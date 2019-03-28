@@ -14,6 +14,7 @@ public class CharacterControlForMoveCpt : BaseMonoBehaviour
         float vMove = Input.GetAxis("Vertical");
         if(hMove==0&& vMove == 0)
         {
+
             characterMoveCpt.Stop();
         }
         else
