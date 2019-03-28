@@ -5,8 +5,13 @@ using UnityEngine;
 [ExecuteInEditMode]
 public class CharacterBodyCpt : BaseMonoBehaviour
 {
+    //头
+    public SpriteRenderer sprHead;
     //躯干
     public SpriteRenderer sprTrunk;
+    //脚
+    public SpriteRenderer sprFootLeft;
+    public SpriteRenderer sprFootRight;
     //头发
     public SpriteRenderer sprHair;
     //眼睛
@@ -19,12 +24,6 @@ public class CharacterBodyCpt : BaseMonoBehaviour
     //角色身体资源管理
     public CharacterBodyManager characterBodyManager;
 
-    private void Start()
-    {
-        SetSex(2);
-        SetHair("hair_3",new Color(0,0,0,1));
-    }
-
     /// <summary>
     /// 设置角色身体属性
     /// </summary>
@@ -35,6 +34,10 @@ public class CharacterBodyCpt : BaseMonoBehaviour
             return;
         this.characterData = characterAttributesBean;
         SetSex(this.characterData.body.sex);
+        SetSkin(this.characterData.body.skinColor.GetColor());
+        SetHair(this.characterData.body.hair, this.characterData.body.hairColor.GetColor());
+        SetEye(this.characterData.body.eye, this.characterData.body.eyeColor.GetColor());
+        SetMouth(this.characterData.body.mouth, this.characterData.body.mouthColor.GetColor());
     }
 
     /// <summary>
@@ -77,5 +80,50 @@ public class CharacterBodyCpt : BaseMonoBehaviour
         Sprite spHair = characterBodyManager.GetHairSpriteByName(hair);
         sprHair.sprite = spHair;
         sprHair.color = hairColor;
+    }
+
+    /// <summary>
+    ///  设置眼睛
+    /// </summary>
+    /// <param name="mouth"></param>
+    /// <param name="mouthColor"></param>
+    public void SetEye(string eye, Color eyeColor)
+    {
+        if (characterBodyManager == null || sprEye == null)
+            return;
+        Sprite spEye = characterBodyManager.GetEyeSpriteByName(eye);
+        sprEye.sprite = spEye;
+        sprEye.color = eyeColor;
+    }
+
+    /// <summary>
+    ///  设置嘴巴
+    /// </summary>
+    /// <param name="mouth"></param>
+    /// <param name="mouthColor"></param>
+    public void SetMouth(string mouth, Color mouthColor)
+    {
+        if (characterBodyManager == null || sprMouth == null)
+            return;
+        Sprite spMouth = characterBodyManager.GetMouthSpriteByName(mouth);
+        sprMouth.sprite = spMouth;
+        sprMouth.color = mouthColor;
+    }
+
+    /// <summary>
+    /// 设置皮肤
+    /// </summary>
+    /// <param name="skinColor">皮肤颜色</param>
+    public void SetSkin(Color skinColor)
+    {
+        if (sprHead == null
+            || sprTrunk == null
+            || sprFootLeft == null
+            || sprFootRight == null)
+            return;
+        sprHead.color = skinColor;
+        sprTrunk.color = skinColor;
+        sprFootLeft.color = skinColor;
+        sprFootRight.color = skinColor;
     }
 }

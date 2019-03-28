@@ -1,12 +1,12 @@
 fileFormatVersion: 2
-guid: 72a4237066f960d4da7b17e4b54b57e6
+guid: 2cdb123fc33e136458994a6327aa136f
 TextureImporter:
   fileIDToRecycleName:
-    21300000: character_body_head
-    21300002: character_body_trunk_man
-    21300004: character_body_trunk_woman
-    21300006: character_body_foot_left
-    21300008: character_body_foot_right
+    21300000: character_mouth_0
+    21300002: character_mouth_1
+    21300004: character_mouth_2
+    21300006: character_mouth_3
+    21300008: character_mouth_4
   externalObjects: {}
   serializedVersion: 9
   mipmaps:
@@ -68,8 +68,8 @@ TextureImporter:
     maxTextureSize: 8192
     resizeAlgorithm: 0
     textureFormat: -1
-    textureCompression: 0
-    compressionQuality: 50
+    textureCompression: 1
+    compressionQuality: 100
     crunchedCompression: 0
     allowsAlphaSplitting: 0
     overridden: 0
@@ -79,8 +79,8 @@ TextureImporter:
     maxTextureSize: 8192
     resizeAlgorithm: 0
     textureFormat: -1
-    textureCompression: 0
-    compressionQuality: 50
+    textureCompression: 1
+    compressionQuality: 100
     crunchedCompression: 0
     allowsAlphaSplitting: 0
     overridden: 0
@@ -89,101 +89,101 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: character_body_head
-      rect:
-        serializedVersion: 2
-        x: 8
-        y: 18
-        width: 18
-        height: 14
-      alignment: 9
-      pivot: {x: 0.5, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: e717cefee6dc1814ba1be783e4e57df8
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: character_body_trunk_man
+      name: character_mouth_0
       rect:
         serializedVersion: 2
         x: 0
-        y: 2
-        width: 16
-        height: 15
-      alignment: 9
-      pivot: {x: 0.5, y: 1}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 860e7ad5e70e2364e9bda3d846e6e0d5
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: character_body_trunk_woman
-      rect:
-        serializedVersion: 2
-        x: 18
-        y: 2
-        width: 16
-        height: 15
-      alignment: 9
-      pivot: {x: 0.5, y: 1}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 39f49a2ef6b93f347a1f6c9bb5e546f7
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: character_body_foot_left
-      rect:
-        serializedVersion: 2
-        x: 11
         y: 0
-        width: 5
-        height: 1
+        width: 64
+        height: 64
       alignment: 9
-      pivot: {x: 0.5, y: 1}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
-      tessellationDetail: 0
+      tessellationDetail: -1
       bones: []
-      spriteID: 26e941a64247ba64783c7cf674956c84
+      spriteID: 3b9638a6736bd384a9531694d2e07c2c
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: character_body_foot_right
+      name: character_mouth_1
       rect:
         serializedVersion: 2
-        x: 18
+        x: 64
         y: 0
-        width: 5
-        height: 1
+        width: 64
+        height: 64
       alignment: 9
-      pivot: {x: 0.5, y: 1}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
-      tessellationDetail: 0
+      tessellationDetail: -1
       bones: []
-      spriteID: d20f3fa7377b87e48a56f89f70b9c970
+      spriteID: 014aa82653c2f19459f496bcd13a8ee5
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: character_mouth_2
+      rect:
+        serializedVersion: 2
+        x: 128
+        y: 0
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5bcd9830a463e5143a1407d7ea090ae0
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: character_mouth_3
+      rect:
+        serializedVersion: 2
+        x: 192
+        y: 0
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 49d37991634910d46913f99ce57f53df
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: character_mouth_4
+      rect:
+        serializedVersion: 2
+        x: 256
+        y: 0
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 030f7ecf2a28e4a4f8a805630b091751
       vertices: []
       indices: 
       edges: []
@@ -191,7 +191,7 @@ TextureImporter:
     outline: []
     physicsShape: []
     bones: []
-    spriteID: a6fdeccd29c342b4ba3d6ee219a76678
+    spriteID: 
     vertices: []
     indices: 
     edges: []
