@@ -207,7 +207,7 @@ public class SQLiteHelper : ScriptableObject
     /// <param name="mainOperations"></param>
     /// <param name="mainColValues"></param>
     /// <returns></returns>
-    public SqliteDataReader ReadTable(string mainTableName, string[] leftTableName, string mainKey, string[] leftKey, string[] mainColNames, string[] mainOperations, string[] mainColValues)
+    public SqliteDataReader ReadTable(string mainTableName, string[] leftTableName, string[] mainKey, string[] leftKey, string[] mainColNames, string[] mainOperations, string[] mainColValues)
     {
         if (mainTableName == null)
         {
@@ -217,12 +217,21 @@ public class SQLiteHelper : ScriptableObject
         string selectStr = "SELECT * ";
 
         string fromStr = "FROM " + mainTableName;
-        if (leftTableName != null && leftTableName.Length > 0)
+        if (mainKey!=null && leftTableName != null && leftTableName.Length > 0)
         {
             int leftTableList = leftTableName.Length;
             for (int i = 0; i < leftTableList; i++)
             {
-                fromStr += " LEFT OUTER JOIN " + leftTableName[i] + " ON " + mainTableName + "." + mainKey + " = " + leftTableName[i] + "." + leftKey[i] + " ";
+                string mainKeyStr = "";
+                if (mainKey.Length == 1|| mainKey.Length!= leftTableList)
+                {
+                    mainKeyStr= mainKey[0];
+                }
+                else
+                {
+                    mainKeyStr = mainKey[i];
+                }
+                fromStr += " LEFT OUTER JOIN " + leftTableName[i] + " ON " + mainTableName + "." + mainKeyStr + " = " + leftTableName[i] + "." + leftKey[i] + " ";
             }
         }
 
@@ -253,8 +262,7 @@ public class SQLiteHelper : ScriptableObject
     }
     public SqliteDataReader ReadTable(string mainTableName, string[] leftTableName, string mainKey, string[] leftKey)
     {
-        return ReadTable(mainTableName, leftTableName, mainKey, leftKey, null, null, null);
+        string[] tempMainkey =new string[]{ mainKey };
+        return ReadTable(mainTableName, leftTableName, tempMainkey, leftKey, null, null, null);
     }
-
-
 }

@@ -105,7 +105,7 @@ public class SQliteHandle
     /// <param name="mainOperations"></param>
     /// <param name="mainColValues"></param>
     /// <returns></returns>
-    public static List<T> LoadTableData<T>(string dbName, string mainTable, string[] leftTableName, string mainKey, string[] leftKey, string[] mainColNames, string[] mainOperations, string[] mainColValues)
+    public static List<T> LoadTableData<T>(string dbName, string mainTable, string[] leftTableName, string[] mainKey, string[] leftKey, string[] mainColNames, string[] mainOperations, string[] mainColValues)
     {
         SQLiteHelper sql = GetSQLiteHelper(dbName);
         SqliteDataReader reader = null;
@@ -156,10 +156,16 @@ public class SQliteHandle
 
     public static List<T> LoadTableData<T>(string dbName, string mainTable, string[] leftTableName, string mainKey, string[] leftKey)
     {
+        string[] tempMainKey = new string[] { mainKey };
+        return LoadTableData<T>(dbName, mainTable, leftTableName, tempMainKey, leftKey, null, null, null);
+    }
+
+    public static List<T> LoadTableData<T>(string dbName, string mainTable, string[] leftTableName, string[] mainKey, string[] leftKey)
+    {
         return LoadTableData<T>(dbName, mainTable, leftTableName, mainKey, leftKey, null, null, null);
     }
 
-    public static List<T> LoadTableData<T>(string dbName, string mainTable, string[] mainColNames, string[] mainOperations, string[] mainColValue)
+    public static List<T> LoadTableDataByCol<T>(string dbName, string mainTable, string[] mainColNames, string[] mainOperations, string[] mainColValue)
     {
         return LoadTableData<T>(dbName, mainTable, null, null, null, mainColNames, mainOperations, mainColValue);
     }
