@@ -1,0 +1,63 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &8949585216560813507
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8949585216560813506}
+  - component: {fileID: 8949585216560813509}
+  m_Layer: 0
+  m_Name: CharacterManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8949585216560813506
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8949585216560813507}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.004779144, y: -0.07274484, z: 0.030487835}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &8949585216560813509
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8949585216560813507}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7843ea82b7a2e5a4db3ebcee0badf36d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  listIconBodyTrunk:
+  - key: man
+    value: {fileID: 21300002, guid: 72a4237066f960d4da7b17e4b54b57e6, type: 3}
+  - key: woman
+    value: {fileID: 21300004, guid: 72a4237066f960d4da7b17e4b54b57e6, type: 3}
+  listIconBodyHair:
+  - key: hair_0
+    value: {fileID: 21300000, guid: e0e843a494ff9624da0fee24681321ca, type: 3}
+  - key: hair_1
+    value: {fileID: 21300002, guid: e0e843a494ff9624da0fee24681321ca, type: 3}
+  - key: hair_2
+    value: {fileID: 21300004, guid: e0e843a494ff9624da0fee24681321ca, type: 3}
+  - key: hair_3
+    value: {fileID: 21300006, guid: e0e843a494ff9624da0fee24681321ca, type: 3}
+  - key: hair_4
+    value: {fileID: 21300008, guid: e0e843a494ff9624da0fee24681321ca, type: 3}
+  listIconBodyEye: []
+  listIconBodyMouth: []
