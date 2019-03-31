@@ -68,17 +68,32 @@ public class CharacterBodyCpt : BaseMonoBehaviour
             sprTrunk.sprite = spTrunk;
     }
 
+
+
     /// <summary>
     /// 设置头发
     /// </summary>
     /// <param name="hair"></param>
     /// <param name="hairColor"></param>
-    public void SetHair(string hair,Color hairColor)
+    public void SetHair(string hair, Color hairColor)
     {
-        if (characterBodyManager == null|| sprHair == null)
+        if (characterBodyManager == null|| sprHair==null)
             return;
         Sprite spHair = characterBodyManager.GetHairSpriteByName(hair);
         sprHair.sprite = spHair;
+        sprHair.color = hairColor;
+    }
+    public void SetHair(string hair)
+    {
+        if (characterBodyManager == null || sprHair == null)
+            return;
+        Sprite spHair = characterBodyManager.GetHairSpriteByName(hair);
+        sprHair.sprite = spHair;
+    }
+    public void SetHair(Color hairColor)
+    {
+        if (sprHair == null)
+            return;
         sprHair.color = hairColor;
     }
 
@@ -95,6 +110,19 @@ public class CharacterBodyCpt : BaseMonoBehaviour
         sprEye.sprite = spEye;
         sprEye.color = eyeColor;
     }
+    public void SetEye(string eye)
+    {
+        if (characterBodyManager == null || sprEye == null)
+            return;
+        Sprite spEye = characterBodyManager.GetEyeSpriteByName(eye);
+        sprEye.sprite = spEye;
+    }
+    public void SetEye(Color eyeColor)
+    {
+        if (sprEye == null)
+            return;
+        sprEye.color = eyeColor;
+    }
 
     /// <summary>
     ///  设置嘴巴
@@ -107,6 +135,19 @@ public class CharacterBodyCpt : BaseMonoBehaviour
             return;
         Sprite spMouth = characterBodyManager.GetMouthSpriteByName(mouth);
         sprMouth.sprite = spMouth;
+        sprMouth.color = mouthColor;
+    }
+    public void SetMouth(string mouth)
+    {
+        if (characterBodyManager == null || sprMouth == null)
+            return;
+        Sprite spMouth = characterBodyManager.GetMouthSpriteByName(mouth);
+        sprMouth.sprite = spMouth;
+    }
+    public void SetMouth( Color mouthColor)
+    {
+        if ( sprMouth == null)
+            return;
         sprMouth.color = mouthColor;
     }
 

@@ -58,10 +58,11 @@ public class ImageEditor : Editor
             float cItemSize = itemTexture.width / cNumber;
             float rItemSize = itemTexture.height / rNumber;
             int position = 0;
-            for (int c = 0; c < cNumber; c++)
+            for (int r = rNumber; r > 0; r--)
             {
-                for (int r = rNumber; r > 0; r--)
-                {
+                for (int c = 0; c < cNumber; c++)
+            {
+               
                     SpriteMetaData smd = new SpriteMetaData();
                     smd.pivot = new Vector2(0.5f, 0.5f);
                     smd.alignment = 9;

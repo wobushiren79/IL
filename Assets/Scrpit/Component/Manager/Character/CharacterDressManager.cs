@@ -2,7 +2,7 @@
 using UnityEditor;
 using System.Collections.Generic;
 
-public class CharacterDressManager : BaseManager
+public class CharacterDressManager : BaseManager,IEquipInfoView
 {
     //面具列表
     public List<IconBean> listIconMask;
@@ -12,6 +12,17 @@ public class CharacterDressManager : BaseManager
     public List<IconBean> listIconClothes;
     //帽子列表
     public List<IconBean> listIconHat;
+    
+    //装备数据
+    public List<EquipInfoBean> listDataEquip;
+
+    //装备控制
+    public EquipInfoController equipInfoController;
+
+    private void Awake()
+    {
+        equipInfoController = new EquipInfoController(this,this);
+    }
 
     /// <summary>
     /// 根据名字获取面具
@@ -51,4 +62,16 @@ public class CharacterDressManager : BaseManager
     {
         return GetSpriteByName(name, listIconHat);
     }
+
+    #region   装备获取回调
+    public void GetEquipInfoSuccess(List<EquipInfoBean> listData)
+    {
+       this.listDataEquip = listData;
+    }
+
+    public void GetEquipInfoFail()
+    {
+        throw new System.NotImplementedException();
+    }
+    #endregion
 }
