@@ -6,6 +6,9 @@ public class UIMainCreate : BaseUIComponent, IRadioGroupCallBack, ColorView.Call
     //返回按钮
     public Button btBack;
     public Text tvBack;
+    //开始按钮
+    public Button btCreate;
+    public Text tvCreate;
     //性别选择
     public RadioGroupView rgSex;
     //皮肤颜色
@@ -32,10 +35,13 @@ public class UIMainCreate : BaseUIComponent, IRadioGroupCallBack, ColorView.Call
     //角色着装控制
     public CharacterDressCpt characterDressCpt;
     public CharacterDressManager characterDressManager;
+
     private void Start()
     {
         if (btBack != null)
             btBack.onClick.AddListener(OpenStartUI);
+        if (btCreate != null)
+            btCreate.onClick.AddListener(CreateNewGame);
         if (rgSex != null)
             rgSex.SetCallBack(this);
         if (colorSkin != null)
@@ -77,6 +83,14 @@ public class UIMainCreate : BaseUIComponent, IRadioGroupCallBack, ColorView.Call
             selectShoes.SetSelectNumber(characterDressManager.GetShoesList().Count + 1);
             selectShoes.SetCallBack(this);
         }
+    }
+
+    /// <summary>
+    /// 创建新游戏
+    /// </summary>
+    public void CreateNewGame()
+    {
+
     }
 
     /// <summary>
