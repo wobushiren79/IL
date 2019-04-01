@@ -14,7 +14,7 @@ public class CharacterBodyManager : BaseManager
     public List<IconBean> listIconBodyMouth;
 
     /// <summary>
-    /// 根据名字获取躯干
+    /// 获取躯干
     /// </summary>
     /// <param name="name"></param>
     /// <returns></returns>
@@ -22,9 +22,13 @@ public class CharacterBodyManager : BaseManager
     {
         return GetSpriteByName(name, listIconBodyTrunk);
     }
+    public Sprite GetTrunkSpriteByPosition(int position)
+    {
+        return GetSpriteByPosition(position, listIconBodyTrunk);
+    }
 
     /// <summary>
-    /// 根据名字获取头发
+    /// 获取头发
     /// </summary>
     /// <param name="name"></param>
     /// <returns></returns>
@@ -32,15 +36,31 @@ public class CharacterBodyManager : BaseManager
     {
         return GetSpriteByName(name, listIconBodyHair);
     }
+    public Sprite GetHairSpriteByPosition(int position)
+    {
+        return GetSpriteByPosition(position, listIconBodyHair);
+    }
+    public IconBean GetHairIconBeanByPosition(int position)
+    {
+        return  BeanUtil.GetIconBeanByPosition(position, listIconBodyHair);
+    }
 
     /// <summary>
-    /// 根据名字获取眼睛
+    /// 获取眼睛
     /// </summary>
     /// <param name="name"></param>
     /// <returns></returns>
     public Sprite GetEyeSpriteByName(string name)
     {
         return GetSpriteByName(name, listIconBodyEye);
+    }
+    public Sprite GettEyeSpriteByPosition(int position)
+    {
+        return GetSpriteByPosition(position, listIconBodyEye);
+    }
+    public IconBean GetEyeIconBeanByPosition(int position)
+    {
+        return BeanUtil.GetIconBeanByPosition(position, listIconBodyEye);
     }
 
     /// <summary>
@@ -52,6 +72,12 @@ public class CharacterBodyManager : BaseManager
     {
         return GetSpriteByName(name, listIconBodyMouth);
     }
-
-
+    public Sprite GettMouthSpriteByPosition(int position)
+    {
+        return GetSpriteByPosition(position, listIconBodyMouth);
+    }
+    public IconBean GetMouthIconBeanByPosition(int position)
+    {
+        return BeanUtil.GetIconBeanByPosition(position, listIconBodyMouth);
+    }
 }

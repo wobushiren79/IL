@@ -19,10 +19,19 @@ public class UIMainCreate : BaseUIComponent, IRadioGroupCallBack, ColorView.Call
     //嘴
     public ColorView colorMouth;
     public SelectView selectMouth;
+    //帽子
+    public SelectView selectHat;
+    //衣服
+    public SelectView selectClothes;
+    //鞋子
+    public SelectView selectShoes;
 
     //角色身体控制
     public CharacterBodyCpt characterBodyCpt;
     public CharacterBodyManager characterBodyManager;
+    //角色着装控制
+    public CharacterDressCpt characterDressCpt;
+    public CharacterDressManager characterDressManager;
     private void Start()
     {
         if (btBack != null)
@@ -35,22 +44,38 @@ public class UIMainCreate : BaseUIComponent, IRadioGroupCallBack, ColorView.Call
             colorHair.SetCallBack(this);
         if (selectHair != null)
         {
-            selectHair.SetSelectData(characterBodyManager.listIconBodyHair);
+            selectHair.SetSelectNumber(characterBodyManager.listIconBodyHair.Count);
             selectHair.SetCallBack(this);
         }
         if (colorEye != null)
             colorEye.SetCallBack(this);
         if (selectEye != null)
         {
-            selectEye.SetSelectData(characterBodyManager.listIconBodyEye);
+            selectEye.SetSelectNumber(characterBodyManager.listIconBodyEye.Count);
             selectEye.SetCallBack(this);
         }
         if (colorMouth != null)
             colorMouth.SetCallBack(this);
         if (selectMouth != null)
         {
-            selectMouth.SetSelectData(characterBodyManager.listIconBodyMouth);
+            selectMouth.SetSelectNumber(characterBodyManager.listIconBodyMouth.Count);
             selectMouth.SetCallBack(this);
+        }
+
+        if (selectHat != null)
+        {
+            selectHat.SetSelectNumber(characterDressManager.GetHatList().Count + 1);
+            selectHat.SetCallBack(this);
+        }
+        if (selectClothes != null)
+        {
+            selectClothes.SetSelectNumber(characterDressManager.GetClothesList().Count + 1);
+            selectClothes.SetCallBack(this);
+        }
+        if (selectShoes != null)
+        {
+            selectShoes.SetSelectNumber(characterDressManager.GetShoesList().Count + 1);
+            selectShoes.SetCallBack(this);
         }
     }
 
@@ -105,19 +130,40 @@ public class UIMainCreate : BaseUIComponent, IRadioGroupCallBack, ColorView.Call
     #endregion
 
     #region 选择回调
-    public void ChangeSelectPosition(SelectView selectView, int position, IconBean iconBean)
+    public void ChangeSelectPosition(SelectView selectView, int position)
     {
         if (selectView == selectHair)
         {
-            characterBodyCpt.SetHair(iconBean.key);
+            characterBodyCpt.SetHair(characterBodyManager.GetHairIconBeanByPosition(position).key);
         }
         else if (selectView == selectEye)
         {
-            characterBodyCpt.SetEye(iconBean.key);
+            characterBodyCpt.SetEye(characterBodyManager.GetEyeIconBeanByPosition(position).key);
         }
         else if (selectView == selectMouth)
         {
-            characterBodyCpt.SetMouth(iconBean.key);
+            characterBodyCpt.SetMouth(characterBodyManager.GetMouthIconBeanByPosition(position).key);
+        }
+        else if (selectView == selectHat)
+        {
+            if (position == 0)
+                characterDressCpt.SetHat(null);
+            else
+                characterDressCpt.SetHat(characterDressManager.GetHatList()[position - 1]);
+        }
+        else if (selectView == selectClothes)
+        {
+            if (position == 0)
+                characterDressCpt.SetClothes(null);
+            else
+                characterDressCpt.SetClothes(characterDressManager.GetClothesList()[position-1]);
+        }
+        else if (selectView == selectShoes)
+        {
+            if (position == 0)
+                characterDressCpt.SetShoes(null);
+            else
+                characterDressCpt.SetShoes(characterDressManager.GetShoesList()[position - 1]);
         }
     }
     #endregion

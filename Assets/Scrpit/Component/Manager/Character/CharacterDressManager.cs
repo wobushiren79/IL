@@ -25,6 +25,74 @@ public class CharacterDressManager : BaseManager,IEquipInfoView
     }
 
     /// <summary>
+    /// 获取所有的帽子数据
+    /// </summary>
+    /// <returns></returns>
+    public List<EquipInfoBean> GetHatList()
+    {
+       return GetEquipListByType(1);
+    }
+    /// <summary>
+    /// 获取所有服装数据
+    /// </summary>
+    /// <returns></returns>
+    public List<EquipInfoBean> GetClothesList()
+    {
+        return GetEquipListByType(2);
+    }
+    /// <summary>
+    /// 获取所有鞋子信息
+    /// </summary>
+    /// <returns></returns>
+    public List<EquipInfoBean> GetShoesList()
+    {
+        return GetEquipListByType(3);
+    }
+
+
+    /// <summary>
+    /// 根据装备类型获取装备信息
+    /// </summary>
+    /// <param name="type"></param>
+    /// <returns></returns>
+    public List<EquipInfoBean> GetEquipListByType(int type)
+    {
+        List<EquipInfoBean> tempList = new List<EquipInfoBean>();
+        if (listDataEquip == null)
+            return tempList;
+        for (int i = 0; i < listDataEquip.Count; i++)
+        {
+            EquipInfoBean itemData = listDataEquip[i];
+            if (itemData.equip_type == type)
+            {
+                tempList.Add(itemData);
+            }
+        }
+        return tempList;
+    }
+
+    /// <summary>
+    /// 根据装备ID获取装备
+    /// </summary>
+    /// <param name="id"></param>
+    /// <returns></returns>
+    public EquipInfoBean GetEquipById(long id)
+    {
+        if (listDataEquip == null)
+            return null;
+        for (int i = 0; i < listDataEquip.Count; i++)
+        {
+            EquipInfoBean itemData = listDataEquip[i];
+            if (itemData.id == id)
+            {
+                return itemData;
+            }
+        }
+        return null;
+    }
+
+
+    /// <summary>
     /// 根据名字获取面具
     /// </summary>
     /// <param name="name"></param>

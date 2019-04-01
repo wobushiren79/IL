@@ -11,4 +11,6 @@ public class CharacterBean
    public CharacterAttributesBean attributes;
     //角色身体属性
    public CharacterBodyBean body;
+
+
 }

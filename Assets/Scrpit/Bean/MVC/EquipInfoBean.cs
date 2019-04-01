@@ -8,6 +8,7 @@ public class EquipInfoBean : BaseBean
     public long intact_id;//套装ID
     public long equip_id;//装备ID
 
+    public int equip_type;//装备类型 1帽子 2衣服  3鞋子
     public string icon_key;//装备图标
 
     public float add_waiter;//增加 跑堂

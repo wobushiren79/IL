@@ -48,6 +48,7 @@ public class ImageEditor : Editor
             textureImporter.spriteImportMode = spriteType;
             textureImporter.filterMode = FilterMode.Point;
             textureImporter.maxTextureSize = 8192;
+            textureImporter.spritePixelsPerUnit = 64;
             textureImporter.compressionQuality = 100;
             textureImporter.isReadable = true;
 

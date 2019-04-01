@@ -132,4 +132,15 @@ public class TypeConversionUtil
         }
         return data;
     }
+
+    /// <summary>
+    /// Color转换ColorBean
+    /// </summary>
+    /// <param name="color"></param>
+    /// <returns></returns>
+    public static ColorBean ColorToColorBean(Color color)
+    {
+        ColorBean colorBean = new ColorBean(color.a, color.g, color.b, color.a);
+        return colorBean;
+    }
 }

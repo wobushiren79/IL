@@ -1,6 +1,8 @@
 ﻿using UnityEngine;
 using UnityEditor;
+using System;
 
+[Serializable]
 public class CharacterBodyBean : ScriptableObject
 {
     public int sex;//性别 0未知，1男，2女，3中性

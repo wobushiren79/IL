@@ -11,7 +11,7 @@ public class SelectView : BaseMonoBehaviour
     public Text tvPosition;//选择序号
 
     private int itemPosition = 0;
-    private  List<IconBean> listData;
+    private int listDataNumber = 0;
     private CallBack callBack;
 
     private void Start()
@@ -29,12 +29,13 @@ public class SelectView : BaseMonoBehaviour
 
     public void LeftSelect()
     {
-        if (CheckUtil.ListIsNull(listData)) {
+        if (listDataNumber == 0)
+        {
             return;
         }
         if (itemPosition - 1 < 0 )
         {
-            itemPosition = listData.Count - 1;
+            itemPosition = listDataNumber - 1;
         }
         else
         {
@@ -45,11 +46,11 @@ public class SelectView : BaseMonoBehaviour
 
     public void RightSelect()
     {
-        if (CheckUtil.ListIsNull(listData))
+        if (listDataNumber==0)
         {
             return;
         }
-        if ((itemPosition + 1) >= listData.Count)
+        if ((itemPosition + 1) >= listDataNumber)
         {
             itemPosition = 0;
         }
@@ -66,13 +67,13 @@ public class SelectView : BaseMonoBehaviour
         tvPosition.text = (itemPosition+1) + "";
         if (callBack != null)
         {
-            callBack.ChangeSelectPosition(this,position, listData[position]);
+            callBack.ChangeSelectPosition(this,position);
         }
     }
 
-    public void SetSelectData(List<IconBean> listData)
+    public void SetSelectNumber(int listDataNumber)
     {
-        this.listData = listData;
+        this.listDataNumber = listDataNumber;
         SetPosition(0);
     }
     
@@ -80,21 +81,21 @@ public class SelectView : BaseMonoBehaviour
     /// 获取选取的数据
     /// </summary>
     /// <returns></returns>
-    public IconBean GetSelectData()
+    public int GetSelectPosition()
     {
-        if (CheckUtil.ListIsNull(listData))
+        if (listDataNumber==0)
         {
-            return null;
+            return 0;
         }
         else
         {
-            return listData[itemPosition];
+            return itemPosition;
         }
        
     }
 
     public interface CallBack
     {
-        void ChangeSelectPosition(SelectView selectView, int position, IconBean iconBean);
+        void ChangeSelectPosition(SelectView selectView, int position);
     }
 }

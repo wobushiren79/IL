@@ -3,20 +3,55 @@ using UnityEditor;
 
 public class CharacterDressCpt : BaseMonoBehaviour
 {
-    //头
+    //帽子
     public SpriteRenderer sprHat;
-    //躯干
+    //衣服
     public SpriteRenderer sprClothes;
-    //脚
+    //鞋子
     public SpriteRenderer sprShoesLeft;
     public SpriteRenderer sprShoesRight;
 
+    //角色属性
+    public CharacterBean characterData;
     //服装管理
     public CharacterDressManager characterDressManager;
 
 
-    public void SetHat(long clothesId)
-    {
 
+    public void SetHat(EquipInfoBean equipInfo)
+    {
+        if (sprHat == null)
+            return;
+        Sprite hatSP;
+        if (equipInfo == null)
+            hatSP = null;
+        else
+            hatSP = characterDressManager.GetHatSpriteByName(equipInfo.icon_key);
+        sprHat.sprite = hatSP;
+    }
+
+    public void SetClothes(EquipInfoBean equipInfo)
+    {
+        if (sprClothes == null)
+            return;
+        Sprite clothesSP;
+        if (equipInfo == null)
+            clothesSP = null;
+        else
+            clothesSP = characterDressManager.GetClothesSpriteByName(equipInfo.icon_key);
+        sprClothes.sprite = clothesSP;
+    }
+
+    public void SetShoes(EquipInfoBean equipInfo)
+    {
+        if (sprShoesLeft == null|| sprShoesRight==null)
+            return;
+        Sprite shoesSP;
+        if (equipInfo == null)
+            shoesSP = null;
+        else
+            shoesSP = characterDressManager.GetShoesSpriteByName(equipInfo.icon_key);
+        sprShoesLeft.sprite = shoesSP;
+        sprShoesRight.sprite = shoesSP;
     }
 }

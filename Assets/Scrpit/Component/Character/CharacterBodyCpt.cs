@@ -20,24 +20,33 @@ public class CharacterBodyCpt : BaseMonoBehaviour
     public SpriteRenderer sprMouth;
 
     //角色属性
-    public CharacterBean characterData;
+    public CharacterBodyBean characterBodyData;
     //角色身体资源管理
     public CharacterBodyManager characterBodyManager;
+
+    /// <summary>
+    /// 获取身体属性
+    /// </summary>
+    /// <returns></returns>
+    public CharacterBodyBean GetBodyData()
+    {
+        return characterBodyData;
+    }
 
     /// <summary>
     /// 设置角色身体属性
     /// </summary>
     /// <param name="characterAttributesBean"></param>
-    public void SetCharacterBody(CharacterBean characterAttributesBean)
+    public void SetCharacterBody(CharacterBodyBean characterBodyData)
     {
-        if (characterAttributesBean == null)
+        if (characterBodyData == null)
             return;
-        this.characterData = characterAttributesBean;
-        SetSex(this.characterData.body.sex);
-        SetSkin(this.characterData.body.skinColor.GetColor());
-        SetHair(this.characterData.body.hair, this.characterData.body.hairColor.GetColor());
-        SetEye(this.characterData.body.eye, this.characterData.body.eyeColor.GetColor());
-        SetMouth(this.characterData.body.mouth, this.characterData.body.mouthColor.GetColor());
+        this.characterBodyData = characterBodyData;
+        SetSex(this.characterBodyData.sex);
+        SetSkin(this.characterBodyData.skinColor.GetColor());
+        SetHair(this.characterBodyData.hair, this.characterBodyData.hairColor.GetColor());
+        SetEye(this.characterBodyData.eye, this.characterBodyData.eyeColor.GetColor());
+        SetMouth(this.characterBodyData.mouth, this.characterBodyData.mouthColor.GetColor());
     }
 
     /// <summary>
@@ -66,9 +75,11 @@ public class CharacterBodyCpt : BaseMonoBehaviour
         }
         if (sprTrunk != null && spTrunk != null)
             sprTrunk.sprite = spTrunk;
+        //数据保存
+        if (characterBodyData == null)
+            characterBodyData = new CharacterBodyBean();
+        characterBodyData.sex = sex;
     }
-
-
 
     /// <summary>
     /// 设置头发
@@ -77,24 +88,29 @@ public class CharacterBodyCpt : BaseMonoBehaviour
     /// <param name="hairColor"></param>
     public void SetHair(string hair, Color hairColor)
     {
-        if (characterBodyManager == null|| sprHair==null)
-            return;
-        Sprite spHair = characterBodyManager.GetHairSpriteByName(hair);
-        sprHair.sprite = spHair;
-        sprHair.color = hairColor;
-    }
-    public void SetHair(string hair)
-    {
         if (characterBodyManager == null || sprHair == null)
             return;
         Sprite spHair = characterBodyManager.GetHairSpriteByName(hair);
-        sprHair.sprite = spHair;
+        if (hair != null)
+            sprHair.sprite = spHair;
+        sprHair.color = hairColor;
+        //数据保存
+        if (characterBodyData == null)
+            characterBodyData = new CharacterBodyBean();
+        characterBodyData.hair = hair;
+        characterBodyData.hairColor = TypeConversionUtil.ColorToColorBean(hairColor);
+    }
+    public void SetHair(string hair)
+    {
+        if (sprHair == null)
+            return;
+        SetHair(hair, sprHair.color);
     }
     public void SetHair(Color hairColor)
     {
         if (sprHair == null)
             return;
-        sprHair.color = hairColor;
+        SetHair(null, hairColor);
     }
 
     /// <summary>
@@ -107,21 +123,26 @@ public class CharacterBodyCpt : BaseMonoBehaviour
         if (characterBodyManager == null || sprEye == null)
             return;
         Sprite spEye = characterBodyManager.GetEyeSpriteByName(eye);
-        sprEye.sprite = spEye;
+        if (eye != null)
+            sprEye.sprite = spEye;
         sprEye.color = eyeColor;
+        //数据保存
+        if (characterBodyData == null)
+            characterBodyData = new CharacterBodyBean();
+        characterBodyData.eye = eye;
+        characterBodyData.eyeColor = TypeConversionUtil.ColorToColorBean(eyeColor);
     }
     public void SetEye(string eye)
     {
         if (characterBodyManager == null || sprEye == null)
             return;
-        Sprite spEye = characterBodyManager.GetEyeSpriteByName(eye);
-        sprEye.sprite = spEye;
+        SetEye(eye, sprEye.color);
     }
     public void SetEye(Color eyeColor)
     {
         if (sprEye == null)
             return;
-        sprEye.color = eyeColor;
+        SetEye(null,eyeColor);
     }
 
     /// <summary>
@@ -134,21 +155,26 @@ public class CharacterBodyCpt : BaseMonoBehaviour
         if (characterBodyManager == null || sprMouth == null)
             return;
         Sprite spMouth = characterBodyManager.GetMouthSpriteByName(mouth);
-        sprMouth.sprite = spMouth;
+        if (mouth != null)
+            sprMouth.sprite = spMouth;
         sprMouth.color = mouthColor;
+        //数据保存
+        if (characterBodyData == null)
+            characterBodyData = new CharacterBodyBean();
+        characterBodyData.mouth = mouth;
+        characterBodyData.mouthColor = TypeConversionUtil.ColorToColorBean(mouthColor);
     }
     public void SetMouth(string mouth)
     {
         if (characterBodyManager == null || sprMouth == null)
             return;
-        Sprite spMouth = characterBodyManager.GetMouthSpriteByName(mouth);
-        sprMouth.sprite = spMouth;
+        SetMouth( mouth, sprMouth.color);
     }
-    public void SetMouth( Color mouthColor)
+    public void SetMouth(Color mouthColor)
     {
-        if ( sprMouth == null)
+        if (sprMouth == null)
             return;
-        sprMouth.color = mouthColor;
+        SetMouth(null, mouthColor);
     }
 
     /// <summary>

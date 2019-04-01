@@ -24,4 +24,19 @@ public class BeanUtil
         }
         return null;
     }
+
+    /// <summary>
+    /// 获取IconBean
+    /// </summary>
+    /// <param name="name"></param>
+    /// <param name="listData"></param>
+    /// <returns></returns>
+    public static IconBean GetIconBeanByPosition(int position, List<IconBean> listData)
+    {
+        if (listData == null)
+            return new IconBean();
+        if (position >= listData.Count)
+            return new IconBean();
+        return listData[position];
+    }
 }
