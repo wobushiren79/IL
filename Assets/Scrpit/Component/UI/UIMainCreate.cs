@@ -35,6 +35,8 @@ public class UIMainCreate : BaseUIComponent, IRadioGroupCallBack, ColorView.Call
     //角色着装控制
     public CharacterDressCpt characterDressCpt;
     public CharacterDressManager characterDressManager;
+    //主界面控制
+    public MainScenesManager mainScenesManager;
 
     private void Start()
     {
@@ -90,7 +92,7 @@ public class UIMainCreate : BaseUIComponent, IRadioGroupCallBack, ColorView.Call
     /// </summary>
     public void CreateNewGame()
     {
-
+        mainScenesManager.CreateNewData();
     }
 
     /// <summary>

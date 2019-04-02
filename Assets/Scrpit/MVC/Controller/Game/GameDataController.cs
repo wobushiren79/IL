@@ -20,6 +20,11 @@ public class GameDataController : BaseMVCController<GameDataModel, IGameDataView
     /// <param name="gameData"></param>
     public void CreateUserData(GameDataBean gameData)
     {
+        if (gameData == null)
+        {
+            GetView().SetGameDataFail();
+            return;
+        }
         GetModel().AddGameData(gameData);
         GameDataSimpleBean gameDataSimple= GameDataSimpleBean.ToSimpleData(gameData);
         GetModel().SetSimpleGameDataByUserId(gameData.userId, gameDataSimple);
@@ -32,6 +37,11 @@ public class GameDataController : BaseMVCController<GameDataModel, IGameDataView
     /// <param name="gameData"></param>
     public void SaveUserData(GameDataBean gameData)
     {
+        if (gameData == null)
+        {
+            GetView().SetGameDataFail();
+            return;
+        }
         GetModel().SetGameDataByUserId(gameData.userId, gameData);
         GameDataSimpleBean gameDataSimple = GameDataSimpleBean.ToSimpleData(gameData);
         GetModel().SetSimpleGameDataByUserId(gameData.userId, gameDataSimple);
