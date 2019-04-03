@@ -3,7 +3,8 @@ using UnityEditor;
 
 public class GameCommonInfo 
 {
-    public static  GameConfigBean gameConfig;
+    public static string gameUserId;//游戏用户ID
+    public static GameConfigBean gameConfig; //游戏设置
 
     private static GameConfigController mGameConfigController;
     private static UITextController mUITextController;

@@ -9,6 +9,10 @@ public class UIMainCreate : BaseUIComponent, IRadioGroupCallBack, ColorView.Call
     //开始按钮
     public Button btCreate;
     public Text tvCreate;
+
+    public InputField etInnName;
+    public InputField etUserName;
+
     //性别选择
     public RadioGroupView rgSex;
     //皮肤颜色
@@ -37,6 +41,8 @@ public class UIMainCreate : BaseUIComponent, IRadioGroupCallBack, ColorView.Call
     public CharacterDressManager characterDressManager;
     //主界面控制
     public MainScenesManager mainScenesManager;
+    //弹出框提示
+    public ToastView toastView;
 
     private void Start()
     {
@@ -92,7 +98,19 @@ public class UIMainCreate : BaseUIComponent, IRadioGroupCallBack, ColorView.Call
     /// </summary>
     public void CreateNewGame()
     {
-        mainScenesManager.CreateNewData();
+
+        if (CheckUtil.StringIsNull(etInnName.text))
+        {
+            toastView.ToastHint(GameCommonInfo.GetUITextById(1000));
+            return;
+        }
+        if (CheckUtil.StringIsNull(etUserName.text))
+        {
+            toastView.ToastHint(GameCommonInfo.GetUITextById(1001));
+            return;
+        }
+        GameDataBean gameData = new GameDataBean();
+        mainScenesManager.CreateNewData(gameData);
     }
 
     /// <summary>

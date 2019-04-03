@@ -17,12 +17,15 @@ public class UIMainStart : BaseUIComponent
     //离开按钮
     public Button btExit;
     public Text tvExit;
-
     private void Start()
     {
         if (btStart != null)
         {
             btStart.onClick.AddListener(OpenCreateUI);
+        }
+        if (btContinue != null)
+        {
+            btContinue.onClick.AddListener(OpenContinueUI);
         }
         if (btExit != null)
         {
@@ -35,6 +38,14 @@ public class UIMainStart : BaseUIComponent
     {
         base.RefreshUI();
          
+    }
+
+    /// <summary>
+    /// 打开继续页面
+    /// </summary>
+    public void OpenContinueUI()
+    {
+        uiManager.OpenUIAndCloseOtherByName("Continue");
     }
 
     /// <summary>

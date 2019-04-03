@@ -5,6 +5,7 @@ public class GameDataSimpleBean
 {
     public string userId;//用户ID
     public long money;//用户金钱
+    public string innName;//客栈名字
     public CharacterBean userCharacter;//用户角色
     public TimeBean gameTime;//游戏时间
 
@@ -19,6 +20,7 @@ public class GameDataSimpleBean
             return null;
         GameDataSimpleBean gameDataSimple = new GameDataSimpleBean();
         gameDataSimple.userId = gameData.userId;
+        gameDataSimple.innName = gameData.innName;
         gameDataSimple.money = gameData.money;
         gameDataSimple.gameTime = gameData.gameTime;
         gameDataSimple.userCharacter = gameData.userCharacter;
