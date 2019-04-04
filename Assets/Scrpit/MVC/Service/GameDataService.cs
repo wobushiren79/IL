@@ -25,4 +25,12 @@ public class GameDataService : BaseDataStorageImpl<GameDataBean>
     {
         BaseStartSaveData(userId, gameData);
     }
+
+    /// <summary>
+    /// 删除用户数据
+    /// </summary>
+    public void DeleteDataByUserId(string userId)
+    {
+        BaseStartDeleteFile(userId);
+    }
 }

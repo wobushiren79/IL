@@ -53,6 +53,20 @@ public abstract class BaseDataStorageImpl<T>
         FileUtil.CreateTextFile(mDataStoragePath, fileName, strData);
     }
 
+    /// <summary>
+    /// 基础-删除文件
+    /// </summary>
+    /// <param name="fileName"></param>
+    public void BaseStartDeleteFile(string fileName)
+    {
+        if (CheckUtil.StringIsNull(fileName))
+        {
+            LogUtil.Log("删除文件失败-没有文件路径");
+            return;
+        }
+        FileUtil.DeleteFile(mDataStoragePath+"/"+ fileName);
+    }
+
    /// <summary>
    /// 基础-保存数据列表
    /// </summary>

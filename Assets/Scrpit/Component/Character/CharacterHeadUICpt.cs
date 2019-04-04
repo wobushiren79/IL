@@ -47,7 +47,14 @@ public class CharacterHeadUICpt : BaseMonoBehaviour
             return;
         Sprite spHair=  characterBodyManager.GetHairSpriteByName(hairName);
         ivHair.sprite = spHair;
-        ivHair.color = hairColor;
+        if (spHair == null)
+        {
+            ivHair.color = new Color(1, 1, 1, 0);
+        }
+        else
+        {
+            ivHair.color = hairColor;
+        }
     }
 
     //设置眼睛
@@ -55,9 +62,16 @@ public class CharacterHeadUICpt : BaseMonoBehaviour
     {
         if (ivEye == null)
             return;
-        Sprite spEye = characterBodyManager.GetHairSpriteByName(eyeName);
+        Sprite spEye = characterBodyManager.GetEyeSpriteByName(eyeName);
         ivEye.sprite = spEye;
-        ivEye.color = eyeColor;
+        if (spEye == null)
+        {
+            ivEye.color = new Color(1, 1, 1, 0);
+        }
+        else
+        {
+            ivEye.color = eyeColor;
+        }
     }
 
     /// <summary>
@@ -69,8 +83,15 @@ public class CharacterHeadUICpt : BaseMonoBehaviour
     {
         if (ivMouth == null)
             return;
-        Sprite spMouth = characterBodyManager.GetHairSpriteByName(mouthName);
+        Sprite spMouth = characterBodyManager.GetMouthSpriteByName(mouthName);
         ivMouth.sprite = spMouth;
-        ivMouth.color = mouthColor;
+        if (spMouth == null)
+        {
+            ivMouth.color = new Color(1, 1, 1, 0);
+        }
+        else
+        {
+            ivMouth.color = mouthColor;
+        }
     }
 }

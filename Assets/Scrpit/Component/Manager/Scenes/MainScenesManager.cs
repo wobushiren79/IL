@@ -34,6 +34,11 @@ public class MainScenesManager : BaseManager,IGameDataView{
         gameDataController.CreateUserData(gameData);
     }
 
+    public void DeleteGameDataByUserId(string userId)
+    {
+        gameDataController.DeleteUserDataByUserId(userId);
+    }
+
     #region 数据回调
     public void GetGameDataFail()
     {
@@ -63,6 +68,16 @@ public class MainScenesManager : BaseManager,IGameDataView{
     public void SetGameDataSuccess()
     {
         SceneUtil.SceneChange("GameInnScenes");
+    }
+
+    public void DeleteGameDataSuccess()
+    {
+        gameDataController.GetSimpleGameData();
+    }
+
+    public void DeleteGameDataFail()
+    {
+
     }
     #endregion
 }

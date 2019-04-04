@@ -35,4 +35,14 @@ public interface IGameDataView
     /// 设置游戏数据失败
     /// </summary>
     void SetGameDataFail();
+
+    /// <summary>
+    /// 删除游戏数据成功
+    /// </summary>
+    void DeleteGameDataSuccess();
+
+    /// <summary>
+    /// 删除游戏数据失败
+    /// </summary>
+    void DeleteGameDataFail();
 }

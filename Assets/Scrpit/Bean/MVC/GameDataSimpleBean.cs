@@ -1,6 +1,8 @@
 ﻿using UnityEngine;
 using UnityEditor;
+using System;
 
+[Serializable]
 public class GameDataSimpleBean 
 {
     public string userId;//用户ID

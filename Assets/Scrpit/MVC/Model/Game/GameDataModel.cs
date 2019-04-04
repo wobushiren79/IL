@@ -39,9 +39,18 @@ public class GameDataModel : BaseMVCModel
     /// <param name="gameData"></param>
     public void AddGameData(GameDataBean gameData)
     {
-        string userId ="UserId_"+ SystemUtil.GetUUID(SystemUtil.UUIDTypeEnum.B);
+        string userId = "UserId_" + SystemUtil.GetUUID(SystemUtil.UUIDTypeEnum.N);
         gameData.userId = userId;
+        gameData.money = 32100;
         SetGameDataByUserId(userId, gameData);
+    }
+
+    /// <summary>
+    /// 通过用户ID删除游戏数据
+    /// </summary>
+    public void DeleteGameDataByUserId(string userId)
+    {
+        mGameDataService.DeleteDataByUserId(userId);
     }
 
     /// <summary>
@@ -69,7 +78,7 @@ public class GameDataModel : BaseMVCModel
             int hasDataPosition = -1;
             for (int i = 0; i < tempListData.Count; i++)
             {
-                GameDataSimpleBean itemData= tempListData[i];
+                GameDataSimpleBean itemData = tempListData[i];
                 if (itemData.userId.Equals(userId))
                 {
                     hasDataPosition = i;
@@ -78,8 +87,33 @@ public class GameDataModel : BaseMVCModel
             if (hasDataPosition != -1)
                 tempListData[hasDataPosition] = gameDataSimple;
             else
-                tempListData.Add(gameDataSimple);        
+                tempListData.Add(gameDataSimple);
         }
         mGameListDataService.UpdateData(tempListData);
+    }
+
+    /// <summary>
+    /// 通过用户ID删除游戏简要数据
+    /// </summary>
+    public void DeleteGameDataSimpleByUserId(string userId)
+    {
+        List<GameDataSimpleBean> tempListData = GetSimpleGameDataList();
+        if (!CheckUtil.ListIsNull(tempListData))
+        {
+            int deletePosition = -1;
+            for (int i = 0; i < tempListData.Count; i++)
+            {
+                GameDataSimpleBean itemData = tempListData[i];
+                if (itemData.userId.Equals(userId))
+                {
+                    deletePosition = i;
+                }
+            }
+            if (deletePosition != -1)
+            {
+                tempListData.RemoveAt(deletePosition);
+                mGameListDataService.UpdateData(tempListData);
+            }
+        }
     }
 }

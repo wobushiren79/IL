@@ -27,6 +27,7 @@ public class UIMainContinue : BaseUIComponent
         if (scenesManager == null)
             return;
         List<GameDataSimpleBean> listGameData =scenesManager.listGameDataSimple;
+        CreateListItem(listGameData);
     }
 
     /// <summary>

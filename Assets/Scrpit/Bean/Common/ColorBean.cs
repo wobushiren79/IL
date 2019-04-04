@@ -35,4 +35,13 @@ public class ColorBean
     {
         return new Color(r,g,b,a);
     }
+
+    public static ColorBean White()
+    {
+        return new ColorBean(1, 1, 1, 1);
+    }
+    public static ColorBean Black()
+    {
+        return new ColorBean(0,0,0,1);
+    }
 }

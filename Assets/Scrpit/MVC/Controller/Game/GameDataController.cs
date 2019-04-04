@@ -48,6 +48,18 @@ public class GameDataController : BaseMVCController<GameDataModel, IGameDataView
         GetView().SetGameDataSuccess();
     }
 
+    public void DeleteUserDataByUserId(string userId)
+    {
+        if (userId == null)
+        {
+            GetView().DeleteGameDataFail();
+            return;
+        }
+        GetModel().DeleteGameDataByUserId(userId);
+        GetModel().DeleteGameDataSimpleByUserId(userId);
+        GetView().DeleteGameDataSuccess();
+    }
+
     /// <summary>
     /// 根据ID获取用户数据
     /// </summary>

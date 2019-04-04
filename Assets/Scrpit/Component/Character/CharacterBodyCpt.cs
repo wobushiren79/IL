@@ -28,8 +28,12 @@ public class CharacterBodyCpt : BaseMonoBehaviour
     /// 获取身体属性
     /// </summary>
     /// <returns></returns>
-    public CharacterBodyBean GetBodyData()
+    public CharacterBodyBean GetCharacterBodyData()
     {
+        if (characterBodyData == null)
+        {
+            characterBodyData = new CharacterBodyBean();
+        }
         return characterBodyData;
     }
 
@@ -97,7 +101,8 @@ public class CharacterBodyCpt : BaseMonoBehaviour
         //数据保存
         if (characterBodyData == null)
             characterBodyData = new CharacterBodyBean();
-        characterBodyData.hair = hair;
+        if (hair != null)
+            characterBodyData.hair = hair;
         characterBodyData.hairColor = TypeConversionUtil.ColorToColorBean(hairColor);
     }
     public void SetHair(string hair)
@@ -129,7 +134,8 @@ public class CharacterBodyCpt : BaseMonoBehaviour
         //数据保存
         if (characterBodyData == null)
             characterBodyData = new CharacterBodyBean();
-        characterBodyData.eye = eye;
+        if (eye != null)
+            characterBodyData.eye = eye;
         characterBodyData.eyeColor = TypeConversionUtil.ColorToColorBean(eyeColor);
     }
     public void SetEye(string eye)
@@ -142,7 +148,7 @@ public class CharacterBodyCpt : BaseMonoBehaviour
     {
         if (sprEye == null)
             return;
-        SetEye(null,eyeColor);
+        SetEye(null, eyeColor);
     }
 
     /// <summary>
@@ -161,14 +167,15 @@ public class CharacterBodyCpt : BaseMonoBehaviour
         //数据保存
         if (characterBodyData == null)
             characterBodyData = new CharacterBodyBean();
-        characterBodyData.mouth = mouth;
+        if (mouth != null)
+            characterBodyData.mouth = mouth;
         characterBodyData.mouthColor = TypeConversionUtil.ColorToColorBean(mouthColor);
     }
     public void SetMouth(string mouth)
     {
         if (characterBodyManager == null || sprMouth == null)
             return;
-        SetMouth( mouth, sprMouth.color);
+        SetMouth(mouth, sprMouth.color);
     }
     public void SetMouth(Color mouthColor)
     {
@@ -192,5 +199,9 @@ public class CharacterBodyCpt : BaseMonoBehaviour
         sprTrunk.color = skinColor;
         sprFootLeft.color = skinColor;
         sprFootRight.color = skinColor;
+        //数据保存
+        if (characterBodyData == null)
+            characterBodyData = new CharacterBodyBean();
+        characterBodyData.skinColor = TypeConversionUtil.ColorToColorBean(skinColor);
     }
 }

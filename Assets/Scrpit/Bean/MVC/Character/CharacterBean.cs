@@ -11,6 +11,7 @@ public class CharacterBean
    public CharacterAttributesBean attributes;
     //角色身体属性
    public CharacterBodyBean body;
-
+    //角色装备属性
+   public CharacterEquipBean equips;
 
 }

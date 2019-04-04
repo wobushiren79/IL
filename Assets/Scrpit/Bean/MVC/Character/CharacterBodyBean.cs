@@ -3,7 +3,7 @@ using UnityEditor;
 using System;
 
 [Serializable]
-public class CharacterBodyBean : ScriptableObject
+public class CharacterBodyBean 
 {
     public int sex;//性别 0未知，1男，2女，3中性
     public ColorBean skinColor;//皮肤颜色
@@ -16,4 +16,15 @@ public class CharacterBodyBean : ScriptableObject
 
     public string mouth;//嘴巴
     public ColorBean mouthColor;//嘴巴颜色
+
+    public CharacterBodyBean()
+    {
+        sex = 1;
+        eye = "eye_0";
+        mouth = "mouth_0";
+        skinColor = ColorBean.White();
+        hairColor = ColorBean.Black();
+        eyeColor = ColorBean.Black();
+        mouthColor = ColorBean.Black();
+    }
 }
