@@ -11,8 +11,6 @@ public class Test : MonoBehaviour {
     {
         navMeshAgent.SetDestination(targetTF.position);
         navMeshAgent.updateRotation = false;
-        navMeshAgent.updateUpAxis = false;
-
-        
+        navMeshAgent.updateUpAxis = false;       
     }
 }
