@@ -23,6 +23,8 @@ public class CharacterDressCpt : BaseMonoBehaviour
         return characterEquipData;
     }
 
+
+
     public void SetHat(EquipInfoBean equipInfo)
     {
         if (sprHat == null)

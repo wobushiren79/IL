@@ -10,7 +10,7 @@ public class UIMainContinue : BaseUIComponent
     public Text tvBack;
     public Text tvNull;
 
-    public MainScenesManager scenesManager;
+    public GameDataManager gameDataManager;
 
     public GameObject listGameDataObj;//列表
     public GameObject itemGameDataObj;//模型
@@ -24,9 +24,9 @@ public class UIMainContinue : BaseUIComponent
     public override void OpenUI()
     {
         base.OpenUI();
-        if (scenesManager == null)
+        if (gameDataManager == null)
             return;
-        List<GameDataSimpleBean> listGameData =scenesManager.listGameDataSimple;
+        List<GameDataSimpleBean> listGameData = gameDataManager.listGameDataSimple;
         CreateListItem(listGameData);
     }
 

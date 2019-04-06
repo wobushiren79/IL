@@ -39,8 +39,8 @@ public class UIMainCreate : BaseUIComponent, IRadioGroupCallBack, ColorView.Call
     //角色着装控制
     public CharacterDressCpt characterDressCpt;
     public CharacterDressManager characterDressManager;
-    //主界面控制
-    public MainScenesManager mainScenesManager;
+    //游戏数据管理
+    public GameDataManager gameDataManager;
     //弹出框提示
     public ToastView toastView;
 
@@ -119,7 +119,8 @@ public class UIMainCreate : BaseUIComponent, IRadioGroupCallBack, ColorView.Call
         gameData.userCharacter.baseInfo.name = etUserName.text;
         gameData.userCharacter.body = characterBodyCpt.GetCharacterBodyData();
         gameData.userCharacter.equips = characterDressCpt.GetCharacterEquipData();
-        mainScenesManager.CreateNewData(gameData);
+        gameDataManager.CreateGameData(gameData);
+        SceneUtil.SceneChange("GameInnScene");
     }
 
     /// <summary>

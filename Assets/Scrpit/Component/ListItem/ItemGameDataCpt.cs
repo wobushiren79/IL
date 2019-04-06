@@ -15,7 +15,8 @@ public class ItemGameDataCpt : BaseMonoBehaviour
 
     public CharacterHeadUICpt characterHeadUI;
     public GameDataSimpleBean gameData;
-    public MainScenesManager scenesManager;
+    //游戏数据管理
+    public GameDataManager gameDataManager;
 
     private void Start()
     {
@@ -62,7 +63,7 @@ public class ItemGameDataCpt : BaseMonoBehaviour
     /// </summary>
     public void GameDataDelete()
     {
-        scenesManager.DeleteGameDataByUserId(gameData.userId);
+        gameDataManager.DeleteGameDataByUserId(gameData.userId);
         Destroy(gameObject);
     }
 }
