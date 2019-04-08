@@ -3,10 +3,17 @@ using UnityEditor;
 
 public class BaseNpcAI : BaseMonoBehaviour
 {
-    public int intentType;//意图 1路过 2吃饭
+    public int intentType;//意图 顾客： 1路过 2思考 3进店 4找座位 5点菜 6吃 7结账 
 
     public CharacterBean characterData;
     public CharacterDressManager characterDressManager;
+    //角色移动控制
+    public CharacterMoveCpt characterMoveCpt;
+
+    private void Awake()
+    {
+        characterMoveCpt = GetComponent<CharacterMoveCpt>();
+    }
 
     public void SetCharacterData(CharacterBean characterBean)
     {
@@ -28,7 +35,7 @@ public class BaseNpcAI : BaseMonoBehaviour
             characterDress.SetClothes(clothesEquip);
 
             EquipInfoBean shoesEquip = characterDressManager.GetEquipById(characterBean.equips.shoesId);
-            characterDress.SetShoes(clothesEquip);
+            characterDress.SetShoes(shoesEquip);
         }
     }
 }

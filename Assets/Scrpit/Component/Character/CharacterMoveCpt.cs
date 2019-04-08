@@ -15,19 +15,30 @@ public class CharacterMoveCpt : BaseMonoBehaviour
 
     //是否是手动
     public bool isManualMove = false;
+
+    private void Start()
+    {
+        if (navMeshAgent != null)
+        {
+            navMeshAgent.updateRotation = false;
+            navMeshAgent.updateUpAxis = false;
+            navMeshAgent.updatePosition = false;
+        }
+    }
     private void FixedUpdate()
     {
         if (!isManualMove && navMeshAgent != null)
         {
             if (navMeshAgent.hasPath)
             {
-                Move(navMeshAgent.nextPosition);
+                Move(new Vector3(navMeshAgent.nextPosition.x, navMeshAgent.nextPosition.y, navMeshAgent.nextPosition.y));
             }
             else
             {
                 Stop();
             }
         }
+        
     }
 
     /// <summary>
@@ -77,7 +88,7 @@ public class CharacterMoveCpt : BaseMonoBehaviour
             theScale.x = Mathf.Abs(theScale.x);
         }
         transform.localScale = theScale;
-        Vector3 movePosition = Vector3.Lerp(Vector3.zero, new Vector3(x, y), lerpOffset);
+        Vector3 movePosition = Vector3.Lerp(Vector3.zero, new Vector3(x, y,y), lerpOffset);
         transform.Translate(movePosition * moveSpeed * Time.deltaTime);
     }
 
