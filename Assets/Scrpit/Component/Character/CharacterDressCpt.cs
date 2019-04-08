@@ -5,6 +5,8 @@ public class CharacterDressCpt : BaseMonoBehaviour
 {
     //帽子
     public SpriteRenderer sprHat;
+    public SpriteRenderer sprHair;
+
     //衣服
     public SpriteRenderer sprClothes;
     //鞋子
@@ -31,9 +33,13 @@ public class CharacterDressCpt : BaseMonoBehaviour
             return;
         Sprite hatSP;
         if (equipInfo == null)
+        {
+            sprHair.color = new Color(sprHair.color.r, sprHair.color.g, sprHair.color.b,1);
             hatSP = null;
+        }  
         else
         {
+            sprHair.color = new Color(sprHair.color.r, sprHair.color.g, sprHair.color.b, 0);
             hatSP = characterDressManager.GetHatSpriteByName(equipInfo.icon_key);
             //设置装备数据
             if (characterEquipData == null)

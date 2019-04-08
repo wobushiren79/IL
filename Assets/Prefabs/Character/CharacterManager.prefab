@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &2732682855923352778
+--- !u!1 &3781763343670252891
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,9 +8,9 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 2732682855923352783}
-  - component: {fileID: 2732682855923352776}
-  - component: {fileID: 2732682855923352777}
+  - component: {fileID: 3781763343670252894}
+  - component: {fileID: 3781763343670252889}
+  - component: {fileID: 3781763343670252888}
   m_Layer: 0
   m_Name: CharacterManager
   m_TagString: Untagged
@@ -18,13 +18,13 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &2732682855923352783
+--- !u!4 &3781763343670252894
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2732682855923352778}
+  m_GameObject: {fileID: 3781763343670252891}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -0.004779144, y: -0.07274484, z: 0.030487835}
   m_LocalScale: {x: 1, y: 1, z: 1}
@@ -32,13 +32,13 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &2732682855923352776
+--- !u!114 &3781763343670252889
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2732682855923352778}
+  m_GameObject: {fileID: 3781763343670252891}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 69812df93ed098c47a5cdec743c627e1, type: 3}
@@ -50,18 +50,48 @@ MonoBehaviour:
   - key: woman
     value: {fileID: 21300004, guid: 72a4237066f960d4da7b17e4b54b57e6, type: 3}
   listIconBodyHair:
-  - key: null
+  - key: character_hair
     value: {fileID: 0}
-  - key: hair_0
+  - key: character_hair_0
     value: {fileID: 21300000, guid: e0e843a494ff9624da0fee24681321ca, type: 3}
-  - key: hair_1
+  - key: character_hair_1
     value: {fileID: 21300002, guid: e0e843a494ff9624da0fee24681321ca, type: 3}
-  - key: hair_2
+  - key: character_hair_2
     value: {fileID: 21300004, guid: e0e843a494ff9624da0fee24681321ca, type: 3}
-  - key: hair_3
+  - key: character_hair_3
     value: {fileID: 21300006, guid: e0e843a494ff9624da0fee24681321ca, type: 3}
-  - key: hair_4
+  - key: character_hair_4
     value: {fileID: 21300008, guid: e0e843a494ff9624da0fee24681321ca, type: 3}
+  - key: character_hair_5
+    value: {fileID: 21300010, guid: e0e843a494ff9624da0fee24681321ca, type: 3}
+  - key: character_hair_6
+    value: {fileID: 21300012, guid: e0e843a494ff9624da0fee24681321ca, type: 3}
+  - key: character_hair_7
+    value: {fileID: 21300014, guid: e0e843a494ff9624da0fee24681321ca, type: 3}
+  - key: character_hair_8
+    value: {fileID: 21300016, guid: e0e843a494ff9624da0fee24681321ca, type: 3}
+  - key: character_hair_9
+    value: {fileID: 21300018, guid: e0e843a494ff9624da0fee24681321ca, type: 3}
+  - key: character_hair_10
+    value: {fileID: 21300020, guid: e0e843a494ff9624da0fee24681321ca, type: 3}
+  - key: character_hair_11
+    value: {fileID: 21300022, guid: e0e843a494ff9624da0fee24681321ca, type: 3}
+  - key: character_hair_12
+    value: {fileID: 21300024, guid: e0e843a494ff9624da0fee24681321ca, type: 3}
+  - key: character_hair_13
+    value: {fileID: 21300026, guid: e0e843a494ff9624da0fee24681321ca, type: 3}
+  - key: character_hair_14
+    value: {fileID: 21300028, guid: e0e843a494ff9624da0fee24681321ca, type: 3}
+  - key: character_hair_15
+    value: {fileID: 21300030, guid: e0e843a494ff9624da0fee24681321ca, type: 3}
+  - key: character_hair_16
+    value: {fileID: 21300032, guid: e0e843a494ff9624da0fee24681321ca, type: 3}
+  - key: character_hair_17
+    value: {fileID: 21300034, guid: e0e843a494ff9624da0fee24681321ca, type: 3}
+  - key: character_hair_18
+    value: {fileID: 21300036, guid: e0e843a494ff9624da0fee24681321ca, type: 3}
+  - key: character_hair_19
+    value: {fileID: 21300038, guid: e0e843a494ff9624da0fee24681321ca, type: 3}
   listIconBodyEye:
   - key: eye_0
     value: {fileID: 21300000, guid: db1a1250b0e67a540a89bf57bffa4f76, type: 3}
@@ -84,13 +114,13 @@ MonoBehaviour:
     value: {fileID: 21300006, guid: 2cdb123fc33e136458994a6327aa136f, type: 3}
   - key: mouth_4
     value: {fileID: 21300008, guid: 2cdb123fc33e136458994a6327aa136f, type: 3}
---- !u!114 &2732682855923352777
+--- !u!114 &3781763343670252888
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2732682855923352778}
+  m_GameObject: {fileID: 3781763343670252891}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 7322bb7532b27224d92a60d3ace5ea0b, type: 3}
@@ -120,6 +150,26 @@ MonoBehaviour:
     value: {fileID: 21300016, guid: 97c9ce9ba7ca82f408a96411ec2d0dbb, type: 3}
   - key: character_shoes_9
     value: {fileID: 21300018, guid: 97c9ce9ba7ca82f408a96411ec2d0dbb, type: 3}
+  - key: character_shoes_10
+    value: {fileID: 21300020, guid: 97c9ce9ba7ca82f408a96411ec2d0dbb, type: 3}
+  - key: character_shoes_11
+    value: {fileID: 21300022, guid: 97c9ce9ba7ca82f408a96411ec2d0dbb, type: 3}
+  - key: character_shoes_12
+    value: {fileID: 21300024, guid: 97c9ce9ba7ca82f408a96411ec2d0dbb, type: 3}
+  - key: character_shoes_13
+    value: {fileID: 21300026, guid: 97c9ce9ba7ca82f408a96411ec2d0dbb, type: 3}
+  - key: character_shoes_14
+    value: {fileID: 21300028, guid: 97c9ce9ba7ca82f408a96411ec2d0dbb, type: 3}
+  - key: character_shoes_15
+    value: {fileID: 21300030, guid: 97c9ce9ba7ca82f408a96411ec2d0dbb, type: 3}
+  - key: character_shoes_16
+    value: {fileID: 21300032, guid: 97c9ce9ba7ca82f408a96411ec2d0dbb, type: 3}
+  - key: character_shoes_17
+    value: {fileID: 21300034, guid: 97c9ce9ba7ca82f408a96411ec2d0dbb, type: 3}
+  - key: character_shoes_18
+    value: {fileID: 21300036, guid: 97c9ce9ba7ca82f408a96411ec2d0dbb, type: 3}
+  - key: character_shoes_19
+    value: {fileID: 21300038, guid: 97c9ce9ba7ca82f408a96411ec2d0dbb, type: 3}
   listIconClothes:
   - key: character_clothes
     value: {fileID: 0}
@@ -143,6 +193,26 @@ MonoBehaviour:
     value: {fileID: 21300016, guid: 7747fb645a7fc44448bf7e2cdb3404d6, type: 3}
   - key: character_clothes_9
     value: {fileID: 21300018, guid: 7747fb645a7fc44448bf7e2cdb3404d6, type: 3}
+  - key: character_clothes_10
+    value: {fileID: 21300020, guid: 7747fb645a7fc44448bf7e2cdb3404d6, type: 3}
+  - key: character_clothes_11
+    value: {fileID: 21300022, guid: 7747fb645a7fc44448bf7e2cdb3404d6, type: 3}
+  - key: character_clothes_12
+    value: {fileID: 21300024, guid: 7747fb645a7fc44448bf7e2cdb3404d6, type: 3}
+  - key: character_clothes_13
+    value: {fileID: 21300026, guid: 7747fb645a7fc44448bf7e2cdb3404d6, type: 3}
+  - key: character_clothes_14
+    value: {fileID: 21300028, guid: 7747fb645a7fc44448bf7e2cdb3404d6, type: 3}
+  - key: character_clothes_15
+    value: {fileID: 21300030, guid: 7747fb645a7fc44448bf7e2cdb3404d6, type: 3}
+  - key: character_clothes_16
+    value: {fileID: 21300032, guid: 7747fb645a7fc44448bf7e2cdb3404d6, type: 3}
+  - key: character_clothes_17
+    value: {fileID: 21300034, guid: 7747fb645a7fc44448bf7e2cdb3404d6, type: 3}
+  - key: character_clothes_18
+    value: {fileID: 21300036, guid: 7747fb645a7fc44448bf7e2cdb3404d6, type: 3}
+  - key: character_clothes_19
+    value: {fileID: 21300038, guid: 7747fb645a7fc44448bf7e2cdb3404d6, type: 3}
   listIconHat:
   - key: character_hat
     value: {fileID: 0}
@@ -166,4 +236,24 @@ MonoBehaviour:
     value: {fileID: 21300016, guid: 8e03ad349de8f344dbeb91ee4ebf2df3, type: 3}
   - key: character_hat_9
     value: {fileID: 21300018, guid: 8e03ad349de8f344dbeb91ee4ebf2df3, type: 3}
+  - key: character_hat_10
+    value: {fileID: 21300020, guid: 8e03ad349de8f344dbeb91ee4ebf2df3, type: 3}
+  - key: character_hat_11
+    value: {fileID: 21300022, guid: 8e03ad349de8f344dbeb91ee4ebf2df3, type: 3}
+  - key: character_hat_12
+    value: {fileID: 21300024, guid: 8e03ad349de8f344dbeb91ee4ebf2df3, type: 3}
+  - key: character_hat_13
+    value: {fileID: 21300026, guid: 8e03ad349de8f344dbeb91ee4ebf2df3, type: 3}
+  - key: character_hat_14
+    value: {fileID: 21300028, guid: 8e03ad349de8f344dbeb91ee4ebf2df3, type: 3}
+  - key: character_hat_15
+    value: {fileID: 21300030, guid: 8e03ad349de8f344dbeb91ee4ebf2df3, type: 3}
+  - key: character_hat_16
+    value: {fileID: 21300032, guid: 8e03ad349de8f344dbeb91ee4ebf2df3, type: 3}
+  - key: character_hat_17
+    value: {fileID: 21300034, guid: 8e03ad349de8f344dbeb91ee4ebf2df3, type: 3}
+  - key: character_hat_18
+    value: {fileID: 21300036, guid: 8e03ad349de8f344dbeb91ee4ebf2df3, type: 3}
+  - key: character_hat_19
+    value: {fileID: 21300038, guid: 8e03ad349de8f344dbeb91ee4ebf2df3, type: 3}
   listDataEquip: []

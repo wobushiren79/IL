@@ -23,8 +23,8 @@ public class CharacterBodyBean
         eye = "eye_0";
         mouth = "mouth_0";
         skinColor = ColorBean.White();
-        hairColor = ColorBean.Black();
-        eyeColor = ColorBean.Black();
-        mouthColor = ColorBean.Black();
+        hairColor = ColorBean.White();
+        eyeColor = ColorBean.White();
+        mouthColor = ColorBean.White();
     }
 }

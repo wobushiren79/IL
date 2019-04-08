@@ -31,8 +31,33 @@ public class ListDataEditor : Editor
         AddList("Assets/Texture/Character/character_shoes.png", dressManager.listIconShoes);
     }
 
+    [MenuItem("Custom/List/AddBodyHair")]
+    public static void AddBodyHair()
+    {
+        GameObject Target = Selection.gameObjects[0];
+        CharacterBodyManager bodyManager = Target.GetComponent<CharacterBodyManager>();
+        AddList("Assets/Texture/Character/character_hair.png", bodyManager.listIconBodyHair);
+    }
+
+    [MenuItem("Custom/List/AddBodyEye")]
+    public static void AddBodyEye()
+    {
+        GameObject Target = Selection.gameObjects[0];
+        CharacterBodyManager bodyManager = Target.GetComponent<CharacterBodyManager>();
+        AddList("Assets/Texture/Character/character_eye.png", bodyManager.listIconBodyEye);
+    }
+
+    [MenuItem("Custom/List/AddBodyMouth")]
+    public static void AddBodyMouth()
+    {
+        GameObject Target = Selection.gameObjects[0];
+        CharacterBodyManager bodyManager = Target.GetComponent<CharacterBodyManager>();
+        AddList("Assets/Texture/Character/character_mouth.png", bodyManager.listIconBodyMouth);
+    }
+
     public static void AddList(string paths,List<IconBean> listData)
     {
+        listData.Clear();
         string temp = paths;
         Object[] objs = AssetDatabase.LoadAllAssetsAtPath(temp);
         objs.ToList().ForEach(obj =>
