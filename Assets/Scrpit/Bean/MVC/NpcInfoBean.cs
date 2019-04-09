@@ -7,6 +7,7 @@ public class NpcInfoBean : BaseBean
 {
     public long npc_id;//npcId
     public int npc_type;//0默认NPC，
+    public int sex;//性别
     public long hat_id;
     public long clothes_id;
     public long shoes_id;

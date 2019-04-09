@@ -13,7 +13,7 @@ public class NpcAICustomerCpt : BaseNpcAI
 
     private void FixedUpdate()
     {
-        if (Vector3.Distance(transform.position, endPosition)<3)
+        if (Vector2.Distance(transform.position, endPosition)<3)
         {
             Destroy(gameObject);
         }

@@ -3,7 +3,7 @@ using UnityEditor;
 using System;
 
 [Serializable]
-public class ColorBean 
+public class ColorBean
 {
     public float r;
     public float g;
@@ -23,7 +23,7 @@ public class ColorBean
         this.a = 1;
     }
 
-    public ColorBean(float r,float g,float b,float a)
+    public ColorBean(float r, float g, float b, float a)
     {
         this.r = r;
         this.g = g;
@@ -33,15 +33,18 @@ public class ColorBean
 
     public Color GetColor()
     {
-        return new Color(r,g,b,a);
+        return new Color(r, g, b, a);
     }
-
     public static ColorBean White()
     {
         return new ColorBean(1, 1, 1, 1);
     }
     public static ColorBean Black()
     {
-        return new ColorBean(0,0,0,1);
+        return new ColorBean(0, 0, 0, 1);
+    }
+    public static ColorBean Random()
+    {
+        return new ColorBean(UnityEngine.Random.Range(0f, 1f), UnityEngine.Random.Range(0f, 1f), UnityEngine.Random.Range(0f, 1f), 1);
     }
 }

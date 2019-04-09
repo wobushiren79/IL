@@ -7,6 +7,7 @@ public class SceneGameInnInit : BaseManager
     public CharacterDressManager characterDressManager;
     public GameDataManager gameDataManager;
     public NpcInfoManager npcInfoManager;
+    public InnBuildManager innBuildManager;
 
     private void Start()
     {
@@ -16,6 +17,8 @@ public class SceneGameInnInit : BaseManager
             gameDataManager.gameDataController.GetGameDataByUserId(GameCommonInfo.gameUserId);
         if (npcInfoManager != null)
             npcInfoManager.npcInfoController.GetAllNpcInfo();
+        if (innBuildManager != null)
+            innBuildManager.buildDataController.GetAllBuildItemsData();
     }
 
 }

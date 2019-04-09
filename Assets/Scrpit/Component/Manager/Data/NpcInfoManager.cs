@@ -7,6 +7,7 @@ public class NpcInfoManager : BaseManager,INpcInfoView
     public NpcInfoController npcInfoController;
 
     public List<NpcInfoBean> listNpcInfo;
+
     private void Awake()
     {
         npcInfoController = new NpcInfoController(this,this);
@@ -35,6 +36,7 @@ public class NpcInfoManager : BaseManager,INpcInfoView
         characterData.body.hair = npcInfo.hair_id;
         characterData.body.eye = npcInfo.eye_id;
         characterData.body.mouth = npcInfo.mouth_id;
+        characterData.body.sex = npcInfo.sex;
 
         characterData.equips = new CharacterEquipBean();
         characterData.equips.hatId = npcInfo.hat_id;

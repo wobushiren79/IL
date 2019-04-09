@@ -31,7 +31,7 @@ public class CharacterMoveCpt : BaseMonoBehaviour
         {
             if (navMeshAgent.hasPath)
             {
-                Move(new Vector3(navMeshAgent.nextPosition.x, navMeshAgent.nextPosition.y, navMeshAgent.nextPosition.y));
+                Move(navMeshAgent.nextPosition);
             }
             else
             {
@@ -71,7 +71,7 @@ public class CharacterMoveCpt : BaseMonoBehaviour
     {
         isManualMove = true;
         //停止自动寻路
-        if (navMeshAgent != null)
+        if (navMeshAgent != null&& navMeshAgent.hasPath)
             navMeshAgent.isStopped = true;
         if (characterAnimtor != null)
         {
@@ -88,8 +88,9 @@ public class CharacterMoveCpt : BaseMonoBehaviour
             theScale.x = Mathf.Abs(theScale.x);
         }
         transform.localScale = theScale;
-        Vector3 movePosition = Vector3.Lerp(Vector3.zero, new Vector3(x, y,y), lerpOffset);
+        Vector3 movePosition = Vector3.Lerp(Vector3.zero, new Vector3(x, y), lerpOffset);
         transform.Translate(movePosition * moveSpeed * Time.deltaTime);
+        //transform.position = new Vector3(transform.position.x, transform.position.y, transform.position.y);
     }
 
 
