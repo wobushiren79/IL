@@ -37,10 +37,9 @@ public class ItemGameDataCpt : BaseMonoBehaviour
             tvInnName.text = gameData.innName;
         if (tvUserName != null && gameData.userCharacter != null && gameData.userCharacter.baseInfo != null)
             tvUserName.text = gameData.userCharacter.baseInfo.name;
-        long lMoney;
-        long mMoney;
-        long sMoney;
-        GameDataBean.GetMoneyDetails(gameData.money, out lMoney, out mMoney, out sMoney);
+        long lMoney = gameData.moneyL;
+        long mMoney = gameData.moneyM;
+        long sMoney = gameData.moneyS;
         if (tvMoneyL != null)
             tvMoneyL.text = "" + lMoney;
         if (tvMoneyM != null)

@@ -6,7 +6,9 @@ using System;
 public class GameDataSimpleBean 
 {
     public string userId;//用户ID
-    public long money;//用户金钱
+    public long moneyL;//用户金钱
+    public long moneyS;
+    public long moneyM;
     public string innName;//客栈名字
     public CharacterBean userCharacter;//用户角色
     public TimeBean gameTime;//游戏时间
@@ -23,7 +25,9 @@ public class GameDataSimpleBean
         GameDataSimpleBean gameDataSimple = new GameDataSimpleBean();
         gameDataSimple.userId = gameData.userId;
         gameDataSimple.innName = gameData.innName;
-        gameDataSimple.money = gameData.money;
+        gameDataSimple.moneyL= gameData.moneyL;
+        gameDataSimple.moneyS = gameData.moneyS;
+        gameDataSimple.moneyM = gameData.moneyM;
         gameDataSimple.gameTime = gameData.gameTime;
         gameDataSimple.userCharacter = gameData.userCharacter;
         return gameDataSimple;

@@ -40,8 +40,51 @@ public class GameDataModel : BaseMVCModel
     public void AddGameData(GameDataBean gameData)
     {
         string userId = "UserId_" + SystemUtil.GetUUID(SystemUtil.UUIDTypeEnum.N);
+        GameCommonInfo.gameUserId = userId;
         gameData.userId = userId;
-        gameData.money = 32100;
+        gameData.moneyS = 1000;
+        gameData.innBuildData = new InnBuildBean();
+        //添加地板
+        gameData.innBuildData.listFloor = new List<InnResBean>();
+        for(int i = 0; i < 6; i++)
+        {
+            for(int f = 0; f < 6; f++)
+            {
+                InnResBean itemData = new InnResBean();
+                itemData.id = 10001;
+                itemData.positionX = i;
+                itemData.positionY = f;
+                gameData.innBuildData.listFloor.Add(itemData);
+            }
+        }
+        //添加墙壁
+        gameData.innBuildData.listWall = new List<InnResBean>();
+        for (int i = 0; i < 6; i++)
+        {
+            for (int f = 0; f < 6; f++)
+            {
+                bool isBuild = false;
+                if (i == 0 || i == 5)
+                {
+                    isBuild = true;
+                }
+                else
+                {
+                    if (f == 0 || f == 5)
+                    {
+                        isBuild = true;
+                    }
+                }
+                if (isBuild) {
+                    InnResBean itemData = new InnResBean();
+                    itemData.id = 20001;
+                    itemData.positionX = i;
+                    itemData.positionY = f;
+                    gameData.innBuildData.listWall.Add(itemData);
+                }
+            }
+        }
+
         SetGameDataByUserId(userId, gameData);
     }
 

@@ -7,7 +7,10 @@ using System.Collections.Generic;
 public class GameDataBean
 {
     public string userId;//用户ID
-    public long money;//1黄金=10白银  1白银=1000文
+    public long moneyS;//1黄金=10白银  1白银=1000文
+    public long moneyM;
+    public long moneyL;
+
     public string innName;//客栈名称
     public CharacterBean userCharacter;// 老板
     public List<CharacterBean> staffCharacterList;//员工

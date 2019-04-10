@@ -4,10 +4,6 @@ using System.Collections.Generic;
 
 public class InnBuildManager : BaseManager, IBuildDataView
 {
-    public List<IconBean> listIconFloor;
-
-    public List<IconBean> listIconWall;
-
     public List<BuildItemBean> listBuildFloorData;
     public List<BuildItemBean> listBuildWallData;
 
@@ -16,15 +12,6 @@ public class InnBuildManager : BaseManager, IBuildDataView
     private void Awake()
     {
         buildDataController = new BuildDataController(this, this);
-    }
-    /// <summary>
-    /// 获取地板
-    /// </summary>
-    /// <param name="name"></param>
-    /// <returns></returns>
-    public Sprite GetFloorByName(string name)
-    {
-        return GetSpriteByName(name, listIconFloor);
     }
 
     /// <summary>

@@ -120,6 +120,7 @@ public class UIMainCreate : BaseUIComponent, IRadioGroupCallBack, ColorView.Call
         gameData.userCharacter.body = characterBodyCpt.GetCharacterBodyData();
         gameData.userCharacter.equips = characterDressCpt.GetCharacterEquipData();
         gameDataManager.CreateGameData(gameData);
+
         SceneUtil.SceneChange("GameInnScene");
     }
 
