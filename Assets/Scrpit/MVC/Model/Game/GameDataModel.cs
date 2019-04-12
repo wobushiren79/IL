@@ -44,6 +44,8 @@ public class GameDataModel : BaseMVCModel
         gameData.userId = userId;
         gameData.moneyS = 1000;
         gameData.innBuildData = new InnBuildBean();
+        gameData.buildItemList = new List<ItemBean>();
+        gameData.equipItemList = new List<ItemBean>();
         //添加地板
         gameData.innBuildData.listFloor = new List<InnResBean>();
         for(int i = 0; i < 6; i++)
@@ -52,8 +54,7 @@ public class GameDataModel : BaseMVCModel
             {
                 InnResBean itemData = new InnResBean();
                 itemData.id = 10001;
-                itemData.positionX = i;
-                itemData.positionY = f;
+                itemData.startPosition = new Vector3Bean(i, f);
                 gameData.innBuildData.listFloor.Add(itemData);
             }
         }
@@ -78,12 +79,13 @@ public class GameDataModel : BaseMVCModel
                 if (isBuild) {
                     InnResBean itemData = new InnResBean();
                     itemData.id = 20001;
-                    itemData.positionX = i;
-                    itemData.positionY = f;
+                    itemData.startPosition = new Vector3Bean(i, f);
                     gameData.innBuildData.listWall.Add(itemData);
                 }
             }
         }
+        //添加家具
+        gameData.buildItemList.Add(new ItemBean(30001,1));
 
         SetGameDataByUserId(userId, gameData);
     }

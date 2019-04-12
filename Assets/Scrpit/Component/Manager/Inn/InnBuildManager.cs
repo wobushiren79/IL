@@ -6,12 +6,38 @@ public class InnBuildManager : BaseManager, IBuildDataView
 {
     public List<BuildItemBean> listBuildFloorData;
     public List<BuildItemBean> listBuildWallData;
+    public List<BuildItemBean> listBuildTableData;
 
     public BuildDataController buildDataController;
+
+    //家具列表
+    public List<BaseBuildItemCpt> listFurnitureCpt;
 
     private void Awake()
     {
         buildDataController = new BuildDataController(this, this);
+    }
+
+    /// <summary>
+    /// 通过ID获取家具Obj
+    /// </summary>
+    /// <param name="id"></param>
+    /// <returns></returns>
+    public GameObject GetFurnitureObjById(long id)
+    {
+        GameObject furnitureObj=null;
+        if (listFurnitureCpt == null)
+            return furnitureObj;
+        for (int i = 0; i < listFurnitureCpt.Count; i++)
+        {
+            BaseBuildItemCpt buildItemCpt = listFurnitureCpt[i];
+            if(buildItemCpt.buildId== id)
+            {
+                furnitureObj = Instantiate(buildItemCpt.gameObject, buildItemCpt.transform);
+                furnitureObj.SetActive(true);
+            }
+        }
+        return furnitureObj; 
     }
 
     /// <summary>
@@ -32,6 +58,16 @@ public class InnBuildManager : BaseManager, IBuildDataView
     public BuildItemBean GetWallDataById(long id)
     {
         return GetBuildDataById(id, listBuildWallData);
+    }
+
+    /// <summary>
+    /// 根据桌子ID获取墙数据
+    /// </summary>
+    /// <param name="id"></param>
+    /// <returns></returns>
+    public BuildItemBean GetTableDataById(long id)
+    {
+        return GetBuildDataById(id, listBuildTableData);
     }
 
     /// <summary>
@@ -75,6 +111,10 @@ public class InnBuildManager : BaseManager, IBuildDataView
             {
                 listBuildWallData.Add(itemData);
             }
+            else if (itemData.build_type == (int)BuildItemBean.BuildType.Table)
+            {
+                listBuildTableData.Add(itemData);
+            }
         }
     }
 
@@ -91,6 +131,9 @@ public class InnBuildManager : BaseManager, IBuildDataView
                 break;
             case BuildItemBean.BuildType.Wall:
                 listBuildWallData = listData;
+                break;
+            case BuildItemBean.BuildType.Table:
+                listBuildTableData = listData;
                 break;
         }
     }

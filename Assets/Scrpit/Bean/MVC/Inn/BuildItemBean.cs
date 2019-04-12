@@ -9,7 +9,8 @@ public class BuildItemBean : BaseBean
     public enum BuildType
     {
         Floor=1,
-        Wall=2
+        Wall=2,
+        Table=3,
     }
 
     public int build_type;

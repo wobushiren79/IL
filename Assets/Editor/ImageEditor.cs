@@ -33,7 +33,26 @@ public class ImageEditor : Editor
     {
         BaseSpriteEditor(SpriteImportMode.Multiple, 5,4);
     }
-
+    [MenuItem("Custom/Image/Multiple_5x5")]
+    public static void Multiple5x5()
+    {
+        BaseSpriteEditor(SpriteImportMode.Multiple, 5, 5);
+    }
+    [MenuItem("Custom/Image/Multiple_5x6")]
+    public static void Multiple5x6()
+    {
+        BaseSpriteEditor(SpriteImportMode.Multiple, 5, 6);
+    }
+    [MenuItem("Custom/Image/Multiple_5x7")]
+    public static void Multiple5x7()
+    {
+        BaseSpriteEditor(SpriteImportMode.Multiple, 5, 7);
+    }
+    [MenuItem("Custom/Image/Multiple_5x8")]
+    public static void Multiple5x8()
+    {
+        BaseSpriteEditor(SpriteImportMode.Multiple, 5, 7);
+    }
     static void BaseSpriteEditor(SpriteImportMode spriteType,int cNumber, int rNumber)
     {
         Object[] objs = GetSelectedTextures();

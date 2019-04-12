@@ -1,7 +1,8 @@
 ﻿using UnityEngine;
 using UnityEditor;
+using Cinemachine;
 
-public class CharacterControlForMoveCpt : BaseMonoBehaviour
+public class ControlForMoveCpt : BaseControl
 {
     //角色移动组建
     public CharacterMoveCpt characterMoveCpt;
@@ -12,7 +13,7 @@ public class CharacterControlForMoveCpt : BaseMonoBehaviour
             return;
         float hMove = Input.GetAxis("Horizontal");
         float vMove = Input.GetAxis("Vertical");
-        if(hMove==0&& vMove == 0)
+        if (hMove == 0 && vMove == 0)
         {
 
             characterMoveCpt.Stop();
@@ -21,6 +22,5 @@ public class CharacterControlForMoveCpt : BaseMonoBehaviour
         {
             characterMoveCpt.Move(hMove, vMove);
         }
-      
     }
 }
