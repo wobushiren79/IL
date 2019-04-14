@@ -3,10 +3,18 @@ using UnityEditor;
 using UnityEngine.UI;
 public class ItemGameBuildCpt : BaseMonoBehaviour
 {
+
+    public Button btBuild;
+    public Image ivIcon;
+    public Text tvName;
+    public Text tvNumber;
+
     public ItemBean itemData;
     public BuildItemBean buildData;
 
-    public Button btBuild;
+    //数据管理
+    public InnBuildManager innBuildManager;
+    public ControlForBuildCpt controlForBuild;
 
     private void Awake()
     {
@@ -23,11 +31,16 @@ public class ItemGameBuildCpt : BaseMonoBehaviour
     {
         this.itemData = itemData;
         this.buildData = buildData;
+
+        Sprite spFurniture=  innBuildManager.GetFurnitureSpriteByName(buildData.icon_key);
+        ivIcon.sprite = spFurniture;
+        tvNumber.text = "x " + itemData.itemNumber;
+        tvName.text = buildData.name;
     }
 
     public void StartBuild()
     {
-
+        controlForBuild.SetBuildItem(buildData.id);
     }
 
 }

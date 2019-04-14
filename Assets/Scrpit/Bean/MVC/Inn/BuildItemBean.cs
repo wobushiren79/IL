@@ -18,4 +18,5 @@ public class BuildItemBean : BaseBean
     public long price_m;
     public long price_l;
     public string icon_key;
+    public string name;
 }

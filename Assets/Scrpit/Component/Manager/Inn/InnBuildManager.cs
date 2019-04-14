@@ -12,10 +12,20 @@ public class InnBuildManager : BaseManager, IBuildDataView
 
     //家具列表
     public List<BaseBuildItemCpt> listFurnitureCpt;
-
+    //家具图标
+    public List<IconBean> listFurnitureIcon;
     private void Awake()
     {
         buildDataController = new BuildDataController(this, this);
+    }
+
+    /// <summary>
+    /// 通过名字获取家具图标
+    /// </summary>
+    /// <returns></returns>
+    public Sprite GetFurnitureSpriteByName(string name)
+    {
+       return GetSpriteByName(name, listFurnitureIcon);
     }
 
     /// <summary>

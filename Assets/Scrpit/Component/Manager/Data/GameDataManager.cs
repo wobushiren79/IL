@@ -15,6 +15,7 @@ public class GameDataManager : BaseManager, IGameDataView
 
     private void Awake()
     {
+        gameData = new GameDataBean();
         gameDataController = new GameDataController(this, this);
     }
 
@@ -69,6 +70,8 @@ public class GameDataManager : BaseManager, IGameDataView
 
     public void GetGameDataSuccess(GameDataBean gameData)
     {
+        if (gameData == null)
+            gameData = new GameDataBean();
         this.gameData = gameData;
     }
 

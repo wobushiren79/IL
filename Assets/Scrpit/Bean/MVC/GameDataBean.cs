@@ -17,8 +17,8 @@ public class GameDataBean
     public InnBuildBean innBuildData;//客栈建筑数据
     public TimeBean gameTime;//游戏时间
 
-    public List<ItemBean> buildItemList;//所拥有的建筑材料
-    public List<ItemBean> equipItemList;//所拥有的装备
+    public List<ItemBean> buildItemList = new List<ItemBean>();//所拥有的建筑材料
+    public List<ItemBean> equipItemList = new List<ItemBean>();//所拥有的装备
 
 
     public static void GetMoneyDetails(long money, out long L, out long M, out long S)

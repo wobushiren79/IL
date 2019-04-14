@@ -23,6 +23,8 @@ public class UIGameBuild : BaseUIComponent
     {
         if (btBack != null)
             btBack.onClick.AddListener(OpenMainUI);
+       gameDataManager.gameData.buildItemList.Add(new ItemBean(30001,3));
+       CreateBuildList(BuildItemBean.BuildType.Table);
     }
 
     public override void OpenUI()
@@ -37,6 +39,7 @@ public class UIGameBuild : BaseUIComponent
         base.CloseUI();
         controlForMove.StartControl();
         controlForBuild.EndControl();
+        controlForBuild.DestoryBuild();
     }
 
     /// <summary>
@@ -74,6 +77,9 @@ public class UIGameBuild : BaseUIComponent
     {
         GameObject itemBuildObj = Instantiate(itemBuildModel, itemBuildModel.transform);
         itemBuildObj.SetActive(true);
+        itemBuildObj.transform.SetParent(listBuildContent.transform);
+        ItemGameBuildCpt itemCpt= itemBuildObj.GetComponent<ItemGameBuildCpt>();
+        itemCpt.SetData(itemData, buildData);
     }
 
     public void CreateTableList()

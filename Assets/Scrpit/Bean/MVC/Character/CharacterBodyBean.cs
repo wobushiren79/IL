@@ -20,8 +20,8 @@ public class CharacterBodyBean
     public CharacterBodyBean()
     {
         sex = 1;
-        eye = "eye_0";
-        mouth = "mouth_0";
+        eye = "character_eye_0";
+        mouth = "character_mouth_0";
         skinColor = ColorBean.White();
         hairColor = ColorBean.White();
         eyeColor = ColorBean.White();
