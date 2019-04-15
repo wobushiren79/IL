@@ -4,12 +4,34 @@ using System;
 using System.Collections.Generic;
 
 [Serializable]
-public class InnResBean:BaseBean
+public class InnResBean
 {
-    //物品名称
-    public long resId;
+    //物品Id
+    public long id;
     //起始点
     public Vector3Bean startPosition;
     //物品占地
     public List<Vector3Bean> listPosition;
+    //方向
+    public int direction;
+
+    public InnResBean()
+    {
+
+    }
+
+    public InnResBean(long id, Vector3 startPosition, List<Vector3> listPosition,Direction2DEnum direction2D)
+    {
+        this.id = id;
+        this.startPosition = new Vector3Bean(startPosition); ;
+        this.listPosition = TypeConversionUtil.ListV3ToListV3Bean(listPosition);
+        this.direction = (int)direction2D;
+    }
+
+    public List<Vector3Bean> GetListPosition()
+    {
+        if (listPosition == null)
+            listPosition = new List<Vector3Bean>();
+        return listPosition;
+    }
 }

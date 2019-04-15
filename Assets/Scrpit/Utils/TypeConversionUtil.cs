@@ -17,6 +17,17 @@ public class TypeConversionUtil
     }
 
     /// <summary>
+    /// 自定义位置转为系统位置
+    /// </summary>
+    /// <param name="vector3Bean"></param>
+    /// <returns></returns>
+    public static Vector3 Vector3BeanToVector3(Vector3Bean vector3Bean)
+    {
+        Vector3 vector3 = new Vector3(vector3Bean.x, vector3Bean.y, vector3Bean.z);
+        return vector3;
+    }
+
+    /// <summary>
     /// Vector3 转化为 Vector2
     /// </summary>
     /// <param name="listVector3"></param>
@@ -29,6 +40,21 @@ public class TypeConversionUtil
             listVector2.Add(new Vector2(item.x, item.y));
         }
         return listVector2;
+    }
+
+    /// <summary>
+    /// Vector3 转化为 Vector2
+    /// </summary>
+    /// <param name="listVector3"></param>
+    /// <returns></returns>
+    public static List<Vector3Bean> ListV3ToListV3Bean(List<Vector3> listVector3)
+    {
+        List<Vector3Bean> listVector3Bean = new List<Vector3Bean>();
+        foreach (Vector3 item in listVector3)
+        {
+            listVector3Bean.Add(new Vector3Bean(item));
+        }
+        return listVector3Bean;
     }
 
     /// <summary>
@@ -143,4 +169,5 @@ public class TypeConversionUtil
         ColorBean colorBean = new ColorBean(color.a, color.g, color.b, color.a);
         return colorBean;
     }
+    
 }

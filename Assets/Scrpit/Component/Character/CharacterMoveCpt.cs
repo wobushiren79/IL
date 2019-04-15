@@ -88,9 +88,8 @@ public class CharacterMoveCpt : BaseMonoBehaviour
             theScale.x = Mathf.Abs(theScale.x);
         }
         transform.localScale = theScale;
-        Vector3 movePosition = Vector3.Lerp(Vector3.zero, new Vector3(x, y), lerpOffset);
+        Vector3 movePosition = Vector3.Lerp(Vector3.zero, new Vector3(x, y,0), lerpOffset);
         transform.Translate(movePosition * moveSpeed * Time.deltaTime);
-        //transform.position = new Vector3(transform.position.x, transform.position.y, transform.position.y);
     }
 
 

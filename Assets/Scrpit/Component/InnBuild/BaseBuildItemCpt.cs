@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using UnityEditor;
+using System.Collections.Generic;
 
 public class BaseBuildItemCpt : BaseMonoBehaviour
 {
@@ -8,9 +9,36 @@ public class BaseBuildItemCpt : BaseMonoBehaviour
     public Direction2DEnum direction = Direction2DEnum.Left;
 
     public GameObject leftObj;
+    public List<Vector3> leftPosition;
+
     public GameObject rightObj;
+    public List<Vector3> rightPosition;
+
     public GameObject upObj;
+    public List<Vector3> upPosition;
+
     public GameObject downOj;
+    public List<Vector3> downPosition;
+
+    /// <summary>
+    /// 获取建筑位置
+    /// </summary>
+    /// <returns></returns>
+    public List<Vector3> GetBuildPosition()
+    {
+        switch (direction)
+        {
+            case Direction2DEnum.Left:
+                return leftPosition;
+            case Direction2DEnum.Right:
+                return rightPosition;
+            case Direction2DEnum.UP:
+                return upPosition;
+            case Direction2DEnum.Down:
+                return downPosition;
+        }
+        return null;
+    }
 
     /// <summary>
     /// 逆时针旋转
@@ -54,6 +82,11 @@ public class BaseBuildItemCpt : BaseMonoBehaviour
                 SetDirection(Direction2DEnum.Left);
                 break;
         }
+    }
+
+    public virtual void SetDirection(int direction)
+    {
+        SetDirection((Direction2DEnum)direction);
     }
 
     public virtual void SetDirection(Direction2DEnum direction)

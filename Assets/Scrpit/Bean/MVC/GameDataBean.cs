@@ -20,6 +20,16 @@ public class GameDataBean
     public List<ItemBean> buildItemList = new List<ItemBean>();//所拥有的建筑材料
     public List<ItemBean> equipItemList = new List<ItemBean>();//所拥有的装备
 
+    /// <summary>
+    /// 获取建筑数据
+    /// </summary>
+    /// <returns></returns>
+    public InnBuildBean GetInnBuildData()
+    {
+        if (innBuildData == null)
+            innBuildData = new InnBuildBean();
+        return innBuildData;
+    }
 
     public static void GetMoneyDetails(long money, out long L, out long M, out long S)
     {
