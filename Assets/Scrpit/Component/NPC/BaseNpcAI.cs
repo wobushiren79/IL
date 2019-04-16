@@ -3,8 +3,6 @@ using UnityEditor;
 
 public class BaseNpcAI : BaseMonoBehaviour
 {
-    public int intentType;//意图 顾客： 1路过 2思考 3进店 4找座位 5点菜 6吃 7结账 
-
     public CharacterBean characterData;
     public CharacterDressManager characterDressManager;
     //角色移动控制
@@ -37,5 +35,14 @@ public class BaseNpcAI : BaseMonoBehaviour
             EquipInfoBean shoesEquip = characterDressManager.GetEquipById(characterBean.equips.shoesId);
             characterDress.SetShoes(shoesEquip);
         }
+    }
+
+    /// <summary>
+    /// 停止移动
+    /// </summary>
+    public void StopMove()
+    {
+        characterMoveCpt.StopAutoMove();
+        characterMoveCpt.Stop();
     }
 }

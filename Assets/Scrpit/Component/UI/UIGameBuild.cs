@@ -19,6 +19,9 @@ public class UIGameBuild : BaseUIComponent
     public ControlForBuildCpt controlForBuild;
     public ControlForMoveCpt controlForMove;
 
+    //游戏进程处理
+    public InnHandler innHandler;
+
     public void Start()
     {
         if (btBack != null)
@@ -40,6 +43,8 @@ public class UIGameBuild : BaseUIComponent
         controlForMove.StartControl();
         controlForBuild.EndControl();
         controlForBuild.DestoryBuild();
+        if (innHandler != null)
+            innHandler.InitInn();
     }
 
     /// <summary>

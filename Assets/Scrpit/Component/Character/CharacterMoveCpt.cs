@@ -12,10 +12,9 @@ public class CharacterMoveCpt : BaseMonoBehaviour
     //角色动画
     public Animator characterAnimtor;
     public NavMeshAgent navMeshAgent;
-
-    //是否是手动
-    public bool isManualMove = false;
-
+    public GameObject characterBodyObj;
+    //是否手动移动
+    public bool isManualMove=false;
     private void Start()
     {
         if (navMeshAgent != null)
@@ -27,9 +26,9 @@ public class CharacterMoveCpt : BaseMonoBehaviour
     }
     private void FixedUpdate()
     {
-        if (!isManualMove && navMeshAgent != null)
+        if (!isManualMove&&navMeshAgent != null)
         {
-            if (navMeshAgent.hasPath)
+            if (!navMeshAgent.isStopped && navMeshAgent.hasPath)
             {
                 Move(navMeshAgent.nextPosition);
             }
@@ -38,7 +37,7 @@ public class CharacterMoveCpt : BaseMonoBehaviour
                 Stop();
             }
         }
-        
+       
     }
 
     /// <summary>
@@ -47,8 +46,10 @@ public class CharacterMoveCpt : BaseMonoBehaviour
     /// <param name="position">目的地</param>
     public void SetDestination(Vector3 position)
     {
+        isManualMove = false ;
         if (navMeshAgent != null)
         {
+            navMeshAgent.isStopped = false;
             navMeshAgent.updateRotation = false;
             navMeshAgent.updateUpAxis = false;
             navMeshAgent.updatePosition = false;
@@ -71,14 +72,13 @@ public class CharacterMoveCpt : BaseMonoBehaviour
     {
         isManualMove = true;
         //停止自动寻路
-        if (navMeshAgent != null&& navMeshAgent.hasPath)
-            navMeshAgent.isStopped = true;
+        StopAutoMove();
         if (characterAnimtor != null)
         {
             characterAnimtor.SetInteger("State", 1);
         }
         //转向
-        Vector3 theScale = transform.localScale;
+        Vector3 theScale = characterBodyObj.transform.localScale;
         if (x < 0)
         {
             theScale.x = -Mathf.Abs(theScale.x);
@@ -87,8 +87,8 @@ public class CharacterMoveCpt : BaseMonoBehaviour
         {
             theScale.x = Mathf.Abs(theScale.x);
         }
-        transform.localScale = theScale;
-        Vector3 movePosition = Vector3.Lerp(Vector3.zero, new Vector3(x, y,0), lerpOffset);
+        characterBodyObj.transform.localScale = theScale;
+        Vector3 movePosition = Vector3.Lerp(Vector3.zero, new Vector3(x, y, 0), lerpOffset);
         transform.Translate(movePosition * moveSpeed * Time.deltaTime);
     }
 
@@ -100,26 +100,53 @@ public class CharacterMoveCpt : BaseMonoBehaviour
             characterAnimtor.SetInteger("State", 1);
         }
         //转向
-        Vector3 theScale = transform.localScale;
-        if (movePosition.x - transform.position.x < 0)
+        Vector3 theScale = characterBodyObj.transform.localScale;
+        if (movePosition.x - characterBodyObj.transform.position.x < 0)
         {
             theScale.x = -Mathf.Abs(theScale.x);
         }
-        else if (movePosition.x - transform.position.x > 0)
+        else if (movePosition.x - characterBodyObj.transform.position.x > 0)
         {
             theScale.x = Mathf.Abs(theScale.x);
         }
-        transform.localScale = theScale;
+        characterBodyObj.transform.localScale = theScale;
         Vector3 newMovePosition = Vector3.Lerp(transform.position, movePosition, lerpOffset);
         transform.position = newMovePosition;
     }
 
     public void Stop()
     {
-        isManualMove = false;
         if (characterAnimtor != null)
         {
             characterAnimtor.SetInteger("State", 0);
+        }
+    }
+
+    /// <summary>
+    /// 停止自动寻路
+    /// </summary>
+    public void StopAutoMove()
+    {
+        if (navMeshAgent != null)
+        {
+            navMeshAgent.isStopped = true;
+            navMeshAgent.ResetPath();
+        }
+    }
+
+    /// <summary>
+    /// 自动寻路是否停止
+    /// </summary>
+    /// <returns></returns>
+    public bool IsAutoMoveStop()
+    {
+        if (navMeshAgent != null && navMeshAgent.hasPath && !navMeshAgent.isStopped)
+        {
+            return false;
+        }
+        else
+        {
+            return true;
         }
     }
 }

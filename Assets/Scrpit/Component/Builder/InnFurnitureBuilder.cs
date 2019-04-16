@@ -8,7 +8,8 @@ public class InnFurnitureBuilder : BaseMonoBehaviour
     public GameDataManager gameDataManager;
     //装饰容器
     public GameObject buildContainer;
-
+    //客栈处理
+    public InnHandler innHandler;
     private void Start()
     {
         List<InnResBean>  listData=  gameDataManager.gameData.GetInnBuildData().GetFurnitureList() ;
@@ -17,6 +18,9 @@ public class InnFurnitureBuilder : BaseMonoBehaviour
             InnResBean itemData = listData[i];
             BuildFurniture(itemData);
         }
+        //初始化客栈处理
+        if (innHandler != null)
+            innHandler.InitInn();
     }
 
     public void BuildFurniture(InnResBean furnitureData)

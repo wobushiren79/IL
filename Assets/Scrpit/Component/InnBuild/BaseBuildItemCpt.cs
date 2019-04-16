@@ -43,7 +43,7 @@ public class BaseBuildItemCpt : BaseMonoBehaviour
     /// <summary>
     /// 逆时针旋转
     /// </summary>
-    public void RotateLet()
+    public virtual void RotateLet()
     {
         switch (direction)
         {
@@ -65,7 +65,7 @@ public class BaseBuildItemCpt : BaseMonoBehaviour
    /// <summary>
    /// 顺时针旋转
    /// </summary>
-    public void RotateRight()
+    public virtual void RotateRight()
     {
         switch (direction)
         {

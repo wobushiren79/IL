@@ -48,9 +48,9 @@ public class GameDataModel : BaseMVCModel
         gameData.equipItemList = new List<ItemBean>();
         //添加地板
         gameData.innBuildData.listFloor = new List<InnResBean>();
-        for(int i = 0; i < 6; i++)
+        for (int i = 0; i < 10; i++)
         {
-            for(int f = 0; f < 6; f++)
+            for (int f = 0; f < 10; f++)
             {
                 InnResBean itemData = new InnResBean();
                 itemData.id = 10001;
@@ -60,23 +60,28 @@ public class GameDataModel : BaseMVCModel
         }
         //添加墙壁
         gameData.innBuildData.listWall = new List<InnResBean>();
-        for (int i = 0; i < 6; i++)
+        for (int i = 0; i < 10; i++)
         {
-            for (int f = 0; f < 6; f++)
+            for (int f = 0; f < 10; f++)
             {
                 bool isBuild = false;
-                if (i == 0 || i == 5)
+                if (i == 0 || i == 9)
                 {
                     isBuild = true;
                 }
+                else if (i == 3 || i == 4 || i == 5)
+                {
+
+                }
                 else
                 {
-                    if (f == 0 || f == 5)
+                    if (f == 0 || f == 9)
                     {
                         isBuild = true;
                     }
                 }
-                if (isBuild) {
+                if (isBuild)
+                {
                     InnResBean itemData = new InnResBean();
                     itemData.id = 20001;
                     itemData.startPosition = new Vector3Bean(i, f);
@@ -85,7 +90,7 @@ public class GameDataModel : BaseMVCModel
             }
         }
         //添加家具
-        gameData.buildItemList.Add(new ItemBean(30001,1));
+        gameData.buildItemList.Add(new ItemBean(30001, 1));
 
         SetGameDataByUserId(userId, gameData);
     }
