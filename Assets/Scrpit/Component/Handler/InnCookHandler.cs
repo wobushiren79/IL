@@ -4,10 +4,10 @@ using System.Collections.Generic;
 
 public class InnCookHandler : BaseMonoBehaviour
 {
-    //桌子列表
-    public List<BuildStoveCpt> listTableCpt;
-    //桌子容器
-    public GameObject tableContainer;
+    //灶台列表
+    public List<BuildStoveCpt> listStoveCpt;
+    //灶台容器
+    public GameObject stoveContainer;
 
     /// <summary>
     /// 找到所有灶台
@@ -15,10 +15,10 @@ public class InnCookHandler : BaseMonoBehaviour
     /// <returns></returns>
     public List<BuildStoveCpt> InitStoveList()
     {
-        if (tableContainer == null)
-            return listTableCpt;
-        BuildStoveCpt[] tableArray = tableContainer.GetComponentsInChildren<BuildStoveCpt>();
-        listTableCpt = TypeConversionUtil.ArrayToList(tableArray);
-        return listTableCpt;
+        if (stoveContainer == null)
+            return listStoveCpt;
+        BuildStoveCpt[] tableArray = stoveContainer.GetComponentsInChildren<BuildStoveCpt>();
+        listStoveCpt = TypeConversionUtil.ArrayToList(tableArray);
+        return listStoveCpt;
     }
 }
