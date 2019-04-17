@@ -44,9 +44,10 @@ public class CharacterMoveCpt : BaseMonoBehaviour
     /// 自动移动
     /// </summary>
     /// <param name="position">目的地</param>
-    public void SetDestination(Vector3 position)
+    public bool SetDestination(Vector3 position)
     {
         isManualMove = false ;
+        bool canGo = true;
         if (navMeshAgent != null)
         {
             navMeshAgent.isStopped = false;
@@ -54,13 +55,23 @@ public class CharacterMoveCpt : BaseMonoBehaviour
             navMeshAgent.updateUpAxis = false;
             navMeshAgent.updatePosition = false;
             navMeshAgent.speed = moveSpeed;
-            navMeshAgent.SetDestination(position);
+            canGo = navMeshAgent.SetDestination(position);
 
             if (characterAnimtor != null)
             {
                 characterAnimtor.SetInteger("State", 1);
             }
         }
+        return canGo;
+    }
+
+    /// <summary>
+    /// 获取路径状态
+    /// </summary>
+    /// <returns></returns>
+    public NavMeshPathStatus GetAutoMovePathStatus()
+    {
+       return   navMeshAgent.pathStatus;
     }
 
     /// <summary>

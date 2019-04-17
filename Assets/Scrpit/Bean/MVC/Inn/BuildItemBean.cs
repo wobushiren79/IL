@@ -11,6 +11,7 @@ public class BuildItemBean : BaseBean
         Floor=1,
         Wall=2,
         Table=3,
+        Stove = 4,
     }
 
     public int build_type;

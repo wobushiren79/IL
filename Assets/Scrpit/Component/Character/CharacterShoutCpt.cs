@@ -15,7 +15,7 @@ public class CharacterShoutCpt : BaseMonoBehaviour
         shoutObj.transform.localScale = new Vector3(1,1,1);
         shoutObj.transform.DOKill();
         shoutObj.transform.DOScale(new Vector3(0,0,0),0.5f).SetEase(Ease.OutBack).From();
-        shoutObj.transform.DOScale(new Vector3(0,0,0),0.5f).SetDelay(3).OnComplete(delegate() {
+        shoutObj.transform.DOScale(new Vector3(0,0,0),0.5f).SetDelay(4).OnComplete(delegate() {
             shoutObj.SetActive(false);
         });
     }

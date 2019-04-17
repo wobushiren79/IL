@@ -16,6 +16,8 @@ public class InnHandler : BaseMonoBehaviour
     public Vector3 doorPosition;
     //客栈桌子处理
     public InnTableHandler innTableHandler;
+    //烹饪处理
+    public InnCookHandler innCookHandler;
     //排队的人
     public List<NpcAICustomerCpt> cusomerQueue=new List<NpcAICustomerCpt>();
 
@@ -26,6 +28,7 @@ public class InnHandler : BaseMonoBehaviour
     public void InitInn()
     {
         innTableHandler.InitTableList();
+        innCookHandler.InitStoveList();
     }
 
     private void FixedUpdate()

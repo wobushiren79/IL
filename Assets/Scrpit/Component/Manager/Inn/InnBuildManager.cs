@@ -7,6 +7,7 @@ public class InnBuildManager : BaseManager, IBuildDataView
     public List<BuildItemBean> listBuildFloorData;
     public List<BuildItemBean> listBuildWallData;
     public List<BuildItemBean> listBuildTableData;
+    public List<BuildItemBean> listBuildStoveData;
 
     public BuildDataController buildDataController;
 
@@ -43,7 +44,7 @@ public class InnBuildManager : BaseManager, IBuildDataView
             BaseBuildItemCpt buildItemCpt = listFurnitureCpt[i];
             if(buildItemCpt.buildId== id)
             {
-                furnitureObj = Instantiate(buildItemCpt.gameObject, buildItemCpt.transform);
+                furnitureObj = Instantiate(buildItemCpt.gameObject);
                 furnitureObj.SetActive(true);
             }
         }
@@ -125,6 +126,10 @@ public class InnBuildManager : BaseManager, IBuildDataView
             {
                 listBuildTableData.Add(itemData);
             }
+            else if (itemData.build_type == (int)BuildItemBean.BuildType.Stove)
+            {
+                listBuildTableData.Add(itemData);
+            }
         }
     }
 
@@ -144,6 +149,9 @@ public class InnBuildManager : BaseManager, IBuildDataView
                 break;
             case BuildItemBean.BuildType.Table:
                 listBuildTableData = listData;
+                break;
+            case BuildItemBean.BuildType.Stove:
+                listBuildStoveData = listData;
                 break;
         }
     }

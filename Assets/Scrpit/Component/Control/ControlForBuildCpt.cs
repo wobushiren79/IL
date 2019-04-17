@@ -137,6 +137,8 @@ public class ControlForBuildCpt : BaseControl
     {
         DestoryBuild();
         buildItemObj = innBuildManager.GetFurnitureObjById(id);
+        if (buildItemObj == null)
+            return;
         buildItemObj.transform.SetParent(buildContainer.transform);
         buildItemCpt = buildItemObj.GetComponent<BaseBuildItemCpt>();
         //屏幕坐标转换为UI坐标

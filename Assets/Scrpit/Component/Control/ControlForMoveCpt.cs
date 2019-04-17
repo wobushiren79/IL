@@ -7,7 +7,6 @@ public class ControlForMoveCpt : BaseControl
     //角色移动组建
     public CharacterMoveCpt characterMoveCpt;
 
-    public CharacterShoutCpt characterShoutCpt;
     private void FixedUpdate()
     {
         if (characterMoveCpt == null)
@@ -22,11 +21,6 @@ public class ControlForMoveCpt : BaseControl
         else
         {
             characterMoveCpt.Move(hMove, vMove);
-        }
-        if (Input.GetMouseButtonDown(0))
-        {
-            characterShoutCpt.Shout("磨破豆腐");
-        }
-      
+        }   
     }
 }

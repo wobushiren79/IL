@@ -7,6 +7,7 @@ public class UIGameBuild : BaseUIComponent
     public Button btBack;
     //类型按钮
     public Button btTypeTable;
+    public Button btTypeStove;
 
     public GameObject listBuildContent;
     public GameObject itemBuildModel;
@@ -26,8 +27,15 @@ public class UIGameBuild : BaseUIComponent
     {
         if (btBack != null)
             btBack.onClick.AddListener(OpenMainUI);
-       gameDataManager.gameData.buildItemList.Add(new ItemBean(30001,3));
-       CreateBuildList(BuildItemBean.BuildType.Table);
+        if (btTypeTable != null)
+            btTypeTable.onClick.AddListener(CreateTableList);
+        if (btTypeStove != null)
+            btTypeStove.onClick.AddListener(CreateStoveList);
+
+
+        gameDataManager.gameData.buildItemList.Add(new ItemBean(30001,3));
+        gameDataManager.gameData.buildItemList.Add(new ItemBean(40001, 3));
+        CreateBuildList(BuildItemBean.BuildType.Table);
     }
 
     public override void OpenUI()
@@ -67,9 +75,13 @@ public class UIGameBuild : BaseUIComponent
 
         for (int i = 0; i < gameDataManager.gameData.buildItemList.Count; i++)
         {
+
             ItemBean itemData = gameDataManager.gameData.buildItemList[i];
             BuildItemBean buildData = innBuildManager.GetTableDataById(itemData.itemId);
-            CreateBuildItem(itemData, buildData);
+            if ((int)type == buildData.build_type)
+            {
+                CreateBuildItem(itemData, buildData);
+            }
         }
     }
 
@@ -90,6 +102,11 @@ public class UIGameBuild : BaseUIComponent
     public void CreateTableList()
     {
         CreateBuildList(BuildItemBean.BuildType.Table);
+    }
+    
+    public void CreateStoveList()
+    {
+        CreateBuildList(BuildItemBean.BuildType.Stove);
     }
 
     /// <summary>

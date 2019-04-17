@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using UnityEditor;
 using System.Collections;
+using UnityEngine.AI;
 
 public class NpcAICustomerCpt : BaseNpcAI
 {
@@ -15,6 +16,9 @@ public class NpcAICustomerCpt : BaseNpcAI
     }
 
     public CustomerIntentEnum intentType;//意图 顾客： 1路过 2思考 3进店 4找座位 5点菜 6吃 7结账 
+
+
+    public CharacterShoutCpt characterShoutCpt;
     //客栈处理
     public InnHandler innHandler;
     //终点
@@ -46,9 +50,10 @@ public class NpcAICustomerCpt : BaseNpcAI
                 }
                 break;
             case CustomerIntentEnum.GotoSeat:
-                if (Vector2.Distance(transform.position, tableForEating.GetSeatPosition()) < 0.05f)
+                if (Vector2.Distance(transform.position, tableForEating.GetSeatPosition()) < 0.1f)
                 {
                     SetDestinationByIntent(CustomerIntentEnum.WaitFood);
+                    characterShoutCpt.Shout("麻婆豆腐");
                 }
                 break;
         }
@@ -93,7 +98,16 @@ public class NpcAICustomerCpt : BaseNpcAI
                 characterMoveCpt.SetDestination(doorPosition);
                 break;
             case CustomerIntentEnum.GotoSeat:
-                characterMoveCpt.SetDestination(tableForEating.GetSeatPosition());
+                //判断路径是否有效
+                NavMeshPath navpath = new NavMeshPath();
+                NavMesh.CalculatePath(transform.position, tableForEating.GetSeatPosition(), -1, navpath);
+                if (navpath.status == NavMeshPathStatus.PathPartial || navpath.status == NavMeshPathStatus.PathInvalid)
+                {
+                    SetDestinationByIntent(CustomerIntentEnum.Leave);
+                }
+                else
+                    characterMoveCpt.SetDestination(tableForEating.GetSeatPosition());
+              
                 break;
             case CustomerIntentEnum.Leave:
                 characterMoveCpt.SetDestination(endPosition);
