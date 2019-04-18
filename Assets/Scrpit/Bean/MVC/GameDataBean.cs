@@ -19,6 +19,7 @@ public class GameDataBean
 
     public List<ItemBean> buildItemList = new List<ItemBean>();//所拥有的建筑材料
     public List<ItemBean> equipItemList = new List<ItemBean>();//所拥有的装备
+    public List<MenuOwnBean> menuList = new List<MenuOwnBean>();//所拥有的菜单
 
     /// <summary>
     /// 获取建筑数据

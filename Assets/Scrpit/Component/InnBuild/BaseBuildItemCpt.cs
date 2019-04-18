@@ -41,6 +41,26 @@ public class BaseBuildItemCpt : BaseMonoBehaviour
     }
 
     /// <summary>
+    /// 获取建筑物体
+    /// </summary>
+    /// <returns></returns>
+    public GameObject GetBuilObj()
+    {
+        switch (direction)
+        {
+            case Direction2DEnum.Left:
+                return leftObj;
+            case Direction2DEnum.Right:
+                return rightObj;
+            case Direction2DEnum.UP:
+                return upObj;
+            case Direction2DEnum.Down:
+                return downOj;
+        }
+        return null;
+    }
+
+    /// <summary>
     /// 逆时针旋转
     /// </summary>
     public virtual void RotateLet()

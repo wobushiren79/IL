@@ -34,7 +34,7 @@ public class InnBuildManager : BaseManager, IBuildDataView
     /// </summary>
     /// <param name="id"></param>
     /// <returns></returns>
-    public GameObject GetFurnitureObjById(long id)
+    public GameObject GetFurnitureObjById(long id, Transform tfFather)
     {
         GameObject furnitureObj=null;
         if (listFurnitureCpt == null)
@@ -44,7 +44,7 @@ public class InnBuildManager : BaseManager, IBuildDataView
             BaseBuildItemCpt buildItemCpt = listFurnitureCpt[i];
             if(buildItemCpt.buildId== id)
             {
-                furnitureObj = Instantiate(buildItemCpt.gameObject);
+                furnitureObj = Instantiate(buildItemCpt.gameObject, tfFather);
                 furnitureObj.SetActive(true);
             }
         }

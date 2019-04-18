@@ -35,7 +35,7 @@ public class NpcCustomerBuilder : BaseMonoBehaviour
     {
         while (isBuild)
         {
-            yield return new WaitForSeconds(5f);
+            yield return new WaitForSeconds(1f);
             BuildCustomer();
         }
     }

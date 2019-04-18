@@ -44,7 +44,7 @@ public class NpcAICustomerCpt : BaseNpcAI
                     StopMove();
                     intentType = CustomerIntentEnum.WaitSeat;
                     //加入排队队伍
-                    innHandler.AddQueue(this);
+                    innHandler.AddWaitQueue(this);
                     //开始等待座位
                     StartCoroutine(StartWaitSeat());
                 }
@@ -53,7 +53,8 @@ public class NpcAICustomerCpt : BaseNpcAI
                 if (Vector2.Distance(transform.position, tableForEating.GetSeatPosition()) < 0.1f)
                 {
                     SetDestinationByIntent(CustomerIntentEnum.WaitFood);
-                    characterShoutCpt.Shout("麻婆豆腐");
+                    MenuInfoBean foodData=  innHandler.OrderForFood();
+                    characterShoutCpt.Shout(foodData.name);
                 }
                 break;
         }
@@ -106,7 +107,9 @@ public class NpcAICustomerCpt : BaseNpcAI
                     SetDestinationByIntent(CustomerIntentEnum.Leave);
                 }
                 else
+                {
                     characterMoveCpt.SetDestination(tableForEating.GetSeatPosition());
+                }
               
                 break;
             case CustomerIntentEnum.Leave:
@@ -122,7 +125,7 @@ public class NpcAICustomerCpt : BaseNpcAI
     public IEnumerator StartWaitSeat()
     {
         yield return new WaitForSeconds(10);
-        innHandler.RemoveQueue(this);
+        innHandler.RemoveWaitQueue(this);
         SetDestinationByIntent(CustomerIntentEnum.Leave);
     }
 }

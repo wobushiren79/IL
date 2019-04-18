@@ -73,6 +73,11 @@ public class GameDataManager : BaseManager, IGameDataView
         if (gameData == null)
             gameData = new GameDataBean();
         this.gameData = gameData;
+
+        //TODO 测试 需要删除
+        gameData.buildItemList.Add(new ItemBean(30001, 3));
+        gameData.buildItemList.Add(new ItemBean(40001, 3));
+        gameData.menuList.Add(new MenuOwnBean(1));
     }
 
     public void SetGameDataFail()

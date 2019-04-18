@@ -31,10 +31,6 @@ public class UIGameBuild : BaseUIComponent
             btTypeTable.onClick.AddListener(CreateTableList);
         if (btTypeStove != null)
             btTypeStove.onClick.AddListener(CreateStoveList);
-
-
-        gameDataManager.gameData.buildItemList.Add(new ItemBean(30001,3));
-        gameDataManager.gameData.buildItemList.Add(new ItemBean(40001, 3));
         CreateBuildList(BuildItemBean.BuildType.Table);
     }
 

@@ -15,6 +15,12 @@ public class CharacterMoveCpt : BaseMonoBehaviour
     public GameObject characterBodyObj;
     //是否手动移动
     public bool isManualMove=false;
+
+    private void Awake()
+    {
+
+    }
+
     private void Start()
     {
         if (navMeshAgent != null)
@@ -24,11 +30,13 @@ public class CharacterMoveCpt : BaseMonoBehaviour
             navMeshAgent.updatePosition = false;
         }
     }
+
+
     private void FixedUpdate()
     {
-        if (!isManualMove&&navMeshAgent != null)
+        if (!isManualMove && navMeshAgent != null)
         {
-            if (!navMeshAgent.isStopped && navMeshAgent.hasPath)
+            if (navMeshAgent.path.corners.Length>1)
             {
                 Move(navMeshAgent.nextPosition);
             }
@@ -37,7 +45,6 @@ public class CharacterMoveCpt : BaseMonoBehaviour
                 Stop();
             }
         }
-       
     }
 
     /// <summary>
@@ -121,8 +128,7 @@ public class CharacterMoveCpt : BaseMonoBehaviour
             theScale.x = Mathf.Abs(theScale.x);
         }
         characterBodyObj.transform.localScale = theScale;
-        Vector3 newMovePosition = Vector3.Lerp(transform.position, movePosition, lerpOffset);
-        transform.position = newMovePosition;
+        transform.position = movePosition;
     }
 
     public void Stop()
@@ -151,7 +157,7 @@ public class CharacterMoveCpt : BaseMonoBehaviour
     /// <returns></returns>
     public bool IsAutoMoveStop()
     {
-        if (navMeshAgent != null && navMeshAgent.hasPath && !navMeshAgent.isStopped)
+        if (navMeshAgent != null && navMeshAgent.path.corners.Length > 1)
         {
             return false;
         }

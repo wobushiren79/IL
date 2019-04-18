@@ -136,15 +136,15 @@ public class ControlForBuildCpt : BaseControl
     public void SetBuildItem(long id)
     {
         DestoryBuild();
-        buildItemObj = innBuildManager.GetFurnitureObjById(id);
+        buildItemObj = innBuildManager.GetFurnitureObjById(id, buildContainer.transform);
         if (buildItemObj == null)
             return;
-        buildItemObj.transform.SetParent(buildContainer.transform);
         buildItemCpt = buildItemObj.GetComponent<BaseBuildItemCpt>();
         //屏幕坐标转换为UI坐标
         Vector3 mousePosition;
         RectTransformUtility.ScreenPointToWorldPointInRectangle(screenRTF, Input.mousePosition, Camera.main, out mousePosition);
         listBuildSpaceContent.transform.position = mousePosition;
+        buildItemCpt.transform.position= mousePosition;
         BuildSpace();
     }
 

@@ -11,6 +11,13 @@ public class ImageEditor : Editor
     {
         BaseSpriteEditor(SpriteImportMode.Single, 0, 0);
     }
+
+    [MenuItem("Custom/Image/Multiple_2x1")]
+    public static void Multiple2x1()
+    {
+        BaseSpriteEditor(SpriteImportMode.Multiple, 2, 1);
+    }
+
     [MenuItem("Custom/Image/Multiple_4x1")]
     public static void Multiple4x1()
     {

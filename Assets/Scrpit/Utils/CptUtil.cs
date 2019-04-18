@@ -50,4 +50,22 @@ public class CptUtil
         }
         return null;
     }
+
+
+    /// <summary>
+    /// 通过名字获取 所有子列表的控件
+    /// </summary>
+    /// <param name="tf"></param>
+    public static T GetAllCptInChildrenByName<T>(GameObject obj, string name) where T : Component
+    {
+        for (int i = 0; i < obj.transform.childCount; i++)
+        {
+            GameObject itemObj = obj.transform.GetChild(i).gameObject;
+            if (name.Equals(itemObj.name))
+            {
+                return itemObj.GetComponent<T>();
+            } 
+        }
+        return null;
+    }
 }

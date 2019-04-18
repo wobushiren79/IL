@@ -27,8 +27,7 @@ public class InnFurnitureBuilder : BaseMonoBehaviour
     {
         if (furnitureData == null)
             return;
-        GameObject buildItemObj = innBuildManager.GetFurnitureObjById(furnitureData.id);
-        buildItemObj.transform.SetParent(buildContainer.transform);
+        GameObject buildItemObj = innBuildManager.GetFurnitureObjById(furnitureData.id, buildContainer.transform);
         buildItemObj.transform.position = TypeConversionUtil.Vector3BeanToVector3(furnitureData.startPosition);
         BaseBuildItemCpt buildItemCpt = buildItemObj.GetComponent<BaseBuildItemCpt>();
         buildItemCpt.SetDirection(furnitureData.direction);

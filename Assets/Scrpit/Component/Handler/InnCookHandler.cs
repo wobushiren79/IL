@@ -6,8 +6,21 @@ public class InnCookHandler : BaseMonoBehaviour
 {
     //灶台列表
     public List<BuildStoveCpt> listStoveCpt;
+    //厨师列表
+    public List<NpcAIWorkerCpt> listChefCpt = new List<NpcAIWorkerCpt>();
+
     //灶台容器
     public GameObject stoveContainer;
+    //厨师容器
+    public GameObject ChefContainer;
+
+
+    //锁
+    private static Object SetChefLock = new Object();
+    private void Start()
+    {
+        InitChefCpt();
+    }
 
     /// <summary>
     /// 找到所有灶台
@@ -20,5 +33,69 @@ public class InnCookHandler : BaseMonoBehaviour
         BuildStoveCpt[] tableArray = stoveContainer.GetComponentsInChildren<BuildStoveCpt>();
         listStoveCpt = TypeConversionUtil.ArrayToList(tableArray);
         return listStoveCpt;
+    }
+
+    /// <summary>
+    /// 找到所有厨师
+    /// </summary>
+    /// <returns></returns>
+    public List<NpcAIWorkerCpt> InitChefCpt()
+    {
+        listChefCpt.Clear();
+        if (ChefContainer == null)
+            return listChefCpt;
+        NpcAIWorkerCpt[] chefArray = ChefContainer.GetComponentsInChildren<NpcAIWorkerCpt>();
+        if (chefArray == null)
+            return listChefCpt;
+
+        for (int i = 0; i < chefArray.Length; i++)
+        {
+            NpcAIWorkerCpt itemCpt = chefArray[i];
+            if (itemCpt.isChef)
+            {
+                listChefCpt.Add(itemCpt);
+            }
+        }
+        return listChefCpt;
+    }
+
+    /// <summary>
+    ///  分配厨师做饭
+    /// </summary>
+    public bool SetChefForCook(MenuInfoBean foodData)
+    {
+        lock (SetChefLock)
+        {
+            NpcAIWorkerCpt chefCpt = null;
+            BuildStoveCpt stoveCpt = null;
+            for (int i = 0; i < listChefCpt.Count; i++)
+            {
+                NpcAIWorkerCpt npcAI = listChefCpt[i];
+                if (npcAI.workerIntent == NpcAIWorkerCpt.WorkerIntentEnum.Idle)
+                {
+                    chefCpt = npcAI;
+                    break;
+                }
+            }
+            for (int i = 0; i < listStoveCpt.Count; i++)
+            {
+                BuildStoveCpt itemStove = listStoveCpt[i];
+                if (itemStove.chefCpt == null)
+                {
+                    stoveCpt = itemStove;
+                    break;
+                }
+            }
+            if (chefCpt != null && stoveCpt != null)
+            {
+                stoveCpt.SetChef(chefCpt);
+                chefCpt.SetDestinationByIntent(NpcAIWorkerCpt.WorkerIntentEnum.Cook, stoveCpt, foodData);
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
     }
 }
