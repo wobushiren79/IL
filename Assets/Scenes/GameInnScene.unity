@@ -219,6 +219,16 @@ PrefabInstance:
       propertyPath: m_Enabled
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 2940785895002602718, guid: 2b0fba09934c2934eb7fd9b31e6030fb,
+        type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 2940785895002602718, guid: 2b0fba09934c2934eb7fd9b31e6030fb,
+        type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0.5
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2b0fba09934c2934eb7fd9b31e6030fb, type: 3}
 --- !u!4 &7710557 stripped
@@ -771,7 +781,7 @@ GameObject:
   - component: {fileID: 116712545}
   - component: {fileID: 116712546}
   m_Layer: 0
-  m_Name: Take
+  m_Name: Food
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1534,7 +1544,7 @@ GameObject:
   - component: {fileID: 247302946}
   - component: {fileID: 247302947}
   m_Layer: 0
-  m_Name: Take
+  m_Name: Food
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1613,7 +1623,7 @@ GameObject:
   - component: {fileID: 261913280}
   - component: {fileID: 261913281}
   m_Layer: 0
-  m_Name: Take
+  m_Name: Food
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -51105,7 +51115,14 @@ MonoBehaviour:
   - {x: -1, y: 1, z: 0}
   - {x: -2, y: 1, z: 0}
   chefCpt: {fileID: 0}
+  innHandler: {fileID: 1541606814}
   innFoodManager: {fileID: 744028635}
+  leftTakeFoodObj: {fileID: 0}
+  RightTakeFoodObj: {fileID: 0}
+  upTakeFoodObj: {fileID: 0}
+  downTakeFoodObj: {fileID: 0}
+  itemFoodModel: {fileID: 5328740976241071941, guid: 1b12f62d116de8e4ba915aa78ab2cb2b,
+    type: 3}
 --- !u!1 &833941888
 GameObject:
   m_ObjectHideFlags: 0
@@ -51173,8 +51190,8 @@ MonoBehaviour:
   cameraMove: {fileID: 833941890}
   buildContainer: {fileID: 1598195667}
   screenRTF: {fileID: 2099675406}
-  innBuildManager: {fileID: 1157347276}
   gameDataManager: {fileID: 158710915}
+  innFurnitureBuilder: {fileID: 2040898640}
   listBuildSpaceContent: {fileID: 1950333890}
   itemBuildSpaceModel: {fileID: 602015811}
   spHasBuild: {fileID: 21300000, guid: 318dffbcd7552a04a9178f87f9813638, type: 3}
@@ -51312,7 +51329,7 @@ GameObject:
   - component: {fileID: 906543073}
   - component: {fileID: 906543074}
   m_Layer: 0
-  m_Name: Take
+  m_Name: Food
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -65486,9 +65503,11 @@ MonoBehaviour:
       shoesId: 0
   characterDressManager: {fileID: 1084954368}
   characterMoveCpt: {fileID: 1414017236}
-  aiForChef: {fileID: 0}
+  aiForChef: {fileID: 1414017237}
+  aiForWaiter: {fileID: 1414017235}
   workerIntent: 0
   isChef: 1
+  isWaiter: 0
 --- !u!95 &1414017232 stripped
 Animator:
   m_CorrespondingSourceObject: {fileID: 2478063932746049267, guid: 2b0fba09934c2934eb7fd9b31e6030fb,
@@ -65531,6 +65550,18 @@ NavMeshAgent:
   m_BaseOffset: 0
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 0
+--- !u!114 &1414017235
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1414017230}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2098c0ba5fad7c540868844d6c2cfcd0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &1414017236
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -65549,6 +65580,22 @@ MonoBehaviour:
   navMeshAgent: {fileID: 1414017234}
   characterBodyObj: {fileID: 1414017229}
   isManualMove: 0
+--- !u!114 &1414017237
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1414017230}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: afe08abc7240c5147a0614bb0a2b7e99, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cookPro: {fileID: 1535495190}
+  stoveCpt: {fileID: 0}
+  cookPositionList: []
+  chefStatue: 0
 --- !u!1 &1431356123
 GameObject:
   m_ObjectHideFlags: 0
@@ -65863,6 +65910,12 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.ScrollRect+ScrollRectEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
+--- !u!1 &1535495190 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4733220288812061310, guid: 2b0fba09934c2934eb7fd9b31e6030fb,
+    type: 3}
+  m_PrefabInstance: {fileID: 1414017225}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1535974062
 GameObject:
   m_ObjectHideFlags: 0
@@ -65958,8 +66011,9 @@ MonoBehaviour:
   innFoodManager: {fileID: 744028635}
   innTableHandler: {fileID: 1541606812}
   innCookHandler: {fileID: 1541606815}
+  innWaiterHandler: {fileID: 0}
   cusomerQueue: []
-  foodQueue: []
+  sendQueue: []
 --- !u!114 &1541606815
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -67497,6 +67551,7 @@ MonoBehaviour:
   gameDataManager: {fileID: 158710915}
   buildContainer: {fileID: 1598195667}
   innHandler: {fileID: 1541606814}
+  innFoodManager: {fileID: 744028635}
 --- !u!1 &2075748568
 GameObject:
   m_ObjectHideFlags: 0

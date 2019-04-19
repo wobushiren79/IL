@@ -7,33 +7,43 @@ public class NpcAIWorkerCpt : BaseNpcAI
     public enum WorkerIntentEnum
     {
         Idle,//空闲
+        Waiter,//跑堂
         Cook,//做菜
     }
 
     //厨师AI控制
     public NpcAIWorkerForChefCpt aiForChef;
+    //跑堂AI控制
+    public NpcAIWorkerForWaiterCpt aiForWaiter;
 
     public WorkerIntentEnum workerIntent = WorkerIntentEnum.Idle;//工作者的想法
 
     //是否开启厨师
     public bool isChef;
+    //是否开启服务员
+    public bool isWaiter;
 
 
     private void Awake()
     {
-        aiForChef = gameObject.AddComponent<NpcAIWorkerForChefCpt>();
+
     }
 
     /// <summary>
-    /// 根据意图设置目的地
+    /// 设置料理
     /// </summary>
-    public void SetDestinationByIntent(WorkerIntentEnum intent, BuildStoveCpt stoveCpt,MenuInfoBean menuInfo)
+    public void SetIntentForCook(BuildStoveCpt stoveCpt,MenuForCustomer foodData)
     {
-        switch (intent)
-        {
-            case WorkerIntentEnum.Cook:
-                aiForChef.SetCookData(stoveCpt, menuInfo);
-                break;
-        }
+        workerIntent = WorkerIntentEnum.Cook;
+        aiForChef.SetCookData(stoveCpt, foodData);
+    }
+
+    /// <summary>
+    /// 设置跑堂
+    /// </summary>
+    /// <param name="stoveCpt"></param>
+    public void SetIntentForWaiter(BuildStoveCpt stoveCpt)
+    {
+        workerIntent = WorkerIntentEnum.Waiter;
     }
 }

@@ -5,6 +5,8 @@ using System.Collections;
 public class NpcAIWorkerForChefCpt : BaseMonoBehaviour
 {
     private NpcAIWorkerCpt mNpcAIWorker;
+    //做菜的进度图标
+    public GameObject cookPro;
 
     private void Start()
     {
@@ -22,48 +24,67 @@ public class NpcAIWorkerForChefCpt : BaseMonoBehaviour
     //灶台
     public BuildStoveCpt stoveCpt;
     //做的菜
-    public MenuInfoBean menuInfo;
+    public MenuForCustomer foodData;
     //烹饪点
-    public List<Vector3> cookPosition;
+    public List<Vector3> cookPositionList;
     //厨师状态
     public ChefStatue chefStatue;
 
+    private Vector3 cookPosition;
+    private float cookAnimTime;
     private void FixedUpdate()
     {
-        if (CheckUtil.ListIsNull(cookPosition))
+        if (CheckUtil.ListIsNull(cookPositionList))
             return;
         switch (chefStatue)
         {
             case ChefStatue.GoToCook:
-                if (Vector2.Distance(transform.position, cookPosition[0]) < 0.1f)
+                if (Vector2.Distance(transform.position, cookPositionList[0]) < 0.1f)
                 {
                     chefStatue = ChefStatue.Cooking;
                     StartCoroutine(StartCook());
+                    ChangeCookPosition();
+                    cookPro.SetActive(true);
                 }
                 break;
             case ChefStatue.Cooking:
+                cookAnimTime -= Time.deltaTime;
+                if (Vector2.Distance(transform.position, cookPosition) < 0.1f&& cookAnimTime<0)
+                {
+                    ChangeCookPosition();     
+                }
                 break;
         }
-    
     }
 
-    public void SetCookData(BuildStoveCpt stoveCpt, MenuInfoBean menuInfo)
+    public void ChangeCookPosition()
+    {
+        cookAnimTime = Random.Range(2,3);
+        cookPosition = RandomUtil.GetRandomDataByList(cookPositionList);
+        mNpcAIWorker.characterMoveCpt.SetDestination(cookPosition);
+    }
+
+    public void SetCookData(BuildStoveCpt stoveCpt, MenuForCustomer foodData)
     {
         this.stoveCpt = stoveCpt;
-        this.menuInfo = menuInfo;
-        cookPosition = stoveCpt.GetCookPosition();
-        if (CheckUtil.ListIsNull(cookPosition))
+        this.foodData = foodData;
+        cookPositionList = stoveCpt.GetCookPosition();
+        if (CheckUtil.ListIsNull(cookPositionList))
         {
             LogUtil.Log("厨师寻路失败-没有灶台烹饪点");
             return;
         }
-        mNpcAIWorker.characterMoveCpt.SetDestination(cookPosition[0]);
+        mNpcAIWorker.characterMoveCpt.SetDestination(cookPositionList[0]);
         chefStatue = ChefStatue.GoToCook;
     }
 
     public IEnumerator StartCook()
     {
-        yield return new WaitForSeconds(menuInfo.cook_time);
-        stoveCpt.SetFood(menuInfo);
+        yield return new WaitForSeconds(foodData.food.cook_time);
+        cookPro.SetActive(false);
+        stoveCpt.SetFood(foodData);
+        stoveCpt.ClearChef();
+        chefStatue = ChefStatue.Idle;
+        mNpcAIWorker.workerIntent = NpcAIWorkerCpt.WorkerIntentEnum.Idle;
     }
 }

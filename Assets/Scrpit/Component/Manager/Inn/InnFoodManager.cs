@@ -20,7 +20,15 @@ public class InnFoodManager : BaseManager,IMenuInfoView
     {
        return GetSpriteByName(name, listFoodIcon);
     }
-
+    /// <summary>
+    /// 通过名字获取食物图标
+    /// </summary>
+    /// <param name="name"></param>
+    /// <returns></returns>
+    public Sprite GetFoodLastSpriteByName(string name)
+    {
+        return GetSpriteByName(name, listFoodLastIcon);
+    }
     private void Awake()
     {
         mMenuInfoController = new MenuInfoController(this,this);

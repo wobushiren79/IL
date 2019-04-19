@@ -23,10 +23,15 @@ public class InnHandler : BaseMonoBehaviour
     public InnTableHandler innTableHandler;
     //烹饪处理
     public InnCookHandler innCookHandler;
+    //服务处理
+    public InnWaiterHandler innWaiterHandler;
+
     //排队的人
     public List<NpcAICustomerCpt> cusomerQueue = new List<NpcAICustomerCpt>();
     //排队等待烹饪的食物
-    public List<MenuInfoBean> foodQueue = new List<MenuInfoBean>();
+    public List<MenuForCustomer> foodQueue = new List<MenuForCustomer>();
+    //排队送餐的食物
+    public List<FoodForCustomerCpt> sendQueue = new List<FoodForCustomerCpt>();
 
     /// <summary>
     /// 初始化客栈
@@ -60,6 +65,11 @@ public class InnHandler : BaseMonoBehaviour
                     foodQueue.RemoveAt(0);
                 }
             }
+            //排队送菜处理
+            if (!CheckUtil.ListIsNull(sendQueue))
+            {
+
+            }
         }
     }
 
@@ -81,28 +91,10 @@ public class InnHandler : BaseMonoBehaviour
     }
 
     /// <summary>
-    /// 加入食物烹饪列队
-    /// </summary>
-    /// <param name="menuInfo"></param>
-    public void AddFoodQueue(MenuInfoBean menuInfo)
-    {
-        foodQueue.Add(menuInfo);
-    }
-
-    /// <summary>
-    /// 移除食物烹饪列队
-    /// </summary>
-    /// <param name="menuInfo"></param>
-    public void RemoveFoodQueue(MenuInfoBean menuInfo)
-    {
-        foodQueue.Remove(menuInfo);
-    }
-
-    /// <summary>
     /// 点餐
     /// </summary>
     /// <returns></returns>
-    public MenuInfoBean OrderForFood()
+    public MenuInfoBean OrderForFood(NpcAICustomerCpt customerCpt, BuildTableCpt table)
     {
         List<MenuOwnBean> listOwnMenu = gameDataManager.gameData.menuList;
         MenuOwnBean menuOwnItem = RandomUtil.GetRandomDataByList(listOwnMenu);
@@ -113,10 +105,16 @@ public class InnHandler : BaseMonoBehaviour
             MenuInfoBean menuInfo = innFoodManager.listMenuData[i];
             if (menuInfo.menu_id == menuOwnItem.menuId)
             {
-                AddFoodQueue(menuInfo);
+                MenuForCustomer menuForCustomer = new MenuForCustomer();
+                menuForCustomer.food = menuInfo;
+                menuForCustomer.customer = customerCpt;
+                menuForCustomer.table = table;
+                foodQueue.Add(menuForCustomer);
                 return menuInfo;
             }
         }
         return null;
     }
+
+
 }

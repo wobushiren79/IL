@@ -53,7 +53,7 @@ public class NpcAICustomerCpt : BaseNpcAI
                 if (Vector2.Distance(transform.position, tableForEating.GetSeatPosition()) < 0.1f)
                 {
                     SetDestinationByIntent(CustomerIntentEnum.WaitFood);
-                    MenuInfoBean foodData=  innHandler.OrderForFood();
+                    MenuInfoBean foodData=  innHandler.OrderForFood(this, tableForEating);
                     characterShoutCpt.Shout(foodData.name);
                 }
                 break;

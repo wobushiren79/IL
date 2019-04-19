@@ -62,7 +62,7 @@ public class InnCookHandler : BaseMonoBehaviour
     /// <summary>
     ///  分配厨师做饭
     /// </summary>
-    public bool SetChefForCook(MenuInfoBean foodData)
+    public bool SetChefForCook(MenuForCustomer foodData)
     {
         lock (SetChefLock)
         {
@@ -89,7 +89,7 @@ public class InnCookHandler : BaseMonoBehaviour
             if (chefCpt != null && stoveCpt != null)
             {
                 stoveCpt.SetChef(chefCpt);
-                chefCpt.SetDestinationByIntent(NpcAIWorkerCpt.WorkerIntentEnum.Cook, stoveCpt, foodData);
+                chefCpt.SetIntentForCook(stoveCpt, foodData);
                 return true;
             }
             else

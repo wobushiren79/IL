@@ -10,8 +10,9 @@ public class ControlForBuildCpt : BaseControl
     //屏幕
     public RectTransform screenRTF;
     //数据管理
-    public InnBuildManager innBuildManager;
     public GameDataManager gameDataManager;
+    //建造者
+    public InnFurnitureBuilder innFurnitureBuilder;
     //地形模型
     public GameObject listBuildSpaceContent;
     public GameObject itemBuildSpaceModel;
@@ -136,7 +137,7 @@ public class ControlForBuildCpt : BaseControl
     public void SetBuildItem(long id)
     {
         DestoryBuild();
-        buildItemObj = innBuildManager.GetFurnitureObjById(id, buildContainer.transform);
+        buildItemObj = innFurnitureBuilder.BuildFurniture(id);
         if (buildItemObj == null)
             return;
         buildItemCpt = buildItemObj.GetComponent<BaseBuildItemCpt>();
