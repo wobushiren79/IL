@@ -38,11 +38,11 @@ public class CharacterMoveCpt : BaseMonoBehaviour
         {
             if (navMeshAgent.path.corners.Length>1)
             {
-                Move(navMeshAgent.nextPosition);
+               Move(navMeshAgent.nextPosition);
             }
             else
             {
-                Stop();
+               Stop();
             }
         }
     }

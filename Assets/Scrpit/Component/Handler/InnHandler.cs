@@ -68,7 +68,11 @@ public class InnHandler : BaseMonoBehaviour
             //排队送菜处理
             if (!CheckUtil.ListIsNull(sendQueue))
             {
-
+                bool isSuccess = innWaiterHandler.SetSendFood(sendQueue[0]);
+                if (isSuccess)
+                {
+                    sendQueue.RemoveAt(0);
+                }
             }
         }
     }

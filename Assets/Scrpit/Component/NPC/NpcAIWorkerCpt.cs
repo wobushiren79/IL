@@ -42,8 +42,9 @@ public class NpcAIWorkerCpt : BaseNpcAI
     /// 设置跑堂
     /// </summary>
     /// <param name="stoveCpt"></param>
-    public void SetIntentForWaiter(BuildStoveCpt stoveCpt)
+    public void SetIntentForWaiterSend(FoodForCustomerCpt food)
     {
         workerIntent = WorkerIntentEnum.Waiter;
+        aiForWaiter.SetFoodSend(food);
     }
 }

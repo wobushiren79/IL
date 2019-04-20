@@ -25,8 +25,7 @@ public class ControlForBuildCpt : BaseControl
     public GameObject buildItemObj;
     public BaseBuildItemCpt buildItemCpt;
     public List<SpriteRenderer> listBuildSpaceSR = new List<SpriteRenderer>();
-
-
+    
     public override void StartControl()
     {
         base.StartControl();

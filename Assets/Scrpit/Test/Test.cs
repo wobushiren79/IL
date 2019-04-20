@@ -5,11 +5,12 @@ using UnityEngine.AI;
 
 public class Test : MonoBehaviour {
 
-    public CharacterMoveCpt characterMoveCpt;
+    public NavMeshAgent agent;
     public Transform targetTF;
+
     private void Start()
     {
-        characterMoveCpt.SetDestination(targetTF.position);
+        agent.SetDestination(targetTF.position);
     }
 
     private void Update()

@@ -17,6 +17,7 @@ public class InnCookHandler : BaseMonoBehaviour
 
     //锁
     private static Object SetChefLock = new Object();
+
     private void Start()
     {
         InitChefCpt();
@@ -89,6 +90,7 @@ public class InnCookHandler : BaseMonoBehaviour
             if (chefCpt != null && stoveCpt != null)
             {
                 stoveCpt.SetChef(chefCpt);
+                foodData.stove = stoveCpt;
                 chefCpt.SetIntentForCook(stoveCpt, foodData);
                 return true;
             }
