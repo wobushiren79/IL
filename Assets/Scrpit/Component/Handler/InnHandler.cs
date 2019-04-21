@@ -25,6 +25,8 @@ public class InnHandler : BaseMonoBehaviour
     public InnCookHandler innCookHandler;
     //服务处理
     public InnWaiterHandler innWaiterHandler;
+    // 支付处理
+    public InnPayHandler innPayHandler;
 
     //排队的人
     public List<NpcAICustomerCpt> cusomerQueue = new List<NpcAICustomerCpt>();
@@ -32,7 +34,10 @@ public class InnHandler : BaseMonoBehaviour
     public List<MenuForCustomer> foodQueue = new List<MenuForCustomer>();
     //排队送餐的食物
     public List<FoodForCustomerCpt> sendQueue = new List<FoodForCustomerCpt>();
-
+    //排队清理的食物
+    public List<FoodForCustomerCpt> clearQueue = new List<FoodForCustomerCpt>();
+    //排队算账的人
+    public List<NpcAICustomerCpt> payQueue = new List<NpcAICustomerCpt>();
     /// <summary>
     /// 初始化客栈
     /// </summary>
@@ -40,6 +45,7 @@ public class InnHandler : BaseMonoBehaviour
     {
         innTableHandler.InitTableList();
         innCookHandler.InitStoveList();
+        innPayHandler.InitCounterList();
     }
 
     private void FixedUpdate()
@@ -74,24 +80,16 @@ public class InnHandler : BaseMonoBehaviour
                     sendQueue.RemoveAt(0);
                 }
             }
+            //排队清理处理
+            if (!CheckUtil.ListIsNull(clearQueue))
+            {
+                bool isSuccess = innWaiterHandler.SetClearFood(clearQueue[0]);
+                if (isSuccess)
+                {
+                    clearQueue.RemoveAt(0);
+                }
+            }
         }
-    }
-
-    /// <summary>
-    /// 加入排队
-    /// </summary>
-    public void AddWaitQueue(NpcAICustomerCpt customerCpt)
-    {
-        cusomerQueue.Add(customerCpt);
-    }
-
-    /// <summary>
-    /// 移除排队
-    /// </summary>
-    /// <param name="customerCpt"></param>
-    public void RemoveWaitQueue(NpcAICustomerCpt customerCpt)
-    {
-        cusomerQueue.Remove(customerCpt);
     }
 
     /// <summary>
@@ -120,5 +118,14 @@ public class InnHandler : BaseMonoBehaviour
         return null;
     }
 
+    /// <summary>
+    /// 获取柜台
+    /// </summary>
+    /// <returns></returns>
+    public BuildCounterCpt GetCounter()
+    {
+        BuildCounterCpt counterCpt=RandomUtil.GetRandomDataByList(innPayHandler.listCounterCpt);
+        return counterCpt;
+    }
 
 }

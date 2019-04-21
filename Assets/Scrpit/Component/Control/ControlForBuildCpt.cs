@@ -1,6 +1,5 @@
 ﻿using UnityEngine;
 using UnityEditor;
-using Cinemachine;
 using System.Collections.Generic;
 
 public class ControlForBuildCpt : BaseControl
@@ -25,7 +24,7 @@ public class ControlForBuildCpt : BaseControl
     public GameObject buildItemObj;
     public BaseBuildItemCpt buildItemCpt;
     public List<SpriteRenderer> listBuildSpaceSR = new List<SpriteRenderer>();
-    
+
     public override void StartControl()
     {
         base.StartControl();
@@ -66,7 +65,7 @@ public class ControlForBuildCpt : BaseControl
             List<InnResBean> listFurniture = gameDataManager.gameData.GetInnBuildData().GetFurnitureList();
             //是否能建造
             bool canBuild = true;
-            foreach(SpriteRenderer itemRenderer in listBuildSpaceSR)
+            foreach (SpriteRenderer itemRenderer in listBuildSpaceSR)
             {
                 bool hasBuild = false;
                 Vector3 srPosition = itemRenderer.transform.position;
@@ -74,7 +73,7 @@ public class ControlForBuildCpt : BaseControl
                 {
                     foreach (Vector3Bean itemPosition in itemData.GetListPosition())
                     {
-                        if(itemPosition.x == srPosition.x && itemPosition.y == srPosition.y)
+                        if (itemPosition.x == srPosition.x && itemPosition.y == srPosition.y)
                         {
                             hasBuild = true;
                             break;
@@ -97,26 +96,31 @@ public class ControlForBuildCpt : BaseControl
 
             if (Input.GetButtonDown("Confirm"))
             {
-                //能建造
-                if (canBuild)
+                //如果在不在UI范围内才处理
+                if (UnityEngine.Screen.width - Input.mousePosition.x - 300 > 0)
                 {
-                    transform.position = buildItemObj.transform.position;
-                    buildItemObj.transform.position = truePosition;
-                    //获取提示区域所占点
-                    List<Vector3> buildPosition = new List<Vector3>();
-                    for (int i = 0; i < listBuildSpaceSR.Count; i++)
+                    //能建造
+                    if (canBuild)
                     {
-                        buildPosition.Add(listBuildSpaceSR[i].transform.position);
+                        transform.position = buildItemObj.transform.position;
+                        buildItemObj.transform.position = truePosition;
+                        //获取提示区域所占点
+                        List<Vector3> buildPosition = new List<Vector3>();
+                        for (int i = 0; i < listBuildSpaceSR.Count; i++)
+                        {
+                            buildPosition.Add(listBuildSpaceSR[i].transform.position);
+                        }
+                        InnResBean addData = new InnResBean(buildItemCpt.buildId, truePosition, buildPosition, buildItemCpt.direction);
+                        gameDataManager.gameData.GetInnBuildData().AddFurniture(addData);
+                        ClearBuild();
                     }
-                    InnResBean addData = new InnResBean(buildItemCpt.buildId, truePosition, buildPosition, buildItemCpt.direction);
-                    gameDataManager.gameData.GetInnBuildData().AddFurniture(addData);
-                    ClearBuild();
+                    //不能建造
+                    else
+                    {
+                        toastView.ToastHint("不能建造");
+                    }
                 }
-                //不能建造
-                else
-                {
-                    toastView.ToastHint("不能建造");
-                }
+
 
             }
             if (Input.GetButtonDown("Rotate_Left"))
@@ -144,7 +148,7 @@ public class ControlForBuildCpt : BaseControl
         Vector3 mousePosition;
         RectTransformUtility.ScreenPointToWorldPointInRectangle(screenRTF, Input.mousePosition, Camera.main, out mousePosition);
         listBuildSpaceContent.transform.position = mousePosition;
-        buildItemCpt.transform.position= mousePosition;
+        buildItemCpt.transform.position = mousePosition;
         BuildSpace();
     }
 

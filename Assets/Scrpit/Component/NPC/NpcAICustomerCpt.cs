@@ -12,6 +12,10 @@ public class NpcAICustomerCpt : BaseNpcAI
         WaitSeat=2,//等待座位
         GotoSeat=3,//前往座位
         WaitFood=4,//等待食物
+        Eatting=5,//吃
+        GotoPay=6,//去付钱
+        WaitPay=7,//等待付钱
+        Pay=8,//正在付钱
         Leave //离开
     }
 
@@ -26,7 +30,12 @@ public class NpcAICustomerCpt : BaseNpcAI
     public Vector3 doorPosition;
     //等到的位置
     public BuildTableCpt tableForEating;
-
+    //做好的食物
+    public FoodForCustomerCpt foodData;
+    //支付的地方
+    public BuildCounterCpt counterCpt;
+    //等待支付时距离柜台的距离
+    public float waitPayDistance;
     private void FixedUpdate()
     {
         switch (intentType)
@@ -44,7 +53,7 @@ public class NpcAICustomerCpt : BaseNpcAI
                     StopMove();
                     intentType = CustomerIntentEnum.WaitSeat;
                     //加入排队队伍
-                    innHandler.AddWaitQueue(this);
+                    innHandler.cusomerQueue.Add(this);
                     //开始等待座位
                     StartCoroutine(StartWaitSeat());
                 }
@@ -55,6 +64,14 @@ public class NpcAICustomerCpt : BaseNpcAI
                     SetDestinationByIntent(CustomerIntentEnum.WaitFood);
                     MenuInfoBean foodData=  innHandler.OrderForFood(this, tableForEating);
                     characterShoutCpt.Shout(foodData.name);
+                }
+                break;
+            case CustomerIntentEnum.GotoPay:
+                if (Vector2.Distance(transform.position, counterCpt.GetPayPosition()) < waitPayDistance)
+                {
+                    characterMoveCpt.StopAutoMove();
+                    SetDestinationByIntent(CustomerIntentEnum.WaitPay);
+                    innHandler.payQueue.Add(this);
                 }
                 break;
         }
@@ -83,6 +100,13 @@ public class NpcAICustomerCpt : BaseNpcAI
     /// <summary>
     /// 根据意图设置目的地
     /// </summary>
+    /// 
+    public void SetDestinationByIntent(CustomerIntentEnum intent,FoodForCustomerCpt foodData)
+    {
+        this.foodData = foodData;
+        SetDestinationByIntent(intent);
+    }
+
     public void SetDestinationByIntent(CustomerIntentEnum intent)
     {
         this.intentType = intent;
@@ -112,11 +136,19 @@ public class NpcAICustomerCpt : BaseNpcAI
                 }
               
                 break;
+            case CustomerIntentEnum.Eatting:
+                StartCoroutine(StartEat());
+                break;
+            case CustomerIntentEnum.GotoPay:
+                counterCpt= innHandler.GetCounter();
+                characterMoveCpt.SetDestination(counterCpt.GetPayPosition());
+                break;
             case CustomerIntentEnum.Leave:
                 characterMoveCpt.SetDestination(endPosition);
                 break;
         }
     }
+
 
     /// <summary>
     /// 开始等待座位
@@ -125,7 +157,20 @@ public class NpcAICustomerCpt : BaseNpcAI
     public IEnumerator StartWaitSeat()
     {
         yield return new WaitForSeconds(10);
-        innHandler.RemoveWaitQueue(this);
+        innHandler.cusomerQueue.Remove(this);
         SetDestinationByIntent(CustomerIntentEnum.Leave);
+    }
+
+    /// <summary>
+    /// 开始吃
+    /// </summary>
+    /// <returns></returns>
+    public IEnumerator StartEat()
+    {
+        yield return new WaitForSeconds(5);
+        waitPayDistance = Random.Range(0.1f,0.5f);
+        SetDestinationByIntent(CustomerIntentEnum.GotoPay);
+        foodData.FinishFood();
+        innHandler.clearQueue.Add(foodData);
     }
 }

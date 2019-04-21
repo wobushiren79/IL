@@ -1,6 +1,8 @@
 ﻿using UnityEngine;
 using UnityEditor;
 using UnityEngine.UI;
+using UnityEngine.AI;
+
 public class UIGameBuild : BaseUIComponent
 {
     //返回按钮
@@ -8,6 +10,7 @@ public class UIGameBuild : BaseUIComponent
     //类型按钮
     public Button btTypeTable;
     public Button btTypeStove;
+    public Button btTypeCounter;
 
     public GameObject listBuildContent;
     public GameObject itemBuildModel;
@@ -22,7 +25,7 @@ public class UIGameBuild : BaseUIComponent
 
     //游戏进程处理
     public InnHandler innHandler;
-
+    public NavMeshSurface2d navMesh;
     public void Start()
     {
         if (btBack != null)
@@ -31,6 +34,8 @@ public class UIGameBuild : BaseUIComponent
             btTypeTable.onClick.AddListener(CreateTableList);
         if (btTypeStove != null)
             btTypeStove.onClick.AddListener(CreateStoveList);
+        if (btTypeCounter != null)
+            btTypeCounter.onClick.AddListener(CreateCounterList);
         CreateBuildList(BuildItemBean.BuildType.Table);
     }
 
@@ -47,6 +52,7 @@ public class UIGameBuild : BaseUIComponent
         controlForMove.StartControl();
         controlForBuild.EndControl();
         controlForBuild.DestoryBuild();
+        navMesh.BuildNavMesh();
         if (innHandler != null)
             innHandler.InitInn();
     }
@@ -57,6 +63,8 @@ public class UIGameBuild : BaseUIComponent
     /// <param name="type"></param>
     public void CreateBuildList(BuildItemBean.BuildType type)
     {
+        //删除当前选中
+        controlForBuild.DestoryBuild();
         if (listBuildContent == null)
             return;
         if (itemBuildModel == null)
@@ -71,9 +79,10 @@ public class UIGameBuild : BaseUIComponent
 
         for (int i = 0; i < gameDataManager.gameData.buildItemList.Count; i++)
         {
-
             ItemBean itemData = gameDataManager.gameData.buildItemList[i];
-            BuildItemBean buildData = innBuildManager.GetTableDataById(itemData.itemId);
+            BuildItemBean buildData = innBuildManager.GetBuildDataById(itemData.itemId);
+            if (buildData == null)
+                continue;
             if ((int)type == buildData.build_type)
             {
                 CreateBuildItem(itemData, buildData);
@@ -103,6 +112,11 @@ public class UIGameBuild : BaseUIComponent
     public void CreateStoveList()
     {
         CreateBuildList(BuildItemBean.BuildType.Stove);
+    }
+
+    public void CreateCounterList()
+    {
+        CreateBuildList(BuildItemBean.BuildType.Counter);
     }
 
     /// <summary>

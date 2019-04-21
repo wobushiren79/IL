@@ -4,10 +4,7 @@ using System.Collections.Generic;
 
 public class InnBuildManager : BaseManager, IBuildDataView
 {
-    public List<BuildItemBean> listBuildFloorData;
-    public List<BuildItemBean> listBuildWallData;
-    public List<BuildItemBean> listBuildTableData;
-    public List<BuildItemBean> listBuildStoveData;
+    public List<BuildItemBean> listBuildData;
 
     public BuildDataController buildDataController;
 
@@ -51,48 +48,19 @@ public class InnBuildManager : BaseManager, IBuildDataView
         return furnitureObj; 
     }
 
-    /// <summary>
-    /// 根据地板ID获取地板数据
-    /// </summary>
-    /// <param name="id"></param>
-    /// <returns></returns>
-    public BuildItemBean GetFloorDataById(long id)
-    {
-        return GetBuildDataById(id, listBuildFloorData);
-    }
-
-    /// <summary>
-    /// 根据墙ID获取墙数据
-    /// </summary>
-    /// <param name="id"></param>
-    /// <returns></returns>
-    public BuildItemBean GetWallDataById(long id)
-    {
-        return GetBuildDataById(id, listBuildWallData);
-    }
-
-    /// <summary>
-    /// 根据桌子ID获取墙数据
-    /// </summary>
-    /// <param name="id"></param>
-    /// <returns></returns>
-    public BuildItemBean GetTableDataById(long id)
-    {
-        return GetBuildDataById(id, listBuildTableData);
-    }
 
     /// <summary>
     /// 根据建筑ID获取建筑
     /// </summary>
     /// <param name="id"></param>
     /// <returns></returns>
-    public BuildItemBean GetBuildDataById(long id, List<BuildItemBean> listData)
+    public BuildItemBean GetBuildDataById(long id)
     {
-        if (listData == null)
+        if (listBuildData == null)
             return null;
-        for (int i = 0; i < listData.Count; i++)
+        for (int i = 0; i < listBuildData.Count; i++)
         {
-            BuildItemBean itemData = listData[i];
+            BuildItemBean itemData = listBuildData[i];
             if (itemData.id == id)
             {
                 return itemData;
@@ -109,28 +77,7 @@ public class InnBuildManager : BaseManager, IBuildDataView
         {
             return;
         }
-        listBuildFloorData.Clear();
-        listBuildWallData.Clear();
-        for (int i = 0; i < listData.Count; i++)
-        {
-            BuildItemBean itemData = listData[i];
-            if (itemData.build_type == (int)BuildItemBean.BuildType.Floor)
-            {
-                listBuildFloorData.Add(itemData);
-            }
-            else if (itemData.build_type == (int)BuildItemBean.BuildType.Wall)
-            {
-                listBuildWallData.Add(itemData);
-            }
-            else if (itemData.build_type == (int)BuildItemBean.BuildType.Table)
-            {
-                listBuildTableData.Add(itemData);
-            }
-            else if (itemData.build_type == (int)BuildItemBean.BuildType.Stove)
-            {
-                listBuildTableData.Add(itemData);
-            }
-        }
+        this.listBuildData = listData;
     }
 
     public void GetAllBuildItemsFail()
@@ -139,21 +86,7 @@ public class InnBuildManager : BaseManager, IBuildDataView
 
     public void GetBuildItemsByTypeSuccess(BuildItemBean.BuildType type, List<BuildItemBean> listData)
     {
-        switch (type)
-        {
-            case BuildItemBean.BuildType.Floor:
-                listBuildFloorData = listData;
-                break;
-            case BuildItemBean.BuildType.Wall:
-                listBuildWallData = listData;
-                break;
-            case BuildItemBean.BuildType.Table:
-                listBuildTableData = listData;
-                break;
-            case BuildItemBean.BuildType.Stove:
-                listBuildStoveData = listData;
-                break;
-        }
+        this.listBuildData = listData;
     }
 
     public void GetBuildItemsByTypeFail()

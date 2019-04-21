@@ -1,6 +1,8 @@
 ﻿using UnityEngine;
 using UnityEditor;
 using UnityEngine.AI;
+using System.Collections.Generic;
+using System.Collections;
 
 public class CharacterMoveCpt : BaseMonoBehaviour
 {
@@ -14,7 +16,8 @@ public class CharacterMoveCpt : BaseMonoBehaviour
     public NavMeshAgent navMeshAgent;
     public GameObject characterBodyObj;
     //是否手动移动
-    public bool isManualMove=false;
+    public bool isManualMove = false;
+
 
     private void Awake()
     {
@@ -28,6 +31,7 @@ public class CharacterMoveCpt : BaseMonoBehaviour
             navMeshAgent.updateRotation = false;
             navMeshAgent.updateUpAxis = false;
             navMeshAgent.updatePosition = false;
+            //NavMesh.avoidancePredictionTime = 5f;
         }
     }
 
@@ -36,13 +40,13 @@ public class CharacterMoveCpt : BaseMonoBehaviour
     {
         if (!isManualMove && navMeshAgent != null)
         {
-            if (navMeshAgent.path.corners.Length>1)
+            if (navMeshAgent.path.corners.Length > 1)
             {
-               Move(navMeshAgent.nextPosition);
+                Move(navMeshAgent.nextPosition);
             }
             else
             {
-               Stop();
+                Stop();
             }
         }
     }
@@ -53,7 +57,7 @@ public class CharacterMoveCpt : BaseMonoBehaviour
     /// <param name="position">目的地</param>
     public bool SetDestination(Vector3 position)
     {
-        isManualMove = false ;
+        isManualMove = false;
         bool canGo = true;
         if (navMeshAgent != null)
         {
@@ -61,6 +65,7 @@ public class CharacterMoveCpt : BaseMonoBehaviour
             navMeshAgent.updateRotation = false;
             navMeshAgent.updateUpAxis = false;
             navMeshAgent.updatePosition = false;
+           // NavMesh.avoidancePredictionTime = 5f;
             navMeshAgent.speed = moveSpeed;
             canGo = navMeshAgent.SetDestination(position);
 
@@ -78,7 +83,7 @@ public class CharacterMoveCpt : BaseMonoBehaviour
     /// <returns></returns>
     public NavMeshPathStatus GetAutoMovePathStatus()
     {
-       return   navMeshAgent.pathStatus;
+        return navMeshAgent.pathStatus;
     }
 
     /// <summary>

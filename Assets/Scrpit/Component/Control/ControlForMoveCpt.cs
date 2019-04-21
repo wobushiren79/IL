@@ -1,6 +1,5 @@
 ﻿using UnityEngine;
 using UnityEditor;
-using Cinemachine;
 
 public class ControlForMoveCpt : BaseControl
 {

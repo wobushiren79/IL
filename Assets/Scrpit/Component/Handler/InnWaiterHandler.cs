@@ -67,4 +67,32 @@ public class InnWaiterHandler : BaseMonoBehaviour
             return false;
         }
     }
+
+
+    /// <summary>
+    /// 设置清理食物
+    /// </summary>
+    /// <returns></returns>
+    public bool SetClearFood(FoodForCustomerCpt foodCpt)
+    {
+        lock (SetWaiterLock)
+        {
+            NpcAIWorkerCpt waiterCpt = null;
+            for (int i = 0; i < listWaiterCpt.Count; i++)
+            {
+                NpcAIWorkerCpt npcAI = listWaiterCpt[i];
+                if (npcAI.workerIntent == NpcAIWorkerCpt.WorkerIntentEnum.Idle)
+                {
+                    waiterCpt = npcAI;
+                    break;
+                }
+            }
+            if (waiterCpt != null)
+            {
+                waiterCpt.SetIntentForWaiterClear(foodCpt);
+                return true;
+            }
+            return false;
+        }
+    }
 }

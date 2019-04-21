@@ -22,7 +22,8 @@ public class NpcAIWorkerCpt : BaseNpcAI
     public bool isChef;
     //是否开启服务员
     public bool isWaiter;
-
+    //是否开启算账
+    public bool isAccounting;
 
     private void Awake()
     {
@@ -46,5 +47,15 @@ public class NpcAIWorkerCpt : BaseNpcAI
     {
         workerIntent = WorkerIntentEnum.Waiter;
         aiForWaiter.SetFoodSend(food);
+    }
+
+    /// <summary>
+    /// 设置跑堂
+    /// </summary>
+    /// <param name="stoveCpt"></param>
+    public void SetIntentForWaiterClear(FoodForCustomerCpt food)
+    {
+        workerIntent = WorkerIntentEnum.Waiter;
+        aiForWaiter.SetFoodClear(food);
     }
 }

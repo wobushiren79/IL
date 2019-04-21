@@ -26,7 +26,7 @@ public class InnFloorBuilder : BaseTilemapBuilder
         for (int i = 0; i < listData.Count; i++)
         {
             InnResBean itemData = listData[i];
-            BuildItemBean buildItemData= InnBuildManager.GetFloorDataById(itemData.id);
+            BuildItemBean buildItemData= InnBuildManager.GetBuildDataById(itemData.id);
             Build(buildItemData.icon_key, (int)itemData.startPosition.x, (int)itemData.startPosition.y);
         }
     }
