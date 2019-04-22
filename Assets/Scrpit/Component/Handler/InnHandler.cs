@@ -36,8 +36,6 @@ public class InnHandler : BaseMonoBehaviour
     public List<FoodForCustomerCpt> sendQueue = new List<FoodForCustomerCpt>();
     //排队清理的食物
     public List<FoodForCustomerCpt> clearQueue = new List<FoodForCustomerCpt>();
-    //排队算账的人
-    public List<NpcAICustomerCpt> payQueue = new List<NpcAICustomerCpt>();
     /// <summary>
     /// 初始化客栈
     /// </summary>
@@ -65,7 +63,7 @@ public class InnHandler : BaseMonoBehaviour
             //排队做菜处理
             if (!CheckUtil.ListIsNull(foodQueue))
             {
-                bool isSuccess= innCookHandler.SetChefForCook(foodQueue[0]);
+                bool isSuccess = innCookHandler.SetChefForCook(foodQueue[0]);
                 if (isSuccess)
                 {
                     foodQueue.RemoveAt(0);
@@ -87,6 +85,22 @@ public class InnHandler : BaseMonoBehaviour
                 if (isSuccess)
                 {
                     clearQueue.RemoveAt(0);
+                }
+            }
+            //排队支付处理
+            if (!CheckUtil.ListIsNull(innPayHandler.listCounterCpt))
+            {
+                for (int i = 0; i < innPayHandler.listCounterCpt.Count; i++)
+                {
+                    BuildCounterCpt counterCpt = innPayHandler.listCounterCpt[i];
+                    if (!CheckUtil.ListIsNull(counterCpt.payQueue))
+                    {
+                        bool isSuccess = innPayHandler.SetPay(counterCpt.payQueue[0]);
+                        if (isSuccess)
+                        {
+                            counterCpt.payQueue.RemoveAt(0);
+                        }
+                    }
                 }
             }
         }
@@ -124,8 +138,16 @@ public class InnHandler : BaseMonoBehaviour
     /// <returns></returns>
     public BuildCounterCpt GetCounter()
     {
-        BuildCounterCpt counterCpt=RandomUtil.GetRandomDataByList(innPayHandler.listCounterCpt);
+        BuildCounterCpt counterCpt = RandomUtil.GetRandomDataByList(innPayHandler.listCounterCpt);
         return counterCpt;
     }
 
+    /// <summary>
+    /// 取消食物 用于顾客不满意要离开
+    /// </summary>
+    /// <param name="customerCpt"></param>
+    public void CanelOrder(NpcAICustomerCpt customerCpt)
+    {
+
+    }
 }

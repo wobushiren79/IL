@@ -78,10 +78,15 @@ public class InnCookHandler : BaseMonoBehaviour
                     break;
                 }
             }
+            if (chefCpt == null)
+            {
+                return false;
+            }
             for (int i = 0; i < listStoveCpt.Count; i++)
             {
                 BuildStoveCpt itemStove = listStoveCpt[i];
-                if (itemStove.chefCpt == null)
+                //检测是否能到达烹饪点
+                if (itemStove.chefCpt == null && CheckUtil.CheckPath(chefCpt.transform.position, itemStove.GetCookPosition()[0]) )
                 {
                     stoveCpt = itemStove;
                     break;

@@ -38,7 +38,8 @@ public class NpcAIWorkerForWaiterCpt : BaseMonoBehaviour
         switch (waiterStatue)
         {
             case WaiterStatue.GoToGetFood:
-                if (Vector2.Distance(transform.position, foodCpt.foodData.stove.GetTakeFoodPosition()) < 1f)
+                
+                if (!CheckCustomerLeave()&&Vector2.Distance(transform.position, foodCpt.foodData.stove.GetTakeFoodPosition()) < 0.1f)
                 {
                     Transform waitTake = CptUtil.GetCptInChildrenByName<Transform>(gameObject, "Take");
                     foodCpt.transform.SetParent(waitTake);
@@ -51,6 +52,14 @@ public class NpcAIWorkerForWaiterCpt : BaseMonoBehaviour
                 }
                 break;
             case WaiterStatue.SendFood:
+                if (!CheckCustomerLeave() && foodCpt.foodData.customer == null || foodCpt.foodData.customer.intentType == NpcAICustomerCpt.CustomerIntentEnum.Leave)
+                {
+                    waiterStatue = WaiterStatue.Idle;
+                    mNpcAIWorker.workerIntent = NpcAIWorkerCpt.WorkerIntentEnum.Idle;
+                    sendPro.SetActive(false);
+                    Destroy(foodCpt.gameObject);
+                    return;
+                }
                 if (Vector2.Distance(transform.position, mTableTF.position) < 1f)
                 {
                     foodCpt.transform.SetParent(mTableTF);
@@ -74,12 +83,38 @@ public class NpcAIWorkerForWaiterCpt : BaseMonoBehaviour
         }
     }
 
+    /// <summary>
+    /// 检测顾客是否离开
+    /// </summary>
+    /// <returns></returns>
+    public bool CheckCustomerLeave()
+    {
+        if (foodCpt.foodData.customer == null || foodCpt.foodData.customer.intentType == NpcAICustomerCpt.CustomerIntentEnum.Leave)
+        {
+            SetStatusIdle();
+            Destroy(foodCpt.gameObject);
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+
     public void SetFoodSend(FoodForCustomerCpt foodCpt)
     {
-        this.foodCpt = foodCpt;
-        mNpcAIWorker.characterMoveCpt.SetDestination(foodCpt.foodData.stove.GetTakeFoodPosition());
-        waiterStatue = WaiterStatue.GoToGetFood;
-        sendPro.SetActive(true);
+        if (CheckUtil.CheckPath(transform.position, foodCpt.foodData.stove.GetTakeFoodPosition()))
+        {
+            this.foodCpt = foodCpt;
+            mNpcAIWorker.characterMoveCpt.SetDestination(foodCpt.foodData.stove.GetTakeFoodPosition());
+            waiterStatue = WaiterStatue.GoToGetFood;
+            sendPro.SetActive(true);
+        }
+        else
+        {
+            SetStatusIdle();
+        }
+ 
     }
 
     public void SetFoodClear(FoodForCustomerCpt foodCpt)
@@ -93,10 +128,19 @@ public class NpcAIWorkerForWaiterCpt : BaseMonoBehaviour
     public IEnumerator StartClear()
     {
         yield return new WaitForSeconds(5);
-        waiterStatue = WaiterStatue.Idle;
-        mNpcAIWorker.workerIntent = NpcAIWorkerCpt.WorkerIntentEnum.Idle;
-        clearPro.SetActive(false);
+        SetStatusIdle();
         this.foodCpt.foodData.table.tableState = BuildTableCpt.TableStateEnum.Idle;
         Destroy(this.foodCpt.gameObject);
+    }
+
+    /// <summary>
+    /// 设置当前员工无事可做
+    /// </summary>
+    public void SetStatusIdle()
+    {
+        waiterStatue = WaiterStatue.Idle;
+        mNpcAIWorker.workerIntent = NpcAIWorkerCpt.WorkerIntentEnum.Idle;
+        sendPro.SetActive(false);
+        clearPro.SetActive(false);
     }
 }

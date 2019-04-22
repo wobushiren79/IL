@@ -72,7 +72,7 @@ public class BuildStoveCpt : BaseBuildItemCpt
         FoodForCustomerCpt foodCpt = foodObj.GetComponent<FoodForCustomerCpt>();
         foodCpt.innFoodManager = innFoodManager;
         foodCpt.SetData(foodData);
-
+        foodData.customer.foodCpt = foodCpt;
         //送餐
         innHandler.sendQueue.Add(foodCpt);
     }

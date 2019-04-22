@@ -18,7 +18,7 @@ public class InnWaiterHandler : BaseMonoBehaviour
     }
 
     /// <summary>
-    /// 找到所有厨师
+    /// 找到所有服务员
     /// </summary>
     /// <returns></returns>
     public List<NpcAIWorkerCpt> InitWaiterCpt()
@@ -53,6 +53,7 @@ public class InnWaiterHandler : BaseMonoBehaviour
             for (int i = 0; i < listWaiterCpt.Count; i++)
             {
                 NpcAIWorkerCpt npcAI = listWaiterCpt[i];
+                //服务员空闲 并且能到达指定地点
                 if (npcAI.workerIntent == NpcAIWorkerCpt.WorkerIntentEnum.Idle)
                 {
                     waiterCpt = npcAI;

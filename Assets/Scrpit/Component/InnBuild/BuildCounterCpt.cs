@@ -4,7 +4,8 @@ using System.Collections.Generic;
 
 public class BuildCounterCpt : BaseBuildItemCpt
 {
-    public NpcAIWorkerCpt accountingCpt;
+    //操作者
+    public NpcAIWorkerCpt workerCpt;
 
     public GameObject leftPayPosition;
     public GameObject leftAccountingPosition;
@@ -17,6 +18,9 @@ public class BuildCounterCpt : BaseBuildItemCpt
 
     public GameObject downPayPosition;
     public GameObject downAccountingPosition;
+
+    //排队算账的人
+    public List<NpcAICustomerCpt> payQueue = new List<NpcAICustomerCpt>();
 
     /// <summary>
     /// 获取付款位置
@@ -42,7 +46,7 @@ public class BuildCounterCpt : BaseBuildItemCpt
     /// 获取算账位置
     /// </summary>
     /// <returns></returns>
-    public Vector3 GetAccountingosition()
+    public Vector3 GetAccountingPosition()
     {
         switch (direction)
         {

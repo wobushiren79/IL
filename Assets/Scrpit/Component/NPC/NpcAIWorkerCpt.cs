@@ -9,12 +9,15 @@ public class NpcAIWorkerCpt : BaseNpcAI
         Idle,//空闲
         Waiter,//跑堂
         Cook,//做菜
+        Accounting,//结账
     }
 
     //厨师AI控制
     public NpcAIWorkerForChefCpt aiForChef;
     //跑堂AI控制
     public NpcAIWorkerForWaiterCpt aiForWaiter;
+    //结账AI控制
+    public NpcAIWorkerForAccountingCpt aiForAccounting;
 
     public WorkerIntentEnum workerIntent = WorkerIntentEnum.Idle;//工作者的想法
 
@@ -57,5 +60,15 @@ public class NpcAIWorkerCpt : BaseNpcAI
     {
         workerIntent = WorkerIntentEnum.Waiter;
         aiForWaiter.SetFoodClear(food);
+    }
+
+    /// <summary>
+    /// 设置结账
+    /// </summary>
+    /// <param name="customerCpt"></param>
+    public void SetIntentForAccounting(NpcAICustomerCpt customerCpt)
+    {
+        workerIntent = WorkerIntentEnum.Accounting;
+        aiForAccounting.SetAccounting(customerCpt);
     }
 }

@@ -1,5 +1,7 @@
 ﻿
 using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.AI;
 
 public class CheckUtil {
 
@@ -44,5 +46,25 @@ public class CheckUtil {
         return int.TryParse(number, out temp);
     }
 
+    /// <summary>
+    /// 判断路径是否有效
+    /// </summary>
+    /// <param name="startPosition"></param>
+    /// <param name="endPosition"></param>
+    /// <returns></returns>
+    public static bool CheckPath(Vector3 startPosition,Vector3 endPosition)
+    {
+        
+        NavMeshPath navpath = new NavMeshPath();
+        NavMesh.CalculatePath(startPosition, endPosition, -1, navpath);
+        if (navpath.status == NavMeshPathStatus.PathPartial || navpath.status == NavMeshPathStatus.PathInvalid)
+        {
+            return false;
+        }
+        else
+        {
+            return true;
+        }
+    }
 
 }

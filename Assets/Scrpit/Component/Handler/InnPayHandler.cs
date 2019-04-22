@@ -5,7 +5,7 @@ using System.Collections.Generic;
 public class InnPayHandler : BaseMonoBehaviour
 {
     // 柜台列表
-    public List<BuildCounterCpt> listCounterCpt;
+    public List<BuildCounterCpt> listCounterCpt=new List<BuildCounterCpt>();
     // 算账人列表
     public List<NpcAIWorkerCpt> listAccountingCpt = new List<NpcAIWorkerCpt>();
     //柜台容器
@@ -59,26 +59,43 @@ public class InnPayHandler : BaseMonoBehaviour
     /// <summary>
     /// 设置算账数据
     /// </summary>
-    public bool SetPay()
+    public bool SetPay(NpcAICustomerCpt customer)
     {
         lock (SetPayLock)
         {
             NpcAIWorkerCpt accountingCpt = null;
+            List<NpcAIWorkerCpt> listIdleWorker = new List<NpcAIWorkerCpt>();
             for (int i = 0; i < listAccountingCpt.Count; i++)
             {
                 NpcAIWorkerCpt npcAI = listAccountingCpt[i];
                 if (npcAI.workerIntent == NpcAIWorkerCpt.WorkerIntentEnum.Idle)
                 {
-                    accountingCpt = npcAI;
-                    break;
+                    listIdleWorker.Add(npcAI);
                 }
             }
-            for (int i = 0; i < listCounterCpt.Count; i++)
+            //选取距离最近的NPC
+            if (listIdleWorker.Count == 0)
+                return false;
+            float distanceMin = -1;
+            for (int i = 0; i < listIdleWorker.Count; i++)
             {
-    
+                NpcAIWorkerCpt itemData = listIdleWorker[i];
+                float distance = Vector2.Distance(itemData.transform.position, customer.counterCpt.GetAccountingPosition());
+                if (distanceMin == -1)
+                {
+                    distanceMin = distance;
+                    accountingCpt = itemData;
+                }
+                else if (distance < distanceMin)
+                {
+                    distanceMin = distance;
+                    accountingCpt = itemData;
+                }
             }
-            if (accountingCpt != null)
+            if (accountingCpt != null&& customer.counterCpt.workerCpt==null)
             {
+                customer.counterCpt.workerCpt = accountingCpt;
+                accountingCpt.SetIntentForAccounting(customer);
                 return true;
             }
             else
