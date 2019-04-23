@@ -69,7 +69,6 @@ public class NpcAICustomerCpt : BaseNpcAI
                     SetDestinationByIntent(CustomerIntentEnum.WaitFood);
                     MenuInfoBean foodData = innHandler.OrderForFood(this, tableForEating);
                     characterShoutCpt.Shout(foodData.name);
-                    StartCoroutine(StartWaitEat());
                 }
                 break;
             case CustomerIntentEnum.GotoPay:
@@ -78,6 +77,17 @@ public class NpcAICustomerCpt : BaseNpcAI
                     characterMoveCpt.StopAutoMove();
                     SetDestinationByIntent(CustomerIntentEnum.WaitPay);
                     counterCpt.payQueue.Add(this);
+                }
+                break;
+            case CustomerIntentEnum.WaitFood:
+            case CustomerIntentEnum.WaitPay:
+                innEvaluation.mood -= Time.deltaTime;
+                characterMoodCpt.SetMood(innEvaluation.mood);
+                if (innEvaluation.mood<=0)
+                {
+                    tableForEating.tableState = BuildTableCpt.TableStateEnum.Idle;
+                    innHandler.CanelOrder(this);
+                    SetDestinationByIntent(CustomerIntentEnum.Leave);
                 }
                 break;
         }
@@ -151,6 +161,7 @@ public class NpcAICustomerCpt : BaseNpcAI
                 characterMoveCpt.SetDestination(counterCpt.GetPayPosition());
                 break;
             case CustomerIntentEnum.Leave:
+
                 characterMoveCpt.SetDestination(endPosition);
                 break;
         }
@@ -181,17 +192,4 @@ public class NpcAICustomerCpt : BaseNpcAI
         innHandler.clearQueue.Add(foodCpt);
     }
 
-    /// <summary>
-    /// 开始等待座位
-    /// </summary>
-    /// <returns></returns>
-    public IEnumerator StartWaitEat()
-    {
-        yield return new WaitForSeconds(60);
-        innHandler.CanelOrder(this);
-        SetDestinationByIntent(CustomerIntentEnum.Leave);
-        tableForEating.tableState = BuildTableCpt.TableStateEnum.Idle;
-        if (foodCpt != null)
-            Destroy(foodCpt.gameObject);
-    }
 }

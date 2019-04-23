@@ -29,7 +29,7 @@ public class NpcAIWorkerForAccountingCpt : BaseMonoBehaviour
         switch (accountingStatue)
         {
             case AccountingStatue.GoToAccounting:
-                if (Vector2.Distance(transform.position, customerCpt.counterCpt.GetAccountingPosition()) < 0.1f)
+                if (!CheckCustomerLeave()&&Vector2.Distance(transform.position, customerCpt.counterCpt.GetAccountingPosition()) < 0.1f)
                 {
                     accountingStatue = AccountingStatue.Accounting;
                     StartCoroutine(StartAccounting());
@@ -38,21 +38,54 @@ public class NpcAIWorkerForAccountingCpt : BaseMonoBehaviour
         }
     }
 
+
+    /// <summary>
+    /// 检测顾客是否离开
+    /// </summary>
+    /// <returns></returns>
+    public bool CheckCustomerLeave()
+    {
+        if (customerCpt == null || customerCpt.intentType == NpcAICustomerCpt.CustomerIntentEnum.Leave)
+        {
+            StopAllCoroutines();
+            SetStatusIdle();
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+
     public void SetAccounting(NpcAICustomerCpt customerCpt)
     {
-        this.customerCpt = customerCpt;
-        accountingStatue = AccountingStatue.GoToAccounting;
-        mNpcAIWorker.characterMoveCpt.SetDestination(customerCpt.counterCpt.GetAccountingPosition());
-        accountingPro.SetActive(true);
+        if (CheckUtil.CheckPath(transform.position, customerCpt.counterCpt.GetAccountingPosition())) {
+            this.customerCpt = customerCpt;
+            accountingStatue = AccountingStatue.GoToAccounting;
+            mNpcAIWorker.characterMoveCpt.SetDestination(customerCpt.counterCpt.GetAccountingPosition());
+            accountingPro.SetActive(true);
+        }
+        else
+        {
+            SetStatusIdle();
+        }
+
     }
 
     public IEnumerator StartAccounting()
     {
         yield return new WaitForSeconds(5);
+        SetStatusIdle();
+        customerCpt.SetDestinationByIntent(NpcAICustomerCpt.CustomerIntentEnum.Leave);
+   
+    }
+
+    public void SetStatusIdle()
+    {
         accountingStatue = AccountingStatue.Idle;
         mNpcAIWorker.workerIntent = NpcAIWorkerCpt.WorkerIntentEnum.Idle;
+        if (customerCpt != null&& customerCpt.counterCpt!=null)
         customerCpt.counterCpt.workerCpt = null;
-        customerCpt.SetDestinationByIntent(NpcAICustomerCpt.CustomerIntentEnum.Leave);
         accountingPro.SetActive(false);
     }
 }
