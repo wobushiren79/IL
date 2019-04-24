@@ -39,6 +39,8 @@ public class InnBuildManager : BaseManager, IBuildDataView
         for (int i = 0; i < listFurnitureCpt.Count; i++)
         {
             BaseBuildItemCpt buildItemCpt = listFurnitureCpt[i];
+            if (buildItemCpt == null)
+                continue;
             if(buildItemCpt.buildId== id)
             {
                 furnitureObj = Instantiate(buildItemCpt.gameObject, tfFather);

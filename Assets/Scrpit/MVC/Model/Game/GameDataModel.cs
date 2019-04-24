@@ -46,51 +46,28 @@ public class GameDataModel : BaseMVCModel
         gameData.innBuildData = new InnBuildBean();
         gameData.buildItemList = new List<ItemBean>();
         gameData.equipItemList = new List<ItemBean>();
-        //添加地板
-        gameData.innBuildData.listFloor = new List<InnResBean>();
-        for (int i = 0; i < 10; i++)
-        {
-            for (int f = 0; f < 10; f++)
-            {
-                InnResBean itemData = new InnResBean();
-                itemData.id = 10001;
-                itemData.startPosition = new Vector3Bean(i, f);
-                gameData.innBuildData.listFloor.Add(itemData);
-            }
-        }
-        //添加墙壁
-        gameData.innBuildData.listWall = new List<InnResBean>();
-        for (int i = 0; i < 10; i++)
-        {
-            for (int f = 0; f < 10; f++)
-            {
-                bool isBuild = false;
-                if (i == 0 || i == 9)
-                {
-                    isBuild = true;
-                }
-                else if (i == 3 || i == 4 || i == 5)
-                {
 
-                }
-                else
-                {
-                    if (f == 0 || f == 9)
-                    {
-                        isBuild = true;
-                    }
-                }
-                if (isBuild)
-                {
-                    InnResBean itemData = new InnResBean();
-                    itemData.id = 20001;
-                    itemData.startPosition = new Vector3Bean(i, f);
-                    gameData.innBuildData.listWall.Add(itemData);
-                }
-            }
-        }
+
+        gameData.innBuildData.innWidth = 9;
+        gameData.innBuildData.innHeight = 9;
+        //添加门
+        List<Vector3> doorPositionList = new List<Vector3>();
+        doorPositionList.Add(new Vector3(5, 0, 0));
+        doorPositionList.Add(new Vector3(4, 0, 0));
+        doorPositionList.Add(new Vector3(3, 0, 0));
+        gameData.innBuildData.AddFurniture(new InnResBean(90001, new Vector3(6, 0, 0), doorPositionList, Direction2DEnum.Left));
+        //添加地板
+        gameData.innBuildData.InitFloor();
+        //添加墙壁
+        gameData.innBuildData.InitWall();
+
         //添加家具
-        gameData.buildItemList.Add(new ItemBean(30001, 1));
+        //TODO 测试 
+        gameData.buildItemList.Add(new ItemBean(30001, 5));
+        gameData.buildItemList.Add(new ItemBean(40001, 1));
+        gameData.buildItemList.Add(new ItemBean(50001, 1));
+        gameData.buildItemList.Add(new ItemBean(90001, 1));
+        gameData.menuList.Add(new MenuOwnBean(1));
 
         SetGameDataByUserId(userId, gameData);
     }

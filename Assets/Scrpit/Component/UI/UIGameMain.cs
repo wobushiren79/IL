@@ -5,7 +5,9 @@ public class UIGameMain : BaseUIComponent
 {
     public Button btBuild;
     public Button btSave;
+
     public GameDataManager gameDataManager;
+    public InnWallBuilder innWall;
     public void Start()
     {
         if (btBuild != null)

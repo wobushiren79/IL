@@ -51,4 +51,9 @@ public class BaseTilemapBuilder : BaseMonoBehaviour
     {
         Build(tileName,new Vector3Int(x,y,0));
     }
+
+    public void ClearAllTiles()
+    {
+        buildTilemap.ClearAllTiles();
+    }
 }

@@ -21,6 +21,7 @@ public class InnWallBuilder : BaseTilemapBuilder
     /// <param name="listData"></param>
     public void BuildWall(List<InnResBean> listData)
     {
+        ClearAllTiles();
         if (listData == null)
             return;
         for (int i = 0; i < listData.Count; i++)

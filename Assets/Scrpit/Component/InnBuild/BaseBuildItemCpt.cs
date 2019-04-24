@@ -19,7 +19,8 @@ public class BaseBuildItemCpt : BaseMonoBehaviour
 
     public GameObject downOj;
     public List<Vector3> downPosition;
-
+    //是否能旋转
+    public bool canRotated=true;
     /// <summary>
     /// 获取建筑位置
     /// </summary>
@@ -111,6 +112,10 @@ public class BaseBuildItemCpt : BaseMonoBehaviour
 
     public virtual void SetDirection(Direction2DEnum direction)
     {
+        if (!canRotated)
+        {
+            return;
+        }
         this.direction = direction;
         switch (direction)
         {

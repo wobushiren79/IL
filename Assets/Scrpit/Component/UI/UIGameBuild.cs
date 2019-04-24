@@ -11,6 +11,7 @@ public class UIGameBuild : BaseUIComponent
     public Button btTypeTable;
     public Button btTypeStove;
     public Button btTypeCounter;
+    public Button btTypeDoor;
 
     public GameObject listBuildContent;
     public GameObject itemBuildModel;
@@ -36,6 +37,8 @@ public class UIGameBuild : BaseUIComponent
             btTypeStove.onClick.AddListener(CreateStoveList);
         if (btTypeCounter != null)
             btTypeCounter.onClick.AddListener(CreateCounterList);
+        if (btTypeDoor != null)
+            btTypeDoor.onClick.AddListener(CreateDoorList);
         CreateBuildList(BuildItemBean.BuildType.Table);
     }
 
@@ -118,7 +121,10 @@ public class UIGameBuild : BaseUIComponent
     {
         CreateBuildList(BuildItemBean.BuildType.Counter);
     }
-
+    public void CreateDoorList()
+    {
+        CreateBuildList(BuildItemBean.BuildType.Door);
+    }
     /// <summary>
     /// 返回游戏主UI
     /// </summary>

@@ -13,6 +13,7 @@ public class BuildItemBean : BaseBean
         Table=3,
         Stove = 4,
         Counter=5,
+        Door=9,
     }
 
     public int build_type;

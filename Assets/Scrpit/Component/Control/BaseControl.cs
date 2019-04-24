@@ -25,4 +25,6 @@ public class BaseControl : BaseMonoBehaviour
     {
         gameObject.SetActive(false);
     }
+
+
 }

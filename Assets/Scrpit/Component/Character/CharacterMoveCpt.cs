@@ -18,6 +18,10 @@ public class CharacterMoveCpt : BaseMonoBehaviour
     //是否手动移动
     public bool isManualMove = false;
 
+    public float minMoveX = 0;
+    public float maxMoveX = 0;
+    public float minMoveY = 0;
+    public float maxMoveY = 0;
 
     private void Awake()
     {
@@ -65,7 +69,7 @@ public class CharacterMoveCpt : BaseMonoBehaviour
             navMeshAgent.updateRotation = false;
             navMeshAgent.updateUpAxis = false;
             navMeshAgent.updatePosition = false;
-           // NavMesh.avoidancePredictionTime = 5f;
+            // NavMesh.avoidancePredictionTime = 5f;
             navMeshAgent.speed = moveSpeed;
             canGo = navMeshAgent.SetDestination(position);
 
@@ -113,9 +117,13 @@ public class CharacterMoveCpt : BaseMonoBehaviour
         characterBodyObj.transform.localScale = theScale;
         Vector3 movePosition = Vector3.Lerp(Vector3.zero, new Vector3(x, y, 0), lerpOffset);
         transform.Translate(movePosition * moveSpeed * Time.deltaTime);
+        BoundaryMove();
     }
 
-
+    /// <summary>
+    /// 自动寻路
+    /// </summary>
+    /// <param name="movePosition"></param>
     public void Move(Vector3 movePosition)
     {
         if (characterAnimtor != null)
@@ -134,7 +142,34 @@ public class CharacterMoveCpt : BaseMonoBehaviour
         }
         characterBodyObj.transform.localScale = theScale;
         transform.position = movePosition;
+        BoundaryMove();
     }
+
+    /// <summary>
+    ///  边界处理
+    /// </summary>
+    public void BoundaryMove()
+    {
+        Vector3 newPosition = transform.position;
+        if (maxMoveX != 0 && transform.position.x > maxMoveX)
+        {
+            newPosition.x = maxMoveX;
+        }
+        if (minMoveX != 0 && transform.position.x < minMoveX)
+        {
+            newPosition.x = minMoveX;
+        }
+        if (maxMoveY != 0 && transform.position.y > maxMoveY)
+        {
+            newPosition.y = maxMoveY;
+        }
+        if (minMoveY != 0 && transform.position.y < minMoveY)
+        {
+            newPosition.y = minMoveY;
+        }
+        transform.position = newPosition;
+    }
+
 
     public void Stop()
     {

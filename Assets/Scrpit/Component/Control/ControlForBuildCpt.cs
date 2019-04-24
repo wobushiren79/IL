@@ -29,6 +29,10 @@ public class ControlForBuildCpt : BaseControl
     {
         base.StartControl();
         cameraFollowObj.transform.position = new Vector3(5, 5);
+        cameraMove.minMoveX = -1;
+        cameraMove.maxMoveX = gameDataManager.gameData.GetInnBuildData().innWidth + 1;
+        cameraMove.minMoveY = -1;
+        cameraMove.maxMoveY = gameDataManager.gameData.GetInnBuildData().innHeight + 1;
     }
 
     private void FixedUpdate()
@@ -73,6 +77,7 @@ public class ControlForBuildCpt : BaseControl
                 {
                     foreach (Vector3Bean itemPosition in itemData.GetListPosition())
                     {
+                        //判断当前位置是否有物体
                         if (itemPosition.x == srPosition.x && itemPosition.y == srPosition.y)
                         {
                             hasBuild = true;
@@ -89,7 +94,18 @@ public class ControlForBuildCpt : BaseControl
                 }
                 else
                 {
-                    itemRenderer.sprite = spNoBuild;
+                    //判断是否超出可修建范围
+                    if (srPosition.x > 1 && srPosition.x < gameDataManager.gameData.GetInnBuildData().innWidth 
+                             && srPosition.y > 0 && srPosition.y < gameDataManager.gameData.GetInnBuildData().innHeight - 1)
+                    {
+                        itemRenderer.sprite = spNoBuild;
+                    }
+                    else
+                    {
+                        itemRenderer.sprite = spHasBuild;
+                        canBuild = false;
+                    }
+                   
                 }
             }
 
