@@ -13,7 +13,7 @@ public class GameDataBean
 
     public string innName;//客栈名称
     public CharacterBean userCharacter;// 老板
-    public List<CharacterBean> staffCharacterList;//员工
+    public List<CharacterBean> workCharacterList=new List<CharacterBean>();//员工
     public InnBuildBean innBuildData;//客栈建筑数据
     public TimeBean gameTime;//游戏时间
 

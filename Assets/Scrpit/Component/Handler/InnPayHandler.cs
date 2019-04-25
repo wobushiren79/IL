@@ -15,10 +15,6 @@ public class InnPayHandler : BaseMonoBehaviour
 
     //锁
     private static Object SetPayLock = new Object();
-    private void Start()
-    {
-        InitAccountingCpt();
-    }
 
     /// <summary>
     /// 找到所有柜台
@@ -64,32 +60,19 @@ public class InnPayHandler : BaseMonoBehaviour
         lock (SetPayLock)
         {
             NpcAIWorkerCpt accountingCpt = null;
-            List<NpcAIWorkerCpt> listIdleWorker = new List<NpcAIWorkerCpt>();
+            float distance = 0;
+            //选取距离最近的NPC
             for (int i = 0; i < listAccountingCpt.Count; i++)
             {
                 NpcAIWorkerCpt npcAI = listAccountingCpt[i];
                 if (npcAI.workerIntent == NpcAIWorkerCpt.WorkerIntentEnum.Idle)
                 {
-                    listIdleWorker.Add(npcAI);
-                }
-            }
-            //选取距离最近的NPC
-            if (listIdleWorker.Count == 0)
-                return false;
-            float distanceMin = -1;
-            for (int i = 0; i < listIdleWorker.Count; i++)
-            {
-                NpcAIWorkerCpt itemData = listIdleWorker[i];
-                float distance = Vector2.Distance(itemData.transform.position, customer.counterCpt.GetAccountingPosition());
-                if (distanceMin == -1)
-                {
-                    distanceMin = distance;
-                    accountingCpt = itemData;
-                }
-                else if (distance < distanceMin)
-                {
-                    distanceMin = distance;
-                    accountingCpt = itemData;
+                    float tempDistance = Vector2.Distance(customer.counterCpt.GetAccountingPosition(), npcAI.transform.position);
+                    if (distance == 0 || tempDistance < distance)
+                    {
+                        distance = tempDistance;
+                        accountingCpt = npcAI;
+                    }
                 }
             }
             if (accountingCpt != null&& customer.counterCpt.workerCpt==null)

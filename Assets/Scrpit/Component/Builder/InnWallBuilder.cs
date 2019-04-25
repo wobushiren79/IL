@@ -7,7 +7,7 @@ public class InnWallBuilder : BaseTilemapBuilder
     public InnBuildManager InnBuildManager;
     public GameDataManager gameDataManager;
 
-    private void Start()
+    public void StartBuild()
     {
         if (gameDataManager != null && gameDataManager.gameData != null && gameDataManager.gameData.innBuildData != null)
         {

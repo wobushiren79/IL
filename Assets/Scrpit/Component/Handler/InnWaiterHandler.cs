@@ -12,11 +12,6 @@ public class InnWaiterHandler : BaseMonoBehaviour
     //锁
     private static Object SetWaiterLock = new Object();
 
-    private void Start()
-    {
-        InitWaiterCpt();
-    }
-
     /// <summary>
     /// 找到所有服务员
     /// </summary>
@@ -50,14 +45,19 @@ public class InnWaiterHandler : BaseMonoBehaviour
         lock (SetWaiterLock)
         {
             NpcAIWorkerCpt waiterCpt = null;
+            float distance = 0;
             for (int i = 0; i < listWaiterCpt.Count; i++)
             {
                 NpcAIWorkerCpt npcAI = listWaiterCpt[i];
                 //服务员空闲 并且能到达指定地点
                 if (npcAI.workerIntent == NpcAIWorkerCpt.WorkerIntentEnum.Idle)
                 {
-                    waiterCpt = npcAI;
-                    break;
+                    float  tempDistance = Vector2.Distance(foodCpt.transform.position, npcAI.transform.position);
+                    if(distance==0 || tempDistance < distance)
+                    {
+                        distance = tempDistance;
+                        waiterCpt = npcAI;
+                    }
                 }
             }
             if (waiterCpt != null)

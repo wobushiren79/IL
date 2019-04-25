@@ -2,6 +2,7 @@
 using UnityEditor;
 using System.Collections;
 using UnityEngine.AI;
+using System.Collections.Generic;
 
 public class NpcAICustomerCpt : BaseNpcAI
 {
@@ -19,7 +20,7 @@ public class NpcAICustomerCpt : BaseNpcAI
         Leave //离开
     }
 
-    public CustomerIntentEnum intentType= CustomerIntentEnum.Walk;//意图 顾客： 1路过 2思考 3进店 4找座位 5点菜 6吃 7结账 
+    public CustomerIntentEnum intentType = CustomerIntentEnum.Walk;//意图 顾客： 1路过 2思考 3进店 4找座位 5点菜 6吃 7结账 
 
     //表情控制
     public CharacterMoodCpt characterMoodCpt;
@@ -55,12 +56,19 @@ public class NpcAICustomerCpt : BaseNpcAI
             case CustomerIntentEnum.Want:
                 if (Vector2.Distance(transform.position, doorPosition) < 0.1f)
                 {
-                    StopMove();
-                    intentType = CustomerIntentEnum.WaitSeat;
-                    //加入排队队伍
-                    innHandler.cusomerQueue.Add(this);
-                    //开始等待座位
-                    StartCoroutine(StartWaitSeat());
+                    if (innHandler.innStatus == InnHandler.InnStatusEnum.Open)
+                    {
+                        StopMove();
+                        intentType = CustomerIntentEnum.WaitSeat;
+                        //加入排队队伍
+                        innHandler.cusomerQueue.Add(this);
+                        innHandler.cusomerList.Add(this);
+                        StartCoroutine(StartWaitSeat());
+                    }
+                    else
+                    {
+                        SetDestinationByIntent(CustomerIntentEnum.Leave);
+                    }
                 }
                 break;
             case CustomerIntentEnum.GotoSeat:
@@ -80,25 +88,48 @@ public class NpcAICustomerCpt : BaseNpcAI
                 }
                 break;
             case CustomerIntentEnum.WaitFood:
-            case CustomerIntentEnum.WaitPay:
-                innEvaluation.mood -= Time.deltaTime;
-                characterMoodCpt.SetMood(innEvaluation.mood);
-                if (innEvaluation.mood<=0)
+                MoodLose();
+                if (innEvaluation.mood <= 0)
                 {
-                    tableForEating.tableState = BuildTableCpt.TableStateEnum.Idle;
-                    innHandler.CanelOrder(this);
-                    SetDestinationByIntent(CustomerIntentEnum.Leave);
+                    if (tableForEating != null)
+                    {
+                        tableForEating.tableState = BuildTableCpt.TableStateEnum.Idle;
+                    }
                 }
+                break;
+            case CustomerIntentEnum.WaitPay:
+                MoodLose();
                 break;
         }
     }
 
+    /// <summary>
+    /// 心情递减
+    /// </summary>
+    public void MoodLose()
+    {
+        innEvaluation.mood -= Time.deltaTime ;
+        characterMoodCpt.SetMood(innEvaluation.mood);
+        if (innEvaluation.mood <= 0)
+        {
+            SetDestinationByIntent(CustomerIntentEnum.Leave);
+        }
+    }
+
+    public void MoodGet(float mood)
+    {
+        innEvaluation.mood += mood;
+        characterMoodCpt.SetMood(innEvaluation.mood);
+    }
     /// <summary>
     /// 设置餐桌
     /// </summary>
     /// <param name="buildTableCpt"></param>
     public void SetTable(BuildTableCpt buildTableCpt)
     {
+        characterMoodCpt.OpenMood();
+        innEvaluation = new InnEvaluationBean();
+        characterMoodCpt.SetMood(innEvaluation.mood);
         StopAllCoroutines();
         this.tableForEating = buildTableCpt;
         SetDestinationByIntent(CustomerIntentEnum.GotoSeat);
@@ -134,18 +165,16 @@ public class NpcAICustomerCpt : BaseNpcAI
                 break;
             case CustomerIntentEnum.Want:
                 //移动到门口附近
+                Vector3 door = RandomUtil.GetRandomDataByList(innHandler.GetEntrancePositionList());
                 doorPosition = new Vector3
-                    (Random.Range(innHandler.doorPosition.x - 1.5f, innHandler.doorPosition.x + 1.5f),
-                    Random.Range(innHandler.doorPosition.y - 1.5f, innHandler.doorPosition.y + 1.5f));
+                    (Random.Range(door.x - 0.5f, door.x + 0.5f),
+                    Random.Range(door.y - 0.7f, door.y - 0.2f));
                 characterMoveCpt.SetDestination(doorPosition);
                 break;
             case CustomerIntentEnum.GotoSeat:
                 //判断路径是否有效
                 if (CheckUtil.CheckPath(transform.position, tableForEating.GetSeatPosition()))
                 {
-                    characterMoodCpt.OpenMood();
-                    innEvaluation = new InnEvaluationBean();
-                    characterMoodCpt.SetMood(innEvaluation.mood);
                     characterMoveCpt.SetDestination(tableForEating.GetSeatPosition());
                 }
                 else
@@ -154,29 +183,34 @@ public class NpcAICustomerCpt : BaseNpcAI
                 }
                 break;
             case CustomerIntentEnum.Eatting:
+                MoodGet(20);
                 StartCoroutine(StartEat());
                 break;
             case CustomerIntentEnum.GotoPay:
                 counterCpt = innHandler.GetCounter();
-                characterMoveCpt.SetDestination(counterCpt.GetPayPosition());
+                if (counterCpt == null)
+                {
+                    SetDestinationByIntent(CustomerIntentEnum.Leave);
+                }
+                else
+                {
+                    characterMoveCpt.SetDestination(counterCpt.GetPayPosition());
+                }
+
                 break;
             case CustomerIntentEnum.Leave:
-
+                if (innHandler.cusomerQueue.Contains(this))
+                {
+                    innHandler.cusomerQueue.Remove(this);
+                }
+                if (innHandler.cusomerList.Contains(this))
+                {
+                    innHandler.cusomerList.Remove(this);
+                }
+                innHandler.CanelOrder(this);
                 characterMoveCpt.SetDestination(endPosition);
                 break;
         }
-    }
-
-
-    /// <summary>
-    /// 开始等待座位
-    /// </summary>
-    /// <returns></returns>
-    public IEnumerator StartWaitSeat()
-    {
-        yield return new WaitForSeconds(10);
-        innHandler.cusomerQueue.Remove(this);
-        SetDestinationByIntent(CustomerIntentEnum.Leave);
     }
 
     /// <summary>
@@ -192,4 +226,13 @@ public class NpcAICustomerCpt : BaseNpcAI
         innHandler.clearQueue.Add(foodCpt);
     }
 
+    /// <summary>
+    /// 开始等待
+    /// </summary>
+    /// <returns></returns>
+    public IEnumerator StartWaitSeat()
+    {
+        yield return new WaitForSeconds(20);
+        SetDestinationByIntent(CustomerIntentEnum.Leave);
+    }
 }

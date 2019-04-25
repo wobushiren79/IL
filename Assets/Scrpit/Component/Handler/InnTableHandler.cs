@@ -23,7 +23,7 @@ public class InnTableHandler : BaseMonoBehaviour
     }
 
     //锁
-   private static Object GetIdleTableLock = new Object();
+    private static Object GetIdleTableLock = new Object();
 
     /// <summary>
     /// 获取随机空闲的座位

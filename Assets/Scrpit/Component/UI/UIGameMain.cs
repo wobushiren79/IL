@@ -5,9 +5,12 @@ public class UIGameMain : BaseUIComponent
 {
     public Button btBuild;
     public Button btSave;
+    public Button btSleep;
 
     public GameDataManager gameDataManager;
+    public InnHandler innHandler;
     public InnWallBuilder innWall;
+
     public void Start()
     {
         if (btBuild != null)
@@ -15,6 +18,9 @@ public class UIGameMain : BaseUIComponent
 
         if (btSave != null)
             btSave.onClick.AddListener(SaveData);
+
+        if (btSleep != null)
+            btSleep.onClick.AddListener(EndDay);
     }
 
     public void SaveData()
@@ -25,5 +31,11 @@ public class UIGameMain : BaseUIComponent
     public void OpenBuildUI()
     {
         uiManager.OpenUIAndCloseOtherByName("Build");
+    }
+
+    public void EndDay()
+    {
+        uiManager.OpenUIAndCloseOtherByName("Start");
+        innHandler.CloseInn();
     }
 }

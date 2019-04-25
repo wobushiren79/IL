@@ -45,6 +45,6 @@ public class ColorBean
     }
     public static ColorBean Random()
     {
-        return new ColorBean(UnityEngine.Random.Range(0f, 1f), UnityEngine.Random.Range(0f, 1f), UnityEngine.Random.Range(0f, 1f), 1);
+        return new ColorBean(UnityEngine.Random.Range(0f,1f), UnityEngine.Random.Range(0f, 1f), UnityEngine.Random.Range(0f, 1f), 1);
     }
 }

@@ -47,17 +47,7 @@ public class UIGameBuild : BaseUIComponent
         base.OpenUI();
         controlForBuild.StartControl();
         controlForMove.EndControl();
-    }
-
-    public override void CloseUI()
-    {
-        base.CloseUI();
-        controlForMove.StartControl();
-        controlForBuild.EndControl();
-        controlForBuild.DestoryBuild();
-        navMesh.BuildNavMesh();
-        if (innHandler != null)
-            innHandler.InitInn();
+        innHandler.CloseInn();
     }
 
     /// <summary>
@@ -130,6 +120,11 @@ public class UIGameBuild : BaseUIComponent
     /// </summary>
     public void OpenMainUI()
     {
+        controlForMove.StartControl();
+        controlForBuild.EndControl();
+        controlForBuild.DestoryBuild();
+        navMesh.BuildNavMesh();
+        innHandler.OpenInn();
         uiManager.OpenUIAndCloseOtherByName("Main");
     }
 }

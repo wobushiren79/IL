@@ -93,7 +93,7 @@ public class InnBuildBean
                 for (int h = 0; h < listWall.Count; h++)
                 {
                     Vector3Bean wallPostion = listWall[h].startPosition;
-                    if (doorPositon.x == wallPostion.x && doorPositon.y == wallPostion.y)
+                    if (doorPositon.x == wallPostion.x + 1 && doorPositon.y == wallPostion.y)
                     {
                         listWall.Remove(listWall[h]);
                         h--;

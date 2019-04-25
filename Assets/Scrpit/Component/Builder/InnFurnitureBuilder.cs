@@ -12,8 +12,8 @@ public class InnFurnitureBuilder : BaseMonoBehaviour
     public InnHandler innHandler;
     //食物资源管理
     public InnFoodManager innFoodManager;
-
-    private void Start()
+    
+    public void StartBuild()
     {
         List<InnResBean> listData = gameDataManager.gameData.GetInnBuildData().GetFurnitureList();
         for (int i = 0; i < listData.Count; i++)
@@ -21,9 +21,6 @@ public class InnFurnitureBuilder : BaseMonoBehaviour
             InnResBean itemData = listData[i];
             BuildFurniture(itemData);
         }
-        //初始化客栈处理
-        if (innHandler != null)
-            innHandler.InitInn();
     }
 
     public GameObject BuildFurniture(long id)
@@ -49,8 +46,6 @@ public class InnFurnitureBuilder : BaseMonoBehaviour
             stoveCpt.innHandler = innHandler;
         }
         return buildItemObj;
-
-
     }
 
 

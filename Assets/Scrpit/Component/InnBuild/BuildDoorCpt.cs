@@ -13,4 +13,5 @@ public class BuildDoorCpt : BaseBuildItemCpt
     {
         return entranceObj.transform.position;
     }
+
 }

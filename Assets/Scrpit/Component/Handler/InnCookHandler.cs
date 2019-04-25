@@ -18,10 +18,7 @@ public class InnCookHandler : BaseMonoBehaviour
     //锁
     private static Object SetChefLock = new Object();
 
-    private void Start()
-    {
-        InitChefCpt();
-    }
+
 
     /// <summary>
     /// 找到所有灶台

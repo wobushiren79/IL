@@ -12,6 +12,7 @@ public class ControlForBuildCpt : BaseControl
     public GameDataManager gameDataManager;
     //建造者
     public InnFurnitureBuilder innFurnitureBuilder;
+    public InnWallBuilder innWallBuilder;
     //地形模型
     public GameObject listBuildSpaceContent;
     public GameObject itemBuildSpaceModel;
@@ -94,18 +95,35 @@ public class ControlForBuildCpt : BaseControl
                 }
                 else
                 {
-                    //判断是否超出可修建范围
-                    if (srPosition.x > 1 && srPosition.x < gameDataManager.gameData.GetInnBuildData().innWidth 
-                             && srPosition.y > 0 && srPosition.y < gameDataManager.gameData.GetInnBuildData().innHeight - 1)
+                    if (buildItemCpt.buildId > 90000 && buildItemCpt.buildId < 100000)
                     {
-                        itemRenderer.sprite = spNoBuild;
+                        // 门的单独处理
+                        if (srPosition.y == 0 && srPosition.x > 2 && srPosition.x < gameDataManager.gameData.GetInnBuildData().innWidth-1)
+                        {
+                            itemRenderer.sprite = spNoBuild;
+                        }
+                        else
+                        {
+                            itemRenderer.sprite = spHasBuild;
+                            canBuild = false;
+                        }
                     }
                     else
                     {
-                        itemRenderer.sprite = spHasBuild;
-                        canBuild = false;
+                        //判断是否超出可修建范围
+                        if (srPosition.x > 1 && srPosition.x < gameDataManager.gameData.GetInnBuildData().innWidth
+                                 && srPosition.y > 0 && srPosition.y < gameDataManager.gameData.GetInnBuildData().innHeight - 1)
+                        {
+                            itemRenderer.sprite = spNoBuild;
+                        }
+                        else
+                        {
+                            itemRenderer.sprite = spHasBuild;
+                            canBuild = false;
+                        }
                     }
-                   
+
+
                 }
             }
 
@@ -128,6 +146,12 @@ public class ControlForBuildCpt : BaseControl
                         }
                         InnResBean addData = new InnResBean(buildItemCpt.buildId, truePosition, buildPosition, buildItemCpt.direction);
                         gameDataManager.gameData.GetInnBuildData().AddFurniture(addData);
+                        //如果是门。需要重置一下墙体
+                        if (buildItemCpt.buildId > 90000 && buildItemCpt.buildId < 100000)
+                        {
+                            gameDataManager.gameData.GetInnBuildData().InitWall();
+                            innWallBuilder.StartBuild();
+                        }
                         ClearBuild();
                     }
                     //不能建造

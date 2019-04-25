@@ -11,13 +11,13 @@ public class InnHandler : BaseMonoBehaviour
     }
 
     //客栈状态
-    public InnStatusEnum innStatus = InnStatusEnum.Open;
-    //大门位置
-    public Vector3 doorPosition;
+    public InnStatusEnum innStatus = InnStatusEnum.Close;
 
     //数据管理
     public GameDataManager gameDataManager;
     public InnFoodManager innFoodManager;
+    //NPC创建
+    public NpcWorkerBuilder workerBuilder;
 
     //客栈桌子处理
     public InnTableHandler innTableHandler;
@@ -27,6 +27,8 @@ public class InnHandler : BaseMonoBehaviour
     public InnWaiterHandler innWaiterHandler;
     // 支付处理
     public InnPayHandler innPayHandler;
+    // 入口处理
+    public InnEntranceHandler innEntranceHandler;
 
     //排队的人
     public List<NpcAICustomerCpt> cusomerQueue = new List<NpcAICustomerCpt>();
@@ -36,14 +38,22 @@ public class InnHandler : BaseMonoBehaviour
     public List<FoodForCustomerCpt> sendQueue = new List<FoodForCustomerCpt>();
     //排队清理的食物
     public List<FoodForCustomerCpt> clearQueue = new List<FoodForCustomerCpt>();
+
+    //顾客列表
+    public List<NpcAICustomerCpt> cusomerList = new List<NpcAICustomerCpt>();
     /// <summary>
     /// 初始化客栈
     /// </summary>
     public void InitInn()
     {
+        innEntranceHandler.InitDoorList();
         innTableHandler.InitTableList();
         innCookHandler.InitStoveList();
         innPayHandler.InitCounterList();
+
+        innPayHandler.InitAccountingCpt();
+        innCookHandler.InitChefCpt();
+        innWaiterHandler.InitWaiterCpt();
     }
 
     private void FixedUpdate()
@@ -58,33 +68,6 @@ public class InnHandler : BaseMonoBehaviour
                 {
                     cusomerQueue[0].SetTable(tableCpt);
                     cusomerQueue.RemoveAt(0);
-                }
-            }
-            //排队做菜处理
-            if (!CheckUtil.ListIsNull(foodQueue))
-            {
-                bool isSuccess = innCookHandler.SetChefForCook(foodQueue[0]);
-                if (isSuccess)
-                {
-                    foodQueue.RemoveAt(0);
-                }
-            }
-            //排队送菜处理
-            if (!CheckUtil.ListIsNull(sendQueue))
-            {
-                bool isSuccess = innWaiterHandler.SetSendFood(sendQueue[0]);
-                if (isSuccess)
-                {
-                    sendQueue.RemoveAt(0);
-                }
-            }
-            //排队清理处理
-            if (!CheckUtil.ListIsNull(clearQueue))
-            {
-                bool isSuccess = innWaiterHandler.SetClearFood(clearQueue[0]);
-                if (isSuccess)
-                {
-                    clearQueue.RemoveAt(0);
                 }
             }
             //排队支付处理
@@ -103,7 +86,73 @@ public class InnHandler : BaseMonoBehaviour
                     }
                 }
             }
+            //排队送菜处理
+            if (!CheckUtil.ListIsNull(sendQueue))
+            {
+                bool isSuccess = innWaiterHandler.SetSendFood(sendQueue[0]);
+                if (isSuccess)
+                {
+                    sendQueue.RemoveAt(0);
+                }
+            }
+            //排队做菜处理
+            if (!CheckUtil.ListIsNull(foodQueue))
+            {
+                bool isSuccess = innCookHandler.SetChefForCook(foodQueue[0]);
+                if (isSuccess)
+                {
+                    foodQueue.RemoveAt(0);
+                }
+            }
+            //排队清理处理
+            if (!CheckUtil.ListIsNull(clearQueue))
+            {
+                bool isSuccess = innWaiterHandler.SetClearFood(clearQueue[0]);
+                if (isSuccess)
+                {
+                    clearQueue.RemoveAt(0);
+                }
+            }
         }
+    }
+
+    public void CloseInn()
+    {
+        innStatus = InnStatusEnum.Close;
+        //驱除所有顾客
+        for (int i = 0; i < cusomerList.Count; i++)
+        {
+            NpcAICustomerCpt npcAI = cusomerList[i];
+            if (npcAI.tableForEating != null)
+                npcAI.tableForEating.tableState = BuildTableCpt.TableStateEnum.Idle;
+            if (npcAI.foodCpt != null)
+                Destroy(npcAI.foodCpt.gameObject);
+            Destroy(npcAI.gameObject);
+        }
+        for (int i = 0; i < sendQueue.Count; i++)
+        {
+            FoodForCustomerCpt food = sendQueue[i];
+            Destroy(food.gameObject);
+        }
+        for (int i=0;i< clearQueue.Count; i++)
+        {
+            FoodForCustomerCpt food=clearQueue[i];
+            Destroy(food.gameObject);
+        }
+
+        cusomerQueue.Clear();
+        foodQueue.Clear();
+        sendQueue.Clear();
+        clearQueue.Clear();
+        cusomerList.Clear();
+        workerBuilder.ClearAllWork();
+    }
+
+    public void OpenInn()
+    {
+        workerBuilder.BuildAllWorker();
+        InitInn();
+        innStatus = InnStatusEnum.Open;
     }
 
     /// <summary>
@@ -149,5 +198,14 @@ public class InnHandler : BaseMonoBehaviour
     public void CanelOrder(NpcAICustomerCpt customerCpt)
     {
 
+    }
+
+    /// <summary>
+    /// 获取所有入口
+    /// </summary>
+    /// <returns></returns>
+    public List<Vector3> GetEntrancePositionList()
+    {
+        return innEntranceHandler.GetEntrancePositionList();
     }
 }

@@ -19,18 +19,35 @@ public class NpcAIWorkerCpt : BaseNpcAI
     //结账AI控制
     public NpcAIWorkerForAccountingCpt aiForAccounting;
 
+    public GameDataManager gameDataManager;
+    public float waitTime = 0;
+    public Vector3 waitPosition;
+
     public WorkerIntentEnum workerIntent = WorkerIntentEnum.Idle;//工作者的想法
 
     //是否开启厨师
-    public bool isChef;
+    public bool isChef = true;
     //是否开启服务员
-    public bool isWaiter;
+    public bool isWaiter = true;
     //是否开启算账
-    public bool isAccounting;
+    public bool isAccounting = true;
 
-    private void Awake()
+
+    private void FixedUpdate()
     {
-
+        if (gameDataManager == null)
+            return;
+        if (workerIntent== WorkerIntentEnum.Idle)
+        {
+            waitTime -= Time.deltaTime;                       
+            if (waitTime <= 0)
+            {
+                waitPosition = new Vector3(Random.Range(2, gameDataManager.gameData.GetInnBuildData().innWidth-2),
+                    Random.Range(2f, gameDataManager.gameData.GetInnBuildData().innHeight - 2));
+                characterMoveCpt.SetDestination(waitPosition);
+                waitTime = Random.Range(2f,10f); ;
+            }
+        }
     }
 
     /// <summary>

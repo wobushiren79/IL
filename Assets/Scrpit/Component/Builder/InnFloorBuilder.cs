@@ -7,7 +7,7 @@ public class InnFloorBuilder : BaseTilemapBuilder
     public InnBuildManager InnBuildManager;
     public GameDataManager gameDataManager;
 
-    private void Start()
+    public  void StartBuild()
     {
         if (gameDataManager != null && gameDataManager.gameData != null && gameDataManager.gameData.innBuildData != null)
         {
@@ -21,6 +21,7 @@ public class InnFloorBuilder : BaseTilemapBuilder
     /// <param name="listData"></param>
     public void BuildFloor(List<InnResBean> listData)
     {
+        ClearAllTiles();
         if (listData == null)
             return;
         for (int i = 0; i < listData.Count; i++)

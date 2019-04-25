@@ -46,15 +46,15 @@ public class GameDataModel : BaseMVCModel
         gameData.innBuildData = new InnBuildBean();
         gameData.buildItemList = new List<ItemBean>();
         gameData.equipItemList = new List<ItemBean>();
-
+        gameData.workCharacterList = new List<CharacterBean>();
 
         gameData.innBuildData.innWidth = 9;
         gameData.innBuildData.innHeight = 9;
         //添加门
         List<Vector3> doorPositionList = new List<Vector3>();
-        doorPositionList.Add(new Vector3(5, 0, 0));
         doorPositionList.Add(new Vector3(4, 0, 0));
-        doorPositionList.Add(new Vector3(3, 0, 0));
+        doorPositionList.Add(new Vector3(5, 0, 0));
+        doorPositionList.Add(new Vector3(6, 0, 0));
         gameData.innBuildData.AddFurniture(new InnResBean(90001, new Vector3(6, 0, 0), doorPositionList, Direction2DEnum.Left));
         //添加地板
         gameData.innBuildData.InitFloor();
@@ -69,7 +69,15 @@ public class GameDataModel : BaseMVCModel
         gameData.buildItemList.Add(new ItemBean(90001, 1));
         gameData.menuList.Add(new MenuOwnBean(1));
 
+        //添加一个员工
+        CharacterBean worker = new CharacterBean();
+        CharacterBean worker2 = new CharacterBean();
+        gameData.workCharacterList.Add(worker);
+        gameData.workCharacterList.Add(worker2);
         SetGameDataByUserId(userId, gameData);
+
+     
+
     }
 
     /// <summary>
