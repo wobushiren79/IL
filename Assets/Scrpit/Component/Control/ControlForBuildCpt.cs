@@ -10,6 +10,7 @@ public class ControlForBuildCpt : BaseControl
     public RectTransform screenRTF;
     //数据管理
     public GameDataManager gameDataManager;
+    public UIGameBuild uiGameBuild;
     //建造者
     public InnFurnitureBuilder innFurnitureBuilder;
     public InnWallBuilder innWallBuilder;
@@ -19,11 +20,13 @@ public class ControlForBuildCpt : BaseControl
     //图标
     public Sprite spHasBuild;
     public Sprite spNoBuild;
+    public Sprite spDismantleBuild;
 
     public ToastView toastView;
 
     public GameObject buildItemObj;
     public BaseBuildItemCpt buildItemCpt;
+
     public List<SpriteRenderer> listBuildSpaceSR = new List<SpriteRenderer>();
 
     public override void StartControl()
@@ -70,6 +73,8 @@ public class ControlForBuildCpt : BaseControl
             List<InnResBean> listFurniture = gameDataManager.gameData.GetInnBuildData().GetFurnitureList();
             //是否能建造
             bool canBuild = true;
+            //拆除用数据
+            InnResBean dismantleData = null;
             foreach (SpriteRenderer itemRenderer in listBuildSpaceSR)
             {
                 bool hasBuild = false;
@@ -81,6 +86,7 @@ public class ControlForBuildCpt : BaseControl
                         //判断当前位置是否有物体
                         if (itemPosition.x == srPosition.x && itemPosition.y == srPosition.y)
                         {
+                            dismantleData = itemData;
                             hasBuild = true;
                             break;
                         }
@@ -90,15 +96,23 @@ public class ControlForBuildCpt : BaseControl
                 }
                 if (hasBuild)
                 {
-                    itemRenderer.sprite = spHasBuild;
-                    canBuild = false;
+                    if (buildItemCpt.buildId == -1)
+                    {
+                        itemRenderer.sprite = spDismantleBuild;
+                    }
+                    else
+                    {
+                        itemRenderer.sprite = spHasBuild;
+                        canBuild = false;
+                    }
+
                 }
                 else
                 {
                     if (buildItemCpt.buildId > 90000 && buildItemCpt.buildId < 100000)
                     {
                         // 门的单独处理
-                        if (srPosition.y == 0 && srPosition.x > 2 && srPosition.x < gameDataManager.gameData.GetInnBuildData().innWidth-1)
+                        if (srPosition.y == 0 && srPosition.x > 2 && srPosition.x < gameDataManager.gameData.GetInnBuildData().innWidth - 1)
                         {
                             itemRenderer.sprite = spNoBuild;
                         }
@@ -107,6 +121,11 @@ public class ControlForBuildCpt : BaseControl
                             itemRenderer.sprite = spHasBuild;
                             canBuild = false;
                         }
+                    }
+                    else if (buildItemCpt.buildId == -1)
+                    {
+                        itemRenderer.sprite = spHasBuild;
+                        canBuild = false;
                     }
                     else
                     {
@@ -122,12 +141,8 @@ public class ControlForBuildCpt : BaseControl
                             canBuild = false;
                         }
                     }
-
-
                 }
             }
-
-
             if (Input.GetButtonDown("Confirm"))
             {
                 //如果在不在UI范围内才处理
@@ -144,20 +159,48 @@ public class ControlForBuildCpt : BaseControl
                         {
                             buildPosition.Add(listBuildSpaceSR[i].transform.position);
                         }
-                        InnResBean addData = new InnResBean(buildItemCpt.buildId, truePosition, buildPosition, buildItemCpt.direction);
-                        gameDataManager.gameData.GetInnBuildData().AddFurniture(addData);
-                        //如果是门。需要重置一下墙体
-                        if (buildItemCpt.buildId > 90000 && buildItemCpt.buildId < 100000)
+                        //如果是拆除
+                        if (buildItemCpt.buildId == -1)
                         {
-                            gameDataManager.gameData.GetInnBuildData().InitWall();
-                            innWallBuilder.StartBuild();
+                            if (dismantleData != null)
+                                gameDataManager.gameData.GetInnBuildData().GetFurnitureList().Remove(dismantleData);
+                            innFurnitureBuilder.DestroyFurnitureByPosition(buildPosition[0]);
+                            //如果是门。需要重置一下墙体
+                            if (dismantleData.id > 90000 && dismantleData.id < 100000)
+                            {
+                                gameDataManager.gameData.GetInnBuildData().InitWall();
+                                innWallBuilder.StartBuild();
+                            }
+                            gameDataManager.gameData.ChangeBuildItem(dismantleData.id, 1);
+                            DestoryBuild();
                         }
-                        ClearBuild();
+                        else
+                        {
+                            InnResBean addData = new InnResBean(buildItemCpt.buildId, truePosition, buildPosition, buildItemCpt.direction);
+                            gameDataManager.gameData.GetInnBuildData().AddFurniture(addData);
+                            //如果是门。需要重置一下墙体
+                            if (buildItemCpt.buildId > 90000 && buildItemCpt.buildId < 100000)
+                            {
+                                gameDataManager.gameData.GetInnBuildData().InitWall();
+                                innWallBuilder.StartBuild();
+                            }
+                            ClearBuild();
+                        }
+                        //刷新UI
+                        uiGameBuild.RefreshData();
                     }
                     //不能建造
                     else
                     {
-                        toastView.ToastHint("不能建造");
+                        if (buildItemCpt.buildId == -1)
+                        {
+                            toastView.ToastHint(GameCommonInfo.GetUITextById(1003));
+                        }
+                        else
+                        {
+                            toastView.ToastHint(GameCommonInfo.GetUITextById(1002));
+                        }
+
                     }
                 }
 
@@ -213,6 +256,17 @@ public class ControlForBuildCpt : BaseControl
         }
     }
 
+    /// <summary>
+    /// 拆除模式
+    /// </summary>
+    public void DismantleMode()
+    {
+        SetBuildItem(-1);
+    }
+
+    /// <summary>
+    /// 删除旋转功
+    /// </summary>
     public void DestoryBuild()
     {
         Destroy(buildItemObj);
@@ -222,11 +276,19 @@ public class ControlForBuildCpt : BaseControl
         listBuildSpaceSR.Clear();
     }
 
+    /// <summary>
+    /// 清空选中
+    /// </summary>
     public void ClearBuild()
     {
         buildItemObj = null;
         buildItemCpt = null;
         CptUtil.RemoveChildsByActive(listBuildSpaceContent.transform);
         listBuildSpaceSR.Clear();
+    }
+
+    public interface CallBack
+    {
+        void BuildChange();
     }
 }

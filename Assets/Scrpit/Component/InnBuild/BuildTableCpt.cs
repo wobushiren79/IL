@@ -14,9 +14,16 @@ public class BuildTableCpt : BaseBuildItemCpt
     public TableStateEnum tableState= TableStateEnum.Idle;
 
     public GameObject leftSeat;
+    public GameObject leftTable;
+
     public GameObject rightSeat;
+    public GameObject rightTable;
+
     public GameObject upSeat;
+    public GameObject upTable;
+
     public GameObject downSeat;
+    public GameObject downTable;
 
     /// <summary>
     /// 获取座位坐标
@@ -36,5 +43,56 @@ public class BuildTableCpt : BaseBuildItemCpt
                 return downSeat.transform.position;
         }
         return Vector3.zero;
+    }
+    /// <summary>
+    /// 获取桌子坐标
+    /// </summary>
+    /// <returns></returns>
+    public GameObject GetTable()
+    {
+        switch (direction)
+        {
+            case Direction2DEnum.Left:
+                return leftTable;
+            case Direction2DEnum.Right:
+                return rightTable;
+            case Direction2DEnum.UP:
+                return upTable;
+            case Direction2DEnum.Down:
+                return downTable;
+        }
+        return null;
+    }
+
+    /// <summary>
+    /// 获取桌子坐标
+    /// </summary>
+    /// <returns></returns>
+    public Vector3 GetTablePosition()
+    {
+        switch (direction)
+        {
+            case Direction2DEnum.Left:
+                return leftTable.transform.position;
+            case Direction2DEnum.Right:
+                return rightTable.transform.position;
+            case Direction2DEnum.UP:
+                return upTable.transform.position;
+            case Direction2DEnum.Down:
+                return downTable.transform.position;
+        }
+        return Vector3.zero;
+    }
+
+    /// <summary>
+    /// 清理桌子
+    /// </summary>
+    public void ClearTable()
+    {
+        FoodForCustomerCpt food= GetTable().GetComponentInChildren<FoodForCustomerCpt>();
+        if (food != null)
+            Destroy(food.gameObject);
+        tableState = TableStateEnum.Idle;
+        
     }
 }

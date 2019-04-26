@@ -7,6 +7,7 @@ public class UIGameBuild : BaseUIComponent
 {
     //返回按钮
     public Button btBack;
+    public Button btDismantle;
     //类型按钮
     public Button btTypeTable;
     public Button btTypeStove;
@@ -27,10 +28,14 @@ public class UIGameBuild : BaseUIComponent
     //游戏进程处理
     public InnHandler innHandler;
     public NavMeshSurface2d navMesh;
+
+    public BuildItemBean.BuildType buildType = BuildItemBean.BuildType.Table;
     public void Start()
     {
         if (btBack != null)
             btBack.onClick.AddListener(OpenMainUI);
+        if (btDismantle != null)
+            btDismantle.onClick.AddListener(DismantleMode);
         if (btTypeTable != null)
             btTypeTable.onClick.AddListener(CreateTableList);
         if (btTypeStove != null)
@@ -56,6 +61,7 @@ public class UIGameBuild : BaseUIComponent
     /// <param name="type"></param>
     public void CreateBuildList(BuildItemBean.BuildType type)
     {
+        buildType = type;
         //删除当前选中
         controlForBuild.DestoryBuild();
         if (listBuildContent == null)
@@ -114,6 +120,19 @@ public class UIGameBuild : BaseUIComponent
     public void CreateDoorList()
     {
         CreateBuildList(BuildItemBean.BuildType.Door);
+    }
+
+    public void DismantleMode()
+    {
+        controlForBuild.DismantleMode();
+    }
+
+    /// <summary>
+    /// 刷新数据
+    /// </summary>
+    public void RefreshData()
+    {
+        CreateBuildList(buildType);
     }
     /// <summary>
     /// 返回游戏主UI

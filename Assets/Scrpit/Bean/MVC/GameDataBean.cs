@@ -4,7 +4,7 @@ using System;
 using System.Collections.Generic;
 
 [Serializable]
-public class GameDataBean
+public class GameDataBean 
 {
     public string userId;//用户ID
     public long moneyS;//1黄金=10白银  1白银=1000文
@@ -41,6 +41,30 @@ public class GameDataBean
         S = temp3 * 100 + temp2 * 10 + temp1;
         M = temp4;
         L = money / 10000;
+    }
+
+    /// <summary>
+    /// 修改建筑材料数量
+    /// </summary>
+    public void ChangeBuildItem(long buildId, long number)
+    {
+        ChangeItem(buildId, number, buildItemList);
+    }
+
+    public void ChangeItem(long buildId , long number, List<ItemBean> list)
+    {
+        foreach (ItemBean item in list)
+        {
+            if (item.itemId == buildId)
+            {
+                item.itemNumber += number;
+                if (item.itemNumber<0)
+                {
+                    item.itemNumber = 0;
+                }
+                break;
+            }
+        }
     }
 
 }

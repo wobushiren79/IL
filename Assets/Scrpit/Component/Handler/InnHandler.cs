@@ -66,8 +66,9 @@ public class InnHandler : BaseMonoBehaviour
                 BuildTableCpt tableCpt = innTableHandler.GetIdleTable();
                 if (tableCpt != null)
                 {
-                    cusomerQueue[0].SetTable(tableCpt);
+                    NpcAICustomerCpt npc = cusomerQueue[0];
                     cusomerQueue.RemoveAt(0);
+                    npc.SetTable(tableCpt);
                 }
             }
             //排队支付处理
@@ -134,11 +135,16 @@ public class InnHandler : BaseMonoBehaviour
             FoodForCustomerCpt food = sendQueue[i];
             Destroy(food.gameObject);
         }
-        for (int i=0;i< clearQueue.Count; i++)
+        for (int i = 0; i < clearQueue.Count; i++)
         {
-            FoodForCustomerCpt food=clearQueue[i];
+            FoodForCustomerCpt food = clearQueue[i];
             Destroy(food.gameObject);
         }
+        for (int i = 0; i < innTableHandler.listTableCpt.Count; i++)
+        {
+            BuildTableCpt buildTableCpt = innTableHandler.listTableCpt[i];
+            buildTableCpt.ClearTable();
+        };
 
         cusomerQueue.Clear();
         foodQueue.Clear();

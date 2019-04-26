@@ -4,9 +4,9 @@ using System.Collections.Generic;
 
 public class InnEntranceHandler : BaseMonoBehaviour
 {
-    //桌子列表
+    //门列表
     public List<BuildDoorCpt> listDoorCpt;
-    //桌子容器
+    //门容器
     public GameObject doorContainer;
 
     /// <summary>
@@ -31,8 +31,10 @@ public class InnEntranceHandler : BaseMonoBehaviour
         if (listDoorCpt == null)
             listDoorCpt = new List<BuildDoorCpt>();
         List<Vector3> doorList = new List<Vector3>();
-        foreach (BuildDoorCpt doorCpt in listDoorCpt )
+        for (int i = 0; i < listDoorCpt.Count; i++)
         {
+            BuildDoorCpt doorCpt = listDoorCpt[i];
+            if(doorCpt!=null)
             doorList.Add(doorCpt.GetEntrancePosition());
         }
         return doorList;

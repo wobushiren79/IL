@@ -28,7 +28,7 @@ public class NpcAIWorkerForChefCpt : BaseMonoBehaviour
     //烹饪点
     public List<Vector3> cookPositionList;
     //厨师状态
-    public ChefStatue chefStatue=ChefStatue.Idle;
+    public ChefStatue chefStatue = ChefStatue.Idle;
 
     private Vector3 cookPosition;
     private float cookAnimTime;
@@ -39,7 +39,7 @@ public class NpcAIWorkerForChefCpt : BaseMonoBehaviour
         switch (chefStatue)
         {
             case ChefStatue.GoToCook:
-                if (!CheckCustomerLeave()&&Vector2.Distance(transform.position, cookPositionList[0]) < 0.1f)
+                if (!CheckCustomerLeave() && Vector2.Distance(transform.position, cookPositionList[0]) < 0.1f)
                 {
                     chefStatue = ChefStatue.Cooking;
                     StartCoroutine(StartCook());
@@ -49,9 +49,9 @@ public class NpcAIWorkerForChefCpt : BaseMonoBehaviour
                 break;
             case ChefStatue.Cooking:
                 cookAnimTime -= Time.deltaTime;
-                if (!CheckCustomerLeave() && Vector2.Distance(transform.position, cookPosition) < 0.1f&& cookAnimTime<0)
+                if (!CheckCustomerLeave() && Vector2.Distance(transform.position, cookPosition) < 0.1f && cookAnimTime < 0)
                 {
-                    ChangeCookPosition();     
+                    ChangeCookPosition();
                 }
                 break;
         }
@@ -63,11 +63,11 @@ public class NpcAIWorkerForChefCpt : BaseMonoBehaviour
     /// <returns></returns>
     public bool CheckCustomerLeave()
     {
-        if (foodData.customer == null || foodData.customer.intentType == NpcAICustomerCpt.CustomerIntentEnum.Leave)
+        if (foodData == null || foodData.customer == null || foodData.customer.intentType == NpcAICustomerCpt.CustomerIntentEnum.Leave)
         {
             StopAllCoroutines();
-            SetStatusIdle();
             cookPro.SetActive(false);
+            SetStatusIdle();
             return true;
         }
         else
@@ -78,7 +78,7 @@ public class NpcAIWorkerForChefCpt : BaseMonoBehaviour
 
     public void ChangeCookPosition()
     {
-        cookAnimTime = Random.Range(2,3);
+        cookAnimTime = Random.Range(2, 3);
         cookPosition = RandomUtil.GetRandomDataByList(cookPositionList);
         mNpcAIWorker.characterMoveCpt.SetDestination(cookPosition);
     }

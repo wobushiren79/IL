@@ -8,7 +8,7 @@ public class NpcAIWorkerForAccountingCpt : BaseMonoBehaviour
     public NpcAICustomerCpt customerCpt;
 
     //算账进度
-    public GameObject  accountingPro;
+    public GameObject accountingPro;
     private void Start()
     {
         mNpcAIWorker = GetComponent<NpcAIWorkerCpt>();
@@ -22,14 +22,14 @@ public class NpcAIWorkerForAccountingCpt : BaseMonoBehaviour
     }
 
     //厨师状态
-    public AccountingStatue accountingStatue= AccountingStatue.Idle;
+    public AccountingStatue accountingStatue = AccountingStatue.Idle;
 
     private void FixedUpdate()
     {
         switch (accountingStatue)
         {
             case AccountingStatue.GoToAccounting:
-                if (!CheckCustomerLeave()&&Vector2.Distance(transform.position, customerCpt.counterCpt.GetAccountingPosition()) < 0.1f)
+                if (!CheckCustomerLeave() && Vector2.Distance(transform.position, customerCpt.counterCpt.GetAccountingPosition()) < 0.1f)
                 {
                     accountingStatue = AccountingStatue.Accounting;
                     StartCoroutine(StartAccounting());
@@ -59,7 +59,8 @@ public class NpcAIWorkerForAccountingCpt : BaseMonoBehaviour
 
     public void SetAccounting(NpcAICustomerCpt customerCpt)
     {
-        if (CheckUtil.CheckPath(transform.position, customerCpt.counterCpt.GetAccountingPosition())) {
+        if (CheckUtil.CheckPath(transform.position, customerCpt.counterCpt.GetAccountingPosition()))
+        {
             this.customerCpt = customerCpt;
             accountingStatue = AccountingStatue.GoToAccounting;
             mNpcAIWorker.characterMoveCpt.SetDestination(customerCpt.counterCpt.GetAccountingPosition());
@@ -75,17 +76,16 @@ public class NpcAIWorkerForAccountingCpt : BaseMonoBehaviour
     public IEnumerator StartAccounting()
     {
         yield return new WaitForSeconds(5);
-        SetStatusIdle();
         customerCpt.SetDestinationByIntent(NpcAICustomerCpt.CustomerIntentEnum.Leave);
-   
+        SetStatusIdle();
     }
 
     public void SetStatusIdle()
     {
         accountingStatue = AccountingStatue.Idle;
         mNpcAIWorker.workerIntent = NpcAIWorkerCpt.WorkerIntentEnum.Idle;
-        if (customerCpt != null&& customerCpt.counterCpt!=null)
-        customerCpt.counterCpt.workerCpt = null;
+        if (customerCpt != null && customerCpt.counterCpt != null)
+            customerCpt.counterCpt.workerCpt = null;
         accountingPro.SetActive(false);
     }
 }

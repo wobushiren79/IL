@@ -41,6 +41,16 @@ public class BaseBuildItemCpt : BaseMonoBehaviour
         return null;
     }
 
+    public List<Vector3> GetBuildWorldPosition()
+    {
+        List<Vector3> worldPositionList = new List<Vector3>();
+        foreach (Vector3 itemData in GetBuildPosition())
+        {
+           Vector3 worldPos = transform.TransformPoint(itemData);
+            worldPositionList.Add(worldPos);
+        }
+        return worldPositionList;
+    }
     /// <summary>
     /// 获取建筑物体
     /// </summary>

@@ -12,7 +12,7 @@ public class InnFurnitureBuilder : BaseMonoBehaviour
     public InnHandler innHandler;
     //食物资源管理
     public InnFoodManager innFoodManager;
-    
+
     public void StartBuild()
     {
         List<InnResBean> listData = gameDataManager.gameData.GetInnBuildData().GetFurnitureList();
@@ -23,12 +23,22 @@ public class InnFurnitureBuilder : BaseMonoBehaviour
         }
     }
 
+    /// <summary>
+    /// 修建建筑
+    /// </summary>
+    /// <param name="id"></param>
+    /// <returns></returns>
     public GameObject BuildFurniture(long id)
     {
-        InnResBean innResBean = new InnResBean(id,Vector3.zero,new List<Vector3>(),Direction2DEnum.Left);
+        InnResBean innResBean = new InnResBean(id, Vector3.zero, new List<Vector3>(), Direction2DEnum.Left);
         return BuildFurniture(innResBean);
     }
 
+    /// <summary>
+    /// 修建建筑
+    /// </summary>
+    /// <param name="furnitureData"></param>
+    /// <returns></returns>
     public GameObject BuildFurniture(InnResBean furnitureData)
     {
         if (furnitureData == null)
@@ -48,5 +58,29 @@ public class InnFurnitureBuilder : BaseMonoBehaviour
         return buildItemObj;
     }
 
-
+    /// <summary>
+    /// 删除指定坐标的建筑
+    /// </summary>
+    /// <param name="position"></param>
+    public void DestroyFurnitureByPosition(Vector3 position)
+    {
+        BaseBuildItemCpt[] buildList = buildContainer.GetComponentsInChildren<BaseBuildItemCpt>();
+        BaseBuildItemCpt destroyCpt = null;
+        foreach (BaseBuildItemCpt itemData in buildList)
+        {
+            List<Vector3> listPosition = itemData.GetBuildWorldPosition();
+            foreach (Vector3 itemPosition in listPosition)
+            {
+                if (itemPosition.x == position.x && itemPosition.y == position.y)
+                {
+                    destroyCpt = itemData;
+                    break;
+                }
+            }
+            if (destroyCpt != null)
+                break;
+        };
+        if (destroyCpt != null)
+            Destroy(destroyCpt.gameObject);
+    }
 }

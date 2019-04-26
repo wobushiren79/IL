@@ -27,7 +27,7 @@ public class NpcAICustomerCpt : BaseNpcAI
     //喊叫控制
     public CharacterShoutCpt characterShoutCpt;
     //评价系统
-    public InnEvaluationBean innEvaluation;
+    public InnEvaluationBean innEvaluation = new InnEvaluationBean();
 
     //客栈处理
     public InnHandler innHandler;
@@ -59,11 +59,7 @@ public class NpcAICustomerCpt : BaseNpcAI
                     if (innHandler.innStatus == InnHandler.InnStatusEnum.Open)
                     {
                         StopMove();
-                        intentType = CustomerIntentEnum.WaitSeat;
-                        //加入排队队伍
-                        innHandler.cusomerQueue.Add(this);
-                        innHandler.cusomerList.Add(this);
-                        StartCoroutine(StartWaitSeat());
+                        SetDestinationByIntent(CustomerIntentEnum.WaitSeat);
                     }
                     else
                     {
@@ -91,11 +87,8 @@ public class NpcAICustomerCpt : BaseNpcAI
                 MoodLose();
                 if (innEvaluation.mood <= 0)
                 {
-                    if (tableForEating != null)
-                    {
-                        tableForEating.tableState = BuildTableCpt.TableStateEnum.Idle;
-                    }
-                }
+                    tableForEating.ClearTable();
+                }    
                 break;
             case CustomerIntentEnum.WaitPay:
                 MoodLose();
@@ -108,7 +101,7 @@ public class NpcAICustomerCpt : BaseNpcAI
     /// </summary>
     public void MoodLose()
     {
-        innEvaluation.mood -= Time.deltaTime ;
+        innEvaluation.mood -= Time.deltaTime;
         characterMoodCpt.SetMood(innEvaluation.mood);
         if (innEvaluation.mood <= 0)
         {
@@ -127,9 +120,6 @@ public class NpcAICustomerCpt : BaseNpcAI
     /// <param name="buildTableCpt"></param>
     public void SetTable(BuildTableCpt buildTableCpt)
     {
-        characterMoodCpt.OpenMood();
-        innEvaluation = new InnEvaluationBean();
-        characterMoodCpt.SetMood(innEvaluation.mood);
         StopAllCoroutines();
         this.tableForEating = buildTableCpt;
         SetDestinationByIntent(CustomerIntentEnum.GotoSeat);
@@ -166,19 +156,34 @@ public class NpcAICustomerCpt : BaseNpcAI
             case CustomerIntentEnum.Want:
                 //移动到门口附近
                 Vector3 door = RandomUtil.GetRandomDataByList(innHandler.GetEntrancePositionList());
-                doorPosition = new Vector3
-                    (Random.Range(door.x - 0.5f, door.x + 0.5f),
-                    Random.Range(door.y - 0.7f, door.y - 0.2f));
-                characterMoveCpt.SetDestination(doorPosition);
+                if (door == null || door == Vector3.zero)
+                {
+                    SetDestinationByIntent(CustomerIntentEnum.Leave);
+                }
+                else
+                {
+                    doorPosition = new Vector3(Random.Range(door.x - 0.5f, door.x + 0.5f),Random.Range(door.y - 0.7f, door.y - 0.2f));
+                    characterMoveCpt.SetDestination(doorPosition);
+                }
+                break;
+            case CustomerIntentEnum.WaitSeat:
+                //加入排队队伍
+                innHandler.cusomerQueue.Add(this);
+                innHandler.cusomerList.Add(this);
+                StartCoroutine(StartWaitSeat());
                 break;
             case CustomerIntentEnum.GotoSeat:
                 //判断路径是否有效
                 if (CheckUtil.CheckPath(transform.position, tableForEating.GetSeatPosition()))
                 {
+                    characterMoodCpt.OpenMood();
+                    characterMoodCpt.SetMood(innEvaluation.mood);
                     characterMoveCpt.SetDestination(tableForEating.GetSeatPosition());
                 }
                 else
                 {
+                    if (tableForEating != null)
+                        tableForEating.tableState = BuildTableCpt.TableStateEnum.Idle;
                     SetDestinationByIntent(CustomerIntentEnum.Leave);
                 }
                 break;

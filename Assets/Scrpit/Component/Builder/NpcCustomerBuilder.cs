@@ -35,7 +35,7 @@ public class NpcCustomerBuilder : BaseMonoBehaviour
     {
         while (isBuild)
         {
-            yield return new WaitForSeconds(5f);
+            yield return new WaitForSeconds(1f);
             BuildCustomer();
         }
     }
@@ -81,7 +81,7 @@ public class NpcCustomerBuilder : BaseMonoBehaviour
         customerAI.SetEndPosition(new Vector3(endPosition.position.x, npcPositionY));
         //想要吃饭概率
         float eatProbability=  Random.Range(0f,1f);
-        if (eatProbability > 0.1f)
+        if (eatProbability > 0.9f)
         {
             customerAI.SetDestinationByIntent(NpcAICustomerCpt.CustomerIntentEnum.Want);
         }
