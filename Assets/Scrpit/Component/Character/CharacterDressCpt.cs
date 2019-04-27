@@ -44,7 +44,7 @@ public class CharacterDressCpt : BaseMonoBehaviour
             //设置装备数据
             if (characterEquipData == null)
                 characterEquipData = new CharacterEquipBean();
-            characterEquipData.hatId = equipInfo.equip_id;
+            characterEquipData.hatId = equipInfo.id;
         }
         sprHat.sprite = hatSP;
     }
@@ -62,7 +62,7 @@ public class CharacterDressCpt : BaseMonoBehaviour
             //设置装备数据
             if (characterEquipData == null)
                 characterEquipData = new CharacterEquipBean();
-            characterEquipData.clothesId = equipInfo.equip_id;
+            characterEquipData.clothesId = equipInfo.id;
         }    
         sprClothes.sprite = clothesSP;
     }
@@ -80,7 +80,7 @@ public class CharacterDressCpt : BaseMonoBehaviour
             //设置装备数据
             if (characterEquipData == null)
                 characterEquipData = new CharacterEquipBean();
-            characterEquipData.shoesId = equipInfo.equip_id;
+            characterEquipData.shoesId = equipInfo.id;
         }
         sprShoesLeft.sprite = shoesSP;
         sprShoesRight.sprite = shoesSP;

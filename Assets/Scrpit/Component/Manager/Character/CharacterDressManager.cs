@@ -2,7 +2,7 @@
 using UnityEditor;
 using System.Collections.Generic;
 
-public class CharacterDressManager : BaseManager,IEquipInfoView
+public class CharacterDressManager : BaseManager, IEquipInfoView
 {
     //面具列表
     public List<IconBean> listIconMask;
@@ -12,7 +12,7 @@ public class CharacterDressManager : BaseManager,IEquipInfoView
     public List<IconBean> listIconClothes;
     //帽子列表
     public List<IconBean> listIconHat;
-    
+
     //装备数据
     public List<EquipInfoBean> listDataEquip;
 
@@ -21,7 +21,7 @@ public class CharacterDressManager : BaseManager,IEquipInfoView
 
     private void Awake()
     {
-        equipInfoController = new EquipInfoController(this,this);
+        equipInfoController = new EquipInfoController(this, this);
     }
 
     /// <summary>
@@ -30,7 +30,7 @@ public class CharacterDressManager : BaseManager,IEquipInfoView
     /// <returns></returns>
     public List<EquipInfoBean> GetHatList()
     {
-       return GetEquipListByType(1);
+        return GetEquipListByType(1);
     }
     /// <summary>
     /// 获取所有服装数据
@@ -91,7 +91,6 @@ public class CharacterDressManager : BaseManager,IEquipInfoView
         return null;
     }
 
-
     /// <summary>
     /// 根据名字获取面具
     /// </summary>
@@ -113,7 +112,20 @@ public class CharacterDressManager : BaseManager,IEquipInfoView
     }
 
     /// <summary>
-    /// 根据名字获取衣服
+    /// 根据ID获取鞋子图标
+    /// </summary>
+    /// <param name="id"></param>
+    /// <returns></returns>
+    public Sprite GetShoesSpriteById(long id)
+    {
+        EquipInfoBean equipInfoBean = GetEquipById(id);
+        if (equipInfoBean == null)
+            return null;
+        return GetSpriteByName(equipInfoBean.icon_key, listIconShoes);
+    }
+
+    /// <summary>
+    /// 根据名字获取衣服图标
     /// </summary>
     /// <param name="name"></param>
     /// <returns></returns>
@@ -121,6 +133,20 @@ public class CharacterDressManager : BaseManager,IEquipInfoView
     {
         return GetSpriteByName(name, listIconClothes);
     }
+
+    /// <summary>
+    /// 根据ID获取衣服图标
+    /// </summary>
+    /// <param name="id"></param>
+    /// <returns></returns>
+    public Sprite GetClothesSpriteById(long id)
+    {
+        EquipInfoBean equipInfoBean = GetEquipById(id);
+        if (equipInfoBean == null)
+            return null;
+        return GetSpriteByName(equipInfoBean.icon_key, listIconClothes);
+    }
+
     /// <summary>
     /// 根据名字获取帽子
     /// </summary>
@@ -131,10 +157,23 @@ public class CharacterDressManager : BaseManager,IEquipInfoView
         return GetSpriteByName(name, listIconHat);
     }
 
+    /// <summary>
+    /// 根据ID获取帽子图标
+    /// </summary>
+    /// <param name="id"></param>
+    /// <returns></returns>
+    public Sprite GetHatSpriteById(long id)
+    {
+        EquipInfoBean equipInfoBean = GetEquipById(id);
+        if (equipInfoBean == null)
+            return null;
+        return GetSpriteByName(equipInfoBean.icon_key, listIconHat);
+    }
+
     #region   装备获取回调
     public void GetEquipInfoSuccess(List<EquipInfoBean> listData)
     {
-       this.listDataEquip = listData;
+        this.listDataEquip = listData;
     }
 
     public void GetEquipInfoFail()

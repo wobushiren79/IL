@@ -6,7 +6,9 @@ public class NpcAIWorkerForAccountingCpt : BaseMonoBehaviour
 {
     private NpcAIWorkerCpt mNpcAIWorker;
     public NpcAICustomerCpt customerCpt;
-
+    //客栈处理
+    public InnHandler innHandler;
+    
     //算账进度
     public GameObject accountingPro;
     private void Start()
@@ -76,6 +78,8 @@ public class NpcAIWorkerForAccountingCpt : BaseMonoBehaviour
     public IEnumerator StartAccounting()
     {
         yield return new WaitForSeconds(5);
+        if (innHandler != null)
+            innHandler.PayMoney(customerCpt.foodCpt,1);
         customerCpt.SetDestinationByIntent(NpcAICustomerCpt.CustomerIntentEnum.Leave);
         SetStatusIdle();
     }

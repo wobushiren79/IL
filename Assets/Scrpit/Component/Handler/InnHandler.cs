@@ -214,4 +214,15 @@ public class InnHandler : BaseMonoBehaviour
     {
         return innEntranceHandler.GetEntrancePositionList();
     }
+
+    /// <summary>
+    /// 付钱
+    /// </summary>
+    /// <param name="food"></param>
+    public void PayMoney(FoodForCustomerCpt foodCpt,float multiple)
+    {
+        gameDataManager.gameData.moneyS += (long)(foodCpt.foodData.food.price_s* multiple);
+        gameDataManager.gameData.moneyM += (long)(foodCpt.foodData.food.price_m* multiple);
+        gameDataManager.gameData.moneyL += (long)(foodCpt.foodData.food.price_l* multiple);
+    }
 }

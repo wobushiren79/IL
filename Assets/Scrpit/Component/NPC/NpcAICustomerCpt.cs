@@ -92,6 +92,10 @@ public class NpcAICustomerCpt : BaseNpcAI
                 break;
             case CustomerIntentEnum.WaitPay:
                 MoodLose();
+                if (innEvaluation.mood <= 0)
+                {
+                    innHandler.PayMoney(foodCpt,0.5f);
+                }
                 break;
         }
     }

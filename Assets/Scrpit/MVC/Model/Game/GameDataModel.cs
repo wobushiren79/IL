@@ -75,9 +75,6 @@ public class GameDataModel : BaseMVCModel
         gameData.workCharacterList.Add(worker);
         gameData.workCharacterList.Add(worker2);
         SetGameDataByUserId(userId, gameData);
-
-     
-
     }
 
     /// <summary>

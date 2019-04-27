@@ -53,17 +53,26 @@ public class GameDataBean
 
     public void ChangeItem(long buildId , long number, List<ItemBean> list)
     {
-        foreach (ItemBean item in list)
+        bool hasData = false;
+        for(int i = 0; i < list.Count; i++)
         {
+            ItemBean item = list[i];
             if (item.itemId == buildId)
             {
+                hasData = true;
                 item.itemNumber += number;
-                if (item.itemNumber<0)
+                if (item.itemNumber <=0)
                 {
                     item.itemNumber = 0;
+                    list.RemoveAt(i);
+                    i--;
                 }
                 break;
             }
+        }
+        if (!hasData&& number>0)
+        {
+            list.Add(new ItemBean(buildId,number));
         }
     }
 

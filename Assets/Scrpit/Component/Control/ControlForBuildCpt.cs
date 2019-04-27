@@ -162,17 +162,25 @@ public class ControlForBuildCpt : BaseControl
                         //如果是拆除
                         if (buildItemCpt.buildId == -1)
                         {
-                            if (dismantleData != null)
-                                gameDataManager.gameData.GetInnBuildData().GetFurnitureList().Remove(dismantleData);
-                            innFurnitureBuilder.DestroyFurnitureByPosition(buildPosition[0]);
-                            //如果是门。需要重置一下墙体
-                            if (dismantleData.id > 90000 && dismantleData.id < 100000)
+                            //如果是最后一扇门则不能删除
+                            InnBuildBean buildData= gameDataManager.gameData.GetInnBuildData();
+                            if (dismantleData.id > 90000 && dismantleData.id < 100000 && buildData.GetDoorList().Count <= 1)
                             {
-                                gameDataManager.gameData.GetInnBuildData().InitWall();
-                                innWallBuilder.StartBuild();
+                                toastView.ToastHint(GameCommonInfo.GetUITextById(1004));
                             }
-                            gameDataManager.gameData.ChangeBuildItem(dismantleData.id, 1);
-                            DestoryBuild();
+                            else
+                            {
+                                if (dismantleData != null)
+                                    buildData.GetFurnitureList().Remove(dismantleData);
+                                innFurnitureBuilder.DestroyFurnitureByPosition(buildPosition[0]);
+                                //如果是门。需要重置一下墙体
+                                if (dismantleData.id > 90000 && dismantleData.id < 100000)
+                                {
+                                    gameDataManager.gameData.GetInnBuildData().InitWall();
+                                    innWallBuilder.StartBuild();
+                                }
+                                gameDataManager.gameData.ChangeBuildItem(dismantleData.id, 1);
+                            }
                         }
                         else
                         {
@@ -184,9 +192,11 @@ public class ControlForBuildCpt : BaseControl
                                 gameDataManager.gameData.GetInnBuildData().InitWall();
                                 innWallBuilder.StartBuild();
                             }
+                            gameDataManager.gameData.ChangeBuildItem(buildItemCpt.buildId, -1);
                             ClearBuild();
                         }
                         //刷新UI
+                        //里面有移除选中功能
                         uiGameBuild.RefreshData();
                     }
                     //不能建造
@@ -200,11 +210,8 @@ public class ControlForBuildCpt : BaseControl
                         {
                             toastView.ToastHint(GameCommonInfo.GetUITextById(1002));
                         }
-
                     }
                 }
-
-
             }
             if (Input.GetButtonDown("Rotate_Left"))
             {

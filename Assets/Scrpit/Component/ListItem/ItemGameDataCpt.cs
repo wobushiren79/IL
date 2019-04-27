@@ -13,7 +13,7 @@ public class ItemGameDataCpt : BaseMonoBehaviour
     public Button btContinue;
     public Button btDelete;
 
-    public CharacterHeadUICpt characterHeadUI;
+    public CharacterUICpt characterUI;
     public GameDataSimpleBean gameData;
     //游戏数据管理
     public GameDataManager gameDataManager;
@@ -31,7 +31,7 @@ public class ItemGameDataCpt : BaseMonoBehaviour
         this.gameData = gameData;
         if (gameData.userCharacter != null && gameData.userCharacter.body != null)
         {
-            characterHeadUI.SetCharacterData(gameData.userCharacter.body);
+            characterUI.SetCharacterData(gameData.userCharacter.body, gameData.userCharacter.equips);
         }
         if (tvInnName != null)
             tvInnName.text = gameData.innName;

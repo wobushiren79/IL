@@ -21,4 +21,7 @@ public class MenuInfoBean : BaseBean
     public string name;
     public string content;
 
+    public long price_s;
+    public long price_m;
+    public long price_l;
 }
