@@ -40,6 +40,8 @@ public class RadioButtonView : BaseMonoBehaviour
     {
         if (mRBCallBack != null)
             mRBCallBack.RadioButtonSelected(this);
+        else
+            ChangeStates();
     }
 
     /// <summary>
@@ -50,6 +52,7 @@ public class RadioButtonView : BaseMonoBehaviour
     {
         this.mRBCallBack = callback;
     }
+
 
     /// <summary>
     /// 改变状态
@@ -79,4 +82,16 @@ public class RadioButtonView : BaseMonoBehaviour
     }
 
 
+    public void ChangeStates()
+    {
+        if (states == RadioButtonStates.Selected)
+        {
+            states = RadioButtonStates.Unselected;
+        }
+        else
+        {
+            states = RadioButtonStates.Selected;
+        }
+        ChangeStates(states);
+    }
 }

@@ -13,5 +13,4 @@ public class CharacterBean
     public CharacterBodyBean body = new CharacterBodyBean();
     //角色装备属性
     public CharacterEquipBean equips = new CharacterEquipBean();
-
 }

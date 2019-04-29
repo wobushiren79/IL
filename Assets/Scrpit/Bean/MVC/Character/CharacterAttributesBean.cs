@@ -7,11 +7,13 @@ public class CharacterAttributesBean
 {
     public float loyal;//忠诚
 
-    public float waiter;// 跑堂
-    public float account;// 算账
-    public float shout;// 吆喝
+    public float speed;// 速度
+    public float account;// 计算
+
+    public float charm;// 魅力
     public float force;// 武力
-    public float chop;// 切菜
-    public float cook;// 做菜
+
+    public float lucky;// 幸运
+    public float cook;// 厨力
 
 }
