@@ -4,16 +4,26 @@ using UnityEngine.UI;
 public class ItemGameWorkerCpt : BaseMonoBehaviour
 {
     public Text tvName;
+    public InfoPromptPopupButton pbName;
+
     public Text tvPrice;
+    public InfoPromptPopupButton pbPrice;
 
     public Text tvLoyal;
+    public InfoPromptPopupButton pbLoyal;
 
     public Text tvSpeed;
+    public InfoPromptPopupButton pbSpeed;
     public Text tvAccount;
+    public InfoPromptPopupButton pbAccount;
     public Text tvCharm;
+    public InfoPromptPopupButton pbCharm;
     public Text tvCook;
+    public InfoPromptPopupButton pbCook;
     public Text tvForce;
+    public InfoPromptPopupButton pbForce;
     public Text tvLucky;
+    public InfoPromptPopupButton pbLucky;
 
     public Button btEquip;
     public Button btFire;
@@ -26,9 +36,32 @@ public class ItemGameWorkerCpt : BaseMonoBehaviour
 
     public CharacterBean characterData;
 
+    private void Start()
+    {
+        if (pbName != null)
+            pbName.SetContent(GameCommonInfo.GetUITextById(11001));
+        if (pbPrice != null)
+            pbPrice.SetContent(GameCommonInfo.GetUITextById(11002));
+        if (pbLoyal != null)
+            pbLoyal.SetContent(GameCommonInfo.GetUITextById(11003));
+
+        if (pbSpeed != null)
+            pbSpeed.SetContent(GameCommonInfo.GetUITextById(11004));
+        if (pbAccount != null)
+            pbAccount.SetContent(GameCommonInfo.GetUITextById(11005));
+        if (pbCharm != null)
+            pbCharm.SetContent(GameCommonInfo.GetUITextById(11006));
+        if (pbCook != null)
+            pbCook.SetContent(GameCommonInfo.GetUITextById(11007));
+        if (pbForce != null)
+            pbForce.SetContent(GameCommonInfo.GetUITextById(11008));
+        if (pbLucky != null)
+            pbLucky.SetContent(GameCommonInfo.GetUITextById(11009));
+    }
+
     public void SetData(CharacterBean data)
     {
-        if (characterData == null)
+        if (data == null)
             return;
         characterData = data;
         if (characterData.baseInfo != null)
@@ -77,7 +110,7 @@ public class ItemGameWorkerCpt : BaseMonoBehaviour
     {
         if (tvLoyal == null)
             return;
-        tvLoyal.text = loyal+"";
+        tvLoyal.text = loyal + "";
     }
 
     /// <summary>
@@ -88,11 +121,11 @@ public class ItemGameWorkerCpt : BaseMonoBehaviour
     /// <param name="isAccounting"></param>
     /// <param name="isBeater"></param>
     /// <param name="isAccost"></param>
-    public  void SetWork(bool isChef, bool isWaiter, bool isAccounting, bool isBeater, bool isAccost)
+    public void SetWork(bool isChef, bool isWaiter, bool isAccounting, bool isBeater, bool isAccost)
     {
         if (rbAccounting != null)
         {
-            if(isAccounting)
+            if (isAccounting)
                 rbAccounting.ChangeStates(RadioButtonView.RadioButtonStates.Selected);
             else
                 rbAccounting.ChangeStates(RadioButtonView.RadioButtonStates.Unselected);

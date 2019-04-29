@@ -24,19 +24,19 @@ public class DialogView : BaseMonoBehaviour
 
     private void OnEnable()
     {
-        if(cgDialog!=null)
-        cgDialog.DOFade(1,0.5f);
+        if (cgDialog != null)
+            cgDialog.DOFade(1, 0.5f);
     }
 
     public void InitData()
     {
-     
+
         if (btSubmit != null)
         {
             btSubmit.onClick.RemoveAllListeners();
             btSubmit.onClick.AddListener(SubmitOnClick);
         }
-        if (btCancel!=null)
+        if (btCancel != null)
         {
             btCancel.onClick.RemoveAllListeners();
             btCancel.onClick.AddListener(CancelOnClick);
@@ -82,7 +82,7 @@ public class DialogView : BaseMonoBehaviour
         {
             tvContent.text = dialogBean.content;
         }
-        if(dialogBean.submitStr!=null)
+        if (dialogBean.submitStr != null)
         {
             tvSubmit.text = dialogBean.submitStr;
         }
@@ -94,7 +94,7 @@ public class DialogView : BaseMonoBehaviour
 
     public interface IDialogCallBack
     {
-         void Submit(DialogView dialogView);
-         void Cancel(DialogView dialogView);
+        void Submit(DialogView dialogView);
+        void Cancel(DialogView dialogView);
     }
 }
