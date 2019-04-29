@@ -16,4 +16,9 @@ public class CharacterBaseBean
     public long priceM;
     public long priceL;
 
+    public bool isChef;//是否开启厨师
+    public bool isWaiter;//是否开启服务生
+    public bool isAccounting;//是否开启记帐
+    public bool isBeater;//是否开启打手
+    public bool isAccost;//是否开启招呼
 }

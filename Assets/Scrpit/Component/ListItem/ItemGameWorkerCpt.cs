@@ -28,13 +28,15 @@ public class ItemGameWorkerCpt : BaseMonoBehaviour
 
     public void SetData(CharacterBean data)
     {
+        if (characterData == null)
+            return;
         characterData = data;
         if (characterData.baseInfo != null)
         {
             CharacterBaseBean characterBase = characterData.baseInfo;
             SetName(characterBase.name);
             SetPrice(characterBase.priceS, characterBase.priceM, characterBase.priceL);
-           
+            SetWork(characterBase.isChef, characterBase.isWaiter, characterBase.isAccounting, characterBase.isBeater, characterBase.isAccost);
         }
         if (characterData.attributes != null)
         {
@@ -76,5 +78,52 @@ public class ItemGameWorkerCpt : BaseMonoBehaviour
         if (tvLoyal == null)
             return;
         tvLoyal.text = loyal+"";
+    }
+
+    /// <summary>
+    ///  设置工作
+    /// </summary>
+    /// <param name="isChef"></param>
+    /// <param name="isWaiter"></param>
+    /// <param name="isAccounting"></param>
+    /// <param name="isBeater"></param>
+    /// <param name="isAccost"></param>
+    public  void SetWork(bool isChef, bool isWaiter, bool isAccounting, bool isBeater, bool isAccost)
+    {
+        if (rbAccounting != null)
+        {
+            if(isAccounting)
+                rbAccounting.ChangeStates(RadioButtonView.RadioButtonStates.Selected);
+            else
+                rbAccounting.ChangeStates(RadioButtonView.RadioButtonStates.Unselected);
+        }
+        if (rbChef != null)
+        {
+            if (isChef)
+                rbChef.ChangeStates(RadioButtonView.RadioButtonStates.Selected);
+            else
+                rbChef.ChangeStates(RadioButtonView.RadioButtonStates.Unselected);
+        }
+        if (rbWaiter != null)
+        {
+            if (isWaiter)
+                rbWaiter.ChangeStates(RadioButtonView.RadioButtonStates.Selected);
+            else
+                rbWaiter.ChangeStates(RadioButtonView.RadioButtonStates.Unselected);
+        }
+        if (rbShout != null)
+        {
+            if (isAccost)
+                rbShout.ChangeStates(RadioButtonView.RadioButtonStates.Selected);
+            else
+                rbShout.ChangeStates(RadioButtonView.RadioButtonStates.Unselected);
+        }
+        if (rbBeater != null)
+        {
+            if (isBeater)
+                rbBeater.ChangeStates(RadioButtonView.RadioButtonStates.Selected);
+            else
+                rbBeater.ChangeStates(RadioButtonView.RadioButtonStates.Unselected);
+        }
     }
 }

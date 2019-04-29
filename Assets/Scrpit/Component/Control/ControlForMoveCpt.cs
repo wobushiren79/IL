@@ -22,4 +22,9 @@ public class ControlForMoveCpt : BaseControl
             characterMoveCpt.Move(hMove, vMove);
         }   
     }
+    public override void StartControl()
+    {
+        base.StartControl();
+        transform.position = new Vector3(0,0,0);
+    }
 }
