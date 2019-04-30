@@ -48,7 +48,7 @@ public class RadioGroupView : BaseMonoBehaviour, IRadioButtonCallBack
         this.mRGCallBack = callback;
     }
 
-    public void RadioButtonSelected(RadioButtonView view)
+    public void RadioButtonSelected(RadioButtonView view, RadioButtonView.RadioButtonStates buttonStates)
     {
         if (CheckUtil.ListIsNull(listButton))
         {

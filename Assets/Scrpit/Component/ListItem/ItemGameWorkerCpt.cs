@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using UnityEditor;
 using UnityEngine.UI;
-public class ItemGameWorkerCpt : BaseMonoBehaviour
+public class ItemGameWorkerCpt : BaseMonoBehaviour, IRadioButtonCallBack
 {
     public Text tvName;
     public InfoPromptPopupButton pbName;
@@ -31,10 +31,12 @@ public class ItemGameWorkerCpt : BaseMonoBehaviour
     public RadioButtonView rbAccounting;
     public RadioButtonView rbChef;
     public RadioButtonView rbWaiter;
-    public RadioButtonView rbShout;
+    public RadioButtonView rbAccost;
     public RadioButtonView rbBeater;
 
+    public CharacterUICpt characterUICpt;
     public CharacterBean characterData;
+    public InnHandler innHandler;
 
     private void Start()
     {
@@ -57,6 +59,17 @@ public class ItemGameWorkerCpt : BaseMonoBehaviour
             pbForce.SetContent(GameCommonInfo.GetUITextById(11008));
         if (pbLucky != null)
             pbLucky.SetContent(GameCommonInfo.GetUITextById(11009));
+
+        if (rbAccounting != null)
+            rbAccounting.SetCallBack(this);
+        if (rbChef != null)
+            rbChef.SetCallBack(this);
+        if (rbWaiter != null)
+            rbWaiter.SetCallBack(this);
+        if (rbAccost != null)
+            rbAccost.SetCallBack(this);
+        if (rbBeater != null)
+            rbBeater.SetCallBack(this);
     }
 
     public void SetData(CharacterBean data)
@@ -76,6 +89,8 @@ public class ItemGameWorkerCpt : BaseMonoBehaviour
             CharacterAttributesBean characterAttributes = characterData.attributes;
             SetLoyal(characterAttributes.loyal);
         }
+        if (data.body != null && data.equips != null)
+            characterUICpt.SetCharacterData(data.body, data.equips);
     }
 
     /// <summary>
@@ -144,12 +159,12 @@ public class ItemGameWorkerCpt : BaseMonoBehaviour
             else
                 rbWaiter.ChangeStates(RadioButtonView.RadioButtonStates.Unselected);
         }
-        if (rbShout != null)
+        if (rbAccost != null)
         {
             if (isAccost)
-                rbShout.ChangeStates(RadioButtonView.RadioButtonStates.Selected);
+                rbAccost.ChangeStates(RadioButtonView.RadioButtonStates.Selected);
             else
-                rbShout.ChangeStates(RadioButtonView.RadioButtonStates.Unselected);
+                rbAccost.ChangeStates(RadioButtonView.RadioButtonStates.Unselected);
         }
         if (rbBeater != null)
         {
@@ -158,5 +173,34 @@ public class ItemGameWorkerCpt : BaseMonoBehaviour
             else
                 rbBeater.ChangeStates(RadioButtonView.RadioButtonStates.Unselected);
         }
+    }
+
+    public void RadioButtonSelected(RadioButtonView view, RadioButtonView.RadioButtonStates buttonStates)
+    {
+        if (characterData == null || characterData.baseInfo == null)
+            return;
+        CharacterBaseBean characterBase = characterData.baseInfo;
+        if (view == rbAccounting)
+        {
+            characterBase.isAccounting = (buttonStates == RadioButtonView.RadioButtonStates.Selected) ? true : false;
+        }
+        else if (view == rbWaiter)
+        {
+            characterBase.isWaiter = (buttonStates == RadioButtonView.RadioButtonStates.Selected) ? true : false;
+        }
+        else if (view == rbChef)
+        {
+            characterBase.isChef = (buttonStates == RadioButtonView.RadioButtonStates.Selected) ? true : false;
+        }
+        else if (view == rbAccost)
+        {
+            characterBase.isAccost = (buttonStates == RadioButtonView.RadioButtonStates.Selected) ? true : false;
+        }
+        else if (view == rbBeater)
+        {
+            characterBase.isBeater = (buttonStates == RadioButtonView.RadioButtonStates.Selected) ? true : false;
+        }
+        if (innHandler != null)
+            innHandler.InitWorker();
     }
 }

@@ -72,6 +72,8 @@ public class GameDataModel : BaseMVCModel
         //添加一个员工
         CharacterBean worker = new CharacterBean();
         CharacterBean worker2 = new CharacterBean();
+        worker.baseInfo.name = "张三";
+        worker2.baseInfo.name = "李四";
         gameData.workCharacterList.Add(worker);
         gameData.workCharacterList.Add(worker2);
         SetGameDataByUserId(userId, gameData);

@@ -5,6 +5,7 @@ using System;
 [Serializable]
 public class CharacterBaseBean 
 {
+    public string characterId;
     //名字
     public string name;
     //工作天数

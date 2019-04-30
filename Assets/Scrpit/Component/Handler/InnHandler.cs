@@ -50,7 +50,15 @@ public class InnHandler : BaseMonoBehaviour
         innTableHandler.InitTableList();
         innCookHandler.InitStoveList();
         innPayHandler.InitCounterList();
+        InitWorker();
+    }
 
+    /// <summary>
+    /// 初始化员工
+    /// </summary>
+    public void InitWorker()
+    {
+        workerBuilder.RefreshWorkStatus();
         innPayHandler.InitAccountingCpt();
         innCookHandler.InitChefCpt();
         innWaiterHandler.InitWaiterCpt();
@@ -219,10 +227,15 @@ public class InnHandler : BaseMonoBehaviour
     /// 付钱
     /// </summary>
     /// <param name="food"></param>
-    public void PayMoney(FoodForCustomerCpt foodCpt,float multiple)
+    public void PayMoney(FoodForCustomerCpt foodCpt, float multiple)
     {
-        gameDataManager.gameData.moneyS += (long)(foodCpt.foodData.food.price_s* multiple);
-        gameDataManager.gameData.moneyM += (long)(foodCpt.foodData.food.price_m* multiple);
-        gameDataManager.gameData.moneyL += (long)(foodCpt.foodData.food.price_l* multiple);
+        gameDataManager.gameData.moneyS += (long)(foodCpt.foodData.food.price_s * multiple);
+        gameDataManager.gameData.moneyM += (long)(foodCpt.foodData.food.price_m * multiple);
+        gameDataManager.gameData.moneyL += (long)(foodCpt.foodData.food.price_l * multiple);
+        innPayHandler.ShowPayEffects
+            (foodCpt.foodData.customer.transform.position,
+            foodCpt.foodData.food.price_l,
+            foodCpt.foodData.food.price_m, 
+            foodCpt.foodData.food.price_s);
     }
 }

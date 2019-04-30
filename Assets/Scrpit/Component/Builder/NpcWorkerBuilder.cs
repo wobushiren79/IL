@@ -11,6 +11,8 @@ public class NpcWorkerBuilder : BaseMonoBehaviour
 
     public GameDataManager gameDataManager;
 
+    public List<NpcAIWorkerCpt> npcWorkerList=new List<NpcAIWorkerCpt>();
+
     public void BuildAllWorker()
     {
         if (objContainer == null || objWorkModel == null || gameDataManager == null)
@@ -37,10 +39,33 @@ public class NpcWorkerBuilder : BaseMonoBehaviour
 
         NpcAIWorkerCpt npcAI = workerObj.GetComponent<NpcAIWorkerCpt>();
         npcAI.SetCharacterData(characterBean);
+        if (characterBean.baseInfo != null)
+        {
+            CharacterBaseBean characterBase = characterBean.baseInfo;
+            npcAI.isChef = characterBase.isChef;
+            npcAI.isAccounting = characterBase.isAccounting;
+            npcAI.isWaiter = characterBase.isWaiter;
+        }
+        npcWorkerList.Add(npcAI);
+    }
+
+    public void RefreshWorkStatus()
+    {
+        if (npcWorkerList == null)
+            return;
+        for(int i=0;i< npcWorkerList.Count;i++)
+        {
+            NpcAIWorkerCpt npcAI= npcWorkerList[i];
+            CharacterBaseBean characterBase = npcAI.characterData.baseInfo;
+            npcAI.isChef = characterBase.isChef;
+            npcAI.isAccounting = characterBase.isAccounting;
+            npcAI.isWaiter = characterBase.isWaiter;
+        }
     }
 
     public void ClearAllWork()
     {
+        npcWorkerList.Clear();
         CptUtil.RemoveChild(objContainer.transform);
     }
 }

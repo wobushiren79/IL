@@ -38,10 +38,11 @@ public class RadioButtonView : BaseMonoBehaviour
     /// </summary>
     public void RadioButtonSelected()
     {
+        ChangeStates();
         if (mRBCallBack != null)
-            mRBCallBack.RadioButtonSelected(this);
-        else
-            ChangeStates();
+        {
+            mRBCallBack.RadioButtonSelected(this, states);
+        }
     }
 
     /// <summary>
@@ -60,6 +61,7 @@ public class RadioButtonView : BaseMonoBehaviour
     /// <param name="states"></param>
     public void ChangeStates(RadioButtonStates states)
     {
+        this.states = states;
         switch (states)
         {
             case RadioButtonStates.Selected:
