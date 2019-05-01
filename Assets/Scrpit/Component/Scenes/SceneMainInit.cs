@@ -15,5 +15,6 @@ public class SceneMainInit : BaseMonoBehaviour
             characterDressManager.equipInfoController.GetAllEquipInfo();
         if (gameDataManager != null)
             gameDataManager.gameDataController.GetSimpleGameData();
+
     }
 }
