@@ -5,6 +5,7 @@ public class UIGameMain : BaseUIComponent
 {
     public Button btWorker;
     public Button btBuild;
+    public Button btMenu;
     public Button btSave;
     public Button btSleep;
 
@@ -45,6 +46,9 @@ public class UIGameMain : BaseUIComponent
         if (btBuild != null)
             btBuild.onClick.AddListener(OpenBuildUI);
 
+        if (btMenu != null)
+            btMenu.onClick.AddListener(OpenMenuUI);
+
         if (btSave != null)
             btSave.onClick.AddListener(SaveData);
 
@@ -65,6 +69,11 @@ public class UIGameMain : BaseUIComponent
     public void OpenWorkerUI()
     {
         uiManager.OpenUIAndCloseOtherByName("Worker");
+    }
+
+    public void OpenMenuUI()
+    {
+        uiManager.OpenUIAndCloseOtherByName("Menu");
     }
 
     public void EndDay()

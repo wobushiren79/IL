@@ -21,6 +21,15 @@ public class GameDataBean
     public List<ItemBean> equipItemList = new List<ItemBean>();//所拥有的装备
     public List<MenuOwnBean> menuList = new List<MenuOwnBean>();//所拥有的菜单
 
+    public long ingOilsalt;//油盐
+    public long ingMeat;//肉类
+    public long ingRiverfresh;//河鲜
+    public long ingSeafood;//海鲜
+    public long ingVegetables;//蔬菜
+    public long ingMelonfruit;//瓜果
+    public long ingWaterwine;//酒水
+    public long ingFlour;//面粉
+
     /// <summary>
     /// 获取建筑数据
     /// </summary>
