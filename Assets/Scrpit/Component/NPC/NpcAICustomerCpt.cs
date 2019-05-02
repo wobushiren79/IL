@@ -72,7 +72,16 @@ public class NpcAICustomerCpt : BaseNpcAI
                 {
                     SetDestinationByIntent(CustomerIntentEnum.WaitFood);
                     MenuInfoBean foodData = innHandler.OrderForFood(this, tableForEating);
-                    characterShoutCpt.Shout(foodData.name);
+                    if (foodData == null)
+                    {
+                        MoodGet(-100);
+                        tableForEating.ClearTable();
+                        SetDestinationByIntent(CustomerIntentEnum.Leave);
+                    }
+                    else
+                    {
+                        characterShoutCpt.Shout(foodData.name);
+                    }  
                 }
                 break;
             case CustomerIntentEnum.GotoPay:
@@ -101,6 +110,17 @@ public class NpcAICustomerCpt : BaseNpcAI
     }
 
     /// <summary>
+    /// 通知不能完成食物
+    /// </summary>
+    public void SendForCanNotCook()
+    {
+        StopAllCoroutines();
+        MoodGet(-100);
+        tableForEating.ClearTable();
+        SetDestinationByIntent(CustomerIntentEnum.Leave);
+    }
+
+    /// <summary>
     /// 心情递减
     /// </summary>
     public void MoodLose()
@@ -118,6 +138,7 @@ public class NpcAICustomerCpt : BaseNpcAI
         innEvaluation.mood += mood;
         characterMoodCpt.SetMood(innEvaluation.mood);
     }
+
     /// <summary>
     /// 设置餐桌
     /// </summary>

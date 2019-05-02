@@ -175,7 +175,9 @@ public class InnHandler : BaseMonoBehaviour
     /// <returns></returns>
     public MenuInfoBean OrderForFood(NpcAICustomerCpt customerCpt, BuildTableCpt table)
     {
-        List<MenuOwnBean> listOwnMenu = gameDataManager.gameData.menuList;
+        List<MenuOwnBean> listOwnMenu = gameDataManager.gameData.GetSellMenuList();
+        if (listOwnMenu.Count == 0)
+            return null;
         MenuOwnBean menuOwnItem = RandomUtil.GetRandomDataByList(listOwnMenu);
         if (menuOwnItem == null)
             return null;
@@ -229,6 +231,9 @@ public class InnHandler : BaseMonoBehaviour
     /// <param name="food"></param>
     public void PayMoney(FoodForCustomerCpt foodCpt, float multiple)
     {
+        //记录+1
+        gameDataManager.gameData.ChangeMenuSellNumber(1,foodCpt.foodData.food.id);
+        //金钱增加
         gameDataManager.gameData.moneyS += (long)(foodCpt.foodData.food.price_s * multiple);
         gameDataManager.gameData.moneyM += (long)(foodCpt.foodData.food.price_m * multiple);
         gameDataManager.gameData.moneyL += (long)(foodCpt.foodData.food.price_l * multiple);

@@ -67,16 +67,18 @@ public class UIGameMenu : BaseUIComponent
 
     public void CreateFoodList()
     {
-        if (gameDataManager == null|| innFoodManager==null)
+        if (gameDataManager == null || innFoodManager == null)
             return;
         List<MenuOwnBean> listMenu = gameDataManager.gameData.menuList;
-        List<MenuInfoBean> listFood= innFoodManager.GetFoodDataListByMenuList(listMenu);
-        for (int i = 0; i < listFood.Count; i++)
+
+        for (int i = 0; i < listMenu.Count; i++)
         {
+            MenuOwnBean itemData = listMenu[i];
+            MenuInfoBean menuInfo = innFoodManager.GetFoodDataById(itemData.menuId);
             GameObject foodObj = Instantiate(objFoodItemModel, objFoodListContent.transform);
             foodObj.SetActive(true);
-            ItemGameMenuFoodCpt foodCpt= foodObj.GetComponent<ItemGameMenuFoodCpt>();
-            foodCpt.SetData(listFood[i]);
+            ItemGameMenuFoodCpt foodCpt = foodObj.GetComponent<ItemGameMenuFoodCpt>();
+            foodCpt.SetData(itemData, menuInfo);
         }
     }
 

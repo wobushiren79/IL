@@ -55,6 +55,25 @@ public class InnFoodManager : BaseManager, IMenuInfoView
         return listFood;
     }
 
+    /// <summary>
+    /// 根据ID获取食物数据
+    /// </summary>
+    /// <param name="id"></param>
+    /// <returns></returns>
+    public MenuInfoBean GetFoodDataById(long id)
+    {
+        if (listMenuData == null)
+            return null;
+        for (int i = 0; i < listMenuData.Count; i++)
+        {
+            MenuInfoBean itemFoodData = listMenuData[i];
+            if (itemFoodData.id == id)
+            {
+                return itemFoodData;
+            }
+        }
+        return null;
+    }
 
     private void Awake()
     {

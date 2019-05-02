@@ -4,7 +4,7 @@ using System;
 using System.Collections.Generic;
 
 [Serializable]
-public class GameDataBean 
+public class GameDataBean
 {
     public string userId;//用户ID
     public long moneyS;//1黄金=10白银  1白银=1000文
@@ -13,7 +13,7 @@ public class GameDataBean
 
     public string innName;//客栈名称
     public CharacterBean userCharacter;// 老板
-    public List<CharacterBean> workCharacterList=new List<CharacterBean>();//员工
+    public List<CharacterBean> workCharacterList = new List<CharacterBean>();//员工
     public InnBuildBean innBuildData;//客栈建筑数据
     public TimeBean gameTime;//游戏时间
 
@@ -41,6 +41,24 @@ public class GameDataBean
         return innBuildData;
     }
 
+    /// <summary>
+    /// 获取正在出售的食物
+    /// </summary>
+    /// <returns></returns>
+    public List<MenuOwnBean> GetSellMenuList()
+    {
+        List<MenuOwnBean> listData = new List<MenuOwnBean>();
+        for (int i = 0; i < menuList.Count; i++)
+        {
+            MenuOwnBean itemData = menuList[i];
+            if (itemData.isSell)
+            {
+                listData.Add(itemData);
+            }
+        }
+        return listData;
+    }
+
     public static void GetMoneyDetails(long money, out long L, out long M, out long S)
     {
         long temp1 = money % 10;
@@ -53,6 +71,98 @@ public class GameDataBean
     }
 
     /// <summary>
+    /// 修改食物销售数量
+    /// </summary>
+    /// <param name="number"></param>
+    /// <param name="menuId"></param>
+    public void ChangeMenuSellNumber(long number, long menuId)
+    {
+        for (int i = 0; i < menuList.Count; i++)
+        {
+            MenuOwnBean itemData = menuList[i];
+            if (itemData.menuId == menuId)
+            {
+                itemData.sellNumber += number;
+                return;
+            }
+        }
+    }
+
+    /// <summary>
+    /// 检测是否能做出食物
+    /// </summary>
+    /// <param name="foodData"></param>
+    /// <returns></returns>
+    public bool CheckCookFood(MenuInfoBean foodData)
+    {
+        if (foodData.ing_oilsalt != 0 && ingOilsalt < foodData.ing_oilsalt)
+        {
+            return false;
+        }
+        if (foodData.ing_meat != 0 && ingMeat < foodData.ing_meat)
+        {
+            return false;
+        }
+        if (foodData.ing_riverfresh != 0 && ingRiverfresh < foodData.ing_riverfresh)
+        {
+            return false;
+        }
+        if (foodData.ing_seafood != 0 && ingSeafood < foodData.ing_seafood)
+        {
+            return false;
+        }
+        if (foodData.ing_vegetables != 0 && ingVegetables < foodData.ing_vegetables)
+        {
+            return false;
+        }
+        if (foodData.ing_melonfruit != 0 && ingMelonfruit < foodData.ing_melonfruit)
+        {
+            return false;
+        }
+        if (foodData.ing_waterwine != 0 && ingWaterwine < foodData.ing_waterwine)
+        {
+            return false;
+        }
+        if (foodData.ing_flour != 0 && ingFlour < foodData.ing_flour)
+        {
+            return false;
+        }
+        return true;
+    }
+
+    /// <summary>
+    /// 扣除食材
+    /// </summary>
+    /// <param name="foodData"></param>
+    public void DeductIng(MenuInfoBean foodData)
+    {
+        ingOilsalt -= foodData.ing_oilsalt;
+        ingMeat -= foodData.ing_meat;
+        ingRiverfresh -= foodData.ing_riverfresh;
+        ingSeafood -= foodData.ing_seafood;
+        ingVegetables -= foodData.ing_vegetables;
+        ingMelonfruit -= foodData.ing_melonfruit;
+        ingWaterwine -= foodData.ing_waterwine;
+        ingFlour -= foodData.ing_flour;
+        if (ingOilsalt < 0)
+            ingOilsalt = 0;
+        if (ingMeat < 0)
+            ingMeat = 0;
+        if (ingRiverfresh < 0)
+            ingRiverfresh = 0;
+        if (ingSeafood < 0)
+            ingSeafood = 0;
+        if (ingVegetables < 0)
+            ingVegetables = 0;
+        if (ingMelonfruit < 0)
+            ingMelonfruit = 0;
+        if (ingWaterwine < 0)
+            ingWaterwine = 0;
+        if (ingFlour < 0)
+            ingFlour = 0;
+    }
+
+    /// <summary>
     /// 修改建筑材料数量
     /// </summary>
     public void ChangeBuildItem(long buildId, long number)
@@ -60,17 +170,17 @@ public class GameDataBean
         ChangeItem(buildId, number, buildItemList);
     }
 
-    public void ChangeItem(long buildId , long number, List<ItemBean> list)
+    public void ChangeItem(long buildId, long number, List<ItemBean> list)
     {
         bool hasData = false;
-        for(int i = 0; i < list.Count; i++)
+        for (int i = 0; i < list.Count; i++)
         {
             ItemBean item = list[i];
             if (item.itemId == buildId)
             {
                 hasData = true;
                 item.itemNumber += number;
-                if (item.itemNumber <=0)
+                if (item.itemNumber <= 0)
                 {
                     item.itemNumber = 0;
                     list.RemoveAt(i);
@@ -79,9 +189,9 @@ public class GameDataBean
                 break;
             }
         }
-        if (!hasData&& number>0)
+        if (!hasData && number > 0)
         {
-            list.Add(new ItemBean(buildId,number));
+            list.Add(new ItemBean(buildId, number));
         }
     }
 

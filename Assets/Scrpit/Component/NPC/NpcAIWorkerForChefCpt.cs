@@ -41,10 +41,24 @@ public class NpcAIWorkerForChefCpt : BaseMonoBehaviour
             case ChefStatue.GoToCook:
                 if (!CheckCustomerLeave() && Vector2.Distance(transform.position, cookPositionList[0]) < 0.1f)
                 {
-                    chefStatue = ChefStatue.Cooking;
-                    StartCoroutine(StartCook());
-                    ChangeCookPosition();
-                    cookPro.SetActive(true);
+                    bool canCook = mNpcAIWorker.gameDataManager.gameData.CheckCookFood(foodData.food);
+                    if (canCook)
+                    {
+                        //扣除食材
+                        mNpcAIWorker.gameDataManager.gameData.DeductIng(foodData.food);
+                        //开始做菜
+                        chefStatue = ChefStatue.Cooking;
+                        StartCoroutine(StartCook());
+                        ChangeCookPosition();
+                        cookPro.SetActive(true);
+                    }
+                    else
+                    {
+                        mNpcAIWorker.characterShoutCpt.Shout("缺少食材！");
+                        foodData.customer.SendForCanNotCook();
+                        SetStatusIdle();
+                    }
+
                 }
                 break;
             case ChefStatue.Cooking:

@@ -11,6 +11,8 @@ public class NpcAIWorkerCpt : BaseNpcAI
         Cook,//做菜
         Accounting,//结账
     }
+    //呼喊
+    public CharacterShoutCpt characterShoutCpt;
 
     //厨师AI控制
     public NpcAIWorkerForChefCpt aiForChef;

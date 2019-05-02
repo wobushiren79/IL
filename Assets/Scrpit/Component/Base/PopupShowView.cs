@@ -12,7 +12,7 @@ public class PopupShowView : BaseMonoBehaviour
     public float offsetX = 0;
     public float offsetY = 0;
 
-    private void Update()
+    public virtual void Update()
     {
         if (screenRTF == null)
             return;
@@ -24,8 +24,8 @@ public class PopupShowView : BaseMonoBehaviour
             RectTransformUtility.ScreenPointToLocalPointInRectangle(screenRTF, Input.mousePosition, Camera.main, out outPosition);
             float moveX = outPosition.x;
             float moveY = outPosition.y;
-            Vector3 newPosition= Vector3.Lerp(transform.localPosition, new Vector3(moveX + offsetX, moveY + offsetY, transform.localPosition.z),0.5f);
-            transform.localPosition = newPosition;
+            //Vector3 newPosition= Vector3.Lerp(transform.localPosition, new Vector3(moveX + offsetX, moveY + offsetY, transform.localPosition.z),0.5f);
+            transform.localPosition = new Vector3(moveX + offsetX, moveY + offsetY, transform.localPosition.z);
         }
     }
 
