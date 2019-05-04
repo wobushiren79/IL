@@ -7,6 +7,8 @@ public class UIGameStart : BaseUIComponent
     public Button btCancel;
 
     public InnHandler innHandler;
+    public ControlHandler controlHandler;
+    public GameTimeHandler gameTimeHandler;
 
     private void Start()
     {
@@ -18,12 +20,16 @@ public class UIGameStart : BaseUIComponent
 
     public void OpenInn()
     {
+        gameTimeHandler.dayStauts = GameTimeHandler.DayEnum.Work;
         uiManager.OpenUIAndCloseOtherByName("Main");
         innHandler.OpenInn();
+        controlHandler.StartControl(ControlHandler.ControlEnum.Work);
     }
 
     public void CloseInn()
     {
+        gameTimeHandler.dayStauts = GameTimeHandler.DayEnum.Rest;
         uiManager.OpenUIAndCloseOtherByName("Main");
+        controlHandler.StartControl(ControlHandler.ControlEnum.Normal);
     }
 }

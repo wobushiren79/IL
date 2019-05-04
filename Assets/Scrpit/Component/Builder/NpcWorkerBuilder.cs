@@ -11,7 +11,7 @@ public class NpcWorkerBuilder : BaseMonoBehaviour
 
     public GameDataManager gameDataManager;
 
-    public List<NpcAIWorkerCpt> npcWorkerList=new List<NpcAIWorkerCpt>();
+    public List<NpcAIWorkerCpt> npcWorkerList = new List<NpcAIWorkerCpt>();
 
     public void BuildAllWorker()
     {
@@ -20,9 +20,10 @@ public class NpcWorkerBuilder : BaseMonoBehaviour
             return;
         }
         List<CharacterBean> listAllWork = gameDataManager.gameData.workCharacterList;
-        for(int i=0;i< listAllWork.Count;i++)
+        BuildWork(gameDataManager.gameData.userCharacter);
+        for (int i = 0; i < listAllWork.Count; i++)
         {
-            CharacterBean itemData= listAllWork[i];
+            CharacterBean itemData = listAllWork[i];
             BuildWork(itemData);
         }
     }
@@ -53,9 +54,9 @@ public class NpcWorkerBuilder : BaseMonoBehaviour
     {
         if (npcWorkerList == null)
             return;
-        for(int i=0;i< npcWorkerList.Count;i++)
+        for (int i = 0; i < npcWorkerList.Count; i++)
         {
-            NpcAIWorkerCpt npcAI= npcWorkerList[i];
+            NpcAIWorkerCpt npcAI = npcWorkerList[i];
             CharacterBaseBean characterBase = npcAI.characterData.baseInfo;
             npcAI.isChef = characterBase.isChef;
             npcAI.isAccounting = characterBase.isAccounting;

@@ -37,8 +37,8 @@ public class ClockView : BaseMonoBehaviour
         }
         ivClockHand.transform.localRotation = Quaternion.Euler(0.0f, 0.0f, rotationZ);
         string hourStr = hour < 10 ? "0" + hour : "" + hour;
-        string minStr = hour < 10 ? "0" + min : "" + min;
-        tvClock.text = hour + ":" + min;
+        string minStr = min < 10 ? "0" + min : "" + min;
+        tvClock.text = hourStr + ":" + minStr;
     }
 
 

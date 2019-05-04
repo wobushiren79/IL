@@ -47,6 +47,7 @@ public class GameDataModel : BaseMVCModel
         gameData.buildItemList = new List<ItemBean>();
         gameData.equipItemList = new List<ItemBean>();
         gameData.workCharacterList = new List<CharacterBean>();
+        gameData.menuList = new List<MenuOwnBean>();
 
         gameData.innBuildData.innWidth = 9;
         gameData.innBuildData.innHeight = 9;
@@ -66,8 +67,6 @@ public class GameDataModel : BaseMVCModel
         gameData.buildItemList.Add(new ItemBean(30001, 5));
         gameData.buildItemList.Add(new ItemBean(40001, 1));
         gameData.buildItemList.Add(new ItemBean(50001, 1));
-        gameData.buildItemList.Add(new ItemBean(90001, 1));
-        gameData.menuList.Add(new MenuOwnBean(1));
 
         //添加一个员工
         CharacterBean worker = new CharacterBean();
@@ -76,6 +75,18 @@ public class GameDataModel : BaseMVCModel
         worker2.baseInfo.name = "李四";
         gameData.workCharacterList.Add(worker);
         gameData.workCharacterList.Add(worker2);
+
+        //添加菜单
+        gameData.menuList.Add(new MenuOwnBean(1));
+        gameData.menuList.Add(new MenuOwnBean(101));
+        gameData.menuList.Add(new MenuOwnBean(201));
+        gameData.menuList.Add(new MenuOwnBean(301));
+        gameData.menuList.Add(new MenuOwnBean(401));
+        gameData.ingOilsalt=50;
+        gameData.ingVegetables = 50;
+        gameData.ingMelonfruit = 50;
+        gameData.ingWaterwine = 50;
+        gameData.ingMeat = 10;
         SetGameDataByUserId(userId, gameData);
     }
 

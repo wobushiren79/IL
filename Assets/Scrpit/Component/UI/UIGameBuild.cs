@@ -22,9 +22,9 @@ public class UIGameBuild : BaseUIComponent
     public InnBuildManager innBuildManager;
 
     //控制
-    public ControlForBuildCpt controlForBuild;
-    public ControlForMoveCpt controlForMove;
-
+    public ControlHandler controlHandler;
+    //时间处理
+    public GameTimeHandler gameTimeHandler;
     //游戏进程处理
     public InnHandler innHandler;
     public NavMeshSurface2d navMesh;
@@ -50,8 +50,7 @@ public class UIGameBuild : BaseUIComponent
     public override void OpenUI()
     {
         base.OpenUI();
-        controlForBuild.StartControl();
-        controlForMove.EndControl();
+        controlHandler.StartControl(ControlHandler.ControlEnum.Build);
         innHandler.CloseInn();
     }
 
@@ -63,7 +62,7 @@ public class UIGameBuild : BaseUIComponent
     {
         buildType = type;
         //删除当前选中
-        controlForBuild.DestoryBuild();
+        ((ControlForBuildCpt)(controlHandler.GetControl(ControlHandler.ControlEnum.Build))).DestoryBuild();
         if (listBuildContent == null)
             return;
         if (itemBuildModel == null)
@@ -124,7 +123,7 @@ public class UIGameBuild : BaseUIComponent
 
     public void DismantleMode()
     {
-        controlForBuild.DismantleMode();
+        ((ControlForBuildCpt)(controlHandler.GetControl(ControlHandler.ControlEnum.Build))).DismantleMode();
     }
 
     /// <summary>
@@ -139,9 +138,16 @@ public class UIGameBuild : BaseUIComponent
     /// </summary>
     public void OpenMainUI()
     {
-        controlForMove.StartControl();
-        controlForBuild.EndControl();
-        controlForBuild.DestoryBuild();
+        if (gameTimeHandler.dayStauts == GameTimeHandler.DayEnum.Work)
+        {
+            controlHandler.StartControl(ControlHandler.ControlEnum.Work);
+        }
+        else
+        {
+            controlHandler.StartControl(ControlHandler.ControlEnum.Normal);
+        }
+        //删除当前选中
+        ((ControlForBuildCpt)(controlHandler.GetControl(ControlHandler.ControlEnum.Build))).DestoryBuild();
         navMesh.BuildNavMesh();
         innHandler.OpenInn();
         uiManager.OpenUIAndCloseOtherByName("Main");
