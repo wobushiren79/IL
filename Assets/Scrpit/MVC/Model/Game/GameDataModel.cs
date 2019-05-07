@@ -82,6 +82,7 @@ public class GameDataModel : BaseMVCModel
         gameData.menuList.Add(new MenuOwnBean(201));
         gameData.menuList.Add(new MenuOwnBean(301));
         gameData.menuList.Add(new MenuOwnBean(401));
+        gameData.menuList.Add(new MenuOwnBean(10001));
         gameData.ingOilsalt=50;
         gameData.ingVegetables = 50;
         gameData.ingMelonfruit = 50;

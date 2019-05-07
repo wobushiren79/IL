@@ -138,18 +138,20 @@ public class UIGameBuild : BaseUIComponent
     /// </summary>
     public void OpenMainUI()
     {
+
+        //删除当前选中
+        ((ControlForBuildCpt)(controlHandler.GetControl(ControlHandler.ControlEnum.Build))).DestoryBuild();
+        navMesh.BuildNavMesh();
+        uiManager.OpenUIAndCloseOtherByName("Main");
+
         if (gameTimeHandler.dayStauts == GameTimeHandler.DayEnum.Work)
         {
+            innHandler.OpenInn();
             controlHandler.StartControl(ControlHandler.ControlEnum.Work);
         }
         else
         {
             controlHandler.StartControl(ControlHandler.ControlEnum.Normal);
         }
-        //删除当前选中
-        ((ControlForBuildCpt)(controlHandler.GetControl(ControlHandler.ControlEnum.Build))).DestoryBuild();
-        navMesh.BuildNavMesh();
-        innHandler.OpenInn();
-        uiManager.OpenUIAndCloseOtherByName("Main");
     }
 }

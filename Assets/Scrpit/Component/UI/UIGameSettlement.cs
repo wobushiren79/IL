@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using UnityEditor;
 using UnityEngine.UI;
-public class UIGameStart : BaseUIComponent
+public class UIGameSettlement : BaseUIComponent
 {
     public Button btSubmit;
     public Button btCancel;

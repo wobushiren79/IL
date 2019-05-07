@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using UnityEditor;
 using UnityEngine.UI;
-public class UIGameMain : BaseUIComponent
+public class UIGameMain : BaseUIComponent,DialogView.IDialogCallBack
 {
     public Button btWorker;
     public Button btBuild;
@@ -15,6 +15,7 @@ public class UIGameMain : BaseUIComponent
     public Text tvMoneyL;
 
     public GameDataManager gameDataManager;
+    public DialogManager dialogManager;
     public InnHandler innHandler;
     public InnWallBuilder innWall;
 
@@ -78,7 +79,20 @@ public class UIGameMain : BaseUIComponent
 
     public void EndDay()
     {
-        uiManager.OpenUIAndCloseOtherByName("Start");
+        DialogBean dialogBean = new DialogBean();
+        dialogBean.content = "是否要结束今天？";
+        dialogManager.CreateDialog(0,this, dialogBean);
+    }
+
+    #region dialog 回调
+    public void Submit(DialogView dialogView)
+    {
+        uiManager.OpenUIAndCloseOtherByName("Settlement");
         innHandler.CloseInn();
     }
+
+    public void Cancel(DialogView dialogView)
+    {
+    }
+    #endregion
 }
