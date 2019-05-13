@@ -9,6 +9,8 @@ public class NpcWorkerBuilder : BaseMonoBehaviour
     //工作模型
     public GameObject objWorkModel;
 
+    public InnHandler innHandler;
+
     public GameDataManager gameDataManager;
 
     public List<NpcAIWorkerCpt> npcWorkerList = new List<NpcAIWorkerCpt>();
@@ -34,8 +36,11 @@ public class NpcWorkerBuilder : BaseMonoBehaviour
         workerObj.transform.SetParent(objContainer.transform);
         workerObj.SetActive(true);
         workerObj.transform.localScale = new Vector3(2, 2);
-        float npcPositionX = Random.Range(0, 1f);
-        float npcPositionY = Random.Range(-1f, 0f);
+        //获取门的坐标 并在门周围生成NPC
+        List<Vector3> doorList = innHandler.GetEntrancePositionList();
+        Vector3 doorPosition = RandomUtil.GetRandomDataByList(doorList);
+        float npcPositionX = Random.Range(doorPosition.x - 0.5f, doorPosition.x + 0.5f);
+        float npcPositionY = Random.Range(doorPosition.y-1f, 0f);
         workerObj.transform.position = new Vector3(npcPositionX, npcPositionY);
 
         NpcAIWorkerCpt npcAI = workerObj.GetComponent<NpcAIWorkerCpt>();

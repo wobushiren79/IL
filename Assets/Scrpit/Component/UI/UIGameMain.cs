@@ -87,7 +87,7 @@ public class UIGameMain : BaseUIComponent,DialogView.IDialogCallBack
     #region dialog 回调
     public void Submit(DialogView dialogView)
     {
-        uiManager.OpenUIAndCloseOtherByName("Settlement");
+        uiManager.OpenUIAndCloseOtherByName("Settle");
         innHandler.CloseInn();
     }
 

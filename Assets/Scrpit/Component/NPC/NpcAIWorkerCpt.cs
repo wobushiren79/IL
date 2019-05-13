@@ -22,6 +22,7 @@ public class NpcAIWorkerCpt : BaseNpcAI
     public NpcAIWorkerForAccountingCpt aiForAccounting;
 
     public GameDataManager gameDataManager;
+    public InnHandler innHandler;
     public float waitTime = 0;
     public Vector3 waitPosition;
 

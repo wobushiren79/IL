@@ -46,6 +46,7 @@ public class NpcAIWorkerForChefCpt : BaseMonoBehaviour
                     {
                         //扣除食材
                         mNpcAIWorker.gameDataManager.gameData.DeductIng(foodData.food);
+                        mNpcAIWorker.innHandler.ConsumeIngRecord(foodData.food);
                         //开始做菜
                         chefStatue = ChefStatue.Cooking;
                         StartCoroutine(StartCook());

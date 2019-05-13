@@ -38,9 +38,11 @@ public class InnHandler : BaseMonoBehaviour
     public List<FoodForCustomerCpt> sendQueue = new List<FoodForCustomerCpt>();
     //排队清理的食物
     public List<FoodForCustomerCpt> clearQueue = new List<FoodForCustomerCpt>();
-
     //顾客列表
     public List<NpcAICustomerCpt> cusomerList = new List<NpcAICustomerCpt>();
+    //当天记录流水
+    public InnRecordBean innRecord = new InnRecordBean();
+
     /// <summary>
     /// 初始化客栈
     /// </summary>
@@ -231,8 +233,16 @@ public class InnHandler : BaseMonoBehaviour
     /// <param name="food"></param>
     public void PayMoney(FoodForCustomerCpt foodCpt, float multiple)
     {
+        //账本记录
+        if (innRecord.sellNumber.ContainsKey(foodCpt.foodData.food.id))
+            innRecord.sellNumber[foodCpt.foodData.food.id] += 1;
+        else
+            innRecord.sellNumber.Add(foodCpt.foodData.food.id, 1);
+        innRecord.incomeS += foodCpt.foodData.food.price_s;
+        innRecord.incomeM += foodCpt.foodData.food.price_m;
+        innRecord.incomeL += foodCpt.foodData.food.price_l;
         //记录+1
-        gameDataManager.gameData.ChangeMenuSellNumber(1,foodCpt.foodData.food.id);
+        gameDataManager.gameData.ChangeMenuSellNumber(1, foodCpt.foodData.food.id);
         //金钱增加
         gameDataManager.gameData.moneyS += (long)(foodCpt.foodData.food.price_s * multiple);
         gameDataManager.gameData.moneyM += (long)(foodCpt.foodData.food.price_m * multiple);
@@ -240,7 +250,23 @@ public class InnHandler : BaseMonoBehaviour
         innPayHandler.ShowPayEffects
             (foodCpt.foodData.customer.transform.position,
             foodCpt.foodData.food.price_l,
-            foodCpt.foodData.food.price_m, 
+            foodCpt.foodData.food.price_m,
             foodCpt.foodData.food.price_s);
     }
+
+    /// <summary>
+    /// 材料消耗记录
+    /// </summary>
+    public void ConsumeIngRecord(MenuInfoBean foodData)
+    {
+        innRecord.consumeIngOilsalt += foodData.ing_oilsalt;
+        innRecord.consumeIngMeat += foodData.ing_meat;
+        innRecord.consumeIngRiverfresh += foodData.ing_riverfresh;
+        innRecord.consumeIngSeafood += foodData.ing_seafood;
+        innRecord.consumeIngVegetablest += foodData.ing_vegetables;
+        innRecord.consumeIngMelonfruit += foodData.ing_melonfruit;
+        innRecord.consumeIngWaterwine += foodData.ing_waterwine;
+        innRecord.consumeIngFlour += foodData.ing_flour;
+    }
+
 }

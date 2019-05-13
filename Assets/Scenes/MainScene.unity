@@ -14264,7 +14264,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_SizeDelta: {x: -50, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &699619617
 MonoBehaviour:
@@ -21614,7 +21614,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_SizeDelta: {x: -50, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &975847635
 MonoBehaviour:
@@ -22150,7 +22150,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_SizeDelta: {x: -50, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1052395522
 MonoBehaviour:
@@ -31397,7 +31397,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_SizeDelta: {x: -50, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1678463368
 MonoBehaviour:
@@ -35828,6 +35828,53 @@ PrefabInstance:
       propertyPath: m_Name
       value: CharacterUI
       objectReference: {fileID: 0}
+    - target: {fileID: 6202850148858248707, guid: dbdedefdbd5ca8045a10545a8d921571,
+        type: 3}
+      propertyPath: characterBodyManager
+      value: 
+      objectReference: {fileID: 1672669450}
+    - target: {fileID: 6202850148858248707, guid: dbdedefdbd5ca8045a10545a8d921571,
+        type: 3}
+      propertyPath: ivBody
+      value: 
+      objectReference: {fileID: 719800865}
+    - target: {fileID: 6202850148858248707, guid: dbdedefdbd5ca8045a10545a8d921571,
+        type: 3}
+      propertyPath: ivClothes
+      value: 
+      objectReference: {fileID: 6202850149408225510}
+    - target: {fileID: 6202850148858248707, guid: dbdedefdbd5ca8045a10545a8d921571,
+        type: 3}
+      propertyPath: ivShoes
+      value: 
+      objectReference: {fileID: 6202850149408225509}
+    - target: {fileID: 6202850148858248707, guid: dbdedefdbd5ca8045a10545a8d921571,
+        type: 3}
+      propertyPath: characterDressManager
+      value: 
+      objectReference: {fileID: 1672669449}
+    - target: {fileID: 6202850148858248707, guid: dbdedefdbd5ca8045a10545a8d921571,
+        type: 3}
+      propertyPath: spMan
+      value: 
+      objectReference: {fileID: 21300000, guid: 3f3db2b70d7f0c64f9221682b2d01a46,
+        type: 3}
+    - target: {fileID: 6202850148858248707, guid: dbdedefdbd5ca8045a10545a8d921571,
+        type: 3}
+      propertyPath: spWoman
+      value: 
+      objectReference: {fileID: 21300000, guid: aa0172fa0c1396d4e8d298bdec4b2617,
+        type: 3}
+    - target: {fileID: 6202850148858248707, guid: dbdedefdbd5ca8045a10545a8d921571,
+        type: 3}
+      propertyPath: ivHat
+      value: 
+      objectReference: {fileID: 866000036}
+    - target: {fileID: 6202850148858248707, guid: dbdedefdbd5ca8045a10545a8d921571,
+        type: 3}
+      propertyPath: ivHead
+      value: 
+      objectReference: {fileID: 123349845}
     - target: {fileID: 6202850148858248704, guid: dbdedefdbd5ca8045a10545a8d921571,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -35933,53 +35980,6 @@ PrefabInstance:
       propertyPath: m_Pivot.y
       value: 0.5
       objectReference: {fileID: 0}
-    - target: {fileID: 6202850148858248707, guid: dbdedefdbd5ca8045a10545a8d921571,
-        type: 3}
-      propertyPath: characterBodyManager
-      value: 
-      objectReference: {fileID: 1672669450}
-    - target: {fileID: 6202850148858248707, guid: dbdedefdbd5ca8045a10545a8d921571,
-        type: 3}
-      propertyPath: ivBody
-      value: 
-      objectReference: {fileID: 719800865}
-    - target: {fileID: 6202850148858248707, guid: dbdedefdbd5ca8045a10545a8d921571,
-        type: 3}
-      propertyPath: ivClothes
-      value: 
-      objectReference: {fileID: 6202850149408225510}
-    - target: {fileID: 6202850148858248707, guid: dbdedefdbd5ca8045a10545a8d921571,
-        type: 3}
-      propertyPath: ivShoes
-      value: 
-      objectReference: {fileID: 6202850149408225509}
-    - target: {fileID: 6202850148858248707, guid: dbdedefdbd5ca8045a10545a8d921571,
-        type: 3}
-      propertyPath: characterDressManager
-      value: 
-      objectReference: {fileID: 1672669449}
-    - target: {fileID: 6202850148858248707, guid: dbdedefdbd5ca8045a10545a8d921571,
-        type: 3}
-      propertyPath: spMan
-      value: 
-      objectReference: {fileID: 21300000, guid: 3f3db2b70d7f0c64f9221682b2d01a46,
-        type: 3}
-    - target: {fileID: 6202850148858248707, guid: dbdedefdbd5ca8045a10545a8d921571,
-        type: 3}
-      propertyPath: spWoman
-      value: 
-      objectReference: {fileID: 21300000, guid: aa0172fa0c1396d4e8d298bdec4b2617,
-        type: 3}
-    - target: {fileID: 6202850148858248707, guid: dbdedefdbd5ca8045a10545a8d921571,
-        type: 3}
-      propertyPath: ivHat
-      value: 
-      objectReference: {fileID: 866000036}
-    - target: {fileID: 6202850148858248707, guid: dbdedefdbd5ca8045a10545a8d921571,
-        type: 3}
-      propertyPath: ivHead
-      value: 
-      objectReference: {fileID: 123349845}
     - target: {fileID: 4644097329694526470, guid: dbdedefdbd5ca8045a10545a8d921571,
         type: 3}
       propertyPath: m_AnchoredPosition.y

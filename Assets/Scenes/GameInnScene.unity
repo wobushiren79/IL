@@ -51676,7 +51676,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0.0000020302712, y: -0.0000006644477}
+  m_AnchoredPosition: {x: 0.0000020302712, y: -0.00001843464}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &299849711
@@ -53578,7 +53578,7 @@ GameObject:
   - component: {fileID: 447858134}
   - component: {fileID: 447858136}
   m_Layer: 5
-  m_Name: Settlement
+  m_Name: Settle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -53654,13 +53654,30 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ecb39a75cb8191c47b6da296d4c437b3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  uiManager: {fileID: 2099675407}
+  uiManager: {fileID: 0}
   uiAnimator: {fileID: 0}
   btSubmit: {fileID: 602449065}
   btCancel: {fileID: 1297053736}
+  tvIncomeS: {fileID: 341498049}
+  tvIncomeM: {fileID: 2134789429}
+  tvIncomeL: {fileID: 1820687855}
+  tvExpensesS: {fileID: 1629294517}
+  tvExpensesM: {fileID: 1534877113}
+  tvExpensesL: {fileID: 309101826}
   innHandler: {fileID: 1541606814}
   controlHandler: {fileID: 1688049105}
   gameTimeHandler: {fileID: 72431160}
+  objListRecordContent: {fileID: 299849709}
+  objItemIngModel: {fileID: 1315866245}
+  objItemFoodModel: {fileID: 1247194842}
+  spIconOilsalt: {fileID: 21300000, guid: 0e2d153ef627dc44fa157bb38c47888e, type: 3}
+  spIconMeat: {fileID: 21300000, guid: 92a6b10e78fa22a44baf85982b23a00c, type: 3}
+  spIconRiverfresh: {fileID: 21300000, guid: bb8fe7189ea2a7f4ca7122b592e8cb23, type: 3}
+  spIconSeafood: {fileID: 21300000, guid: 211ed2a33c22812499334cd74df35af4, type: 3}
+  spIconVegetablest: {fileID: 21300000, guid: b77cad57ef1f65442957908d54d9a122, type: 3}
+  spIconMelonfruit: {fileID: 21300000, guid: 17a36105ac1950f4c8cfd8a03a980b4b, type: 3}
+  spIconWaterwine: {fileID: 21300000, guid: 35316d828838491469cf9f75bc5d095c, type: 3}
+  spIconFlour: {fileID: 21300000, guid: 178cb696885ea05418101e665aeb0a77, type: 3}
 --- !u!1 &449543980
 GameObject:
   m_ObjectHideFlags: 0
@@ -58362,7 +58379,7 @@ MonoBehaviour:
   - key: food_301
     value: {fileID: 21300002, guid: cb58be2efbb7edc4d8d7c97957e19ec6, type: 3}
   - key: food_10001
-    value: {fileID: 21300000, guid: 4890719f37177b64e818be1b91d1b454, type: 3}
+    value: {fileID: 21300002, guid: 4890719f37177b64e818be1b91d1b454, type: 3}
   - key: food_401
     value: {fileID: 21300002, guid: 1d2ac7b36f4d7614c9c47d7f6f58044e, type: 3}
   listMenuData: []
@@ -58522,7 +58539,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 0, b: 0, a: 1}
+  m_Color: {r: 0, g: 1, b: 0.11796141, a: 1}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
@@ -58542,7 +58559,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "\u652F\u51FA"
+  m_Text: "\u6536\u5165"
 --- !u!222 &754674966
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -60364,16 +60381,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 987447170}
     m_Modifications:
-    - target: {fileID: 6202850148858248704, guid: dbdedefdbd5ca8045a10545a8d921571,
-        type: 3}
-      propertyPath: m_LocalScale.x
-      value: 1.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 6202850148858248704, guid: dbdedefdbd5ca8045a10545a8d921571,
-        type: 3}
-      propertyPath: m_LocalScale.y
-      value: 1.5
-      objectReference: {fileID: 0}
     - target: {fileID: 6202850148858248707, guid: dbdedefdbd5ca8045a10545a8d921571,
         type: 3}
       propertyPath: characterBodyManager
@@ -60384,6 +60391,16 @@ PrefabInstance:
       propertyPath: characterDressManager
       value: 
       objectReference: {fileID: 1084954368}
+    - target: {fileID: 6202850148858248704, guid: dbdedefdbd5ca8045a10545a8d921571,
+        type: 3}
+      propertyPath: m_LocalScale.x
+      value: 1.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 6202850148858248704, guid: dbdedefdbd5ca8045a10545a8d921571,
+        type: 3}
+      propertyPath: m_LocalScale.y
+      value: 1.5
+      objectReference: {fileID: 0}
     - target: {fileID: 3389196402562200801, guid: dbdedefdbd5ca8045a10545a8d921571,
         type: 3}
       propertyPath: m_Name
@@ -62126,7 +62143,7 @@ GameObject:
   - component: {fileID: 1124234025}
   - component: {fileID: 1124234024}
   m_Layer: 5
-  m_Name: Expenditure
+  m_Name: Expenses
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -63639,13 +63656,14 @@ GameObject:
   - component: {fileID: 1247194843}
   - component: {fileID: 1247194845}
   - component: {fileID: 1247194844}
+  - component: {fileID: 1247194846}
   m_Layer: 5
-  m_Name: ItemSettlementForFood
+  m_Name: ItemSettleForFood
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1247194843
 RectTransform:
   m_ObjectHideFlags: 0
@@ -63663,10 +63681,10 @@ RectTransform:
   m_Father: {fileID: 299849710}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 60}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 198.4908, y: -30}
+  m_SizeDelta: {x: 394.9816, y: 60}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1247194844
 MonoBehaviour:
@@ -63705,6 +63723,24 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1247194842}
   m_CullTransparentMesh: 0
+--- !u!114 &1247194846
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1247194842}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 14f57d4bd980eac43a9895ea02e6492c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ivIcon: {fileID: 1472020972}
+  tvContent: {fileID: 650479981}
+  tvPriceS: {fileID: 742448438}
+  tvPriceM: {fileID: 1828940444}
+  tvPriceL: {fileID: 1844881790}
+  innFoodManager: {fileID: 744028635}
 --- !u!1 &1255737625
 GameObject:
   m_ObjectHideFlags: 0
@@ -64467,13 +64503,14 @@ GameObject:
   - component: {fileID: 1315866246}
   - component: {fileID: 1315866248}
   - component: {fileID: 1315866247}
+  - component: {fileID: 1315866249}
   m_Layer: 5
-  m_Name: ItemSettlementForIng
+  m_Name: ItemSettleForIng
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1315866246
 RectTransform:
   m_ObjectHideFlags: 0
@@ -64491,10 +64528,10 @@ RectTransform:
   m_Father: {fileID: 299849710}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 60}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 451.3148, y: -30}
+  m_SizeDelta: {x: 900.6296, y: 60}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1315866247
 MonoBehaviour:
@@ -64533,6 +64570,21 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1315866245}
   m_CullTransparentMesh: 0
+--- !u!114 &1315866249
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1315866245}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a471b7c4c085be247afdd286f56d1ece, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ivIcon: {fileID: 1552062495}
+  tvName: {fileID: 1675249360}
+  tvConsume: {fileID: 1175499046}
 --- !u!1 &1318440225
 GameObject:
   m_ObjectHideFlags: 0
@@ -64822,8 +64874,8 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1451042253}
   m_HandleRect: {fileID: 1451042252}
   m_Direction: 2
-  m_Value: 1
-  m_Size: 0.99999994
+  m_Value: 0
+  m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -78493,16 +78545,16 @@ PrefabInstance:
       propertyPath: m_ApplyRootMotion
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 9002758691252893949, guid: 2b0fba09934c2934eb7fd9b31e6030fb,
-        type: 3}
-      propertyPath: m_Controller
-      value: 
-      objectReference: {fileID: 9100000, guid: 56caa0a2ffa50b2488e4267c4473848e, type: 2}
     - target: {fileID: 2478063932746049264, guid: 2b0fba09934c2934eb7fd9b31e6030fb,
         type: 3}
       propertyPath: m_Enabled
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 9002758691252893949, guid: 2b0fba09934c2934eb7fd9b31e6030fb,
+        type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: 56caa0a2ffa50b2488e4267c4473848e, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2b0fba09934c2934eb7fd9b31e6030fb, type: 3}
 --- !u!4 &1414017226 stripped
@@ -78604,6 +78656,7 @@ MonoBehaviour:
   aiForWaiter: {fileID: 1414017235}
   aiForAccounting: {fileID: 1414017244}
   gameDataManager: {fileID: 158710915}
+  innHandler: {fileID: 1541606814}
   waitTime: 0
   waitPosition: {x: 0, y: 0, z: 0}
   workerIntent: 0
@@ -79194,7 +79247,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -0.00006676082, y: -0.0000033435554}
+  m_AnchoredPosition: {x: -0.00006676082, y: 0.000011804857}
   m_SizeDelta: {x: 0, y: 5}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &1447137916
@@ -79345,7 +79398,7 @@ RectTransform:
   m_Father: {fileID: 1273054031}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0.000000059604645}
+  m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 20, y: 20}
@@ -80825,6 +80878,21 @@ MonoBehaviour:
   sendQueue: []
   clearQueue: []
   cusomerList: []
+  innRecord:
+    consumeIngOilsalt: 0
+    consumeIngMeat: 0
+    consumeIngRiverfresh: 0
+    consumeIngSeafood: 0
+    consumeIngVegetablest: 0
+    consumeIngMelonfruit: 0
+    consumeIngWaterwine: 0
+    consumeIngFlour: 0
+    incomeS: 0
+    incomeM: 0
+    incomeL: 0
+    expensesS: 0
+    expensesM: 0
+    expensesL: 0
 --- !u!114 &1541606815
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -81115,7 +81183,7 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_Sprite: {fileID: 21300000, guid: 0ab2eb3971b32ae4e86be18cc10596a3, type: 3}
+  m_Sprite: {fileID: 21300000, guid: bb8fe7189ea2a7f4ca7122b592e8cb23, type: 3}
   m_Type: 0
   m_PreserveAspect: 1
   m_FillCenter: 1
@@ -82882,6 +82950,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   objContainer: {fileID: 98732981}
   objWorkModel: {fileID: 1414017230}
+  innHandler: {fileID: 1541606814}
   gameDataManager: {fileID: 158710915}
   npcWorkerList: []
 --- !u!4 &1716359874
