@@ -47,7 +47,7 @@ public class ControlForBuildCpt : BaseControl
         float vMove = Input.GetAxis("Vertical");
         if (hMove == 0 && vMove == 0)
         {
-            cameraMove.Stop();
+            cameraMove.StopAnim();
         }
         else
         {

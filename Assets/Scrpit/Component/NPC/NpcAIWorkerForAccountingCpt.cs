@@ -31,7 +31,7 @@ public class NpcAIWorkerForAccountingCpt : BaseMonoBehaviour
         switch (accountingStatue)
         {
             case AccountingStatue.GoToAccounting:
-                if (!CheckCustomerLeave() && Vector2.Distance(transform.position, customerCpt.counterCpt.GetAccountingPosition()) < 0.1f)
+                if (!CheckCustomerLeave() && mNpcAIWorker.characterMoveCpt.IsAutoMoveStop())
                 {
                     accountingStatue = AccountingStatue.Accounting;
                     StartCoroutine(StartAccounting());

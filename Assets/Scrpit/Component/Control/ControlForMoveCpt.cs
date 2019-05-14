@@ -15,7 +15,7 @@ public class ControlForMoveCpt : BaseControl
         if (hMove == 0 && vMove == 0)
         {
 
-            characterMoveCpt.Stop();
+            characterMoveCpt.StopAnim();
         }
         else
         {

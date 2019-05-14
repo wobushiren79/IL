@@ -43,6 +43,6 @@ public class BaseNpcAI : BaseMonoBehaviour
     public void StopMove()
     {
         characterMoveCpt.StopAutoMove();
-        characterMoveCpt.Stop();
+        characterMoveCpt.StopAnim();
     }
 }

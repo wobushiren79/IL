@@ -17,6 +17,9 @@ public class SceneGameInnInit : BaseManager
 
     public NavMeshSurface2d navMesh;
 
+    public NpcCustomerBuilder leftCustomerBuilder;
+    public NpcCustomerBuilder rightCustomerBuilder;
+
     private void Start()
     {
         if (characterDressManager != null)
@@ -38,6 +41,16 @@ public class SceneGameInnInit : BaseManager
         if (innHandler != null)
             innHandler.InitInn();
         navMesh.BuildNavMesh();
+
+        if (leftCustomerBuilder != null)
+        {
+            leftCustomerBuilder.transform.position = new Vector3(-30,-2.5f,0);
+        }
+        if (rightCustomerBuilder!=null)
+        {
+            rightCustomerBuilder.transform.position = new Vector3(30 + gameDataManager.gameData.GetInnBuildData().innWidth, -2.5f, 0);
+        }
+            
     }
 
 }

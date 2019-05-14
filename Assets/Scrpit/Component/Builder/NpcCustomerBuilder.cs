@@ -13,12 +13,10 @@ public class NpcCustomerBuilder : BaseMonoBehaviour
     //NPC数据管理
     public NpcInfoManager npcInfoManager;
     public CharacterBodyManager characterBodyManager;
-
-    // 开始点
-    public Transform startPosition;
+    public GameTimeHandler gameTimeHandler;
     // 结束点
     public Transform endPosition;
-    public float startPositionRange=2.5f;
+    public float startPositionRange = 2.5f;
     public bool isBuild = true;
 
     private void Start()
@@ -35,7 +33,29 @@ public class NpcCustomerBuilder : BaseMonoBehaviour
     {
         while (isBuild)
         {
-            yield return new WaitForSeconds(1f);
+            float personNumber = 1;
+            if (gameTimeHandler.hours >= 11 && gameTimeHandler.hours <= 13)
+            {
+                personNumber = 1;
+            }
+            else if (gameTimeHandler.hours >= 17 && gameTimeHandler.hours <= 19)
+            {
+                personNumber = 1;
+            }
+            else if (gameTimeHandler.hours < 11)
+            {
+                personNumber = 1 + (10 - gameTimeHandler.hours);
+            }
+            else if (gameTimeHandler.hours > 13 && gameTimeHandler.hours < 17)
+            {
+                personNumber = 2.5f;
+            }
+            else if(gameTimeHandler.hours > 19)
+            {
+                personNumber = 2 + (gameTimeHandler.hours - 17);
+            }
+
+            yield return new WaitForSeconds(personNumber);
             BuildCustomer();
         }
     }
@@ -50,9 +70,9 @@ public class NpcCustomerBuilder : BaseMonoBehaviour
         //随机生成头型
         if (CheckUtil.StringIsNull(characterData.body.hair))
         {
-           IconBean itemHair= RandomUtil.GetRandomDataByList(characterBodyManager.listIconBodyHair);
-           characterData.body.hair = itemHair.key;
-           characterData.body.hairColor = ColorBean.Random();
+            IconBean itemHair = RandomUtil.GetRandomDataByList(characterBodyManager.listIconBodyHair);
+            characterData.body.hair = itemHair.key;
+            characterData.body.hairColor = ColorBean.Random();
         }
         //随机生成眼睛
         if (CheckUtil.StringIsNull(characterData.body.eye))
@@ -69,27 +89,25 @@ public class NpcCustomerBuilder : BaseMonoBehaviour
             characterData.body.mouthColor = ColorBean.Random();
         }
 
-        GameObject customerObj = Instantiate(objCustomerModel, objCustomerModel.transform);
-        customerObj.transform.SetParent(objContainer.transform); 
+        GameObject customerObj = Instantiate(objCustomerModel, objContainer.transform);
         customerObj.SetActive(true);
         customerObj.transform.localScale = new Vector3(2, 2);
-        float npcPositionY = Random.Range(startPosition.position.y - startPositionRange, startPosition.position.y + startPositionRange);
-        customerObj.transform.position = new Vector3(startPosition.position.x, npcPositionY);
-
+        float npcPositionY = Random.Range(transform.position.y - startPositionRange, transform.position.y + startPositionRange);
+        customerObj.transform.position = new Vector3(transform.position.x, npcPositionY);
         NpcAICustomerCpt customerAI = customerObj.GetComponent<NpcAICustomerCpt>();
         customerAI.SetCharacterData(characterData);
         customerAI.SetEndPosition(new Vector3(endPosition.position.x, npcPositionY));
         //想要吃饭概率
-        float eatProbability=  Random.Range(0f,1f);
+        float eatProbability = Random.Range(0f, 1f);
         if (eatProbability > 0.9f)
         {
-            customerAI.SetDestinationByIntent(NpcAICustomerCpt.CustomerIntentEnum.Want);
+             customerAI.SetDestinationByIntent(NpcAICustomerCpt.CustomerIntentEnum.Want);
         }
         else
         {
-            customerAI.SetDestinationByIntent(NpcAICustomerCpt.CustomerIntentEnum.Walk);
+             customerAI.SetDestinationByIntent(NpcAICustomerCpt.CustomerIntentEnum.Walk);
         }
- 
+
     }
 
 }

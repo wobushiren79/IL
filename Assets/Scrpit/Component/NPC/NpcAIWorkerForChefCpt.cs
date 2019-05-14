@@ -39,7 +39,7 @@ public class NpcAIWorkerForChefCpt : BaseMonoBehaviour
         switch (chefStatue)
         {
             case ChefStatue.GoToCook:
-                if (!CheckCustomerLeave() && Vector2.Distance(transform.position, cookPositionList[0]) < 0.1f)
+                if (!CheckCustomerLeave() && mNpcAIWorker.characterMoveCpt.IsAutoMoveStop())
                 {
                     bool canCook = mNpcAIWorker.gameDataManager.gameData.CheckCookFood(foodData.food);
                     if (canCook)
@@ -64,7 +64,7 @@ public class NpcAIWorkerForChefCpt : BaseMonoBehaviour
                 break;
             case ChefStatue.Cooking:
                 cookAnimTime -= Time.deltaTime;
-                if (!CheckCustomerLeave() && Vector2.Distance(transform.position, cookPosition) < 0.1f && cookAnimTime < 0)
+                if (!CheckCustomerLeave() && mNpcAIWorker.characterMoveCpt.IsAutoMoveStop() && cookAnimTime < 0)
                 {
                     ChangeCookPosition();
                 }

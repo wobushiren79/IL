@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 public class InnWallBuilder : BaseTilemapBuilder
 {
-    public InnBuildManager InnBuildManager;
+    public InnBuildManager innBuildManager;
     public GameDataManager gameDataManager;
 
     public void StartBuild()
@@ -27,7 +27,7 @@ public class InnWallBuilder : BaseTilemapBuilder
         for (int i = 0; i < listData.Count; i++)
         {
             InnResBean itemData = listData[i];
-            BuildItemBean buildItemData = InnBuildManager.GetBuildDataById(itemData.id);
+            BuildItemBean buildItemData = innBuildManager.GetBuildDataById(itemData.id);
             Build(buildItemData.icon_key, (int)itemData.startPosition.x, (int)itemData.startPosition.y);
         }
     }

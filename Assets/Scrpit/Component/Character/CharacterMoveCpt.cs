@@ -30,28 +30,41 @@ public class CharacterMoveCpt : BaseMonoBehaviour
 
     private void Start()
     {
-        if (navMeshAgent != null)
-        {
-            navMeshAgent.updateRotation = false;
-            navMeshAgent.updateUpAxis = false;
-            navMeshAgent.updatePosition = false;
-            //NavMesh.avoidancePredictionTime = 5f;
-        }
+        lastPosition = transform.position;
     }
 
+    private Vector3 lastPosition;
 
     private void FixedUpdate()
     {
         if (!isManualMove && navMeshAgent != null)
         {
-            if (navMeshAgent.path.corners.Length > 1)
+            if (navMeshAgent.hasPath)
             {
-                Move(navMeshAgent.nextPosition);
+                if (characterAnimtor != null)
+                {
+                    characterAnimtor.SetInteger("State", 1);
+                }
+                //Move(navMeshAgent.nextPosition);
+                //转向
+                Vector3 theScale = characterBodyObj.transform.localScale;
+                if (characterBodyObj.transform.position.x - lastPosition.x < 0)
+                {
+                    theScale.x = -Mathf.Abs(theScale.x);
+                }
+                else if (characterBodyObj.transform.position.x - lastPosition.x > 0)
+                {
+                    theScale.x = Mathf.Abs(theScale.x);
+                }
+                characterBodyObj.transform.localScale = theScale;
             }
             else
             {
-                Stop();
+                //是否在计算路径
+                if (!navMeshAgent.pathPending)
+                    StopAnim();
             }
+            lastPosition = transform.position;
         }
     }
 
@@ -68,15 +81,10 @@ public class CharacterMoveCpt : BaseMonoBehaviour
             navMeshAgent.isStopped = false;
             navMeshAgent.updateRotation = false;
             navMeshAgent.updateUpAxis = false;
-            navMeshAgent.updatePosition = false;
+            navMeshAgent.updatePosition = true;
             // NavMesh.avoidancePredictionTime = 5f;
             navMeshAgent.speed = moveSpeed;
             canGo = navMeshAgent.SetDestination(position);
-
-            if (characterAnimtor != null)
-            {
-                characterAnimtor.SetInteger("State", 1);
-            }
         }
         return canGo;
     }
@@ -141,7 +149,7 @@ public class CharacterMoveCpt : BaseMonoBehaviour
             theScale.x = Mathf.Abs(theScale.x);
         }
         characterBodyObj.transform.localScale = theScale;
-        transform.position = movePosition;
+        //transform.position = movePosition;
         BoundaryMove();
     }
 
@@ -171,7 +179,7 @@ public class CharacterMoveCpt : BaseMonoBehaviour
     }
 
 
-    public void Stop()
+    public void StopAnim()
     {
         if (characterAnimtor != null)
         {
@@ -197,7 +205,11 @@ public class CharacterMoveCpt : BaseMonoBehaviour
     /// <returns></returns>
     public bool IsAutoMoveStop()
     {
-        if (navMeshAgent != null && navMeshAgent.path.corners.Length > 1)
+        if (navMeshAgent != null && navMeshAgent.pathPending)
+        {
+            return false;
+        }
+        if (navMeshAgent != null  && navMeshAgent.hasPath)
         {
             return false;
         }

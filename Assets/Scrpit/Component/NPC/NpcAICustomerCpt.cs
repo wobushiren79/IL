@@ -48,13 +48,14 @@ public class NpcAICustomerCpt : BaseNpcAI
         {
             case CustomerIntentEnum.Walk:
             case CustomerIntentEnum.Leave:
-                if (Vector2.Distance(transform.position, endPosition) < 3)
+                // if ( Vector2.Distance(transform.position, endPosition) < 3)
+                if (characterMoveCpt.IsAutoMoveStop())
                 {
                     Destroy(gameObject);
                 }
                 break;
             case CustomerIntentEnum.Want:
-                if (Vector2.Distance(transform.position, doorPosition) < 0.1f)
+                if (characterMoveCpt.IsAutoMoveStop())
                 {
                     if (innHandler.innStatus == InnHandler.InnStatusEnum.Open)
                     {
@@ -68,7 +69,7 @@ public class NpcAICustomerCpt : BaseNpcAI
                 }
                 break;
             case CustomerIntentEnum.GotoSeat:
-                if (Vector2.Distance(transform.position, tableForEating.GetSeatPosition()) < 0.1f)
+                if (characterMoveCpt.IsAutoMoveStop())
                 {
                     SetDestinationByIntent(CustomerIntentEnum.WaitFood);
                     MenuInfoBean foodData = innHandler.OrderForFood(this, tableForEating);
@@ -81,7 +82,7 @@ public class NpcAICustomerCpt : BaseNpcAI
                     else
                     {
                         characterShoutCpt.Shout(foodData.name);
-                    }  
+                    }
                 }
                 break;
             case CustomerIntentEnum.GotoPay:
@@ -97,13 +98,13 @@ public class NpcAICustomerCpt : BaseNpcAI
                 if (innEvaluation.mood <= 0)
                 {
                     tableForEating.ClearTable();
-                }    
+                }
                 break;
             case CustomerIntentEnum.WaitPay:
                 MoodLose();
                 if (innEvaluation.mood <= 0)
                 {
-                    innHandler.PayMoney(foodCpt,0.5f);
+                    innHandler.PayMoney(foodCpt, 0.5f);
                 }
                 break;
         }
@@ -187,7 +188,7 @@ public class NpcAICustomerCpt : BaseNpcAI
                 }
                 else
                 {
-                    doorPosition = new Vector3(Random.Range(door.x - 0.5f, door.x + 0.5f),Random.Range(door.y - 0.7f, door.y - 0.2f));
+                    doorPosition = new Vector3(Random.Range(door.x - 0.5f, door.x + 0.5f), Random.Range(door.y - 0.7f, door.y - 0.2f));
                     characterMoveCpt.SetDestination(doorPosition);
                 }
                 break;

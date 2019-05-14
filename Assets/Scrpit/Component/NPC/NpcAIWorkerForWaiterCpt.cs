@@ -38,7 +38,7 @@ public class NpcAIWorkerForWaiterCpt : BaseMonoBehaviour
         {
             case WaiterStatue.GoToGetFood:
 
-                if (!CheckCustomerLeave() && Vector2.Distance(transform.position, foodCpt.foodData.stove.GetTakeFoodPosition()) < 0.1f)
+                if (!CheckCustomerLeave() && mNpcAIWorker.characterMoveCpt.IsAutoMoveStop())
                 {
                     Transform waitTake = CptUtil.GetCptInChildrenByName<Transform>(gameObject, "Take");
                     foodCpt.transform.SetParent(waitTake);
@@ -55,7 +55,7 @@ public class NpcAIWorkerForWaiterCpt : BaseMonoBehaviour
                 {
                     return;
                 }
-                if (Vector2.Distance(transform.position, foodCpt.foodData.table.GetTablePosition()) < 1f)
+                if (mNpcAIWorker.characterMoveCpt.IsAutoMoveStop())
                 {
                     foodCpt.transform.SetParent(foodCpt.foodData.table.GetTable().transform);
                     foodCpt.transform.localPosition = new Vector3(0f, 0.1f, 0);
@@ -67,7 +67,7 @@ public class NpcAIWorkerForWaiterCpt : BaseMonoBehaviour
                 }
                 break;
             case WaiterStatue.GoToClear:
-                if (Vector2.Distance(transform.position, foodCpt.transform.position) < 1f)
+                if (mNpcAIWorker.characterMoveCpt.IsAutoMoveStop())
                 {
                     waiterStatue = WaiterStatue.Clear;
                     clearPro.SetActive(true);
