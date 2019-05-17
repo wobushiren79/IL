@@ -195,4 +195,39 @@ public class GameDataBean
         }
     }
 
+
+    /// <summary>
+    /// 是否有足够的钱
+    /// </summary>
+    /// <param name="priceL"></param>
+    /// <param name="priceM"></param>
+    /// <param name="priceS"></param>
+    public bool HasEnoughMoney(long priceL, long priceM, long priceS)
+    {
+        if (moneyL < priceL || moneyM < priceM || moneyS < priceS)
+        {
+            return false;
+        }
+        return true;
+    }
+
+    /// <summary>
+    /// 支付金钱
+    /// </summary>
+    /// <param name="priceL"></param>
+    /// <param name="priceM"></param>
+    /// <param name="priceS"></param>
+    public void PayMoney(long priceL, long priceM, long priceS)
+    {
+        moneyL -= priceL;
+        moneyM -= priceM;
+        moneyS -= priceS;
+        if (moneyL < 0)
+            moneyL = 0;
+        if (moneyM < 0)
+            moneyM = 0;
+        if (moneyS < 0)
+            moneyS = 0;
+    }
+
 }

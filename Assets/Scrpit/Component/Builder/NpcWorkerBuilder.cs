@@ -22,11 +22,17 @@ public class NpcWorkerBuilder : BaseMonoBehaviour
             return;
         }
         List<CharacterBean> listAllWork = gameDataManager.gameData.workCharacterList;
-        BuildWork(gameDataManager.gameData.userCharacter);
+        if (gameDataManager.gameData.userCharacter.baseInfo.isAttendance)
+        {
+            BuildWork(gameDataManager.gameData.userCharacter);
+        }
         for (int i = 0; i < listAllWork.Count; i++)
         {
             CharacterBean itemData = listAllWork[i];
-            BuildWork(itemData);
+            if (itemData.baseInfo.isAttendance)
+            {
+                BuildWork(itemData);
+            }
         }
     }
 

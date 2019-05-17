@@ -22,4 +22,6 @@ public class CharacterBaseBean
     public bool isAccounting;//是否开启记帐
     public bool isBeater;//是否开启打手
     public bool isAccost;//是否开启招呼
+
+    public bool isAttendance;//是否出勤
 }

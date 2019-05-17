@@ -107,10 +107,7 @@ public class UIGameSettle : BaseUIComponent
 
     public void OpenInn()
     {
-        gameTimeHandler.dayStauts = GameTimeHandler.DayEnum.Work;
-        uiManager.OpenUIAndCloseOtherByName("Main");
-        innHandler.OpenInn();
-        controlHandler.StartControl(ControlHandler.ControlEnum.Work);
+        uiManager.OpenUIAndCloseOtherByName("Attendance");
     }
 
     public void CloseInn()
