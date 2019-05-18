@@ -14,6 +14,7 @@ public class UIGameMain : BaseUIComponent,DialogView.IDialogCallBack
     public Text tvMoneyM;
     public Text tvMoneyL;
 
+    public GameTimeHandler gameTimeHandler;
     public GameDataManager gameDataManager;
     public DialogManager dialogManager;
     public InnHandler innHandler;
@@ -87,6 +88,7 @@ public class UIGameMain : BaseUIComponent,DialogView.IDialogCallBack
     #region dialog 回调
     public void Submit(DialogView dialogView)
     {
+        gameTimeHandler.isStopTime = true;
         uiManager.OpenUIAndCloseOtherByName("Settle");
         innHandler.CloseInn();
     }

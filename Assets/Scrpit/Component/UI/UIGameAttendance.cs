@@ -50,6 +50,7 @@ public class UIGameAttendance : BaseUIComponent, ItemGameAttendanceCpt.CallBack
         }
         gameDataManager.gameData.PayMoney(attendancePriceL, attendancePriceM, attendancePriceS);
         gameTimeHandler.dayStauts = GameTimeHandler.DayEnum.Work;
+        gameTimeHandler.StartNewDay(false);
         uiManager.OpenUIAndCloseOtherByName("Main");
         innHandler.OpenInn();
         controlHandler.StartControl(ControlHandler.ControlEnum.Work);

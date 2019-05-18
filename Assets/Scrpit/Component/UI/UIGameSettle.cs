@@ -51,6 +51,7 @@ public class UIGameSettle : BaseUIComponent
 
     public void InitData()
     {
+        CptUtil.RemoveChildsByActive(objListRecordContent.transform);
         animDelay = 0.1f;
         if (innHandler.innRecord.consumeIngOilsalt > 0)
             CreateIngItem(innHandler.innRecord.consumeIngOilsalt, spIconOilsalt, "消耗食材 油盐");
@@ -113,6 +114,7 @@ public class UIGameSettle : BaseUIComponent
     public void CloseInn()
     {
         gameTimeHandler.dayStauts = GameTimeHandler.DayEnum.Rest;
+        gameTimeHandler.StartNewDay(true);
         uiManager.OpenUIAndCloseOtherByName("Main");
         controlHandler.StartControl(ControlHandler.ControlEnum.Normal);
     }

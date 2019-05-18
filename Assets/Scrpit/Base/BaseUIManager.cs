@@ -8,6 +8,22 @@ public class BaseUIManager : BaseMonoBehaviour
     public List<BaseUIComponent> uiList;
 
     /// <summary>
+    /// 获取打开的UI
+    /// </summary>
+    /// <returns></returns>
+    public BaseUIComponent GetOpenUI()
+    {
+        foreach (BaseUIComponent itemUI in uiList)
+        {
+            if (itemUI.gameObject.activeSelf)
+            {
+                return itemUI;
+            }
+        }
+        return null;
+    }
+
+    /// <summary>
     /// 根据UI的名字获取UI
     /// </summary>
     /// <param name="uiName"></param>

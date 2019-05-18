@@ -1313,6 +1313,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: afaf6764ba738ab478272358c9fbbaf7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  uiManager: {fileID: 2099675407}
+  innHandler: {fileID: 1541606814}
   hours: 0
   min: 0
   dayStauts: 0
@@ -2781,6 +2783,7 @@ MonoBehaviour:
   tvMoneyS: {fileID: 1827572404}
   tvMoneyM: {fileID: 1981289179}
   tvMoneyL: {fileID: 801655268}
+  gameTimeHandler: {fileID: 72431160}
   gameDataManager: {fileID: 158710915}
   dialogManager: {fileID: 1178872440}
   innHandler: {fileID: 1541606814}
@@ -51915,7 +51918,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0.0000020302712, y: 0.00001034914}
+  m_AnchoredPosition: {x: 0.0000020302712, y: -0.0000021010799}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &299849711
@@ -88411,7 +88414,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 325678150}
   m_HandleRect: {fileID: 325678149}
   m_Direction: 2
-  m_Value: 0
+  m_Value: 1
   m_Size: 0.99999994
   m_NumberOfSteps: 0
   m_OnValueChanged:
