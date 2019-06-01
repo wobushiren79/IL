@@ -4,18 +4,19 @@ using UnityEngine.UI;
 
 public class CharacterInteractiveCpt : BaseMonoBehaviour
 {
+    public GameObject interactiveObj;
     public TextMesh tvContent;
     public SpriteRenderer srIcon;
 
-    public void SetChangeLocation(string location)
+    public void ShowInteractive(string content)
     {
-        gameObject.SetActive(true);
-        tvContent.text = location;
+        interactiveObj.SetActive(true);
+        tvContent.text = content;
     }
 
     public void CloseInteractive()
     {
-        gameObject.SetActive(false);
+        interactiveObj.SetActive(false);
     }
 
 }

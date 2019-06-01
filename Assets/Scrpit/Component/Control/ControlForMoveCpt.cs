@@ -7,8 +7,6 @@ public class ControlForMoveCpt : BaseControl
     //角色移动组建
     public CharacterMoveCpt characterMoveCpt;
     public GameDataManager gameDataManager;
-    //角色互动
-    public CharacterInteractiveCpt characterInteractiveCpt;
 
     private void Start()
     {
@@ -36,17 +34,6 @@ public class ControlForMoveCpt : BaseControl
         else
         {
             characterMoveCpt.Move(hMove, vMove);
-        }
-        if(transform.position.x<= characterMoveCpt.minMoveX
-            || transform.position.x >= characterMoveCpt.maxMoveX
-              || transform.position.y <= characterMoveCpt.minMoveY
-                || transform.position.y >= characterMoveCpt.maxMoveY)
-        {
-            characterInteractiveCpt.SetChangeLocation("进入小镇");
-        }
-        else
-        {
-            characterInteractiveCpt.CloseInteractive();
         }
     }
 
