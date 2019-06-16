@@ -51,6 +51,27 @@ public class CharacterBodyCpt : BaseMonoBehaviour
         SetHair(this.characterBodyData.hair, this.characterBodyData.hairColor.GetColor());
         SetEye(this.characterBodyData.eye, this.characterBodyData.eyeColor.GetColor());
         SetMouth(this.characterBodyData.mouth, this.characterBodyData.mouthColor.GetColor());
+        SetFace(this.characterBodyData.face);
+    }
+
+    /// <summary>
+    /// 设置朝向
+    /// </summary>
+    /// <param name="face"></param>
+    public void SetFace(int face)
+    {
+        Vector3 bodyScale = transform.localScale;
+        switch (face)
+        {
+            case 1:
+                bodyScale.x = -1;
+                break;
+           
+            case 2:
+                bodyScale.x = 1;
+                break;
+        }
+        transform.localScale = bodyScale;
     }
 
     /// <summary>

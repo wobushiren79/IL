@@ -22,7 +22,7 @@ public class UIGameMain : BaseUIComponent,DialogView.IDialogCallBack
 
     private void Update()
     {
-        if (tvInnStatus != null)
+        if (tvInnStatus != null&& innHandler!=null)
             if (innHandler.innStatus == InnHandler.InnStatusEnum.Close)
             {
                 tvInnStatus.text = GameCommonInfo.GetUITextById(2002);

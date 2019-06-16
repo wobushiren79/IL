@@ -8,6 +8,7 @@ public class NpcInfoBean : BaseBean
     public long npc_id;//npcId
     public int npc_type;//0默认NPC，
     public int sex;//性别
+    public int face;//面向 1.左边 2右边
     public long hat_id;
     public long clothes_id;
     public long shoes_id;

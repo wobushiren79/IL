@@ -22,6 +22,7 @@ public class SceneGameInnInit : BaseManager
 
     private void Start()
     {
+        //获取相关数据
         if (characterDressManager != null)
             characterDressManager.equipInfoController.GetAllEquipInfo();
         if (gameDataManager != null)
@@ -31,10 +32,13 @@ public class SceneGameInnInit : BaseManager
         if (innBuildManager != null)
             innBuildManager.buildDataController.GetAllBuildItemsData();
 
+        //构建地板
         if (innFloorBuilder != null)
             innFloorBuilder.StartBuild();
+        //构建墙壁
         if (innWallBuilder != null)
             innWallBuilder.StartBuild();
+        //构建建筑
         if (innFurnitureBuilder != null)
             innFurnitureBuilder.StartBuild();
         //初始化客栈处理
@@ -42,6 +46,7 @@ public class SceneGameInnInit : BaseManager
             innHandler.InitInn();
         navMesh.BuildNavMesh();
 
+        //客栈边界生成
         if (leftCustomerBuilder != null)
         {
             leftCustomerBuilder.transform.position = new Vector3(-30,-2.5f,0);
@@ -49,8 +54,7 @@ public class SceneGameInnInit : BaseManager
         if (rightCustomerBuilder!=null)
         {
             rightCustomerBuilder.transform.position = new Vector3(30 + gameDataManager.gameData.GetInnBuildData().innWidth, -2.5f, 0);
-        }
-            
+        }     
     }
 
 }

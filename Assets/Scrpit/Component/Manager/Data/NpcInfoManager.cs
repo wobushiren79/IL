@@ -24,6 +24,25 @@ public class NpcInfoManager : BaseManager,INpcInfoView
     }
 
     /// <summary>
+    ///  获取指定类型NPC数据
+    /// </summary>
+    /// <param name="type"></param>
+    /// <returns></returns>
+    public CharacterBean GetCharacterDataByType(int type)
+    {  
+        for (int i=0;i< listNpcInfo.Count; i++)
+        {
+            NpcInfoBean itemData = listNpcInfo[i];
+            if (itemData.npc_type == type)
+            {
+                CharacterBean characterData = NpcInfoToCharacterData(itemData);
+                return characterData;
+            }
+        }
+        return null;
+    }
+
+    /// <summary>
     /// NPC信息转为角色信息
     /// </summary>
     /// <param name="npcInfo"></param>
@@ -37,6 +56,7 @@ public class NpcInfoManager : BaseManager,INpcInfoView
         characterData.body.eye = npcInfo.eye_id;
         characterData.body.mouth = npcInfo.mouth_id;
         characterData.body.sex = npcInfo.sex;
+        characterData.body.face = npcInfo.face;
 
         characterData.equips = new CharacterEquipBean();
         characterData.equips.hatId = npcInfo.hat_id;

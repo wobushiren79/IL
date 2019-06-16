@@ -17,6 +17,8 @@ public class CharacterBodyBean
     public string mouth;//嘴巴
     public ColorBean mouthColor;//嘴巴颜色
 
+    public int face;//面向 
+
     public CharacterBodyBean()
     {
         sex = 1;
