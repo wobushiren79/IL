@@ -13,6 +13,28 @@ public class ControlHandler : BaseManager
 
     public List<BaseControl> listControl = new List<BaseControl>();
 
+    /// <summary>
+    /// 暂停控制
+    /// </summary>
+    public void StopControl()
+    {
+        BaseControl control= GetControl();
+        control.enabled = false;
+    }
+
+    /// <summary>
+    /// 恢复控制
+    /// </summary>
+    public void RestoreControl()
+    {
+        BaseControl control = GetControl();
+        control.enabled = true;
+    }
+
+    /// <summary>
+    /// 开始控制
+    /// </summary>
+    /// <param name="controlEnum"></param>
     public void StartControl(ControlEnum controlEnum)
     {
         string controlName = GetControlName(controlEnum);
@@ -30,6 +52,28 @@ public class ControlHandler : BaseManager
         }
     }
 
+    /// <summary>
+    /// 获取当前控制
+    /// </summary>
+    /// <returns></returns>
+    public BaseControl GetControl()
+    {
+        for (int i = 0; i < listControl.Count; i++)
+        {
+            BaseControl itemControl = listControl[i];
+            if (itemControl.gameObject.activeSelf)
+            {
+                return itemControl;
+            }
+        }
+        return null;
+    }
+
+    /// <summary>
+    /// 通过类型获取控制
+    /// </summary>
+    /// <param name="controlEnum"></param>
+    /// <returns></returns>
     public BaseControl GetControl(ControlEnum controlEnum)
     {
         string controlName = GetControlName(controlEnum);
@@ -44,6 +88,11 @@ public class ControlHandler : BaseManager
         return null;
     }
 
+    /// <summary>
+    /// 获取控制名称
+    /// </summary>
+    /// <param name="controlEnum"></param>
+    /// <returns></returns>
     private string GetControlName(ControlEnum controlEnum)
     {
         string controlName = "";

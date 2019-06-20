@@ -25,6 +25,8 @@ public abstract class BaseInteractiveCpt : BaseMonoBehaviour
             canInteractive = true;
         }
     }
+
+
     private void OnTriggerExit2D(Collider2D collision)
     {
         GameObject collisionObj = collision.gameObject;

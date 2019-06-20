@@ -25,6 +25,11 @@ public class ToastView : MonoBehaviour
         CreateToast(null, hintContent, destoryTime);
     }
 
+    public void ToastHint(Sprite toastIconSp, string hintContent)
+    {
+        CreateToast(toastIconSp, hintContent, 3);
+    }
+
     /// <summary>
     /// 创建toast
     /// </summary>
