@@ -8,6 +8,8 @@ public class BaseUIComponent : BaseMonoBehaviour
     public BaseUIManager uiManager;
     //UI动画
     public Animator uiAnimator;
+    //备注数据
+    public string remarkData;
 
     private void Awake()
     {
@@ -47,5 +49,14 @@ public class BaseUIComponent : BaseMonoBehaviour
     public virtual void RefreshUI()
     {
 
+    }
+
+    /// <summary>
+    /// 设置备用数据
+    /// </summary>
+    /// <param name="remarkData"></param>
+    public virtual void SetRemarkData(string remarkData)
+    {
+        this.remarkData = remarkData;
     }
 }

@@ -30,6 +30,7 @@ public class GameDataBean
     public long ingWaterwine;//酒水
     public long ingFlour;//面粉
 
+    public int workerNumberLimit=5;//员工人员招聘上限
     /// <summary>
     /// 获取建筑数据
     /// </summary>

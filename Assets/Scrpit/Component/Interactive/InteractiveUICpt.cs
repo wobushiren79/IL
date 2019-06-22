@@ -5,6 +5,9 @@ public class InteractiveUICpt : BaseInteractiveCpt
 {
     public string interactiveContent;
     public string uiName;
+
+    //备注信息
+    public string remarkData;
     public BaseUIManager uiManager;
 
     public override void InteractiveDetection()
@@ -12,6 +15,11 @@ public class InteractiveUICpt : BaseInteractiveCpt
         if (Input.GetButtonDown("Interactive_E"))
         {
             uiManager.OpenUIAndCloseOtherByName(uiName);
+            if (!CheckUtil.StringIsNull(remarkData))
+            {
+                BaseUIComponent baseUIComponent = uiManager.GetUIByName(uiName);
+                baseUIComponent.SetRemarkData(remarkData);
+            }
         }
     }
 
