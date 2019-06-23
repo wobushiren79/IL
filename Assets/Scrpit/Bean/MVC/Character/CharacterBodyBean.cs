@@ -3,7 +3,7 @@ using UnityEditor;
 using System;
 
 [Serializable]
-public class CharacterBodyBean 
+public class CharacterBodyBean
 {
     public int sex;//性别 0未知，1男，2女，3中性
     public ColorBean skinColor;//皮肤颜色
@@ -28,5 +28,30 @@ public class CharacterBodyBean
         hairColor = ColorBean.White();
         eyeColor = ColorBean.White();
         mouthColor = ColorBean.White();
+    }
+
+    public static void CreateRandomBodyByManager(CharacterBodyBean characterBody,CharacterBodyManager characterBodyManager)
+    {
+        //随机生成头型
+        if (CheckUtil.StringIsNull(characterBody.hair))
+        {
+            IconBean itemHair = RandomUtil.GetRandomDataByList(characterBodyManager.listIconBodyHair);
+            characterBody.hair = itemHair.key;
+            characterBody.hairColor = ColorBean.Random();
+        }
+        //随机生成眼睛
+        if (CheckUtil.StringIsNull(characterBody.eye))
+        {
+            IconBean itemEye = RandomUtil.GetRandomDataByList(characterBodyManager.listIconBodyEye);
+            characterBody.eye = itemEye.key;
+            characterBody.eyeColor = ColorBean.Random();
+        }
+        //随机生成嘴巴
+        if (CheckUtil.StringIsNull(characterBody.mouth))
+        {
+            IconBean itemMouth = RandomUtil.GetRandomDataByList(characterBodyManager.listIconBodyMouth);
+            characterBody.mouth = itemMouth.key;
+            characterBody.mouthColor = ColorBean.Random();
+        }
     }
 }

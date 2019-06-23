@@ -67,27 +67,8 @@ public class NpcCustomerBuilder : BaseMonoBehaviour
         CharacterBean characterData = npcInfoManager.GetRandomCharacterData();
         if (characterData == null)
             return;
-        //随机生成头型
-        if (CheckUtil.StringIsNull(characterData.body.hair))
-        {
-            IconBean itemHair = RandomUtil.GetRandomDataByList(characterBodyManager.listIconBodyHair);
-            characterData.body.hair = itemHair.key;
-            characterData.body.hairColor = ColorBean.Random();
-        }
-        //随机生成眼睛
-        if (CheckUtil.StringIsNull(characterData.body.eye))
-        {
-            IconBean itemEye = RandomUtil.GetRandomDataByList(characterBodyManager.listIconBodyEye);
-            characterData.body.eye = itemEye.key;
-            characterData.body.eyeColor = ColorBean.Random();
-        }
-        //随机生成嘴巴
-        if (CheckUtil.StringIsNull(characterData.body.mouth))
-        {
-            IconBean itemMouth = RandomUtil.GetRandomDataByList(characterBodyManager.listIconBodyMouth);
-            characterData.body.mouth = itemMouth.key;
-            characterData.body.mouthColor = ColorBean.Random();
-        }
+        //随机生成身体数据
+        CharacterBodyBean.CreateRandomBodyByManager(characterData.body, characterBodyManager);
 
         GameObject customerObj = Instantiate(objCustomerModel, objContainer.transform);
         customerObj.SetActive(true);

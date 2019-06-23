@@ -14,12 +14,12 @@ public class InteractiveUICpt : BaseInteractiveCpt
     {
         if (Input.GetButtonDown("Interactive_E"))
         {
-            uiManager.OpenUIAndCloseOtherByName(uiName);
             if (!CheckUtil.StringIsNull(remarkData))
             {
                 BaseUIComponent baseUIComponent = uiManager.GetUIByName(uiName);
                 baseUIComponent.SetRemarkData(remarkData);
             }
+            uiManager.OpenUIAndCloseOtherByName(uiName);
         }
     }
 

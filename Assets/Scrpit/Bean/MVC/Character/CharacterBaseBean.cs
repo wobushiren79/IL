@@ -24,4 +24,18 @@ public class CharacterBaseBean
     public bool isAccost;//是否开启招呼
 
     public bool isAttendance;//是否出勤
+
+    /// <summary>
+    /// 根据能力生成工资
+    /// </summary>
+    /// <param name="attributesBean"></param>
+    public void CreatePriceByAttributes(CharacterAttributesBean attributesBean)
+    {
+        int totalAttribute = attributesBean.cook + attributesBean.speed + attributesBean.charm + attributesBean.force + attributesBean.lucky + attributesBean.account;
+        priceS = 100;
+        if (totalAttribute > 6)
+        {
+            priceS += (totalAttribute - 6)*50;
+        }  
+    }
 }
