@@ -78,7 +78,7 @@ public class CharacterBean
     {
         CharacterBean characterData = new CharacterBean();
         //设置随机名字
-        characterData.baseInfo.name = RandomUtil.GetRandomGenerateChineseWord(2);
+        characterData.baseInfo.name = RandomUtil.GetRandomGenerateChineseWord(UnityEngine.Random.Range(2,4));
         //生成随机能力
         switch (type)
         {
@@ -101,6 +101,7 @@ public class CharacterBean
                 characterData.attributes = CharacterAttributesBean.CreateRandomDataForBeater();
                 break;
         }
+
         //根据能力生成工资
         characterData.baseInfo.CreatePriceByAttributes(characterData.attributes);
         return characterData;

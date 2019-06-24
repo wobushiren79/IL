@@ -118,6 +118,11 @@ public class UITownRecruitment : BaseUIComponent
         base.OpenUI();
         if (controlHandler != null)
             controlHandler.StopControl();
+        RefreshUI();
+    }
+
+    public override void RefreshUI()
+    {
         switch (remarkData)
         {
             case "chef":
@@ -153,6 +158,8 @@ public class UITownRecruitment : BaseUIComponent
             CharacterBean itemData = listData[i];
             GameObject objCandidate = Instantiate(objCandidateModel, objCandidateContent.transform);
             objCandidate.SetActive(true);
+            ItemGameCandidateCpt itemCpt= objCandidate.GetComponent<ItemGameCandidateCpt>();
+            itemCpt.SetData(itemData);
         }
     }
 
@@ -169,5 +176,35 @@ public class UITownRecruitment : BaseUIComponent
     public void OpenMainUI()
     {
         uiManager.OpenUIAndCloseOtherByName("Main");
+    }
+
+    /// <summary>
+    /// 移除数据
+    /// </summary>
+    /// <param name="characterData"></param>
+    public void RemoveCandidate(CharacterBean characterData)
+    {
+        switch (remarkData)
+        {
+            case "chef":
+                listCandidateChef.Remove(characterData);
+                break;
+            case "accounting":
+                listCandidateAccounting.Remove(characterData);
+                break;
+            case "accost":
+                listCandidateAccost.Remove(characterData);
+                break;
+            case "waiter":
+                listCandidateWaiter.Remove(characterData);
+                break;
+            case "beater":
+                listCandidateBeater.Remove(characterData);
+                break;
+            case "complex":
+                listCandidateComplex.Remove(characterData);
+                break;
+        }
+        RefreshUI();
     }
 }

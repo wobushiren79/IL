@@ -16,6 +16,11 @@ public class UIGameWorker : BaseUIComponent
     {
         if (btBack != null)
             btBack.onClick.AddListener(OpenMainUI);
+    }
+
+    public override void OpenUI()
+    {
+        base.OpenUI();
         InitData();
     }
 
@@ -31,6 +36,7 @@ public class UIGameWorker : BaseUIComponent
         List<CharacterBean> listData = new List<CharacterBean>();
         listData.Add(gameDataManager.gameData.userCharacter);
         listData.AddRange(gameDataManager.gameData.workCharacterList);
+        CptUtil.RemoveChildsByActive(objListContent.transform);
         for (int i = 0; i < listData.Count; i++)
         {
             CharacterBean itemData = listData[i];
