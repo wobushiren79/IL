@@ -3,24 +3,14 @@ using UnityEditor;
 using UnityEngine.UI;
 using System.Collections.Generic;
 
-public class UITownRecruitment : BaseUIComponent
+public class UITownRecruitment : UIBaseStore
 {
-    //返回按钮
-    public Button btBack;
-    //金钱
-    public Text tvMoneyL;
-    public Text tvMoneyM;
-    public Text tvMoneyS;
     //人员数量
     public Text tvNumber;
 
     public GameObject objCandidateContent;
     public GameObject objCandidateModel;
 
-    //控制处理
-    public ControlHandler controlHandler;
-    //数据控制
-    public GameDataManager gameDataManager;
     public CharacterBodyManager characterBodyManager;
 
     //厨师招聘列表
@@ -39,12 +29,6 @@ public class UITownRecruitment : BaseUIComponent
     private void Awake()
     {
         CreateCandidateData();
-    }
-
-    private void Start()
-    {
-        if (btBack != null)
-            btBack.onClick.AddListener(OpenMainUI);
     }
 
     /// <summary>
@@ -90,34 +74,18 @@ public class UITownRecruitment : BaseUIComponent
         }
     }
 
-    private void Update()
+    private new void Update()
     {
-        if (gameDataManager != null)
+        base.Update();
+        if (gameDataManager != null&&tvNumber != null)
         {
-            if (tvMoneyL != null)
-            {
-                tvMoneyL.text = gameDataManager.gameData.moneyL + "";
-            }
-            if (tvMoneyM != null)
-            {
-                tvMoneyM.text = gameDataManager.gameData.moneyM + "";
-            }
-            if (tvMoneyS != null)
-            {
-                tvMoneyS.text = gameDataManager.gameData.moneyS + "";
-            }
-            if (tvNumber != null)
-            {
-                tvNumber.text = gameDataManager.gameData.workCharacterList.Count + "/" + gameDataManager.gameData.workerNumberLimit;
-            }
+            tvNumber.text = gameDataManager.gameData.workCharacterList.Count + "/" + gameDataManager.gameData.workerNumberLimit;
         }
     }
 
     public override void OpenUI()
     {
         base.OpenUI();
-        if (controlHandler != null)
-            controlHandler.StopControl();
         RefreshUI();
     }
 
@@ -163,20 +131,6 @@ public class UITownRecruitment : BaseUIComponent
         }
     }
 
-    public override void CloseUI()
-    {
-        base.CloseUI();
-        if (controlHandler != null)
-            controlHandler.RestoreControl();
-    }
-
-    /// <summary>
-    /// 返回游戏主UI
-    /// </summary>
-    public void OpenMainUI()
-    {
-        uiManager.OpenUIAndCloseOtherByName("Main");
-    }
 
     /// <summary>
     /// 移除数据

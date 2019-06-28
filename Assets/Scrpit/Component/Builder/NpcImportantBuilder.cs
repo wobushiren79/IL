@@ -4,6 +4,7 @@ using UnityEditor;
 public class NpcImportantBuilder : BaseMonoBehaviour
 {
     public Transform marketNpc;
+    public Transform GroceryNpc;
 
     public GameObject objNpcModel;
     public GameObject objNpcContainer;
@@ -18,6 +19,9 @@ public class NpcImportantBuilder : BaseMonoBehaviour
             //生成市场老板
             CharacterBean characterMarketData=  npcInfoManager.GetCharacterDataByType(1);
             BuildNpc(marketNpc, characterMarketData);
+            //生成杂货店老板
+            CharacterBean characterGroceryData = npcInfoManager.GetCharacterDataByType(2);
+            BuildNpc(GroceryNpc, characterGroceryData);
         }
     }
 

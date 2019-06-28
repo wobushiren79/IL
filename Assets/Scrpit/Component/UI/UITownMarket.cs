@@ -4,22 +4,12 @@ using UnityEngine.UI;
 using DG.Tweening;
 using System.Collections.Generic;
 
-public class UITownMarket : BaseUIComponent, IStoreInfoView
+public class UITownMarket : UIBaseStore, IStoreInfoView
 {
-    //返回按钮
-    public Button btBack;
-    //金钱
-    public Text tvMoneyL;
-    public Text tvMoneyM;
-    public Text tvMoneyS;
-    //控制处理
-    public ControlHandler controlHandler;
-
     public GameObject objGoodsContent;
     public GameObject objGoodsModel;
 
     public List<IconBean> listGoodsIcon;
-    public GameDataManager gameDataManager;
     //商店数据
     private StoreInfoController mStoreInfoController;
 
@@ -29,53 +19,12 @@ public class UITownMarket : BaseUIComponent, IStoreInfoView
         mStoreInfoController = new StoreInfoController(this, this);
     }
 
-    private void Start()
-    {
-        if (btBack != null)
-            btBack.onClick.AddListener(OpenMainUI);
-    }
-
-    private void Update()
-    {
-        if (gameDataManager != null)
-        {
-            if (tvMoneyL!=null)
-            {
-                tvMoneyL.text = gameDataManager.gameData.moneyL+"";
-            }
-            if (tvMoneyM != null)
-            {
-                tvMoneyM.text = gameDataManager.gameData.moneyM + "";
-            }
-            if (tvMoneyS != null)
-            {
-                tvMoneyS.text = gameDataManager.gameData.moneyS + "";
-            }
-        }
-    }
-
     public override void OpenUI()
     {
         base.OpenUI();
-        if (controlHandler != null)
-            controlHandler.StopControl();
         mStoreInfoController.GetMarketStoreInfo();
     }
 
-    public override void CloseUI()
-    {
-        base.CloseUI();
-        if (controlHandler != null)
-            controlHandler.RestoreControl();
-    }
-
-    /// <summary>
-    /// 返回游戏主UI
-    /// </summary>
-    public void OpenMainUI()
-    {
-        uiManager.OpenUIAndCloseOtherByName("Main");
-    }
 
     public void GetAllStoreInfoSuccess(List<StoreInfoBean> listData)
     {
