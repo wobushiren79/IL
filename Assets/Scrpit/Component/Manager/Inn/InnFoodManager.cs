@@ -4,8 +4,7 @@ using System.Collections.Generic;
 
 public class InnFoodManager : BaseManager, IMenuInfoView
 {
-    public List<IconBean> listFoodIcon;
-    public List<IconBean> listFoodLastIcon;
+    public IconBeanDictionary listFoodIcon;
 
     public List<MenuInfoBean> listMenuData;
 
@@ -18,7 +17,8 @@ public class InnFoodManager : BaseManager, IMenuInfoView
     /// <returns></returns>
     public Sprite GetFoodSpriteByName(string name)
     {
-        return GetSpriteByName(name, listFoodIcon);
+        listFoodIcon.TryGetValue(name + "_0", out Sprite spFood);
+        return spFood;
     }
     /// <summary>
     /// 通过名字获取食物图标
@@ -27,7 +27,8 @@ public class InnFoodManager : BaseManager, IMenuInfoView
     /// <returns></returns>
     public Sprite GetFoodLastSpriteByName(string name)
     {
-        return GetSpriteByName(name, listFoodLastIcon);
+        listFoodIcon.TryGetValue(name + "_1", out Sprite spFood);
+        return spFood;
     }
 
     /// <summary>

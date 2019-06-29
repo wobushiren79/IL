@@ -12,7 +12,7 @@ public class ListDataEditor : Editor
     {
         GameObject Target = Selection.gameObjects[0];
         CharacterDressManager dressManager = Target.GetComponent<CharacterDressManager>();
-        AddList("Assets/Texture/Character/character_hat.png", dressManager.listIconHat);
+        AddIconBeanDictionaryByFile("Assets/Texture/Character/character_hat.png", dressManager.listIconHat);
     }
 
     [MenuItem("Custom/List/AddDressClothes")]
@@ -21,8 +21,8 @@ public class ListDataEditor : Editor
         GameObject Target = Selection.gameObjects[0];
         CharacterDressManager dressManager = Target.GetComponent<CharacterDressManager>();
         dressManager.listIconClothes.Clear();
-        AddList("Assets/Texture/Character/character_clothes.png", dressManager.listIconClothes);
-        AddList("Assets/Texture/Character/character_clothes_work.png", dressManager.listIconClothes);
+        AddIconBeanDictionaryByFile("Assets/Texture/Character/character_clothes.png", dressManager.listIconClothes);
+        AddIconBeanDictionaryByFile("Assets/Texture/Character/character_clothes_work.png", dressManager.listIconClothes);
     }
 
     [MenuItem("Custom/List/AddDressShoes")]
@@ -31,8 +31,8 @@ public class ListDataEditor : Editor
         GameObject Target = Selection.gameObjects[0];
         CharacterDressManager dressManager = Target.GetComponent<CharacterDressManager>();
         dressManager.listIconShoes.Clear();
-        AddList("Assets/Texture/Character/character_shoes.png", dressManager.listIconShoes);
-        AddList("Assets/Texture/Character/character_shoes_work.png", dressManager.listIconShoes);
+        AddIconBeanDictionaryByFile("Assets/Texture/Character/character_shoes.png", dressManager.listIconShoes);
+        AddIconBeanDictionaryByFile("Assets/Texture/Character/character_shoes_work.png", dressManager.listIconShoes);
     }
 
     [MenuItem("Custom/List/AddBodyHair")]
@@ -40,7 +40,7 @@ public class ListDataEditor : Editor
     {
         GameObject Target = Selection.gameObjects[0];
         CharacterBodyManager bodyManager = Target.GetComponent<CharacterBodyManager>();
-        AddList("Assets/Texture/Character/character_hair.png", bodyManager.listIconBodyHair);
+        AddIconBeanDictionaryByFile("Assets/Texture/Character/character_hair.png", bodyManager.listIconBodyHair);
     }
 
     [MenuItem("Custom/List/AddBodyEye")]
@@ -48,7 +48,7 @@ public class ListDataEditor : Editor
     {
         GameObject Target = Selection.gameObjects[0];
         CharacterBodyManager bodyManager = Target.GetComponent<CharacterBodyManager>();
-        AddList("Assets/Texture/Character/character_eye.png", bodyManager.listIconBodyEye);
+        AddIconBeanDictionaryByFile("Assets/Texture/Character/character_eye.png", bodyManager.listIconBodyEye);
     }
 
     [MenuItem("Custom/List/AddBodyMouth")]
@@ -56,19 +56,54 @@ public class ListDataEditor : Editor
     {
         GameObject Target = Selection.gameObjects[0];
         CharacterBodyManager bodyManager = Target.GetComponent<CharacterBodyManager>();
-        AddList("Assets/Texture/Character/character_mouth.png", bodyManager.listIconBodyMouth);
+        AddIconBeanDictionaryByFile("Assets/Texture/Character/character_mouth.png", bodyManager.listIconBodyMouth);
     }
 
-    public static void AddList(string paths,List<IconBean> listData)
+
+    [MenuItem("Custom/List/AddFoodIcon")]
+    public static void AddFood()
     {
-        string temp = paths;
-        Object[] objs = AssetDatabase.LoadAllAssetsAtPath(temp);
+        GameObject Target = Selection.gameObjects[0];
+        InnFoodManager foodManager = Target.GetComponent<InnFoodManager>();
+        AddIconBeanDictionaryByFolder("Assets/Texture/Food/", foodManager.listFoodIcon);
+    }
+
+    /// <summary>
+    /// 根据指定文件添加字典
+    /// </summary>
+    /// <param name="filePath"></param>
+    /// <param name="map"></param>
+    public static void AddIconBeanDictionaryByFile(string filePath, IconBeanDictionary map)
+    {
+        Object[] objs = AssetDatabase.LoadAllAssetsAtPath(filePath);
         objs.ToList().ForEach(obj =>
         {
-            IconBean iconBean = new IconBean();
-            iconBean.key = obj.name;
-            iconBean.value = obj as Sprite;
-            listData.Add(iconBean);
+            if (obj as Sprite != null)
+            {
+                map.Add(obj.name, obj as Sprite);
+            }
         });
+    }
+
+    /// <summary>
+    /// 根据文件夹下所有文件添加字典
+    /// </summary>
+    /// <param name="folderPath"></param>
+    /// <param name="mapFood"></param>
+    public static void AddIconBeanDictionaryByFolder(string folderPath, IconBeanDictionary map)
+    {
+        map.Clear();
+        FileInfo[] files = FileUtil.GetFilesByPath(folderPath);
+        foreach (FileInfo item in files)
+        {
+            Object[] objs = AssetDatabase.LoadAllAssetsAtPath(folderPath + item.Name);
+            objs.ToList().ForEach(obj =>
+            {
+                if (obj as Sprite != null)
+                {
+                    map.Add(obj.name, obj as Sprite);
+                }
+            });
+        }
     }
 }

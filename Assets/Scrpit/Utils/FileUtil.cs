@@ -172,4 +172,20 @@ public class FileUtil : ScriptableObject
         newFs.Close();
         newFs.Dispose();
     }
+
+    /// <summary>
+    /// 获取指定路径下面的所有资源文件  
+    /// </summary>
+    /// <param name="fullPath"> "Assets/Models/21/21000001/"; </param>
+    /// <returns></returns>
+    public static FileInfo[] GetFilesByPath(string fullPath)
+    {
+        if (Directory.Exists(fullPath))
+        {
+            DirectoryInfo direction = new DirectoryInfo(fullPath);
+            FileInfo[] files = direction.GetFiles("*", SearchOption.AllDirectories);
+            return files;
+        }
+        return null;
+    }
 }

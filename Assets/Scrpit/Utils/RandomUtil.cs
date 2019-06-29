@@ -21,6 +21,32 @@ public class RandomUtil
     }
 
     /// <summary>
+    /// 获取IconBeanDictionary 中 随机一个数
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
+    /// <param name="list"></param>
+    /// <returns></returns>
+    public static IconBean GetRandomDataByIconBeanDictionary(IconBeanDictionary list)
+    {
+        int position = Random.Range(0, list.Count);
+        int i = 0;
+        foreach (string key in list.Keys)
+        {
+            if (position == i)
+            {
+                IconBean data = new IconBean
+                {
+                    key = key,
+                    value = list[key]
+                };
+                return data;
+            }
+            i++;
+        }
+        return null;
+    }
+
+    /// <summary>
     /// 获取List随机数
     /// </summary>
     /// <typeparam name="T"></typeparam>

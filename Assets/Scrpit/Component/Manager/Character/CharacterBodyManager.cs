@@ -5,13 +5,13 @@ using System.Collections.Generic;
 public class CharacterBodyManager : BaseManager
 {
     //身体列表
-    public List<IconBean> listIconBodyTrunk;
+    public IconBeanDictionary listIconBodyTrunk;
     //头发列表
-    public List<IconBean> listIconBodyHair;
+    public IconBeanDictionary listIconBodyHair;
     //眼睛列表
-    public List<IconBean> listIconBodyEye;
+    public IconBeanDictionary listIconBodyEye;
     //嘴巴列表
-    public List<IconBean> listIconBodyMouth;
+    public IconBeanDictionary listIconBodyMouth;
 
     /// <summary>
     /// 获取躯干
@@ -20,11 +20,8 @@ public class CharacterBodyManager : BaseManager
     /// <returns></returns>
     public Sprite GetTrunkSpriteByName(string name)
     {
-        return GetSpriteByName(name, listIconBodyTrunk);
-    }
-    public Sprite GetTrunkSpriteByPosition(int position)
-    {
-        return GetSpriteByPosition(position, listIconBodyTrunk);
+        listIconBodyTrunk.TryGetValue(name, out Sprite spIcon);
+        return spIcon;
     }
 
     /// <summary>
@@ -34,15 +31,8 @@ public class CharacterBodyManager : BaseManager
     /// <returns></returns>
     public Sprite GetHairSpriteByName(string name)
     {
-        return GetSpriteByName(name, listIconBodyHair);
-    }
-    public Sprite GetHairSpriteByPosition(int position)
-    {
-        return GetSpriteByPosition(position, listIconBodyHair);
-    }
-    public IconBean GetHairIconBeanByPosition(int position)
-    {
-        return  BeanUtil.GetIconBeanByPosition(position, listIconBodyHair);
+        listIconBodyHair.TryGetValue(name, out Sprite spIcon);
+        return spIcon;
     }
 
     /// <summary>
@@ -52,15 +42,8 @@ public class CharacterBodyManager : BaseManager
     /// <returns></returns>
     public Sprite GetEyeSpriteByName(string name)
     {
-        return GetSpriteByName(name, listIconBodyEye);
-    }
-    public Sprite GettEyeSpriteByPosition(int position)
-    {
-        return GetSpriteByPosition(position, listIconBodyEye);
-    }
-    public IconBean GetEyeIconBeanByPosition(int position)
-    {
-        return BeanUtil.GetIconBeanByPosition(position, listIconBodyEye);
+        listIconBodyEye.TryGetValue(name, out Sprite spIcon);
+        return spIcon;
     }
 
     /// <summary>
@@ -70,14 +53,7 @@ public class CharacterBodyManager : BaseManager
     /// <returns></returns>
     public Sprite GetMouthSpriteByName(string name)
     {
-        return GetSpriteByName(name, listIconBodyMouth);
-    }
-    public Sprite GettMouthSpriteByPosition(int position)
-    {
-        return GetSpriteByPosition(position, listIconBodyMouth);
-    }
-    public IconBean GetMouthIconBeanByPosition(int position)
-    {
-        return BeanUtil.GetIconBeanByPosition(position, listIconBodyMouth);
+        listIconBodyMouth.TryGetValue(name, out Sprite spIcon);
+        return spIcon;
     }
 }

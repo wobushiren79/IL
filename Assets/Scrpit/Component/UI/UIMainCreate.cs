@@ -179,15 +179,15 @@ public class UIMainCreate : BaseUIComponent, IRadioGroupCallBack, ColorView.Call
     {
         if (selectView == selectHair)
         {
-            characterBodyCpt.SetHair(characterBodyManager.GetHairIconBeanByPosition(position).key);
+           // characterBodyCpt.SetHair(characterBodyManager.GetHairIconBeanByPosition(position).key);
         }
         else if (selectView == selectEye)
         {
-            characterBodyCpt.SetEye(characterBodyManager.GetEyeIconBeanByPosition(position).key);
+            //characterBodyCpt.SetEye(characterBodyManager.GetEyeIconBeanByPosition(position).key);
         }
         else if (selectView == selectMouth)
         {
-            characterBodyCpt.SetMouth(characterBodyManager.GetMouthIconBeanByPosition(position).key);
+          //  characterBodyCpt.SetMouth(characterBodyManager.GetMouthIconBeanByPosition(position).key);
         }
         else if (selectView == selectHat)
         {

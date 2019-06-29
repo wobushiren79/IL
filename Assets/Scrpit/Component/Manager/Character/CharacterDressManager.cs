@@ -5,13 +5,13 @@ using System.Collections.Generic;
 public class CharacterDressManager : BaseManager, IEquipInfoView
 {
     //面具列表
-    public List<IconBean> listIconMask;
+    public IconBeanDictionary listIconMask;
     //鞋子列表
-    public List<IconBean> listIconShoes;
+    public IconBeanDictionary listIconShoes;
     //衣服列表
-    public List<IconBean> listIconClothes;
+    public IconBeanDictionary listIconClothes;
     //帽子列表
-    public List<IconBean> listIconHat;
+    public IconBeanDictionary listIconHat;
 
     //装备数据
     public List<EquipInfoBean> listDataEquip;
@@ -98,7 +98,8 @@ public class CharacterDressManager : BaseManager, IEquipInfoView
     /// <returns></returns>
     public Sprite GetMaskSpriteByName(string name)
     {
-        return GetSpriteByName(name, listIconMask);
+        listIconMask.TryGetValue(name,out Sprite spIcon);
+        return spIcon;
     }
 
     /// <summary>
@@ -108,7 +109,8 @@ public class CharacterDressManager : BaseManager, IEquipInfoView
     /// <returns></returns>
     public Sprite GetShoesSpriteByName(string name)
     {
-        return GetSpriteByName(name, listIconShoes);
+        listIconShoes.TryGetValue(name, out Sprite spIcon);
+        return spIcon;
     }
 
     /// <summary>
@@ -121,7 +123,7 @@ public class CharacterDressManager : BaseManager, IEquipInfoView
         EquipInfoBean equipInfoBean = GetEquipById(id);
         if (equipInfoBean == null)
             return null;
-        return GetSpriteByName(equipInfoBean.icon_key, listIconShoes);
+        return GetShoesSpriteByName(equipInfoBean.icon_key);
     }
 
     /// <summary>
@@ -131,7 +133,8 @@ public class CharacterDressManager : BaseManager, IEquipInfoView
     /// <returns></returns>
     public Sprite GetClothesSpriteByName(string name)
     {
-        return GetSpriteByName(name, listIconClothes);
+        listIconClothes.TryGetValue(name, out Sprite spIcon);
+        return spIcon;
     }
 
     /// <summary>
@@ -144,7 +147,7 @@ public class CharacterDressManager : BaseManager, IEquipInfoView
         EquipInfoBean equipInfoBean = GetEquipById(id);
         if (equipInfoBean == null)
             return null;
-        return GetSpriteByName(equipInfoBean.icon_key, listIconClothes);
+        return GetClothesSpriteByName(equipInfoBean.icon_key);
     }
 
     /// <summary>
@@ -154,7 +157,8 @@ public class CharacterDressManager : BaseManager, IEquipInfoView
     /// <returns></returns>
     public Sprite GetHatSpriteByName(string name)
     {
-        return GetSpriteByName(name, listIconHat);
+        listIconHat.TryGetValue(name, out Sprite spIcon);
+        return spIcon;
     }
 
     /// <summary>
@@ -167,7 +171,7 @@ public class CharacterDressManager : BaseManager, IEquipInfoView
         EquipInfoBean equipInfoBean = GetEquipById(id);
         if (equipInfoBean == null)
             return null;
-        return GetSpriteByName(equipInfoBean.icon_key, listIconHat);
+        return GetHatSpriteByName(equipInfoBean.icon_key);
     }
 
     #region   装备获取回调

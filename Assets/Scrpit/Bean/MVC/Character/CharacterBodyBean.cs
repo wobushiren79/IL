@@ -35,17 +35,17 @@ public class CharacterBodyBean
         //随机生成性别
         characterBody.sex = UnityEngine.Random.Range(1, 3);
         //随机生成头型
-        IconBean itemHair = RandomUtil.GetRandomDataByList(characterBodyManager.listIconBodyHair);
+        IconBean itemHair = RandomUtil.GetRandomDataByIconBeanDictionary(characterBodyManager.listIconBodyHair);
         characterBody.hair = itemHair.key;
         characterBody.hairColor = ColorBean.Random();
 
         //随机生成眼睛
-        IconBean itemEye = RandomUtil.GetRandomDataByList(characterBodyManager.listIconBodyEye);
+        IconBean itemEye = RandomUtil.GetRandomDataByIconBeanDictionary(characterBodyManager.listIconBodyEye);
         characterBody.eye = itemEye.key;
         characterBody.eyeColor = ColorBean.Random();
 
         //随机生成嘴巴
-        IconBean itemMouth = RandomUtil.GetRandomDataByList(characterBodyManager.listIconBodyMouth);
+        IconBean itemMouth = RandomUtil.GetRandomDataByIconBeanDictionary(characterBodyManager.listIconBodyMouth);
         characterBody.mouth = itemMouth.key;
         characterBody.mouthColor = ColorBean.Random();
 
