@@ -13,7 +13,8 @@ public class UIBaseStore : BaseUIComponent
     //控制处理
     public ControlHandler controlHandler;
     public GameDataManager gameDataManager;
-    private void Start()
+
+    public void Start()
     {
         if (btBack != null)
             btBack.onClick.AddListener(OpenMainUI);

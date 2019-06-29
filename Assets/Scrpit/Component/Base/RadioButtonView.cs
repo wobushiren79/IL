@@ -30,6 +30,7 @@ public class RadioButtonView : BaseMonoBehaviour
 
     private void Start()
     {
+        ChangeStates(states);
         rbButton.onClick.AddListener(RadioButtonSelected);
     }
 

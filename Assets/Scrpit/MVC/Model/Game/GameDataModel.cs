@@ -78,16 +78,9 @@ public class GameDataModel : BaseMVCModel
 
         //添加菜单
         gameData.menuList.Add(new MenuOwnBean(1));
-        gameData.menuList.Add(new MenuOwnBean(101));
-        gameData.menuList.Add(new MenuOwnBean(201));
-        gameData.menuList.Add(new MenuOwnBean(301));
-        gameData.menuList.Add(new MenuOwnBean(401));
         gameData.menuList.Add(new MenuOwnBean(10001));
         gameData.ingOilsalt=50;
         gameData.ingVegetables = 50;
-        gameData.ingMelonfruit = 50;
-        gameData.ingWaterwine = 50;
-        gameData.ingMeat = 10;
         SetGameDataByUserId(userId, gameData);
     }
 
