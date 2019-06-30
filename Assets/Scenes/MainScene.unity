@@ -22424,6 +22424,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   uiManager: {fileID: 1146384156}
   uiAnimator: {fileID: 0}
+  remarkData: 
   btStart: {fileID: 800721833}
   tvStart: {fileID: 699619617}
   btContinue: {fileID: 1894163156}
@@ -22789,14 +22790,15 @@ MonoBehaviour:
         isAccounting: 0
         isBeater: 0
         isAccost: 0
+        isAttendance: 0
       attributes:
         loyal: 0
+        cook: 0
         speed: 0
         account: 0
         charm: 0
         force: 0
         lucky: 0
-        cook: 0
       body:
         sex: 1
         skinColor:
@@ -22822,6 +22824,7 @@ MonoBehaviour:
           g: 0
           b: 0
           a: 1
+        face: 0
       equips:
         hatId: 0
         clothesId: 0
@@ -22851,6 +22854,7 @@ MonoBehaviour:
     ingMelonfruit: 0
     ingWaterwine: 0
     ingFlour: 0
+    workerNumberLimit: 5
   listGameDataSimple: []
 --- !u!1 &1185944211
 GameObject:
@@ -25658,7 +25662,7 @@ MonoBehaviour:
   rbButton: {fileID: 1575166174}
   rbImage: {fileID: 550951571}
   rbText: {fileID: 0}
-  states: 0
+  states: 1
 --- !u!114 &1575166174
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -25771,6 +25775,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   uiManager: {fileID: 1146384156}
   uiAnimator: {fileID: 0}
+  remarkData: 
   btBack: {fileID: 441752652}
   tvBack: {fileID: 1880842559}
   btCreate: {fileID: 98848216}
@@ -25794,6 +25799,9 @@ MonoBehaviour:
   characterDressManager: {fileID: 1672669449}
   gameDataManager: {fileID: 1163914678}
   toastView: {fileID: 613884071}
+  listSelectHair: []
+  listSelectEye: []
+  listSelectMouth: []
 --- !u!1 &1581112160
 GameObject:
   m_ObjectHideFlags: 0
@@ -33242,14 +33250,15 @@ MonoBehaviour:
         isAccounting: 0
         isBeater: 0
         isAccost: 0
+        isAttendance: 0
       attributes:
         loyal: 0
+        cook: 0
         speed: 0
         account: 0
         charm: 0
         force: 0
         lucky: 0
-        cook: 0
       body:
         sex: 0
         skinColor:
@@ -33275,6 +33284,7 @@ MonoBehaviour:
           g: 0
           b: 0
           a: 0
+        face: 0
       equips:
         hatId: 0
         clothesId: 0
@@ -35270,6 +35280,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   uiManager: {fileID: 1146384156}
   uiAnimator: {fileID: 0}
+  remarkData: 
   btBack: {fileID: 460741562}
   tvBack: {fileID: 1887554514}
   tvNull: {fileID: 1145803950}
@@ -35695,6 +35706,16 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2478063931147506651, guid: 2b0fba09934c2934eb7fd9b31e6030fb,
+        type: 3}
+      propertyPath: m_LocalScale.x
+      value: 200
+      objectReference: {fileID: 0}
+    - target: {fileID: 2478063931147506651, guid: 2b0fba09934c2934eb7fd9b31e6030fb,
+        type: 3}
+      propertyPath: m_LocalScale.y
+      value: 200
+      objectReference: {fileID: 0}
     - target: {fileID: 2478063932544207080, guid: 2b0fba09934c2934eb7fd9b31e6030fb,
         type: 3}
       propertyPath: m_Color.r
@@ -35749,6 +35770,42 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 3781763343670252888, guid: 46ca908cf374a6b488fa38749b225a41,
+        type: 3}
+      propertyPath: listIconShoes.isExpanded
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3781763343670252888, guid: 46ca908cf374a6b488fa38749b225a41,
+        type: 3}
+      propertyPath: listIconShoes.reorderableList.isExpanded
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3781763343670252888, guid: 46ca908cf374a6b488fa38749b225a41,
+        type: 3}
+      propertyPath: listIconHat.isExpanded
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3781763343670252888, guid: 46ca908cf374a6b488fa38749b225a41,
+        type: 3}
+      propertyPath: listIconHat.reorderableList.isExpanded
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3781763343670252888, guid: 46ca908cf374a6b488fa38749b225a41,
+        type: 3}
+      propertyPath: listIconHat._values.Array.data[19]
+      value: 
+      objectReference: {fileID: 21300022, guid: 8e03ad349de8f344dbeb91ee4ebf2df3,
+        type: 3}
+    - target: {fileID: 3781763343670252889, guid: 46ca908cf374a6b488fa38749b225a41,
+        type: 3}
+      propertyPath: listIconBodyHair.isExpanded
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3781763343670252889, guid: 46ca908cf374a6b488fa38749b225a41,
+        type: 3}
+      propertyPath: listIconBodyHair.reorderableList.isExpanded
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2732682855923352778, guid: 46ca908cf374a6b488fa38749b225a41,
         type: 3}
       propertyPath: m_Name
@@ -35828,53 +35885,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: CharacterUI
       objectReference: {fileID: 0}
-    - target: {fileID: 6202850148858248707, guid: dbdedefdbd5ca8045a10545a8d921571,
-        type: 3}
-      propertyPath: characterBodyManager
-      value: 
-      objectReference: {fileID: 1672669450}
-    - target: {fileID: 6202850148858248707, guid: dbdedefdbd5ca8045a10545a8d921571,
-        type: 3}
-      propertyPath: ivBody
-      value: 
-      objectReference: {fileID: 719800865}
-    - target: {fileID: 6202850148858248707, guid: dbdedefdbd5ca8045a10545a8d921571,
-        type: 3}
-      propertyPath: ivClothes
-      value: 
-      objectReference: {fileID: 6202850149408225510}
-    - target: {fileID: 6202850148858248707, guid: dbdedefdbd5ca8045a10545a8d921571,
-        type: 3}
-      propertyPath: ivShoes
-      value: 
-      objectReference: {fileID: 6202850149408225509}
-    - target: {fileID: 6202850148858248707, guid: dbdedefdbd5ca8045a10545a8d921571,
-        type: 3}
-      propertyPath: characterDressManager
-      value: 
-      objectReference: {fileID: 1672669449}
-    - target: {fileID: 6202850148858248707, guid: dbdedefdbd5ca8045a10545a8d921571,
-        type: 3}
-      propertyPath: spMan
-      value: 
-      objectReference: {fileID: 21300000, guid: 3f3db2b70d7f0c64f9221682b2d01a46,
-        type: 3}
-    - target: {fileID: 6202850148858248707, guid: dbdedefdbd5ca8045a10545a8d921571,
-        type: 3}
-      propertyPath: spWoman
-      value: 
-      objectReference: {fileID: 21300000, guid: aa0172fa0c1396d4e8d298bdec4b2617,
-        type: 3}
-    - target: {fileID: 6202850148858248707, guid: dbdedefdbd5ca8045a10545a8d921571,
-        type: 3}
-      propertyPath: ivHat
-      value: 
-      objectReference: {fileID: 866000036}
-    - target: {fileID: 6202850148858248707, guid: dbdedefdbd5ca8045a10545a8d921571,
-        type: 3}
-      propertyPath: ivHead
-      value: 
-      objectReference: {fileID: 123349845}
     - target: {fileID: 6202850148858248704, guid: dbdedefdbd5ca8045a10545a8d921571,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -35980,6 +35990,53 @@ PrefabInstance:
       propertyPath: m_Pivot.y
       value: 0.5
       objectReference: {fileID: 0}
+    - target: {fileID: 6202850148858248707, guid: dbdedefdbd5ca8045a10545a8d921571,
+        type: 3}
+      propertyPath: characterBodyManager
+      value: 
+      objectReference: {fileID: 1672669450}
+    - target: {fileID: 6202850148858248707, guid: dbdedefdbd5ca8045a10545a8d921571,
+        type: 3}
+      propertyPath: ivBody
+      value: 
+      objectReference: {fileID: 719800865}
+    - target: {fileID: 6202850148858248707, guid: dbdedefdbd5ca8045a10545a8d921571,
+        type: 3}
+      propertyPath: ivClothes
+      value: 
+      objectReference: {fileID: 6202850149408225510}
+    - target: {fileID: 6202850148858248707, guid: dbdedefdbd5ca8045a10545a8d921571,
+        type: 3}
+      propertyPath: ivShoes
+      value: 
+      objectReference: {fileID: 6202850149408225509}
+    - target: {fileID: 6202850148858248707, guid: dbdedefdbd5ca8045a10545a8d921571,
+        type: 3}
+      propertyPath: characterDressManager
+      value: 
+      objectReference: {fileID: 1672669449}
+    - target: {fileID: 6202850148858248707, guid: dbdedefdbd5ca8045a10545a8d921571,
+        type: 3}
+      propertyPath: spMan
+      value: 
+      objectReference: {fileID: 21300000, guid: 3f3db2b70d7f0c64f9221682b2d01a46,
+        type: 3}
+    - target: {fileID: 6202850148858248707, guid: dbdedefdbd5ca8045a10545a8d921571,
+        type: 3}
+      propertyPath: spWoman
+      value: 
+      objectReference: {fileID: 21300000, guid: aa0172fa0c1396d4e8d298bdec4b2617,
+        type: 3}
+    - target: {fileID: 6202850148858248707, guid: dbdedefdbd5ca8045a10545a8d921571,
+        type: 3}
+      propertyPath: ivHat
+      value: 
+      objectReference: {fileID: 866000036}
+    - target: {fileID: 6202850148858248707, guid: dbdedefdbd5ca8045a10545a8d921571,
+        type: 3}
+      propertyPath: ivHead
+      value: 
+      objectReference: {fileID: 123349845}
     - target: {fileID: 4644097329694526470, guid: dbdedefdbd5ca8045a10545a8d921571,
         type: 3}
       propertyPath: m_AnchoredPosition.y

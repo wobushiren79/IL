@@ -98,8 +98,7 @@ public class CharacterDressManager : BaseManager, IEquipInfoView
     /// <returns></returns>
     public Sprite GetMaskSpriteByName(string name)
     {
-        listIconMask.TryGetValue(name,out Sprite spIcon);
-        return spIcon;
+        return GetSpriteByName(name, listIconMask);
     }
 
     /// <summary>
@@ -109,8 +108,7 @@ public class CharacterDressManager : BaseManager, IEquipInfoView
     /// <returns></returns>
     public Sprite GetShoesSpriteByName(string name)
     {
-        listIconShoes.TryGetValue(name, out Sprite spIcon);
-        return spIcon;
+        return GetSpriteByName(name, listIconShoes);
     }
 
     /// <summary>
@@ -133,8 +131,7 @@ public class CharacterDressManager : BaseManager, IEquipInfoView
     /// <returns></returns>
     public Sprite GetClothesSpriteByName(string name)
     {
-        listIconClothes.TryGetValue(name, out Sprite spIcon);
-        return spIcon;
+        return GetSpriteByName(name, listIconClothes);
     }
 
     /// <summary>
@@ -157,8 +154,7 @@ public class CharacterDressManager : BaseManager, IEquipInfoView
     /// <returns></returns>
     public Sprite GetHatSpriteByName(string name)
     {
-        listIconHat.TryGetValue(name, out Sprite spIcon);
-        return spIcon;
+        return GetSpriteByName(name, listIconHat);
     }
 
     /// <summary>
@@ -182,7 +178,6 @@ public class CharacterDressManager : BaseManager, IEquipInfoView
 
     public void GetEquipInfoFail()
     {
-        throw new System.NotImplementedException();
     }
     #endregion
 }

@@ -1,6 +1,8 @@
 ﻿using UnityEngine;
 using UnityEditor;
 using UnityEngine.UI;
+using System.Collections.Generic;
+
 public class UIMainCreate : BaseUIComponent, IRadioGroupCallBack, ColorView.CallBack, SelectView.CallBack
 {
     //返回按钮
@@ -44,8 +46,12 @@ public class UIMainCreate : BaseUIComponent, IRadioGroupCallBack, ColorView.Call
     //弹出框提示
     public ToastView toastView;
 
+    public List<IconBean> listSelectHair;
+    public List<IconBean> listSelectEye;
+    public List<IconBean> listSelectMouth;
     private void Start()
     {
+        InitData();
         if (btBack != null)
             btBack.onClick.AddListener(OpenStartUI);
         if (btCreate != null)
@@ -58,7 +64,7 @@ public class UIMainCreate : BaseUIComponent, IRadioGroupCallBack, ColorView.Call
             colorHair.SetCallBack(this);
         if (selectHair != null)
         {
-            selectHair.SetSelectNumber(characterBodyManager.listIconBodyHair.Count);
+            selectHair.SetSelectNumber(listSelectHair.Count);
             selectHair.SetCallBack(this);
         }
         if (colorEye != null)
@@ -91,6 +97,19 @@ public class UIMainCreate : BaseUIComponent, IRadioGroupCallBack, ColorView.Call
             selectShoes.SetSelectNumber(characterDressManager.GetShoesList().Count + 1);
             selectShoes.SetCallBack(this);
         }
+    }
+
+    public void InitData()
+    {
+        //初始化可选择头型数据
+        listSelectHair = TypeConversionUtil.IconBeanDictionaryToList(characterBodyManager.listIconBodyHair);
+        ChangeSelectPosition(selectHair, 0);
+        //初始化可选择眼睛
+        listSelectEye= TypeConversionUtil.IconBeanDictionaryToList(characterBodyManager.listIconBodyEye);
+        ChangeSelectPosition(selectEye, 0);
+        //初始化可选择嘴巴
+        listSelectMouth= TypeConversionUtil.IconBeanDictionaryToList(characterBodyManager.listIconBodyMouth);
+        ChangeSelectPosition(selectMouth, 0);
     }
 
     /// <summary>
@@ -179,15 +198,15 @@ public class UIMainCreate : BaseUIComponent, IRadioGroupCallBack, ColorView.Call
     {
         if (selectView == selectHair)
         {
-           // characterBodyCpt.SetHair(characterBodyManager.GetHairIconBeanByPosition(position).key);
+            characterBodyCpt.SetHair(listSelectHair[position].key);
         }
         else if (selectView == selectEye)
         {
-            //characterBodyCpt.SetEye(characterBodyManager.GetEyeIconBeanByPosition(position).key);
+            characterBodyCpt.SetEye(listSelectEye[position].key);
         }
         else if (selectView == selectMouth)
         {
-          //  characterBodyCpt.SetMouth(characterBodyManager.GetMouthIconBeanByPosition(position).key);
+          characterBodyCpt.SetMouth(listSelectMouth[position].key);
         }
         else if (selectView == selectHat)
         {

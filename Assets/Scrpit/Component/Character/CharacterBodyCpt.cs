@@ -86,16 +86,16 @@ public class CharacterBodyCpt : BaseMonoBehaviour
         switch (sex)
         {
             case 0:
-                spTrunk = characterBodyManager.GetTrunkSpriteByName("man");
+                spTrunk = characterBodyManager.GetTrunkSpriteByName("character_body_man");
                 break;
             case 1:
-                spTrunk = characterBodyManager.GetTrunkSpriteByName("man");
+                spTrunk = characterBodyManager.GetTrunkSpriteByName("character_body_man");
                 break;
             case 2:
-                spTrunk = characterBodyManager.GetTrunkSpriteByName("woman");
+                spTrunk = characterBodyManager.GetTrunkSpriteByName("character_body_woman");
                 break;
             case 3:
-                spTrunk = characterBodyManager.GetTrunkSpriteByName("man");
+                spTrunk = characterBodyManager.GetTrunkSpriteByName("character_body_man");
                 break;
         }
         if (sprTrunk != null && spTrunk != null)

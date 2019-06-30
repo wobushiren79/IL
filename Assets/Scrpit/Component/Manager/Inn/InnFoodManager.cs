@@ -17,8 +17,7 @@ public class InnFoodManager : BaseManager, IMenuInfoView
     /// <returns></returns>
     public Sprite GetFoodSpriteByName(string name)
     {
-        listFoodIcon.TryGetValue(name + "_0", out Sprite spFood);
-        return spFood;
+        return GetSpriteByName(name + "_0", listFoodIcon);
     }
     /// <summary>
     /// 通过名字获取食物图标
@@ -27,8 +26,7 @@ public class InnFoodManager : BaseManager, IMenuInfoView
     /// <returns></returns>
     public Sprite GetFoodLastSpriteByName(string name)
     {
-        listFoodIcon.TryGetValue(name + "_1", out Sprite spFood);
-        return spFood;
+        return GetSpriteByName(name + "_1", listFoodIcon);
     }
 
     /// <summary>

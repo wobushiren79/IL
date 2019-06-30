@@ -169,5 +169,26 @@ public class TypeConversionUtil
         ColorBean colorBean = new ColorBean(color.a, color.g, color.b, color.a);
         return colorBean;
     }
+
+
+    /// <summary>
+    ///  图标字典转List
+    /// </summary>
+    /// <param name="map"></param>
+    /// <returns></returns>
+    public static List<IconBean> IconBeanDictionaryToList(IconBeanDictionary map)
+    {
+        List<IconBean> listData = new List<IconBean>();
+        foreach(string key in map.Keys)
+        {
+            IconBean iconBean = new IconBean
+            {
+                key = key,
+                value = map[key]
+            };
+            listData.Add(iconBean);
+        }
+        return listData;
+    }
     
 }

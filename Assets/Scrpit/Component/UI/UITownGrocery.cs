@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using DG.Tweening;
 using UnityEditor;
 using UnityEngine.UI;
 using System.Collections.Generic;
@@ -82,6 +83,7 @@ public class UITownGrocery : UIBaseStore, IStoreInfoView, IRadioGroupCallBack
             itemObj.SetActive(true);
             ItemGameGroceryCpt groceryCpt = itemObj.GetComponent<ItemGameGroceryCpt>();
             groceryCpt.SetData(itemData);
+            itemObj.transform.DOScale(new Vector3(0, 0, 0), 0.5f).SetEase(Ease.OutBack).SetDelay(i * 0.05f).From();
         }
     }
 

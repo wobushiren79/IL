@@ -30,4 +30,18 @@ public class BaseManager : BaseMonoBehaviour
             return null;
         return iconData.value;
     }
+
+    /// <summary>
+    /// 通过名字获取Icon
+    /// </summary>
+    /// <param name="name"></param>
+    /// <returns></returns>
+    public Sprite GetSpriteByName(string name,IconBeanDictionary map)
+    {
+        if (name == null)
+            return null;
+        map.TryGetValue(name, out Sprite spIcon);
+        return spIcon;
+    }
+
 }

@@ -20,8 +20,7 @@ public class CharacterBodyManager : BaseManager
     /// <returns></returns>
     public Sprite GetTrunkSpriteByName(string name)
     {
-        listIconBodyTrunk.TryGetValue(name, out Sprite spIcon);
-        return spIcon;
+        return GetSpriteByName(name, listIconBodyTrunk);
     }
 
     /// <summary>
@@ -31,8 +30,7 @@ public class CharacterBodyManager : BaseManager
     /// <returns></returns>
     public Sprite GetHairSpriteByName(string name)
     {
-        listIconBodyHair.TryGetValue(name, out Sprite spIcon);
-        return spIcon;
+        return GetSpriteByName(name, listIconBodyHair);
     }
 
     /// <summary>
@@ -42,8 +40,7 @@ public class CharacterBodyManager : BaseManager
     /// <returns></returns>
     public Sprite GetEyeSpriteByName(string name)
     {
-        listIconBodyEye.TryGetValue(name, out Sprite spIcon);
-        return spIcon;
+        return GetSpriteByName(name, listIconBodyEye);
     }
 
     /// <summary>
@@ -53,7 +50,6 @@ public class CharacterBodyManager : BaseManager
     /// <returns></returns>
     public Sprite GetMouthSpriteByName(string name)
     {
-        listIconBodyMouth.TryGetValue(name, out Sprite spIcon);
-        return spIcon;
+        return GetSpriteByName(name, listIconBodyMouth);
     }
 }
