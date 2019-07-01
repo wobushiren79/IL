@@ -3,7 +3,7 @@ using UnityEditor;
 
 public class SceneGameTownInit : BaseMonoBehaviour
 {
-    public CharacterDressManager characterDressManager;
+    public GameItemsManager gameItemsManager;
     public GameDataManager gameDataManager;
     public NpcInfoManager npcInfoManager;
 
@@ -11,8 +11,8 @@ public class SceneGameTownInit : BaseMonoBehaviour
     private void Start()
     {
         //获取相关数据
-        if (characterDressManager != null)
-            characterDressManager.equipInfoController.GetAllEquipInfo();
+        if (gameItemsManager != null)
+            gameItemsManager.itemsInfoController.GetAllItemsInfo();
         if (gameDataManager != null)
             gameDataManager.gameDataController.GetGameDataByUserId(GameCommonInfo.gameUserId);
         if (npcInfoManager != null)

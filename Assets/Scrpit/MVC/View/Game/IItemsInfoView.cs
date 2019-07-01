@@ -2,16 +2,16 @@
 using UnityEditor;
 using System.Collections.Generic;
 
-public interface IEquipInfoView 
+public interface IItemsInfoView 
 {
     /// <summary>
-    /// 获取装备信息成功
+    /// 获取道具信息成功
     /// </summary>
     /// <param name="listData"></param>
-    void GetEquipInfoSuccess(List<EquipInfoBean> listData);
+    void GetItemsInfoSuccess(List<ItemsInfoBean> listData);
 
     /// <summary>
-    /// 获取装备信息失败
+    /// 获取道具信息失败
     /// </summary>
-    void GetEquipInfoFail();
+    void GetItemsInfoFail();
 }

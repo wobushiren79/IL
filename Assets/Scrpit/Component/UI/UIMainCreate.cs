@@ -43,6 +43,7 @@ public class UIMainCreate : BaseUIComponent, IRadioGroupCallBack, ColorView.Call
     public CharacterDressManager characterDressManager;
     //游戏数据管理
     public GameDataManager gameDataManager;
+    public GameItemsManager gameItemsManager;
     //弹出框提示
     public ToastView toastView;
 
@@ -84,17 +85,19 @@ public class UIMainCreate : BaseUIComponent, IRadioGroupCallBack, ColorView.Call
 
         if (selectHat != null)
         {
-            selectHat.SetSelectNumber(characterDressManager.GetHatList().Count + 1);
+            selectHat.SetSelectNumber(gameItemsManager.GetHatList().Count + 1);
             selectHat.SetCallBack(this);
         }
+
         if (selectClothes != null)
         {
-            selectClothes.SetSelectNumber(characterDressManager.GetClothesList().Count + 1);
+            selectClothes.SetSelectNumber(gameItemsManager.GetClothesList().Count + 1);
             selectClothes.SetCallBack(this);
         }
+
         if (selectShoes != null)
         {
-            selectShoes.SetSelectNumber(characterDressManager.GetShoesList().Count + 1);
+            selectShoes.SetSelectNumber(gameItemsManager.GetShoesList().Count + 1);
             selectShoes.SetCallBack(this);
         }
     }
@@ -213,21 +216,21 @@ public class UIMainCreate : BaseUIComponent, IRadioGroupCallBack, ColorView.Call
             if (position == 0)
                 characterDressCpt.SetHat(null);
             else
-                characterDressCpt.SetHat(characterDressManager.GetHatList()[position - 1]);
+                characterDressCpt.SetHat(gameItemsManager.GetHatList()[position - 1]);
         }
         else if (selectView == selectClothes)
         {
             if (position == 0)
                 characterDressCpt.SetClothes(null);
             else
-                characterDressCpt.SetClothes(characterDressManager.GetClothesList()[position-1]);
+                characterDressCpt.SetClothes(gameItemsManager.GetClothesList()[position-1]);
         }
         else if (selectView == selectShoes)
         {
             if (position == 0)
                 characterDressCpt.SetShoes(null);
             else
-                characterDressCpt.SetShoes(characterDressManager.GetShoesList()[position - 1]);
+                characterDressCpt.SetShoes(gameItemsManager.GetShoesList()[position - 1]);
         }
     }
     #endregion

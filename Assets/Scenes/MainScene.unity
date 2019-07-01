@@ -23391,6 +23391,87 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1245605159}
   m_CullTransparentMesh: 0
+--- !u!1001 &1245980738
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 404659543357992953, guid: c0ef08bab5953ed48a4fa41fc338eead,
+        type: 3}
+      propertyPath: m_Name
+      value: GameItemsManager
+      objectReference: {fileID: 0}
+    - target: {fileID: 404659543357992934, guid: c0ef08bab5953ed48a4fa41fc338eead,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 404659543357992934, guid: c0ef08bab5953ed48a4fa41fc338eead,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 404659543357992934, guid: c0ef08bab5953ed48a4fa41fc338eead,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 404659543357992934, guid: c0ef08bab5953ed48a4fa41fc338eead,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 404659543357992934, guid: c0ef08bab5953ed48a4fa41fc338eead,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 404659543357992934, guid: c0ef08bab5953ed48a4fa41fc338eead,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 404659543357992934, guid: c0ef08bab5953ed48a4fa41fc338eead,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 404659543357992934, guid: c0ef08bab5953ed48a4fa41fc338eead,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 11
+      objectReference: {fileID: 0}
+    - target: {fileID: 404659543357992934, guid: c0ef08bab5953ed48a4fa41fc338eead,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 404659543357992934, guid: c0ef08bab5953ed48a4fa41fc338eead,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 404659543357992934, guid: c0ef08bab5953ed48a4fa41fc338eead,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: c0ef08bab5953ed48a4fa41fc338eead, type: 3}
+--- !u!114 &1245980739 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1850674566571564988, guid: c0ef08bab5953ed48a4fa41fc338eead,
+    type: 3}
+  m_PrefabInstance: {fileID: 1245980738}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ed7f34e37a9809649acb422eac0eb457, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1269424679
 GameObject:
   m_ObjectHideFlags: 0
@@ -25798,6 +25879,7 @@ MonoBehaviour:
   characterDressCpt: {fileID: 1056367662}
   characterDressManager: {fileID: 1672669449}
   gameDataManager: {fileID: 1163914678}
+  gameItemsManager: {fileID: 1245980739}
   toastView: {fileID: 613884071}
   listSelectHair: []
   listSelectEye: []
@@ -26028,7 +26110,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fb1d3c27d7a5f68408904cdc9a0e6fbd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  characterDressManager: {fileID: 1672669449}
+  gameItemsManager: {fileID: 1245980739}
   gameDataManager: {fileID: 1163914678}
 --- !u!1 &1642431345
 GameObject:
@@ -35770,6 +35852,21 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 3781763343670252889, guid: 46ca908cf374a6b488fa38749b225a41,
+        type: 3}
+      propertyPath: listIconBodyHair.isExpanded
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3781763343670252889, guid: 46ca908cf374a6b488fa38749b225a41,
+        type: 3}
+      propertyPath: listIconBodyHair.reorderableList.isExpanded
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3781763343670252894, guid: 46ca908cf374a6b488fa38749b225a41,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 10
+      objectReference: {fileID: 0}
     - target: {fileID: 3781763343670252888, guid: 46ca908cf374a6b488fa38749b225a41,
         type: 3}
       propertyPath: listIconShoes.isExpanded
@@ -35796,16 +35893,6 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 21300022, guid: 8e03ad349de8f344dbeb91ee4ebf2df3,
         type: 3}
-    - target: {fileID: 3781763343670252889, guid: 46ca908cf374a6b488fa38749b225a41,
-        type: 3}
-      propertyPath: listIconBodyHair.isExpanded
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3781763343670252889, guid: 46ca908cf374a6b488fa38749b225a41,
-        type: 3}
-      propertyPath: listIconBodyHair.reorderableList.isExpanded
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 2732682855923352778, guid: 46ca908cf374a6b488fa38749b225a41,
         type: 3}
       propertyPath: m_Name
@@ -35866,11 +35953,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 3781763343670252894, guid: 46ca908cf374a6b488fa38749b225a41,
-        type: 3}
-      propertyPath: m_RootOrder
-      value: 10
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 46ca908cf374a6b488fa38749b225a41, type: 3}
 --- !u!1001 &6202850149408225508
@@ -35885,6 +35967,58 @@ PrefabInstance:
       propertyPath: m_Name
       value: CharacterUI
       objectReference: {fileID: 0}
+    - target: {fileID: 6202850148858248707, guid: dbdedefdbd5ca8045a10545a8d921571,
+        type: 3}
+      propertyPath: characterBodyManager
+      value: 
+      objectReference: {fileID: 1672669450}
+    - target: {fileID: 6202850148858248707, guid: dbdedefdbd5ca8045a10545a8d921571,
+        type: 3}
+      propertyPath: ivBody
+      value: 
+      objectReference: {fileID: 719800865}
+    - target: {fileID: 6202850148858248707, guid: dbdedefdbd5ca8045a10545a8d921571,
+        type: 3}
+      propertyPath: ivClothes
+      value: 
+      objectReference: {fileID: 6202850149408225510}
+    - target: {fileID: 6202850148858248707, guid: dbdedefdbd5ca8045a10545a8d921571,
+        type: 3}
+      propertyPath: ivShoes
+      value: 
+      objectReference: {fileID: 6202850149408225509}
+    - target: {fileID: 6202850148858248707, guid: dbdedefdbd5ca8045a10545a8d921571,
+        type: 3}
+      propertyPath: characterDressManager
+      value: 
+      objectReference: {fileID: 1672669449}
+    - target: {fileID: 6202850148858248707, guid: dbdedefdbd5ca8045a10545a8d921571,
+        type: 3}
+      propertyPath: spMan
+      value: 
+      objectReference: {fileID: 21300000, guid: 3f3db2b70d7f0c64f9221682b2d01a46,
+        type: 3}
+    - target: {fileID: 6202850148858248707, guid: dbdedefdbd5ca8045a10545a8d921571,
+        type: 3}
+      propertyPath: spWoman
+      value: 
+      objectReference: {fileID: 21300000, guid: aa0172fa0c1396d4e8d298bdec4b2617,
+        type: 3}
+    - target: {fileID: 6202850148858248707, guid: dbdedefdbd5ca8045a10545a8d921571,
+        type: 3}
+      propertyPath: ivHat
+      value: 
+      objectReference: {fileID: 866000036}
+    - target: {fileID: 6202850148858248707, guid: dbdedefdbd5ca8045a10545a8d921571,
+        type: 3}
+      propertyPath: ivHead
+      value: 
+      objectReference: {fileID: 123349845}
+    - target: {fileID: 6202850148858248707, guid: dbdedefdbd5ca8045a10545a8d921571,
+        type: 3}
+      propertyPath: gameItemsManager
+      value: 
+      objectReference: {fileID: 1245980739}
     - target: {fileID: 6202850148858248704, guid: dbdedefdbd5ca8045a10545a8d921571,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -35990,53 +36124,6 @@ PrefabInstance:
       propertyPath: m_Pivot.y
       value: 0.5
       objectReference: {fileID: 0}
-    - target: {fileID: 6202850148858248707, guid: dbdedefdbd5ca8045a10545a8d921571,
-        type: 3}
-      propertyPath: characterBodyManager
-      value: 
-      objectReference: {fileID: 1672669450}
-    - target: {fileID: 6202850148858248707, guid: dbdedefdbd5ca8045a10545a8d921571,
-        type: 3}
-      propertyPath: ivBody
-      value: 
-      objectReference: {fileID: 719800865}
-    - target: {fileID: 6202850148858248707, guid: dbdedefdbd5ca8045a10545a8d921571,
-        type: 3}
-      propertyPath: ivClothes
-      value: 
-      objectReference: {fileID: 6202850149408225510}
-    - target: {fileID: 6202850148858248707, guid: dbdedefdbd5ca8045a10545a8d921571,
-        type: 3}
-      propertyPath: ivShoes
-      value: 
-      objectReference: {fileID: 6202850149408225509}
-    - target: {fileID: 6202850148858248707, guid: dbdedefdbd5ca8045a10545a8d921571,
-        type: 3}
-      propertyPath: characterDressManager
-      value: 
-      objectReference: {fileID: 1672669449}
-    - target: {fileID: 6202850148858248707, guid: dbdedefdbd5ca8045a10545a8d921571,
-        type: 3}
-      propertyPath: spMan
-      value: 
-      objectReference: {fileID: 21300000, guid: 3f3db2b70d7f0c64f9221682b2d01a46,
-        type: 3}
-    - target: {fileID: 6202850148858248707, guid: dbdedefdbd5ca8045a10545a8d921571,
-        type: 3}
-      propertyPath: spWoman
-      value: 
-      objectReference: {fileID: 21300000, guid: aa0172fa0c1396d4e8d298bdec4b2617,
-        type: 3}
-    - target: {fileID: 6202850148858248707, guid: dbdedefdbd5ca8045a10545a8d921571,
-        type: 3}
-      propertyPath: ivHat
-      value: 
-      objectReference: {fileID: 866000036}
-    - target: {fileID: 6202850148858248707, guid: dbdedefdbd5ca8045a10545a8d921571,
-        type: 3}
-      propertyPath: ivHead
-      value: 
-      objectReference: {fileID: 123349845}
     - target: {fileID: 4644097329694526470, guid: dbdedefdbd5ca8045a10545a8d921571,
         type: 3}
       propertyPath: m_AnchoredPosition.y

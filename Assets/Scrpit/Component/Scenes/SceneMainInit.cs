@@ -6,13 +6,13 @@ public class SceneMainInit : BaseMonoBehaviour
 {
 
     // 角色着装管理
-    public CharacterDressManager characterDressManager;
+    public GameItemsManager gameItemsManager;
     public GameDataManager gameDataManager;
 
     private void Start()
     {
-        if (characterDressManager != null)
-            characterDressManager.equipInfoController.GetAllEquipInfo();
+        if (gameItemsManager != null)
+            gameItemsManager.itemsInfoController.GetAllItemsInfo();
         if (gameDataManager != null)
             gameDataManager.gameDataController.GetSimpleGameData();
 

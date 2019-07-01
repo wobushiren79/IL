@@ -20,8 +20,10 @@ public class CharacterUICpt : BaseMonoBehaviour
     //角色身体数据
     public CharacterBodyBean characterBodyData;
     public CharacterEquipBean characterEquipData;
+
     public CharacterBodyManager characterBodyManager;
     public CharacterDressManager characterDressManager;
+    public GameItemsManager gameItemsManager;
 
     public void SetCharacterData(CharacterBodyBean characterBodyData, CharacterEquipBean characterEquipData)
     {
@@ -30,7 +32,7 @@ public class CharacterUICpt : BaseMonoBehaviour
         if (characterEquipData != null)
             this.characterEquipData = characterEquipData;
         SetSkin(characterBodyData.skinColor.GetColor());
-        SetHair(characterBodyData.hair,characterBodyData.hairColor.GetColor());
+        SetHair(characterBodyData.hair, characterBodyData.hairColor.GetColor());
         SetEye(characterBodyData.eye, characterBodyData.eyeColor.GetColor());
         SetMouth(characterBodyData.mouth, characterBodyData.mouthColor.GetColor());
         SetBody(characterBodyData.sex, characterBodyData.skinColor.GetColor());
@@ -55,11 +57,11 @@ public class CharacterUICpt : BaseMonoBehaviour
     /// </summary>
     /// <param name="hairName"></param>
     /// <param name="hairColor"></param>
-    public void SetHair(string hairName,Color hairColor)
+    public void SetHair(string hairName, Color hairColor)
     {
         if (ivHair == null)
             return;
-        Sprite spHair=  characterBodyManager.GetHairSpriteByName(hairName);
+        Sprite spHair = characterBodyManager.GetHairSpriteByName(hairName);
         ivHair.sprite = spHair;
         if (spHair == null)
         {
@@ -71,7 +73,7 @@ public class CharacterUICpt : BaseMonoBehaviour
         }
     }
 
-   
+
     /// <summary>
     /// 设置眼睛
     /// </summary>
@@ -144,7 +146,10 @@ public class CharacterUICpt : BaseMonoBehaviour
     {
         if (ivClothes == null)
             return;
-        Sprite spClothes = characterDressManager.GetClothesSpriteById(clothesId);
+        ItemsInfoBean itemsInfo = gameItemsManager.GetItemsById(clothesId);
+        if (itemsInfo == null)
+            return;
+        Sprite spClothes = characterDressManager.GetClothesSpriteByName(itemsInfo.icon_key);
         if (spClothes == null)
         {
             ivClothes.color = new Color(1, 1, 1, 0);
@@ -164,7 +169,10 @@ public class CharacterUICpt : BaseMonoBehaviour
     {
         if (ivShoes == null)
             return;
-        Sprite spShoes = characterDressManager.GetShoesSpriteById(shoesId);
+        ItemsInfoBean itemsInfo = gameItemsManager.GetItemsById(shoesId);
+        if (itemsInfo == null)
+            return;
+        Sprite spShoes = characterDressManager.GetShoesSpriteByName(itemsInfo.icon_key);
         if (spShoes == null)
         {
             ivShoes.color = new Color(1, 1, 1, 0);
@@ -180,11 +188,14 @@ public class CharacterUICpt : BaseMonoBehaviour
     ///  设置帽子ID
     /// </summary>
     /// <param name="hatId"></param>
-    public void SetHat(long hatId,Color hairColor)
+    public void SetHat(long hatId, Color hairColor)
     {
         if (ivHat == null)
             return;
-        Sprite spHat = characterDressManager.GetHatSpriteById(hatId);
+        ItemsInfoBean itemsInfo = gameItemsManager.GetItemsById(hatId);
+        if (itemsInfo == null)
+            return;
+        Sprite spHat = characterDressManager.GetHatSpriteByName(itemsInfo.icon_key);
         if (spHat == null)
         {
             ivHat.color = new Color(1, 1, 1, 0);

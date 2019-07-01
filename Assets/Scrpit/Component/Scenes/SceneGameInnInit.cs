@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine.AI;
 public class SceneGameInnInit : BaseManager
 {
-    public CharacterDressManager characterDressManager;
+    public GameItemsManager gameItemsManager;
     public GameDataManager gameDataManager;
     public NpcInfoManager npcInfoManager;
     public InnBuildManager innBuildManager;
@@ -23,8 +23,8 @@ public class SceneGameInnInit : BaseManager
     private void Start()
     {
         //获取相关数据
-        if (characterDressManager != null)
-            characterDressManager.equipInfoController.GetAllEquipInfo();
+        if (gameItemsManager != null)
+            gameItemsManager.itemsInfoController.GetAllItemsInfo();
         if (gameDataManager != null)
             gameDataManager.gameDataController.GetGameDataByUserId(GameCommonInfo.gameUserId);
         if (npcInfoManager != null)

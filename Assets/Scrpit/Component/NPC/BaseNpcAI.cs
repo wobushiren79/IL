@@ -4,7 +4,7 @@ using UnityEditor;
 public class BaseNpcAI : BaseMonoBehaviour
 {
     public CharacterBean characterData;
-    public CharacterDressManager characterDressManager;
+    public GameItemsManager gameItemsManager;
     //角色移动控制
     public CharacterMoveCpt characterMoveCpt;
 
@@ -26,13 +26,13 @@ public class BaseNpcAI : BaseMonoBehaviour
         CharacterDressCpt characterDress = CptUtil.GetCptInChildrenByName<CharacterDressCpt>(gameObject, "Body");
         if (characterDress != null)
         {
-            EquipInfoBean hatEquip= characterDressManager.GetEquipById(characterBean.equips.hatId);
+            ItemsInfoBean hatEquip= gameItemsManager.GetItemsById(characterBean.equips.hatId);
             characterDress.SetHat(hatEquip);
 
-            EquipInfoBean clothesEquip = characterDressManager.GetEquipById(characterBean.equips.clothesId);
+            ItemsInfoBean clothesEquip = gameItemsManager.GetItemsById(characterBean.equips.clothesId);
             characterDress.SetClothes(clothesEquip);
 
-            EquipInfoBean shoesEquip = characterDressManager.GetEquipById(characterBean.equips.shoesId);
+            ItemsInfoBean shoesEquip = gameItemsManager.GetItemsById(characterBean.equips.shoesId);
             characterDress.SetShoes(shoesEquip);
         }
     }
