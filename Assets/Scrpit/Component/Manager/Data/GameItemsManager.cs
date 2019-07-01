@@ -10,7 +10,7 @@ public class GameItemsManager : BaseManager
     /// </summary>
     /// <param name="name"></param>
     /// <returns></returns>
-    public Sprite GetItemsIconByName(string name)
+    public Sprite GetItemsSpriteByName(string name)
     {
         return GetSpriteByName(name, listItemsIcon);
     }

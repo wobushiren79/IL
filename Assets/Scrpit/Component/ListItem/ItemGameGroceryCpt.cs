@@ -1,12 +1,13 @@
 ﻿using UnityEngine;
 using UnityEditor;
 using UnityEngine.UI;
-public class ItemGameGroceryCpt : BaseMonoBehaviour
+public class ItemGameGroceryCpt : BaseMonoBehaviour, DialogView.IDialogCallBack
 {
     public Image ivIcon;
     public Text tvName;
     public Text tvContent;
     public Text tvOwn;
+    public Button btSubmit;
 
     public GameObject objPriceL;
     public Text tvPriceL;
@@ -15,12 +16,23 @@ public class ItemGameGroceryCpt : BaseMonoBehaviour
     public GameObject objPriceS;
     public Text tvPriceS;
 
+    public GameDataManager gameDataManager;
     public CharacterDressManager characterDressManager;
-    public InnFoodManager innFoodManager;
+    public GameItemsManager gameItemsManager;
 
+    public ToastView toastView;
+    public DialogManager dialogManager;
+
+    public StoreInfoBean storeInfo;
+    private void Start()
+    {
+        if (btSubmit != null)
+            btSubmit.onClick.AddListener(SubmitBuy);
+    }
 
     public void SetData(StoreInfoBean storeInfo)
     {
+        this.storeInfo = storeInfo;
         SetIcon(storeInfo.icon_key, storeInfo.mark, storeInfo.mark_id);
         SetName(storeInfo.name);
         SetContent(storeInfo.content);
@@ -33,16 +45,15 @@ public class ItemGameGroceryCpt : BaseMonoBehaviour
     /// <param name="iconKey"></param>
     /// <param name="mark"></param>
     /// <param name="markId"></param>
-    public void SetIcon(string iconKey,string mark,long markId)
+    public void SetIcon(string iconKey, string mark, long markId)
     {
-        Sprite spIcon = null;
-        if (int.Parse(mark) == 1)
-        {
-            //食物
-            spIcon = innFoodManager.GetFoodSpriteByName(iconKey);
-        }
-        if (ivIcon != null&& spIcon!=null)
-            ivIcon.sprite=spIcon;
+
+        if (gameItemsManager == null)
+            return;
+        Sprite spIcon = gameItemsManager.GetItemsSpriteByName(iconKey);
+
+        if (ivIcon != null && spIcon != null)
+            ivIcon.sprite = spIcon;
     }
 
     /// <summary>
@@ -68,7 +79,7 @@ public class ItemGameGroceryCpt : BaseMonoBehaviour
     /// <summary>
     /// 设置价格
     /// </summary>
-    public void SetPrice(long priceL,long priceM,long priceS)
+    public void SetPrice(long priceL, long priceM, long priceS)
     {
         if (priceL == 0)
             objPriceL.SetActive(false);
@@ -76,8 +87,46 @@ public class ItemGameGroceryCpt : BaseMonoBehaviour
             objPriceM.SetActive(false);
         if (priceS == 0)
             objPriceS.SetActive(false);
-        tvPriceL.text = priceL+"";
+        tvPriceL.text = priceL + "";
         tvPriceM.text = priceM + "";
         tvPriceS.text = priceS + "";
     }
+
+    /// <summary>
+    /// 购买确认
+    /// </summary>
+    public void SubmitBuy()
+    {
+        if (gameDataManager == null || storeInfo == null)
+            return;
+        DialogBean dialogBean = new DialogBean();
+        dialogBean.content = "确认购买" + storeInfo.name + "?";
+        dialogManager.CreateDialog(0, this, dialogBean);
+    }
+
+    #region 提交回调
+    public void Submit(DialogView dialogView)
+    {
+        if (gameDataManager == null|| storeInfo==null)
+            return;
+        if (!gameDataManager.gameData.HasEnoughMoney(storeInfo.price_l, storeInfo.price_m, storeInfo.price_s))
+        {
+            toastView.ToastHint(GameCommonInfo.GetUITextById(1005));
+            return;
+        }
+        gameDataManager.gameData.PayMoney(storeInfo.price_l, storeInfo.price_m, storeInfo.price_s);
+        toastView.ToastHint(ivIcon.sprite, "购买成功!");
+        ItemBean itemBean = new ItemBean
+        {
+            itemId = storeInfo.mark_id,
+            itemNumber = 1
+        };
+        gameDataManager.gameData.equipItemList.Add(itemBean);
+    }
+
+    public void Cancel(DialogView dialogView)
+    {
+
+    }
+    #endregion
 }

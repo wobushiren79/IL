@@ -3,7 +3,7 @@ using UnityEditor;
 using UnityEngine.UI;
 using System.Collections.Generic;
 
-public class UITownRecruitment : UIBaseStore
+public class UITownRecruitment : UIBaseOne
 {
     //人员数量
     public Text tvNumber;

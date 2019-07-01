@@ -2,7 +2,7 @@
 using UnityEditor;
 using UnityEngine.UI;
 
-public class UIBaseStore : BaseUIComponent
+public class UIBaseOne : BaseUIComponent
 {
     //返回按钮
     public Button btBack;

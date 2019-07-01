@@ -12,6 +12,7 @@ public class ListDataEditor : Editor
     {
         GameObject Target = Selection.gameObjects[0];
         CharacterDressManager dressManager = Target.GetComponent<CharacterDressManager>();
+        dressManager.listIconHat.Clear();
         AddIconBeanDictionaryByFile("Assets/Texture/Character/character_hat.png", dressManager.listIconHat);
     }
 
@@ -40,6 +41,7 @@ public class ListDataEditor : Editor
     {
         GameObject Target = Selection.gameObjects[0];
         CharacterBodyManager bodyManager = Target.GetComponent<CharacterBodyManager>();
+        bodyManager.listIconBodyHair.Clear();
         AddIconBeanDictionaryByFile("Assets/Texture/Character/character_hair.png", bodyManager.listIconBodyHair);
     }
 
@@ -48,6 +50,7 @@ public class ListDataEditor : Editor
     {
         GameObject Target = Selection.gameObjects[0];
         CharacterBodyManager bodyManager = Target.GetComponent<CharacterBodyManager>();
+        bodyManager.listIconBodyEye.Clear();
         AddIconBeanDictionaryByFile("Assets/Texture/Character/character_eye.png", bodyManager.listIconBodyEye);
     }
 
@@ -56,6 +59,7 @@ public class ListDataEditor : Editor
     {
         GameObject Target = Selection.gameObjects[0];
         CharacterBodyManager bodyManager = Target.GetComponent<CharacterBodyManager>();
+        bodyManager.listIconBodyMouth.Clear();
         AddIconBeanDictionaryByFile("Assets/Texture/Character/character_mouth.png", bodyManager.listIconBodyMouth);
     }
 
@@ -66,6 +70,14 @@ public class ListDataEditor : Editor
         GameObject Target = Selection.gameObjects[0];
         InnFoodManager foodManager = Target.GetComponent<InnFoodManager>();
         AddIconBeanDictionaryByFolder("Assets/Texture/Food/", foodManager.listFoodIcon);
+    }
+
+    [MenuItem("Custom/List/AddItems")]
+    public static void AddItems()
+    {
+        GameObject Target = Selection.gameObjects[0];
+        GameItemsManager foodManager = Target.GetComponent<GameItemsManager>();
+        AddIconBeanDictionaryByFolder("Assets/Texture/Items/", foodManager.listItemsIcon);
     }
 
     /// <summary>

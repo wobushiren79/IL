@@ -125,7 +125,7 @@ public class ItemGameCandidateCpt : BaseMonoBehaviour, DialogView.IDialogCallBac
     public void Submit(DialogView dialogView)
     {
         if (!gameDataManager.gameData.HasEnoughMoney(characterData.baseInfo.priceL, characterData.baseInfo.priceM, characterData.baseInfo.priceS)) {
-            toastView.ToastHint("没有足够的金钱！");
+            toastView.ToastHint(GameCommonInfo.GetUITextById(1005));
             return;
         }
         gameDataManager.gameData.PayMoney(characterData.baseInfo.priceL, characterData.baseInfo.priceM, characterData.baseInfo.priceS);

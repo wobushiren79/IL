@@ -81,7 +81,7 @@ public class ItemGameGoodsMarketCpt : BaseMonoBehaviour
         }
         if (!gameDataManager.gameData.HasEnoughMoney(goodsData.price_l* buyNumber, goodsData.price_m * buyNumber, goodsData.price_s * buyNumber))
         {
-            toastView.ToastHint("没有足够的金钱！");
+            toastView.ToastHint(GameCommonInfo.GetUITextById(1005));
             return;
         }
         gameDataManager.gameData.PayMoney(goodsData.price_l * buyNumber, goodsData.price_m * buyNumber, goodsData.price_s * buyNumber);

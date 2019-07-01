@@ -6,6 +6,7 @@ public class UIGameMain : BaseUIComponent,DialogView.IDialogCallBack
     public Button btWorker;
     public Button btBuild;
     public Button btMenu;
+    public Button btBackpack;
     public Button btSave;
     public Button btSleep;
 
@@ -51,6 +52,9 @@ public class UIGameMain : BaseUIComponent,DialogView.IDialogCallBack
         if (btMenu != null)
             btMenu.onClick.AddListener(OpenMenuUI);
 
+        if (btBackpack != null)
+            btBackpack.onClick.AddListener(OpenBackpackUI);
+
         if (btSave != null)
             btSave.onClick.AddListener(SaveData);
 
@@ -76,6 +80,11 @@ public class UIGameMain : BaseUIComponent,DialogView.IDialogCallBack
     public void OpenMenuUI()
     {
         uiManager.OpenUIAndCloseOtherByName("Menu");
+    }
+
+    public void OpenBackpackUI()
+    {
+        uiManager.OpenUIAndCloseOtherByName("Backpack");
     }
 
     public void EndDay()

@@ -4,7 +4,7 @@ using UnityEditor;
 using UnityEngine.UI;
 using System.Collections.Generic;
 
-public class UITownGrocery : UIBaseStore, IStoreInfoView, IRadioGroupCallBack
+public class UITownGrocery : UIBaseOne, IStoreInfoView, IRadioGroupCallBack
 {
     public GameObject objGroceryContent;
     public GameObject objGroceryModel;
@@ -41,17 +41,20 @@ public class UITownGrocery : UIBaseStore, IStoreInfoView, IRadioGroupCallBack
                 CreateGroceryData(mGroceryListData);
                 break;
             case 1:
-                CreateGroceryData(GetGroceryListDataByType(type));
+                CreateGroceryData(GetGroceryListDataByMark("12"));
+                break;
+            case 2:
+                CreateGroceryData(GetGroceryListDataByMark("11"));
                 break;
         }
     }
 
     /// <summary>
-    ///  根据类型获取数据
+    ///  根据备注获取数据
     /// </summary>
-    /// <param name="type"></param>
+    /// <param name="mark"></param>
     /// <returns></returns>
-    public List<StoreInfoBean> GetGroceryListDataByType(int type)
+    public List<StoreInfoBean> GetGroceryListDataByMark(string mark)
     {
         List<StoreInfoBean> listData = new List<StoreInfoBean>();
         if (mGroceryListData == null)
@@ -59,7 +62,7 @@ public class UITownGrocery : UIBaseStore, IStoreInfoView, IRadioGroupCallBack
         for(int i=0;i< mGroceryListData.Count; i++)
         {
             StoreInfoBean itemData= mGroceryListData[i];
-            if (int.Parse(itemData.mark) == type)
+            if (itemData.mark.Equals(mark))
             {
                 listData.Add(itemData);
             }

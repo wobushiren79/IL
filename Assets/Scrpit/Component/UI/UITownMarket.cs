@@ -4,7 +4,7 @@ using UnityEngine.UI;
 using DG.Tweening;
 using System.Collections.Generic;
 
-public class UITownMarket : UIBaseStore, IStoreInfoView
+public class UITownMarket : UIBaseOne, IStoreInfoView
 {
     public GameObject objGoodsContent;
     public GameObject objGoodsModel;
