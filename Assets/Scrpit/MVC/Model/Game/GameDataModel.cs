@@ -44,8 +44,8 @@ public class GameDataModel : BaseMVCModel
         gameData.userId = userId;
         gameData.moneyS = 1000;
         gameData.innBuildData = new InnBuildBean();
-        gameData.buildItemList = new List<ItemBean>();
-        gameData.equipItemList = new List<ItemBean>();
+        gameData.buildList = new List<ItemBean>();
+        gameData.itemsList = new List<ItemBean>();
         gameData.workCharacterList = new List<CharacterBean>();
         gameData.menuList = new List<MenuOwnBean>();
 
@@ -64,9 +64,9 @@ public class GameDataModel : BaseMVCModel
 
         //添加家具
         //TODO 测试 
-        gameData.buildItemList.Add(new ItemBean(30001, 5));
-        gameData.buildItemList.Add(new ItemBean(40001, 1));
-        gameData.buildItemList.Add(new ItemBean(50001, 1));
+        gameData.buildList.Add(new ItemBean(30001, 5));
+        gameData.buildList.Add(new ItemBean(40001, 1));
+        gameData.buildList.Add(new ItemBean(50001, 1));
 
         //添加一个员工
         CharacterBean worker = new CharacterBean();

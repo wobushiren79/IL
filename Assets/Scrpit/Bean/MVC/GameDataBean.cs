@@ -17,8 +17,8 @@ public class GameDataBean
     public InnBuildBean innBuildData;//客栈建筑数据
     public TimeBean gameTime;//游戏时间
 
-    public List<ItemBean> buildItemList = new List<ItemBean>();//所拥有的建筑材料
-    public List<ItemBean> equipItemList = new List<ItemBean>();//所拥有的装备
+    public List<ItemBean> buildList = new List<ItemBean>();//所拥有的建筑材料
+    public List<ItemBean> itemsList = new List<ItemBean>();//所拥有的装备
     public List<MenuOwnBean> menuList = new List<MenuOwnBean>();//所拥有的菜单
 
     public long ingOilsalt;//油盐
@@ -30,7 +30,7 @@ public class GameDataBean
     public long ingWaterwine;//酒水
     public long ingFlour;//面粉
 
-    public int workerNumberLimit=5;//员工人员招聘上限
+    public int workerNumberLimit = 5;//员工人员招聘上限
     /// <summary>
     /// 获取建筑数据
     /// </summary>
@@ -168,7 +168,7 @@ public class GameDataBean
     /// </summary>
     public void ChangeBuildItem(long buildId, long number)
     {
-        ChangeItem(buildId, number, buildItemList);
+        ChangeItem(buildId, number, buildList);
     }
 
     public void ChangeItem(long buildId, long number, List<ItemBean> list)
@@ -231,4 +231,22 @@ public class GameDataBean
             moneyS = 0;
     }
 
+    /// <summary>
+    /// 获取某一物品数量
+    /// </summary>
+    /// <param name="itemId"></param>
+    /// <returns></returns>
+    public long GetItemsNumber(long itemId)
+    {
+        long number = 0;
+        for (int i = 0; i < itemsList.Count; i++)
+        {
+            ItemBean itemData = itemsList[i];
+            if (itemId == itemData.itemId)
+            {
+                number += itemData.itemNumber;
+            }
+        }
+        return number;
+    }
 }

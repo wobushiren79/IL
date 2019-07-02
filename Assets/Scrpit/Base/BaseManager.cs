@@ -40,8 +40,10 @@ public class BaseManager : BaseMonoBehaviour
     {
         if (name == null)
             return null;
-        map.TryGetValue(name, out Sprite spIcon);
-        return spIcon;
+        if (map.TryGetValue(name, out Sprite spIcon))
+            return spIcon;
+        else
+            return null;  
     }
 
 }

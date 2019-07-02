@@ -5528,6 +5528,16 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 21300000, guid: aa0172fa0c1396d4e8d298bdec4b2617,
         type: 3}
+    - target: {fileID: 3781763343670252889, guid: 46ca908cf374a6b488fa38749b225a41,
+        type: 3}
+      propertyPath: listIconBodyTrunk.isExpanded
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3781763343670252889, guid: 46ca908cf374a6b488fa38749b225a41,
+        type: 3}
+      propertyPath: listIconBodyTrunk.reorderableList.isExpanded
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3781763343670252894, guid: 46ca908cf374a6b488fa38749b225a41,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -5845,6 +5855,27 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 12, y: 8}
   m_EdgeRadius: 0
+--- !u!1 &923158203 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4051540072353260152, guid: 898e8ca9695e0024389e2ebac8c9bdb1,
+    type: 3}
+  m_PrefabInstance: {fileID: 3541419660663142851}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &923158204
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 923158203}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 1573420865, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_EffectColor: {r: 0, g: 0, b: 0, a: 0.5}
+  m_EffectDistance: {x: 1, y: -1}
+  m_UseGraphicAlpha: 1
 --- !u!1001 &973414068
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -9970,8 +10001,8 @@ MonoBehaviour:
       hour: 0
       minute: 0
       second: 0
-    buildItemList: []
-    equipItemList: []
+    buildList: []
+    itemsList: []
     menuList: []
     ingOilsalt: 0
     ingMeat: 0
@@ -20756,6 +20787,16 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1850674566571564988, guid: c0ef08bab5953ed48a4fa41fc338eead,
+        type: 3}
+      propertyPath: listItemsIcon.isExpanded
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1850674566571564988, guid: c0ef08bab5953ed48a4fa41fc338eead,
+        type: 3}
+      propertyPath: listItemsIcon.reorderableList.isExpanded
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c0ef08bab5953ed48a4fa41fc338eead, type: 3}
 --- !u!4 &1504919678269456226 stripped
@@ -22392,6 +22433,31 @@ PrefabInstance:
       propertyPath: m_SizeDelta.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1323905460378242739, guid: 898e8ca9695e0024389e2ebac8c9bdb1,
+        type: 3}
+      propertyPath: controlHandler
+      value: 
+      objectReference: {fileID: 1367732069}
+    - target: {fileID: 1323905460378242739, guid: 898e8ca9695e0024389e2ebac8c9bdb1,
+        type: 3}
+      propertyPath: gameDataManager
+      value: 
+      objectReference: {fileID: 1935938916}
+    - target: {fileID: 1323905460378242739, guid: 898e8ca9695e0024389e2ebac8c9bdb1,
+        type: 3}
+      propertyPath: gameItemsManager
+      value: 
+      objectReference: {fileID: 1850674566571564988}
+    - target: {fileID: 4732655327245803044, guid: 898e8ca9695e0024389e2ebac8c9bdb1,
+        type: 3}
+      propertyPath: characterDressManager
+      value: 
+      objectReference: {fileID: 1113833293}
+    - target: {fileID: 4732655327245803044, guid: 898e8ca9695e0024389e2ebac8c9bdb1,
+        type: 3}
+      propertyPath: gameItemsManager
+      value: 
+      objectReference: {fileID: 1850674566571564988}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 898e8ca9695e0024389e2ebac8c9bdb1, type: 3}
 --- !u!4 &3767722383280718074 stripped

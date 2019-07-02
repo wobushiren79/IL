@@ -24,6 +24,8 @@ public class ItemGameGroceryCpt : BaseMonoBehaviour, DialogView.IDialogCallBack
     public DialogManager dialogManager;
 
     public StoreInfoBean storeInfo;
+
+
     private void Start()
     {
         if (btSubmit != null)
@@ -37,6 +39,12 @@ public class ItemGameGroceryCpt : BaseMonoBehaviour, DialogView.IDialogCallBack
         SetName(storeInfo.name);
         SetContent(storeInfo.content);
         SetPrice(storeInfo.price_l, storeInfo.price_m, storeInfo.price_s);
+        SetOwn();
+    }
+
+    public void RefreshUI()
+    {
+        SetOwn();
     }
 
     /// <summary>
@@ -93,12 +101,27 @@ public class ItemGameGroceryCpt : BaseMonoBehaviour, DialogView.IDialogCallBack
     }
 
     /// <summary>
+    /// 设置拥有数量
+    /// </summary>
+    public void SetOwn()
+    {
+        if (tvOwn == null)
+            return;
+        tvOwn.text = ("拥有\n"+ gameDataManager.gameData.GetItemsNumber(storeInfo.mark_id));
+    }
+
+    /// <summary>
     /// 购买确认
     /// </summary>
     public void SubmitBuy()
     {
         if (gameDataManager == null || storeInfo == null)
             return;
+        if (!gameDataManager.gameData.HasEnoughMoney(storeInfo.price_l, storeInfo.price_m, storeInfo.price_s))
+        {
+            toastView.ToastHint(GameCommonInfo.GetUITextById(1005));
+            return;
+        }
         DialogBean dialogBean = new DialogBean();
         dialogBean.content = "确认购买" + storeInfo.name + "?";
         dialogManager.CreateDialog(0, this, dialogBean);
@@ -121,7 +144,8 @@ public class ItemGameGroceryCpt : BaseMonoBehaviour, DialogView.IDialogCallBack
             itemId = storeInfo.mark_id,
             itemNumber = 1
         };
-        gameDataManager.gameData.equipItemList.Add(itemBean);
+        gameDataManager.gameData.itemsList.Add(itemBean);
+        RefreshUI();
     }
 
     public void Cancel(DialogView dialogView)

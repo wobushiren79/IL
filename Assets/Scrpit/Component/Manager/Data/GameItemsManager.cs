@@ -9,7 +9,7 @@ public class GameItemsManager : BaseManager, IItemsInfoView
     //装备控制
     public ItemsInfoController itemsInfoController;
     //装备数据
-    public Dictionary<long,ItemsInfoBean> listDataItems;
+    public Dictionary<long, ItemsInfoBean> listDataItems;
 
     private void Awake()
     {
@@ -52,7 +52,8 @@ public class GameItemsManager : BaseManager, IItemsInfoView
         if (listDataItems == null)
             return tempList;
 
-        foreach (long key in this.listDataItems.Keys) {
+        foreach (long key in this.listDataItems.Keys)
+        {
             ItemsInfoBean itemData = this.listDataItems[key];
             if (itemData.items_type == type)
             {
@@ -69,9 +70,45 @@ public class GameItemsManager : BaseManager, IItemsInfoView
     /// <returns></returns>
     public ItemsInfoBean GetItemsById(long id)
     {
-        if (listDataItems == null||id==0)
+        if (listDataItems == null || id == 0)
             return null;
         return this.listDataItems[id];
+    }
+
+    /// <summary>
+    /// 根据装备IDs获取装备
+    /// </summary>
+    /// <param name="id"></param>
+    /// <returns></returns>
+    public List<ItemsInfoBean> GetItemsById(long[] ids)
+    {
+        List<ItemsInfoBean> listData = new List<ItemsInfoBean>();
+        if (listDataItems == null || ids == null)
+            return listData;
+        foreach (long id in ids)
+        {
+            if (this.listDataItems.TryGetValue(id, out ItemsInfoBean itemData))
+                listData.Add(itemData);
+        }
+        return listData;
+    }
+
+    /// <summary>
+    /// 根据装备信息获取装备
+    /// </summary>
+    /// <param name="itemBeans"></param>
+    /// <returns></returns>
+    public List<ItemsInfoBean> GetItemsByItemBean(List<ItemBean> itemBeans)
+    {
+        List<ItemsInfoBean> listData = new List<ItemsInfoBean>();
+        if (listDataItems == null || itemBeans == null)
+            return listData;
+        foreach (ItemBean itemBean in itemBeans)
+        {
+            if (this.listDataItems.TryGetValue(itemBean.itemId, out ItemsInfoBean itemData))
+                listData.Add(itemData);
+        }
+        return listData;
     }
 
     /// <summary>

@@ -19,4 +19,7 @@ public class ItemsInfoBean : BaseBean
     public float add_cook;//增加 做菜
 
     public int intact_number;//套装触发数量
+
+    public string name;//名字
+    public string content;//内容
 }
