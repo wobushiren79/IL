@@ -166,9 +166,17 @@ public class GameDataBean
     /// <summary>
     /// 修改建筑材料数量
     /// </summary>
-    public void ChangeBuildItem(long buildId, long number)
+    public void ChangeBuildNumber(long buildId, long number)
     {
         ChangeItem(buildId, number, buildList);
+    }
+
+    /// <summary>
+    /// 修改建筑材料数量
+    /// </summary>
+    public void ChangeItemsNumber(long itemsId, long number)
+    {
+        ChangeItem(itemsId, number, itemsList);
     }
 
     public void ChangeItem(long buildId, long number, List<ItemBean> list)
@@ -248,5 +256,28 @@ public class GameDataBean
             }
         }
         return number;
+    }
+
+    /// <summary>
+    /// 增加菜谱
+    /// </summary>
+    /// <param name="menuId"></param>
+    /// <returns></returns>
+    public bool AddFoodMenu(long menuId)
+    {
+        //检测是否已经学过
+        foreach(MenuOwnBean itemData in menuList)
+        {
+            if (itemData.menuId == menuId)
+            {
+                return false;
+            }
+        }
+        MenuOwnBean menuOwn = new MenuOwnBean
+        {
+            menuId = menuId
+        };
+        menuList.Add(menuOwn);
+        return true;
     }
 }

@@ -23,14 +23,16 @@ public class UIGameBackpack : UIBaseOne
         CptUtil.RemoveChildsByActive(objItemContent.transform);
         if (gameItemsManager == null || gameDataManager == null)
             return;
-        List<ItemsInfoBean> listItemsData = gameItemsManager.GetItemsByItemBean(gameDataManager.gameData.itemsList);
-        for (int i = 0; i < listItemsData.Count; i++)
+        for (int i = 0; i < gameDataManager.gameData.itemsList.Count; i++)
         {
-            ItemsInfoBean itemData= listItemsData[i];
+            ItemBean itemBean = gameDataManager.gameData.itemsList[i];
+            ItemsInfoBean itemsInfoBean = gameItemsManager.GetItemsById(itemBean.itemId);
+            if (itemsInfoBean == null)
+                continue;
             GameObject objItem = Instantiate(objItemModel, objItemContent.transform);
             objItem.SetActive(true);
             ItemGameBackpackCpt backpackCpt = objItem.GetComponent<ItemGameBackpackCpt>();
-            backpackCpt.SetData(itemData);
+            backpackCpt.SetData(itemsInfoBean, itemBean);
             objItem.transform.DOScale(new Vector3(0, 0, 0), 0.5f).SetEase(Ease.OutBack).SetDelay(i * 0.05f).From();
         }
     }

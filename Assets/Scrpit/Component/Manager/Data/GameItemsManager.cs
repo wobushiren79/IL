@@ -72,7 +72,10 @@ public class GameItemsManager : BaseManager, IItemsInfoView
     {
         if (listDataItems == null || id == 0)
             return null;
-        return this.listDataItems[id];
+        if (this.listDataItems.TryGetValue(id, out ItemsInfoBean itemData))
+            return itemData;
+        return
+            null;
     }
 
     /// <summary>

@@ -179,7 +179,7 @@ public class ControlForBuildCpt : BaseControl
                                     gameDataManager.gameData.GetInnBuildData().InitWall();
                                     innWallBuilder.StartBuild();
                                 }
-                                gameDataManager.gameData.ChangeBuildItem(dismantleData.id, 1);
+                                gameDataManager.gameData.ChangeBuildNumber(dismantleData.id, 1);
                             }
                         }
                         else
@@ -192,7 +192,7 @@ public class ControlForBuildCpt : BaseControl
                                 gameDataManager.gameData.GetInnBuildData().InitWall();
                                 innWallBuilder.StartBuild();
                             }
-                            gameDataManager.gameData.ChangeBuildItem(buildItemCpt.buildId, -1);
+                            gameDataManager.gameData.ChangeBuildNumber(buildItemCpt.buildId, -1);
                             ClearBuild();
                         }
                         //刷新UI

@@ -17,6 +17,7 @@ public class ItemsInfoBean : BaseBean
     public float add_force;//增加 武力
     public float add_chop;//增加 切菜
     public float add_cook;//增加 做菜
+    public long add_id;//增加的内容ID
 
     public int intact_number;//套装触发数量
 
