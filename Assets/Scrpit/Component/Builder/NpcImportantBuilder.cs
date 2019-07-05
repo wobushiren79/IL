@@ -5,6 +5,8 @@ public class NpcImportantBuilder : BaseMonoBehaviour
 {
     public Transform marketNpc;
     public Transform GroceryNpc;
+    public Transform ClothesNpc1;
+    public Transform ClothesNpc2;
 
     public GameObject objNpcModel;
     public GameObject objNpcContainer;
@@ -17,11 +19,16 @@ public class NpcImportantBuilder : BaseMonoBehaviour
         if (npcInfoManager != null)
         {
             //生成市场老板
-            CharacterBean characterMarketData=  npcInfoManager.GetCharacterDataByType(1);
+            CharacterBean characterMarketData=  npcInfoManager.GetCharacterDataById(10001);
             BuildNpc(marketNpc, characterMarketData);
             //生成杂货店老板
-            CharacterBean characterGroceryData = npcInfoManager.GetCharacterDataByType(2);
+            CharacterBean characterGroceryData = npcInfoManager.GetCharacterDataById(20001);
             BuildNpc(GroceryNpc, characterGroceryData);
+            //生成服装店老板
+            CharacterBean characterClothesData1 = npcInfoManager.GetCharacterDataById(30001);
+            BuildNpc(ClothesNpc1, characterClothesData1);
+            CharacterBean characterClothesData2 = npcInfoManager.GetCharacterDataById(30002);
+            BuildNpc(ClothesNpc2, characterClothesData2);
         }
     }
 

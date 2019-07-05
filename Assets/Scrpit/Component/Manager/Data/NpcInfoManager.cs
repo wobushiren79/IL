@@ -6,7 +6,7 @@ public class NpcInfoManager : BaseManager,INpcInfoView
 {
     public NpcInfoController npcInfoController;
 
-    public List<NpcInfoBean> listNpcInfo;
+    public Dictionary<long,NpcInfoBean> listNpcInfo;
 
     private void Awake()
     {
@@ -18,9 +18,26 @@ public class NpcInfoManager : BaseManager,INpcInfoView
     /// </summary>
     public CharacterBean GetRandomCharacterData()
     {
-        NpcInfoBean itemData= RandomUtil.GetRandomDataByList(listNpcInfo);
-        CharacterBean characterData = NpcInfoToCharacterData(itemData);
+        List<CharacterBean> listData = GetCharacterDataByType(0);
+        CharacterBean characterData = RandomUtil.GetRandomDataByList(listData);
         return characterData;
+    }
+
+    /// <summary>
+    /// 通过ID获取NPC数据
+    /// </summary>
+    /// <param name="id"></param>
+    /// <returns></returns>
+    public CharacterBean GetCharacterDataById(long id)
+    {
+        if (listNpcInfo == null)
+            return null;
+        if(listNpcInfo.TryGetValue(id,out NpcInfoBean npcInfo))
+        {
+            CharacterBean characterData = NpcInfoToCharacterData(npcInfo);
+            return characterData;
+        }
+        return null;
     }
 
     /// <summary>
@@ -28,18 +45,21 @@ public class NpcInfoManager : BaseManager,INpcInfoView
     /// </summary>
     /// <param name="type"></param>
     /// <returns></returns>
-    public CharacterBean GetCharacterDataByType(int type)
-    {  
-        for (int i=0;i< listNpcInfo.Count; i++)
+    public List<CharacterBean> GetCharacterDataByType(int type)
+    {
+        List<CharacterBean> listData = new List<CharacterBean>();
+        if (listNpcInfo == null)
+            return listData;
+        foreach(long key in listNpcInfo.Keys)
         {
-            NpcInfoBean itemData = listNpcInfo[i];
+            NpcInfoBean itemData= listNpcInfo[key];
             if (itemData.npc_type == type)
             {
                 CharacterBean characterData = NpcInfoToCharacterData(itemData);
-                return characterData;
+                listData.Add(characterData);
             }
         }
-        return null;
+        return listData;
     }
 
     /// <summary>
@@ -72,9 +92,12 @@ public class NpcInfoManager : BaseManager,INpcInfoView
        
     }
 
-    public void GetNpcInfoSuccess(int type, List<NpcInfoBean> listNpcInfo)
+    public void GetNpcInfoSuccess(int type, List<NpcInfoBean> listData)
     {
-        this.listNpcInfo = listNpcInfo;
+        this.listNpcInfo = new Dictionary<long, NpcInfoBean>();
+        foreach (NpcInfoBean itemData in listData) {
+            listNpcInfo.Add(itemData.id,itemData);
+        };
     }
     #endregion
 }
