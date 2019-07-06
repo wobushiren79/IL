@@ -47,27 +47,59 @@ public class NpcInfoManager : BaseManager,INpcInfoView
     /// <returns></returns>
     public List<CharacterBean> GetCharacterDataByType(int type)
     {
+       return GetCharacterDataByType(new int[] { type });
+    }
+
+    public List<CharacterBean> GetCharacterDataByType(int[] types)
+    {
         List<CharacterBean> listData = new List<CharacterBean>();
         if (listNpcInfo == null)
             return listData;
-        foreach(long key in listNpcInfo.Keys)
+        foreach (long key in listNpcInfo.Keys)
         {
-            NpcInfoBean itemData= listNpcInfo[key];
-            if (itemData.npc_type == type)
-            {
-                CharacterBean characterData = NpcInfoToCharacterData(itemData);
-                listData.Add(characterData);
+            foreach (int type in types) {
+                NpcInfoBean itemData = listNpcInfo[key];
+                if (itemData.npc_type == type)
+                {
+                    CharacterBean characterData = NpcInfoToCharacterData(itemData);
+                    listData.Add(characterData);
+                }
             }
         }
         return listData;
     }
 
     /// <summary>
+    /// 根据类型获取NPC信息
+    /// </summary>
+    /// <param name="types"></param>
+    /// <returns></returns>
+    public List<NpcInfoBean> GetNpcInfoByType(int[] types)
+    {
+        List<NpcInfoBean> listData = new List<NpcInfoBean>();
+        if (listNpcInfo == null)
+            return listData;
+        foreach (long key in listNpcInfo.Keys)
+        {
+            foreach (int type in types)
+            {
+                NpcInfoBean itemData = listNpcInfo[key];
+                if (itemData.npc_type == type)
+                {
+                    listData.Add(itemData);
+                }
+            }
+        }
+        return listData;
+    }
+
+
+    /// <summary>
     /// NPC信息转为角色信息
     /// </summary>
     /// <param name="npcInfo"></param>
     /// <returns></returns>
-    public CharacterBean NpcInfoToCharacterData(NpcInfoBean npcInfo)
+    public static CharacterBean NpcInfoToCharacterData(NpcInfoBean npcInfo)
     {
         CharacterBean characterData = new CharacterBean();
 

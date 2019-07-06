@@ -17,4 +17,7 @@ public class NpcInfoBean : BaseBean
     public string  mouth_id;
 
     public string name;//npc名字
+
+    public float position_x;
+    public float position_y;
 }
