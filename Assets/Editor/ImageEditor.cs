@@ -75,7 +75,7 @@ public class ImageEditor : Editor
     {
         Object[] objs = GetSelectedTextures();
 
-        Selection.objects = new Object[0];
+       // Selection.objects = new Object[0];
 
         if (objs.Length <= 0)
         {
@@ -93,7 +93,7 @@ public class ImageEditor : Editor
             textureImporter.spriteImportMode = spriteType;
             textureImporter.filterMode = FilterMode.Point;
             textureImporter.maxTextureSize = 8192;
-            textureImporter.spritePixelsPerUnit = 64;
+            textureImporter.spritePixelsPerUnit = 32;
             textureImporter.compressionQuality = 100;
             textureImporter.isReadable = true;
 
