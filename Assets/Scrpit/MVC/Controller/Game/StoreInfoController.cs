@@ -47,6 +47,14 @@ public class StoreInfoController : BaseMVCController<StoreInfoModel, IStoreInfoV
     }
 
     /// <summary>
+    /// 获取服装店数据
+    /// </summary>
+    public void GetClothesStoreInfo()
+    {
+        GetStoreInfoByType(2);
+    }
+
+    /// <summary>
     /// 查询所有商店信息
     /// </summary>
     public void GetStoreInfoByType(int type)

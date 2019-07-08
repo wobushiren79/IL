@@ -1034,7 +1034,7 @@ Rigidbody2D:
   m_Material: {fileID: 0}
   m_Interpolate: 0
   m_SleepingMode: 1
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
   m_Constraints: 4
 --- !u!61 &4921963546102894238
 BoxCollider2D:
@@ -1110,6 +1110,7 @@ MonoBehaviour:
   characterAnimtor: {fileID: 7362692423562799186}
   navMeshAgent: {fileID: 0}
   characterBodyObj: {fileID: 7362692424501826022}
+  characterRigidbody: {fileID: 4921963546102894233}
   isManualMove: 0
   minMoveX: 0
   maxMoveX: 0

@@ -21,6 +21,31 @@ public class RadioGroupView : BaseMonoBehaviour, IRadioButtonCallBack
         }
     }
 
+    public void SetPosition(int position, bool isCallBack)
+    {
+        if (listButton == null)
+            return;
+        if (position > listButton.Count)
+            return;
+        for (int i = 0; i < listButton.Count; i++)
+        {
+            RadioButtonView itemRB = listButton[i];
+            if (i == position)
+            {
+                itemRB.ChangeStates(RadioButtonView.RadioButtonStates.Selected);
+                if (isCallBack)
+                {
+                    if (mRGCallBack != null)
+                        mRGCallBack.RadioButtonSelected(i, itemRB);
+                }
+            }
+            else
+            {
+                itemRB.ChangeStates(RadioButtonView.RadioButtonStates.Unselected);
+            }
+        }
+    }
+
     /// <summary>
     /// 自动找到rb
     /// </summary>

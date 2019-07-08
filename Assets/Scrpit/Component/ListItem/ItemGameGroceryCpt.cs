@@ -3,6 +3,7 @@ using UnityEditor;
 using UnityEngine.UI;
 public class ItemGameGroceryCpt : BaseMonoBehaviour, DialogView.IDialogCallBack
 {
+    public RectTransform rtIcon;
     public Image ivIcon;
     public Text tvName;
     public Text tvContent;
@@ -24,7 +25,7 @@ public class ItemGameGroceryCpt : BaseMonoBehaviour, DialogView.IDialogCallBack
     public DialogManager dialogManager;
 
     public StoreInfoBean storeInfo;
-
+    public ItemsInfoBean itemsInfo;
 
     private void Start()
     {
@@ -35,10 +36,13 @@ public class ItemGameGroceryCpt : BaseMonoBehaviour, DialogView.IDialogCallBack
     public void SetData(StoreInfoBean storeInfo)
     {
         this.storeInfo = storeInfo;
+        this.itemsInfo = gameItemsManager.GetItemsById(storeInfo.mark_id);
+        if (itemsInfo == null || storeInfo == null)
+            return;
         SetIcon(storeInfo.icon_key, storeInfo.mark, storeInfo.mark_id);
-        SetName(storeInfo.name);
-        SetContent(storeInfo.content);
         SetPrice(storeInfo.price_l, storeInfo.price_m, storeInfo.price_s);
+        SetName(itemsInfo.name);
+        SetContent(itemsInfo.content);
         SetOwn();
     }
 
@@ -58,10 +62,38 @@ public class ItemGameGroceryCpt : BaseMonoBehaviour, DialogView.IDialogCallBack
 
         if (gameItemsManager == null)
             return;
-        Sprite spIcon = gameItemsManager.GetItemsSpriteByName(iconKey);
-
+        Sprite spIcon = null;
+        Vector2 offsetMin = new Vector2(0,0);
+        Vector2 offsetMax = new Vector2(0, 0);
+        switch (mark)
+        {
+            case "1":
+                spIcon = characterDressManager.GetHatSpriteByName(iconKey);
+                offsetMin = new Vector2(-50, -100);
+                offsetMax = new Vector2(50, 0 );
+                break;
+            case "2":
+                spIcon = characterDressManager.GetClothesSpriteByName(iconKey);
+                offsetMin = new Vector2(-50, -25);
+                offsetMax = new Vector2(50, 75);
+                break;
+            case "3":
+                spIcon = characterDressManager.GetShoesSpriteByName(iconKey);
+                offsetMin = new Vector2(-50, 0);
+                offsetMax = new Vector2(50, 100);
+                break;
+            default:
+                spIcon = gameItemsManager.GetItemsSpriteByName(iconKey);
+                break;
+        }
         if (ivIcon != null && spIcon != null)
             ivIcon.sprite = spIcon;
+        if (rtIcon != null)
+        {
+            rtIcon.offsetMin = offsetMin;
+            rtIcon.offsetMax = offsetMax;
+        }
+          
     }
 
     /// <summary>
@@ -107,7 +139,7 @@ public class ItemGameGroceryCpt : BaseMonoBehaviour, DialogView.IDialogCallBack
     {
         if (tvOwn == null)
             return;
-        tvOwn.text = ("拥有\n"+ gameDataManager.gameData.GetItemsNumber(storeInfo.mark_id));
+        tvOwn.text = ("拥有\n" + gameDataManager.gameData.GetItemsNumber(storeInfo.mark_id));
     }
 
     /// <summary>
@@ -130,7 +162,7 @@ public class ItemGameGroceryCpt : BaseMonoBehaviour, DialogView.IDialogCallBack
     #region 提交回调
     public void Submit(DialogView dialogView)
     {
-        if (gameDataManager == null|| storeInfo==null)
+        if (gameDataManager == null || storeInfo == null)
             return;
         if (!gameDataManager.gameData.HasEnoughMoney(storeInfo.price_l, storeInfo.price_m, storeInfo.price_s))
         {

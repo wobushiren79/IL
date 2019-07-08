@@ -15,6 +15,8 @@ public class CharacterMoveCpt : BaseMonoBehaviour
     public Animator characterAnimtor;
     public NavMeshAgent navMeshAgent;
     public GameObject characterBodyObj;
+    public Rigidbody2D characterRigidbody;
+
     //是否手动移动
     public bool isManualMove = false;
 
@@ -123,9 +125,12 @@ public class CharacterMoveCpt : BaseMonoBehaviour
             theScale.x = Mathf.Abs(theScale.x);
         }
         characterBodyObj.transform.localScale = theScale;
-        Vector3 movePosition = Vector3.Lerp(Vector3.zero, new Vector3(x, y, 0), lerpOffset);
-        transform.Translate(movePosition * moveSpeed * Time.deltaTime);
+        //Vector2 lerpPosition = Vector3.Lerp(Vector2.zero, new Vector2(x, y), lerpOffset);
+        // transform.Translate(movePosition * moveSpeed * Time.deltaTime);
+        Vector3 movePosition = transform.position + new Vector3(x, y) * moveSpeed * Time.deltaTime;
+        characterRigidbody.MovePosition(movePosition);
         BoundaryMove();
+
     }
 
     /// <summary>
@@ -209,7 +214,7 @@ public class CharacterMoveCpt : BaseMonoBehaviour
         {
             return false;
         }
-        if (navMeshAgent != null  && navMeshAgent.hasPath)
+        if (navMeshAgent != null && navMeshAgent.hasPath)
         {
             return false;
         }

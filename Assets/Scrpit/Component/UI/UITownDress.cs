@@ -1,51 +1,53 @@
 ﻿using UnityEngine;
-using DG.Tweening;
 using UnityEditor;
-using UnityEngine.UI;
 using System.Collections.Generic;
+using DG.Tweening;
 
-public class UITownGrocery : UIBaseOne, IStoreInfoView, IRadioGroupCallBack
+public class UITownDress : UIBaseOne, IStoreInfoView, IRadioGroupCallBack
 {
     public GameObject objGroceryContent;
     public GameObject objGroceryModel;
 
-    public RadioGroupView rgGroceryType;
+    public RadioGroupView rgStyleType;
+    public RadioGroupView rgPartType;
 
     private StoreInfoController mStoreInfoController;
-    private List<StoreInfoBean> mGroceryListData;
+    private List<StoreInfoBean> mClothesListData;
 
     private void Awake()
     {
         mStoreInfoController = new StoreInfoController(this, this);
-        mStoreInfoController.GetGroceryInfo();
+        mStoreInfoController.GetClothesStoreInfo();
     }
 
     public new void Start()
     {
         base.Start();
-        if (rgGroceryType != null)
-            rgGroceryType.SetCallBack(this);
+        if (rgStyleType != null)
+            rgStyleType.SetCallBack(this);
+        if (rgPartType != null)
+            rgPartType.SetCallBack(this);
     }
 
     public override void OpenUI()
     {
         base.OpenUI();
-        rgGroceryType.SetPosition(0,false);
-        InitDataByType(0);
+        rgStyleType.SetPosition(0,false);
+        rgPartType.SetPosition(0, false);
+        InitDataByType(0,0);
     }
 
-    public void InitDataByType(int type)
+    public void InitDataByType(int styleType,int partType)
     {
-        switch (type)
+        switch (partType)
         {
             case 0:
-                CreateGroceryData(mGroceryListData);
+                CreateClothesData(mClothesListData);
                 break;
             case 1:
-                CreateGroceryData(GetGroceryListDataByMark("12"));
-                break;
             case 2:
-                CreateGroceryData(GetGroceryListDataByMark("11"));
+            case 3:
+                CreateClothesData(GetClothesListDataByMark(partType+""));
                 break;
         }
     }
@@ -55,14 +57,14 @@ public class UITownGrocery : UIBaseOne, IStoreInfoView, IRadioGroupCallBack
     /// </summary>
     /// <param name="mark"></param>
     /// <returns></returns>
-    public List<StoreInfoBean> GetGroceryListDataByMark(string mark)
+    public List<StoreInfoBean> GetClothesListDataByMark(string mark)
     {
         List<StoreInfoBean> listData = new List<StoreInfoBean>();
-        if (mGroceryListData == null)
+        if (mClothesListData == null)
             return listData;
-        for(int i=0;i< mGroceryListData.Count; i++)
+        for (int i = 0; i < mClothesListData.Count; i++)
         {
-            StoreInfoBean itemData= mGroceryListData[i];
+            StoreInfoBean itemData = mClothesListData[i];
             if (itemData.mark.Equals(mark))
             {
                 listData.Add(itemData);
@@ -75,7 +77,7 @@ public class UITownGrocery : UIBaseOne, IStoreInfoView, IRadioGroupCallBack
     /// 创建商品列表
     /// </summary>
     /// <param name="listData"></param>
-    public void CreateGroceryData(List<StoreInfoBean> listData)
+    public void CreateClothesData(List<StoreInfoBean> listData)
     {
         CptUtil.RemoveChildsByActive(objGroceryContent.transform);
         if (listData == null || objGroceryContent == null || objGroceryModel == null)
@@ -85,8 +87,8 @@ public class UITownGrocery : UIBaseOne, IStoreInfoView, IRadioGroupCallBack
             StoreInfoBean itemData = listData[i];
             GameObject itemObj = Instantiate(objGroceryModel, objGroceryContent.transform);
             itemObj.SetActive(true);
-            ItemGameGroceryCpt groceryCpt = itemObj.GetComponent<ItemGameGroceryCpt>();
-            groceryCpt.SetData(itemData);
+            ItemGameDressStoreCpt clothesCpt = itemObj.GetComponent<ItemGameDressStoreCpt>();
+            clothesCpt.SetData(itemData);
             itemObj.transform.DOScale(new Vector3(0, 0, 0), 0.5f).SetEase(Ease.OutBack).SetDelay(i * 0.05f).From();
         }
     }
@@ -103,7 +105,7 @@ public class UITownGrocery : UIBaseOne, IStoreInfoView, IRadioGroupCallBack
 
     public void GetStoreInfoByTypeSuccess(List<StoreInfoBean> listData)
     {
-        mGroceryListData = listData;
+        mClothesListData = listData;
     }
 
     public void GetStoreInfoByTypeFail()
@@ -114,7 +116,7 @@ public class UITownGrocery : UIBaseOne, IStoreInfoView, IRadioGroupCallBack
     #region 类型选择回调
     public void RadioButtonSelected(int position, RadioButtonView view)
     {
-        InitDataByType(position);
+        InitDataByType(0,position);
     }
 
     public void RadioButtonUnSelected(int position, RadioButtonView view)
