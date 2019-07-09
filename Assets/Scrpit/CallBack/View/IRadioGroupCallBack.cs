@@ -8,12 +8,12 @@ public interface IRadioGroupCallBack
     /// </summary>
     /// <param name="position"></param>
     /// <param name="view"></param>
-    void RadioButtonSelected(int position,RadioButtonView view);
+    void RadioButtonSelected(RadioGroupView rgView, int position,RadioButtonView rbview);
 
     /// <summary>
     /// 按钮未选择
     /// </summary>
     /// <param name="position"></param>
     /// <param name="view"></param>
-    void RadioButtonUnSelected(int position, RadioButtonView view);
+    void RadioButtonUnSelected(RadioGroupView rgView, int position, RadioButtonView rbview);
 }

@@ -14,6 +14,8 @@ public class UITownDress : UIBaseOne, IStoreInfoView, IRadioGroupCallBack
     private StoreInfoController mStoreInfoController;
     private List<StoreInfoBean> mClothesListData;
 
+    private int mStyleType = 0;
+    private int mPartType = 0;
     private void Awake()
     {
         mStoreInfoController = new StoreInfoController(this, this);
@@ -32,24 +34,52 @@ public class UITownDress : UIBaseOne, IStoreInfoView, IRadioGroupCallBack
     public override void OpenUI()
     {
         base.OpenUI();
-        rgStyleType.SetPosition(0,false);
+        rgStyleType.SetPosition(0, false);
         rgPartType.SetPosition(0, false);
-        InitDataByType(0,0);
+        InitDataByType(0, 0);
     }
 
-    public void InitDataByType(int styleType,int partType)
+    public void InitDataByType(int styleType, int partType)
     {
+        List<StoreInfoBean> createListData = new List<StoreInfoBean>();
         switch (partType)
         {
             case 0:
-                CreateClothesData(mClothesListData);
+                createListData = mClothesListData;
                 break;
             case 1:
             case 2:
             case 3:
-                CreateClothesData(GetClothesListDataByMark(partType+""));
+                createListData = GetClothesListDataByMark(partType + "");
                 break;
         }
+        CreateClothesData(GetClothesListDataByMarkType(styleType, createListData));
+    }
+
+    /// <summary>
+    ///  根据备注获取数据
+    /// </summary>
+    /// <param name="mark"></param>
+    /// <returns></returns>
+    public List<StoreInfoBean> GetClothesListDataByMarkType(int styleType, List<StoreInfoBean> listStoreData)
+    {
+        if (styleType == 0)
+        {
+            return listStoreData;
+        }
+        List<StoreInfoBean> listData = new List<StoreInfoBean>();
+        if (listStoreData == null)
+            return listData;
+
+        for (int i = 0; i < listStoreData.Count; i++)
+        {
+            StoreInfoBean itemData = listStoreData[i];
+            if (itemData.mark_type == styleType)
+            {
+                listData.Add(itemData);
+            }
+        }
+        return listData;
     }
 
     /// <summary>
@@ -114,13 +144,22 @@ public class UITownDress : UIBaseOne, IStoreInfoView, IRadioGroupCallBack
     #endregion
 
     #region 类型选择回调
-    public void RadioButtonSelected(int position, RadioButtonView view)
+    public void RadioButtonSelected(RadioGroupView rgView, int position, RadioButtonView rbview)
     {
-        InitDataByType(0,position);
+        if (rgView == rgStyleType)
+        {
+            mStyleType = position;
+        }
+        else if (rgView == rgPartType)
+        {
+            mPartType = position;
+        }
+        InitDataByType(mStyleType, mPartType);
     }
 
-    public void RadioButtonUnSelected(int position, RadioButtonView view)
+    public void RadioButtonUnSelected(RadioGroupView rgView, int position, RadioButtonView view)
     {
+
     }
     #endregion
 }

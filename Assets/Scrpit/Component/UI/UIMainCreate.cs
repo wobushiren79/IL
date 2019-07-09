@@ -155,7 +155,7 @@ public class UIMainCreate : BaseUIComponent, IRadioGroupCallBack, ColorView.Call
     }
 
     #region 性别回调
-    public void RadioButtonSelected(int position, RadioButtonView view)
+    public void RadioButtonSelected(RadioGroupView rgView, int position, RadioButtonView view)
     {
         if (position == 0)
         {
@@ -167,7 +167,7 @@ public class UIMainCreate : BaseUIComponent, IRadioGroupCallBack, ColorView.Call
         }
     }
 
-    public void RadioButtonUnSelected(int position, RadioButtonView view)
+    public void RadioButtonUnSelected(RadioGroupView rgView, int position, RadioButtonView view)
     {
 
     }

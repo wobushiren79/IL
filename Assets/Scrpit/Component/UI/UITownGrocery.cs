@@ -112,12 +112,12 @@ public class UITownGrocery : UIBaseOne, IStoreInfoView, IRadioGroupCallBack
     #endregion
 
     #region 类型选择回调
-    public void RadioButtonSelected(int position, RadioButtonView view)
+    public void RadioButtonSelected(RadioGroupView rgView, int position, RadioButtonView view)
     {
         InitDataByType(position);
     }
 
-    public void RadioButtonUnSelected(int position, RadioButtonView view)
+    public void RadioButtonUnSelected(RadioGroupView rgView, int position, RadioButtonView view)
     {
     }
     #endregion

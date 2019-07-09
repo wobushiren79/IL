@@ -36,7 +36,7 @@ public class RadioGroupView : BaseMonoBehaviour, IRadioButtonCallBack
                 if (isCallBack)
                 {
                     if (mRGCallBack != null)
-                        mRGCallBack.RadioButtonSelected(i, itemRB);
+                        mRGCallBack.RadioButtonSelected(this,i, itemRB);
                 }
             }
             else
@@ -86,13 +86,13 @@ public class RadioGroupView : BaseMonoBehaviour, IRadioButtonCallBack
             {
                 itemRB.ChangeStates(RadioButtonView.RadioButtonStates.Selected);
                 if (mRGCallBack != null)
-                    mRGCallBack.RadioButtonSelected(i, itemRB);
+                    mRGCallBack.RadioButtonSelected(this,i, itemRB);
             }
             else
             {
                 itemRB.ChangeStates(RadioButtonView.RadioButtonStates.Unselected);
                 if (mRGCallBack != null)
-                    mRGCallBack.RadioButtonUnSelected(i, itemRB);
+                    mRGCallBack.RadioButtonUnSelected(this,i, itemRB);
             }
         }
     }
