@@ -8,6 +8,7 @@ using DG.Tweening;
 public class ItemGameBackpackCpt : InfoItemsPopupButton, IPointerClickHandler, ItemsSelectionBox.ICallBack, DialogView.IDialogCallBack
 {
     public Text tvName;
+    public RectTransform rtIcon;
     public Image ivIcon;
     public InfoItemsPopupButton infoItemsPopup;
     public ItemsSelectionBox selectionBox;
@@ -44,17 +45,25 @@ public class ItemGameBackpackCpt : InfoItemsPopupButton, IPointerClickHandler, I
     /// <param name="itemType"></param>
     public void SetIcon(string iconKey, int itemType)
     {
+        Vector2 offsetMin = new Vector2(0, 0);
+        Vector2 offsetMax = new Vector2(0, 0);
         Sprite spIcon = null;
         switch (itemType)
         {
             case (int)GeneralEnum.Hat:
                 spIcon = characterDressManager.GetHatSpriteByName(iconKey);
+                offsetMin = new Vector2(-50, -100);
+                offsetMax = new Vector2(50, 0);
                 break;
             case (int)GeneralEnum.Clothes:
                 spIcon = characterDressManager.GetClothesSpriteByName(iconKey);
+                offsetMin = new Vector2(-50, -25);
+                offsetMax = new Vector2(50, 75);
                 break;
             case (int)GeneralEnum.Shoes:
                 spIcon = characterDressManager.GetShoesSpriteByName(iconKey);
+                offsetMin = new Vector2(-50, 0);
+                offsetMax = new Vector2(50, 100);
                 break;
             case (int)GeneralEnum.Book:
             case (int)GeneralEnum.Cook:
@@ -63,6 +72,11 @@ public class ItemGameBackpackCpt : InfoItemsPopupButton, IPointerClickHandler, I
         }
         if (ivIcon != null)
             ivIcon.sprite = spIcon;
+        if (rtIcon != null)
+        {
+            rtIcon.offsetMin = offsetMin;
+            rtIcon.offsetMax = offsetMax;
+        }
     }
 
     /// <summary>

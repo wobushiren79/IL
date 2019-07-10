@@ -17,7 +17,9 @@ public class ItemsInfoBean : BaseBean
     public int add_charm;//增加 吆喝
     public int add_force;//增加 武力
     public int add_lucky;//增加 切菜
-  
+    public int add_loyal;//增加信任
+
+
     public long add_id;//增加的内容ID
 
     public int intact_number;//套装触发数量

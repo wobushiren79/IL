@@ -37,7 +37,8 @@ public class ItemGameWorkerCpt : BaseMonoBehaviour, IRadioButtonCallBack
     public CharacterUICpt characterUICpt;
     public CharacterBean characterData;
     public InnHandler innHandler;
-
+    public GameItemsManager gameItemsManager;
+    public BaseUIManager baseUIManager;
     private void Start()
     {
         if (pbName != null)
@@ -70,6 +71,11 @@ public class ItemGameWorkerCpt : BaseMonoBehaviour, IRadioButtonCallBack
             rbAccost.SetCallBack(this);
         if (rbBeater != null)
             rbBeater.SetCallBack(this);
+
+        if (btEquip != null)
+            btEquip.onClick.AddListener(OpenEquipUI);
+        if (btFire != null)
+            btFire.onClick.AddListener(FireWorker);
     }
 
     public void SetData(CharacterBean data)
@@ -88,9 +94,56 @@ public class ItemGameWorkerCpt : BaseMonoBehaviour, IRadioButtonCallBack
         {
             CharacterAttributesBean characterAttributes = characterData.attributes;
             SetLoyal(characterAttributes.loyal);
+            SetAttributes(characterData.attributes, characterData.equips);
         }
         if (data.body != null && data.equips != null)
             characterUICpt.SetCharacterData(data.body, data.equips);
+    }
+
+    /// <summary>
+    /// 打开装备UI
+    /// </summary>
+    public void OpenEquipUI()
+    {
+        if (baseUIManager != null)
+        {
+            baseUIManager.OpenUIAndCloseOtherByName("Equip");
+            UIGameEquip uiComponent = (UIGameEquip)baseUIManager.GetUIByName("Equip");
+            uiComponent.SetCharacterData(characterData);
+        }
+    }
+
+    /// <summary>
+    /// 开除该员工
+    /// </summary>
+    public void FireWorker()
+    {
+
+    }
+
+    /// <summary>
+    /// 设置属性
+    /// </summary>
+    /// <param name="characterAttributes"></param>
+    public void SetAttributes(CharacterAttributesBean characterAttributes, CharacterEquipBean characterEquip)
+    {
+        CharacterAttributesBean extraAttributes = new CharacterAttributesBean();
+        if (gameItemsManager != null && characterEquip != null)
+        {
+            extraAttributes = characterEquip.GetEquipAttributes(gameItemsManager);
+        }
+        if (tvCook != null)
+            tvCook.text = characterAttributes.cook + ""+ (extraAttributes.cook == 0 ? "" : "+" + extraAttributes.cook);
+        if (tvSpeed != null)
+            tvSpeed.text = characterAttributes.speed + (extraAttributes.speed == 0 ? "" : "+" + extraAttributes.speed);
+        if (tvAccount != null)
+            tvAccount.text = characterAttributes.account + (extraAttributes.account == 0 ? "" : "+" + extraAttributes.account);
+        if (tvCharm != null)
+            tvCharm.text = characterAttributes.charm + (extraAttributes.charm == 0 ? "" : "+" + extraAttributes.charm);
+        if (tvForce != null)
+            tvForce.text = characterAttributes.force + (extraAttributes.force == 0 ? "" : "+" + extraAttributes.force);
+        if (tvLucky != null)
+            tvLucky.text = characterAttributes.lucky + (extraAttributes.lucky == 0 ? "" : "+" + extraAttributes.lucky);
     }
 
     /// <summary>
