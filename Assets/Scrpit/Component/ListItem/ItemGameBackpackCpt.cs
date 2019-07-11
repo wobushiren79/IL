@@ -12,7 +12,7 @@ public class ItemGameBackpackCpt : InfoItemsPopupButton, IPointerClickHandler, I
     public Image ivIcon;
     public InfoItemsPopupButton infoItemsPopup;
     public ItemsSelectionBox selectionBox;
-
+    
     public GameDataManager gameDataManager;
     public GameItemsManager gameItemsManager;
     public CharacterDressManager characterDressManager;
@@ -24,8 +24,8 @@ public class ItemGameBackpackCpt : InfoItemsPopupButton, IPointerClickHandler, I
 
     public UnityEvent leftClick;
     public UnityEvent rightClick;
-
-    private void Start()
+ 
+    public void Start()
     {
         rightClick.AddListener(new UnityAction(ButtonRightClick));
     }
@@ -103,7 +103,7 @@ public class ItemGameBackpackCpt : InfoItemsPopupButton, IPointerClickHandler, I
             rightClick.Invoke();
     }
 
-    private void ButtonRightClick()
+    public virtual void ButtonRightClick()
     {
         if (itemsInfoBean == null)
             return;
@@ -154,6 +154,16 @@ public class ItemGameBackpackCpt : InfoItemsPopupButton, IPointerClickHandler, I
         };
         dialogManager.CreateDialog(0,this, dialogBean);
     }
+
+    public virtual void SelectionEquip(ItemsSelectionBox view)
+    {
+
+    }
+
+    public virtual void SelectionUnload(ItemsSelectionBox view)
+    {
+
+    }
     #endregion
 
     #region 删除确认回调
@@ -179,4 +189,6 @@ public class ItemGameBackpackCpt : InfoItemsPopupButton, IPointerClickHandler, I
             Destroy(gameObject);
         });
     }
+
+
 }

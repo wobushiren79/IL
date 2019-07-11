@@ -148,7 +148,10 @@ public class CharacterUICpt : BaseMonoBehaviour
             return;
         ItemsInfoBean itemsInfo = gameItemsManager.GetItemsById(clothesId);
         if (itemsInfo == null)
+        {
+            ivClothes.color = new Color(1, 1, 1, 0);
             return;
+        }       
         Sprite spClothes = characterDressManager.GetClothesSpriteByName(itemsInfo.icon_key);
         if (spClothes == null)
         {
@@ -171,7 +174,10 @@ public class CharacterUICpt : BaseMonoBehaviour
             return;
         ItemsInfoBean itemsInfo = gameItemsManager.GetItemsById(shoesId);
         if (itemsInfo == null)
+        {
+            ivShoes.color = new Color(1, 1, 1, 0);
             return;
+        } 
         Sprite spShoes = characterDressManager.GetShoesSpriteByName(itemsInfo.icon_key);
         if (spShoes == null)
         {
@@ -194,7 +200,11 @@ public class CharacterUICpt : BaseMonoBehaviour
             return;
         ItemsInfoBean itemsInfo = gameItemsManager.GetItemsById(hatId);
         if (itemsInfo == null)
+        {
+            ivHat.color = new Color(1, 1, 1, 0);
             return;
+        }
+          
         Sprite spHat = characterDressManager.GetHatSpriteByName(itemsInfo.icon_key);
         if (spHat == null)
         {

@@ -133,17 +133,17 @@ public class ItemGameWorkerCpt : BaseMonoBehaviour, IRadioButtonCallBack
             extraAttributes = characterEquip.GetEquipAttributes(gameItemsManager);
         }
         if (tvCook != null)
-            tvCook.text = characterAttributes.cook + ""+ (extraAttributes.cook == 0 ? "" : "+" + extraAttributes.cook);
+            tvCook.text = extraAttributes.cook + characterAttributes.cook + "";
         if (tvSpeed != null)
-            tvSpeed.text = characterAttributes.speed + (extraAttributes.speed == 0 ? "" : "+" + extraAttributes.speed);
+            tvSpeed.text = extraAttributes.speed + characterAttributes.speed + "";
         if (tvAccount != null)
-            tvAccount.text = characterAttributes.account + (extraAttributes.account == 0 ? "" : "+" + extraAttributes.account);
+            tvAccount.text = extraAttributes.account+ characterAttributes.account + "";
         if (tvCharm != null)
-            tvCharm.text = characterAttributes.charm + (extraAttributes.charm == 0 ? "" : "+" + extraAttributes.charm);
+            tvCharm.text = extraAttributes.charm+characterAttributes.charm + "";
         if (tvForce != null)
-            tvForce.text = characterAttributes.force + (extraAttributes.force == 0 ? "" : "+" + extraAttributes.force);
+            tvForce.text = extraAttributes.force+characterAttributes.force + "";
         if (tvLucky != null)
-            tvLucky.text = characterAttributes.lucky + (extraAttributes.lucky == 0 ? "" : "+" + extraAttributes.lucky);
+            tvLucky.text = extraAttributes.lucky+ characterAttributes.lucky + "";
     }
 
     /// <summary>

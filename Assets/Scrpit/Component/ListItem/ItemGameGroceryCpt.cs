@@ -155,7 +155,7 @@ public class ItemGameGroceryCpt : BaseMonoBehaviour, DialogView.IDialogCallBack
             return;
         }
         DialogBean dialogBean = new DialogBean();
-        dialogBean.content = "确认购买" + storeInfo.name + "?";
+        dialogBean.content = "确认购买" + itemsInfo.name + "?";
         dialogManager.CreateDialog(0, this, dialogBean);
     }
 

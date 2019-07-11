@@ -10,6 +10,8 @@ public class ItemsSelectionBox : BaseMonoBehaviour
 
     public Button btUse;
     public Button btDiscard;
+    public Button btEquip;
+    public Button btUnload;
     public GameObject objContent;
 
     //屏幕(用来找到鼠标点击的相对位置)
@@ -27,6 +29,10 @@ public class ItemsSelectionBox : BaseMonoBehaviour
             btUse.onClick.AddListener(UseItems);
         if (btDiscard != null)
             btDiscard.onClick.AddListener(DiscardItems);
+        if (btEquip != null)
+            btEquip.onClick.AddListener(EquipItems);
+        if (btUnload != null)
+            btUnload.onClick.AddListener(UnloadItems);
     }
 
     public void SetCallBack(ICallBack callBack)
@@ -42,14 +48,25 @@ public class ItemsSelectionBox : BaseMonoBehaviour
 
     public void Open(int type)
     {
-        btUse.gameObject.SetActive(true);
-        btDiscard.gameObject.SetActive(true);
+        btUse.gameObject.SetActive(false);
+        btDiscard.gameObject.SetActive(false);
+        btEquip.gameObject.SetActive(false);
+        btUnload.gameObject.SetActive(false);
         switch (type)
         {
             case 0:
-                btUse.gameObject.SetActive(false);
+                btDiscard.gameObject.SetActive(true);
                 break;
             case 1:
+                btUse.gameObject.SetActive(true);
+                btDiscard.gameObject.SetActive(true);
+                break;
+            case 2:
+                btEquip.gameObject.SetActive(true);
+                btDiscard.gameObject.SetActive(true);
+                break;
+            case 3:
+                btUnload.gameObject.SetActive(true);
                 break;
         }
         gameObject.SetActive(true);
@@ -92,6 +109,27 @@ public class ItemsSelectionBox : BaseMonoBehaviour
         Close();
     }
 
+    /// <summary>
+    /// 装备
+    /// </summary>
+    public void EquipItems()
+    {
+        if (callBack != null)
+            callBack.SelectionEquip(this);
+        Close();
+    }
+
+    /// <summary>
+    /// 卸下
+    /// </summary>
+    public void UnloadItems()
+    {
+        if (callBack != null)
+            callBack.SelectionUnload(this);
+        Close();
+    }
+
+
     public interface ICallBack
     {
         /// <summary>
@@ -105,5 +143,17 @@ public class ItemsSelectionBox : BaseMonoBehaviour
         /// </summary>
         /// <param name="view"></param>
         void SelectionDiscard(ItemsSelectionBox view);
+
+        /// <summary>
+        /// 选择装备
+        /// </summary>
+        /// <param name="view"></param>
+        void SelectionEquip(ItemsSelectionBox view);
+
+        /// <summary>
+        /// 选择卸下
+        /// </summary>
+        /// <param name="view"></param>
+        void SelectionUnload(ItemsSelectionBox view);
     }
 }

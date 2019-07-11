@@ -24,6 +24,22 @@ public class BaseUIManager : BaseMonoBehaviour
     }
 
     /// <summary>
+    /// 获取打开UI的名字
+    /// </summary>
+    /// <returns></returns>
+    public string GetOpenUIName()
+    {
+        foreach (BaseUIComponent itemUI in uiList)
+        {
+            if (itemUI.gameObject.activeSelf)
+            {
+                return itemUI.name;
+            }
+        }
+        return null;
+    }
+
+    /// <summary>
     /// 根据UI的名字获取UI
     /// </summary>
     /// <param name="uiName"></param>
