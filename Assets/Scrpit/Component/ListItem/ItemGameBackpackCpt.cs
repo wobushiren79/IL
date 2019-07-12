@@ -93,6 +93,11 @@ public class ItemGameBackpackCpt : InfoItemsPopupButton, IPointerClickHandler, I
     public override void OpenPopup()
     {
         ((InfoItemsPopupShow)popupShow).SetData(ivIcon.sprite, itemsInfoBean);
+        if (itemsInfoBean == null|| itemsInfoBean.id == 0)
+        {
+            if (popupShow != null)
+                popupShow.gameObject.SetActive(false);
+        }
     }
 
     public void OnPointerClick(PointerEventData eventData)
@@ -121,7 +126,7 @@ public class ItemGameBackpackCpt : InfoItemsPopupButton, IPointerClickHandler, I
     }
 
     #region 选择回调
-    public void SelectionUse(ItemsSelectionBox view)
+    public virtual void SelectionUse(ItemsSelectionBox view)
     {
         if (itemsInfoBean == null || itemBean == null || gameDataManager == null)
             return;
@@ -144,7 +149,7 @@ public class ItemGameBackpackCpt : InfoItemsPopupButton, IPointerClickHandler, I
         }
     }
 
-    public void SelectionDiscard(ItemsSelectionBox view)
+    public virtual void SelectionDiscard(ItemsSelectionBox view)
     {
         if (dialogManager==null||itemsInfoBean == null)
             return;

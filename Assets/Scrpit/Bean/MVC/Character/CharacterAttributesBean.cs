@@ -15,6 +15,22 @@ public class CharacterAttributesBean
     public int force;// 武力
     public int lucky;// 幸运
 
+    /// <summary>
+    /// 增加属性
+    /// </summary>
+    /// <param name="itemsInfo"></param>
+    public void AddAttributes(ItemsInfoBean itemsInfo)
+    {
+        if (itemsInfo == null)
+            return;
+        loyal += itemsInfo.add_loyal;
+        cook += itemsInfo.add_cook;
+        speed += itemsInfo.add_speed;
+        account += itemsInfo.add_account;
+        charm += itemsInfo.add_charm;
+        force += itemsInfo.add_force;
+        lucky += itemsInfo.add_lucky;
+    }
 
     /// <summary>
     /// 获取随机属性 - 厨师

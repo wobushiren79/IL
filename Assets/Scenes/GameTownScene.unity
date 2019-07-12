@@ -1782,7 +1782,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 45901495}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.03, y: -394.9, z: -9.990901}
+  m_LocalPosition: {x: -0.03, y: -294.9, z: -9.990901}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1672042562}
@@ -2590,6 +2590,7 @@ MonoBehaviour:
       hatId: 0
       clothesId: 0
       shoesId: 0
+      listLearnBook: 
   gameItemsManager: {fileID: 1850674566571564988}
   characterMoveCpt: {fileID: 0}
 --- !u!4 &178385737 stripped
@@ -10264,7 +10265,7 @@ PrefabInstance:
     - target: {fileID: 7362692425160318330, guid: eac23c2d72574c74698e32d71a49378a,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: -394.9
+      value: -294.9
       objectReference: {fileID: 0}
     - target: {fileID: 7362692425160318330, guid: eac23c2d72574c74698e32d71a49378a,
         type: 3}
@@ -12578,7 +12579,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1704288485}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.03, y: -394.9, z: -9.990901}
+  m_LocalPosition: {x: -0.03, y: -294.9, z: -9.990901}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1391615885}
@@ -13480,6 +13481,24 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 1792279974}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1820016435 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8062692487888369413, guid: 898e8ca9695e0024389e2ebac8c9bdb1,
+    type: 3}
+  m_PrefabInstance: {fileID: 3541419660663142851}
+  m_PrefabAsset: {fileID: 0}
+--- !u!225 &1820016440
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1820016435}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 0
+  m_IgnoreParentGroups: 0
 --- !u!1001 &1824148211
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -14098,6 +14117,7 @@ MonoBehaviour:
         hatId: 0
         clothesId: 0
         shoesId: 0
+        listLearnBook: 
     workCharacterList: []
     innBuildData:
       listWall: []
@@ -28548,7 +28568,7 @@ PrefabInstance:
     - target: {fileID: 6135781236434108146, guid: 898e8ca9695e0024389e2ebac8c9bdb1,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -0.012705258
+      value: -0.012256782
       objectReference: {fileID: 0}
     - target: {fileID: 3528622370266862748, guid: 898e8ca9695e0024389e2ebac8c9bdb1,
         type: 3}
@@ -29073,7 +29093,7 @@ PrefabInstance:
     - target: {fileID: 538781780231013112, guid: 898e8ca9695e0024389e2ebac8c9bdb1,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -50.000004
+      value: -50
       objectReference: {fileID: 0}
     - target: {fileID: 5699391617295827237, guid: 898e8ca9695e0024389e2ebac8c9bdb1,
         type: 3}
@@ -29098,7 +29118,7 @@ PrefabInstance:
     - target: {fileID: 3566682452035414980, guid: 898e8ca9695e0024389e2ebac8c9bdb1,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -30.000004
+      value: -30
       objectReference: {fileID: 0}
     - target: {fileID: 5016015092414275092, guid: 898e8ca9695e0024389e2ebac8c9bdb1,
         type: 3}
@@ -29679,6 +29699,142 @@ PrefabInstance:
         type: 3}
       propertyPath: m_SizeDelta.y
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5752057252617405037, guid: 898e8ca9695e0024389e2ebac8c9bdb1,
+        type: 3}
+      propertyPath: characterBodyManager
+      value: 
+      objectReference: {fileID: 1113833294}
+    - target: {fileID: 5752057252617405037, guid: 898e8ca9695e0024389e2ebac8c9bdb1,
+        type: 3}
+      propertyPath: characterDressManager
+      value: 
+      objectReference: {fileID: 1113833293}
+    - target: {fileID: 5752057252617405037, guid: 898e8ca9695e0024389e2ebac8c9bdb1,
+        type: 3}
+      propertyPath: gameItemsManager
+      value: 
+      objectReference: {fileID: 1850674566571564988}
+    - target: {fileID: 2544990596902594885, guid: 898e8ca9695e0024389e2ebac8c9bdb1,
+        type: 3}
+      propertyPath: m_FontData.m_Font
+      value: 
+      objectReference: {fileID: 12800000, guid: 5af80356261d6ff4f8aeec8a15c0cab5,
+        type: 3}
+    - target: {fileID: 2691009011918313409, guid: 898e8ca9695e0024389e2ebac8c9bdb1,
+        type: 3}
+      propertyPath: gameDataManager
+      value: 
+      objectReference: {fileID: 1935938916}
+    - target: {fileID: 2691009011918313409, guid: 898e8ca9695e0024389e2ebac8c9bdb1,
+        type: 3}
+      propertyPath: characterDressManager
+      value: 
+      objectReference: {fileID: 1113833293}
+    - target: {fileID: 2691009011918313409, guid: 898e8ca9695e0024389e2ebac8c9bdb1,
+        type: 3}
+      propertyPath: gameItemsManager
+      value: 
+      objectReference: {fileID: 1850674566571564988}
+    - target: {fileID: 2691009011918313409, guid: 898e8ca9695e0024389e2ebac8c9bdb1,
+        type: 3}
+      propertyPath: dialogManager
+      value: 
+      objectReference: {fileID: 545962627}
+    - target: {fileID: 2691009011918313409, guid: 898e8ca9695e0024389e2ebac8c9bdb1,
+        type: 3}
+      propertyPath: toastView
+      value: 
+      objectReference: {fileID: 418512633}
+    - target: {fileID: 4381609135561477377, guid: 898e8ca9695e0024389e2ebac8c9bdb1,
+        type: 3}
+      propertyPath: gameDataManager
+      value: 
+      objectReference: {fileID: 1935938916}
+    - target: {fileID: 4381609135561477377, guid: 898e8ca9695e0024389e2ebac8c9bdb1,
+        type: 3}
+      propertyPath: characterDressManager
+      value: 
+      objectReference: {fileID: 1113833293}
+    - target: {fileID: 4381609135561477377, guid: 898e8ca9695e0024389e2ebac8c9bdb1,
+        type: 3}
+      propertyPath: gameItemsManager
+      value: 
+      objectReference: {fileID: 1850674566571564988}
+    - target: {fileID: 4381609135561477377, guid: 898e8ca9695e0024389e2ebac8c9bdb1,
+        type: 3}
+      propertyPath: dialogManager
+      value: 
+      objectReference: {fileID: 545962627}
+    - target: {fileID: 4381609135561477377, guid: 898e8ca9695e0024389e2ebac8c9bdb1,
+        type: 3}
+      propertyPath: toastView
+      value: 
+      objectReference: {fileID: 418512633}
+    - target: {fileID: 4381609135561477377, guid: 898e8ca9695e0024389e2ebac8c9bdb1,
+        type: 3}
+      propertyPath: type
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5492829529936058128, guid: 898e8ca9695e0024389e2ebac8c9bdb1,
+        type: 3}
+      propertyPath: gameDataManager
+      value: 
+      objectReference: {fileID: 1935938916}
+    - target: {fileID: 5492829529936058128, guid: 898e8ca9695e0024389e2ebac8c9bdb1,
+        type: 3}
+      propertyPath: characterDressManager
+      value: 
+      objectReference: {fileID: 1113833293}
+    - target: {fileID: 5492829529936058128, guid: 898e8ca9695e0024389e2ebac8c9bdb1,
+        type: 3}
+      propertyPath: gameItemsManager
+      value: 
+      objectReference: {fileID: 1850674566571564988}
+    - target: {fileID: 5492829529936058128, guid: 898e8ca9695e0024389e2ebac8c9bdb1,
+        type: 3}
+      propertyPath: toastView
+      value: 
+      objectReference: {fileID: 418512633}
+    - target: {fileID: 5492829529936058128, guid: 898e8ca9695e0024389e2ebac8c9bdb1,
+        type: 3}
+      propertyPath: dialogManager
+      value: 
+      objectReference: {fileID: 545962627}
+    - target: {fileID: 5492829529936058128, guid: 898e8ca9695e0024389e2ebac8c9bdb1,
+        type: 3}
+      propertyPath: type
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3175490551083425100, guid: 898e8ca9695e0024389e2ebac8c9bdb1,
+        type: 3}
+      propertyPath: gameDataManager
+      value: 
+      objectReference: {fileID: 1935938916}
+    - target: {fileID: 3175490551083425100, guid: 898e8ca9695e0024389e2ebac8c9bdb1,
+        type: 3}
+      propertyPath: characterDressManager
+      value: 
+      objectReference: {fileID: 1113833293}
+    - target: {fileID: 3175490551083425100, guid: 898e8ca9695e0024389e2ebac8c9bdb1,
+        type: 3}
+      propertyPath: gameItemsManager
+      value: 
+      objectReference: {fileID: 1850674566571564988}
+    - target: {fileID: 3175490551083425100, guid: 898e8ca9695e0024389e2ebac8c9bdb1,
+        type: 3}
+      propertyPath: dialogManager
+      value: 
+      objectReference: {fileID: 545962627}
+    - target: {fileID: 3175490551083425100, guid: 898e8ca9695e0024389e2ebac8c9bdb1,
+        type: 3}
+      propertyPath: toastView
+      value: 
+      objectReference: {fileID: 418512633}
+    - target: {fileID: 3175490551083425100, guid: 898e8ca9695e0024389e2ebac8c9bdb1,
+        type: 3}
+      propertyPath: type
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 898e8ca9695e0024389e2ebac8c9bdb1, type: 3}

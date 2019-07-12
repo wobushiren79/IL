@@ -39,6 +39,7 @@ public class ItemGameWorkerCpt : BaseMonoBehaviour, IRadioButtonCallBack
     public InnHandler innHandler;
     public GameItemsManager gameItemsManager;
     public BaseUIManager baseUIManager;
+
     private void Start()
     {
         if (pbName != null)
@@ -107,9 +108,9 @@ public class ItemGameWorkerCpt : BaseMonoBehaviour, IRadioButtonCallBack
     {
         if (baseUIManager != null)
         {
-            baseUIManager.OpenUIAndCloseOtherByName("Equip");
             UIGameEquip uiComponent = (UIGameEquip)baseUIManager.GetUIByName("Equip");
             uiComponent.SetCharacterData(characterData);
+            baseUIManager.OpenUIAndCloseOtherByName("Equip");  
         }
     }
 

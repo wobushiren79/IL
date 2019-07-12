@@ -1,15 +1,18 @@
 ﻿using UnityEngine;
 using UnityEditor;
 using System;
+using System.Collections.Generic;
 
 [Serializable]
 public class CharacterEquipBean
 {
     public long handId;
-
     public long hatId;
     public long clothesId;
     public long shoesId;
+
+    //学会的书籍
+    public List<long> listLearnBook=new List<long>();
 
     /// <summary>
     /// 获取装备的属性加成
@@ -44,4 +47,23 @@ public class CharacterEquipBean
         attributesBean.lucky += itemsInfo.add_lucky;
         attributesBean.loyal += itemsInfo.add_loyal;
     }
+
+    /// <summary>
+    /// 检测是否学习过该书籍
+    /// </summary>
+    /// <param name="bookId"></param>
+    /// <returns></returns>
+    public bool CheckLearnBook(long bookId)
+    {
+        for (int i = 0; i < listLearnBook.Count; i++)
+        {
+           long itemId= listLearnBook[i];
+            if (itemId == bookId)
+            {
+                return true;
+            }
+        }
+        return false;
+    }
+
 }

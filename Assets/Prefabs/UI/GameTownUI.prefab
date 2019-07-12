@@ -1011,6 +1011,7 @@ GameObject:
   - component: {fileID: 1633166862942239860}
   - component: {fileID: 2617706461245454519}
   - component: {fileID: 274308637025253777}
+  - component: {fileID: 4381609135561477377}
   m_Layer: 5
   m_Name: Hat
   m_TagString: Untagged
@@ -1117,6 +1118,62 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
+--- !u!114 &4381609135561477377
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 422104360159667772}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8603e9a2bc0014c4aa71b668e0aecacf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  popupShow: {fileID: 2029128273642674934}
+  tvName: {fileID: 0}
+  rtIcon: {fileID: 3566682452035414980}
+  ivIcon: {fileID: 8053496676828851257}
+  infoItemsPopup: {fileID: 4381609135561477377}
+  selectionBox: {fileID: 2721058370662054375}
+  gameDataManager: {fileID: 0}
+  gameItemsManager: {fileID: 0}
+  characterDressManager: {fileID: 0}
+  dialogManager: {fileID: 0}
+  toastView: {fileID: 0}
+  itemsInfoBean:
+    id: 0
+    valid: 0
+    intact_id: 0
+    items_id: 0
+    items_type: 0
+    icon_key: 
+    add_cook: 0
+    add_speed: 0
+    add_account: 0
+    add_charm: 0
+    add_force: 0
+    add_lucky: 0
+    add_loyal: 0
+    add_id: 0
+    intact_number: 0
+    name: 
+    content: 
+  itemBean:
+    itemId: 0
+    itemNumber: 0
+  leftClick:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
+  rightClick:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
+  uiGameEquip: {fileID: 3188780461585003138}
+  type: 1
 --- !u!1 &437104898209024029
 GameObject:
   m_ObjectHideFlags: 0
@@ -2754,6 +2811,8 @@ GameObject:
   - component: {fileID: 5891278661140412608}
   - component: {fileID: 3993415784183969929}
   - component: {fileID: 2958606511173809131}
+  - component: {fileID: 8594585511073070914}
+  - component: {fileID: 7574278234162147552}
   m_Layer: 5
   m_Name: Icon
   m_TagString: Untagged
@@ -2817,6 +2876,33 @@ MonoBehaviour:
   m_FillClockwise: 1
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
+--- !u!114 &8594585511073070914
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1443328086029579742}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 1573420865, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_EffectColor: {r: 0, g: 0, b: 0, a: 0.5}
+  m_EffectDistance: {x: 1, y: -1}
+  m_UseGraphicAlpha: 1
+--- !u!225 &7574278234162147552
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1443328086029579742}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 0
+  m_IgnoreParentGroups: 0
 --- !u!1 &1482383910721387641
 GameObject:
   m_ObjectHideFlags: 0
@@ -4102,6 +4188,7 @@ GameObject:
   - component: {fileID: 4294445741703561761}
   - component: {fileID: 2344390135056877493}
   - component: {fileID: 8665111771855174751}
+  - component: {fileID: 3924764847286162614}
   m_Layer: 5
   m_Name: Icon
   m_TagString: Untagged
@@ -4149,7 +4236,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 0}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
@@ -4180,6 +4267,18 @@ MonoBehaviour:
   m_EffectColor: {r: 0, g: 0, b: 0, a: 0.5}
   m_EffectDistance: {x: 1, y: -1}
   m_UseGraphicAlpha: 1
+--- !u!225 &3924764847286162614
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2613744683627833966}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 0
+  m_IgnoreParentGroups: 0
 --- !u!1 &2622114303639053219
 GameObject:
   m_ObjectHideFlags: 0
@@ -4192,6 +4291,7 @@ GameObject:
   - component: {fileID: 5553836178813337582}
   - component: {fileID: 8270939438165093110}
   - component: {fileID: 6258435173017953883}
+  - component: {fileID: 3175490551083425100}
   m_Layer: 5
   m_Name: Shoes
   m_TagString: Untagged
@@ -4298,6 +4398,62 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
+--- !u!114 &3175490551083425100
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2622114303639053219}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8603e9a2bc0014c4aa71b668e0aecacf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  popupShow: {fileID: 2029128273642674934}
+  tvName: {fileID: 0}
+  rtIcon: {fileID: 7348205209510205998}
+  ivIcon: {fileID: 7330500052285311686}
+  infoItemsPopup: {fileID: 3175490551083425100}
+  selectionBox: {fileID: 2721058370662054375}
+  gameDataManager: {fileID: 0}
+  gameItemsManager: {fileID: 0}
+  characterDressManager: {fileID: 0}
+  dialogManager: {fileID: 0}
+  toastView: {fileID: 0}
+  itemsInfoBean:
+    id: 0
+    valid: 0
+    intact_id: 0
+    items_id: 0
+    items_type: 0
+    icon_key: 
+    add_cook: 0
+    add_speed: 0
+    add_account: 0
+    add_charm: 0
+    add_force: 0
+    add_lucky: 0
+    add_loyal: 0
+    add_id: 0
+    intact_number: 0
+    name: 
+    content: 
+  itemBean:
+    itemId: 0
+    itemNumber: 0
+  leftClick:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
+  rightClick:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
+  uiGameEquip: {fileID: 3188780461585003138}
+  type: 1
 --- !u!1 &2712281341297424002
 GameObject:
   m_ObjectHideFlags: 0
@@ -4444,10 +4600,22 @@ MonoBehaviour:
   uiAnimator: {fileID: 0}
   remarkData: 
   btBack: {fileID: 8413169767696801192}
+  equipHand: {fileID: 2691009011918313409}
   ivHand: {fileID: 6323289833802061336}
+  equipHat: {fileID: 4381609135561477377}
   ivHat: {fileID: 8053496676828851257}
+  equipClothes: {fileID: 5492829529936058128}
   ivClothes: {fileID: 2344390135056877493}
+  equipShoes: {fileID: 3175490551083425100}
   ivShoes: {fileID: 7330500052285311686}
+  tvLoyal: {fileID: 2544990596902594885}
+  tvCook: {fileID: 3976944351400912955}
+  tvSpeed: {fileID: 199333476551343283}
+  tvAccount: {fileID: 5670599802735583177}
+  tvCharm: {fileID: 7294380262066151282}
+  tvForce: {fileID: 8437691026227610289}
+  tvLucky: {fileID: 3649107336219292986}
+  characterUICpt: {fileID: 5752057252617405037}
   objItemContent: {fileID: 7915062024277027676}
   objItemModel: {fileID: 9079032310810603547}
   gameDataManager: {fileID: 0}
@@ -4635,6 +4803,7 @@ GameObject:
   - component: {fileID: 8533437614286038783}
   - component: {fileID: 7330500052285311686}
   - component: {fileID: 2835289078948458423}
+  - component: {fileID: 3476666205362485624}
   m_Layer: 5
   m_Name: Icon
   m_TagString: Untagged
@@ -4682,7 +4851,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 0}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
@@ -4713,6 +4882,18 @@ MonoBehaviour:
   m_EffectColor: {r: 0, g: 0, b: 0, a: 0.5}
   m_EffectDistance: {x: 1, y: -1}
   m_UseGraphicAlpha: 1
+--- !u!225 &3476666205362485624
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2976824912301838201}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 0
+  m_IgnoreParentGroups: 0
 --- !u!1 &2993475434503356943
 GameObject:
   m_ObjectHideFlags: 0
@@ -35971,6 +36152,7 @@ GameObject:
   - component: {fileID: 360633326268673508}
   - component: {fileID: 943166251271949517}
   - component: {fileID: 6300153527387419908}
+  - component: {fileID: 2443242173431303687}
   m_Layer: 5
   m_Name: Icon
   m_TagString: Untagged
@@ -36034,6 +36216,18 @@ MonoBehaviour:
   m_FillClockwise: 1
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
+--- !u!225 &2443242173431303687
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4051540072353260152}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 0
+  m_IgnoreParentGroups: 0
 --- !u!1 &4081386887251956687
 GameObject:
   m_ObjectHideFlags: 0
@@ -36895,6 +37089,7 @@ GameObject:
   - component: {fileID: 4645354639200397267}
   - component: {fileID: 8053496676828851257}
   - component: {fileID: 2360001451698760391}
+  - component: {fileID: 2689509943622636019}
   m_Layer: 5
   m_Name: Icon
   m_TagString: Untagged
@@ -36942,7 +37137,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 0}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
@@ -36973,6 +37168,18 @@ MonoBehaviour:
   m_EffectColor: {r: 0, g: 0, b: 0, a: 0.5}
   m_EffectDistance: {x: 1, y: -1}
   m_UseGraphicAlpha: 1
+--- !u!225 &2689509943622636019
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4571010246211037379}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 0
+  m_IgnoreParentGroups: 0
 --- !u!1 &4648936146127567998
 GameObject:
   m_ObjectHideFlags: 0
@@ -41883,7 +42090,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0.00001665665, y: 0.000026585963}
+  m_AnchoredPosition: {x: 0.00001665665, y: 0.00004181282}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &5420951954832615588
@@ -42072,6 +42279,7 @@ GameObject:
   - component: {fileID: 4298620854708895562}
   - component: {fileID: 6279385683086924532}
   - component: {fileID: 6707185815972378929}
+  - component: {fileID: 4272909950865740288}
   m_Layer: 5
   m_Name: Icon
   m_TagString: Untagged
@@ -42150,6 +42358,18 @@ MonoBehaviour:
   m_EffectColor: {r: 0, g: 0, b: 0, a: 0.5}
   m_EffectDistance: {x: 1, y: -1}
   m_UseGraphicAlpha: 1
+--- !u!225 &4272909950865740288
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8062692487888369413}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 0
+  m_IgnoreParentGroups: 0
 --- !u!1 &8084817346231039861
 GameObject:
   m_ObjectHideFlags: 0
@@ -42527,6 +42747,7 @@ GameObject:
   - component: {fileID: 4409456655117253950}
   - component: {fileID: 7350421565212809024}
   - component: {fileID: 1633145280337952796}
+  - component: {fileID: 5492829529936058128}
   m_Layer: 5
   m_Name: Clothes
   m_TagString: Untagged
@@ -42633,6 +42854,62 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
+--- !u!114 &5492829529936058128
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8357391284447669650}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8603e9a2bc0014c4aa71b668e0aecacf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  popupShow: {fileID: 2029128273642674934}
+  tvName: {fileID: 0}
+  rtIcon: {fileID: 5699391617295827237}
+  ivIcon: {fileID: 2344390135056877493}
+  infoItemsPopup: {fileID: 5492829529936058128}
+  selectionBox: {fileID: 2721058370662054375}
+  gameDataManager: {fileID: 0}
+  gameItemsManager: {fileID: 0}
+  characterDressManager: {fileID: 0}
+  dialogManager: {fileID: 0}
+  toastView: {fileID: 0}
+  itemsInfoBean:
+    id: 0
+    valid: 0
+    intact_id: 0
+    items_id: 0
+    items_type: 0
+    icon_key: 
+    add_cook: 0
+    add_speed: 0
+    add_account: 0
+    add_charm: 0
+    add_force: 0
+    add_lucky: 0
+    add_loyal: 0
+    add_id: 0
+    intact_number: 0
+    name: 
+    content: 
+  itemBean:
+    itemId: 0
+    itemNumber: 0
+  leftClick:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
+  rightClick:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
+  uiGameEquip: {fileID: 3188780461585003138}
+  type: 1
 --- !u!1 &8418788281269251932
 GameObject:
   m_ObjectHideFlags: 0
@@ -42786,6 +43063,7 @@ GameObject:
   - component: {fileID: 8411711284471831729}
   - component: {fileID: 986367598119102254}
   - component: {fileID: 2937785852762979862}
+  - component: {fileID: 2691009011918313409}
   m_Layer: 5
   m_Name: Hand
   m_TagString: Untagged
@@ -42892,6 +43170,62 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
+--- !u!114 &2691009011918313409
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8515478444666311244}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8603e9a2bc0014c4aa71b668e0aecacf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  popupShow: {fileID: 2029128273642674934}
+  tvName: {fileID: 0}
+  rtIcon: {fileID: 538781780231013112}
+  ivIcon: {fileID: 6323289833802061336}
+  infoItemsPopup: {fileID: 2691009011918313409}
+  selectionBox: {fileID: 2721058370662054375}
+  gameDataManager: {fileID: 0}
+  gameItemsManager: {fileID: 0}
+  characterDressManager: {fileID: 0}
+  dialogManager: {fileID: 0}
+  toastView: {fileID: 0}
+  itemsInfoBean:
+    id: 0
+    valid: 0
+    intact_id: 0
+    items_id: 0
+    items_type: 0
+    icon_key: 
+    add_cook: 0
+    add_speed: 0
+    add_account: 0
+    add_charm: 0
+    add_force: 0
+    add_lucky: 0
+    add_loyal: 0
+    add_id: 0
+    intact_number: 0
+    name: 
+    content: 
+  itemBean:
+    itemId: 0
+    itemNumber: 0
+  leftClick:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
+  rightClick:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
+  uiGameEquip: {fileID: 3188780461585003138}
+  type: 1
 --- !u!1 &8526134469623722277
 GameObject:
   m_ObjectHideFlags: 0
@@ -43181,6 +43515,7 @@ GameObject:
   - component: {fileID: 1488583912087337101}
   - component: {fileID: 4732655327245803044}
   - component: {fileID: 6230216357135062618}
+  - component: {fileID: 8186872965833132984}
   m_Layer: 5
   m_Name: ItemBackpack
   m_TagString: Untagged
@@ -43312,6 +43647,48 @@ CanvasGroup:
   m_Interactable: 1
   m_BlocksRaycasts: 1
   m_IgnoreParentGroups: 0
+--- !u!114 &8186872965833132984
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8639818734658660278}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 1392445389, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Navigation:
+    m_Mode: 3
+    m_SelectOnUp: {fileID: 0}
+    m_SelectOnDown: {fileID: 0}
+    m_SelectOnLeft: {fileID: 0}
+    m_SelectOnRight: {fileID: 0}
+  m_Transition: 1
+  m_Colors:
+    m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
+    m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
+    m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
+    m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
+    m_ColorMultiplier: 1
+    m_FadeDuration: 0.1
+  m_SpriteState:
+    m_HighlightedSprite: {fileID: 0}
+    m_PressedSprite: {fileID: 0}
+    m_DisabledSprite: {fileID: 0}
+  m_AnimationTriggers:
+    m_NormalTrigger: Normal
+    m_HighlightedTrigger: Highlighted
+    m_PressedTrigger: Pressed
+    m_DisabledTrigger: Disabled
+  m_Interactable: 1
+  m_TargetGraphic: {fileID: 1488583912087337101}
+  m_OnClick:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
+      Culture=neutral, PublicKeyToken=null
 --- !u!1 &8694503317926978171
 GameObject:
   m_ObjectHideFlags: 0
@@ -44002,6 +44379,7 @@ GameObject:
   - component: {fileID: 4623843468926170372}
   - component: {fileID: 8853414330754719143}
   - component: {fileID: 5701665347387694770}
+  - component: {fileID: 8875659877099146204}
   m_Layer: 5
   m_Name: ItemBackpack
   m_TagString: Untagged
@@ -44134,6 +44512,49 @@ MonoBehaviour:
     m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
       Culture=neutral, PublicKeyToken=null
   uiGameEquip: {fileID: 3188780461585003138}
+  type: 0
+--- !u!114 &8875659877099146204
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9079032310810603547}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 1392445389, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Navigation:
+    m_Mode: 3
+    m_SelectOnUp: {fileID: 0}
+    m_SelectOnDown: {fileID: 0}
+    m_SelectOnLeft: {fileID: 0}
+    m_SelectOnRight: {fileID: 0}
+  m_Transition: 1
+  m_Colors:
+    m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
+    m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
+    m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
+    m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
+    m_ColorMultiplier: 1
+    m_FadeDuration: 0.1
+  m_SpriteState:
+    m_HighlightedSprite: {fileID: 0}
+    m_PressedSprite: {fileID: 0}
+    m_DisabledSprite: {fileID: 0}
+  m_AnimationTriggers:
+    m_NormalTrigger: Normal
+    m_HighlightedTrigger: Highlighted
+    m_PressedTrigger: Pressed
+    m_DisabledTrigger: Disabled
+  m_Interactable: 1
+  m_TargetGraphic: {fileID: 4623843468926170372}
+  m_OnClick:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
+      Culture=neutral, PublicKeyToken=null
 --- !u!1 &9087430572011412287
 GameObject:
   m_ObjectHideFlags: 0
@@ -44363,6 +44784,18 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: dbdedefdbd5ca8045a10545a8d921571, type: 3}
+--- !u!114 &5752057252617405037 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6202850148858248707, guid: dbdedefdbd5ca8045a10545a8d921571,
+    type: 3}
+  m_PrefabInstance: {fileID: 1857623524233247854}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3e42d425c72705442b4e5e7ae17eb6ee, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!224 &5752057252617405038 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 6202850148858248704, guid: dbdedefdbd5ca8045a10545a8d921571,
