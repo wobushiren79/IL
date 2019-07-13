@@ -49,18 +49,18 @@ public class ItemGameWorkerCpt : BaseMonoBehaviour, IRadioButtonCallBack
         if (pbLoyal != null)
             pbLoyal.SetContent(GameCommonInfo.GetUITextById(11003));
 
-        if (pbSpeed != null)
-            pbSpeed.SetContent(GameCommonInfo.GetUITextById(11004));
-        if (pbAccount != null)
-            pbAccount.SetContent(GameCommonInfo.GetUITextById(11005));
-        if (pbCharm != null)
-            pbCharm.SetContent(GameCommonInfo.GetUITextById(11006));
         if (pbCook != null)
-            pbCook.SetContent(GameCommonInfo.GetUITextById(11007));
+            pbCook.SetContent(GameCommonInfo.GetUITextById(1));
+        if (pbSpeed != null)
+            pbSpeed.SetContent(GameCommonInfo.GetUITextById(2));
+        if (pbAccount != null)
+            pbAccount.SetContent(GameCommonInfo.GetUITextById(3));
+        if (pbCharm != null)
+            pbCharm.SetContent(GameCommonInfo.GetUITextById(4));
         if (pbForce != null)
-            pbForce.SetContent(GameCommonInfo.GetUITextById(11008));
+            pbForce.SetContent(GameCommonInfo.GetUITextById(5));
         if (pbLucky != null)
-            pbLucky.SetContent(GameCommonInfo.GetUITextById(11009));
+            pbLucky.SetContent(GameCommonInfo.GetUITextById(6));
 
         if (rbAccounting != null)
             rbAccounting.SetCallBack(this);

@@ -172,7 +172,7 @@ public class GameDataBean
     }
 
     /// <summary>
-    /// 修改建筑材料数量
+    /// 修改道具数量
     /// </summary>
     public void ChangeItemsNumber(long itemsId, long number)
     {

@@ -53,6 +53,14 @@ public class StoreInfoController : BaseMVCController<StoreInfoModel, IStoreInfoV
     {
         GetStoreInfoByType(2);
     }
+    
+    /// <summary>
+    /// 获取建筑坊数据
+    /// </summary>
+    public void GetCarpenterInfo()
+    {
+        GetStoreInfoByType(3);
+    }
 
     /// <summary>
     /// 查询所有商店信息
