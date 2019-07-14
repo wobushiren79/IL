@@ -34,6 +34,12 @@ public class UITownCarpenter : UIBaseOne, IStoreInfoView, IRadioGroupCallBack
         InitDataByType(0);
     }
 
+    public override void RefreshUI()
+    {
+        base.RefreshUI();
+        InitDataByType(0);
+    }
+
     public void InitDataByType(int type)
     {
        List<StoreInfoBean> listData= GetCerpenterListDataByMark(type);
@@ -76,7 +82,21 @@ public class UITownCarpenter : UIBaseOne, IStoreInfoView, IRadioGroupCallBack
             GameObject itemObj ;
             if (type == 0)
             {
-                itemObj = Instantiate(objCarpenterModelForExpansion, objCarpenterContent.transform);
+                if(itemData.id> 300000&& itemData.id<= 300010)
+                {
+                    if (int.Parse(itemData.mark) - 1 == gameDataManager.gameData.GetInnBuildData().buildLevel)
+                    {
+                        itemObj = Instantiate(objCarpenterModelForExpansion, objCarpenterContent.transform);
+                    }
+                    else
+                    {
+                        continue;
+                    }   
+                }
+                else
+                {
+                    itemObj = Instantiate(objCarpenterModelForExpansion, objCarpenterContent.transform);
+                } 
             }
             else
             {

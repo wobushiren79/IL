@@ -244,12 +244,27 @@ public class GameDataBean
     /// </summary>
     /// <param name="itemId"></param>
     /// <returns></returns>
-    public long GetItemsNumber(long itemId)
+    /// 
+    public long GetItemsNumber(long itemId) {
+      return  GetNumber(itemId, itemsList);
+    }
+
+    /// <summary>
+    /// 获取建筑材料数量
+    /// </summary>
+    /// <param name="itemId"></param>
+    /// <returns></returns>
+    public long GetBuildNumber(long itemId)
+    {
+        return GetNumber(itemId, buildList);
+    }
+
+    public long GetNumber(long itemId,List<ItemBean> listData)
     {
         long number = 0;
-        for (int i = 0; i < itemsList.Count; i++)
+        for (int i = 0; i < listData.Count; i++)
         {
-            ItemBean itemData = itemsList[i];
+            ItemBean itemData = listData[i];
             if (itemId == itemData.itemId)
             {
                 number += itemData.itemNumber;
@@ -257,6 +272,8 @@ public class GameDataBean
         }
         return number;
     }
+
+    
 
     /// <summary>
     /// 增加菜谱

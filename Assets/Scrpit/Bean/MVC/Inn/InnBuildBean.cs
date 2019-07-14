@@ -16,6 +16,8 @@ public class InnBuildBean
     public int innWidth = 9;//客栈宽
     public int innHeight = 9;//客栈高
 
+    public int buildLevel = 0;
+
     /// <summary>
     /// 初始化墙壁
     /// </summary>
@@ -108,18 +110,15 @@ public class InnBuildBean
     /// </summary>
     public void InitFloor()
     {
-        if (listFloor == null)
+        listFloor = new List<InnResBean>();
+        for (int i = 0; i < innWidth; i++)
         {
-            listFloor = new List<InnResBean>();
-            for (int i = 0; i < innWidth; i++)
+            for (int f = 0; f < innHeight; f++)
             {
-                for (int f = 0; f < innHeight; f++)
-                {
-                    InnResBean itemData = new InnResBean();
-                    itemData.id = 10001;
-                    itemData.startPosition = new Vector3Bean(i, f);
-                    listFloor.Add(itemData);
-                }
+                InnResBean itemData = new InnResBean();
+                itemData.id = 10001;
+                itemData.startPosition = new Vector3Bean(i, f);
+                listFloor.Add(itemData);
             }
         }
     }
@@ -147,7 +146,7 @@ public class InnBuildBean
             listFurniture = new List<InnResBean>();
         return listFurniture;
     }
-   
+
 
     /// <summary>
     /// 获取门

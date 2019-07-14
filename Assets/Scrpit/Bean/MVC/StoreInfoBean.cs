@@ -9,6 +9,8 @@ public class StoreInfoBean : BaseBean
     public string mark;
     public long mark_id;
     public int mark_type;
+    public int mark_x;
+    public int mark_y;
     public long price_l;
     public long price_m;
     public long price_s;

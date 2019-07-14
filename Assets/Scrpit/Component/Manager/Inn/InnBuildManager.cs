@@ -4,14 +4,15 @@ using System.Collections.Generic;
 
 public class InnBuildManager : BaseManager, IBuildDataView
 {
-    public List<BuildItemBean> listBuildData;
+    public Dictionary<long,BuildItemBean> listBuildData;
 
     public BuildDataController buildDataController;
 
     //家具列表
     public List<BaseBuildItemCpt> listFurnitureCpt;
     //家具图标
-    public List<IconBean> listFurnitureIcon;
+    public IconBeanDictionary listFurnitureIcon;
+
     private void Awake()
     {
         buildDataController = new BuildDataController(this, this);
@@ -60,26 +61,25 @@ public class InnBuildManager : BaseManager, IBuildDataView
     {
         if (listBuildData == null)
             return null;
-        for (int i = 0; i < listBuildData.Count; i++)
-        {
-            BuildItemBean itemData = listBuildData[i];
-            if (itemData.id == id)
-            {
-                return itemData;
-            }
-        }
-        return null;
+        if (listBuildData.TryGetValue(id, out BuildItemBean itemData))
+            return itemData;
+        else
+            return null;
     }
 
 
     #region 建筑数据回调
     public void GetAllBuildItemsSuccess(List<BuildItemBean> listData)
     {
+        listBuildData = new Dictionary<long, BuildItemBean>();
         if (CheckUtil.ListIsNull(listData))
         {
             return;
         }
-        this.listBuildData = listData;
+        foreach (BuildItemBean itemData in listData)
+        {
+            listBuildData.Add(itemData.id, itemData);
+        }
     }
 
     public void GetAllBuildItemsFail()
@@ -88,7 +88,11 @@ public class InnBuildManager : BaseManager, IBuildDataView
 
     public void GetBuildItemsByTypeSuccess(BuildItemBean.BuildType type, List<BuildItemBean> listData)
     {
-        this.listBuildData = listData;
+        listBuildData = new Dictionary<long, BuildItemBean>();
+        foreach (BuildItemBean itemData in listData)
+        {
+            listBuildData.Add(itemData.id, itemData);
+        }
     }
 
     public void GetBuildItemsByTypeFail()

@@ -80,6 +80,14 @@ public class ListDataEditor : Editor
         AddIconBeanDictionaryByFolder("Assets/Texture/Items/", foodManager.listItemsIcon);
     }
 
+
+    [MenuItem("Custom/List/AddFurniture")]
+    public static void AddFurniture()
+    {
+        GameObject Target = Selection.gameObjects[0];
+        InnBuildManager innBuildManager = Target.GetComponent<InnBuildManager>();
+        AddIconBeanDictionaryByFolder("Assets/Texture/InnBuild/", innBuildManager.listFurnitureIcon);
+    }
     /// <summary>
     /// 根据指定文件添加字典
     /// </summary>

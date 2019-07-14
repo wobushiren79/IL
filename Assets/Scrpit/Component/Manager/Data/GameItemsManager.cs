@@ -10,7 +10,6 @@ public class GameItemsManager : BaseManager, IItemsInfoView
     public ItemsInfoController itemsInfoController;
     //装备数据
     public Dictionary<long, ItemsInfoBean> listDataItems;
-
     private void Awake()
     {
         itemsInfoController = new ItemsInfoController(this, this);

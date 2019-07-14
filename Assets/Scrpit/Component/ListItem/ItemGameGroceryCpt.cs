@@ -155,7 +155,7 @@ public class ItemGameGroceryCpt : BaseMonoBehaviour, DialogView.IDialogCallBack
             return;
         }
         DialogBean dialogBean = new DialogBean();
-        dialogBean.content = "确认购买" + itemsInfo.name + "?";
+        dialogBean.content =string.Format(GameCommonInfo.GetUITextById(3002), itemsInfo.name);
         dialogManager.CreateDialog(0, this, dialogBean);
     }
 
@@ -170,7 +170,7 @@ public class ItemGameGroceryCpt : BaseMonoBehaviour, DialogView.IDialogCallBack
             return;
         }
         gameDataManager.gameData.PayMoney(storeInfo.price_l, storeInfo.price_m, storeInfo.price_s);
-        toastView.ToastHint(ivIcon.sprite, "购买成功!");
+        toastView.ToastHint(string.Format(GameCommonInfo.GetUITextById(1010), itemsInfo.name));
         ItemBean itemBean = new ItemBean
         {
             itemId = storeInfo.mark_id,
