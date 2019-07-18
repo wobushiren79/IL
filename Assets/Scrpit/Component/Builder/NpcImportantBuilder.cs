@@ -13,7 +13,7 @@ public class NpcImportantBuilder : BaseMonoBehaviour
 
     public void BuildImportant()
     {
-        List<NpcInfoBean> listCharacter=  npcInfoManager.GetNpcInfoByType(new int[] {1,2,3,4});
+        List<NpcInfoBean> listCharacter=  npcInfoManager.GetNpcInfoByType(new int[] {1,2,3,4,10});
         foreach (NpcInfoBean itemData in listCharacter)
         {
             //生成

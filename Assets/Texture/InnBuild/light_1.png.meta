@@ -1,12 +1,12 @@
 fileFormatVersion: 2
-guid: 570e06c5c50efef479db0d912d6bc581
+guid: 5091535d347a7374db86eb56cab62919
 TextureImporter:
   fileIDToRecycleName:
-    21300000: moon_light_0
-    21300002: moon_light_1
-    21300004: moon_light_2
-    21300006: moon_light_3
-    21300008: moon_light_4
+    21300000: light_1_0
+    21300002: light_1_1
+    21300004: light_1_2
+    21300006: light_1_3
+    21300008: light_1_4
   externalObjects: {}
   serializedVersion: 9
   mipmaps:
@@ -50,7 +50,7 @@ TextureImporter:
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 100
+  spritePixelsToUnits: 32
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -68,8 +68,19 @@ TextureImporter:
     maxTextureSize: 8192
     resizeAlgorithm: 0
     textureFormat: -1
-    textureCompression: 1
+    textureCompression: 0
     compressionQuality: 100
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+  - serializedVersion: 2
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
     crunchedCompression: 0
     allowsAlphaSplitting: 0
     overridden: 0
@@ -78,12 +89,12 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: moon_light_0
+      name: light_1_0
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 64
+        width: 32
         height: 64
       alignment: 9
       pivot: {x: 0.5, y: 0.5}
@@ -92,18 +103,38 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: faa5983e71fba9b10800000000000000
+      spriteID: e2f53e6f75b48dc4ebf2414013979ff9
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: moon_light_1
+      name: light_1_1
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 0
+        width: 32
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 79a435e4f73c2f148b6e1212eded9f19
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: light_1_2
       rect:
         serializedVersion: 2
         x: 64
         y: 0
-        width: 64
+        width: 32
         height: 64
       alignment: 9
       pivot: {x: 0.5, y: 0.5}
@@ -112,18 +143,38 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: a513b92626ef739b0800000000000000
+      spriteID: 4ced821cfeeb0ee47b3dd60ceec57028
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: moon_light_2
+      name: light_1_3
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 0
+        width: 32
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0c449c7e4ca66b642b39abf42248b44c
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: light_1_4
       rect:
         serializedVersion: 2
         x: 128
         y: 0
-        width: 64
+        width: 32
         height: 64
       alignment: 9
       pivot: {x: 0.5, y: 0.5}
@@ -132,47 +183,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 67267acdb10729340800000000000000
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: moon_light_3
-      rect:
-        serializedVersion: 2
-        x: 192
-        y: 0
-        width: 64
-        height: 64
-      alignment: 9
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: abd47121c0b2d0a00800000000000000
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: moon_light_4
-      rect:
-        serializedVersion: 2
-        x: 256
-        y: 0
-        width: 64
-        height: 64
-      alignment: 9
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 8bf389bd9441ef5b0800000000000000
+      spriteID: e647e14bc85b83f458d8ea4dbfae1bf9
       vertices: []
       indices: 
       edges: []
@@ -180,7 +191,7 @@ TextureImporter:
     outline: []
     physicsShape: []
     bones: []
-    spriteID: 
+    spriteID: e86a5d7cb0b8feb49af3bef04c292333
     vertices: []
     indices: 
     edges: []

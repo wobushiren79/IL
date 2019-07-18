@@ -5750,6 +5750,7 @@ GameObject:
   - component: {fileID: 163403361}
   - component: {fileID: 163403363}
   - component: {fileID: 163403362}
+  - component: {fileID: 163403364}
   m_Layer: 5
   m_Name: MoonLight
   m_TagString: Untagged
@@ -5796,7 +5797,7 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_Sprite: {fileID: 21300000, guid: 570e06c5c50efef479db0d912d6bc581, type: 3}
+  m_Sprite: {fileID: 21300014, guid: 570e06c5c50efef479db0d912d6bc581, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -5813,6 +5814,25 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 163403360}
   m_CullTransparentMesh: 0
+--- !u!95 &163403364
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 163403360}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 402004b1dc3ca3e47a5b504871960b3f, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &175607843
 GameObject:
   m_ObjectHideFlags: 0
@@ -22826,9 +22846,11 @@ MonoBehaviour:
           a: 1
         face: 0
       equips:
+        handId: 0
         hatId: 0
         clothesId: 0
         shoesId: 0
+        listLearnBook: 
     workCharacterList: []
     innBuildData:
       listWall: []
@@ -22836,6 +22858,7 @@ MonoBehaviour:
       listFurniture: []
       innWidth: 9
       innHeight: 9
+      buildLevel: 0
     gameTime:
       year: 0
       month: 0
@@ -22843,8 +22866,8 @@ MonoBehaviour:
       hour: 0
       minute: 0
       second: 0
-    buildItemList: []
-    equipItemList: []
+    buildList: []
+    itemsList: []
     menuList: []
     ingOilsalt: 0
     ingMeat: 0
@@ -33368,9 +33391,11 @@ MonoBehaviour:
           a: 0
         face: 0
       equips:
+        handId: 0
         hatId: 0
         clothesId: 0
         shoesId: 0
+        listLearnBook: 
     gameTime:
       year: 0
       month: 0
@@ -34910,7 +34935,6 @@ GameObject:
   m_Component:
   - component: {fileID: 2113240895}
   - component: {fileID: 2113240897}
-  - component: {fileID: 2113240896}
   m_Layer: 5
   m_Name: Moon
   m_TagString: Untagged
@@ -34939,25 +34963,6 @@ RectTransform:
   m_AnchoredPosition: {x: 100, y: -100}
   m_SizeDelta: {x: 180, y: 180}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!95 &2113240896
-Animator:
-  serializedVersion: 3
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2113240894}
-  m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 402004b1dc3ca3e47a5b504871960b3f, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!222 &2113240897
 CanvasRenderer:
   m_ObjectHideFlags: 0
