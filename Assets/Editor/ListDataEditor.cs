@@ -69,6 +69,7 @@ public class ListDataEditor : Editor
     {
         GameObject Target = Selection.gameObjects[0];
         InnFoodManager foodManager = Target.GetComponent<InnFoodManager>();
+        foodManager.listFoodIcon.Clear();
         AddIconBeanDictionaryByFolder("Assets/Texture/Food/", foodManager.listFoodIcon);
     }
 
@@ -76,8 +77,9 @@ public class ListDataEditor : Editor
     public static void AddItems()
     {
         GameObject Target = Selection.gameObjects[0];
-        GameItemsManager foodManager = Target.GetComponent<GameItemsManager>();
-        AddIconBeanDictionaryByFolder("Assets/Texture/Items/", foodManager.listItemsIcon);
+        GameItemsManager itemsManager = Target.GetComponent<GameItemsManager>();
+        itemsManager.listItemsIcon.Clear();
+        AddIconBeanDictionaryByFolder("Assets/Texture/Items/", itemsManager.listItemsIcon);
     }
 
 
@@ -86,8 +88,20 @@ public class ListDataEditor : Editor
     {
         GameObject Target = Selection.gameObjects[0];
         InnBuildManager innBuildManager = Target.GetComponent<InnBuildManager>();
+        innBuildManager.listFurnitureIcon.Clear();
         AddIconBeanDictionaryByFolder("Assets/Texture/InnBuild/", innBuildManager.listFurnitureIcon);
     }
+
+    [MenuItem("Custom/List/AddUI")]
+    public static void AddUI()
+    {
+        GameObject Target = Selection.gameObjects[0];
+        UIDataManager uiDataManager = Target.GetComponent<UIDataManager>();
+        uiDataManager.listUIIcon.Clear();
+        AddIconBeanDictionaryByFolder("Assets/Texture/Background/", uiDataManager.listUIIcon);
+        AddIconBeanDictionaryByFolder("Assets/Texture/Common/", uiDataManager.listUIIcon);
+    }
+
     /// <summary>
     /// 根据指定文件添加字典
     /// </summary>
@@ -112,7 +126,6 @@ public class ListDataEditor : Editor
     /// <param name="mapFood"></param>
     public static void AddIconBeanDictionaryByFolder(string folderPath, IconBeanDictionary map)
     {
-        map.Clear();
         FileInfo[] files = FileUtil.GetFilesByPath(folderPath);
         foreach (FileInfo item in files)
         {

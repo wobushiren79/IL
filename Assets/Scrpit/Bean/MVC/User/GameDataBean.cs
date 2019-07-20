@@ -16,6 +16,7 @@ public class GameDataBean
     public List<CharacterBean> workCharacterList = new List<CharacterBean>();//员工
     public InnBuildBean innBuildData;//客栈建筑数据
     public TimeBean gameTime;//游戏时间
+    public UserAchievementBean userAchievement;
 
     public List<ItemBean> buildList = new List<ItemBean>();//所拥有的建筑材料
     public List<ItemBean> itemsList = new List<ItemBean>();//所拥有的装备
@@ -31,6 +32,18 @@ public class GameDataBean
     public long ingFlour;//面粉
 
     public int workerNumberLimit = 5;//员工人员招聘上限
+
+    /// <summary>
+    /// 获取成就数据
+    /// </summary>
+    /// <returns></returns>
+    public UserAchievementBean GetAchievementData()
+    {
+        if (userAchievement == null)
+            userAchievement = new UserAchievementBean();
+        return userAchievement;
+    }
+
     /// <summary>
     /// 获取建筑数据
     /// </summary>
