@@ -22,13 +22,39 @@ public class AchievementInfoBean : BaseBean
     public string name;
     public string content;
 
-   /// <summary>
-   /// 检测是否满足条件
-   /// </summary>
-   /// <param name="gameData"></param>
-   /// <returns></returns>
+    /// <summary>
+    /// 检测是否满足条件
+    /// </summary>
+    /// <param name="gameData"></param>
+    /// <returns></returns>
     public bool CheckAchievement(GameDataBean gameData)
     {
-        return false;
+        //检测拥有的钱
+        if (achieve_money_s != 0 && achieve_money_s > gameData.moneyS)
+        {
+            return false;
+        }
+        if (achieve_money_m != 0 && achieve_money_m > gameData.moneyM)
+        {
+            return false;
+        }
+        if (achieve_money_l != 0 && achieve_money_l > gameData.moneyL)
+        {
+            return false;
+        }
+        //检测支付的钱
+        if (achieve_pay_s != 0 && achieve_pay_s > gameData.moneyS)
+        {
+            return false;
+        }
+        if (achieve_pay_m != 0 && achieve_pay_m > gameData.moneyM)
+        {
+            return false;
+        }
+        if (achieve_pay_l != 0 && achieve_pay_l > gameData.moneyL)
+        {
+            return false;
+        }
+        return true;
     }
 }

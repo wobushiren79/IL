@@ -60,7 +60,7 @@ public class UITownGuildAchievement : UIBaseOne, IRadioGroupCallBack,IAchievemen
             itemObj.SetActive(true);
             ItemGameGuildAchievementCpt achCpt = itemObj.GetComponent<ItemGameGuildAchievementCpt>();
             achCpt.SetData(itemData);
-            itemObj.transform.DOScale(new Vector3(0, 0, 0), 0.5f).SetEase(Ease.OutBack).SetDelay(i * 0.05f).From();
+            itemObj.transform.DOScale(new Vector3(0, 0, 0), 0.5f).SetEase(Ease.OutBack).SetDelay(i * 0.02f).From();
         }
     }
 

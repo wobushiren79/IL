@@ -3,9 +3,20 @@ using UnityEditor;
 using UnityEngine.UI;
 public class ItemGameGuildAchievementCpt : BaseMonoBehaviour
 {
+    public enum AchievementStatusEnum
+    {
+        UnKnown=0,
+        Completed=1,
+        Processing=2,
+        ToBeConfirmed=3
+    }
+
     public Image ivIcon;
     public Image ivBackground;
+    public Button btSubmit;
+    public InfoAchievementPopupButton popupButton;
 
+    public UITownGuildAchievement uiTownGuildAchievement;
     public GameItemsManager gameItemsManager;
     public GameDataManager gameDataManager;
 
@@ -16,6 +27,13 @@ public class ItemGameGuildAchievementCpt : BaseMonoBehaviour
     public Material materialGray;
 
     public AchievementInfoBean achievementInfo;
+    public AchievementStatusEnum status= AchievementStatusEnum.UnKnown;
+
+    private void Start()
+    {
+        if (btSubmit != null)
+            btSubmit.onClick.AddListener(SubmitAchievement);
+    }
 
     public void SetData(AchievementInfoBean data)
     {
@@ -31,7 +49,7 @@ public class ItemGameGuildAchievementCpt : BaseMonoBehaviour
         bool hasAch = gameDataManager.gameData.GetAchievementData().CheckAchievementList(achId);
         if (hasAch)
         {
-            SetAchStatus(1);
+            SetAchStatus(AchievementStatusEnum.Completed);
             return;
         }
         //检测前置成就
@@ -40,11 +58,11 @@ public class ItemGameGuildAchievementCpt : BaseMonoBehaviour
             //检测是否符合条件
             if (CheckAchieve())
             {
-                SetAchStatus(3);
+                SetAchStatus(AchievementStatusEnum.ToBeConfirmed);
             }
             else
             {
-                SetAchStatus(2);
+                SetAchStatus(AchievementStatusEnum.Processing);
             }
         }
         else
@@ -55,47 +73,51 @@ public class ItemGameGuildAchievementCpt : BaseMonoBehaviour
                 //检测是否符合条件
                 if (CheckAchieve())
                 {
-                    SetAchStatus(3);
+                    SetAchStatus(AchievementStatusEnum.ToBeConfirmed);
                 }
                 else
                 {
-                    SetAchStatus(2);
+                    SetAchStatus(AchievementStatusEnum.Processing);
                 }
             }
             else
             {
-                SetAchStatus(0);
+                SetAchStatus(AchievementStatusEnum.UnKnown);
             }
         }
     }
 
-    public void SetAchStatus(int status)
+    public void SetAchStatus(AchievementStatusEnum status)
     {
+        this.status = status;
         if (achievementInfo == null || ivIcon == null || ivBackground == null)
             return;
         switch (status)
         {
-            case 0:
+            case AchievementStatusEnum.UnKnown:
                 //未知
                 ivIcon.sprite = spIconUnknow;
                 ivBackground.sprite = spBackLock;
                 break;
-            case 1:
+            case AchievementStatusEnum.Completed:
                 //已解锁
                 SetIcon(achievementInfo.icon_key, null);
                 ivBackground.sprite = spBackUnLock;
                 break;
-            case 2:
+            case AchievementStatusEnum.Processing:
                 //未解锁 不满足条件
                 SetIcon(achievementInfo.icon_key, materialGray);
                 ivBackground.sprite = spBackLock;
                 break;
-            case 3:
+            case AchievementStatusEnum.ToBeConfirmed:
                 //未解锁 满足条件  
                 SetIcon(achievementInfo.icon_key, materialGray);
                 ivBackground.sprite = spBackPass;
                 break;
         }
+        //弹出框刷新数据
+        if (popupButton != null)
+            popupButton.SetData(status, achievementInfo);
     }
 
     public void SetIcon(string iconKey, Material material)
@@ -115,5 +137,18 @@ public class ItemGameGuildAchievementCpt : BaseMonoBehaviour
         if (achievementInfo == null || gameDataManager == null)
             return false;
         return achievementInfo.CheckAchievement(gameDataManager.gameData);
+    }
+
+    public void SubmitAchievement()
+    {
+        if (gameDataManager == null || achievementInfo == null)
+            return;
+        if (status ==AchievementStatusEnum.ToBeConfirmed)
+        {
+            gameDataManager.gameData.GetAchievementData().AddAchievement(achievementInfo.id);
+            SetAchStatus( AchievementStatusEnum.Completed);
+            if (uiTownGuildAchievement != null)
+                uiTownGuildAchievement.InitDataByType(achievementInfo.type);
+        }
     }
 }
