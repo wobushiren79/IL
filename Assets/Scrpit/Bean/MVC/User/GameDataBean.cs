@@ -10,6 +10,7 @@ public class GameDataBean
     public long moneyS;//1黄金=10白银  1白银=1000文
     public long moneyM;
     public long moneyL;
+    public long guildCoin;//公会硬币
 
     public string innName;//客栈名称
     public CharacterBean userCharacter;// 老板
@@ -42,6 +43,37 @@ public class GameDataBean
         if (userAchievement == null)
             userAchievement = new UserAchievementBean();
         return userAchievement;
+    }
+
+    /// <summary>
+    /// 添加成就和奖励
+    /// </summary>
+    /// <param name="achievementInfo"></param>
+    public void AddAchievement(AchievementInfoBean achievementInfo)
+    {
+        //添加成就ID
+        GetAchievementData().AddAchievement(achievementInfo.id);
+        //添加奖励
+        if (achievementInfo.reward_guildcoin != 0)
+        {
+            guildCoin += achievementInfo.reward_guildcoin;
+        }
+        //添加装备
+        if (!CheckUtil.StringIsNull(achievementInfo.reward_items_ids))
+        {
+            foreach (long id in achievementInfo.GetRewardItems())
+            {
+                AddNewItems(id, 1);
+            }
+        }
+        //添加建筑材料
+        if (!CheckUtil.StringIsNull(achievementInfo.reward_build_ids))
+        {
+            foreach (long id in achievementInfo.GetRewardBuild())
+            {
+                ChangeBuildNumber(id, 1);
+            }
+        }
     }
 
     /// <summary>
@@ -217,6 +249,15 @@ public class GameDataBean
         }
     }
 
+    /// <summary>
+    /// 增加一个傲居
+    /// </summary>
+    /// <param name="id"></param>
+    public void AddNewItems(long id,long number)
+    {
+        ItemBean itemBean = new ItemBean(id,1);
+        itemsList.Add(itemBean);
+    }
 
     /// <summary>
     /// 是否有足够的钱
@@ -227,6 +268,20 @@ public class GameDataBean
     public bool HasEnoughMoney(long priceL, long priceM, long priceS)
     {
         if (moneyL < priceL || moneyM < priceM || moneyS < priceS)
+        {
+            return false;
+        }
+        return true;
+    }
+
+    /// <summary>
+    /// 是否1足够的公会勋章
+    /// </summary>
+    /// <param name="coin"></param>
+    /// <returns></returns>
+    public bool HasEnoughGuildCoin(long coin)
+    {
+        if (guildCoin < coin)
         {
             return false;
         }
@@ -253,13 +308,25 @@ public class GameDataBean
     }
 
     /// <summary>
+    /// 支付公会勋章
+    /// </summary>
+    /// <param name="coin"></param>
+    public void PayGuildCoin(long coin)
+    {
+        guildCoin -= coin;
+        if (guildCoin < 0)
+            guildCoin = 0;
+    }
+
+    /// <summary>
     /// 获取某一物品数量
     /// </summary>
     /// <param name="itemId"></param>
     /// <returns></returns>
     /// 
-    public long GetItemsNumber(long itemId) {
-      return  GetNumber(itemId, itemsList);
+    public long GetItemsNumber(long itemId)
+    {
+        return GetNumber(itemId, itemsList);
     }
 
     /// <summary>
@@ -272,7 +339,7 @@ public class GameDataBean
         return GetNumber(itemId, buildList);
     }
 
-    public long GetNumber(long itemId,List<ItemBean> listData)
+    public long GetNumber(long itemId, List<ItemBean> listData)
     {
         long number = 0;
         for (int i = 0; i < listData.Count; i++)
@@ -286,7 +353,7 @@ public class GameDataBean
         return number;
     }
 
-    
+
 
     /// <summary>
     /// 增加菜谱
@@ -296,7 +363,7 @@ public class GameDataBean
     public bool AddFoodMenu(long menuId)
     {
         //检测是否已经学过
-        foreach(MenuOwnBean itemData in menuList)
+        foreach (MenuOwnBean itemData in menuList)
         {
             if (itemData.menuId == menuId)
             {

@@ -182,7 +182,7 @@ public class UIGameEquip : BaseUIComponent
             case (int)GeneralEnum.Hand:
                 unloadItemsId = this.characterData.equips.handId;
                 this.characterData.equips.handId = itemsInfo.id;
-                Sprite spHand = characterDressManager.GetShoesSpriteByName(itemsInfo.icon_key);
+                Sprite spHand = gameItemsManager.GetItemsSpriteByName(itemsInfo.icon_key);
                 if (itemsInfo.icon_key == null || spHand == null)
                     ivHand.color = new Color(1, 1, 1, 0);
                 else

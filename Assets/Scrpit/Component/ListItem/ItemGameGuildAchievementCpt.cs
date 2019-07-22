@@ -132,6 +132,10 @@ public class ItemGameGuildAchievementCpt : BaseMonoBehaviour
         ivIcon.material = material;
     }
 
+    /// <summary>
+    /// 检测成就
+    /// </summary>
+    /// <returns></returns>
     public bool CheckAchieve()
     {
         if (achievementInfo == null || gameDataManager == null)
@@ -139,14 +143,20 @@ public class ItemGameGuildAchievementCpt : BaseMonoBehaviour
         return achievementInfo.CheckAchievement(gameDataManager.gameData);
     }
 
+    /// <summary>
+    /// 完成成就
+    /// </summary>
     public void SubmitAchievement()
     {
         if (gameDataManager == null || achievementInfo == null)
             return;
         if (status ==AchievementStatusEnum.ToBeConfirmed)
         {
-            gameDataManager.gameData.GetAchievementData().AddAchievement(achievementInfo.id);
+            //添加该成就和奖励
+            gameDataManager.gameData.AddAchievement(achievementInfo);
+            //设置状态
             SetAchStatus( AchievementStatusEnum.Completed);
+            //刷新UI
             if (uiTownGuildAchievement != null)
                 uiTownGuildAchievement.InitDataByType(achievementInfo.type);
         }

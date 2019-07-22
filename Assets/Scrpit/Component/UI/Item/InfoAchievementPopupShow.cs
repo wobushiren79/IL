@@ -1,6 +1,8 @@
 ﻿using UnityEngine;
 using UnityEditor;
 using UnityEngine.UI;
+using System.Collections.Generic;
+
 public class InfoAchievementPopupShow : PopupShowView
 {
     public Image ivIcon;
@@ -12,14 +14,20 @@ public class InfoAchievementPopupShow : PopupShowView
     public GameObject objAchieveContent;
     public GameObject objAchieveModel;
 
+    public GameObject objRewardTitle;
+    public GameObject objRewardContent;
+    public GameObject objRewardModel;
+
     public Material materialGray;
 
     public GameDataManager gameDataManager;
     public GameItemsManager gameItemsManager;
+    public CharacterDressManager characterDressManager;
+    public InnBuildManager innBuildManager;
     public AchievementInfoBean achievementInfo;
     public ItemGameGuildAchievementCpt.AchievementStatusEnum status;
 
-    public void SetData(ItemGameGuildAchievementCpt.AchievementStatusEnum status,AchievementInfoBean achievementInfo)
+    public void SetData(ItemGameGuildAchievementCpt.AchievementStatusEnum status, AchievementInfoBean achievementInfo)
     {
         this.status = status;
         this.achievementInfo = achievementInfo;
@@ -28,6 +36,7 @@ public class InfoAchievementPopupShow : PopupShowView
         SetContent(achievementInfo.content);
         SetAchieve(achievementInfo);
         SetStatus(status);
+        SetReward(achievementInfo);
     }
 
     public void SetIcon(string iconKey)
@@ -46,7 +55,7 @@ public class InfoAchievementPopupShow : PopupShowView
                     ivIcon.material = materialGray;
                     break;
             }
-        }   
+        }
     }
 
     public void SetName(string name)
@@ -61,15 +70,19 @@ public class InfoAchievementPopupShow : PopupShowView
             tvContent.text = content;
     }
 
+    /// <summary>
+    /// 设置状态
+    /// </summary>
+    /// <param name="status"></param>
     public void SetStatus(ItemGameGuildAchievementCpt.AchievementStatusEnum status)
     {
-        if(tvStatus!=null)
+        if (tvStatus != null)
         {
             switch (status)
             {
                 case ItemGameGuildAchievementCpt.AchievementStatusEnum.Completed:
                     tvStatus.text = GameCommonInfo.GetUITextById(12001);
-                    tvStatus.color = new Color(0,1,0,1);
+                    tvStatus.color = new Color(0, 1, 0, 1);
                     break;
                 case ItemGameGuildAchievementCpt.AchievementStatusEnum.Processing:
                     tvStatus.text = GameCommonInfo.GetUITextById(12002);
@@ -82,10 +95,14 @@ public class InfoAchievementPopupShow : PopupShowView
                     tvStatus.color = new Color(1, 0.2f, 0, 1);
                     break;
             }
-         
+
         }
     }
 
+    /// <summary>
+    /// 设置成就达成条件
+    /// </summary>
+    /// <param name="data"></param>
     public void SetAchieve(AchievementInfoBean data)
     {
         CptUtil.RemoveChildsByActive(objAchieveContent.transform);
@@ -125,6 +142,66 @@ public class InfoAchievementPopupShow : PopupShowView
         }
     }
 
+    /// <summary>
+    /// 设置奖励
+    /// </summary>
+    /// <param name="data"></param>
+    public void SetReward(AchievementInfoBean data)
+    {
+        CptUtil.RemoveChildsByActive(objRewardContent.transform);
+        if (data == null || gameItemsManager == null)
+            return;
+        GameObject objTitle = Instantiate(objRewardTitle, objRewardContent.transform);
+        objTitle.SetActive(true);
+        //奖励-公会硬币
+        if (data.reward_guildcoin != 0)
+        {
+            Sprite spIcon = gameItemsManager.GetItemsSpriteByName("guild_coin_2");
+            CreateRewardItem(GameCommonInfo.GetUITextById(11206), data.reward_guildcoin, spIcon);
+        }
+        //奖励-道具
+        if (!CheckUtil.StringIsNull(data.reward_items_ids))
+        {
+            List<long> listItems = data.GetRewardItems();
+            foreach (long itemId in listItems)
+            {
+                ItemsInfoBean itemsInfo = gameItemsManager.GetItemsById(itemId);
+                if (itemsInfo == null)
+                    continue;
+                Sprite spIcon;
+                if (itemsInfo.items_type == (int)GeneralEnum.Hat)
+                {
+                    spIcon = gameItemsManager.GetItemsSpriteByName("unknown_hat_1");
+                }
+                else if (itemsInfo.items_type == (int)GeneralEnum.Clothes)
+                {
+                    spIcon = gameItemsManager.GetItemsSpriteByName("unknown_clothes_1");
+                }
+                else if (itemsInfo.items_type == (int)GeneralEnum.Shoes)
+                {
+                    spIcon = gameItemsManager.GetItemsSpriteByName("unknown_shoes_1");
+                }
+                else
+                {
+                    spIcon = gameItemsManager.GetItemsSpriteByName(itemsInfo.icon_key);
+                }
+                CreateRewardItem(itemsInfo.name, 0, spIcon);
+            }
+        }
+        //奖励-建筑材料
+        if (!CheckUtil.StringIsNull(data.reward_build_ids))
+        {
+            List<long> listBuild = data.GetRewardBuild();
+            foreach (long buildId in listBuild)
+            {
+                BuildItemBean buildItem = innBuildManager.GetBuildDataById(buildId);
+                if (buildItem == null)
+                    continue;
+                Sprite spIcon = innBuildManager.GetFurnitureSpriteByName(buildItem.icon_key);
+                CreateRewardItem(buildItem.name, 0, spIcon);
+            }
+        }
+    }
 
     private void CreateAchieveItem(string name, float pro)
     {
@@ -132,6 +209,14 @@ public class InfoAchievementPopupShow : PopupShowView
         objAchieve.SetActive(true);
         ItemGamePopupAchCpt itemAchieve = objAchieve.GetComponent<ItemGamePopupAchCpt>();
         itemAchieve.SetData(name, pro);
+    }
+
+    private void CreateRewardItem(string name, long number, Sprite spIcon)
+    {
+        GameObject objReward = Instantiate(objRewardModel, objRewardContent.transform);
+        objReward.SetActive(true);
+        ItemGamePopupAchRewardCpt itemAchieve = objReward.GetComponent<ItemGamePopupAchRewardCpt>();
+        itemAchieve.SetData(name, number, spIcon);
     }
 
     private void CreateProStr(long own, long achieve, out string proStr, out float pro)

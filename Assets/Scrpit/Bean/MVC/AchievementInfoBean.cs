@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using UnityEditor;
 using System;
+using System.Collections.Generic;
 
 [Serializable]
 public class AchievementInfoBean : BaseBean
@@ -19,8 +20,30 @@ public class AchievementInfoBean : BaseBean
     public long achieve_pay_m;
     public long achieve_pay_l;
 
+    //奖励
+    //公会硬币
+    public long reward_guildcoin;
+    //奖励道具
+    public string reward_items_ids;
+    //奖励建筑材料
+    public string reward_build_ids;
+
+
     public string name;
     public string content;
+
+
+    public List<long> GetRewardItems()
+    {
+        List<string> listData = StringUtil.SplitBySubstring(reward_items_ids,',');
+        return TypeConversionUtil.ListStrToListLong(listData);
+    }
+
+    public List<long> GetRewardBuild()
+    {
+        List<string> listData = StringUtil.SplitBySubstring(reward_build_ids,',');
+        return TypeConversionUtil.ListStrToListLong(listData);
+    }
 
     /// <summary>
     /// 检测是否满足条件
@@ -57,4 +80,6 @@ public class AchievementInfoBean : BaseBean
         }
         return true;
     }
+
+
 }

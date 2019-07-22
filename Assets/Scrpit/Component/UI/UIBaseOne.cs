@@ -10,6 +10,8 @@ public class UIBaseOne : BaseUIComponent
     public Text tvMoneyL;
     public Text tvMoneyM;
     public Text tvMoneyS;
+    //公会硬币
+    public Text tvGuildCoin;
     //控制处理
     public ControlHandler controlHandler;
     public GameDataManager gameDataManager;
@@ -49,6 +51,10 @@ public class UIBaseOne : BaseUIComponent
             if (tvMoneyS != null)
             {
                 tvMoneyS.text = gameDataManager.gameData.moneyS + "";
+            }
+            if (tvGuildCoin != null)
+            {
+                tvGuildCoin.text = gameDataManager.gameData.guildCoin + "";
             }
         }
     }

@@ -63,14 +63,14 @@ public class ItemGameGroceryCpt : BaseMonoBehaviour, DialogView.IDialogCallBack
         if (gameItemsManager == null)
             return;
         Sprite spIcon = null;
-        Vector2 offsetMin = new Vector2(0,0);
+        Vector2 offsetMin = new Vector2(0, 0);
         Vector2 offsetMax = new Vector2(0, 0);
         switch (mark)
         {
             case "1":
                 spIcon = characterDressManager.GetHatSpriteByName(iconKey);
                 offsetMin = new Vector2(-50, -100);
-                offsetMax = new Vector2(50, 0 );
+                offsetMax = new Vector2(50, 0);
                 break;
             case "2":
                 spIcon = characterDressManager.GetClothesSpriteByName(iconKey);
@@ -93,7 +93,7 @@ public class ItemGameGroceryCpt : BaseMonoBehaviour, DialogView.IDialogCallBack
             rtIcon.offsetMin = offsetMin;
             rtIcon.offsetMax = offsetMax;
         }
-          
+
     }
 
     /// <summary>
@@ -155,7 +155,7 @@ public class ItemGameGroceryCpt : BaseMonoBehaviour, DialogView.IDialogCallBack
             return;
         }
         DialogBean dialogBean = new DialogBean();
-        dialogBean.content =string.Format(GameCommonInfo.GetUITextById(3002), itemsInfo.name);
+        dialogBean.content = string.Format(GameCommonInfo.GetUITextById(3002), itemsInfo.name);
         dialogManager.CreateDialog(0, this, dialogBean);
     }
 
@@ -171,12 +171,7 @@ public class ItemGameGroceryCpt : BaseMonoBehaviour, DialogView.IDialogCallBack
         }
         gameDataManager.gameData.PayMoney(storeInfo.price_l, storeInfo.price_m, storeInfo.price_s);
         toastView.ToastHint(string.Format(GameCommonInfo.GetUITextById(1010), itemsInfo.name));
-        ItemBean itemBean = new ItemBean
-        {
-            itemId = storeInfo.mark_id,
-            itemNumber = 1
-        };
-        gameDataManager.gameData.itemsList.Add(itemBean);
+        gameDataManager.gameData.AddNewItems(storeInfo.mark_id, 1);
         RefreshUI();
     }
 

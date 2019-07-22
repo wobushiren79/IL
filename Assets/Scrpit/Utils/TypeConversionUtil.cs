@@ -190,5 +190,25 @@ public class TypeConversionUtil
         }
         return listData;
     }
+
+    /// <summary>
+    /// List<string> 强转 List<long>
+    /// </summary>
+    /// <param name="listStr"></param>
+    /// <returns></returns>
+    public static List<long> ListStrToListLong(List<string> listStr)
+    {
+        if (listStr == null)
+            return null;
+        List<long> listData = new List<long>();
+        foreach (string itemStr in listStr)
+        {
+            if (long.TryParse(itemStr,out long itemLong))
+            {
+                listData.Add(itemLong);
+            }
+        }
+        return listData;
+    }
     
 }

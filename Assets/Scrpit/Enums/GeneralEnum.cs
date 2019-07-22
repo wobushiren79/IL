@@ -3,7 +3,8 @@ using UnityEditor;
 
 public enum GeneralEnum
 {
-    Hat=1,
+    Null = 0,
+    Hat =1,
     Clothes=2,
     Shoes=3,
 

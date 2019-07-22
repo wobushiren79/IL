@@ -13,6 +13,21 @@ public class CharacterDressManager : BaseManager
     //帽子列表
     public IconBeanDictionary listIconHat;
 
+
+    public Sprite GetSpriteByName(GeneralEnum generalEnum, string name )
+    {
+        switch (generalEnum)
+        {
+            case GeneralEnum.Hat:
+                return GetHatSpriteByName(name);
+            case GeneralEnum.Clothes:
+                return GetClothesSpriteByName(name);
+            case GeneralEnum.Shoes:
+                return GetShoesSpriteByName(name);
+        }
+        return null;
+    }
+
     /// <summary>
     /// 根据名字获取面具
     /// </summary>
