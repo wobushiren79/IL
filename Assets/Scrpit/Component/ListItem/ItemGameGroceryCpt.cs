@@ -170,7 +170,7 @@ public class ItemGameGroceryCpt : BaseMonoBehaviour, DialogView.IDialogCallBack
             return;
         }
         gameDataManager.gameData.PayMoney(storeInfo.price_l, storeInfo.price_m, storeInfo.price_s);
-        toastView.ToastHint(string.Format(GameCommonInfo.GetUITextById(1010), itemsInfo.name));
+        toastView.ToastHint(ivIcon.sprite, string.Format(GameCommonInfo.GetUITextById(1010), itemsInfo.name));
         gameDataManager.gameData.AddNewItems(storeInfo.mark_id, 1);
         RefreshUI();
     }

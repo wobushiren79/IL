@@ -3,7 +3,7 @@ using UnityEditor;
 using System.Collections.Generic;
 using DG.Tweening;
 
-public class UITownGuildAchievement : UIBaseOne, IRadioGroupCallBack,IAchievementInfoView
+public class UITownGuildAchievement : UIBaseOne, IRadioGroupCallBack, IAchievementInfoView
 {
     public GameObject objGroceryContent;
     public GameObject objGroceryModel;
@@ -14,7 +14,7 @@ public class UITownGuildAchievement : UIBaseOne, IRadioGroupCallBack,IAchievemen
     public List<AchievementInfoBean> listAchData;
     private void Awake()
     {
-        mAchievementInfoController = new AchievementInfoController(this,this);
+        mAchievementInfoController = new AchievementInfoController(this, this);
         mAchievementInfoController.GetAllAchievementInfo();
     }
 
@@ -34,14 +34,15 @@ public class UITownGuildAchievement : UIBaseOne, IRadioGroupCallBack,IAchievemen
 
     public void InitDataByType(int type)
     {
-        switch (type)
+        List<AchievementInfoBean> listTypeData = new List<AchievementInfoBean>();
+        foreach (AchievementInfoBean itemData in listAchData)
         {
-            case 0:
-                break;
-            case 1:
-                break;
-        }
-        CreateAchievementData(listAchData);
+            if (type == itemData.type)
+            {
+                listTypeData.Add(itemData);
+            }
+        };
+        CreateAchievementData(listTypeData);
     }
 
     /// <summary>
@@ -55,7 +56,7 @@ public class UITownGuildAchievement : UIBaseOne, IRadioGroupCallBack,IAchievemen
             return;
         for (int i = 0; i < listData.Count; i++)
         {
-            AchievementInfoBean itemData = listAchData[i];
+            AchievementInfoBean itemData = listData[i];
             GameObject itemObj = Instantiate(objGroceryModel, objGroceryContent.transform);
             itemObj.SetActive(true);
             ItemGameGuildAchievementCpt achCpt = itemObj.GetComponent<ItemGameGuildAchievementCpt>();

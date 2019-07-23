@@ -5,18 +5,20 @@ public class ItemGameGuildAchievementCpt : BaseMonoBehaviour
 {
     public enum AchievementStatusEnum
     {
-        UnKnown=0,
-        Completed=1,
-        Processing=2,
-        ToBeConfirmed=3
+        UnKnown = 0,
+        Completed = 1,
+        Processing = 2,
+        ToBeConfirmed = 3
     }
 
     public Image ivIcon;
     public Image ivBackground;
     public Button btSubmit;
     public InfoAchievementPopupButton popupButton;
+    public ToastAchievementShow toastAchievement;
 
     public UITownGuildAchievement uiTownGuildAchievement;
+    public InnFoodManager innFoodManager;
     public GameItemsManager gameItemsManager;
     public GameDataManager gameDataManager;
 
@@ -27,7 +29,7 @@ public class ItemGameGuildAchievementCpt : BaseMonoBehaviour
     public Material materialGray;
 
     public AchievementInfoBean achievementInfo;
-    public AchievementStatusEnum status= AchievementStatusEnum.UnKnown;
+    public AchievementStatusEnum status = AchievementStatusEnum.UnKnown;
 
     private void Start()
     {
@@ -101,17 +103,17 @@ public class ItemGameGuildAchievementCpt : BaseMonoBehaviour
                 break;
             case AchievementStatusEnum.Completed:
                 //已解锁
-                SetIcon(achievementInfo.icon_key, null);
+                SetIcon(achievementInfo.type,achievementInfo.icon_key, null);
                 ivBackground.sprite = spBackUnLock;
                 break;
             case AchievementStatusEnum.Processing:
                 //未解锁 不满足条件
-                SetIcon(achievementInfo.icon_key, materialGray);
+                SetIcon(achievementInfo.type, achievementInfo.icon_key, materialGray);
                 ivBackground.sprite = spBackLock;
                 break;
             case AchievementStatusEnum.ToBeConfirmed:
                 //未解锁 满足条件  
-                SetIcon(achievementInfo.icon_key, materialGray);
+                SetIcon(achievementInfo.type, achievementInfo.icon_key, materialGray);
                 ivBackground.sprite = spBackPass;
                 break;
         }
@@ -120,11 +122,19 @@ public class ItemGameGuildAchievementCpt : BaseMonoBehaviour
             popupButton.SetData(status, achievementInfo);
     }
 
-    public void SetIcon(string iconKey, Material material)
+    public void SetIcon(int type, string iconKey, Material material)
     {
         if (gameItemsManager == null || ivIcon == null)
             return;
-        Sprite spIcon = gameItemsManager.GetItemsSpriteByName(iconKey);
+        Sprite spIcon;
+        if (type == 1)
+        {
+            spIcon = innFoodManager.GetFoodSpriteByName(iconKey);
+        }
+        else
+        {
+            spIcon = gameItemsManager.GetItemsSpriteByName(iconKey);
+        }
         if (spIcon != null)
             ivIcon.sprite = spIcon;
         else
@@ -150,15 +160,18 @@ public class ItemGameGuildAchievementCpt : BaseMonoBehaviour
     {
         if (gameDataManager == null || achievementInfo == null)
             return;
-        if (status ==AchievementStatusEnum.ToBeConfirmed)
+        if (status == AchievementStatusEnum.ToBeConfirmed)
         {
             //添加该成就和奖励
             gameDataManager.gameData.AddAchievement(achievementInfo);
             //设置状态
-            SetAchStatus( AchievementStatusEnum.Completed);
+            SetAchStatus(AchievementStatusEnum.Completed);
             //刷新UI
             if (uiTownGuildAchievement != null)
                 uiTownGuildAchievement.InitDataByType(achievementInfo.type);
+            //弹出特效提示
+            if (toastAchievement != null)
+                toastAchievement.Toast(achievementInfo);
         }
     }
 }

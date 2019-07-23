@@ -9,7 +9,6 @@ public class InfoAchievementPopupShow : PopupShowView
     public Text tvName;
     public Text tvStatus;
     public Text tvContent;
-    public RectTransform rtContent;
 
     public GameObject objAchieveContent;
     public GameObject objAchieveModel;
@@ -24,6 +23,8 @@ public class InfoAchievementPopupShow : PopupShowView
     public GameItemsManager gameItemsManager;
     public CharacterDressManager characterDressManager;
     public InnBuildManager innBuildManager;
+    public InnFoodManager innFoodManager;
+
     public AchievementInfoBean achievementInfo;
     public ItemGameGuildAchievementCpt.AchievementStatusEnum status;
 
@@ -31,7 +32,7 @@ public class InfoAchievementPopupShow : PopupShowView
     {
         this.status = status;
         this.achievementInfo = achievementInfo;
-        SetIcon(achievementInfo.icon_key);
+        SetIcon(achievementInfo.type, achievementInfo.icon_key);
         SetName(achievementInfo.name);
         SetContent(achievementInfo.content);
         SetAchieve(achievementInfo);
@@ -39,9 +40,18 @@ public class InfoAchievementPopupShow : PopupShowView
         SetReward(achievementInfo);
     }
 
-    public void SetIcon(string iconKey)
+    public void SetIcon(int type, string iconKey)
     {
-        Sprite spIcon = gameItemsManager.GetItemsSpriteByName(iconKey);
+        Sprite spIcon;
+        if (type == 1)
+        {
+            spIcon = innFoodManager.GetFoodSpriteByName(iconKey);
+        }
+        else
+        {
+            spIcon = gameItemsManager.GetItemsSpriteByName(iconKey);
+        }
+
         if (spIcon != null && ivIcon != null)
         {
             ivIcon.sprite = spIcon;

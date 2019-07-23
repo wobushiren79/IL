@@ -26,6 +26,12 @@ public class UIGameMenu : BaseUIComponent
     {
         if (btBack != null)
             btBack.onClick.AddListener(OpenMainUI);
+     
+    }
+
+    public override void OpenUI()
+    {
+        base.OpenUI();
         CreateFoodList();
     }
 
@@ -69,6 +75,7 @@ public class UIGameMenu : BaseUIComponent
     {
         if (gameDataManager == null || innFoodManager == null)
             return;
+        CptUtil.RemoveChildsByActive(objFoodListContent.transform);
         List<MenuOwnBean> listMenu = gameDataManager.gameData.menuList;
 
         for (int i = 0; i < listMenu.Count; i++)
