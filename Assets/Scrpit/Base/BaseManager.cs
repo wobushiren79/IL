@@ -36,7 +36,7 @@ public class BaseManager : BaseMonoBehaviour
     /// </summary>
     /// <param name="name"></param>
     /// <returns></returns>
-    public Sprite GetSpriteByName(string name,IconBeanDictionary map)
+    public virtual Sprite GetSpriteByName(string name,IconBeanDictionary map)
     {
         if (name == null)
             return null;
@@ -46,4 +46,20 @@ public class BaseManager : BaseMonoBehaviour
             return null;  
     }
 
+    /// <summary>
+    /// 通过ID获取数据
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
+    /// <param name="name"></param>
+    /// <param name="map"></param>
+    /// <returns></returns>
+    public virtual T GetDataById<T>(long name, Dictionary<long,T> map) where T : class
+    {
+        if (map == null)
+            return null;
+        if (map.TryGetValue(name, out T itemData))
+            return itemData;
+        else
+            return null;
+    }
 }

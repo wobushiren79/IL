@@ -6,7 +6,7 @@ public class InnFoodManager : BaseManager, IMenuInfoView
 {
     public IconBeanDictionary listFoodIcon;
 
-    public List<MenuInfoBean> listMenuData;
+    public Dictionary<long, MenuInfoBean> listMenuData;
 
     public MenuInfoController mMenuInfoController;
 
@@ -33,23 +33,17 @@ public class InnFoodManager : BaseManager, IMenuInfoView
     /// 通过自己的列表获取食物数据
     /// </summary>
     /// <param name="listMenu"></param>
-    public List<MenuInfoBean> GetFoodDataListByMenuList(List<MenuOwnBean> listMenu)
+    public List<MenuInfoBean> GetFoodDataListByMenuList(List<MenuOwnBean> listOwnMenu)
     {
         List<MenuInfoBean> listFood = new List<MenuInfoBean>();
-        if (listMenuData == null || listMenu == null)
+        if (listMenuData == null || listOwnMenu == null)
             return listFood;
-        for (int i = 0; i < listMenuData.Count; i++)
+        for (int i = 0; i < listOwnMenu.Count; i++)
         {
-            MenuInfoBean itemFoodData = listMenuData[i];
-            for (int f = 0; f < listMenu.Count; f++)
-            {
-                MenuOwnBean itemMenuData = listMenu[f];
-                if (itemMenuData.menuId == itemFoodData.id)
-                {
-                    listFood.Add(itemFoodData);
-                    break;
-                }
-            }
+            MenuOwnBean itemFoodData = listOwnMenu[i];
+            MenuInfoBean menuInfo= GetFoodDataById(itemFoodData.menuId);
+            if (menuInfo != null)
+                listFood.Add(menuInfo);
         }
         return listFood;
     }
@@ -61,17 +55,7 @@ public class InnFoodManager : BaseManager, IMenuInfoView
     /// <returns></returns>
     public MenuInfoBean GetFoodDataById(long id)
     {
-        if (listMenuData == null)
-            return null;
-        for (int i = 0; i < listMenuData.Count; i++)
-        {
-            MenuInfoBean itemFoodData = listMenuData[i];
-            if (itemFoodData.id == id)
-            {
-                return itemFoodData;
-            }
-        }
-        return null;
+        return GetDataById(id, listMenuData);
     }
 
     private void Awake()
@@ -91,7 +75,12 @@ public class InnFoodManager : BaseManager, IMenuInfoView
 
     public void GetAllMenuInfoSuccess(List<MenuInfoBean> listData)
     {
-        this.listMenuData = listData;
+        listMenuData = new Dictionary<long, MenuInfoBean>();
+        if (listData != null)
+            foreach (MenuInfoBean itemData in listData)
+            {
+                listMenuData.Add(itemData.id, itemData);
+            }
     }
     #endregion
 }

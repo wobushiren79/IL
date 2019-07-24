@@ -12,6 +12,7 @@ public class ItemGameGuildAchievementCpt : BaseMonoBehaviour
     }
 
     public Image ivIcon;
+    public Image ivIconRemark;
     public Image ivBackground;
     public Button btSubmit;
     public InfoAchievementPopupButton popupButton;
@@ -103,17 +104,17 @@ public class ItemGameGuildAchievementCpt : BaseMonoBehaviour
                 break;
             case AchievementStatusEnum.Completed:
                 //已解锁
-                SetIcon(achievementInfo.type,achievementInfo.icon_key, null);
+                SetIcon(achievementInfo.type,achievementInfo.icon_key, achievementInfo.icon_key_remark, null);
                 ivBackground.sprite = spBackUnLock;
                 break;
             case AchievementStatusEnum.Processing:
                 //未解锁 不满足条件
-                SetIcon(achievementInfo.type, achievementInfo.icon_key, materialGray);
+                SetIcon(achievementInfo.type, achievementInfo.icon_key, achievementInfo.icon_key_remark, materialGray);
                 ivBackground.sprite = spBackLock;
                 break;
             case AchievementStatusEnum.ToBeConfirmed:
                 //未解锁 满足条件  
-                SetIcon(achievementInfo.type, achievementInfo.icon_key, materialGray);
+                SetIcon(achievementInfo.type, achievementInfo.icon_key, achievementInfo.icon_key_remark, materialGray);
                 ivBackground.sprite = spBackPass;
                 break;
         }
@@ -122,7 +123,7 @@ public class ItemGameGuildAchievementCpt : BaseMonoBehaviour
             popupButton.SetData(status, achievementInfo);
     }
 
-    public void SetIcon(int type, string iconKey, Material material)
+    public void SetIcon(int type, string iconKey,string iconKeyRemark, Material material)
     {
         if (gameItemsManager == null || ivIcon == null)
             return;
@@ -140,6 +141,21 @@ public class ItemGameGuildAchievementCpt : BaseMonoBehaviour
         else
             ivIcon.sprite = spIconUnknow;
         ivIcon.material = material;
+        //设置备用图标
+        if (!CheckUtil.StringIsNull(iconKeyRemark))
+        {
+            Sprite spIconRemark = gameItemsManager.GetItemsSpriteByName(iconKeyRemark);
+            if (spIconRemark != null)
+            {
+                ivIconRemark.sprite = spIconRemark;
+            }
+            ivIconRemark.gameObject.SetActive(true);
+            ivIconRemark.material = material;
+        }
+        else
+        {
+            ivIconRemark.gameObject.SetActive(false);
+        }
     }
 
     /// <summary>

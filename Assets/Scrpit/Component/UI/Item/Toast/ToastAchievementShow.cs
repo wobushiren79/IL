@@ -5,6 +5,7 @@ using DG.Tweening;
 public class ToastAchievementShow : BaseMonoBehaviour
 {
     public Image ivIcon;
+    public Image ivRemark;
     public Text tvName;
     public Button btBack;
 
@@ -45,7 +46,7 @@ public class ToastAchievementShow : BaseMonoBehaviour
     /// 设置图标
     /// </summary>
     /// <param name="iconKey"></param>
-    public void SetIcon(int type,string iconKey)
+    public void SetIcon(int type, string iconKey)
     {
         if (ivIcon != null && gameItemsManager != null && achievementInfo != null)
         {
@@ -58,9 +59,21 @@ public class ToastAchievementShow : BaseMonoBehaviour
             {
                 spIcon = gameItemsManager.GetItemsSpriteByName(iconKey);
             }
-            
+
             if (spIcon != null)
                 ivIcon.sprite = spIcon;
+        }
+        //设置备用图标
+        if (ivRemark != null && achievementInfo != null && !CheckUtil.StringIsNull(achievementInfo.icon_key_remark))
+        {
+            ivRemark.gameObject.SetActive(true);
+            Sprite spIconRemark = gameItemsManager.GetItemsSpriteByName(achievementInfo.icon_key_remark);
+            if (spIconRemark != null)
+                ivRemark.sprite = spIconRemark;
+        }
+        else
+        {
+            ivRemark.gameObject.SetActive(false);
         }
     }
 
@@ -122,7 +135,7 @@ public class ToastAchievementShow : BaseMonoBehaviour
         {
             foreach (long id in achievementInfo.GetRewardBuild())
             {
-                BuildItemBean buildItem= innBuildManager.GetBuildDataById(id);
+                BuildItemBean buildItem = innBuildManager.GetBuildDataById(id);
                 Sprite spIcon = innBuildManager.GetFurnitureSpriteByName(buildItem.icon_key);
                 CreateRewardItem(spIcon, animTimeDelay);
                 animTimeDelay += 0.5f;
@@ -130,7 +143,7 @@ public class ToastAchievementShow : BaseMonoBehaviour
         }
     }
 
-    private void CreateRewardItem(Sprite spIcon,float delay)
+    private void CreateRewardItem(Sprite spIcon, float delay)
     {
         GameObject objReward = Instantiate(objRewardModel, objRewardContent.transform);
         objReward.SetActive(true);

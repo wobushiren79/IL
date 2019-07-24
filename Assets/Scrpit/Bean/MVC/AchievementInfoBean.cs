@@ -10,6 +10,8 @@ public class AchievementInfoBean : BaseBean
     public long pre_ach_id;//前置成就
     public int type;//类型 1通用  2菜品
     public string icon_key;
+    public string icon_key_remark;
+    public long remark_id;
 
     //拥有的金钱
     public long achieve_money_s;
@@ -19,6 +21,8 @@ public class AchievementInfoBean : BaseBean
     public long achieve_pay_s;
     public long achieve_pay_m;
     public long achieve_pay_l;
+    //销售数量
+    public long achieve_sell_number;
 
     //奖励
     //公会硬币
@@ -35,13 +39,13 @@ public class AchievementInfoBean : BaseBean
 
     public List<long> GetRewardItems()
     {
-        List<string> listData = StringUtil.SplitBySubstring(reward_items_ids,',');
+        List<string> listData = StringUtil.SplitBySubstring(reward_items_ids, ',');
         return TypeConversionUtil.ListStrToListLong(listData);
     }
 
     public List<long> GetRewardBuild()
     {
-        List<string> listData = StringUtil.SplitBySubstring(reward_build_ids,',');
+        List<string> listData = StringUtil.SplitBySubstring(reward_build_ids, ',');
         return TypeConversionUtil.ListStrToListLong(listData);
     }
 
@@ -77,6 +81,17 @@ public class AchievementInfoBean : BaseBean
         if (achieve_pay_l != 0 && achieve_pay_l > gameData.moneyL)
         {
             return false;
+        }
+        //销售数量要求
+        if (achieve_sell_number != 0)
+        {
+            MenuOwnBean menuOwn = gameData.GetMenuById(remark_id);
+            if (menuOwn != null && achieve_sell_number > menuOwn.sellNumber)
+                return false;
+            else if (menuOwn == null)
+            {
+                return false;
+            }
         }
         return true;
     }

@@ -51,6 +51,8 @@ public class GameDataBean
     /// <param name="achievementInfo"></param>
     public void AddAchievement(AchievementInfoBean achievementInfo)
     {
+        //扣除需要支付的数据
+        PayMoney(achievementInfo.achieve_pay_l, achievementInfo.achieve_pay_m, achievementInfo.achieve_pay_s);
         //添加成就ID
         GetAchievementData().AddAchievement(achievementInfo.id);
         //添加奖励
@@ -103,6 +105,24 @@ public class GameDataBean
             }
         }
         return listData;
+    }
+
+    /// <summary>
+    /// 获取指定菜品
+    /// </summary>
+    /// <param name="id"></param>
+    /// <returns></returns>
+    public MenuOwnBean GetMenuById(long id)
+    {
+        for (int i = 0; i < menuList.Count; i++)
+        {
+            MenuOwnBean itemData = menuList[i];
+            if (itemData.menuId== id)
+            {
+                return itemData;
+            }
+        }
+        return null;
     }
 
     public static void GetMoneyDetails(long money, out long L, out long M, out long S)

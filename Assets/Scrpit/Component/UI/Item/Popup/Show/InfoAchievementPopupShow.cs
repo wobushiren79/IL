@@ -6,6 +6,7 @@ using System.Collections.Generic;
 public class InfoAchievementPopupShow : PopupShowView
 {
     public Image ivIcon;
+    public Image ivRemark;
     public Text tvName;
     public Text tvStatus;
     public Text tvContent;
@@ -32,7 +33,7 @@ public class InfoAchievementPopupShow : PopupShowView
     {
         this.status = status;
         this.achievementInfo = achievementInfo;
-        SetIcon(achievementInfo.type, achievementInfo.icon_key);
+        SetIcon(achievementInfo.type, achievementInfo.icon_key, achievementInfo.icon_key_remark);
         SetName(achievementInfo.name);
         SetContent(achievementInfo.content);
         SetAchieve(achievementInfo);
@@ -40,7 +41,7 @@ public class InfoAchievementPopupShow : PopupShowView
         SetReward(achievementInfo);
     }
 
-    public void SetIcon(int type, string iconKey)
+    public void SetIcon(int type, string iconKey, string iconKeyRemark)
     {
         Sprite spIcon;
         if (type == 1)
@@ -52,19 +53,35 @@ public class InfoAchievementPopupShow : PopupShowView
             spIcon = gameItemsManager.GetItemsSpriteByName(iconKey);
         }
 
-        if (spIcon != null && ivIcon != null)
+        if (spIcon != null && ivIcon != null && ivRemark != null)
         {
             ivIcon.sprite = spIcon;
             switch (status)
             {
                 case ItemGameGuildAchievementCpt.AchievementStatusEnum.Completed:
                     ivIcon.material = null;
+                    ivRemark.material = null;
                     break;
                 case ItemGameGuildAchievementCpt.AchievementStatusEnum.Processing:
                 case ItemGameGuildAchievementCpt.AchievementStatusEnum.ToBeConfirmed:
                     ivIcon.material = materialGray;
+                    ivRemark.material = materialGray;
                     break;
             }
+        }
+
+        //设置备用图标
+        if (ivRemark != null && !CheckUtil.StringIsNull(iconKeyRemark))
+        {
+            ivRemark.gameObject.SetActive(true);
+            Sprite spIconRemark = gameItemsManager.GetItemsSpriteByName(iconKeyRemark);
+            if (spIconRemark != null)
+                ivRemark.sprite = spIconRemark;
+
+        }
+        else
+        {
+            ivRemark.gameObject.SetActive(false);
         }
     }
 
@@ -149,6 +166,19 @@ public class InfoAchievementPopupShow : PopupShowView
         {
             CreateProStr(gameDataManager.gameData.moneyL, data.achieve_pay_l, out string proStr, out float pro);
             CreateAchieveItem(GameCommonInfo.GetUITextById(11106) + proStr, pro);
+        }
+        //销售数量要求
+        if (data.achieve_sell_number != 0)
+        {
+            MenuOwnBean menuOwn = gameDataManager.gameData.GetMenuById(data.remark_id);
+            long sellNumber = 0;
+            if (menuOwn != null)
+            {
+                sellNumber = menuOwn.sellNumber;
+            }
+            MenuInfoBean menuInfo = innFoodManager.GetFoodDataById(data.remark_id);
+            CreateProStr(sellNumber, data.achieve_sell_number, out string proStr, out float pro);
+            CreateAchieveItem(string.Format(GameCommonInfo.GetUITextById(11107), menuInfo == null ? "???" : menuInfo.name, proStr), pro);
         }
     }
 
