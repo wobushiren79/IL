@@ -11,6 +11,6 @@ public enum GeneralEnum
     Hand=8,
     Ing = 9,
     Book =11,
-    Cook =12,
+    Menu =12,//菜谱
    
 }

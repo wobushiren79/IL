@@ -3,6 +3,21 @@ using UnityEditor;
 using UnityEngine.UI;
 public class ItemGameGroceryCpt : BaseMonoBehaviour, DialogView.IDialogCallBack
 {
+    public GameObject objCook;
+    public Text tvCook;
+    public GameObject objSpeed;
+    public Text tvSpeed;
+    public GameObject objAccount;
+    public Text tvAccount;
+    public GameObject objCharm;
+    public Text tvCharm;
+    public GameObject objForce;
+    public Text tvForce;
+    public GameObject objLucky;
+    public Text tvLucky;
+    public GameObject objCookBook;
+    public Text tvCookBook;
+
     public RectTransform rtIcon;
     public Image ivIcon;
     public Text tvName;
@@ -33,6 +48,7 @@ public class ItemGameGroceryCpt : BaseMonoBehaviour, DialogView.IDialogCallBack
             btSubmit.onClick.AddListener(SubmitBuy);
     }
 
+
     public void SetData(StoreInfoBean storeInfo)
     {
         this.storeInfo = storeInfo;
@@ -44,6 +60,15 @@ public class ItemGameGroceryCpt : BaseMonoBehaviour, DialogView.IDialogCallBack
         SetName(itemsInfo.name);
         SetContent(itemsInfo.content);
         SetOwn();
+        int cookBookNumber = itemsInfo.items_type == (int)GeneralEnum.Menu ? 1 : 0;
+        SetAttribute(
+            cookBookNumber,
+            itemsInfo.add_cook,
+            itemsInfo.add_speed,
+            itemsInfo.add_account,
+            itemsInfo.add_charm,
+            itemsInfo.add_force,
+            itemsInfo.add_lucky);
     }
 
     public void RefreshUI()
@@ -140,6 +165,47 @@ public class ItemGameGroceryCpt : BaseMonoBehaviour, DialogView.IDialogCallBack
         if (tvOwn == null)
             return;
         tvOwn.text = ("拥有\n" + gameDataManager.gameData.GetItemsNumber(storeInfo.mark_id));
+    }
+
+    /// <summary>
+    /// 设置属性
+    /// </summary>
+    /// <param name="add_cook"></param>
+    /// <param name="add_speed"></param>
+    /// <param name="add_account"></param>
+    /// <param name="add_charm"></param>
+    /// <param name="add_force"></param>
+    /// <param name="add_lucky"></param>
+    public void SetAttribute(int add_book, int add_cook, int add_speed, int add_account, int add_charm, int add_force, int add_lucky)
+    {
+        if (objCook != null && add_cook == 0)
+            objCook.SetActive(false);
+        if (objSpeed != null && add_speed == 0)
+            objSpeed.SetActive(false);
+        if (objAccount != null && add_account == 0)
+            objAccount.SetActive(false);
+        if (objCharm != null && add_charm == 0)
+            objCharm.SetActive(false);
+        if (objForce != null && add_force == 0)
+            objForce.SetActive(false);
+        if (objLucky != null && add_lucky == 0)
+            objLucky.SetActive(false);
+        if (objCookBook != null && add_book == 0)
+            objCookBook.SetActive(false);
+        if (tvCook != null)
+            tvCook.text = GameCommonInfo.GetUITextById(1) + "+" + add_cook;
+        if (tvSpeed != null)
+            tvSpeed.text = GameCommonInfo.GetUITextById(2) + "+" + add_speed;
+        if (tvAccount != null)
+            tvAccount.text = GameCommonInfo.GetUITextById(3) + "+" + add_account;
+        if (tvCharm != null)
+            tvCharm.text = GameCommonInfo.GetUITextById(4) + "+" + add_charm;
+        if (tvForce != null)
+            tvForce.text = GameCommonInfo.GetUITextById(5) + "+" + add_force;
+        if (tvLucky != null)
+            tvLucky.text = GameCommonInfo.GetUITextById(6) + "+" + add_lucky;
+        if (tvCookBook != null)
+            tvCookBook.text = GameCommonInfo.GetUITextById(7) + "+" + add_book;
     }
 
     /// <summary>

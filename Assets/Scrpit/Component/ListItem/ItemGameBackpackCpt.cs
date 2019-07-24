@@ -66,7 +66,7 @@ public class ItemGameBackpackCpt : InfoItemsPopupButton, IPointerClickHandler, I
                 offsetMax = new Vector2(50, 100);
                 break;
             case (int)GeneralEnum.Book:
-            case (int)GeneralEnum.Cook:
+            case (int)GeneralEnum.Menu:
                 spIcon = gameItemsManager.GetItemsSpriteByName(iconKey);
                 break;
         }
@@ -116,7 +116,7 @@ public class ItemGameBackpackCpt : InfoItemsPopupButton, IPointerClickHandler, I
             selectionBox.SetCallBack(this);
         switch (itemsInfoBean.items_type)
         {
-            case (int)GeneralEnum.Cook:
+            case (int)GeneralEnum.Menu:
                 selectionBox.Open(1);
                 break;
             default:
@@ -132,7 +132,7 @@ public class ItemGameBackpackCpt : InfoItemsPopupButton, IPointerClickHandler, I
             return;
         switch (itemsInfoBean.items_type)
         {
-            case (int)GeneralEnum.Cook:
+            case (int)GeneralEnum.Menu:
                 //添加菜谱
                 if (gameDataManager.gameData.AddFoodMenu(itemsInfoBean.add_id))
                 {
