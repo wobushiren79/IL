@@ -13,7 +13,7 @@ public class UserAchievementBean
     /// </summary>
     /// <param name="achId"></param>
     /// <returns></returns>
-    public bool CheckAchievementList(long achId)
+    public bool CheckHasAchievement(long achId)
     {
        return achievementList.Contains(achId);
     }

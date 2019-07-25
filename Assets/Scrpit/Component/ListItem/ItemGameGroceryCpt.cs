@@ -31,6 +31,9 @@ public class ItemGameGroceryCpt : BaseMonoBehaviour, DialogView.IDialogCallBack
     public Text tvPriceM;
     public GameObject objPriceS;
     public Text tvPriceS;
+    public GameObject objGuildCoin;
+    public Text tvGuildCoin;
+
 
     public GameDataManager gameDataManager;
     public CharacterDressManager characterDressManager;
@@ -56,7 +59,7 @@ public class ItemGameGroceryCpt : BaseMonoBehaviour, DialogView.IDialogCallBack
         if (itemsInfo == null || storeInfo == null)
             return;
         SetIcon(storeInfo.icon_key, storeInfo.mark, storeInfo.mark_id);
-        SetPrice(storeInfo.price_l, storeInfo.price_m, storeInfo.price_s);
+        SetPrice(storeInfo.price_l, storeInfo.price_m, storeInfo.price_s,storeInfo.guild_coin);
         SetName(itemsInfo.name);
         SetContent(itemsInfo.content);
         SetOwn();
@@ -144,17 +147,24 @@ public class ItemGameGroceryCpt : BaseMonoBehaviour, DialogView.IDialogCallBack
     /// <summary>
     /// 设置价格
     /// </summary>
-    public void SetPrice(long priceL, long priceM, long priceS)
+    public void SetPrice(long priceL, long priceM, long priceS, long coin)
     {
-        if (priceL == 0)
+        if (priceL == 0 && objPriceL != null)
             objPriceL.SetActive(false);
-        if (priceM == 0)
+        if (priceM == 0 && objPriceM != null)
             objPriceM.SetActive(false);
-        if (priceS == 0)
+        if (priceS == 0 && objPriceS != null)
             objPriceS.SetActive(false);
-        tvPriceL.text = priceL + "";
-        tvPriceM.text = priceM + "";
-        tvPriceS.text = priceS + "";
+        if (coin == 0 && objGuildCoin != null)
+            objGuildCoin.SetActive(false);
+        if (tvPriceL != null)
+            tvPriceL.text = priceL + "";
+        if (tvPriceM != null)
+            tvPriceM.text = priceM + "";
+        if (tvPriceS != null)
+            tvPriceS.text = priceS + "";
+        if (tvGuildCoin != null)
+            tvGuildCoin.text = coin + "";
     }
 
     /// <summary>
@@ -226,7 +236,7 @@ public class ItemGameGroceryCpt : BaseMonoBehaviour, DialogView.IDialogCallBack
     }
 
     #region 提交回调
-    public void Submit(DialogView dialogView)
+    public virtual void Submit(DialogView dialogView)
     {
         if (gameDataManager == null || storeInfo == null)
             return;
@@ -241,7 +251,7 @@ public class ItemGameGroceryCpt : BaseMonoBehaviour, DialogView.IDialogCallBack
         RefreshUI();
     }
 
-    public void Cancel(DialogView dialogView)
+    public virtual void Cancel(DialogView dialogView)
     {
 
     }

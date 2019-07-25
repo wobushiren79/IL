@@ -63,6 +63,14 @@ public class StoreInfoController : BaseMVCController<StoreInfoModel, IStoreInfoV
     }
 
     /// <summary>
+    /// 回去公会数据
+    /// </summary>
+    public void GetGuildStoreInfo()
+    {
+        GetStoreInfoByType(10);
+    }
+
+    /// <summary>
     /// 查询所有商店信息
     /// </summary>
     public void GetStoreInfoByType(int type)

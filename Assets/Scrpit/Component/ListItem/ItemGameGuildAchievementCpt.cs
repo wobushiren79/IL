@@ -49,7 +49,7 @@ public class ItemGameGuildAchievementCpt : BaseMonoBehaviour
         if (gameItemsManager == null || ivIcon == null || gameDataManager == null || ivBackground == null)
             return;
         //检测是否拥有该成就
-        bool hasAch = gameDataManager.gameData.GetAchievementData().CheckAchievementList(achId);
+        bool hasAch = gameDataManager.gameData.GetAchievementData().CheckHasAchievement(achId);
         if (hasAch)
         {
             SetAchStatus(AchievementStatusEnum.Completed);
@@ -70,7 +70,7 @@ public class ItemGameGuildAchievementCpt : BaseMonoBehaviour
         }
         else
         {
-            bool hasPre = gameDataManager.gameData.GetAchievementData().CheckAchievementList(preId);
+            bool hasPre = gameDataManager.gameData.GetAchievementData().CheckHasAchievement(preId);
             if (hasPre)
             {
                 //检测是否符合条件
