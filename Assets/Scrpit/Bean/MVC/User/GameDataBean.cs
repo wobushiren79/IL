@@ -13,6 +13,9 @@ public class GameDataBean
     public long guildCoin;//公会硬币
 
     public string innName;//客栈名称
+    public int innLevel;//客栈等级 （天地人1-5星  3 2 1）
+    public InnAttributesBean innAttributes;//客栈属性
+
     public CharacterBean userCharacter;// 老板
     public List<CharacterBean> workCharacterList = new List<CharacterBean>();//员工
     public InnBuildBean innBuildData;//客栈建筑数据
@@ -43,6 +46,18 @@ public class GameDataBean
         if (userAchievement == null)
             userAchievement = new UserAchievementBean();
         return userAchievement;
+    }
+
+    /// <summary>
+    /// 获取客栈属性数据
+    /// </summary>
+    /// <returns></returns>
+    public InnAttributesBean GetInnAttributesData()
+    {
+        if (innAttributes == null)
+            innAttributes = new InnAttributesBean();
+        innAttributes.RefreshRichNess(menuList);
+        return innAttributes;
     }
 
     /// <summary>
@@ -117,7 +132,7 @@ public class GameDataBean
         for (int i = 0; i < menuList.Count; i++)
         {
             MenuOwnBean itemData = menuList[i];
-            if (itemData.menuId== id)
+            if (itemData.menuId == id)
             {
                 return itemData;
             }
@@ -273,9 +288,9 @@ public class GameDataBean
     /// 增加一个傲居
     /// </summary>
     /// <param name="id"></param>
-    public void AddNewItems(long id,long number)
+    public void AddNewItems(long id, long number)
     {
-        ItemBean itemBean = new ItemBean(id,1);
+        ItemBean itemBean = new ItemBean(id, 1);
         itemsList.Add(itemBean);
     }
 
@@ -396,5 +411,51 @@ public class GameDataBean
         };
         menuList.Add(menuOwn);
         return true;
+    }
+
+    /// <summary>
+    /// 获取客栈等级
+    /// </summary>
+    /// <param name="levelTitle"></param>
+    /// <param name="levelStar"></param>
+    /// <returns></returns>
+    public string GetInnLevel(out int levelTitle, out int levelStar)
+    {
+        levelStar = (innLevel % 10);
+        levelTitle = (innLevel % 100) / 10;
+        string levelTitleStr = "";
+        string levelStarStr = "";
+        switch (levelTitle)
+        {
+            case 1:
+                levelTitleStr = GameCommonInfo.GetUITextById(2007);
+                break;
+            case 2:
+                levelTitleStr = GameCommonInfo.GetUITextById(2008);
+                break;
+            case 3:
+                levelTitleStr = GameCommonInfo.GetUITextById(2009);
+                break;
+        }
+
+        switch (levelStar)
+        {
+            case 1:
+                levelStarStr = GameCommonInfo.GetUITextById(2010);
+                break;
+            case 2:
+                levelStarStr = GameCommonInfo.GetUITextById(2011);
+                break;
+            case 3:
+                levelStarStr = GameCommonInfo.GetUITextById(2012);
+                break;
+            case 4:
+                levelStarStr = GameCommonInfo.GetUITextById(2013);
+                break;
+            case 5:
+                levelStarStr = GameCommonInfo.GetUITextById(2014);
+                break;
+        }
+        return levelTitleStr + levelStarStr;
     }
 }
