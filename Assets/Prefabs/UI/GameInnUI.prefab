@@ -5659,8 +5659,17 @@ MonoBehaviour:
   tvMoneyS: {fileID: 7665700139281810876}
   tvMoneyM: {fileID: 7665700138911309267}
   tvMoneyL: {fileID: 7665700138260154092}
+  popupAesthetics: {fileID: 0}
+  tvAesthetics: {fileID: 0}
+  popupPraise: {fileID: 0}
+  tvPraise: {fileID: 0}
+  popupRichness: {fileID: 0}
+  tvRichness: {fileID: 0}
+  popupInnLevel: {fileID: 0}
+  ivInnLevel: {fileID: 0}
   gameTimeHandler: {fileID: 0}
   gameDataManager: {fileID: 0}
+  gameItemsManager: {fileID: 0}
   dialogManager: {fileID: 0}
   innHandler: {fileID: 0}
   innWall: {fileID: 0}
@@ -8551,7 +8560,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 7665700138341103741}
   m_Direction: 2
   m_Value: 0
-  m_Size: 1
+  m_Size: 0.9999999
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -11320,7 +11329,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &7665700138116069643
 RectTransform:
   m_ObjectHideFlags: 0
@@ -13727,8 +13736,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0.000010814022}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0.000028351473}
+  m_SizeDelta: {x: 0, y: 154}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &7665700138247619300
 MonoBehaviour:
@@ -15131,7 +15140,7 @@ RectTransform:
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 20, y: 20}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -22023,10 +22032,10 @@ RectTransform:
   m_Father: {fileID: 7665700138247619298}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 150}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 442.02426, y: -77}
+  m_SizeDelta: {x: 880.0485, y: 150}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &7665700138921634100
 CanvasRenderer:
