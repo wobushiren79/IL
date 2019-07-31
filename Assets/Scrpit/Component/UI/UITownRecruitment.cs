@@ -11,8 +11,6 @@ public class UITownRecruitment : UIBaseOne
     public GameObject objCandidateContent;
     public GameObject objCandidateModel;
 
-    public CharacterBodyManager characterBodyManager;
-
     //厨师招聘列表
     public List<CharacterBean> listCandidateChef = new List<CharacterBean>();
     //账房招聘列表
@@ -36,6 +34,7 @@ public class UITownRecruitment : UIBaseOne
     /// </summary>
     public void CreateCandidateData()
     {
+        CharacterBodyManager characterBodyManager = GetUIMananger<UIGameManager>().characterBodyManager;
         for (int i = 0; i < 10; i++)
         {
             CharacterBean characterData = CharacterBean.CreateRandomDataForChef();
@@ -77,7 +76,8 @@ public class UITownRecruitment : UIBaseOne
     private new void Update()
     {
         base.Update();
-        if (gameDataManager != null&&tvNumber != null)
+        GameDataManager gameDataManager = GetUIMananger<UIGameManager>().gameDataManager;
+        if (gameDataManager != null && tvNumber != null)
         {
             tvNumber.text = gameDataManager.gameData.workCharacterList.Count + "/" + gameDataManager.gameData.workerNumberLimit;
         }
@@ -126,7 +126,7 @@ public class UITownRecruitment : UIBaseOne
             CharacterBean itemData = listData[i];
             GameObject objCandidate = Instantiate(objCandidateModel, objCandidateContent.transform);
             objCandidate.SetActive(true);
-            ItemGameCandidateCpt itemCpt= objCandidate.GetComponent<ItemGameCandidateCpt>();
+            ItemGameCandidateCpt itemCpt = objCandidate.GetComponent<ItemGameCandidateCpt>();
             itemCpt.SetData(itemData);
         }
     }

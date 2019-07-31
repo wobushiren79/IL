@@ -7,8 +7,6 @@ public class UIGameWorker : BaseUIComponent
 {
     public Button btBack;
 
-    public GameDataManager gameDataManager;
-
     public GameObject objListContent;
     public GameObject objItemWorkModle;
 
@@ -26,11 +24,12 @@ public class UIGameWorker : BaseUIComponent
 
     public void OpenMainUI()
     {
-        uiManager.OpenUIAndCloseOtherByName("Main");
+        uiManager.OpenUIAndCloseOtherByName(EnumUtil.GetEnumName(UIEnum.GameMain));
     }
 
     public void InitData()
     {
+        GameDataManager gameDataManager = GetUIMananger<UIGameManager>().gameDataManager;
         if (gameDataManager == null)
             return;
         List<CharacterBean> listData = new List<CharacterBean>();

@@ -1,8 +1,9 @@
 ﻿using UnityEngine;
 using UnityEditor;
 using UnityEngine.UI;
-public class ItemGameWorkerCpt : BaseMonoBehaviour, IRadioButtonCallBack
+public class ItemGameWorkerCpt : ItemGameBaseCpt, IRadioButtonCallBack
 {
+    [Header("控件")]
     public Text tvName;
     public InfoPromptPopupButton pbName;
 
@@ -34,33 +35,59 @@ public class ItemGameWorkerCpt : BaseMonoBehaviour, IRadioButtonCallBack
     public RadioButtonView rbAccost;
     public RadioButtonView rbBeater;
 
+    [Header("数据")]
     public CharacterUICpt characterUICpt;
     public CharacterBean characterData;
-    public InnHandler innHandler;
-    public GameItemsManager gameItemsManager;
-    public BaseUIManager baseUIManager;
 
     private void Start()
     {
+        UIGameManager uIGameManager = GetUIManager<UIGameManager>();
         if (pbName != null)
+        {
+            pbName.SetPopupShowView(uIGameManager.InfoPromptPopup);
             pbName.SetContent(GameCommonInfo.GetUITextById(11001));
+        }
         if (pbPrice != null)
+        {
+            pbPrice.SetPopupShowView(uIGameManager.InfoPromptPopup);
             pbPrice.SetContent(GameCommonInfo.GetUITextById(11002));
+        }   
         if (pbLoyal != null)
+        {
+            pbLoyal.SetPopupShowView(uIGameManager.InfoPromptPopup);
             pbLoyal.SetContent(GameCommonInfo.GetUITextById(11003));
-
+        }
         if (pbCook != null)
+        {
+            pbCook.SetPopupShowView(uIGameManager.InfoPromptPopup);
             pbCook.SetContent(GameCommonInfo.GetUITextById(1));
+        }  
         if (pbSpeed != null)
+        {
+            pbSpeed.SetPopupShowView(uIGameManager.InfoPromptPopup);
             pbSpeed.SetContent(GameCommonInfo.GetUITextById(2));
+        }   
         if (pbAccount != null)
+        {
+            pbAccount.SetPopupShowView(uIGameManager.InfoPromptPopup);
             pbAccount.SetContent(GameCommonInfo.GetUITextById(3));
+        }   
         if (pbCharm != null)
+        {
+            pbCharm.SetPopupShowView(uIGameManager.InfoPromptPopup);
             pbCharm.SetContent(GameCommonInfo.GetUITextById(4));
+        }
         if (pbForce != null)
+        {
+            pbForce.SetPopupShowView(uIGameManager.InfoPromptPopup);
             pbForce.SetContent(GameCommonInfo.GetUITextById(5));
+        }
         if (pbLucky != null)
+        {
+            pbLucky.SetPopupShowView(uIGameManager.InfoPromptPopup);
             pbLucky.SetContent(GameCommonInfo.GetUITextById(6));
+        }
+
 
         if (rbAccounting != null)
             rbAccounting.SetCallBack(this);
@@ -106,11 +133,11 @@ public class ItemGameWorkerCpt : BaseMonoBehaviour, IRadioButtonCallBack
     /// </summary>
     public void OpenEquipUI()
     {
-        if (baseUIManager != null)
+        if (uiComponent != null)
         {
-            UIGameEquip uiComponent = (UIGameEquip)baseUIManager.GetUIByName("Equip");
-            uiComponent.SetCharacterData(characterData);
-            baseUIManager.OpenUIAndCloseOtherByName("Equip");  
+            UIGameEquip uiequip = (UIGameEquip)GetUIManager().GetUIByName(EnumUtil.GetEnumName(UIEnum.GameEquip));
+            uiequip.SetCharacterData(characterData);
+            uiComponent.uiManager.OpenUIAndCloseOtherByName(EnumUtil.GetEnumName(UIEnum.GameEquip));  
         }
     }
 
@@ -129,8 +156,9 @@ public class ItemGameWorkerCpt : BaseMonoBehaviour, IRadioButtonCallBack
     public void SetAttributes(CharacterAttributesBean characterAttributes, CharacterEquipBean characterEquip)
     {
         CharacterAttributesBean extraAttributes = new CharacterAttributesBean();
-        if (gameItemsManager != null && characterEquip != null)
+        if (uiComponent!=null&&GetUIManager<UIGameManager>().gameItemsManager != null && characterEquip != null)
         {
+            GameItemsManager gameItemsManager = GetUIManager<UIGameManager>().gameItemsManager;
             extraAttributes = characterEquip.GetEquipAttributes(gameItemsManager);
         }
         if (tvCook != null)
@@ -254,7 +282,7 @@ public class ItemGameWorkerCpt : BaseMonoBehaviour, IRadioButtonCallBack
         {
             characterBase.isBeater = (buttonStates == RadioButtonView.RadioButtonStates.Selected) ? true : false;
         }
-        if (innHandler != null)
-            innHandler.InitWorker();
+        if (GetUIManager<UIGameManager>().innHandler != null)
+            GetUIManager<UIGameManager>().innHandler.InitWorker();
     }
 }

@@ -15,7 +15,10 @@ public class InfoPromptPopupButton : PopupButtonView
 
     public override void OpenPopup()
     {
-        ((InfoPromptPopupShow)popupShow).SetContent(content);
+        if (popupShow != null)
+            ((InfoPromptPopupShow)popupShow).SetContent(content);
+        else
+            LogUtil.Log("popupShow is null");
     }
 
     public override void ClosePopup()

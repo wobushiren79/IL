@@ -6,6 +6,7 @@ using System.Collections.Generic;
 public class UIGameMenu : BaseUIComponent
 {
     //返回按钮
+    [Header("控件")]
     public Button btBack;
     public Text tvOilsalt;
     public Text tvMeat;
@@ -16,9 +17,7 @@ public class UIGameMenu : BaseUIComponent
     public Text tvWaterwine;
     public Text tvflour;
 
-    public GameDataManager gameDataManager;
-    public InnFoodManager innFoodManager;
-
+    [Header("模型")]
     public GameObject objFoodListContent;
     public GameObject objFoodItemModel;
 
@@ -37,6 +36,7 @@ public class UIGameMenu : BaseUIComponent
 
     private void Update()
     {
+        GameDataManager gameDataManager = GetUIMananger<UIGameManager>().gameDataManager;
         if (tvOilsalt != null)
         {
             tvOilsalt.text = "油盐 " + gameDataManager.gameData.ingOilsalt;
@@ -73,6 +73,8 @@ public class UIGameMenu : BaseUIComponent
 
     public void CreateFoodList()
     {
+        GameDataManager gameDataManager = GetUIMananger<UIGameManager>().gameDataManager;
+        InnFoodManager innFoodManager = GetUIMananger<UIGameManager>().innFoodManager;
         if (gameDataManager == null || innFoodManager == null)
             return;
         CptUtil.RemoveChildsByActive(objFoodListContent.transform);
@@ -94,7 +96,7 @@ public class UIGameMenu : BaseUIComponent
     /// </summary>
     public void OpenMainUI()
     {
-        uiManager.OpenUIAndCloseOtherByName("Main");
+        uiManager.OpenUIAndCloseOtherByName(EnumUtil.GetEnumName(UIEnum.GameMain));
     }
 
 }

@@ -12,9 +12,6 @@ public class UIBaseOne : BaseUIComponent
     public Text tvMoneyS;
     //公会硬币
     public Text tvGuildCoin;
-    //控制处理
-    public ControlHandler controlHandler;
-    public GameDataManager gameDataManager;
 
     public void Start()
     {
@@ -25,19 +22,20 @@ public class UIBaseOne : BaseUIComponent
     public override void OpenUI()
     {
         base.OpenUI();
-        if (controlHandler != null)
-            controlHandler.StopControl();
+        if (GetUIMananger<UIGameManager>().controlHandler != null)
+            GetUIMananger<UIGameManager>().controlHandler.StopControl();
     }
 
     public override void CloseUI()
     {
         base.CloseUI();
-        if (controlHandler != null)
-            controlHandler.RestoreControl();
+        if (GetUIMananger<UIGameManager>().controlHandler != null)
+            GetUIMananger<UIGameManager>().controlHandler.RestoreControl();
     }
 
     public void SetMoney()
     {
+        GameDataManager gameDataManager = GetUIMananger<UIGameManager>().gameDataManager;
         if (gameDataManager != null)
         {
             if (tvMoneyL != null)
@@ -69,6 +67,6 @@ public class UIBaseOne : BaseUIComponent
     /// </summary>
     public void OpenMainUI()
     {
-        uiManager.OpenUIAndCloseOtherByName("Main");
+        uiManager.OpenUIAndCloseOtherByName(EnumUtil.GetEnumName(UIEnum.GameMain));
     }
 }

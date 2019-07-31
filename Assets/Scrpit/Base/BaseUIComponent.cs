@@ -2,8 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BaseUIComponent : BaseMonoBehaviour
-{
+public class BaseUIComponent : BaseMonoBehaviour 
+{ 
     //UI管理
     public BaseUIManager uiManager;
     //UI动画
@@ -58,5 +58,10 @@ public class BaseUIComponent : BaseMonoBehaviour
     public virtual void SetRemarkData(string remarkData)
     {
         this.remarkData = remarkData;
+    }
+
+    public T GetUIMananger<T>() where T : BaseUIManager
+    {
+        return uiManager as T;
     }
 }

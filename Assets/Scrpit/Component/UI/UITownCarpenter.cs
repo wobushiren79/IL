@@ -84,7 +84,7 @@ public class UITownCarpenter : UIBaseOne, IStoreInfoView, IRadioGroupCallBack
             {
                 if(itemData.id> 300000&& itemData.id<= 300010)
                 {
-                    if (int.Parse(itemData.mark) - 1 == gameDataManager.gameData.GetInnBuildData().buildLevel)
+                    if (int.Parse(itemData.mark) - 1 ==GetUIMananger<UIGameManager>().gameDataManager.gameData.GetInnBuildData().buildLevel)
                     {
                         itemObj = Instantiate(objCarpenterModelForExpansion, objCarpenterContent.transform);
                     }

@@ -2,8 +2,9 @@
 using UnityEngine.UI;
 using UnityEditor;
 
-public class ItemGameMenuFoodCpt : BaseMonoBehaviour, IRadioButtonCallBack
+public class ItemGameMenuFoodCpt : ItemGameBaseCpt, IRadioButtonCallBack
 {
+    [Header("控件")]
     public Text tvName;
     public InfoFoodPopupButton pbFood;
     public Image ivFood;
@@ -18,13 +19,12 @@ public class ItemGameMenuFoodCpt : BaseMonoBehaviour, IRadioButtonCallBack
     public InfoPromptPopupButton pbReputation;
     public Image ivReputation;
 
-    public GameDataManager gameDataManager;
 
+    [Header("数据")]
     public Sprite spReputation1;
     public Sprite spReputation2;
     public Sprite spReputation3;
-
-    public InnFoodManager innFoodManager;
+    
     public MenuOwnBean menuOwnData;
     public MenuInfoBean foodData;
 
@@ -32,8 +32,17 @@ public class ItemGameMenuFoodCpt : BaseMonoBehaviour, IRadioButtonCallBack
     {
         if (rbShow != null)
             rbShow.SetCallBack(this);
+        UIGameManager uiGameManager = GetUIManager<UIGameManager>();
+        if (pbFood != null)
+        {
+            pbFood.SetPopupShowView(uiGameManager.infoFoodPopup);
+        }
         if (pbReputation != null)
-            pbReputation.SetContent("知名度");
+        {
+            pbReputation.SetPopupShowView(uiGameManager.InfoPromptPopup);
+            pbReputation.SetContent(GameCommonInfo.GetUITextById(100));
+        }
+         
     }
 
     private void Update()
@@ -62,7 +71,8 @@ public class ItemGameMenuFoodCpt : BaseMonoBehaviour, IRadioButtonCallBack
             }
         }
         //设置材料是否足够
-        if (gameDataManager.gameData.CheckCookFood(foodData))
+        GameDataManager gameDataManager = GetUIManager<UIGameManager>().gameDataManager;
+        if ( gameDataManager.gameData.CheckCookFood(foodData))
         {
             tvName.color =Color.black;
             tvShow.color= Color.black;
@@ -81,7 +91,7 @@ public class ItemGameMenuFoodCpt : BaseMonoBehaviour, IRadioButtonCallBack
         //设置详细信息弹窗
         if (pbFood != null)
             pbFood.SetData(menuOwnData, foodData);
-
+        InnFoodManager innFoodManager = GetUIManager<UIGameManager>().innFoodManager;
         Sprite spFood = innFoodManager.GetFoodSpriteByName(foodData.icon_key);
         //食物图标设置
         if (ivFood != null)
@@ -136,14 +146,14 @@ public class ItemGameMenuFoodCpt : BaseMonoBehaviour, IRadioButtonCallBack
             if (rbShow != null)
                 rbShow.ChangeStates(RadioButtonView.RadioButtonStates.Selected);
             if (tvShow != null)
-                tvShow.text = "售卖中";
+                tvShow.text = GameCommonInfo.GetUITextById(2021);
         }
         else
         {
             if (rbShow != null)
                 rbShow.ChangeStates(RadioButtonView.RadioButtonStates.Unselected);
             if (tvShow != null)
-                tvShow.text = "隐藏中";
+                tvShow.text = GameCommonInfo.GetUITextById(2020);
         }
 
     }
@@ -155,11 +165,11 @@ public class ItemGameMenuFoodCpt : BaseMonoBehaviour, IRadioButtonCallBack
             switch (buttonStates)
             {
                 case RadioButtonView.RadioButtonStates.Selected:
-                    tvShow.text = "售卖中";
+                    tvShow.text = GameCommonInfo.GetUITextById(2021);
                     menuOwnData.isSell = true;
                     break;
                 case RadioButtonView.RadioButtonStates.Unselected:
-                    tvShow.text = "隐藏中";
+                    tvShow.text = GameCommonInfo.GetUITextById(2020);
                     menuOwnData.isSell = false;
                     break;
             }

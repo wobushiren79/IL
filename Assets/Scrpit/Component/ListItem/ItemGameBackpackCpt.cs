@@ -12,7 +12,7 @@ public class ItemGameBackpackCpt : InfoItemsPopupButton, IPointerClickHandler, I
     public Image ivIcon;
     public InfoItemsPopupButton infoItemsPopup;
     public ItemsSelectionBox selectionBox;
-    
+
     public GameDataManager gameDataManager;
     public GameItemsManager gameItemsManager;
     public CharacterDressManager characterDressManager;
@@ -24,12 +24,16 @@ public class ItemGameBackpackCpt : InfoItemsPopupButton, IPointerClickHandler, I
 
     public UnityEvent leftClick;
     public UnityEvent rightClick;
- 
+
     public void Start()
     {
         rightClick.AddListener(new UnityAction(ButtonRightClick));
     }
 
+    public void SetSelectionBox(ItemsSelectionBox selectionBox)
+    {
+        this.selectionBox = selectionBox;
+    }
     public void SetData(ItemsInfoBean infoBean, ItemBean itemBean)
     {
         this.itemsInfoBean = infoBean;
@@ -93,7 +97,7 @@ public class ItemGameBackpackCpt : InfoItemsPopupButton, IPointerClickHandler, I
     public override void OpenPopup()
     {
         ((InfoItemsPopupShow)popupShow).SetData(ivIcon.sprite, itemsInfoBean);
-        if (itemsInfoBean == null|| itemsInfoBean.id == 0)
+        if (itemsInfoBean == null || itemsInfoBean.id == 0)
         {
             if (popupShow != null)
                 popupShow.gameObject.SetActive(false);
@@ -151,13 +155,13 @@ public class ItemGameBackpackCpt : InfoItemsPopupButton, IPointerClickHandler, I
 
     public virtual void SelectionDiscard(ItemsSelectionBox view)
     {
-        if (dialogManager==null||itemsInfoBean == null)
+        if (dialogManager == null || itemsInfoBean == null)
             return;
         DialogBean dialogBean = new DialogBean
         {
             content = string.Format(GameCommonInfo.GetUITextById(3001), itemsInfoBean.name)
         };
-        dialogManager.CreateDialog(0,this, dialogBean);
+        dialogManager.CreateDialog(0, this, dialogBean);
     }
 
     public virtual void SelectionEquip(ItemsSelectionBox view)

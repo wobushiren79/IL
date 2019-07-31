@@ -24,11 +24,6 @@ public class UIGameMain : BaseUIComponent, DialogView.IDialogCallBack
     public InfoPromptPopupButton popupInnLevel;
     public Image ivInnLevel;
 
-
-    public GameTimeHandler gameTimeHandler;
-    public GameDataManager gameDataManager;
-    public GameItemsManager gameItemsManager;
-    public DialogManager dialogManager;
     public InnHandler innHandler;
     public InnWallBuilder innWall;
 
@@ -44,11 +39,11 @@ public class UIGameMain : BaseUIComponent, DialogView.IDialogCallBack
                 tvInnStatus.text = GameCommonInfo.GetUITextById(2001);
             }
         if (tvMoneyS != null)
-            tvMoneyS.text = gameDataManager.gameData.moneyS + "";
+            tvMoneyS.text = GetUIMananger<UIGameManager>().gameDataManager.gameData.moneyS + "";
         if (tvMoneyM != null)
-            tvMoneyM.text = gameDataManager.gameData.moneyM + "";
+            tvMoneyM.text = GetUIMananger<UIGameManager>().gameDataManager.gameData.moneyM + "";
         if (tvMoneyL != null)
-            tvMoneyL.text = gameDataManager.gameData.moneyL + "";
+            tvMoneyL.text = GetUIMananger<UIGameManager>().gameDataManager.gameData.moneyL + "";
     }
 
     public override void OpenUI()
@@ -62,7 +57,7 @@ public class UIGameMain : BaseUIComponent, DialogView.IDialogCallBack
     /// </summary>
     public void InitInnData()
     {
-        InnAttributesBean innAttributes = gameDataManager.gameData.GetInnAttributesData();
+        InnAttributesBean innAttributes = GetUIMananger<UIGameManager>().gameDataManager.gameData.GetInnAttributesData();
         if (innAttributes == null)
             return;
         if (popupAesthetics != null)
@@ -78,7 +73,7 @@ public class UIGameMain : BaseUIComponent, DialogView.IDialogCallBack
         if (tvRichness != null)
             tvRichness.text = innAttributes.richness + "";
 
-        string innLevelStr= gameDataManager.gameData.GetInnLevel(out int innLevelTitle,out int innLevelStar);
+        string innLevelStr= GetUIMananger<UIGameManager>().gameDataManager.gameData.GetInnLevel(out int innLevelTitle,out int innLevelStar);
         if (popupInnLevel != null)
         {
             popupInnLevel.SetContent(GameCommonInfo.GetUITextById(2006) + " " + innLevelStr);
@@ -86,7 +81,7 @@ public class UIGameMain : BaseUIComponent, DialogView.IDialogCallBack
          
         if (ivInnLevel != null)
         {
-            Sprite spIcon = gameItemsManager.GetItemsSpriteByName("inn_level_" + innLevelTitle + "_" + (innLevelStar - 1));
+            Sprite spIcon = GetUIMananger<UIGameManager>().gameItemsManager.GetItemsSpriteByName("inn_level_" + innLevelTitle + "_" + (innLevelStar - 1));
             if (spIcon)
             {
                 ivInnLevel.gameObject.SetActive(true);
@@ -123,41 +118,41 @@ public class UIGameMain : BaseUIComponent, DialogView.IDialogCallBack
 
     public void SaveData()
     {
-        gameDataManager.SaveGameData();
+        GetUIMananger<UIGameManager>().gameDataManager.SaveGameData();
     }
 
     public void OpenBuildUI()
     {
-        uiManager.OpenUIAndCloseOtherByName("Build");
+        uiManager.OpenUIAndCloseOtherByName(EnumUtil.GetEnumName(UIEnum.GameMain));
     }
 
     public void OpenWorkerUI()
     {
-        uiManager.OpenUIAndCloseOtherByName("Worker");
+        uiManager.OpenUIAndCloseOtherByName(EnumUtil.GetEnumName(UIEnum.GameWorker));
     }
 
     public void OpenMenuUI()
     {
-        uiManager.OpenUIAndCloseOtherByName("Menu");
+        uiManager.OpenUIAndCloseOtherByName(EnumUtil.GetEnumName(UIEnum.GameMenu));
     }
 
     public void OpenBackpackUI()
     {
-        uiManager.OpenUIAndCloseOtherByName("Backpack");
+        uiManager.OpenUIAndCloseOtherByName(EnumUtil.GetEnumName(UIEnum.GameBackpack));
     }
 
     public void EndDay()
     {
         DialogBean dialogBean = new DialogBean();
         dialogBean.content = "是否要结束今天？";
-        dialogManager.CreateDialog(0, this, dialogBean);
+        GetUIMananger<UIGameManager>().dialogManager.CreateDialog(0, this, dialogBean);
     }
 
     #region dialog 回调
     public void Submit(DialogView dialogView)
     {
-        gameTimeHandler.isStopTime = true;
-        uiManager.OpenUIAndCloseOtherByName("Settle");
+        GetUIMananger<UIGameManager>().gameTimeHandler.isStopTime = true;
+        uiManager.OpenUIAndCloseOtherByName(EnumUtil.GetEnumName(UIEnum.GameSettle));
         innHandler.CloseInn();
     }
 

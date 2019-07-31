@@ -8,6 +8,11 @@ public abstract class PopupButtonView : BaseMonoBehaviour, IPointerEnterHandler,
     public PopupShowView popupShow;
     private Button mThisButton;
 
+    public void SetPopupShowView(PopupShowView popupShow)
+    {
+        this.popupShow = popupShow;
+    }
+
     private void Start()
     {
         mThisButton=GetComponent<Button>();
