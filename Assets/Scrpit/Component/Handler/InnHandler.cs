@@ -183,19 +183,16 @@ public class InnHandler : BaseMonoBehaviour
         MenuOwnBean menuOwnItem = RandomUtil.GetRandomDataByList(listOwnMenu);
         if (menuOwnItem == null)
             return null;
-        for (int i = 0; i < innFoodManager.listMenuData.Count; i++)
+        if (innFoodManager.listMenuData.TryGetValue(menuOwnItem.menuId, out MenuInfoBean menuInfo))
         {
-            MenuInfoBean menuInfo = innFoodManager.listMenuData[i];
-            if (menuInfo.menu_id == menuOwnItem.menuId)
-            {
-                MenuForCustomer menuForCustomer = new MenuForCustomer();
-                menuForCustomer.food = menuInfo;
-                menuForCustomer.customer = customerCpt;
-                menuForCustomer.table = table;
-                foodQueue.Add(menuForCustomer);
-                return menuInfo;
-            }
+            MenuForCustomer menuForCustomer = new MenuForCustomer();
+            menuForCustomer.food = menuInfo;
+            menuForCustomer.customer = customerCpt;
+            menuForCustomer.table = table;
+            foodQueue.Add(menuForCustomer);
+            return menuInfo;
         }
+
         return null;
     }
 

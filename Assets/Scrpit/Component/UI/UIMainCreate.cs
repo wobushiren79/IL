@@ -37,21 +37,17 @@ public class UIMainCreate : BaseUIComponent, IRadioGroupCallBack, ColorView.Call
 
     //角色身体控制
     public CharacterBodyCpt characterBodyCpt;
-    public CharacterBodyManager characterBodyManager;
     //角色着装控制
     public CharacterDressCpt characterDressCpt;
-    public CharacterDressManager characterDressManager;
-    //游戏数据管理
-    public GameDataManager gameDataManager;
-    public GameItemsManager gameItemsManager;
-    //弹出框提示
-    public ToastView toastView;
 
     public List<IconBean> listSelectHair;
     public List<IconBean> listSelectEye;
     public List<IconBean> listSelectMouth;
     private void Start()
     {
+
+        GameItemsManager gameItemsManager = GetUIMananger<UIGameManager>().gameItemsManager;
+        CharacterBodyManager characterBodyManager= GetUIMananger<UIGameManager>().characterBodyManager;
         InitData();
         if (btBack != null)
             btBack.onClick.AddListener(OpenStartUI);
@@ -104,6 +100,7 @@ public class UIMainCreate : BaseUIComponent, IRadioGroupCallBack, ColorView.Call
 
     public void InitData()
     {
+        CharacterBodyManager characterBodyManager = GetUIMananger<UIGameManager>().characterBodyManager;
         //初始化可选择头型数据
         listSelectHair = TypeConversionUtil.IconBeanDictionaryToList(characterBodyManager.listIconBodyHair);
         ChangeSelectPosition(selectHair, 0);
@@ -120,7 +117,8 @@ public class UIMainCreate : BaseUIComponent, IRadioGroupCallBack, ColorView.Call
     /// </summary>
     public void CreateNewGame()
     {
-
+        ToastView toastView = GetUIMananger<UIGameManager>().toastView;
+        GameDataManager gameDataManager = GetUIMananger<UIGameManager>().gameDataManager;
         if (CheckUtil.StringIsNull(etInnName.text))
         {
             toastView.ToastHint(GameCommonInfo.GetUITextById(1000));
@@ -143,7 +141,7 @@ public class UIMainCreate : BaseUIComponent, IRadioGroupCallBack, ColorView.Call
         gameData.userCharacter.equips = characterDressCpt.GetCharacterEquipData();
         gameDataManager.CreateGameData(gameData);
 
-        SceneUtil.SceneChange("GameInnScene");
+        SceneUtil.SceneChange(EnumUtil.GetEnumName(ScenesEnum.GameInnScene));
     }
 
     /// <summary>
@@ -151,7 +149,7 @@ public class UIMainCreate : BaseUIComponent, IRadioGroupCallBack, ColorView.Call
     /// </summary>
     public void OpenStartUI()
     {
-        uiManager.OpenUIAndCloseOtherByName("Start");
+        uiManager.OpenUIAndCloseOtherByName(EnumUtil.GetEnumName(UIEnum.MainStart));
     }
 
     #region 性别回调
@@ -199,6 +197,7 @@ public class UIMainCreate : BaseUIComponent, IRadioGroupCallBack, ColorView.Call
     #region 选择回调
     public void ChangeSelectPosition(SelectView selectView, int position)
     {
+        GameItemsManager gameItemsManager = GetUIMananger<UIGameManager>().gameItemsManager;
         if (selectView == selectHair)
         {
             characterBodyCpt.SetHair(listSelectHair[position].key);

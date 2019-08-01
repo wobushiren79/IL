@@ -39,7 +39,7 @@ public class ItemGameMenuFoodCpt : ItemGameBaseCpt, IRadioButtonCallBack
         }
         if (pbReputation != null)
         {
-            pbReputation.SetPopupShowView(uiGameManager.InfoPromptPopup);
+            pbReputation.SetPopupShowView(uiGameManager.infoPromptPopup);
             pbReputation.SetContent(GameCommonInfo.GetUITextById(100));
         }
          

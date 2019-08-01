@@ -31,13 +31,21 @@ public class UIMainStart : BaseUIComponent
         {
             btExit.onClick.AddListener(ExitGame);
         }
-     
+
+        if (tvStart != null)
+            tvStart.text = GameCommonInfo.GetUITextById(4011);
+        if (tvContinue != null)
+            tvContinue.text = GameCommonInfo.GetUITextById(4012);
+        if (tvSetting != null)
+            tvSetting.text = GameCommonInfo.GetUITextById(4013);
+        if (tvExit != null)
+            tvExit.text = GameCommonInfo.GetUITextById(4014);
     }
 
     public override void RefreshUI()
     {
         base.RefreshUI();
-         
+
     }
 
     /// <summary>
@@ -45,7 +53,7 @@ public class UIMainStart : BaseUIComponent
     /// </summary>
     public void OpenContinueUI()
     {
-        uiManager.OpenUIAndCloseOtherByName("Continue");
+        uiManager.OpenUIAndCloseOtherByName(EnumUtil.GetEnumName(UIEnum.MainContinue));
     }
 
     /// <summary>
@@ -53,7 +61,7 @@ public class UIMainStart : BaseUIComponent
     /// </summary>
     public void OpenCreateUI()
     {
-        uiManager.OpenUIAndCloseOtherByName("Create");
+        uiManager.OpenUIAndCloseOtherByName(EnumUtil.GetEnumName(UIEnum.MainCreate));
     }
 
     /// <summary>

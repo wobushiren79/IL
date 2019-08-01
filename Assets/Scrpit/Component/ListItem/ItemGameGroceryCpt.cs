@@ -1,8 +1,9 @@
 ﻿using UnityEngine;
 using UnityEditor;
 using UnityEngine.UI;
-public class ItemGameGroceryCpt : BaseMonoBehaviour, DialogView.IDialogCallBack
+public class ItemGameGroceryCpt : ItemGameBaseCpt, DialogView.IDialogCallBack
 {
+    [Header("控件")]
     public GameObject objCook;
     public Text tvCook;
     public GameObject objSpeed;
@@ -35,13 +36,7 @@ public class ItemGameGroceryCpt : BaseMonoBehaviour, DialogView.IDialogCallBack
     public Text tvGuildCoin;
 
 
-    public GameDataManager gameDataManager;
-    public CharacterDressManager characterDressManager;
-    public GameItemsManager gameItemsManager;
-
-    public ToastView toastView;
-    public DialogManager dialogManager;
-
+    [Header("数据")]
     public StoreInfoBean storeInfo;
     public ItemsInfoBean itemsInfo;
 
@@ -55,11 +50,11 @@ public class ItemGameGroceryCpt : BaseMonoBehaviour, DialogView.IDialogCallBack
     public void SetData(StoreInfoBean storeInfo)
     {
         this.storeInfo = storeInfo;
-        this.itemsInfo = gameItemsManager.GetItemsById(storeInfo.mark_id);
+        this.itemsInfo = GetUIManager<UIGameManager>().gameItemsManager.GetItemsById(storeInfo.mark_id);
         if (itemsInfo == null || storeInfo == null)
             return;
         SetIcon(storeInfo.icon_key, storeInfo.mark, storeInfo.mark_id);
-        SetPrice(storeInfo.price_l, storeInfo.price_m, storeInfo.price_s,storeInfo.guild_coin);
+        SetPrice(storeInfo.price_l, storeInfo.price_m, storeInfo.price_s, storeInfo.guild_coin);
         SetName(itemsInfo.name);
         SetContent(itemsInfo.content);
         SetOwn();
@@ -87,7 +82,8 @@ public class ItemGameGroceryCpt : BaseMonoBehaviour, DialogView.IDialogCallBack
     /// <param name="markId"></param>
     public void SetIcon(string iconKey, string mark, long markId)
     {
-
+        GameItemsManager gameItemsManager = GetUIManager<UIGameManager>().gameItemsManager;
+        CharacterDressManager characterDressManager = GetUIManager<UIGameManager>().characterDressManager;
         if (gameItemsManager == null)
             return;
         Sprite spIcon = null;
@@ -174,7 +170,7 @@ public class ItemGameGroceryCpt : BaseMonoBehaviour, DialogView.IDialogCallBack
     {
         if (tvOwn == null)
             return;
-        tvOwn.text = ("拥有\n" + gameDataManager.gameData.GetItemsNumber(storeInfo.mark_id));
+        tvOwn.text = (GameCommonInfo.GetUITextById(4001) + GetUIManager<UIGameManager>().gameDataManager.gameData.GetItemsNumber(storeInfo.mark_id));
     }
 
     /// <summary>
@@ -223,6 +219,9 @@ public class ItemGameGroceryCpt : BaseMonoBehaviour, DialogView.IDialogCallBack
     /// </summary>
     public void SubmitBuy()
     {
+        GameDataManager gameDataManager = GetUIManager<UIGameManager>().gameDataManager;
+        ToastView toastView = GetUIManager<UIGameManager>().toastView;
+        DialogManager dialogManager = GetUIManager<UIGameManager>().dialogManager;
         if (gameDataManager == null || storeInfo == null)
             return;
         if (!gameDataManager.gameData.HasEnoughMoney(storeInfo.price_l, storeInfo.price_m, storeInfo.price_s))
@@ -238,6 +237,8 @@ public class ItemGameGroceryCpt : BaseMonoBehaviour, DialogView.IDialogCallBack
     #region 提交回调
     public virtual void Submit(DialogView dialogView)
     {
+        GameDataManager gameDataManager = GetUIManager<UIGameManager>().gameDataManager;
+        ToastView toastView = GetUIManager<UIGameManager>().toastView;
         if (gameDataManager == null || storeInfo == null)
             return;
         if (!gameDataManager.gameData.HasEnoughMoney(storeInfo.price_l, storeInfo.price_m, storeInfo.price_s))

@@ -17,18 +17,6 @@ public class UIGameBuild : BaseUIComponent
     public GameObject listBuildContent;
     public GameObject itemBuildModel;
 
-    //数据管理
-    public GameDataManager gameDataManager;
-    public InnBuildManager innBuildManager;
-
-    //控制
-    public ControlHandler controlHandler;
-    //时间处理
-    public GameTimeHandler gameTimeHandler;
-    //游戏进程处理
-    public InnHandler innHandler;
-    public NavMeshSurface2d navMesh;
-
     public BuildItemBean.BuildType buildType = BuildItemBean.BuildType.Table;
     public void Start()
     {
@@ -50,8 +38,8 @@ public class UIGameBuild : BaseUIComponent
     public override void OpenUI()
     {
         base.OpenUI();
-        controlHandler.StartControl(ControlHandler.ControlEnum.Build);
-        innHandler.CloseInn();
+        GetUIMananger<UIGameManager>().controlHandler.StartControl(ControlHandler.ControlEnum.Build);
+        GetUIMananger<UIGameManager>().innHandler.CloseInn();
     }
 
     /// <summary>
@@ -60,6 +48,9 @@ public class UIGameBuild : BaseUIComponent
     /// <param name="type"></param>
     public void CreateBuildList(BuildItemBean.BuildType type)
     {
+        GameDataManager gameDataManager= GetUIMananger<UIGameManager>().gameDataManager;
+        ControlHandler controlHandler = GetUIMananger<UIGameManager>().controlHandler;
+        InnBuildManager innBuildManager = GetUIMananger<UIGameManager>().innBuildManager;
         buildType = type;
         //删除当前选中
         ((ControlForBuildCpt)(controlHandler.GetControl(ControlHandler.ControlEnum.Build))).DestoryBuild();
@@ -123,6 +114,7 @@ public class UIGameBuild : BaseUIComponent
 
     public void DismantleMode()
     {
+        ControlHandler controlHandler = GetUIMananger<UIGameManager>().controlHandler;
         ((ControlForBuildCpt)(controlHandler.GetControl(ControlHandler.ControlEnum.Build))).DismantleMode();
     }
 
@@ -138,11 +130,15 @@ public class UIGameBuild : BaseUIComponent
     /// </summary>
     public void OpenMainUI()
     {
+        ControlHandler controlHandler = GetUIMananger<UIGameManager>().controlHandler;
+        InnHandler innHandler = GetUIMananger<UIGameManager>().innHandler;
+        GameTimeHandler gameTimeHandler = GetUIMananger<UIGameManager>().gameTimeHandler;
+        NavMeshSurface2d navMesh = GetUIMananger<UIGameManager>().navMesh;
 
         //删除当前选中
         ((ControlForBuildCpt)(controlHandler.GetControl(ControlHandler.ControlEnum.Build))).DestoryBuild();
         navMesh.BuildNavMesh();
-        uiManager.OpenUIAndCloseOtherByName("Main");
+        uiManager.OpenUIAndCloseOtherByName(EnumUtil.GetEnumName(UIEnum.GameMain));
 
         if (gameTimeHandler.dayStauts == GameTimeHandler.DayEnum.Work)
         {

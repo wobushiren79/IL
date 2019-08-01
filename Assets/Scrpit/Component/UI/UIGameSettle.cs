@@ -17,10 +17,6 @@ public class UIGameSettle : BaseUIComponent
     public Text tvExpensesM;
     public Text tvExpensesL;
 
-    public InnHandler innHandler;
-    public ControlHandler controlHandler;
-    public GameTimeHandler gameTimeHandler;
-
     public GameObject objListRecordContent;
     public GameObject objItemIngModel;
     public GameObject objItemFoodModel;
@@ -51,24 +47,26 @@ public class UIGameSettle : BaseUIComponent
 
     public void InitData()
     {
+        InnHandler innHandler = GetUIMananger<UIGameManager>().innHandler;
         CptUtil.RemoveChildsByActive(objListRecordContent.transform);
         animDelay = 0.1f;
+        string consumeIngStr = GameCommonInfo.GetUITextById(4002);
         if (innHandler.innRecord.consumeIngOilsalt > 0)
-            CreateIngItem(innHandler.innRecord.consumeIngOilsalt, spIconOilsalt, "消耗食材 油盐");
+            CreateIngItem(innHandler.innRecord.consumeIngOilsalt, spIconOilsalt, consumeIngStr + " " + GameCommonInfo.GetUITextById(21));
         if (innHandler.innRecord.consumeIngMeat > 0)
-            CreateIngItem(innHandler.innRecord.consumeIngMeat, spIconMeat, "消耗食材 鲜肉");
+            CreateIngItem(innHandler.innRecord.consumeIngMeat, spIconMeat, consumeIngStr + " " + GameCommonInfo.GetUITextById(22));
         if (innHandler.innRecord.consumeIngRiverfresh > 0)
-            CreateIngItem(innHandler.innRecord.consumeIngRiverfresh, spIconRiverfresh, "消耗食材 河鲜");
+            CreateIngItem(innHandler.innRecord.consumeIngRiverfresh, spIconRiverfresh, consumeIngStr + " " + GameCommonInfo.GetUITextById(23));
         if (innHandler.innRecord.consumeIngSeafood > 0)
-            CreateIngItem(innHandler.innRecord.consumeIngSeafood, spIconSeafood, "消耗食材 海鲜");
+            CreateIngItem(innHandler.innRecord.consumeIngSeafood, spIconSeafood, consumeIngStr + " " + GameCommonInfo.GetUITextById(24));
         if (innHandler.innRecord.consumeIngVegetablest > 0)
-            CreateIngItem(innHandler.innRecord.consumeIngVegetablest, spIconVegetablest, "消耗食材 蔬菜");
+            CreateIngItem(innHandler.innRecord.consumeIngVegetablest, spIconVegetablest, consumeIngStr + " " + GameCommonInfo.GetUITextById(25));
         if (innHandler.innRecord.consumeIngMelonfruit > 0)
-            CreateIngItem(innHandler.innRecord.consumeIngMelonfruit, spIconMelonfruit, "消耗食材 瓜果");
+            CreateIngItem(innHandler.innRecord.consumeIngMelonfruit, spIconMelonfruit, consumeIngStr + " " + GameCommonInfo.GetUITextById(26));
         if (innHandler.innRecord.consumeIngWaterwine > 0)
-            CreateIngItem(innHandler.innRecord.consumeIngWaterwine, spIconWaterwine, "消耗食材 酒水");
+            CreateIngItem(innHandler.innRecord.consumeIngWaterwine, spIconWaterwine, consumeIngStr + " " + GameCommonInfo.GetUITextById(27));
         if (innHandler.innRecord.consumeIngFlour > 0)
-            CreateIngItem(innHandler.innRecord.consumeIngFlour, spIconFlour, "消耗食材 面粉");
+            CreateIngItem(innHandler.innRecord.consumeIngFlour, spIconFlour, consumeIngStr + " " + GameCommonInfo.GetUITextById(28));
         //遍历食物
         foreach (KeyValuePair<long, int> kvp in innHandler.innRecord.sellNumber)
         {
@@ -108,14 +106,17 @@ public class UIGameSettle : BaseUIComponent
 
     public void OpenInn()
     {
-        uiManager.OpenUIAndCloseOtherByName("Attendance");
+        uiManager.OpenUIAndCloseOtherByName(EnumUtil.GetEnumName(UIEnum.GameAttendance));
     }
 
     public void CloseInn()
     {
+        GameTimeHandler gameTimeHandler = GetUIMananger<UIGameManager>().gameTimeHandler;
+        ControlHandler controlHandler = GetUIMananger<UIGameManager>().controlHandler;
+
         gameTimeHandler.dayStauts = GameTimeHandler.DayEnum.Rest;
         gameTimeHandler.StartNewDay(true);
-        uiManager.OpenUIAndCloseOtherByName("Main");
+        uiManager.OpenUIAndCloseOtherByName(EnumUtil.GetEnumName(UIEnum.GameMain));
         controlHandler.StartControl(ControlHandler.ControlEnum.Normal);
     }
 }

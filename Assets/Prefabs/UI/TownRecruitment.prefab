@@ -35,8 +35,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -0.00002493192, y: 0.00007562246}
-  m_SizeDelta: {x: 0, y: 260}
+  m_AnchoredPosition: {x: -0.00002493192, y: 0.00002947452}
+  m_SizeDelta: {x: 0, y: 10}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &6889042820277592116
 MonoBehaviour:
@@ -184,7 +184,7 @@ RectTransform:
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 20, y: 20}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -294,12 +294,9 @@ MonoBehaviour:
   tvMoneyM: {fileID: 6889042821021364180}
   tvMoneyS: {fileID: 6889042820609400037}
   tvGuildCoin: {fileID: 0}
-  controlHandler: {fileID: 0}
-  gameDataManager: {fileID: 0}
   tvNumber: {fileID: 6889042821587579160}
   objCandidateContent: {fileID: 6889042820277592121}
   objCandidateModel: {fileID: 6889042821273704576}
-  characterBodyManager: {fileID: 0}
   listCandidateChef: []
   listCandidateAccounting: []
   listCandidateWaiter: []
@@ -1273,7 +1270,6 @@ GameObject:
   - component: {fileID: 6889042821273704605}
   - component: {fileID: 6889042821273704604}
   - component: {fileID: 6889042821273704607}
-  - component: {fileID: 6889042821273704606}
   m_Layer: 5
   m_Name: ItemRecruitment
   m_TagString: Untagged
@@ -1353,13 +1349,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7c5fc197c222e0c4e9b49dac013360ce, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  uiComponent: {fileID: 6889042820495873258}
   tvName: {fileID: 6889042821000306984}
   tvPrice: {fileID: 6889042822180316043}
   btSubmit: {fileID: 6889042821666035329}
   ivSex: {fileID: 6889042821677780078}
-  infoAbilityPopupButton: {fileID: 6889042821273704606}
+  infoAbilityPopupButton: {fileID: 2646409724135884238}
   characterUICpt: {fileID: 6889042821825855696}
-  uiTownRecruitment: {fileID: 6889042820495873258}
   spMan: {fileID: 21300000, guid: c74dadfc811858b48abd12f5c2c6170e, type: 3}
   spWoman: {fileID: 21300000, guid: c14f38d399b2cf445aaae24c0344b9db, type: 3}
   characterData:
@@ -1416,9 +1412,6 @@ MonoBehaviour:
       clothesId: 0
       shoesId: 0
       listLearnBook: 
-  gameDataManager: {fileID: 0}
-  toastView: {fileID: 0}
-  dialogManager: {fileID: 0}
 --- !u!114 &6889042821273704607
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1461,19 +1454,6 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
---- !u!114 &6889042821273704606
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6889042821273704576}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a9a7926dd6abb8146b9711a0bc71f073, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  popupShow: {fileID: 0}
 --- !u!1 &6889042821290611924
 GameObject:
   m_ObjectHideFlags: 0
@@ -2239,6 +2219,7 @@ GameObject:
   - component: {fileID: 6889042821766029475}
   - component: {fileID: 6889042821766029474}
   - component: {fileID: 6889042821766029477}
+  - component: {fileID: 2646409724135884238}
   m_Layer: 5
   m_Name: Icon
   m_TagString: Untagged
@@ -2346,6 +2327,19 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
+--- !u!114 &2646409724135884238
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6889042821766029479}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a9a7926dd6abb8146b9711a0bc71f073, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  popupShow: {fileID: 0}
 --- !u!1 &6889042821825855698
 GameObject:
   m_ObjectHideFlags: 0
@@ -3057,7 +3051,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.05, y: 0.30616593}
   m_AnchorMax: {x: 0.1533125, y: 0.40935454}
-  m_AnchoredPosition: {x: -5.8500977, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &6889042822322135373

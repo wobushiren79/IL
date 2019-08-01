@@ -814,6 +814,7 @@ GameObject:
   - component: {fileID: 1591988440379129136}
   - component: {fileID: 1591988440379129139}
   - component: {fileID: 1591988440379129138}
+  - component: {fileID: 901886830762271758}
   m_Layer: 5
   m_Name: ItemBackpack
   m_TagString: Untagged
@@ -891,17 +892,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 947eea902d81f884aacc60b1037d75ce, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  popupShow: {fileID: 0}
+  uiComponent: {fileID: 1591988440865545749}
   tvName: {fileID: 1591988441146350852}
   rtIcon: {fileID: 1591988440024956095}
   ivIcon: {fileID: 1591988440024956034}
-  infoItemsPopup: {fileID: 1591988440379129136}
-  selectionBox: {fileID: 0}
-  gameDataManager: {fileID: 0}
-  gameItemsManager: {fileID: 0}
-  characterDressManager: {fileID: 0}
-  dialogManager: {fileID: 0}
-  toastView: {fileID: 0}
+  infoItemsPopup: {fileID: 901886830762271758}
   itemsInfoBean:
     id: 0
     valid: 0
@@ -987,6 +982,38 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
+--- !u!114 &901886830762271758
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1591988440379129132}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9f50fe07f4e6e024f961413f0733e03f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  popupShow: {fileID: 0}
+  itemsInfo:
+    id: 0
+    valid: 0
+    intact_id: 0
+    items_id: 0
+    items_type: 0
+    icon_key: 
+    add_cook: 0
+    add_speed: 0
+    add_account: 0
+    add_charm: 0
+    add_force: 0
+    add_lucky: 0
+    add_loyal: 0
+    add_id: 0
+    intact_number: 0
+    name: 
+    content: 
+  spIcon: {fileID: 0}
 --- !u!1 &1591988440459072129
 GameObject:
   m_ObjectHideFlags: 0
@@ -1297,11 +1324,8 @@ MonoBehaviour:
   tvMoneyM: {fileID: 1591988439340639034}
   tvMoneyS: {fileID: 1591988439558288526}
   tvGuildCoin: {fileID: 0}
-  controlHandler: {fileID: 0}
-  gameDataManager: {fileID: 0}
   objItemContent: {fileID: 1591988441206148769}
   objItemModel: {fileID: 1591988440379129132}
-  gameItemsManager: {fileID: 0}
 --- !u!1 &1591988440902016385
 GameObject:
   m_ObjectHideFlags: 0

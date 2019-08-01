@@ -1,20 +1,19 @@
 ﻿using UnityEngine;
 using UnityEditor;
 using UnityEngine.UI;
-public class ItemGameBuildCpt : BaseMonoBehaviour
-{
+using static ControlHandler;
 
+public class ItemGameBuildCpt : ItemGameBaseCpt
+{
+    [Header("控件")]
     public Button btBuild;
     public Image ivIcon;
     public Text tvName;
     public Text tvNumber;
 
+    [Header("数据")]
     public ItemBean itemData;
     public BuildItemBean buildData;
-
-    //数据管理
-    public InnBuildManager innBuildManager;
-    public ControlForBuildCpt controlForBuild;
 
     private void Awake()
     {
@@ -32,7 +31,8 @@ public class ItemGameBuildCpt : BaseMonoBehaviour
         this.itemData = itemData;
         this.buildData = buildData;
 
-        Sprite spFurniture=  innBuildManager.GetFurnitureSpriteByName(buildData.icon_key);
+   
+        Sprite spFurniture = GetUIManager<UIGameManager>().innBuildManager.GetFurnitureSpriteByName(buildData.icon_key);
         ivIcon.sprite = spFurniture;
         tvNumber.text = "x " + itemData.itemNumber;
         tvName.text = buildData.name;
@@ -40,6 +40,7 @@ public class ItemGameBuildCpt : BaseMonoBehaviour
 
     public void StartBuild()
     {
+        ControlForBuildCpt controlForBuild = (ControlForBuildCpt)GetUIManager<UIGameManager>().controlHandler.GetControl(ControlEnum.Build);
         controlForBuild.SetBuildItem(buildData.id);
     }
 

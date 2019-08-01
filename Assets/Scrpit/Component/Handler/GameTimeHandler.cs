@@ -22,6 +22,7 @@ public class GameTimeHandler : BaseMonoBehaviour
     //是否停止时间
     public bool isStopTime = true;
 
+    public float timeSclae = 1;
     private void Start()
     {
         StartNewDay(true);
@@ -37,7 +38,7 @@ public class GameTimeHandler : BaseMonoBehaviour
 
     public void TimeLapse()
     {
-        min += Time.deltaTime*20;
+        min += Time.deltaTime * timeSclae;
         if (min >= 60)
         {
             min = 0;

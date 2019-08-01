@@ -2,7 +2,7 @@
 using UnityEditor;
 using UnityEngine.UI;
 
-public class ItemGameGoodsMarketCpt : BaseMonoBehaviour
+public class ItemGameGoodsMarketCpt : ItemGameBaseCpt
 {
     public Image ivIcon;
     public Text tvName;
@@ -14,8 +14,7 @@ public class ItemGameGoodsMarketCpt : BaseMonoBehaviour
     public Text tvOwn;
 
     public StoreInfoBean goodsData;
-    public GameDataManager gameDataManager;
-    public ToastView toastView;
+
 
     private void Start()
     {
@@ -40,6 +39,7 @@ public class ItemGameGoodsMarketCpt : BaseMonoBehaviour
             return;
         int ingType = int.Parse(goodsData.mark);
         long ownNumber = 0;
+        GameDataManager gameDataManager = GetUIManager<UIGameManager>().gameDataManager;
         switch (ingType)
         {
             case 1:
@@ -74,6 +74,8 @@ public class ItemGameGoodsMarketCpt : BaseMonoBehaviour
     {
         int ingType = int.Parse(goodsData.mark);
         int buyNumber = int.Parse(etNumber.text);
+        GameDataManager gameDataManager = GetUIManager<UIGameManager>().gameDataManager;
+        ToastView toastView = GetUIManager<UIGameManager>().toastView;
         if (buyNumber<=0)
         {
             toastView.ToastHint("至少需要购买1件商品！");

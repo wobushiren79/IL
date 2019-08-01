@@ -4,7 +4,6 @@ using UnityEngine.Events;
 
 public class ItemGameBackpackEquipCpt : ItemGameBackpackCpt
 {
-    public UIGameEquip uiGameEquip;
     public CharacterBean characterData;
 
     public int type = 0;
@@ -19,6 +18,7 @@ public class ItemGameBackpackEquipCpt : ItemGameBackpackCpt
     {
         if (itemsInfoBean == null)
             return;
+        ItemsSelectionBox selectionBox = GetUIManager<UIGameManager>().itemsSelectionBox;
         if (selectionBox != null)
             selectionBox.SetCallBack(this);
         if (type == 1)
@@ -48,6 +48,7 @@ public class ItemGameBackpackEquipCpt : ItemGameBackpackCpt
     #region  装备回调
     public override void SelectionUse(ItemsSelectionBox view)
     {
+        ToastView toastView= GetUIManager<UIGameManager>().toastView;
         switch (itemsInfoBean.items_type)
         {
             case (int)GeneralEnum.Book:
@@ -72,14 +73,14 @@ public class ItemGameBackpackEquipCpt : ItemGameBackpackCpt
             default:
                 break;
         }
-        uiGameEquip.RefreshUI();
+        GetUIComponent<UIGameEquip>().RefreshUI();
     }
 
     public override void SelectionEquip(ItemsSelectionBox view)
     {
-        uiGameEquip.SetEquip(itemsInfoBean);
+        GetUIComponent<UIGameEquip>().SetEquip(itemsInfoBean);
         RemoveItems();
-        uiGameEquip.RefreshUI();
+        GetUIComponent<UIGameEquip>().RefreshUI();
     }
 
     public override void SelectionUnload(ItemsSelectionBox view)
@@ -87,8 +88,8 @@ public class ItemGameBackpackEquipCpt : ItemGameBackpackCpt
         ItemsInfoBean nullItems = new ItemsInfoBean();
         nullItems.id = 0;
         nullItems.items_type = itemsInfoBean.items_type;
-        uiGameEquip.SetEquip(nullItems);
-        uiGameEquip.RefreshUI();
+        GetUIComponent<UIGameEquip>().SetEquip(nullItems);
+        GetUIComponent<UIGameEquip>().RefreshUI();
     }
     #endregion 
 }

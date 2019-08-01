@@ -7,6 +7,8 @@ public class ItemGameGuildStoreCpt : ItemGameGroceryCpt
 
     public override void Submit(DialogView dialogView)
     {
+        GameDataManager gameDataManager=   GetUIManager<UIGameManager>().gameDataManager;
+        ToastView toastView = GetUIManager<UIGameManager>().toastView;
         if (gameDataManager == null || storeInfo == null)
             return;
         if (!gameDataManager.gameData.HasEnoughGuildCoin(storeInfo.guild_coin))

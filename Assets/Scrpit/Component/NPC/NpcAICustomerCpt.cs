@@ -72,6 +72,7 @@ public class NpcAICustomerCpt : BaseNpcAI
                 if (characterMoveCpt.IsAutoMoveStop())
                 {
                     SetDestinationByIntent(CustomerIntentEnum.WaitFood);
+                    //点餐
                     MenuInfoBean foodData = innHandler.OrderForFood(this, tableForEating);
                     if (foodData == null)
                     {

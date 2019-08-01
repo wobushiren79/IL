@@ -44,47 +44,47 @@ public class ItemGameWorkerCpt : ItemGameBaseCpt, IRadioButtonCallBack
         UIGameManager uIGameManager = GetUIManager<UIGameManager>();
         if (pbName != null)
         {
-            pbName.SetPopupShowView(uIGameManager.InfoPromptPopup);
+            pbName.SetPopupShowView(uIGameManager.infoPromptPopup);
             pbName.SetContent(GameCommonInfo.GetUITextById(11001));
         }
         if (pbPrice != null)
         {
-            pbPrice.SetPopupShowView(uIGameManager.InfoPromptPopup);
+            pbPrice.SetPopupShowView(uIGameManager.infoPromptPopup);
             pbPrice.SetContent(GameCommonInfo.GetUITextById(11002));
         }   
         if (pbLoyal != null)
         {
-            pbLoyal.SetPopupShowView(uIGameManager.InfoPromptPopup);
+            pbLoyal.SetPopupShowView(uIGameManager.infoPromptPopup);
             pbLoyal.SetContent(GameCommonInfo.GetUITextById(11003));
         }
         if (pbCook != null)
         {
-            pbCook.SetPopupShowView(uIGameManager.InfoPromptPopup);
+            pbCook.SetPopupShowView(uIGameManager.infoPromptPopup);
             pbCook.SetContent(GameCommonInfo.GetUITextById(1));
         }  
         if (pbSpeed != null)
         {
-            pbSpeed.SetPopupShowView(uIGameManager.InfoPromptPopup);
+            pbSpeed.SetPopupShowView(uIGameManager.infoPromptPopup);
             pbSpeed.SetContent(GameCommonInfo.GetUITextById(2));
         }   
         if (pbAccount != null)
         {
-            pbAccount.SetPopupShowView(uIGameManager.InfoPromptPopup);
+            pbAccount.SetPopupShowView(uIGameManager.infoPromptPopup);
             pbAccount.SetContent(GameCommonInfo.GetUITextById(3));
         }   
         if (pbCharm != null)
         {
-            pbCharm.SetPopupShowView(uIGameManager.InfoPromptPopup);
+            pbCharm.SetPopupShowView(uIGameManager.infoPromptPopup);
             pbCharm.SetContent(GameCommonInfo.GetUITextById(4));
         }
         if (pbForce != null)
         {
-            pbForce.SetPopupShowView(uIGameManager.InfoPromptPopup);
+            pbForce.SetPopupShowView(uIGameManager.infoPromptPopup);
             pbForce.SetContent(GameCommonInfo.GetUITextById(5));
         }
         if (pbLucky != null)
         {
-            pbLucky.SetPopupShowView(uIGameManager.InfoPromptPopup);
+            pbLucky.SetPopupShowView(uIGameManager.infoPromptPopup);
             pbLucky.SetContent(GameCommonInfo.GetUITextById(6));
         }
 
@@ -106,7 +106,7 @@ public class ItemGameWorkerCpt : ItemGameBaseCpt, IRadioButtonCallBack
             btFire.onClick.AddListener(FireWorker);
     }
 
-    public void SetData(CharacterBean data)
+    public virtual void SetData(CharacterBean data)
     {
         if (data == null)
             return;
@@ -257,7 +257,7 @@ public class ItemGameWorkerCpt : ItemGameBaseCpt, IRadioButtonCallBack
         }
     }
 
-    public void RadioButtonSelected(RadioButtonView view, RadioButtonView.RadioButtonStates buttonStates)
+    public virtual void RadioButtonSelected(RadioButtonView view, RadioButtonView.RadioButtonStates buttonStates)
     {
         if (characterData == null || characterData.baseInfo == null)
             return;

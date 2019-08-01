@@ -1,9 +1,8 @@
 ﻿using UnityEngine;
 using UnityEditor;
 using UnityEngine.UI;
-public class ItemGameDataCpt : BaseMonoBehaviour
+public class ItemGameDataCpt : ItemGameBaseCpt
 {
-
     public Text tvInnName;
     public Text tvUserName;
     public Text tvMoneyL;
@@ -15,8 +14,6 @@ public class ItemGameDataCpt : BaseMonoBehaviour
 
     public CharacterUICpt characterUI;
     public GameDataSimpleBean gameData;
-    //游戏数据管理
-    public GameDataManager gameDataManager;
 
     private void Start()
     {
@@ -54,7 +51,7 @@ public class ItemGameDataCpt : BaseMonoBehaviour
     public void GameContinue()
     {
         GameCommonInfo.gameUserId = gameData.userId;
-        SceneUtil.SceneChange("GameInnScene");
+        SceneUtil.SceneChange(EnumUtil.GetEnumName(ScenesEnum.GameInnScene));
     }
 
     /// <summary>
@@ -62,6 +59,7 @@ public class ItemGameDataCpt : BaseMonoBehaviour
     /// </summary>
     public void GameDataDelete()
     {
+        GameDataManager gameDataManager=  GetUIManager<UIGameManager>().gameDataManager;
         gameDataManager.DeleteGameDataByUserId(gameData.userId);
         Destroy(gameObject);
     }

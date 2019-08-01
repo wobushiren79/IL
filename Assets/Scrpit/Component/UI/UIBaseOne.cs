@@ -28,9 +28,12 @@ public class UIBaseOne : BaseUIComponent
 
     public override void CloseUI()
     {
+        if (gameObject.activeSelf)
+        {
+            if (GetUIMananger<UIGameManager>().controlHandler != null)
+                GetUIMananger<UIGameManager>().controlHandler.RestoreControl();
+        }
         base.CloseUI();
-        if (GetUIMananger<UIGameManager>().controlHandler != null)
-            GetUIMananger<UIGameManager>().controlHandler.RestoreControl();
     }
 
     public void SetMoney()

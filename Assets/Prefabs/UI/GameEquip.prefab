@@ -774,6 +774,7 @@ GameObject:
   - component: {fileID: 4140619151103012904}
   - component: {fileID: 4140619151103012905}
   - component: {fileID: 4140619151103012906}
+  - component: {fileID: 5592363253601266309}
   m_Layer: 5
   m_Name: Hand
   m_TagString: Untagged
@@ -892,17 +893,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8603e9a2bc0014c4aa71b668e0aecacf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  popupShow: {fileID: 0}
+  uiComponent: {fileID: 4140619151399399097}
   tvName: {fileID: 0}
   rtIcon: {fileID: 4140619151186211105}
   ivIcon: {fileID: 4140619151186211100}
-  infoItemsPopup: {fileID: 4140619151103012906}
-  selectionBox: {fileID: 0}
-  gameDataManager: {fileID: 0}
-  gameItemsManager: {fileID: 0}
-  characterDressManager: {fileID: 0}
-  dialogManager: {fileID: 0}
-  toastView: {fileID: 0}
+  infoItemsPopup: {fileID: 5592363253601266309}
   itemsInfoBean:
     id: 0
     valid: 0
@@ -934,7 +929,6 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
       Culture=neutral, PublicKeyToken=null
-  uiGameEquip: {fileID: 4140619151399399097}
   characterData:
     baseInfo:
       characterId: 
@@ -990,6 +984,38 @@ MonoBehaviour:
       shoesId: 0
       listLearnBook: 
   type: 1
+--- !u!114 &5592363253601266309
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4140619151103012907}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9f50fe07f4e6e024f961413f0733e03f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  popupShow: {fileID: 0}
+  itemsInfo:
+    id: 0
+    valid: 0
+    intact_id: 0
+    items_id: 0
+    items_type: 0
+    icon_key: 
+    add_cook: 0
+    add_speed: 0
+    add_account: 0
+    add_charm: 0
+    add_force: 0
+    add_lucky: 0
+    add_loyal: 0
+    add_id: 0
+    intact_number: 0
+    name: 
+    content: 
+  spIcon: {fileID: 0}
 --- !u!1 &4140619151109988416
 GameObject:
   m_ObjectHideFlags: 0
@@ -2603,6 +2629,7 @@ GameObject:
   - component: {fileID: 4140619151861859679}
   - component: {fileID: 4140619151861859672}
   - component: {fileID: 4140619151861859673}
+  - component: {fileID: 3833167137714841585}
   m_Layer: 5
   m_Name: Clothes
   m_TagString: Untagged
@@ -2721,17 +2748,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8603e9a2bc0014c4aa71b668e0aecacf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  popupShow: {fileID: 0}
+  uiComponent: {fileID: 4140619151399399097}
   tvName: {fileID: 0}
   rtIcon: {fileID: 4140619151445946952}
   ivIcon: {fileID: 4140619151445946948}
-  infoItemsPopup: {fileID: 4140619151861859673}
-  selectionBox: {fileID: 0}
-  gameDataManager: {fileID: 0}
-  gameItemsManager: {fileID: 0}
-  characterDressManager: {fileID: 0}
-  dialogManager: {fileID: 0}
-  toastView: {fileID: 0}
+  infoItemsPopup: {fileID: 3833167137714841585}
   itemsInfoBean:
     id: 0
     valid: 0
@@ -2763,7 +2784,6 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
       Culture=neutral, PublicKeyToken=null
-  uiGameEquip: {fileID: 4140619151399399097}
   characterData:
     baseInfo:
       characterId: 
@@ -2819,6 +2839,38 @@ MonoBehaviour:
       shoesId: 0
       listLearnBook: 
   type: 1
+--- !u!114 &3833167137714841585
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4140619151861859674}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9f50fe07f4e6e024f961413f0733e03f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  popupShow: {fileID: 0}
+  itemsInfo:
+    id: 0
+    valid: 0
+    intact_id: 0
+    items_id: 0
+    items_type: 0
+    icon_key: 
+    add_cook: 0
+    add_speed: 0
+    add_account: 0
+    add_charm: 0
+    add_force: 0
+    add_lucky: 0
+    add_loyal: 0
+    add_id: 0
+    intact_number: 0
+    name: 
+    content: 
+  spIcon: {fileID: 0}
 --- !u!1 &4140619151878928941
 GameObject:
   m_ObjectHideFlags: 0
@@ -3504,6 +3556,7 @@ GameObject:
   - component: {fileID: 4140619152221243280}
   - component: {fileID: 4140619152221243281}
   - component: {fileID: 4140619152221243282}
+  - component: {fileID: 6170019904488030133}
   m_Layer: 5
   m_Name: Hat
   m_TagString: Untagged
@@ -3622,17 +3675,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8603e9a2bc0014c4aa71b668e0aecacf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  popupShow: {fileID: 0}
+  uiComponent: {fileID: 4140619151399399097}
   tvName: {fileID: 0}
   rtIcon: {fileID: 4140619151926127334}
   ivIcon: {fileID: 4140619151926127330}
-  infoItemsPopup: {fileID: 4140619152221243282}
-  selectionBox: {fileID: 0}
-  gameDataManager: {fileID: 0}
-  gameItemsManager: {fileID: 0}
-  characterDressManager: {fileID: 0}
-  dialogManager: {fileID: 0}
-  toastView: {fileID: 0}
+  infoItemsPopup: {fileID: 6170019904488030133}
   itemsInfoBean:
     id: 0
     valid: 0
@@ -3664,7 +3711,6 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
       Culture=neutral, PublicKeyToken=null
-  uiGameEquip: {fileID: 4140619151399399097}
   characterData:
     baseInfo:
       characterId: 
@@ -3720,6 +3766,38 @@ MonoBehaviour:
       shoesId: 0
       listLearnBook: 
   type: 1
+--- !u!114 &6170019904488030133
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4140619152221243283}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9f50fe07f4e6e024f961413f0733e03f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  popupShow: {fileID: 0}
+  itemsInfo:
+    id: 0
+    valid: 0
+    intact_id: 0
+    items_id: 0
+    items_type: 0
+    icon_key: 
+    add_cook: 0
+    add_speed: 0
+    add_account: 0
+    add_charm: 0
+    add_force: 0
+    add_lucky: 0
+    add_loyal: 0
+    add_id: 0
+    intact_number: 0
+    name: 
+    content: 
+  spIcon: {fileID: 0}
 --- !u!1 &4140619152248758931
 GameObject:
   m_ObjectHideFlags: 0
@@ -3733,6 +3811,7 @@ GameObject:
   - component: {fileID: 4140619152248758935}
   - component: {fileID: 4140619152248758928}
   - component: {fileID: 4140619152248758929}
+  - component: {fileID: 1374256342111912693}
   m_Layer: 5
   m_Name: Shoes
   m_TagString: Untagged
@@ -3851,17 +3930,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8603e9a2bc0014c4aa71b668e0aecacf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  popupShow: {fileID: 0}
+  uiComponent: {fileID: 4140619151399399097}
   tvName: {fileID: 0}
   rtIcon: {fileID: 4140619150827684071}
   ivIcon: {fileID: 4140619150827684068}
-  infoItemsPopup: {fileID: 4140619152248758929}
-  selectionBox: {fileID: 0}
-  gameDataManager: {fileID: 0}
-  gameItemsManager: {fileID: 0}
-  characterDressManager: {fileID: 0}
-  dialogManager: {fileID: 0}
-  toastView: {fileID: 0}
+  infoItemsPopup: {fileID: 1374256342111912693}
   itemsInfoBean:
     id: 0
     valid: 0
@@ -3893,7 +3966,6 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
       Culture=neutral, PublicKeyToken=null
-  uiGameEquip: {fileID: 4140619151399399097}
   characterData:
     baseInfo:
       characterId: 
@@ -3949,6 +4021,38 @@ MonoBehaviour:
       shoesId: 0
       listLearnBook: 
   type: 1
+--- !u!114 &1374256342111912693
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4140619152248758931}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9f50fe07f4e6e024f961413f0733e03f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  popupShow: {fileID: 0}
+  itemsInfo:
+    id: 0
+    valid: 0
+    intact_id: 0
+    items_id: 0
+    items_type: 0
+    icon_key: 
+    add_cook: 0
+    add_speed: 0
+    add_account: 0
+    add_charm: 0
+    add_force: 0
+    add_lucky: 0
+    add_loyal: 0
+    add_id: 0
+    intact_number: 0
+    name: 
+    content: 
+  spIcon: {fileID: 0}
 --- !u!1 &4140619152334257931
 GameObject:
   m_ObjectHideFlags: 0
@@ -4779,6 +4883,7 @@ GameObject:
   - component: {fileID: 4140619152742821714}
   - component: {fileID: 4140619152742821715}
   - component: {fileID: 4140619152742821708}
+  - component: {fileID: 5122568591514965047}
   m_Layer: 5
   m_Name: ItemBackpack
   m_TagString: Untagged
@@ -4868,17 +4973,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8603e9a2bc0014c4aa71b668e0aecacf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  popupShow: {fileID: 0}
+  uiComponent: {fileID: 4140619151399399097}
   tvName: {fileID: 4140619151820672839}
   rtIcon: {fileID: 4140619151109988427}
   ivIcon: {fileID: 4140619151109988423}
-  infoItemsPopup: {fileID: 0}
-  selectionBox: {fileID: 0}
-  gameDataManager: {fileID: 0}
-  gameItemsManager: {fileID: 0}
-  characterDressManager: {fileID: 0}
-  dialogManager: {fileID: 0}
-  toastView: {fileID: 0}
+  infoItemsPopup: {fileID: 5122568591514965047}
   itemsInfoBean:
     id: 0
     valid: 0
@@ -4910,7 +5009,6 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
       Culture=neutral, PublicKeyToken=null
-  uiGameEquip: {fileID: 4140619151399399097}
   characterData:
     baseInfo:
       characterId: 
@@ -5008,6 +5106,38 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
+--- !u!114 &5122568591514965047
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4140619152742821709}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9f50fe07f4e6e024f961413f0733e03f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  popupShow: {fileID: 0}
+  itemsInfo:
+    id: 0
+    valid: 0
+    intact_id: 0
+    items_id: 0
+    items_type: 0
+    icon_key: 
+    add_cook: 0
+    add_speed: 0
+    add_account: 0
+    add_charm: 0
+    add_force: 0
+    add_lucky: 0
+    add_loyal: 0
+    add_id: 0
+    intact_number: 0
+    name: 
+    content: 
+  spIcon: {fileID: 0}
 --- !u!1 &4140619152748189280
 GameObject:
   m_ObjectHideFlags: 0

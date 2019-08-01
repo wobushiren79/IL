@@ -10,10 +10,8 @@ public class UIMainContinue : BaseUIComponent
     public Text tvBack;
     public Text tvNull;
 
-    public GameDataManager gameDataManager;
-
-    public GameObject listGameDataObj;//列表
-    public GameObject itemGameDataObj;//模型
+    public GameObject objGameDataContent;//列表
+    public GameObject objGameDataModel;//模型
 
     private void Start()
     {
@@ -24,6 +22,7 @@ public class UIMainContinue : BaseUIComponent
     public override void OpenUI()
     {
         base.OpenUI();
+       GameDataManager gameDataManager = GetUIMananger<UIGameManager>().gameDataManager;
         if (gameDataManager == null)
             return;
         List<GameDataSimpleBean> listGameData = gameDataManager.listGameDataSimple;
@@ -36,7 +35,7 @@ public class UIMainContinue : BaseUIComponent
     /// <param name="listGameData"></param>
     public void CreateListItem(List<GameDataSimpleBean> listGameData)
     {
-        CptUtil.RemoveChildsByActive(listGameDataObj.transform);
+        CptUtil.RemoveChildsByActive(objGameDataContent.transform);
         if ( CheckUtil.ListIsNull(listGameData))
         {
             tvNull.gameObject.SetActive(true);
@@ -45,9 +44,8 @@ public class UIMainContinue : BaseUIComponent
         tvNull.gameObject.SetActive(false);
         for(int i = 0; i < listGameData.Count; i++)
         {
-            GameObject itemGameObj= Instantiate(itemGameDataObj, itemGameDataObj.transform);
+            GameObject itemGameObj= Instantiate(objGameDataModel, objGameDataContent.transform);
             itemGameObj.SetActive(true);
-            itemGameObj.transform.SetParent(listGameDataObj.transform);
             ItemGameDataCpt itemGameDataCpt= itemGameObj.GetComponent<ItemGameDataCpt>();
             itemGameDataCpt.SetData(listGameData[i]);
         }
@@ -58,6 +56,6 @@ public class UIMainContinue : BaseUIComponent
     /// </summary>
     public void OpenStartUI()
     {
-        uiManager.OpenUIAndCloseOtherByName("Start");
+        uiManager.OpenUIAndCloseOtherByName(EnumUtil.GetEnumName(UIEnum.MainStart));
     }
 }

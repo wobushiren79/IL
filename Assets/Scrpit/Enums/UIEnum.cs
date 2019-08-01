@@ -3,17 +3,23 @@ using UnityEditor;
 
 public enum UIEnum 
 {
-    GameMain = 1,
+    MainStart,
+    MainContinue,
+    MainCreate,
+    GameMain ,
     GameWorker,
     GameEquip,
     GameMenu,
     GameBackpack,
+    GameBuild,
     GameSettle,
+    GameAttendance,
     TownMarket,
     TownRecruitment,
     TownGrocery,
     TownDress,
     TownCarpenter,
     TownGuildStore,
-    TownGuildAchievement
+    TownGuildAchievement,
+
 }

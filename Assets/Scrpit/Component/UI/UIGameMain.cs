@@ -24,11 +24,41 @@ public class UIGameMain : BaseUIComponent, DialogView.IDialogCallBack
     public InfoPromptPopupButton popupInnLevel;
     public Image ivInnLevel;
 
-    public InnHandler innHandler;
-    public InnWallBuilder innWall;
+    public void Start()
+    {
+        if (btWorker != null)
+            btWorker.onClick.AddListener(OpenWorkerUI);
+
+        if (btBuild != null)
+            btBuild.onClick.AddListener(OpenBuildUI);
+
+        if (btMenu != null)
+            btMenu.onClick.AddListener(OpenMenuUI);
+
+        if (btBackpack != null)
+            btBackpack.onClick.AddListener(OpenBackpackUI);
+
+        if (btSave != null)
+            btSave.onClick.AddListener(SaveData);
+
+        if (btSleep != null)
+            btSleep.onClick.AddListener(EndDay);
+
+        InfoPromptPopupShow infoPromptPopup= GetUIMananger<UIGameManager>().infoPromptPopup;
+        if (popupAesthetics != null)
+            popupAesthetics.SetPopupShowView(infoPromptPopup);
+        if (popupPraise != null)
+            popupPraise.SetPopupShowView(infoPromptPopup);
+        if (popupRichness != null)
+            popupRichness.SetPopupShowView(infoPromptPopup);
+        if (popupInnLevel != null)
+            popupInnLevel.SetPopupShowView(infoPromptPopup);
+        InitInnData();
+    }
 
     private void Update()
     {
+        InnHandler innHandler = GetUIMananger<UIGameManager>().innHandler;
         if (tvInnStatus != null && innHandler != null)
             if (innHandler.innStatus == InnHandler.InnStatusEnum.Close)
             {
@@ -93,29 +123,6 @@ public class UIGameMain : BaseUIComponent, DialogView.IDialogCallBack
 
     }
 
-    public void Start()
-    {
-        if (btWorker != null)
-            btWorker.onClick.AddListener(OpenWorkerUI);
-
-        if (btBuild != null)
-            btBuild.onClick.AddListener(OpenBuildUI);
-
-        if (btMenu != null)
-            btMenu.onClick.AddListener(OpenMenuUI);
-
-        if (btBackpack != null)
-            btBackpack.onClick.AddListener(OpenBackpackUI);
-
-        if (btSave != null)
-            btSave.onClick.AddListener(SaveData);
-
-        if (btSleep != null)
-            btSleep.onClick.AddListener(EndDay);
-
-        InitInnData();
-    }
-
     public void SaveData()
     {
         GetUIMananger<UIGameManager>().gameDataManager.SaveGameData();
@@ -123,7 +130,7 @@ public class UIGameMain : BaseUIComponent, DialogView.IDialogCallBack
 
     public void OpenBuildUI()
     {
-        uiManager.OpenUIAndCloseOtherByName(EnumUtil.GetEnumName(UIEnum.GameMain));
+        uiManager.OpenUIAndCloseOtherByName(EnumUtil.GetEnumName(UIEnum.GameBuild));
     }
 
     public void OpenWorkerUI()
@@ -144,13 +151,14 @@ public class UIGameMain : BaseUIComponent, DialogView.IDialogCallBack
     public void EndDay()
     {
         DialogBean dialogBean = new DialogBean();
-        dialogBean.content = "是否要结束今天？";
+        dialogBean.content = GameCommonInfo.GetUITextById(3004);
         GetUIMananger<UIGameManager>().dialogManager.CreateDialog(0, this, dialogBean);
     }
 
     #region dialog 回调
     public void Submit(DialogView dialogView)
     {
+        InnHandler innHandler = GetUIMananger<UIGameManager>().innHandler;
         GetUIMananger<UIGameManager>().gameTimeHandler.isStopTime = true;
         uiManager.OpenUIAndCloseOtherByName(EnumUtil.GetEnumName(UIEnum.GameSettle));
         innHandler.CloseInn();

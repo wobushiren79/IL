@@ -2,7 +2,7 @@
 using UnityEditor;
 using System;
 using UnityEngine.UI;
-public class ItemSettleFoodCpt : BaseMonoBehaviour
+public class ItemSettleFoodCpt : ItemGameBaseCpt
 {
     public Image ivIcon;
     public Text tvContent;
@@ -10,10 +10,9 @@ public class ItemSettleFoodCpt : BaseMonoBehaviour
     public Text tvPriceM;
     public Text tvPriceL;
 
-    public InnFoodManager innFoodManager;
-
     public void SetData(long foodId, int number)
     {
+        InnFoodManager innFoodManager= GetUIManager<UIGameManager>().innFoodManager;
         MenuInfoBean foodData = innFoodManager.GetFoodDataById(foodId);
         Sprite foodIcon = innFoodManager.GetFoodSpriteByName(foodData.icon_key);
         if (ivIcon != null)

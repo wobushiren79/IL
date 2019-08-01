@@ -41,26 +41,6 @@ public class UIGameEquip : BaseUIComponent
     {
         if (btBack != null)
             btBack.onClick.AddListener(OpenWorkUI);
-        if (equipHand != null)
-        {
-            equipHand.SetSelectionBox(GetUIMananger<UIGameManager>().itemsSelectionBox);
-            equipHand.SetPopupShowView(GetUIMananger<UIGameManager>().infoItemsPopup);
-        }
-        if (equipHat != null)
-        {
-            equipHat.SetSelectionBox(GetUIMananger<UIGameManager>().itemsSelectionBox);
-            equipHat.SetPopupShowView(GetUIMananger<UIGameManager>().infoItemsPopup);
-        }
-        if (equipClothes != null)
-        {
-            equipClothes.SetSelectionBox(GetUIMananger<UIGameManager>().itemsSelectionBox);
-            equipClothes.SetPopupShowView(GetUIMananger<UIGameManager>().infoItemsPopup);
-        }
-        if (equipShoes != null)
-        {
-            equipShoes.SetSelectionBox(GetUIMananger<UIGameManager>().itemsSelectionBox);
-            equipShoes.SetPopupShowView(GetUIMananger<UIGameManager>().infoItemsPopup);
-        }
     }
 
     public void SetCharacterData(CharacterBean characterData)
@@ -252,8 +232,6 @@ public class UIGameEquip : BaseUIComponent
         GameObject objItem = Instantiate(objItemModel, objItemContent.transform);
         objItem.SetActive(true);
         ItemGameBackpackEquipCpt backpackCpt = objItem.GetComponent<ItemGameBackpackEquipCpt>(); 
-        backpackCpt.SetSelectionBox(GetUIMananger<UIGameManager>().itemsSelectionBox);
-        backpackCpt.SetPopupShowView(GetUIMananger<UIGameManager>().infoItemsPopup);
         backpackCpt.SetData(characterData, itemsInfoBean, itemBean);
         return objItem;
     }

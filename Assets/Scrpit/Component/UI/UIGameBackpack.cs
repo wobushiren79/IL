@@ -29,8 +29,6 @@ public class UIGameBackpack : UIBaseOne
             GameObject objItem = Instantiate(objItemModel, objItemContent.transform);
             objItem.SetActive(true);
             ItemGameBackpackCpt backpackCpt = objItem.GetComponent<ItemGameBackpackCpt>();
-            backpackCpt.SetSelectionBox(GetUIMananger<UIGameManager>().itemsSelectionBox);
-            backpackCpt.SetPopupShowView(GetUIMananger<UIGameManager>().infoItemsPopup);
             backpackCpt.SetData(itemsInfoBean, itemBean);
             objItem.transform.DOScale(new Vector3(0, 0, 0), 0.5f).SetEase(Ease.OutBack).SetDelay(i * 0.05f).From();
         }

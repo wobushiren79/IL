@@ -3,7 +3,7 @@ using UnityEditor;
 using UnityEngine.UI;
 using System.Collections.Generic;
 
-public class UIGameAttendance : BaseUIComponent, ItemGameAttendanceCpt.CallBack
+public class UIGameAttendance : BaseUIComponent, ItemGameAttendanceCpt.ICallBack
 {
     public Text tvPriceL;
     public Text tvPriceM;
@@ -14,13 +14,6 @@ public class UIGameAttendance : BaseUIComponent, ItemGameAttendanceCpt.CallBack
 
     public GameObject objListContent;
     public GameObject objItemWorkModle;
-
-    public ToastView toastView;
-
-    public GameDataManager gameDataManager;
-    public GameTimeHandler gameTimeHandler;
-    public InnHandler innHandler;
-    public ControlHandler controlHandler;
 
     //出勤金钱
     public long attendancePriceL;
@@ -38,26 +31,33 @@ public class UIGameAttendance : BaseUIComponent, ItemGameAttendanceCpt.CallBack
 
     public void StartWork()
     {
+        GameDataManager gameDataManager = GetUIMananger<UIGameManager>().gameDataManager;
+        GameTimeHandler gameTimeHandler = GetUIMananger<UIGameManager>().gameTimeHandler;
+        InnHandler innHandler = GetUIMananger<UIGameManager>().innHandler;
+        ControlHandler controlHandler = GetUIMananger<UIGameManager>().controlHandler;
+        ToastView toastView = GetUIMananger<UIGameManager>().toastView;
+
         if (attendanceNumber <= 0)
         {
-            toastView.ToastHint("至少需要选择1人出勤");
+            toastView.ToastHint(GameCommonInfo.GetUITextById(1013));
             return;
         }
         if (!gameDataManager.gameData.HasEnoughMoney(attendancePriceL, attendancePriceM, attendancePriceS))
         {
-            toastView.ToastHint("没有足够的金钱支付出勤");
+            toastView.ToastHint(GameCommonInfo.GetUITextById(1014));
             return;
         }
         gameDataManager.gameData.PayMoney(attendancePriceL, attendancePriceM, attendancePriceS);
         gameTimeHandler.dayStauts = GameTimeHandler.DayEnum.Work;
         gameTimeHandler.StartNewDay(false);
-        uiManager.OpenUIAndCloseOtherByName("Main");
+        uiManager.OpenUIAndCloseOtherByName(EnumUtil.GetEnumName(UIEnum.GameMain));
         innHandler.OpenInn();
         controlHandler.StartControl(ControlHandler.ControlEnum.Work);
     }
 
     public void InitData()
     {
+        GameDataManager gameDataManager = GetUIMananger<UIGameManager>().gameDataManager;
         if (gameDataManager == null)
             return;
         List<CharacterBean> listData = new List<CharacterBean>();
@@ -89,7 +89,7 @@ public class UIGameAttendance : BaseUIComponent, ItemGameAttendanceCpt.CallBack
         tvPriceL.text = attendancePriceL + "";
         tvPriceM.text = attendancePriceM + "";
         tvPirceS.text = attendancePriceS + "";
-        tvNumber.text = "出勤人数：" + attendanceNumber;
+        tvNumber.text = GameCommonInfo.GetUITextById(4003) + attendanceNumber;
     }
 
     #region  出勤回调

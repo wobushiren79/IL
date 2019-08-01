@@ -3,7 +3,7 @@ using UnityEditor;
 using System;
 using UnityEngine.UI;
 
-public class ItemGameCerpenterCpt : BaseMonoBehaviour, DialogView.IDialogCallBack
+public class ItemGameCerpenterCpt : ItemGameBaseCpt, DialogView.IDialogCallBack
 {
     public Image ivIcon;
     public Text tvName;
@@ -18,16 +18,8 @@ public class ItemGameCerpenterCpt : BaseMonoBehaviour, DialogView.IDialogCallBac
     public GameObject objPriceS;
     public Text tvPriceS;
 
-    public GameDataManager gameDataManager;
-    public GameItemsManager gameItemsManager;
-    public InnBuildManager innBuildManager;
-
-    public ToastView toastView;
-    public DialogManager dialogManager;
-
     public StoreInfoBean storeInfo;
     public BuildItemBean buildItemData;
-    public UITownCarpenter uiTownCarpenter;
 
     private void Start()
     {
@@ -42,6 +34,7 @@ public class ItemGameCerpenterCpt : BaseMonoBehaviour, DialogView.IDialogCallBac
 
     public void SetData(StoreInfoBean itemData)
     {
+        InnBuildManager innBuildManager= GetUIManager<UIGameManager>().innBuildManager;
         storeInfo = itemData;
         buildItemData= innBuildManager.GetBuildDataById(itemData.mark_id);
         SetPrice(storeInfo.price_l, storeInfo.price_m, storeInfo.price_s);
@@ -71,7 +64,8 @@ public class ItemGameCerpenterCpt : BaseMonoBehaviour, DialogView.IDialogCallBac
     /// <param name="markId"></param>
     public void SetIcon(long id,string iconKey)
     {
-
+        GameItemsManager gameItemsManager = GetUIManager<UIGameManager>().gameItemsManager;
+        InnBuildManager innBuildManager = GetUIManager<UIGameManager>().innBuildManager;
         if (gameItemsManager == null)
             return;
         Sprite spIcon = null;
@@ -134,9 +128,10 @@ public class ItemGameCerpenterCpt : BaseMonoBehaviour, DialogView.IDialogCallBac
     /// </summary>
     public void SetOwn()
     {
+        GameDataManager gameDataManager = GetUIManager<UIGameManager>().gameDataManager;
         if (tvOwn == null)
             return;
-        tvOwn.text = ("拥有\n" + gameDataManager.gameData.GetBuildNumber(storeInfo.mark_id));
+        tvOwn.text = (GameCommonInfo.GetUITextById(4001) + gameDataManager.gameData.GetBuildNumber(storeInfo.mark_id));
     }
 
     /// <summary>
@@ -144,6 +139,9 @@ public class ItemGameCerpenterCpt : BaseMonoBehaviour, DialogView.IDialogCallBac
     /// </summary>
     public void SubmitBuy()
     {
+        GameDataManager gameDataManager = GetUIManager<UIGameManager>().gameDataManager;
+        ToastView toastView = GetUIManager<UIGameManager>().toastView;
+        DialogManager dialogManager = GetUIManager<UIGameManager>().dialogManager;
         if (gameDataManager == null || storeInfo == null)
             return;
         if (!gameDataManager.gameData.HasEnoughMoney(storeInfo.price_l, storeInfo.price_m, storeInfo.price_s))
@@ -163,6 +161,9 @@ public class ItemGameCerpenterCpt : BaseMonoBehaviour, DialogView.IDialogCallBac
     #region 确认回调
     public void Submit(DialogView dialogView)
     {
+        GameDataManager gameDataManager = GetUIManager<UIGameManager>().gameDataManager;
+        ToastView toastView = GetUIManager<UIGameManager>().toastView;
+
         gameDataManager.gameData.PayMoney(storeInfo.price_l, storeInfo.price_m, storeInfo.price_s);
         string toastStr ;
         if (storeInfo.id > 300000 && storeInfo.id < 300010)
@@ -172,7 +173,7 @@ public class ItemGameCerpenterCpt : BaseMonoBehaviour, DialogView.IDialogCallBac
             gameDataManager.gameData.GetInnBuildData().innHeight = storeInfo.mark_y;
             gameDataManager.gameData.GetInnBuildData().InitFloor();
             gameDataManager.gameData.GetInnBuildData().InitWall();
-            uiTownCarpenter.RefreshUI();
+            GetUIComponent<UITownCarpenter>().RefreshUI();
             toastStr = string.Format(GameCommonInfo.GetUITextById(1011), storeInfo.name);
         }
         else

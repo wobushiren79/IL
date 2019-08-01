@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using UnityEditor;
 using UnityEngine.UI;
-public class ItemGameCandidateCpt : BaseMonoBehaviour, DialogView.IDialogCallBack
+public class ItemGameCandidateCpt : ItemGameBaseCpt, DialogView.IDialogCallBack
 {
     public Text tvName;
     public Text tvPrice;
@@ -9,20 +9,18 @@ public class ItemGameCandidateCpt : BaseMonoBehaviour, DialogView.IDialogCallBac
     public Image ivSex;
     public InfoAbilityPopupButton infoAbilityPopupButton;
     public CharacterUICpt characterUICpt;
-    public UITownRecruitment uiTownRecruitment;
 
     public Sprite spMan;
     public Sprite spWoman;
 
     public CharacterBean characterData;
-    public GameDataManager gameDataManager;
-    public ToastView toastView;
-    public DialogManager dialogManager;
 
     private void Start()
     {
         if (btSubmit != null)
             btSubmit.onClick.AddListener(EmploymentCandidate);
+        if (infoAbilityPopupButton != null)
+            infoAbilityPopupButton.SetPopupShowView(GetUIManager<UIGameManager>().infoAbilityPopup);
     }
 
     /// <summary>
@@ -30,6 +28,9 @@ public class ItemGameCandidateCpt : BaseMonoBehaviour, DialogView.IDialogCallBac
     /// </summary>
     public void EmploymentCandidate()
     {
+        GameDataManager gameDataManager = GetUIManager<UIGameManager>().gameDataManager;
+        ToastView toastView = GetUIManager<UIGameManager>().toastView;
+        DialogManager dialogManager = GetUIManager<UIGameManager>().dialogManager;
         //检测是否超过人员上限
         if (gameDataManager == null)
             return;
@@ -40,7 +41,7 @@ public class ItemGameCandidateCpt : BaseMonoBehaviour, DialogView.IDialogCallBac
         };
         //确认
         DialogBean dialogBean = new DialogBean();
-        dialogBean.content = "初次聘用该员工需先支付一次日薪，是否支付 " + characterData.baseInfo.priceS + "文 聘用 "+ characterData.baseInfo .name+ " ？";
+        dialogBean.content = "初次聘用该员工需先支付一次日薪，是否支付 " + characterData.baseInfo.priceS + "文 聘用 " + characterData.baseInfo.name + " ？";
         dialogManager.CreateDialog(0, this, dialogBean);
     }
 
@@ -124,13 +125,17 @@ public class ItemGameCandidateCpt : BaseMonoBehaviour, DialogView.IDialogCallBac
     #region  dialog 回调
     public void Submit(DialogView dialogView)
     {
-        if (!gameDataManager.gameData.HasEnoughMoney(characterData.baseInfo.priceL, characterData.baseInfo.priceM, characterData.baseInfo.priceS)) {
+        GameDataManager gameDataManager = GetUIManager<UIGameManager>().gameDataManager;
+        ToastView toastView = GetUIManager<UIGameManager>().toastView;
+
+        if (!gameDataManager.gameData.HasEnoughMoney(characterData.baseInfo.priceL, characterData.baseInfo.priceM, characterData.baseInfo.priceS))
+        {
             toastView.ToastHint(GameCommonInfo.GetUITextById(1005));
             return;
         }
         gameDataManager.gameData.PayMoney(characterData.baseInfo.priceL, characterData.baseInfo.priceM, characterData.baseInfo.priceS);
         gameDataManager.gameData.workCharacterList.Add(characterData);
-        uiTownRecruitment.RemoveCandidate(characterData);
+        GetUIComponent<UITownRecruitment>().RemoveCandidate(characterData);
     }
 
     public void Cancel(DialogView dialogView)
