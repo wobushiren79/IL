@@ -131,7 +131,7 @@ public class ItemGameCerpenterCpt : ItemGameBaseCpt, DialogView.IDialogCallBack
         GameDataManager gameDataManager = GetUIManager<UIGameManager>().gameDataManager;
         if (tvOwn == null)
             return;
-        tvOwn.text = (GameCommonInfo.GetUITextById(4001) + gameDataManager.gameData.GetBuildNumber(storeInfo.mark_id));
+        tvOwn.text = (GameCommonInfo.GetUITextById(4001) +"\n"+ gameDataManager.gameData.GetBuildNumber(storeInfo.mark_id));
     }
 
     /// <summary>

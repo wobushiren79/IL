@@ -49688,7 +49688,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -63496745
-  m_SortingLayer: 8
+  m_SortingLayer: 9
   m_SortingOrder: -11
   m_Sprite: {fileID: 21300000, guid: a3f7fef6a79405e4681ad1960226a42f, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -64065,16 +64065,16 @@ PrefabInstance:
       propertyPath: m_ApplyRootMotion
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 9002758691252893949, guid: 2b0fba09934c2934eb7fd9b31e6030fb,
-        type: 3}
-      propertyPath: m_Controller
-      value: 
-      objectReference: {fileID: 9100000, guid: 56caa0a2ffa50b2488e4267c4473848e, type: 2}
     - target: {fileID: 2478063932746049264, guid: 2b0fba09934c2934eb7fd9b31e6030fb,
         type: 3}
       propertyPath: m_Enabled
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 9002758691252893949, guid: 2b0fba09934c2934eb7fd9b31e6030fb,
+        type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: 56caa0a2ffa50b2488e4267c4473848e, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2b0fba09934c2934eb7fd9b31e6030fb, type: 3}
 --- !u!4 &1414017226 stripped
@@ -64559,7 +64559,7 @@ TilemapRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -1765281875
-  m_SortingLayer: 4
+  m_SortingLayer: 5
   m_SortingOrder: 0
   m_ChunkSize: {x: 32, y: 32, z: 32}
   m_ChunkCullingBounds: {x: 0, y: 0, z: 0}
@@ -65003,7 +65003,7 @@ TilemapRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -63496745
-  m_SortingLayer: 8
+  m_SortingLayer: 9
   m_SortingOrder: 0
   m_ChunkSize: {x: 32, y: 32, z: 32}
   m_ChunkCullingBounds: {x: 0, y: 0, z: 0}
@@ -65770,7 +65770,7 @@ TilemapRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -680304649
-  m_SortingLayer: 5
+  m_SortingLayer: 6
   m_SortingOrder: 0
   m_ChunkSize: {x: 32, y: 32, z: 32}
   m_ChunkCullingBounds: {x: 0, y: 0, z: 0}
@@ -66400,6 +66400,16 @@ PrefabInstance:
       propertyPath: m_Name
       value: InnBuildManager
       objectReference: {fileID: 0}
+    - target: {fileID: 2414675617322255133, guid: 3b08cb01fecef4c47bd80f6bd0bc4d37,
+        type: 3}
+      propertyPath: listFurnitureIcon.isExpanded
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2414675617322255133, guid: 3b08cb01fecef4c47bd80f6bd0bc4d37,
+        type: 3}
+      propertyPath: listFurnitureIcon.reorderableList.isExpanded
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2414675617322255130, guid: 3b08cb01fecef4c47bd80f6bd0bc4d37,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -66453,16 +66463,6 @@ PrefabInstance:
     - target: {fileID: 2414675617322255130, guid: 3b08cb01fecef4c47bd80f6bd0bc4d37,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2414675617322255133, guid: 3b08cb01fecef4c47bd80f6bd0bc4d37,
-        type: 3}
-      propertyPath: listFurnitureIcon.isExpanded
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2414675617322255133, guid: 3b08cb01fecef4c47bd80f6bd0bc4d37,
-        type: 3}
-      propertyPath: listFurnitureIcon.reorderableList.isExpanded
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
@@ -66683,7 +66683,7 @@ PrefabInstance:
     - target: {fileID: 5365830923317823621, guid: f443ac1a915aad04bb8a054fbd99f5d9,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 7.5000763
+      value: 7.500061
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f443ac1a915aad04bb8a054fbd99f5d9, type: 3}
@@ -66822,6 +66822,16 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 4921963546102894242, guid: eac23c2d72574c74698e32d71a49378a,
+        type: 3}
+      propertyPath: camera2D
+      value: 
+      objectReference: {fileID: 1102455763}
+    - target: {fileID: 4921963546102894242, guid: eac23c2d72574c74698e32d71a49378a,
+        type: 3}
+      propertyPath: gameDataManager
+      value: 
+      objectReference: {fileID: 158710915}
     - target: {fileID: 7362692425160318330, guid: eac23c2d72574c74698e32d71a49378a,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -66877,16 +66887,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 4921963546102894242, guid: eac23c2d72574c74698e32d71a49378a,
-        type: 3}
-      propertyPath: camera2D
-      value: 
-      objectReference: {fileID: 1102455763}
-    - target: {fileID: 4921963546102894242, guid: eac23c2d72574c74698e32d71a49378a,
-        type: 3}
-      propertyPath: gameDataManager
-      value: 
-      objectReference: {fileID: 158710915}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: eac23c2d72574c74698e32d71a49378a, type: 3}
 --- !u!1001 &5208250660879423487

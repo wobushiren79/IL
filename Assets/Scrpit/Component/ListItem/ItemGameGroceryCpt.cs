@@ -170,7 +170,7 @@ public class ItemGameGroceryCpt : ItemGameBaseCpt, DialogView.IDialogCallBack
     {
         if (tvOwn == null)
             return;
-        tvOwn.text = (GameCommonInfo.GetUITextById(4001) + GetUIManager<UIGameManager>().gameDataManager.gameData.GetItemsNumber(storeInfo.mark_id));
+        tvOwn.text = (GameCommonInfo.GetUITextById(4001)+ "\n" + GetUIManager<UIGameManager>().gameDataManager.gameData.GetItemsNumber(storeInfo.mark_id));
     }
 
     /// <summary>
