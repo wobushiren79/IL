@@ -2,14 +2,16 @@
 {
 	Properties
 	{
+		_MainTex("Base (RGB)", 2D) = "white" {}
 		_ColorOpacity("Water Tint (RGB) & Opacity (A)", 2D) = "white" {}
 		_DistortionNormalMap("Normal Map", 2D) = "bump" {}
 		_DistortionStrength("Distortion strength", Float) = 1.0
 	}
 	SubShader
 	{
-		Tags { "RenderType"="Opaque" "Queue"="Transparent" }
-		LOD 100
+        Tags { "QUEUE" = "Transparent+0" "RenderType" = "Transparent" "RenderPipeline" = "LightweightPipeline" }
+		//Tags { "RenderType"="Opaque" "Queue"="Transparent" }
+		//LOD 100
 
 		// Grab the screen behind the object into _BackgroundTexture
 		GrabPass
@@ -19,6 +21,10 @@
 
 		Pass
 		{
+		 Tags { "LIGHTMODE" = "Lightweight2D" "QUEUE" = "Transparent+0" "RenderType" = "Transparent" "RenderPipeline" = "LightweightPipeline" }
+		 ZWrite Off
+		 Cull Off
+
 			CGPROGRAM
 			#pragma vertex vert
 			#pragma fragment frag
@@ -82,7 +88,7 @@
 
 				bgcolor.rgb = lerp(bgcolor.rgb, coloropa.rgb, coloropa.a);
 				bgcolor.rgb *= coloropa.rgb;
-
+				
 				return bgcolor;
 				//return float4(i.uv2.x, i.uv2.y, 0, 1);
 			}
