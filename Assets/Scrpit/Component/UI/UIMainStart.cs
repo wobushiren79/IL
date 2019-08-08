@@ -17,6 +17,7 @@ public class UIMainStart : BaseUIComponent
     //离开按钮
     public Button btExit;
     public Text tvExit;
+
     private void Start()
     {
         if (btStart != null)
@@ -71,4 +72,5 @@ public class UIMainStart : BaseUIComponent
     {
         GameUtil.ExitGame();
     }
+
 }

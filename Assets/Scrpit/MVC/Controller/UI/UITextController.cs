@@ -5,7 +5,7 @@ using System;
 
 public class UITextController : BaseMVCController<UITextModel,IUITextView>
 {
-    private Dictionary<long, UITextBean> mMapData;
+    private Dictionary<long, TextInfoBean> mMapData;
 
     public UITextController(BaseMonoBehaviour content, IUITextView view) : base(content, view)
     {
@@ -25,11 +25,11 @@ public class UITextController : BaseMVCController<UITextModel,IUITextView>
     /// </summary>
     public void RefreshData()
     {
-        mMapData = new Dictionary<long, UITextBean>();
-        List<UITextBean> listData = GetModel().GetAllData();
+        mMapData = new Dictionary<long, TextInfoBean>();
+        List<TextInfoBean> listData = GetModel().GetAllData();
         if (listData == null)
             return;
-        foreach (UITextBean itemData in listData)
+        foreach (TextInfoBean itemData in listData)
         {
             mMapData.Add(itemData.id, itemData);
         }
@@ -44,7 +44,7 @@ public class UITextController : BaseMVCController<UITextModel,IUITextView>
     {
         if (mMapData == null)
             return null;
-        UITextBean itemData=null;
+        TextInfoBean itemData=null;
         try
         {
              itemData = mMapData[id];

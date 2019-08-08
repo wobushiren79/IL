@@ -134,6 +134,27 @@ public class BaseUIManager : BaseMonoBehaviour
     }
 
     /// <summary>
+    /// 通过UI开启UI并关闭其他UI
+    /// </summary>
+    /// <param name="uiName"></param>
+    public void OpenUIAndCloseOtherByName(BaseUIComponent uiComponent)
+    {
+        if (uiList == null || uiComponent==null)
+            return;
+        foreach (BaseUIComponent itemUI in uiList)
+        {
+            if (itemUI== uiComponent)
+            {
+                itemUI.OpenUI();
+            }
+            else
+            {
+                itemUI.CloseUI();
+            }
+        }
+    }
+
+    /// <summary>
     /// 刷新UI
     /// </summary>
     public void RefreshAllUI()
