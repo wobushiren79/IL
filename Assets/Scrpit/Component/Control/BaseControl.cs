@@ -19,12 +19,27 @@ public class BaseControl : BaseMonoBehaviour
     }
 
     /// <summary>
+    /// 暂停控制
+    /// </summary>
+    public virtual void StopControl()
+    {
+        this.enabled = false;
+    }
+
+    /// <summary>
+    /// 恢复控制
+    /// </summary>
+    public virtual void RestoreControl()
+    {
+        this.enabled = true;
+    }
+
+    /// <summary>
     /// 结束控制
     /// </summary>
     public virtual void EndControl()
     {
         gameObject.SetActive(false);
     }
-
 
 }

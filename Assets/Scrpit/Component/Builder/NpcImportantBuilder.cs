@@ -32,5 +32,7 @@ public class NpcImportantBuilder : BaseMonoBehaviour
         npcObj.transform.localScale = new Vector3(2,2);
         NpcAIImportantCpt aiCpt= npcObj.GetComponent<NpcAIImportantCpt>();
         aiCpt.SetCharacterData(characterData);
+        InteractiveTalkCpt interactiveTalk = npcObj.GetComponent<InteractiveTalkCpt>();
+        interactiveTalk.markIds = StringUtil.SplitBySubstringForArrayLong(infoData.talk_ids,',');
     }
 }

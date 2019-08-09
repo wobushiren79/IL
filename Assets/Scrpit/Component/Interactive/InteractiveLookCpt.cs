@@ -11,7 +11,8 @@ public class InteractiveLookCpt : BaseInteractiveCpt
     {
         if (Input.GetButtonDown("Interactive_E"))
         {
-            EventHandler.Instance.EventTriggerForLook(markId);
+            if (!EventHandler.Instance.isEventing)
+                EventHandler.Instance.EventTriggerForLook(markId);
         }
     }
 

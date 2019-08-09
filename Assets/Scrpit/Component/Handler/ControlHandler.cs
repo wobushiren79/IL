@@ -19,7 +19,7 @@ public class ControlHandler : BaseManager
     public void StopControl()
     {
         BaseControl control= GetControl();
-        control.enabled = false;
+        control.StopControl();
     }
 
     /// <summary>
@@ -28,7 +28,7 @@ public class ControlHandler : BaseManager
     public void RestoreControl()
     {
         BaseControl control = GetControl();
-        control.enabled = true;
+        control.RestoreControl();
     }
 
     /// <summary>
@@ -37,7 +37,7 @@ public class ControlHandler : BaseManager
     /// <param name="controlEnum"></param>
     public void StartControl(ControlEnum controlEnum)
     {
-        string controlName = GetControlName(controlEnum);
+        string controlName = EnumUtil.GetEnumName(controlEnum);
         for (int i = 0; i < listControl.Count; i++)
         {
             BaseControl itemControl = listControl[i];
@@ -76,7 +76,7 @@ public class ControlHandler : BaseManager
     /// <returns></returns>
     public BaseControl GetControl(ControlEnum controlEnum)
     {
-        string controlName = GetControlName(controlEnum);
+        string controlName = EnumUtil.GetEnumName(controlEnum);
         for (int i = 0; i < listControl.Count; i++)
         {
             BaseControl itemControl = listControl[i];
@@ -86,28 +86,5 @@ public class ControlHandler : BaseManager
             }
         }
         return null;
-    }
-
-    /// <summary>
-    /// 获取控制名称
-    /// </summary>
-    /// <param name="controlEnum"></param>
-    /// <returns></returns>
-    private string GetControlName(ControlEnum controlEnum)
-    {
-        string controlName = "";
-        switch (controlEnum)
-        {
-            case ControlEnum.Normal:
-                controlName = "NormalControl";
-                break;
-            case ControlEnum.Build:
-                controlName = "BuildControl";
-                break;
-            case ControlEnum.Work:
-                controlName = "WorkControl";
-                break;
-        }
-        return controlName;
     }
 }

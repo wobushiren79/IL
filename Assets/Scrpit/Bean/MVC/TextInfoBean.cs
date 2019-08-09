@@ -12,5 +12,5 @@ public class TextInfoBean : BaseBean
     //文本内容
     public string content;
     //文本顺序
-    public long order;
+    public int order;
 }

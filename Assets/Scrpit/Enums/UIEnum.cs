@@ -14,6 +14,7 @@ public enum UIEnum
     GameBuild,
     GameSettle,
     GameAttendance,
+    GameText,
     TownMarket,
     TownRecruitment,
     TownGrocery,

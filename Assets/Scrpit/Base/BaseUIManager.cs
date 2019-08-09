@@ -65,9 +65,9 @@ public class BaseUIManager : BaseMonoBehaviour
     /// <returns></returns>
     public List<BaseUIComponent> GetUIListByName(string uiName)
     {
-        if (uiList == null||CheckUtil.StringIsNull(uiName))
+        if (uiList == null || CheckUtil.StringIsNull(uiName))
             return null;
-        List<BaseUIComponent> tempUIList =new List<BaseUIComponent>();
+        List<BaseUIComponent> tempUIList = new List<BaseUIComponent>();
         foreach (BaseUIComponent itemUI in uiList)
         {
             if (itemUI.name.Equals(uiName))
@@ -116,21 +116,24 @@ public class BaseUIManager : BaseMonoBehaviour
     /// 通过UI的名字开启UI并关闭其他UI
     /// </summary>
     /// <param name="uiName"></param>
-    public void OpenUIAndCloseOtherByName(string uiName)
+    public BaseUIComponent OpenUIAndCloseOtherByName(string uiName)
     {
         if (uiList == null || CheckUtil.StringIsNull(uiName))
-            return;
+            return null;
+        BaseUIComponent uiComponent = null;
         foreach (BaseUIComponent itemUI in uiList)
         {
             if (itemUI.name.Equals(uiName))
             {
                 itemUI.OpenUI();
+                uiComponent = itemUI;
             }
             else
             {
                 itemUI.CloseUI();
             }
         }
+        return uiComponent;
     }
 
     /// <summary>
@@ -139,11 +142,11 @@ public class BaseUIManager : BaseMonoBehaviour
     /// <param name="uiName"></param>
     public void OpenUIAndCloseOtherByName(BaseUIComponent uiComponent)
     {
-        if (uiList == null || uiComponent==null)
+        if (uiList == null || uiComponent == null)
             return;
         foreach (BaseUIComponent itemUI in uiList)
         {
-            if (itemUI== uiComponent)
+            if (itemUI == uiComponent)
             {
                 itemUI.OpenUI();
             }

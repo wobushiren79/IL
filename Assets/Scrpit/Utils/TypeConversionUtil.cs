@@ -210,5 +210,25 @@ public class TypeConversionUtil
         }
         return listData;
     }
-    
+
+    /// <summary>
+    ///  string[] 强转 long[]
+    /// </summary>
+    /// <param name="arrayStr"></param>
+    /// <returns></returns>
+    public static long[] ArrayStrToArrayLong(string[] arrayStr)
+    {
+        if (arrayStr == null)
+            return null;
+        long[] listData = new long[arrayStr.Length];
+        for(int i=0;i< arrayStr.Length; i++)
+        {
+            string itemStr = arrayStr[i];
+            if (long.TryParse(itemStr, out long itemLong))
+            {
+                listData[i] = itemLong;
+            }
+        }
+        return listData;
+    }
 }

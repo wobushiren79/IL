@@ -37,9 +37,23 @@ public class ControlForMoveCpt : BaseControl
         }
     }
 
+    public override void StopControl()
+    {
+        base.StopControl();
+        if (characterMoveCpt != null)
+            characterMoveCpt.StopAnim();
+    }
+
+    public override void EndControl()
+    {
+        base.EndControl();
+        if (characterMoveCpt != null)
+            characterMoveCpt.StopAnim();
+    }
+
     public override void StartControl()
     {
         base.StartControl();
-        transform.position = new Vector3(0,0,0);
+        //transform.position = new Vector3(0, 0, 0);
     }
 }

@@ -26,10 +26,27 @@ public class StringUtil
     /// <param name="data"></param>
     /// <param name="substring"></param>
     /// <returns></returns>
-    public static List<string> SplitBySubstring(string data, char substring)
+    public static List<string> SplitBySubstringForListStr(string data, char substring)
     {
+        if (data == null)
+            return new List<string>();
         string[] splitData = data.Split(substring);
         List<string> listData = TypeConversionUtil.ArrayToList(splitData);
+        return listData;
+    }
+
+    /// <summary>
+    /// string通过指定字符拆分成数组
+    /// </summary>
+    /// <param name="data"></param>
+    /// <param name="substring"></param>
+    /// <returns></returns>
+    public static long[] SplitBySubstringForArrayLong(string data, char substring)
+    {
+        if (data == null)
+            return new long[0];
+        string[] splitData = data.Split(substring);
+        long[]  listData= TypeConversionUtil.ArrayStrToArrayLong(splitData);
         return listData;
     }
 }

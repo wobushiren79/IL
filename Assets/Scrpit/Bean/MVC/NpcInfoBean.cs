@@ -20,4 +20,6 @@ public class NpcInfoBean : BaseBean
 
     public float position_x;
     public float position_y;
+
+    public string talk_ids;//人物对话ID
 }

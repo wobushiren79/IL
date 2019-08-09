@@ -17,7 +17,7 @@ public class TextInfoController : BaseMVCController<TextInfoModel,ITextInfoView>
     {
         List<TextInfoBean> listData = GetModel().GetTextForLook(markId);
         if(listData != null)
-            GetView().GetTextInfoSuccess(listData);
+            GetView().GetTextInfoForLookSuccess(listData);
         else
             GetView().GetTextInfoFail();
     }
@@ -26,7 +26,7 @@ public class TextInfoController : BaseMVCController<TextInfoModel,ITextInfoView>
     {
         List<TextInfoBean> listData = GetModel().GetTextForTalk(markId);
         if (listData != null)
-            GetView().GetTextInfoSuccess(listData);
+            GetView().GetTextInfoForTalkSuccess(listData);
         else
             GetView().GetTextInfoFail();
     }
@@ -35,7 +35,7 @@ public class TextInfoController : BaseMVCController<TextInfoModel,ITextInfoView>
     {
         List<TextInfoBean> listData = GetModel().GetTextForStory(markId);
         if (listData != null)
-            GetView().GetTextInfoSuccess(listData);
+            GetView().GetTextInfoForStorySuccess(listData);
         else
             GetView().GetTextInfoFail();
     }

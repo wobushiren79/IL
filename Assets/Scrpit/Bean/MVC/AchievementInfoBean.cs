@@ -39,13 +39,13 @@ public class AchievementInfoBean : BaseBean
 
     public List<long> GetRewardItems()
     {
-        List<string> listData = StringUtil.SplitBySubstring(reward_items_ids, ',');
+        List<string> listData = StringUtil.SplitBySubstringForListStr(reward_items_ids, ',');
         return TypeConversionUtil.ListStrToListLong(listData);
     }
 
     public List<long> GetRewardBuild()
     {
-        List<string> listData = StringUtil.SplitBySubstring(reward_build_ids, ',');
+        List<string> listData = StringUtil.SplitBySubstringForListStr(reward_build_ids, ',');
         return TypeConversionUtil.ListStrToListLong(listData);
     }
 

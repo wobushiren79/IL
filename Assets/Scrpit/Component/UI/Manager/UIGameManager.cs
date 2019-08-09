@@ -22,6 +22,7 @@ public class UIGameManager : BaseUIManager
     public CharacterBodyManager characterBodyManager;
     public InnBuildManager innBuildManager;
     public InnFoodManager innFoodManager;
+    public NpcInfoManager npcInfoManager;
     //UI相关
     public DialogManager dialogManager;
 

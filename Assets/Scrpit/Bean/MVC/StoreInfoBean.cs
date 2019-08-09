@@ -31,7 +31,7 @@ public class StoreInfoBean : BaseBean
     {
         if (pre_ach_ids == null)
             return null;
-        List<string> listIdsStr = StringUtil.SplitBySubstring(pre_ach_ids, ',');
+        List<string> listIdsStr = StringUtil.SplitBySubstringForListStr(pre_ach_ids, ',');
         List<long> listData = TypeConversionUtil.ListStrToListLong(listIdsStr);
         return listData;
     }
