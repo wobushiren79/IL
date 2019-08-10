@@ -4,7 +4,7 @@ using UnityEngine.UI;
 using DG.Tweening;
 using System.Collections.Generic;
 
-public class UIGameText : BaseUIComponent
+public class UIGameText : BaseUIComponent, ITextInfoView
 {
     [Header("控件")]
     public Text tvContent;
@@ -15,7 +15,15 @@ public class UIGameText : BaseUIComponent
     public int textOrder = 1;
     public List<TextInfoBean> listTextData;
 
+    private TextInfoController mTextInfoController;
     private Tweener tweenerText;
+    private TextEnum mTextEnum;
+
+    private void Awake()
+    {
+        mTextInfoController = new TextInfoController(this, this);
+    }
+
     public override void OpenUI()
     {
         base.OpenUI();
@@ -31,7 +39,11 @@ public class UIGameText : BaseUIComponent
                 GetUIMananger<UIGameManager>().controlHandler.RestoreControl();
         }
         base.CloseUI();
-        EventHandler.Instance.isEventing = false;
+        //如果是调查或者对话 文本显示结束后 事件结束
+        if(mTextEnum==TextEnum.Look|| mTextEnum == TextEnum.Talk)
+        {
+            EventHandler.Instance.isEventing = false;
+        } 
     }
 
     private void Update()
@@ -57,12 +69,27 @@ public class UIGameText : BaseUIComponent
         }
     }
 
-    public void SetData(TextEnum textEnum, List<TextInfoBean> listData)
+    /// <summary>
+    /// 设置数据
+    /// </summary>
+    /// <param name="textEnum"></param>
+    /// <param name="markId"></param>
+    public void SetData(TextEnum textEnum, long markId)
     {
-        listTextData = listData;
-        textOrder = 1;
-        TextInfoBean textData = GetTextDataByOrder(textOrder);
-        ShowText(textData);
+        mTextEnum = textEnum;
+        textOrder = 1; 
+        switch (textEnum)
+        {
+            case TextEnum.Look:
+                mTextInfoController.GetTextForLook(markId);
+                break;
+            case TextEnum.Talk:
+                mTextInfoController.GetTextForTalk(markId);
+                break;
+            case TextEnum.Story:
+                mTextInfoController.GetTextForStory(markId);
+                break;
+        }
     }
 
     /// <summary>
@@ -122,4 +149,34 @@ public class UIGameText : BaseUIComponent
             characterUICpt.SetCharacterData(characterData.body, characterData.equips);
 
     }
+
+
+    #region 文本获取回调
+    public void GetTextInfoForLookSuccess(List<TextInfoBean> listData)
+    {
+        listTextData = listData;
+        TextInfoBean textData = GetTextDataByOrder(textOrder);
+        ShowText(textData);
+    }
+
+    public void GetTextInfoForTalkSuccess(List<TextInfoBean> listData)
+    {
+        listTextData = listData;
+        TextInfoBean textData = GetTextDataByOrder(textOrder);
+        ShowText(textData);
+    }
+
+    public void GetTextInfoForStorySuccess(List<TextInfoBean> listData)
+    {
+        listTextData = listData;
+        TextInfoBean textData = GetTextDataByOrder(textOrder);
+        ShowText(textData);
+    }
+
+
+    public void GetTextInfoFail()
+    {
+
+    }
+    #endregion
 }

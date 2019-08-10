@@ -22,4 +22,29 @@ public class NpcInfoBean : BaseBean
     public float position_y;
 
     public string talk_ids;//人物对话ID
+
+
+    /// <summary>
+    /// NPC信息转为角色信息
+    /// </summary>
+    /// <param name="npcInfo"></param>
+    /// <returns></returns>
+    public static CharacterBean NpcInfoToCharacterData(NpcInfoBean npcInfo)
+    {
+        CharacterBean characterData = new CharacterBean();
+
+        characterData.body = new CharacterBodyBean();
+        characterData.body.hair = npcInfo.hair_id;
+        characterData.body.eye = npcInfo.eye_id;
+        characterData.body.mouth = npcInfo.mouth_id;
+        characterData.body.sex = npcInfo.sex;
+        characterData.body.face = npcInfo.face;
+
+        characterData.equips = new CharacterEquipBean();
+        characterData.equips.hatId = npcInfo.hat_id;
+        characterData.equips.clothesId = npcInfo.clothes_id;
+        characterData.equips.shoesId = npcInfo.shoes_id;
+
+        return characterData;
+    }
 }

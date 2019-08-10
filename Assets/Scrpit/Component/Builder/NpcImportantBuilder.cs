@@ -17,7 +17,7 @@ public class NpcImportantBuilder : BaseMonoBehaviour
         foreach (NpcInfoBean itemData in listCharacter)
         {
             //生成
-            CharacterBean characterData = NpcInfoManager.NpcInfoToCharacterData(itemData);
+            CharacterBean characterData = NpcInfoBean.NpcInfoToCharacterData(itemData);
             BuildNpc(itemData,characterData);
         }
     }

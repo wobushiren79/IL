@@ -7,7 +7,7 @@ public class SceneGameTownInit : BaseMonoBehaviour
     public InnBuildManager innBuildManager;
     public GameDataManager gameDataManager;
     public NpcInfoManager npcInfoManager;
-
+    public StoryInfoManager storyInfoManager;
     public NpcImportantBuilder npcImportantBuilder;
 
     private void Start()
@@ -21,8 +21,11 @@ public class SceneGameTownInit : BaseMonoBehaviour
             gameDataManager.gameDataController.GetGameDataByUserId(GameCommonInfo.gameUserId);
         if (npcInfoManager != null)
             npcInfoManager.npcInfoController.GetAllNpcInfo();
+        if (storyInfoManager != null)
+            storyInfoManager.storyInfoController.GetAllStoryInfo();
         //构建重要的NPC
         if (npcImportantBuilder!=null)
             npcImportantBuilder.BuildImportant();
+
     }
 }

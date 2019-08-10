@@ -34,7 +34,7 @@ public class NpcInfoManager : BaseManager,INpcInfoView
             return null;
         if(listNpcInfo.TryGetValue(id,out NpcInfoBean npcInfo))
         {
-            CharacterBean characterData = NpcInfoToCharacterData(npcInfo);
+            CharacterBean characterData = NpcInfoBean.NpcInfoToCharacterData(npcInfo);
             return characterData;
         }
         return null;
@@ -61,7 +61,7 @@ public class NpcInfoManager : BaseManager,INpcInfoView
                 NpcInfoBean itemData = listNpcInfo[key];
                 if (itemData.npc_type == type)
                 {
-                    CharacterBean characterData = NpcInfoToCharacterData(itemData);
+                    CharacterBean characterData = NpcInfoBean.NpcInfoToCharacterData(itemData);
                     listData.Add(characterData);
                 }
             }
@@ -91,31 +91,6 @@ public class NpcInfoManager : BaseManager,INpcInfoView
             }
         }
         return listData;
-    }
-
-
-    /// <summary>
-    /// NPC信息转为角色信息
-    /// </summary>
-    /// <param name="npcInfo"></param>
-    /// <returns></returns>
-    public static CharacterBean NpcInfoToCharacterData(NpcInfoBean npcInfo)
-    {
-        CharacterBean characterData = new CharacterBean();
-
-        characterData.body = new CharacterBodyBean();
-        characterData.body.hair = npcInfo.hair_id;
-        characterData.body.eye = npcInfo.eye_id;
-        characterData.body.mouth = npcInfo.mouth_id;
-        characterData.body.sex = npcInfo.sex;
-        characterData.body.face = npcInfo.face;
-
-        characterData.equips = new CharacterEquipBean();
-        characterData.equips.hatId = npcInfo.hat_id;
-        characterData.equips.clothesId = npcInfo.clothes_id;
-        characterData.equips.shoesId = npcInfo.shoes_id;
-
-        return characterData;
     }
 
     #region 数据回调

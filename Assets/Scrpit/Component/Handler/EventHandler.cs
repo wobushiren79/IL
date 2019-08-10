@@ -2,18 +2,13 @@
 using UnityEditor;
 using System.Collections.Generic;
 
-public class EventHandler : BaseSingleton<EventHandler>, ITextInfoView
+public class EventHandler : BaseSingleton<EventHandler>
 {
     public BaseUIManager uiManager;
-
-    private TextInfoController mTextInfoController;
+    public StoryInfoManager storyInfoManager;
+    public StoryBuilder storyBuilder;
 
     public bool isEventing = false;//事件是否进行中
-
-    private void Awake()
-    {
-        mTextInfoController = new TextInfoController(this, this);
-    }
 
     /// <summary>
     /// 调查事件触发
@@ -22,7 +17,8 @@ public class EventHandler : BaseSingleton<EventHandler>, ITextInfoView
     public void EventTriggerForLook(long markId)
     {
         isEventing = true;
-        mTextInfoController.GetTextForLook(markId);
+        BaseUIComponent baseUIComponent = uiManager.OpenUIAndCloseOtherByName(EnumUtil.GetEnumName(UIEnum.GameText));
+        ((UIGameText)baseUIComponent).SetData(TextEnum.Look, markId);
     }
 
     /// <summary>
@@ -32,43 +28,38 @@ public class EventHandler : BaseSingleton<EventHandler>, ITextInfoView
     public void EventTriggerForTalk(long markId)
     {
         isEventing = true;
-        mTextInfoController.GetTextForTalk(markId);
+        BaseUIComponent baseUIComponent = uiManager.OpenUIAndCloseOtherByName(EnumUtil.GetEnumName(UIEnum.GameText));
+        ((UIGameText)baseUIComponent).SetData(TextEnum.Talk, markId);
     }
+
     /// <summary>
     /// 剧情触发
     /// </summary>
     /// <param name="markId"></param>
-    public void EventTriggerForStory(long markId)
+    public void EventTriggerForStory(StoryInfoBean storyInfo)
     {
         isEventing = true;
+        storyBuilder.BuildStory(storyInfo);
     }
 
-    #region 文本获取回调
-    public void GetTextInfoForLookSuccess(List<TextInfoBean> listData)
+    public void EventTriggerForStory(long id)
     {
-        BaseUIComponent baseUIComponent = uiManager.OpenUIAndCloseOtherByName(EnumUtil.GetEnumName(UIEnum.GameText));
-        ((UIGameText)baseUIComponent).SetData(TextEnum.Look, listData);
+        if (storyInfoManager == null)
+            return;
+        StoryInfoBean storyInfo = storyInfoManager.GetStoryInfoDataById(id);
+        if (storyInfo != null)
+            EventTriggerForStory(storyInfo);
     }
 
-    public void GetTextInfoForTalkSuccess(List<TextInfoBean> listData)
+    /// <summary>
+    /// 检测故事 自动触发剧情
+    /// </summary>
+    public void CheckEventForStory()
     {
-        BaseUIComponent baseUIComponent = uiManager.OpenUIAndCloseOtherByName(EnumUtil.GetEnumName(UIEnum.GameText));
-        ((UIGameText)baseUIComponent).SetData(TextEnum.Talk, listData);
+        if (storyInfoManager == null)
+            return;
+        StoryInfoBean storyInfo = storyInfoManager.CheckStory();
+        if (storyInfo != null)
+            EventTriggerForStory(storyInfo);
     }
-
-    public void GetTextInfoForStorySuccess(List<TextInfoBean> listData)
-    {
-
-    }
-
-    public void GetTextInfoSuccess(List<TextInfoBean> listData)
-    {
-
-    }
-
-    public void GetTextInfoFail()
-    {
-
-    }
-    #endregion
 }

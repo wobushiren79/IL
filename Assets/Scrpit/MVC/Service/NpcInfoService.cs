@@ -44,6 +44,22 @@ public class NpcInfoService
     }
 
     /// <summary>
+    /// 根据ID查询数据
+    /// </summary>
+    /// <param name="ids"></param>
+    /// <returns></returns>
+    public List<NpcInfoBean> QueryDataById(long id)
+    {
+        string[] leftTable = new string[] { mLeftDetailsTableName };
+        string[] mainKey = new string[] { "id" };
+        string[] leftKey = new string[] { "npc_id" };
+        string[] colName = new string[] { mTableName + ".id" };
+        string[] operations = new string[] { "=" };
+        string[] colValue = new string[] { id+"" };
+        return SQliteHandle.LoadTableData<NpcInfoBean>(ProjectConfigInfo.DATA_BASE_INFO_NAME, mTableName, leftTable, mainKey, leftKey, colName, operations, colValue);
+    }
+
+    /// <summary>
     /// 根据Type查询数据
     /// </summary>
     /// <param name="type"></param>
