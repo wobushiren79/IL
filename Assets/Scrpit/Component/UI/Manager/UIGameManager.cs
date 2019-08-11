@@ -33,5 +33,5 @@ public class UIGameManager : BaseUIManager
     public ControlHandler controlHandler;
 
     [Header("地形")]
-    public NavMeshSurface2d navMesh;
+    public NavMeshSurface navMesh;
 }

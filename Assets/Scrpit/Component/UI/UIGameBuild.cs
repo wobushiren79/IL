@@ -133,7 +133,7 @@ public class UIGameBuild : BaseUIComponent
         ControlHandler controlHandler = GetUIMananger<UIGameManager>().controlHandler;
         InnHandler innHandler = GetUIMananger<UIGameManager>().innHandler;
         GameTimeHandler gameTimeHandler = GetUIMananger<UIGameManager>().gameTimeHandler;
-        NavMeshSurface2d navMesh = GetUIMananger<UIGameManager>().navMesh;
+        NavMeshSurface navMesh = GetUIMananger<UIGameManager>().navMesh;
 
         //删除当前选中
         ((ControlForBuildCpt)(controlHandler.GetControl(ControlHandler.ControlEnum.Build))).DestoryBuild();

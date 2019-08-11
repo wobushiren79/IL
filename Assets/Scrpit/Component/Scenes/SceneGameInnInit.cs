@@ -1,7 +1,8 @@
 ﻿using UnityEngine;
 using UnityEditor;
-using System.Collections.Generic;
 using UnityEngine.AI;
+using System.Collections;
+
 public class SceneGameInnInit : BaseManager
 {
     public GameItemsManager gameItemsManager;
@@ -15,7 +16,7 @@ public class SceneGameInnInit : BaseManager
 
     public InnHandler innHandler;
 
-    public NavMeshSurface2d navMesh;
+    public NavMeshSurface navMesh;
 
     public NpcCustomerBuilder leftCustomerBuilder;
     public NpcCustomerBuilder rightCustomerBuilder;
@@ -44,17 +45,28 @@ public class SceneGameInnInit : BaseManager
         //初始化客栈处理
         if (innHandler != null)
             innHandler.InitInn();
-        navMesh.BuildNavMesh();
+
 
         //客栈边界生成
         if (leftCustomerBuilder != null)
         {
-            leftCustomerBuilder.transform.position = new Vector3(-30,-2.5f,0);
+            leftCustomerBuilder.transform.position = new Vector3(-30, -2.5f, 0);
         }
-        if (rightCustomerBuilder!=null)
+        if (rightCustomerBuilder != null)
         {
             rightCustomerBuilder.transform.position = new Vector3(30 + gameDataManager.gameData.GetInnBuildData().innWidth, -2.5f, 0);
-        }     
+        }
+
+        StartCoroutine(BuildNavMesh());
     }
 
+    /// <summary>
+    /// 生成地形
+    /// </summary>
+    /// <returns></returns>
+    public IEnumerator BuildNavMesh()
+    {
+        yield return new WaitForEndOfFrame();
+        navMesh.BuildNavMesh();
+    }  
 }

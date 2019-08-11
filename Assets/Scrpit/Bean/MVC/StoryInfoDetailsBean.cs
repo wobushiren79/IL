@@ -8,4 +8,10 @@ public class StoryInfoDetailsBean
     public int type;
     //事件顺序
     public int order;
+
+    //NPCID
+    public long npc_id;
+    //NPC坐标
+    public float npc_position_x;
+    public float npc_position_y;
 }

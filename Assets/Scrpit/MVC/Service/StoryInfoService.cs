@@ -32,7 +32,7 @@ public class StoryInfoService
         string[] colName = new string[] { "story_id" };
         string[] operations = new string[] { "=" };
         string[] colValue = new string[] { id + "" };
-        return SQliteHandle.LoadTableData<StoryInfoDetailsBean>(ProjectConfigInfo.DATA_BASE_INFO_NAME, mLeftDetailsTableName, colName, operations, colValue);
+        return SQliteHandle.LoadTableDataByCol<StoryInfoDetailsBean>(ProjectConfigInfo.DATA_BASE_INFO_NAME, mLeftDetailsTableName, colName, operations, colValue);
     }
 
 }
