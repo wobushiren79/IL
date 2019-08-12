@@ -1,8 +1,9 @@
 ﻿using UnityEngine;
 using UnityEditor;
+using System.Collections;
 using System.Collections.Generic;
 
-public class StoryBuilder : BaseMonoBehaviour, StoryInfoManager.CallBack
+public class StoryBuilder : BaseMonoBehaviour, StoryInfoManager.CallBack,UIGameText.CallBack
 {
     [Header("控件")]
     public GameObject objNpcModle;
@@ -10,11 +11,20 @@ public class StoryBuilder : BaseMonoBehaviour, StoryInfoManager.CallBack
     [Header("数据")]
     public StoryInfoManager storyInfoManager;
     public NpcInfoManager npcInfoManager;
+    public BaseUIManager uiManager;
 
     public StoryInfoBean storyInfo;
     public List<StoryInfoDetailsBean> listStoryDetails;
+    public List<GameObject> listNpcObj;
 
     public int storyOrder = 1;
+
+    private void Awake()
+    {
+        listNpcObj = new List<GameObject>();
+    }
+
+
     /// <summary>
     /// 创建故事
     /// </summary>
@@ -27,9 +37,9 @@ public class StoryBuilder : BaseMonoBehaviour, StoryInfoManager.CallBack
 
     public void GetStoryDetailsSuccess(List<StoryInfoDetailsBean> listData)
     {
+        ClearStoryScene();
         listStoryDetails = listData;
         storyOrder = 1;
-        ClearStoryScene();
         List<StoryInfoDetailsBean> listOrderData = GetStoryDetailsByOrder(storyOrder);
         CreateStoryScene(listOrderData);
     }
@@ -69,10 +79,53 @@ public class StoryBuilder : BaseMonoBehaviour, StoryInfoManager.CallBack
             switch (itemData.type)
             {
                 case 1:
-                    CreateNpc(itemData);
+                    //Npc站位
+                    GameObject objNpc = GetNpcByNpcNum(itemData.npc_num);
+                    if (objNpc == null)
+                        CreateNpc(itemData);
+                    else
+                    {
+                        BaseNpcAI npcAI = objNpc.GetComponent<BaseNpcAI>();
+                        npcAI.characterMoveCpt.SetDestination(new Vector3(itemData.npc_position_x,itemData.npc_position_y));
+                    }
+                    break;
+                case 11:
+                    UIGameText uiComponent = (UIGameText)uiManager.OpenUIAndCloseOtherByName(EnumUtil.GetEnumName(UIEnum.GameText));
+                    uiComponent.SetCallBack(this);
+                    uiComponent.SetData(TextEnum.Story, itemData.text_mark_id);  
+                    break;
+                case 12:
+                    //剧情自动跳转
+                    StartCoroutine(StoryAutoNext(itemData.wait_time));
                     break;
             }
         }
+    }
+
+    public IEnumerator StoryAutoNext(float waitTime)
+    {
+        yield return new WaitForSeconds(waitTime);
+        NextOrder();
+    } 
+
+    /// <summary>
+    /// 通过Npc编号获取NPC
+    /// </summary>
+    /// <param name="npcNum"></param>
+    /// <returns></returns>
+    public GameObject GetNpcByNpcNum(int npcNum)
+    {
+        if (listNpcObj != null)
+        {
+            foreach (GameObject itemNpc in listNpcObj)
+            {
+                if (itemNpc.name.Equals(npcNum + ""))
+                {
+                    return itemNpc;
+                }
+            }
+        }
+        return null;
     }
 
     /// <summary>
@@ -84,8 +137,12 @@ public class StoryBuilder : BaseMonoBehaviour, StoryInfoManager.CallBack
         GameObject objNpc = Instantiate(objNpcModle, transform);
         objNpc.SetActive(true);
         objNpc.transform.localPosition = new Vector3(itemData.npc_position_x, itemData.npc_position_y);
+        listNpcObj.Add(objNpc);
         NpcAIStoryCpt aiNpc = objNpc.GetComponent<NpcAIStoryCpt>();
         CharacterBean characterData = npcInfoManager.GetCharacterDataById(itemData.npc_id);
+        //设置编号
+        objNpc.name = itemData.npc_num + "";
+
         aiNpc.SetCharacterData(characterData);
     }
 
@@ -94,7 +151,33 @@ public class StoryBuilder : BaseMonoBehaviour, StoryInfoManager.CallBack
     /// </summary>
     public void ClearStoryScene()
     {
-        CptUtil.RemoveChild(transform);
+        CptUtil.RemoveChildsByActive(transform);
         gameObject.transform.position = Vector3.zero;
+        listNpcObj.Clear();
     }
+
+    /// <summary>
+    /// 下一个剧情点
+    /// </summary>
+    public void NextOrder()
+    {
+        storyOrder++;
+        List<StoryInfoDetailsBean> listOrderData = GetStoryDetailsByOrder(storyOrder);
+        if (CheckUtil.ListIsNull(listOrderData))
+        {
+            //没有剧情。完结
+            EventHandler.Instance.isEventing = false;
+            uiManager.OpenUIAndCloseOtherByName(EnumUtil.GetEnumName(UIEnum.GameMain));
+            ClearStoryScene();
+        }
+        else
+        CreateStoryScene(listOrderData);
+    }
+
+    #region 文本结束回调
+    public void TextEnd()
+    {
+        NextOrder();
+    }
+    #endregion
 }

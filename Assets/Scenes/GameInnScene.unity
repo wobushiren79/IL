@@ -97,7 +97,7 @@ LightmapSettings:
     m_ExportTrainingData: 0
     m_TrainingDataDestination: TrainingData
   m_LightingDataAsset: {fileID: 0}
-  m_UseShadowmask: 0
+  m_UseShadowmask: 1
 --- !u!196 &4
 NavMeshSettings:
   serializedVersion: 2
@@ -127,6 +127,16 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1716359874}
     m_Modifications:
+    - target: {fileID: 5210061400093648316, guid: 2b0fba09934c2934eb7fd9b31e6030fb,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1047252903781998910, guid: 2b0fba09934c2934eb7fd9b31e6030fb,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2478063932746049266, guid: 2b0fba09934c2934eb7fd9b31e6030fb,
         type: 3}
       propertyPath: m_Name
@@ -256,11 +266,11 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 7710556}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &7710559
+--- !u!114 &7710559 stripped
 MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
+  m_CorrespondingSourceObject: {fileID: 5210061400093648316, guid: 2b0fba09934c2934eb7fd9b31e6030fb,
+    type: 3}
+  m_PrefabInstance: {fileID: 7710556}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7710558}
   m_Enabled: 1
@@ -268,17 +278,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dd8f360140d665a4ab11835a2f24d633, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  lerpOffset: 0.9
-  moveSpeed: 1
-  characterAnimtor: {fileID: 7710564}
-  navMeshAgent: {fileID: 7710561}
-  characterBodyObj: {fileID: 723469085}
-  characterRigidbody: {fileID: 0}
-  isManualMove: 0
-  minMoveX: 0
-  maxMoveX: 0
-  minMoveY: 0
-  maxMoveY: 0
 --- !u!114 &7710560
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -357,28 +356,6 @@ MonoBehaviour:
   foodCpt: {fileID: 0}
   counterCpt: {fileID: 0}
   waitPayDistance: 0
---- !u!195 &7710561
-NavMeshAgent:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7710558}
-  m_Enabled: 1
-  m_AgentTypeID: 0
-  m_Radius: 0.1
-  m_Speed: 1
-  m_Acceleration: 10
-  avoidancePriority: 50
-  m_AngularSpeed: 360
-  m_StoppingDistance: 0
-  m_AutoTraverseOffMeshLink: 1
-  m_AutoBraking: 1
-  m_AutoRepath: 1
-  m_Height: 0.5
-  m_BaseOffset: 0
-  m_WalkableMask: 4294967295
-  m_ObstacleAvoidanceType: 0
 --- !u!114 &7710562 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 5374315413826618855, guid: 2b0fba09934c2934eb7fd9b31e6030fb,
@@ -410,12 +387,6 @@ MonoBehaviour:
   spOkay: {fileID: 21300004, guid: 809c705990bfd2542bc997497a8ddb73, type: 3}
   spHappy: {fileID: 21300002, guid: 809c705990bfd2542bc997497a8ddb73, type: 3}
   spExcited: {fileID: 21300000, guid: 809c705990bfd2542bc997497a8ddb73, type: 3}
---- !u!95 &7710564 stripped
-Animator:
-  m_CorrespondingSourceObject: {fileID: 2478063932746049267, guid: 2b0fba09934c2934eb7fd9b31e6030fb,
-    type: 3}
-  m_PrefabInstance: {fileID: 7710556}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &72431159
 GameObject:
   m_ObjectHideFlags: 0
@@ -49924,12 +49895,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 17
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &723469085 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 2478063931806359367, guid: 2b0fba09934c2934eb7fd9b31e6030fb,
-    type: 3}
-  m_PrefabInstance: {fileID: 7710556}
-  m_PrefabAsset: {fileID: 0}
 --- !u!114 &744028635 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 7216684091573950971, guid: 65baa4bc4b3f90247828311df8ceaf96,
@@ -50354,12 +50319,12 @@ PrefabInstance:
     - target: {fileID: 1493773234539546852, guid: 61afd9858eb339d4bbbecb6c1c7f54d6,
         type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 0
+      value: 200
       objectReference: {fileID: 0}
     - target: {fileID: 1493773234539546852, guid: 61afd9858eb339d4bbbecb6c1c7f54d6,
         type: 3}
       propertyPath: m_SizeDelta.x
-      value: 0
+      value: 200
       objectReference: {fileID: 0}
     - target: {fileID: 1493773234539546852, guid: 61afd9858eb339d4bbbecb6c1c7f54d6,
         type: 3}
@@ -63990,6 +63955,16 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1716359874}
     m_Modifications:
+    - target: {fileID: 5210061400093648316, guid: 2b0fba09934c2934eb7fd9b31e6030fb,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1047252903781998910, guid: 2b0fba09934c2934eb7fd9b31e6030fb,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2478063932746049266, guid: 2b0fba09934c2934eb7fd9b31e6030fb,
         type: 3}
       propertyPath: m_Name
@@ -64115,12 +64090,18 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 1414017225}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &1414017229 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 2478063931806359367, guid: 2b0fba09934c2934eb7fd9b31e6030fb,
+--- !u!114 &1414017229 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5210061400093648316, guid: 2b0fba09934c2934eb7fd9b31e6030fb,
     type: 3}
   m_PrefabInstance: {fileID: 1414017225}
   m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1414017230}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dd8f360140d665a4ab11835a2f24d633, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1414017230 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 2478063932746049266, guid: 2b0fba09934c2934eb7fd9b31e6030fb,
@@ -64194,7 +64175,7 @@ MonoBehaviour:
       shoesId: 0
       listLearnBook: 
   gameItemsManager: {fileID: 1899891679}
-  characterMoveCpt: {fileID: 1414017236}
+  characterMoveCpt: {fileID: 1414017229}
   characterShoutCpt: {fileID: 1414017239}
   aiForChef: {fileID: 1414017237}
   aiForWaiter: {fileID: 1414017235}
@@ -64207,12 +64188,6 @@ MonoBehaviour:
   isChef: 1
   isWaiter: 1
   isAccounting: 1
---- !u!95 &1414017232 stripped
-Animator:
-  m_CorrespondingSourceObject: {fileID: 2478063932746049267, guid: 2b0fba09934c2934eb7fd9b31e6030fb,
-    type: 3}
-  m_PrefabInstance: {fileID: 1414017225}
-  m_PrefabAsset: {fileID: 0}
 --- !u!114 &1414017233
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -64227,28 +64202,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   shoutObj: {fileID: 1414017228}
   tvShout: {fileID: 1414017227}
---- !u!195 &1414017234
-NavMeshAgent:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1414017230}
-  m_Enabled: 1
-  m_AgentTypeID: 0
-  m_Radius: 0.1
-  m_Speed: 1
-  m_Acceleration: 10
-  avoidancePriority: 50
-  m_AngularSpeed: 360
-  m_StoppingDistance: 0
-  m_AutoTraverseOffMeshLink: 1
-  m_AutoBraking: 1
-  m_AutoRepath: 1
-  m_Height: 0.5
-  m_BaseOffset: 0
-  m_WalkableMask: 4294967295
-  m_ObstacleAvoidanceType: 0
 --- !u!114 &1414017235
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -64265,29 +64218,6 @@ MonoBehaviour:
   sendPro: {fileID: 1108213355}
   clearPro: {fileID: 282648889}
   waiterStatue: 0
---- !u!114 &1414017236
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1414017230}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dd8f360140d665a4ab11835a2f24d633, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  lerpOffset: 0.9
-  moveSpeed: 1
-  characterAnimtor: {fileID: 1414017232}
-  navMeshAgent: {fileID: 1414017234}
-  characterBodyObj: {fileID: 1414017229}
-  characterRigidbody: {fileID: 0}
-  isManualMove: 0
-  minMoveX: 0
-  maxMoveX: 0
-  minMoveY: 0
-  maxMoveY: 0
 --- !u!114 &1414017237
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -39,6 +39,7 @@ public class EventHandler : BaseSingleton<EventHandler>
     public void EventTriggerForStory(StoryInfoBean storyInfo)
     {
         isEventing = true;
+        uiManager.CloseAllUI();
         storyBuilder.BuildStory(storyInfo);
     }
 

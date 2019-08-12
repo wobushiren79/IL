@@ -27,7 +27,11 @@ public class CharacterMoveCpt : BaseMonoBehaviour
 
     private void Awake()
     {
-
+        if (navMeshAgent != null)
+        {
+            navMeshAgent.updateRotation = false;
+            navMeshAgent.updateUpAxis = false;
+        }
     }
 
     private void Start()

@@ -113,6 +113,18 @@ public class BaseUIManager : BaseMonoBehaviour
     }
 
     /// <summary>
+    /// 关闭所有UI
+    /// </summary>
+    public void CloseAllUI()
+    {
+        foreach (BaseUIComponent itemUI in uiList)
+        {
+            if (itemUI.gameObject.activeSelf)
+                itemUI.CloseUI();
+        }
+    }
+
+    /// <summary>
     /// 通过UI的名字开启UI并关闭其他UI
     /// </summary>
     /// <param name="uiName"></param>

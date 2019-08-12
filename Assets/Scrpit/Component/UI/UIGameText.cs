@@ -19,6 +19,8 @@ public class UIGameText : BaseUIComponent, ITextInfoView
     private Tweener tweenerText;
     private TextEnum mTextEnum;
 
+    private CallBack mCallBack;
+
     private void Awake()
     {
         mTextInfoController = new TextInfoController(this, this);
@@ -63,10 +65,31 @@ public class UIGameText : BaseUIComponent, ITextInfoView
                     ShowText(textData);
                 else
                 {
-                    uiManager.OpenUIAndCloseOtherByName(EnumUtil.GetEnumName(UIEnum.GameMain));
+                    switch (mTextEnum)
+                    {
+                        case TextEnum.Look:
+                        case TextEnum.Talk:
+                            uiManager.OpenUIAndCloseOtherByName(EnumUtil.GetEnumName(UIEnum.GameMain));
+                            break;
+                        case TextEnum.Story:
+                            uiManager.CloseAllUI();
+                            break;
+                    }
+                    //回调
+                    if (mCallBack != null)
+                        mCallBack.TextEnd();
                 }
             }
         }
+    }
+
+    /// <summary>
+    /// 设置回调
+    /// </summary>
+    /// <param name="callBack"></param>
+    public void SetCallBack(CallBack callBack)
+    {
+        mCallBack = callBack;
     }
 
     /// <summary>
@@ -179,4 +202,9 @@ public class UIGameText : BaseUIComponent, ITextInfoView
 
     }
     #endregion
+
+    public interface CallBack
+    {
+        void TextEnd();
+    }
 }

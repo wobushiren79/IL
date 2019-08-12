@@ -3250,6 +3250,16 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 2040311819}
     m_Modifications:
+    - target: {fileID: 5210061400093648316, guid: 2b0fba09934c2934eb7fd9b31e6030fb,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1047252903781998910, guid: 2b0fba09934c2934eb7fd9b31e6030fb,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2478063932746049266, guid: 2b0fba09934c2934eb7fd9b31e6030fb,
         type: 3}
       propertyPath: m_Name
@@ -15861,11 +15871,13 @@ MonoBehaviour:
   objNpcModle: {fileID: 1750574419}
   storyInfoManager: {fileID: 599470758}
   npcInfoManager: {fileID: 2118945205}
+  uiManager: {fileID: 610247095}
   storyInfo:
     id: 0
     valid: 0
     position_x: 0
     position_y: 0
+  listNpcObj: []
   storyOrder: 1
 --- !u!1001 &861864780
 PrefabInstance:
@@ -35661,7 +35673,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1498491155}
-  m_LocalRotation: {x: -0.7071068, y: -0, z: -0, w: 0.7071068}
+  m_LocalRotation: {x: -0.7071068, y: 0, z: 0, w: 0.7071068}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -46561,6 +46573,16 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 859951615}
     m_Modifications:
+    - target: {fileID: 5210061400093648316, guid: 2b0fba09934c2934eb7fd9b31e6030fb,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1047252903781998910, guid: 2b0fba09934c2934eb7fd9b31e6030fb,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2478063932746049266, guid: 2b0fba09934c2934eb7fd9b31e6030fb,
         type: 3}
       propertyPath: m_Name
@@ -46589,17 +46611,17 @@ PrefabInstance:
     - target: {fileID: 2478063931147506651, guid: 2b0fba09934c2934eb7fd9b31e6030fb,
         type: 3}
       propertyPath: m_LocalRotation.x
-      value: -0
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2478063931147506651, guid: 2b0fba09934c2934eb7fd9b31e6030fb,
         type: 3}
       propertyPath: m_LocalRotation.y
-      value: -0
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2478063931147506651, guid: 2b0fba09934c2934eb7fd9b31e6030fb,
         type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2478063931147506651, guid: 2b0fba09934c2934eb7fd9b31e6030fb,
         type: 3}
@@ -46737,7 +46759,19 @@ MonoBehaviour:
       shoesId: 0
       listLearnBook: 
   gameItemsManager: {fileID: 1850674566571564988}
-  characterMoveCpt: {fileID: 0}
+  characterMoveCpt: {fileID: 1750574421}
+--- !u!114 &1750574421 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5210061400093648316, guid: 2b0fba09934c2934eb7fd9b31e6030fb,
+    type: 3}
+  m_PrefabInstance: {fileID: 1750574417}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1750574419}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dd8f360140d665a4ab11835a2f24d633, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &1753523665
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -49139,7 +49173,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1965031476}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 5.2091293, y: 16.353863, z: -6.211307}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1425486235}
@@ -61547,7 +61581,7 @@ PrefabInstance:
     - target: {fileID: 7577364584852501876, guid: 14f456b6afd43dd409e00c9ee64236d5,
         type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 89.99997
+      value: 90
       objectReference: {fileID: 0}
     - target: {fileID: 7577364584654802790, guid: 14f456b6afd43dd409e00c9ee64236d5,
         type: 3}
