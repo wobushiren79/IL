@@ -11,6 +11,11 @@ public class StoryInfoModel : BaseMVCModel
         mStoryInfoService = new StoryInfoService();
     }
 
+    public List<StoryInfoBean> GetStoryInfoByScene(int scene)
+    {
+        return mStoryInfoService.QueryStoryInfoByScene(scene);
+    }
+
     public List<StoryInfoBean> GetAllStoryInfo()
     {
       return  mStoryInfoService.QueryAllStoryData();

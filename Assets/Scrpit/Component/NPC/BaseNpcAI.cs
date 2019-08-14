@@ -15,7 +15,7 @@ public class BaseNpcAI : BaseMonoBehaviour
 
     public void SetCharacterData(CharacterBean characterBean)
     {
-        if (characterData == null)
+        if (characterBean == null)
             return;
         this.characterData = characterBean;
         //设置身体数据

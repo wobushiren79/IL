@@ -4,9 +4,9 @@ using System.Collections.Generic;
 
 public interface IStoryInfoView
 {
-    void GetAllStoryInfoSuccess(List<StoryInfoBean> listData);
+    void GetStoryInfoSuccess(List<StoryInfoBean> listData);
 
-    void GetAllStoryInfoFail();
+    void GetStoryInfoFail();
 
     void GetStoryDetailsByIdSuccess(List<StoryInfoDetailsBean> listData);
 

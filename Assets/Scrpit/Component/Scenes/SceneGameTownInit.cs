@@ -22,7 +22,8 @@ public class SceneGameTownInit : BaseMonoBehaviour
         if (npcInfoManager != null)
             npcInfoManager.npcInfoController.GetAllNpcInfo();
         if (storyInfoManager != null)
-            storyInfoManager.storyInfoController.GetAllStoryInfo();
+            storyInfoManager.storyInfoController.GetStoryInfoByScene(2);
+
         //构建重要的NPC
         if (npcImportantBuilder!=null)
             npcImportantBuilder.BuildImportant();

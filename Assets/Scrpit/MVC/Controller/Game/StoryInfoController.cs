@@ -13,13 +13,22 @@ public class StoryInfoController : BaseMVCController<StoryInfoModel, IStoryInfoV
 
     }
 
+    public void GetStoryInfoByScene(int scene)
+    {
+        List<StoryInfoBean> listData = GetModel().GetStoryInfoByScene(scene);
+        if (listData != null)
+            GetView().GetStoryInfoSuccess(listData);
+        else
+            GetView().GetStoryInfoFail();
+    }
+
     public void GetAllStoryInfo()
     {
         List<StoryInfoBean> listData = GetModel().GetAllStoryInfo();
         if (listData != null)
-            GetView().GetAllStoryInfoSuccess(listData);
+            GetView().GetStoryInfoSuccess(listData);
         else
-            GetView().GetAllStoryInfoFail();
+            GetView().GetStoryInfoFail();
     }
 
     public void GetStoryDetailsById(long id)

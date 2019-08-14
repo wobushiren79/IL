@@ -9,10 +9,12 @@ public class SceneGameInnInit : BaseManager
     public GameDataManager gameDataManager;
     public NpcInfoManager npcInfoManager;
     public InnBuildManager innBuildManager;
+    public StoryInfoManager storyInfoManager;
 
     public InnFloorBuilder innFloorBuilder;
     public InnWallBuilder innWallBuilder;
     public InnFurnitureBuilder innFurnitureBuilder;
+
 
     public InnHandler innHandler;
 
@@ -32,6 +34,9 @@ public class SceneGameInnInit : BaseManager
             npcInfoManager.npcInfoController.GetAllNpcInfo();
         if (innBuildManager != null)
             innBuildManager.buildDataController.GetAllBuildItemsData();
+        //故事数据
+        if (storyInfoManager != null)
+            storyInfoManager.storyInfoController.GetStoryInfoByScene(1);
 
         //构建地板
         if (innFloorBuilder != null)
@@ -46,7 +51,6 @@ public class SceneGameInnInit : BaseManager
         if (innHandler != null)
             innHandler.InitInn();
 
-
         //客栈边界生成
         if (leftCustomerBuilder != null)
         {
@@ -58,6 +62,7 @@ public class SceneGameInnInit : BaseManager
         }
 
         StartCoroutine(BuildNavMesh());
+
     }
 
     /// <summary>

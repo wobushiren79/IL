@@ -14,10 +14,10 @@
 		//LOD 100
 
 		// Grab the screen behind the object into _BackgroundTexture
-		GrabPass
-		{
-			"_BackgroundTexture"
-		}
+		//GrabPass
+		//{
+		//	"_BackgroundTexture"
+		//}
 
 		Pass
 		{

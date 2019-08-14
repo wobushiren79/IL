@@ -74,6 +74,7 @@ public class CharacterMoveCpt : BaseMonoBehaviour
         }
     }
 
+
     /// <summary>
     /// 自动移动
     /// </summary>
@@ -93,6 +94,18 @@ public class CharacterMoveCpt : BaseMonoBehaviour
             canGo = navMeshAgent.SetDestination(position);
         }
         return canGo;
+    }
+
+    /// <summary>
+    /// 本地移动
+    /// </summary>
+    /// <param name="tfPar"></param>
+    /// <param name="position"></param>
+    /// <returns></returns>
+    public bool SetDestinationLocal(Transform tfPar, Vector3 position)
+    {
+       Vector3 worldPos= tfPar.TransformPoint(position);
+       return SetDestination(worldPos);
     }
 
     /// <summary>

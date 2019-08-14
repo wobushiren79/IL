@@ -14,7 +14,7 @@ public class NpcInfoBean : BaseBean
     public long shoes_id;
     public string hair_id;
     public string eye_id;
-    public string  mouth_id;
+    public string mouth_id;
 
     public string name;//npc名字
 
@@ -32,6 +32,8 @@ public class NpcInfoBean : BaseBean
     public static CharacterBean NpcInfoToCharacterData(NpcInfoBean npcInfo)
     {
         CharacterBean characterData = new CharacterBean();
+
+        characterData.baseInfo.characterId = npcInfo.id + "";
 
         characterData.body = new CharacterBodyBean();
         characterData.body.hair = npcInfo.hair_id;

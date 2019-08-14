@@ -9,6 +9,7 @@ public class StoryBuilder : BaseMonoBehaviour, StoryInfoManager.CallBack,UIGameT
     public GameObject objNpcModle;
 
     [Header("数据")]
+    public GameDataManager gameDataManager;
     public StoryInfoManager storyInfoManager;
     public NpcInfoManager npcInfoManager;
     public BaseUIManager uiManager;
@@ -86,7 +87,7 @@ public class StoryBuilder : BaseMonoBehaviour, StoryInfoManager.CallBack,UIGameT
                     else
                     {
                         BaseNpcAI npcAI = objNpc.GetComponent<BaseNpcAI>();
-                        npcAI.characterMoveCpt.SetDestination(new Vector3(itemData.npc_position_x,itemData.npc_position_y));
+                        npcAI.characterMoveCpt.SetDestinationLocal(transform,new Vector3(itemData.npc_position_x,itemData.npc_position_y));
                     }
                     break;
                 case 11:
@@ -139,7 +140,12 @@ public class StoryBuilder : BaseMonoBehaviour, StoryInfoManager.CallBack,UIGameT
         objNpc.transform.localPosition = new Vector3(itemData.npc_position_x, itemData.npc_position_y);
         listNpcObj.Add(objNpc);
         NpcAIStoryCpt aiNpc = objNpc.GetComponent<NpcAIStoryCpt>();
-        CharacterBean characterData = npcInfoManager.GetCharacterDataById(itemData.npc_id);
+        CharacterBean characterData;
+        if (itemData.npc_id == 0)
+            characterData = gameDataManager.gameData.userCharacter;
+        else
+            characterData = npcInfoManager.GetCharacterDataById(itemData.npc_id);
+
         //设置编号
         objNpc.name = itemData.npc_num + "";
 

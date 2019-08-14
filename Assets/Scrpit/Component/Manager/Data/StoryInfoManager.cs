@@ -51,7 +51,7 @@ public class StoryInfoManager : BaseManager,IStoryInfoView
     }
 
     #region 故事数据回调
-    public void GetAllStoryInfoSuccess(List<StoryInfoBean> listData)
+    public void GetStoryInfoSuccess(List<StoryInfoBean> listData)
     {
         mapStory = new Dictionary<long, StoryInfoBean>();
         foreach (StoryInfoBean itemData in listData)
@@ -66,11 +66,11 @@ public class StoryInfoManager : BaseManager,IStoryInfoView
             callBack.GetStoryDetailsSuccess(listData);
     }
 
-    public void GetStoryDetailsFail()
+    public void GetStoryInfoFail()
     {
     }
 
-    public void GetAllStoryInfoFail()
+    public void GetStoryDetailsFail()
     {
     }
     #endregion
