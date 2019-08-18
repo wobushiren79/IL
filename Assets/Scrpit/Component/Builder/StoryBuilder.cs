@@ -13,6 +13,7 @@ public class StoryBuilder : BaseMonoBehaviour, StoryInfoManager.CallBack,UIGameT
     public StoryInfoManager storyInfoManager;
     public NpcInfoManager npcInfoManager;
     public BaseUIManager uiManager;
+    public ControlHandler controlHandler;
 
     public StoryInfoBean storyInfo;
     public List<StoryInfoDetailsBean> listStoryDetails;
@@ -142,7 +143,10 @@ public class StoryBuilder : BaseMonoBehaviour, StoryInfoManager.CallBack,UIGameT
         NpcAIStoryCpt aiNpc = objNpc.GetComponent<NpcAIStoryCpt>();
         CharacterBean characterData;
         if (itemData.npc_id == 0)
-            characterData = gameDataManager.gameData.userCharacter;
+        {
+           ((ControlForStoryCpt)controlHandler.GetControl()).SetCameraFollowObj(objNpc);
+           characterData = gameDataManager.gameData.userCharacter;  
+        }  
         else
             characterData = npcInfoManager.GetCharacterDataById(itemData.npc_id);
 
@@ -172,7 +176,7 @@ public class StoryBuilder : BaseMonoBehaviour, StoryInfoManager.CallBack,UIGameT
         if (CheckUtil.ListIsNull(listOrderData))
         {
             //没有剧情。完结
-            EventHandler.Instance.isEventing = false;
+            EventHandler.Instance.ChangeEventStatus(false);
             uiManager.OpenUIAndCloseOtherByName(EnumUtil.GetEnumName(UIEnum.GameMain));
             ClearStoryScene();
         }

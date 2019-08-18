@@ -1,17 +1,33 @@
 ﻿using UnityEngine;
 using UnityEditor;
 using System.Collections.Generic;
+using Cinemachine;
 
 public class ControlHandler : BaseManager
 {
+
     public enum ControlEnum
     {
         Normal,//普通
         Build,//建筑模式
         Work,//上班模式
-    }
+        Story,//故事模式
+    }    
 
+    //镜头
+    public CinemachineVirtualCamera camera2D;
     public List<BaseControl> listControl = new List<BaseControl>();
+
+    /// <summary>
+    /// 初始化
+    /// </summary>
+    private void Awake()
+    {
+        foreach (BaseControl itemControl in listControl)
+        {
+            itemControl.SetCamera2D(camera2D);
+        }
+    }
 
     /// <summary>
     /// 暂停控制
@@ -35,21 +51,24 @@ public class ControlHandler : BaseManager
     /// 开始控制
     /// </summary>
     /// <param name="controlEnum"></param>
-    public void StartControl(ControlEnum controlEnum)
+    public BaseControl StartControl(ControlEnum controlEnum)
     {
         string controlName = EnumUtil.GetEnumName(controlEnum);
+        BaseControl baseControl = null;
         for (int i = 0; i < listControl.Count; i++)
         {
             BaseControl itemControl = listControl[i];
             if (itemControl.name.Equals(controlName))
             {
                 itemControl.StartControl();
+                baseControl = itemControl;
             }
             else
             {
                 itemControl.EndControl();
             }
         }
+        return baseControl;
     }
 
     /// <summary>

@@ -13,7 +13,7 @@ public class ListDataEditor : Editor
         GameObject Target = Selection.gameObjects[0];
         CharacterDressManager dressManager = Target.GetComponent<CharacterDressManager>();
         dressManager.listIconHat.Clear();
-        AddIconBeanDictionaryByFile("Assets/Texture/Character/character_hat.png", dressManager.listIconHat);
+        AddIconBeanDictionaryByFolder("Assets/Texture/Character/Dress/Hat/", dressManager.listIconHat);
     }
 
     [MenuItem("Custom/List/AddDressClothes")]
@@ -22,8 +22,7 @@ public class ListDataEditor : Editor
         GameObject Target = Selection.gameObjects[0];
         CharacterDressManager dressManager = Target.GetComponent<CharacterDressManager>();
         dressManager.listIconClothes.Clear();
-        AddIconBeanDictionaryByFile("Assets/Texture/Character/character_clothes.png", dressManager.listIconClothes);
-        AddIconBeanDictionaryByFile("Assets/Texture/Character/character_clothes_work.png", dressManager.listIconClothes);
+        AddIconBeanDictionaryByFolder("Assets/Texture/Character/Dress/Clothes/", dressManager.listIconClothes);
     }
 
     [MenuItem("Custom/List/AddDressShoes")]
@@ -32,8 +31,7 @@ public class ListDataEditor : Editor
         GameObject Target = Selection.gameObjects[0];
         CharacterDressManager dressManager = Target.GetComponent<CharacterDressManager>();
         dressManager.listIconShoes.Clear();
-        AddIconBeanDictionaryByFile("Assets/Texture/Character/character_shoes.png", dressManager.listIconShoes);
-        AddIconBeanDictionaryByFile("Assets/Texture/Character/character_shoes_work.png", dressManager.listIconShoes);
+        AddIconBeanDictionaryByFolder("Assets/Texture/Character/Dress/Shoes/", dressManager.listIconShoes);
     }
 
     [MenuItem("Custom/List/AddBodyHair")]

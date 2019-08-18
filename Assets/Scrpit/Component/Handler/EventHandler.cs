@@ -4,11 +4,13 @@ using System.Collections.Generic;
 
 public class EventHandler : BaseSingleton<EventHandler>
 {
+
     public BaseUIManager uiManager;
     public StoryInfoManager storyInfoManager;
     public StoryBuilder storyBuilder;
+    public ControlHandler controlHandler;
 
-    public bool isEventing = false;//事件是否进行中
+    private bool mIsEventing = false;//事件是否进行中
 
     /// <summary>
     /// 调查事件触发
@@ -16,7 +18,7 @@ public class EventHandler : BaseSingleton<EventHandler>
     /// <param name="markId"></param>
     public void EventTriggerForLook(long markId)
     {
-        isEventing = true;
+        ChangeEventStatus(true);
         BaseUIComponent baseUIComponent = uiManager.OpenUIAndCloseOtherByName(EnumUtil.GetEnumName(UIEnum.GameText));
         ((UIGameText)baseUIComponent).SetData(TextEnum.Look, markId);
     }
@@ -27,7 +29,7 @@ public class EventHandler : BaseSingleton<EventHandler>
     /// <param name="markId"></param>
     public void EventTriggerForTalk(long markId)
     {
-        isEventing = true;
+        ChangeEventStatus(true);
         BaseUIComponent baseUIComponent = uiManager.OpenUIAndCloseOtherByName(EnumUtil.GetEnumName(UIEnum.GameText));
         ((UIGameText)baseUIComponent).SetData(TextEnum.Talk, markId);
     }
@@ -38,7 +40,7 @@ public class EventHandler : BaseSingleton<EventHandler>
     /// <param name="markId"></param>
     public void EventTriggerForStory(StoryInfoBean storyInfo)
     {
-        isEventing = true;
+        ChangeEventStatus(true);
         uiManager.CloseAllUI();
         storyBuilder.BuildStory(storyInfo);
     }
@@ -62,5 +64,32 @@ public class EventHandler : BaseSingleton<EventHandler>
         StoryInfoBean storyInfo = storyInfoManager.CheckStory();
         if (storyInfo != null)
             EventTriggerForStory(storyInfo);
+    }
+
+    /// <summary>
+    /// 改变事件状态
+    /// </summary>
+    /// <param name="isEvent"></param>
+    public void ChangeEventStatus(bool isEvent)
+    {
+        mIsEventing = isEvent;
+        if (controlHandler!=null)
+            if (isEvent)
+            {
+                controlHandler.StartControl(ControlHandler.ControlEnum.Story);
+            }
+            else
+            {
+                controlHandler.StartControl(ControlHandler.ControlEnum.Normal);
+            }  
+    }
+
+    /// <summary>
+    /// 获取时间状态
+    /// </summary>
+    /// <returns></returns>
+    public bool GetEventStatus()
+    {
+        return mIsEventing;
     }
 }

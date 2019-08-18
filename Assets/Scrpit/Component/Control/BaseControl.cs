@@ -5,9 +5,28 @@ using Cinemachine;
 public class BaseControl : BaseMonoBehaviour
 {
     //镜头
-    public CinemachineVirtualCamera camera2D;
+    private CinemachineVirtualCamera mCamera2D;
     //镜头跟随对象
     public GameObject cameraFollowObj;
+
+    /// <summary>
+    /// 设置摄像头
+    /// </summary>
+    /// <param name="camera"></param>
+    public void SetCamera2D(CinemachineVirtualCamera camera)
+    {
+        mCamera2D = camera;
+    }
+
+    /// <summary>
+    /// 设置镜头跟随
+    /// </summary>
+    /// <param name="objFollow"></param>
+    public void SetCameraFollowObj(GameObject objFollow)
+    {
+        cameraFollowObj = objFollow;
+        mCamera2D.Follow = cameraFollowObj.transform;
+    }
 
     /// <summary>
     /// 开始控制
@@ -15,7 +34,7 @@ public class BaseControl : BaseMonoBehaviour
     public virtual void StartControl()
     {
         gameObject.SetActive(true);
-        camera2D.Follow = cameraFollowObj.transform;
+        mCamera2D.Follow = cameraFollowObj.transform;
     }
 
     /// <summary>
@@ -32,6 +51,7 @@ public class BaseControl : BaseMonoBehaviour
     public virtual void RestoreControl()
     {
         this.enabled = true;
+        mCamera2D.Follow = cameraFollowObj.transform;
     }
 
     /// <summary>
