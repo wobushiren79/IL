@@ -76,6 +76,7 @@ public class StoryBuilder : BaseMonoBehaviour, StoryInfoManager.CallBack,UIGameT
             return;
         //设置剧情发生坐标
         gameObject.transform.position = new Vector3(storyInfo.position_x, storyInfo.position_y);
+        bool isNext = true;
         foreach (StoryInfoDetailsBean itemData in listData)
         {
             switch (itemData.type)
@@ -92,16 +93,20 @@ public class StoryBuilder : BaseMonoBehaviour, StoryInfoManager.CallBack,UIGameT
                     }
                     break;
                 case 11:
+                    isNext = false;
                     UIGameText uiComponent = (UIGameText)uiManager.OpenUIAndCloseOtherByName(EnumUtil.GetEnumName(UIEnum.GameText));
                     uiComponent.SetCallBack(this);
-                    uiComponent.SetData(TextEnum.Story, itemData.text_mark_id);  
+                    uiComponent.SetData(TextEnum.Story, itemData.text_mark_id);
                     break;
                 case 12:
                     //剧情自动跳转
+                    isNext = false;
                     StartCoroutine(StoryAutoNext(itemData.wait_time));
                     break;
             }
         }
+        if(isNext)
+            NextOrder();
     }
 
     public IEnumerator StoryAutoNext(float waitTime)

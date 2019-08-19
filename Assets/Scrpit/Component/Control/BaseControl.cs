@@ -25,7 +25,8 @@ public class BaseControl : BaseMonoBehaviour
     public void SetCameraFollowObj(GameObject objFollow)
     {
         cameraFollowObj = objFollow;
-        mCamera2D.Follow = cameraFollowObj.transform;
+        if (cameraFollowObj != null)
+            mCamera2D.Follow = cameraFollowObj.transform;
     }
 
     /// <summary>
@@ -34,7 +35,8 @@ public class BaseControl : BaseMonoBehaviour
     public virtual void StartControl()
     {
         gameObject.SetActive(true);
-        mCamera2D.Follow = cameraFollowObj.transform;
+        if (cameraFollowObj != null)
+            mCamera2D.Follow = cameraFollowObj.transform;
     }
 
     /// <summary>

@@ -16,7 +16,7 @@ public class GameDataBean
     public int innLevel;//客栈等级 （天地人1-5星  3 2 1）
     public InnAttributesBean innAttributes;//客栈属性
 
-    public CharacterBean userCharacter;// 老板
+    public CharacterBean userCharacter=new CharacterBean();// 老板
     public List<CharacterBean> workCharacterList = new List<CharacterBean>();//员工
     public InnBuildBean innBuildData;//客栈建筑数据
     public TimeBean gameTime;//游戏时间

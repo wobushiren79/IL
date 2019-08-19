@@ -49,4 +49,19 @@ public class StringUtil
         long[]  listData= TypeConversionUtil.ArrayStrToArrayLong(splitData);
         return listData;
     }
+
+    /// <summary>
+    /// string通过指定字符拆分成数组
+    /// </summary>
+    /// <param name="data"></param>
+    /// <param name="substring"></param>
+    /// <returns></returns>
+    public static float[] SplitBySubstringForArrayFloat(string data, char substring)
+    {
+        if (data == null)
+            return new float[0];
+        string[] splitData = data.Split(substring);
+        float[] listData = TypeConversionUtil.ArrayStrToArrayFloat(splitData);
+        return listData;
+    }
 }

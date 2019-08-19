@@ -10,19 +10,22 @@ public class UIGameText : BaseUIComponent, ITextInfoView
     public Text tvContent;
     public Text tvName;
     public Text tvBehind;
+    public GameObject objNext;
     public CharacterUICpt characterUICpt;
 
     public GameObject objTypeNormal;
     public GameObject objTypeBehind;
 
+    public GameObject objSelectContent;
+    public GameObject objSelectModel;
+
     [Header("数据")]
     public int textOrder = 1;
     public List<TextInfoBean> listTextData;
-
+    public TextInfoBean currentTextData;
     private TextInfoController mTextInfoController;
     private Tweener tweenerText;
     private TextEnum mTextEnum;
-
     private CallBack mCallBack;
 
     private void Awake()
@@ -44,23 +47,34 @@ public class UIGameText : BaseUIComponent, ITextInfoView
     {
         if (Input.GetButtonDown("Interactive_E") || Input.GetButtonDown("Confirm"))
         {
-            if (tweenerText != null && tweenerText.IsPlaying())
+            if (tweenerText != null && tweenerText.IsActive() && tweenerText.IsPlaying())
             {
                 tweenerText.Complete();
             }
             else
             {
-                NextText();
+                //当时选择对话时 不能跳过
+                if (this.currentTextData != null && this.currentTextData.type == 1)
+                {
+
+                }
+                else
+                {
+                    NextText(textOrder + 1);
+                }
             }
         }
     }
 
-    public void NextText()
+    public void NextText(int order)
     {
-        textOrder += 1;
-        TextInfoBean textData = GetTextDataByOrder(textOrder);
-        if (textData != null)
-            ShowText(textData);
+        //如果顺序为0 则在原顺序上+1
+        if (order == 0)
+            order = this.textOrder + 1;
+        this.textOrder = order;
+        List<TextInfoBean> textListData = GetTextDataByOrder(textOrder);
+        if (!CheckUtil.ListIsNull(textListData))
+            ShowText(textListData);
         else
         {
             switch (mTextEnum)
@@ -116,62 +130,106 @@ public class UIGameText : BaseUIComponent, ITextInfoView
     /// </summary>
     /// <param name="order"></param>
     /// <returns></returns>
-    public TextInfoBean GetTextDataByOrder(int order)
+    public List<TextInfoBean> GetTextDataByOrder(int order)
     {
-        TextInfoBean data = null;
+        List<TextInfoBean> listData = new List<TextInfoBean>();
         if (listTextData == null || order > listTextData.Count)
-            return data;
+            return listData;
         foreach (TextInfoBean itemData in listTextData)
         {
             if (itemData.order == order)
             {
-                return itemData;
+                listData.Add(itemData);
             }
         }
-        return data;
+        return listData;
     }
 
     /// <summary>
     /// 展示文本数据
     /// </summary>
     /// <param name="textData"></param>
-    public void ShowText(TextInfoBean textData)
+    public void ShowText(List<TextInfoBean> listTextData)
     {
-        switch (textData.type)
+        //清空选项
+        CptUtil.RemoveChildsByName(objSelectContent.transform, "SelectButton", true);
+        List<TextInfoBean> textListData = GetTextDataByOrder(textOrder);
+        if (CheckUtil.ListIsNull(textListData))
+        {
+            LogUtil.LogError("没有查询到相应文本对话数据");
+            return;
+        }
+        currentTextData = textListData[0];
+        switch (currentTextData.type)
         {
             case 0:
+            case 1:
                 objTypeNormal.SetActive(true);
                 objTypeBehind.SetActive(false);
-                UIGameManager uiGameManager = GetUIMananger<UIGameManager>();
-                if (tvContent != null)
+                //选择对话 特殊处理 增加选择框
+                if (currentTextData.type == 1)
                 {
-                    tvContent.text = "";
-                    string contentDetails = SetContentDetails(textData.content);
-                    tweenerText = tvContent.DOText(contentDetails, textData.content.Length / 8f).SetEase(Ease.OutBack);
+                    objNext.gameObject.SetActive(false);
+                    foreach (TextInfoBean itemData in textListData)
+                    {
+                        //提示文本
+                        if (itemData.select_type == 0)
+                        {
+                            this.currentTextData = itemData;
+                        }
+                        // 选项
+                        else
+                        {
+                            GameObject objSelect = Instantiate(objSelectModel, objSelectContent.transform);
+                            objSelect.SetActive(true);
+                            ItemGameTextSelectCpt itemCpt = objSelect.GetComponent<ItemGameTextSelectCpt>();
+                            itemCpt.SetData(itemData, this);
+                        }
+                    }
                 }
+                else
+                {
+                    objNext.gameObject.SetActive(true);
+                }
+                //正常文本处理
+                UIGameManager uiGameManager = GetUIMananger<UIGameManager>();
                 CharacterBean characterData;
-                if (textData.user_id == 0)
+                if (currentTextData.user_id == 0)
                     characterData = uiGameManager.gameDataManager.gameData.userCharacter;
                 else
-                    characterData = uiGameManager.npcInfoManager.GetCharacterDataById(textData.user_id);
+                    characterData = uiGameManager.npcInfoManager.GetCharacterDataById(currentTextData.user_id);
                 if (characterData == null)
                 {
                     LogUtil.LogError("文本展示没有找到该文本发起者");
                     return;
                 }
+                //名字设置
                 if (tvName != null)
-                    tvName.text = characterData.baseInfo.name;
+                {
+                    if (CheckUtil.StringIsNull(currentTextData.name))
+                        tvName.text = characterData.baseInfo.name;
+                    else
+                        tvName.text = currentTextData.name;
+                }
                 if (characterUICpt != null)
                     characterUICpt.SetCharacterData(characterData.body, characterData.equips);
+                //设置正文内容
+                if (tvContent != null)
+                {
+                    tvContent.text = "";
+                    string contentDetails = SetContentDetails(currentTextData.content);
+                    tweenerText = tvContent.DOText(contentDetails, currentTextData.content.Length / 8f).SetEase(Ease.OutBack);
+                }
                 break;
-            case 1:
+            case 5:
                 objTypeNormal.SetActive(false);
                 objTypeBehind.SetActive(true);
                 if (tvBehind != null)
                 {
-                    tvBehind.text = SetContentDetails(textData.content);
-                    tweenerText = tvBehind.DOFade(0, textData.wait_time).From().OnComplete(delegate {
-                        NextText();
+                    tvBehind.text = SetContentDetails(currentTextData.content);
+                    tweenerText = tvBehind.DOFade(0, currentTextData.wait_time).From().OnComplete(delegate
+                    {
+                        NextText(textOrder + 1);
                     });
                 }
                 break;
@@ -191,6 +249,14 @@ public class UIGameText : BaseUIComponent, ITextInfoView
             userName = uiGameManager.gameDataManager.gameData.userCharacter.baseInfo.name;
         //替换名字
         content = content.Replace("{name}", userName);
+        //替换小名
+        string otherName = "";
+        if (userName.Length > 1)
+        {
+            otherName = userName.Substring(userName.Length - 1, 1);
+            otherName += otherName;
+        }
+        content = content.Replace("{othername}", otherName);
         return content;
     }
 
@@ -198,22 +264,19 @@ public class UIGameText : BaseUIComponent, ITextInfoView
     public void GetTextInfoForLookSuccess(List<TextInfoBean> listData)
     {
         listTextData = listData;
-        TextInfoBean textData = GetTextDataByOrder(textOrder);
-        ShowText(textData);
+        ShowText(listTextData);
     }
 
     public void GetTextInfoForTalkSuccess(List<TextInfoBean> listData)
     {
         listTextData = listData;
-        TextInfoBean textData = GetTextDataByOrder(textOrder);
-        ShowText(textData);
+        ShowText(listTextData);
     }
 
     public void GetTextInfoForStorySuccess(List<TextInfoBean> listData)
     {
         listTextData = listData;
-        TextInfoBean textData = GetTextDataByOrder(textOrder);
-        ShowText(textData);
+        ShowText(listTextData);
     }
 
 

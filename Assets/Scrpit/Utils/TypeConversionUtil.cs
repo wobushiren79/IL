@@ -231,4 +231,27 @@ public class TypeConversionUtil
         }
         return listData;
     }
+
+
+
+    /// <summary>
+    ///  string[] 强转 float[]
+    /// </summary>
+    /// <param name="arrayStr"></param>
+    /// <returns></returns>
+    public static float[] ArrayStrToArrayFloat(string[] arrayStr)
+    {
+        if (arrayStr == null)
+            return null;
+        float[] listData = new float[arrayStr.Length];
+        for (int i = 0; i < arrayStr.Length; i++)
+        {
+            string itemStr = arrayStr[i];
+            if (float.TryParse(itemStr, out float itemFloat))
+            {
+                listData[i] = itemFloat;
+            }
+        }
+        return listData;
+    }
 }

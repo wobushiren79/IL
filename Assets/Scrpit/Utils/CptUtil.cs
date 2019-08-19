@@ -32,6 +32,23 @@ public class CptUtil
     }
 
     /// <summary>
+    /// 根据名字删除所有显示的子物体
+    /// </summary>
+    /// <param name="tf"></param>
+    /// <param name="name"></param>
+    /// <param name="activeSelf"></param>
+    public static void RemoveChildsByName(Transform tf,string name,bool activeSelf)
+    {
+        for (int i = 0; i < tf.childCount; i++)
+        {
+            if (tf.GetChild(i).gameObject.activeSelf == activeSelf&& tf.GetChild(i).gameObject.name.Contains(name))
+            {
+                GameObject.Destroy(tf.GetChild(i).gameObject);
+            }
+        }
+    }
+
+    /// <summary>
     /// 通过名字获取子列表的控件
     /// </summary>
     /// <typeparam name="T"></typeparam>
