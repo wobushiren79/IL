@@ -21,4 +21,6 @@ public class StoryInfoDetailsBean
     public float wait_time;
     //文本ID
     public long text_mark_id;
+    //表情
+    public int expression;
 }

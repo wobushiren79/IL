@@ -3,7 +3,7 @@ using UnityEditor;
 using System.Collections;
 using System.Collections.Generic;
 
-public class StoryBuilder : BaseMonoBehaviour, StoryInfoManager.CallBack,UIGameText.CallBack
+public class StoryBuilder : BaseMonoBehaviour, StoryInfoManager.CallBack, UIGameText.CallBack
 {
     [Header("控件")]
     public GameObject objNpcModle;
@@ -89,10 +89,15 @@ public class StoryBuilder : BaseMonoBehaviour, StoryInfoManager.CallBack,UIGameT
                     else
                     {
                         BaseNpcAI npcAI = objNpc.GetComponent<BaseNpcAI>();
-                        npcAI.characterMoveCpt.SetDestinationLocal(transform,new Vector3(itemData.npc_position_x,itemData.npc_position_y));
+                        npcAI.characterMoveCpt.SetDestinationLocal(transform, new Vector3(itemData.npc_position_x, itemData.npc_position_y));
                     }
                     break;
+                case 2:
+                    //表情
+                    SetCharacterExpression(itemData.npc_num, itemData.expression);
+                    break;
                 case 11:
+                    //进入对话
                     isNext = false;
                     UIGameText uiComponent = (UIGameText)uiManager.OpenUIAndCloseOtherByName(EnumUtil.GetEnumName(UIEnum.GameText));
                     uiComponent.SetCallBack(this);
@@ -105,7 +110,7 @@ public class StoryBuilder : BaseMonoBehaviour, StoryInfoManager.CallBack,UIGameT
                     break;
             }
         }
-        if(isNext)
+        if (isNext)
             NextOrder();
     }
 
@@ -113,7 +118,23 @@ public class StoryBuilder : BaseMonoBehaviour, StoryInfoManager.CallBack,UIGameT
     {
         yield return new WaitForSeconds(waitTime);
         NextOrder();
-    } 
+    }
+
+    /// <summary>
+    /// 设置人物表情
+    /// </summary>
+    /// <param name="npcNum"></param>
+    /// <param name="expression"></param>
+    public void SetCharacterExpression(int npcNum,int expression)
+    {
+        GameObject objItem = GetNpcByNpcNum(npcNum);
+        if (objItem != null)
+        {
+            CharacterExpressionCpt characterExpression = objItem.GetComponent<CharacterExpressionCpt>();
+            if (characterExpression != null)
+                characterExpression.SetExpression(expression);
+        }
+    }
 
     /// <summary>
     /// 通过Npc编号获取NPC
@@ -149,9 +170,9 @@ public class StoryBuilder : BaseMonoBehaviour, StoryInfoManager.CallBack,UIGameT
         CharacterBean characterData;
         if (itemData.npc_id == 0)
         {
-           ((ControlForStoryCpt)controlHandler.GetControl()).SetCameraFollowObj(objNpc);
-           characterData = gameDataManager.gameData.userCharacter;  
-        }  
+            ((ControlForStoryCpt)controlHandler.GetControl()).SetCameraFollowObj(objNpc);
+            characterData = gameDataManager.gameData.userCharacter;
+        }
         else
             characterData = npcInfoManager.GetCharacterDataById(itemData.npc_id);
 
@@ -186,7 +207,7 @@ public class StoryBuilder : BaseMonoBehaviour, StoryInfoManager.CallBack,UIGameT
             ClearStoryScene();
         }
         else
-        CreateStoryScene(listOrderData);
+            CreateStoryScene(listOrderData);
     }
 
     #region 文本结束回调

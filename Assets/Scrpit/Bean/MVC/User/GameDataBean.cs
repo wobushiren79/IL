@@ -26,6 +26,8 @@ public class GameDataBean
     public List<ItemBean> itemsList = new List<ItemBean>();//所拥有的装备
     public List<MenuOwnBean> menuList = new List<MenuOwnBean>();//所拥有的菜单
 
+    public List<CharacterFavorabilityBean> characterFavorabilityList = new List<CharacterFavorabilityBean>();//角色好感度
+
     public long ingOilsalt;//油盐
     public long ingMeat;//肉类
     public long ingRiverfresh;//河鲜
@@ -36,6 +38,33 @@ public class GameDataBean
     public long ingFlour;//面粉
 
     public int workerNumberLimit = 5;//员工人员招聘上限
+
+    /// <summary>
+    /// 增加好感度
+    /// </summary>
+    /// <param name="characterId"></param>
+    /// <param name="favorability"></param>
+    public void AddFavorability(long characterId,int favorability)
+    {
+        if (characterFavorabilityList == null)
+        {
+            characterFavorabilityList = new List<CharacterFavorabilityBean>();
+        }
+        bool hasData = false;
+        foreach (CharacterFavorabilityBean itemData in characterFavorabilityList)
+        {
+            if(itemData.characterId== characterId)
+            {
+                hasData = true;
+                itemData.favorability += favorability;
+            }
+        }
+        if (!hasData)
+        {
+            CharacterFavorabilityBean characterFavorability = new CharacterFavorabilityBean(characterId, favorability);
+            characterFavorabilityList.Add(characterFavorability);
+        }
+    }
 
     /// <summary>
     /// 获取成就数据

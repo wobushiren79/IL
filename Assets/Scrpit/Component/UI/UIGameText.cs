@@ -23,6 +23,7 @@ public class UIGameText : BaseUIComponent, ITextInfoView
     public int textOrder = 1;
     public List<TextInfoBean> listTextData;
     public TextInfoBean currentTextData;
+
     private TextInfoController mTextInfoController;
     private Tweener tweenerText;
     private TextEnum mTextEnum;
@@ -71,6 +72,11 @@ public class UIGameText : BaseUIComponent, ITextInfoView
         //如果顺序为0 则在原顺序上+1
         if (order == 0)
             order = this.textOrder + 1;
+        if (currentTextData != null && currentTextData.next_order != 0)
+        {
+            //指定顺序的话就加载指定数序
+            order = currentTextData.next_order;
+        }
         this.textOrder = order;
         List<TextInfoBean> textListData = GetTextDataByOrder(textOrder);
         if (!CheckUtil.ListIsNull(textListData))
@@ -162,6 +168,7 @@ public class UIGameText : BaseUIComponent, ITextInfoView
         currentTextData = textListData[0];
         switch (currentTextData.type)
         {
+            //对话和选择对话
             case 0:
             case 1:
                 objTypeNormal.SetActive(true);
@@ -193,6 +200,7 @@ public class UIGameText : BaseUIComponent, ITextInfoView
                 }
                 //正常文本处理
                 UIGameManager uiGameManager = GetUIMananger<UIGameManager>();
+                //角色图标设置
                 CharacterBean characterData;
                 if (currentTextData.user_id == 0)
                     characterData = uiGameManager.gameDataManager.gameData.userCharacter;
@@ -207,7 +215,9 @@ public class UIGameText : BaseUIComponent, ITextInfoView
                 if (tvName != null)
                 {
                     if (CheckUtil.StringIsNull(currentTextData.name))
+                    {
                         tvName.text = characterData.baseInfo.name;
+                    }
                     else
                         tvName.text = currentTextData.name;
                 }
@@ -222,6 +232,7 @@ public class UIGameText : BaseUIComponent, ITextInfoView
                 }
                 break;
             case 5:
+                //黑幕
                 objTypeNormal.SetActive(false);
                 objTypeBehind.SetActive(true);
                 if (tvBehind != null)
@@ -234,6 +245,22 @@ public class UIGameText : BaseUIComponent, ITextInfoView
                 }
                 break;
         }
+        //添加好感度
+        if (currentTextData.add_favorability!=0) {
+            AddFavorability(currentTextData.user_id, currentTextData.add_favorability);
+        }
+    }
+
+    /// <summary>
+    /// 增加好感
+    /// </summary>
+    /// <param name="characterId"></param>
+    /// <param name="favorablility"></param>
+    public void AddFavorability(long characterId,int favorablility)
+    {
+        UIGameManager uiGameManager= GetUIMananger<UIGameManager>();
+        uiGameManager.gameDataManager.gameData.AddFavorability(characterId, favorablility);
+        LogUtil.Log("add favorability");
     }
 
     /// <summary>
@@ -245,7 +272,8 @@ public class UIGameText : BaseUIComponent, ITextInfoView
     {
         UIGameManager uiGameManager = GetUIMananger<UIGameManager>();
         string userName = "";
-        if (uiGameManager.gameDataManager.gameData.userCharacter != null)
+        if (uiGameManager.gameDataManager.gameData.userCharacter != null 
+            && uiGameManager.gameDataManager.gameData.userCharacter.baseInfo.name!=null)
             userName = uiGameManager.gameDataManager.gameData.userCharacter.baseInfo.name;
         //替换名字
         content = content.Replace("{name}", userName);

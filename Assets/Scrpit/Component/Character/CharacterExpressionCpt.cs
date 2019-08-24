@@ -7,10 +7,21 @@ public class CharacterExpressionCpt : BaseMonoBehaviour
 {
     public enum CharacterExpressionEnum
     {
-        Love,
+        Love=1,
+        Wordless,
+        Mad,
+        Shame,
+        Surprise,
+        Fret,
     }
+
     [Header("表情图标")]
     public Sprite spLove;
+    public Sprite spWordlesse;
+    public Sprite spMad;
+    public Sprite spShame;
+    public Sprite spSurprise;
+    public Sprite spFret;
 
     [Header("控件")]
     public SpriteRenderer spExpression;
@@ -24,6 +35,11 @@ public class CharacterExpressionCpt : BaseMonoBehaviour
        
     }
 
+    public void SetExpression(int expression)
+    {
+        SetExpression((CharacterExpressionEnum)expression);
+    }
+
     public void SetExpression(CharacterExpressionEnum expression)
     {
         if (spExpression == null)
@@ -33,6 +49,21 @@ public class CharacterExpressionCpt : BaseMonoBehaviour
         {
             case CharacterExpressionEnum.Love:
                 spIcon = spLove;
+                break;
+            case CharacterExpressionEnum.Wordless:
+                spIcon = spWordlesse;
+                break;
+            case CharacterExpressionEnum.Mad:
+                spIcon = spMad;
+                break;
+            case CharacterExpressionEnum.Shame:
+                spIcon = spShame;
+                break;
+            case CharacterExpressionEnum.Surprise:
+                spIcon = spSurprise;
+                break;
+            case CharacterExpressionEnum.Fret:
+                spIcon = spFret;
                 break;
         }
         if (spIcon == null)

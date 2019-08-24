@@ -37,6 +37,7 @@ public class NpcInfoBean : BaseBean
         CharacterBean characterData = new CharacterBean();
 
         characterData.baseInfo.characterId = npcInfo.id + "";
+        characterData.baseInfo.name = npcInfo.name;
 
         characterData.body = new CharacterBodyBean();
         characterData.body.hair = npcInfo.hair_id;
