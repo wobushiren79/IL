@@ -23,7 +23,7 @@ public class ItemGameTextSelectCpt : BaseMonoBehaviour
     /// 设置数据
     /// </summary>
     /// <param name="itemData"></param>
-    public void SetData(TextInfoBean itemData,UIGameText uiGameText)
+    public void SetData(TextInfoBean itemData, UIGameText uiGameText)
     {
         this.textData = itemData;
         this.mUIGameText = uiGameText;
@@ -36,8 +36,11 @@ public class ItemGameTextSelectCpt : BaseMonoBehaviour
     /// <param name="content"></param>
     public void SetText(string content)
     {
-        if (tvContent != null)
-            tvContent.text = content;
+        if (tvContent != null && mUIGameText != null)
+        {
+            string contentDetails = mUIGameText.SetContentDetails(content);
+            tvContent.text = contentDetails;
+        }
     }
 
     public void Submit()

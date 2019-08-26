@@ -10,6 +10,7 @@ public class UIGameText : BaseUIComponent, ITextInfoView
     public Text tvContent;
     public Text tvName;
     public Text tvBehind;
+    public Image ivFavorability;
     public GameObject objNext;
     public CharacterUICpt characterUICpt;
 
@@ -260,7 +261,17 @@ public class UIGameText : BaseUIComponent, ITextInfoView
     {
         UIGameManager uiGameManager= GetUIMananger<UIGameManager>();
         uiGameManager.gameDataManager.gameData.AddFavorability(characterId, favorablility);
-        LogUtil.Log("add favorability");
+        //好感动画
+        if (ivFavorability != null)
+        {
+            ivFavorability.transform.localScale = new Vector3(1,1,1);
+            ivFavorability.transform.DOComplete();
+            ivFavorability.gameObject.SetActive(true);
+            ivFavorability.transform.DOScale(new Vector3(0,0,0),1).From().SetEase(Ease.OutBack).OnComplete(delegate() {
+                ivFavorability.gameObject.SetActive(false);
+            });
+            ivFavorability.DOColor(new Color(1, 1, 1, 0), 1).From();
+        }
     }
 
     /// <summary>
@@ -268,21 +279,26 @@ public class UIGameText : BaseUIComponent, ITextInfoView
     /// </summary>
     /// <param name="content"></param>
     /// <returns></returns>
-    private string SetContentDetails(string content)
+    public string SetContentDetails(string content)
     {
         UIGameManager uiGameManager = GetUIMananger<UIGameManager>();
         string userName = "";
+        int sex = 1;
         if (uiGameManager.gameDataManager.gameData.userCharacter != null 
             && uiGameManager.gameDataManager.gameData.userCharacter.baseInfo.name!=null)
             userName = uiGameManager.gameDataManager.gameData.userCharacter.baseInfo.name;
-        //替换名字
-        content = content.Replace("{name}", userName);
+        if (uiGameManager.gameDataManager.gameData.userCharacter != null)
+            sex = uiGameManager.gameDataManager.gameData.userCharacter.body.sex;
+            //替换名字
+            content = content.Replace("{name}", userName);
         //替换小名
         string otherName = "";
         if (userName.Length > 1)
         {
             otherName = userName.Substring(userName.Length - 1, 1);
-            otherName += otherName;
+            //男的叫哥哥  女的叫姐姐
+            string otherStr = sex == 1 ? GameCommonInfo.GetUITextById(99001) : GameCommonInfo.GetUITextById(99002);
+            otherName += otherStr;
         }
         content = content.Replace("{othername}", otherName);
         return content;
