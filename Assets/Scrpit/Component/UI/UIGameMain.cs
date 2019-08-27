@@ -44,7 +44,7 @@ public class UIGameMain : BaseUIComponent, DialogView.IDialogCallBack
         if (btSleep != null)
             btSleep.onClick.AddListener(EndDay);
 
-        InfoPromptPopupShow infoPromptPopup= GetUIMananger<UIGameManager>().infoPromptPopup;
+        InfoPromptPopupShow infoPromptPopup = GetUIMananger<UIGameManager>().infoPromptPopup;
         if (popupAesthetics != null)
             popupAesthetics.SetPopupShowView(infoPromptPopup);
         if (popupPraise != null)
@@ -103,12 +103,12 @@ public class UIGameMain : BaseUIComponent, DialogView.IDialogCallBack
         if (tvRichness != null)
             tvRichness.text = innAttributes.richness + "";
 
-        string innLevelStr= GetUIMananger<UIGameManager>().gameDataManager.gameData.GetInnLevel(out int innLevelTitle,out int innLevelStar);
+        string innLevelStr = GetUIMananger<UIGameManager>().gameDataManager.gameData.GetInnLevel(out int innLevelTitle, out int innLevelStar);
         if (popupInnLevel != null)
         {
             popupInnLevel.SetContent(GameCommonInfo.GetUITextById(2006) + " " + innLevelStr);
         }
-         
+
         if (ivInnLevel != null)
         {
             Sprite spIcon = GetUIMananger<UIGameManager>().gameItemsManager.GetItemsSpriteByName("inn_level_" + innLevelTitle + "_" + (innLevelStar - 1));
@@ -159,9 +159,23 @@ public class UIGameMain : BaseUIComponent, DialogView.IDialogCallBack
     public void Submit(DialogView dialogView)
     {
         InnHandler innHandler = GetUIMananger<UIGameManager>().innHandler;
+        GameTimeHandler gameTimeHandler=  GetUIMananger<UIGameManager>().gameTimeHandler;
+
         GetUIMananger<UIGameManager>().gameTimeHandler.isStopTime = true;
-        uiManager.OpenUIAndCloseOtherByName(EnumUtil.GetEnumName(UIEnum.GameSettle));
-        innHandler.CloseInn();
+        if (gameTimeHandler.dayStauts == GameTimeHandler.DayEnum.Work)
+        {
+            //如果是工作状态结束一天 则进入结算画面
+            uiManager.OpenUIAndCloseOtherByName(EnumUtil.GetEnumName(UIEnum.GameSettle));
+        }
+        else if(gameTimeHandler.dayStauts == GameTimeHandler.DayEnum.Rest)
+        {
+            //如果是休息状态结束一天 则直接进入下一天画面
+            uiManager.OpenUIAndCloseOtherByName(EnumUtil.GetEnumName(UIEnum.GameDate));
+        }
+
+        //关闭店面
+        if (innHandler != null)
+            innHandler.CloseInn();
     }
 
     public void Cancel(DialogView dialogView)

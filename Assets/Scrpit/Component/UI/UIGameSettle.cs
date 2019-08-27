@@ -7,7 +7,6 @@ using System.Collections.Generic;
 public class UIGameSettle : BaseUIComponent
 {
     public Button btSubmit;
-    public Button btCancel;
 
     //收入支出
     public Text tvIncomeS;
@@ -31,12 +30,11 @@ public class UIGameSettle : BaseUIComponent
     public Sprite spIconFlour;
 
     private float animDelay;
+
     private void Start()
     {
         if (btSubmit != null)
-            btSubmit.onClick.AddListener(OpenInn);
-        if (btCancel != null)
-            btCancel.onClick.AddListener(CloseInn);
+            btSubmit.onClick.AddListener(OpenDateUI);
     }
 
     public override void OpenUI()
@@ -104,19 +102,9 @@ public class UIGameSettle : BaseUIComponent
         animDelay += 0.1f;
     }
 
-    public void OpenInn()
+    public void OpenDateUI()
     {
-        uiManager.OpenUIAndCloseOtherByName(EnumUtil.GetEnumName(UIEnum.GameAttendance));
+        uiManager.OpenUIAndCloseOtherByName(EnumUtil.GetEnumName(UIEnum.GameDate));
     }
 
-    public void CloseInn()
-    {
-        GameTimeHandler gameTimeHandler = GetUIMananger<UIGameManager>().gameTimeHandler;
-        ControlHandler controlHandler = GetUIMananger<UIGameManager>().controlHandler;
-
-        gameTimeHandler.dayStauts = GameTimeHandler.DayEnum.Rest;
-        gameTimeHandler.StartNewDay(true);
-        uiManager.OpenUIAndCloseOtherByName(EnumUtil.GetEnumName(UIEnum.GameMain));
-        controlHandler.StartControl(ControlHandler.ControlEnum.Normal);
-    }
 }

@@ -5,6 +5,7 @@ using System.Collections;
 
 public class SceneGameInnInit : BaseManager
 {
+    public UIGameManager uiGameManager;
     public GameItemsManager gameItemsManager;
     public GameDataManager gameDataManager;
     public NpcInfoManager npcInfoManager;
@@ -63,6 +64,7 @@ public class SceneGameInnInit : BaseManager
 
         StartCoroutine(BuildNavMesh());
 
+        uiGameManager.OpenUIAndCloseOtherByName(EnumUtil.GetEnumName(UIEnum.GameDate));
     }
 
     /// <summary>

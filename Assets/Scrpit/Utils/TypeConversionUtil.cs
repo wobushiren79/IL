@@ -254,4 +254,20 @@ public class TypeConversionUtil
         }
         return listData;
     }
+
+    /// <summary>
+    /// 数字转中文
+    /// </summary>
+    /// <param name="number"></param>
+    /// <returns></returns>
+    public static string NumberToChinese(int number)
+    {
+        if (number >= 10 || number < 0)
+        {
+            LogUtil.LogError("阿拉伯数字转中文数字失败");
+            return "";
+        }
+        string[] chineseNumberList = new string[10] { "〇","一", "二", "三", "四", "五", "六", "七", "八", "九" };
+        return chineseNumberList[number];
+    }
 }

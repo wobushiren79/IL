@@ -27,5 +27,10 @@ public class TimeBean
         this.second = second;
     }
 
-
+    public void SetTimeForYMD(int year,int month,int day)
+    {
+        this.year = year;
+        this.month = month;
+        this.day = day;
+    }
 }

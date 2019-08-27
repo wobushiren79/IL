@@ -16,10 +16,10 @@ public class GameDataBean
     public int innLevel;//客栈等级 （天地人1-5星  3 2 1）
     public InnAttributesBean innAttributes;//客栈属性
 
-    public CharacterBean userCharacter=new CharacterBean();// 老板
+    public CharacterBean userCharacter = new CharacterBean();// 老板
     public List<CharacterBean> workCharacterList = new List<CharacterBean>();//员工
     public InnBuildBean innBuildData;//客栈建筑数据
-    public TimeBean gameTime;//游戏时间
+    public TimeBean gameTime = new TimeBean();//游戏时间
     public UserAchievementBean userAchievement;
 
     public List<ItemBean> buildList = new List<ItemBean>();//所拥有的建筑材料
@@ -44,7 +44,7 @@ public class GameDataBean
     /// </summary>
     /// <param name="characterId"></param>
     /// <param name="favorability"></param>
-    public void AddFavorability(long characterId,int favorability)
+    public void AddFavorability(long characterId, int favorability)
     {
         if (characterFavorabilityList == null)
         {
@@ -53,7 +53,7 @@ public class GameDataBean
         bool hasData = false;
         foreach (CharacterFavorabilityBean itemData in characterFavorabilityList)
         {
-            if(itemData.characterId== characterId)
+            if (itemData.characterId == characterId)
             {
                 hasData = true;
                 itemData.favorability += favorability;
