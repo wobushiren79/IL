@@ -142,7 +142,8 @@ public class BaseUIManager : BaseMonoBehaviour
             }
             else
             {
-                itemUI.CloseUI();
+                if (itemUI.gameObject.activeSelf)
+                    itemUI.CloseUI();
             }
         }
         return uiComponent;
