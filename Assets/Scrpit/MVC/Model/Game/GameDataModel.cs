@@ -69,18 +69,24 @@ public class GameDataModel : BaseMVCModel
         gameData.buildList.Add(new ItemBean(50001, 1));
 
         //添加一个员工
-        CharacterBean worker = new CharacterBean();
-        CharacterBean worker2 = new CharacterBean();
-        worker.baseInfo.name = "张三";
-        worker2.baseInfo.name = "李四";
-        gameData.workCharacterList.Add(worker);
-        gameData.workCharacterList.Add(worker2);
+        //CharacterBean worker = new CharacterBean();
+        //CharacterBean worker2 = new CharacterBean();
+        //worker.baseInfo.name = "张三";
+        //worker2.baseInfo.name = "李四";
+        //gameData.workCharacterList.Add(worker);
+        //gameData.workCharacterList.Add(worker2);
 
         //添加菜单
         gameData.menuList.Add(new MenuOwnBean(1));
         gameData.menuList.Add(new MenuOwnBean(10001));
-        gameData.ingOilsalt=50;
+        gameData.ingOilsalt = 50;
         gameData.ingVegetables = 50;
+
+        //设置时间
+        TimeBean gameTime = new TimeBean();
+        gameTime.SetTimeForYMD(1, 1, 0);
+        gameData.gameTime = gameTime;
+
         SetGameDataByUserId(userId, gameData);
     }
 

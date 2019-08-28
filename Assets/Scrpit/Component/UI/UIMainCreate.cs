@@ -43,12 +43,15 @@ public class UIMainCreate : BaseUIComponent, IRadioGroupCallBack, ColorView.Call
     public List<IconBean> listSelectHair;
     public List<IconBean> listSelectEye;
     public List<IconBean> listSelectMouth;
+
+    public List<ItemsInfoBean> listSelectHat;
+    public List<ItemsInfoBean> listSelectClothes;
+    public List<ItemsInfoBean> listSelectShoes;
+
     private void Start()
     {
-
-        GameItemsManager gameItemsManager = GetUIMananger<UIGameManager>().gameItemsManager;
-        CharacterBodyManager characterBodyManager= GetUIMananger<UIGameManager>().characterBodyManager;
         InitData();
+
         if (btBack != null)
             btBack.onClick.AddListener(OpenStartUI);
         if (btCreate != null)
@@ -68,32 +71,29 @@ public class UIMainCreate : BaseUIComponent, IRadioGroupCallBack, ColorView.Call
             colorEye.SetCallBack(this);
         if (selectEye != null)
         {
-            selectEye.SetSelectNumber(characterBodyManager.listIconBodyEye.Count);
+            selectEye.SetSelectNumber(listSelectEye.Count);
             selectEye.SetCallBack(this);
         }
         if (colorMouth != null)
             colorMouth.SetCallBack(this);
         if (selectMouth != null)
         {
-            selectMouth.SetSelectNumber(characterBodyManager.listIconBodyMouth.Count);
+            selectMouth.SetSelectNumber(listSelectMouth.Count);
             selectMouth.SetCallBack(this);
         }
-
         if (selectHat != null)
         {
-            selectHat.SetSelectNumber(gameItemsManager.GetHatList().Count + 1);
+            selectHat.SetSelectNumber(listSelectHat.Count);
             selectHat.SetCallBack(this);
         }
-
         if (selectClothes != null)
         {
-            selectClothes.SetSelectNumber(gameItemsManager.GetClothesList().Count + 1);
+            selectClothes.SetSelectNumber(listSelectClothes.Count);
             selectClothes.SetCallBack(this);
         }
-
         if (selectShoes != null)
         {
-            selectShoes.SetSelectNumber(gameItemsManager.GetShoesList().Count + 1);
+            selectShoes.SetSelectNumber(listSelectShoes.Count);
             selectShoes.SetCallBack(this);
         }
     }
@@ -101,15 +101,26 @@ public class UIMainCreate : BaseUIComponent, IRadioGroupCallBack, ColorView.Call
     public void InitData()
     {
         CharacterBodyManager characterBodyManager = GetUIMananger<UIGameManager>().characterBodyManager;
+        GameItemsManager gameItemsManager = GetUIMananger<UIGameManager>().gameItemsManager;
+
         //初始化可选择头型数据
         listSelectHair = TypeConversionUtil.IconBeanDictionaryToList(characterBodyManager.listIconBodyHair);
         ChangeSelectPosition(selectHair, 0);
         //初始化可选择眼睛
-        listSelectEye= TypeConversionUtil.IconBeanDictionaryToList(characterBodyManager.listIconBodyEye);
+        listSelectEye = TypeConversionUtil.IconBeanDictionaryToList(characterBodyManager.listIconBodyEye);
         ChangeSelectPosition(selectEye, 0);
         //初始化可选择嘴巴
-        listSelectMouth= TypeConversionUtil.IconBeanDictionaryToList(characterBodyManager.listIconBodyMouth);
+        listSelectMouth = TypeConversionUtil.IconBeanDictionaryToList(characterBodyManager.listIconBodyMouth);
         ChangeSelectPosition(selectMouth, 0);
+        //初始化帽子
+        listSelectHat = gameItemsManager.GetItemsById(new long[] { 100001 });
+        listSelectHat.Insert(0, new ItemsInfoBean());
+        //初始化衣服
+        listSelectClothes = gameItemsManager.GetItemsById(new long[] { 200001 });
+        listSelectClothes.Insert(0, new ItemsInfoBean());
+        //初始化鞋子
+        listSelectShoes = gameItemsManager.GetItemsById(new long[] { 300001 });
+        listSelectShoes.Insert(0, new ItemsInfoBean());
     }
 
     /// <summary>
@@ -208,28 +219,19 @@ public class UIMainCreate : BaseUIComponent, IRadioGroupCallBack, ColorView.Call
         }
         else if (selectView == selectMouth)
         {
-          characterBodyCpt.SetMouth(listSelectMouth[position].key);
+            characterBodyCpt.SetMouth(listSelectMouth[position].key);
         }
         else if (selectView == selectHat)
         {
-            if (position == 0)
-                characterDressCpt.SetHat(null);
-            else
-                characterDressCpt.SetHat(gameItemsManager.GetHatList()[position - 1]);
+            characterDressCpt.SetHat(listSelectHat[position]);
         }
         else if (selectView == selectClothes)
         {
-            if (position == 0)
-                characterDressCpt.SetClothes(null);
-            else
-                characterDressCpt.SetClothes(gameItemsManager.GetClothesList()[position-1]);
+            characterDressCpt.SetClothes(listSelectClothes[position]);
         }
         else if (selectView == selectShoes)
         {
-            if (position == 0)
-                characterDressCpt.SetShoes(null);
-            else
-                characterDressCpt.SetShoes(gameItemsManager.GetShoesList()[position - 1]);
+            characterDressCpt.SetShoes(listSelectShoes[position]);
         }
     }
     #endregion

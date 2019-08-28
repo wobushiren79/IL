@@ -2,7 +2,7 @@
 using UnityEditor;
 using System.Collections.Generic;
 
-public class StoryInfoManager : BaseManager,IStoryInfoView
+public class StoryInfoManager : BaseManager, IStoryInfoView
 {
     public StoryInfoController storyInfoController;
     public Dictionary<long, StoryInfoBean> mapStory;
@@ -21,7 +21,7 @@ public class StoryInfoManager : BaseManager,IStoryInfoView
     /// <returns></returns>
     public StoryInfoBean GetStoryInfoDataById(long id)
     {
-       return GetDataById(id, mapStory);
+        return GetDataById(id, mapStory);
     }
 
     public void GetStoryDetailsById(long id, CallBack callBack)
@@ -33,7 +33,7 @@ public class StoryInfoManager : BaseManager,IStoryInfoView
     /// <summary>
     /// 检测故事是否触发
     /// </summary>
-    public StoryInfoBean CheckStory()
+    public StoryInfoBean CheckStory(GameDataBean gameData)
     {
         if (mapStory == null)
             return null;
@@ -41,10 +41,33 @@ public class StoryInfoManager : BaseManager,IStoryInfoView
         {
             StoryInfoBean storyInfo = mapStory[key];
             //TODO 检测条件
-            if (key == 1)
+            //判断该事件是否可重复触发
+            if (storyInfo.trigger_loop == 0)
             {
-                storyInfoController.GetStoryDetailsById(key);
+                //如果已经触发过该事件
+               if(gameData.CheckTriggeredEvent(storyInfo.id))
+                    continue;
             }
+            //是否触发
+            if (storyInfo.trigger_date_year != 0)
+            {
+                //年是否满足触发条件
+                if (storyInfo.trigger_date_year != gameData.gameTime.year)
+                    continue;
+            }
+            if (storyInfo.trigger_date_month != 0)
+            {
+                //月是否满足触发条件
+                if (storyInfo.trigger_date_month != gameData.gameTime.month)
+                    continue;
+            }
+            if (storyInfo.trigger_date_day != 0)
+            {
+                //日是否满足触发条件
+                if (storyInfo.trigger_date_day != gameData.gameTime.day)
+                    continue;
+            }
+            storyInfoController.GetStoryDetailsById(key);
             return storyInfo;
         }
         return null;

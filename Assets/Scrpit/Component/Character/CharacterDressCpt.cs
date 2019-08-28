@@ -20,7 +20,7 @@ public class CharacterDressCpt : BaseMonoBehaviour
 
     public CharacterEquipBean GetCharacterEquipData()
     {
-        if(characterEquipData==null)
+        if (characterEquipData == null)
             characterEquipData = new CharacterEquipBean();
         return characterEquipData;
     }
@@ -32,9 +32,9 @@ public class CharacterDressCpt : BaseMonoBehaviour
         Sprite hatSP;
         if (itemsInfo == null)
         {
-            sprHair.color = new Color(sprHair.color.r, sprHair.color.g, sprHair.color.b,1);
+            sprHair.color = new Color(sprHair.color.r, sprHair.color.g, sprHair.color.b, 1);
             hatSP = null;
-        }  
+        }
         else
         {
             sprHair.color = new Color(sprHair.color.r, sprHair.color.g, sprHair.color.b, 0);
@@ -51,23 +51,24 @@ public class CharacterDressCpt : BaseMonoBehaviour
     {
         if (sprClothes == null)
             return;
-        Sprite clothesSP;
+        Sprite clothesSP = null;
         if (itemsInfo == null)
             clothesSP = null;
         else
         {
-            clothesSP = characterDressManager.GetClothesSpriteByName(itemsInfo.icon_key);
+            if (itemsInfo.id != 0)
+                clothesSP = characterDressManager.GetClothesSpriteByName(itemsInfo.icon_key);
             //设置装备数据
             if (characterEquipData == null)
                 characterEquipData = new CharacterEquipBean();
             characterEquipData.clothesId = itemsInfo.id;
-        }    
+        }
         sprClothes.sprite = clothesSP;
     }
 
     public void SetShoes(ItemsInfoBean itemsInfo)
     {
-        if (sprShoesLeft == null|| sprShoesRight==null)
+        if (sprShoesLeft == null || sprShoesRight == null)
             return;
         Sprite shoesSP;
         if (itemsInfo == null)

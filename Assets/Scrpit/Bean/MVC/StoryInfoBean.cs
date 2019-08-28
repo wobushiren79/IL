@@ -10,4 +10,11 @@ public class StoryInfoBean : BaseBean
     //事件发生位置
     public float position_x;
     public float position_y;
+
+    //该事件是否可以反复触发
+    public int trigger_loop;
+    //事件触发条件
+    public int trigger_date_year;
+    public int trigger_date_month;
+    public int trigger_date_day;
 }

@@ -125,7 +125,7 @@ public class StoryBuilder : BaseMonoBehaviour, StoryInfoManager.CallBack, UIGame
     /// </summary>
     /// <param name="npcNum"></param>
     /// <param name="expression"></param>
-    public void SetCharacterExpression(int npcNum,int expression)
+    public void SetCharacterExpression(int npcNum, int expression)
     {
         GameObject objItem = GetNpcByNpcNum(npcNum);
         if (objItem != null)
@@ -203,8 +203,13 @@ public class StoryBuilder : BaseMonoBehaviour, StoryInfoManager.CallBack, UIGame
         {
             //没有剧情。完结
             EventHandler.Instance.ChangeEventStatus(false);
-            uiManager.OpenUIAndCloseOtherByName(EnumUtil.GetEnumName(UIEnum.GameMain));
+            //清理故事场景
             ClearStoryScene();
+            //保存数据
+            if (gameDataManager != null && storyInfo != null)
+                gameDataManager.gameData.AddTraggeredEvent(storyInfo.id);
+            //打开主界面UI
+            uiManager.OpenUIAndCloseOtherByName(EnumUtil.GetEnumName(UIEnum.GameMain));
         }
         else
             CreateStoryScene(listOrderData);

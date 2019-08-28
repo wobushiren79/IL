@@ -14,10 +14,6 @@ public class GameTimeHandler : BaseMonoBehaviour
     public BaseUIManager uiManager;
     public InnHandler innHandler;
 
-    public int year = 1;
-    public int month = 1;
-    public int day = 1;
-
     public float hours;
     public float min;
     public DayEnum dayStauts = DayEnum.Rest;
@@ -28,17 +24,6 @@ public class GameTimeHandler : BaseMonoBehaviour
     public bool isStopTime = true;
 
     public float timeSclae = 1;
-
-    private void Awake()
-    {
-        if (gameDataManager != null)
-        {
-            TimeBean timeData= gameDataManager.gameData.gameTime;
-            year = timeData.year;
-            month = timeData.month;
-            day = timeData.day;
-        }
-    }
 
     private void Start()
     {
@@ -58,25 +43,22 @@ public class GameTimeHandler : BaseMonoBehaviour
     /// </summary>
     public void GoToNextDay(int nextDay)
     {
+        TimeBean timeData = gameDataManager.gameData.gameTime;
+
         for (int i = 0; i < nextDay; i++)
         {
-            day += 1;
-            if (day > 30)
+            timeData.day += 1;
+            if (timeData.day > 30)
             {
-                day = 1;
-                month += 1;
+                timeData.day = 1;
+                timeData.month += 1;
             }
-            if (month > 12)
+            if (timeData.month > 12)
             {
-                month = 1;
-                year += 1;
+                timeData.month = 1;
+                timeData.year += 1;
             }
         }
-        //记录时间
-        if (gameDataManager != null)
-        {
-            gameDataManager.gameData.gameTime.SetTimeForYMD(year,month,day);
-        }  
     }
 
 
@@ -138,10 +120,9 @@ public class GameTimeHandler : BaseMonoBehaviour
     /// <param name="day"></param>
     public void GetTimeForDate(out int year, out int month, out int day)
     {
-        year = this.year;
-        month = this.month;
-        day = this.day;
+        TimeBean timeData = gameDataManager.gameData.gameTime;
+        year = timeData.year;
+        month = timeData.month;
+        day = timeData.day;
     }
-
-
 }

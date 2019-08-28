@@ -97,7 +97,7 @@ LightmapSettings:
     m_ExportTrainingData: 0
     m_TrainingDataDestination: TrainingData
   m_LightingDataAsset: {fileID: 0}
-  m_UseShadowmask: 0
+  m_UseShadowmask: 1
 --- !u!196 &4
 NavMeshSettings:
   serializedVersion: 2
@@ -2289,17 +2289,17 @@ PrefabInstance:
     - target: {fileID: 1493773234539546852, guid: 61afd9858eb339d4bbbecb6c1c7f54d6,
         type: 3}
       propertyPath: m_AnchorMin.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1493773234539546852, guid: 61afd9858eb339d4bbbecb6c1c7f54d6,
         type: 3}
       propertyPath: m_AnchorMax.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1493773234539546852, guid: 61afd9858eb339d4bbbecb6c1c7f54d6,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -260
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1493773234539546852, guid: 61afd9858eb339d4bbbecb6c1c7f54d6,
         type: 3}
@@ -11316,10 +11316,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 71055f2e65db5b348b3e564d95a056ad, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  gameDataManager: {fileID: 1935938916}
   uiManager: {fileID: 610247095}
   storyInfoManager: {fileID: 599470758}
   storyBuilder: {fileID: 859951616}
-  isEventing: 0
+  controlHandler: {fileID: 1367732069}
 --- !u!1 &435490110
 GameObject:
   m_ObjectHideFlags: 0
@@ -34431,6 +34432,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a07855e11ef482448961f696eacf595c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  camera2D: {fileID: 1704288487}
   listControl:
   - {fileID: 1287699546}
 --- !u!4 &1367732070
@@ -48714,6 +48716,8 @@ MonoBehaviour:
     buildList: []
     itemsList: []
     menuList: []
+    characterFavorabilityList: []
+    triggeredEventList: 
     ingOilsalt: 0
     ingMeat: 0
     ingRiverfresh: 0
@@ -55392,6 +55396,16 @@ PrefabInstance:
       propertyPath: uiManager
       value: 
       objectReference: {fileID: 610247095}
+    - target: {fileID: 854223575868488546, guid: 168c7e39d2d5e564e81f7d4de2123dda,
+        type: 3}
+      propertyPath: controlHandler
+      value: 
+      objectReference: {fileID: 1367732069}
+    - target: {fileID: 854223575868488546, guid: 168c7e39d2d5e564e81f7d4de2123dda,
+        type: 3}
+      propertyPath: gameDataManager
+      value: 
+      objectReference: {fileID: 1935938916}
     - target: {fileID: 854223574375975990, guid: 168c7e39d2d5e564e81f7d4de2123dda,
         type: 3}
       propertyPath: gameItemsManager
@@ -56080,6 +56094,16 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 7.500473
       objectReference: {fileID: 0}
+    - target: {fileID: 1591988440235008298, guid: 9867e412dcdcdb24fb58f6415e7b195c,
+        type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1591988440235008298, guid: 9867e412dcdcdb24fb58f6415e7b195c,
+        type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1591988440379129136, guid: 9867e412dcdcdb24fb58f6415e7b195c,
         type: 3}
       propertyPath: popupShow
@@ -56115,16 +56139,6 @@ PrefabInstance:
       propertyPath: toastView
       value: 
       objectReference: {fileID: 418512633}
-    - target: {fileID: 1591988440235008298, guid: 9867e412dcdcdb24fb58f6415e7b195c,
-        type: 3}
-      propertyPath: m_AnchorMax.x
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1591988440235008298, guid: 9867e412dcdcdb24fb58f6415e7b195c,
-        type: 3}
-      propertyPath: m_AnchorMax.y
-      value: 1
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9867e412dcdcdb24fb58f6415e7b195c, type: 3}
 --- !u!1001 &1712287378759094698
@@ -56383,12 +56397,12 @@ PrefabInstance:
       propertyPath: innFoodManager
       value: 
       objectReference: {fileID: 598477695}
-    - target: {fileID: 2062234782002432036, guid: 54879e323a2a32542b98a4756d4814b8,
+    - target: {fileID: 2062234781820347731, guid: 54879e323a2a32542b98a4756d4814b8,
         type: 3}
       propertyPath: popupShow
       value: 
       objectReference: {fileID: 0}
-    - target: {fileID: 2062234781820347731, guid: 54879e323a2a32542b98a4756d4814b8,
+    - target: {fileID: 2062234782002432036, guid: 54879e323a2a32542b98a4756d4814b8,
         type: 3}
       propertyPath: popupShow
       value: 
@@ -58277,6 +58291,21 @@ PrefabInstance:
       propertyPath: m_SizeDelta.y
       value: 56.34909
       objectReference: {fileID: 0}
+    - target: {fileID: 4140619151878928940, guid: fbe245d5e2055f940830c6d0bd1040c0,
+        type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4140619151878928940, guid: fbe245d5e2055f940830c6d0bd1040c0,
+        type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4140619151878928940, guid: fbe245d5e2055f940830c6d0bd1040c0,
+        type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0.000021159649
+      objectReference: {fileID: 0}
     - target: {fileID: 4140619152742821715, guid: fbe245d5e2055f940830c6d0bd1040c0,
         type: 3}
       propertyPath: popupShow
@@ -58317,21 +58346,6 @@ PrefabInstance:
       propertyPath: toastView
       value: 
       objectReference: {fileID: 418512633}
-    - target: {fileID: 4140619151878928940, guid: fbe245d5e2055f940830c6d0bd1040c0,
-        type: 3}
-      propertyPath: m_AnchorMax.x
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4140619151878928940, guid: fbe245d5e2055f940830c6d0bd1040c0,
-        type: 3}
-      propertyPath: m_AnchorMax.y
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4140619151878928940, guid: fbe245d5e2055f940830c6d0bd1040c0,
-        type: 3}
-      propertyPath: m_AnchorMin.y
-      value: 0.000021159649
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: fbe245d5e2055f940830c6d0bd1040c0, type: 3}
 --- !u!1001 &4246832423452768830
@@ -60990,6 +61004,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Dialog
       objectReference: {fileID: 0}
+    - target: {fileID: 7307331287848585606, guid: a9ec67fcc7b2ad343a9fce7bbb8e5d94,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7307331287848585657, guid: a9ec67fcc7b2ad343a9fce7bbb8e5d94,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -61443,11 +61462,6 @@ PrefabInstance:
       propertyPath: m_AnchorMin.y
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 7577364584254848190, guid: 14f456b6afd43dd409e00c9ee64236d5,
-        type: 3}
-      propertyPath: m_Text
-      value: 
-      objectReference: {fileID: 0}
     - target: {fileID: 4556736455070394673, guid: 14f456b6afd43dd409e00c9ee64236d5,
         type: 3}
       propertyPath: characterBodyManager
@@ -61467,6 +61481,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_AnchoredPosition.x
       value: 90
+      objectReference: {fileID: 0}
+    - target: {fileID: 7577364584254848190, guid: 14f456b6afd43dd409e00c9ee64236d5,
+        type: 3}
+      propertyPath: m_Text
+      value: 
       objectReference: {fileID: 0}
     - target: {fileID: 7577364584330236049, guid: 14f456b6afd43dd409e00c9ee64236d5,
         type: 3}

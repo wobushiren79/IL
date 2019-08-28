@@ -9,6 +9,7 @@ public class UIGameDate : BaseUIComponent
     public Text tvYear;
     public Text tvMonth;
     public Text tvDay;
+    public Text tvDialogContent;
 
     public GameObject objDialog;
     public Button btWork;
@@ -21,6 +22,8 @@ public class UIGameDate : BaseUIComponent
 
     private void Start()
     {
+        if (tvDialogContent != null)
+            tvDialogContent.text = GameCommonInfo.GetUITextById(3005);
         if (btWork != null)
             btWork.onClick.AddListener(InnWork);
         if (btRest != null)
@@ -48,6 +51,12 @@ public class UIGameDate : BaseUIComponent
         objDialog.SetActive(false);
     }
 
+    /// <summary>
+    /// 设置数据
+    /// </summary>
+    /// <param name="year"></param>
+    /// <param name="month"></param>
+    /// <param name="day"></param>
     public void SetDate(int year, int month, int day)
     {
         float totalAnimTime = 1;
@@ -88,9 +97,7 @@ public class UIGameDate : BaseUIComponent
             totalAnimTime = animDelay + 3 * animTime;
         }
         //展示是否营业框
-
         StartCoroutine(ShowDialog(totalAnimTime));
-
     }
 
     /// <summary>
@@ -101,9 +108,18 @@ public class UIGameDate : BaseUIComponent
     public IEnumerator ShowDialog(float delayTime)
     {
         yield return new WaitForSeconds(delayTime);
-        objDialog.SetActive(true);
-        objDialog.transform.localScale = new Vector3(1,1,1);
-        objDialog.transform.DOScale(Vector3.zero,0.5f).From().SetEase(Ease.OutBack);
+        // 第一天默认不营业
+        gameTimeHandler.GetTimeForDate(out int year, out int month, out int day);
+        if (year == 1 && day == 1 && day == 1)
+        {
+            InnRest();
+        }
+        else
+        {
+            objDialog.SetActive(true);
+            objDialog.transform.localScale = new Vector3(1, 1, 1);
+            objDialog.transform.DOScale(Vector3.zero, 0.5f).From().SetEase(Ease.OutBack);
+        }
     }
 
     /// <summary>
@@ -144,7 +160,7 @@ public class UIGameDate : BaseUIComponent
 
     public void InnWork()
     {
-        uiManager.OpenUIAndCloseOtherByName(EnumUtil.GetEnumName(UIEnum.GameMain));
+        uiManager.OpenUIAndCloseOtherByName(EnumUtil.GetEnumName(UIEnum.GameAttendance));
     }
 
     public void InnRest()
@@ -154,8 +170,13 @@ public class UIGameDate : BaseUIComponent
 
         gameTimeHandler.dayStauts = GameTimeHandler.DayEnum.Rest;
         gameTimeHandler.StartNewDay(true);
-        uiManager.OpenUIAndCloseOtherByName(EnumUtil.GetEnumName(UIEnum.GameMain));
-        controlHandler.StartControl(ControlHandler.ControlEnum.Normal);
+
+        //没有触发事件
+        if (!EventHandler.Instance.EventTriggerForStory())
+        {
+            uiManager.OpenUIAndCloseOtherByName(EnumUtil.GetEnumName(UIEnum.GameMain));
+            controlHandler.StartControl(ControlHandler.ControlEnum.Normal);
+        }
     }
 
 }

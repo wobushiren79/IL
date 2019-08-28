@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 public class EventHandler : BaseSingleton<EventHandler>
 {
-
+    public GameDataManager gameDataManager;
     public BaseUIManager uiManager;
     public StoryInfoManager storyInfoManager;
     public StoryBuilder storyBuilder;
@@ -57,13 +57,19 @@ public class EventHandler : BaseSingleton<EventHandler>
     /// <summary>
     /// 检测故事 自动触发剧情
     /// </summary>
-    public void CheckEventForStory()
+    public bool EventTriggerForStory()
     {
         if (storyInfoManager == null)
-            return;
-        StoryInfoBean storyInfo = storyInfoManager.CheckStory();
+            return false;
+        StoryInfoBean storyInfo = storyInfoManager.CheckStory(gameDataManager.gameData);
         if (storyInfo != null)
+        {
             EventTriggerForStory(storyInfo);
+            return true;
+        }
+        else
+            return false;
+           
     }
 
     /// <summary>

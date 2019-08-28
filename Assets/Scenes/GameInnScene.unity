@@ -1057,9 +1057,6 @@ MonoBehaviour:
   gameDataManager: {fileID: 158710915}
   uiManager: {fileID: 466882524}
   innHandler: {fileID: 1541606814}
-  year: 0
-  month: 0
-  day: 0
   hours: 0
   min: 0
   dayStauts: 0
@@ -2322,6 +2319,7 @@ MonoBehaviour:
     itemsList: []
     menuList: []
     characterFavorabilityList: []
+    triggeredEventList: 
     ingOilsalt: 0
     ingMeat: 0
     ingRiverfresh: 0
@@ -85853,6 +85851,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 71055f2e65db5b348b3e564d95a056ad, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  gameDataManager: {fileID: 158710915}
   uiManager: {fileID: 466882524}
   storyInfoManager: {fileID: 298753614}
   storyBuilder: {fileID: 1465827168}
@@ -86277,11 +86276,6 @@ PrefabInstance:
       propertyPath: m_Pivot.y
       value: 0.5
       objectReference: {fileID: 0}
-    - target: {fileID: 518942206073368830, guid: 10f377b49c9a6b94fad8d71948677267,
-        type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: -0.024993896
-      objectReference: {fileID: 0}
     - target: {fileID: 6372810423451581369, guid: 10f377b49c9a6b94fad8d71948677267,
         type: 3}
       propertyPath: uiManager
@@ -86296,6 +86290,11 @@ PrefabInstance:
         type: 3}
       propertyPath: animTime
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 518942206073368830, guid: 10f377b49c9a6b94fad8d71948677267,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -0.024993896
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 10f377b49c9a6b94fad8d71948677267, type: 3}

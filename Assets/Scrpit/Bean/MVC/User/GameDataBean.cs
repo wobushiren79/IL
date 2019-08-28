@@ -27,6 +27,7 @@ public class GameDataBean
     public List<MenuOwnBean> menuList = new List<MenuOwnBean>();//所拥有的菜单
 
     public List<CharacterFavorabilityBean> characterFavorabilityList = new List<CharacterFavorabilityBean>();//角色好感度
+    public List<long> triggeredEventList = new List<long>();//触发过的事件
 
     public long ingOilsalt;//油盐
     public long ingMeat;//肉类
@@ -38,6 +39,27 @@ public class GameDataBean
     public long ingFlour;//面粉
 
     public int workerNumberLimit = 5;//员工人员招聘上限
+
+    /// <summary>
+    /// 添加事件
+    /// </summary>
+    /// <param name="eventId"></param>
+    public void AddTraggeredEvent(long eventId)
+    {
+        if (!CheckTriggeredEvent(eventId))
+        {
+            triggeredEventList.Add(eventId);
+        }
+    }
+
+    /// <summary>
+    /// 检测是否已经触发过该事件
+    /// </summary>
+    /// <param name="eventId"></param>
+    /// <returns></returns>
+    public bool CheckTriggeredEvent(long eventId) {
+       return triggeredEventList.Contains(eventId);
+    }
 
     /// <summary>
     /// 增加好感度
