@@ -69,7 +69,6 @@ public class EventHandler : BaseSingleton<EventHandler>
         }
         else
             return false;
-           
     }
 
     /// <summary>

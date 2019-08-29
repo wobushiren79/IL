@@ -84,7 +84,7 @@ public class GameDataModel : BaseMVCModel
 
         //设置时间
         TimeBean gameTime = new TimeBean();
-        gameTime.SetTimeForYMD(1, 1, 0);
+        gameTime.SetTimeForYMD(221, 1, 0);
         gameData.gameTime = gameTime;
 
         SetGameDataByUserId(userId, gameData);

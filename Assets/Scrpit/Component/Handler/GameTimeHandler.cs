@@ -12,22 +12,20 @@ public class GameTimeHandler : BaseMonoBehaviour
     public GameDataManager gameDataManager;
 
     public BaseUIManager uiManager;
-    public InnHandler innHandler;
 
     public float hours;
     public float min;
+
     public DayEnum dayStauts = DayEnum.Rest;
-    //时钟
-    public ClockView clockView;
 
     //是否停止时间
     public bool isStopTime = true;
-
+    //时间流逝速度
     public float timeSclae = 1;
 
     private void Start()
     {
-        StartNewDay(true);
+        SetNewDay();
     }
 
     private void Update()
@@ -59,9 +57,13 @@ public class GameTimeHandler : BaseMonoBehaviour
                 timeData.year += 1;
             }
         }
+
+        SetNewDay();
     }
 
-
+    /// <summary>
+    /// 时间流逝
+    /// </summary>
     public void TimeLapse()
     {
         min += Time.deltaTime * timeSclae;
@@ -72,45 +74,40 @@ public class GameTimeHandler : BaseMonoBehaviour
         }
         if (hours >= 24)
         {
-            isStopTime = true;
-            if (uiManager != null)
-                if (uiManager.GetOpenUI() != null && uiManager.GetOpenUI().name.Equals("Settle"))
-                {
-
-                }
-                else
-                {
-                    uiManager.OpenUIAndCloseOtherByName("Settle");
-                }
-            if (innHandler != null)
-                innHandler.CloseInn();
+            SetTimeStatus(true);
+            //TODO 一天时间结束处理
         }
-        clockView.SetTime((int)hours, (int)min);
-        float sunColor = 1;
-        if (hours < 12)
-        {
-            sunColor = hours / 12f + (min / 720f);
-        }
-        else if (hours >= 12 && hours <= 15)
-        {
-            sunColor = 1;
-        }
-        else
-        {
-            sunColor = 1 - (hours - 15f) / 12f - (min / 720f);
-        }
-        // sun.color = new Color(sunColor, sunColor, sunColor, 1);
     }
 
-    public void StartNewDay(bool isStopTime)
+    /// <summary>
+    /// 开始新的一天
+    /// </summary>
+    public void SetNewDay()
     {
+        SetTimeStatus(true);
         hours = 6;
         min = 0;
-        // sun.color = new Color(1, 1, 1, 1);
-        clockView.SetTime((int)hours, (int)min);
+    }
+
+    /// <summary>
+    /// 设置时间状态
+    /// </summary>
+    /// <param name="isStopTime"></param>
+    public void SetTimeStatus(bool isStopTime)
+    {
         this.isStopTime = isStopTime;
     }
 
+    /// <summary>
+    /// 获取日期
+    /// </summary>
+    /// <param name="hours"></param>
+    /// <param name="min"></param>
+    public void GetTime(out float hours, out float min)
+    {
+        hours = this.hours;
+        min = this.min;
+    }
 
     /// <summary>
     /// 获取日期
@@ -118,7 +115,7 @@ public class GameTimeHandler : BaseMonoBehaviour
     /// <param name="year"></param>
     /// <param name="month"></param>
     /// <param name="day"></param>
-    public void GetTimeForDate(out int year, out int month, out int day)
+    public void GetTime(out int year, out int month, out int day)
     {
         TimeBean timeData = gameDataManager.gameData.gameTime;
         year = timeData.year;

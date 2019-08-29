@@ -35,12 +35,12 @@ public class UIGameDate : BaseUIComponent
         base.OpenUI();
         if (gameTimeHandler != null)
         {
-            gameTimeHandler.GetTimeForDate(out int year, out int month, out int day);
+            gameTimeHandler.GetTime(out int year, out int month, out int day);
             SetYear(year);
             SetMonth(month);
             SetDay(day);
             gameTimeHandler.GoToNextDay(1);
-            gameTimeHandler.GetTimeForDate(out int newYear, out int newMonth, out int newDay);
+            gameTimeHandler.GetTime(out int newYear, out int newMonth, out int newDay);
             SetDate(newYear, newMonth, newDay);
         }
     }
@@ -109,7 +109,7 @@ public class UIGameDate : BaseUIComponent
     {
         yield return new WaitForSeconds(delayTime);
         // 第一天默认不营业
-        gameTimeHandler.GetTimeForDate(out int year, out int month, out int day);
+        gameTimeHandler.GetTime(out int year, out int month, out int day);
         if (year == 1 && day == 1 && day == 1)
         {
             InnRest();
@@ -169,7 +169,7 @@ public class UIGameDate : BaseUIComponent
         ControlHandler controlHandler = GetUIMananger<UIGameManager>().controlHandler;
 
         gameTimeHandler.dayStauts = GameTimeHandler.DayEnum.Rest;
-        gameTimeHandler.StartNewDay(true);
+        gameTimeHandler.SetTimeStatus(false);
 
         //没有触发事件
         if (!EventHandler.Instance.EventTriggerForStory())

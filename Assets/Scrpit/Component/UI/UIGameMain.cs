@@ -3,6 +3,7 @@ using UnityEditor;
 using UnityEngine.UI;
 public class UIGameMain : BaseUIComponent, DialogView.IDialogCallBack
 {
+    [Header("控件")]
     public Button btWorker;
     public Button btBuild;
     public Button btMenu;
@@ -23,6 +24,8 @@ public class UIGameMain : BaseUIComponent, DialogView.IDialogCallBack
     public Text tvRichness;
     public InfoPromptPopupButton popupInnLevel;
     public Image ivInnLevel;
+
+    public ClockView clockView;//时钟
 
     public void Start()
     {
@@ -59,6 +62,7 @@ public class UIGameMain : BaseUIComponent, DialogView.IDialogCallBack
     private void Update()
     {
         InnHandler innHandler = GetUIMananger<UIGameManager>().innHandler;
+        GameTimeHandler gameTimeHandler = GetUIMananger<UIGameManager>().gameTimeHandler;
         if (tvInnStatus != null && innHandler != null)
             if (innHandler.innStatus == InnHandler.InnStatusEnum.Close)
             {
@@ -74,6 +78,11 @@ public class UIGameMain : BaseUIComponent, DialogView.IDialogCallBack
             tvMoneyM.text = GetUIMananger<UIGameManager>().gameDataManager.gameData.moneyM + "";
         if (tvMoneyL != null)
             tvMoneyL.text = GetUIMananger<UIGameManager>().gameDataManager.gameData.moneyL + "";
+        if (clockView!=null&& gameTimeHandler!=null)
+        {
+            gameTimeHandler.GetTime(out float hour,out float min);
+            clockView.SetTime((int)hour, (int)min);
+        }  
     }
 
     public override void OpenUI()
