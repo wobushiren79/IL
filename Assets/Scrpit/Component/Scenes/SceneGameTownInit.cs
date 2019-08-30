@@ -10,6 +10,7 @@ public class SceneGameTownInit : BaseMonoBehaviour
     public StoryInfoManager storyInfoManager;
     public NpcImportantBuilder npcImportantBuilder;
 
+    public GameTimeHandler gameTimeHandler;
     private void Start()
     {
         //获取相关数据
@@ -18,15 +19,26 @@ public class SceneGameTownInit : BaseMonoBehaviour
         if (innBuildManager != null)
             innBuildManager.buildDataController.GetAllBuildItemsData();
         if (gameDataManager != null)
-            gameDataManager.gameDataController.GetGameDataByUserId(GameCommonInfo.gameUserId);
+        {
+            if (GameCommonInfo.gameData != null)
+                gameDataManager.gameData = GameCommonInfo.gameData;
+            else
+                gameDataManager.gameDataController.GetGameDataByUserId(GameCommonInfo.gameUserId);
+        }
         if (npcInfoManager != null)
             npcInfoManager.npcInfoController.GetAllNpcInfo();
         if (storyInfoManager != null)
             storyInfoManager.storyInfoController.GetStoryInfoByScene(2);
 
         //构建重要的NPC
-        if (npcImportantBuilder!=null)
+        if (npcImportantBuilder != null)
             npcImportantBuilder.BuildImportant();
 
+        if (gameTimeHandler != null && gameDataManager != null)
+        {
+            TimeBean timeData = gameDataManager.gameData.gameTime;
+            gameTimeHandler.SetTime(timeData.hour, timeData.minute);
+            gameTimeHandler.SetTimeStatus(false);
+        }
     }
 }

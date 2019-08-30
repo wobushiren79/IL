@@ -43,12 +43,16 @@ public class UIGameDate : BaseUIComponent
             gameTimeHandler.GetTime(out int newYear, out int newMonth, out int newDay);
             SetDate(newYear, newMonth, newDay);
         }
+        if (GetUIMananger<UIGameManager>().controlHandler != null)
+            GetUIMananger<UIGameManager>().controlHandler.StopControl();
     }
 
     public override void CloseUI()
     {
         base.CloseUI();
         objDialog.SetActive(false);
+        if (GetUIMananger<UIGameManager>().controlHandler != null)
+            GetUIMananger<UIGameManager>().controlHandler.RestoreControl();
     }
 
     /// <summary>

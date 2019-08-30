@@ -1,6 +1,8 @@
 ﻿using UnityEngine;
 using UnityEditor;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
+
 public class UIGameMain : BaseUIComponent, DialogView.IDialogCallBack
 {
     [Header("控件")]
@@ -78,11 +80,11 @@ public class UIGameMain : BaseUIComponent, DialogView.IDialogCallBack
             tvMoneyM.text = GetUIMananger<UIGameManager>().gameDataManager.gameData.moneyM + "";
         if (tvMoneyL != null)
             tvMoneyL.text = GetUIMananger<UIGameManager>().gameDataManager.gameData.moneyL + "";
-        if (clockView!=null&& gameTimeHandler!=null)
+        if (clockView != null && gameTimeHandler != null)
         {
-            gameTimeHandler.GetTime(out float hour,out float min);
+            gameTimeHandler.GetTime(out float hour, out float min);
             clockView.SetTime((int)hour, (int)min);
-        }  
+        }
     }
 
     public override void OpenUI()
@@ -168,18 +170,35 @@ public class UIGameMain : BaseUIComponent, DialogView.IDialogCallBack
     public void Submit(DialogView dialogView)
     {
         InnHandler innHandler = GetUIMananger<UIGameManager>().innHandler;
-        GameTimeHandler gameTimeHandler=  GetUIMananger<UIGameManager>().gameTimeHandler;
+        GameTimeHandler gameTimeHandler = GetUIMananger<UIGameManager>().gameTimeHandler;
 
         GetUIMananger<UIGameManager>().gameTimeHandler.isStopTime = true;
+        //重置游戏时间
+        GameCommonInfo.gameData.gameTime.hour = 0;
+        GameCommonInfo.gameData.gameTime.minute = 0;
+
         if (gameTimeHandler.dayStauts == GameTimeHandler.DayEnum.Work)
         {
             //如果是工作状态结束一天 则进入结算画面
             uiManager.OpenUIAndCloseOtherByName(EnumUtil.GetEnumName(UIEnum.GameSettle));
         }
-        else if(gameTimeHandler.dayStauts == GameTimeHandler.DayEnum.Rest)
+        else if (gameTimeHandler.dayStauts == GameTimeHandler.DayEnum.Rest)
         {
             //如果是休息状态结束一天 则直接进入下一天画面
-            uiManager.OpenUIAndCloseOtherByName(EnumUtil.GetEnumName(UIEnum.GameDate));
+            {
+                Scene scene = SceneManager.GetActiveScene();
+                //如果是客栈场景
+                if (EnumUtil.GetEnumName(ScenesEnum.GameInnScene).Equals(scene.name))
+                {
+                    uiManager.OpenUIAndCloseOtherByName(EnumUtil.GetEnumName(UIEnum.GameDate));
+                }
+                //如果是城镇 则先回到客栈
+                else if (EnumUtil.GetEnumName(ScenesEnum.GameTownScene).Equals(scene.name))
+                {
+                    SceneUtil.SceneChange(EnumUtil.GetEnumName(ScenesEnum.GameInnScene));
+                }
+            }
+
         }
 
         //关闭店面

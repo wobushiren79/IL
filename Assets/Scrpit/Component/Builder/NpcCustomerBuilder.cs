@@ -34,25 +34,25 @@ public class NpcCustomerBuilder : BaseMonoBehaviour
         while (isBuild)
         {
             float personNumber = 1;
-            if (gameTimeHandler.hours >= 11 && gameTimeHandler.hours <= 13)
+            if (gameTimeHandler.hour >= 11 && gameTimeHandler.hour <= 13)
             {
                 personNumber = 1;
             }
-            else if (gameTimeHandler.hours >= 17 && gameTimeHandler.hours <= 19)
+            else if (gameTimeHandler.hour >= 17 && gameTimeHandler.hour <= 19)
             {
                 personNumber = 1;
             }
-            else if (gameTimeHandler.hours < 11)
+            else if (gameTimeHandler.hour < 11)
             {
-                personNumber = 1 + (10 - gameTimeHandler.hours);
+                personNumber = 1 + (10 - gameTimeHandler.hour);
             }
-            else if (gameTimeHandler.hours > 13 && gameTimeHandler.hours < 17)
+            else if (gameTimeHandler.hour > 13 && gameTimeHandler.hour < 17)
             {
                 personNumber = 2.5f;
             }
-            else if(gameTimeHandler.hours > 19)
+            else if(gameTimeHandler.hour > 19)
             {
-                personNumber = 2 + (gameTimeHandler.hours - 17);
+                personNumber = 2 + (gameTimeHandler.hour - 17);
             }
 
             yield return new WaitForSeconds(personNumber);

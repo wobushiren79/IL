@@ -9,7 +9,7 @@
 	}
 	SubShader
 	{
-        Tags { "QUEUE" = "Transparent+0" "RenderType" = "Transparent" "RenderPipeline" = "LightweightPipeline" }
+ Tags { "QUEUE" = "Transparent+0" "RenderType" = "Transparent" "RenderPipeline" = "LightweightPipeline" }
 		//Tags { "RenderType"="Opaque" "Queue"="Transparent" }
 		//LOD 100
 
@@ -21,9 +21,10 @@
 
 		Pass
 		{
-		 Tags { "LIGHTMODE" = "Lightweight2D" "QUEUE" = "Transparent+0" "RenderType" = "Transparent" "RenderPipeline" = "LightweightPipeline" }
-		 ZWrite Off
-		 Cull Off
+  Tags { "QUEUE" = "Transparent+0" "RenderType" = "Transparent" "RenderPipeline" = "LightweightPipeline" }
+  ZWrite Off
+  Cull Off
+  Blend SrcAlpha OneMinusSrcAlpha, One OneMinusSrcAlpha
 
 			CGPROGRAM
 			#pragma vertex vert

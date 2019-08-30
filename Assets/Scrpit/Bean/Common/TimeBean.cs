@@ -33,4 +33,10 @@ public class TimeBean
         this.month = month;
         this.day = day;
     }
+
+    public void SetTimeForHM(int hour, int minute)
+    {
+        this.hour = hour;
+        this.minute = minute;
+    }
 }

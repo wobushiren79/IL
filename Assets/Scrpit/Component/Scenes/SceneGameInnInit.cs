@@ -18,11 +18,13 @@ public class SceneGameInnInit : BaseManager
 
 
     public InnHandler innHandler;
+    public GameTimeHandler gameTimeHandler;
 
     public NavMeshSurface navMesh;
 
     public NpcCustomerBuilder leftCustomerBuilder;
     public NpcCustomerBuilder rightCustomerBuilder;
+
 
     private void Start()
     {
@@ -30,7 +32,16 @@ public class SceneGameInnInit : BaseManager
         if (gameItemsManager != null)
             gameItemsManager.itemsInfoController.GetAllItemsInfo();
         if (gameDataManager != null)
-            gameDataManager.gameDataController.GetGameDataByUserId(GameCommonInfo.gameUserId);
+        {
+            if (GameCommonInfo.gameData != null)
+            {
+                gameDataManager.gameData = GameCommonInfo.gameData;
+            }
+            else
+            {
+                gameDataManager.gameDataController.GetGameDataByUserId(GameCommonInfo.gameUserId);
+            }
+        }
         if (npcInfoManager != null)
             npcInfoManager.npcInfoController.GetAllNpcInfo();
         if (innBuildManager != null)
@@ -64,7 +75,24 @@ public class SceneGameInnInit : BaseManager
 
         StartCoroutine(BuildNavMesh());
 
-        uiGameManager.OpenUIAndCloseOtherByName(EnumUtil.GetEnumName(UIEnum.GameDate));
+        if (gameDataManager != null&& gameTimeHandler != null)
+        {
+            TimeBean timeData = gameDataManager.gameData.gameTime;
+            if (timeData.hour == 0 && timeData.minute == 0)
+            {
+                //如果是需要切换第二天
+                gameTimeHandler.SetTimeStatus(true);
+                uiGameManager.OpenUIAndCloseOtherByName(EnumUtil.GetEnumName(UIEnum.GameDate));
+            }
+            else
+            {
+                //如果是其他场景切换过来
+                gameTimeHandler.SetTime(timeData.hour, timeData.minute);
+                gameTimeHandler.SetTimeStatus(false);
+            }
+        }
+      
+
     }
 
     /// <summary>

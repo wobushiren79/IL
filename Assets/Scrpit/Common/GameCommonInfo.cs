@@ -5,6 +5,7 @@ public class GameCommonInfo
 {
     public static string gameUserId;//游戏用户ID
     public static GameConfigBean gameConfig; //游戏设置
+    public static GameDataBean gameData;//世界时间
 
     private static GameConfigController mGameConfigController;
     private static UITextController mUITextController;
@@ -12,6 +13,7 @@ public class GameCommonInfo
     static GameCommonInfo()
     {
         gameConfig = new GameConfigBean();
+
         mGameConfigController = new GameConfigController(null, new GameConfigCallBack());
         mUITextController = new UITextController(null,null);
         mGameConfigController.GetGameConfigData();

@@ -1,7 +1,9 @@
 ﻿using UnityEngine;
 using UnityEditor;
 using System.Collections;
-public class GameTimeHandler : BaseMonoBehaviour
+using System.Collections.Generic;
+
+public class GameTimeHandler : BaseObservable<IBaseObserver>
 {
     public enum DayEnum
     {
@@ -11,9 +13,7 @@ public class GameTimeHandler : BaseMonoBehaviour
 
     public GameDataManager gameDataManager;
 
-    public BaseUIManager uiManager;
-
-    public float hours;
+    public float hour;
     public float min;
 
     public DayEnum dayStauts = DayEnum.Rest;
@@ -23,11 +23,6 @@ public class GameTimeHandler : BaseMonoBehaviour
     //时间流逝速度
     public float timeSclae = 1;
 
-    private void Start()
-    {
-        SetNewDay();
-    }
-
     private void Update()
     {
         if (!isStopTime)
@@ -35,6 +30,7 @@ public class GameTimeHandler : BaseMonoBehaviour
             TimeLapse();
         }
     }
+
 
     /// <summary>
     /// 进行下一天
@@ -70,13 +66,21 @@ public class GameTimeHandler : BaseMonoBehaviour
         if (min >= 60)
         {
             min = 0;
-            hours += 1;
+            hour += 1;
+
+            //整点通知
+            if (hour == 18)
+            {
+                NotifyAllObserver(18, null);
+            }
         }
-        if (hours >= 24)
+        if (hour >= 24)
         {
             SetTimeStatus(true);
             //TODO 一天时间结束处理
         }
+        TimeBean timeData = gameDataManager.gameData.gameTime;
+        timeData.SetTimeForHM((int)hour, (int)min);
     }
 
     /// <summary>
@@ -85,8 +89,10 @@ public class GameTimeHandler : BaseMonoBehaviour
     public void SetNewDay()
     {
         SetTimeStatus(true);
-        hours = 6;
+        hour = 6;
         min = 0;
+        //通知新的一天
+        NotifyAllObserver(6, null);
     }
 
     /// <summary>
@@ -103,9 +109,9 @@ public class GameTimeHandler : BaseMonoBehaviour
     /// </summary>
     /// <param name="hours"></param>
     /// <param name="min"></param>
-    public void GetTime(out float hours, out float min)
+    public void GetTime(out float hour, out float min)
     {
-        hours = this.hours;
+        hour = this.hour;
         min = this.min;
     }
 
@@ -121,5 +127,16 @@ public class GameTimeHandler : BaseMonoBehaviour
         year = timeData.year;
         month = timeData.month;
         day = timeData.day;
+    }
+
+    /// <summary>
+    /// 设置时间
+    /// </summary>
+    /// <param name="hour"></param>
+    /// <param name="min"></param>
+    public void SetTime(int hour,int min)
+    {
+        this.hour = (float)hour;
+        this.min = (float)min;
     }
 }

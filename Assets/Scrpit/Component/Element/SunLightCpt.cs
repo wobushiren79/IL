@@ -1,16 +1,18 @@
 ﻿using UnityEngine;
 using UnityEditor;
-using UnityEngine.Experimental.Rendering.LWRP;
 
-public class SunLightCpt : BaseMonoBehaviour
+
+public class SunLightCpt : LightCpt
 {
-    public Light2D sunLight;
 
-    public void SetSunColor(float r,float g,float b)
-    {
-        if (sunLight == null)
-            return;
-        sunLight.color = new Color(r, g, b);
+    /// <summary>
+    /// 设置太阳颜色
+    /// </summary>
+    /// <param name="r"></param>
+    /// <param name="g"></param>
+    /// <param name="b"></param>
+    public void SetSunColor(float r,float g,float b) {
+        SetLightColor(r, g, b);
     }
 
 }
