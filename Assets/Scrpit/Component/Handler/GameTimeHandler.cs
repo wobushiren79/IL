@@ -11,6 +11,12 @@ public class GameTimeHandler : BaseObservable<IBaseObserver>
         Work,
     }
 
+    public enum NotifyTypeEnum
+    {
+        NewDay,//新的一天
+        Night//夜晚
+    }
+
     public GameDataManager gameDataManager;
 
     public float hour;
@@ -53,7 +59,6 @@ public class GameTimeHandler : BaseObservable<IBaseObserver>
                 timeData.year += 1;
             }
         }
-
         SetNewDay();
     }
 
@@ -68,10 +73,10 @@ public class GameTimeHandler : BaseObservable<IBaseObserver>
             min = 0;
             hour += 1;
 
-            //整点通知
+            //晚上通知
             if (hour == 18)
             {
-                NotifyAllObserver(18, null);
+                NotifyAllObserver((int)NotifyTypeEnum.Night, null);
             }
         }
         if (hour >= 24)
@@ -92,7 +97,7 @@ public class GameTimeHandler : BaseObservable<IBaseObserver>
         hour = 6;
         min = 0;
         //通知新的一天
-        NotifyAllObserver(6, null);
+        NotifyAllObserver((int)NotifyTypeEnum.NewDay, null);
     }
 
     /// <summary>

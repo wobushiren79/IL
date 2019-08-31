@@ -8,5 +8,5 @@ public interface IBaseObserver
     /// </summary>
     /// <param name="type"></param>
     /// <param name="obj"></param>
-    void ObserbableUpdate(int type,params Object[] obj);
+    void ObserbableUpdate<T>(T observable, int type,params Object[] obj) where T : Object;
 }

@@ -1,41 +1,79 @@
 ﻿using UnityEngine;
 using UnityEditor;
+using System.Collections.Generic;
+using System;
 
 public class WeatherHandler : BaseMonoBehaviour
 {
-    public enum WeatherStatusEnum
+    public enum WeatherTypeEnum
     {
-        Sunny,//普通
-        Rain,//下雨
-        Snow,//下雪
-        Fog,//起雾
-        Wind,//大风
+        Sunny = 1,//普通
+        Rain = 2,//下雨
+        Snow = 3,//下雪
+        Fog = 4,//起雾
+        Wind = 5,//大风
     }
-    public WeatherStatusEnum weatherStatus = WeatherStatusEnum.Sunny;
 
     [Header("控件")]
     //太阳光
     public SunLightCpt sunLight;
     [Header("数据")]
     public GameTimeHandler gameTimeHandler;
+    public List<WeatherCpt> listWeather = new List<WeatherCpt>();
+
+    public WeatherTypeEnum weatherType = WeatherTypeEnum.Sunny;
+    public WeatherBean weatherData = new WeatherBean();
 
     private void Update()
     {
-        switch (weatherStatus)
+        switch (weatherType)
         {
-            case WeatherStatusEnum.Sunny:
+            case WeatherTypeEnum.Sunny:
+                SetWeahterSunny();
+                break;
+            default:
                 SetWeahterSunny();
                 break;
         }
     }
 
     /// <summary>
+    /// 随机化一个天气
+    /// </summary>
+    public WeatherBean RandomWeather()
+    {
+        WeatherTypeEnum weatherStatusRandom = WeatherTypeEnum.Sunny;
+        int weatherRandom = 0;
+        if (weatherRandom == 0)
+        {
+            weatherStatusRandom = WeatherTypeEnum.Rain;
+        }
+        WeatherBean weatherData = new WeatherBean();
+        weatherData.weatherType = (int)weatherStatusRandom;
+        weatherData.weatherSize = 1;
+        SetWeahter(weatherData);
+        return weatherData;
+    }
+
+    /// <summary>
     /// 设置天气
     /// </summary>
     /// <param name="weatherStatus"></param>
-    public void SetWeahter(WeatherStatusEnum weatherStatus)
+    public void SetWeahter(WeatherBean weatherData)
     {
-        this.weatherStatus = weatherStatus;
+        this.weatherData = weatherData;
+        weatherType = (WeatherTypeEnum)weatherData.weatherType;
+        foreach (WeatherCpt itemWeather in listWeather)
+        {
+            if (itemWeather.name.Equals(EnumUtil.GetEnumName(weatherType)))
+            {
+                itemWeather.OpenWeather();
+            }
+            else
+            {
+                itemWeather.CloseWeather();
+            }
+        }
     }
 
     /// <summary>

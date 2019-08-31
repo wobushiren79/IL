@@ -11,6 +11,7 @@ public class SceneGameTownInit : BaseMonoBehaviour
     public NpcImportantBuilder npcImportantBuilder;
 
     public GameTimeHandler gameTimeHandler;
+    public WeatherHandler weatherHandler;
     private void Start()
     {
         //获取相关数据
@@ -39,6 +40,12 @@ public class SceneGameTownInit : BaseMonoBehaviour
             TimeBean timeData = gameDataManager.gameData.gameTime;
             gameTimeHandler.SetTime(timeData.hour, timeData.minute);
             gameTimeHandler.SetTimeStatus(false);
+        }
+
+        //设置天气
+        if (weatherHandler != null)
+        {
+            weatherHandler.SetWeahter(gameDataManager.gameData.weatherToday);
         }
     }
 }

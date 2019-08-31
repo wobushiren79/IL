@@ -97,7 +97,7 @@ LightmapSettings:
     m_ExportTrainingData: 0
     m_TrainingDataDestination: TrainingData
   m_LightingDataAsset: {fileID: 0}
-  m_UseShadowmask: 1
+  m_UseShadowmask: 0
 --- !u!196 &4
 NavMeshSettings:
   serializedVersion: 2
@@ -2326,6 +2326,9 @@ MonoBehaviour:
     ingWaterwine: 0
     ingFlour: 0
     workerNumberLimit: 5
+    weatherToday:
+      weatherType: 0
+      weatherSize: 0
   listGameDataSimple: []
 --- !u!4 &158710916
 Transform:
@@ -78533,7 +78536,8 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
+  m_Children:
+  - {fileID: 1650303587}
   m_Father: {fileID: 328749808}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -78549,9 +78553,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4d1148b6377b18c44b3114d808aa52aa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  weatherStatus: 0
   sunLight: {fileID: 411204159}
   gameTimeHandler: {fileID: 72431160}
+  listWeather:
+  - {fileID: 1650303588}
+  weatherType: 1
+  weatherData:
+    weatherType: 0
+    weatherSize: 0
 --- !u!1 &1512474042
 GameObject:
   m_ObjectHideFlags: 0
@@ -80233,6 +80242,133 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 1
+--- !u!1001 &1650303586
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 1509204896}
+    m_Modifications:
+    - target: {fileID: 2980903469358969825, guid: f6a85ad95a2480b4a95cd9b30c1d9bd5,
+        type: 3}
+      propertyPath: m_Name
+      value: Rain
+      objectReference: {fileID: 0}
+    - target: {fileID: 2980903469358969825, guid: f6a85ad95a2480b4a95cd9b30c1d9bd5,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2980903469358969824, guid: f6a85ad95a2480b4a95cd9b30c1d9bd5,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2980903469358969824, guid: f6a85ad95a2480b4a95cd9b30c1d9bd5,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 36.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 2980903469358969824, guid: f6a85ad95a2480b4a95cd9b30c1d9bd5,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2980903469358969824, guid: f6a85ad95a2480b4a95cd9b30c1d9bd5,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2980903469358969824, guid: f6a85ad95a2480b4a95cd9b30c1d9bd5,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2980903469358969824, guid: f6a85ad95a2480b4a95cd9b30c1d9bd5,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2980903469358969824, guid: f6a85ad95a2480b4a95cd9b30c1d9bd5,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2980903469358969824, guid: f6a85ad95a2480b4a95cd9b30c1d9bd5,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2980903469358969824, guid: f6a85ad95a2480b4a95cd9b30c1d9bd5,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2980903469358969824, guid: f6a85ad95a2480b4a95cd9b30c1d9bd5,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2980903469358969824, guid: f6a85ad95a2480b4a95cd9b30c1d9bd5,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2980903469358969824, guid: f6a85ad95a2480b4a95cd9b30c1d9bd5,
+        type: 3}
+      propertyPath: m_LocalScale.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2980903468375431761, guid: f6a85ad95a2480b4a95cd9b30c1d9bd5,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2980903468375431761, guid: f6a85ad95a2480b4a95cd9b30c1d9bd5,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2980903468375431762, guid: f6a85ad95a2480b4a95cd9b30c1d9bd5,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2980903468375431767, guid: f6a85ad95a2480b4a95cd9b30c1d9bd5,
+        type: 3}
+      propertyPath: playOnAwake
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2980903468956987791, guid: f6a85ad95a2480b4a95cd9b30c1d9bd5,
+        type: 3}
+      propertyPath: ShapeModule.m_Scale.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2980903468956987791, guid: f6a85ad95a2480b4a95cd9b30c1d9bd5,
+        type: 3}
+      propertyPath: playOnAwake
+      value: 1
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: f6a85ad95a2480b4a95cd9b30c1d9bd5, type: 3}
+--- !u!4 &1650303587 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 2980903469358969824, guid: f6a85ad95a2480b4a95cd9b30c1d9bd5,
+    type: 3}
+  m_PrefabInstance: {fileID: 1650303586}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1650303588 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 691231599324317079, guid: f6a85ad95a2480b4a95cd9b30c1d9bd5,
+    type: 3}
+  m_PrefabInstance: {fileID: 1650303586}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b6a3b571ff9d5af4ab50aa6e9bf9a742, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1650435595
 GameObject:
   m_ObjectHideFlags: 0
@@ -86185,6 +86321,7 @@ MonoBehaviour:
   innFurnitureBuilder: {fileID: 2040898640}
   innHandler: {fileID: 1541606814}
   gameTimeHandler: {fileID: 72431160}
+  weatherHandler: {fileID: 1509204897}
   navMesh: {fileID: 1535387626}
   leftCustomerBuilder: {fileID: 558286068}
   rightCustomerBuilder: {fileID: 180496407}

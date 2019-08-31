@@ -3,7 +3,7 @@ using UnityEditor;
 using UnityEngine.AI;
 using System.Collections;
 
-public class SceneGameInnInit : BaseManager
+public class SceneGameInnInit : BaseManager,IBaseObserver
 {
     public UIGameManager uiGameManager;
     public GameItemsManager gameItemsManager;
@@ -16,15 +16,14 @@ public class SceneGameInnInit : BaseManager
     public InnWallBuilder innWallBuilder;
     public InnFurnitureBuilder innFurnitureBuilder;
 
-
     public InnHandler innHandler;
     public GameTimeHandler gameTimeHandler;
+    public WeatherHandler weatherHandler;
 
     public NavMeshSurface navMesh;
 
     public NpcCustomerBuilder leftCustomerBuilder;
     public NpcCustomerBuilder rightCustomerBuilder;
-
 
     private void Start()
     {
@@ -77,6 +76,8 @@ public class SceneGameInnInit : BaseManager
 
         if (gameDataManager != null&& gameTimeHandler != null)
         {
+            //增加回调
+            gameTimeHandler.AddObserver(this);
             TimeBean timeData = gameDataManager.gameData.gameTime;
             if (timeData.hour == 0 && timeData.minute == 0)
             {
@@ -91,8 +92,6 @@ public class SceneGameInnInit : BaseManager
                 gameTimeHandler.SetTimeStatus(false);
             }
         }
-      
-
     }
 
     /// <summary>
@@ -103,5 +102,34 @@ public class SceneGameInnInit : BaseManager
     {
         yield return new WaitForEndOfFrame();
         navMesh.BuildNavMesh();
-    }  
+    }
+
+    /// <summary>
+    /// 初始化新的一天
+    /// </summary>
+    public void InitNewDay()
+    {
+        //随机化一个天气
+        if (weatherHandler != null)
+        {
+            WeatherBean weatherData=  weatherHandler.RandomWeather();
+            gameDataManager.gameData.weatherToday = weatherData;
+        }
+           
+    }
+
+
+    #region 通知回调
+    public void ObserbableUpdate<T>(T observable, int type, params Object[] obj) where T : Object
+    {
+        if(observable == gameTimeHandler)
+        {
+            if (type == (int)GameTimeHandler.NotifyTypeEnum.NewDay)
+            {
+                InitNewDay();
+            }
+        }
+    }
+    #endregion
+
 }

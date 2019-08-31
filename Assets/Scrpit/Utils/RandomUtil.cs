@@ -16,8 +16,8 @@ public class RandomUtil
     {
         if (CheckUtil.ListIsNull(list))
             return default(T);
-       int position = Random.Range(0, list.Count);
-       return list[position];
+        int position = Random.Range(0, list.Count);
+        return list[position];
     }
 
     /// <summary>
@@ -59,7 +59,7 @@ public class RandomUtil
         int counter = list.Count;
         T temp;
         int index;
-        while (counter>0)
+        while (counter > 0)
         {
             counter--;
             index = Random.Range(0, counter);
@@ -123,7 +123,7 @@ public class RandomUtil
         //添加姓
         chineseWords += GetRandomDataByArray(GeneralDataUtil.ChinesNameWords);
         //添加名
-        for (int i = 0; i < count-1; i++)
+        for (int i = 0; i < count - 1; i++)
         {
             // 获取区码(常用汉字的区码范围为16-55)
             int regionCode = Random.Range(16, 56);

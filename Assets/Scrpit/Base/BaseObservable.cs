@@ -80,7 +80,7 @@ public class BaseObservable<T> : BaseMonoBehaviour
             return;
         foreach (T item in mObserverList)
         {
-            item.ObserbableUpdate(type, objs);
+            item.ObserbableUpdate(this,type, objs);
         }
     }
 
@@ -98,7 +98,7 @@ public class BaseObservable<T> : BaseMonoBehaviour
         {
             if (item.Equals(observer))
             {
-                item.ObserbableUpdate(type, objs);
+                item.ObserbableUpdate(this,type, objs);
             }
         }
     }

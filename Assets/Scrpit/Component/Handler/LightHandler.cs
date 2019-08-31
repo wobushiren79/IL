@@ -45,15 +45,18 @@ public class LightHandler : BaseMonoBehaviour, IBaseObserver
     }
 
     #region 时间通知
-    public void ObserbableUpdate(int type, params Object[] obj)
+    public void ObserbableUpdate<T>(T observable, int type, params Object[] obj) where T : Object
     {
-        if (type == 6)
+        if (observable == gameTimeHandler)
         {
-            SetAllLightStatus(false);
-        }
-        else if (type == 18)
-        {
-            SetAllLightStatus(true);
+            if (type == (int)GameTimeHandler.NotifyTypeEnum.NewDay)
+            {
+                SetAllLightStatus(false);
+            }
+            else if (type == (int)GameTimeHandler.NotifyTypeEnum.Night)
+            {
+                SetAllLightStatus(true);
+            }
         }
     }
     #endregion

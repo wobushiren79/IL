@@ -40,6 +40,8 @@ public class GameDataBean
 
     public int workerNumberLimit = 5;//员工人员招聘上限
 
+    public WeatherBean weatherToday;//当天天气
+
     /// <summary>
     /// 添加事件
     /// </summary>
