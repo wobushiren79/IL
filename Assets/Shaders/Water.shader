@@ -21,7 +21,7 @@
 
 		Pass
 		{
-  Tags { "QUEUE" = "Transparent+0" "RenderType" = "Transparent" "RenderPipeline" = "LightweightPipeline" }
+  Tags { "LIGHTMODE" = "Lightweight2D" "QUEUE" = "Transparent+0" "RenderType" = "Transparent" "RenderPipeline" = "LightweightPipeline" }
   ZWrite Off
   Cull Off
   Blend SrcAlpha OneMinusSrcAlpha, One OneMinusSrcAlpha

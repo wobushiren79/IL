@@ -43,7 +43,7 @@ public class WeatherHandler : BaseMonoBehaviour
     public WeatherBean RandomWeather()
     {
         WeatherTypeEnum weatherStatusRandom = WeatherTypeEnum.Sunny;
-        int weatherRandom = 0;
+        int weatherRandom =  UnityEngine.Random.Range(0,10);
         if (weatherRandom == 0)
         {
             weatherStatusRandom = WeatherTypeEnum.Rain;
@@ -61,7 +61,9 @@ public class WeatherHandler : BaseMonoBehaviour
     /// <param name="weatherStatus"></param>
     public void SetWeahter(WeatherBean weatherData)
     {
-        this.weatherData = weatherData;
+        if (weatherData == null)
+            return;
+        this.weatherData = weatherData; 
         weatherType = (WeatherTypeEnum)weatherData.weatherType;
         foreach (WeatherCpt itemWeather in listWeather)
         {

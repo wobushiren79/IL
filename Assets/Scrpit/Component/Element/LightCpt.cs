@@ -10,7 +10,7 @@ public class LightCpt : BaseMonoBehaviour
         Close,
     }
 
-    public Light2D light2D;
+    public UnityEngine.Experimental.Rendering.Universal.Light2D light2D;
 
     public LightStatusEnum lightStatus = LightStatusEnum.Open;
 
