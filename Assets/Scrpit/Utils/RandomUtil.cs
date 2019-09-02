@@ -5,6 +5,16 @@ using System.Text;
 
 public class RandomUtil
 {
+    /// <summary>
+    /// 随机获取枚举的一个值
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
+    /// <returns></returns>
+    public static T GetRandomEnum<T>()  
+    {
+         T[] enumList=  System.Enum.GetValues(typeof(T)) as T[];
+         return enumList[Random.Range(0, enumList.Length)];
+    }
 
     /// <summary>
     /// 获取List 中 随机一个数

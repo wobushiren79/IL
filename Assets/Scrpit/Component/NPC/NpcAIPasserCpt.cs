@@ -84,7 +84,7 @@ public class NpcAIPasserCpt : BaseNpcAI
     }
     public void SetIntent(PasserIntentEnum passerIntent)
     {
-        SetIntent(passerIntent, SceneTownManager.TownBuildingEnum.None);
+        SetIntent(passerIntent, SceneTownManager.TownBuildingEnum.Guild);
     }
 
 

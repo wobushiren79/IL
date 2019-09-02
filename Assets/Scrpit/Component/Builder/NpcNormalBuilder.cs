@@ -18,6 +18,10 @@ public class NpcNormalBuilder : BaseMonoBehaviour
     public List<Transform> listInitStartPosition;
     //有序化生成NPC位置
     public List<Transform> listStartPosition;
+    //是否生成NPC
+    public bool isBuildNpc=false;
+    //生成间隔
+    public float buildInterval = 3;
 
     /// <summary>
     /// 随机获取初始化点位置
@@ -29,6 +33,18 @@ public class NpcNormalBuilder : BaseMonoBehaviour
             return Vector3.zero;
         Transform initStartPosition =  RandomUtil.GetRandomDataByList(listInitStartPosition);
         return GameUtil.GetTransformInsidePosition2D(initStartPosition);
+    }
+
+    /// <summary>
+    /// 获取开始的随机地点
+    /// </summary>
+    /// <returns></returns>
+    public Vector3 GetRandomStartPosition()
+    {
+        if (CheckUtil.ListIsNull(listStartPosition))
+            return Vector3.zero;
+        Transform startPosition = RandomUtil.GetRandomDataByList(listStartPosition);
+        return GameUtil.GetTransformInsidePosition2D(startPosition);
     }
 
     /// <summary>
