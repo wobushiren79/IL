@@ -36,6 +36,21 @@ public class CheckUtil {
     }
 
     /// <summary>
+    /// 检测Array是否为Null
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
+    /// <param name="array"></param>
+    /// <returns></returns>
+    public static bool ArrayIsNull<T>(T[] array)
+    {
+        if (array == null || array.Length == 0)
+        {
+            return true;
+        }
+        return false;
+    }
+
+    /// <summary>
     /// 检测是否是数字
     /// </summary>
     /// <param name="number"></param>

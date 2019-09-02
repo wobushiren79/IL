@@ -240,4 +240,22 @@ public class CharacterMoveCpt : BaseMonoBehaviour
             return true;
         }
     }
+
+   /// <summary>
+   /// 关闭自动寻路
+   /// </summary>
+    public void CloseNavMeshAgent()
+    {
+        if (navMeshAgent != null)
+            navMeshAgent.enabled = false;
+    }
+
+    /// <summary>
+    /// 开启自动寻路
+    /// </summary>
+    public void OpenNavMeshAgent()
+    {
+        if (navMeshAgent != null)
+            navMeshAgent.enabled = true;
+    }
 }

@@ -3,17 +3,8 @@ using UnityEditor;
 using System.Collections.Generic;
 using System.Collections;
 
-public class NpcCustomerBuilder : BaseMonoBehaviour
+public class NpcCustomerBuilder : NpcNormalBuilder
 {
-    //添加的容器
-    public GameObject objContainer;
-    //顾客模型
-    public GameObject objCustomerModel;
-
-    //NPC数据管理
-    public NpcInfoManager npcInfoManager;
-    public CharacterBodyManager characterBodyManager;
-    public GameTimeHandler gameTimeHandler;
     // 结束点
     public Transform endPosition;
     public float startPositionRange = 2.5f;
@@ -64,7 +55,7 @@ public class NpcCustomerBuilder : BaseMonoBehaviour
     {
         if (npcInfoManager == null)
             return;
-        CharacterBean characterData = npcInfoManager.GetRandomCharacterData();
+        CharacterBean characterData = npcInfoManager.GetRandomCharacterData(1,1);
         if (characterData == null)
             return;
         //随机生成身体数据

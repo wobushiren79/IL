@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using UnityEditor;
+using System.Collections.Generic;
 
 public class CptUtil
 {
@@ -73,16 +74,51 @@ public class CptUtil
     /// 通过名字获取 所有子列表的控件
     /// </summary>
     /// <param name="tf"></param>
-    public static T GetAllCptInChildrenByName<T>(GameObject obj, string name) where T : Component
+    public static List<T> GetAllCptInChildrenByName<T>(GameObject obj, string name) where T : Component
     {
-        for (int i = 0; i < obj.transform.childCount; i++)
+        //for (int i = 0; i < obj.transform.childCount; i++)
+        //{
+        //    GameObject itemObj = obj.transform.GetChild(i).gameObject;
+        //    if (name.Equals(itemObj.name))
+        //    {
+        //        return itemObj.GetComponent<T>();
+        //    } 
+        //}
+        List<T> listCpt = new List<T>();
+        T[] cptList = obj.GetComponentsInChildren<T>();
+        foreach (T item in cptList)
         {
-            GameObject itemObj = obj.transform.GetChild(i).gameObject;
-            if (name.Equals(itemObj.name))
+            if (item.name.Equals(name))
             {
-                return itemObj.GetComponent<T>();
-            } 
+                listCpt.Add(item);
+            }
         }
-        return null;
+        return listCpt;
+    }
+
+    /// <summary>
+    /// 通过包含该名字获取 所有子列表的控件
+    /// </summary>
+    /// <param name="tf"></param>
+    public static List<T> GetAllCptInChildrenByContainName<T>(GameObject obj, string name) where T : Component
+    {
+        //for (int i = 0; i < obj.transform.childCount; i++)
+        //{
+        //    GameObject itemObj = obj.transform.GetChild(i).gameObject;
+        //    if (name.Equals(itemObj.name))
+        //    {
+        //        return itemObj.GetComponent<T>();
+        //    } 
+        //}
+        List<T> listCpt = new List<T>();
+        T[] cptList = obj.GetComponentsInChildren<T>();
+        foreach (T item in cptList)
+        {
+            if (item.name.Contains(name))
+            {
+                listCpt.Add(item);
+            }
+        }
+        return listCpt;
     }
 }

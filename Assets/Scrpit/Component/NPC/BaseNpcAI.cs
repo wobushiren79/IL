@@ -1,9 +1,12 @@
 ﻿using UnityEngine;
 using UnityEditor;
+using UnityEngine.AI;
 
 public class BaseNpcAI : BaseMonoBehaviour
 {
+    //角色数据
     public CharacterBean characterData;
+    //装备控制管理
     public GameItemsManager gameItemsManager;
     //角色移动控制
     public CharacterMoveCpt characterMoveCpt;
@@ -45,4 +48,5 @@ public class BaseNpcAI : BaseMonoBehaviour
         characterMoveCpt.StopAutoMove();
         characterMoveCpt.StopAnim();
     }
+
 }

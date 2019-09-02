@@ -9,6 +9,7 @@ public class SceneGameTownInit : BaseMonoBehaviour
     public NpcInfoManager npcInfoManager;
     public StoryInfoManager storyInfoManager;
     public NpcImportantBuilder npcImportantBuilder;
+    public NpcPasserBuilder npcPasserBuilder;
 
     public GameTimeHandler gameTimeHandler;
     public WeatherHandler weatherHandler;
@@ -34,6 +35,9 @@ public class SceneGameTownInit : BaseMonoBehaviour
         //构建重要的NPC
         if (npcImportantBuilder != null)
             npcImportantBuilder.BuildImportant();
+        //构建普通路人NPC
+        if (npcPasserBuilder != null)
+            npcPasserBuilder.BuilderPasserForInit(30);
 
         if (gameTimeHandler != null && gameDataManager != null)
         {
@@ -41,6 +45,7 @@ public class SceneGameTownInit : BaseMonoBehaviour
             gameTimeHandler.SetTime(timeData.hour, timeData.minute);
             gameTimeHandler.SetTimeStatus(false);
         }
+       
 
         //设置天气
         if (weatherHandler != null)

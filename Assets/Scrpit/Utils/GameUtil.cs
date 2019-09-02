@@ -4,6 +4,20 @@ using UnityEditor;
 public class GameUtil
 {
     /// <summary>
+    /// 获取tf里随机一个点
+    /// </summary>
+    /// <param name="tfTarget"></param>
+    /// <returns></returns>
+    public static Vector3 GetTransformInsidePosition2D(Transform tfTarget)
+    {
+        float tempX = tfTarget.localScale.x / 2f;
+        float tempY = tfTarget.localScale.y / 2f;
+        float randomXoff = Random.Range(-tempX, tempX);
+        float randomYoff = Random.Range(-tempY, tempY);
+        return new Vector3(tfTarget.position.x + randomXoff, tfTarget.position.y + randomYoff);
+    }
+
+    /// <summary>
     /// 获取屏幕宽
     /// </summary>
     /// <returns></returns>
