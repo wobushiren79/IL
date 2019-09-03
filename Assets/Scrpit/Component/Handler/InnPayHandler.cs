@@ -57,7 +57,7 @@ public class InnPayHandler : BaseMonoBehaviour
     /// <summary>
     /// 设置算账数据
     /// </summary>
-    public bool SetPay(NpcAICustomerCpt customer)
+    public bool SetPay(OrderForCustomer orderForCustomer)
     {
         lock (SetPayLock)
         {
@@ -69,7 +69,7 @@ public class InnPayHandler : BaseMonoBehaviour
                 NpcAIWorkerCpt npcAI = listAccountingCpt[i];
                 if (npcAI.workerIntent == NpcAIWorkerCpt.WorkerIntentEnum.Idle)
                 {
-                    float tempDistance = Vector2.Distance(customer.counterCpt.GetAccountingPosition(), npcAI.transform.position);
+                    float tempDistance = Vector2.Distance(orderForCustomer.counter.GetAccountingPosition(), npcAI.transform.position);
                     if (distance == 0 || tempDistance < distance)
                     {
                         distance = tempDistance;
@@ -77,10 +77,10 @@ public class InnPayHandler : BaseMonoBehaviour
                     }
                 }
             }
-            if (accountingCpt != null && customer.counterCpt.workerCpt == null)
+            if (accountingCpt != null && orderForCustomer.counter.workerCpt == null)
             {
-                customer.counterCpt.workerCpt = accountingCpt;
-                accountingCpt.SetIntentForAccounting(customer);
+                orderForCustomer.counter.workerCpt = accountingCpt;
+                accountingCpt.SetIntentForAccounting(orderForCustomer);
                 return true;
             }
             else

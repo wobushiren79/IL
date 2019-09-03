@@ -5,7 +5,7 @@ using System.Collections;
 public class NpcAIWorkerForAccountingCpt : BaseMonoBehaviour
 {
     private NpcAIWorkerCpt mNpcAIWorker;
-    public NpcAICustomerCpt customerCpt;
+    public OrderForCustomer orderForCustomer;
     //客栈处理
     public InnHandler innHandler;
     
@@ -47,7 +47,7 @@ public class NpcAIWorkerForAccountingCpt : BaseMonoBehaviour
     /// <returns></returns>
     public bool CheckCustomerLeave()
     {
-        if (customerCpt == null || customerCpt.intentType == NpcAICustomerCpt.CustomerIntentEnum.Leave)
+        if (orderForCustomer.customer == null || orderForCustomer.customer.intentType == NpcAICustomerCpt.CustomerIntentEnum.Leave)
         {
             StopAllCoroutines();
             SetStatusIdle();
@@ -59,13 +59,13 @@ public class NpcAIWorkerForAccountingCpt : BaseMonoBehaviour
         }
     }
 
-    public void SetAccounting(NpcAICustomerCpt customerCpt)
+    public void SetAccounting(OrderForCustomer  orderForCustomer)
     {
-        if (CheckUtil.CheckPath(transform.position, customerCpt.counterCpt.GetAccountingPosition()))
+        if (CheckUtil.CheckPath(transform.position, orderForCustomer.counter.GetAccountingPosition()))
         {
-            this.customerCpt = customerCpt;
+            this.orderForCustomer = orderForCustomer;
             accountingStatue = AccountingStatue.GoToAccounting;
-            mNpcAIWorker.characterMoveCpt.SetDestination(customerCpt.counterCpt.GetAccountingPosition());
+            mNpcAIWorker.characterMoveCpt.SetDestination(orderForCustomer.counter.GetAccountingPosition());
             accountingPro.SetActive(true);
         }
         else
@@ -79,8 +79,8 @@ public class NpcAIWorkerForAccountingCpt : BaseMonoBehaviour
     {
         yield return new WaitForSeconds(5);
         if (innHandler != null)
-            innHandler.PayMoney(customerCpt.foodCpt,1);
-        customerCpt.SetDestinationByIntent(NpcAICustomerCpt.CustomerIntentEnum.Leave);
+            innHandler.PayMoney(orderForCustomer,1);
+        orderForCustomer.customer.SetIntent(NpcAICustomerCpt.CustomerIntentEnum.Leave);
         SetStatusIdle();
     }
 
@@ -88,8 +88,8 @@ public class NpcAIWorkerForAccountingCpt : BaseMonoBehaviour
     {
         accountingStatue = AccountingStatue.Idle;
         mNpcAIWorker.workerIntent = NpcAIWorkerCpt.WorkerIntentEnum.Idle;
-        if (customerCpt != null && customerCpt.counterCpt != null)
-            customerCpt.counterCpt.workerCpt = null;
+        if (orderForCustomer != null && orderForCustomer.counter != null)
+            orderForCustomer.counter.workerCpt = null;
         accountingPro.SetActive(false);
     }
 }

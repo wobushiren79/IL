@@ -48,7 +48,7 @@ public class InnTableHandler : BaseMonoBehaviour
             if (idleTableList.Count == 0)
                 return null;
             BuildTableCpt buildTable = RandomUtil.GetRandomDataByList(idleTableList);
-            buildTable.tableState = BuildTableCpt.TableStateEnum.Ready;
+            buildTable.SetTableStatus(BuildTableCpt.TableStateEnum.Ready);
             return buildTable;
         }
     }

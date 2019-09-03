@@ -60,7 +60,7 @@ public class BuildStoveCpt : BaseBuildItemCpt
     /// 设置食物
     /// </summary>
     /// <param name="foodData"></param>
-    public void SetFood(MenuForCustomer foodData)
+    public void SetFood(OrderForCustomer orderForCustomer)
     {
         GameObject buildObj = GetBuilObj();
         Transform tfFoodFather = CptUtil.GetCptInChildrenByName<Transform>(buildObj, "Food");
@@ -71,10 +71,10 @@ public class BuildStoveCpt : BaseBuildItemCpt
             0);
         FoodForCustomerCpt foodCpt = foodObj.GetComponent<FoodForCustomerCpt>();
         foodCpt.innFoodManager = innFoodManager;
-        foodCpt.SetData(foodData);
-        foodData.customer.foodCpt = foodCpt;
+        foodCpt.SetData(orderForCustomer.foodData);
+        orderForCustomer.foodCpt= foodCpt;
         //送餐
-        innHandler.sendQueue.Add(foodCpt);
+        innHandler.sendQueue.Add(orderForCustomer);
     }
 
     /// <summary>

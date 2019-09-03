@@ -26,17 +26,26 @@ public class InnEntranceHandler : BaseMonoBehaviour
     /// 获取所有入口地址
     /// </summary>
     /// <returns></returns>
-    public List<Vector3> GetEntrancePositionList()
+    public List<BuildDoorCpt> GetEntranceList()
     {
         if (listDoorCpt == null)
             listDoorCpt = new List<BuildDoorCpt>();
-        List<Vector3> doorList = new List<Vector3>();
-        for (int i = 0; i < listDoorCpt.Count; i++)
-        {
-            BuildDoorCpt doorCpt = listDoorCpt[i];
-            if(doorCpt!=null)
-            doorList.Add(doorCpt.GetEntrancePosition());
-        }
-        return doorList;
+        return listDoorCpt;
+    }
+
+    /// <summary>
+    /// 获取随机一个入口附近的坐标
+    /// </summary>
+    /// <returns></returns>
+    public Vector3 GetRandomEntrancePosition()
+    {
+        BuildDoorCpt buildDoor = RandomUtil.GetRandomDataByList(GetEntranceList());
+        Transform tfEntrance = null;
+        if (buildDoor != null && buildDoor.entranceObj != null)
+            tfEntrance = buildDoor.entranceObj.transform;
+        if (tfEntrance != null)
+            return GameUtil.GetTransformInsidePosition2D(tfEntrance);
+        else
+            return Vector3.zero;
     }
 }

@@ -40,7 +40,7 @@ public class InnWaiterHandler : BaseMonoBehaviour
     /// 设置运送食物
     /// </summary>
     /// <returns></returns>
-    public bool SetSendFood(FoodForCustomerCpt foodCpt)
+    public bool SetSendFood(OrderForCustomer orderForCustomer)
     {
         lock (SetWaiterLock)
         {
@@ -52,7 +52,7 @@ public class InnWaiterHandler : BaseMonoBehaviour
                 //服务员空闲 并且能到达指定地点
                 if (npcAI.workerIntent == NpcAIWorkerCpt.WorkerIntentEnum.Idle)
                 {
-                    float  tempDistance = Vector2.Distance(foodCpt.transform.position, npcAI.transform.position);
+                    float  tempDistance = Vector2.Distance(orderForCustomer.foodCpt.transform.position, npcAI.transform.position);
                     if(distance==0 || tempDistance < distance)
                     {
                         distance = tempDistance;
@@ -62,7 +62,7 @@ public class InnWaiterHandler : BaseMonoBehaviour
             }
             if (waiterCpt != null)
             {
-                waiterCpt.SetIntentForWaiterSend(foodCpt);
+                waiterCpt.SetIntentForWaiterSend(orderForCustomer);
                 return true;
             }
             return false;
@@ -74,7 +74,7 @@ public class InnWaiterHandler : BaseMonoBehaviour
     /// 设置清理食物
     /// </summary>
     /// <returns></returns>
-    public bool SetClearFood(FoodForCustomerCpt foodCpt)
+    public bool SetClearFood(OrderForCustomer orderForCustomer)
     {
         lock (SetWaiterLock)
         {
@@ -90,7 +90,7 @@ public class InnWaiterHandler : BaseMonoBehaviour
             }
             if (waiterCpt != null)
             {
-                waiterCpt.SetIntentForWaiterClear(foodCpt);
+                waiterCpt.SetIntentForWaiterClear(orderForCustomer);
                 return true;
             }
             return false;

@@ -22,7 +22,7 @@ public class NpcNormalBuilder : BaseMonoBehaviour
     public bool isBuildNpc=false;
     //生成间隔
     public float buildInterval = 3;
-
+    public float buildMaxNumber = 100;
     /// <summary>
     /// 随机获取初始化点位置
     /// </summary>

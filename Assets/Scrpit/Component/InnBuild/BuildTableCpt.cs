@@ -7,9 +7,10 @@ public class BuildTableCpt : BaseBuildItemCpt
     {
         Idle=0,//空闲
         Ready=1,//有人,等待移动到座位并且点餐
-        Wait=2,//已经点餐，等待上菜
+        WaitFood=2,//已经点餐，等待上菜
         Eating=3,//吃饭中
-        Cleaning=4,//清理
+        WaitClean=4,//等待清理
+        Cleaning=5,//清理
     }
     public TableStateEnum tableState= TableStateEnum.Idle;
 
@@ -85,14 +86,47 @@ public class BuildTableCpt : BaseBuildItemCpt
     }
 
     /// <summary>
+    /// 设置桌子状态
+    /// </summary>
+    /// <param name="tableState"></param>
+    public void SetTableStatus(TableStateEnum tableState)
+    {
+        this.tableState = tableState;
+    }
+
+    /// <summary>
+    /// 初始化桌子
+    /// </summary>
+    public void InitTable()
+    {
+        FoodForCustomerCpt food = GetTable().GetComponentInChildren<FoodForCustomerCpt>();
+        if (food != null)
+            //删除桌子上的食物
+            Destroy(food.gameObject);
+        tableState = TableStateEnum.Idle;
+    }
+
+    /// <summary>
     /// 清理桌子
     /// </summary>
     public void ClearTable()
     {
-        FoodForCustomerCpt food= GetTable().GetComponentInChildren<FoodForCustomerCpt>();
-        if (food != null)
-            Destroy(food.gameObject);
-        tableState = TableStateEnum.Idle;
-        
+        switch (tableState)
+        {
+            case TableStateEnum.WaitClean:
+                //如果桌子等待清理中 则不做处理 等待清理人员将状态变为清理中再处理
+                break;
+            case TableStateEnum.Cleaning:
+                FoodForCustomerCpt food = GetTable().GetComponentInChildren<FoodForCustomerCpt>();
+                if (food != null)
+                    //删除桌子上的食物
+                    Destroy(food.gameObject);
+                tableState = TableStateEnum.Idle;
+                break;
+            default:
+                tableState = TableStateEnum.Idle;
+                break;
+        }
     }
+
 }

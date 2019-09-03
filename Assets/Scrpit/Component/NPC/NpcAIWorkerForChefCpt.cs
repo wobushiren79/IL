@@ -23,8 +23,8 @@ public class NpcAIWorkerForChefCpt : BaseMonoBehaviour
 
     //灶台
     public BuildStoveCpt stoveCpt;
-    //做的菜
-    public MenuForCustomer foodData;
+    //顾客的订单
+    public OrderForCustomer orderForCustomer;
     //烹饪点
     public List<Vector3> cookPositionList;
     //厨师状态
@@ -41,12 +41,12 @@ public class NpcAIWorkerForChefCpt : BaseMonoBehaviour
             case ChefStatue.GoToCook:
                 if (!CheckCustomerLeave() && mNpcAIWorker.characterMoveCpt.IsAutoMoveStop())
                 {
-                    bool canCook = mNpcAIWorker.gameDataManager.gameData.CheckCookFood(foodData.food);
+                    bool canCook = mNpcAIWorker.gameDataManager.gameData.CheckCookFood(orderForCustomer.foodData);
                     if (canCook)
                     {
                         //扣除食材
-                        mNpcAIWorker.gameDataManager.gameData.DeductIng(foodData.food);
-                        mNpcAIWorker.innHandler.ConsumeIngRecord(foodData.food);
+                        mNpcAIWorker.gameDataManager.gameData.DeductIng(orderForCustomer.foodData);
+                        mNpcAIWorker.innHandler.ConsumeIngRecord(orderForCustomer.foodData);
                         //开始做菜
                         chefStatue = ChefStatue.Cooking;
                         StartCoroutine(StartCook());
@@ -56,7 +56,7 @@ public class NpcAIWorkerForChefCpt : BaseMonoBehaviour
                     else
                     {
                         mNpcAIWorker.characterShoutCpt.Shout("缺少食材！");
-                        foodData.customer.SendForCanNotCook();
+                        orderForCustomer.customer.SendForCanNotCook();
                         SetStatusIdle();
                     }
 
@@ -78,7 +78,7 @@ public class NpcAIWorkerForChefCpt : BaseMonoBehaviour
     /// <returns></returns>
     public bool CheckCustomerLeave()
     {
-        if (foodData == null || foodData.customer == null || foodData.customer.intentType == NpcAICustomerCpt.CustomerIntentEnum.Leave)
+        if (orderForCustomer.foodData == null || orderForCustomer.customer == null || orderForCustomer.customer.intentType == NpcAICustomerCpt.CustomerIntentEnum.Leave)
         {
             StopAllCoroutines();
             cookPro.SetActive(false);
@@ -98,12 +98,12 @@ public class NpcAIWorkerForChefCpt : BaseMonoBehaviour
         mNpcAIWorker.characterMoveCpt.SetDestination(cookPosition);
     }
 
-    public void SetCookData(BuildStoveCpt stoveCpt, MenuForCustomer foodData)
+    public void SetCookData(BuildStoveCpt stoveCpt, OrderForCustomer orderForCustomer)
     {
         this.stoveCpt = stoveCpt;
-        this.foodData = foodData;
+        this.orderForCustomer = orderForCustomer;
         //如果顾客已经离开
-        if (foodData.customer == null || foodData.customer.intentType == NpcAICustomerCpt.CustomerIntentEnum.Leave)
+        if (orderForCustomer.customer == null || orderForCustomer.customer.intentType == NpcAICustomerCpt.CustomerIntentEnum.Leave)
         {
             SetStatusIdle();
             return;
@@ -121,9 +121,9 @@ public class NpcAIWorkerForChefCpt : BaseMonoBehaviour
 
     public IEnumerator StartCook()
     {
-        yield return new WaitForSeconds(foodData.food.cook_time);
+        yield return new WaitForSeconds(orderForCustomer.foodData.cook_time);
         cookPro.SetActive(false);
-        stoveCpt.SetFood(foodData);
+        stoveCpt.SetFood(orderForCustomer);
         stoveCpt.ClearChef();
         chefStatue = ChefStatue.Idle;
         mNpcAIWorker.workerIntent = NpcAIWorkerCpt.WorkerIntentEnum.Idle;

@@ -56,39 +56,39 @@ public class NpcAIWorkerCpt : BaseNpcAI
     /// <summary>
     /// 设置料理
     /// </summary>
-    public void SetIntentForCook(BuildStoveCpt stoveCpt,MenuForCustomer foodData)
+    public void SetIntentForCook(BuildStoveCpt stoveCpt,OrderForCustomer orderForCustomer)
     {
         workerIntent = WorkerIntentEnum.Cook;
-        aiForChef.SetCookData(stoveCpt, foodData);
+        aiForChef.SetCookData(stoveCpt, orderForCustomer);
     }
 
     /// <summary>
     /// 设置跑堂
     /// </summary>
     /// <param name="stoveCpt"></param>
-    public void SetIntentForWaiterSend(FoodForCustomerCpt food)
+    public void SetIntentForWaiterSend(OrderForCustomer orderForCustomer)
     {
         workerIntent = WorkerIntentEnum.Waiter;
-        aiForWaiter.SetFoodSend(food);
+        aiForWaiter.SetFoodSend(orderForCustomer);
     }
 
     /// <summary>
-    /// 设置跑堂
+    /// 设置清理
     /// </summary>
     /// <param name="stoveCpt"></param>
-    public void SetIntentForWaiterClear(FoodForCustomerCpt food)
+    public void SetIntentForWaiterClear(OrderForCustomer orderForCustomer)
     {
         workerIntent = WorkerIntentEnum.Waiter;
-        aiForWaiter.SetFoodClear(food);
+        aiForWaiter.SetFoodClear(orderForCustomer);
     }
 
     /// <summary>
     /// 设置结账
     /// </summary>
     /// <param name="customerCpt"></param>
-    public void SetIntentForAccounting(NpcAICustomerCpt customerCpt)
+    public void SetIntentForAccounting(OrderForCustomer orderForCustomer)
     {
         workerIntent = WorkerIntentEnum.Accounting;
-        aiForAccounting.SetAccounting(customerCpt);
+        aiForAccounting.SetAccounting(orderForCustomer);
     }
 }

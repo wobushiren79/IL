@@ -33,13 +33,14 @@ public class InnHandler : BaseMonoBehaviour
     //排队的人
     public List<NpcAICustomerCpt> cusomerQueue = new List<NpcAICustomerCpt>();
     //排队等待烹饪的食物
-    public List<MenuForCustomer> foodQueue = new List<MenuForCustomer>();
+    public List<OrderForCustomer> foodQueue = new List<OrderForCustomer>();
     //排队送餐的食物
-    public List<FoodForCustomerCpt> sendQueue = new List<FoodForCustomerCpt>();
+    public List<OrderForCustomer> sendQueue = new List<OrderForCustomer>();
     //排队清理的食物
-    public List<FoodForCustomerCpt> clearQueue = new List<FoodForCustomerCpt>();
-    //顾客列表
-    public List<NpcAICustomerCpt> cusomerList = new List<NpcAICustomerCpt>();
+    public List<OrderForCustomer> clearQueue = new List<OrderForCustomer>();
+
+    //总体顾客列表
+    public List<OrderForCustomer> cusomerList = new List<OrderForCustomer>();
     //当天记录流水
     public InnRecordBean innRecord = new InnRecordBean();
 
@@ -76,9 +77,15 @@ public class InnHandler : BaseMonoBehaviour
                 BuildTableCpt tableCpt = innTableHandler.GetIdleTable();
                 if (tableCpt != null)
                 {
-                    NpcAICustomerCpt npc = cusomerQueue[0];
+                    //排队成功
+                    NpcAICustomerCpt customer = cusomerQueue[0];
+                    //添加一个订单
+                    OrderForCustomer orderForCustomer = CreateOrder(customer, tableCpt);
+                    cusomerList.Add(orderForCustomer);
+                    //设置客户前往座位
+                    customer.SetIntent(NpcAICustomerCpt.CustomerIntentEnum.GotoSeat, orderForCustomer);
+                    //移除排队列表
                     cusomerQueue.RemoveAt(0);
-                    npc.SetTable(tableCpt);
                 }
             }
             //排队支付处理
@@ -133,27 +140,16 @@ public class InnHandler : BaseMonoBehaviour
         //驱除所有顾客
         for (int i = 0; i < cusomerList.Count; i++)
         {
-            NpcAICustomerCpt npcAI = cusomerList[i];
-            if (npcAI.tableForEating != null)
-                npcAI.tableForEating.tableState = BuildTableCpt.TableStateEnum.Idle;
-            if (npcAI.foodCpt != null)
-                Destroy(npcAI.foodCpt.gameObject);
-            Destroy(npcAI.gameObject);
-        }
-        for (int i = 0; i < sendQueue.Count; i++)
-        {
-            FoodForCustomerCpt food = sendQueue[i];
-            Destroy(food.gameObject);
-        }
-        for (int i = 0; i < clearQueue.Count; i++)
-        {
-            FoodForCustomerCpt food = clearQueue[i];
-            Destroy(food.gameObject);
+            OrderForCustomer orderCusomer = cusomerList[i];
+            if (orderCusomer.customer != null && orderCusomer.customer.gameObject != null)
+                Destroy(orderCusomer.customer.gameObject);
+            if (orderCusomer.foodCpt != null && orderCusomer.foodCpt.gameObject != null)
+                Destroy(orderCusomer.foodCpt.gameObject);
         }
         for (int i = 0; i < innTableHandler.listTableCpt.Count; i++)
         {
             BuildTableCpt buildTableCpt = innTableHandler.listTableCpt[i];
-            buildTableCpt.ClearTable();
+            buildTableCpt.InitTable();
         };
 
         cusomerQueue.Clear();
@@ -172,27 +168,39 @@ public class InnHandler : BaseMonoBehaviour
     }
 
     /// <summary>
+    /// 创建一个订单
+    /// </summary>
+    /// <param name="npc"></param>
+    /// <returns></returns>
+    public OrderForCustomer CreateOrder(NpcAICustomerCpt npc, BuildTableCpt table)
+    {
+        OrderForCustomer order = new OrderForCustomer();
+        order.customer = npc;
+        order.table = table;
+        return order;
+    }
+
+    /// <summary>
     /// 点餐
     /// </summary>
     /// <returns></returns>
-    public MenuInfoBean OrderForFood(NpcAICustomerCpt customerCpt, BuildTableCpt table)
+    public MenuInfoBean OrderForFood(OrderForCustomer orderForCustomer)
     {
+        //获取正在出售的菜品
         List<MenuOwnBean> listOwnMenu = gameDataManager.gameData.GetSellMenuList();
         if (listOwnMenu.Count == 0)
             return null;
+        //随机获取一个菜品
         MenuOwnBean menuOwnItem = RandomUtil.GetRandomDataByList(listOwnMenu);
         if (menuOwnItem == null)
             return null;
+        //食物数据库里有这个数据
         if (innFoodManager.listMenuData.TryGetValue(menuOwnItem.menuId, out MenuInfoBean menuInfo))
         {
-            MenuForCustomer menuForCustomer = new MenuForCustomer();
-            menuForCustomer.food = menuInfo;
-            menuForCustomer.customer = customerCpt;
-            menuForCustomer.table = table;
-            foodQueue.Add(menuForCustomer);
+            orderForCustomer.foodData = menuInfo;
+            foodQueue.Add(orderForCustomer);
             return menuInfo;
         }
-
         return null;
     }
 
@@ -216,39 +224,39 @@ public class InnHandler : BaseMonoBehaviour
     }
 
     /// <summary>
-    /// 获取所有入口
+    ///  获取随机一个入口附近的坐标
     /// </summary>
     /// <returns></returns>
-    public List<Vector3> GetEntrancePositionList()
+    public Vector3 GetRandomEntrancePosition()
     {
-        return innEntranceHandler.GetEntrancePositionList();
+        return innEntranceHandler.GetRandomEntrancePosition();
     }
 
     /// <summary>
     /// 付钱
     /// </summary>
     /// <param name="food"></param>
-    public void PayMoney(FoodForCustomerCpt foodCpt, float multiple)
+    public void PayMoney(OrderForCustomer order, float multiple)
     {
         //账本记录
-        if (innRecord.sellNumber.ContainsKey(foodCpt.foodData.food.id))
-            innRecord.sellNumber[foodCpt.foodData.food.id] += 1;
+        if (innRecord.sellNumber.ContainsKey(order.foodData.id))
+            innRecord.sellNumber[order.foodData.id] += 1;
         else
-            innRecord.sellNumber.Add(foodCpt.foodData.food.id, 1);
-        innRecord.incomeS += foodCpt.foodData.food.price_s;
-        innRecord.incomeM += foodCpt.foodData.food.price_m;
-        innRecord.incomeL += foodCpt.foodData.food.price_l;
+            innRecord.sellNumber.Add(order.foodData.id, 1);
+        innRecord.incomeS += order.foodData.price_s;
+        innRecord.incomeM += order.foodData.price_m;
+        innRecord.incomeL += order.foodData.price_l;
         //记录+1
-        gameDataManager.gameData.ChangeMenuSellNumber(1, foodCpt.foodData.food.id);
+        gameDataManager.gameData.ChangeMenuSellNumber(1, order.foodData.id);
         //金钱增加
-        gameDataManager.gameData.moneyS += (long)(foodCpt.foodData.food.price_s * multiple);
-        gameDataManager.gameData.moneyM += (long)(foodCpt.foodData.food.price_m * multiple);
-        gameDataManager.gameData.moneyL += (long)(foodCpt.foodData.food.price_l * multiple);
-        innPayHandler.ShowPayEffects
-            (foodCpt.foodData.customer.transform.position,
-            foodCpt.foodData.food.price_l,
-            foodCpt.foodData.food.price_m,
-            foodCpt.foodData.food.price_s);
+        gameDataManager.gameData.moneyS += (long)(order.foodData.price_s * multiple);
+        gameDataManager.gameData.moneyM += (long)(order.foodData.price_m * multiple);
+        gameDataManager.gameData.moneyL += (long)(order.foodData.price_l * multiple);
+        innPayHandler.ShowPayEffects(
+            order.customer.transform.position,
+            order.foodData.price_l,
+            order.foodData.price_m,
+            order.foodData.price_s);
     }
 
     /// <summary>

@@ -60,7 +60,7 @@ public class InnCookHandler : BaseMonoBehaviour
     /// <summary>
     ///  分配厨师做饭
     /// </summary>
-    public bool SetChefForCook(MenuForCustomer foodData)
+    public bool SetChefForCook(OrderForCustomer foodData)
     {
         lock (SetChefLock)
         {

@@ -19,8 +19,8 @@ public class BuildCounterCpt : BaseBuildItemCpt
     public GameObject downPayPosition;
     public GameObject downAccountingPosition;
 
-    //排队算账的人
-    public List<NpcAICustomerCpt> payQueue = new List<NpcAICustomerCpt>();
+    //排队算账的订单
+    public List<OrderForCustomer> payQueue = new List<OrderForCustomer>();
 
     /// <summary>
     /// 获取付款位置
@@ -31,13 +31,13 @@ public class BuildCounterCpt : BaseBuildItemCpt
         switch (direction)
         {
             case Direction2DEnum.Left:
-                return leftPayPosition.transform.position;
+                return GameUtil.GetTransformInsidePosition2D(leftPayPosition.transform);
             case Direction2DEnum.Right:
-                return rightPayPosition.transform.position;
+                return GameUtil.GetTransformInsidePosition2D(rightPayPosition.transform);
             case Direction2DEnum.UP:
-                return upPayPosition.transform.position;
+                return GameUtil.GetTransformInsidePosition2D(upPayPosition.transform);
             case Direction2DEnum.Down:
-                return downPayPosition.transform.position;
+                return GameUtil.GetTransformInsidePosition2D(downPayPosition.transform);
         }
         return transform.position;
     }

@@ -43,11 +43,8 @@ public class NpcWorkerBuilder : BaseMonoBehaviour
         workerObj.SetActive(true);
         workerObj.transform.localScale = new Vector3(2, 2);
         //获取门的坐标 并在门周围生成NPC
-        List<Vector3> doorList = innHandler.GetEntrancePositionList();
-        Vector3 doorPosition = RandomUtil.GetRandomDataByList(doorList);
-        float npcPositionX = Random.Range(doorPosition.x - 0.5f, doorPosition.x + 0.5f);
-        float npcPositionY = Random.Range(doorPosition.y-1f, 0f);
-        workerObj.transform.position = new Vector3(npcPositionX, npcPositionY);
+        Vector3 doorPosition = innHandler.GetRandomEntrancePosition();
+        workerObj.transform.position = doorPosition;
 
         NpcAIWorkerCpt npcAI = workerObj.GetComponent<NpcAIWorkerCpt>();
         npcAI.SetCharacterData(characterBean);

@@ -26,22 +26,24 @@ public class NpcAICustomerCpt : BaseNpcAI
     public CharacterMoodCpt characterMoodCpt;
     //喊叫控制
     public CharacterShoutCpt characterShoutCpt;
-    //评价系统
-    public InnEvaluationBean innEvaluation = new InnEvaluationBean();
+
 
     //客栈处理
     public InnHandler innHandler;
-    //终点
-    public Vector3 endPosition;
-    public Vector3 doorPosition;
-    //等到的位置
-    public BuildTableCpt tableForEating;
-    //做好的食物
-    public FoodForCustomerCpt foodCpt;
-    //支付的地方
-    public BuildCounterCpt counterCpt;
-    //等待支付时距离柜台的距离
-    public float waitPayDistance;
+    //客栈区域数据管理
+    public SceneInnManager sceneInnManager;
+
+    //移动目标点
+    public Vector3 movePosition;
+
+    //根据客人点餐生成的点餐数据
+    public OrderForCustomer orderForCustomer;
+
+    //等待座位的时间
+    public float timeWaitSeat = 20;
+    //评价数据
+    public InnEvaluationBean innEvaluation = new InnEvaluationBean();
+
     private void FixedUpdate()
     {
         switch (intentType)
@@ -49,66 +51,244 @@ public class NpcAICustomerCpt : BaseNpcAI
             case CustomerIntentEnum.Walk:
             case CustomerIntentEnum.Leave:
                 // if ( Vector2.Distance(transform.position, endPosition) < 3)
+                //到目标点就删除
                 if (characterMoveCpt.IsAutoMoveStop())
-                {
                     Destroy(gameObject);
-                }
                 break;
             case CustomerIntentEnum.Want:
                 if (characterMoveCpt.IsAutoMoveStop())
                 {
+                    //判断点是否关门
                     if (innHandler.innStatus == InnHandler.InnStatusEnum.Open)
-                    {
-                        StopMove();
-                        SetDestinationByIntent(CustomerIntentEnum.WaitSeat);
-                    }
+                        SetIntent(CustomerIntentEnum.WaitSeat);
                     else
-                    {
-                        SetDestinationByIntent(CustomerIntentEnum.Leave);
-                    }
+                        SetIntent(CustomerIntentEnum.Leave);
                 }
                 break;
             case CustomerIntentEnum.GotoSeat:
                 if (characterMoveCpt.IsAutoMoveStop())
                 {
-                    SetDestinationByIntent(CustomerIntentEnum.WaitFood);
                     //点餐
-                    MenuInfoBean foodData = innHandler.OrderForFood(this, tableForEating);
-                    if (foodData == null)
+                    innHandler.OrderForFood(orderForCustomer);
+                    if (orderForCustomer.foodData == null)
                     {
-                        MoodGet(-100);
-                        tableForEating.ClearTable();
-                        SetDestinationByIntent(CustomerIntentEnum.Leave);
+                        //如果没有菜品出售 心情直接降100 
+                        ChangeMood(-100);
+                        //离开
+                        SetIntent(CustomerIntentEnum.Leave);
                     }
                     else
                     {
-                        characterShoutCpt.Shout(foodData.name);
+                        //喊出需要的菜品
+                        characterShoutCpt.Shout(orderForCustomer.foodData.name);
+                        //设置等待食物
+                        SetIntent(CustomerIntentEnum.WaitFood);
                     }
                 }
                 break;
-            case CustomerIntentEnum.GotoPay:
-                if (Vector2.Distance(transform.position, counterCpt.GetPayPosition()) < waitPayDistance)
-                {
-                    characterMoveCpt.StopAutoMove();
-                    SetDestinationByIntent(CustomerIntentEnum.WaitPay);
-                    counterCpt.payQueue.Add(this);
-                }
-                break;
             case CustomerIntentEnum.WaitFood:
-                MoodLose();
-                if (innEvaluation.mood <= 0)
+                ChangeMood(-Time.deltaTime);
+                break;
+            case CustomerIntentEnum.GotoPay:
+                if (characterMoveCpt.IsAutoMoveStop())
                 {
-                    tableForEating.ClearTable();
+                    SetIntent(CustomerIntentEnum.WaitPay);
                 }
                 break;
             case CustomerIntentEnum.WaitPay:
-                MoodLose();
+                ChangeMood(-Time.deltaTime);
                 if (innEvaluation.mood <= 0)
                 {
-                    innHandler.PayMoney(foodCpt, 0.5f);
+                    innHandler.PayMoney(orderForCustomer, 0.5f);
                 }
                 break;
         }
+    }
+
+    /// <summary>
+    /// 根据意图设置目的地
+    /// </summary>
+    public void SetIntent(CustomerIntentEnum intent)
+    {
+        SetIntent(intent, null);
+    }
+
+    public void SetIntent(CustomerIntentEnum intent, OrderForCustomer orderForCustomer)
+    {
+        this.intentType = intent;
+        switch (intentType)
+        {
+            case CustomerIntentEnum.Walk:
+                IntentForWalk();
+                break;
+            case CustomerIntentEnum.Want:
+                IntentForWant();
+                break;
+            case CustomerIntentEnum.WaitSeat:
+                IntentForWaitSeat();
+                break;
+            case CustomerIntentEnum.GotoSeat:
+                IntentForGoToSeat(orderForCustomer);
+                break;
+            case CustomerIntentEnum.WaitFood:
+                IntentForWaitFood();
+                break;
+            case CustomerIntentEnum.Eatting:
+                IntentForEatting();
+                break;
+            case CustomerIntentEnum.GotoPay:
+                IntentForGotoPay();
+                break;
+            case CustomerIntentEnum.WaitPay:
+                IntentForWaitPay();
+                break;
+            case CustomerIntentEnum.Leave:
+                IntentForLeave();
+                break;
+        }
+    }
+
+    /// <summary>
+    /// 意图-散步
+    /// </summary>
+    public void IntentForWalk()
+    {
+        if (sceneInnManager == null)
+            return;
+        if (transform.position.x > 0)
+            //如果角色在右边生成 出口则设置为左边
+            movePosition = sceneInnManager.GetRandomSceneExportPosition(1);
+        else
+            //如果角色在左边生成 出口则设置为右边
+            movePosition = sceneInnManager.GetRandomSceneExportPosition(0);
+        characterMoveCpt.SetDestination(movePosition);
+    }
+
+    /// <summary>
+    /// 意图-想要就餐
+    /// </summary>
+    public void IntentForWant()
+    {
+        //移动到门口附近
+        Vector3 doorPosition = innHandler.GetRandomEntrancePosition();
+        if (doorPosition == null || doorPosition == Vector3.zero)
+            //如果找不到门则离开 散散步
+            SetIntent(CustomerIntentEnum.Walk);
+        else
+            //前往门
+            characterMoveCpt.SetDestination(doorPosition);
+    }
+
+    /// <summary>
+    /// 意图-排队就餐
+    /// </summary>
+    public void IntentForWaitSeat()
+    {
+        //加入排队队伍
+        innHandler.cusomerQueue.Add(this);
+        StartCoroutine(StartWaitSeat());
+    }
+
+    /// <summary>
+    /// 意图-前往餐桌
+    /// </summary>
+    /// <param name="buildTableCpt"></param>
+    public void IntentForGoToSeat(OrderForCustomer orderForCustomer)
+    {
+        //停止等待
+        StopAllCoroutines();
+        this.orderForCustomer = orderForCustomer;
+        //判断路径是否有效
+        if (CheckUtil.CheckPath(transform.position, orderForCustomer.table.GetSeatPosition()))
+        {
+            //开启满意度
+            characterMoodCpt.OpenMood();
+            characterMoodCpt.SetMood(innEvaluation.mood);
+            //前往桌子
+            movePosition = orderForCustomer.table.GetSeatPosition();
+            characterMoveCpt.SetDestination(movePosition);
+        }
+        else
+        {
+            SetIntent(CustomerIntentEnum.Leave);
+        }
+    }
+
+    /// <summary>
+    /// 意图-等待食物
+    /// </summary>
+    public void IntentForWaitFood()
+    {
+        if (orderForCustomer.table != null)
+            orderForCustomer.table.SetTableStatus(BuildTableCpt.TableStateEnum.WaitFood);
+    }
+
+    /// <summary>
+    /// 意图-吃饭中
+    /// </summary>
+    public void IntentForEatting()
+    {
+        //停止等待
+        StopAllCoroutines();
+        //好感+20
+        ChangeMood(20);
+        //设置桌子状态
+        if (orderForCustomer.table != null)
+            orderForCustomer.table.SetTableStatus(BuildTableCpt.TableStateEnum.Eating);
+        //开始吃
+        StartCoroutine(StartEat());
+    }
+
+    /// <summary>
+    /// 意图-去结账
+    /// </summary>
+    public void IntentForGotoPay()
+    {
+        orderForCustomer.counter = innHandler.GetCounter();
+        //如果判断有无结算台
+        if (orderForCustomer.counter == null)
+        {
+            SetIntent(CustomerIntentEnum.Leave);
+        }
+        else
+        {
+            movePosition = orderForCustomer.counter.GetPayPosition();
+            characterMoveCpt.SetDestination(movePosition);
+        }
+    }
+
+    /// <summary>
+    /// 意图-等待结算
+    /// </summary>
+    public void IntentForWaitPay()
+    {
+        orderForCustomer.counter.payQueue.Add(orderForCustomer);
+    }
+
+    /// <summary>
+    /// 意图-离开
+    /// </summary>
+    public void IntentForLeave()
+    {
+        //清理桌子
+        if (orderForCustomer != null && orderForCustomer.table != null)
+        {
+            orderForCustomer.table.ClearTable();
+        }
+        //如果在排队则移除排队列表
+        if (innHandler.cusomerQueue.Contains(this))
+        {
+            innHandler.cusomerQueue.Remove(this);
+        }
+        //如果在顾客列表 则移除顾客列表
+        if (innHandler.cusomerList.Contains(orderForCustomer))
+        {
+            innHandler.cusomerList.Remove(orderForCustomer);
+        }
+        innHandler.CanelOrder(this);
+        //随机获取一个退出点
+        movePosition = sceneInnManager.GetRandomSceneExportPosition();
+        characterMoveCpt.SetDestination(movePosition);
     }
 
     /// <summary>
@@ -117,154 +297,49 @@ public class NpcAICustomerCpt : BaseNpcAI
     public void SendForCanNotCook()
     {
         StopAllCoroutines();
-        MoodGet(-100);
-        tableForEating.ClearTable();
-        SetDestinationByIntent(CustomerIntentEnum.Leave);
+        ChangeMood(-100);
+        SetIntent(CustomerIntentEnum.Leave);
     }
 
     /// <summary>
-    /// 心情递减
+    /// 改变心情
     /// </summary>
-    public void MoodLose()
-    {
-        innEvaluation.mood -= Time.deltaTime;
-        characterMoodCpt.SetMood(innEvaluation.mood);
-        if (innEvaluation.mood <= 0)
-        {
-            SetDestinationByIntent(CustomerIntentEnum.Leave);
-        }
-    }
-
-    public void MoodGet(float mood)
+    /// <param name="mood"></param>
+    public void ChangeMood(float mood)
     {
         innEvaluation.mood += mood;
         characterMoodCpt.SetMood(innEvaluation.mood);
-    }
-
-    /// <summary>
-    /// 设置餐桌
-    /// </summary>
-    /// <param name="buildTableCpt"></param>
-    public void SetTable(BuildTableCpt buildTableCpt)
-    {
-        StopAllCoroutines();
-        this.tableForEating = buildTableCpt;
-        SetDestinationByIntent(CustomerIntentEnum.GotoSeat);
-    }
-
-    /// <summary>
-    /// 设置终点
-    /// </summary>
-    /// <param name="endPosition"></param>
-    public void SetEndPosition(Vector3 endPosition)
-    {
-        this.endPosition = endPosition;
-    }
-
-    /// <summary>
-    /// 根据意图设置目的地
-    /// </summary>
-    /// 
-    public void SetDestinationByIntent(CustomerIntentEnum intent, FoodForCustomerCpt foodCpt)
-    {
-        StopAllCoroutines();
-        this.foodCpt = foodCpt;
-        SetDestinationByIntent(intent);
-    }
-
-    public void SetDestinationByIntent(CustomerIntentEnum intent)
-    {
-        this.intentType = intent;
-        switch (intentType)
+        if (innEvaluation.mood <= 0)
         {
-            case CustomerIntentEnum.Walk:
-                characterMoveCpt.SetDestination(endPosition);
-                break;
-            case CustomerIntentEnum.Want:
-                //移动到门口附近
-                Vector3 door = RandomUtil.GetRandomDataByList(innHandler.GetEntrancePositionList());
-                if (door == null || door == Vector3.zero)
-                {
-                    SetDestinationByIntent(CustomerIntentEnum.Leave);
-                }
-                else
-                {
-                    doorPosition = new Vector3(Random.Range(door.x - 0.5f, door.x + 0.5f), Random.Range(door.y - 0.7f, door.y - 0.2f));
-                    characterMoveCpt.SetDestination(doorPosition);
-                }
-                break;
-            case CustomerIntentEnum.WaitSeat:
-                //加入排队队伍
-                innHandler.cusomerQueue.Add(this);
-                innHandler.cusomerList.Add(this);
-                StartCoroutine(StartWaitSeat());
-                break;
-            case CustomerIntentEnum.GotoSeat:
-                //判断路径是否有效
-                if (CheckUtil.CheckPath(transform.position, tableForEating.GetSeatPosition()))
-                {
-                    characterMoodCpt.OpenMood();
-                    characterMoodCpt.SetMood(innEvaluation.mood);
-                    characterMoveCpt.SetDestination(tableForEating.GetSeatPosition());
-                }
-                else
-                {
-                    if (tableForEating != null)
-                        tableForEating.tableState = BuildTableCpt.TableStateEnum.Idle;
-                    SetDestinationByIntent(CustomerIntentEnum.Leave);
-                }
-                break;
-            case CustomerIntentEnum.Eatting:
-                MoodGet(20);
-                StartCoroutine(StartEat());
-                break;
-            case CustomerIntentEnum.GotoPay:
-                counterCpt = innHandler.GetCounter();
-                if (counterCpt == null)
-                {
-                    SetDestinationByIntent(CustomerIntentEnum.Leave);
-                }
-                else
-                {
-                    characterMoveCpt.SetDestination(counterCpt.GetPayPosition());
-                }
-
-                break;
-            case CustomerIntentEnum.Leave:
-                if (innHandler.cusomerQueue.Contains(this))
-                {
-                    innHandler.cusomerQueue.Remove(this);
-                }
-                if (innHandler.cusomerList.Contains(this))
-                {
-                    innHandler.cusomerList.Remove(this);
-                }
-                innHandler.CanelOrder(this);
-                characterMoveCpt.SetDestination(endPosition);
-                break;
+            SetIntent(CustomerIntentEnum.Leave);
         }
     }
 
     /// <summary>
-    /// 开始吃
+    /// 开始吃计时
     /// </summary>
     /// <returns></returns>
     public IEnumerator StartEat()
     {
         yield return new WaitForSeconds(5);
-        waitPayDistance = Random.Range(0.1f, 0.5f);
-        SetDestinationByIntent(CustomerIntentEnum.GotoPay);
-        foodCpt.FinishFood();
-        innHandler.clearQueue.Add(foodCpt);
+        //吃完食物
+        orderForCustomer.foodCpt.FinishFood(orderForCustomer.foodData);
+        //设置桌子为待清理
+        if (orderForCustomer.table != null)
+            orderForCustomer.table.SetTableStatus(BuildTableCpt.TableStateEnum.WaitClean);
+        //清理列队增加
+        innHandler.clearQueue.Add(orderForCustomer);
+        //去结账
+        SetIntent(CustomerIntentEnum.GotoPay);
     }
 
     /// <summary>
-    /// 开始等待
+    /// 开始等待就餐计时
     /// </summary>
     /// <returns></returns>
     public IEnumerator StartWaitSeat()
     {
-        yield return new WaitForSeconds(20);
-        SetDestinationByIntent(CustomerIntentEnum.Leave);
+        yield return new WaitForSeconds(timeWaitSeat);
+        SetIntent(CustomerIntentEnum.Leave);
     }
 }

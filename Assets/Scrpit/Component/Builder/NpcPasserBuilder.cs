@@ -37,6 +37,9 @@ public class NpcPasserBuilder : NpcNormalBuilder
 
     public void BuilderPasser(Vector3 npcPosition)
     {
+        //如果大于构建上线则不再创建新NPC
+        if (objContainer.transform.childCount > buildMaxNumber)
+            return;
         //生成NPC
         GameObject npcObj = BuildNpc(npcPosition);
         //设置意图

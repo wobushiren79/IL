@@ -51,7 +51,17 @@ public class NpcAIPasserCpt : BaseNpcAI
                     transform.position = buildingOutDoorPosition;
                     //离开建筑后开启自动寻路
                     characterMoveCpt.OpenNavMeshAgent();
-                    SetIntent(PasserIntentEnum.LeaveTown);
+                    //有一定概率去下一个地点
+                    int isLeave = Random.Range(0, 2);
+                    if (isLeave == 1)
+                    {
+                        SetIntent(PasserIntentEnum.LeaveTown);
+                    }
+                    else
+                    {
+                        SceneTownManager.TownBuildingEnum buildingToGo = RandomUtil.GetRandomEnum<SceneTownManager.TownBuildingEnum>();
+                        SetIntent(NpcAIPasserCpt.PasserIntentEnum.GoToBuilding, buildingToGo);
+                    }
                 }
                 break;
         }
@@ -65,7 +75,6 @@ public class NpcAIPasserCpt : BaseNpcAI
     public void SetIntent(PasserIntentEnum passerIntent, SceneTownManager.TownBuildingEnum buildingEnum)
     {
         this.passerIntent = passerIntent;
-
         switch (passerIntent)
         {
             case PasserIntentEnum.LeaveTown:
@@ -86,7 +95,6 @@ public class NpcAIPasserCpt : BaseNpcAI
     {
         SetIntent(passerIntent, SceneTownManager.TownBuildingEnum.Guild);
     }
-
 
     /// <summary>
     /// 离开城镇
@@ -134,9 +142,9 @@ public class NpcAIPasserCpt : BaseNpcAI
         StartCoroutine(StayTimeCountdown(buildingEnum));
     }
 
-   /// <summary>
-   /// 离开建筑物
-   /// </summary>
+    /// <summary>
+    /// 离开建筑物
+    /// </summary>
     public void IntentForLeaveBuilding()
     {
         //前往门口
