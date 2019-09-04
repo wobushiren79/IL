@@ -4,12 +4,11 @@ using System.Collections.Generic;
 
 public class BuildStoveCpt : BaseBuildItemCpt
 {
-    //当前操作厨师
-    public NpcAIWorkerCpt chefCpt;
-    //客栈管理
-    public InnHandler innHandler;
-    //食物资源管理
-    public InnFoodManager innFoodManager;
+    public enum StoveStatusEnum {
+        Idle = 0,//空闲
+        Ready = 1,//准备中
+        Cooking = 2,//料理中
+    }
 
     public GameObject leftTakeFoodObj;
     public GameObject RightTakeFoodObj;
@@ -18,6 +17,8 @@ public class BuildStoveCpt : BaseBuildItemCpt
 
     //食物模型
     public GameObject itemFoodModel;
+
+    public StoveStatusEnum stoveStatus = StoveStatusEnum.Idle;
 
     /// <summary>
     /// 获取获取食物坐标
@@ -40,59 +41,51 @@ public class BuildStoveCpt : BaseBuildItemCpt
     }
 
     /// <summary>
-    /// 设置初始
-    /// </summary>
-    /// <param name="chef"></param>
-    public void SetChef(NpcAIWorkerCpt chef)
-    {
-        this.chefCpt = chef;
-    }
-
-    /// <summary>
-    /// 清楚厨师
-    /// </summary>
-    public void ClearChef()
-    {
-        chefCpt = null;
-    }
-
-    /// <summary>
     /// 设置食物
     /// </summary>
     /// <param name="foodData"></param>
-    public void SetFood(OrderForCustomer orderForCustomer)
+    public void CreateFood(InnFoodManager innFoodManager, OrderForCustomer orderForCustomer)
     {
         GameObject buildObj = GetBuilObj();
         Transform tfFoodFather = CptUtil.GetCptInChildrenByName<Transform>(buildObj, "Food");
+        //创建食物
         GameObject foodObj = Instantiate(itemFoodModel, tfFoodFather);
-        foodObj.transform.position = new Vector3
-            (Random.Range(foodObj.transform.position.x - 0.2f, foodObj.transform.position.x + 0.2f),
-            Random.Range(foodObj.transform.position.y - 0.2f, foodObj.transform.position.y + 0.2f),
-            0);
+        foodObj.SetActive(true);
+        foodObj.transform.position = GameUtil.GetTransformInsidePosition2D(tfFoodFather);
         FoodForCustomerCpt foodCpt = foodObj.GetComponent<FoodForCustomerCpt>();
         foodCpt.innFoodManager = innFoodManager;
         foodCpt.SetData(orderForCustomer.foodData);
         orderForCustomer.foodCpt= foodCpt;
-        //送餐
-        innHandler.sendQueue.Add(orderForCustomer);
     }
 
     /// <summary>
     /// 获取烹饪点
     /// </summary>
     /// <returns></returns>
-    public List<Vector3> GetCookPosition()
+    public Vector3 GetCookPosition()
     {
         GameObject buildObj = GetBuilObj();
-        Transform[] allTF = buildObj.GetComponentsInChildren<Transform>();
-        List<Vector3> listPosition = new List<Vector3>();
-        foreach (Transform itemTF in allTF)
-        {
-            if (itemTF.name.Contains("CookPosition"))
-            {
-                listPosition.Add(itemTF.position);
-            }
-        }
-        return listPosition;
+        Transform tfCook = CptUtil.GetCptInChildrenByName<Transform>(buildObj,"CookPosition");
+        return tfCook.position;
+    }
+
+    /// <summary>
+    /// 设置灶台状态
+    /// </summary>
+    /// <param name="stoveStatus"></param>
+    public void SetStoveStatus(StoveStatusEnum stoveStatus)
+    {
+        this.stoveStatus = stoveStatus;
+    }
+
+    /// <summary>
+    /// 清理灶台
+    /// </summary>
+    public void ClearStove()
+    {
+        GameObject buildObj = GetBuilObj();
+        Transform tfFoodFather = CptUtil.GetCptInChildrenByName<Transform>(buildObj, "Food");
+        CptUtil.RemoveChild(tfFoodFather);
+        SetStoveStatus(StoveStatusEnum.Idle);
     }
 }

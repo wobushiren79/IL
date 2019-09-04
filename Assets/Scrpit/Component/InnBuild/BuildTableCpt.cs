@@ -3,7 +3,7 @@ using UnityEditor;
 
 public class BuildTableCpt : BaseBuildItemCpt
 {
-    public enum TableStateEnum
+    public enum TableStatusEnum
     {
         Idle=0,//空闲
         Ready=1,//有人,等待移动到座位并且点餐
@@ -12,7 +12,8 @@ public class BuildTableCpt : BaseBuildItemCpt
         WaitClean=4,//等待清理
         Cleaning=5,//清理
     }
-    public TableStateEnum tableState= TableStateEnum.Idle;
+
+    public TableStatusEnum tableStatus = TableStatusEnum.Idle;
 
     public GameObject leftSeat;
     public GameObject leftTable;
@@ -88,45 +89,22 @@ public class BuildTableCpt : BaseBuildItemCpt
     /// <summary>
     /// 设置桌子状态
     /// </summary>
-    /// <param name="tableState"></param>
-    public void SetTableStatus(TableStateEnum tableState)
+    /// <param name="tableStatus"></param>
+    public void SetTableStatus(TableStatusEnum tableStatus)
     {
-        this.tableState = tableState;
-    }
-
-    /// <summary>
-    /// 初始化桌子
-    /// </summary>
-    public void InitTable()
-    {
-        FoodForCustomerCpt food = GetTable().GetComponentInChildren<FoodForCustomerCpt>();
-        if (food != null)
-            //删除桌子上的食物
-            Destroy(food.gameObject);
-        tableState = TableStateEnum.Idle;
+        this.tableStatus = tableStatus;
     }
 
     /// <summary>
     /// 清理桌子
     /// </summary>
-    public void ClearTable()
+    public void CleanTable()
     {
-        switch (tableState)
-        {
-            case TableStateEnum.WaitClean:
-                //如果桌子等待清理中 则不做处理 等待清理人员将状态变为清理中再处理
-                break;
-            case TableStateEnum.Cleaning:
-                FoodForCustomerCpt food = GetTable().GetComponentInChildren<FoodForCustomerCpt>();
-                if (food != null)
-                    //删除桌子上的食物
-                    Destroy(food.gameObject);
-                tableState = TableStateEnum.Idle;
-                break;
-            default:
-                tableState = TableStateEnum.Idle;
-                break;
-        }
+        FoodForCustomerCpt food = GetTable().GetComponentInChildren<FoodForCustomerCpt>();
+        if (food != null)
+            //删除桌子上的食物
+            Destroy(food.gameObject);
+        SetTableStatus(TableStatusEnum.Idle);
     }
 
 }

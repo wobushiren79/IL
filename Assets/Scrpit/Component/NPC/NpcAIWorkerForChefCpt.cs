@@ -2,141 +2,173 @@
 using UnityEditor;
 using System.Collections.Generic;
 using System.Collections;
-public class NpcAIWorkerForChefCpt : BaseMonoBehaviour
+public class NpcAIWorkerForChefCpt : NpcAIWokerFoBaseCpt
 {
-    private NpcAIWorkerCpt mNpcAIWorker;
-    //做菜的进度图标
-    public GameObject cookPro;
-
-    private void Start()
-    {
-        mNpcAIWorker = GetComponent<NpcAIWorkerCpt>();
-    }
-
-
-    public enum ChefStatue
+    public enum ChefIntentEnum
     {
         Idle,//空闲
         GoToCook,//做菜之前的路上
         Cooking,//做菜中
     }
 
-    //灶台
-    public BuildStoveCpt stoveCpt;
+    //食物管理
+    public InnFoodManager innFoodManager;
+    //做菜的进度图标
+    public GameObject cookPro;
     //顾客的订单
     public OrderForCustomer orderForCustomer;
-    //烹饪点
-    public List<Vector3> cookPositionList;
     //厨师状态
-    public ChefStatue chefStatue = ChefStatue.Idle;
+    public ChefIntentEnum chefIntent = ChefIntentEnum.Idle;
+    //移动的目标店
+    public Vector3 movePosition;
 
-    private Vector3 cookPosition;
-    private float cookAnimTime;
     private void FixedUpdate()
     {
-        if (CheckUtil.ListIsNull(cookPositionList))
-            return;
-        switch (chefStatue)
+        switch (chefIntent)
         {
-            case ChefStatue.GoToCook:
-                if (!CheckCustomerLeave() && mNpcAIWorker.characterMoveCpt.IsAutoMoveStop())
+            case ChefIntentEnum.Idle:
+                break;
+            case ChefIntentEnum.GoToCook:
+                //先检测订单是否有效
+                if (orderForCustomer.CheckOrder())
                 {
-                    bool canCook = mNpcAIWorker.gameDataManager.gameData.CheckCookFood(orderForCustomer.foodData);
-                    if (canCook)
+                    //检测是否到达烹饪点
+                    if (npcAIWorker.characterMoveCpt.IsAutoMoveStop())
                     {
-                        //扣除食材
-                        mNpcAIWorker.gameDataManager.gameData.DeductIng(orderForCustomer.foodData);
-                        mNpcAIWorker.innHandler.ConsumeIngRecord(orderForCustomer.foodData);
                         //开始做菜
-                        chefStatue = ChefStatue.Cooking;
-                        StartCoroutine(StartCook());
-                        ChangeCookPosition();
-                        cookPro.SetActive(true);
+                        SetIntent(ChefIntentEnum.Cooking);
                     }
-                    else
-                    {
-                        mNpcAIWorker.characterShoutCpt.Shout("缺少食材！");
-                        orderForCustomer.customer.SendForCanNotCook();
-                        SetStatusIdle();
-                    }
-
+                }
+                else
+                {
+                    //设置闲置
+                    SetIntent(ChefIntentEnum.Idle);
                 }
                 break;
-            case ChefStatue.Cooking:
-                cookAnimTime -= Time.deltaTime;
-                if (!CheckCustomerLeave() && mNpcAIWorker.characterMoveCpt.IsAutoMoveStop() && cookAnimTime < 0)
+            case ChefIntentEnum.Cooking:
+                if (!orderForCustomer.CheckOrder())
                 {
-                    ChangeCookPosition();
+                    //设置闲置
+                    SetIntent(ChefIntentEnum.Idle);
                 }
                 break;
         }
     }
 
     /// <summary>
-    /// 检测顾客是否离开
+    /// 设置意图
     /// </summary>
-    /// <returns></returns>
-    public bool CheckCustomerLeave()
+    /// <param name="chefIntent"></param>
+    /// <param name="orderForCustomer"></param>
+    public void SetIntent(ChefIntentEnum chefIntent, OrderForCustomer orderForCustomer)
     {
-        if (orderForCustomer.foodData == null || orderForCustomer.customer == null || orderForCustomer.customer.intentType == NpcAICustomerCpt.CustomerIntentEnum.Leave)
-        {
-            StopAllCoroutines();
-            cookPro.SetActive(false);
-            SetStatusIdle();
-            return true;
-        }
-        else
-        {
-            return false;
-        }
-    }
-
-    public void ChangeCookPosition()
-    {
-        cookAnimTime = Random.Range(2, 3);
-        cookPosition = RandomUtil.GetRandomDataByList(cookPositionList);
-        mNpcAIWorker.characterMoveCpt.SetDestination(cookPosition);
-    }
-
-    public void SetCookData(BuildStoveCpt stoveCpt, OrderForCustomer orderForCustomer)
-    {
-        this.stoveCpt = stoveCpt;
+        this.chefIntent = chefIntent;
         this.orderForCustomer = orderForCustomer;
-        //如果顾客已经离开
-        if (orderForCustomer.customer == null || orderForCustomer.customer.intentType == NpcAICustomerCpt.CustomerIntentEnum.Leave)
+        switch (chefIntent)
         {
-            SetStatusIdle();
+            case ChefIntentEnum.Idle:
+                SetIntentForIdle();
+                break;
+            case ChefIntentEnum.GoToCook:
+                SetIntentForGoToCook(orderForCustomer);
+                break;
+            case ChefIntentEnum.Cooking:
+                SetIntentForCooking(orderForCustomer);
+                break;
+        }
+    }
+    public void SetIntent(ChefIntentEnum chefIntent)
+    {
+        SetIntent(chefIntent, orderForCustomer);
+    }
+
+    /// <summary>
+    /// 设置做菜
+    /// </summary>
+    /// <param name="orderForCustomer"></param>
+    public void SetCook(OrderForCustomer orderForCustomer)
+    {
+        if (orderForCustomer == null)
+            return;
+        SetIntent(ChefIntentEnum.GoToCook,orderForCustomer);
+    }
+
+    /// <summary>
+    /// 意图-闲置
+    /// </summary>
+    public void SetIntentForIdle()
+    {
+        StopAllCoroutines();
+        cookPro.SetActive(false);
+        chefIntent = ChefIntentEnum.Idle;
+        npcAIWorker.SetIntent(NpcAIWorkerCpt.WorkerIntentEnum.Idle);
+        //设置灶台为空闲
+        if (orderForCustomer != null && orderForCustomer.stove != null)
+            orderForCustomer.stove.SetStoveStatus(BuildStoveCpt.StoveStatusEnum.Idle);
+        orderForCustomer = null;
+    }
+
+    /// <summary>
+    /// 意图-前往做菜
+    /// </summary>
+    /// <param name="orderForCustomer"></param>
+    public void SetIntentForGoToCook(OrderForCustomer orderForCustomer)
+    {
+        //如果订单是否有效
+        if (!orderForCustomer.CheckOrder())
+        {
+            SetIntent(ChefIntentEnum.Idle);
             return;
         }
-
-        cookPositionList = stoveCpt.GetCookPosition();
-        if (CheckUtil.ListIsNull(cookPositionList))
+        movePosition = orderForCustomer.stove.GetCookPosition();
+        if (movePosition == null)
         {
             LogUtil.Log("厨师寻路失败-没有灶台烹饪点");
             return;
         }
-        mNpcAIWorker.characterMoveCpt.SetDestination(cookPositionList[0]);
-        chefStatue = ChefStatue.GoToCook;
-    }
-
-    public IEnumerator StartCook()
-    {
-        yield return new WaitForSeconds(orderForCustomer.foodData.cook_time);
-        cookPro.SetActive(false);
-        stoveCpt.SetFood(orderForCustomer);
-        stoveCpt.ClearChef();
-        chefStatue = ChefStatue.Idle;
-        mNpcAIWorker.workerIntent = NpcAIWorkerCpt.WorkerIntentEnum.Idle;
+        npcAIWorker.characterMoveCpt.SetDestination(movePosition);
     }
 
     /// <summary>
-    /// 设置空闲状态
+    /// 意图-做菜中
     /// </summary>
-    public void SetStatusIdle()
+    /// <param name="orderForCustomer"></param>
+    public void SetIntentForCooking(OrderForCustomer orderForCustomer)
     {
-        cookPro.SetActive(false);
-        stoveCpt.ClearChef();
-        chefStatue = ChefStatue.Idle;
-        mNpcAIWorker.workerIntent = NpcAIWorkerCpt.WorkerIntentEnum.Idle;
+        //检测是否能烹饪
+        bool canCook = npcAIWorker.gameDataManager.gameData.CheckCookFood(orderForCustomer.foodData);
+        if (canCook)
+        {
+            //扣除食材
+            npcAIWorker.gameDataManager.gameData.DeductIng(orderForCustomer.foodData);
+            //记录食材消耗
+            npcAIWorker.innHandler.ConsumeIngRecord(orderForCustomer.foodData);
+            cookPro.SetActive(true);
+            //设置灶台状态
+            orderForCustomer.stove.SetStoveStatus(BuildStoveCpt.StoveStatusEnum.Cooking);
+            StartCoroutine(StartCook());
+        }
+        else
+        {
+            npcAIWorker.characterShoutCpt.Shout(GameCommonInfo.GetUITextById(13001));
+            orderForCustomer.customer.SendForCanNotCook();
+            SetIntent(ChefIntentEnum.Idle);
+        }
     }
+
+    /// <summary>
+    ///  开始做菜
+    /// </summary>
+    /// <returns></returns>
+    public IEnumerator StartCook()
+    {
+        yield return new WaitForSeconds(orderForCustomer.foodData.cook_time);
+        //在灶台创建一个食物
+        orderForCustomer.stove.CreateFood(innFoodManager,orderForCustomer);
+        //通知送餐
+        npcAIWorker.innHandler.sendQueue.Add(orderForCustomer);
+        //设置状态为闲置
+        SetIntent(ChefIntentEnum.Idle);
+    }
+
 }

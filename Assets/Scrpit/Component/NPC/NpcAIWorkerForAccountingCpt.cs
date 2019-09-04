@@ -2,94 +2,135 @@
 using UnityEditor;
 using System;
 using System.Collections;
-public class NpcAIWorkerForAccountingCpt : BaseMonoBehaviour
+public class NpcAIWorkerForAccountingCpt : NpcAIWokerFoBaseCpt
 {
-    private NpcAIWorkerCpt mNpcAIWorker;
-    public OrderForCustomer orderForCustomer;
-    //客栈处理
-    public InnHandler innHandler;
-    
-    //算账进度
-    public GameObject accountingPro;
-    private void Start()
-    {
-        mNpcAIWorker = GetComponent<NpcAIWorkerCpt>();
-    }
-
-    public enum AccountingStatue
+    public enum AccountingIntentEnum
     {
         Idle,//空闲
         GoToAccounting,//结账之前的路上
         Accounting,//结账中
     }
-
+    //点单
+    public OrderForCustomer orderForCustomer;
+    //算账进度
+    public GameObject accountingPro;
+    //移动的目的点
+    public Vector3 movePosition;
     //厨师状态
-    public AccountingStatue accountingStatue = AccountingStatue.Idle;
+    public AccountingIntentEnum accountingIntent = AccountingIntentEnum.Idle;
+
 
     private void FixedUpdate()
     {
-        switch (accountingStatue)
+        switch (accountingIntent)
         {
-            case AccountingStatue.GoToAccounting:
-                if (!CheckCustomerLeave() && mNpcAIWorker.characterMoveCpt.IsAutoMoveStop())
+            case AccountingIntentEnum.Idle:
+                break;
+            case AccountingIntentEnum.GoToAccounting:
+                if (orderForCustomer.CheckOrder())
                 {
-                    accountingStatue = AccountingStatue.Accounting;
-                    StartCoroutine(StartAccounting());
+                    if (npcAIWorker.characterMoveCpt.IsAutoMoveStop())
+                    {
+                        SetIntent(AccountingIntentEnum.Accounting);
+                    }
+                }
+                else
+                {
+                    SetIntent(AccountingIntentEnum.Idle);
+                }
+                break;
+            case AccountingIntentEnum.Accounting:
+                if (!orderForCustomer.CheckOrder())
+                {
+                    SetIntent(AccountingIntentEnum.Idle);
                 }
                 break;
         }
     }
 
-
-    /// <summary>
-    /// 检测顾客是否离开
-    /// </summary>
-    /// <returns></returns>
-    public bool CheckCustomerLeave()
+    public void SetAccounting(OrderForCustomer orderForCustomer)
     {
-        if (orderForCustomer.customer == null || orderForCustomer.customer.intentType == NpcAICustomerCpt.CustomerIntentEnum.Leave)
-        {
-            StopAllCoroutines();
-            SetStatusIdle();
-            return true;
-        }
-        else
-        {
-            return false;
-        }
+        SetIntent(AccountingIntentEnum.GoToAccounting, orderForCustomer);
     }
 
-    public void SetAccounting(OrderForCustomer  orderForCustomer)
+    /// <summary>
+    /// 设置意图
+    /// </summary>
+    /// <param name="accountingIntent"></param>
+    /// <param name="orderForCustomer"></param>
+    public void SetIntent(AccountingIntentEnum accountingIntent, OrderForCustomer orderForCustomer)
+    {
+        this.accountingIntent = accountingIntent;
+        this.orderForCustomer = orderForCustomer;
+        switch (accountingIntent)
+        {
+            case AccountingIntentEnum.Idle:
+                SetIntentForIdle();
+                break;
+            case AccountingIntentEnum.GoToAccounting:
+                SetIntentForGoToAccounting(orderForCustomer);
+                break;
+            case AccountingIntentEnum.Accounting:
+                SetIntentForAccounting(orderForCustomer);
+                break;
+        }
+    }
+    public void SetIntent(AccountingIntentEnum accountingIntent)
+    {
+        SetIntent(accountingIntent, orderForCustomer);
+    }
+
+    /// <summary>
+    /// 意图-闲置
+    /// </summary>
+    public void SetIntentForIdle()
+    {
+        StopAllCoroutines();
+        accountingPro.SetActive(false);
+        npcAIWorker.SetIntent(NpcAIWorkerCpt.WorkerIntentEnum.Idle);
+        if (orderForCustomer != null && orderForCustomer.counter != null)
+            orderForCustomer.counter.SetCounterStatus(BuildCounterCpt.CounterStatusEnum.Idle);
+        orderForCustomer = null;
+    }
+
+    /// <summary>
+    /// 意图-前往结算
+    /// </summary>
+    /// <param name="orderForCustomer"></param>
+    public void SetIntentForGoToAccounting(OrderForCustomer orderForCustomer)
     {
         if (CheckUtil.CheckPath(transform.position, orderForCustomer.counter.GetAccountingPosition()))
         {
-            this.orderForCustomer = orderForCustomer;
-            accountingStatue = AccountingStatue.GoToAccounting;
-            mNpcAIWorker.characterMoveCpt.SetDestination(orderForCustomer.counter.GetAccountingPosition());
             accountingPro.SetActive(true);
+            movePosition = orderForCustomer.counter.GetAccountingPosition();
+            npcAIWorker.characterMoveCpt.SetDestination(movePosition);
         }
         else
         {
-            SetStatusIdle();
+            SetIntent(AccountingIntentEnum.Idle);
         }
+    }
 
+    /// <summary>
+    /// 意图-结算中
+    /// </summary>
+    /// <param name="orderForCustomer"></param>
+    public void SetIntentForAccounting(OrderForCustomer orderForCustomer)
+    {
+        //设置柜台的状态
+        orderForCustomer.counter.SetCounterStatus(BuildCounterCpt.CounterStatusEnum.Accounting);
+        //开始结算
+        StartCoroutine(StartAccounting());
     }
 
     public IEnumerator StartAccounting()
     {
         yield return new WaitForSeconds(5);
-        if (innHandler != null)
-            innHandler.PayMoney(orderForCustomer,1);
+        if (npcAIWorker.innHandler != null)
+            npcAIWorker.innHandler.PayMoney(orderForCustomer, 1);
+        //通知离开
         orderForCustomer.customer.SetIntent(NpcAICustomerCpt.CustomerIntentEnum.Leave);
-        SetStatusIdle();
+        SetIntent(AccountingIntentEnum.Idle);
     }
 
-    public void SetStatusIdle()
-    {
-        accountingStatue = AccountingStatue.Idle;
-        mNpcAIWorker.workerIntent = NpcAIWorkerCpt.WorkerIntentEnum.Idle;
-        if (orderForCustomer != null && orderForCustomer.counter != null)
-            orderForCustomer.counter.workerCpt = null;
-        accountingPro.SetActive(false);
-    }
 }

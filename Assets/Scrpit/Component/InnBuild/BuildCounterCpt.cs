@@ -4,8 +4,12 @@ using System.Collections.Generic;
 
 public class BuildCounterCpt : BaseBuildItemCpt
 {
-    //操作者
-    public NpcAIWorkerCpt workerCpt;
+    public enum CounterStatusEnum
+    {
+        Idle=0,
+        Ready=1,
+        Accounting=2
+    }
 
     public GameObject leftPayPosition;
     public GameObject leftAccountingPosition;
@@ -22,6 +26,7 @@ public class BuildCounterCpt : BaseBuildItemCpt
     //排队算账的订单
     public List<OrderForCustomer> payQueue = new List<OrderForCustomer>();
 
+    public CounterStatusEnum counterStatus= CounterStatusEnum.Idle;
     /// <summary>
     /// 获取付款位置
     /// </summary>
@@ -62,5 +67,15 @@ public class BuildCounterCpt : BaseBuildItemCpt
         return transform.position;
     }
 
+    public void SetCounterStatus(CounterStatusEnum counterStatus)
+    {
+        this.counterStatus = counterStatus;
+    }
+
+    public void ClearCounter()
+    {
+        payQueue.Clear();
+        SetCounterStatus(CounterStatusEnum.Idle);
+    }
 
 }

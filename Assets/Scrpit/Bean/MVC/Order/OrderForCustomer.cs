@@ -15,4 +15,23 @@ public class OrderForCustomer
     public BuildCounterCpt counter;
     //做好的食物 
     public FoodForCustomerCpt foodCpt;
+    //做食物的厨师
+    public NpcAIWorkerCpt chef;
+    //送餐的人
+    public NpcAIWorkerCpt waiterForSend;
+    /// <summary>
+    /// 检测订单是否有效
+    /// </summary>
+    /// <returns></returns>
+    public bool CheckOrder()
+    {
+        if (foodData == null || customer == null || customer.customerIntent == NpcAICustomerCpt.CustomerIntentEnum.Leave)
+        {
+            return false;
+        }
+        else
+        {
+            return true;
+        }
+    }
 }

@@ -20,13 +20,12 @@ public class NpcAICustomerCpt : BaseNpcAI
         Leave //离开
     }
 
-    public CustomerIntentEnum intentType = CustomerIntentEnum.Walk;//意图 顾客： 1路过 2思考 3进店 4找座位 5点菜 6吃 7结账 
+    public CustomerIntentEnum customerIntent= CustomerIntentEnum.Walk;//意图 顾客： 1路过 2思考 3进店 4找座位 5点菜 6吃 7结账 
 
     //表情控制
     public CharacterMoodCpt characterMoodCpt;
     //喊叫控制
     public CharacterShoutCpt characterShoutCpt;
-
 
     //客栈处理
     public InnHandler innHandler;
@@ -46,7 +45,7 @@ public class NpcAICustomerCpt : BaseNpcAI
 
     private void FixedUpdate()
     {
-        switch (intentType)
+        switch (customerIntent)
         {
             case CustomerIntentEnum.Walk:
             case CustomerIntentEnum.Leave:
@@ -97,10 +96,6 @@ public class NpcAICustomerCpt : BaseNpcAI
                 break;
             case CustomerIntentEnum.WaitPay:
                 ChangeMood(-Time.deltaTime);
-                if (innEvaluation.mood <= 0)
-                {
-                    innHandler.PayMoney(orderForCustomer, 0.5f);
-                }
                 break;
         }
     }
@@ -115,8 +110,8 @@ public class NpcAICustomerCpt : BaseNpcAI
 
     public void SetIntent(CustomerIntentEnum intent, OrderForCustomer orderForCustomer)
     {
-        this.intentType = intent;
-        switch (intentType)
+        this.customerIntent = intent;
+        switch (customerIntent)
         {
             case CustomerIntentEnum.Walk:
                 IntentForWalk();
@@ -220,7 +215,7 @@ public class NpcAICustomerCpt : BaseNpcAI
     public void IntentForWaitFood()
     {
         if (orderForCustomer.table != null)
-            orderForCustomer.table.SetTableStatus(BuildTableCpt.TableStateEnum.WaitFood);
+            orderForCustomer.table.SetTableStatus(BuildTableCpt.TableStatusEnum.WaitFood);
     }
 
     /// <summary>
@@ -234,7 +229,7 @@ public class NpcAICustomerCpt : BaseNpcAI
         ChangeMood(20);
         //设置桌子状态
         if (orderForCustomer.table != null)
-            orderForCustomer.table.SetTableStatus(BuildTableCpt.TableStateEnum.Eating);
+            orderForCustomer.table.SetTableStatus(BuildTableCpt.TableStatusEnum.Eating);
         //开始吃
         StartCoroutine(StartEat());
     }
@@ -270,22 +265,16 @@ public class NpcAICustomerCpt : BaseNpcAI
     /// </summary>
     public void IntentForLeave()
     {
-        //清理桌子
-        if (orderForCustomer != null && orderForCustomer.table != null)
-        {
-            orderForCustomer.table.ClearTable();
-        }
         //如果在排队则移除排队列表
         if (innHandler.cusomerQueue.Contains(this))
         {
             innHandler.cusomerQueue.Remove(this);
         }
-        //如果在顾客列表 则移除顾客列表
-        if (innHandler.cusomerList.Contains(orderForCustomer))
+        //如果在订单列表 则移除订单列表
+        if (innHandler.orderList.Contains(orderForCustomer))
         {
-            innHandler.cusomerList.Remove(orderForCustomer);
+            innHandler.orderList.Remove(orderForCustomer);
         }
-        innHandler.CanelOrder(this);
         //随机获取一个退出点
         movePosition = sceneInnManager.GetRandomSceneExportPosition();
         characterMoveCpt.SetDestination(movePosition);
@@ -298,7 +287,6 @@ public class NpcAICustomerCpt : BaseNpcAI
     {
         StopAllCoroutines();
         ChangeMood(-100);
-        SetIntent(CustomerIntentEnum.Leave);
     }
 
     /// <summary>
@@ -311,7 +299,8 @@ public class NpcAICustomerCpt : BaseNpcAI
         characterMoodCpt.SetMood(innEvaluation.mood);
         if (innEvaluation.mood <= 0)
         {
-            SetIntent(CustomerIntentEnum.Leave);
+            innHandler.EndOrderForForce(orderForCustomer);
+            SetIntent(CustomerIntentEnum.Leave); 
         }
     }
 
@@ -326,7 +315,7 @@ public class NpcAICustomerCpt : BaseNpcAI
         orderForCustomer.foodCpt.FinishFood(orderForCustomer.foodData);
         //设置桌子为待清理
         if (orderForCustomer.table != null)
-            orderForCustomer.table.SetTableStatus(BuildTableCpt.TableStateEnum.WaitClean);
+            orderForCustomer.table.SetTableStatus(BuildTableCpt.TableStatusEnum.WaitClean);
         //清理列队增加
         innHandler.clearQueue.Add(orderForCustomer);
         //去结账

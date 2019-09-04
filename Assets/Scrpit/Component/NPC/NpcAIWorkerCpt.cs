@@ -1,15 +1,18 @@
 ﻿using UnityEngine;
 using UnityEditor;
+using System;
 
 public class NpcAIWorkerCpt : BaseNpcAI
 {
-
     public enum WorkerIntentEnum
     {
         Idle,//空闲
-        Waiter,//跑堂
+        WaiterSend,//跑堂
+        WaiterClean,//清扫
         Cook,//做菜
         Accounting,//结账
+        Accost,//招待
+        Beater//打手
     }
     //呼喊
     public CharacterShoutCpt characterShoutCpt;
@@ -21,45 +24,74 @@ public class NpcAIWorkerCpt : BaseNpcAI
     //结账AI控制
     public NpcAIWorkerForAccountingCpt aiForAccounting;
 
-    public GameDataManager gameDataManager;
+    //客栈数据
     public InnHandler innHandler;
-    public float waitTime = 0;
-    public Vector3 waitPosition;
+    //游戏数据
+    public GameDataManager gameDataManager;
 
     public WorkerIntentEnum workerIntent = WorkerIntentEnum.Idle;//工作者的想法
 
-    //是否开启厨师
-    public bool isChef = true;
-    //是否开启服务员
-    public bool isWaiter = true;
-    //是否开启算账
-    public bool isAccounting = true;
-
-
     private void FixedUpdate()
     {
-        if (gameDataManager == null)
-            return;
-        if (workerIntent== WorkerIntentEnum.Idle)
+        switch (workerIntent)
         {
-            waitTime -= Time.deltaTime;                       
-            if (waitTime <= 0)
-            {
-                waitPosition = new Vector3(Random.Range(2, gameDataManager.gameData.GetInnBuildData().innWidth-2),
-                    Random.Range(2f, gameDataManager.gameData.GetInnBuildData().innHeight - 2));
-                characterMoveCpt.SetDestination(waitPosition);
-                waitTime = Random.Range(2f,10f); ;
-            }
+            case WorkerIntentEnum.Idle:
+                //TODO  瞎逛
+                break;
         }
+    }
+
+    /// <summary>
+    /// 设置意图
+    /// </summary>
+    /// <param name="workerIntent"></param>
+    /// <param name="orderForCustomer"></param>
+    public void SetIntent(WorkerIntentEnum workerIntent, OrderForCustomer orderForCustomer)
+    {
+        this.workerIntent = workerIntent;
+        switch (workerIntent)
+        {
+            case WorkerIntentEnum.Idle:
+                SetIntentForIdle();
+                break;
+            case WorkerIntentEnum.Cook:
+                SetIntentForCook(orderForCustomer);
+                break;
+            case WorkerIntentEnum.WaiterSend:
+                SetIntentForWaiterSend(orderForCustomer);
+                break;
+            case WorkerIntentEnum.WaiterClean:
+                SetIntentForWaiterClear(orderForCustomer);
+                break;
+            case WorkerIntentEnum.Accounting:
+                SetIntentForAccounting(orderForCustomer);
+                break;
+            case WorkerIntentEnum.Accost:
+                break;
+            case WorkerIntentEnum.Beater:
+                break;
+        }
+    }
+
+    public void SetIntent(WorkerIntentEnum workerIntent)
+    {
+        SetIntent(workerIntent, null);
+    }
+
+    /// <summary>
+    /// 设置闲置
+    /// </summary>
+    private void SetIntentForIdle()
+    {
+
     }
 
     /// <summary>
     /// 设置料理
     /// </summary>
-    public void SetIntentForCook(BuildStoveCpt stoveCpt,OrderForCustomer orderForCustomer)
+    public void SetIntentForCook(OrderForCustomer orderForCustomer)
     {
-        workerIntent = WorkerIntentEnum.Cook;
-        aiForChef.SetCookData(stoveCpt, orderForCustomer);
+        aiForChef.SetCook(orderForCustomer);
     }
 
     /// <summary>
@@ -68,7 +100,6 @@ public class NpcAIWorkerCpt : BaseNpcAI
     /// <param name="stoveCpt"></param>
     public void SetIntentForWaiterSend(OrderForCustomer orderForCustomer)
     {
-        workerIntent = WorkerIntentEnum.Waiter;
         aiForWaiter.SetFoodSend(orderForCustomer);
     }
 
@@ -78,8 +109,7 @@ public class NpcAIWorkerCpt : BaseNpcAI
     /// <param name="stoveCpt"></param>
     public void SetIntentForWaiterClear(OrderForCustomer orderForCustomer)
     {
-        workerIntent = WorkerIntentEnum.Waiter;
-        aiForWaiter.SetFoodClear(orderForCustomer);
+        aiForWaiter.SetFoodClean(orderForCustomer);
     }
 
     /// <summary>
@@ -88,7 +118,6 @@ public class NpcAIWorkerCpt : BaseNpcAI
     /// <param name="customerCpt"></param>
     public void SetIntentForAccounting(OrderForCustomer orderForCustomer)
     {
-        workerIntent = WorkerIntentEnum.Accounting;
         aiForAccounting.SetAccounting(orderForCustomer);
     }
 }

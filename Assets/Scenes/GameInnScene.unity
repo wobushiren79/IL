@@ -304,6 +304,11 @@ MonoBehaviour:
       isAccounting: 0
       isBeater: 0
       isAccost: 0
+      priorityChef: 0
+      priorityWaiter: 0
+      priorityAccounting: 0
+      priorityBeater: 0
+      priorityAccost: 0
       isAttendance: 0
     attributes:
       loyal: 0
@@ -2299,6 +2304,11 @@ MonoBehaviour:
         isAccounting: 0
         isBeater: 0
         isAccost: 0
+        priorityChef: 0
+        priorityWaiter: 0
+        priorityAccounting: 0
+        priorityBeater: 0
+        priorityAccost: 0
         isAttendance: 0
       attributes:
         loyal: 0
@@ -52993,6 +53003,11 @@ MonoBehaviour:
       isAccounting: 0
       isBeater: 0
       isAccost: 0
+      priorityChef: 0
+      priorityWaiter: 0
+      priorityAccounting: 0
+      priorityBeater: 0
+      priorityAccost: 0
       isAttendance: 0
     attributes:
       loyal: 0
@@ -56033,6 +56048,11 @@ MonoBehaviour:
       isAccounting: 0
       isBeater: 0
       isAccost: 0
+      priorityChef: 0
+      priorityWaiter: 0
+      priorityAccounting: 0
+      priorityBeater: 0
+      priorityAccost: 0
       isAttendance: 0
     attributes:
       loyal: 0
@@ -59721,6 +59741,11 @@ MonoBehaviour:
       isAccounting: 0
       isBeater: 0
       isAccost: 0
+      priorityChef: 0
+      priorityWaiter: 0
+      priorityAccounting: 0
+      priorityBeater: 0
+      priorityAccost: 0
       isAttendance: 0
     attributes:
       loyal: 0
@@ -60101,6 +60126,11 @@ MonoBehaviour:
       isAccounting: 0
       isBeater: 0
       isAccost: 0
+      priorityChef: 0
+      priorityWaiter: 0
+      priorityAccounting: 0
+      priorityBeater: 0
+      priorityAccost: 0
       isAttendance: 0
     attributes:
       loyal: 0
@@ -63096,7 +63126,7 @@ PrefabInstance:
     - target: {fileID: 1591988439818786242, guid: 9867e412dcdcdb24fb58f6415e7b195c,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 7.5004864
+      value: 7.5004883
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9867e412dcdcdb24fb58f6415e7b195c, type: 3}
@@ -63748,6 +63778,11 @@ MonoBehaviour:
       isAccounting: 0
       isBeater: 0
       isAccost: 0
+      priorityChef: 0
+      priorityWaiter: 0
+      priorityAccounting: 0
+      priorityBeater: 0
+      priorityAccost: 0
       isAttendance: 0
     attributes:
       loyal: 0
@@ -77482,6 +77517,11 @@ MonoBehaviour:
       isAccounting: 0
       isBeater: 0
       isAccost: 0
+      priorityChef: 0
+      priorityWaiter: 0
+      priorityAccounting: 0
+      priorityBeater: 0
+      priorityAccost: 0
       isAttendance: 0
     attributes:
       loyal: 0
@@ -77529,14 +77569,9 @@ MonoBehaviour:
   aiForChef: {fileID: 1414017237}
   aiForWaiter: {fileID: 1414017235}
   aiForAccounting: {fileID: 1414017244}
-  gameDataManager: {fileID: 158710915}
   innHandler: {fileID: 1541606814}
-  waitTime: 0
-  waitPosition: {x: 0, y: 0, z: 0}
+  gameDataManager: {fileID: 158710915}
   workerIntent: 0
-  isChef: 1
-  isWaiter: 1
-  isAccounting: 1
 --- !u!114 &1414017233
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -77563,9 +77598,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2098c0ba5fad7c540868844d6c2cfcd0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  npcAIWorker: {fileID: 0}
   sendPro: {fileID: 1108213355}
   clearPro: {fileID: 282648889}
-  waiterStatue: 0
+  movePosition: {x: 0, y: 0, z: 0}
+  waiterIntent: 0
 --- !u!114 &1414017237
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -77578,10 +77615,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: afe08abc7240c5147a0614bb0a2b7e99, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  npcAIWorker: {fileID: 0}
+  innFoodManager: {fileID: 744028635}
   cookPro: {fileID: 1535495190}
-  stoveCpt: {fileID: 0}
-  cookPositionList: []
-  chefStatue: 0
+  chefIntent: 0
+  movePosition: {x: 0, y: 0, z: 0}
 --- !u!1 &1414017238 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 876383420389226599, guid: 2b0fba09934c2934eb7fd9b31e6030fb,
@@ -77612,9 +77650,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 19a73f5366fcbce4e8b142e15ef6ac31, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  innHandler: {fileID: 1541606814}
+  npcAIWorker: {fileID: 0}
   accountingPro: {fileID: 1414017238}
-  accountingStatue: 0
+  movePosition: {x: 0, y: 0, z: 0}
+  accountingIntent: 0
 --- !u!1 &1416520026
 GameObject:
   m_ObjectHideFlags: 0
@@ -79764,6 +79803,11 @@ MonoBehaviour:
       isAccounting: 0
       isBeater: 0
       isAccost: 0
+      priorityChef: 0
+      priorityWaiter: 0
+      priorityAccounting: 0
+      priorityBeater: 0
+      priorityAccost: 0
       isAttendance: 0
     attributes:
       loyal: 0
@@ -83913,6 +83957,11 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: -29.007889
       objectReference: {fileID: 0}
+    - target: {fileID: 4140619152024381430, guid: fbe245d5e2055f940830c6d0bd1040c0,
+        type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -0.3875122
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: fbe245d5e2055f940830c6d0bd1040c0, type: 3}
 --- !u!224 &1854903225 stripped
@@ -84086,6 +84135,11 @@ MonoBehaviour:
       isAccounting: 0
       isBeater: 0
       isAccost: 0
+      priorityChef: 0
+      priorityWaiter: 0
+      priorityAccounting: 0
+      priorityBeater: 0
+      priorityAccost: 0
       isAttendance: 0
     attributes:
       loyal: 0
@@ -86764,11 +86818,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1688049104}
     m_Modifications:
-    - target: {fileID: 1795861048272312833, guid: 536a11571fc77f649b20991dbaf0bbab,
-        type: 3}
-      propertyPath: m_Name
-      value: Build
-      objectReference: {fileID: 0}
     - target: {fileID: 1795861048272312832, guid: 536a11571fc77f649b20991dbaf0bbab,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -86874,6 +86923,11 @@ PrefabInstance:
       propertyPath: uiGameBuild
       value: 
       objectReference: {fileID: 7858365660736564080}
+    - target: {fileID: 1795861048272312833, guid: 536a11571fc77f649b20991dbaf0bbab,
+        type: 3}
+      propertyPath: m_Name
+      value: Build
+      objectReference: {fileID: 0}
     - target: {fileID: 1795861048272312835, guid: 536a11571fc77f649b20991dbaf0bbab,
         type: 3}
       propertyPath: characterRigidbody
@@ -86894,16 +86948,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 466882523}
     m_Modifications:
-    - target: {fileID: 2381383282166401099, guid: 10f377b49c9a6b94fad8d71948677267,
-        type: 3}
-      propertyPath: m_Name
-      value: GameDate
-      objectReference: {fileID: 0}
-    - target: {fileID: 2381383282166401099, guid: 10f377b49c9a6b94fad8d71948677267,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 2381383282166401100, guid: 10f377b49c9a6b94fad8d71948677267,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -87024,6 +87068,16 @@ PrefabInstance:
       propertyPath: animTime
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 2381383282166401099, guid: 10f377b49c9a6b94fad8d71948677267,
+        type: 3}
+      propertyPath: m_Name
+      value: GameDate
+      objectReference: {fileID: 0}
+    - target: {fileID: 2381383282166401099, guid: 10f377b49c9a6b94fad8d71948677267,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 518942206073368830, guid: 10f377b49c9a6b94fad8d71948677267,
         type: 3}
       propertyPath: m_AnchoredPosition.y
@@ -87038,11 +87092,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1535974063}
     m_Modifications:
-    - target: {fileID: 2414675617322255131, guid: 3b08cb01fecef4c47bd80f6bd0bc4d37,
-        type: 3}
-      propertyPath: m_Name
-      value: InnBuildManager
-      objectReference: {fileID: 0}
     - target: {fileID: 2414675617322255133, guid: 3b08cb01fecef4c47bd80f6bd0bc4d37,
         type: 3}
       propertyPath: listFurnitureIcon.isExpanded
@@ -87052,6 +87101,11 @@ PrefabInstance:
         type: 3}
       propertyPath: listFurnitureIcon.reorderableList.isExpanded
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2414675617322255131, guid: 3b08cb01fecef4c47bd80f6bd0bc4d37,
+        type: 3}
+      propertyPath: m_Name
+      value: InnBuildManager
       objectReference: {fileID: 0}
     - target: {fileID: 2414675617322255130, guid: 3b08cb01fecef4c47bd80f6bd0bc4d37,
         type: 3}
@@ -87373,16 +87427,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1688049104}
     m_Modifications:
-    - target: {fileID: 3148206784604620135, guid: 5f2777cf44771634d9464f1e1e38c57c,
-        type: 3}
-      propertyPath: m_Name
-      value: Work
-      objectReference: {fileID: 0}
-    - target: {fileID: 3148206784604620135, guid: 5f2777cf44771634d9464f1e1e38c57c,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 3148206784604620132, guid: 5f2777cf44771634d9464f1e1e38c57c,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -87448,6 +87492,16 @@ PrefabInstance:
       propertyPath: gameDataManager
       value: 
       objectReference: {fileID: 158710915}
+    - target: {fileID: 3148206784604620135, guid: 5f2777cf44771634d9464f1e1e38c57c,
+        type: 3}
+      propertyPath: m_Name
+      value: Work
+      objectReference: {fileID: 0}
+    - target: {fileID: 3148206784604620135, guid: 5f2777cf44771634d9464f1e1e38c57c,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3677209761248648269, guid: 5f2777cf44771634d9464f1e1e38c57c,
         type: 3}
       propertyPath: m_CollisionDetection
@@ -87491,16 +87545,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1688049104}
     m_Modifications:
-    - target: {fileID: 7362692423562799187, guid: eac23c2d72574c74698e32d71a49378a,
-        type: 3}
-      propertyPath: m_Name
-      value: Normal
-      objectReference: {fileID: 0}
-    - target: {fileID: 7362692423562799187, guid: eac23c2d72574c74698e32d71a49378a,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 4921963546102894242, guid: eac23c2d72574c74698e32d71a49378a,
         type: 3}
       propertyPath: camera2D
@@ -87566,6 +87610,16 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7362692423562799187, guid: eac23c2d72574c74698e32d71a49378a,
+        type: 3}
+      propertyPath: m_Name
+      value: Normal
+      objectReference: {fileID: 0}
+    - target: {fileID: 7362692423562799187, guid: eac23c2d72574c74698e32d71a49378a,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: eac23c2d72574c74698e32d71a49378a, type: 3}
 --- !u!1001 &5124242189696920846
@@ -87575,11 +87629,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1535974063}
     m_Modifications:
-    - target: {fileID: 5124242190391181517, guid: 71f7078ea3403dc458a5d6a264ebeb25,
-        type: 3}
-      propertyPath: m_Name
-      value: SceneInnManager
-      objectReference: {fileID: 0}
     - target: {fileID: 5124242190391181514, guid: 71f7078ea3403dc458a5d6a264ebeb25,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -87635,6 +87684,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5124242190391181517, guid: 71f7078ea3403dc458a5d6a264ebeb25,
+        type: 3}
+      propertyPath: m_Name
+      value: SceneInnManager
+      objectReference: {fileID: 0}
     - target: {fileID: 5124242190391181515, guid: 71f7078ea3403dc458a5d6a264ebeb25,
         type: 3}
       propertyPath: listSceneExport.Array.size
@@ -87671,16 +87725,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 466882523}
     m_Modifications:
-    - target: {fileID: 804664821100930175, guid: afe8614d307f4d74bb2c156c0a1c795e,
-        type: 3}
-      propertyPath: m_Name
-      value: GameSettle
-      objectReference: {fileID: 0}
-    - target: {fileID: 804664821100930175, guid: afe8614d307f4d74bb2c156c0a1c795e,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 276167336923631222, guid: afe8614d307f4d74bb2c156c0a1c795e,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -87806,6 +87850,16 @@ PrefabInstance:
       propertyPath: uiManager
       value: 
       objectReference: {fileID: 466882524}
+    - target: {fileID: 804664821100930175, guid: afe8614d307f4d74bb2c156c0a1c795e,
+        type: 3}
+      propertyPath: m_Name
+      value: GameSettle
+      objectReference: {fileID: 0}
+    - target: {fileID: 804664821100930175, guid: afe8614d307f4d74bb2c156c0a1c795e,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5596250976783769739, guid: afe8614d307f4d74bb2c156c0a1c795e,
         type: 3}
       propertyPath: innFoodManager
@@ -87949,16 +88003,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1688049104}
     m_Modifications:
-    - target: {fileID: 8393298759284253277, guid: 8f67108a5e0aa5a4984db1b4386d1983,
-        type: 3}
-      propertyPath: m_Name
-      value: Story
-      objectReference: {fileID: 0}
-    - target: {fileID: 8393298759284253277, guid: 8f67108a5e0aa5a4984db1b4386d1983,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 8393298759284253276, guid: 8f67108a5e0aa5a4984db1b4386d1983,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -88014,6 +88058,16 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8393298759284253277, guid: 8f67108a5e0aa5a4984db1b4386d1983,
+        type: 3}
+      propertyPath: m_Name
+      value: Story
+      objectReference: {fileID: 0}
+    - target: {fileID: 8393298759284253277, guid: 8f67108a5e0aa5a4984db1b4386d1983,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8f67108a5e0aa5a4984db1b4386d1983, type: 3}
 --- !u!1001 &8839051139865039895
@@ -88023,11 +88077,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 466882523}
     m_Modifications:
-    - target: {fileID: 7900265931792256785, guid: ad62647ae11e7c4478901b1a2fa4a8eb,
-        type: 3}
-      propertyPath: m_Name
-      value: GameBuild
-      objectReference: {fileID: 0}
     - target: {fileID: 6250084528016547680, guid: ad62647ae11e7c4478901b1a2fa4a8eb,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -88167,6 +88216,11 @@ PrefabInstance:
         type: 3}
       propertyPath: navMesh
       value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 7900265931792256785, guid: ad62647ae11e7c4478901b1a2fa4a8eb,
+        type: 3}
+      propertyPath: m_Name
+      value: GameBuild
       objectReference: {fileID: 0}
     - target: {fileID: 5352602745801416271, guid: ad62647ae11e7c4478901b1a2fa4a8eb,
         type: 3}

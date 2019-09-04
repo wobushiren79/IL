@@ -40,7 +40,7 @@ public class InnTableHandler : BaseMonoBehaviour
             for (int i = 0; i < listTableCpt.Count; i++)
             {
                 BuildTableCpt itemTable = listTableCpt[i];
-                if (itemTable.tableState == BuildTableCpt.TableStateEnum.Idle)
+                if (itemTable.tableStatus == BuildTableCpt.TableStatusEnum.Idle)
                 {
                     idleTableList.Add(itemTable);
                 }
@@ -48,7 +48,7 @@ public class InnTableHandler : BaseMonoBehaviour
             if (idleTableList.Count == 0)
                 return null;
             BuildTableCpt buildTable = RandomUtil.GetRandomDataByList(idleTableList);
-            buildTable.SetTableStatus(BuildTableCpt.TableStateEnum.Ready);
+            buildTable.SetTableStatus(BuildTableCpt.TableStatusEnum.Ready);
             return buildTable;
         }
     }

@@ -23,6 +23,13 @@ public class CharacterBaseBean
     public bool isBeater;//是否开启打手
     public bool isAccost;//是否开启招呼
 
+    //优先级
+    public int priorityChef;
+    public int priorityWaiter;
+    public int priorityAccounting;
+    public int priorityBeater;
+    public int priorityAccost;
+
     public bool isAttendance;//是否出勤
 
     /// <summary>

@@ -9,6 +9,7 @@ public class InnPayHandler : BaseMonoBehaviour
     public List<BuildCounterCpt> listCounterCpt = new List<BuildCounterCpt>();
     // 算账人列表
     public List<NpcAIWorkerCpt> listAccountingCpt = new List<NpcAIWorkerCpt>();
+
     //柜台容器
     public GameObject counterContainer;
     //算账人容器
@@ -16,7 +17,7 @@ public class InnPayHandler : BaseMonoBehaviour
     //支付特效
     public GameObject objPayEffects;
     //锁
-    private static Object SetPayLock = new Object();
+    private static Object mSetPayLock = new Object();
 
     /// <summary>
     /// 找到所有柜台
@@ -45,10 +46,10 @@ public class InnPayHandler : BaseMonoBehaviour
             return listAccountingCpt;
         for (int i = 0; i < chefArray.Length; i++)
         {
-            NpcAIWorkerCpt itemCpt = chefArray[i];
-            if (itemCpt.isAccounting)
+            NpcAIWorkerCpt npcAI = chefArray[i];
+            if (npcAI.characterData.baseInfo.isAccounting)
             {
-                listAccountingCpt.Add(itemCpt);
+                listAccountingCpt.Add(npcAI);
             }
         }
         return listAccountingCpt;
@@ -59,7 +60,7 @@ public class InnPayHandler : BaseMonoBehaviour
     /// </summary>
     public bool SetPay(OrderForCustomer orderForCustomer)
     {
-        lock (SetPayLock)
+        lock (mSetPayLock)
         {
             NpcAIWorkerCpt accountingCpt = null;
             float distance = 0;
@@ -77,10 +78,10 @@ public class InnPayHandler : BaseMonoBehaviour
                     }
                 }
             }
-            if (accountingCpt != null && orderForCustomer.counter.workerCpt == null)
+            if (accountingCpt != null && orderForCustomer.counter.counterStatus == BuildCounterCpt.CounterStatusEnum.Idle)
             {
-                orderForCustomer.counter.workerCpt = accountingCpt;
-                accountingCpt.SetIntentForAccounting(orderForCustomer);
+                orderForCustomer.counter.SetCounterStatus(BuildCounterCpt.CounterStatusEnum.Ready);
+                accountingCpt.SetIntent(NpcAIWorkerCpt.WorkerIntentEnum.Accounting, orderForCustomer);
                 return true;
             }
             else

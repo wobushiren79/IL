@@ -48,30 +48,12 @@ public class NpcWorkerBuilder : BaseMonoBehaviour
 
         NpcAIWorkerCpt npcAI = workerObj.GetComponent<NpcAIWorkerCpt>();
         npcAI.SetCharacterData(characterBean);
-        if (characterBean.baseInfo != null)
-        {
-            CharacterBaseBean characterBase = characterBean.baseInfo;
-            npcAI.isChef = characterBase.isChef;
-            npcAI.isAccounting = characterBase.isAccounting;
-            npcAI.isWaiter = characterBase.isWaiter;
-        }
         npcWorkerList.Add(npcAI);
     }
 
-    public void RefreshWorkStatus()
-    {
-        if (npcWorkerList == null)
-            return;
-        for (int i = 0; i < npcWorkerList.Count; i++)
-        {
-            NpcAIWorkerCpt npcAI = npcWorkerList[i];
-            CharacterBaseBean characterBase = npcAI.characterData.baseInfo;
-            npcAI.isChef = characterBase.isChef;
-            npcAI.isAccounting = characterBase.isAccounting;
-            npcAI.isWaiter = characterBase.isWaiter;
-        }
-    }
-
+    /// <summary>
+    /// 清空所有工作者
+    /// </summary>
     public void ClearAllWork()
     {
         npcWorkerList.Clear();

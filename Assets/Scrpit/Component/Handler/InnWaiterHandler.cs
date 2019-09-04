@@ -10,7 +10,7 @@ public class InnWaiterHandler : BaseMonoBehaviour
     public List<NpcAIWorkerCpt> listWaiterCpt = new List<NpcAIWorkerCpt>();
 
     //锁
-    private static Object SetWaiterLock = new Object();
+    private static Object mSetWaiterLock = new Object();
 
     /// <summary>
     /// 找到所有服务员
@@ -27,10 +27,10 @@ public class InnWaiterHandler : BaseMonoBehaviour
 
         for (int i = 0; i < chefArray.Length; i++)
         {
-            NpcAIWorkerCpt itemCpt = chefArray[i];
-            if (itemCpt.isWaiter)
+            NpcAIWorkerCpt npcAI= chefArray[i];
+            if (npcAI.characterData.baseInfo.isWaiter)
             {
-                listWaiterCpt.Add(itemCpt);
+                listWaiterCpt.Add(npcAI);
             }
         }
         return listWaiterCpt;
@@ -42,7 +42,7 @@ public class InnWaiterHandler : BaseMonoBehaviour
     /// <returns></returns>
     public bool SetSendFood(OrderForCustomer orderForCustomer)
     {
-        lock (SetWaiterLock)
+        lock (mSetWaiterLock)
         {
             NpcAIWorkerCpt waiterCpt = null;
             float distance = 0;
@@ -62,7 +62,7 @@ public class InnWaiterHandler : BaseMonoBehaviour
             }
             if (waiterCpt != null)
             {
-                waiterCpt.SetIntentForWaiterSend(orderForCustomer);
+                waiterCpt.SetIntent(NpcAIWorkerCpt.WorkerIntentEnum.WaiterSend, orderForCustomer);
                 return true;
             }
             return false;
@@ -76,7 +76,7 @@ public class InnWaiterHandler : BaseMonoBehaviour
     /// <returns></returns>
     public bool SetClearFood(OrderForCustomer orderForCustomer)
     {
-        lock (SetWaiterLock)
+        lock (mSetWaiterLock)
         {
             NpcAIWorkerCpt waiterCpt = null;
             for (int i = 0; i < listWaiterCpt.Count; i++)
@@ -90,7 +90,7 @@ public class InnWaiterHandler : BaseMonoBehaviour
             }
             if (waiterCpt != null)
             {
-                waiterCpt.SetIntentForWaiterClear(orderForCustomer);
+                waiterCpt.SetIntent(NpcAIWorkerCpt.WorkerIntentEnum.WaiterClean, orderForCustomer);
                 return true;
             }
             return false;

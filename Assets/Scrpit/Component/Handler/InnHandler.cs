@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using UnityEditor;
 using System.Collections.Generic;
+using System;
 
 public class InnHandler : BaseMonoBehaviour
 {
@@ -39,8 +40,8 @@ public class InnHandler : BaseMonoBehaviour
     //排队清理的食物
     public List<OrderForCustomer> clearQueue = new List<OrderForCustomer>();
 
-    //总体顾客列表
-    public List<OrderForCustomer> cusomerList = new List<OrderForCustomer>();
+    //订单列表
+    public List<OrderForCustomer> orderList = new List<OrderForCustomer>();
     //当天记录流水
     public InnRecordBean innRecord = new InnRecordBean();
 
@@ -61,7 +62,6 @@ public class InnHandler : BaseMonoBehaviour
     /// </summary>
     public void InitWorker()
     {
-        workerBuilder.RefreshWorkStatus();
         innPayHandler.InitAccountingCpt();
         innCookHandler.InitChefCpt();
         innWaiterHandler.InitWaiterCpt();
@@ -81,7 +81,7 @@ public class InnHandler : BaseMonoBehaviour
                     NpcAICustomerCpt customer = cusomerQueue[0];
                     //添加一个订单
                     OrderForCustomer orderForCustomer = CreateOrder(customer, tableCpt);
-                    cusomerList.Add(orderForCustomer);
+                    orderList.Add(orderForCustomer);
                     //设置客户前往座位
                     customer.SetIntent(NpcAICustomerCpt.CustomerIntentEnum.GotoSeat, orderForCustomer);
                     //移除排队列表
@@ -138,9 +138,9 @@ public class InnHandler : BaseMonoBehaviour
     {
         innStatus = InnStatusEnum.Close;
         //驱除所有顾客
-        for (int i = 0; i < cusomerList.Count; i++)
+        for (int i = 0; i < orderList.Count; i++)
         {
-            OrderForCustomer orderCusomer = cusomerList[i];
+            OrderForCustomer orderCusomer = orderList[i];
             if (orderCusomer.customer != null && orderCusomer.customer.gameObject != null)
                 Destroy(orderCusomer.customer.gameObject);
             if (orderCusomer.foodCpt != null && orderCusomer.foodCpt.gameObject != null)
@@ -149,14 +149,24 @@ public class InnHandler : BaseMonoBehaviour
         for (int i = 0; i < innTableHandler.listTableCpt.Count; i++)
         {
             BuildTableCpt buildTableCpt = innTableHandler.listTableCpt[i];
-            buildTableCpt.InitTable();
+            buildTableCpt.CleanTable();
+        };
+        for (int i = 0; i < innPayHandler.listCounterCpt.Count; i++)
+        {
+            BuildCounterCpt buildCounterCpt = innPayHandler.listCounterCpt[i];
+            buildCounterCpt.ClearCounter();
+        };
+        for (int i = 0; i < innCookHandler.listStoveCpt.Count; i++)
+        {
+            BuildStoveCpt buildStoveCpt = innCookHandler.listStoveCpt[i];
+            buildStoveCpt.ClearStove();
         };
 
         cusomerQueue.Clear();
         foodQueue.Clear();
         sendQueue.Clear();
         clearQueue.Clear();
-        cusomerList.Clear();
+        orderList.Clear();
         workerBuilder.ClearAllWork();
     }
 
@@ -178,6 +188,29 @@ public class InnHandler : BaseMonoBehaviour
         order.customer = npc;
         order.table = table;
         return order;
+    }
+
+    /// <summary>
+    /// 强制结束一个订单 不高兴时结束
+    /// </summary>
+    /// <param name="orderForCustomer"></param>
+    public void EndOrderForForce(OrderForCustomer orderForCustomer)
+    {
+        //如果食物已经做出来了
+        if (orderForCustomer.foodCpt != null)
+        {
+            //支付一半的钱
+            PayMoney(orderForCustomer, 0.5f);
+        }
+        //如果桌子还属于这个顾客
+        switch (orderForCustomer.customer.customerIntent)
+        {
+            case NpcAICustomerCpt.CustomerIntentEnum.GotoSeat:
+            case NpcAICustomerCpt.CustomerIntentEnum.WaitFood:
+            case NpcAICustomerCpt.CustomerIntentEnum.Eatting:
+                orderForCustomer.table.CleanTable();
+                break;
+        }
     }
 
     /// <summary>
@@ -214,14 +247,6 @@ public class InnHandler : BaseMonoBehaviour
         return counterCpt;
     }
 
-    /// <summary>
-    /// 取消食物 用于顾客不满意要离开
-    /// </summary>
-    /// <param name="customerCpt"></param>
-    public void CanelOrder(NpcAICustomerCpt customerCpt)
-    {
-
-    }
 
     /// <summary>
     ///  获取随机一个入口附近的坐标

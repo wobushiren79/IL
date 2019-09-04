@@ -48,13 +48,11 @@ public class InnFurnitureBuilder : BaseMonoBehaviour
         BaseBuildItemCpt buildItemCpt = buildItemObj.GetComponent<BaseBuildItemCpt>();
         buildItemCpt.SetDirection(furnitureData.direction);
 
-        if (buildItemCpt.buildId >= 40000 && buildItemCpt.buildId < 50000)
-        {
-            //判断是灶台
-            BuildStoveCpt stoveCpt = (BuildStoveCpt)buildItemCpt;
-            stoveCpt.innFoodManager = innFoodManager;
-            stoveCpt.innHandler = innHandler;
-        }
+        //if (buildItemCpt.buildId >= 40000 && buildItemCpt.buildId < 50000)
+        //{
+        //    //判断是灶台
+        //    BuildStoveCpt stoveCpt = (BuildStoveCpt)buildItemCpt;
+        //}
         return buildItemObj;
     }
 
