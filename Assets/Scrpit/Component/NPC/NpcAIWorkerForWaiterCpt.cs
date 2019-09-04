@@ -37,15 +37,16 @@ public class NpcAIWorkerForWaiterCpt : NpcAIWokerFoBaseCpt
                 {
                     if (npcAIWorker.characterMoveCpt.IsAutoMoveStop())
                     {
-                        SetIntent(WaiterIntentEnum.SendFood,orderForCustomer);
+                        SetIntent(WaiterIntentEnum.SendFood, orderForCustomer);
                     }
                 }
                 else
                 {
                     //删除食物
-                    Destroy(orderForCustomer.foodCpt.gameObject);
+                    if (orderForCustomer.foodCpt != null)
+                        Destroy(orderForCustomer.foodCpt.gameObject);
                     SetIntent(WaiterIntentEnum.Idle);
-                }    
+                }
                 break;
             case WaiterIntentEnum.SendFood:
                 if (orderForCustomer.CheckOrder())
@@ -65,14 +66,15 @@ public class NpcAIWorkerForWaiterCpt : NpcAIWokerFoBaseCpt
                 else
                 {
                     //删除食物
-                    Destroy(orderForCustomer.foodCpt.gameObject);
+                    if (orderForCustomer.foodCpt != null)
+                        Destroy(orderForCustomer.foodCpt.gameObject);
                     SetIntent(WaiterIntentEnum.Idle);
-                }      
+                }
                 break;
             case WaiterIntentEnum.GoToClear:
                 if (npcAIWorker.characterMoveCpt.IsAutoMoveStop())
                 {
-                    SetIntent(WaiterIntentEnum.Cleaning,orderForCustomer);
+                    SetIntent(WaiterIntentEnum.Cleaning, orderForCustomer);
                 }
                 break;
             case WaiterIntentEnum.Cleaning:
@@ -86,7 +88,7 @@ public class NpcAIWorkerForWaiterCpt : NpcAIWokerFoBaseCpt
     /// <param name="orderForCustomer"></param>
     public void SetFoodSend(OrderForCustomer orderForCustomer)
     {
-        SetIntent(WaiterIntentEnum.GoToGetFood,orderForCustomer);
+        SetIntent(WaiterIntentEnum.GoToGetFood, orderForCustomer);
     }
 
     /// <summary>

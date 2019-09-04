@@ -199,8 +199,9 @@ public class InnHandler : BaseMonoBehaviour
         //如果食物已经做出来了
         if (orderForCustomer.foodCpt != null)
         {
+
             //支付一半的钱
-            PayMoney(orderForCustomer, 0.5f);
+            //PayMoney(orderForCustomer, 0.5f);
         }
         //如果桌子还属于这个顾客
         switch (orderForCustomer.customer.customerIntent)
@@ -209,6 +210,8 @@ public class InnHandler : BaseMonoBehaviour
             case NpcAICustomerCpt.CustomerIntentEnum.WaitFood:
             case NpcAICustomerCpt.CustomerIntentEnum.Eatting:
                 orderForCustomer.table.CleanTable();
+                if (orderForCustomer.foodCpt != null)
+                    Destroy(orderForCustomer.foodCpt.gameObject);
                 break;
         }
     }
