@@ -147,7 +147,6 @@ public class InnBuildBean
         return listFurniture;
     }
 
-
     /// <summary>
     /// 获取门
     /// </summary>
@@ -166,4 +165,27 @@ public class InnBuildBean
         }
         return doorList;
     }
+
+    /// <summary>
+    /// 通过坐标获取家具
+    /// </summary>
+    /// <param name="position"></param>
+    /// <returns></returns>
+    public InnResBean GetFurnitureByPosition(Vector3 position)
+    {
+        if (listFurniture == null)
+            return null;
+        foreach (InnResBean itemData in listFurniture)
+        {
+            foreach(Vector3Bean itemPosition in  itemData.listPosition)
+            {
+                if (itemPosition.x == position.x && itemPosition.y == position.y)
+                {
+                    return itemData;
+                }
+            }
+        }
+        return null;
+    }
+
 }

@@ -53,7 +53,7 @@ public class UIGameBuild : BaseUIComponent
         InnBuildManager innBuildManager = GetUIMananger<UIGameManager>().innBuildManager;
         buildType = type;
         //删除当前选中
-        ((ControlForBuildCpt)(controlHandler.GetControl(ControlHandler.ControlEnum.Build))).DestoryBuild();
+        ((ControlForBuildCpt)(controlHandler.GetControl(ControlHandler.ControlEnum.Build))).DestoryBuildItem();
         if (listBuildContent == null)
             return;
         if (itemBuildModel == null)
@@ -115,7 +115,7 @@ public class UIGameBuild : BaseUIComponent
     public void DismantleMode()
     {
         ControlHandler controlHandler = GetUIMananger<UIGameManager>().controlHandler;
-        ((ControlForBuildCpt)(controlHandler.GetControl(ControlHandler.ControlEnum.Build))).DismantleMode();
+        ((ControlForBuildCpt)(controlHandler.GetControl(ControlHandler.ControlEnum.Build))).SetDismantleMode();
     }
 
     /// <summary>
@@ -136,17 +136,22 @@ public class UIGameBuild : BaseUIComponent
         NavMeshSurface navMesh = GetUIMananger<UIGameManager>().navMesh;
 
         //删除当前选中
-        ((ControlForBuildCpt)(controlHandler.GetControl(ControlHandler.ControlEnum.Build))).DestoryBuild();
+        ((ControlForBuildCpt)(controlHandler.GetControl(ControlHandler.ControlEnum.Build))).DestoryBuildItem();
+        //重新构建地形
         navMesh.BuildNavMesh();
+        //打开主UI
         uiManager.OpenUIAndCloseOtherByName(EnumUtil.GetEnumName(UIEnum.GameMain));
 
         if (gameTimeHandler.dayStauts == GameTimeHandler.DayEnum.Work)
         {
+            //如果是工作日 开店继续营业
             innHandler.OpenInn();
+            //恢复工作日控制器
             controlHandler.StartControl(ControlHandler.ControlEnum.Work);
         }
         else
         {
+            //恢复休息日控制器
             controlHandler.StartControl(ControlHandler.ControlEnum.Normal);
         }
     }

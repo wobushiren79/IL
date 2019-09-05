@@ -35,6 +35,8 @@ public class NpcAIWorkerForChefCpt : NpcAIWokerFoBaseCpt
                     //检测是否到达烹饪点
                     if (npcAIWorker.characterMoveCpt.IsAutoMoveStop())
                     {
+                        //设置朝向
+                        npcAIWorker.SetCharacterFace(orderForCustomer.stove.GetUserFace());
                         //开始做菜
                         SetIntent(ChefIntentEnum.Cooking);
                     }

@@ -67,6 +67,8 @@ public class NpcAICustomerCpt : BaseNpcAI
             case CustomerIntentEnum.GotoSeat:
                 if (characterMoveCpt.IsAutoMoveStop())
                 {
+                    //修改朝向
+                    SetCharacterFace(orderForCustomer.table.GetUserFace());
                     //点餐
                     innHandler.OrderForFood(orderForCustomer);
                     if (orderForCustomer.foodData == null)

@@ -21,11 +21,11 @@ public class ControlForWorkCpt : BaseControl
     {
         if (cameraMove == null)
             return;
-        float hMove = Input.GetAxis("Horizontal");
-        float vMove = Input.GetAxis("Vertical");
+        float hMove = Input.GetAxis(InputInfo.Horizontal);
+        float vMove = Input.GetAxis(InputInfo.Vertical);
         if (hMove == 0 && vMove == 0)
         {
-            cameraMove.StopAnim();
+           // cameraMove.StopAnim();
         }
         else
         {

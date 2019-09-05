@@ -16,6 +16,10 @@ public class BaseNpcAI : BaseMonoBehaviour
         characterMoveCpt = GetComponent<CharacterMoveCpt>();
     }
 
+    /// <summary>
+    /// 设置角色数据
+    /// </summary>
+    /// <param name="characterBean"></param>
     public void SetCharacterData(CharacterBean characterBean)
     {
         if (characterBean == null)
@@ -38,6 +42,18 @@ public class BaseNpcAI : BaseMonoBehaviour
             ItemsInfoBean shoesEquip = gameItemsManager.GetItemsById(characterBean.equips.shoesId);
             characterDress.SetShoes(shoesEquip);
         }
+    }
+
+    /// <summary>
+    /// 设置角色朝向
+    /// </summary>
+    /// <param name="face"></param>
+    public void SetCharacterFace(int face)
+    {
+        //设置身体数据
+        CharacterBodyCpt characterBody = CptUtil.GetCptInChildrenByName<CharacterBodyCpt>(gameObject, "Body");
+        if (characterBody != null)
+            characterBody.SetFace(face);
     }
 
     /// <summary>

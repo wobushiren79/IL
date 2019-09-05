@@ -30,7 +30,7 @@ public class CharacterDressCpt : BaseMonoBehaviour
         if (sprHat == null)
             return;
         Sprite hatSP;
-        if (itemsInfo == null)
+        if (itemsInfo == null||itemsInfo.icon_key==null)
         {
             sprHair.color = new Color(sprHair.color.r, sprHair.color.g, sprHair.color.b, 1);
             hatSP = null;

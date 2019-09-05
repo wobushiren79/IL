@@ -10,17 +10,22 @@ public class BaseBuildItemCpt : BaseMonoBehaviour
 
     public GameObject leftObj;
     public List<Vector3> leftPosition;
+    public int leftUserFace = 2;
 
     public GameObject rightObj;
     public List<Vector3> rightPosition;
+    public int rightUserFace = 2;
 
     public GameObject upObj;
     public List<Vector3> upPosition;
+    public int upUserFace = 2;
 
     public GameObject downOj;
     public List<Vector3> downPosition;
+    public int downUserFace = 2;
     //是否能旋转
     public bool canRotated=true;
+
     /// <summary>
     /// 获取建筑位置
     /// </summary>
@@ -41,6 +46,10 @@ public class BaseBuildItemCpt : BaseMonoBehaviour
         return null;
     }
 
+    /// <summary>
+    /// 获取建筑物的世界坐标
+    /// </summary>
+    /// <returns></returns>
     public List<Vector3> GetBuildWorldPosition()
     {
         List<Vector3> worldPositionList = new List<Vector3>();
@@ -51,6 +60,7 @@ public class BaseBuildItemCpt : BaseMonoBehaviour
         }
         return worldPositionList;
     }
+
     /// <summary>
     /// 获取建筑物体
     /// </summary>
@@ -69,6 +79,26 @@ public class BaseBuildItemCpt : BaseMonoBehaviour
                 return downOj;
         }
         return null;
+    }
+
+    /// <summary>
+    /// 获取使用者朝向
+    /// </summary>
+    /// <returns></returns>
+    public int GetUserFace()
+    {
+        switch (direction)
+        {
+            case Direction2DEnum.Left:
+                return leftUserFace;
+            case Direction2DEnum.Right:
+                return rightUserFace;
+            case Direction2DEnum.UP:
+                return upUserFace;
+            case Direction2DEnum.Down:
+                return downUserFace;
+        }
+        return 1;
     }
 
     /// <summary>

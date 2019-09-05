@@ -3574,6 +3574,11 @@ MonoBehaviour:
       isAccounting: 0
       isBeater: 0
       isAccost: 0
+      priorityChef: 0
+      priorityWaiter: 0
+      priorityAccounting: 0
+      priorityBeater: 0
+      priorityAccost: 0
       isAttendance: 0
     attributes:
       loyal: 0
@@ -18069,6 +18074,11 @@ MonoBehaviour:
       isAccounting: 0
       isBeater: 0
       isAccost: 0
+      priorityChef: 0
+      priorityWaiter: 0
+      priorityAccounting: 0
+      priorityBeater: 0
+      priorityAccost: 0
       isAttendance: 0
     attributes:
       loyal: 0
@@ -22998,11 +23008,21 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1367732070}
     m_Modifications:
+    - target: {fileID: 8246437030031608964, guid: eac23c2d72574c74698e32d71a49378a,
+        type: 3}
+      propertyPath: gameItemsManager
+      value: 
+      objectReference: {fileID: 1850674566571564988}
     - target: {fileID: 7362692423562799187, guid: eac23c2d72574c74698e32d71a49378a,
         type: 3}
       propertyPath: m_Name
       value: Normal
       objectReference: {fileID: 0}
+    - target: {fileID: 4921963546102894242, guid: eac23c2d72574c74698e32d71a49378a,
+        type: 3}
+      propertyPath: gameDataManager
+      value: 
+      objectReference: {fileID: 1935938916}
     - target: {fileID: 7362692425160318330, guid: eac23c2d72574c74698e32d71a49378a,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -23083,6 +23103,16 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7362692424323637332, guid: eac23c2d72574c74698e32d71a49378a,
+        type: 3}
+      propertyPath: characterBodyManager
+      value: 
+      objectReference: {fileID: 1113833294}
+    - target: {fileID: 7362692424501826021, guid: eac23c2d72574c74698e32d71a49378a,
+        type: 3}
+      propertyPath: characterDressManager
+      value: 
+      objectReference: {fileID: 1113833293}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: eac23c2d72574c74698e32d71a49378a, type: 3}
 --- !u!4 &1287699545 stripped
@@ -49890,6 +49920,11 @@ MonoBehaviour:
         isAccounting: 0
         isBeater: 0
         isAccost: 0
+        priorityChef: 0
+        priorityWaiter: 0
+        priorityAccounting: 0
+        priorityBeater: 0
+        priorityAccost: 0
         isAttendance: 0
       attributes:
         loyal: 0
@@ -56958,7 +56993,7 @@ PrefabInstance:
     - target: {fileID: 1030715794930158128, guid: f90ab6ce8072bd8439c970074fa445d8,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 7.499998
+      value: 7.5
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f90ab6ce8072bd8439c970074fa445d8, type: 3}
@@ -57442,7 +57477,7 @@ PrefabInstance:
     - target: {fileID: 1591988439818786242, guid: 9867e412dcdcdb24fb58f6415e7b195c,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 7.500471
+      value: 7.500473
       objectReference: {fileID: 0}
     - target: {fileID: 1591988440379129136, guid: 9867e412dcdcdb24fb58f6415e7b195c,
         type: 3}
@@ -61592,7 +61627,7 @@ PrefabInstance:
     - target: {fileID: 6889042820963258754, guid: d6bb33fc81a5693489650ae03de47561,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 7.500471
+      value: 7.500473
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d6bb33fc81a5693489650ae03de47561, type: 3}
@@ -61810,7 +61845,7 @@ PrefabInstance:
     - target: {fileID: 7041178839685126263, guid: d04d2ddb62804ba4489bdb74169bb3fb,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 7.500471
+      value: 7.500473
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d04d2ddb62804ba4489bdb74169bb3fb, type: 3}
@@ -62064,7 +62099,7 @@ PrefabInstance:
     - target: {fileID: 7163875734536595497, guid: 7191e203aa3ea9445881ec18749369ec,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 7.500456
+      value: 7.500458
       objectReference: {fileID: 0}
     - target: {fileID: 7163875733259846952, guid: 7191e203aa3ea9445881ec18749369ec,
         type: 3}
@@ -63575,7 +63610,7 @@ PrefabInstance:
     - target: {fileID: 7767516801426089799, guid: 27c68408f9c05274b9a46e0a16dc369e,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 7.499998
+      value: 7.5
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 27c68408f9c05274b9a46e0a16dc369e, type: 3}
@@ -64287,7 +64322,7 @@ PrefabInstance:
     - target: {fileID: 8412449499012319050, guid: ac3d1e91b6fcde849b7fb1bd0e959320,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 7.499998
+      value: 7.5
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ac3d1e91b6fcde849b7fb1bd0e959320, type: 3}

@@ -3,7 +3,7 @@ using UnityEditor;
 using System.Collections.Generic;
 using Cinemachine;
 
-public class ControlHandler : BaseManager
+public class ControlHandler : BaseMonoBehaviour
 {
 
     public enum ControlEnum

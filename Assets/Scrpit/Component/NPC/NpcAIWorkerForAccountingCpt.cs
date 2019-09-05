@@ -31,6 +31,8 @@ public class NpcAIWorkerForAccountingCpt : NpcAIWokerFoBaseCpt
                 {
                     if (npcAIWorker.characterMoveCpt.IsAutoMoveStop())
                     {
+                        //设置朝向
+                        npcAIWorker.SetCharacterFace(orderForCustomer.counter.GetUserFace());
                         SetIntent(AccountingIntentEnum.Accounting);
                     }
                 }

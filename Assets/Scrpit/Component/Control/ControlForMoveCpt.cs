@@ -7,11 +7,12 @@ public class ControlForMoveCpt : BaseControl
     //角色移动组建
     public CharacterMoveCpt characterMoveCpt;
     public GameDataManager gameDataManager;
+    public BaseNpcAI npcAI;
 
     private void Start()
     {
         Scene scene = SceneManager.GetActiveScene();
-        if (scene.name.Equals("GameInnScene"))
+        if (scene.name.Equals(EnumUtil.GetEnumName(ScenesEnum.GameInnScene)))
         {
             cameraFollowObj.transform.position = new Vector3(0, 0);
             characterMoveCpt.minMoveX = -5;
@@ -19,14 +20,15 @@ public class ControlForMoveCpt : BaseControl
             characterMoveCpt.minMoveY = -5;
             characterMoveCpt.maxMoveY = gameDataManager.gameData.GetInnBuildData().innHeight + 5;
         }
+        InitCharacter();
     }
 
-    private void FixedUpdate()
+    private void Update()
     {
         if (characterMoveCpt == null)
             return;
-        float hMove = Input.GetAxis("Horizontal");
-        float vMove = Input.GetAxis("Vertical");
+        float hMove = Input.GetAxis(InputInfo.Horizontal);
+        float vMove = Input.GetAxis(InputInfo.Vertical);
         if (hMove == 0 && vMove == 0)
         {
             characterMoveCpt.StopAnim();
@@ -54,6 +56,17 @@ public class ControlForMoveCpt : BaseControl
     public override void StartControl()
     {
         base.StartControl();
+        InitCharacter();
         //transform.position = new Vector3(0, 0, 0);
     }
+
+    /// <summary>
+    /// 初始化角色
+    /// </summary>
+    public void InitCharacter()
+    {
+        if (gameDataManager != null && gameDataManager.gameData.userCharacter != null)
+            npcAI.SetCharacterData(gameDataManager.gameData.userCharacter);
+    }
+
 }

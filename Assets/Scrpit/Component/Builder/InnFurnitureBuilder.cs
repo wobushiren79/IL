@@ -13,6 +13,9 @@ public class InnFurnitureBuilder : BaseMonoBehaviour
     //食物资源管理
     public InnFoodManager innFoodManager;
 
+    /// <summary>
+    /// 开始建造
+    /// </summary>
     public void StartBuild()
     {
         List<InnResBean> listData = gameDataManager.gameData.GetInnBuildData().GetFurnitureList();
@@ -47,14 +50,9 @@ public class InnFurnitureBuilder : BaseMonoBehaviour
         buildItemObj.transform.position = TypeConversionUtil.Vector3BeanToVector3(furnitureData.startPosition);
         BaseBuildItemCpt buildItemCpt = buildItemObj.GetComponent<BaseBuildItemCpt>();
         buildItemCpt.SetDirection(furnitureData.direction);
-
-        //if (buildItemCpt.buildId >= 40000 && buildItemCpt.buildId < 50000)
-        //{
-        //    //判断是灶台
-        //    BuildStoveCpt stoveCpt = (BuildStoveCpt)buildItemCpt;
-        //}
         return buildItemObj;
     }
+
 
     /// <summary>
     /// 删除指定坐标的建筑
@@ -62,23 +60,34 @@ public class InnFurnitureBuilder : BaseMonoBehaviour
     /// <param name="position"></param>
     public void DestroyFurnitureByPosition(Vector3 position)
     {
+        BaseBuildItemCpt buildCpt = GetFurnitureByPosition(position);
+        if(buildCpt != null)
+            Destroy(buildCpt.gameObject);
+    }
+
+    /// <summary>
+    /// 通过坐标获取建筑物
+    /// </summary>
+    /// <param name="position"></param>
+    /// <returns></returns>
+    public BaseBuildItemCpt GetFurnitureByPosition(Vector3 position)
+    {
         BaseBuildItemCpt[] buildList = buildContainer.GetComponentsInChildren<BaseBuildItemCpt>();
-        BaseBuildItemCpt destroyCpt = null;
+        BaseBuildItemCpt target = null;
         foreach (BaseBuildItemCpt itemData in buildList)
         {
+            if (itemData.buildId == -1)
+                continue;
             List<Vector3> listPosition = itemData.GetBuildWorldPosition();
             foreach (Vector3 itemPosition in listPosition)
             {
                 if (itemPosition.x == position.x && itemPosition.y == position.y)
                 {
-                    destroyCpt = itemData;
+                    target = itemData;
                     break;
                 }
             }
-            if (destroyCpt != null)
-                break;
-        };
-        if (destroyCpt != null)
-            Destroy(destroyCpt.gameObject);
+        }
+        return target;
     }
 }
