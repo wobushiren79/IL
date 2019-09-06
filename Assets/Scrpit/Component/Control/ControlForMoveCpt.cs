@@ -23,7 +23,7 @@ public class ControlForMoveCpt : BaseControl
         InitCharacter();
     }
 
-    private void Update()
+    public void FixedUpdate()
     {
         if (characterMoveCpt == null)
             return;
