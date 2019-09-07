@@ -9,12 +9,19 @@ public class UIGameText : BaseUIComponent, ITextInfoView
     [Header("控件")]
     public Text tvContent;
     public Text tvName;
-    public Text tvBehind;
     public Image ivFavorability;
+
+    public Text tvBookName;
+    public Text tvBookContent;
+    public Button btBookBack;
+
+    public Text tvBehind;
+
     public GameObject objNext;
     public CharacterUICpt characterUICpt;
 
     public GameObject objTypeNormal;
+    public GameObject objTypeBook;
     public GameObject objTypeBehind;
 
     public GameObject objSelectContent;
@@ -35,6 +42,12 @@ public class UIGameText : BaseUIComponent, ITextInfoView
         mTextInfoController = new TextInfoController(this, this);
     }
 
+    private void Start()
+    {
+        if (btBookBack != null)
+            btBookBack.onClick.AddListener(NextText);
+    }
+
     public override void CloseUI()
     {
         base.CloseUI();
@@ -47,7 +60,11 @@ public class UIGameText : BaseUIComponent, ITextInfoView
 
     private void Update()
     {
-        if (Input.GetButtonDown("Interactive_E") || Input.GetButtonDown("Confirm"))
+        if (this.currentTextData != null && this.currentTextData.type == 4)
+        {
+            return;
+        }
+        if (Input.GetButtonDown(InputInfo.Interactive_E) || Input.GetButtonDown(InputInfo.Confirm))
         {
             if (tweenerText != null && tweenerText.IsActive() && tweenerText.IsPlaying())
             {
@@ -62,10 +79,15 @@ public class UIGameText : BaseUIComponent, ITextInfoView
                 }
                 else
                 {
-                    NextText(textOrder + 1);
+                    NextText();
                 }
             }
         }
+    }
+
+    public void NextText()
+    {
+        NextText(textOrder + 1);
     }
 
     public void NextText(int order)
@@ -167,13 +189,14 @@ public class UIGameText : BaseUIComponent, ITextInfoView
             return;
         }
         currentTextData = textListData[0];
+        objTypeNormal.SetActive(false);
+        objTypeBehind.SetActive(false);
         switch (currentTextData.type)
         {
             //对话和选择对话
             case 0:
             case 1:
                 objTypeNormal.SetActive(true);
-                objTypeBehind.SetActive(false);
                 //选择对话 特殊处理 增加选择框
                 if (currentTextData.type == 1)
                 {
@@ -232,9 +255,16 @@ public class UIGameText : BaseUIComponent, ITextInfoView
                     tweenerText = tvContent.DOText(contentDetails, currentTextData.content.Length / 8f).SetEase(Ease.OutBack);
                 }
                 break;
+            case 4:
+                //书本详情
+                if (tvBookName != null)
+                    tvBookName.text = currentTextData.name;
+                if (tvBookContent != null)
+                    tvBookContent.text = currentTextData.content;
+                objTypeBook.SetActive(true);   
+                break;
             case 5:
                 //黑幕
-                objTypeNormal.SetActive(false);
                 objTypeBehind.SetActive(true);
                 if (tvBehind != null)
                 {

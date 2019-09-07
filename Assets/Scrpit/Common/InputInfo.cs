@@ -18,4 +18,7 @@ public class InputInfo : ScriptableObject
 
     //选择按钮Q
     public static string Rotate_Left = "Rotate_Left";
+
+    //互动按钮E
+    public static string Interactive_E = "Interactive_E";
 }

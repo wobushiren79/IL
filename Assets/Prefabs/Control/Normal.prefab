@@ -949,7 +949,6 @@ GameObject:
   m_Component:
   - component: {fileID: 7362692425160318330}
   - component: {fileID: 7362692423562799186}
-  - component: {fileID: 785587027101871025}
   - component: {fileID: 1070507204587047750}
   - component: {fileID: 4921963546102894233}
   - component: {fileID: 4921963546102894238}
@@ -957,6 +956,7 @@ GameObject:
   - component: {fileID: 4921963546102894237}
   - component: {fileID: 4921963546102894236}
   - component: {fileID: 8246437030031608964}
+  - component: {fileID: 5020146865545219144}
   m_Layer: 0
   m_Name: Normal
   m_TagString: Untagged
@@ -1007,17 +1007,6 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
---- !u!210 &785587027101871025
-SortingGroup:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7362692423562799187}
-  m_Enabled: 1
-  m_SortingLayerID: -63496745
-  m_SortingLayer: 9
-  m_SortingOrder: 0
 --- !u!114 &1070507204587047750
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1206,6 +1195,17 @@ MonoBehaviour:
       listLearnBook: 
   gameItemsManager: {fileID: 0}
   characterMoveCpt: {fileID: 4921963546102894236}
+--- !u!210 &5020146865545219144
+SortingGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7362692423562799187}
+  m_Enabled: 1
+  m_SortingLayerID: -63496745
+  m_SortingLayer: 9
+  m_SortingOrder: 0
 --- !u!1 &7362692423639950936
 GameObject:
   m_ObjectHideFlags: 0
@@ -1680,9 +1680,9 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: -63496745
-  m_SortingLayer: 9
-  m_SortingOrder: -10
+  m_SortingLayerID: -597549249
+  m_SortingLayer: 8
+  m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: ebf5b2b779608bd40a1a30440aad1e95, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -1705,6 +1705,7 @@ GameObject:
   - component: {fileID: 7362692424501826020}
   - component: {fileID: 7362692424323637332}
   - component: {fileID: 7362692424501826021}
+  - component: {fileID: 214933738314489925}
   m_Layer: 0
   m_Name: Body
   m_TagString: Untagged
@@ -1800,6 +1801,17 @@ MonoBehaviour:
     shoesId: 0
     listLearnBook: 
   characterDressManager: {fileID: 0}
+--- !u!210 &214933738314489925
+SortingGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7362692424501826022}
+  m_Enabled: 1
+  m_SortingLayerID: -63496745
+  m_SortingLayer: 9
+  m_SortingOrder: 0
 --- !u!1 &7362692424669640070
 GameObject:
   m_ObjectHideFlags: 0
