@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using UnityEditor;
 using System;
+using System.Collections.Generic;
 
 public class NpcAIWorkerCpt : BaseNpcAI
 {
@@ -28,8 +29,10 @@ public class NpcAIWorkerCpt : BaseNpcAI
     public InnHandler innHandler;
     //游戏数据
     public GameDataManager gameDataManager;
-
-    public WorkerIntentEnum workerIntent = WorkerIntentEnum.Idle;//工作者的想法
+    //工作者的想法
+    public WorkerIntentEnum workerIntent = WorkerIntentEnum.Idle;
+    //工作信息
+    public List<WorkerInfo> listWorkerInfo = new List<WorkerInfo>();
 
     private void FixedUpdate()
     {
@@ -40,6 +43,36 @@ public class NpcAIWorkerCpt : BaseNpcAI
                 break;
         }
     }
+
+    public override void SetCharacterData(CharacterBean characterBean)
+    {
+        base.SetCharacterData(characterBean);
+        InitWorkerInfo();
+    }
+
+    /// <summary>
+    /// 通过优先级设置工作
+    /// </summary>
+    public void SetWorkByPriority()
+    {
+        foreach (WorkerInfo itemWorkerInfo in listWorkerInfo)
+        {
+            if (!itemWorkerInfo.isWork)
+                continue;
+            bool isDistributionSuccess=innHandler.DistributionWorkForType(itemWorkerInfo.worker,this);
+            if (isDistributionSuccess)
+                return;
+        }
+    }
+
+    /// <summary>
+    /// 初始工作信息
+    /// </summary>
+    public void InitWorkerInfo()
+    {
+        listWorkerInfo = characterData.baseInfo.GetAllWorkerInfo();
+    }
+
 
     /// <summary>
     /// 设置意图
@@ -120,4 +153,5 @@ public class NpcAIWorkerCpt : BaseNpcAI
     {
         aiForAccounting.SetAccounting(orderForCustomer);
     }
+
 }

@@ -2,6 +2,7 @@
 using UnityEditor;
 using System.Collections.Generic;
 using System;
+using System.Diagnostics;
 
 public class InnHandler : BaseMonoBehaviour
 {
@@ -65,6 +66,7 @@ public class InnHandler : BaseMonoBehaviour
         innPayHandler.InitAccountingCpt();
         innCookHandler.InitChefCpt();
         innWaiterHandler.InitWaiterCpt();
+        workerBuilder.InitWorkerData();
     }
 
     private void FixedUpdate()
@@ -88,52 +90,14 @@ public class InnHandler : BaseMonoBehaviour
                     cusomerQueue.RemoveAt(0);
                 }
             }
-            //排队支付处理
-            if (!CheckUtil.ListIsNull(innPayHandler.listCounterCpt))
-            {
-                for (int i = 0; i < innPayHandler.listCounterCpt.Count; i++)
-                {
-                    BuildCounterCpt counterCpt = innPayHandler.listCounterCpt[i];
-                    if (!CheckUtil.ListIsNull(counterCpt.payQueue))
-                    {
-                        bool isSuccess = innPayHandler.SetPay(counterCpt.payQueue[0]);
-                        if (isSuccess)
-                        {
-                            counterCpt.payQueue.RemoveAt(0);
-                        }
-                    }
-                }
-            }
-            //排队送菜处理
-            if (!CheckUtil.ListIsNull(sendQueue))
-            {
-                bool isSuccess = innWaiterHandler.SetSendFood(sendQueue[0]);
-                if (isSuccess)
-                {
-                    sendQueue.RemoveAt(0);
-                }
-            }
-            //排队做菜处理
-            if (!CheckUtil.ListIsNull(foodQueue))
-            {
-                bool isSuccess = innCookHandler.SetChefForCook(foodQueue[0]);
-                if (isSuccess)
-                {
-                    foodQueue.RemoveAt(0);
-                }
-            }
-            //排队清理处理
-            if (!CheckUtil.ListIsNull(clearQueue))
-            {
-                bool isSuccess = innWaiterHandler.SetClearFood(clearQueue[0]);
-                if (isSuccess)
-                {
-                    clearQueue.RemoveAt(0);
-                }
-            }
+            //给闲置的工作人员分配工作
+            DistributionWorkForIdleWorker();
         }
     }
 
+    /// <summary>
+    /// 关闭客栈
+    /// </summary>
     public void CloseInn()
     {
         innStatus = InnStatusEnum.Close;
@@ -170,6 +134,9 @@ public class InnHandler : BaseMonoBehaviour
         workerBuilder.ClearAllWork();
     }
 
+    /// <summary>
+    /// 开启客栈
+    /// </summary>
     public void OpenInn()
     {
         workerBuilder.BuildAllWorker();
@@ -302,4 +269,90 @@ public class InnHandler : BaseMonoBehaviour
         innRecord.consumeIngFlour += foodData.ing_flour;
     }
 
+    /// <summary>
+    /// 给空闲的员工分配工作
+    /// </summary>
+    public void DistributionWorkForIdleWorker()
+    {
+        //获取所有工作者
+        List<NpcAIWorkerCpt> listWork = workerBuilder.npcWorkerList;
+        if (listWork == null)
+            return;
+        for (int i = 0; i < listWork.Count; i++)
+        {
+            NpcAIWorkerCpt itemWorker = listWork[i];
+            //如果该工作者此时空闲
+            if (itemWorker.workerIntent == NpcAIWorkerCpt.WorkerIntentEnum.Idle)
+            {
+                //通过优先级设置工作
+                itemWorker.SetWorkByPriority();
+            }
+        }
+    }
+
+    //通过不同的工作类型分配不同的工作
+    public bool DistributionWorkForType(WorkerEnum workType, NpcAIWorkerCpt workNpc)
+    {
+        switch (workType)
+        {
+            case WorkerEnum.Accounting:
+                if (!CheckUtil.ListIsNull(innPayHandler.listCounterCpt))
+                {
+                    for (int i = 0; i < innPayHandler.listCounterCpt.Count; i++)
+                    {
+                        BuildCounterCpt counterCpt = innPayHandler.listCounterCpt[i];
+                        if (!CheckUtil.ListIsNull(counterCpt.payQueue))
+                        {
+                            bool isSuccess = innPayHandler.SetPay(counterCpt.payQueue[0], workNpc);
+                            if (isSuccess)
+                            {
+                                counterCpt.payQueue.RemoveAt(0);
+                                return true;
+                            }
+                        }
+                    }
+                }
+                break;
+            case WorkerEnum.Chef:
+                //排队做菜处理
+                if (!CheckUtil.ListIsNull(foodQueue))
+                {
+                    bool isSuccess = innCookHandler.SetChefForCook(foodQueue[0],workNpc);
+                    if (isSuccess)
+                    {
+                        foodQueue.RemoveAt(0);
+                        return true;
+                    }
+                }
+                break;
+            case WorkerEnum.Waiter:
+                //排队送菜处理
+                if (!CheckUtil.ListIsNull(sendQueue))
+                {
+                    bool isSuccess = innWaiterHandler.SetSendFood(sendQueue[0], workNpc);
+                    if (isSuccess)
+                    {
+                        sendQueue.RemoveAt(0);
+                        return true;
+                        break;
+                    }
+                }
+                //排队清理处理
+                if (!CheckUtil.ListIsNull(clearQueue))
+                {
+                    bool isSuccess = innWaiterHandler.SetClearFood(clearQueue[0], workNpc);
+                    if (isSuccess)
+                    {
+                        clearQueue.RemoveAt(0);
+                        return true;
+                    }
+                }
+                break;
+            case WorkerEnum.Accost:
+                break;
+            case WorkerEnum.Beater:
+                break;
+        }
+        return false;
+    }
 }

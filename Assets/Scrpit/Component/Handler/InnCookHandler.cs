@@ -57,6 +57,43 @@ public class InnCookHandler : BaseMonoBehaviour
     /// <summary>
     ///  分配厨师做饭
     /// </summary>
+    public bool SetChefForCook(OrderForCustomer orderForCustomer, NpcAIWorkerCpt chefCpt)
+    {
+        lock (mSetChefLock)
+        {
+            BuildStoveCpt stoveCpt = null;
+            if (chefCpt == null)
+            {
+                return false;
+            }
+            for (int i = 0; i < listStoveCpt.Count; i++)
+            {
+                BuildStoveCpt itemStove = listStoveCpt[i];
+                //检测是否能到达烹饪点
+                if (itemStove.stoveStatus == BuildStoveCpt.StoveStatusEnum.Idle && CheckUtil.CheckPath(chefCpt.transform.position, itemStove.GetCookPosition()))
+                {
+                    stoveCpt = itemStove;
+                    break;
+                }
+            }
+            if (chefCpt != null && stoveCpt != null)
+            {
+                orderForCustomer.stove = stoveCpt;
+                orderForCustomer.stove.SetStoveStatus(BuildStoveCpt.StoveStatusEnum.Ready);
+                orderForCustomer.chef = chefCpt;
+                chefCpt.SetIntent(NpcAIWorkerCpt.WorkerIntentEnum.Cook, orderForCustomer);
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+    }
+
+    /// <summary>
+    ///  分配厨师做饭
+    /// </summary>
     public bool SetChefForCook(OrderForCustomer orderForCustomer)
     {
         lock (mSetChefLock)

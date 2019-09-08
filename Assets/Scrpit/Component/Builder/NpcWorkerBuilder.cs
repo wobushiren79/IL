@@ -59,4 +59,17 @@ public class NpcWorkerBuilder : BaseMonoBehaviour
         npcWorkerList.Clear();
         CptUtil.RemoveChild(objContainer.transform);
     }
+
+    /// <summary>
+    /// 初始化工作者的数据
+    /// </summary>
+    public void InitWorkerData()
+    {
+        //初始化优先级
+        for (int i = 0; i < npcWorkerList.Count; i++)
+        {
+            NpcAIWorkerCpt npcAI = npcWorkerList[i];
+            npcAI.InitWorkerInfo();
+        }
+    }
 }

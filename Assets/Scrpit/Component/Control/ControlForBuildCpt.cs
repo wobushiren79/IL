@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using DG.Tweening;
 using UnityEditor;
 using System.Collections.Generic;
 
@@ -307,6 +308,8 @@ public class ControlForBuildCpt : BaseControl
                     }
                     //背包里删除一个
                     gameDataManager.gameData.ChangeBuildNumber(buildItemCpt.buildId, -1);
+                    //动画
+                    buildItemCpt.transform.DOScale(new Vector3(0.2f, 0.2f, 0.2f), 0.5f).From().SetEase(Ease.OutBack);
                     ClearBuild();
                 }
                 //刷新一下建筑占地

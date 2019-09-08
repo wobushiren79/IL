@@ -20,7 +20,7 @@ public class BaseNpcAI : BaseMonoBehaviour
     /// 设置角色数据
     /// </summary>
     /// <param name="characterBean"></param>
-    public void SetCharacterData(CharacterBean characterBean)
+    public virtual void SetCharacterData(CharacterBean characterBean)
     {
         if (characterBean == null)
             return;

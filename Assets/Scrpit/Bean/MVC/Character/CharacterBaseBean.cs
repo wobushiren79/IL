@@ -1,9 +1,11 @@
 ﻿using UnityEngine;
 using UnityEditor;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 
 [Serializable]
-public class CharacterBaseBean 
+public class CharacterBaseBean
 {
     public string characterId;
     //名字
@@ -42,7 +44,60 @@ public class CharacterBaseBean
         priceS = 100;
         if (totalAttribute > 6)
         {
-            priceS += (totalAttribute - 6)*50;
-        }  
+            priceS += (totalAttribute - 6) * 50;
+        }
+    }
+
+    /// <summary>
+    /// 获取所有职业的工作数据
+    /// </summary>
+    /// <returns></returns>
+    public List<WorkerInfo> GetAllWorkerInfo()
+    {
+        List<WorkerInfo> workerInfos = new List<WorkerInfo>();
+        workerInfos.Add(GetWorkerInfoByType(WorkerEnum.Chef));
+        workerInfos.Add(GetWorkerInfoByType(WorkerEnum.Waiter));
+        workerInfos.Add(GetWorkerInfoByType(WorkerEnum.Accounting));
+        workerInfos.Add(GetWorkerInfoByType(WorkerEnum.Accost));
+        workerInfos.Add(GetWorkerInfoByType(WorkerEnum.Beater));
+        //按照优先度排序，数值越高越靠前
+        workerInfos = workerInfos.OrderByDescending(i => i.priority).ToList();
+        return workerInfos;
+    }
+
+    /// <summary>
+    /// 根据类型获取工作数据
+    /// </summary>
+    /// <param name="worker"></param>
+    /// <returns></returns>
+    public WorkerInfo GetWorkerInfoByType(WorkerEnum worker)
+    {
+        bool isWork = true;
+        int priority = 1;
+        switch (worker)
+        {
+            case WorkerEnum.Chef:
+                isWork = isChef;
+                priority = priorityChef;
+                break;
+            case WorkerEnum.Waiter:
+                isWork = isWaiter;
+                priority = priorityWaiter;
+                break;
+            case WorkerEnum.Accounting:
+                isWork = isAccounting;
+                priority = priorityAccounting;
+                break;
+            case WorkerEnum.Accost:
+                isWork = isAccost;
+                priority = priorityAccost;
+                break;
+            case WorkerEnum.Beater:
+                isWork = isBeater;
+                priority = priorityBeater;
+                break;
+        }
+        WorkerInfo workerInfo = new WorkerInfo(worker, priority, isWork);
+        return workerInfo;
     }
 }

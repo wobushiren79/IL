@@ -40,6 +40,23 @@ public class InnWaiterHandler : BaseMonoBehaviour
     /// 设置运送食物
     /// </summary>
     /// <returns></returns>
+    public bool SetSendFood(OrderForCustomer orderForCustomer, NpcAIWorkerCpt waiterCpt)
+    {
+        lock (mSetWaiterLock)
+        {
+            if (waiterCpt != null)
+            {
+                waiterCpt.SetIntent(NpcAIWorkerCpt.WorkerIntentEnum.WaiterSend, orderForCustomer);
+                return true;
+            }
+            return false;
+        }
+    }
+
+    /// <summary>
+    /// 设置运送食物
+    /// </summary>
+    /// <returns></returns>
     public bool SetSendFood(OrderForCustomer orderForCustomer)
     {
         lock (mSetWaiterLock)
@@ -69,6 +86,22 @@ public class InnWaiterHandler : BaseMonoBehaviour
         }
     }
 
+    /// <summary>
+    /// 设置清理食物
+    /// </summary>
+    /// <returns></returns>
+    public bool SetClearFood(OrderForCustomer orderForCustomer, NpcAIWorkerCpt waiterCpt)
+    {
+        lock (mSetWaiterLock)
+        {
+            if (waiterCpt != null)
+            {
+                waiterCpt.SetIntent(NpcAIWorkerCpt.WorkerIntentEnum.WaiterClean, orderForCustomer);
+                return true;
+            }
+            return false;
+        }
+    }
 
     /// <summary>
     /// 设置清理食物

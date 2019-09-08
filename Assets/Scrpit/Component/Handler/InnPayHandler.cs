@@ -58,6 +58,26 @@ public class InnPayHandler : BaseMonoBehaviour
     /// <summary>
     /// 设置算账数据
     /// </summary>
+    public bool SetPay(OrderForCustomer orderForCustomer, NpcAIWorkerCpt workNpc)
+    {
+        lock (mSetPayLock)
+        {
+            if (workNpc != null && orderForCustomer.counter.counterStatus == BuildCounterCpt.CounterStatusEnum.Idle)
+            {
+                orderForCustomer.counter.SetCounterStatus(BuildCounterCpt.CounterStatusEnum.Ready);
+                workNpc.SetIntent(NpcAIWorkerCpt.WorkerIntentEnum.Accounting, orderForCustomer);
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+    }
+
+    /// <summary>
+    /// 设置算账数据
+    /// </summary>
     public bool SetPay(OrderForCustomer orderForCustomer)
     {
         lock (mSetPayLock)
