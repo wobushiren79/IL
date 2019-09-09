@@ -6,7 +6,7 @@ using System.Collections.Generic;
 public class StoryBuilder : BaseMonoBehaviour, StoryInfoManager.CallBack, UIGameText.CallBack
 {
     [Header("控件")]
-    public GameObject objNpcModle;
+    public GameObject objNpcModel;
 
     [Header("数据")]
     public GameDataManager gameDataManager;
@@ -162,7 +162,7 @@ public class StoryBuilder : BaseMonoBehaviour, StoryInfoManager.CallBack, UIGame
     /// <param name="itemData"></param>
     public void CreateNpc(StoryInfoDetailsBean itemData)
     {
-        GameObject objNpc = Instantiate(objNpcModle, transform);
+        GameObject objNpc = Instantiate(objNpcModel, transform);
         objNpc.SetActive(true);
         objNpc.transform.localPosition = new Vector3(itemData.npc_position_x, itemData.npc_position_y);
         listNpcObj.Add(objNpc);

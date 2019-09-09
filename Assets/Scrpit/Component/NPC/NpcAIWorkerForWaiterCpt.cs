@@ -86,7 +86,7 @@ public class NpcAIWorkerForWaiterCpt : NpcAIWokerFoBaseCpt
     /// 设置送餐
     /// </summary>
     /// <param name="orderForCustomer"></param>
-    public void SetFoodSend(OrderForCustomer orderForCustomer)
+    public void StartFoodSend(OrderForCustomer orderForCustomer)
     {
         SetIntent(WaiterIntentEnum.GoToGetFood, orderForCustomer);
     }
@@ -95,7 +95,7 @@ public class NpcAIWorkerForWaiterCpt : NpcAIWokerFoBaseCpt
     /// 设置清理
     /// </summary>
     /// <param name="orderForCustomer"></param>
-    public void SetFoodClean(OrderForCustomer orderForCustomer)
+    public void StartFoodClean(OrderForCustomer orderForCustomer)
     {
         SetIntent(WaiterIntentEnum.GoToClear, orderForCustomer);
     }

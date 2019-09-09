@@ -334,7 +334,6 @@ public class InnHandler : BaseMonoBehaviour
                     {
                         sendQueue.RemoveAt(0);
                         return true;
-                        break;
                     }
                 }
                 //排队清理处理
@@ -349,6 +348,7 @@ public class InnHandler : BaseMonoBehaviour
                 }
                 break;
             case WorkerEnum.Accost:
+                workNpc.aiForAccost.StartAccost();
                 break;
             case WorkerEnum.Beater:
                 break;

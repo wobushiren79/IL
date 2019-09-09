@@ -29,11 +29,16 @@ public class ItemGameWorkerCpt : ItemGameBaseCpt, IRadioButtonCallBack
     public Button btEquip;
     public Button btFire;
 
-    public RadioButtonView rbAccounting;
     public RadioButtonView rbChef;
+    public InputField etPriorityChef;
     public RadioButtonView rbWaiter;
+    public InputField etPriorityWaiter;
+    public RadioButtonView rbAccounting;
+    public InputField etPriorityAccounting;
     public RadioButtonView rbAccost;
+    public InputField etPriorityAccost;
     public RadioButtonView rbBeater;
+    public InputField etPriorityBeater;
 
     [Header("数据")]
     public CharacterUICpt characterUICpt;
@@ -51,7 +56,7 @@ public class ItemGameWorkerCpt : ItemGameBaseCpt, IRadioButtonCallBack
         {
             pbPrice.SetPopupShowView(uIGameManager.infoPromptPopup);
             pbPrice.SetContent(GameCommonInfo.GetUITextById(11002));
-        }   
+        }
         if (pbLoyal != null)
         {
             pbLoyal.SetPopupShowView(uIGameManager.infoPromptPopup);
@@ -61,17 +66,17 @@ public class ItemGameWorkerCpt : ItemGameBaseCpt, IRadioButtonCallBack
         {
             pbCook.SetPopupShowView(uIGameManager.infoPromptPopup);
             pbCook.SetContent(GameCommonInfo.GetUITextById(1));
-        }  
+        }
         if (pbSpeed != null)
         {
             pbSpeed.SetPopupShowView(uIGameManager.infoPromptPopup);
             pbSpeed.SetContent(GameCommonInfo.GetUITextById(2));
-        }   
+        }
         if (pbAccount != null)
         {
             pbAccount.SetPopupShowView(uIGameManager.infoPromptPopup);
             pbAccount.SetContent(GameCommonInfo.GetUITextById(3));
-        }   
+        }
         if (pbCharm != null)
         {
             pbCharm.SetPopupShowView(uIGameManager.infoPromptPopup);
@@ -99,6 +104,16 @@ public class ItemGameWorkerCpt : ItemGameBaseCpt, IRadioButtonCallBack
             rbAccost.SetCallBack(this);
         if (rbBeater != null)
             rbBeater.SetCallBack(this);
+        if (etPriorityChef != null)
+            etPriorityChef.onValueChanged.AddListener(PriorityChangeForChef);
+        if(etPriorityWaiter!=null)
+            etPriorityWaiter.onValueChanged.AddListener(PriorityChangeForWaiter);
+        if (etPriorityAccounting != null)
+            etPriorityAccounting.onValueChanged.AddListener(PriorityChangeForAccounting);
+        if (etPriorityAccost != null)
+            etPriorityAccost.onValueChanged.AddListener(PriorityChangeForAccost);
+        if (etPriorityBeater != null)
+            etPriorityBeater.onValueChanged.AddListener(PriorityChangeForBeater);
 
         if (btEquip != null)
             btEquip.onClick.AddListener(OpenEquipUI);
@@ -116,7 +131,8 @@ public class ItemGameWorkerCpt : ItemGameBaseCpt, IRadioButtonCallBack
             CharacterBaseBean characterBase = characterData.baseInfo;
             SetName(characterBase.name);
             SetPrice(characterBase.priceS, characterBase.priceM, characterBase.priceL);
-            SetWork(characterBase.isChef, characterBase.isWaiter, characterBase.isAccounting, characterBase.isBeater, characterBase.isAccost);
+            SetWork(characterBase.isChef, characterBase.isWaiter, characterBase.isAccounting, characterBase.isAccost, characterBase.isBeater);
+            SetPriority(characterBase.priorityChef, characterBase.priorityWaiter, characterBase.priorityAccounting, characterBase.priorityAccost, characterBase.priorityBeater);
         }
         if (characterData.attributes != null)
         {
@@ -137,7 +153,7 @@ public class ItemGameWorkerCpt : ItemGameBaseCpt, IRadioButtonCallBack
         {
             UIGameEquip uiequip = (UIGameEquip)GetUIManager().GetUIByName(EnumUtil.GetEnumName(UIEnum.GameEquip));
             uiequip.SetCharacterData(characterData);
-            uiComponent.uiManager.OpenUIAndCloseOtherByName(EnumUtil.GetEnumName(UIEnum.GameEquip));  
+            uiComponent.uiManager.OpenUIAndCloseOtherByName(EnumUtil.GetEnumName(UIEnum.GameEquip));
         }
     }
 
@@ -156,7 +172,7 @@ public class ItemGameWorkerCpt : ItemGameBaseCpt, IRadioButtonCallBack
     public void SetAttributes(CharacterAttributesBean characterAttributes, CharacterEquipBean characterEquip)
     {
         CharacterAttributesBean extraAttributes = new CharacterAttributesBean();
-        if (uiComponent!=null&&GetUIManager<UIGameManager>().gameItemsManager != null && characterEquip != null)
+        if (uiComponent != null && GetUIManager<UIGameManager>().gameItemsManager != null && characterEquip != null)
         {
             GameItemsManager gameItemsManager = GetUIManager<UIGameManager>().gameItemsManager;
             extraAttributes = characterEquip.GetEquipAttributes(gameItemsManager);
@@ -166,13 +182,13 @@ public class ItemGameWorkerCpt : ItemGameBaseCpt, IRadioButtonCallBack
         if (tvSpeed != null)
             tvSpeed.text = extraAttributes.speed + characterAttributes.speed + "";
         if (tvAccount != null)
-            tvAccount.text = extraAttributes.account+ characterAttributes.account + "";
+            tvAccount.text = extraAttributes.account + characterAttributes.account + "";
         if (tvCharm != null)
-            tvCharm.text = extraAttributes.charm+characterAttributes.charm + "";
+            tvCharm.text = extraAttributes.charm + characterAttributes.charm + "";
         if (tvForce != null)
-            tvForce.text = extraAttributes.force+characterAttributes.force + "";
+            tvForce.text = extraAttributes.force + characterAttributes.force + "";
         if (tvLucky != null)
-            tvLucky.text = extraAttributes.lucky+ characterAttributes.lucky + "";
+            tvLucky.text = extraAttributes.lucky + characterAttributes.lucky + "";
     }
 
     /// <summary>
@@ -218,7 +234,7 @@ public class ItemGameWorkerCpt : ItemGameBaseCpt, IRadioButtonCallBack
     /// <param name="isAccounting"></param>
     /// <param name="isBeater"></param>
     /// <param name="isAccost"></param>
-    public void SetWork(bool isChef, bool isWaiter, bool isAccounting, bool isBeater, bool isAccost)
+    public void SetWork(bool isChef, bool isWaiter, bool isAccounting, bool isAccost,bool isBeater)
     {
         if (rbAccounting != null)
         {
@@ -255,6 +271,80 @@ public class ItemGameWorkerCpt : ItemGameBaseCpt, IRadioButtonCallBack
             else
                 rbBeater.ChangeStates(RadioButtonView.RadioButtonStates.Unselected);
         }
+    }
+
+    /// <summary>
+    /// 设置优先级
+    /// </summary>
+    /// <param name="priorityChef"></param>
+    /// <param name="priorityWaiter"></param>
+    /// <param name="priorityAccounting"></param>
+    /// <param name="priorityBeater"></param>
+    /// <param name="priorityAccost"></param>
+    public void SetPriority(int priorityChef, int priorityWaiter, int priorityAccounting, int priorityAccost,int priorityBeater)
+    {
+        if (etPriorityChef != null)
+            etPriorityChef.text = priorityChef + "";
+        if (etPriorityWaiter != null)
+            etPriorityWaiter.text = priorityWaiter + "";
+        if (etPriorityAccounting != null)
+            etPriorityAccounting.text = priorityAccounting + "";
+        if (etPriorityAccost != null)
+            etPriorityAccost.text = priorityChef + "";
+        if (etPriorityBeater != null)
+            etPriorityBeater.text = priorityBeater + "";
+    }
+
+    /// <summary>
+    ///  更改优先级
+    /// </summary>
+    /// <param name="worker"></param>
+    /// <param name="content"></param>
+    public void PriorityChange(WorkerEnum worker, string content)
+    {
+        if(int.TryParse(content,out int priority))
+        {
+            switch (worker)
+            {
+               case WorkerEnum.Chef:
+                    characterData.baseInfo.priorityChef=priority;
+                break;
+                case WorkerEnum.Waiter:
+                    characterData.baseInfo.priorityWaiter = priority;
+                    break;
+                case WorkerEnum.Accounting:
+                    characterData.baseInfo.priorityAccounting = priority;
+                    break;
+                case WorkerEnum.Accost:
+                    characterData.baseInfo.priorityAccost = priority;
+                    break;
+                case WorkerEnum.Beater:
+                    characterData.baseInfo.priorityBeater = priority;
+                    break;
+            }
+            if (GetUIManager<UIGameManager>().innHandler != null)
+                GetUIManager<UIGameManager>().innHandler.InitWorker();
+        }
+    }
+    public void PriorityChangeForChef(string content)
+    {
+        PriorityChange(WorkerEnum.Chef, content);
+    }
+    public void PriorityChangeForWaiter(string content)
+    {
+        PriorityChange(WorkerEnum.Waiter, content);
+    }
+    public void PriorityChangeForAccounting(string content)
+    {
+        PriorityChange(WorkerEnum.Accounting, content);
+    }
+    public void PriorityChangeForAccost(string content)
+    {
+        PriorityChange(WorkerEnum.Accost, content);
+    }
+    public void PriorityChangeForBeater(string content)
+    {
+        PriorityChange(WorkerEnum.Beater, content);
     }
 
     public virtual void RadioButtonSelected(RadioButtonView view, RadioButtonView.RadioButtonStates buttonStates)

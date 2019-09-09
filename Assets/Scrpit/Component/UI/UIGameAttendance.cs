@@ -26,9 +26,21 @@ public class UIGameAttendance : BaseUIComponent, ItemGameAttendanceCpt.ICallBack
     {
         if (btSubmit != null)
             btSubmit.onClick.AddListener(StartWork);
+    }
+
+    public override void OpenUI()
+    {
+        base.OpenUI();
+        attendanceNumber = 0;
+        attendancePriceL = 0;
+        attendancePriceM = 0;
+        attendancePriceS = 0;
         InitData();
     }
 
+    /// <summary>
+    /// 开始工作
+    /// </summary>
     public void StartWork()
     {
         GameDataManager gameDataManager = GetUIMananger<UIGameManager>().gameDataManager;
@@ -37,6 +49,7 @@ public class UIGameAttendance : BaseUIComponent, ItemGameAttendanceCpt.ICallBack
         ControlHandler controlHandler = GetUIMananger<UIGameManager>().controlHandler;
         ToastView toastView = GetUIMananger<UIGameManager>().toastView;
 
+        //如果出勤人数太少
         if (attendanceNumber <= 0)
         {
             toastView.ToastHint(GameCommonInfo.GetUITextById(1013));
@@ -68,6 +81,7 @@ public class UIGameAttendance : BaseUIComponent, ItemGameAttendanceCpt.ICallBack
             CharacterBean itemData = listData[i];
             CreateWorkerItem(itemData);
         }
+        SetTotalData();
     }
 
     public void CreateWorkerItem(CharacterBean characterData)
@@ -79,9 +93,18 @@ public class UIGameAttendance : BaseUIComponent, ItemGameAttendanceCpt.ICallBack
         ItemGameAttendanceCpt workerItem = objWorkerItem.GetComponent<ItemGameAttendanceCpt>();
         if (workerItem != null)
         {
-            workerItem.SetCallBack(this);
             workerItem.SetData(characterData);
+            workerItem.SetCallBack(this);
         }
+        //初始化数据
+        if (characterData.baseInfo.isAttendance)
+        {
+            attendancePriceL += characterData.baseInfo.priceL;
+            attendancePriceM += characterData.baseInfo.priceM;
+            attendancePriceS += characterData.baseInfo.priceS;
+            attendanceNumber += 1;
+        }
+        
     }
 
     public void SetTotalData()

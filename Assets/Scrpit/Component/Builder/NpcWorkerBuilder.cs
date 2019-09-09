@@ -41,7 +41,7 @@ public class NpcWorkerBuilder : BaseMonoBehaviour
         GameObject workerObj = Instantiate(objWorkModel, objWorkModel.transform);
         workerObj.transform.SetParent(objContainer.transform);
         workerObj.SetActive(true);
-        workerObj.transform.localScale = new Vector3(2, 2);
+        workerObj.transform.localScale = new Vector3(1, 1);
         //获取门的坐标 并在门周围生成NPC
         Vector3 doorPosition = innHandler.GetRandomEntrancePosition();
         workerObj.transform.position = doorPosition;

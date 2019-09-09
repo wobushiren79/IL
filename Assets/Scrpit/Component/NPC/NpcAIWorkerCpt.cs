@@ -24,6 +24,8 @@ public class NpcAIWorkerCpt : BaseNpcAI
     public NpcAIWorkerForWaiterCpt aiForWaiter;
     //结账AI控制
     public NpcAIWorkerForAccountingCpt aiForAccounting;
+    //招待AI控制
+    public NpcAIWorkerForAccost aiForAccost;
 
     //客栈数据
     public InnHandler innHandler;
@@ -124,7 +126,7 @@ public class NpcAIWorkerCpt : BaseNpcAI
     /// </summary>
     public void SetIntentForCook(OrderForCustomer orderForCustomer)
     {
-        aiForChef.SetCook(orderForCustomer);
+        aiForChef.StartCook(orderForCustomer);
     }
 
     /// <summary>
@@ -133,7 +135,7 @@ public class NpcAIWorkerCpt : BaseNpcAI
     /// <param name="stoveCpt"></param>
     public void SetIntentForWaiterSend(OrderForCustomer orderForCustomer)
     {
-        aiForWaiter.SetFoodSend(orderForCustomer);
+        aiForWaiter.StartFoodSend(orderForCustomer);
     }
 
     /// <summary>
@@ -142,7 +144,7 @@ public class NpcAIWorkerCpt : BaseNpcAI
     /// <param name="stoveCpt"></param>
     public void SetIntentForWaiterClear(OrderForCustomer orderForCustomer)
     {
-        aiForWaiter.SetFoodClean(orderForCustomer);
+        aiForWaiter.StartFoodClean(orderForCustomer);
     }
 
     /// <summary>
@@ -151,7 +153,7 @@ public class NpcAIWorkerCpt : BaseNpcAI
     /// <param name="customerCpt"></param>
     public void SetIntentForAccounting(OrderForCustomer orderForCustomer)
     {
-        aiForAccounting.SetAccounting(orderForCustomer);
+        aiForAccounting.StartAccounting(orderForCustomer);
     }
 
 }

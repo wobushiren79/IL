@@ -14,7 +14,10 @@ public class CharacterMoveCpt : BaseMonoBehaviour
     //角色动画
     public Animator characterAnimtor;
     public NavMeshAgent navMeshAgent;
-    public GameObject characterBodyObj;
+
+    //移动对象
+    public GameObject objMove;
+    public GameObject objCharacterBody;
     public Rigidbody2D characterRigidbody;
 
     //是否手动移动
@@ -36,10 +39,12 @@ public class CharacterMoveCpt : BaseMonoBehaviour
 
     private void Start()
     {
-        lastPosition = transform.position;
+        if (objMove == null)
+            objMove = gameObject;
+        mLastPosition = objMove.transform.position;
     }
 
-    private Vector3 lastPosition;
+    private Vector3 mLastPosition;
 
     private void FixedUpdate()
     {
@@ -53,16 +58,19 @@ public class CharacterMoveCpt : BaseMonoBehaviour
                 }
                 //Move(navMeshAgent.nextPosition);
                 //转向
-                Vector3 theScale = characterBodyObj.transform.localScale;
-                if (characterBodyObj.transform.position.x - lastPosition.x < 0)
+                if (objCharacterBody != null)
                 {
-                    theScale.x = -Mathf.Abs(theScale.x);
+                    Vector3 theScale = objCharacterBody.transform.localScale;
+                    if (objCharacterBody.transform.position.x - mLastPosition.x < 0)
+                    {
+                        theScale.x = -Mathf.Abs(theScale.x);
+                    }
+                    else if (objCharacterBody.transform.position.x - mLastPosition.x > 0)
+                    {
+                        theScale.x = Mathf.Abs(theScale.x);
+                    }
+                    objCharacterBody.transform.localScale = theScale;
                 }
-                else if (characterBodyObj.transform.position.x - lastPosition.x > 0)
-                {
-                    theScale.x = Mathf.Abs(theScale.x);
-                }
-                characterBodyObj.transform.localScale = theScale;
             }
             else
             {
@@ -70,7 +78,7 @@ public class CharacterMoveCpt : BaseMonoBehaviour
                 if (!navMeshAgent.pathPending)
                     StopAnim();
             }
-            lastPosition = transform.position;
+            mLastPosition = objMove.transform.position;
         }
     }
 
@@ -132,19 +140,23 @@ public class CharacterMoveCpt : BaseMonoBehaviour
             characterAnimtor.SetInteger("State", 1);
         }
         //转向
-        Vector3 theScale = characterBodyObj.transform.localScale;
-        if (x < 0)
+        if (objCharacterBody != null)
         {
-            theScale.x = -Mathf.Abs(theScale.x);
+            Vector3 theScale = objCharacterBody.transform.localScale;
+            if (x < 0)
+            {
+                theScale.x = -Mathf.Abs(theScale.x);
+            }
+            else if (x > 0)
+            {
+                theScale.x = Mathf.Abs(theScale.x);
+            }
+            objCharacterBody.transform.localScale = theScale;
         }
-        else if (x > 0)
-        {
-            theScale.x = Mathf.Abs(theScale.x);
-        }
-        characterBodyObj.transform.localScale = theScale;
+
         //Vector2 lerpPosition = Vector3.Lerp(Vector2.zero, new Vector2(x, y), lerpOffset);
         // transform.Translate(movePosition * moveSpeed * Time.deltaTime);
-        Vector3 movePosition = transform.position + new Vector3(x, y) * moveSpeed * Time.deltaTime;
+        Vector3 movePosition = objMove.transform.position + new Vector3(x, y) * moveSpeed * Time.deltaTime;
         characterRigidbody.MovePosition(movePosition);
         BoundaryMove();
 
@@ -161,16 +173,16 @@ public class CharacterMoveCpt : BaseMonoBehaviour
             characterAnimtor.SetInteger("State", 1);
         }
         //转向
-        Vector3 theScale = characterBodyObj.transform.localScale;
-        if (movePosition.x - characterBodyObj.transform.position.x < 0)
+        Vector3 theScale = objCharacterBody.transform.localScale;
+        if (movePosition.x - objCharacterBody.transform.position.x < 0)
         {
             theScale.x = -Mathf.Abs(theScale.x);
         }
-        else if (movePosition.x - characterBodyObj.transform.position.x > 0)
+        else if (movePosition.x - objCharacterBody.transform.position.x > 0)
         {
             theScale.x = Mathf.Abs(theScale.x);
         }
-        characterBodyObj.transform.localScale = theScale;
+        objCharacterBody.transform.localScale = theScale;
         //transform.position = movePosition;
         BoundaryMove();
     }
@@ -180,24 +192,24 @@ public class CharacterMoveCpt : BaseMonoBehaviour
     /// </summary>
     public void BoundaryMove()
     {
-        Vector3 newPosition = transform.position;
-        if (maxMoveX != 0 && transform.position.x > maxMoveX)
+        Vector3 newPosition = objMove.transform.position;
+        if (maxMoveX != 0 && objMove.transform.position.x > maxMoveX)
         {
             newPosition.x = maxMoveX;
         }
-        if (minMoveX != 0 && transform.position.x < minMoveX)
+        if (minMoveX != 0 && objMove.transform.position.x < minMoveX)
         {
             newPosition.x = minMoveX;
         }
-        if (maxMoveY != 0 && transform.position.y > maxMoveY)
+        if (maxMoveY != 0 && objMove.transform.position.y > maxMoveY)
         {
             newPosition.y = maxMoveY;
         }
-        if (minMoveY != 0 && transform.position.y < minMoveY)
+        if (minMoveY != 0 && objMove.transform.position.y < minMoveY)
         {
             newPosition.y = minMoveY;
         }
-        transform.position = newPosition;
+        objMove.transform.position = newPosition;
     }
 
 

@@ -64,7 +64,7 @@ public class NpcNormalBuilder : BaseMonoBehaviour
 
         GameObject npcObj = Instantiate(objCustomerModel, objContainer.transform);
         npcObj.SetActive(true);
-        npcObj.transform.localScale = new Vector3(2, 2);
+        npcObj.transform.localScale = new Vector3(1, 1);
         npcObj.transform.position = startPosition;
 
         BaseNpcAI baseNpcAI= npcObj.GetComponent<BaseNpcAI>();

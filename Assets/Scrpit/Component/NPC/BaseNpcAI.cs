@@ -11,11 +11,6 @@ public class BaseNpcAI : BaseMonoBehaviour
     //角色移动控制
     public CharacterMoveCpt characterMoveCpt;
 
-    private void Awake()
-    {
-        characterMoveCpt = GetComponent<CharacterMoveCpt>();
-    }
-
     /// <summary>
     /// 设置角色数据
     /// </summary>

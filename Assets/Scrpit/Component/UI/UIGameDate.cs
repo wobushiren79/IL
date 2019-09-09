@@ -114,7 +114,7 @@ public class UIGameDate : BaseUIComponent
         yield return new WaitForSeconds(delayTime);
         // 第一天默认不营业
         gameTimeHandler.GetTime(out int year, out int month, out int day);
-        if (year == 1 && day == 1 && day == 1)
+        if (year == 221 && day == 1 && day == 1)
         {
             InnRest();
         }

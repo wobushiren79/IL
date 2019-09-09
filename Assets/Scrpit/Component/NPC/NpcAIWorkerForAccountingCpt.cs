@@ -50,7 +50,7 @@ public class NpcAIWorkerForAccountingCpt : NpcAIWokerFoBaseCpt
         }
     }
 
-    public void SetAccounting(OrderForCustomer orderForCustomer)
+    public void StartAccounting(OrderForCustomer orderForCustomer)
     {
         SetIntent(AccountingIntentEnum.GoToAccounting, orderForCustomer);
     }

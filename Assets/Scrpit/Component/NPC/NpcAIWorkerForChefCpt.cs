@@ -88,7 +88,7 @@ public class NpcAIWorkerForChefCpt : NpcAIWokerFoBaseCpt
     /// 设置做菜
     /// </summary>
     /// <param name="orderForCustomer"></param>
-    public void SetCook(OrderForCustomer orderForCustomer)
+    public void StartCook(OrderForCustomer orderForCustomer)
     {
         if (orderForCustomer == null)
             return;
@@ -129,6 +129,7 @@ public class NpcAIWorkerForChefCpt : NpcAIWokerFoBaseCpt
             return;
         }
         npcAIWorker.characterMoveCpt.SetDestination(movePosition);
+        cookPro.SetActive(true);
     }
 
     /// <summary>
@@ -145,7 +146,6 @@ public class NpcAIWorkerForChefCpt : NpcAIWokerFoBaseCpt
             npcAIWorker.gameDataManager.gameData.DeductIng(orderForCustomer.foodData);
             //记录食材消耗
             npcAIWorker.innHandler.ConsumeIngRecord(orderForCustomer.foodData);
-            cookPro.SetActive(true);
             //设置灶台状态
             orderForCustomer.stove.SetStoveStatus(BuildStoveCpt.StoveStatusEnum.Cooking);
             StartCoroutine(StartCook());
