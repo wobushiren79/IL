@@ -17,6 +17,8 @@ public class NpcAIWorkerForAccost : NpcAIWokerFoBaseCpt
 
     //招募图标
     public GameObject accostPro;
+    //谈话进度
+    public GameObject talkPro;
     //拉人的检测范围
     public BoxCollider2D mAccostBox;
 
@@ -94,6 +96,8 @@ public class NpcAIWorkerForAccost : NpcAIWokerFoBaseCpt
     {
         if (accostPro != null)
             accostPro.SetActive(false);
+        if (talkPro != null)
+            talkPro.SetActive(false);
         if (mAccostBox != null)
             mAccostBox.enabled = false;
         npcAICustomer = null;
@@ -106,7 +110,7 @@ public class NpcAIWorkerForAccost : NpcAIWokerFoBaseCpt
     public void SetIntentForGoToDoor()
     {
         if (accostPro != null)
-            accostPro.SetActive(true);
+            accostPro.SetActive(false);
         movePosition = npcAIWorker.innHandler.GetRandomEntrancePosition();
         npcAIWorker.characterMoveCpt.SetDestination(movePosition);
     }
@@ -128,11 +132,12 @@ public class NpcAIWorkerForAccost : NpcAIWokerFoBaseCpt
     /// </summary>
     private void SetIntentForGoToCustomer()
     {
+        if (accostPro != null)
+            accostPro.SetActive(false);
         //设置客户等待
         npcAICustomer.SetIntent(NpcAICustomerCpt.CustomerIntentEnum.WaitAccost);
         //走向客户
-        movePosition = Vector3.Lerp(transform.transform.position, npcAICustomer.transform.position, 0.9f);
-            
+        movePosition = Vector3.Lerp(transform.transform.position, npcAICustomer.transform.position, 0.9f);          
         npcAIWorker.characterMoveCpt.SetDestination(movePosition);
         //展示表情
         npcAIWorker.SetExpression(CharacterExpressionCpt.CharacterExpressionEnum.Surprise);
@@ -143,6 +148,10 @@ public class NpcAIWorkerForAccost : NpcAIWokerFoBaseCpt
     /// </summary>
     private void SetIntentForTalking()
     {
+        if (accostPro != null)
+            accostPro.SetActive(false);
+        if (talkPro != null)
+            talkPro.SetActive(true);
         StartCoroutine(StartTalking(5));
     }
 

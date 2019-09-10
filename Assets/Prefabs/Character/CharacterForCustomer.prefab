@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 6005648394122929475}
   - component: {fileID: 6355272750433371025}
   - component: {fileID: 5927514836725964328}
+  - component: {fileID: 8299112105059165523}
   m_Layer: 0
   m_Name: CharacterForCustomer
   m_TagString: Untagged
@@ -184,6 +185,17 @@ MonoBehaviour:
   sceneInnManager: {fileID: 0}
   movePosition: {x: 0, y: 0, z: 0}
   timeWaitSeat: 20
+--- !u!210 &8299112105059165523
+SortingGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 377874546984278071}
+  m_Enabled: 1
+  m_SortingLayerID: -63496745
+  m_SortingLayer: 9
+  m_SortingOrder: 0
 --- !u!1 &2199415702426631752
 GameObject:
   m_ObjectHideFlags: 0
@@ -347,12 +359,18 @@ PrefabInstance:
       propertyPath: m_Enabled
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 8957706686985648905, guid: 2b0fba09934c2934eb7fd9b31e6030fb,
+        type: 3}
+      propertyPath: m_Color.rgba
+      value: 4278190208
+      objectReference: {fileID: 0}
     - target: {fileID: 2651985318937832334, guid: 2b0fba09934c2934eb7fd9b31e6030fb,
         type: 3}
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 5667961521748927760, guid: 2b0fba09934c2934eb7fd9b31e6030fb, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 2b0fba09934c2934eb7fd9b31e6030fb, type: 3}
 --- !u!4 &3885834711599310108 stripped
 Transform:
@@ -391,7 +409,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 1697461308649322183}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 0}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 545268fae3793df47b15468b2c869720, type: 3}
   m_Name: 
