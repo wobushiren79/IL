@@ -19,6 +19,9 @@ public class EventHandler : BaseSingleton<EventHandler>
     public void EventTriggerForLook(long markId)
     {
         ChangeEventStatus(true);
+        //控制模式修改
+        if (controlHandler != null)
+            controlHandler.StopControl();
         BaseUIComponent baseUIComponent = uiManager.OpenUIAndCloseOtherByName(EnumUtil.GetEnumName(UIEnum.GameText));
         ((UIGameText)baseUIComponent).SetData(TextEnum.Look, markId);
     }
@@ -30,6 +33,9 @@ public class EventHandler : BaseSingleton<EventHandler>
     public void EventTriggerForTalk(long markId)
     {
         ChangeEventStatus(true);
+        //控制模式修改
+        if (controlHandler != null)
+            controlHandler.StopControl();
         BaseUIComponent baseUIComponent = uiManager.OpenUIAndCloseOtherByName(EnumUtil.GetEnumName(UIEnum.GameText));
         ((UIGameText)baseUIComponent).SetData(TextEnum.Talk, markId);
     }
@@ -41,6 +47,9 @@ public class EventHandler : BaseSingleton<EventHandler>
     public void EventTriggerForStory(StoryInfoBean storyInfo)
     {
         ChangeEventStatus(true);
+        //控制模式修改
+        if(controlHandler!=null)
+            controlHandler.StartControl(ControlHandler.ControlEnum.Story);
         uiManager.CloseAllUI();
         storyBuilder.BuildStory(storyInfo);
     }
@@ -79,14 +88,11 @@ public class EventHandler : BaseSingleton<EventHandler>
     {
         mIsEventing = isEvent;
         if (controlHandler!=null)
-            if (isEvent)
+            if (!isEvent)
             {
-                controlHandler.StartControl(ControlHandler.ControlEnum.Story);
-            }
-            else
-            {
+                //事件结束 操作回复
                 controlHandler.StartControl(ControlHandler.ControlEnum.Normal);
-            }  
+            }
     }
 
     /// <summary>

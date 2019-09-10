@@ -27,6 +27,8 @@ public class UIGameText : BaseUIComponent, ITextInfoView
     public GameObject objSelectContent;
     public GameObject objSelectModel;
 
+    //文本容器
+    public RectTransform rtfTextContent;
     [Header("数据")]
     public int textOrder = 1;
     public List<TextInfoBean> listTextData;
@@ -64,11 +66,14 @@ public class UIGameText : BaseUIComponent, ITextInfoView
         {
             return;
         }
-        if (Input.GetButtonDown(InputInfo.Interactive_E) || Input.GetButtonDown(InputInfo.Confirm))
+        if (Input.GetButtonDown(InputInfo.Interactive_E))
         {
             if (tweenerText != null && tweenerText.IsActive() && tweenerText.IsPlaying())
             {
                 tweenerText.Complete();
+                //刷新控件
+                if(rtfTextContent!=null)
+                GameUtil.RefreshRectViewHight(rtfTextContent, true);
             }
             else
             {
@@ -191,6 +196,7 @@ public class UIGameText : BaseUIComponent, ITextInfoView
         currentTextData = textListData[0];
         objTypeNormal.SetActive(false);
         objTypeBehind.SetActive(false);
+        objTypeBook.SetActive(false);
         switch (currentTextData.type)
         {
             //对话和选择对话

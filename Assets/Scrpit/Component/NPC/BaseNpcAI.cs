@@ -10,7 +10,9 @@ public class BaseNpcAI : BaseMonoBehaviour
     public GameItemsManager gameItemsManager;
     //角色移动控制
     public CharacterMoveCpt characterMoveCpt;
-
+    //角色表情
+    public CharacterExpressionCpt characterExpression;
+          
     /// <summary>
     /// 设置角色数据
     /// </summary>
@@ -37,6 +39,21 @@ public class BaseNpcAI : BaseMonoBehaviour
             ItemsInfoBean shoesEquip = gameItemsManager.GetItemsById(characterBean.equips.shoesId);
             characterDress.SetShoes(shoesEquip);
         }
+    }
+
+    /// <summary>
+    /// 设置表情
+    /// </summary>
+    /// <param name="expressionEnum"></param>
+    public void SetExpression(CharacterExpressionCpt.CharacterExpressionEnum expressionEnum)
+    {
+        if (characterExpression != null)
+            characterExpression.SetExpression(expressionEnum);
+    }
+    public void SetExpression(int expression)
+    {
+        if (characterExpression != null)
+            characterExpression.SetExpression(expression);
     }
 
     /// <summary>

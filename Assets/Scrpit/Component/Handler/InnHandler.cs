@@ -348,7 +348,7 @@ public class InnHandler : BaseMonoBehaviour
                 }
                 break;
             case WorkerEnum.Accost:
-                workNpc.aiForAccost.StartAccost();
+                workNpc.SetIntent(NpcAIWorkerCpt.WorkerIntentEnum.Accost);
                 break;
             case WorkerEnum.Beater:
                 break;

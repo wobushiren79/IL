@@ -70,6 +70,7 @@ public class UIGameAttendance : BaseUIComponent, ItemGameAttendanceCpt.ICallBack
 
     public void InitData()
     {
+        CptUtil.RemoveChildsByActive(objListContent.transform);
         GameDataManager gameDataManager = GetUIMananger<UIGameManager>().gameDataManager;
         if (gameDataManager == null)
             return;

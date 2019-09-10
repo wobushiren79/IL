@@ -29,7 +29,7 @@ public class NpcImportantBuilder : BaseMonoBehaviour
         GameObject npcObj = Instantiate(objNpcModel, objNpcContainer.transform);
         npcObj.SetActive(true);
         npcObj.transform.position = new Vector3(infoData.position_x,infoData.position_y);
-        npcObj.transform.localScale = new Vector3(2,2);
+        npcObj.transform.localScale = new Vector3(1,1);
         NpcAIImportantCpt aiCpt= npcObj.GetComponent<NpcAIImportantCpt>();
         aiCpt.SetCharacterData(characterData);
         InteractiveTalkCpt interactiveTalk = npcObj.GetComponent<InteractiveTalkCpt>();

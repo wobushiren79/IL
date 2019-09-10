@@ -130,9 +130,9 @@ public class StoryBuilder : BaseMonoBehaviour, StoryInfoManager.CallBack, UIGame
         GameObject objItem = GetNpcByNpcNum(npcNum);
         if (objItem != null)
         {
-            CharacterExpressionCpt characterExpression = objItem.GetComponent<CharacterExpressionCpt>();
-            if (characterExpression != null)
-                characterExpression.SetExpression(expression);
+            NpcAIStoryCpt npcAIStory = objItem.GetComponent<NpcAIStoryCpt>();
+            if (npcAIStory != null)
+                npcAIStory.SetExpression(expression);
         }
     }
 

@@ -102,6 +102,7 @@ public class NpcAIWorkerCpt : BaseNpcAI
                 SetIntentForAccounting(orderForCustomer);
                 break;
             case WorkerIntentEnum.Accost:
+                SetIntentForAccost();
                 break;
             case WorkerIntentEnum.Beater:
                 break;
@@ -154,6 +155,14 @@ public class NpcAIWorkerCpt : BaseNpcAI
     public void SetIntentForAccounting(OrderForCustomer orderForCustomer)
     {
         aiForAccounting.StartAccounting(orderForCustomer);
+    }
+
+    /// <summary>
+    /// 设置招待
+    /// </summary>
+    public void SetIntentForAccost()
+    {
+        aiForAccost.StartAccost();
     }
 
 }

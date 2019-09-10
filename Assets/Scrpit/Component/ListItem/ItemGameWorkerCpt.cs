@@ -290,7 +290,7 @@ public class ItemGameWorkerCpt : ItemGameBaseCpt, IRadioButtonCallBack
         if (etPriorityAccounting != null)
             etPriorityAccounting.text = priorityAccounting + "";
         if (etPriorityAccost != null)
-            etPriorityAccost.text = priorityChef + "";
+            etPriorityAccost.text = priorityAccost + "";
         if (etPriorityBeater != null)
             etPriorityBeater.text = priorityBeater + "";
     }

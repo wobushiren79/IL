@@ -17,7 +17,9 @@ public class NpcAICustomerCpt : BaseNpcAI
         GotoPay = 6,//去付钱
         WaitPay = 7,//等待付钱
         Pay = 8,//正在付钱
-        Leave //离开
+        Leave =10,//离开
+
+        WaitAccost=11,//等待招待
     }
 
     public CustomerIntentEnum customerIntent= CustomerIntentEnum.Walk;//意图 顾客： 1路过 2思考 3进店 4找座位 5点菜 6吃 7结账 
@@ -141,6 +143,9 @@ public class NpcAICustomerCpt : BaseNpcAI
                 break;
             case CustomerIntentEnum.Leave:
                 IntentForLeave();
+                break;
+            case CustomerIntentEnum.WaitAccost:
+                IntentForWaitAccost();
                 break;
         }
     }
@@ -280,6 +285,15 @@ public class NpcAICustomerCpt : BaseNpcAI
         //随机获取一个退出点
         movePosition = sceneInnManager.GetRandomSceneExportPosition();
         characterMoveCpt.SetDestination(movePosition);
+    }
+
+    /// <summary>
+    /// 意图-等待招待过来
+    /// </summary>
+    public void IntentForWaitAccost()
+    {
+        SetExpression(CharacterExpressionCpt.CharacterExpressionEnum.Surprise);
+        StopMove();
     }
 
     /// <summary>
