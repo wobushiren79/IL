@@ -171,11 +171,15 @@ public class UIGameMain : BaseUIComponent, DialogView.IDialogCallBack
     {
         InnHandler innHandler = GetUIMananger<UIGameManager>().innHandler;
         GameTimeHandler gameTimeHandler = GetUIMananger<UIGameManager>().gameTimeHandler;
+        GameDataManager gameDataManager = GetUIMananger<UIGameManager>().gameDataManager;
 
         GetUIMananger<UIGameManager>().gameTimeHandler.isStopTime = true;
         //重置游戏时间
         GameCommonInfo.gameData.gameTime.hour = 0;
         GameCommonInfo.gameData.gameTime.minute = 0;
+
+        //保存数据
+        gameDataManager.SaveGameData();
 
         if (gameTimeHandler.dayStauts == GameTimeHandler.DayEnum.Work)
         {

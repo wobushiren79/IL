@@ -6,9 +6,7 @@ using System.Collections;
 public class UIGameDate : BaseUIComponent
 {
     [Header("控件")]
-    public Text tvYear;
-    public Text tvMonth;
-    public Text tvDay;
+    public CalendarView calendarView;
     public Text tvDialogContent;
 
     public GameObject objDialog;
@@ -36,9 +34,10 @@ public class UIGameDate : BaseUIComponent
         if (gameTimeHandler != null)
         {
             gameTimeHandler.GetTime(out int year, out int month, out int day);
-            SetYear(year);
-            SetMonth(month);
-            SetDay(day);
+            calendarView.InitData(year, month, day);
+            //保存数据
+           
+            //进入下一天
             gameTimeHandler.GoToNextDay(1);
             gameTimeHandler.GetTime(out int newYear, out int newMonth, out int newDay);
             SetDate(newYear, newMonth, newDay);
@@ -63,45 +62,9 @@ public class UIGameDate : BaseUIComponent
     /// <param name="day"></param>
     public void SetDate(int year, int month, int day)
     {
-        float totalAnimTime = 1;
-        if (int.TryParse(tvDay.text, out int oldDay) && day != oldDay)
-        {
-            DOTween.To(() => oldDay,
-            newPoint =>
-            {
-                SetDay(newPoint);
-            },
-            day,
-            animTime)
-           .SetDelay(animDelay);
-            totalAnimTime = animDelay + animTime;
-        }
-        if (int.TryParse(tvMonth.text, out int oldMonth) && month != oldMonth)
-        {
-            DOTween.To(() => oldMonth,
-            newPoint =>
-            {
-                SetMonth(newPoint);
-            },
-            month,
-            animTime)
-            .SetDelay(animDelay + animTime);
-            totalAnimTime = animDelay + 2 * animTime;
-        }
-        if (int.TryParse(tvYear.text, out int oldYearh) && year != oldYearh)
-        {
-            DOTween.To(() => oldYearh,
-            newPoint =>
-            {
-                SetYear(newPoint);
-            },
-            year,
-            animTime)
-            .SetDelay(animDelay + 2 * animTime);
-            totalAnimTime = animDelay + 3 * animTime;
-        }
+        calendarView.ChangeData(year,month,day);
         //展示是否营业框
-        StartCoroutine(ShowDialog(totalAnimTime));
+        StartCoroutine(ShowDialog(3));
     }
 
     /// <summary>
@@ -123,42 +86,6 @@ public class UIGameDate : BaseUIComponent
             objDialog.SetActive(true);
             objDialog.transform.localScale = new Vector3(1, 1, 1);
             objDialog.transform.DOScale(Vector3.zero, 0.5f).From().SetEase(Ease.OutBack);
-        }
-    }
-
-    /// <summary>
-    /// 设置年
-    /// </summary>
-    /// <param name="year"></param>
-    public void SetYear(int year)
-    {
-        if (tvYear != null)
-        {
-            tvYear.text = "" + year;
-        }
-    }
-
-    /// <summary>
-    /// 设置月
-    /// </summary>
-    /// <param name="month"></param>
-    public void SetMonth(int month)
-    {
-        if (tvMonth != null)
-        {
-            tvMonth.text = "" + month;
-        }
-    }
-
-    /// <summary>
-    /// 设置日
-    /// </summary>
-    /// <param name="day"></param>
-    public void SetDay(int day)
-    {
-        if (tvDay != null)
-        {
-            tvDay.text = "" + day;
         }
     }
 

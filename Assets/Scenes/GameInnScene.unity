@@ -98,7 +98,7 @@ LightmapSettings:
     m_TrainingDataDestination: TrainingData
     m_LightProbeSampleCountMultiplier: 4
   m_LightingDataAsset: {fileID: 0}
-  m_UseShadowmask: 0
+  m_UseShadowmask: 1
 --- !u!196 &4
 NavMeshSettings:
   serializedVersion: 2
@@ -49574,7 +49574,7 @@ PrefabInstance:
     - target: {fileID: 3384141392868308103, guid: 8472686e42a4221439fb402da7102545,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -20
+      value: -20.00003
       objectReference: {fileID: 0}
     - target: {fileID: 3384141392397983801, guid: 8472686e42a4221439fb402da7102545,
         type: 3}
@@ -67697,6 +67697,16 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 466882523}
     m_Modifications:
+    - target: {fileID: 2381383282166401099, guid: 10f377b49c9a6b94fad8d71948677267,
+        type: 3}
+      propertyPath: m_Name
+      value: GameDate
+      objectReference: {fileID: 0}
+    - target: {fileID: 2381383282166401099, guid: 10f377b49c9a6b94fad8d71948677267,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2381383282166401100, guid: 10f377b49c9a6b94fad8d71948677267,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -67817,20 +67827,15 @@ PrefabInstance:
       propertyPath: animTime
       value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 2381383282166401099, guid: 10f377b49c9a6b94fad8d71948677267,
-        type: 3}
-      propertyPath: m_Name
-      value: GameDate
-      objectReference: {fileID: 0}
-    - target: {fileID: 2381383282166401099, guid: 10f377b49c9a6b94fad8d71948677267,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 518942206073368830, guid: 10f377b49c9a6b94fad8d71948677267,
         type: 3}
       propertyPath: m_AnchoredPosition.y
       value: -0.025024414
+      objectReference: {fileID: 0}
+    - target: {fileID: 9063871483517557652, guid: 10f377b49c9a6b94fad8d71948677267,
+        type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -0.000061035156
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 10f377b49c9a6b94fad8d71948677267, type: 3}
@@ -68211,7 +68216,7 @@ PrefabInstance:
     - target: {fileID: 5365830923317823621, guid: f443ac1a915aad04bb8a054fbd99f5d9,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 7.5002136
+      value: 7.5002747
       objectReference: {fileID: 0}
     - target: {fileID: 6111098969770990466, guid: f443ac1a915aad04bb8a054fbd99f5d9,
         type: 3}
@@ -68672,6 +68677,16 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 466882523}
     m_Modifications:
+    - target: {fileID: 804664821100930175, guid: afe8614d307f4d74bb2c156c0a1c795e,
+        type: 3}
+      propertyPath: m_Name
+      value: GameSettle
+      objectReference: {fileID: 0}
+    - target: {fileID: 804664821100930175, guid: afe8614d307f4d74bb2c156c0a1c795e,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 276167336923631222, guid: afe8614d307f4d74bb2c156c0a1c795e,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -68797,16 +68812,6 @@ PrefabInstance:
       propertyPath: uiManager
       value: 
       objectReference: {fileID: 466882524}
-    - target: {fileID: 804664821100930175, guid: afe8614d307f4d74bb2c156c0a1c795e,
-        type: 3}
-      propertyPath: m_Name
-      value: GameSettle
-      objectReference: {fileID: 0}
-    - target: {fileID: 804664821100930175, guid: afe8614d307f4d74bb2c156c0a1c795e,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 5596250976783769739, guid: afe8614d307f4d74bb2c156c0a1c795e,
         type: 3}
       propertyPath: innFoodManager
@@ -69054,6 +69059,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 466882523}
     m_Modifications:
+    - target: {fileID: 7900265931792256785, guid: ad62647ae11e7c4478901b1a2fa4a8eb,
+        type: 3}
+      propertyPath: m_Name
+      value: GameBuild
+      objectReference: {fileID: 0}
     - target: {fileID: 6250084528016547680, guid: ad62647ae11e7c4478901b1a2fa4a8eb,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -69193,11 +69203,6 @@ PrefabInstance:
         type: 3}
       propertyPath: navMesh
       value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 7900265931792256785, guid: ad62647ae11e7c4478901b1a2fa4a8eb,
-        type: 3}
-      propertyPath: m_Name
-      value: GameBuild
       objectReference: {fileID: 0}
     - target: {fileID: 5352602745801416271, guid: ad62647ae11e7c4478901b1a2fa4a8eb,
         type: 3}
