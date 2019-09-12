@@ -16,7 +16,6 @@ public class UIGameDate : BaseUIComponent
     [Header("数据")]
     public float animTime = 1;//动画时间
     public float animDelay = 2;//动画延迟
-    public GameTimeHandler gameTimeHandler;//时间控制
 
     private void Start()
     {
@@ -31,6 +30,7 @@ public class UIGameDate : BaseUIComponent
     public override void OpenUI()
     {
         base.OpenUI();
+        GameTimeHandler gameTimeHandler =   GetUIMananger<UIGameManager>().gameTimeHandler;
         if (gameTimeHandler != null)
         {
             gameTimeHandler.GetTime(out int year, out int month, out int day);
@@ -75,6 +75,7 @@ public class UIGameDate : BaseUIComponent
     public IEnumerator ShowDialog(float delayTime)
     {
         yield return new WaitForSeconds(delayTime);
+        GameTimeHandler gameTimeHandler = GetUIMananger<UIGameManager>().gameTimeHandler;
         // 第一天默认不营业
         gameTimeHandler.GetTime(out int year, out int month, out int day);
         if (year == 221 && day == 1 && day == 1)
@@ -98,6 +99,7 @@ public class UIGameDate : BaseUIComponent
     {
         GameTimeHandler gameTimeHandler = GetUIMananger<UIGameManager>().gameTimeHandler;
         ControlHandler controlHandler = GetUIMananger<UIGameManager>().controlHandler;
+        NpcCustomerBuilder npcCustomerBuilder = GetUIMananger<UIGameManager>().npcCustomerBuilder;
 
         gameTimeHandler.dayStauts = GameTimeHandler.DayEnum.Rest;
         gameTimeHandler.SetTimeStatus(false);
@@ -107,6 +109,8 @@ public class UIGameDate : BaseUIComponent
         {
             uiManager.OpenUIAndCloseOtherByName(EnumUtil.GetEnumName(UIEnum.GameMain));
             controlHandler.StartControl(ControlHandler.ControlEnum.Normal);
+            //开始建造NPC
+            npcCustomerBuilder.StartBuildCustomer();
         }
     }
 

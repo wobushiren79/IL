@@ -1,11 +1,10 @@
 ﻿using UnityEngine;
 using UnityEditor;
+using System;
 
-public class SceneGameTownInit : BaseMonoBehaviour
+public class SceneGameTownInit : BaseSceneInit,IBaseObserver,DialogView.IDialogCallBack
 {
-    public GameItemsManager gameItemsManager;
     public InnBuildManager innBuildManager;
-    public GameDataManager gameDataManager;
     public NpcInfoManager npcInfoManager;
     public StoryInfoManager storyInfoManager;
     public NpcImportantBuilder npcImportantBuilder;
@@ -44,13 +43,68 @@ public class SceneGameTownInit : BaseMonoBehaviour
             TimeBean timeData = gameDataManager.gameData.gameTime;
             gameTimeHandler.SetTime(timeData.hour, timeData.minute);
             gameTimeHandler.SetTimeStatus(false);
+            //增加回调
+            gameTimeHandler.AddObserver(this);
         }
-       
 
         //设置天气
         if (weatherHandler != null)
         {
             weatherHandler.SetWeahter(gameDataManager.gameData.weatherToday);
         }
+    
     }
+
+    /// <summary>
+    /// 结束一天
+    /// </summary>
+    public void EndDay()
+    {
+        //停止时间
+        if (gameTimeHandler != null)
+            gameTimeHandler.SetTimeStatus(true);
+        //停止控制
+        if (controlHandler != null)
+            controlHandler.StopControl();
+        //重置游戏时间
+        GameCommonInfo.gameData.gameTime.hour = 0;
+        GameCommonInfo.gameData.gameTime.minute = 0;
+ 
+        if (dialogManager != null)
+        {
+            DialogBean dialogBean = new DialogBean();
+            dialogBean.content = GameCommonInfo.GetUITextById(3006);
+            dialogManager.CreateDialog(1, this, dialogBean,5);
+        }
+        else
+        {
+            SceneUtil.SceneChange(EnumUtil.GetEnumName(ScenesEnum.GameInnScene));
+        }
+    }
+
+
+    #region  时间通知回调
+    public void ObserbableUpdate<T>(T observable, int type, params UnityEngine.Object[] obj) where T : UnityEngine.Object
+    {
+        if (observable == gameTimeHandler)
+        {
+            if (type == (int)GameTimeHandler.NotifyTypeEnum.EndDay)
+            {
+                EndDay();
+            }
+        }
+    }
+    #endregion
+
+    #region  弹窗通知回调
+    public void Submit(DialogView dialogView)
+    {
+        SceneUtil.SceneChange(EnumUtil.GetEnumName(ScenesEnum.GameInnScene));
+    }
+
+    public void Cancel(DialogView dialogView)
+    {
+
+    }
+    #endregion
 }

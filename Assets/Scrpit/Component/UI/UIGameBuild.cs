@@ -38,6 +38,9 @@ public class UIGameBuild : BaseUIComponent
     public override void OpenUI()
     {
         base.OpenUI();
+        //停止时间
+        GetUIMananger<UIGameManager>().gameTimeHandler.SetTimeStatus(true);
+
         GetUIMananger<UIGameManager>().controlHandler.StartControl(ControlHandler.ControlEnum.Build);
         GetUIMananger<UIGameManager>().innHandler.CloseInn();
     }

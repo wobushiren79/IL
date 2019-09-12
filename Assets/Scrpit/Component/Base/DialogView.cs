@@ -17,6 +17,8 @@ public class DialogView : BaseMonoBehaviour
     public CanvasGroup cgDialog;
     private IDialogCallBack mCallBack;
 
+
+    private float mTimeDelayDelete;
     private void Start()
     {
         InitData();
@@ -54,7 +56,9 @@ public class DialogView : BaseMonoBehaviour
         {
             mCallBack.Submit(this);
         }
-        Destroy(gameObject);
+        DestroyDialog();
+
+  
     }
     public void CancelOnClick()
     {
@@ -62,7 +66,17 @@ public class DialogView : BaseMonoBehaviour
         {
             mCallBack.Cancel(this);
         }
-        Destroy(gameObject);
+        DestroyDialog();
+    }
+
+    public void DestroyDialog()
+    {
+        if (mTimeDelayDelete != 0)
+        {
+            transform.DOScale(new Vector3(1, 1, 1), mTimeDelayDelete).OnComplete(delegate () { Destroy(gameObject); });
+        }
+        else
+            Destroy(gameObject);
     }
 
     public void SetCallBack(IDialogCallBack callBack)
@@ -90,6 +104,15 @@ public class DialogView : BaseMonoBehaviour
         {
             tvCancel.text = dialogBean.cancelStr;
         }
+    }
+
+    /// <summary>
+    /// 设置延迟删除
+    /// </summary>
+    /// <param name="delayTime"></param>
+    public void SetDelayDelete(float delayTime)
+    {
+        this.mTimeDelayDelete = delayTime;
     }
 
     public interface IDialogCallBack

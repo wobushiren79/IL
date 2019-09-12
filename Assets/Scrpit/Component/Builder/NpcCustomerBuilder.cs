@@ -3,19 +3,19 @@ using UnityEditor;
 using System.Collections.Generic;
 using System.Collections;
 
-public class NpcCustomerBuilder : NpcNormalBuilder
+public class NpcCustomerBuilder : NpcNormalBuilder,IBaseObserver
 {
     private void Start()
     {
-        isBuildNpc = true;
-        StartCoroutine(StartBuild());
+        gameTimeHandler.AddObserver(this);
+        //StartBuildCustomer();
     }
 
     /// <summary>
     /// 初始化生成NPC
     /// </summary>
     /// <param name="npcNumber"></param>
-    public void BuilderPasserForInit(int npcNumber)
+    public void BuilderCustomerForInit(int npcNumber)
     {
         for (int i = 0; i < npcNumber; i++)
         {
@@ -25,7 +25,24 @@ public class NpcCustomerBuilder : NpcNormalBuilder
         }
     }
 
-    public IEnumerator StartBuild()
+    /// <summary>
+    /// 开始建造NPC
+    /// </summary>
+    public void StartBuildCustomer()
+    {
+        isBuildNpc = true;
+        StartCoroutine(StartBuild());
+    }
+    /// <summary>
+    /// 停止建造NPC
+    /// </summary>
+    public void StopBuildCustomer()
+    {
+        isBuildNpc = false;
+        StopAllCoroutines();
+    }
+
+    private IEnumerator StartBuild()
     {
         while (isBuildNpc)
         {
@@ -76,4 +93,24 @@ public class NpcCustomerBuilder : NpcNormalBuilder
         }
     }
 
+    /// <summary>
+    /// 时间回调
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
+    /// <param name="observable"></param>
+    /// <param name="type"></param>
+    /// <param name="obj"></param>
+    public void ObserbableUpdate<T>(T observable, int type, params Object[] obj) where T : Object
+    {
+        if((GameTimeHandler.NotifyTypeEnum)type== GameTimeHandler.NotifyTypeEnum.NewDay)
+        {
+            StopBuildCustomer();
+            ClearNpc();
+        }
+        else if ((GameTimeHandler.NotifyTypeEnum)type == GameTimeHandler.NotifyTypeEnum.EndDay)
+        {
+            StopBuildCustomer();
+            ClearNpc();
+        }
+    }
 }

@@ -14,11 +14,11 @@ public class GameTimeHandler : BaseObservable<IBaseObserver>
     public enum NotifyTypeEnum
     {
         NewDay,//新的一天
-        Night//夜晚
+        Night,//夜晚
+        EndDay,
     }
 
     public GameDataManager gameDataManager;
-
     public float hour;
     public float min;
 
@@ -48,12 +48,12 @@ public class GameTimeHandler : BaseObservable<IBaseObserver>
         for (int i = 0; i < nextDay; i++)
         {
             timeData.day += 1;
-            if (timeData.day > 30)
+            if (timeData.day > 28)
             {
                 timeData.day = 1;
                 timeData.month += 1;
             }
-            if (timeData.month > 12)
+            if (timeData.month > 4)
             {
                 timeData.month = 1;
                 timeData.year += 1;
@@ -83,6 +83,7 @@ public class GameTimeHandler : BaseObservable<IBaseObserver>
         {
             SetTimeStatus(true);
             //TODO 一天时间结束处理
+            NotifyAllObserver((int)NotifyTypeEnum.EndDay, null);
         }
         TimeBean timeData = gameDataManager.gameData.gameTime;
         timeData.SetTimeForHM((int)hour, (int)min);
@@ -139,7 +140,7 @@ public class GameTimeHandler : BaseObservable<IBaseObserver>
     /// </summary>
     /// <param name="hour"></param>
     /// <param name="min"></param>
-    public void SetTime(int hour,int min)
+    public void SetTime(int hour, int min)
     {
         this.hour = (float)hour;
         this.min = (float)min;

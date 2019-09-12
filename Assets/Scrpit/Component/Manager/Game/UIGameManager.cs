@@ -4,6 +4,8 @@ using UnityEngine.AI;
 
 public class UIGameManager : BaseUIManager
 {
+    [Header("初始化")]
+    public BaseSceneInit sceneInit;
     //UI控件
     [Header("控件")]
     public InfoPromptPopupShow infoPromptPopup;
@@ -25,12 +27,14 @@ public class UIGameManager : BaseUIManager
     public NpcInfoManager npcInfoManager;
     //UI相关
     public DialogManager dialogManager;
-
     //相关处理
     [Header("处理")]
     public InnHandler innHandler;
     public GameTimeHandler gameTimeHandler;
     public ControlHandler controlHandler;
+
+    [Header("建造")]
+    public NpcCustomerBuilder npcCustomerBuilder;
 
     [Header("地形")]
     public NavMeshSurface navMesh;

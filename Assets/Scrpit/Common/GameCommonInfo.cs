@@ -7,6 +7,8 @@ public class GameCommonInfo
     public static GameConfigBean gameConfig; //游戏设置
     public static GameDataBean gameData;//世界时间
 
+    public static string LoadingSceneName;//预加载场景名字
+
     private static GameConfigController mGameConfigController;
     private static UITextController mUITextController;
      

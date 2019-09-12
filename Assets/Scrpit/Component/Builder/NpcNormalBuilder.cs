@@ -71,4 +71,12 @@ public class NpcNormalBuilder : BaseMonoBehaviour
         baseNpcAI.SetCharacterData(characterData);
         return npcObj;
     }
+
+    /// <summary>
+    /// 删除所有NPC
+    /// </summary>
+    public void ClearNpc()
+    {
+        CptUtil.RemoveChildsByActive(objContainer.transform);
+    }
 }

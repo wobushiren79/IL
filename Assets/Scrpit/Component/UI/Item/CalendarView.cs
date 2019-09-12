@@ -20,11 +20,29 @@ public class CalendarView : BaseMonoBehaviour, IDateInfoView
     public float timeDelay = 2;
     public DateInfoController dateInfoController;
 
+    private List<ItemGameCalendarCpt> mListItemDay = new List<ItemGameCalendarCpt>();
+
+    private void OnGUI()
+    {
+        //防止拖动分辨率 UI变形
+        RectTransform rtfDayContent = objDayContent.GetComponent<RectTransform>();
+        GridLayoutGroup glgDayContent = objDayContent.GetComponent<GridLayoutGroup>();
+        float itemW = rtfDayContent.rect.width / 7f;
+        float itemH = rtfDayContent.rect.height / 4f;
+        glgDayContent.cellSize = new Vector2(itemW, itemH);
+    }
+
     private void Awake()
     {
         dateInfoController = new DateInfoController(this, this);
     }
 
+    /// <summary>
+    /// 初始化数据
+    /// </summary>
+    /// <param name="year"></param>
+    /// <param name="month"></param>
+    /// <param name="day"></param>
     public void InitData(int year, int month, int day)
     {
         this.year = year;
@@ -32,23 +50,21 @@ public class CalendarView : BaseMonoBehaviour, IDateInfoView
         this.day = day;
         SetYear(year);
         SetSeasons(month);
-        InitDays(month);
+        InitMonth(month);
     }
 
-    private void Update()
-    {
-        if (Input.GetMouseButtonDown(0))
-        {
 
-            ChangeData(year,month+ 1, day );
-        }
-    }
-
+    /// <summary>
+    /// 改变数据
+    /// </summary>
+    /// <param name="year"></param>
+    /// <param name="month"></param>
+    /// <param name="day"></param>
     public void ChangeData(int year, int month, int day)
     {
         StopAllCoroutines();
         //延迟执行
-        StartCoroutine(StartDelay( year,month,day));
+        StartCoroutine(StartDelay(year, month, day));
     }
 
     /// <summary>
@@ -94,11 +110,12 @@ public class CalendarView : BaseMonoBehaviour, IDateInfoView
     }
 
     /// <summary>
-    /// 初始化天数
+    /// 初始化月份
     /// </summary>
-    public void InitDays(int month)
+    public void InitMonth(int month)
     {
         CptUtil.RemoveChildsByActive(objDayContent.transform);
+        mListItemDay.Clear();
         dateInfoController.GetDateInfoByMonth(month);
     }
 
@@ -115,23 +132,50 @@ public class CalendarView : BaseMonoBehaviour, IDateInfoView
         tvSeasons.transform.localScale = new Vector3(1f, 1f, 1f);
         if (this.year != year)
         {
+            this.year = year;
             tvYear.transform
-                .DOScale(new Vector3(0.5f, 0.5f, 0.5f), 0.5f)
+                .DOScale(new Vector3(0.5f, 0.5f, 0.5f),1f)
                 .From()
                 .SetEase(Ease.OutBack);
             SetYear(year);
         }
         if (this.month != month)
         {
+            this.month = month;
+            this.day = day;
             tvSeasons.transform
-                .DOScale(new Vector3(0.5f, 0.5f, 0.5f), 0.5f)
+                .DOScale(new Vector3(0.5f, 0.5f, 0.5f), 1f)
                 .From()
                 .SetEase(Ease.OutBack);
             SetSeasons(month);
+            InitMonth(month);
         }
-        this.year = year;
-        this.month = month;
-        this.day = day;
+        if (this.day != day)
+        {
+            this.day = day;
+            SetCurrentDay(day);
+        }
+    }
+
+    /// <summary>
+    /// 设置当前天
+    /// </summary>
+    /// <param name="day"></param>
+    public void SetCurrentDay(int day)
+    {
+        if (mListItemDay == null)
+            return;
+        foreach (ItemGameCalendarCpt itemDay in mListItemDay)
+        {
+            if (itemDay.dateInfo != null && itemDay.dateInfo.day == day)
+            {
+                itemDay.SetItemStatus(true);
+            }
+            else
+            {
+                itemDay.SetItemStatus(false);
+            }
+        }
     }
 
     #region 日期数据回调
@@ -145,22 +189,18 @@ public class CalendarView : BaseMonoBehaviour, IDateInfoView
             //设置数据
             ItemGameCalendarCpt calendarCpt = objDay.GetComponent<ItemGameCalendarCpt>();
             if (calendarCpt != null)
+            {
                 calendarCpt.SetData(itemData);
+                mListItemDay.Add(calendarCpt);
+                if (day == itemData.day)
+                    calendarCpt.SetItemStatus(true);
+            }
         }
-    }
-
-    private void OnGUI()
-    {
-        //防止拖动分辨率 UI变形
-        RectTransform rtfDayContent = objDayContent.GetComponent<RectTransform>();
-        GridLayoutGroup glgDayContent = objDayContent.GetComponent<GridLayoutGroup>();
-        float itemW = rtfDayContent.rect.width / 7f;
-        float itemH = rtfDayContent.rect.height / 4f;
-        glgDayContent.cellSize = new Vector2(itemW, itemH);
     }
 
     public void GetDateInfoFail()
     {
+
     }
     #endregion
 }

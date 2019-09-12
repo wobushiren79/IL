@@ -60,6 +60,11 @@ public class ControlForMoveCpt : BaseControl
         //transform.position = new Vector3(0, 0, 0);
     }
 
+    public override void RestoreControl()
+    {
+        base.RestoreControl();
+        InitCharacter();
+    }
     /// <summary>
     /// 初始化角色
     /// </summary>

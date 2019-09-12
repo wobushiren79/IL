@@ -169,45 +169,18 @@ public class UIGameMain : BaseUIComponent, DialogView.IDialogCallBack
     #region dialog 回调
     public void Submit(DialogView dialogView)
     {
-        InnHandler innHandler = GetUIMananger<UIGameManager>().innHandler;
-        GameTimeHandler gameTimeHandler = GetUIMananger<UIGameManager>().gameTimeHandler;
-        GameDataManager gameDataManager = GetUIMananger<UIGameManager>().gameDataManager;
-
-        GetUIMananger<UIGameManager>().gameTimeHandler.isStopTime = true;
-        //重置游戏时间
-        GameCommonInfo.gameData.gameTime.hour = 0;
-        GameCommonInfo.gameData.gameTime.minute = 0;
-
-        //保存数据
-        gameDataManager.SaveGameData();
-
-        if (gameTimeHandler.dayStauts == GameTimeHandler.DayEnum.Work)
+        BaseSceneInit sceneInit = GetUIMananger<UIGameManager>().sceneInit;
+        Scene scene = SceneManager.GetActiveScene();
+        //如果是客栈场景
+        if (EnumUtil.GetEnumName(ScenesEnum.GameInnScene).Equals(scene.name))
         {
-            //如果是工作状态结束一天 则进入结算画面
-            uiManager.OpenUIAndCloseOtherByName(EnumUtil.GetEnumName(UIEnum.GameSettle));
+            ((SceneGameInnInit)sceneInit).EndDay();
         }
-        else if (gameTimeHandler.dayStauts == GameTimeHandler.DayEnum.Rest)
+        //如果是城镇 则先回到客栈
+        else if (EnumUtil.GetEnumName(ScenesEnum.GameTownScene).Equals(scene.name))
         {
-            //如果是休息状态结束一天 则直接进入下一天画面
-            {
-                Scene scene = SceneManager.GetActiveScene();
-                //如果是客栈场景
-                if (EnumUtil.GetEnumName(ScenesEnum.GameInnScene).Equals(scene.name))
-                {
-                    uiManager.OpenUIAndCloseOtherByName(EnumUtil.GetEnumName(UIEnum.GameDate));
-                }
-                //如果是城镇 则先回到客栈
-                else if (EnumUtil.GetEnumName(ScenesEnum.GameTownScene).Equals(scene.name))
-                {
-                    SceneUtil.SceneChange(EnumUtil.GetEnumName(ScenesEnum.GameInnScene));
-                }
-            }
-
+            ((SceneGameTownInit)sceneInit).EndDay();
         }
-
-        //关闭店面
-        if (innHandler != null)
-            innHandler.CloseInn();
     }
 
     public void Cancel(DialogView dialogView)

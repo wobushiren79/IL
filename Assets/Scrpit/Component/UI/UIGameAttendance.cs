@@ -48,7 +48,7 @@ public class UIGameAttendance : BaseUIComponent, ItemGameAttendanceCpt.ICallBack
         InnHandler innHandler = GetUIMananger<UIGameManager>().innHandler;
         ControlHandler controlHandler = GetUIMananger<UIGameManager>().controlHandler;
         ToastView toastView = GetUIMananger<UIGameManager>().toastView;
-
+        NpcCustomerBuilder npcCustomerBuilder = GetUIMananger<UIGameManager>().npcCustomerBuilder;
         //如果出勤人数太少
         if (attendanceNumber <= 0)
         {
@@ -60,12 +60,20 @@ public class UIGameAttendance : BaseUIComponent, ItemGameAttendanceCpt.ICallBack
             toastView.ToastHint(GameCommonInfo.GetUITextById(1014));
             return;
         }
+        //支付出勤费用
         gameDataManager.gameData.PayMoney(attendancePriceL, attendancePriceM, attendancePriceS);
+        //设置当天状态
         gameTimeHandler.dayStauts = GameTimeHandler.DayEnum.Work;
+        //设置是否停止时间
         gameTimeHandler.SetTimeStatus(false);
+        //开启主UI
         uiManager.OpenUIAndCloseOtherByName(EnumUtil.GetEnumName(UIEnum.GameMain));
+        //打开客栈
         innHandler.OpenInn();
+        //放开控制
         controlHandler.StartControl(ControlHandler.ControlEnum.Work);
+        //开始建造NPC
+        npcCustomerBuilder.StartBuildCustomer();
     }
 
     public void InitData()

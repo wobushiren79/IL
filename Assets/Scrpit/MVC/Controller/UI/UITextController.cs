@@ -44,17 +44,14 @@ public class UITextController : BaseMVCController<UITextModel,IUITextView>
     {
         if (mMapData == null)
             return null;
-        TextInfoBean itemData=null;
-        try
+        if (mMapData.TryGetValue(id,out TextInfoBean textInfo))
         {
-             itemData = mMapData[id];
+            return textInfo.content;
         }
-        catch (Exception e)
+        else
         {
-            LogUtil.LogError("没有找到ID为"+id+"的UI内容");
+            LogUtil.LogError("没有找到ID为" + id + "的UI内容");
+            return "???";
         }
-        if (itemData == null)
-            return null;
-        return itemData.content;
     }
 }

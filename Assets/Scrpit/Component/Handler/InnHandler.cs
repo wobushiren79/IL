@@ -32,6 +32,7 @@ public class InnHandler : BaseMonoBehaviour
     // 入口处理
     public InnEntranceHandler innEntranceHandler;
 
+
     //排队的人
     public List<NpcAICustomerCpt> cusomerQueue = new List<NpcAICustomerCpt>();
     //排队等待烹饪的食物
@@ -110,21 +111,38 @@ public class InnHandler : BaseMonoBehaviour
             if (orderCusomer.foodCpt != null && orderCusomer.foodCpt.gameObject != null)
                 Destroy(orderCusomer.foodCpt.gameObject);
         }
+        //清理排队的客人
+        foreach (NpcAICustomerCpt itemCusomter in cusomerQueue)
+        {
+            Destroy(itemCusomter.gameObject);
+        }
+        //清理所有桌子
         for (int i = 0; i < innTableHandler.listTableCpt.Count; i++)
         {
             BuildTableCpt buildTableCpt = innTableHandler.listTableCpt[i];
             buildTableCpt.CleanTable();
         };
+        //清理所有柜台
         for (int i = 0; i < innPayHandler.listCounterCpt.Count; i++)
         {
             BuildCounterCpt buildCounterCpt = innPayHandler.listCounterCpt[i];
             buildCounterCpt.ClearCounter();
         };
+        //清理所有灶台
         for (int i = 0; i < innCookHandler.listStoveCpt.Count; i++)
         {
             BuildStoveCpt buildStoveCpt = innCookHandler.listStoveCpt[i];
             buildStoveCpt.ClearStove();
         };
+        //结束所有拉人活动
+        foreach (NpcAIWorkerCpt itemWorker in workerBuilder.npcWorkerList)
+        {
+            if (itemWorker != null && itemWorker.aiForAccost.npcAICustomer != null)
+            {
+                itemWorker.aiForAccost.npcAICustomer.SetIntent(NpcAICustomerCpt.CustomerIntentEnum.Leave);
+            }
+        }
+
 
         cusomerQueue.Clear();
         foodQueue.Clear();
@@ -290,7 +308,9 @@ public class InnHandler : BaseMonoBehaviour
         }
     }
 
-    //通过不同的工作类型分配不同的工作
+    /// <summary>
+    /// 通过不同的工作类型分配不同的工作
+    /// </summary>
     public bool DistributionWorkForType(WorkerEnum workType, NpcAIWorkerCpt workNpc)
     {
         switch (workType)
@@ -317,7 +337,7 @@ public class InnHandler : BaseMonoBehaviour
                 //排队做菜处理
                 if (!CheckUtil.ListIsNull(foodQueue))
                 {
-                    bool isSuccess = innCookHandler.SetChefForCook(foodQueue[0],workNpc);
+                    bool isSuccess = innCookHandler.SetChefForCook(foodQueue[0], workNpc);
                     if (isSuccess)
                     {
                         foodQueue.RemoveAt(0);
@@ -355,4 +375,5 @@ public class InnHandler : BaseMonoBehaviour
         }
         return false;
     }
+
 }

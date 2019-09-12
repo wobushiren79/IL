@@ -72,4 +72,5 @@ public class NpcWorkerBuilder : BaseMonoBehaviour
             npcAI.InitWorkerInfo();
         }
     }
+
 }
