@@ -53,7 +53,12 @@ public class ItemGameGroceryCpt : ItemGameBaseCpt, DialogView.IDialogCallBack
         this.itemsInfo = GetUIManager<UIGameManager>().gameItemsManager.GetItemsById(storeInfo.mark_id);
         if (itemsInfo == null || storeInfo == null)
             return;
-        SetIcon(storeInfo.icon_key, storeInfo.mark, storeInfo.mark_id);
+        //如果图标key没有则替换成itemInfo的图标
+        string iconKey = storeInfo.icon_key;
+        if (CheckUtil.StringIsNull(iconKey))
+            iconKey = itemsInfo.icon_key;
+
+        SetIcon(iconKey, storeInfo.mark, storeInfo.mark_id);
         SetPrice(storeInfo.price_l, storeInfo.price_m, storeInfo.price_s, storeInfo.guild_coin);
         SetName(itemsInfo.name);
         SetContent(itemsInfo.content);

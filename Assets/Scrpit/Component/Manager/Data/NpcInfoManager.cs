@@ -19,7 +19,7 @@ public class NpcInfoManager : BaseManager, INpcInfoView
     /// </summary>
     public CharacterBean GetRandomCharacterData(long idStart, long idEnd)
     {
-        long randomId = (long)Random.Range(idStart, idEnd);
+        long randomId = Random.Range((int)idStart, (int)idEnd+1);
         CharacterBean characterData = null;
         if (listNormalNpcInfo.TryGetValue(randomId, out NpcInfoBean npcInfo))
         {
