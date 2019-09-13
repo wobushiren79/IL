@@ -56,7 +56,7 @@ public class NpcNormalBuilder : BaseMonoBehaviour
     {
         if (npcInfoManager == null)
             return null;
-        CharacterBean characterData = npcInfoManager.GetRandomCharacterData(1,3);
+        CharacterBean characterData = npcInfoManager.GetRandomCharacterData();
         if (characterData == null)
             return null;
         //随机生成身体数据

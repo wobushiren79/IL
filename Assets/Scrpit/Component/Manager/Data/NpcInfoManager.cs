@@ -27,6 +27,13 @@ public class NpcInfoManager : BaseManager, INpcInfoView
         }
         return characterData;
     }
+    /// <summary>
+    /// 获取一个随机NPC的数据 
+    /// </summary>
+    public CharacterBean GetRandomCharacterData()
+    {
+        return GetRandomCharacterData(1,listNormalNpcInfo.Count );
+    }
 
     /// <summary>
     /// 通过ID获取NPC数据
