@@ -8,6 +8,8 @@ public class ClockView : BaseMonoBehaviour
     public Image ivClockHand;
     //时间
     public Text tvClock;
+    //日期
+    public Text tvMonthAndDay;
     // 当前时间
     public int timeHour;
 
@@ -17,7 +19,7 @@ public class ClockView : BaseMonoBehaviour
     /// </summary>
     /// <param name="hour">24小时</param>
     /// <param name="min"></param>
-    public void SetTime(int hour, int min)
+    public void SetTime(int month, int day, int hour, int min)
     {
         timeHour = hour;
         if (hour > 24 || hour < 0)
@@ -40,7 +42,34 @@ public class ClockView : BaseMonoBehaviour
         string hourStr = hour < 10 ? "0" + hour : "" + hour;
         string minStr = min < 10 ? "0" + min : "" + min;
         tvClock.text = hourStr + ":" + minStr;
+
+        SetMonthAndDay(month, day);
     }
 
-
+    public void SetMonthAndDay(int month, int day)
+    {
+        if (tvMonthAndDay == null)
+            return;
+        string seasons = "";
+        switch (month)
+        {
+            case 1:
+                seasons = GameCommonInfo.GetUITextById(33);
+                tvMonthAndDay.color = new Color(0.22f, 0.87f, 0f);
+                break;
+            case 2:
+                seasons = GameCommonInfo.GetUITextById(34);
+                tvMonthAndDay.color = new Color(1f, 0.8f, 0f);
+                break;
+            case 3:
+                seasons = GameCommonInfo.GetUITextById(35);
+                tvMonthAndDay.color = new Color(1f, 0.32f, 0f);
+                break;
+            case 4:
+                seasons = GameCommonInfo.GetUITextById(36);
+                tvMonthAndDay.color = new Color(0f, 0.9f, 1f);
+                break;
+        }
+        tvMonthAndDay.text = seasons + " " + day + GameCommonInfo.GetUITextById(31);
+    }
 }

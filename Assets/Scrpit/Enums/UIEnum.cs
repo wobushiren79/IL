@@ -9,6 +9,7 @@ public enum UIEnum
     GameDate,
     GameMain ,
     GameWorker,
+    GameWorkerDetails,
     GameEquip,
     GameMenu,
     GameBackpack,

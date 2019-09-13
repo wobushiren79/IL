@@ -83,7 +83,8 @@ public class UIGameMain : BaseUIComponent, DialogView.IDialogCallBack
         if (clockView != null && gameTimeHandler != null)
         {
             gameTimeHandler.GetTime(out float hour, out float min);
-            clockView.SetTime((int)hour, (int)min);
+            gameTimeHandler.GetTime(out int year,out int month,out int day);
+            clockView.SetTime(month, day, (int)hour, (int)min);
         }
     }
 

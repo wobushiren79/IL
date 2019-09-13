@@ -27,6 +27,7 @@ public class ItemGameWorkerCpt : ItemGameBaseCpt, IRadioButtonCallBack
     public InfoPromptPopupButton pbLucky;
 
     public Button btEquip;
+    public Button btDetails;
     public Button btFire;
 
     public RadioButtonView rbChef;
@@ -117,6 +118,8 @@ public class ItemGameWorkerCpt : ItemGameBaseCpt, IRadioButtonCallBack
 
         if (btEquip != null)
             btEquip.onClick.AddListener(OpenEquipUI);
+        if (btDetails != null)
+            btDetails.onClick.AddListener(OpenDeitalsUI);
         if (btFire != null)
             btFire.onClick.AddListener(FireWorker);
     }
@@ -154,6 +157,19 @@ public class ItemGameWorkerCpt : ItemGameBaseCpt, IRadioButtonCallBack
             UIGameEquip uiequip = (UIGameEquip)GetUIManager().GetUIByName(EnumUtil.GetEnumName(UIEnum.GameEquip));
             uiequip.SetCharacterData(characterData);
             uiComponent.uiManager.OpenUIAndCloseOtherByName(EnumUtil.GetEnumName(UIEnum.GameEquip));
+        }
+    }
+
+    /// <summary>
+    /// 打开详情页
+    /// </summary>
+    public void OpenDeitalsUI()
+    {
+        if (uiComponent != null)
+        {
+            UIGameWorkerDetails uiWorkerDetails = (UIGameWorkerDetails)GetUIManager().GetUIByName(EnumUtil.GetEnumName(UIEnum.GameWorkerDetails));
+            uiWorkerDetails.SetCharacterData(characterData);
+            uiComponent.uiManager.OpenUIAndCloseOtherByName(EnumUtil.GetEnumName(UIEnum.GameWorkerDetails));
         }
     }
 

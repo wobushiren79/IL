@@ -89,19 +89,19 @@ public class CalendarView : BaseMonoBehaviour, IDateInfoView
         {
             case 1:
                 tvSeasons.text = GameCommonInfo.GetUITextById(33);
-                tvSeasons.color = new Color(0.35f, 0.64f, 0.25f);
+                tvSeasons.color = new Color(0.22f, 0.87f, 0f);
                 break;
             case 2:
                 tvSeasons.text = GameCommonInfo.GetUITextById(34);
-                tvSeasons.color = new Color(0.9f, 0.8f, 0.15f);
+                tvSeasons.color = new Color(1f, 0.8f, 0f);
                 break;
             case 3:
                 tvSeasons.text = GameCommonInfo.GetUITextById(35);
-                tvSeasons.color = new Color(0.9f, 0.55f, 0.27f);
+                tvSeasons.color = new Color(1f, 0.32f, 0f);
                 break;
             case 4:
                 tvSeasons.text = GameCommonInfo.GetUITextById(36);
-                tvSeasons.color = new Color(0.3f, 0.4f, 0.6f);
+                tvSeasons.color = new Color(0f, 0.9f, 1f);
                 break;
             default:
                 tvSeasons.text = "";
