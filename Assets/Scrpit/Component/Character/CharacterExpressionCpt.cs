@@ -26,15 +26,6 @@ public class CharacterExpressionCpt : BaseMonoBehaviour
     [Header("控件")]
     public SpriteRenderer spExpression;
 
-    public void Update()
-    {
-        if (Input.GetMouseButtonDown(1))
-        {
-            SetExpression(CharacterExpressionEnum.Love);
-        }
-       
-    }
-
     public void SetExpression(int expression)
     {
         SetExpression((CharacterExpressionEnum)expression);

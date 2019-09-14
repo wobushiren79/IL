@@ -24,12 +24,16 @@ public class UIGameWorkerDetails : BaseUIComponent
     public Text tvForce;
     public Text tvLucky;
 
+    public ItemGameWorkerDetailsWorkerCpt detailsForChef;
+    public ItemGameWorkerDetailsWorkerCpt detailsForWaiter;
+    public ItemGameWorkerDetailsWorkerCpt detailsForAccounting;
+    public ItemGameWorkerDetailsWorkerCpt detailsForAccost;
+    public ItemGameWorkerDetailsWorkerCpt detailsForBeater;
+
     public Button btBack;
 
     [Header("数据")]
     public CharacterBean characterData;
-
-    
 
     public void SetCharacterData(CharacterBean characterData)
     {
@@ -60,6 +64,8 @@ public class UIGameWorkerDetails : BaseUIComponent
         SetLoyal(characterData.attributes.loyal);
         SetAttributes(characterData.attributes, characterData.equips);
         SetEquip(characterData.equips);
+        SetWorkerInfo(characterData.baseInfo);
+        characterUICpt.SetCharacterData(characterData.body, characterData.equips);
     }
 
     public void OpenWorkUI()
@@ -79,6 +85,10 @@ public class UIGameWorkerDetails : BaseUIComponent
         }
     }
 
+    /// <summary>
+    /// 设置装备
+    /// </summary>
+    /// <param name="characterEquip"></param>
     public void SetEquip(CharacterEquipBean characterEquip)
     {
         GameItemsManager gameItemsManager = GetUIMananger<UIGameManager>().gameItemsManager;
@@ -137,17 +147,6 @@ public class UIGameWorkerDetails : BaseUIComponent
         SetEquipSprite(ivShoes, spShoes);
     }
 
-    private void SetEquipSprite(Image iv, Sprite spIcon)
-    {
-        if (spIcon != null)
-        {
-            iv.sprite = spIcon;
-            iv.color = new Color(1, 1, 1, 1);
-        }
-        else
-            iv.color = new Color(1, 1, 1, 0);
-    }
-
     /// <summary>
     /// 设置属性
     /// </summary>
@@ -168,5 +167,40 @@ public class UIGameWorkerDetails : BaseUIComponent
             tvForce.text = GameCommonInfo.GetUITextById(5) + "：" + characterAttributes.force + (extraAttributes.force == 0 ? "" : "+" + extraAttributes.force);
         if (tvLucky != null)
             tvLucky.text = GameCommonInfo.GetUITextById(6) + "：" + characterAttributes.lucky + (extraAttributes.lucky == 0 ? "" : "+" + extraAttributes.lucky);
+    }
+
+    /// <summary>
+    /// 设置职业数据
+    /// </summary>
+    public void SetWorkerInfo(CharacterBaseBean characterBase)
+    {
+        if (characterBase == null)
+            return;
+        if (detailsForChef != null)
+            detailsForChef.SetData(WorkerEnum.Chef, characterBase.chefInfo);
+        if (detailsForWaiter != null)
+            detailsForWaiter.SetData(WorkerEnum.Waiter, characterBase.waiterInfo);
+        if (detailsForAccounting != null)
+            detailsForAccounting.SetData(WorkerEnum.Accounting, characterBase.accountingInfo);
+        if (detailsForAccost != null)
+            detailsForAccost.SetData(WorkerEnum.Accost, characterBase.accostInfo);
+        if (detailsForBeater != null)
+            detailsForBeater.SetData(WorkerEnum.Beater, characterBase.beaterInfo);
+    }
+
+    /// <summary>
+    /// 设置装备图标
+    /// </summary>
+    /// <param name="iv"></param>
+    /// <param name="spIcon"></param>
+    private void SetEquipSprite(Image iv, Sprite spIcon)
+    {
+        if (spIcon != null)
+        {
+            iv.sprite = spIcon;
+            iv.color = new Color(1, 1, 1, 1);
+        }
+        else
+            iv.color = new Color(1, 1, 1, 0);
     }
 }

@@ -53,6 +53,10 @@ public class NpcAIWorkerForWaiterCpt : NpcAIWokerFoBaseCpt
                 {
                     if (npcAIWorker.characterMoveCpt.IsAutoMoveStop())
                     {
+                        //记录数据
+                        npcAIWorker.characterData.baseInfo.waiterInfo.AddSendNumber(1);
+                        //增加经验
+                        npcAIWorker.characterData.baseInfo.waiterInfo.AddExp(1);
                         //放下食物
                         orderForCustomer.foodCpt.transform.SetParent(orderForCustomer.table.GetTable().transform);
                         orderForCustomer.foodCpt.transform.localPosition = new Vector3(0f, 0.1f, 0);
@@ -198,16 +202,21 @@ public class NpcAIWorkerForWaiterCpt : NpcAIWokerFoBaseCpt
     {
         orderForCustomer.table.SetTableStatus(BuildTableCpt.TableStatusEnum.Cleaning);
         clearPro.SetActive(true);
-        StartCoroutine(StartClear());
+        StartCoroutine(StartClean());
     }
 
     /// <summary>
     /// 开始清理
     /// </summary>
     /// <returns></returns>
-    public IEnumerator StartClear()
+    public IEnumerator StartClean()
     {
         yield return new WaitForSeconds(5);
+        //记录数据
+        npcAIWorker.characterData.baseInfo.waiterInfo.AddCleanNumber(1);
+        //增加经验
+        npcAIWorker.characterData.baseInfo.waiterInfo.AddExp(1);
+
         orderForCustomer.table.CleanTable();
         SetIntent(WaiterIntentEnum.Idle);
     }

@@ -165,6 +165,11 @@ public class NpcAIWorkerForChefCpt : NpcAIWokerFoBaseCpt
     public IEnumerator StartCook()
     {
         yield return new WaitForSeconds(orderForCustomer.foodData.cook_time);
+        //记录数据
+        npcAIWorker.characterData.baseInfo.chefInfo.AddCookNumber(1, orderForCustomer.foodData.id);
+        //添加经验
+        npcAIWorker.characterData.baseInfo.chefInfo.AddExp(1);
+
         //在灶台创建一个食物
         orderForCustomer.stove.CreateFood(innFoodManager,orderForCustomer);
         //通知送餐

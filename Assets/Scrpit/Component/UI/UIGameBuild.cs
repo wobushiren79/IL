@@ -44,6 +44,12 @@ public class UIGameBuild : BaseUIComponent
         GetUIMananger<UIGameManager>().controlHandler.StartControl(ControlHandler.ControlEnum.Build);
         GetUIMananger<UIGameManager>().innHandler.CloseInn();
     }
+    public override void CloseUI()
+    {
+        base.CloseUI();
+        //继续时间
+        GetUIMananger<UIGameManager>().gameTimeHandler.SetTimeStatus(false);
+    }
 
     /// <summary>
     /// 创建建筑列表

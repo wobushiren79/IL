@@ -19,18 +19,24 @@ public class CharacterBaseBean
     public long priceM;
     public long priceL;
 
+    public CharacterWorkerForChefBean chefInfo=new CharacterWorkerForChefBean();
+    public CharacterWorkerForWaiterBean waiterInfo=new CharacterWorkerForWaiterBean();
+    public CharacterWorkerForAccountingBean accountingInfo=new CharacterWorkerForAccountingBean();
+    public CharacterWorkerForAccostBean accostInfo=new CharacterWorkerForAccostBean();
+    public CharacterWorkerForBeaterBean beaterInfo=new CharacterWorkerForBeaterBean();
+
     public bool isChef;//是否开启厨师
     public bool isWaiter;//是否开启服务生
     public bool isAccounting;//是否开启记帐
-    public bool isBeater;//是否开启打手
     public bool isAccost;//是否开启招呼
+    public bool isBeater;//是否开启打手
 
     //优先级
     public int priorityChef;
     public int priorityWaiter;
     public int priorityAccounting;
-    public int priorityBeater;
     public int priorityAccost;
+    public int priorityBeater;
 
     public bool isAttendance;//是否出勤
 
@@ -100,4 +106,5 @@ public class CharacterBaseBean
         WorkerInfo workerInfo = new WorkerInfo(worker, priority, isWork);
         return workerInfo;
     }
+
 }

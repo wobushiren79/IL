@@ -1,0 +1,139 @@
+﻿using UnityEngine;
+using UnityEditor;
+using System;
+
+[Serializable]
+public class CharacterWorkerBaseBean
+{
+    //职业等级
+    public int workerLevel;
+    //当前职业经验值
+    public int workerExp;
+
+    /// <summary>
+    /// 增加经验
+    /// </summary>
+    /// <param name="addExp"></param>
+    public void AddExp(int addExp)
+    {
+        workerExp += addExp;
+        //数据如果出现异常则修复
+        int nextLevelExp = GetLevelUpExp(workerLevel + 1);
+        if (workerExp > nextLevelExp)
+        {
+            workerExp = nextLevelExp;
+        }
+        else if (workerExp < 0)
+        {
+            workerExp = 0;
+        }
+    }
+
+    /// <summary>
+    /// 获取职业经验信息
+    /// </summary>
+    /// <param name="nextLevelExp"></param>
+    /// <param name="currentExp"></param>
+    /// <param name="levelProportion"></param>
+    public void GetWorkerExp(out float nextLevelExp, out float currentExp, out float levelProportion)
+    {
+        nextLevelExp = GetLevelUpExp(workerLevel + 1);
+        currentExp = workerExp;
+        levelProportion = currentExp / nextLevelExp;
+    }
+
+    /// <summary>
+    /// 获取职业等级名称
+    /// </summary>
+    /// <returns></returns>
+    public string GetWorkerLevelName()
+    {
+        string workerLevelName = "???";
+        switch (workerLevel)
+        {
+            case 0:
+                workerLevelName = GameCommonInfo.GetUITextById(110);
+                break;
+            case 1:
+                workerLevelName = GameCommonInfo.GetUITextById(111);
+                break;
+            case 2:
+                workerLevelName = GameCommonInfo.GetUITextById(112);
+                break;
+            case 3:
+                workerLevelName = GameCommonInfo.GetUITextById(113);
+                break;
+            case 4:
+                workerLevelName = GameCommonInfo.GetUITextById(114);
+                break;
+            case 5:
+                workerLevelName = GameCommonInfo.GetUITextById(115);
+                break;
+            case 6:
+                workerLevelName = GameCommonInfo.GetUITextById(116);
+                break;
+        }
+        return workerLevelName;
+    }
+
+    /// <summary>
+    /// 获取指定等级的经验值
+    /// </summary>
+    /// <param name="leve">升级等级</param>
+    /// <returns></returns>
+    public static int GetLevelUpExp(int leve)
+    {
+        int nextLevelExp = int.MaxValue;
+        switch (leve)
+        {
+            case 1:
+                nextLevelExp = 1000;
+                break;
+            case 2:
+                nextLevelExp = 2000;
+                break;
+            case 3:
+                nextLevelExp = 4000;
+                break;
+            case 4:
+                nextLevelExp = 8000;
+                break;
+            case 5:
+                nextLevelExp = 16000;
+                break;
+            case 6:
+                nextLevelExp = 50000;
+                break;
+        }
+        return nextLevelExp;
+    }
+
+    /// <summary>
+    /// 获取职业名称
+    /// </summary>
+    /// <param name="workerType"></param>
+    /// <returns></returns>
+    public static string GetWorkerName(WorkerEnum workerType)
+    {
+        string workerName = "???";
+        switch (workerType)
+        {
+            case WorkerEnum.Chef:
+                workerName = GameCommonInfo.GetUITextById(11);
+                break;
+            case WorkerEnum.Waiter:
+                workerName = GameCommonInfo.GetUITextById(12);
+                break;
+            case WorkerEnum.Accounting:
+                workerName = GameCommonInfo.GetUITextById(13);
+                break;
+            case WorkerEnum.Accost:
+                workerName = GameCommonInfo.GetUITextById(14);
+                break;
+            case WorkerEnum.Beater:
+                workerName = GameCommonInfo.GetUITextById(15);
+                break;
+        }
+        return workerName;
+    }
+}

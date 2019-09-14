@@ -186,12 +186,21 @@ public class NpcAIWorkerForAccost : NpcAIWokerFoBaseCpt
             npcAIWorker.SetExpression(CharacterExpressionCpt.CharacterExpressionEnum.Love);
             npcAICustomer.SetExpression(CharacterExpressionCpt.CharacterExpressionEnum.Love);
             npcAICustomer.SetIntent(NpcAICustomerCpt.CustomerIntentEnum.Want);
+            //记录
+            npcAIWorker.characterData.baseInfo.accostInfo.AddAccostSuccessNumber(1);
+            //添加经验
+            npcAIWorker.characterData.baseInfo.accostInfo.AddExp(2);
         }
         else
         {
             npcAIWorker.SetExpression(CharacterExpressionCpt.CharacterExpressionEnum.Shame);
             npcAICustomer.SetExpression(CharacterExpressionCpt.CharacterExpressionEnum.Mad);
             npcAICustomer.SetIntent(NpcAICustomerCpt.CustomerIntentEnum.Leave);
+
+            //记录
+            npcAIWorker.characterData.baseInfo.accostInfo.AddAccostFailNumber(1);
+            //添加经验
+            npcAIWorker.characterData.baseInfo.accostInfo.AddExp(1);
         }
         SetIntent(AccostIntentEnum.Idle);
     }

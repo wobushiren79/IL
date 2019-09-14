@@ -128,6 +128,35 @@ public class NpcAIWorkerForAccountingCpt : NpcAIWokerFoBaseCpt
     public IEnumerator StartAccounting()
     {
         yield return new WaitForSeconds(5);
+        //是否出错
+        bool isError = false;
+        if (isError)
+        {
+            //出错
+            //记录数据
+            npcAIWorker.characterData.baseInfo.accountingInfo.AddAccountingFail
+                (orderForCustomer.foodData.price_l, orderForCustomer.foodData.price_m, orderForCustomer.foodData.price_s,0.5f);
+            //增加经验
+            npcAIWorker.characterData.baseInfo.accountingInfo.AddExp(1);
+
+            //工作者表示抱歉
+            npcAIWorker.SetExpression(CharacterExpressionCpt.CharacterExpressionEnum.Wordless);
+            //顾客生气
+            orderForCustomer.customer.SetExpression(CharacterExpressionCpt.CharacterExpressionEnum.Mad);
+        }
+        else
+        {
+            //成功
+            //记录数据
+            npcAIWorker.characterData.baseInfo.accountingInfo.AddAccountingSuccess
+                (orderForCustomer.foodData.price_l, orderForCustomer.foodData.price_m, orderForCustomer.foodData.price_s,0);
+            //增加经验
+            npcAIWorker.characterData.baseInfo.accountingInfo.AddExp(2);
+
+            //TODO 如果有额外的加成 工作者和店员都应该高兴
+
+        }
+
         if (npcAIWorker.innHandler != null)
             npcAIWorker.innHandler.PayMoney(orderForCustomer, 1);
         //通知离开
