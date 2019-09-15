@@ -98,8 +98,8 @@ public class ItemGameGroceryCpt : ItemGameBaseCpt, DialogView.IDialogCallBack
         {
             case "1":
                 spIcon = characterDressManager.GetHatSpriteByName(iconKey);
-                offsetMin = new Vector2(-50, -100);
-                offsetMax = new Vector2(50, 0);
+                offsetMin = new Vector2(-50, -75);
+                offsetMax = new Vector2(50, 25);
                 break;
             case "2":
                 spIcon = characterDressManager.GetClothesSpriteByName(iconKey);

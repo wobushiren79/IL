@@ -4,14 +4,14 @@ using System.Collections.Generic;
 
 public class InnBuildManager : BaseManager, IBuildDataView
 {
-    public Dictionary<long,BuildItemBean> listBuildData;
+    public Dictionary<long, BuildItemBean> listBuildData;
 
     public BuildDataController buildDataController;
 
     //家具列表
-    public List<BaseBuildItemCpt> listFurnitureCpt;
+    public GameObjectDictionary listFurnitureCpt = new GameObjectDictionary();
     //家具图标
-    public IconBeanDictionary listFurnitureIcon;
+    public IconBeanDictionary listFurnitureIcon = new IconBeanDictionary();
 
     private void Awake()
     {
@@ -24,7 +24,7 @@ public class InnBuildManager : BaseManager, IBuildDataView
     /// <returns></returns>
     public Sprite GetFurnitureSpriteByName(string name)
     {
-       return GetSpriteByName(name, listFurnitureIcon);
+        return GetSpriteByName(name, listFurnitureIcon);
     }
 
     /// <summary>
@@ -34,21 +34,16 @@ public class InnBuildManager : BaseManager, IBuildDataView
     /// <returns></returns>
     public GameObject GetFurnitureObjById(long id, Transform tfFather)
     {
-        GameObject furnitureObj=null;
+        GameObject furnitureObj = null;
         if (listFurnitureCpt == null)
             return furnitureObj;
-        for (int i = 0; i < listFurnitureCpt.Count; i++)
+        if (listFurnitureCpt.TryGetValue(id, out GameObject objItem))
         {
-            BaseBuildItemCpt buildItemCpt = listFurnitureCpt[i];
-            if (buildItemCpt == null)
-                continue;
-            if(buildItemCpt.buildId== id)
-            {
-                furnitureObj = Instantiate(buildItemCpt.gameObject, tfFather);
-                furnitureObj.SetActive(true);
-            }
+            furnitureObj = Instantiate(objItem, tfFather);
+            furnitureObj.SetActive(true);
+
         }
-        return furnitureObj; 
+        return furnitureObj;
     }
 
 
@@ -59,12 +54,7 @@ public class InnBuildManager : BaseManager, IBuildDataView
     /// <returns></returns>
     public BuildItemBean GetBuildDataById(long id)
     {
-        if (listBuildData == null)
-            return null;
-        if (listBuildData.TryGetValue(id, out BuildItemBean itemData))
-            return itemData;
-        else
-            return null;
+        return GetDataById(id, listBuildData);
     }
 
 

@@ -81,13 +81,29 @@ public class ListDataEditor : Editor
     }
 
 
-    [MenuItem("Custom/List/AddFurniture")]
-    public static void AddFurniture()
+    [MenuItem("Custom/List/AddFurnitureIcon")]
+    public static void AddFurnitureIcon()
     {
         GameObject Target = Selection.gameObjects[0];
         InnBuildManager innBuildManager = Target.GetComponent<InnBuildManager>();
         innBuildManager.listFurnitureIcon.Clear();
-        AddIconBeanDictionaryByFolder("Assets/Texture/InnBuild/", innBuildManager.listFurnitureIcon);
+        AddIconBeanDictionaryByFolder("Assets/Texture/InnBuild/TableAndChair/", innBuildManager.listFurnitureIcon);
+        AddIconBeanDictionaryByFolder("Assets/Texture/InnBuild/Stove/", innBuildManager.listFurnitureIcon);
+        AddIconBeanDictionaryByFolder("Assets/Texture/InnBuild/Counter/", innBuildManager.listFurnitureIcon);
+        AddIconBeanDictionaryByFolder("Assets/Texture/InnBuild/Door/", innBuildManager.listFurnitureIcon);
+    }
+
+    [MenuItem("Custom/List/AddFurnitureCpt")]
+    public static void AddFurnitureCpt()
+    {
+        GameObject Target = Selection.gameObjects[0];
+        InnBuildManager innBuildManager = Target.GetComponent<InnBuildManager>();
+        innBuildManager.listFurnitureCpt.Clear();
+        AddGameObjectDictionaryByFolder("Assets/Prefabs/BuildItem/Table/", innBuildManager.listFurnitureCpt);
+        AddGameObjectDictionaryByFolder("Assets/Prefabs/BuildItem/Stove/", innBuildManager.listFurnitureCpt);
+        AddGameObjectDictionaryByFolder("Assets/Prefabs/BuildItem/Counter/", innBuildManager.listFurnitureCpt);
+        AddGameObjectDictionaryByFolder("Assets/Prefabs/BuildItem/Door/", innBuildManager.listFurnitureCpt);
+        AddGameObjectDictionaryByFolder("Assets/Prefabs/BuildItem/Other/", innBuildManager.listFurnitureCpt);
     }
 
     [MenuItem("Custom/List/AddUI")]
@@ -135,6 +151,20 @@ public class ListDataEditor : Editor
                     map.Add(obj.name, obj as Sprite);
                 }
             });
+        }
+    }
+
+    public static void AddGameObjectDictionaryByFolder(string folderPath, GameObjectDictionary map)
+    {
+        FileInfo[] files = FileUtil.GetFilesByPath(folderPath);
+        foreach (FileInfo item in files)
+        {
+            Object obj = AssetDatabase.LoadMainAssetAtPath(folderPath + item.Name);
+            if (obj as GameObject != null)
+            {
+                BaseBuildItemCpt buildItemCpt = ((GameObject)obj).GetComponent<BaseBuildItemCpt>();
+                map.Add(buildItemCpt.buildId, obj as GameObject);
+            }
         }
     }
 }
