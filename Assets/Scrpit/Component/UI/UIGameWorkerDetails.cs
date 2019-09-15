@@ -2,7 +2,7 @@
 using UnityEditor;
 using System;
 using UnityEngine.UI;
-public class UIGameWorkerDetails : BaseUIComponent
+public class UIGameWorkerDetails : BaseUIComponent, IRadioGroupCallBack
 {
     [Header("控件")]
     public CharacterUICpt characterUICpt;
@@ -30,6 +30,13 @@ public class UIGameWorkerDetails : BaseUIComponent
     public ItemGameWorkerDetailsWorkerCpt detailsForAccost;
     public ItemGameWorkerDetailsWorkerCpt detailsForBeater;
 
+    public RadioGroupView rgWorkerTitle;
+    public UIGameWorkerDetailsChefInfo workerChefInfo;
+    public UIGameWorkerDetailsWaiterInfo workerWaiterInfo;
+    public UIGameWorkerDetailsAccountingInfo workerAccountingInfo;
+    public UIGameWorkerDetailsAccostInfo workerAccostInfo;
+    public UIGameWorkerDetailsBeaterInfo workerBeaterInfo;
+
     public Button btBack;
 
     [Header("数据")]
@@ -54,7 +61,51 @@ public class UIGameWorkerDetails : BaseUIComponent
             pbClothes.SetPopupShowView(infoItemsPopupShow);
         if (pbShoes != null)
             pbShoes.SetPopupShowView(infoItemsPopupShow);
+        if (rgWorkerTitle != null)
+        {
+            rgWorkerTitle.SetCallBack(this);
+            rgWorkerTitle.SetPosition(0, true);
+        } 
     }
+
+    /// <summary>
+    /// 初始化数据
+    /// </summary>
+    /// <param name="workerType"></param>
+    public void InitDataByWorker(WorkerEnum workerType)
+    {
+        if (characterData == null)
+            return;
+        workerChefInfo.gameObject.SetActive(false);
+        workerWaiterInfo.gameObject.SetActive(false);
+        workerAccountingInfo.gameObject.SetActive(false);
+        workerAccostInfo.gameObject.SetActive(false);
+        workerBeaterInfo.gameObject.SetActive(false);
+        switch (workerType)
+        {
+            case WorkerEnum.Chef:
+                InnFoodManager innFoodManager = GetUIMananger<UIGameManager>().innFoodManager;
+                workerChefInfo.gameObject.SetActive(true);
+                workerChefInfo.SetData(innFoodManager,characterData.baseInfo.chefInfo);
+                break;
+            case WorkerEnum.Waiter:
+                workerWaiterInfo.gameObject.SetActive(true);
+                workerWaiterInfo.SetData(characterData.baseInfo.waiterInfo);
+                break;
+            case WorkerEnum.Accounting:
+                workerAccountingInfo.gameObject.SetActive(true);
+                workerAccountingInfo.SetData(characterData.baseInfo.accountingInfo);
+                break;
+            case WorkerEnum.Accost:
+                workerAccostInfo.gameObject.SetActive(true);
+                workerAccostInfo.SetData(characterData.baseInfo.accostInfo);
+                break;
+            case WorkerEnum.Beater:
+                workerBeaterInfo.gameObject.SetActive(true);
+                break;
+        }
+    }
+
 
     public override void OpenUI()
     {
@@ -62,10 +113,11 @@ public class UIGameWorkerDetails : BaseUIComponent
         if (characterData == null)
             return;
         SetLoyal(characterData.attributes.loyal);
-        SetAttributes(characterData.attributes, characterData.equips);
+        SetAttributes(characterData);
         SetEquip(characterData.equips);
         SetWorkerInfo(characterData.baseInfo);
         characterUICpt.SetCharacterData(characterData.body, characterData.equips);
+        rgWorkerTitle.SetPosition(0 , true);
     }
 
     public void OpenWorkUI()
@@ -152,21 +204,22 @@ public class UIGameWorkerDetails : BaseUIComponent
     /// </summary>
     /// <param name="characterAttributes"></param>
     /// <param name="characterEquip"></param>
-    public void SetAttributes(CharacterAttributesBean characterAttributes, CharacterEquipBean characterEquip)
+    public void SetAttributes(CharacterBean characterData)
     {
-        CharacterAttributesBean extraAttributes = characterEquip.GetEquipAttributes(GetUIMananger<UIGameManager>().gameItemsManager);
+        characterData.GetAttributes(GetUIMananger<UIGameManager>().gameItemsManager,
+            out CharacterAttributesBean totalAttributes, out CharacterAttributesBean selfAttributes, out CharacterAttributesBean equipAttributes);
         if (tvCook != null)
-            tvCook.text = GameCommonInfo.GetUITextById(1) + "：" + characterAttributes.cook + (extraAttributes.cook == 0 ? "" : "+" + extraAttributes.cook);
+            tvCook.text = GameCommonInfo.GetUITextById(1) + "：" + selfAttributes.cook + (equipAttributes.cook == 0 ? "" : "+" + equipAttributes.cook);
         if (tvSpeed != null)
-            tvSpeed.text = GameCommonInfo.GetUITextById(2) + "：" + characterAttributes.speed + (extraAttributes.speed == 0 ? "" : "+" + extraAttributes.speed);
+            tvSpeed.text = GameCommonInfo.GetUITextById(2) + "：" + selfAttributes.speed + (equipAttributes.speed == 0 ? "" : "+" + equipAttributes.speed);
         if (tvAccount != null)
-            tvAccount.text = GameCommonInfo.GetUITextById(3) + "：" + characterAttributes.account + (extraAttributes.account == 0 ? "" : "+" + extraAttributes.account);
+            tvAccount.text = GameCommonInfo.GetUITextById(3) + "：" + selfAttributes.account + (equipAttributes.account == 0 ? "" : "+" + equipAttributes.account);
         if (tvCharm != null)
-            tvCharm.text = GameCommonInfo.GetUITextById(4) + "：" + characterAttributes.charm + (extraAttributes.charm == 0 ? "" : "+" + extraAttributes.charm);
+            tvCharm.text = GameCommonInfo.GetUITextById(4) + "：" + selfAttributes.charm + (equipAttributes.charm == 0 ? "" : "+" + equipAttributes.charm);
         if (tvForce != null)
-            tvForce.text = GameCommonInfo.GetUITextById(5) + "：" + characterAttributes.force + (extraAttributes.force == 0 ? "" : "+" + extraAttributes.force);
+            tvForce.text = GameCommonInfo.GetUITextById(5) + "：" + selfAttributes.force + (equipAttributes.force == 0 ? "" : "+" + equipAttributes.force);
         if (tvLucky != null)
-            tvLucky.text = GameCommonInfo.GetUITextById(6) + "：" + characterAttributes.lucky + (extraAttributes.lucky == 0 ? "" : "+" + extraAttributes.lucky);
+            tvLucky.text = GameCommonInfo.GetUITextById(6) + "：" + selfAttributes.lucky + (equipAttributes.lucky == 0 ? "" : "+" + equipAttributes.lucky);
     }
 
     /// <summary>
@@ -203,4 +256,17 @@ public class UIGameWorkerDetails : BaseUIComponent
         else
             iv.color = new Color(1, 1, 1, 0);
     }
+
+
+    #region 数据类型选择回调
+    public void RadioButtonSelected(RadioGroupView rgView, int position, RadioButtonView rbview)
+    {
+        InitDataByWorker((WorkerEnum)(position + 1));
+    }
+
+    public void RadioButtonUnSelected(RadioGroupView rgView, int position, RadioButtonView rbview)
+    {
+
+    }
+    #endregion
 }

@@ -37,37 +37,37 @@ public class UITownRecruitment : UIBaseOne
         CharacterBodyManager characterBodyManager = GetUIMananger<UIGameManager>().characterBodyManager;
         for (int i = 0; i < 10; i++)
         {
-            CharacterBean characterData = CharacterBean.CreateRandomDataForChef();
+            CharacterBean characterData = CharacterBean.CreateRandomData(WorkerEnum.Chef);
             CharacterBodyBean.CreateRandomBodyByManager(characterData.body, characterBodyManager);
             listCandidateChef.Add(characterData);
         }
         for (int i = 0; i < 10; i++)
         {
-            CharacterBean characterData = CharacterBean.CreateRandomDataForAccounting();
+            CharacterBean characterData = CharacterBean.CreateRandomData(WorkerEnum.Accounting);
             CharacterBodyBean.CreateRandomBodyByManager(characterData.body, characterBodyManager);
             listCandidateAccounting.Add(characterData);
         }
         for (int i = 0; i < 10; i++)
         {
-            CharacterBean characterData = CharacterBean.CreateRandomDataForWaiter();
+            CharacterBean characterData = CharacterBean.CreateRandomData(WorkerEnum.Waiter);
             CharacterBodyBean.CreateRandomBodyByManager(characterData.body, characterBodyManager);
             listCandidateWaiter.Add(characterData);
         }
         for (int i = 0; i < 10; i++)
         {
-            CharacterBean characterData = CharacterBean.CreateRandomDataForAccost();
+            CharacterBean characterData = CharacterBean.CreateRandomData(WorkerEnum.Accost);
             CharacterBodyBean.CreateRandomBodyByManager(characterData.body, characterBodyManager);
             listCandidateAccost.Add(characterData);
         }
         for (int i = 0; i < 10; i++)
         {
-            CharacterBean characterData = CharacterBean.CreateRandomDataForBeater();
+            CharacterBean characterData = CharacterBean.CreateRandomData(WorkerEnum.Beater);
             CharacterBodyBean.CreateRandomBodyByManager(characterData.body, characterBodyManager);
             listCandidateBeater.Add(characterData);
         }
         for (int i = 0; i < 10; i++)
         {
-            CharacterBean characterData = CharacterBean.CreateRandomDataForComplex();
+            CharacterBean characterData = CharacterBean.CreateRandomData(0);
             CharacterBodyBean.CreateRandomBodyByManager(characterData.body, characterBodyManager);
             listCandidateComplex.Add(characterData);
         }

@@ -196,6 +196,7 @@ public class CalendarView : BaseMonoBehaviour, IDateInfoView
                     calendarCpt.SetItemStatus(true);
             }
         }
+        OnGUI();
     }
 
     public void GetDateInfoFail()

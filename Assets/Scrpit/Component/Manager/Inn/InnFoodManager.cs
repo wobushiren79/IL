@@ -49,6 +49,26 @@ public class InnFoodManager : BaseManager, IMenuInfoView
     }
 
     /// <summary>
+    /// 通过列表获取食物数据
+    /// </summary>
+    /// <param name="listItem"></param>
+    /// <returns></returns>
+    public List<MenuInfoBean> GetFoodDataListByItemList(List<ItemBean> listItem)
+    {
+        List<MenuInfoBean> listFood = new List<MenuInfoBean>();
+        if (listMenuData == null || listItem == null)
+            return listFood;
+        for (int i = 0; i < listItem.Count; i++)
+        {
+            ItemBean itemFoodData = listItem[i];
+            MenuInfoBean menuInfo = GetFoodDataById(itemFoodData.itemId);
+            if (menuInfo != null)
+                listFood.Add(menuInfo);
+        }
+        return listFood;
+    }
+
+    /// <summary>
     /// 根据ID获取食物数据
     /// </summary>
     /// <param name="id"></param>

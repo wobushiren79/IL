@@ -189,7 +189,7 @@ public class NpcAIWorkerForAccost : NpcAIWokerFoBaseCpt
             //记录
             npcAIWorker.characterData.baseInfo.accostInfo.AddAccostSuccessNumber(1);
             //添加经验
-            npcAIWorker.characterData.baseInfo.accostInfo.AddExp(2);
+            npcAIWorker.characterData.baseInfo.accostInfo.AddExp(1);
         }
         else
         {
@@ -200,7 +200,7 @@ public class NpcAIWorkerForAccost : NpcAIWokerFoBaseCpt
             //记录
             npcAIWorker.characterData.baseInfo.accostInfo.AddAccostFailNumber(1);
             //添加经验
-            npcAIWorker.characterData.baseInfo.accostInfo.AddExp(1);
+            //npcAIWorker.characterData.baseInfo.accostInfo.AddExp(1);
         }
         SetIntent(AccostIntentEnum.Idle);
     }

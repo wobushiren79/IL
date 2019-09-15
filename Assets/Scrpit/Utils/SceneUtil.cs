@@ -8,7 +8,7 @@ public class SceneUtil {
     public static void SceneChange(string scenenName)
     {
         GameCommonInfo.LoadingSceneName = scenenName;
-        SceneManager.LoadScene(EnumUtil.GetEnumName(ScenesEnum.LoadingScene));
+        SceneManager.LoadSceneAsync(EnumUtil.GetEnumName(ScenesEnum.LoadingScene));
     }
 
 

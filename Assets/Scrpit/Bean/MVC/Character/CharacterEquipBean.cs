@@ -37,6 +37,11 @@ public class CharacterEquipBean
         return attributesBean;
     }
 
+    /// <summary>
+    /// 添加属性
+    /// </summary>
+    /// <param name="attributesBean"></param>
+    /// <param name="itemsInfo"></param>
     private void AddAttributes(CharacterAttributesBean attributesBean, ItemsInfoBean itemsInfo)
     {
         attributesBean.cook += itemsInfo.add_cook;
