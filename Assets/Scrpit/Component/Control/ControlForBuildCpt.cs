@@ -74,7 +74,7 @@ public class ControlForBuildCpt : BaseControl
         //是否能建造
         bool isCanBuild = CheckCanBuild();
         //检测是否控制建造
-        CheckBuildConfirm(isCanBuild,truePosition);
+        CheckBuildConfirm(isCanBuild, truePosition);
     }
 
     /// <summary>
@@ -106,6 +106,7 @@ public class ControlForBuildCpt : BaseControl
         foreach (SpriteRenderer itemRenderer in listBuildSpaceSR)
         {
             Vector3 srPosition = itemRenderer.transform.position;
+            srPosition= Vector3Int.CeilToInt(srPosition);
             //检测是否超出建造范围
             bool isOutBuild = ChecOutBuild(srPosition);
             if (isOutBuild)
@@ -261,7 +262,7 @@ public class ControlForBuildCpt : BaseControl
                 //镜头正对建造点
                 cameraMove.transform.position = buildItemCpt.transform.position;
                 //建筑物位置设置
-                buildItemCpt.transform.position = buildPosition;
+                buildItemCpt.transform.position = buildPosition + new Vector3(-0.5f, 0.5f);
                 //如果是拆除
                 if (buildItemCpt.buildId == -1)
                 {
@@ -298,7 +299,7 @@ public class ControlForBuildCpt : BaseControl
                         listBuildPosition.Add(listBuildSpaceSR[i].transform.position);
                     }
                     //增加一个家具
-                    InnResBean addData = new InnResBean(buildItemCpt.buildId, buildPosition, listBuildPosition, buildItemCpt.direction);
+                    InnResBean addData = new InnResBean(buildItemCpt.buildId, buildItemCpt.transform.position, listBuildPosition, buildItemCpt.direction);
                     gameDataManager.gameData.GetInnBuildData().AddFurniture(addData);
                     //如果是门。需要重置一下墙体
                     if (buildItemCpt.buildId > 90000 && buildItemCpt.buildId < 100000)

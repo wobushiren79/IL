@@ -9,14 +9,13 @@ public class BuildStoveCpt : BaseBuildItemCpt
         Ready = 1,//准备中
         Cooking = 2,//料理中
     }
-
-    public GameObject leftTakeFoodObj;
-    public GameObject RightTakeFoodObj;
-    public GameObject upTakeFoodObj;
-    public GameObject downTakeFoodObj;
+    public GameObject objCookPosition;
+    public GameObject objTakePosition;
+    public GameObject objFoodContainer;
 
     //食物模型
     public GameObject itemFoodModel;
+
 
     public StoveStatusEnum stoveStatus = StoveStatusEnum.Idle;
 
@@ -26,18 +25,7 @@ public class BuildStoveCpt : BaseBuildItemCpt
     /// <returns></returns>
     public Vector3 GetTakeFoodPosition()
     {
-        switch (direction)
-        {
-            case Direction2DEnum.Left:
-                return leftTakeFoodObj.transform.position;
-            case Direction2DEnum.Right:
-                return RightTakeFoodObj.transform.position;
-            case Direction2DEnum.UP:
-                return upTakeFoodObj.transform.position;
-            case Direction2DEnum.Down:
-                return downTakeFoodObj.transform.position;
-        }
-        return transform.position;
+        return objTakePosition.transform.position;
     }
 
     /// <summary>
@@ -46,12 +34,10 @@ public class BuildStoveCpt : BaseBuildItemCpt
     /// <param name="foodData"></param>
     public void CreateFood(InnFoodManager innFoodManager, OrderForCustomer orderForCustomer)
     {
-        GameObject buildObj = GetBuilObj();
-        Transform tfFoodFather = CptUtil.GetCptInChildrenByName<Transform>(buildObj, "Food");
         //创建食物
-        GameObject foodObj = Instantiate(itemFoodModel, tfFoodFather);
+        GameObject foodObj = Instantiate(itemFoodModel, objFoodContainer.transform);
         foodObj.SetActive(true);
-        foodObj.transform.position = GameUtil.GetTransformInsidePosition2D(tfFoodFather);
+        foodObj.transform.position = GameUtil.GetTransformInsidePosition2D(foodObj.transform);
         FoodForCustomerCpt foodCpt = foodObj.GetComponent<FoodForCustomerCpt>();
         foodCpt.innFoodManager = innFoodManager;
         foodCpt.SetData(orderForCustomer.foodData);
@@ -64,9 +50,7 @@ public class BuildStoveCpt : BaseBuildItemCpt
     /// <returns></returns>
     public Vector3 GetCookPosition()
     {
-        GameObject buildObj = GetBuilObj();
-        Transform tfCook = CptUtil.GetCptInChildrenByName<Transform>(buildObj,"CookPosition");
-        return tfCook.position;
+        return objCookPosition.transform.position;
     }
 
     /// <summary>
@@ -83,9 +67,7 @@ public class BuildStoveCpt : BaseBuildItemCpt
     /// </summary>
     public void ClearStove()
     {
-        GameObject buildObj = GetBuilObj();
-        Transform tfFoodFather = CptUtil.GetCptInChildrenByName<Transform>(buildObj, "Food");
-        CptUtil.RemoveChild(tfFoodFather);
+        CptUtil.RemoveChild(objFoodContainer.transform);
         SetStoveStatus(StoveStatusEnum.Idle);
     }
 }

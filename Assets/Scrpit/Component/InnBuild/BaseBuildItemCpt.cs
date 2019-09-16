@@ -7,24 +7,31 @@ public class BaseBuildItemCpt : BaseMonoBehaviour
     //建筑ID
     public long buildId;
     public Direction2DEnum direction = Direction2DEnum.Left;
+    //不同方向的贴图
+    public Sprite spLeft;
+    public Sprite spRight;
+    public Sprite spDown;
+    public Sprite spUp;
 
-    public GameObject leftObj;
-    public List<Vector3> leftPosition;
+    //用户使用面朝方向
     public int leftUserFace = 2;
-
-    public GameObject rightObj;
-    public List<Vector3> rightPosition;
     public int rightUserFace = 2;
-
-    public GameObject upObj;
-    public List<Vector3> upPosition;
     public int upUserFace = 2;
-
-    public GameObject downOj;
-    public List<Vector3> downPosition;
     public int downUserFace = 2;
+
+    //体积
+    public GameObject objBox;
+    //占地
+    public GameObject objBuildPositionList;
+
+    //主要的建筑物图标
+    public SpriteRenderer srMainBuild;
+    //阴影
+    public SpriteRenderer srShadow;
+
+
     //是否能旋转
-    public bool canRotated=true;
+    public bool canRotated = true;
 
     /// <summary>
     /// 获取建筑位置
@@ -32,18 +39,14 @@ public class BaseBuildItemCpt : BaseMonoBehaviour
     /// <returns></returns>
     public List<Vector3> GetBuildPosition()
     {
-        switch (direction)
+        List<Vector3> listPosition = new List<Vector3>();
+        List<Transform> buildPositionList= CptUtil.GetAllCptInChildrenByContainName<Transform>(objBuildPositionList,"Position_");
+        foreach (Transform itemTF in buildPositionList)
         {
-            case Direction2DEnum.Left:
-                return leftPosition;
-            case Direction2DEnum.Right:
-                return rightPosition;
-            case Direction2DEnum.UP:
-                return upPosition;
-            case Direction2DEnum.Down:
-                return downPosition;
+            Vector3 position= transform.InverseTransformPoint(itemTF.position);
+            listPosition.Add(position);
         }
-        return null;
+        return listPosition;
     }
 
     /// <summary>
@@ -53,32 +56,12 @@ public class BaseBuildItemCpt : BaseMonoBehaviour
     public List<Vector3> GetBuildWorldPosition()
     {
         List<Vector3> worldPositionList = new List<Vector3>();
-        foreach (Vector3 itemData in GetBuildPosition())
+        List<Transform> buildPositionList = CptUtil.GetAllCptInChildrenByContainName<Transform>(objBuildPositionList, "Position_");
+        foreach (Transform itemTF in buildPositionList)
         {
-           Vector3 worldPos = transform.TransformPoint(itemData);
-            worldPositionList.Add(worldPos);
+            worldPositionList.Add(itemTF.position);
         }
         return worldPositionList;
-    }
-
-    /// <summary>
-    /// 获取建筑物体
-    /// </summary>
-    /// <returns></returns>
-    public GameObject GetBuilObj()
-    {
-        switch (direction)
-        {
-            case Direction2DEnum.Left:
-                return leftObj;
-            case Direction2DEnum.Right:
-                return rightObj;
-            case Direction2DEnum.UP:
-                return upObj;
-            case Direction2DEnum.Down:
-                return downOj;
-        }
-        return null;
     }
 
     /// <summary>
@@ -98,7 +81,7 @@ public class BaseBuildItemCpt : BaseMonoBehaviour
             case Direction2DEnum.Down:
                 return downUserFace;
         }
-        return 1;
+        return 2;
     }
 
     /// <summary>
@@ -123,9 +106,9 @@ public class BaseBuildItemCpt : BaseMonoBehaviour
         }
     }
 
-   /// <summary>
-   /// 顺时针旋转
-   /// </summary>
+    /// <summary>
+    /// 顺时针旋转
+    /// </summary>
     public virtual void RotateRight()
     {
         switch (direction)
@@ -157,32 +140,35 @@ public class BaseBuildItemCpt : BaseMonoBehaviour
             return;
         }
         this.direction = direction;
+        Sprite spShadow = null;
+        Sprite spMianBuild = null;
         switch (direction)
         {
             case Direction2DEnum.Left:
-                leftObj.SetActive(true);
-                rightObj.SetActive(false);
-                upObj.SetActive(false);
-                downOj.SetActive(false);
+                spShadow = spLeft;
+                spMianBuild = spLeft;
+                objBox.transform.localEulerAngles = new Vector3(0, 0, 0);
                 break;
             case Direction2DEnum.Right:
-                leftObj.SetActive(false);
-                rightObj.SetActive(true);
-                upObj.SetActive(false);
-                downOj.SetActive(false);
-                break;
-            case Direction2DEnum.UP:
-                leftObj.SetActive(false);
-                rightObj.SetActive(false);
-                upObj.SetActive(true);
-                downOj.SetActive(false);
+                spShadow = spRight;
+                spMianBuild = spRight;
+                objBox.transform.localEulerAngles = new Vector3(0,0,180);
                 break;
             case Direction2DEnum.Down:
-                leftObj.SetActive(false);
-                rightObj.SetActive(false);
-                upObj.SetActive(false);
-                downOj.SetActive(true);
+                spShadow = spDown;
+                spMianBuild = spDown;
+                objBox.transform.localEulerAngles = new Vector3(0,0,90);
+                break;
+            case Direction2DEnum.UP:
+                spShadow = spUp;
+                spMianBuild = spUp;
+                objBox.transform.localEulerAngles = new Vector3(0, 0, -90);
                 break;
         }
+
+        if (srMainBuild != null)
+            srMainBuild.sprite = spMianBuild;
+        if (srShadow != null && spShadow != null)
+            srShadow.sprite = spShadow;
     }
 }

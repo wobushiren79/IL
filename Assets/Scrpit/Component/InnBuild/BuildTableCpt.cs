@@ -15,17 +15,45 @@ public class BuildTableCpt : BaseBuildItemCpt
 
     public TableStatusEnum tableStatus = TableStatusEnum.Idle;
 
-    public GameObject leftSeat;
-    public GameObject leftTable;
+    public GameObject objLeftChair;
+    public GameObject objLeftSeat;
 
-    public GameObject rightSeat;
-    public GameObject rightTable;
+    public GameObject objRightChair;
+    public GameObject objRightSeat;
 
-    public GameObject upSeat;
-    public GameObject upTable;
+    public GameObject objDownChair;
+    public GameObject objDownSeat;
 
-    public GameObject downSeat;
-    public GameObject downTable;
+    public GameObject objUpChair;
+    public GameObject objUpSeat;
+
+
+    public GameObject tablePosition;
+
+
+    public override void SetDirection(Direction2DEnum direction)
+    {
+        base.SetDirection(direction);
+        objLeftChair.SetActive(false);
+        objRightChair.SetActive(false);
+        objDownChair.SetActive(false);
+        objUpChair.SetActive(false);
+        switch (direction)
+        {
+            case Direction2DEnum.Left:
+                objLeftChair.SetActive(true);
+                break;
+            case Direction2DEnum.Right:
+                objRightChair.SetActive(true);
+                break;
+            case Direction2DEnum.Down:
+                objDownChair.SetActive(true);
+                break;
+            case Direction2DEnum.UP:
+                objUpChair.SetActive(true);
+                break;
+        }
+    }
 
     /// <summary>
     /// 获取座位坐标
@@ -36,34 +64,25 @@ public class BuildTableCpt : BaseBuildItemCpt
         switch (direction)
         {
             case Direction2DEnum.Left:
-                return leftSeat.transform.position;
+                return objLeftSeat.transform.position;
             case Direction2DEnum.Right:
-                return rightSeat.transform.position;
+                return objRightSeat.transform.position;
             case Direction2DEnum.UP:
-                return upSeat.transform.position;
+                return objUpSeat.transform.position;
             case Direction2DEnum.Down:
-                return downSeat.transform.position;
+                return objDownSeat.transform.position;
         }
         return Vector3.zero;
     }
+
+
     /// <summary>
-    /// 获取桌子坐标
+    /// 获取桌子
     /// </summary>
     /// <returns></returns>
     public GameObject GetTable()
     {
-        switch (direction)
-        {
-            case Direction2DEnum.Left:
-                return leftTable;
-            case Direction2DEnum.Right:
-                return rightTable;
-            case Direction2DEnum.UP:
-                return upTable;
-            case Direction2DEnum.Down:
-                return downTable;
-        }
-        return null;
+        return tablePosition;
     }
 
     /// <summary>
@@ -72,18 +91,7 @@ public class BuildTableCpt : BaseBuildItemCpt
     /// <returns></returns>
     public Vector3 GetTablePosition()
     {
-        switch (direction)
-        {
-            case Direction2DEnum.Left:
-                return leftTable.transform.position;
-            case Direction2DEnum.Right:
-                return rightTable.transform.position;
-            case Direction2DEnum.UP:
-                return upTable.transform.position;
-            case Direction2DEnum.Down:
-                return downTable.transform.position;
-        }
-        return Vector3.zero;
+        return tablePosition.transform.position;
     }
 
     /// <summary>
