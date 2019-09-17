@@ -12,7 +12,7 @@ public class BaseNpcAI : BaseMonoBehaviour
     public CharacterMoveCpt characterMoveCpt;
     //角色表情
     public CharacterExpressionCpt characterExpression;
-          
+
     /// <summary>
     /// 设置角色数据
     /// </summary>
@@ -30,7 +30,7 @@ public class BaseNpcAI : BaseMonoBehaviour
         CharacterDressCpt characterDress = CptUtil.GetCptInChildrenByName<CharacterDressCpt>(gameObject, "Body");
         if (characterDress != null)
         {
-            ItemsInfoBean hatEquip= gameItemsManager.GetItemsById(characterBean.equips.hatId);
+            ItemsInfoBean hatEquip = gameItemsManager.GetItemsById(characterBean.equips.hatId);
             characterDress.SetHat(hatEquip);
 
             ItemsInfoBean clothesEquip = gameItemsManager.GetItemsById(characterBean.equips.clothesId);
@@ -39,6 +39,23 @@ public class BaseNpcAI : BaseMonoBehaviour
             ItemsInfoBean shoesEquip = gameItemsManager.GetItemsById(characterBean.equips.shoesId);
             characterDress.SetShoes(shoesEquip);
         }
+        //设置属性数据
+        //获取属性数据
+        characterData.GetAttributes(gameItemsManager,
+             out CharacterAttributesBean totalAttributes, out CharacterAttributesBean selfAttributes, out CharacterAttributesBean equipAttributes);
+        //设置速度
+        if (characterMoveCpt != null)
+        {
+            float speed = totalAttributes.speed * 0.05f + 1;
+            //速度修正
+            if (speed <= 0.1f)
+            {
+                //最低不小于0.1
+                speed = 0.1f;
+            }
+            characterMoveCpt.moveSpeed = speed;
+        }
+
     }
 
     /// <summary>
