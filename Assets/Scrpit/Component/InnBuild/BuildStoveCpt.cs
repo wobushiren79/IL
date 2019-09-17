@@ -1,7 +1,6 @@
 ﻿using UnityEngine;
 using UnityEditor;
 using System.Collections.Generic;
-
 public class BuildStoveCpt : BaseBuildItemCpt
 {
     public enum StoveStatusEnum {
@@ -37,11 +36,13 @@ public class BuildStoveCpt : BaseBuildItemCpt
         //创建食物
         GameObject foodObj = Instantiate(itemFoodModel, objFoodContainer.transform);
         foodObj.SetActive(true);
-        foodObj.transform.position = GameUtil.GetTransformInsidePosition2D(foodObj.transform);
+        foodObj.transform.position = GameUtil.GetTransformInsidePosition2D(foodObj.transform,0.5f);
         FoodForCustomerCpt foodCpt = foodObj.GetComponent<FoodForCustomerCpt>();
         foodCpt.innFoodManager = innFoodManager;
         foodCpt.SetData(orderForCustomer.foodData);
         orderForCustomer.foodCpt= foodCpt;
+        //食物创建动画
+        foodCpt.CreateAnim();
     }
 
     /// <summary>

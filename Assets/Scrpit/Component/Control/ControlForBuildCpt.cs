@@ -263,6 +263,14 @@ public class ControlForBuildCpt : BaseControl
                 cameraMove.transform.position = buildItemCpt.transform.position;
                 //建筑物位置设置
                 buildItemCpt.transform.position = buildPosition + new Vector3(-0.5f, 0.5f);
+                //获取提示区域所占点
+                List<Vector3> listBuildPosition = new List<Vector3>();
+                for (int i = 0; i < listBuildSpaceSR.Count; i++)
+                {
+                    //精度修正
+                    listBuildPosition.Add(Vector3Int.CeilToInt(listBuildSpaceSR[i].transform.position));
+                }
+
                 //如果是拆除
                 if (buildItemCpt.buildId == -1)
                 {
@@ -279,7 +287,7 @@ public class ControlForBuildCpt : BaseControl
                     else
                     {
                         buildData.GetFurnitureList().Remove(itemFurnitureData);
-                        innFurnitureBuilder.DestroyFurnitureByPosition(buildPosition);
+                        innFurnitureBuilder.DestroyFurnitureByPosition(listBuildPosition[0]);
                         //如果是门。需要重置一下墙体
                         if (itemFurnitureData.id > 90000 && itemFurnitureData.id < 100000)
                         {
@@ -292,12 +300,6 @@ public class ControlForBuildCpt : BaseControl
                 }
                 else
                 {
-                    //获取提示区域所占点
-                    List<Vector3> listBuildPosition = new List<Vector3>();
-                    for (int i = 0; i < listBuildSpaceSR.Count; i++)
-                    {
-                        listBuildPosition.Add(listBuildSpaceSR[i].transform.position);
-                    }
                     //增加一个家具
                     InnResBean addData = new InnResBean(buildItemCpt.buildId, buildItemCpt.transform.position, listBuildPosition, buildItemCpt.direction);
                     gameDataManager.gameData.GetInnBuildData().AddFurniture(addData);

@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using UnityEditor;
+using DG.Tweening;
 
 public class FoodForCustomerCpt : BaseMonoBehaviour
 {
@@ -25,5 +26,15 @@ public class FoodForCustomerCpt : BaseMonoBehaviour
     {
         if (foodData != null && innFoodManager != null)
             srFood.sprite = innFoodManager.GetFoodLastSpriteByName(foodData.icon_key);
+    }
+
+    /// <summary>
+    /// 食材创建动画
+    /// </summary>
+    public void CreateAnim()
+    {
+        transform.DOKill();
+        transform.localScale = new Vector3(1, 1, 1);
+        transform.DOScale(new Vector3(0.2f, 0.2f, 0.2f), 0.5f).From().SetEase(Ease.OutBack);
     }
 }

@@ -32,9 +32,8 @@ Transform:
   - {fileID: 5240366230723691659}
   - {fileID: 7877881793780933405}
   - {fileID: 758106374854226575}
-  - {fileID: 1808711557162810083}
   m_Father: {fileID: 3085979124016098596}
-  m_RootOrder: 2
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &934767766760176674
 GameObject:
@@ -172,7 +171,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2399883535864595841}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1, y: -0.2, z: 0}
+  m_LocalPosition: {x: 0.8, y: -0.15, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 3495503384092488405}
@@ -218,6 +217,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3085979124016098596}
   - component: {fileID: 3085979124016098597}
+  - component: {fileID: 687486612641477810}
   m_Layer: 0
   m_Name: Stove_Wooden_1
   m_TagString: Untagged
@@ -238,6 +238,7 @@ Transform:
   m_Children:
   - {fileID: 7955240628534086943}
   - {fileID: 3947738149722412568}
+  - {fileID: 1808711557162810083}
   - {fileID: 3495503384092488405}
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -276,6 +277,17 @@ MonoBehaviour:
   itemFoodModel: {fileID: 5328740976241071941, guid: 1b12f62d116de8e4ba915aa78ab2cb2b,
     type: 3}
   stoveStatus: 0
+--- !u!210 &687486612641477810
+SortingGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3085979124016098595}
+  m_Enabled: 1
+  m_SortingLayerID: -63496745
+  m_SortingLayer: 9
+  m_SortingOrder: 0
 --- !u!1 &3248474746089359934
 GameObject:
   m_ObjectHideFlags: 0
@@ -367,7 +379,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.8, y: 2.8}
+  m_Size: {x: 1, y: 3}
   m_EdgeRadius: 0
 --- !u!1 &4916540376759918248
 GameObject:
@@ -378,6 +390,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1808711557162810083}
+  - component: {fileID: 9214788540571189860}
   m_Layer: 0
   m_Name: Food
   m_TagString: Untagged
@@ -392,13 +405,25 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4916540376759918248}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 3495503384092488405}
-  m_RootOrder: 5
+  m_Children:
+  - {fileID: 391994197717864743}
+  m_Father: {fileID: 3085979124016098596}
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!210 &9214788540571189860
+SortingGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4916540376759918248}
+  m_Enabled: 1
+  m_SortingLayerID: -63496745
+  m_SortingLayer: 9
+  m_SortingOrder: 1
 --- !u!1 &5375911963975835625
 GameObject:
   m_ObjectHideFlags: 0
@@ -458,6 +483,36 @@ Transform:
   m_Children: []
   m_Father: {fileID: 5240366230723691659}
   m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &6501507666444195029
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 391994197717864743}
+  m_Layer: 0
+  m_Name: New Sprite
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &391994197717864743
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6501507666444195029}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1808711557162810083}
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &7704050970323524063
 GameObject:

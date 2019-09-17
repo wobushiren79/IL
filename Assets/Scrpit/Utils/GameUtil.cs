@@ -8,13 +8,18 @@ public class GameUtil
     /// </summary>
     /// <param name="tfTarget"></param>
     /// <returns></returns>
+    /// 
     public static Vector3 GetTransformInsidePosition2D(Transform tfTarget)
+    {
+        return GetTransformInsidePosition2D(tfTarget, 1);
+    }
+    public static Vector3 GetTransformInsidePosition2D(Transform tfTarget, float size)
     {
         float tempX = tfTarget.localScale.x / 2f;
         float tempY = tfTarget.localScale.y / 2f;
         float randomXoff = Random.Range(-tempX, tempX);
         float randomYoff = Random.Range(-tempY, tempY);
-        return new Vector3(tfTarget.position.x + randomXoff, tfTarget.position.y + randomYoff);
+        return new Vector3(tfTarget.position.x + randomXoff * size, tfTarget.position.y + randomYoff * size);
     }
 
     /// <summary>
@@ -63,7 +68,7 @@ public class GameUtil
     /// </summary>
     /// <param name="itemRTF"></param>
     /// <param name="isWithFitter">宽是否自适应大小</param>
-    public static void RefreshRectViewHight(RectTransform itemRTF,bool isWithFitter)
+    public static void RefreshRectViewHight(RectTransform itemRTF, bool isWithFitter)
     {
         if (itemRTF == null)
             return;
@@ -93,11 +98,11 @@ public class GameUtil
     /// </summary>
     public static void ExitGame()
     {
-        #if UNITY_EDITOR
+#if UNITY_EDITOR
         UnityEditor.EditorApplication.isPlaying = false;
-        #else
+#else
 		Application.Quit();
-        #endif
+#endif
     }
 
 

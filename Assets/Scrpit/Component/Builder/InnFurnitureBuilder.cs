@@ -81,7 +81,7 @@ public class InnFurnitureBuilder : BaseMonoBehaviour
             List<Vector3> listPosition = itemData.GetBuildWorldPosition();
             foreach (Vector3 itemPosition in listPosition)
             {
-                if (itemPosition.x == position.x && itemPosition.y == position.y)
+                if (itemPosition.x == position.x-0.5f && itemPosition.y == position.y+0.5f)
                 {
                     target = itemData;
                     break;
