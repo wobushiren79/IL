@@ -9,14 +9,37 @@ public class FoodForCustomerCpt : BaseMonoBehaviour
     //食物数据管理
     public InnFoodManager innFoodManager;
 
+    public GameObject objBadFood;
+    public GameObject objGoodFood;
+    public GameObject objPrefectFood;
+
     /// <summary>
     /// 设置数据
     /// </summary>
     /// <param name="foodData"></param>
-    public void SetData(MenuInfoBean foodData)
+    public void SetData(InnFoodManager innFoodManager,MenuInfoBean foodData,int foodLevel)
     {
+        this.innFoodManager = innFoodManager;
         if (foodData != null && innFoodManager != null)
             srFood.sprite = innFoodManager.GetFoodSpriteByName(foodData.icon_key);
+
+        objBadFood.SetActive(false);
+        objGoodFood.SetActive(false);
+        objPrefectFood.SetActive(false);
+        switch (foodLevel)
+        {
+            case -1:
+                objBadFood.SetActive(true);
+                break;
+            case 0:
+                break;
+            case 1:
+                objGoodFood.SetActive(true);
+                break;
+            case 2:
+                objPrefectFood.SetActive(true);
+                break;
+        }
     }
 
     /// <summary>
@@ -26,6 +49,9 @@ public class FoodForCustomerCpt : BaseMonoBehaviour
     {
         if (foodData != null && innFoodManager != null)
             srFood.sprite = innFoodManager.GetFoodLastSpriteByName(foodData.icon_key);
+        objBadFood.SetActive(false);
+        objGoodFood.SetActive(false);
+        objPrefectFood.SetActive(false);
     }
 
     /// <summary>

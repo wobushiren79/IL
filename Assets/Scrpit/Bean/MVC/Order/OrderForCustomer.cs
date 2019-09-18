@@ -19,6 +19,8 @@ public class OrderForCustomer
     public NpcAIWorkerCpt chef;
     //送餐的人
     public NpcAIWorkerCpt waiterForSend;
+    //做出的食物等级 -1 0 1 2
+    public int foodLevel;
     /// <summary>
     /// 检测订单是否有效
     /// </summary>

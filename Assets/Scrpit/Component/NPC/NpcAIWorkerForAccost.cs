@@ -152,7 +152,9 @@ public class NpcAIWorkerForAccost : NpcAIWokerFoBaseCpt
             accostPro.SetActive(false);
         if (talkPro != null)
             talkPro.SetActive(true);
-        StartCoroutine(StartTalking(CalculationTalkTime()));
+        //计算聊天时间
+        float talkTime = npcAIWorker.characterData.CalculationAccostTalkTime(npcAIWorker.gameItemsManager);
+        StartCoroutine(StartTalking(talkTime));
     }
 
     /// <summary>
@@ -180,7 +182,7 @@ public class NpcAIWorkerForAccost : NpcAIWokerFoBaseCpt
     {
         yield return new WaitForSeconds(talkTime);
         //是否成功
-        if (CalculationRate())
+        if (npcAIWorker.characterData.CalculationAccostRate(npcAIWorker.gameItemsManager))
         {
             npcAIWorker.SetExpression(CharacterExpressionCpt.CharacterExpressionEnum.Love);
             npcAICustomer.SetExpression(CharacterExpressionCpt.CharacterExpressionEnum.Love);
@@ -192,7 +194,7 @@ public class NpcAIWorkerForAccost : NpcAIWokerFoBaseCpt
         }
         else
         {
-            npcAIWorker.SetExpression(CharacterExpressionCpt.CharacterExpressionEnum.Shame);
+            npcAIWorker.SetExpression(CharacterExpressionCpt.CharacterExpressionEnum.Wordless);
             npcAICustomer.SetExpression(CharacterExpressionCpt.CharacterExpressionEnum.Mad);
             npcAICustomer.SetIntent(NpcAICustomerCpt.CustomerIntentEnum.Leave);
 
@@ -204,41 +206,5 @@ public class NpcAIWorkerForAccost : NpcAIWokerFoBaseCpt
         SetIntent(AccostIntentEnum.Idle);
     }
 
-    /// <summary>
-    ///  计算成功概率
-    /// </summary>
-    /// <returns></returns>
-    private bool CalculationRate()
-    {
-        //获取数据
-        npcAICustomer.characterData.GetAttributes(npcAICustomer.gameItemsManager,
-        out CharacterAttributesBean totalAttributes, out CharacterAttributesBean selfAttributes, out CharacterAttributesBean equipAttributes);
-        float randomRate =  UnityEngine.Random.Range(0f,1f);
-        float successRate = 0.5f + totalAttributes.charm * 0.04f + totalAttributes.lucky * 0.01f;
-        if (successRate >= randomRate)
-            return true;
-        else
-            return false;
-    }
 
-    /// <summary>
-    /// 计算聊天时间
-    /// </summary>
-    /// <returns></returns>
-    private float CalculationTalkTime()
-    {
-        //默认10秒
-        float talkTime = 10.1f;
-        //获取数据
-        npcAICustomer.characterData.GetAttributes(npcAICustomer.gameItemsManager,
-        out CharacterAttributesBean totalAttributes, out CharacterAttributesBean selfAttributes, out CharacterAttributesBean equipAttributes);
-        talkTime = 10.1f - totalAttributes.charm * 0.1f;
-        //数据修正 
-        if (talkTime <= 0.1f)
-        {
-            //最低不能小于0.5秒
-            talkTime = 0.1f;
-        }
-        return talkTime; 
-    }
 }

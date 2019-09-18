@@ -251,25 +251,27 @@ public class InnHandler : BaseMonoBehaviour
     /// <param name="food"></param>
     public void PayMoney(OrderForCustomer order, float multiple)
     {
+        long getMoneyL = (long)(order.foodData.price_l * multiple);
+        long getMoneyM = (long)(order.foodData.price_m * multiple);
+        long getMoneyS = (long)(order.foodData.price_s * multiple);
+        
         //账本记录
         if (innRecord.sellNumber.ContainsKey(order.foodData.id))
             innRecord.sellNumber[order.foodData.id] += 1;
         else
             innRecord.sellNumber.Add(order.foodData.id, 1);
-        innRecord.incomeS += order.foodData.price_s;
-        innRecord.incomeM += order.foodData.price_m;
-        innRecord.incomeL += order.foodData.price_l;
+        innRecord.incomeL += getMoneyL;
+        innRecord.incomeS += getMoneyM;
+        innRecord.incomeM += getMoneyS;
+
         //记录+1
         gameDataManager.gameData.ChangeMenuSellNumber(1, order.foodData.id);
         //金钱增加
-        gameDataManager.gameData.moneyS += (long)(order.foodData.price_s * multiple);
-        gameDataManager.gameData.moneyM += (long)(order.foodData.price_m * multiple);
-        gameDataManager.gameData.moneyL += (long)(order.foodData.price_l * multiple);
-        innPayHandler.ShowPayEffects(
-            order.customer.transform.position,
-            order.foodData.price_l,
-            order.foodData.price_m,
-            order.foodData.price_s);
+        gameDataManager.gameData.moneyL += getMoneyL;
+        gameDataManager.gameData.moneyM += getMoneyM;
+        gameDataManager.gameData.moneyS += getMoneyS;
+        //展示特效
+        innPayHandler.ShowPayEffects(order.customer.transform.position,getMoneyL,getMoneyM, getMoneyS);
     }
 
     /// <summary>

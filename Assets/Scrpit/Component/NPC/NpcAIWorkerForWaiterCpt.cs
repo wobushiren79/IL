@@ -211,7 +211,8 @@ public class NpcAIWorkerForWaiterCpt : NpcAIWokerFoBaseCpt
     /// <returns></returns>
     public IEnumerator StartClean()
     {
-        yield return new WaitForSeconds(5);
+        float cleanTime = npcAIWorker.characterData.CalculationWaiterCleanTime(npcAIWorker.gameItemsManager);
+        yield return new WaitForSeconds(cleanTime);
         //记录数据
         npcAIWorker.characterData.baseInfo.waiterInfo.AddCleanNumber(1);
         //增加经验
@@ -220,4 +221,6 @@ public class NpcAIWorkerForWaiterCpt : NpcAIWokerFoBaseCpt
         orderForCustomer.table.CleanTable();
         SetIntent(WaiterIntentEnum.Idle);
     }
+
+
 }

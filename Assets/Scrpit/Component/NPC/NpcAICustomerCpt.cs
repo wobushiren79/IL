@@ -232,8 +232,19 @@ public class NpcAICustomerCpt : BaseNpcAI
     {
         //停止等待
         StopAllCoroutines();
-        //好感+20
-        ChangeMood(20);
+        //好感+
+        switch (orderForCustomer.foodLevel)
+        {
+            case -1:
+                ChangeMood(-20);
+                break;
+            case 1:
+                ChangeMood(20);
+                break;
+            case 2:
+                ChangeMood(40);
+                break;
+        }
         //设置桌子状态
         if (orderForCustomer.table != null)
             orderForCustomer.table.SetTableStatus(BuildTableCpt.TableStatusEnum.Eating);

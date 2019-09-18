@@ -92,7 +92,7 @@ public class NpcAIWorkerForChefCpt : NpcAIWokerFoBaseCpt
     {
         if (orderForCustomer == null)
             return;
-        SetIntent(ChefIntentEnum.GoToCook,orderForCustomer);
+        SetIntent(ChefIntentEnum.GoToCook, orderForCustomer);
     }
 
     /// <summary>
@@ -164,18 +164,21 @@ public class NpcAIWorkerForChefCpt : NpcAIWokerFoBaseCpt
     /// <returns></returns>
     public IEnumerator StartCook()
     {
-        yield return new WaitForSeconds(orderForCustomer.foodData.cook_time);
+        float foodTime = npcAIWorker.characterData.CalculationChefMakeFoodTime(npcAIWorker.gameItemsManager,orderForCustomer.foodData.cook_time);
+        yield return new WaitForSeconds(foodTime);
         //记录数据
         npcAIWorker.characterData.baseInfo.chefInfo.AddCookNumber(1, orderForCustomer.foodData.id);
         //添加经验
         npcAIWorker.characterData.baseInfo.chefInfo.AddExp(1);
-
+        //计算食物生成等级
+        orderForCustomer.foodLevel = npcAIWorker.characterData.CalculationChefFoodLevel(npcAIWorker.gameItemsManager);
         //在灶台创建一个食物
-        orderForCustomer.stove.CreateFood(innFoodManager,orderForCustomer);
+        orderForCustomer.stove.CreateFood(innFoodManager, orderForCustomer);
         //通知送餐
         npcAIWorker.innHandler.sendQueue.Add(orderForCustomer);
         //设置状态为闲置
         SetIntent(ChefIntentEnum.Idle);
     }
+
 
 }

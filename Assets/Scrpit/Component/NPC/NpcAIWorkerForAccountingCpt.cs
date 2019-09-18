@@ -127,38 +127,52 @@ public class NpcAIWorkerForAccountingCpt : NpcAIWokerFoBaseCpt
 
     public IEnumerator StartAccounting()
     {
-        yield return new WaitForSeconds(5);
+        float time = npcAIWorker.characterData.CalculationAccountingTime(npcAIWorker.gameItemsManager);
+        yield return new WaitForSeconds(time);
+        //计算不同食物等级的手艺
+        float foodLevelRate = npcAIWorker.characterData.CalculationAccountingFoodLevel(orderForCustomer.foodLevel);
         //是否出错
-        bool isError = false;
+        bool isError = npcAIWorker.characterData.CalculationAccountingCheck(npcAIWorker.gameItemsManager, out float moreRate);
         if (isError)
         {
             //出错
             //记录数据
-            npcAIWorker.characterData.baseInfo.accountingInfo.AddAccountingFail
-                (orderForCustomer.foodData.price_l, orderForCustomer.foodData.price_m, orderForCustomer.foodData.price_s,0.5f);
+            npcAIWorker.characterData.baseInfo.accountingInfo.AddAccountingFail(
+                (long)(1 + foodLevelRate) * orderForCustomer.foodData.price_l,
+                (long)(1 + foodLevelRate) * orderForCustomer.foodData.price_m,
+                (long)(1 + foodLevelRate) * orderForCustomer.foodData.price_s,
+                moreRate);
             //增加经验
             npcAIWorker.characterData.baseInfo.accountingInfo.AddExp(1);
 
             //工作者表示抱歉
-            npcAIWorker.SetExpression(CharacterExpressionCpt.CharacterExpressionEnum.Wordless);
+            //npcAIWorker.SetExpression(CharacterExpressionCpt.CharacterExpressionEnum.Wordless);
             //顾客生气
-            orderForCustomer.customer.SetExpression(CharacterExpressionCpt.CharacterExpressionEnum.Mad);
+            //orderForCustomer.customer.SetExpression(CharacterExpressionCpt.CharacterExpressionEnum.Mad);
+            moreRate = (-moreRate);
         }
         else
         {
             //成功
             //记录数据
-            npcAIWorker.characterData.baseInfo.accountingInfo.AddAccountingSuccess
-                (orderForCustomer.foodData.price_l, orderForCustomer.foodData.price_m, orderForCustomer.foodData.price_s,0);
+            npcAIWorker.characterData.baseInfo.accountingInfo.AddAccountingSuccess(
+                   (long)(1 + foodLevelRate) * orderForCustomer.foodData.price_l,
+                   (long)(1 + foodLevelRate) * orderForCustomer.foodData.price_m,
+                   (long)(1 + foodLevelRate) * orderForCustomer.foodData.price_s,
+                   moreRate);
             //增加经验
             npcAIWorker.characterData.baseInfo.accountingInfo.AddExp(2);
 
-            //TODO 如果有额外的加成 工作者和店员都应该高兴
-
+            //如果有额外的加成 工作者和店员都应该高兴
+            //orderForCustomer.customer.SetExpression(CharacterExpressionCpt.CharacterExpressionEnum.Love);
         }
 
         if (npcAIWorker.innHandler != null)
-            npcAIWorker.innHandler.PayMoney(orderForCustomer, 1);
+        {
+            float tempRate = (1 + foodLevelRate) * (1 + moreRate);
+            npcAIWorker.innHandler.PayMoney(orderForCustomer, tempRate);
+        }
+
         //通知离开
         orderForCustomer.customer.SetIntent(NpcAICustomerCpt.CustomerIntentEnum.Leave);
         SetIntent(AccountingIntentEnum.Idle);
