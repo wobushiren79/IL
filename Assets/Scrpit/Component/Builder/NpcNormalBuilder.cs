@@ -7,19 +7,20 @@ public class NpcNormalBuilder : BaseMonoBehaviour
     //添加的容器
     public GameObject objContainer;
     //顾客模型
-    public GameObject objCustomerModel;
+    public GameObject objNormalModel;
 
     //NPC数据管理
     public NpcInfoManager npcInfoManager;
     public CharacterBodyManager characterBodyManager;
     public GameTimeHandler gameTimeHandler;
+    public GameDataManager gameDataManager;
 
     //初始化大量随机NPC位置
     public List<Transform> listInitStartPosition;
     //有序化生成NPC位置
     public List<Transform> listStartPosition;
     //是否生成NPC
-    public bool isBuildNpc=false;
+    public bool isBuildNpc = false;
     //生成间隔
     public float buildInterval = 3;
     public float buildMaxNumber = 100;
@@ -31,7 +32,7 @@ public class NpcNormalBuilder : BaseMonoBehaviour
     {
         if (CheckUtil.ListIsNull(listInitStartPosition))
             return Vector3.zero;
-        Transform initStartPosition =  RandomUtil.GetRandomDataByList(listInitStartPosition);
+        Transform initStartPosition = RandomUtil.GetRandomDataByList(listInitStartPosition);
         return GameUtil.GetTransformInsidePosition2D(initStartPosition);
     }
 
@@ -61,13 +62,26 @@ public class NpcNormalBuilder : BaseMonoBehaviour
             return null;
         //随机生成身体数据
         CharacterBodyBean.CreateRandomBodyByManager(characterData.body, characterBodyManager);
+        return BuildNpc(characterData, startPosition);
+    }
 
-        GameObject npcObj = Instantiate(objCustomerModel, objContainer.transform);
+    public GameObject BuildNpc(CharacterBean characterData, Vector3 startPosition)
+    {
+       return BuildNpc(objNormalModel, characterData, startPosition);
+    }
+
+    public GameObject BuildNpc(GameObject objModel, CharacterBean characterData, Vector3 startPosition)
+        {
+        if (npcInfoManager == null)
+            return null;
+        if (characterData == null)
+            return null;
+        GameObject npcObj = Instantiate(objModel, objContainer.transform);
         npcObj.SetActive(true);
         npcObj.transform.localScale = new Vector3(1, 1);
         npcObj.transform.position = startPosition;
 
-        BaseNpcAI baseNpcAI= npcObj.GetComponent<BaseNpcAI>();
+        BaseNpcAI baseNpcAI = npcObj.GetComponent<BaseNpcAI>();
         baseNpcAI.SetCharacterData(characterData);
         return npcObj;
     }

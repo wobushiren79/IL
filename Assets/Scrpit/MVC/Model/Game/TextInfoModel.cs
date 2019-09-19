@@ -21,6 +21,11 @@ public class TextInfoModel : BaseMVCModel
        return mTextInfoService.QueryDataByMarkId(TextEnum.Talk, markId);
     }
 
+    public List<TextInfoBean> GetTextForTalk(long characterId,int favorability)
+    {
+        return mTextInfoService.QueryDataForFirstOrderByFavorability(characterId, favorability);
+    }
+
     public List<TextInfoBean> GetTextForStory(long markId)
     {
         return mTextInfoService.QueryDataByMarkId(TextEnum.Story, markId);

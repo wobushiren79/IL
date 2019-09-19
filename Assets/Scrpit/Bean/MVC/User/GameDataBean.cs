@@ -91,6 +91,23 @@ public class GameDataBean
     }
 
     /// <summary>
+    /// 通过角色ID获取该角色好感度
+    /// </summary>
+    /// <param name="id"></param>
+    /// <returns></returns>
+    public CharacterFavorabilityBean GetFavorabilityDataById(long id)
+    {
+        foreach (CharacterFavorabilityBean itemData in characterFavorabilityList)
+        {
+            if (itemData.characterId == id)
+            {
+                return itemData;
+            }
+        }
+        return null;
+    }
+
+    /// <summary>
     /// 获取成就数据
     /// </summary>
     /// <returns></returns>

@@ -6,6 +6,8 @@ public class BaseNpcAI : BaseMonoBehaviour
 {
     //角色数据
     public CharacterBean characterData;
+    //角色好感度
+    public CharacterFavorabilityBean characterFavorabilityData;
     //装备控制管理
     public GameItemsManager gameItemsManager;
     //角色移动控制
@@ -56,6 +58,15 @@ public class BaseNpcAI : BaseMonoBehaviour
             characterMoveCpt.moveSpeed = speed;
         }
 
+    }
+
+    /// <summary>
+    /// 设置角色好感度
+    /// </summary>
+    /// <param name="characterFavorabilityData"></param>
+    public virtual void SetFavorabilityData(CharacterFavorabilityBean characterFavorabilityData)
+    {
+        this.characterFavorabilityData = characterFavorabilityData;
     }
 
     /// <summary>

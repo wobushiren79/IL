@@ -106,7 +106,7 @@ public class NpcInfoManager : BaseManager, INpcInfoView
         {
             if (type == 0)
             {
-                foreach (long key in listNpcInfo.Keys)
+                foreach (long key in listNormalNpcInfo.Keys)
                 {
                     NpcInfoBean itemData = listNormalNpcInfo[key];
                     listData.Add(itemData);

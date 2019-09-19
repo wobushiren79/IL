@@ -13,7 +13,7 @@ public class InnHandler : BaseMonoBehaviour
     }
 
     //客栈状态
-    public InnStatusEnum innStatus = InnStatusEnum.Close;
+    private InnStatusEnum innStatus = InnStatusEnum.Close;
 
     //数据管理
     public GameDataManager gameDataManager;
@@ -163,6 +163,34 @@ public class InnHandler : BaseMonoBehaviour
     }
 
     /// <summary>
+    /// 获取客栈状态
+    /// </summary>
+    /// <returns></returns>
+    public InnStatusEnum GetInnStatus()
+    {
+        return innStatus;
+    }
+
+    /// <summary>
+    /// 获取柜台
+    /// </summary>
+    /// <returns></returns>
+    public BuildCounterCpt GetCounter()
+    {
+        BuildCounterCpt counterCpt = RandomUtil.GetRandomDataByList(innPayHandler.listCounterCpt);
+        return counterCpt;
+    }
+
+    /// <summary>
+    ///  获取随机一个入口附近的坐标
+    /// </summary>
+    /// <returns></returns>
+    public Vector3 GetRandomEntrancePosition()
+    {
+        return innEntranceHandler.GetRandomEntrancePosition();
+    }
+
+    /// <summary>
     /// 创建一个订单
     /// </summary>
     /// <param name="npc"></param>
@@ -223,26 +251,6 @@ public class InnHandler : BaseMonoBehaviour
             return menuInfo;
         }
         return null;
-    }
-
-    /// <summary>
-    /// 获取柜台
-    /// </summary>
-    /// <returns></returns>
-    public BuildCounterCpt GetCounter()
-    {
-        BuildCounterCpt counterCpt = RandomUtil.GetRandomDataByList(innPayHandler.listCounterCpt);
-        return counterCpt;
-    }
-
-
-    /// <summary>
-    ///  获取随机一个入口附近的坐标
-    /// </summary>
-    /// <returns></returns>
-    public Vector3 GetRandomEntrancePosition()
-    {
-        return innEntranceHandler.GetRandomEntrancePosition();
     }
 
     /// <summary>
@@ -377,5 +385,6 @@ public class InnHandler : BaseMonoBehaviour
         }
         return false;
     }
+
 
 }

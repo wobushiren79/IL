@@ -60,7 +60,7 @@ public class NpcAICustomerCpt : BaseNpcAI
                 if (characterMoveCpt.IsAutoMoveStop())
                 {
                     //判断点是否关门
-                    if (innHandler.innStatus == InnHandler.InnStatusEnum.Open)
+                    if (innHandler.GetInnStatus() == InnHandler.InnStatusEnum.Open)
                         SetIntent(CustomerIntentEnum.WaitSeat);
                     else
                         SetIntent(CustomerIntentEnum.Leave);

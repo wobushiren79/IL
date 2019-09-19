@@ -66,7 +66,7 @@ public class UIGameMain : BaseUIComponent, DialogView.IDialogCallBack
         InnHandler innHandler = GetUIMananger<UIGameManager>().innHandler;
         GameTimeHandler gameTimeHandler = GetUIMananger<UIGameManager>().gameTimeHandler;
         if (tvInnStatus != null && innHandler != null)
-            if (innHandler.innStatus == InnHandler.InnStatusEnum.Close)
+            if (innHandler.GetInnStatus() == InnHandler.InnStatusEnum.Close)
             {
                 tvInnStatus.text = GameCommonInfo.GetUITextById(2002);
             }

@@ -29,6 +29,7 @@ public class UIGameText : BaseUIComponent, ITextInfoView
 
     //文本容器
     public RectTransform rtfTextContent;
+
     [Header("数据")]
     public int textOrder = 1;
     public List<TextInfoBean> listTextData;
@@ -151,7 +152,7 @@ public class UIGameText : BaseUIComponent, ITextInfoView
                 mTextInfoController.GetTextForLook(markId);
                 break;
             case TextEnum.Talk:
-                mTextInfoController.GetTextForTalk(markId);
+                mTextInfoController.GetTextForTalk(markId);  
                 break;
             case TextEnum.Story:
                 mTextInfoController.GetTextForStory(markId);
