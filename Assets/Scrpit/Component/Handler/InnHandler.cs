@@ -191,6 +191,18 @@ public class InnHandler : BaseMonoBehaviour
     }
 
     /// <summary>
+    /// 获取随机客栈内一点
+    /// </summary>
+    /// <returns></returns>
+    public Vector3 GetRandomInnPositon()
+    {
+        int height= gameDataManager.gameData.GetInnBuildData().innHeight;
+        int width = gameDataManager.gameData.GetInnBuildData().innWidth;
+        Vector3 position = new Vector3(UnityEngine.Random.Range(1.5f,(float)width-1f), UnityEngine.Random.Range(1.5f, (float)height-1f));
+        return position;
+    }
+
+    /// <summary>
     /// 创建一个订单
     /// </summary>
     /// <param name="npc"></param>
@@ -379,7 +391,7 @@ public class InnHandler : BaseMonoBehaviour
                 break;
             case WorkerEnum.Accost:
                 workNpc.SetIntent(NpcAIWorkerCpt.WorkerIntentEnum.Accost);
-                break;
+                return true;
             case WorkerEnum.Beater:
                 break;
         }

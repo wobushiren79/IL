@@ -30,7 +30,7 @@ public class EventHandler : BaseSingleton<EventHandler>
     /// 对话时间触发
     /// </summary>
     /// <param name="markId"></param>
-    public void EventTriggerForTalk(long markId)
+    public void EventTriggerForTalk(long markId, UIGameText.ICallBack callBack)
     {
         ChangeEventStatus(true);
         //控制模式修改
@@ -38,6 +38,7 @@ public class EventHandler : BaseSingleton<EventHandler>
             controlHandler.StopControl();
         BaseUIComponent baseUIComponent = uiManager.OpenUIAndCloseOtherByName(EnumUtil.GetEnumName(UIEnum.GameText));
         ((UIGameText)baseUIComponent).SetData(TextEnum.Talk, markId);
+        ((UIGameText)baseUIComponent).SetCallBack(callBack);
     }
 
     /// <summary>
@@ -48,7 +49,7 @@ public class EventHandler : BaseSingleton<EventHandler>
     {
         ChangeEventStatus(true);
         //控制模式修改
-        if(controlHandler!=null)
+        if (controlHandler != null)
             controlHandler.StartControl(ControlHandler.ControlEnum.Story);
         uiManager.CloseAllUI();
         storyBuilder.BuildStory(storyInfo);
@@ -87,11 +88,19 @@ public class EventHandler : BaseSingleton<EventHandler>
     public void ChangeEventStatus(bool isEvent)
     {
         mIsEventing = isEvent;
-        if (controlHandler!=null)
+        if (controlHandler != null)
             if (!isEvent)
             {
                 //事件结束 操作回复
-                controlHandler.StartControl(ControlHandler.ControlEnum.Normal);
+                //如果是故事模式 则恢复普通控制状态
+                if (controlHandler.GetControl() == controlHandler.GetControl(ControlHandler.ControlEnum.Story))
+                {
+                    controlHandler.StartControl(ControlHandler.ControlEnum.Normal);
+                }
+                else
+                {
+                    controlHandler.RestoreControl();
+                }
             }
     }
 

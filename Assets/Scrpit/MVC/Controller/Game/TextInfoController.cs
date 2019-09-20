@@ -31,15 +31,23 @@ public class TextInfoController : BaseMVCController<TextInfoModel,ITextInfoView>
             GetView().GetTextInfoFail();
     }
 
-    public void GetTextForTalk(long characterId,int favorability)
+    public void GetTextForTalkByFavorability(long characterId,int favorability)
     {
-        List<TextInfoBean> listData = GetModel().GetTextForTalk(characterId, favorability);
+        List<TextInfoBean> listData = GetModel().GetTextForTalkByFavorability(characterId, favorability);
         if (listData != null)
             GetView().GetTextInfoForTalkSuccess(listData);
         else
             GetView().GetTextInfoFail();
     }
 
+    public void GetTextForTalkByFirst(long characterId)
+    {
+        List<TextInfoBean> listData = GetModel().GetTextForTalkByFirst(characterId);
+        if (listData != null)
+            GetView().GetTextInfoForTalkSuccess(listData);
+        else
+            GetView().GetTextInfoFail();
+    }
 
     public void GetTextForStory(long markId)
     {

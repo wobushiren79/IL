@@ -42,8 +42,8 @@ public class ToastView : MonoBehaviour
             return;
         GameObject toastHintObj = Instantiate(itemToastModel, itemToastModel.transform);
         toastHintObj.SetActive(true);
-        toastHintObj.transform.localScale = new Vector3(0, 0, 1);
-        toastHintObj.transform.DOScale(new Vector3(1, 1), 0.5f).SetEase(Ease.OutBack);
+        toastHintObj.transform.localScale = new Vector3(1, 1, 1);
+        toastHintObj.transform.DOScale(new Vector3(0.2f, 0.2f), 0.5f).From().SetEase(Ease.OutBack);
         toastHintObj.transform.parent = listContent.transform;
 
         //设置Icon
@@ -55,14 +55,12 @@ public class ToastView : MonoBehaviour
         if (toastContent != null && toastContentStr != null)
             toastContent.text = toastContentStr;
         //定时销毁
-        toastHintObj.transform.DOScaleZ(1, destoryTime).OnComplete(delegate () {
-            DestroyToast(toastHintObj);
-        });
+        DestroyToast(toastHintObj, destoryTime);
     }
 
-    private void DestroyToast(GameObject toastObj)
+    private void DestroyToast(GameObject toastObj,float timeDelay)
     {
-        toastObj.transform.DOScale(new Vector3(0, 0), 0.4f).OnComplete(delegate () {
+        toastObj.transform.DOScale(new Vector3(0, 0), 0.4f).SetDelay(timeDelay).OnComplete(delegate () {
             Destroy(toastObj);
         });
     }

@@ -3,7 +3,7 @@ using UnityEditor;
 using System.Collections;
 using System.Collections.Generic;
 
-public class StoryBuilder : BaseMonoBehaviour, StoryInfoManager.CallBack, UIGameText.CallBack
+public class StoryBuilder : BaseMonoBehaviour, StoryInfoManager.CallBack, UIGameText.ICallBack
 {
     [Header("控件")]
     public GameObject objNpcModel;
@@ -219,6 +219,11 @@ public class StoryBuilder : BaseMonoBehaviour, StoryInfoManager.CallBack, UIGame
     public void TextEnd()
     {
         NextOrder();
+    }
+
+    public void AddFavorability(long characterId, int favorability)
+    {
+
     }
     #endregion
 }

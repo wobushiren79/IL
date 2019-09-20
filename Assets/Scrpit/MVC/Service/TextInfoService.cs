@@ -43,9 +43,23 @@ public class TextInfoService
         string[] leftTable = new string[] { mLeftDetailsTableName };
         string[] mainKey = new string[] { "id" };
         string[] leftKey = new string[] { "text_id" };
-        string[] colName = new string[] { mTableName + ".user_id", mTableName + ".order", mTableName + ".min_favorability", mTableName + ".max_favorability" };
+        string[] colName = new string[] { mTableName + ".user_id", mTableName + ".\"order\"", mTableName + ".condition_min_favorability", mTableName + ".condition_max_favorability" };
         string[] operations = new string[] { "=", "=", "<=", ">" };
         string[] colValue = new string[] { characterId + "", "1", favorability + "", favorability + "" };
+        return SQliteHandle.LoadTableData<TextInfoBean>(ProjectConfigInfo.DATA_BASE_INFO_NAME, mTableName, leftTable, mainKey, leftKey, colName, operations, colValue);
+    }
+
+
+    public List<TextInfoBean> QueryDataForFirstOrderByFirstMeet(long characterId)
+    {
+        mTableName = "text_talk";
+        mLeftDetailsTableName = "text_talk_details_" + GameCommonInfo.gameConfig.language;
+        string[] leftTable = new string[] { mLeftDetailsTableName };
+        string[] mainKey = new string[] { "id" };
+        string[] leftKey = new string[] { "text_id" };
+        string[] colName = new string[] { mTableName + ".user_id", mTableName + ".\"order\"", mTableName + ".condition_first_meet" };
+        string[] operations = new string[] { "=", "=", "="};
+        string[] colValue = new string[] { characterId + "", "1", "1" };
         return SQliteHandle.LoadTableData<TextInfoBean>(ProjectConfigInfo.DATA_BASE_INFO_NAME, mTableName, leftTable, mainKey, leftKey, colName, operations, colValue);
     }
 }

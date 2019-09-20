@@ -21,9 +21,25 @@ public class TextInfoModel : BaseMVCModel
        return mTextInfoService.QueryDataByMarkId(TextEnum.Talk, markId);
     }
 
-    public List<TextInfoBean> GetTextForTalk(long characterId,int favorability)
+    /// <summary>
+    /// 通过好感区间值查询对话
+    /// </summary>
+    /// <param name="characterId"></param>
+    /// <param name="favorability"></param>
+    /// <returns></returns>
+    public List<TextInfoBean> GetTextForTalkByFavorability(long characterId,int favorability)
     {
         return mTextInfoService.QueryDataForFirstOrderByFavorability(characterId, favorability);
+    }
+
+    /// <summary>
+    /// 通过是否首次对话查询
+    /// </summary>
+    /// <param name="characterId"></param>
+    /// <returns></returns>
+    public List<TextInfoBean> GetTextForTalkByFirst(long characterId)
+    {
+        return mTextInfoService.QueryDataForFirstOrderByFirstMeet(characterId);
     }
 
     public List<TextInfoBean> GetTextForStory(long markId)

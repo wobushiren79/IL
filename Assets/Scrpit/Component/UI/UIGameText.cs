@@ -38,7 +38,7 @@ public class UIGameText : BaseUIComponent, ITextInfoView
     private TextInfoController mTextInfoController;
     private Tweener tweenerText;
     private TextEnum mTextEnum;
-    private CallBack mCallBack;
+    private ICallBack mCallBack;
 
     private void Awake()
     {
@@ -73,8 +73,8 @@ public class UIGameText : BaseUIComponent, ITextInfoView
             {
                 tweenerText.Complete();
                 //刷新控件
-                if(rtfTextContent!=null)
-                GameUtil.RefreshRectViewHight(rtfTextContent, true);
+                if (rtfTextContent != null)
+                    GameUtil.RefreshRectViewHight(rtfTextContent, true);
             }
             else
             {
@@ -122,6 +122,11 @@ public class UIGameText : BaseUIComponent, ITextInfoView
                     uiManager.CloseAllUI();
                     break;
             }
+            //如果是时停 需要回复时停
+            if (!currentTextData.is_stoptime)
+            {
+                GetUIMananger<UIGameManager>().gameTimeHandler.SetTimeRestore();
+            }
             //回调
             if (mCallBack != null)
                 mCallBack.TextEnd();
@@ -132,7 +137,7 @@ public class UIGameText : BaseUIComponent, ITextInfoView
     /// 设置回调
     /// </summary>
     /// <param name="callBack"></param>
-    public void SetCallBack(CallBack callBack)
+    public void SetCallBack(ICallBack callBack)
     {
         mCallBack = callBack;
     }
@@ -152,7 +157,7 @@ public class UIGameText : BaseUIComponent, ITextInfoView
                 mTextInfoController.GetTextForLook(markId);
                 break;
             case TextEnum.Talk:
-                mTextInfoController.GetTextForTalk(markId);  
+                mTextInfoController.GetTextForTalk(markId);
                 break;
             case TextEnum.Story:
                 mTextInfoController.GetTextForStory(markId);
@@ -198,6 +203,12 @@ public class UIGameText : BaseUIComponent, ITextInfoView
         objTypeNormal.SetActive(false);
         objTypeBehind.SetActive(false);
         objTypeBook.SetActive(false);
+
+        UIGameManager uiGameManager = GetUIMananger<UIGameManager>();
+        //时停选择 特殊处理
+        if (currentTextData.is_stoptime)
+            //设置时间彻底停止计时
+            uiGameManager.gameTimeHandler.SetTimeStop();
         switch (currentTextData.type)
         {
             //对话和选择对话
@@ -230,7 +241,6 @@ public class UIGameText : BaseUIComponent, ITextInfoView
                     objNext.gameObject.SetActive(true);
                 }
                 //正常文本处理
-                UIGameManager uiGameManager = GetUIMananger<UIGameManager>();
                 //角色图标设置
                 CharacterBean characterData;
                 if (currentTextData.user_id == 0)
@@ -259,7 +269,16 @@ public class UIGameText : BaseUIComponent, ITextInfoView
                 {
                     tvContent.text = "";
                     string contentDetails = SetContentDetails(currentTextData.content);
-                    tweenerText = tvContent.DOText(contentDetails, currentTextData.content.Length / 8f).SetEase(Ease.OutBack);
+                    //如果时停了就不播放动画了
+                    if (Time.timeScale == 0)
+                    {
+                        tvContent.text = contentDetails;
+                        //刷新控件大小
+                        if (rtfTextContent != null)
+                            GameUtil.RefreshRectViewHight(rtfTextContent, true);
+                    }
+                    else
+                        tweenerText = tvContent.DOText(contentDetails, currentTextData.content.Length / 8f).SetEase(Ease.OutBack);
                 }
                 break;
             case 4:
@@ -268,7 +287,7 @@ public class UIGameText : BaseUIComponent, ITextInfoView
                     tvBookName.text = currentTextData.name;
                 if (tvBookContent != null)
                     tvBookContent.text = currentTextData.content;
-                objTypeBook.SetActive(true);   
+                objTypeBook.SetActive(true);
                 break;
             case 5:
                 //黑幕
@@ -284,8 +303,12 @@ public class UIGameText : BaseUIComponent, ITextInfoView
                 break;
         }
         //添加好感度
-        if (currentTextData.add_favorability!=0) {
+        if (currentTextData.add_favorability != 0)
+        {
             AddFavorability(currentTextData.user_id, currentTextData.add_favorability);
+            //回调
+            if (mCallBack != null)
+                mCallBack.AddFavorability(currentTextData.user_id, currentTextData.add_favorability);
         }
     }
 
@@ -294,17 +317,19 @@ public class UIGameText : BaseUIComponent, ITextInfoView
     /// </summary>
     /// <param name="characterId"></param>
     /// <param name="favorablility"></param>
-    public void AddFavorability(long characterId,int favorablility)
+    public void AddFavorability(long characterId, int favorablility)
     {
-        UIGameManager uiGameManager= GetUIMananger<UIGameManager>();
-        uiGameManager.gameDataManager.gameData.AddFavorability(characterId, favorablility);
+        UIGameManager uiGameManager = GetUIMananger<UIGameManager>();
+        CharacterFavorabilityBean favorabilityData = uiGameManager.gameDataManager.gameData.GetFavorabilityDataById(characterId);
+        favorabilityData.AddFavorability(favorablility);
         //好感动画
         if (ivFavorability != null)
         {
-            ivFavorability.transform.localScale = new Vector3(1,1,1);
+            ivFavorability.transform.localScale = new Vector3(1, 1, 1);
             ivFavorability.transform.DOComplete();
             ivFavorability.gameObject.SetActive(true);
-            ivFavorability.transform.DOScale(new Vector3(0,0,0),1).From().SetEase(Ease.OutBack).OnComplete(delegate() {
+            ivFavorability.transform.DOScale(new Vector3(0, 0, 0), 1).From().SetEase(Ease.OutBack).OnComplete(delegate ()
+            {
                 ivFavorability.gameObject.SetActive(false);
             });
             ivFavorability.DOColor(new Color(1, 1, 1, 0), 1).From();
@@ -321,13 +346,13 @@ public class UIGameText : BaseUIComponent, ITextInfoView
         UIGameManager uiGameManager = GetUIMananger<UIGameManager>();
         string userName = "";
         int sex = 1;
-        if (uiGameManager.gameDataManager.gameData.userCharacter != null 
-            && uiGameManager.gameDataManager.gameData.userCharacter.baseInfo.name!=null)
+        if (uiGameManager.gameDataManager.gameData.userCharacter != null
+            && uiGameManager.gameDataManager.gameData.userCharacter.baseInfo.name != null)
             userName = uiGameManager.gameDataManager.gameData.userCharacter.baseInfo.name;
         if (uiGameManager.gameDataManager.gameData.userCharacter != null)
             sex = uiGameManager.gameDataManager.gameData.userCharacter.body.sex;
-            //替换名字
-            content = content.Replace("{name}", userName);
+        //替换名字
+        content = content.Replace("{name}", userName);
         //替换小名
         string otherName = "";
         if (userName.Length > 1)
@@ -360,15 +385,16 @@ public class UIGameText : BaseUIComponent, ITextInfoView
         ShowText(listTextData);
     }
 
-
     public void GetTextInfoFail()
     {
 
     }
     #endregion
 
-    public interface CallBack
+    public interface ICallBack
     {
         void TextEnd();
+
+        void AddFavorability(long characterId,int favorability);
     }
 }

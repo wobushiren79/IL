@@ -64,47 +64,22 @@ public class GameDataBean
     }
 
     /// <summary>
-    /// 增加好感度
-    /// </summary>
-    /// <param name="characterId"></param>
-    /// <param name="favorability"></param>
-    public void AddFavorability(long characterId, int favorability)
-    {
-        if (characterFavorabilityList == null)
-        {
-            characterFavorabilityList = new List<CharacterFavorabilityBean>();
-        }
-        bool hasData = false;
-        foreach (CharacterFavorabilityBean itemData in characterFavorabilityList)
-        {
-            if (itemData.characterId == characterId)
-            {
-                hasData = true;
-                itemData.favorability += favorability;
-            }
-        }
-        if (!hasData)
-        {
-            CharacterFavorabilityBean characterFavorability = new CharacterFavorabilityBean(characterId, favorability);
-            characterFavorabilityList.Add(characterFavorability);
-        }
-    }
-
-    /// <summary>
     /// 通过角色ID获取该角色好感度
     /// </summary>
     /// <param name="id"></param>
     /// <returns></returns>
-    public CharacterFavorabilityBean GetFavorabilityDataById(long id)
+    public CharacterFavorabilityBean GetFavorabilityDataById(long characterId)
     {
         foreach (CharacterFavorabilityBean itemData in characterFavorabilityList)
         {
-            if (itemData.characterId == id)
+            if (itemData.characterId == characterId)
             {
                 return itemData;
             }
         }
-        return null;
+        CharacterFavorabilityBean favorabilityData = new CharacterFavorabilityBean(characterId);
+        characterFavorabilityList.Add(favorabilityData);
+        return favorabilityData;
     }
 
     /// <summary>

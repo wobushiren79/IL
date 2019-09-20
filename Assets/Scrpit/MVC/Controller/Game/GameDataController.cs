@@ -37,7 +37,7 @@ public class GameDataController : BaseMVCController<GameDataModel, IGameDataView
     /// <param name="gameData"></param>
     public void SaveUserData(GameDataBean gameData)
     {
-        if (gameData == null)
+        if (gameData == null||CheckUtil.StringIsNull(gameData.userId))
         {
             GetView().SetGameDataFail();
             return;

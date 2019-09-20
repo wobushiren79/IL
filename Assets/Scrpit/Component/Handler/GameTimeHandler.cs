@@ -111,6 +111,33 @@ public class GameTimeHandler : BaseObservable<IBaseObserver>
     }
 
     /// <summary>
+    /// 设置时间尺度
+    /// </summary>
+    /// <param name="scale"></param>
+    public void SetTimeScale(float scale)
+    {
+        Time.timeScale = scale;
+    }
+
+    /// <summary>
+    /// 设置时间彻底停止
+    /// </summary>
+    public void SetTimeStop()
+    {
+        SetTimeScale(0);
+        SetTimeStatus(true);
+    }
+
+    /// <summary>
+    /// 设置时间恢复
+    /// </summary>
+    public void SetTimeRestore()
+    {
+        SetTimeScale(1);
+        SetTimeStatus(false);
+    }
+
+    /// <summary>
     /// 获取日期
     /// </summary>
     /// <param name="hours"></param>

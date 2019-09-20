@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using UnityEditor;
 using System;
+using System.Collections.Generic;
 
 [Serializable]
 public class TextInfoBean : BaseBean
@@ -25,6 +26,39 @@ public class TextInfoBean : BaseBean
     public int select_type;
     //选择结果指向
     public int select_result;
+
+    //是否停止时间
+    public bool is_stoptime;
+
+    //触发条件
+    public bool condition_first_meet;
+    //触发条件 好感区间
+    public int condition_min_favorability;
+    public int condition_max_favorability;
+
     //选择加的好感
     public int add_favorability;
+    public string add_money;
+
+
+    /// <summary>
+    /// 获取增加的钱
+    /// </summary>
+    /// <param name="moneyL"></param>
+    /// <param name="moneyM"></param>
+    /// <param name="moneyS"></param>
+    public void GetAddMoney(out long moneyL, out long moneyM, out long moneyS)
+    {
+        if (CheckUtil.StringIsNull(add_money))
+        {
+            moneyL = 0;
+            moneyM = 0;
+            moneyS = 0;
+            return;
+        }
+        long[] listData= StringUtil.SplitBySubstringForArrayLong(add_money,',');
+        moneyL = listData[0];
+        moneyM = listData[1];
+        moneyS = listData[2];
+    }
 }

@@ -1,15 +1,17 @@
 ﻿using UnityEngine;
 using UnityEditor;
 using System.Collections.Generic;
+using System.Collections;
 
-public class NpcAIRascalCpt : BaseNpcAI,ITextInfoView
+public class NpcAIRascalCpt : BaseNpcAI,ITextInfoView,UIGameText.ICallBack
 {
     public enum RascalIntentEnum
     {
          Idle = 0,
          GoToInn = 1,//前往客栈
          WaitingForReply=2,//等待回复
-         Leave=10,//离开
+         MakeTrouble=3,//闹事
+         Leave =10,//离开
     }
 
     public RascalIntentEnum rascalIntent= RascalIntentEnum.Idle;
@@ -23,6 +25,8 @@ public class NpcAIRascalCpt : BaseNpcAI,ITextInfoView
 
     //想要说的对话
     public List<TextInfoBean> listTextInfoBean;
+    //累计增加的好感
+    public int addFavorability = 0;
 
     private void Start()
     {
@@ -34,7 +38,7 @@ public class NpcAIRascalCpt : BaseNpcAI,ITextInfoView
     /// </summary>
     public void StartEvil()
     {
-        SetIntentForGoToInn();
+        SetIntent(RascalIntentEnum.GoToInn);
     }
 
     private void Update()
@@ -79,6 +83,9 @@ public class NpcAIRascalCpt : BaseNpcAI,ITextInfoView
             case RascalIntentEnum.WaitingForReply:
                 SetIntentForWaitingForReply();
                 break;
+            case RascalIntentEnum.MakeTrouble:
+                SetIntentForMakeTrouble();
+                break;
             case RascalIntentEnum.Leave:
                 SetIntentForLeave();
                 break;
@@ -91,7 +98,15 @@ public class NpcAIRascalCpt : BaseNpcAI,ITextInfoView
     public void SetIntentForWaitingForReply()
     {
         //获取文本信息
-        mTextInfoController.GetTextForTalk(characterFavorabilityData.characterId, characterFavorabilityData.favorability);
+        if (characterFavorabilityData.firstMeet)
+        {     
+            //获取第一次对话的文本
+            mTextInfoController.GetTextForTalkByFirst(characterFavorabilityData.characterId);
+        }
+        else
+        {
+            mTextInfoController.GetTextForTalkByFavorability(characterFavorabilityData.characterId, characterFavorabilityData.favorability);
+        }
     }
 
     /// <summary>
@@ -108,6 +123,14 @@ public class NpcAIRascalCpt : BaseNpcAI,ITextInfoView
     }
 
     /// <summary>
+    /// 意图-制造麻烦
+    /// </summary>
+    public void SetIntentForMakeTrouble()
+    {
+        StartCoroutine(StartMakeTrouble());
+    }
+
+    /// <summary>
     /// 意图-离开
     /// </summary>
     public void SetIntentForLeave()
@@ -120,6 +143,11 @@ public class NpcAIRascalCpt : BaseNpcAI,ITextInfoView
     #region 对话信息回调
     public void GetTextInfoForLookSuccess(List<TextInfoBean> listData)
     {
+
+    }
+
+    public void GetTextInfoForTalkSuccess(List<TextInfoBean> listData)
+    {
         this.listTextInfoBean = listData;
         if (CheckUtil.ListIsNull(listTextInfoBean))
         {
@@ -127,12 +155,7 @@ public class NpcAIRascalCpt : BaseNpcAI,ITextInfoView
             return;
         }
         TextInfoBean textInfo = RandomUtil.GetRandomDataByList(listTextInfoBean);
-        EventHandler.Instance.EventTriggerForTalk(textInfo.mark_id);
-    }
-
-    public void GetTextInfoForTalkSuccess(List<TextInfoBean> listData)
-    {
-
+        EventHandler.Instance.EventTriggerForTalk(textInfo.mark_id,this);
     }
 
     public void GetTextInfoForStorySuccess(List<TextInfoBean> listData)
@@ -142,7 +165,36 @@ public class NpcAIRascalCpt : BaseNpcAI,ITextInfoView
 
     public void GetTextInfoFail()
     {
-
+ 
     }
     #endregion
+
+    #region
+    public void TextEnd()
+    {
+        if (addFavorability >= 0)
+        {
+            SetIntent(RascalIntentEnum.Leave);
+        }
+        else
+        {
+            SetIntent(RascalIntentEnum.MakeTrouble);
+        }
+    }
+
+    public void AddFavorability(long characterId, int favorability)
+    {
+        addFavorability += favorability;
+    }
+    #endregion
+
+    public IEnumerator StartMakeTrouble()
+    {
+        while (rascalIntent==RascalIntentEnum.MakeTrouble)
+        {
+            movePosition = innHandler.GetRandomInnPositon();
+            characterMoveCpt.SetDestination(movePosition);
+            yield return new WaitForSeconds(5);
+        }
+    }
 }
