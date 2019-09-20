@@ -3,18 +3,18 @@ using UnityEditor;
 using System.Collections.Generic;
 using System.Collections;
 
-public class NpcAIRascalCpt : BaseNpcAI,ITextInfoView,UIGameText.ICallBack
+public class NpcAIRascalCpt : BaseNpcAI, ITextInfoView, UIGameText.ICallBack
 {
     public enum RascalIntentEnum
     {
-         Idle = 0,
-         GoToInn = 1,//前往客栈
-         WaitingForReply=2,//等待回复
-         MakeTrouble=3,//闹事
-         Leave =10,//离开
+        Idle = 0,
+        GoToInn = 1,//前往客栈
+        WaitingForReply = 2,//等待回复
+        MakeTrouble = 3,//闹事
+        Leave = 10,//离开
     }
 
-    public RascalIntentEnum rascalIntent= RascalIntentEnum.Idle;
+    public RascalIntentEnum rascalIntent = RascalIntentEnum.Idle;
     //下一个移动点
     public Vector3 movePosition;
     //客栈处理
@@ -30,7 +30,7 @@ public class NpcAIRascalCpt : BaseNpcAI,ITextInfoView,UIGameText.ICallBack
 
     private void Start()
     {
-        mTextInfoController = new TextInfoController(this,this);
+        mTextInfoController = new TextInfoController(this, this);
     }
 
     /// <summary>
@@ -91,7 +91,7 @@ public class NpcAIRascalCpt : BaseNpcAI,ITextInfoView,UIGameText.ICallBack
                 break;
         }
     }
-    
+
     /// <summary>
     /// 意图-等待恢复
     /// </summary>
@@ -99,7 +99,7 @@ public class NpcAIRascalCpt : BaseNpcAI,ITextInfoView,UIGameText.ICallBack
     {
         //获取文本信息
         if (characterFavorabilityData.firstMeet)
-        {     
+        {
             //获取第一次对话的文本
             mTextInfoController.GetTextForTalkByFirst(characterFavorabilityData.characterId);
         }
@@ -155,7 +155,7 @@ public class NpcAIRascalCpt : BaseNpcAI,ITextInfoView,UIGameText.ICallBack
             return;
         }
         TextInfoBean textInfo = RandomUtil.GetRandomDataByList(listTextInfoBean);
-        EventHandler.Instance.EventTriggerForTalk(textInfo.mark_id,this);
+        EventHandler.Instance.EventTriggerForTalk(textInfo.mark_id, this);
     }
 
     public void GetTextInfoForStorySuccess(List<TextInfoBean> listData)
@@ -165,7 +165,7 @@ public class NpcAIRascalCpt : BaseNpcAI,ITextInfoView,UIGameText.ICallBack
 
     public void GetTextInfoFail()
     {
- 
+
     }
     #endregion
 
@@ -190,10 +190,13 @@ public class NpcAIRascalCpt : BaseNpcAI,ITextInfoView,UIGameText.ICallBack
 
     public IEnumerator StartMakeTrouble()
     {
-        while (rascalIntent==RascalIntentEnum.MakeTrouble)
+        while (rascalIntent == RascalIntentEnum.MakeTrouble)
         {
             movePosition = innHandler.GetRandomInnPositon();
             characterMoveCpt.SetDestination(movePosition);
+            //随机获取一句喊话
+            int shoutId = Random.Range(13101, 13106);
+            characterShoutCpt.Shout(GameCommonInfo.GetUITextById(shoutId));
             yield return new WaitForSeconds(5);
         }
     }

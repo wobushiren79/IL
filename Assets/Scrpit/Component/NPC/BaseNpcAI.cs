@@ -12,6 +12,8 @@ public class BaseNpcAI : BaseMonoBehaviour
     public GameItemsManager gameItemsManager;
     //角色移动控制
     public CharacterMoveCpt characterMoveCpt;
+    //角色吼叫控制
+    public CharacterShoutCpt characterShoutCpt;
     //角色表情
     public CharacterExpressionCpt characterExpression;
 
