@@ -10,7 +10,7 @@ public class NpcEventBuilder : NpcNormalBuilder, IBaseObserver
     private void Start()
     {
         gameTimeHandler.AddObserver(this);
-        //RascalEvent();
+        RascalEvent();
     }
 
     /// <summary>

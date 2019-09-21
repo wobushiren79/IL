@@ -29,10 +29,13 @@ public class InnHandler : BaseMonoBehaviour
     public InnWaiterHandler innWaiterHandler;
     // 支付处理
     public InnPayHandler innPayHandler;
+    //客栈战斗处理
+    public InnFightHandler innFightHandler;
     // 入口处理
     public InnEntranceHandler innEntranceHandler;
 
-
+    //闹事的人的列表
+    public List<NpcAIRascalCpt> rascalrQueue = new List<NpcAIRascalCpt>();
     //排队的人
     public List<NpcAICustomerCpt> cusomerQueue = new List<NpcAICustomerCpt>();
     //排队等待烹饪的食物
@@ -393,6 +396,16 @@ public class InnHandler : BaseMonoBehaviour
                 workNpc.SetIntent(NpcAIWorkerCpt.WorkerIntentEnum.Accost);
                 return true;
             case WorkerEnum.Beater:
+                //分派打架人选
+                if (!CheckUtil.ListIsNull(rascalrQueue))
+                {
+                    NpcAIRascalCpt npcAIRascal = innFightHandler.SetFight(rascalrQueue, workNpc);
+                    if (npcAIRascal)
+                    {
+                        rascalrQueue.Remove(npcAIRascal);
+                        return true;
+                    }
+                }
                 break;
         }
         return false;

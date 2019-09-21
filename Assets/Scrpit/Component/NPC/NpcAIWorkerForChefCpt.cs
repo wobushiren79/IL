@@ -22,7 +22,7 @@ public class NpcAIWorkerForChefCpt : NpcAIWokerFoBaseCpt
     //移动的目标店
     public Vector3 movePosition;
 
-    private void FixedUpdate()
+    private void Update()
     {
         switch (chefIntent)
         {

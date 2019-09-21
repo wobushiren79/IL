@@ -26,7 +26,7 @@ public class NpcAIWorkerForWaiterCpt : NpcAIWokerFoBaseCpt
     public WaiterIntentEnum waiterIntent = WaiterIntentEnum.Idle;
 
 
-    private void FixedUpdate()
+    private void Update()
     {
         switch (waiterIntent)
         {

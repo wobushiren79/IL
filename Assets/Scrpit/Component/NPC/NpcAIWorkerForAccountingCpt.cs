@@ -20,7 +20,7 @@ public class NpcAIWorkerForAccountingCpt : NpcAIWokerFoBaseCpt
     public AccountingIntentEnum accountingIntent = AccountingIntentEnum.Idle;
 
 
-    private void FixedUpdate()
+    private void Update()
     {
         switch (accountingIntent)
         {

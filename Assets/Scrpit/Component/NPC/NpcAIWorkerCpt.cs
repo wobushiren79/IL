@@ -15,8 +15,6 @@ public class NpcAIWorkerCpt : BaseNpcAI
         Accost,//招待
         Beater//打手
     }
-    //呼喊
-    public CharacterShoutCpt characterShoutCpt;
 
     //厨师AI控制
     public NpcAIWorkerForChefCpt aiForChef;
@@ -26,6 +24,8 @@ public class NpcAIWorkerCpt : BaseNpcAI
     public NpcAIWorkerForAccountingCpt aiForAccounting;
     //招待AI控制
     public NpcAIWorkerForAccost aiForAccost;
+    //打手AI控制
+    public NpcAIWorkerForBeaterCpt aiForBeater;
 
     //客栈数据
     public InnHandler innHandler;
@@ -75,13 +75,13 @@ public class NpcAIWorkerCpt : BaseNpcAI
         listWorkerInfo = characterData.baseInfo.GetAllWorkerInfo();
     }
 
-
     /// <summary>
     /// 设置意图
     /// </summary>
     /// <param name="workerIntent"></param>
     /// <param name="orderForCustomer"></param>
-    public void SetIntent(WorkerIntentEnum workerIntent, OrderForCustomer orderForCustomer)
+    /// <param name="npcAIRascal"></param>
+    public void SetIntent(WorkerIntentEnum workerIntent, OrderForCustomer orderForCustomer, NpcAIRascalCpt npcAIRascal)
     {
         this.workerIntent = workerIntent;
         switch (workerIntent)
@@ -105,13 +105,21 @@ public class NpcAIWorkerCpt : BaseNpcAI
                 SetIntentForAccost();
                 break;
             case WorkerIntentEnum.Beater:
+                SetIntentForBeater(npcAIRascal);
                 break;
         }
     }
-
     public void SetIntent(WorkerIntentEnum workerIntent)
     {
-        SetIntent(workerIntent, null);
+        SetIntent(workerIntent, null,null);
+    }
+    public void SetIntent(WorkerIntentEnum workerIntent, OrderForCustomer orderForCustomer)
+    {
+        SetIntent(workerIntent, orderForCustomer,null);
+    }
+    public void SetIntent(WorkerIntentEnum workerIntent, NpcAIRascalCpt npcAIRascal)
+    {
+        SetIntent(workerIntent, null, npcAIRascal);
     }
 
     /// <summary>
@@ -165,4 +173,11 @@ public class NpcAIWorkerCpt : BaseNpcAI
         aiForAccost.StartAccost();
     }
 
+    /// <summary>
+    /// 设置打手工作
+    /// </summary>
+    public void SetIntentForBeater(NpcAIRascalCpt npcAIRascal)
+    {
+        aiForBeater.StartFight(npcAIRascal);
+    }
 }

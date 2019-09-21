@@ -26,8 +26,6 @@ public class NpcAICustomerCpt : BaseNpcAI
 
     //表情控制
     public CharacterMoodCpt characterMoodCpt;
-    //喊叫控制
-    public CharacterShoutCpt characterShoutCpt;
 
     //客栈处理
     public InnHandler innHandler;

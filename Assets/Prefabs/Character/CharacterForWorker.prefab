@@ -328,6 +328,7 @@ GameObject:
   - component: {fileID: 5088782280854681849}
   - component: {fileID: 1343993552124416576}
   - component: {fileID: 2211740558533283340}
+  - component: {fileID: 1814074578211177026}
   - component: {fileID: 48957864184890530}
   - component: {fileID: 6673297751631119772}
   m_Layer: 0
@@ -395,16 +396,50 @@ MonoBehaviour:
       priceS: 0
       priceM: 0
       priceL: 0
+      chefInfo:
+        workerLevel: 0
+        workerExp: 0
+        cookNumber: 0
+        listFoodCookNumer: []
+      waiterInfo:
+        workerLevel: 0
+        workerExp: 0
+        cleanTotalNumber: 0
+        sendTotalNumber: 0
+      accountingInfo:
+        workerLevel: 0
+        workerExp: 0
+        accountingTotalNumber: 0
+        accountingErrorNumber: 0
+        accountingSuccessNumber: 0
+        loseMoneyL: 0
+        lostMoneyM: 0
+        lostMoneyS: 0
+        moreMoneyL: 0
+        moreMoneyM: 0
+        moreMoneyS: 0
+        accountingMoneyL: 0
+        accountingMoneyM: 0
+        accountingMoneyS: 0
+      accostInfo:
+        workerLevel: 0
+        workerExp: 0
+        accostTotalNumber: 0
+        accostSuccessNumber: 0
+        accostFailNumber: 0
+      beaterInfo:
+        workerLevel: 0
+        workerExp: 0
       isChef: 0
       isWaiter: 0
       isAccounting: 0
-      isBeater: 0
       isAccost: 0
+      isBeater: 0
       priorityChef: 0
       priorityWaiter: 0
       priorityAccounting: 0
-      priorityBeater: 0
       priorityAccost: 0
+      priorityBeater: 0
       isAttendance: 0
     attributes:
       loyal: 0
@@ -446,14 +481,19 @@ MonoBehaviour:
       clothesId: 0
       shoesId: 0
       listLearnBook: 
+  characterFavorabilityData:
+    characterId: 0
+    favorability: 0
+    firstMeet: 0
   gameItemsManager: {fileID: 0}
   characterMoveCpt: {fileID: 3262071503705689678}
-  characterExpression: {fileID: 6362100544653756119}
   characterShoutCpt: {fileID: 3431049019408379413}
+  characterExpression: {fileID: 6362100544653756119}
   aiForChef: {fileID: 8089863752262935693}
   aiForWaiter: {fileID: 5088782280854681849}
   aiForAccounting: {fileID: 1343993552124416576}
   aiForAccost: {fileID: 2211740558533283340}
+  aiForBeater: {fileID: 1814074578211177026}
   innHandler: {fileID: 0}
   gameDataManager: {fileID: 0}
   workerIntent: 0
@@ -526,6 +566,21 @@ MonoBehaviour:
   movePosition: {x: 0, y: 0, z: 0}
   accostIntent: 0
   npcAICustomer: {fileID: 0}
+--- !u!114 &1814074578211177026
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2705659404278029976}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 299d3c3d7cb71d64fbc043d87fbe10ee, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  npcAIWorker: {fileID: 8336812364067628564}
+  beaterIntent: 0
+  movePosition: {x: 0, y: 0, z: 0}
 --- !u!61 &48957864184890530
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -1174,11 +1229,6 @@ PrefabInstance:
       propertyPath: m_Enabled
       value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 7014457080795894761, guid: 2b0fba09934c2934eb7fd9b31e6030fb,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 5210061400093648316, guid: 2b0fba09934c2934eb7fd9b31e6030fb,
         type: 3}
       propertyPath: m_Enabled
@@ -1194,6 +1244,11 @@ PrefabInstance:
       propertyPath: navMeshAgent
       value: 
       objectReference: {fileID: 7354873128230069989}
+    - target: {fileID: 7014457080795894761, guid: 2b0fba09934c2934eb7fd9b31e6030fb,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5035379056513621660, guid: 2b0fba09934c2934eb7fd9b31e6030fb,
         type: 3}
       propertyPath: m_Sprite
@@ -1228,18 +1283,6 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 7280332141832121330}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &3431049019408379413 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 5374315413826618855, guid: 2b0fba09934c2934eb7fd9b31e6030fb,
-    type: 3}
-  m_PrefabInstance: {fileID: 7280332141832121330}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e7c07ba0b0c5f374193ef8b5c7106212, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &6362100544653756119 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 4414186510013377829, guid: 2b0fba09934c2934eb7fd9b31e6030fb,
@@ -1262,5 +1305,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: dd8f360140d665a4ab11835a2f24d633, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &3431049019408379413 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5374315413826618855, guid: 2b0fba09934c2934eb7fd9b31e6030fb,
+    type: 3}
+  m_PrefabInstance: {fileID: 7280332141832121330}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e7c07ba0b0c5f374193ef8b5c7106212, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
