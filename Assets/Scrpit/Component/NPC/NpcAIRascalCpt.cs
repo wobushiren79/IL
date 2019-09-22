@@ -30,7 +30,8 @@ public class NpcAIRascalCpt : BaseNpcAI, ITextInfoView, UIGameText.ICallBack
 
     //下一个移动点
     public Vector3 movePosition;
-
+    //战斗对象
+    public BaseNpcAI npcFight;
     //客栈处理
     public InnHandler innHandler;
     //客栈区域数据管理
@@ -46,8 +47,8 @@ public class NpcAIRascalCpt : BaseNpcAI, ITextInfoView, UIGameText.ICallBack
     public int characterMaxLife = 10;
     public int characterLife = 10;
 
-    //制造麻烦的市场
-    public float timeMakeTrouble = 180;
+    //制造麻烦的时间
+    public float timeMakeTrouble = 60;
 
     private void Start()
     {
@@ -73,6 +74,11 @@ public class NpcAIRascalCpt : BaseNpcAI, ITextInfoView, UIGameText.ICallBack
         {
             characterLife = 0;
             SetIntent(RascalIntentEnum.Leave);
+            //随机获取一句喊话
+            int shoutId = Random.Range(13201, 13206);
+            characterShoutCpt.Shout(GameCommonInfo.GetUITextById(shoutId));
+            //快速离开
+            characterMoveCpt.SetMoveSpeed(3);
         }
         else if (characterLife > characterMaxLife)
         {
@@ -142,6 +148,19 @@ public class NpcAIRascalCpt : BaseNpcAI, ITextInfoView, UIGameText.ICallBack
     }
 
     /// <summary>
+    /// 意图-前往客栈
+    /// </summary>
+    public void SetIntentForGoToInn()
+    {
+        //移动到门口附近
+        movePosition = innHandler.GetRandomEntrancePosition();
+        if (movePosition == null)
+            movePosition = Vector3.zero;
+        //前往门
+        characterMoveCpt.SetDestination(movePosition);
+    }
+
+    /// <summary>
     /// 意图-等待恢复
     /// </summary>
     public void SetIntentForWaitingForReply()
@@ -156,19 +175,6 @@ public class NpcAIRascalCpt : BaseNpcAI, ITextInfoView, UIGameText.ICallBack
         {
             mTextInfoController.GetTextForTalkByFavorability(characterFavorabilityData.characterId, characterFavorabilityData.favorability);
         }
-    }
-
-    /// <summary>
-    /// 意图-前往客栈
-    /// </summary>
-    public void SetIntentForGoToInn()
-    {
-        //移动到门口附近
-        movePosition = innHandler.GetRandomEntrancePosition();
-        if (movePosition == null)
-            movePosition = Vector3.zero;
-        //前往门
-        characterMoveCpt.SetDestination(movePosition);
     }
 
     /// <summary>
@@ -204,9 +210,8 @@ public class NpcAIRascalCpt : BaseNpcAI, ITextInfoView, UIGameText.ICallBack
     /// </summary>
     public void SetIntentForContinueMakeTrouble()
     {
+        npcFight = null;
         objFightShow.SetActive(false);
-        //闹事人员添加
-        innHandler.rascalrQueue.Add(this);
         StartCoroutine(StartMakeTrouble());
     }
 
@@ -215,6 +220,8 @@ public class NpcAIRascalCpt : BaseNpcAI, ITextInfoView, UIGameText.ICallBack
     /// </summary>
     public void SetIntentForLeave()
     {
+        innHandler.rascalrQueue.Remove(this);
+        npcFight = null;
         objLife.SetActive(false);
         objFightShow.SetActive(false);
         objRascalSpaceShow.SetActive(false);

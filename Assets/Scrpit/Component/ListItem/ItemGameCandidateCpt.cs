@@ -123,7 +123,7 @@ public class ItemGameCandidateCpt : ItemGameBaseCpt, DialogView.IDialogCallBack
     }
 
     #region  dialog 回调
-    public void Submit(DialogView dialogView)
+    public void Submit(DialogView dialogView, DialogBean dialogData)
     {
         GameDataManager gameDataManager = GetUIManager<UIGameManager>().gameDataManager;
         ToastView toastView = GetUIManager<UIGameManager>().toastView;
@@ -138,7 +138,7 @@ public class ItemGameCandidateCpt : ItemGameBaseCpt, DialogView.IDialogCallBack
         GetUIComponent<UITownRecruitment>().RemoveCandidate(characterData);
     }
 
-    public void Cancel(DialogView dialogView)
+    public void Cancel(DialogView dialogView, DialogBean dialogData)
     {
     }
     #endregion

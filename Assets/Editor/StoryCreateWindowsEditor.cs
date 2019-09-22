@@ -8,7 +8,7 @@ public class StoryCreateWindowsEditor : EditorWindow
     private GameObject mObjNpcModel;
 
     [MenuItem("Tools/Window/StoryCreate")]
-    static void CreateTestWindows()
+    static void CreateWindows()
     {
         EditorWindow.GetWindow(typeof(StoryCreateWindowsEditor));
     }

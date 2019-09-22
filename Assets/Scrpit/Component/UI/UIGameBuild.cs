@@ -40,13 +40,14 @@ public class UIGameBuild : BaseUIComponent
         base.OpenUI();
         //停止时间
         GetUIMananger<UIGameManager>().gameTimeHandler.SetTimeStatus(true);
-
         GetUIMananger<UIGameManager>().controlHandler.StartControl(ControlHandler.ControlEnum.Build);
         GetUIMananger<UIGameManager>().innHandler.CloseInn();
     }
     public override void CloseUI()
     {
         base.CloseUI();
+        //时间添加1小时
+        GetUIMananger<UIGameManager>().gameTimeHandler.AddHour(1);
         //继续时间
         GetUIMananger<UIGameManager>().gameTimeHandler.SetTimeStatus(false);
     }

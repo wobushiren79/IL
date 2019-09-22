@@ -5,7 +5,7 @@ public class ItemGameGuildStoreCpt : ItemGameGroceryCpt
 {
 
 
-    public override void Submit(DialogView dialogView)
+    public override void Submit(DialogView dialogView, DialogBean dialogData)
     {
         GameDataManager gameDataManager=   GetUIManager<UIGameManager>().gameDataManager;
         ToastView toastView = GetUIManager<UIGameManager>().toastView;

@@ -83,7 +83,7 @@ public class UIGameMain : BaseUIComponent, DialogView.IDialogCallBack
         if (clockView != null && gameTimeHandler != null)
         {
             gameTimeHandler.GetTime(out float hour, out float min);
-            gameTimeHandler.GetTime(out int year,out int month,out int day);
+            gameTimeHandler.GetTime(out int year, out int month, out int day);
             clockView.SetTime(month, day, (int)hour, (int)min);
         }
     }
@@ -142,7 +142,19 @@ public class UIGameMain : BaseUIComponent, DialogView.IDialogCallBack
 
     public void OpenBuildUI()
     {
-        uiManager.OpenUIAndCloseOtherByName(EnumUtil.GetEnumName(UIEnum.GameBuild));
+        InnHandler innHandler = GetUIMananger<UIGameManager>().innHandler;
+        ToastView toastView = GetUIMananger<UIGameManager>().toastView;
+        if (CheckUtil.ListIsNull(innHandler.rascalrQueue))
+        {
+            DialogBean dialogBean = new DialogBean();
+            dialogBean.content = GameCommonInfo.GetUITextById(3007);
+            dialogBean.dialogPosition = 1;
+            GetUIMananger<UIGameManager>().dialogManager.CreateDialog(0, this, dialogBean);
+        }
+        else
+        {
+            toastView.ToastHint(GameCommonInfo.GetUITextById(1016));
+        }
     }
 
     public void OpenWorkerUI()
@@ -164,28 +176,39 @@ public class UIGameMain : BaseUIComponent, DialogView.IDialogCallBack
     {
         DialogBean dialogBean = new DialogBean();
         dialogBean.content = GameCommonInfo.GetUITextById(3004);
+        dialogBean.dialogPosition = 0;
         GetUIMananger<UIGameManager>().dialogManager.CreateDialog(0, this, dialogBean);
     }
 
     #region dialog 回调
-    public void Submit(DialogView dialogView)
+    public void Submit(DialogView dialogView, DialogBean dialogData)
     {
-        BaseSceneInit sceneInit = GetUIMananger<UIGameManager>().sceneInit;
-        Scene scene = SceneManager.GetActiveScene();
-        //如果是客栈场景
-        if (EnumUtil.GetEnumName(ScenesEnum.GameInnScene).Equals(scene.name))
+        if (dialogData.dialogPosition == 0)
         {
-            ((SceneGameInnInit)sceneInit).EndDay();
+            //结束一天
+            BaseSceneInit sceneInit = GetUIMananger<UIGameManager>().sceneInit;
+            Scene scene = SceneManager.GetActiveScene();
+            //如果是客栈场景
+            if (EnumUtil.GetEnumName(ScenesEnum.GameInnScene).Equals(scene.name))
+            {
+                ((SceneGameInnInit)sceneInit).EndDay();
+            }
+            //如果是城镇 则先回到客栈
+            else if (EnumUtil.GetEnumName(ScenesEnum.GameTownScene).Equals(scene.name))
+            {
+                ((SceneGameTownInit)sceneInit).EndDay();
+            }
         }
-        //如果是城镇 则先回到客栈
-        else if (EnumUtil.GetEnumName(ScenesEnum.GameTownScene).Equals(scene.name))
+        else if (dialogData.dialogPosition == 1)
         {
-            ((SceneGameTownInit)sceneInit).EndDay();
+            //打开建筑
+            uiManager.OpenUIAndCloseOtherByName(EnumUtil.GetEnumName(UIEnum.GameBuild));
         }
     }
 
-    public void Cancel(DialogView dialogView)
+    public void Cancel(DialogView dialogView, DialogBean dialogData)
     {
+
     }
     #endregion
 }

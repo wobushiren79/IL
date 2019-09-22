@@ -36,7 +36,7 @@ public class SceneGameTownInit : BaseSceneInit,IBaseObserver,DialogView.IDialogC
             npcImportantBuilder.BuildImportant();
         //构建普通路人NPC
         if (npcPasserBuilder != null)
-            npcPasserBuilder.BuilderPasserForInit(30);
+            npcPasserBuilder.BuilderPasserForInit(20);
 
         if (gameTimeHandler != null && gameDataManager != null)
         {
@@ -97,12 +97,12 @@ public class SceneGameTownInit : BaseSceneInit,IBaseObserver,DialogView.IDialogC
     #endregion
 
     #region  弹窗通知回调
-    public void Submit(DialogView dialogView)
+    public void Submit(DialogView dialogView, DialogBean dialogData)
     {
         SceneUtil.SceneChange(EnumUtil.GetEnumName(ScenesEnum.GameInnScene));
     }
 
-    public void Cancel(DialogView dialogView)
+    public void Cancel(DialogView dialogView, DialogBean dialogData)
     {
 
     }

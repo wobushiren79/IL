@@ -165,12 +165,12 @@ public class ItemGameBackpackCpt : ItemGameBaseCpt, IPointerClickHandler, ItemsS
     #endregion
 
     #region 删除确认回调
-    public void Submit(DialogView dialogView)
+    public void Submit(DialogView dialogView, DialogBean dialogData)
     {
         RemoveItems();
     }
 
-    public void Cancel(DialogView dialogView)
+    public void Cancel(DialogView dialogView, DialogBean dialogData)
     {
 
     }

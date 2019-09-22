@@ -240,7 +240,7 @@ public class ItemGameGroceryCpt : ItemGameBaseCpt, DialogView.IDialogCallBack
     }
 
     #region 提交回调
-    public virtual void Submit(DialogView dialogView)
+    public virtual void Submit(DialogView dialogView, DialogBean dialogData)
     {
         GameDataManager gameDataManager = GetUIManager<UIGameManager>().gameDataManager;
         ToastView toastView = GetUIManager<UIGameManager>().toastView;
@@ -257,7 +257,7 @@ public class ItemGameGroceryCpt : ItemGameBaseCpt, DialogView.IDialogCallBack
         RefreshUI();
     }
 
-    public virtual void Cancel(DialogView dialogView)
+    public virtual void Cancel(DialogView dialogView, DialogBean dialogData)
     {
 
     }

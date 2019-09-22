@@ -159,7 +159,7 @@ public class ItemGameCerpenterCpt : ItemGameBaseCpt, DialogView.IDialogCallBack
     }
 
     #region 确认回调
-    public void Submit(DialogView dialogView)
+    public void Submit(DialogView dialogView, DialogBean dialogData)
     {
         GameDataManager gameDataManager = GetUIManager<UIGameManager>().gameDataManager;
         ToastView toastView = GetUIManager<UIGameManager>().toastView;
@@ -185,7 +185,7 @@ public class ItemGameCerpenterCpt : ItemGameBaseCpt, DialogView.IDialogCallBack
         toastView.ToastHint(ivIcon.sprite, toastStr);
     }
 
-    public void Cancel(DialogView dialogView)
+    public void Cancel(DialogView dialogView, DialogBean dialogData)
     {
 
     }

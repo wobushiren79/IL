@@ -8,6 +8,7 @@ public class BaseNpcAI : BaseMonoBehaviour
     public CharacterBean characterData;
     //角色好感度
     public CharacterFavorabilityBean characterFavorabilityData;
+
     //装备控制管理
     public GameItemsManager gameItemsManager;
     //角色移动控制
@@ -57,7 +58,7 @@ public class BaseNpcAI : BaseMonoBehaviour
                 //最低不小于0.1
                 speed = 0.1f;
             }
-            characterMoveCpt.moveSpeed = speed;
+            characterMoveCpt.SetMoveSpeed(speed);
         }
 
     }
@@ -75,6 +76,11 @@ public class BaseNpcAI : BaseMonoBehaviour
     /// 设置表情
     /// </summary>
     /// <param name="expressionEnum"></param>
+    public void SetExpression(CharacterExpressionCpt.CharacterExpressionEnum expressionEnum,float desTime)
+    {
+        if (characterExpression != null)
+            characterExpression.SetExpression(expressionEnum, desTime);
+    }
     public void SetExpression(CharacterExpressionCpt.CharacterExpressionEnum expressionEnum)
     {
         if (characterExpression != null)
@@ -104,7 +110,19 @@ public class BaseNpcAI : BaseMonoBehaviour
     public void StopMove()
     {
         characterMoveCpt.StopAutoMove();
-        characterMoveCpt.StopAnim();
+        characterMoveCpt.SetAnimStatus(0);
     }
 
+    /// <summary>
+    /// 设置角色死亡
+    /// </summary>
+    public void SetCharacterDead()
+    {
+        //设置角色死亡
+        characterMoveCpt.SetAnimStatus(10);
+        CharacterBodyCpt characterBody = CptUtil.GetCptInChildrenByName<CharacterBodyCpt>(gameObject, "Body");
+        if (characterBody != null)
+            characterBody.SetEye("character_eye_13", new Color(0,0,0),false);
+
+    }
 }

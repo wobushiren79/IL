@@ -145,8 +145,13 @@ public class InnHandler : BaseMonoBehaviour
                 itemWorker.aiForAccost.npcAICustomer.SetIntent(NpcAICustomerCpt.CustomerIntentEnum.Leave);
             }
         }
+        //清理所有捣乱的人
+        foreach (NpcAIRascalCpt itemRascal in rascalrQueue)
+        {
+            Destroy(itemRascal.gameObject);
+        }
 
-
+        rascalrQueue.Clear();
         cusomerQueue.Clear();
         foodQueue.Clear();
         sendQueue.Clear();
@@ -402,7 +407,7 @@ public class InnHandler : BaseMonoBehaviour
                     NpcAIRascalCpt npcAIRascal = innFightHandler.SetFight(rascalrQueue, workNpc);
                     if (npcAIRascal)
                     {
-                        rascalrQueue.Remove(npcAIRascal);
+                        //rascalrQueue.Remove(npcAIRascal);
                         return true;
                     }
                 }

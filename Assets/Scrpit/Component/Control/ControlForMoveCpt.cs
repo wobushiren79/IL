@@ -31,7 +31,7 @@ public class ControlForMoveCpt : BaseControl
         float vMove = Input.GetAxis(InputInfo.Vertical);
         if (hMove == 0 && vMove == 0)
         {
-            characterMoveCpt.StopAnim();
+            characterMoveCpt.SetAnimStatus(0);
         }
         else
         {
@@ -43,14 +43,14 @@ public class ControlForMoveCpt : BaseControl
     {
         base.StopControl();
         if (characterMoveCpt != null)
-            characterMoveCpt.StopAnim();
+            characterMoveCpt.SetAnimStatus(0);
     }
 
     public override void EndControl()
     {
         base.EndControl();
         if (characterMoveCpt != null)
-            characterMoveCpt.StopAnim();
+            characterMoveCpt.SetAnimStatus(0);
     }
 
     public override void StartControl()

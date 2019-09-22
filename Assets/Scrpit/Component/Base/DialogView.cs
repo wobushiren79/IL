@@ -17,7 +17,7 @@ public class DialogView : BaseMonoBehaviour
     public CanvasGroup cgDialog;
     private IDialogCallBack mCallBack;
 
-
+    public DialogBean dialogData;
     private float mTimeDelayDelete;
     private void Start()
     {
@@ -54,7 +54,7 @@ public class DialogView : BaseMonoBehaviour
     {
         if (mCallBack != null)
         {
-            mCallBack.Submit(this);
+            mCallBack.Submit(this, dialogData);
         }
         DestroyDialog();
 
@@ -64,7 +64,7 @@ public class DialogView : BaseMonoBehaviour
     {
         if (mCallBack != null)
         {
-            mCallBack.Cancel(this);
+            mCallBack.Cancel(this, dialogData);
         }
         DestroyDialog();
     }
@@ -84,25 +84,27 @@ public class DialogView : BaseMonoBehaviour
         this.mCallBack = callBack;
     }
 
-    public void SetData(DialogBean dialogBean)
+    public void SetData(DialogBean dialogData)
     {
-        if (dialogBean == null)
+        if (dialogData == null)
             return;
-        if (dialogBean.title != null)
+        this.dialogData = dialogData;
+
+        if (dialogData.title != null)
         {
-            tvTitle.text = dialogBean.title;
+            tvTitle.text = dialogData.title;
         }
-        if (dialogBean.content != null)
+        if (dialogData.content != null)
         {
-            tvContent.text = dialogBean.content;
+            tvContent.text = dialogData.content;
         }
-        if (dialogBean.submitStr != null)
+        if (dialogData.submitStr != null)
         {
-            tvSubmit.text = dialogBean.submitStr;
+            tvSubmit.text = dialogData.submitStr;
         }
-        if (dialogBean.cancelStr != null)
+        if (dialogData.cancelStr != null)
         {
-            tvCancel.text = dialogBean.cancelStr;
+            tvCancel.text = dialogData.cancelStr;
         }
     }
 
@@ -117,7 +119,7 @@ public class DialogView : BaseMonoBehaviour
 
     public interface IDialogCallBack
     {
-        void Submit(DialogView dialogView);
-        void Cancel(DialogView dialogView);
+        void Submit(DialogView dialogView,DialogBean dialogBean);
+        void Cancel(DialogView dialogView,DialogBean dialogBean);
     }
 }

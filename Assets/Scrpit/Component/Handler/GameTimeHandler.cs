@@ -101,6 +101,7 @@ public class GameTimeHandler : BaseObservable<IBaseObserver>
         NotifyAllObserver((int)NotifyTypeEnum.NewDay, null);
     }
 
+
     /// <summary>
     /// 设置时间状态
     /// </summary>
@@ -171,5 +172,19 @@ public class GameTimeHandler : BaseObservable<IBaseObserver>
     {
         this.hour = (float)hour;
         this.min = (float)min;
+    }
+    
+    /// <summary>
+    /// 添加时间
+    /// </summary>
+    /// <param name="hour"></param>
+    /// <param name="min"></param>
+    public void AddHour(int addHour)
+    {
+        if (hour< 18 && (hour+ addHour) >= 18)
+        {
+            NotifyAllObserver((int)NotifyTypeEnum.Night, null);
+        }
+        hour += addHour;
     }
 }

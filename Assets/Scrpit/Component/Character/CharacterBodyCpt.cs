@@ -144,7 +144,7 @@ public class CharacterBodyCpt : BaseMonoBehaviour
     /// </summary>
     /// <param name="mouth"></param>
     /// <param name="mouthColor"></param>
-    public void SetEye(string eye, Color eyeColor)
+    public void SetEye(string eye, Color eyeColor,bool isSave)
     {
         if (characterBodyManager == null || sprEye == null)
             return;
@@ -152,6 +152,8 @@ public class CharacterBodyCpt : BaseMonoBehaviour
         if (eye != null)
             sprEye.sprite = spEye;
         sprEye.color = eyeColor;
+        if (!isSave)
+            return;
         //数据保存
         if (characterBodyData == null)
             characterBodyData = new CharacterBodyBean();
@@ -163,14 +165,19 @@ public class CharacterBodyCpt : BaseMonoBehaviour
     {
         if (characterBodyManager == null || sprEye == null)
             return;
-        SetEye(eye, sprEye.color);
+        SetEye(eye, sprEye.color,true);
     }
     public void SetEye(Color eyeColor)
     {
         if (sprEye == null)
             return;
-        SetEye(null, eyeColor);
+        SetEye(null, eyeColor,true);
     }
+    public void SetEye(string eye,Color eyeColor)
+    {
+        SetEye(eye, eyeColor, true);
+    }
+
 
     /// <summary>
     ///  设置嘴巴

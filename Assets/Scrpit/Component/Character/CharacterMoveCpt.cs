@@ -45,6 +45,8 @@ public class CharacterMoveCpt : BaseMonoBehaviour
     }
 
     private Vector3 mLastPosition;
+    //角色动画状态
+    private int mAnimState = 0;
 
     private void FixedUpdate()
     {
@@ -52,10 +54,7 @@ public class CharacterMoveCpt : BaseMonoBehaviour
         {
             if (navMeshAgent.hasPath)
             {
-                if (characterAnimtor != null)
-                {
-                    characterAnimtor.SetInteger("State", 1);
-                }
+                SetAnimStatus(1);
                 //Move(navMeshAgent.nextPosition);
                 //转向
                 if (objCharacterBody != null)
@@ -76,12 +75,11 @@ public class CharacterMoveCpt : BaseMonoBehaviour
             {
                 //是否在计算路径
                 if (!navMeshAgent.pathPending)
-                    StopAnim();
+                    SetAnimStatus(0);
             }
             mLastPosition = objMove.transform.position;
         }
     }
-
 
     /// <summary>
     /// 自动移动
@@ -117,6 +115,17 @@ public class CharacterMoveCpt : BaseMonoBehaviour
     }
 
     /// <summary>
+    /// 设置移动速度
+    /// </summary>
+    /// <param name="moveSpeed"></param>
+    public void SetMoveSpeed(float moveSpeed)
+    {
+        this.moveSpeed = moveSpeed;
+        if (navMeshAgent != null)
+            navMeshAgent.speed = moveSpeed;
+    }
+
+    /// <summary>
     /// 获取路径状态
     /// </summary>
     /// <returns></returns>
@@ -135,10 +144,7 @@ public class CharacterMoveCpt : BaseMonoBehaviour
         isManualMove = true;
         //停止自动寻路
         StopAutoMove();
-        if (characterAnimtor != null)
-        {
-            characterAnimtor.SetInteger("State", 1);
-        }
+        SetAnimStatus(1);
         //转向
         if (objCharacterBody != null)
         {
@@ -168,10 +174,7 @@ public class CharacterMoveCpt : BaseMonoBehaviour
     /// <param name="movePosition"></param>
     public void Move(Vector3 movePosition)
     {
-        if (characterAnimtor != null)
-        {
-            characterAnimtor.SetInteger("State", 1);
-        }
+        SetAnimStatus(1);
         //转向
         Vector3 theScale = objCharacterBody.transform.localScale;
         if (movePosition.x - objCharacterBody.transform.position.x < 0)
@@ -212,12 +215,23 @@ public class CharacterMoveCpt : BaseMonoBehaviour
         objMove.transform.position = newPosition;
     }
 
-
-    public void StopAnim()
+    /// <summary>
+    /// 设置动画状态
+    /// </summary>
+    /// <param name="status"></param>
+    public void SetAnimStatus(int status)
     {
+        if (mAnimState == 10&& status==0)
+        {
+            //如果角色已经死亡 则IDLE为不动
+            status = 10;
+        }
+        if (mAnimState == status)
+            return;
+        mAnimState = status;
         if (characterAnimtor != null)
         {
-            characterAnimtor.SetInteger("State", 0);
+            characterAnimtor.SetInteger("Status", mAnimState);
         }
     }
 

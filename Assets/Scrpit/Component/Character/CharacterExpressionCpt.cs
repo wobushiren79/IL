@@ -13,6 +13,7 @@ public class CharacterExpressionCpt : BaseMonoBehaviour
         Shame,
         Surprise,
         Fret,
+        Dead,
     }
 
     [Header("表情图标")]
@@ -22,16 +23,20 @@ public class CharacterExpressionCpt : BaseMonoBehaviour
     public Sprite spShame;
     public Sprite spSurprise;
     public Sprite spFret;
+    public Sprite spDead;
 
     [Header("控件")]
     public SpriteRenderer spExpression;
 
     public void SetExpression(int expression)
     {
-        SetExpression((CharacterExpressionEnum)expression);
+        SetExpression((CharacterExpressionEnum)expression,2);
     }
-
     public void SetExpression(CharacterExpressionEnum expression)
+    {
+        SetExpression(expression, 2);
+    }
+    public void SetExpression(CharacterExpressionEnum expression,float desTime)
     {
         if (spExpression == null)
             return;
@@ -56,6 +61,9 @@ public class CharacterExpressionCpt : BaseMonoBehaviour
             case CharacterExpressionEnum.Fret:
                 spIcon = spFret;
                 break;
+            case CharacterExpressionEnum.Dead:
+                spIcon = spDead;
+                break;
         }
         if (spIcon == null)
             return;
@@ -66,13 +74,13 @@ public class CharacterExpressionCpt : BaseMonoBehaviour
         spExpression.gameObject.SetActive(true);
         spExpression.transform.DOScale(new Vector3(0, 0, 0), 0.5f).From().SetEase(Ease.OutBack).OnComplete(delegate ()
         {
-            StartCoroutine(TimeDes());
+            StartCoroutine(TimeDes(desTime));
         });
     }
 
-    public IEnumerator TimeDes()
+    public IEnumerator TimeDes(float desTime)
     {
-        yield return new WaitForSeconds(2);
+        yield return new WaitForSeconds(desTime);
         if (spExpression != null)
         {
             spExpression.gameObject.SetActive(false);

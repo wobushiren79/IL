@@ -12,8 +12,16 @@ public class InnFightHandler : BaseMonoBehaviour
         {
             return null;
         }
-        NpcAIRascalCpt itemRascal = listRascal[0];
-        workNpc.SetIntent(NpcAIWorkerCpt.WorkerIntentEnum.Beater, itemRascal);
-        return itemRascal;
+        for (int i = 0; i < listRascal.Count; i++)
+        {
+            NpcAIRascalCpt itemRascal = listRascal[i];
+            if (itemRascal.npcFight == null)
+            {
+                itemRascal.npcFight = workNpc;
+                workNpc.SetIntent(NpcAIWorkerCpt.WorkerIntentEnum.Beater, itemRascal);
+                return itemRascal;
+            }
+        }
+        return null;
     }
 }

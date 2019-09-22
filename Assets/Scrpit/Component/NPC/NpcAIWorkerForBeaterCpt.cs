@@ -14,8 +14,12 @@ public class NpcAIWorkerForBeaterCpt : NpcAIWokerFoBaseCpt
     }
 
     public BeaterIntentEnum beaterIntent = BeaterIntentEnum.Idle;
+    //工作进度
+    public GameObject beaterPro;
+
     public Vector3 movePosition;
     public NpcAIRascalCpt npcAIRascal;//闹事者
+
     private void Update()
     {
         switch (beaterIntent)
@@ -73,6 +77,7 @@ public class NpcAIWorkerForBeaterCpt : NpcAIWokerFoBaseCpt
     /// </summary>
     public void SetIntentForIdle()
     {
+        beaterPro.SetActive(false);
         npcAIRascal = null;
         npcAIWorker.SetIntent(NpcAIWorkerCpt.WorkerIntentEnum.Idle);
     }
@@ -82,6 +87,7 @@ public class NpcAIWorkerForBeaterCpt : NpcAIWokerFoBaseCpt
     /// </summary>
     public void SetIntentForGoToRascal()
     {
+        beaterPro.SetActive(true);
         movePosition = npcAIRascal.transform.position;
         npcAIWorker.characterMoveCpt.SetDestination(movePosition);
     }
@@ -91,6 +97,7 @@ public class NpcAIWorkerForBeaterCpt : NpcAIWokerFoBaseCpt
     /// </summary>
     public void SetIntentForFighting()
     {
+        beaterPro.SetActive(false);
         StartCoroutine(StartFighting());
     }
 
@@ -98,12 +105,29 @@ public class NpcAIWorkerForBeaterCpt : NpcAIWokerFoBaseCpt
     /// 意图-休息
     /// </summary>
     public void SetIntentForRest() {
-
-        //受伤的表情
+        npcAIRascal = null;
+        //设置心情
+        npcAIWorker.SetExpression(CharacterExpressionCpt.CharacterExpressionEnum.Dead,60);
+        //设置角色死亡
+        npcAIWorker.SetCharacterDead();
+        //弹窗提示
+        string toastStr= string.Format(GameCommonInfo.GetUITextById(1015),npcAIWorker.characterData.baseInfo.name,60+"");
+        EventHandler.Instance.EventTriggerForToast(toastStr,6);
         //设置不工作
-        //删除当前NPC
+        StartCoroutine(StartRest(60));
     }
 
+    /// <summary>
+    /// 开始休息
+    /// </summary>
+    /// <returns></returns>
+    private IEnumerator StartRest(float restTime)
+    {
+        yield return new WaitForSeconds(restTime);
+        npcAIWorker.SetCharacterData(npcAIWorker.characterData);
+        SetIntent(BeaterIntentEnum.Idle);
+    }
+    
     /// <summary>
     /// 开始战斗
     /// </summary>
@@ -118,8 +142,9 @@ public class NpcAIWorkerForBeaterCpt : NpcAIWokerFoBaseCpt
         }
         else
         {
-            SetIntent(BeaterIntentEnum.Rest);
+            //设置继续闹事
             npcAIRascal.SetIntent(NpcAIRascalCpt.RascalIntentEnum.ContinueMakeTrouble);
+            SetIntent(BeaterIntentEnum.Rest);
         }
     }
 }

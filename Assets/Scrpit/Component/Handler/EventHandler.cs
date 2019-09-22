@@ -13,6 +13,14 @@ public class EventHandler : BaseSingleton<EventHandler>
     private bool mIsEventing = false;//事件是否进行中
 
     /// <summary>
+    /// 提示窗触发
+    /// </summary>
+    public void EventTriggerForToast(string content, float destoryTime)
+    {
+        ((UIGameManager)uiManager).toastView.ToastHint(content, destoryTime);
+    }
+
+    /// <summary>
     /// 调查事件触发
     /// </summary>
     /// <param name="markId"></param>
