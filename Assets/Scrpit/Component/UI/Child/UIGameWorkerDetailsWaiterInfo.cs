@@ -6,6 +6,8 @@ public class UIGameWorkerDetailsWaiterInfo : BaseMonoBehaviour
     public Text tvSendNumber;
     public Text tvCleanNumber;
 
+    public Text tvCleanTime;
+
     public CharacterWorkerForWaiterBean waiterData;
 
     /// <summary>
@@ -17,6 +19,7 @@ public class UIGameWorkerDetailsWaiterInfo : BaseMonoBehaviour
         this.waiterData = waiterData;
         SetSendNumber(waiterData.sendTotalNumber);
         SetCleanNumber(waiterData.cleanTotalNumber);
+        SetCleanTime(waiterData.cleanTotalTime);
     }
 
     /// <summary>
@@ -37,5 +40,15 @@ public class UIGameWorkerDetailsWaiterInfo : BaseMonoBehaviour
     {
         if (tvCleanNumber != null)
             tvCleanNumber.text = number + "";
+    }
+
+    /// <summary>
+    /// 设置清理时间
+    /// </summary>
+    /// <param name="time"></param>
+    public void SetCleanTime(float time)
+    {
+        if (tvCleanTime != null)
+            tvCleanTime.text = time + GameCommonInfo.GetUITextById(38);
     }
 }

@@ -122,7 +122,7 @@ public class BaseNpcAI : BaseMonoBehaviour
         characterMoveCpt.SetAnimStatus(10);
         CharacterBodyCpt characterBody = CptUtil.GetCptInChildrenByName<CharacterBodyCpt>(gameObject, "Body");
         if (characterBody != null)
-            characterBody.SetEye("character_eye_13", new Color(0,0,0),false);
+            characterBody.SetEye("character_eye_special_dead", new Color(0,0,0),false);
 
     }
 }

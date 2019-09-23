@@ -10,6 +10,8 @@ public class CharacterWorkerForWaiterBean : CharacterWorkerBaseBean
     //送餐次数
     public long sendTotalNumber;
 
+    //总计清理时间
+    public float cleanTotalTime;
     /// <summary>
     /// 增加清理次数
     /// </summary>
@@ -28,4 +30,12 @@ public class CharacterWorkerForWaiterBean : CharacterWorkerBaseBean
         sendTotalNumber += number;
     }
 
+    /// <summary>
+    /// 增加清理时间
+    /// </summary>
+    /// <param name="time"></param>
+    public void AddCleanTime(float time)
+    {
+        cleanTotalTime += time;
+    }
 }

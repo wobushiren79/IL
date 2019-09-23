@@ -11,6 +11,8 @@ public class CharacterWorkerForAccostBean : CharacterWorkerBaseBean
     public long accostSuccessNumber;
     //吆喝失败次数
     public long accostFailNumber;
+    //总计招揽时间
+    public float accostTotalTime;
 
     /// <summary>
     /// 添加吆喝成功次数
@@ -30,5 +32,14 @@ public class CharacterWorkerForAccostBean : CharacterWorkerBaseBean
     {
         accostFailNumber += number;
         accostTotalNumber += number;
+    }
+
+    /// <summary>
+    /// 添加交流时间
+    /// </summary>
+    /// <param name="time"></param>
+    public void AddAccostTime(float time)
+    {
+        accostTotalTime += time;
     }
 }

@@ -152,9 +152,7 @@ public class NpcAIWorkerForAccost : NpcAIWokerFoBaseCpt
             accostPro.SetActive(false);
         if (talkPro != null)
             talkPro.SetActive(true);
-        //计算聊天时间
-        float talkTime = npcAIWorker.characterData.CalculationAccostTalkTime(npcAIWorker.gameItemsManager);
-        StartCoroutine(StartTalking(talkTime));
+        StartCoroutine(StartTalking());
     }
 
     /// <summary>
@@ -178,8 +176,16 @@ public class NpcAIWorkerForAccost : NpcAIWokerFoBaseCpt
         }
     }
 
-    public IEnumerator StartTalking(float talkTime)
+    /// <summary>
+    /// 开始交谈
+    /// </summary>
+    /// <returns></returns>
+    public IEnumerator StartTalking()
     {
+        //计算聊天时间
+        float talkTime = npcAIWorker.characterData.CalculationAccostTalkTime(npcAIWorker.gameItemsManager);
+        //记录
+        npcAIWorker.characterData.baseInfo.accostInfo.AddAccostTime(talkTime);
         yield return new WaitForSeconds(talkTime);
         //是否成功
         if (npcAIWorker.characterData.CalculationAccostRate(npcAIWorker.gameItemsManager))

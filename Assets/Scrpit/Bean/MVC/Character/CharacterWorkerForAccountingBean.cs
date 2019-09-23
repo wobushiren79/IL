@@ -27,6 +27,8 @@ public class CharacterWorkerForAccountingBean : CharacterWorkerBaseBean
     public long accountingMoneyM;
     public long accountingMoneyS;
 
+    //总计结算时间
+    public float accountingTotalTime;
 
     /// <summary>
     ///  增加结算成功次数和金钱
@@ -71,5 +73,14 @@ public class CharacterWorkerForAccountingBean : CharacterWorkerBaseBean
         loseMoneyL += loseTempL;
         lostMoneyM += loseTempM;
         lostMoneyS += loseTempS;
+    }
+
+    /// <summary>
+    /// 增加结算时间
+    /// </summary>
+    /// <param name="time"></param>
+    public void AddAccountingTime(float time)
+    {
+        accountingTotalTime += time;
     }
 }

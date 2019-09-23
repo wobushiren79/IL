@@ -104,17 +104,21 @@ public class NpcAIWorkerForBeaterCpt : NpcAIWokerFoBaseCpt
     /// <summary>
     /// 意图-休息
     /// </summary>
-    public void SetIntentForRest() {
+    public void SetIntentForRest()
+    {
+        float restTime = npcAIWorker.characterData.CalculationBeaterRestTime(npcAIWorker.gameItemsManager);
+        //记录
+        npcAIWorker.characterData.baseInfo.beaterInfo.AddRestTime(restTime);
         npcAIRascal = null;
         //设置心情
-        npcAIWorker.SetExpression(CharacterExpressionCpt.CharacterExpressionEnum.Dead,60);
+        npcAIWorker.SetExpression(CharacterExpressionCpt.CharacterExpressionEnum.Dead, restTime);
         //设置角色死亡
         npcAIWorker.SetCharacterDead();
         //弹窗提示
-        string toastStr= string.Format(GameCommonInfo.GetUITextById(1015),npcAIWorker.characterData.baseInfo.name,60+"");
-        EventHandler.Instance.EventTriggerForToast(toastStr,6);
+        string toastStr = string.Format(GameCommonInfo.GetUITextById(1015), npcAIWorker.characterData.baseInfo.name, restTime + "");
+        EventHandler.Instance.EventTriggerForToast(toastStr, restTime);
         //设置不工作
-        StartCoroutine(StartRest(60));
+        StartCoroutine(StartRest(restTime));
     }
 
     /// <summary>
@@ -127,21 +131,34 @@ public class NpcAIWorkerForBeaterCpt : NpcAIWokerFoBaseCpt
         npcAIWorker.SetCharacterData(npcAIWorker.characterData);
         SetIntent(BeaterIntentEnum.Idle);
     }
-    
+
     /// <summary>
     /// 开始战斗
     /// </summary>
     /// <returns></returns>
     private IEnumerator StartFighting()
     {
-        yield return new WaitForSeconds(5);
-        int life= npcAIRascal.AddLife(-5);
+        float fightTime = npcAIWorker.characterData.CalculationBeaterFightTime(npcAIWorker.gameItemsManager);
+        //记录
+        npcAIWorker.characterData.baseInfo.beaterInfo.AddFightTime(fightTime);
+        yield return new WaitForSeconds(fightTime);
+        int damage = npcAIWorker.characterData.CalculationBeaterDamage(npcAIWorker.gameItemsManager);
+        int life = npcAIRascal.AddLife(-damage);
+
         if (life <= 0)
         {
+            //添加经验
+            npcAIWorker.characterData.baseInfo.beaterInfo.AddExp(10);
+            //记录
+            npcAIWorker.characterData.baseInfo.beaterInfo.AddFightWinNumber(1);
             SetIntent(BeaterIntentEnum.Idle);
         }
         else
         {
+            //添加经验
+            npcAIWorker.characterData.baseInfo.beaterInfo.AddExp(5);
+            //记录
+            npcAIWorker.characterData.baseInfo.beaterInfo.AddFightLoseNumber(1);
             //设置继续闹事
             npcAIRascal.SetIntent(NpcAIRascalCpt.RascalIntentEnum.ContinueMakeTrouble);
             SetIntent(BeaterIntentEnum.Rest);

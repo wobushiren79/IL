@@ -8,6 +8,8 @@ public class CharacterWorkerForChefBean : CharacterWorkerBaseBean
 {
     //烹饪次数
     public long cookNumber;
+    //料理时间
+    public float cookTime;
     //烹饪不同食物的次数
     public List<ItemBean> listFoodCookNumer = new List<ItemBean>();
 
@@ -32,5 +34,14 @@ public class CharacterWorkerForChefBean : CharacterWorkerBaseBean
         {
             listFoodCookNumer.Add(new ItemBean(foodId,numerber));
         }
+    }
+
+    /// <summary>
+    /// 增加料理时间
+    /// </summary>
+    /// <param name="cookTime"></param>
+    public void AddCookTime(float cookTime)
+    {
+        this.cookTime += cookTime;
     }
 }

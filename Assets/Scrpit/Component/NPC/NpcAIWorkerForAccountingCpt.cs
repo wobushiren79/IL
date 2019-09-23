@@ -125,9 +125,14 @@ public class NpcAIWorkerForAccountingCpt : NpcAIWokerFoBaseCpt
         StartCoroutine(StartAccounting());
     }
 
+    /// <summary>
+    /// 开始结算
+    /// </summary>
+    /// <returns></returns>
     public IEnumerator StartAccounting()
     {
         float time = npcAIWorker.characterData.CalculationAccountingTime(npcAIWorker.gameItemsManager);
+        npcAIWorker.characterData.baseInfo.accountingInfo.AddAccountingTime(time);
         yield return new WaitForSeconds(time);
         //计算不同食物等级的手艺
         float foodLevelRate = npcAIWorker.characterData.CalculationAccountingFoodLevel(orderForCustomer.foodLevel);

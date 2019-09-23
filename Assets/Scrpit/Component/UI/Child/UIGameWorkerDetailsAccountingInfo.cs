@@ -19,6 +19,8 @@ public class UIGameWorkerDetailsAccountingInfo : BaseMonoBehaviour
     public Text tvLoseMoneyM;
     public Text tvLoseMoneyS;
 
+    public Text tvAccountingTime;
+
     [Header("数据")]
     public CharacterWorkerForAccountingBean accountingData;
 
@@ -35,6 +37,7 @@ public class UIGameWorkerDetailsAccountingInfo : BaseMonoBehaviour
           accountingData.moreMoneyL, accountingData.moreMoneyM, accountingData.moreMoneyS);
         SetFailData(accountingData.accountingErrorNumber,
           accountingData.loseMoneyL, accountingData.lostMoneyM, accountingData.lostMoneyS);
+        SetAccountingTime(accountingData.accountingTotalTime);
     }
 
     /// <summary>
@@ -92,5 +95,15 @@ public class UIGameWorkerDetailsAccountingInfo : BaseMonoBehaviour
             tvLoseMoneyM.text = loseMoneM + "";
         if (tvLoseMoneyS != null)
             tvLoseMoneyS.text = loseMoneS + "";
+    }
+
+    /// <summary>
+    /// 设置结算时间
+    /// </summary>
+    /// <param name="time"></param>
+    public void SetAccountingTime(float time)
+    {
+        if (tvAccountingTime != null)
+            tvAccountingTime.text = time+GameCommonInfo.GetUITextById(38);
     }
 }

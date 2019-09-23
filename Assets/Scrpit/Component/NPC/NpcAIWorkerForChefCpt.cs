@@ -165,6 +165,7 @@ public class NpcAIWorkerForChefCpt : NpcAIWokerFoBaseCpt
     public IEnumerator StartCook()
     {
         float foodTime = npcAIWorker.characterData.CalculationChefMakeFoodTime(npcAIWorker.gameItemsManager,orderForCustomer.foodData.cook_time);
+        npcAIWorker.characterData.baseInfo.chefInfo.AddCookTime(foodTime);
         yield return new WaitForSeconds(foodTime);
         //记录数据
         npcAIWorker.characterData.baseInfo.chefInfo.AddCookNumber(1, orderForCustomer.foodData.id);

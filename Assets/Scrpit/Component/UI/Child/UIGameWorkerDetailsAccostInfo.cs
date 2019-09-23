@@ -8,6 +8,8 @@ public class UIGameWorkerDetailsAccostInfo : BaseMonoBehaviour
     public Text tvAccostSuccessNumber;
     public Text tvAccostFailNumber;
 
+    public Text tvAccostTime;
+
     [Header("数据")]
     public CharacterWorkerForAccostBean accostInfo;
 
@@ -21,6 +23,7 @@ public class UIGameWorkerDetailsAccostInfo : BaseMonoBehaviour
         SetAccostTotalNumber(accostInfo.accostTotalNumber);
         SetAccostSuccessNumber(accostInfo.accostSuccessNumber);
         SetAccostFailNumber(accostInfo.accostFailNumber);
+        SetAccostTime(accostInfo.accostTotalTime);
     }
 
     /// <summary>
@@ -51,5 +54,15 @@ public class UIGameWorkerDetailsAccostInfo : BaseMonoBehaviour
     {
         if (tvAccostTotalNumber != null)
             tvAccostTotalNumber.text = nunber + "";
+    }
+
+    /// <summary>
+    /// 设置总共数量 
+    /// </summary>
+    /// <param name="nunber"></param>
+    public void SetAccostTime(float time)
+    {
+        if (tvAccostTime != null)
+            tvAccostTime.text = time + GameCommonInfo.GetUITextById(38);
     }
 }

@@ -49,7 +49,8 @@ public class ListDataEditor : Editor
         GameObject Target = Selection.gameObjects[0];
         CharacterBodyManager bodyManager = Target.GetComponent<CharacterBodyManager>();
         bodyManager.listIconBodyEye.Clear();
-        AddIconBeanDictionaryByFile("Assets/Texture/Character/character_eye.png", bodyManager.listIconBodyEye);
+        AddIconBeanDictionaryByFolder("Assets/Texture/Character/Eye/", bodyManager.listIconBodyEye);
+        //AddIconBeanDictionaryByFile("Assets/Texture/Character/character_eye.png", bodyManager.listIconBodyEye);
     }
 
     [MenuItem("Custom/List/AddBodyMouth")]

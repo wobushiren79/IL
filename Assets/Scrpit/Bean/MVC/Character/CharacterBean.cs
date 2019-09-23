@@ -255,4 +255,47 @@ public class CharacterBean
         }
         return foodLevelRate;
     }
+
+    /// <summary>
+    /// 计算打手打架事件
+    /// </summary>
+    /// <returns></returns>
+    public float CalculationBeaterFightTime(GameItemsManager gameItemsManager)
+    {
+        GetAttributes(gameItemsManager,
+        out CharacterAttributesBean totalAttributes, out CharacterAttributesBean selfAttributes, out CharacterAttributesBean equipAttributes);
+
+        float fightTime = 10;
+        fightTime -= (totalAttributes.force * 0.1f);
+        if (fightTime < 0.1f)
+        {
+            fightTime = 0.1f;
+        }
+        return fightTime;
+    }
+
+    /// <summary>
+    /// 计算打手攻击力
+    /// </summary>
+    /// <param name="gameItemsManager"></param>
+    /// <returns></returns>
+    public int CalculationBeaterDamage(GameItemsManager gameItemsManager)
+    {
+        GetAttributes(gameItemsManager,
+        out CharacterAttributesBean totalAttributes, out CharacterAttributesBean selfAttributes, out CharacterAttributesBean equipAttributes);
+        return totalAttributes.force;
+    }
+
+    /// <summary>
+    /// 计算打手休息时间
+    /// </summary>
+    /// <param name="gameItemsManager"></param>
+    /// <returns></returns>
+    public float CalculationBeaterRestTime(GameItemsManager gameItemsManager)
+    {
+        GetAttributes(gameItemsManager,
+        out CharacterAttributesBean totalAttributes, out CharacterAttributesBean selfAttributes, out CharacterAttributesBean equipAttributes);
+        float restTime = 3 + (57 - 0.57f * totalAttributes.force);
+        return restTime;
+    }
 }

@@ -7,6 +7,7 @@ public class UIGameWorkerDetailsChefInfo : BaseMonoBehaviour
 {
     [Header("控件")]
     public Text tvCookNumber;
+    public Text tvCookTime;
 
     public GameObject objItemContent;
     public GameObject objItemModel;
@@ -18,14 +19,29 @@ public class UIGameWorkerDetailsChefInfo : BaseMonoBehaviour
     {
         this.chefData = chefData;
         SetCookNumber(chefData.cookNumber);
+        SetCookTime(chefData.cookTime);
         SetFoodData(innFoodManager, chefData.listFoodCookNumer);
     }
 
-    //设置烹饪数量
+   
+    /// <summary>
+    /// 设置料理数量
+    /// </summary>
+    /// <param name="number"></param>
     public void SetCookNumber(long number)
     {
         if (tvCookNumber != null)
             tvCookNumber.text = number + "";
+    }
+
+    /// <summary>
+    /// 设置料理时间
+    /// </summary>
+    /// <param name="time"></param>
+    public void SetCookTime(float time)
+    {
+        if (tvCookTime != null)
+            tvCookTime.text = time + GameCommonInfo.GetUITextById(38);
     }
 
     /// <summary>
