@@ -45,7 +45,7 @@ public class LightHandler : BaseMonoBehaviour, IBaseObserver
     }
 
     #region 时间通知
-    public void ObserbableUpdate<T>(T observable, int type, params Object[] obj) where T : Object
+    public void ObserbableUpdate<T>(T observable, int type, params System.Object[] obj) where T : Object
     {
         if (observable == gameTimeHandler)
         {

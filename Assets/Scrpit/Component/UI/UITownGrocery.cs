@@ -47,6 +47,21 @@ public class UITownGrocery : UIBaseOne, IStoreInfoView, IRadioGroupCallBack
             case 2:
                 CreateGroceryData(GetGroceryListDataByMark("11"));
                 break;
+            case 3:
+                CreateGroceryData(GetGroceryListDataByMark("4"));
+                break;
+            case 4:
+                CreateGroceryData(GetGroceryListDataByMark("5"));
+                break;
+            case 5:
+                CreateGroceryData(GetGroceryListDataByMark("6"));
+                break;
+            case 6:
+                CreateGroceryData(GetGroceryListDataByMark("7"));
+                break;
+            case 7:
+                CreateGroceryData(GetGroceryListDataByMark("8"));
+                break;
         }
     }
 

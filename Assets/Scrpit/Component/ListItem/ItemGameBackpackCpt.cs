@@ -20,9 +20,13 @@ public class ItemGameBackpackCpt : ItemGameBaseCpt, IPointerClickHandler, ItemsS
 
     public void Start()
     {
-        rightClick.AddListener(new UnityAction(ButtonRightClick));
+        leftClick.AddListener(new UnityAction(ButtonClick));
+        rightClick.AddListener(new UnityAction(ButtonClick));
         if (infoItemsPopup != null)
+        {
             infoItemsPopup.SetPopupShowView(GetUIManager<UIGameManager>().infoItemsPopup);
+            infoItemsPopup.SetData(itemsInfoBean, ivIcon.sprite);
+        }
     }
 
     public void SetData(ItemsInfoBean infoBean, ItemBean itemBean)
@@ -31,7 +35,10 @@ public class ItemGameBackpackCpt : ItemGameBaseCpt, IPointerClickHandler, ItemsS
         this.itemBean = itemBean;
         SetIcon(infoBean.icon_key, infoBean.items_type);
         SetName(infoBean.name);
-        infoItemsPopup.SetData(infoBean, ivIcon.sprite);
+        if (infoItemsPopup != null)
+        {
+            infoItemsPopup.SetData(itemsInfoBean, ivIcon.sprite);
+        }
     }
 
     /// <summary>
@@ -41,7 +48,7 @@ public class ItemGameBackpackCpt : ItemGameBaseCpt, IPointerClickHandler, ItemsS
     /// <param name="itemType"></param>
     public void SetIcon(string iconKey, int itemType)
     {
-        CharacterDressManager characterDressManager= GetUIManager<UIGameManager>().characterDressManager;
+        CharacterDressManager characterDressManager = GetUIManager<UIGameManager>().characterDressManager;
         GameItemsManager gameItemsManager = GetUIManager<UIGameManager>().gameItemsManager;
 
         Vector2 offsetMin = new Vector2(0, 0);
@@ -51,26 +58,30 @@ public class ItemGameBackpackCpt : ItemGameBaseCpt, IPointerClickHandler, ItemsS
         {
             case (int)GeneralEnum.Hat:
                 spIcon = characterDressManager.GetHatSpriteByName(iconKey);
-                offsetMin = new Vector2(-50, -100);
-                offsetMax = new Vector2(50, 0);
+                offsetMin = new Vector2(-30, -60);
+                offsetMax = new Vector2(30, 0);
                 break;
             case (int)GeneralEnum.Clothes:
                 spIcon = characterDressManager.GetClothesSpriteByName(iconKey);
-                offsetMin = new Vector2(-50, -25);
-                offsetMax = new Vector2(50, 75);
+                offsetMin = new Vector2(-30, -20);
+                offsetMax = new Vector2(30, 40);
                 break;
             case (int)GeneralEnum.Shoes:
                 spIcon = characterDressManager.GetShoesSpriteByName(iconKey);
-                offsetMin = new Vector2(-50, 0);
-                offsetMax = new Vector2(50, 100);
+                offsetMin = new Vector2(-30, 0);
+                offsetMax = new Vector2(30, 60);
                 break;
-            case (int)GeneralEnum.Book:
-            case (int)GeneralEnum.Menu:
+            default:
                 spIcon = gameItemsManager.GetItemsSpriteByName(iconKey);
                 break;
         }
-        if (ivIcon != null)
-            ivIcon.sprite = spIcon;
+
+        if (spIcon != null)
+            ivIcon.color = new Color(1, 1, 1, 1);
+        else
+            ivIcon.color = new Color(1, 1, 1, 0);
+        ivIcon.sprite = spIcon;
+
         if (rtIcon != null)
         {
             rtIcon.offsetMin = offsetMin;
@@ -96,7 +107,7 @@ public class ItemGameBackpackCpt : ItemGameBaseCpt, IPointerClickHandler, ItemsS
             rightClick.Invoke();
     }
 
-    public virtual void ButtonRightClick()
+    public virtual void ButtonClick()
     {
         if (itemsInfoBean == null)
             return;

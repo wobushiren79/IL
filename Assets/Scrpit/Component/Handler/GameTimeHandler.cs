@@ -16,6 +16,7 @@ public class GameTimeHandler : BaseObservable<IBaseObserver>
         NewDay,//新的一天
         Night,//夜晚
         EndDay,
+        TimePoint,//整点报时
     }
 
     public GameDataManager gameDataManager;
@@ -78,6 +79,7 @@ public class GameTimeHandler : BaseObservable<IBaseObserver>
             {
                 NotifyAllObserver((int)NotifyTypeEnum.Night, null);
             }
+            NotifyAllObserver((int)NotifyTypeEnum.TimePoint, hour);
         }
         if (hour >= 24)
         {
@@ -173,7 +175,7 @@ public class GameTimeHandler : BaseObservable<IBaseObserver>
         this.hour = (float)hour;
         this.min = (float)min;
     }
-    
+
     /// <summary>
     /// 添加时间
     /// </summary>
@@ -181,7 +183,7 @@ public class GameTimeHandler : BaseObservable<IBaseObserver>
     /// <param name="min"></param>
     public void AddHour(int addHour)
     {
-        if (hour< 18 && (hour+ addHour) >= 18)
+        if (hour < 18 && (hour + addHour) >= 18)
         {
             NotifyAllObserver((int)NotifyTypeEnum.Night, null);
         }

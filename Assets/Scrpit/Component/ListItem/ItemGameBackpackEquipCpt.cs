@@ -14,7 +14,7 @@ public class ItemGameBackpackEquipCpt : ItemGameBackpackCpt
         SetData(infoBean, itemBean);
     }
 
-    public override void ButtonRightClick()
+    public override void ButtonClick()
     {
         if (itemsInfoBean == null)
             return;
@@ -32,6 +32,11 @@ public class ItemGameBackpackEquipCpt : ItemGameBackpackCpt
                 case (int)GeneralEnum.Hat:
                 case (int)GeneralEnum.Clothes:
                 case (int)GeneralEnum.Shoes:
+                case (int)GeneralEnum.Chef:
+                case (int)GeneralEnum.Waiter:
+                case (int)GeneralEnum.Accouting:
+                case (int)GeneralEnum.Accost:
+                case (int)GeneralEnum.Beater:
                     selectionBox.Open(2);
                     break;
                 case (int)GeneralEnum.Book:
@@ -78,18 +83,20 @@ public class ItemGameBackpackEquipCpt : ItemGameBackpackCpt
 
     public override void SelectionEquip(ItemsSelectionBox view)
     {
-        GetUIComponent<UIGameEquip>().SetEquip(itemsInfoBean);
+        UIGameEquip uiGameEquip = GetUIComponent<UIGameEquip>();
+        uiGameEquip.SetEquip(itemsInfoBean);
         RemoveItems();
-        GetUIComponent<UIGameEquip>().RefreshUI();
+        uiGameEquip.RefreshUI();
     }
 
     public override void SelectionUnload(ItemsSelectionBox view)
     {
+        UIGameEquip uiGameEquip = GetUIComponent<UIGameEquip>();
         ItemsInfoBean nullItems = new ItemsInfoBean();
         nullItems.id = 0;
         nullItems.items_type = itemsInfoBean.items_type;
-        GetUIComponent<UIGameEquip>().SetEquip(nullItems);
-        GetUIComponent<UIGameEquip>().RefreshUI();
+        uiGameEquip.SetEquip(nullItems);
+        uiGameEquip.RefreshUI();
     }
     #endregion 
 }

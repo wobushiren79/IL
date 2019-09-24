@@ -84,7 +84,7 @@ public class SceneGameTownInit : BaseSceneInit,IBaseObserver,DialogView.IDialogC
 
 
     #region  时间通知回调
-    public void ObserbableUpdate<T>(T observable, int type, params UnityEngine.Object[] obj) where T : UnityEngine.Object
+    public void ObserbableUpdate<T>(T observable, int type, params System.Object[] obj) where T : UnityEngine.Object
     {
         if (observable == gameTimeHandler)
         {

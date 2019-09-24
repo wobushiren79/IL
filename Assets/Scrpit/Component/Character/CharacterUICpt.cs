@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -9,11 +10,13 @@ public class CharacterUICpt : BaseMonoBehaviour
     public Image ivHair;
     public Image ivEye;
     public Image ivMouth;
-
-    public Image ivHat;
     public Image ivBody;
+
+    public Image ivHand;
+    public Image ivHat;
     public Image ivClothes;
     public Image ivShoes;
+
 
     public Sprite spMan;
     public Sprite spWoman;
@@ -39,6 +42,30 @@ public class CharacterUICpt : BaseMonoBehaviour
         SetClothes(characterEquipData.clothesId);
         SetShoes(characterEquipData.shoesId);
         SetHat(characterEquipData.hatId, characterBodyData.hairColor.GetColor());
+        SetHand(characterEquipData.handId);
+    }
+
+    /// <summary>
+    /// 设置手持
+    /// </summary>
+    /// <param name="handId"></param>
+    public void SetHand(long handId)
+    {
+        ItemsInfoBean itemsInfo=  gameItemsManager.GetItemsById(handId);
+        Sprite spHand = null;
+        if (itemsInfo != null)
+        {
+            spHand = gameItemsManager.GetItemsSpriteByName(itemsInfo.icon_key);
+        } 
+        if (spHand == null)
+        {
+            ivHand.color = new Color(1, 1, 1, 0);
+        }
+        else
+        {
+            ivHand.color = new Color(1, 1, 1, 1);
+        }
+        ivHand.sprite = spHand;
     }
 
     /// <summary>

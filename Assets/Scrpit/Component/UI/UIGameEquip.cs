@@ -9,16 +9,9 @@ public class UIGameEquip : BaseUIComponent
     [Header("控件")]
     public Button btBack;
     public ItemGameBackpackEquipCpt equipHand;
-    public Image ivHand;
-
     public ItemGameBackpackEquipCpt equipHat;
-    public Image ivHat;
-
     public ItemGameBackpackEquipCpt equipClothes;
-    public Image ivClothes;
-
     public ItemGameBackpackEquipCpt equipShoes;
-    public Image ivShoes;
 
     public Text tvLoyal;
     public Text tvCook;
@@ -43,17 +36,24 @@ public class UIGameEquip : BaseUIComponent
             btBack.onClick.AddListener(OpenWorkUI);
     }
 
+    public override void OpenUI()
+    {
+        base.OpenUI();
+        CreateBackpackData();
+    }
+
+    public void OpenWorkUI()
+    {
+        uiManager.OpenUIAndCloseOtherByName(EnumUtil.GetEnumName(UIEnum.GameWorker));
+    }
+
     public void SetCharacterData(CharacterBean characterData)
     {
         this.characterData = characterData;
-        ItemsInfoBean itemsHand = GetUIMananger<UIGameManager>().gameItemsManager.GetItemsById(characterData.equips.handId);
-        SetEquipIcon(itemsHand, (int)GeneralEnum.Hand);
-        ItemsInfoBean itemsHat = GetUIMananger<UIGameManager>().gameItemsManager.GetItemsById(characterData.equips.hatId);
-        SetEquipIcon(itemsHat, (int)GeneralEnum.Hat);
-        ItemsInfoBean itemsClothes = GetUIMananger<UIGameManager>().gameItemsManager.GetItemsById(characterData.equips.clothesId);
-        SetEquipIcon(itemsClothes, (int)GeneralEnum.Clothes);
-        ItemsInfoBean itemsShoes = GetUIMananger<UIGameManager>().gameItemsManager.GetItemsById(characterData.equips.shoesId);
-        SetEquipIcon(itemsShoes, (int)GeneralEnum.Shoes);
+        SetEquip(characterData.equips.handId);
+        SetEquip(characterData.equips.hatId);
+        SetEquip(characterData.equips.clothesId);
+        SetEquip(characterData.equips.shoesId);
         RefreshUI();
     }
 
@@ -103,109 +103,82 @@ public class UIGameEquip : BaseUIComponent
     }
 
     /// <summary>
-    /// 设置装备数据
+    /// 设置装备
     /// </summary>
-    /// <param name="itemsInfo"></param>
-    public void SetEquip(ItemsInfoBean itemsInfo)
+    /// <param name="itemId"></param>
+    public void SetEquip(long itemId)
     {
-        SetEquip(itemsInfo, -1);
+        GameItemsManager gameItemsManager = GetUIMananger<UIGameManager>().gameItemsManager;
+        if (gameItemsManager == null)
+            return;
+        ItemsInfoBean itemInfo = gameItemsManager.GetItemsById(itemId);
+        SetEquip(itemInfo);
     }
 
-    public void SetEquip(ItemsInfoBean itemsInfo, int type)
+    /// <summary>
+    /// 设置装备
+    /// </summary>
+    /// <param name="itemInfo"></param>
+    /// <param name="unloadEquipId">卸载的装备ID</param>
+    public void SetEquip(ItemsInfoBean itemInfo)
     {
-        long unloadItemsId = SetEquipIcon(itemsInfo, type);
-        //装备添加卸下的
-        if (unloadItemsId != 0)
+
+        if (itemInfo == null)
+            return;
+        CharacterDressManager characterDressManager = GetUIMananger<UIGameManager>().characterDressManager;
+        GameItemsManager gameItemsManager = GetUIMananger<UIGameManager>().gameItemsManager;
+        GameDataManager gameDataManager = GetUIMananger<UIGameManager>().gameDataManager;
+
+        if (characterDressManager == null || gameItemsManager == null)
+            return;
+
+        ItemGameBackpackEquipCpt itemCpt = null;
+        long unloadEquipId = 0;
+        switch (itemInfo.items_type)
         {
-            ItemBean itemBean = new ItemBean(unloadItemsId, 1);
-            ItemsInfoBean itemsInfoBean = GetUIMananger<UIGameManager>().gameItemsManager.GetItemsById(unloadItemsId);
-            GetUIMananger<UIGameManager>().gameDataManager.gameData.itemsList.Add(itemBean);
-            GameObject objItem = CreateItemBackpackData(itemBean, itemsInfoBean);
+            case 1:
+                itemCpt = equipHat;
+                unloadEquipId = characterData.equips.hatId;
+                characterData.equips.hatId = itemInfo.id;
+                break;
+            case 2:
+                itemCpt = equipClothes;
+                unloadEquipId = characterData.equips.clothesId;
+                characterData.equips.clothesId = itemInfo.id;
+                break;
+            case 3:
+                itemCpt = equipShoes;
+                unloadEquipId = characterData.equips.shoesId;
+                characterData.equips.shoesId = itemInfo.id;
+                break;
+            case 4:
+            case 5:
+            case 6:
+            case 7:
+            case 8:
+                itemCpt = equipHand;
+                unloadEquipId = characterData.equips.handId;
+                characterData.equips.handId = itemInfo.id;
+                break;
+        }
+        itemCpt.SetData(characterData, itemInfo , null);
+        //刷新显示
+        if (characterUICpt != null)
+            characterUICpt.SetCharacterData(characterData.body, characterData.equips);
+        //如果有卸载的装备 则添加到背包
+        if (unloadEquipId != 0)
+        {
+            ItemBean unloadItem = new ItemBean(unloadEquipId, 1);
+            ItemsInfoBean unloadInfo= gameItemsManager.GetItemsById(unloadEquipId);
+            GameObject objItem = CreateItemBackpackData(unloadItem, unloadInfo);
             objItem.transform.DOScale(new Vector3(0, 0, 0), 0.5f).SetEase(Ease.OutBack).From();
+            gameDataManager.gameData.ChangeItemsNumber(unloadEquipId,1);
         }
     }
 
     /// <summary>
-    /// 设置装备图标
+    /// 创建背包里的装备
     /// </summary>
-    /// <param name="itemsInfo"></param>
-    /// <param name="type"></param>
-    /// <returns></returns>
-    public long SetEquipIcon(ItemsInfoBean itemsInfo, int type)
-    {
-        long unloadItemsId = 0;
-        if (GetUIMananger<UIGameManager>().gameItemsManager == null)
-            return unloadItemsId;
-        if (itemsInfo == null)
-        {
-            itemsInfo = new ItemsInfoBean
-            {
-                items_type = type
-            };
-        }
-        switch (itemsInfo.items_type)
-        {
-            case (int)GeneralEnum.Hat:
-                unloadItemsId = this.characterData.equips.hatId;
-                this.characterData.equips.hatId = itemsInfo.id;
-                Sprite spHat = GetUIMananger<UIGameManager>().characterDressManager.GetHatSpriteByName(itemsInfo.icon_key);
-                if (itemsInfo.icon_key == null || spHat == null)
-                    ivHat.color = new Color(1, 1, 1, 0);
-                else
-                    ivHat.color = new Color(1, 1, 1, 1);
-                ivHat.sprite = spHat;
-                equipHat.SetData(itemsInfo, null);
-                break;
-            case (int)GeneralEnum.Clothes:
-                unloadItemsId = this.characterData.equips.clothesId;
-                this.characterData.equips.clothesId = itemsInfo.id;
-                Sprite spClothes = GetUIMananger<UIGameManager>().characterDressManager.GetClothesSpriteByName(itemsInfo.icon_key);
-                if (itemsInfo.icon_key == null || spClothes == null)
-                    ivClothes.color = new Color(1, 1, 1, 0);
-                else
-                    ivClothes.color = new Color(1, 1, 1, 1);
-                ivClothes.sprite = spClothes;
-                equipClothes.SetData(itemsInfo, null);
-                break;
-            case (int)GeneralEnum.Shoes:
-                unloadItemsId = this.characterData.equips.shoesId;
-                this.characterData.equips.shoesId = itemsInfo.id;
-                Sprite spShoes = GetUIMananger<UIGameManager>().characterDressManager.GetShoesSpriteByName(itemsInfo.icon_key);
-                if (itemsInfo.icon_key == null || spShoes == null)
-                    ivShoes.color = new Color(1, 1, 1, 0);
-                else
-                    ivShoes.color = new Color(1, 1, 1, 1);
-                ivShoes.sprite = spShoes;
-                equipShoes.SetData(itemsInfo, null);
-                break;
-            case (int)GeneralEnum.Hand:
-                unloadItemsId = this.characterData.equips.handId;
-                this.characterData.equips.handId = itemsInfo.id;
-                Sprite spHand = GetUIMananger<UIGameManager>().gameItemsManager.GetItemsSpriteByName(itemsInfo.icon_key);
-                if (itemsInfo.icon_key == null || spHand == null)
-                    ivHand.color = new Color(1, 1, 1, 0);
-                else
-                    ivHand.color = new Color(1, 1, 1, 1);
-                ivShoes.sprite = spHand;
-                equipHand.SetData(itemsInfo, null);
-                break;
-        }
-
-        characterUICpt.SetCharacterData(characterData.body, characterData.equips);
-        return unloadItemsId;
-    }
-
-    public override void OpenUI()
-    {
-        base.OpenUI();
-        CreateBackpackData();
-    }
-
-    public void OpenWorkUI()
-    {
-        uiManager.OpenUIAndCloseOtherByName(EnumUtil.GetEnumName(UIEnum.GameWorker));
-    }
-
     public void CreateBackpackData()
     {
         CptUtil.RemoveChildsByActive(objItemContent.transform);
@@ -217,21 +190,32 @@ public class UIGameEquip : BaseUIComponent
             ItemsInfoBean itemsInfoBean = GetUIMananger<UIGameManager>().gameItemsManager.GetItemsById(itemBean.itemId);
             if (itemsInfoBean == null)
                 continue;
-            if (itemsInfoBean.items_type != 1
-                && itemsInfoBean.items_type != 2
-                && itemsInfoBean.items_type != 3
-                && itemsInfoBean.items_type != 11)
+            if (itemsInfoBean.items_type != (int)GeneralEnum.Hat
+                && itemsInfoBean.items_type != (int)GeneralEnum.Clothes
+                && itemsInfoBean.items_type != (int)GeneralEnum.Shoes
+                && itemsInfoBean.items_type != (int)GeneralEnum.Chef
+                && itemsInfoBean.items_type != (int)GeneralEnum.Waiter
+                && itemsInfoBean.items_type != (int)GeneralEnum.Accouting
+                && itemsInfoBean.items_type != (int)GeneralEnum.Accost
+                && itemsInfoBean.items_type != (int)GeneralEnum.Beater
+                && itemsInfoBean.items_type != (int)GeneralEnum.Book)
                 continue;
             GameObject objItem = CreateItemBackpackData(itemBean, itemsInfoBean);
             objItem.transform.DOScale(new Vector3(0, 0, 0), 0.5f).SetEase(Ease.OutBack).SetDelay(i * 0.05f).From();
         }
     }
 
+    /// <summary>
+    /// 单个创建
+    /// </summary>
+    /// <param name="itemBean"></param>
+    /// <param name="itemsInfoBean"></param>
+    /// <returns></returns>
     public GameObject CreateItemBackpackData(ItemBean itemBean, ItemsInfoBean itemsInfoBean)
     {
         GameObject objItem = Instantiate(objItemModel, objItemContent.transform);
         objItem.SetActive(true);
-        ItemGameBackpackEquipCpt backpackCpt = objItem.GetComponent<ItemGameBackpackEquipCpt>(); 
+        ItemGameBackpackEquipCpt backpackCpt = objItem.GetComponent<ItemGameBackpackEquipCpt>();
         backpackCpt.SetData(characterData, itemsInfoBean, itemBean);
         return objItem;
     }

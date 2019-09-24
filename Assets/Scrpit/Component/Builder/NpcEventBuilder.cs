@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using UnityEditor;
 using System;
+using System.Collections.Generic;
 
 public class NpcEventBuilder : NpcNormalBuilder, IBaseObserver
 {
@@ -10,6 +11,14 @@ public class NpcEventBuilder : NpcNormalBuilder, IBaseObserver
     private void Start()
     {
         gameTimeHandler.AddObserver(this);
+    }
+
+    /// <summary>
+    /// 开始事件
+    /// </summary>
+    public void StartEvent()
+    {
+        //TODO 各种事件的完善
         RascalEvent();
     }
 
@@ -19,8 +28,8 @@ public class NpcEventBuilder : NpcNormalBuilder, IBaseObserver
     public void RascalEvent()
     {
         Vector3 npcPosition = GetRandomStartPosition();
-        CharacterBean characterData = npcInfoManager.GetCharacterDataById(210001);
-        BuildRascal(characterData, npcPosition);
+        List<CharacterBean> listData = npcInfoManager.GetCharacterDataByType(21);
+        BuildRascal(RandomUtil.GetRandomDataByList(listData), npcPosition);
     }
 
     /// <summary>
@@ -43,7 +52,7 @@ public class NpcEventBuilder : NpcNormalBuilder, IBaseObserver
     }
 
     #region 时间回调通知
-    public void ObserbableUpdate<T>(T observable, int type, params UnityEngine.Object[] obj) where T : UnityEngine.Object
+    public void ObserbableUpdate<T>(T observable, int type, params System.Object[] obj) where T : UnityEngine.Object
     {
         if ((GameTimeHandler.NotifyTypeEnum)type == GameTimeHandler.NotifyTypeEnum.NewDay)
         {
@@ -52,6 +61,14 @@ public class NpcEventBuilder : NpcNormalBuilder, IBaseObserver
         else if ((GameTimeHandler.NotifyTypeEnum)type == GameTimeHandler.NotifyTypeEnum.EndDay)
         {
             ClearNpc();
+        }
+        else if ((GameTimeHandler.NotifyTypeEnum)type == GameTimeHandler.NotifyTypeEnum.TimePoint)
+        {
+            int hour = (int)obj[0];
+            if (hour > 9 && hour <= 20)
+            {
+                StartEvent();
+            }
         }
     }
     #endregion

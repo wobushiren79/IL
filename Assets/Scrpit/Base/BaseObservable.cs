@@ -74,7 +74,7 @@ public class BaseObservable<T> : BaseMonoBehaviour
     /// </summary>
     /// <param name="type"></param>
     /// <param name="objs"></param>
-    public void NotifyAllObserver(int type, params Object[] objs)
+    public void NotifyAllObserver(int type, params System.Object[] objs)
     {
         if (CheckUtil.ListIsNull(mObserverList))
             return;
@@ -90,7 +90,7 @@ public class BaseObservable<T> : BaseMonoBehaviour
     /// <param name="observer"></param>
     /// <param name="type"></param>
     /// <param name="objs"></param>
-    public void NotifyObserver(T observer, int type, params Object[] objs)
+    public void NotifyObserver(T observer, int type, params System.Object[] objs)
     {
         if (CheckUtil.ListIsNull(mObserverList))
             return;

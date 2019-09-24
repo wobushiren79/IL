@@ -8,7 +8,12 @@ public enum GeneralEnum
     Clothes=2,
     Shoes=3,
 
-    Hand=8,
+    Chef=4,
+    Waiter=5,
+    Accouting=6,
+    Accost=7,
+    Beater=8,
+
     Ing = 9,
     Book =11,
     Menu =12,//菜谱

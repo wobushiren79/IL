@@ -12,6 +12,8 @@ public class CharacterDressCpt : BaseMonoBehaviour
     //鞋子
     public SpriteRenderer sprShoesLeft;
     public SpriteRenderer sprShoesRight;
+    //手持
+    public SpriteRenderer sprHand;
 
     //角色属性
     public CharacterEquipBean characterEquipData;
@@ -83,5 +85,27 @@ public class CharacterDressCpt : BaseMonoBehaviour
         }
         sprShoesLeft.sprite = shoesSP;
         sprShoesRight.sprite = shoesSP;
+    }
+
+    /// <summary>
+    /// 设置手持
+    /// </summary>
+    /// <param name="itemsInfo"></param>
+    public void SetHand(GameItemsManager gameItemsManager, ItemsInfoBean itemsInfo)
+    {
+        if (sprHand == null)
+            return;
+        Sprite handSP;
+        if (itemsInfo == null)
+            handSP = null;
+        else
+        {
+            handSP = gameItemsManager.GetItemsSpriteByName(itemsInfo.icon_key);
+            //设置装备数据
+            if (characterEquipData == null)
+                characterEquipData = new CharacterEquipBean();
+            characterEquipData.handId = itemsInfo.id;
+        }
+        sprHand.sprite = handSP;
     }
 }

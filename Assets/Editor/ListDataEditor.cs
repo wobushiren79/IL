@@ -79,6 +79,11 @@ public class ListDataEditor : Editor
         GameItemsManager itemsManager = Target.GetComponent<GameItemsManager>();
         itemsManager.listItemsIcon.Clear();
         AddIconBeanDictionaryByFolder("Assets/Texture/Items/", itemsManager.listItemsIcon);
+        AddIconBeanDictionaryByFolder("Assets/Texture/Items/Chef/", itemsManager.listItemsIcon);
+        AddIconBeanDictionaryByFolder("Assets/Texture/Items/Waiter/", itemsManager.listItemsIcon);
+        AddIconBeanDictionaryByFolder("Assets/Texture/Items/Accounting/", itemsManager.listItemsIcon);
+        AddIconBeanDictionaryByFolder("Assets/Texture/Items/Accost/", itemsManager.listItemsIcon);
+        AddIconBeanDictionaryByFolder("Assets/Texture/Items/Beater/", itemsManager.listItemsIcon);
     }
 
 

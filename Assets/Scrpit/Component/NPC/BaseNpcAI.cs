@@ -43,6 +43,9 @@ public class BaseNpcAI : BaseMonoBehaviour
 
             ItemsInfoBean shoesEquip = gameItemsManager.GetItemsById(characterBean.equips.shoesId);
             characterDress.SetShoes(shoesEquip);
+
+            ItemsInfoBean handEquip = gameItemsManager.GetItemsById(characterBean.equips.handId);
+            characterDress.SetHand(gameItemsManager, handEquip);
         }
         //设置属性数据
         //获取属性数据
@@ -76,7 +79,7 @@ public class BaseNpcAI : BaseMonoBehaviour
     /// 设置表情
     /// </summary>
     /// <param name="expressionEnum"></param>
-    public void SetExpression(CharacterExpressionCpt.CharacterExpressionEnum expressionEnum,float desTime)
+    public void SetExpression(CharacterExpressionCpt.CharacterExpressionEnum expressionEnum, float desTime)
     {
         if (characterExpression != null)
             characterExpression.SetExpression(expressionEnum, desTime);
@@ -122,7 +125,7 @@ public class BaseNpcAI : BaseMonoBehaviour
         characterMoveCpt.SetAnimStatus(10);
         CharacterBodyCpt characterBody = CptUtil.GetCptInChildrenByName<CharacterBodyCpt>(gameObject, "Body");
         if (characterBody != null)
-            characterBody.SetEye("character_eye_special_dead", new Color(0,0,0),false);
+            characterBody.SetEye("character_eye_special_dead", new Color(0, 0, 0), false);
 
     }
 }

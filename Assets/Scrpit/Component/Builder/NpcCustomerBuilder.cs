@@ -100,7 +100,7 @@ public class NpcCustomerBuilder : NpcNormalBuilder,IBaseObserver
     /// <param name="observable"></param>
     /// <param name="type"></param>
     /// <param name="obj"></param>
-    public void ObserbableUpdate<T>(T observable, int type, params Object[] obj) where T : Object
+    public void ObserbableUpdate<T>(T observable, int type, params System.Object[] obj) where T : Object
     {
         if((GameTimeHandler.NotifyTypeEnum)type== GameTimeHandler.NotifyTypeEnum.NewDay)
         {
