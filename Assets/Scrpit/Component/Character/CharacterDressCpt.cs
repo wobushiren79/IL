@@ -107,5 +107,14 @@ public class CharacterDressCpt : BaseMonoBehaviour
             characterEquipData.handId = itemsInfo.id;
         }
         sprHand.sprite = handSP;
+        //设置旋转角度
+        if (itemsInfo != null && itemsInfo.rotation_angle != 0)
+        {
+            sprHand.transform.localEulerAngles = new Vector3(0, 0, itemsInfo.rotation_angle);
+        }
+        else
+        {
+            sprHand.transform.localEulerAngles = new Vector3(0,0,45);
+        }
     }
 }

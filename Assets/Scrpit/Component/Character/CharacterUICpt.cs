@@ -66,6 +66,16 @@ public class CharacterUICpt : BaseMonoBehaviour
             ivHand.color = new Color(1, 1, 1, 1);
         }
         ivHand.sprite = spHand;
+
+        //设置旋转角度
+        if (itemsInfo!=null&&itemsInfo.rotation_angle != 0)
+        {
+            ivHand.transform.localEulerAngles = new Vector3(0, 0, itemsInfo.rotation_angle);
+        }
+        else
+        {
+            ivHand.transform.localEulerAngles = new Vector3(0, 0, 45);
+        }
     }
 
     /// <summary>

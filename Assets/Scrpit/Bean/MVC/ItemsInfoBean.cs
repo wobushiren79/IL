@@ -19,6 +19,7 @@ public class ItemsInfoBean : BaseBean
     public int add_lucky;//增加 切菜
     public int add_loyal;//增加信任
 
+    public int rotation_angle;//选择角度
 
     public long add_id;//增加的内容ID
 
