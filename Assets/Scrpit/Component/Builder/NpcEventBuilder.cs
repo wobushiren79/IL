@@ -64,7 +64,7 @@ public class NpcEventBuilder : NpcNormalBuilder, IBaseObserver
         }
         else if ((GameTimeHandler.NotifyTypeEnum)type == GameTimeHandler.NotifyTypeEnum.TimePoint)
         {
-            int hour = (int)obj[0];
+            int hour = Convert.ToInt32(obj[0]);
             if (hour > 9 && hour <= 20)
             {
                 StartEvent();

@@ -289,6 +289,9 @@ public class NpcAICustomerCpt : BaseNpcAI
         //如果在订单列表 则移除订单列表
         if (innHandler.orderList.Contains(orderForCustomer))
         {
+            //根据心情评价客栈 前提订单里有他
+            innHandler.InnPraise(innEvaluation.GetPraise());
+            //移除订单列表
             innHandler.orderList.Remove(orderForCustomer);
         }
         //随机获取一个退出点

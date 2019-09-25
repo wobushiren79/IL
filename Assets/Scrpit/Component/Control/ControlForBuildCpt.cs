@@ -254,7 +254,7 @@ public class ControlForBuildCpt : BaseControl
         if (Input.GetButtonDown(InputInfo.Confirm))
         {
             //防止误触右边的UI
-            if (UnityEngine.Screen.width - Input.mousePosition.x - 300 < 0)
+            if (UnityEngine.Screen.width - Input.mousePosition.x - 350 < 0)
                 return;
             //能建造
             if (isCanBuild)
@@ -319,7 +319,7 @@ public class ControlForBuildCpt : BaseControl
                 InitBuildingExist();
                 //刷新UI
                 //里面有移除选中功能
-                uiGameBuild.RefreshData();
+                uiGameBuild.RefreshUI();
             }
             //不能建造 相关提示
             else

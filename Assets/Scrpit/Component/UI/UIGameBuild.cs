@@ -5,6 +5,8 @@ using UnityEngine.AI;
 
 public class UIGameBuild : BaseUIComponent
 {
+    public Text tvAesthetics;
+
     //返回按钮
     public Button btBack;
     public Button btDismantle;
@@ -18,8 +20,10 @@ public class UIGameBuild : BaseUIComponent
     public GameObject itemBuildModel;
 
     public BuildItemBean.BuildType buildType = BuildItemBean.BuildType.Table;
+
     public void Start()
     {
+        GameDataManager gameDataManager = GetUIMananger<UIGameManager>().gameDataManager;
         if (btBack != null)
             btBack.onClick.AddListener(OpenMainUI);
         if (btDismantle != null)
@@ -32,6 +36,8 @@ public class UIGameBuild : BaseUIComponent
             btTypeCounter.onClick.AddListener(CreateCounterList);
         if (btTypeDoor != null)
             btTypeDoor.onClick.AddListener(CreateDoorList);
+        if (tvAesthetics != null)
+            tvAesthetics.text = gameDataManager.gameData.GetInnAttributesData().GetAesthetics() + "";
         CreateBuildList(BuildItemBean.BuildType.Table);
     }
 
@@ -53,12 +59,27 @@ public class UIGameBuild : BaseUIComponent
     }
 
     /// <summary>
+    /// 刷新数据
+    /// </summary>
+    public override void RefreshUI()
+    {
+        GameDataManager gameDataManager = GetUIMananger<UIGameManager>().gameDataManager;
+        InnBuildManager innBuildManager = GetUIMananger<UIGameManager>().innBuildManager;
+        //刷新列表数据
+        CreateBuildList(buildType);
+        //刷新美观值
+        gameDataManager.gameData.GetInnAttributesData().SetAesthetics(innBuildManager, gameDataManager.gameData.GetInnBuildData());
+        if (tvAesthetics != null)
+            tvAesthetics.text = gameDataManager.gameData.GetInnAttributesData().GetAesthetics() + "";
+    }
+
+    /// <summary>
     /// 创建建筑列表
     /// </summary>
     /// <param name="type"></param>
     public void CreateBuildList(BuildItemBean.BuildType type)
     {
-        GameDataManager gameDataManager= GetUIMananger<UIGameManager>().gameDataManager;
+        GameDataManager gameDataManager = GetUIMananger<UIGameManager>().gameDataManager;
         ControlHandler controlHandler = GetUIMananger<UIGameManager>().controlHandler;
         InnBuildManager innBuildManager = GetUIMananger<UIGameManager>().innBuildManager;
         buildType = type;
@@ -99,7 +120,7 @@ public class UIGameBuild : BaseUIComponent
         GameObject itemBuildObj = Instantiate(itemBuildModel, itemBuildModel.transform);
         itemBuildObj.SetActive(true);
         itemBuildObj.transform.SetParent(listBuildContent.transform);
-        ItemGameBuildCpt itemCpt= itemBuildObj.GetComponent<ItemGameBuildCpt>();
+        ItemGameBuildCpt itemCpt = itemBuildObj.GetComponent<ItemGameBuildCpt>();
         itemCpt.SetData(itemData, buildData);
     }
 
@@ -107,7 +128,7 @@ public class UIGameBuild : BaseUIComponent
     {
         CreateBuildList(BuildItemBean.BuildType.Table);
     }
-    
+
     public void CreateStoveList()
     {
         CreateBuildList(BuildItemBean.BuildType.Stove);
@@ -128,13 +149,6 @@ public class UIGameBuild : BaseUIComponent
         ((ControlForBuildCpt)(controlHandler.GetControl(ControlHandler.ControlEnum.Build))).SetDismantleMode();
     }
 
-    /// <summary>
-    /// 刷新数据
-    /// </summary>
-    public void RefreshData()
-    {
-        CreateBuildList(buildType);
-    }
     /// <summary>
     /// 返回游戏主UI
     /// </summary>

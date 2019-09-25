@@ -416,5 +416,17 @@ public class InnHandler : BaseMonoBehaviour
         return false;
     }
 
-
+    /// <summary>
+    /// 给客栈评价
+    /// </summary>
+    public void InnPraise(float parise)
+    {
+        //记录好评数量
+        if (parise > 0)
+            innRecord.praiseGoodNumber++;
+        else if(parise < 0)
+            innRecord.praiseBadNumber++;
+        //增加评价
+        gameDataManager.gameData.GetInnAttributesData().AddPraise(parise);
+    }
 }

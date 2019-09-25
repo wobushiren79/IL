@@ -83,7 +83,8 @@ public class NpcCustomerBuilder : NpcNormalBuilder,IBaseObserver
         NpcAICustomerCpt customerAI = npcObj.GetComponent<NpcAICustomerCpt>();
         //想要吃饭概率
         float eatProbability = Random.Range(0f, 1f);
-        if (eatProbability > 0.9f)
+        float rateWant =  gameDataManager.gameData.GetInnAttributesData().CalculationCustomerWantRate();
+        if (eatProbability <= rateWant)
         {
              customerAI.SetIntent(NpcAICustomerCpt.CustomerIntentEnum.Want);
         }

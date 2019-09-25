@@ -21,6 +21,7 @@ public class UIGameMain : BaseUIComponent, DialogView.IDialogCallBack
     public InfoPromptPopupButton popupAesthetics;
     public Text tvAesthetics;
     public InfoPromptPopupButton popupPraise;
+    public Slider sliderPraise;
     public Text tvPraise;
     public InfoPromptPopupButton popupRichness;
     public Text tvRichness;
@@ -49,6 +50,7 @@ public class UIGameMain : BaseUIComponent, DialogView.IDialogCallBack
         if (btSleep != null)
             btSleep.onClick.AddListener(EndDay);
 
+        GameDataManager gameDataManager = GetUIMananger<UIGameManager>().gameDataManager;
         InfoPromptPopupShow infoPromptPopup = GetUIMananger<UIGameManager>().infoPromptPopup;
         if (popupAesthetics != null)
             popupAesthetics.SetPopupShowView(infoPromptPopup);
@@ -58,6 +60,9 @@ public class UIGameMain : BaseUIComponent, DialogView.IDialogCallBack
             popupRichness.SetPopupShowView(infoPromptPopup);
         if (popupInnLevel != null)
             popupInnLevel.SetPopupShowView(infoPromptPopup);
+        //设置美观值
+        if (tvAesthetics != null)
+            tvAesthetics.text = gameDataManager.gameData.GetInnAttributesData().GetAesthetics() + "";
         InitInnData();
     }
 
@@ -65,6 +70,7 @@ public class UIGameMain : BaseUIComponent, DialogView.IDialogCallBack
     {
         InnHandler innHandler = GetUIMananger<UIGameManager>().innHandler;
         GameTimeHandler gameTimeHandler = GetUIMananger<UIGameManager>().gameTimeHandler;
+        InnAttributesBean innAttributes = GetUIMananger<UIGameManager>().gameDataManager.gameData.GetInnAttributesData();
         if (tvInnStatus != null && innHandler != null)
             if (innHandler.GetInnStatus() == InnHandler.InnStatusEnum.Close)
             {
@@ -85,6 +91,14 @@ public class UIGameMain : BaseUIComponent, DialogView.IDialogCallBack
             gameTimeHandler.GetTime(out float hour, out float min);
             gameTimeHandler.GetTime(out int year, out int month, out int day);
             clockView.SetTime(month, day, (int)hour, (int)min);
+        }
+        if (sliderPraise != null)
+        {
+            sliderPraise.value = innAttributes.GetPraise() / 100f;
+        }
+        if (tvPraise != null)
+        {
+            tvPraise.text = innAttributes.GetPraise() + "%";
         }
     }
 
@@ -107,9 +121,7 @@ public class UIGameMain : BaseUIComponent, DialogView.IDialogCallBack
         if (tvAesthetics != null)
             tvAesthetics.text = innAttributes.aesthetics + "";
         if (popupPraise != null)
-            popupPraise.SetContent(GameCommonInfo.GetUITextById(2004) + " " + innAttributes.praise);
-        if (tvPraise != null)
-            tvPraise.text = innAttributes.praise + "";
+            popupPraise.SetContent(GameCommonInfo.GetUITextById(2004) + " " + innAttributes.praise+"%");
         if (popupRichness != null)
             popupRichness.SetContent(GameCommonInfo.GetUITextById(2005) + " " + innAttributes.richness);
         if (tvRichness != null)
@@ -132,7 +144,6 @@ public class UIGameMain : BaseUIComponent, DialogView.IDialogCallBack
             else
                 ivInnLevel.gameObject.SetActive(false);
         }
-
     }
 
     public void SaveData()

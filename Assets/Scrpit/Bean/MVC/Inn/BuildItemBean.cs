@@ -17,10 +17,8 @@ public class BuildItemBean : BaseBean
     }
 
     public int build_type;
-    public long price_s;
-    public long price_m;
-    public long price_l;
     public string icon_key;
     public string name;
     public string content;
+    public int aesthetics;//美观值
 }
