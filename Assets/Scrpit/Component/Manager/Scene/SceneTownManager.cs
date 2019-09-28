@@ -11,7 +11,8 @@ public class SceneTownManager : BaseManager
         Grocery,
         Dress,
         Carpenter,
-        Guild
+        Guild,
+        Arena,
     }
 
     //小镇出入口
@@ -41,6 +42,10 @@ public class SceneTownManager : BaseManager
     public Transform guildOutDoor;
     public Transform guildInDoor;
     public Transform guildInside;
+    //竞技场
+    public Transform arenaOutDoor;
+    public Transform arenaInDoor;
+    public Transform arenaInside;
 
     /// <summary>
     /// 获取随机城镇门坐标
@@ -94,6 +99,10 @@ public class SceneTownManager : BaseManager
                 outDoorPosition = guildOutDoor.transform.position;
                 inDoorPosition = guildInDoor.transform.position;
                 break;
+            case TownBuildingEnum.Arena:
+                outDoorPosition = arenaOutDoor.transform.position;
+                inDoorPosition = arenaInDoor.transform.position;
+                break;
         }
     }
 
@@ -125,6 +134,9 @@ public class SceneTownManager : BaseManager
                 break;
             case TownBuildingEnum.Guild:
                 tfBuilding = guildInside;
+                break;
+            case TownBuildingEnum.Arena:
+                tfBuilding = arenaInside;
                 break;
         }
         if (tfBuilding == null)
