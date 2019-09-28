@@ -16,7 +16,7 @@ public class ItemGameBackpackEquipCpt : ItemGameBackpackCpt
 
     public override void ButtonClick()
     {
-        if (itemsInfoBean == null)
+        if (itemsInfoBean == null|| itemsInfoBean.id==0)
             return;
         ItemsSelectionBox selectionBox = GetUIManager<UIGameManager>().itemsSelectionBox;
         if (selectionBox != null)
@@ -86,7 +86,6 @@ public class ItemGameBackpackEquipCpt : ItemGameBackpackCpt
         UIGameEquip uiGameEquip = GetUIComponent<UIGameEquip>();
         uiGameEquip.SetEquip(itemsInfoBean);
         RemoveItems();
-        uiGameEquip.RefreshUI();
     }
 
     public override void SelectionUnload(ItemsSelectionBox view)

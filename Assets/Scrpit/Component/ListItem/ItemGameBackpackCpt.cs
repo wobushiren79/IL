@@ -33,8 +33,11 @@ public class ItemGameBackpackCpt : ItemGameBaseCpt, IPointerClickHandler, ItemsS
     {
         this.itemsInfoBean = infoBean;
         this.itemBean = itemBean;
-        SetIcon(infoBean.icon_key, infoBean.items_type);
-        SetName(infoBean.name);
+        if (infoBean != null)
+        {
+            SetIcon(infoBean.icon_key, infoBean.items_type);
+            SetName(infoBean.name);
+        }
         if (infoItemsPopup != null)
         {
             infoItemsPopup.SetData(itemsInfoBean, ivIcon.sprite);

@@ -50,10 +50,17 @@ public class UIGameEquip : BaseUIComponent
     public void SetCharacterData(CharacterBean characterData)
     {
         this.characterData = characterData;
-        SetEquip(characterData.equips.handId);
-        SetEquip(characterData.equips.hatId);
-        SetEquip(characterData.equips.clothesId);
-        SetEquip(characterData.equips.shoesId);
+
+        GameItemsManager gameItemsManager = GetUIMananger<UIGameManager>().gameItemsManager;
+        if (characterData.equips.handId != 0)
+            equipHand.SetData(characterData, gameItemsManager.GetItemsById(characterData.equips.handId), null);
+        if (characterData.equips.hatId != 0)
+            equipHat.SetData(characterData, gameItemsManager.GetItemsById(characterData.equips.hatId), null);
+        if (characterData.equips.clothesId != 0)
+            equipClothes.SetData(characterData, gameItemsManager.GetItemsById(characterData.equips.clothesId), null);
+        if (characterData.equips.shoesId != 0)
+            equipShoes.SetData(characterData, gameItemsManager.GetItemsById(characterData.equips.shoesId), null);
+
         RefreshUI();
     }
 
@@ -65,6 +72,10 @@ public class UIGameEquip : BaseUIComponent
         base.RefreshUI();
         SetLoyal(characterData.attributes.loyal);
         SetAttributes(characterData.attributes, characterData.equips);
+
+        //人物刷新
+        if (characterUICpt != null)
+            characterUICpt.SetCharacterData(characterData.body, characterData.equips);
     }
 
     /// <summary>
@@ -161,18 +172,19 @@ public class UIGameEquip : BaseUIComponent
                 characterData.equips.handId = itemInfo.id;
                 break;
         }
-        itemCpt.SetData(characterData, itemInfo , null);
+        itemCpt.SetData(characterData, itemInfo, null);
+        //从背包里扣除装备
+        gameDataManager.gameData.ChangeItemsNumber(itemInfo.id, -1);
         //刷新显示
-        if (characterUICpt != null)
-            characterUICpt.SetCharacterData(characterData.body, characterData.equips);
+        RefreshUI();
         //如果有卸载的装备 则添加到背包
         if (unloadEquipId != 0)
         {
             ItemBean unloadItem = new ItemBean(unloadEquipId, 1);
-            ItemsInfoBean unloadInfo= gameItemsManager.GetItemsById(unloadEquipId);
+            ItemsInfoBean unloadInfo = gameItemsManager.GetItemsById(unloadEquipId);
             GameObject objItem = CreateItemBackpackData(unloadItem, unloadInfo);
             objItem.transform.DOScale(new Vector3(0, 0, 0), 0.5f).SetEase(Ease.OutBack).From();
-            gameDataManager.gameData.ChangeItemsNumber(unloadEquipId,1);
+            gameDataManager.gameData.ChangeItemsNumber(unloadEquipId, 1);
         }
     }
 
