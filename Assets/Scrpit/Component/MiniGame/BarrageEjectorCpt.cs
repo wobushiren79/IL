@@ -33,13 +33,13 @@ public class BarrageEjectorCpt : BaseMonoBehaviour
     /// 开始发射
     /// </summary>
     /// <param name="launchType"></param>
-    public void StartLaunch(LaunchTypeEnum launchType, Vector3 targetPositon, float shotSpeed)
+    public void StartLaunch(LaunchTypeEnum launchType, Vector3 targetPositon, float 了launchSpeed)
     {
-        animEjector.SetTrigger("Shoot");
+        animEjector.SetTrigger("Launch");
         switch (launchType)
         {
             case LaunchTypeEnum.Single:
-                LaunchSingle(targetPositon, shotSpeed);
+                LaunchSingle(targetPositon, 了launchSpeed);
                 break;
         }
     }
@@ -69,8 +69,9 @@ public class BarrageEjectorCpt : BaseMonoBehaviour
         GameObject objBullet = Instantiate(objBulletModel, objBulletContainer.transform);
         objBullet.SetActive(true);
         objBullet.transform.position = objEjector.transform.position;
-        Rigidbody2D rbBullet = objBullet.GetComponent<Rigidbody2D>();
+        BarrageBulletCpt bulletCpt= objBullet.GetComponent<BarrageBulletCpt>();
         //发射子弹
-        rbBullet.velocity = (targetPositon - objEjector.transform.position).normalized * force;
+        bulletCpt.LaunchBullet(targetPositon, force);
+ 
     }
 }
