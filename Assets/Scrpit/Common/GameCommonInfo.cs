@@ -7,7 +7,15 @@ public class GameCommonInfo
     public static GameConfigBean gameConfig; //游戏设置
     public static GameDataBean gameData;//世界时间
 
-    public static string LoadingSceneName;//预加载场景名字
+    /// <summary>
+    /// 进入竞技场准备数据
+    /// </summary>
+    public static ArenaPrepareBean ArenaPrepareData;
+
+    /// <summary>
+    /// 预加载场景名字
+    /// </summary>
+    public static string LoadingSceneName;
 
     private static GameConfigController mGameConfigController;
     private static UITextController mUITextController;

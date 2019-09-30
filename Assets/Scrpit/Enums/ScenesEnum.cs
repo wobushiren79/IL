@@ -6,5 +6,6 @@ public enum ScenesEnum
     MainScene,
     GameInnScene,
     GameTownScene,
+    GameArenaScene,
     LoadingScene,
 }
