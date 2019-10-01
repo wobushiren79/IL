@@ -6,6 +6,7 @@ using System.Collections.Generic;
 [Serializable]
 public class CharacterEquipBean
 {
+    public long maskId;
     public long handId;
     public long hatId;
     public long clothesId;

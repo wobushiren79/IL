@@ -7,6 +7,15 @@ using UnityEngine;
 
 public class ListDataEditor : Editor
 {
+    [MenuItem("Custom/List/AddDressMask")]
+    public static void AddDressMask()
+    {
+        GameObject Target = Selection.gameObjects[0];
+        CharacterDressManager dressManager = Target.GetComponent<CharacterDressManager>();
+        dressManager.listIconMask.Clear();
+        AddIconBeanDictionaryByFolder("Assets/Texture/Character/Dress/Mask/", dressManager.listIconMask);
+    }
+
     [MenuItem("Custom/List/AddDressHat")]
     public static void AddDressHat()
     {
@@ -59,7 +68,8 @@ public class ListDataEditor : Editor
         GameObject Target = Selection.gameObjects[0];
         CharacterBodyManager bodyManager = Target.GetComponent<CharacterBodyManager>();
         bodyManager.listIconBodyMouth.Clear();
-        AddIconBeanDictionaryByFile("Assets/Texture/Character/character_mouth.png", bodyManager.listIconBodyMouth);
+        AddIconBeanDictionaryByFolder("Assets/Texture/Character/Mouth/", bodyManager.listIconBodyMouth);
+        //AddIconBeanDictionaryByFile("Assets/Texture/Character/character_mouth.png", bodyManager.listIconBodyMouth);
     }
 
 

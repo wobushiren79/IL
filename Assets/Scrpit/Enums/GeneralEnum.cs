@@ -18,4 +18,5 @@ public enum GeneralEnum
     Book =11,
     Menu =12,//菜谱
    
+    Mask=21,//面具
 }

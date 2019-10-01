@@ -9,9 +9,13 @@ public class NpcInfoBean : BaseBean
     public int npc_type;//0默认NPC，
     public int sex;//性别
     public int face;//面向 1.左边 2右边
+
+    public long mask_id;
+    public long hand_id;
     public long hat_id;
     public long clothes_id;
     public long shoes_id;
+
     public string hair_id;
     public string hair_color;
     public string eye_id;
@@ -59,10 +63,11 @@ public class NpcInfoBean : BaseBean
         characterData.body.face = npcInfo.face;
 
         characterData.equips = new CharacterEquipBean();
+        characterData.equips.handId = npcInfo.hand_id;
         characterData.equips.hatId = npcInfo.hat_id;
         characterData.equips.clothesId = npcInfo.clothes_id;
         characterData.equips.shoesId = npcInfo.shoes_id;
-
+        characterData.equips.maskId = npcInfo.mask_id;
         return characterData;
     }
 

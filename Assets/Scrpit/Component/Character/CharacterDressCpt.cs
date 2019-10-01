@@ -3,6 +3,8 @@ using UnityEditor;
 
 public class CharacterDressCpt : BaseMonoBehaviour
 {
+    //面具
+    public SpriteRenderer sprMask;
     //帽子
     public SpriteRenderer sprHat;
     public SpriteRenderer sprHair;
@@ -27,6 +29,10 @@ public class CharacterDressCpt : BaseMonoBehaviour
         return characterEquipData;
     }
 
+    /// <summary>
+    /// 设置帽子
+    /// </summary>
+    /// <param name="itemsInfo"></param>
     public void SetHat(ItemsInfoBean itemsInfo)
     {
         if (sprHat == null)
@@ -49,6 +55,33 @@ public class CharacterDressCpt : BaseMonoBehaviour
         sprHat.sprite = hatSP;
     }
 
+    /// <summary>
+    /// 设置面具
+    /// </summary>
+    /// <param name="itemsInfo"></param>
+    public void SetMask(ItemsInfoBean itemsInfo)
+    {
+        if (sprMask == null)
+            return;
+        Sprite maskSP = null;
+        if (itemsInfo == null)
+            maskSP = null;
+        else
+        {
+            if (itemsInfo.id != 0)
+                maskSP = characterDressManager.GetMaskSpriteByName(itemsInfo.icon_key);
+            //设置装备数据
+            if (characterEquipData == null)
+                characterEquipData = new CharacterEquipBean();
+            characterEquipData.maskId = itemsInfo.id;
+        }
+        sprMask.sprite = maskSP;
+    }
+
+    /// <summary>
+    /// 设置衣服
+    /// </summary>
+    /// <param name="itemsInfo"></param>
     public void SetClothes(ItemsInfoBean itemsInfo)
     {
         if (sprClothes == null)
@@ -68,6 +101,10 @@ public class CharacterDressCpt : BaseMonoBehaviour
         sprClothes.sprite = clothesSP;
     }
 
+    /// <summary>
+    /// 设置鞋子
+    /// </summary>
+    /// <param name="itemsInfo"></param>
     public void SetShoes(ItemsInfoBean itemsInfo)
     {
         if (sprShoesLeft == null || sprShoesRight == null)

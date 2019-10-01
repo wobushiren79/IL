@@ -35,6 +35,12 @@ public class BaseNpcAI : BaseMonoBehaviour
         CharacterDressCpt characterDress = CptUtil.GetCptInChildrenByName<CharacterDressCpt>(gameObject, "Body");
         if (characterDress != null)
         {
+            ItemsInfoBean maskEquip = gameItemsManager.GetItemsById(characterBean.equips.maskId);
+            characterDress.SetMask(maskEquip);
+
+            ItemsInfoBean handEquip = gameItemsManager.GetItemsById(characterBean.equips.handId);
+            characterDress.SetHand(gameItemsManager, handEquip);
+
             ItemsInfoBean hatEquip = gameItemsManager.GetItemsById(characterBean.equips.hatId);
             characterDress.SetHat(hatEquip);
 
@@ -43,9 +49,6 @@ public class BaseNpcAI : BaseMonoBehaviour
 
             ItemsInfoBean shoesEquip = gameItemsManager.GetItemsById(characterBean.equips.shoesId);
             characterDress.SetShoes(shoesEquip);
-
-            ItemsInfoBean handEquip = gameItemsManager.GetItemsById(characterBean.equips.handId);
-            characterDress.SetHand(gameItemsManager, handEquip);
         }
         //设置属性数据
         //获取属性数据

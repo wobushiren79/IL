@@ -45,7 +45,7 @@ BoxCollider2D:
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
@@ -101,12 +101,14 @@ MonoBehaviour:
         workerLevel: 0
         workerExp: 0
         cookNumber: 0
+        cookTime: 0
         listFoodCookNumer: []
       waiterInfo:
         workerLevel: 0
         workerExp: 0
         cleanTotalNumber: 0
         sendTotalNumber: 0
+        cleanTotalTime: 0
       accountingInfo:
         workerLevel: 0
         workerExp: 0
@@ -122,15 +124,22 @@ MonoBehaviour:
         accountingMoneyL: 0
         accountingMoneyM: 0
         accountingMoneyS: 0
+        accountingTotalTime: 0
       accostInfo:
         workerLevel: 0
         workerExp: 0
         accostTotalNumber: 0
         accostSuccessNumber: 0
         accostFailNumber: 0
+        accostTotalTime: 0
       beaterInfo:
         workerLevel: 0
         workerExp: 0
+        fightTotalNumber: 0
+        fightWinNumber: 0
+        fightLoseNumber: 0
+        fightTotalTime: 0
+        restTotalTime: 0
       isChef: 0
       isWaiter: 0
       isAccounting: 0
