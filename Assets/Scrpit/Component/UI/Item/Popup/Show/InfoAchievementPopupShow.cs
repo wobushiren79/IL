@@ -27,9 +27,9 @@ public class InfoAchievementPopupShow : PopupShowView
     public InnFoodManager innFoodManager;
 
     public AchievementInfoBean achievementInfo;
-    public ItemGameGuildAchievementCpt.AchievementStatusEnum status;
+    public ItemTownGuildAchievementCpt.AchievementStatusEnum status;
 
-    public void SetData(ItemGameGuildAchievementCpt.AchievementStatusEnum status, AchievementInfoBean achievementInfo)
+    public void SetData(ItemTownGuildAchievementCpt.AchievementStatusEnum status, AchievementInfoBean achievementInfo)
     {
         this.status = status;
         this.achievementInfo = achievementInfo;
@@ -58,12 +58,12 @@ public class InfoAchievementPopupShow : PopupShowView
             ivIcon.sprite = spIcon;
             switch (status)
             {
-                case ItemGameGuildAchievementCpt.AchievementStatusEnum.Completed:
+                case ItemTownGuildAchievementCpt.AchievementStatusEnum.Completed:
                     ivIcon.material = null;
                     ivRemark.material = null;
                     break;
-                case ItemGameGuildAchievementCpt.AchievementStatusEnum.Processing:
-                case ItemGameGuildAchievementCpt.AchievementStatusEnum.ToBeConfirmed:
+                case ItemTownGuildAchievementCpt.AchievementStatusEnum.Processing:
+                case ItemTownGuildAchievementCpt.AchievementStatusEnum.ToBeConfirmed:
                     ivIcon.material = materialGray;
                     ivRemark.material = materialGray;
                     break;
@@ -101,22 +101,22 @@ public class InfoAchievementPopupShow : PopupShowView
     /// 设置状态
     /// </summary>
     /// <param name="status"></param>
-    public void SetStatus(ItemGameGuildAchievementCpt.AchievementStatusEnum status)
+    public void SetStatus(ItemTownGuildAchievementCpt.AchievementStatusEnum status)
     {
         if (tvStatus != null)
         {
             switch (status)
             {
-                case ItemGameGuildAchievementCpt.AchievementStatusEnum.Completed:
+                case ItemTownGuildAchievementCpt.AchievementStatusEnum.Completed:
                     tvStatus.text = GameCommonInfo.GetUITextById(12001);
                     tvStatus.color = new Color(0, 1, 0, 1);
                     break;
-                case ItemGameGuildAchievementCpt.AchievementStatusEnum.Processing:
+                case ItemTownGuildAchievementCpt.AchievementStatusEnum.Processing:
                     tvStatus.text = GameCommonInfo.GetUITextById(12002);
                     tvStatus.color = new Color();
                     tvStatus.color = new Color(0, 0, 0, 1);
                     break;
-                case ItemGameGuildAchievementCpt.AchievementStatusEnum.ToBeConfirmed:
+                case ItemTownGuildAchievementCpt.AchievementStatusEnum.ToBeConfirmed:
                     tvStatus.text = GameCommonInfo.GetUITextById(12003);
                     tvStatus.color = new Color();
                     tvStatus.color = new Color(1, 0.2f, 0, 1);
@@ -261,7 +261,7 @@ public class InfoAchievementPopupShow : PopupShowView
 
     private void CreateProStr(long own, long achieve, out string proStr, out float pro)
     {
-        if (status == ItemGameGuildAchievementCpt.AchievementStatusEnum.Completed)
+        if (status == ItemTownGuildAchievementCpt.AchievementStatusEnum.Completed)
         {
             proStr = "(" + achieve + "/" + achieve + ")";
             pro = 1;

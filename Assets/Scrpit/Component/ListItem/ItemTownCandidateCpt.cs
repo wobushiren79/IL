@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using UnityEditor;
 using UnityEngine.UI;
-public class ItemGameCandidateCpt : ItemGameBaseCpt, DialogView.IDialogCallBack
+public class ItemTownCandidateCpt : ItemGameBaseCpt, DialogView.IDialogCallBack
 {
     public Text tvName;
     public Text tvPrice;

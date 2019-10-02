@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using UnityEditor;
 using UnityEngine.UI;
-public class ItemGameGroceryCpt : ItemGameBaseCpt, DialogView.IDialogCallBack
+public class ItemTownGroceryCpt : ItemGameBaseCpt, DialogView.IDialogCallBack
 {
     [Header("控件")]
     public GameObject objCook;

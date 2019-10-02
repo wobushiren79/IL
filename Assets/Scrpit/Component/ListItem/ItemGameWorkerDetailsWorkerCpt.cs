@@ -25,7 +25,8 @@ public class ItemGameWorkerDetailsWorkerCpt : BaseMonoBehaviour
         if (workInfo == null)
             return;
         //设置等级名称
-        string workerLevelName = workInfo.GetWorkerLevelName() + CharacterWorkerBaseBean.GetWorkerName(workerType);
+        string workerLevelName =
+            CharacterWorkerBaseBean.GetWorkerLevelName(workInfo.workerLevel) + CharacterWorkerBaseBean.GetWorkerName(workerType);
         SetLevelName(workerLevelName);
         //设置经验条
         workInfo.GetWorkerExp(out float nextLevelExp, out float currentExp, out float levelProportion);

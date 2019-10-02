@@ -124,9 +124,8 @@ public class UITownRecruitment : UIBaseOne
         for (int i = 0; i < listData.Count; i++)
         {
             CharacterBean itemData = listData[i];
-            GameObject objCandidate = Instantiate(objCandidateModel, objCandidateContent.transform);
-            objCandidate.SetActive(true);
-            ItemGameCandidateCpt itemCpt = objCandidate.GetComponent<ItemGameCandidateCpt>();
+            GameObject objCandidate = Instantiate(objCandidateContent, objCandidateModel);
+            ItemTownCandidateCpt itemCpt = objCandidate.GetComponent<ItemTownCandidateCpt>();
             itemCpt.SetData(itemData);
         }
     }

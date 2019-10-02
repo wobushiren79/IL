@@ -82,9 +82,7 @@ public class UIGameAttendance : BaseUIComponent, ItemGameAttendanceCpt.ICallBack
         GameDataManager gameDataManager = GetUIMananger<UIGameManager>().gameDataManager;
         if (gameDataManager == null)
             return;
-        List<CharacterBean> listData = new List<CharacterBean>();
-        listData.Add(gameDataManager.gameData.userCharacter);
-        listData.AddRange(gameDataManager.gameData.workCharacterList);
+        List<CharacterBean> listData = gameDataManager.gameData.GetAllCharacterData();
         for (int i = 0; i < listData.Count; i++)
         {
             CharacterBean itemData = listData[i];

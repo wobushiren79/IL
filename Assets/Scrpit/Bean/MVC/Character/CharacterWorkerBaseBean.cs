@@ -32,48 +32,14 @@ public class CharacterWorkerBaseBean
     /// <summary>
     /// 获取职业经验信息
     /// </summary>
-    /// <param name="nextLevelExp"></param>
-    /// <param name="currentExp"></param>
-    /// <param name="levelProportion"></param>
+    /// <param name="nextLevelExp">升级所需经验</param>
+    /// <param name="currentExp">当前经验</param>
+    /// <param name="levelProportion">经验百分比</param>
     public void GetWorkerExp(out float nextLevelExp, out float currentExp, out float levelProportion)
     {
         nextLevelExp = GetLevelUpExp(workerLevel + 1);
         currentExp = workerExp;
         levelProportion = currentExp / nextLevelExp;
-    }
-
-    /// <summary>
-    /// 获取职业等级名称
-    /// </summary>
-    /// <returns></returns>
-    public string GetWorkerLevelName()
-    {
-        string workerLevelName = "???";
-        switch (workerLevel)
-        {
-            case 0:
-                workerLevelName = GameCommonInfo.GetUITextById(110);
-                break;
-            case 1:
-                workerLevelName = GameCommonInfo.GetUITextById(111);
-                break;
-            case 2:
-                workerLevelName = GameCommonInfo.GetUITextById(112);
-                break;
-            case 3:
-                workerLevelName = GameCommonInfo.GetUITextById(113);
-                break;
-            case 4:
-                workerLevelName = GameCommonInfo.GetUITextById(114);
-                break;
-            case 5:
-                workerLevelName = GameCommonInfo.GetUITextById(115);
-                break;
-            case 6:
-                workerLevelName = GameCommonInfo.GetUITextById(116);
-                break;
-        }
-        return workerLevelName;
     }
 
     /// <summary>
@@ -135,5 +101,39 @@ public class CharacterWorkerBaseBean
                 break;
         }
         return workerName;
+    }
+
+    /// <summary>
+    /// 获取职业等级名称
+    /// </summary>
+    /// <returns></returns>
+    public static string GetWorkerLevelName(int level)
+    {
+        string workerLevelName = "???";
+        switch (level)
+        {
+            case 0:
+                workerLevelName = GameCommonInfo.GetUITextById(110);
+                break;
+            case 1:
+                workerLevelName = GameCommonInfo.GetUITextById(111);
+                break;
+            case 2:
+                workerLevelName = GameCommonInfo.GetUITextById(112);
+                break;
+            case 3:
+                workerLevelName = GameCommonInfo.GetUITextById(113);
+                break;
+            case 4:
+                workerLevelName = GameCommonInfo.GetUITextById(114);
+                break;
+            case 5:
+                workerLevelName = GameCommonInfo.GetUITextById(115);
+                break;
+            case 6:
+                workerLevelName = GameCommonInfo.GetUITextById(116);
+                break;
+        }
+        return workerLevelName;
     }
 }

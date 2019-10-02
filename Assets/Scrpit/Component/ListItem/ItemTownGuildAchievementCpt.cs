@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using UnityEditor;
 using UnityEngine.UI;
-public class ItemGameGuildAchievementCpt : ItemGameBaseCpt
+public class ItemTownGuildAchievementCpt : ItemGameBaseCpt
 {
     public enum AchievementStatusEnum
     {

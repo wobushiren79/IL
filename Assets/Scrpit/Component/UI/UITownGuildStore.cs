@@ -3,7 +3,7 @@ using UnityEditor;
 using System.Collections.Generic;
 using DG.Tweening;
 
-public class UITownGuildStore : UIBaseOne , IStoreInfoView,IRadioGroupCallBack
+public class UITownGuildStore : UIBaseOne, IStoreInfoView, IRadioGroupCallBack
 {
     public GameObject objGuidStoreContent;
     public GameObject objGuidStoreModel;
@@ -87,9 +87,8 @@ public class UITownGuildStore : UIBaseOne , IStoreInfoView,IRadioGroupCallBack
             {
                 continue;
             }
-            GameObject itemObj = Instantiate(objGuidStoreModel, objGuidStoreContent.transform);
-            itemObj.SetActive(true);
-            ItemGameGuildStoreCpt groceryCpt = itemObj.GetComponent<ItemGameGuildStoreCpt>();
+            GameObject itemObj = Instantiate(objGuidStoreContent, objGuidStoreModel);
+            ItemTownGuildStoreCpt groceryCpt = itemObj.GetComponent<ItemTownGuildStoreCpt>();
             groceryCpt.SetData(itemData);
             itemObj.transform.DOScale(new Vector3(0, 0, 0), 0.5f).SetEase(Ease.OutBack).SetDelay(i * 0.05f).From();
         }

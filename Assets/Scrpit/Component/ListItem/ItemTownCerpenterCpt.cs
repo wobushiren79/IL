@@ -3,7 +3,7 @@ using UnityEditor;
 using System;
 using UnityEngine.UI;
 
-public class ItemGameCerpenterCpt : ItemGameBaseCpt, DialogView.IDialogCallBack
+public class ItemTownCerpenterCpt : ItemGameBaseCpt, DialogView.IDialogCallBack
 {
     public Image ivIcon;
     public Text tvName;

@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using UnityEditor;
 
-public class ItemGameGuildStoreCpt : ItemGameGroceryCpt
+public class ItemTownGuildStoreCpt : ItemTownGroceryCpt
 {
 
 

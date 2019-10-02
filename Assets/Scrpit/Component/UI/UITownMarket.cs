@@ -53,9 +53,8 @@ public class UITownMarket : UIBaseOne, IStoreInfoView
         for (int i = 0; i < listData.Count; i++)
         {
             StoreInfoBean itemData = listData[i];
-            GameObject objGoods = Instantiate(objGoodsModel, objGoodsContent.transform);
-            objGoods.SetActive(true);
-            ItemGameGoodsMarketCpt itemCpt = objGoods.GetComponent<ItemGameGoodsMarketCpt>();
+            GameObject objGoods = Instantiate(objGoodsContent, objGoodsModel);
+            ItemTownGoodsMarketCpt itemCpt = objGoods.GetComponent<ItemTownGoodsMarketCpt>();
             if (itemCpt != null)
             {
                 IconBean iconData = BeanUtil.GetIconBeanByName(itemData.icon_key, listGoodsIcon);

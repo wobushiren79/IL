@@ -30,7 +30,7 @@ public class UITownGrocery : UIBaseOne, IStoreInfoView, IRadioGroupCallBack
     public override void OpenUI()
     {
         base.OpenUI();
-        rgGroceryType.SetPosition(0,false);
+        rgGroceryType.SetPosition(0, false);
         InitDataByType(0);
     }
 
@@ -75,9 +75,9 @@ public class UITownGrocery : UIBaseOne, IStoreInfoView, IRadioGroupCallBack
         List<StoreInfoBean> listData = new List<StoreInfoBean>();
         if (mGroceryListData == null)
             return listData;
-        for(int i=0;i< mGroceryListData.Count; i++)
+        for (int i = 0; i < mGroceryListData.Count; i++)
         {
-            StoreInfoBean itemData= mGroceryListData[i];
+            StoreInfoBean itemData = mGroceryListData[i];
             if (itemData.mark.Equals(mark))
             {
                 listData.Add(itemData);
@@ -98,14 +98,12 @@ public class UITownGrocery : UIBaseOne, IStoreInfoView, IRadioGroupCallBack
         for (int i = 0; i < listData.Count; i++)
         {
             StoreInfoBean itemData = listData[i];
-            GameObject itemObj = Instantiate(objGroceryModel, objGroceryContent.transform);
-            itemObj.SetActive(true);
-            ItemGameGroceryCpt groceryCpt = itemObj.GetComponent<ItemGameGroceryCpt>();
+            GameObject itemObj = Instantiate(objGroceryContent, objGroceryModel);
+            ItemTownGroceryCpt groceryCpt = itemObj.GetComponent<ItemTownGroceryCpt>();
             groceryCpt.SetData(itemData);
             itemObj.transform.DOScale(new Vector3(0, 0, 0), 0.5f).SetEase(Ease.OutBack).SetDelay(i * 0.05f).From();
         }
     }
-
 
     #region 商店数据回调
     public void GetAllStoreInfoSuccess(List<StoreInfoBean> listData)

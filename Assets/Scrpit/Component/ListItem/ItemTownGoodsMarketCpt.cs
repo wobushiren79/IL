@@ -2,7 +2,7 @@
 using UnityEditor;
 using UnityEngine.UI;
 
-public class ItemGameGoodsMarketCpt : ItemGameBaseCpt
+public class ItemTownGoodsMarketCpt : ItemGameBaseCpt
 {
     public Image ivIcon;
     public Text tvName;

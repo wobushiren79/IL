@@ -42,8 +42,8 @@ public class UITownCarpenter : UIBaseOne, IStoreInfoView, IRadioGroupCallBack
 
     public void InitDataByType(int type)
     {
-       List<StoreInfoBean> listData= GetCerpenterListDataByMark(type);
-       CreateCarpenterData(listData, type);
+        List<StoreInfoBean> listData = GetCerpenterListDataByMark(type);
+        CreateCarpenterData(listData, type);
     }
 
     /// <summary>
@@ -71,7 +71,7 @@ public class UITownCarpenter : UIBaseOne, IStoreInfoView, IRadioGroupCallBack
     /// 创建商品列表
     /// </summary>
     /// <param name="listData"></param>
-    public void CreateCarpenterData(List<StoreInfoBean> listData,int type)
+    public void CreateCarpenterData(List<StoreInfoBean> listData, int type)
     {
         CptUtil.RemoveChildsByActive(objCarpenterContent.transform);
         if (listData == null || objCarpenterContent == null)
@@ -79,31 +79,30 @@ public class UITownCarpenter : UIBaseOne, IStoreInfoView, IRadioGroupCallBack
         for (int i = 0; i < listData.Count; i++)
         {
             StoreInfoBean itemData = listData[i];
-            GameObject itemObj ;
+            GameObject itemObj;
             if (type == 0)
             {
-                if(itemData.id> 300000&& itemData.id<= 300010)
+                if (itemData.id > 300000 && itemData.id <= 300010)
                 {
-                    if (int.Parse(itemData.mark) - 1 ==GetUIMananger<UIGameManager>().gameDataManager.gameData.GetInnBuildData().buildLevel)
+                    if (int.Parse(itemData.mark) - 1 == GetUIMananger<UIGameManager>().gameDataManager.gameData.GetInnBuildData().buildLevel)
                     {
-                        itemObj = Instantiate(objCarpenterModelForExpansion, objCarpenterContent.transform);
+                        itemObj = Instantiate(objCarpenterContent, objCarpenterModelForExpansion);
                     }
                     else
                     {
                         continue;
-                    }   
+                    }
                 }
                 else
                 {
-                    itemObj = Instantiate(objCarpenterModelForExpansion, objCarpenterContent.transform);
-                } 
+                    itemObj = Instantiate(objCarpenterContent, objCarpenterModelForExpansion);
+                }
             }
             else
             {
-                itemObj = Instantiate(objCarpenterModelForGoods, objCarpenterContent.transform);
+                itemObj = Instantiate(objCarpenterContent, objCarpenterModelForGoods);
             }
-            itemObj.SetActive(true);
-            ItemGameCerpenterCpt groceryCpt = itemObj.GetComponent<ItemGameCerpenterCpt>();
+            ItemTownCerpenterCpt groceryCpt = itemObj.GetComponent<ItemTownCerpenterCpt>();
             groceryCpt.SetData(itemData);
             itemObj.transform.DOScale(new Vector3(0, 0, 0), 0.5f).SetEase(Ease.OutBack).SetDelay(i * 0.05f).From();
         }

@@ -2,7 +2,7 @@
 using UnityEditor;
 using UnityEngine.UI;
 
-public class ItemGameDressStoreCpt : ItemGameGroceryCpt
+public class ItemTownDressStoreCpt : ItemTownGroceryCpt
 {
  
 }

@@ -43,6 +43,20 @@ public class GameDataBean
     public WeatherBean weatherToday;//当天天气
 
     /// <summary>
+    /// 获取所有人员信息
+    /// </summary>
+    /// <returns></returns>
+    public List<CharacterBean> GetAllCharacterData()
+    {
+        List<CharacterBean> listData = new List<CharacterBean>();
+        if (userCharacter != null)
+            listData.Add(userCharacter);
+        if (workCharacterList != null)
+            listData.AddRange(workCharacterList);
+        return listData;
+    }
+
+    /// <summary>
     /// 添加事件
     /// </summary>
     /// <param name="eventId"></param>
@@ -59,8 +73,9 @@ public class GameDataBean
     /// </summary>
     /// <param name="eventId"></param>
     /// <returns></returns>
-    public bool CheckTriggeredEvent(long eventId) {
-       return triggeredEventList.Contains(eventId);
+    public bool CheckTriggeredEvent(long eventId)
+    {
+        return triggeredEventList.Contains(eventId);
     }
 
     /// <summary>
@@ -330,7 +345,7 @@ public class GameDataBean
     }
 
     /// <summary>
-    /// 增加一个傲居
+    /// 增加一个新的道具
     /// </summary>
     /// <param name="id"></param>
     public void AddNewItems(long id, long number)
@@ -432,8 +447,6 @@ public class GameDataBean
         }
         return number;
     }
-
-
 
     /// <summary>
     /// 增加菜谱

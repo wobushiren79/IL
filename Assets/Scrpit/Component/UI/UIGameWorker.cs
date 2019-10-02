@@ -40,10 +40,8 @@ public class UIGameWorker : BaseUIComponent
     {
         GameDataManager gameDataManager = GetUIMananger<UIGameManager>().gameDataManager;
         if (gameDataManager == null)
-            return;
-        List<CharacterBean> listData = new List<CharacterBean>();
-        listData.Add(gameDataManager.gameData.userCharacter);
-        listData.AddRange(gameDataManager.gameData.workCharacterList);
+            return;  
+        List<CharacterBean> listData = gameDataManager.gameData.GetAllCharacterData();
         CptUtil.RemoveChildsByActive(objListContent.transform);
         for (int i = 0; i < listData.Count; i++)
         {

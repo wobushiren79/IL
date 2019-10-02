@@ -1,16 +1,21 @@
 ﻿using UnityEngine;
 using UnityEditor;
 
-public class UITownGuildImprove : UIBaseOne,IRadioGroupCallBack
+public class UITownGuildImprove : UIBaseOne, IRadioGroupCallBack
 {
     public RadioGroupView rgType;
-    public GameObject objTypeInn;
-    public GameObject objTypeCharacter;
+    public UITownGuildImproveInnInfo uiInnInfo;
+    public UITownGuildImproveCharacterInfo uiCharacterInfo;
 
-    private new void Start()
+    private void Awake()
     {
-        base.Start();
-        ChangeUIType(0);
+        rgType.SetCallBack(this);
+    }
+
+    public override void OpenUI()
+    {
+        base.OpenUI();
+        rgType.SetPosition(0, true);
     }
 
     /// <summary>
@@ -19,15 +24,18 @@ public class UITownGuildImprove : UIBaseOne,IRadioGroupCallBack
     /// <param name="type"></param>
     public void ChangeUIType(int type)
     {
-        objTypeInn.SetActive(false);
-        objTypeCharacter.SetActive(false);
+        UIGameManager uiGameManager = GetUIMananger<UIGameManager>();
+
+        uiInnInfo.gameObject.SetActive(false);
+        uiCharacterInfo.gameObject.SetActive(false);
         switch (type)
         {
             case 0:
-                objTypeInn.SetActive(true);
+                uiInnInfo.gameObject.SetActive(true);
                 break;
             case 1:
-                objTypeCharacter.SetActive(true);
+                uiCharacterInfo.gameObject.SetActive(true);
+                uiCharacterInfo.InitData(uiGameManager.gameDataManager.gameData);
                 break;
         }
     }
