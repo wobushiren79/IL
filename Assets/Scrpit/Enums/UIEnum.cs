@@ -24,5 +24,5 @@ public enum UIEnum
     TownCarpenter,
     TownGuildStore,
     TownGuildAchievement,
-
+    TownGuildImprove,
 }

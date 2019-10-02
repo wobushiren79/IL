@@ -2,7 +2,7 @@
 using UnityEditor;
 using System.Collections.Generic;
 
-public class NpcInfoService 
+public class NpcInfoService
 {
     private readonly string mTableName;
     private readonly string mLeftDetailsTableName;
@@ -23,7 +23,10 @@ public class NpcInfoService
             (ProjectConfigInfo.DATA_BASE_INFO_NAME, mTableName,
             new string[] { mLeftDetailsTableName },
             new string[] { "id" },
-            new string[] { "npc_id" });
+            new string[] { "npc_id" },
+            new string[] { mTableName + ".valid" },
+            new string[] { "=" },
+            new string[] { "1" });
     }
 
     /// <summary>
@@ -33,7 +36,7 @@ public class NpcInfoService
     /// <returns></returns>
     public List<NpcInfoBean> QueryDataByIds(long[] ids)
     {
-        string[] leftTable = new string[] { mLeftDetailsTableName};
+        string[] leftTable = new string[] { mLeftDetailsTableName };
         string[] mainKey = new string[] { "id" };
         string[] leftKey = new string[] { "npc_id" };
         string[] colName = new string[] { mTableName + ".id" };
@@ -55,7 +58,7 @@ public class NpcInfoService
         string[] leftKey = new string[] { "npc_id" };
         string[] colName = new string[] { mTableName + ".id" };
         string[] operations = new string[] { "=" };
-        string[] colValue = new string[] { id+"" };
+        string[] colValue = new string[] { id + "" };
         return SQliteHandle.LoadTableData<NpcInfoBean>(ProjectConfigInfo.DATA_BASE_INFO_NAME, mTableName, leftTable, mainKey, leftKey, colName, operations, colValue);
     }
 
