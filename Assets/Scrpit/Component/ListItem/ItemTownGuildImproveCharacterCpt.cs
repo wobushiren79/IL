@@ -262,6 +262,39 @@ public class ItemTownGuildImproveCharacterCpt : ItemGameBaseCpt, DialogView.IDia
     {
         GameDataManager gameDataManager = GetUIManager<UIGameManager>().gameDataManager;
         gameDataManager.gameData.PayMoney(levelData.price_l, levelData.price_m, levelData.price_s);
+
+        //判断玩哪个游戏
+        ArenaGameEnum gameType;
+        switch (workerType)
+        {
+            case WorkerEnum.Chef:
+                gameType = ArenaGameEnum.Cooking;
+                break;
+            case WorkerEnum.Waiter:
+                gameType = ArenaGameEnum.Barrage;
+                break;
+            case WorkerEnum.Accounting:
+                gameType = ArenaGameEnum.Barrage;
+                break;
+            case WorkerEnum.Accost:
+                gameType = ArenaGameEnum.Barrage;
+                break;
+            case WorkerEnum.Beater:
+                gameType = ArenaGameEnum.Barrage;
+                break;
+            default:
+                gameType = ArenaGameEnum.Barrage;
+                break;
+        }
+        //设置竞技场数据
+        GameCommonInfo.ArenaPrepareData = new ArenaPrepareBean
+        {
+            gameType = gameType,
+            gamePlayerNumber = 1,
+            gameLevel = levelData.mark_type,
+        };
+        //跳转到竞技场
+        SceneUtil.SceneChange(EnumUtil.GetEnumName(ScenesEnum.GameArenaScene));
     }
 
     public void Cancel(DialogView dialogView, DialogBean dialogBean)

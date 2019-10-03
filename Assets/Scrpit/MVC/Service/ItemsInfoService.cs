@@ -11,7 +11,7 @@ public class ItemsInfoService
     public ItemsInfoService()
     {
         mTableName = "items_info";
-        mLeftDetailsTableName = "items_info_details_" + GameCommonInfo.gameConfig.language;
+        mLeftDetailsTableName = "items_info_details_" + GameCommonInfo.GameConfig.language;
         mLeftIntactTableName = "items_intact_info";
     }
 

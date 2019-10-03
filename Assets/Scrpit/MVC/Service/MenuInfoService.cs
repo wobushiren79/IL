@@ -10,7 +10,7 @@ public class MenuInfoService
     public MenuInfoService()
     {
         mTableName = "menu_info";
-        mLeftDetailsTableName = "menu_info_details_" + GameCommonInfo.gameConfig.language;
+        mLeftDetailsTableName = "menu_info_details_" + GameCommonInfo.GameConfig.language;
     }
 
     /// <summary>

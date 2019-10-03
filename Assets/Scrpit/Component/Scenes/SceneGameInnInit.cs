@@ -6,7 +6,6 @@ using UnityEngine.SceneManagement;
 
 public class SceneGameInnInit : BaseSceneInit, IBaseObserver, DialogView.IDialogCallBack
 {
-    public UIGameManager uiGameManager;
     public NpcInfoManager npcInfoManager;
     public InnBuildManager innBuildManager;
     public StoryInfoManager storyInfoManager;
@@ -30,13 +29,13 @@ public class SceneGameInnInit : BaseSceneInit, IBaseObserver, DialogView.IDialog
             gameItemsManager.itemsInfoController.GetAllItemsInfo();
         if (gameDataManager != null)
         {
-            if (GameCommonInfo.gameData != null)
+            if (GameCommonInfo.GameData != null)
             {
-                gameDataManager.gameData = GameCommonInfo.gameData;
+                gameDataManager.gameData = GameCommonInfo.GameData;
             }
             else
             {
-                gameDataManager.gameDataController.GetGameDataByUserId(GameCommonInfo.gameUserId);
+                gameDataManager.gameDataController.GetGameDataByUserId(GameCommonInfo.GameUserId);
             }
         }
         if (npcInfoManager != null)
@@ -115,8 +114,8 @@ public class SceneGameInnInit : BaseSceneInit, IBaseObserver, DialogView.IDialog
         //停止时间
         gameTimeHandler.SetTimeStatus(true);
         //重置游戏时间
-        GameCommonInfo.gameData.gameTime.hour = 0;
-        GameCommonInfo.gameData.gameTime.minute = 0;
+        GameCommonInfo.GameData.gameTime.hour = 0;
+        GameCommonInfo.GameData.gameTime.minute = 0;
         //保存数据
         gameDataManager.SaveGameData();
 

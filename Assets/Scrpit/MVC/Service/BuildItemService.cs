@@ -11,7 +11,7 @@ public class BuildItemService
     public BuildItemService()
     {
         mTableName = "build_item";
-        mLeftDetailsTableName = "build_item_details_" + GameCommonInfo.gameConfig.language;
+        mLeftDetailsTableName = "build_item_details_" + GameCommonInfo.GameConfig.language;
     }
 
     /// <summary>

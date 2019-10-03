@@ -17,6 +17,7 @@ public enum UIEnum
     GameSettle,
     GameAttendance,
     GameText,
+    GameCountDown,
     TownMarket,
     TownRecruitment,
     TownGrocery,
@@ -25,4 +26,5 @@ public enum UIEnum
     TownGuildStore,
     TownGuildAchievement,
     TownGuildImprove,
+    MiniGameBarrage,
 }

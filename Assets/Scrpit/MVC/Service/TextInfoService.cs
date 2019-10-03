@@ -13,15 +13,15 @@ public class TextInfoService
         {
             case TextEnum.Look:
                 mTableName = "text_look";
-                mLeftDetailsTableName = "text_look_details_" + GameCommonInfo.gameConfig.language;
+                mLeftDetailsTableName = "text_look_details_" + GameCommonInfo.GameConfig.language;
                 break;
             case TextEnum.Talk:
                 mTableName = "text_talk";
-                mLeftDetailsTableName = "text_talk_details_" + GameCommonInfo.gameConfig.language;
+                mLeftDetailsTableName = "text_talk_details_" + GameCommonInfo.GameConfig.language;
                 break;
             case TextEnum.Story:
                 mTableName = "text_story";
-                mLeftDetailsTableName = "text_story_details_" + GameCommonInfo.gameConfig.language;
+                mLeftDetailsTableName = "text_story_details_" + GameCommonInfo.GameConfig.language;
                 break;
             default:
                 return null;
@@ -39,7 +39,7 @@ public class TextInfoService
     public List<TextInfoBean> QueryDataForFirstOrderByFavorability(long characterId, int favorability)
     {
         mTableName = "text_talk";
-        mLeftDetailsTableName = "text_talk_details_" + GameCommonInfo.gameConfig.language;
+        mLeftDetailsTableName = "text_talk_details_" + GameCommonInfo.GameConfig.language;
         string[] leftTable = new string[] { mLeftDetailsTableName };
         string[] mainKey = new string[] { "id" };
         string[] leftKey = new string[] { "text_id" };
@@ -53,7 +53,7 @@ public class TextInfoService
     public List<TextInfoBean> QueryDataForFirstOrderByFirstMeet(long characterId)
     {
         mTableName = "text_talk";
-        mLeftDetailsTableName = "text_talk_details_" + GameCommonInfo.gameConfig.language;
+        mLeftDetailsTableName = "text_talk_details_" + GameCommonInfo.GameConfig.language;
         string[] leftTable = new string[] { mLeftDetailsTableName };
         string[] mainKey = new string[] { "id" };
         string[] leftKey = new string[] { "text_id" };

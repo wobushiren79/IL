@@ -73,7 +73,7 @@ public class GameDataManager : BaseManager, IGameDataView
         if (gameData == null)
             gameData = new GameDataBean();
         this.gameData = gameData;
-        GameCommonInfo.gameData = gameData;
+        GameCommonInfo.GameData = gameData;
     }
 
     public void SetGameDataFail()

@@ -16,7 +16,10 @@ public class SceneGameArenaInit : BaseSceneInit
         ArenaPrepareBean arenaPrepareData = GameCommonInfo.ArenaPrepareData;
         arenaPrepareData = new ArenaPrepareBean();
         arenaPrepareData.gameType = ArenaGameEnum.Barrage;
-
+        arenaPrepareData.gamePlayerNumber = 1;
+        arenaPrepareData.gameLevel = 1;
+        arenaPrepareData.winSurvivalTime = 60;
+        arenaPrepareData.winLife = 1;
         if (arenaPrepareData == null)
             return;
         switch (arenaPrepareData.gameType)
@@ -24,10 +27,14 @@ public class SceneGameArenaInit : BaseSceneInit
             case ArenaGameEnum.Cooking:
                 break;
             case ArenaGameEnum.Barrage:
-                barrageHandler.InitGame(arenaPrepareData);
-                barrageHandler.StartGame();
+                GameBarrage(arenaPrepareData);
                 break;
 
         }
+    }
+
+    public void GameBarrage(ArenaPrepareBean arenaPrepareData)
+    {
+        barrageHandler.InitGame(arenaPrepareData);
     }
 }

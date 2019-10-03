@@ -10,7 +10,7 @@ public class NpcInfoService
     public NpcInfoService()
     {
         mTableName = "npc_info";
-        mLeftDetailsTableName = "npc_info_details_" + GameCommonInfo.gameConfig.language;
+        mLeftDetailsTableName = "npc_info_details_" + GameCommonInfo.GameConfig.language;
     }
 
     /// <summary>

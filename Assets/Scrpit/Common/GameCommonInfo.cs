@@ -3,9 +3,9 @@ using UnityEditor;
 
 public class GameCommonInfo 
 {
-    public static string gameUserId;//游戏用户ID
-    public static GameConfigBean gameConfig; //游戏设置
-    public static GameDataBean gameData;//世界时间
+    public static string GameUserId;//游戏用户ID
+    public static GameConfigBean GameConfig; //游戏设置
+    public static GameDataBean GameData;//世界时间
 
     /// <summary>
     /// 进入竞技场准备数据
@@ -22,7 +22,7 @@ public class GameCommonInfo
      
     static GameCommonInfo()
     {
-        gameConfig = new GameConfigBean();
+        GameConfig = new GameConfigBean();
 
         mGameConfigController = new GameConfigController(null, new GameConfigCallBack());
         mUITextController = new UITextController(null,null);
@@ -45,7 +45,7 @@ public class GameCommonInfo
 
         public void GetGameConfigSuccess(GameConfigBean configBean)
         {
-            gameConfig = configBean;
+            GameConfig = configBean;
             mUITextController.RefreshData();
         }
 

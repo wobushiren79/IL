@@ -10,7 +10,7 @@ public class AchievementInfoService
     public AchievementInfoService()
     {
         mTableName = "achievement_info";
-        mLeftDetailsTableName = "achievement_info_details_" + GameCommonInfo.gameConfig.language;
+        mLeftDetailsTableName = "achievement_info_details_" + GameCommonInfo.GameConfig.language;
     }
 
     /// <summary>

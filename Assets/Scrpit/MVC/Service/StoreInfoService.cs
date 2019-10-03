@@ -10,7 +10,7 @@ public class StoreInfoService
     public StoreInfoService()
     {
         mTableName = "store_info";
-        mLeftDetailsTableName = "store_info_details_" + GameCommonInfo.gameConfig.language;
+        mLeftDetailsTableName = "store_info_details_" + GameCommonInfo.GameConfig.language;
     }
 
     /// <summary>

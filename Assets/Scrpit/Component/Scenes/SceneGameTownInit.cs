@@ -21,10 +21,10 @@ public class SceneGameTownInit : BaseSceneInit,IBaseObserver,DialogView.IDialogC
             innBuildManager.buildDataController.GetAllBuildItemsData();
         if (gameDataManager != null)
         {
-            if (GameCommonInfo.gameData != null)
-                gameDataManager.gameData = GameCommonInfo.gameData;
+            if (GameCommonInfo.GameData != null)
+                gameDataManager.gameData = GameCommonInfo.GameData;
             else
-                gameDataManager.gameDataController.GetGameDataByUserId(GameCommonInfo.gameUserId);
+                gameDataManager.gameDataController.GetGameDataByUserId(GameCommonInfo.GameUserId);
         }
         if (npcInfoManager != null)
             npcInfoManager.npcInfoController.GetAllNpcInfo();
@@ -67,8 +67,8 @@ public class SceneGameTownInit : BaseSceneInit,IBaseObserver,DialogView.IDialogC
         if (controlHandler != null)
             controlHandler.StopControl();
         //重置游戏时间
-        GameCommonInfo.gameData.gameTime.hour = 0;
-        GameCommonInfo.gameData.gameTime.minute = 0;
+        GameCommonInfo.GameData.gameTime.hour = 0;
+        GameCommonInfo.GameData.gameTime.minute = 0;
  
         if (dialogManager != null)
         {
