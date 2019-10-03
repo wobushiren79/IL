@@ -112,17 +112,16 @@ public class UITownCarpenter : UIBaseOne, IStoreInfoView, IRadioGroupCallBack
     public void GetAllStoreInfoSuccess(List<StoreInfoBean> listData)
     {
     }
-
-    public void GetStoreInfoByTypeFail()
+    public void GetAllStoreInfoFail()
     {
     }
 
-    public void GetStoreInfoByTypeSuccess(List<StoreInfoBean> listData)
+
+    public void GetStoreInfoByTypeSuccess(int type, List<StoreInfoBean> listData)
     {
         mCarpenterListData = listData;
     }
-
-    public void GetAllStoreInfoFail()
+    public void GetStoreInfoByTypeFail(int type)
     {
     }
     #endregion

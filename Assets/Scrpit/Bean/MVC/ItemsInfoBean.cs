@@ -11,6 +11,7 @@ public class ItemsInfoBean : BaseBean
     public int items_type;//装备类型 1帽子 2衣服  3鞋子
     public string icon_key;//装备图标
 
+    public int add_life;//添加生命值
     public int add_cook;//增加 做菜
     public int add_speed;//增加 跑堂
     public int add_account;//增加 算账

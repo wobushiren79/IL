@@ -5,7 +5,7 @@ using System;
 
 public class ItemTownGuildImproveCharacterCpt : BaseMonoBehaviour
 {
-    [Header("空间")]
+    [Header("控件")]
     public CharacterUICpt characterUICpt;
     public Image ivWorker;
     public Text tvName;
@@ -15,6 +15,11 @@ public class ItemTownGuildImproveCharacterCpt : BaseMonoBehaviour
     public Text tvHighLevelName;
     public Image ivHighLevelIcon;
 
+    public Image ivMoney;
+    public Text tvMoney;
+    public Text tvTime;
+
+    [Header("数据")]
     public Sprite spWorkerChef;
     public Sprite spWorkerWaiter;
     public Sprite spWorkerAccounting;
@@ -28,19 +33,25 @@ public class ItemTownGuildImproveCharacterCpt : BaseMonoBehaviour
     public Sprite spWorkerLevel_5;
     public Sprite spWorkerLevel_6;
 
+    public Sprite spMoneyL;
+    public Sprite spMoneyM;
+    public Sprite spMoneyS;
+
     /// <summary>
     /// 设置数据
     /// </summary>
     /// <param name="workerType"></param>
     /// <param name="characterData"></param>
     /// <param name="workerData"></param>
-    public void SetData(WorkerEnum workerType, CharacterBean characterData, CharacterWorkerBaseBean workerData)
+    public void SetData(WorkerEnum workerType, CharacterBean characterData, CharacterWorkerBaseBean workerData, StoreInfoBean levelData)
     {
         SetWorkerIcon(workerType);
         SetName(characterData.baseInfo.name);
         SetCharacter(characterData);
         SetLowLevelData(workerType, workerData.workerLevel);
         SetHighLevelData(workerType, workerData.workerLevel + 1);
+        SetMoney(levelData.price_l, levelData.price_m, levelData.price_s);
+        SetTime(int.Parse(levelData.mark));
     }
 
     /// <summary>
@@ -167,4 +178,40 @@ public class ItemTownGuildImproveCharacterCpt : BaseMonoBehaviour
                 break;
         }
     }
+
+    /// <summary>
+    /// 设置金钱
+    /// </summary>
+    /// <param name="moneyL"></param>
+    /// <param name="moneyM"></param>
+    /// <param name="moneyS"></param>
+    public void SetMoney(long moneyL, long moneyM, long moneyS)
+    {
+        if (moneyL != 0)
+        {
+            ivMoney.sprite = spMoneyL;
+            tvMoney.text = moneyL + "";
+        }
+        else if (moneyM != 0)
+        {
+            ivMoney.sprite = spMoneyM;
+            tvMoney.text = moneyM + "";
+        }
+        else if (moneyS != 0)
+        {
+            ivMoney.sprite = spMoneyS;
+            tvMoney.text = moneyS + "";
+        }
+    }
+
+    /// <summary>
+    /// 设置时间
+    /// </summary>
+    /// <param name="time"></param>
+    public void SetTime(int time)
+    {
+        if (tvTime != null)
+            tvTime.text = time + GameCommonInfo.GetUITextById(37);
+    }
+
 }

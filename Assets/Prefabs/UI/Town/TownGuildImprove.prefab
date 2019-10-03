@@ -1096,8 +1096,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 301.65128, y: -52}
-  m_SizeDelta: {x: 593.30255, y: 100}
+  m_AnchoredPosition: {x: 300.95203, y: -52}
+  m_SizeDelta: {x: 591.90405, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &4670742135034708241
 CanvasRenderer:
@@ -1154,6 +1154,9 @@ MonoBehaviour:
   ivLowLevelIcon: {fileID: 3884317566801498552}
   tvHighLevelName: {fileID: 3536332774788984535}
   ivHighLevelIcon: {fileID: 8625506922378577824}
+  ivMoney: {fileID: 6030878352041673090}
+  tvMoney: {fileID: 6221153270444669778}
+  tvTime: {fileID: 3818422919427580917}
   spWorkerChef: {fileID: 1635286803553952380, guid: f93f8ef2981e93e4d959d81431aef78d,
     type: 3}
   spWorkerWaiter: {fileID: -8963251539759571500, guid: 00b93cc8c63020447ad8d39fa6361c23,
@@ -1176,6 +1179,9 @@ MonoBehaviour:
     type: 3}
   spWorkerLevel_6: {fileID: -6065493090226664078, guid: 138cfebddb90a7e4fb2370e40b2d028d,
     type: 3}
+  spMoneyL: {fileID: 21300000, guid: 96bc4e961099db8478cd010fa8794791, type: 3}
+  spMoneyM: {fileID: 21300000, guid: c9e90e061d5d02842a845cfad2b2d4d4, type: 3}
+  spMoneyS: {fileID: 21300000, guid: 8c602e885f036ed42bab42d9cd5f3b82, type: 3}
 --- !u!1 &2418279529039129992
 GameObject:
   m_ObjectHideFlags: 0
@@ -2153,7 +2159,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1625065550745157696}
   m_HandleRect: {fileID: 1556668633968008933}
   m_Direction: 2
-  m_Value: 0
+  m_Value: 1
   m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
@@ -4772,7 +4778,7 @@ RectTransform:
   m_GameObject: {fileID: 7759728528915378199}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: -1, y: 1, z: 1}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 3709497512886486900}
   m_RootOrder: 1
@@ -4780,7 +4786,7 @@ RectTransform:
   m_AnchorMin: {x: 0.39800003, y: 0}
   m_AnchorMax: {x: 0.59937197, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: -30, y: 0}
+  m_SizeDelta: {x: -20, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &8641593738043615962
 CanvasRenderer:
@@ -4808,7 +4814,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: b97923f6dd610cf4ea064cf440ddd325, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 1f355d688437cff41acf71ca12467f8b, type: 3}
   m_Type: 0
   m_PreserveAspect: 1
   m_FillCenter: 1
@@ -5177,6 +5183,17 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 3860202822804484677}
     m_Modifications:
+    - target: {fileID: 6202850148536630151, guid: dbdedefdbd5ca8045a10545a8d921571,
+        type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 049a214cc61f8294fb0ef456d115c33f,
+        type: 3}
+    - target: {fileID: 6202850148858248711, guid: dbdedefdbd5ca8045a10545a8d921571,
+        type: 3}
+      propertyPath: m_Name
+      value: CharacterUI
+      objectReference: {fileID: 0}
     - target: {fileID: 6202850148858248704, guid: dbdedefdbd5ca8045a10545a8d921571,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -5282,17 +5299,6 @@ PrefabInstance:
       propertyPath: m_Pivot.y
       value: 0.5
       objectReference: {fileID: 0}
-    - target: {fileID: 6202850148858248711, guid: dbdedefdbd5ca8045a10545a8d921571,
-        type: 3}
-      propertyPath: m_Name
-      value: CharacterUI
-      objectReference: {fileID: 0}
-    - target: {fileID: 6202850148536630151, guid: dbdedefdbd5ca8045a10545a8d921571,
-        type: 3}
-      propertyPath: m_Sprite
-      value: 
-      objectReference: {fileID: 21300000, guid: 049a214cc61f8294fb0ef456d115c33f,
-        type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: dbdedefdbd5ca8045a10545a8d921571, type: 3}
 --- !u!114 &806500220372799302 stripped

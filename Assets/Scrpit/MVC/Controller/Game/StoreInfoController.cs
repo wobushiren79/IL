@@ -31,14 +31,6 @@ public class StoreInfoController : BaseMVCController<StoreInfoModel, IStoreInfoV
     }
 
     /// <summary>
-    /// 获取市场数据
-    /// </summary>
-    public void GetMarketStoreInfo()
-    {
-        GetStoreInfoByType(9);
-    }
-
-    /// <summary>
     /// 获取杂货店数据
     /// </summary>
     public void GetGroceryInfo()
@@ -53,7 +45,7 @@ public class StoreInfoController : BaseMVCController<StoreInfoModel, IStoreInfoV
     {
         GetStoreInfoByType(2);
     }
-    
+
     /// <summary>
     /// 获取建筑坊数据
     /// </summary>
@@ -63,11 +55,27 @@ public class StoreInfoController : BaseMVCController<StoreInfoModel, IStoreInfoV
     }
 
     /// <summary>
-    /// 回去公会数据
+    /// 获取市场数据
+    /// </summary>
+    public void GetMarketStoreInfo()
+    {
+        GetStoreInfoByType(9);
+    }
+
+    /// <summary>
+    /// 获取公会商店数据
     /// </summary>
     public void GetGuildStoreInfo()
     {
         GetStoreInfoByType(10);
+    }
+
+    /// <summary>
+    /// 获取角色提升数据
+    /// </summary>
+    public void GetGuildImproveForCharacter()
+    {
+        GetStoreInfoByType(11);
     }
 
     /// <summary>
@@ -78,11 +86,11 @@ public class StoreInfoController : BaseMVCController<StoreInfoModel, IStoreInfoV
         List<StoreInfoBean> listData = GetModel().GetStoreInfoByType(type);
         if (!CheckUtil.ListIsNull(listData))
         {
-            GetView().GetStoreInfoByTypeSuccess(listData);
+            GetView().GetStoreInfoByTypeSuccess(type, listData);
         }
         else
         {
-            GetView().GetStoreInfoByTypeFail();
+            GetView().GetStoreInfoByTypeFail(type);
         }
     }
 }

@@ -132,12 +132,12 @@ public class UITownDress : UIBaseOne, IStoreInfoView, IRadioGroupCallBack
     {
     }
 
-    public void GetStoreInfoByTypeSuccess(List<StoreInfoBean> listData)
+    public void GetStoreInfoByTypeSuccess(int type,List<StoreInfoBean> listData)
     {
         mClothesListData = listData;
     }
 
-    public void GetStoreInfoByTypeFail()
+    public void GetStoreInfoByTypeFail(int type)
     {
     }
     #endregion

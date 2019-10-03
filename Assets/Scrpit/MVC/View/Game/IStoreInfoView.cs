@@ -8,7 +8,7 @@ public interface IStoreInfoView
 
     void GetAllStoreInfoFail();
 
-    void GetStoreInfoByTypeSuccess(List<StoreInfoBean> listData);
+    void GetStoreInfoByTypeSuccess(int type, List<StoreInfoBean> listData);
 
-    void GetStoreInfoByTypeFail();
+    void GetStoreInfoByTypeFail(int type);
 }

@@ -66,6 +66,7 @@ public class CharacterBean
         equipAttributes = equips.GetEquipAttributes(gameItemsManager);
         totalAttributes = new CharacterAttributesBean
         {
+            life = 100 + selfAttributes.life + equipAttributes.life,
             cook = selfAttributes.cook + equipAttributes.cook,
             speed = selfAttributes.speed + equipAttributes.speed,
             account = selfAttributes.account + equipAttributes.account,

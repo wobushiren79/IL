@@ -63,6 +63,7 @@ public class NpcInfoBean : BaseBean
         characterData.body.face = npcInfo.face;
 
         characterData.equips = new CharacterEquipBean();
+        characterData.equips.maskId = npcInfo.mask_id;
         characterData.equips.handId = npcInfo.hand_id;
         characterData.equips.hatId = npcInfo.hat_id;
         characterData.equips.clothesId = npcInfo.clothes_id;

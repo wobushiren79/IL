@@ -12,6 +12,7 @@ public class CharacterUICpt : BaseMonoBehaviour
     public Image ivMouth;
     public Image ivBody;
 
+    public Image ivMask;
     public Image ivHand;
     public Image ivHat;
     public Image ivClothes;
@@ -39,43 +40,13 @@ public class CharacterUICpt : BaseMonoBehaviour
         SetEye(characterBodyData.eye, characterBodyData.eyeColor.GetColor());
         SetMouth(characterBodyData.mouth, characterBodyData.mouthColor.GetColor());
         SetBody(characterBodyData.sex, characterBodyData.skinColor.GetColor());
+
+        SetMask(characterEquipData.maskId);
+        SetHand(characterEquipData.handId);
         SetClothes(characterEquipData.clothesId);
         SetShoes(characterEquipData.shoesId);
         SetHat(characterEquipData.hatId, characterBodyData.hairColor.GetColor());
-        SetHand(characterEquipData.handId);
-    }
-
-    /// <summary>
-    /// 设置手持
-    /// </summary>
-    /// <param name="handId"></param>
-    public void SetHand(long handId)
-    {
-        ItemsInfoBean itemsInfo=  gameItemsManager.GetItemsById(handId);
-        Sprite spHand = null;
-        if (itemsInfo != null)
-        {
-            spHand = gameItemsManager.GetItemsSpriteByName(itemsInfo.icon_key);
-        } 
-        if (spHand == null)
-        {
-            ivHand.color = new Color(1, 1, 1, 0);
-        }
-        else
-        {
-            ivHand.color = new Color(1, 1, 1, 1);
-        }
-        ivHand.sprite = spHand;
-
-        //设置旋转角度
-        if (itemsInfo!=null&&itemsInfo.rotation_angle != 0)
-        {
-            ivHand.transform.localEulerAngles = new Vector3(0, 0, itemsInfo.rotation_angle);
-        }
-        else
-        {
-            ivHand.transform.localEulerAngles = new Vector3(0, 0, 45);
-        }
+  
     }
 
     /// <summary>
@@ -109,7 +80,6 @@ public class CharacterUICpt : BaseMonoBehaviour
             ivHair.color = hairColor;
         }
     }
-
 
     /// <summary>
     /// 设置眼睛
@@ -173,6 +143,65 @@ public class CharacterUICpt : BaseMonoBehaviour
         }
         ivBody.sprite = spSex;
         ivBody.color = skinColor;
+    }
+
+    /// <summary>
+    /// 设置服装
+    /// </summary>
+    /// <param name="clothesId"></param>
+    public void SetMask(long maskId)
+    {
+        if (ivMask == null)
+            return;
+        ItemsInfoBean itemsInfo = gameItemsManager.GetItemsById(maskId);
+        if (itemsInfo == null)
+        {
+            ivMask.color = new Color(1, 1, 1, 0);
+            return;
+        }
+        Sprite spMask = characterDressManager.GetMaskSpriteByName(itemsInfo.icon_key);
+        if (spMask == null)
+        {
+            ivMask.color = new Color(1, 1, 1, 0);
+        }
+        else
+        {
+            ivMask.color = new Color(1, 1, 1, 1);
+        }
+        ivMask.sprite = spMask;
+    }
+
+    /// <summary>
+    /// 设置手持
+    /// </summary>
+    /// <param name="handId"></param>
+    public void SetHand(long handId)
+    {
+        ItemsInfoBean itemsInfo = gameItemsManager.GetItemsById(handId);
+        Sprite spHand = null;
+        if (itemsInfo != null)
+        {
+            spHand = gameItemsManager.GetItemsSpriteByName(itemsInfo.icon_key);
+        }
+        if (spHand == null)
+        {
+            ivHand.color = new Color(1, 1, 1, 0);
+        }
+        else
+        {
+            ivHand.color = new Color(1, 1, 1, 1);
+        }
+        ivHand.sprite = spHand;
+
+        //设置旋转角度
+        if (itemsInfo != null && itemsInfo.rotation_angle != 0)
+        {
+            ivHand.transform.localEulerAngles = new Vector3(0, 0, itemsInfo.rotation_angle);
+        }
+        else
+        {
+            ivHand.transform.localEulerAngles = new Vector3(0, 0, 45);
+        }
     }
 
     /// <summary>

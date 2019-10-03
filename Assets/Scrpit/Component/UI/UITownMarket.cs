@@ -34,12 +34,12 @@ public class UITownMarket : UIBaseOne, IStoreInfoView
     {
     }
 
-    public void GetStoreInfoByTypeSuccess(List<StoreInfoBean> listData)
+    public void GetStoreInfoByTypeSuccess(int type,List<StoreInfoBean> listData)
     {
         CreateGoods(listData);
     }
 
-    public void GetStoreInfoByTypeFail()
+    public void GetStoreInfoByTypeFail(int type)
     {
 
     }

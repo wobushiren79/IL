@@ -8,6 +8,7 @@ public class CharacterAttributesBean
 {
     public int loyal;//忠诚
 
+    public int life;//生命值
     public int cook;// 厨力
     public int speed;// 速度
     public int account;// 计算
