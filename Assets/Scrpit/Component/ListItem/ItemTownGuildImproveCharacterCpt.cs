@@ -3,7 +3,7 @@ using UnityEditor;
 using UnityEngine.UI;
 using System;
 
-public class ItemTownGuildImproveCharacterCpt : BaseMonoBehaviour
+public class ItemTownGuildImproveCharacterCpt : ItemGameBaseCpt, DialogView.IDialogCallBack
 {
     [Header("控件")]
     public CharacterUICpt characterUICpt;
@@ -18,6 +18,8 @@ public class ItemTownGuildImproveCharacterCpt : BaseMonoBehaviour
     public Image ivMoney;
     public Text tvMoney;
     public Text tvTime;
+
+    public Button btSubmit;
 
     [Header("数据")]
     public Sprite spWorkerChef;
@@ -37,6 +39,15 @@ public class ItemTownGuildImproveCharacterCpt : BaseMonoBehaviour
     public Sprite spMoneyM;
     public Sprite spMoneyS;
 
+    public StoreInfoBean levelData;
+    public WorkerEnum workerType;
+
+    private void Start()
+    {
+        if (btSubmit != null)
+            btSubmit.onClick.AddListener(ImproveCheck);
+    }
+
     /// <summary>
     /// 设置数据
     /// </summary>
@@ -45,6 +56,8 @@ public class ItemTownGuildImproveCharacterCpt : BaseMonoBehaviour
     /// <param name="workerData"></param>
     public void SetData(WorkerEnum workerType, CharacterBean characterData, CharacterWorkerBaseBean workerData, StoreInfoBean levelData)
     {
+        this.workerType = workerType;
+        this.levelData = levelData;
         SetWorkerIcon(workerType);
         SetName(characterData.baseInfo.name);
         SetCharacter(characterData);
@@ -214,4 +227,46 @@ public class ItemTownGuildImproveCharacterCpt : BaseMonoBehaviour
             tvTime.text = time + GameCommonInfo.GetUITextById(37);
     }
 
+    /// <summary>
+    /// 晋升确认
+    /// </summary>
+    public void ImproveCheck()
+    {
+        GameDataManager gameDataManager = GetUIManager<UIGameManager>().gameDataManager;
+        GameTimeHandler gameTimeHandler = GetUIManager<UIGameManager>().gameTimeHandler;
+        DialogManager dialogManager = GetUIManager<UIGameManager>().dialogManager;
+        //判断是否有足够的金钱
+        if (!gameDataManager.gameData.HasEnoughMoney(levelData.price_l, levelData.price_m, levelData.price_s))
+        {
+            ToastView toastView = GetUIManager<UIGameManager>().toastView;
+            toastView.ToastHint(GameCommonInfo.GetUITextById(1005));
+            return;
+        }
+        //判断时间是否过晚
+        gameTimeHandler.GetTime(out float hour, out float min);
+        if (hour >= 18 && hour < 6)
+        {
+            ToastView toastView = GetUIManager<UIGameManager>().toastView;
+            toastView.ToastHint(GameCommonInfo.GetUITextById(1031));
+            return;
+        }
+
+        DialogBean dialogData = new DialogBean();
+        string contentStr = string.Format(GameCommonInfo.GetUITextById(3008), tvTime.text, tvName.text, tvLowLevelName.text, tvHighLevelName.text);
+        dialogData.content = contentStr;
+        dialogManager.CreateDialog(0, this, dialogData);
+    }
+
+    #region 弹窗回调
+    public void Submit(DialogView dialogView, DialogBean dialogBean)
+    {
+        GameDataManager gameDataManager = GetUIManager<UIGameManager>().gameDataManager;
+        gameDataManager.gameData.PayMoney(levelData.price_l, levelData.price_m, levelData.price_s);
+    }
+
+    public void Cancel(DialogView dialogView, DialogBean dialogBean)
+    {
+
+    }
+    #endregion
 }
