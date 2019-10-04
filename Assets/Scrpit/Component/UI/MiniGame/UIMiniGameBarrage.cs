@@ -32,7 +32,6 @@ public class UIMiniGameBarrage : UIBaseMiniGame
         gameData = barrageData;
         MiniGameCharacterBean userGameData = barrageData.userGameData;
         SetUserLife(userGameData.characterMaxLife, userGameData.characterCurrentLife);
-        StartCoroutine(StartCountDown(barrageData.winSurvivalTime));
     }
 
     /// <summary>
@@ -59,17 +58,6 @@ public class UIMiniGameBarrage : UIBaseMiniGame
             tvTime.text = time + "";
             tvTime.transform.localScale = new Vector3(1, 1, 1);
             tvTime.transform.DOScale(new Vector3(0.3f, 0.3f, 0.3f), 0.5f).From().SetEase(Ease.OutBack);
-        }
-    }
-
-    public IEnumerator StartCountDown(float totalTime)
-    {
-        MiniGameBarrageBean barrageData = ((MiniGameBarrageBean)gameData);
-        while (true)
-        {
-            SetTime(barrageData.currentTime);
-            yield return new WaitForSeconds(1);
-            ((MiniGameBarrageBean)gameData).currentTime--;
         }
     }
 }

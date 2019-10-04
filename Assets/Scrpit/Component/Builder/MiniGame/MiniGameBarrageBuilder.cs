@@ -49,7 +49,7 @@ public class MiniGameBarrageBuilder : BaseMonoBehaviour
     public void CreateAllPlayer(MiniGameCharacterBean userData, List<MiniGameCharacterBean> listEnemyData)
     {
         //创建操作角色
-        NpcAIMiniGameBarrageCpt npcCpt = CreatePlayer(userData, new Vector3(0, 1, 0));
+        NpcAIMiniGameBarrageCpt npcCpt = CreatePlayer(userData, new Vector3(0, 6, 0));
         controlForMiniGameBarrageCpt.SetCameraFollowObj(npcCpt);
     }
 
@@ -71,7 +71,7 @@ public class MiniGameBarrageBuilder : BaseMonoBehaviour
     /// </summary>
     public NpcAIMiniGameBarrageCpt CreatePlayer(MiniGameCharacterBean characterData, Vector3 position)
     {
-        GameObject objPlayer = Instantiate(objPlayerContainer, objPlayerModel);
+        GameObject objPlayer = Instantiate(objPlayerContainer, objPlayerModel, position);
         NpcAIMiniGameBarrageCpt npcCpt = objPlayer.GetComponent<NpcAIMiniGameBarrageCpt>();
         npcCpt.SetData(characterData);
         listGamePlayer.Add(npcCpt);
@@ -95,4 +95,5 @@ public class MiniGameBarrageBuilder : BaseMonoBehaviour
         CptUtil.RemoveChild(objEjectorContainer.transform);
         listEjector.Clear();
     }
+
 }

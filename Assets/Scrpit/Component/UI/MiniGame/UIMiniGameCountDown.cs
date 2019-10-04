@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using System.Collections;
 using DG.Tweening;
 
-public class UIGameCountDown : BaseUIComponent
+public class UIMiniGameCountDown : BaseUIComponent
 {
     public GameObject objTarget;
     public GameObject objCountDown;
@@ -94,7 +94,7 @@ public class UIGameCountDown : BaseUIComponent
             yield return new WaitForSeconds(1.3f);
         }
         if (mCallBack != null)
-            mCallBack.CountDownEnd();
+            mCallBack.GamePreCountDownEnd();
     }
 
     public void SetCallBack(ICallBack callBack)
@@ -104,7 +104,8 @@ public class UIGameCountDown : BaseUIComponent
 
     public interface ICallBack
     {
-        void CountDownEnd();
+        //游戏准备倒计时
+        void GamePreCountDownEnd();
     }
 
 }

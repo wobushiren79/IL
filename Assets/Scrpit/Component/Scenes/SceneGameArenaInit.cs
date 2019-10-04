@@ -4,7 +4,7 @@ using UnityEditor;
 public class SceneGameArenaInit : BaseSceneInit
 {
     //弹幕游戏控制
-    public ArenaGameBarrageHandler barrageHandler;
+    public MiniGameBarrageHandler barrageHandler;
 
     private new void Start()
     {
@@ -30,13 +30,13 @@ public class SceneGameArenaInit : BaseSceneInit
             case ArenaGameEnum.Cooking:
                 break;
             case ArenaGameEnum.Barrage:
-                GameBarrage(arenaPrepareData);
+                InitGameBarrage(arenaPrepareData.gameBarrageData);
                 break;
         }
     }
 
-    public void GameBarrage(ArenaPrepareBean arenaPrepareData)
+    public void InitGameBarrage(MiniGameBarrageBean gameBarrageData)
     {
-        barrageHandler.InitGame(arenaPrepareData);
+        barrageHandler.InitGame(gameBarrageData);
     }
 }

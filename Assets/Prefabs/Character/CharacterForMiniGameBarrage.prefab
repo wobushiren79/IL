@@ -40,7 +40,7 @@ ParticleSystem:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5167797600346032923}
   serializedVersion: 6
-  lengthInSec: 10
+  lengthInSec: 20
   simulationSpeed: 1
   stopAction: 0
   cullingMode: 0
@@ -48,7 +48,7 @@ ParticleSystem:
   ringBufferLoopRange: {x: 0, y: 1}
   looping: 0
   prewarm: 0
-  playOnAwake: 1
+  playOnAwake: 0
   useUnscaledTime: 0
   autoRandomSeed: 1
   useRigidbodyForVelocity: 1
@@ -115,7 +115,7 @@ ParticleSystem:
     startLifetime:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 10
+      scalar: 20
       minScalar: 5
       maxCurve:
         serializedVersion: 2
@@ -168,7 +168,7 @@ ParticleSystem:
     startSpeed:
       serializedVersion: 2
       minMaxState: 3
-      scalar: 10
+      scalar: 100
       minScalar: 0
       maxCurve:
         serializedVersion: 2
@@ -600,7 +600,7 @@ ParticleSystem:
         m_PostInfinity: 2
         m_RotationOrder: 4
     randomizeRotationDirection: 0
-    maxNumParticles: 1000
+    maxNumParticles: 10000
     size3D: 0
     rotation3D: 0
     gravityModifier:
@@ -2595,32 +2595,23 @@ ParticleSystem:
           inWeight: 0.33333334
           outWeight: 0.9517292
         - serializedVersion: 3
-          time: 0.048248067
+          time: 0.013743643
           value: 0
-          inSlope: 0.01875719
-          outSlope: 0.01875719
+          inSlope: 0.0023113433
+          outSlope: 0.0023113433
           tangentMode: 0
           weightedMode: 0
           inWeight: 1
-          outWeight: 0.17188711
-        - serializedVersion: 3
-          time: 0.13000943
-          value: 0.0012814375
-          inSlope: 0.008853138
-          outSlope: 0.008853138
-          tangentMode: 0
-          weightedMode: 0
-          inWeight: 0.33333334
-          outWeight: 0.12364713
+          outWeight: 0.0746572
         - serializedVersion: 3
           time: 1
           value: 0
-          inSlope: 0
-          outSlope: 0
+          inSlope: -0.0014480102
+          outSlope: -0.0014480102
           tangentMode: 0
           weightedMode: 0
-          inWeight: 0.12481259
-          outWeight: 0.33333334
+          inWeight: 0.33333334
+          outWeight: 0.029809548
         m_PreInfinity: 2
         m_PostInfinity: 2
         m_RotationOrder: 4
@@ -2652,7 +2643,7 @@ ParticleSystem:
     inWorldSpace: 0
     multiplyDragByParticleSize: 1
     multiplyDragByParticleVelocity: 1
-    dampen: 0.3
+    dampen: 0.9
     drag:
       serializedVersion: 2
       minMaxState: 0
@@ -4794,7 +4785,7 @@ ParticleSystemRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10301, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 7dd371ba1ff02ff4f87b272c8e2f884c, type: 2}
   - {fileID: 0}
   m_StaticBatchInfo:
     firstSubMesh: 0
