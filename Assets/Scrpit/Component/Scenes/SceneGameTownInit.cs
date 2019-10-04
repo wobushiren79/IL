@@ -12,20 +12,15 @@ public class SceneGameTownInit : BaseSceneInit,IBaseObserver,DialogView.IDialogC
 
     public GameTimeHandler gameTimeHandler;
     public WeatherHandler weatherHandler;
-    private void Start()
+
+    private new void Start()
     {
+        base.Start();
         //获取相关数据
         if (gameItemsManager != null)
             gameItemsManager.itemsInfoController.GetAllItemsInfo();
         if (innBuildManager != null)
             innBuildManager.buildDataController.GetAllBuildItemsData();
-        if (gameDataManager != null)
-        {
-            if (GameCommonInfo.GameData != null)
-                gameDataManager.gameData = GameCommonInfo.GameData;
-            else
-                gameDataManager.gameDataController.GetGameDataByUserId(GameCommonInfo.GameUserId);
-        }
         if (npcInfoManager != null)
             npcInfoManager.npcInfoController.GetAllNpcInfo();
         if (storyInfoManager != null)

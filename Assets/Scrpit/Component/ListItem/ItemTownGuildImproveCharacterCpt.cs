@@ -289,9 +289,7 @@ public class ItemTownGuildImproveCharacterCpt : ItemGameBaseCpt, DialogView.IDia
         //设置竞技场数据
         GameCommonInfo.ArenaPrepareData = new ArenaPrepareBean
         {
-            gameType = gameType,
-            gamePlayerNumber = 1,
-            gameLevel = levelData.mark_type,
+  
         };
         //跳转到竞技场
         SceneUtil.SceneChange(EnumUtil.GetEnumName(ScenesEnum.GameArenaScene));

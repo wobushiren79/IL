@@ -22,6 +22,7 @@ public class BarrageEjectorCpt : BaseMonoBehaviour
 
     //发射器朝向角度
     private float mAngelsTarget = 0;
+
     private void Update()
     {
         //旋转发射器朝向
@@ -44,7 +45,6 @@ public class BarrageEjectorCpt : BaseMonoBehaviour
         }
     }
 
-
     /// <summary>
     ///  单发模式
     /// </summary>
@@ -54,7 +54,6 @@ public class BarrageEjectorCpt : BaseMonoBehaviour
     {
         CreateBullet(targetPositon, shotSpeed);
     }
-
 
     /// <summary>
     ///  创建子弹

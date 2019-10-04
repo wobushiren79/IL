@@ -70,7 +70,7 @@ public class ControlForMoveCpt : BaseControl
     /// </summary>
     public void InitCharacter()
     {
-        if (gameDataManager != null && gameDataManager.gameData.userCharacter != null)
+        if (gameDataManager != null && gameDataManager.gameData.userCharacter != null && npcAI != null)
             npcAI.SetCharacterData(gameDataManager.gameData.userCharacter);
     }
 

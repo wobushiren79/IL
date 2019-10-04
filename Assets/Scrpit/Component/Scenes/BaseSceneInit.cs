@@ -9,4 +9,19 @@ public class BaseSceneInit : BaseMonoBehaviour
     public DialogManager dialogManager;
 
     public ControlHandler controlHandler;
+
+    public void Start()
+    {
+        if (gameDataManager != null)
+        {
+            if (GameCommonInfo.GameData != null)
+            {
+                gameDataManager.gameData = GameCommonInfo.GameData;
+            }
+            else
+            {
+                gameDataManager.gameDataController.GetGameDataByUserId(GameCommonInfo.GameUserId);
+            }
+        }
+    }
 }

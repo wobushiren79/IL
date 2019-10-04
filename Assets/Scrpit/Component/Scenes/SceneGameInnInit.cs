@@ -22,22 +22,12 @@ public class SceneGameInnInit : BaseSceneInit, IBaseObserver, DialogView.IDialog
 
     public NpcCustomerBuilder npcCustomerBuilder;
 
-    private void Start()
+    private new void Start()
     {
+        base.Start();
         //获取相关数据
         if (gameItemsManager != null)
             gameItemsManager.itemsInfoController.GetAllItemsInfo();
-        if (gameDataManager != null)
-        {
-            if (GameCommonInfo.GameData != null)
-            {
-                gameDataManager.gameData = GameCommonInfo.GameData;
-            }
-            else
-            {
-                gameDataManager.gameDataController.GetGameDataByUserId(GameCommonInfo.GameUserId);
-            }
-        }
         if (npcInfoManager != null)
             npcInfoManager.npcInfoController.GetAllNpcInfo();
         if (innBuildManager != null)

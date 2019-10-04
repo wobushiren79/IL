@@ -22,7 +22,7 @@ public class BaseControl : BaseMonoBehaviour
     /// 设置镜头跟随
     /// </summary>
     /// <param name="objFollow"></param>
-    public void SetCameraFollowObj(GameObject objFollow)
+    public virtual void SetCameraFollowObj(GameObject objFollow)
     {
         cameraFollowObj = objFollow;
         if (cameraFollowObj != null)

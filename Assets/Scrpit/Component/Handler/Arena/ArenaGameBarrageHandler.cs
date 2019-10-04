@@ -8,10 +8,9 @@ public class ArenaGameBarrageHandler : BaseHandler,UIGameCountDown.ICallBack
     //UI管理
     public UIGameManager uiGameManager;
     //弹幕游戏生成器
-    public ArenaGameBarrageBuilder arenaGameBarrageBuilder;
+    public MiniGameBarrageBuilder miniGameBarrageBuilder;
     //弹幕游戏数据
     public ArenaPrepareBean arenaPrepareData;
-
     /// <summary>
     /// 初始化游戏
     /// </summary>
@@ -24,8 +23,10 @@ public class ArenaGameBarrageHandler : BaseHandler,UIGameCountDown.ICallBack
             return;
         }
         this.arenaPrepareData = arenaPrepareData;
+        //创建所有玩家
+        miniGameBarrageBuilder.CreateAllPlayer(arenaPrepareData.gameBarrageData.userGameData,arenaPrepareData.gameBarrageData.listEnemyGameData);
         //创建发射器
-        BarrageEjectorCpt barrageEjector = arenaGameBarrageBuilder.CreateEjector();
+        miniGameBarrageBuilder.CreateEjector();
         //打开倒计时UI
         UIGameCountDown uiCountDown =  (UIGameCountDown)uiGameManager.OpenUIAndCloseOtherByName(EnumUtil.GetEnumName(UIEnum.GameCountDown));
         uiCountDown.SetCallBack(this);
@@ -33,7 +34,7 @@ public class ArenaGameBarrageHandler : BaseHandler,UIGameCountDown.ICallBack
         //设置标题
         string targetTitleStr = GameCommonInfo.GetUITextById(202);
         //设置胜利条件
-        List<string> listWinConditions = arenaPrepareData.GetListWinConditions();
+        List<string> listWinConditions = arenaPrepareData.gameBarrageData.GetListWinConditions();
         uiCountDown.SetData(targetTitleStr, listWinConditions);
     }
 
@@ -55,12 +56,17 @@ public class ArenaGameBarrageHandler : BaseHandler,UIGameCountDown.ICallBack
     {
         while (true)
         {
-            List<BarrageEjectorCpt> listEjector= arenaGameBarrageBuilder.GetEjector();
+            //获取所有发射器
+            List<BarrageEjectorCpt> listEjector= miniGameBarrageBuilder.GetEjector();
             if (!CheckUtil.ListIsNull(listEjector))
             {
                 foreach (BarrageEjectorCpt itemEjector in listEjector)
                 {
-                    itemEjector.StartLaunch(BarrageEjectorCpt.LaunchTypeEnum.Single, Vector3.zero, 5);
+                    //获取所有的目标
+                    List<NpcAIMiniGameBarrageCpt> listPlayer = miniGameBarrageBuilder.GetPlayerList();
+                    //随机获取一个NPC
+                    NpcAIMiniGameBarrageCpt npcCpt= RandomUtil.GetRandomDataByList(listPlayer);
+                    itemEjector.StartLaunch(BarrageEjectorCpt.LaunchTypeEnum.Single, npcCpt.transform.position, 5);
                 }
             }
             yield return new WaitForSeconds(1);
@@ -71,7 +77,8 @@ public class ArenaGameBarrageHandler : BaseHandler,UIGameCountDown.ICallBack
     public void CountDownEnd()
     {
         //打开弹幕游戏UI
-        uiGameManager.OpenUIAndCloseOtherByName(EnumUtil.GetEnumName(UIEnum.MiniGameBarrage));
+        UIMiniGameBarrage uiMiniGameBarrage = (UIMiniGameBarrage)uiGameManager.OpenUIAndCloseOtherByName(EnumUtil.GetEnumName(UIEnum.MiniGameBarrage));
+        uiMiniGameBarrage.SetData(arenaPrepareData.gameBarrageData);
         //开始游戏
         StartGame();
     }

@@ -6,12 +6,28 @@ public class BarrageBulletCpt : BaseMonoBehaviour
     public Animator animBullet;
     public Rigidbody2D rbBullet;
 
+    //石头伤害
+    public int bulletDamage = 10;
+    //石头是否摧毁
+    public bool mIsDestroy = false;
+
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.GetComponent<BarrageWallCpt>())
+        if (!mIsDestroy)
         {
-            StopMove();
-            animBullet.SetBool("IsDestroy", true);
+            BarrageWallCpt wallCpt = collision.GetComponent<BarrageWallCpt>();
+            NpcAIMiniGameBarrageCpt npcCpt = collision.GetComponent<NpcAIMiniGameBarrageCpt>();
+            if (wallCpt || npcCpt)
+            {
+                mIsDestroy = true;
+                StopMove();
+                animBullet.SetBool("IsDestroy", true);
+                //如果是NPC 扣血
+                if (npcCpt)
+                {
+                    npcCpt.LifeDamage(bulletDamage);
+                }
+            }
         }
     }
 
