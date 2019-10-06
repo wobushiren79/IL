@@ -4,6 +4,7 @@ using System.Collections.Generic;
 
 public class MiniGameBaseBean 
 {
+    public MiniGameReasonEnum gameReason;//玩游戏的原因
     public int gameLevel;//游戏等级
     //胜利条件
     public float winSurvivalTime;//生存时间(秒)

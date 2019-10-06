@@ -8,7 +8,10 @@ public class BarrageEjectorCpt : BaseMonoBehaviour
     /// </summary>
     public enum LaunchTypeEnum
     {
-        Single,//单发
+        Single = 1,//单发
+        Double = 2,//双发、
+        Triple = 3,//三连发
+
     }
 
     //发射动画
@@ -21,12 +24,12 @@ public class BarrageEjectorCpt : BaseMonoBehaviour
     public GameObject objBulletModel;
 
     //发射器朝向角度
-    private float mAngelsTarget = 0;
+    private float mAngelsTarget = 90;
 
     private void Update()
     {
-        //旋转发射器朝向
-        objEjector.transform.rotation = Quaternion.Slerp
+        //旋转发射器朝向 
+        objEjector.transform.localRotation = Quaternion.Slerp
             (objEjector.transform.rotation, Quaternion.Euler(0, 0, mAngelsTarget), 10 * Time.deltaTime);
     }
 
@@ -34,13 +37,19 @@ public class BarrageEjectorCpt : BaseMonoBehaviour
     /// 开始发射
     /// </summary>
     /// <param name="launchType"></param>
-    public void StartLaunch(LaunchTypeEnum launchType, Vector3 targetPositon, float 了launchSpeed)
+    public void StartLaunch(LaunchTypeEnum launchType, Vector3 targetPositon, float launchSpeed)
     {
         animEjector.SetTrigger("Launch");
         switch (launchType)
         {
             case LaunchTypeEnum.Single:
-                LaunchSingle(targetPositon, 了launchSpeed);
+                LaunchSingle(targetPositon, launchSpeed);
+                break;
+            case LaunchTypeEnum.Double:
+                LaunchDouble(targetPositon, launchSpeed);
+                break;
+            case LaunchTypeEnum.Triple:
+                LaunchTriple(targetPositon, launchSpeed);
                 break;
         }
     }
@@ -52,6 +61,29 @@ public class BarrageEjectorCpt : BaseMonoBehaviour
     /// <param name="shotSpeed">发射速度</param>
     public void LaunchSingle(Vector3 targetPositon, float shotSpeed)
     {
+        CreateBullet(targetPositon, shotSpeed);
+    }
+
+    /// <summary>
+    /// 双发
+    /// </summary>
+    /// <param name="targetPositon"></param>
+    /// <param name="shotSpeed"></param>
+    public void LaunchDouble(Vector3 targetPositon, float shotSpeed)
+    {
+        CreateBullet(targetPositon + new Vector3(2, 2, 1), shotSpeed);
+        CreateBullet(targetPositon + new Vector3(-2, -2, 1), shotSpeed);
+    }
+
+    /// <summary>
+    /// 三连发
+    /// </summary>
+    /// <param name="targetPositon"></param>
+    /// <param name="shotSpeed"></param>
+    public void LaunchTriple(Vector3 targetPositon, float shotSpeed)
+    {
+        CreateBullet(targetPositon + new Vector3(4, 4, 1), shotSpeed);
+        CreateBullet(targetPositon + new Vector3(-4, -4, 1), shotSpeed);
         CreateBullet(targetPositon, shotSpeed);
     }
 
@@ -68,9 +100,8 @@ public class BarrageEjectorCpt : BaseMonoBehaviour
         GameObject objBullet = Instantiate(objBulletModel, objBulletContainer.transform);
         objBullet.SetActive(true);
         objBullet.transform.position = objEjector.transform.position;
-        BarrageBulletCpt bulletCpt= objBullet.GetComponent<BarrageBulletCpt>();
+        BarrageBulletCpt bulletCpt = objBullet.GetComponent<BarrageBulletCpt>();
         //发射子弹
         bulletCpt.LaunchBullet(targetPositon, force);
- 
     }
 }

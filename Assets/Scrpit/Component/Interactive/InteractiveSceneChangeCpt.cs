@@ -3,14 +3,16 @@ using UnityEditor;
 
 public class InteractiveSceneChangeCpt : BaseInteractiveCpt
 {
+    
     public string interactiveContent;
-    public string sceneChangeName;
+    //需要跳转的场景
+    public ScenesEnum changeScene;
 
     public override void InteractiveDetection()
     {
         if (Input.GetButtonDown("Interactive_E"))
         {
-            SceneUtil.SceneChange(sceneChangeName);
+            SceneUtil.SceneChange(changeScene);
         }
     }
 

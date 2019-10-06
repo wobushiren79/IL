@@ -2,16 +2,20 @@
 using UnityEditor;
 using System;
 
-public class SceneGameTownInit : BaseSceneInit,IBaseObserver,DialogView.IDialogCallBack
+public class SceneGameTownInit : BaseSceneInit, IBaseObserver, DialogView.IDialogCallBack
 {
     public InnBuildManager innBuildManager;
     public NpcInfoManager npcInfoManager;
     public StoryInfoManager storyInfoManager;
+    public SceneTownManager sceneTownManager;
+
     public NpcImportantBuilder npcImportantBuilder;
     public NpcPasserBuilder npcPasserBuilder;
 
     public GameTimeHandler gameTimeHandler;
     public WeatherHandler weatherHandler;
+
+
 
     private new void Start()
     {
@@ -47,7 +51,8 @@ public class SceneGameTownInit : BaseSceneInit,IBaseObserver,DialogView.IDialogC
         {
             weatherHandler.SetWeahter(gameDataManager.gameData.weatherToday);
         }
-    
+        //设置角色位置
+        InitUserPosition();
     }
 
     /// <summary>
@@ -64,19 +69,38 @@ public class SceneGameTownInit : BaseSceneInit,IBaseObserver,DialogView.IDialogC
         //重置游戏时间
         GameCommonInfo.GameData.gameTime.hour = 0;
         GameCommonInfo.GameData.gameTime.minute = 0;
- 
+
         if (dialogManager != null)
         {
             DialogBean dialogBean = new DialogBean();
             dialogBean.content = GameCommonInfo.GetUITextById(3006);
-            dialogManager.CreateDialog(1, this, dialogBean,5);
+            dialogManager.CreateDialog(1, this, dialogBean, 5);
         }
         else
         {
-            SceneUtil.SceneChange(EnumUtil.GetEnumName(ScenesEnum.GameInnScene));
+            SceneUtil.SceneChange(ScenesEnum.GameInnScene);
         }
     }
 
+    /// <summary>
+    /// 初始化用户位置
+    /// </summary>
+    public void InitUserPosition()
+    {
+        //开始角色控制
+        ControlForMoveCpt moveControl = (ControlForMoveCpt)controlHandler.StartControl(ControlHandler.ControlEnum.Normal);
+        //位置控制
+        switch (GameCommonInfo.ScenesChangeData.beforeScene)
+        {
+            case ScenesEnum.GameArenaScene:
+                moveControl.SetPosition(GameCommonInfo.ScenesChangeData.beforeUserPosition);
+                break;
+            case ScenesEnum.GameInnScene:
+                Vector3 doorPosition = sceneTownManager.GetMainTownDoorPosition();
+                moveControl.SetPosition(doorPosition);
+                break;
+        }
+    }
 
     #region  时间通知回调
     public void ObserbableUpdate<T>(T observable, int type, params System.Object[] obj) where T : UnityEngine.Object
@@ -94,7 +118,7 @@ public class SceneGameTownInit : BaseSceneInit,IBaseObserver,DialogView.IDialogC
     #region  弹窗通知回调
     public void Submit(DialogView dialogView, DialogBean dialogData)
     {
-        SceneUtil.SceneChange(EnumUtil.GetEnumName(ScenesEnum.GameInnScene));
+        SceneUtil.SceneChange(ScenesEnum.GameInnScene);
     }
 
     public void Cancel(DialogView dialogView, DialogBean dialogData)

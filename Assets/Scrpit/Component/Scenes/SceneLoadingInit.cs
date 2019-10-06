@@ -39,7 +39,7 @@ public class SceneLoadingInit : MonoBehaviour
     /// <returns></returns>
     IEnumerator AsyncLoading()
     {
-        mOperation = SceneManager.LoadSceneAsync(GameCommonInfo.LoadingSceneName);
+        mOperation = SceneManager.LoadSceneAsync(EnumUtil.GetEnumName(GameCommonInfo.ScenesChangeData.loadingScene));
         //阻止当加载完成自动切换
         mOperation.allowSceneActivation = false;
         yield return mOperation;

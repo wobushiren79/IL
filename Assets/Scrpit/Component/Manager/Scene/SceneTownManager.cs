@@ -62,6 +62,15 @@ public class SceneTownManager : BaseManager
     }
 
     /// <summary>
+    /// 获取正门坐标
+    /// </summary>
+    /// <returns></returns>
+    public Vector3 GetMainTownDoorPosition()
+    {
+        return listTownDoor[0].position;
+    }
+
+    /// <summary>
     /// 获取建筑物门的位置
     /// </summary>
     /// <param name="townBuilding"></param>

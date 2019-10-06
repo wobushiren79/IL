@@ -152,7 +152,7 @@ public class UIMainCreate : BaseUIComponent, IRadioGroupCallBack, ColorView.Call
         gameData.userCharacter.equips = characterDressCpt.GetCharacterEquipData();
         gameDataManager.CreateGameData(gameData);
 
-        SceneUtil.SceneChange(EnumUtil.GetEnumName(ScenesEnum.GameInnScene));
+        SceneUtil.SceneChange(ScenesEnum.GameInnScene);
     }
 
     /// <summary>

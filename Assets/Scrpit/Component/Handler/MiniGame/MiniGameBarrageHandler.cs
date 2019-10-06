@@ -3,7 +3,7 @@ using UnityEditor;
 using System.Collections;
 using System.Collections.Generic;
 
-public class MiniGameBarrageHandler : BaseHandler, UIMiniGameCountDown.ICallBack
+public class MiniGameBarrageHandler : BaseMiniGameHandler, UIMiniGameCountDown.ICallBack, UIMiniGameEnd.ICallBack
 {
     //UI管理
     public UIGameManager uiGameManager;
@@ -11,6 +11,8 @@ public class MiniGameBarrageHandler : BaseHandler, UIMiniGameCountDown.ICallBack
     public MiniGameBarrageBuilder miniGameBarrageBuilder;
     //弹幕游戏数据
     public MiniGameBarrageBean gameBarrageData;
+    //发射器位置
+    public List<Vector3> listEjectorPosition = new List<Vector3>();
 
     //游戏是否正在游玩
     public bool isGamePlay = false;
@@ -25,11 +27,17 @@ public class MiniGameBarrageHandler : BaseHandler, UIMiniGameCountDown.ICallBack
             LogUtil.Log("弹幕游戏数据为NULL，无法初始化弹幕游戏");
             return;
         }
+        if (CheckUtil.ListIsNull(gameBarrageData.listEjectorPosition))
+        {
+            LogUtil.Log("发射台坐标为NULL，无法初始化弹幕游戏");
+            return;
+        }
         this.gameBarrageData = gameBarrageData;
         //创建所有玩家
         miniGameBarrageBuilder.CreateAllPlayer(gameBarrageData.userGameData, gameBarrageData.listEnemyGameData);
         //创建发射器
-        miniGameBarrageBuilder.CreateEjector();
+        for (int i = 0; i < gameBarrageData.listEjectorPosition.Count;i++)
+            miniGameBarrageBuilder.CreateEjector(gameBarrageData.listEjectorPosition[i]);
         //打开游戏准备倒计时UI
         UIMiniGameCountDown uiCountDown = (UIMiniGameCountDown)uiGameManager.OpenUIAndCloseOtherByName(EnumUtil.GetEnumName(UIEnum.MiniGameCountDown));
         uiCountDown.SetCallBack(this);
@@ -55,9 +63,10 @@ public class MiniGameBarrageHandler : BaseHandler, UIMiniGameCountDown.ICallBack
         //开始倒计时
         StartCoroutine(StartCountDown(gameBarrageData.winSurvivalTime));
         //开始射击
-        StartCoroutine(StartShoot());
+        StartCoroutine(StartLaunch());
+        //通知 游戏开始
+        NotifyAllObserver((int)NotifyMiniGameEnum.GameStart);
     }
-
 
     /// <summary>
     /// 结束游戏
@@ -72,18 +81,20 @@ public class MiniGameBarrageHandler : BaseHandler, UIMiniGameCountDown.ICallBack
             StopAllCoroutines();
             miniGameBarrageBuilder.DestoryPlayer();
             miniGameBarrageBuilder.DestoryEjector();
+            //打开游戏结束UI
+            UIMiniGameEnd uiMiniGameEnd = (UIMiniGameEnd)uiGameManager.OpenUIAndCloseOtherByName(EnumUtil.GetEnumName(UIEnum.MiniGameEnd));
+            uiMiniGameEnd.SetData(isWinGame);
+            uiMiniGameEnd.SetCallBack(this);
+            //通知 游戏结束
+            NotifyAllObserver((int)NotifyMiniGameEnum.GameEnd);
         }
-        UIMiniGameEnd uiMiniGameEnd = (UIMiniGameEnd)uiGameManager.OpenUIAndCloseOtherByName(EnumUtil.GetEnumName(UIEnum.MiniGameEnd));
-        uiMiniGameEnd.SetData();
     }
-
-
 
     /// <summary>
     /// 开始射击目标
     /// </summary>
     /// <returns></returns>
-    public IEnumerator StartShoot()
+    public IEnumerator StartLaunch()
     {
         while (true)
         {
@@ -97,10 +108,28 @@ public class MiniGameBarrageHandler : BaseHandler, UIMiniGameCountDown.ICallBack
                     List<NpcAIMiniGameBarrageCpt> listPlayer = miniGameBarrageBuilder.GetPlayerList();
                     //随机获取一个NPC
                     NpcAIMiniGameBarrageCpt npcCpt = RandomUtil.GetRandomDataByList(listPlayer);
-                    itemEjector.StartLaunch(BarrageEjectorCpt.LaunchTypeEnum.Single, npcCpt.transform.position, 5);
+                    Vector3 launchTarget = Vector3.zero;
+                    if (npcCpt != null)
+                        launchTarget = npcCpt.transform.position;
+                    //获取发射类型
+                    if (CheckUtil.ArrayIsNull(gameBarrageData.launchTypes))
+                    {
+                        gameBarrageData.launchTypes = new BarrageEjectorCpt.LaunchTypeEnum[]
+                        {
+                             BarrageEjectorCpt.LaunchTypeEnum.Single
+                        };
+                    }
+                    BarrageEjectorCpt.LaunchTypeEnum launchType = RandomUtil.GetRandomDataByArray(gameBarrageData.launchTypes);
+
+
+                    itemEjector.StartLaunch(launchType, launchTarget, gameBarrageData.launchSpeed);
                 }
             }
-            yield return new WaitForSeconds(1);
+            //发射间隔时间
+            float launchIntervalTime = gameBarrageData.launchInterval;
+            if (launchIntervalTime < 0.1f)
+                launchIntervalTime = 0.1f;
+            yield return new WaitForSeconds(launchIntervalTime);
         }
     }
 
@@ -118,7 +147,10 @@ public class MiniGameBarrageHandler : BaseHandler, UIMiniGameCountDown.ICallBack
             uiMiniGame.SetTime(gameBarrageData.currentTime);
             yield return new WaitForSeconds(1);
             gameBarrageData.currentTime--;
+            if (gameBarrageData.currentTime <= 0)
+                break;
         }
+        EndGame(true);
     }
 
     #region 倒计时回调
@@ -131,4 +163,13 @@ public class MiniGameBarrageHandler : BaseHandler, UIMiniGameCountDown.ICallBack
         StartGame();
     }
     #endregion
+
+    #region 游戏结束按钮回调
+    public void OnClickClose()
+    {
+        //通知 关闭游戏
+        NotifyAllObserver((int)NotifyMiniGameEnum.GameClose);
+    }
+    #endregion
+
 }

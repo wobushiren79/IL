@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using UnityEditor;
 
-public enum ArenaGameEnum 
+public enum MiniGameEnum 
 {
     Cooking,//烹饪游戏
     Barrage,//弹幕游戏

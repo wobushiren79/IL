@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using UnityEditor;
+using System;
 
 public class EnumUtil
 {
@@ -8,4 +9,8 @@ public class EnumUtil
          return data.ToString();
     }
 
+    public static T GetEnum<T>(string data)
+    {
+        return (T)Enum.Parse(typeof(T), data);
+    }
 }

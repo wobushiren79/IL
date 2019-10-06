@@ -41,6 +41,10 @@ public class UIMiniGameCountDown : BaseUIComponent
         objTarget.SetActive(true);
         objCountDown.SetActive(false);
         SetTargetContent(titleStr, listWinConditions);
+
+        //UI动画
+        objTarget.transform.localScale = new Vector3(1, 1, 1);
+        objTarget.transform.DOScale(new Vector3(0.2f, 0.2f, 0.2f), 0.5f).From().SetEase(Ease.OutBack);
     }
 
     /// <summary>

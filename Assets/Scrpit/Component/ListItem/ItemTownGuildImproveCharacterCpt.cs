@@ -40,6 +40,7 @@ public class ItemTownGuildImproveCharacterCpt : ItemGameBaseCpt, DialogView.IDia
     public Sprite spMoneyS;
 
     public StoreInfoBean levelData;
+    public CharacterBean characterData;
     public WorkerEnum workerType;
 
     private void Start()
@@ -58,6 +59,7 @@ public class ItemTownGuildImproveCharacterCpt : ItemGameBaseCpt, DialogView.IDia
     {
         this.workerType = workerType;
         this.levelData = levelData;
+        this.characterData = characterData;
         SetWorkerIcon(workerType);
         SetName(characterData.baseInfo.name);
         SetCharacter(characterData);
@@ -261,38 +263,53 @@ public class ItemTownGuildImproveCharacterCpt : ItemGameBaseCpt, DialogView.IDia
     public void Submit(DialogView dialogView, DialogBean dialogBean)
     {
         GameDataManager gameDataManager = GetUIManager<UIGameManager>().gameDataManager;
+        GameItemsManager gameItemsManager = GetUIManager<UIGameManager>().gameItemsManager;
+        ControlHandler controlHandler = GetUIManager<UIGameManager>().controlHandler;
+        //支付金钱
         gameDataManager.gameData.PayMoney(levelData.price_l, levelData.price_m, levelData.price_s);
 
+        //设置竞技场数据
+        GameCommonInfo.ArenaPrepareData = new ArenaPrepareBean();
         //判断玩哪个游戏
-        ArenaGameEnum gameType;
+        MiniGameEnum gameType;
         switch (workerType)
         {
             case WorkerEnum.Chef:
-                gameType = ArenaGameEnum.Cooking;
+                gameType = MiniGameEnum.Cooking;
                 break;
             case WorkerEnum.Waiter:
-                gameType = ArenaGameEnum.Barrage;
+                //设置弹幕游戏数据
+                gameType = MiniGameEnum.Barrage;
+                GameCommonInfo.ArenaPrepareData.gameBarrageData = new MiniGameBarrageBean
+                {
+                    gameReason = MiniGameReasonEnum.Improve,
+                    gameLevel = levelData.mark_type,
+                    winLife = levelData.minigame_win_life,
+                    winSurvivalTime = levelData.minigame_win_survivaltime,
+                    launchInterval = levelData.barrage_launch_interval,
+                    launchSpeed = levelData.barrage_launch_speed,
+                    launchTypes = StringUtil.SplitBySubstringForArrayEnum<BarrageEjectorCpt.LaunchTypeEnum>(levelData.barrage_launch_types, ',')
+                };
+                GameCommonInfo.ArenaPrepareData.gameBarrageData.InitData(gameItemsManager, characterData, null);
                 break;
             case WorkerEnum.Accounting:
-                gameType = ArenaGameEnum.Barrage;
+                gameType = MiniGameEnum.Barrage;
                 break;
             case WorkerEnum.Accost:
-                gameType = ArenaGameEnum.Barrage;
+                gameType = MiniGameEnum.Barrage;
                 break;
             case WorkerEnum.Beater:
-                gameType = ArenaGameEnum.Barrage;
+                gameType = MiniGameEnum.Barrage;
                 break;
             default:
-                gameType = ArenaGameEnum.Barrage;
+                gameType = MiniGameEnum.Barrage;
                 break;
         }
-        //设置竞技场数据
-        GameCommonInfo.ArenaPrepareData = new ArenaPrepareBean
-        {
-  
-        };
+        GameCommonInfo.ArenaPrepareData.gameType = gameType;
+        //保存之前的位置
+        GameCommonInfo.ScenesChangeData.beforeUserPosition = controlHandler.GetControl(ControlHandler.ControlEnum.Normal).transform.position;
         //跳转到竞技场
-        SceneUtil.SceneChange(EnumUtil.GetEnumName(ScenesEnum.GameArenaScene));
+        SceneUtil.SceneChange(ScenesEnum.GameArenaScene);
     }
 
     public void Cancel(DialogView dialogView, DialogBean dialogBean)

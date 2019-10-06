@@ -15,7 +15,7 @@ public class GameCommonInfo
     /// <summary>
     /// 预加载场景名字
     /// </summary>
-    public static string LoadingSceneName;
+    public static ScenesChangeBean ScenesChangeData = new ScenesChangeBean();
 
     private static GameConfigController mGameConfigController;
     private static UITextController mUITextController;

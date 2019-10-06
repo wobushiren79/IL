@@ -51,7 +51,7 @@ public class ItemGameDataCpt : ItemGameBaseCpt
     public void GameContinue()
     {
         GameCommonInfo.GameUserId = gameData.userId;
-        SceneUtil.SceneChange(EnumUtil.GetEnumName(ScenesEnum.GameInnScene));
+        SceneUtil.SceneChange(ScenesEnum.GameInnScene);
     }
 
     /// <summary>

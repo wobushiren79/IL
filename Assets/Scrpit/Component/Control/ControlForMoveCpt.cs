@@ -39,6 +39,15 @@ public class ControlForMoveCpt : BaseControl
         }
     }
 
+    /// <summary>
+    /// 设置位置
+    /// </summary>
+    /// <param name="position"></param>
+    public void SetPosition(Vector3 position)
+    {
+        transform.position = position;
+    }
+
     public override void StopControl()
     {
         base.StopControl();

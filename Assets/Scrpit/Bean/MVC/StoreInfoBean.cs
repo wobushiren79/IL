@@ -19,9 +19,21 @@ public class StoreInfoBean : BaseBean
 
     public string pre_ach_ids;//前置成就ID
 
+    //小游戏专用数据
+    public int minigame_player_number;//玩家数量
+    public float minigame_win_survivaltime;//生存时间
+    public float minigame_win_life;//胜利生命值
+
+    //弹幕游戏专用数据
+    public int barrage_launch_interval;//发射间隔
+    public float barrage_launch_speed;//发射速度
+    public string barrage_launch_types;//发射器子弹类型
+
+
     public string icon_key;//图标KEY
     public string name;
     public string content;
+
 
     /// <summary>
     /// 获取前置成就ID

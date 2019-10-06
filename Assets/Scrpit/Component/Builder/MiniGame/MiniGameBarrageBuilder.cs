@@ -8,8 +8,6 @@ public class MiniGameBarrageBuilder : BaseMonoBehaviour
     public GameObject objEjectorContainer;
     //发射器模型
     public GameObject objEjectorModel;
-    //发射器创建位置
-    public Transform tfEjectorPosition;
 
     //玩家容器
     public GameObject objPlayerContainer;
@@ -57,10 +55,10 @@ public class MiniGameBarrageBuilder : BaseMonoBehaviour
     /// 创建一个发射器
     /// </summary>
     /// <param name="position"></param>
-    public BarrageEjectorCpt CreateEjector()
+    public BarrageEjectorCpt CreateEjector(Vector3 ejectorPosition)
     {
         GameObject objEjector = Instantiate(objEjectorContainer, objEjectorModel);
-        objEjector.transform.position = tfEjectorPosition.position;
+        objEjector.transform.position = ejectorPosition;
         BarrageEjectorCpt ejectorCpt = objEjector.GetComponent<BarrageEjectorCpt>();
         listEjector.Add(ejectorCpt);
         return ejectorCpt;

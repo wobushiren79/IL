@@ -5,12 +5,13 @@ using UnityEngine.SceneManagement;
 
 public class SceneUtil {
 
-    public static void SceneChange(string scenenName)
+    public static void SceneChange(ScenesEnum scenenName)
     {
-        GameCommonInfo.LoadingSceneName = scenenName;
+        //获取当前场景名字
+        string beforeSceneName = SceneManager.GetActiveScene().name;
+        GameCommonInfo.ScenesChangeData.beforeScene = EnumUtil.GetEnum<ScenesEnum>(beforeSceneName);
+        GameCommonInfo.ScenesChangeData.loadingScene = scenenName;
         SceneManager.LoadSceneAsync(EnumUtil.GetEnumName(ScenesEnum.LoadingScene));
     }
-
-
 
 }

@@ -568,6 +568,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   uiGameManager: {fileID: 1383179670}
   miniGameBarrageBuilder: {fileID: 1268023043}
+  isGamePlay: 0
 --- !u!1 &732217960
 GameObject:
   m_ObjectHideFlags: 0
@@ -1820,6 +1821,11 @@ PrefabInstance:
       propertyPath: gameItemsManager
       value: 
       objectReference: {fileID: 1057893566}
+    - target: {fileID: 8153746686964139622, guid: bb7343e0f0f52f34483e6ac7aa1d0db4,
+        type: 3}
+      propertyPath: gameBarrageHandler
+      value: 
+      objectReference: {fileID: 688571299}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: bb7343e0f0f52f34483e6ac7aa1d0db4, type: 3}
 --- !u!4 &903310767 stripped
@@ -8785,16 +8791,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1383179666}
     m_Modifications:
-    - target: {fileID: 2588219947376932421, guid: 00b5f95d6d4bfd440b69aa42ce4a5926,
-        type: 3}
-      propertyPath: m_Name
-      value: MiniGameEnd
-      objectReference: {fileID: 0}
-    - target: {fileID: 2588219947376932421, guid: 00b5f95d6d4bfd440b69aa42ce4a5926,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 2588219947376932426, guid: 00b5f95d6d4bfd440b69aa42ce4a5926,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -8905,6 +8901,16 @@ PrefabInstance:
       propertyPath: uiManager
       value: 
       objectReference: {fileID: 1383179670}
+    - target: {fileID: 2588219947376932421, guid: 00b5f95d6d4bfd440b69aa42ce4a5926,
+        type: 3}
+      propertyPath: m_Name
+      value: MiniGameEnd
+      objectReference: {fileID: 0}
+    - target: {fileID: 2588219947376932421, guid: 00b5f95d6d4bfd440b69aa42ce4a5926,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 00b5f95d6d4bfd440b69aa42ce4a5926, type: 3}
 --- !u!1001 &4742499061935762668

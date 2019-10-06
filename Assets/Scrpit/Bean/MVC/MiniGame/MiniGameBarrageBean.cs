@@ -1,15 +1,31 @@
 ﻿using UnityEngine;
 using UnityEditor;
 using System.Collections.Generic;
+using System;
 
+[Serializable]
 public class MiniGameBarrageBean : MiniGameBaseBean
 {
-    // public int gamePlayerNumber;//游戏人数
-    public float currentTime;//当前时间
+    //发射间隔
+    public float launchInterval;
+    //发射器发射类型
+    public BarrageEjectorCpt.LaunchTypeEnum[] launchTypes;
+    //发射速度
+    public float launchSpeed = 10;
+    //发射台位置
+    public List<Vector3> listEjectorPosition;
+    //玩家数量
+    public int playerNumber = 1;
 
+
+    //当前时间
+    public float currentTime;
+
+    //玩家数据
     public MiniGameCharacterBean userGameData = new MiniGameCharacterBean();
-    public List<MiniGameCharacterBean> listEnemyGameData=new List<MiniGameCharacterBean>();
-    
+    //对手数据
+    public List<MiniGameCharacterBean> listEnemyGameData = new List<MiniGameCharacterBean>();
+
     /// <summary>
     /// 初始化数据
     /// </summary>
@@ -26,7 +42,7 @@ public class MiniGameBarrageBean : MiniGameBaseBean
                 out CharacterAttributesBean totalAttributes, out CharacterAttributesBean selfAttributes, out CharacterAttributesBean equipAttributes);
             userGameData = new MiniGameCharacterBean
             {
-                characterType = 0,
+                characterType = 1,
                 characterMaxLife = totalAttributes.life,
                 characterCurrentLife = totalAttributes.life
             };

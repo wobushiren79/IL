@@ -21,6 +21,30 @@ public class StringUtil
     }
 
     /// <summary>
+    /// string 拆分成指定枚举
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
+    /// <param name="data"></param>
+    /// <param name="substring"></param>
+    /// <returns></returns>
+    public static T[] SplitBySubstringForArrayEnum<T>(string data, char substring)
+    {
+        if (data == null)
+            return new T[0];
+        string[] splitData = data.Split(substring);
+        if (CheckUtil.ArrayIsNull(splitData))
+        {
+            return new T[0];
+        }
+        T[] listData = new T[splitData.Length];
+        for (int i = 0; i < splitData.Length; i++)
+        {
+            listData[i] = EnumUtil.GetEnum<T>(splitData[i]);
+        }
+        return listData;
+    }
+
+    /// <summary>
     /// string通过指定字符拆分成数组
     /// </summary>
     /// <param name="data"></param>
@@ -46,7 +70,7 @@ public class StringUtil
         if (data == null)
             return new long[0];
         string[] splitData = data.Split(substring);
-        long[]  listData= TypeConversionUtil.ArrayStrToArrayLong(splitData);
+        long[] listData = TypeConversionUtil.ArrayStrToArrayLong(splitData);
         return listData;
     }
 

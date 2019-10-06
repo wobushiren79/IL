@@ -26,12 +26,17 @@ public class NpcAIMiniGameBarrageCpt : BaseNpcAI
     /// <param name="damage"></param>
     public void LifeDamage(int damage)
     {
+        if (characterMiniGameData == null || gameBarrageHandler == null)
+            return;
         characterMiniGameData.characterCurrentLife -= damage;
         psBlood.Play();
         //如果是控制的角色并且生命值
-        if (characterMiniGameData.characterType == 1)
+        if (characterMiniGameData.characterCurrentLife < gameBarrageHandler.gameBarrageData.winLife)
         {
-
+            if (characterMiniGameData.characterType == 1)
+            {
+                gameBarrageHandler.EndGame(false);
+            }
         }
     }
 
