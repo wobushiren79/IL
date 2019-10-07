@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using UnityEditor;
+using UnityEngine.AI;
 
 public class NpcAIMiniGameBarrageCpt : BaseNpcAI, SightForMiniGameBarrageCpt.ICallBack
 {
@@ -67,7 +68,12 @@ public class NpcAIMiniGameBarrageCpt : BaseNpcAI, SightForMiniGameBarrageCpt.ICa
     public void SeeBullet(BarrageBulletCpt barrageBullet)
     {
         Rigidbody2D rbBullet = barrageBullet.GetComponent<Rigidbody2D>();
-        LogUtil.Log("velocity:" + rbBullet.velocity);
+        Vector3 tempVector = rbBullet.transform.position - transform.position;
+        Vector3 moveVelocity = new Vector3(tempVector.y,-tempVector.x);
+
+   
+        characterMoveCpt.SetDestination(transform.position+ moveVelocity.normalized);
     }
     #endregion
+
 }

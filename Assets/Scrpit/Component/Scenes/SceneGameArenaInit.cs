@@ -25,7 +25,12 @@ public class SceneGameArenaInit : BaseSceneInit, IBaseObserver
         arenaPrepareData.gameType = MiniGameEnum.Barrage;
         arenaPrepareData.gameBarrageData = new MiniGameBarrageBean();
         arenaPrepareData.gameBarrageData.gameLevel = 1;
-        arenaPrepareData.gameBarrageData.launchInterval = 5;
+        arenaPrepareData.gameBarrageData.launchInterval = 2;
+        arenaPrepareData.gameBarrageData.launchTypes= new BarrageEjectorCpt.LaunchTypeEnum[] {
+            BarrageEjectorCpt.LaunchTypeEnum.Single,
+            BarrageEjectorCpt.LaunchTypeEnum.Double,
+            BarrageEjectorCpt.LaunchTypeEnum.Triple
+        };
         arenaPrepareData.gameBarrageData.launchSpeed = 1;
         arenaPrepareData.gameBarrageData.winSurvivalTime = 60;
         arenaPrepareData.gameBarrageData.winLife = 1;
