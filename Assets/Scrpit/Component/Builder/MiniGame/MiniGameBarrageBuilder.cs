@@ -52,6 +52,15 @@ public class MiniGameBarrageBuilder : BaseMonoBehaviour
             NpcAIMiniGameBarrageCpt npcCpt = CreatePlayer(itemUserData, new Vector3(0, 6, 0));
             controlForMiniGameBarrageCpt.SetCameraFollowObj(npcCpt);
         }
+        //创建敌人
+        if (CheckUtil.ListIsNull(listEnemyData))
+        {
+            return;
+        }
+        foreach (MiniGameCharacterBean itemEnemyData in listEnemyData)
+        {
+            NpcAIMiniGameBarrageCpt npcCpt = CreatePlayer(itemEnemyData, new Vector3(0, 6, 0));
+        }
     }
 
     /// <summary>

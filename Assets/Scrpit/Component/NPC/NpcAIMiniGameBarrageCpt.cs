@@ -1,8 +1,14 @@
 ﻿using UnityEngine;
 using UnityEditor;
 
-public class NpcAIMiniGameBarrageCpt : BaseNpcAI
+public class NpcAIMiniGameBarrageCpt : BaseNpcAI, SightForMiniGameBarrageCpt.ICallBack
 {
+    public enum MiniGameBarrageIntentEnum
+    {
+        Idle = 0,//闲置
+        Dodge = 1,//躲避
+    }
+
     //弹幕游戏处理
     public MiniGameBarrageHandler gameBarrageHandler;
     //迷你游戏数据
@@ -10,6 +16,8 @@ public class NpcAIMiniGameBarrageCpt : BaseNpcAI
 
     //血 粒子
     public ParticleSystem psBlood;
+    //视野
+    public SightForMiniGameBarrageCpt sightForMiniGameBarrage;
 
     /// <summary>
     /// 设置NPC数据
@@ -18,6 +26,12 @@ public class NpcAIMiniGameBarrageCpt : BaseNpcAI
     public void SetData(MiniGameCharacterBean characterMiniGameData)
     {
         this.characterMiniGameData = characterMiniGameData;
+        SetCharacterData(characterMiniGameData.characterData);
+        //如果是敌人 则打开AI
+        if (characterMiniGameData.characterType == 0)
+        {
+            OpenAI();
+        }
     }
 
     /// <summary>
@@ -40,4 +54,20 @@ public class NpcAIMiniGameBarrageCpt : BaseNpcAI
         }
     }
 
+    /// <summary>
+    /// 打开AI
+    /// </summary>
+    public void OpenAI()
+    {
+        sightForMiniGameBarrage.gameObject.SetActive(true);
+        sightForMiniGameBarrage.SetCallBack(this);
+    }
+
+    #region 视线回调
+    public void SeeBullet(BarrageBulletCpt barrageBullet)
+    {
+        Rigidbody2D rbBullet = barrageBullet.GetComponent<Rigidbody2D>();
+        LogUtil.Log("velocity:" + rbBullet.velocity);
+    }
+    #endregion
 }

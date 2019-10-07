@@ -21,18 +21,22 @@ public class SceneGameArenaInit : BaseSceneInit, IBaseObserver
             gameItemsManager.itemsInfoController.GetAllItemsInfo();
         //测试数据
         ArenaPrepareBean arenaPrepareData = GameCommonInfo.ArenaPrepareData;
-        //arenaPrepareData = new ArenaPrepareBean();
-        //arenaPrepareData.gameType = MiniGameEnum.Barrage;
-        //arenaPrepareData.gameBarrageData = new MiniGameBarrageBean();
-        //arenaPrepareData.gameBarrageData.gameLevel = 1;
-        //arenaPrepareData.gameBarrageData.launchInterval = 5;
-        //arenaPrepareData.gameBarrageData.winSurvivalTime = 10;
-        //arenaPrepareData.gameBarrageData.winLife = 1;
-        //arenaPrepareData.gameBarrageData.InitData(gameItemsManager, gameDataManager.gameData.userCharacter);
-        //arenaPrepareData.gameBarrageData.AddRewardItem(100001, 1);
-        //arenaPrepareData.gameBarrageData.AddRewardItem(100001, 2);
-        //arenaPrepareData.gameBarrageData.AddRewardItem(200001, 3);
-        //arenaPrepareData.gameBarrageData.AddRewardItem(1100006, 3);
+        arenaPrepareData = new ArenaPrepareBean();
+        arenaPrepareData.gameType = MiniGameEnum.Barrage;
+        arenaPrepareData.gameBarrageData = new MiniGameBarrageBean();
+        arenaPrepareData.gameBarrageData.gameLevel = 1;
+        arenaPrepareData.gameBarrageData.launchInterval = 5;
+        arenaPrepareData.gameBarrageData.launchSpeed = 1;
+        arenaPrepareData.gameBarrageData.winSurvivalTime = 60;
+        arenaPrepareData.gameBarrageData.winLife = 1;
+        List<CharacterBean> listEm = new List<CharacterBean>();
+        listEm.Add(new CharacterBean());
+        arenaPrepareData.gameBarrageData.InitData(gameItemsManager, gameDataManager.gameData.userCharacter, listEm);
+
+        arenaPrepareData.gameBarrageData.AddRewardItem(100001, 1);
+        arenaPrepareData.gameBarrageData.AddRewardItem(100001, 2);
+        arenaPrepareData.gameBarrageData.AddRewardItem(200001, 3);
+        arenaPrepareData.gameBarrageData.AddRewardItem(1100006, 3);
 
         if (arenaPrepareData == null)
             return;

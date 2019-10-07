@@ -61,7 +61,6 @@ public class MiniGameBaseBean
         }
     }
 
-
     /// <summary>
     /// 初始化数据
     /// </summary>
@@ -113,5 +112,21 @@ public class MiniGameBaseBean
         List<CharacterBean> listCharacterData = new List<CharacterBean>();
         listCharacterData.Add(userData);
         InitData(gameItemsManager, listCharacterData, null);
+    }
+
+    public virtual void InitData(GameItemsManager gameItemsManager, CharacterBean userData, List<CharacterBean> listEnemyData)
+    {
+        List<CharacterBean> listCharacterData = new List<CharacterBean>();
+        listCharacterData.Add(userData);
+        InitData(gameItemsManager, listCharacterData, listEnemyData);
+    }
+
+    public virtual void InitData(GameItemsManager gameItemsManager, CharacterBean userData, CharacterBean enemyData)
+    {
+        List<CharacterBean> listCharacterData = new List<CharacterBean>();
+        listCharacterData.Add(userData);
+        List<CharacterBean> listEnemyData = new List<CharacterBean>();
+        listEnemyData.Add(enemyData);
+        InitData(gameItemsManager, listCharacterData, listEnemyData);
     }
 }
