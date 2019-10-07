@@ -5,6 +5,8 @@ using System;
 [Serializable]
 public class CharacterWorkerBaseBean
 {
+    //职业类型
+    public WorkerEnum workerType;
     //职业等级
     public int workerLevel;
     //当前职业经验值
@@ -40,6 +42,34 @@ public class CharacterWorkerBaseBean
         nextLevelExp = GetLevelUpExp(workerLevel + 1);
         currentExp = workerExp;
         levelProportion = currentExp / nextLevelExp;
+    }
+
+    /// <summary>
+    /// 升级
+    /// </summary>
+    public void LevelUp(CharacterAttributesBean characterAttributes)
+    {
+        workerLevel += 1;
+        workerExp = 0;
+        characterAttributes.life += 10;
+        switch (workerType)
+        {
+            case WorkerEnum.Chef:
+                characterAttributes.cook += 5;
+                break;
+            case WorkerEnum.Waiter:
+                characterAttributes.speed += 5;
+                break;
+            case WorkerEnum.Accounting:
+                characterAttributes.account += 5;
+                break;
+            case WorkerEnum.Accost:
+                characterAttributes.charm += 5;
+                break;
+            case WorkerEnum.Beater:
+                characterAttributes.force += 5;
+                break;
+        }
     }
 
     /// <summary>

@@ -290,7 +290,7 @@ public class ItemTownGuildImproveCharacterCpt : ItemGameBaseCpt, DialogView.IDia
                     launchSpeed = levelData.barrage_launch_speed,
                     launchTypes = StringUtil.SplitBySubstringForArrayEnum<BarrageEjectorCpt.LaunchTypeEnum>(levelData.barrage_launch_types, ',')
                 };
-                GameCommonInfo.ArenaPrepareData.gameBarrageData.InitData(gameItemsManager, characterData, null);
+                GameCommonInfo.ArenaPrepareData.gameBarrageData.InitData(gameItemsManager, characterData);
                 break;
             case WorkerEnum.Accounting:
                 gameType = MiniGameEnum.Barrage;

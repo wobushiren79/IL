@@ -14,10 +14,12 @@ public class CharacterDressManager : BaseManager
     public IconBeanDictionary listIconHat;
 
 
-    public Sprite GetSpriteByName(GeneralEnum generalEnum, string name )
+    public Sprite GetSpriteByName(GeneralEnum generalEnum, string name)
     {
         switch (generalEnum)
         {
+            case GeneralEnum.Mask:
+                return GetMaskSpriteByName(name);
             case GeneralEnum.Hat:
                 return GetHatSpriteByName(name);
             case GeneralEnum.Clothes:

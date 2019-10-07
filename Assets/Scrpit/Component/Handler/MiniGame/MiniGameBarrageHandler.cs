@@ -34,9 +34,9 @@ public class MiniGameBarrageHandler : BaseMiniGameHandler, UIMiniGameCountDown.I
         }
         this.gameBarrageData = gameBarrageData;
         //创建所有玩家
-        miniGameBarrageBuilder.CreateAllPlayer(gameBarrageData.userGameData, gameBarrageData.listEnemyGameData);
+        miniGameBarrageBuilder.CreateAllPlayer(gameBarrageData.listUserGameData, gameBarrageData.listEnemyGameData);
         //创建发射器
-        for (int i = 0; i < gameBarrageData.listEjectorPosition.Count;i++)
+        for (int i = 0; i < gameBarrageData.listEjectorPosition.Count; i++)
             miniGameBarrageBuilder.CreateEjector(gameBarrageData.listEjectorPosition[i]);
         //打开游戏准备倒计时UI
         UIMiniGameCountDown uiCountDown = (UIMiniGameCountDown)uiGameManager.OpenUIAndCloseOtherByName(EnumUtil.GetEnumName(UIEnum.MiniGameCountDown));
@@ -81,9 +81,14 @@ public class MiniGameBarrageHandler : BaseMiniGameHandler, UIMiniGameCountDown.I
             StopAllCoroutines();
             miniGameBarrageBuilder.DestoryPlayer();
             miniGameBarrageBuilder.DestoryEjector();
+            //设置游戏数据
+            if (isWinGame)
+                gameBarrageData.gameResult = 1;
+            else
+                gameBarrageData.gameResult = 0;
             //打开游戏结束UI
             UIMiniGameEnd uiMiniGameEnd = (UIMiniGameEnd)uiGameManager.OpenUIAndCloseOtherByName(EnumUtil.GetEnumName(UIEnum.MiniGameEnd));
-            uiMiniGameEnd.SetData(isWinGame);
+            uiMiniGameEnd.SetData(gameBarrageData);
             uiMiniGameEnd.SetCallBack(this);
             //通知 游戏结束
             NotifyAllObserver((int)NotifyMiniGameEnum.GameEnd);

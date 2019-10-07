@@ -18,7 +18,7 @@ public class UIMiniGameBarrage : UIBaseMiniGame
         if (gameData != null)
         {
             MiniGameBarrageBean barrageData = ((MiniGameBarrageBean)gameData);
-            MiniGameCharacterBean userGameData = barrageData.userGameData;
+            MiniGameCharacterBean userGameData = barrageData.listUserGameData[0];
             SetUserLife(userGameData.characterMaxLife, userGameData.characterCurrentLife);
         }
     }
@@ -30,7 +30,7 @@ public class UIMiniGameBarrage : UIBaseMiniGame
     public void SetData(MiniGameBarrageBean barrageData)
     {
         gameData = barrageData;
-        MiniGameCharacterBean userGameData = barrageData.userGameData;
+        MiniGameCharacterBean userGameData = barrageData.listUserGameData[0];
         SetUserLife(userGameData.characterMaxLife, userGameData.characterCurrentLife);
     }
 

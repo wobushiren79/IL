@@ -736,17 +736,17 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1654764113376500029}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 4096985902861452017}
-  m_RootOrder: 1
+  m_Father: {fileID: 3860202822804484677}
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.202, y: 0.8}
-  m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: 7.5, y: 0}
-  m_SizeDelta: {x: -15, y: 0}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 0.25}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &2006758771575248143
 CanvasRenderer:
@@ -781,7 +781,7 @@ MonoBehaviour:
     m_BestFit: 0
     m_MinSize: 10
     m_MaxSize: 40
-    m_Alignment: 6
+    m_Alignment: 4
     m_AlignByGeometry: 0
     m_RichText: 1
     m_HorizontalOverflow: 0
@@ -1074,7 +1074,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &4096985902861452017
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1087,17 +1087,16 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 3860202822804484677}
-  - {fileID: 9052452933818898272}
   - {fileID: 3709497512886486900}
   - {fileID: 871761782119488981}
   - {fileID: 5995393862135774107}
   m_Father: {fileID: 2777551011293516092}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 300.95203, y: -52}
-  m_SizeDelta: {x: 591.90405, y: 100}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &4670742135034708241
 CanvasRenderer:
@@ -1184,6 +1183,139 @@ MonoBehaviour:
   spMoneyL: {fileID: 21300000, guid: 96bc4e961099db8478cd010fa8794791, type: 3}
   spMoneyM: {fileID: 21300000, guid: c9e90e061d5d02842a845cfad2b2d4d4, type: 3}
   spMoneyS: {fileID: 21300000, guid: 8c602e885f036ed42bab42d9cd5f3b82, type: 3}
+  levelData:
+    id: 0
+    valid: 0
+    type: 0
+    mark: 
+    mark_id: 0
+    mark_type: 0
+    mark_x: 0
+    mark_y: 0
+    price_l: 0
+    price_m: 0
+    price_s: 0
+    guild_coin: 0
+    pre_ach_ids: 
+    minigame_player_number: 0
+    minigame_win_survivaltime: 0
+    minigame_win_life: 0
+    barrage_launch_interval: 0
+    barrage_launch_speed: 0
+    barrage_launch_types: 
+    icon_key: 
+    name: 
+    content: 
+  characterData:
+    baseInfo:
+      characterId: 
+      name: 
+      workDay: 0
+      priceS: 0
+      priceM: 0
+      priceL: 0
+      chefInfo:
+        workerType: 1
+        workerLevel: 0
+        workerExp: 0
+        cookNumber: 0
+        cookTime: 0
+        listFoodCookNumer: []
+      waiterInfo:
+        workerType: 2
+        workerLevel: 0
+        workerExp: 0
+        cleanTotalNumber: 0
+        sendTotalNumber: 0
+        cleanTotalTime: 0
+      accountingInfo:
+        workerType: 3
+        workerLevel: 0
+        workerExp: 0
+        accountingTotalNumber: 0
+        accountingErrorNumber: 0
+        accountingSuccessNumber: 0
+        loseMoneyL: 0
+        lostMoneyM: 0
+        lostMoneyS: 0
+        moreMoneyL: 0
+        moreMoneyM: 0
+        moreMoneyS: 0
+        accountingMoneyL: 0
+        accountingMoneyM: 0
+        accountingMoneyS: 0
+        accountingTotalTime: 0
+      accostInfo:
+        workerType: 4
+        workerLevel: 0
+        workerExp: 0
+        accostTotalNumber: 0
+        accostSuccessNumber: 0
+        accostFailNumber: 0
+        accostTotalTime: 0
+      beaterInfo:
+        workerType: 5
+        workerLevel: 0
+        workerExp: 0
+        fightTotalNumber: 0
+        fightWinNumber: 0
+        fightLoseNumber: 0
+        fightTotalTime: 0
+        restTotalTime: 0
+      isChef: 0
+      isWaiter: 0
+      isAccounting: 0
+      isAccost: 0
+      isBeater: 0
+      priorityChef: 0
+      priorityWaiter: 0
+      priorityAccounting: 0
+      priorityAccost: 0
+      priorityBeater: 0
+      isAttendance: 0
+    attributes:
+      loyal: 0
+      life: 0
+      cook: 0
+      speed: 0
+      account: 0
+      charm: 0
+      force: 0
+      lucky: 0
+    body:
+      sex: 1
+      skinColor:
+        r: 1
+        g: 1
+        b: 1
+        a: 1
+      hair: 
+      hairColor:
+        r: 1
+        g: 1
+        b: 1
+        a: 1
+      eye: character_eye_0
+      eyeColor:
+        r: 1
+        g: 1
+        b: 1
+        a: 1
+      mouth: character_mouth_0
+      mouthColor:
+        r: 1
+        g: 1
+        b: 1
+        a: 1
+      face: 0
+    equips:
+      maskId: 0
+      handId: 0
+      hatId: 0
+      clothesId: 0
+      shoesId: 0
+      listLearnBook: 
+  workerType: 0
 --- !u!1 &2418279529039129992
 GameObject:
   m_ObjectHideFlags: 0
@@ -1402,18 +1534,21 @@ MonoBehaviour:
         priceM: 0
         priceL: 0
         chefInfo:
+          workerType: 1
           workerLevel: 0
           workerExp: 0
           cookNumber: 0
           cookTime: 0
           listFoodCookNumer: []
         waiterInfo:
+          workerType: 2
           workerLevel: 0
           workerExp: 0
           cleanTotalNumber: 0
           sendTotalNumber: 0
           cleanTotalTime: 0
         accountingInfo:
+          workerType: 3
           workerLevel: 0
           workerExp: 0
           accountingTotalNumber: 0
@@ -1430,6 +1565,7 @@ MonoBehaviour:
           accountingMoneyS: 0
           accountingTotalTime: 0
         accostInfo:
+          workerType: 4
           workerLevel: 0
           workerExp: 0
           accostTotalNumber: 0
@@ -1437,6 +1573,7 @@ MonoBehaviour:
           accostFailNumber: 0
           accostTotalTime: 0
         beaterInfo:
+          workerType: 5
           workerLevel: 0
           workerExp: 0
           fightTotalNumber: 0
@@ -1566,12 +1703,12 @@ RectTransform:
   - {fileID: 6443551338713958413}
   - {fileID: 7110735341010332985}
   m_Father: {fileID: 4096985902861452017}
-  m_RootOrder: 2
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.202, y: 0}
   m_AnchorMax: {x: 0.70400006, y: 1}
-  m_AnchoredPosition: {x: 2.5, y: -10}
-  m_SizeDelta: {x: -5, y: -30}
+  m_AnchoredPosition: {x: 2.5, y: 0}
+  m_SizeDelta: {x: -5, y: -10}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &4132838296955051714
 CanvasRenderer:
@@ -1835,7 +1972,7 @@ RectTransform:
   - {fileID: 1348520049713406364}
   - {fileID: 6488398786860674450}
   m_Father: {fileID: 4096985902861452017}
-  m_RootOrder: 3
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.70400006, y: 0}
   m_AnchorMax: {x: 0.9027733, y: 1}
@@ -2199,6 +2336,7 @@ RectTransform:
   m_Children:
   - {fileID: 4317135455877528425}
   - {fileID: 806500220372799301}
+  - {fileID: 9052452933818898272}
   m_Father: {fileID: 4096985902861452017}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -2531,7 +2669,7 @@ RectTransform:
   m_Children:
   - {fileID: 5286494680971753112}
   m_Father: {fileID: 4096985902861452017}
-  m_RootOrder: 4
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.9027733, y: 0}
   m_AnchorMax: {x: 1, y: 1}

@@ -16,62 +16,21 @@ public class MiniGameBarrageBean : MiniGameBaseBean
     public List<Vector3> listEjectorPosition;
     //玩家数量
     public int playerNumber = 1;
-
-
     //当前时间
     public float currentTime;
 
-    //玩家数据
-    public MiniGameCharacterBean userGameData = new MiniGameCharacterBean();
-    //对手数据
-    public List<MiniGameCharacterBean> listEnemyGameData = new List<MiniGameCharacterBean>();
-
-    /// <summary>
-    /// 初始化数据
-    /// </summary>
-    /// <param name="gameItemsManager"></param>
-    /// <param name="userData"></param>
-    /// <param name="listEnemyData"></param>
-    public void InitData(GameItemsManager gameItemsManager, CharacterBean userData, List<CharacterBean> listEnemyData)
+    public MiniGameBarrageBean()
     {
-        //创建操作角色数据
-        if (userData != null)
-        {
-            //获取角色属性
-            userData.GetAttributes(gameItemsManager,
-                out CharacterAttributesBean totalAttributes, out CharacterAttributesBean selfAttributes, out CharacterAttributesBean equipAttributes);
-            userGameData = new MiniGameCharacterBean
-            {
-                characterType = 1,
-                characterMaxLife = totalAttributes.life,
-                characterCurrentLife = totalAttributes.life
-            };
-        }
-        //创建敌人角色数据
-        if (!CheckUtil.ListIsNull(listEnemyData))
-        {
-            foreach (CharacterBean itemData in listEnemyData)
-            {
-                //获取角色属性
-                userData.GetAttributes(gameItemsManager,
-                    out CharacterAttributesBean totalAttributes, out CharacterAttributesBean selfAttributes, out CharacterAttributesBean equipAttributes);
-                MiniGameCharacterBean itemUserGameData = new MiniGameCharacterBean
-                {
-                    characterType = 0,
-                    characterMaxLife = totalAttributes.life,
-                    characterCurrentLife = totalAttributes.life
-                };
-                listEnemyGameData.Add(itemUserGameData);
-            }
-        }
+        gameType = MiniGameEnum.Barrage;
+    }
+
+    public override void InitData(GameItemsManager gameItemsManager, List<CharacterBean> listUserData, List<CharacterBean> listEnemyData)
+    {
+        base.InitData(gameItemsManager, listUserData, listEnemyData);
+        //初始化时间
         if (winSurvivalTime != 0)
         {
             currentTime = winSurvivalTime;
         }
-    }
-
-    public void InitData(GameItemsManager gameItemsManager, CharacterBean userData)
-    {
-        InitData(gameItemsManager, userData, null);
     }
 }

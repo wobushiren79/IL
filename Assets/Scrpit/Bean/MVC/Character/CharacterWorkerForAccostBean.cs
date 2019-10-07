@@ -14,6 +14,11 @@ public class CharacterWorkerForAccostBean : CharacterWorkerBaseBean
     //总计招揽时间
     public float accostTotalTime;
 
+    public CharacterWorkerForAccostBean()
+    {
+        workerType = WorkerEnum.Accost;
+    }
+
     /// <summary>
     /// 添加吆喝成功次数
     /// </summary>

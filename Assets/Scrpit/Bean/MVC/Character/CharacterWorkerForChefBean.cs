@@ -13,6 +13,12 @@ public class CharacterWorkerForChefBean : CharacterWorkerBaseBean
     //烹饪不同食物的次数
     public List<ItemBean> listFoodCookNumer = new List<ItemBean>();
 
+    public CharacterWorkerForChefBean()
+    {
+        workerType = WorkerEnum.Chef;
+    }
+
+
     /// <summary>
     /// 增加烹饪次数
     /// </summary>

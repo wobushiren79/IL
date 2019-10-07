@@ -10,4 +10,7 @@ public class MiniGameCharacterBean
     public int characterMaxLife;
     //角色当前血量
     public int characterCurrentLife;
+
+    //角色数据
+    public CharacterBean characterData;
 }

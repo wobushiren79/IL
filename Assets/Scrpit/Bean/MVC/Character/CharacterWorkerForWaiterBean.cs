@@ -12,6 +12,12 @@ public class CharacterWorkerForWaiterBean : CharacterWorkerBaseBean
 
     //总计清理时间
     public float cleanTotalTime;
+
+    public CharacterWorkerForWaiterBean()
+    {
+        workerType = WorkerEnum.Waiter;
+    }
+
     /// <summary>
     /// 增加清理次数
     /// </summary>

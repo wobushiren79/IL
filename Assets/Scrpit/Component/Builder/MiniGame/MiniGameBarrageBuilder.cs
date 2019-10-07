@@ -44,11 +44,14 @@ public class MiniGameBarrageBuilder : BaseMonoBehaviour
     /// </summary>
     /// <param name="userData"></param>
     /// <param name="listEnemy"></param>
-    public void CreateAllPlayer(MiniGameCharacterBean userData, List<MiniGameCharacterBean> listEnemyData)
+    public void CreateAllPlayer(List<MiniGameCharacterBean> listUserData, List<MiniGameCharacterBean> listEnemyData)
     {
         //创建操作角色
-        NpcAIMiniGameBarrageCpt npcCpt = CreatePlayer(userData, new Vector3(0, 6, 0));
-        controlForMiniGameBarrageCpt.SetCameraFollowObj(npcCpt);
+        foreach (MiniGameCharacterBean itemUserData in listUserData)
+        {
+            NpcAIMiniGameBarrageCpt npcCpt = CreatePlayer(itemUserData, new Vector3(0, 6, 0));
+            controlForMiniGameBarrageCpt.SetCameraFollowObj(npcCpt);
+        }
     }
 
     /// <summary>

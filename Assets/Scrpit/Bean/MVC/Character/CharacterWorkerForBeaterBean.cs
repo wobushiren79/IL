@@ -11,6 +11,10 @@ public class CharacterWorkerForBeaterBean : CharacterWorkerBaseBean
     public float fightTotalTime;
     public float restTotalTime;
 
+    public CharacterWorkerForBeaterBean()
+    {
+        workerType = WorkerEnum.Beater;
+    }
 
     public void AddFightWinNumber(long number)
     {

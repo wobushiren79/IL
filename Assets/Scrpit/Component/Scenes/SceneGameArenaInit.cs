@@ -15,16 +15,24 @@ public class SceneGameArenaInit : BaseSceneInit, IBaseObserver
     }
 
     public void InitSceneData()
-    {
+    {        
+        //获取相关数据
+        if (gameItemsManager != null)
+            gameItemsManager.itemsInfoController.GetAllItemsInfo();
+        //测试数据
         ArenaPrepareBean arenaPrepareData = GameCommonInfo.ArenaPrepareData;
         //arenaPrepareData = new ArenaPrepareBean();
-        //arenaPrepareData.gameType = ArenaGameEnum.Barrage;
+        //arenaPrepareData.gameType = MiniGameEnum.Barrage;
         //arenaPrepareData.gameBarrageData = new MiniGameBarrageBean();
-        //arenaPrepareData.gameBarrageData.gameLevel = 3;
-        //arenaPrepareData.gameBarrageData.launchInterval = 3;
-        //arenaPrepareData.gameBarrageData.winSurvivalTime = 60;
+        //arenaPrepareData.gameBarrageData.gameLevel = 1;
+        //arenaPrepareData.gameBarrageData.launchInterval = 5;
+        //arenaPrepareData.gameBarrageData.winSurvivalTime = 10;
         //arenaPrepareData.gameBarrageData.winLife = 1;
         //arenaPrepareData.gameBarrageData.InitData(gameItemsManager, gameDataManager.gameData.userCharacter);
+        //arenaPrepareData.gameBarrageData.AddRewardItem(100001, 1);
+        //arenaPrepareData.gameBarrageData.AddRewardItem(100001, 2);
+        //arenaPrepareData.gameBarrageData.AddRewardItem(200001, 3);
+        //arenaPrepareData.gameBarrageData.AddRewardItem(1100006, 3);
 
         if (arenaPrepareData == null)
             return;

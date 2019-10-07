@@ -30,6 +30,11 @@ public class CharacterWorkerForAccountingBean : CharacterWorkerBaseBean
     //总计结算时间
     public float accountingTotalTime;
 
+    public CharacterWorkerForAccountingBean()
+    {
+        workerType = WorkerEnum.Accounting;
+    }
+
     /// <summary>
     ///  增加结算成功次数和金钱
     /// </summary>
