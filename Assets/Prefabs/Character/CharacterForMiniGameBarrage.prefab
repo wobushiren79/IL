@@ -5020,6 +5020,7 @@ MonoBehaviour:
   characterShoutCpt: {fileID: 4717018018557957672}
   characterExpression: {fileID: 3936434963332890346}
   gameBarrageHandler: {fileID: 0}
+  navMeshAgent: {fileID: 3067088595257032274}
   psBlood: {fileID: 4141132151749652711}
   sightForMiniGameBarrage: {fileID: 6384526941455185760}
 --- !u!50 &7203349196426540017
@@ -5041,7 +5042,7 @@ Rigidbody2D:
   m_Material: {fileID: 0}
   m_Interpolate: 0
   m_SleepingMode: 1
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
   m_Constraints: 4
 --- !u!58 &3701038979504985865
 CircleCollider2D:
@@ -5106,7 +5107,7 @@ CircleCollider2D:
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
-  m_Radius: 5
+  m_Radius: 4
 --- !u!114 &6384526941455185760
 MonoBehaviour:
   m_ObjectHideFlags: 0

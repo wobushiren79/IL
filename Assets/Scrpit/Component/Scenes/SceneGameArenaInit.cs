@@ -1,12 +1,15 @@
 ﻿using UnityEngine;
 using UnityEditor;
 using System.Collections.Generic;
+using UnityEngine.AI;
+using System.Collections;
 
 public class SceneGameArenaInit : BaseSceneInit, IBaseObserver
 {
     //弹幕游戏控制
     public MiniGameBarrageHandler barrageHandler;
-
+    //地形控制
+    public NavMeshSurface navMesh;
     private new void Start()
     {
         base.Start();
@@ -15,7 +18,7 @@ public class SceneGameArenaInit : BaseSceneInit, IBaseObserver
     }
 
     public void InitSceneData()
-    {        
+    {
         //获取相关数据
         if (gameItemsManager != null)
             gameItemsManager.itemsInfoController.GetAllItemsInfo();
@@ -25,8 +28,8 @@ public class SceneGameArenaInit : BaseSceneInit, IBaseObserver
         arenaPrepareData.gameType = MiniGameEnum.Barrage;
         arenaPrepareData.gameBarrageData = new MiniGameBarrageBean();
         arenaPrepareData.gameBarrageData.gameLevel = 1;
-        arenaPrepareData.gameBarrageData.launchInterval = 2;
-        arenaPrepareData.gameBarrageData.launchTypes= new BarrageEjectorCpt.LaunchTypeEnum[] {
+        arenaPrepareData.gameBarrageData.launchInterval = 1;
+        arenaPrepareData.gameBarrageData.launchTypes = new BarrageEjectorCpt.LaunchTypeEnum[] {
             BarrageEjectorCpt.LaunchTypeEnum.Single,
             BarrageEjectorCpt.LaunchTypeEnum.Double,
             BarrageEjectorCpt.LaunchTypeEnum.Triple
@@ -34,9 +37,7 @@ public class SceneGameArenaInit : BaseSceneInit, IBaseObserver
         arenaPrepareData.gameBarrageData.launchSpeed = 1;
         arenaPrepareData.gameBarrageData.winSurvivalTime = 60;
         arenaPrepareData.gameBarrageData.winLife = 1;
-        List<CharacterBean> listEm = new List<CharacterBean>();
-        listEm.Add(new CharacterBean());
-        arenaPrepareData.gameBarrageData.InitData(gameItemsManager, gameDataManager.gameData.userCharacter, listEm);
+        arenaPrepareData.gameBarrageData.InitData(gameItemsManager, gameDataManager.gameData.userCharacter);
 
         arenaPrepareData.gameBarrageData.AddRewardItem(100001, 1);
         arenaPrepareData.gameBarrageData.AddRewardItem(100001, 2);
@@ -53,6 +54,9 @@ public class SceneGameArenaInit : BaseSceneInit, IBaseObserver
                 InitGameBarrage(arenaPrepareData.gameBarrageData);
                 break;
         }
+
+        //初始化地形
+        StartCoroutine(BuildNavMesh());
     }
 
     /// <summary>
@@ -72,7 +76,7 @@ public class SceneGameArenaInit : BaseSceneInit, IBaseObserver
             gameBarrageData.listEjectorPosition.Add(new Vector3(2, 0, 0));
             gameBarrageData.listEjectorPosition.Add(new Vector3(-2, 0, 0));
         }
-        else if ( gameBarrageData.gameLevel > 4)
+        else if (gameBarrageData.gameLevel > 4)
         {
             gameBarrageData.listEjectorPosition.Add(new Vector3(0, 1, 0));
             gameBarrageData.listEjectorPosition.Add(new Vector3(2, -1, 0));
@@ -97,4 +101,14 @@ public class SceneGameArenaInit : BaseSceneInit, IBaseObserver
         }
     }
     #endregion
+
+    /// <summary>
+    /// 生成地形
+    /// </summary>
+    /// <returns></returns>
+    public IEnumerator BuildNavMesh()
+    {
+        yield return new WaitForEndOfFrame();
+        navMesh.BuildNavMesh();
+    }
 }

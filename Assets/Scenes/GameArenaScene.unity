@@ -365,7 +365,7 @@ MonoBehaviour:
   m_OverrideVoxelSize: 0
   m_VoxelSize: 0.05
   m_BuildHeightMesh: 0
-  m_NavMeshData: {fileID: 23800000, guid: fee3a6b2a5e155f4cbdabf9ce59047f6, type: 2}
+  m_NavMeshData: {fileID: 23800000, guid: db172c62ed7180f43a22e8ab747048d4, type: 2}
 --- !u!1 &413770738
 GameObject:
   m_ObjectHideFlags: 0
@@ -607,6 +607,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 640217921}
+  - component: {fileID: 640217922}
   m_Layer: 0
   m_Name: EjectorContainer
   m_TagString: Untagged
@@ -628,6 +629,22 @@ Transform:
   m_Father: {fileID: 661638576}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &640217922
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 640217920}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1e3fdca004f2d45fe8abbed571a8abd5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_OverrideArea: 1
+  m_Area: 1
+  m_IgnoreFromBuild: 0
+  m_AffectedAgents: ffffffff
 --- !u!1 &661638575
 GameObject:
   m_ObjectHideFlags: 0
@@ -788,7 +805,7 @@ PrefabInstance:
     - target: {fileID: 7362692425160318330, guid: e9c65060932ca1b498ee603cef88ca56,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 5.47
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7362692425160318330, guid: e9c65060932ca1b498ee603cef88ca56,
         type: 3}
@@ -1928,12 +1945,12 @@ PrefabInstance:
     - target: {fileID: 8937234797044043919, guid: bb7343e0f0f52f34483e6ac7aa1d0db4,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0
+      value: -2.2
       objectReference: {fileID: 0}
     - target: {fileID: 8937234797044043919, guid: bb7343e0f0f52f34483e6ac7aa1d0db4,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 6
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8937234797044043919, guid: bb7343e0f0f52f34483e6ac7aa1d0db4,
         type: 3}
@@ -1983,7 +2000,7 @@ PrefabInstance:
     - target: {fileID: 3067088595257032274, guid: bb7343e0f0f52f34483e6ac7aa1d0db4,
         type: 3}
       propertyPath: m_Enabled
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8153746686964139622, guid: bb7343e0f0f52f34483e6ac7aa1d0db4,
         type: 3}
@@ -2005,6 +2022,16 @@ PrefabInstance:
       propertyPath: characterDressManager
       value: 
       objectReference: {fileID: 1881033342}
+    - target: {fileID: 7133047012006686733, guid: bb7343e0f0f52f34483e6ac7aa1d0db4,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3701038979504985865, guid: bb7343e0f0f52f34483e6ac7aa1d0db4,
+        type: 3}
+      propertyPath: m_IsTrigger
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: bb7343e0f0f52f34483e6ac7aa1d0db4, type: 3}
 --- !u!4 &903310767 stripped
@@ -7677,6 +7704,7 @@ MonoBehaviour:
   dialogManager: {fileID: 0}
   controlHandler: {fileID: 1631365415}
   barrageHandler: {fileID: 688571299}
+  navMesh: {fileID: 404978616}
 --- !u!1 &1699721781
 GameObject:
   m_ObjectHideFlags: 0
@@ -9069,16 +9097,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1383179666}
     m_Modifications:
-    - target: {fileID: 2588219947376932421, guid: 00b5f95d6d4bfd440b69aa42ce4a5926,
-        type: 3}
-      propertyPath: m_Name
-      value: MiniGameEnd
-      objectReference: {fileID: 0}
-    - target: {fileID: 2588219947376932421, guid: 00b5f95d6d4bfd440b69aa42ce4a5926,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 2588219947376932426, guid: 00b5f95d6d4bfd440b69aa42ce4a5926,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -9189,6 +9207,16 @@ PrefabInstance:
       propertyPath: uiManager
       value: 
       objectReference: {fileID: 1383179670}
+    - target: {fileID: 2588219947376932421, guid: 00b5f95d6d4bfd440b69aa42ce4a5926,
+        type: 3}
+      propertyPath: m_Name
+      value: MiniGameEnd
+      objectReference: {fileID: 0}
+    - target: {fileID: 2588219947376932421, guid: 00b5f95d6d4bfd440b69aa42ce4a5926,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3078652455503504527, guid: 00b5f95d6d4bfd440b69aa42ce4a5926,
         type: 3}
       propertyPath: m_AnchorMax.x
@@ -9348,16 +9376,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1383179666}
     m_Modifications:
-    - target: {fileID: 4742499063405651707, guid: 91c41a5c51bf3294db6af52fdf2ab638,
-        type: 3}
-      propertyPath: m_Name
-      value: MiniGameBarrage
-      objectReference: {fileID: 0}
-    - target: {fileID: 4742499063405651707, guid: 91c41a5c51bf3294db6af52fdf2ab638,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 4742499063405651700, guid: 91c41a5c51bf3294db6af52fdf2ab638,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -9468,6 +9486,16 @@ PrefabInstance:
       propertyPath: uiManager
       value: 
       objectReference: {fileID: 1383179670}
+    - target: {fileID: 4742499063405651707, guid: 91c41a5c51bf3294db6af52fdf2ab638,
+        type: 3}
+      propertyPath: m_Name
+      value: MiniGameBarrage
+      objectReference: {fileID: 0}
+    - target: {fileID: 4742499063405651707, guid: 91c41a5c51bf3294db6af52fdf2ab638,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4033089762493181477, guid: 91c41a5c51bf3294db6af52fdf2ab638,
         type: 3}
       propertyPath: m_AnchorMin.y
@@ -9596,16 +9624,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1383179666}
     m_Modifications:
-    - target: {fileID: 7643544672460960892, guid: 4c94c9994edbece4d9b95f342972ddec,
-        type: 3}
-      propertyPath: m_Name
-      value: MiniGameCountDown
-      objectReference: {fileID: 0}
-    - target: {fileID: 7643544672460960892, guid: 4c94c9994edbece4d9b95f342972ddec,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 7643544672460960895, guid: 4c94c9994edbece4d9b95f342972ddec,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -9716,6 +9734,16 @@ PrefabInstance:
       propertyPath: uiManager
       value: 
       objectReference: {fileID: 1383179670}
+    - target: {fileID: 7643544672460960892, guid: 4c94c9994edbece4d9b95f342972ddec,
+        type: 3}
+      propertyPath: m_Name
+      value: MiniGameCountDown
+      objectReference: {fileID: 0}
+    - target: {fileID: 7643544672460960892, guid: 4c94c9994edbece4d9b95f342972ddec,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3758320116644142180, guid: 4c94c9994edbece4d9b95f342972ddec,
         type: 3}
       propertyPath: m_AnchoredPosition.y
@@ -9914,6 +9942,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_SortingOrder
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8093713243959992678, guid: 1d8478f9efd95244d82213bf582e72bf,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1d8478f9efd95244d82213bf582e72bf, type: 3}

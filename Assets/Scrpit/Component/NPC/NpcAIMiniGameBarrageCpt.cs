@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using UnityEditor;
 using UnityEngine.AI;
+using System.Collections.Generic;
 
 public class NpcAIMiniGameBarrageCpt : BaseNpcAI, SightForMiniGameBarrageCpt.ICallBack
 {
@@ -14,7 +15,8 @@ public class NpcAIMiniGameBarrageCpt : BaseNpcAI, SightForMiniGameBarrageCpt.ICa
     public MiniGameBarrageHandler gameBarrageHandler;
     //迷你游戏数据
     public MiniGameCharacterBean characterMiniGameData;
-
+    //寻路AI
+    public NavMeshAgent navMeshAgent;
     //血 粒子
     public ParticleSystem psBlood;
     //视野
@@ -60,19 +62,30 @@ public class NpcAIMiniGameBarrageCpt : BaseNpcAI, SightForMiniGameBarrageCpt.ICa
     /// </summary>
     public void OpenAI()
     {
+        navMeshAgent.enabled = true;
         sightForMiniGameBarrage.gameObject.SetActive(true);
         sightForMiniGameBarrage.SetCallBack(this);
     }
 
     #region 视线回调
-    public void SeeBullet(BarrageBulletCpt barrageBullet)
+    public void SeeBullet(List<BarrageBulletCpt> barrageBulletList)
     {
-        Rigidbody2D rbBullet = barrageBullet.GetComponent<Rigidbody2D>();
-        Vector3 tempVector = rbBullet.transform.position - transform.position;
-        Vector3 moveVelocity = new Vector3(tempVector.y,-tempVector.x);
-
-   
-        characterMoveCpt.SetDestination(transform.position+ moveVelocity.normalized);
+        float distanceTemp = 0;
+        Rigidbody2D rbNear = null;
+        for (int i = 0; i < barrageBulletList.Count; i++)
+        {
+            BarrageBulletCpt itemBullet = barrageBulletList[i];
+            Rigidbody2D rbBullet = itemBullet.GetComponent<Rigidbody2D>();
+            //获取最近的子弹
+            float distanceItem = Vector2.Distance(rbBullet.position, transform.position);
+            if (distanceItem > distanceTemp)
+            {
+                distanceTemp = distanceItem;
+                rbNear = rbBullet;
+            }
+        }
+        Vector3 moveVelocity = new Vector3(-rbNear.velocity.y, rbNear.velocity.x);
+        characterMoveCpt.SetDestination(transform.position + moveVelocity.normalized);
     }
     #endregion
 
