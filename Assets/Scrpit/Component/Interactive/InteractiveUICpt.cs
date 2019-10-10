@@ -4,7 +4,7 @@ using UnityEditor;
 public class InteractiveUICpt : BaseInteractiveCpt
 {
     public string interactiveContent;
-    public string uiName;
+    public UIEnum uiType;
 
     //备注信息
     public string remarkData;
@@ -16,10 +16,10 @@ public class InteractiveUICpt : BaseInteractiveCpt
         {
             if (!CheckUtil.StringIsNull(remarkData))
             {
-                BaseUIComponent baseUIComponent = uiManager.GetUIByName(uiName);
+                BaseUIComponent baseUIComponent = uiManager.GetUIByName(EnumUtil.GetEnumName(uiType));
                 baseUIComponent.SetRemarkData(remarkData);
             }
-            uiManager.OpenUIAndCloseOtherByName(uiName);
+            uiManager.OpenUIAndCloseOtherByName(EnumUtil.GetEnumName(uiType));
         }
     }
 
