@@ -140,7 +140,7 @@ public class ItemTownGoodsMarketCpt : ItemGameBaseCpt
     /// <param name="value"></param>
     public void InputNumberChange(string value)
     {
-        if (CheckUtil.StringIsNull(value))
+        if (CheckUtil.StringIsNull(value) || value.Contains("-"))
         {
             etNumber.text = "0";
         }
