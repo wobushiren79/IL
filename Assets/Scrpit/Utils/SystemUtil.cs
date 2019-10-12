@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using UnityEditor;
+using System;
 
 public class SystemUtil 
 {
@@ -37,5 +38,4 @@ public class SystemUtil
         }
         return System.Guid.NewGuid().ToString(uuidMark);
     }
-
 }

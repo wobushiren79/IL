@@ -295,9 +295,7 @@ public class InnHandler : BaseMonoBehaviour
         //记录+1
         gameDataManager.gameData.ChangeMenuSellNumber(1, order.foodData.id);
         //金钱增加
-        gameDataManager.gameData.moneyL += getMoneyL;
-        gameDataManager.gameData.moneyM += getMoneyM;
-        gameDataManager.gameData.moneyS += getMoneyS;
+        gameDataManager.gameData.AddMoney(getMoneyL, getMoneyM, getMoneyS);
         //展示特效
         innPayHandler.ShowPayEffects(order.customer.transform.position,getMoneyL,getMoneyM, getMoneyS);
     }

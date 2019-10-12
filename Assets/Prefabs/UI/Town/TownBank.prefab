@@ -34,7 +34,7 @@ RectTransform:
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0.58852506, y: 1}
+  m_AnchorMax: {x: 0.59400004, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -368,8 +368,8 @@ RectTransform:
   m_Father: {fileID: 728688627848623734}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.58852506, y: 0}
-  m_AnchorMax: {x: 0.77800006, y: 1}
+  m_AnchorMin: {x: 0.59400004, y: 0}
+  m_AnchorMax: {x: 0.78548527, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -1445,6 +1445,10 @@ MonoBehaviour:
   tvMoneyM: {fileID: 7163875734458531718}
   tvMoneyS: {fileID: 7163875734826130140}
   tvGuildCoin: {fileID: 0}
+  SToM: {fileID: 4994203649099317857}
+  MToS: {fileID: 6607413642758878243}
+  MToL: {fileID: 7830387394539515016}
+  LToM: {fileID: 3154732733735652342}
 --- !u!1 &7163875734758376521
 GameObject:
   m_ObjectHideFlags: 0
@@ -1618,9 +1622,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &7163875734458531718 stripped
+--- !u!114 &7163875734826130140 stripped
 MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 7238013970255735619, guid: 9175f4ced977de748b2e2e1a94c34871,
+  m_CorrespondingSourceObject: {fileID: 7238013969615719961, guid: 9175f4ced977de748b2e2e1a94c34871,
     type: 3}
   m_PrefabInstance: {fileID: 511620752946533573}
   m_PrefabAsset: {fileID: 0}
@@ -1630,9 +1634,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &7163875734826130140 stripped
+--- !u!114 &7163875734458531718 stripped
 MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 7238013969615719961, guid: 9175f4ced977de748b2e2e1a94c34871,
+  m_CorrespondingSourceObject: {fileID: 7238013970255735619, guid: 9175f4ced977de748b2e2e1a94c34871,
     type: 3}
   m_PrefabInstance: {fileID: 511620752946533573}
   m_PrefabAsset: {fileID: 0}
@@ -1649,11 +1653,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 7163875733579027256}
     m_Modifications:
-    - target: {fileID: 1100681143109939010, guid: 751872d0aab401a498ec6af3e5bcf8dd,
-        type: 3}
-      propertyPath: m_Name
-      value: ItemTownBankMoneyExchange_ML
-      objectReference: {fileID: 0}
     - target: {fileID: 7134381919399761693, guid: 751872d0aab401a498ec6af3e5bcf8dd,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -1759,6 +1758,11 @@ PrefabInstance:
       propertyPath: m_Pivot.y
       value: 0.5
       objectReference: {fileID: 0}
+    - target: {fileID: 1100681143109939010, guid: 751872d0aab401a498ec6af3e5bcf8dd,
+        type: 3}
+      propertyPath: m_Name
+      value: ItemTownBankMoneyExchange_ML
+      objectReference: {fileID: 0}
     - target: {fileID: 8998575443610626439, guid: 751872d0aab401a498ec6af3e5bcf8dd,
         type: 3}
       propertyPath: uiComponent
@@ -1769,12 +1773,6 @@ PrefabInstance:
       propertyPath: exchangeType
       value: 2
       objectReference: {fileID: 0}
-    - target: {fileID: 9093753278854171145, guid: 751872d0aab401a498ec6af3e5bcf8dd,
-        type: 3}
-      propertyPath: m_Sprite
-      value: 
-      objectReference: {fileID: 21300000, guid: c9e90e061d5d02842a845cfad2b2d4d4,
-        type: 3}
     - target: {fileID: 7807867970805174106, guid: 751872d0aab401a498ec6af3e5bcf8dd,
         type: 3}
       propertyPath: m_Color.r
@@ -1790,12 +1788,6 @@ PrefabInstance:
       propertyPath: m_Color.b
       value: 0.8470589
       objectReference: {fileID: 0}
-    - target: {fileID: 4656677297433822276, guid: 751872d0aab401a498ec6af3e5bcf8dd,
-        type: 3}
-      propertyPath: m_Sprite
-      value: 
-      objectReference: {fileID: 21300000, guid: 96bc4e961099db8478cd010fa8794791,
-        type: 3}
     - target: {fileID: 7294452115759335729, guid: 751872d0aab401a498ec6af3e5bcf8dd,
         type: 3}
       propertyPath: m_Color.r
@@ -1811,6 +1803,18 @@ PrefabInstance:
       propertyPath: m_Color.b
       value: 0.36078432
       objectReference: {fileID: 0}
+    - target: {fileID: 4656677297433822276, guid: 751872d0aab401a498ec6af3e5bcf8dd,
+        type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 96bc4e961099db8478cd010fa8794791,
+        type: 3}
+    - target: {fileID: 9093753278854171145, guid: 751872d0aab401a498ec6af3e5bcf8dd,
+        type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: c9e90e061d5d02842a845cfad2b2d4d4,
+        type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 751872d0aab401a498ec6af3e5bcf8dd, type: 3}
 --- !u!224 &8306935589027271186 stripped
@@ -1819,6 +1823,18 @@ RectTransform:
     type: 3}
   m_PrefabInstance: {fileID: 1173824773848794383}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &7830387394539515016 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8998575443610626439, guid: 751872d0aab401a498ec6af3e5bcf8dd,
+    type: 3}
+  m_PrefabInstance: {fileID: 1173824773848794383}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fd64c498d5b18144eaafa7441311cefe, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &2833717458643230116
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1826,11 +1842,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 7163875733579027256}
     m_Modifications:
-    - target: {fileID: 1100681143109939010, guid: 751872d0aab401a498ec6af3e5bcf8dd,
-        type: 3}
-      propertyPath: m_Name
-      value: ItemTownBankMoneyExchange_MS
-      objectReference: {fileID: 0}
     - target: {fileID: 7134381919399761693, guid: 751872d0aab401a498ec6af3e5bcf8dd,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -1936,6 +1947,11 @@ PrefabInstance:
       propertyPath: m_Pivot.y
       value: 0.5
       objectReference: {fileID: 0}
+    - target: {fileID: 1100681143109939010, guid: 751872d0aab401a498ec6af3e5bcf8dd,
+        type: 3}
+      propertyPath: m_Name
+      value: ItemTownBankMoneyExchange_MS
+      objectReference: {fileID: 0}
     - target: {fileID: 8998575443610626439, guid: 751872d0aab401a498ec6af3e5bcf8dd,
         type: 3}
       propertyPath: uiComponent
@@ -1946,12 +1962,6 @@ PrefabInstance:
       propertyPath: exchangeType
       value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 9093753278854171145, guid: 751872d0aab401a498ec6af3e5bcf8dd,
-        type: 3}
-      propertyPath: m_Sprite
-      value: 
-      objectReference: {fileID: 21300000, guid: c9e90e061d5d02842a845cfad2b2d4d4,
-        type: 3}
     - target: {fileID: 7807867970805174106, guid: 751872d0aab401a498ec6af3e5bcf8dd,
         type: 3}
       propertyPath: m_Color.r
@@ -1967,12 +1977,6 @@ PrefabInstance:
       propertyPath: m_Color.b
       value: 0.8470589
       objectReference: {fileID: 0}
-    - target: {fileID: 4656677297433822276, guid: 751872d0aab401a498ec6af3e5bcf8dd,
-        type: 3}
-      propertyPath: m_Sprite
-      value: 
-      objectReference: {fileID: 21300000, guid: 8c602e885f036ed42bab42d9cd5f3b82,
-        type: 3}
     - target: {fileID: 7294452115759335729, guid: 751872d0aab401a498ec6af3e5bcf8dd,
         type: 3}
       propertyPath: m_Color.r
@@ -1988,8 +1992,32 @@ PrefabInstance:
       propertyPath: m_Color.b
       value: 0.3137255
       objectReference: {fileID: 0}
+    - target: {fileID: 4656677297433822276, guid: 751872d0aab401a498ec6af3e5bcf8dd,
+        type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 8c602e885f036ed42bab42d9cd5f3b82,
+        type: 3}
+    - target: {fileID: 9093753278854171145, guid: 751872d0aab401a498ec6af3e5bcf8dd,
+        type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: c9e90e061d5d02842a845cfad2b2d4d4,
+        type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 751872d0aab401a498ec6af3e5bcf8dd, type: 3}
+--- !u!114 &6607413642758878243 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8998575443610626439, guid: 751872d0aab401a498ec6af3e5bcf8dd,
+    type: 3}
+  m_PrefabInstance: {fileID: 2833717458643230116}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fd64c498d5b18144eaafa7441311cefe, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!224 &4922726371195243193 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 7134381919399761693, guid: 751872d0aab401a498ec6af3e5bcf8dd,
@@ -2003,11 +2031,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 7163875733579027256}
     m_Modifications:
-    - target: {fileID: 1100681143109939010, guid: 751872d0aab401a498ec6af3e5bcf8dd,
-        type: 3}
-      propertyPath: m_Name
-      value: ItemTownBankMoneyExchange_SM
-      objectReference: {fileID: 0}
     - target: {fileID: 7134381919399761693, guid: 751872d0aab401a498ec6af3e5bcf8dd,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -2112,6 +2135,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Pivot.y
       value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1100681143109939010, guid: 751872d0aab401a498ec6af3e5bcf8dd,
+        type: 3}
+      propertyPath: m_Name
+      value: ItemTownBankMoneyExchange_SM
       objectReference: {fileID: 0}
     - target: {fileID: 8998575443610626439, guid: 751872d0aab401a498ec6af3e5bcf8dd,
         type: 3}
@@ -2135,6 +2163,18 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 751872d0aab401a498ec6af3e5bcf8dd, type: 3}
+--- !u!114 &4994203649099317857 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8998575443610626439, guid: 751872d0aab401a498ec6af3e5bcf8dd,
+    type: 3}
+  m_PrefabInstance: {fileID: 4156722892957068262}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fd64c498d5b18144eaafa7441311cefe, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!224 &6534107319745805563 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 7134381919399761693, guid: 751872d0aab401a498ec6af3e5bcf8dd,
@@ -2148,11 +2188,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 7163875733579027256}
     m_Modifications:
-    - target: {fileID: 1100681143109939010, guid: 751872d0aab401a498ec6af3e5bcf8dd,
-        type: 3}
-      propertyPath: m_Name
-      value: ItemTownBankMoneyExchange_LM
-      objectReference: {fileID: 0}
     - target: {fileID: 7134381919399761693, guid: 751872d0aab401a498ec6af3e5bcf8dd,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -2258,6 +2293,11 @@ PrefabInstance:
       propertyPath: m_Pivot.y
       value: 0.5
       objectReference: {fileID: 0}
+    - target: {fileID: 1100681143109939010, guid: 751872d0aab401a498ec6af3e5bcf8dd,
+        type: 3}
+      propertyPath: m_Name
+      value: ItemTownBankMoneyExchange_LM
+      objectReference: {fileID: 0}
     - target: {fileID: 8998575443610626439, guid: 751872d0aab401a498ec6af3e5bcf8dd,
         type: 3}
       propertyPath: uiComponent
@@ -2268,12 +2308,6 @@ PrefabInstance:
       propertyPath: exchangeType
       value: 3
       objectReference: {fileID: 0}
-    - target: {fileID: 9093753278854171145, guid: 751872d0aab401a498ec6af3e5bcf8dd,
-        type: 3}
-      propertyPath: m_Sprite
-      value: 
-      objectReference: {fileID: 21300000, guid: 96bc4e961099db8478cd010fa8794791,
-        type: 3}
     - target: {fileID: 7807867970805174106, guid: 751872d0aab401a498ec6af3e5bcf8dd,
         type: 3}
       propertyPath: m_Color.r
@@ -2304,8 +2338,26 @@ PrefabInstance:
       propertyPath: m_Color.b
       value: 0.8470589
       objectReference: {fileID: 0}
+    - target: {fileID: 9093753278854171145, guid: 751872d0aab401a498ec6af3e5bcf8dd,
+        type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 96bc4e961099db8478cd010fa8794791,
+        type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 751872d0aab401a498ec6af3e5bcf8dd, type: 3}
+--- !u!114 &3154732733735652342 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8998575443610626439, guid: 751872d0aab401a498ec6af3e5bcf8dd,
+    type: 3}
+  m_PrefabInstance: {fileID: 6279847487019328113}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fd64c498d5b18144eaafa7441311cefe, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!224 &3757385868342490476 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 7134381919399761693, guid: 751872d0aab401a498ec6af3e5bcf8dd,

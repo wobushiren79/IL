@@ -34,6 +34,7 @@ public class UITownRecruitment : UIBaseOne
     /// </summary>
     public void CreateCandidateData()
     {
+        Random.InitState(GameCommonInfo.RandomSeed);
         CharacterBodyManager characterBodyManager = GetUIMananger<UIGameManager>().characterBodyManager;
         for (int i = 0; i < 10; i++)
         {

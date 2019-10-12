@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using UnityEditor;
 using UnityEngine.UI;
-public class ItemTownBankExchangeCpt : ItemGameBaseCpt
+public class ItemTownBankExchangeCpt : ItemGameBaseCpt, DialogView.IDialogCallBack
 {
     public enum ExchangeMoneyEnum
     {
@@ -12,7 +12,9 @@ public class ItemTownBankExchangeCpt : ItemGameBaseCpt
     }
 
     public Button btSubmit;
+    public Image ivOldMoney;
     public Text tvOldMoney;
+    public Image ivNewMoney;
     public InputField etNewMoney;
     public Image ivRate;
     public Text tvRate;
@@ -32,10 +34,15 @@ public class ItemTownBankExchangeCpt : ItemGameBaseCpt
             etNewMoney.onValueChanged.AddListener(ExchangeMoney);
     }
 
-    public void SetData(ExchangeMoneyEnum exchangeType, float exchangeRate)
+    /// <summary>
+    /// 设置数据
+    /// </summary>
+    /// <param name="exchangeType"></param>
+    /// <param name="exchangeRate"></param>
+    public void SetData(ExchangeMoneyEnum exchangeType, int exchangeOld,int exchangeNew)
     {
         SetExchangeType(exchangeType);
-        SetRate(exchangeRate);
+        SetRate(exchangeOld, exchangeNew);
     }
 
     /// <summary>
@@ -51,41 +58,95 @@ public class ItemTownBankExchangeCpt : ItemGameBaseCpt
     /// 设置交换汇率
     /// </summary>
     /// <param name="exchangeRate"></param>
-    public void SetRate(float exchangeRate)
+    public void SetRate(int exchangeOld, int exchangeNew)
     {
-        this.exchangeRate = exchangeRate;
-        tvRate.text = "" + exchangeRate;
+        this.exchangeRate = (float)exchangeOld / (float)exchangeNew;
+
         Sprite spRate;
+        Color colorRate = Color.gray;
+        tvRate.text = exchangeOld + ":" + exchangeNew;
         switch (exchangeType)
         {
             //文换银 正常比例是1000:1
             case ExchangeMoneyEnum.SToM:
+           
                 if (exchangeRate > 1000)
-                    spRate = spRateDown;
-                else if (exchangeRate <1000)
+                {
                     spRate = spRateUp;
+                    colorRate = Color.red;
+                }
+                else if (exchangeRate < 1000)
+                {
+                    spRate = spRateDown;
+                    colorRate = Color.green;
+                }
                 else
+                {
                     spRate = spRateUnbiased;
+                    colorRate = Color.gray;
+                }
                 break;
             //银换文 正常比例是1:1000
             case ExchangeMoneyEnum.MToS:
-                if(exchangeRate>0.0001)
+                if (exchangeRate > 0.001f)
+                {
+                    spRate = spRateUp;
+                    colorRate = Color.red;
+                }
+                else if (exchangeRate < 0.001f)
+                {
                     spRate = spRateDown;
-                else if(exchangeRate < 0.0001)
-                    spRate = spRateDown;
-                spRate = spRateUnbiased;
+                    colorRate = Color.green;
+                }
+                else
+                {
+                    spRate = spRateUnbiased;
+                    colorRate = Color.gray;
+                }
                 break;
+            //银换金 正常比例1:10
             case ExchangeMoneyEnum.MToL:
-                spRate = spRateUnbiased;
+                if (exchangeRate > 10)
+                {
+                    spRate = spRateUp;
+                    colorRate = Color.red;
+                }
+                else if (exchangeRate < 10)
+                {
+                    spRate = spRateDown;
+                    colorRate = Color.green;
+                }
+                else
+                {
+                    spRate = spRateUnbiased;
+                    colorRate = Color.gray;
+                }
                 break;
+            //金换银 正常比例10:1
             case ExchangeMoneyEnum.LToM:
-                spRate = spRateUnbiased;
+                if (exchangeRate > 0.1f)
+                {
+                    spRate = spRateUp;
+                    colorRate = Color.red;
+                }
+                else if (exchangeRate < 0.1f)
+                {
+                    spRate = spRateDown;
+                    colorRate = Color.green;
+                }
+                else
+                {
+                    spRate = spRateUnbiased;
+                    colorRate = Color.gray;
+                }
                 break;
             default:
                 spRate = spRateUnbiased;
+                colorRate = Color.gray;
                 break;
         }
         ivRate.sprite = spRate;
+        tvRate.color = colorRate;
     }
 
     /// <summary>
@@ -94,14 +155,19 @@ public class ItemTownBankExchangeCpt : ItemGameBaseCpt
     /// <param name="money"></param>
     public void ExchangeMoney(string value)
     {
-        if (CheckUtil.StringIsNull(value) || value.Contains("-"))
+        int valueInt = 0;
+        if (value.Contains("-"))
         {
-            etNewMoney.text = "0";
+            etNewMoney.text = "";
         }
         else
         {
-            tvOldMoney.text = (exchangeRate * int.Parse(value)) + "";
+            if (int.TryParse(value, out int outInt))
+            {
+                valueInt = outInt;
+            }
         }
+        tvOldMoney.text = Mathf.CeilToInt(exchangeRate * valueInt) + "";
     }
 
     /// <summary>
@@ -109,6 +175,91 @@ public class ItemTownBankExchangeCpt : ItemGameBaseCpt
     /// </summary>
     public void ExchangeSubmit()
     {
+        ToastView toastView = GetUIManager<UIGameManager>().toastView;
+        GameDataManager gameDataManager = GetUIManager<UIGameManager>().gameDataManager;
+        DialogManager dialogManager = GetUIManager<UIGameManager>().dialogManager;
 
+        mPayMoneyL = 0;
+        mPayMoneyM = 0;
+        mPayMoneyS = 0;
+        mExchangeMoneyL = 0;
+        mExchangeMoneyM = 0;
+        mExchangeMoneyS = 0;
+        mExchangeMoneyStr = "";
+
+        int.TryParse(etNewMoney.text, out int exchangeMoney);
+        int.TryParse(tvOldMoney.text, out int payMoney);
+
+        //兑换金额不对
+        if (payMoney == 0 || exchangeMoney == 0)
+        {
+            toastView.ToastHint(ivOldMoney.sprite, GameCommonInfo.GetUITextById(1041));
+            return;
+        }
+        //是否有足够的金额兑换
+        string moneyOldUnit = "";
+        string moneyNewUnit = "";
+        switch (exchangeType)
+        {
+            case ExchangeMoneyEnum.SToM:
+                mPayMoneyS = payMoney;
+                mExchangeMoneyM = exchangeMoney;
+                moneyOldUnit = GameCommonInfo.GetUITextById(18);
+                moneyNewUnit = GameCommonInfo.GetUITextById(17);
+                break;
+            case ExchangeMoneyEnum.MToS:
+                mPayMoneyM = payMoney;
+                mExchangeMoneyS = exchangeMoney;
+                moneyOldUnit = GameCommonInfo.GetUITextById(17);
+                moneyNewUnit = GameCommonInfo.GetUITextById(18);
+                break;
+            case ExchangeMoneyEnum.MToL:
+                mPayMoneyM = payMoney;
+                mExchangeMoneyL = exchangeMoney;
+                moneyOldUnit = GameCommonInfo.GetUITextById(17);
+                moneyNewUnit = GameCommonInfo.GetUITextById(16);
+                break;
+            case ExchangeMoneyEnum.LToM:
+                mPayMoneyL = payMoney;
+                mExchangeMoneyM = exchangeMoney;
+                moneyOldUnit = GameCommonInfo.GetUITextById(16);
+                moneyNewUnit = GameCommonInfo.GetUITextById(17);
+                break;
+        }
+
+        if (!gameDataManager.gameData.HasEnoughMoney(mPayMoneyL, mPayMoneyM, mPayMoneyS))
+        {
+            toastView.ToastHint(ivOldMoney.sprite, GameCommonInfo.GetUITextById(1042));
+            return;
+        }
+
+
+        DialogBean dialogBean = new DialogBean();
+        mExchangeMoneyStr = exchangeMoney + moneyNewUnit + "";
+        dialogBean.content = string.Format(GameCommonInfo.GetUITextById(3041), payMoney + moneyOldUnit + "", mExchangeMoneyStr);
+        dialogManager.CreateDialog(0, this, dialogBean);
     }
+
+    private long mPayMoneyL = 0;
+    private long mPayMoneyM = 0;
+    private long mPayMoneyS = 0;
+    private long mExchangeMoneyL = 0;
+    private long mExchangeMoneyM = 0;
+    private long mExchangeMoneyS = 0;
+    private string mExchangeMoneyStr = "";
+    #region 确认对话框回调
+    public void Submit(DialogView dialogView, DialogBean dialogBean)
+    {
+        ToastView toastView = GetUIManager<UIGameManager>().toastView;
+        GameDataManager gameDataManager = GetUIManager<UIGameManager>().gameDataManager;
+
+        gameDataManager.gameData.PayMoney(mPayMoneyL, mPayMoneyM, mPayMoneyS);
+        gameDataManager.gameData.AddMoney(mExchangeMoneyL, mExchangeMoneyM, mExchangeMoneyS);
+        toastView.ToastHint(ivNewMoney.sprite, string.Format(GameCommonInfo.GetUITextById(1043), mExchangeMoneyStr));
+    }
+
+    public void Cancel(DialogView dialogView, DialogBean dialogBean)
+    {
+    }
+    #endregion
 }

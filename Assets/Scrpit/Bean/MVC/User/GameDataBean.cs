@@ -200,17 +200,6 @@ public class GameDataBean
         return null;
     }
 
-    public static void GetMoneyDetails(long money, out long L, out long M, out long S)
-    {
-        long temp1 = money % 10;
-        long temp2 = money % 100 / 10;
-        long temp3 = money % 1000 / 100;
-        long temp4 = money % 10000 / 1000;
-        S = temp3 * 100 + temp2 * 10 + temp1;
-        M = temp4;
-        L = money / 10000;
-    }
-
     /// <summary>
     /// 修改食物销售数量
     /// </summary>
@@ -400,6 +389,19 @@ public class GameDataBean
             moneyM = 0;
         if (moneyS < 0)
             moneyS = 0;
+    }
+
+    /// <summary>
+    /// 增加金钱
+    /// </summary>
+    /// <param name="getMoneyL"></param>
+    /// <param name="getMoneyM"></param>
+    /// <param name="getMoneyS"></param>
+    public void AddMoney(long priceL, long priceM, long priceS)
+    {
+        moneyL += priceL;
+        moneyM += priceM;
+        moneyS += priceS;
     }
 
     /// <summary>

@@ -1,38 +1,37 @@
 ﻿using UnityEngine;
 using UnityEditor;
 
-public class GameCommonInfo 
+public class GameCommonInfo
 {
-    public static string GameUserId;//游戏用户ID
-    public static GameConfigBean GameConfig; //游戏设置
-    public static GameDataBean GameData;//世界时间
-
-    /// <summary>
-    /// 进入竞技场准备数据
-    /// </summary>
+    //游戏用户ID
+    public static string GameUserId;
+    //游戏设置
+    public static GameConfigBean GameConfig;
+    //世界时间
+    public static GameDataBean GameData;
+    //进入竞技场准备数据
     public static ArenaPrepareBean ArenaPrepareData;
-
-    /// <summary>
-    /// 预加载场景名字
-    /// </summary>
+    //随机种子
+    public static int RandomSeed = 0;
+    // 预加载场景名字
     public static ScenesChangeBean ScenesChangeData = new ScenesChangeBean();
 
     private static GameConfigController mGameConfigController;
     private static UITextController mUITextController;
-     
+
     static GameCommonInfo()
     {
         GameConfig = new GameConfigBean();
 
         mGameConfigController = new GameConfigController(null, new GameConfigCallBack());
-        mUITextController = new UITextController(null,null);
+        mUITextController = new UITextController(null, null);
         mGameConfigController.GetGameConfigData();
     }
 
 
     public static string GetUITextById(long id)
     {
-       return mUITextController.GetTextById(id);
+        return mUITextController.GetTextById(id);
     }
 
 
