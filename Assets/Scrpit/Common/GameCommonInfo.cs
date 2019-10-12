@@ -13,6 +13,8 @@ public class GameCommonInfo
     public static ArenaPrepareBean ArenaPrepareData;
     //随机种子
     public static int RandomSeed = 0;
+    //每日限制数据
+    public static UserDailyLimitBean DailyLimitData = new UserDailyLimitBean();
     // 预加载场景名字
     public static ScenesChangeBean ScenesChangeData = new ScenesChangeBean();
 

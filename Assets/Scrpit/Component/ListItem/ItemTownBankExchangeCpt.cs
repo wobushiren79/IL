@@ -18,6 +18,7 @@ public class ItemTownBankExchangeCpt : ItemGameBaseCpt, DialogView.IDialogCallBa
     public InputField etNewMoney;
     public Image ivRate;
     public Text tvRate;
+    public Text tvLimit;
 
     public Sprite spRateUp;
     public Sprite spRateDown;
@@ -26,6 +27,7 @@ public class ItemTownBankExchangeCpt : ItemGameBaseCpt, DialogView.IDialogCallBa
     //交换汇率
     public float exchangeRate = 1;
     public ExchangeMoneyEnum exchangeType = ExchangeMoneyEnum.SToM;
+
     private void Start()
     {
         if (btSubmit != null)
@@ -35,14 +37,27 @@ public class ItemTownBankExchangeCpt : ItemGameBaseCpt, DialogView.IDialogCallBa
     }
 
     /// <summary>
+    /// 刷新UI
+    /// </summary>
+    public void RefreshUI()
+    {
+        if (tvLimit != null && exchangeType == ExchangeMoneyEnum.MToL)
+        {
+            tvLimit.gameObject.SetActive(true);
+            tvLimit.text = GameCommonInfo.GetUITextById(19) + ":" + GameCommonInfo.DailyLimitData.exchangeMoneyL;
+        }
+    }
+
+    /// <summary>
     /// 设置数据
     /// </summary>
     /// <param name="exchangeType"></param>
     /// <param name="exchangeRate"></param>
-    public void SetData(ExchangeMoneyEnum exchangeType, int exchangeOld,int exchangeNew)
+    public void SetData(ExchangeMoneyEnum exchangeType, int exchangeOld, int exchangeNew)
     {
         SetExchangeType(exchangeType);
         SetRate(exchangeOld, exchangeNew);
+        RefreshUI();
     }
 
     /// <summary>
@@ -69,7 +84,7 @@ public class ItemTownBankExchangeCpt : ItemGameBaseCpt, DialogView.IDialogCallBa
         {
             //文换银 正常比例是1000:1
             case ExchangeMoneyEnum.SToM:
-           
+
                 if (exchangeRate > 1000)
                 {
                     spRate = spRateUp;
@@ -226,13 +241,18 @@ public class ItemTownBankExchangeCpt : ItemGameBaseCpt, DialogView.IDialogCallBa
                 moneyNewUnit = GameCommonInfo.GetUITextById(17);
                 break;
         }
-
+        //判断是否有足够的金钱兑换
         if (!gameDataManager.gameData.HasEnoughMoney(mPayMoneyL, mPayMoneyM, mPayMoneyS))
         {
             toastView.ToastHint(ivOldMoney.sprite, GameCommonInfo.GetUITextById(1042));
             return;
         }
-
+        //判断是否超过限额
+        if (mExchangeMoneyL > GameCommonInfo.DailyLimitData.exchangeMoneyL)
+        {
+            toastView.ToastHint(GameCommonInfo.GetUITextById(1044));
+            return;
+        }
 
         DialogBean dialogBean = new DialogBean();
         mExchangeMoneyStr = exchangeMoney + moneyNewUnit + "";
@@ -247,6 +267,7 @@ public class ItemTownBankExchangeCpt : ItemGameBaseCpt, DialogView.IDialogCallBa
     private long mExchangeMoneyM = 0;
     private long mExchangeMoneyS = 0;
     private string mExchangeMoneyStr = "";
+
     #region 确认对话框回调
     public void Submit(DialogView dialogView, DialogBean dialogBean)
     {
@@ -255,7 +276,11 @@ public class ItemTownBankExchangeCpt : ItemGameBaseCpt, DialogView.IDialogCallBa
 
         gameDataManager.gameData.PayMoney(mPayMoneyL, mPayMoneyM, mPayMoneyS);
         gameDataManager.gameData.AddMoney(mExchangeMoneyL, mExchangeMoneyM, mExchangeMoneyS);
+        GameCommonInfo.DailyLimitData.exchangeMoneyL -= (int)mExchangeMoneyL;
+        //成功提示
         toastView.ToastHint(ivNewMoney.sprite, string.Format(GameCommonInfo.GetUITextById(1043), mExchangeMoneyStr));
+        //刷新UI
+        RefreshUI();
     }
 
     public void Cancel(DialogView dialogView, DialogBean dialogBean)
