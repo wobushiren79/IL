@@ -24,9 +24,7 @@ public class NpcAIRascalCpt : BaseNpcAI, ITextInfoView, UIGameText.ICallBack
     //打架特效
     public GameObject objFightShow;
     //生命条
-    public GameObject objLife;
-    public TextMesh tvLife;
-    public SpriteRenderer ivLife;
+    public CharacterLifeCpt characterLifeCpt;
 
     //下一个移动点
     public Vector3 movePosition;
@@ -84,8 +82,7 @@ public class NpcAIRascalCpt : BaseNpcAI, ITextInfoView, UIGameText.ICallBack
         {
             characterLife = characterMaxLife;
         }
-        tvLife.text = characterLife + "/" + characterMaxLife;
-        ivLife.transform.localScale = new Vector3((float)characterLife / (float)characterMaxLife, 1, 1);
+        characterLifeCpt.SetData(characterLife, characterMaxLife);
         return characterLife;
     }
 
@@ -185,8 +182,8 @@ public class NpcAIRascalCpt : BaseNpcAI, ITextInfoView, UIGameText.ICallBack
         //展示生命条
         AddLife(characterMaxLife);
 
-        objLife.SetActive(true);
-        objLife.transform.DOScale(new Vector3(0.2f, 0.2f), 0.5f).From().SetEase(Ease.OutBack);
+        characterLifeCpt.gameObject.SetActive(true);
+        characterLifeCpt.gameObject.transform.DOScale(new Vector3(0.2f, 0.2f), 0.5f).From().SetEase(Ease.OutBack);
         //展示范围
         objRascalSpaceShow.SetActive(true);
         objRascalSpaceShow.transform.DOScale(new Vector3(0.2f, 0.2f), 0.5f).From().SetEase(Ease.OutBack);
@@ -222,7 +219,7 @@ public class NpcAIRascalCpt : BaseNpcAI, ITextInfoView, UIGameText.ICallBack
     {
         innHandler.rascalrQueue.Remove(this);
         npcFight = null;
-        objLife.SetActive(false);
+        characterLifeCpt.gameObject.SetActive(false);
         objFightShow.SetActive(false);
         objRascalSpaceShow.SetActive(false);
         //随机获取一个退出点

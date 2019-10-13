@@ -9,4 +9,6 @@ public class ArenaPrepareBean
 
     //弹幕游戏数据
     public MiniGameBarrageBean gameBarrageData;
+    //战斗游戏数据
+    public MiniGameCombatBean gameCombatData;
 }

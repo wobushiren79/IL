@@ -11,6 +11,8 @@ public class MiniGameBaseBean
     //胜利条件
     public float winSurvivalTime;//生存时间(秒)
     public float winLife;//生命值多少以上
+    public int winSurvivalNumber;//生存角色个数
+    public int winBringDownNumber;//打到角色个数
 
     //游戏结果 0输 1赢
     public int gameResult;
@@ -18,7 +20,7 @@ public class MiniGameBaseBean
     public Dictionary<long, int> listRewardItem = new Dictionary<long, int>();
 
     //玩家数据
-    public List<MiniGameCharacterBean> listUserGameData =new List<MiniGameCharacterBean>();
+    public List<MiniGameCharacterBean> listUserGameData = new List<MiniGameCharacterBean>();
     //对手数据
     public List<MiniGameCharacterBean> listEnemyGameData = new List<MiniGameCharacterBean>();
 
@@ -38,6 +40,16 @@ public class MiniGameBaseBean
         {
             string winLifeStr = string.Format(GameCommonInfo.GetUITextById(212), winLife + "");
             listWinConditions.Add(winLifeStr);
+        }
+        if (winSurvivalNumber != 0)
+        {
+            string winSurvivalNumberStr = string.Format(GameCommonInfo.GetUITextById(213), winSurvivalNumber + "");
+            listWinConditions.Add(winSurvivalNumberStr);
+        }
+        if (winBringDownNumber != 0)
+        {
+            string winBringDownNumberStr = string.Format(GameCommonInfo.GetUITextById(214), winBringDownNumber+ "");
+            listWinConditions.Add(winBringDownNumberStr);
         }
         return listWinConditions;
     }

@@ -55,7 +55,7 @@ public class UIMiniGameCountDown : BaseUIComponent
     {
         if (tvTargetTitle != null)
             tvTargetTitle.text = titleStr;
-        if (tvTargetWinConditions != null && !CheckUtil.ListIsNull(listWinRequired))
+        if (tvTargetWinConditions != null && listWinRequired != null)
         {
             foreach (string required in listWinRequired)
             {
@@ -80,6 +80,12 @@ public class UIMiniGameCountDown : BaseUIComponent
 
     public IEnumerator ShowCountDown()
     {
+        //回调
+        if (mCallBack != null)
+            mCallBack.GamePreCountDownStart();
+        //恢复控制
+        if (GetUIMananger<UIGameManager>().controlHandler != null)
+            GetUIMananger<UIGameManager>().controlHandler.RestoreControl();
         tvCountDown.text = "";
         for (int i = 0; i <= 3; i++)
         {
@@ -108,7 +114,9 @@ public class UIMiniGameCountDown : BaseUIComponent
 
     public interface ICallBack
     {
-        //游戏准备倒计时
+        //游戏开始倒计时
+        void GamePreCountDownStart();
+        //游戏倒计时结束
         void GamePreCountDownEnd();
     }
 

@@ -2,7 +2,7 @@
 using UnityEditor;
 using Cinemachine;
 
-public class BaseControl : BaseMonoBehaviour
+public class BaseControl: BaseMonoBehaviour
 {
     //镜头
     private CinemachineVirtualCamera mCamera2D;
@@ -64,5 +64,14 @@ public class BaseControl : BaseMonoBehaviour
     {
         gameObject.SetActive(false);
     }
-
+    
+    /// <summary>
+    /// 设置摄像机位置
+    /// </summary>
+    /// <param name="position"></param>
+    public void SetCameraPosition(Vector3 position)
+    {
+        if (cameraFollowObj != null)
+            cameraFollowObj.transform.position = position;
+    }
 }

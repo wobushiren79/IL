@@ -5,14 +5,15 @@ using Cinemachine;
 
 public class ControlHandler : BaseMonoBehaviour
 {
-
     public enum ControlEnum
     {
         Normal,//普通
         Build,//建筑模式
         Work,//上班模式
         Story,//故事模式
-    }    
+        MiniGameBarrage,//弹幕小游戏操作
+        MiniGameCombat,//战斗小游戏操作
+    }
 
     //镜头
     public CinemachineVirtualCamera camera2D;
@@ -34,8 +35,9 @@ public class ControlHandler : BaseMonoBehaviour
     /// </summary>
     public void StopControl()
     {
-        BaseControl control= GetControl();
-        control.StopControl();
+        BaseControl control = GetControl();
+        if (control != null)
+            control.StopControl();
     }
 
     /// <summary>
@@ -44,7 +46,8 @@ public class ControlHandler : BaseMonoBehaviour
     public void RestoreControl()
     {
         BaseControl control = GetControl();
-        control.RestoreControl();
+        if (control != null)
+            control.RestoreControl();
     }
 
     /// <summary>

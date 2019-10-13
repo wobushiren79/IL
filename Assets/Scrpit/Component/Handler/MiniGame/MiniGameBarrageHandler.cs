@@ -5,14 +5,10 @@ using System.Collections.Generic;
 
 public class MiniGameBarrageHandler : BaseMiniGameHandler, UIMiniGameCountDown.ICallBack, UIMiniGameEnd.ICallBack
 {
-    //UI管理
-    public UIGameManager uiGameManager;
     //弹幕游戏生成器
     public MiniGameBarrageBuilder miniGameBarrageBuilder;
     //弹幕游戏数据
     public MiniGameBarrageBean gameBarrageData;
-    //发射器位置
-    public List<Vector3> listEjectorPosition = new List<Vector3>();
 
     //游戏是否正在游玩
     public bool isGamePlay = false;
@@ -38,15 +34,9 @@ public class MiniGameBarrageHandler : BaseMiniGameHandler, UIMiniGameCountDown.I
         //创建发射器
         for (int i = 0; i < gameBarrageData.listEjectorPosition.Count; i++)
             miniGameBarrageBuilder.CreateEjector(gameBarrageData.listEjectorPosition[i]);
+
         //打开游戏准备倒计时UI
-        UIMiniGameCountDown uiCountDown = (UIMiniGameCountDown)uiGameManager.OpenUIAndCloseOtherByName(EnumUtil.GetEnumName(UIEnum.MiniGameCountDown));
-        uiCountDown.SetCallBack(this);
-        //设置标题
-        string targetTitleStr = GameCommonInfo.GetUITextById(202);
-        //设置胜利条件
-        List<string> listWinConditions = gameBarrageData.GetListWinConditions();
-        //设置准备UI的数据
-        uiCountDown.SetData(targetTitleStr, listWinConditions);
+        OpenCountDownUI(gameBarrageData);
     }
 
     /// <summary>
@@ -159,8 +149,15 @@ public class MiniGameBarrageHandler : BaseMiniGameHandler, UIMiniGameCountDown.I
     }
 
     #region 倒计时回调
-    public void GamePreCountDownEnd()
+    public override void GamePreCountDownStart()
     {
+        base.GamePreCountDownStart();
+        controlHandler.StartControl(ControlHandler.ControlEnum.MiniGameBarrage);
+    }
+
+    public override void GamePreCountDownEnd()
+    {
+        base.GamePreCountDownEnd();
         //打开弹幕游戏UI
         UIMiniGameBarrage uiMiniGameBarrage = (UIMiniGameBarrage)uiGameManager.OpenUIAndCloseOtherByName(EnumUtil.GetEnumName(UIEnum.MiniGameBarrage));
         uiMiniGameBarrage.SetData(gameBarrageData);

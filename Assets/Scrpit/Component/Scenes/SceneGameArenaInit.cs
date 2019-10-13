@@ -8,6 +8,8 @@ public class SceneGameArenaInit : BaseSceneInit, IBaseObserver
 {
     //弹幕游戏控制
     public MiniGameBarrageHandler barrageHandler;
+    //战斗游戏控制
+    public MiniGameCombatHandler combatHandler;
     //地形控制
     public NavMeshSurface navMesh;
     private new void Start()
@@ -24,7 +26,8 @@ public class SceneGameArenaInit : BaseSceneInit, IBaseObserver
             gameItemsManager.itemsInfoController.GetAllItemsInfo();
         //测试数据
         ArenaPrepareBean arenaPrepareData = GameCommonInfo.ArenaPrepareData;
-        //arenaPrepareData = new ArenaPrepareBean();
+        arenaPrepareData = new ArenaPrepareBean();
+
         //arenaPrepareData.gameType = MiniGameEnum.Barrage;
         //arenaPrepareData.gameBarrageData = new MiniGameBarrageBean();
         //arenaPrepareData.gameBarrageData.gameLevel = 1;
@@ -44,6 +47,22 @@ public class SceneGameArenaInit : BaseSceneInit, IBaseObserver
         //arenaPrepareData.gameBarrageData.AddRewardItem(200001, 3);
         //arenaPrepareData.gameBarrageData.AddRewardItem(1100006, 3);
 
+
+        arenaPrepareData.gameType = MiniGameEnum.Combat;
+        arenaPrepareData.gameCombatData = new MiniGameCombatBean();
+        arenaPrepareData.gameCombatData.combatPosition = Vector3.zero;
+        arenaPrepareData.gameCombatData.winBringDownNumber = 3;
+        arenaPrepareData.gameCombatData.winSurvivalNumber = 3;
+        List<CharacterBean> listOurData = new List<CharacterBean>();
+        listOurData.Add(new CharacterBean());
+        listOurData.Add(new CharacterBean());
+        listOurData.Add(new CharacterBean());
+        List<CharacterBean> listEnemyData = new List<CharacterBean>();
+        listEnemyData.Add(new CharacterBean());
+        listEnemyData.Add(new CharacterBean());
+        listEnemyData.Add(new CharacterBean());
+        arenaPrepareData.gameCombatData.InitData(gameItemsManager, listOurData, listEnemyData);
+
         if (arenaPrepareData == null)
             return;
         switch (arenaPrepareData.gameType)
@@ -52,6 +71,9 @@ public class SceneGameArenaInit : BaseSceneInit, IBaseObserver
                 break;
             case MiniGameEnum.Barrage:
                 InitGameBarrage(arenaPrepareData.gameBarrageData);
+                break;
+            case MiniGameEnum.Combat:
+                InitGameCombat(arenaPrepareData.gameCombatData);
                 break;
         }
 
@@ -84,6 +106,15 @@ public class SceneGameArenaInit : BaseSceneInit, IBaseObserver
         }
         //弹幕处理初始化
         barrageHandler.InitGame(gameBarrageData);
+    }
+
+    /// <summary>
+    /// 初始化战斗游戏
+    /// </summary>
+    /// <param name="gameCombatData"></param>
+    public void InitGameCombat(MiniGameCombatBean gameCombatData)
+    {
+        combatHandler.InitData(gameCombatData);
     }
 
     #region 通知回调
