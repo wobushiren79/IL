@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using UnityEditor;
 using System.Collections.Generic;
+using System;
 
 public class MiniGameCombatHandler : BaseMiniGameHandler, UIMiniGameCountDown.ICallBack
 {
@@ -9,7 +10,10 @@ public class MiniGameCombatHandler : BaseMiniGameHandler, UIMiniGameCountDown.IC
     //生成器
     public MiniGameCombatBuilder gameCombatBuilder;
 
-
+    /// <summary>
+    /// 初始化数据
+    /// </summary>
+    /// <param name="gameCombatData"></param>
     public void InitData(MiniGameCombatBean gameCombatData)
     {
         if (gameCombatData == null)
@@ -28,17 +32,28 @@ public class MiniGameCombatHandler : BaseMiniGameHandler, UIMiniGameCountDown.IC
         OpenCountDownUI(gameCombatData);
     }
 
+    /// <summary>
+    /// 开始游戏
+    /// </summary>
+    public void StartGame()
+    {
+      
+    }
+
     #region 倒计时UI回调
     public override void GamePreCountDownStart()
     {
         base.GamePreCountDownStart();
-
     }
 
     public override void GamePreCountDownEnd()
     {
         base.GamePreCountDownEnd();
-
+        //打开游戏UI
+        UIMiniGameCombat uiMiniGameCombat = (UIMiniGameCombat)uiGameManager.OpenUIAndCloseOtherByName(EnumUtil.GetEnumName(UIEnum.MiniGameCombat));
+        uiMiniGameCombat.SetData(gameCombatData);
+        //开始游戏
+        StartGame();
     }
     #endregion
 }

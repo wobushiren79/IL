@@ -29,5 +29,6 @@ public enum UIEnum
     TownArena,//竞技场UI
     MiniGameEnd,
     MiniGameCountDown,
-    MiniGameBarrage,
+    MiniGameBarrage,//弹幕游戏UI
+    MiniGameCombat,//战斗游戏UI
 }
