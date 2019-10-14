@@ -12,6 +12,7 @@ public class SceneGameArenaInit : BaseSceneInit, IBaseObserver
     public MiniGameCombatHandler combatHandler;
     //地形控制
     public NavMeshSurface navMesh;
+
     private new void Start()
     {
         base.Start();
@@ -24,6 +25,9 @@ public class SceneGameArenaInit : BaseSceneInit, IBaseObserver
         //获取相关数据
         if (gameItemsManager != null)
             gameItemsManager.itemsInfoController.GetAllItemsInfo();
+        //获取所有NPC
+        if (npcInfoManager != null)
+            npcInfoManager.npcInfoController.GetAllNpcInfo();
         //测试数据
         ArenaPrepareBean arenaPrepareData = GameCommonInfo.ArenaPrepareData;
         arenaPrepareData = new ArenaPrepareBean();
@@ -54,13 +58,14 @@ public class SceneGameArenaInit : BaseSceneInit, IBaseObserver
         arenaPrepareData.gameCombatData.winBringDownNumber = 3;
         arenaPrepareData.gameCombatData.winSurvivalNumber = 3;
         List<CharacterBean> listOurData = new List<CharacterBean>();
-        listOurData.Add(new CharacterBean());
-        listOurData.Add(new CharacterBean());
-        listOurData.Add(new CharacterBean());
+     
+        listOurData.Add(npcInfoManager.GetCharacterDataById(200001));
+        listOurData.Add(npcInfoManager.GetCharacterDataById(200101));
+        listOurData.Add(npcInfoManager.GetCharacterDataById(210001));
         List<CharacterBean> listEnemyData = new List<CharacterBean>();
-        listEnemyData.Add(new CharacterBean());
-        listEnemyData.Add(new CharacterBean());
-        listEnemyData.Add(new CharacterBean());
+        listEnemyData.Add(npcInfoManager.GetCharacterDataById(100001));
+        listEnemyData.Add(npcInfoManager.GetCharacterDataById(100002));
+        listEnemyData.Add(npcInfoManager.GetCharacterDataById(100003));
         arenaPrepareData.gameCombatData.InitData(gameItemsManager, listOurData, listEnemyData);
 
         if (arenaPrepareData == null)

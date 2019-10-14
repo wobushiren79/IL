@@ -3,7 +3,7 @@ using UnityEditor;
 using System.Collections.Generic;
 using System;
 
-public class MiniGameCombatHandler : BaseMiniGameHandler, UIMiniGameCountDown.ICallBack
+public class MiniGameCombatHandler : BaseMiniGameHandler, UIMiniGameCountDown.ICallBack,UIMiniGameCombat.ICallBack
 {
     //游戏数据
     public MiniGameCombatBean gameCombatData;
@@ -51,9 +51,21 @@ public class MiniGameCombatHandler : BaseMiniGameHandler, UIMiniGameCountDown.IC
         base.GamePreCountDownEnd();
         //打开游戏UI
         UIMiniGameCombat uiMiniGameCombat = (UIMiniGameCombat)uiGameManager.OpenUIAndCloseOtherByName(EnumUtil.GetEnumName(UIEnum.MiniGameCombat));
+        uiMiniGameCombat.SetCallBack(this);
         uiMiniGameCombat.SetData(gameCombatData);
+        uiMiniGameCombat.StartRound();
         //开始游戏
         StartGame();
     }
     #endregion
+
+    #region 游戏回调
+    public void CharacterRoundCombat(MiniGameCharacterBean gameCharacterData)
+    {
+        //UIMiniGameCombat uiMiniGameCombat = (UIMiniGameCombat)uiGameManager.GetOpenUI();
+        //uiMiniGameCombat.StartNewRoundForCharacter(gameCharacterData);
+        //uiMiniGameCombat.StartRound();
+    }
+    #endregion
+
 }

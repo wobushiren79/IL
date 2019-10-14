@@ -31,6 +31,15 @@ public class NpcInfoBean : BaseBean
     public string talk_ids;//人物对话ID
 
 
+    public int attributes_loyal;
+    public int attributes_life;
+    public int attributes_cook;
+    public int attributes_speed;
+    public int attributes_account;
+    public int attributes_charm;
+    public int attributes_force;
+    public int attributes_lucky;
+
     /// <summary>
     /// NPC信息转为角色信息
     /// </summary>
@@ -62,6 +71,7 @@ public class NpcInfoBean : BaseBean
         characterData.body.sex = npcInfo.sex;
         characterData.body.face = npcInfo.face;
 
+        //设置装备
         characterData.equips = new CharacterEquipBean();
         characterData.equips.maskId = npcInfo.mask_id;
         characterData.equips.handId = npcInfo.hand_id;
@@ -69,6 +79,18 @@ public class NpcInfoBean : BaseBean
         characterData.equips.clothesId = npcInfo.clothes_id;
         characterData.equips.shoesId = npcInfo.shoes_id;
         characterData.equips.maskId = npcInfo.mask_id;
+
+        //设置属性
+        characterData.attributes = new CharacterAttributesBean();
+        characterData.attributes.loyal = npcInfo.attributes_loyal;
+        characterData.attributes.life = npcInfo.attributes_life;
+        characterData.attributes.cook = npcInfo.attributes_cook;
+        characterData.attributes.speed = npcInfo.attributes_speed;
+        characterData.attributes.account = npcInfo.attributes_account;
+        characterData.attributes.charm = npcInfo.attributes_charm;
+        characterData.attributes.force = npcInfo.attributes_force;
+        characterData.attributes.lucky = npcInfo.attributes_lucky;
+      
         return characterData;
     }
 

@@ -6,7 +6,6 @@ using UnityEngine.SceneManagement;
 
 public class SceneGameInnInit : BaseSceneInit, IBaseObserver, DialogView.IDialogCallBack
 {
-    public NpcInfoManager npcInfoManager;
     public InnBuildManager innBuildManager;
     public StoryInfoManager storyInfoManager;
 

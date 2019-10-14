@@ -31,14 +31,16 @@ public class MiniGameCombatBuilder : BaseMonoBehaviour
     public void CreateOurCharacter(Vector3 combatPosition, List<MiniGameCharacterBean> listCharacterData)
     {
         listOurCharacter.Clear();
-        float characterPositionY = (listCharacterData.Count - 1) / 2f;
+        float characterPositionY = ((listCharacterData.Count - 1) / 2f)*1.5f;
         for (int i = 0; i < listCharacterData.Count; i++)
         {
-            Vector3 characterPosition = new Vector3(combatPosition.x - 5, characterPositionY);
-            characterPositionY--;
+            Vector3 characterPosition = new Vector3(combatPosition.x - 3, characterPositionY);
+            characterPositionY-=1.5f;
             MiniGameCharacterBean itemData = listCharacterData[i];
             NpcAIMiniGameCombatCpt npcCpt = CreateCharacter(characterPosition, itemData);
             listOurCharacter.Add(npcCpt);
+            //设置角色朝向
+            npcCpt.SetCharacterFace(2);
         }
     }
 
@@ -49,14 +51,16 @@ public class MiniGameCombatBuilder : BaseMonoBehaviour
     public void CreateEnemyCharacter(Vector3 combatPosition, List<MiniGameCharacterBean> listCharacterData)
     {
         listEnemyCharacter.Clear();
-        float characterPositionY = (listCharacterData.Count - 1) / 2f;
+        float characterPositionY = ((listCharacterData.Count - 1) / 2f)*1.5f;
         for (int i = 0; i < listCharacterData.Count; i++)
         {
-            Vector3 characterPosition = new Vector3(combatPosition.x + 5, characterPositionY);
-            characterPositionY--;
+            Vector3 characterPosition = new Vector3(combatPosition.x + 3, characterPositionY);
+            characterPositionY-=1.5f;
             MiniGameCharacterBean itemData = listCharacterData[i];
             NpcAIMiniGameCombatCpt npcCpt = CreateCharacter(characterPosition, itemData);
             listEnemyCharacter.Add(npcCpt);
+            //设置角色朝向
+            npcCpt.SetCharacterFace(1);
         }
     }
 

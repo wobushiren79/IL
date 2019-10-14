@@ -77,6 +77,11 @@ public class CharacterBean
         };
     }
 
+    public void GetAttributes(GameItemsManager gameItemsManager, out CharacterAttributesBean totalAttributes)
+    {
+        GetAttributes(gameItemsManager, out totalAttributes, out CharacterAttributesBean selfAttributes, out CharacterAttributesBean equipAttributes);
+    }
+
     /// <summary>
     ///  计算吆喝成功概率
     /// </summary>

@@ -166,7 +166,7 @@ public class TypeConversionUtil
     /// <returns></returns>
     public static ColorBean ColorToColorBean(Color color)
     {
-        ColorBean colorBean = new ColorBean(color.a, color.g, color.b, color.a);
+        ColorBean colorBean = new ColorBean(color.r, color.g, color.b, color.a);
         return colorBean;
     }
 

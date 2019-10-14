@@ -6,8 +6,9 @@ public class BaseSceneInit : BaseMonoBehaviour
     public UIGameManager uiGameManager;
     public GameDataManager gameDataManager;
     public GameItemsManager gameItemsManager;
+    public NpcInfoManager npcInfoManager;
     public DialogManager dialogManager;
-
+ 
     public ControlHandler controlHandler;
 
     public void Start()
