@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 using UnityEditor;
 using DG.Tweening;
 using System.Collections.Generic;
@@ -7,6 +8,12 @@ using System;
 
 public class UIMiniGameCombat : UIBaseMiniGame
 {
+    //指令UI
+    public GameObject objCommand;
+    public Button btCommandFight;
+    public Button btCommandDefend;
+    public Button btCommandItem;
+
     //进度条
     public RectTransform rtfRoundContainer;
 
@@ -30,6 +37,16 @@ public class UIMiniGameCombat : UIBaseMiniGame
 
     private float mRoundContainerW = 0;
 
+    private void Start()
+    {
+        if (btCommandFight)
+            btCommandFight.onClick.AddListener(CommandFight);
+        if (btCommandDefend)
+            btCommandDefend.onClick.AddListener(CommandDefend);
+        if (btCommandItem)
+            btCommandItem.onClick.AddListener(CommandItem);
+    }
+
     private void Awake()
     {
         if (rtfRoundContainer != null)
@@ -41,10 +58,10 @@ public class UIMiniGameCombat : UIBaseMiniGame
         //排序
         if (mListCharacterRound != null)
         {
-            mListCharacterRound= mListCharacterRound.OrderByDescending(i=>((RectTransform)i.transform).anchoredPosition.x).ToList();
+            mListCharacterRound = mListCharacterRound.OrderByDescending(i => ((RectTransform)i.transform).anchoredPosition.x).ToList();
             for (int i = 0; i < mListCharacterRound.Count; i++)
             {
-                RectTransform itemRTF =(RectTransform)mListCharacterRound[i].transform;
+                RectTransform itemRTF = (RectTransform)mListCharacterRound[i].transform;
                 itemRTF.SetAsFirstSibling();
             }
         }
@@ -89,6 +106,47 @@ public class UIMiniGameCombat : UIBaseMiniGame
     }
 
     /// <summary>
+    /// 开启命令UI
+    /// </summary>
+    public void OpenCommand()
+    {
+        objCommand.SetActive(true);
+        objCommand.transform.localScale = new Vector3(1, 1, 1);
+        objCommand.transform.DOScale(new Vector3(0.2f, 0.2f, 0.2f), 0.5f).From().SetEase(Ease.OutBack);
+    }
+
+    public void CloseCommand()
+    {
+        objCommand.SetActive(false);
+    }
+
+    /// <summary>
+    /// 指令-战斗
+    /// </summary>
+    public void CommandFight()
+    {
+
+    }
+
+    /// <summary>
+    /// 指定防守
+    /// </summary>
+    public void CommandDefend()
+    {
+
+    }
+
+    /// <summary>
+    /// 指令物品
+    /// </summary>
+    public void CommandItem()
+    {
+        ToastView toastView = GetUIMananger<UIGameManager>().toastView;
+        toastView.ToastHint("开发中");
+    }
+
+
+    /// <summary>
     /// 设置角色开始新的回合计时
     /// </summary>
     /// <param name="gameCharacterData"></param>
@@ -102,7 +160,7 @@ public class UIMiniGameCombat : UIBaseMiniGame
                 //恢复状态
                 itemCpt.SetStatus(false);
                 //重新设置位置
-                RectTransform itemRTF= (RectTransform)itemCpt.transform;
+                RectTransform itemRTF = (RectTransform)itemCpt.transform;
                 itemRTF.anchoredPosition = Vector2.zero;
                 return;
             }
@@ -134,7 +192,7 @@ public class UIMiniGameCombat : UIBaseMiniGame
                         {
                             DOTween.Kill(tempItemCpt.transform);
                         }
-                     
+
                         //通知轮到角色回合
                         if (mCallBack != null)
                             mCallBack.CharacterRoundCombat(itemCpt.gameCharacterData);
@@ -144,8 +202,6 @@ public class UIMiniGameCombat : UIBaseMiniGame
              );
         }
     }
-
-    
 
     /// <summary>
     /// 创建友方信息列表

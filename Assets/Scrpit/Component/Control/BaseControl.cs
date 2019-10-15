@@ -74,4 +74,22 @@ public class BaseControl: BaseMonoBehaviour
         if (cameraFollowObj != null)
             cameraFollowObj.transform.position = position;
     }
+
+    /// <summary>
+    /// 设置镜头远近
+    /// </summary>
+    /// <param name="orthographicSize"></param>
+    ///
+    public void SetCameraOrthographicSize(float orthographicSize)
+    {
+        if (mCamera2D!=null)
+        {
+            mCamera2D.m_Lens.OrthographicSize = orthographicSize;
+        }
+       
+    }
+    public void SetCameraOrthographicSize()
+    {
+        SetCameraOrthographicSize(8);
+    }
 }

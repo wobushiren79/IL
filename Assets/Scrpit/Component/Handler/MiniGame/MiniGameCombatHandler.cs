@@ -3,7 +3,7 @@ using UnityEditor;
 using System.Collections.Generic;
 using System;
 
-public class MiniGameCombatHandler : BaseMiniGameHandler, UIMiniGameCountDown.ICallBack,UIMiniGameCombat.ICallBack
+public class MiniGameCombatHandler : BaseMiniGameHandler, UIMiniGameCountDown.ICallBack, UIMiniGameCombat.ICallBack
 {
     //游戏数据
     public MiniGameCombatBean gameCombatData;
@@ -37,7 +37,26 @@ public class MiniGameCombatHandler : BaseMiniGameHandler, UIMiniGameCountDown.IC
     /// </summary>
     public void StartGame()
     {
-      
+
+    }
+
+    /// <summary>
+    /// 选中某一个角色
+    /// </summary>
+    /// <param name="gameCharacterData"></param>
+    public NpcAIMiniGameCombatCpt SelectedCharacter(MiniGameCharacterBean gameCharacterData)
+    {
+        List<NpcAIMiniGameCombatCpt> listCharacter = gameCombatBuilder.GetAllCharacter();
+        for (int i = 0; i < listCharacter.Count; i++)
+        {
+            NpcAIMiniGameCombatCpt itemNpc = listCharacter[i];
+            if (itemNpc.characterMiniGameData == gameCharacterData)
+            {
+                itemNpc.SetSelected(true);
+                return itemNpc;
+            }
+        }
+        return null;
     }
 
     #region 倒计时UI回调
@@ -62,6 +81,22 @@ public class MiniGameCombatHandler : BaseMiniGameHandler, UIMiniGameCountDown.IC
     #region 游戏回调
     public void CharacterRoundCombat(MiniGameCharacterBean gameCharacterData)
     {
+        //如果是敌方
+        if (gameCharacterData.characterType == 0)
+        {
+
+        }
+        //如果是友方
+        else if (gameCharacterData.characterType == 1)
+        {
+            UIMiniGameCombat uiMiniGameCombat = (UIMiniGameCombat)uiGameManager.GetOpenUI();
+            uiMiniGameCombat.OpenCommand();
+        }
+        //设置角色为选中状态
+        NpcAIMiniGameCombatCpt npcCpt = SelectedCharacter(gameCharacterData);
+        //聚焦回合角色
+        ControlForMiniGameCombatCpt controlForMiniGameCombat = (ControlForMiniGameCombatCpt)controlHandler.GetControl();
+        controlForMiniGameCombat.SetCameraPosition(npcCpt.transform.position);
         //UIMiniGameCombat uiMiniGameCombat = (UIMiniGameCombat)uiGameManager.GetOpenUI();
         //uiMiniGameCombat.StartNewRoundForCharacter(gameCharacterData);
         //uiMiniGameCombat.StartRound();

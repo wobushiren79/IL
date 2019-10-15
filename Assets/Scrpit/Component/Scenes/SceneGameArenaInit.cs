@@ -58,7 +58,7 @@ public class SceneGameArenaInit : BaseSceneInit, IBaseObserver
         arenaPrepareData.gameCombatData.winBringDownNumber = 3;
         arenaPrepareData.gameCombatData.winSurvivalNumber = 3;
         List<CharacterBean> listOurData = new List<CharacterBean>();
-     
+
         listOurData.Add(npcInfoManager.GetCharacterDataById(200001));
         listOurData.Add(npcInfoManager.GetCharacterDataById(200101));
         listOurData.Add(npcInfoManager.GetCharacterDataById(210001));

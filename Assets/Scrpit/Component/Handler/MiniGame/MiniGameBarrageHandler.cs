@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using DG.Tweening;
 using UnityEditor;
 using System.Collections;
 using System.Collections.Generic;
@@ -69,19 +70,29 @@ public class MiniGameBarrageHandler : BaseMiniGameHandler, UIMiniGameCountDown.I
         {
             isGamePlay = false;
             StopAllCoroutines();
-            miniGameBarrageBuilder.DestoryPlayer();
-            miniGameBarrageBuilder.DestoryEjector();
-            //设置游戏数据
-            if (isWinGame)
-                gameBarrageData.gameResult = 1;
-            else
-                gameBarrageData.gameResult = 0;
-            //打开游戏结束UI
-            UIMiniGameEnd uiMiniGameEnd = (UIMiniGameEnd)uiGameManager.OpenUIAndCloseOtherByName(EnumUtil.GetEnumName(UIEnum.MiniGameEnd));
-            uiMiniGameEnd.SetData(gameBarrageData);
-            uiMiniGameEnd.SetCallBack(this);
-            //通知 游戏结束
-            NotifyAllObserver((int)NotifyMiniGameEnum.GameEnd);
+            //拉近尽头
+            ControlForMiniGameBarrageCpt controlForMiniGameBarrage =(ControlForMiniGameBarrageCpt) controlHandler.GetControl();
+            controlForMiniGameBarrage.SetCameraOrthographicSize(6);
+            //开启慢镜头
+            Time.timeScale = 0.1f;
+            transform.DOScale(new Vector3(1, 1, 1), 0.3f).OnComplete(delegate () {
+                Time.timeScale = 1f;
+                controlForMiniGameBarrage.SetCameraOrthographicSize();
+                miniGameBarrageBuilder.DestoryPlayer();
+                miniGameBarrageBuilder.DestoryEjector();
+                //设置游戏数据
+                if (isWinGame)
+                    gameBarrageData.gameResult = 1;
+                else
+                    gameBarrageData.gameResult = 0;
+                //打开游戏结束UI
+                UIMiniGameEnd uiMiniGameEnd = (UIMiniGameEnd)uiGameManager.OpenUIAndCloseOtherByName(EnumUtil.GetEnumName(UIEnum.MiniGameEnd));
+                uiMiniGameEnd.SetData(gameBarrageData);
+                uiMiniGameEnd.SetCallBack(this);
+                //通知 游戏结束
+                NotifyAllObserver((int)NotifyMiniGameEnum.GameEnd);
+            });
+
         }
     }
 

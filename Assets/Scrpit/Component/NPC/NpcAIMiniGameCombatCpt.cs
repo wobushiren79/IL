@@ -11,6 +11,8 @@ public class NpcAIMiniGameCombatCpt : BaseNpcAI
     public CharacterLifeCpt characterLifeCpt;
     //角色出血特效
     public ParticleSystem psBlood;
+    //选中特效
+    public ParticleSystem psSelected;
 
     /// <summary>
     /// 设置NPC数据
@@ -22,5 +24,18 @@ public class NpcAIMiniGameCombatCpt : BaseNpcAI
         SetCharacterData(characterMiniGameData.characterData);
     }
 
-
+    /// <summary>
+    /// 设置选中
+    /// </summary>
+    /// <param name="isSelected"></param>
+    public void SetSelected(bool isSelected)
+    {
+        if (isSelected)
+        {
+            psSelected.gameObject.SetActive(true);
+            psSelected.Play();
+        }
+        else
+            psSelected.gameObject.SetActive(false);
+    }
 }

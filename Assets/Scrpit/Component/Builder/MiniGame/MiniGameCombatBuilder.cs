@@ -14,6 +14,18 @@ public class MiniGameCombatBuilder : BaseMonoBehaviour
     public List<NpcAIMiniGameCombatCpt> listEnemyCharacter = new List<NpcAIMiniGameCombatCpt>();
 
     /// <summary>
+    /// 获取所有角色
+    /// </summary>
+    /// <returns></returns>
+    public List<NpcAIMiniGameCombatCpt> GetAllCharacter()
+    {
+        List<NpcAIMiniGameCombatCpt> allCharacter = new List<NpcAIMiniGameCombatCpt>();
+        allCharacter.AddRange(listOurCharacter);
+        allCharacter.AddRange(listEnemyCharacter);
+        return allCharacter;
+    }
+
+    /// <summary>
     /// 创建所有角色
     /// </summary>
     /// <param name="listUserGameData"></param>
