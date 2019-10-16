@@ -11,14 +11,13 @@ public class MiniGameBarrageHandler : BaseMiniGameHandler, UIMiniGameCountDown.I
     //弹幕游戏数据
     public MiniGameBarrageBean gameBarrageData;
 
-    //游戏是否正在游玩
-    public bool isGamePlay = false;
     /// <summary>
     /// 初始化游戏
     /// </summary>
     /// <param name="arenaPrepareData"></param>
     public void InitGame(MiniGameBarrageBean gameBarrageData)
     {
+        SetMiniGameStatus(MiniGameStatusEnum.GamePre);
         if (gameBarrageData == null)
         {
             LogUtil.Log("弹幕游戏数据为NULL，无法初始化弹幕游戏");
@@ -50,13 +49,13 @@ public class MiniGameBarrageHandler : BaseMiniGameHandler, UIMiniGameCountDown.I
             LogUtil.Log("弹幕游戏数据为NULL，无法开始弹幕游戏");
             return;
         }
-        isGamePlay = true;
+        SetMiniGameStatus(MiniGameStatusEnum.Gameing);
         //开始倒计时
         StartCoroutine(StartCountDown(gameBarrageData.winSurvivalTime));
         //开始射击
         StartCoroutine(StartLaunch());
         //通知 游戏开始
-        NotifyAllObserver((int)NotifyMiniGameEnum.GameStart);
+        NotifyAllObserver((int)MiniGameStatusEnum.Gameing);
     }
 
     /// <summary>
@@ -66,9 +65,9 @@ public class MiniGameBarrageHandler : BaseMiniGameHandler, UIMiniGameCountDown.I
     public void EndGame(bool isWinGame)
     {
         //如果正在游玩 则结束游戏
-        if (isGamePlay)
+        if (GetMiniGameStatus()==MiniGameStatusEnum.Gameing)
         {
-            isGamePlay = false;
+            SetMiniGameStatus(MiniGameStatusEnum.GameEnd);
             StopAllCoroutines();
             //拉近尽头
             ControlForMiniGameBarrageCpt controlForMiniGameBarrage =(ControlForMiniGameBarrageCpt) controlHandler.GetControl();
@@ -90,7 +89,7 @@ public class MiniGameBarrageHandler : BaseMiniGameHandler, UIMiniGameCountDown.I
                 uiMiniGameEnd.SetData(gameBarrageData);
                 uiMiniGameEnd.SetCallBack(this);
                 //通知 游戏结束
-                NotifyAllObserver((int)NotifyMiniGameEnum.GameEnd);
+                NotifyAllObserver((int)MiniGameStatusEnum.GameEnd);
             });
 
         }
@@ -181,7 +180,7 @@ public class MiniGameBarrageHandler : BaseMiniGameHandler, UIMiniGameCountDown.I
     public void OnClickClose()
     {
         //通知 关闭游戏
-        NotifyAllObserver((int)NotifyMiniGameEnum.GameClose);
+        NotifyAllObserver((int)MiniGameStatusEnum.GameClose);
     }
     #endregion
 

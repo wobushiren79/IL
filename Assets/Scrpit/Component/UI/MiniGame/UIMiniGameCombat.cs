@@ -14,6 +14,12 @@ public class UIMiniGameCombat : UIBaseMiniGame
     public Button btCommandDefend;
     public Button btCommandItem;
 
+    //攻击指令相关
+    public GameObject objCommandFight;
+    public Button btCommandFightForChange;
+    public Button btCommandFightForConfirm;
+    public Button btCommandFightForCancel;
+
     //进度条
     public RectTransform rtfRoundContainer;
 
@@ -45,6 +51,13 @@ public class UIMiniGameCombat : UIBaseMiniGame
             btCommandDefend.onClick.AddListener(CommandDefend);
         if (btCommandItem)
             btCommandItem.onClick.AddListener(CommandItem);
+
+        if (btCommandFightForChange)
+            btCommandFightForChange.onClick.AddListener(CommandFightForChange);
+        if (btCommandFightForConfirm)
+            btCommandFightForConfirm.onClick.AddListener(CommandFightForConfirm);
+        if (btCommandFightForCancel)
+            btCommandFightForCancel.onClick.AddListener(CommandFightForCancel);
     }
 
     private void Awake()
@@ -125,15 +138,39 @@ public class UIMiniGameCombat : UIBaseMiniGame
     /// </summary>
     public void CommandFight()
     {
-
+        if (mCallBack != null)
+            mCallBack.CommandFight(0);
+        objCommand.SetActive(false);
+        objCommandFight.SetActive(true);
     }
+    private void CommandFightForChange()
+    {
+        if (mCallBack != null)
+            mCallBack.CommandFight(1);
+    }
+    private void CommandFightForConfirm()
+    {
+        if (mCallBack != null)
+            mCallBack.CommandFight(2);
+    }
+    private void CommandFightForCancel()
+    {
+        if (mCallBack != null)
+            mCallBack.CommandFight(3);
+        objCommand.SetActive(true);
+        objCommandFight.SetActive(false);
+    }
+
+
+
 
     /// <summary>
     /// 指定防守
     /// </summary>
     public void CommandDefend()
     {
-
+        if (mCallBack != null)
+            mCallBack.CommandDefend(0);
     }
 
     /// <summary>
@@ -265,6 +302,16 @@ public class UIMiniGameCombat : UIBaseMiniGame
         /// </summary>
         /// <param name="gameCharacterData"></param>
         void CharacterRoundCombat(MiniGameCharacterBean gameCharacterData);
+
+        /// <summary>
+        /// 指令 战斗
+        /// </summary>
+        void CommandFight(int detials);
+
+        /// <summary>
+        /// 指令 防御
+        /// </summary>
+        void CommandDefend(int detials);
     }
 
 }

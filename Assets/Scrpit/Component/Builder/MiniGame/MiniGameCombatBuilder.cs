@@ -24,6 +24,14 @@ public class MiniGameCombatBuilder : BaseMonoBehaviour
         allCharacter.AddRange(listEnemyCharacter);
         return allCharacter;
     }
+    public List<NpcAIMiniGameCombatCpt> GetOurCharacter()
+    {
+        return listOurCharacter;
+    }
+    public List<NpcAIMiniGameCombatCpt> GetEnemyCharacter()
+    {
+        return listEnemyCharacter;
+    }
 
     /// <summary>
     /// 创建所有角色
@@ -43,11 +51,11 @@ public class MiniGameCombatBuilder : BaseMonoBehaviour
     public void CreateOurCharacter(Vector3 combatPosition, List<MiniGameCharacterBean> listCharacterData)
     {
         listOurCharacter.Clear();
-        float characterPositionY = ((listCharacterData.Count - 1) / 2f)*1.5f;
+        float characterPositionY = ((listCharacterData.Count - 1) / 2f) * 1.5f;
         for (int i = 0; i < listCharacterData.Count; i++)
         {
             Vector3 characterPosition = new Vector3(combatPosition.x - 3, characterPositionY);
-            characterPositionY-=1.5f;
+            characterPositionY -= 1.5f;
             MiniGameCharacterBean itemData = listCharacterData[i];
             NpcAIMiniGameCombatCpt npcCpt = CreateCharacter(characterPosition, itemData);
             listOurCharacter.Add(npcCpt);
@@ -63,11 +71,11 @@ public class MiniGameCombatBuilder : BaseMonoBehaviour
     public void CreateEnemyCharacter(Vector3 combatPosition, List<MiniGameCharacterBean> listCharacterData)
     {
         listEnemyCharacter.Clear();
-        float characterPositionY = ((listCharacterData.Count - 1) / 2f)*1.5f;
+        float characterPositionY = ((listCharacterData.Count - 1) / 2f) * 1.5f;
         for (int i = 0; i < listCharacterData.Count; i++)
         {
             Vector3 characterPosition = new Vector3(combatPosition.x + 3, characterPositionY);
-            characterPositionY-=1.5f;
+            characterPositionY -= 1.5f;
             MiniGameCharacterBean itemData = listCharacterData[i];
             NpcAIMiniGameCombatCpt npcCpt = CreateCharacter(characterPosition, itemData);
             listEnemyCharacter.Add(npcCpt);

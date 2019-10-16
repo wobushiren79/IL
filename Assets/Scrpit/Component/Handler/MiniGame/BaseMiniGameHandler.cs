@@ -3,17 +3,39 @@ using UnityEditor;
 using System.Collections.Generic;
 
 public class BaseMiniGameHandler : BaseHandler, UIMiniGameCountDown.ICallBack
-{    
+{
+    public enum MiniGameStatusEnum
+    {
+        GamePre = 0,//游戏准备中
+        Gameing = 1,//游戏进行中
+        GameEnd = 2,//游戏结束
+        GameClose = 3,//游戏关闭
+    }
+
     //UI管理
     public UIGameManager uiGameManager;
     //控制器
     public ControlHandler controlHandler;
 
-    public enum NotifyMiniGameEnum
+    //迷你游戏状态
+    private MiniGameStatusEnum mMiniGameStatus = MiniGameStatusEnum.GamePre;
+
+    /// <summary>
+    /// 设置游戏状态
+    /// </summary>
+    /// <param name="status"></param>
+    public void SetMiniGameStatus(MiniGameStatusEnum status)
     {
-        GameStart = 1,
-        GameEnd = 2,
-        GameClose = 3,
+        mMiniGameStatus = status;
+    }
+
+    /// <summary>
+    /// 获取游戏状态
+    /// </summary>
+    /// <returns></returns>
+    public MiniGameStatusEnum GetMiniGameStatus()
+    {
+        return mMiniGameStatus;
     }
 
     /// <summary>

@@ -43,7 +43,9 @@ public class NpcAIMiniGameBarrageCpt : BaseNpcAI, SightForMiniGameBarrageCpt.ICa
     /// <param name="damage"></param>
     public void LifeDamage(int damage)
     {
-        if (characterMiniGameData == null || gameBarrageHandler == null|| !gameBarrageHandler.isGamePlay)
+        if (characterMiniGameData == null
+            || gameBarrageHandler == null
+            || gameBarrageHandler.GetMiniGameStatus() != BaseMiniGameHandler.MiniGameStatusEnum.Gameing)
             return;
         characterMiniGameData.characterCurrentLife -= damage;
         psBlood.Play();

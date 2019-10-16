@@ -127,11 +127,11 @@ public class SceneGameArenaInit : BaseSceneInit, IBaseObserver
     {
         switch (type)
         {
-            case (int)BaseMiniGameHandler.NotifyMiniGameEnum.GameStart:
+            case (int)BaseMiniGameHandler.MiniGameStatusEnum.Gameing:
                 break;
-            case (int)BaseMiniGameHandler.NotifyMiniGameEnum.GameEnd:
+            case (int)BaseMiniGameHandler.MiniGameStatusEnum.GameEnd:
                 break;
-            case (int)BaseMiniGameHandler.NotifyMiniGameEnum.GameClose:
+            case (int)BaseMiniGameHandler.MiniGameStatusEnum.GameClose:
                 SceneUtil.SceneChange(GameCommonInfo.ScenesChangeData.beforeScene);
                 break;
         }
