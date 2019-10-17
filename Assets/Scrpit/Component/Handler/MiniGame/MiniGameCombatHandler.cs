@@ -111,6 +111,22 @@ public class MiniGameCombatHandler : BaseMiniGameHandler, UIMiniGameCountDown.IC
         SelectedChangeCharacter(null, currentNpc);
     }
 
+    /// <summary>
+    /// 开始下一个回合
+    /// </summary>
+    public void StartNextRound()
+    {
+        //UI继续回合计时
+        UIMiniGameCombat uiMiniGameCombat = (UIMiniGameCombat)uiGameManager.GetOpenUI();
+        //关闭指令UI
+        uiMiniGameCombat.CloseCommand();
+        //设置当前角色重新开始
+        uiMiniGameCombat.StartNextRoundForCharacter(mRoundActionCharacter.characterMiniGameData);
+        uiMiniGameCombat.StartRound();
+        //关闭选中特效
+        mRoundActionCharacter.SetSelected(false);
+    }
+
     #region 倒计时UI回调
     public override void GamePreCountDownStart()
     {
@@ -134,6 +150,8 @@ public class MiniGameCombatHandler : BaseMiniGameHandler, UIMiniGameCountDown.IC
     #region 游戏回调
     public void CharacterRoundCombat(MiniGameCharacterBean gameCharacterData)
     {
+        //初始化数据
+        gameCharacterData.CombatInit();
         //如果是敌方
         if (gameCharacterData.characterType == 0)
         {
@@ -149,13 +167,10 @@ public class MiniGameCombatHandler : BaseMiniGameHandler, UIMiniGameCountDown.IC
         }
         //设置角色为选中状态
         NpcAIMiniGameCombatCpt npcCpt = GetCharacter(gameCharacterData);
+        npcCpt.SetCombatStatus(0);
         //开启选中特效
         SelectedChangeCharacter(npcCpt);
         mRoundActionCharacter = npcCpt;
-
-        //UIMiniGameCombat uiMiniGameCombat = (UIMiniGameCombat)uiGameManager.GetOpenUI();
-        //uiMiniGameCombat.StartNewRoundForCharacter(gameCharacterData);
-        //uiMiniGameCombat.StartRound();
     }
 
     /// <summary>
@@ -199,7 +214,9 @@ public class MiniGameCombatHandler : BaseMiniGameHandler, UIMiniGameCountDown.IC
     {
         if (mRoundActionCharacter == null || mRoundActionCharacter.characterMiniGameData == null || mRoundActionCharacter.characterMiniGameData.characterType != 1)
             return;
-
+        mRoundActionCharacter.characterMiniGameData.combatIsDefend = true;
+        mRoundActionCharacter.SetCombatStatus(1);
+        StartNextRound();
     }
     #endregion
 

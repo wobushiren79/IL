@@ -20,6 +20,9 @@ public class UIMiniGameCombat : UIBaseMiniGame
     public Button btCommandFightForConfirm;
     public Button btCommandFightForCancel;
 
+    //攻击力道 
+    public CombatPowerView viewCombatPower;
+
     //进度条
     public RectTransform rtfRoundContainer;
 
@@ -161,9 +164,6 @@ public class UIMiniGameCombat : UIBaseMiniGame
         objCommandFight.SetActive(false);
     }
 
-
-
-
     /// <summary>
     /// 指定防守
     /// </summary>
@@ -187,7 +187,7 @@ public class UIMiniGameCombat : UIBaseMiniGame
     /// 设置角色开始新的回合计时
     /// </summary>
     /// <param name="gameCharacterData"></param>
-    public void StartNewRoundForCharacter(MiniGameCharacterBean gameCharacterData)
+    public void StartNextRoundForCharacter(MiniGameCharacterBean gameCharacterData)
     {
         for (int i = 0; i < mListCharacterRound.Count; i++)
         {

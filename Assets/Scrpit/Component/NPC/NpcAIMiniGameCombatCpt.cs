@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 using UnityEditor;
-
+using DG.Tweening;
 public class NpcAIMiniGameCombatCpt : BaseNpcAI
 {
     //战斗游戏处理
@@ -13,7 +13,11 @@ public class NpcAIMiniGameCombatCpt : BaseNpcAI
     public ParticleSystem psBlood;
     //选中特效
     public ParticleSystem psSelected;
+    //战斗状态
+    public SpriteRenderer srCombatStatus;
 
+    //防御图标
+    public Sprite spStatusDefend;
     /// <summary>
     /// 设置NPC数据
     /// </summary>
@@ -37,5 +41,29 @@ public class NpcAIMiniGameCombatCpt : BaseNpcAI
         }
         else
             psSelected.gameObject.SetActive(false);
+    }
+
+
+    /// <summary>
+    /// 设置战斗状态
+    /// </summary>
+    /// <param name="status">0,没有  1防御</param>
+    public void SetCombatStatus(int status)
+    {
+        srCombatStatus.color = new Color(1, 1, 1, 1);
+        switch (status)
+        {
+            case 0:
+                srCombatStatus.color = new Color(1, 1, 1, 0);
+                break;
+            case 1:
+                srCombatStatus.sprite = spStatusDefend;
+                srCombatStatus.transform.localScale = new Vector3(1, 1, 1);
+                srCombatStatus.transform.DOScale(new Vector3(0.2f, 0.2f, 0.2f), 0.5f).From().SetEase(Ease.OutBack);
+                break;
+            case 2:
+                break;
+        }
+
     }
 }
