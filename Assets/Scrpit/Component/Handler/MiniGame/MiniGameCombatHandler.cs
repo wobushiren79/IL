@@ -12,6 +12,7 @@ public class MiniGameCombatHandler : BaseMiniGameHandler, UIMiniGameCountDown.IC
         EnemyRound,//敌方回合
     }
 
+    public GameItemsManager gameItemsManager;
     //游戏数据
     public MiniGameCombatBean gameCombatData;
     //生成器
@@ -24,6 +25,7 @@ public class MiniGameCombatHandler : BaseMiniGameHandler, UIMiniGameCountDown.IC
     private NpcAIMiniGameCombatCpt mRoundTargetCharacter;
     //回合对象选择序列
     private int mTargetSelectedPosition = 0;
+
     /// <summary>
     /// 初始化数据
     /// </summary>
@@ -200,6 +202,9 @@ public class MiniGameCombatHandler : BaseMiniGameHandler, UIMiniGameCountDown.IC
                 break;
             //确认
             case 2:
+                //打开力道测试
+                UIMiniGameCombat uiMiniGameCombat = (UIMiniGameCombat)uiGameManager.GetOpenUI();
+                uiMiniGameCombat.OpenCombatPowerTest(mRoundActionCharacter.characterMiniGameData);
                 break;
             //取消
             case 3:
@@ -216,6 +221,30 @@ public class MiniGameCombatHandler : BaseMiniGameHandler, UIMiniGameCountDown.IC
             return;
         mRoundActionCharacter.characterMiniGameData.combatIsDefend = true;
         mRoundActionCharacter.SetCombatStatus(1);
+        StartNextRound();
+    }
+
+    public void PowerTestEnd(float resultsAccuracy, float resultsForce)
+    {
+        //获取属性
+        mRoundActionCharacter.characterMiniGameData.characterData.GetAttributes(gameItemsManager, out CharacterAttributesBean characterAttributes);
+
+        //计算闪避
+        float dodgeRate = UnityEngine.Random.Range(0f,1f);
+        if(dodgeRate <= resultsAccuracy)
+        {
+            //如果角色防御了
+            if (mRoundTargetCharacter.characterMiniGameData.combatIsDefend)
+                resultsAccuracy = resultsAccuracy / 2f;
+            //计算伤害
+            int damage = (int)((resultsForce + 0.2f) * characterAttributes.force) * 2;
+            //角色伤害
+            mRoundTargetCharacter.UnderAttack(resultsForce, damage);
+        }
+        else
+        {
+            mRoundTargetCharacter.ShowTextInfo(GameCommonInfo.GetUITextById(14001));
+        }
         StartNextRound();
     }
     #endregion

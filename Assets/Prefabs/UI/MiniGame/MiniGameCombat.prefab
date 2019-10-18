@@ -5748,7 +5748,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &7807355011370660149
 RectTransform:
   m_ObjectHideFlags: 0
@@ -5765,11 +5765,11 @@ RectTransform:
   m_Father: {fileID: 4931124165951311265}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchorMin: {x: 0.5, y: 0}
+  m_AnchorMax: {x: 0.5, y: 0}
+  m_AnchoredPosition: {x: 0, y: 50}
   m_SizeDelta: {x: 300, y: 120}
-  m_Pivot: {x: 0.5, y: 0.5}
+  m_Pivot: {x: 0.5, y: 0}
 --- !u!222 &4365038741750565016
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -7159,7 +7159,7 @@ MonoBehaviour:
   btCommandFightForChange: {fileID: 6824318496050473553}
   btCommandFightForConfirm: {fileID: 7942483657293365434}
   btCommandFightForCancel: {fileID: 7234758167260805947}
-  viewCombatPower: {fileID: 0}
+  viewCombatPower: {fileID: 2602871895865033914}
   rtfRoundContainer: {fileID: 3751149580918525827}
   objOurCharacterContainer: {fileID: 3340083228266696937}
   objEnemyCharacterContainer: {fileID: 3071996576061344296}
@@ -9045,11 +9045,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 7807355011370660149}
     m_Modifications:
-    - target: {fileID: 3091980493505435052, guid: 6eb7f01faca30a84f8f44831a7ff07fb,
-        type: 3}
-      propertyPath: m_Name
-      value: StrengthTestView (1)
-      objectReference: {fileID: 0}
     - target: {fileID: 1262615136723371460, guid: 6eb7f01faca30a84f8f44831a7ff07fb,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -9108,12 +9103,12 @@ PrefabInstance:
     - target: {fileID: 1262615136723371460, guid: 6eb7f01faca30a84f8f44831a7ff07fb,
         type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 0
+      value: 150
       objectReference: {fileID: 0}
     - target: {fileID: 1262615136723371460, guid: 6eb7f01faca30a84f8f44831a7ff07fb,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 0
+      value: -90
       objectReference: {fileID: 0}
     - target: {fileID: 1262615136723371460, guid: 6eb7f01faca30a84f8f44831a7ff07fb,
         type: 3}
@@ -9133,7 +9128,7 @@ PrefabInstance:
     - target: {fileID: 1262615136723371460, guid: 6eb7f01faca30a84f8f44831a7ff07fb,
         type: 3}
       propertyPath: m_AnchorMin.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1262615136723371460, guid: 6eb7f01faca30a84f8f44831a7ff07fb,
         type: 3}
@@ -9143,7 +9138,7 @@ PrefabInstance:
     - target: {fileID: 1262615136723371460, guid: 6eb7f01faca30a84f8f44831a7ff07fb,
         type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1262615136723371460, guid: 6eb7f01faca30a84f8f44831a7ff07fb,
         type: 3}
@@ -9155,30 +9150,40 @@ PrefabInstance:
       propertyPath: m_Pivot.y
       value: 0.5
       objectReference: {fileID: 0}
+    - target: {fileID: 3091980493505435052, guid: 6eb7f01faca30a84f8f44831a7ff07fb,
+        type: 3}
+      propertyPath: m_Name
+      value: StrengthTestView_Force
+      objectReference: {fileID: 0}
     - target: {fileID: 7942901523339529862, guid: 6eb7f01faca30a84f8f44831a7ff07fb,
         type: 3}
       propertyPath: m_AnchorMax.x
-      value: 0
+      value: 0.89
       objectReference: {fileID: 0}
     - target: {fileID: 7942901523339529862, guid: 6eb7f01faca30a84f8f44831a7ff07fb,
         type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5528372056718942376, guid: 6eb7f01faca30a84f8f44831a7ff07fb,
+        type: 3}
+      propertyPath: m_Text
+      value: "\u529B\u5EA6"
       objectReference: {fileID: 0}
     - target: {fileID: 6649749948737195505, guid: 6eb7f01faca30a84f8f44831a7ff07fb,
         type: 3}
       propertyPath: m_AnchorMin.x
-      value: 0
+      value: 0.89
       objectReference: {fileID: 0}
     - target: {fileID: 6649749948737195505, guid: 6eb7f01faca30a84f8f44831a7ff07fb,
         type: 3}
       propertyPath: m_AnchorMax.x
-      value: 0
+      value: 0.89
       objectReference: {fileID: 0}
     - target: {fileID: 6649749948737195505, guid: 6eb7f01faca30a84f8f44831a7ff07fb,
         type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6eb7f01faca30a84f8f44831a7ff07fb, type: 3}
@@ -9344,11 +9349,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 7807355011370660149}
     m_Modifications:
-    - target: {fileID: 3091980493505435052, guid: 6eb7f01faca30a84f8f44831a7ff07fb,
-        type: 3}
-      propertyPath: m_Name
-      value: StrengthTestView
-      objectReference: {fileID: 0}
     - target: {fileID: 1262615136723371460, guid: 6eb7f01faca30a84f8f44831a7ff07fb,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -9407,12 +9407,12 @@ PrefabInstance:
     - target: {fileID: 1262615136723371460, guid: 6eb7f01faca30a84f8f44831a7ff07fb,
         type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 0
+      value: 150
       objectReference: {fileID: 0}
     - target: {fileID: 1262615136723371460, guid: 6eb7f01faca30a84f8f44831a7ff07fb,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 0
+      value: -30
       objectReference: {fileID: 0}
     - target: {fileID: 1262615136723371460, guid: 6eb7f01faca30a84f8f44831a7ff07fb,
         type: 3}
@@ -9432,7 +9432,7 @@ PrefabInstance:
     - target: {fileID: 1262615136723371460, guid: 6eb7f01faca30a84f8f44831a7ff07fb,
         type: 3}
       propertyPath: m_AnchorMin.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1262615136723371460, guid: 6eb7f01faca30a84f8f44831a7ff07fb,
         type: 3}
@@ -9442,7 +9442,7 @@ PrefabInstance:
     - target: {fileID: 1262615136723371460, guid: 6eb7f01faca30a84f8f44831a7ff07fb,
         type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1262615136723371460, guid: 6eb7f01faca30a84f8f44831a7ff07fb,
         type: 3}
@@ -9454,30 +9454,35 @@ PrefabInstance:
       propertyPath: m_Pivot.y
       value: 0.5
       objectReference: {fileID: 0}
+    - target: {fileID: 3091980493505435052, guid: 6eb7f01faca30a84f8f44831a7ff07fb,
+        type: 3}
+      propertyPath: m_Name
+      value: StrengthTestView_Accuracy
+      objectReference: {fileID: 0}
     - target: {fileID: 7942901523339529862, guid: 6eb7f01faca30a84f8f44831a7ff07fb,
         type: 3}
       propertyPath: m_AnchorMax.x
-      value: 0
+      value: 0.89
       objectReference: {fileID: 0}
     - target: {fileID: 7942901523339529862, guid: 6eb7f01faca30a84f8f44831a7ff07fb,
         type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6649749948737195505, guid: 6eb7f01faca30a84f8f44831a7ff07fb,
         type: 3}
       propertyPath: m_AnchorMin.x
-      value: 0
+      value: 0.89
       objectReference: {fileID: 0}
     - target: {fileID: 6649749948737195505, guid: 6eb7f01faca30a84f8f44831a7ff07fb,
         type: 3}
       propertyPath: m_AnchorMax.x
-      value: 0
+      value: 0.89
       objectReference: {fileID: 0}
     - target: {fileID: 6649749948737195505, guid: 6eb7f01faca30a84f8f44831a7ff07fb,
         type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6eb7f01faca30a84f8f44831a7ff07fb, type: 3}

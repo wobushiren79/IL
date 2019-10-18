@@ -11,6 +11,7 @@ public class CombatPowerView : BaseMonoBehaviour, StrengthTestView.ICallBack
     public float resultsAccuracy;
     public float resultsForce;
 
+    private ICallBack mCallBack;
 
     private void Start()
     {
@@ -18,8 +19,15 @@ public class CombatPowerView : BaseMonoBehaviour, StrengthTestView.ICallBack
             strengthTestForAccuracy.SetCallBack(this);
         if (strengthTestForForce != null)
             strengthTestForForce.SetCallBack(this);
-        SetData(10);
-        StartPowerTest();
+    }
+
+    /// <summary>
+    /// 设置回调
+    /// </summary>
+    /// <param name="callBack"></param>
+    public void SetCallBack(ICallBack callBack)
+    {
+        this.mCallBack = callBack;
     }
 
     /// <summary>
@@ -33,8 +41,9 @@ public class CombatPowerView : BaseMonoBehaviour, StrengthTestView.ICallBack
         float moveSpeed = 5f -(float)force/20f;
         if (moveSpeed < 0.1f)
             moveSpeed = 0.1f;
-        strengthTestForAccuracy.SetSpeed(moveSpeed);
-        strengthTestForForce.SetSpeed(moveSpeed);
+        strengthTestForAccuracy.SetData( GameCommonInfo.GetUITextById(51),moveSpeed);
+        strengthTestForForce.SetData(GameCommonInfo.GetUITextById(52), moveSpeed);
+        StartPowerTest();
     }
 
     public void StartPowerTest()
@@ -53,7 +62,14 @@ public class CombatPowerView : BaseMonoBehaviour, StrengthTestView.ICallBack
         else if (view == strengthTestForForce)
         {
             resultsForce = value;
+            if (mCallBack != null)
+                mCallBack.PowerTestEnd(resultsAccuracy, resultsForce);
         }
     }
     #endregion
+
+    public interface ICallBack
+    {
+        void PowerTestEnd(float resultsAccuracy,float resultsForce);
+    }
 }

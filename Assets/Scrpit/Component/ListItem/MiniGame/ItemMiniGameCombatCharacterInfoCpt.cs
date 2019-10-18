@@ -8,6 +8,15 @@ public class ItemMiniGameCombatCharacterInfoCpt : ItemGameBaseCpt
     public Text tvLife;
     public Text tvForce;
     public Slider sliderLife;
+    public MiniGameCharacterBean gameCharacterData;
+
+    private void Update()
+    {
+        if (gameCharacterData != null)
+        {
+            SetLife(gameCharacterData.characterCurrentLife, gameCharacterData.characterMaxLife);
+        }
+    }
 
     /// <summary>
     /// 设置数据
@@ -15,6 +24,8 @@ public class ItemMiniGameCombatCharacterInfoCpt : ItemGameBaseCpt
     /// <param name="gameCharacterData"></param>
     public void SetData(MiniGameCharacterBean gameCharacterData)
     {
+        this.gameCharacterData = gameCharacterData;
+
         SetCharacterUI(gameCharacterData.characterData);
         SetName(gameCharacterData.characterData.baseInfo.name);
         SetLife(gameCharacterData.characterCurrentLife, gameCharacterData.characterMaxLife);

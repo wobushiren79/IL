@@ -41,13 +41,13 @@ public class NpcAIMiniGameBarrageCpt : BaseNpcAI, SightForMiniGameBarrageCpt.ICa
     ///遭到攻击
     /// </summary>
     /// <param name="damage"></param>
-    public void LifeDamage(int damage)
+    public void UnderAttack(int damage)
     {
         if (characterMiniGameData == null
             || gameBarrageHandler == null
             || gameBarrageHandler.GetMiniGameStatus() != BaseMiniGameHandler.MiniGameStatusEnum.Gameing)
             return;
-        characterMiniGameData.characterCurrentLife -= damage;
+        characterMiniGameData.AddLife(-damage);
         psBlood.Play();
         //如果是控制的角色并且生命值
         if (characterMiniGameData.characterCurrentLife < gameBarrageHandler.gameBarrageData.winLife)

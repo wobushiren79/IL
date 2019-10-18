@@ -14,9 +14,23 @@ public class MiniGameCharacterBean
     //角色数据
     public CharacterBean characterData;
 
+    /// <summary>
+    /// 增加生命
+    /// </summary>
+    /// <param name="life"></param>
+    public void AddLife(int life)
+    {
+        characterCurrentLife += life;
+        if (characterCurrentLife < 0)
+        {
+            characterCurrentLife = 0;
+        }
+    }
+  
     //战斗数据初始化
     public void CombatInit()
     {
         combatIsDefend = false;
     }
+
 }

@@ -25,7 +25,7 @@ public class BarrageBulletCpt : BaseMonoBehaviour
                 //如果是NPC 扣血
                 if (npcCpt)
                 {
-                    npcCpt.LifeDamage(bulletDamage);
+                    npcCpt.UnderAttack(bulletDamage);
                 }
             }
         }

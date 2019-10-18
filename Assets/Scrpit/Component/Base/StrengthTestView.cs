@@ -53,6 +53,19 @@ public class StrengthTestView : BaseMonoBehaviour
     }
 
     /// <summary>
+    /// 设置数据
+    /// </summary>
+    /// <param name="name"></param>
+    /// <param name="speed"></param>
+    public void SetData(string name,float speed)
+    {
+        mDirection = 1;
+        sliderStrength.value = 0;
+        SetTitle(name);
+        SetSpeed(speed);
+    }
+
+    /// <summary>
     /// 设置标题
     /// </summary>
     /// <param name="name"></param>

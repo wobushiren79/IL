@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System;
 
-public class UIMiniGameCombat : UIBaseMiniGame
+public class UIMiniGameCombat : UIBaseMiniGame, CombatPowerView.ICallBack
 {
     //指令UI
     public GameObject objCommand;
@@ -61,6 +61,9 @@ public class UIMiniGameCombat : UIBaseMiniGame
             btCommandFightForConfirm.onClick.AddListener(CommandFightForConfirm);
         if (btCommandFightForCancel)
             btCommandFightForCancel.onClick.AddListener(CommandFightForCancel);
+
+        if (viewCombatPower != null)
+            viewCombatPower.SetCallBack(this);
     }
 
     private void Awake()
@@ -155,6 +158,7 @@ public class UIMiniGameCombat : UIBaseMiniGame
     {
         if (mCallBack != null)
             mCallBack.CommandFight(2);
+        objCommandFight.SetActive(false);
     }
     private void CommandFightForCancel()
     {
@@ -182,6 +186,20 @@ public class UIMiniGameCombat : UIBaseMiniGame
         toastView.ToastHint("开发中");
     }
 
+    /// <summary>
+    /// 开启力道测试
+    /// </summary>
+    /// <param name="gameCharacterData"></param>
+    public void OpenCombatPowerTest(MiniGameCharacterBean gameCharacterData)
+    {
+        //弹出进度条
+        viewCombatPower.gameObject.SetActive(true);
+        //获取属性
+        GameItemsManager gameItemsManager = GetUIMananger<UIGameManager>().gameItemsManager;
+        gameCharacterData.characterData.GetAttributes(gameItemsManager, out CharacterAttributesBean characterAttributes);
+        //设置数据
+        viewCombatPower.SetData(characterAttributes.force);
+    }
 
     /// <summary>
     /// 设置角色开始新的回合计时
@@ -295,6 +313,15 @@ public class UIMiniGameCombat : UIBaseMiniGame
         objRoundItem.transform.DOScale(new Vector3(0.2f, 0.2f, 0.2f), 0.5f).From().SetDelay(0.1f * position).SetEase(Ease.OutBack);
     }
 
+    #region 力度测试回调
+    public void PowerTestEnd(float resultsAccuracy, float resultsForce)
+    {
+        viewCombatPower.gameObject.SetActive(false);
+        if (mCallBack != null)
+            mCallBack.PowerTestEnd(resultsAccuracy, resultsForce);
+    }
+    #endregion
+
     public interface ICallBack
     {
         /// <summary>
@@ -312,6 +339,11 @@ public class UIMiniGameCombat : UIBaseMiniGame
         /// 指令 防御
         /// </summary>
         void CommandDefend(int detials);
+
+        /// <summary>
+        /// 力度测试
+        /// </summary>
+        void PowerTestEnd(float resultsAccuracy, float resultsForce);
     }
 
 }
