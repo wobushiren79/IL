@@ -74,6 +74,18 @@ public class CharacterBodyCpt : BaseMonoBehaviour
         transform.localScale = bodyScale;
     }
 
+    public int GetFace()
+    {
+        if (transform.localScale.x < 0)
+        {
+            return 1;
+        }
+        else
+        {
+            return 2;
+        }
+    }
+
     /// <summary>
     /// 设置性别
     /// </summary>

@@ -1,6 +1,8 @@
 ﻿using UnityEngine;
 using UnityEditor;
 using DG.Tweening;
+using System.Collections.Generic;
+using System.Collections;
 public class NpcAIMiniGameCombatCpt : BaseNpcAI
 {
     //战斗游戏处理
@@ -22,6 +24,17 @@ public class NpcAIMiniGameCombatCpt : BaseNpcAI
 
     //防御图标
     public Sprite spStatusDefend;
+
+    public override void SetCharacterDead()
+    {
+        base.SetCharacterDead();
+        SetExpression(CharacterExpressionCpt.CharacterExpressionEnum.Dead, -1);
+        //清空状态
+        SetCombatStatus(0);
+        //关闭血量展示
+        characterLifeCpt.gameObject.SetActive(false);
+    }
+
     /// <summary>
     /// 设置NPC数据
     /// </summary>
@@ -116,11 +129,130 @@ public class NpcAIMiniGameCombatCpt : BaseNpcAI
         tvItem.text = text + "";
         //数字特效
         objItemDamage.transform.DOScale(new Vector3(0, 0, 0), 1f).From().SetEase(Ease.OutElastic);
-        objItemDamage.transform.DOLocalMoveY(3, 5).OnComplete(delegate ()
+        objItemDamage.transform.DOLocalMoveY(1.5f, 2.5f).OnComplete(delegate ()
         {
             Destroy(objItemDamage);
         });
         DOTween.To(() => 1f, alpha => tvItem.color = new Color(tvItem.color.r, tvItem.color.g, tvItem.color.b, alpha), 0f, 1).SetDelay(4);
         return tvItem;
+    }
+
+    /// <summary>
+    /// 开启AI
+    /// </summary>
+    public void OpenAI()
+    {
+        //相对友方列表
+        List<NpcAIMiniGameCombatCpt> relativeOurList = null;
+        //相对敌人列表
+        List<NpcAIMiniGameCombatCpt> relativeEnemyList = null;
+        //如果是友方AI
+        if (characterMiniGameData.characterType == 1)
+        {
+            relativeOurList = gameCombatHandler.gameCombatBuilder.GetCharacter(1);
+            relativeEnemyList = gameCombatHandler.gameCombatBuilder.GetCharacter(0);
+        }
+        //如果是敌方AI
+        else if (characterMiniGameData.characterType == 0)
+        {
+            relativeOurList = gameCombatHandler.gameCombatBuilder.GetCharacter(0);
+            relativeEnemyList = gameCombatHandler.gameCombatBuilder.GetCharacter(1);
+        }
+        //如果友方人数大于两人，自己的血量是友方最低 并且低于0.3辣么就防御 
+        if (relativeOurList.Count >= 2)
+        {
+            bool isMinimumLife = true;
+            float lifeRate = ((float)characterMiniGameData.characterCurrentLife / (float)characterMiniGameData.characterMaxLife);
+            for (int i = 0; i < relativeOurList.Count; i++)
+            {
+                NpcAIMiniGameCombatCpt itemNpc = relativeOurList[i];
+                if (itemNpc != this)
+                {
+                    if (characterMiniGameData.characterCurrentLife >= itemNpc.characterMiniGameData.characterCurrentLife)
+                    {
+                        isMinimumLife = false;
+                    }
+                }
+            }
+            //判断是否是最低血量 并且低于0.3
+            if (isMinimumLife && lifeRate < 0.3f)
+            {
+                StartCoroutine(IntentForDefend());
+                return;
+            }
+        }
+        //如果不防御就攻击
+        StartCoroutine(IntentForFight(relativeEnemyList));
+    }
+
+    /// <summary>
+    /// 意图-攻击
+    /// </summary>
+    public IEnumerator IntentForFight(List<NpcAIMiniGameCombatCpt> relativeEnemyList)
+    {
+        //逻辑首先选择不防御的
+        if (!CheckUtil.ListIsNull(relativeEnemyList))
+        {
+            List<NpcAIMiniGameCombatCpt> noDefendCharacter = new List<NpcAIMiniGameCombatCpt>();
+
+            for (int i = 0; i < relativeEnemyList.Count; i++)
+            {
+                NpcAIMiniGameCombatCpt itemNPC = relativeEnemyList[i];
+                if (!itemNPC.characterMiniGameData.combatIsDefend)
+                {
+                    noDefendCharacter.Add(itemNPC);
+                }
+            }
+            //如果没有不防御的 则选择所有防御的人
+            if (CheckUtil.ListIsNull(noDefendCharacter))
+            {
+                noDefendCharacter = relativeEnemyList;
+            }
+            //其次选择血最少的
+            NpcAIMiniGameCombatCpt targetNpc = null;
+            for (int i = 0; i < noDefendCharacter.Count; i++)
+            {
+                NpcAIMiniGameCombatCpt itemNPC = noDefendCharacter[i];
+                if (targetNpc == null)
+                {
+                    targetNpc = itemNPC;
+                }
+                else
+                {
+                    //选择血少的
+                    if (targetNpc.characterMiniGameData.characterCurrentLife > itemNPC.characterMiniGameData.characterCurrentLife)
+                    {
+                        targetNpc = itemNPC;
+                    }
+                    else if (targetNpc.characterMiniGameData.characterCurrentLife == itemNPC.characterMiniGameData.characterCurrentLife)
+                    {
+                        if (Random.Range(0, 2) == 1)
+                        {
+                            targetNpc = itemNPC;
+                        }
+                    }
+                }
+            }
+            yield return new WaitForSeconds(1);
+            gameCombatHandler.SetRoundTargetCharacter(targetNpc);
+            gameCombatHandler.SelectedCharacter(targetNpc);
+            gameCombatHandler.StartFight(1, 1);
+        }
+    }
+
+    /// <summary>
+    /// 意图-防御
+    /// </summary>
+    public IEnumerator IntentForDefend()
+    {
+        yield return new WaitForSeconds(2);
+        gameCombatHandler.CommandDefend(0);
+    }
+    /// <summary>
+    /// 意图-攻击
+    /// </summary>
+    public void IntentForItem()
+    {
+
     }
 }

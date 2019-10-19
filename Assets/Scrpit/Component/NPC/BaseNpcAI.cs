@@ -109,6 +109,12 @@ public class BaseNpcAI : BaseMonoBehaviour
         if (characterBody != null)
             characterBody.SetFace(face);
     }
+    public int GetCharacterFace()
+    {
+        //设置身体数据
+        CharacterBodyCpt characterBody = CptUtil.GetCptInChildrenByName<CharacterBodyCpt>(gameObject, "Body");
+        return characterBody.GetFace();
+    }
 
     /// <summary>
     /// 停止移动
@@ -122,7 +128,7 @@ public class BaseNpcAI : BaseMonoBehaviour
     /// <summary>
     /// 设置角色死亡
     /// </summary>
-    public void SetCharacterDead()
+    public virtual void SetCharacterDead()
     {
         //设置角色死亡
         characterMoveCpt.SetAnimStatus(10);

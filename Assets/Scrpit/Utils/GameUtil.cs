@@ -92,6 +92,19 @@ public class GameUtil
 
     }
 
+    /// <summary>
+    /// 世界坐标转换为本地UI坐标
+    /// </summary>
+    /// <param name="rtfCanvas"></param>
+    /// <param name="camera"></param>
+    /// <param name="point"></param>
+    /// <returns></returns>
+    public static Vector2 WorldPointToUILocalPoint(RectTransform rtfCanvas, Vector3 point)
+    {
+        Vector3 screenPoint = Camera.main.WorldToScreenPoint(point);
+        RectTransformUtility.ScreenPointToLocalPointInRectangle(rtfCanvas, screenPoint, Camera.main, out Vector2 localPoint);
+        return localPoint;
+    }
 
     /// <summary>
     /// 离开游戏

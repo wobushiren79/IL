@@ -1,7 +1,9 @@
 ﻿using UnityEngine;
 using UnityEditor;
+using DG.Tweening;
 using System.Collections.Generic;
 using System;
+using System.Collections;
 
 public class MiniGameCombatHandler : BaseMiniGameHandler, UIMiniGameCountDown.ICallBack, UIMiniGameCombat.ICallBack
 {
@@ -48,6 +50,25 @@ public class MiniGameCombatHandler : BaseMiniGameHandler, UIMiniGameCountDown.IC
         //打开倒计时UI
         OpenCountDownUI(gameCombatData);
     }
+
+    /// <summary>
+    /// 设置行动目标
+    /// </summary>
+    /// <param name="actionNpc"></param>
+    public void SetRoundActionCharacter(NpcAIMiniGameCombatCpt actionNpc)
+    {
+        this.mRoundActionCharacter = actionNpc;
+    }
+
+    /// <summary>
+    /// 设置目标NPC
+    /// </summary>
+    /// <param name="targetNpc"></param>
+    public void SetRoundTargetCharacter(NpcAIMiniGameCombatCpt targetNpc)
+    {
+        this.mRoundTargetCharacter = targetNpc;
+    }
+
     /// <summary>
     /// 设置回合状态
     /// </summary>
@@ -56,6 +77,7 @@ public class MiniGameCombatHandler : BaseMiniGameHandler, UIMiniGameCountDown.IC
     {
         mMiniGameCombatStatus = miniGameCombatStatus;
     }
+
     /// <summary>
     /// 获取回合状态
     /// </summary>
@@ -63,14 +85,6 @@ public class MiniGameCombatHandler : BaseMiniGameHandler, UIMiniGameCountDown.IC
     public MiniGameCombatStatusEnum GetMiniGameCombatStatus()
     {
         return mMiniGameCombatStatus;
-    }
-
-    /// <summary>
-    /// 开始游戏
-    /// </summary>
-    public void StartGame()
-    {
-        SetMiniGameStatus(MiniGameStatusEnum.Gameing);
     }
 
     /// <summary>
@@ -95,22 +109,33 @@ public class MiniGameCombatHandler : BaseMiniGameHandler, UIMiniGameCountDown.IC
     /// 选中一个角色
     /// </summary>
     /// <param name="npcAI"></param>
-    public void SelectedChangeCharacter(NpcAIMiniGameCombatCpt beforeNpc, NpcAIMiniGameCombatCpt currentNpc)
+    public void SelectedCharacter(NpcAIMiniGameCombatCpt npcCpt)
     {
-        if (currentNpc == null)
-            return;
         //设置选中特效
-        if (beforeNpc != null)
-            beforeNpc.SetSelected(false);
-        if (currentNpc != null)
-            currentNpc.SetSelected(true);
-        //聚焦当前选中角色
-        ControlForMiniGameCombatCpt controlForMiniGameCombat = (ControlForMiniGameCombatCpt)controlHandler.GetControl();
-        controlForMiniGameCombat.SetCameraPosition(currentNpc.transform.position);
+        if (npcCpt != null)
+        {
+            npcCpt.SetSelected(true);
+            //聚焦当前选中角色
+            ControlForMiniGameCombatCpt controlForMiniGameCombat = (ControlForMiniGameCombatCpt)controlHandler.GetControl();
+            controlForMiniGameCombat.SetCameraPosition(npcCpt.transform.position);
+        }
     }
-    public void SelectedChangeCharacter(NpcAIMiniGameCombatCpt currentNpc)
+
+    /// <summary>
+    /// 取消选中
+    /// </summary>
+    public void UnSelectedCharacter(NpcAIMiniGameCombatCpt npcCpt)
     {
-        SelectedChangeCharacter(null, currentNpc);
+        if (npcCpt != null)
+            npcCpt.SetSelected(false);
+    }
+
+    /// <summary>
+    /// 开始游戏
+    /// </summary>
+    public void StartGame()
+    {
+        SetMiniGameStatus(MiniGameStatusEnum.Gameing);
     }
 
     /// <summary>
@@ -118,15 +143,30 @@ public class MiniGameCombatHandler : BaseMiniGameHandler, UIMiniGameCountDown.IC
     /// </summary>
     public void StartNextRound()
     {
+        //取消选中状态
+        UnSelectedCharacter(mRoundActionCharacter);
+        UnSelectedCharacter(mRoundTargetCharacter);
+
         //UI继续回合计时
         UIMiniGameCombat uiMiniGameCombat = (UIMiniGameCombat)uiGameManager.GetOpenUI();
         //关闭指令UI
         uiMiniGameCombat.CloseCommand();
         //设置当前角色重新开始
-        uiMiniGameCombat.StartNextRoundForCharacter(mRoundActionCharacter.characterMiniGameData);
+        uiMiniGameCombat.InitCharacterRound(mRoundActionCharacter.characterMiniGameData);
         uiMiniGameCombat.StartRound();
-        //关闭选中特效
-        mRoundActionCharacter.SetSelected(false);
+
+        mRoundActionCharacter = null;
+        mRoundTargetCharacter = null;
+    }
+
+    /// <summary>
+    /// 开始战斗
+    /// </summary>
+    /// <param name="resultsAccuracy"></param>
+    /// <param name="resultsForce"></param>
+    public void StartFight(float resultsAccuracy, float resultsForce)
+    {
+        StartCoroutine(CoroutineForFight(resultsAccuracy, resultsForce));
     }
 
     #region 倒计时UI回调
@@ -150,15 +190,24 @@ public class MiniGameCombatHandler : BaseMiniGameHandler, UIMiniGameCountDown.IC
     #endregion
 
     #region 游戏回调
+    /// <summary>
+    /// 角色的回合
+    /// </summary>
+    /// <param name="gameCharacterData"></param>
     public void CharacterRoundCombat(MiniGameCharacterBean gameCharacterData)
     {
         //初始化数据
         gameCharacterData.CombatInit();
+        //获取角色
+        NpcAIMiniGameCombatCpt npcCpt = GetCharacter(gameCharacterData);
+        SetRoundActionCharacter(npcCpt);
+        //取消之前的状态
+        npcCpt.SetCombatStatus(0);
         //如果是敌方
         if (gameCharacterData.characterType == 0)
         {
             SetMiniGameCombatStatus(MiniGameCombatStatusEnum.EnemyRound);
-
+            npcCpt.OpenAI();
         }
         //如果是友方
         else if (gameCharacterData.characterType == 1)
@@ -167,12 +216,8 @@ public class MiniGameCombatHandler : BaseMiniGameHandler, UIMiniGameCountDown.IC
             UIMiniGameCombat uiMiniGameCombat = (UIMiniGameCombat)uiGameManager.GetOpenUI();
             uiMiniGameCombat.OpenCommand();
         }
-        //设置角色为选中状态
-        NpcAIMiniGameCombatCpt npcCpt = GetCharacter(gameCharacterData);
-        npcCpt.SetCombatStatus(0);
         //开启选中特效
-        SelectedChangeCharacter(npcCpt);
-        mRoundActionCharacter = npcCpt;
+        SelectedCharacter(npcCpt);
     }
 
     /// <summary>
@@ -189,16 +234,19 @@ public class MiniGameCombatHandler : BaseMiniGameHandler, UIMiniGameCountDown.IC
             //选择攻击
             case 0:
                 //设置选中特效 默认选中第一个]
-                mRoundTargetCharacter = listEnemy[mTargetSelectedPosition];
-                SelectedChangeCharacter(null, mRoundTargetCharacter);
+                SetRoundTargetCharacter(listEnemy[mTargetSelectedPosition]);
+                SelectedCharacter(mRoundTargetCharacter);
                 break;
             //交换 
             case 1:
                 mTargetSelectedPosition++;
                 if (mTargetSelectedPosition >= listEnemy.Count)
                     mTargetSelectedPosition = 0;
-                SelectedChangeCharacter(mRoundTargetCharacter, listEnemy[mTargetSelectedPosition]);
-                mRoundTargetCharacter = listEnemy[mTargetSelectedPosition];
+                //取消选中
+                UnSelectedCharacter(mRoundTargetCharacter);
+                //设置新目标
+                SetRoundTargetCharacter(listEnemy[mTargetSelectedPosition]);
+                SelectedCharacter(mRoundTargetCharacter);
                 break;
             //确认
             case 2:
@@ -208,45 +256,89 @@ public class MiniGameCombatHandler : BaseMiniGameHandler, UIMiniGameCountDown.IC
                 break;
             //取消
             case 3:
-                SelectedChangeCharacter(mRoundTargetCharacter, mRoundActionCharacter);
-                mRoundTargetCharacter = null;
+                UnSelectedCharacter(mRoundTargetCharacter);
+                SelectedCharacter(mRoundActionCharacter);
+                SetRoundTargetCharacter(null);
                 break;
         }
 
     }
 
+    /// <summary>
+    /// 指令防御
+    /// </summary>
+    /// <param name="details"></param>
     public void CommandDefend(int details)
     {
-        if (mRoundActionCharacter == null || mRoundActionCharacter.characterMiniGameData == null || mRoundActionCharacter.characterMiniGameData.characterType != 1)
+        if (mRoundActionCharacter == null || mRoundActionCharacter.characterMiniGameData == null)
             return;
         mRoundActionCharacter.characterMiniGameData.combatIsDefend = true;
         mRoundActionCharacter.SetCombatStatus(1);
         StartNextRound();
     }
 
+    /// <summary>
+    /// 力道测试结束
+    /// </summary>
+    /// <param name="resultsAccuracy"></param>
+    /// <param name="resultsForce"></param>
     public void PowerTestEnd(float resultsAccuracy, float resultsForce)
+    {
+        StartFight(resultsAccuracy, resultsForce);
+    }
+    #endregion
+
+    public IEnumerator CoroutineForFight(float resultsAccuracy, float resultsForce)
     {
         //获取属性
         mRoundActionCharacter.characterMiniGameData.characterData.GetAttributes(gameItemsManager, out CharacterAttributesBean characterAttributes);
-
+        //让行动角色移动到被攻击对象面前
+        Vector3 offsetPosition;
+        //根据角色朝向决定位置
+        if (mRoundTargetCharacter.GetCharacterFace() == 1)
+            offsetPosition = new Vector3(-1, 0);
+        else
+            offsetPosition = new Vector3(1, 0);
+        //记录之前的位置
+        Vector3 oldPosition = mRoundActionCharacter.transform.position;
+        //行动角色移动到目标角色面前
+        mRoundActionCharacter.transform.DOMove(mRoundTargetCharacter.transform.position + offsetPosition, 0.5f);
+        yield return new WaitForSeconds(0.5f);
         //计算闪避
-        float dodgeRate = UnityEngine.Random.Range(0f,1f);
-        if(dodgeRate <= resultsAccuracy)
+        float dodgeRate = UnityEngine.Random.Range(0f, 1f);
+        if (dodgeRate <= resultsAccuracy)
         {
             //如果角色防御了
             if (mRoundTargetCharacter.characterMiniGameData.combatIsDefend)
-                resultsAccuracy = resultsAccuracy / 2f;
+                resultsForce = resultsForce / 2f;
             //计算伤害
             int damage = (int)((resultsForce + 0.2f) * characterAttributes.force) * 2;
             //角色伤害
             mRoundTargetCharacter.UnderAttack(resultsForce, damage);
+            //如果角色阵亡
+            if (mRoundTargetCharacter.characterMiniGameData.characterCurrentLife <= 0)
+            {
+                //设置角色死亡
+                mRoundTargetCharacter.SetCharacterDead();
+                //移除这个角色
+                if (gameCombatBuilder.GetOurCharacter().Contains(mRoundTargetCharacter))
+                    gameCombatBuilder.GetOurCharacter().Remove(mRoundTargetCharacter);
+                if (gameCombatBuilder.GetEnemyCharacter().Contains(mRoundTargetCharacter))
+                    gameCombatBuilder.GetEnemyCharacter().Remove(mRoundTargetCharacter);
+                //ui回合移除该角色
+                UIMiniGameCombat uiMiniGameCombat = (UIMiniGameCombat)uiGameManager.GetOpenUI();
+                uiMiniGameCombat.RemoveCharacterRound(mRoundTargetCharacter.characterMiniGameData);
+            }
         }
         else
         {
+            //角色闪避了
             mRoundTargetCharacter.ShowTextInfo(GameCommonInfo.GetUITextById(14001));
         }
+        //行动角色回到自己的位置
+        yield return new WaitForSeconds(0.5f);
+        mRoundActionCharacter.transform.DOMove(oldPosition, 0.5f);
+        yield return new WaitForSeconds(0.5f);
         StartNextRound();
     }
-    #endregion
-
 }

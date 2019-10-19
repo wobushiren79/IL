@@ -125,13 +125,36 @@ public class UIMiniGameCombat : UIBaseMiniGame, CombatPowerView.ICallBack
     }
 
     /// <summary>
+    /// 移除角色回合行动
+    /// </summary>
+    public void RemoveCharacterRound(MiniGameCharacterBean miniGameCharacter)
+    {
+        for (int i = 0;i<mListCharacterRound.Count;i++ )
+        {
+            ItemMiniGameCombatCharacterRoundCpt itemRound = mListCharacterRound[i];
+            if (itemRound.gameCharacterData == miniGameCharacter)
+            {
+                mListCharacterRound.Remove(itemRound);
+                Destroy(itemRound.gameObject);
+                return;
+            }
+        }
+    }
+
+    /// <summary>
     /// 开启命令UI
     /// </summary>
     public void OpenCommand()
     {
         objCommand.SetActive(true);
         objCommand.transform.localScale = new Vector3(1, 1, 1);
-        objCommand.transform.DOScale(new Vector3(0.2f, 0.2f, 0.2f), 0.5f).From().SetEase(Ease.OutBack);
+        objCommand.transform.DOScale(new Vector3(0f, 0f, 0f), 0.5f).From().SetEase(Ease.OutBack).SetDelay(0.2f);
+    }
+    public void OpenCommandFight()
+    {
+        objCommandFight.SetActive(true);
+        objCommandFight.transform.localScale = new Vector3(1, 1, 1);
+        objCommandFight.transform.DOScale(new Vector3(0f, 0f, 0f), 0.5f).From().SetEase(Ease.OutBack).SetDelay(0.2f);
     }
 
     public void CloseCommand()
@@ -147,7 +170,7 @@ public class UIMiniGameCombat : UIBaseMiniGame, CombatPowerView.ICallBack
         if (mCallBack != null)
             mCallBack.CommandFight(0);
         objCommand.SetActive(false);
-        objCommandFight.SetActive(true);
+        OpenCommandFight();
     }
     private void CommandFightForChange()
     {
@@ -164,8 +187,8 @@ public class UIMiniGameCombat : UIBaseMiniGame, CombatPowerView.ICallBack
     {
         if (mCallBack != null)
             mCallBack.CommandFight(3);
-        objCommand.SetActive(true);
         objCommandFight.SetActive(false);
+        OpenCommand();
     }
 
     /// <summary>
@@ -202,10 +225,10 @@ public class UIMiniGameCombat : UIBaseMiniGame, CombatPowerView.ICallBack
     }
 
     /// <summary>
-    /// 设置角色开始新的回合计时
+    /// 初始化角色回合
     /// </summary>
     /// <param name="gameCharacterData"></param>
-    public void StartNextRoundForCharacter(MiniGameCharacterBean gameCharacterData)
+    public void InitCharacterRound(MiniGameCharacterBean gameCharacterData)
     {
         for (int i = 0; i < mListCharacterRound.Count; i++)
         {

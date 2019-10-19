@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using UnityEditor;
 using UnityEngine.UI;
+using DG.Tweening;
 public class ItemMiniGameCombatCharacterInfoCpt : ItemGameBaseCpt
 {
     public CharacterUICpt characterUI;
@@ -8,13 +9,33 @@ public class ItemMiniGameCombatCharacterInfoCpt : ItemGameBaseCpt
     public Text tvLife;
     public Text tvForce;
     public Slider sliderLife;
+
+    public GameObject objDead;
+    public Image ivDead;
+    public Text tvDead;
+
     public MiniGameCharacterBean gameCharacterData;
+    
 
     private void Update()
     {
         if (gameCharacterData != null)
         {
-            SetLife(gameCharacterData.characterCurrentLife, gameCharacterData.characterMaxLife);
+            if (gameCharacterData.characterCurrentLife > 0)
+                SetLife(gameCharacterData.characterCurrentLife, gameCharacterData.characterMaxLife);
+            else
+                SetDead();
+        }
+    }
+
+    public void SetDead()
+    {
+        if (!objDead.activeSelf)
+        {
+            objDead.SetActive(true);
+            ivDead.DOFade(0,1).From();
+            tvDead.transform.DOScale(new Vector3(1.5f, 1.5f, 1.5f), 1).From();
+            tvDead.transform.DOLocalRotate(new Vector3(0,0,-45),1).From();
         }
     }
 

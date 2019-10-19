@@ -74,7 +74,14 @@ public class CharacterExpressionCpt : BaseMonoBehaviour
         spExpression.gameObject.SetActive(true);
         spExpression.transform.DOScale(new Vector3(0, 0, 0), 0.5f).From().SetEase(Ease.OutBack).OnComplete(delegate ()
         {
-            StartCoroutine(TimeDes(desTime));
+            if (desTime == -1)
+            {
+
+            }
+            else
+            {
+                StartCoroutine(TimeDes(desTime));
+            }
         });
     }
 

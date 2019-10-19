@@ -32,6 +32,17 @@ public class MiniGameCombatBuilder : BaseMonoBehaviour
     {
         return listEnemyCharacter;
     }
+    public List<NpcAIMiniGameCombatCpt> GetCharacter(int type)
+    {
+        if (type == 1)
+        {
+            return listOurCharacter;
+        }
+        else
+        {
+            return listEnemyCharacter;
+        }
+    }
 
     /// <summary>
     /// 创建所有角色
