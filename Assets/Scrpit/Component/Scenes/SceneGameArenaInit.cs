@@ -18,6 +18,7 @@ public class SceneGameArenaInit : BaseSceneInit, IBaseObserver
         base.Start();
         InitSceneData();
         barrageHandler.AddObserver(this);
+        combatHandler.AddObserver(this);
     }
 
     public void InitSceneData()
@@ -67,6 +68,10 @@ public class SceneGameArenaInit : BaseSceneInit, IBaseObserver
         listEnemyData.Add(npcInfoManager.GetCharacterDataById(100002));
         listEnemyData.Add(npcInfoManager.GetCharacterDataById(100003));
         arenaPrepareData.gameCombatData.InitData(gameItemsManager, listOurData, listEnemyData);
+        arenaPrepareData.gameCombatData.AddRewardItem(100001, 1);
+        arenaPrepareData.gameCombatData.AddRewardItem(100001, 2);
+        arenaPrepareData.gameCombatData.AddRewardItem(200001, 3);
+        arenaPrepareData.gameCombatData.AddRewardItem(1100006, 3);
 
         if (arenaPrepareData == null)
             return;
@@ -119,7 +124,7 @@ public class SceneGameArenaInit : BaseSceneInit, IBaseObserver
     /// <param name="gameCombatData"></param>
     public void InitGameCombat(MiniGameCombatBean gameCombatData)
     {
-        combatHandler.InitData(gameCombatData);
+        combatHandler.InitGame(gameCombatData);
     }
 
     #region 通知回调
@@ -127,14 +132,14 @@ public class SceneGameArenaInit : BaseSceneInit, IBaseObserver
     {
         switch (type)
         {
-            case (int)BaseMiniGameHandler.MiniGameStatusEnum.Gameing:
+            case (int)BaseMiniGameHandler<BaseMiniGameBuilder, MiniGameBaseBean>.MiniGameStatusEnum.Gameing:
                 break;
-            case (int)BaseMiniGameHandler.MiniGameStatusEnum.GameEnd:
+            case (int)BaseMiniGameHandler<BaseMiniGameBuilder, MiniGameBaseBean>.MiniGameStatusEnum.GameEnd:
                 break;
-            case (int)BaseMiniGameHandler.MiniGameStatusEnum.GameClose:
+            case (int)BaseMiniGameHandler<BaseMiniGameBuilder, MiniGameBaseBean>.MiniGameStatusEnum.GameClose:
                 SceneUtil.SceneChange(GameCommonInfo.ScenesChangeData.beforeScene);
                 break;
-        }
+        }   
     }
     #endregion
 

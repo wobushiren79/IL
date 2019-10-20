@@ -3,7 +3,7 @@ using UnityEditor;
 using System;
 using System.Collections.Generic;
 
-public class MiniGameCombatBuilder : BaseMonoBehaviour
+public class MiniGameCombatBuilder : BaseMiniGameBuilder
 {
     public GameObject objPlayerContainer;
     public GameObject objPlayerModel;
@@ -105,5 +105,21 @@ public class MiniGameCombatBuilder : BaseMonoBehaviour
         NpcAIMiniGameCombatCpt npcCpt = objPlayer.GetComponent<NpcAIMiniGameCombatCpt>();
         npcCpt.SetData(miniGameCharacterData);
         return npcCpt;
+    }
+
+    /// <summary>
+    /// 删除所有角色
+    /// </summary>
+    public void DestroyAllCharacter()
+    {
+        CptUtil.RemoveChildsByActive(objPlayerContainer);
+        listOurCharacter.Clear();
+        listEnemyCharacter.Clear();
+    }
+
+    public override void DestroyAll()
+    {
+        base.DestroyAll();
+        DestroyAllCharacter();
     }
 }

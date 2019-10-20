@@ -149,14 +149,14 @@ public class NpcAIMiniGameCombatCpt : BaseNpcAI
         //如果是友方AI
         if (characterMiniGameData.characterType == 1)
         {
-            relativeOurList = gameCombatHandler.gameCombatBuilder.GetCharacter(1);
-            relativeEnemyList = gameCombatHandler.gameCombatBuilder.GetCharacter(0);
+            relativeOurList = gameCombatHandler.miniGameBuilder.GetCharacter(1);
+            relativeEnemyList = gameCombatHandler.miniGameBuilder.GetCharacter(0);
         }
         //如果是敌方AI
         else if (characterMiniGameData.characterType == 0)
         {
-            relativeOurList = gameCombatHandler.gameCombatBuilder.GetCharacter(0);
-            relativeEnemyList = gameCombatHandler.gameCombatBuilder.GetCharacter(1);
+            relativeOurList = gameCombatHandler.miniGameBuilder.GetCharacter(0);
+            relativeEnemyList = gameCombatHandler.miniGameBuilder.GetCharacter(1);
         }
         //如果友方人数大于两人，自己的血量是友方最低 并且低于0.3辣么就防御 
         if (relativeOurList.Count >= 2)

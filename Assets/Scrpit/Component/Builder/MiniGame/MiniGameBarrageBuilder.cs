@@ -2,7 +2,7 @@
 using UnityEditor;
 using System.Collections.Generic;
 
-public class MiniGameBarrageBuilder : BaseMonoBehaviour
+public class MiniGameBarrageBuilder : BaseMiniGameBuilder
 {
     //发射器容器
     public GameObject objEjectorContainer;
@@ -106,4 +106,13 @@ public class MiniGameBarrageBuilder : BaseMonoBehaviour
         listEjector.Clear();
     }
 
+    /// <summary>
+    /// 删除所有
+    /// </summary>
+    public override void DestroyAll()
+    {
+        base.DestroyAll();
+        DestoryPlayer();
+        DestoryEjector();
+    }
 }

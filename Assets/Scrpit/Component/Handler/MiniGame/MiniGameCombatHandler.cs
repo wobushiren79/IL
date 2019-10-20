@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using System;
 using System.Collections;
 
-public class MiniGameCombatHandler : BaseMiniGameHandler, UIMiniGameCountDown.ICallBack, UIMiniGameCombat.ICallBack
+public class MiniGameCombatHandler : BaseMiniGameHandler<MiniGameCombatBuilder, MiniGameCombatBean>, UIMiniGameCountDown.ICallBack, UIMiniGameCombat.ICallBack
 {
     public enum MiniGameCombatStatusEnum
     {
@@ -13,12 +13,7 @@ public class MiniGameCombatHandler : BaseMiniGameHandler, UIMiniGameCountDown.IC
         OurRound,//我方回合
         EnemyRound,//敌方回合
     }
-
     public GameItemsManager gameItemsManager;
-    //游戏数据
-    public MiniGameCombatBean gameCombatData;
-    //生成器
-    public MiniGameCombatBuilder gameCombatBuilder;
     //战斗状态
     private MiniGameCombatStatusEnum mMiniGameCombatStatus;
     //回合的行动角色数据
@@ -32,23 +27,39 @@ public class MiniGameCombatHandler : BaseMiniGameHandler, UIMiniGameCountDown.IC
     /// 初始化数据
     /// </summary>
     /// <param name="gameCombatData"></param>
-    public void InitData(MiniGameCombatBean gameCombatData)
+    public override void InitGame(MiniGameCombatBean gameCombatData)
     {
-        SetMiniGameStatus(MiniGameStatusEnum.GamePre);
+        base.InitGame(gameCombatData);
         if (gameCombatData == null)
         {
             LogUtil.Log("战斗游戏数据为NULL，无法初始化战斗游戏");
             return;
         }
         mTargetSelectedPosition = 0;
-        this.gameCombatData = gameCombatData;
         //创建NPC
-        gameCombatBuilder.CreateAllPlaer(gameCombatData.combatPosition, gameCombatData.listUserGameData, gameCombatData.listEnemyGameData);
+        miniGameBuilder.CreateAllPlaer(gameCombatData.combatPosition, gameCombatData.listUserGameData, gameCombatData.listEnemyGameData);
         //设置摄像机位置
         controlHandler.StartControl(ControlHandler.ControlEnum.MiniGameCombat);
         controlHandler.GetControl().SetCameraPosition(gameCombatData.combatPosition);
         //打开倒计时UI
         OpenCountDownUI(gameCombatData);
+    }
+
+    /// <summary>
+    /// 开始游戏
+    /// </summary>
+    public override void StartGame()
+    {
+        base.StartGame();
+    }
+
+    /// <summary>
+    /// 结束战斗
+    /// </summary>
+    /// <param name="isWinGame"></param>
+    public override void EndGame(bool isWinGame)
+    {
+        base.EndGame(isWinGame);
     }
 
     /// <summary>
@@ -93,7 +104,7 @@ public class MiniGameCombatHandler : BaseMiniGameHandler, UIMiniGameCountDown.IC
     /// <param name="gameCharacterData"></param>
     public NpcAIMiniGameCombatCpt GetCharacter(MiniGameCharacterBean gameCharacterData)
     {
-        List<NpcAIMiniGameCombatCpt> listCharacter = gameCombatBuilder.GetAllCharacter();
+        List<NpcAIMiniGameCombatCpt> listCharacter = miniGameBuilder.GetAllCharacter();
         for (int i = 0; i < listCharacter.Count; i++)
         {
             NpcAIMiniGameCombatCpt itemNpc = listCharacter[i];
@@ -131,14 +142,6 @@ public class MiniGameCombatHandler : BaseMiniGameHandler, UIMiniGameCountDown.IC
     }
 
     /// <summary>
-    /// 开始游戏
-    /// </summary>
-    public void StartGame()
-    {
-        SetMiniGameStatus(MiniGameStatusEnum.Gameing);
-    }
-
-    /// <summary>
     /// 开始下一个回合
     /// </summary>
     public void StartNextRound()
@@ -157,6 +160,51 @@ public class MiniGameCombatHandler : BaseMiniGameHandler, UIMiniGameCountDown.IC
 
         mRoundActionCharacter = null;
         mRoundTargetCharacter = null;
+    }
+
+    /// <summary>
+    /// 检测是否游戏结束
+    /// </summary>
+    /// <returns></returns>
+    public bool CheckIsGameOver(out bool isWinGame)
+    {
+        isWinGame = false;
+        List<NpcAIMiniGameCombatCpt> listOurNpc = miniGameBuilder.GetOurCharacter();
+        List<NpcAIMiniGameCombatCpt> listEnemyNpc = miniGameBuilder.GetEnemyCharacter();
+        bool isOurNpcAllDead = true;
+        bool isEnemyNpcAllDead = true;
+        foreach (NpcAIMiniGameCombatCpt itemNpc in listOurNpc)
+        {
+            if (itemNpc.characterMiniGameData.characterCurrentLife > 0)
+            {
+                isOurNpcAllDead = false;
+            }
+        }
+        foreach (NpcAIMiniGameCombatCpt itemNpc in listEnemyNpc)
+        {
+            if (itemNpc.characterMiniGameData.characterCurrentLife > 0)
+            {
+                isEnemyNpcAllDead = false;
+            }
+        }
+        if (isOurNpcAllDead)
+        {
+            isWinGame = false;
+        }
+        if (isEnemyNpcAllDead)
+        {
+            isWinGame = true;
+        }
+
+        //如果双方都没有全部死亡则游戏没有结束
+        if (!isOurNpcAllDead && !isEnemyNpcAllDead)
+        {
+            return false ;
+        }
+        else
+        {
+            return true;
+        }
     }
 
     /// <summary>
@@ -181,7 +229,7 @@ public class MiniGameCombatHandler : BaseMiniGameHandler, UIMiniGameCountDown.IC
         //打开游戏UI
         UIMiniGameCombat uiMiniGameCombat = (UIMiniGameCombat)uiGameManager.OpenUIAndCloseOtherByName(EnumUtil.GetEnumName(UIEnum.MiniGameCombat));
         uiMiniGameCombat.SetCallBack(this);
-        uiMiniGameCombat.SetData(gameCombatData);
+        uiMiniGameCombat.SetData(miniGameData);
         SetMiniGameCombatStatus(MiniGameCombatStatusEnum.Rounding);
         uiMiniGameCombat.StartRound();
         //开始游戏
@@ -228,7 +276,7 @@ public class MiniGameCombatHandler : BaseMiniGameHandler, UIMiniGameCountDown.IC
     {
         if (mRoundActionCharacter == null || mRoundActionCharacter.characterMiniGameData == null || mRoundActionCharacter.characterMiniGameData.characterType != 1)
             return;
-        List<NpcAIMiniGameCombatCpt> listEnemy = gameCombatBuilder.GetEnemyCharacter();
+        List<NpcAIMiniGameCombatCpt> listEnemy = miniGameBuilder.GetEnemyCharacter();
         switch (details)
         {
             //选择攻击
@@ -312,7 +360,7 @@ public class MiniGameCombatHandler : BaseMiniGameHandler, UIMiniGameCountDown.IC
             if (mRoundTargetCharacter.characterMiniGameData.combatIsDefend)
                 resultsForce = resultsForce / 2f;
             //计算伤害
-            int damage = (int)((resultsForce + 0.2f) * characterAttributes.force) * 2;
+            int damage = (int)((resultsForce + 0.2f) * characterAttributes.force) * 200;
             //角色伤害
             mRoundTargetCharacter.UnderAttack(resultsForce, damage);
             //如果角色阵亡
@@ -321,13 +369,18 @@ public class MiniGameCombatHandler : BaseMiniGameHandler, UIMiniGameCountDown.IC
                 //设置角色死亡
                 mRoundTargetCharacter.SetCharacterDead();
                 //移除这个角色
-                if (gameCombatBuilder.GetOurCharacter().Contains(mRoundTargetCharacter))
-                    gameCombatBuilder.GetOurCharacter().Remove(mRoundTargetCharacter);
-                if (gameCombatBuilder.GetEnemyCharacter().Contains(mRoundTargetCharacter))
-                    gameCombatBuilder.GetEnemyCharacter().Remove(mRoundTargetCharacter);
+                if (miniGameBuilder.GetOurCharacter().Contains(mRoundTargetCharacter))
+                    miniGameBuilder.GetOurCharacter().Remove(mRoundTargetCharacter);
+                if (miniGameBuilder.GetEnemyCharacter().Contains(mRoundTargetCharacter))
+                    miniGameBuilder.GetEnemyCharacter().Remove(mRoundTargetCharacter);
                 //ui回合移除该角色
                 UIMiniGameCombat uiMiniGameCombat = (UIMiniGameCombat)uiGameManager.GetOpenUI();
                 uiMiniGameCombat.RemoveCharacterRound(mRoundTargetCharacter.characterMiniGameData);
+                //检测是否游戏结束
+                bool isGameOver = CheckIsGameOver(out bool isWinGame);
+                if (isGameOver)
+                    //结束游戏
+                    EndGame(isWinGame);
             }
         }
         else

@@ -4,7 +4,6 @@ using System.Collections.Generic;
 
 public class CptUtil
 {
-
     /// <summary>
     /// 删除所有子物体
     /// </summary>
@@ -16,7 +15,17 @@ public class CptUtil
           GameObject.Destroy(tf.GetChild(i).gameObject);
         }
     }
-
+    /// <summary>
+    /// 删除所有子物体
+    /// </summary>
+    /// <param name="tf"></param>
+    public static void RemoveChild(GameObject obj)
+    {
+        for (int i = 0; i < obj.transform.childCount; i++)
+        {
+            GameObject.Destroy(obj.transform.GetChild(i).gameObject);
+        }
+    }
     /// <summary>
     /// 删除所有显示的子物体
     /// </summary>
@@ -28,6 +37,20 @@ public class CptUtil
             if (tf.GetChild(i).gameObject.activeSelf)
             {
                 GameObject.Destroy(tf.GetChild(i).gameObject);
+            }
+        }
+    }
+    /// <summary>
+    /// 删除所有显示的子物体
+    /// </summary>
+    /// <param name="tf"></param>
+    public static void RemoveChildsByActive(GameObject obj)
+    {
+        for (int i = 0; i < obj.transform.childCount; i++)
+        {
+            if (obj.transform.GetChild(i).gameObject.activeSelf)
+            {
+                GameObject.Destroy(obj.transform.GetChild(i).gameObject);
             }
         }
     }
