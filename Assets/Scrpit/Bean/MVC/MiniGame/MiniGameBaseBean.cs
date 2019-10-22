@@ -13,6 +13,7 @@ public class MiniGameBaseBean
     public float winLife;//生命值多少以上
     public int winSurvivalNumber;//生存角色个数
     public int winBringDownNumber;//打到角色个数
+    public int winScore;//胜利分数
 
     //游戏结果 0输 1赢
     public int gameResult;
@@ -50,6 +51,11 @@ public class MiniGameBaseBean
         {
             string winBringDownNumberStr = string.Format(GameCommonInfo.GetUITextById(214), winBringDownNumber+ "");
             listWinConditions.Add(winBringDownNumberStr);
+        }
+        if (winScore != 0)
+        {
+            string winScoreStr = string.Format(GameCommonInfo.GetUITextById(215), winScore + "");
+            listWinConditions.Add(winScoreStr);
         }
         return listWinConditions;
     }

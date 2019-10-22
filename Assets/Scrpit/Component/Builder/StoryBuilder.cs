@@ -3,7 +3,7 @@ using UnityEditor;
 using System.Collections;
 using System.Collections.Generic;
 
-public class StoryBuilder : BaseMonoBehaviour, StoryInfoManager.CallBack, UIGameText.ICallBack
+public class StoryBuilder : BaseMonoBehaviour, StoryInfoManager.CallBack
 {
     [Header("控件")]
     public GameObject objNpcModel;
@@ -13,19 +13,24 @@ public class StoryBuilder : BaseMonoBehaviour, StoryInfoManager.CallBack, UIGame
     public StoryInfoManager storyInfoManager;
     public NpcInfoManager npcInfoManager;
     public BaseUIManager uiManager;
+
+    public EventHandler eventHandler;
     public ControlHandler controlHandler;
 
+    //剧情
     public StoryInfoBean storyInfo;
+    //剧情详情
     public List<StoryInfoDetailsBean> listStoryDetails;
+    //剧情NPC列表
     public List<GameObject> listNpcObj;
 
-    public int storyOrder = 1;
+    //剧情点
+    private int mStoryOrder = 1;
 
     private void Awake()
     {
         listNpcObj = new List<GameObject>();
     }
-
 
     /// <summary>
     /// 创建故事
@@ -35,15 +40,6 @@ public class StoryBuilder : BaseMonoBehaviour, StoryInfoManager.CallBack, UIGame
     {
         this.storyInfo = storyInfo;
         storyInfoManager.GetStoryDetailsById(storyInfo.id, this);
-    }
-
-    public void GetStoryDetailsSuccess(List<StoryInfoDetailsBean> listData)
-    {
-        ClearStoryScene();
-        listStoryDetails = listData;
-        storyOrder = 1;
-        List<StoryInfoDetailsBean> listOrderData = GetStoryDetailsByOrder(storyOrder);
-        CreateStoryScene(listOrderData);
     }
 
     /// <summary>
@@ -100,7 +96,6 @@ public class StoryBuilder : BaseMonoBehaviour, StoryInfoManager.CallBack, UIGame
                     //进入对话
                     isNext = false;
                     UIGameText uiComponent = (UIGameText)uiManager.OpenUIAndCloseOtherByName(EnumUtil.GetEnumName(UIEnum.GameText));
-                    uiComponent.SetCallBack(this);
                     uiComponent.SetData(TextEnum.Story, itemData.text_mark_id);
                     break;
                 case 12:
@@ -111,13 +106,31 @@ public class StoryBuilder : BaseMonoBehaviour, StoryInfoManager.CallBack, UIGame
             }
         }
         if (isNext)
-            NextOrder();
+            NextStoryOrder();
+    }
+
+    /// <summary>
+    /// 下一个剧情点
+    /// </summary>
+    public void NextStoryOrder()
+    {
+        mStoryOrder++;
+        List<StoryInfoDetailsBean> listOrderData = GetStoryDetailsByOrder(mStoryOrder);
+        if (CheckUtil.ListIsNull(listOrderData))
+        {
+            //清理故事场景
+            ClearStoryScene();
+            //没有剧情。完结
+            eventHandler.SetEventStatus(EventHandler.EventStatusEnum.EventEnd);
+        }
+        else
+            CreateStoryScene(listOrderData);
     }
 
     public IEnumerator StoryAutoNext(float waitTime)
     {
         yield return new WaitForSeconds(waitTime);
-        NextOrder();
+        NextStoryOrder();
     }
 
     /// <summary>
@@ -162,8 +175,7 @@ public class StoryBuilder : BaseMonoBehaviour, StoryInfoManager.CallBack, UIGame
     /// <param name="itemData"></param>
     public void CreateNpc(StoryInfoDetailsBean itemData)
     {
-        GameObject objNpc = Instantiate(objNpcModel, transform);
-        objNpc.SetActive(true);
+        GameObject objNpc = Instantiate(transform.gameObject, objNpcModel);
         objNpc.transform.localPosition = new Vector3(itemData.npc_position_x, itemData.npc_position_y);
         listNpcObj.Add(objNpc);
         NpcAIStoryCpt aiNpc = objNpc.GetComponent<NpcAIStoryCpt>();
@@ -192,38 +204,15 @@ public class StoryBuilder : BaseMonoBehaviour, StoryInfoManager.CallBack, UIGame
         listNpcObj.Clear();
     }
 
-    /// <summary>
-    /// 下一个剧情点
-    /// </summary>
-    public void NextOrder()
+    #region  获取故事详情回调
+    public void GetStoryDetailsSuccess(List<StoryInfoDetailsBean> listData)
     {
-        storyOrder++;
-        List<StoryInfoDetailsBean> listOrderData = GetStoryDetailsByOrder(storyOrder);
-        if (CheckUtil.ListIsNull(listOrderData))
-        {
-            //没有剧情。完结
-            EventHandler.Instance.ChangeEventStatus(false);
-            //清理故事场景
-            ClearStoryScene();
-            //保存数据
-            if (gameDataManager != null && storyInfo != null)
-                gameDataManager.gameData.AddTraggeredEvent(storyInfo.id);
-            //打开主界面UI
-            uiManager.OpenUIAndCloseOtherByName(EnumUtil.GetEnumName(UIEnum.GameMain));
-        }
-        else
-            CreateStoryScene(listOrderData);
-    }
+        mStoryOrder = 1;
+        ClearStoryScene();
+        listStoryDetails = listData;
 
-    #region 文本结束回调
-    public void TextEnd()
-    {
-        NextOrder();
-    }
-
-    public void AddFavorability(long characterId, int favorability)
-    {
-
+        List<StoryInfoDetailsBean> listOrderData = GetStoryDetailsByOrder(mStoryOrder);
+        CreateStoryScene(listOrderData);
     }
     #endregion
 }

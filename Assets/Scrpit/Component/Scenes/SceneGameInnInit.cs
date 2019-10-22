@@ -7,7 +7,6 @@ using UnityEngine.SceneManagement;
 public class SceneGameInnInit : BaseSceneInit, IBaseObserver, DialogView.IDialogCallBack
 {
     public InnBuildManager innBuildManager;
-    public StoryInfoManager storyInfoManager;
 
     public InnFloorBuilder innFloorBuilder;
     public InnWallBuilder innWallBuilder;

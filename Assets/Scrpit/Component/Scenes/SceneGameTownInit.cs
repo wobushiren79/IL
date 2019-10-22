@@ -5,7 +5,6 @@ using System;
 public class SceneGameTownInit : BaseSceneInit, IBaseObserver, DialogView.IDialogCallBack
 {
     public InnBuildManager innBuildManager;
-    public StoryInfoManager storyInfoManager;
     public SceneTownManager sceneTownManager;
 
     public NpcImportantBuilder npcImportantBuilder;

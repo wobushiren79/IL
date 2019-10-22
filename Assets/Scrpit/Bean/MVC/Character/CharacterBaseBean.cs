@@ -8,6 +8,8 @@ using System.Linq;
 public class CharacterBaseBean
 {
     public string characterId;
+    //称号
+    public string titleName;
     //名字
     public string name;
     //工作天数

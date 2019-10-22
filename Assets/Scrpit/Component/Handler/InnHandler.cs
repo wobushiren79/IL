@@ -18,6 +18,7 @@ public class InnHandler : BaseMonoBehaviour
     //数据管理
     public GameDataManager gameDataManager;
     public InnFoodManager innFoodManager;
+    public ToastView toastView;
     //NPC创建
     public NpcWorkerBuilder workerBuilder;
 

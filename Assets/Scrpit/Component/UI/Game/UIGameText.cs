@@ -51,16 +51,6 @@ public class UIGameText : BaseUIComponent, ITextInfoView
             btBookBack.onClick.AddListener(NextText);
     }
 
-    public override void CloseUI()
-    {
-        base.CloseUI();
-        //如果是调查或者对话 文本显示结束后 事件结束
-        if (mTextEnum == TextEnum.Look || mTextEnum == TextEnum.Talk)
-        {
-            EventHandler.Instance.ChangeEventStatus(false);
-        }
-    }
-
     private void Update()
     {
         if (this.currentTextData != null && this.currentTextData.type == 4)
@@ -129,7 +119,7 @@ public class UIGameText : BaseUIComponent, ITextInfoView
             }
             //回调
             if (mCallBack != null)
-                mCallBack.TextEnd();
+                mCallBack.UITextEnd();
         }
     }
 
@@ -257,7 +247,7 @@ public class UIGameText : BaseUIComponent, ITextInfoView
                 {
                     if (CheckUtil.StringIsNull(currentTextData.name))
                     {
-                        tvName.text = characterData.baseInfo.name;
+                        tvName.text = characterData.baseInfo.titleName + characterData.baseInfo.name;
                     }
                     else
                         tvName.text = currentTextData.name;
@@ -308,7 +298,7 @@ public class UIGameText : BaseUIComponent, ITextInfoView
             AddFavorability(currentTextData.user_id, currentTextData.add_favorability);
             //回调
             if (mCallBack != null)
-                mCallBack.AddFavorability(currentTextData.user_id, currentTextData.add_favorability);
+                mCallBack.UITextAddFavorability(currentTextData.user_id, currentTextData.add_favorability);
         }
     }
 
@@ -393,8 +383,8 @@ public class UIGameText : BaseUIComponent, ITextInfoView
 
     public interface ICallBack
     {
-        void TextEnd();
+        void UITextEnd();
 
-        void AddFavorability(long characterId,int favorability);
+        void UITextAddFavorability(long characterId,int favorability);
     }
 }

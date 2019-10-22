@@ -32,6 +32,7 @@ public class UIGameManager : BaseUIManager
     public InnHandler innHandler;
     public GameTimeHandler gameTimeHandler;
     public ControlHandler controlHandler;
+    public EventHandler eventHandler;
 
     [Header("建造")]
     public NpcCustomerBuilder npcCustomerBuilder;

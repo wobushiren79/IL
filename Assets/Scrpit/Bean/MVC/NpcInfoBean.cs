@@ -23,6 +23,7 @@ public class NpcInfoBean : BaseBean
     public string mouth_id;
     public string mouth_color;
 
+    public string title_name;//称号
     public string name;//npc名字
 
     public float position_x;
@@ -50,6 +51,7 @@ public class NpcInfoBean : BaseBean
         CharacterBean characterData = new CharacterBean();
 
         characterData.baseInfo.characterId = npcInfo.id + "";
+        characterData.baseInfo.titleName = npcInfo.title_name;
         characterData.baseInfo.name = npcInfo.name;
 
         characterData.body = new CharacterBodyBean();

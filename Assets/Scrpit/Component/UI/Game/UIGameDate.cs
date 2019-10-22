@@ -100,12 +100,12 @@ public class UIGameDate : BaseUIComponent
         GameTimeHandler gameTimeHandler = GetUIMananger<UIGameManager>().gameTimeHandler;
         ControlHandler controlHandler = GetUIMananger<UIGameManager>().controlHandler;
         NpcCustomerBuilder npcCustomerBuilder = GetUIMananger<UIGameManager>().npcCustomerBuilder;
-
+        EventHandler eventHandler = GetUIMananger<UIGameManager>().eventHandler;
         gameTimeHandler.dayStauts = GameTimeHandler.DayEnum.Rest;
         gameTimeHandler.SetTimeStatus(false);
 
         //没有触发事件
-        if (!EventHandler.Instance.EventTriggerForStory())
+        if (!eventHandler.EventTriggerForStory())
         {
             uiManager.OpenUIAndCloseOtherByName(EnumUtil.GetEnumName(UIEnum.GameMain));
             controlHandler.StartControl(ControlHandler.ControlEnum.Normal);

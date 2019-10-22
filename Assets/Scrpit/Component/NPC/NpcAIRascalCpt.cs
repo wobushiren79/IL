@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Collections;
 using DG.Tweening;
 
-public class NpcAIRascalCpt : BaseNpcAI, ITextInfoView, UIGameText.ICallBack
+public class NpcAIRascalCpt : BaseNpcAI, ITextInfoView, IBaseObserver
 {
     public enum RascalIntentEnum
     {
@@ -13,7 +13,7 @@ public class NpcAIRascalCpt : BaseNpcAI, ITextInfoView, UIGameText.ICallBack
         WaitingForReply = 2,//等待回复
         MakeTrouble = 3,//闹事
         Fighting = 4,//打架中
-        ContinueMakeTrouble=5,//继续闹事
+        ContinueMakeTrouble = 5,//继续闹事
         Leave = 10,//离开
     }
 
@@ -34,7 +34,6 @@ public class NpcAIRascalCpt : BaseNpcAI, ITextInfoView, UIGameText.ICallBack
     public InnHandler innHandler;
     //客栈区域数据管理
     public SceneInnManager sceneInnManager;
-    private TextInfoController mTextInfoController;
 
     //想要说的对话
     public List<TextInfoBean> listTextInfoBean;
@@ -48,9 +47,13 @@ public class NpcAIRascalCpt : BaseNpcAI, ITextInfoView, UIGameText.ICallBack
     //制造麻烦的时间
     public float timeMakeTrouble = 60;
 
+
+    private TextInfoController mTextInfoController;
+    private EventHandler mEventHandler;
     private void Start()
     {
         mTextInfoController = new TextInfoController(this, this);
+        mEventHandler = FindObjectOfType<EventHandler>();
     }
 
     /// <summary>
@@ -251,7 +254,7 @@ public class NpcAIRascalCpt : BaseNpcAI, ITextInfoView, UIGameText.ICallBack
     /// <returns></returns>
     public IEnumerator StartMakeTrouble()
     {
-        while (rascalIntent == RascalIntentEnum.MakeTrouble|| rascalIntent == RascalIntentEnum.ContinueMakeTrouble)
+        while (rascalIntent == RascalIntentEnum.MakeTrouble || rascalIntent == RascalIntentEnum.ContinueMakeTrouble)
         {
             movePosition = innHandler.GetRandomInnPositon();
             characterMoveCpt.SetDestination(movePosition);
@@ -260,8 +263,8 @@ public class NpcAIRascalCpt : BaseNpcAI, ITextInfoView, UIGameText.ICallBack
             characterShoutCpt.Shout(GameCommonInfo.GetUITextById(shoutId));
             yield return new WaitForSeconds(5);
             //时间到了就离开
-            timeMakeTrouble-=5;
-            if (timeMakeTrouble<=0)
+            timeMakeTrouble -= 5;
+            if (timeMakeTrouble <= 0)
             {
                 SetIntent(RascalIntentEnum.Leave);
             }
@@ -283,7 +286,8 @@ public class NpcAIRascalCpt : BaseNpcAI, ITextInfoView, UIGameText.ICallBack
             return;
         }
         TextInfoBean textInfo = RandomUtil.GetRandomDataByList(listTextInfoBean);
-        EventHandler.Instance.EventTriggerForTalk(textInfo.mark_id, this);
+        mEventHandler.EventTriggerForTalk(textInfo.mark_id);
+        mEventHandler.AddObserver(this);
     }
 
     public void GetTextInfoForStorySuccess(List<TextInfoBean> listData)
@@ -297,7 +301,7 @@ public class NpcAIRascalCpt : BaseNpcAI, ITextInfoView, UIGameText.ICallBack
     }
     #endregion
 
-    #region
+    #region 事件通知
     public void TextEnd()
     {
         if (addFavorability >= 0)
@@ -313,6 +317,17 @@ public class NpcAIRascalCpt : BaseNpcAI, ITextInfoView, UIGameText.ICallBack
     public void AddFavorability(long characterId, int favorability)
     {
         addFavorability += favorability;
+    }
+
+    public void ObserbableUpdate<T>(T observable, int type, params object[] obj) where T : Object
+    {
+        if (observable == mEventHandler)
+        {
+            if (type == (int)EventHandler.NotifyEventTypeEnum.TalkForAddFavorability)
+            {
+                addFavorability += (int)obj[1];
+            }
+        }
     }
     #endregion
 

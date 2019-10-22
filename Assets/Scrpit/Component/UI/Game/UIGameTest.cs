@@ -31,7 +31,8 @@ public class UIGameTest : BaseUIComponent
     {
         if (long.TryParse(etStoryId.text,out long storyId))
         {
-            EventHandler.Instance.EventTriggerForStory(storyId);
+            EventHandler eventHandler= GetUIMananger<UIGameManager>().eventHandler;
+            eventHandler.EventTriggerForStory(storyId);
         } 
     }
 

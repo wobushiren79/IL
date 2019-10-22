@@ -5,7 +5,7 @@ using System;
 [Serializable]
 public class StoryInfoBean : BaseBean
 {
-    //事件发生场景 1客栈 2城镇
+    //事件发生场景 1客栈 2城镇 3竞技场
     public int story_scene;
     //事件发生位置
     public float position_x;

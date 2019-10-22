@@ -11,4 +11,6 @@ public class ArenaPrepareBean
     public MiniGameBarrageBean gameBarrageData;
     //战斗游戏数据
     public MiniGameCombatBean gameCombatData;
+    //烹饪游戏数据
+    public MiniGameCookingBean gameCookingData;
 }
