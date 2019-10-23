@@ -9,6 +9,7 @@ public class EventHandler : BaseHandler, UIGameText.ICallBack
         Talk,//对话事件
         Look,//调查事件
         Story,//故事事件
+        StoryForMiniGameCooking//故事烹饪游戏
     }
 
     public enum EventStatusEnum
@@ -79,11 +80,10 @@ public class EventHandler : BaseHandler, UIGameText.ICallBack
             controlHandler.StartControl(ControlHandler.ControlEnum.Story);
         uiManager.CloseAllUI();
         //设置文本的回调
-        UIGameText uiGameText=(UIGameText)uiManager.GetUIByName(EnumUtil.GetEnumName(UIEnum.GameText));
+        UIGameText uiGameText = (UIGameText)uiManager.GetUIByName(EnumUtil.GetEnumName(UIEnum.GameText));
         uiGameText.SetCallBack(this);
         storyBuilder.BuildStory(storyInfo);
     }
-
     /// <summary>
     /// 根据ID触发故事
     /// </summary>
@@ -96,7 +96,6 @@ public class EventHandler : BaseHandler, UIGameText.ICallBack
         if (storyInfo != null)
             EventTriggerForStory(storyInfo);
     }
-
     /// <summary>
     /// 检测故事 自动触发剧情
     /// </summary>
@@ -112,6 +111,33 @@ public class EventHandler : BaseHandler, UIGameText.ICallBack
         }
         else
             return false;
+    }
+
+    /// <summary>
+    /// 烹饪游戏剧情触发
+    /// </summary>
+    /// <param name="id"></param>
+    /// <param name="UserData"></param>
+    /// <param name="listEnemyData"></param>
+    /// <param name="listAuditerData"></param>
+    public void EventTriggerForStoryCooking(long id, CharacterBean UserData, List<CharacterBean> listEnemyData, List<CharacterBean> listAuditerData)
+    {
+        if (storyInfoManager == null)
+            return;
+        StoryInfoBean storyInfo = storyInfoManager.GetStoryInfoDataById(id);
+        if (storyInfo == null)
+            return;
+        this.mStoryInfo = storyInfo;
+        SetEventStatus(EventStatusEnum.EventIng);
+        SetEventType(EventTypeEnum.StoryForMiniGameCooking);
+        //控制模式修改
+        if (controlHandler != null)
+            controlHandler.StartControl(ControlHandler.ControlEnum.MiniGameCooking);
+        uiManager.CloseAllUI();
+        //设置文本的回调
+        UIGameText uiGameText = (UIGameText)uiManager.GetUIByName(EnumUtil.GetEnumName(UIEnum.GameText));
+        uiGameText.SetCallBack(this);
+        storyBuilder.BuildStory(storyInfo);
     }
 
     /// <summary>
@@ -159,7 +185,7 @@ public class EventHandler : BaseHandler, UIGameText.ICallBack
     /// <param name="eventType"></param>
     public void SetEventType(EventTypeEnum eventType)
     {
-        this.mEventType=eventType;
+        this.mEventType = eventType;
     }
 
     /// <summary>

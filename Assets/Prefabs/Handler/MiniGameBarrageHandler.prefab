@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 5358693864847973551}
   - component: {fileID: 5358693864847973550}
   m_Layer: 0
-  m_Name: BarrageHandler
+  m_Name: MiniGameBarrageHandler
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -44,13 +44,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   uiGameManager: {fileID: 0}
-  miniGameBarrageBuilder: {fileID: 0}
-  gameBarrageData:
+  controlHandler: {fileID: 0}
+  miniGameBuilder: {fileID: 0}
+  miniGameData:
     gameType: 1
     gameReason: 0
     gameLevel: 0
     winSurvivalTime: 0
     winLife: 0
+    winSurvivalNumber: 0
+    winBringDownNumber: 0
+    winScore: 0
     gameResult: 0
     launchInterval: 0
     launchTypes: 
@@ -58,4 +62,3 @@ MonoBehaviour:
     listEjectorPosition: []
     playerNumber: 1
     currentTime: 0
-  isGamePlay: 0

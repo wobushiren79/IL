@@ -49,7 +49,7 @@ public class MiniGameCombatBuilder : BaseMiniGameBuilder
     /// </summary>
     /// <param name="listUserGameData"></param>
     /// <param name="listEnemyGameData"></param>
-    public void CreateAllPlaer(Vector3 combatPosition, List<MiniGameCharacterBean> listUserGameData, List<MiniGameCharacterBean> listEnemyGameData)
+    public void CreateAllCharacter(Vector3 combatPosition, List<MiniGameCharacterBean> listUserGameData, List<MiniGameCharacterBean> listEnemyGameData)
     {
         CreateOurCharacter(combatPosition, listUserGameData);
         CreateEnemyCharacter(combatPosition, listEnemyGameData);

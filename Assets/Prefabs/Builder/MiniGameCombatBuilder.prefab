@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 7873284715322261454}
   - component: {fileID: 7873284715322261455}
   m_Layer: 0
-  m_Name: CombatBuilder
+  m_Name: MiniGameCombatBuilder
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -55,11 +55,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 7873284715322261454}
     m_Modifications:
-    - target: {fileID: 7110065966612563045, guid: e24fe2c4fb859a342ae0ab31215bdd26,
-        type: 3}
-      propertyPath: m_Name
-      value: CharacterForMiniGameCombat
-      objectReference: {fileID: 0}
     - target: {fileID: 8937234797044043919, guid: e24fe2c4fb859a342ae0ab31215bdd26,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -114,6 +109,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7110065966612563045, guid: e24fe2c4fb859a342ae0ab31215bdd26,
+        type: 3}
+      propertyPath: m_Name
+      value: CharacterForMiniGameCombat
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e24fe2c4fb859a342ae0ab31215bdd26, type: 3}

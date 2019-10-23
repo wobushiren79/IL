@@ -9,9 +9,11 @@ public class MiniGameBarrageBean : MiniGameBaseBean
     //发射间隔
     public float launchInterval;
     //发射器发射类型
-    public BarrageEjectorCpt.LaunchTypeEnum[] launchTypes;
+    public MiniGameBarrageEjectorCpt.LaunchTypeEnum[] launchTypes;
     //发射速度
     public float launchSpeed = 10;
+    //用户起始位置
+    public Vector2 userStartPosition;
     //发射台位置
     public List<Vector3> listEjectorPosition;
     //玩家数量

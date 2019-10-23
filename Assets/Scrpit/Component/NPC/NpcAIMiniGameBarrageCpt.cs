@@ -70,13 +70,13 @@ public class NpcAIMiniGameBarrageCpt : BaseNpcAI, SightForMiniGameBarrageCpt.ICa
     }
 
     #region 视线回调
-    public void SeeBullet(List<BarrageBulletCpt> barrageBulletList)
+    public void SeeBullet(List<MiniGameBarrageBulletCpt> barrageBulletList)
     {
         float distanceTemp = 0;
         Rigidbody2D rbNear = null;
         for (int i = 0; i < barrageBulletList.Count; i++)
         {
-            BarrageBulletCpt itemBullet = barrageBulletList[i];
+            MiniGameBarrageBulletCpt itemBullet = barrageBulletList[i];
             Rigidbody2D rbBullet = itemBullet.GetComponent<Rigidbody2D>();
             //获取最近的子弹
             float distanceItem = Vector2.Distance(rbBullet.position, transform.position);

@@ -8,7 +8,7 @@ public class SightForMiniGameBarrageCpt : BaseMonoBehaviour
     private ICallBack callBack;
 
     //视线内的所有石头
-    public List<BarrageBulletCpt> listSightBullet = new List<BarrageBulletCpt>();
+    public List<MiniGameBarrageBulletCpt> listSightBullet = new List<MiniGameBarrageBulletCpt>();
 
     private void Start()
     {
@@ -39,10 +39,10 @@ public class SightForMiniGameBarrageCpt : BaseMonoBehaviour
         {
             yield return new WaitForSeconds(0.1f);
             Collider2D[] colliders = Physics2D.OverlapCircleAll(transform.position, 2f);
-            List<BarrageBulletCpt> barrageBulletList = new List<BarrageBulletCpt>();
+            List<MiniGameBarrageBulletCpt> barrageBulletList = new List<MiniGameBarrageBulletCpt>();
             foreach (Collider2D itemCollider in colliders)
             {
-                BarrageBulletCpt itemBullet = itemCollider.GetComponent<BarrageBulletCpt>();
+                MiniGameBarrageBulletCpt itemBullet = itemCollider.GetComponent<MiniGameBarrageBulletCpt>();
                 if (itemBullet)
                 {
                     barrageBulletList.Add(itemBullet);
@@ -59,6 +59,6 @@ public class SightForMiniGameBarrageCpt : BaseMonoBehaviour
         /// 看见子弹
         /// </summary>
         /// <param name="barrageBullet"></param>
-        void SeeBullet(List<BarrageBulletCpt> barrageBulletList);
+        void SeeBullet(List<MiniGameBarrageBulletCpt> barrageBulletList);
     }
 }

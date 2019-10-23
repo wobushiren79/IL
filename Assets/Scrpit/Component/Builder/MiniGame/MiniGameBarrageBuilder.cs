@@ -15,7 +15,7 @@ public class MiniGameBarrageBuilder : BaseMiniGameBuilder
     public GameObject objPlayerModel;
 
     //所有的发射器
-    public List<BarrageEjectorCpt> listEjector = new List<BarrageEjectorCpt>();
+    public List<MiniGameBarrageEjectorCpt> listEjector = new List<MiniGameBarrageEjectorCpt>();
     //所有的游玩对象
     public List<NpcAIMiniGameBarrageCpt> listGamePlayer = new List<NpcAIMiniGameBarrageCpt>();
 
@@ -25,7 +25,7 @@ public class MiniGameBarrageBuilder : BaseMiniGameBuilder
     /// 获取所有的发射器
     /// </summary>
     /// <returns></returns>
-    public List<BarrageEjectorCpt> GetEjector()
+    public List<MiniGameBarrageEjectorCpt> GetEjector()
     {
         return listEjector;
     }
@@ -44,22 +44,13 @@ public class MiniGameBarrageBuilder : BaseMiniGameBuilder
     /// </summary>
     /// <param name="userData"></param>
     /// <param name="listEnemy"></param>
-    public void CreateAllPlayer(List<MiniGameCharacterBean> listUserData, List<MiniGameCharacterBean> listEnemyData)
+    public void CreateAllCharacter(List<MiniGameCharacterBean> listUserData, Vector3 userStartPosition)
     {
         //创建操作角色
         foreach (MiniGameCharacterBean itemUserData in listUserData)
         {
-            NpcAIMiniGameBarrageCpt npcCpt = CreatePlayer(itemUserData, new Vector3(0, 6, 0));
+            NpcAIMiniGameBarrageCpt npcCpt = CreatePlayer(itemUserData, userStartPosition);
             controlForMiniGameBarrageCpt.SetCameraFollowObj(npcCpt);
-        }
-        //创建敌人
-        if (CheckUtil.ListIsNull(listEnemyData))
-        {
-            return;
-        }
-        foreach (MiniGameCharacterBean itemEnemyData in listEnemyData)
-        {
-            NpcAIMiniGameBarrageCpt npcCpt = CreatePlayer(itemEnemyData, new Vector3(0, 6, 0));
         }
     }
 
@@ -67,11 +58,11 @@ public class MiniGameBarrageBuilder : BaseMiniGameBuilder
     /// 创建一个发射器
     /// </summary>
     /// <param name="position"></param>
-    public BarrageEjectorCpt CreateEjector(Vector3 ejectorPosition)
+    public MiniGameBarrageEjectorCpt CreateEjector(Vector3 ejectorPosition)
     {
         GameObject objEjector = Instantiate(objEjectorContainer, objEjectorModel);
         objEjector.transform.position = ejectorPosition;
-        BarrageEjectorCpt ejectorCpt = objEjector.GetComponent<BarrageEjectorCpt>();
+        MiniGameBarrageEjectorCpt ejectorCpt = objEjector.GetComponent<MiniGameBarrageEjectorCpt>();
         listEjector.Add(ejectorCpt);
         return ejectorCpt;
     }

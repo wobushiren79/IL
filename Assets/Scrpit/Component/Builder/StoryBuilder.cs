@@ -26,9 +26,12 @@ public class StoryBuilder : BaseMonoBehaviour, StoryInfoManager.CallBack
 
     //剧情点
     private int mStoryOrder = 1;
+    //迷你游戏数据
+    private MiniGameCookingBean mGameCookingData;
 
     private void Awake()
     {
+        listStoryDetails = new List<StoryInfoDetailsBean>();
         listNpcObj = new List<GameObject>();
     }
 
@@ -40,6 +43,17 @@ public class StoryBuilder : BaseMonoBehaviour, StoryInfoManager.CallBack
     {
         this.storyInfo = storyInfo;
         storyInfoManager.GetStoryDetailsById(storyInfo.id, this);
+    }
+
+    /// <summary>
+    /// 创建迷你烹饪游戏的故事
+    /// </summary>
+    /// <param name="storyInfo"></param>
+    /// <param name="gameCookingData"></param>
+    public void BuildStoryForMiniGameCooking(StoryInfoBean storyInfo, MiniGameCookingBean gameCookingData)
+    {
+        mGameCookingData = gameCookingData;
+        BuildStory(storyInfo);
     }
 
     /// <summary>
@@ -187,10 +201,8 @@ public class StoryBuilder : BaseMonoBehaviour, StoryInfoManager.CallBack
         }
         else
             characterData = npcInfoManager.GetCharacterDataById(itemData.npc_id);
-
         //设置编号
         objNpc.name = itemData.npc_num + "";
-
         aiNpc.SetCharacterData(characterData);
     }
 
@@ -199,19 +211,34 @@ public class StoryBuilder : BaseMonoBehaviour, StoryInfoManager.CallBack
     /// </summary>
     public void ClearStoryScene()
     {
+        mGameCookingData = null;
         CptUtil.RemoveChildsByActive(transform);
         gameObject.transform.position = Vector3.zero;
         listNpcObj.Clear();
+        mStoryOrder = 1;
+    }
+
+    /// <summary>
+    /// 合并烹饪游戏数据
+    /// </summary>
+    /// <param name="listData"></param>
+    /// <param name="gameCookingData"></param>
+    private void MergeDataForGameCooking(List<StoryInfoDetailsBean> listData,MiniGameCookingBean gameCookingData)
+    {
+
     }
 
     #region  获取故事详情回调
     public void GetStoryDetailsSuccess(List<StoryInfoDetailsBean> listData)
     {
-        mStoryOrder = 1;
         ClearStoryScene();
         listStoryDetails = listData;
-
         List<StoryInfoDetailsBean> listOrderData = GetStoryDetailsByOrder(mStoryOrder);
+        //如果是迷你烹饪游戏的剧情 则需要合并一下数据
+        if (mGameCookingData!=null)
+        {
+            MergeDataForGameCooking(listOrderData, mGameCookingData);
+        }
         CreateStoryScene(listOrderData);
     }
     #endregion

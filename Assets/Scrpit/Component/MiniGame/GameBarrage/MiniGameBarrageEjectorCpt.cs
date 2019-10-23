@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using UnityEditor;
 
-public class BarrageEjectorCpt : BaseMonoBehaviour
+public class MiniGameBarrageEjectorCpt : BaseMonoBehaviour
 {
     /// <summary>
     /// 发射类型
@@ -100,7 +100,7 @@ public class BarrageEjectorCpt : BaseMonoBehaviour
         GameObject objBullet = Instantiate(objBulletModel, objBulletContainer.transform);
         objBullet.SetActive(true);
         objBullet.transform.position = objEjector.transform.position;
-        BarrageBulletCpt bulletCpt = objBullet.GetComponent<BarrageBulletCpt>();
+        MiniGameBarrageBulletCpt bulletCpt = objBullet.GetComponent<MiniGameBarrageBulletCpt>();
         //发射子弹
         bulletCpt.LaunchBullet(targetPositon, force);
     }

@@ -13,6 +13,7 @@ public class ControlHandler : BaseMonoBehaviour
         Story,//故事模式
         MiniGameBarrage,//弹幕小游戏操作
         MiniGameCombat,//战斗小游戏操作
+        MiniGameCooking,//烹饪小游戏操作
     }
 
     //镜头

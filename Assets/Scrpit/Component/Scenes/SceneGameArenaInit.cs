@@ -7,10 +7,16 @@ using System;
 
 public class SceneGameArenaInit : BaseSceneInit, IBaseObserver
 {
+    //场景数据管理
+    public SceneArenaManager sceneArenaManager;
+
     //弹幕游戏控制
     public MiniGameBarrageHandler barrageHandler;
     //战斗游戏控制
     public MiniGameCombatHandler combatHandler;
+    //烹饪游戏控制
+    public MiniGameCookingHandler cookingHandler;
+
     //地形控制
     public NavMeshSurface navMesh;
 
@@ -20,6 +26,7 @@ public class SceneGameArenaInit : BaseSceneInit, IBaseObserver
         InitSceneData();
         barrageHandler.AddObserver(this);
         combatHandler.AddObserver(this);
+        cookingHandler.AddObserver(this);
     }
 
     public void InitSceneData()
@@ -40,7 +47,32 @@ public class SceneGameArenaInit : BaseSceneInit, IBaseObserver
         arenaPrepareData.gameType = MiniGameEnum.Cooking;
         arenaPrepareData.gameCookingData = new MiniGameCookingBean();
         arenaPrepareData.gameCookingData.gameReason = MiniGameReasonEnum.Improve;
-
+        List<CharacterBean> listOurData = new List<CharacterBean>();
+        listOurData.Add(npcInfoManager.GetCharacterDataById(200001));
+        List<CharacterBean> listEnemyData = new List<CharacterBean>();
+        listEnemyData.Add(npcInfoManager.GetCharacterDataById(100001));
+        listEnemyData.Add(npcInfoManager.GetCharacterDataById(100002));
+        listEnemyData.Add(npcInfoManager.GetCharacterDataById(100003));
+        listEnemyData.Add(npcInfoManager.GetCharacterDataById(100002));
+        listEnemyData.Add(npcInfoManager.GetCharacterDataById(100003));
+        listEnemyData.Add(npcInfoManager.GetCharacterDataById(100002));
+        listEnemyData.Add(npcInfoManager.GetCharacterDataById(100003));
+        listEnemyData.Add(npcInfoManager.GetCharacterDataById(100003));
+        listEnemyData.Add(npcInfoManager.GetCharacterDataById(100002));
+        listEnemyData.Add(npcInfoManager.GetCharacterDataById(100003));
+        listEnemyData.Add(npcInfoManager.GetCharacterDataById(100003));
+        listEnemyData.Add(npcInfoManager.GetCharacterDataById(100003));
+        listEnemyData.Add(npcInfoManager.GetCharacterDataById(100003));
+        listEnemyData.Add(npcInfoManager.GetCharacterDataById(100003));
+        listEnemyData.Add(npcInfoManager.GetCharacterDataById(100003));
+        List<CharacterBean> listAuditerData = new List<CharacterBean>();
+        listAuditerData.Add(npcInfoManager.GetCharacterDataById(100001));
+        listAuditerData.Add(npcInfoManager.GetCharacterDataById(100002));
+        listAuditerData.Add(npcInfoManager.GetCharacterDataById(100003));
+        List<CharacterBean> listCompereData = new List<CharacterBean>();
+        listCompereData.Add(npcInfoManager.GetCharacterDataById(110003));
+        listCompereData.Add(npcInfoManager.GetCharacterDataById(110004));
+        arenaPrepareData.gameCookingData.InitData(gameItemsManager, listOurData, listEnemyData, listAuditerData, listCompereData);
 
         //arenaPrepareData.gameType = MiniGameEnum.Barrage;
         //arenaPrepareData.gameBarrageData = new MiniGameBarrageBean();
@@ -63,7 +95,6 @@ public class SceneGameArenaInit : BaseSceneInit, IBaseObserver
 
         //arenaPrepareData.gameType = MiniGameEnum.Combat;
         //arenaPrepareData.gameCombatData = new MiniGameCombatBean();
-        //arenaPrepareData.gameCombatData.combatPosition = Vector3.zero;
         //arenaPrepareData.gameCombatData.winBringDownNumber = 3;
         //arenaPrepareData.gameCombatData.winSurvivalNumber = 3;
         //List<CharacterBean> listOurData = new List<CharacterBean>();
@@ -109,7 +140,40 @@ public class SceneGameArenaInit : BaseSceneInit, IBaseObserver
         {
             //如果是晋升 
             case MiniGameReasonEnum.Improve:
-                //EventHandler.Instance.EventTriggerForStory();
+                //设置每个玩家的初始位置
+                sceneArenaManager.GetArenaForCookingPlayerPositionBy2(out Vector3 playerStartPosition);
+                //总共玩家数量为单数 则初始点为playerStartPosition，如果是双数则从playerStartPosition.x -0.5f开始
+                float positionX = playerStartPosition.x + gameCookingData.listEnemyGameData.Count / 2f;
+                float positionY = playerStartPosition.y;
+                //随机站位
+                int userRandomPositionNumber = UnityEngine.Random.Range(0, gameCookingData.listEnemyGameData.Count + 1);
+                for (int i = 0; i < gameCookingData.listEnemyGameData.Count + 1; i++)
+                {
+                    if (i == userRandomPositionNumber)
+                    {
+                        gameCookingData.userStartPosition = new Vector3(positionX, positionY);
+                    }
+                    else
+                    {
+                        gameCookingData.listEnemyStartPosition.Add(new Vector3(positionX, positionY));
+                    }
+                    positionX -= 1;
+                }
+
+                //设置评审员位置
+                sceneArenaManager.GetArenaForCookingAuditorPositionBy2(out Vector3 auditorStartPosition);
+                positionX = auditorStartPosition.x + ((gameCookingData.listAuditerGameData.Count - 1) / 2f);
+                positionY = auditorStartPosition.y;
+                for (int i = 0; i < gameCookingData.listAuditerGameData.Count; i++)
+                {
+                    gameCookingData.listAuditerStartPosition.Add(new Vector3(positionX, positionY));
+                    positionX -= 1;
+                }
+                //设置主持人位置
+                List<Vector3> listComperePosition = sceneArenaManager.GetArenaForCookingComperePositionBy2(gameCookingData.listCompereGameData.Count);
+                gameCookingData.listCompereStartPosition = listComperePosition;
+                //准备游戏
+                cookingHandler.InitGame(gameCookingData);
                 break;
         }
     }
@@ -121,22 +185,21 @@ public class SceneGameArenaInit : BaseSceneInit, IBaseObserver
     public void InitGameBarrage(MiniGameBarrageBean gameBarrageData)
     {
         //添加竞技场发射台坐标
-        gameBarrageData.listEjectorPosition = new List<Vector3>();
         if (gameBarrageData.gameLevel <= 2)
         {
-            gameBarrageData.listEjectorPosition.Add(new Vector3(0, 0, 0));
+            gameBarrageData.listEjectorPosition = sceneArenaManager.GetArenaForBarrageEjectorBy1(1);
         }
         else if (gameBarrageData.gameLevel > 2 && gameBarrageData.gameLevel <= 4)
         {
-            gameBarrageData.listEjectorPosition.Add(new Vector3(2, 0, 0));
-            gameBarrageData.listEjectorPosition.Add(new Vector3(-2, 0, 0));
+            gameBarrageData.listEjectorPosition = sceneArenaManager.GetArenaForBarrageEjectorBy1(2);
         }
         else if (gameBarrageData.gameLevel > 4)
         {
-            gameBarrageData.listEjectorPosition.Add(new Vector3(0, 1, 0));
-            gameBarrageData.listEjectorPosition.Add(new Vector3(2, -1, 0));
-            gameBarrageData.listEjectorPosition.Add(new Vector3(-2, -1, 0));
+            gameBarrageData.listEjectorPosition = sceneArenaManager.GetArenaForBarrageEjectorBy1(3);
         }
+        //添加用户起始位置
+        sceneArenaManager.GetArenaForBarrageUserPositionBy1(out Vector3 userPosition);
+        gameBarrageData.userStartPosition = userPosition;
         //弹幕处理初始化
         barrageHandler.InitGame(gameBarrageData);
     }
@@ -147,6 +210,10 @@ public class SceneGameArenaInit : BaseSceneInit, IBaseObserver
     /// <param name="gameCombatData"></param>
     public void InitGameCombat(MiniGameCombatBean gameCombatData)
     {
+        //找到竞技场战斗的地点
+        sceneArenaManager.GetArenaForCombatBy1(out Vector3 combatPosition);
+        gameCombatData.combatPosition = combatPosition;
+        //初始化游戏
         combatHandler.InitGame(gameCombatData);
     }
 
@@ -162,7 +229,7 @@ public class SceneGameArenaInit : BaseSceneInit, IBaseObserver
             case (int)BaseMiniGameHandler<BaseMiniGameBuilder, MiniGameBaseBean>.MiniGameStatusEnum.GameClose:
                 SceneUtil.SceneChange(GameCommonInfo.ScenesChangeData.beforeScene);
                 break;
-        }   
+        }
     }
     #endregion
 

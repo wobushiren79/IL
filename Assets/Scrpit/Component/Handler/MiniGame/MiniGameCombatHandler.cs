@@ -37,7 +37,7 @@ public class MiniGameCombatHandler : BaseMiniGameHandler<MiniGameCombatBuilder, 
         }
         mTargetSelectedPosition = 0;
         //创建NPC
-        miniGameBuilder.CreateAllPlaer(gameCombatData.combatPosition, gameCombatData.listUserGameData, gameCombatData.listEnemyGameData);
+        miniGameBuilder.CreateAllCharacter(gameCombatData.combatPosition, gameCombatData.listUserGameData, gameCombatData.listEnemyGameData);
         //设置摄像机位置
         controlHandler.StartControl(ControlHandler.ControlEnum.MiniGameCombat);
         controlHandler.GetControl().SetCameraPosition(gameCombatData.combatPosition);

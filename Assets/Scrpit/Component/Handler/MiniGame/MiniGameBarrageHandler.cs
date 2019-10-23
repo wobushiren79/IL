@@ -24,7 +24,7 @@ public class MiniGameBarrageHandler : BaseMiniGameHandler<MiniGameBarrageBuilder
             return;
         }
         //创建所有玩家
-        miniGameBuilder.CreateAllPlayer(gameBarrageData.listUserGameData, gameBarrageData.listEnemyGameData);
+        miniGameBuilder.CreateAllCharacter(gameBarrageData.listUserGameData, gameBarrageData.userStartPosition);
         //创建发射器
         for (int i = 0; i < gameBarrageData.listEjectorPosition.Count; i++)
             miniGameBuilder.CreateEjector(gameBarrageData.listEjectorPosition[i]);
@@ -67,10 +67,10 @@ public class MiniGameBarrageHandler : BaseMiniGameHandler<MiniGameBarrageBuilder
         while (true)
         {
             //获取所有发射器
-            List<BarrageEjectorCpt> listEjector = miniGameBuilder.GetEjector();
+            List<MiniGameBarrageEjectorCpt> listEjector = miniGameBuilder.GetEjector();
             if (!CheckUtil.ListIsNull(listEjector))
             {
-                foreach (BarrageEjectorCpt itemEjector in listEjector)
+                foreach (MiniGameBarrageEjectorCpt itemEjector in listEjector)
                 {
                     //获取所有的目标
                     List<NpcAIMiniGameBarrageCpt> listPlayer = miniGameBuilder.GetPlayerList();
@@ -82,12 +82,12 @@ public class MiniGameBarrageHandler : BaseMiniGameHandler<MiniGameBarrageBuilder
                     //获取发射类型
                     if (CheckUtil.ArrayIsNull(miniGameData.launchTypes))
                     {
-                        miniGameData.launchTypes = new BarrageEjectorCpt.LaunchTypeEnum[]
+                        miniGameData.launchTypes = new MiniGameBarrageEjectorCpt.LaunchTypeEnum[]
                         {
-                             BarrageEjectorCpt.LaunchTypeEnum.Single
+                             MiniGameBarrageEjectorCpt.LaunchTypeEnum.Single
                         };
                     }
-                    BarrageEjectorCpt.LaunchTypeEnum launchType = RandomUtil.GetRandomDataByArray(miniGameData.launchTypes);
+                    MiniGameBarrageEjectorCpt.LaunchTypeEnum launchType = RandomUtil.GetRandomDataByArray(miniGameData.launchTypes);
 
 
                     itemEjector.StartLaunch(launchType, launchTarget, miniGameData.launchSpeed);

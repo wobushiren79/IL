@@ -288,7 +288,7 @@ public class ItemTownGuildImproveCharacterCpt : ItemGameBaseCpt, DialogView.IDia
                     winSurvivalTime = levelData.minigame_win_survivaltime,
                     launchInterval = levelData.barrage_launch_interval,
                     launchSpeed = levelData.barrage_launch_speed,
-                    launchTypes = StringUtil.SplitBySubstringForArrayEnum<BarrageEjectorCpt.LaunchTypeEnum>(levelData.barrage_launch_types, ',')
+                    launchTypes = StringUtil.SplitBySubstringForArrayEnum<MiniGameBarrageEjectorCpt.LaunchTypeEnum>(levelData.barrage_launch_types, ',')
                 };
                 GameCommonInfo.ArenaPrepareData.gameBarrageData.InitData(gameItemsManager, characterData);
                 break;

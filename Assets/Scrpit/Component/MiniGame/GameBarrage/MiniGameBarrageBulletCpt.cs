@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using UnityEditor;
 
-public class BarrageBulletCpt : BaseMonoBehaviour
+public class MiniGameBarrageBulletCpt : BaseMonoBehaviour
 {
     public Animator animBullet;
     public Rigidbody2D rbBullet;
@@ -15,7 +15,7 @@ public class BarrageBulletCpt : BaseMonoBehaviour
     {
         if (!mIsDestroy)
         {
-            BarrageWallCpt wallCpt = collision.GetComponent<BarrageWallCpt>();
+            MiniGameBarrageWallCpt wallCpt = collision.GetComponent<MiniGameBarrageWallCpt>();
             NpcAIMiniGameBarrageCpt npcCpt = collision.GetComponent<NpcAIMiniGameBarrageCpt>();
             if (wallCpt || npcCpt)
             {
