@@ -113,14 +113,13 @@ public class EventHandler : BaseHandler, UIGameText.ICallBack
             return false;
     }
 
+
     /// <summary>
     /// 烹饪游戏剧情触发
     /// </summary>
+    /// <param name="gameCookingData"></param>
     /// <param name="id"></param>
-    /// <param name="UserData"></param>
-    /// <param name="listEnemyData"></param>
-    /// <param name="listAuditerData"></param>
-    public void EventTriggerForStoryCooking(long id, CharacterBean UserData, List<CharacterBean> listEnemyData, List<CharacterBean> listAuditerData)
+    public void EventTriggerForStoryCooking( MiniGameCookingBean gameCookingData, long id)
     {
         if (storyInfoManager == null)
             return;

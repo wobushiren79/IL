@@ -13,6 +13,37 @@ public class MiniGameCookingBuilder : BaseMiniGameBuilder
     public List<NpcAIMiniGameCookingCpt> listCompereCharacter = new List<NpcAIMiniGameCookingCpt>();
 
     /// <summary>
+    /// 获取用户的角色
+    /// </summary>
+    /// <returns></returns>
+    public NpcAIMiniGameCookingCpt GetUserCharacter()
+    {
+        return userCharacter;
+    }
+
+    /// <summary>
+    /// 根据角色类型获取角色
+    /// </summary>
+    /// <param name="npcType"></param>
+    /// <returns></returns>
+    public List<NpcAIMiniGameCookingCpt> GetCharacterByType(NpcAIMiniGameCookingCpt.MiniGameCookingNpcType npcType)
+    {
+        switch (npcType)
+        {
+            case NpcAIMiniGameCookingCpt.MiniGameCookingNpcType.Player:
+                List<NpcAIMiniGameCookingCpt> listData = new List<NpcAIMiniGameCookingCpt>();
+                listData.Add(userCharacter);
+                listData.AddRange(listAuditerCharacter);
+                return listData;
+            case NpcAIMiniGameCookingCpt.MiniGameCookingNpcType.Auditer:
+                return listAuditerCharacter;
+            case NpcAIMiniGameCookingCpt.MiniGameCookingNpcType.Compere:
+                return listCompereCharacter;
+        }
+        return null;
+    }
+
+    /// <summary>
     /// 创建所有角色
     /// </summary>
     /// <param name="listUserData">玩家</param>
@@ -72,5 +103,17 @@ public class MiniGameCookingBuilder : BaseMiniGameBuilder
         npcCpt.SetData(characterGameData);
         npcCpt.OpenAI();
         return npcCpt;
+    }
+
+    /// <summary>
+    ///  设置主持人是否显示
+    /// </summary>
+    /// <param name="value"></param>
+    public void SetCompereCharacterActive(bool value)
+    {
+        foreach (NpcAIMiniGameCookingCpt itemCompere in  listCompereCharacter)
+        {
+            itemCompere.gameObject.SetActive(value);
+        }
     }
 }

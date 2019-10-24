@@ -247,7 +247,7 @@ public class UIGameText : BaseUIComponent, ITextInfoView
                 {
                     if (CheckUtil.StringIsNull(currentTextData.name))
                     {
-                        tvName.text = characterData.baseInfo.titleName + characterData.baseInfo.name;
+                        tvName.text = characterData.baseInfo.titleName +"-"+ characterData.baseInfo.name;
                     }
                     else
                         tvName.text = currentTextData.name;

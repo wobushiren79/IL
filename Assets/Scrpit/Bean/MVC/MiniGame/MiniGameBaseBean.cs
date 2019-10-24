@@ -17,6 +17,7 @@ public class MiniGameBaseBean
 
     //游戏结果 0输 1赢
     public int gameResult;
+
     //奖励道具
     public Dictionary<long, int> listRewardItem = new Dictionary<long, int>();
 

@@ -18,6 +18,11 @@ public class MiniGameCookingBean : MiniGameBaseBean
     //所有主持人起始位置
     public List<Vector3> listCompereStartPosition = new List<Vector3>();
 
+    //游戏开幕故事ID
+    public long storyGameOpenId;
+    //游戏审核故事ID
+    public long storyGameAuditId;
+
     public MiniGameCookingBean()
     {
         gameType = MiniGameEnum.Cooking;

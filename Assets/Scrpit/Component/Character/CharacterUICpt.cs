@@ -29,6 +29,13 @@ public class CharacterUICpt : BaseMonoBehaviour
     public CharacterDressManager characterDressManager;
     public GameItemsManager gameItemsManager;
 
+    public void Awake()
+    {
+        characterBodyManager = FindObjectOfType<CharacterBodyManager>();
+        characterDressManager = FindObjectOfType<CharacterDressManager>();
+        gameItemsManager = FindObjectOfType<GameItemsManager>();
+    }
+
     public void SetCharacterData(CharacterBodyBean characterBodyData, CharacterEquipBean characterEquipData)
     {
         if (characterBodyData != null)
@@ -46,7 +53,6 @@ public class CharacterUICpt : BaseMonoBehaviour
         SetClothes(characterEquipData.clothesId);
         SetShoes(characterEquipData.shoesId);
         SetHat(characterEquipData.hatId, characterBodyData.hairColor.GetColor());
-  
     }
 
     /// <summary>

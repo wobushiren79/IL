@@ -70,8 +70,8 @@ public class SceneGameArenaInit : BaseSceneInit, IBaseObserver
         listAuditerData.Add(npcInfoManager.GetCharacterDataById(100002));
         listAuditerData.Add(npcInfoManager.GetCharacterDataById(100003));
         List<CharacterBean> listCompereData = new List<CharacterBean>();
-        listCompereData.Add(npcInfoManager.GetCharacterDataById(110003));
-        listCompereData.Add(npcInfoManager.GetCharacterDataById(110004));
+        listCompereData.Add(npcInfoManager.GetCharacterDataById(110005));
+        listCompereData.Add(npcInfoManager.GetCharacterDataById(110006));
         arenaPrepareData.gameCookingData.InitData(gameItemsManager, listOurData, listEnemyData, listAuditerData, listCompereData);
 
         //arenaPrepareData.gameType = MiniGameEnum.Barrage;
@@ -172,6 +172,10 @@ public class SceneGameArenaInit : BaseSceneInit, IBaseObserver
                 //设置主持人位置
                 List<Vector3> listComperePosition = sceneArenaManager.GetArenaForCookingComperePositionBy2(gameCookingData.listCompereGameData.Count);
                 gameCookingData.listCompereStartPosition = listComperePosition;
+
+                //游戏开始动画
+                gameCookingData.storyGameOpenId = 100001;
+                gameCookingData.storyGameAuditId = 100001;
                 //准备游戏
                 cookingHandler.InitGame(gameCookingData);
                 break;
