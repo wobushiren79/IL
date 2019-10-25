@@ -17,7 +17,7 @@ public class TextInfoBean : BaseBean
     //文本内容
     public string content;
     //文本顺序
-    public int order;
+    public int text_order;
     //指定下一顺序
     public int next_order;
     //停留时间

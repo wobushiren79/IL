@@ -70,22 +70,28 @@ MonoBehaviour:
   characterData:
     baseInfo:
       characterId: 
+      titleName: 
       name: 
       workDay: 0
       priceS: 0
       priceM: 0
       priceL: 0
       chefInfo:
+        workerType: 1
         workerLevel: 0
         workerExp: 0
         cookNumber: 0
+        cookTime: 0
         listFoodCookNumer: []
       waiterInfo:
+        workerType: 2
         workerLevel: 0
         workerExp: 0
         cleanTotalNumber: 0
         sendTotalNumber: 0
+        cleanTotalTime: 0
       accountingInfo:
+        workerType: 3
         workerLevel: 0
         workerExp: 0
         accountingTotalNumber: 0
@@ -100,15 +106,24 @@ MonoBehaviour:
         accountingMoneyL: 0
         accountingMoneyM: 0
         accountingMoneyS: 0
+        accountingTotalTime: 0
       accostInfo:
+        workerType: 4
         workerLevel: 0
         workerExp: 0
         accostTotalNumber: 0
         accostSuccessNumber: 0
         accostFailNumber: 0
+        accostTotalTime: 0
       beaterInfo:
+        workerType: 5
         workerLevel: 0
         workerExp: 0
+        fightTotalNumber: 0
+        fightWinNumber: 0
+        fightLoseNumber: 0
+        fightTotalTime: 0
+        restTotalTime: 0
       isChef: 0
       isWaiter: 0
       isAccounting: 0
@@ -122,6 +137,7 @@ MonoBehaviour:
       isAttendance: 0
     attributes:
       loyal: 0
+      life: 0
       cook: 0
       speed: 0
       account: 0
@@ -155,6 +171,7 @@ MonoBehaviour:
         a: 1
       face: 0
     equips:
+      maskId: 0
       handId: 0
       hatId: 0
       clothesId: 0
@@ -235,11 +252,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Character
       objectReference: {fileID: 0}
-    - target: {fileID: 4414186510013377829, guid: 2b0fba09934c2934eb7fd9b31e6030fb,
-        type: 3}
-      propertyPath: m_Enabled
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 5210061400093648316, guid: 2b0fba09934c2934eb7fd9b31e6030fb,
         type: 3}
       propertyPath: objMove
@@ -254,6 +266,66 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Enabled
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4414186510013377829, guid: 2b0fba09934c2934eb7fd9b31e6030fb,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2478063932836047103, guid: 2b0fba09934c2934eb7fd9b31e6030fb,
+        type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 2478063932836047103, guid: 2b0fba09934c2934eb7fd9b31e6030fb,
+        type: 3}
+      propertyPath: m_WasSpriteAssigned
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2478063932836047103, guid: 2b0fba09934c2934eb7fd9b31e6030fb,
+        type: 3}
+      propertyPath: m_MaskInteraction
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2478063932431075100, guid: 2b0fba09934c2934eb7fd9b31e6030fb,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -0.1284
+      objectReference: {fileID: 0}
+    - target: {fileID: 2478063932431075100, guid: 2b0fba09934c2934eb7fd9b31e6030fb,
+        type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0.2647793
+      objectReference: {fileID: 0}
+    - target: {fileID: 2478063932431075100, guid: 2b0fba09934c2934eb7fd9b31e6030fb,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -0.1156
+      objectReference: {fileID: 0}
+    - target: {fileID: 2478063932431075100, guid: 2b0fba09934c2934eb7fd9b31e6030fb,
+        type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.2269762
+      objectReference: {fileID: 0}
+    - target: {fileID: 2478063930735958546, guid: 2b0fba09934c2934eb7fd9b31e6030fb,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -0.1366
+      objectReference: {fileID: 0}
+    - target: {fileID: 2478063930735958546, guid: 2b0fba09934c2934eb7fd9b31e6030fb,
+        type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0.24639584
+      objectReference: {fileID: 0}
+    - target: {fileID: 2478063930735958546, guid: 2b0fba09934c2934eb7fd9b31e6030fb,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0.1209
+      objectReference: {fileID: 0}
+    - target: {fileID: 2478063930735958546, guid: 2b0fba09934c2934eb7fd9b31e6030fb,
+        type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.23878217
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2b0fba09934c2934eb7fd9b31e6030fb, type: 3}

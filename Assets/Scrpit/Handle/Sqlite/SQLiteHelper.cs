@@ -78,8 +78,6 @@ public class SQLiteHelper : ScriptableObject
         mDbConnection = null;
     }
 
-
-
     /// <summary>
     /// 向指定数据表中插入数据
     /// </summary>
@@ -97,6 +95,33 @@ public class SQLiteHelper : ScriptableObject
         }
 
         string queryString = "INSERT INTO " + tableName + " VALUES (" + values[0];
+        for (int i = 1; i < values.Length; i++)
+        {
+            queryString += ", " + values[i];
+        }
+        queryString += " )";
+        return ExecuteQuery(queryString);
+    }
+
+    public SqliteDataReader InsertValues(string tableName, string[] keys, string[] values)
+    {
+        //获取数据表中字段数目
+        //当插入的数据长度不等于字段数目时引发异常
+        if (keys.Length != values.Length)
+        {
+            throw new SqliteException("插入数据键值不相等");
+        }
+
+        string keyString = "";
+        for (int i = 0; i < keys.Length; i++)
+        {
+            if (i == 0)
+                keyString += keys[i];
+            else
+                keyString += ("," + keys[i]);
+        }
+        string queryString = "INSERT INTO " + tableName + "(" + keyString + ") VALUES (" + values[0];
+
         for (int i = 1; i < values.Length; i++)
         {
             queryString += ", " + values[i];
@@ -177,6 +202,22 @@ public class SQLiteHelper : ScriptableObject
         return ExecuteQuery(queryString);
     }
 
+    public SqliteDataReader DeleteValuesANDAndLeft(string tableName, string[] colNames, string[] operations, string[] colValues)
+    {
+        //当字段名称和字段数值不对应时引发异常
+        if (colNames.Length != colValues.Length || operations.Length != colNames.Length || operations.Length != colValues.Length)
+        {
+            throw new SqliteException("colNames.Length!=colValues.Length || operations.Length!=colNames.Length || operations.Length!=colValues.Length");
+        }
+
+        string queryString = "PRAGMA foreign_keys=ON; DELETE FROM " + tableName + " WHERE " + colNames[0] + operations[0] + colValues[0];
+        for (int i = 1; i < colValues.Length; i++)
+        {
+            queryString += " AND " + colNames[i] + operations[i] + colValues[i];
+        }
+        return ExecuteQuery(queryString);
+    }
+
     /// <summary>
     /// 创建数据表
     /// </summary> +
@@ -217,15 +258,15 @@ public class SQLiteHelper : ScriptableObject
         string selectStr = "SELECT * ";
 
         string fromStr = "FROM " + mainTableName;
-        if (mainKey!=null && leftTableName != null && leftTableName.Length > 0)
+        if (mainKey != null && leftTableName != null && leftTableName.Length > 0)
         {
             int leftTableList = leftTableName.Length;
             for (int i = 0; i < leftTableList; i++)
             {
                 string mainKeyStr = "";
-                if (mainKey.Length == 1|| mainKey.Length!= leftTableList)
+                if (mainKey.Length == 1 || mainKey.Length != leftTableList)
                 {
-                    mainKeyStr= mainKey[0];
+                    mainKeyStr = mainKey[0];
                 }
                 else
                 {
@@ -236,9 +277,9 @@ public class SQLiteHelper : ScriptableObject
         }
 
         string whereStr = "";
-        if (mainColNames!=null&& mainColNames.Length > 0)
+        if (mainColNames != null && mainColNames.Length > 0)
         {
-             whereStr = " WHERE " + mainColNames[0] + " " + mainOperations[0] + " " + mainColValues[0];
+            whereStr = " WHERE " + mainColNames[0] + " " + mainOperations[0] + " " + mainColValues[0];
             if (mainColNames.Length > 1)
             {
                 for (int i = 1; i < mainColNames.Length; i++)
@@ -262,7 +303,7 @@ public class SQLiteHelper : ScriptableObject
     }
     public SqliteDataReader ReadTable(string mainTableName, string[] leftTableName, string mainKey, string[] leftKey)
     {
-        string[] tempMainkey =new string[]{ mainKey };
+        string[] tempMainkey = new string[] { mainKey };
         return ReadTable(mainTableName, leftTableName, tempMainkey, leftKey, null, null, null);
     }
 }

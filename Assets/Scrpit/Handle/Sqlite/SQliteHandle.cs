@@ -79,7 +79,7 @@ public class SQliteHandle
         }
         catch (Exception e)
         {
-            LogUtil.Log("更新数据是啊比-" + e.Message);
+            LogUtil.Log("更新数据:" + e.Message);
         }
         finally
         {
@@ -148,25 +148,113 @@ public class SQliteHandle
                 reader.Close();
         }
     }
-
     public static List<T> LoadTableData<T>(string dbName, string mainTable)
     {
         return LoadTableData<T>(dbName, mainTable, null, null, null, null, null, null);
     }
-
     public static List<T> LoadTableData<T>(string dbName, string mainTable, string[] leftTableName, string mainKey, string[] leftKey)
     {
         string[] tempMainKey = new string[] { mainKey };
         return LoadTableData<T>(dbName, mainTable, leftTableName, tempMainKey, leftKey, null, null, null);
     }
-
     public static List<T> LoadTableData<T>(string dbName, string mainTable, string[] leftTableName, string[] mainKey, string[] leftKey)
     {
         return LoadTableData<T>(dbName, mainTable, leftTableName, mainKey, leftKey, null, null, null);
     }
-
     public static List<T> LoadTableDataByCol<T>(string dbName, string mainTable, string[] mainColNames, string[] mainOperations, string[] mainColValue)
     {
         return LoadTableData<T>(dbName, mainTable, null, null, null, mainColNames, mainOperations, mainColValue);
+    }
+
+
+    /// <summary>
+    /// 删除表数据
+    /// </summary>
+    /// <param name="dbName">数据库名字</param>
+    /// <param name="tableName"></param>
+    /// <param name="colNames"></param>
+    /// <param name="operations"></param>
+    /// <param name="colValues"></param>
+    public static void DeleteTableData(string dbName, string tableName, string[] colNames, string[] operations, string[] colValues)
+    {
+        SQLiteHelper sql = GetSQLiteHelper(dbName);
+        try
+        {
+            sql.DeleteValuesAND(tableName, colNames, operations, colValues);
+        }
+        catch (Exception e)
+        {
+            LogUtil.Log("更新数据失败:" + e.Message);
+        }
+        finally
+        {
+            if (sql != null)
+                sql.CloseConnection();
+        }
+    }
+    public static void DeleteTableDataAndLeft(string dbName, string tableName, string[] colNames, string[] operations, string[] colValues)
+    {
+        SQLiteHelper sql = GetSQLiteHelper(dbName);
+        try
+        {
+            sql.DeleteValuesANDAndLeft(tableName, colNames, operations, colValues);
+        }
+        catch (Exception e)
+        {
+            LogUtil.Log("更新数据失败:" + e.Message);
+        }
+        finally
+        {
+            if (sql != null)
+                sql.CloseConnection();
+        }
+    }
+    /// <summary>
+    /// 插入数据
+    /// </summary>
+    /// <param name="dbName"></param>
+    /// <param name="tableName"></param>
+    /// <param name="values"></param>
+    public static void InsertValues(string dbName, string tableName,string[] values)
+    {
+        SQLiteHelper sql = GetSQLiteHelper(dbName);
+        try
+        {
+            sql.InsertValues(tableName, values);
+        }
+        catch (Exception e)
+        {
+            LogUtil.Log("插入数据失败:" + e.Message);
+        }
+        finally
+        {
+            if (sql != null)
+                sql.CloseConnection();
+        }
+    }
+
+    /// <summary>
+    /// 插入数据
+    /// </summary>
+    /// <param name="dbName"></param>
+    /// <param name="tableName"></param>
+    /// <param name="keys"></param>
+    /// <param name="values"></param>
+    public static void InsertValues(string dbName, string tableName, string[] keys, string[] values)
+    {
+        SQLiteHelper sql = GetSQLiteHelper(dbName);
+        try
+        {
+            sql.InsertValues(tableName, keys, values);
+        }
+        catch (Exception e)
+        {
+            LogUtil.Log("插入数据失败:" + e.Message);
+        }
+        finally
+        {
+            if (sql != null)
+                sql.CloseConnection();
+        }
     }
 }

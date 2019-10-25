@@ -3,11 +3,19 @@ using UnityEditor;
 
 public class StoryInfoDetailsBean 
 {
+    public enum StoryInfoDetailsTypeEnum
+    {
+        Position=1,//位置
+        Expression=2,//表情
+        Talk=11,//对话
+        AutoNext=12,//指定时间跳转
+    }
+
     public long story_id;
     //类型 1 NPC站位 11对话 12剧情自动跳转
     public int type;
     //事件顺序
-    public int order;
+    public int story_order;
 
     //NPCID
     public long npc_id;

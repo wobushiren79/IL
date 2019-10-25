@@ -50,4 +50,38 @@ public class StoryInfoService
         return SQliteHandle.LoadTableDataByCol<StoryInfoDetailsBean>(ProjectConfigInfo.DATA_BASE_INFO_NAME, mLeftDetailsTableName, colName, operations, colValue);
     }
 
+    /// <summary>
+    /// 根据ID和序号修改数据
+    /// </summary>
+    /// <param name="id"></param>
+    /// <param name="order"></param>
+    public void UpdateStoryDetailsByIdAndOrder(long id, int order, List<StoryInfoDetailsBean> listData)
+    {
+        if (listData == null)
+            return;
+        //先删除该ID和序号下的所有数据
+        string[] colKeys = new string[] { "story_id", "story_order" };
+        string[] operations = new string[] { "=", "=", };
+        string[] colValues = new string[] { id + "", order + "", };
+        SQliteHandle.DeleteTableData(ProjectConfigInfo.DATA_BASE_INFO_NAME, mLeftDetailsTableName, colKeys, operations, colValues);
+        //插入数据
+        foreach (StoryInfoDetailsBean itemData in listData)
+        {
+            Dictionary<string,object> mapData= ReflexUtil.GetAllNameAndValue(itemData);
+            string[] insertKeys = new string[mapData.Count];
+            string[] insertValues = new string[mapData.Count];
+            int i = 0;
+            foreach (var item in mapData)
+            {
+                if (item.Key.Equals("id"))
+                {
+                    insertKeys[i] = item.Key;
+                    insertValues[i] = Convert.ToString(item.Value);
+                }
+                i++;
+            }
+         SQliteHandle.InsertValues(ProjectConfigInfo.DATA_BASE_INFO_NAME, mLeftDetailsTableName, insertKeys, insertValues);
+        }
+
+    }
 }

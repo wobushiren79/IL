@@ -69,7 +69,7 @@ public class StoryBuilder : BaseMonoBehaviour, StoryInfoManager.CallBack
 
         foreach (StoryInfoDetailsBean itemData in listStoryDetails)
         {
-            if (itemData.order == order)
+            if (itemData.story_order == order)
             {
                 listData.Add(itemData);
             }
@@ -91,7 +91,7 @@ public class StoryBuilder : BaseMonoBehaviour, StoryInfoManager.CallBack
         {
             switch (itemData.type)
             {
-                case 1:
+                case (int)StoryInfoDetailsBean.StoryInfoDetailsTypeEnum.Position:
                     //Npc站位
                     GameObject objNpc = GetNpcByNpcNum(itemData.npc_num);
                     if (objNpc == null)
@@ -102,17 +102,17 @@ public class StoryBuilder : BaseMonoBehaviour, StoryInfoManager.CallBack
                         npcAI.characterMoveCpt.SetDestinationLocal(transform, new Vector3(itemData.npc_position_x, itemData.npc_position_y));
                     }
                     break;
-                case 2:
+                case (int)StoryInfoDetailsBean.StoryInfoDetailsTypeEnum.Expression:
                     //表情
                     SetCharacterExpression(itemData.npc_num, itemData.expression);
                     break;
-                case 11:
+                case (int)StoryInfoDetailsBean.StoryInfoDetailsTypeEnum.Talk:
                     //进入对话
                     isNext = false;
                     UIGameText uiComponent = (UIGameText)uiManager.OpenUIAndCloseOtherByName(EnumUtil.GetEnumName(UIEnum.GameText));
                     uiComponent.SetData(TextEnum.Story, itemData.text_mark_id);
                     break;
-                case 12:
+                case (int)StoryInfoDetailsBean.StoryInfoDetailsTypeEnum.AutoNext:
                     //剧情自动跳转
                     isNext = false;
                     StartCoroutine(StoryAutoNext(itemData.wait_time));
@@ -223,7 +223,7 @@ public class StoryBuilder : BaseMonoBehaviour, StoryInfoManager.CallBack
     /// </summary>
     /// <param name="listData"></param>
     /// <param name="gameCookingData"></param>
-    private void MergeDataForGameCooking(List<StoryInfoDetailsBean> listData,MiniGameCookingBean gameCookingData)
+    private void MergeDataForGameCooking(List<StoryInfoDetailsBean> listData, MiniGameCookingBean gameCookingData)
     {
 
     }
@@ -235,7 +235,7 @@ public class StoryBuilder : BaseMonoBehaviour, StoryInfoManager.CallBack
         listStoryDetails = listData;
         List<StoryInfoDetailsBean> listOrderData = GetStoryDetailsByOrder(mStoryOrder);
         //如果是迷你烹饪游戏的剧情 则需要合并一下数据
-        if (mGameCookingData!=null)
+        if (mGameCookingData != null)
         {
             MergeDataForGameCooking(listOrderData, mGameCookingData);
         }

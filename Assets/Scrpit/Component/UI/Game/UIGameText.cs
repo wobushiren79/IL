@@ -115,7 +115,9 @@ public class UIGameText : BaseUIComponent, ITextInfoView
             //如果是时停 需要回复时停
             if (!currentTextData.is_stoptime)
             {
-                GetUIMananger<UIGameManager>().gameTimeHandler.SetTimeRestore();
+                GameTimeHandler gameTimeHandler = GetUIMananger<UIGameManager>().gameTimeHandler;
+                if (gameTimeHandler != null)
+                    gameTimeHandler.SetTimeRestore();
             }
             //回调
             if (mCallBack != null)
@@ -167,7 +169,7 @@ public class UIGameText : BaseUIComponent, ITextInfoView
             return listData;
         foreach (TextInfoBean itemData in listTextData)
         {
-            if (itemData.order == order)
+            if (itemData.text_order == order)
             {
                 listData.Add(itemData);
             }
@@ -247,7 +249,7 @@ public class UIGameText : BaseUIComponent, ITextInfoView
                 {
                     if (CheckUtil.StringIsNull(currentTextData.name))
                     {
-                        tvName.text = characterData.baseInfo.titleName +"-"+ characterData.baseInfo.name;
+                        tvName.text = characterData.baseInfo.titleName + "-" + characterData.baseInfo.name;
                     }
                     else
                         tvName.text = currentTextData.name;
@@ -385,6 +387,6 @@ public class UIGameText : BaseUIComponent, ITextInfoView
     {
         void UITextEnd();
 
-        void UITextAddFavorability(long characterId,int favorability);
+        void UITextAddFavorability(long characterId, int favorability);
     }
 }
