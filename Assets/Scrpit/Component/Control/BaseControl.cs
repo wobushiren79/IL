@@ -24,9 +24,15 @@ public class BaseControl: BaseMonoBehaviour
     /// <param name="objFollow"></param>
     public virtual void SetCameraFollowObj(GameObject objFollow)
     {
-        cameraFollowObj = objFollow;
-        if (cameraFollowObj != null)
-            mCamera2D.Follow = cameraFollowObj.transform;
+        if (objFollow != null)
+        {
+            cameraFollowObj = objFollow;
+        }
+        else
+        {
+            cameraFollowObj = gameObject;
+        }
+        mCamera2D.Follow = cameraFollowObj.transform;
     }
 
     /// <summary>

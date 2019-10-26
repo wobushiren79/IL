@@ -8,12 +8,12 @@ public class CharacterExpressionCpt : BaseMonoBehaviour
     public enum CharacterExpressionEnum
     {
         Love=1,
-        Wordless,
-        Mad,
-        Shame,
-        Surprise,
-        Fret,
-        Dead,
+        Wordless=2,
+        Mad=3,
+        Shame=4,
+        Surprise=5,
+        Fret=6,
+        Dead=7,
     }
 
     [Header("表情图标")]

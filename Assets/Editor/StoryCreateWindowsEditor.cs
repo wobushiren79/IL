@@ -269,7 +269,7 @@ public class StoryCreateWindowsEditor : EditorWindow
         listStoryTextInfo = null;
         foreach (StoryInfoDetailsBean itemData in listData)
         {
-            if (itemData.type == (int)StoryInfoDetailsBean.StoryInfoDetailsTypeEnum.Position)
+            if (itemData.type == (int)StoryInfoDetailsBean.StoryInfoDetailsTypeEnum.NpcPosition)
             {
                 BaseNpcAI npcAI = CptUtil.GetCptInChildrenByName<BaseNpcAI>(mObjContent, itemData.npc_num + "");
                 if (npcAI == null)
@@ -299,7 +299,7 @@ public class StoryCreateWindowsEditor : EditorWindow
         foreach (StoryInfoDetailsBean itemData in listOrderStoryInfoDetails)
         {
             GUILayout.BeginHorizontal();
-            if (itemData.type == (int)StoryInfoDetailsBean.StoryInfoDetailsTypeEnum.Position)
+            if (itemData.type == (int)StoryInfoDetailsBean.StoryInfoDetailsTypeEnum.NpcPosition)
             {
                 GUILayout.Label("NPC站位 ");
                 NpcInfoBean npcInfo;
@@ -328,7 +328,7 @@ public class StoryCreateWindowsEditor : EditorWindow
                 }
                 if (GUILayout.Button("获取显示坐标"))
                 {
-                    GameObject objItem=  GetSceneObjByName(itemData.npc_num + "");
+                    GameObject objItem = GetSceneObjByName(itemData.npc_num + "");
                     itemData.npc_position_x = objItem.transform.localPosition.x;
                     itemData.npc_position_y = objItem.transform.localPosition.y;
                 }
@@ -353,14 +353,14 @@ public class StoryCreateWindowsEditor : EditorWindow
                         textInfo.user_id = long.Parse(EditorGUILayout.TextArea(textInfo.user_id + "", GUILayout.Width(100), GUILayout.Height(20)));
                         GUILayout.Label("姓名");
                         NpcInfoBean npcInfo;
-                        if (textInfo.user_id==0)
+                        if (textInfo.user_id == 0)
                         {
                             npcInfo = new NpcInfoBean();
                             npcInfo.name = "玩家";
                         }
                         else
                         {
-                             npcInfo = mapNpcInfo[textInfo.user_id];
+                            npcInfo = mapNpcInfo[textInfo.user_id];
                         }
                         GUILayout.Label(npcInfo.title_name + "-" + npcInfo.name);
                         GUILayout.Label("指定的姓名");
@@ -382,9 +382,11 @@ public class StoryCreateWindowsEditor : EditorWindow
                     if (listStoryTextInfo == null)
                         listStoryTextInfo = new List<TextInfoBean>();
                     TextInfoBean textInfo = new TextInfoBean();
-                    textInfo.id = itemData.text_mark_id*1000 + listStoryTextInfo.Count+1;
-                    textInfo.type = 1;
+                    textInfo.id = itemData.text_mark_id * 1000 + listStoryTextInfo.Count + 1;
+                    textInfo.type = 0;
+                    textInfo.mark_id = itemData.text_mark_id;
                     textInfo.user_id = 1;
+                    textInfo.text_order = listStoryTextInfo.Count + 1;
                     listStoryTextInfo.Add(textInfo);
                 }
                 GUILayout.EndVertical();
@@ -408,6 +410,19 @@ public class StoryCreateWindowsEditor : EditorWindow
                     removeTempData = itemData;
                 }
             }
+            else if (itemData.type == (int)StoryInfoDetailsBean.StoryInfoDetailsTypeEnum.CameraPosition)
+            {
+                GUILayout.Label("摄像头位置 ");
+                GUILayout.Label("x:");
+                itemData.camera_position_x = float.Parse(EditorGUILayout.TextArea(itemData.camera_position_x + "", GUILayout.Width(100), GUILayout.Height(20)));
+                GUILayout.Label("y:");
+                itemData.camera_position_y = float.Parse(EditorGUILayout.TextArea(itemData.camera_position_y + "", GUILayout.Width(100), GUILayout.Height(20)));
+            }
+            else if (itemData.type == (int)StoryInfoDetailsBean.StoryInfoDetailsTypeEnum.CameraFollowCharacter)
+            {
+                GUILayout.Label("摄像头跟随角色序号 ");
+                itemData.camera_follow_character = int.Parse(EditorGUILayout.TextArea(itemData.camera_follow_character + "", GUILayout.Width(100), GUILayout.Height(20)));
+            }
             GUILayout.EndHorizontal();
         }
         if (removeTempData != null)
@@ -415,10 +430,9 @@ public class StoryCreateWindowsEditor : EditorWindow
             listOrderStoryInfoDetails.Remove(removeTempData);
             RemoveSceneCharacterByName(removeTempData.npc_num + "");
         }
-        GUILayout.BeginHorizontal();
         if (GUILayout.Button("添加站位"))
         {
-            CreateStoryInfoDetailsDataByType(StoryInfoDetailsBean.StoryInfoDetailsTypeEnum.Position);
+            CreateStoryInfoDetailsDataByType(StoryInfoDetailsBean.StoryInfoDetailsTypeEnum.NpcPosition);
         }
         if (GUILayout.Button("添加对话"))
         {
@@ -428,15 +442,21 @@ public class StoryCreateWindowsEditor : EditorWindow
         {
             CreateStoryInfoDetailsDataByType(StoryInfoDetailsBean.StoryInfoDetailsTypeEnum.AutoNext);
         }
-        GUILayout.EndHorizontal();
-
+        if (GUILayout.Button("添加摄像头坐标"))
+        {
+            CreateStoryInfoDetailsDataByType(StoryInfoDetailsBean.StoryInfoDetailsTypeEnum.CameraPosition);
+        }
+        if (GUILayout.Button("添加摄像头跟随角色"))
+        {
+            CreateStoryInfoDetailsDataByType(StoryInfoDetailsBean.StoryInfoDetailsTypeEnum.CameraFollowCharacter);
+        }
         if (GUILayout.Button("保存该序号下的故事数据"))
         {
             //先处理对话
             if (listStoryTextInfo != null)
                 textInfoService.UpdateDataByMarkIdFor(TextEnum.Story, long.Parse(mStoryId) * 10000 + int.Parse(mStroyOrder), listStoryTextInfo);
 
-           // storyInfoService.UpdateStoryDetailsByIdAndOrder(long.Parse(mStoryId), int.Parse(mStroyOrder), listOrderStoryInfoDetails);
+            storyInfoService.UpdateStoryDetailsByIdAndOrder(long.Parse(mStoryId), int.Parse(mStroyOrder), listOrderStoryInfoDetails);
             
             //刷新数据
             QueryStoryData(mStoryScene, mStoryId);
@@ -450,7 +470,7 @@ public class StoryCreateWindowsEditor : EditorWindow
         itemPositionInfo.type = (int)type;
         switch (type)
         {
-            case StoryInfoDetailsBean.StoryInfoDetailsTypeEnum.Position:
+            case StoryInfoDetailsBean.StoryInfoDetailsTypeEnum.NpcPosition:
                 itemPositionInfo.npc_id = 1;
                 itemPositionInfo.npc_num = listOrderStoryInfoDetails.Count + 1;
                 break;
@@ -459,6 +479,10 @@ public class StoryCreateWindowsEditor : EditorWindow
                 break;
             case StoryInfoDetailsBean.StoryInfoDetailsTypeEnum.AutoNext:
                 itemPositionInfo.wait_time = 1;
+                break;
+            case StoryInfoDetailsBean.StoryInfoDetailsTypeEnum.CameraPosition:
+                break;
+            case StoryInfoDetailsBean.StoryInfoDetailsTypeEnum.CameraFollowCharacter:
                 break;
         }
 

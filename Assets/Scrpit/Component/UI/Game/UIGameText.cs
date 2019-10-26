@@ -40,6 +40,8 @@ public class UIGameText : BaseUIComponent, ITextInfoView
     private TextEnum mTextEnum;
     private ICallBack mCallBack;
 
+    //备用文本替换数据
+    public List<string> listMarkData = new List<string>();
     private void Awake()
     {
         mTextInfoController = new TextInfoController(this, this);
@@ -155,6 +157,15 @@ public class UIGameText : BaseUIComponent, ITextInfoView
                 mTextInfoController.GetTextForStory(markId);
                 break;
         }
+    }
+
+    /// <summary>
+    /// 设置备用数据
+    /// </summary>
+    /// <param name="listMarkData"></param>
+    public void SetListMark(List<string> listMarkData)
+    {
+        this.listMarkData = listMarkData;
     }
 
     /// <summary>
@@ -302,6 +313,22 @@ public class UIGameText : BaseUIComponent, ITextInfoView
             if (mCallBack != null)
                 mCallBack.UITextAddFavorability(currentTextData.user_id, currentTextData.add_favorability);
         }
+        //场景人物表情展示
+        if (!CheckUtil.StringIsNull(currentTextData.scene_expression))
+        {
+            if (mCallBack != null)
+            {
+                Dictionary<int, CharacterExpressionCpt.CharacterExpressionEnum> mapData = new Dictionary<int, CharacterExpressionCpt.CharacterExpressionEnum>();
+                List<string> listData = StringUtil.SplitBySubstringForListStr(currentTextData.scene_expression, ',');
+                for (int i = 0; i < listData.Count; i += 2)
+                {
+                    int mapKey = int.Parse(listData[i]);
+                    CharacterExpressionCpt.CharacterExpressionEnum mapValue = (CharacterExpressionCpt.CharacterExpressionEnum)int.Parse(listData[i + 1]);
+                    mapData.Add(mapKey, mapValue);
+                }
+                mCallBack.UITextSceneExpression(mapData);
+            }
+        }
     }
 
     /// <summary>
@@ -355,6 +382,10 @@ public class UIGameText : BaseUIComponent, ITextInfoView
             otherName += otherStr;
         }
         content = content.Replace("{othername}", otherName);
+
+        //替换备用数据
+        if (!CheckUtil.ListIsNull(listMarkData))
+            content = string.Format(content, listMarkData.ToArray());
         return content;
     }
 
@@ -385,8 +416,22 @@ public class UIGameText : BaseUIComponent, ITextInfoView
 
     public interface ICallBack
     {
+        /// <summary>
+        /// 文本展示结束
+        /// </summary>
         void UITextEnd();
 
+        /// <summary>
+        /// 文本增加好感
+        /// </summary>
+        /// <param name="characterId"></param>
+        /// <param name="favorability"></param>
         void UITextAddFavorability(long characterId, int favorability);
+
+        /// <summary>
+        /// 文本场景表情互动
+        /// </summary>
+        /// <param name="mapData"></param>
+        void UITextSceneExpression(Dictionary<int, CharacterExpressionCpt.CharacterExpressionEnum> mapData);
     }
 }

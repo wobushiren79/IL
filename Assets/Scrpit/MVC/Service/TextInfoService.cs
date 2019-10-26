@@ -109,15 +109,20 @@ public class TextInfoService
                 string itemKey = item.Key;
                 if (itemKey.Equals("name")|| itemKey.Equals("content") || itemKey.Equals("id"))
                 {
+                    string valueStr = "";
                     if (itemKey.Equals("id"))
                     {
                         listLeftKeys.Add("text_id");
+                        valueStr = Convert.ToString(item.Value);
                     }
                     else
                     {
                         listLeftKeys.Add(item.Key);
+                        valueStr += "'";
+                        valueStr += Convert.ToString(item.Value);
+                        valueStr += "'";
                     }
-                    listLeftValues.Add(Convert.ToString(item.Value));
+                    listLeftValues.Add(valueStr);
                 }
                 if (itemKey.Equals("id") 
                     || itemKey.Equals("type") 

@@ -39,7 +39,8 @@ public class TextInfoBean : BaseBean
     //选择加的好感
     public int add_favorability;
     public string add_money;
-
+    //场景人物表情
+    public string scene_expression;
 
     /// <summary>
     /// 获取增加的钱

@@ -87,11 +87,12 @@ public class StoryBuilder : BaseMonoBehaviour, StoryInfoManager.CallBack
         //设置剧情发生坐标
         gameObject.transform.position = new Vector3(storyInfo.position_x, storyInfo.position_y);
         bool isNext = true;
+        BaseControl baseControl = null;
         foreach (StoryInfoDetailsBean itemData in listData)
         {
             switch (itemData.type)
             {
-                case (int)StoryInfoDetailsBean.StoryInfoDetailsTypeEnum.Position:
+                case (int)StoryInfoDetailsBean.StoryInfoDetailsTypeEnum.NpcPosition:
                     //Npc站位
                     GameObject objNpc = GetNpcByNpcNum(itemData.npc_num);
                     if (objNpc == null)
@@ -106,6 +107,9 @@ public class StoryBuilder : BaseMonoBehaviour, StoryInfoManager.CallBack
                     //表情
                     SetCharacterExpression(itemData.npc_num, itemData.expression);
                     break;
+                case (int)StoryInfoDetailsBean.StoryInfoDetailsTypeEnum.SceneInt:
+                    //场景物体互动
+                    break;
                 case (int)StoryInfoDetailsBean.StoryInfoDetailsTypeEnum.Talk:
                     //进入对话
                     isNext = false;
@@ -117,6 +121,20 @@ public class StoryBuilder : BaseMonoBehaviour, StoryInfoManager.CallBack
                     isNext = false;
                     StartCoroutine(StoryAutoNext(itemData.wait_time));
                     break;
+                case (int)StoryInfoDetailsBean.StoryInfoDetailsTypeEnum.CameraPosition:
+                    //设置摄像头位置
+                    baseControl = controlHandler.GetControl();
+                    Vector3 cameraWorldPosition = objNpcModel.transform.TransformPoint(new Vector3(itemData.camera_position_x, itemData.camera_position_y));
+                    baseControl.SetCameraFollowObj(null);
+                    baseControl.SetCameraPosition(cameraWorldPosition);
+                    break;
+                case (int)StoryInfoDetailsBean.StoryInfoDetailsTypeEnum.CameraFollowCharacter:
+                    //设置摄像头位置
+                    objNpc = GetNpcByNpcNum(itemData.camera_follow_character);
+                    baseControl = controlHandler.GetControl();
+                    baseControl.SetCameraFollowObj(objNpc);
+                    break;
+
             }
         }
         if (isNext)

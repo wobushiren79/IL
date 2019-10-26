@@ -67,20 +67,25 @@ public class StoryInfoService
         //插入数据
         foreach (StoryInfoDetailsBean itemData in listData)
         {
-            Dictionary<string,object> mapData= ReflexUtil.GetAllNameAndValue(itemData);
+            Dictionary<string, object> mapData = ReflexUtil.GetAllNameAndValue(itemData);
             string[] insertKeys = new string[mapData.Count];
             string[] insertValues = new string[mapData.Count];
             int i = 0;
             foreach (var item in mapData)
             {
-                if (item.Key.Equals("id"))
+                insertKeys[i] = item.Key;
+                if (item.Key.Equals("scene_intobj_name")
+                    || item.Key.Equals("scene_intobj_method"))
                 {
-                    insertKeys[i] = item.Key;
-                    insertValues[i] = Convert.ToString(item.Value);
+                    insertValues[i] = "'";
+                    insertValues[i] += Convert.ToString(item.Value);
+                    insertValues[i] += "'";
                 }
+                else
+                    insertValues[i] = Convert.ToString(item.Value);
                 i++;
             }
-         SQliteHandle.InsertValues(ProjectConfigInfo.DATA_BASE_INFO_NAME, mLeftDetailsTableName, insertKeys, insertValues);
+            SQliteHandle.InsertValues(ProjectConfigInfo.DATA_BASE_INFO_NAME, mLeftDetailsTableName, insertKeys, insertValues);
         }
 
     }

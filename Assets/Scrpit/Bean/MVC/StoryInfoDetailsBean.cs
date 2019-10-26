@@ -5,10 +5,14 @@ public class StoryInfoDetailsBean
 {
     public enum StoryInfoDetailsTypeEnum
     {
-        Position=1,//位置
+        NpcPosition=1,//NPC位置
         Expression=2,//表情
-        Talk=11,//对话
+        SceneInt=3,//场景互动
+        Talk =11,//对话
         AutoNext=12,//指定时间跳转
+
+        CameraPosition = 21,//摄像机位置
+        CameraFollowCharacter=22,//摄像头跟随目标
     }
 
     public long story_id;
@@ -31,4 +35,13 @@ public class StoryInfoDetailsBean
     public long text_mark_id;
     //表情
     public int expression;
+
+    public float camera_position_x;
+    public float camera_position_y;
+    public int camera_follow_character;
+
+    //场景互动物体名称
+    public string scene_intobj_name;
+    //场景互动物体方法
+    public string scene_intobj_method;
 }

@@ -77,7 +77,11 @@ public class EventHandler : BaseHandler, UIGameText.ICallBack
         SetEventType(EventTypeEnum.Story);
         //控制模式修改
         if (controlHandler != null)
-            controlHandler.StartControl(ControlHandler.ControlEnum.Story);
+        {
+            BaseControl baseControl = controlHandler.StartControl(ControlHandler.ControlEnum.Story);
+            baseControl.transform.position = new Vector3(storyInfo.position_x, storyInfo.position_y);
+        }
+           
         uiManager.CloseAllUI();
         //设置文本的回调
         UIGameText uiGameText = (UIGameText)uiManager.GetUIByName(EnumUtil.GetEnumName(UIEnum.GameText));
@@ -119,7 +123,7 @@ public class EventHandler : BaseHandler, UIGameText.ICallBack
     /// </summary>
     /// <param name="gameCookingData"></param>
     /// <param name="id"></param>
-    public void EventTriggerForStoryCooking( MiniGameCookingBean gameCookingData, long id)
+    public void EventTriggerForStoryCooking(MiniGameCookingBean gameCookingData, long id)
     {
         if (storyInfoManager == null)
             return;
@@ -131,11 +135,18 @@ public class EventHandler : BaseHandler, UIGameText.ICallBack
         SetEventType(EventTypeEnum.StoryForMiniGameCooking);
         //控制模式修改
         if (controlHandler != null)
-            controlHandler.StartControl(ControlHandler.ControlEnum.MiniGameCooking);
+        {
+            BaseControl baseControl = controlHandler.StartControl(ControlHandler.ControlEnum.Story);
+            baseControl.transform.position = new Vector3(storyInfo.position_x, storyInfo.position_y);
+        }
+          
         uiManager.CloseAllUI();
         //设置文本的回调
         UIGameText uiGameText = (UIGameText)uiManager.GetUIByName(EnumUtil.GetEnumName(UIEnum.GameText));
         uiGameText.SetCallBack(this);
+        //设置文本的备用数据
+        List<string> listMarkData = GetMiniGameMarkStrData(gameCookingData);
+        uiGameText.SetListMark(listMarkData);
         storyBuilder.BuildStory(storyInfo);
     }
 
@@ -196,6 +207,41 @@ public class EventHandler : BaseHandler, UIGameText.ICallBack
         return mEventType;
     }
 
+    /// <summary>
+    /// 获取迷你游戏故事的备用文本数据
+    /// </summary>
+    /// <returns></returns>
+    private List<string> GetMiniGameMarkStrData(MiniGameBaseBean miniGameData)
+    {
+        List<string> listData = new List<string>();
+        //0 为所有友方角色称呼 和 姓名
+        string userCharacterList = "";
+        foreach (MiniGameCharacterBean itemCharacter in miniGameData.listUserGameData)
+        {
+            userCharacterList += (itemCharacter.characterData.baseInfo.titleName + "" + itemCharacter.characterData.baseInfo.name) + " ";
+        }
+        listData.Add(userCharacterList);
+        //1 为所有敌方角色称呼 和 姓名
+        string enemyCharacterList = "";
+        foreach (MiniGameCharacterBean itemCharacter in miniGameData.listEnemyGameData)
+        {
+            enemyCharacterList += (itemCharacter.characterData.baseInfo.titleName + "" + itemCharacter.characterData.baseInfo.name) + " ";
+        }
+        listData.Add(enemyCharacterList);
+        //2 所有评审人员角色姓名
+        string auditerCharaterList = "";
+        if(miniGameData.gameType== MiniGameEnum.Cooking)
+        {
+            MiniGameCookingBean gameCookingData = (MiniGameCookingBean)miniGameData;
+            foreach (MiniGameCharacterBean itemCharacter in gameCookingData.listAuditerGameData)
+            {
+                auditerCharaterList += (itemCharacter.characterData.baseInfo.titleName + "" + itemCharacter.characterData.baseInfo.name) + " ";
+            }
+        }
+        listData.Add(auditerCharaterList);
+        return listData; 
+    }
+
     #region 对话文本回调
     public void UITextEnd()
     {
@@ -207,6 +253,7 @@ public class EventHandler : BaseHandler, UIGameText.ICallBack
                 SetEventStatus(EventStatusEnum.EventEnd);
                 break;
             case EventTypeEnum.Story:
+            case EventTypeEnum.StoryForMiniGameCooking:
                 storyBuilder.NextStoryOrder();
                 break;
         }
@@ -216,6 +263,18 @@ public class EventHandler : BaseHandler, UIGameText.ICallBack
     public void UITextAddFavorability(long characterId, int favorability)
     {
         NotifyAllObserver((int)NotifyEventTypeEnum.TalkForAddFavorability, characterId, favorability);
+    }
+
+    public void UITextSceneExpression(Dictionary<int, CharacterExpressionCpt.CharacterExpressionEnum> mapData)
+    {
+        foreach (var item in mapData)
+        {
+            int npcNum = item.Key;
+            CharacterExpressionCpt.CharacterExpressionEnum expression = item.Value;
+            GameObject objNpc = storyBuilder.GetNpcByNpcNum(npcNum);
+            NpcAIStoryCpt npcAI= objNpc.GetComponent<NpcAIStoryCpt>();
+            npcAI.SetExpression(expression);
+        } 
     }
     #endregion
 
