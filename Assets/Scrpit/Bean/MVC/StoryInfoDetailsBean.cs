@@ -42,6 +42,10 @@ public class StoryInfoDetailsBean
 
     //场景互动物体名称
     public string scene_intobj_name;
+    //场景互动物体具体名称你
+    public string scene_intcomponent_name;
     //场景互动物体方法
-    public string scene_intobj_method;
+    public string scene_intcomponent_method;
+    //场景互动物体方法参数
+    public string scene_intcomponent_parameters;
 }

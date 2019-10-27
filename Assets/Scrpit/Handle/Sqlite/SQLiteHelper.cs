@@ -2,7 +2,7 @@
 using Mono.Data.Sqlite;
 using System;
 
-public class SQLiteHelper : ScriptableObject
+public class SQLiteHelper 
 {
     /// <summary>
     /// 数据库连接定义

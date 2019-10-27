@@ -6,8 +6,7 @@ public class Test : MonoBehaviour {
     private void Start()
     {
 
-        ReflexUtil.GetInvokeMethod(this,"TestM");
-
+ 
     }
 
 

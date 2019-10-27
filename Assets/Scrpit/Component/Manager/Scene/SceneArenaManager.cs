@@ -18,6 +18,11 @@ public class SceneArenaManager : BaseManager
     public Transform arena_2_AuditorStartPosition;
     public Transform arena_2_CompereStartPosition_1;
     public Transform arena_2_CompereStartPosition_2;
+
+    public GameObject arena_2_Obj_CallBoard_Container;
+    public GameObject arena_2_Obj_AuditTable_Container;
+    public GameObject arena_2_Obj_Stove_Container;
+
     /// <summary>
     /// 获取竞技场1的战斗地点
     /// </summary>
@@ -98,4 +103,36 @@ public class SceneArenaManager : BaseManager
         }
         return listPosition;
     }
+
+    /// <summary>
+    /// 获取竞技场2的通告板
+    /// </summary>
+    /// <returns></returns>
+    public List<MiniGameCookingCallBoardCpt> GetArenaForCookingCallBoardBy2()
+    {
+        MiniGameCookingCallBoardCpt[] listCallBoard = arena_2_Obj_CallBoard_Container.GetComponentsInChildren<MiniGameCookingCallBoardCpt>();
+        return TypeConversionUtil.ArrayToList(listCallBoard);
+    }
+
+    /// <summary>
+    /// 获取竞技场2的评审桌子
+    /// </summary>
+    /// <returns></returns>
+    public List<MiniGameCookingAuditTableCpt> GetArenaForCookingAuditTableBy2()
+    {
+        MiniGameCookingAuditTableCpt[] listCallBoard = arena_2_Obj_AuditTable_Container.GetComponentsInChildren<MiniGameCookingAuditTableCpt>();
+        return TypeConversionUtil.ArrayToList(listCallBoard);
+    }
+
+    /// <summary>
+    /// 获取竞技场2的灶台
+    /// </summary>
+    /// <returns></returns>
+    public List<MiniGameCookingStoveCpt> GetArenaForCookingStoveBy2()
+    {
+        MiniGameCookingStoveCpt[] listCallBoard = arena_2_Obj_Stove_Container.GetComponentsInChildren<MiniGameCookingStoveCpt>();
+        return TypeConversionUtil.ArrayToList(listCallBoard);
+    }
+
+
 }

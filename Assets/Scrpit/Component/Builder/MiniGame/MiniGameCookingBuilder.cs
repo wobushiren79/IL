@@ -12,6 +12,13 @@ public class MiniGameCookingBuilder : BaseMiniGameBuilder
     public List<NpcAIMiniGameCookingCpt> listAuditerCharacter = new List<NpcAIMiniGameCookingCpt>();
     public List<NpcAIMiniGameCookingCpt> listCompereCharacter = new List<NpcAIMiniGameCookingCpt>();
 
+    //所有的通告版
+    public List<MiniGameCookingCallBoardCpt> listCallBoard = new List<MiniGameCookingCallBoardCpt>();
+    //所有的评审桌子
+    public List<MiniGameCookingAuditTableCpt> listAuditTable = new List<MiniGameCookingAuditTableCpt>();
+    //所有的灶台
+    public List<MiniGameCookingStoveCpt> listStove = new List<MiniGameCookingStoveCpt>();
+
     /// <summary>
     /// 获取用户的角色
     /// </summary>
@@ -26,18 +33,18 @@ public class MiniGameCookingBuilder : BaseMiniGameBuilder
     /// </summary>
     /// <param name="npcType"></param>
     /// <returns></returns>
-    public List<NpcAIMiniGameCookingCpt> GetCharacterByType(NpcAIMiniGameCookingCpt.MiniGameCookingNpcType npcType)
+    public List<NpcAIMiniGameCookingCpt> GetCharacterByType(NpcAIMiniGameCookingCpt.MiniGameCookingNpcTypeEnum npcType)
     {
         switch (npcType)
         {
-            case NpcAIMiniGameCookingCpt.MiniGameCookingNpcType.Player:
+            case NpcAIMiniGameCookingCpt.MiniGameCookingNpcTypeEnum.Player:
                 List<NpcAIMiniGameCookingCpt> listData = new List<NpcAIMiniGameCookingCpt>();
-                listData.Add(userCharacter);
-                listData.AddRange(listAuditerCharacter);
+                listData.AddRange(listEnemyCharacter);
+                listData.Insert(Random.Range(0, listEnemyCharacter.Count+1), userCharacter);
                 return listData;
-            case NpcAIMiniGameCookingCpt.MiniGameCookingNpcType.Auditer:
+            case NpcAIMiniGameCookingCpt.MiniGameCookingNpcTypeEnum.Auditer:
                 return listAuditerCharacter;
-            case NpcAIMiniGameCookingCpt.MiniGameCookingNpcType.Compere:
+            case NpcAIMiniGameCookingCpt.MiniGameCookingNpcTypeEnum.Compere:
                 return listCompereCharacter;
         }
         return null;
@@ -59,19 +66,19 @@ public class MiniGameCookingBuilder : BaseMiniGameBuilder
         if (!CheckUtil.ListIsNull(listUserData))
             CreateUserCharacter(listUserData[0], userStartPosition);
         if (!CheckUtil.ListIsNull(listEnemyData))
-            CreateCharacterList(listEnemyData, listEnemyStartPosition, NpcAIMiniGameCookingCpt.MiniGameCookingNpcType.Player);
+            CreateCharacterList(listEnemyData, listEnemyStartPosition, NpcAIMiniGameCookingCpt.MiniGameCookingNpcTypeEnum.Player);
         if (!CheckUtil.ListIsNull(listAuditerData))
-            CreateCharacterList(listAuditerData, listAuditerStartPosition, NpcAIMiniGameCookingCpt.MiniGameCookingNpcType.Auditer);
+            CreateCharacterList(listAuditerData, listAuditerStartPosition, NpcAIMiniGameCookingCpt.MiniGameCookingNpcTypeEnum.Auditer);
         if (!CheckUtil.ListIsNull(listCompereData))
-            CreateCharacterList(listCompereData, listCompereStartPosition, NpcAIMiniGameCookingCpt.MiniGameCookingNpcType.Compere);
+            CreateCharacterList(listCompereData, listCompereStartPosition, NpcAIMiniGameCookingCpt.MiniGameCookingNpcTypeEnum.Compere);
     }
 
     public void CreateUserCharacter(MiniGameCharacterBean userData, Vector3 startPosition)
     {
-        userCharacter = CreateCharacter(userData, startPosition, NpcAIMiniGameCookingCpt.MiniGameCookingNpcType.Player);
+        userCharacter = CreateCharacter(userData, startPosition, NpcAIMiniGameCookingCpt.MiniGameCookingNpcTypeEnum.Player);
     }
 
-    public void CreateCharacterList(List<MiniGameCharacterBean> listCharacterData, List<Vector3> listCharacterPosition, NpcAIMiniGameCookingCpt.MiniGameCookingNpcType npcType)
+    public void CreateCharacterList(List<MiniGameCharacterBean> listCharacterData, List<Vector3> listCharacterPosition, NpcAIMiniGameCookingCpt.MiniGameCookingNpcTypeEnum npcType)
     {
         if (CheckUtil.ListIsNull(listCharacterData))
             return;
@@ -82,20 +89,20 @@ public class MiniGameCookingBuilder : BaseMiniGameBuilder
             NpcAIMiniGameCookingCpt npcCpt = CreateCharacter(itemCharacterData, listCharacterPosition[i], npcType);
             switch (npcType)
             {
-                case NpcAIMiniGameCookingCpt.MiniGameCookingNpcType.Player:
+                case NpcAIMiniGameCookingCpt.MiniGameCookingNpcTypeEnum.Player:
                     listEnemyCharacter.Add(npcCpt);
                     break;
-                case NpcAIMiniGameCookingCpt.MiniGameCookingNpcType.Auditer:
+                case NpcAIMiniGameCookingCpt.MiniGameCookingNpcTypeEnum.Auditer:
                     listAuditerCharacter.Add(npcCpt);
                     break;
-                case NpcAIMiniGameCookingCpt.MiniGameCookingNpcType.Compere:
+                case NpcAIMiniGameCookingCpt.MiniGameCookingNpcTypeEnum.Compere:
                     listCompereCharacter.Add(npcCpt);
                     break;
             }
         }
     }
 
-    private NpcAIMiniGameCookingCpt CreateCharacter(MiniGameCharacterBean characterGameData, Vector3 startPosition, NpcAIMiniGameCookingCpt.MiniGameCookingNpcType npcType)
+    private NpcAIMiniGameCookingCpt CreateCharacter(MiniGameCharacterBean characterGameData, Vector3 startPosition, NpcAIMiniGameCookingCpt.MiniGameCookingNpcTypeEnum npcType)
     {
         GameObject objCharacter = Instantiate(objNpcContainer, objNpcModel, startPosition);
         NpcAIMiniGameCookingCpt npcCpt = objCharacter.GetComponent<NpcAIMiniGameCookingCpt>();
@@ -115,5 +122,56 @@ public class MiniGameCookingBuilder : BaseMiniGameBuilder
         {
             itemCompere.gameObject.SetActive(value);
         }
+    }
+    
+    /// <summary>
+    /// 设置通告板
+    /// </summary>
+    /// <param name="listCallBoard"></param>
+    public void SetListCallBoard(List<MiniGameCookingCallBoardCpt> listCallBoard)
+    {
+        this.listCallBoard = listCallBoard;
+    }
+    /// <summary>
+    /// 获取通告板
+    /// </summary>
+    /// <returns></returns>
+    public List<MiniGameCookingCallBoardCpt> GetListCallBoard()
+    {
+        return listCallBoard;
+    }
+
+    /// <summary>
+    /// 设置审核桌子
+    /// </summary>
+    /// <param name="listAuditTable"></param>
+    public void SetListAuditTable(List<MiniGameCookingAuditTableCpt> listAuditTable)
+    {
+        this.listAuditTable = listAuditTable;
+    }
+    /// <summary>
+    /// 获取审核桌子
+    /// </summary>
+    /// <returns></returns>
+    public List<MiniGameCookingAuditTableCpt> GetListAuditTable()
+    {
+        return listAuditTable;
+    }
+
+    /// <summary>
+    /// 设置桌子列表
+    /// </summary>
+    /// <param name="listStove"></param>
+    public void SetListStove(List<MiniGameCookingStoveCpt> listStove)
+    {
+        this.listStove = listStove;
+    }
+    /// <summary>
+    /// 获取灶台
+    /// </summary>
+    /// <returns></returns>
+    public List<MiniGameCookingStoveCpt> GetListStove()
+    {
+        return listStove;
     }
 }

@@ -69,6 +69,8 @@ public class SceneGameArenaInit : BaseSceneInit, IBaseObserver
         listAuditerData.Add(npcInfoManager.GetCharacterDataById(100001));
         listAuditerData.Add(npcInfoManager.GetCharacterDataById(100002));
         listAuditerData.Add(npcInfoManager.GetCharacterDataById(100003));
+        listAuditerData.Add(npcInfoManager.GetCharacterDataById(100003));
+        listAuditerData.Add(npcInfoManager.GetCharacterDataById(100003));
         List<CharacterBean> listCompereData = new List<CharacterBean>();
         listCompereData.Add(npcInfoManager.GetCharacterDataById(110005));
         listCompereData.Add(npcInfoManager.GetCharacterDataById(110006));
@@ -172,7 +174,15 @@ public class SceneGameArenaInit : BaseSceneInit, IBaseObserver
                 //设置主持人位置
                 List<Vector3> listComperePosition = sceneArenaManager.GetArenaForCookingComperePositionBy2(gameCookingData.listCompereGameData.Count);
                 gameCookingData.listCompereStartPosition = listComperePosition;
-
+                //设置游戏用通告版
+                List<MiniGameCookingCallBoardCpt> listCallBoard= sceneArenaManager.GetArenaForCookingCallBoardBy2();
+                cookingHandler.miniGameBuilder.SetListCallBoard(listCallBoard);
+                //设置游戏用评审桌子
+                List < MiniGameCookingAuditTableCpt > listAuditTable = sceneArenaManager.GetArenaForCookingAuditTableBy2();
+                cookingHandler.miniGameBuilder.SetListAuditTable(listAuditTable);
+                //设置游戏用灶台
+                List<MiniGameCookingStoveCpt> listStove = sceneArenaManager.GetArenaForCookingStoveBy2();
+                cookingHandler.miniGameBuilder.SetListStove(listStove);
                 //游戏开始动画
                 gameCookingData.storyGameOpenId = 100001;
                 gameCookingData.storyGameAuditId = 100001;

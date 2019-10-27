@@ -2,6 +2,7 @@
 using UnityEditor;
 using System.Collections;
 using System.Collections.Generic;
+using System;
 
 public class StoryBuilder : BaseMonoBehaviour, StoryInfoManager.CallBack
 {
@@ -109,6 +110,11 @@ public class StoryBuilder : BaseMonoBehaviour, StoryInfoManager.CallBack
                     break;
                 case (int)StoryInfoDetailsBean.StoryInfoDetailsTypeEnum.SceneInt:
                     //场景物体互动
+                    GameObject objFind =  GameObject.Find(itemData.scene_intobj_name);
+                    //参数
+                    List<string> listparameter=  StringUtil.SplitBySubstringForListStr(itemData.scene_intcomponent_parameters,',');
+                    //通过反射调取方法
+                    ReflexUtil.GetInvokeMethod(objFind, itemData.scene_intcomponent_name, itemData.scene_intcomponent_method, listparameter);
                     break;
                 case (int)StoryInfoDetailsBean.StoryInfoDetailsTypeEnum.Talk:
                     //进入对话

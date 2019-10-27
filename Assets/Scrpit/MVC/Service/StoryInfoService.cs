@@ -75,7 +75,9 @@ public class StoryInfoService
             {
                 insertKeys[i] = item.Key;
                 if (item.Key.Equals("scene_intobj_name")
-                    || item.Key.Equals("scene_intobj_method"))
+                    || item.Key.Equals("scene_intcomponent_name")
+                    || item.Key.Equals("scene_intcomponent_method")
+                    || item.Key.Equals("scene_intcomponent_parameters"))
                 {
                     insertValues[i] = "'";
                     insertValues[i] += Convert.ToString(item.Value);

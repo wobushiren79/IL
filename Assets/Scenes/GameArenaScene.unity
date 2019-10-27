@@ -864,6 +864,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1699721782}
     m_Modifications:
+    - target: {fileID: 566250345546063860, guid: 3eaf6e08402778c479110c1951295af5,
+        type: 3}
+      propertyPath: m_Name
+      value: GameDataManager
+      objectReference: {fileID: 0}
     - target: {fileID: 566250345546063861, guid: 3eaf6e08402778c479110c1951295af5,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -918,11 +923,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 566250345546063860, guid: 3eaf6e08402778c479110c1951295af5,
-        type: 3}
-      propertyPath: m_Name
-      value: GameDataManager
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3eaf6e08402778c479110c1951295af5, type: 3}
@@ -1176,9 +1176,9 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1010190180}
-  - {fileID: 708897745}
   - {fileID: 444979388}
   - {fileID: 2083533617}
+  - {fileID: 708897745}
   - {fileID: 2053796671}
   m_Father: {fileID: 856982791}
   m_RootOrder: 9
@@ -2799,7 +2799,7 @@ Transform:
   - {fileID: 461520218}
   - {fileID: 1178620897}
   m_Father: {fileID: 173091570}
-  m_RootOrder: 2
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &444979389
 MonoBehaviour:
@@ -3485,6 +3485,9 @@ MonoBehaviour:
   arena_2_AuditorStartPosition: {fileID: 955521015}
   arena_2_CompereStartPosition_1: {fileID: 2083765821}
   arena_2_CompereStartPosition_2: {fileID: 158430614}
+  arena_2_Obj_CallBoard_Container: {fileID: 444979387}
+  arena_2_Obj_AuditTable_Container: {fileID: 2083533616}
+  arena_2_Obj_Stove_Container: {fileID: 708897744}
 --- !u!1001 &602416773
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4193,7 +4196,7 @@ PrefabInstance:
     - target: {fileID: 8393298759284253276, guid: 8f67108a5e0aa5a4984db1b4386d1983,
         type: 3}
       propertyPath: m_RootOrder
-      value: 2
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 8393298759284253276, guid: 8f67108a5e0aa5a4984db1b4386d1983,
         type: 3}
@@ -4755,7 +4758,7 @@ Transform:
   - {fileID: 307888902}
   - {fileID: 1942271497}
   m_Father: {fileID: 173091570}
-  m_RootOrder: 1
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &708897746
 MonoBehaviour:
@@ -7519,6 +7522,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1699721782}
     m_Modifications:
+    - target: {fileID: 404659543357992953, guid: c0ef08bab5953ed48a4fa41fc338eead,
+        type: 3}
+      propertyPath: m_Name
+      value: GameItemsManager
+      objectReference: {fileID: 0}
     - target: {fileID: 404659543357992934, guid: c0ef08bab5953ed48a4fa41fc338eead,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -7573,11 +7581,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 404659543357992953, guid: c0ef08bab5953ed48a4fa41fc338eead,
-        type: 3}
-      propertyPath: m_Name
-      value: GameItemsManager
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c0ef08bab5953ed48a4fa41fc338eead, type: 3}
@@ -8109,6 +8112,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1178620897}
   - component: {fileID: 1178620898}
+  - component: {fileID: 1178620899}
   m_Layer: 0
   m_Name: CallBoard_1
   m_TagString: Untagged
@@ -8144,6 +8148,20 @@ SortingGroup:
   m_SortingLayerID: -63496745
   m_SortingLayer: 9
   m_SortingOrder: 1
+--- !u!114 &1178620899
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1178620896}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3a6307436c2016243aac35bb23e5716e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  objContent: {fileID: 1956234643}
+  tvContent: {fileID: 1739446999}
 --- !u!1 &1179307484
 GameObject:
   m_ObjectHideFlags: 0
@@ -14844,7 +14862,7 @@ PrefabInstance:
     - target: {fileID: 7577364584852501876, guid: 14f456b6afd43dd409e00c9ee64236d5,
         type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 89.99997
+      value: 90
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 14f456b6afd43dd409e00c9ee64236d5, type: 3}
@@ -20404,6 +20422,7 @@ Transform:
   m_Children:
   - {fileID: 778401255}
   - {fileID: 325021097}
+  - {fileID: 2074385261}
   - {fileID: 673962644}
   m_Father: {fileID: 867965365}
   m_RootOrder: 1
@@ -20424,6 +20443,7 @@ MonoBehaviour:
   listControl:
   - {fileID: 778401256}
   - {fileID: 325021098}
+  - {fileID: 2074385262}
   - {fileID: 673962645}
 --- !u!114 &1662692420 stripped
 MonoBehaviour:
@@ -23184,7 +23204,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1956234643}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -1, z: 0}
+  m_LocalPosition: {x: 0, y: 0.72, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1038965650}
@@ -23782,6 +23802,50 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 2063058287}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &2074385260
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2074385261}
+  - component: {fileID: 2074385262}
+  m_Layer: 0
+  m_Name: MiniGameCooking
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2074385261
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2074385260}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1631365414}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2074385262
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2074385260}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b0222b4a4d9db5446a866faebb7d3510, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cameraFollowObj: {fileID: 0}
 --- !u!1001 &2077370543
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -23891,7 +23955,7 @@ Transform:
   - {fileID: 1481095797}
   - {fileID: 1790621400}
   m_Father: {fileID: 173091570}
-  m_RootOrder: 3
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &2083533618
 MonoBehaviour:
@@ -24276,6 +24340,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 587775624}
     m_Modifications:
+    - target: {fileID: 1811787146803250898, guid: fa48377771c747b48962f716a6db091e,
+        type: 3}
+      propertyPath: m_Name
+      value: MiniGameCookingBuilder
+      objectReference: {fileID: 0}
     - target: {fileID: 77171152888119009, guid: fa48377771c747b48962f716a6db091e,
         type: 3}
       propertyPath: m_IsActive
@@ -24346,11 +24415,6 @@ PrefabInstance:
       propertyPath: objNpcContainer
       value: 
       objectReference: {fileID: 1378200329}
-    - target: {fileID: 1811787146803250898, guid: fa48377771c747b48962f716a6db091e,
-        type: 3}
-      propertyPath: m_Name
-      value: MiniGameCookingBuilder
-      objectReference: {fileID: 0}
     - target: {fileID: 5364523151381204546, guid: fa48377771c747b48962f716a6db091e,
         type: 3}
       propertyPath: gameItemsManager
@@ -24380,6 +24444,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 587775624}
     m_Modifications:
+    - target: {fileID: 2544807728547424800, guid: 41d29718bae067343bfac132563aa0eb,
+        type: 3}
+      propertyPath: m_Name
+      value: MiniGameBarrageBuilder
+      objectReference: {fileID: 0}
     - target: {fileID: 2544807728547424803, guid: 41d29718bae067343bfac132563aa0eb,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -24450,11 +24519,6 @@ PrefabInstance:
       propertyPath: controlForMiniGameBarrageCpt
       value: 
       objectReference: {fileID: 778401256}
-    - target: {fileID: 2544807728547424800, guid: 41d29718bae067343bfac132563aa0eb,
-        type: 3}
-      propertyPath: m_Name
-      value: MiniGameBarrageBuilder
-      objectReference: {fileID: 0}
     - target: {fileID: 2544807726944973876, guid: 41d29718bae067343bfac132563aa0eb,
         type: 3}
       propertyPath: objBulletContainer
@@ -24489,6 +24553,16 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1383179666}
     m_Modifications:
+    - target: {fileID: 2588219947376932421, guid: 00b5f95d6d4bfd440b69aa42ce4a5926,
+        type: 3}
+      propertyPath: m_Name
+      value: MiniGameEnd
+      objectReference: {fileID: 0}
+    - target: {fileID: 2588219947376932421, guid: 00b5f95d6d4bfd440b69aa42ce4a5926,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2588219947376932426, guid: 00b5f95d6d4bfd440b69aa42ce4a5926,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -24599,16 +24673,6 @@ PrefabInstance:
       propertyPath: uiManager
       value: 
       objectReference: {fileID: 1383179670}
-    - target: {fileID: 2588219947376932421, guid: 00b5f95d6d4bfd440b69aa42ce4a5926,
-        type: 3}
-      propertyPath: m_Name
-      value: MiniGameEnd
-      objectReference: {fileID: 0}
-    - target: {fileID: 2588219947376932421, guid: 00b5f95d6d4bfd440b69aa42ce4a5926,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 3078652455503504527, guid: 00b5f95d6d4bfd440b69aa42ce4a5926,
         type: 3}
       propertyPath: m_AnchorMax.x
@@ -24768,6 +24832,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 867965365}
     m_Modifications:
+    - target: {fileID: 3991136240366352493, guid: 7727d09af9aa6fb45b2d6ea73f6b1810,
+        type: 3}
+      propertyPath: m_Name
+      value: MiniGameCookingHandler
+      objectReference: {fileID: 0}
     - target: {fileID: 3991136240366352494, guid: 7727d09af9aa6fb45b2d6ea73f6b1810,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -24843,11 +24912,6 @@ PrefabInstance:
       propertyPath: eventHandler
       value: 
       objectReference: {fileID: 196521812}
-    - target: {fileID: 3991136240366352493, guid: 7727d09af9aa6fb45b2d6ea73f6b1810,
-        type: 3}
-      propertyPath: m_Name
-      value: MiniGameCookingHandler
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7727d09af9aa6fb45b2d6ea73f6b1810, type: 3}
 --- !u!1001 &4742499061935762668
@@ -24857,6 +24921,16 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1383179666}
     m_Modifications:
+    - target: {fileID: 4742499063405651707, guid: 91c41a5c51bf3294db6af52fdf2ab638,
+        type: 3}
+      propertyPath: m_Name
+      value: MiniGameBarrage
+      objectReference: {fileID: 0}
+    - target: {fileID: 4742499063405651707, guid: 91c41a5c51bf3294db6af52fdf2ab638,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4742499063405651700, guid: 91c41a5c51bf3294db6af52fdf2ab638,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -24967,16 +25041,6 @@ PrefabInstance:
       propertyPath: uiManager
       value: 
       objectReference: {fileID: 1383179670}
-    - target: {fileID: 4742499063405651707, guid: 91c41a5c51bf3294db6af52fdf2ab638,
-        type: 3}
-      propertyPath: m_Name
-      value: MiniGameBarrage
-      objectReference: {fileID: 0}
-    - target: {fileID: 4742499063405651707, guid: 91c41a5c51bf3294db6af52fdf2ab638,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 4033089762493181477, guid: 91c41a5c51bf3294db6af52fdf2ab638,
         type: 3}
       propertyPath: m_AnchorMin.y
@@ -25036,6 +25100,16 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1383179666}
     m_Modifications:
+    - target: {fileID: 4931124165951311264, guid: 7721ff57a2bce0a40937a2c80b097d44,
+        type: 3}
+      propertyPath: m_Name
+      value: MiniGameCombat
+      objectReference: {fileID: 0}
+    - target: {fileID: 4931124165951311264, guid: 7721ff57a2bce0a40937a2c80b097d44,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4931124165951311265, guid: 7721ff57a2bce0a40937a2c80b097d44,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -25146,16 +25220,6 @@ PrefabInstance:
       propertyPath: uiManager
       value: 
       objectReference: {fileID: 1383179670}
-    - target: {fileID: 4931124165951311264, guid: 7721ff57a2bce0a40937a2c80b097d44,
-        type: 3}
-      propertyPath: m_Name
-      value: MiniGameCombat
-      objectReference: {fileID: 0}
-    - target: {fileID: 4931124165951311264, guid: 7721ff57a2bce0a40937a2c80b097d44,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 6936743203372406144, guid: 7721ff57a2bce0a40937a2c80b097d44,
         type: 3}
       propertyPath: m_SizeDelta.y
@@ -25985,6 +26049,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 867965365}
     m_Modifications:
+    - target: {fileID: 5358693864847973548, guid: b43a565b081a76d40a09c4962d7e7483,
+        type: 3}
+      propertyPath: m_Name
+      value: MiniGameBarrageHandler
+      objectReference: {fileID: 0}
     - target: {fileID: 5358693864847973551, guid: b43a565b081a76d40a09c4962d7e7483,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -26060,11 +26129,6 @@ PrefabInstance:
       propertyPath: miniGameBuilder
       value: 
       objectReference: {fileID: 1268023043}
-    - target: {fileID: 5358693864847973548, guid: b43a565b081a76d40a09c4962d7e7483,
-        type: 3}
-      propertyPath: m_Name
-      value: MiniGameBarrageHandler
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b43a565b081a76d40a09c4962d7e7483, type: 3}
 --- !u!1001 &7016311925020222792
@@ -26218,6 +26282,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 867965365}
     m_Modifications:
+    - target: {fileID: 7567779371456955112, guid: 94a1bdfb710b5c74e8a84eadd19706d9,
+        type: 3}
+      propertyPath: m_Name
+      value: MiniGameCombatHandler
+      objectReference: {fileID: 0}
     - target: {fileID: 7567779371456955113, guid: 94a1bdfb710b5c74e8a84eadd19706d9,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -26298,11 +26367,6 @@ PrefabInstance:
       propertyPath: miniGameBuilder
       value: 
       objectReference: {fileID: 147023511}
-    - target: {fileID: 7567779371456955112, guid: 94a1bdfb710b5c74e8a84eadd19706d9,
-        type: 3}
-      propertyPath: m_Name
-      value: MiniGameCombatHandler
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 94a1bdfb710b5c74e8a84eadd19706d9, type: 3}
 --- !u!1001 &7643544670968981605
@@ -26312,6 +26376,16 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1383179666}
     m_Modifications:
+    - target: {fileID: 7643544672460960892, guid: 4c94c9994edbece4d9b95f342972ddec,
+        type: 3}
+      propertyPath: m_Name
+      value: MiniGameCountDown
+      objectReference: {fileID: 0}
+    - target: {fileID: 7643544672460960892, guid: 4c94c9994edbece4d9b95f342972ddec,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7643544672460960895, guid: 4c94c9994edbece4d9b95f342972ddec,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -26422,16 +26496,6 @@ PrefabInstance:
       propertyPath: uiManager
       value: 
       objectReference: {fileID: 1383179670}
-    - target: {fileID: 7643544672460960892, guid: 4c94c9994edbece4d9b95f342972ddec,
-        type: 3}
-      propertyPath: m_Name
-      value: MiniGameCountDown
-      objectReference: {fileID: 0}
-    - target: {fileID: 7643544672460960892, guid: 4c94c9994edbece4d9b95f342972ddec,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 3758320116644142180, guid: 4c94c9994edbece4d9b95f342972ddec,
         type: 3}
       propertyPath: m_AnchoredPosition.y
@@ -26566,6 +26630,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 587775624}
     m_Modifications:
+    - target: {fileID: 7873284715322261453, guid: bb93b112888a57844b25afe7b899b7f3,
+        type: 3}
+      propertyPath: m_Name
+      value: MiniGameCombatBuilder
+      objectReference: {fileID: 0}
     - target: {fileID: 7873284715322261454, guid: bb93b112888a57844b25afe7b899b7f3,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -26626,11 +26695,6 @@ PrefabInstance:
       propertyPath: objPlayerContainer
       value: 
       objectReference: {fileID: 1824036738}
-    - target: {fileID: 7873284715322261453, guid: bb93b112888a57844b25afe7b899b7f3,
-        type: 3}
-      propertyPath: m_Name
-      value: MiniGameCombatBuilder
-      objectReference: {fileID: 0}
     - target: {fileID: 8670261339388487597, guid: bb93b112888a57844b25afe7b899b7f3,
         type: 3}
       propertyPath: characterDressManager
@@ -26665,6 +26729,16 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1631365414}
     m_Modifications:
+    - target: {fileID: 8095176419513426766, guid: 85d7a8dcf4a3f00438800e40f946199f,
+        type: 3}
+      propertyPath: m_Name
+      value: MiniGameCombat
+      objectReference: {fileID: 0}
+    - target: {fileID: 8095176419513426766, guid: 85d7a8dcf4a3f00438800e40f946199f,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8095176419513426767, guid: 85d7a8dcf4a3f00438800e40f946199f,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -26725,16 +26799,6 @@ PrefabInstance:
       propertyPath: gameCombatHandler
       value: 
       objectReference: {fileID: 1662692420}
-    - target: {fileID: 8095176419513426766, guid: 85d7a8dcf4a3f00438800e40f946199f,
-        type: 3}
-      propertyPath: m_Name
-      value: MiniGameCombat
-      objectReference: {fileID: 0}
-    - target: {fileID: 8095176419513426766, guid: 85d7a8dcf4a3f00438800e40f946199f,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 85d7a8dcf4a3f00438800e40f946199f, type: 3}
 --- !u!1001 &8420536468625317336

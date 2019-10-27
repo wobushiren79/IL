@@ -400,6 +400,19 @@ public class StoryCreateWindowsEditor : EditorWindow
                 GUILayout.Label("指定NPC展现表情 ");
 
             }
+            else if (itemData.type == (int)StoryInfoDetailsBean.StoryInfoDetailsTypeEnum.SceneInt)
+            {
+                GUILayout.Label("场景互动 ");
+                GUILayout.Label("互动物体名称：");
+                itemData.scene_intobj_name = EditorGUILayout.TextArea(itemData.scene_intobj_name, GUILayout.Width(200), GUILayout.Height(20));
+                GUILayout.Label("互动类型名称：");
+                itemData.scene_intcomponent_name = EditorGUILayout.TextArea(itemData.scene_intcomponent_name, GUILayout.Width(200), GUILayout.Height(20));
+                GUILayout.Label("互动方法：");
+                itemData.scene_intcomponent_method = EditorGUILayout.TextArea(itemData.scene_intcomponent_method, GUILayout.Width(200), GUILayout.Height(20));
+                GUILayout.Label("互动方法参数：");
+                itemData.scene_intcomponent_parameters = EditorGUILayout.TextArea(itemData.scene_intcomponent_parameters, GUILayout.Width(200), GUILayout.Height(20));
+
+            }
             else if (itemData.type == (int)StoryInfoDetailsBean.StoryInfoDetailsTypeEnum.AutoNext)
             {
                 GUILayout.Label("延迟执行 ");
@@ -437,6 +450,10 @@ public class StoryCreateWindowsEditor : EditorWindow
         if (GUILayout.Button("添加对话"))
         {
             CreateStoryInfoDetailsDataByType(StoryInfoDetailsBean.StoryInfoDetailsTypeEnum.Talk);
+        }
+        if (GUILayout.Button("添加场景互动"))
+        {
+            CreateStoryInfoDetailsDataByType(StoryInfoDetailsBean.StoryInfoDetailsTypeEnum.SceneInt);
         }
         if (GUILayout.Button("添加延迟"))
         {
@@ -476,6 +493,8 @@ public class StoryCreateWindowsEditor : EditorWindow
                 break;
             case StoryInfoDetailsBean.StoryInfoDetailsTypeEnum.Talk:
                 itemPositionInfo.text_mark_id = long.Parse(mStoryId)*10000+ int.Parse(mStroyOrder);
+                break;
+            case StoryInfoDetailsBean.StoryInfoDetailsTypeEnum.SceneInt:
                 break;
             case StoryInfoDetailsBean.StoryInfoDetailsTypeEnum.AutoNext:
                 itemPositionInfo.wait_time = 1;
