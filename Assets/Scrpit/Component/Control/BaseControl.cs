@@ -2,7 +2,7 @@
 using UnityEditor;
 using Cinemachine;
 
-public class BaseControl: BaseMonoBehaviour
+public class BaseControl : BaseMonoBehaviour
 {
     //镜头
     private CinemachineVirtualCamera mCamera2D;
@@ -60,7 +60,8 @@ public class BaseControl: BaseMonoBehaviour
     public virtual void RestoreControl()
     {
         this.enabled = true;
-        mCamera2D.Follow = cameraFollowObj.transform;
+        if (cameraFollowObj != null)
+            mCamera2D.Follow = cameraFollowObj.transform;
     }
 
     /// <summary>
@@ -70,7 +71,7 @@ public class BaseControl: BaseMonoBehaviour
     {
         gameObject.SetActive(false);
     }
-    
+
     /// <summary>
     /// 设置摄像机位置
     /// </summary>
@@ -88,11 +89,11 @@ public class BaseControl: BaseMonoBehaviour
     ///
     public void SetCameraOrthographicSize(float orthographicSize)
     {
-        if (mCamera2D!=null)
+        if (mCamera2D != null)
         {
             mCamera2D.m_Lens.OrthographicSize = orthographicSize;
         }
-       
+
     }
     public void SetCameraOrthographicSize()
     {

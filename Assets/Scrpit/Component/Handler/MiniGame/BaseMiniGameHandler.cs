@@ -104,7 +104,7 @@ public class BaseMiniGameHandler<B,D> : BaseHandler, UIMiniGameCountDown.ICallBa
     /// 打开倒计时UI
     /// </summary>
     /// <param name="miniGameData"></param>
-    public void OpenCountDownUI(MiniGameBaseBean miniGameData)
+    public void OpenCountDownUI(MiniGameBaseBean miniGameData,bool isCountDown)
     {
         //打开游戏准备倒计时UI
         UIMiniGameCountDown uiCountDown = (UIMiniGameCountDown)uiGameManager.OpenUIAndCloseOtherByName(EnumUtil.GetEnumName(UIEnum.MiniGameCountDown));
@@ -122,9 +122,12 @@ public class BaseMiniGameHandler<B,D> : BaseHandler, UIMiniGameCountDown.ICallBa
                 break;
         }
         //设置准备UI的数据
-        uiCountDown.SetData(targetTitleStr, listWinConditions);
+        uiCountDown.SetData(targetTitleStr, listWinConditions, isCountDown);
     }
-
+    public void OpenCountDownUI(MiniGameBaseBean miniGameData)
+    {
+        OpenCountDownUI(miniGameData, true);
+    }
 
     #region 倒计时UI回调
     public virtual void GamePreCountDownStart()

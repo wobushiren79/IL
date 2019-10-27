@@ -17,7 +17,8 @@ public class UIMiniGameCountDown : BaseUIComponent
     public Text tvCountDown;
 
     private ICallBack mCallBack;
-
+    //是否倒计时
+    private bool mIsCountDown;
     private void Start()
     {
         if (btTargetStart != null)
@@ -36,8 +37,10 @@ public class UIMiniGameCountDown : BaseUIComponent
     /// </summary>
     /// <param name="titleStr">标题</param>
     /// <param name="listWinRequired">胜利条件</param>
-    public void SetData(string titleStr, List<string> listWinConditions)
+    public void SetData(string titleStr, List<string> listWinConditions,bool isCountDown)
     {
+        this.mIsCountDown = isCountDown;
+
         objTarget.SetActive(true);
         objCountDown.SetActive(false);
         SetTargetContent(titleStr, listWinConditions);
@@ -74,8 +77,18 @@ public class UIMiniGameCountDown : BaseUIComponent
         //恢复控制
         if (GetUIMananger<UIGameManager>().controlHandler != null)
             GetUIMananger<UIGameManager>().controlHandler.RestoreControl();
-        //倒计时
-        StartCoroutine(ShowCountDown());
+
+        if (mIsCountDown)
+        {
+            //倒计时
+            StartCoroutine(ShowCountDown());
+        }
+        else
+        {
+            //没有倒计时 直接结束
+            if (mCallBack != null)
+                mCallBack.GamePreCountDownEnd();
+        }
     }
 
     public IEnumerator ShowCountDown()

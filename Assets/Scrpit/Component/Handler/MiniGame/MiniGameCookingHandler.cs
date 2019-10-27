@@ -43,13 +43,8 @@ public class MiniGameCookingHandler : BaseMiniGameHandler<MiniGameCookingBuilder
         }
         //因为剧情需要，先隐藏主持人
         miniGameBuilder.SetCompereCharacterActive(false);
-        //触发开场事件
-
-        if (eventHandler != null)
-        {
-            eventHandler.AddObserver(this);
-            eventHandler.EventTriggerForStoryCooking(miniGameData, miniGameData.storyGameOpenId);
-        }
+        //打开倒计时UI
+        OpenCountDownUI(miniGameData,false);
     }
 
     /// <summary>
@@ -99,5 +94,16 @@ public class MiniGameCookingHandler : BaseMiniGameHandler<MiniGameCookingBuilder
     }
     #endregion
 
-
+    #region 倒计时UI
+    public override void GamePreCountDownEnd()
+    {
+        base.GamePreCountDownEnd();
+        //触发开场事件
+        if (eventHandler != null)
+        {
+            eventHandler.AddObserver(this);
+            eventHandler.EventTriggerForStoryCooking(miniGameData, miniGameData.storyGameOpenId);
+        }
+    }
+    #endregion
 }
