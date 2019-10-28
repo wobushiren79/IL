@@ -10,7 +10,7 @@ public class NpcAIMiniGameCookingCpt : BaseNpcAI
         GoToStove,
     }
 
-    public MiniGameCookingIntentEnum miniGameCookingIntent= MiniGameCookingIntentEnum.Idle;
+    public MiniGameCookingIntentEnum miniGameCookingIntent = MiniGameCookingIntentEnum.Idle;
 
     public enum MiniGameCookingNpcTypeEnum
     {
@@ -18,11 +18,34 @@ public class NpcAIMiniGameCookingCpt : BaseNpcAI
         Auditer,//评审员
         Compere//主持
     }
-    private MiniGameCookingNpcTypeEnum mNpcType;
-    public MiniGameCharacterBean characterMiniGameData;
 
+    private MiniGameCookingNpcTypeEnum mNpcType;
+
+    //游戏处理
+    public MiniGameCookingHandler miniGameCookingHandler;
+
+    //该NPC的数据
+    public MiniGameCharacterBean characterMiniGameData;
+    //该NPC的评审桌
     public MiniGameCookingAuditTableCpt auditTableCpt;
+    //该NPC的灶台
     public MiniGameCookingStoveCpt stoveCpt;
+
+    private void Update()
+    {
+        switch (miniGameCookingIntent)
+        {
+            case MiniGameCookingIntentEnum.GoToStove:
+                //如果是玩家到达灶台 则开始选择制作的食物
+                if (characterMiniGameData != null && characterMiniGameData.characterType == 1 && characterMoveCpt.IsAutoMoveStop())
+                {
+                    miniGameCookingHandler.StartSelectMenu();
+                }
+                break;
+        }
+
+
+    }
 
     public void SetNpcType(MiniGameCookingNpcTypeEnum npcType)
     {
@@ -92,7 +115,7 @@ public class NpcAIMiniGameCookingCpt : BaseNpcAI
     /// </summary>
     public void SetIntentForGoToAuditTable()
     {
-        if (auditTableCpt!=null)
+        if (auditTableCpt != null)
         {
             Vector3 seatPosition = auditTableCpt.GetSeatPosition();
             characterMoveCpt.SetDestination(seatPosition);

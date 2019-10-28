@@ -9,6 +9,8 @@ public class SceneGameArenaInit : BaseSceneInit, IBaseObserver
 {
     //场景数据管理
     public SceneArenaManager sceneArenaManager;
+    //食物管理
+    public InnFoodManager innFoodManager;
 
     //弹幕游戏控制
     public MiniGameBarrageHandler barrageHandler;
@@ -19,6 +21,8 @@ public class SceneGameArenaInit : BaseSceneInit, IBaseObserver
 
     //地形控制
     public NavMeshSurface navMesh;
+    
+
 
     private new void Start()
     {
@@ -47,6 +51,7 @@ public class SceneGameArenaInit : BaseSceneInit, IBaseObserver
         arenaPrepareData.gameType = MiniGameEnum.Cooking;
         arenaPrepareData.gameCookingData = new MiniGameCookingBean();
         arenaPrepareData.gameCookingData.gameReason = MiniGameReasonEnum.Improve;
+        arenaPrepareData.gameCookingData.winScore = 70;
         List<CharacterBean> listOurData = new List<CharacterBean>();
         listOurData.Add(npcInfoManager.GetCharacterDataById(200001));
         List<CharacterBean> listEnemyData = new List<CharacterBean>();
@@ -138,6 +143,11 @@ public class SceneGameArenaInit : BaseSceneInit, IBaseObserver
     /// <param name="gameCookingData"></param>
     private void InitGameCooking(MiniGameCookingBean gameCookingData)
     {
+        //如果没有料理主题 则随机获取一个
+        if (gameCookingData.cookingTheme == null)
+        {
+            gameCookingData.cookingTheme = innFoodManager.GetRandomCookingTheme();
+        }
         switch (gameCookingData.gameReason)
         {
             //如果是晋升 

@@ -23,6 +23,9 @@ public class MiniGameCookingBean : MiniGameBaseBean
     //游戏审核故事ID
     public long storyGameAuditId;
 
+    //料理的主题
+    public CookingThemeBean cookingTheme;
+
     public MiniGameCookingBean()
     {
         gameType = MiniGameEnum.Cooking;

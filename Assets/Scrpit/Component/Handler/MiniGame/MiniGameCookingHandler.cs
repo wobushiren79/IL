@@ -22,7 +22,7 @@ public class MiniGameCookingHandler : BaseMiniGameHandler<MiniGameCookingBuilder
         //设置通告板内容
         List<MiniGameCookingCallBoardCpt> listCallBoard = miniGameBuilder.GetListCallBoard();
         foreach (MiniGameCookingCallBoardCpt itemCpt in listCallBoard)
-            itemCpt.SetCallBoardContent("ma");
+            itemCpt.SetCallBoardContent(miniGameData.cookingTheme.name);
         //给评审人员分配桌子
         List<MiniGameCookingAuditTableCpt> listAuditTable = miniGameBuilder.GetListAuditTable();
         List<NpcAIMiniGameCookingCpt> listAuditNpcAI = miniGameBuilder.GetCharacterByType(NpcAIMiniGameCookingCpt.MiniGameCookingNpcTypeEnum.Auditer);
@@ -77,8 +77,15 @@ public class MiniGameCookingHandler : BaseMiniGameHandler<MiniGameCookingBuilder
             BaseControl baseControl = controlHandler.StartControl(ControlHandler.ControlEnum.MiniGameCooking);
             baseControl.SetCameraFollowObj(miniGameBuilder.GetUserCharacter().gameObject);
         }
-        //打开游戏UI
+    }
 
+    /// <summary>
+    /// 开始选择制作的食物
+    /// </summary>
+    public void StartSelectMenu()
+    {
+        //打开游戏UI
+        uiGameManager.OpenUIAndCloseOtherByName(EnumUtil.GetEnumName(UIEnum.MiniGameCookingSelect));
     }
 
     #region 通知回调

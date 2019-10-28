@@ -41,7 +41,7 @@ public class UIGameText : BaseUIComponent, ITextInfoView
     private ICallBack mCallBack;
 
     //备用文本替换数据
-    public List<string> listMarkData = new List<string>();
+    public SortedList<string, string> listMarkData = new SortedList<string, string>();
     private void Awake()
     {
         mTextInfoController = new TextInfoController(this, this);
@@ -163,7 +163,7 @@ public class UIGameText : BaseUIComponent, ITextInfoView
     /// 设置备用数据
     /// </summary>
     /// <param name="listMarkData"></param>
-    public void SetListMark(List<string> listMarkData)
+    public void SetListMark(SortedList<string, string> listMarkData)
     {
         this.listMarkData = listMarkData;
     }
@@ -384,8 +384,14 @@ public class UIGameText : BaseUIComponent, ITextInfoView
         content = content.Replace("{othername}", otherName);
 
         //替换备用数据
-        if (!CheckUtil.ListIsNull(listMarkData))
-            content = string.Format(content, listMarkData.ToArray());
+        if (listMarkData!=null)
+        {
+            foreach (var item in listMarkData)
+            {
+                content = content.Replace(item.Key, item.Value);
+            }
+        }
+          
         return content;
     }
 

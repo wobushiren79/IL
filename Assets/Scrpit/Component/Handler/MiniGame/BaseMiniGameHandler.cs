@@ -120,6 +120,9 @@ public class BaseMiniGameHandler<B,D> : BaseHandler, UIMiniGameCountDown.ICallBa
             case MiniGameEnum.Combat:
                 targetTitleStr = GameCommonInfo.GetUITextById(205);
                 break;
+            case MiniGameEnum.Cooking:
+                targetTitleStr = GameCommonInfo.GetUITextById(201);
+                break;
         }
         //设置准备UI的数据
         uiCountDown.SetData(targetTitleStr, listWinConditions, isCountDown);

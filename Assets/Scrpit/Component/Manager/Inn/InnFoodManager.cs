@@ -2,13 +2,26 @@
 using UnityEditor;
 using System.Collections.Generic;
 
-public class InnFoodManager : BaseManager, IMenuInfoView
+public class InnFoodManager : BaseManager, IMenuInfoView, ICookingThemeView
 {
+    //食物图标
     public IconBeanDictionary listFoodIcon;
-
+    //菜单数据
     public Dictionary<long, MenuInfoBean> listMenuData;
+    //料理主题数据
+    public Dictionary<long, CookingThemeBean> listCookingTheme;
 
     public MenuInfoController mMenuInfoController;
+    public CookingThemeController mCookingThemeController;
+
+    private void Awake()
+    {
+        mMenuInfoController = new MenuInfoController(this, this);
+        mCookingThemeController = new CookingThemeController(this, this);
+
+        mMenuInfoController.GetAllMenuInfo();
+        mCookingThemeController.GetAllCookingTheme();
+    }
 
     /// <summary>
     /// 通过名字获取食物图标
@@ -41,7 +54,7 @@ public class InnFoodManager : BaseManager, IMenuInfoView
         for (int i = 0; i < listOwnMenu.Count; i++)
         {
             MenuOwnBean itemFoodData = listOwnMenu[i];
-            MenuInfoBean menuInfo= GetFoodDataById(itemFoodData.menuId);
+            MenuInfoBean menuInfo = GetFoodDataById(itemFoodData.menuId);
             if (menuInfo != null)
                 listFood.Add(menuInfo);
         }
@@ -69,6 +82,39 @@ public class InnFoodManager : BaseManager, IMenuInfoView
     }
 
     /// <summary>
+    /// 随机获取一个料理主题
+    /// </summary>
+    /// <returns></returns>
+    public CookingThemeBean GetRandomCookingTheme()
+    {
+        int randomTempNum = Random.Range(0,listCookingTheme.Count);
+        int i = 0;
+        foreach (var item in listCookingTheme)
+        {
+            if(i == randomTempNum)
+            {
+                return item.Value;
+            }
+            i++;
+        }
+        return null;
+    }
+
+    /// <summary>
+    /// 通过主题ID获取料理主题
+    /// </summary>
+    /// <param name="themeId"></param>
+    /// <returns></returns>
+    public CookingThemeBean GetCookingTheme(long themeId)
+    {
+        if (listCookingTheme.TryGetValue(themeId, out CookingThemeBean cookingTheme))
+        {
+            return cookingTheme;
+        }
+        return null;
+    }
+
+    /// <summary>
     /// 根据ID获取食物数据
     /// </summary>
     /// <param name="id"></param>
@@ -76,15 +122,6 @@ public class InnFoodManager : BaseManager, IMenuInfoView
     public MenuInfoBean GetFoodDataById(long id)
     {
         return GetDataById(id, listMenuData);
-    }
-
-    private void Awake()
-    {
-        mMenuInfoController = new MenuInfoController(this, this);
-    }
-    private void Start()
-    {
-        mMenuInfoController.GetAllMenuInfo();
     }
 
     #region 菜单回调
@@ -101,6 +138,22 @@ public class InnFoodManager : BaseManager, IMenuInfoView
             {
                 listMenuData.Add(itemData.id, itemData);
             }
+    }
+    #endregion
+
+    #region 料理主题回调
+    public void GetAllCookingThemeSuccess(List<CookingThemeBean> listData)
+    {
+        listCookingTheme = new Dictionary<long, CookingThemeBean>();
+        if (listData != null)
+            foreach (CookingThemeBean itemData in listData)
+            {
+                listCookingTheme.Add(itemData.id, itemData);
+            }
+    }
+
+    public void GetAllCookingThemeFail()
+    {
     }
     #endregion
 }

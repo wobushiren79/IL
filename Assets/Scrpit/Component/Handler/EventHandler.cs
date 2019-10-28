@@ -145,7 +145,7 @@ public class EventHandler : BaseHandler, UIGameText.ICallBack
         UIGameText uiGameText = (UIGameText)uiManager.GetUIByName(EnumUtil.GetEnumName(UIEnum.GameText));
         uiGameText.SetCallBack(this);
         //设置文本的备用数据
-        List<string> listMarkData = GetMiniGameMarkStrData(gameCookingData);
+        SortedList<string, string> listMarkData = GetMiniGameMarkStrData(gameCookingData);
         uiGameText.SetListMark(listMarkData);
         storyBuilder.BuildStory(storyInfo);
     }
@@ -211,34 +211,37 @@ public class EventHandler : BaseHandler, UIGameText.ICallBack
     /// 获取迷你游戏故事的备用文本数据
     /// </summary>
     /// <returns></returns>
-    private List<string> GetMiniGameMarkStrData(MiniGameBaseBean miniGameData)
+    private SortedList<string,string> GetMiniGameMarkStrData(MiniGameBaseBean miniGameData)
     {
-        List<string> listData = new List<string>();
-        //0 为所有友方角色称呼 和 姓名
+        SortedList<string, string> listData = new SortedList<string, string>();
+        //为所有友方角色称呼 和 姓名
         string userCharacterList = "";
         foreach (MiniGameCharacterBean itemCharacter in miniGameData.listUserGameData)
         {
             userCharacterList += (itemCharacter.characterData.baseInfo.titleName + "" + itemCharacter.characterData.baseInfo.name) + " ";
         }
-        listData.Add(userCharacterList);
-        //1 为所有敌方角色称呼 和 姓名
+        listData.Add("{minigame_usernamelist}",userCharacterList);
+        //为所有敌方角色称呼 和 姓名
         string enemyCharacterList = "";
         foreach (MiniGameCharacterBean itemCharacter in miniGameData.listEnemyGameData)
         {
             enemyCharacterList += (itemCharacter.characterData.baseInfo.titleName + "" + itemCharacter.characterData.baseInfo.name) + " ";
         }
-        listData.Add(enemyCharacterList);
-        //2 所有评审人员角色姓名
-        string auditerCharaterList = "";
+        listData.Add("{minigame_enemynamelist}", enemyCharacterList);
+
         if(miniGameData.gameType== MiniGameEnum.Cooking)
         {
             MiniGameCookingBean gameCookingData = (MiniGameCookingBean)miniGameData;
+            //所有评审人员角色姓名
+            string auditerCharaterList = "";
             foreach (MiniGameCharacterBean itemCharacter in gameCookingData.listAuditerGameData)
             {
                 auditerCharaterList += (itemCharacter.characterData.baseInfo.titleName + "" + itemCharacter.characterData.baseInfo.name) + " ";
             }
+            listData.Add("{minigame_cooking_auditernamelist}", auditerCharaterList);
+            //料理的主题
+            listData.Add("{minigame_cooking_theme}", gameCookingData.cookingTheme.name);
         }
-        listData.Add(auditerCharaterList);
         return listData; 
     }
 
