@@ -39,35 +39,35 @@ public class UIGameMenu : BaseUIComponent
         GameDataManager gameDataManager = GetUIMananger<UIGameManager>().gameDataManager;
         if (tvOilsalt != null)
         {
-            tvOilsalt.text = "油盐 " + gameDataManager.gameData.ingOilsalt;
+            tvOilsalt.text =GameCommonInfo.GetUITextById(21) + gameDataManager.gameData.ingOilsalt;
         }
         if (tvMeat != null)
         {
-            tvMeat.text = "鲜肉 " + gameDataManager.gameData.ingMeat;
+            tvMeat.text = GameCommonInfo.GetUITextById(22) + gameDataManager.gameData.ingMeat;
         }
         if (tvRiverfresh != null)
         {
-            tvRiverfresh.text = "河鲜 " + gameDataManager.gameData.ingRiverfresh;
+            tvRiverfresh.text = GameCommonInfo.GetUITextById(23) + gameDataManager.gameData.ingRiverfresh;
         }
         if (tvSeafood != null)
         {
-            tvSeafood.text = "海鲜 " + gameDataManager.gameData.ingSeafood;
+            tvSeafood.text = GameCommonInfo.GetUITextById(24) + gameDataManager.gameData.ingSeafood;
         }
         if (tvVegetables != null)
         {
-            tvVegetables.text = "蔬菜 " + gameDataManager.gameData.ingVegetables;
+            tvVegetables.text = GameCommonInfo.GetUITextById(25) + gameDataManager.gameData.ingVegetables;
         }
         if (tvMelonfruit != null)
         {
-            tvMelonfruit.text = "瓜果 " + gameDataManager.gameData.ingMelonfruit;
+            tvMelonfruit.text = GameCommonInfo.GetUITextById(26) + gameDataManager.gameData.ingMelonfruit;
         }
         if (tvWaterwine != null)
         {
-            tvWaterwine.text = "酒水 " + gameDataManager.gameData.ingWaterwine;
+            tvWaterwine.text = GameCommonInfo.GetUITextById(27) + gameDataManager.gameData.ingWaterwine;
         }
         if (tvflour != null)
         {
-            tvflour.text = "面粉 " + gameDataManager.gameData.ingFlour;
+            tvflour.text = GameCommonInfo.GetUITextById(28) + gameDataManager.gameData.ingFlour;
         }
     }
 

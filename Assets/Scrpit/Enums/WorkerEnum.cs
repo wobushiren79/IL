@@ -1,9 +1,4 @@
-﻿using UnityEngine;
-using UnityEditor;
-
-
-
-public enum WorkerEnum 
+﻿public enum WorkerEnum 
 {
     Chef=1, //厨师
     Waiter =2,//跑堂

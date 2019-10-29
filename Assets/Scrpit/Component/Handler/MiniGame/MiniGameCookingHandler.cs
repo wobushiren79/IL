@@ -2,7 +2,7 @@
 using UnityEditor;
 using System.Collections.Generic;
 
-public class MiniGameCookingHandler : BaseMiniGameHandler<MiniGameCookingBuilder, MiniGameCookingBean>, IBaseObserver
+public class MiniGameCookingHandler : BaseMiniGameHandler<MiniGameCookingBuilder, MiniGameCookingBean>, UIMiniGameCookingSelect.ICallBack, IBaseObserver
 {
     //事件处理
     public EventHandler eventHandler;
@@ -44,7 +44,7 @@ public class MiniGameCookingHandler : BaseMiniGameHandler<MiniGameCookingBuilder
         //因为剧情需要，先隐藏主持人
         miniGameBuilder.SetCompereCharacterActive(false);
         //打开倒计时UI
-        OpenCountDownUI(miniGameData,false);
+        OpenCountDownUI(miniGameData, false);
     }
 
     /// <summary>
@@ -85,7 +85,9 @@ public class MiniGameCookingHandler : BaseMiniGameHandler<MiniGameCookingBuilder
     public void StartSelectMenu()
     {
         //打开游戏UI
-        uiGameManager.OpenUIAndCloseOtherByName(EnumUtil.GetEnumName(UIEnum.MiniGameCookingSelect));
+        UIMiniGameCookingSelect uiMiniGameCookingSelect = (UIMiniGameCookingSelect)uiGameManager.OpenUIAndCloseOtherByName(EnumUtil.GetEnumName(UIEnum.MiniGameCookingSelect));
+        uiMiniGameCookingSelect.SetCallBack(this);
+        uiMiniGameCookingSelect.SetData(miniGameData);
     }
 
     #region 通知回调
@@ -111,6 +113,13 @@ public class MiniGameCookingHandler : BaseMiniGameHandler<MiniGameCookingBuilder
             eventHandler.AddObserver(this);
             eventHandler.EventTriggerForStoryCooking(miniGameData, miniGameData.storyGameOpenId);
         }
+    }
+    #endregion
+
+    #region UI选择回调
+    public void UIMiniGameCookingSelect(MenuInfoBean menuInfo)
+    {
+        
     }
     #endregion
 }

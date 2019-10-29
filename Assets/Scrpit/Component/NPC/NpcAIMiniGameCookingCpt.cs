@@ -36,10 +36,15 @@ public class NpcAIMiniGameCookingCpt : BaseNpcAI
         switch (miniGameCookingIntent)
         {
             case MiniGameCookingIntentEnum.GoToStove:
-                //如果是玩家到达灶台 则开始选择制作的食物
-                if (characterMiniGameData != null && characterMiniGameData.characterType == 1 && characterMoveCpt.IsAutoMoveStop())
+                if (characterMiniGameData != null && characterMoveCpt.IsAutoMoveStop())
                 {
-                    miniGameCookingHandler.StartSelectMenu();
+                    SetIntent(MiniGameCookingIntentEnum.Idle);
+                    if (characterMiniGameData.characterType == 1)
+                    {
+                        //如果是玩家到达灶台 则开始选择制作的食物
+                        miniGameCookingHandler.StartSelectMenu();
+                    }
+                    //打开灶台
                 }
                 break;
         }

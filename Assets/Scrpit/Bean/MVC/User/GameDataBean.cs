@@ -201,6 +201,15 @@ public class GameDataBean
     }
 
     /// <summary>
+    /// 获取所有菜品
+    /// </summary>
+    /// <returns></returns>
+    public List<MenuOwnBean> GetMenuList()
+    {
+        return menuList;
+    }
+
+    /// <summary>
     /// 修改食物销售数量
     /// </summary>
     /// <param name="number"></param>
@@ -518,4 +527,5 @@ public class GameDataBean
         }
         return levelTitleStr + levelStarStr;
     }
+
 }
