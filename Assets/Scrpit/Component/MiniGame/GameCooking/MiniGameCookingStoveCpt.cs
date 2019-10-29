@@ -7,6 +7,7 @@ public class MiniGameCookingStoveCpt : BaseMonoBehaviour
     public GameObject objCookingMakingPosition;
     public GameObject objCookingEndPosition;
 
+    public GameObject objEffects;
     /// <summary>
     /// 获取料理准备阶段位置
     /// </summary>
@@ -32,5 +33,21 @@ public class MiniGameCookingStoveCpt : BaseMonoBehaviour
     public Vector3 GetCookingEndPosition()
     {
         return objCookingEndPosition.transform.position;
+    }
+
+    /// <summary>
+    /// 开启灶台
+    /// </summary>
+    public void OpenStove()
+    {
+        objEffects.SetActive(true);
+    }
+
+    /// <summary>
+    /// 关闭灶台
+    /// </summary>
+    public void CloseStove()
+    {
+        objEffects.SetActive(false);
     }
 }

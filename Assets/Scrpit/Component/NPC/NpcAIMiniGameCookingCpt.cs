@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using UnityEditor;
+using System.Collections;
 
 public class NpcAIMiniGameCookingCpt : BaseNpcAI
 {
@@ -8,6 +9,7 @@ public class NpcAIMiniGameCookingCpt : BaseNpcAI
         Idle,
         GoToAuditTable,
         GoToStove,
+        Cooking,
     }
 
     public MiniGameCookingIntentEnum miniGameCookingIntent = MiniGameCookingIntentEnum.Idle;
@@ -38,13 +40,19 @@ public class NpcAIMiniGameCookingCpt : BaseNpcAI
             case MiniGameCookingIntentEnum.GoToStove:
                 if (characterMiniGameData != null && characterMoveCpt.IsAutoMoveStop())
                 {
-                    SetIntent(MiniGameCookingIntentEnum.Idle);
                     if (characterMiniGameData.characterType == 1)
                     {
                         //如果是玩家到达灶台 则开始选择制作的食物
                         miniGameCookingHandler.StartSelectMenu();
+                        SetIntent(MiniGameCookingIntentEnum.Idle);
+                    }
+                    else
+                    {
+                        SetIntent(MiniGameCookingIntentEnum.Cooking);
                     }
                     //打开灶台
+                    if (stoveCpt != null)
+                        stoveCpt.OpenStove();
                 }
                 break;
         }
@@ -112,6 +120,9 @@ public class NpcAIMiniGameCookingCpt : BaseNpcAI
             case MiniGameCookingIntentEnum.GoToStove:
                 SetIntentForGoToStove();
                 break;
+            case MiniGameCookingIntentEnum.Cooking:
+                SetIntentForCooking();
+                break;
         }
     }
 
@@ -136,6 +147,40 @@ public class NpcAIMiniGameCookingCpt : BaseNpcAI
         {
             Vector3 makingPosition = stoveCpt.GetCookingMakingPosition();
             characterMoveCpt.SetDestination(makingPosition);
+        }
+    }
+
+    /// <summary>
+    /// 意图-做菜
+    /// </summary>
+    public void SetIntentForCooking()
+    {
+        StartCoroutine(CoroutineForCooking());
+    }
+
+    /// <summary>
+    /// 协成-开始做菜
+    /// </summary>
+    /// <returns></returns>
+    public IEnumerator CoroutineForCooking()
+    {
+        while (miniGameCookingIntent == MiniGameCookingIntentEnum.Cooking)
+        {
+            int randomDo = Random.Range(0, 3);
+            float randomDoTime= Random.Range(3f, 7f);
+            switch (randomDo)
+            {
+                case 0:
+                    characterMoveCpt.SetDestination(stoveCpt.GetCookingPrePosition());
+                    break;
+                case 1:
+                    characterMoveCpt.SetDestination(stoveCpt.GetCookingMakingPosition());
+                    break;
+                case 2:
+                    characterMoveCpt.SetDestination(stoveCpt.GetCookingEndPosition());
+                    break;
+            }
+            yield return new WaitForSeconds(randomDoTime);
         }
     }
 }
