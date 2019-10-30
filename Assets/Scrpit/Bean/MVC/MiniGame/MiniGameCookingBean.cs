@@ -47,12 +47,10 @@ public class MiniGameCookingBean : MiniGameBaseBean
                 //获取角色属性
                 itemData.GetAttributes(gameItemsManager,
                 out CharacterAttributesBean totalAttributes, out CharacterAttributesBean selfAttributes, out CharacterAttributesBean equipAttributes);
-                MiniGameCharacterBean itemUserGameData = new MiniGameCharacterBean
-                {
-                    characterMaxLife = totalAttributes.life,
-                    characterCurrentLife = totalAttributes.life,
-                    characterData = itemData,
-                };
+                MiniGameCharacterBean itemUserGameData = CreateMiniGameCharacterBeanByType();
+                itemUserGameData.characterMaxLife = totalAttributes.life;
+                itemUserGameData.characterCurrentLife = totalAttributes.life;
+                itemUserGameData.characterData = itemData;
                 listAuditerGameData.Add(itemUserGameData);
             }
         }
@@ -65,12 +63,10 @@ public class MiniGameCookingBean : MiniGameBaseBean
                 //获取角色属性
                 itemData.GetAttributes(gameItemsManager,
                 out CharacterAttributesBean totalAttributes, out CharacterAttributesBean selfAttributes, out CharacterAttributesBean equipAttributes);
-                MiniGameCharacterBean itemUserGameData = new MiniGameCharacterBean
-                {
-                    characterMaxLife = totalAttributes.life,
-                    characterCurrentLife = totalAttributes.life,
-                    characterData = itemData,
-                };
+                MiniGameCharacterBean itemUserGameData = CreateMiniGameCharacterBeanByType();
+                itemUserGameData.characterMaxLife = totalAttributes.life;
+                itemUserGameData.characterCurrentLife = totalAttributes.life;
+                itemUserGameData.characterData = itemData;
                 listCompereGameData.Add(itemUserGameData);
             }
         }

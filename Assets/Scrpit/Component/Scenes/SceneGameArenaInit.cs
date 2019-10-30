@@ -65,11 +65,6 @@ public class SceneGameArenaInit : BaseSceneInit, IBaseObserver
         listEnemyData.Add(npcInfoManager.GetCharacterDataById(100003));
         listEnemyData.Add(npcInfoManager.GetCharacterDataById(100002));
         listEnemyData.Add(npcInfoManager.GetCharacterDataById(100003));
-        listEnemyData.Add(npcInfoManager.GetCharacterDataById(100003));
-        listEnemyData.Add(npcInfoManager.GetCharacterDataById(100003));
-        listEnemyData.Add(npcInfoManager.GetCharacterDataById(100003));
-        listEnemyData.Add(npcInfoManager.GetCharacterDataById(100003));
-        listEnemyData.Add(npcInfoManager.GetCharacterDataById(100003));
         List<CharacterBean> listAuditerData = new List<CharacterBean>();
         listAuditerData.Add(npcInfoManager.GetCharacterDataById(100001));
         listAuditerData.Add(npcInfoManager.GetCharacterDataById(100002));

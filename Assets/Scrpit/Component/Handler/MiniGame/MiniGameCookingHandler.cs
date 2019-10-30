@@ -6,7 +6,7 @@ public class MiniGameCookingHandler : BaseMiniGameHandler<MiniGameCookingBuilder
 {
     //事件处理
     public EventHandler eventHandler;
-
+    
     /// <summary>
     /// 初始化游戏
     /// </summary>
@@ -32,12 +32,18 @@ public class MiniGameCookingHandler : BaseMiniGameHandler<MiniGameCookingBuilder
             MiniGameCookingAuditTableCpt itemTable = listAuditTable[i];
             itemNpc.SetAuditTable(itemTable);
         }
-        //给参赛选手分配灶台
+        //参赛选手相关设定
         List<MiniGameCookingStoveCpt> listStove = miniGameBuilder.GetListStove();
         List<NpcAIMiniGameCookingCpt> listPlayerNpcAI = miniGameBuilder.GetCharacterByType(NpcAIMiniGameCookingCpt.MiniGameCookingNpcTypeEnum.Player);
         for (int i = 0; i < listPlayerNpcAI.Count; i++)
         {
+            //如果没有给定敌方角色的菜品 那就随机给参赛的敌方角色设置菜品
             NpcAIMiniGameCookingCpt itemNpc = listPlayerNpcAI[i];
+            if (itemNpc.characterMiniGameData.cookingMenuInfo == null && itemNpc.characterMiniGameData.characterType == 0)
+            {
+                itemNpc.characterMiniGameData.cookingMenuInfo = uiGameManager.innFoodManager.GetRandomFoodDataByCookingTheme(miniGameData.cookingTheme);
+            }
+            //给参赛选手分配灶台
             MiniGameCookingStoveCpt itemTable = listStove[i];
             itemNpc.SetStove(itemTable);
         }

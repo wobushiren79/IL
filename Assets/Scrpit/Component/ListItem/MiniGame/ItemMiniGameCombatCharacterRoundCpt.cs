@@ -5,7 +5,7 @@ using System;
 public class ItemMiniGameCombatCharacterRoundCpt : ItemGameBaseCpt
 {
     public CharacterUICpt characterUI;
-    public MiniGameCharacterBean gameCharacterData;
+    public MiniGameCharacterForCombatBean gameCharacterData;
 
     public ParticleSystem psSelected;
 
@@ -13,7 +13,7 @@ public class ItemMiniGameCombatCharacterRoundCpt : ItemGameBaseCpt
     /// 设置数据
     /// </summary>
     /// <param name="gameCharacterData"></param>
-    public void SetData(MiniGameCharacterBean gameCharacterData)
+    public void SetData(MiniGameCharacterForCombatBean gameCharacterData)
     {
         this.gameCharacterData = gameCharacterData;
         SetCharacterUI(gameCharacterData.characterData);

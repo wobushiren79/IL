@@ -8,7 +8,7 @@ public class NpcAIMiniGameCombatCpt : BaseNpcAI
     //战斗游戏处理
     public MiniGameCombatHandler gameCombatHandler;
     //角色数据
-    public MiniGameCharacterBean characterMiniGameData;
+    public MiniGameCharacterForCombatBean characterMiniGameData;
     //角色血量
     public CharacterLifeCpt characterLifeCpt;
     //角色出血特效
@@ -39,7 +39,7 @@ public class NpcAIMiniGameCombatCpt : BaseNpcAI
     /// 设置NPC数据
     /// </summary>
     /// <param name="characterMiniGameData"></param>
-    public void SetData(MiniGameCharacterBean characterMiniGameData)
+    public void SetData(MiniGameCharacterForCombatBean characterMiniGameData)
     {
         this.characterMiniGameData = characterMiniGameData;
         SetCharacterData(characterMiniGameData.characterData);

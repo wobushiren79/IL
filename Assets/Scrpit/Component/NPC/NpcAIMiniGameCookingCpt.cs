@@ -9,7 +9,7 @@ public class NpcAIMiniGameCookingCpt : BaseNpcAI
         Idle,
         GoToAuditTable,
         GoToStove,
-        Cooking,
+        AutoCooking,
     }
 
     public MiniGameCookingIntentEnum miniGameCookingIntent = MiniGameCookingIntentEnum.Idle;
@@ -27,7 +27,7 @@ public class NpcAIMiniGameCookingCpt : BaseNpcAI
     public MiniGameCookingHandler miniGameCookingHandler;
 
     //该NPC的数据
-    public MiniGameCharacterBean characterMiniGameData;
+    public MiniGameCharacterForCookingBean characterMiniGameData;
     //该NPC的评审桌
     public MiniGameCookingAuditTableCpt auditTableCpt;
     //该NPC的灶台
@@ -48,7 +48,7 @@ public class NpcAIMiniGameCookingCpt : BaseNpcAI
                     }
                     else
                     {
-                        SetIntent(MiniGameCookingIntentEnum.Cooking);
+                        SetIntent(MiniGameCookingIntentEnum.AutoCooking);
                     }
                     //打开灶台
                     if (stoveCpt != null)
@@ -74,7 +74,7 @@ public class NpcAIMiniGameCookingCpt : BaseNpcAI
     /// 设置NPC数据
     /// </summary>
     /// <param name="characterMiniGameData"></param>
-    public void SetData(MiniGameCharacterBean characterMiniGameData)
+    public void SetData(MiniGameCharacterForCookingBean characterMiniGameData)
     {
         this.characterMiniGameData = characterMiniGameData;
         SetCharacterData(characterMiniGameData.characterData);
@@ -96,6 +96,7 @@ public class NpcAIMiniGameCookingCpt : BaseNpcAI
     public void SetStove(MiniGameCookingStoveCpt stoveCpt)
     {
         this.stoveCpt = stoveCpt;
+        this.stoveCpt.SetMenuInfo(characterMiniGameData.cookingMenuInfo);
     }
 
     public void OpenAI()
@@ -120,7 +121,7 @@ public class NpcAIMiniGameCookingCpt : BaseNpcAI
             case MiniGameCookingIntentEnum.GoToStove:
                 SetIntentForGoToStove();
                 break;
-            case MiniGameCookingIntentEnum.Cooking:
+            case MiniGameCookingIntentEnum.AutoCooking:
                 SetIntentForCooking();
                 break;
         }
@@ -164,7 +165,7 @@ public class NpcAIMiniGameCookingCpt : BaseNpcAI
     /// <returns></returns>
     public IEnumerator CoroutineForCooking()
     {
-        while (miniGameCookingIntent == MiniGameCookingIntentEnum.Cooking)
+        while (miniGameCookingIntent == MiniGameCookingIntentEnum.AutoCooking)
         {
             int randomDo = Random.Range(0, 3);
             float randomDoTime= Random.Range(3f, 7f);
@@ -172,6 +173,7 @@ public class NpcAIMiniGameCookingCpt : BaseNpcAI
             {
                 case 0:
                     characterMoveCpt.SetDestination(stoveCpt.GetCookingPrePosition());
+                    stoveCpt.ChangeIngredientPre();
                     break;
                 case 1:
                     characterMoveCpt.SetDestination(stoveCpt.GetCookingMakingPosition());

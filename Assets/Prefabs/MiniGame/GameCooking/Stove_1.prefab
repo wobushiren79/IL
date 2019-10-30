@@ -135,6 +135,87 @@ Transform:
   m_Father: {fileID: 136901762060795377}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &462964594589904431
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7348513379743809832}
+  - component: {fileID: 8856213962068238984}
+  m_Layer: 0
+  m_Name: Ingredients
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7348513379743809832
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 462964594589904431}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -1, y: 0.6, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 136901762060795377}
+  m_RootOrder: 5
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!212 &8856213962068238984
+SpriteRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 462964594589904431}
+  m_Enabled: 1
+  m_CastShadows: 0
+  m_ReceiveShadows: 0
+  m_DynamicOccludee: 1
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 0
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 0
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: -63496745
+  m_SortingLayer: 9
+  m_SortingOrder: 0
+  m_Sprite: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_FlipX: 0
+  m_FlipY: 0
+  m_DrawMode: 0
+  m_Size: {x: 1, y: 1}
+  m_AdaptiveModeThreshold: 0.5
+  m_SpriteTileMode: 0
+  m_WasSpriteAssigned: 0
+  m_MaskInteraction: 0
+  m_SpriteSortPoint: 0
 --- !u!1 &587301815448370344
 GameObject:
   m_ObjectHideFlags: 0
@@ -311,6 +392,7 @@ Transform:
   - {fileID: 8273356095062964491}
   - {fileID: 3833560780820708799}
   - {fileID: 7614610725066795215}
+  - {fileID: 7348513379743809832}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -329,7 +411,27 @@ MonoBehaviour:
   objCookingPrePosition: {fileID: 8569614832374276393}
   objCookingMakingPosition: {fileID: 1931980207585595724}
   objCookingEndPosition: {fileID: 587301815448370344}
+  srIngredientPre: {fileID: 8856213962068238984}
   objEffects: {fileID: 7434476584314283806}
+  menuInfo:
+    id: 0
+    valid: 0
+    menu_id: 0
+    icon_key: 
+    cook_time: 0
+    ing_oilsalt: 0
+    ing_meat: 0
+    ing_riverfresh: 0
+    ing_seafood: 0
+    ing_vegetables: 0
+    ing_melonfruit: 0
+    ing_waterwine: 0
+    ing_flour: 0
+    name: 
+    content: 
+    price_s: 0
+    price_m: 0
+    price_l: 0
 --- !u!65 &2500056955621334123
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -5353,11 +5455,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 7614610725066795215}
     m_Modifications:
-    - target: {fileID: 1669299788019589415, guid: 35c36388fba9fcd459b416f5d7060397,
-        type: 3}
-      propertyPath: m_Name
-      value: PSCookingSmoke_1
-      objectReference: {fileID: 0}
     - target: {fileID: 2773403650529176510, guid: 35c36388fba9fcd459b416f5d7060397,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -5412,6 +5509,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1669299788019589415, guid: 35c36388fba9fcd459b416f5d7060397,
+        type: 3}
+      propertyPath: m_Name
+      value: PSCookingSmoke_1
       objectReference: {fileID: 0}
     - target: {fileID: 3776649128993642791, guid: 35c36388fba9fcd459b416f5d7060397,
         type: 3}

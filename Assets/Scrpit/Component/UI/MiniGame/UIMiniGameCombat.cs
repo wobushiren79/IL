@@ -329,7 +329,7 @@ public class UIMiniGameCombat : UIBaseMiniGame, CombatPowerView.ICallBack
         GameObject objRoundItem = Instantiate(objRoundCharacterContainer, objRoundCharacterModel);
         RectTransform rtfItemRound = objRoundItem.GetComponent<RectTransform>();
         ItemMiniGameCombatCharacterRoundCpt characterRoundCpt = objRoundItem.GetComponent<ItemMiniGameCombatCharacterRoundCpt>();
-        characterRoundCpt.SetData(gameCharacterData);
+        characterRoundCpt.SetData((MiniGameCharacterForCombatBean)gameCharacterData);
         mListCharacterRound.Add(characterRoundCpt);
         //添加动画
         objItem.transform.DOScale(new Vector3(0.2f, 0.2f, 0.2f), 0.5f).From().SetDelay(0.1f * position).SetEase(Ease.OutBack);
@@ -351,7 +351,7 @@ public class UIMiniGameCombat : UIBaseMiniGame, CombatPowerView.ICallBack
         /// 轮到一个角色的回合
         /// </summary>
         /// <param name="gameCharacterData"></param>
-        void CharacterRoundCombat(MiniGameCharacterBean gameCharacterData);
+        void CharacterRoundCombat(MiniGameCharacterForCombatBean gameCharacterData);
 
         /// <summary>
         /// 指令 战斗

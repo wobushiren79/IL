@@ -123,14 +123,15 @@ public class ListDataEditor : Editor
         AddGameObjectDictionaryByFolder("Assets/Prefabs/BuildItem/Other/", innBuildManager.listFurnitureCpt);
     }
 
-    [MenuItem("Custom/List/AddUI")]
+    [MenuItem("Custom/List/AddIcon")]
     public static void AddUI()
     {
         GameObject Target = Selection.gameObjects[0];
-        UIDataManager uiDataManager = Target.GetComponent<UIDataManager>();
-        uiDataManager.listUIIcon.Clear();
-        AddIconBeanDictionaryByFolder("Assets/Texture/Background/", uiDataManager.listUIIcon);
-        AddIconBeanDictionaryByFolder("Assets/Texture/Common/", uiDataManager.listUIIcon);
+        IconDataManager iconDataManager = Target.GetComponent<IconDataManager>();
+        iconDataManager.listIcon.Clear();
+        //AddIconBeanDictionaryByFolder("Assets/Texture/Background/", iconDataManager.listIcon);
+        //AddIconBeanDictionaryByFolder("Assets/Texture/Common/", iconDataManager.listIcon);
+        AddIconBeanDictionaryByFolder("Assets/Texture/Element/Ingredients/", iconDataManager.listIcon);
     }
 
     /// <summary>

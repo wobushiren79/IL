@@ -1,18 +1,18 @@
 ﻿using UnityEngine;
 using UnityEditor;
 
-public class UIDataManager : BaseManager
+public class IconDataManager : BaseManager
 {
     //UI图标
-    public IconBeanDictionary listUIIcon;
+    public IconBeanDictionary listIcon;
     
     /// <summary>
     /// 根据名字获取UI图标
     /// </summary>
     /// <param name="name"></param>
     /// <returns></returns>
-    public Sprite GetUISpriteByName(string name)
+    public Sprite GetIconSpriteByName(string name)
     {
-        return GetSpriteByName(name, listUIIcon);
+        return GetSpriteByName(name, listIcon);
     }
 }

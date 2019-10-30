@@ -96,13 +96,11 @@ public class MiniGameBaseBean
                 //获取角色属性
                 itemData.GetAttributes(gameItemsManager,
                 out CharacterAttributesBean totalAttributes, out CharacterAttributesBean selfAttributes, out CharacterAttributesBean equipAttributes);
-                MiniGameCharacterBean itemUserGameData = new MiniGameCharacterBean
-                {
-                    characterType = 1,
-                    characterMaxLife = totalAttributes.life,
-                    characterCurrentLife = totalAttributes.life,
-                    characterData = itemData,
-                };
+                MiniGameCharacterBean itemUserGameData = CreateMiniGameCharacterBeanByType();
+                itemUserGameData.characterType = 1;
+                itemUserGameData.characterMaxLife = totalAttributes.life;
+                itemUserGameData.characterCurrentLife = totalAttributes.life;
+                itemUserGameData.characterData = itemData;
                 listUserGameData.Add(itemUserGameData);
             }
         }
@@ -114,16 +112,40 @@ public class MiniGameBaseBean
                 //获取角色属性
                 itemData.GetAttributes(gameItemsManager,
                 out CharacterAttributesBean totalAttributes, out CharacterAttributesBean selfAttributes, out CharacterAttributesBean equipAttributes);
-                MiniGameCharacterBean itemEnemyGameData = new MiniGameCharacterBean
-                {
-                    characterType = 0,
-                    characterMaxLife = totalAttributes.life,
-                    characterCurrentLife = totalAttributes.life,
-                    characterData = itemData,
-                };
+                MiniGameCharacterBean itemEnemyGameData = CreateMiniGameCharacterBeanByType();
+                itemEnemyGameData.characterType = 0;
+                itemEnemyGameData.characterMaxLife = totalAttributes.life;
+                itemEnemyGameData.characterCurrentLife = totalAttributes.life;
+                itemEnemyGameData.characterData = itemData;
                 listEnemyGameData.Add(itemEnemyGameData);
             }
         }
+    }
+
+    /// <summary>
+    /// 通过游戏类型获取角色数据类型
+    /// </summary>
+    /// <returns></returns>
+    public MiniGameCharacterBean CreateMiniGameCharacterBeanByType()
+    {
+        MiniGameCharacterBean itemUserGameData = null;
+        switch (gameType)
+        {
+            case MiniGameEnum.Barrage:
+                itemUserGameData = new MiniGameCharacterForBarrageBean();
+                break;
+            case MiniGameEnum.Combat:
+                itemUserGameData = new MiniGameCharacterForCombatBean();
+                break;
+            case MiniGameEnum.Cooking:
+                itemUserGameData = new MiniGameCharacterForCookingBean();
+                break;
+            //case MiniGameEnum.Barrage:
+            //    break;
+            //case MiniGameEnum.Barrage:
+            //    break;
+        }
+        return itemUserGameData;
     }
 
     public virtual void InitData(GameItemsManager gameItemsManager, CharacterBean userData)

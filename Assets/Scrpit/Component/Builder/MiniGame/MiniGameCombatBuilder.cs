@@ -103,7 +103,7 @@ public class MiniGameCombatBuilder : BaseMiniGameBuilder
     {
         GameObject objPlayer = Instantiate(objPlayerContainer, objPlayerModel, combatPosition);
         NpcAIMiniGameCombatCpt npcCpt = objPlayer.GetComponent<NpcAIMiniGameCombatCpt>();
-        npcCpt.SetData(miniGameCharacterData);
+        npcCpt.SetData((MiniGameCharacterForCombatBean)miniGameCharacterData);
         return npcCpt;
     }
 

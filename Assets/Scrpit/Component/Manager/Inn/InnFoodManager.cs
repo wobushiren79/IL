@@ -82,6 +82,24 @@ public class InnFoodManager : BaseManager, IMenuInfoView, ICookingThemeView
     }
 
     /// <summary>
+    /// 根据料理主题随机获取一个料理
+    /// </summary>
+    public MenuInfoBean GetRandomFoodDataByCookingTheme(CookingThemeBean cookingTheme)
+    {
+        //TODO
+        int randomTemp = Random.Range(0, listMenuData.Count);
+        int i = 0;
+        foreach (var item in listMenuData)
+        {
+            if (i == randomTemp)
+            {
+                return item.Value;
+            }
+            i++;
+        }
+        return null;
+    }
+    /// <summary>
     /// 随机获取一个料理主题
     /// </summary>
     /// <returns></returns>

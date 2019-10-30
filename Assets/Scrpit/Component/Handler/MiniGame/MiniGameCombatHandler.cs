@@ -242,7 +242,7 @@ public class MiniGameCombatHandler : BaseMiniGameHandler<MiniGameCombatBuilder, 
     /// 角色的回合
     /// </summary>
     /// <param name="gameCharacterData"></param>
-    public void CharacterRoundCombat(MiniGameCharacterBean gameCharacterData)
+    public void CharacterRoundCombat(MiniGameCharacterForCombatBean gameCharacterData)
     {
         //初始化数据
         gameCharacterData.CombatInit();

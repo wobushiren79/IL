@@ -1,0 +1,110 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &4193329787158794441
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4193329787158794442}
+  - component: {fileID: 4193329787158794443}
+  - component: {fileID: 4193329787158794444}
+  m_Layer: 0
+  m_Name: UIAndIconManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4193329787158794442
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4193329787158794441}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &4193329787158794443
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4193329787158794441}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c9ae57a4c21a198449a96e89fffd138f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  listDialogModel: []
+  parentObj: {fileID: 0}
+--- !u!114 &4193329787158794444
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4193329787158794441}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e557b594c526c894fb9f91e875d9fa20, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  listIcon:
+    reorderableList:
+      canAdd: 1
+      canRemove: 1
+      draggable: 1
+      expandable: 1
+      multipleSelection: 1
+      isExpanded: 0
+      label:
+        m_Text: Keys
+        m_Image: {fileID: 0}
+        m_Tooltip: 
+      headerHeight: 18
+      footerHeight: 13
+      slideEasing: 0.15
+      verticalSpacing: 2
+      showDefaultBackground: 1
+      elementDisplayType: 0
+      elementNameProperty: 
+      elementNameOverride: 
+      elementIcon: {fileID: 0}
+    reqReferences: {fileID: 0}
+    isExpanded: 0
+    _keyValues:
+    - ingredient_flour_1
+    - ingredient_meat_1
+    - ingredient_melonfruit_1
+    - ingredient_oilsalt_1
+    - ingredient_riverfresh_1
+    - ingredient_seafood_1
+    - ingredient_vegetables_1
+    - ingredient_waterwine_1
+    _keys:
+    - ingredient_flour_1
+    - ingredient_meat_1
+    - ingredient_melonfruit_1
+    - ingredient_oilsalt_1
+    - ingredient_riverfresh_1
+    - ingredient_seafood_1
+    - ingredient_vegetables_1
+    - ingredient_waterwine_1
+    _values:
+    - {fileID: 21300000, guid: e966764e833e52a469e08fb8de96de35, type: 3}
+    - {fileID: 21300000, guid: 6bb89306d697c354fb5dbb6c8fc1317a, type: 3}
+    - {fileID: 21300000, guid: 366da9509b825c14d8318efbae9020bf, type: 3}
+    - {fileID: 21300000, guid: 7c17781adb9edf14ba7562ee942574dc, type: 3}
+    - {fileID: 21300000, guid: eaf7a337dc984724da2ed2dbd076cb03, type: 3}
+    - {fileID: 21300000, guid: 6d1edd112c0659245aee88784ae99be0, type: 3}
+    - {fileID: 21300000, guid: e21096ed0d695b64aacbefca3ff036d9, type: 3}
+    - {fileID: 21300000, guid: abdf6d80519354a489f8a00051e0c373, type: 3}

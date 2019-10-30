@@ -9,11 +9,9 @@ public class MiniGameCharacterBean
     public int characterMaxLife;
     //角色当前血量
     public int characterCurrentLife;
-    //是否防御状态
-    public bool combatIsDefend;
+
     //角色数据
     public CharacterBean characterData;
-
     /// <summary>
     /// 增加生命
     /// </summary>
@@ -27,10 +25,5 @@ public class MiniGameCharacterBean
         }
     }
   
-    //战斗数据初始化
-    public void CombatInit()
-    {
-        combatIsDefend = false;
-    }
 
 }
