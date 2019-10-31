@@ -31,5 +31,6 @@ public enum UIEnum
     MiniGameCountDown,
     MiniGameBarrage,//弹幕游戏UI
     MiniGameCombat,//战斗游戏UI
+    MiniGameCooking,//料理游戏UI
     MiniGameCookingSelect,//料理游戏 食物选择UI
 }

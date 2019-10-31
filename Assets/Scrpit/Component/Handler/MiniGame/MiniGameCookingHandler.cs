@@ -95,6 +95,27 @@ public class MiniGameCookingHandler : BaseMiniGameHandler<MiniGameCookingBuilder
         uiMiniGameCookingSelect.SetCallBack(this);
         uiMiniGameCookingSelect.SetData(miniGameData);
     }
+    
+    /// <summary>
+    /// 开始准备阶段的料理游戏
+    /// </summary>
+    public void StartPreCooking(MenuInfoBean menuInfo)
+    {
+        UIMiniGameCooking uiMiniGameCooking = (UIMiniGameCooking)uiGameManager.OpenUIAndCloseOtherByName(EnumUtil.GetEnumName(UIEnum.MiniGameCooking));
+
+    }
+
+    /// <summary>
+    /// 开始故事 游戏开场
+    /// </summary>
+    public void StartStoryForGameOpen()
+    {
+        if (eventHandler != null)
+        {
+            eventHandler.AddObserver(this);
+            eventHandler.EventTriggerForStoryCooking(miniGameData, miniGameData.storyGameOpenId);
+        }
+    }
 
     #region 通知回调
     public void ObserbableUpdate<T>(T observable, int type, params object[] obj) where T : Object
@@ -114,18 +135,17 @@ public class MiniGameCookingHandler : BaseMiniGameHandler<MiniGameCookingBuilder
     {
         base.GamePreCountDownEnd();
         //触发开场事件
-        if (eventHandler != null)
-        {
-            eventHandler.AddObserver(this);
-            eventHandler.EventTriggerForStoryCooking(miniGameData, miniGameData.storyGameOpenId);
-        }
+        StartStoryForGameOpen();
     }
     #endregion
 
     #region UI选择回调
     public void UIMiniGameCookingSelect(MenuInfoBean menuInfo)
     {
-        
+        //设置操作角色的料理
+        miniGameBuilder.GetUserCharacter().characterMiniGameData.cookingMenuInfo = menuInfo;
+        //开始准备烹饪的游戏
+        StartPreCooking(menuInfo);
     }
     #endregion
 }

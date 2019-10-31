@@ -54,6 +54,16 @@ public class UIMiniGameCookingSelect : BaseUIComponent
         }
     }
 
+    /// <summary>
+    /// 选择菜单
+    /// </summary>
+    /// <param name="menuInfo"></param>
+    public void SelectMenu(MenuInfoBean menuInfo)
+    {
+        if (mCallBack != null)
+            mCallBack.UIMiniGameCookingSelect(menuInfo);
+    }
+
     public interface ICallBack
     {
         void UIMiniGameCookingSelect(MenuInfoBean menuInfo);

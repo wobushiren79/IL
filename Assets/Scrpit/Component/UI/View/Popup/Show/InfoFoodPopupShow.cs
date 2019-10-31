@@ -4,6 +4,7 @@ using UnityEditor;
 
 public class InfoFoodPopupShow : PopupShowView
 {
+    public GameObject objTime;
     public Text tvTime;
 
     public GameObject objOilsalt;
@@ -83,9 +84,9 @@ public class InfoFoodPopupShow : PopupShowView
             if (tvTime != null)
             {
                 if (isShowTime)
-                    tvTime.gameObject.SetActive(true);
+                    objTime.SetActive(true);
                 else
-                    tvTime.gameObject.SetActive(false);
+                    objTime.SetActive(false);
                 tvTime.text = foodData.cook_time + GameCommonInfo.GetUITextById(38);
             }
              
