@@ -10,6 +10,9 @@ public class NpcAIMiniGameCookingCpt : BaseNpcAI
         GoToAuditTable,
         GoToStove,
         AutoCooking,
+        CookingPre,
+        CookingMaking,
+        CookingEnd,
     }
 
     public MiniGameCookingIntentEnum miniGameCookingIntent = MiniGameCookingIntentEnum.Idle;
@@ -43,8 +46,8 @@ public class NpcAIMiniGameCookingCpt : BaseNpcAI
                     if (characterMiniGameData.characterType == 1)
                     {
                         //如果是玩家到达灶台 则开始选择制作的食物
-                        miniGameCookingHandler.StartSelectMenu();
                         SetIntent(MiniGameCookingIntentEnum.Idle);
+                        miniGameCookingHandler.StartSelectMenu();
                     }
                     else
                     {
@@ -122,7 +125,16 @@ public class NpcAIMiniGameCookingCpt : BaseNpcAI
                 SetIntentForGoToStove();
                 break;
             case MiniGameCookingIntentEnum.AutoCooking:
-                SetIntentForCooking();
+                SetIntentForAutoCooking();
+                break;
+            case MiniGameCookingIntentEnum.CookingPre:
+                SetIntentForCookingPre();
+                break;
+            case MiniGameCookingIntentEnum.CookingMaking:
+                SetIntentForCookingMaking();
+                break;
+            case MiniGameCookingIntentEnum.CookingEnd:
+                SetIntentForCookingEnd();
                 break;
         }
     }
@@ -154,16 +166,42 @@ public class NpcAIMiniGameCookingCpt : BaseNpcAI
     /// <summary>
     /// 意图-做菜
     /// </summary>
-    public void SetIntentForCooking()
+    public void SetIntentForAutoCooking()
     {
-        StartCoroutine(CoroutineForCooking());
+        StartCoroutine(CoroutineForAutoCooking());
+    }
+
+    /// <summary>
+    /// 意图-做菜 备料
+    /// </summary>
+    public void SetIntentForCookingPre()
+    {
+        stoveCpt.SetMenuInfo(characterMiniGameData.cookingMenuInfo);
+        characterMoveCpt.SetDestination(stoveCpt.GetCookingPrePosition());
+        StartCoroutine(CoroutineForCookingPre());
+    }
+
+    /// <summary>
+    /// 意图-做菜 烹饪
+    /// </summary>
+    public void SetIntentForCookingMaking()
+    {
+
+    }
+
+    /// <summary>
+    /// 意图-做菜 摆盘
+    /// </summary>
+    public void SetIntentForCookingEnd()
+    {
+
     }
 
     /// <summary>
     /// 协成-开始做菜
     /// </summary>
     /// <returns></returns>
-    public IEnumerator CoroutineForCooking()
+    public IEnumerator CoroutineForAutoCooking()
     {
         while (miniGameCookingIntent == MiniGameCookingIntentEnum.AutoCooking)
         {
@@ -183,6 +221,15 @@ public class NpcAIMiniGameCookingCpt : BaseNpcAI
                     break;
             }
             yield return new WaitForSeconds(randomDoTime);
+        }
+    }
+
+    public IEnumerator CoroutineForCookingPre()
+    {
+        while (miniGameCookingIntent == MiniGameCookingIntentEnum.CookingPre)
+        {
+            stoveCpt.ChangeIngredientPre();
+            yield return new WaitForSeconds(3);
         }
     }
 }

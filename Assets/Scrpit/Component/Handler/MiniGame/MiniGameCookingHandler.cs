@@ -2,7 +2,10 @@
 using UnityEditor;
 using System.Collections.Generic;
 
-public class MiniGameCookingHandler : BaseMiniGameHandler<MiniGameCookingBuilder, MiniGameCookingBean>, UIMiniGameCookingSelect.ICallBack, IBaseObserver
+public class MiniGameCookingHandler : BaseMiniGameHandler<MiniGameCookingBuilder, MiniGameCookingBean>, 
+    UIMiniGameCookingSelect.ICallBack,
+    UIMiniGameCooking.ICallBack,
+    IBaseObserver
 {
     //事件处理
     public EventHandler eventHandler;
@@ -102,7 +105,13 @@ public class MiniGameCookingHandler : BaseMiniGameHandler<MiniGameCookingBuilder
     public void StartPreCooking(MenuInfoBean menuInfo)
     {
         UIMiniGameCooking uiMiniGameCooking = (UIMiniGameCooking)uiGameManager.OpenUIAndCloseOtherByName(EnumUtil.GetEnumName(UIEnum.MiniGameCooking));
-
+        uiMiniGameCooking.SetData(miniGameData);
+        uiMiniGameCooking.SetCallBack(this);
+        uiMiniGameCooking.StartCookingPre();
+        //角色就位
+        NpcAIMiniGameCookingCpt npcAI= miniGameBuilder.GetUserCharacter();
+        npcAI.characterMiniGameData.cookingMenuInfo = menuInfo;
+        npcAI.SetIntent(NpcAIMiniGameCookingCpt.MiniGameCookingIntentEnum.CookingPre);
     }
 
     /// <summary>
@@ -146,6 +155,13 @@ public class MiniGameCookingHandler : BaseMiniGameHandler<MiniGameCookingBuilder
         miniGameBuilder.GetUserCharacter().characterMiniGameData.cookingMenuInfo = menuInfo;
         //开始准备烹饪的游戏
         StartPreCooking(menuInfo);
+    }
+    #endregion
+
+    #region UI游戏回调
+    public void UIMiniGameCookingSettle(UIMiniGameCooking.MiniGameCookingPhaseTypeEnum type, float useTime, int correctNumber, int errorNumber, int unfinishNumber)
+    {
+
     }
     #endregion
 }

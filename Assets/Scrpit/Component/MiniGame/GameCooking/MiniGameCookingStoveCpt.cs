@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using UnityEditor;
 using System.Collections.Generic;
-
+using DG.Tweening;
 public class MiniGameCookingStoveCpt : BaseMonoBehaviour
 {
     public GameObject objCookingPrePosition;
@@ -112,7 +112,7 @@ public class MiniGameCookingStoveCpt : BaseMonoBehaviour
                 iconKey += "seafood_1";
                 break;
             case IngredientsEnum.Vegetablest:
-                iconKey += "vegetablest_1";
+                iconKey += "vegetables_1";
                 break;
             case IngredientsEnum.Melonfruit:
                 iconKey += "melonfruit_1";
@@ -126,6 +126,10 @@ public class MiniGameCookingStoveCpt : BaseMonoBehaviour
         }
         Sprite spIcon = mIconDataManager.GetIconSpriteByName(iconKey);
         if (srIngredientPre != null)
+        {
             srIngredientPre.sprite = spIcon;
+            srIngredientPre.transform.localScale = new Vector3(1,1,1);
+            srIngredientPre.transform.DOScale(Vector3.zero, 0.5f).From().SetEase(Ease.OutBack);
+        }   
     }
 }
