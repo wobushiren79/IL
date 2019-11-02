@@ -37,7 +37,7 @@ public class UIMiniGameCountDown : BaseUIComponent
     /// </summary>
     /// <param name="titleStr">标题</param>
     /// <param name="listWinRequired">胜利条件</param>
-    public void SetData(string titleStr, List<string> listWinConditions,bool isCountDown)
+    public void SetData(string titleStr, List<string> listWinConditions, bool isCountDown)
     {
         this.mIsCountDown = isCountDown;
 
@@ -104,13 +104,13 @@ public class UIMiniGameCountDown : BaseUIComponent
         {
             string numberStr = "";
             if (i == 0)
-                numberStr = "三";
+                numberStr = GameCommonInfo.GetUITextById(252);
             else if (i == 1)
-                numberStr = "二";
+                numberStr = GameCommonInfo.GetUITextById(253);
             else if (i == 2)
-                numberStr = "一";
+                numberStr = GameCommonInfo.GetUITextById(254);
             else if (i == 3)
-                numberStr = "开始";
+                numberStr = GameCommonInfo.GetUITextById(255);
             tvCountDown.text = numberStr;
             tvCountDown.transform.localScale = new Vector3(1, 1, 1);
             tvCountDown.transform.DOScale(new Vector3(0.2f, 0.2f, 0.2f), 0.5f).From().SetEase(Ease.OutBack);

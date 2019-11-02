@@ -109,6 +109,7 @@ public class ItemMiniGameCookingButtonCpt : ItemGameBaseCpt
         buttonStatus = 1;
         ivButton.color = new Color(1, 1, 1, 1f);
         ivError.gameObject.SetActive(false);
+        ivButton.transform.DOScale(new Vector3(1.5f,1.5f,1.5f), 0.2f).From().SetEase(Ease.OutBack);
     }
 
     /// <summary>

@@ -186,7 +186,7 @@ public class NpcAIMiniGameCookingCpt : BaseNpcAI
     /// </summary>
     public void SetIntentForCookingMaking()
     {
-
+        characterMoveCpt.SetDestination(stoveCpt.GetCookingMakingPosition());
     }
 
     /// <summary>

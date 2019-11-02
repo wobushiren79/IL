@@ -3,6 +3,7 @@ using UnityEditor;
 using UnityEngine.UI;
 using DG.Tweening;
 using System.Collections.Generic;
+using System.Collections;
 
 public class UIMiniGameCooking : BaseUIComponent
 {
@@ -14,7 +15,10 @@ public class UIMiniGameCooking : BaseUIComponent
         End//摆盘
     }
 
+    public GameObject objTitle;
     public Text tvTitle;
+    public GameObject objCountDown;
+    public Text tvCountDown;
 
     public Slider sliderTime;
 
@@ -22,6 +26,7 @@ public class UIMiniGameCooking : BaseUIComponent
     public GameObject objCookingModel;
 
     public MiniGameCookingBean gameCookingData;
+    public float gameTiming;//游戏计时时间
 
     private ICallBack mCallBack;
 
@@ -79,19 +84,15 @@ public class UIMiniGameCooking : BaseUIComponent
         }
     }
 
-    public override void OpenUI()
-    {
-        base.OpenUI();
-    }
-
     public void SetCallBack(ICallBack callBack)
     {
         this.mCallBack = callBack;
     }
 
-    public void SetData(MiniGameCookingBean gameCookingData)
+    public void SetData(MiniGameCookingBean gameCookingData,float gameTiming)
     {
         this.gameCookingData = gameCookingData;
+        this.gameTiming = gameTiming;
     }
 
     /// <summary>
@@ -101,7 +102,9 @@ public class UIMiniGameCooking : BaseUIComponent
     {
         mPhaseType = MiniGameCookingPhaseTypeEnum.Pre;
         SetTitle(GameCommonInfo.GetUITextById(231));
+        //创建按钮
         CreateRandomCookingButton();
+        StartCountDown();
     }
 
     /// <summary>
@@ -111,6 +114,9 @@ public class UIMiniGameCooking : BaseUIComponent
     {
         mPhaseType = MiniGameCookingPhaseTypeEnum.Making;
         SetTitle(GameCommonInfo.GetUITextById(232));
+        //创建按钮
+        CreateRandomCookingButton();
+        StartCountDown();
     }
 
     /// <summary>
@@ -120,6 +126,12 @@ public class UIMiniGameCooking : BaseUIComponent
     {
         mPhaseType = MiniGameCookingPhaseTypeEnum.End;
         SetTitle(GameCommonInfo.GetUITextById(233));
+    }
+
+    public void StartCountDown()
+    {
+        //开始倒计时
+        StartCoroutine(CoroutineForCountDown());
     }
 
     /// <summary>
@@ -162,8 +174,11 @@ public class UIMiniGameCooking : BaseUIComponent
     /// <param name="name"></param>
     public void SetTitle(string name)
     {
-        if (tvTitle != null)
+        if (objTitle!=null&&tvTitle != null)
+        {
             tvTitle.text = name;
+            objTitle.transform.DOScale(new Vector3(3, 3, 3), 1).From().SetEase(Ease.OutBack);
+        }
     }
 
     /// <summary>
@@ -192,12 +207,15 @@ public class UIMiniGameCooking : BaseUIComponent
         }
         if (mCallBack != null)
         {
-            switch (mPhaseType)
+            MiniGameCookingSettleBean cookingSettleData = new MiniGameCookingSettleBean
             {
-                case MiniGameCookingPhaseTypeEnum.Pre:
-                    mCallBack.UIMiniGameCookingSettle(mPhaseType,1, correctNumber, errorNumber, unfinishNumber);
-                    break;
-            }
+                maxTime = sliderTime.maxValue,
+                residueTime = sliderTime.value,
+                correctNumber = correctNumber,
+                errorNumber = errorNumber,
+                unfinishNumber = unfinishNumber
+            };
+            mCallBack.UIMiniGameCookingSettle(mPhaseType, cookingSettleData);
         }
     }
 
@@ -221,6 +239,12 @@ public class UIMiniGameCooking : BaseUIComponent
     /// <param name="type"></param>
     private void ButtonClick(ItemMiniGameCookingButtonCpt.MiniGameCookingButtonTypeEnum type)
     {
+        //当第一次点击后开始计时
+        if (mButtonPosition == 0)
+        {
+            //倒计时开始计时
+            StartCoroutine(CoroutineForTiming());
+        }
         ItemMiniGameCookingButtonCpt itemButton= mListButton[mButtonPosition];
         if(itemButton.buttonType== type)
         {
@@ -242,16 +266,59 @@ public class UIMiniGameCooking : BaseUIComponent
         mListButton[mButtonPosition].SetSelectedStatus(true);
     }
 
+    /// <summary>
+    /// 协程 倒计时
+    /// </summary>
+    /// <returns></returns>
+    private IEnumerator CoroutineForCountDown()
+    {
+        objCountDown.SetActive(true);
+        tvCountDown.text = tvTitle.text;
+        tvCountDown.transform.DOScale(new Vector3(3, 3, 3), 0.5f).From().SetEase(Ease.OutBack);
+        yield return new WaitForSeconds(3);
+        tvCountDown.text = GameCommonInfo.GetUITextById(252);
+        tvCountDown.transform.DOScale(new Vector3(3, 3, 3), 0.5f).From().SetEase(Ease.OutBack);
+        yield return new WaitForSeconds(1);
+        tvCountDown.text = GameCommonInfo.GetUITextById(253);
+        tvCountDown.transform.DOScale(new Vector3(3, 3, 3), 0.5f).From().SetEase(Ease.OutBack);
+        yield return new WaitForSeconds(1);
+        tvCountDown.text = GameCommonInfo.GetUITextById(254);
+        tvCountDown.transform.DOScale(new Vector3(3, 3, 3), 0.5f).From().SetEase(Ease.OutBack);
+        yield return new WaitForSeconds(1);
+        tvCountDown.text = GameCommonInfo.GetUITextById(255);
+        tvCountDown.transform.DOScale(new Vector3(3, 3, 3), 0.5f).From().SetEase(Ease.OutBack);
+        yield return new WaitForSeconds(1);
+        objCountDown.SetActive(false);
+        mIsPlay = true;
+    }
+
+    /// <summary>
+    /// 协程 计时
+    /// </summary>
+    /// <returns></returns>
+    private IEnumerator CoroutineForTiming()
+    {
+        if (gameTiming < 1)
+            gameTiming = 1;
+        sliderTime.maxValue = gameTiming;
+        sliderTime.value = sliderTime.maxValue;
+        while (mIsPlay)
+        {
+            yield return new WaitForSeconds(0.1f);
+            sliderTime.value-=0.1f;
+            if (sliderTime.value <= 0)
+            {
+                SettleGame();
+            }
+        }
+    }
+
     public interface ICallBack
     {
         /// <summary>
         /// 游戏完成结算
         /// </summary>
         /// <param name="type">1备料  2烹饪 3摆盘</param>
-        /// <param name="useTime">使用时间</param>
-        /// <param name="correctNumber">完成数量</param>
-        /// <param name="errorNumber">错误数量</param>
-        /// <param name="unfinishNumber">未完成数量</param>
-        void UIMiniGameCookingSettle(MiniGameCookingPhaseTypeEnum type,float useTime,int correctNumber, int errorNumber,int unfinishNumber);
+        void UIMiniGameCookingSettle(MiniGameCookingPhaseTypeEnum type, MiniGameCookingSettleBean settleData);
     }
 }

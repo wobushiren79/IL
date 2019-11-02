@@ -9,7 +9,13 @@ public class MiniGameCookingHandler : BaseMiniGameHandler<MiniGameCookingBuilder
 {
     //事件处理
     public EventHandler eventHandler;
-    
+    public GameItemsManager gameItemsManager;
+
+    private void Awake()
+    {
+        gameItemsManager = FindObjectOfType<GameItemsManager>();
+    }
+
     /// <summary>
     /// 初始化游戏
     /// </summary>
@@ -104,14 +110,32 @@ public class MiniGameCookingHandler : BaseMiniGameHandler<MiniGameCookingBuilder
     /// </summary>
     public void StartPreCooking(MenuInfoBean menuInfo)
     {
+        //计算游戏时间
+        float gameTiming = 10;
+        miniGameBuilder.GetUserCharacter().characterData.GetAttributes(gameItemsManager, out CharacterAttributesBean attributes);
+        gameTiming += (attributes.cook * 0.5f);
+        //打开UI
         UIMiniGameCooking uiMiniGameCooking = (UIMiniGameCooking)uiGameManager.OpenUIAndCloseOtherByName(EnumUtil.GetEnumName(UIEnum.MiniGameCooking));
-        uiMiniGameCooking.SetData(miniGameData);
+        uiMiniGameCooking.SetData(miniGameData,gameTiming);
         uiMiniGameCooking.SetCallBack(this);
         uiMiniGameCooking.StartCookingPre();
         //角色就位
         NpcAIMiniGameCookingCpt npcAI= miniGameBuilder.GetUserCharacter();
         npcAI.characterMiniGameData.cookingMenuInfo = menuInfo;
         npcAI.SetIntent(NpcAIMiniGameCookingCpt.MiniGameCookingIntentEnum.CookingPre);
+    }
+
+    /// <summary>
+    /// 开始制作料理阶段游戏
+    /// </summary>
+    public void StartMakingCooking()
+    {
+        //打开UI
+        UIMiniGameCooking uiMiniGameCooking = (UIMiniGameCooking)uiGameManager.GetOpenUI();
+        uiMiniGameCooking.StartCookingMaking();
+        //角色就位
+        NpcAIMiniGameCookingCpt npcAI = miniGameBuilder.GetUserCharacter();
+        npcAI.SetIntent(NpcAIMiniGameCookingCpt.MiniGameCookingIntentEnum.CookingMaking);
     }
 
     /// <summary>
@@ -159,9 +183,18 @@ public class MiniGameCookingHandler : BaseMiniGameHandler<MiniGameCookingBuilder
     #endregion
 
     #region UI游戏回调
-    public void UIMiniGameCookingSettle(UIMiniGameCooking.MiniGameCookingPhaseTypeEnum type, float useTime, int correctNumber, int errorNumber, int unfinishNumber)
+    public void UIMiniGameCookingSettle(UIMiniGameCooking.MiniGameCookingPhaseTypeEnum type, MiniGameCookingSettleBean settleData)
     {
-
+        switch (type)
+        {
+            case UIMiniGameCooking.MiniGameCookingPhaseTypeEnum.Pre:
+                StartMakingCooking();
+                break;
+            case UIMiniGameCooking.MiniGameCookingPhaseTypeEnum.Making:
+                break;
+            case UIMiniGameCooking.MiniGameCookingPhaseTypeEnum.End:
+                break;
+        }
     }
     #endregion
 }
