@@ -106,6 +106,7 @@ public class MiniGameCookingBuilder : BaseMiniGameBuilder
     {
         GameObject objCharacter = Instantiate(objNpcContainer, objNpcModel, startPosition);
         NpcAIMiniGameCookingCpt npcCpt = objCharacter.GetComponent<NpcAIMiniGameCookingCpt>();
+        npcCpt.startPosition = startPosition;
         npcCpt.SetNpcType(npcType);
         npcCpt.SetData((MiniGameCharacterForCookingBean)characterGameData);
         npcCpt.OpenAI();

@@ -132,6 +132,7 @@ Transform:
   - {fileID: 4024200724735826722}
   - {fileID: 7704449499845584107}
   - {fileID: 9144275777439686988}
+  - {fileID: 7142029722687158187}
   m_Father: {fileID: 136901762060795377}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -411,6 +412,9 @@ MonoBehaviour:
   objCookingPrePosition: {fileID: 8569614832374276393}
   objCookingMakingPosition: {fileID: 1931980207585595724}
   objCookingEndPosition: {fileID: 587301815448370344}
+  objFoodPosition: {fileID: 5770394041020601859}
+  objFoodModel: {fileID: 3623682161330935454, guid: ad92aaa306e346149b750dcba6b77aa1,
+    type: 3}
   srIngredientPre: {fileID: 8856213962068238984}
   objEffects: {fileID: 7434476584314283806}
   menuInfo:
@@ -5385,6 +5389,36 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 10210, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!1 &5770394041020601859
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7142029722687158187}
+  m_Layer: 0
+  m_Name: FoodPosition
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7142029722687158187
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5770394041020601859}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 1, y: 0.2, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 3833560780820708799}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &7434476584314283806
 GameObject:
   m_ObjectHideFlags: 0
@@ -5455,6 +5489,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 7614610725066795215}
     m_Modifications:
+    - target: {fileID: 1669299788019589415, guid: 35c36388fba9fcd459b416f5d7060397,
+        type: 3}
+      propertyPath: m_Name
+      value: PSCookingSmoke_1
+      objectReference: {fileID: 0}
     - target: {fileID: 2773403650529176510, guid: 35c36388fba9fcd459b416f5d7060397,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -5509,11 +5548,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1669299788019589415, guid: 35c36388fba9fcd459b416f5d7060397,
-        type: 3}
-      propertyPath: m_Name
-      value: PSCookingSmoke_1
       objectReference: {fileID: 0}
     - target: {fileID: 3776649128993642791, guid: 35c36388fba9fcd459b416f5d7060397,
         type: 3}

@@ -177,6 +177,8 @@ public class EventHandler : BaseHandler, UIGameText.ICallBack
             uiManager.OpenUIAndCloseOtherByName(EnumUtil.GetEnumName(UIEnum.GameMain));
             //通知事件结束
             NotifyAllObserver((int)NotifyEventTypeEnum.EventEnd);
+            //移除所有观察者
+            RemoveAllObserver();
         }
     }
 

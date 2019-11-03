@@ -13,6 +13,7 @@ public class NpcAIMiniGameCookingCpt : BaseNpcAI
         CookingPre,
         CookingMaking,
         CookingEnd,
+        GoToAudit,//前往评审
     }
 
     public MiniGameCookingIntentEnum miniGameCookingIntent = MiniGameCookingIntentEnum.Idle;
@@ -25,17 +26,21 @@ public class NpcAIMiniGameCookingCpt : BaseNpcAI
     }
 
     private MiniGameCookingNpcTypeEnum mNpcType;
+    //开始的位置
+    public Vector3 startPosition;
 
     //游戏处理
     public MiniGameCookingHandler miniGameCookingHandler;
-
     //该NPC的数据
     public MiniGameCharacterForCookingBean characterMiniGameData;
     //该NPC的评审桌
     public MiniGameCookingAuditTableCpt auditTableCpt;
     //该NPC的灶台
     public MiniGameCookingStoveCpt stoveCpt;
-
+    //做好的食物
+    public FoodForCoverCpt foodForCover;
+    //拿食物位置
+    public GameObject objFoodPosition;
     private void Update()
     {
         switch (miniGameCookingIntent)
@@ -136,6 +141,9 @@ public class NpcAIMiniGameCookingCpt : BaseNpcAI
             case MiniGameCookingIntentEnum.CookingEnd:
                 SetIntentForCookingEnd();
                 break;
+            case MiniGameCookingIntentEnum.GoToAudit:
+                SetIntentForGoToAudit();
+                break;
         }
     }
 
@@ -194,7 +202,24 @@ public class NpcAIMiniGameCookingCpt : BaseNpcAI
     /// </summary>
     public void SetIntentForCookingEnd()
     {
+        characterMoveCpt.SetDestination(stoveCpt.GetCookingEndPosition());
+        foodForCover = stoveCpt.CreateFood();
+    }
 
+    /// <summary>
+    /// 意图-前往评审
+    /// </summary>
+    public void SetIntentForGoToAudit()
+    {
+        //如果是对手。先创建一个食物
+        if (characterMiniGameData.characterType ==0)
+        {
+            foodForCover = stoveCpt.CreateFood();
+        }
+        //将食物拿在手上
+        foodForCover.transform.SetParent(objFoodPosition.transform);
+        foodForCover.transform.position = objFoodPosition.transform.position;
+        characterMoveCpt.SetDestination(startPosition);
     }
 
     /// <summary>
@@ -231,5 +256,6 @@ public class NpcAIMiniGameCookingCpt : BaseNpcAI
             stoveCpt.ChangeIngredientPre();
             yield return new WaitForSeconds(3);
         }
+        stoveCpt.ClearStoveIngredient();
     }
 }

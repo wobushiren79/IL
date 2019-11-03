@@ -26,6 +26,11 @@ public class MiniGameCookingBean : MiniGameBaseBean
     //料理的主题
     public CookingThemeBean cookingTheme;
 
+    //游玩成绩
+    public MiniGameCookingSettleBean settleDataForPre;
+    public MiniGameCookingSettleBean settleDataForMaking;
+    public MiniGameCookingSettleBean settleDataForEnd;
+
     public MiniGameCookingBean()
     {
         gameType = MiniGameEnum.Cooking;

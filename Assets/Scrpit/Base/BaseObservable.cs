@@ -70,6 +70,16 @@ public class BaseObservable<T> : BaseMonoBehaviour
     }
 
     /// <summary>
+    /// 移除所有观察者
+    /// </summary>
+    public void RemoveAllObserver()
+    {
+        if (CheckUtil.ListIsNull(mObserverList))
+            return;
+        mObserverList.Clear();
+    }
+
+    /// <summary>
     /// 通知所有观察者
     /// </summary>
     /// <param name="type"></param>

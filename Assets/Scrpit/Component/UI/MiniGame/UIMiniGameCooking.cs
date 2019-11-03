@@ -126,6 +126,9 @@ public class UIMiniGameCooking : BaseUIComponent
     {
         mPhaseType = MiniGameCookingPhaseTypeEnum.End;
         SetTitle(GameCommonInfo.GetUITextById(233));
+        //创建按钮
+        CreateRandomCookingButton();
+        StartCountDown();
     }
 
     public void StartCountDown()
@@ -184,7 +187,7 @@ public class UIMiniGameCooking : BaseUIComponent
     /// <summary>
     /// 结算游戏成绩
     /// </summary>
-    public void SettleGame()
+    public IEnumerator SettleGame()
     {
         mIsPlay = false;
         mButtonPosition = 0;
@@ -204,6 +207,13 @@ public class UIMiniGameCooking : BaseUIComponent
                     errorNumber++;
                     break;
             }
+        }
+        if (mPhaseType == MiniGameCookingPhaseTypeEnum.End)
+        {
+            objCountDown.SetActive(true);
+            tvCountDown.text = GameCommonInfo.GetUITextById(256);
+            tvCountDown.transform.DOScale(new Vector3(3, 3, 3), 0.5f).From().SetEase(Ease.OutBack);
+            yield return new WaitForSeconds(3);
         }
         if (mCallBack != null)
         {
@@ -259,7 +269,7 @@ public class UIMiniGameCooking : BaseUIComponent
         mButtonPosition++;
         if (mButtonPosition >= mButtonNumber)
         {
-            SettleGame();
+            StartCoroutine(SettleGame());
             return;
         }
         //设置选中状态
@@ -272,10 +282,12 @@ public class UIMiniGameCooking : BaseUIComponent
     /// <returns></returns>
     private IEnumerator CoroutineForCountDown()
     {
+        sliderTime.maxValue = gameTiming;
+        sliderTime.value = sliderTime.maxValue;
         objCountDown.SetActive(true);
         tvCountDown.text = tvTitle.text;
         tvCountDown.transform.DOScale(new Vector3(3, 3, 3), 0.5f).From().SetEase(Ease.OutBack);
-        yield return new WaitForSeconds(3);
+        yield return new WaitForSeconds(5);
         tvCountDown.text = GameCommonInfo.GetUITextById(252);
         tvCountDown.transform.DOScale(new Vector3(3, 3, 3), 0.5f).From().SetEase(Ease.OutBack);
         yield return new WaitForSeconds(1);
@@ -308,7 +320,7 @@ public class UIMiniGameCooking : BaseUIComponent
             sliderTime.value-=0.1f;
             if (sliderTime.value <= 0)
             {
-                SettleGame();
+                StartCoroutine(SettleGame());
             }
         }
     }

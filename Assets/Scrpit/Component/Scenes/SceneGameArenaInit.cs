@@ -190,7 +190,7 @@ public class SceneGameArenaInit : BaseSceneInit, IBaseObserver
                 cookingHandler.miniGameBuilder.SetListStove(listStove);
                 //游戏开始动画
                 gameCookingData.storyGameOpenId = 100001;
-                gameCookingData.storyGameAuditId = 100001;
+                gameCookingData.storyGameAuditId = 100002;
                 //准备游戏
                 cookingHandler.InitGame(gameCookingData);
                 break;

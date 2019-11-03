@@ -139,6 +139,33 @@ public class MiniGameCookingHandler : BaseMiniGameHandler<MiniGameCookingBuilder
     }
 
     /// <summary>
+    /// 开始摆盘料理阶段游戏
+    /// </summary>
+    public void StartEndCooking()
+    {
+        //打开UI
+        UIMiniGameCooking uiMiniGameCooking = (UIMiniGameCooking)uiGameManager.GetOpenUI();
+        uiMiniGameCooking.StartCookingEnd();
+        //角色就位
+        NpcAIMiniGameCookingCpt npcAI = miniGameBuilder.GetUserCharacter();
+        npcAI.SetIntent(NpcAIMiniGameCookingCpt.MiniGameCookingIntentEnum.CookingEnd);
+    }
+
+    /// <summary>
+    /// 开始审核
+    /// </summary>
+    public void StartAudit()
+    {
+        uiGameManager.CloseAllUI();
+        List<NpcAIMiniGameCookingCpt> listPlayer = miniGameBuilder.GetCharacterByType(NpcAIMiniGameCookingCpt.MiniGameCookingNpcTypeEnum.Player);
+        foreach (NpcAIMiniGameCookingCpt itemNpc in listPlayer)
+        {
+            itemNpc.SetIntent(NpcAIMiniGameCookingCpt.MiniGameCookingIntentEnum.GoToAudit);
+        }
+        StartStoryForGameAudit();
+    }
+
+    /// <summary>
     /// 开始故事 游戏开场
     /// </summary>
     public void StartStoryForGameOpen()
@@ -147,6 +174,18 @@ public class MiniGameCookingHandler : BaseMiniGameHandler<MiniGameCookingBuilder
         {
             eventHandler.AddObserver(this);
             eventHandler.EventTriggerForStoryCooking(miniGameData, miniGameData.storyGameOpenId);
+        }
+    }
+
+    /// <summary>
+    ///  开始故事 审核故事 
+    /// </summary>
+    public void StartStoryForGameAudit()
+    {
+        if (eventHandler != null)
+        {
+            eventHandler.AddObserver(this);
+            eventHandler.EventTriggerForStoryCooking(miniGameData, miniGameData.storyGameAuditId);
         }
     }
 
@@ -188,11 +227,16 @@ public class MiniGameCookingHandler : BaseMiniGameHandler<MiniGameCookingBuilder
         switch (type)
         {
             case UIMiniGameCooking.MiniGameCookingPhaseTypeEnum.Pre:
+                miniGameData.settleDataForPre = settleData;
                 StartMakingCooking();
                 break;
             case UIMiniGameCooking.MiniGameCookingPhaseTypeEnum.Making:
+                miniGameData.settleDataForMaking = settleData;
+                StartEndCooking();
                 break;
             case UIMiniGameCooking.MiniGameCookingPhaseTypeEnum.End:
+                miniGameData.settleDataForEnd = settleData;
+                StartAudit();
                 break;
         }
     }

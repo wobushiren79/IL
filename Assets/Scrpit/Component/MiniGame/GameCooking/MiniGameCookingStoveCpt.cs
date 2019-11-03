@@ -7,6 +7,9 @@ public class MiniGameCookingStoveCpt : BaseMonoBehaviour
     public GameObject objCookingPrePosition;
     public GameObject objCookingMakingPosition;
     public GameObject objCookingEndPosition;
+    public GameObject objFoodPosition;
+    //做好的食物模型
+    public GameObject objFoodModel;
 
     public SpriteRenderer srIngredientPre;
     public GameObject objEffects;
@@ -131,5 +134,27 @@ public class MiniGameCookingStoveCpt : BaseMonoBehaviour
             srIngredientPre.transform.localScale = new Vector3(1,1,1);
             srIngredientPre.transform.DOScale(Vector3.zero, 0.5f).From().SetEase(Ease.OutBack);
         }   
+    }
+
+    /// <summary>
+    /// 创建食物
+    /// </summary>
+    public FoodForCoverCpt CreateFood()
+    {
+        GameObject objFood = Instantiate(objFoodPosition, objFoodModel, objFoodPosition.transform.position);
+        FoodForCoverCpt foodForCover= objFood.GetComponent<FoodForCoverCpt>();
+        foodForCover.SetData(menuInfo);
+        return foodForCover;
+    }
+
+    /// <summary>
+    /// 清理灶台食材
+    /// </summary>
+    public void ClearStoveIngredient()
+    {
+        if (srIngredientPre!=null)
+        {
+            srIngredientPre.sprite = null;
+        }
     }
 }

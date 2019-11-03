@@ -14,6 +14,7 @@ public class NpcAIWorkerForWaiterCpt : NpcAIWokerFoBaseCpt
         Cleaning,//清理中
     }
 
+    public GameObject objTake;
     //订单
     public OrderForCustomer orderForCustomer;
     //送菜的进度图标
@@ -60,7 +61,6 @@ public class NpcAIWorkerForWaiterCpt : NpcAIWokerFoBaseCpt
                         //放下食物
                         orderForCustomer.foodCpt.transform.SetParent(orderForCustomer.table.GetTable().transform);
                         orderForCustomer.foodCpt.transform.localPosition = new Vector3(0f, 0.1f, 0);
-                        orderForCustomer.foodCpt.transform.localScale = new Vector3(1, 1, 1);
                         //通知客人吃饭
                         orderForCustomer.customer.SetIntent(NpcAICustomerCpt.CustomerIntentEnum.Eatting);
                         //设置闲置
@@ -175,10 +175,8 @@ public class NpcAIWorkerForWaiterCpt : NpcAIWokerFoBaseCpt
     public void SetIntentForSendFood(OrderForCustomer orderForCustomer)
     {
         sendPro.SetActive(true);
-        Transform waitTake = CptUtil.GetCptInChildrenByName<Transform>(gameObject, "Take");
-        orderForCustomer.foodCpt.transform.SetParent(waitTake);
-        orderForCustomer.foodCpt.transform.localScale = new Vector3(0.5f, 0.5f, 1);
-        orderForCustomer.foodCpt.transform.localPosition = new Vector3(0, 0.1f, 0);
+        orderForCustomer.foodCpt.transform.SetParent(objTake.transform);
+        orderForCustomer.foodCpt.transform.localPosition = objTake.transform.localPosition;
         movePosition = orderForCustomer.table.GetTablePosition();
         npcAIWorker.characterMoveCpt.SetDestination(movePosition);
     }
