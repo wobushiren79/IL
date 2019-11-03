@@ -2,6 +2,7 @@
 using UnityEditor;
 using System;
 using System.Collections;
+using DG.Tweening;
 
 public class NpcAIWorkerForWaiterCpt : NpcAIWokerFoBaseCpt
 {
@@ -60,7 +61,8 @@ public class NpcAIWorkerForWaiterCpt : NpcAIWokerFoBaseCpt
                         npcAIWorker.characterData.baseInfo.waiterInfo.AddExp(1);
                         //放下食物
                         orderForCustomer.foodCpt.transform.SetParent(orderForCustomer.table.GetTable().transform);
-                        orderForCustomer.foodCpt.transform.localPosition = new Vector3(0f, 0.1f, 0);
+                        orderForCustomer.foodCpt.transform.DOLocalMove(Vector3.zero,0.2f);
+                        //orderForCustomer.foodCpt.transform.localPosition = Vector3.zero;
                         //通知客人吃饭
                         orderForCustomer.customer.SetIntent(NpcAICustomerCpt.CustomerIntentEnum.Eatting);
                         //设置闲置
@@ -176,7 +178,8 @@ public class NpcAIWorkerForWaiterCpt : NpcAIWokerFoBaseCpt
     {
         sendPro.SetActive(true);
         orderForCustomer.foodCpt.transform.SetParent(objTake.transform);
-        orderForCustomer.foodCpt.transform.localPosition = objTake.transform.localPosition;
+        orderForCustomer.foodCpt.transform.DOLocalMove(Vector3.zero, 0.2f);
+        //orderForCustomer.foodCpt.transform.localPosition = Vector3.zero;
         movePosition = orderForCustomer.table.GetTablePosition();
         npcAIWorker.characterMoveCpt.SetDestination(movePosition);
     }
