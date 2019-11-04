@@ -1,8 +1,9 @@
 ﻿using UnityEngine;
 using UnityEditor;
 using System.Collections.Generic;
+using System;
 
-public class MiniGameCookingHandler : BaseMiniGameHandler<MiniGameCookingBuilder, MiniGameCookingBean>, 
+public class MiniGameCookingHandler : BaseMiniGameHandler<MiniGameCookingBuilder, MiniGameCookingBean>,
     UIMiniGameCookingSelect.ICallBack,
     UIMiniGameCooking.ICallBack,
     IBaseObserver
@@ -56,8 +57,6 @@ public class MiniGameCookingHandler : BaseMiniGameHandler<MiniGameCookingBuilder
             MiniGameCookingStoveCpt itemTable = listStove[i];
             itemNpc.SetStove(itemTable);
         }
-        //因为剧情需要，先隐藏主持人
-        miniGameBuilder.SetCompereCharacterActive(false);
         //打开倒计时UI
         OpenCountDownUI(miniGameData, false);
     }
@@ -104,7 +103,7 @@ public class MiniGameCookingHandler : BaseMiniGameHandler<MiniGameCookingBuilder
         uiMiniGameCookingSelect.SetCallBack(this);
         uiMiniGameCookingSelect.SetData(miniGameData);
     }
-    
+
     /// <summary>
     /// 开始准备阶段的料理游戏
     /// </summary>
@@ -116,11 +115,11 @@ public class MiniGameCookingHandler : BaseMiniGameHandler<MiniGameCookingBuilder
         gameTiming += (attributes.cook * 0.5f);
         //打开UI
         UIMiniGameCooking uiMiniGameCooking = (UIMiniGameCooking)uiGameManager.OpenUIAndCloseOtherByName(EnumUtil.GetEnumName(UIEnum.MiniGameCooking));
-        uiMiniGameCooking.SetData(miniGameData,gameTiming);
+        uiMiniGameCooking.SetData(miniGameData, gameTiming);
         uiMiniGameCooking.SetCallBack(this);
         uiMiniGameCooking.StartCookingPre();
         //角色就位
-        NpcAIMiniGameCookingCpt npcAI= miniGameBuilder.GetUserCharacter();
+        NpcAIMiniGameCookingCpt npcAI = miniGameBuilder.GetUserCharacter();
         npcAI.characterMiniGameData.cookingMenuInfo = menuInfo;
         npcAI.SetIntent(NpcAIMiniGameCookingCpt.MiniGameCookingIntentEnum.CookingPre);
     }
@@ -162,7 +161,6 @@ public class MiniGameCookingHandler : BaseMiniGameHandler<MiniGameCookingBuilder
         {
             itemNpc.SetIntent(NpcAIMiniGameCookingCpt.MiniGameCookingIntentEnum.GoToAudit);
         }
-        StartStoryForGameAudit();
     }
 
     /// <summary>
@@ -170,6 +168,8 @@ public class MiniGameCookingHandler : BaseMiniGameHandler<MiniGameCookingBuilder
     /// </summary>
     public void StartStoryForGameOpen()
     {
+        //因为剧情需要，先隐藏主持人
+        miniGameBuilder.SetCompereCharacterActive(false);
         if (eventHandler != null)
         {
             eventHandler.AddObserver(this);
@@ -182,6 +182,8 @@ public class MiniGameCookingHandler : BaseMiniGameHandler<MiniGameCookingBuilder
     /// </summary>
     public void StartStoryForGameAudit()
     {
+        //因为剧情需要，先隐藏主持人
+        miniGameBuilder.SetCompereCharacterActive(false);
         if (eventHandler != null)
         {
             eventHandler.AddObserver(this);
@@ -189,14 +191,63 @@ public class MiniGameCookingHandler : BaseMiniGameHandler<MiniGameCookingBuilder
         }
     }
 
+    /// <summary>
+    /// 呈上自己的作品
+    /// </summary>
+    public void PresentUserFoodForAudit()
+    {
+        PresentFoodForAudit(miniGameBuilder.GetUserCharacter());
+    }
+
+    /// <summary>
+    /// 呈上某人的作品
+    /// </summary>
+    /// <param name="miniGameCharacterData"></param>
+    public void PresentFoodForAudit(NpcAIMiniGameCookingCpt npc)
+    {
+        //获取所有评审
+        List<NpcAIMiniGameCookingCpt> listAuditer = miniGameBuilder.GetCharacterByType(NpcAIMiniGameCookingCpt.MiniGameCookingNpcTypeEnum.Auditer);
+        foreach (NpcAIMiniGameCookingCpt itemAuditer in listAuditer)
+        {
+            //复制食物给所有评审
+            MiniGameCookingAuditTableCpt auditTableCpt = itemAuditer.auditTableCpt;
+            GameObject objFoodForCover = Instantiate(auditTableCpt.objFoodPosition, npc.foodForCover.gameObject);
+            objFoodForCover.transform.localPosition = Vector3.zero;
+            objFoodForCover.transform.localScale = new Vector3(1, 1, 1);
+        }
+        //隐藏自己手上的食物
+        npc.foodForCover.gameObject.SetActive(false);
+    }
+
+    /// <summary>
+    /// 展示审核的食物
+    /// </summary>
+    public void ShowFoodForAudit()
+    {
+        List<MiniGameCookingAuditTableCpt> listTable = miniGameBuilder.GetListAuditTable();
+        foreach (MiniGameCookingAuditTableCpt itemTable in listTable)
+        {
+            FoodForCoverCpt foodCoverCpt = itemTable.GetFood();
+            if (foodCoverCpt != null)
+                foodCoverCpt.ShowFood();
+        }
+    }
+
     #region 通知回调
-    public void ObserbableUpdate<T>(T observable, int type, params object[] obj) where T : Object
+    public void ObserbableUpdate<T>(T observable, int type, params object[] obj) where T : UnityEngine.Object
     {
         if (observable == eventHandler)
         {
             if (type == (int)EventHandler.NotifyEventTypeEnum.EventEnd)
             {
-                StartGame();
+                if (Convert.ToInt64(obj[0]) == miniGameData.storyGameOpenId)
+                {
+                    StartGame();
+                }
+                else if (Convert.ToInt64(obj[0]) == miniGameData.storyGameAuditId)
+                {
+
+                }
             }
         }
     }

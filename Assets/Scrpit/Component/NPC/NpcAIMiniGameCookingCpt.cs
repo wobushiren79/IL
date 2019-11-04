@@ -41,6 +41,7 @@ public class NpcAIMiniGameCookingCpt : BaseNpcAI
     public FoodForCoverCpt foodForCover;
     //拿食物位置
     public GameObject objFoodPosition;
+
     private void Update()
     {
         switch (miniGameCookingIntent)
@@ -63,9 +64,14 @@ public class NpcAIMiniGameCookingCpt : BaseNpcAI
                         stoveCpt.OpenStove();
                 }
                 break;
+            case MiniGameCookingIntentEnum.GoToAudit:
+                if (characterMiniGameData.characterType == 1&& characterMoveCpt.IsAutoMoveStop())
+                {
+                    SetIntent(MiniGameCookingIntentEnum.Idle);
+                    miniGameCookingHandler.StartStoryForGameAudit();
+                }
+                break;
         }
-
-
     }
 
     public void SetNpcType(MiniGameCookingNpcTypeEnum npcType)

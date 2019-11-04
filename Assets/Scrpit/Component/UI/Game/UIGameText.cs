@@ -55,7 +55,11 @@ public class UIGameText : BaseUIComponent, ITextInfoView
 
     private void Update()
     {
-        if (this.currentTextData != null && this.currentTextData.type == 4)
+        if (currentTextData == null)
+        {
+            return;
+        }
+        if (currentTextData.type == 4|| currentTextData.type == 5)
         {
             return;
         }
@@ -70,8 +74,8 @@ public class UIGameText : BaseUIComponent, ITextInfoView
             }
             else
             {
-                //当时选择对话时 不能跳过
-                if (this.currentTextData != null && this.currentTextData.type == 1)
+                //当时选择对话 不能跳过
+                if (currentTextData.type == 1)
                 {
 
                 }
@@ -384,14 +388,14 @@ public class UIGameText : BaseUIComponent, ITextInfoView
         content = content.Replace("{othername}", otherName);
 
         //替换备用数据
-        if (listMarkData!=null)
+        if (listMarkData != null)
         {
             foreach (var item in listMarkData)
             {
                 content = content.Replace(item.Key, item.Value);
             }
         }
-          
+
         return content;
     }
 

@@ -24,4 +24,13 @@ public class MiniGameCookingAuditTableCpt : BaseMonoBehaviour
     {
         return objFoodPosition.transform.position;
     }
+
+    /// <summary>
+    /// 获取食物
+    /// </summary>
+    /// <returns></returns>
+    public FoodForCoverCpt GetFood()
+    {
+        return objFoodPosition.GetComponentInChildren<FoodForCoverCpt>();
+    }
 }

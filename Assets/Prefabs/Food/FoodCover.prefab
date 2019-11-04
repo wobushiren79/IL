@@ -58,6 +58,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3205e685c5ff6174e9e4c07a255cde63, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  srCover: {fileID: 7496077836271630160}
   foodCustomerCpt: {fileID: 8306937388336567346}
   innFoodManager: {fileID: 0}
 --- !u!1 &7821327323398913003
@@ -229,16 +230,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 3916003464961602216}
     m_Modifications:
-    - target: {fileID: 5328740976241071941, guid: 1b12f62d116de8e4ba915aa78ab2cb2b,
-        type: 3}
-      propertyPath: m_Name
-      value: Food
-      objectReference: {fileID: 0}
-    - target: {fileID: 5328740976241071941, guid: 1b12f62d116de8e4ba915aa78ab2cb2b,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 5328740976241071939, guid: 1b12f62d116de8e4ba915aa78ab2cb2b,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -247,7 +238,7 @@ PrefabInstance:
     - target: {fileID: 5328740976241071939, guid: 1b12f62d116de8e4ba915aa78ab2cb2b,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: 0.1
       objectReference: {fileID: 0}
     - target: {fileID: 5328740976241071939, guid: 1b12f62d116de8e4ba915aa78ab2cb2b,
         type: 3}
@@ -294,13 +285,7 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 5328740974829804379, guid: 1b12f62d116de8e4ba915aa78ab2cb2b,
-        type: 3}
-      propertyPath: m_Sprite
-      value: 
-      objectReference: {fileID: 21300000, guid: 0ab2eb3971b32ae4e86be18cc10596a3,
-        type: 3}
-    - target: {fileID: 348980899896524852, guid: 1b12f62d116de8e4ba915aa78ab2cb2b,
+    - target: {fileID: 4529766413023507430, guid: 1b12f62d116de8e4ba915aa78ab2cb2b,
         type: 3}
       propertyPath: m_IsActive
       value: 0
@@ -310,7 +295,23 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 4529766413023507430, guid: 1b12f62d116de8e4ba915aa78ab2cb2b,
+    - target: {fileID: 348980899896524852, guid: 1b12f62d116de8e4ba915aa78ab2cb2b,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5328740974829804379, guid: 1b12f62d116de8e4ba915aa78ab2cb2b,
+        type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 0ab2eb3971b32ae4e86be18cc10596a3,
+        type: 3}
+    - target: {fileID: 5328740976241071941, guid: 1b12f62d116de8e4ba915aa78ab2cb2b,
+        type: 3}
+      propertyPath: m_Name
+      value: Food
+      objectReference: {fileID: 0}
+    - target: {fileID: 5328740976241071941, guid: 1b12f62d116de8e4ba915aa78ab2cb2b,
         type: 3}
       propertyPath: m_IsActive
       value: 0

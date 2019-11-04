@@ -349,22 +349,35 @@ public class StoryCreateWindowsEditor : EditorWindow
                         GUILayout.BeginHorizontal();
                         GUILayout.Label("ID");
                         textInfo.id = long.Parse(EditorGUILayout.TextArea(textInfo.id + "", GUILayout.Width(120), GUILayout.Height(20)));
-                        GUILayout.Label("userID");
-                        textInfo.user_id = long.Parse(EditorGUILayout.TextArea(textInfo.user_id + "", GUILayout.Width(100), GUILayout.Height(20)));
-                        GUILayout.Label("姓名");
-                        NpcInfoBean npcInfo;
-                        if (textInfo.user_id == 0)
+                        GUILayout.Label("type");
+                        textInfo.type = int.Parse(EditorGUILayout.TextArea(textInfo.type + "", GUILayout.Width(100), GUILayout.Height(20)));
+
+                        if (textInfo.type == 0)
                         {
-                            npcInfo = new NpcInfoBean();
-                            npcInfo.name = "玩家";
+                            GUILayout.Label("userID");
+                            textInfo.user_id = long.Parse(EditorGUILayout.TextArea(textInfo.user_id + "", GUILayout.Width(100), GUILayout.Height(20)));
+
+                            GUILayout.Label("姓名");
+                            NpcInfoBean npcInfo;
+                            if (textInfo.user_id == 0)
+                            {
+                                npcInfo = new NpcInfoBean();
+                                npcInfo.name = "玩家";
+                            }
+                            else
+                            {
+                                npcInfo = mapNpcInfo[textInfo.user_id];
+                            }
+                            GUILayout.Label(npcInfo.title_name + "-" + npcInfo.name);
+                            GUILayout.Label("指定的姓名");
+                            textInfo.name = EditorGUILayout.TextArea(textInfo.name, GUILayout.Width(100), GUILayout.Height(20));
                         }
-                        else
+                        else if (textInfo.type == 5)
                         {
-                            npcInfo = mapNpcInfo[textInfo.user_id];
+                            GUILayout.Label("黑幕时间");
+                            textInfo.wait_time = float.Parse(EditorGUILayout.TextArea(textInfo.wait_time + "", GUILayout.Width(100), GUILayout.Height(20)));
                         }
-                        GUILayout.Label(npcInfo.title_name + "-" + npcInfo.name);
-                        GUILayout.Label("指定的姓名");
-                        textInfo.name = EditorGUILayout.TextArea(textInfo.name, GUILayout.Width(100), GUILayout.Height(20));
+
                         GUILayout.Label("对话内容");
                         textInfo.content = EditorGUILayout.TextArea(textInfo.content, GUILayout.Width(400), GUILayout.Height(20));
 
@@ -385,7 +398,7 @@ public class StoryCreateWindowsEditor : EditorWindow
                     textInfo.id = itemData.text_mark_id * 1000 + listStoryTextInfo.Count + 1;
                     textInfo.type = 0;
                     textInfo.mark_id = itemData.text_mark_id;
-                    textInfo.user_id = 1;
+                    textInfo.user_id = 0;
                     textInfo.text_order = listStoryTextInfo.Count + 1;
                     listStoryTextInfo.Add(textInfo);
                 }

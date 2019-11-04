@@ -176,7 +176,7 @@ public class EventHandler : BaseHandler, UIGameText.ICallBack
             //打开主界面UI
             uiManager.OpenUIAndCloseOtherByName(EnumUtil.GetEnumName(UIEnum.GameMain));
             //通知事件结束
-            NotifyAllObserver((int)NotifyEventTypeEnum.EventEnd);
+            NotifyAllObserver((int)NotifyEventTypeEnum.EventEnd, mStoryInfo.id);
             //移除所有观察者
             RemoveAllObserver();
         }
@@ -243,6 +243,13 @@ public class EventHandler : BaseHandler, UIGameText.ICallBack
             listData.Add("{minigame_cooking_auditernamelist}", auditerCharaterList);
             //料理的主题
             listData.Add("{minigame_cooking_theme}", gameCookingData.cookingTheme.name);
+            //所有友方角色
+            foreach (MiniGameCharacterBean itemCharacter in gameCookingData.listUserGameData)
+            {
+                MiniGameCharacterForCookingBean cookingCharacterData= (MiniGameCharacterForCookingBean)itemCharacter;
+                if(cookingCharacterData.cookingMenuInfo!=null)
+                    listData.Add("{minigame_cooking_user_cooking_foodname}", cookingCharacterData.cookingMenuInfo.name);
+            }
         }
         return listData; 
     }
