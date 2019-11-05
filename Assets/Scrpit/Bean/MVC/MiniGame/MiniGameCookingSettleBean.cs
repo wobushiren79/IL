@@ -9,4 +9,10 @@ public class MiniGameCookingSettleBean
     public int correctNumber;//完成数
     public int errorNumber;//错误数
     public int unfinishNumber;//未完成数
+
+    public int GetScore()
+    {
+        float scoreRate = (float)correctNumber / (float)(correctNumber + errorNumber + unfinishNumber);
+        return (int)(scoreRate * 100);
+    }
 }

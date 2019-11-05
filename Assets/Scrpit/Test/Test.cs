@@ -3,7 +3,7 @@ using UnityEngine.AI;
 using System.Collections;
 public class Test : MonoBehaviour {
 
-    public FoodForCoverCpt coverCpt;
+    public NpcAIMiniGameCookingCpt npcCpt;
 
     private void Start()
     {
@@ -15,12 +15,9 @@ public class Test : MonoBehaviour {
     {
         if (Input.GetButtonDown(InputInfo.Interactive_E))
         {
-            coverCpt.ShowFood();
+            npcCpt.ShowScore(86);
         }
     }
 
-    public void TestM(int a)
-    {
-        LogUtil.Log("TestM"+a);
-    }
+
 }

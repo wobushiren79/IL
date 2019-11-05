@@ -266,6 +266,8 @@ public class StoryCreateWindowsEditor : EditorWindow
     {
         if (listData == null)
             return;
+        if(listStoryTextInfo!=null)
+        listStoryTextInfo.Clear();
         listStoryTextInfo = null;
         foreach (StoryInfoDetailsBean itemData in listData)
         {

@@ -150,6 +150,7 @@ public class MiniGameCookingBuilder : BaseMiniGameBuilder
     {
         this.listAuditTable = listAuditTable;
     }
+
     /// <summary>
     /// 获取审核桌子
     /// </summary>

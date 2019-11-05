@@ -8,6 +8,8 @@ public class FoodForCoverCpt : BaseMonoBehaviour
 
     public FoodForCustomerCpt foodCustomerCpt;
     public InnFoodManager innFoodManager;
+    public MenuInfoBean menuInfo;
+    
 
     private void Awake()
     {
@@ -16,6 +18,7 @@ public class FoodForCoverCpt : BaseMonoBehaviour
 
     public void SetData(MenuInfoBean menuInfo)
     {
+        this.menuInfo = menuInfo;
         foodCustomerCpt.SetData(innFoodManager, menuInfo,0);
     }
 
@@ -28,5 +31,13 @@ public class FoodForCoverCpt : BaseMonoBehaviour
         foodCustomerCpt.transform.DOScale(new Vector3(0.5f, 0.5f, 0.5f), 1).From().SetEase(Ease.OutBack);
         srCover.DOFade(0, 1);
         srCover.transform.DOLocalMoveY(1,1);
+    }
+
+    /// <summary>
+    /// 消灭食物
+    /// </summary>
+    public void FinshFood()
+    {
+        foodCustomerCpt.FinishFood(menuInfo);
     }
 }

@@ -1,6 +1,8 @@
 ﻿using UnityEngine;
 using UnityEditor;
 using System.Collections;
+using UnityEngine.UI;
+using DG.Tweening;
 
 public class NpcAIMiniGameCookingCpt : BaseNpcAI
 {
@@ -14,6 +16,8 @@ public class NpcAIMiniGameCookingCpt : BaseNpcAI
         CookingMaking,
         CookingEnd,
         GoToAudit,//前往评审
+        EatFood,
+        AuditFood,//评审食物
     }
 
     public MiniGameCookingIntentEnum miniGameCookingIntent = MiniGameCookingIntentEnum.Idle;
@@ -26,6 +30,9 @@ public class NpcAIMiniGameCookingCpt : BaseNpcAI
     }
 
     private MiniGameCookingNpcTypeEnum mNpcType;
+    public SpriteRenderer srScore;
+    public TextMesh tvScore;
+
     //开始的位置
     public Vector3 startPosition;
 
@@ -37,10 +44,12 @@ public class NpcAIMiniGameCookingCpt : BaseNpcAI
     public MiniGameCookingAuditTableCpt auditTableCpt;
     //该NPC的灶台
     public MiniGameCookingStoveCpt stoveCpt;
-    //做好的食物
+    //拥有的食物 评审 和 参与者
     public FoodForCoverCpt foodForCover;
     //拿食物位置
     public GameObject objFoodPosition;
+    //被评审的对象
+    public NpcAIMiniGameCookingCpt auditTargetNpc;
 
     private void Update()
     {
@@ -65,7 +74,7 @@ public class NpcAIMiniGameCookingCpt : BaseNpcAI
                 }
                 break;
             case MiniGameCookingIntentEnum.GoToAudit:
-                if (characterMiniGameData.characterType == 1&& characterMoveCpt.IsAutoMoveStop())
+                if (characterMiniGameData.characterType == 1 && characterMoveCpt.IsAutoMoveStop())
                 {
                     SetIntent(MiniGameCookingIntentEnum.Idle);
                     miniGameCookingHandler.StartStoryForGameAudit();
@@ -122,7 +131,8 @@ public class NpcAIMiniGameCookingCpt : BaseNpcAI
     /// 设置意图
     /// </summary>
     /// <param name="intent"></param>
-    public void SetIntent(MiniGameCookingIntentEnum intent)
+    /// <param name="auditType"> 评审类型 1题2色3香4味</param>
+    public void SetIntent(MiniGameCookingIntentEnum intent, int auditType)
     {
         this.miniGameCookingIntent = intent;
         switch (miniGameCookingIntent)
@@ -150,7 +160,17 @@ public class NpcAIMiniGameCookingCpt : BaseNpcAI
             case MiniGameCookingIntentEnum.GoToAudit:
                 SetIntentForGoToAudit();
                 break;
+            case MiniGameCookingIntentEnum.EatFood:
+                SetIntentForEatFood();
+                break;
+            case MiniGameCookingIntentEnum.AuditFood:
+                SetIntentForAuditFood(auditType);
+                break;
         }
+    }
+    public void SetIntent(MiniGameCookingIntentEnum intent)
+    {
+        SetIntent(intent, 0);
     }
 
     /// <summary>
@@ -218,7 +238,7 @@ public class NpcAIMiniGameCookingCpt : BaseNpcAI
     public void SetIntentForGoToAudit()
     {
         //如果是对手。先创建一个食物
-        if (characterMiniGameData.characterType ==0)
+        if (characterMiniGameData.characterType == 0)
         {
             foodForCover = stoveCpt.CreateFood();
         }
@@ -226,6 +246,121 @@ public class NpcAIMiniGameCookingCpt : BaseNpcAI
         foodForCover.transform.SetParent(objFoodPosition.transform);
         foodForCover.transform.position = objFoodPosition.transform.position;
         characterMoveCpt.SetDestination(startPosition);
+    }
+
+    /// <summary>
+    /// 意图-吃食物
+    /// </summary>
+    public void SetIntentForEatFood()
+    {
+        StartCoroutine(CoroutineForEatFood());
+    }
+
+    /// <summary>
+    /// 意图-评审食物
+    /// </summary>
+    public void SetIntentForAuditFood(int type)
+    {
+        int score = 0;
+        switch (type)
+        {
+            case 1:
+                score = AuditFoodForTheme();
+                auditTargetNpc.characterMiniGameData.listScoreForColor.Add(score);
+                break;
+            case 2:
+                score = AuditFoodForColor();
+                auditTargetNpc.characterMiniGameData.listScoreForColor.Add(score);
+                break;
+            case 3:
+                score = AuditFoodForSweet();
+                auditTargetNpc.characterMiniGameData.listScoreForSweet.Add(score);
+                break;
+            case 4:
+                score = AuditFoodForTaste();
+                auditTargetNpc.characterMiniGameData.listScoreForTaste.Add(score);
+                break;
+        }
+        ShowScore(score);
+    }
+
+    /// <summary>
+    /// 评审主题
+    /// </summary>
+    /// <returns></returns>
+    private int AuditFoodForTheme()
+    {
+        CookingThemeBean cookingTheme = miniGameCookingHandler.miniGameData.cookingTheme;
+        MenuInfoBean menuInfo = auditTargetNpc.characterMiniGameData.cookingMenuInfo;
+        float similarity = cookingTheme.GetSimilarity(menuInfo);
+        return ScoreDeal((int)(similarity * 100));
+    }
+
+    /// <summary>
+    /// 评审 色
+    /// </summary>
+    /// <returns></returns>
+    private int AuditFoodForColor()
+    {
+        int score = auditTargetNpc.characterMiniGameData.settleDataForPre.GetScore();
+        return ScoreDeal(score);
+    }
+
+    /// <summary>
+    /// 评审 香
+    /// </summary>
+    /// <returns></returns>
+    private int AuditFoodForSweet()
+    {
+        int score = auditTargetNpc.characterMiniGameData.settleDataForPre.GetScore();
+        return ScoreDeal(score);
+    }
+
+    /// <summary>
+    /// 评审 味
+    /// </summary>
+    /// <returns></returns>
+    private int AuditFoodForTaste()
+    {
+        int score = auditTargetNpc.characterMiniGameData.settleDataForMaking.GetScore();
+        return ScoreDeal(score);
+    }
+
+    /// <summary>
+    /// 分数处理
+    /// </summary>
+    /// <param name="score"></param>
+    /// <returns></returns>
+    private int ScoreDeal(int score)
+    {
+        score += Random.Range(-10, 11);
+        if (score < 0)
+            score = 0;
+        if (score > 100)
+            score = 100;
+        return score;
+    }
+
+    /// <summary>
+    /// 展示分数
+    /// </summary>
+    /// <param name="score"></param>
+    public void ShowScore(int score)
+    {
+        srScore.gameObject.SetActive(true);
+        tvScore.text = score + "";
+        srScore.transform.localScale = new Vector3(1,1,1);
+        srScore.transform.DOScale(Vector3.zero, 0.5f).From().SetEase(Ease.OutBack);
+    }
+
+    /// <summary>
+    /// 关闭分数
+    /// </summary>
+    public void CloseScore()
+    {
+        srScore.transform.DOScale(Vector3.zero, 0.5f).OnComplete(delegate() {
+            srScore.gameObject.SetActive(false);
+        });
     }
 
     /// <summary>
@@ -237,7 +372,7 @@ public class NpcAIMiniGameCookingCpt : BaseNpcAI
         while (miniGameCookingIntent == MiniGameCookingIntentEnum.AutoCooking)
         {
             int randomDo = Random.Range(0, 3);
-            float randomDoTime= Random.Range(3f, 7f);
+            float randomDoTime = Random.Range(3f, 7f);
             switch (randomDo)
             {
                 case 0:
@@ -255,6 +390,10 @@ public class NpcAIMiniGameCookingCpt : BaseNpcAI
         }
     }
 
+    /// <summary>
+    /// 协程 料理准备
+    /// </summary>
+    /// <returns></returns>
     public IEnumerator CoroutineForCookingPre()
     {
         while (miniGameCookingIntent == MiniGameCookingIntentEnum.CookingPre)
@@ -263,5 +402,16 @@ public class NpcAIMiniGameCookingCpt : BaseNpcAI
             yield return new WaitForSeconds(3);
         }
         stoveCpt.ClearStoveIngredient();
+    }
+
+    /// <summary>
+    /// 协程 吃食物
+    /// </summary>
+    /// <returns></returns>
+    public IEnumerator CoroutineForEatFood()
+    {
+        yield return new WaitForSeconds(1);
+        if (foodForCover != null)
+            foodForCover.FinshFood();
     }
 }
