@@ -3,7 +3,7 @@ using DG.Tweening;
 using UnityEditor;
 using System.Collections.Generic;
 
-public class BaseMiniGameHandler<B,D> : BaseHandler, UIMiniGameCountDown.ICallBack, UIMiniGameEnd.ICallBack 
+public class BaseMiniGameHandler<B, D> : BaseHandler, UIMiniGameCountDown.ICallBack, UIMiniGameEnd.ICallBack
     where D : MiniGameBaseBean
     where B : BaseMiniGameBuilder
 {
@@ -64,11 +64,14 @@ public class BaseMiniGameHandler<B,D> : BaseHandler, UIMiniGameCountDown.ICallBa
         NotifyAllObserver((int)MiniGameStatusEnum.Gameing);
     }
 
+
+
     /// <summary>
     /// 游戏结束
     /// </summary>
     /// <param name="isWinGame"></param>
-    public virtual void EndGame(bool isWinGame)
+    /// <param name="isSlow">是否开启慢镜头</param>
+    public virtual void EndGame(bool isWinGame, bool isSlow)
     {
         if (GetMiniGameStatus() == MiniGameStatusEnum.Gameing)
         {
@@ -77,8 +80,11 @@ public class BaseMiniGameHandler<B,D> : BaseHandler, UIMiniGameCountDown.ICallBa
             //拉近尽头
             BaseControl baseControl = controlHandler.GetControl();
             baseControl.SetCameraOrthographicSize(6);
-            //开启慢镜头
-            Time.timeScale = 0.1f;
+            if (isSlow)
+            {
+                //开启慢镜头
+                Time.timeScale = 0.1f;
+            }
             transform.DOScale(new Vector3(1, 1, 1), 0.3f).OnComplete(delegate ()
             {
                 Time.timeScale = 1f;
@@ -99,12 +105,16 @@ public class BaseMiniGameHandler<B,D> : BaseHandler, UIMiniGameCountDown.ICallBa
             NotifyAllObserver((int)MiniGameStatusEnum.GameEnd);
         }
     }
+    public virtual void EndGame(bool isWinGame)
+    {
+        EndGame(isWinGame, true);
+    }
 
     /// <summary>
     /// 打开倒计时UI
     /// </summary>
     /// <param name="miniGameData"></param>
-    public void OpenCountDownUI(MiniGameBaseBean miniGameData,bool isCountDown)
+    public void OpenCountDownUI(MiniGameBaseBean miniGameData, bool isCountDown)
     {
         //打开游戏准备倒计时UI
         UIMiniGameCountDown uiCountDown = (UIMiniGameCountDown)uiGameManager.OpenUIAndCloseOtherByName(EnumUtil.GetEnumName(UIEnum.MiniGameCountDown));

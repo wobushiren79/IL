@@ -33,4 +33,5 @@ public enum UIEnum
     MiniGameCombat,//战斗游戏UI
     MiniGameCooking,//料理游戏UI
     MiniGameCookingSelect,//料理游戏 食物选择UI
+    MiniGameCookingSettlement,//料理游戏 结算UI
 }

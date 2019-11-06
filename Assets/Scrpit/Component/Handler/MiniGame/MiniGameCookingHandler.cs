@@ -2,10 +2,12 @@
 using UnityEditor;
 using System.Collections.Generic;
 using System;
+using System.Linq;
 
 public class MiniGameCookingHandler : BaseMiniGameHandler<MiniGameCookingBuilder, MiniGameCookingBean>,
     UIMiniGameCookingSelect.ICallBack,
     UIMiniGameCooking.ICallBack,
+    UIMiniGameCookingSettlement.ICallBack,
     IBaseObserver
 {
     //事件处理
@@ -234,7 +236,7 @@ public class MiniGameCookingHandler : BaseMiniGameHandler<MiniGameCookingBuilder
                 foodCoverCpt.ShowFood();
         }
     }
-    
+
     /// <summary>
     /// 吃掉食物
     /// </summary>
@@ -287,8 +289,22 @@ public class MiniGameCookingHandler : BaseMiniGameHandler<MiniGameCookingBuilder
                 }
                 else if (Convert.ToInt64(obj[0]) == miniGameData.storyGameAuditId)
                 {
+                    //显示主持人
                     miniGameBuilder.SetCompereCharacterActive(true);
+                    //关闭评审员的分数
                     CloseScoreForAudit();
+                    //结算分数
+                    List<NpcAIMiniGameCookingCpt> listPlayer= miniGameBuilder.GetCharacterByType(NpcAIMiniGameCookingCpt.MiniGameCookingNpcTypeEnum.Player);
+                    foreach (NpcAIMiniGameCookingCpt itemNpc in listPlayer)
+                    {
+                        itemNpc.characterMiniGameData.InitScore();
+                    }
+                    //按分数排名
+                    listPlayer = listPlayer.OrderBy(item=>item.characterMiniGameData.scoreForTotal).ToList();
+                    //打开结算UI
+                    UIMiniGameCookingSettlement uiSettlement = (UIMiniGameCookingSettlement)uiGameManager.OpenUIAndCloseOtherByName(EnumUtil.GetEnumName(UIEnum.MiniGameCookingSettlement));
+                    uiSettlement.SetCallBack(this);
+                    uiSettlement.SetData(listPlayer);
                 }
             }
         }
@@ -332,6 +348,13 @@ public class MiniGameCookingHandler : BaseMiniGameHandler<MiniGameCookingBuilder
                 StartAudit();
                 break;
         }
+    }
+    #endregion
+
+    #region UI结算回调
+    public void UIMiniGameCookingSettlementClose()
+    {
+        EndGame(true, false);
     }
     #endregion
 }
