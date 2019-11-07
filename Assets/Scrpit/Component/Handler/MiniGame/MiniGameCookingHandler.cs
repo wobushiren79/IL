@@ -300,7 +300,7 @@ public class MiniGameCookingHandler : BaseMiniGameHandler<MiniGameCookingBuilder
                         itemNpc.characterMiniGameData.InitScore();
                     }
                     //按分数排名
-                    listPlayer = listPlayer.OrderBy(item=>item.characterMiniGameData.scoreForTotal).ToList();
+                    listPlayer = listPlayer.OrderByDescending(item=>item.characterMiniGameData.scoreForTotal).ToList();
                     //打开结算UI
                     UIMiniGameCookingSettlement uiSettlement = (UIMiniGameCookingSettlement)uiGameManager.OpenUIAndCloseOtherByName(EnumUtil.GetEnumName(UIEnum.MiniGameCookingSettlement));
                     uiSettlement.SetCallBack(this);
@@ -353,7 +353,12 @@ public class MiniGameCookingHandler : BaseMiniGameHandler<MiniGameCookingBuilder
 
     #region UI结算回调
     public void UIMiniGameCookingSettlementClose()
-    {
+    {   //打开游戏控制器
+        if (controlHandler != null)
+        {
+            BaseControl baseControl = controlHandler.StartControl(ControlHandler.ControlEnum.MiniGameCooking);
+            baseControl.SetCameraFollowObj(miniGameBuilder.GetUserCharacter().gameObject);
+        }
         EndGame(true, false);
     }
     #endregion

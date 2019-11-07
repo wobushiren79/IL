@@ -2,6 +2,7 @@
 using UnityEditor;
 using UnityEngine.UI;
 using System.Collections.Generic;
+using DG.Tweening;
 
 public class UIMiniGameCookingSettlement : BaseUIComponent
 {
@@ -50,6 +51,7 @@ public class UIMiniGameCookingSettlement : BaseUIComponent
             GameObject objItem=  Instantiate(objItemSettlementContainer, objItemSettlementModel);
             ItemMiniGameCookingSettlementCpt itemCpt= objItem.GetComponent<ItemMiniGameCookingSettlementCpt>();
             itemCpt.SetData(itemNpc,i+1);
+            objItem.transform.DOScale(new Vector3(0,0,0), 0.5f).From().SetEase(Ease.OutBack).SetDelay(i * 0.1f);
         }
     }
 

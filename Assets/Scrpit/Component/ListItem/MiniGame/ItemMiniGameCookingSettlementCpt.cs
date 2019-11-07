@@ -13,6 +13,9 @@ public class ItemMiniGameCookingSettlementCpt : ItemGameBaseCpt
     public Text tvTasteScore;
     public Text tvTotalScore;
     public Text tvRank;
+
+    public Image ivLevel;
+    public Text tvLevel;
     
     public void SetData(NpcAIMiniGameCookingCpt itemNpc,int rank)
     {
@@ -25,6 +28,7 @@ public class ItemMiniGameCookingSettlementCpt : ItemGameBaseCpt
             characterGameData.scoreForTaste,
             characterGameData.scoreForTotal);
         SetRank(rank);
+        SetLevel(characterGameData.characterData.baseInfo.chefInfo.workerLevel);
     }
 
     public void SetCharacter(CharacterBean characterData)
@@ -56,6 +60,14 @@ public class ItemMiniGameCookingSettlementCpt : ItemGameBaseCpt
     public void SetRank(int rank)
     {
         if (tvRank != null)
-            tvRank.text = rank+"";
+            tvRank.text = rank + "";
+    }
+
+    public void SetLevel(int level)
+    {
+        string levelName = CharacterWorkerBaseBean.GetWorkerLevelName(level);
+        string workName = CharacterWorkerBaseBean.GetWorkerName(WorkerEnum.Chef);
+        if (tvLevel != null)
+            tvLevel.text = workName + levelName;
     }
 }
