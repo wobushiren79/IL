@@ -4,11 +4,14 @@ using UnityEditor;
 public class TreeCpt : BaseMonoBehaviour
 {
     public SpriteRenderer srTree;
+    public SpriteRenderer srShadow;
 
     public Sprite spSpring;
     public Sprite spSummer;
     public Sprite spAutumn;
     public Sprite spWinter;
+
+    public Sprite spWinterSnow;
 
     /// <summary>
     /// 设置数据
@@ -33,5 +36,6 @@ public class TreeCpt : BaseMonoBehaviour
                 break;
         }
         srTree.sprite = spSeasons;
+        srShadow.sprite= spSeasons;
     }
 }
