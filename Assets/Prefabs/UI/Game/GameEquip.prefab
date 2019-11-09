@@ -405,6 +405,7 @@ RectTransform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
+  - {fileID: 3338793336488539267}
   - {fileID: 4140619152054784272}
   - {fileID: 4140619152549029170}
   m_Father: {fileID: 4140619151399399098}
@@ -688,6 +689,7 @@ MonoBehaviour:
     items_id: 0
     items_type: 0
     icon_key: 
+    add_life: 0
     add_cook: 0
     add_speed: 0
     add_account: 0
@@ -695,6 +697,7 @@ MonoBehaviour:
     add_force: 0
     add_lucky: 0
     add_loyal: 0
+    rotation_angle: 0
     add_id: 0
     intact_number: 0
     name: 
@@ -711,24 +714,28 @@ MonoBehaviour:
   characterData:
     baseInfo:
       characterId: 
+      titleName: 
       name: 
       workDay: 0
       priceS: 0
       priceM: 0
       priceL: 0
       chefInfo:
+        workerType: 1
         workerLevel: 0
         workerExp: 0
         cookNumber: 0
         cookTime: 0
         listFoodCookNumer: []
       waiterInfo:
+        workerType: 2
         workerLevel: 0
         workerExp: 0
         cleanTotalNumber: 0
         sendTotalNumber: 0
         cleanTotalTime: 0
       accountingInfo:
+        workerType: 3
         workerLevel: 0
         workerExp: 0
         accountingTotalNumber: 0
@@ -745,6 +752,7 @@ MonoBehaviour:
         accountingMoneyS: 0
         accountingTotalTime: 0
       accostInfo:
+        workerType: 4
         workerLevel: 0
         workerExp: 0
         accostTotalNumber: 0
@@ -752,6 +760,7 @@ MonoBehaviour:
         accostFailNumber: 0
         accostTotalTime: 0
       beaterInfo:
+        workerType: 5
         workerLevel: 0
         workerExp: 0
         fightTotalNumber: 0
@@ -772,6 +781,7 @@ MonoBehaviour:
       isAttendance: 0
     attributes:
       loyal: 0
+      life: 0
       cook: 0
       speed: 0
       account: 0
@@ -805,6 +815,7 @@ MonoBehaviour:
         a: 1
       face: 0
     equips:
+      maskId: 0
       handId: 0
       hatId: 0
       clothesId: 0
@@ -831,6 +842,7 @@ MonoBehaviour:
     items_id: 0
     items_type: 0
     icon_key: 
+    add_life: 0
     add_cook: 0
     add_speed: 0
     add_account: 0
@@ -838,6 +850,7 @@ MonoBehaviour:
     add_force: 0
     add_lucky: 0
     add_loyal: 0
+    rotation_angle: 0
     add_id: 0
     intact_number: 0
     name: 
@@ -1343,6 +1356,7 @@ MonoBehaviour:
   equipHat: {fileID: 4140619152221243282}
   equipClothes: {fileID: 4140619151861859673}
   equipShoes: {fileID: 4140619152248758929}
+  characterAttributeView: {fileID: 3338793336488539266}
   tvLoyal: {fileID: 4140619151792276881}
   tvCook: {fileID: 4140619152357465174}
   tvSpeed: {fileID: 4140619151060069014}
@@ -1356,24 +1370,28 @@ MonoBehaviour:
   characterData:
     baseInfo:
       characterId: 
+      titleName: 
       name: 
       workDay: 0
       priceS: 0
       priceM: 0
       priceL: 0
       chefInfo:
+        workerType: 1
         workerLevel: 0
         workerExp: 0
         cookNumber: 0
         cookTime: 0
         listFoodCookNumer: []
       waiterInfo:
+        workerType: 2
         workerLevel: 0
         workerExp: 0
         cleanTotalNumber: 0
         sendTotalNumber: 0
         cleanTotalTime: 0
       accountingInfo:
+        workerType: 3
         workerLevel: 0
         workerExp: 0
         accountingTotalNumber: 0
@@ -1390,6 +1408,7 @@ MonoBehaviour:
         accountingMoneyS: 0
         accountingTotalTime: 0
       accostInfo:
+        workerType: 4
         workerLevel: 0
         workerExp: 0
         accostTotalNumber: 0
@@ -1397,6 +1416,7 @@ MonoBehaviour:
         accostFailNumber: 0
         accostTotalTime: 0
       beaterInfo:
+        workerType: 5
         workerLevel: 0
         workerExp: 0
         fightTotalNumber: 0
@@ -1417,6 +1437,7 @@ MonoBehaviour:
       isAttendance: 0
     attributes:
       loyal: 0
+      life: 0
       cook: 0
       speed: 0
       account: 0
@@ -1450,6 +1471,7 @@ MonoBehaviour:
         a: 1
       face: 0
     equips:
+      maskId: 0
       handId: 0
       hatId: 0
       clothesId: 0
@@ -2491,6 +2513,7 @@ MonoBehaviour:
     items_id: 0
     items_type: 0
     icon_key: 
+    add_life: 0
     add_cook: 0
     add_speed: 0
     add_account: 0
@@ -2498,6 +2521,7 @@ MonoBehaviour:
     add_force: 0
     add_lucky: 0
     add_loyal: 0
+    rotation_angle: 0
     add_id: 0
     intact_number: 0
     name: 
@@ -2514,24 +2538,28 @@ MonoBehaviour:
   characterData:
     baseInfo:
       characterId: 
+      titleName: 
       name: 
       workDay: 0
       priceS: 0
       priceM: 0
       priceL: 0
       chefInfo:
+        workerType: 1
         workerLevel: 0
         workerExp: 0
         cookNumber: 0
         cookTime: 0
         listFoodCookNumer: []
       waiterInfo:
+        workerType: 2
         workerLevel: 0
         workerExp: 0
         cleanTotalNumber: 0
         sendTotalNumber: 0
         cleanTotalTime: 0
       accountingInfo:
+        workerType: 3
         workerLevel: 0
         workerExp: 0
         accountingTotalNumber: 0
@@ -2548,6 +2576,7 @@ MonoBehaviour:
         accountingMoneyS: 0
         accountingTotalTime: 0
       accostInfo:
+        workerType: 4
         workerLevel: 0
         workerExp: 0
         accostTotalNumber: 0
@@ -2555,6 +2584,7 @@ MonoBehaviour:
         accostFailNumber: 0
         accostTotalTime: 0
       beaterInfo:
+        workerType: 5
         workerLevel: 0
         workerExp: 0
         fightTotalNumber: 0
@@ -2575,6 +2605,7 @@ MonoBehaviour:
       isAttendance: 0
     attributes:
       loyal: 0
+      life: 0
       cook: 0
       speed: 0
       account: 0
@@ -2608,6 +2639,7 @@ MonoBehaviour:
         a: 1
       face: 0
     equips:
+      maskId: 0
       handId: 0
       hatId: 0
       clothesId: 0
@@ -2634,6 +2666,7 @@ MonoBehaviour:
     items_id: 0
     items_type: 0
     icon_key: 
+    add_life: 0
     add_cook: 0
     add_speed: 0
     add_account: 0
@@ -2641,6 +2674,7 @@ MonoBehaviour:
     add_force: 0
     add_lucky: 0
     add_loyal: 0
+    rotation_angle: 0
     add_id: 0
     intact_number: 0
     name: 
@@ -3048,7 +3082,7 @@ RectTransform:
   - {fileID: 4140619151599833531}
   - {fileID: 4140619152024381430}
   m_Father: {fileID: 4140619151037850657}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0.6}
   m_AnchorMax: {x: 1, y: 1}
@@ -3381,6 +3415,7 @@ MonoBehaviour:
     items_id: 0
     items_type: 0
     icon_key: 
+    add_life: 0
     add_cook: 0
     add_speed: 0
     add_account: 0
@@ -3388,6 +3423,7 @@ MonoBehaviour:
     add_force: 0
     add_lucky: 0
     add_loyal: 0
+    rotation_angle: 0
     add_id: 0
     intact_number: 0
     name: 
@@ -3404,24 +3440,28 @@ MonoBehaviour:
   characterData:
     baseInfo:
       characterId: 
+      titleName: 
       name: 
       workDay: 0
       priceS: 0
       priceM: 0
       priceL: 0
       chefInfo:
+        workerType: 1
         workerLevel: 0
         workerExp: 0
         cookNumber: 0
         cookTime: 0
         listFoodCookNumer: []
       waiterInfo:
+        workerType: 2
         workerLevel: 0
         workerExp: 0
         cleanTotalNumber: 0
         sendTotalNumber: 0
         cleanTotalTime: 0
       accountingInfo:
+        workerType: 3
         workerLevel: 0
         workerExp: 0
         accountingTotalNumber: 0
@@ -3438,6 +3478,7 @@ MonoBehaviour:
         accountingMoneyS: 0
         accountingTotalTime: 0
       accostInfo:
+        workerType: 4
         workerLevel: 0
         workerExp: 0
         accostTotalNumber: 0
@@ -3445,6 +3486,7 @@ MonoBehaviour:
         accostFailNumber: 0
         accostTotalTime: 0
       beaterInfo:
+        workerType: 5
         workerLevel: 0
         workerExp: 0
         fightTotalNumber: 0
@@ -3465,6 +3507,7 @@ MonoBehaviour:
       isAttendance: 0
     attributes:
       loyal: 0
+      life: 0
       cook: 0
       speed: 0
       account: 0
@@ -3498,6 +3541,7 @@ MonoBehaviour:
         a: 1
       face: 0
     equips:
+      maskId: 0
       handId: 0
       hatId: 0
       clothesId: 0
@@ -3524,6 +3568,7 @@ MonoBehaviour:
     items_id: 0
     items_type: 0
     icon_key: 
+    add_life: 0
     add_cook: 0
     add_speed: 0
     add_account: 0
@@ -3531,6 +3576,7 @@ MonoBehaviour:
     add_force: 0
     add_lucky: 0
     add_loyal: 0
+    rotation_angle: 0
     add_id: 0
     intact_number: 0
     name: 
@@ -3680,6 +3726,7 @@ MonoBehaviour:
     items_id: 0
     items_type: 0
     icon_key: 
+    add_life: 0
     add_cook: 0
     add_speed: 0
     add_account: 0
@@ -3687,6 +3734,7 @@ MonoBehaviour:
     add_force: 0
     add_lucky: 0
     add_loyal: 0
+    rotation_angle: 0
     add_id: 0
     intact_number: 0
     name: 
@@ -3703,24 +3751,28 @@ MonoBehaviour:
   characterData:
     baseInfo:
       characterId: 
+      titleName: 
       name: 
       workDay: 0
       priceS: 0
       priceM: 0
       priceL: 0
       chefInfo:
+        workerType: 1
         workerLevel: 0
         workerExp: 0
         cookNumber: 0
         cookTime: 0
         listFoodCookNumer: []
       waiterInfo:
+        workerType: 2
         workerLevel: 0
         workerExp: 0
         cleanTotalNumber: 0
         sendTotalNumber: 0
         cleanTotalTime: 0
       accountingInfo:
+        workerType: 3
         workerLevel: 0
         workerExp: 0
         accountingTotalNumber: 0
@@ -3737,6 +3789,7 @@ MonoBehaviour:
         accountingMoneyS: 0
         accountingTotalTime: 0
       accostInfo:
+        workerType: 4
         workerLevel: 0
         workerExp: 0
         accostTotalNumber: 0
@@ -3744,6 +3797,7 @@ MonoBehaviour:
         accostFailNumber: 0
         accostTotalTime: 0
       beaterInfo:
+        workerType: 5
         workerLevel: 0
         workerExp: 0
         fightTotalNumber: 0
@@ -3764,6 +3818,7 @@ MonoBehaviour:
       isAttendance: 0
     attributes:
       loyal: 0
+      life: 0
       cook: 0
       speed: 0
       account: 0
@@ -3797,6 +3852,7 @@ MonoBehaviour:
         a: 1
       face: 0
     equips:
+      maskId: 0
       handId: 0
       hatId: 0
       clothesId: 0
@@ -3823,6 +3879,7 @@ MonoBehaviour:
     items_id: 0
     items_type: 0
     icon_key: 
+    add_life: 0
     add_cook: 0
     add_speed: 0
     add_account: 0
@@ -3830,6 +3887,7 @@ MonoBehaviour:
     add_force: 0
     add_lucky: 0
     add_loyal: 0
+    rotation_angle: 0
     add_id: 0
     intact_number: 0
     name: 
@@ -4131,10 +4189,10 @@ RectTransform:
   - {fileID: 4140619152766605514}
   - {fileID: 4140619151794432430}
   m_Father: {fileID: 4140619151037850657}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 1, y: 0.6}
+  m_AnchorMax: {x: 1, y: 0.3514}
   m_AnchoredPosition: {x: 0, y: 10}
   m_SizeDelta: {x: -40, y: -20}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -4465,6 +4523,7 @@ MonoBehaviour:
     items_id: 0
     items_type: 0
     icon_key: 
+    add_life: 0
     add_cook: 0
     add_speed: 0
     add_account: 0
@@ -4472,6 +4531,7 @@ MonoBehaviour:
     add_force: 0
     add_lucky: 0
     add_loyal: 0
+    rotation_angle: 0
     add_id: 0
     intact_number: 0
     name: 
@@ -4488,24 +4548,28 @@ MonoBehaviour:
   characterData:
     baseInfo:
       characterId: 
+      titleName: 
       name: 
       workDay: 0
       priceS: 0
       priceM: 0
       priceL: 0
       chefInfo:
+        workerType: 1
         workerLevel: 0
         workerExp: 0
         cookNumber: 0
         cookTime: 0
         listFoodCookNumer: []
       waiterInfo:
+        workerType: 2
         workerLevel: 0
         workerExp: 0
         cleanTotalNumber: 0
         sendTotalNumber: 0
         cleanTotalTime: 0
       accountingInfo:
+        workerType: 3
         workerLevel: 0
         workerExp: 0
         accountingTotalNumber: 0
@@ -4522,6 +4586,7 @@ MonoBehaviour:
         accountingMoneyS: 0
         accountingTotalTime: 0
       accostInfo:
+        workerType: 4
         workerLevel: 0
         workerExp: 0
         accostTotalNumber: 0
@@ -4529,6 +4594,7 @@ MonoBehaviour:
         accostFailNumber: 0
         accostTotalTime: 0
       beaterInfo:
+        workerType: 5
         workerLevel: 0
         workerExp: 0
         fightTotalNumber: 0
@@ -4549,6 +4615,7 @@ MonoBehaviour:
       isAttendance: 0
     attributes:
       loyal: 0
+      life: 0
       cook: 0
       speed: 0
       account: 0
@@ -4582,6 +4649,7 @@ MonoBehaviour:
         a: 1
       face: 0
     equips:
+      maskId: 0
       handId: 0
       hatId: 0
       clothesId: 0
@@ -4651,6 +4719,7 @@ MonoBehaviour:
     items_id: 0
     items_type: 0
     icon_key: 
+    add_life: 0
     add_cook: 0
     add_speed: 0
     add_account: 0
@@ -4658,6 +4727,7 @@ MonoBehaviour:
     add_force: 0
     add_lucky: 0
     add_loyal: 0
+    rotation_angle: 0
     add_id: 0
     intact_number: 0
     name: 
@@ -4958,6 +5028,188 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!1001 &1405223270063649492
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 4140619151037850657}
+    m_Modifications:
+    - target: {fileID: 4455640888631526999, guid: bd4462e4875444244b34315f9f8a474e,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4455640888631526999, guid: bd4462e4875444244b34315f9f8a474e,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4455640888631526999, guid: bd4462e4875444244b34315f9f8a474e,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4455640888631526999, guid: bd4462e4875444244b34315f9f8a474e,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4455640888631526999, guid: bd4462e4875444244b34315f9f8a474e,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4455640888631526999, guid: bd4462e4875444244b34315f9f8a474e,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4455640888631526999, guid: bd4462e4875444244b34315f9f8a474e,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4455640888631526999, guid: bd4462e4875444244b34315f9f8a474e,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4455640888631526999, guid: bd4462e4875444244b34315f9f8a474e,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4455640888631526999, guid: bd4462e4875444244b34315f9f8a474e,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4455640888631526999, guid: bd4462e4875444244b34315f9f8a474e,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4455640888631526999, guid: bd4462e4875444244b34315f9f8a474e,
+        type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4455640888631526999, guid: bd4462e4875444244b34315f9f8a474e,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4455640888631526999, guid: bd4462e4875444244b34315f9f8a474e,
+        type: 3}
+      propertyPath: m_SizeDelta.x
+      value: -30
+      objectReference: {fileID: 0}
+    - target: {fileID: 4455640888631526999, guid: bd4462e4875444244b34315f9f8a474e,
+        type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4455640888631526999, guid: bd4462e4875444244b34315f9f8a474e,
+        type: 3}
+      propertyPath: m_AnchorMin.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4455640888631526999, guid: bd4462e4875444244b34315f9f8a474e,
+        type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0.3514
+      objectReference: {fileID: 0}
+    - target: {fileID: 4455640888631526999, guid: bd4462e4875444244b34315f9f8a474e,
+        type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4455640888631526999, guid: bd4462e4875444244b34315f9f8a474e,
+        type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0.6
+      objectReference: {fileID: 0}
+    - target: {fileID: 4455640888631526999, guid: bd4462e4875444244b34315f9f8a474e,
+        type: 3}
+      propertyPath: m_Pivot.x
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 4455640888631526999, guid: bd4462e4875444244b34315f9f8a474e,
+        type: 3}
+      propertyPath: m_Pivot.y
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 4455640888631526996, guid: bd4462e4875444244b34315f9f8a474e,
+        type: 3}
+      propertyPath: m_Name
+      value: CharacterAttributeView
+      objectReference: {fileID: 0}
+    - target: {fileID: 4455640887006325386, guid: bd4462e4875444244b34315f9f8a474e,
+        type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -8.167094
+      objectReference: {fileID: 0}
+    - target: {fileID: 4455640887006325386, guid: bd4462e4875444244b34315f9f8a474e,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 2.653651
+      objectReference: {fileID: 0}
+    - target: {fileID: 4455640887299156324, guid: bd4462e4875444244b34315f9f8a474e,
+        type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 8.167095
+      objectReference: {fileID: 0}
+    - target: {fileID: 4455640887299156324, guid: bd4462e4875444244b34315f9f8a474e,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 2.6536498
+      objectReference: {fileID: 0}
+    - target: {fileID: 4455640887106146020, guid: bd4462e4875444244b34315f9f8a474e,
+        type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -5.047543
+      objectReference: {fileID: 0}
+    - target: {fileID: 4455640887106146020, guid: bd4462e4875444244b34315f9f8a474e,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -6.9473457
+      objectReference: {fileID: 0}
+    - target: {fileID: 4455640887091579949, guid: bd4462e4875444244b34315f9f8a474e,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 8.587392
+      objectReference: {fileID: 0}
+    - target: {fileID: 4455640888197137337, guid: bd4462e4875444244b34315f9f8a474e,
+        type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 5.0475416
+      objectReference: {fileID: 0}
+    - target: {fileID: 4455640888197137337, guid: bd4462e4875444244b34315f9f8a474e,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -6.9473467
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: bd4462e4875444244b34315f9f8a474e, type: 3}
+--- !u!224 &3338793336488539267 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 4455640888631526999, guid: bd4462e4875444244b34315f9f8a474e,
+    type: 3}
+  m_PrefabInstance: {fileID: 1405223270063649492}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &3338793336488539266 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4455640888631526998, guid: bd4462e4875444244b34315f9f8a474e,
+    type: 3}
+  m_PrefabInstance: {fileID: 1405223270063649492}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7bdffcf781fc8cb4e8b0a673aa309854, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &1561515005594980276
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4965,6 +5217,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 4140619152054784272}
     m_Modifications:
+    - target: {fileID: 6202850148858248711, guid: dbdedefdbd5ca8045a10545a8d921571,
+        type: 3}
+      propertyPath: m_Name
+      value: CharacterUI
+      objectReference: {fileID: 0}
     - target: {fileID: 6202850148858248704, guid: dbdedefdbd5ca8045a10545a8d921571,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -5070,13 +5327,14 @@ PrefabInstance:
       propertyPath: m_Pivot.y
       value: 0.5
       objectReference: {fileID: 0}
-    - target: {fileID: 6202850148858248711, guid: dbdedefdbd5ca8045a10545a8d921571,
-        type: 3}
-      propertyPath: m_Name
-      value: CharacterUI
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: dbdedefdbd5ca8045a10545a8d921571, type: 3}
+--- !u!224 &4881742324054553012 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 6202850148858248704, guid: dbdedefdbd5ca8045a10545a8d921571,
+    type: 3}
+  m_PrefabInstance: {fileID: 1561515005594980276}
+  m_PrefabAsset: {fileID: 0}
 --- !u!114 &4881742324054553015 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 6202850148858248707, guid: dbdedefdbd5ca8045a10545a8d921571,
@@ -5089,9 +5347,3 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3e42d425c72705442b4e5e7ae17eb6ee, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!224 &4881742324054553012 stripped
-RectTransform:
-  m_CorrespondingSourceObject: {fileID: 6202850148858248704, guid: dbdedefdbd5ca8045a10545a8d921571,
-    type: 3}
-  m_PrefabInstance: {fileID: 1561515005594980276}
-  m_PrefabAsset: {fileID: 0}

@@ -13,6 +13,8 @@ public class UIGameEquip : BaseUIComponent
     public ItemGameBackpackEquipCpt equipClothes;
     public ItemGameBackpackEquipCpt equipShoes;
 
+    public CharacterAttributeView characterAttributeView;
+
     public Text tvLoyal;
     public Text tvCook;
     public Text tvSpeed;
@@ -20,6 +22,7 @@ public class UIGameEquip : BaseUIComponent
     public Text tvCharm;
     public Text tvForce;
     public Text tvLucky;
+ 
 
     public CharacterUICpt characterUICpt;
 
@@ -40,6 +43,7 @@ public class UIGameEquip : BaseUIComponent
     {
         base.OpenUI();
         CreateBackpackData();
+        RefreshUI();
     }
 
     public void OpenWorkUI()
@@ -60,8 +64,6 @@ public class UIGameEquip : BaseUIComponent
             equipClothes.SetData(characterData, gameItemsManager.GetItemsById(characterData.equips.clothesId), null);
         if (characterData.equips.shoesId != 0)
             equipShoes.SetData(characterData, gameItemsManager.GetItemsById(characterData.equips.shoesId), null);
-
-        RefreshUI();
     }
 
     /// <summary>
@@ -111,6 +113,8 @@ public class UIGameEquip : BaseUIComponent
             tvForce.text = GameCommonInfo.GetUITextById(5) + "：" + selfAttributes.force + (equipAttributes.force == 0 ? "" : "+" + equipAttributes.force);
         if (tvLucky != null)
             tvLucky.text = GameCommonInfo.GetUITextById(6) + "：" + selfAttributes.lucky + (equipAttributes.lucky == 0 ? "" : "+" + equipAttributes.lucky);
+        if (characterAttributeView != null)
+            characterAttributeView.SetData(totalAttributes.cook, totalAttributes.speed, totalAttributes.account, totalAttributes.charm, totalAttributes.force);
     }
 
     /// <summary>

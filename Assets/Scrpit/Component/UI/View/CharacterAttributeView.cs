@@ -2,11 +2,18 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using DG.Tweening;
 
 public class CharacterAttributeView : Graphic
 {
     public RectTransform rtfContent;
     public RectTransform rtfThis;
+
+    public Text tvCook;
+    public Text tvSpeed;
+    public Text tvAccount;
+    public Text tvCharm;
+    public Text tvForce;
 
     public int cook;
     public int speed;
@@ -14,11 +21,13 @@ public class CharacterAttributeView : Graphic
     public int charm;
     public int force;
 
-
-    void Update()
-    {
-        SetData(cook, speed, account, charm, force);
-    }
+    //是否在初始化中
+    private bool mIsIniting = false;
+    //private void Update()
+    //{
+    //   
+    //        SetAllDirty(); //设置更改，请求渲染（可以在需要的时候手动调用，而不是在update中）
+    //}
 
     /// <summary>
     /// 设置数据
@@ -35,7 +44,50 @@ public class CharacterAttributeView : Graphic
         this.account = account;
         this.charm = charm;
         this.force = force;
-        SetAllDirty(); //设置更改，请求渲染（可以在需要的时候手动调用，而不是在update中）
+
+        if (tvCook != null)
+            tvCook.text = GameCommonInfo.GetUITextById(1) + "（" + cook + ")";
+        if (tvSpeed != null)
+            tvSpeed.text = "（" + speed + ")" + GameCommonInfo.GetUITextById(2);
+        if (tvAccount != null)
+            tvAccount.text = "（" + account + ")" + GameCommonInfo.GetUITextById(3);
+        if (tvCharm != null)
+            tvCharm.text = GameCommonInfo.GetUITextById(4) + "（" + charm + ")";
+        if (tvForce != null)
+            tvForce.text = GameCommonInfo.GetUITextById(5) + "（" + force + ")";
+        StartCoroutine(CoroutineForInit());
+    }
+
+    public IEnumerator CoroutineForInit()
+    {
+        mIsIniting = true;
+        yield return new WaitForEndOfFrame();
+        //设置每个点的位置
+        InitPosition();
+        for (int i = 0; i < rtfContent.childCount; i++)
+        {
+            RectTransform tfChild = (RectTransform)rtfContent.GetChild(i);
+            tfChild.DOAnchorPos(Vector2.zero, 2)
+                .From()
+                .SetEase(Ease.OutCubic)
+                .OnUpdate(delegate ()
+                {
+                    SetAllDirty();
+                })
+                .OnComplete(delegate ()
+                {
+                    mIsIniting = false;
+                });
+        }
+    }
+
+    private void Update()
+    {
+        if (!mIsIniting)
+        {
+            InitPosition();
+            SetAllDirty();
+        }
     }
 
     protected override void OnPopulateMesh(VertexHelper vh)
@@ -44,35 +96,13 @@ public class CharacterAttributeView : Graphic
         {
             return;
         }
-
         Color32 color32 = color;//绘制的颜色
         vh.Clear(); //清除原先需要绘制的顶点和三角形数据，用下面的元素替代
-        float radius = rtfContent.rect.width / 2f;
 
         // 几何图形的顶点，本例中根据子节点坐标确定顶点
         for (int i = 0; i < rtfContent.childCount; i++)
         {
             RectTransform tfChild = (RectTransform)rtfContent.GetChild(i);
-            if (tfChild.name.Contains("Cook"))
-            {
-                SetAttributePosition(tfChild,i, radius, cook);
-            }
-            if (tfChild.name.Contains("Speed"))
-            {
-                SetAttributePosition(tfChild,i, radius, speed);
-            }
-            if (tfChild.name.Contains("Account"))
-            {
-                SetAttributePosition(tfChild,i, radius, account);
-            }
-            if (tfChild.name.Contains("Charm"))
-            {
-                SetAttributePosition(tfChild,i, radius, charm);
-            }
-            if (tfChild.name.Contains("Force"))
-            {
-                SetAttributePosition(tfChild,i, radius, force);
-            }
             vh.AddVert(tfChild.localPosition, color32, new Vector2(0f, 0f));
         }
         //几何图形中的三角形
@@ -83,21 +113,69 @@ public class CharacterAttributeView : Graphic
         vh.AddTriangle(0, 1, 5);
     }
 
-    private void SetAttributePosition(RectTransform tfChild,int position, float radius, int attribute)
+    /// <summary>
+    /// 初始化点的位置
+    /// </summary>
+    private void InitPosition()
+    {
+        float minWidth = 0;
+        if (rtfContent.rect.width < rtfContent.rect.height)
+        {
+            minWidth = rtfContent.rect.width;
+        }
+        else
+        {
+            minWidth = rtfContent.rect.height;
+        }
+        float radius = minWidth / 2f;
+        for (int i = 0; i < rtfContent.childCount; i++)
+        {
+            RectTransform tfChild = (RectTransform)rtfContent.GetChild(i);
+            if (tfChild.name.Contains("Cook"))
+            {
+                SetAttributePosition(tfChild, i, radius, cook);
+            }
+            if (tfChild.name.Contains("Speed"))
+            {
+                SetAttributePosition(tfChild, i, radius, speed);
+            }
+            if (tfChild.name.Contains("Account"))
+            {
+                SetAttributePosition(tfChild, i, radius, account);
+            }
+            if (tfChild.name.Contains("Charm"))
+            {
+                SetAttributePosition(tfChild, i, radius, charm);
+            }
+            if (tfChild.name.Contains("Force"))
+            {
+                SetAttributePosition(tfChild, i, radius, force);
+            }
+        }
+    }
+
+    /// <summary>
+    /// 设置每个点的位置
+    /// </summary>
+    /// <param name="tfChild"></param>
+    /// <param name="position"></param>
+    /// <param name="radius"></param>
+    /// <param name="attribute"></param>
+    private void SetAttributePosition(RectTransform tfChild, int position, float radius, int attribute)
     {
         float attributeR = 0;
         if (attribute != 0)
         {
-             attributeR = radius / (100f / attribute);
+            attributeR = radius / (100f / attribute);
         }
         else
         {
             attributeR = 1;
         }
-        float angle = 72 * (position-1);
+        float angle = 72 * (position - 1);
 
         float positionY = Mathf.Cos(Mathf.PI * angle / 180) * attributeR;
         float positionX = Mathf.Sin(Mathf.PI * angle / 180) * attributeR;
-        tfChild.anchoredPosition = new Vector2(positionX,positionY);
+        tfChild.anchoredPosition = new Vector2(positionX, positionY);
     }
 }
