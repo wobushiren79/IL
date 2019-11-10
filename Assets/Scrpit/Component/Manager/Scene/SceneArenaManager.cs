@@ -23,6 +23,7 @@ public class SceneArenaManager : BaseManager
     public GameObject arena_2_Obj_AuditTable_Container;
     public GameObject arena_2_Obj_Stove_Container;
 
+    public Transform arena_3_PlayerPosition;
     /// <summary>
     /// 获取竞技场1的战斗地点
     /// </summary>
@@ -134,5 +135,12 @@ public class SceneArenaManager : BaseManager
         return TypeConversionUtil.ArrayToList(listCallBoard);
     }
 
-
+    /// <summary>
+    /// 获取竞技场3的玩家位置
+    /// </summary>
+    /// <param name="playerPosition"></param>
+    public void GetArenaForAccountBy3(out Vector3 playerPosition)
+    {
+        playerPosition = arena_3_PlayerPosition.position;
+    }
 }

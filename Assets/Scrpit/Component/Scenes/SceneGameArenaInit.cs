@@ -18,6 +18,8 @@ public class SceneGameArenaInit : BaseSceneInit, IBaseObserver
     public MiniGameCombatHandler combatHandler;
     //烹饪游戏控制
     public MiniGameCookingHandler cookingHandler;
+    //计算游戏处理
+    public MiniGameAccountHandler accountHandler;
 
     //地形控制
     public NavMeshSurface navMesh;
@@ -31,6 +33,7 @@ public class SceneGameArenaInit : BaseSceneInit, IBaseObserver
         barrageHandler.AddObserver(this);
         combatHandler.AddObserver(this);
         cookingHandler.AddObserver(this);
+        accountHandler.AddObserver(this);
     }
 
     public void InitSceneData()
@@ -48,33 +51,38 @@ public class SceneGameArenaInit : BaseSceneInit, IBaseObserver
         ArenaPrepareBean arenaPrepareData = GameCommonInfo.ArenaPrepareData;
         arenaPrepareData = new ArenaPrepareBean();
 
-        arenaPrepareData.gameType = MiniGameEnum.Cooking;
-        arenaPrepareData.gameCookingData = new MiniGameCookingBean();
-        arenaPrepareData.gameCookingData.gameReason = MiniGameReasonEnum.Improve;
-        arenaPrepareData.gameCookingData.winScore = 70;
+        arenaPrepareData.gameType = MiniGameEnum.Account;
         List<CharacterBean> listOurData = new List<CharacterBean>();
-        listOurData.Add(npcInfoManager.GetCharacterDataById(200001));
-        List<CharacterBean> listEnemyData = new List<CharacterBean>();
-        listEnemyData.Add(npcInfoManager.GetCharacterDataById(100001));
-        listEnemyData.Add(npcInfoManager.GetCharacterDataById(100002));
-        listEnemyData.Add(npcInfoManager.GetCharacterDataById(100003));
-        listEnemyData.Add(npcInfoManager.GetCharacterDataById(100002));
-        listEnemyData.Add(npcInfoManager.GetCharacterDataById(100003));
-        listEnemyData.Add(npcInfoManager.GetCharacterDataById(100002));
-        listEnemyData.Add(npcInfoManager.GetCharacterDataById(100003));
-        listEnemyData.Add(npcInfoManager.GetCharacterDataById(100003));
-        listEnemyData.Add(npcInfoManager.GetCharacterDataById(100002));
-        listEnemyData.Add(npcInfoManager.GetCharacterDataById(100003));
-        List<CharacterBean> listAuditerData = new List<CharacterBean>();
-        listAuditerData.Add(npcInfoManager.GetCharacterDataById(100001));
-        listAuditerData.Add(npcInfoManager.GetCharacterDataById(100002));
-        listAuditerData.Add(npcInfoManager.GetCharacterDataById(100003));
-        listAuditerData.Add(npcInfoManager.GetCharacterDataById(100003));
-        listAuditerData.Add(npcInfoManager.GetCharacterDataById(100003));
-        List<CharacterBean> listCompereData = new List<CharacterBean>();
-        listCompereData.Add(npcInfoManager.GetCharacterDataById(110005));
-        listCompereData.Add(npcInfoManager.GetCharacterDataById(110006));
-        arenaPrepareData.gameCookingData.InitData(gameItemsManager, listOurData, listEnemyData, listAuditerData, listCompereData);
+        listOurData.Add(npcInfoManager.GetCharacterDataById(100001));
+        arenaPrepareData.gameAccountData.InitData(gameItemsManager, listOurData, null);
+
+        //arenaPrepareData.gameType = MiniGameEnum.Cooking;
+        //arenaPrepareData.gameCookingData = new MiniGameCookingBean();
+        //arenaPrepareData.gameCookingData.gameReason = MiniGameReasonEnum.Improve;
+        //arenaPrepareData.gameCookingData.winScore = 70;
+        //List<CharacterBean> listOurData = new List<CharacterBean>();
+        //listOurData.Add(npcInfoManager.GetCharacterDataById(200001));
+        //List<CharacterBean> listEnemyData = new List<CharacterBean>();
+        //listEnemyData.Add(npcInfoManager.GetCharacterDataById(100001));
+        //listEnemyData.Add(npcInfoManager.GetCharacterDataById(100002));
+        //listEnemyData.Add(npcInfoManager.GetCharacterDataById(100003));
+        //listEnemyData.Add(npcInfoManager.GetCharacterDataById(100002));
+        //listEnemyData.Add(npcInfoManager.GetCharacterDataById(100003));
+        //listEnemyData.Add(npcInfoManager.GetCharacterDataById(100002));
+        //listEnemyData.Add(npcInfoManager.GetCharacterDataById(100003));
+        //listEnemyData.Add(npcInfoManager.GetCharacterDataById(100003));
+        //listEnemyData.Add(npcInfoManager.GetCharacterDataById(100002));
+        //listEnemyData.Add(npcInfoManager.GetCharacterDataById(100003));
+        //List<CharacterBean> listAuditerData = new List<CharacterBean>();
+        //listAuditerData.Add(npcInfoManager.GetCharacterDataById(100001));
+        //listAuditerData.Add(npcInfoManager.GetCharacterDataById(100002));
+        //listAuditerData.Add(npcInfoManager.GetCharacterDataById(100003));
+        //listAuditerData.Add(npcInfoManager.GetCharacterDataById(100003));
+        //listAuditerData.Add(npcInfoManager.GetCharacterDataById(100003));
+        //List<CharacterBean> listCompereData = new List<CharacterBean>();
+        //listCompereData.Add(npcInfoManager.GetCharacterDataById(110005));
+        //listCompereData.Add(npcInfoManager.GetCharacterDataById(110006));
+        //arenaPrepareData.gameCookingData.InitData(gameItemsManager, listOurData, listEnemyData, listAuditerData, listCompereData);
 
         //arenaPrepareData.gameType = MiniGameEnum.Barrage;
         //arenaPrepareData.gameBarrageData = new MiniGameBarrageBean();
@@ -126,8 +134,10 @@ public class SceneGameArenaInit : BaseSceneInit, IBaseObserver
             case MiniGameEnum.Combat:
                 InitGameCombat(arenaPrepareData.gameCombatData);
                 break;
+            case MiniGameEnum.Account:
+                InitGameAccout(arenaPrepareData.gameAccountData);
+                break;
         }
-
         //初始化地形
         StartCoroutine(BuildNavMesh());
     }
@@ -234,6 +244,18 @@ public class SceneGameArenaInit : BaseSceneInit, IBaseObserver
         gameCombatData.combatPosition = combatPosition;
         //初始化游戏
         combatHandler.InitGame(gameCombatData);
+    }
+
+    /// <summary>
+    /// 初始化算账游戏
+    /// </summary>
+    /// <param name="gameAccountData"></param>
+    public void InitGameAccout(MiniGameAccountBean gameAccountData)
+    {
+        sceneArenaManager.GetArenaForAccountBy3(out Vector3 playerPosition);
+        gameAccountData.playerPosition = playerPosition;
+        //初始化游戏
+        accountHandler.InitGame(gameAccountData);
     }
 
     #region 通知回调
