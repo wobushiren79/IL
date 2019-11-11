@@ -24,6 +24,7 @@ public class SceneArenaManager : BaseManager
     public GameObject arena_2_Obj_Stove_Container;
 
     public Transform arena_3_PlayerPosition;
+    public Transform arena_3_CameraPosition;
     /// <summary>
     /// 获取竞技场1的战斗地点
     /// </summary>
@@ -139,8 +140,17 @@ public class SceneArenaManager : BaseManager
     /// 获取竞技场3的玩家位置
     /// </summary>
     /// <param name="playerPosition"></param>
-    public void GetArenaForAccountBy3(out Vector3 playerPosition)
+    public void GetArenaForAccountPlayerBy3(out Vector3 playerPosition)
     {
         playerPosition = arena_3_PlayerPosition.position;
+    }
+
+    /// <summary>
+    /// 获取竞技场3的摄像头位置
+    /// </summary>
+    /// <param name="cameraPosition"></param>
+    public void GetArenaForAccountCameraBy3(out Vector3 cameraPosition)
+    {
+        cameraPosition = arena_3_CameraPosition.position;
     }
 }

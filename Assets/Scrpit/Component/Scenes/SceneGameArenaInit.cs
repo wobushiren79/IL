@@ -54,6 +54,7 @@ public class SceneGameArenaInit : BaseSceneInit, IBaseObserver
         arenaPrepareData.gameType = MiniGameEnum.Account;
         List<CharacterBean> listOurData = new List<CharacterBean>();
         listOurData.Add(npcInfoManager.GetCharacterDataById(100001));
+        arenaPrepareData.gameAccountData = new MiniGameAccountBean();
         arenaPrepareData.gameAccountData.InitData(gameItemsManager, listOurData, null);
 
         //arenaPrepareData.gameType = MiniGameEnum.Cooking;
@@ -252,8 +253,10 @@ public class SceneGameArenaInit : BaseSceneInit, IBaseObserver
     /// <param name="gameAccountData"></param>
     public void InitGameAccout(MiniGameAccountBean gameAccountData)
     {
-        sceneArenaManager.GetArenaForAccountBy3(out Vector3 playerPosition);
+        sceneArenaManager.GetArenaForAccountPlayerBy3(out Vector3 playerPosition);
+        sceneArenaManager.GetArenaForAccountCameraBy3(out Vector3 cameraPosition);
         gameAccountData.playerPosition = playerPosition;
+        gameAccountData.cameraPosition = cameraPosition;
         //初始化游戏
         accountHandler.InitGame(gameAccountData);
     }
