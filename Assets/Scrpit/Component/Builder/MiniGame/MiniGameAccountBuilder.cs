@@ -5,9 +5,12 @@ using System.Collections.Generic;
 
 public class MiniGameAccountBuilder : BaseMiniGameBuilder
 {
+    public MiniGameAccountEjectorCpt ejectorCpt;
+    public NpcAIMiniGameAccountCpt userCharacterAI;
+
     public GameObject objCharacterContainer;
     public GameObject objCharacterModel;
-
+    
     /// <summary>
     /// 创建玩家
     /// </summary>
@@ -17,8 +20,26 @@ public class MiniGameAccountBuilder : BaseMiniGameBuilder
         foreach (MiniGameCharacterBean miniGameCharacter in listUserGameData)
         {
             GameObject objCharacter = Instantiate(objCharacterContainer, objCharacterModel, playerPosition);
-            NpcAIMiniGameAccountCpt npcAI = objCharacter.GetComponent<NpcAIMiniGameAccountCpt>();
-            npcAI.SetCharacterData(miniGameCharacter.characterData);
+            userCharacterAI = objCharacter.GetComponent<NpcAIMiniGameAccountCpt>();
+            userCharacterAI.SetCharacterData(miniGameCharacter.characterData);
         }
+    }
+
+    /// <summary>
+    /// 获取发射器
+    /// </summary>
+    /// <returns></returns>
+    public MiniGameAccountEjectorCpt GetEjector()
+    {
+        return ejectorCpt;
+    }
+
+    /// <summary>
+    /// 获取角色
+    /// </summary>
+    /// <returns></returns>
+    public NpcAIMiniGameAccountCpt GetUserCharacter()
+    {
+        return userCharacterAI;
     }
 }

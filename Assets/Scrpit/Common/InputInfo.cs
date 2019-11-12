@@ -22,6 +22,9 @@ public class InputInfo : ScriptableObject
     //互动按钮E
     public static string Interactive_E = "Interactive_E";
 
+    //互动按钮E
+    public static string Interactive_Space = "Interactive_Space";
+
     //方向 左
     public static string Direction_Left = "Direction_Left";
     //方向 右
