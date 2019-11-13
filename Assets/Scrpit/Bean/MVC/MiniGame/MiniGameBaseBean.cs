@@ -14,6 +14,9 @@ public class MiniGameBaseBean
     public int winSurvivalNumber;//生存角色个数
     public int winBringDownNumber;//打到角色个数
     public int winScore;//胜利分数
+    public int winMoneyS;//胜利的金钱
+    public int winMoneyM;//胜利的金钱
+    public int winMoneyL;//胜利的金钱
 
     //游戏结果 0输 1赢
     public int gameResult;
@@ -58,6 +61,25 @@ public class MiniGameBaseBean
             string winScoreStr = string.Format(GameCommonInfo.GetUITextById(215), winScore + "");
             listWinConditions.Add(winScoreStr);
         }
+        if ( winMoneyL != 0|| winMoneyM != 0||winMoneyS != 0)
+        {
+            string moneyStr = "";
+            if (winMoneyL != 0)
+            {
+                moneyStr += winMoneyL + GameCommonInfo.GetUITextById(16);
+            }
+            if (winMoneyM != 0)
+            {
+                moneyStr += winMoneyM + GameCommonInfo.GetUITextById(17);
+            }
+            if (winMoneyS != 0)
+            {
+                moneyStr += winMoneyS + GameCommonInfo.GetUITextById(18);
+            }
+            string winMoneyStr = string.Format(GameCommonInfo.GetUITextById(216), moneyStr);
+            listWinConditions.Add(winMoneyStr);
+        }
+      
         return listWinConditions;
     }
 

@@ -25,6 +25,7 @@ public class SceneArenaManager : BaseManager
 
     public Transform arena_3_PlayerPosition;
     public Transform arena_3_CameraPosition;
+    public Transform arena_3_MoneyPosition;
     /// <summary>
     /// 获取竞技场1的战斗地点
     /// </summary>
@@ -152,5 +153,14 @@ public class SceneArenaManager : BaseManager
     public void GetArenaForAccountCameraBy3(out Vector3 cameraPosition)
     {
         cameraPosition = arena_3_CameraPosition.position;
+    }
+
+    /// <summary>
+    /// 获取竞技场3的金钱生成位置
+    /// </summary>
+    /// <param name="tfMoneyPosition"></param>
+    public void GetArenaForAccountMoneyBy3(out Transform tfMoneyPosition)
+    {
+        tfMoneyPosition = arena_3_MoneyPosition;
     }
 }

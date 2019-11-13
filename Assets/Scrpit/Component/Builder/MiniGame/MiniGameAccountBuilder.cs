@@ -10,6 +10,9 @@ public class MiniGameAccountBuilder : BaseMiniGameBuilder
 
     public GameObject objCharacterContainer;
     public GameObject objCharacterModel;
+
+    public GameObject objMoneyContainer;
+    public GameObject objMoneyModel;
     
     /// <summary>
     /// 创建玩家
@@ -23,6 +26,19 @@ public class MiniGameAccountBuilder : BaseMiniGameBuilder
             userCharacterAI = objCharacter.GetComponent<NpcAIMiniGameAccountCpt>();
             userCharacterAI.SetCharacterData(miniGameCharacter.characterData);
         }
+    }
+
+    /// <summary>
+    /// 生成金钱
+    /// </summary>
+    /// <param name="moneyL"></param>
+    /// <param name="moneyM"></param>
+    /// <param name="moneyS"></param>
+    public  void CreateMoney(int moneyL,int moneyM, int moneyS,Transform tfMoneyPosition)
+    {
+        moneyL *= 2;
+        moneyM *= 2;
+        moneyS *= 2;
     }
 
     /// <summary>

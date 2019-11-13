@@ -56,7 +56,9 @@ public class SceneGameArenaInit : BaseSceneInit, IBaseObserver
         listOurData.Add(npcInfoManager.GetCharacterDataById(100001));
         arenaPrepareData.gameAccountData = new MiniGameAccountBean();
         arenaPrepareData.gameAccountData.InitData(gameItemsManager, listOurData, null);
-
+        arenaPrepareData.gameAccountData.winMoneyS=100;
+        arenaPrepareData.gameAccountData.winMoneyM=10;
+        arenaPrepareData.gameAccountData.winMoneyL=1;
         //arenaPrepareData.gameType = MiniGameEnum.Cooking;
         //arenaPrepareData.gameCookingData = new MiniGameCookingBean();
         //arenaPrepareData.gameCookingData.gameReason = MiniGameReasonEnum.Improve;
@@ -255,8 +257,10 @@ public class SceneGameArenaInit : BaseSceneInit, IBaseObserver
     {
         sceneArenaManager.GetArenaForAccountPlayerBy3(out Vector3 playerPosition);
         sceneArenaManager.GetArenaForAccountCameraBy3(out Vector3 cameraPosition);
+        sceneArenaManager.GetArenaForAccountMoneyBy3(out Transform tfMoneyPosition);
         gameAccountData.playerPosition = playerPosition;
         gameAccountData.cameraPosition = cameraPosition;
+        gameAccountData.tfMoneyPosition = tfMoneyPosition;
         //初始化游戏
         accountHandler.InitGame(gameAccountData);
     }

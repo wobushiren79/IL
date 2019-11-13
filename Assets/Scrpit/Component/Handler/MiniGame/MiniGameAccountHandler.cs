@@ -14,6 +14,8 @@ public class MiniGameAccountHandler : BaseMiniGameHandler<MiniGameAccountBuilder
         gameControl.SetCameraOrthographicSize(8);
         gameControl.SetCameraPosition(miniGameData.cameraPosition);
         gameControl.SetCallBack(this);
+        //生成金钱
+        miniGameBuilder.CreateMoney(miniGameData.winMoneyL, miniGameData.winMoneyM, miniGameData.winMoneyS, miniGameData.tfMoneyPosition);
         //打开倒计时UI
         OpenCountDownUI(miniGameData);
     }

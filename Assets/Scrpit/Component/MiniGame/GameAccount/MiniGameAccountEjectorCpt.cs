@@ -10,9 +10,10 @@ public class MiniGameAccountEjectorCpt : MonoBehaviour
     public SpriteRenderer srRope;
 
     private bool mIsRotating = false;
-    private bool mIsLaunch = false;
-    private float mRotateSpeed = 1;
-    private float mLaunchSpeed = 0.1f;
+    private int mLaunchStatus = 0;//0等待发射，1发射中，2回收中
+    private float mRotateSpeed = 45f;//每秒
+    private float mLaunchSpeed = 5f;//每秒
+
     void Update()
     {
         if (srHook && srHookPlatform && srRope)
@@ -23,27 +24,25 @@ public class MiniGameAccountEjectorCpt : MonoBehaviour
             srRope.transform.localEulerAngles = new Vector3(0, 0, angle + 90);
             srRope.size = new Vector2(0.25f, localScale * 4);
         }
-
-    }
-
-
-    private void FixedUpdate()
-    {
-        // 
         if (mIsRotating)
         {
             if (srHook.transform.eulerAngles.z > 60 && srHook.transform.eulerAngles.z <= 180)
-                mRotateSpeed = -1;
+                mRotateSpeed = -mRotateSpeed;
             else if (srHook.transform.eulerAngles.z < 300 && srHook.transform.eulerAngles.z > 180)
-                mRotateSpeed = 1;
-            srHook.transform.Rotate(new Vector3(0, 0, mRotateSpeed));
+                mRotateSpeed = -mRotateSpeed;
+            srHook.transform.Rotate(new Vector3(0, 0, mRotateSpeed * Time.deltaTime));
         }
-        if (mIsLaunch)
+        if (mLaunchStatus == 1)
         {
             float angles = srHook.transform.eulerAngles.z;
-            float positionY = Mathf.Cos(Mathf.PI * angles / 180) ;
-            float positionX = -Mathf.Sin(Mathf.PI * angles / 180) ;
-            srHook.transform.Translate(positionX* mLaunchSpeed, positionY* mLaunchSpeed, 0, Space.World);
+            float positionY = Mathf.Cos(Mathf.PI * angles / 180);
+            float positionX = -Mathf.Sin(Mathf.PI * angles / 180);
+            srHook.transform.Translate(positionX * mLaunchSpeed * Time.deltaTime, positionY * mLaunchSpeed * Time.deltaTime, 0, Space.World);
+            //如果超过上限 则回收
+            if (srRope.size.y >= 50)
+            {
+                Recycle();
+            }
         }
     }
 
@@ -69,10 +68,30 @@ public class MiniGameAccountEjectorCpt : MonoBehaviour
     public void Launch()
     {
         //如果正在发射中 则不能再次发射
-        if (mIsLaunch)
+        if (mLaunchStatus==1|| mLaunchStatus==2)
             return;
         //停止旋转
         StopRotate();
-        mIsLaunch = true;
+        mLaunchStatus = 1;
+    }
+
+    /// <summary>
+    /// 回收
+    /// </summary>
+    public void Recycle()
+    {
+        mLaunchStatus = 2;
+        srHook.transform.DOLocalMove(new Vector3(0, 0, 0), 3).OnComplete(delegate(){
+            Settlement();
+        });
+    }
+
+    /// <summary>
+    /// 结算
+    /// </summary>
+    public void Settlement()
+    {
+        mLaunchStatus = 0;
+        StartRotate();
     }
 }
