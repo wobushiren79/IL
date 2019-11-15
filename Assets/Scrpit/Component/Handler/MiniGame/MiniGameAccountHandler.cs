@@ -1,8 +1,10 @@
 ﻿using UnityEngine;
 using UnityEditor;
+using System.Collections;
 
 public class MiniGameAccountHandler : BaseMiniGameHandler<MiniGameAccountBuilder, MiniGameAccountBean>,
-    ControlForMiniGameAccountCpt.ICallBack
+    ControlForMiniGameAccountCpt.ICallBack,
+    MiniGameAccountEjectorCpt.ICallBack
 {
     public override void InitGame(MiniGameAccountBean miniGameData)
     {
@@ -25,10 +27,51 @@ public class MiniGameAccountHandler : BaseMiniGameHandler<MiniGameAccountBuilder
         base.StartGame();
         //发射器开始旋转
         MiniGameAccountEjectorCpt ejectorCpt = miniGameBuilder.GetEjector();
+        ejectorCpt.SetCallBack(this);
         ejectorCpt.StartRotate();
         //打开游戏UI
-        UIMiniGameAccount uiMiniGameAccount= (UIMiniGameAccount)uiGameManager.OpenUIAndCloseOtherByName(EnumUtil.GetEnumName(UIEnum.MiniGameAccount));
+        UIMiniGameAccount uiMiniGameAccount = (UIMiniGameAccount)uiGameManager.OpenUIAndCloseOtherByName(EnumUtil.GetEnumName(UIEnum.MiniGameAccount));
+        uiMiniGameAccount.SetData(miniGameData.winSurvivalTime, miniGameData.winMoneyL, miniGameData.winMoneyM, miniGameData.winMoneyS);
+        //开始倒计时
+        StartCoroutine(StartCountDown());
     }
+
+    /// <summary>
+    /// 检测游戏结果
+    /// </summary>
+    /// <returns></returns>
+    public bool CheckGameResults()
+    {
+        bool isWin = false;
+        if (miniGameData.currentMoneyL >= miniGameData.winMoneyL
+            && miniGameData.currentMoneyM >= miniGameData.winMoneyM
+             && miniGameData.currentMoneyS >= miniGameData.winMoneyS)
+        {
+            isWin = true;
+        }
+        return isWin;
+    }
+
+    /// <summary>
+    /// 开始倒计时
+    /// </summary>
+    /// <param name="totalTime"></param>
+    /// <returns></returns>
+    public IEnumerator StartCountDown()
+    {
+        UIMiniGameAccount uiMiniGameAccount = (UIMiniGameAccount)uiGameManager.GetOpenUI();
+        while (true)
+        {
+            //设置游戏UI时间
+            uiMiniGameAccount.SetTime(miniGameData.currentTime);
+            yield return new WaitForSeconds(1);
+            miniGameData.currentTime--;
+            if (miniGameData.currentTime <= 0)
+                break;
+        }
+        EndGame(CheckGameResults());
+    }
+
 
 
     #region 倒计时回调
@@ -48,6 +91,20 @@ public class MiniGameAccountHandler : BaseMiniGameHandler<MiniGameAccountBuilder
             MiniGameAccountEjectorCpt ejectorCpt = miniGameBuilder.GetEjector();
             ejectorCpt.Launch();
         }
+    }
+    #endregion
+
+    #region 发射机回调
+    public void AccountEjectorSettlement(MiniGameAccountEjectorCpt ejector, int moneyL, int moneyM, int moneyS)
+    {
+        miniGameData.currentMoneyL += moneyL;
+        miniGameData.currentMoneyM += moneyM;
+        miniGameData.currentMoneyS += moneyS;
+
+        //展示特效
+        MiniGameAccountEjectorCpt ejectorCpt = miniGameBuilder.GetEjector();
+        UIMiniGameAccount uiMiniGameAccount = (UIMiniGameAccount)uiGameManager.GetOpenUI();
+        uiMiniGameAccount.ShowMoneyGet(ejectorCpt.transform.position, moneyL, moneyM, moneyS);
     }
     #endregion
 }

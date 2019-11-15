@@ -13,7 +13,7 @@ public class MiniGameAccountBuilder : BaseMiniGameBuilder
 
     public GameObject objMoneyContainer;
     public GameObject objMoneyModel;
-    
+
     /// <summary>
     /// 创建玩家
     /// </summary>
@@ -34,11 +34,40 @@ public class MiniGameAccountBuilder : BaseMiniGameBuilder
     /// <param name="moneyL"></param>
     /// <param name="moneyM"></param>
     /// <param name="moneyS"></param>
-    public  void CreateMoney(int moneyL,int moneyM, int moneyS,Transform tfMoneyPosition)
+    public void CreateMoney(int moneyL, int moneyM, int moneyS, Transform tfMoneyPosition)
     {
         moneyL *= 2;
         moneyM *= 2;
         moneyS *= 2;
+        while (moneyL > 0)
+        {
+            int moneyMax = (moneyL > 10 ? 10 : moneyL);
+            int money = UnityEngine.Random.Range(1, moneyMax);
+            CreateMoneyItem(MoneyEnum.L, money, tfMoneyPosition);
+            moneyL -= money;
+        }
+        while (moneyM > 0)
+        {
+            int moneyMax = (moneyM > 10 ? 10 : moneyM);
+            int money = UnityEngine.Random.Range(1, moneyMax);
+            CreateMoneyItem(MoneyEnum.M, money, tfMoneyPosition);
+            moneyM -= money;
+        }
+        while (moneyS > 0)
+        {
+            int moneyMax = (moneyS > 10 ? 10 : moneyS);
+            int money = UnityEngine.Random.Range(1, moneyMax);
+            CreateMoneyItem(MoneyEnum.S, money, tfMoneyPosition);
+            moneyS -= money;
+        }
+    }
+
+    private void CreateMoneyItem(MoneyEnum moneyType, int money, Transform tfMoneyPosition)
+    {
+        Vector3 moneyPosition = GameUtil.GetTransformInsidePosition2D(tfMoneyPosition);
+        GameObject objMoney = Instantiate(objMoneyContainer, objMoneyModel, moneyPosition);
+        MiniGameAccountMoneyCpt accountMoneyCpt = objMoney.GetComponent<MiniGameAccountMoneyCpt>();
+        accountMoneyCpt.InitData(moneyType, money);
     }
 
     /// <summary>

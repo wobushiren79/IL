@@ -52,13 +52,11 @@ public class SceneGameArenaInit : BaseSceneInit, IBaseObserver
         arenaPrepareData = new ArenaPrepareBean();
 
         arenaPrepareData.gameType = MiniGameEnum.Account;
-        List<CharacterBean> listOurData = new List<CharacterBean>();
-        listOurData.Add(npcInfoManager.GetCharacterDataById(100001));
         arenaPrepareData.gameAccountData = new MiniGameAccountBean();
-        arenaPrepareData.gameAccountData.InitData(gameItemsManager, listOurData, null);
-        arenaPrepareData.gameAccountData.winMoneyS=100;
-        arenaPrepareData.gameAccountData.winMoneyM=10;
-        arenaPrepareData.gameAccountData.winMoneyL=1;
+        arenaPrepareData.gameAccountData.InitData(gameItemsManager, npcInfoManager.GetCharacterDataById(100001));
+        arenaPrepareData.gameAccountData.winMoneyS=10;
+        arenaPrepareData.gameAccountData.winMoneyM=1;
+        arenaPrepareData.gameAccountData.winMoneyL=0;
         //arenaPrepareData.gameType = MiniGameEnum.Cooking;
         //arenaPrepareData.gameCookingData = new MiniGameCookingBean();
         //arenaPrepareData.gameCookingData.gameReason = MiniGameReasonEnum.Improve;

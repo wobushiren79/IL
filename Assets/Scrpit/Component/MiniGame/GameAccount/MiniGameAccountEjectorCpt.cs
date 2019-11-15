@@ -13,6 +13,13 @@ public class MiniGameAccountEjectorCpt : MonoBehaviour
     private int mLaunchStatus = 0;//0等待发射，1发射中，2回收中
     private float mRotateSpeed = 45f;//每秒
     private float mLaunchSpeed = 5f;//每秒
+    private float mRotatingDirection = 1;
+    public ICallBack mCallBack;
+
+    public void SetCallBack(ICallBack mCallBack)
+    {
+        this.mCallBack = mCallBack;
+    }
 
     void Update()
     {
@@ -27,10 +34,10 @@ public class MiniGameAccountEjectorCpt : MonoBehaviour
         if (mIsRotating)
         {
             if (srHook.transform.eulerAngles.z > 60 && srHook.transform.eulerAngles.z <= 180)
-                mRotateSpeed = -mRotateSpeed;
+                mRotatingDirection = -1;
             else if (srHook.transform.eulerAngles.z < 300 && srHook.transform.eulerAngles.z > 180)
-                mRotateSpeed = -mRotateSpeed;
-            srHook.transform.Rotate(new Vector3(0, 0, mRotateSpeed * Time.deltaTime));
+                mRotatingDirection = 1;
+            srHook.transform.Rotate(new Vector3(0, 0, mRotatingDirection * mRotateSpeed * Time.deltaTime));
         }
         if (mLaunchStatus == 1)
         {
@@ -68,7 +75,7 @@ public class MiniGameAccountEjectorCpt : MonoBehaviour
     public void Launch()
     {
         //如果正在发射中 则不能再次发射
-        if (mLaunchStatus==1|| mLaunchStatus==2)
+        if (mLaunchStatus == 1 || mLaunchStatus == 2)
             return;
         //停止旋转
         StopRotate();
@@ -81,7 +88,8 @@ public class MiniGameAccountEjectorCpt : MonoBehaviour
     public void Recycle()
     {
         mLaunchStatus = 2;
-        srHook.transform.DOLocalMove(new Vector3(0, 0, 0), 3).OnComplete(delegate(){
+        srHook.transform.DOLocalMove(new Vector3(0, 0, 0), 3).OnComplete(delegate ()
+        {
             Settlement();
         });
     }
@@ -92,6 +100,43 @@ public class MiniGameAccountEjectorCpt : MonoBehaviour
     public void Settlement()
     {
         mLaunchStatus = 0;
+        MiniGameAccountMoneyCpt[] moneyList = srHook.GetComponentsInChildren<MiniGameAccountMoneyCpt>();
+        if (mCallBack != null)
+        {
+            int moneyL = 0;
+            int moneyM = 0;
+            int moneyS = 0;
+            if (moneyList != null)
+                foreach (MiniGameAccountMoneyCpt money in moneyList)
+                {
+                    if (money.moneyType == MoneyEnum.L)
+                    {
+                        moneyL += money.money;
+                    }
+                    else if (money.moneyType == MoneyEnum.M)
+                    {
+                        moneyM += money.money;
+                    }
+                    else if (money.moneyType == MoneyEnum.S)
+                    {
+                        moneyS += money.money;
+                    }
+                }
+            mCallBack.AccountEjectorSettlement(this, moneyL, moneyM, moneyS);
+            //结算完毕删除
+            if (moneyList != null)
+            {
+                foreach (MiniGameAccountMoneyCpt money in moneyList)
+                {
+                    Destroy(money.gameObject);
+                }
+            }
+        }
         StartRotate();
+    }
+
+    public interface ICallBack
+    {
+        void AccountEjectorSettlement(MiniGameAccountEjectorCpt ejector, int moneyL, int moneyM, int moneyS);
     }
 }

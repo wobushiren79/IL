@@ -53,7 +53,7 @@ public class MiniGameBaseBean
         }
         if (winBringDownNumber != 0)
         {
-            string winBringDownNumberStr = string.Format(GameCommonInfo.GetUITextById(214), winBringDownNumber+ "");
+            string winBringDownNumberStr = string.Format(GameCommonInfo.GetUITextById(214), winBringDownNumber + "");
             listWinConditions.Add(winBringDownNumberStr);
         }
         if (winScore != 0)
@@ -61,7 +61,7 @@ public class MiniGameBaseBean
             string winScoreStr = string.Format(GameCommonInfo.GetUITextById(215), winScore + "");
             listWinConditions.Add(winScoreStr);
         }
-        if ( winMoneyL != 0|| winMoneyM != 0||winMoneyS != 0)
+        if (winMoneyL != 0 || winMoneyM != 0 || winMoneyS != 0)
         {
             string moneyStr = "";
             if (winMoneyL != 0)
@@ -79,7 +79,7 @@ public class MiniGameBaseBean
             string winMoneyStr = string.Format(GameCommonInfo.GetUITextById(216), moneyStr);
             listWinConditions.Add(winMoneyStr);
         }
-      
+
         return listWinConditions;
     }
 
@@ -162,10 +162,9 @@ public class MiniGameBaseBean
             case MiniGameEnum.Cooking:
                 itemUserGameData = new MiniGameCharacterForCookingBean();
                 break;
-            //case MiniGameEnum.Barrage:
-            //    break;
-            //case MiniGameEnum.Barrage:
-            //    break;
+            case MiniGameEnum.Account:
+                itemUserGameData = new MiniGameCharacterForAccountBean();
+                break;
         }
         return itemUserGameData;
     }

@@ -8,8 +8,13 @@ public class MiniGameAccountMoneyCpt : BaseMonoBehaviour
     public Sprite spMoneyM;
     public Sprite spMoneyL;
 
+    public MoneyEnum moneyType;
+    public int money;
+
     public void InitData(MoneyEnum moneyType, int money)
     {
+        this.moneyType = moneyType;
+        this.money = money;
         switch (moneyType)
         {
             case MoneyEnum.L:
@@ -22,18 +27,8 @@ public class MiniGameAccountMoneyCpt : BaseMonoBehaviour
                 srMoney.sprite = spMoneyS;
                 break;
         }
-        if (money >= 0 && money < 5)
-        {
-            transform.localScale = new Vector3(1, 1, 1);
-        }
-        else if (money >= 5 && money < 10)
-        {
-            transform.localScale = new Vector3(2, 2, 2);
-        }
-        else if (money >= 10)
-        {
-            transform.localScale = new Vector3(2, 2, 2);
-        }
+        float scaleSize =money / 10f;
+        transform.localScale = new Vector3(0.5f + scaleSize, 0.5f + scaleSize, 0.5f + scaleSize);
         transform.eulerAngles =new Vector3(0,0, Random.Range(0, 360));
     }
 }

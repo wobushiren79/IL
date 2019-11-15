@@ -106,6 +106,15 @@ public class GameUtil
         return localPoint;
     }
 
+    //世界坐标转成UI中父节点的坐标, 并设置子节点的位置 
+    //成功转化的前提条件为UI所用摄像头为Camera.main
+    public static void WorldPointToUILocalPoint(RectTransform uiParent, Vector3 worldPositon,  RectTransform uiTarget)
+    {
+        Vector3 spos = Camera.main.WorldToScreenPoint(worldPositon);
+        RectTransformUtility.ScreenPointToLocalPointInRectangle(uiParent, spos, Camera.main, out Vector2 retPos);
+        uiTarget.anchoredPosition = retPos;
+    }
+
     /// <summary>
     /// 离开游戏
     /// </summary>

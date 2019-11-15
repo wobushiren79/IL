@@ -11,6 +11,7 @@ public class MiniGameAccountHookCpt : BaseMonoBehaviour
         //如果撞到钱了
         if (money)
         {
+            money.transform.SetParent(transform);
             ejectorCpt.Recycle();
             return;
         }
