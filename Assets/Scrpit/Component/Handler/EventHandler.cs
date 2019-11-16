@@ -81,7 +81,7 @@ public class EventHandler : BaseHandler, UIGameText.ICallBack
             BaseControl baseControl = controlHandler.StartControl(ControlHandler.ControlEnum.Story);
             baseControl.transform.position = new Vector3(storyInfo.position_x, storyInfo.position_y);
         }
-           
+
         uiManager.CloseAllUI();
         //设置文本的回调
         UIGameText uiGameText = (UIGameText)uiManager.GetUIByName(EnumUtil.GetEnumName(UIEnum.GameText));
@@ -139,7 +139,7 @@ public class EventHandler : BaseHandler, UIGameText.ICallBack
             BaseControl baseControl = controlHandler.StartControl(ControlHandler.ControlEnum.Story);
             baseControl.transform.position = new Vector3(storyInfo.position_x, storyInfo.position_y);
         }
-          
+
         uiManager.CloseAllUI();
         //设置文本的回调
         UIGameText uiGameText = (UIGameText)uiManager.GetUIByName(EnumUtil.GetEnumName(UIEnum.GameText));
@@ -176,7 +176,10 @@ public class EventHandler : BaseHandler, UIGameText.ICallBack
             //打开主界面UI
             uiManager.OpenUIAndCloseOtherByName(EnumUtil.GetEnumName(UIEnum.GameMain));
             //通知事件结束
-            NotifyAllObserver((int)NotifyEventTypeEnum.EventEnd, mStoryInfo.id);
+            if (mStoryInfo == null)
+                NotifyAllObserver((int)NotifyEventTypeEnum.EventEnd);
+            else
+                NotifyAllObserver((int)NotifyEventTypeEnum.EventEnd, mStoryInfo.id);
             //移除所有观察者
             RemoveAllObserver();
         }
@@ -213,7 +216,7 @@ public class EventHandler : BaseHandler, UIGameText.ICallBack
     /// 获取迷你游戏故事的备用文本数据
     /// </summary>
     /// <returns></returns>
-    private SortedList<string,string> GetMiniGameMarkStrData(MiniGameBaseBean miniGameData)
+    private SortedList<string, string> GetMiniGameMarkStrData(MiniGameBaseBean miniGameData)
     {
         SortedList<string, string> listData = new SortedList<string, string>();
         //为所有友方角色称呼 和 姓名
@@ -222,7 +225,7 @@ public class EventHandler : BaseHandler, UIGameText.ICallBack
         {
             userCharacterList += (itemCharacter.characterData.baseInfo.titleName + "" + itemCharacter.characterData.baseInfo.name) + " ";
         }
-        listData.Add("{minigame_usernamelist}",userCharacterList);
+        listData.Add("{minigame_usernamelist}", userCharacterList);
         //为所有敌方角色称呼 和 姓名
         string enemyCharacterList = "";
         foreach (MiniGameCharacterBean itemCharacter in miniGameData.listEnemyGameData)
@@ -231,7 +234,7 @@ public class EventHandler : BaseHandler, UIGameText.ICallBack
         }
         listData.Add("{minigame_enemynamelist}", enemyCharacterList);
 
-        if(miniGameData.gameType== MiniGameEnum.Cooking)
+        if (miniGameData.gameType == MiniGameEnum.Cooking)
         {
             MiniGameCookingBean gameCookingData = (MiniGameCookingBean)miniGameData;
             //所有评审人员角色姓名
@@ -246,12 +249,12 @@ public class EventHandler : BaseHandler, UIGameText.ICallBack
             //所有友方角色
             foreach (MiniGameCharacterBean itemCharacter in gameCookingData.listUserGameData)
             {
-                MiniGameCharacterForCookingBean cookingCharacterData= (MiniGameCharacterForCookingBean)itemCharacter;
-                if(cookingCharacterData.cookingMenuInfo!=null)
+                MiniGameCharacterForCookingBean cookingCharacterData = (MiniGameCharacterForCookingBean)itemCharacter;
+                if (cookingCharacterData.cookingMenuInfo != null)
                     listData.Add("{minigame_cooking_user_cooking_foodname}", cookingCharacterData.cookingMenuInfo.name);
             }
         }
-        return listData; 
+        return listData;
     }
 
     #region 对话文本回调
@@ -284,9 +287,9 @@ public class EventHandler : BaseHandler, UIGameText.ICallBack
             int npcNum = item.Key;
             CharacterExpressionCpt.CharacterExpressionEnum expression = item.Value;
             GameObject objNpc = storyBuilder.GetNpcByNpcNum(npcNum);
-            NpcAIStoryCpt npcAI= objNpc.GetComponent<NpcAIStoryCpt>();
+            NpcAIStoryCpt npcAI = objNpc.GetComponent<NpcAIStoryCpt>();
             npcAI.SetExpression(expression);
-        } 
+        }
     }
     #endregion
 
