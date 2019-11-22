@@ -15,4 +15,6 @@ public class ArenaPrepareBean
     public MiniGameCookingBean gameCookingData;
     //算账游戏数据
     public MiniGameAccountBean gameAccountData;
+    //辩论游戏数据
+    public MiniGameDebateBean gameDebateData;
 }

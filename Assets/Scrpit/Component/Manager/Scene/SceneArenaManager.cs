@@ -26,6 +26,7 @@ public class SceneArenaManager : BaseManager
     public Transform arena_3_PlayerPosition;
     public Transform arena_3_CameraPosition;
     public Transform arena_3_MoneyPosition;
+
     /// <summary>
     /// 获取竞技场1的战斗地点
     /// </summary>

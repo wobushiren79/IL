@@ -165,6 +165,9 @@ public class MiniGameBaseBean
             case MiniGameEnum.Account:
                 itemUserGameData = new MiniGameCharacterForAccountBean();
                 break;
+            case MiniGameEnum.Debate:
+                itemUserGameData = new MiniGameCharacterForDebateBean();
+                break;
         }
         return itemUserGameData;
     }

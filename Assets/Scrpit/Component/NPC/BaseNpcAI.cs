@@ -99,7 +99,7 @@ public class BaseNpcAI : BaseMonoBehaviour
     }
 
     /// <summary>
-    /// 设置角色朝向
+    /// 设置角色朝向 1左 2 右
     /// </summary>
     /// <param name="face"></param>
     public void SetCharacterFace(int face)

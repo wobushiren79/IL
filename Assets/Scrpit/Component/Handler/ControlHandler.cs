@@ -15,6 +15,7 @@ public class ControlHandler : BaseMonoBehaviour
         MiniGameCombat,//战斗小游戏操作
         MiniGameCooking,//烹饪小游戏操作
         MiniGameAccount,//算账小游戏
+        MiniGameDebate,//辩论
     }
 
     //镜头

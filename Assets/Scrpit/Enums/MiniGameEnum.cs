@@ -7,4 +7,5 @@ public enum MiniGameEnum
     Barrage,//弹幕游戏
     Combat,//战斗游戏
     Account,//算账游戏
+    Debate,//辩论游戏 （斗魅）
 }

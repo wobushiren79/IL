@@ -20,12 +20,12 @@ public class SceneGameArenaInit : BaseSceneInit, IBaseObserver
     public MiniGameCookingHandler cookingHandler;
     //计算游戏处理
     public MiniGameAccountHandler accountHandler;
+    //辩论游戏处理
+    public MiniGameDebateHandler debateHandler;
 
     //地形控制
     public NavMeshSurface navMesh;
     
-
-
     private new void Start()
     {
         base.Start();
@@ -34,6 +34,7 @@ public class SceneGameArenaInit : BaseSceneInit, IBaseObserver
         combatHandler.AddObserver(this);
         cookingHandler.AddObserver(this);
         accountHandler.AddObserver(this);
+        debateHandler.AddObserver(this);
     }
 
     public void InitSceneData()
@@ -51,12 +52,18 @@ public class SceneGameArenaInit : BaseSceneInit, IBaseObserver
         ArenaPrepareBean arenaPrepareData = GameCommonInfo.ArenaPrepareData;
         arenaPrepareData = new ArenaPrepareBean();
 
-        arenaPrepareData.gameType = MiniGameEnum.Account;
-        arenaPrepareData.gameAccountData = new MiniGameAccountBean();
-        arenaPrepareData.gameAccountData.InitData(gameItemsManager, npcInfoManager.GetCharacterDataById(100001));
-        arenaPrepareData.gameAccountData.winMoneyS=10;
-        arenaPrepareData.gameAccountData.winMoneyM=1;
-        arenaPrepareData.gameAccountData.winMoneyL=0;
+        arenaPrepareData.gameType = MiniGameEnum.Debate;
+        arenaPrepareData.gameDebateData = new MiniGameDebateBean();
+        arenaPrepareData.gameDebateData.InitData(gameItemsManager, npcInfoManager.GetCharacterDataById(100001), npcInfoManager.GetCharacterDataById(100002));
+
+        //arenaPrepareData.gameType = MiniGameEnum.Account;
+        //arenaPrepareData.gameAccountData = new MiniGameAccountBean();
+        //arenaPrepareData.gameAccountData.InitData(gameItemsManager, npcInfoManager.GetCharacterDataById(100001));
+        //arenaPrepareData.gameAccountData.winMoneyS=10;
+        //arenaPrepareData.gameAccountData.winMoneyM=1;
+        //arenaPrepareData.gameAccountData.winMoneyL=0;
+
+
         //arenaPrepareData.gameType = MiniGameEnum.Cooking;
         //arenaPrepareData.gameCookingData = new MiniGameCookingBean();
         //arenaPrepareData.gameCookingData.gameReason = MiniGameReasonEnum.Improve;
@@ -137,6 +144,9 @@ public class SceneGameArenaInit : BaseSceneInit, IBaseObserver
                 break;
             case MiniGameEnum.Account:
                 InitGameAccout(arenaPrepareData.gameAccountData);
+                break;
+            case MiniGameEnum.Debate:
+                InitGameDebate(arenaPrepareData.gameDebateData);
                 break;
         }
         //初始化地形
@@ -261,6 +271,20 @@ public class SceneGameArenaInit : BaseSceneInit, IBaseObserver
         gameAccountData.tfMoneyPosition = tfMoneyPosition;
         //初始化游戏
         accountHandler.InitGame(gameAccountData);
+    }
+
+    /// <summary>
+    /// 初始化辩论游戏
+    /// </summary>
+    /// <param name="gameDebateData"></param>
+    public void InitGameDebate(MiniGameDebateBean gameDebateData)
+    {
+        //找到竞技场战斗的地点
+        sceneArenaManager.GetArenaForCombatBy1(out Vector3 debatePosition);
+        gameDebateData.debatePosition = debatePosition;
+
+        //初始化游戏
+        debateHandler.InitGame(gameDebateData);
     }
 
     #region 通知回调
