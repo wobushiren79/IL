@@ -90,7 +90,7 @@ public class NpcAIMiniGameCombatCpt : BaseNpcAI
     /// <param name="damage"></param>
     public void UnderAttack(float powerLevel, int damage)
     {
-        characterMiniGameData.AddLife(-damage);
+        characterMiniGameData.ChangeLife(-damage);
 
         TextMesh tvItem = ShowTextInfo("-" + damage);
         if (powerLevel > 0.8f)

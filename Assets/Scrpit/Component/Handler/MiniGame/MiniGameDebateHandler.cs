@@ -11,6 +11,11 @@ public class MiniGameDebateHandler : BaseMiniGameHandler<MiniGameDebateBuilder, 
         //设置摄像机位置
         controlHandler.StartControl(ControlHandler.ControlEnum.MiniGameDebate);
         controlHandler.GetControl().SetCameraPosition(miniGameData.debatePosition);
+
+        //打开UI
+        UIMiniGameDebate uiMiniGameDebate= (UIMiniGameDebate)uiGameManager.OpenUIAndCloseOtherByName(EnumUtil.GetEnumName(UIEnum.MiniGameDebate));
+        uiMiniGameDebate.SetData((MiniGameCharacterForDebateBean)miniGameData.listUserGameData[0], (MiniGameCharacterForDebateBean)miniGameData.listEnemyGameData[0]);
+
     }
 
     public override void StartGame()

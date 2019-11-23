@@ -12,11 +12,12 @@ public class MiniGameCharacterBean
 
     //角色数据
     public CharacterBean characterData;
+
     /// <summary>
-    /// 增加生命
+    /// 修改生命
     /// </summary>
     /// <param name="life"></param>
-    public void AddLife(int life)
+    public void ChangeLife(int life)
     {
         characterCurrentLife += life;
         if (characterCurrentLife < 0)

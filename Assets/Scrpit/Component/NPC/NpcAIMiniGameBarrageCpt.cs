@@ -47,7 +47,7 @@ public class NpcAIMiniGameBarrageCpt : BaseNpcAI, SightForMiniGameBarrageCpt.ICa
             || gameBarrageHandler == null
             || gameBarrageHandler.GetMiniGameStatus() != BaseMiniGameHandler<MiniGameBarrageBuilder,MiniGameBarrageBean>.MiniGameStatusEnum.Gameing)
             return;
-        characterMiniGameData.AddLife(-damage);
+        characterMiniGameData.ChangeLife(-damage);
         psBlood.Play();
         //如果是控制的角色并且生命值
         if (characterMiniGameData.characterCurrentLife < gameBarrageHandler.miniGameData.winLife)

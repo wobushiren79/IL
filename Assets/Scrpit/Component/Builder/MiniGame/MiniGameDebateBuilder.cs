@@ -10,6 +10,7 @@ public class MiniGameDebateBuilder : BaseMiniGameBuilder
     //角色模型
     public GameObject objCharacterModel;
 
+
     /// <summary>
     /// 创建全部角色
     /// </summary>
