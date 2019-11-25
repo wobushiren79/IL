@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using UnityEditor;
+using System.Collections.Generic;
 
 public class MiniGameDebateHandler : BaseMiniGameHandler<MiniGameDebateBuilder, MiniGameDebateBean>
 {
@@ -15,12 +16,26 @@ public class MiniGameDebateHandler : BaseMiniGameHandler<MiniGameDebateBuilder, 
         //打开UI
         UIMiniGameDebate uiMiniGameDebate= (UIMiniGameDebate)uiGameManager.OpenUIAndCloseOtherByName(EnumUtil.GetEnumName(UIEnum.MiniGameDebate));
         uiMiniGameDebate.SetData((MiniGameCharacterForDebateBean)miniGameData.listUserGameData[0], (MiniGameCharacterForDebateBean)miniGameData.listEnemyGameData[0]);
-
+        StartGame();
     }
 
     public override void StartGame()
     {
         base.StartGame();
+        UIMiniGameDebate uiMiniGameDebate = (UIMiniGameDebate)uiGameManager.GetOpenUI();
+        List<ItemMiniGameDebateCardCpt.DebateCardTypeEnun> listUser = new List<ItemMiniGameDebateCardCpt.DebateCardTypeEnun>();
+        listUser.Add(ItemMiniGameDebateCardCpt.DebateCardTypeEnun.Rock);
+        listUser.Add(ItemMiniGameDebateCardCpt.DebateCardTypeEnun.Paper);
+        listUser.Add(ItemMiniGameDebateCardCpt.DebateCardTypeEnun.Scissors);
+        listUser.Add(ItemMiniGameDebateCardCpt.DebateCardTypeEnun.Paper);
+        listUser.Add(ItemMiniGameDebateCardCpt.DebateCardTypeEnun.Paper);
+        List<ItemMiniGameDebateCardCpt.DebateCardTypeEnun> listEnemy = new List<ItemMiniGameDebateCardCpt.DebateCardTypeEnun>();
+        listEnemy.Add(ItemMiniGameDebateCardCpt.DebateCardTypeEnun.Paper);
+        listEnemy.Add(ItemMiniGameDebateCardCpt.DebateCardTypeEnun.Paper);
+        listEnemy.Add(ItemMiniGameDebateCardCpt.DebateCardTypeEnun.Paper);
+        listEnemy.Add(ItemMiniGameDebateCardCpt.DebateCardTypeEnun.Paper);
+        listEnemy.Add(ItemMiniGameDebateCardCpt.DebateCardTypeEnun.Paper);
+        uiMiniGameDebate.CreateCardItemList(listUser, listEnemy);
     }
 
 

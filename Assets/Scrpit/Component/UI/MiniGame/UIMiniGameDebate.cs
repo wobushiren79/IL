@@ -1,6 +1,9 @@
 ﻿using UnityEngine;
 using UnityEditor;
 using UnityEngine.UI;
+using System.Collections.Generic;
+using DG.Tweening;
+
 public class UIMiniGameDebate : BaseUIComponent
 {
     [Header("控件")]
@@ -10,6 +13,13 @@ public class UIMiniGameDebate : BaseUIComponent
     public Text tvEnemyName;
     public Text tvUserLife;
     public Text tvEnemyLife;
+
+    public GameObject objUserDebateCardContainer;
+    public GameObject objEnemyDebateCardContainer;
+    public GameObject objDebateCardModel;
+
+    public GameObject objCombatContainer;
+    public GameObject objCombatCardModel;
 
     [Header("数据")]
     public MiniGameCharacterForDebateBean userGameData;
@@ -92,4 +102,36 @@ public class UIMiniGameDebate : BaseUIComponent
             tvEnemyLife.text = life + "/" + maxLife;
         }
     }
+
+    /// <summary>
+    /// 创建卡片
+    /// </summary>
+    /// <param name="listUserDebate"></param>
+    /// <param name="listEnemyDebate"></param>
+    public void CreateCardItemList(List<ItemMiniGameDebateCardCpt.DebateCardTypeEnun> listUserDebate, List<ItemMiniGameDebateCardCpt.DebateCardTypeEnun> listEnemyDebate)
+    {
+        for (int i = 0; i < listUserDebate.Count; i++)
+        {
+            ItemMiniGameDebateCardCpt.DebateCardTypeEnun itemType = listUserDebate[i];
+            GameObject objItem = CreateCardItem(itemType, objUserDebateCardContainer);
+            objItem.transform.DOScale(new Vector3(0,0,0), 1).From().SetEase(Ease.OutBack).SetDelay(i * 0.1f);
+        }
+        for (int i = 0; i < listEnemyDebate.Count; i++)
+        {
+            ItemMiniGameDebateCardCpt.DebateCardTypeEnun itemType = listEnemyDebate[i];
+            GameObject objItem = CreateCardItem(itemType, objEnemyDebateCardContainer);
+            objItem.transform.DOScale(new Vector3(0, 0, 0), 1).From().SetEase(Ease.OutBack).SetDelay(i * 0.1f);
+            Button bt= objItem.GetComponent<Button>();
+            bt.enabled = false;
+        }
+    }
+
+    public GameObject CreateCardItem(ItemMiniGameDebateCardCpt.DebateCardTypeEnun itemType, GameObject objContainer)
+    {
+        GameObject objItem = Instantiate(objContainer, objDebateCardModel);
+        ItemMiniGameDebateCardCpt cardItem = objItem.GetComponent<ItemMiniGameDebateCardCpt>();
+        cardItem.SetData(itemType);
+        return objItem;
+    }
+
 }
