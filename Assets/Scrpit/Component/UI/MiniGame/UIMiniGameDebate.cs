@@ -23,7 +23,8 @@ public class UIMiniGameDebate : BaseUIComponent
 
     public GameObject objCombatUserPosition;
     public GameObject objCombatEnemyPosition;
-
+    public GameObject objCombatUserEndPosition;
+    public GameObject objCombatEnemyEndPosition;
     [Header("数据")]
     public MiniGameCharacterForDebateBean userGameData;
     public MiniGameCharacterForDebateBean enemyGameData;
@@ -165,13 +166,70 @@ public class UIMiniGameDebate : BaseUIComponent
     /// <param name="enemyCard"></param>
     public void CreateCombatCard(ItemMiniGameDebateCardCpt userCard, ItemMiniGameDebateCardCpt enemyCard)
     {
-        userCard.transform.SetParent(objCombatContainer.transform);
-        userCard.ClosePointerListener();
-        userCard.transform.DOMove(objCombatUserPosition.transform.position, 1);
+        CheckWinner(userCard, enemyCard, out ItemMiniGameDebateCardCpt winner, out ItemMiniGameDebateCardCpt loser);
 
         enemyCard.transform.SetParent(objCombatContainer.transform);
         enemyCard.ClosePointerListener();
-        enemyCard.transform.DOMove(objCombatEnemyPosition.transform.position, 1);
+        enemyCard.transform.DOMove(objCombatEnemyPosition.transform.position, 0.5f).OnComplete(delegate ()
+        {
+
+            enemyCard.transform.DOMove(objCombatEnemyEndPosition.transform.position, 1).SetEase(Ease.InOutBack);
+
+        });
+
+        userCard.transform.SetParent(objCombatContainer.transform);
+        userCard.ClosePointerListener();
+        userCard.transform.DOMove(objCombatUserPosition.transform.position, 0.5f).OnComplete(delegate ()
+        {
+
+            userCard.transform.DOMove(objCombatUserEndPosition.transform.position, 1).SetEase(Ease.InOutBack).OnComplete(delegate ()
+            {
+
+                //败者删除动画
+                if (winner == null || loser == null)
+                {
+                    CardDestroyAnim(userCard);
+                    CardDestroyAnim(enemyCard);
+                }
+                else
+                {
+                    CardDestroyAnim(loser);
+                }
+
+
+            });
+
+        });
+    }
+
+    /// <summary>
+    /// 检测胜利者
+    /// </summary>
+    /// <param name="userCard"></param>
+    /// <param name="enemyCard"></param>
+    /// <returns></returns>
+    public void CheckWinner(
+        ItemMiniGameDebateCardCpt userCard, ItemMiniGameDebateCardCpt enemyCard,
+        out ItemMiniGameDebateCardCpt winnerCard, out ItemMiniGameDebateCardCpt loserCard)
+    {
+        ItemMiniGameDebateCardCpt.DebateCardTypeEnun userCardType = userCard.debateCardType;
+        ItemMiniGameDebateCardCpt.DebateCardTypeEnun enemyCardType = enemyCard.debateCardType;
+        int result = (int)userCardType - (int)enemyCardType;
+        if (result == -1 || result == 2)
+        {
+            winnerCard = userCard;
+            loserCard = enemyCard;
+        }
+        else if (result == 0)
+        {
+            winnerCard = null;
+            loserCard = null;
+        }
+        else
+        {
+            winnerCard = enemyCard;
+            loserCard = userCard;
+        }
     }
 
     /// <summary>
@@ -231,5 +289,19 @@ public class UIMiniGameDebate : BaseUIComponent
         listEnemyCard.Clear();
         CptUtil.RemoveChildsByActive(objUserDebateCardContainer);
         CptUtil.RemoveChildsByActive(objEnemyDebateCardContainer);
+    }
+
+    /// <summary>
+    /// 卡片删除动画
+    /// </summary>
+    /// <param name="card"></param>
+    private void CardDestroyAnim(ItemMiniGameDebateCardCpt card)
+    {
+        CanvasGroup cgLoser = card.GetComponent<CanvasGroup>();
+        cgLoser.DOFade(0, 0.5f);
+        card.transform.DOScale(new Vector3(1.5f, 1.5f, 1.5f), 0.5f).OnComplete(delegate ()
+        {
+            Destroy(card.gameObject);
+        });
     }
 }

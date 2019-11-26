@@ -8,9 +8,9 @@ public class ItemMiniGameDebateCardCpt : ItemGameBaseCpt, IPointerEnterHandler,I
 {
     public enum DebateCardTypeEnun
     {
-        Rock,//石头
-        Paper,//布
-        Scissors//剪刀
+        Rock=1,//石头
+        Scissors=2,//剪刀
+        Paper=3,//布
     }
 
     [Header("控件")]
