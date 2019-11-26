@@ -13,30 +13,31 @@ public class MiniGameDebateHandler : BaseMiniGameHandler<MiniGameDebateBuilder, 
         controlHandler.StartControl(ControlHandler.ControlEnum.MiniGameDebate);
         controlHandler.GetControl().SetCameraPosition(miniGameData.debatePosition);
 
-        //打开UI
-        UIMiniGameDebate uiMiniGameDebate= (UIMiniGameDebate)uiGameManager.OpenUIAndCloseOtherByName(EnumUtil.GetEnumName(UIEnum.MiniGameDebate));
-        uiMiniGameDebate.SetData((MiniGameCharacterForDebateBean)miniGameData.listUserGameData[0], (MiniGameCharacterForDebateBean)miniGameData.listEnemyGameData[0]);
-        StartGame();
+        //打开倒计时UI
+        OpenCountDownUI(miniGameData);
     }
 
     public override void StartGame()
     {
         base.StartGame();
-        UIMiniGameDebate uiMiniGameDebate = (UIMiniGameDebate)uiGameManager.GetOpenUI();
-        List<ItemMiniGameDebateCardCpt.DebateCardTypeEnun> listUser = new List<ItemMiniGameDebateCardCpt.DebateCardTypeEnun>();
-        listUser.Add(ItemMiniGameDebateCardCpt.DebateCardTypeEnun.Rock);
-        listUser.Add(ItemMiniGameDebateCardCpt.DebateCardTypeEnun.Paper);
-        listUser.Add(ItemMiniGameDebateCardCpt.DebateCardTypeEnun.Scissors);
-        listUser.Add(ItemMiniGameDebateCardCpt.DebateCardTypeEnun.Paper);
-        listUser.Add(ItemMiniGameDebateCardCpt.DebateCardTypeEnun.Paper);
-        List<ItemMiniGameDebateCardCpt.DebateCardTypeEnun> listEnemy = new List<ItemMiniGameDebateCardCpt.DebateCardTypeEnun>();
-        listEnemy.Add(ItemMiniGameDebateCardCpt.DebateCardTypeEnun.Paper);
-        listEnemy.Add(ItemMiniGameDebateCardCpt.DebateCardTypeEnun.Paper);
-        listEnemy.Add(ItemMiniGameDebateCardCpt.DebateCardTypeEnun.Paper);
-        listEnemy.Add(ItemMiniGameDebateCardCpt.DebateCardTypeEnun.Paper);
-        listEnemy.Add(ItemMiniGameDebateCardCpt.DebateCardTypeEnun.Paper);
-        uiMiniGameDebate.CreateCardItemList(listUser, listEnemy);
+
     }
 
+    #region 倒计时UI回调
+    public override void GamePreCountDownStart()
+    {
+        base.GamePreCountDownStart();
+    }
 
+    public override void GamePreCountDownEnd()
+    {
+        base.GamePreCountDownEnd();
+        //打开UI
+        UIMiniGameDebate uiMiniGameDebate = (UIMiniGameDebate)uiGameManager.OpenUIAndCloseOtherByName(EnumUtil.GetEnumName(UIEnum.MiniGameDebate));
+        uiMiniGameDebate.SetData((MiniGameCharacterForDebateBean)miniGameData.listUserGameData[0], (MiniGameCharacterForDebateBean)miniGameData.listEnemyGameData[0]);
+        uiMiniGameDebate.DrawCard();
+        //开始游戏
+        StartGame();
+    }
+    #endregion
 }

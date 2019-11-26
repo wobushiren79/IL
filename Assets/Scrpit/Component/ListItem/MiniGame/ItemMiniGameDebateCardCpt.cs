@@ -1,7 +1,10 @@
 ﻿using UnityEngine;
 using UnityEditor;
 using UnityEngine.UI;
-public class ItemMiniGameDebateCardCpt : ItemGameBaseCpt
+using UnityEngine.EventSystems;
+using DG.Tweening;
+
+public class ItemMiniGameDebateCardCpt : ItemGameBaseCpt, IPointerEnterHandler,IPointerExitHandler,IPointerClickHandler
 {
     public enum DebateCardTypeEnun
     {
@@ -19,12 +22,18 @@ public class ItemMiniGameDebateCardCpt : ItemGameBaseCpt
     public Sprite spPaper;
     public Sprite spScissors;
 
+    public DebateCardTypeEnun debateCardType;
+    public int ownType;//拥有着类型。1 玩家 2敌人
+    public bool isOpenPointer = false;
+
     /// <summary>
     /// 设置数据
     /// </summary>
     /// <param name="cardType"></param>
-    public void SetData(DebateCardTypeEnun cardType)
+    public void SetData(DebateCardTypeEnun cardType,int ownType)
     {
+        this.debateCardType = cardType;
+        this.ownType = ownType;
         Sprite spIcon = null;
         string name = "???";
         switch (cardType)
@@ -44,6 +53,16 @@ public class ItemMiniGameDebateCardCpt : ItemGameBaseCpt
         }
         SetIcon(spIcon);
         SetName(name);
+
+    }
+
+    public void OpenPointerListener()
+    {
+        isOpenPointer = true;
+    }
+    public void ClosePointerListener()
+    {
+        isOpenPointer = false;
     }
 
     /// <summary>
@@ -67,6 +86,33 @@ public class ItemMiniGameDebateCardCpt : ItemGameBaseCpt
         if (tvName != null)
         {
             tvName.text = name;
+        }
+    }
+
+    public void OnPointerEnter(PointerEventData eventData)
+    {
+        if (!isOpenPointer)
+            return;
+        transform.DOScale(new Vector3(1.2f,1.2f,1.2f),0.5f).SetLoops(-1,LoopType.Yoyo);
+    }
+
+    public void OnPointerExit(PointerEventData eventData)
+    {
+        if (!isOpenPointer)
+            return;
+        transform.DOKill();
+        transform.DOScale(new Vector3(1f, 1f, 1f), 0.2f);
+    }
+
+    public void OnPointerClick(PointerEventData eventData)
+    {
+        if (!isOpenPointer)
+            return;
+        if (ownType==1)
+        {
+            transform.DOKill();
+            transform.localScale = new Vector3(1, 1, 1);
+            ((UIMiniGameDebate)uiComponent).SelectCard(this);
         }
     }
 }
