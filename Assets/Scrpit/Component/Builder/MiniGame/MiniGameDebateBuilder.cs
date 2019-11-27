@@ -10,6 +10,26 @@ public class MiniGameDebateBuilder : BaseMiniGameBuilder
     //角色模型
     public GameObject objCharacterModel;
 
+    public NpcAIMiniGameDebateCpt aiUserCharacter;
+    public NpcAIMiniGameDebateCpt aiEnemyCharacter;
+
+    /// <summary>
+    /// 获取友方角色
+    /// </summary>
+    /// <returns></returns>
+    public NpcAIMiniGameDebateCpt GetUserCharacter()
+    {
+        return aiUserCharacter;
+    }
+
+    /// <summary>
+    /// 获取地方角色
+    /// </summary>
+    /// <returns></returns>
+    public NpcAIMiniGameDebateCpt GetEnemyCharacter()
+    {
+        return aiEnemyCharacter;
+    }
 
     /// <summary>
     /// 创建全部角色
@@ -28,10 +48,10 @@ public class MiniGameDebateBuilder : BaseMiniGameBuilder
     /// </summary>
     /// <param name="userCharacter"></param>
     /// <param name="debatePosition"></param>
-    public void CreateUserCharacter(MiniGameCharacterBean userCharacter, Vector3 debatePosition)
+    public void CreateUserCharacter(MiniGameCharacterBean userCharacterData, Vector3 debatePosition)
     {
-        NpcAIMiniGameDebateCpt npcAI = CreateCharacter(new Vector3(debatePosition.x - 2.5f, debatePosition.y), (MiniGameCharacterForDebateBean)userCharacter);
-        npcAI.SetCharacterFace(2);
+        aiUserCharacter = CreateCharacter(new Vector3(debatePosition.x - 2.5f, debatePosition.y), (MiniGameCharacterForDebateBean)userCharacterData);
+        aiUserCharacter.SetCharacterFace(2);
     }
 
     /// <summary>
@@ -39,10 +59,10 @@ public class MiniGameDebateBuilder : BaseMiniGameBuilder
     /// </summary>
     /// <param name="enemyCharacter"></param>
     /// <param name="debatePosition"></param>
-    public void CreateEnemyCharcater(MiniGameCharacterBean enemyCharacter, Vector3 debatePosition)
+    public void CreateEnemyCharcater(MiniGameCharacterBean enemyCharacterData, Vector3 debatePosition)
     {
-        NpcAIMiniGameDebateCpt npcAI= CreateCharacter(new Vector3(debatePosition.x + 2.5f, debatePosition.y), (MiniGameCharacterForDebateBean)enemyCharacter);
-        npcAI.SetCharacterFace(1);
+        aiEnemyCharacter = CreateCharacter(new Vector3(debatePosition.x + 2.5f, debatePosition.y), (MiniGameCharacterForDebateBean)enemyCharacterData);
+        aiEnemyCharacter.SetCharacterFace(1);
     }
 
     /// <summary>

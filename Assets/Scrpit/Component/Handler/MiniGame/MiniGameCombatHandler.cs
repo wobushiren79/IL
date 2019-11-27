@@ -360,7 +360,7 @@ public class MiniGameCombatHandler : BaseMiniGameHandler<MiniGameCombatBuilder, 
             if (mRoundTargetCharacter.characterMiniGameData.combatIsDefend)
                 resultsForce = resultsForce / 2f;
             //计算伤害
-            int damage = (int)((resultsForce + 0.2f) * characterAttributes.force) * 200;
+            int damage = (int)((resultsForce + 0.2f) * characterAttributes.force) * 2;
             //角色伤害
             mRoundTargetCharacter.UnderAttack(resultsForce, damage);
             //如果角色阵亡

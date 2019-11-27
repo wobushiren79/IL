@@ -106,13 +106,14 @@ public class ItemMiniGameDebateCardCpt : ItemGameBaseCpt, IPointerEnterHandler,I
 
     public void OnPointerClick(PointerEventData eventData)
     {
-        if (!isOpenPointer)
+        UIMiniGameDebate uIMiniGameDebate = ((UIMiniGameDebate)uiComponent);
+        if (!isOpenPointer|| uIMiniGameDebate.isCombat)
             return;
         if (ownType==1)
         {
             transform.DOKill();
             transform.localScale = new Vector3(1, 1, 1);
-            ((UIMiniGameDebate)uiComponent).SelectCard(this);
+            uIMiniGameDebate.SelectCard(this);
         }
     }
 }

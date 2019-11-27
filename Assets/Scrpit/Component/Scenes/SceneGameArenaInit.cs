@@ -55,6 +55,7 @@ public class SceneGameArenaInit : BaseSceneInit, IBaseObserver
         arenaPrepareData.gameType = MiniGameEnum.Debate;
         arenaPrepareData.gameDebateData = new MiniGameDebateBean();
         arenaPrepareData.gameDebateData.InitData(gameItemsManager, npcInfoManager.GetCharacterDataById(100001), npcInfoManager.GetCharacterDataById(100002));
+        arenaPrepareData.gameDebateData.winLife = 1;
 
         //arenaPrepareData.gameType = MiniGameEnum.Account;
         //arenaPrepareData.gameAccountData = new MiniGameAccountBean();

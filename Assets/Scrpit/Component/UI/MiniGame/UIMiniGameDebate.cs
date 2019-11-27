@@ -2,6 +2,7 @@
 using UnityEditor;
 using UnityEngine.UI;
 using System.Collections.Generic;
+using System.Collections;
 using DG.Tweening;
 
 public class UIMiniGameDebate : BaseUIComponent
@@ -13,18 +14,21 @@ public class UIMiniGameDebate : BaseUIComponent
     public Text tvEnemyName;
     public Text tvUserLife;
     public Text tvEnemyLife;
+    public Text tvUserCharm;
+    public Text tvEnemyCharm;
 
     public GameObject objUserDebateCardContainer;
     public GameObject objEnemyDebateCardContainer;
     public GameObject objDebateCardModel;
 
     public GameObject objCombatContainer;
-    public GameObject objCombatCardModel;
 
     public GameObject objCombatUserPosition;
     public GameObject objCombatEnemyPosition;
     public GameObject objCombatUserEndPosition;
     public GameObject objCombatEnemyEndPosition;
+
+    public ParticleSystem psCombat;
     [Header("数据")]
     public MiniGameCharacterForDebateBean userGameData;
     public MiniGameCharacterForDebateBean enemyGameData;
@@ -32,13 +36,30 @@ public class UIMiniGameDebate : BaseUIComponent
     public List<ItemMiniGameDebateCardCpt> listUserCard = new List<ItemMiniGameDebateCardCpt>();
     public List<ItemMiniGameDebateCardCpt> listEnemyCard = new List<ItemMiniGameDebateCardCpt>();
 
-    private void Update()
+    private ICallBack mCallBack;
+
+    public bool isCombat = false;//是否正在战斗
+
+    public override void RefreshUI()
     {
-        if (Input.GetButtonDown(InputInfo.Interactive_Space))
-        {
-            ClearCard();
-            DrawCard();
-        }
+        base.RefreshUI();
+        GameItemsManager gameItemsManager=  GetUIMananger<UIGameManager>().gameItemsManager;
+        SetCharacter(userGameData.characterData, enemyGameData.characterData);
+        SetCharacterName(userGameData.characterData.baseInfo.name, enemyGameData.characterData.baseInfo.name);
+        SetLife(userGameData.characterCurrentLife, userGameData.characterMaxLife, enemyGameData.characterCurrentLife, enemyGameData.characterMaxLife);
+
+        userGameData.characterData.GetAttributes( gameItemsManager, out CharacterAttributesBean userAttributes);
+        enemyGameData.characterData.GetAttributes(gameItemsManager, out CharacterAttributesBean enemyAttributes);
+        SetCharm(userAttributes.charm, enemyAttributes.charm);
+    }
+
+    /// <summary>
+    /// 设置回调
+    /// </summary>
+    /// <param name="callBack"></param>
+    public void SetCallBack(ICallBack callBack)
+    {
+        this.mCallBack = callBack;
     }
 
     /// <summary>
@@ -48,79 +69,67 @@ public class UIMiniGameDebate : BaseUIComponent
     /// <param name="enemyGameData"></param>
     public void SetData(MiniGameCharacterForDebateBean userGameData, MiniGameCharacterForDebateBean enemyGameData)
     {
+        ClearCard();
         this.userGameData = userGameData;
         this.enemyGameData = enemyGameData;
-        SetUserCharacterName(userGameData.characterData.baseInfo.name);
-        SetEnemyCharacterName(enemyGameData.characterData.baseInfo.name);
-        SetUserLife(userGameData.characterCurrentLife, userGameData.characterMaxLife);
-        SetEnemyLife(userGameData.characterCurrentLife, userGameData.characterMaxLife);
-        SetUserCharacter(userGameData.characterData);
-        SetEnemyCharacter(enemyGameData.characterData);
+        RefreshUI();
     }
 
     /// <summary>
-    /// 设置友方角色形象
+    /// 设置角色形象
     /// </summary>
     /// <param name="characterData"></param>
-    public void SetUserCharacter(CharacterBean characterData)
+    public void SetCharacter(CharacterBean userCharacterData, CharacterBean enemyCharacterData)
     {
         if (characterUser != null)
-            characterUser.SetCharacterData(characterData.body, characterData.equips);
-    }
-
-    /// <summary>
-    /// 设置敌方角色形象
-    /// </summary>
-    /// <param name="characterData"></param>
-    public void SetEnemyCharacter(CharacterBean characterData)
-    {
+            characterUser.SetCharacterData(userCharacterData.body, userCharacterData.equips);
         if (characterEnemy != null)
-            characterEnemy.SetCharacterData(characterData.body, characterData.equips);
+            characterEnemy.SetCharacterData(enemyCharacterData.body, enemyCharacterData.equips);
     }
 
     /// <summary>
-    /// 设置友方角色姓名
+    /// 设置角色姓名
     /// </summary>
     /// <param name="name"></param>
-    public void SetUserCharacterName(string name)
+    public void SetCharacterName(string userName, string enemyName)
     {
         if (tvUserName != null)
-            tvUserName.text = name;
-    }
-
-    /// <summary>
-    /// 设置敌方角色姓名
-    /// </summary>
-    /// <param name="name"></param>
-    public void SetEnemyCharacterName(string name)
-    {
+            tvUserName.text = userName;
         if (tvEnemyName != null)
-            tvEnemyName.text = name;
+            tvEnemyName.text = enemyName;
     }
 
     /// <summary>
-    /// 设置友方血量
+    /// 设置血量
     /// </summary>
     /// <param name="life"></param>
     /// <param name="maxLife"></param>
-    public void SetUserLife(int life, int maxLife)
+    public void SetLife(int userLife, int userMaxLife, int enemyLife, int enemyMaxLife)
     {
         if (tvUserLife != null)
         {
-            tvUserLife.text = life + "/" + maxLife;
+            tvUserLife.text = userLife + "/" + userMaxLife;
+        }
+        if (tvEnemyLife != null)
+        {
+            tvEnemyLife.text = enemyLife + "/" + enemyMaxLife;
         }
     }
 
     /// <summary>
-    /// 设置敌方血量
+    /// 设置魅力
     /// </summary>
-    /// <param name="life"></param>
-    /// <param name="maxLife"></param>
-    public void SetEnemyLife(int life, int maxLife)
+    /// <param name="userCharam"></param>
+    /// <param name="enemyCharm"></param>
+    public void SetCharm(int userCharam, int enemyCharm)
     {
-        if (tvEnemyLife != null)
+        if (tvUserCharm != null)
         {
-            tvEnemyLife.text = life + "/" + maxLife;
+            tvUserCharm.text = GameCommonInfo.GetUITextById(4) + ":" + userCharam;
+        }
+        if (tvEnemyCharm != null)
+        {
+            tvEnemyCharm.text = GameCommonInfo.GetUITextById(4) + ":" + enemyCharm;
         }
     }
 
@@ -150,6 +159,9 @@ public class UIMiniGameDebate : BaseUIComponent
     /// </summary>
     public void SelectCard(ItemMiniGameDebateCardCpt selectCard)
     {
+        if (isCombat)
+            return;
+        isCombat = true;
         ItemMiniGameDebateCardCpt enemyCard = RandomUtil.GetRandomDataByList(listEnemyCard);
         CreateCombatCard(selectCard, enemyCard);
 
@@ -194,9 +206,13 @@ public class UIMiniGameDebate : BaseUIComponent
                 else
                 {
                     CardDestroyAnim(loser);
+                    if (mCallBack != null)
+                        mCallBack.DamageForCharacter(loser.ownType);
+                    psCombat.Play();
+                    CardDestroyAnim(winner, 1f);
                 }
-
-
+                //开始新的回合
+                StartCoroutine(CoroutineForStartNewRound());
             });
 
         });
@@ -295,13 +311,42 @@ public class UIMiniGameDebate : BaseUIComponent
     /// 卡片删除动画
     /// </summary>
     /// <param name="card"></param>
-    private void CardDestroyAnim(ItemMiniGameDebateCardCpt card)
+    private void CardDestroyAnim(ItemMiniGameDebateCardCpt card, float delayTime)
     {
         CanvasGroup cgLoser = card.GetComponent<CanvasGroup>();
-        cgLoser.DOFade(0, 0.5f);
-        card.transform.DOScale(new Vector3(1.5f, 1.5f, 1.5f), 0.5f).OnComplete(delegate ()
+        card.transform.DOShakePosition(0.2f, 5).SetDelay(delayTime);
+        cgLoser.DOFade(0, 0.2f).SetDelay(delayTime); ;
+        card.transform.DOScale(new Vector3(1.5f, 1.5f, 1.5f), 0.2f).SetDelay(delayTime).OnComplete(delegate ()
         {
             Destroy(card.gameObject);
         });
+    }
+    private void CardDestroyAnim(ItemMiniGameDebateCardCpt card)
+    {
+        CardDestroyAnim(card, 0);
+    }
+
+    /// <summary>
+    /// 开始新的回合
+    /// </summary>
+    /// <returns></returns>
+    private IEnumerator CoroutineForStartNewRound()
+    {
+        yield return new WaitForSeconds(0.5f);
+        if (listUserCard.Count <= 2)
+        {
+            DrawCard();
+        }
+        yield return new WaitForSeconds(0.5f);
+        isCombat = false;
+    }
+
+    public interface ICallBack
+    {
+        /// <summary>
+        /// 对角色造成伤害 
+        /// </summary>
+        /// <param name="characterType">1己方 2敌方</param>
+        void DamageForCharacter(int characterType);
     }
 }
