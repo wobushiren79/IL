@@ -15,6 +15,7 @@ public class CptUtil
           GameObject.Destroy(tf.GetChild(i).gameObject);
         }
     }
+
     /// <summary>
     /// 删除所有子物体
     /// </summary>
@@ -26,6 +27,7 @@ public class CptUtil
             GameObject.Destroy(obj.transform.GetChild(i).gameObject);
         }
     }
+
     /// <summary>
     /// 删除所有显示的子物体
     /// </summary>
@@ -40,6 +42,7 @@ public class CptUtil
             }
         }
     }
+
     /// <summary>
     /// 删除所有显示的子物体
     /// </summary>
@@ -55,6 +58,22 @@ public class CptUtil
         }
     }
 
+    /// <summary>
+    /// 删除所有显示的子物体
+    /// </summary>
+    /// <param name="tf"></param>
+    public static void RemoveChildsByActiveInEditor(GameObject obj)
+    {
+        for (int i = 0; i < obj.transform.childCount; i++)
+        {
+            GameObject objItem = obj.transform.GetChild(i).gameObject;
+            if (objItem.activeSelf)
+            {
+                GameObject.DestroyImmediate(objItem);
+                i--;
+            }
+        }
+    }
     /// <summary>
     /// 根据名字删除所有显示的子物体
     /// </summary>
@@ -91,7 +110,6 @@ public class CptUtil
         }
         return null;
     }
-
 
     /// <summary>
     /// 通过名字获取 所有子列表的控件
@@ -144,6 +162,5 @@ public class CptUtil
         }
         return listCpt;
     }
-
 
 }

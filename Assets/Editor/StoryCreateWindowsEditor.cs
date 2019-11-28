@@ -18,6 +18,12 @@ public class StoryCreateWindowsEditor : EditorWindow
         this.titleContent = new GUIContent("剧情创建辅助工具");
     }
 
+
+    private void OnDestroy()
+    {
+        CptUtil.RemoveChildsByActiveInEditor(mObjContent);
+    }
+
     private void OnEnable()
     {
         LogUtil.Log("OnEnable");
@@ -53,10 +59,11 @@ public class StoryCreateWindowsEditor : EditorWindow
     List<TextInfoBean> listStoryTextInfo;
     Dictionary<long, NpcInfoBean> mapNpcInfo = new Dictionary<long, NpcInfoBean>();
 
+    private Vector2 scrollPosition= Vector2.zero;
     private void OnGUI()
     {
         //滚动布局
-        GUILayout.BeginScrollView(Vector2.zero);
+        scrollPosition = GUILayout.BeginScrollView(scrollPosition);
         GUILayout.BeginVertical();
         //父对象
         mObjContent = EditorGUILayout.ObjectField(new GUIContent("剧情容器", ""), mObjContent, typeof(GameObject), true) as GameObject;
@@ -266,8 +273,8 @@ public class StoryCreateWindowsEditor : EditorWindow
     {
         if (listData == null)
             return;
-        if(listStoryTextInfo!=null)
-        listStoryTextInfo.Clear();
+        if (listStoryTextInfo != null)
+            listStoryTextInfo.Clear();
         listStoryTextInfo = null;
         foreach (StoryInfoDetailsBean itemData in listData)
         {
@@ -276,7 +283,22 @@ public class StoryCreateWindowsEditor : EditorWindow
                 BaseNpcAI npcAI = CptUtil.GetCptInChildrenByName<BaseNpcAI>(mObjContent, itemData.npc_num + "");
                 if (npcAI == null)
                 {
-                    NpcInfoBean npcInfoBean = mapNpcInfo[itemData.npc_id];
+                    NpcInfoBean npcInfoBean;
+                    if (itemData.npc_id == 0)
+                    {
+                        npcInfoBean = new NpcInfoBean();
+                    }
+                    else
+                    {
+                        if (mapNpcInfo.TryGetValue(itemData.npc_id, out NpcInfoBean npcInfo))
+                            npcInfoBean = npcInfo;
+                        else
+                        {
+                            npcInfoBean = new NpcInfoBean();
+                            LogUtil.LogError("创建NPC失败 找不到ID为" + itemData.npc_id + "的NPC信息");
+                        }
+                    }
+
                     CreateNpc(npcInfoBean.npc_id, new Vector3(itemData.npc_position_x, itemData.npc_position_y), itemData.npc_num);
                 }
                 else
@@ -353,7 +375,8 @@ public class StoryCreateWindowsEditor : EditorWindow
                         textInfo.id = long.Parse(EditorGUILayout.TextArea(textInfo.id + "", GUILayout.Width(120), GUILayout.Height(20)));
                         GUILayout.Label("type");
                         textInfo.type = int.Parse(EditorGUILayout.TextArea(textInfo.type + "", GUILayout.Width(100), GUILayout.Height(20)));
-
+                        GUILayout.Label("order");
+                        textInfo.text_order = int.Parse(EditorGUILayout.TextArea(textInfo.text_order + "", GUILayout.Width(100), GUILayout.Height(20)));
                         if (textInfo.type == 0)
                         {
                             GUILayout.Label("userID");
@@ -373,6 +396,24 @@ public class StoryCreateWindowsEditor : EditorWindow
                             GUILayout.Label(npcInfo.title_name + "-" + npcInfo.name);
                             GUILayout.Label("指定的姓名");
                             textInfo.name = EditorGUILayout.TextArea(textInfo.name, GUILayout.Width(100), GUILayout.Height(20));
+                            GUILayout.Label("指定跳转的对话顺序next_order");
+                            textInfo.next_order = int.Parse(EditorGUILayout.TextArea(textInfo.next_order + "", GUILayout.Width(100), GUILayout.Height(20)));
+                        }
+                        else if (textInfo.type == 1)
+                        {
+                            GUILayout.Label("select type");
+                            textInfo.select_type = int.Parse(EditorGUILayout.TextArea(textInfo.select_type + "", GUILayout.Width(100), GUILayout.Height(20)));
+                            GUILayout.Label("分支选择");
+                            if (textInfo.select_type == 0)
+                            {
+                                GUILayout.Label("默认对话");
+                            }
+                            else
+                            {
+                                GUILayout.Label("分支选项 下一句对话ID");
+                                textInfo.select_result= int.Parse(EditorGUILayout.TextArea(textInfo.select_result + "", GUILayout.Width(100), GUILayout.Height(20)));
+                            }
+                           
                         }
                         else if (textInfo.type == 5)
                         {
@@ -413,7 +454,10 @@ public class StoryCreateWindowsEditor : EditorWindow
             else if (itemData.type == (int)StoryInfoDetailsBean.StoryInfoDetailsTypeEnum.Expression)
             {
                 GUILayout.Label("指定NPC展现表情 ");
-
+                GUILayout.Label("NPC编号：");
+                itemData.npc_num =int.Parse(EditorGUILayout.TextArea(itemData.npc_num+"", GUILayout.Width(200), GUILayout.Height(20)));
+                GUILayout.Label("表情编号 1爱心 2无语 3生气 4羞愧 5惊讶 6烦恼 7死亡：");
+                itemData.expression = int.Parse(EditorGUILayout.TextArea(itemData.expression + "", GUILayout.Width(200), GUILayout.Height(20)));
             }
             else if (itemData.type == (int)StoryInfoDetailsBean.StoryInfoDetailsTypeEnum.SceneInt)
             {
@@ -462,6 +506,10 @@ public class StoryCreateWindowsEditor : EditorWindow
         {
             CreateStoryInfoDetailsDataByType(StoryInfoDetailsBean.StoryInfoDetailsTypeEnum.NpcPosition);
         }
+        if (GUILayout.Button("添加人物表情"))
+        {
+            CreateStoryInfoDetailsDataByType(StoryInfoDetailsBean.StoryInfoDetailsTypeEnum.Expression);
+        }
         if (GUILayout.Button("添加对话"))
         {
             CreateStoryInfoDetailsDataByType(StoryInfoDetailsBean.StoryInfoDetailsTypeEnum.Talk);
@@ -489,7 +537,7 @@ public class StoryCreateWindowsEditor : EditorWindow
                 textInfoService.UpdateDataByMarkIdFor(TextEnum.Story, long.Parse(mStoryId) * 10000 + int.Parse(mStroyOrder), listStoryTextInfo);
 
             storyInfoService.UpdateStoryDetailsByIdAndOrder(long.Parse(mStoryId), int.Parse(mStroyOrder), listOrderStoryInfoDetails);
-            
+
             //刷新数据
             QueryStoryData(mStoryScene, mStoryId);
         }
@@ -506,8 +554,10 @@ public class StoryCreateWindowsEditor : EditorWindow
                 itemPositionInfo.npc_id = 1;
                 itemPositionInfo.npc_num = listOrderStoryInfoDetails.Count + 1;
                 break;
+            case StoryInfoDetailsBean.StoryInfoDetailsTypeEnum.Expression:
+                break;
             case StoryInfoDetailsBean.StoryInfoDetailsTypeEnum.Talk:
-                itemPositionInfo.text_mark_id = long.Parse(mStoryId)*10000+ int.Parse(mStroyOrder);
+                itemPositionInfo.text_mark_id = long.Parse(mStoryId) * 10000 + int.Parse(mStroyOrder);
                 break;
             case StoryInfoDetailsBean.StoryInfoDetailsTypeEnum.SceneInt:
                 break;

@@ -299,6 +299,7 @@ public class SceneGameArenaInit : BaseSceneInit, IBaseObserver
                 break;
             case (int)BaseMiniGameHandler<BaseMiniGameBuilder, MiniGameBaseBean>.MiniGameStatusEnum.GameClose:
                 SceneUtil.SceneChange(GameCommonInfo.ScenesChangeData.beforeScene);
+                //SceneUtil.SceneChange(ScenesEnum.GameArenaScene);
                 break;
         }
     }
