@@ -64,6 +64,8 @@ public class CptUtil
     /// <param name="tf"></param>
     public static void RemoveChildsByActiveInEditor(GameObject obj)
     {
+        if (obj == null)
+            return;
         for (int i = 0; i < obj.transform.childCount; i++)
         {
             GameObject objItem = obj.transform.GetChild(i).gameObject;

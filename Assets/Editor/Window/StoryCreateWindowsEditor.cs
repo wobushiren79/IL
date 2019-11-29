@@ -26,7 +26,6 @@ public class StoryCreateWindowsEditor : EditorWindow
 
     private void OnEnable()
     {
-        LogUtil.Log("OnEnable");
         //查询所有NPC数据
         listAllStoryInfoDetails = null;
         listOrderStoryInfoDetails = null;

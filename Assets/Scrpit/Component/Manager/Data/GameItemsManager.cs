@@ -24,6 +24,7 @@ public class GameItemsManager : BaseManager, IItemsInfoView
     {
         return GetItemsListByType(1);
     }
+
     /// <summary>
     /// 获取所有服装数据
     /// </summary>
@@ -32,6 +33,7 @@ public class GameItemsManager : BaseManager, IItemsInfoView
     {
         return GetItemsListByType(2);
     }
+
     /// <summary>
     /// 获取所有鞋子信息
     /// </summary>
@@ -39,6 +41,24 @@ public class GameItemsManager : BaseManager, IItemsInfoView
     public List<ItemsInfoBean> GetShoesList()
     {
         return GetItemsListByType(3);
+    }
+
+    /// <summary>
+    /// 获取所有物品
+    /// </summary>
+    /// <returns></returns>
+    public List<ItemsInfoBean> GetAllItems()
+    {
+        List<ItemsInfoBean> tempList = new List<ItemsInfoBean>();
+        if (listDataItems == null)
+            return tempList;
+
+        foreach (long key in this.listDataItems.Keys)
+        {
+            ItemsInfoBean itemData = this.listDataItems[key];
+            tempList.Add(itemData);
+        };
+        return tempList;
     }
 
     /// <summary>
