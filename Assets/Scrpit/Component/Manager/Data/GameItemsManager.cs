@@ -97,6 +97,41 @@ public class GameItemsManager : BaseManager, IItemsInfoView
         return
             null;
     }
+    /// <summary>
+    /// 根据装备ID获取装备
+    /// </summary>
+    /// <param name="id"></param>
+    /// <returns></returns>
+    public List<ItemsInfoBean> GetItemsByIds(List<long> ids)
+    {
+        List<ItemsInfoBean> listData = new List<ItemsInfoBean>();
+        if (listDataItems == null || ids == null)
+            return listData;
+        foreach (long id in ids)
+        {
+            if (this.listDataItems.TryGetValue(id, out ItemsInfoBean itemData))
+                listData.Add(itemData);
+        }
+        return listData;
+    }
+
+    /// <summary>
+    /// 根据装备ID获取装备
+    /// </summary>
+    /// <param name="id"></param>
+    /// <returns></returns>
+    public List<ItemsInfoBean> GetItemsByIds(long[] ids)
+    {
+        List<ItemsInfoBean> listData = new List<ItemsInfoBean>();
+        if (listDataItems == null || ids == null)
+            return listData;
+        foreach (long id in ids)
+        {
+            if (this.listDataItems.TryGetValue(id, out ItemsInfoBean itemData))
+                listData.Add(itemData);
+        }
+        return listData;
+    }
 
     /// <summary>
     /// 根据装备IDs获取装备

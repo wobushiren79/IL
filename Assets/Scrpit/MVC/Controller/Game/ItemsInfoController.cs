@@ -63,4 +63,6 @@ public class ItemsInfoController : BaseMVCController<ItemsInfoModel, IItemsInfoV
             GetView().GetItemsInfoFail();
         }
     }
+
+
 }

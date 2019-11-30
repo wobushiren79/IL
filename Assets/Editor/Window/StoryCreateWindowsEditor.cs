@@ -438,6 +438,7 @@ public class StoryCreateWindowsEditor : EditorWindow
                         listStoryTextInfo = new List<TextInfoBean>();
                     TextInfoBean textInfo = new TextInfoBean();
                     textInfo.id = itemData.text_mark_id * 1000 + listStoryTextInfo.Count + 1;
+                    textInfo.text_id = textInfo.id;
                     textInfo.type = 0;
                     textInfo.mark_id = itemData.text_mark_id;
                     textInfo.user_id = 0;

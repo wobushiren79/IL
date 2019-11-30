@@ -74,17 +74,15 @@ public class StoryInfoService
             foreach (var item in mapData)
             {
                 insertKeys[i] = item.Key;
-                if (item.Key.Equals("scene_intobj_name")
-                    || item.Key.Equals("scene_intcomponent_name")
-                    || item.Key.Equals("scene_intcomponent_method")
-                    || item.Key.Equals("scene_intcomponent_parameters"))
+                string valueStr = Convert.ToString(item.Value);
+                if (item.Value is string)
                 {
-                    insertValues[i] = "'";
-                    insertValues[i] += Convert.ToString(item.Value);
-                    insertValues[i] += "'";
+                    insertValues[i]=("'" + valueStr + "'");
                 }
                 else
-                    insertValues[i] = Convert.ToString(item.Value);
+                {
+                    insertValues[i]=(valueStr);
+                }
                 i++;
             }
             SQliteHandle.InsertValues(ProjectConfigInfo.DATA_BASE_INFO_NAME, mLeftDetailsTableName, insertKeys, insertValues);

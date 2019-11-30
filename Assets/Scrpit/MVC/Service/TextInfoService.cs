@@ -107,36 +107,32 @@ public class TextInfoService
             foreach (var item in mapData)
             {
                 string itemKey = item.Key;
-                if (itemKey.Equals("name")|| itemKey.Equals("content") || itemKey.Equals("id"))
+                if (itemKey.Equals("name") || itemKey.Equals("content") || itemKey.Equals("text_id"))
                 {
-                    string valueStr = "";
-                    if (itemKey.Equals("id"))
+                    string valueStr = Convert.ToString(item.Value);
+                    listLeftKeys.Add(item.Key);
+                    if (item.Value is string)
                     {
-                        listLeftKeys.Add("text_id");
-                        valueStr = Convert.ToString(item.Value);
+                        listLeftValues.Add("'" + valueStr + "'");
                     }
                     else
                     {
-                        listLeftKeys.Add(item.Key);
-                        valueStr += "'";
-                        valueStr += Convert.ToString(item.Value);
-                        valueStr += "'";
+                        listLeftValues.Add(valueStr);
                     }
-                    listLeftValues.Add(valueStr);
+
                 }
-                if (itemKey.Equals("id") 
-                    || itemKey.Equals("type") 
-                    || itemKey.Equals("mark_id")
-                    || itemKey.Equals("text_order")
-                    || itemKey.Equals("next_order")
-                    || itemKey.Equals("user_id")
-                    || itemKey.Equals("wait_time")
-                    || itemKey.Equals("select_type")
-                    || itemKey.Equals("select_result")
-                    || itemKey.Equals("add_favorability"))
+                else
                 {
+                    string valueStr = Convert.ToString(item.Value);
                     listMainKeys.Add(item.Key);
-                    listMainValues.Add(Convert.ToString(item.Value));
+                    if (item.Value is string)
+                    {
+                        listMainValues.Add("'" + valueStr + "'");
+                    }
+                    else
+                    {
+                        listMainValues.Add(valueStr);
+                    }
                 }
             }
             SQliteHandle.InsertValues(ProjectConfigInfo.DATA_BASE_INFO_NAME, mTableName,TypeConversionUtil.ListToArray(listMainKeys), TypeConversionUtil.ListToArray(listMainValues));

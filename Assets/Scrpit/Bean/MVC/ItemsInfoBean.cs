@@ -24,7 +24,7 @@ public class ItemsInfoBean : BaseBean
 
     public long add_id;//增加的内容ID
 
-    public int intact_number;//套装触发数量
+    //public int intact_number;//套装触发数量
 
     public string name;//名字
     public string content;//内容

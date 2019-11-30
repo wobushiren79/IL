@@ -9,7 +9,7 @@ public class NpcInfoManager : BaseManager, INpcInfoView
     public Dictionary<long, NpcInfoBean> listNpcInfo;//重要NPC数据
     public Dictionary<long, NpcInfoBean> listNormalNpcInfo;//普通路人NPC数据
 
-    private void Awake()
+    public void Awake()
     {
         npcInfoController = new NpcInfoController(this, this);
     }
@@ -50,6 +50,27 @@ public class NpcInfoManager : BaseManager, INpcInfoView
             return characterData;
         }
         return null;
+    }
+
+    /// <summary>
+    /// 通过ID获取NPC数据
+    /// </summary>
+    /// <param name="ids"></param>
+    /// <returns></returns>
+    public List<CharacterBean> GetCharacterDataByIds(long[] ids)
+    {
+        List<CharacterBean> listData = new List<CharacterBean>();
+        if (listNpcInfo == null|| ids==null)
+            return listData;
+        foreach (long id in ids)
+        {
+            if (listNpcInfo.TryGetValue(id, out NpcInfoBean npcInfo))
+            {
+                CharacterBean characterData = NpcInfoBean.NpcInfoToCharacterData(npcInfo);
+                listData.Add(characterData);
+            }
+        }
+        return listData;
     }
 
     /// <summary>

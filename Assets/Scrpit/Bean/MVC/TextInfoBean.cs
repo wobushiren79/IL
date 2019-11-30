@@ -6,6 +6,7 @@ using System.Collections.Generic;
 [Serializable]
 public class TextInfoBean : BaseBean
 {
+    public long text_id;
     //类型 0默认文本 1选择对话    4书本详情  5黑幕标题
     public int type;
     //文本编号
