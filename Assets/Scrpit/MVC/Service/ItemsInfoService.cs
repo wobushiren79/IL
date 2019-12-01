@@ -3,16 +3,12 @@ using UnityEditor;
 using System.Collections.Generic;
 using System;
 
-public class ItemsInfoService
+public class ItemsInfoService : BaseMVCService<ItemsInfoBean>
 {
-    private readonly string mTableName;
-    private readonly string mLeftDetailsTableName;
     private readonly string mLeftIntactTableName;
 
-    public ItemsInfoService()
+    public ItemsInfoService() : base("items_info", "items_info_details_" + GameCommonInfo.GameConfig.language)
     {
-        mTableName = "items_info";
-        mLeftDetailsTableName = "items_info_details_" + GameCommonInfo.GameConfig.language;
         mLeftIntactTableName = "items_intact_info";
     }
 
@@ -46,56 +42,30 @@ public class ItemsInfoService
         return SQliteHandle.LoadTableData<ItemsInfoBean>(ProjectConfigInfo.DATA_BASE_INFO_NAME, mTableName, leftTable, mainKey, leftKey, colName, operations, colValue);
     }
 
+    /// <summary>
+    /// 删除数据
+    /// </summary>
+    /// <param name="itemsInfo"></param>
     public void DeleteData(ItemsInfoBean itemsInfo)
     {
         if (itemsInfo == null)
             return;
-        string[] colKeys = new string[] { "id" };
-        string[] operations = new string[] { "=" };
-        string[] colValues = new string[] { itemsInfo.id + "", };
-        SQliteHandle.DeleteTableDataAndLeft(ProjectConfigInfo.DATA_BASE_INFO_NAME, mTableName, colKeys, operations, colValues);
+        BaseDeleteDataById(itemsInfo.id);
     }
 
+    /// <summary>
+    /// 插入数据
+    /// </summary>
+    /// <param name="itemsInfo"></param>
     public void InsertData(ItemsInfoBean itemsInfo)
     {
-        //插入数据
-        Dictionary<string, object> mapData = ReflexUtil.GetAllNameAndValue(itemsInfo);
-        List<string> listMainKeys = new List<string>();
-        List<string> listMainValues = new List<string>();
-        List<string> listLeftKeys = new List<string>();
-        List<string> listLeftValues = new List<string>();
-        foreach (var item in mapData)
+        List<string> listLeftName = new List<string>
         {
-            string itemKey = item.Key;
-            if (itemKey.Equals("name") || itemKey.Equals("content") || itemKey.Equals("items_id"))
-            {
-                string valueStr = Convert.ToString(item.Value);
-                listLeftKeys.Add(item.Key);
-                if (item.Value is string)
-                {
-                    listLeftValues.Add("'" + valueStr + "'");
-                }
-                else
-                {
-                    listLeftValues.Add(valueStr);
-                }
-            }
-            else
-            {
-                string valueStr = Convert.ToString(item.Value);
-                listMainKeys.Add(item.Key);
-                if (item.Value is string)
-                {
-                    listMainValues.Add("'" + valueStr + "'");
-                }
-                else
-                {
-                    listMainValues.Add(valueStr);
-                }
-            }
-        }
-        SQliteHandle.InsertValues(ProjectConfigInfo.DATA_BASE_INFO_NAME, mTableName, TypeConversionUtil.ListToArray(listMainKeys), TypeConversionUtil.ListToArray(listMainValues));
-        SQliteHandle.InsertValues(ProjectConfigInfo.DATA_BASE_INFO_NAME, mLeftDetailsTableName, TypeConversionUtil.ListToArray(listLeftKeys), TypeConversionUtil.ListToArray(listLeftValues));
+            "items_id",
+            "content",
+            "name"
+        };
+        BaseInsertDataWithLeft(itemsInfo, listLeftName);
     }
 
     public void UpdateData(ItemsInfoBean itemsInfo)

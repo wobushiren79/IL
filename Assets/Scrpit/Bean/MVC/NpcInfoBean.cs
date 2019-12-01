@@ -57,17 +57,17 @@ public class NpcInfoBean : BaseBean
         characterData.body = new CharacterBodyBean();
         characterData.body.hair = npcInfo.hair_id;
         //设置头发颜色
-        ColorBean hairColor = ColorStrToColorBean(npcInfo.hair_color);
+        ColorBean hairColor = new ColorBean(npcInfo.hair_color);
         if (hairColor != null)
             characterData.body.hairColor = hairColor;
         characterData.body.eye = npcInfo.eye_id;
         //设置眼睛颜色
-        ColorBean eyeColor = ColorStrToColorBean(npcInfo.eye_color);
+        ColorBean eyeColor = new ColorBean(npcInfo.eye_color); 
         if (eyeColor != null)
             characterData.body.eyeColor = eyeColor;
         characterData.body.mouth = npcInfo.mouth_id;
         //设置嘴巴颜色
-        ColorBean mouthColor = ColorStrToColorBean(npcInfo.mouth_color);
+        ColorBean mouthColor = new ColorBean(npcInfo.mouth_color); 
         if (mouthColor != null)
             characterData.body.mouthColor = mouthColor;
         characterData.body.sex = npcInfo.sex;
@@ -92,33 +92,8 @@ public class NpcInfoBean : BaseBean
         characterData.attributes.charm = npcInfo.attributes_charm;
         characterData.attributes.force = npcInfo.attributes_force;
         characterData.attributes.lucky = npcInfo.attributes_lucky;
-      
-        return characterData;
-    }
 
-    public static ColorBean ColorStrToColorBean(string color)
-    {
-        if (CheckUtil.StringIsNull(color))
-        {
-            return null;
-        }
-        else
-        {
-            float[] listData = StringUtil.SplitBySubstringForArrayFloat(color, ',');
-            if (listData == null)
-                return null;
-            if (listData.Length == 3)
-            {
-                return new ColorBean(listData[0], listData[1], listData[2], 1);
-            }
-            else if (listData.Length == 4)
-            {
-                return new ColorBean(listData[0], listData[1], listData[2], listData[3]);
-            }
-            else
-            {
-                return null;
-            }
-        }
+        characterData.npcInfoData = npcInfo;
+        return characterData;
     }
 }

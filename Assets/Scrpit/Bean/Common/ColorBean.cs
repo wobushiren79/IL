@@ -5,10 +5,10 @@ using System;
 [Serializable]
 public class ColorBean
 {
-    public float r;
-    public float g;
-    public float b;
-    public float a;
+    public float r=1;
+    public float g=1;
+    public float b=1;
+    public float a=1;
 
     public ColorBean()
     {
@@ -31,6 +31,35 @@ public class ColorBean
         this.a = a;
     }
 
+    public ColorBean(string colorStr)
+    {
+        float[] colors = StringUtil.SplitBySubstringForArrayFloat(colorStr, ',');
+        if (colors == null)
+            return;
+        else if (colors.Length == 1)
+        {
+            this.r = colors[0];
+        }
+        else if (colors.Length == 2)
+        {
+            this.r = colors[0];
+            this.g = colors[1];
+        }
+        else if (colors.Length == 3)
+        {
+            this.r = colors[0];
+            this.g = colors[1];
+            this.b = colors[2];
+        }
+        else if (colors.Length == 4)
+        {
+            this.r = colors[0];
+            this.g = colors[1];
+            this.b = colors[2];
+            this.a = colors[3];
+        }
+    }
+
     public Color GetColor()
     {
         return new Color(r, g, b, a);
@@ -45,6 +74,6 @@ public class ColorBean
     }
     public static ColorBean Random()
     {
-        return new ColorBean(UnityEngine.Random.Range(0f,1f), UnityEngine.Random.Range(0f, 1f), UnityEngine.Random.Range(0f, 1f), 1);
+        return new ColorBean(UnityEngine.Random.Range(0f, 1f), UnityEngine.Random.Range(0f, 1f), UnityEngine.Random.Range(0f, 1f), 1);
     }
 }

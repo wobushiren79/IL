@@ -1,16 +1,14 @@
 ﻿using UnityEngine;
 using UnityEditor;
 using System.Collections.Generic;
+using System;
 
-public class NpcInfoService
+public class NpcInfoService: BaseMVCService<NpcInfoBean>
 {
-    private readonly string mTableName;
-    private readonly string mLeftDetailsTableName;
 
-    public NpcInfoService()
+    public NpcInfoService() : base("npc_info", "npc_info_details_" + GameCommonInfo.GameConfig.language)
     {
-        mTableName = "npc_info";
-        mLeftDetailsTableName = "npc_info_details_" + GameCommonInfo.GameConfig.language;
+
     }
 
     /// <summary>
@@ -19,14 +17,7 @@ public class NpcInfoService
     /// <returns></returns>
     public List<NpcInfoBean> QueryAllData()
     {
-        return SQliteHandle.LoadTableData<NpcInfoBean>
-            (ProjectConfigInfo.DATA_BASE_INFO_NAME, mTableName,
-            new string[] { mLeftDetailsTableName },
-            new string[] { "id" },
-            new string[] { "npc_id" },
-            new string[] { mTableName + ".valid" },
-            new string[] { "=" },
-            new string[] { "1" });
+        return BaseQueryData("npc_id", mTableName + ".valid", "1");
     }
 
     /// <summary>
@@ -53,13 +44,7 @@ public class NpcInfoService
     /// <returns></returns>
     public List<NpcInfoBean> QueryDataById(long id)
     {
-        string[] leftTable = new string[] { mLeftDetailsTableName };
-        string[] mainKey = new string[] { "id" };
-        string[] leftKey = new string[] { "npc_id" };
-        string[] colName = new string[] { mTableName + ".id" };
-        string[] operations = new string[] { "=" };
-        string[] colValue = new string[] { id + "" };
-        return SQliteHandle.LoadTableData<NpcInfoBean>(ProjectConfigInfo.DATA_BASE_INFO_NAME, mTableName, leftTable, mainKey, leftKey, colName, operations, colValue);
+        return BaseQueryData("npc_id", mTableName + ".id", id + "");
     }
 
     /// <summary>
@@ -77,5 +62,41 @@ public class NpcInfoService
         string values = TypeConversionUtil.ArrayToStringBySplit(type, ",");
         string[] colValue = new string[] { "(" + values + ")" };
         return SQliteHandle.LoadTableData<NpcInfoBean>(ProjectConfigInfo.DATA_BASE_INFO_NAME, mTableName, leftTable, mainKey, leftKey, colName, operations, colValue);
+    }
+
+    /// <summary>
+    /// 删除数据
+    /// </summary>
+    /// <param name="itemsInfo"></param>
+    public void DeleteData(NpcInfoBean npcInfo)
+    {
+        if (npcInfo == null)
+            return;
+        BaseDeleteDataById(npcInfo.id);
+    }
+
+    /// <summary>
+    /// 插入数据
+    /// </summary>
+    /// <param name="itemsInfo"></param>
+    public void InsertData(NpcInfoBean itemsInfo)
+    {
+        List<string> listLeftName = new List<string>
+        {
+            "npc_id",
+            "title_name",
+            "name"
+        };
+        BaseInsertDataWithLeft(itemsInfo, listLeftName);
+    }
+
+    /// <summary>
+    /// 更新数据
+    /// </summary>
+    /// <param name="npcInfoData"></param>
+    public void Update(NpcInfoBean npcInfoData)
+    {
+        DeleteData(npcInfoData);
+        InsertData(npcInfoData);
     }
 }

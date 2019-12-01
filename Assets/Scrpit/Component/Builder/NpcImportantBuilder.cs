@@ -13,26 +13,24 @@ public class NpcImportantBuilder : BaseMonoBehaviour
 
     public void BuildImportant()
     {
-        List<NpcInfoBean> listCharacter=  npcInfoManager.GetNpcInfoByType(new int[] {1,2,3,4,10,11});
-        foreach (NpcInfoBean itemData in listCharacter)
+        List<CharacterBean> listCharacter=  npcInfoManager.GetCharacterDataByType(new int[] {1});
+        foreach (CharacterBean itemData in listCharacter)
         {
-            //生成
-            CharacterBean characterData = NpcInfoBean.NpcInfoToCharacterData(itemData);
-            BuildNpc(itemData,characterData);
+            BuildNpc(itemData);
         }
     }
 
-    private void BuildNpc(NpcInfoBean infoData, CharacterBean characterData)
+    private void BuildNpc(CharacterBean characterData)
     {
         if (objNpcModel==null|| objNpcContainer==null)
             return;
         GameObject npcObj = Instantiate(objNpcModel, objNpcContainer.transform);
         npcObj.SetActive(true);
-        npcObj.transform.position = new Vector3(infoData.position_x,infoData.position_y);
+        npcObj.transform.position = new Vector3(characterData.npcInfoData.position_x, characterData.npcInfoData.position_y);
         npcObj.transform.localScale = new Vector3(1,1);
         NpcAIImportantCpt aiCpt= npcObj.GetComponent<NpcAIImportantCpt>();
         aiCpt.SetCharacterData(characterData);
         InteractiveTalkCpt interactiveTalk = npcObj.GetComponent<InteractiveTalkCpt>();
-        interactiveTalk.markIds = StringUtil.SplitBySubstringForArrayLong(infoData.talk_ids,',');
+        interactiveTalk.markIds = StringUtil.SplitBySubstringForArrayLong(characterData.npcInfoData.talk_ids,',');
     }
 }
