@@ -15,6 +15,7 @@ public class CharacterBean
     public CharacterEquipBean equips = new CharacterEquipBean();
     //NPC相关数据
     public NpcInfoBean npcInfoData = new NpcInfoBean();
+
     /// <summary>
     /// 创建随机角色数据
     /// </summary>

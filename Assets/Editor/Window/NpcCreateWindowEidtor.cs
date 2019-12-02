@@ -109,15 +109,19 @@ public class NpcCreateWindowEidtor : EditorWindow
         }
         if (GUILayout.Button("查询路人NPC", GUILayout.Width(100), GUILayout.Height(20)))
         {
-            listFindNpcData = npcInfoManager.GetCharacterDataByType(1);
+            listFindNpcData = npcInfoManager.GetCharacterDataByType((int)NPCTypeEnum.Passerby);
         }
         if (GUILayout.Button("查询小镇NPC", GUILayout.Width(100), GUILayout.Height(20)))
         {
-            listFindNpcData = npcInfoManager.GetCharacterDataByType(2);
+            listFindNpcData = npcInfoManager.GetCharacterDataByType((int)NPCTypeEnum.Town);
+        }
+        if (GUILayout.Button("查询小镇可招募NPC", GUILayout.Width(120), GUILayout.Height(20)))
+        {
+            listFindNpcData = npcInfoManager.GetCharacterDataByType((int)NPCTypeEnum.RecruitTown);
         }
         if (GUILayout.Button("查询其他NPC", GUILayout.Width(100), GUILayout.Height(20)))
         {
-            listFindNpcData = npcInfoManager.GetCharacterDataByType(0);
+            listFindNpcData = npcInfoManager.GetCharacterDataByType((int)NPCTypeEnum.Other);
         }
 
         GUILayout.EndHorizontal();
@@ -139,6 +143,9 @@ public class NpcCreateWindowEidtor : EditorWindow
             }
             GUILayout.EndHorizontal();
             GUINpcInfo(itemData.npcInfoData, false);
+            itemData.body.hairColor = new ColorBean(itemData.npcInfoData.hair_color);
+            itemData.body.eyeColor = new ColorBean(itemData.npcInfoData.eye_color);
+            itemData.body.mouthColor = new ColorBean(itemData.npcInfoData.mouth_color);
         }
 
     }
