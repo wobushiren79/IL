@@ -3,12 +3,18 @@ using UnityEditor;
 using System.Collections.Generic;
 using System;
 
-public class TextInfoService
+public class TextInfoService : BaseMVCService<TextInfoBean>
 {
-    private string mTableName;
-    private string mLeftDetailsTableName;
+    public TextInfoService() : base("", "")
+    {
 
-    public List<TextInfoBean> QueryDataByMarkId(TextEnum textEnum, long markId)
+    }
+
+    /// <summary>
+    /// 初始化表名
+    /// </summary>
+    /// <param name="textEnum"></param>
+    private void InitTableByTextType(TextEnum textEnum)
     {
         switch (textEnum)
         {
@@ -24,16 +30,79 @@ public class TextInfoService
                 mTableName = "text_story";
                 mLeftDetailsTableName = "text_story_details_" + GameCommonInfo.GameConfig.language;
                 break;
-            default:
-                return null;
         }
-        string[] leftTable = new string[] { mLeftDetailsTableName };
-        string[] mainKey = new string[] { "id" };
-        string[] leftKey = new string[] { "text_id" };
-        string[] colName = new string[] { mTableName + ".mark_id" };
-        string[] operations = new string[] { "=" };
-        string[] colValue = new string[] { markId + "" };
-        return SQliteHandle.LoadTableData<TextInfoBean>(ProjectConfigInfo.DATA_BASE_INFO_NAME, mTableName, leftTable, mainKey, leftKey, colName, operations, colValue);
+    }
+
+    /// <summary>
+    /// 通过标记ID查询对话
+    /// </summary>
+    /// <param name="textEnum"></param>
+    /// <param name="markId"></param>
+    /// <returns></returns>
+    public List<TextInfoBean> QueryDataByMarkId(TextEnum textEnum, long markId)
+    {
+        InitTableByTextType(textEnum);
+        return BaseQueryData("text_id", mTableName + ".mark_id", markId + "");
+    }
+
+    /// <summary>
+    /// 通过用户ID查询对话
+    /// </summary>
+    /// <param name="textEnum"></param>
+    /// <param name="userId"></param>
+    /// <returns></returns>
+    public List<TextInfoBean> QueryDataByUserId(TextEnum textEnum, long userId)
+    {
+        InitTableByTextType(textEnum);
+        return BaseQueryData("text_id", mTableName + ".user_id", userId + "");
+    }
+
+    /// <summary>
+    /// 通过markid更新数据
+    /// </summary>
+    /// <param name="textEnum"></param>
+    /// <param name="markId"></param>
+    /// <param name="listData"></param>
+    public void UpdateDataByMarkId(TextEnum textEnum, long markId, List<TextInfoBean> listData)
+    {
+        InitTableByTextType(textEnum);
+
+        //先删除旧的数据
+        BaseDeleteData("mark_id", markId + "");
+        //再存储新的
+        //插入数据
+        if (CheckUtil.ListIsNull(listData))
+            return;
+        List<string> leftName = new List<string>();
+        leftName.Add("name");
+        leftName.Add("content");
+        leftName.Add("text_id");
+        foreach (TextInfoBean itemData in listData)
+        {
+            BaseInsertDataWithLeft(itemData, leftName);
+        }
+    }
+
+    /// <summary>
+    /// 通过ID更新数据
+    /// </summary>
+    /// <param name="textEnum"></param>
+    /// <param name="id"></param>
+    /// <param name="textData"></param>
+    public void UpdateDataById(TextEnum textEnum, long id, TextInfoBean textData)
+    {
+        InitTableByTextType(textEnum);
+        //先删除旧的数据
+        BaseDeleteDataById(id);
+        //再存储新的
+        //插入数据
+        if (textData==null)
+            return;
+        List<string> leftName = new List<string>();
+        leftName.Add("name");
+        leftName.Add("content");
+        leftName.Add("text_id");
+        BaseInsertDataWithLeft(textData, leftName);
     }
 
 
@@ -63,80 +132,5 @@ public class TextInfoService
         string[] operations = new string[] { "=", "=", "=" };
         string[] colValue = new string[] { characterId + "", "1", "1" };
         return SQliteHandle.LoadTableData<TextInfoBean>(ProjectConfigInfo.DATA_BASE_INFO_NAME, mTableName, leftTable, mainKey, leftKey, colName, operations, colValue);
-    }
-
-
-    public void UpdateDataByMarkIdFor(TextEnum textEnum, long markId, List<TextInfoBean> listData)
-    {
-        switch (textEnum)
-        {
-            case TextEnum.Look:
-                mTableName = "text_look";
-                mLeftDetailsTableName = "text_look_details_" + GameCommonInfo.GameConfig.language;
-                break;
-            case TextEnum.Talk:
-                mTableName = "text_talk";
-                mLeftDetailsTableName = "text_talk_details_" + GameCommonInfo.GameConfig.language;
-                break;
-            case TextEnum.Story:
-                mTableName = "text_story";
-                mLeftDetailsTableName = "text_story_details_" + GameCommonInfo.GameConfig.language;
-                break;
-            default:
-                return;
-        }
-        //先删除旧的数据
-        SQliteHandle.DeleteTableDataAndLeft(
-            ProjectConfigInfo.DATA_BASE_INFO_NAME,
-            mTableName,
-            new string[] { "mark_id"},
-            new string[] { "=" },
-            new string[] { markId + "" }
-            );
-        //再存储新的
-        //插入数据
-        if (CheckUtil.ListIsNull(listData))
-            return;
-        foreach (TextInfoBean itemData in listData)
-        {
-            Dictionary<string, object> mapData = ReflexUtil.GetAllNameAndValue(itemData);
-            List<string> listMainKeys = new List<string>();
-            List<string> listMainValues = new List<string>();
-            List<string> listLeftKeys = new List<string>();
-            List<string> listLeftValues = new List<string>();
-            foreach (var item in mapData)
-            {
-                string itemKey = item.Key;
-                if (itemKey.Equals("name") || itemKey.Equals("content") || itemKey.Equals("text_id"))
-                {
-                    string valueStr = Convert.ToString(item.Value);
-                    listLeftKeys.Add(item.Key);
-                    if (item.Value is string)
-                    {
-                        listLeftValues.Add("'" + valueStr + "'");
-                    }
-                    else
-                    {
-                        listLeftValues.Add(valueStr);
-                    }
-
-                }
-                else
-                {
-                    string valueStr = Convert.ToString(item.Value);
-                    listMainKeys.Add(item.Key);
-                    if (item.Value is string)
-                    {
-                        listMainValues.Add("'" + valueStr + "'");
-                    }
-                    else
-                    {
-                        listMainValues.Add(valueStr);
-                    }
-                }
-            }
-            SQliteHandle.InsertValues(ProjectConfigInfo.DATA_BASE_INFO_NAME, mTableName,TypeConversionUtil.ListToArray(listMainKeys), TypeConversionUtil.ListToArray(listMainValues));
-            SQliteHandle.InsertValues(ProjectConfigInfo.DATA_BASE_INFO_NAME, mLeftDetailsTableName, TypeConversionUtil.ListToArray(listLeftKeys), TypeConversionUtil.ListToArray(listLeftValues));
-        }
     }
 }

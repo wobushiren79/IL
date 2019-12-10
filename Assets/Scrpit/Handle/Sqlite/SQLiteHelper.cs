@@ -127,6 +127,7 @@ public class SQLiteHelper
             queryString += ", " + values[i];
         }
         queryString += " )";
+        LogUtil.Log(queryString);
         return ExecuteQuery(queryString);
     }
 

@@ -7,84 +7,31 @@ using System.Collections.Generic;
 public class UIGameText : BaseUIComponent, ITextInfoView
 {
     [Header("控件")]
-    public Text tvContent;
-    public Text tvName;
-    public Image ivFavorability;
-
-    public Text tvBookName;
-    public Text tvBookContent;
-    public Button btBookBack;
-
-    public Text tvBehind;
-
-    public GameObject objNext;
-    public CharacterUICpt characterUICpt;
-
-    public GameObject objTypeNormal;
-    public GameObject objTypeBook;
-    public GameObject objTypeBehind;
-
-    public GameObject objSelectContent;
-    public GameObject objSelectModel;
-
-    //文本容器
-    public RectTransform rtfTextContent;
+    public UIGameTextForBook uiForBook;
+    public UIGameTextForBehind uiForBehind;
+    public UIGameTextForTalk uiForTalk;
 
     [Header("数据")]
     public int textOrder = 1;
+
     public List<TextInfoBean> listTextData;
     public TextInfoBean currentTextData;
 
+    public Dictionary<long, List<TextInfoBean>> mapTalkNormalData;
+    public Dictionary<long, List<TextInfoBean>> mapTalkGiftData;
+    public Dictionary<long, List<TextInfoBean>> mapTalkRecruitData;
+
     private TextInfoController mTextInfoController;
-    private Tweener tweenerText;
+
     private TextEnum mTextEnum;
-    private ICallBack mCallBack;
+    public ICallBack callBack;
 
     //备用文本替换数据
     public SortedList<string, string> listMarkData = new SortedList<string, string>();
+
     private void Awake()
     {
         mTextInfoController = new TextInfoController(this, this);
-    }
-
-    private void Start()
-    {
-        if (btBookBack != null)
-            btBookBack.onClick.AddListener(NextText);
-    }
-
-    private void Update()
-    {
-        if (currentTextData == null)
-        {
-            return;
-        }
-        if (currentTextData.type == 4|| currentTextData.type == 5)
-        {
-            return;
-        }
-        if (Input.GetButtonDown(InputInfo.Interactive_E))
-        {
-            if (tweenerText != null && tweenerText.IsActive() && tweenerText.IsPlaying())
-            {
-                tweenerText.Complete();
-                //刷新控件
-                if (rtfTextContent != null)
-                    GameUtil.RefreshRectViewHight(rtfTextContent, true);
-            }
-            else
-            {
-                //当时选择对话 不能跳过
-                if (currentTextData.type == 1)
-                {
-
-                }
-                else
-                {
-                    NextText();
-                }
-            }
-        }
     }
 
     public void NextText()
@@ -119,15 +66,15 @@ public class UIGameText : BaseUIComponent, ITextInfoView
                     break;
             }
             //如果是时停 需要回复时停
-            if (!currentTextData.is_stoptime)
+            if (currentTextData.is_stoptime == 1)
             {
                 GameTimeHandler gameTimeHandler = GetUIMananger<UIGameManager>().gameTimeHandler;
                 if (gameTimeHandler != null)
                     gameTimeHandler.SetTimeRestore();
             }
             //回调
-            if (mCallBack != null)
-                mCallBack.UITextEnd();
+            if (callBack != null)
+                callBack.UITextEnd();
         }
     }
 
@@ -137,30 +84,47 @@ public class UIGameText : BaseUIComponent, ITextInfoView
     /// <param name="callBack"></param>
     public void SetCallBack(ICallBack callBack)
     {
-        mCallBack = callBack;
+        this.callBack = callBack;
     }
 
     /// <summary>
     /// 设置数据
     /// </summary>
     /// <param name="textEnum"></param>
-    /// <param name="markId"></param>
-    public void SetData(TextEnum textEnum, long markId)
+    /// <param name="id">当 textEnum为Look 或 Story时 为markId。Talk时则为UserId </param>
+    public void SetData(TextEnum textEnum, long id)
     {
         mTextEnum = textEnum;
         textOrder = 1;
         switch (textEnum)
         {
             case TextEnum.Look:
-                mTextInfoController.GetTextForLook(markId);
+                mTextInfoController.GetTextForLook(id);
                 break;
             case TextEnum.Talk:
-                mTextInfoController.GetTextForTalk(markId);
+                mTextInfoController.GetTextForTalk(id);
                 break;
             case TextEnum.Story:
-                mTextInfoController.GetTextForStory(markId);
+                mTextInfoController.GetTextForStory(id);
                 break;
         }
+    }
+
+    public void SetDataForTalk(long userId , NPCTypeEnum npcType)
+    {
+        mTextEnum = TextEnum.Talk;
+        textOrder = 1;
+        listTextData = new List<TextInfoBean>();
+        switch (npcType)
+        {
+            case NPCTypeEnum.RecruitTown:
+                listTextData.Add(new TextInfoBean(0,GameCommonInfo.GetUITextById(99101)));
+                listTextData.Add(new TextInfoBean(1, GameCommonInfo.GetUITextById(99102)));
+                listTextData.Add(new TextInfoBean(1, GameCommonInfo.GetUITextById(99104)));
+                listTextData.Add(new TextInfoBean(1, GameCommonInfo.GetUITextById(99103)));
+                break;
+        }
+        mTextInfoController.GetTextForTalk(userId);
     }
 
     /// <summary>
@@ -196,166 +160,41 @@ public class UIGameText : BaseUIComponent, ITextInfoView
     /// 展示文本数据
     /// </summary>
     /// <param name="textData"></param>
-    public void ShowText(List<TextInfoBean> listTextData)
+    public void ShowText(List<TextInfoBean> textListData)
     {
-        //清空选项
-        CptUtil.RemoveChildsByName(objSelectContent.transform, "SelectButton", true);
-        List<TextInfoBean> textListData = GetTextDataByOrder(textOrder);
         if (CheckUtil.ListIsNull(textListData))
         {
             LogUtil.LogError("没有查询到相应文本对话数据");
             return;
         }
         currentTextData = textListData[0];
-        objTypeNormal.SetActive(false);
-        objTypeBehind.SetActive(false);
-        objTypeBook.SetActive(false);
+        uiForTalk.Close();
+        uiForBook.Close();
+        uiForBehind.Close();
 
         UIGameManager uiGameManager = GetUIMananger<UIGameManager>();
         //时停选择 特殊处理
-        if (currentTextData.is_stoptime)
+        if (currentTextData.is_stoptime==1)
             //设置时间彻底停止计时
             uiGameManager.gameTimeHandler.SetTimeStop();
-        switch (currentTextData.type)
+        switch ((TextInfoTypeEnum)currentTextData.type)
         {
             //对话和选择对话
-            case 0:
-            case 1:
-                objTypeNormal.SetActive(true);
-                //选择对话 特殊处理 增加选择框
-                if (currentTextData.type == 1)
-                {
-                    objNext.gameObject.SetActive(false);
-                    foreach (TextInfoBean itemData in textListData)
-                    {
-                        //提示文本
-                        if (itemData.select_type == 0)
-                        {
-                            this.currentTextData = itemData;
-                        }
-                        // 选项
-                        else
-                        {
-                            GameObject objSelect = Instantiate(objSelectModel, objSelectContent.transform);
-                            objSelect.SetActive(true);
-                            ItemGameTextSelectCpt itemCpt = objSelect.GetComponent<ItemGameTextSelectCpt>();
-                            itemCpt.SetData(itemData, this);
-                        }
-                    }
-                }
-                else
-                {
-                    objNext.gameObject.SetActive(true);
-                }
-                //正常文本处理
-                //角色图标设置
-                CharacterBean characterData;
-                if (currentTextData.user_id == 0)
-                    characterData = uiGameManager.gameDataManager.gameData.userCharacter;
-                else
-                    characterData = uiGameManager.npcInfoManager.GetCharacterDataById(currentTextData.user_id);
-                if (characterData == null)
-                {
-                    LogUtil.LogError("文本展示没有找到该文本发起者");
-                    return;
-                }
-                //名字设置
-                if (tvName != null)
-                {
-                    if (CheckUtil.StringIsNull(currentTextData.name))
-                    {
-                        tvName.text = characterData.baseInfo.titleName + "-" + characterData.baseInfo.name;
-                    }
-                    else
-                        tvName.text = currentTextData.name;
-                }
-                if (characterUICpt != null)
-                    characterUICpt.SetCharacterData(characterData.body, characterData.equips);
-                //设置正文内容
-                if (tvContent != null)
-                {
-                    tvContent.text = "";
-                    string contentDetails = SetContentDetails(currentTextData.content);
-                    //如果时停了就不播放动画了
-                    if (Time.timeScale == 0)
-                    {
-                        tvContent.text = contentDetails;
-                        //刷新控件大小
-                        if (rtfTextContent != null)
-                            GameUtil.RefreshRectViewHight(rtfTextContent, true);
-                    }
-                    else
-                        tweenerText = tvContent.DOText(contentDetails, currentTextData.content.Length / 8f).SetEase(Ease.OutBack);
-                }
+            case TextInfoTypeEnum.Normal:
+            case TextInfoTypeEnum.Select:
+                uiForTalk.Open();
+                uiForTalk.SetData(currentTextData, textListData);
                 break;
-            case 4:
+            case TextInfoTypeEnum.Book:
                 //书本详情
-                if (tvBookName != null)
-                    tvBookName.text = currentTextData.name;
-                if (tvBookContent != null)
-                    tvBookContent.text = currentTextData.content;
-                objTypeBook.SetActive(true);
+                uiForBook.Open();
+                uiForBook.SetData(currentTextData.name, currentTextData.content);
                 break;
-            case 5:
+            case TextInfoTypeEnum.Behind:
                 //黑幕
-                objTypeBehind.SetActive(true);
-                if (tvBehind != null)
-                {
-                    tvBehind.text = SetContentDetails(currentTextData.content);
-                    tweenerText = tvBehind.DOFade(0, currentTextData.wait_time).From().OnComplete(delegate
-                    {
-                        NextText(textOrder + 1);
-                    });
-                }
+                uiForBehind.Open();
+                uiForBehind.SetData(currentTextData.content, currentTextData.wait_time);
                 break;
-        }
-        //添加好感度
-        if (currentTextData.add_favorability != 0)
-        {
-            AddFavorability(currentTextData.user_id, currentTextData.add_favorability);
-            //回调
-            if (mCallBack != null)
-                mCallBack.UITextAddFavorability(currentTextData.user_id, currentTextData.add_favorability);
-        }
-        //场景人物表情展示
-        if (!CheckUtil.StringIsNull(currentTextData.scene_expression))
-        {
-            if (mCallBack != null)
-            {
-                Dictionary<int, CharacterExpressionCpt.CharacterExpressionEnum> mapData = new Dictionary<int, CharacterExpressionCpt.CharacterExpressionEnum>();
-                List<string> listData = StringUtil.SplitBySubstringForListStr(currentTextData.scene_expression, ',');
-                for (int i = 0; i < listData.Count; i += 2)
-                {
-                    int mapKey = int.Parse(listData[i]);
-                    CharacterExpressionCpt.CharacterExpressionEnum mapValue = (CharacterExpressionCpt.CharacterExpressionEnum)int.Parse(listData[i + 1]);
-                    mapData.Add(mapKey, mapValue);
-                }
-                mCallBack.UITextSceneExpression(mapData);
-            }
-        }
-    }
-
-    /// <summary>
-    /// 增加好感
-    /// </summary>
-    /// <param name="characterId"></param>
-    /// <param name="favorablility"></param>
-    public void AddFavorability(long characterId, int favorablility)
-    {
-        UIGameManager uiGameManager = GetUIMananger<UIGameManager>();
-        CharacterFavorabilityBean favorabilityData = uiGameManager.gameDataManager.gameData.GetFavorabilityDataById(characterId);
-        favorabilityData.AddFavorability(favorablility);
-        //好感动画
-        if (ivFavorability != null)
-        {
-            ivFavorability.transform.localScale = new Vector3(1, 1, 1);
-            ivFavorability.transform.DOComplete();
-            ivFavorability.gameObject.SetActive(true);
-            ivFavorability.transform.DOScale(new Vector3(0, 0, 0), 1).From().SetEase(Ease.OutBack).OnComplete(delegate ()
-            {
-                ivFavorability.gameObject.SetActive(false);
-            });
-            ivFavorability.DOColor(new Color(1, 1, 1, 0), 1).From();
         }
     }
 
@@ -399,6 +238,44 @@ public class UIGameText : BaseUIComponent, ITextInfoView
         return content;
     }
 
+    /// <summary>
+    /// 文本选择
+    /// </summary>
+    /// <param name="textData"></param>
+    public void SelectText(TextInfoBean textData)
+    {
+        switch (mTextEnum)
+        {
+            case TextEnum.Story:
+                int textOrderNext = textData.select_result;
+                NextText(textOrderNext);
+                break;
+            case TextEnum.Talk:
+                if (textData.content.Equals(GameCommonInfo.GetUITextById(99102)))
+                {
+                    //对话
+                    listTextData = RandomUtil.GetRandomDataByDictionary(mapTalkNormalData);
+                    NextText(1);
+                }
+                else if (textData.content.Equals(GameCommonInfo.GetUITextById(99103)))
+                {
+                    //退出
+
+                }
+                else if (textData.content.Equals(GameCommonInfo.GetUITextById(99104)))
+                {
+                    //招募
+
+                }
+                else if (textData.content.Equals(GameCommonInfo.GetUITextById(99105)))
+                {
+                    //送礼
+
+                }
+                break;
+        }
+    }
+
     #region 文本获取回调
     public void GetTextInfoForLookSuccess(List<TextInfoBean> listData)
     {
@@ -408,7 +285,36 @@ public class UIGameText : BaseUIComponent, ITextInfoView
 
     public void GetTextInfoForTalkSuccess(List<TextInfoBean> listData)
     {
-        listTextData = listData;
+        mapTalkNormalData = new Dictionary<long, List<TextInfoBean>>();
+        mapTalkGiftData = new Dictionary<long, List<TextInfoBean>>();
+        mapTalkRecruitData = new Dictionary<long, List<TextInfoBean>>();
+        foreach (TextInfoBean itemTalkInfo in listData)
+        {
+            long markId = itemTalkInfo.mark_id;
+            Dictionary<long, List<TextInfoBean>> addMap=new Dictionary<long, List<TextInfoBean>>();
+            switch ((TextTalkTypeEnum)itemTalkInfo.talk_type)
+            {
+                case TextTalkTypeEnum.Normal:
+                    addMap = mapTalkNormalData;
+                    break;
+                case TextTalkTypeEnum.Gift:
+                    addMap = mapTalkGiftData;
+                    break;
+                case TextTalkTypeEnum.Recruit:
+                    addMap = mapTalkRecruitData;
+                    break;
+            }
+            if (addMap.TryGetValue(markId, out List<TextInfoBean> value))
+            {
+                value.Add(itemTalkInfo);
+            }
+            else
+            {
+                List<TextInfoBean> listTemp = new List<TextInfoBean>();
+                listTemp.Add(itemTalkInfo);
+                addMap.Add(markId, listTemp);
+            }
+        }
         ShowText(listTextData);
     }
 

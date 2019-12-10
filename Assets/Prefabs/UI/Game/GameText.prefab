@@ -865,17 +865,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 47c5c6ebf99f11946bc71df256cc25ec, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  uiComponent: {fileID: 7577364583261336168}
   tvContent: {fileID: 555195973788043142}
   btSubmit: {fileID: 4332103261380952983}
   textData:
     id: 0
     valid: 0
+    text_id: 0
     type: 0
     mark_id: 0
     user_id: 0
     name: 
     content: 
-    order: 0
+    text_order: 0
     next_order: 0
     wait_time: 0
     select_type: 0
@@ -886,6 +888,7 @@ MonoBehaviour:
     condition_max_favorability: 0
     add_favorability: 0
     add_money: 
+    scene_expression: 
 --- !u!1 &4121556879504047167
 GameObject:
   m_ObjectHideFlags: 0
@@ -1016,6 +1019,7 @@ GameObject:
   - component: {fileID: 6894139977122350862}
   - component: {fileID: 7990063313969122637}
   - component: {fileID: 191613415119536846}
+  - component: {fileID: 5614888759089978253}
   m_Layer: 5
   m_Name: Type_Behind
   m_TagString: Untagged
@@ -1079,6 +1083,20 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &5614888759089978253
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4247056916302537757}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0bb7f4132b0e1c944b4106e779796cfc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  uiComponent: {fileID: 7577364583261336168}
+  tvBehind: {fileID: 2216750725328085978}
 --- !u!1 &5800653061776494872
 GameObject:
   m_ObjectHideFlags: 0
@@ -1163,6 +1181,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1129973855673650927}
   - component: {fileID: 4690211107065175531}
+  - component: {fileID: 7667217608940544719}
   m_Layer: 5
   m_Name: Type_Talk
   m_TagString: Untagged
@@ -1200,6 +1219,48 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5811393097175599135}
   m_CullTransparentMesh: 0
+--- !u!114 &7667217608940544719
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5811393097175599135}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4da795506fd229f428b29291c23f3fe8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  uiComponent: {fileID: 7577364583261336168}
+  rtfTextContent: {fileID: 7577364583810613439}
+  tvContent: {fileID: 7577364584254848190}
+  tvName: {fileID: 8562395018130005216}
+  ivFavorability: {fileID: 8378790579713765670}
+  objNext: {fileID: 4166016897768624947}
+  characterUICpt: {fileID: 4556736455070394673}
+  textData:
+    id: 0
+    valid: 0
+    text_id: 0
+    type: 0
+    mark_id: 0
+    user_id: 0
+    name: 
+    content: 
+    text_order: 0
+    next_order: 0
+    wait_time: 0
+    select_type: 0
+    select_result: 0
+    is_stoptime: 0
+    condition_first_meet: 0
+    condition_min_favorability: 0
+    condition_max_favorability: 0
+    add_favorability: 0
+    add_money: 
+    scene_expression: 
+  objSelectContent: {fileID: 7577364583810613438}
+  objSelectModel: {fileID: 3412293648310747249}
 --- !u!1 &6535886535714325153
 GameObject:
   m_ObjectHideFlags: 0
@@ -1210,6 +1271,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2322993975236640114}
   - component: {fileID: 1046194899892865036}
+  - component: {fileID: 242377336617440198}
   m_Layer: 5
   m_Name: Type_Book
   m_TagString: Untagged
@@ -1246,6 +1308,22 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6535886535714325153}
   m_CullTransparentMesh: 0
+--- !u!114 &242377336617440198
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6535886535714325153}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9694a3d11ffb5884f957c7332d14b994, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  uiComponent: {fileID: 0}
+  tvBookName: {fileID: 5232380993698789230}
+  tvBookContent: {fileID: 5876831642292577473}
+  btBookBack: {fileID: 2780979392128714447}
 --- !u!1 &6679470358871560618
 GameObject:
   m_ObjectHideFlags: 0
@@ -1745,32 +1823,21 @@ MonoBehaviour:
   uiManager: {fileID: 0}
   uiAnimator: {fileID: 0}
   remarkData: 
-  tvContent: {fileID: 7577364584254848190}
-  tvName: {fileID: 8562395018130005216}
-  ivFavorability: {fileID: 8378790579713765670}
-  tvBookName: {fileID: 5232380993698789230}
-  tvBookContent: {fileID: 5876831642292577473}
-  btBookBack: {fileID: 2780979392128714447}
-  tvBehind: {fileID: 2216750725328085978}
-  objNext: {fileID: 4166016897768624947}
-  characterUICpt: {fileID: 4556736455070394673}
-  objTypeNormal: {fileID: 5811393097175599135}
-  objTypeBook: {fileID: 6535886535714325153}
-  objTypeBehind: {fileID: 4247056916302537757}
-  objSelectContent: {fileID: 7577364583810613438}
-  objSelectModel: {fileID: 3412293648310747249}
-  rtfTextContent: {fileID: 7577364583810613439}
+  uiForBook: {fileID: 242377336617440198}
+  uiForBehind: {fileID: 5614888759089978253}
+  uiForTalk: {fileID: 7667217608940544719}
   textOrder: 1
   listTextData: []
   currentTextData:
     id: 0
     valid: 0
+    text_id: 0
     type: 0
     mark_id: 0
     user_id: 0
     name: 
     content: 
-    order: 0
+    text_order: 0
     next_order: 0
     wait_time: 0
     select_type: 0
@@ -1781,6 +1848,7 @@ MonoBehaviour:
     condition_max_favorability: 0
     add_favorability: 0
     add_money: 
+    scene_expression: 
 --- !u!1 &7577364583810613438
 GameObject:
   m_ObjectHideFlags: 0
@@ -2430,8 +2498,8 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 7577364584152270959}
   m_HandleRect: {fileID: 7577364584152270958}
   m_Direction: 2
-  m_Value: 0
-  m_Size: 1
+  m_Value: 0.999996
+  m_Size: 0.9155555
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -2852,6 +2920,26 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 7577364584774304036}
     m_Modifications:
+    - target: {fileID: 6202850148858248707, guid: dbdedefdbd5ca8045a10545a8d921571,
+        type: 3}
+      propertyPath: characterDressManager
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 6202850148858248707, guid: dbdedefdbd5ca8045a10545a8d921571,
+        type: 3}
+      propertyPath: characterBodyManager
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 6202850148858248707, guid: dbdedefdbd5ca8045a10545a8d921571,
+        type: 3}
+      propertyPath: gameItemsManager
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 6202850148858248711, guid: dbdedefdbd5ca8045a10545a8d921571,
+        type: 3}
+      propertyPath: m_Name
+      value: CharacterUI
+      objectReference: {fileID: 0}
     - target: {fileID: 6202850148858248704, guid: dbdedefdbd5ca8045a10545a8d921571,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -2966,26 +3054,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalScale.y
       value: 1.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 6202850148858248711, guid: dbdedefdbd5ca8045a10545a8d921571,
-        type: 3}
-      propertyPath: m_Name
-      value: CharacterUI
-      objectReference: {fileID: 0}
-    - target: {fileID: 6202850148858248707, guid: dbdedefdbd5ca8045a10545a8d921571,
-        type: 3}
-      propertyPath: characterDressManager
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 6202850148858248707, guid: dbdedefdbd5ca8045a10545a8d921571,
-        type: 3}
-      propertyPath: characterBodyManager
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 6202850148858248707, guid: dbdedefdbd5ca8045a10545a8d921571,
-        type: 3}
-      propertyPath: gameItemsManager
-      value: 
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: dbdedefdbd5ca8045a10545a8d921571, type: 3}

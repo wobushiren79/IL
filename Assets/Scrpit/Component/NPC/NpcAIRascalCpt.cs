@@ -286,7 +286,7 @@ public class NpcAIRascalCpt : BaseNpcAI, ITextInfoView, IBaseObserver
             return;
         }
         TextInfoBean textInfo = RandomUtil.GetRandomDataByList(listTextInfoBean);
-        mEventHandler.EventTriggerForTalk(textInfo.mark_id);
+       // mEventHandler.EventTriggerForTalk(textInfo.mark_id, textInfo.);
         mEventHandler.AddObserver(this);
     }
 

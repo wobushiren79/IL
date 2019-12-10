@@ -3,12 +3,14 @@ using UnityEditor;
 using System.Collections.Generic;
 using System;
 using Cinemachine;
+using System.Collections;
 
 public class NpcCreateWindowEidtor : EditorWindow
 {
     GameItemsManager gameItemsManager;
     NpcInfoManager npcInfoManager;
     NpcInfoService npcInfoService;
+    TextInfoService textInfoService;
 
     private CinemachineVirtualCamera mCamera2D;
     private GameObject mObjContent;
@@ -35,6 +37,7 @@ public class NpcCreateWindowEidtor : EditorWindow
         gameItemsManager = new GameItemsManager();
         npcInfoManager = new NpcInfoManager();
         npcInfoService = new NpcInfoService();
+        textInfoService = new TextInfoService();
 
         gameItemsManager.Awake();
         npcInfoManager.Awake();
@@ -67,7 +70,7 @@ public class NpcCreateWindowEidtor : EditorWindow
         mCamera2D = EditorGUILayout.ObjectField(new GUIContent("摄像头", ""), mCamera2D, typeof(CinemachineVirtualCamera), true) as CinemachineVirtualCamera;
         GUICreateNpc();
         GUIFindNpc();
-
+        GUINpcTalk();
         GUILayout.EndScrollView();
     }
 
@@ -147,12 +150,115 @@ public class NpcCreateWindowEidtor : EditorWindow
             itemData.body.eyeColor = new ColorBean(itemData.npcInfoData.eye_color);
             itemData.body.mouthColor = new ColorBean(itemData.npcInfoData.mouth_color);
         }
-
     }
 
     private Sprite spCreateHair;
     private Sprite spCreateEye;
     private Sprite spCreateMouth;
+
+    public Dictionary<long, List<TextInfoBean>> mapNpcTalkInfo = new Dictionary<long, List<TextInfoBean>>();
+    private void GUINpcTalk()
+    {
+        GUILayout.BeginHorizontal();
+        GUILayout.Label("NpcID:" + findIds, GUILayout.Width(120));
+        if (GUILayout.Button("查询NPC的对话", GUILayout.Width(120), GUILayout.Height(20)))
+        {
+            GetNpcTalkInfoList();
+        }
+        if (GUILayout.Button("添加对话逻辑", GUILayout.Width(120), GUILayout.Height(20)))
+        {
+            long markId = long.Parse(findIds) * 10000;
+            markId += (mapNpcTalkInfo.Count + 1);
+            List<TextInfoBean> listTemp = new List<TextInfoBean>();
+            mapNpcTalkInfo.Add(markId, listTemp);
+        }
+
+        GUILayout.EndHorizontal();
+        if (mapNpcTalkInfo == null || mapNpcTalkInfo.Count == 0)
+            return;
+
+
+        long removeMarkId = 0;
+        long removeTalkId = 0;
+        foreach (var mapItemTalkInfo in mapNpcTalkInfo)
+        {
+            GUILayout.Label("markId：");
+            GUILayout.BeginHorizontal();
+            if (GUILayout.Button("添加对话", GUILayout.Width(120), GUILayout.Height(20)))
+            {
+                TextInfoBean addText = new TextInfoBean();
+                addText.mark_id = mapItemTalkInfo.Key;
+                addText.id = addText.mark_id * 1000 + (mapItemTalkInfo.Value.Count + 1);
+                addText.text_id = addText.id;
+                addText.user_id = long.Parse(findIds);
+                addText.valid = 1;
+                mapItemTalkInfo.Value.Add(addText);
+                textInfoService.UpdateDataById(TextEnum.Talk, addText.id, addText);
+            }
+            if (GUILayout.Button("删除对话逻辑", GUILayout.Width(120), GUILayout.Height(20)))
+            {
+                removeMarkId = mapItemTalkInfo.Key;
+            }
+            GUILayout.EndHorizontal();
+            long.Parse(EditorGUILayout.TextArea(mapItemTalkInfo.Key + "", GUILayout.Width(100), GUILayout.Height(20)));
+            foreach (TextInfoBean itemTalkInfo in mapItemTalkInfo.Value)
+            {
+                GUILayout.BeginHorizontal();
+                if (GUILayout.Button("更新", GUILayout.Width(120), GUILayout.Height(20)))
+                {
+                    textInfoService.UpdateDataById(TextEnum.Talk, itemTalkInfo.id, itemTalkInfo);
+                }
+                if (GUILayout.Button("删除对话", GUILayout.Width(120), GUILayout.Height(20)))
+                {
+                    removeTalkId = itemTalkInfo.id;
+                }
+                GUILayout.Label("talkId：");
+                itemTalkInfo.id = long.Parse(EditorGUILayout.TextArea(itemTalkInfo.id + "", GUILayout.Width(100), GUILayout.Height(20)));
+                GUILayout.Label("talkId：");
+                itemTalkInfo.talk_type = (int)(NPCTypeEnum)EditorGUILayout.EnumPopup((TextTalkTypeEnum)itemTalkInfo.talk_type, GUILayout.Width(100), GUILayout.Height(20));
+                GUILayout.Label("对话顺序：");
+                itemTalkInfo.text_order = int.Parse(EditorGUILayout.TextArea(itemTalkInfo.text_order + "", GUILayout.Width(50), GUILayout.Height(20)));
+                GUILayout.Label("指定下一句对话：");
+                itemTalkInfo.next_order = int.Parse(EditorGUILayout.TextArea(itemTalkInfo.next_order + "", GUILayout.Width(50), GUILayout.Height(20)));
+                GUILayout.Label("触发条件-最低好感：");
+                itemTalkInfo.condition_min_favorability = int.Parse(EditorGUILayout.TextArea(itemTalkInfo.condition_min_favorability + "", GUILayout.Width(50), GUILayout.Height(20)));
+                GUILayout.Label("预设名字：");
+                itemTalkInfo.name = EditorGUILayout.TextArea(itemTalkInfo.name + "", GUILayout.Width(50), GUILayout.Height(20));
+                GUILayout.Label("对话内容：");
+                itemTalkInfo.content = EditorGUILayout.TextArea(itemTalkInfo.content + "", GUILayout.Width(500), GUILayout.Height(20));
+                GUILayout.EndHorizontal();
+            }
+        }
+        if (removeMarkId != 0)
+            mapNpcTalkInfo.Remove(removeMarkId);
+        if (removeTalkId != 0)
+        {
+            GetNpcTalkInfoList();
+        }
+    }
+
+    /// <summary>
+    /// 获取NPC对话数据
+    /// </summary>
+    private void GetNpcTalkInfoList()
+    {
+        List<TextInfoBean> listNpcTalkInfo = textInfoService.QueryDataByUserId(TextEnum.Talk, long.Parse(findIds));
+        mapNpcTalkInfo.Clear();
+        foreach (TextInfoBean itemTalkInfo in listNpcTalkInfo)
+        {
+            long markId = itemTalkInfo.mark_id;
+            if (mapNpcTalkInfo.TryGetValue(markId, out List<TextInfoBean> value))
+            {
+                value.Add(itemTalkInfo);
+            }
+            else
+            {
+                List<TextInfoBean> listTemp = new List<TextInfoBean>();
+                listTemp.Add(itemTalkInfo);
+                mapNpcTalkInfo.Add(markId, listTemp);
+            }
+        }
+    }
 
     private void GUINpcInfo(NpcInfoBean npcInfo, bool canSelectPic)
     {
@@ -214,7 +320,7 @@ public class NpcCreateWindowEidtor : EditorWindow
         ColorBean hairColorData = new ColorBean(npcInfo.hair_color);
         Color hairColor = hairColorData.GetColor(); ;
         hairColor = EditorGUILayout.ColorField(hairColor);
-        npcInfo.hair_color = hairColor.r + "," + hairColor.g + "," + hairColor.b+ "," + hairColor.a;
+        npcInfo.hair_color = hairColor.r + "," + hairColor.g + "," + hairColor.b + "," + hairColor.a;
 
         GUILayout.Label("眼睛颜色：");
         ColorBean eyeColorData = new ColorBean(npcInfo.eye_color);

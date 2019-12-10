@@ -6,7 +6,6 @@ public class BuildItemService
 {
     private readonly string mTableName;
     private readonly string mLeftDetailsTableName;
-    private readonly string mLeftIntactTableName;
 
     public BuildItemService()
     {
@@ -34,9 +33,9 @@ public class BuildItemService
     /// <returns></returns>
     public List<BuildItemBean> QueryDataByType(int type)
     {
-        string[] leftTable = new string[] { mLeftDetailsTableName, mLeftIntactTableName };
-        string[] mainKey = new string[] { "id", "intact_id" };
-        string[] leftKey = new string[] { "equip_id", "intact_id" };
+        string[] leftTable = new string[] { mLeftDetailsTableName };
+        string[] mainKey = new string[] { "id" };
+        string[] leftKey = new string[] { "build_id" };
         string[] colName = new string[] { mTableName + ".build_type" };
         string[] operations = new string[] { "=" };
         string[] colValue = new string[] { ""+ type };

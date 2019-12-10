@@ -54,7 +54,7 @@ public class EventHandler : BaseHandler, UIGameText.ICallBack
     /// 对话时间触发
     /// </summary>
     /// <param name="markId"></param>
-    public void EventTriggerForTalk(long markId)
+    public void EventTriggerForTalk(long userId,NPCTypeEnum npcType)
     {
         SetEventStatus(EventStatusEnum.EventIng);
         SetEventType(EventTypeEnum.Talk);
@@ -62,7 +62,7 @@ public class EventHandler : BaseHandler, UIGameText.ICallBack
         if (controlHandler != null)
             controlHandler.StopControl();
         UIGameText uiGameText = (UIGameText)uiManager.OpenUIAndCloseOtherByName(EnumUtil.GetEnumName(UIEnum.GameText));
-        uiGameText.SetData(TextEnum.Talk, markId);
+        uiGameText.SetDataForTalk(userId, npcType);
         uiGameText.SetCallBack(this);
     }
 
@@ -88,6 +88,7 @@ public class EventHandler : BaseHandler, UIGameText.ICallBack
         uiGameText.SetCallBack(this);
         storyBuilder.BuildStory(storyInfo);
     }
+
     /// <summary>
     /// 根据ID触发故事
     /// </summary>
@@ -100,6 +101,7 @@ public class EventHandler : BaseHandler, UIGameText.ICallBack
         if (storyInfo != null)
             EventTriggerForStory(storyInfo);
     }
+
     /// <summary>
     /// 检测故事 自动触发剧情
     /// </summary>

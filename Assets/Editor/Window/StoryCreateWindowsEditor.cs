@@ -534,7 +534,7 @@ public class StoryCreateWindowsEditor : EditorWindow
         {
             //先处理对话
             if (listStoryTextInfo != null)
-                textInfoService.UpdateDataByMarkIdFor(TextEnum.Story, long.Parse(mStoryId) * 10000 + int.Parse(mStroyOrder), listStoryTextInfo);
+                textInfoService.UpdateDataByMarkId(TextEnum.Story, long.Parse(mStoryId) * 10000 + int.Parse(mStroyOrder), listStoryTextInfo);
 
             storyInfoService.UpdateStoryDetailsByIdAndOrder(long.Parse(mStoryId), int.Parse(mStroyOrder), listOrderStoryInfoDetails);
 

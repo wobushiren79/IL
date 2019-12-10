@@ -3,12 +3,11 @@ using UnityEngine.UI;
 using UnityEditor;
 using System;
 
-public class ItemGameTextSelectCpt : BaseMonoBehaviour
+public class ItemGameTextSelectCpt : ItemGameBaseCpt
 {
     [Header("控件")]
     public Text tvContent;
     public Button btSubmit;
-    private UIGameText mUIGameText;
 
     [Header("数据")]
     public TextInfoBean textData;
@@ -23,10 +22,9 @@ public class ItemGameTextSelectCpt : BaseMonoBehaviour
     /// 设置数据
     /// </summary>
     /// <param name="itemData"></param>
-    public void SetData(TextInfoBean itemData, UIGameText uiGameText)
+    public void SetData(TextInfoBean itemData)
     {
         this.textData = itemData;
-        this.mUIGameText = uiGameText;
         SetText(itemData.content);
     }
 
@@ -36,12 +34,13 @@ public class ItemGameTextSelectCpt : BaseMonoBehaviour
     /// <param name="content"></param>
     public void SetText(string content)
     {
-        if (tvContent != null && mUIGameText != null)
+        UIGameText uiGameText = (UIGameText)uiComponent;
+        if (tvContent != null && uiGameText != null)
         {
-            string contentDetails = mUIGameText.SetContentDetails(content);
+            string contentDetails = uiGameText.SetContentDetails(content);
             tvContent.text = contentDetails;
         }
-        UIGameManager uiGameManager = mUIGameText.GetUIMananger<UIGameManager>();
+        UIGameManager uiGameManager = uiGameText.GetUIMananger<UIGameManager>();
         //检测是否有钱
         textData.GetAddMoney(out long moneyL, out long moneyM, out long moneyS);
         if (moneyL > 0 || moneyM > 0 || moneyS > 0)
@@ -60,7 +59,8 @@ public class ItemGameTextSelectCpt : BaseMonoBehaviour
 
     public void Submit()
     {
-        UIGameManager uiGameManager = mUIGameText.GetUIMananger<UIGameManager>();
+        UIGameText uiGameText = (UIGameText)uiComponent;
+        UIGameManager uiGameManager = uiGameText.GetUIMananger<UIGameManager>();
         textData.GetAddMoney(out long moneyL, out long moneyM, out long moneyS);
         if (moneyL > 0 || moneyM > 0 || moneyS > 0)
         {
@@ -74,7 +74,6 @@ public class ItemGameTextSelectCpt : BaseMonoBehaviour
                 return;
             }
         }
-        int textOrderNext = textData.select_result;
-        mUIGameText.NextText(textOrderNext);
+        uiGameText.SelectText(textData);
     }
 }

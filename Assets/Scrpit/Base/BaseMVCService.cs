@@ -5,8 +5,8 @@ using System;
 
 public class BaseMVCService<T>
 {
-    public readonly string mTableName;//主表名称
-    public readonly string mLeftDetailsTableName;//副标名称
+    public string mTableName;//主表名称
+    public string mLeftDetailsTableName;//副标名称
 
     public BaseMVCService(string tableName) : this(tableName, null)
     {
@@ -137,7 +137,14 @@ public class BaseMVCService<T>
             return;
         string[] colKeys = new string[] { "id" };
         string[] operations = new string[] { "=" };
-        string[] colValues = new string[] { id + "", };
+        string[] colValues = new string[] { id + ""};
+        SQliteHandle.DeleteTableDataAndLeft(ProjectConfigInfo.DATA_BASE_INFO_NAME, mTableName, colKeys, operations, colValues);
+    }
+    public void BaseDeleteData(string key,string value)
+    {
+        string[] colKeys = new string[] { key };
+        string[] operations = new string[] { "=" };
+        string[] colValues = new string[] { value };
         SQliteHandle.DeleteTableDataAndLeft(ProjectConfigInfo.DATA_BASE_INFO_NAME, mTableName, colKeys, operations, colValues);
     }
 

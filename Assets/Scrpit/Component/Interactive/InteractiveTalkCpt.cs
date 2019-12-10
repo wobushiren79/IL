@@ -3,14 +3,14 @@ using UnityEditor;
 
 public class InteractiveTalkCpt : BaseInteractiveCpt
 {
+    private BaseNpcAI mNpcAI;
     public string interactiveContent;
-
-    public long[] markIds;//交互ID
 
     private EventHandler mEventHandler;
 
     private void Start()
     {
+        mNpcAI = GetComponent<BaseNpcAI>();
         mEventHandler = FindObjectOfType<EventHandler>();
     }
 
@@ -18,8 +18,11 @@ public class InteractiveTalkCpt : BaseInteractiveCpt
     {
         if (Input.GetButtonDown(InputInfo.Interactive_E) && mEventHandler != null)
         {
-            if (mEventHandler.GetEventStatus() == EventHandler.EventStatusEnum.EventEnd && markIds != null && markIds.Length > 0)
-                mEventHandler.EventTriggerForTalk(RandomUtil.GetRandomDataByArray(markIds));
+            if (mEventHandler.GetEventStatus() == EventHandler.EventStatusEnum.EventEnd)
+            {
+                NpcInfoBean npcInfo = mNpcAI.characterData.npcInfoData;
+                mEventHandler.EventTriggerForTalk(npcInfo.id, (NPCTypeEnum)npcInfo.npc_type);
+            }
         }
     }
 

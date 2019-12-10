@@ -16,9 +16,14 @@ public class TextInfoModel : BaseMVCModel
         return mTextInfoService.QueryDataByMarkId(TextEnum.Look, markId);
     }
 
-    public List<TextInfoBean> GetTextForTalk(long markId)
+    public List<TextInfoBean> GetTextForTalk(long userId)
     {
-       return mTextInfoService.QueryDataByMarkId(TextEnum.Talk, markId);
+       return mTextInfoService.QueryDataByUserId(TextEnum.Talk, userId);
+    }
+
+    public List<TextInfoBean> GetTextForStory(long markId)
+    {
+        return mTextInfoService.QueryDataByMarkId(TextEnum.Story, markId);
     }
 
     /// <summary>
@@ -42,8 +47,5 @@ public class TextInfoModel : BaseMVCModel
         return mTextInfoService.QueryDataForFirstOrderByFirstMeet(characterId);
     }
 
-    public List<TextInfoBean> GetTextForStory(long markId)
-    {
-        return mTextInfoService.QueryDataByMarkId(TextEnum.Story, markId);
-    }
+
 }

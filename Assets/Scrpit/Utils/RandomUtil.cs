@@ -113,9 +113,29 @@ public class RandomUtil
     public static T GetRandomDataByArray<T>(T[] list)
     {
         if (list == null)
-            return default(T);
+            return default;
         int position = Random.Range(0, list.Length);
         return list[position];
+    }
+
+    /// <summary>
+    /// 获取map随机数
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
+    /// <param name="mapData"></param>
+    /// <returns></returns>
+    public static T GetRandomDataByDictionary<T>(Dictionary<long, T> mapData)
+    {
+        int position = Random.Range(0, mapData.Count);
+        int tempPosition = 0;
+        foreach (var itemData in mapData)
+        {
+            if (tempPosition == position)
+            {
+                return itemData.Value;
+            }
+        }
+        return default;
     }
 
     /// <summary>
@@ -160,4 +180,6 @@ public class RandomUtil
         }
         return chineseWords;
     }
+
+
 }

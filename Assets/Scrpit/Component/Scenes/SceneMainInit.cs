@@ -4,8 +4,9 @@ using System.Collections.Generic;
 
 public class SceneMainInit : BaseSceneInit
 {
-    private void Start()
+    private new void Start()
     {
+        base.Start();
         if (gameItemsManager != null)
             gameItemsManager.itemsInfoController.GetAllItemsInfo();
         if (gameDataManager != null)
