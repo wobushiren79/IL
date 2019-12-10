@@ -2,7 +2,7 @@
 using Mono.Data.Sqlite;
 using System;
 
-public class SQLiteHelper 
+public class SQLiteHelper
 {
     /// <summary>
     /// 数据库连接定义
@@ -100,6 +100,9 @@ public class SQLiteHelper
             queryString += ", " + values[i];
         }
         queryString += " )";
+#if UNITY_EDITOR
+        LogUtil.Log(queryString);
+#endif
         return ExecuteQuery(queryString);
     }
 
@@ -127,7 +130,9 @@ public class SQLiteHelper
             queryString += ", " + values[i];
         }
         queryString += " )";
+#if UNITY_EDITOR
         LogUtil.Log(queryString);
+#endif
         return ExecuteQuery(queryString);
     }
 
@@ -154,6 +159,9 @@ public class SQLiteHelper
             queryString += ", " + colNames[i] + "=" + colValues[i];
         }
         queryString += " WHERE " + key + operation + value;
+#if UNITY_EDITOR
+        LogUtil.Log(queryString);
+#endif
         return ExecuteQuery(queryString);
     }
 
@@ -177,6 +185,9 @@ public class SQLiteHelper
         {
             queryString += "OR " + colNames[i] + operations[0] + colValues[i];
         }
+#if UNITY_EDITOR
+        LogUtil.Log(queryString);
+#endif
         return ExecuteQuery(queryString);
     }
 
@@ -200,6 +211,9 @@ public class SQLiteHelper
         {
             queryString += " AND " + colNames[i] + operations[i] + colValues[i];
         }
+#if UNITY_EDITOR
+        LogUtil.Log(queryString);
+#endif
         return ExecuteQuery(queryString);
     }
 
@@ -216,6 +230,9 @@ public class SQLiteHelper
         {
             queryString += " AND " + colNames[i] + operations[i] + colValues[i];
         }
+#if UNITY_EDITOR
+        LogUtil.Log(queryString);
+#endif
         return ExecuteQuery(queryString);
     }
 
@@ -234,6 +251,9 @@ public class SQLiteHelper
             queryString += ", " + colNames[i] + " " + colTypes[i];
         }
         queryString += "  ) ";
+#if UNITY_EDITOR
+        LogUtil.Log(queryString);
+#endif
         return ExecuteQuery(queryString);
     }
 
@@ -290,8 +310,11 @@ public class SQLiteHelper
             }
         }
 
-        string queryStr = selectStr + fromStr + whereStr;
-        return ExecuteQuery(queryStr);
+        string queryString = selectStr + fromStr + whereStr;
+#if UNITY_EDITOR
+        LogUtil.Log(queryString);
+#endif
+        return ExecuteQuery(queryString);
     }
 
     public SqliteDataReader ReadTable(string tableName)

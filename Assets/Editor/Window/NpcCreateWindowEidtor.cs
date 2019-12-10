@@ -193,11 +193,11 @@ public class NpcCreateWindowEidtor : EditorWindow
                 addText.user_id = long.Parse(findIds);
                 addText.valid = 1;
                 mapItemTalkInfo.Value.Add(addText);
-                textInfoService.UpdateDataById(TextEnum.Talk, addText.id, addText);
             }
-            if (GUILayout.Button("删除对话逻辑", GUILayout.Width(120), GUILayout.Height(20)))
+            if (GUILayout.Button("删除markId下所有对话", GUILayout.Width(150), GUILayout.Height(20)))
             {
                 removeMarkId = mapItemTalkInfo.Key;
+                textInfoService.DeleteDataByMarkId(TextEnum.Talk, removeMarkId);
             }
             GUILayout.EndHorizontal();
             long.Parse(EditorGUILayout.TextArea(mapItemTalkInfo.Key + "", GUILayout.Width(100), GUILayout.Height(20)));
@@ -211,11 +211,17 @@ public class NpcCreateWindowEidtor : EditorWindow
                 if (GUILayout.Button("删除对话", GUILayout.Width(120), GUILayout.Height(20)))
                 {
                     removeTalkId = itemTalkInfo.id;
+                    textInfoService.DeleteDataById(TextEnum.Talk,removeTalkId);
                 }
                 GUILayout.Label("talkId：");
-                itemTalkInfo.id = long.Parse(EditorGUILayout.TextArea(itemTalkInfo.id + "", GUILayout.Width(100), GUILayout.Height(20)));
-                GUILayout.Label("talkId：");
+                itemTalkInfo.id = long.Parse(EditorGUILayout.TextArea(itemTalkInfo.id + "", GUILayout.Width(150), GUILayout.Height(20)));
                 itemTalkInfo.talk_type = (int)(NPCTypeEnum)EditorGUILayout.EnumPopup((TextTalkTypeEnum)itemTalkInfo.talk_type, GUILayout.Width(100), GUILayout.Height(20));
+                itemTalkInfo.type = (int)(TextInfoTypeEnum)EditorGUILayout.EnumPopup((TextInfoTypeEnum)itemTalkInfo.type, GUILayout.Width(100), GUILayout.Height(20));
+                if (itemTalkInfo.type== (int)TextInfoTypeEnum.Select)
+                {
+                    GUILayout.Label("选择类型：");
+                    itemTalkInfo.select_type = int.Parse(EditorGUILayout.TextArea(itemTalkInfo.select_type + "", GUILayout.Width(50), GUILayout.Height(20)));
+                }
                 GUILayout.Label("对话顺序：");
                 itemTalkInfo.text_order = int.Parse(EditorGUILayout.TextArea(itemTalkInfo.text_order + "", GUILayout.Width(50), GUILayout.Height(20)));
                 GUILayout.Label("指定下一句对话：");

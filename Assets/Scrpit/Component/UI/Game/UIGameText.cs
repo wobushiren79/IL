@@ -260,12 +260,13 @@ public class UIGameText : BaseUIComponent, ITextInfoView
                 else if (textData.content.Equals(GameCommonInfo.GetUITextById(99103)))
                 {
                     //退出
-
+                    NextText();
                 }
                 else if (textData.content.Equals(GameCommonInfo.GetUITextById(99104)))
                 {
                     //招募
-
+                    listTextData = RandomUtil.GetRandomDataByDictionary(mapTalkRecruitData);
+                    NextText(1);
                 }
                 else if (textData.content.Equals(GameCommonInfo.GetUITextById(99105)))
                 {

@@ -22,9 +22,9 @@ public class TextInfoController : BaseMVCController<TextInfoModel,ITextInfoView>
             GetView().GetTextInfoFail();
     }
 
-    public void GetTextForTalk(long markId)
+    public void GetTextForTalk(long userId)
     {
-        List<TextInfoBean> listData = GetModel().GetTextForTalk(markId);
+        List<TextInfoBean> listData = GetModel().GetTextForTalk(userId);
         if (listData != null)
             GetView().GetTextInfoForTalkSuccess(listData);
         else

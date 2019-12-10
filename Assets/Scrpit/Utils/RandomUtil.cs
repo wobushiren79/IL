@@ -134,6 +134,7 @@ public class RandomUtil
             {
                 return itemData.Value;
             }
+            tempPosition++;
         }
         return default;
     }
