@@ -13,7 +13,7 @@ public class ControlForBuildCpt : BaseControl
     public GameObject buildContainer;
 
     //数据管理
-    public GameDataManager mGameDataManager;
+    public GameDataManager gameDataManager;
     public UIGameBuild uiGameBuild;
     //建造者
     public InnFurnitureBuilder innFurnitureBuilder;
@@ -27,7 +27,7 @@ public class ControlForBuildCpt : BaseControl
     public Sprite spYellow;
 
     //提示框
-    public ToastView toastView;
+    public ToastManager toastManager;
     //创建的临时建筑
     public BaseBuildItemCpt buildItemCpt;
 
@@ -38,7 +38,7 @@ public class ControlForBuildCpt : BaseControl
 
     private void Awake()
     {
-        mGameDataManager = FindObjectOfType<GameDataManager>();
+        gameDataManager = FindObjectOfType<GameDataManager>();
     }
 
     public override void StartControl()
@@ -48,9 +48,9 @@ public class ControlForBuildCpt : BaseControl
         cameraFollowObj.transform.position = new Vector3(5, 5);
         //定义镜头的移动范围
         cameraMove.minMoveX = -1;
-        cameraMove.maxMoveX = mGameDataManager.gameData.GetInnBuildData().innWidth + 1;
+        cameraMove.maxMoveX = gameDataManager.gameData.GetInnBuildData().innWidth + 1;
         cameraMove.minMoveY = -1;
-        cameraMove.maxMoveY = mGameDataManager.gameData.GetInnBuildData().innHeight + 1;
+        cameraMove.maxMoveY = gameDataManager.gameData.GetInnBuildData().innHeight + 1;
         //初始化建筑占地坐标
         InitBuildingExist();
     }
@@ -88,7 +88,7 @@ public class ControlForBuildCpt : BaseControl
     public void InitBuildingExist()
     {
         listBuildingExist.Clear();
-        List<InnResBean> listFurniture = mGameDataManager.gameData.GetInnBuildData().GetFurnitureList();
+        List<InnResBean> listFurniture = gameDataManager.gameData.GetInnBuildData().GetFurnitureList();
         if (listFurniture != null)
         {
             foreach (InnResBean itemBuilding in listFurniture)
@@ -168,7 +168,7 @@ public class ControlForBuildCpt : BaseControl
         if (buildItemCpt.buildId > 90000 && buildItemCpt.buildId < 100000)
         {
             // 门的单独处理
-            if (position.y == 0 && position.x > 2 && position.x < mGameDataManager.gameData.GetInnBuildData().innWidth - 1)
+            if (position.y == 0 && position.x > 2 && position.x < gameDataManager.gameData.GetInnBuildData().innWidth - 1)
             {
                 return false;
             }
@@ -185,8 +185,8 @@ public class ControlForBuildCpt : BaseControl
         else
         {
             //判断是否超出可修建范围
-            if (position.x > 1 && position.x < mGameDataManager.gameData.GetInnBuildData().innWidth
-                     && position.y > 0 && position.y < mGameDataManager.gameData.GetInnBuildData().innHeight - 1)
+            if (position.x > 1 && position.x < gameDataManager.gameData.GetInnBuildData().innWidth
+                     && position.y > 0 && position.y < gameDataManager.gameData.GetInnBuildData().innHeight - 1)
             {
                 return false;
             }
@@ -280,14 +280,14 @@ public class ControlForBuildCpt : BaseControl
                 if (buildItemCpt.buildId == -1)
                 {
                     //获取拆除位置的家具数据
-                    InnBuildBean buildData = mGameDataManager.gameData.GetInnBuildData();
+                    InnBuildBean buildData = gameDataManager.gameData.GetInnBuildData();
                     InnResBean itemFurnitureData = buildData.GetFurnitureByPosition(buildPosition);
                     if (itemFurnitureData == null)
                         return;
                     //如果是最后一扇门则不能删除
                     if (itemFurnitureData.id > 90000 && itemFurnitureData.id < 100000 && buildData.GetDoorList().Count <= 1)
                     {
-                        toastView.ToastHint(GameCommonInfo.GetUITextById(1004));
+                        toastManager.ToastHint(GameCommonInfo.GetUITextById(1004));
                     }
                     else
                     {
@@ -296,26 +296,26 @@ public class ControlForBuildCpt : BaseControl
                         //如果是门。需要重置一下墙体
                         if (itemFurnitureData.id > 90000 && itemFurnitureData.id < 100000)
                         {
-                            mGameDataManager.gameData.GetInnBuildData().InitWall();
+                            gameDataManager.gameData.GetInnBuildData().InitWall();
                             innWallBuilder.StartBuild();
                         }
                         //背包里添加一个
-                        mGameDataManager.gameData.ChangeBuildNumber(itemFurnitureData.id, 1);
+                        gameDataManager.gameData.ChangeBuildNumber(itemFurnitureData.id, 1);
                     }
                 }
                 else
                 {
                     //增加一个家具
                     InnResBean addData = new InnResBean(buildItemCpt.buildId, buildItemCpt.transform.position, listBuildPosition, buildItemCpt.direction);
-                    mGameDataManager.gameData.GetInnBuildData().AddFurniture(addData);
+                    gameDataManager.gameData.GetInnBuildData().AddFurniture(addData);
                     //如果是门。需要重置一下墙体
                     if (buildItemCpt.buildId > 90000 && buildItemCpt.buildId < 100000)
                     {
-                        mGameDataManager.gameData.GetInnBuildData().InitWall();
+                        gameDataManager.gameData.GetInnBuildData().InitWall();
                         innWallBuilder.StartBuild();
                     }
                     //背包里删除一个
-                    mGameDataManager.gameData.ChangeBuildNumber(buildItemCpt.buildId, -1);
+                    gameDataManager.gameData.ChangeBuildNumber(buildItemCpt.buildId, -1);
                     //动画
                     buildItemCpt.transform.DOScale(new Vector3(0.2f, 0.2f, 0.2f), 0.5f).From().SetEase(Ease.OutBack);
                     ClearBuild();
@@ -333,12 +333,12 @@ public class ControlForBuildCpt : BaseControl
                 if (buildItemCpt.buildId == -1)
                 {
                     //如果是拆除模式提示
-                    toastView.ToastHint(GameCommonInfo.GetUITextById(1003));
+                    toastManager.ToastHint(GameCommonInfo.GetUITextById(1003));
                 }
                 else
                 {
                     //如果是正常模式提示
-                    toastView.ToastHint(GameCommonInfo.GetUITextById(1002));
+                    toastManager.ToastHint(GameCommonInfo.GetUITextById(1002));
                 }
             }
         }

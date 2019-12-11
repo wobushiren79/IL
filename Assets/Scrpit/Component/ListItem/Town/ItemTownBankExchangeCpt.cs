@@ -190,7 +190,7 @@ public class ItemTownBankExchangeCpt : ItemGameBaseCpt, DialogView.IDialogCallBa
     /// </summary>
     public void ExchangeSubmit()
     {
-        ToastView toastView = GetUIManager<UIGameManager>().toastView;
+        ToastManager toastManager = GetUIManager<UIGameManager>().toastManager;
         GameDataManager gameDataManager = GetUIManager<UIGameManager>().gameDataManager;
         DialogManager dialogManager = GetUIManager<UIGameManager>().dialogManager;
 
@@ -208,7 +208,7 @@ public class ItemTownBankExchangeCpt : ItemGameBaseCpt, DialogView.IDialogCallBa
         //兑换金额不对
         if (payMoney == 0 || exchangeMoney == 0)
         {
-            toastView.ToastHint(ivOldMoney.sprite, GameCommonInfo.GetUITextById(1041));
+            toastManager.ToastHint(ivOldMoney.sprite, GameCommonInfo.GetUITextById(1041));
             return;
         }
         //是否有足够的金额兑换
@@ -244,13 +244,13 @@ public class ItemTownBankExchangeCpt : ItemGameBaseCpt, DialogView.IDialogCallBa
         //判断是否有足够的金钱兑换
         if (!gameDataManager.gameData.HasEnoughMoney(mPayMoneyL, mPayMoneyM, mPayMoneyS))
         {
-            toastView.ToastHint(ivOldMoney.sprite, GameCommonInfo.GetUITextById(1042));
+            toastManager.ToastHint(ivOldMoney.sprite, GameCommonInfo.GetUITextById(1042));
             return;
         }
         //判断是否超过限额
         if (mExchangeMoneyL > GameCommonInfo.DailyLimitData.exchangeMoneyL)
         {
-            toastView.ToastHint(GameCommonInfo.GetUITextById(1044));
+            toastManager.ToastHint(GameCommonInfo.GetUITextById(1044));
             return;
         }
 
@@ -271,14 +271,14 @@ public class ItemTownBankExchangeCpt : ItemGameBaseCpt, DialogView.IDialogCallBa
     #region 确认对话框回调
     public void Submit(DialogView dialogView, DialogBean dialogBean)
     {
-        ToastView toastView = GetUIManager<UIGameManager>().toastView;
+        ToastManager toastManager = GetUIManager<UIGameManager>().toastManager;
         GameDataManager gameDataManager = GetUIManager<UIGameManager>().gameDataManager;
 
         gameDataManager.gameData.PayMoney(mPayMoneyL, mPayMoneyM, mPayMoneyS);
         gameDataManager.gameData.AddMoney(mExchangeMoneyL, mExchangeMoneyM, mExchangeMoneyS);
         GameCommonInfo.DailyLimitData.exchangeMoneyL -= (int)mExchangeMoneyL;
         //成功提示
-        toastView.ToastHint(ivNewMoney.sprite, string.Format(GameCommonInfo.GetUITextById(1043), mExchangeMoneyStr));
+        toastManager.ToastHint(ivNewMoney.sprite, string.Format(GameCommonInfo.GetUITextById(1043), mExchangeMoneyStr));
         //刷新UI
         RefreshUI();
     }

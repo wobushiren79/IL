@@ -75,15 +75,15 @@ public class ItemTownGoodsMarketCpt : ItemGameBaseCpt
         int ingType = int.Parse(goodsData.mark);
         int buyNumber = int.Parse(etNumber.text);
         GameDataManager gameDataManager = GetUIManager<UIGameManager>().gameDataManager;
-        ToastView toastView = GetUIManager<UIGameManager>().toastView;
+        ToastManager toastManager = GetUIManager<UIGameManager>().toastManager;
         if (buyNumber<=0)
         {
-            toastView.ToastHint("至少需要购买1件商品！");
+            toastManager.ToastHint("至少需要购买1件商品！");
             return;
         }
         if (!gameDataManager.gameData.HasEnoughMoney(goodsData.price_l* buyNumber, goodsData.price_m * buyNumber, goodsData.price_s * buyNumber))
         {
-            toastView.ToastHint(GameCommonInfo.GetUITextById(1005));
+            toastManager.ToastHint(GameCommonInfo.GetUITextById(1005));
             return;
         }
         gameDataManager.gameData.PayMoney(goodsData.price_l * buyNumber, goodsData.price_m * buyNumber, goodsData.price_s * buyNumber);
@@ -115,7 +115,7 @@ public class ItemTownGoodsMarketCpt : ItemGameBaseCpt
                 break;
         }
         RreshData();
-        toastView.ToastHint(ivIcon.sprite, "购入 "+ buyNumber +"份"+ goodsData.name+" 共花费 "+tvPirce.text +"文！");
+        toastManager.ToastHint(ivIcon.sprite, "购入 "+ buyNumber +"份"+ goodsData.name+" 共花费 "+tvPirce.text +"文！");
     }
 
     /// <summary>

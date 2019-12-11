@@ -154,7 +154,7 @@ public class UIGameMain : BaseUIComponent, DialogView.IDialogCallBack
     public void OpenBuildUI()
     {
         InnHandler innHandler = GetUIMananger<UIGameManager>().innHandler;
-        ToastView toastView = GetUIMananger<UIGameManager>().toastView;
+        ToastManager toastManager = GetUIMananger<UIGameManager>().toastManager;
         if (CheckUtil.ListIsNull(innHandler.rascalrQueue))
         {
             DialogBean dialogBean = new DialogBean();
@@ -164,7 +164,7 @@ public class UIGameMain : BaseUIComponent, DialogView.IDialogCallBack
         }
         else
         {
-            toastView.ToastHint(GameCommonInfo.GetUITextById(1016));
+            toastManager.ToastHint(GameCommonInfo.GetUITextById(1016));
         }
     }
 

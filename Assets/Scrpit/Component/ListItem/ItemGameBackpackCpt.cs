@@ -132,7 +132,7 @@ public class ItemGameBackpackCpt : ItemGameBaseCpt, IPointerClickHandler, ItemsS
     public virtual void SelectionUse(ItemsSelectionBox view)
     {
         GameDataManager gameDataManager = GetUIManager<UIGameManager>().gameDataManager;
-        ToastView toastView = GetUIManager<UIGameManager>().toastView;
+        ToastManager toastManager = GetUIManager<UIGameManager>().toastManager;
 
         if (itemsInfoBean == null || itemBean == null || gameDataManager == null)
             return;
@@ -143,11 +143,11 @@ public class ItemGameBackpackCpt : ItemGameBaseCpt, IPointerClickHandler, ItemsS
                 if (gameDataManager.gameData.AddFoodMenu(itemsInfoBean.add_id))
                 {
                     RemoveItems();
-                    toastView.ToastHint(ivIcon.sprite, GameCommonInfo.GetUITextById(1006));
+                    toastManager.ToastHint(ivIcon.sprite, GameCommonInfo.GetUITextById(1006));
                 }
                 else
                 {
-                    toastView.ToastHint(GameCommonInfo.GetUITextById(1007));
+                    toastManager.ToastHint(GameCommonInfo.GetUITextById(1007));
                 };
                 break;
             default:

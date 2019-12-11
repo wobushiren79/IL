@@ -225,13 +225,13 @@ public class ItemTownGroceryCpt : ItemGameBaseCpt, DialogView.IDialogCallBack
     public void SubmitBuy()
     {
         GameDataManager gameDataManager = GetUIManager<UIGameManager>().gameDataManager;
-        ToastView toastView = GetUIManager<UIGameManager>().toastView;
+        ToastManager toastManager = GetUIManager<UIGameManager>().toastManager;
         DialogManager dialogManager = GetUIManager<UIGameManager>().dialogManager;
         if (gameDataManager == null || storeInfo == null)
             return;
         if (!gameDataManager.gameData.HasEnoughMoney(storeInfo.price_l, storeInfo.price_m, storeInfo.price_s))
         {
-            toastView.ToastHint(GameCommonInfo.GetUITextById(1005));
+            toastManager.ToastHint(GameCommonInfo.GetUITextById(1005));
             return;
         }
         DialogBean dialogBean = new DialogBean();
@@ -243,16 +243,16 @@ public class ItemTownGroceryCpt : ItemGameBaseCpt, DialogView.IDialogCallBack
     public virtual void Submit(DialogView dialogView, DialogBean dialogData)
     {
         GameDataManager gameDataManager = GetUIManager<UIGameManager>().gameDataManager;
-        ToastView toastView = GetUIManager<UIGameManager>().toastView;
+        ToastManager toastManager = GetUIManager<UIGameManager>().toastManager;
         if (gameDataManager == null || storeInfo == null)
             return;
         if (!gameDataManager.gameData.HasEnoughMoney(storeInfo.price_l, storeInfo.price_m, storeInfo.price_s))
         {
-            toastView.ToastHint(GameCommonInfo.GetUITextById(1005));
+            toastManager.ToastHint(GameCommonInfo.GetUITextById(1005));
             return;
         }
         gameDataManager.gameData.PayMoney(storeInfo.price_l, storeInfo.price_m, storeInfo.price_s);
-        toastView.ToastHint(ivIcon.sprite, string.Format(GameCommonInfo.GetUITextById(1010), itemsInfo.name));
+        toastManager.ToastHint(ivIcon.sprite, string.Format(GameCommonInfo.GetUITextById(1010), itemsInfo.name));
         gameDataManager.gameData.AddNewItems(storeInfo.mark_id, 1);
         RefreshUI();
     }

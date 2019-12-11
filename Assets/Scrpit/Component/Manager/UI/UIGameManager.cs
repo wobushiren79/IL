@@ -14,7 +14,7 @@ public class UIGameManager : BaseUIManager
     public InfoAchievementPopupShow infoAchievementPopup;
     public InfoAbilityPopupShow infoAbilityPopup;
     public ItemsSelectionBox itemsSelectionBox;
-    public ToastView toastView;
+
     public ToastAchievementShow toastAchievement;
     //数据
     [Header("数据")]
@@ -27,6 +27,7 @@ public class UIGameManager : BaseUIManager
     public NpcInfoManager npcInfoManager;
     //UI相关
     public DialogManager dialogManager;
+    public ToastManager toastManager;
     //相关处理
     [Header("处理")]
     public InnHandler innHandler;

@@ -2,8 +2,9 @@
 using UnityEngine.UI;
 using UnityEditor;
 using System;
+using System.Collections.Generic;
 
-public class ItemGameTextSelectCpt : ItemGameBaseCpt
+public class ItemGameTextSelectCpt : ItemGameBaseCpt,DialogView.IDialogCallBack
 {
     [Header("控件")]
     public Text tvContent;
@@ -61,19 +62,43 @@ public class ItemGameTextSelectCpt : ItemGameBaseCpt
     {
         UIGameText uiGameText = (UIGameText)uiComponent;
         UIGameManager uiGameManager = uiGameText.GetUIMananger<UIGameManager>();
-        textData.GetAddMoney(out long moneyL, out long moneyM, out long moneyS);
-        if (moneyL > 0 || moneyM > 0 || moneyS > 0)
+        if (CheckUtil.StringIsNull( textData.add_pre))
         {
-            if (uiGameManager.gameDataManager.gameData.HasEnoughMoney(moneyL, moneyM, moneyS))
+            //如果没有前置条件 则直接进行下一步
+            textData.GetAddMoney(out long moneyL, out long moneyM, out long moneyS);
+            if (moneyL > 0 || moneyM > 0 || moneyS > 0)
             {
-                uiGameManager.gameDataManager.gameData.PayMoney(moneyL, moneyM, moneyS);
+                if (uiGameManager.gameDataManager.gameData.HasEnoughMoney(moneyL, moneyM, moneyS))
+                {
+                    uiGameManager.gameDataManager.gameData.PayMoney(moneyL, moneyM, moneyS);
+                }
+                else
+                {
+                    //uiGameManager.toastManager.ToastHint(GameCommonInfo.GetUITextById(1005));
+                    return;
+                }
             }
-            else
-            {
-                //uiGameManager.toastView.ToastHint(GameCommonInfo.GetUITextById(1005));
-                return;
-            }
+            uiGameText.SelectText(textData);
         }
-        uiGameText.SelectText(textData);
+        else
+        {
+            List<string> listAddPre= StringUtil.SplitBySubstringForListStr(textData.add_pre,',');
+            DialogBean dialogBean = new DialogBean();
+            PickForCharacterDialogView dialogView= (PickForCharacterDialogView)uiGameManager.dialogManager.CreateDialog(2,this, dialogBean);
+            dialogView.SetData(int.Parse(listAddPre[1]));
+        }
+
     }
+
+    #region dilaog回调
+    public void Submit(DialogView dialogView, DialogBean dialogBean)
+    {
+         
+    }
+
+    public void Cancel(DialogView dialogView, DialogBean dialogBean)
+    {
+
+    }
+    #endregion
 }

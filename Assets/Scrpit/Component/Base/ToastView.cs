@@ -6,62 +6,51 @@ using DG.Tweening;
 
 public class ToastView : MonoBehaviour
 {
-    //数据列表
-    public GameObject listContent;
-    //Item模板
-    public GameObject itemToastModel;
+    public Image ivIcon;
+    public Text tvContent;
 
-    /// <summary>
-    /// Toast提示
-    /// </summary>
-    /// <param name="hintContent"></param>
-    public void ToastHint(string hintContent)
+    public void SetData(Sprite spIcon,string content,float destoryTime)
     {
-        CreateToast(null, hintContent, 3);
-    }
-
-    public void ToastHint(string hintContent, float destoryTime)
-    {
-        CreateToast(null, hintContent, destoryTime);
-    }
-
-    public void ToastHint(Sprite toastIconSp, string hintContent)
-    {
-        CreateToast(toastIconSp, hintContent, 3);
-    }
-
-    /// <summary>
-    /// 创建toast
-    /// </summary>
-    /// <param name="toastIconSp"></param>
-    /// <param name="toastTitleStr"></param>
-    /// <param name="toastContentStr"></param>
-    public void CreateToast(Sprite toastIconSp, string toastContentStr, float destoryTime)
-    {
-        if (listContent == null || itemToastModel == null)
-            return;
-        GameObject toastHintObj = Instantiate(itemToastModel, itemToastModel.transform);
-        toastHintObj.SetActive(true);
-        toastHintObj.transform.localScale = new Vector3(1, 1, 1);
-        toastHintObj.transform.DOScale(new Vector3(0.2f, 0.2f), 0.5f).From().SetEase(Ease.OutBack);
-        toastHintObj.transform.parent = listContent.transform;
-
         //设置Icon
-        Image toastIcon = CptUtil.GetCptInChildrenByName<Image>(toastHintObj, "ToastIcon");
-        if (toastIcon != null && toastIconSp != null)
-            toastIcon.sprite = toastIconSp;
+        SetIcon( spIcon);
         //设置内容
-        Text toastContent = CptUtil.GetCptInChildrenByName<Text>(toastHintObj, "ToastContent");
-        if (toastContent != null && toastContentStr != null)
-            toastContent.text = toastContentStr;
+        SetContent( content);
         //定时销毁
-        DestroyToast(toastHintObj, destoryTime);
+        DestroyToast(destoryTime);
+    }
+   
+    /// <summary>
+    /// 设置图标
+    /// </summary>
+    /// <param name="spIcon"></param>
+    public void SetIcon(Sprite spIcon)
+    {
+        if(ivIcon!= null&& spIcon != null)
+        {
+            ivIcon.sprite = spIcon;
+        }
     }
 
-    private void DestroyToast(GameObject toastObj,float timeDelay)
+    /// <summary>
+    /// 设置内容
+    /// </summary>
+    /// <param name="content"></param>
+    public void SetContent(string content)
     {
-        toastObj.transform.DOScale(new Vector3(0, 0), 0.4f).SetDelay(timeDelay).OnComplete(delegate () {
-            Destroy(toastObj);
+        if (tvContent != null)
+        {
+            tvContent.text = content;
+        }
+    }
+
+    /// <summary>
+    /// 摧毁Toast
+    /// </summary>
+    /// <param name="timeDelay"></param>
+    private void DestroyToast(float timeDelay)
+    {
+        gameObject.transform.DOScale(new Vector3(0, 0), 0.4f).SetDelay(timeDelay).OnComplete(delegate () {
+            Destroy(gameObject);
         });
     }
 }

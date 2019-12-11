@@ -24,7 +24,7 @@ public class DialogView : BaseMonoBehaviour
         InitData();
     }
 
-    private void OnEnable()
+    public void OnEnable()
     {
         if (cgDialog != null)
             cgDialog.DOFade(1, 0.5f);

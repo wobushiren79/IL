@@ -128,16 +128,16 @@ public class UIMainCreate : BaseUIComponent, IRadioGroupCallBack, ColorView.Call
     /// </summary>
     public void CreateNewGame()
     {
-        ToastView toastView = GetUIMananger<UIGameManager>().toastView;
+        ToastManager toastManager = GetUIMananger<UIGameManager>().toastManager;
         GameDataManager gameDataManager = GetUIMananger<UIGameManager>().gameDataManager;
         if (CheckUtil.StringIsNull(etInnName.text))
         {
-            toastView.ToastHint(GameCommonInfo.GetUITextById(1000));
+            toastManager.ToastHint(GameCommonInfo.GetUITextById(1000));
             return;
         }
         if (CheckUtil.StringIsNull(etUserName.text))
         {
-            toastView.ToastHint(GameCommonInfo.GetUITextById(1001));
+            toastManager.ToastHint(GameCommonInfo.GetUITextById(1001));
             return;
         }
         GameDataBean gameData = new GameDataBean();

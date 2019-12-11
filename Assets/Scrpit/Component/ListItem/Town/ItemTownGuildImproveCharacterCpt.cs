@@ -240,16 +240,16 @@ public class ItemTownGuildImproveCharacterCpt : ItemGameBaseCpt, DialogView.IDia
         //判断是否有足够的金钱
         if (!gameDataManager.gameData.HasEnoughMoney(levelData.price_l, levelData.price_m, levelData.price_s))
         {
-            ToastView toastView = GetUIManager<UIGameManager>().toastView;
-            toastView.ToastHint(GameCommonInfo.GetUITextById(1005));
+            ToastManager toastManager = GetUIManager<UIGameManager>().toastManager;
+            toastManager.ToastHint(GameCommonInfo.GetUITextById(1005));
             return;
         }
         //判断时间是否过晚
         gameTimeHandler.GetTime(out float hour, out float min);
         if (hour >= 18 && hour < 6)
         {
-            ToastView toastView = GetUIManager<UIGameManager>().toastView;
-            toastView.ToastHint(GameCommonInfo.GetUITextById(1031));
+            ToastManager toastManager = GetUIManager<UIGameManager>().toastManager;
+            toastManager.ToastHint(GameCommonInfo.GetUITextById(1031));
             return;
         }
 

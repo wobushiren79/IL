@@ -410,7 +410,7 @@ public class StoryCreateWindowsEditor : EditorWindow
                             else
                             {
                                 GUILayout.Label("分支选项 下一句对话ID");
-                                textInfo.select_result= int.Parse(EditorGUILayout.TextArea(textInfo.select_result + "", GUILayout.Width(100), GUILayout.Height(20)));
+                                textInfo.next_order= int.Parse(EditorGUILayout.TextArea(textInfo.next_order + "", GUILayout.Width(100), GUILayout.Height(20)));
                             }
                            
                         }

@@ -27,8 +27,8 @@ public class TextInfoBean : BaseBean
     public float wait_time;
     //选择对话 的类型 0提示文本  1选项
     public int select_type;
-    //选择结果指向
-    public int select_result;
+
+
 
     //是否停止时间
     public int is_stoptime;
@@ -39,9 +39,17 @@ public class TextInfoBean : BaseBean
     public int condition_min_favorability;
     public int condition_max_favorability;
 
-    //选择加的好感
+    //好处的前提条件 类型，人数
+    public string add_pre;
+    //增加的好感
     public int add_favorability;
+    //增加的金钱
     public string add_money;
+    //增加的角色
+    public string add_character;
+    //增加的物品
+    public string add_items;
+
     //场景人物表情
     public string scene_expression;
 

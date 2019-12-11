@@ -53,7 +53,7 @@ public class ItemGameBackpackEquipCpt : ItemGameBackpackCpt
     #region  装备回调
     public override void SelectionUse(ItemsSelectionBox view)
     {
-        ToastView toastView= GetUIManager<UIGameManager>().toastView;
+        ToastManager toastManager= GetUIManager<UIGameManager>().toastManager;
         switch (itemsInfoBean.items_type)
         {
             case (int)GeneralEnum.Book:
@@ -62,7 +62,7 @@ public class ItemGameBackpackEquipCpt : ItemGameBackpackCpt
                 {
                     //已经学习过该图书
                     string toastStr = string.Format(GameCommonInfo.GetUITextById(1009), characterData.baseInfo.name, itemsInfoBean.name);
-                    toastView.ToastHint(toastStr);
+                    toastManager.ToastHint(toastStr);
                 }
                 else
                 {
@@ -71,7 +71,7 @@ public class ItemGameBackpackEquipCpt : ItemGameBackpackCpt
                     characterData.attributes.AddAttributes(itemsInfoBean);
 
                     string toastStr = string.Format(GameCommonInfo.GetUITextById(1008), characterData.baseInfo.name, itemsInfoBean.name);
-                    toastView.ToastHint(ivIcon.sprite, toastStr);
+                    toastManager.ToastHint(ivIcon.sprite, toastStr);
                     RemoveItems();
                 }
                 break;

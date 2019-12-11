@@ -205,8 +205,8 @@ public class UIMiniGameCombat : UIBaseMiniGame, CombatPowerView.ICallBack
     /// </summary>
     public void CommandItem()
     {
-        ToastView toastView = GetUIMananger<UIGameManager>().toastView;
-        toastView.ToastHint("开发中");
+        ToastManager toastManager = GetUIMananger<UIGameManager>().toastManager;
+        toastManager.ToastHint("开发中");
     }
 
     /// <summary>

@@ -29,19 +29,19 @@ public class ItemTownCandidateCpt : ItemGameBaseCpt, DialogView.IDialogCallBack
     public void EmploymentCandidate()
     {
         GameDataManager gameDataManager = GetUIManager<UIGameManager>().gameDataManager;
-        ToastView toastView = GetUIManager<UIGameManager>().toastView;
+        ToastManager toastManager = GetUIManager<UIGameManager>().toastManager;
         DialogManager dialogManager = GetUIManager<UIGameManager>().dialogManager;
         //检测是否超过人员上限
         if (gameDataManager == null)
             return;
         if (gameDataManager.gameData.workCharacterList.Count >= gameDataManager.gameData.workerNumberLimit)
         {
-            toastView.ToastHint("招聘的员工数量已达最大！");
+            toastManager.ToastHint(GameCommonInfo.GetUITextById(1051));
             return;
         };
         //确认
         DialogBean dialogBean = new DialogBean();
-        dialogBean.content = "初次聘用该员工需先支付一次日薪，是否支付 " + characterData.baseInfo.priceS + "文 聘用 " + characterData.baseInfo.name + " ？";
+        dialogBean.content = string.Format(GameCommonInfo.GetUITextById(3061), characterData.baseInfo.priceS+"", characterData.baseInfo.name + "");
         dialogManager.CreateDialog(0, this, dialogBean);
     }
 
@@ -73,7 +73,7 @@ public class ItemTownCandidateCpt : ItemGameBaseCpt, DialogView.IDialogCallBack
     public void SetName(string name)
     {
         if (tvName != null)
-            tvName.text = "姓名：" + name;
+            tvName.text = GameCommonInfo.GetUITextById(61)+ "：" + name;
     }
 
     /// <summary>
@@ -86,13 +86,13 @@ public class ItemTownCandidateCpt : ItemGameBaseCpt, DialogView.IDialogCallBack
     {
         if (tvPrice != null)
         {
-            string priceStr = "日薪：";
+            string priceStr = GameCommonInfo.GetUITextById(62) + "：";
             if (price_l > 0)
-                priceStr += price_l + "金";
+                priceStr += price_l + GameCommonInfo.GetUITextById(16);
             if (price_m > 0)
-                priceStr += price_m + "银";
+                priceStr += price_m + GameCommonInfo.GetUITextById(17);
             if (price_s > 0)
-                priceStr += price_s + "文";
+                priceStr += price_s + GameCommonInfo.GetUITextById(18);
             tvPrice.text = priceStr;
         }
     }
@@ -126,11 +126,11 @@ public class ItemTownCandidateCpt : ItemGameBaseCpt, DialogView.IDialogCallBack
     public void Submit(DialogView dialogView, DialogBean dialogData)
     {
         GameDataManager gameDataManager = GetUIManager<UIGameManager>().gameDataManager;
-        ToastView toastView = GetUIManager<UIGameManager>().toastView;
+        ToastManager toastManager = GetUIManager<UIGameManager>().toastManager;
 
         if (!gameDataManager.gameData.HasEnoughMoney(characterData.baseInfo.priceL, characterData.baseInfo.priceM, characterData.baseInfo.priceS))
         {
-            toastView.ToastHint(GameCommonInfo.GetUITextById(1005));
+            toastManager.ToastHint(GameCommonInfo.GetUITextById(1005));
             return;
         }
         gameDataManager.gameData.PayMoney(characterData.baseInfo.priceL, characterData.baseInfo.priceM, characterData.baseInfo.priceS);

@@ -47,17 +47,17 @@ public class UIGameAttendance : BaseUIComponent, ItemGameAttendanceCpt.ICallBack
         GameTimeHandler gameTimeHandler = GetUIMananger<UIGameManager>().gameTimeHandler;
         InnHandler innHandler = GetUIMananger<UIGameManager>().innHandler;
         ControlHandler controlHandler = GetUIMananger<UIGameManager>().controlHandler;
-        ToastView toastView = GetUIMananger<UIGameManager>().toastView;
+        ToastManager toastManager = GetUIMananger<UIGameManager>().toastManager;
         NpcCustomerBuilder npcCustomerBuilder = GetUIMananger<UIGameManager>().npcCustomerBuilder;
         //如果出勤人数太少
         if (attendanceNumber <= 0)
         {
-            toastView.ToastHint(GameCommonInfo.GetUITextById(1013));
+            toastManager.ToastHint(GameCommonInfo.GetUITextById(1013));
             return;
         }
         if (!gameDataManager.gameData.HasEnoughMoney(attendancePriceL, attendancePriceM, attendancePriceS))
         {
-            toastView.ToastHint(GameCommonInfo.GetUITextById(1014));
+            toastManager.ToastHint(GameCommonInfo.GetUITextById(1014));
             return;
         }
         //支付出勤费用

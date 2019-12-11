@@ -110,7 +110,7 @@ public class UIGameText : BaseUIComponent, ITextInfoView
         }
     }
 
-    public void SetDataForTalk(long userId , NPCTypeEnum npcType)
+    public void SetDataForTalk(long userId, NPCTypeEnum npcType)
     {
         mTextEnum = TextEnum.Talk;
         textOrder = 1;
@@ -118,7 +118,7 @@ public class UIGameText : BaseUIComponent, ITextInfoView
         switch (npcType)
         {
             case NPCTypeEnum.RecruitTown:
-                listTextData.Add(new TextInfoBean(0,GameCommonInfo.GetUITextById(99101)));
+                listTextData.Add(new TextInfoBean(0, GameCommonInfo.GetUITextById(99101)));
                 listTextData.Add(new TextInfoBean(1, GameCommonInfo.GetUITextById(99102)));
                 listTextData.Add(new TextInfoBean(1, GameCommonInfo.GetUITextById(99104)));
                 listTextData.Add(new TextInfoBean(1, GameCommonInfo.GetUITextById(99103)));
@@ -174,7 +174,7 @@ public class UIGameText : BaseUIComponent, ITextInfoView
 
         UIGameManager uiGameManager = GetUIMananger<UIGameManager>();
         //时停选择 特殊处理
-        if (currentTextData.is_stoptime==1)
+        if (currentTextData.is_stoptime == 1)
             //设置时间彻底停止计时
             uiGameManager.gameTimeHandler.SetTimeStop();
         switch ((TextInfoTypeEnum)currentTextData.type)
@@ -247,8 +247,7 @@ public class UIGameText : BaseUIComponent, ITextInfoView
         switch (mTextEnum)
         {
             case TextEnum.Story:
-                int textOrderNext = textData.select_result;
-                NextText(textOrderNext);
+                NextText(textData.next_order);
                 break;
             case TextEnum.Talk:
                 if (textData.content.Equals(GameCommonInfo.GetUITextById(99102)))
@@ -273,6 +272,10 @@ public class UIGameText : BaseUIComponent, ITextInfoView
                     //送礼
 
                 }
+                else
+                {
+                    NextText(textData.next_order);
+                }
                 break;
         }
     }
@@ -292,7 +295,7 @@ public class UIGameText : BaseUIComponent, ITextInfoView
         foreach (TextInfoBean itemTalkInfo in listData)
         {
             long markId = itemTalkInfo.mark_id;
-            Dictionary<long, List<TextInfoBean>> addMap=new Dictionary<long, List<TextInfoBean>>();
+            Dictionary<long, List<TextInfoBean>> addMap = new Dictionary<long, List<TextInfoBean>>();
             switch ((TextTalkTypeEnum)itemTalkInfo.talk_type)
             {
                 case TextTalkTypeEnum.Normal:
