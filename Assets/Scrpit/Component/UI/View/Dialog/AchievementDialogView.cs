@@ -2,16 +2,13 @@
 using UnityEditor;
 using UnityEngine.UI;
 using DG.Tweening;
-public class ToastAchievementShow : BaseMonoBehaviour
+public class AchievementDialogView : DialogView
 {
     public Image ivIcon;
     public Image ivRemark;
     public Text tvName;
-    public Button btBack;
 
-    public GameObject objToastContent;
-    public GameObject objToast;
-
+    public GameObject objAchContainer;
     public GameObject objRewardContent;
     public GameObject objRewardModel;
 
@@ -20,26 +17,14 @@ public class ToastAchievementShow : BaseMonoBehaviour
     public InnBuildManager innBuildManager;
     public InnFoodManager innFoodManager;
 
-    public void Start()
+    public void SetData(AchievementInfoBean achievementInfo)
     {
-        if (btBack != null)
-            btBack.onClick.AddListener(Close);
-    }
-
-    public void Toast(AchievementInfoBean achievementInfo)
-    {
-        objToastContent.SetActive(true);
         this.achievementInfo = achievementInfo;
         SetIcon(achievementInfo.type, achievementInfo.icon_key);
         SetName(achievementInfo.name);
         SetReward(achievementInfo);
-        objToast.transform.DOKill();
-        objToast.transform.DOScale(new Vector3(0, 0, 0), 1.5f).From().SetEase(Ease.OutElastic);
-    }
-
-    public void Close()
-    {
-        objToastContent.SetActive(false);
+        objAchContainer.transform.DOKill();
+        objAchContainer.transform.DOScale(new Vector3(0, 0, 0), 1.5f).From().SetEase(Ease.OutElastic);
     }
 
     /// <summary>

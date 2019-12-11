@@ -102,7 +102,7 @@ public class ItemTownGuildAchievementCpt : ItemGameBaseCpt
                 break;
             case AchievementStatusEnum.Completed:
                 //已解锁
-                SetIcon(achievementInfo.type,achievementInfo.icon_key, achievementInfo.icon_key_remark, null);
+                SetIcon(achievementInfo.type, achievementInfo.icon_key, achievementInfo.icon_key_remark, null);
                 ivBackground.sprite = spBackUnLock;
                 break;
             case AchievementStatusEnum.Processing:
@@ -121,7 +121,7 @@ public class ItemTownGuildAchievementCpt : ItemGameBaseCpt
             popupButton.SetData(status, achievementInfo);
     }
 
-    public void SetIcon(int type, string iconKey,string iconKeyRemark, Material material)
+    public void SetIcon(int type, string iconKey, string iconKeyRemark, Material material)
     {
         GameItemsManager gameItemsManager = GetUIManager<UIGameManager>().gameItemsManager;
         InnFoodManager innFoodManager = GetUIManager<UIGameManager>().innFoodManager;
@@ -189,8 +189,9 @@ public class ItemTownGuildAchievementCpt : ItemGameBaseCpt
             if (GetUIComponent<UITownGuildAchievement>() != null)
                 GetUIComponent<UITownGuildAchievement>().InitDataByType(achievementInfo.type);
             //弹出特效提示
-            if (GetUIManager<UIGameManager>().toastAchievement != null)
-                GetUIManager<UIGameManager>().toastAchievement.Toast(achievementInfo);
+            DialogManager dialogManager = GetUIManager<UIGameManager>().dialogManager;
+            AchievementDialogView achDialog = (AchievementDialogView)dialogManager.CreateDialog(3, null, null);
+            achDialog.SetData(achievementInfo);
         }
     }
 }

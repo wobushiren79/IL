@@ -14,8 +14,6 @@ public class UIGameManager : BaseUIManager
     public InfoAchievementPopupShow infoAchievementPopup;
     public InfoAbilityPopupShow infoAbilityPopup;
     public ItemsSelectionBox itemsSelectionBox;
-
-    public ToastAchievementShow toastAchievement;
     //数据
     [Header("数据")]
     public GameDataManager gameDataManager;
