@@ -602,7 +602,154 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   characterUI: {fileID: 902378865116809208}
+  popupAbility: {fileID: 8606995222773318388}
   tvName: {fileID: 6526023255502042152}
+  ivBack: {fileID: 6526023255725422112}
+  btPick: {fileID: 6526023255725422125}
+  spBackPick: {fileID: 21300000, guid: 5bb356a5a4952794facefcb53729449b, type: 3}
+  spBackUnPick: {fileID: 21300000, guid: 1f4332a1c89bc6a4792d12be2b5808ca, type: 3}
+  isPick: 0
+  characterData:
+    baseInfo:
+      characterId: 
+      titleName: 
+      name: 
+      workDay: 0
+      priceS: 0
+      priceM: 0
+      priceL: 0
+      chefInfo:
+        workerType: 1
+        workerLevel: 0
+        workerExp: 0
+        cookNumber: 0
+        cookTime: 0
+        listFoodCookNumer: []
+      waiterInfo:
+        workerType: 2
+        workerLevel: 0
+        workerExp: 0
+        cleanTotalNumber: 0
+        sendTotalNumber: 0
+        cleanTotalTime: 0
+      accountingInfo:
+        workerType: 3
+        workerLevel: 0
+        workerExp: 0
+        accountingTotalNumber: 0
+        accountingErrorNumber: 0
+        accountingSuccessNumber: 0
+        loseMoneyL: 0
+        lostMoneyM: 0
+        lostMoneyS: 0
+        moreMoneyL: 0
+        moreMoneyM: 0
+        moreMoneyS: 0
+        accountingMoneyL: 0
+        accountingMoneyM: 0
+        accountingMoneyS: 0
+        accountingTotalTime: 0
+      accostInfo:
+        workerType: 4
+        workerLevel: 0
+        workerExp: 0
+        accostTotalNumber: 0
+        accostSuccessNumber: 0
+        accostFailNumber: 0
+        accostTotalTime: 0
+      beaterInfo:
+        workerType: 5
+        workerLevel: 0
+        workerExp: 0
+        fightTotalNumber: 0
+        fightWinNumber: 0
+        fightLoseNumber: 0
+        fightTotalTime: 0
+        restTotalTime: 0
+      isChef: 0
+      isWaiter: 0
+      isAccounting: 0
+      isAccost: 0
+      isBeater: 0
+      priorityChef: 0
+      priorityWaiter: 0
+      priorityAccounting: 0
+      priorityAccost: 0
+      priorityBeater: 0
+      isAttendance: 0
+    attributes:
+      loyal: 0
+      life: 0
+      cook: 0
+      speed: 0
+      account: 0
+      charm: 0
+      force: 0
+      lucky: 0
+    body:
+      sex: 1
+      skinColor:
+        r: 1
+        g: 1
+        b: 1
+        a: 1
+      hair: 
+      hairColor:
+        r: 1
+        g: 1
+        b: 1
+        a: 1
+      eye: character_eye_0
+      eyeColor:
+        r: 1
+        g: 1
+        b: 1
+        a: 1
+      mouth: character_mouth_0
+      mouthColor:
+        r: 1
+        g: 1
+        b: 1
+        a: 1
+      face: 0
+    equips:
+      maskId: 0
+      handId: 0
+      hatId: 0
+      clothesId: 0
+      shoesId: 0
+      listLearnBook: 
+    npcInfoData:
+      id: 0
+      valid: 0
+      npc_id: 0
+      npc_type: 0
+      sex: 0
+      face: 0
+      mask_id: 0
+      hand_id: 0
+      hat_id: 0
+      clothes_id: 0
+      shoes_id: 0
+      hair_id: 
+      hair_color: 
+      eye_id: 
+      eye_color: 
+      mouth_id: 
+      mouth_color: 
+      title_name: 
+      name: 
+      position_x: 0
+      position_y: 0
+      talk_ids: 
+      attributes_loyal: 0
+      attributes_life: 0
+      attributes_cook: 0
+      attributes_speed: 0
+      attributes_account: 0
+      attributes_charm: 0
+      attributes_force: 0
+      attributes_lucky: 0
 --- !u!114 &8606995222773318388
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -748,7 +895,7 @@ MonoBehaviour:
   m_StartCorner: 0
   m_StartAxis: 0
   m_CellSize: {x: 120, y: 150}
-  m_Spacing: {x: 0, y: 0}
+  m_Spacing: {x: 10, y: 10}
   m_Constraint: 0
   m_ConstraintCount: 2
 --- !u!1 &6526023256504878619
@@ -1174,7 +1321,6 @@ MonoBehaviour:
   objPickCharacterContainer: {fileID: 6526023256182956300}
   objPickCharacterModel: {fileID: 6526023255725422114}
   pickCharacterMax: 0
-  gameDataManager: {fileID: 0}
   listPickCharacter: []
 --- !u!225 &6526023256844059509
 CanvasGroup:

@@ -8,6 +8,12 @@ public class ToastView : MonoBehaviour
 {
     public Image ivIcon;
     public Text tvContent;
+    public CanvasGroup cgToast;
+
+    private void Awake()
+    {
+        cgToast = GetComponent<CanvasGroup>();
+    }
 
     public void SetData(Sprite spIcon,string content,float destoryTime)
     {
@@ -49,7 +55,9 @@ public class ToastView : MonoBehaviour
     /// <param name="timeDelay"></param>
     private void DestroyToast(float timeDelay)
     {
-        gameObject.transform.DOScale(new Vector3(0, 0), 0.4f).SetDelay(timeDelay).OnComplete(delegate () {
+        if (cgToast != null)
+            cgToast.DOFade(0,0.2f).SetDelay(timeDelay);
+        transform.DOScale(new Vector3(0, 0), 0.2f).SetDelay(timeDelay).OnComplete(delegate () {
             Destroy(gameObject);
         });
     }

@@ -190,7 +190,7 @@ public class ItemTownGuildAchievementCpt : ItemGameBaseCpt
                 GetUIComponent<UITownGuildAchievement>().InitDataByType(achievementInfo.type);
             //弹出特效提示
             DialogManager dialogManager = GetUIManager<UIGameManager>().dialogManager;
-            AchievementDialogView achDialog = (AchievementDialogView)dialogManager.CreateDialog(3, null, null);
+            AchievementDialogView achDialog = (AchievementDialogView)dialogManager.CreateDialog(DialogEnum.Achievement, null, null);
             achDialog.SetData(achievementInfo);
         }
     }

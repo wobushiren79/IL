@@ -8,19 +8,19 @@ public class DialogManager : BaseMonoBehaviour
     public GameObject objDialogContainer;
     public List<GameObject> listObjDialogModel=new List<GameObject>();
 
-    public DialogView CreateDialog(int dialogPosition, DialogView.IDialogCallBack callBack, DialogBean dialogBean)
+    public DialogView CreateDialog(DialogEnum dialogType, DialogView.IDialogCallBack callBack, DialogBean dialogBean)
     {
-       return CreateDialog(dialogPosition, callBack, dialogBean, 0);
+       return CreateDialog(dialogType, callBack, dialogBean, 0);
     }
 
-    public DialogView CreateDialog(int dialogPosition, DialogView.IDialogCallBack callBack, DialogBean dialogBean, float delayDelete)
+    public DialogView CreateDialog(DialogEnum dialogType, DialogView.IDialogCallBack callBack, DialogBean dialogBean, float delayDelete)
     {
-        if (CheckUtil.ListIsNull(listObjDialogModel) || dialogPosition >= listObjDialogModel.Count)
+        if (CheckUtil.ListIsNull(listObjDialogModel) || (int)dialogType >= listObjDialogModel.Count)
         {
             LogUtil.LogError("创建Dialog失败，缺少Dialog模型");
             return null;
         }
-        GameObject objDialog = Instantiate(objDialogContainer, listObjDialogModel[dialogPosition]);
+        GameObject objDialog = Instantiate(objDialogContainer, listObjDialogModel[(int)dialogType]);
         DialogView dialogView = objDialog.GetComponent<DialogView>();
         if (dialogView == null)
             Destroy(objDialog);

@@ -140,7 +140,7 @@ public class SceneGameInnInit : BaseSceneInit, IBaseObserver, DialogView.IDialog
                     gameTimeHandler.SetTimeStatus(true);
                     DialogBean dialogBean = new DialogBean();
                     dialogBean.content = GameCommonInfo.GetUITextById(3006);
-                    dialogManager.CreateDialog(1, this, dialogBean);
+                    dialogManager.CreateDialog(DialogEnum.Text, this, dialogBean);
                 }
                 else
                 {

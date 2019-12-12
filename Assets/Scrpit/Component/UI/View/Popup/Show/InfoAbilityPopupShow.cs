@@ -4,6 +4,7 @@ using UnityEngine.UI;
 public class InfoAbilityPopupShow : PopupShowView
 {
     public Text tvLoyal;
+    public Text tvLife;
     public Text tvCook;
     public Text tvSpeed;
     public Text tvAccount;
@@ -11,17 +12,36 @@ public class InfoAbilityPopupShow : PopupShowView
     public Text tvForce;
     public Text tvLucky;
 
+    private GameItemsManager mGameItemsManager;
+
+    private void Awake()
+    {
+        mGameItemsManager = FindObjectOfType<GameItemsManager>();
+    }
+
     public void SetData(CharacterBean characterData)
     {
         if (characterData == null)
             return;
-        SetLoyal(characterData.attributes.loyal);
-        SetCook(characterData.attributes.cook);
-        SetSpeed(characterData.attributes.speed);
-        SetAccount(characterData.attributes.account);
-        SetCharm(characterData.attributes.charm);
-        SetForce(characterData.attributes.force);
-        SetLucky(characterData.attributes.lucky);
+        characterData.GetAttributes(mGameItemsManager, out CharacterAttributesBean totalAttributes);
+        SetLoyal(totalAttributes.loyal);
+        SetCook(totalAttributes.cook);
+        SetSpeed(totalAttributes.speed);
+        SetAccount(totalAttributes.account);
+        SetCharm(totalAttributes.charm);
+        SetForce(totalAttributes.force);
+        SetLucky(totalAttributes.lucky);
+        SetLife(totalAttributes.life);
+    }
+
+    /// <summary>
+    /// 设置生命值
+    /// </summary>
+    /// <param name="life"></param>
+    public void SetLife(int life)
+    {
+        if (tvLife != null)
+            tvLife.text = GameCommonInfo.GetUITextById(9) + " " + life;
     }
 
     /// <summary>
@@ -31,7 +51,7 @@ public class InfoAbilityPopupShow : PopupShowView
     public void SetLoyal(int loyal)
     {
         if (tvLoyal != null)
-            tvLoyal.text = "忠诚 " + loyal;
+            tvLoyal.text = GameCommonInfo.GetUITextById(8)+" " + loyal;
     }
 
     /// <summary>
@@ -41,7 +61,7 @@ public class InfoAbilityPopupShow : PopupShowView
     public void SetCook(int cook)
     {
         if (tvCook != null)
-            tvCook.text = "厨力 " + cook;
+            tvCook.text = GameCommonInfo.GetUITextById(1) + " " + cook;
     }
 
     /// <summary>
@@ -51,7 +71,7 @@ public class InfoAbilityPopupShow : PopupShowView
     public void SetSpeed(int speed)
     {
         if (tvSpeed != null)
-            tvSpeed.text = "速度 " + speed;
+            tvSpeed.text = GameCommonInfo.GetUITextById(2) + " " + speed;
     }
 
     /// <summary>
@@ -61,7 +81,7 @@ public class InfoAbilityPopupShow : PopupShowView
     public void SetAccount(int account)
     {
         if (tvAccount != null)
-            tvAccount.text = "计算 " + account;
+            tvAccount.text = GameCommonInfo.GetUITextById(3) + " " + account;
     }
 
     /// <summary>
@@ -71,7 +91,7 @@ public class InfoAbilityPopupShow : PopupShowView
     public void SetCharm(int charm)
     {
         if (tvCharm != null)
-            tvCharm.text = "魅力 " + charm;
+            tvCharm.text = GameCommonInfo.GetUITextById(4) + " " + charm;
     }
 
     /// <summary>
@@ -81,7 +101,7 @@ public class InfoAbilityPopupShow : PopupShowView
     public void SetForce(int force)
     {
         if (tvForce != null)
-            tvForce.text = "武力 " + force;
+            tvForce.text = GameCommonInfo.GetUITextById(5) + " " + force;
     }
 
     /// <summary>
@@ -91,6 +111,6 @@ public class InfoAbilityPopupShow : PopupShowView
     public void SetLucky(int lucky)
     {
         if (tvLucky != null)
-            tvLucky.text = "幸运 " + lucky;
+            tvLucky.text = GameCommonInfo.GetUITextById(6) + " " + lucky;
     }
 }

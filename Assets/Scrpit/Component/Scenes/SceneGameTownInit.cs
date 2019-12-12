@@ -72,7 +72,7 @@ public class SceneGameTownInit : BaseSceneInit, IBaseObserver, DialogView.IDialo
         {
             DialogBean dialogBean = new DialogBean();
             dialogBean.content = GameCommonInfo.GetUITextById(3006);
-            dialogManager.CreateDialog(1, this, dialogBean, 5);
+            dialogManager.CreateDialog(DialogEnum.Text, this, dialogBean, 5);
         }
         else
         {

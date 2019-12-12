@@ -19,7 +19,8 @@ public class DialogView : BaseMonoBehaviour
 
     public DialogBean dialogData;
     private float mTimeDelayDelete;
-    private void Start()
+
+    public void Start()
     {
         InitData();
     }
