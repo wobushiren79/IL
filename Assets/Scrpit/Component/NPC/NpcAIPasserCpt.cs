@@ -1,31 +1,43 @@
 ﻿using UnityEngine;
 using UnityEditor;
 using System.Collections;
+using System;
+
 public class NpcAIPasserCpt : BaseNpcAI
 {
     public enum PasserIntentEnum
     {
-        LeaveTown,
-        GoToBuilding,
-        StayInBuilding,
-        LeaveBuilding,
+        LeaveTown,//离开
+        StayInTown,//镇上闲逛
+        GoToBuilding,//前往建筑
+        StayInBuilding,//留在建筑
+        LeaveBuilding,//离开建筑
+        GoToEvent,//前往看热闹
+        LookOnEvent,//看热闹
     }
+
     //城镇数据
     public SceneTownManager sceneTownManager;
+    //事件处理
+    public MiniGameCombatHandler miniGameCombatHandler;
     //移动目标点
     public Vector3 movePosition;
+    //备用目标点
+    public Vector3 markPosition;
     //建筑相关点
     public Vector3 buildingOutDoorPosition;
     public Vector3 buildingInDoorPosition;
     //前往的建筑
     public SceneTownManager.TownBuildingEnum buildingToGo;
-
+    //npc现在所在地
+    public SceneTownManager.TownBuildingEnum npcLocation;
     //路人意图
     public PasserIntentEnum passerIntent = PasserIntentEnum.LeaveTown;
 
-
     private void FixedUpdate()
     {
+        //检测是否有战斗
+        CheckHasCombat();
         switch (passerIntent)
         {
             case PasserIntentEnum.LeaveTown:
@@ -33,6 +45,10 @@ public class NpcAIPasserCpt : BaseNpcAI
                 if (characterMoveCpt.IsAutoMoveStop())
                     //删除NPC
                     Destroy(gameObject);
+                break;
+            case PasserIntentEnum.StayInTown:
+                if (characterMoveCpt.IsAutoMoveStop())
+                    SetRandomBuildingToGo();
                 break;
             case PasserIntentEnum.GoToBuilding:
                 //检测是否到达目标点
@@ -49,22 +65,115 @@ public class NpcAIPasserCpt : BaseNpcAI
                     characterMoveCpt.CloseNavMeshAgent();
                     //离开建筑内部
                     transform.position = buildingOutDoorPosition;
+                    //设置当前所在地
+                    SetLocation(SceneTownManager.TownBuildingEnum.Town);
                     //离开建筑后开启自动寻路
                     characterMoveCpt.OpenNavMeshAgent();
                     //有一定概率去下一个地点
-                    int isLeave = Random.Range(0, 2);
+                    int isLeave = UnityEngine.Random.Range(0, 2);
                     if (isLeave == 1)
                     {
                         SetIntent(PasserIntentEnum.LeaveTown);
                     }
                     else
                     {
-                        SceneTownManager.TownBuildingEnum buildingToGo = RandomUtil.GetRandomEnum<SceneTownManager.TownBuildingEnum>();
-                        SetIntent(NpcAIPasserCpt.PasserIntentEnum.GoToBuilding, buildingToGo);
+                        SetRandomBuildingToGo();
                     }
                 }
                 break;
+            case PasserIntentEnum.GoToEvent:
+                if (characterMoveCpt.IsAutoMoveStop())
+                    SetIntent(PasserIntentEnum.LookOnEvent);
+                break;
+            case PasserIntentEnum.LookOnEvent:
+                CheckEventEnd();
+                break;
         }
+    }
+
+    /// <summary>
+    ///  //随机获取一个要去的地方
+    /// </summary>
+    public void SetRandomBuildingToGo()
+    {
+        SceneTownManager.TownBuildingEnum buildingToGo = RandomUtil.GetRandomEnum<SceneTownManager.TownBuildingEnum>();
+        //if (buildingToGo == SceneTownManager.TownBuildingEnum.Town)
+        //{
+        //    SetIntent(PasserIntentEnum.StayInTown);
+        //}
+        //else
+        //{
+        //    SetIntent(PasserIntentEnum.GoToBuilding, buildingToGo);
+        //}
+        SetIntent(PasserIntentEnum.StayInTown);
+    }
+
+    /// <summary>
+    /// 检测是否有战斗可看
+    /// </summary>
+    /// <returns></returns>
+    public bool CheckHasCombat()
+    {
+        if (passerIntent != PasserIntentEnum.GoToEvent
+            && passerIntent != PasserIntentEnum.LookOnEvent
+            && miniGameCombatHandler.GetMiniGameStatus() == BaseMiniGameHandler<MiniGameCombatBuilder, MiniGameCombatBean>.MiniGameStatusEnum.Gameing
+            && Vector2.Distance(transform.position, miniGameCombatHandler.GetMiniGameCombatPosition()) <= 10)
+        {
+            SetIntent(PasserIntentEnum.GoToEvent, miniGameCombatHandler.GetMiniGameCombatPosition());
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+
+    /// <summary>
+    /// 检测战斗是否结束
+    /// </summary>
+    public bool CheckEventEnd()
+    {
+        if (miniGameCombatHandler.GetMiniGameStatus() != BaseMiniGameHandler<MiniGameCombatBuilder, MiniGameCombatBean>.MiniGameStatusEnum.Gameing)
+        {
+            if (npcLocation == SceneTownManager.TownBuildingEnum.Town)
+            {
+                SetRandomBuildingToGo();
+            }
+            else
+            {
+                int randomIntent = UnityEngine.Random.Range(0, 2);
+                //一半概率继续留在该建筑
+                if (randomIntent == 0)
+                {
+                    //开始逛街
+                    movePosition = sceneTownManager.GetRandomBuildingInsidePosition(npcLocation);
+                    characterMoveCpt.SetDestination(movePosition);
+                    //开始逛街
+                    StartCoroutine(CoroutineForStayTimeCountdown(npcLocation));
+                }
+                //一半概率离开该建筑
+                else
+                {
+                    SetIntent(PasserIntentEnum.LeaveBuilding);
+                }
+
+            }
+
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+
+    /// <summary>
+    /// 设置所在地
+    /// </summary>
+    /// <param name="buildingType"></param>
+    public void SetLocation(SceneTownManager.TownBuildingEnum buildingType)
+    {
+        npcLocation = buildingType;
     }
 
     /// <summary>
@@ -72,13 +181,17 @@ public class NpcAIPasserCpt : BaseNpcAI
     /// </summary>
     /// <param name="passerIntent"></param>
     /// <param name="movePosition"></param>
-    public void SetIntent(PasserIntentEnum passerIntent, SceneTownManager.TownBuildingEnum buildingEnum)
+    public void SetIntent(PasserIntentEnum passerIntent, SceneTownManager.TownBuildingEnum buildingEnum, Vector3 eventPosition)
     {
         this.passerIntent = passerIntent;
+        StopAllCoroutines();
         switch (passerIntent)
         {
             case PasserIntentEnum.LeaveTown:
                 IntentForLeaveTown();
+                break;
+            case PasserIntentEnum.StayInTown:
+                IntentForStayInTown();
                 break;
             case PasserIntentEnum.GoToBuilding:
                 IntentForGoToBuilding(buildingEnum);
@@ -89,11 +202,38 @@ public class NpcAIPasserCpt : BaseNpcAI
             case PasserIntentEnum.LeaveBuilding:
                 IntentForLeaveBuilding();
                 break;
+            case PasserIntentEnum.GoToEvent:
+                IntentForGoToEvent(eventPosition);
+                break;
+            case PasserIntentEnum.LookOnEvent:
+                IntentForLookOnEvent();
+                break;
         }
     }
+
+
+
     public void SetIntent(PasserIntentEnum passerIntent)
     {
-        SetIntent(passerIntent, SceneTownManager.TownBuildingEnum.Guild);
+        SetIntent(passerIntent, SceneTownManager.TownBuildingEnum.Guild, Vector3.zero);
+    }
+    public void SetIntent(PasserIntentEnum passerIntent, Vector3 eventPosition)
+    {
+        SetIntent(passerIntent, SceneTownManager.TownBuildingEnum.Guild, eventPosition);
+    }
+    public void SetIntent(PasserIntentEnum passerIntent, SceneTownManager.TownBuildingEnum buildingEnum)
+    {
+        SetIntent(passerIntent, buildingEnum, Vector3.zero);
+    }
+
+    /// <summary>
+    /// 镇上闲逛
+    /// </summary>
+    public void IntentForStayInTown()
+    {
+        //开始逛街
+        movePosition = sceneTownManager.GetRandomBuildingInsidePosition(SceneTownManager.TownBuildingEnum.Town);
+        characterMoveCpt.SetDestination(movePosition);
     }
 
     /// <summary>
@@ -116,6 +256,7 @@ public class NpcAIPasserCpt : BaseNpcAI
         if (sceneTownManager == null)
             return;
         this.buildingToGo = buildingEnum;
+
         //获取建筑的门
         sceneTownManager.GetBuildingDoorPosition(buildingEnum, out Vector3 outDoorPostion, out Vector3 inDoorPosition);
         buildingOutDoorPosition = outDoorPostion;
@@ -133,13 +274,15 @@ public class NpcAIPasserCpt : BaseNpcAI
         characterMoveCpt.CloseNavMeshAgent();
         //进入建筑内部
         transform.position = buildingInDoorPosition;
+        //设置当前所在地
+        SetLocation(buildingEnum);
         //进入建筑后开启自动寻路
         characterMoveCpt.OpenNavMeshAgent();
         //开始逛街
         movePosition = sceneTownManager.GetRandomBuildingInsidePosition(buildingEnum);
         characterMoveCpt.SetDestination(movePosition);
         //开始逛街
-        StartCoroutine(StayTimeCountdown(buildingEnum));
+        StartCoroutine(CoroutineForStayTimeCountdown(buildingEnum));
     }
 
     /// <summary>
@@ -152,11 +295,50 @@ public class NpcAIPasserCpt : BaseNpcAI
     }
 
     /// <summary>
-    /// 逗留倒计时
+    /// 前往看热闹
+    /// </summary>
+    /// <param name="eventPosition"></param>
+    public void IntentForGoToEvent(Vector3 eventPosition)
+    {
+        this.markPosition = eventPosition;
+        float angle = 0;
+        float circler = UnityEngine.Random.Range(5f, 6f);
+        if (Vector2.Distance(transform.position, eventPosition) <= 5)
+        {
+            angle = UnityEngine.Random.Range(0f, 360f);
+        }
+        else
+        {
+            float tempAngle = VectorUtil.GetAngle(eventPosition, transform.position);
+            angle = UnityEngine.Random.Range(tempAngle - 45f, tempAngle + 45f);
+        }
+        movePosition = VectorUtil.GetCirclePosition(angle, eventPosition, circler);
+        characterMoveCpt.SetDestination(movePosition);
+    }
+
+    /// <summary>
+    /// 看热闹
+    /// </summary>
+    public void IntentForLookOnEvent()
+    {
+        ///设置朝向
+        if (markPosition.x < transform.position.x)
+        {
+            SetCharacterFace(1);
+        }
+        else
+        {
+            SetCharacterFace(2);
+        }
+        StartCoroutine(CoroutineForLookOnEvent());
+    }
+
+    /// <summary>
+    /// 协程-逗留倒计时
     /// </summary>
     /// <param name="buildingEnum"></param>
     /// <returns></returns>
-    public IEnumerator StayTimeCountdown(SceneTownManager.TownBuildingEnum buildingEnum)
+    public IEnumerator CoroutineForStayTimeCountdown(SceneTownManager.TownBuildingEnum buildingEnum)
     {
         for (int i = 0; i < 3; i++)
         {
@@ -166,5 +348,19 @@ public class NpcAIPasserCpt : BaseNpcAI
             yield return new WaitForSeconds(20);
         }
         SetIntent(PasserIntentEnum.LeaveBuilding);
+    }
+
+    /// <summary>
+    /// 协程-看热闹
+    /// </summary>
+    /// <returns></returns>
+    public IEnumerator CoroutineForLookOnEvent()
+    {
+        while (PasserIntentEnum.LookOnEvent == passerIntent)
+        {
+            yield return new WaitForSeconds(UnityEngine.Random.Range(10, 40));
+            int expression = UnityEngine.Random.Range(1, 7);
+            SetExpression((CharacterExpressionCpt.CharacterExpressionEnum)expression, 2);
+        }
     }
 }

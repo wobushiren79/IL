@@ -58,6 +58,15 @@ public class PickForCharacterDialogView : DialogView,ItemGameDialogPickCharacter
     }
 
     /// <summary>
+    /// 获取选取的角色
+    /// </summary>
+    /// <returns></returns>
+    public List<CharacterBean> GetPickCharacter()
+    {
+        return listPickCharacter;
+    }
+
+    /// <summary>
     /// 设置标题
     /// </summary>
     public void SetTitle()

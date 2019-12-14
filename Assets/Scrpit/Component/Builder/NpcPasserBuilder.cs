@@ -1,9 +1,12 @@
 ﻿using UnityEngine;
 using UnityEditor;
 using System.Collections;
+using System.Collections.Generic;
+
 public class NpcPasserBuilder : NpcNormalBuilder
 {
     public SceneTownManager sceneTownManager;
+    public List<NpcAIPasserCpt> listPasser = new List<NpcAIPasserCpt>();
 
     private void Start()
     {
@@ -17,6 +20,7 @@ public class NpcPasserBuilder : NpcNormalBuilder
     /// <param name="npcNumber"></param>
     public void BuilderPasserForInit(int npcNumber)
     {
+        listPasser.Clear();
         for (int i = 0; i < npcNumber; i++)
         {
             //获取随机坐标
@@ -46,9 +50,20 @@ public class NpcPasserBuilder : NpcNormalBuilder
         NpcAIPasserCpt npcAI = npcObj.GetComponent<NpcAIPasserCpt>();
         if (npcAI != null)
         {
+            //设置天前所在地
+            npcAI.SetLocation(SceneTownManager.TownBuildingEnum.Town);
             //随机获取一个要去的地方
-            SceneTownManager.TownBuildingEnum buildingToGo = RandomUtil.GetRandomEnum<SceneTownManager.TownBuildingEnum>();
-            npcAI.SetIntent(NpcAIPasserCpt.PasserIntentEnum.GoToBuilding, buildingToGo);
+            npcAI.SetRandomBuildingToGo();
         }
+        listPasser.Add(npcAI);
+    }
+
+    /// <summary>
+    /// 获取所有路人
+    /// </summary>
+    /// <returns></returns>
+    public List<NpcAIPasserCpt> GetAllPasser()
+    {
+        return listPasser;
     }
 }

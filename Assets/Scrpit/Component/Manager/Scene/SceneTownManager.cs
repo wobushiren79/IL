@@ -6,6 +6,7 @@ public class SceneTownManager : BaseManager
 {
     public enum TownBuildingEnum
     {
+        Town,
         Market,
         Recruitment,
         Grocery,
@@ -17,7 +18,8 @@ public class SceneTownManager : BaseManager
 
     //小镇出入口
     public List<Transform> listTownDoor;
-
+    //小镇
+    public Transform townInside;
     //市场
     public Transform marketOutDoor;
     public Transform marketInDoor;
@@ -126,6 +128,9 @@ public class SceneTownManager : BaseManager
         Transform tfBuilding = null;
         switch (townBuildingEnum)
         {
+            case TownBuildingEnum.Town:
+                tfBuilding = townInside;
+                break;
             case TownBuildingEnum.Market:
                 tfBuilding = marketInside;
                 break;

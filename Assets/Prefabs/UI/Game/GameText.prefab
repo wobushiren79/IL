@@ -873,6 +873,7 @@ MonoBehaviour:
     valid: 0
     text_id: 0
     type: 0
+    talk_type: 0
     mark_id: 0
     user_id: 0
     name: 
@@ -881,13 +882,15 @@ MonoBehaviour:
     next_order: 0
     wait_time: 0
     select_type: 0
-    select_result: 0
     is_stoptime: 0
     condition_first_meet: 0
     condition_min_favorability: 0
     condition_max_favorability: 0
+    add_pre: 
     add_favorability: 0
     add_money: 
+    add_character: 
+    add_items: 
     scene_expression: 
 --- !u!1 &4121556879504047167
 GameObject:
@@ -1243,6 +1246,7 @@ MonoBehaviour:
     valid: 0
     text_id: 0
     type: 0
+    talk_type: 0
     mark_id: 0
     user_id: 0
     name: 
@@ -1251,13 +1255,15 @@ MonoBehaviour:
     next_order: 0
     wait_time: 0
     select_type: 0
-    select_result: 0
     is_stoptime: 0
     condition_first_meet: 0
     condition_min_favorability: 0
     condition_max_favorability: 0
+    add_pre: 
     add_favorability: 0
     add_money: 
+    add_character: 
+    add_items: 
     scene_expression: 
   objSelectContent: {fileID: 7577364583810613438}
   objSelectModel: {fileID: 3412293648310747249}
@@ -1833,6 +1839,7 @@ MonoBehaviour:
     valid: 0
     text_id: 0
     type: 0
+    talk_type: 0
     mark_id: 0
     user_id: 0
     name: 
@@ -1841,13 +1848,15 @@ MonoBehaviour:
     next_order: 0
     wait_time: 0
     select_type: 0
-    select_result: 0
     is_stoptime: 0
     condition_first_meet: 0
     condition_min_favorability: 0
     condition_max_favorability: 0
+    add_pre: 
     add_favorability: 0
     add_money: 
+    add_character: 
+    add_items: 
     scene_expression: 
 --- !u!1 &7577364583810613438
 GameObject:
@@ -2670,7 +2679,7 @@ MonoBehaviour:
   m_Content: {fileID: 7577364583810613439}
   m_Horizontal: 0
   m_Vertical: 1
-  m_MovementType: 1
+  m_MovementType: 2
   m_Elasticity: 0.1
   m_Inertia: 1
   m_DecelerationRate: 0.135
@@ -2920,26 +2929,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 7577364584774304036}
     m_Modifications:
-    - target: {fileID: 6202850148858248707, guid: dbdedefdbd5ca8045a10545a8d921571,
-        type: 3}
-      propertyPath: characterDressManager
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 6202850148858248707, guid: dbdedefdbd5ca8045a10545a8d921571,
-        type: 3}
-      propertyPath: characterBodyManager
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 6202850148858248707, guid: dbdedefdbd5ca8045a10545a8d921571,
-        type: 3}
-      propertyPath: gameItemsManager
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 6202850148858248711, guid: dbdedefdbd5ca8045a10545a8d921571,
-        type: 3}
-      propertyPath: m_Name
-      value: CharacterUI
-      objectReference: {fileID: 0}
     - target: {fileID: 6202850148858248704, guid: dbdedefdbd5ca8045a10545a8d921571,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -3054,6 +3043,26 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalScale.y
       value: 1.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 6202850148858248707, guid: dbdedefdbd5ca8045a10545a8d921571,
+        type: 3}
+      propertyPath: characterDressManager
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 6202850148858248707, guid: dbdedefdbd5ca8045a10545a8d921571,
+        type: 3}
+      propertyPath: characterBodyManager
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 6202850148858248707, guid: dbdedefdbd5ca8045a10545a8d921571,
+        type: 3}
+      propertyPath: gameItemsManager
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 6202850148858248711, guid: dbdedefdbd5ca8045a10545a8d921571,
+        type: 3}
+      propertyPath: m_Name
+      value: CharacterUI
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: dbdedefdbd5ca8045a10545a8d921571, type: 3}

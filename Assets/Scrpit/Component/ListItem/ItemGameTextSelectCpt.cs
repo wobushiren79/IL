@@ -62,7 +62,7 @@ public class ItemGameTextSelectCpt : ItemGameBaseCpt,DialogView.IDialogCallBack
     {
         UIGameText uiGameText = (UIGameText)uiComponent;
         UIGameManager uiGameManager = uiGameText.GetUIMananger<UIGameManager>();
-        if (CheckUtil.StringIsNull( textData.add_pre))
+        if (CheckUtil.StringIsNull(textData.add_pre))
         {
             //如果没有前置条件 则直接进行下一步
             textData.GetAddMoney(out long moneyL, out long moneyM, out long moneyS);
@@ -93,7 +93,11 @@ public class ItemGameTextSelectCpt : ItemGameBaseCpt,DialogView.IDialogCallBack
     #region dilaog回调
     public void Submit(DialogView dialogView, DialogBean dialogBean)
     {
-         
+        if (CheckUtil.StringIsNull(textData.add_pre))
+            return;
+        UIGameText uiGameText = (UIGameText)uiComponent;
+        PickForCharacterDialogView pickDialog = (PickForCharacterDialogView)dialogView;
+        uiGameText.callBack.UITextSelectResult(textData, pickDialog.GetPickCharacter());
     }
 
     public void Cancel(DialogView dialogView, DialogBean dialogBean)

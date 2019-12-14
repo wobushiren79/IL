@@ -6,7 +6,7 @@ public class MiniGameBaseBean
 {
     public MiniGameEnum gameType;//游戏类型
     public MiniGameReasonEnum gameReason;//玩游戏的原因
-
+    
     public int gameLevel;//游戏等级
     //胜利条件
     public float winSurvivalTime;//生存时间(秒)

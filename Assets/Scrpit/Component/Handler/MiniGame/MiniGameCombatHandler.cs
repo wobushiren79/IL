@@ -39,8 +39,7 @@ public class MiniGameCombatHandler : BaseMiniGameHandler<MiniGameCombatBuilder, 
         //创建NPC
         miniGameBuilder.CreateAllCharacter(gameCombatData.combatPosition, gameCombatData.listUserGameData, gameCombatData.listEnemyGameData);
         //设置摄像机位置
-        controlHandler.StartControl(ControlHandler.ControlEnum.MiniGameCombat);
-        controlHandler.GetControl().SetCameraPosition(gameCombatData.combatPosition);
+        SetCameraPosition();
         //打开倒计时UI
         OpenCountDownUI(gameCombatData);
     }
@@ -60,6 +59,20 @@ public class MiniGameCombatHandler : BaseMiniGameHandler<MiniGameCombatBuilder, 
     public override void EndGame(bool isWinGame)
     {
         base.EndGame(isWinGame);
+    }
+
+    /// <summary>
+    /// 设置摄像机位置
+    /// </summary>
+    public void SetCameraPosition()
+    {
+        SetCameraPosition(miniGameData.combatPosition);
+    }
+    public void SetCameraPosition(Vector3 cameraPosition)
+    {
+        //设置摄像机位置
+        controlHandler.StartControl(ControlHandler.ControlEnum.MiniGameCombat);
+        controlHandler.GetControl().SetCameraPosition(cameraPosition);
     }
 
     /// <summary>
@@ -96,6 +109,15 @@ public class MiniGameCombatHandler : BaseMiniGameHandler<MiniGameCombatBuilder, 
     public MiniGameCombatStatusEnum GetMiniGameCombatStatus()
     {
         return mMiniGameCombatStatus;
+    }
+
+    /// <summary>
+    /// 获取战斗地点
+    /// </summary>
+    /// <returns></returns>
+    public Vector3 GetMiniGameCombatPosition()
+    {
+        return miniGameData.combatPosition;
     }
 
     /// <summary>

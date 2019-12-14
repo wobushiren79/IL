@@ -20,4 +20,19 @@ public class VectorUtil
         float sign = (vec2.y < vec1.y) ? -1.0f : 1.0f;
         return Vector2.Angle(Vector2.right, diference) * sign;
     }
+
+    /// <summary>
+    /// 获取圆上一点坐标
+    /// </summary>
+    /// <param name="angle"></param>
+    /// <param name="centerPosition"></param>
+    /// <param name="r"></param>
+    /// <returns></returns>
+    public static Vector2 GetCirclePosition(float angle,Vector2 centerPosition,float r)
+    {
+        float x= centerPosition.x + r * Mathf.Cos(angle * 3.14f / 180f);
+        float y = centerPosition.y + r * Mathf.Sin(angle * 3.14f / 180f);
+        Vector2 circlePosition = new Vector2(x,y);
+        return circlePosition;
+    }
 }

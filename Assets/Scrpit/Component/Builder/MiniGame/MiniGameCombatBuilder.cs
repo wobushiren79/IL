@@ -62,7 +62,7 @@ public class MiniGameCombatBuilder : BaseMiniGameBuilder
     public void CreateOurCharacter(Vector3 combatPosition, List<MiniGameCharacterBean> listCharacterData)
     {
         listOurCharacter.Clear();
-        float characterPositionY = ((listCharacterData.Count - 1) / 2f) * 1.5f;
+        float characterPositionY = combatPosition.y+((listCharacterData.Count - 1) / 2f) * 1.5f;
         for (int i = 0; i < listCharacterData.Count; i++)
         {
             Vector3 characterPosition = new Vector3(combatPosition.x - 3, characterPositionY);
@@ -82,7 +82,7 @@ public class MiniGameCombatBuilder : BaseMiniGameBuilder
     public void CreateEnemyCharacter(Vector3 combatPosition, List<MiniGameCharacterBean> listCharacterData)
     {
         listEnemyCharacter.Clear();
-        float characterPositionY = ((listCharacterData.Count - 1) / 2f) * 1.5f;
+        float characterPositionY = combatPosition.y+((listCharacterData.Count - 1) / 2f) * 1.5f;
         for (int i = 0; i < listCharacterData.Count; i++)
         {
             Vector3 characterPosition = new Vector3(combatPosition.x + 3, characterPositionY);

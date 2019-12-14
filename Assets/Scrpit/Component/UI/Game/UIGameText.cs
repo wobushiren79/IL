@@ -353,5 +353,10 @@ public class UIGameText : BaseUIComponent, ITextInfoView
         /// </summary>
         /// <param name="mapData"></param>
         void UITextSceneExpression(Dictionary<int, CharacterExpressionCpt.CharacterExpressionEnum> mapData);
+
+        /// <summary>
+        /// 文本选择结果处理
+        /// </summary>
+        void UITextSelectResult(TextInfoBean textData,List<CharacterBean> listUserData);
     }
 }

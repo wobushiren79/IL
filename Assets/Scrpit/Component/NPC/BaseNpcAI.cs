@@ -18,6 +18,11 @@ public class BaseNpcAI : BaseMonoBehaviour
     //角色表情
     public CharacterExpressionCpt characterExpression;
 
+    private void Awake()
+    {
+        gameItemsManager = FindObjectOfType<GameItemsManager>();
+    }
+
     /// <summary>
     /// 设置角色数据
     /// </summary>

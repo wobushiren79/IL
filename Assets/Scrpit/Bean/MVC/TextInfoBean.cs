@@ -39,7 +39,7 @@ public class TextInfoBean : BaseBean
     public int condition_min_favorability;
     public int condition_max_favorability;
 
-    //好处的前提条件 类型，人数
+    //好处的前提条件 类型，人数，敌人ID
     public string add_pre;
     //增加的好感
     public int add_favorability;

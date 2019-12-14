@@ -25,15 +25,20 @@ public class EventHandler : BaseHandler, UIGameText.ICallBack
     }
 
     public GameDataManager gameDataManager;
+    public GameItemsManager gameItemsManager;
     public BaseUIManager uiManager;
     public StoryInfoManager storyInfoManager;
+    public NpcInfoManager npcInfoManager;
     public StoryBuilder storyBuilder;
     public ControlHandler controlHandler;
+    public MiniGameCombatHandler miniGameCombatHandler;
 
     private EventStatusEnum mEventStatus = EventStatusEnum.EventEnd;
     private EventTypeEnum mEventType;
+    private Vector3 mEventPosition=Vector3.zero;
 
     private StoryInfoBean mStoryInfo;
+
     /// <summary>
     /// 调查事件触发
     /// </summary>
@@ -54,7 +59,7 @@ public class EventHandler : BaseHandler, UIGameText.ICallBack
     /// 对话时间触发
     /// </summary>
     /// <param name="markId"></param>
-    public void EventTriggerForTalk(long userId,NPCTypeEnum npcType)
+    public void EventTriggerForTalk(long userId, NPCTypeEnum npcType)
     {
         SetEventStatus(EventStatusEnum.EventIng);
         SetEventType(EventTypeEnum.Talk);
@@ -73,6 +78,7 @@ public class EventHandler : BaseHandler, UIGameText.ICallBack
     public void EventTriggerForStory(StoryInfoBean storyInfo)
     {
         this.mStoryInfo = storyInfo;
+        mEventPosition = new Vector3(storyInfo.position_x, storyInfo.position_y);
         SetEventStatus(EventStatusEnum.EventIng);
         SetEventType(EventTypeEnum.Story);
         //控制模式修改
@@ -293,6 +299,32 @@ public class EventHandler : BaseHandler, UIGameText.ICallBack
             npcAI.SetExpression(expression);
         }
     }
+
+    public void UITextSelectResult(TextInfoBean textData, List<CharacterBean> listUserData)
+    {
+        List<string> listAddPre = StringUtil.SplitBySubstringForListStr(textData.add_pre, ',');
+        switch ((SelectResultTypeEnum)int.Parse(listAddPre[0]))
+        {
+            case SelectResultTypeEnum.Combat:
+                long[] listEnemyId= StringUtil.SplitBySubstringForArrayLong(listAddPre[2], '|');
+                List<CharacterBean> listEnemyData= npcInfoManager.GetCharacterDataByIds(listEnemyId);
+                float[] combatPosition = StringUtil.SplitBySubstringForArrayFloat(listAddPre[3], '|');
+                MiniGameCombatInit(new Vector3(combatPosition[0], combatPosition[1]), listUserData, listEnemyData);
+
+                break;
+        }
+    }
     #endregion
 
+
+    private void MiniGameCombatInit(Vector3 combatPosition, List<CharacterBean> listUserData, List<CharacterBean> listEnemyData)
+    {
+        MiniGameCombatBean miniGameCombatData = new MiniGameCombatBean();
+        miniGameCombatData.combatPosition = combatPosition;
+        miniGameCombatData.winBringDownNumber = listEnemyData.Count;
+        miniGameCombatData.winSurvivalNumber = listUserData.Count;
+        miniGameCombatData.InitData(gameItemsManager, listUserData, listEnemyData);
+        miniGameCombatHandler.InitGame(miniGameCombatData);
+        mEventPosition = combatPosition;
+    }
 }
