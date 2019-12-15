@@ -91,7 +91,7 @@ public class UIGameText : BaseUIComponent, ITextInfoView
     /// 设置数据
     /// </summary>
     /// <param name="textEnum"></param>
-    /// <param name="id">当 textEnum为Look 或 Story时 为markId。Talk时则为UserId </param>
+    /// <param name="id">当 textEnum为Look 或 Story时 为markId</param>
     public void SetData(TextEnum textEnum, long id)
     {
         mTextEnum = textEnum;
@@ -102,7 +102,7 @@ public class UIGameText : BaseUIComponent, ITextInfoView
                 mTextInfoController.GetTextForLook(id);
                 break;
             case TextEnum.Talk:
-                mTextInfoController.GetTextForTalk(id);
+                mTextInfoController.GetTextForTalkByMarkId(id);
                 break;
             case TextEnum.Story:
                 mTextInfoController.GetTextForStory(id);
@@ -124,7 +124,7 @@ public class UIGameText : BaseUIComponent, ITextInfoView
                 listTextData.Add(new TextInfoBean(1, GameCommonInfo.GetUITextById(99103)));
                 break;
         }
-        mTextInfoController.GetTextForTalk(userId);
+        mTextInfoController.GetTextForTalkByUserId(userId);
     }
 
     /// <summary>
@@ -287,7 +287,7 @@ public class UIGameText : BaseUIComponent, ITextInfoView
         ShowText(listTextData);
     }
 
-    public void GetTextInfoForTalkSuccess(List<TextInfoBean> listData)
+    public void GetTextInfoForTalkByUserIdSuccess(List<TextInfoBean> listData)
     {
         mapTalkNormalData = new Dictionary<long, List<TextInfoBean>>();
         mapTalkGiftData = new Dictionary<long, List<TextInfoBean>>();
@@ -322,6 +322,12 @@ public class UIGameText : BaseUIComponent, ITextInfoView
         ShowText(listTextData);
     }
 
+    public void GetTextInfoForTalkByMarkIdSuccess(List<TextInfoBean> listData)
+    {
+        listTextData = listData;
+        ShowText(listTextData);
+    }
+
     public void GetTextInfoForStorySuccess(List<TextInfoBean> listData)
     {
         listTextData = listData;
@@ -332,6 +338,8 @@ public class UIGameText : BaseUIComponent, ITextInfoView
     {
 
     }
+
+
     #endregion
 
     public interface ICallBack

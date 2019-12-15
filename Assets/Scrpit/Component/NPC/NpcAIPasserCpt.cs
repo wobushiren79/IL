@@ -1,7 +1,6 @@
 ﻿using UnityEngine;
 using UnityEditor;
 using System.Collections;
-using System;
 
 public class NpcAIPasserCpt : BaseNpcAI
 {
@@ -97,15 +96,14 @@ public class NpcAIPasserCpt : BaseNpcAI
     public void SetRandomBuildingToGo()
     {
         SceneTownManager.TownBuildingEnum buildingToGo = RandomUtil.GetRandomEnum<SceneTownManager.TownBuildingEnum>();
-        //if (buildingToGo == SceneTownManager.TownBuildingEnum.Town)
-        //{
-        //    SetIntent(PasserIntentEnum.StayInTown);
-        //}
-        //else
-        //{
-        //    SetIntent(PasserIntentEnum.GoToBuilding, buildingToGo);
-        //}
-        SetIntent(PasserIntentEnum.StayInTown);
+        if (buildingToGo == SceneTownManager.TownBuildingEnum.Town)
+        {
+            SetIntent(PasserIntentEnum.StayInTown);
+        }
+        else
+        {
+            SetIntent(PasserIntentEnum.GoToBuilding, buildingToGo);
+        }
     }
 
     /// <summary>
@@ -302,15 +300,15 @@ public class NpcAIPasserCpt : BaseNpcAI
     {
         this.markPosition = eventPosition;
         float angle = 0;
-        float circler = UnityEngine.Random.Range(5f, 6f);
+        float circler = Random.Range(5f, 6f);
         if (Vector2.Distance(transform.position, eventPosition) <= 5)
         {
-            angle = UnityEngine.Random.Range(0f, 360f);
+            angle = Random.Range(0f, 360f);
         }
         else
         {
             float tempAngle = VectorUtil.GetAngle(eventPosition, transform.position);
-            angle = UnityEngine.Random.Range(tempAngle - 45f, tempAngle + 45f);
+            angle = Random.Range(tempAngle - 45f, tempAngle + 45f);
         }
         movePosition = VectorUtil.GetCirclePosition(angle, eventPosition, circler);
         characterMoveCpt.SetDestination(movePosition);
@@ -358,9 +356,11 @@ public class NpcAIPasserCpt : BaseNpcAI
     {
         while (PasserIntentEnum.LookOnEvent == passerIntent)
         {
-            yield return new WaitForSeconds(UnityEngine.Random.Range(10, 40));
-            int expression = UnityEngine.Random.Range(1, 7);
-            SetExpression((CharacterExpressionCpt.CharacterExpressionEnum)expression, 2);
+            yield return new WaitForSeconds(UnityEngine.Random.Range(10, 60));
+            //int expression = UnityEngine.Random.Range(1, 7);
+            //SetExpression((CharacterExpressionCpt.CharacterExpressionEnum)expression, 2);
+            int shoutId= Random.Range(13301, 13306);     
+            SetShout(GameCommonInfo.GetUITextById(shoutId));
         }
     }
 }

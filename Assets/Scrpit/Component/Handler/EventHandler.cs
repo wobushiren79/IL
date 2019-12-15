@@ -2,7 +2,9 @@
 using UnityEditor;
 using System.Collections.Generic;
 
-public class EventHandler : BaseHandler, UIGameText.ICallBack
+public class EventHandler : BaseHandler,
+    UIGameText.ICallBack,
+    IBaseObserver
 {
     public enum EventTypeEnum
     {
@@ -35,9 +37,14 @@ public class EventHandler : BaseHandler, UIGameText.ICallBack
 
     private EventStatusEnum mEventStatus = EventStatusEnum.EventEnd;
     private EventTypeEnum mEventType;
-    private Vector3 mEventPosition=Vector3.zero;
+    private Vector3 mEventPosition = Vector3.zero;
 
     private StoryInfoBean mStoryInfo;
+
+    private void Awake()
+    {
+        miniGameCombatHandler.AddObserver(this);
+    }
 
     /// <summary>
     /// 调查事件触发
@@ -56,7 +63,7 @@ public class EventHandler : BaseHandler, UIGameText.ICallBack
     }
 
     /// <summary>
-    /// 对话时间触发
+    /// 对话事件触发
     /// </summary>
     /// <param name="markId"></param>
     public void EventTriggerForTalk(long userId, NPCTypeEnum npcType)
@@ -70,7 +77,21 @@ public class EventHandler : BaseHandler, UIGameText.ICallBack
         uiGameText.SetDataForTalk(userId, npcType);
         uiGameText.SetCallBack(this);
     }
-
+    /// <summary>
+    /// 对话事件触发
+    /// </summary>
+    /// <param name="markId"></param>
+    public void EventTriggerForTalk(long markId)
+    {
+        SetEventStatus(EventStatusEnum.EventIng);
+        SetEventType(EventTypeEnum.Talk);
+        //控制模式修改
+        if (controlHandler != null)
+            controlHandler.StopControl();
+        UIGameText uiGameText = (UIGameText)uiManager.OpenUIAndCloseOtherByName(EnumUtil.GetEnumName(UIEnum.GameText));
+        uiGameText.SetData(TextEnum.Talk, markId);
+        uiGameText.SetCallBack(this);
+    }
     /// <summary>
     /// 剧情触发
     /// </summary>
@@ -306,9 +327,10 @@ public class EventHandler : BaseHandler, UIGameText.ICallBack
         switch ((SelectResultTypeEnum)int.Parse(listAddPre[0]))
         {
             case SelectResultTypeEnum.Combat:
-                long[] listEnemyId= StringUtil.SplitBySubstringForArrayLong(listAddPre[2], '|');
-                List<CharacterBean> listEnemyData= npcInfoManager.GetCharacterDataByIds(listEnemyId);
+                long[] listEnemyId = StringUtil.SplitBySubstringForArrayLong(listAddPre[2], '|');
+                List<CharacterBean> listEnemyData = npcInfoManager.GetCharacterDataByIds(listEnemyId);
                 float[] combatPosition = StringUtil.SplitBySubstringForArrayFloat(listAddPre[3], '|');
+                mSelectResultMarkId = long.Parse(listAddPre[4]);
                 MiniGameCombatInit(new Vector3(combatPosition[0], combatPosition[1]), listUserData, listEnemyData);
 
                 break;
@@ -316,7 +338,7 @@ public class EventHandler : BaseHandler, UIGameText.ICallBack
     }
     #endregion
 
-
+    private long mSelectResultMarkId = 0;
     private void MiniGameCombatInit(Vector3 combatPosition, List<CharacterBean> listUserData, List<CharacterBean> listEnemyData)
     {
         MiniGameCombatBean miniGameCombatData = new MiniGameCombatBean();
@@ -327,4 +349,22 @@ public class EventHandler : BaseHandler, UIGameText.ICallBack
         miniGameCombatHandler.InitGame(miniGameCombatData);
         mEventPosition = combatPosition;
     }
+
+    #region 回调处理
+    public void ObserbableUpdate<T>(T observable, int type, params object[] obj) where T : Object
+    {
+        switch (type)
+        {
+            case (int)BaseMiniGameHandler<BaseMiniGameBuilder, MiniGameBaseBean>.MiniGameStatusEnum.Gameing:
+                break;
+            case (int)BaseMiniGameHandler<BaseMiniGameBuilder, MiniGameBaseBean>.MiniGameStatusEnum.GameEnd:
+                break;
+            case (int)BaseMiniGameHandler<BaseMiniGameBuilder, MiniGameBaseBean>.MiniGameStatusEnum.GameClose:
+                controlHandler.StartControl(ControlHandler.ControlEnum.Normal);
+                if (mSelectResultMarkId != 0)
+                    EventTriggerForTalk(mSelectResultMarkId);
+                break;
+        }
+    }
+    #endregion
 }

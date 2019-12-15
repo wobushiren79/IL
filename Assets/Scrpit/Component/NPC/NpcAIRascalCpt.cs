@@ -165,16 +165,16 @@ public class NpcAIRascalCpt : BaseNpcAI, ITextInfoView, IBaseObserver
     /// </summary>
     public void SetIntentForWaitingForReply()
     {
-        //获取文本信息
-        if (characterFavorabilityData.firstMeet)
-        {
-            //获取第一次对话的文本
-            mTextInfoController.GetTextForTalkByFirst(characterFavorabilityData.characterId);
-        }
-        else
-        {
-            mTextInfoController.GetTextForTalkByFavorability(characterFavorabilityData.characterId, characterFavorabilityData.favorability);
-        }
+        ////获取文本信息
+        //if (characterFavorabilityData.firstMeet)
+        //{
+        //    //获取第一次对话的文本
+        //    mTextInfoController.GetTextForTalkByFirst(characterFavorabilityData.characterId);
+        //}
+        //else
+        //{
+        //    mTextInfoController.GetTextForTalkByFavorability(characterFavorabilityData.characterId, characterFavorabilityData.favorability);
+        //}
     }
 
     /// <summary>
@@ -277,7 +277,12 @@ public class NpcAIRascalCpt : BaseNpcAI, ITextInfoView, IBaseObserver
 
     }
 
-    public void GetTextInfoForTalkSuccess(List<TextInfoBean> listData)
+    public void GetTextInfoForTalkByUserIdSuccess(List<TextInfoBean> listData)
+    {
+
+    }
+
+    public void GetTextInfoForTalkByMarkIdSuccess(List<TextInfoBean> listData)
     {
         this.listTextInfoBean = listData;
         if (CheckUtil.ListIsNull(listTextInfoBean))
@@ -286,10 +291,9 @@ public class NpcAIRascalCpt : BaseNpcAI, ITextInfoView, IBaseObserver
             return;
         }
         TextInfoBean textInfo = RandomUtil.GetRandomDataByList(listTextInfoBean);
-       // mEventHandler.EventTriggerForTalk(textInfo.mark_id, textInfo.);
+        // mEventHandler.EventTriggerForTalk(textInfo.mark_id, textInfo.);
         mEventHandler.AddObserver(this);
     }
-
     public void GetTextInfoForStorySuccess(List<TextInfoBean> listData)
     {
 

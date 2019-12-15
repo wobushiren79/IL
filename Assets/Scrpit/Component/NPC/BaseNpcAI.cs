@@ -142,4 +142,13 @@ public class BaseNpcAI : BaseMonoBehaviour
             characterBody.SetEye("character_eye_special_dead", new Color(0, 0, 0), false);
 
     }
+
+    /// <summary>
+    /// 设置喊叫
+    /// </summary>
+    /// <param name="content"></param>
+    public void SetShout(string content)
+    {
+        characterShoutCpt.Shout(content);
+    }
 }

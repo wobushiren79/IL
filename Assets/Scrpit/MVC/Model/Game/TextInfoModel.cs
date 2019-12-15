@@ -16,9 +16,14 @@ public class TextInfoModel : BaseMVCModel
         return mTextInfoService.QueryDataByMarkId(TextEnum.Look, markId);
     }
 
-    public List<TextInfoBean> GetTextForTalk(long userId)
+    public List<TextInfoBean> GetTextForTalkByUserId(long userId)
     {
        return mTextInfoService.QueryDataByUserId(TextEnum.Talk, userId);
+    }
+
+    public List<TextInfoBean> GetTextForTalkByMarkId(long markId)
+    {
+        return mTextInfoService.QueryDataByMarkId(TextEnum.Talk, markId);
     }
 
     public List<TextInfoBean> GetTextForStory(long markId)

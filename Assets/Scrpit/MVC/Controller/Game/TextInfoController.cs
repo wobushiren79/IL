@@ -22,29 +22,20 @@ public class TextInfoController : BaseMVCController<TextInfoModel,ITextInfoView>
             GetView().GetTextInfoFail();
     }
 
-    public void GetTextForTalk(long userId)
+    public void GetTextForTalkByUserId(long userId)
     {
-        List<TextInfoBean> listData = GetModel().GetTextForTalk(userId);
+        List<TextInfoBean> listData = GetModel().GetTextForTalkByUserId(userId);
         if (listData != null)
-            GetView().GetTextInfoForTalkSuccess(listData);
+            GetView().GetTextInfoForTalkByUserIdSuccess(listData);
         else
             GetView().GetTextInfoFail();
     }
 
-    public void GetTextForTalkByFavorability(long characterId,int favorability)
+    public void GetTextForTalkByMarkId(long markId)
     {
-        List<TextInfoBean> listData = GetModel().GetTextForTalkByFavorability(characterId, favorability);
+        List<TextInfoBean> listData = GetModel().GetTextForTalkByMarkId(markId);
         if (listData != null)
-            GetView().GetTextInfoForTalkSuccess(listData);
-        else
-            GetView().GetTextInfoFail();
-    }
-
-    public void GetTextForTalkByFirst(long characterId)
-    {
-        List<TextInfoBean> listData = GetModel().GetTextForTalkByFirst(characterId);
-        if (listData != null)
-            GetView().GetTextInfoForTalkSuccess(listData);
+            GetView().GetTextInfoForTalkByMarkIdSuccess(listData);
         else
             GetView().GetTextInfoFail();
     }
