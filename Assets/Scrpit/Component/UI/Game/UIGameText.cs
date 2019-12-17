@@ -112,6 +112,7 @@ public class UIGameText : BaseUIComponent, ITextInfoView
 
     public void SetDataForTalk(long userId, NPCTypeEnum npcType)
     {
+        GameDataManager gameDataManager=  GetUIMananger<UIGameManager>().gameDataManager;
         mTextEnum = TextEnum.Talk;
         textOrder = 1;
         listTextData = new List<TextInfoBean>();
@@ -120,7 +121,10 @@ public class UIGameText : BaseUIComponent, ITextInfoView
             case NPCTypeEnum.RecruitTown:
                 listTextData.Add(new TextInfoBean(0, GameCommonInfo.GetUITextById(99101)));
                 listTextData.Add(new TextInfoBean(1, GameCommonInfo.GetUITextById(99102)));
-                listTextData.Add(new TextInfoBean(1, GameCommonInfo.GetUITextById(99104)));
+                if (!gameDataManager.gameData.CheckHasWorker(userId))
+                {
+                    listTextData.Add(new TextInfoBean(1, GameCommonInfo.GetUITextById(99104)));
+                }
                 listTextData.Add(new TextInfoBean(1, GameCommonInfo.GetUITextById(99103)));
                 break;
         }

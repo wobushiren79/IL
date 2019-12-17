@@ -337,6 +337,23 @@ public class GameDataBean
     }
 
     /// <summary>
+    /// 检测是否拥有该ID的角色
+    /// </summary>
+    /// <param name="characterId"></param>
+    /// <returns></returns>
+    public bool CheckHasWorker(long characterId)
+    {
+        foreach (CharacterBean characterData in listWorkerCharacter)
+        {
+            if(characterData.baseInfo.characterId.Equals(characterId+""))
+            {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /// <summary>
     /// 检测是否已经触发过该事件
     /// </summary>
     /// <param name="eventId"></param>
