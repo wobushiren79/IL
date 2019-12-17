@@ -61,7 +61,7 @@ public class BaseMiniGameHandler<B, D> : BaseHandler, UIMiniGameCountDown.ICallB
     {
         SetMiniGameStatus(MiniGameStatusEnum.Gameing);
         //通知 游戏开始
-        NotifyAllObserver((int)MiniGameStatusEnum.Gameing);
+        NotifyAllObserver((int)MiniGameStatusEnum.Gameing, miniGameData);
     }
 
 
@@ -102,7 +102,7 @@ public class BaseMiniGameHandler<B, D> : BaseHandler, UIMiniGameCountDown.ICallB
                 uiMiniGameEnd.SetCallBack(this);
             });
             //通知 游戏结束
-            NotifyAllObserver((int)MiniGameStatusEnum.GameEnd);
+            NotifyAllObserver((int)MiniGameStatusEnum.GameEnd, miniGameData);
         }
     }
     public virtual void EndGame(bool isWinGame)
@@ -164,7 +164,7 @@ public class BaseMiniGameHandler<B, D> : BaseHandler, UIMiniGameCountDown.ICallB
     public void OnClickClose()
     {
         //通知 关闭游戏
-        NotifyAllObserver((int)MiniGameStatusEnum.GameClose);
+        NotifyAllObserver((int)MiniGameStatusEnum.GameClose, miniGameData);
     }
     #endregion
 }

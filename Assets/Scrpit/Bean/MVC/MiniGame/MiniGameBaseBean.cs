@@ -18,11 +18,19 @@ public class MiniGameBaseBean
     public int winMoneyM;//胜利的金钱
     public int winMoneyL;//胜利的金钱
 
+
     //游戏结果 0输 1赢
     public int gameResult;
+    //结果之后的ID
+    public long gameResultWinStoryId;
+    public long gameResultLoseStoryId;
+    public long gameResultWinTalkMarkId;
+    public long gameResultLoseTalkMarkId;
 
     //奖励道具
     public Dictionary<long, int> listRewardItem = new Dictionary<long, int>();
+    //奖励的角色
+    public List<long> listRewardCharacter = new List<long>();
 
     //玩家数据
     public List<MiniGameCharacterBean> listUserGameData = new List<MiniGameCharacterBean>();

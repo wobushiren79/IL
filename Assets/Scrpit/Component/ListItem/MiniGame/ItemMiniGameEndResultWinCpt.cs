@@ -5,6 +5,7 @@ public class ItemMiniGameEndResultWinCpt : BaseMonoBehaviour
 {
     public Text tvContent;
     public Image ivIcon;
+    public CharacterUICpt characterUI;
 
     /// <summary>
     /// 设置图标
@@ -12,7 +13,10 @@ public class ItemMiniGameEndResultWinCpt : BaseMonoBehaviour
     /// <param name="spIcon"></param>
     public void SetIcon(Sprite spIcon)
     {
-        if (ivIcon != null && spIcon != null)
+        if (ivIcon == null)
+            return;
+        ivIcon.gameObject.SetActive(true);
+        if (spIcon != null)
             ivIcon.sprite = spIcon;
     }
 
@@ -24,5 +28,17 @@ public class ItemMiniGameEndResultWinCpt : BaseMonoBehaviour
     {
         if (tvContent != null)
             tvContent.text = content;
+    }
+
+    /// <summary>
+    /// 设置角色形象
+    /// </summary>
+    public void SetCharacterUI(CharacterBean characterData)
+    {
+        if (characterUI == null)
+            return;
+        characterUI.gameObject.SetActive(true);
+        if (characterData != null)
+            characterUI.SetCharacterData(characterData.body, characterData.equips);
     }
 }

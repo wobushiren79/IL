@@ -21,7 +21,7 @@ public class NpcWorkerBuilder : BaseMonoBehaviour
         {
             return;
         }
-        List<CharacterBean> listAllWork = gameDataManager.gameData.workCharacterList;
+        List<CharacterBean> listAllWork = gameDataManager.gameData.listWorkerCharacter;
         if (gameDataManager.gameData.userCharacter.baseInfo.isAttendance)
         {
             BuildWork(gameDataManager.gameData.userCharacter);

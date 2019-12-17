@@ -133,6 +133,7 @@ public class UIMiniGameEnd : BaseUIComponent
         GameDataManager gameDataManager = GetUIMananger<UIGameManager>().gameDataManager;
         GameItemsManager gameItemsManager = GetUIMananger<UIGameManager>().gameItemsManager;
         CharacterDressManager characterDressManager = GetUIMananger<UIGameManager>().characterDressManager;
+        NpcInfoManager npcInfoManager = GetUIMananger<UIGameManager>().npcInfoManager;
         //通常列表
         string reasonStr = "";
         switch (miniGameData.gameReason)
@@ -158,11 +159,15 @@ public class UIMiniGameEnd : BaseUIComponent
                 //决斗胜利
                 reasonStr = GameCommonInfo.GetUITextById(44);
                 break;
+            case MiniGameReasonEnum.Recruit:
+                //决斗胜利
+                reasonStr = GameCommonInfo.GetUITextById(45);
+                break;
         }
         GameObject objReasonItem = Instantiate(objResultContainer, objResultWinModel);
         ItemMiniGameEndResultWinCpt itemReasonWin = objReasonItem.GetComponent<ItemMiniGameEndResultWinCpt>();
         itemReasonWin.SetContent(reasonStr);
-
+        itemReasonWin.SetIcon(null);
         //遍历奖励列表
         foreach (var itemReward in miniGameData.listRewardItem)
         {
@@ -195,8 +200,21 @@ public class UIMiniGameEnd : BaseUIComponent
             {
                 gameDataManager.gameData.AddNewItems(itemReward.Key, 1);
             }
-
         }
+        //遍历奖励人物
+        if (miniGameData.listRewardCharacter != null)
+        {
+            foreach (long rewardCharacterId in miniGameData.listRewardCharacter)
+            {
+                GameObject objItem = Instantiate(objResultContainer, objResultWinModel);
+                ItemMiniGameEndResultWinCpt itemWin = objItem.GetComponent<ItemMiniGameEndResultWinCpt>();
+                CharacterBean characterData = npcInfoManager.GetCharacterDataById(rewardCharacterId);
+                itemWin.SetCharacterUI(characterData);
+                itemWin.SetContent(GameCommonInfo.GetUITextById(53) + " " + characterData.baseInfo.name);
+                gameDataManager.gameData.AddWorkCharacter(characterData);
+            }
+        }
+
     }
 
     /// <summary>

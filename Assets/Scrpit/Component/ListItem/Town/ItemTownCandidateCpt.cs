@@ -34,7 +34,7 @@ public class ItemTownCandidateCpt : ItemGameBaseCpt, DialogView.IDialogCallBack
         //检测是否超过人员上限
         if (gameDataManager == null)
             return;
-        if (gameDataManager.gameData.workCharacterList.Count >= gameDataManager.gameData.workerNumberLimit)
+        if (gameDataManager.gameData.listWorkerCharacter.Count >= gameDataManager.gameData.workerNumberLimit)
         {
             toastManager.ToastHint(GameCommonInfo.GetUITextById(1051));
             return;
@@ -134,7 +134,7 @@ public class ItemTownCandidateCpt : ItemGameBaseCpt, DialogView.IDialogCallBack
             return;
         }
         gameDataManager.gameData.PayMoney(characterData.baseInfo.priceL, characterData.baseInfo.priceM, characterData.baseInfo.priceS);
-        gameDataManager.gameData.workCharacterList.Add(characterData);
+        gameDataManager.gameData.listWorkerCharacter.Add(characterData);
         GetUIComponent<UITownRecruitment>().RemoveCandidate(characterData);
     }
 

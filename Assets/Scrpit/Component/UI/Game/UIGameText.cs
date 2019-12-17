@@ -244,6 +244,8 @@ public class UIGameText : BaseUIComponent, ITextInfoView
     /// <param name="textData"></param>
     public void SelectText(TextInfoBean textData)
     {
+        GameDataManager gameDataManager = GetUIMananger<UIGameManager>().gameDataManager;
+        ToastManager toastManager = GetUIMananger<UIGameManager>().toastManager;
         switch (mTextEnum)
         {
             case TextEnum.Story:
@@ -264,8 +266,15 @@ public class UIGameText : BaseUIComponent, ITextInfoView
                 else if (textData.content.Equals(GameCommonInfo.GetUITextById(99104)))
                 {
                     //招募
-                    listTextData = RandomUtil.GetRandomDataByDictionary(mapTalkRecruitData);
-                    NextText(1);
+                    if (gameDataManager.gameData.CheckIsMaxWorker())
+                    {
+                        toastManager.ToastHint(GameCommonInfo.GetUITextById(1051));
+                    }
+                    else
+                    {
+                        listTextData = RandomUtil.GetRandomDataByDictionary(mapTalkRecruitData);
+                        NextText(1);
+                    } 
                 }
                 else if (textData.content.Equals(GameCommonInfo.GetUITextById(99105)))
                 {

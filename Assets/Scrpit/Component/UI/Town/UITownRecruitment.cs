@@ -80,7 +80,7 @@ public class UITownRecruitment : UIBaseOne
         GameDataManager gameDataManager = GetUIMananger<UIGameManager>().gameDataManager;
         if (gameDataManager != null && tvNumber != null)
         {
-            tvNumber.text = gameDataManager.gameData.workCharacterList.Count + "/" + gameDataManager.gameData.workerNumberLimit;
+            tvNumber.text = gameDataManager.gameData.listWorkerCharacter.Count + "/" + gameDataManager.gameData.workerNumberLimit;
         }
     }
 

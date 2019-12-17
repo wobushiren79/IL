@@ -38,7 +38,7 @@ public class CombatPowerView : BaseMonoBehaviour, StrengthTestView.ICallBack
     {
         resultsAccuracy = 0;
         resultsForce = 0;
-        float moveSpeed = 5f -(float)force/20f;
+        float moveSpeed = 6f -(float)force/20f;
         if (moveSpeed < 0.1f)
             moveSpeed = 0.1f;
         strengthTestForAccuracy.SetData( GameCommonInfo.GetUITextById(51),moveSpeed);

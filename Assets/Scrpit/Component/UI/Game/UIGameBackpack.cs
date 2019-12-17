@@ -20,9 +20,9 @@ public class UIGameBackpack : UIBaseOne
         UIGameManager uiGameManager = GetUIMananger<UIGameManager>();
         if (uiGameManager.gameItemsManager == null || uiGameManager.gameDataManager == null)
             return;
-        for (int i = 0; i < uiGameManager.gameDataManager.gameData.itemsList.Count; i++)
+        for (int i = 0; i < uiGameManager.gameDataManager.gameData.listItems.Count; i++)
         {
-            ItemBean itemBean = uiGameManager.gameDataManager.gameData.itemsList[i];
+            ItemBean itemBean = uiGameManager.gameDataManager.gameData.listItems[i];
             ItemsInfoBean itemsInfoBean = uiGameManager.gameItemsManager.GetItemsById(itemBean.itemId);
             if (itemsInfoBean == null)
                 continue;

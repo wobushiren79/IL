@@ -17,17 +17,18 @@ public class GameDataBean
     public InnAttributesBean innAttributes;//客栈属性
 
     public CharacterBean userCharacter = new CharacterBean();// 老板
-    public List<CharacterBean> workCharacterList = new List<CharacterBean>();//员工
+    public List<CharacterBean> listWorkerCharacter = new List<CharacterBean>();//员工
+
     public InnBuildBean innBuildData;//客栈建筑数据
     public TimeBean gameTime = new TimeBean();//游戏时间
     public UserAchievementBean userAchievement;
 
-    public List<ItemBean> buildList = new List<ItemBean>();//所拥有的建筑材料
-    public List<ItemBean> itemsList = new List<ItemBean>();//所拥有的装备
-    public List<MenuOwnBean> menuList = new List<MenuOwnBean>();//所拥有的菜单
+    public List<ItemBean> listBuild = new List<ItemBean>();//所拥有的建筑材料
+    public List<ItemBean> listItems = new List<ItemBean>();//所拥有的装备
+    public List<MenuOwnBean> listMenu = new List<MenuOwnBean>();//所拥有的菜单
 
-    public List<CharacterFavorabilityBean> characterFavorabilityList = new List<CharacterFavorabilityBean>();//角色好感度
-    public List<long> triggeredEventList = new List<long>();//触发过的事件
+    public List<CharacterFavorabilityBean> listCharacterFavorability = new List<CharacterFavorabilityBean>();//角色好感度
+    public List<long> listTriggeredEvent = new List<long>();//触发过的事件
 
     public long ingOilsalt;//油盐
     public long ingMeat;//肉类
@@ -38,86 +39,17 @@ public class GameDataBean
     public long ingWaterwine;//酒水
     public long ingFlour;//面粉
 
-    public int workerNumberLimit = 5;//员工人员招聘上限
+    public int workerNumberLimit = 3;//员工人员招聘上限
 
     public WeatherBean weatherToday;//当天天气
 
     /// <summary>
-    /// 获取所有人员信息
+    /// 增加工作员工
     /// </summary>
-    /// <returns></returns>
-    public List<CharacterBean> GetAllCharacterData()
+    /// <param name="characterData"></param>
+    public void AddWorkCharacter(CharacterBean characterData)
     {
-        List<CharacterBean> listData = new List<CharacterBean>();
-        if (userCharacter != null)
-            listData.Add(userCharacter);
-        if (workCharacterList != null)
-            listData.AddRange(workCharacterList);
-        return listData;
-    }
-
-    /// <summary>
-    /// 添加事件
-    /// </summary>
-    /// <param name="eventId"></param>
-    public void AddTraggeredEvent(long eventId)
-    {
-        if (!CheckTriggeredEvent(eventId))
-        {
-            triggeredEventList.Add(eventId);
-        }
-    }
-
-    /// <summary>
-    /// 检测是否已经触发过该事件
-    /// </summary>
-    /// <param name="eventId"></param>
-    /// <returns></returns>
-    public bool CheckTriggeredEvent(long eventId)
-    {
-        return triggeredEventList.Contains(eventId);
-    }
-
-    /// <summary>
-    /// 通过角色ID获取该角色好感度
-    /// </summary>
-    /// <param name="id"></param>
-    /// <returns></returns>
-    public CharacterFavorabilityBean GetFavorabilityDataById(long characterId)
-    {
-        foreach (CharacterFavorabilityBean itemData in characterFavorabilityList)
-        {
-            if (itemData.characterId == characterId)
-            {
-                return itemData;
-            }
-        }
-        CharacterFavorabilityBean favorabilityData = new CharacterFavorabilityBean(characterId);
-        characterFavorabilityList.Add(favorabilityData);
-        return favorabilityData;
-    }
-
-    /// <summary>
-    /// 获取成就数据
-    /// </summary>
-    /// <returns></returns>
-    public UserAchievementBean GetAchievementData()
-    {
-        if (userAchievement == null)
-            userAchievement = new UserAchievementBean();
-        return userAchievement;
-    }
-
-    /// <summary>
-    /// 获取客栈属性数据
-    /// </summary>
-    /// <returns></returns>
-    public InnAttributesBean GetInnAttributesData()
-    {
-        if (innAttributes == null)
-            innAttributes = new InnAttributesBean();
-        innAttributes.RefreshRichNess(menuList);
-        return innAttributes;
+        listWorkerCharacter.Add(characterData);
     }
 
     /// <summary>
@@ -154,6 +86,120 @@ public class GameDataBean
     }
 
     /// <summary>
+    /// 添加事件
+    /// </summary>
+    /// <param name="eventId"></param>
+    public void AddTraggeredEvent(long eventId)
+    {
+        if (!CheckTriggeredEvent(eventId))
+        {
+            listTriggeredEvent.Add(eventId);
+        }
+    }
+
+    /// <summary>
+    /// 增加菜谱
+    /// </summary>
+    /// <param name="menuId"></param>
+    /// <returns></returns>
+    public bool AddFoodMenu(long menuId)
+    {
+        //检测是否已经学过
+        foreach (MenuOwnBean itemData in listMenu)
+        {
+            if (itemData.menuId == menuId)
+            {
+                return false;
+            }
+        }
+        MenuOwnBean menuOwn = new MenuOwnBean
+        {
+            menuId = menuId
+        };
+        listMenu.Add(menuOwn);
+        return true;
+    }
+
+    /// <summary>
+    /// 增加一个新的道具
+    /// </summary>
+    /// <param name="id"></param>
+    public void AddNewItems(long id, long number)
+    {
+        ItemBean itemBean = new ItemBean(id, 1);
+        listItems.Add(itemBean);
+    }
+
+    /// <summary>
+    /// 增加金钱
+    /// </summary>
+    /// <param name="getMoneyL"></param>
+    /// <param name="getMoneyM"></param>
+    /// <param name="getMoneyS"></param>
+    public void AddMoney(long priceL, long priceM, long priceS)
+    {
+        moneyL += priceL;
+        moneyM += priceM;
+        moneyS += priceS;
+    }
+
+    /// <summary>
+    /// 获取所有人员信息
+    /// </summary>
+    /// <returns></returns>
+    public List<CharacterBean> GetAllCharacterData()
+    {
+        List<CharacterBean> listData = new List<CharacterBean>();
+        if (userCharacter != null)
+            listData.Add(userCharacter);
+        if (listWorkerCharacter != null)
+            listData.AddRange(listWorkerCharacter);
+        return listData;
+    }
+
+    /// <summary>
+    /// 通过角色ID获取该角色好感度
+    /// </summary>
+    /// <param name="id"></param>
+    /// <returns></returns>
+    public CharacterFavorabilityBean GetFavorabilityDataById(long characterId)
+    {
+        foreach (CharacterFavorabilityBean itemData in listCharacterFavorability)
+        {
+            if (itemData.characterId == characterId)
+            {
+                return itemData;
+            }
+        }
+        CharacterFavorabilityBean favorabilityData = new CharacterFavorabilityBean(characterId);
+        listCharacterFavorability.Add(favorabilityData);
+        return favorabilityData;
+    }
+
+    /// <summary>
+    /// 获取成就数据
+    /// </summary>
+    /// <returns></returns>
+    public UserAchievementBean GetAchievementData()
+    {
+        if (userAchievement == null)
+            userAchievement = new UserAchievementBean();
+        return userAchievement;
+    }
+
+    /// <summary>
+    /// 获取客栈属性数据
+    /// </summary>
+    /// <returns></returns>
+    public InnAttributesBean GetInnAttributesData()
+    {
+        if (innAttributes == null)
+            innAttributes = new InnAttributesBean();
+        innAttributes.RefreshRichNess(listMenu);
+        return innAttributes;
+    }
+
+    /// <summary>
     /// 获取建筑数据
     /// </summary>
     /// <returns></returns>
@@ -171,9 +217,9 @@ public class GameDataBean
     public List<MenuOwnBean> GetSellMenuList()
     {
         List<MenuOwnBean> listData = new List<MenuOwnBean>();
-        for (int i = 0; i < menuList.Count; i++)
+        for (int i = 0; i < listMenu.Count; i++)
         {
-            MenuOwnBean itemData = menuList[i];
+            MenuOwnBean itemData = listMenu[i];
             if (itemData.isSell)
             {
                 listData.Add(itemData);
@@ -189,9 +235,9 @@ public class GameDataBean
     /// <returns></returns>
     public MenuOwnBean GetMenuById(long id)
     {
-        for (int i = 0; i < menuList.Count; i++)
+        for (int i = 0; i < listMenu.Count; i++)
         {
-            MenuOwnBean itemData = menuList[i];
+            MenuOwnBean itemData = listMenu[i];
             if (itemData.menuId == id)
             {
                 return itemData;
@@ -206,25 +252,98 @@ public class GameDataBean
     /// <returns></returns>
     public List<MenuOwnBean> GetMenuList()
     {
-        return menuList;
+        return listMenu;
     }
 
     /// <summary>
-    /// 修改食物销售数量
+    /// 获取某一物品数量
     /// </summary>
-    /// <param name="number"></param>
-    /// <param name="menuId"></param>
-    public void ChangeMenuSellNumber(long number, long menuId)
+    /// <param name="itemId"></param>
+    /// <returns></returns>
+    /// 
+    public long GetItemsNumber(long itemId)
     {
-        for (int i = 0; i < menuList.Count; i++)
+        return GetNumber(itemId, listItems);
+    }
+
+    /// <summary>
+    /// 获取建筑材料数量
+    /// </summary>
+    /// <param name="itemId"></param>
+    /// <returns></returns>
+    public long GetBuildNumber(long itemId)
+    {
+        return GetNumber(itemId, listBuild);
+    }
+
+    public long GetNumber(long itemId, List<ItemBean> listData)
+    {
+        long number = 0;
+        for (int i = 0; i < listData.Count; i++)
         {
-            MenuOwnBean itemData = menuList[i];
-            if (itemData.menuId == menuId)
+            ItemBean itemData = listData[i];
+            if (itemId == itemData.itemId)
             {
-                itemData.sellNumber += number;
-                return;
+                number += itemData.itemNumber;
             }
         }
+        return number;
+    }
+
+    /// <summary>
+    /// 获取客栈等级
+    /// </summary>
+    /// <param name="levelTitle"></param>
+    /// <param name="levelStar"></param>
+    /// <returns></returns>
+    public string GetInnLevel(out int levelTitle, out int levelStar)
+    {
+        levelStar = (innLevel % 10);
+        levelTitle = (innLevel % 100) / 10;
+        string levelTitleStr = "";
+        string levelStarStr = "";
+        switch (levelTitle)
+        {
+            case 1:
+                levelTitleStr = GameCommonInfo.GetUITextById(2007);
+                break;
+            case 2:
+                levelTitleStr = GameCommonInfo.GetUITextById(2008);
+                break;
+            case 3:
+                levelTitleStr = GameCommonInfo.GetUITextById(2009);
+                break;
+        }
+
+        switch (levelStar)
+        {
+            case 1:
+                levelStarStr = GameCommonInfo.GetUITextById(2010);
+                break;
+            case 2:
+                levelStarStr = GameCommonInfo.GetUITextById(2011);
+                break;
+            case 3:
+                levelStarStr = GameCommonInfo.GetUITextById(2012);
+                break;
+            case 4:
+                levelStarStr = GameCommonInfo.GetUITextById(2013);
+                break;
+            case 5:
+                levelStarStr = GameCommonInfo.GetUITextById(2014);
+                break;
+        }
+        return levelTitleStr + levelStarStr;
+    }
+
+    /// <summary>
+    /// 检测是否已经触发过该事件
+    /// </summary>
+    /// <param name="eventId"></param>
+    /// <returns></returns>
+    public bool CheckTriggeredEvent(long eventId)
+    {
+        return listTriggeredEvent.Contains(eventId);
     }
 
     /// <summary>
@@ -270,6 +389,77 @@ public class GameDataBean
     }
 
     /// <summary>
+    /// 检测是否超过最大限制工作人员
+    /// </summary>
+    /// <returns></returns>
+    public bool CheckIsMaxWorker()
+    {
+        if ( listWorkerCharacter.Count>= workerNumberLimit)
+        {
+            return true;
+        }
+        return false;
+    }
+
+    /// <summary>
+    /// 修改食物销售数量
+    /// </summary>
+    /// <param name="number"></param>
+    /// <param name="menuId"></param>
+    public void ChangeMenuSellNumber(long number, long menuId)
+    {
+        for (int i = 0; i < listMenu.Count; i++)
+        {
+            MenuOwnBean itemData = listMenu[i];
+            if (itemData.menuId == menuId)
+            {
+                itemData.sellNumber += number;
+                return;
+            }
+        }
+    }
+
+    /// <summary>
+    /// 修改建筑材料数量
+    /// </summary>
+    public void ChangeBuildNumber(long buildId, long number)
+    {
+        ChangeItem(buildId, number, listBuild);
+    }
+
+    /// <summary>
+    /// 修改道具数量
+    /// </summary>
+    public void ChangeItemsNumber(long itemsId, long number)
+    {
+        ChangeItem(itemsId, number, listItems);
+    }
+
+    public void ChangeItem(long buildId, long number, List<ItemBean> list)
+    {
+        bool hasData = false;
+        for (int i = 0; i < list.Count; i++)
+        {
+            ItemBean item = list[i];
+            if (item.itemId == buildId)
+            {
+                hasData = true;
+                item.itemNumber += number;
+                if (item.itemNumber <= 0)
+                {
+                    item.itemNumber = 0;
+                    list.RemoveAt(i);
+                    i--;
+                }
+                break;
+            }
+        }
+        if (!hasData && number > 0)
+        {
+            list.Add(new ItemBean(buildId, number));
+        }
+    }
+    /// <summary>
     /// 扣除食材
     /// </summary>
     /// <param name="foodData"></param>
@@ -299,57 +489,6 @@ public class GameDataBean
             ingWaterwine = 0;
         if (ingFlour < 0)
             ingFlour = 0;
-    }
-
-    /// <summary>
-    /// 修改建筑材料数量
-    /// </summary>
-    public void ChangeBuildNumber(long buildId, long number)
-    {
-        ChangeItem(buildId, number, buildList);
-    }
-
-    /// <summary>
-    /// 修改道具数量
-    /// </summary>
-    public void ChangeItemsNumber(long itemsId, long number)
-    {
-        ChangeItem(itemsId, number, itemsList);
-    }
-
-    public void ChangeItem(long buildId, long number, List<ItemBean> list)
-    {
-        bool hasData = false;
-        for (int i = 0; i < list.Count; i++)
-        {
-            ItemBean item = list[i];
-            if (item.itemId == buildId)
-            {
-                hasData = true;
-                item.itemNumber += number;
-                if (item.itemNumber <= 0)
-                {
-                    item.itemNumber = 0;
-                    list.RemoveAt(i);
-                    i--;
-                }
-                break;
-            }
-        }
-        if (!hasData && number > 0)
-        {
-            list.Add(new ItemBean(buildId, number));
-        }
-    }
-
-    /// <summary>
-    /// 增加一个新的道具
-    /// </summary>
-    /// <param name="id"></param>
-    public void AddNewItems(long id, long number)
-    {
-        ItemBean itemBean = new ItemBean(id, 1);
-        itemsList.Add(itemBean);
     }
 
     /// <summary>
@@ -401,19 +540,6 @@ public class GameDataBean
     }
 
     /// <summary>
-    /// 增加金钱
-    /// </summary>
-    /// <param name="getMoneyL"></param>
-    /// <param name="getMoneyM"></param>
-    /// <param name="getMoneyS"></param>
-    public void AddMoney(long priceL, long priceM, long priceS)
-    {
-        moneyL += priceL;
-        moneyM += priceM;
-        moneyS += priceS;
-    }
-
-    /// <summary>
     /// 支付公会勋章
     /// </summary>
     /// <param name="coin"></param>
@@ -424,108 +550,5 @@ public class GameDataBean
             guildCoin = 0;
     }
 
-    /// <summary>
-    /// 获取某一物品数量
-    /// </summary>
-    /// <param name="itemId"></param>
-    /// <returns></returns>
-    /// 
-    public long GetItemsNumber(long itemId)
-    {
-        return GetNumber(itemId, itemsList);
-    }
-
-    /// <summary>
-    /// 获取建筑材料数量
-    /// </summary>
-    /// <param name="itemId"></param>
-    /// <returns></returns>
-    public long GetBuildNumber(long itemId)
-    {
-        return GetNumber(itemId, buildList);
-    }
-
-    public long GetNumber(long itemId, List<ItemBean> listData)
-    {
-        long number = 0;
-        for (int i = 0; i < listData.Count; i++)
-        {
-            ItemBean itemData = listData[i];
-            if (itemId == itemData.itemId)
-            {
-                number += itemData.itemNumber;
-            }
-        }
-        return number;
-    }
-
-    /// <summary>
-    /// 增加菜谱
-    /// </summary>
-    /// <param name="menuId"></param>
-    /// <returns></returns>
-    public bool AddFoodMenu(long menuId)
-    {
-        //检测是否已经学过
-        foreach (MenuOwnBean itemData in menuList)
-        {
-            if (itemData.menuId == menuId)
-            {
-                return false;
-            }
-        }
-        MenuOwnBean menuOwn = new MenuOwnBean
-        {
-            menuId = menuId
-        };
-        menuList.Add(menuOwn);
-        return true;
-    }
-
-    /// <summary>
-    /// 获取客栈等级
-    /// </summary>
-    /// <param name="levelTitle"></param>
-    /// <param name="levelStar"></param>
-    /// <returns></returns>
-    public string GetInnLevel(out int levelTitle, out int levelStar)
-    {
-        levelStar = (innLevel % 10);
-        levelTitle = (innLevel % 100) / 10;
-        string levelTitleStr = "";
-        string levelStarStr = "";
-        switch (levelTitle)
-        {
-            case 1:
-                levelTitleStr = GameCommonInfo.GetUITextById(2007);
-                break;
-            case 2:
-                levelTitleStr = GameCommonInfo.GetUITextById(2008);
-                break;
-            case 3:
-                levelTitleStr = GameCommonInfo.GetUITextById(2009);
-                break;
-        }
-
-        switch (levelStar)
-        {
-            case 1:
-                levelStarStr = GameCommonInfo.GetUITextById(2010);
-                break;
-            case 2:
-                levelStarStr = GameCommonInfo.GetUITextById(2011);
-                break;
-            case 3:
-                levelStarStr = GameCommonInfo.GetUITextById(2012);
-                break;
-            case 4:
-                levelStarStr = GameCommonInfo.GetUITextById(2013);
-                break;
-            case 5:
-                levelStarStr = GameCommonInfo.GetUITextById(2014);
-                break;
-        }
-        return levelTitleStr + levelStarStr;
-    }
 
 }

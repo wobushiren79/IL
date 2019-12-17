@@ -93,13 +93,13 @@ public class UIGameBuild : BaseUIComponent
             return;
         if (gameDataManager.gameData == null)
             return;
-        if (gameDataManager.gameData.buildList == null)
+        if (gameDataManager.gameData.listBuild == null)
             return;
         CptUtil.RemoveChildsByActive(listBuildContent.transform);
 
-        for (int i = 0; i < gameDataManager.gameData.buildList.Count; i++)
+        for (int i = 0; i < gameDataManager.gameData.listBuild.Count; i++)
         {
-            ItemBean itemData = gameDataManager.gameData.buildList[i];
+            ItemBean itemData = gameDataManager.gameData.listBuild[i];
             BuildItemBean buildData = innBuildManager.GetBuildDataById(itemData.itemId);
             if (buildData == null)
                 continue;

@@ -78,7 +78,7 @@ public class UIGameMenu : BaseUIComponent
         if (gameDataManager == null || innFoodManager == null)
             return;
         CptUtil.RemoveChildsByActive(objFoodListContent.transform);
-        List<MenuOwnBean> listMenu = gameDataManager.gameData.menuList;
+        List<MenuOwnBean> listMenu = gameDataManager.gameData.listMenu;
 
         for (int i = 0; i < listMenu.Count; i++)
         {

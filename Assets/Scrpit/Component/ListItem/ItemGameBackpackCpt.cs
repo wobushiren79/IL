@@ -198,7 +198,7 @@ public class ItemGameBackpackCpt : ItemGameBaseCpt, IPointerClickHandler, ItemsS
         GameDataManager gameDataManager = GetUIManager<UIGameManager>().gameDataManager;
         gameObject.transform.DOLocalMove(new Vector3(0, 0), 0.2f).SetEase(Ease.InCirc).OnComplete(delegate
         {
-            gameDataManager.gameData.itemsList.Remove(itemBean);
+            gameDataManager.gameData.listItems.Remove(itemBean);
             Destroy(gameObject);
         });
     }

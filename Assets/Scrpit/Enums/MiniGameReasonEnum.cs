@@ -6,4 +6,5 @@ public enum MiniGameReasonEnum
 {
     Improve,//晋升
     Fight,//比斗
+    Recruit,//招募
 }

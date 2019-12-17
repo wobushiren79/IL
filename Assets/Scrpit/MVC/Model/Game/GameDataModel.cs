@@ -44,10 +44,10 @@ public class GameDataModel : BaseMVCModel
         gameData.userId = userId;
         gameData.moneyS = 1000;
         gameData.innBuildData = new InnBuildBean();
-        gameData.buildList = new List<ItemBean>();
-        gameData.itemsList = new List<ItemBean>();
-        gameData.workCharacterList = new List<CharacterBean>();
-        gameData.menuList = new List<MenuOwnBean>();
+        gameData.listBuild = new List<ItemBean>();
+        gameData.listItems = new List<ItemBean>();
+        gameData.listWorkerCharacter = new List<CharacterBean>();
+        gameData.listMenu = new List<MenuOwnBean>();
 
         gameData.innBuildData.innWidth = 9;
         gameData.innBuildData.innHeight = 9;
@@ -64,21 +64,21 @@ public class GameDataModel : BaseMVCModel
 
         //添加家具
         //TODO 测试 
-        gameData.buildList.Add(new ItemBean(30001, 100));
-        gameData.buildList.Add(new ItemBean(40001, 5));
-        gameData.buildList.Add(new ItemBean(50001, 5));
-        gameData.buildList.Add(new ItemBean(90001, 5));
+        gameData.listBuild.Add(new ItemBean(30001, 100));
+        gameData.listBuild.Add(new ItemBean(40001, 5));
+        gameData.listBuild.Add(new ItemBean(50001, 5));
+        gameData.listBuild.Add(new ItemBean(90001, 5));
         //添加一个员工
         CharacterBean worker = new CharacterBean();
         CharacterBean worker2 = new CharacterBean();
         worker.baseInfo.name = "张三";
         worker2.baseInfo.name = "李四";
-        gameData.workCharacterList.Add(worker);
-        gameData.workCharacterList.Add(worker2);
+        gameData.listWorkerCharacter.Add(worker);
+        gameData.listWorkerCharacter.Add(worker2);
 
         //添加菜单
-        gameData.menuList.Add(new MenuOwnBean(1));
-        gameData.menuList.Add(new MenuOwnBean(10001));
+        gameData.listMenu.Add(new MenuOwnBean(1));
+        gameData.listMenu.Add(new MenuOwnBean(10001));
         gameData.ingOilsalt = 50;
         gameData.ingVegetables = 50;
 

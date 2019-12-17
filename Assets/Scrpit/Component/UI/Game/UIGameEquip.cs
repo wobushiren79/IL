@@ -200,9 +200,9 @@ public class UIGameEquip : BaseUIComponent
         CptUtil.RemoveChildsByActive(objItemContent.transform);
         if (GetUIMananger<UIGameManager>().gameItemsManager == null || GetUIMananger<UIGameManager>().gameDataManager == null)
             return;
-        for (int i = 0; i < GetUIMananger<UIGameManager>().gameDataManager.gameData.itemsList.Count; i++)
+        for (int i = 0; i < GetUIMananger<UIGameManager>().gameDataManager.gameData.listItems.Count; i++)
         {
-            ItemBean itemBean = GetUIMananger<UIGameManager>().gameDataManager.gameData.itemsList[i];
+            ItemBean itemBean = GetUIMananger<UIGameManager>().gameDataManager.gameData.listItems[i];
             ItemsInfoBean itemsInfoBean = GetUIMananger<UIGameManager>().gameItemsManager.GetItemsById(itemBean.itemId);
             if (itemsInfoBean == null)
                 continue;

@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using UnityEditor;
 using System.Collections.Generic;
+using System.Linq;
 
 public class EventHandler : BaseHandler,
     UIGameText.ICallBack,
@@ -324,30 +325,33 @@ public class EventHandler : BaseHandler,
     public void UITextSelectResult(TextInfoBean textData, List<CharacterBean> listUserData)
     {
         List<string> listAddPre = StringUtil.SplitBySubstringForListStr(textData.add_pre, ',');
+        List<long> listRewardCharacter = StringUtil.SplitBySubstringForArrayLong(textData.add_character, ',').ToList();
         switch ((SelectResultTypeEnum)int.Parse(listAddPre[0]))
         {
             case SelectResultTypeEnum.Combat:
-                long[] listEnemyId = StringUtil.SplitBySubstringForArrayLong(listAddPre[2], '|');
-                List<CharacterBean> listEnemyData = npcInfoManager.GetCharacterDataByIds(listEnemyId);
-                float[] combatPosition = StringUtil.SplitBySubstringForArrayFloat(listAddPre[3], '|');
-                mSelectResultMarkId = long.Parse(listAddPre[4]);
-                MiniGameCombatInit(new Vector3(combatPosition[0], combatPosition[1]), listUserData, listEnemyData);
-
+                MiniGameCombatInit(listAddPre, listRewardCharacter, listUserData);
                 break;
         }
     }
     #endregion
 
-    private long mSelectResultMarkId = 0;
-    private void MiniGameCombatInit(Vector3 combatPosition, List<CharacterBean> listUserData, List<CharacterBean> listEnemyData)
+    private void MiniGameCombatInit(List<string> listAddPre, List<long> listRewardCharacter, List<CharacterBean> listUserData)
     {
+        long[] listEnemyId = StringUtil.SplitBySubstringForArrayLong(listAddPre[2], '|');
+        List<CharacterBean> listEnemyData = npcInfoManager.GetCharacterDataByIds(listEnemyId);
+        float[] combatPosition = StringUtil.SplitBySubstringForArrayFloat(listAddPre[3], '|');
+
         MiniGameCombatBean miniGameCombatData = new MiniGameCombatBean();
-        miniGameCombatData.combatPosition = combatPosition;
+        miniGameCombatData.gameReason = MiniGameReasonEnum.Recruit;
+        miniGameCombatData.combatPosition = new Vector3(combatPosition[0], combatPosition[1]);
         miniGameCombatData.winBringDownNumber = listEnemyData.Count;
         miniGameCombatData.winSurvivalNumber = listUserData.Count;
+        miniGameCombatData.gameResultWinTalkMarkId = long.Parse(listAddPre[4]);
+        miniGameCombatData.gameResultLoseTalkMarkId = long.Parse(listAddPre[5]);
+        miniGameCombatData.listRewardCharacter = listRewardCharacter;
         miniGameCombatData.InitData(gameItemsManager, listUserData, listEnemyData);
         miniGameCombatHandler.InitGame(miniGameCombatData);
-        mEventPosition = combatPosition;
+        mEventPosition = miniGameCombatData.combatPosition;
     }
 
     #region 回调处理
@@ -360,9 +364,19 @@ public class EventHandler : BaseHandler,
             case (int)BaseMiniGameHandler<BaseMiniGameBuilder, MiniGameBaseBean>.MiniGameStatusEnum.GameEnd:
                 break;
             case (int)BaseMiniGameHandler<BaseMiniGameBuilder, MiniGameBaseBean>.MiniGameStatusEnum.GameClose:
+                MiniGameBaseBean miniGameData = (MiniGameBaseBean)obj[0];
                 controlHandler.StartControl(ControlHandler.ControlEnum.Normal);
-                if (mSelectResultMarkId != 0)
-                    EventTriggerForTalk(mSelectResultMarkId);
+                if (miniGameData.gameResult == 0)
+                {
+                    if (miniGameData.gameResultLoseTalkMarkId != 0)
+                        EventTriggerForTalk(miniGameData.gameResultLoseTalkMarkId);
+                }
+                else
+                {
+                    if (miniGameData.gameResultWinTalkMarkId != 0)
+                        EventTriggerForTalk(miniGameData.gameResultWinTalkMarkId);
+                }
+
                 break;
         }
     }

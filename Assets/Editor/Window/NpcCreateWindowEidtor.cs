@@ -223,7 +223,7 @@ public class NpcCreateWindowEidtor : EditorWindow
                     itemTalkInfo.select_type = int.Parse(EditorGUILayout.TextArea(itemTalkInfo.select_type + "", GUILayout.Width(50), GUILayout.Height(20)));
                     if (itemTalkInfo.select_type==1)
                     {
-                        GUILayout.Label("好处的前提条件：类型（1战斗），己方人数，敌方角色ID(-分隔),位置xy(-分隔),后续对话markID");
+                        GUILayout.Label("好处的前提条件：类型（1战斗），己方人数，敌方角色ID(-分隔),位置xy(-分隔),后续赢对话markID,后续输对话markID");
 
                         itemTalkInfo.add_pre =EditorGUILayout.TextArea(itemTalkInfo.add_pre + "", GUILayout.Width(300), GUILayout.Height(20));
                         GUILayout.Label("增加的好感：");
