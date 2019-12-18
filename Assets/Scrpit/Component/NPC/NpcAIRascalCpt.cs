@@ -299,6 +299,11 @@ public class NpcAIRascalCpt : BaseNpcAI, ITextInfoView, IBaseObserver
 
     }
 
+    public void GetTextInfoForTalkByFirstMeetSuccess(List<TextInfoBean> listData)
+    {
+
+    }
+
     public void GetTextInfoFail()
     {
 
@@ -333,6 +338,8 @@ public class NpcAIRascalCpt : BaseNpcAI, ITextInfoView, IBaseObserver
             }
         }
     }
+
+
     #endregion
 
 

@@ -110,14 +110,30 @@ public class UIGameText : BaseUIComponent, ITextInfoView
         }
     }
 
+    private long mTalkUserId = 0;
     public void SetDataForTalk(long userId, NPCTypeEnum npcType)
     {
+        this.mTalkUserId = userId;
         GameDataManager gameDataManager=  GetUIMananger<UIGameManager>().gameDataManager;
         mTextEnum = TextEnum.Talk;
         textOrder = 1;
+        CharacterFavorabilityBean characterFavorability = gameDataManager.gameData.GetCharacterFavorability(userId);
+        //如果是小镇居民的第一次对话
+        if (npcType == NPCTypeEnum.Town && characterFavorability.firstMeet)
+        {
+            characterFavorability.firstMeet = false;
+            mTextInfoController.GetTextForTalkByFirstMeet(userId);
+            return;
+        }
         listTextData = new List<TextInfoBean>();
         switch (npcType)
         {
+            case NPCTypeEnum.Town:
+                listTextData.Add(new TextInfoBean(0, GameCommonInfo.GetUITextById(99101)));
+                listTextData.Add(new TextInfoBean(1, GameCommonInfo.GetUITextById(99102)));
+                listTextData.Add(new TextInfoBean(1, GameCommonInfo.GetUITextById(99105)));
+                listTextData.Add(new TextInfoBean(1, GameCommonInfo.GetUITextById(99103)));
+                break;
             case NPCTypeEnum.RecruitTown:
                 listTextData.Add(new TextInfoBean(0, GameCommonInfo.GetUITextById(99101)));
                 listTextData.Add(new TextInfoBean(1, GameCommonInfo.GetUITextById(99102)));
@@ -128,7 +144,7 @@ public class UIGameText : BaseUIComponent, ITextInfoView
                 listTextData.Add(new TextInfoBean(1, GameCommonInfo.GetUITextById(99103)));
                 break;
         }
-        mTextInfoController.GetTextForTalkByUserId(userId);
+        mTextInfoController.GetTextForTalkByMinFavorability(userId, characterFavorability.favorabilityLevel);
     }
 
     /// <summary>
@@ -261,6 +277,11 @@ public class UIGameText : BaseUIComponent, ITextInfoView
                     //对话
                     listTextData = RandomUtil.GetRandomDataByDictionary(mapTalkNormalData);
                     NextText(1);
+                    //增加好感
+                    if (GameCommonInfo.DailyLimitData.AddTalkNpc(mTalkUserId))
+                    {
+                        gameDataManager.gameData.GetCharacterFavorability(mTalkUserId).AddFavorability(1);
+                    }
                 }
                 else if (textData.content.Equals(GameCommonInfo.GetUITextById(99103)))
                 {
@@ -335,6 +356,12 @@ public class UIGameText : BaseUIComponent, ITextInfoView
         ShowText(listTextData);
     }
 
+    public void GetTextInfoForTalkByFirstMeetSuccess(List<TextInfoBean> listData)
+    {
+        listTextData = listData;
+        ShowText(listTextData);
+    }
+
     public void GetTextInfoForTalkByMarkIdSuccess(List<TextInfoBean> listData)
     {
         listTextData = listData;
@@ -351,8 +378,6 @@ public class UIGameText : BaseUIComponent, ITextInfoView
     {
 
     }
-
-
     #endregion
 
     public interface ICallBack

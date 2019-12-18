@@ -158,25 +158,6 @@ public class GameDataBean
     }
 
     /// <summary>
-    /// 通过角色ID获取该角色好感度
-    /// </summary>
-    /// <param name="id"></param>
-    /// <returns></returns>
-    public CharacterFavorabilityBean GetFavorabilityDataById(long characterId)
-    {
-        foreach (CharacterFavorabilityBean itemData in listCharacterFavorability)
-        {
-            if (itemData.characterId == characterId)
-            {
-                return itemData;
-            }
-        }
-        CharacterFavorabilityBean favorabilityData = new CharacterFavorabilityBean(characterId);
-        listCharacterFavorability.Add(favorabilityData);
-        return favorabilityData;
-    }
-
-    /// <summary>
     /// 获取成就数据
     /// </summary>
     /// <returns></returns>
@@ -334,6 +315,25 @@ public class GameDataBean
                 break;
         }
         return levelTitleStr + levelStarStr;
+    }
+
+    /// <summary>
+    /// 获取角色好感数据
+    /// </summary>
+    /// <param name="characterId"></param>
+    /// <returns></returns>
+    public CharacterFavorabilityBean GetCharacterFavorability(long characterId)
+    {
+        foreach (CharacterFavorabilityBean itemData in listCharacterFavorability)
+        {
+            if(itemData.characterId == characterId)
+            {
+                return itemData;
+            }
+        }
+        CharacterFavorabilityBean characterFavorability = new CharacterFavorabilityBean(characterId);
+        listCharacterFavorability.Add(characterFavorability);
+        return characterFavorability;
     }
 
     /// <summary>

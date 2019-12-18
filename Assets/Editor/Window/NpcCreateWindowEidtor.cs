@@ -182,8 +182,23 @@ public class NpcCreateWindowEidtor : EditorWindow
         long removeTalkId = 0;
         foreach (var mapItemTalkInfo in mapNpcTalkInfo)
         {
-            GUILayout.Label("markId：");
             GUILayout.BeginHorizontal();
+            GUILayout.Label("markId：",GUILayout.Width(120), GUILayout.Height(20));
+            long.Parse(EditorGUILayout.TextArea(mapItemTalkInfo.Key + "", GUILayout.Width(100), GUILayout.Height(20)));
+            if (mapItemTalkInfo.Value.Count > 0)
+            {
+                GUILayout.Label("条件-是否第一次对话：", GUILayout.Width(120), GUILayout.Height(20));
+                mapItemTalkInfo.Value[0].condition_first_meet = int.Parse(EditorGUILayout.TextArea(mapItemTalkInfo.Value[0].condition_first_meet + "", GUILayout.Width(50), GUILayout.Height(20)));
+                GUILayout.Label("条件-好感对话：", GUILayout.Width(120), GUILayout.Height(20));
+                mapItemTalkInfo.Value[0].condition_min_favorability = int.Parse(EditorGUILayout.TextArea(mapItemTalkInfo.Value[0].condition_min_favorability + "", GUILayout.Width(50), GUILayout.Height(20)));
+
+            }
+            if (mapItemTalkInfo.Value != null)
+                foreach (TextInfoBean itemTalkInfo in mapItemTalkInfo.Value)
+                {
+                    itemTalkInfo.condition_first_meet = mapItemTalkInfo.Value[0].condition_first_meet;
+                    itemTalkInfo.condition_min_favorability = mapItemTalkInfo.Value[0].condition_min_favorability;
+                }
             if (GUILayout.Button("添加对话", GUILayout.Width(120), GUILayout.Height(20)))
             {
                 TextInfoBean addText = new TextInfoBean();
@@ -192,6 +207,7 @@ public class NpcCreateWindowEidtor : EditorWindow
                 addText.text_id = addText.id;
                 addText.user_id = long.Parse(findIds);
                 addText.valid = 1;
+                addText.text_order = 1;
                 mapItemTalkInfo.Value.Add(addText);
             }
             if (GUILayout.Button("删除markId下所有对话", GUILayout.Width(150), GUILayout.Height(20)))
@@ -200,7 +216,7 @@ public class NpcCreateWindowEidtor : EditorWindow
                 textInfoService.DeleteDataByMarkId(TextEnum.Talk, removeMarkId);
             }
             GUILayout.EndHorizontal();
-            long.Parse(EditorGUILayout.TextArea(mapItemTalkInfo.Key + "", GUILayout.Width(100), GUILayout.Height(20)));
+
             foreach (TextInfoBean itemTalkInfo in mapItemTalkInfo.Value)
             {
                 GUILayout.BeginHorizontal();
@@ -211,21 +227,21 @@ public class NpcCreateWindowEidtor : EditorWindow
                 if (GUILayout.Button("删除对话", GUILayout.Width(120), GUILayout.Height(20)))
                 {
                     removeTalkId = itemTalkInfo.id;
-                    textInfoService.DeleteDataById(TextEnum.Talk,removeTalkId);
+                    textInfoService.DeleteDataById(TextEnum.Talk, removeTalkId);
                 }
                 GUILayout.Label("talkId：");
                 itemTalkInfo.id = long.Parse(EditorGUILayout.TextArea(itemTalkInfo.id + "", GUILayout.Width(150), GUILayout.Height(20)));
                 itemTalkInfo.talk_type = (int)(NPCTypeEnum)EditorGUILayout.EnumPopup((TextTalkTypeEnum)itemTalkInfo.talk_type, GUILayout.Width(100), GUILayout.Height(20));
                 itemTalkInfo.type = (int)(TextInfoTypeEnum)EditorGUILayout.EnumPopup((TextInfoTypeEnum)itemTalkInfo.type, GUILayout.Width(100), GUILayout.Height(20));
-                if (itemTalkInfo.type== (int)TextInfoTypeEnum.Select)
+                if (itemTalkInfo.type == (int)TextInfoTypeEnum.Select)
                 {
                     GUILayout.Label("选择类型：");
                     itemTalkInfo.select_type = int.Parse(EditorGUILayout.TextArea(itemTalkInfo.select_type + "", GUILayout.Width(50), GUILayout.Height(20)));
-                    if (itemTalkInfo.select_type==1)
+                    if (itemTalkInfo.select_type == 1)
                     {
                         GUILayout.Label("好处的前提条件：类型（1战斗），己方人数，敌方角色ID(-分隔),位置xy(-分隔),后续赢对话markID,后续输对话markID");
 
-                        itemTalkInfo.add_pre =EditorGUILayout.TextArea(itemTalkInfo.add_pre + "", GUILayout.Width(300), GUILayout.Height(20));
+                        itemTalkInfo.add_pre = EditorGUILayout.TextArea(itemTalkInfo.add_pre + "", GUILayout.Width(300), GUILayout.Height(20));
                         GUILayout.Label("增加的好感：");
                         itemTalkInfo.add_favorability = int.Parse(EditorGUILayout.TextArea(itemTalkInfo.add_favorability + "", GUILayout.Width(50), GUILayout.Height(20)));
                         GUILayout.Label("增加的金钱：L,M,S");

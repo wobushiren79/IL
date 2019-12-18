@@ -46,7 +46,7 @@ public class NpcEventBuilder : NpcNormalBuilder, IBaseObserver
         GameObject npcObj = BuildNpc(objRascalModel,characterData, npcPosition);
         //设置意图
         NpcAIRascalCpt rascalCpt = npcObj.GetComponent<NpcAIRascalCpt>();
-        CharacterFavorabilityBean characterFavorability= gameDataManager.gameData.GetFavorabilityDataById(long.Parse(characterData.baseInfo.characterId));
+        CharacterFavorabilityBean characterFavorability= gameDataManager.gameData.GetCharacterFavorability(long.Parse(characterData.baseInfo.characterId));
         rascalCpt.SetFavorabilityData(characterFavorability);
         rascalCpt.StartEvil();
     }

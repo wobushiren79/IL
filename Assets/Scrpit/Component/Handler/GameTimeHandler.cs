@@ -99,7 +99,7 @@ public class GameTimeHandler : BaseObservable<IBaseObserver>
         GameCommonInfo.RandomSeed = Random.Range(int.MinValue, int.MaxValue);
         Random.InitState(GameCommonInfo.RandomSeed);
         //解除每日
-        GameCommonInfo.DailyLimitData = new UserDailyLimitBean();
+        GameCommonInfo.DailyLimitData.InitData();
         //初始化时间
         SetTimeStatus(true);
         hour = 6;

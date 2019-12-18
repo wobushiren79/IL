@@ -108,6 +108,11 @@ public class BaseMVCService<T>
 
     public List<T> BaseQueryData(string leftId, string key1, string value1, string key2, string value2)
     {
+        return BaseQueryData( leftId,  key1,"=",  value1,  key2, "=",  value2);
+    }
+
+    public List<T> BaseQueryData(string leftId, string key1, string operation1, string value1, string key2, string operation2, string value2)
+    {
         if (mTableName == null)
         {
             LogUtil.LogError("查询数据失败，没有表名");
@@ -122,11 +127,31 @@ public class BaseMVCService<T>
         string[] mainKey = new string[] { "id" };
         string[] leftKey = new string[] { leftId };
         string[] colName = new string[] { key1, key2 };
-        string[] operations = new string[] { "=", "=" };
+        string[] operations = new string[] { operation1, operation2 };
         string[] colValue = new string[] { value1, value2 };
         return SQliteHandle.LoadTableData<T>(ProjectConfigInfo.DATA_BASE_INFO_NAME, mTableName, leftTable, mainKey, leftKey, colName, operations, colValue);
     }
 
+    public List<T> BaseQueryData(string leftId, string key1, string operation1, string value1, string key2, string operation2, string value2, string key3, string operation3, string value3)
+    {
+        if (mTableName == null)
+        {
+            LogUtil.LogError("查询数据失败，没有表名");
+            return null;
+        }
+        if (mLeftDetailsTableName == null)
+        {
+            LogUtil.LogError("查询数据失败，没有关联的副表");
+            return null;
+        }
+        string[] leftTable = new string[] { mLeftDetailsTableName };
+        string[] mainKey = new string[] { "id" };
+        string[] leftKey = new string[] { leftId };
+        string[] colName = new string[] { key1, key2 ,key3};
+        string[] operations = new string[] { operation1, operation2,operation3 };
+        string[] colValue = new string[] { value1, value2,value3 };
+        return SQliteHandle.LoadTableData<T>(ProjectConfigInfo.DATA_BASE_INFO_NAME, mTableName, leftTable, mainKey, leftKey, colName, operations, colValue);
+    }
     /// <summary>
     /// 通过ID删除数据
     /// </summary>

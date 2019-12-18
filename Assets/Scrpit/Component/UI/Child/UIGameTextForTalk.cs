@@ -193,7 +193,7 @@ public class UIGameTextForTalk : BaseUIChildComponent<UIGameText>
         if (textData.add_favorability != 0)
         {
             UIGameManager uiGameManager = uiComponent.GetUIMananger<UIGameManager>();
-            CharacterFavorabilityBean favorabilityData = uiGameManager.gameDataManager.gameData.GetFavorabilityDataById(characterId);
+            CharacterFavorabilityBean favorabilityData = uiGameManager.gameDataManager.gameData.GetCharacterFavorability(characterId);
             favorabilityData.AddFavorability(favorablility);
             //好感动画
             if (ivFavorability != null)

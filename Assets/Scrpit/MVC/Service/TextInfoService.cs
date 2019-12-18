@@ -34,6 +34,31 @@ public class TextInfoService : BaseMVCService<TextInfoBean>
     }
 
     /// <summary>
+    /// 查询初次对话数据
+    /// </summary>
+    /// <param name="textEnum"></param>
+    /// <param name="userId"></param>
+    /// <returns></returns>
+    public List<TextInfoBean> QueryDataByFirstMeet(TextEnum textEnum, long userId)
+    {
+        InitTableByTextType(textEnum);
+        return BaseQueryData("text_id", mTableName + ".user_id", userId + "", mTableName + ".condition_first_meet", "1");
+    }
+
+    /// <summary>
+    /// 通过最低好感查询对话数据
+    /// </summary>
+    /// <param name="textEnum"></param>
+    /// <param name="userId"></param>
+    /// <param name="minFavorability"></param>
+    /// <returns></returns>
+    public List<TextInfoBean> QueryDataByMinFavorability(TextEnum textEnum, long userId,int minFavorability)
+    {
+        InitTableByTextType(textEnum);
+        return BaseQueryData("text_id", mTableName + ".user_id","=", userId + "", mTableName + ".condition_first_meet", "=", "0", mTableName + ".condition_min_favorability", "<=", minFavorability + "");
+    }
+    
+    /// <summary>
     /// 通过标记ID查询对话
     /// </summary>
     /// <param name="textEnum"></param>
