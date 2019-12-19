@@ -42,7 +42,7 @@ public class TextInfoService : BaseMVCService<TextInfoBean>
     public List<TextInfoBean> QueryDataByFirstMeet(TextEnum textEnum, long userId)
     {
         InitTableByTextType(textEnum);
-        return BaseQueryData("text_id", mTableName + ".user_id", userId + "", mTableName + ".condition_first_meet", "1");
+        return BaseQueryData("text_id", mTableName + ".user_id", userId + "", mTableName + ".talk_type", (int)TextTalkTypeEnum.First + "");
     }
 
     /// <summary>
@@ -80,6 +80,19 @@ public class TextInfoService : BaseMVCService<TextInfoBean>
     {
         InitTableByTextType(textEnum);
         return BaseQueryData("text_id", mTableName + ".user_id", userId + "");
+    }
+
+    /// <summary>
+    /// 通过对话类型查询指定用户对话
+    /// </summary>
+    /// <param name="textEnum"></param>
+    /// <param name="talkType"></param>
+    /// <param name="userId"></param>
+    /// <returns></returns>
+    public List<TextInfoBean> QueryDataByTalkType(TextEnum textEnum, TextTalkTypeEnum talkType, long userId)
+    {
+        InitTableByTextType(textEnum);
+        return BaseQueryData("text_id", mTableName + ".user_id", userId + "", mTableName+".talk_type", (int)talkType+"");
     }
 
     /// <summary>

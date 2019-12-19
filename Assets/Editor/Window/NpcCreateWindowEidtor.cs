@@ -105,6 +105,7 @@ public class NpcCreateWindowEidtor : EditorWindow
         {
             long[] ids = StringUtil.SplitBySubstringForArrayLong(findIds, ',');
             listFindNpcData = npcInfoManager.GetCharacterDataByIds(ids);
+            GetNpcTalkInfoList(TextTalkTypeEnum.Normal);
         }
         if (GUILayout.Button("查询全部", GUILayout.Width(100), GUILayout.Height(20)))
         {
@@ -161,14 +162,31 @@ public class NpcCreateWindowEidtor : EditorWindow
     {
         GUILayout.BeginHorizontal();
         GUILayout.Label("NpcID:" + findIds, GUILayout.Width(120));
-        if (GUILayout.Button("查询NPC的对话", GUILayout.Width(120), GUILayout.Height(20)))
+        if (GUILayout.Button("查询普通对话", GUILayout.Width(120), GUILayout.Height(20)))
         {
-            GetNpcTalkInfoList();
+            GetNpcTalkInfoList(TextTalkTypeEnum.Normal);
         }
-        if (GUILayout.Button("添加对话逻辑", GUILayout.Width(120), GUILayout.Height(20)))
+        if (GUILayout.Button("查询第一次对话",  GUILayout.Width(120), GUILayout.Height(20)))
         {
-            long markId = long.Parse(findIds) * 10000;
+            GetNpcTalkInfoList(TextTalkTypeEnum.First);
+        }
+        if (GUILayout.Button("查询招募对话", GUILayout.Width(120), GUILayout.Height(20)))
+        {
+            GetNpcTalkInfoList(TextTalkTypeEnum.Recruit);
+        }
+        if (GUILayout.Button("查询礼物对话", GUILayout.Width(120), GUILayout.Height(20)))
+        {
+            GetNpcTalkInfoList(TextTalkTypeEnum.Gift);
+        }
+        if (GUILayout.Button("查询后续事件对话", GUILayout.Width(120), GUILayout.Height(20)))
+        {
+            GetNpcTalkInfoList(TextTalkTypeEnum.Special);
+        }
+        if (GUILayout.Button("添加对话逻辑(警告：一定要先查询对应对话再添加)", GUILayout.Width(300), GUILayout.Height(20)))
+        {
+            long markId = long.Parse(findIds) * 100000;
             markId += (mapNpcTalkInfo.Count + 1);
+            markId += (int)mFindTalkType * 10000;
             List<TextInfoBean> listTemp = new List<TextInfoBean>();
             mapNpcTalkInfo.Add(markId, listTemp);
         }
@@ -182,13 +200,14 @@ public class NpcCreateWindowEidtor : EditorWindow
         long removeTalkId = 0;
         foreach (var mapItemTalkInfo in mapNpcTalkInfo)
         {
+            GUILayout.Space(20);
             GUILayout.BeginHorizontal();
             GUILayout.Label("markId：",GUILayout.Width(120), GUILayout.Height(20));
             long.Parse(EditorGUILayout.TextArea(mapItemTalkInfo.Key + "", GUILayout.Width(100), GUILayout.Height(20)));
             if (mapItemTalkInfo.Value.Count > 0)
             {
-                GUILayout.Label("条件-是否第一次对话：", GUILayout.Width(120), GUILayout.Height(20));
-                mapItemTalkInfo.Value[0].condition_first_meet = int.Parse(EditorGUILayout.TextArea(mapItemTalkInfo.Value[0].condition_first_meet + "", GUILayout.Width(50), GUILayout.Height(20)));
+                GUILayout.Label("对话类型：", GUILayout.Width(120), GUILayout.Height(20));
+                mapItemTalkInfo.Value[0].talk_type = (int)(TextTalkTypeEnum)EditorGUILayout.EnumPopup((TextTalkTypeEnum)mapItemTalkInfo.Value[0].talk_type, GUILayout.Width(100), GUILayout.Height(20));
                 GUILayout.Label("条件-好感对话：", GUILayout.Width(120), GUILayout.Height(20));
                 mapItemTalkInfo.Value[0].condition_min_favorability = int.Parse(EditorGUILayout.TextArea(mapItemTalkInfo.Value[0].condition_min_favorability + "", GUILayout.Width(50), GUILayout.Height(20)));
 
@@ -196,7 +215,7 @@ public class NpcCreateWindowEidtor : EditorWindow
             if (mapItemTalkInfo.Value != null)
                 foreach (TextInfoBean itemTalkInfo in mapItemTalkInfo.Value)
                 {
-                    itemTalkInfo.condition_first_meet = mapItemTalkInfo.Value[0].condition_first_meet;
+                    itemTalkInfo.talk_type = mapItemTalkInfo.Value[0].talk_type;
                     itemTalkInfo.condition_min_favorability = mapItemTalkInfo.Value[0].condition_min_favorability;
                 }
             if (GUILayout.Button("添加对话", GUILayout.Width(120), GUILayout.Height(20)))
@@ -208,6 +227,7 @@ public class NpcCreateWindowEidtor : EditorWindow
                 addText.user_id = long.Parse(findIds);
                 addText.valid = 1;
                 addText.text_order = 1;
+                addText.talk_type = (int)mFindTalkType;
                 mapItemTalkInfo.Value.Add(addText);
             }
             if (GUILayout.Button("删除markId下所有对话", GUILayout.Width(150), GUILayout.Height(20)))
@@ -231,7 +251,6 @@ public class NpcCreateWindowEidtor : EditorWindow
                 }
                 GUILayout.Label("talkId：");
                 itemTalkInfo.id = long.Parse(EditorGUILayout.TextArea(itemTalkInfo.id + "", GUILayout.Width(150), GUILayout.Height(20)));
-                itemTalkInfo.talk_type = (int)(NPCTypeEnum)EditorGUILayout.EnumPopup((TextTalkTypeEnum)itemTalkInfo.talk_type, GUILayout.Width(100), GUILayout.Height(20));
                 itemTalkInfo.type = (int)(TextInfoTypeEnum)EditorGUILayout.EnumPopup((TextInfoTypeEnum)itemTalkInfo.type, GUILayout.Width(100), GUILayout.Height(20));
                 if (itemTalkInfo.type == (int)TextInfoTypeEnum.Select)
                 {
@@ -262,6 +281,15 @@ public class NpcCreateWindowEidtor : EditorWindow
                 itemTalkInfo.name = EditorGUILayout.TextArea(itemTalkInfo.name + "", GUILayout.Width(50), GUILayout.Height(20));
                 GUILayout.Label("对话内容：");
                 itemTalkInfo.content = EditorGUILayout.TextArea(itemTalkInfo.content + "", GUILayout.Width(500), GUILayout.Height(20));
+                if (GUILayout.Button("更新", GUILayout.Width(120), GUILayout.Height(20)))
+                {
+                    textInfoService.UpdateDataById(TextEnum.Talk, itemTalkInfo.id, itemTalkInfo);
+                }
+                if (GUILayout.Button("删除对话", GUILayout.Width(120), GUILayout.Height(20)))
+                {
+                    removeTalkId = itemTalkInfo.id;
+                    textInfoService.DeleteDataById(TextEnum.Talk, removeTalkId);
+                }
                 GUILayout.EndHorizontal();
             }
         }
@@ -269,16 +297,18 @@ public class NpcCreateWindowEidtor : EditorWindow
             mapNpcTalkInfo.Remove(removeMarkId);
         if (removeTalkId != 0)
         {
-            GetNpcTalkInfoList();
+            GetNpcTalkInfoList(mFindTalkType);
         }
     }
 
+    private TextTalkTypeEnum mFindTalkType;
     /// <summary>
     /// 获取NPC对话数据
     /// </summary>
-    private void GetNpcTalkInfoList()
+    private void GetNpcTalkInfoList(TextTalkTypeEnum talkType)
     {
-        List<TextInfoBean> listNpcTalkInfo = textInfoService.QueryDataByUserId(TextEnum.Talk, long.Parse(findIds));
+        mFindTalkType = talkType;
+        List<TextInfoBean> listNpcTalkInfo = textInfoService.QueryDataByTalkType(TextEnum.Talk, talkType, long.Parse(findIds));
         mapNpcTalkInfo.Clear();
         foreach (TextInfoBean itemTalkInfo in listNpcTalkInfo)
         {

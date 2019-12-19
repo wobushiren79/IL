@@ -9,7 +9,7 @@ public class TextInfoBean : BaseBean
     public long text_id;
     //类型 0默认文本 1选择对话    4书本详情  5黑幕标题
     public int type;
-    //对话类型 0普通对话，1送礼回复对话  2招募对话
+    //对话类型 0普通对话，1送礼回复对话  2招募对话  3后续对话  4第一次对话
     public int talk_type;
     //文本编号
     public long mark_id;
@@ -32,9 +32,7 @@ public class TextInfoBean : BaseBean
 
     //是否停止时间
     public int is_stoptime;
-
-    //触发条件
-    public int condition_first_meet;
+    
     //触发条件 好感区间
     public int condition_min_favorability;
     public int condition_max_favorability;
