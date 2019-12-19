@@ -10,8 +10,11 @@ public class UIGameMain : BaseUIComponent, DialogView.IDialogCallBack
     public Button btBuild;
     public Button btMenu;
     public Button btBackpack;
+    public Button btFavorability;
+
     public Button btSave;
     public Button btSleep;
+
 
     public Text tvInnStatus;
     public Text tvMoneyS;
@@ -43,6 +46,9 @@ public class UIGameMain : BaseUIComponent, DialogView.IDialogCallBack
 
         if (btBackpack != null)
             btBackpack.onClick.AddListener(OpenBackpackUI);
+
+        if (btFavorability != null)
+            btFavorability.onClick.AddListener(OpenFavorabilityUI);
 
         if (btSave != null)
             btSave.onClick.AddListener(SaveData);
@@ -181,6 +187,11 @@ public class UIGameMain : BaseUIComponent, DialogView.IDialogCallBack
     public void OpenBackpackUI()
     {
         uiManager.OpenUIAndCloseOtherByName(EnumUtil.GetEnumName(UIEnum.GameBackpack));
+    }
+
+    public void OpenFavorabilityUI()
+    {
+        uiManager.OpenUIAndCloseOtherByName(EnumUtil.GetEnumName(UIEnum.GameFavorability));
     }
 
     public void EndDay()

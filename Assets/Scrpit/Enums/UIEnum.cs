@@ -17,6 +17,7 @@ public enum UIEnum
     GameSettle,
     GameAttendance,
     GameText,
+    GameFavorability,//人物好感UI
     TownMarket,//市场UI
     TownRecruitment,//招人UI
     TownGrocery,//杂货店UI

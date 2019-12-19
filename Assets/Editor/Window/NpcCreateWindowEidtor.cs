@@ -242,8 +242,6 @@ public class NpcCreateWindowEidtor : EditorWindow
                         GUILayout.Label("好处的前提条件：类型（1战斗），己方人数，敌方角色ID(-分隔),位置xy(-分隔),后续赢对话markID,后续输对话markID");
 
                         itemTalkInfo.add_pre = EditorGUILayout.TextArea(itemTalkInfo.add_pre + "", GUILayout.Width(300), GUILayout.Height(20));
-                        GUILayout.Label("增加的好感：");
-                        itemTalkInfo.add_favorability = int.Parse(EditorGUILayout.TextArea(itemTalkInfo.add_favorability + "", GUILayout.Width(50), GUILayout.Height(20)));
                         GUILayout.Label("增加的金钱：L,M,S");
                         itemTalkInfo.add_money = EditorGUILayout.TextArea(itemTalkInfo.add_money + "", GUILayout.Width(50), GUILayout.Height(20));
                         GUILayout.Label("增加的角色：id,id,id");
@@ -252,6 +250,8 @@ public class NpcCreateWindowEidtor : EditorWindow
                         itemTalkInfo.add_items = EditorGUILayout.TextArea(itemTalkInfo.add_items + "", GUILayout.Width(50), GUILayout.Height(20));
                     }
                 }
+                GUILayout.Label("增加的好感：");
+                itemTalkInfo.add_favorability = int.Parse(EditorGUILayout.TextArea(itemTalkInfo.add_favorability + "", GUILayout.Width(50), GUILayout.Height(20)));
                 GUILayout.Label("对话顺序：");
                 itemTalkInfo.text_order = int.Parse(EditorGUILayout.TextArea(itemTalkInfo.text_order + "", GUILayout.Width(50), GUILayout.Height(20)));
                 GUILayout.Label("指定下一句对话：");
@@ -311,6 +311,8 @@ public class NpcCreateWindowEidtor : EditorWindow
         npcInfo.npc_type = (int)(NPCTypeEnum)EditorGUILayout.EnumPopup("Npc类型：", (NPCTypeEnum)npcInfo.npc_type);
         GUILayout.Label("姓名：");
         npcInfo.name = EditorGUILayout.TextArea(npcInfo.name + "", GUILayout.Width(100), GUILayout.Height(20));
+        GUILayout.Label("性别：1男 2女");
+        npcInfo.sex =int.Parse(EditorGUILayout.TextArea(npcInfo.sex + "", GUILayout.Width(30), GUILayout.Height(20)));
         GUILayout.Label("称号：");
         npcInfo.title_name = EditorGUILayout.TextArea(npcInfo.title_name + "", GUILayout.Width(100), GUILayout.Height(20));
         GUILayout.Label("位置XY：");

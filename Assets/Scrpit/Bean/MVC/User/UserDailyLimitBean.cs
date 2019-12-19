@@ -8,7 +8,8 @@ public class UserDailyLimitBean
     public int exchangeMoneyL=5;
     //当前对话过的NPC
     public List<long> listNpcTalk = new List<long>();
-
+    //当前送过礼物的NPC
+    public List<long> listNpcGift = new List<long>();
     public void InitData()
     {
         exchangeMoneyL = 5;
@@ -26,6 +27,16 @@ public class UserDailyLimitBean
     }
 
     /// <summary>
+    /// 检测NPC是否送过礼物
+    /// </summary>
+    /// <param name="npcId"></param>
+    /// <returns></returns>
+    public bool CheckIsGiftNpc(long npcId)
+    {
+        return listNpcGift.Contains(npcId);
+    }
+
+    /// <summary>
     /// 增加NPC对话
     /// </summary>
     /// <param name="npcId"></param>
@@ -39,6 +50,24 @@ public class UserDailyLimitBean
         else
         {
             listNpcTalk.Add(npcId);
+            return true;
+        }
+    }
+
+    /// <summary>
+    /// 增加NPC对话
+    /// </summary>
+    /// <param name="npcId"></param>
+    /// <returns></returns>
+    public bool AddGiftNpc(long npcId)
+    {
+        if (CheckIsGiftNpc(npcId))
+        {
+            return false;
+        }
+        else
+        {
+            listNpcGift.Add(npcId);
             return true;
         }
     }
