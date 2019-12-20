@@ -5,8 +5,15 @@ using System.Collections.Generic;
 
 public class NpcPasserBuilder : NpcNormalBuilder
 {
-    public SceneTownManager sceneTownManager;
+    protected SceneTownManager sceneTownManager;
+
     public List<NpcAIPasserCpt> listPasser = new List<NpcAIPasserCpt>();
+
+    protected override void Awake()
+    {
+        base.Awake();
+        sceneTownManager = Find<SceneTownManager>( ImportantTypeEnum.SceneManager);
+    }
 
     private void Start()
     {

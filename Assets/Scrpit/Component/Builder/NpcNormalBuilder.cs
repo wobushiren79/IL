@@ -10,10 +10,10 @@ public class NpcNormalBuilder : BaseMonoBehaviour
     public GameObject objNormalModel;
 
     //NPC数据管理
-    public NpcInfoManager npcInfoManager;
-    public CharacterBodyManager characterBodyManager;
-    public GameTimeHandler gameTimeHandler;
-    public GameDataManager gameDataManager;
+    protected NpcInfoManager npcInfoManager;
+    protected CharacterBodyManager characterBodyManager;
+    protected GameTimeHandler gameTimeHandler;
+    protected GameDataManager gameDataManager;
 
     //初始化大量随机NPC位置
     public List<Transform> listInitStartPosition;
@@ -24,6 +24,15 @@ public class NpcNormalBuilder : BaseMonoBehaviour
     //生成间隔
     public float buildInterval = 3;
     public float buildMaxNumber = 100;
+
+    protected virtual void Awake()
+    {
+        npcInfoManager = Find<NpcInfoManager>( ImportantTypeEnum.NpcManager);
+        characterBodyManager = Find<CharacterBodyManager>(ImportantTypeEnum.CharacterManager);
+        gameTimeHandler = Find<GameTimeHandler>(ImportantTypeEnum.TimeHandler);
+        gameDataManager = Find<GameDataManager>(ImportantTypeEnum.GameDataManager);
+    }
+
     /// <summary>
     /// 随机获取初始化点位置
     /// </summary>

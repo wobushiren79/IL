@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 854223575868488546}
   m_Layer: 0
   m_Name: StoryBuilder
-  m_TagString: Untagged
+  m_TagString: Builder
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -49,6 +49,7 @@ MonoBehaviour:
   storyInfoManager: {fileID: 0}
   npcInfoManager: {fileID: 0}
   uiManager: {fileID: 0}
+  eventHandler: {fileID: 0}
   controlHandler: {fileID: 0}
   storyInfo:
     id: 0
@@ -61,7 +62,6 @@ MonoBehaviour:
     trigger_date_month: 0
     trigger_date_day: 0
   listNpcObj: []
-  storyOrder: 1
 --- !u!1001 &8651858717852315967
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -69,16 +69,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 854223575868487837}
     m_Modifications:
-    - target: {fileID: 5414656473032252804, guid: 2a71eec895f1845489c53dc8951552aa,
-        type: 3}
-      propertyPath: m_Name
-      value: CharacterForStory
-      objectReference: {fileID: 0}
-    - target: {fileID: 5414656473032252804, guid: 2a71eec895f1845489c53dc8951552aa,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 895773567829846705, guid: 2a71eec895f1845489c53dc8951552aa,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -132,6 +122,16 @@ PrefabInstance:
     - target: {fileID: 895773567829846705, guid: 2a71eec895f1845489c53dc8951552aa,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5414656473032252804, guid: 2a71eec895f1845489c53dc8951552aa,
+        type: 3}
+      propertyPath: m_Name
+      value: CharacterForStory
+      objectReference: {fileID: 0}
+    - target: {fileID: 5414656473032252804, guid: 2a71eec895f1845489c53dc8951552aa,
+        type: 3}
+      propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []

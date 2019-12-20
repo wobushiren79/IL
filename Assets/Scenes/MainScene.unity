@@ -14588,7 +14588,7 @@ GameObject:
   - component: {fileID: 1146384152}
   - component: {fileID: 1146384156}
   m_Layer: 5
-  m_Name: MainUI
+  m_Name: GameUI
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -14669,7 +14669,7 @@ RectTransform:
   - {fileID: 2140194068}
   - {fileID: 1577479847}
   m_Father: {fileID: 1269424680}
-  m_RootOrder: 2
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -14699,8 +14699,7 @@ MonoBehaviour:
   infoAchievementPopup: {fileID: 0}
   infoAbilityPopup: {fileID: 0}
   itemsSelectionBox: {fileID: 0}
-  toastAchievement: {fileID: 0}
-  gameDataManager: {fileID: 1163914678}
+  gameDataManager: {fileID: 0}
   gameItemsManager: {fileID: 1245980739}
   characterDressManager: {fileID: 1672669449}
   characterBodyManager: {fileID: 1672669450}
@@ -14715,237 +14714,6 @@ MonoBehaviour:
   eventHandler: {fileID: 0}
   npcCustomerBuilder: {fileID: 0}
   navMesh: {fileID: 0}
---- !u!1 &1163914676
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1163914677}
-  - component: {fileID: 1163914678}
-  m_Layer: 0
-  m_Name: GameDataManager
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1163914677
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1163914676}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 1789416300}
-  m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1163914678
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1163914676}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 65c19ce6f94522149b732f48f5e7d546, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  gameData:
-    userId: 
-    moneyS: 0
-    moneyM: 0
-    moneyL: 0
-    guildCoin: 0
-    innName: 
-    innLevel: 0
-    innAttributes:
-      aesthetics: 0
-      praise: 0
-      richness: 0
-    userCharacter:
-      baseInfo:
-        characterId: 
-        titleName: 
-        name: 
-        workDay: 0
-        priceS: 0
-        priceM: 0
-        priceL: 0
-        chefInfo:
-          workerType: 1
-          workerLevel: 0
-          workerExp: 0
-          cookNumber: 0
-          cookTime: 0
-          listFoodCookNumer: []
-        waiterInfo:
-          workerType: 2
-          workerLevel: 0
-          workerExp: 0
-          cleanTotalNumber: 0
-          sendTotalNumber: 0
-          cleanTotalTime: 0
-        accountingInfo:
-          workerType: 3
-          workerLevel: 0
-          workerExp: 0
-          accountingTotalNumber: 0
-          accountingErrorNumber: 0
-          accountingSuccessNumber: 0
-          loseMoneyL: 0
-          lostMoneyM: 0
-          lostMoneyS: 0
-          moreMoneyL: 0
-          moreMoneyM: 0
-          moreMoneyS: 0
-          accountingMoneyL: 0
-          accountingMoneyM: 0
-          accountingMoneyS: 0
-          accountingTotalTime: 0
-        accostInfo:
-          workerType: 4
-          workerLevel: 0
-          workerExp: 0
-          accostTotalNumber: 0
-          accostSuccessNumber: 0
-          accostFailNumber: 0
-          accostTotalTime: 0
-        beaterInfo:
-          workerType: 5
-          workerLevel: 0
-          workerExp: 0
-          fightTotalNumber: 0
-          fightWinNumber: 0
-          fightLoseNumber: 0
-          fightTotalTime: 0
-          restTotalTime: 0
-        isChef: 0
-        isWaiter: 0
-        isAccounting: 0
-        isAccost: 0
-        isBeater: 0
-        priorityChef: 0
-        priorityWaiter: 0
-        priorityAccounting: 0
-        priorityAccost: 0
-        priorityBeater: 0
-        isAttendance: 0
-      attributes:
-        loyal: 0
-        life: 0
-        cook: 0
-        speed: 0
-        account: 0
-        charm: 0
-        force: 0
-        lucky: 0
-      body:
-        sex: 1
-        skinColor:
-          r: 1
-          g: 1
-          b: 1
-          a: 1
-        hair: 
-        hairColor:
-          r: 0
-          g: 0
-          b: 0
-          a: 1
-        eye: eye_0
-        eyeColor:
-          r: 0
-          g: 0
-          b: 0
-          a: 1
-        mouth: mouth_0
-        mouthColor:
-          r: 0
-          g: 0
-          b: 0
-          a: 1
-        face: 0
-      equips:
-        maskId: 0
-        handId: 0
-        hatId: 0
-        clothesId: 0
-        shoesId: 0
-        listLearnBook: 
-      npcInfoData:
-        id: 0
-        valid: 0
-        npc_id: 0
-        npc_type: 0
-        sex: 0
-        face: 0
-        mask_id: 0
-        hand_id: 0
-        hat_id: 0
-        clothes_id: 0
-        shoes_id: 0
-        hair_id: 
-        hair_color: 
-        eye_id: 
-        eye_color: 
-        mouth_id: 
-        mouth_color: 
-        title_name: 
-        name: 
-        position_x: 0
-        position_y: 0
-        talk_ids: 
-        attributes_loyal: 0
-        attributes_life: 0
-        attributes_cook: 0
-        attributes_speed: 0
-        attributes_account: 0
-        attributes_charm: 0
-        attributes_force: 0
-        attributes_lucky: 0
-    workCharacterList: []
-    innBuildData:
-      listWall: []
-      listFloor: []
-      listFurniture: []
-      innWidth: 9
-      innHeight: 9
-      buildLevel: 0
-    gameTime:
-      year: 0
-      month: 0
-      day: 0
-      hour: 0
-      minute: 0
-      second: 0
-    userAchievement:
-      achievementList: 
-    buildList: []
-    itemsList: []
-    menuList: []
-    characterFavorabilityList: []
-    triggeredEventList: 
-    ingOilsalt: 0
-    ingMeat: 0
-    ingRiverfresh: 0
-    ingSeafood: 0
-    ingVegetables: 0
-    ingMelonfruit: 0
-    ingWaterwine: 0
-    ingFlour: 0
-    workerNumberLimit: 5
-    weatherToday:
-      weatherType: 0
-      weatherSize: 0
-  listGameDataSimple: []
 --- !u!1 &1221916724
 GameObject:
   m_ObjectHideFlags: 0
@@ -15064,7 +14832,7 @@ PrefabInstance:
     - target: {fileID: 404659543357992934, guid: c0ef08bab5953ed48a4fa41fc338eead,
         type: 3}
       propertyPath: m_RootOrder
-      value: 3
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 404659543357992934, guid: c0ef08bab5953ed48a4fa41fc338eead,
         type: 3}
@@ -15133,9 +14901,9 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
+  - {fileID: 1146384155}
   - {fileID: 1255648225}
   - {fileID: 1522694746}
-  - {fileID: 1146384155}
   - {fileID: 1649143940}
   m_Father: {fileID: 0}
   m_RootOrder: 3
@@ -15235,7 +15003,7 @@ PrefabInstance:
     - target: {fileID: 3497484140042754007, guid: 774c32e13022c8d4b8d21d01a73e640b,
         type: 3}
       propertyPath: m_RootOrder
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 3497484140042754007, guid: 774c32e13022c8d4b8d21d01a73e640b,
         type: 3}
@@ -15490,7 +15258,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   uiGameManager: {fileID: 0}
-  gameDataManager: {fileID: 1163914678}
+  gameDataManager: {fileID: 0}
   gameItemsManager: {fileID: 1245980739}
   npcInfoManager: {fileID: 0}
   dialogManager: {fileID: 0}
@@ -20460,7 +20228,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1636872500}
-  - {fileID: 1163914677}
+  - {fileID: 1857107476}
   - {fileID: 1604314201}
   - {fileID: 410007960}
   m_Father: {fileID: 0}
@@ -20497,6 +20265,81 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1001 &1857107475
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 1789416300}
+    m_Modifications:
+    - target: {fileID: 566250345546063860, guid: 3eaf6e08402778c479110c1951295af5,
+        type: 3}
+      propertyPath: m_Name
+      value: GameDataManager
+      objectReference: {fileID: 0}
+    - target: {fileID: 566250345546063861, guid: 3eaf6e08402778c479110c1951295af5,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 566250345546063861, guid: 3eaf6e08402778c479110c1951295af5,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 566250345546063861, guid: 3eaf6e08402778c479110c1951295af5,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 566250345546063861, guid: 3eaf6e08402778c479110c1951295af5,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 566250345546063861, guid: 3eaf6e08402778c479110c1951295af5,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 566250345546063861, guid: 3eaf6e08402778c479110c1951295af5,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 566250345546063861, guid: 3eaf6e08402778c479110c1951295af5,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 566250345546063861, guid: 3eaf6e08402778c479110c1951295af5,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 566250345546063861, guid: 3eaf6e08402778c479110c1951295af5,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 566250345546063861, guid: 3eaf6e08402778c479110c1951295af5,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 566250345546063861, guid: 3eaf6e08402778c479110c1951295af5,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 3eaf6e08402778c479110c1951295af5, type: 3}
+--- !u!4 &1857107476 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 566250345546063861, guid: 3eaf6e08402778c479110c1951295af5,
+    type: 3}
+  m_PrefabInstance: {fileID: 1857107475}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &2064442761
 GameObject:
   m_ObjectHideFlags: 0
@@ -20824,7 +20667,7 @@ PrefabInstance:
         type: 3}
       propertyPath: gameDataManager
       value: 
-      objectReference: {fileID: 1163914678}
+      objectReference: {fileID: 0}
     - target: {fileID: 44925143759245463, guid: d9299c8ff17b8514abe6662549a9d4a0,
         type: 3}
       propertyPath: gameItemsManager
@@ -21627,7 +21470,7 @@ PrefabInstance:
     - target: {fileID: 75164539118015787, guid: 59dd1d83e63f71d4292b7187304fc45e,
         type: 3}
       propertyPath: m_RootOrder
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 75164539118015806, guid: 59dd1d83e63f71d4292b7187304fc45e,
         type: 3}
@@ -21637,6 +21480,11 @@ PrefabInstance:
     - target: {fileID: 75164539118015807, guid: 59dd1d83e63f71d4292b7187304fc45e,
         type: 3}
       propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 75164539493165897, guid: 59dd1d83e63f71d4292b7187304fc45e,
+        type: 3}
+      propertyPath: m_SizeDelta.y
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 75164539641823421, guid: 59dd1d83e63f71d4292b7187304fc45e,
@@ -21989,7 +21837,7 @@ PrefabInstance:
     - target: {fileID: 3781763343670252894, guid: 46ca908cf374a6b488fa38749b225a41,
         type: 3}
       propertyPath: m_RootOrder
-      value: 2
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 3781763343670252894, guid: 46ca908cf374a6b488fa38749b225a41,
         type: 3}
@@ -22044,7 +21892,7 @@ PrefabInstance:
         type: 3}
       propertyPath: gameDataManager
       value: 
-      objectReference: {fileID: 1163914678}
+      objectReference: {fileID: 0}
     - target: {fileID: 4017380742522294514, guid: f2ba28e69b1fad340b9db3de318be7a3,
         type: 3}
       propertyPath: m_IsActive

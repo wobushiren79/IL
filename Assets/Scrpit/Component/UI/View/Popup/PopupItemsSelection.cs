@@ -2,8 +2,16 @@
 using UnityEditor;
 using UnityEngine.UI;
 using DG.Tweening;
-public class ItemsSelectionBox : BaseMonoBehaviour
+public class PopupItemsSelection : BaseMonoBehaviour
 {
+    public enum SelectionTypeEnum
+    {
+        Discard,//只有丢弃
+        UseAndDiscard,//使用和丢弃
+        EquipAndDiscard,//装备和丢弃
+        Unload,//卸除 用于装备界面
+        Gift,//赠送
+    }
 
     public ICallBack callBack;
     public Button btBack;
@@ -12,6 +20,7 @@ public class ItemsSelectionBox : BaseMonoBehaviour
     public Button btDiscard;
     public Button btEquip;
     public Button btUnload;
+    public Button btGift;
     public GameObject objContent;
 
     //屏幕(用来找到鼠标点击的相对位置)
@@ -33,6 +42,8 @@ public class ItemsSelectionBox : BaseMonoBehaviour
             btEquip.onClick.AddListener(EquipItems);
         if (btUnload != null)
             btUnload.onClick.AddListener(UnloadItems);
+        if (btGift != null)
+            btGift.onClick.AddListener(GiftItems);
     }
 
     public void SetCallBack(ICallBack callBack)
@@ -46,27 +57,35 @@ public class ItemsSelectionBox : BaseMonoBehaviour
         gameObject.SetActive(false);
     }
 
-    public void Open(int type)
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="type"></param>
+    public void Open(SelectionTypeEnum type)
     {
         btUse.gameObject.SetActive(false);
         btDiscard.gameObject.SetActive(false);
         btEquip.gameObject.SetActive(false);
         btUnload.gameObject.SetActive(false);
+        btGift.gameObject.SetActive(false);
         switch (type)
         {
-            case 0:
+            case SelectionTypeEnum.Discard:
                 btDiscard.gameObject.SetActive(true);
                 break;
-            case 1:
+            case SelectionTypeEnum.UseAndDiscard:
                 btUse.gameObject.SetActive(true);
                 btDiscard.gameObject.SetActive(true);
                 break;
-            case 2:
+            case SelectionTypeEnum.EquipAndDiscard:
                 btEquip.gameObject.SetActive(true);
                 btDiscard.gameObject.SetActive(true);
                 break;
-            case 3:
+            case SelectionTypeEnum.Unload:
                 btUnload.gameObject.SetActive(true);
+                break;
+            case SelectionTypeEnum.Gift:
+                btGift.gameObject.SetActive(true);
                 break;
         }
         gameObject.SetActive(true);
@@ -129,6 +148,12 @@ public class ItemsSelectionBox : BaseMonoBehaviour
         Close();
     }
 
+    public void GiftItems()
+    {
+        if (callBack != null)
+            callBack.SelectionUnload(this);
+        Close();
+    }
 
     public interface ICallBack
     {
@@ -136,24 +161,30 @@ public class ItemsSelectionBox : BaseMonoBehaviour
         /// 选择使用
         /// </summary>
         /// <param name="view"></param>
-        void SelectionUse(ItemsSelectionBox view);
+        void SelectionUse(PopupItemsSelection view);
 
         /// <summary>
         /// 选择丢弃
         /// </summary>
         /// <param name="view"></param>
-        void SelectionDiscard(ItemsSelectionBox view);
+        void SelectionDiscard(PopupItemsSelection view);
 
         /// <summary>
         /// 选择装备
         /// </summary>
         /// <param name="view"></param>
-        void SelectionEquip(ItemsSelectionBox view);
+        void SelectionEquip(PopupItemsSelection view);
 
         /// <summary>
         /// 选择卸下
         /// </summary>
         /// <param name="view"></param>
-        void SelectionUnload(ItemsSelectionBox view);
+        void SelectionUnload(PopupItemsSelection view);
+
+        /// <summary>
+        /// 选择赠送
+        /// </summary>
+        /// <param name="view"></param>
+        void SelectionGift(PopupItemsSelection view);
     }
 }

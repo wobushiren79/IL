@@ -13,7 +13,7 @@ public class UIGameManager : BaseUIManager
     public InfoFoodPopupShow infoFoodPopup;
     public InfoAchievementPopupShow infoAchievementPopup;
     public InfoAbilityPopupShow infoAbilityPopup;
-    public ItemsSelectionBox itemsSelectionBox;
+    public PopupItemsSelection popupItemsSelection;
     //数据
     [Header("数据")]
     public GameDataManager gameDataManager;
@@ -38,4 +38,5 @@ public class UIGameManager : BaseUIManager
 
     [Header("地形")]
     public NavMeshSurface navMesh;
+
 }

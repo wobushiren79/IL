@@ -27,14 +27,14 @@ public class EventHandler : BaseHandler,
         TalkForAddFavorability,//对话增加高感
     }
 
-    public GameDataManager gameDataManager;
-    public GameItemsManager gameItemsManager;
-    public BaseUIManager uiManager;
-    public StoryInfoManager storyInfoManager;
-    public NpcInfoManager npcInfoManager;
-    public StoryBuilder storyBuilder;
-    public ControlHandler controlHandler;
-    public MiniGameCombatHandler miniGameCombatHandler;
+    protected GameDataManager gameDataManager;
+    protected GameItemsManager gameItemsManager;
+    protected BaseUIManager uiManager;
+    protected StoryInfoManager storyInfoManager;
+    protected NpcInfoManager npcInfoManager;
+    protected StoryBuilder storyBuilder;
+    protected ControlHandler controlHandler;
+    protected MiniGameCombatHandler miniGameCombatHandler;
 
     private EventStatusEnum mEventStatus = EventStatusEnum.EventEnd;
     private EventTypeEnum mEventType;
@@ -44,6 +44,15 @@ public class EventHandler : BaseHandler,
 
     private void Awake()
     {
+        gameDataManager = Find<GameDataManager>(ImportantTypeEnum.GameDataManager);
+        gameItemsManager = Find<GameItemsManager>(ImportantTypeEnum.GameItemsManager);
+        uiManager = Find<BaseUIManager>(ImportantTypeEnum.GameUI);
+        storyInfoManager = Find<StoryInfoManager>(ImportantTypeEnum.StoryManager);
+        npcInfoManager = Find<NpcInfoManager>(ImportantTypeEnum.NpcManager);
+        storyBuilder = Find<StoryBuilder>(ImportantTypeEnum.StoryBuilder);
+        controlHandler = Find<ControlHandler>(ImportantTypeEnum.ControlHandler);
+        miniGameCombatHandler = Find<MiniGameCombatHandler>(ImportantTypeEnum.MiniGameHandler);
+
         miniGameCombatHandler.AddObserver(this);
     }
 

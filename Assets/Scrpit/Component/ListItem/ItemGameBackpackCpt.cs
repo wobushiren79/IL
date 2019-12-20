@@ -5,7 +5,7 @@ using UnityEngine.EventSystems;
 using UnityEngine.Events;
 using DG.Tweening;
 
-public class ItemGameBackpackCpt : ItemGameBaseCpt, IPointerClickHandler, ItemsSelectionBox.ICallBack, DialogView.IDialogCallBack
+public class ItemGameBackpackCpt : ItemGameBaseCpt, IPointerClickHandler, PopupItemsSelection.ICallBack, DialogView.IDialogCallBack
 {
     public Text tvName;
     public RectTransform rtIcon;
@@ -18,13 +18,19 @@ public class ItemGameBackpackCpt : ItemGameBaseCpt, IPointerClickHandler, ItemsS
     public UnityEvent leftClick;
     public UnityEvent rightClick;
 
+    protected UIGameManager uiGameManager;
+    private void Awake()
+    {
+        uiGameManager = Find<UIGameManager>(ImportantTypeEnum.GameUI);
+    }
+
     public void Start()
     {
         leftClick.AddListener(new UnityAction(ButtonClick));
         rightClick.AddListener(new UnityAction(ButtonClick));
         if (infoItemsPopup != null)
         {
-            infoItemsPopup.SetPopupShowView(GetUIManager<UIGameManager>().infoItemsPopup);
+            infoItemsPopup.SetPopupShowView(uiGameManager.infoItemsPopup);
             infoItemsPopup.SetData(itemsInfoBean, ivIcon.sprite);
         }
     }
@@ -51,8 +57,8 @@ public class ItemGameBackpackCpt : ItemGameBaseCpt, IPointerClickHandler, ItemsS
     /// <param name="itemType"></param>
     public void SetIcon(string iconKey, int itemType)
     {
-        CharacterDressManager characterDressManager = GetUIManager<UIGameManager>().characterDressManager;
-        GameItemsManager gameItemsManager = GetUIManager<UIGameManager>().gameItemsManager;
+        CharacterDressManager characterDressManager = uiGameManager.characterDressManager;
+        GameItemsManager gameItemsManager = uiGameManager.gameItemsManager;
 
         Vector2 offsetMin = new Vector2(0, 0);
         Vector2 offsetMax = new Vector2(0, 0);
@@ -114,25 +120,25 @@ public class ItemGameBackpackCpt : ItemGameBaseCpt, IPointerClickHandler, ItemsS
     {
         if (itemsInfoBean == null)
             return;
-        ItemsSelectionBox selectionBox = GetUIManager<UIGameManager>().itemsSelectionBox;
-        if (selectionBox != null)
-            selectionBox.SetCallBack(this);
+        PopupItemsSelection popupItemsSelection = uiGameManager.popupItemsSelection;
+        if (popupItemsSelection != null)
+            popupItemsSelection.SetCallBack(this);
         switch (itemsInfoBean.items_type)
         {
             case (int)GeneralEnum.Menu:
-                selectionBox.Open(1);
+                popupItemsSelection.Open(PopupItemsSelection.SelectionTypeEnum.EquipAndDiscard);
                 break;
             default:
-                selectionBox.Open(0);
+                popupItemsSelection.Open(PopupItemsSelection.SelectionTypeEnum.Discard);
                 break;
         }
     }
 
     #region 选择回调
-    public virtual void SelectionUse(ItemsSelectionBox view)
+    public virtual void SelectionUse(PopupItemsSelection view)
     {
-        GameDataManager gameDataManager = GetUIManager<UIGameManager>().gameDataManager;
-        ToastManager toastManager = GetUIManager<UIGameManager>().toastManager;
+        GameDataManager gameDataManager = uiGameManager.gameDataManager;
+        ToastManager toastManager = uiGameManager.toastManager;
 
         if (itemsInfoBean == null || itemBean == null || gameDataManager == null)
             return;
@@ -155,9 +161,9 @@ public class ItemGameBackpackCpt : ItemGameBaseCpt, IPointerClickHandler, ItemsS
         }
     }
 
-    public virtual void SelectionDiscard(ItemsSelectionBox view)
+    public virtual void SelectionDiscard(PopupItemsSelection view)
     {
-        DialogManager dialogManager = GetUIManager<UIGameManager>().dialogManager;
+        DialogManager dialogManager = uiGameManager.dialogManager;
         if (dialogManager == null || itemsInfoBean == null)
             return;
         DialogBean dialogBean = new DialogBean
@@ -167,12 +173,17 @@ public class ItemGameBackpackCpt : ItemGameBaseCpt, IPointerClickHandler, ItemsS
         dialogManager.CreateDialog(0, this, dialogBean);
     }
 
-    public virtual void SelectionEquip(ItemsSelectionBox view)
+    public virtual void SelectionEquip(PopupItemsSelection view)
     {
 
     }
 
-    public virtual void SelectionUnload(ItemsSelectionBox view)
+    public virtual void SelectionUnload(PopupItemsSelection view)
+    {
+
+    }
+
+    public virtual void SelectionGift(PopupItemsSelection view)
     {
 
     }
@@ -195,13 +206,12 @@ public class ItemGameBackpackCpt : ItemGameBaseCpt, IPointerClickHandler, ItemsS
     /// </summary>
     public void RemoveItems()
     {
-        GameDataManager gameDataManager = GetUIManager<UIGameManager>().gameDataManager;
+        GameDataManager gameDataManager = uiGameManager.gameDataManager;
         gameObject.transform.DOLocalMove(new Vector3(0, 0), 0.2f).SetEase(Ease.InCirc).OnComplete(delegate
         {
             gameDataManager.gameData.listItems.Remove(itemBean);
             Destroy(gameObject);
         });
     }
-
 
 }

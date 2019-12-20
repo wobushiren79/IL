@@ -11,12 +11,14 @@ public class MiniGameCookingHandler : BaseMiniGameHandler<MiniGameCookingBuilder
     IBaseObserver
 {
     //事件处理
-    public EventHandler eventHandler;
-    public GameItemsManager gameItemsManager;
+    protected EventHandler eventHandler;
+    protected GameItemsManager gameItemsManager;
 
-    private void Awake()
+    protected override void Awake()
     {
-        gameItemsManager = FindObjectOfType<GameItemsManager>();
+        base.Awake();
+        gameItemsManager = Find<GameItemsManager>(ImportantTypeEnum.GameItemsManager);
+        eventHandler = Find<EventHandler>(ImportantTypeEnum.EventHandler);
     }
 
     /// <summary>
@@ -294,13 +296,13 @@ public class MiniGameCookingHandler : BaseMiniGameHandler<MiniGameCookingBuilder
                     //关闭评审员的分数
                     CloseScoreForAudit();
                     //结算分数
-                    List<NpcAIMiniGameCookingCpt> listPlayer= miniGameBuilder.GetCharacterByType(NpcAIMiniGameCookingCpt.MiniGameCookingNpcTypeEnum.Player);
+                    List<NpcAIMiniGameCookingCpt> listPlayer = miniGameBuilder.GetCharacterByType(NpcAIMiniGameCookingCpt.MiniGameCookingNpcTypeEnum.Player);
                     foreach (NpcAIMiniGameCookingCpt itemNpc in listPlayer)
                     {
                         itemNpc.characterMiniGameData.InitScore();
                     }
                     //按分数排名
-                    listPlayer = listPlayer.OrderByDescending(item=>item.characterMiniGameData.scoreForTotal).ToList();
+                    listPlayer = listPlayer.OrderByDescending(item => item.characterMiniGameData.scoreForTotal).ToList();
                     //打开结算UI
                     UIMiniGameCookingSettlement uiSettlement = (UIMiniGameCookingSettlement)uiGameManager.OpenUIAndCloseOtherByName(EnumUtil.GetEnumName(UIEnum.MiniGameCookingSettlement));
                     uiSettlement.SetCallBack(this);

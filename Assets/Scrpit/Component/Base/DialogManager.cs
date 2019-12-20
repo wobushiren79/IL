@@ -15,12 +15,23 @@ public class DialogManager : BaseMonoBehaviour
 
     public DialogView CreateDialog(DialogEnum dialogType, DialogView.IDialogCallBack callBack, DialogBean dialogBean, float delayDelete)
     {
-        if (CheckUtil.ListIsNull(listObjDialogModel) || (int)dialogType >= listObjDialogModel.Count)
+        if (CheckUtil.ListIsNull(listObjDialogModel))
         {
             LogUtil.LogError("创建Dialog失败，缺少Dialog模型");
             return null;
         }
-        GameObject objDialog = Instantiate(objDialogContainer, listObjDialogModel[(int)dialogType]);
+        GameObject objCreateDialogModel = null;
+        foreach (GameObject itemDialog in listObjDialogModel)
+        {
+            if (itemDialog.name.Equals(EnumUtil.GetEnumName(dialogType)))
+            {
+                objCreateDialogModel = itemDialog;
+                break;
+            }
+        }
+        if (objCreateDialogModel == null)
+            return null;
+        GameObject objDialog = Instantiate(objDialogContainer, objCreateDialogModel);
         DialogView dialogView = objDialog.GetComponent<DialogView>();
         if (dialogView == null)
             Destroy(objDialog);

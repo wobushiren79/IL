@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 566250345546063858}
   m_Layer: 0
   m_Name: GameDataManager
-  m_TagString: Untagged
+  m_TagString: Data
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -58,24 +58,28 @@ MonoBehaviour:
     userCharacter:
       baseInfo:
         characterId: 
+        titleName: 
         name: 
         workDay: 0
         priceS: 0
         priceM: 0
         priceL: 0
         chefInfo:
+          workerType: 1
           workerLevel: 0
           workerExp: 0
           cookNumber: 0
           cookTime: 0
           listFoodCookNumer: []
         waiterInfo:
+          workerType: 2
           workerLevel: 0
           workerExp: 0
           cleanTotalNumber: 0
           sendTotalNumber: 0
           cleanTotalTime: 0
         accountingInfo:
+          workerType: 3
           workerLevel: 0
           workerExp: 0
           accountingTotalNumber: 0
@@ -92,6 +96,7 @@ MonoBehaviour:
           accountingMoneyS: 0
           accountingTotalTime: 0
         accostInfo:
+          workerType: 4
           workerLevel: 0
           workerExp: 0
           accostTotalNumber: 0
@@ -99,6 +104,7 @@ MonoBehaviour:
           accostFailNumber: 0
           accostTotalTime: 0
         beaterInfo:
+          workerType: 5
           workerLevel: 0
           workerExp: 0
           fightTotalNumber: 0
@@ -159,7 +165,38 @@ MonoBehaviour:
         clothesId: 0
         shoesId: 0
         listLearnBook: 
-    workCharacterList: []
+      npcInfoData:
+        id: 0
+        valid: 0
+        npc_id: 0
+        npc_type: 0
+        sex: 0
+        face: 0
+        mask_id: 0
+        hand_id: 0
+        hat_id: 0
+        clothes_id: 0
+        shoes_id: 0
+        hair_id: 
+        hair_color: 
+        eye_id: 
+        eye_color: 
+        mouth_id: 
+        mouth_color: 
+        title_name: 
+        name: 
+        position_x: 0
+        position_y: 0
+        talk_ids: 
+        attributes_loyal: 0
+        attributes_life: 0
+        attributes_cook: 0
+        attributes_speed: 0
+        attributes_account: 0
+        attributes_charm: 0
+        attributes_force: 0
+        attributes_lucky: 0
+    listWorkerCharacter: []
     innBuildData:
       listWall: []
       listFloor: []
@@ -176,11 +213,11 @@ MonoBehaviour:
       second: 0
     userAchievement:
       achievementList: 
-    buildList: []
-    itemsList: []
-    menuList: []
-    characterFavorabilityList: []
-    triggeredEventList: 
+    listBuild: []
+    listItems: []
+    listMenu: []
+    listCharacterFavorability: []
+    listTriggeredEvent: 
     ingOilsalt: 0
     ingMeat: 0
     ingRiverfresh: 0

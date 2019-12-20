@@ -8,7 +8,7 @@ public class ItemGameBackpackEquipCpt : ItemGameBackpackCpt
 
     public int type = 0;
 
-    public void SetData(CharacterBean characterData,ItemsInfoBean infoBean, ItemBean itemBean)
+    public void SetData(CharacterBean characterData, ItemsInfoBean infoBean, ItemBean itemBean)
     {
         this.characterData = characterData;
         SetData(infoBean, itemBean);
@@ -16,14 +16,14 @@ public class ItemGameBackpackEquipCpt : ItemGameBackpackCpt
 
     public override void ButtonClick()
     {
-        if (itemsInfoBean == null|| itemsInfoBean.id==0)
+        if (itemsInfoBean == null || itemsInfoBean.id == 0)
             return;
-        ItemsSelectionBox selectionBox = GetUIManager<UIGameManager>().itemsSelectionBox;
-        if (selectionBox != null)
-            selectionBox.SetCallBack(this);
+        PopupItemsSelection popupItemsSelection = GetUIManager<UIGameManager>().popupItemsSelection;
+        if (popupItemsSelection != null)
+            popupItemsSelection.SetCallBack(this);
         if (type == 1)
         {
-            selectionBox.Open(3);
+            popupItemsSelection.Open(PopupItemsSelection.SelectionTypeEnum.Unload);
         }
         else
         {
@@ -37,13 +37,13 @@ public class ItemGameBackpackEquipCpt : ItemGameBackpackCpt
                 case (int)GeneralEnum.Accouting:
                 case (int)GeneralEnum.Accost:
                 case (int)GeneralEnum.Beater:
-                    selectionBox.Open(2);
+                    popupItemsSelection.Open(PopupItemsSelection.SelectionTypeEnum.EquipAndDiscard);
                     break;
                 case (int)GeneralEnum.Book:
-                    selectionBox.Open(1);
+                    popupItemsSelection.Open(PopupItemsSelection.SelectionTypeEnum.UseAndDiscard);
                     break;
                 default:
-                    selectionBox.Open(0);
+                    popupItemsSelection.Open(PopupItemsSelection.SelectionTypeEnum.Discard);
                     break;
             }
         }
@@ -51,9 +51,9 @@ public class ItemGameBackpackEquipCpt : ItemGameBackpackCpt
     }
 
     #region  装备回调
-    public override void SelectionUse(ItemsSelectionBox view)
+    public override void SelectionUse(PopupItemsSelection view)
     {
-        ToastManager toastManager= GetUIManager<UIGameManager>().toastManager;
+        ToastManager toastManager = GetUIManager<UIGameManager>().toastManager;
         switch (itemsInfoBean.items_type)
         {
             case (int)GeneralEnum.Book:
@@ -81,14 +81,14 @@ public class ItemGameBackpackEquipCpt : ItemGameBackpackCpt
         GetUIComponent<UIGameEquip>().RefreshUI();
     }
 
-    public override void SelectionEquip(ItemsSelectionBox view)
+    public override void SelectionEquip(PopupItemsSelection view)
     {
         UIGameEquip uiGameEquip = GetUIComponent<UIGameEquip>();
         uiGameEquip.SetEquip(itemsInfoBean);
         RemoveItems();
     }
 
-    public override void SelectionUnload(ItemsSelectionBox view)
+    public override void SelectionUnload(PopupItemsSelection view)
     {
         UIGameEquip uiGameEquip = GetUIComponent<UIGameEquip>();
         ItemsInfoBean nullItems = new ItemsInfoBean();

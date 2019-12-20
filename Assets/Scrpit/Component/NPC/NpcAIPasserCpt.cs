@@ -16,9 +16,10 @@ public class NpcAIPasserCpt : BaseNpcAI
     }
 
     //城镇数据
-    public SceneTownManager sceneTownManager;
+    protected SceneTownManager sceneTownManager;
     //事件处理
-    public MiniGameCombatHandler miniGameCombatHandler;
+    protected MiniGameCombatHandler miniGameCombatHandler;
+
     //移动目标点
     public Vector3 movePosition;
     //备用目标点
@@ -32,6 +33,12 @@ public class NpcAIPasserCpt : BaseNpcAI
     public SceneTownManager.TownBuildingEnum npcLocation;
     //路人意图
     public PasserIntentEnum passerIntent = PasserIntentEnum.LeaveTown;
+
+    private void Awake()
+    {
+        sceneTownManager = Find<SceneTownManager>(ImportantTypeEnum.SceneManager);
+        miniGameCombatHandler = Find<MiniGameCombatHandler>(ImportantTypeEnum.MiniGameHandler);
+    }
 
     private void FixedUpdate()
     {

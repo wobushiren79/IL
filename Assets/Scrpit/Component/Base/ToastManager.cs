@@ -29,17 +29,32 @@ public class ToastManager : BaseMonoBehaviour
         CreateToast(ToastEnum.Normal, toastIconSp, hintContent, 3);
     }
 
+
     /// <summary>
     /// 创建toast
     /// </summary>
+    /// <param name="toastType"></param>
     /// <param name="toastIconSp"></param>
-    /// <param name="toastTitleStr"></param>
     /// <param name="toastContentStr"></param>
-    public void CreateToast(ToastEnum dialogType, Sprite toastIconSp, string toastContentStr, float destoryTime)
+    /// <param name="destoryTime"></param>
+    public void CreateToast(ToastEnum toastType, Sprite toastIconSp, string toastContentStr, float destoryTime)
     {
         if (objToastContainer == null || listObjToastModel == null)
             return;
-        GameObject objToast = Instantiate(objToastContainer, listObjToastModel[(int)dialogType]);
+
+        GameObject objCreateToastModel = null;
+        foreach (GameObject itemDialog in listObjToastModel)
+        {
+            if (itemDialog.name.Equals(EnumUtil.GetEnumName(toastType)))
+            {
+                objCreateToastModel = itemDialog;
+                break;
+            }
+        }
+        if (objCreateToastModel == null)
+            return;
+
+        GameObject objToast = Instantiate(objToastContainer, objCreateToastModel);
         objToast.transform.localScale = new Vector3(1, 1, 1);
         objToast.transform.DOScale(new Vector3(0.2f, 0.2f), 0.3f).From().SetEase(Ease.OutBack);
 

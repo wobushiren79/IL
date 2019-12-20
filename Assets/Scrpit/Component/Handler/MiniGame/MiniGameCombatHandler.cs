@@ -13,7 +13,7 @@ public class MiniGameCombatHandler : BaseMiniGameHandler<MiniGameCombatBuilder, 
         OurRound,//我方回合
         EnemyRound,//敌方回合
     }
-    public GameItemsManager gameItemsManager;
+    protected GameItemsManager gameItemsManager;
     //战斗状态
     private MiniGameCombatStatusEnum mMiniGameCombatStatus;
     //回合的行动角色数据
@@ -22,6 +22,12 @@ public class MiniGameCombatHandler : BaseMiniGameHandler<MiniGameCombatBuilder, 
     private NpcAIMiniGameCombatCpt mRoundTargetCharacter;
     //回合对象选择序列
     private int mTargetSelectedPosition = 0;
+
+    protected override void Awake()
+    {
+        base.Awake();
+        gameItemsManager = Find<GameItemsManager>(ImportantTypeEnum.GameItemsManager);
+    }
 
     /// <summary>
     /// 初始化数据

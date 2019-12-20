@@ -1,13 +1,23 @@
 ﻿using UnityEngine;
 using UnityEngine.AI;
 using System.Collections;
-public class Test : MonoBehaviour {
+using System;
 
+public class Test : BaseMonoBehaviour {
 
-    private void Start()
+    public int LoopCount = 1000;
+    public int TestCount = 10;
+    public int NumGameObjects = 1000;
+
+    private void Awake()
     {
-        Quaternion quaternion= Quaternion.AngleAxis(45, Vector3.zero);
+
+ 
     }
 
+    private void OnGUI()
+    {
+
+    }
 
 }

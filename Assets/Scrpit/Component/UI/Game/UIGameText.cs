@@ -4,7 +4,7 @@ using UnityEngine.UI;
 using DG.Tweening;
 using System.Collections.Generic;
 
-public class UIGameText : BaseUIComponent, ITextInfoView
+public class UIGameText : BaseUIComponent, ITextInfoView,DialogView.IDialogCallBack
 {
     [Header("控件")]
     public UIGameTextForBook uiForBook;
@@ -266,6 +266,7 @@ public class UIGameText : BaseUIComponent, ITextInfoView
     {
         GameDataManager gameDataManager = GetUIMananger<UIGameManager>().gameDataManager;
         ToastManager toastManager = GetUIMananger<UIGameManager>().toastManager;
+        DialogManager dialogManager = GetUIMananger<UIGameManager>().dialogManager;
         switch (mTextEnum)
         {
             case TextEnum.Story:
@@ -304,7 +305,8 @@ public class UIGameText : BaseUIComponent, ITextInfoView
                 else if (textData.content.Equals(GameCommonInfo.GetUITextById(99105)))
                 {
                     //送礼
-
+                    DialogBean dialogData = new DialogBean();
+                    dialogManager.CreateDialog(DialogEnum.PickForItems,this, dialogData);
                 }
                 else
                 {
@@ -375,6 +377,18 @@ public class UIGameText : BaseUIComponent, ITextInfoView
     }
 
     public void GetTextInfoFail()
+    {
+
+    }
+    #endregion
+
+    #region 弹窗回调
+    public void Submit(DialogView dialogView, DialogBean dialogBean)
+    {
+
+    }
+
+    public void Cancel(DialogView dialogView, DialogBean dialogBean)
     {
 
     }

@@ -31,4 +31,28 @@ public class BaseMonoBehaviour : MonoBehaviour {
         objItem.transform.position = position;
         return objItem;
     }
+
+    /// <summary>
+    /// 查找数据
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
+    /// <param name="tagType"></param>
+    /// <returns></returns>
+    //public T FindObjectOfType<T>(GameObjectTagEnum tagType)
+    //{
+    //    GameObject objsFind=  GameObject.FindGameObjectWithTag(EnumUtil.GetEnumName(tagType));
+    //    return objsFind.GetComponent<T>();
+    //}
+
+    /// <summary>
+    /// 查找数据
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
+    /// <param name="importantType"></param>
+    /// <returns></returns>
+    public T Find<T>(ImportantTypeEnum importantType)
+    {
+        GameObject objFind = GameObject.Find(EnumUtil.GetEnumName(importantType));
+        return objFind.GetComponent<T>();
+    }
 }

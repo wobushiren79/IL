@@ -55,7 +55,7 @@ public class TextInfoService : BaseMVCService<TextInfoBean>
     public List<TextInfoBean> QueryDataByMinFavorability(TextEnum textEnum, long userId,int minFavorability)
     {
         InitTableByTextType(textEnum);
-        return BaseQueryData("text_id", mTableName + ".user_id","=", userId + "", mTableName + ".condition_first_meet", "=", "0", mTableName + ".condition_min_favorability", "<=", minFavorability + "");
+        return BaseQueryData("text_id", mTableName + ".user_id","=", userId + "", mTableName + ".condition_min_favorability", "<=", minFavorability + "");
     }
     
     /// <summary>

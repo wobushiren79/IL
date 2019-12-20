@@ -15,7 +15,7 @@ public abstract class PopupButtonView : BaseMonoBehaviour, IPointerEnterHandler,
 
     private void Start()
     {
-        mThisButton=GetComponent<Button>();
+        mThisButton = GetComponent<Button>();
         if (mThisButton != null)
             mThisButton.onClick.AddListener(ButtonClick);
     }

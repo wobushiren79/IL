@@ -85,7 +85,7 @@ public class ItemGameTextSelectCpt : ItemGameBaseCpt,DialogView.IDialogCallBack
             List<string> listAddPre= StringUtil.SplitBySubstringForListStr(textData.add_pre,',');
             DialogBean dialogBean = new DialogBean();
             PickForCharacterDialogView dialogView= (PickForCharacterDialogView)uiGameManager.dialogManager.CreateDialog(DialogEnum.PickForCharacter,this, dialogBean);
-            dialogView.SetData(int.Parse(listAddPre[1]));
+            dialogView.SetPickCharacterMax(int.Parse(listAddPre[1]));
         }
 
     }

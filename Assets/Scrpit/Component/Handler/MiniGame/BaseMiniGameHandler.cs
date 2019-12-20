@@ -16,9 +16,9 @@ public class BaseMiniGameHandler<B, D> : BaseHandler, UIMiniGameCountDown.ICallB
     }
 
     //UI管理
-    public UIGameManager uiGameManager;
+    protected UIGameManager uiGameManager;
     //控制器
-    public ControlHandler controlHandler;
+    protected ControlHandler controlHandler;
     //游戏构建器
     public B miniGameBuilder;
     //游戏数据
@@ -26,6 +26,13 @@ public class BaseMiniGameHandler<B, D> : BaseHandler, UIMiniGameCountDown.ICallB
 
     //迷你游戏状态
     private MiniGameStatusEnum mMiniGameStatus = MiniGameStatusEnum.GamePre;
+
+    protected virtual void Awake()
+    {
+        uiGameManager = Find<UIGameManager>(ImportantTypeEnum.GameUI);
+        controlHandler = Find<ControlHandler>(ImportantTypeEnum.ControlHandler);
+        miniGameBuilder = Find<B>(ImportantTypeEnum.MiniGameHandler);
+    }
 
     /// <summary>
     /// 设置游戏状态

@@ -20,18 +20,12 @@ public class PickForCharacterDialogView : DialogView,ItemGameDialogPickCharacter
         mToastManager = FindObjectOfType<ToastManager>();
     }
 
-    public new void OnEnable()
-    {
-        base.OnEnable();
-    }
-
-    public void SetData(int pickCharacterMax)
+    public void SetPickCharacterMax(int pickCharacterMax)
     {
         this.pickCharacterMax = pickCharacterMax;
-        InitData();
     }
 
-    public new void InitData()
+    public override void InitData()
     {
         base.InitData();
         listPickCharacter.Clear();
