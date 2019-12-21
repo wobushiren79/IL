@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using UnityEditor;
 using System;
-
+using System.Linq;
 [Serializable]
 public class NpcInfoBean : BaseBean
 {
@@ -41,6 +41,8 @@ public class NpcInfoBean : BaseBean
     public int attributes_force;
     public int attributes_lucky;
 
+    //喜欢的东西
+    public string love_items;
     /// <summary>
     /// NPC信息转为角色信息
     /// </summary>
@@ -53,7 +55,9 @@ public class NpcInfoBean : BaseBean
         characterData.baseInfo.characterId = npcInfo.id + "";
         characterData.baseInfo.titleName = npcInfo.title_name;
         characterData.baseInfo.name = npcInfo.name;
-
+        //设置最喜欢的东西
+        if (!CheckUtil.StringIsNull(npcInfo.love_items))
+            characterData.baseInfo.listLoveItems = StringUtil.SplitBySubstringForArrayLong(npcInfo.love_items, ',').ToList();
         characterData.body = new CharacterBodyBean();
         characterData.body.hair = npcInfo.hair_id;
         //设置头发颜色
@@ -62,12 +66,12 @@ public class NpcInfoBean : BaseBean
             characterData.body.hairColor = hairColor;
         characterData.body.eye = npcInfo.eye_id;
         //设置眼睛颜色
-        ColorBean eyeColor = new ColorBean(npcInfo.eye_color); 
+        ColorBean eyeColor = new ColorBean(npcInfo.eye_color);
         if (eyeColor != null)
             characterData.body.eyeColor = eyeColor;
         characterData.body.mouth = npcInfo.mouth_id;
         //设置嘴巴颜色
-        ColorBean mouthColor = new ColorBean(npcInfo.mouth_color); 
+        ColorBean mouthColor = new ColorBean(npcInfo.mouth_color);
         if (mouthColor != null)
             characterData.body.mouthColor = mouthColor;
         characterData.body.sex = npcInfo.sex;

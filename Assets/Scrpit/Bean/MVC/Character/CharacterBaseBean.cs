@@ -42,6 +42,8 @@ public class CharacterBaseBean
 
     public bool isAttendance;//是否出勤
 
+    public List<long> listLoveItems = new List<long>();//喜欢的物品
+
     /// <summary>
     /// 根据能力生成工资
     /// </summary>
@@ -109,4 +111,21 @@ public class CharacterBaseBean
         return workerInfo;
     }
 
+
+    /// <summary>
+    /// 检测是否是喜欢的物品
+    /// </summary>
+    /// <param name="itemsId"></param>
+    /// <returns></returns>
+    public bool CheckIsLoveItems(long itemsId)
+    {
+        if (listLoveItems.Contains(itemsId))
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
 }

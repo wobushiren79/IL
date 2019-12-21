@@ -4,7 +4,7 @@ using UnityEngine.UI;
 using DG.Tweening;
 using System.Collections.Generic;
 
-public class UIGameText : BaseUIComponent, ITextInfoView,DialogView.IDialogCallBack
+public class UIGameText : BaseUIComponent, ITextInfoView, DialogView.IDialogCallBack
 {
     [Header("控件")]
     public UIGameTextForBook uiForBook;
@@ -114,7 +114,7 @@ public class UIGameText : BaseUIComponent, ITextInfoView,DialogView.IDialogCallB
     public void SetDataForTalk(long userId, NPCTypeEnum npcType)
     {
         this.mTalkUserId = userId;
-        GameDataManager gameDataManager=  GetUIMananger<UIGameManager>().gameDataManager;
+        GameDataManager gameDataManager = GetUIMananger<UIGameManager>().gameDataManager;
         mTextEnum = TextEnum.Talk;
         textOrder = 1;
         CharacterFavorabilityBean characterFavorability = gameDataManager.gameData.GetCharacterFavorability(userId);
@@ -131,7 +131,11 @@ public class UIGameText : BaseUIComponent, ITextInfoView,DialogView.IDialogCallB
             case NPCTypeEnum.Town:
                 listTextData.Add(new TextInfoBean(0, GameCommonInfo.GetUITextById(99101)));
                 listTextData.Add(new TextInfoBean(1, GameCommonInfo.GetUITextById(99102)));
-                listTextData.Add(new TextInfoBean(1, GameCommonInfo.GetUITextById(99105)));
+                //检测是否送过礼物
+                if (!GameCommonInfo.DailyLimitData.CheckIsGiftNpc(mTalkUserId))
+                {
+                    listTextData.Add(new TextInfoBean(1, GameCommonInfo.GetUITextById(99105)));
+                }
                 listTextData.Add(new TextInfoBean(1, GameCommonInfo.GetUITextById(99103)));
                 break;
             case NPCTypeEnum.RecruitTown:
@@ -283,6 +287,9 @@ public class UIGameText : BaseUIComponent, ITextInfoView,DialogView.IDialogCallB
                     {
                         gameDataManager.gameData.GetCharacterFavorability(mTalkUserId).AddFavorability(1);
                     }
+                    //增加数据记录
+                    CharacterFavorabilityBean characterFavorability = gameDataManager.gameData.GetCharacterFavorability(mTalkUserId);
+                    characterFavorability.AddTalkNumber(1);
                 }
                 else if (textData.content.Equals(GameCommonInfo.GetUITextById(99103)))
                 {
@@ -300,13 +307,13 @@ public class UIGameText : BaseUIComponent, ITextInfoView,DialogView.IDialogCallB
                     {
                         listTextData = RandomUtil.GetRandomDataByDictionary(mapTalkRecruitData);
                         NextText(1);
-                    } 
+                    }
                 }
                 else if (textData.content.Equals(GameCommonInfo.GetUITextById(99105)))
                 {
                     //送礼
                     DialogBean dialogData = new DialogBean();
-                    dialogManager.CreateDialog(DialogEnum.PickForItems,this, dialogData);
+                    PickForItemsDialogView pickForItemsDialog = (PickForItemsDialogView)dialogManager.CreateDialog(DialogEnum.PickForItems, this, dialogData);
                 }
                 else
                 {
@@ -385,7 +392,35 @@ public class UIGameText : BaseUIComponent, ITextInfoView,DialogView.IDialogCallB
     #region 弹窗回调
     public void Submit(DialogView dialogView, DialogBean dialogBean)
     {
-
+        NpcInfoManager npcInfoManager= GetUIMananger<UIGameManager>().npcInfoManager;
+        GameDataManager gameDataManager = GetUIMananger<UIGameManager>().gameDataManager;
+        //获取选择物品
+        PickForItemsDialogView pickForItemsDialog = (PickForItemsDialogView)dialogView;
+        pickForItemsDialog.GetSelectedItems(out ItemsInfoBean itemsInfo,out ItemBean itemData);
+        //获取赠送人
+        CharacterBean characterData = npcInfoManager.GetCharacterDataById(mTalkUserId);
+        CharacterFavorabilityBean characterFavorability= gameDataManager.gameData.GetCharacterFavorability(mTalkUserId);
+        int addFavorability = 0;
+        if (characterData.baseInfo.CheckIsLoveItems(itemData.itemId))
+        {
+            addFavorability = 3;
+            //增加数据记录
+            characterFavorability.AddGiftLoveNumber(1);
+        }
+        else
+        {
+            addFavorability = 1;
+            //增加数据记录
+            characterFavorability.AddGiftNormalNumber(1);
+        }
+        //删减物品
+        gameDataManager.gameData.ChangeItemsNumber(itemData.itemId,-1);
+        //增加每日限制
+        GameCommonInfo.DailyLimitData.AddGiftNpc(mTalkUserId);
+        //通过增加好感查询对话
+        listTextData = GetGiftTalkByFavorability(addFavorability);
+        ShowText(listTextData);
+      
     }
 
     public void Cancel(DialogView dialogView, DialogBean dialogBean)
@@ -393,6 +428,31 @@ public class UIGameText : BaseUIComponent, ITextInfoView,DialogView.IDialogCallB
 
     }
     #endregion
+
+    /// <summary>
+    /// 通过等级获取赠送对话
+    /// </summary>
+    /// <param name="level"></param>
+    private List<TextInfoBean> GetGiftTalkByFavorability(int favorability)
+    {
+        List<List<TextInfoBean>> listData = new List<List<TextInfoBean>>();
+        foreach (var itemData in mapTalkGiftData)
+        {
+            if(itemData.Value[0].add_favorability == favorability)
+            {
+                listData.Add(itemData.Value);
+                break;
+            }
+        }
+        if (listData.Count == 0)
+        {
+            return new List<TextInfoBean>();
+        }
+        else
+        {
+            return RandomUtil.GetRandomDataByList(listData);
+        }
+    }
 
     public interface ICallBack
     {
@@ -417,6 +477,6 @@ public class UIGameText : BaseUIComponent, ITextInfoView,DialogView.IDialogCallB
         /// <summary>
         /// 文本选择结果处理
         /// </summary>
-        void UITextSelectResult(TextInfoBean textData,List<CharacterBean> listUserData);
+        void UITextSelectResult(TextInfoBean textData, List<CharacterBean> listUserData);
     }
 }

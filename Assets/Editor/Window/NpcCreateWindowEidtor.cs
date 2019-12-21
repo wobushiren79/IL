@@ -430,6 +430,8 @@ public class NpcCreateWindowEidtor : EditorWindow
         if (shoesInfo != null)
             GUIPic(shoesPath, shoesInfo.icon_key);
 
+        GUILayout.Label("喜欢的东西ID（用,分隔）：");
+        npcInfo.love_items = EditorGUILayout.TextArea(npcInfo.love_items + "", GUILayout.Width(100), GUILayout.Height(20));
         GUILayout.EndHorizontal();
 
     }

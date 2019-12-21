@@ -148,10 +148,13 @@ public class PopupItemsSelection : BaseMonoBehaviour
         Close();
     }
 
+    /// <summary>
+    /// 赠送
+    /// </summary>
     public void GiftItems()
     {
         if (callBack != null)
-            callBack.SelectionUnload(this);
+            callBack.SelectionGift(this);
         Close();
     }
 

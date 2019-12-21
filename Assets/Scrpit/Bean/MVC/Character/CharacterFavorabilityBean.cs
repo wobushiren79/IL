@@ -13,6 +13,12 @@ public class CharacterFavorabilityBean
     //是否是第一次见面
     public bool firstMeet = true;
 
+    //送礼次数
+    public int giftLoveNumber = 0;
+    public int giftNormalNumber = 0;
+    //谈话次数
+    public int talkNumber = 0;
+
     public CharacterFavorabilityBean(long characterId) : this(characterId, 0)
     {
 
@@ -65,4 +71,30 @@ public class CharacterFavorabilityBean
         firstMeet = false;
     }
 
+    /// <summary>
+    /// 增加普通礼物赠送次数
+    /// </summary>
+    /// <param name="number"></param>
+    public void AddGiftNormalNumber( int number)
+    {
+        giftNormalNumber += number;
+    }
+
+    /// <summary>
+    /// 增加喜爱礼物赠送次数
+    /// </summary>
+    /// <param name="number"></param>
+    public void AddGiftLoveNumber(int number)
+    {
+        giftLoveNumber += number;
+    }
+
+    /// <summary>
+    /// 增加谈话次数
+    /// </summary>
+    /// <param name="number"></param>
+    public void AddTalkNumber(int number)
+    {
+        talkNumber += number;
+    }
 }
