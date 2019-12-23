@@ -203,8 +203,11 @@ public class BaseMVCService
             string itemKey = item.Key;
             string valueStr = Convert.ToString(item.Value);
             listKeys.Add(item.Key);
-            bool isString = item.Value is string;
-            if (isString)
+            if (item.Value==null)
+            {
+                listValues.Add("null");
+            }
+            else if (item.Value is string)
             {
                 if (CheckUtil.StringIsNull(valueStr))
                     listValues.Add("null");
@@ -239,7 +242,11 @@ public class BaseMVCService
             {
                 string valueStr = Convert.ToString(item.Value);
                 listLeftKeys.Add(item.Key);
-                if (item.Value is string)
+                if (item.Value == null)
+                {
+                    listLeftValues.Add("null");
+                }
+                else if (item.Value is string)
                 {
                     if (CheckUtil.StringIsNull(valueStr))
                         listLeftValues.Add("null");
@@ -259,7 +266,11 @@ public class BaseMVCService
             {
                 string valueStr = Convert.ToString(item.Value);
                 listMainKeys.Add(item.Key);
-                if (item.Value is string)
+                if (item.Value == null)
+                {
+                    listMainValues.Add("null");
+                }
+                else if (item.Value is string)
                 {
                     if (CheckUtil.StringIsNull(valueStr))
                         listMainValues.Add("null");
