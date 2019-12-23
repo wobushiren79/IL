@@ -4,13 +4,13 @@ using System.Collections.Generic;
 
 public class AchievementInfoService 
 {
-    private readonly string mTableName;
-    private readonly string mLeftDetailsTableName;
+    private readonly string tableNameForMain;
+    private readonly string tableNameForLeft;
 
     public AchievementInfoService()
     {
-        mTableName = "achievement_info";
-        mLeftDetailsTableName = "achievement_info_details_" + GameCommonInfo.GameConfig.language;
+        tableNameForMain = "achievement_info";
+        tableNameForLeft = "achievement_info_details_" + GameCommonInfo.GameConfig.language;
     }
 
     /// <summary>
@@ -20,8 +20,8 @@ public class AchievementInfoService
     public List<AchievementInfoBean> QueryAllData()
     {
         return SQliteHandle.LoadTableData<AchievementInfoBean>
-            (ProjectConfigInfo.DATA_BASE_INFO_NAME, mTableName,
-            new string[] { mLeftDetailsTableName },
+            (ProjectConfigInfo.DATA_BASE_INFO_NAME, tableNameForMain,
+            new string[] { tableNameForLeft },
             new string[] { "id" },
             new string[] { "ach_id" });
     }
@@ -33,14 +33,14 @@ public class AchievementInfoService
     /// <returns></returns>
     public List<AchievementInfoBean> QueryDataByIds(long[] ids)
     {
-        string[] leftTable = new string[] { mLeftDetailsTableName };
+        string[] leftTable = new string[] { tableNameForLeft };
         string[] mainKey = new string[] { "id" };
         string[] leftKey = new string[] { "ach_id" };
-        string[] colName = new string[] { mTableName + ".id" };
+        string[] colName = new string[] { tableNameForMain + ".id" };
         string[] operations = new string[] { "IN" };
         string values = TypeConversionUtil.ArrayToStringBySplit(ids, ",");
         string[] colValue = new string[] { "(" + values + ")" };
-        return SQliteHandle.LoadTableData<AchievementInfoBean>(ProjectConfigInfo.DATA_BASE_INFO_NAME, mTableName, leftTable, mainKey, leftKey, colName, operations, colValue);
+        return SQliteHandle.LoadTableData<AchievementInfoBean>(ProjectConfigInfo.DATA_BASE_INFO_NAME, tableNameForMain, leftTable, mainKey, leftKey, colName, operations, colValue);
     }
 
     /// <summary>
@@ -50,12 +50,12 @@ public class AchievementInfoService
     /// <returns></returns>
     public List<AchievementInfoBean> QueryDataByType(int type)
     {
-        string[] leftTable = new string[] { mLeftDetailsTableName };
+        string[] leftTable = new string[] { tableNameForLeft };
         string[] mainKey = new string[] { "id" };
         string[] leftKey = new string[] { "ach_id" };
-        string[] colName = new string[] { mTableName + ".type" };
+        string[] colName = new string[] { tableNameForMain + ".type" };
         string[] operations = new string[] { "=" };
         string[] colValue = new string[] { type + "" };
-        return SQliteHandle.LoadTableData<AchievementInfoBean>(ProjectConfigInfo.DATA_BASE_INFO_NAME, mTableName, leftTable, mainKey, leftKey, colName, operations, colValue);
+        return SQliteHandle.LoadTableData<AchievementInfoBean>(ProjectConfigInfo.DATA_BASE_INFO_NAME, tableNameForMain, leftTable, mainKey, leftKey, colName, operations, colValue);
     }
 }

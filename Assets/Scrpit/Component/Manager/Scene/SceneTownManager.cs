@@ -4,18 +4,6 @@ using System.Collections.Generic;
 
 public class SceneTownManager : BaseManager
 {
-    public enum TownBuildingEnum
-    {
-        Town,
-        Market,
-        Recruitment,
-        Grocery,
-        Dress,
-        Carpenter,
-        Guild,
-        Arena,
-    }
-
     //小镇出入口
     public List<Transform> listTownDoor;
     //小镇

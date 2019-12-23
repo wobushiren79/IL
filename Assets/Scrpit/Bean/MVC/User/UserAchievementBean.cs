@@ -8,6 +8,15 @@ public class UserAchievementBean
 {
     public List<long> achievementList = new List<long>();//解锁成就列表
 
+    public long ownIngOilsalt;//油盐
+    public long ownIngMeat;//肉类
+    public long ownIngRiverfresh;//河鲜
+    public long ownIngSeafood;//海鲜
+    public long ownIngVegetables;//蔬菜
+    public long ownIngMelonfruit;//瓜果
+    public long ownIngWaterwine;//酒水
+    public long ownIngFlour;//面粉
+
     /// <summary>
     /// 是否包含该成就
     /// </summary>

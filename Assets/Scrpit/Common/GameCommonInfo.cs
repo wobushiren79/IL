@@ -12,7 +12,7 @@ public class GameCommonInfo
     //进入竞技场准备数据
     public static ArenaPrepareBean ArenaPrepareData;
     //随机种子
-    public static int RandomSeed = 0;
+    public static int RandomSeed = 1564;
     //每日限制数据
     public static UserDailyLimitBean DailyLimitData = new UserDailyLimitBean();
     // 预加载场景名字
@@ -30,6 +30,13 @@ public class GameCommonInfo
         mGameConfigController.GetGameConfigData();
     }
 
+    /// <summary>
+    /// 随机化种子
+    /// </summary>
+    public static void InitRandomSeed()
+    {
+        Random.InitState(RandomSeed);
+    }
 
     public static string GetUITextById(long id)
     {

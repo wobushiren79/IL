@@ -7,6 +7,10 @@ public class StoryInfoBean : BaseBean
 {
     //事件发生场景 1客栈 2城镇 3竞技场
     public int story_scene;
+    //地点类型
+    public int location_type;
+    //发生地外还是里
+    public int out_in;
     //事件发生位置
     public float position_x;
     public float position_y;
@@ -17,4 +21,7 @@ public class StoryInfoBean : BaseBean
     public int trigger_date_year;
     public int trigger_date_month;
     public int trigger_date_day;
+
+    //备注
+    public string note;
 }

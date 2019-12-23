@@ -35,15 +35,15 @@ public class StoreInfoController : BaseMVCController<StoreInfoModel, IStoreInfoV
     /// </summary>
     public void GetGroceryInfo()
     {
-        GetStoreInfoByType(1);
+        GetStoreInfoByType(StoreTypeEnum.Grocery);
     }
 
     /// <summary>
     /// 获取服装店数据
     /// </summary>
-    public void GetClothesStoreInfo()
+    public void GetDressStoreInfo()
     {
-        GetStoreInfoByType(2);
+        GetStoreInfoByType(StoreTypeEnum.Dress);
     }
 
     /// <summary>
@@ -51,7 +51,7 @@ public class StoreInfoController : BaseMVCController<StoreInfoModel, IStoreInfoV
     /// </summary>
     public void GetCarpenterInfo()
     {
-        GetStoreInfoByType(3);
+        GetStoreInfoByType(StoreTypeEnum.Carpenter);
     }
 
     /// <summary>
@@ -59,7 +59,7 @@ public class StoreInfoController : BaseMVCController<StoreInfoModel, IStoreInfoV
     /// </summary>
     public void GetMarketStoreInfo()
     {
-        GetStoreInfoByType(9);
+        GetStoreInfoByType(StoreTypeEnum.Market);
     }
 
     /// <summary>
@@ -67,7 +67,7 @@ public class StoreInfoController : BaseMVCController<StoreInfoModel, IStoreInfoV
     /// </summary>
     public void GetGuildStoreInfo()
     {
-        GetStoreInfoByType(10);
+        GetStoreInfoByType(StoreTypeEnum.Guild);
     }
 
     /// <summary>
@@ -75,13 +75,13 @@ public class StoreInfoController : BaseMVCController<StoreInfoModel, IStoreInfoV
     /// </summary>
     public void GetGuildImproveForCharacter()
     {
-        GetStoreInfoByType(11);
+        GetStoreInfoByType(StoreTypeEnum.Improve);
     }
 
     /// <summary>
     /// 查询所有商店信息
     /// </summary>
-    public void GetStoreInfoByType(int type)
+    public void GetStoreInfoByType(StoreTypeEnum type)
     {
         List<StoreInfoBean> listData = GetModel().GetStoreInfoByType(type);
         if (!CheckUtil.ListIsNull(listData))

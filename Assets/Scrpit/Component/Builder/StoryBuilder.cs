@@ -130,7 +130,7 @@ public class StoryBuilder : BaseMonoBehaviour, StoryInfoManager.CallBack
                 case (int)StoryInfoDetailsBean.StoryInfoDetailsTypeEnum.CameraPosition:
                     //设置摄像头位置
                     baseControl = controlHandler.GetControl();
-                    Vector3 cameraWorldPosition = objNpcModel.transform.TransformPoint(new Vector3(itemData.camera_position_x, itemData.camera_position_y));
+                    Vector3 cameraWorldPosition = transform.TransformPoint(new Vector3(itemData.camera_position_x, itemData.camera_position_y));
                     baseControl.SetCameraFollowObj(null);
                     baseControl.SetCameraPosition(cameraWorldPosition);
                     break;

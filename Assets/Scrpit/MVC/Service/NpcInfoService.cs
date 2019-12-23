@@ -3,7 +3,7 @@ using UnityEditor;
 using System.Collections.Generic;
 using System;
 
-public class NpcInfoService: BaseMVCService<NpcInfoBean>
+public class NpcInfoService: BaseMVCService
 {
 
     public NpcInfoService() : base("npc_info", "npc_info_details_" + GameCommonInfo.GameConfig.language)
@@ -17,7 +17,7 @@ public class NpcInfoService: BaseMVCService<NpcInfoBean>
     /// <returns></returns>
     public List<NpcInfoBean> QueryAllData()
     {
-        return BaseQueryData("npc_id", mTableName + ".valid", "1");
+        return BaseQueryData<NpcInfoBean>("npc_id", tableNameForMain + ".valid", "1");
     }
 
     /// <summary>
@@ -27,14 +27,14 @@ public class NpcInfoService: BaseMVCService<NpcInfoBean>
     /// <returns></returns>
     public List<NpcInfoBean> QueryDataByIds(long[] ids)
     {
-        string[] leftTable = new string[] { mLeftDetailsTableName };
+        string[] leftTable = new string[] { tableNameForLeft };
         string[] mainKey = new string[] { "id" };
         string[] leftKey = new string[] { "npc_id" };
-        string[] colName = new string[] { mTableName + ".id" };
+        string[] colName = new string[] { tableNameForMain + ".id" };
         string[] operations = new string[] { "IN" };
         string values = TypeConversionUtil.ArrayToStringBySplit(ids, ",");
         string[] colValue = new string[] { "(" + values + ")" };
-        return SQliteHandle.LoadTableData<NpcInfoBean>(ProjectConfigInfo.DATA_BASE_INFO_NAME, mTableName, leftTable, mainKey, leftKey, colName, operations, colValue);
+        return SQliteHandle.LoadTableData<NpcInfoBean>(ProjectConfigInfo.DATA_BASE_INFO_NAME, tableNameForMain, leftTable, mainKey, leftKey, colName, operations, colValue);
     }
 
     /// <summary>
@@ -44,7 +44,7 @@ public class NpcInfoService: BaseMVCService<NpcInfoBean>
     /// <returns></returns>
     public List<NpcInfoBean> QueryDataById(long id)
     {
-        return BaseQueryData("npc_id", mTableName + ".id", id + "");
+        return BaseQueryData<NpcInfoBean>("npc_id", tableNameForMain + ".id", id + "");
     }
 
     /// <summary>
@@ -54,14 +54,14 @@ public class NpcInfoService: BaseMVCService<NpcInfoBean>
     /// <returns></returns>
     public List<NpcInfoBean> QueryDataByType(int[] type)
     {
-        string[] leftTable = new string[] { mLeftDetailsTableName };
+        string[] leftTable = new string[] { tableNameForLeft };
         string[] mainKey = new string[] { "id" };
         string[] leftKey = new string[] { "npc_id" };
-        string[] colName = new string[] { mTableName + ".npc_type" };
+        string[] colName = new string[] { tableNameForMain + ".npc_type" };
         string[] operations = new string[] { "IN" };
         string values = TypeConversionUtil.ArrayToStringBySplit(type, ",");
         string[] colValue = new string[] { "(" + values + ")" };
-        return SQliteHandle.LoadTableData<NpcInfoBean>(ProjectConfigInfo.DATA_BASE_INFO_NAME, mTableName, leftTable, mainKey, leftKey, colName, operations, colValue);
+        return SQliteHandle.LoadTableData<NpcInfoBean>(ProjectConfigInfo.DATA_BASE_INFO_NAME, tableNameForMain, leftTable, mainKey, leftKey, colName, operations, colValue);
     }
 
     /// <summary>

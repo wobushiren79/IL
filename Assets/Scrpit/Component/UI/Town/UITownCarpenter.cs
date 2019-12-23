@@ -116,12 +116,12 @@ public class UITownCarpenter : UIBaseOne, IStoreInfoView, IRadioGroupCallBack
     {
     }
 
-
-    public void GetStoreInfoByTypeSuccess(int type, List<StoreInfoBean> listData)
+    public void GetStoreInfoByTypeSuccess(StoreTypeEnum type, List<StoreInfoBean> listData)
     {
         mCarpenterListData = listData;
     }
-    public void GetStoreInfoByTypeFail(int type)
+
+    public void GetStoreInfoByTypeFail(StoreTypeEnum type)
     {
     }
     #endregion
@@ -135,5 +135,6 @@ public class UITownCarpenter : UIBaseOne, IStoreInfoView, IRadioGroupCallBack
     public void RadioButtonUnSelected(RadioGroupView rgView, int position, RadioButtonView rbview)
     {
     }
+
     #endregion
 }

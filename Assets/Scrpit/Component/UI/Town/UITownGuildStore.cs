@@ -103,13 +103,12 @@ public class UITownGuildStore : UIBaseOne, IStoreInfoView, IRadioGroupCallBack
     public void GetAllStoreInfoFail()
     {
     }
-
-    public void GetStoreInfoByTypeSuccess(int type,List<StoreInfoBean> listData)
+    public void GetStoreInfoByTypeSuccess(StoreTypeEnum type, List<StoreInfoBean> listData)
     {
         mGuidStoreListData = listData;
     }
 
-    public void GetStoreInfoByTypeFail(int type)
+    public void GetStoreInfoByTypeFail(StoreTypeEnum type)
     {
     }
     #endregion
@@ -123,5 +122,7 @@ public class UITownGuildStore : UIBaseOne, IStoreInfoView, IRadioGroupCallBack
     public void RadioButtonUnSelected(RadioGroupView rgView, int position, RadioButtonView view)
     {
     }
+
+
     #endregion
 }

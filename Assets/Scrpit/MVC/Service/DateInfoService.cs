@@ -2,7 +2,7 @@
 using UnityEditor;
 using System.Collections.Generic;
 
-public class DateInfoService : BaseMVCService<DateInfoBean>
+public class DateInfoService : BaseMVCService
 {
 
     public string mLeftId = "date_id";
@@ -18,7 +18,7 @@ public class DateInfoService : BaseMVCService<DateInfoBean>
     /// <returns></returns>
     public List<DateInfoBean> QueryAllData()
     {
-        return BaseQueryAllData(mLeftId);
+        return BaseQueryAllData<DateInfoBean>(mLeftId);
     }
 
     /// <summary>
@@ -28,7 +28,7 @@ public class DateInfoService : BaseMVCService<DateInfoBean>
     /// <returns></returns>
     public List<DateInfoBean> QueayDataByMonth(int month)
     {
-        return BaseQueryData(mLeftId, GetTableName() + ".month", month + "");
+        return BaseQueryData<DateInfoBean>(mLeftId, GetTableName() + ".month", month + "");
     }
 
     /// <summary>
@@ -39,6 +39,6 @@ public class DateInfoService : BaseMVCService<DateInfoBean>
     /// <returns></returns>
     public List<DateInfoBean> QuearyDateByMonthAndDay(int month, int day)
     {
-        return BaseQueryData(mLeftId, GetTableName() + ".month", month + "", GetTableName() + ".day", day + "");
+        return BaseQueryData<DateInfoBean>(mLeftId, GetTableName() + ".month", month + "", GetTableName() + ".day", day + "");
     }
 }

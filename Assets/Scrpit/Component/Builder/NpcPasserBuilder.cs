@@ -58,7 +58,7 @@ public class NpcPasserBuilder : NpcNormalBuilder
         if (npcAI != null)
         {
             //设置天前所在地
-            npcAI.SetLocation(SceneTownManager.TownBuildingEnum.Town);
+            npcAI.SetLocation(TownBuildingEnum.Town);
             //随机获取一个要去的地方
             npcAI.SetRandomBuildingToGo();
         }

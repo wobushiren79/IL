@@ -25,9 +25,9 @@ public class StoreInfoModel : BaseMVCModel
     /// 根据类型获取商店信息
     /// </summary>
     /// <returns></returns>
-    public List<StoreInfoBean> GetStoreInfoByType(int type)
+    public List<StoreInfoBean> GetStoreInfoByType(StoreTypeEnum type)
     {
-        List<StoreInfoBean> listData = mStoreInfoService.QueryDataByType(type);
+        List<StoreInfoBean> listData = mStoreInfoService.QueryDataByType((int)type);
         return listData;
     }
 }

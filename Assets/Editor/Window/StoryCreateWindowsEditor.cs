@@ -1,11 +1,15 @@
 ﻿using UnityEngine;
 using UnityEditor;
 using System.Collections.Generic;
+using Cinemachine;
 
 public class StoryCreateWindowsEditor : EditorWindow
 {
     private GameObject mObjContent;
     private GameObject mObjNpcModel;
+    //镜头
+    private GameObject mObjCarmera;
+    private CinemachineVirtualCamera mCamera2D;
 
     [MenuItem("Tools/Window/StoryCreate")]
     static void CreateWindows()
@@ -18,7 +22,6 @@ public class StoryCreateWindowsEditor : EditorWindow
         this.titleContent = new GUIContent("剧情创建辅助工具");
     }
 
-
     private void OnDestroy()
     {
         CptUtil.RemoveChildsByActiveInEditor(mObjContent);
@@ -26,6 +29,9 @@ public class StoryCreateWindowsEditor : EditorWindow
 
     private void OnEnable()
     {
+        mObjContent = GameObject.Find("StoryBuilder");
+        mObjCarmera = GameObject.Find("CM vcam1");
+        mCamera2D = mObjCarmera.GetComponent<CinemachineVirtualCamera>();
         //查询所有NPC数据
         listAllStoryInfoDetails = null;
         listOrderStoryInfoDetails = null;
@@ -49,23 +55,29 @@ public class StoryCreateWindowsEditor : EditorWindow
     StoryInfoService storyInfoService;
 
     private string mNpcCreateIdStr = "人物ID";
-    private string mStoryScene = "故事场景";
-    private string mStoryId = "故事ID";
-    private string mStroyOrder = "故事顺序序号";
+    private int mStoryScene = 1;
+    private int mStorySceneBuilding = 1;
+    private long mStoryIdLast = 1;
+    private long mStoryId = 0;
+    private long mFindStoryId = 0;
+    private int mFindStroyOrder = 1;
+
+
+    List<StoryInfoBean> listStoryInfo = new List<StoryInfoBean>();
 
     List<StoryInfoDetailsBean> listAllStoryInfoDetails;
     List<StoryInfoDetailsBean> listOrderStoryInfoDetails;
     List<TextInfoBean> listStoryTextInfo;
     Dictionary<long, NpcInfoBean> mapNpcInfo = new Dictionary<long, NpcInfoBean>();
 
-    private Vector2 scrollPosition= Vector2.zero;
+    private Vector2 scrollPosition = Vector2.zero;
     private void OnGUI()
     {
         //滚动布局
         scrollPosition = GUILayout.BeginScrollView(scrollPosition);
         GUILayout.BeginVertical();
         //父对象
-        mObjContent = EditorGUILayout.ObjectField(new GUIContent("剧情容器", ""), mObjContent, typeof(GameObject), true) as GameObject;
+       // mObjContent = EditorGUILayout.ObjectField(new GUIContent("剧情容器", ""), mObjContent, typeof(GameObject), true) as GameObject;
         mObjNpcModel = EditorGUILayout.ObjectField(new GUIContent("NPC模型", ""), mObjNpcModel, typeof(GameObject), true) as GameObject;
 
         //NPC创建
@@ -81,242 +93,171 @@ public class StoryCreateWindowsEditor : EditorWindow
         //故事数据生成
         GUILayout.BeginHorizontal();
         GUILayout.Label("故事数据生成：", GUILayout.Width(100), GUILayout.Height(20));
-        mStoryScene = EditorGUILayout.TextArea(mStoryScene, GUILayout.Width(100), GUILayout.Height(20));
-        mStoryId = EditorGUILayout.TextArea(mStoryId, GUILayout.Width(100), GUILayout.Height(20));
-        mStroyOrder = EditorGUILayout.TextArea(mStroyOrder, GUILayout.Width(100), GUILayout.Height(20));
+        GUILayout.Label("场景：", GUILayout.Width(50), GUILayout.Height(20));
+        mStoryScene = (int)(ScenesEnum)EditorGUILayout.EnumPopup((ScenesEnum)mStoryScene, GUILayout.Width(150), GUILayout.Height(20));
+        mStoryId = mStoryScene * 10000000;
+        if (mStoryScene == (int)ScenesEnum.GameTownScene)
+        {
+            GUILayout.Label("城镇建筑：", GUILayout.Width(50), GUILayout.Height(20));
+            mStorySceneBuilding = (int)(TownBuildingEnum)EditorGUILayout.EnumPopup((TownBuildingEnum)mStorySceneBuilding, GUILayout.Width(150), GUILayout.Height(20));
+            mStoryId += mStorySceneBuilding * 100000;
+        }
+        mStoryIdLast = long.Parse(EditorGUILayout.TextArea(mStoryIdLast + "", GUILayout.Width(100), GUILayout.Height(20)));
+        mStoryId += mStoryIdLast;
+        GUILayout.Label("id：" + mStoryId, GUILayout.Width(150), GUILayout.Height(20));
+        mFindStroyOrder = int.Parse(EditorGUILayout.TextArea(mFindStroyOrder + "", GUILayout.Width(100), GUILayout.Height(20)));
         if (GUILayout.Button("生成数据"))
         {
-            CreateStoryData(mStoryScene, mStoryId, mStroyOrder);
+            CreateStoryData(mStoryScene, mStorySceneBuilding, mStoryId);
         }
         GUILayout.EndHorizontal();
-        //故事查询
-        GUILayout.BeginHorizontal();
-        GUILayout.Label("故事数据查询：", GUILayout.Width(100), GUILayout.Height(20));
-        mStoryScene = EditorGUILayout.TextArea(mStoryScene, GUILayout.Width(100), GUILayout.Height(20));
-        mStoryId = EditorGUILayout.TextArea(mStoryId, GUILayout.Width(100), GUILayout.Height(20));
-        if (GUILayout.Button("查询"))
-        {
-            QueryStoryData(mStoryScene, mStoryId);
-        }
-        GUILayout.EndHorizontal();
-
-        //故事内容
-        if (listOrderStoryInfoDetails != null)
-        {
-            GUILayout.BeginHorizontal();
-            if (GUILayout.Button("<"))
-            {
-                mStroyOrder = "" + (int.Parse(mStroyOrder) - 1);
-                listOrderStoryInfoDetails = GetStoryInfoDetailsByOrder(int.Parse(mStroyOrder));
-                CreateSceneData(listOrderStoryInfoDetails);
-            }
-            mStroyOrder = EditorGUILayout.TextArea(mStroyOrder, GUILayout.Width(100), GUILayout.Height(20));
-            if (GUILayout.Button(">"))
-            {
-                mStroyOrder = "" + (int.Parse(mStroyOrder) + 1);
-                listOrderStoryInfoDetails = GetStoryInfoDetailsByOrder(int.Parse(mStroyOrder));
-                CreateSceneData(listOrderStoryInfoDetails);
-            }
-            GUILayout.EndHorizontal();
-
-            ShowStoryInfoDetails();
-        }
+        //查询相关UI
+        GUIFindStoryInfo();
+        //故事信息UI
+        GUIStoryInfo();
+        //故事详情
+        GUIStoryInfoDetails();
 
 
         GUILayout.EndVertical();
         GUILayout.EndScrollView();
     }
 
-    /// <summary>
-    /// 创建一个NPC
-    /// </summary>
-    /// <param name="idStr"></param>
-    public GameObject CreateNpc(string idStr)
+    private void GUIFindStoryInfo()
     {
-
-        if (mObjContent == null)
+        //故事查询
+        GUILayout.BeginHorizontal();
+        GUILayout.Label("故事数据查询：", GUILayout.Width(100), GUILayout.Height(20));
+        mFindStoryId = long.Parse(EditorGUILayout.TextArea(mFindStoryId + "", GUILayout.Width(100), GUILayout.Height(20)));
+        if (GUILayout.Button("查询", GUILayout.Width(100), GUILayout.Height(20)))
         {
-            LogUtil.LogError("还没有定义剧情容器");
-            return null;
+            QueryStoryInfoData(mFindStoryId);
         }
-        if (mObjNpcModel == null)
+        if (GUILayout.Button("查询全部", GUILayout.Width(100), GUILayout.Height(20)))
         {
-            LogUtil.LogError("还没有NPC模型");
-            return null;
+            QueryStoryInfoData(-1);
         }
-        if (long.TryParse(idStr, out long createNpcId))
+        if (GUILayout.Button("查询客栈故事", GUILayout.Width(100), GUILayout.Height(20)))
         {
-            return CreateNpc(createNpcId, Vector3.zero, 0);
+            QueryStoryInfoDataByScene(ScenesEnum.GameInnScene);
         }
-        else
-            LogUtil.LogError("创建人物ID不规范");
-        return null;
+        if (GUILayout.Button("查询小镇故事", GUILayout.Width(100), GUILayout.Height(20)))
+        {
+            QueryStoryInfoDataByScene(ScenesEnum.GameTownScene);
+        }
+        if (GUILayout.Button("查询竞技场故事", GUILayout.Width(100), GUILayout.Height(20)))
+        {
+            QueryStoryInfoDataByScene(ScenesEnum.GameArenaScene);
+        }
+        GUILayout.EndHorizontal();
     }
 
-    public GameObject CreateNpc(long createNpcId, Vector3 position, int number)
+    private void GUIStoryInfo()
     {
-        CharacterBean characterData = null;
-        GameObject objNpc = null;
-        if (createNpcId == 0)
-        {
-            characterData = new CharacterBean();
-        }
-        else
-        {
-            characterData = NpcInfoBean.NpcInfoToCharacterData(mapNpcInfo[createNpcId]);
-        }
-
-        objNpc = Instantiate(mObjNpcModel, mObjContent.transform);
-        BaseNpcAI baseNpcAI = objNpc.GetComponent<BaseNpcAI>();
-        baseNpcAI.gameItemsManager = gameItemsManager;
-        baseNpcAI.transform.localPosition = position;
-        baseNpcAI.SetCharacterData(characterData);
-        baseNpcAI.name = "" + number;
-        objNpc.SetActive(true);
-
-        return objNpc;
-    }
-    /// <summary>
-    /// 创建故事数据
-    /// </summary>
-    /// <param name="scene"></param>
-    /// <param name="storyId"></param>
-    /// <param name="order"></param>
-    public void CreateStoryData(string scene, string storyId, string order)
-    {
-        if (mObjContent == null)
-        {
-            LogUtil.LogError("还没有定义剧情容器");
+        if (listStoryInfo == null)
             return;
-        }
-        float storyPositionX = mObjContent.transform.position.x;
-        float storyPositionY = mObjContent.transform.position.y;
-        LogUtil.Log("story_info:" + storyId + "	1	" + scene + "	" + storyPositionX + "	" + storyPositionY);
-
-        string detailsStr = "";
-        for (int i = 0; i < mObjContent.transform.childCount; i++)
+        for (int i = 0; i < listStoryInfo.Count; i++)
         {
-            GameObject itemObj = mObjContent.transform.GetChild(i).gameObject;
-            if (itemObj.activeSelf)
-            {
-                BaseNpcAI baseNpc = itemObj.GetComponent<BaseNpcAI>();
-                if (baseNpc == null)
-                    continue;
-                CharacterBean characterData = baseNpc.characterData;
-                if (characterData == null)
-                    continue;
-                detailsStr += (storyId + "	" + order + "	1	");
-                //NPC_ID
-                detailsStr += (baseNpc.characterData.baseInfo.characterId + "	");
-                //npc位置
-                detailsStr += (itemObj.transform.localPosition.x + "	" + itemObj.transform.localPosition.y + "	");
-                //npc编号
-                detailsStr += (itemObj.name + "	");
-
-                detailsStr += ("\n");
-            }
+            StoryInfoBean storyInfo = listStoryInfo[i];
+            GUIStoryInfoItem(storyInfo);
         }
-        LogUtil.Log("story_info_details:" + detailsStr);
     }
 
-    /// <summary>
-    /// 查询故事详情数据
-    /// </summary>
-    /// <param name="scene"></param>
-    /// <param name="storyId"></param>
-    public void QueryStoryData(string scene, string storyId)
+    private void GUIStoryInfoItem(StoryInfoBean storyInfo)
     {
-        if (mObjContent == null)
+        GUILayout.BeginHorizontal();
+        if (GUILayout.Button("更新", GUILayout.Width(50), GUILayout.Height(20)))
         {
-            LogUtil.LogError("还没有定义剧情容器");
-            return;
+            storyInfoService.UpdateStoryData(storyInfo);
         }
-        //清空容器
-        for (int i = 0; i < mObjContent.transform.childCount; i++)
+        if (GUILayout.Button("显示详情", GUILayout.Width(100), GUILayout.Height(20)))
         {
-            if (mObjContent.transform.GetChild(i).gameObject.activeSelf)
+            mFindStoryId = storyInfo.id;
+            mObjContent.transform.position = new Vector3(storyInfo.position_x, storyInfo.position_y);
+            QueryStoryInfoData(mFindStoryId);
+            QueryStoryDetailsData(mFindStoryId);
+        }
+        GUILayout.Label("注释：", GUILayout.Width(50), GUILayout.Height(20));
+        storyInfo.note = EditorGUILayout.TextArea(storyInfo.note + "", GUILayout.Width(200), GUILayout.Height(20));
+
+        GUILayout.Label("id：" + storyInfo.id, GUILayout.Width(150), GUILayout.Height(20));
+        GUILayout.Label("故事发生场景：" + storyInfo.id, GUILayout.Width(150), GUILayout.Height(20));
+        storyInfo.story_scene = (int)(ScenesEnum)EditorGUILayout.EnumPopup((ScenesEnum)storyInfo.story_scene, GUILayout.Width(150), GUILayout.Height(20));
+        if (storyInfo.story_scene == (int)ScenesEnum.GameTownScene)
+        {
+            GUILayout.Label("故事发生地点：" + storyInfo.id, GUILayout.Width(150), GUILayout.Height(20));
+            storyInfo.story_scene = (int)(ScenesEnum)EditorGUILayout.EnumPopup((ScenesEnum)storyInfo.story_scene, GUILayout.Width(150), GUILayout.Height(20));
+        }
+        GUILayout.Label("坐标：" + storyInfo.id, GUILayout.Width(150), GUILayout.Height(20));
+        if (GUILayout.Button("获取容器坐标", GUILayout.Width(150), GUILayout.Height(20)))
+        {
+            if (mObjContent == null)
             {
-                GameObject.DestroyImmediate(mObjContent.transform.GetChild(i).gameObject);
+                LogUtil.LogError("容器没有定义");
+            }
+            else
+            {
+                storyInfo.position_x = mObjContent.transform.position.x;
+                storyInfo.position_y = mObjContent.transform.position.y;
             }
         }
-        listAllStoryInfoDetails = storyInfoService.QueryStoryDetailsById(long.Parse(storyId));
-        listOrderStoryInfoDetails = GetStoryInfoDetailsByOrder(int.Parse(mStroyOrder));
-        CreateSceneData(listOrderStoryInfoDetails);
+        storyInfo.position_x = float.Parse(EditorGUILayout.TextArea(storyInfo.position_x + "", GUILayout.Width(100), GUILayout.Height(20)));
+        storyInfo.position_y = float.Parse(EditorGUILayout.TextArea(storyInfo.position_y + "", GUILayout.Width(100), GUILayout.Height(20)));
+
+        GUILayout.Label("0外 1里：" + storyInfo.id, GUILayout.Width(150), GUILayout.Height(20));
+        storyInfo.out_in = int.Parse(EditorGUILayout.TextArea(storyInfo.out_in + "", GUILayout.Width(50), GUILayout.Height(20)));
+
+        GUILayout.Label("触发条件(日期)：" + storyInfo.id, GUILayout.Width(150), GUILayout.Height(20));
+        GUILayout.Label("年：", GUILayout.Width(50), GUILayout.Height(20));
+        storyInfo.trigger_date_year = int.Parse(EditorGUILayout.TextArea(storyInfo.trigger_date_year + "", GUILayout.Width(50), GUILayout.Height(20)));
+        GUILayout.Label("月：", GUILayout.Width(50), GUILayout.Height(20));
+        storyInfo.trigger_date_month = int.Parse(EditorGUILayout.TextArea(storyInfo.trigger_date_month + "", GUILayout.Width(50), GUILayout.Height(20)));
+        GUILayout.Label("日：", GUILayout.Width(50), GUILayout.Height(20));
+        storyInfo.trigger_date_day = int.Parse(EditorGUILayout.TextArea(storyInfo.trigger_date_day + "", GUILayout.Width(50), GUILayout.Height(20)));
+        if (GUILayout.Button("更新", GUILayout.Width(50), GUILayout.Height(20)))
+        {
+            storyInfoService.UpdateStoryData(storyInfo);
+        }
+        GUILayout.EndHorizontal();
+        GUILayout.Space(20);
     }
 
-    /// <summary>
-    /// 根据序号查询数据详情
-    /// </summary>
-    /// <param name="order"></param>
-    /// <returns></returns>
-    public List<StoryInfoDetailsBean> GetStoryInfoDetailsByOrder(int order)
+    private void GUIStoryInfoDetails()
     {
-        List<StoryInfoDetailsBean> listData = new List<StoryInfoDetailsBean>();
-        if (listAllStoryInfoDetails == null)
-            return listData;
-        foreach (StoryInfoDetailsBean itemData in listAllStoryInfoDetails)
+        //故事内容
+        if (listOrderStoryInfoDetails != null)
         {
-            if (itemData.story_order == order)
+            GUILayout.BeginHorizontal();
+            if (GUILayout.Button("刷新", GUILayout.Width(100), GUILayout.Height(20)))
             {
-                listData.Add(itemData);
+                RefreshSceneData(listOrderStoryInfoDetails);
             }
-        }
-        return listData;
-    }
-
-    /// <summary>
-    /// 创建场景数据
-    /// </summary>
-    /// <param name="listData"></param>
-    public void CreateSceneData(List<StoryInfoDetailsBean> listData)
-    {
-        if (listData == null)
-            return;
-        if (listStoryTextInfo != null)
-            listStoryTextInfo.Clear();
-        listStoryTextInfo = null;
-        foreach (StoryInfoDetailsBean itemData in listData)
-        {
-            if (itemData.type == (int)StoryInfoDetailsBean.StoryInfoDetailsTypeEnum.NpcPosition)
+            if (GUILayout.Button("更新", GUILayout.Width(100), GUILayout.Height(20)))
             {
-                BaseNpcAI npcAI = CptUtil.GetCptInChildrenByName<BaseNpcAI>(mObjContent, itemData.npc_num + "");
-                if (npcAI == null)
-                {
-                    NpcInfoBean npcInfoBean;
-                    if (itemData.npc_id == 0)
-                    {
-                        npcInfoBean = new NpcInfoBean();
-                    }
-                    else
-                    {
-                        if (mapNpcInfo.TryGetValue(itemData.npc_id, out NpcInfoBean npcInfo))
-                            npcInfoBean = npcInfo;
-                        else
-                        {
-                            npcInfoBean = new NpcInfoBean();
-                            LogUtil.LogError("创建NPC失败 找不到ID为" + itemData.npc_id + "的NPC信息");
-                        }
-                    }
-
-                    CreateNpc(npcInfoBean.npc_id, new Vector3(itemData.npc_position_x, itemData.npc_position_y), itemData.npc_num);
-                }
-                else
-                {
-                    npcAI.transform.localPosition = new Vector3(itemData.npc_position_x, itemData.npc_position_y);
-                }
+                storyInfoService.UpdateStoryDetailsByIdAndOrder(mFindStoryId, mFindStroyOrder,listOrderStoryInfoDetails);
             }
-            //如果是对话 查询对话数据
-            else if (itemData.type == (int)StoryInfoDetailsBean.StoryInfoDetailsTypeEnum.Talk)
+            if (GUILayout.Button("<", GUILayout.Width(100), GUILayout.Height(20)))
             {
-                listStoryTextInfo = textInfoService.QueryDataByMarkId(TextEnum.Story, itemData.text_mark_id);
+                mFindStroyOrder = (mFindStroyOrder - 1);
+                listOrderStoryInfoDetails = GetStoryInfoDetailsByOrder(mFindStroyOrder);
+                RefreshSceneData(listOrderStoryInfoDetails);
             }
+            mFindStroyOrder = int.Parse(EditorGUILayout.TextArea(mFindStroyOrder + "", GUILayout.Width(100), GUILayout.Height(20)));
+            if (GUILayout.Button(">", GUILayout.Width(100), GUILayout.Height(20)))
+            {
+                mFindStroyOrder = mFindStroyOrder + 1;
+                listOrderStoryInfoDetails = GetStoryInfoDetailsByOrder(mFindStroyOrder);
+                RefreshSceneData(listOrderStoryInfoDetails);
+            }
+            GUILayout.EndHorizontal();
+            GUIStoryInfoDetailsList();
         }
     }
 
     /// <summary>
     /// 展示指定顺序的故事详情
     /// </summary>
-    public void ShowStoryInfoDetails()
+    public void GUIStoryInfoDetailsList()
     {
         StoryInfoDetailsBean removeTempData = null;
         foreach (StoryInfoDetailsBean itemData in listOrderStoryInfoDetails)
@@ -347,7 +288,7 @@ public class StoryCreateWindowsEditor : EditorWindow
                 if (GUILayout.Button("更新显示"))
                 {
                     RemoveSceneCharacterByName(itemData.npc_num + "");
-                    CreateSceneData(listOrderStoryInfoDetails);
+                    RefreshSceneData(listOrderStoryInfoDetails);
                 }
                 if (GUILayout.Button("获取显示坐标"))
                 {
@@ -410,9 +351,9 @@ public class StoryCreateWindowsEditor : EditorWindow
                             else
                             {
                                 GUILayout.Label("分支选项 下一句对话ID");
-                                textInfo.next_order= int.Parse(EditorGUILayout.TextArea(textInfo.next_order + "", GUILayout.Width(100), GUILayout.Height(20)));
+                                textInfo.next_order = int.Parse(EditorGUILayout.TextArea(textInfo.next_order + "", GUILayout.Width(100), GUILayout.Height(20)));
                             }
-                           
+
                         }
                         else if (textInfo.type == 5)
                         {
@@ -455,7 +396,7 @@ public class StoryCreateWindowsEditor : EditorWindow
             {
                 GUILayout.Label("指定NPC展现表情 ");
                 GUILayout.Label("NPC编号：");
-                itemData.npc_num =int.Parse(EditorGUILayout.TextArea(itemData.npc_num+"", GUILayout.Width(200), GUILayout.Height(20)));
+                itemData.npc_num = int.Parse(EditorGUILayout.TextArea(itemData.npc_num + "", GUILayout.Width(200), GUILayout.Height(20)));
                 GUILayout.Label("表情编号 1爱心 2无语 3生气 4羞愧 5惊讶 6烦恼 7死亡：");
                 itemData.expression = int.Parse(EditorGUILayout.TextArea(itemData.expression + "", GUILayout.Width(200), GUILayout.Height(20)));
             }
@@ -484,10 +425,10 @@ public class StoryCreateWindowsEditor : EditorWindow
             }
             else if (itemData.type == (int)StoryInfoDetailsBean.StoryInfoDetailsTypeEnum.CameraPosition)
             {
-                GUILayout.Label("摄像头位置 ");
-                GUILayout.Label("x:");
+                GUILayout.Label("摄像头位置 ", GUILayout.Width(150), GUILayout.Height(20));
+                GUILayout.Label("x:", GUILayout.Width(50), GUILayout.Height(20));
                 itemData.camera_position_x = float.Parse(EditorGUILayout.TextArea(itemData.camera_position_x + "", GUILayout.Width(100), GUILayout.Height(20)));
-                GUILayout.Label("y:");
+                GUILayout.Label("y:", GUILayout.Width(50), GUILayout.Height(20));
                 itemData.camera_position_y = float.Parse(EditorGUILayout.TextArea(itemData.camera_position_y + "", GUILayout.Width(100), GUILayout.Height(20)));
             }
             else if (itemData.type == (int)StoryInfoDetailsBean.StoryInfoDetailsTypeEnum.CameraFollowCharacter)
@@ -502,67 +443,249 @@ public class StoryCreateWindowsEditor : EditorWindow
             listOrderStoryInfoDetails.Remove(removeTempData);
             RemoveSceneCharacterByName(removeTempData.npc_num + "");
         }
-        if (GUILayout.Button("添加站位"))
+        if (GUILayout.Button("添加站位", GUILayout.Width(200), GUILayout.Height(20)))
         {
-            CreateStoryInfoDetailsDataByType(StoryInfoDetailsBean.StoryInfoDetailsTypeEnum.NpcPosition);
+            CreateStoryInfoDetailsDataByType(mFindStoryId, StoryInfoDetailsBean.StoryInfoDetailsTypeEnum.NpcPosition);
         }
-        if (GUILayout.Button("添加人物表情"))
+        if (GUILayout.Button("添加人物表情", GUILayout.Width(200), GUILayout.Height(20)))
         {
-            CreateStoryInfoDetailsDataByType(StoryInfoDetailsBean.StoryInfoDetailsTypeEnum.Expression);
+            CreateStoryInfoDetailsDataByType(mFindStoryId, StoryInfoDetailsBean.StoryInfoDetailsTypeEnum.Expression);
         }
-        if (GUILayout.Button("添加对话"))
+        if (GUILayout.Button("添加对话", GUILayout.Width(200), GUILayout.Height(20)))
         {
-            CreateStoryInfoDetailsDataByType(StoryInfoDetailsBean.StoryInfoDetailsTypeEnum.Talk);
+            CreateStoryInfoDetailsDataByType(mFindStoryId, StoryInfoDetailsBean.StoryInfoDetailsTypeEnum.Talk);
         }
-        if (GUILayout.Button("添加场景互动"))
+        if (GUILayout.Button("添加场景互动", GUILayout.Width(200), GUILayout.Height(20)))
         {
-            CreateStoryInfoDetailsDataByType(StoryInfoDetailsBean.StoryInfoDetailsTypeEnum.SceneInt);
+            CreateStoryInfoDetailsDataByType(mFindStoryId, StoryInfoDetailsBean.StoryInfoDetailsTypeEnum.SceneInt);
         }
-        if (GUILayout.Button("添加延迟"))
+        if (GUILayout.Button("添加延迟", GUILayout.Width(200), GUILayout.Height(20)))
         {
-            CreateStoryInfoDetailsDataByType(StoryInfoDetailsBean.StoryInfoDetailsTypeEnum.AutoNext);
+            CreateStoryInfoDetailsDataByType(mFindStoryId, StoryInfoDetailsBean.StoryInfoDetailsTypeEnum.AutoNext);
         }
-        if (GUILayout.Button("添加摄像头坐标"))
+        if (GUILayout.Button("添加摄像头坐标", GUILayout.Width(200), GUILayout.Height(20)))
         {
-            CreateStoryInfoDetailsDataByType(StoryInfoDetailsBean.StoryInfoDetailsTypeEnum.CameraPosition);
+            CreateStoryInfoDetailsDataByType(mFindStoryId, StoryInfoDetailsBean.StoryInfoDetailsTypeEnum.CameraPosition);
         }
-        if (GUILayout.Button("添加摄像头跟随角色"))
+        if (GUILayout.Button("添加摄像头跟随角色", GUILayout.Width(200), GUILayout.Height(20)))
         {
-            CreateStoryInfoDetailsDataByType(StoryInfoDetailsBean.StoryInfoDetailsTypeEnum.CameraFollowCharacter);
+            CreateStoryInfoDetailsDataByType(mFindStoryId, StoryInfoDetailsBean.StoryInfoDetailsTypeEnum.CameraFollowCharacter);
         }
-        if (GUILayout.Button("保存该序号下的故事数据"))
+        if (GUILayout.Button("保存该序号下的故事数据", GUILayout.Width(200), GUILayout.Height(20)))
         {
             //先处理对话
             if (listStoryTextInfo != null)
-                textInfoService.UpdateDataByMarkId(TextEnum.Story, long.Parse(mStoryId) * 10000 + int.Parse(mStroyOrder), listStoryTextInfo);
+                textInfoService.UpdateDataByMarkId(TextEnum.Story, mStoryId * 10000 + mFindStroyOrder, listStoryTextInfo);
 
-            storyInfoService.UpdateStoryDetailsByIdAndOrder(long.Parse(mStoryId), int.Parse(mStroyOrder), listOrderStoryInfoDetails);
+            storyInfoService.UpdateStoryDetailsByIdAndOrder(mStoryId, mFindStroyOrder, listOrderStoryInfoDetails);
 
             //刷新数据
-            QueryStoryData(mStoryScene, mStoryId);
+            QueryStoryDetailsData(mStoryId);
+        }
+    }
+    /// <summary>
+    /// 创建一个NPC
+    /// </summary>
+    /// <param name="idStr"></param>
+    public GameObject CreateNpc(string idStr)
+    {
+
+        if (mObjContent == null)
+        {
+            LogUtil.LogError("还没有定义剧情容器");
+            return null;
+        }
+        if (mObjNpcModel == null)
+        {
+            LogUtil.LogError("还没有NPC模型");
+            return null;
+        }
+        if (long.TryParse(idStr, out long createNpcId))
+        {
+            return CreateNpc(createNpcId, Vector3.zero, 0);
+        }
+        else
+            LogUtil.LogError("创建人物ID不规范");
+        return null;
+    }
+
+    public GameObject CreateNpc(long createNpcId, Vector3 position, int number)
+    {
+        CharacterBean characterData = null;
+        GameObject objNpc = null;
+        if (createNpcId == 0)
+        {
+            characterData = new CharacterBean();
+        }
+        else
+        {
+            characterData = NpcInfoBean.NpcInfoToCharacterData(mapNpcInfo[createNpcId]);
+        }
+
+        objNpc = Instantiate(mObjNpcModel, mObjContent.transform);
+        BaseNpcAI baseNpcAI = objNpc.GetComponent<BaseNpcAI>();
+        baseNpcAI.gameItemsManager = gameItemsManager;
+        baseNpcAI.transform.localPosition = position;
+        baseNpcAI.SetCharacterData(characterData);
+        baseNpcAI.name = "" + number;
+        objNpc.SetActive(true);
+
+        return objNpc;
+    }
+
+    /// <summary>
+    /// 创建故事数据
+    /// </summary>
+    /// <param name="scene"></param>
+    /// <param name="positionType"></param>
+    /// <param name="storyId"></param>
+    public void CreateStoryData(int scene, int positionType, long storyId)
+    {
+        StoryInfoBean storyInfo = new StoryInfoBean();
+        storyInfo.story_scene = scene;
+        storyInfo.id = storyId;
+        storyInfo.location_type = positionType;
+        storyInfo.position_x = 0;
+        storyInfo.position_y = 0;
+        storyInfo.valid = 1;
+        storyInfoService.CreateStoryInfo(storyInfo);
+    }
+
+    public void QueryStoryInfoData(long findStoryId)
+    {
+        if (findStoryId == -1)
+        {
+            listStoryInfo = storyInfoService.QueryAllStoryData();
+        }
+        else
+        {
+            listStoryInfo = storyInfoService.QueryStoryData(mFindStoryId);
         }
     }
 
-    public void CreateStoryInfoDetailsDataByType(StoryInfoDetailsBean.StoryInfoDetailsTypeEnum type)
+    public void QueryStoryInfoDataByScene(ScenesEnum scenesEnum)
     {
-        StoryInfoDetailsBean itemPositionInfo = new StoryInfoDetailsBean();
+        listStoryInfo = storyInfoService.QueryStoryData((int)scenesEnum);
+    }
 
-        itemPositionInfo.type = (int)type;
+    /// <summary>
+    /// 查询故事详细数据
+    /// </summary>
+    /// <param name="scene"></param>
+    /// <param name="storyId"></param>
+    public void QueryStoryDetailsData(long mFindStoryId)
+    {
+        if (mObjContent == null)
+        {
+            LogUtil.LogError("还没有定义剧情容器");
+            return;
+        }
+        //清空容器
+        for (int i = 0; i < mObjContent.transform.childCount; i++)
+        {
+            if (mObjContent.transform.GetChild(i).gameObject.activeSelf)
+            {
+                GameObject.DestroyImmediate(mObjContent.transform.GetChild(i).gameObject);
+            }
+        }
+        listAllStoryInfoDetails = storyInfoService.QueryStoryDetailsById(mFindStoryId);
+        listOrderStoryInfoDetails = GetStoryInfoDetailsByOrder(mFindStroyOrder);
+        RefreshSceneData(listOrderStoryInfoDetails);
+    }
+
+    /// <summary>
+    /// 根据序号查询数据详情
+    /// </summary>
+    /// <param name="order"></param>
+    /// <returns></returns>
+    public List<StoryInfoDetailsBean> GetStoryInfoDetailsByOrder(int order)
+    {
+        List<StoryInfoDetailsBean> listData = new List<StoryInfoDetailsBean>();
+        if (listAllStoryInfoDetails == null)
+            return listData;
+        foreach (StoryInfoDetailsBean itemData in listAllStoryInfoDetails)
+        {
+            if (itemData.story_order == order)
+            {
+                listData.Add(itemData);
+            }
+        }
+        return listData;
+    }
+
+    /// <summary>
+    /// 刷新场景数据
+    /// </summary>
+    /// <param name="listData"></param>
+    public void RefreshSceneData(List<StoryInfoDetailsBean> listData)
+    {
+        if (listData == null)
+            return;
+        if (listStoryTextInfo != null)
+            listStoryTextInfo.Clear();
+        listStoryTextInfo = null;
+        foreach (StoryInfoDetailsBean itemData in listData)
+        {
+            if (itemData.type == (int)StoryInfoDetailsBean.StoryInfoDetailsTypeEnum.NpcPosition)
+            {
+                BaseNpcAI npcAI = CptUtil.GetCptInChildrenByName<BaseNpcAI>(mObjContent, itemData.npc_num + "");
+                if (npcAI == null)
+                {
+                    NpcInfoBean npcInfoBean;
+                    if (itemData.npc_id == 0)
+                    {
+                        npcInfoBean = new NpcInfoBean();
+                    }
+                    else
+                    {
+                        if (mapNpcInfo.TryGetValue(itemData.npc_id, out NpcInfoBean npcInfo))
+                            npcInfoBean = npcInfo;
+                        else
+                        {
+                            npcInfoBean = new NpcInfoBean();
+                            LogUtil.LogError("创建NPC失败 找不到ID为" + itemData.npc_id + "的NPC信息");
+                        }
+                    }
+
+                    CreateNpc(npcInfoBean.npc_id, new Vector3(itemData.npc_position_x, itemData.npc_position_y), itemData.npc_num);
+                }
+                else
+                {
+                    npcAI.transform.localPosition = new Vector3(itemData.npc_position_x, itemData.npc_position_y);
+                }
+            }
+            //如果是对话 查询对话数据
+            else if (itemData.type == (int)StoryInfoDetailsBean.StoryInfoDetailsTypeEnum.Talk)
+            {
+                listStoryTextInfo = textInfoService.QueryDataByMarkId(TextEnum.Story, itemData.text_mark_id);
+            }
+            else if (itemData.type == (int)StoryInfoDetailsBean.StoryInfoDetailsTypeEnum.CameraPosition)
+            {
+                Vector3 cameraWorldPosition = mObjContent.transform.TransformPoint(new Vector3(itemData.camera_position_x, itemData.camera_position_y,-10));
+                mCamera2D.transform.position = cameraWorldPosition;
+            }
+        }
+    }
+
+    public void CreateStoryInfoDetailsDataByType(long storyId, StoryInfoDetailsBean.StoryInfoDetailsTypeEnum type)
+    {
+        StoryInfoDetailsBean itemDetailsInfo = new StoryInfoDetailsBean();
+        itemDetailsInfo.type = (int)type;
         switch (type)
         {
             case StoryInfoDetailsBean.StoryInfoDetailsTypeEnum.NpcPosition:
-                itemPositionInfo.npc_id = 1;
-                itemPositionInfo.npc_num = listOrderStoryInfoDetails.Count + 1;
+                itemDetailsInfo.npc_id = 1;
+                itemDetailsInfo.npc_num = 1;
                 break;
             case StoryInfoDetailsBean.StoryInfoDetailsTypeEnum.Expression:
                 break;
             case StoryInfoDetailsBean.StoryInfoDetailsTypeEnum.Talk:
-                itemPositionInfo.text_mark_id = long.Parse(mStoryId) * 10000 + int.Parse(mStroyOrder);
+                itemDetailsInfo.text_mark_id = mStoryId * 10000 + mFindStroyOrder;
                 break;
             case StoryInfoDetailsBean.StoryInfoDetailsTypeEnum.SceneInt:
                 break;
             case StoryInfoDetailsBean.StoryInfoDetailsTypeEnum.AutoNext:
-                itemPositionInfo.wait_time = 1;
+                itemDetailsInfo.wait_time = 1;
                 break;
             case StoryInfoDetailsBean.StoryInfoDetailsTypeEnum.CameraPosition:
                 break;
@@ -570,11 +693,10 @@ public class StoryCreateWindowsEditor : EditorWindow
                 break;
         }
 
-        itemPositionInfo.story_id = long.Parse(mStoryId);
-        itemPositionInfo.story_order = int.Parse(mStroyOrder);
+        itemDetailsInfo.story_id = storyId;
+        itemDetailsInfo.story_order = mFindStroyOrder;
 
-        listOrderStoryInfoDetails.Add(itemPositionInfo);
-        CreateSceneData(listOrderStoryInfoDetails);
+        listOrderStoryInfoDetails.Add(itemDetailsInfo);
     }
 
     /// <summary>

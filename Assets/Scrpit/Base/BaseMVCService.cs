@@ -3,10 +3,10 @@ using UnityEditor;
 using System.Collections.Generic;
 using System;
 
-public class BaseMVCService<T>
+public class BaseMVCService
 {
-    public string mTableName;//主表名称
-    public string mLeftDetailsTableName;//副标名称
+    public string tableNameForMain;//主表名称
+    public string tableNameForLeft;//副标名称
 
     public BaseMVCService(string tableName) : this(tableName, null)
     {
@@ -15,32 +15,32 @@ public class BaseMVCService<T>
 
     public BaseMVCService(string tableName, string leftDetailsTableName)
     {
-        mTableName = tableName;
-        mLeftDetailsTableName = leftDetailsTableName;
+        tableNameForMain = tableName;
+        tableNameForLeft = leftDetailsTableName;
     }
 
     public string GetTableName()
     {
-        return mTableName;
+        return tableNameForMain;
     }
 
     public string GetLeftTableName()
     {
-        return mLeftDetailsTableName;
+        return tableNameForLeft;
     }
 
     /// <summary>
     /// 查询所有数据
     /// </summary>
     /// <returns></returns>
-    public List<T> BaseQueryAllData()
+    public List<T> BaseQueryAllData<T>()
     {
-        if (mTableName == null)
+        if (tableNameForMain == null)
         {
             LogUtil.LogError("查询数据失败，没有表名");
             return null;
         }
-        return SQliteHandle.LoadTableData<T>(ProjectConfigInfo.DATA_BASE_INFO_NAME, mTableName);
+        return SQliteHandle.LoadTableData<T>(ProjectConfigInfo.DATA_BASE_INFO_NAME, tableNameForMain);
     }
 
     /// <summary>
@@ -48,16 +48,16 @@ public class BaseMVCService<T>
     /// </summary>
     /// <param name="leftId"></param>
     /// <returns></returns>
-    public List<T> BaseQueryAllData(string leftId)
+    public List<T> BaseQueryAllData<T>(string leftId)
     {
-        if (mLeftDetailsTableName == null)
+        if (tableNameForLeft == null)
         {
             LogUtil.LogError("查询数据失败，没有关联的副表");
             return null;
         }
         return SQliteHandle.LoadTableData<T>
-            (ProjectConfigInfo.DATA_BASE_INFO_NAME, mTableName,
-            new string[] { mLeftDetailsTableName },
+            (ProjectConfigInfo.DATA_BASE_INFO_NAME, tableNameForMain,
+            new string[] { tableNameForLeft },
             new string[] { "id" },
             new string[] { leftId });
     }
@@ -68,14 +68,14 @@ public class BaseMVCService<T>
     /// <param name="key"></param>
     /// <param name="value"></param>
     /// <returns></returns>
-    public List<T> BaseQueryData(string key, string value)
+    public List<T> BaseQueryData<T>(string key, string value)
     {
-        string[] leftTable = new string[] { mLeftDetailsTableName };
+        string[] leftTable = new string[] { tableNameForLeft };
         string[] mainKey = new string[] { "id" };
         string[] colName = new string[] { key };
         string[] operations = new string[] { "=" };
         string[] colValue = new string[] { value };
-        return SQliteHandle.LoadTableDataByCol<T>(ProjectConfigInfo.DATA_BASE_INFO_NAME, mTableName, colName, operations, colValue);
+        return SQliteHandle.LoadTableDataByCol<T>(ProjectConfigInfo.DATA_BASE_INFO_NAME, tableNameForMain, colName, operations, colValue);
     }
 
     /// <summary>
@@ -85,72 +85,77 @@ public class BaseMVCService<T>
     /// <param name="key"></param>
     /// <param name="value"></param>
     /// <returns></returns>
-    public List<T> BaseQueryData(string leftId, string key, string value)
+    public List<T> BaseQueryData<T>(string leftId, string key, string value)
     {
-        if (mTableName == null)
+       return BaseQueryData<T>( leftId,  key, "=",  value);
+    }
+
+    public List<T> BaseQueryData<T>(string leftId, string key, string operation, string value)
+    {
+        if (tableNameForMain == null)
         {
             LogUtil.LogError("查询数据失败，没有表名");
             return null;
         }
-        if (mLeftDetailsTableName == null)
+        if (tableNameForLeft == null)
         {
             LogUtil.LogError("查询数据失败，没有关联的副表");
             return null;
         }
-        string[] leftTable = new string[] { mLeftDetailsTableName };
+        string[] leftTable = new string[] { tableNameForLeft };
         string[] mainKey = new string[] { "id" };
         string[] leftKey = new string[] { leftId };
         string[] colName = new string[] { key };
-        string[] operations = new string[] { "=" };
+        string[] operations = new string[] { operation };
         string[] colValue = new string[] { value };
-        return SQliteHandle.LoadTableData<T>(ProjectConfigInfo.DATA_BASE_INFO_NAME, mTableName, leftTable, mainKey, leftKey, colName, operations, colValue);
+        return SQliteHandle.LoadTableData<T>(ProjectConfigInfo.DATA_BASE_INFO_NAME, tableNameForMain, leftTable, mainKey, leftKey, colName, operations, colValue);
     }
 
-    public List<T> BaseQueryData(string leftId, string key1, string value1, string key2, string value2)
+    public List<T> BaseQueryData<T>(string leftId, string key1, string value1, string key2, string value2)
     {
-        return BaseQueryData( leftId,  key1,"=",  value1,  key2, "=",  value2);
+        return BaseQueryData<T>( leftId,  key1,"=",  value1,  key2, "=",  value2);
     }
 
-    public List<T> BaseQueryData(string leftId, string key1, string operation1, string value1, string key2, string operation2, string value2)
+    public List<T> BaseQueryData<T>(string leftId, string key1, string operation1, string value1, string key2, string operation2, string value2)
     {
-        if (mTableName == null)
+        if (tableNameForMain == null)
         {
             LogUtil.LogError("查询数据失败，没有表名");
             return null;
         }
-        if (mLeftDetailsTableName == null)
+        if (tableNameForLeft == null)
         {
             LogUtil.LogError("查询数据失败，没有关联的副表");
             return null;
         }
-        string[] leftTable = new string[] { mLeftDetailsTableName };
+        string[] leftTable = new string[] { tableNameForLeft };
         string[] mainKey = new string[] { "id" };
         string[] leftKey = new string[] { leftId };
         string[] colName = new string[] { key1, key2 };
         string[] operations = new string[] { operation1, operation2 };
         string[] colValue = new string[] { value1, value2 };
-        return SQliteHandle.LoadTableData<T>(ProjectConfigInfo.DATA_BASE_INFO_NAME, mTableName, leftTable, mainKey, leftKey, colName, operations, colValue);
+        return SQliteHandle.LoadTableData<T>(ProjectConfigInfo.DATA_BASE_INFO_NAME, tableNameForMain, leftTable, mainKey, leftKey, colName, operations, colValue);
     }
 
-    public List<T> BaseQueryData(string leftId, string key1, string operation1, string value1, string key2, string operation2, string value2, string key3, string operation3, string value3)
+    public List<T> BaseQueryData<T>(string leftId, string key1, string operation1, string value1, string key2, string operation2, string value2, string key3, string operation3, string value3)
     {
-        if (mTableName == null)
+        if (tableNameForMain == null)
         {
             LogUtil.LogError("查询数据失败，没有表名");
             return null;
         }
-        if (mLeftDetailsTableName == null)
+        if (tableNameForLeft == null)
         {
             LogUtil.LogError("查询数据失败，没有关联的副表");
             return null;
         }
-        string[] leftTable = new string[] { mLeftDetailsTableName };
+        string[] leftTable = new string[] { tableNameForLeft };
         string[] mainKey = new string[] { "id" };
         string[] leftKey = new string[] { leftId };
         string[] colName = new string[] { key1, key2 ,key3};
         string[] operations = new string[] { operation1, operation2,operation3 };
         string[] colValue = new string[] { value1, value2,value3 };
-        return SQliteHandle.LoadTableData<T>(ProjectConfigInfo.DATA_BASE_INFO_NAME, mTableName, leftTable, mainKey, leftKey, colName, operations, colValue);
+        return SQliteHandle.LoadTableData<T>(ProjectConfigInfo.DATA_BASE_INFO_NAME, tableNameForMain, leftTable, mainKey, leftKey, colName, operations, colValue);
     }
     /// <summary>
     /// 通过ID删除数据
@@ -163,14 +168,23 @@ public class BaseMVCService<T>
         string[] colKeys = new string[] { "id" };
         string[] operations = new string[] { "=" };
         string[] colValues = new string[] { id + ""};
-        SQliteHandle.DeleteTableDataAndLeft(ProjectConfigInfo.DATA_BASE_INFO_NAME, mTableName, colKeys, operations, colValues);
+        SQliteHandle.DeleteTableDataAndLeft(ProjectConfigInfo.DATA_BASE_INFO_NAME, tableNameForMain, colKeys, operations, colValues);
     }
+
     public void BaseDeleteData(string key,string value)
     {
         string[] colKeys = new string[] { key };
         string[] operations = new string[] { "=" };
         string[] colValues = new string[] { value };
-        SQliteHandle.DeleteTableDataAndLeft(ProjectConfigInfo.DATA_BASE_INFO_NAME, mTableName, colKeys, operations, colValues);
+        SQliteHandle.DeleteTableDataAndLeft(ProjectConfigInfo.DATA_BASE_INFO_NAME, tableNameForMain, colKeys, operations, colValues);
+    }
+
+    public void BaseDeleteData(string tableName, string key1, string value1, string key2, string value2)
+    {
+        string[] colKeys = new string[] { key1 , key2 };
+        string[] operations = new string[] { "=", "=" };
+        string[] colValues = new string[] { value1 , value2 };
+        SQliteHandle.DeleteTableDataAndLeft(ProjectConfigInfo.DATA_BASE_INFO_NAME, tableName, colKeys, operations, colValues);
     }
 
     /// <summary>
@@ -178,7 +192,7 @@ public class BaseMVCService<T>
     /// </summary>
     /// <param name="tableName"></param>
     /// <param name="itemData"></param>
-    public void BaseInsertData(string tableName, T itemData)
+    public void BaseInsertData<T>(string tableName, T itemData)
     {
         //插入数据
         Dictionary<string, object> mapData = ReflexUtil.GetAllNameAndValue(itemData);
@@ -189,7 +203,8 @@ public class BaseMVCService<T>
             string itemKey = item.Key;
             string valueStr = Convert.ToString(item.Value);
             listKeys.Add(item.Key);
-            if (item.Value is string)
+            bool isString = item.Value is string;
+            if (isString)
             {
                 if (CheckUtil.StringIsNull(valueStr))
                     listValues.Add("null");
@@ -209,7 +224,7 @@ public class BaseMVCService<T>
     /// </summary>
     /// <param name="itemData"></param>
     /// <param name="listLeftName"></param>
-    public void BaseInsertDataWithLeft(T itemData, List<string> listLeftName)
+    public void BaseInsertDataWithLeft<T>(T itemData, List<string> listLeftName)
     {
         //插入数据
         Dictionary<string, object> mapData = ReflexUtil.GetAllNameAndValue(itemData);
@@ -261,7 +276,7 @@ public class BaseMVCService<T>
                 }
             }
         }
-        SQliteHandle.InsertValues(ProjectConfigInfo.DATA_BASE_INFO_NAME, mTableName, TypeConversionUtil.ListToArray(listMainKeys), TypeConversionUtil.ListToArray(listMainValues));
-        SQliteHandle.InsertValues(ProjectConfigInfo.DATA_BASE_INFO_NAME, mLeftDetailsTableName, TypeConversionUtil.ListToArray(listLeftKeys), TypeConversionUtil.ListToArray(listLeftValues));
+        SQliteHandle.InsertValues(ProjectConfigInfo.DATA_BASE_INFO_NAME, tableNameForMain, TypeConversionUtil.ListToArray(listMainKeys), TypeConversionUtil.ListToArray(listMainValues));
+        SQliteHandle.InsertValues(ProjectConfigInfo.DATA_BASE_INFO_NAME, tableNameForLeft, TypeConversionUtil.ListToArray(listLeftKeys), TypeConversionUtil.ListToArray(listLeftValues));
     }
 }

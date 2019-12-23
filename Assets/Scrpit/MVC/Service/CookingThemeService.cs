@@ -2,7 +2,7 @@
 using UnityEditor;
 using System.Collections.Generic;
 
-public class CookingThemeService : BaseMVCService<CookingThemeBean>
+public class CookingThemeService : BaseMVCService
 {
     public CookingThemeService() : base("cooking_theme", "cooking_theme_details_" + GameCommonInfo.GameConfig.language)
     {
@@ -15,6 +15,6 @@ public class CookingThemeService : BaseMVCService<CookingThemeBean>
     /// <returns></returns>
     public List<CookingThemeBean> QueryAllTheme()
     {
-        return BaseQueryAllData("theme_id");
+        return BaseQueryAllData<CookingThemeBean>("theme_id");
     }
 }

@@ -4,13 +4,13 @@ using System.Collections.Generic;
 
 public class MenuInfoService 
 {
-    private readonly string mTableName;
-    private readonly string mLeftDetailsTableName;
+    private readonly string tableNameForMain;
+    private readonly string tableNameForLeft;
 
     public MenuInfoService()
     {
-        mTableName = "menu_info";
-        mLeftDetailsTableName = "menu_info_details_" + GameCommonInfo.GameConfig.language;
+        tableNameForMain = "menu_info";
+        tableNameForLeft = "menu_info_details_" + GameCommonInfo.GameConfig.language;
     }
 
     /// <summary>
@@ -20,8 +20,8 @@ public class MenuInfoService
     public List<MenuInfoBean> QueryAllData()
     {
         return SQliteHandle.LoadTableData<MenuInfoBean>
-            (ProjectConfigInfo.DATA_BASE_INFO_NAME, mTableName,
-            new string[] { mLeftDetailsTableName },
+            (ProjectConfigInfo.DATA_BASE_INFO_NAME, tableNameForMain,
+            new string[] { tableNameForLeft },
             new string[] { "id" },
             new string[] { "menu_id" });
     }
@@ -33,13 +33,13 @@ public class MenuInfoService
     /// <returns></returns>
     public List<MenuInfoBean> QueryDataByIds(long[] ids)
     {
-        string[] leftTable = new string[] { mLeftDetailsTableName };
+        string[] leftTable = new string[] { tableNameForLeft };
         string[] mainKey = new string[] { "id" };
         string[] leftKey = new string[] { "menu_id" };
-        string[] colName = new string[] { mTableName + ".id" };
+        string[] colName = new string[] { tableNameForMain + ".id" };
         string[] operations = new string[] { "IN" };
         string values = TypeConversionUtil.ArrayToStringBySplit(ids, ",");
         string[] colValue = new string[] { "(" + values + ")" };
-        return SQliteHandle.LoadTableData<MenuInfoBean>(ProjectConfigInfo.DATA_BASE_INFO_NAME, mTableName, leftTable, mainKey, leftKey, colName, operations, colValue);
+        return SQliteHandle.LoadTableData<MenuInfoBean>(ProjectConfigInfo.DATA_BASE_INFO_NAME, tableNameForMain, leftTable, mainKey, leftKey, colName, operations, colValue);
     }
 }

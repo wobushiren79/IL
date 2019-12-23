@@ -4,13 +4,13 @@ using System.Collections.Generic;
 
 public class BuildItemService 
 {
-    private readonly string mTableName;
-    private readonly string mLeftDetailsTableName;
+    private readonly string tableNameForMain;
+    private readonly string tableNameForLeft;
 
     public BuildItemService()
     {
-        mTableName = "build_item";
-        mLeftDetailsTableName = "build_item_details_" + GameCommonInfo.GameConfig.language;
+        tableNameForMain = "build_item";
+        tableNameForLeft = "build_item_details_" + GameCommonInfo.GameConfig.language;
     }
 
     /// <summary>
@@ -20,8 +20,8 @@ public class BuildItemService
     public List<BuildItemBean> QueryAllData()
     {
         return SQliteHandle.LoadTableData<BuildItemBean>
-            (ProjectConfigInfo.DATA_BASE_INFO_NAME, mTableName,
-            new string[] { mLeftDetailsTableName },
+            (ProjectConfigInfo.DATA_BASE_INFO_NAME, tableNameForMain,
+            new string[] { tableNameForLeft },
             new string[] { "id" },
             new string[] { "build_id" });
     }
@@ -33,13 +33,13 @@ public class BuildItemService
     /// <returns></returns>
     public List<BuildItemBean> QueryDataByType(int type)
     {
-        string[] leftTable = new string[] { mLeftDetailsTableName };
+        string[] leftTable = new string[] { tableNameForLeft };
         string[] mainKey = new string[] { "id" };
         string[] leftKey = new string[] { "build_id" };
-        string[] colName = new string[] { mTableName + ".build_type" };
+        string[] colName = new string[] { tableNameForMain + ".build_type" };
         string[] operations = new string[] { "=" };
         string[] colValue = new string[] { ""+ type };
-        return SQliteHandle.LoadTableData<BuildItemBean>(ProjectConfigInfo.DATA_BASE_INFO_NAME, mTableName, leftTable, mainKey, leftKey, colName, operations, colValue);
+        return SQliteHandle.LoadTableData<BuildItemBean>(ProjectConfigInfo.DATA_BASE_INFO_NAME, tableNameForMain, leftTable, mainKey, leftKey, colName, operations, colValue);
     }
 
 }

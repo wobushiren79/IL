@@ -16,6 +16,7 @@ public enum ImportantTypeEnum
     UIManager,
     StoryManager,
     SceneManager,
+    StoreInfoManager,
 
     StoryBuilder,
     NpcBuilder,

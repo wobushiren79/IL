@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using UnityEditor;
 using System.Collections.Generic;
+using UnityEngine.EventSystems;
 
 public class DialogManager : BaseMonoBehaviour
 {
@@ -39,6 +40,9 @@ public class DialogManager : BaseMonoBehaviour
         dialogView.SetData(dialogBean);
         if (delayDelete != 0)
             dialogView.SetDelayDelete(delayDelete);
+
+        //改变焦点
+        EventSystem.current.SetSelectedGameObject(objDialog);
         return dialogView;
     }
 }

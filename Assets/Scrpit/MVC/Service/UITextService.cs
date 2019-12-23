@@ -4,12 +4,12 @@ using System.Collections.Generic;
 
 public class UITextService 
 {
-    private readonly string mTableName;
+    private readonly string tableNameForMain;
     private readonly string mLeftTableName;
 
     public UITextService()
     {
-        mTableName = "text_ui";
+        tableNameForMain = "text_ui";
         mLeftTableName = "text_ui_details_" + GameCommonInfo.GameConfig.language;
     }
 
@@ -19,6 +19,6 @@ public class UITextService
     /// <returns></returns>
     public List<TextInfoBean> QueryAllData()
     {
-        return SQliteHandle.LoadTableData<TextInfoBean>(ProjectConfigInfo.DATA_BASE_INFO_NAME, mTableName, new string[] { mLeftTableName }, "id", new string[] { "text_id" });
+        return SQliteHandle.LoadTableData<TextInfoBean>(ProjectConfigInfo.DATA_BASE_INFO_NAME, tableNameForMain, new string[] { mLeftTableName }, "id", new string[] { "text_id" });
     }
 }

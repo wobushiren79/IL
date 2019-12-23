@@ -21,7 +21,7 @@ public class GameDataBean
 
     public InnBuildBean innBuildData;//客栈建筑数据
     public TimeBean gameTime = new TimeBean();//游戏时间
-    public UserAchievementBean userAchievement;
+    public UserAchievementBean userAchievement = new UserAchievementBean();//成就相关
 
     public List<ItemBean> listBuild = new List<ItemBean>();//所拥有的建筑材料
     public List<ItemBean> listItems = new List<ItemBean>();//所拥有的装备
@@ -42,6 +42,48 @@ public class GameDataBean
     public int workerNumberLimit = 3;//员工人员招聘上限
 
     public WeatherBean weatherToday;//当天天气
+
+    /// <summary>
+    /// 增加食材
+    /// </summary>
+    public void AddIng(IngredientsEnum ingType, int number)
+    {
+        switch (ingType)
+        {
+            case IngredientsEnum.Oilsalt:
+                ingOilsalt += number;
+                userAchievement.ownIngOilsalt += number;
+                break;
+            case IngredientsEnum.Meat:
+                ingMeat += number;
+                userAchievement.ownIngMeat += number;
+                break;
+            case IngredientsEnum.Riverfresh:
+                ingRiverfresh += number;
+                userAchievement.ownIngRiverfresh += number;
+                break;
+            case IngredientsEnum.Seafood:
+                ingSeafood += number;
+                userAchievement.ownIngSeafood += number;
+                break;
+            case IngredientsEnum.Vegetablest:
+                ingVegetables += number;
+                userAchievement.ownIngVegetables += number;
+                break;
+            case IngredientsEnum.Melonfruit:
+                ingMelonfruit += number;
+                userAchievement.ownIngMelonfruit += number;
+                break;
+            case IngredientsEnum.Waterwine:
+                ingWaterwine += number;
+                userAchievement.ownIngWaterwine += number;
+                break;
+            case IngredientsEnum.Flour:
+                ingFlour += number;
+                userAchievement.ownIngFlour += number;
+                break;
+        }
+    }
 
     /// <summary>
     /// 增加工作员工
@@ -326,7 +368,7 @@ public class GameDataBean
     {
         foreach (CharacterFavorabilityBean itemData in listCharacterFavorability)
         {
-            if(itemData.characterId == characterId)
+            if (itemData.characterId == characterId)
             {
                 return itemData;
             }
@@ -345,7 +387,7 @@ public class GameDataBean
     {
         foreach (CharacterBean characterData in listWorkerCharacter)
         {
-            if(characterData.baseInfo.characterId.Equals(characterId+""))
+            if (characterData.baseInfo.characterId.Equals(characterId + ""))
             {
                 return true;
             }
@@ -411,7 +453,7 @@ public class GameDataBean
     /// <returns></returns>
     public bool CheckIsMaxWorker()
     {
-        if ( listWorkerCharacter.Count>= workerNumberLimit)
+        if (listWorkerCharacter.Count >= workerNumberLimit)
         {
             return true;
         }

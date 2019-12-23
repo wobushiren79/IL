@@ -3,7 +3,7 @@ using UnityEditor;
 using System.Collections.Generic;
 using System;
 
-public class ItemsInfoService : BaseMVCService<ItemsInfoBean>
+public class ItemsInfoService : BaseMVCService
 {
     private readonly string mLeftIntactTableName;
 
@@ -19,8 +19,8 @@ public class ItemsInfoService : BaseMVCService<ItemsInfoBean>
     public List<ItemsInfoBean> QueryAllData()
     {
         return SQliteHandle.LoadTableData<ItemsInfoBean>
-            (ProjectConfigInfo.DATA_BASE_INFO_NAME, mTableName,
-            new string[] { mLeftDetailsTableName, mLeftIntactTableName },
+            (ProjectConfigInfo.DATA_BASE_INFO_NAME, tableNameForMain,
+            new string[] { tableNameForLeft, mLeftIntactTableName },
             new string[] { "id", "intact_id" },
             new string[] { "items_id", "intact_id" });
     }
@@ -32,14 +32,14 @@ public class ItemsInfoService : BaseMVCService<ItemsInfoBean>
     /// <returns></returns>
     public List<ItemsInfoBean> QueryDataByIds(long[] ids)
     {
-        string[] leftTable = new string[] { mLeftDetailsTableName, mLeftIntactTableName };
+        string[] leftTable = new string[] { tableNameForLeft, mLeftIntactTableName };
         string[] mainKey = new string[] { "id", "intact_id" };
         string[] leftKey = new string[] { "items_id", "intact_id" };
-        string[] colName = new string[] { mTableName + ".id" };
+        string[] colName = new string[] { tableNameForMain + ".id" };
         string[] operations = new string[] { "IN" };
         string values = TypeConversionUtil.ArrayToStringBySplit(ids, ",");
         string[] colValue = new string[] { "(" + values + ")" };
-        return SQliteHandle.LoadTableData<ItemsInfoBean>(ProjectConfigInfo.DATA_BASE_INFO_NAME, mTableName, leftTable, mainKey, leftKey, colName, operations, colValue);
+        return SQliteHandle.LoadTableData<ItemsInfoBean>(ProjectConfigInfo.DATA_BASE_INFO_NAME, tableNameForMain, leftTable, mainKey, leftKey, colName, operations, colValue);
     }
 
     /// <summary>

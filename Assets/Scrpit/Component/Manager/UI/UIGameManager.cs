@@ -23,6 +23,7 @@ public class UIGameManager : BaseUIManager
     public InnBuildManager innBuildManager;
     public InnFoodManager innFoodManager;
     public NpcInfoManager npcInfoManager;
+    public StoreInfoManager storeInfoManager;
     //UI相关
     public DialogManager dialogManager;
     public ToastManager toastManager;
@@ -39,4 +40,8 @@ public class UIGameManager : BaseUIManager
     [Header("地形")]
     public NavMeshSurface navMesh;
 
+    private void Awake()
+    {
+        storeInfoManager = Find<StoreInfoManager>(ImportantTypeEnum.StoreInfoManager);
+    }
 }

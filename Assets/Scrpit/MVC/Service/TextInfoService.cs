@@ -3,7 +3,7 @@ using UnityEditor;
 using System.Collections.Generic;
 using System;
 
-public class TextInfoService : BaseMVCService<TextInfoBean>
+public class TextInfoService : BaseMVCService
 {
     public TextInfoService() : base("", "")
     {
@@ -19,16 +19,16 @@ public class TextInfoService : BaseMVCService<TextInfoBean>
         switch (textEnum)
         {
             case TextEnum.Look:
-                mTableName = "text_look";
-                mLeftDetailsTableName = "text_look_details_" + GameCommonInfo.GameConfig.language;
+                tableNameForMain = "text_look";
+                tableNameForLeft = "text_look_details_" + GameCommonInfo.GameConfig.language;
                 break;
             case TextEnum.Talk:
-                mTableName = "text_talk";
-                mLeftDetailsTableName = "text_talk_details_" + GameCommonInfo.GameConfig.language;
+                tableNameForMain = "text_talk";
+                tableNameForLeft = "text_talk_details_" + GameCommonInfo.GameConfig.language;
                 break;
             case TextEnum.Story:
-                mTableName = "text_story";
-                mLeftDetailsTableName = "text_story_details_" + GameCommonInfo.GameConfig.language;
+                tableNameForMain = "text_story";
+                tableNameForLeft = "text_story_details_" + GameCommonInfo.GameConfig.language;
                 break;
         }
     }
@@ -42,7 +42,7 @@ public class TextInfoService : BaseMVCService<TextInfoBean>
     public List<TextInfoBean> QueryDataByFirstMeet(TextEnum textEnum, long userId)
     {
         InitTableByTextType(textEnum);
-        return BaseQueryData("text_id", mTableName + ".user_id", userId + "", mTableName + ".talk_type", (int)TextTalkTypeEnum.First + "");
+        return BaseQueryData<TextInfoBean>("text_id", tableNameForMain + ".user_id", userId + "", tableNameForMain + ".talk_type", (int)TextTalkTypeEnum.First + "");
     }
 
     /// <summary>
@@ -55,7 +55,7 @@ public class TextInfoService : BaseMVCService<TextInfoBean>
     public List<TextInfoBean> QueryDataByMinFavorability(TextEnum textEnum, long userId,int minFavorability)
     {
         InitTableByTextType(textEnum);
-        return BaseQueryData("text_id", mTableName + ".user_id","=", userId + "", mTableName + ".condition_min_favorability", "<=", minFavorability + "");
+        return BaseQueryData<TextInfoBean>("text_id", tableNameForMain + ".user_id","=", userId + "", tableNameForMain + ".condition_min_favorability", "<=", minFavorability + "");
     }
     
     /// <summary>
@@ -67,7 +67,7 @@ public class TextInfoService : BaseMVCService<TextInfoBean>
     public List<TextInfoBean> QueryDataByMarkId(TextEnum textEnum, long markId)
     {
         InitTableByTextType(textEnum);
-        return BaseQueryData("text_id", mTableName + ".mark_id", markId + "");
+        return BaseQueryData<TextInfoBean>("text_id", tableNameForMain + ".mark_id", markId + "");
     }
 
     /// <summary>
@@ -79,7 +79,7 @@ public class TextInfoService : BaseMVCService<TextInfoBean>
     public List<TextInfoBean> QueryDataByUserId(TextEnum textEnum, long userId)
     {
         InitTableByTextType(textEnum);
-        return BaseQueryData("text_id", mTableName + ".user_id", userId + "");
+        return BaseQueryData<TextInfoBean>("text_id", tableNameForMain + ".user_id", userId + "");
     }
 
     /// <summary>
@@ -92,7 +92,7 @@ public class TextInfoService : BaseMVCService<TextInfoBean>
     public List<TextInfoBean> QueryDataByTalkType(TextEnum textEnum, TextTalkTypeEnum talkType, long userId)
     {
         InitTableByTextType(textEnum);
-        return BaseQueryData("text_id", mTableName + ".user_id", userId + "", mTableName+".talk_type", (int)talkType+"");
+        return BaseQueryData<TextInfoBean>("text_id", tableNameForMain + ".user_id", userId + "", tableNameForMain+".talk_type", (int)talkType+"");
     }
 
     /// <summary>
@@ -163,29 +163,29 @@ public class TextInfoService : BaseMVCService<TextInfoBean>
 
     public List<TextInfoBean> QueryDataForFirstOrderByFavorability(long characterId, int favorability)
     {
-        mTableName = "text_talk";
-        mLeftDetailsTableName = "text_talk_details_" + GameCommonInfo.GameConfig.language;
-        string[] leftTable = new string[] { mLeftDetailsTableName };
+        tableNameForMain = "text_talk";
+        tableNameForLeft = "text_talk_details_" + GameCommonInfo.GameConfig.language;
+        string[] leftTable = new string[] { tableNameForLeft };
         string[] mainKey = new string[] { "id" };
         string[] leftKey = new string[] { "text_id" };
-        string[] colName = new string[] { mTableName + ".user_id", mTableName + ".text_order", mTableName + ".condition_min_favorability", mTableName + ".condition_max_favorability" };
+        string[] colName = new string[] { tableNameForMain + ".user_id", tableNameForMain + ".text_order", tableNameForMain + ".condition_min_favorability", tableNameForMain + ".condition_max_favorability" };
         string[] operations = new string[] { "=", "=", "<=", ">" };
         string[] colValue = new string[] { characterId + "", "1", favorability + "", favorability + "" };
-        return SQliteHandle.LoadTableData<TextInfoBean>(ProjectConfigInfo.DATA_BASE_INFO_NAME, mTableName, leftTable, mainKey, leftKey, colName, operations, colValue);
+        return SQliteHandle.LoadTableData<TextInfoBean>(ProjectConfigInfo.DATA_BASE_INFO_NAME, tableNameForMain, leftTable, mainKey, leftKey, colName, operations, colValue);
     }
 
 
     public List<TextInfoBean> QueryDataForFirstOrderByFirstMeet(long characterId)
     {
-        mTableName = "text_talk";
-        mLeftDetailsTableName = "text_talk_details_" + GameCommonInfo.GameConfig.language;
-        string[] leftTable = new string[] { mLeftDetailsTableName };
+        tableNameForMain = "text_talk";
+        tableNameForLeft = "text_talk_details_" + GameCommonInfo.GameConfig.language;
+        string[] leftTable = new string[] { tableNameForLeft };
         string[] mainKey = new string[] { "id" };
         string[] leftKey = new string[] { "text_id" };
-        //string[] colName = new string[] { mTableName + ".user_id", mTableName + ".\"order\"", mTableName + ".condition_first_meet" };
-        string[] colName = new string[] { mTableName + ".user_id", mTableName + ".text_order", mTableName + ".condition_first_meet" };
+        //string[] colName = new string[] { tableNameForMain + ".user_id", tableNameForMain + ".\"order\"", tableNameForMain + ".condition_first_meet" };
+        string[] colName = new string[] { tableNameForMain + ".user_id", tableNameForMain + ".text_order", tableNameForMain + ".condition_first_meet" };
         string[] operations = new string[] { "=", "=", "=" };
         string[] colValue = new string[] { characterId + "", "1", "1" };
-        return SQliteHandle.LoadTableData<TextInfoBean>(ProjectConfigInfo.DATA_BASE_INFO_NAME, mTableName, leftTable, mainKey, leftKey, colName, operations, colValue);
+        return SQliteHandle.LoadTableData<TextInfoBean>(ProjectConfigInfo.DATA_BASE_INFO_NAME, tableNameForMain, leftTable, mainKey, leftKey, colName, operations, colValue);
     }
 }

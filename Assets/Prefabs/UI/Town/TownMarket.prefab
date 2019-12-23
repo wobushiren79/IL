@@ -988,8 +988,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 300.86084, y: -30}
-  m_SizeDelta: {x: 591.7217, y: 50}
+  m_AnchoredPosition: {x: 326.5, y: -30}
+  m_SizeDelta: {x: 643, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &7041178839023270088
 CanvasRenderer:
@@ -1091,6 +1091,10 @@ MonoBehaviour:
   btNumberSub: {fileID: 7041178838332072515}
   btSubmit: {fileID: 7041178839023270094}
   tvOwn: {fileID: 7041178840082262741}
+  ivRiseAndFall: {fileID: 7041178839613219545}
+  spRise: {fileID: 21300000, guid: 59131e1f11c8f814fadc5d92cdf45ff9, type: 3}
+  spNormal: {fileID: 21300000, guid: a700f5466c6e5044d8c6198c5648a679, type: 3}
+  spFall: {fileID: 21300000, guid: 7db59293cba3e9d4fbfb31bfcfa8d0f6, type: 3}
   goodsData:
     id: 0
     valid: 0
@@ -1114,6 +1118,9 @@ MonoBehaviour:
     icon_key: 
     name: 
     content: 
+  price_l: 0
+  price_m: 0
+  price_s: 0
 --- !u!1 &7041178839356377379
 GameObject:
   m_ObjectHideFlags: 0
@@ -1301,9 +1308,9 @@ RectTransform:
   m_Father: {fileID: 7041178840407188589}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.84787506, y: 0.947}
-  m_AnchorMax: {x: 0.84787506, y: 0.947}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 351, y: 300.5}
   m_SizeDelta: {x: 80, y: 80}
   m_Pivot: {x: 0, y: 1}
 --- !u!222 &7041178839491165465
@@ -1497,10 +1504,10 @@ RectTransform:
   m_Father: {fileID: 7041178840407188589}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.1533125, y: 0.054}
-  m_AnchorMax: {x: 0.84787506, y: 0.947}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 1, y: 0.5}
+  m_SizeDelta: {x: 700, y: 600}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &7041178839576281832
 CanvasRenderer:
@@ -1551,7 +1558,7 @@ GameObject:
   - component: {fileID: 7041178839613219545}
   - component: {fileID: 7041178839613219550}
   m_Layer: 5
-  m_Name: Gain
+  m_Name: RiseAndFall
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2059,7 +2066,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 7041178840267306805}
   m_HandleRect: {fileID: 7041178840267306810}
   m_Direction: 2
-  m_Value: 0
+  m_Value: 1
   m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
@@ -2565,11 +2572,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 7041178840407188589}
     m_Modifications:
-    - target: {fileID: 7238013969030672229, guid: 9175f4ced977de748b2e2e1a94c34871,
-        type: 3}
-      propertyPath: m_Name
-      value: ItemShowMoney_1
-      objectReference: {fileID: 0}
     - target: {fileID: 7238013969030672226, guid: 9175f4ced977de748b2e2e1a94c34871,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -2599,6 +2601,21 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7238013969030672226, guid: 9175f4ced977de748b2e2e1a94c34871,
+        type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -349
+      objectReference: {fileID: 0}
+    - target: {fileID: 7238013969030672226, guid: 9175f4ced977de748b2e2e1a94c34871,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -299.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 7238013969030672229, guid: 9175f4ced977de748b2e2e1a94c34871,
+        type: 3}
+      propertyPath: m_Name
+      value: ItemShowMoney_1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9175f4ced977de748b2e2e1a94c34871, type: 3}

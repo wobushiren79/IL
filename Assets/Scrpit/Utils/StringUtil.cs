@@ -29,7 +29,7 @@ public class StringUtil
     /// <returns></returns>
     public static T[] SplitBySubstringForArrayEnum<T>(string data, char substring)
     {
-        if (data == null)
+        if (CheckUtil.StringIsNull(data))
             return new T[0];
         string[] splitData = data.Split(substring);
         if (CheckUtil.ArrayIsNull(splitData))
@@ -39,7 +39,14 @@ public class StringUtil
         T[] listData = new T[splitData.Length];
         for (int i = 0; i < splitData.Length; i++)
         {
-            listData[i] = EnumUtil.GetEnum<T>(splitData[i]);
+            if (CheckUtil.StringIsNull(splitData[i]))
+            {
+
+            }
+            else
+            {
+                listData[i] = EnumUtil.GetEnum<T>(splitData[i]);
+            }
         }
         return listData;
     }

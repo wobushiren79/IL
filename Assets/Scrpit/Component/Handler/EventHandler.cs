@@ -142,6 +142,19 @@ public class EventHandler : BaseHandler,
     /// <summary>
     /// 检测故事 自动触发剧情
     /// </summary>
+    public bool EventTriggerForStory(TownBuildingEnum position, int OutOrIn)
+    {
+        if (storyInfoManager == null)
+            return false;
+        StoryInfoBean storyInfo = storyInfoManager.CheckStory(gameDataManager.gameData);
+        if (storyInfo != null)
+        {
+            EventTriggerForStory(storyInfo);
+            return true;
+        }
+        else
+            return false;
+    }
     public bool EventTriggerForStory()
     {
         if (storyInfoManager == null)
@@ -155,7 +168,6 @@ public class EventHandler : BaseHandler,
         else
             return false;
     }
-
 
     /// <summary>
     /// 烹饪游戏剧情触发

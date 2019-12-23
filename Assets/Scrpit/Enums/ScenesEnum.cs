@@ -3,9 +3,9 @@ using UnityEditor;
 
 public enum ScenesEnum 
 {
-    MainScene,
-    GameInnScene,
-    GameTownScene,
-    GameArenaScene,
-    LoadingScene,
+    MainScene=0,
+    GameInnScene=1,
+    GameTownScene=2,
+    GameArenaScene=3,
+    LoadingScene=99,
 }

@@ -97,7 +97,7 @@ public class GameTimeHandler : BaseObservable<IBaseObserver>
     {
         //初始化世界种子
         GameCommonInfo.RandomSeed = Random.Range(int.MinValue, int.MaxValue);
-        Random.InitState(GameCommonInfo.RandomSeed);
+        GameCommonInfo.InitRandomSeed();
         //解除每日
         GameCommonInfo.DailyLimitData.InitData();
         //初始化时间

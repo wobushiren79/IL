@@ -19,7 +19,7 @@ public class UITownDress : UIBaseOne, IStoreInfoView, IRadioGroupCallBack
     private void Awake()
     {
         mStoreInfoController = new StoreInfoController(this, this);
-        mStoreInfoController.GetClothesStoreInfo();
+        mStoreInfoController.GetDressStoreInfo();
     }
 
     public new void Start()
@@ -132,12 +132,12 @@ public class UITownDress : UIBaseOne, IStoreInfoView, IRadioGroupCallBack
     {
     }
 
-    public void GetStoreInfoByTypeSuccess(int type,List<StoreInfoBean> listData)
+    public void GetStoreInfoByTypeSuccess(StoreTypeEnum type, List<StoreInfoBean> listData)
     {
         mClothesListData = listData;
     }
 
-    public void GetStoreInfoByTypeFail(int type)
+    public void GetStoreInfoByTypeFail(StoreTypeEnum type)
     {
     }
     #endregion
@@ -160,5 +160,7 @@ public class UITownDress : UIBaseOne, IStoreInfoView, IRadioGroupCallBack
     {
 
     }
+
+
     #endregion
 }

@@ -121,14 +121,13 @@ public class UITownGuildImproveCharacterInfo : BaseMonoBehaviour, IStoreInfoView
 
     }
 
-    public void GetStoreInfoByTypeSuccess(int type, List<StoreInfoBean> listData)
+    public void GetStoreInfoByTypeSuccess(StoreTypeEnum type, List<StoreInfoBean> listData)
     {
         mListLevelInfo = listData;
     }
 
-    public void GetStoreInfoByTypeFail(int type)
+    public void GetStoreInfoByTypeFail(StoreTypeEnum type)
     {
-
     }
     #endregion
 }

@@ -3,15 +3,12 @@ using UnityEditor;
 using System.Collections.Generic;
 using System;
 
-public class StoryInfoService
+public class StoryInfoService : BaseMVCService
 {
-    private readonly string mTableName;
-    private readonly string mLeftDetailsTableName;
 
-    public StoryInfoService()
+    public StoryInfoService() : base("story_info", "story_info_details")
     {
-        mTableName = "story_info";
-        mLeftDetailsTableName = "story_info_details";
+
     }
 
     /// <summary>
@@ -20,7 +17,23 @@ public class StoryInfoService
     /// <returns></returns>
     public List<StoryInfoBean> QueryAllStoryData()
     {
-        return SQliteHandle.LoadTableData<StoryInfoBean>(ProjectConfigInfo.DATA_BASE_INFO_NAME, mTableName);
+        return BaseQueryAllData<StoryInfoBean>();
+    }
+
+    public List<StoryInfoBean> QueryStoryData(long id)
+    {
+        return BaseQueryData<StoryInfoBean>("id", id + "");
+    }
+
+    public List<StoryInfoBean> QueryStoryData(int scene)
+    {
+        return BaseQueryData<StoryInfoBean>("story_scene", scene + "");
+    }
+
+    public void UpdateStoryData(StoryInfoBean storyInfoBean)
+    {
+        BaseDeleteDataById(storyInfoBean.id);
+        BaseInsertData(tableNameForMain, storyInfoBean);
     }
 
     /// <summary>
@@ -33,8 +46,17 @@ public class StoryInfoService
         string[] colName = new string[] { "story_scene" };
         string[] operations = new string[] { "=" };
         string[] colValue = new string[] { scene + "" };
-        return SQliteHandle.LoadTableDataByCol<StoryInfoBean>(ProjectConfigInfo.DATA_BASE_INFO_NAME, mTableName, colName, operations, colValue);
+        return SQliteHandle.LoadTableDataByCol<StoryInfoBean>(ProjectConfigInfo.DATA_BASE_INFO_NAME, tableNameForMain, colName, operations, colValue);
 
+    }
+
+    /// <summary>
+    /// 创建数据
+    /// </summary>
+    /// <param name="storyInfo"></param>
+    public void CreateStoryInfo(StoryInfoBean storyInfo)
+    {
+        BaseInsertData(tableNameForMain, storyInfo);
     }
 
     /// <summary>
@@ -47,7 +69,7 @@ public class StoryInfoService
         string[] colName = new string[] { "story_id" };
         string[] operations = new string[] { "=" };
         string[] colValue = new string[] { id + "" };
-        return SQliteHandle.LoadTableDataByCol<StoryInfoDetailsBean>(ProjectConfigInfo.DATA_BASE_INFO_NAME, mLeftDetailsTableName, colName, operations, colValue);
+        return SQliteHandle.LoadTableDataByCol<StoryInfoDetailsBean>(ProjectConfigInfo.DATA_BASE_INFO_NAME, tableNameForLeft, colName, operations, colValue);
     }
 
     /// <summary>
@@ -60,33 +82,11 @@ public class StoryInfoService
         if (listData == null)
             return;
         //先删除该ID和序号下的所有数据
-        string[] colKeys = new string[] { "story_id", "story_order" };
-        string[] operations = new string[] { "=", "=", };
-        string[] colValues = new string[] { id + "", order + "", };
-        SQliteHandle.DeleteTableData(ProjectConfigInfo.DATA_BASE_INFO_NAME, mLeftDetailsTableName, colKeys, operations, colValues);
+        BaseDeleteData(tableNameForLeft, "story_id", id + "", "story_order", order + "");
         //插入数据
         foreach (StoryInfoDetailsBean itemData in listData)
         {
-            Dictionary<string, object> mapData = ReflexUtil.GetAllNameAndValue(itemData);
-            string[] insertKeys = new string[mapData.Count];
-            string[] insertValues = new string[mapData.Count];
-            int i = 0;
-            foreach (var item in mapData)
-            {
-                insertKeys[i] = item.Key;
-                string valueStr = Convert.ToString(item.Value);
-                if (item.Value is string)
-                {
-                    insertValues[i]=("'" + valueStr + "'");
-                }
-                else
-                {
-                    insertValues[i]=(valueStr);
-                }
-                i++;
-            }
-            SQliteHandle.InsertValues(ProjectConfigInfo.DATA_BASE_INFO_NAME, mLeftDetailsTableName, insertKeys, insertValues);
+            BaseInsertData(tableNameForLeft, itemData);
         }
-
     }
 }
