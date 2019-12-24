@@ -103,6 +103,7 @@ public class TextInfoService : BaseMVCService
     /// <param name="listData"></param>
     public void UpdateDataByMarkId(TextEnum textEnum, long markId, List<TextInfoBean> listData)
     {
+        InitTableByTextType(textEnum);
         //先删除旧的数据
         DeleteDataByMarkId(textEnum, markId);
         //再存储新的
@@ -126,7 +127,8 @@ public class TextInfoService : BaseMVCService
     /// <param name="id"></param>
     /// <param name="textData"></param>
     public void UpdateDataById(TextEnum textEnum, long id, TextInfoBean textData)
-    {        
+    {
+        InitTableByTextType(textEnum);
         //先删除旧的数据
         DeleteDataById( textEnum,  id);
         //再存储新的
@@ -150,6 +152,7 @@ public class TextInfoService : BaseMVCService
         InitTableByTextType(textEnum);
         BaseDeleteDataById(id);
     }
+
     /// <summary>
     /// 通过MarkId删除数据
     /// </summary>

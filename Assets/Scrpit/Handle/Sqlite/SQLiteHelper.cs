@@ -79,6 +79,17 @@ public class SQLiteHelper
     }
 
     /// <summary>
+    /// 获取表信息
+    /// </summary>
+    /// <param name="tableName"></param>
+    /// <returns></returns>
+    public SqliteDataReader GetTableInfo(string tableName)
+    {
+        string queryString = "PRAGMA table_info("+ tableName + ")";
+        return ExecuteQuery(queryString);
+    }
+
+    /// <summary>
     /// 向指定数据表中插入数据
     /// </summary>
     /// <returns>The values.</returns>

@@ -96,13 +96,18 @@ public class StoryBuilder : BaseMonoBehaviour, StoryInfoManager.CallBack
                 case (int)StoryInfoDetailsBean.StoryInfoDetailsTypeEnum.NpcPosition:
                     //Npc站位
                     GameObject objNpc = GetNpcByNpcNum(itemData.npc_num);
+                    BaseNpcAI npcAI = null;
                     if (objNpc == null)
-                        CreateNpc(itemData);
+                    {
+                        npcAI = CreateNpc(itemData);
+                        objNpc = npcAI.gameObject;
+                    }
                     else
                     {
-                        BaseNpcAI npcAI = objNpc.GetComponent<BaseNpcAI>();
+                        npcAI = objNpc.GetComponent<BaseNpcAI>();
                         npcAI.characterMoveCpt.SetDestinationLocal(transform, new Vector3(itemData.npc_position_x, itemData.npc_position_y));
                     }
+                    npcAI.SetCharacterFace(itemData.npc_face);
                     break;
                 case (int)StoryInfoDetailsBean.StoryInfoDetailsTypeEnum.Expression:
                     //表情
@@ -110,9 +115,9 @@ public class StoryBuilder : BaseMonoBehaviour, StoryInfoManager.CallBack
                     break;
                 case (int)StoryInfoDetailsBean.StoryInfoDetailsTypeEnum.SceneInt:
                     //场景物体互动
-                    GameObject objFind =  GameObject.Find(itemData.scene_intobj_name);
+                    GameObject objFind = GameObject.Find(itemData.scene_intobj_name);
                     //参数
-                    List<string> listparameter=  StringUtil.SplitBySubstringForListStr(itemData.scene_intcomponent_parameters,',');
+                    List<string> listparameter = StringUtil.SplitBySubstringForListStr(itemData.scene_intcomponent_parameters, ',');
                     //通过反射调取方法
                     ReflexUtil.GetInvokeMethod(objFind, itemData.scene_intcomponent_name, itemData.scene_intcomponent_method, listparameter);
                     break;
@@ -211,7 +216,7 @@ public class StoryBuilder : BaseMonoBehaviour, StoryInfoManager.CallBack
     /// 生成NPC
     /// </summary>
     /// <param name="itemData"></param>
-    public void CreateNpc(StoryInfoDetailsBean itemData)
+    public BaseNpcAI CreateNpc(StoryInfoDetailsBean itemData)
     {
         GameObject objNpc = Instantiate(transform.gameObject, objNpcModel);
         objNpc.transform.localPosition = new Vector3(itemData.npc_position_x, itemData.npc_position_y);
@@ -228,6 +233,7 @@ public class StoryBuilder : BaseMonoBehaviour, StoryInfoManager.CallBack
         //设置编号
         objNpc.name = itemData.npc_num + "";
         aiNpc.SetCharacterData(characterData);
+        return aiNpc;
     }
 
     /// <summary>

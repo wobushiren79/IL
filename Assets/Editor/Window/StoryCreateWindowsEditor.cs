@@ -30,6 +30,7 @@ public class StoryCreateWindowsEditor : EditorWindow
     private void OnEnable()
     {
         mObjContent = GameObject.Find("StoryBuilder");
+        mObjNpcModel = mObjContent.transform.Find("CharacterForStory").gameObject;
         mObjCarmera = GameObject.Find("CM vcam1");
         mCamera2D = mObjCarmera.GetComponent<CinemachineVirtualCamera>();
         //查询所有NPC数据
@@ -78,7 +79,7 @@ public class StoryCreateWindowsEditor : EditorWindow
         GUILayout.BeginVertical();
         //父对象
        // mObjContent = EditorGUILayout.ObjectField(new GUIContent("剧情容器", ""), mObjContent, typeof(GameObject), true) as GameObject;
-        mObjNpcModel = EditorGUILayout.ObjectField(new GUIContent("NPC模型", ""), mObjNpcModel, typeof(GameObject), true) as GameObject;
+       // mObjNpcModel = EditorGUILayout.ObjectField(new GUIContent("NPC模型", ""), mObjNpcModel, typeof(GameObject), true) as GameObject;
 
         //NPC创建
         GUILayout.BeginHorizontal();
@@ -232,7 +233,7 @@ public class StoryCreateWindowsEditor : EditorWindow
             {
                 RefreshSceneData(listOrderStoryInfoDetails);
             }
-            if (GUILayout.Button("更新", GUILayout.Width(100), GUILayout.Height(20)))
+            if (GUILayout.Button("保存", GUILayout.Width(100), GUILayout.Height(20)))
             {
                 storyInfoService.UpdateStoryDetailsByIdAndOrder(mFindStoryId, mFindStroyOrder,listOrderStoryInfoDetails);
             }
@@ -265,7 +266,21 @@ public class StoryCreateWindowsEditor : EditorWindow
             GUILayout.BeginHorizontal();
             if (itemData.type == (int)StoryInfoDetailsBean.StoryInfoDetailsTypeEnum.NpcPosition)
             {
-                GUILayout.Label("NPC站位 ");
+                if (GUILayout.Button("更新显示", GUILayout.Width(100), GUILayout.Height(20)))
+                {
+                    RemoveSceneCharacterByName(itemData.npc_num + "");
+                    RefreshSceneData(listOrderStoryInfoDetails);
+                }
+                if (GUILayout.Button("获取显示坐标", GUILayout.Width(120), GUILayout.Height(20)))
+                {
+                    GameObject objItem = GetSceneObjByName(itemData.npc_num + "");
+                    itemData.npc_position_x = objItem.transform.localPosition.x;
+                    itemData.npc_position_y = objItem.transform.localPosition.y;
+                }
+                if (GUILayout.Button("删除", GUILayout.Width(100), GUILayout.Height(20)))
+                {
+                    removeTempData = itemData;
+                }
                 NpcInfoBean npcInfo;
                 if (itemData.npc_id == 0)
                 {
@@ -276,52 +291,73 @@ public class StoryCreateWindowsEditor : EditorWindow
                 {
                     npcInfo = mapNpcInfo[itemData.npc_id];
                 }
-                GUILayout.Label("姓名：" + npcInfo.title_name + "-" + npcInfo.name);
-                GUILayout.Label("NPCId:");
+                GUILayout.Label("NPCId:", GUILayout.Width(50), GUILayout.Height(20));
                 itemData.npc_id = long.Parse(EditorGUILayout.TextArea(itemData.npc_id + "", GUILayout.Width(100), GUILayout.Height(20)));
-                GUILayout.Label("NPC序号:");
+                GUILayout.Label("姓名：" + npcInfo.title_name + "-" + npcInfo.name, GUILayout.Width(200), GUILayout.Height(20));
+                GUILayout.Label("NPC序号:", GUILayout.Width(100), GUILayout.Height(20));
                 itemData.npc_num = int.Parse(EditorGUILayout.TextArea(itemData.npc_num + "", GUILayout.Width(50), GUILayout.Height(20)));
-                GUILayout.Label("NPC位置X:");
+                GUILayout.Label("NPC站位 ", GUILayout.Width(100), GUILayout.Height(20));
+                GUILayout.Label("NPC位置X:", GUILayout.Width(120), GUILayout.Height(20));
                 itemData.npc_position_x = float.Parse(EditorGUILayout.TextArea(itemData.npc_position_x + "", GUILayout.Width(100), GUILayout.Height(20)));
-                GUILayout.Label("NPC位置Y:");
+                GUILayout.Label("NPC位置Y:", GUILayout.Width(120), GUILayout.Height(20));
                 itemData.npc_position_y = float.Parse(EditorGUILayout.TextArea(itemData.npc_position_y + "", GUILayout.Width(100), GUILayout.Height(20)));
-                if (GUILayout.Button("更新显示"))
-                {
-                    RemoveSceneCharacterByName(itemData.npc_num + "");
-                    RefreshSceneData(listOrderStoryInfoDetails);
-                }
-                if (GUILayout.Button("获取显示坐标"))
-                {
-                    GameObject objItem = GetSceneObjByName(itemData.npc_num + "");
-                    itemData.npc_position_x = objItem.transform.localPosition.x;
-                    itemData.npc_position_y = objItem.transform.localPosition.y;
-                }
-                if (GUILayout.Button("删除"))
-                {
-                    removeTempData = itemData;
-                }
+                GUILayout.Label("NPC朝向1左2右:", GUILayout.Width(120), GUILayout.Height(20));
+                itemData.npc_face = int.Parse(EditorGUILayout.TextArea(itemData.npc_face + "", GUILayout.Width(50), GUILayout.Height(20)));
+
+       
             }
             else if (itemData.type == (int)StoryInfoDetailsBean.StoryInfoDetailsTypeEnum.Talk)
             {
-                GUILayout.Label("对话 ");
                 GUILayout.BeginVertical();
+                GUILayout.Space(20);
+                GUILayout.BeginHorizontal();
+                GUILayout.Label("对话 ", GUILayout.Width(120), GUILayout.Height(20));
+                if (GUILayout.Button("添加子对话", GUILayout.Width(120), GUILayout.Height(20)))
+                {
+                    if (listStoryTextInfo == null)
+                        listStoryTextInfo = new List<TextInfoBean>();
+                    TextInfoBean textInfo = new TextInfoBean();
+                    textInfo.id = itemData.text_mark_id * 1000 + listStoryTextInfo.Count + 1;
+                    textInfo.text_id = textInfo.id;
+                    textInfo.type = 0;
+                    textInfo.mark_id = itemData.text_mark_id;
+                    textInfo.user_id = 0;
+                    textInfo.text_order = listStoryTextInfo.Count + 1;
+                    listStoryTextInfo.Add(textInfo);
+                }
+                if (GUILayout.Button("删除所有对话", GUILayout.Width(120), GUILayout.Height(20)))
+                {
+                    removeTempData = itemData;
+                }
+                GUILayout.EndHorizontal();
                 if (listStoryTextInfo != null)
                 {
                     TextInfoBean removeTempText = null;
                     foreach (TextInfoBean textInfo in listStoryTextInfo)
                     {
                         GUILayout.BeginHorizontal();
+                        if (GUILayout.Button("删除子对话"))
+                        {
+                            removeTempText = textInfo;
+                            textInfoService.DeleteDataById(TextEnum.Story, textInfo.id);
+                        }
+                        if (GUILayout.Button("更新"))
+                        {
+                            textInfoService.UpdateDataById(TextEnum.Story, textInfo.id, textInfo);
+                        }
                         GUILayout.Label("ID");
                         textInfo.id = long.Parse(EditorGUILayout.TextArea(textInfo.id + "", GUILayout.Width(120), GUILayout.Height(20)));
                         GUILayout.Label("type");
                         textInfo.type = int.Parse(EditorGUILayout.TextArea(textInfo.type + "", GUILayout.Width(100), GUILayout.Height(20)));
-                        GUILayout.Label("order");
+                        GUILayout.Label("对话顺序");
                         textInfo.text_order = int.Parse(EditorGUILayout.TextArea(textInfo.text_order + "", GUILayout.Width(100), GUILayout.Height(20)));
+                        GUILayout.Label("下一对话");
+                        textInfo.next_order = int.Parse(EditorGUILayout.TextArea(textInfo.next_order + "", GUILayout.Width(100), GUILayout.Height(20)));
                         if (textInfo.type == 0)
                         {
+                         
                             GUILayout.Label("userID");
                             textInfo.user_id = long.Parse(EditorGUILayout.TextArea(textInfo.user_id + "", GUILayout.Width(100), GUILayout.Height(20)));
-
                             GUILayout.Label("姓名");
                             NpcInfoBean npcInfo;
                             if (textInfo.user_id == 0)
@@ -336,8 +372,7 @@ public class StoryCreateWindowsEditor : EditorWindow
                             GUILayout.Label(npcInfo.title_name + "-" + npcInfo.name);
                             GUILayout.Label("指定的姓名");
                             textInfo.name = EditorGUILayout.TextArea(textInfo.name, GUILayout.Width(100), GUILayout.Height(20));
-                            GUILayout.Label("指定跳转的对话顺序next_order");
-                            textInfo.next_order = int.Parse(EditorGUILayout.TextArea(textInfo.next_order + "", GUILayout.Width(100), GUILayout.Height(20)));
+                        
                         }
                         else if (textInfo.type == 1)
                         {
@@ -363,34 +398,18 @@ public class StoryCreateWindowsEditor : EditorWindow
 
                         GUILayout.Label("对话内容");
                         textInfo.content = EditorGUILayout.TextArea(textInfo.content, GUILayout.Width(400), GUILayout.Height(20));
-
-                        if (GUILayout.Button("删除子对话"))
+                        if (GUILayout.Button("更新"))
                         {
-                            removeTempText = textInfo;
+                            textInfoService.UpdateDataById(TextEnum.Story, textInfo.id, textInfo);
                         }
-                        GUILayout.EndHorizontal();
-                    }
+                        GUILayout.EndHorizontal();                    }
+
                     if (removeTempText != null)
                         listStoryTextInfo.Remove(removeTempText);
                 }
-                if (GUILayout.Button("添加子对话"))
-                {
-                    if (listStoryTextInfo == null)
-                        listStoryTextInfo = new List<TextInfoBean>();
-                    TextInfoBean textInfo = new TextInfoBean();
-                    textInfo.id = itemData.text_mark_id * 1000 + listStoryTextInfo.Count + 1;
-                    textInfo.text_id = textInfo.id;
-                    textInfo.type = 0;
-                    textInfo.mark_id = itemData.text_mark_id;
-                    textInfo.user_id = 0;
-                    textInfo.text_order = listStoryTextInfo.Count + 1;
-                    listStoryTextInfo.Add(textInfo);
-                }
+
                 GUILayout.EndVertical();
-                if (GUILayout.Button("删除所有对话"))
-                {
-                    removeTempData = itemData;
-                }
+              
             }
             else if (itemData.type == (int)StoryInfoDetailsBean.StoryInfoDetailsTypeEnum.Expression)
             {
@@ -415,16 +434,20 @@ public class StoryCreateWindowsEditor : EditorWindow
             }
             else if (itemData.type == (int)StoryInfoDetailsBean.StoryInfoDetailsTypeEnum.AutoNext)
             {
-                GUILayout.Label("延迟执行 ");
-                GUILayout.Label("延迟时间s:");
-                itemData.wait_time = float.Parse(EditorGUILayout.TextArea(itemData.wait_time + "", GUILayout.Width(100), GUILayout.Height(20)));
-                if (GUILayout.Button("删除"))
+                if (GUILayout.Button("删除", GUILayout.Width(100), GUILayout.Height(20)))
                 {
                     removeTempData = itemData;
                 }
+                GUILayout.Label("延迟执行 ", GUILayout.Width(100), GUILayout.Height(20));
+                GUILayout.Label("延迟时间s:", GUILayout.Width(120), GUILayout.Height(20));
+                itemData.wait_time = float.Parse(EditorGUILayout.TextArea(itemData.wait_time + "", GUILayout.Width(100), GUILayout.Height(20)));
             }
             else if (itemData.type == (int)StoryInfoDetailsBean.StoryInfoDetailsTypeEnum.CameraPosition)
             {
+                if (GUILayout.Button("删除", GUILayout.Width(100), GUILayout.Height(20)))
+                {
+                    removeTempData = itemData;
+                }
                 GUILayout.Label("摄像头位置 ", GUILayout.Width(150), GUILayout.Height(20));
                 GUILayout.Label("x:", GUILayout.Width(50), GUILayout.Height(20));
                 itemData.camera_position_x = float.Parse(EditorGUILayout.TextArea(itemData.camera_position_x + "", GUILayout.Width(100), GUILayout.Height(20)));
@@ -433,13 +456,18 @@ public class StoryCreateWindowsEditor : EditorWindow
             }
             else if (itemData.type == (int)StoryInfoDetailsBean.StoryInfoDetailsTypeEnum.CameraFollowCharacter)
             {
-                GUILayout.Label("摄像头跟随角色序号 ");
+                if (GUILayout.Button("删除", GUILayout.Width(100), GUILayout.Height(20)))
+                {
+                    removeTempData = itemData;
+                }
+                GUILayout.Label("摄像头跟随角色序号 ", GUILayout.Width(200), GUILayout.Height(20));
                 itemData.camera_follow_character = int.Parse(EditorGUILayout.TextArea(itemData.camera_follow_character + "", GUILayout.Width(100), GUILayout.Height(20)));
             }
             GUILayout.EndHorizontal();
         }
         if (removeTempData != null)
         {
+            listAllStoryInfoDetails.Remove(removeTempData);
             listOrderStoryInfoDetails.Remove(removeTempData);
             RemoveSceneCharacterByName(removeTempData.npc_num + "");
         }
@@ -473,14 +501,7 @@ public class StoryCreateWindowsEditor : EditorWindow
         }
         if (GUILayout.Button("保存该序号下的故事数据", GUILayout.Width(200), GUILayout.Height(20)))
         {
-            //先处理对话
-            if (listStoryTextInfo != null)
-                textInfoService.UpdateDataByMarkId(TextEnum.Story, mStoryId * 10000 + mFindStroyOrder, listStoryTextInfo);
-
-            storyInfoService.UpdateStoryDetailsByIdAndOrder(mStoryId, mFindStroyOrder, listOrderStoryInfoDetails);
-
-            //刷新数据
-            QueryStoryDetailsData(mStoryId);
+            storyInfoService.UpdateStoryDetailsByIdAndOrder(mFindStoryId, mFindStroyOrder, listOrderStoryInfoDetails);
         }
     }
     /// <summary>
@@ -646,13 +667,16 @@ public class StoryCreateWindowsEditor : EditorWindow
                             LogUtil.LogError("创建NPC失败 找不到ID为" + itemData.npc_id + "的NPC信息");
                         }
                     }
-
-                    CreateNpc(npcInfoBean.npc_id, new Vector3(itemData.npc_position_x, itemData.npc_position_y), itemData.npc_num);
+                    GameObject objNpc= CreateNpc(npcInfoBean.npc_id, new Vector3(itemData.npc_position_x, itemData.npc_position_y), itemData.npc_num);
+                    npcAI = objNpc.GetComponent<BaseNpcAI>();
                 }
                 else
                 {
                     npcAI.transform.localPosition = new Vector3(itemData.npc_position_x, itemData.npc_position_y);
+                    npcAI.transform.localPosition = new Vector3(itemData.npc_position_x, itemData.npc_position_y);
                 }
+                //设置朝向
+                npcAI.SetCharacterFace(itemData.npc_face);
             }
             //如果是对话 查询对话数据
             else if (itemData.type == (int)StoryInfoDetailsBean.StoryInfoDetailsTypeEnum.Talk)
@@ -662,7 +686,13 @@ public class StoryCreateWindowsEditor : EditorWindow
             else if (itemData.type == (int)StoryInfoDetailsBean.StoryInfoDetailsTypeEnum.CameraPosition)
             {
                 Vector3 cameraWorldPosition = mObjContent.transform.TransformPoint(new Vector3(itemData.camera_position_x, itemData.camera_position_y,-10));
+                mCamera2D.Follow = null;
                 mCamera2D.transform.position = cameraWorldPosition;
+            }
+            else if (itemData.type == (int)StoryInfoDetailsBean.StoryInfoDetailsTypeEnum.CameraFollowCharacter)
+            {
+                BaseNpcAI npcAI = CptUtil.GetCptInChildrenByName<BaseNpcAI>(mObjContent, itemData.camera_follow_character + "");
+                mCamera2D.Follow = npcAI.transform;
             }
         }
     }
@@ -680,7 +710,7 @@ public class StoryCreateWindowsEditor : EditorWindow
             case StoryInfoDetailsBean.StoryInfoDetailsTypeEnum.Expression:
                 break;
             case StoryInfoDetailsBean.StoryInfoDetailsTypeEnum.Talk:
-                itemDetailsInfo.text_mark_id = mStoryId * 10000 + mFindStroyOrder;
+                itemDetailsInfo.text_mark_id = storyId * 10000 + mFindStroyOrder;
                 break;
             case StoryInfoDetailsBean.StoryInfoDetailsTypeEnum.SceneInt:
                 break;
@@ -695,8 +725,9 @@ public class StoryCreateWindowsEditor : EditorWindow
 
         itemDetailsInfo.story_id = storyId;
         itemDetailsInfo.story_order = mFindStroyOrder;
-
+        listAllStoryInfoDetails.Add(itemDetailsInfo);
         listOrderStoryInfoDetails.Add(itemDetailsInfo);
+        storyInfoService.UpdateStoryDetailsByIdAndOrder(mFindStoryId, mFindStroyOrder, listOrderStoryInfoDetails);
     }
 
     /// <summary>

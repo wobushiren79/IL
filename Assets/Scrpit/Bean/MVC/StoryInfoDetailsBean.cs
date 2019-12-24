@@ -28,6 +28,8 @@ public class StoryInfoDetailsBean
     public float npc_position_y;
     //NPC编号
     public int npc_num;
+    //npc朝向
+    public int npc_face;
 
     //剧情自动跳转时间
     public float wait_time;
