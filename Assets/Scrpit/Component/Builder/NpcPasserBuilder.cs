@@ -73,4 +73,6 @@ public class NpcPasserBuilder : NpcNormalBuilder
     {
         return listPasser;
     }
+
+    
 }

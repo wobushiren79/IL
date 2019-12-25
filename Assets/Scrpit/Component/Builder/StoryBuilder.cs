@@ -91,9 +91,9 @@ public class StoryBuilder : BaseMonoBehaviour, StoryInfoManager.CallBack
         BaseControl baseControl = null;
         foreach (StoryInfoDetailsBean itemData in listData)
         {
-            switch (itemData.type)
+            switch ((StoryInfoDetailsBean.StoryInfoDetailsTypeEnum)itemData.type)
             {
-                case (int)StoryInfoDetailsBean.StoryInfoDetailsTypeEnum.NpcPosition:
+                case StoryInfoDetailsBean.StoryInfoDetailsTypeEnum.NpcPosition:
                     //Npc站位
                     GameObject objNpc = GetNpcByNpcNum(itemData.npc_num);
                     BaseNpcAI npcAI = null;
@@ -109,11 +109,20 @@ public class StoryBuilder : BaseMonoBehaviour, StoryInfoManager.CallBack
                     }
                     npcAI.SetCharacterFace(itemData.npc_face);
                     break;
-                case (int)StoryInfoDetailsBean.StoryInfoDetailsTypeEnum.Expression:
+                case StoryInfoDetailsBean.StoryInfoDetailsTypeEnum.NpcDestory:
+                    //删除角色
+                    int[] npcNum= StringUtil.SplitBySubstringForArrayInt(itemData.npc_destroy,',');
+                    foreach (int itemNpcNum in npcNum)
+                    {
+                        objNpc = GetNpcByNpcNum(itemNpcNum);
+                        Destroy(objNpc);
+                    }
+                    break;
+                case StoryInfoDetailsBean.StoryInfoDetailsTypeEnum.Expression:
                     //表情
                     SetCharacterExpression(itemData.npc_num, itemData.expression);
                     break;
-                case (int)StoryInfoDetailsBean.StoryInfoDetailsTypeEnum.SceneInt:
+                case StoryInfoDetailsBean.StoryInfoDetailsTypeEnum.SceneInt:
                     //场景物体互动
                     GameObject objFind = GameObject.Find(itemData.scene_intobj_name);
                     //参数
@@ -121,25 +130,25 @@ public class StoryBuilder : BaseMonoBehaviour, StoryInfoManager.CallBack
                     //通过反射调取方法
                     ReflexUtil.GetInvokeMethod(objFind, itemData.scene_intcomponent_name, itemData.scene_intcomponent_method, listparameter);
                     break;
-                case (int)StoryInfoDetailsBean.StoryInfoDetailsTypeEnum.Talk:
+                case StoryInfoDetailsBean.StoryInfoDetailsTypeEnum.Talk:
                     //进入对话
                     isNext = false;
                     UIGameText uiComponent = (UIGameText)uiManager.OpenUIAndCloseOtherByName(EnumUtil.GetEnumName(UIEnum.GameText));
                     uiComponent.SetData(TextEnum.Story, itemData.text_mark_id);
                     break;
-                case (int)StoryInfoDetailsBean.StoryInfoDetailsTypeEnum.AutoNext:
+                case StoryInfoDetailsBean.StoryInfoDetailsTypeEnum.AutoNext:
                     //剧情自动跳转
                     isNext = false;
                     StartCoroutine(StoryAutoNext(itemData.wait_time));
                     break;
-                case (int)StoryInfoDetailsBean.StoryInfoDetailsTypeEnum.CameraPosition:
+                case StoryInfoDetailsBean.StoryInfoDetailsTypeEnum.CameraPosition:
                     //设置摄像头位置
                     baseControl = controlHandler.GetControl();
                     Vector3 cameraWorldPosition = transform.TransformPoint(new Vector3(itemData.camera_position_x, itemData.camera_position_y));
                     baseControl.SetCameraFollowObj(null);
                     baseControl.SetCameraPosition(cameraWorldPosition);
                     break;
-                case (int)StoryInfoDetailsBean.StoryInfoDetailsTypeEnum.CameraFollowCharacter:
+                case StoryInfoDetailsBean.StoryInfoDetailsTypeEnum.CameraFollowCharacter:
                     //设置摄像头位置
                     objNpc = GetNpcByNpcNum(itemData.camera_follow_character);
                     baseControl = controlHandler.GetControl();

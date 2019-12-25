@@ -8,6 +8,7 @@ public class StoryInfoDetailsBean
         NpcPosition=1,//NPC位置
         Expression=2,//表情
         SceneInt=3,//场景互动
+        NpcDestory=4,//销毁NPC
         Talk =11,//对话
         AutoNext=12,//指定时间跳转
 
@@ -41,6 +42,8 @@ public class StoryInfoDetailsBean
     public float camera_position_x;
     public float camera_position_y;
     public int camera_follow_character;
+    //摧毁的NPCID
+    public string npc_destroy;
 
     //场景互动物体名称
     public string scene_intobj_name;

@@ -44,7 +44,7 @@ public class UIGameText : BaseUIComponent, ITextInfoView, DialogView.IDialogCall
         //如果顺序为0 则在原顺序上+1
         if (order == 0)
             order = this.textOrder + 1;
-        if (currentTextData != null && currentTextData.next_order != 0)
+        if (currentTextData != null&&currentTextData.type!= (int)TextInfoTypeEnum.Select && currentTextData.next_order != 0)
         {
             //指定顺序的话就加载指定数序
             order = currentTextData.next_order;

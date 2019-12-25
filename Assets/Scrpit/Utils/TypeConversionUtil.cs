@@ -232,7 +232,26 @@ public class TypeConversionUtil
         return listData;
     }
 
-
+    /// <summary>
+    ///  string[] 强转 long[]
+    /// </summary>
+    /// <param name="arrayStr"></param>
+    /// <returns></returns>
+    public static int[] ArrayStrToArrayInt(string[] arrayStr)
+    {
+        if (arrayStr == null)
+            return null;
+        int[] listData = new int[arrayStr.Length];
+        for (int i = 0; i < arrayStr.Length; i++)
+        {
+            string itemStr = arrayStr[i];
+            if (int.TryParse(itemStr, out int itemInt))
+            {
+                listData[i] = itemInt;
+            }
+        }
+        return listData;
+    }
 
     /// <summary>
     ///  string[] 强转 float[]

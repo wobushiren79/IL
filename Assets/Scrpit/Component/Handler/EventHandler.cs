@@ -34,6 +34,7 @@ public class EventHandler : BaseHandler,
     protected NpcInfoManager npcInfoManager;
     protected StoryBuilder storyBuilder;
     protected ControlHandler controlHandler;
+    protected NpcImportantBuilder npcImportantBuilder;
     protected MiniGameCombatHandler miniGameCombatHandler;
 
     private EventStatusEnum mEventStatus = EventStatusEnum.EventEnd;
@@ -52,7 +53,7 @@ public class EventHandler : BaseHandler,
         storyBuilder = Find<StoryBuilder>(ImportantTypeEnum.StoryBuilder);
         controlHandler = Find<ControlHandler>(ImportantTypeEnum.ControlHandler);
         miniGameCombatHandler = Find<MiniGameCombatHandler>(ImportantTypeEnum.MiniGameHandler);
-
+        npcImportantBuilder = Find<NpcImportantBuilder>(ImportantTypeEnum.NpcBuilder);
         miniGameCombatHandler.AddObserver(this);
     }
 
@@ -118,7 +119,9 @@ public class EventHandler : BaseHandler,
             BaseControl baseControl = controlHandler.StartControl(ControlHandler.ControlEnum.Story);
             baseControl.transform.position = new Vector3(storyInfo.position_x, storyInfo.position_y);
         }
-
+        //隐藏重要NPC
+        if (npcImportantBuilder != null)
+            npcImportantBuilder.HideNpc();
         uiManager.CloseAllUI();
         //设置文本的回调
         UIGameText uiGameText = (UIGameText)uiManager.GetUIByName(EnumUtil.GetEnumName(UIEnum.GameText));
@@ -233,6 +236,9 @@ public class EventHandler : BaseHandler,
                 NotifyAllObserver((int)NotifyEventTypeEnum.EventEnd, mStoryInfo.id);
             //移除所有观察者
             RemoveAllObserver();
+            //显示重要NPC
+            if (npcImportantBuilder != null)
+                npcImportantBuilder.ShowNpc();
         }
     }
 
@@ -358,6 +364,10 @@ public class EventHandler : BaseHandler,
 
     private void MiniGameCombatInit(List<string> listAddPre, List<long> listRewardCharacter, List<CharacterBean> listUserData)
     {
+        //隐藏重要NPC
+        if (npcImportantBuilder != null)
+            npcImportantBuilder.HideNpc();
+
         long[] listEnemyId = StringUtil.SplitBySubstringForArrayLong(listAddPre[2], '|');
         List<CharacterBean> listEnemyData = npcInfoManager.GetCharacterDataByIds(listEnemyId);
         float[] combatPosition = StringUtil.SplitBySubstringForArrayFloat(listAddPre[3], '|');
@@ -397,7 +407,9 @@ public class EventHandler : BaseHandler,
                     if (miniGameData.gameResultWinTalkMarkId != 0)
                         EventTriggerForTalk(miniGameData.gameResultWinTalkMarkId);
                 }
-
+                //显示重要NPC
+                if (npcImportantBuilder != null)
+                    npcImportantBuilder.ShowNpc();
                 break;
         }
     }
