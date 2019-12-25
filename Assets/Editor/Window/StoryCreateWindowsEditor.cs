@@ -186,10 +186,13 @@ public class StoryCreateWindowsEditor : EditorWindow
         storyInfo.story_scene = (int)(ScenesEnum)EditorGUILayout.EnumPopup((ScenesEnum)storyInfo.story_scene, GUILayout.Width(150), GUILayout.Height(20));
         if (storyInfo.story_scene == (int)ScenesEnum.GameTownScene)
         {
-            GUILayout.Label("故事发生地点：" + storyInfo.id, GUILayout.Width(150), GUILayout.Height(20));
+            GUILayout.Label("故事发生地点：", GUILayout.Width(150), GUILayout.Height(20));
             storyInfo.story_scene = (int)(ScenesEnum)EditorGUILayout.EnumPopup((ScenesEnum)storyInfo.story_scene, GUILayout.Width(150), GUILayout.Height(20));
+
+            GUILayout.Label("0外 1里：", GUILayout.Width(150), GUILayout.Height(20));
+            storyInfo.out_in = int.Parse(EditorGUILayout.TextArea(storyInfo.out_in + "", GUILayout.Width(50), GUILayout.Height(20)));
         }
-        GUILayout.Label("坐标：" + storyInfo.id, GUILayout.Width(150), GUILayout.Height(20));
+        GUILayout.Label("坐标：" , GUILayout.Width(150), GUILayout.Height(20));
         if (GUILayout.Button("获取容器坐标", GUILayout.Width(150), GUILayout.Height(20)))
         {
             if (mObjContent == null)
@@ -205,20 +208,22 @@ public class StoryCreateWindowsEditor : EditorWindow
         storyInfo.position_x = float.Parse(EditorGUILayout.TextArea(storyInfo.position_x + "", GUILayout.Width(100), GUILayout.Height(20)));
         storyInfo.position_y = float.Parse(EditorGUILayout.TextArea(storyInfo.position_y + "", GUILayout.Width(100), GUILayout.Height(20)));
 
-        GUILayout.Label("0外 1里：" + storyInfo.id, GUILayout.Width(150), GUILayout.Height(20));
-        storyInfo.out_in = int.Parse(EditorGUILayout.TextArea(storyInfo.out_in + "", GUILayout.Width(50), GUILayout.Height(20)));
-
-        GUILayout.Label("触发条件(日期)：" + storyInfo.id, GUILayout.Width(150), GUILayout.Height(20));
+        GUILayout.Label("触发条件(日期)：" , GUILayout.Width(150), GUILayout.Height(20));
         GUILayout.Label("年：", GUILayout.Width(50), GUILayout.Height(20));
         storyInfo.trigger_date_year = int.Parse(EditorGUILayout.TextArea(storyInfo.trigger_date_year + "", GUILayout.Width(50), GUILayout.Height(20)));
         GUILayout.Label("月：", GUILayout.Width(50), GUILayout.Height(20));
         storyInfo.trigger_date_month = int.Parse(EditorGUILayout.TextArea(storyInfo.trigger_date_month + "", GUILayout.Width(50), GUILayout.Height(20)));
         GUILayout.Label("日：", GUILayout.Width(50), GUILayout.Height(20));
         storyInfo.trigger_date_day = int.Parse(EditorGUILayout.TextArea(storyInfo.trigger_date_day + "", GUILayout.Width(50), GUILayout.Height(20)));
+
+        GUILayout.Label("好感触发（人物ID，好感等级|人物ID，好感等级）：", GUILayout.Width(300), GUILayout.Height(20));
+        storyInfo.trigger_favorability = EditorGUILayout.TextArea(storyInfo.trigger_favorability + "", GUILayout.Width(300), GUILayout.Height(20));
+
         if (GUILayout.Button("更新", GUILayout.Width(50), GUILayout.Height(20)))
         {
             storyInfoService.UpdateStoryData(storyInfo);
         }
+
         GUILayout.EndHorizontal();
         GUILayout.Space(20);
     }
@@ -347,8 +352,8 @@ public class StoryCreateWindowsEditor : EditorWindow
                         }
                         GUILayout.Label("ID");
                         textInfo.id = long.Parse(EditorGUILayout.TextArea(textInfo.id + "", GUILayout.Width(120), GUILayout.Height(20)));
-                        GUILayout.Label("type");
-                        textInfo.type = int.Parse(EditorGUILayout.TextArea(textInfo.type + "", GUILayout.Width(100), GUILayout.Height(20)));
+                        GUILayout.Label("对话类型");
+                        textInfo.type = (int)(TextInfoTypeEnum)EditorGUILayout.EnumPopup((TextInfoTypeEnum)textInfo.type, GUILayout.Width(100), GUILayout.Height(20));
                         GUILayout.Label("对话顺序");
                         textInfo.text_order = int.Parse(EditorGUILayout.TextArea(textInfo.text_order + "", GUILayout.Width(100), GUILayout.Height(20)));
                         GUILayout.Label("下一对话");

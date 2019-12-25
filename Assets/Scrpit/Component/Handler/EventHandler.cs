@@ -142,11 +142,11 @@ public class EventHandler : BaseHandler,
     /// <summary>
     /// 检测故事 自动触发剧情
     /// </summary>
-    public bool EventTriggerForStory(TownBuildingEnum position, int OutOrIn)
+    public bool EventTriggerForStory(TownBuildingEnum positionType, int OutOrIn)
     {
         if (storyInfoManager == null)
             return false;
-        StoryInfoBean storyInfo = storyInfoManager.CheckStory(gameDataManager.gameData);
+        StoryInfoBean storyInfo = storyInfoManager.CheckStory(gameDataManager.gameData, positionType, OutOrIn);
         if (storyInfo != null)
         {
             EventTriggerForStory(storyInfo);

@@ -102,6 +102,10 @@ public class SceneTownManager : BaseManager
                 outDoorPosition = arenaOutDoor.transform.position;
                 inDoorPosition = arenaInDoor.transform.position;
                 break;
+            case TownBuildingEnum.Bank:
+                outDoorPosition = arenaOutDoor.transform.position;
+                inDoorPosition = arenaInDoor.transform.position;
+                break;
         }
     }
 

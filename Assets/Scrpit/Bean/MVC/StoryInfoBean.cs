@@ -21,7 +21,8 @@ public class StoryInfoBean : BaseBean
     public int trigger_date_year;
     public int trigger_date_month;
     public int trigger_date_day;
-
+    //触发好感
+    public string trigger_favorability;
     //备注
     public string note;
 }

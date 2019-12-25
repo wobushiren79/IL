@@ -33,7 +33,12 @@ public class StoryInfoManager : BaseManager, IStoryInfoView
     /// <summary>
     /// 检测故事是否触发
     /// </summary>
+    /// 
     public StoryInfoBean CheckStory(GameDataBean gameData)
+    {
+        return CheckStory(gameData, TownBuildingEnum.Town, 2);
+    }
+    public StoryInfoBean CheckStory(GameDataBean gameData, TownBuildingEnum positionType, int outOrIn)
     {
         if (mapStory == null)
             return null;
@@ -45,7 +50,7 @@ public class StoryInfoManager : BaseManager, IStoryInfoView
             if (storyInfo.trigger_loop == 0)
             {
                 //如果已经触发过该事件
-               if(gameData.CheckTriggeredEvent(storyInfo.id))
+                if (gameData.CheckTriggeredEvent(storyInfo.id))
                     continue;
             }
             //是否触发
@@ -67,12 +72,33 @@ public class StoryInfoManager : BaseManager, IStoryInfoView
                 if (storyInfo.trigger_date_day != gameData.gameTime.day)
                     continue;
             }
-            storyInfoController.GetStoryDetailsById(key);
+            //如果是小镇
+            if (storyInfo.story_scene == (int)ScenesEnum.GameTownScene)
+            {
+                //判断地点是否正确
+                if (positionType != (TownBuildingEnum)storyInfo.location_type || outOrIn != storyInfo.out_in)
+                    continue;
+            }
+            if (!CheckUtil.StringIsNull(storyInfo.trigger_favorability))
+            {
+                List<string> listData = StringUtil.SplitBySubstringForListStr(storyInfo.trigger_favorability, '|');
+                bool isCheckFavorability = true;
+                foreach (string itemData in listData)
+                {
+                    long[] favorabilityData= StringUtil.SplitBySubstringForArrayLong(itemData,',');
+                    CharacterFavorabilityBean characterFavorability=  gameData.GetCharacterFavorability(favorabilityData[0]);
+                    if (characterFavorability.favorabilityLevel < favorabilityData[1])
+                    {
+                        isCheckFavorability = false;
+                    }
+                }
+                if (!isCheckFavorability)
+                    continue; 
+            }
             return storyInfo;
         }
         return null;
     }
-
     #region 故事数据回调
     public void GetStoryInfoSuccess(List<StoryInfoBean> listData)
     {
