@@ -34,6 +34,7 @@ public class NpcCreateWindowEidtor : EditorWindow
 
     private void OnEnable()
     {
+        mCamera2D = GameObject.Find("CM vcam1").GetComponent<CinemachineVirtualCamera>();
         gameItemsManager = new GameItemsManager();
         npcInfoManager = new NpcInfoManager();
         npcInfoService = new NpcInfoService();
@@ -67,7 +68,6 @@ public class NpcCreateWindowEidtor : EditorWindow
 
         mObjContent = EditorGUILayout.ObjectField(new GUIContent("Npc容器", ""), mObjContent, typeof(GameObject), true) as GameObject;
         mObjNpcModel = EditorGUILayout.ObjectField(new GUIContent("NPC模型", ""), mObjNpcModel, typeof(GameObject), true) as GameObject;
-        mCamera2D = EditorGUILayout.ObjectField(new GUIContent("摄像头", ""), mCamera2D, typeof(CinemachineVirtualCamera), true) as CinemachineVirtualCamera;
         GUICreateNpc();
         GUIFindNpc();
         GUINpcTalk();
@@ -370,17 +370,17 @@ public class NpcCreateWindowEidtor : EditorWindow
         else
         {
             GUILayout.Label("头发：");
-            npcInfo.hair_id = EditorGUILayout.TextArea(npcInfo.hair_id + "", GUILayout.Width(100), GUILayout.Height(20));
+            npcInfo.hair_id = EditorGUILayout.TextArea(npcInfo.hair_id + "", GUILayout.Width(200), GUILayout.Height(20));
             string hairPath = "Assets/Texture/Character/Hair/";
             GUIPic(hairPath, npcInfo.hair_id);
 
             GUILayout.Label("眼睛：");
-            npcInfo.eye_id = EditorGUILayout.TextArea(npcInfo.eye_id + "", GUILayout.Width(100), GUILayout.Height(20));
+            npcInfo.eye_id = EditorGUILayout.TextArea(npcInfo.eye_id + "", GUILayout.Width(200), GUILayout.Height(20));
             string eyePath = "Assets/Texture/Character/Eye/";
             GUIPic(eyePath, npcInfo.eye_id);
 
             GUILayout.Label("嘴巴：");
-            npcInfo.mouth_id = EditorGUILayout.TextArea(npcInfo.mouth_id + "", GUILayout.Width(100), GUILayout.Height(20));
+            npcInfo.mouth_id = EditorGUILayout.TextArea(npcInfo.mouth_id + "", GUILayout.Width(200), GUILayout.Height(20));
             string mouthPath = "Assets/Texture/Character/Mouth/";
             GUIPic(mouthPath, npcInfo.mouth_id);
         }

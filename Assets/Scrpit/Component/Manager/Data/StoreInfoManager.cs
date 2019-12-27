@@ -28,6 +28,11 @@ public class StoreInfoManager : BaseMonoBehaviour, IStoreInfoView
         mStoreInfoController.GetMarketStoreInfo();
     }
 
+    public void GetStoreInfoForDress()
+    {
+        mStoreInfoController.GetDressStoreInfo();
+    }
+
 
     #region 数据回调
     public void GetAllStoreInfoFail()

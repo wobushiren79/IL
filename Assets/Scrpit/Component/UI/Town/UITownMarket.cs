@@ -11,11 +11,6 @@ public class UITownMarket : UIBaseOne, StoreInfoManager.ICallBack
 
     public List<IconBean> listGoodsIcon;
 
-    private void Awake()
-    {
-
-    }
-
     public override void OpenUI()
     {
         base.OpenUI();

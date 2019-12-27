@@ -1,8 +1,9 @@
 ﻿using UnityEngine;
 using UnityEditor;
 using System;
+using System.Diagnostics;
 
-public class TimeUtil 
+public class TimeUtil
 {
     //获取当前时间------------------------------------------------------------------------------------------------------------
     public static int GetNowTimeForYear()
@@ -15,7 +16,7 @@ public class TimeUtil
     }
     public static int GetNowTimeForDay()
     {
-       return DateTime.Now.Day;
+        return DateTime.Now.Day;
     }
     public static int GetNowTimeForHour()
     {
@@ -31,17 +32,17 @@ public class TimeUtil
     }
     public static TimeBean GetNowTime()
     {
-        DateTime dateTime= DateTime.Now;
+        DateTime dateTime = DateTime.Now;
         TimeBean timeData = new TimeBean(dateTime.Year, dateTime.Month, dateTime.Day, dateTime.Hour, dateTime.Minute, dateTime.Second);
         return timeData;
     }
 
     //比较时间------------------------------------------------------------------------------------------------------------
-    public static TimeSpan SubtractTime(TimeBean timeOne,TimeBean timeTwo)
+    public static TimeSpan SubtractTime(TimeBean timeOne, TimeBean timeTwo)
     {
-        DateTime dateOne=  TypeConversionUtil.TimeBeanToDateTime(timeOne);
+        DateTime dateOne = TypeConversionUtil.TimeBeanToDateTime(timeOne);
         DateTime dateTwo = TypeConversionUtil.TimeBeanToDateTime(timeTwo);
-        TimeSpan timeSpan= dateOne.Subtract(dateTwo);
+        TimeSpan timeSpan = dateOne.Subtract(dateTwo);
         return timeSpan;
     }
     public static double SubtractTimeForDays(TimeBean timeOne, TimeBean timeTwo)
@@ -86,5 +87,23 @@ public class TimeUtil
     {
         TimeSpan timeSpan = SubtractTime(timeOne, timeTwo);
         return timeSpan.TotalSeconds;
+    }
+
+    /// <summary>
+    /// 计算方法耗时
+    /// </summary>
+    /// <param name="mark"></param>
+    /// <param name="findAct"></param>
+    public static Stopwatch GetMethodTimeStart()
+    {
+        Stopwatch sw = new Stopwatch();
+        sw.Start();
+        return sw;
+    }
+   
+    public static void GetMethodTimeEnd(string mark, Stopwatch stopwatch)
+    {
+        stopwatch.Stop();
+        LogUtil.Log("方法耗时"+mark+"："+ string.Format("total: {0} ms", stopwatch.ElapsedMilliseconds));
     }
 }

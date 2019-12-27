@@ -2,25 +2,21 @@
 using UnityEditor;
 using System.Collections.Generic;
 using DG.Tweening;
+using System.Diagnostics;
 
-public class UITownDress : UIBaseOne, IStoreInfoView, IRadioGroupCallBack
+public class UITownDress : UIBaseOne, IRadioGroupCallBack, StoreInfoManager.ICallBack
 {
     public GameObject objGroceryContent;
     public GameObject objGroceryModel;
 
     public RadioGroupView rgStyleType;
     public RadioGroupView rgPartType;
-
-    private StoreInfoController mStoreInfoController;
+    
     private List<StoreInfoBean> mClothesListData;
 
     private int mStyleType = 0;
     private int mPartType = 0;
-    private void Awake()
-    {
-        mStoreInfoController = new StoreInfoController(this, this);
-        mStoreInfoController.GetDressStoreInfo();
-    }
+
 
     public new void Start()
     {
@@ -34,8 +30,16 @@ public class UITownDress : UIBaseOne, IStoreInfoView, IRadioGroupCallBack
     public override void OpenUI()
     {
         base.OpenUI();
+
+        StoreInfoManager storeInfoManager = GetUIMananger<UIGameManager>().storeInfoManager;
+        storeInfoManager.SetCallBack(this);
+        
+        storeInfoManager.GetStoreInfoForDress();
+
         rgStyleType.SetPosition(0, false);
         rgPartType.SetPosition(0, false);
+
+
         InitDataByType(0, 0);
     }
 
@@ -124,21 +128,9 @@ public class UITownDress : UIBaseOne, IStoreInfoView, IRadioGroupCallBack
 
 
     #region 商店数据回调
-    public void GetAllStoreInfoSuccess(List<StoreInfoBean> listData)
-    {
-    }
-
-    public void GetAllStoreInfoFail()
-    {
-    }
-
-    public void GetStoreInfoByTypeSuccess(StoreTypeEnum type, List<StoreInfoBean> listData)
+    public void GetStoreInfoSuccess(StoreTypeEnum type, List<StoreInfoBean> listData)
     {
         mClothesListData = listData;
-    }
-
-    public void GetStoreInfoByTypeFail(StoreTypeEnum type)
-    {
     }
     #endregion
 
@@ -160,7 +152,5 @@ public class UITownDress : UIBaseOne, IStoreInfoView, IRadioGroupCallBack
     {
 
     }
-
-
     #endregion
 }
