@@ -395,7 +395,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.4, y: 0.2}
+  m_Size: {x: 0.5, y: 0.2}
   m_EdgeRadius: 0
 --- !u!114 &4921963546102894242
 MonoBehaviour:
@@ -508,6 +508,7 @@ MonoBehaviour:
       priorityAccost: 0
       priorityBeater: 0
       isAttendance: 0
+      listLoveItems: 
     attributes:
       loyal: 0
       life: 0
@@ -581,10 +582,15 @@ MonoBehaviour:
       attributes_charm: 0
       attributes_force: 0
       attributes_lucky: 0
+      love_items: 
   characterFavorabilityData:
     characterId: 0
     favorability: 0
+    favorabilityLevel: 0
     firstMeet: 0
+    giftLoveNumber: 0
+    giftNormalNumber: 0
+    talkNumber: 0
   gameItemsManager: {fileID: 0}
   characterMoveCpt: {fileID: 5707193527457681228}
   characterShoutCpt: {fileID: 0}
