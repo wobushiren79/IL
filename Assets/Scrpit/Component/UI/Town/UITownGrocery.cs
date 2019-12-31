@@ -4,21 +4,14 @@ using UnityEditor;
 using UnityEngine.UI;
 using System.Collections.Generic;
 
-public class UITownGrocery : UIBaseOne, IStoreInfoView, IRadioGroupCallBack
+public class UITownGrocery : UIBaseOne, StoreInfoManager.ICallBack, IRadioGroupCallBack
 {
     public GameObject objGroceryContent;
     public GameObject objGroceryModel;
 
     public RadioGroupView rgGroceryType;
-
-    private StoreInfoController mStoreInfoController;
+    
     private List<StoreInfoBean> mGroceryListData;
-
-    private void Awake()
-    {
-        mStoreInfoController = new StoreInfoController(this, this);
-        mStoreInfoController.GetGroceryInfo();
-    }
 
     public new void Start()
     {
@@ -30,8 +23,11 @@ public class UITownGrocery : UIBaseOne, IStoreInfoView, IRadioGroupCallBack
     public override void OpenUI()
     {
         base.OpenUI();
+        StoreInfoManager storeInfoManager= GetUIMananger<UIGameManager>().storeInfoManager;
+        storeInfoManager.SetCallBack(this);
+        storeInfoManager.GetStoreInfoForGrocery();
         rgGroceryType.SetPosition(0, false);
-        InitDataByType(0);
+
     }
 
     public void InitDataByType(int type)
@@ -106,24 +102,10 @@ public class UITownGrocery : UIBaseOne, IStoreInfoView, IRadioGroupCallBack
     }
 
     #region 商店数据回调
-    public void GetAllStoreInfoSuccess(List<StoreInfoBean> listData)
-    {
-
-    }
-
-    public void GetAllStoreInfoFail()
-    {
-
-    }
-
-    public void GetStoreInfoByTypeSuccess(StoreTypeEnum type, List<StoreInfoBean> listData)
+    public void GetStoreInfoSuccess(StoreTypeEnum type, List<StoreInfoBean> listData)
     {
         mGroceryListData = listData;
-    }
-
-    public void GetStoreInfoByTypeFail(StoreTypeEnum type)
-    {
-
+        InitDataByType(0);
     }
     #endregion
 
@@ -136,7 +118,5 @@ public class UITownGrocery : UIBaseOne, IStoreInfoView, IRadioGroupCallBack
     public void RadioButtonUnSelected(RadioGroupView rgView, int position, RadioButtonView view)
     {
     }
-
-
     #endregion
 }

@@ -2,7 +2,7 @@
 using UnityEditor;
 using System.Collections.Generic;
 using DG.Tweening;
-using System.Diagnostics;
+using System.Collections;
 
 public class UITownDress : UIBaseOne, IRadioGroupCallBack, StoreInfoManager.ICallBack
 {
@@ -122,7 +122,7 @@ public class UITownDress : UIBaseOne, IRadioGroupCallBack, StoreInfoManager.ICal
             GameObject itemObj = Instantiate(objGroceryContent, objGroceryModel);
             ItemTownDressStoreCpt clothesCpt = itemObj.GetComponent<ItemTownDressStoreCpt>();
             clothesCpt.SetData(itemData);
-            itemObj.transform.DOScale(new Vector3(0, 0, 0), 0.5f).SetEase(Ease.OutBack).SetDelay(i * 0.05f).From();
+           itemObj.transform.DOScale(new Vector3(0, 0, 0), 0.5f).SetEase(Ease.OutBack).SetDelay(i * 0.05f).From();
         }
     }
 

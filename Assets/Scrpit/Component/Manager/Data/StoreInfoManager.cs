@@ -28,9 +28,20 @@ public class StoreInfoManager : BaseMonoBehaviour, IStoreInfoView
         mStoreInfoController.GetMarketStoreInfo();
     }
 
+    /// <summary>
+    /// 获取绸缎庄数据
+    /// </summary>
     public void GetStoreInfoForDress()
     {
         mStoreInfoController.GetDressStoreInfo();
+    }
+
+    /// <summary>
+    /// 获取百宝阁数据
+    /// </summary>
+    public void GetStoreInfoForGrocery()
+    {
+        mStoreInfoController.GetGroceryInfo();
     }
 
 
