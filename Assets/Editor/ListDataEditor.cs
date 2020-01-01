@@ -7,6 +7,19 @@ using UnityEngine;
 
 public class ListDataEditor : Editor
 {
+    [MenuItem("Custom/List/AddCharacterData")]
+    public static void AddCharacterData()
+    {
+        AddDressMask();
+        AddDressHat();
+        AddDressClothes();
+        AddDressShoes();
+
+        AddBodyHair();
+        AddBodyEye();
+        AddBodyMouth();
+    }
+
     [MenuItem("Custom/List/AddDressMask")]
     public static void AddDressMask()
     {

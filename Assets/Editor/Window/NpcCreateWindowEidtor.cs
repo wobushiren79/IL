@@ -249,12 +249,12 @@ public class NpcCreateWindowEidtor : EditorWindow
                     removeTalkId = itemTalkInfo.id;
                     textInfoService.DeleteDataById(TextEnum.Talk, removeTalkId);
                 }
-                GUILayout.Label("talkId：");
+                GUILayout.Label("talkId：", GUILayout.Width(100), GUILayout.Height(20));
                 itemTalkInfo.id = long.Parse(EditorGUILayout.TextArea(itemTalkInfo.id + "", GUILayout.Width(150), GUILayout.Height(20)));
                 itemTalkInfo.type = (int)(TextInfoTypeEnum)EditorGUILayout.EnumPopup((TextInfoTypeEnum)itemTalkInfo.type, GUILayout.Width(100), GUILayout.Height(20));
                 if (itemTalkInfo.type == (int)TextInfoTypeEnum.Select)
                 {
-                    GUILayout.Label("选择类型：");
+                    GUILayout.Label("选择类型：", GUILayout.Width(100), GUILayout.Height(20));
                     itemTalkInfo.select_type = int.Parse(EditorGUILayout.TextArea(itemTalkInfo.select_type + "", GUILayout.Width(50), GUILayout.Height(20)));
                     if (itemTalkInfo.select_type == 1)
                     {
@@ -269,17 +269,17 @@ public class NpcCreateWindowEidtor : EditorWindow
                         itemTalkInfo.add_items = EditorGUILayout.TextArea(itemTalkInfo.add_items + "", GUILayout.Width(50), GUILayout.Height(20));
                     }
                 }
-                GUILayout.Label("增加的好感：");
+                GUILayout.Label("增加的好感：", GUILayout.Width(100), GUILayout.Height(20));
                 itemTalkInfo.add_favorability = int.Parse(EditorGUILayout.TextArea(itemTalkInfo.add_favorability + "", GUILayout.Width(50), GUILayout.Height(20)));
-                GUILayout.Label("对话顺序：");
+                GUILayout.Label("对话顺序：", GUILayout.Width(100), GUILayout.Height(20));
                 itemTalkInfo.text_order = int.Parse(EditorGUILayout.TextArea(itemTalkInfo.text_order + "", GUILayout.Width(50), GUILayout.Height(20)));
-                GUILayout.Label("指定下一句对话：");
+                GUILayout.Label("指定下一句对话：", GUILayout.Width(120), GUILayout.Height(20));
                 itemTalkInfo.next_order = int.Parse(EditorGUILayout.TextArea(itemTalkInfo.next_order + "", GUILayout.Width(50), GUILayout.Height(20)));
-                GUILayout.Label("触发条件-最低好感：");
+                GUILayout.Label("触发条件-最低好感：", GUILayout.Width(120), GUILayout.Height(20));
                 itemTalkInfo.condition_min_favorability = int.Parse(EditorGUILayout.TextArea(itemTalkInfo.condition_min_favorability + "", GUILayout.Width(50), GUILayout.Height(20)));
-                GUILayout.Label("预设名字：");
+                GUILayout.Label("预设名字：", GUILayout.Width(100), GUILayout.Height(20));
                 itemTalkInfo.name = EditorGUILayout.TextArea(itemTalkInfo.name + "", GUILayout.Width(50), GUILayout.Height(20));
-                GUILayout.Label("对话内容：");
+                GUILayout.Label("对话内容：", GUILayout.Width(100), GUILayout.Height(20));
                 itemTalkInfo.content = EditorGUILayout.TextArea(itemTalkInfo.content + "", GUILayout.Width(500), GUILayout.Height(20));
                 if (GUILayout.Button("更新", GUILayout.Width(120), GUILayout.Height(20)))
                 {
@@ -335,17 +335,19 @@ public class NpcCreateWindowEidtor : EditorWindow
             npcInfo.position_x = npcAI.transform.position.x;
             npcInfo.position_y = npcAI.transform.position.y;
         }
-        GUILayout.Label("NPCID：");
+        GUILayout.Label("NPCID：", GUILayout.Width(100), GUILayout.Height(20));
         npcInfo.id = long.Parse(EditorGUILayout.TextArea(npcInfo.id + "", GUILayout.Width(100), GUILayout.Height(20)));
         npcInfo.npc_id = npcInfo.id;
         npcInfo.npc_type = (int)(NPCTypeEnum)EditorGUILayout.EnumPopup("Npc类型：", (NPCTypeEnum)npcInfo.npc_type);
-        GUILayout.Label("姓名：");
+        GUILayout.Label("姓名：", GUILayout.Width(100), GUILayout.Height(20));
         npcInfo.name = EditorGUILayout.TextArea(npcInfo.name + "", GUILayout.Width(100), GUILayout.Height(20));
-        GUILayout.Label("性别：1男 2女");
+        GUILayout.Label("性别：1男 2女", GUILayout.Width(100), GUILayout.Height(20));
         npcInfo.sex =int.Parse(EditorGUILayout.TextArea(npcInfo.sex + "", GUILayout.Width(30), GUILayout.Height(20)));
-        GUILayout.Label("称号：");
+        GUILayout.Label("朝向 1左 2右", GUILayout.Width(100), GUILayout.Height(20));
+        npcInfo.face = int.Parse(EditorGUILayout.TextArea(npcInfo.face + "", GUILayout.Width(30), GUILayout.Height(20)));
+        GUILayout.Label("称号：", GUILayout.Width(100), GUILayout.Height(20));
         npcInfo.title_name = EditorGUILayout.TextArea(npcInfo.title_name + "", GUILayout.Width(100), GUILayout.Height(20));
-        GUILayout.Label("位置XY：");
+        GUILayout.Label("位置XY：", GUILayout.Width(100), GUILayout.Height(20));
         npcInfo.position_x = float.Parse(EditorGUILayout.TextArea(npcInfo.position_x + "", GUILayout.Width(100), GUILayout.Height(20)));
         npcInfo.position_y = float.Parse(EditorGUILayout.TextArea(npcInfo.position_y + "", GUILayout.Width(100), GUILayout.Height(20)));
 
@@ -369,68 +371,68 @@ public class NpcCreateWindowEidtor : EditorWindow
         }
         else
         {
-            GUILayout.Label("头发：");
+            GUILayout.Label("头发：", GUILayout.Width(100), GUILayout.Height(20));
             npcInfo.hair_id = EditorGUILayout.TextArea(npcInfo.hair_id + "", GUILayout.Width(200), GUILayout.Height(20));
             string hairPath = "Assets/Texture/Character/Hair/";
             GUIPic(hairPath, npcInfo.hair_id);
 
-            GUILayout.Label("眼睛：");
+            GUILayout.Label("眼睛：", GUILayout.Width(100), GUILayout.Height(20));
             npcInfo.eye_id = EditorGUILayout.TextArea(npcInfo.eye_id + "", GUILayout.Width(200), GUILayout.Height(20));
             string eyePath = "Assets/Texture/Character/Eye/";
             GUIPic(eyePath, npcInfo.eye_id);
 
-            GUILayout.Label("嘴巴：");
+            GUILayout.Label("嘴巴：", GUILayout.Width(100), GUILayout.Height(20));
             npcInfo.mouth_id = EditorGUILayout.TextArea(npcInfo.mouth_id + "", GUILayout.Width(200), GUILayout.Height(20));
             string mouthPath = "Assets/Texture/Character/Mouth/";
             GUIPic(mouthPath, npcInfo.mouth_id);
         }
-        GUILayout.Label("头发颜色：");
+        GUILayout.Label("头发颜色：", GUILayout.Width(100), GUILayout.Height(20));
         ColorBean hairColorData = new ColorBean(npcInfo.hair_color);
         Color hairColor = hairColorData.GetColor(); ;
         hairColor = EditorGUILayout.ColorField(hairColor);
         npcInfo.hair_color = hairColor.r + "," + hairColor.g + "," + hairColor.b + "," + hairColor.a;
 
-        GUILayout.Label("眼睛颜色：");
+        GUILayout.Label("眼睛颜色：", GUILayout.Width(100), GUILayout.Height(20));
         ColorBean eyeColorData = new ColorBean(npcInfo.eye_color);
         Color eyeColor = eyeColorData.GetColor(); ;
         eyeColor = EditorGUILayout.ColorField(eyeColor);
         npcInfo.eye_color = eyeColor.r + "," + eyeColor.g + "," + eyeColor.b + "," + eyeColor.a;
 
-        GUILayout.Label("嘴巴颜色：");
+        GUILayout.Label("嘴巴颜色：", GUILayout.Width(100), GUILayout.Height(20));
         ColorBean mouthColorData = new ColorBean(npcInfo.mouth_color);
         Color mouthColor = mouthColorData.GetColor(); ;
         mouthColor = EditorGUILayout.ColorField(mouthColor);
         npcInfo.mouth_color = mouthColor.r + "," + mouthColor.g + "," + mouthColor.b + "," + mouthColor.a;
 
-        GUILayout.Label("面具：");
+        GUILayout.Label("面具：", GUILayout.Width(100), GUILayout.Height(20));
         npcInfo.mask_id = long.Parse(EditorGUILayout.TextArea(npcInfo.mask_id + "", GUILayout.Width(100), GUILayout.Height(20)));
         string maskPath = "Assets/Texture/Character/Dress/Mask/";
         ItemsInfoBean maskInfo = gameItemsManager.GetItemsById(npcInfo.mask_id);
         if (maskInfo != null)
             GUIPic(maskPath, maskInfo.icon_key);
 
-        GUILayout.Label("帽子：");
+        GUILayout.Label("帽子：", GUILayout.Width(100), GUILayout.Height(20));
         npcInfo.hat_id = long.Parse(EditorGUILayout.TextArea(npcInfo.hat_id + "", GUILayout.Width(100), GUILayout.Height(20)));
         string hatPath = "Assets/Texture/Character/Dress/Hat/";
         ItemsInfoBean hatInfo = gameItemsManager.GetItemsById(npcInfo.hat_id);
         if (hatInfo != null)
             GUIPic(hatPath, hatInfo.icon_key);
 
-        GUILayout.Label("衣服：");
+        GUILayout.Label("衣服：", GUILayout.Width(100), GUILayout.Height(20));
         npcInfo.clothes_id = long.Parse(EditorGUILayout.TextArea(npcInfo.clothes_id + "", GUILayout.Width(100), GUILayout.Height(20)));
         string clothesPath = "Assets/Texture/Character/Dress/Clothes/";
         ItemsInfoBean clothesInfo = gameItemsManager.GetItemsById(npcInfo.clothes_id);
         if (clothesInfo != null)
             GUIPic(clothesPath, clothesInfo.icon_key);
 
-        GUILayout.Label("鞋子：");
+        GUILayout.Label("鞋子：", GUILayout.Width(100), GUILayout.Height(20));
         npcInfo.shoes_id = long.Parse(EditorGUILayout.TextArea(npcInfo.shoes_id + "", GUILayout.Width(100), GUILayout.Height(20)));
         string shoesPath = "Assets/Texture/Character/Dress/Shoes/";
         ItemsInfoBean shoesInfo = gameItemsManager.GetItemsById(npcInfo.shoes_id);
         if (shoesInfo != null)
             GUIPic(shoesPath, shoesInfo.icon_key);
 
-        GUILayout.Label("喜欢的东西ID（用,分隔）：");
+        GUILayout.Label("喜欢的东西ID（用,分隔）：", GUILayout.Width(150), GUILayout.Height(20));
         npcInfo.love_items = EditorGUILayout.TextArea(npcInfo.love_items + "", GUILayout.Width(100), GUILayout.Height(20));
         GUILayout.EndHorizontal();
 
