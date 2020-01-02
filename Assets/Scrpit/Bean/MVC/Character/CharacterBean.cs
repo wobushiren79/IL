@@ -17,40 +17,32 @@ public class CharacterBean
     public NpcInfoBean npcInfoData = new NpcInfoBean();
 
     /// <summary>
-    /// 创建随机角色数据
+    /// 创建随机工作者角色数据
     /// </summary>
     /// <param name="type"></param>
     /// <returns></returns>
-    public static CharacterBean CreateRandomData(WorkerEnum type)
+    public static CharacterBean CreateRandomWorkerData(CharacterBodyManager characterBodyManager)
     {
         CharacterBean characterData = new CharacterBean();
         //设置随机名字
         characterData.baseInfo.name = RandomUtil.GetRandomGenerateChineseWord(UnityEngine.Random.Range(2, 4));
         //生成随机能力
-        switch (type)
-        {
-            case 0:
-                characterData.attributes = CharacterAttributesBean.CreateRandomDataForComplex();
-                break;
-            case WorkerEnum.Chef:
-                characterData.attributes = CharacterAttributesBean.CreateRandomDataForChef();
-                break;
-            case WorkerEnum.Waiter:
-                characterData.attributes = CharacterAttributesBean.CreateRandomDataForWaiter();
-                break;
-            case WorkerEnum.Accounting:
-                characterData.attributes = CharacterAttributesBean.CreateRandomDataForAccounting();
-                break;
-            case WorkerEnum.Accost:
-                characterData.attributes = CharacterAttributesBean.CreateRandomDataForAccost();
-                break;
-            case WorkerEnum.Beater:
-                characterData.attributes = CharacterAttributesBean.CreateRandomDataForBeater();
-                break;
-        }
-
+        characterData.attributes.CreateRandomData(
+            0,50,
+            50,100,
+            1,5,
+            1,5,
+            1,5,
+            1,5,
+            1,5,
+            1,5);
+        //随机身体数据
+        CharacterBodyBean.CreateRandomBodyByManager(characterData.body, characterBodyManager);
         //根据能力生成工资
-        characterData.baseInfo.CreatePriceByAttributes(characterData.attributes);
+        characterData.attributes.CreatePriceByAttributes(out long priceL, out long priceM, out long priceS);
+        characterData.baseInfo.priceL = priceL;
+        characterData.baseInfo.priceM = priceM;
+        characterData.baseInfo.priceS = priceS;
         return characterData;
     }
 

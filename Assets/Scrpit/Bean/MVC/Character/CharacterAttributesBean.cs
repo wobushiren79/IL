@@ -34,60 +34,25 @@ public class CharacterAttributesBean
     }
 
     /// <summary>
-    /// 获取随机属性 - 厨师
+    /// 生成随机身体属性
     /// </summary>
+    /// <param name="loyalMin"></param>
+    /// <param name="loyalMax"></param>
+    /// <param name="cookMin"></param>
+    /// <param name="cookMax"></param>
+    /// <param name="speedMin"></param>
+    /// <param name="speedMax"></param>
+    /// <param name="accountMin"></param>
+    /// <param name="accountMax"></param>
+    /// <param name="charmMin"></param>
+    /// <param name="charmMax"></param>
+    /// <param name="forceMin"></param>
+    /// <param name="forceMax"></param>
+    /// <param name="luckyMin"></param>
+    /// <param name="luckyMax"></param>
     /// <returns></returns>
-    public static CharacterAttributesBean CreateRandomDataForChef()
-    {
-        return CreateRandomData(60, 100, 4, 5, 0, 2, 0, 2, 0, 2, 0, 2, 0, 2);
-    }
-
-    /// <summary>
-    /// 获取随机属性 - 账房
-    /// </summary>
-    /// <returns></returns>
-    public static CharacterAttributesBean CreateRandomDataForAccounting()
-    {
-        return CreateRandomData(60, 100, 0, 2, 0, 2, 4, 5, 0, 2, 0, 2, 0, 2);
-    }
-
-    /// <summary>
-    /// 获取随机属性 - 伙计
-    /// </summary>
-    /// <returns></returns>
-    public static CharacterAttributesBean CreateRandomDataForWaiter()
-    {
-        return CreateRandomData(60, 100, 0, 2, 4, 5, 0, 2, 2, 3, 0, 2, 0, 2);
-    }
-
-    /// <summary>
-    /// 获取随机属性 - 吆喝
-    /// </summary>
-    /// <returns></returns>
-    public static CharacterAttributesBean CreateRandomDataForAccost()
-    {
-        return CreateRandomData(60, 100, 0, 2, 2, 3, 0, 2, 4, 5, 0, 2, 0, 2);
-    }
-
-    /// <summary>
-    /// 获取随机属性 - 打手
-    /// </summary>
-    /// <returns></returns>
-    public static CharacterAttributesBean CreateRandomDataForBeater()
-    {
-        return CreateRandomData(60, 100, 0, 2, 0, 2, 0, 2, 0, 2, 4, 5, 0, 2);
-    }
-
-    /// <summary>
-    /// 获取随机属性 - 综合
-    /// </summary>
-    /// <returns></returns>
-    public static CharacterAttributesBean CreateRandomDataForComplex()
-    {
-        return CreateRandomData(60, 100, 1, 3, 1, 3, 1, 3, 1, 3, 1, 3, 1, 3);
-    }
-
-    public static CharacterAttributesBean CreateRandomData(
+    public void CreateRandomData(
+        int lifeMin, int lifeMax,
         int loyalMin, int loyalMax,
         int cookMin, int cookMax,
         int speedMin, int speedMax,
@@ -96,14 +61,29 @@ public class CharacterAttributesBean
         int forceMin, int forceMax,
         int luckyMin, int luckyMax)
     {
-        CharacterAttributesBean attributesBean = new CharacterAttributesBean();
-        attributesBean.loyal = UnityEngine.Random.Range(loyalMin, loyalMax + 1);
-        attributesBean.speed = UnityEngine.Random.Range(speedMin, speedMax + 1);
-        attributesBean.account = UnityEngine.Random.Range(accountMin, accountMax + 1);
-        attributesBean.charm = UnityEngine.Random.Range(charmMin, charmMax + 1);
-        attributesBean.force = UnityEngine.Random.Range(forceMin, forceMax + 1);
-        attributesBean.lucky = UnityEngine.Random.Range(luckyMin, luckyMax + 1);
-        attributesBean.cook = UnityEngine.Random.Range(cookMin, cookMax + 1);
-        return attributesBean;
+        life = UnityEngine.Random.Range(lifeMin, lifeMax+1);
+        loyal = UnityEngine.Random.Range(loyalMin, loyalMax + 1);
+        speed = UnityEngine.Random.Range(speedMin, speedMax + 1);
+        account = UnityEngine.Random.Range(accountMin, accountMax + 1);
+        charm = UnityEngine.Random.Range(charmMin, charmMax + 1);
+        force = UnityEngine.Random.Range(forceMin, forceMax + 1);
+        lucky = UnityEngine.Random.Range(luckyMin, luckyMax + 1);
+        cook = UnityEngine.Random.Range(cookMin, cookMax + 1);
+    }
+
+    /// <summary>
+    /// 根据能力生成工资
+    /// </summary>
+    /// <param name="attributesBean"></param>
+    public void CreatePriceByAttributes(out long priceL, out long priceM, out long priceS)
+    {
+        priceL = 0;
+        priceM = 0;
+        priceS = 100;
+        int totalAttribute = cook + speed + charm + force + lucky + account;
+        if (totalAttribute > 6)
+        {
+            priceS += (totalAttribute - 6) * 10;
+        }
     }
 }

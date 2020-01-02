@@ -32,8 +32,8 @@ public class CharacterBodyBean
 
     public static void CreateRandomBodyByManager(CharacterBodyBean characterBody, CharacterBodyManager characterBodyManager)
     {
-         //随机生成性别
-         characterBody.sex = UnityEngine.Random.Range(1, 3);
+        //随机生成性别
+        characterBody.sex = UnityEngine.Random.Range(1, 3);
         //随机生成头型
         IconBean itemHair = RandomUtil.GetRandomDataByIconBeanDictionary(characterBodyManager.listIconBodyHair);
         characterBody.hair = itemHair.key;

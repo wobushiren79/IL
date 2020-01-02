@@ -10,10 +10,40 @@ public class UserDailyLimitBean
     public List<long> listNpcTalk = new List<long>();
     //当前送过礼物的NPC
     public List<long> listNpcGift = new List<long>();
+    //当天招募者数据
+    public List<CharacterBean> listRecruitmentCharacter;
+
     public void InitData()
     {
         exchangeMoneyL = 5;
+        listNpcGift.Clear();
         listNpcTalk.Clear();
+        listRecruitmentCharacter = null;
+    }
+
+    /// <summary>
+    /// 增加招募者
+    /// </summary>
+    /// <param name="characterData"></param>
+    public void AddRecruitmentCharacter(CharacterBean characterData)
+    {
+        if (listRecruitmentCharacter == null)
+        {
+            listRecruitmentCharacter = new List<CharacterBean>();
+        }
+        listRecruitmentCharacter.Add(characterData);
+    }
+
+    /// <summary>
+    /// 移除招募者
+    /// </summary>
+    /// <param name="characterData"></param>
+    public void RemoveRecruitmentCharacter(CharacterBean characterData)
+    {
+        if (listRecruitmentCharacter != null)
+        {
+            listRecruitmentCharacter.Remove(characterData);
+        }
     }
 
     /// <summary>

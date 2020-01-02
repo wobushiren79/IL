@@ -45,20 +45,6 @@ public class CharacterBaseBean
     public List<long> listLoveItems = new List<long>();//喜欢的物品
 
     /// <summary>
-    /// 根据能力生成工资
-    /// </summary>
-    /// <param name="attributesBean"></param>
-    public void CreatePriceByAttributes(CharacterAttributesBean attributesBean)
-    {
-        int totalAttribute = attributesBean.cook + attributesBean.speed + attributesBean.charm + attributesBean.force + attributesBean.lucky + attributesBean.account;
-        priceS = 100;
-        if (totalAttribute > 6)
-        {
-            priceS += (totalAttribute - 6) * 50;
-        }
-    }
-
-    /// <summary>
     /// 获取所有职业的工作数据
     /// </summary>
     /// <returns></returns>

@@ -41,7 +41,7 @@ public class ItemTownCandidateCpt : ItemGameBaseCpt, DialogView.IDialogCallBack
         };
         //确认
         DialogBean dialogBean = new DialogBean();
-        dialogBean.content = string.Format(GameCommonInfo.GetUITextById(3061), characterData.baseInfo.priceS+"", characterData.baseInfo.name + "");
+        dialogBean.content = string.Format(GameCommonInfo.GetUITextById(3061), characterData.baseInfo.priceS + "", characterData.baseInfo.name + "");
         dialogManager.CreateDialog(0, this, dialogBean);
     }
 
@@ -73,7 +73,7 @@ public class ItemTownCandidateCpt : ItemGameBaseCpt, DialogView.IDialogCallBack
     public void SetName(string name)
     {
         if (tvName != null)
-            tvName.text = GameCommonInfo.GetUITextById(61)+ "：" + name;
+            tvName.text = GameCommonInfo.GetUITextById(61) + "：" + name;
     }
 
     /// <summary>
