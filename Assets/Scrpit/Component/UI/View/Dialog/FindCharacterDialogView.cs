@@ -14,6 +14,7 @@ public class FindCharacterDialogView : DialogView
     public Sprite spSexMan;
     public Sprite spSexWoman;
 
+    public CharacterBean characterData;
     public override void Start()
     {
         base.Start();
@@ -46,6 +47,7 @@ public class FindCharacterDialogView : DialogView
     /// <param name="characterData"></param>
     public void SetData(CharacterBean characterData)
     {
+        this.characterData = characterData;
         SetName(characterData.baseInfo.name);
         SetSex(characterData.body.sex);
         SetPrice(characterData.baseInfo.priceL, characterData.baseInfo.priceM, characterData.baseInfo.priceS);

@@ -122,16 +122,19 @@ public class UITownRecruitment : UIBaseOne, DialogView.IDialogCallBack
             //如果是金钱选择回调
             DialogManager dialogManager = GetUIMananger<UIGameManager>().dialogManager;
             CharacterBodyManager characterBodyManager = GetUIMananger<UIGameManager>().characterBodyManager;
-
+            PickForMoneyDialogView pickForMoneyDialog = (PickForMoneyDialogView)dialogView;
             DialogBean dialogData = new DialogBean();
-            FindCharacterDialogView pickForMoneyDialog = (FindCharacterDialogView)dialogManager.CreateDialog(DialogEnum.FindCharacter, this, dialogData);
-            CharacterBean characterData = CharacterBean.CreateRandomWorkerData(characterBodyManager);
-            pickForMoneyDialog.SetData(characterData);
+            //根据金额获取角色
+            CharacterBean characterData = CharacterBean.CreateRandomWorkerDataByPrice(characterBodyManager, pickForMoneyDialog.moneyL, pickForMoneyDialog.moneyM, pickForMoneyDialog.moneyS);
+            FindCharacterDialogView findCharacterDialog = (FindCharacterDialogView)dialogManager.CreateDialog(DialogEnum.FindCharacter, this, dialogData);
+            findCharacterDialog.SetData(characterData);
         }
         else if (dialogView is FindCharacterDialogView)
         {
             //如果是招募回调
-
+            GameDataManager gameDataManager = GetUIMananger<UIGameManager>().gameDataManager;
+            FindCharacterDialogView findCharacterDialog = (FindCharacterDialogView)dialogView;
+            gameDataManager.gameData.listWorkerCharacter.Add(findCharacterDialog.characterData);
         }
     }
 

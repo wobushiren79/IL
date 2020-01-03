@@ -28,18 +28,18 @@ public class CharacterBean
         characterData.baseInfo.name = RandomUtil.GetRandomGenerateChineseWord(UnityEngine.Random.Range(2, 4));
         //生成随机能力
         characterData.attributes.CreateRandomData(
-            0,50,
-            50,100,
-            1,5,
-            1,5,
-            1,5,
-            1,5,
-            1,5,
-            1,5);
+            0, 50,
+            50, 100,
+            1, 5,
+            1, 5,
+            1, 5,
+            1, 5,
+            1, 5,
+            1, 5);
         //随机身体数据
         CharacterBodyBean.CreateRandomBodyByManager(characterData.body, characterBodyManager);
         //根据性别装备服装
-        if (characterData.body.sex==1)
+        if (characterData.body.sex == 1)
         {
             characterData.equips.clothesId = 210039;
         }
@@ -54,6 +54,120 @@ public class CharacterBean
         characterData.baseInfo.priceM = priceM;
         characterData.baseInfo.priceS = priceS;
         return characterData;
+    }
+
+    /// <summary>
+    /// 根据重金创建随机工作者角色数据
+    /// 属性生产规则：
+    /// 1.总计金钱越多能力越高 最高10
+    /// 2.如果有银或者金 则可能抽中稀有角色能力上限15
+    /// </summary>
+    /// <param name="characterBodyManager"></param>
+    /// <param name="findPriceL"></param>
+    /// <param name="findPriceM"></param>
+    /// <param name="findPriceS"></param>
+    /// <returns></returns>
+    public static CharacterBean CreateRandomWorkerDataByPrice(CharacterBodyManager characterBodyManager, long findPriceL, long findPriceM, long findPriceS)
+    {
+        CharacterBean characterData = new CharacterBean();
+        //设置随机名字
+        characterData.baseInfo.name = RandomUtil.GetRandomGenerateChineseWord(UnityEngine.Random.Range(2, 4));
+        //生成随机能力
+        long totalPoint = (findPriceS + findPriceM * 1000 + findPriceL * 10000) / 100;
+        int maxLife = 10;
+        int minLife = 0;
+
+        int maxCook = 1;
+        int minCook = 1;
+
+        int maxSpeed = 1;
+        int minSpeed = 1;
+
+        int maxAccount = 1;
+        int minAccount = 1;
+
+        int maxCharm = 1;
+        int minCharm = 1;
+
+        int maxForce = 1;
+        int minForce = 1;
+
+        int maxLucky = 1;
+        int minLucky = 1;
+        while (totalPoint > 0)
+        {
+            int type = UnityEngine.Random.Range(1, 8);
+            switch (type)
+            {
+                case 1:
+                    maxLife += 10;
+                    break;
+                case 2:
+                    ChangeAttributes(maxCook, minCook,out maxCook,out minCook);
+                    break;
+                case 3:
+                    ChangeAttributes(maxSpeed, minSpeed, out maxSpeed, out minSpeed);
+                    break;
+                case 4:
+                    ChangeAttributes(maxAccount, minAccount, out maxAccount, out minAccount);
+                    break;
+                case 5:
+                    ChangeAttributes(maxCharm, minCharm, out maxCharm, out minCharm);
+                    break;
+                case 6:
+                    ChangeAttributes(maxForce, minForce, out maxForce, out minForce);
+                    break;
+                case 7:
+                    ChangeAttributes(maxLucky, minLucky, out maxLucky, out minLucky);
+                    break;
+            }
+            totalPoint--;
+        }
+        //生成随机能力
+        characterData.attributes.CreateRandomData(
+            minLife, maxLife,
+            50, 100,
+            minCook, maxCook,
+            minSpeed, maxSpeed,
+            minAccount, maxAccount,
+            minCharm, maxCharm,
+            minForce, maxForce,
+            minLucky, maxLucky);
+        //随机身体数据
+        CharacterBodyBean.CreateRandomBodyByManager(characterData.body, characterBodyManager);
+        //根据性别装备服装
+        if (characterData.body.sex == 1)
+        {
+            characterData.equips.clothesId = 210039;
+        }
+        else if (characterData.body.sex == 2)
+        {
+            characterData.equips.clothesId = 210040;
+        }
+        characterData.equips.shoesId = 310039;
+        //根据能力生成工资
+        characterData.attributes.CreatePriceByAttributes(out long priceL, out long priceM, out long priceS);
+        characterData.baseInfo.priceL = priceL;
+        characterData.baseInfo.priceM = priceM;
+        characterData.baseInfo.priceS = priceS;
+        return characterData;
+    }
+
+    /// <summary>
+    /// 改变属性
+    /// </summary>
+    private static void ChangeAttributes(int maxAttribute,int minAttribute,  out int outMaxAttribute,  out int outMinAttribute )
+    {
+        maxAttribute++;
+        if (maxAttribute > 10)
+        {
+            maxAttribute = 10;
+            minAttribute++;
+            if (minAttribute > 5)
+                minAttribute = 5;
+        }
+        outMaxAttribute = maxAttribute;
+        outMinAttribute = minAttribute;
     }
 
     /// <summary>
