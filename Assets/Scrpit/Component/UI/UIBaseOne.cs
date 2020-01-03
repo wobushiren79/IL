@@ -13,7 +13,7 @@ public class UIBaseOne : BaseUIComponent
     //公会硬币
     public Text tvGuildCoin;
 
-    public void Start()
+    public virtual void Start()
     {
         if (btBack != null)
             btBack.onClick.AddListener(OpenMainUI);

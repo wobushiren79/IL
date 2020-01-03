@@ -22,7 +22,8 @@ public class UIGameEquip : BaseUIComponent
     public Text tvCharm;
     public Text tvForce;
     public Text tvLucky;
- 
+
+    public Image ivSex;
 
     public CharacterUICpt characterUICpt;
 
@@ -32,6 +33,8 @@ public class UIGameEquip : BaseUIComponent
 
     [Header("数据")]
     public CharacterBean characterData;
+    public Sprite spSexMan;
+    public Sprite spSexWoman;
 
     private void Start()
     {
@@ -54,7 +57,23 @@ public class UIGameEquip : BaseUIComponent
     public void SetCharacterData(CharacterBean characterData)
     {
         this.characterData = characterData;
+    }
 
+    /// <summary>
+    /// 刷新UI数据
+    /// </summary>
+    public override void RefreshUI()
+    {
+        base.RefreshUI();
+        SetSex(characterData.body.sex);
+        SetLoyal(characterData.attributes.loyal);
+        SetAttributes(characterData.attributes, characterData.equips);
+
+        //人物刷新
+        if (characterUICpt != null)
+            characterUICpt.SetCharacterData(characterData.body, characterData.equips);
+
+        //装备物品刷新
         GameItemsManager gameItemsManager = GetUIMananger<UIGameManager>().gameItemsManager;
         if (characterData.equips.handId != 0)
             equipHand.SetData(characterData, gameItemsManager.GetItemsById(characterData.equips.handId), null);
@@ -67,20 +86,6 @@ public class UIGameEquip : BaseUIComponent
     }
 
     /// <summary>
-    /// 刷新UI数据
-    /// </summary>
-    public override void RefreshUI()
-    {
-        base.RefreshUI();
-        SetLoyal(characterData.attributes.loyal);
-        SetAttributes(characterData.attributes, characterData.equips);
-
-        //人物刷新
-        if (characterUICpt != null)
-            characterUICpt.SetCharacterData(characterData.body, characterData.equips);
-    }
-
-    /// <summary>
     /// 设置忠诚
     /// </summary>
     /// <param name="loyal"></param>
@@ -89,6 +94,24 @@ public class UIGameEquip : BaseUIComponent
         if (tvLoyal != null)
         {
             tvLoyal.text = loyal + "";
+        }
+    }
+    
+    /// <summary>
+    /// 设置性别
+    /// </summary>
+    /// <param name="sex"></param>
+    public void SetSex(int sex)
+    {
+        if (ivSex == null)
+            return;
+        if (sex==1)
+        {
+            ivSex.sprite = spSexMan;
+        }
+        else if (sex == 2)
+        {
+            ivSex.sprite = spSexWoman;
         }
     }
 

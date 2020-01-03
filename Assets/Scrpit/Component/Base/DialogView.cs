@@ -20,7 +20,7 @@ public class DialogView : BaseMonoBehaviour
     public DialogBean dialogData;
     private float mTimeDelayDelete;
 
-    public void Start()
+    public virtual void Start()
     {
         InitData();
     }
@@ -51,17 +51,15 @@ public class DialogView : BaseMonoBehaviour
         }
     }
 
-    public void SubmitOnClick()
+    public virtual void SubmitOnClick()
     {
         if (mCallBack != null)
         {
             mCallBack.Submit(this, dialogData);
         }
         DestroyDialog();
-
-  
     }
-    public void CancelOnClick()
+    public virtual void CancelOnClick()
     {
         if (mCallBack != null)
         {
@@ -93,19 +91,67 @@ public class DialogView : BaseMonoBehaviour
 
         if (dialogData.title != null)
         {
-            tvTitle.text = dialogData.title;
+            SetTitile(dialogData.title);
         }
         if (dialogData.content != null)
         {
-            tvContent.text = dialogData.content;
+            SetContent(dialogData.content);
         }
         if (dialogData.submitStr != null)
         {
-            tvSubmit.text = dialogData.submitStr;
+            SetSubmitStr(dialogData.submitStr);
         }
         if (dialogData.cancelStr != null)
         {
-            tvCancel.text = dialogData.cancelStr;
+            SetCancelStr(dialogData.cancelStr);
+        }
+    }
+
+    /// <summary>
+    /// 设置标题
+    /// </summary>
+    /// <param name="title"></param>
+    public void SetTitile(string title)
+    {
+        if (tvTitle != null)
+        {
+            tvTitle.text = title;
+        }
+    }
+
+    /// <summary>
+    /// 设置内容
+    /// </summary>
+    /// <param name="content"></param>
+    public void SetContent(string content)
+    {
+        if (tvContent != null)
+        {
+            tvContent.text = content;
+        }
+    }
+
+    /// <summary>
+    /// 设置提交按钮问题
+    /// </summary>
+    /// <param name="str"></param>
+    public void SetSubmitStr(string str)
+    {
+        if (tvSubmit!=null)
+        {
+            tvSubmit.text = str;
+        }
+    }
+
+    /// <summary>
+    /// 设置取消按钮文字
+    /// </summary>
+    /// <param name="str"></param>
+    public void SetCancelStr(string str)
+    {
+        if (tvCancel != null)
+        {
+            tvCancel.text = str;
         }
     }
 

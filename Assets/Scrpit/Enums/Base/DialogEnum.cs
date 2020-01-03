@@ -8,4 +8,6 @@ public enum DialogEnum
     PickForCharacter = 2,
     Achievement = 3,
     PickForItems=4,
+    PickForMoney=5,
+    FindCharacter=6,
 }

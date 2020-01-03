@@ -24,6 +24,7 @@ public class UIGameWorkerDetails : BaseUIComponent, IRadioGroupCallBack
     public Text tvCharm;
     public Text tvForce;
     public Text tvLucky;
+    public Image ivSex;
 
     public ItemGameWorkerDetailsWorkerCpt detailsForChef;
     public ItemGameWorkerDetailsWorkerCpt detailsForWaiter;
@@ -42,6 +43,8 @@ public class UIGameWorkerDetails : BaseUIComponent, IRadioGroupCallBack
 
     [Header("数据")]
     public CharacterBean characterData;
+    public Sprite spSexMan;
+    public Sprite spSexWoman;
 
     public void SetCharacterData(CharacterBean characterData)
     {
@@ -114,6 +117,7 @@ public class UIGameWorkerDetails : BaseUIComponent, IRadioGroupCallBack
         if (characterData == null)
             return;
         SetLoyal(characterData.attributes.loyal);
+        SetSex(characterData.body.sex);
         SetAttributes(characterData);
         SetEquip(characterData.equips);
         SetWorkerInfo(characterData.baseInfo);
@@ -135,6 +139,24 @@ public class UIGameWorkerDetails : BaseUIComponent, IRadioGroupCallBack
         if (tvLoyal != null)
         {
             tvLoyal.text = loyal + "";
+        }
+    }
+
+    /// <summary>
+    /// 设置性别
+    /// </summary>
+    /// <param name="sex"></param>
+    public void SetSex(int sex)
+    {
+        if (ivSex == null)
+            return;
+        if (sex == 1)
+        {
+            ivSex.sprite = spSexMan;
+        }
+        else if (sex == 2)
+        {
+            ivSex.sprite = spSexWoman;
         }
     }
 

@@ -38,6 +38,16 @@ public class CharacterBean
             1,5);
         //随机身体数据
         CharacterBodyBean.CreateRandomBodyByManager(characterData.body, characterBodyManager);
+        //根据性别装备服装
+        if (characterData.body.sex==1)
+        {
+            characterData.equips.clothesId = 210039;
+        }
+        else if (characterData.body.sex == 2)
+        {
+            characterData.equips.clothesId = 210040;
+        }
+        characterData.equips.shoesId = 310039;
         //根据能力生成工资
         characterData.attributes.CreatePriceByAttributes(out long priceL, out long priceM, out long priceS);
         characterData.baseInfo.priceL = priceL;
