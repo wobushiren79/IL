@@ -111,9 +111,11 @@ public class UITownCarpenter : UIBaseOne, IStoreInfoView, IRadioGroupCallBack
     #region 获取商店物品回调
     public void GetAllStoreInfoSuccess(List<StoreInfoBean> listData)
     {
+
     }
     public void GetAllStoreInfoFail()
     {
+
     }
 
     public void GetStoreInfoByTypeSuccess(StoreTypeEnum type, List<StoreInfoBean> listData)

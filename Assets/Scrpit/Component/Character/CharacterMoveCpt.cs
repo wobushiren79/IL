@@ -85,7 +85,7 @@ public class CharacterMoveCpt : BaseMonoBehaviour
     /// 自动移动
     /// </summary>
     /// <param name="position">目的地</param>
-    public bool SetDestination(Vector3 position)
+    public bool SetDestination(Vector2 position)
     {
         isManualMove = false;
         bool canGo = true;

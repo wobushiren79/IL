@@ -95,8 +95,8 @@ public class UITownGrocery : UIBaseOne, StoreInfoManager.ICallBack, IRadioGroupC
         {
             StoreInfoBean itemData = listData[i];
             GameObject itemObj = Instantiate(objGroceryContent, objGroceryModel);
-            ItemTownGroceryCpt groceryCpt = itemObj.GetComponent<ItemTownGroceryCpt>();
-            groceryCpt.SetData(itemData);
+            ItemTownStoreForGoodsCpt goodsCpt = itemObj.GetComponent<ItemTownStoreForGoodsCpt>();
+            goodsCpt.SetData(itemData);
             itemObj.transform.DOScale(new Vector3(0, 0, 0), 0.5f).SetEase(Ease.OutBack).SetDelay(i * 0.05f).From();
         }
     }

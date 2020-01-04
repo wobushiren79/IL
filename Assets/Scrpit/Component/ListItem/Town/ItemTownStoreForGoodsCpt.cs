@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using UnityEditor;
 using UnityEngine.UI;
-public class ItemTownGroceryCpt : ItemGameBaseCpt, DialogView.IDialogCallBack
+public class ItemTownStoreForGoodsCpt : ItemGameBaseCpt, DialogView.IDialogCallBack
 {
     [Header("控件")]
     public GameObject objCook;
@@ -46,7 +46,10 @@ public class ItemTownGroceryCpt : ItemGameBaseCpt, DialogView.IDialogCallBack
             btSubmit.onClick.AddListener(SubmitBuy);
     }
 
-
+    /// <summary>
+    /// 设置数据
+    /// </summary>
+    /// <param name="storeInfo"></param>
     public void SetData(StoreInfoBean storeInfo)
     {
         this.storeInfo = storeInfo;
@@ -74,6 +77,9 @@ public class ItemTownGroceryCpt : ItemGameBaseCpt, DialogView.IDialogCallBack
             itemsInfo.add_lucky);
     }
 
+    /// <summary>
+    /// 刷新数据
+    /// </summary>
     public void RefreshUI()
     {
         SetOwn();
@@ -94,19 +100,19 @@ public class ItemTownGroceryCpt : ItemGameBaseCpt, DialogView.IDialogCallBack
         Sprite spIcon = null;
         Vector2 offsetMin = new Vector2(0, 0);
         Vector2 offsetMax = new Vector2(0, 0);
-        switch (mark)
+        switch((GeneralEnum) int.Parse(mark))
         {
-            case "1":
+            case GeneralEnum.Hat:
                 spIcon = characterDressManager.GetHatSpriteByName(iconKey);
                 offsetMin = new Vector2(-50, -75);
                 offsetMax = new Vector2(50, 25);
                 break;
-            case "2":
+            case GeneralEnum.Clothes:
                 spIcon = characterDressManager.GetClothesSpriteByName(iconKey);
                 offsetMin = new Vector2(-50, -25);
                 offsetMax = new Vector2(50, 75);
                 break;
-            case "3":
+            case GeneralEnum.Shoes:
                 spIcon = characterDressManager.GetShoesSpriteByName(iconKey);
                 offsetMin = new Vector2(-50, 0);
                 offsetMax = new Vector2(50, 100);
@@ -122,7 +128,6 @@ public class ItemTownGroceryCpt : ItemGameBaseCpt, DialogView.IDialogCallBack
             rtIcon.offsetMin = offsetMin;
             rtIcon.offsetMax = offsetMax;
         }
-
     }
 
     /// <summary>

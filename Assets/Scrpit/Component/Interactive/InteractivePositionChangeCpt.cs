@@ -23,11 +23,11 @@ public class InteractivePositionChangeCpt : BaseInteractiveCpt
 
     public override void InteractiveDetection()
     {
-        if (Input.GetButtonDown("Interactive_E"))
+        if (Input.GetButtonDown(InputInfo.Interactive_E))
         {
             if (mInteractiveObj != null)
             {
-                sceneTownManager.GetBuildingDoorPosition(positionChange,out Vector3 outDoorPosition,out Vector3 inDoorPosition);
+                sceneTownManager.GetBuildingDoorPosition(positionChange,out Vector2 outDoorPosition,out Vector2 inDoorPosition);
                 if (OutOrIn==0)
                 {
                     mInteractiveObj.transform.position = inDoorPosition;

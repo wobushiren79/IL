@@ -120,9 +120,9 @@ public class UITownDress : UIBaseOne, IRadioGroupCallBack, StoreInfoManager.ICal
         {
             StoreInfoBean itemData = listData[i];
             GameObject itemObj = Instantiate(objGroceryContent, objGroceryModel);
-            ItemTownDressStoreCpt clothesCpt = itemObj.GetComponent<ItemTownDressStoreCpt>();
-            clothesCpt.SetData(itemData);
-           itemObj.transform.DOScale(new Vector3(0, 0, 0), 0.5f).SetEase(Ease.OutBack).SetDelay(i * 0.05f).From();
+            ItemTownStoreForGoodsCpt goodsCpt = itemObj.GetComponent<ItemTownStoreForGoodsCpt>();
+            goodsCpt.SetData(itemData);
+            itemObj.transform.DOScale(new Vector3(0, 0, 0), 0.5f).SetEase(Ease.OutBack).SetDelay(i * 0.05f).From();
         }
     }
 

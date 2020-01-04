@@ -21,12 +21,12 @@ public class NpcAIPasserCpt : BaseNpcAI
     protected MiniGameCombatHandler miniGameCombatHandler;
 
     //移动目标点
-    public Vector3 movePosition;
+    public Vector2 movePosition;
     //备用目标点
-    public Vector3 markPosition;
+    public Vector2 markPosition;
     //建筑相关点
-    public Vector3 buildingOutDoorPosition;
-    public Vector3 buildingInDoorPosition;
+    public Vector2 buildingOutDoorPosition;
+    public Vector2 buildingInDoorPosition;
     //前往的建筑
     public TownBuildingEnum buildingToGo;
     //npc现在所在地
@@ -263,7 +263,7 @@ public class NpcAIPasserCpt : BaseNpcAI
         this.buildingToGo = buildingEnum;
 
         //获取建筑的门
-        sceneTownManager.GetBuildingDoorPosition(buildingEnum, out Vector3 outDoorPostion, out Vector3 inDoorPosition);
+        sceneTownManager.GetBuildingDoorPosition(buildingEnum, out Vector2 outDoorPostion, out Vector2 inDoorPosition);
         buildingOutDoorPosition = outDoorPostion;
         buildingInDoorPosition = inDoorPosition;
         //前往门

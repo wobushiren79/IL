@@ -66,10 +66,10 @@ public class SceneTownManager : BaseManager
     /// <param name="townBuilding"></param>
     /// <param name="outDoorPosition"></param>
     /// <param name="inDoorPosition"></param>
-    public void GetBuildingDoorPosition(TownBuildingEnum townBuildingEnum, out Vector3 outDoorPosition, out Vector3 inDoorPosition)
+    public void GetBuildingDoorPosition(TownBuildingEnum townBuildingEnum, out Vector2 outDoorPosition, out Vector2 inDoorPosition)
     {
-        outDoorPosition = Vector3.zero;
-        inDoorPosition = Vector3.zero;
+        outDoorPosition = Vector2.zero;
+        inDoorPosition = Vector2.zero;
         switch (townBuildingEnum)
         {
             case TownBuildingEnum.Market:
@@ -92,7 +92,7 @@ public class SceneTownManager : BaseManager
                 break;
             case TownBuildingEnum.Carpenter:
                 outDoorPosition = carpenterOutDoor.transform.position;
-                inDoorPosition = carpenterInside.transform.position;
+                inDoorPosition = carpenterInDoor.transform.position;
                 break;
             case TownBuildingEnum.Guild:
                 outDoorPosition = guildOutDoor.transform.position;
