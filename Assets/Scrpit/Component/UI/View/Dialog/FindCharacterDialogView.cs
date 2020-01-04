@@ -10,11 +10,18 @@ public class FindCharacterDialogView : DialogView
     public Text tvName;
     public Image ivSex;
     public Text tvPrice;
-
+    public Image ivCardBG;
+    public Image ivHaloBG;
     public Sprite spSexMan;
     public Sprite spSexWoman;
+    public InfoAbilityPopupButton infoAbilityPopupButton;
 
     public CharacterBean characterData;
+
+    public Color colorForNormal;
+    public Color colorForRare;
+    public Sprite spBGNormal;
+    public Sprite spBGRare;
     public override void Start()
     {
         base.Start();
@@ -52,6 +59,42 @@ public class FindCharacterDialogView : DialogView
         SetSex(characterData.body.sex);
         SetPrice(characterData.baseInfo.priceL, characterData.baseInfo.priceM, characterData.baseInfo.priceS);
         SetCharacterUI(characterData);
+        SetPopupInfo(characterData);
+        SetBackground((NPCTypeEnum)characterData.baseInfo.characterType);
+    }
+
+    /// <summary>
+    /// 设置背景
+    /// </summary>
+    /// <param name="npcType"></param>
+    public void SetBackground(NPCTypeEnum npcType)
+    {
+        if (ivCardBG == null || ivHaloBG == null )
+            return;
+        if (npcType == NPCTypeEnum.RecruitRare)
+        {
+            ivCardBG.sprite = spBGRare;
+            ivHaloBG.color = colorForRare;
+            tvName.color = colorForRare;
+        }
+        else
+        {
+            ivCardBG.sprite = spBGNormal;
+            ivHaloBG.color = colorForNormal;
+            tvName.color = colorForNormal;
+        }
+    }
+
+    /// <summary>
+    /// 设置弹窗框数据
+    /// </summary>
+    /// <param name="characterData"></param>
+    public void SetPopupInfo(CharacterBean characterData)
+    {
+        if (infoAbilityPopupButton != null)
+        {
+            infoAbilityPopupButton.SetData(characterData);
+        }
     }
 
     /// <summary>
@@ -60,7 +103,7 @@ public class FindCharacterDialogView : DialogView
     /// <param name="characterData"></param>
     public void SetCharacterUI(CharacterBean characterData)
     {
-        if (characterUI!=null)
+        if (characterUI != null)
         {
             characterUI.SetCharacterData(characterData.body, characterData.equips);
         }
@@ -72,12 +115,12 @@ public class FindCharacterDialogView : DialogView
     /// <param name="name"></param>
     public void SetName(string name)
     {
-        if (tvName!=null)
+        if (tvName != null)
         {
             tvName.text = name;
         }
     }
-    
+
     /// <summary>
     /// 设置性别
     /// </summary>
@@ -86,7 +129,7 @@ public class FindCharacterDialogView : DialogView
     {
         if (ivSex != null)
         {
-            if(sex==1)
+            if (sex == 1)
             {
                 ivSex.sprite = spSexMan;
             }

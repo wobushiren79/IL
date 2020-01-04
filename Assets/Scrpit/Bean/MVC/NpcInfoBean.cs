@@ -51,7 +51,7 @@ public class NpcInfoBean : BaseBean
     public static CharacterBean NpcInfoToCharacterData(NpcInfoBean npcInfo)
     {
         CharacterBean characterData = new CharacterBean();
-
+        characterData.baseInfo.characterType = npcInfo.npc_type;
         characterData.baseInfo.characterId = npcInfo.id + "";
         characterData.baseInfo.titleName = npcInfo.title_name;
         characterData.baseInfo.name = npcInfo.name;

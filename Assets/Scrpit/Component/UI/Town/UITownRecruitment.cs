@@ -9,6 +9,8 @@ public class UITownRecruitment : UIBaseOne, DialogView.IDialogCallBack
     public Text tvNumber;
     //重金寻聘
     public Button btFindWorker;
+    public InfoPromptPopupButton infoPromptPopupButton;
+    public Text tvNull;
 
     public GameObject objCandidateContent;
     public GameObject objCandidateModel;
@@ -28,8 +30,15 @@ public class UITownRecruitment : UIBaseOne, DialogView.IDialogCallBack
     public override void Start()
     {
         base.Start();
+        InfoPromptPopupShow infoPromptPopupShow = GetUIMananger<UIGameManager>().infoPromptPopup;
         if (btFindWorker != null)
             btFindWorker.onClick.AddListener(FindWorkerByMoney);
+        if (infoPromptPopupButton != null)
+        {
+            infoPromptPopupButton.SetPopupShowView(infoPromptPopupShow);
+            infoPromptPopupButton.SetContent("根据寻聘金额随机获取角色，金额越高角色属性越强，获得稀有角色概率越高");
+        }
+            
     }
 
     public override void RefreshUI()
@@ -61,7 +70,7 @@ public class UITownRecruitment : UIBaseOne, DialogView.IDialogCallBack
     {
         GameCommonInfo.InitRandomSeed();
         CharacterBodyManager characterBodyManager = GetUIMananger<UIGameManager>().characterBodyManager;
-        for (int i = 0; i < 10; i++)
+        for (int i = 0; i < Random.Range(1,15); i++)
         {
             CharacterBean characterData = CharacterBean.CreateRandomWorkerData(characterBodyManager);
             GameCommonInfo.DailyLimitData.AddRecruitmentCharacter(characterData);
@@ -75,6 +84,10 @@ public class UITownRecruitment : UIBaseOne, DialogView.IDialogCallBack
     public void CreateRecruitmentList(List<CharacterBean> listData)
     {
         CptUtil.RemoveChildsByActive(objCandidateContent.transform);
+        if (CheckUtil.ListIsNull(listData))
+            tvNull.gameObject.SetActive(true);
+        else
+            tvNull.gameObject.SetActive(false);
         for (int i = 0; i < listData.Count; i++)
         {
             CharacterBean itemData = listData[i];

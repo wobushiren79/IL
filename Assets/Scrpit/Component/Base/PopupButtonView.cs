@@ -40,6 +40,13 @@ public abstract class PopupButtonView : BaseMonoBehaviour, IPointerEnterHandler,
         ClosePopup();
     }
 
+    private void OnDisable()
+    {
+        if (popupShow != null)
+            popupShow.gameObject.SetActive(false);
+        ClosePopup();
+    }
+
     public abstract void OpenPopup();
     public abstract void ClosePopup();
 }

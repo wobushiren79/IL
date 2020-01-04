@@ -8,6 +8,8 @@ using System.Linq;
 public class CharacterBaseBean
 {
     public string characterId;
+    //类型
+    public int characterType;
     //称号
     public string titleName;
     //名字

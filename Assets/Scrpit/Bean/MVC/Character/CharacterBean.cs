@@ -24,6 +24,7 @@ public class CharacterBean
     public static CharacterBean CreateRandomWorkerData(CharacterBodyManager characterBodyManager)
     {
         CharacterBean characterData = new CharacterBean();
+        characterData.baseInfo.characterType = (int)NPCTypeEnum.RecruitNormal;
         //设置随机名字
         characterData.baseInfo.name = RandomUtil.GetRandomGenerateChineseWord(UnityEngine.Random.Range(2, 4));
         //生成随机能力
@@ -94,35 +95,70 @@ public class CharacterBean
 
         int maxLucky = 1;
         int minLucky = 1;
-        while (totalPoint > 0)
+        //稀有角色
+        float getRatePro = totalPoint * 0.001f + findPriceL * 0.05f + findPriceM * 0.002f;
+        //抽中稀有
+        if ( UnityEngine.Random.Range(0f, 1f)<= getRatePro)
         {
-            int type = UnityEngine.Random.Range(1, 8);
-            switch (type)
-            {
-                case 1:
-                    maxLife += 10;
-                    break;
-                case 2:
-                    ChangeAttributes(maxCook, minCook,out maxCook,out minCook);
-                    break;
-                case 3:
-                    ChangeAttributes(maxSpeed, minSpeed, out maxSpeed, out minSpeed);
-                    break;
-                case 4:
-                    ChangeAttributes(maxAccount, minAccount, out maxAccount, out minAccount);
-                    break;
-                case 5:
-                    ChangeAttributes(maxCharm, minCharm, out maxCharm, out minCharm);
-                    break;
-                case 6:
-                    ChangeAttributes(maxForce, minForce, out maxForce, out minForce);
-                    break;
-                case 7:
-                    ChangeAttributes(maxLucky, minLucky, out maxLucky, out minLucky);
-                    break;
-            }
-            totalPoint--;
+            characterData.baseInfo.characterType = (int)NPCTypeEnum.RecruitRare;
+
+             maxLife = 100;
+             minLife = 200;
+
+             maxCook = 15;
+             minCook = 10;
+
+             maxSpeed = 15;
+             minSpeed = 10;
+
+             maxAccount = 15;
+             minAccount = 10;
+
+             maxCharm = 15;
+             minCharm = 10;
+
+             maxForce = 15;
+             minForce = 10;
+
+             maxLucky = 15;
+             minLucky = 10;
         }
+        //没有抽中稀有
+        else
+        {
+            characterData.baseInfo.characterType = (int)NPCTypeEnum.RecruitNormal;
+            while (totalPoint > 0)
+            {
+                int type = UnityEngine.Random.Range(1, 8);
+                switch (type)
+                {
+                    case 1:
+                        maxLife += 10;
+                        break;
+                    case 2:
+                        ChangeAttributes(maxCook, minCook, out maxCook, out minCook);
+                        break;
+                    case 3:
+                        ChangeAttributes(maxSpeed, minSpeed, out maxSpeed, out minSpeed);
+                        break;
+                    case 4:
+                        ChangeAttributes(maxAccount, minAccount, out maxAccount, out minAccount);
+                        break;
+                    case 5:
+                        ChangeAttributes(maxCharm, minCharm, out maxCharm, out minCharm);
+                        break;
+                    case 6:
+                        ChangeAttributes(maxForce, minForce, out maxForce, out minForce);
+                        break;
+                    case 7:
+                        ChangeAttributes(maxLucky, minLucky, out maxLucky, out minLucky);
+                        break;
+                }
+                totalPoint--;
+            }
+        }
+
+
         //生成随机能力
         characterData.attributes.CreateRandomData(
             minLife, maxLife,
@@ -156,7 +192,7 @@ public class CharacterBean
     /// <summary>
     /// 改变属性
     /// </summary>
-    private static void ChangeAttributes(int maxAttribute,int minAttribute,  out int outMaxAttribute,  out int outMinAttribute )
+    private static void ChangeAttributes(int maxAttribute, int minAttribute, out int outMaxAttribute, out int outMinAttribute)
     {
         maxAttribute++;
         if (maxAttribute > 10)
