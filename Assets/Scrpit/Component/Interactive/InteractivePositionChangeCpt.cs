@@ -21,7 +21,7 @@ public class InteractivePositionChangeCpt : BaseInteractiveCpt
         sceneTownManager = Find<SceneTownManager>(ImportantTypeEnum.SceneManager);
     }
 
-    public override void InteractiveDetection()
+    public override void InteractiveDetection(CharacterInteractiveCpt characterInt)
     {
         if (Input.GetButtonDown(InputInfo.Interactive_E))
         {

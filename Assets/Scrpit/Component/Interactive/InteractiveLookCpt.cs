@@ -14,7 +14,7 @@ public class InteractiveLookCpt : BaseInteractiveCpt
         mEventHandler = FindObjectOfType<EventHandler>();
     }
 
-    public override void InteractiveDetection()
+    public override void InteractiveDetection(CharacterInteractiveCpt characterInt)
     {
         if (Input.GetButtonDown(InputInfo.Interactive_E) && mEventHandler != null)
         {

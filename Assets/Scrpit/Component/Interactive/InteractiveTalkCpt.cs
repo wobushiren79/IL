@@ -14,12 +14,18 @@ public class InteractiveTalkCpt : BaseInteractiveCpt
         mEventHandler = FindObjectOfType<EventHandler>();
     }
 
-    public override void InteractiveDetection()
+    public override void InteractiveDetection(CharacterInteractiveCpt characterInt)
     {
         if (Input.GetButtonDown(InputInfo.Interactive_E) && mEventHandler != null)
         {
             if (mEventHandler.GetEventStatus() == EventHandler.EventStatusEnum.EventEnd)
             {
+                //先改变人物面向
+                if (characterInt.transform.position.x>transform.position.x)
+                    mNpcAI.SetCharacterFace(2);
+                else
+                    mNpcAI.SetCharacterFace(1);
+                //获取人物信息
                 NpcInfoBean npcInfo = mNpcAI.characterData.npcInfoData;
                 mEventHandler.EventTriggerForTalk(npcInfo.id, (NPCTypeEnum)npcInfo.npc_type);
             }

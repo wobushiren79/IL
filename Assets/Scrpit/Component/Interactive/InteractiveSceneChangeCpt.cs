@@ -8,9 +8,9 @@ public class InteractiveSceneChangeCpt : BaseInteractiveCpt
     //需要跳转的场景
     public ScenesEnum changeScene;
 
-    public override void InteractiveDetection()
+    public override void InteractiveDetection(CharacterInteractiveCpt characterInt)
     {
-        if (Input.GetButtonDown("Interactive_E"))
+        if (Input.GetButtonDown(InputInfo.Interactive_E))
         {
             SceneUtil.SceneChange(changeScene);
         }

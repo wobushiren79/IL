@@ -3,7 +3,7 @@ using UnityEditor;
 
 public abstract class BaseInteractiveCpt : BaseMonoBehaviour
 {
-    public Collider2D colliderInteractive;
+    public CharacterInteractiveCpt characterInt;
 
     public bool canInteractive=false;
 
@@ -11,7 +11,7 @@ public abstract class BaseInteractiveCpt : BaseMonoBehaviour
     {
         if (canInteractive)
         {
-            InteractiveDetection();
+            InteractiveDetection(characterInt);
         }
     }
 
@@ -21,6 +21,7 @@ public abstract class BaseInteractiveCpt : BaseMonoBehaviour
         CharacterInteractiveCpt characterInt = collisionObj.GetComponent<CharacterInteractiveCpt>();
         if (characterInt != null)
         {
+            this.characterInt = characterInt;
             InteractiveStart(characterInt);
             canInteractive = true;
         }
@@ -35,6 +36,7 @@ public abstract class BaseInteractiveCpt : BaseMonoBehaviour
         {
             InteractiveEnd(characterInt);
             canInteractive = false;
+            this.characterInt = null;
         }
     }
 
@@ -42,5 +44,5 @@ public abstract class BaseInteractiveCpt : BaseMonoBehaviour
 
     public abstract void InteractiveEnd(CharacterInteractiveCpt characterInt);
 
-    public abstract void InteractiveDetection();
+    public abstract void InteractiveDetection(CharacterInteractiveCpt characterInt);
 }

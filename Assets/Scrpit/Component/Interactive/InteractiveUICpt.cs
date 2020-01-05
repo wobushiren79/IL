@@ -10,9 +10,9 @@ public class InteractiveUICpt : BaseInteractiveCpt
     public string remarkData;
     public BaseUIManager uiManager;
 
-    public override void InteractiveDetection()
+    public override void InteractiveDetection(CharacterInteractiveCpt characterInt)
     {
-        if (Input.GetButtonDown("Interactive_E"))
+        if (Input.GetButtonDown(InputInfo.Interactive_E))
         {
             if (!CheckUtil.StringIsNull(remarkData))
             {
