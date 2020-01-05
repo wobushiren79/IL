@@ -44,6 +44,13 @@ public class StoreInfoManager : BaseMonoBehaviour, IStoreInfoView
         mStoreInfoController.GetGroceryInfo();
     }
 
+    /// <summary>
+    /// 获取建筑坊数据
+    /// </summary>
+    public void GetStoreInfoForCarpenter()
+    {
+        mStoreInfoController.GetCarpenterInfo();
+    }
 
     #region 数据回调
     public void GetAllStoreInfoFail()
