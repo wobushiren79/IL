@@ -19,7 +19,7 @@ public class UIGameBuild : BaseUIComponent
     public GameObject listBuildContent;
     public GameObject itemBuildModel;
 
-    public BuildItemBean.BuildType buildType = BuildItemBean.BuildType.Table;
+    public BuildItemTypeEnum buildType = BuildItemTypeEnum.Table;
 
     public void Start()
     {
@@ -38,7 +38,7 @@ public class UIGameBuild : BaseUIComponent
             btTypeDoor.onClick.AddListener(CreateDoorList);
         if (tvAesthetics != null)
             tvAesthetics.text = gameDataManager.gameData.GetInnAttributesData().GetAesthetics() + "";
-        CreateBuildList(BuildItemBean.BuildType.Table);
+        CreateBuildList(BuildItemTypeEnum.Table);
     }
 
     public override void OpenUI()
@@ -77,7 +77,7 @@ public class UIGameBuild : BaseUIComponent
     /// 创建建筑列表
     /// </summary>
     /// <param name="type"></param>
-    public void CreateBuildList(BuildItemBean.BuildType type)
+    public void CreateBuildList(BuildItemTypeEnum  type)
     {
         GameDataManager gameDataManager = GetUIMananger<UIGameManager>().gameDataManager;
         ControlHandler controlHandler = GetUIMananger<UIGameManager>().controlHandler;
@@ -126,21 +126,21 @@ public class UIGameBuild : BaseUIComponent
 
     public void CreateTableList()
     {
-        CreateBuildList(BuildItemBean.BuildType.Table);
+        CreateBuildList(BuildItemTypeEnum.Table);
     }
 
     public void CreateStoveList()
     {
-        CreateBuildList(BuildItemBean.BuildType.Stove);
+        CreateBuildList(BuildItemTypeEnum.Stove);
     }
 
     public void CreateCounterList()
     {
-        CreateBuildList(BuildItemBean.BuildType.Counter);
+        CreateBuildList(BuildItemTypeEnum.Counter);
     }
     public void CreateDoorList()
     {
-        CreateBuildList(BuildItemBean.BuildType.Door);
+        CreateBuildList(BuildItemTypeEnum.Door);
     }
 
     public void DismantleMode()

@@ -27,7 +27,7 @@ public class BuildDataController : BaseMVCController<BuildDataModel, IBuildDataV
         }
     }
 
-    public void GetBuildItemsDataByType(BuildItemBean.BuildType type)
+    public void GetBuildItemsDataByType(BuildItemTypeEnum type)
     {
         List<BuildItemBean> listData = GetModel().GetBuildItemsByType((int)type);
         if (CheckUtil.ListIsNull(listData))

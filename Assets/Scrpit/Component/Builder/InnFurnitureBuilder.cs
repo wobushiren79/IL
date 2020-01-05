@@ -76,7 +76,7 @@ public class InnFurnitureBuilder : BaseMonoBehaviour
         BaseBuildItemCpt target = null;
         foreach (BaseBuildItemCpt itemData in buildList)
         {
-            if (itemData.buildId == -1)
+            if (itemData.buildItemData.id == -1)
                 continue;
             List<Vector3> listPosition = itemData.GetBuildWorldPosition();
             foreach (Vector3 itemPosition in listPosition)

@@ -42,6 +42,21 @@ public class UIGameManager : BaseUIManager
 
     private void Awake()
     {
+        gameDataManager = Find<GameDataManager>(ImportantTypeEnum.GameDataManager);
+        gameItemsManager = Find<GameItemsManager>(ImportantTypeEnum.GameItemsManager);
+        characterDressManager = Find<CharacterDressManager>(ImportantTypeEnum.CharacterManager);
+        characterBodyManager = Find<CharacterBodyManager>(ImportantTypeEnum.CharacterManager);
+        innBuildManager = Find<InnBuildManager>(ImportantTypeEnum.InnBuildManager);
+        innFoodManager = Find<InnFoodManager>(ImportantTypeEnum.FoodManager);
+        npcInfoManager = Find<NpcInfoManager>(ImportantTypeEnum.NpcManager);
         storeInfoManager = Find<StoreInfoManager>(ImportantTypeEnum.StoreInfoManager);
+
+        dialogManager = Find<DialogManager>(ImportantTypeEnum.DialogManager);
+        toastManager = Find<ToastManager>(ImportantTypeEnum.ToastManager);
+
+        innHandler = Find<InnHandler>(ImportantTypeEnum.InnHandler);
+        gameTimeHandler = Find<GameTimeHandler>(ImportantTypeEnum.TimeHandler);
+        controlHandler = Find<ControlHandler>(ImportantTypeEnum.ControlHandler);
+        eventHandler = Find<EventHandler>(ImportantTypeEnum.EventHandler);
     }
 }

@@ -6,9 +6,9 @@ public class BuildCounterCpt : BaseBuildItemCpt
 {
     public enum CounterStatusEnum
     {
-        Idle=0,
-        Ready=1,
-        Accounting=2
+        Idle = 0,
+        Ready = 1,
+        Accounting = 2
     }
 
     public GameObject objPayPosition;
@@ -17,7 +17,7 @@ public class BuildCounterCpt : BaseBuildItemCpt
     //排队算账的订单
     public List<OrderForCustomer> payQueue = new List<OrderForCustomer>();
 
-    public CounterStatusEnum counterStatus= CounterStatusEnum.Idle;
+    public CounterStatusEnum counterStatus = CounterStatusEnum.Idle;
 
     /// <summary>
     /// 获取付款位置

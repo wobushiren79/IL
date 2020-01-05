@@ -17,9 +17,6 @@ public class ControlHandler : BaseMonoBehaviour
         MiniGameAccount,//算账小游戏
         MiniGameDebate,//辩论
     }
-
-    //镜头
-    public CinemachineVirtualCamera camera2D;
     public List<BaseControl> listControl = new List<BaseControl>();
 
     /// <summary>
@@ -27,6 +24,7 @@ public class ControlHandler : BaseMonoBehaviour
     /// </summary>
     private void Awake()
     {
+        CinemachineVirtualCamera camera2D = Find<CinemachineVirtualCamera>(ImportantTypeEnum.Camera2D);
         foreach (BaseControl itemControl in listControl)
         {
             itemControl.SetCamera2D(camera2D);

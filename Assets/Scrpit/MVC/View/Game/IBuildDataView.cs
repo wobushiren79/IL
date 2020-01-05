@@ -8,7 +8,7 @@ public interface IBuildDataView
 
     void GetAllBuildItemsFail();
 
-    void GetBuildItemsByTypeSuccess(BuildItemBean.BuildType type,List<BuildItemBean> listData);
+    void GetBuildItemsByTypeSuccess(BuildItemTypeEnum type,List<BuildItemBean> listData);
 
     void GetBuildItemsByTypeFail();
 }

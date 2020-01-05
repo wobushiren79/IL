@@ -124,7 +124,7 @@ public class ControlForBuildCpt : BaseControl
             bool hasBuilding = CheckHasBuild(srPosition);
             //设置显示的提示颜色
             //如果是拆除模式
-            if (buildItemCpt.buildId == -1)
+            if (buildItemCpt.buildItemData.id == -1)
             {
                 if (hasBuilding)
                     itemRenderer.sprite = spYellow;
@@ -165,7 +165,7 @@ public class ControlForBuildCpt : BaseControl
     /// <returns></returns>
     public bool ChecOutBuild(Vector3 position)
     {
-        if (buildItemCpt.buildId > 90000 && buildItemCpt.buildId < 100000)
+        if (buildItemCpt.buildItemData.id > 90000 && buildItemCpt.buildItemData.id < 100000)
         {
             // 门的单独处理
             if (position.y == 0 && position.x > 2 && position.x < gameDataManager.gameData.GetInnBuildData().innWidth - 1)
@@ -177,7 +177,7 @@ public class ControlForBuildCpt : BaseControl
                 return true;
             }
         }
-        else if (buildItemCpt.buildId == -1)
+        else if (buildItemCpt.buildItemData.id == -1)
         {
             //拆除模式
             return false;
@@ -277,7 +277,7 @@ public class ControlForBuildCpt : BaseControl
                 }
 
                 //如果是拆除
-                if (buildItemCpt.buildId == -1)
+                if (buildItemCpt.buildItemData.id == -1)
                 {
                     //获取拆除位置的家具数据
                     InnBuildBean buildData = gameDataManager.gameData.GetInnBuildData();
@@ -306,16 +306,16 @@ public class ControlForBuildCpt : BaseControl
                 else
                 {
                     //增加一个家具
-                    InnResBean addData = new InnResBean(buildItemCpt.buildId, buildItemCpt.transform.position, listBuildPosition, buildItemCpt.direction);
+                    InnResBean addData = new InnResBean(buildItemCpt.buildItemData.id, buildItemCpt.transform.position, listBuildPosition, buildItemCpt.direction);
                     gameDataManager.gameData.GetInnBuildData().AddFurniture(addData);
                     //如果是门。需要重置一下墙体
-                    if (buildItemCpt.buildId > 90000 && buildItemCpt.buildId < 100000)
+                    if (buildItemCpt.buildItemData.id > 90000 && buildItemCpt.buildItemData.id < 100000)
                     {
                         gameDataManager.gameData.GetInnBuildData().InitWall();
                         innWallBuilder.StartBuild();
                     }
                     //背包里删除一个
-                    gameDataManager.gameData.ChangeBuildNumber(buildItemCpt.buildId, -1);
+                    gameDataManager.gameData.ChangeBuildNumber(buildItemCpt.buildItemData.id, -1);
                     //动画
                     buildItemCpt.transform.DOScale(new Vector3(0.2f, 0.2f, 0.2f), 0.5f).From().SetEase(Ease.OutBack);
                     ClearBuild();
@@ -330,7 +330,7 @@ public class ControlForBuildCpt : BaseControl
             else
             {
                 //不能建造的原因
-                if (buildItemCpt.buildId == -1)
+                if (buildItemCpt.buildItemData.id == -1)
                 {
                     //如果是拆除模式提示
                     toastManager.ToastHint(GameCommonInfo.GetUITextById(1003));

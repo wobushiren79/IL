@@ -1,8 +1,10 @@
 ﻿using UnityEngine;
 using UnityEditor;
 
-public enum ImportantTypeEnum 
+public enum ImportantTypeEnum
 {
+    Camera2D,
+
     GameUI,
     DialogManager,
     ToastManager,
@@ -17,6 +19,7 @@ public enum ImportantTypeEnum
     StoryManager,
     SceneManager,
     StoreInfoManager,
+    InnBuildManager,
 
     StoryBuilder,
     NpcBuilder,
@@ -33,4 +36,5 @@ public enum ImportantTypeEnum
     LightHandler,
     EcologyHandler,
     MiniGameHandler,
+    InnHandler,
 }

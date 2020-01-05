@@ -54,7 +54,8 @@ public class EventHandler : BaseHandler,
         controlHandler = Find<ControlHandler>(ImportantTypeEnum.ControlHandler);
         miniGameCombatHandler = Find<MiniGameCombatHandler>(ImportantTypeEnum.MiniGameHandler);
         npcImportantBuilder = Find<NpcImportantBuilder>(ImportantTypeEnum.NpcBuilder);
-        miniGameCombatHandler.AddObserver(this);
+        if (miniGameCombatHandler != null)
+            miniGameCombatHandler.AddObserver(this);
     }
 
     /// <summary>

@@ -123,18 +123,18 @@ public class ListDataEditor : Editor
         AddIconBeanDictionaryByFolder("Assets/Texture/InnBuild/Door/", innBuildManager.listFurnitureIcon);
     }
 
-    [MenuItem("Custom/List/AddFurnitureCpt")]
-    public static void AddFurnitureCpt()
-    {
-        GameObject Target = Selection.gameObjects[0];
-        InnBuildManager innBuildManager = Target.GetComponent<InnBuildManager>();
-        innBuildManager.listFurnitureCpt.Clear();
-        AddGameObjectDictionaryByFolder("Assets/Prefabs/BuildItem/Table/", innBuildManager.listFurnitureCpt);
-        AddGameObjectDictionaryByFolder("Assets/Prefabs/BuildItem/Stove/", innBuildManager.listFurnitureCpt);
-        AddGameObjectDictionaryByFolder("Assets/Prefabs/BuildItem/Counter/", innBuildManager.listFurnitureCpt);
-        AddGameObjectDictionaryByFolder("Assets/Prefabs/BuildItem/Door/", innBuildManager.listFurnitureCpt);
-        AddGameObjectDictionaryByFolder("Assets/Prefabs/BuildItem/Other/", innBuildManager.listFurnitureCpt);
-    }
+    //[MenuItem("Custom/List/AddFurnitureCpt")]
+    //public static void AddFurnitureCpt()
+    //{
+    //    GameObject Target = Selection.gameObjects[0];
+    //    InnBuildManager innBuildManager = Target.GetComponent<InnBuildManager>();
+    //    innBuildManager.listFurnitureCpt.Clear();
+    //    AddGameObjectDictionaryByFolder("Assets/Prefabs/BuildItem/Table/", innBuildManager.listFurnitureCpt);
+    //    AddGameObjectDictionaryByFolder("Assets/Prefabs/BuildItem/Stove/", innBuildManager.listFurnitureCpt);
+    //    AddGameObjectDictionaryByFolder("Assets/Prefabs/BuildItem/Counter/", innBuildManager.listFurnitureCpt);
+    //    AddGameObjectDictionaryByFolder("Assets/Prefabs/BuildItem/Door/", innBuildManager.listFurnitureCpt);
+    //    AddGameObjectDictionaryByFolder("Assets/Prefabs/BuildItem/Other/", innBuildManager.listFurnitureCpt);
+    //}
 
     [MenuItem("Custom/List/AddIcon")]
     public static void AddUI()
@@ -194,7 +194,7 @@ public class ListDataEditor : Editor
             if (obj as GameObject != null)
             {
                 BaseBuildItemCpt buildItemCpt = ((GameObject)obj).GetComponent<BaseBuildItemCpt>();
-                map.Add(buildItemCpt.buildId, obj as GameObject);
+                map.Add(buildItemCpt.buildItemData.id, obj as GameObject);
             }
         }
     }

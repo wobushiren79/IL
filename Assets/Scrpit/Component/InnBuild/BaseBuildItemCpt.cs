@@ -4,9 +4,11 @@ using System.Collections.Generic;
 
 public class BaseBuildItemCpt : BaseMonoBehaviour
 {
-    //建筑ID
-    public long buildId;
+    //建筑数据
+    public BuildItemBean buildItemData;
+
     public Direction2DEnum direction = Direction2DEnum.Left;
+
     //不同方向的贴图
     public Sprite spLeft;
     public Sprite spRight;
@@ -28,10 +30,17 @@ public class BaseBuildItemCpt : BaseMonoBehaviour
     public SpriteRenderer srMainBuild;
     //阴影
     public SpriteRenderer srShadow;
-
-
     //是否能旋转
     public bool canRotated = true;
+
+    /// <summary>
+    /// 设置建筑数据
+    /// </summary>
+    /// <param name="buildItemData"></param>
+    public virtual void SetData(BuildItemBean buildItemData)
+    {
+        this.buildItemData = buildItemData;
+    }
 
     /// <summary>
     /// 获取建筑位置

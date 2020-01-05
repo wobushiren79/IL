@@ -53,6 +53,13 @@ public class BaseMonoBehaviour : MonoBehaviour {
     public T Find<T>(ImportantTypeEnum importantType)
     {
         GameObject objFind = GameObject.Find(EnumUtil.GetEnumName(importantType));
-        return objFind.GetComponent<T>();
+        if (objFind == null)
+        {
+            return default;
+        }
+        else
+        {
+            return objFind.GetComponent<T>();
+        }
     }
 }

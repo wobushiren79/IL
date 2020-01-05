@@ -37,11 +37,12 @@ public class InnBuildManager : BaseManager, IBuildDataView
         GameObject furnitureObj = null;
         if (listFurnitureCpt == null)
             return furnitureObj;
-        if (listFurnitureCpt.TryGetValue(id, out GameObject objItem))
+        BuildItemBean buildItemData = GetBuildDataById(id);
+        if (listFurnitureCpt.TryGetValue(buildItemData.model_id, out GameObject objItem))
         {
-            furnitureObj = Instantiate(objItem, tfFather);
-            furnitureObj.SetActive(true);
-
+            furnitureObj = Instantiate(tfFather.gameObject, objItem);
+            BaseBuildItemCpt buildItemCpt = furnitureObj.GetComponent<BaseBuildItemCpt>();
+            buildItemCpt.SetData(buildItemData);
         }
         return furnitureObj;
     }
@@ -76,7 +77,7 @@ public class InnBuildManager : BaseManager, IBuildDataView
     {
     }
 
-    public void GetBuildItemsByTypeSuccess(BuildItemBean.BuildType type, List<BuildItemBean> listData)
+    public void GetBuildItemsByTypeSuccess(BuildItemTypeEnum type, List<BuildItemBean> listData)
     {
         listBuildData = new Dictionary<long, BuildItemBean>();
         foreach (BuildItemBean itemData in listData)
