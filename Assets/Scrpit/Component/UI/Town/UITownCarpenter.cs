@@ -62,12 +62,20 @@ public class UITownCarpenter : UIBaseOne, IRadioGroupCallBack, StoreInfoManager.
     /// <param name="listData"></param>
     public void CreateCarpenterData(List<StoreInfoBean> listData, int type)
     {
+        GameDataManager gameDataManager= GetUIMananger<UIGameManager>().gameDataManager;
         CptUtil.RemoveChildsByActive(objCarpenterContent.transform);
         if (listData == null || objCarpenterContent == null)
             return;
         for (int i = 0; i < listData.Count; i++)
         {
             StoreInfoBean itemData = listData[i];
+            if (itemData.mark_type==0)
+            {
+                if (gameDataManager.gameData.GetInnBuildData().buildLevel+1!= int.Parse(itemData.mark))
+                {
+                    continue;
+                }
+            }
             GameObject itemObj = Instantiate(objCarpenterContent, objCarpenterModel);
             ItemTownCerpenterCpt cerpenterCpt = itemObj.GetComponent<ItemTownCerpenterCpt>();
             cerpenterCpt.SetData(itemData);

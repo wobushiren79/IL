@@ -33,6 +33,8 @@ public class BaseBuildItemCpt : BaseMonoBehaviour
     //是否能旋转
     public bool canRotated = true;
 
+
+
     /// <summary>
     /// 设置建筑数据
     /// </summary>
@@ -43,16 +45,45 @@ public class BaseBuildItemCpt : BaseMonoBehaviour
     }
 
     /// <summary>
+    /// 设置数据
+    /// </summary>
+    /// <param name="buildItemData"></param>
+    /// <param name="spLeft"></param>
+    /// <param name="spRight"></param>
+    /// <param name="spDown"></param>
+    /// <param name="spUp"></param>
+    public void SetData(BuildItemBean buildItemData, Sprite spLeft, Sprite spRight, Sprite spDown, Sprite spUp)
+    {
+        SetData(buildItemData);
+        SetSprite(spLeft, spRight, spDown, spUp);
+    }
+
+    /// <summary>
+    /// 设置图片
+    /// </summary>
+    /// <param name="spLeft"></param>
+    /// <param name="spRight"></param>
+    /// <param name="spDown"></param>
+    /// <param name="spUp"></param>
+    public void SetSprite(Sprite spLeft, Sprite spRight, Sprite spDown, Sprite spUp)
+    {
+        this.spLeft = spLeft;
+        this.spRight = spRight;
+        this.spDown = spDown;
+        this.spUp = spUp;
+    }
+
+    /// <summary>
     /// 获取建筑位置
     /// </summary>
     /// <returns></returns>
     public List<Vector3> GetBuildPosition()
     {
         List<Vector3> listPosition = new List<Vector3>();
-        List<Transform> buildPositionList= CptUtil.GetAllCptInChildrenByContainName<Transform>(objBuildPositionList,"Position_");
+        List<Transform> buildPositionList = CptUtil.GetAllCptInChildrenByContainName<Transform>(objBuildPositionList, "Position_");
         foreach (Transform itemTF in buildPositionList)
         {
-            Vector3 position= transform.InverseTransformPoint(itemTF.position);
+            Vector3 position = transform.InverseTransformPoint(itemTF.position);
             listPosition.Add(position);
         }
         return listPosition;
@@ -161,12 +192,12 @@ public class BaseBuildItemCpt : BaseMonoBehaviour
             case Direction2DEnum.Right:
                 spShadow = spRight;
                 spMianBuild = spRight;
-                objBox.transform.localEulerAngles = new Vector3(0,0,180);
+                objBox.transform.localEulerAngles = new Vector3(0, 0, 180);
                 break;
             case Direction2DEnum.Down:
                 spShadow = spDown;
                 spMianBuild = spDown;
-                objBox.transform.localEulerAngles = new Vector3(0,0,90);
+                objBox.transform.localEulerAngles = new Vector3(0, 0, 90);
                 break;
             case Direction2DEnum.UP:
                 spShadow = spUp;

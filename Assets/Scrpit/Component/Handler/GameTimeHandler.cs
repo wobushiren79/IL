@@ -2,6 +2,7 @@
 using UnityEditor;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.AI;
 
 public class GameTimeHandler : BaseObservable<IBaseObserver>
 {
@@ -19,7 +20,11 @@ public class GameTimeHandler : BaseObservable<IBaseObserver>
         TimePoint,//整点报时
     }
 
-    public GameDataManager gameDataManager;
+    protected GameDataManager gameDataManager;
+    protected InnFloorBuilder innFloorBuilder;
+    protected InnWallBuilder innWallBuilder;
+    protected NavMeshSurface navMesh;
+
     public float hour;
     public float min;
 
@@ -29,6 +34,14 @@ public class GameTimeHandler : BaseObservable<IBaseObserver>
     public bool isStopTime = true;
     //时间流逝速度
     public float timeSclae = 1;
+
+    private void Awake()
+    {
+        gameDataManager = Find<GameDataManager>(ImportantTypeEnum.GameDataManager);
+        innFloorBuilder = Find<InnFloorBuilder>(ImportantTypeEnum.InnBuilder);
+        innWallBuilder = Find<InnWallBuilder>(ImportantTypeEnum.InnBuilder);
+        navMesh = Find<NavMeshSurface>(ImportantTypeEnum.NavMesh);
+    }
 
     private void Update()
     {
@@ -60,6 +73,36 @@ public class GameTimeHandler : BaseObservable<IBaseObserver>
             }
         }
         SetNewDay();
+    }
+
+    /// <summary>
+    /// 获取当前日期之后几天的日期
+    /// </summary>
+    /// <param name="afterDay"></param>
+    /// <returns></returns>
+    public TimeBean GetAfterDay(int afterDay)
+    {
+        TimeBean timeData = gameDataManager.gameData.gameTime;
+        int tempYear = timeData.year;
+        int tempMonth = timeData.month;
+        int tempDay = timeData.day;
+        for (int i = 0; i < afterDay; i++)
+        {
+            tempDay += 1;
+            if (tempDay > 28)
+            {
+                tempDay = 1;
+                tempMonth += 1;
+            }
+            if (tempMonth > 4)
+            {
+                tempMonth = 1;
+                tempYear += 1;
+            }
+        }
+        TimeBean tempTimeData = new TimeBean();
+        tempTimeData.SetTimeForYMD(tempYear, tempMonth, tempDay);
+        return tempTimeData;
     }
 
     /// <summary>
@@ -104,6 +147,37 @@ public class GameTimeHandler : BaseObservable<IBaseObserver>
         SetTimeStatus(true);
         hour = 6;
         min = 0;
+        //如果有建筑日则建筑日减一天
+        InnBuildBean innBuildData= gameDataManager.gameData.GetInnBuildData();
+        if (innBuildData.listBuildDay.Count > 0)
+        {
+            //检测当前日子是否包含在建筑日内
+            TimeBean timeData = gameDataManager.gameData.gameTime;
+            bool isBuildDay = false;
+            foreach (TimeBean itemTime in innBuildData.listBuildDay)
+            {
+                if(itemTime.year== timeData.year&& itemTime.month == timeData.month && itemTime.day == timeData.day)
+                {
+                    isBuildDay = true;
+                }
+            }
+            if (!isBuildDay)
+            {
+                innBuildData.listBuildDay.Clear();
+                innBuildData.innWidth = innBuildData.buildInnWidth;
+                innBuildData.buildInnWidth = 0;
+                innBuildData.innHeight = innBuildData.buildInnHeight;
+                innBuildData.buildInnHeight = 0;
+                innBuildData.InitFloor();
+                innBuildData.InitWall();
+                if (innFloorBuilder != null)
+                    innFloorBuilder.StartBuild();
+                if (innWallBuilder != null)
+                    innWallBuilder.StartBuild();
+                if (navMesh!=null)
+                    navMesh.BuildNavMesh();
+            }
+        }
         //通知新的一天
         NotifyAllObserver((int)NotifyTypeEnum.NewDay, null);
     }

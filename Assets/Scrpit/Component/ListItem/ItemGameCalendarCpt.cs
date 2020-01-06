@@ -6,9 +6,11 @@ public class ItemGameCalendarCpt : BaseMonoBehaviour
 {
     public Image ivBackground;
     public Text tvDay;
+    public Text tvRemark;
     public Text tvDetails;
 
     public DateInfoBean dateInfo;
+
     /// <summary>
     /// 设置数据
     /// </summary>
@@ -21,6 +23,19 @@ public class ItemGameCalendarCpt : BaseMonoBehaviour
         SetDay(dateInfo.day);
         SetDetails(dateInfo.content);
     }
+
+    /// <summary>
+    /// 设置备用
+    /// </summary>
+    /// <param name="remark"></param>
+    public void SetRemark(string remark)
+    {
+        if (tvRemark == null)
+            return;
+        tvRemark.gameObject.SetActive(true);
+        tvRemark.text = remark;
+    }
+
 
     public void SetItemStatus(bool isCurrentDay)
     {

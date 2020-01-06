@@ -42,7 +42,41 @@ public class InnBuildManager : BaseManager, IBuildDataView
         {
             furnitureObj = Instantiate(tfFather.gameObject, objItem);
             BaseBuildItemCpt buildItemCpt = furnitureObj.GetComponent<BaseBuildItemCpt>();
-            buildItemCpt.SetData(buildItemData);
+            List<string> listIcon = buildItemData.GetIconList();
+            switch ((BuildItemTypeEnum)buildItemData.build_type)
+            {
+                case BuildItemTypeEnum.Counter:
+                    BuildCounterCpt buildCounter = (BuildCounterCpt)buildItemCpt;
+                    Sprite spLeftCounter = GetFurnitureSpriteByName(listIcon[0] + "_0");
+                    Sprite spRightCounter = GetFurnitureSpriteByName(listIcon[0] + "_1");
+                    Sprite spDownCounter = GetFurnitureSpriteByName(listIcon[0] + "_2");
+                    Sprite spUpCounter = GetFurnitureSpriteByName(listIcon[0] + "_3");
+                    buildCounter.SetData(buildItemData, spLeftCounter, spRightCounter, spDownCounter, spUpCounter);
+                    break;
+                case BuildItemTypeEnum.Stove:
+                    BuildStoveCpt buildStove = (BuildStoveCpt)buildItemCpt;
+                    Sprite spLeftStove = GetFurnitureSpriteByName(listIcon[0] + "_0");
+                    Sprite spRightStove = GetFurnitureSpriteByName(listIcon[0] + "_1");
+                    Sprite spDownStove = GetFurnitureSpriteByName(listIcon[0] + "_2");
+                    Sprite spUpStove = GetFurnitureSpriteByName(listIcon[0] + "_3");
+                    buildStove.SetData(buildItemData, spLeftStove, spRightStove, spDownStove, spUpStove);
+                    break;
+                case BuildItemTypeEnum.Table:
+                    BuildTableCpt buildTable = (BuildTableCpt)buildItemCpt;
+                    Sprite spTable = GetFurnitureSpriteByName(listIcon[0]);
+                    Sprite spLeftChair = GetFurnitureSpriteByName(listIcon[1] + "_0");
+                    Sprite spRightChair = GetFurnitureSpriteByName(listIcon[1] + "_1");
+                    Sprite spDownChair = GetFurnitureSpriteByName(listIcon[1] + "_2");
+                    Sprite spUpChair = GetFurnitureSpriteByName(listIcon[1] + "_3");
+                    buildTable.SetData(buildItemData, spTable, spLeftChair, spRightChair, spDownChair, spUpChair);
+                    break;
+                case BuildItemTypeEnum.Door:
+                    BuildDoorCpt buildDoor = (BuildDoorCpt)buildItemCpt;
+                    Sprite spDoor = GetFurnitureSpriteByName(listIcon[0]);
+                    buildDoor.SetData(buildItemData, spDoor, spDoor, spDoor, spDoor);
+                    break;
+            }
+
         }
         return furnitureObj;
     }

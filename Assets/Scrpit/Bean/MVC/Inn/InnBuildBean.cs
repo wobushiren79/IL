@@ -18,6 +18,10 @@ public class InnBuildBean
 
     public int buildLevel = 0;
 
+    public List<TimeBean> listBuildDay = new List<TimeBean>();
+    public int buildInnWidth = 0;
+    public int buildInnHeight = 0;
+
     /// <summary>
     /// 初始化墙壁
     /// </summary>

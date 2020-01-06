@@ -16,9 +16,9 @@ public class CalendarView : BaseMonoBehaviour, IDateInfoView
     public int year;
     public int month;
     public int day;
-    public float timeAnimChange = 3;
-    public float timeDelay = 2;
+
     public DateInfoController dateInfoController;
+    protected GameDataManager gameDataManager;
 
     private List<ItemGameCalendarCpt> mListItemDay = new List<ItemGameCalendarCpt>();
 
@@ -35,6 +35,7 @@ public class CalendarView : BaseMonoBehaviour, IDateInfoView
     private void Awake()
     {
         dateInfoController = new DateInfoController(this, this);
+        gameDataManager = Find<GameDataManager>(ImportantTypeEnum.GameDataManager);
     }
 
     /// <summary>
@@ -53,7 +54,6 @@ public class CalendarView : BaseMonoBehaviour, IDateInfoView
         InitMonth(month);
     }
 
-
     /// <summary>
     /// 改变数据
     /// </summary>
@@ -62,9 +62,59 @@ public class CalendarView : BaseMonoBehaviour, IDateInfoView
     /// <param name="day"></param>
     public void ChangeData(int year, int month, int day)
     {
-        StopAllCoroutines();
-        //延迟执行
-        StartCoroutine(StartDelay(year, month, day));
+        tvYear.transform.DOKill();
+        tvSeasons.transform.DOKill();
+        tvYear.transform.localScale = new Vector3(1f, 1f, 1f);
+        tvSeasons.transform.localScale = new Vector3(1f, 1f, 1f);
+        this.day = day;
+        if (this.year != year)
+        {
+            this.year = year;
+            tvYear.transform
+                .DOScale(new Vector3(0.5f, 0.5f, 0.5f), 1f)
+                .From()
+                .SetEase(Ease.OutBack);
+            SetYear(year);
+        }
+        if (this.month != month)
+        {
+            this.month = month;
+            this.day = day;
+            tvSeasons.transform
+                .DOScale(new Vector3(0.5f, 0.5f, 0.5f), 1f)
+                .From()
+                .SetEase(Ease.OutBack);
+            SetSeasons(month);
+            InitMonth(month);
+        }
+        else
+        {
+            SetCurrentDay(day);
+        }
+    }
+
+    /// <summary>
+    /// 设置建筑日
+    /// </summary>
+    /// <param name="buildDay"></param>
+    public void SetBuildDay()
+    {
+        InnBuildBean innBuildData = gameDataManager.gameData.GetInnBuildData();
+        if (innBuildData.listBuildDay.Count > 0)
+        {
+            foreach (TimeBean itemBuildDay in innBuildData.listBuildDay)
+            {
+                foreach (ItemGameCalendarCpt itemGameCalendar in mListItemDay)
+                {
+                    if (itemGameCalendar.dateInfo.day == itemBuildDay.day
+                        && itemGameCalendar.dateInfo.month== itemBuildDay.month
+                        && year == itemBuildDay.year)
+                    {
+                        itemGameCalendar.SetRemark("建");
+                    }
+                }
+            }
+        }
     }
 
     /// <summary>
@@ -85,21 +135,21 @@ public class CalendarView : BaseMonoBehaviour, IDateInfoView
     {
         if (tvSeasons == null)
             return;
-        switch (month)
+        switch ((SeasonsEnum)month)
         {
-            case 1:
+            case SeasonsEnum.Spring:
                 tvSeasons.text = GameCommonInfo.GetUITextById(33);
                 tvSeasons.color = new Color(0.22f, 0.87f, 0f);
                 break;
-            case 2:
+            case SeasonsEnum.Summer:
                 tvSeasons.text = GameCommonInfo.GetUITextById(34);
                 tvSeasons.color = new Color(1f, 0.8f, 0f);
                 break;
-            case 3:
+            case SeasonsEnum.Autumn:
                 tvSeasons.text = GameCommonInfo.GetUITextById(35);
                 tvSeasons.color = new Color(1f, 0.32f, 0f);
                 break;
-            case 4:
+            case SeasonsEnum.Winter:
                 tvSeasons.text = GameCommonInfo.GetUITextById(36);
                 tvSeasons.color = new Color(0f, 0.9f, 1f);
                 break;
@@ -117,44 +167,6 @@ public class CalendarView : BaseMonoBehaviour, IDateInfoView
         CptUtil.RemoveChildsByActive(objDayContent.transform);
         mListItemDay.Clear();
         dateInfoController.GetDateInfoByMonth(month);
-    }
-
-    /// <summary>
-    /// 延迟执行
-    /// </summary>
-    /// <returns></returns>
-    private IEnumerator StartDelay(int year, int month, int day)
-    {
-        yield return new WaitForSeconds(timeDelay);
-        tvYear.transform.DOKill();
-        tvSeasons.transform.DOKill();
-        tvYear.transform.localScale = new Vector3(1f, 1f, 1f);
-        tvSeasons.transform.localScale = new Vector3(1f, 1f, 1f);
-        if (this.year != year)
-        {
-            this.year = year;
-            tvYear.transform
-                .DOScale(new Vector3(0.5f, 0.5f, 0.5f),1f)
-                .From()
-                .SetEase(Ease.OutBack);
-            SetYear(year);
-        }
-        if (this.month != month)
-        {
-            this.month = month;
-            this.day = day;
-            tvSeasons.transform
-                .DOScale(new Vector3(0.5f, 0.5f, 0.5f), 1f)
-                .From()
-                .SetEase(Ease.OutBack);
-            SetSeasons(month);
-            InitMonth(month);
-        }
-        if (this.day != day)
-        {
-            this.day = day;
-            SetCurrentDay(day);
-        }
     }
 
     /// <summary>
@@ -196,6 +208,9 @@ public class CalendarView : BaseMonoBehaviour, IDateInfoView
                     calendarCpt.SetItemStatus(true);
             }
         }
+        //如果当天是修建日，则需在日历上显示
+        SetBuildDay();
+
         OnGUI();
     }
 

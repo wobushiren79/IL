@@ -3,7 +3,7 @@ using UnityEditor;
 using UnityEngine.UI;
 using System.Collections.Generic;
 
-public class UIMainContinue : BaseUIComponent
+public class UIMainContinue : BaseUIComponent, GameDataManager.IGameDataSimpleCallBack
 {
     //返回按钮
     public Button btBack;
@@ -22,11 +22,11 @@ public class UIMainContinue : BaseUIComponent
     public override void OpenUI()
     {
         base.OpenUI();
-       GameDataManager gameDataManager = GetUIMananger<UIGameManager>().gameDataManager;
+        GameDataManager gameDataManager = GetUIMananger<UIGameManager>().gameDataManager;
         if (gameDataManager == null)
             return;
-        List<GameDataSimpleBean> listGameData = gameDataManager.listGameDataSimple;
-        CreateListItem(listGameData);
+        gameDataManager.SetSimpleGameDataCallBack(this);
+        gameDataManager.GetSimpleGameDataList();
     }
 
     /// <summary>
@@ -58,4 +58,11 @@ public class UIMainContinue : BaseUIComponent
     {
         uiManager.OpenUIAndCloseOtherByName(EnumUtil.GetEnumName(UIEnum.MainStart));
     }
+
+    #region  数据列表回调
+    public void GetSimpleGameDataSuccess(List<GameDataSimpleBean> listData)
+    {
+        CreateListItem(listData);
+    }
+    #endregion
 }

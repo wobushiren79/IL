@@ -5,7 +5,7 @@ using System;
 public class SceneGameTownInit : BaseSceneInit, IBaseObserver, DialogView.IDialogCallBack
 {
     public InnBuildManager innBuildManager;
-    public SceneTownManager sceneTownManager;
+    protected SceneTownManager sceneTownManager;
 
     public NpcImportantBuilder npcImportantBuilder;
     public NpcPasserBuilder npcPasserBuilder;
@@ -13,7 +13,10 @@ public class SceneGameTownInit : BaseSceneInit, IBaseObserver, DialogView.IDialo
     public GameTimeHandler gameTimeHandler;
     public WeatherHandler weatherHandler;
 
-
+    private void Awake()
+    {
+        sceneTownManager = Find<SceneTownManager>(ImportantTypeEnum.SceneManager);
+    }
 
     private new void Start()
     {

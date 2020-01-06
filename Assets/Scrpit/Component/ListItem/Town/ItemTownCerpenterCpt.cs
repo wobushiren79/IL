@@ -2,6 +2,7 @@
 using UnityEditor;
 using System;
 using UnityEngine.UI;
+using System.Collections.Generic;
 
 public class ItemTownCerpenterCpt : ItemGameBaseCpt, DialogView.IDialogCallBack
 {
@@ -176,6 +177,7 @@ public class ItemTownCerpenterCpt : ItemGameBaseCpt, DialogView.IDialogCallBack
         GameDataManager gameDataManager = GetUIManager<UIGameManager>().gameDataManager;
         ToastManager toastManager = GetUIManager<UIGameManager>().toastManager;
         DialogManager dialogManager = GetUIManager<UIGameManager>().dialogManager;
+        InnBuildBean innBuildData = gameDataManager.gameData.GetInnBuildData();
         if (gameDataManager == null || storeInfo == null)
             return;
         if (!gameDataManager.gameData.HasEnoughMoney(storeInfo.price_l, storeInfo.price_m, storeInfo.price_s))
@@ -183,9 +185,16 @@ public class ItemTownCerpenterCpt : ItemGameBaseCpt, DialogView.IDialogCallBack
             toastManager.ToastHint(GameCommonInfo.GetUITextById(1005));
             return;
         }
+        if (storeInfo.mark_type == 0 && innBuildData.listBuildDay.Count != 0)
+        {
+            toastManager.ToastHint(GameCommonInfo.GetUITextById(1019));
+            return;
+        }
         DialogBean dialogBean = new DialogBean();
-        if (storeInfo.id > 300000 && storeInfo.id < 300010)
-            dialogBean.content = string.Format(GameCommonInfo.GetUITextById(3003), storeInfo.name);
+        if (storeInfo.mark_type == 0)
+        {
+            dialogBean.content = string.Format(GameCommonInfo.GetUITextById(3010), 1 + "");
+        }
         else
             dialogBean.content = string.Format(GameCommonInfo.GetUITextById(3002), buildItemData.name);
 
@@ -197,16 +206,21 @@ public class ItemTownCerpenterCpt : ItemGameBaseCpt, DialogView.IDialogCallBack
     {
         GameDataManager gameDataManager = GetUIManager<UIGameManager>().gameDataManager;
         ToastManager toastManager = GetUIManager<UIGameManager>().toastManager;
+        GameTimeHandler gameTimeHandler = GetUIManager<UIGameManager>().gameTimeHandler;
 
         gameDataManager.gameData.PayMoney(storeInfo.price_l, storeInfo.price_m, storeInfo.price_s);
         string toastStr;
-        if (storeInfo.id > 300000 && storeInfo.id < 300010)
+        if (storeInfo.mark_type == 0)
         {
-            gameDataManager.gameData.GetInnBuildData().buildLevel = int.Parse(storeInfo.mark);
-            gameDataManager.gameData.GetInnBuildData().innWidth = storeInfo.mark_x;
-            gameDataManager.gameData.GetInnBuildData().innHeight = storeInfo.mark_y;
-            gameDataManager.gameData.GetInnBuildData().InitFloor();
-            gameDataManager.gameData.GetInnBuildData().InitWall();
+            InnBuildBean innBuildData = gameDataManager.gameData.GetInnBuildData();
+            innBuildData.buildLevel = int.Parse(storeInfo.mark);
+            innBuildData.buildInnWidth = storeInfo.mark_x;
+            innBuildData.buildInnHeight = storeInfo.mark_y;
+            //设置修建天数
+            List<TimeBean> listBuildDay = new List<TimeBean>();
+            listBuildDay.Add(gameTimeHandler.GetAfterDay(1));
+            innBuildData.listBuildDay = listBuildDay;
+
             GetUIComponent<UITownCarpenter>().RefreshUI();
             toastStr = string.Format(GameCommonInfo.GetUITextById(1011), storeInfo.name);
         }

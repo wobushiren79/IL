@@ -29,7 +29,7 @@ public class NpcEventBuilder : NpcNormalBuilder, IBaseObserver
     {
         Vector3 npcPosition = GetRandomStartPosition();
         List<CharacterBean> listData = npcInfoManager.GetCharacterDataByType(21);
-        BuildRascal(RandomUtil.GetRandomDataByList(listData), npcPosition);
+      //  BuildRascal(RandomUtil.GetRandomDataByList(listData), npcPosition);
     }
 
     /// <summary>

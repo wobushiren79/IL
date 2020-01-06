@@ -43,6 +43,12 @@ public class NpcAICustomerCpt : BaseNpcAI
     //评价数据
     public InnEvaluationBean innEvaluation = new InnEvaluationBean();
 
+    private void Awake()
+    {
+        sceneInnManager = Find<SceneInnManager>(ImportantTypeEnum.SceneManager);
+        innHandler = Find<InnHandler>(ImportantTypeEnum.InnHandler);
+    }
+
     private void FixedUpdate()
     {
         switch (customerIntent)

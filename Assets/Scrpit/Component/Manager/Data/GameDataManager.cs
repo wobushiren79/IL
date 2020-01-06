@@ -5,7 +5,6 @@ using System;
 
 public class GameDataManager : BaseManager, IGameDataView
 {
-
     //游戏数据控制
     public GameDataController gameDataController;
 
@@ -14,10 +13,19 @@ public class GameDataManager : BaseManager, IGameDataView
     //简略游戏数据
     public List<GameDataSimpleBean> listGameDataSimple;
 
+
+    private IGameDataSimpleCallBack mSimpleGameDataCallBack;
+
+
     private void Awake()
     {
         gameData = new GameDataBean();
         gameDataController = new GameDataController(this, this);
+    }
+
+    public void SetSimpleGameDataCallBack(IGameDataSimpleCallBack callBack)
+    {
+        mSimpleGameDataCallBack = callBack;
     }
 
     /// <summary>
@@ -36,6 +44,14 @@ public class GameDataManager : BaseManager, IGameDataView
     public void CreateGameData(GameDataBean gameDataBean)
     {
         gameDataController.CreateUserData(gameDataBean);
+    }
+
+    /// <summary>
+    /// 获取简介数据
+    /// </summary>
+    public void GetSimpleGameDataList()
+    {
+        gameDataController.GetSimpleGameData();
     }
 
     /// <summary>
@@ -67,6 +83,10 @@ public class GameDataManager : BaseManager, IGameDataView
     public void GetGameDataSimpleListSuccess(List<GameDataSimpleBean> listData)
     {
         this.listGameDataSimple = listData;
+        if (mSimpleGameDataCallBack!=null)
+        {
+            mSimpleGameDataCallBack.GetSimpleGameDataSuccess(listData);
+        }
     }
 
     public void GetGameDataSuccess(GameDataBean gameData)
@@ -86,14 +106,14 @@ public class GameDataManager : BaseManager, IGameDataView
     }
     #endregion
 
-    public interface GameDataCallBack
+    public interface IGameDataCallBack
     {
         
     }
 
-    public interface GameDataSimpleCallBack
+    public interface IGameDataSimpleCallBack
     {
-
+         void GetSimpleGameDataSuccess(List<GameDataSimpleBean> listData);
     }
 
 }

@@ -4,7 +4,7 @@ using UnityEditor;
 public enum ImportantTypeEnum
 {
     Camera2D,
-
+    NavMesh,
     GameUI,
     DialogManager,
     ToastManager,
@@ -23,6 +23,7 @@ public enum ImportantTypeEnum
 
     StoryBuilder,
     NpcBuilder,
+    InnBuilder,
     MiniGameCombatBuilder,
     MiniGameCookingBuilder,
     MiniGameBarrageBuilder,

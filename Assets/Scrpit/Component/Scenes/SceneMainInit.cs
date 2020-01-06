@@ -9,7 +9,5 @@ public class SceneMainInit : BaseSceneInit
         base.Start();
         if (gameItemsManager != null)
             gameItemsManager.itemsInfoController.GetAllItemsInfo();
-        if (gameDataManager != null)
-            gameDataManager.gameDataController.GetSimpleGameData();
     }
 }

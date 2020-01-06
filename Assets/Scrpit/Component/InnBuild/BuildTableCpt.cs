@@ -5,31 +5,73 @@ public class BuildTableCpt : BaseBuildItemCpt
 {
     public enum TableStatusEnum
     {
-        Idle=0,//空闲
-        Ready=1,//有人,等待移动到座位并且点餐
-        WaitFood=2,//已经点餐，等待上菜
-        Eating=3,//吃饭中
-        WaitClean=4,//等待清理
-        Cleaning=5,//清理
+        Idle = 0,//空闲
+        Ready = 1,//有人,等待移动到座位并且点餐
+        WaitFood = 2,//已经点餐，等待上菜
+        Eating = 3,//吃饭中
+        WaitClean = 4,//等待清理
+        Cleaning = 5,//清理
     }
 
     public TableStatusEnum tableStatus = TableStatusEnum.Idle;
 
     public GameObject objLeftChair;
     public GameObject objLeftSeat;
+    public SpriteRenderer srLeftChair;
 
     public GameObject objRightChair;
     public GameObject objRightSeat;
+    public SpriteRenderer srRightChair;
 
     public GameObject objDownChair;
     public GameObject objDownSeat;
+    public SpriteRenderer srDownChair;
 
     public GameObject objUpChair;
     public GameObject objUpSeat;
-
+    public SpriteRenderer srUpChair;
 
     public GameObject tablePosition;
 
+    /// <summary>
+    /// 设置数据
+    /// </summary>
+    /// <param name="buildItemData"></param>
+    /// <param name="spTable"></param>
+    /// <param name="spLeftChair"></param>
+    /// <param name="spUpChair"></param>
+    /// <param name="spRightChair"></param>
+    /// <param name="spDownChair"></param>
+    public void SetData(BuildItemBean buildItemData, Sprite spTable, Sprite spLeftChair, Sprite spRightChair,Sprite spDownChair, Sprite spUpChair)
+    {
+        base.SetData(buildItemData);
+        SetTableData(spTable);
+        SetChairData(spLeftChair, spUpChair, spRightChair, spDownChair);
+    }
+
+    /// <summary>
+    /// 设置椅子数据
+    /// </summary>
+    /// <param name="spLeftChair"></param>
+    /// <param name="spUpChair"></param>
+    /// <param name="spRightChair"></param>
+    /// <param name="spDownChair"></param>
+    public void SetChairData(Sprite spLeftChair, Sprite spUpChair, Sprite spRightChair, Sprite spDownChair)
+    {
+        srLeftChair.sprite = spLeftChair;
+        srUpChair.sprite = spUpChair;
+        srRightChair.sprite = spRightChair;
+        srDownChair.sprite = spDownChair;
+    }
+
+    /// <summary>
+    /// 设置桌子数据
+    /// </summary>
+    /// <param name="spTable"></param>
+    public void SetTableData(Sprite spTable)
+    {
+        SetSprite(spTable, spTable, spTable, spTable);
+    }
 
     public override void SetDirection(Direction2DEnum direction)
     {
@@ -74,7 +116,6 @@ public class BuildTableCpt : BaseBuildItemCpt
         }
         return Vector3.zero;
     }
-
 
     /// <summary>
     /// 获取桌子

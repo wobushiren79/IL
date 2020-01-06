@@ -14,8 +14,6 @@ public class BuildStoveCpt : BaseBuildItemCpt
 
     //食物模型
     public GameObject itemFoodModel;
-
-
     public StoveStatusEnum stoveStatus = StoveStatusEnum.Idle;
 
     /// <summary>

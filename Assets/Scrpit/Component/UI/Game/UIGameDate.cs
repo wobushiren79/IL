@@ -30,17 +30,17 @@ public class UIGameDate : BaseUIComponent
     public override void OpenUI()
     {
         base.OpenUI();
-        GameTimeHandler gameTimeHandler =   GetUIMananger<UIGameManager>().gameTimeHandler;
+        GameTimeHandler gameTimeHandler = GetUIMananger<UIGameManager>().gameTimeHandler;
+        GameDataManager gameDataManager = GetUIMananger<UIGameManager>().gameDataManager;
         if (gameTimeHandler != null)
         {
             gameTimeHandler.GetTime(out int year, out int month, out int day);
+            //设置日历
             calendarView.InitData(year, month, day);
             //保存数据
-           
-            //进入下一天
-            gameTimeHandler.GoToNextDay(1);
-            gameTimeHandler.GetTime(out int newYear, out int newMonth, out int newDay);
-            SetDate(newYear, newMonth, newDay);
+
+            //下一天
+            StartCoroutine(CoroutineForNextDay());
         }
         if (GetUIMananger<UIGameManager>().controlHandler != null)
             GetUIMananger<UIGameManager>().controlHandler.StopControl();
@@ -55,30 +55,29 @@ public class UIGameDate : BaseUIComponent
     }
 
     /// <summary>
-    /// 设置数据
+    /// 协程-下一天
     /// </summary>
-    /// <param name="year"></param>
-    /// <param name="month"></param>
-    /// <param name="day"></param>
-    public void SetDate(int year, int month, int day)
-    {
-        calendarView.ChangeData(year,month,day);
-        //展示是否营业框
-        StartCoroutine(ShowDialog(3));
-    }
-
-    /// <summary>
-    /// 延迟展示确认框
-    /// </summary>
-    /// <param name="delayTime"></param>
     /// <returns></returns>
-    public IEnumerator ShowDialog(float delayTime)
+    public IEnumerator CoroutineForNextDay()
     {
-        yield return new WaitForSeconds(delayTime);
         GameTimeHandler gameTimeHandler = GetUIMananger<UIGameManager>().gameTimeHandler;
+        GameDataManager gameDataManager = GetUIMananger<UIGameManager>().gameDataManager;
+        yield return new WaitForSeconds(3);
+        //进入下一天
+        gameTimeHandler.GoToNextDay(1);
+        gameTimeHandler.GetTime(out int newYear, out int newMonth, out int newDay);
+        calendarView.ChangeData(newYear, newMonth, newDay);
+
+        //展示是否营业框
+        yield return new WaitForSeconds(3);
         // 第一天默认不营业
         gameTimeHandler.GetTime(out int year, out int month, out int day);
         if (year == 221 && day == 1 && day == 1)
+        {
+            InnRest();
+        }
+        //如果时建设中则不营业
+        else if (gameDataManager.gameData.GetInnBuildData().listBuildDay.Count > 0)
         {
             InnRest();
         }
@@ -90,11 +89,17 @@ public class UIGameDate : BaseUIComponent
         }
     }
 
+    /// <summary>
+    /// 营业
+    /// </summary>
     public void InnWork()
     {
         uiManager.OpenUIAndCloseOtherByName(EnumUtil.GetEnumName(UIEnum.GameAttendance));
     }
 
+    /// <summary>
+    /// 休息
+    /// </summary>
     public void InnRest()
     {
         GameTimeHandler gameTimeHandler = GetUIMananger<UIGameManager>().gameTimeHandler;
