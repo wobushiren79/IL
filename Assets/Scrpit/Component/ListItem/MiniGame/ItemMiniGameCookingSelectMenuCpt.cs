@@ -25,7 +25,7 @@ public class ItemMiniGameCookingSelectMenuCpt : ItemGameBaseCpt, DialogView.IDia
     public void SetData(MenuOwnBean menuOwn, MenuInfoBean menuInfo)
     {
         this.menuInfo = menuInfo;
-        infoFoodPopup.SetData(menuOwn, menuInfo,false);
+        infoFoodPopup.SetData(menuOwn, menuInfo);
         SetName(menuInfo.name);
         SetIcon(menuInfo.icon_key);
     }
@@ -53,7 +53,7 @@ public class ItemMiniGameCookingSelectMenuCpt : ItemGameBaseCpt, DialogView.IDia
         DialogManager dialogManager = GetUIManager<UIGameManager>().dialogManager;
         DialogBean dialogData = new DialogBean();
         dialogData.content = string.Format(GameCommonInfo.GetUITextById(3051), menuInfo.name);
-        dialogManager.CreateDialog(0,this, dialogData);
+        dialogManager.CreateDialog(DialogEnum.Normal,this, dialogData);
     }
 
     #region 确认选择回调

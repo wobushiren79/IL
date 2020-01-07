@@ -31,7 +31,7 @@ public class BaseMiniGameHandler<B, D> : BaseHandler, UIMiniGameCountDown.ICallB
     {
         uiGameManager = Find<UIGameManager>(ImportantTypeEnum.GameUI);
         controlHandler = Find<ControlHandler>(ImportantTypeEnum.ControlHandler);
-        miniGameBuilder = Find<B>(ImportantTypeEnum.MiniGameHandler);
+        miniGameBuilder = FindInChildren<B>(ImportantTypeEnum.MiniGameBuilder);
     }
 
     /// <summary>
@@ -41,6 +41,16 @@ public class BaseMiniGameHandler<B, D> : BaseHandler, UIMiniGameCountDown.ICallB
     public void SetMiniGameStatus(MiniGameStatusEnum status)
     {
         mMiniGameStatus = status;
+    }
+
+    /// <summary>
+    /// 设置摄像头位置
+    /// </summary>
+    /// <param name="cameraPosition"></param>
+    public void SetCameraPosition(Vector3 cameraPosition)
+    {
+        //设置摄像机位置
+        controlHandler.GetControl().SetCameraPosition(cameraPosition);
     }
 
     /// <summary>

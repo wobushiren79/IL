@@ -8,24 +8,36 @@ using System;
 public class SceneGameArenaInit : BaseSceneInit, IBaseObserver
 {
     //场景数据管理
-    public SceneArenaManager sceneArenaManager;
+    protected SceneArenaManager sceneArenaManager;
     //食物管理
-    public InnFoodManager innFoodManager;
+    protected InnFoodManager innFoodManager;
 
     //弹幕游戏控制
-    public MiniGameBarrageHandler barrageHandler;
+    protected MiniGameBarrageHandler barrageHandler;
     //战斗游戏控制
-    public MiniGameCombatHandler combatHandler;
+    protected MiniGameCombatHandler combatHandler;
     //烹饪游戏控制
-    public MiniGameCookingHandler cookingHandler;
+    protected MiniGameCookingHandler cookingHandler;
     //计算游戏处理
-    public MiniGameAccountHandler accountHandler;
+    protected MiniGameAccountHandler accountHandler;
     //辩论游戏处理
-    public MiniGameDebateHandler debateHandler;
+    protected MiniGameDebateHandler debateHandler;
 
     //地形控制
-    public NavMeshSurface navMesh;
-    
+    protected NavMeshSurface navMesh;
+
+    private void Awake()
+    {
+        sceneArenaManager = Find<SceneArenaManager>(ImportantTypeEnum.SceneManager);
+        innFoodManager = Find<InnFoodManager>(ImportantTypeEnum.FoodManager);
+        barrageHandler = Find<MiniGameBarrageHandler>(ImportantTypeEnum.MiniGameHandler);
+        combatHandler = Find<MiniGameCombatHandler>(ImportantTypeEnum.MiniGameHandler);
+        cookingHandler = Find<MiniGameCookingHandler>(ImportantTypeEnum.MiniGameHandler);
+        accountHandler = Find<MiniGameAccountHandler>(ImportantTypeEnum.MiniGameHandler);
+        debateHandler = Find<MiniGameDebateHandler>(ImportantTypeEnum.MiniGameHandler);
+        navMesh = Find<NavMeshSurface>(ImportantTypeEnum.NavMesh);
+    }
+
     private new void Start()
     {
         base.Start();
@@ -48,14 +60,13 @@ public class SceneGameArenaInit : BaseSceneInit, IBaseObserver
         if (storyInfoManager != null)
             storyInfoManager.storyInfoController.GetStoryInfoByScene(3);
 
-        //测试数据
         ArenaPrepareBean arenaPrepareData = GameCommonInfo.ArenaPrepareData;
-        arenaPrepareData = new ArenaPrepareBean();
-
-        arenaPrepareData.gameType = MiniGameEnum.Debate;
-        arenaPrepareData.gameDebateData = new MiniGameDebateBean();
-        arenaPrepareData.gameDebateData.InitData(gameItemsManager, npcInfoManager.GetCharacterDataById(100001), npcInfoManager.GetCharacterDataById(100002));
-        arenaPrepareData.gameDebateData.winLife = 1;
+        //测试数据 
+        //arenaPrepareData = new ArenaPrepareBean();
+        //arenaPrepareData.gameType = MiniGameEnum.Debate;
+        //arenaPrepareData.gameDebateData = new MiniGameDebateBean();
+        //arenaPrepareData.gameDebateData.InitData(gameItemsManager, npcInfoManager.GetCharacterDataById(100001), npcInfoManager.GetCharacterDataById(100002));
+        //arenaPrepareData.gameDebateData.winLife = 1;
 
         //arenaPrepareData.gameType = MiniGameEnum.Account;
         //arenaPrepareData.gameAccountData = new MiniGameAccountBean();
@@ -64,7 +75,7 @@ public class SceneGameArenaInit : BaseSceneInit, IBaseObserver
         //arenaPrepareData.gameAccountData.winMoneyM=1;
         //arenaPrepareData.gameAccountData.winMoneyL=0;
 
-
+        //arenaPrepareData = new ArenaPrepareBean();
         //arenaPrepareData.gameType = MiniGameEnum.Cooking;
         //arenaPrepareData.gameCookingData = new MiniGameCookingBean();
         //arenaPrepareData.gameCookingData.gameReason = MiniGameReasonEnum.Improve;
@@ -93,14 +104,15 @@ public class SceneGameArenaInit : BaseSceneInit, IBaseObserver
         //listCompereData.Add(npcInfoManager.GetCharacterDataById(110006));
         //arenaPrepareData.gameCookingData.InitData(gameItemsManager, listOurData, listEnemyData, listAuditerData, listCompereData);
 
+        //arenaPrepareData = new ArenaPrepareBean();
         //arenaPrepareData.gameType = MiniGameEnum.Barrage;
         //arenaPrepareData.gameBarrageData = new MiniGameBarrageBean();
         //arenaPrepareData.gameBarrageData.gameLevel = 1;
         //arenaPrepareData.gameBarrageData.launchInterval = 1;
-        //arenaPrepareData.gameBarrageData.launchTypes = new BarrageEjectorCpt.LaunchTypeEnum[] {
-        //    BarrageEjectorCpt.LaunchTypeEnum.Single,
-        //    BarrageEjectorCpt.LaunchTypeEnum.Double,
-        //    BarrageEjectorCpt.LaunchTypeEnum.Triple
+        //arenaPrepareData.gameBarrageData.launchTypes = new MiniGameBarrageEjectorCpt.LaunchTypeEnum[] {
+        //    MiniGameBarrageEjectorCpt.LaunchTypeEnum.Single,
+        //    MiniGameBarrageEjectorCpt.LaunchTypeEnum.Double,
+        //    MiniGameBarrageEjectorCpt.LaunchTypeEnum.Triple
         //};
         //arenaPrepareData.gameBarrageData.launchSpeed = 1;
         //arenaPrepareData.gameBarrageData.winSurvivalTime = 60;
@@ -111,7 +123,7 @@ public class SceneGameArenaInit : BaseSceneInit, IBaseObserver
         //arenaPrepareData.gameBarrageData.AddRewardItem(200001, 3);
         //arenaPrepareData.gameBarrageData.AddRewardItem(1100006, 3);
 
-
+        //arenaPrepareData = new ArenaPrepareBean();
         //arenaPrepareData.gameType = MiniGameEnum.Combat;
         //arenaPrepareData.gameCombatData = new MiniGameCombatBean();
         //arenaPrepareData.gameCombatData.winBringDownNumber = 3;
@@ -210,9 +222,7 @@ public class SceneGameArenaInit : BaseSceneInit, IBaseObserver
                 //设置游戏用灶台
                 List<MiniGameCookingStoveCpt> listStove = sceneArenaManager.GetArenaForCookingStoveBy2();
                 cookingHandler.miniGameBuilder.SetListStove(listStove);
-                //游戏开始动画
-                gameCookingData.storyGameOpenId = 100001;
-                gameCookingData.storyGameAuditId = 100002;
+                cookingHandler.miniGameBuilder.SetListStove(listStove);
                 //准备游戏
                 cookingHandler.InitGame(gameCookingData);
                 break;

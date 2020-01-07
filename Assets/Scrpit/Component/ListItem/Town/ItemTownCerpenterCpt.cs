@@ -198,7 +198,7 @@ public class ItemTownCerpenterCpt : ItemGameBaseCpt, DialogView.IDialogCallBack
         else
             dialogBean.content = string.Format(GameCommonInfo.GetUITextById(3002), buildItemData.name);
 
-        dialogManager.CreateDialog(0, this, dialogBean);
+        dialogManager.CreateDialog(DialogEnum.Normal, this, dialogBean);
     }
 
     #region 确认回调

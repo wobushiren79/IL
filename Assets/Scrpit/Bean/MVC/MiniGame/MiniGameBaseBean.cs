@@ -38,6 +38,36 @@ public class MiniGameBaseBean
     public List<MiniGameCharacterBean> listEnemyGameData = new List<MiniGameCharacterBean>();
 
     /// <summary>
+    /// 获取友方数据
+    /// </summary>
+    /// <returns></returns>
+    public List<MiniGameCharacterBean> GetUserGameData()
+    {
+        return listUserGameData;
+    }
+
+    /// <summary>
+    /// 获取敌人数据
+    /// </summary>
+    /// <returns></returns>
+    public List<MiniGameCharacterBean> GetEnemyGameData()
+    {
+        return listEnemyGameData;
+    }
+
+    /// <summary>
+    /// 获取所有玩家数据
+    /// </summary>
+    /// <returns></returns>
+    public List<MiniGameCharacterBean> GetPlayerGameData()
+    {
+        List<MiniGameCharacterBean> listData = new List<MiniGameCharacterBean>();
+        listData.AddRange(listUserGameData);
+        listData.AddRange(listEnemyGameData);
+        return listData;
+    }
+
+    /// <summary>
     /// 获取胜利条件列表
     /// </summary>
     /// <returns></returns>

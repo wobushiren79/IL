@@ -170,7 +170,7 @@ public class ItemGameBackpackCpt : ItemGameBaseCpt, IPointerClickHandler, PopupI
         {
             content = string.Format(GameCommonInfo.GetUITextById(3001), itemsInfoBean.name)
         };
-        dialogManager.CreateDialog(0, this, dialogBean);
+        dialogManager.CreateDialog(DialogEnum.Normal, this, dialogBean);
     }
 
     public virtual void SelectionEquip(PopupItemsSelection view)

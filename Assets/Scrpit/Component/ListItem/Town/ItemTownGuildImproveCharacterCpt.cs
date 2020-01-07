@@ -2,6 +2,7 @@
 using UnityEditor;
 using UnityEngine.UI;
 using System;
+using System.Collections.Generic;
 
 public class ItemTownGuildImproveCharacterCpt : ItemGameBaseCpt, DialogView.IDialogCallBack
 {
@@ -256,14 +257,13 @@ public class ItemTownGuildImproveCharacterCpt : ItemGameBaseCpt, DialogView.IDia
         DialogBean dialogData = new DialogBean();
         string contentStr = string.Format(GameCommonInfo.GetUITextById(3008), tvTime.text, tvName.text, tvLowLevelName.text, tvHighLevelName.text);
         dialogData.content = contentStr;
-        dialogManager.CreateDialog(0, this, dialogData);
+        dialogManager.CreateDialog(DialogEnum.Normal, this, dialogData);
     }
 
     #region 弹窗回调
     public void Submit(DialogView dialogView, DialogBean dialogBean)
     {
         GameDataManager gameDataManager = GetUIManager<UIGameManager>().gameDataManager;
-        GameItemsManager gameItemsManager = GetUIManager<UIGameManager>().gameItemsManager;
         ControlHandler controlHandler = GetUIManager<UIGameManager>().controlHandler;
         //支付金钱
         gameDataManager.gameData.PayMoney(levelData.price_l, levelData.price_m, levelData.price_s);
@@ -276,21 +276,12 @@ public class ItemTownGuildImproveCharacterCpt : ItemGameBaseCpt, DialogView.IDia
         {
             case WorkerEnum.Chef:
                 gameType = MiniGameEnum.Cooking;
+                InitChefGame();
                 break;
             case WorkerEnum.Waiter:
                 //设置弹幕游戏数据
                 gameType = MiniGameEnum.Barrage;
-                GameCommonInfo.ArenaPrepareData.gameBarrageData = new MiniGameBarrageBean
-                {
-                    gameReason = MiniGameReasonEnum.Improve,
-                    gameLevel = levelData.mark_type,
-                    winLife = levelData.minigame_win_life,
-                    winSurvivalTime = levelData.minigame_win_survivaltime,
-                    launchInterval = levelData.barrage_launch_interval,
-                    launchSpeed = levelData.barrage_launch_speed,
-                    launchTypes = StringUtil.SplitBySubstringForArrayEnum<MiniGameBarrageEjectorCpt.LaunchTypeEnum>(levelData.barrage_launch_types, ',')
-                };
-                GameCommonInfo.ArenaPrepareData.gameBarrageData.InitData(gameItemsManager, characterData);
+                InitWaiterGame();
                 break;
             case WorkerEnum.Accounting:
                 gameType = MiniGameEnum.Barrage;
@@ -310,6 +301,66 @@ public class ItemTownGuildImproveCharacterCpt : ItemGameBaseCpt, DialogView.IDia
         GameCommonInfo.ScenesChangeData.beforeUserPosition = controlHandler.GetControl(ControlHandler.ControlEnum.Normal).transform.position;
         //跳转到竞技场
         SceneUtil.SceneChange(ScenesEnum.GameArenaScene);
+    }
+
+    /// <summary>
+    /// 初始化厨师游戏
+    /// </summary>
+    private void InitChefGame()
+    {
+        GameItemsManager gameItemsManager = GetUIManager<UIGameManager>().gameItemsManager;
+        CharacterBodyManager characterBodyManager = GetUIManager<UIGameManager>().characterBodyManager;
+        NpcInfoManager npcInfoManager = GetUIManager<UIGameManager>().npcInfoManager;
+        GameCommonInfo.ArenaPrepareData.gameCookingData = new MiniGameCookingBean
+        {
+            gameReason = MiniGameReasonEnum.Improve,
+            winScore = 60,
+            //游戏开始动画
+            storyGameOpenId = 30000001,
+            //游戏审核动画
+            storyGameAuditId = 30000002,
+        };
+        //随机生成敌人
+        List<CharacterBean> listEnemyData = new List<CharacterBean>();
+        for (int i = 0; i < UnityEngine.Random.Range(1, 16); i++)
+        {
+            CharacterBean randomEnemy = CharacterBean.CreateRandomWorkerData(characterBodyManager);
+            listEnemyData.Add(randomEnemy);
+        }
+        //主持由东方姑娘主持
+        List<CharacterBean> listCompereData = new List<CharacterBean>();
+        CharacterBean compereData = npcInfoManager.GetCharacterDataById(110005);
+        listCompereData.Add(compereData);
+        //评审人员
+        List<long> listAuditerIds = new List<long>() { 100011, 100021, 100031, 100041, 100051, 100061, 100071, 100081, 100091 };
+        List<CharacterBean> listAuditerData = new List<CharacterBean>();
+        listAuditerIds = RandomUtil.GetRandomDataByListForNumberNR(listAuditerIds, 5);
+        foreach (long itemId in listAuditerIds)
+        {
+            CharacterBean auditerData = npcInfoManager.GetCharacterDataById(itemId);
+            listAuditerData.Add(auditerData);
+        }
+
+        GameCommonInfo.ArenaPrepareData.gameCookingData.InitData(gameItemsManager, characterData, listEnemyData, listAuditerData, listCompereData);
+    }
+
+    /// <summary>
+    /// 初始化跑堂游戏
+    /// </summary>
+    private void InitWaiterGame()
+    {
+        GameItemsManager gameItemsManager = GetUIManager<UIGameManager>().gameItemsManager;
+        GameCommonInfo.ArenaPrepareData.gameBarrageData = new MiniGameBarrageBean
+        {
+            gameReason = MiniGameReasonEnum.Improve,
+            gameLevel = levelData.mark_type,
+            winLife = levelData.minigame_win_life,
+            winSurvivalTime = levelData.minigame_win_survivaltime,
+            launchInterval = levelData.barrage_launch_interval,
+            launchSpeed = levelData.barrage_launch_speed,
+            launchTypes = StringUtil.SplitBySubstringForArrayEnum<MiniGameBarrageEjectorCpt.LaunchTypeEnum>(levelData.barrage_launch_types, ',')
+        };
+        GameCommonInfo.ArenaPrepareData.gameBarrageData.InitData(gameItemsManager, characterData);
     }
 
     public void Cancel(DialogView dialogView, DialogBean dialogBean)

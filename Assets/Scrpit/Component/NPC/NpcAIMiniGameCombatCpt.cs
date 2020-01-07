@@ -237,7 +237,7 @@ public class NpcAIMiniGameCombatCpt : BaseNpcAI
             gameCombatHandler.SetRoundTargetCharacter(targetNpc);
             gameCombatHandler.SelectedCharacter(targetNpc);
             gameCombatHandler.StartFight(1, 1);
-            gameCombatHandler.SetCameraPosition();
+            gameCombatHandler.InitCameraPosition();
         }
     }
 
@@ -248,7 +248,7 @@ public class NpcAIMiniGameCombatCpt : BaseNpcAI
     {
         yield return new WaitForSeconds(2);
         gameCombatHandler.CommandDefend(0);
-        gameCombatHandler.SetCameraPosition();
+        gameCombatHandler.InitCameraPosition();
     }
     /// <summary>
     /// 意图-攻击

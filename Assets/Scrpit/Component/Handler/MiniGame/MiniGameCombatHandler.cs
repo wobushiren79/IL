@@ -45,7 +45,7 @@ public class MiniGameCombatHandler : BaseMiniGameHandler<MiniGameCombatBuilder, 
         //创建NPC
         miniGameBuilder.CreateAllCharacter(gameCombatData.combatPosition, gameCombatData.listUserGameData, gameCombatData.listEnemyGameData);
         //设置摄像机位置
-        SetCameraPosition();
+        InitCameraPosition();
         //打开倒计时UI
         OpenCountDownUI(gameCombatData);
     }
@@ -70,15 +70,10 @@ public class MiniGameCombatHandler : BaseMiniGameHandler<MiniGameCombatBuilder, 
     /// <summary>
     /// 设置摄像机位置
     /// </summary>
-    public void SetCameraPosition()
+    public void InitCameraPosition()
     {
-        SetCameraPosition(miniGameData.combatPosition);
-    }
-    public void SetCameraPosition(Vector3 cameraPosition)
-    {
-        //设置摄像机位置
         controlHandler.StartControl(ControlHandler.ControlEnum.MiniGameCombat);
-        controlHandler.GetControl().SetCameraPosition(cameraPosition);
+        SetCameraPosition(miniGameData.combatPosition);
     }
 
     /// <summary>

@@ -12,7 +12,7 @@ public class NpcAIMiniGameBarrageCpt : BaseNpcAI, SightForMiniGameBarrageCpt.ICa
     }
 
     //弹幕游戏处理
-    public MiniGameBarrageHandler gameBarrageHandler;
+    protected MiniGameBarrageHandler gameBarrageHandler;
     //迷你游戏数据
     public MiniGameCharacterBean characterMiniGameData;
     //寻路AI
@@ -21,6 +21,11 @@ public class NpcAIMiniGameBarrageCpt : BaseNpcAI, SightForMiniGameBarrageCpt.ICa
     public ParticleSystem psBlood;
     //视野
     public SightForMiniGameBarrageCpt sightForMiniGameBarrage;
+
+    private void Awake()
+    {
+        gameBarrageHandler = Find<MiniGameBarrageHandler>( ImportantTypeEnum.MiniGameHandler);
+    }
 
     /// <summary>
     /// 设置NPC数据

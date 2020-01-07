@@ -52,7 +52,11 @@ public class BaseMonoBehaviour : MonoBehaviour {
     /// <returns></returns>
     public T Find<T>(ImportantTypeEnum importantType)
     {
-        GameObject objFind = GameObject.Find(EnumUtil.GetEnumName(importantType));
+       return Find<T>(EnumUtil.GetEnumName(importantType)); 
+    }
+    public T Find<T>(string name)
+    {
+        GameObject objFind = GameObject.Find(name);
         if (objFind == null)
         {
             return default;
@@ -60,6 +64,22 @@ public class BaseMonoBehaviour : MonoBehaviour {
         else
         {
             return objFind.GetComponent<T>();
+        }
+    }
+    public T FindInChildren<T>(ImportantTypeEnum importantType)
+    {
+        return FindInChildren<T>(EnumUtil.GetEnumName(importantType));
+    }
+    public T FindInChildren<T>(string name)
+    {
+        GameObject objFind = GameObject.Find(name);
+        if (objFind == null)
+        {
+            return default;
+        }
+        else
+        {
+            return objFind.GetComponentInChildren<T>();
         }
     }
 }

@@ -37,7 +37,7 @@ public class NpcAIMiniGameCookingCpt : BaseNpcAI
     public Vector3 startPosition;
 
     //游戏处理
-    public MiniGameCookingHandler miniGameCookingHandler;
+    protected MiniGameCookingHandler miniGameCookingHandler;
     //该NPC的数据
     public MiniGameCharacterForCookingBean characterMiniGameData;
     //该NPC的评审桌
@@ -50,6 +50,11 @@ public class NpcAIMiniGameCookingCpt : BaseNpcAI
     public GameObject objFoodPosition;
     //被评审的对象
     public NpcAIMiniGameCookingCpt auditTargetNpc;
+
+    private void Awake()
+    {
+        miniGameCookingHandler = Find<MiniGameCookingHandler>(ImportantTypeEnum.MiniGameHandler);
+    }
 
     private void Update()
     {

@@ -12,7 +12,7 @@ public class SceneLoadingInit : MonoBehaviour
     void Start()
     {
         //启动协程
-        StartCoroutine(AsyncLoading());
+       StartCoroutine(CoroutineForAsyncLoading());
        // StartCoroutine(prepareTime());
     }
 
@@ -37,7 +37,7 @@ public class SceneLoadingInit : MonoBehaviour
     /// 异步加载场景
     /// </summary>
     /// <returns></returns>
-    IEnumerator AsyncLoading()
+    IEnumerator CoroutineForAsyncLoading()
     {
         mOperation = SceneManager.LoadSceneAsync(EnumUtil.GetEnumName(GameCommonInfo.ScenesChangeData.loadingScene));
         //阻止当加载完成自动切换

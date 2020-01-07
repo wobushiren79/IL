@@ -6,6 +6,7 @@ using System.Collections.Generic;
 
 public class MiniGameBarrageHandler : BaseMiniGameHandler<MiniGameBarrageBuilder, MiniGameBarrageBean>, UIMiniGameCountDown.ICallBack, UIMiniGameEnd.ICallBack
 {
+
     /// <summary>
     /// 初始化游戏
     /// </summary>

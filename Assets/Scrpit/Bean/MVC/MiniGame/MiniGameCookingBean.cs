@@ -32,12 +32,12 @@ public class MiniGameCookingBean : MiniGameBaseBean
     }
 
     public void InitData(GameItemsManager gameItemsManager, 
-        List<CharacterBean> listUserData, 
+        CharacterBean userData, 
         List<CharacterBean> listEnemyData,
         List<CharacterBean> listAuditerData,
         List<CharacterBean> listCompereData)
     {
-        base.InitData(gameItemsManager, listUserData, listEnemyData);
+        base.InitData(gameItemsManager, new List<CharacterBean>() { userData }, listEnemyData);
 
         //创建评审角色数据
         if (!CheckUtil.ListIsNull(listAuditerData))

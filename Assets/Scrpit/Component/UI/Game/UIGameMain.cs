@@ -201,7 +201,7 @@ public class UIGameMain : BaseUIComponent, DialogView.IDialogCallBack
         DialogBean dialogBean = new DialogBean();
         dialogBean.content = GameCommonInfo.GetUITextById(3004);
         dialogBean.dialogPosition = 0;
-        GetUIMananger<UIGameManager>().dialogManager.CreateDialog(0, this, dialogBean);
+        GetUIMananger<UIGameManager>().dialogManager.CreateDialog(DialogEnum.Normal, this, dialogBean);
     }
 
     #region dialog 回调

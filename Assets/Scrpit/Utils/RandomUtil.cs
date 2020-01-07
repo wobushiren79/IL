@@ -10,10 +10,10 @@ public class RandomUtil
     /// </summary>
     /// <typeparam name="T"></typeparam>
     /// <returns></returns>
-    public static T GetRandomEnum<T>()  
+    public static T GetRandomEnum<T>()
     {
-         T[] enumList=  System.Enum.GetValues(typeof(T)) as T[];
-         return enumList[Random.Range(0, enumList.Length)];
+        T[] enumList = System.Enum.GetValues(typeof(T)) as T[];
+        return enumList[Random.Range(0, enumList.Length)];
     }
 
     /// <summary>
@@ -28,6 +28,35 @@ public class RandomUtil
             return default(T);
         int position = Random.Range(0, list.Count);
         return list[position];
+    }
+
+    /// <summary>
+    /// 获取list 中指定数量的集合 不重复
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
+    /// <param name="list"></param>
+    /// <param name="number"></param>
+    /// <returns></returns>
+    public static List<T> GetRandomDataByListForNumberNR<T>(List<T> list, int number)
+    {
+        List<T> listData = new List<T>();
+        if (CheckUtil.ListIsNull(list)||number > list.Count)
+            return listData;
+        List<int> tempList = new List<int>();
+        for(int i = 0; i < number; i++)
+        {
+            int position = Random.Range(0, list.Count);
+            if (!tempList.Contains(position))
+            {
+                listData.Add(list[position]);
+                tempList.Add(position);
+            }
+            else
+            {
+                i--;
+            }
+        }
+        return listData;
     }
 
     /// <summary>

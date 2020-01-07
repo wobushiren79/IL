@@ -24,11 +24,7 @@ public enum ImportantTypeEnum
     StoryBuilder,
     NpcBuilder,
     InnBuilder,
-    MiniGameCombatBuilder,
-    MiniGameCookingBuilder,
-    MiniGameBarrageBuilder,
-    MiniGameAccountBuilder,
-    MiniGameDebateBuilder,
+    MiniGameBuilder,
 
     EventHandler,
     TimeHandler,

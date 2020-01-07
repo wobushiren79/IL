@@ -31,7 +31,7 @@ public class StoryCreateWindowsEditor : EditorWindow
     {
         mObjContent = GameObject.Find("StoryBuilder");
         mObjNpcModel = mObjContent.transform.Find("CharacterForStory").gameObject;
-        mObjCarmera = GameObject.Find("CM vcam1");
+        mObjCarmera = GameObject.Find("Camera2D");
         mCamera2D = mObjCarmera.GetComponent<CinemachineVirtualCamera>();
         //查询所有NPC数据
         listAllStoryInfoDetails = null;

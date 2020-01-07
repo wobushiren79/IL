@@ -33,6 +33,9 @@ public class MiniGameCookingHandler : BaseMiniGameHandler<MiniGameCookingBuilder
             miniGameData.listEnemyGameData, miniGameData.listEnemyStartPosition,
             miniGameData.listAuditerGameData, miniGameData.listAuditerStartPosition,
             miniGameData.listCompereGameData, miniGameData.listCompereStartPosition);
+
+        //初始化摄像头位置
+        InitCameraPosition();
         //设置通告板内容
         List<MiniGameCookingCallBoardCpt> listCallBoard = miniGameBuilder.GetListCallBoard();
         foreach (MiniGameCookingCallBoardCpt itemCpt in listCallBoard)
@@ -64,6 +67,17 @@ public class MiniGameCookingHandler : BaseMiniGameHandler<MiniGameCookingBuilder
         //打开倒计时UI
         OpenCountDownUI(miniGameData, false);
     }
+
+    /// <summary>
+    /// 设置摄像机位置
+    /// </summary>
+    public void InitCameraPosition()
+    {
+        BaseControl baseControl= controlHandler.StartControl(ControlHandler.ControlEnum.MiniGameCooking);
+        baseControl.SetCameraFollowObj(baseControl.gameObject);
+        SetCameraPosition(miniGameData.userStartPosition);
+    }
+
 
     /// <summary>
     /// 开始游戏
@@ -361,7 +375,37 @@ public class MiniGameCookingHandler : BaseMiniGameHandler<MiniGameCookingBuilder
             BaseControl baseControl = controlHandler.StartControl(ControlHandler.ControlEnum.MiniGameCooking);
             baseControl.SetCameraFollowObj(miniGameBuilder.GetUserCharacter().gameObject);
         }
-        EndGame(true, false);
+        //如果是晋升则按照分数计算是否胜利
+        if(miniGameData.gameReason== MiniGameReasonEnum.Improve)
+        {
+            List<MiniGameCharacterBean> listCharacterGameData = miniGameData.GetUserGameData();
+            MiniGameCharacterForCookingBean characterMiniGameData = (MiniGameCharacterForCookingBean)listCharacterGameData[0];
+            if (characterMiniGameData.scoreForTotal >= miniGameData.winScore)
+            {
+                EndGame(true, false);
+            }
+            else
+            {
+                EndGame(false, false);
+            }
+        }
+        //如果是其他 则按名次
+        else
+        {
+            List<MiniGameCharacterBean> listCharacterGameData = miniGameData.GetPlayerGameData();
+            //按分数排名
+            listCharacterGameData = listCharacterGameData.OrderByDescending(item => ((MiniGameCharacterForCookingBean)item).scoreForTotal).ToList();
+            MiniGameCharacterForCookingBean firstCharacterData =(MiniGameCharacterForCookingBean) listCharacterGameData[0];
+            if (firstCharacterData.characterType==1)
+            {
+                EndGame(true, false);
+            }
+            else
+            {
+                EndGame(false, false);
+            }
+        }
+      
     }
     #endregion
 }

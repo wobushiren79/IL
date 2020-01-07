@@ -241,7 +241,7 @@ public class ItemTownStoreForGoodsCpt : ItemGameBaseCpt, DialogView.IDialogCallB
         }
         DialogBean dialogBean = new DialogBean();
         dialogBean.content = string.Format(GameCommonInfo.GetUITextById(3002), itemsInfo.name);
-        dialogManager.CreateDialog(0, this, dialogBean);
+        dialogManager.CreateDialog(DialogEnum.Normal, this, dialogBean);
     }
 
     #region 提交回调

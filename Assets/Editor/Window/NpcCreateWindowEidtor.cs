@@ -34,7 +34,7 @@ public class NpcCreateWindowEidtor : EditorWindow
 
     private void OnEnable()
     {
-        mCamera2D = GameObject.Find("CM vcam1").GetComponent<CinemachineVirtualCamera>();
+        mCamera2D = GameObject.Find("Camera2D").GetComponent<CinemachineVirtualCamera>();
         gameItemsManager = new GameItemsManager();
         npcInfoManager = new NpcInfoManager();
         npcInfoService = new NpcInfoService();
