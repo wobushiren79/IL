@@ -3,21 +3,14 @@ using UnityEditor;
 using System.Collections.Generic;
 using DG.Tweening;
 
-public class UITownGuildStore : UIBaseOne, IStoreInfoView, IRadioGroupCallBack
+public class UITownGuildStore : UIBaseOne, StoreInfoManager.ICallBack, IRadioGroupCallBack
 {
     public GameObject objGuidStoreContent;
     public GameObject objGuidStoreModel;
 
     public RadioGroupView rgGuildStoreType;
-
-    private StoreInfoController mStoreInfoController;
+    
     private List<StoreInfoBean> mGuidStoreListData;
-
-    private void Awake()
-    {
-        mStoreInfoController = new StoreInfoController(this, this);
-        mStoreInfoController.GetGuildStoreInfo();
-    }
 
     public new void Start()
     {
@@ -30,7 +23,10 @@ public class UITownGuildStore : UIBaseOne, IStoreInfoView, IRadioGroupCallBack
     {
         base.OpenUI();
         rgGuildStoreType.SetPosition(0, false);
-        InitDataByType(0);
+
+        StoreInfoManager storeInfoManager = GetUIMananger<UIGameManager>().storeInfoManager;
+        storeInfoManager.SetCallBack(this);
+        storeInfoManager.GetStoreInfoForGuildGoods();
     }
 
     public void InitDataByType(int type)
@@ -96,20 +92,10 @@ public class UITownGuildStore : UIBaseOne, IStoreInfoView, IRadioGroupCallBack
 
 
     #region 商店数据回调
-    public void GetAllStoreInfoSuccess(List<StoreInfoBean> listData)
-    {
-    }
-
-    public void GetAllStoreInfoFail()
-    {
-    }
-    public void GetStoreInfoByTypeSuccess(StoreTypeEnum type, List<StoreInfoBean> listData)
+    public void GetStoreInfoSuccess(StoreTypeEnum type, List<StoreInfoBean> listData)
     {
         mGuidStoreListData = listData;
-    }
-
-    public void GetStoreInfoByTypeFail(StoreTypeEnum type)
-    {
+        InitDataByType(0);
     }
     #endregion
 
@@ -121,8 +107,7 @@ public class UITownGuildStore : UIBaseOne, IStoreInfoView, IRadioGroupCallBack
 
     public void RadioButtonUnSelected(RadioGroupView rgView, int position, RadioButtonView view)
     {
+
     }
-
-
     #endregion
 }

@@ -6,9 +6,58 @@ using System.Collections.Generic;
 [Serializable]
 public class InnAttributesBean
 {
+    public string innName;//客栈名称
+    public int innLevel;//客栈等级 （天地人1-5星  3 2 1）
+
     public long aesthetics;//客栈美观数
     public float praise;//好评率
     public long richness;//菜品丰富度
+
+    /// <summary>
+    /// 获取客栈等级
+    /// </summary>
+    /// <param name="levelTitle"></param>
+    /// <param name="levelStar"></param>
+    /// <returns></returns>
+    public string GetInnLevel(out int levelTitle, out int levelStar)
+    {
+        levelStar = (innLevel % 10);
+        levelTitle = (innLevel % 100) / 10;
+        string levelTitleStr = "";
+        string levelStarStr = "";
+        switch (levelTitle)
+        {
+            case 1:
+                levelTitleStr = GameCommonInfo.GetUITextById(2007);
+                break;
+            case 2:
+                levelTitleStr = GameCommonInfo.GetUITextById(2008);
+                break;
+            case 3:
+                levelTitleStr = GameCommonInfo.GetUITextById(2009);
+                break;
+        }
+
+        switch (levelStar)
+        {
+            case 1:
+                levelStarStr = GameCommonInfo.GetUITextById(2010);
+                break;
+            case 2:
+                levelStarStr = GameCommonInfo.GetUITextById(2011);
+                break;
+            case 3:
+                levelStarStr = GameCommonInfo.GetUITextById(2012);
+                break;
+            case 4:
+                levelStarStr = GameCommonInfo.GetUITextById(2013);
+                break;
+            case 5:
+                levelStarStr = GameCommonInfo.GetUITextById(2014);
+                break;
+        }
+        return levelTitleStr + levelStarStr;
+    }
 
     /// <summary>
     /// 刷新菜品数据
@@ -102,7 +151,7 @@ public class InnAttributesBean
         float rateRichness = (richness * 0.01f);
         if (rateRichness > 1)
             rateRichness = 1;
-        rate = 0.32f * rateRichness + 0.32f* ratePraise + 0.32f* rateAesthetics + 0.04f;
+        rate = 0.32f * rateRichness + 0.32f * ratePraise + 0.32f * rateAesthetics + 0.04f;
         return rate;
     }
 }

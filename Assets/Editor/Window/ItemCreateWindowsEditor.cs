@@ -2,11 +2,12 @@
 using UnityEditor;
 using System.Collections.Generic;
 
-public class ItemCreateWindowsEditor : EditorWindow
+public class ItemCreateWindowsEditor : EditorWindow, StoreInfoManager.ICallBack
 {
     GameItemsManager gameItemsManager;
+    StoreInfoManager storeInfoManager;
     ItemsInfoService itemsInfoService;
-
+    StoreInfoService storeInfoService;
     [MenuItem("Tools/Window/ItemCreate")]
     static void CreateWindows()
     {
@@ -22,8 +23,12 @@ public class ItemCreateWindowsEditor : EditorWindow
     {
         gameItemsManager = new GameItemsManager();
         gameItemsManager.Awake();
+        storeInfoManager = new StoreInfoManager();
+        storeInfoManager.Awake();
+        storeInfoManager.SetCallBack(this);
         gameItemsManager.itemsInfoController.GetAllItemsInfo();
         itemsInfoService = new ItemsInfoService();
+        storeInfoService = new StoreInfoService();
     }
 
     public void RefreshData()
@@ -37,9 +42,13 @@ public class ItemCreateWindowsEditor : EditorWindow
     public ItemsInfoBean createItemsInfo = new ItemsInfoBean();
     public Sprite spriteCreateIcon;
     public GeneralEnum createItemType;
+
+    public StoreInfoBean createStoreInfoBean = new StoreInfoBean();
+    public StoreTypeEnum createStoreItemType;
     long inputId = 0;
 
     public List<ItemsInfoBean> listFindItem = new List<ItemsInfoBean>();
+    public List<StoreInfoBean> listFindStoreItem = new List<StoreInfoBean>();
     private void OnGUI()
     {
         //滚动布局
@@ -49,12 +58,133 @@ public class ItemCreateWindowsEditor : EditorWindow
         {
             RefreshData();
         }
+
         GUICreateItem();
         GUILayout.Label("------------------------------------------------------------------------------------------------");
         GUIFindItem();
-
+        GUILayout.Label("------------------------------------------------------------------------------------------------");
+        GUICreateStoreItem();
+        GUILayout.Label("------------------------------------------------------------------------------------------------");
+        GUIFindStoreItem();
         GUILayout.EndVertical();
         GUILayout.EndScrollView();
+    }
+
+    /// <summary>
+    /// 创建商品UI
+    /// </summary>
+    private void GUICreateStoreItem()
+    {
+        GUILayout.Label("创建商品");
+        GUIStoreItem(createStoreInfoBean,true);
+    }
+
+    private string findStoreIds = "";
+    /// <summary>
+    /// 查询商品UI
+    /// </summary>
+    private void GUIFindStoreItem()
+    {
+        GUILayout.Label("查询物品");
+        GUILayout.BeginHorizontal();
+        GUILayout.Label("商品ID：", GUILayout.Width(50), GUILayout.Height(20));
+        findStoreIds = EditorGUILayout.TextArea(findStoreIds + "", GUILayout.Width(100), GUILayout.Height(20));
+        if (GUILayout.Button("查询", GUILayout.Width(100), GUILayout.Height(20)))
+        {
+
+        }
+        if (GUILayout.Button("查询公会商品", GUILayout.Width(100), GUILayout.Height(20)))
+        {
+            storeInfoManager.GetStoreInfoForGuildGoods();
+        }
+        if (GUILayout.Button("查询职业升级", GUILayout.Width(100), GUILayout.Height(20)))
+        {
+            storeInfoManager.GetStoreInfoForGuildImprove();
+        }
+        if (GUILayout.Button("查询客栈升级", GUILayout.Width(100), GUILayout.Height(20)))
+        {
+            storeInfoManager.GetStoreInfoForGuildInnLevel();
+        }
+        GUILayout.EndHorizontal();
+        if (listFindStoreItem == null)
+            return;
+        foreach (StoreInfoBean itemStoreInfo in listFindStoreItem)
+        {
+            GUIStoreItem(itemStoreInfo,false);
+        }
+    }
+
+    /// <summary>
+    /// 商品UI
+    /// </summary>
+    /// <param name="storeInfo"></param>
+    private void GUIStoreItem(StoreInfoBean storeInfo, bool isCreate)
+    {
+        EditorGUILayout.BeginHorizontal();
+        if (isCreate)
+        {
+            if (GUILayout.Button("创建", GUILayout.Width(100), GUILayout.Height(20)))
+            {
+                storeInfoService.InsertData(storeInfo);
+            }
+        }
+        else
+        {
+            if (GUILayout.Button("删除", GUILayout.Width(100), GUILayout.Height(20)))
+            {
+                storeInfoService.DeleteDataById(storeInfo.id);
+                listFindStoreItem.Remove(storeInfo);
+            }
+            if (GUILayout.Button("更新", GUILayout.Width(100), GUILayout.Height(20)))
+            {
+                storeInfoService.Update(storeInfo);
+            }
+        }
+
+        GUILayout.Label("商品ID：", GUILayout.Width(50), GUILayout.Height(20));
+        storeInfo.id = long.Parse(EditorGUILayout.TextArea(storeInfo.id + "", GUILayout.Width(100), GUILayout.Height(20)));
+        storeInfo.store_id = storeInfo.id;
+        storeInfo.type = (int)(StoreTypeEnum)EditorGUILayout.EnumPopup("商品类型", (StoreTypeEnum)storeInfo.type, GUILayout.Width(300), GUILayout.Height(20));
+        switch ((StoreTypeEnum)storeInfo.type)
+        {
+            case StoreTypeEnum.Improve:
+                GUIStoreItemForImprove(storeInfo);
+                break;
+            case StoreTypeEnum.InnLevel:
+                GUIStoreItemForInnLevel(storeInfo);
+                break;
+        }
+
+        if (!isCreate)
+        {
+            if (GUILayout.Button("更新", GUILayout.Width(100), GUILayout.Height(20)))
+            {
+                storeInfoService.Update(storeInfo);
+            }
+        }
+
+        EditorGUILayout.EndHorizontal();
+        EditorGUILayout.Space(20);
+    }
+
+    private void GUIStoreItemForImprove(StoreInfoBean storeInfo)
+    {
+        GUILayout.Label("考试等级：", GUILayout.Width(100), GUILayout.Height(20));
+        storeInfo.mark_type = int.Parse(EditorGUILayout.TextArea(storeInfo.mark_type + "", GUILayout.Width(100), GUILayout.Height(20)));
+        GUILayout.Label("价格LMS：", GUILayout.Width(50), GUILayout.Height(20));
+        storeInfo.price_l = long.Parse(EditorGUILayout.TextArea(storeInfo.price_l + "", GUILayout.Width(100), GUILayout.Height(20)));
+        storeInfo.price_m = long.Parse(EditorGUILayout.TextArea(storeInfo.price_m + "", GUILayout.Width(100), GUILayout.Height(20)));
+        storeInfo.price_s = long.Parse(EditorGUILayout.TextArea(storeInfo.price_s + "", GUILayout.Width(100), GUILayout.Height(20)));
+    }
+
+    private void GUIStoreItemForInnLevel(StoreInfoBean storeInfo)
+    {
+        GUILayout.Label("客栈等级：", GUILayout.Width(100), GUILayout.Height(20));
+        storeInfo.mark_type = int.Parse(EditorGUILayout.TextArea(storeInfo.mark_type + "", GUILayout.Width(100), GUILayout.Height(20)));
+        GUILayout.Label("升级所需价格LMS：", GUILayout.Width(100), GUILayout.Height(20));
+        storeInfo.price_l = long.Parse(EditorGUILayout.TextArea(storeInfo.price_l + "", GUILayout.Width(100), GUILayout.Height(20)));
+        storeInfo.price_m = long.Parse(EditorGUILayout.TextArea(storeInfo.price_m + "", GUILayout.Width(100), GUILayout.Height(20)));
+        storeInfo.price_s = long.Parse(EditorGUILayout.TextArea(storeInfo.price_s + "", GUILayout.Width(100), GUILayout.Height(20)));
     }
 
     /// <summary>
@@ -266,5 +396,10 @@ public class ItemCreateWindowsEditor : EditorWindow
         }
     }
 
-
+    #region 商店数据回调
+    public void GetStoreInfoSuccess(StoreTypeEnum type, List<StoreInfoBean> listData)
+    {
+        listFindStoreItem = listData;
+    }
+    #endregion
 }

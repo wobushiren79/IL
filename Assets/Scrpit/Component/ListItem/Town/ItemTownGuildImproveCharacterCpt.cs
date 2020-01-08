@@ -105,7 +105,7 @@ public class ItemTownGuildImproveCharacterCpt : ItemGameBaseCpt, DialogView.IDia
             case WorkerEnum.Waiter:
                 spWorker = spWorkerWaiter;
                 break;
-            case WorkerEnum.Accounting:
+            case WorkerEnum.Accountant:
                 spWorker = spWorkerAccounting;
                 break;
             case WorkerEnum.Accost:
@@ -283,14 +283,17 @@ public class ItemTownGuildImproveCharacterCpt : ItemGameBaseCpt, DialogView.IDia
                 gameType = MiniGameEnum.Barrage;
                 InitWaiterGame();
                 break;
-            case WorkerEnum.Accounting:
-                gameType = MiniGameEnum.Barrage;
+            case WorkerEnum.Accountant:
+                gameType = MiniGameEnum.Account;
+                InitAccountantGame();
                 break;
             case WorkerEnum.Accost:
-                gameType = MiniGameEnum.Barrage;
+                gameType = MiniGameEnum.Debate;
+                InitAccostGame();
                 break;
             case WorkerEnum.Beater:
-                gameType = MiniGameEnum.Barrage;
+                gameType = MiniGameEnum.Combat;
+                InitBeaterGame();
                 break;
             default:
                 gameType = MiniGameEnum.Barrage;
@@ -304,7 +307,54 @@ public class ItemTownGuildImproveCharacterCpt : ItemGameBaseCpt, DialogView.IDia
     }
 
     /// <summary>
-    /// 初始化厨师游戏
+    /// 初始化打手考试
+    /// </summary>
+    private void InitBeaterGame()
+    {
+        GameItemsManager gameItemsManager = GetUIManager<UIGameManager>().gameItemsManager;
+        NpcInfoManager npcInfoManager = GetUIManager<UIGameManager>().npcInfoManager;
+        GameCommonInfo.ArenaPrepareData.gameCombatData = new MiniGameCombatBean
+        {
+            winBringDownNumber = 1,
+            winSurvivalNumber=1,
+        };
+        CharacterBean enemyData = npcInfoManager.GetCharacterDataById(110111);
+        GameCommonInfo.ArenaPrepareData.gameCombatData.InitData(gameItemsManager, characterData, enemyData);
+    }
+
+    /// <summary>
+    /// 初始化吆喝考试
+    /// </summary>
+    private void InitAccostGame()
+    {
+        GameItemsManager gameItemsManager = GetUIManager<UIGameManager>().gameItemsManager;
+        NpcInfoManager npcInfoManager = GetUIManager<UIGameManager>().npcInfoManager;
+        GameCommonInfo.ArenaPrepareData.gameDebateData = new MiniGameDebateBean
+        {
+            winLife = 1
+        };
+        CharacterBean enemyData= npcInfoManager.GetCharacterDataById(110111);
+        GameCommonInfo.ArenaPrepareData.gameDebateData.InitData(gameItemsManager, characterData, enemyData);
+    }
+
+    /// <summary>
+    /// 初始化计算考试
+    /// </summary>
+    private void InitAccountantGame()
+    {
+        GameItemsManager gameItemsManager = GetUIManager<UIGameManager>().gameItemsManager;
+        NpcInfoManager npcInfoManager = GetUIManager<UIGameManager>().npcInfoManager;
+        GameCommonInfo.ArenaPrepareData.gameAccountData = new MiniGameAccountBean
+        {
+            winMoneyS = 10,
+            winMoneyM = 1,
+            winMoneyL = 0,
+        };
+        GameCommonInfo.ArenaPrepareData.gameAccountData.InitData(gameItemsManager, characterData);
+    }
+
+    /// <summary>
+    /// 初始化厨师考试
     /// </summary>
     private void InitChefGame()
     {

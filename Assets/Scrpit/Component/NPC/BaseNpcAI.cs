@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using UnityEditor;
 using UnityEngine.AI;
-
+using DG.Tweening;
 public class BaseNpcAI : BaseMonoBehaviour
 {
     //角色数据
@@ -139,8 +139,10 @@ public class BaseNpcAI : BaseMonoBehaviour
         characterMoveCpt.SetAnimStatus(10);
         CharacterBodyCpt characterBody = CptUtil.GetCptInChildrenByName<CharacterBodyCpt>(gameObject, "Body");
         if (characterBody != null)
+        {
             characterBody.SetEye("character_eye_special_dead", new Color(0, 0, 0), false);
-
+            characterBody.transform.DOLocalRotate(new Vector3(0,0,90),0.1f).SetEase(Ease.OutBack);
+        }
     }
 
     /// <summary>

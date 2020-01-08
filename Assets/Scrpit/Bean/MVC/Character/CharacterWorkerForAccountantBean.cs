@@ -3,7 +3,7 @@ using UnityEditor;
 using System;
 
 [Serializable]
-public class CharacterWorkerForAccountingBean : CharacterWorkerBaseBean
+public class CharacterWorkerForAccountantBean : CharacterWorkerBaseBean
 {
     //总计算账次数
     public long accountingTotalNumber;
@@ -30,9 +30,9 @@ public class CharacterWorkerForAccountingBean : CharacterWorkerBaseBean
     //总计结算时间
     public float accountingTotalTime;
 
-    public CharacterWorkerForAccountingBean()
+    public CharacterWorkerForAccountantBean()
     {
-        workerType = WorkerEnum.Accounting;
+        workerType = WorkerEnum.Accountant;
     }
 
     /// <summary>
@@ -42,7 +42,7 @@ public class CharacterWorkerForAccountingBean : CharacterWorkerBaseBean
     /// <param name="moneyM"></param>
     /// <param name="moneyS"></param>
     /// <param name="moreProportion">多余获取比例</param>
-    public void AddAccountingSuccess(long moneyL, long moneyM, long moneyS, float moreProportion)
+    public void AddAccountantSuccess(long moneyL, long moneyM, long moneyS, float moreProportion)
     {
         accountingTotalNumber += 1;
         accountingMoneyL += moneyL;
@@ -63,7 +63,7 @@ public class CharacterWorkerForAccountingBean : CharacterWorkerBaseBean
     /// <param name="moneyM"></param>
     /// <param name="moneyS"></param>
     /// <param name="loseProportion">失去比例</param>
-    public void AddAccountingFail(long moneyL, long moneyM, long moneyS, float loseProportion)
+    public void AddAccountantFail(long moneyL, long moneyM, long moneyS, float loseProportion)
     {
         long loseTempL = (long)(moneyL * loseProportion);
         long loseTempM = (long)(moneyM * loseProportion);
@@ -84,7 +84,7 @@ public class CharacterWorkerForAccountingBean : CharacterWorkerBaseBean
     /// 增加结算时间
     /// </summary>
     /// <param name="time"></param>
-    public void AddAccountingTime(float time)
+    public void AddAccountantTime(float time)
     {
         accountingTotalTime += time;
     }

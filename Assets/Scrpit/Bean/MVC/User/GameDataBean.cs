@@ -12,10 +12,7 @@ public class GameDataBean
     public long moneyL;
     public long guildCoin;//公会硬币
 
-    public string innName;//客栈名称
-    public int innLevel;//客栈等级 （天地人1-5星  3 2 1）
-    public InnAttributesBean innAttributes;//客栈属性
-
+    public InnAttributesBean innAttributes = new InnAttributesBean();//客栈属性
     public CharacterBean userCharacter = new CharacterBean();// 老板
     public List<CharacterBean> listWorkerCharacter = new List<CharacterBean>();//员工
 
@@ -311,52 +308,6 @@ public class GameDataBean
             }
         }
         return number;
-    }
-
-    /// <summary>
-    /// 获取客栈等级
-    /// </summary>
-    /// <param name="levelTitle"></param>
-    /// <param name="levelStar"></param>
-    /// <returns></returns>
-    public string GetInnLevel(out int levelTitle, out int levelStar)
-    {
-        levelStar = (innLevel % 10);
-        levelTitle = (innLevel % 100) / 10;
-        string levelTitleStr = "";
-        string levelStarStr = "";
-        switch (levelTitle)
-        {
-            case 1:
-                levelTitleStr = GameCommonInfo.GetUITextById(2007);
-                break;
-            case 2:
-                levelTitleStr = GameCommonInfo.GetUITextById(2008);
-                break;
-            case 3:
-                levelTitleStr = GameCommonInfo.GetUITextById(2009);
-                break;
-        }
-
-        switch (levelStar)
-        {
-            case 1:
-                levelStarStr = GameCommonInfo.GetUITextById(2010);
-                break;
-            case 2:
-                levelStarStr = GameCommonInfo.GetUITextById(2011);
-                break;
-            case 3:
-                levelStarStr = GameCommonInfo.GetUITextById(2012);
-                break;
-            case 4:
-                levelStarStr = GameCommonInfo.GetUITextById(2013);
-                break;
-            case 5:
-                levelStarStr = GameCommonInfo.GetUITextById(2014);
-                break;
-        }
-        return levelTitleStr + levelStarStr;
     }
 
     /// <summary>

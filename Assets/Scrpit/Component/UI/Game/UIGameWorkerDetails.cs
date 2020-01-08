@@ -96,9 +96,9 @@ public class UIGameWorkerDetails : BaseUIComponent, IRadioGroupCallBack
                 workerWaiterInfo.gameObject.SetActive(true);
                 workerWaiterInfo.SetData(characterData.baseInfo.waiterInfo);
                 break;
-            case WorkerEnum.Accounting:
+            case WorkerEnum.Accountant:
                 workerAccountingInfo.gameObject.SetActive(true);
-                workerAccountingInfo.SetData(characterData.baseInfo.accountingInfo);
+                workerAccountingInfo.SetData(characterData.baseInfo.accountantInfo);
                 break;
             case WorkerEnum.Accost:
                 workerAccostInfo.gameObject.SetActive(true);
@@ -259,7 +259,7 @@ public class UIGameWorkerDetails : BaseUIComponent, IRadioGroupCallBack
         if (detailsForWaiter != null)
             detailsForWaiter.SetData(WorkerEnum.Waiter, characterBase.waiterInfo);
         if (detailsForAccounting != null)
-            detailsForAccounting.SetData(WorkerEnum.Accounting, characterBase.accountingInfo);
+            detailsForAccounting.SetData(WorkerEnum.Accountant, characterBase.accountantInfo);
         if (detailsForAccost != null)
             detailsForAccost.SetData(WorkerEnum.Accost, characterBase.accostInfo);
         if (detailsForBeater != null)

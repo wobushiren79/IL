@@ -24,7 +24,7 @@ public class GameDataSimpleBean
             return null;
         GameDataSimpleBean gameDataSimple = new GameDataSimpleBean();
         gameDataSimple.userId = gameData.userId;
-        gameDataSimple.innName = gameData.innName;
+        gameDataSimple.innName = gameData.innAttributes.innName;
         gameDataSimple.moneyL= gameData.moneyL;
         gameDataSimple.moneyS = gameData.moneyS;
         gameDataSimple.moneyM = gameData.moneyM;

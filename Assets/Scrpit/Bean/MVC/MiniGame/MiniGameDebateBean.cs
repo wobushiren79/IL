@@ -8,6 +8,4 @@ public class MiniGameDebateBean : MiniGameBaseBean
     public MiniGameDebateBean() {
         gameType = MiniGameEnum.Debate;
     }
-
-
 }

@@ -4,13 +4,13 @@ using System.Collections.Generic;
 
 public class StoreInfoManager : BaseMonoBehaviour, IStoreInfoView
 {  
-    public StoreInfoController mStoreInfoController;
+    private StoreInfoController mStoreInfoController;
     //商店数据
     public List<StoreInfoBean> listStoreData;
 
     private ICallBack mCallBack;
 
-    private void Awake()
+    public void Awake()
     {
         mStoreInfoController = new StoreInfoController(this, this);
     }
@@ -50,6 +50,30 @@ public class StoreInfoManager : BaseMonoBehaviour, IStoreInfoView
     public void GetStoreInfoForCarpenter()
     {
         mStoreInfoController.GetCarpenterInfo();
+    }
+
+    /// <summary>
+    /// 获取公会角色提升数据
+    /// </summary>
+    public void GetStoreInfoForGuildImprove()
+    {
+        mStoreInfoController.GetGuildImproveForCharacter();
+    }
+
+    /// <summary>
+    /// 获取公会商品
+    /// </summary>
+    public void GetStoreInfoForGuildGoods()
+    {
+        mStoreInfoController.GetGuildStoreInfo();
+    }
+
+    /// <summary>
+    /// 获取公会客栈升级相关数据
+    /// </summary>
+    public void GetStoreInfoForGuildInnLevel()
+    {
+        mStoreInfoController.GetGuildInnLevel();
     }
 
     #region 数据回调

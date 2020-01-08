@@ -167,7 +167,6 @@ public class SQliteHandle
         return LoadTableData<T>(dbName, mainTable, null, null, null, mainColNames, mainOperations, mainColValue);
     }
 
-
     /// <summary>
     /// 删除表数据
     /// </summary>
@@ -176,16 +175,18 @@ public class SQliteHandle
     /// <param name="colNames"></param>
     /// <param name="operations"></param>
     /// <param name="colValues"></param>
-    public static void DeleteTableData(string dbName, string tableName, string[] colNames, string[] operations, string[] colValues)
+    public static bool DeleteTableData(string dbName, string tableName, string[] colNames, string[] operations, string[] colValues)
     {
         SQLiteHelper sql = GetSQLiteHelper(dbName);
         try
         {
             sql.DeleteValuesAND(tableName, colNames, operations, colValues);
+            return true;
         }
         catch (Exception e)
         {
             LogUtil.Log("更新数据失败:" + e.Message);
+            return false;
         }
         finally
         {
@@ -193,16 +194,18 @@ public class SQliteHandle
                 sql.CloseConnection();
         }
     }
-    public static void DeleteTableDataAndLeft(string dbName, string tableName, string[] colNames, string[] operations, string[] colValues)
+    public static bool DeleteTableDataAndLeft(string dbName, string tableName, string[] colNames, string[] operations, string[] colValues)
     {
         SQLiteHelper sql = GetSQLiteHelper(dbName);
         try
         {
             sql.DeleteValuesANDAndLeft(tableName, colNames, operations, colValues);
+            return true;
         }
         catch (Exception e)
         {
             LogUtil.Log("更新数据失败:" + e.Message);
+            return false;
         }
         finally
         {
@@ -216,16 +219,18 @@ public class SQliteHandle
     /// <param name="dbName"></param>
     /// <param name="tableName"></param>
     /// <param name="values"></param>
-    public static void InsertValues(string dbName, string tableName,string[] values)
+    public static bool InsertValues(string dbName, string tableName,string[] values)
     {
         SQLiteHelper sql = GetSQLiteHelper(dbName);
         try
         {
             sql.InsertValues(tableName, values);
+            return true;
         }
         catch (Exception e)
         {
             LogUtil.Log("插入数据失败:" + e.Message);
+            return false;
         }
         finally
         {
@@ -241,16 +246,18 @@ public class SQliteHandle
     /// <param name="tableName"></param>
     /// <param name="keys"></param>
     /// <param name="values"></param>
-    public static void InsertValues(string dbName, string tableName, string[] keys, string[] values)
+    public static bool InsertValues(string dbName, string tableName, string[] keys, string[] values)
     {
         SQLiteHelper sql = GetSQLiteHelper(dbName);
         try
         {
             sql.InsertValues(tableName, keys, values);
+            return true;
         }
         catch (Exception e)
         {
             LogUtil.Log("插入数据失败:" + e.Message);
+            return false;
         }
         finally
         {

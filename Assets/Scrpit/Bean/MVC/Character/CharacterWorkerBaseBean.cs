@@ -60,7 +60,7 @@ public class CharacterWorkerBaseBean
             case WorkerEnum.Waiter:
                 characterAttributes.speed += 5;
                 break;
-            case WorkerEnum.Accounting:
+            case WorkerEnum.Accountant:
                 characterAttributes.account += 5;
                 break;
             case WorkerEnum.Accost:
@@ -120,7 +120,7 @@ public class CharacterWorkerBaseBean
             case WorkerEnum.Waiter:
                 workerName = GameCommonInfo.GetUITextById(12);
                 break;
-            case WorkerEnum.Accounting:
+            case WorkerEnum.Accountant:
                 workerName = GameCommonInfo.GetUITextById(13);
                 break;
             case WorkerEnum.Accost:

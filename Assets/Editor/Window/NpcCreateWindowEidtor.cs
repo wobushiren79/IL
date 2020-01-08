@@ -434,6 +434,22 @@ public class NpcCreateWindowEidtor : EditorWindow
 
         GUILayout.Label("喜欢的东西ID（用,分隔）：", GUILayout.Width(150), GUILayout.Height(20));
         npcInfo.love_items = EditorGUILayout.TextArea(npcInfo.love_items + "", GUILayout.Width(100), GUILayout.Height(20));
+
+
+        GUILayout.Label("命：", GUILayout.Width(30), GUILayout.Height(20));
+        npcInfo.attributes_life =int.Parse(EditorGUILayout.TextArea(npcInfo.attributes_life + "", GUILayout.Width(50), GUILayout.Height(20))) ;
+        GUILayout.Label("厨：", GUILayout.Width(30), GUILayout.Height(20));
+        npcInfo.attributes_cook = int.Parse(EditorGUILayout.TextArea(npcInfo.attributes_cook + "", GUILayout.Width(50), GUILayout.Height(20)));
+        GUILayout.Label("速：", GUILayout.Width(30), GUILayout.Height(20));
+        npcInfo.attributes_speed = int.Parse(EditorGUILayout.TextArea(npcInfo.attributes_speed + "", GUILayout.Width(50), GUILayout.Height(20)));
+        GUILayout.Label("算：", GUILayout.Width(30), GUILayout.Height(20));
+        npcInfo.attributes_account = int.Parse(EditorGUILayout.TextArea(npcInfo.attributes_account + "", GUILayout.Width(50), GUILayout.Height(20)));
+        GUILayout.Label("魅：", GUILayout.Width(30), GUILayout.Height(20));
+        npcInfo.attributes_charm = int.Parse(EditorGUILayout.TextArea(npcInfo.attributes_charm + "", GUILayout.Width(50), GUILayout.Height(20)));
+        GUILayout.Label("武：", GUILayout.Width(30), GUILayout.Height(20));
+        npcInfo.attributes_force = int.Parse(EditorGUILayout.TextArea(npcInfo.attributes_force + "", GUILayout.Width(50), GUILayout.Height(20)));
+        GUILayout.Label("运：", GUILayout.Width(30), GUILayout.Height(20));
+        npcInfo.attributes_lucky = int.Parse(EditorGUILayout.TextArea(npcInfo.attributes_lucky + "", GUILayout.Width(50), GUILayout.Height(20)));
         GUILayout.EndHorizontal();
 
     }

@@ -79,6 +79,14 @@ public class StoreInfoController : BaseMVCController<StoreInfoModel, IStoreInfoV
     }
 
     /// <summary>
+    /// 获取公会客栈升级数据
+    /// </summary>
+    public void GetGuildInnLevel()
+    {
+        GetStoreInfoByType(StoreTypeEnum.InnLevel);
+    }
+
+    /// <summary>
     /// 查询所有商店信息
     /// </summary>
     public void GetStoreInfoByType(StoreTypeEnum type)

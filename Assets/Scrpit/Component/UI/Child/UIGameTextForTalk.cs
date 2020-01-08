@@ -179,7 +179,7 @@ public class UIGameTextForTalk : BaseUIChildComponent<UIGameText>
                     GameUtil.RefreshRectViewHight(rtfTextContent, true);
             }
             else
-                tweenerText = tvContent.DOText(contentDetails, textData.content.Length / 8f).SetEase(Ease.OutBack);
+                tweenerText = tvContent.DOText(contentDetails, textData.content.Length / 8f);
         }
     }
 

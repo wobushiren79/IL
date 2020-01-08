@@ -141,7 +141,7 @@ public class UIMainCreate : BaseUIComponent, IRadioGroupCallBack, ColorView.Call
             return;
         }
         GameDataBean gameData = new GameDataBean();
-        gameData.innName = etInnName.text;
+        gameData.innAttributes.innName = etInnName.text;
 
         gameData.userCharacter = new CharacterBean();
         gameData.userCharacter.baseInfo = new CharacterBaseBean();

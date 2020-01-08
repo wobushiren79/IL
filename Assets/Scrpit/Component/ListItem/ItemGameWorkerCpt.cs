@@ -134,8 +134,8 @@ public class ItemGameWorkerCpt : ItemGameBaseCpt, IRadioButtonCallBack
             CharacterBaseBean characterBase = characterData.baseInfo;
             SetName(characterBase.name);
             SetPrice(characterBase.priceS, characterBase.priceM, characterBase.priceL);
-            SetWork(characterBase.isChef, characterBase.isWaiter, characterBase.isAccounting, characterBase.isAccost, characterBase.isBeater);
-            SetPriority(characterBase.priorityChef, characterBase.priorityWaiter, characterBase.priorityAccounting, characterBase.priorityAccost, characterBase.priorityBeater);
+            SetWork(characterBase.isChef, characterBase.isWaiter, characterBase.isAccountant, characterBase.isAccost, characterBase.isBeater);
+            SetPriority(characterBase.priorityChef, characterBase.priorityWaiter, characterBase.priorityAccountant, characterBase.priorityAccost, characterBase.priorityBeater);
         }
         if (characterData.attributes != null)
         {
@@ -246,14 +246,14 @@ public class ItemGameWorkerCpt : ItemGameBaseCpt, IRadioButtonCallBack
     /// </summary>
     /// <param name="isChef"></param>
     /// <param name="isWaiter"></param>
-    /// <param name="isAccounting"></param>
+    /// <param name="isAccountant"></param>
     /// <param name="isBeater"></param>
     /// <param name="isAccost"></param>
-    public void SetWork(bool isChef, bool isWaiter, bool isAccounting, bool isAccost, bool isBeater)
+    public void SetWork(bool isChef, bool isWaiter, bool isAccountant, bool isAccost, bool isBeater)
     {
         if (rbAccounting != null)
         {
-            if (isAccounting)
+            if (isAccountant)
                 rbAccounting.ChangeStates(RadioButtonView.RadioButtonStates.Selected);
             else
                 rbAccounting.ChangeStates(RadioButtonView.RadioButtonStates.Unselected);
@@ -293,17 +293,17 @@ public class ItemGameWorkerCpt : ItemGameBaseCpt, IRadioButtonCallBack
     /// </summary>
     /// <param name="priorityChef"></param>
     /// <param name="priorityWaiter"></param>
-    /// <param name="priorityAccounting"></param>
+    /// <param name="priorityAccountant"></param>
     /// <param name="priorityBeater"></param>
     /// <param name="priorityAccost"></param>
-    public void SetPriority(int priorityChef, int priorityWaiter, int priorityAccounting, int priorityAccost, int priorityBeater)
+    public void SetPriority(int priorityChef, int priorityWaiter, int priorityAccountant, int priorityAccost, int priorityBeater)
     {
         if (etPriorityChef != null)
             etPriorityChef.text = priorityChef + "";
         if (etPriorityWaiter != null)
             etPriorityWaiter.text = priorityWaiter + "";
         if (etPriorityAccounting != null)
-            etPriorityAccounting.text = priorityAccounting + "";
+            etPriorityAccounting.text = priorityAccountant + "";
         if (etPriorityAccost != null)
             etPriorityAccost.text = priorityAccost + "";
         if (etPriorityBeater != null)
@@ -327,8 +327,8 @@ public class ItemGameWorkerCpt : ItemGameBaseCpt, IRadioButtonCallBack
                 case WorkerEnum.Waiter:
                     characterData.baseInfo.priorityWaiter = priority;
                     break;
-                case WorkerEnum.Accounting:
-                    characterData.baseInfo.priorityAccounting = priority;
+                case WorkerEnum.Accountant:
+                    characterData.baseInfo.priorityAccountant = priority;
                     break;
                 case WorkerEnum.Accost:
                     characterData.baseInfo.priorityAccost = priority;
@@ -351,7 +351,7 @@ public class ItemGameWorkerCpt : ItemGameBaseCpt, IRadioButtonCallBack
     }
     public void PriorityChangeForAccounting(string content)
     {
-        PriorityChange(WorkerEnum.Accounting, content);
+        PriorityChange(WorkerEnum.Accountant, content);
     }
     public void PriorityChangeForAccost(string content)
     {
@@ -369,7 +369,7 @@ public class ItemGameWorkerCpt : ItemGameBaseCpt, IRadioButtonCallBack
         CharacterBaseBean characterBase = characterData.baseInfo;
         if (view == rbAccounting)
         {
-            characterBase.isAccounting = (buttonStates == RadioButtonView.RadioButtonStates.Selected) ? true : false;
+            characterBase.isAccountant = (buttonStates == RadioButtonView.RadioButtonStates.Selected) ? true : false;
         }
         else if (view == rbWaiter)
         {

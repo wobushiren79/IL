@@ -47,7 +47,7 @@ public class InnPayHandler : BaseMonoBehaviour
         for (int i = 0; i < chefArray.Length; i++)
         {
             NpcAIWorkerCpt npcAI = chefArray[i];
-            if (npcAI.characterData.baseInfo.isAccounting)
+            if (npcAI.characterData.baseInfo.isAccountant)
             {
                 listAccountingCpt.Add(npcAI);
             }

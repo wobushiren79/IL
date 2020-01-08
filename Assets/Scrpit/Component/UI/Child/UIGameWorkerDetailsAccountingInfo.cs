@@ -22,13 +22,13 @@ public class UIGameWorkerDetailsAccountingInfo : BaseMonoBehaviour
     public Text tvAccountingTime;
 
     [Header("数据")]
-    public CharacterWorkerForAccountingBean accountingData;
+    public CharacterWorkerForAccountantBean accountingData;
 
     /// <summary>
     /// 设置数据
     /// </summary>
     /// <param name="accountingData"></param>
-    public void SetData(CharacterWorkerForAccountingBean accountingData)
+    public void SetData(CharacterWorkerForAccountantBean accountingData)
     {
         this.accountingData = accountingData;
         SetTotalData(accountingData.accountingTotalNumber,

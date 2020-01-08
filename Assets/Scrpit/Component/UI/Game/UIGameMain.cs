@@ -133,7 +133,7 @@ public class UIGameMain : BaseUIComponent, DialogView.IDialogCallBack
         if (tvRichness != null)
             tvRichness.text = innAttributes.richness + "";
 
-        string innLevelStr = GetUIMananger<UIGameManager>().gameDataManager.gameData.GetInnLevel(out int innLevelTitle, out int innLevelStar);
+        string innLevelStr = GetUIMananger<UIGameManager>().gameDataManager.gameData.innAttributes.GetInnLevel(out int innLevelTitle, out int innLevelStar);
         if (popupInnLevel != null)
         {
             popupInnLevel.SetContent(GameCommonInfo.GetUITextById(2006) + " " + innLevelStr);

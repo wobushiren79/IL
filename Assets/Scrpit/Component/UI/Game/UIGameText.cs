@@ -237,6 +237,8 @@ public class UIGameText : BaseUIComponent, ITextInfoView, DialogView.IDialogCall
             userName = uiGameManager.gameDataManager.gameData.userCharacter.baseInfo.name;
         if (uiGameManager.gameDataManager.gameData.userCharacter != null)
             sex = uiGameManager.gameDataManager.gameData.userCharacter.body.sex;
+        //去除空格 防止自动换行
+        content = content.Replace(" ", "");
         //替换名字
         content = content.Replace("{name}", userName);
         //替换小名

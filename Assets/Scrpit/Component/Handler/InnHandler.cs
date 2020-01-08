@@ -344,7 +344,7 @@ public class InnHandler : BaseMonoBehaviour
     {
         switch (workType)
         {
-            case WorkerEnum.Accounting:
+            case WorkerEnum.Accountant:
                 if (!CheckUtil.ListIsNull(innPayHandler.listCounterCpt))
                 {
                     for (int i = 0; i < innPayHandler.listCounterCpt.Count; i++)

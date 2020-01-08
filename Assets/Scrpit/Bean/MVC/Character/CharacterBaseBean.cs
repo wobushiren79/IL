@@ -25,20 +25,20 @@ public class CharacterBaseBean
 
     public CharacterWorkerForChefBean chefInfo=new CharacterWorkerForChefBean();
     public CharacterWorkerForWaiterBean waiterInfo=new CharacterWorkerForWaiterBean();
-    public CharacterWorkerForAccountingBean accountingInfo=new CharacterWorkerForAccountingBean();
+    public CharacterWorkerForAccountantBean accountantInfo=new CharacterWorkerForAccountantBean();
     public CharacterWorkerForAccostBean accostInfo=new CharacterWorkerForAccostBean();
     public CharacterWorkerForBeaterBean beaterInfo=new CharacterWorkerForBeaterBean();
 
     public bool isChef;//是否开启厨师
     public bool isWaiter;//是否开启服务生
-    public bool isAccounting;//是否开启记帐
+    public bool isAccountant;//是否开启记帐
     public bool isAccost;//是否开启招呼
     public bool isBeater;//是否开启打手
 
     //优先级
     public int priorityChef;
     public int priorityWaiter;
-    public int priorityAccounting;
+    public int priorityAccountant;
     public int priorityAccost;
     public int priorityBeater;
 
@@ -55,7 +55,7 @@ public class CharacterBaseBean
         List<WorkerInfo> workerInfos = new List<WorkerInfo>();
         workerInfos.Add(GetWorkerInfoByType(WorkerEnum.Chef));
         workerInfos.Add(GetWorkerInfoByType(WorkerEnum.Waiter));
-        workerInfos.Add(GetWorkerInfoByType(WorkerEnum.Accounting));
+        workerInfos.Add(GetWorkerInfoByType(WorkerEnum.Accountant));
         workerInfos.Add(GetWorkerInfoByType(WorkerEnum.Accost));
         workerInfos.Add(GetWorkerInfoByType(WorkerEnum.Beater));
         //按照优先度排序，数值越高越靠前
@@ -82,9 +82,9 @@ public class CharacterBaseBean
                 isWork = isWaiter;
                 priority = priorityWaiter;
                 break;
-            case WorkerEnum.Accounting:
-                isWork = isAccounting;
-                priority = priorityAccounting;
+            case WorkerEnum.Accountant:
+                isWork = isAccountant;
+                priority = priorityAccountant;
                 break;
             case WorkerEnum.Accost:
                 isWork = isAccost;

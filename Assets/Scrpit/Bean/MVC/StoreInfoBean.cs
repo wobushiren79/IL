@@ -6,6 +6,7 @@ using System.Collections.Generic;
 [Serializable]
 public class StoreInfoBean : BaseBean
 {
+    public long store_id;
     public int type;//类型 9市场
     public string mark;
     public long mark_id;

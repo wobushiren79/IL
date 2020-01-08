@@ -132,7 +132,7 @@ public class NpcAIWorkerForAccountingCpt : NpcAIWokerFoBaseCpt
     public IEnumerator StartAccounting()
     {
         float time = npcAIWorker.characterData.CalculationAccountingTime(npcAIWorker.gameItemsManager);
-        npcAIWorker.characterData.baseInfo.accountingInfo.AddAccountingTime(time);
+        npcAIWorker.characterData.baseInfo.accountantInfo.AddAccountantTime(time);
         yield return new WaitForSeconds(time);
         //计算不同食物等级的手艺
         float foodLevelRate = npcAIWorker.characterData.CalculationAccountingFoodLevel(orderForCustomer.foodLevel);
@@ -142,13 +142,13 @@ public class NpcAIWorkerForAccountingCpt : NpcAIWokerFoBaseCpt
         {
             //出错
             //记录数据
-            npcAIWorker.characterData.baseInfo.accountingInfo.AddAccountingFail(
+            npcAIWorker.characterData.baseInfo.accountantInfo.AddAccountantFail(
                 (long)(1 + foodLevelRate) * orderForCustomer.foodData.price_l,
                 (long)(1 + foodLevelRate) * orderForCustomer.foodData.price_m,
                 (long)(1 + foodLevelRate) * orderForCustomer.foodData.price_s,
                 moreRate);
             //增加经验
-            npcAIWorker.characterData.baseInfo.accountingInfo.AddExp(1);
+            npcAIWorker.characterData.baseInfo.accountantInfo.AddExp(1);
 
             //工作者表示抱歉
             //npcAIWorker.SetExpression(CharacterExpressionCpt.CharacterExpressionEnum.Wordless);
@@ -160,13 +160,13 @@ public class NpcAIWorkerForAccountingCpt : NpcAIWokerFoBaseCpt
         {
             //成功
             //记录数据
-            npcAIWorker.characterData.baseInfo.accountingInfo.AddAccountingSuccess(
+            npcAIWorker.characterData.baseInfo.accountantInfo.AddAccountantSuccess(
                    (long)(1 + foodLevelRate) * orderForCustomer.foodData.price_l,
                    (long)(1 + foodLevelRate) * orderForCustomer.foodData.price_m,
                    (long)(1 + foodLevelRate) * orderForCustomer.foodData.price_s,
                    moreRate);
             //增加经验
-            npcAIWorker.characterData.baseInfo.accountingInfo.AddExp(2);
+            npcAIWorker.characterData.baseInfo.accountantInfo.AddExp(2);
 
             //如果有额外的加成 工作者和店员都应该高兴
             //orderForCustomer.customer.SetExpression(CharacterExpressionCpt.CharacterExpressionEnum.Love);

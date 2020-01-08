@@ -24,7 +24,7 @@ public class UITownGuildImprove : UIBaseOne, IRadioGroupCallBack
     /// <param name="type"></param>
     public void ChangeUIType(int type)
     {
-        UIGameManager uiGameManager = GetUIMananger<UIGameManager>();
+        GameDataManager gameDataManager = GetUIMananger<UIGameManager>().gameDataManager;
 
         uiInnInfo.gameObject.SetActive(false);
         uiCharacterInfo.gameObject.SetActive(false);
@@ -32,10 +32,11 @@ public class UITownGuildImprove : UIBaseOne, IRadioGroupCallBack
         {
             case 0:
                 uiInnInfo.gameObject.SetActive(true);
+                uiInnInfo.InitData(gameDataManager.gameData);
                 break;
             case 1:
                 uiCharacterInfo.gameObject.SetActive(true);
-                uiCharacterInfo.InitData(uiGameManager.gameDataManager.gameData);
+                uiCharacterInfo.InitData(gameDataManager.gameData);
                 break;
         }
     }
