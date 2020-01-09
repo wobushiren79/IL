@@ -1,6 +1,8 @@
 ﻿using UnityEngine;
 using UnityEditor;
 using UnityEngine.UI;
+using System.Collections.Generic;
+
 public class ItemTownGuildImproveInnLevelCpt : BaseMonoBehaviour
 {
     public Text tvTitle;
@@ -13,18 +15,32 @@ public class ItemTownGuildImproveInnLevelCpt : BaseMonoBehaviour
 
     public Button btSubmit;
 
+    protected IconDataManager iconDataManager;
+
+    private void Awake()
+    {
+        iconDataManager = Find<IconDataManager>(ImportantTypeEnum.UIManager);
+    }
+
     private void Start()
     {
-        if (btSubmit!=null)
+        if (btSubmit != null)
         {
             btSubmit.onClick.AddListener(OnClickSubmit);
         }
     }
 
-    public void SetData(string innLevelStr,Sprite spInnLevel, StoreInfoBean storeInfo)
+    /// <summary>
+    /// 设置数据
+    /// </summary>
+    /// <param name="innLevelStr"></param>
+    /// <param name="spInnLevel"></param>
+    /// <param name="storeInfo"></param>
+    public void SetData(string innLevelStr, Sprite spInnLevel, StoreInfoBean storeInfo)
     {
         SetTitleName(innLevelStr);
         SetTitleIcon(spInnLevel);
+        CreatePreDataItem(storeInfo.pre_data);
     }
 
     /// <summary>
@@ -48,23 +64,28 @@ public class ItemTownGuildImproveInnLevelCpt : BaseMonoBehaviour
             return;
         ivTitleIcon.sprite = spInnLevel;
     }
-    
-    /// <summary>
-    /// 处理前置数据
-    /// </summary>
-    /// <param name="data"></param>
-    private void HandlePreData(string data)
-    {
-
-    }
 
     /// <summary>
-    /// 处理奖励数据
+    /// 创建前置数据
     /// </summary>
-    /// <param name="data"></param>
-    private void HandleRewardData(string data)
+    /// <param name="preData"></param>
+    public void CreatePreDataItem(string preData)
     {
-
+        Dictionary<PreTypeEnum, string> listPreData = PreTypeEnumTools.GetPreData(preData);
+        foreach (var itemData in listPreData)
+        {
+            GameObject objPre = Instantiate(objPreContainer, objPreModel);
+            //设置描述
+            string preDes=  PreTypeEnumTools.GetPreDescribe(itemData.Key,itemData.Value);
+            Text tvContent = CptUtil.GetCptInChildrenByName<Text>(objPre, "Text");
+            tvContent.text = preDes;
+            //设置图标
+            Sprite spIcon = PreTypeEnumTools.GetPreSprite(itemData.Key, iconDataManager);
+            Image ivIcon = CptUtil.GetCptInChildrenByName<Image>(objPre, "Icon");
+            ivIcon.sprite = spIcon;
+        }
+        GameUtil.RefreshRectViewHight((RectTransform)objPreContainer.transform, true);
+        GameUtil.RefreshRectViewHight((RectTransform)transform,true);
     }
 
     /// <summary>

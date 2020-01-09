@@ -79,7 +79,7 @@ public class InnAttributesBean
     {
         int levelStar = (innLevel % 10);
         int levelTitle = (innLevel % 100) / 10;
-
+        
         nextLevelStar = 1;
         nextLevelTitle = 1;
         if (levelStar + 1 > 5)
@@ -90,6 +90,8 @@ public class InnAttributesBean
         else
         {
             nextLevelStar = levelStar + 1;
+            if (levelTitle == 0)
+                levelTitle = 1;
             nextLevelTitle = levelTitle;
         }
 

@@ -105,9 +105,10 @@ public class ListDataEditor : Editor
         AddIconBeanDictionaryByFolder("Assets/Texture/Items/", itemsManager.listItemsIcon);
         AddIconBeanDictionaryByFolder("Assets/Texture/Items/Chef/", itemsManager.listItemsIcon);
         AddIconBeanDictionaryByFolder("Assets/Texture/Items/Waiter/", itemsManager.listItemsIcon);
-        AddIconBeanDictionaryByFolder("Assets/Texture/Items/Accounting/", itemsManager.listItemsIcon);
+        AddIconBeanDictionaryByFolder("Assets/Texture/Items/Accountant/", itemsManager.listItemsIcon);
         AddIconBeanDictionaryByFolder("Assets/Texture/Items/Accost/", itemsManager.listItemsIcon);
         AddIconBeanDictionaryByFolder("Assets/Texture/Items/Beater/", itemsManager.listItemsIcon);
+        AddIconBeanDictionaryByFolder("Assets/Texture/Element/Ingredients/", itemsManager.listItemsIcon);
     }
 
 
@@ -144,7 +145,7 @@ public class ListDataEditor : Editor
         iconDataManager.listIcon.Clear();
         //AddIconBeanDictionaryByFolder("Assets/Texture/Background/", iconDataManager.listIcon);
         //AddIconBeanDictionaryByFolder("Assets/Texture/Common/", iconDataManager.listIcon);
-        AddIconBeanDictionaryByFolder("Assets/Texture/Element/Ingredients/", iconDataManager.listIcon);
+        AddIconBeanDictionaryByFolder("Assets/Texture/Common/UI/", iconDataManager.listIcon);
     }
 
     /// <summary>

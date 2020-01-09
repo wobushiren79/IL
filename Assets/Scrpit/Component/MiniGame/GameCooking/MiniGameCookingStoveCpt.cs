@@ -15,11 +15,11 @@ public class MiniGameCookingStoveCpt : BaseMonoBehaviour
     public GameObject objEffects;
 
     public MenuInfoBean menuInfo;
-    private IconDataManager mIconDataManager;
+    protected GameItemsManager gameItemsManager;
 
     private void Awake()
     {
-        mIconDataManager = FindObjectOfType<IconDataManager>();
+        gameItemsManager = Find<GameItemsManager>(ImportantTypeEnum.GameItemsManager);
     }
 
     /// <summary>
@@ -79,7 +79,7 @@ public class MiniGameCookingStoveCpt : BaseMonoBehaviour
     /// </summary>
     public void ChangeIngredientPre()
     {
-        if (menuInfo == null || mIconDataManager == null)
+        if (menuInfo == null || gameItemsManager == null)
             return;
         List<IngredientsEnum> listIng = new List<IngredientsEnum>();
         if (menuInfo.ing_oilsalt != 0)
@@ -127,7 +127,7 @@ public class MiniGameCookingStoveCpt : BaseMonoBehaviour
                 iconKey += "flour_1";
                 break;
         }
-        Sprite spIcon = mIconDataManager.GetIconSpriteByName(iconKey);
+        Sprite spIcon = gameItemsManager.GetItemsSpriteByName(iconKey);
         if (srIngredientPre != null)
         {
             srIngredientPre.sprite = spIcon;

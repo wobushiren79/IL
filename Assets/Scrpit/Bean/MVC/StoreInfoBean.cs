@@ -18,11 +18,9 @@ public class StoreInfoBean : BaseBean
     public long price_s;
     public long guild_coin;
 
-
     public string pre_ach_ids;//前置成就ID
     public string pre_data;//前置条件
     public string reward_data;//奖励
-
 
     //小游戏专用数据
     public int minigame_player_number;//玩家数量
@@ -33,7 +31,6 @@ public class StoreInfoBean : BaseBean
     public int barrage_launch_interval;//发射间隔
     public float barrage_launch_speed;//发射速度
     public string barrage_launch_types;//发射器子弹类型
-
 
     public string icon_key;//图标KEY
     public string name;
@@ -75,4 +72,5 @@ public class StoreInfoBean : BaseBean
         }
         return true;
     }
+
 }
