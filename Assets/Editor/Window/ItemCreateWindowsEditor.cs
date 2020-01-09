@@ -76,7 +76,7 @@ public class ItemCreateWindowsEditor : EditorWindow, StoreInfoManager.ICallBack
     private void GUICreateStoreItem()
     {
         GUILayout.Label("创建商品");
-        GUIStoreItem(createStoreInfoBean,true);
+        GUIStoreItem(createStoreInfoBean, true);
     }
 
     private string findStoreIds = "";
@@ -110,7 +110,7 @@ public class ItemCreateWindowsEditor : EditorWindow, StoreInfoManager.ICallBack
             return;
         foreach (StoreInfoBean itemStoreInfo in listFindStoreItem)
         {
-            GUIStoreItem(itemStoreInfo,false);
+            GUIStoreItem(itemStoreInfo, false);
         }
     }
 
@@ -185,6 +185,68 @@ public class ItemCreateWindowsEditor : EditorWindow, StoreInfoManager.ICallBack
         storeInfo.price_l = long.Parse(EditorGUILayout.TextArea(storeInfo.price_l + "", GUILayout.Width(100), GUILayout.Height(20)));
         storeInfo.price_m = long.Parse(EditorGUILayout.TextArea(storeInfo.price_m + "", GUILayout.Width(100), GUILayout.Height(20)));
         storeInfo.price_s = long.Parse(EditorGUILayout.TextArea(storeInfo.price_s + "", GUILayout.Width(100), GUILayout.Height(20)));
+
+        //前置相关
+        EditorGUILayout.BeginVertical();
+        GUILayout.Label("前置：", GUILayout.Width(100), GUILayout.Height(20));
+        if (GUILayout.Button("添加前置", GUILayout.Width(100), GUILayout.Height(20)))
+        {
+            storeInfo.pre_data += ("|" + EnumUtil.GetEnumName(PreTypeEnum.PayMoneyL) + ":" + "1|");
+        }
+        List<string> listPreData = StringUtil.SplitBySubstringForListStr(storeInfo.pre_data, '|');
+        storeInfo.pre_data = "";
+        for (int i = 0; i < listPreData.Count; i++)
+        {
+            string itemPreData = listPreData[i];
+            if (CheckUtil.StringIsNull(itemPreData))
+            {
+                continue;
+            }
+            EditorGUILayout.BeginHorizontal();
+            if (GUILayout.Button("删除", GUILayout.Width(100), GUILayout.Height(20)))
+            {
+                listPreData.RemoveAt(i);
+                i--;
+                continue;
+            }
+            List<string> listItemPreData = StringUtil.SplitBySubstringForListStr(itemPreData, ':');
+            listItemPreData[0] = EnumUtil.GetEnumName(EditorGUILayout.EnumPopup("前置类型", EnumUtil.GetEnum<PreTypeEnum>(listItemPreData[0]), GUILayout.Width(300), GUILayout.Height(20)));
+            listItemPreData[1] = EditorGUILayout.TextArea(listItemPreData[1] + "", GUILayout.Width(100), GUILayout.Height(20));
+            EditorGUILayout.EndHorizontal();
+            storeInfo.pre_data += (listItemPreData[0] + ":" + listItemPreData[1])+"|";
+        }
+        EditorGUILayout.EndVertical();
+
+        //奖励相关
+        EditorGUILayout.BeginVertical();
+        GUILayout.Label("奖励：", GUILayout.Width(100), GUILayout.Height(20));
+        if (GUILayout.Button("添加奖励", GUILayout.Width(100), GUILayout.Height(20)))
+        {
+            storeInfo.reward_data += (EnumUtil.GetEnumName(RewardTypeEnum.AddWorkerNumber) + ":" + "1|");
+        }
+        List<string> listRewardData = StringUtil.SplitBySubstringForListStr(storeInfo.reward_data, '|');
+        storeInfo.reward_data = "";
+        for (int i = 0; i < listRewardData.Count; i++)
+        {
+            string itemRewardData = listRewardData[i];
+            if (CheckUtil.StringIsNull(itemRewardData))
+            {
+                continue;
+            }
+            EditorGUILayout.BeginHorizontal();
+            if (GUILayout.Button("删除", GUILayout.Width(100), GUILayout.Height(20)))
+            {
+                listRewardData.RemoveAt(i);
+                i--;
+                continue;
+            }
+            List<string> listItemRewardData = StringUtil.SplitBySubstringForListStr(itemRewardData, ':');
+            listItemRewardData[0] = EnumUtil.GetEnumName(EditorGUILayout.EnumPopup("奖励类型", EnumUtil.GetEnum<RewardTypeEnum>(listItemRewardData[0]), GUILayout.Width(300), GUILayout.Height(20)));
+            listItemRewardData[1] = EditorGUILayout.TextArea(listItemRewardData[1] + "", GUILayout.Width(100), GUILayout.Height(20));
+            EditorGUILayout.EndHorizontal();
+            storeInfo.reward_data += (listItemRewardData[0] + ":" + listItemRewardData[1]) + "|";
+        }
+        EditorGUILayout.EndVertical();
     }
 
     /// <summary>

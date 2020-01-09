@@ -14,15 +14,13 @@ public class InnAttributesBean
     public long richness;//菜品丰富度
 
     /// <summary>
-    /// 获取客栈等级
+    /// 获取等级名称
     /// </summary>
     /// <param name="levelTitle"></param>
     /// <param name="levelStar"></param>
     /// <returns></returns>
-    public string GetInnLevel(out int levelTitle, out int levelStar)
+    public string GetInnLevelStr(int levelTitle, int levelStar)
     {
-        levelStar = (innLevel % 10);
-        levelTitle = (innLevel % 100) / 10;
         string levelTitleStr = "";
         string levelStarStr = "";
         switch (levelTitle)
@@ -57,6 +55,45 @@ public class InnAttributesBean
                 break;
         }
         return levelTitleStr + levelStarStr;
+    }
+    /// <summary>
+    /// 获取客栈等级
+    /// </summary>
+    /// <param name="levelTitle"></param>
+    /// <param name="levelStar"></param>
+    /// <returns></returns>
+    public string GetInnLevel(out int levelTitle, out int levelStar)
+    {
+        levelStar = (innLevel % 10);
+        levelTitle = (innLevel % 100) / 10;
+        return GetInnLevelStr(levelTitle, levelStar);
+    }
+
+    /// <summary>
+    /// 获取下一客栈等级
+    /// </summary>
+    /// <param name="levelTitle"></param>
+    /// <param name="levelStar"></param>
+    /// <returns></returns>
+    public string GetNextInnLevel(out int nextLevelTitle, out int nextLevelStar)
+    {
+        int levelStar = (innLevel % 10);
+        int levelTitle = (innLevel % 100) / 10;
+
+        nextLevelStar = 1;
+        nextLevelTitle = 1;
+        if (levelStar + 1 > 5)
+        {
+            nextLevelStar = 1;
+            nextLevelTitle = levelTitle + 1;
+        }
+        else
+        {
+            nextLevelStar = levelStar + 1;
+            nextLevelTitle = levelTitle;
+        }
+
+        return GetInnLevelStr(nextLevelTitle,nextLevelStar);
     }
 
     /// <summary>

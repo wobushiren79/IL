@@ -18,7 +18,11 @@ public class StoreInfoBean : BaseBean
     public long price_s;
     public long guild_coin;
 
+
     public string pre_ach_ids;//前置成就ID
+    public string pre_data;//前置条件
+    public string reward_data;//奖励
+
 
     //小游戏专用数据
     public int minigame_player_number;//玩家数量
