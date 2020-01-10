@@ -1,24 +1,29 @@
 ﻿using UnityEngine;
 using UnityEditor;
 using System.Collections.Generic;
+using UnityEngine.UI;
 
 public class UITownGuildImproveInnInfo : BaseMonoBehaviour, StoreInfoManager.ICallBack
 {
+    public Text tvNull;
+
     public GameObject objInnLevelContainer;
     public GameObject objInnLevelModel;
 
     protected StoreInfoManager storeInfoManager;
-    protected GameItemsManager gameItemsManager;
+    protected IconDataManager  iconDataManager;
 
     public GameDataBean gameData;
+
     private void Awake()
     {
         storeInfoManager = Find<StoreInfoManager>(ImportantTypeEnum.StoreInfoManager);
-        gameItemsManager = Find<GameItemsManager>(ImportantTypeEnum.GameItemsManager);
+        iconDataManager = Find<IconDataManager>(ImportantTypeEnum.UIManager);
     }
 
     public void InitData(GameDataBean gameData)
     {
+        CptUtil.RemoveChildsByActive(objInnLevelContainer);
         this.gameData = gameData;
         storeInfoManager.SetCallBack(this);
         storeInfoManager.GetStoreInfoForGuildInnLevel();
@@ -31,7 +36,6 @@ public class UITownGuildImproveInnInfo : BaseMonoBehaviour, StoreInfoManager.ICa
     /// <param name="spInnLevel"></param>
     private void CreateInnLevelItem(string innLevelStr, Sprite spInnLevel, StoreInfoBean storeInfo)
     {
-        CptUtil.RemoveChildsByActive(objInnLevelContainer);
         GameObject objItem = Instantiate(objInnLevelContainer, objInnLevelModel);
         ItemTownGuildImproveInnLevelCpt itemCpt = objItem.GetComponent<ItemTownGuildImproveInnLevelCpt>();
         itemCpt.SetData(innLevelStr, spInnLevel, storeInfo);
@@ -60,8 +64,14 @@ public class UITownGuildImproveInnInfo : BaseMonoBehaviour, StoreInfoManager.ICa
     #region 数据回调
     public void GetStoreInfoSuccess(StoreTypeEnum type, List<StoreInfoBean> listData)
     {
+        tvNull.gameObject.SetActive(false);
         string innLevelStr = gameData.innAttributes.GetNextInnLevel(out int levelTitle, out int levelStar);
-        Sprite spInnLevel = gameItemsManager.GetItemsSpriteByName("inn_level_" + levelTitle + "_" + (levelStar - 1));
+        if (levelTitle > 3)
+        {
+            tvNull.gameObject.SetActive(true);
+            return;
+        }
+        Sprite spInnLevel = iconDataManager.GetIconSpriteByName("inn_level_" + levelTitle + "_" + (levelStar - 1));
         StoreInfoBean storeInfoData = GetStoreInfoByLevel(listData, levelTitle, levelStar);
         if (storeInfoData != null)
         {

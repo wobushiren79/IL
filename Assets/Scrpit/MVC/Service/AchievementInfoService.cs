@@ -2,15 +2,11 @@
 using UnityEditor;
 using System.Collections.Generic;
 
-public class AchievementInfoService 
+public class AchievementInfoService : BaseMVCService
 {
-    private readonly string tableNameForMain;
-    private readonly string tableNameForLeft;
-
-    public AchievementInfoService()
+    public AchievementInfoService() : base("achievement_info", "achievement_info_details_" + GameCommonInfo.GameConfig.language)
     {
-        tableNameForMain = "achievement_info";
-        tableNameForLeft = "achievement_info_details_" + GameCommonInfo.GameConfig.language;
+
     }
 
     /// <summary>
@@ -19,11 +15,7 @@ public class AchievementInfoService
     /// <returns></returns>
     public List<AchievementInfoBean> QueryAllData()
     {
-        return SQliteHandle.LoadTableData<AchievementInfoBean>
-            (ProjectConfigInfo.DATA_BASE_INFO_NAME, tableNameForMain,
-            new string[] { tableNameForLeft },
-            new string[] { "id" },
-            new string[] { "ach_id" });
+        return BaseQueryAllData<AchievementInfoBean>("ach_id");
     }
 
     /// <summary>
@@ -33,14 +25,8 @@ public class AchievementInfoService
     /// <returns></returns>
     public List<AchievementInfoBean> QueryDataByIds(long[] ids)
     {
-        string[] leftTable = new string[] { tableNameForLeft };
-        string[] mainKey = new string[] { "id" };
-        string[] leftKey = new string[] { "ach_id" };
-        string[] colName = new string[] { tableNameForMain + ".id" };
-        string[] operations = new string[] { "IN" };
         string values = TypeConversionUtil.ArrayToStringBySplit(ids, ",");
-        string[] colValue = new string[] { "(" + values + ")" };
-        return SQliteHandle.LoadTableData<AchievementInfoBean>(ProjectConfigInfo.DATA_BASE_INFO_NAME, tableNameForMain, leftTable, mainKey, leftKey, colName, operations, colValue);
+        return BaseQueryData<AchievementInfoBean>("ach_id", tableNameForMain + ".id", "IN", "(" + values + ")");
     }
 
     /// <summary>
@@ -50,12 +36,37 @@ public class AchievementInfoService
     /// <returns></returns>
     public List<AchievementInfoBean> QueryDataByType(int type)
     {
-        string[] leftTable = new string[] { tableNameForLeft };
-        string[] mainKey = new string[] { "id" };
-        string[] leftKey = new string[] { "ach_id" };
-        string[] colName = new string[] { tableNameForMain + ".type" };
-        string[] operations = new string[] { "=" };
-        string[] colValue = new string[] { type + "" };
-        return SQliteHandle.LoadTableData<AchievementInfoBean>(ProjectConfigInfo.DATA_BASE_INFO_NAME, tableNameForMain, leftTable, mainKey, leftKey, colName, operations, colValue);
+        return BaseQueryData<AchievementInfoBean>("ach_id", tableNameForMain + ".type", type + "");
+    }
+
+    /// <summary>
+    /// 通过ID删除数据
+    /// </summary>
+    /// <param name="id"></param>
+    public void DeleteDataById(long id)
+    {
+        bool isDelete = BaseDeleteData(tableNameForMain, "id", id + "");
+        if (isDelete)
+            BaseDeleteData(tableNameForLeft, "ach_id", id + "");
+    }
+
+    /// <summary>
+    /// 插入数据
+    /// </summary>
+    /// <param name="achievementInfo"></param>
+    public void InsertData(AchievementInfoBean achievementInfo)
+    {
+        List<string> listLeftName = new List<string>() { "ach_id","name","content"};
+        BaseInsertDataWithLeft(achievementInfo, listLeftName);
+    }
+
+    /// <summary>
+    /// 更新数据
+    /// </summary>
+    /// <param name="achievementInfo"></param>
+    public void Update(AchievementInfoBean achievementInfo)
+    {
+        DeleteDataById(achievementInfo.id);
+        InsertData(achievementInfo);
     }
 }

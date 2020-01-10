@@ -37,14 +37,15 @@ public class ItemTownGuildAchievementCpt : ItemGameBaseCpt
     public void SetData(AchievementInfoBean data)
     {
         this.achievementInfo = data;
-        SetIcon(data.id, data.pre_ach_id, data.icon_key);
+        SetIcon(data.id, data.pre_ach_id, data.icon_key, data.pre_data);
     }
 
-    public void SetIcon(long achId, long preId, string iconKey)
+    public void SetIcon(long achId, long preId, string iconKey, string preData)
     {
-        GameItemsManager gameItemsManager = GetUIManager<UIGameManager>().gameItemsManager;
         GameDataManager gameDataManager = GetUIManager<UIGameManager>().gameDataManager;
-        if (gameItemsManager == null || ivIcon == null || gameDataManager == null || ivBackground == null)
+        bool isAllPre = PreTypeEnumTools.CheckIsAllPre(gameDataManager.gameData, preData);
+
+        if (ivIcon == null || gameDataManager == null || ivBackground == null)
             return;
         //检测是否拥有该成就
         bool hasAch = gameDataManager.gameData.GetAchievementData().CheckHasAchievement(achId);
@@ -57,7 +58,7 @@ public class ItemTownGuildAchievementCpt : ItemGameBaseCpt
         if (preId == 0)
         {
             //检测是否符合条件
-            if (CheckAchieve())
+            if (isAllPre)
             {
                 SetAchStatus(AchievementStatusEnum.ToBeConfirmed);
             }
@@ -72,7 +73,7 @@ public class ItemTownGuildAchievementCpt : ItemGameBaseCpt
             if (hasPre)
             {
                 //检测是否符合条件
-                if (CheckAchieve())
+                if (isAllPre)
                 {
                     SetAchStatus(AchievementStatusEnum.ToBeConfirmed);
                 }
@@ -123,10 +124,10 @@ public class ItemTownGuildAchievementCpt : ItemGameBaseCpt
 
     public void SetIcon(int type, string iconKey, string iconKeyRemark, Material material)
     {
-        GameItemsManager gameItemsManager = GetUIManager<UIGameManager>().gameItemsManager;
+        IconDataManager iconDataManager = GetUIManager<UIGameManager>().iconDataManager;
         InnFoodManager innFoodManager = GetUIManager<UIGameManager>().innFoodManager;
 
-        if (gameItemsManager == null || ivIcon == null)
+        if (iconDataManager == null || ivIcon == null)
             return;
         Sprite spIcon;
         if (type == 1)
@@ -135,7 +136,7 @@ public class ItemTownGuildAchievementCpt : ItemGameBaseCpt
         }
         else
         {
-            spIcon = gameItemsManager.GetItemsSpriteByName(iconKey);
+            spIcon = iconDataManager.GetIconSpriteByName(iconKey);
         }
         if (spIcon != null)
             ivIcon.sprite = spIcon;
@@ -145,7 +146,7 @@ public class ItemTownGuildAchievementCpt : ItemGameBaseCpt
         //设置备用图标
         if (!CheckUtil.StringIsNull(iconKeyRemark))
         {
-            Sprite spIconRemark = gameItemsManager.GetItemsSpriteByName(iconKeyRemark);
+            Sprite spIconRemark = iconDataManager.GetIconSpriteByName(iconKeyRemark);
             if (spIconRemark != null)
             {
                 ivIconRemark.sprite = spIconRemark;
@@ -160,18 +161,6 @@ public class ItemTownGuildAchievementCpt : ItemGameBaseCpt
     }
 
     /// <summary>
-    /// 检测成就
-    /// </summary>
-    /// <returns></returns>
-    public bool CheckAchieve()
-    {
-        GameDataManager gameDataManager = GetUIManager<UIGameManager>().gameDataManager;
-        if (achievementInfo == null || gameDataManager == null)
-            return false;
-        return achievementInfo.CheckAchievement(gameDataManager.gameData);
-    }
-
-    /// <summary>
     /// 完成成就
     /// </summary>
     public void SubmitAchievement()
@@ -182,7 +171,7 @@ public class ItemTownGuildAchievementCpt : ItemGameBaseCpt
         if (status == AchievementStatusEnum.ToBeConfirmed)
         {
             //添加该成就和奖励
-            gameDataManager.gameData.AddAchievement(achievementInfo);
+            gameDataManager.gameData.GetAchievementData().AddAchievement(achievementInfo.id);
             //设置状态
             SetAchStatus(AchievementStatusEnum.Completed);
             //刷新UI

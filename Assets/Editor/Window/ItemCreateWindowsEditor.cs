@@ -8,6 +8,7 @@ public class ItemCreateWindowsEditor : EditorWindow, StoreInfoManager.ICallBack
     StoreInfoManager storeInfoManager;
     ItemsInfoService itemsInfoService;
     StoreInfoService storeInfoService;
+    AchievementInfoService achievementInfoService;
     [MenuItem("Tools/Window/ItemCreate")]
     static void CreateWindows()
     {
@@ -29,12 +30,14 @@ public class ItemCreateWindowsEditor : EditorWindow, StoreInfoManager.ICallBack
         gameItemsManager.itemsInfoController.GetAllItemsInfo();
         itemsInfoService = new ItemsInfoService();
         storeInfoService = new StoreInfoService();
+        achievementInfoService = new AchievementInfoService();
     }
 
     public void RefreshData()
     {
         gameItemsManager.itemsInfoController.GetAllItemsInfo();
         listFindItem.Clear();
+        listFindStoreItem.Clear();
     }
 
     private Vector2 scrollPosition = Vector2.zero;
@@ -43,12 +46,17 @@ public class ItemCreateWindowsEditor : EditorWindow, StoreInfoManager.ICallBack
     public Sprite spriteCreateIcon;
     public GeneralEnum createItemType;
 
-    public StoreInfoBean createStoreInfoBean = new StoreInfoBean();
+    public StoreInfoBean createStoreInfo = new StoreInfoBean();
     public StoreTypeEnum createStoreItemType;
+
+    public AchievementInfoBean createAchInfo = new AchievementInfoBean();
     long inputId = 0;
+
+
 
     public List<ItemsInfoBean> listFindItem = new List<ItemsInfoBean>();
     public List<StoreInfoBean> listFindStoreItem = new List<StoreInfoBean>();
+    public List<AchievementInfoBean> listFindAchItem = new List<AchievementInfoBean>();
     private void OnGUI()
     {
         //滚动布局
@@ -60,14 +68,177 @@ public class ItemCreateWindowsEditor : EditorWindow, StoreInfoManager.ICallBack
         }
 
         GUICreateItem();
-        GUILayout.Label("------------------------------------------------------------------------------------------------");
         GUIFindItem();
         GUILayout.Label("------------------------------------------------------------------------------------------------");
         GUICreateStoreItem();
-        GUILayout.Label("------------------------------------------------------------------------------------------------");
         GUIFindStoreItem();
+        GUILayout.Label("------------------------------------------------------------------------------------------------");
+        GUICreateAchItem();
+        GUIFindAchItem();
         GUILayout.EndVertical();
         GUILayout.EndScrollView();
+    }
+
+    /// <summary>
+    /// 创建成就UI
+    /// </summary>
+    private void GUICreateAchItem()
+    {
+        GUILayout.Label("创建成就");
+        GUIAchItem(createAchInfo, true);
+    }
+
+    private string findAchIds = "";
+
+    /// <summary>
+    /// 成就查询UI
+    /// </summary>
+    private void GUIFindAchItem()
+    {
+        GUILayout.Label("查询成就");
+        GUILayout.BeginHorizontal();
+        GUILayout.Label("成就ID：", GUILayout.Width(50), GUILayout.Height(20));
+        findAchIds = EditorGUILayout.TextArea(findAchIds + "", GUILayout.Width(100), GUILayout.Height(20));
+        if (GUILayout.Button("查询", GUILayout.Width(100), GUILayout.Height(20)))
+        {
+
+        }
+        if (GUILayout.Button("查询所有成就", GUILayout.Width(100), GUILayout.Height(20)))
+        {
+            listFindAchItem = achievementInfoService.QueryAllData();
+        }
+        if (GUILayout.Button("查询通用成就", GUILayout.Width(100), GUILayout.Height(20)))
+        {
+            listFindAchItem = achievementInfoService.QueryDataByType((int)AchievementTypeEnum.Normal);
+        }
+        GUILayout.EndHorizontal();
+        if (listFindAchItem == null)
+            return;
+        foreach (AchievementInfoBean itemAchInfo in listFindAchItem)
+        {
+            GUIAchItem(itemAchInfo, false);
+        }
+    }
+
+    /// <summary>
+    /// 成就UI item
+    /// </summary>
+    /// <param name="achievementInfo"></param>
+    /// <param name="isCreate"></param>
+    private void GUIAchItem(AchievementInfoBean achievementInfo, bool isCreate)
+    {
+        EditorGUILayout.BeginHorizontal();
+        if (isCreate)
+        {
+            if (GUILayout.Button("创建", GUILayout.Width(100), GUILayout.Height(20)))
+            {
+                achievementInfoService.InsertData(achievementInfo);
+            }
+        }
+        else
+        {
+            if (GUILayout.Button("删除", GUILayout.Width(100), GUILayout.Height(20)))
+            {
+                achievementInfoService.DeleteDataById(achievementInfo.id);
+                listFindAchItem.Remove(achievementInfo);
+            }
+            if (GUILayout.Button("更新", GUILayout.Width(100), GUILayout.Height(20)))
+            {
+                achievementInfoService.Update(achievementInfo);
+            }
+        }
+
+        GUILayout.Label("成就ID：", GUILayout.Width(50), GUILayout.Height(20));
+        achievementInfo.id = long.Parse(EditorGUILayout.TextArea(achievementInfo.id + "", GUILayout.Width(100), GUILayout.Height(20)));
+        achievementInfo.ach_id = achievementInfo.id;
+        achievementInfo.type = (int)(AchievementTypeEnum)EditorGUILayout.EnumPopup("成就类型", (AchievementTypeEnum)achievementInfo.type, GUILayout.Width(300), GUILayout.Height(20));
+        string path = "Assets/Texture/Common/UI/";
+        path += (achievementInfo.icon_key + ".png");
+        Texture2D iconTex = EditorGUIUtility.FindTexture(path);
+        if (iconTex)
+        {
+            GUILayout.Label(iconTex, GUILayout.Width(64), GUILayout.Height(64));
+        }
+        GUILayout.Label("icon_key：", GUILayout.Width(150), GUILayout.Height(20));
+        achievementInfo.icon_key = EditorGUILayout.TextArea(achievementInfo.icon_key + "", GUILayout.Width(150), GUILayout.Height(20));
+        GUILayout.Label("名称：", GUILayout.Width(100), GUILayout.Height(20));
+        achievementInfo.name = EditorGUILayout.TextArea(achievementInfo.name + "", GUILayout.Width(150), GUILayout.Height(20));
+        GUILayout.Label("内容：", GUILayout.Width(100), GUILayout.Height(20));
+        achievementInfo.content = EditorGUILayout.TextArea(achievementInfo.content + "", GUILayout.Width(150), GUILayout.Height(20));
+
+        //前置相关
+        EditorGUILayout.BeginVertical();
+        GUILayout.Label("前置：", GUILayout.Width(100), GUILayout.Height(20));
+        if (GUILayout.Button("添加前置", GUILayout.Width(100), GUILayout.Height(20)))
+        {
+            achievementInfo.pre_data += ("|" + EnumUtil.GetEnumName(PreTypeEnum.PayMoneyL) + ":" + "1|");
+        }
+        List<string> listPreData = StringUtil.SplitBySubstringForListStr(achievementInfo.pre_data, '|');
+        achievementInfo.pre_data = "";
+        for (int i = 0; i < listPreData.Count; i++)
+        {
+            string itemPreData = listPreData[i];
+            if (CheckUtil.StringIsNull(itemPreData))
+            {
+                continue;
+            }
+            EditorGUILayout.BeginHorizontal();
+            if (GUILayout.Button("删除", GUILayout.Width(100), GUILayout.Height(20)))
+            {
+                listPreData.RemoveAt(i);
+                i--;
+                continue;
+            }
+            List<string> listItemPreData = StringUtil.SplitBySubstringForListStr(itemPreData, ':');
+            listItemPreData[0] = EnumUtil.GetEnumName(EditorGUILayout.EnumPopup("前置类型", EnumUtil.GetEnum<PreTypeEnum>(listItemPreData[0]), GUILayout.Width(300), GUILayout.Height(20)));
+            listItemPreData[1] = EditorGUILayout.TextArea(listItemPreData[1] + "", GUILayout.Width(100), GUILayout.Height(20));
+            EditorGUILayout.EndHorizontal();
+            achievementInfo.pre_data += (listItemPreData[0] + ":" + listItemPreData[1]) + "|";
+        }
+        EditorGUILayout.EndVertical();
+
+        //奖励相关
+        EditorGUILayout.BeginVertical();
+        GUILayout.Label("奖励：", GUILayout.Width(100), GUILayout.Height(20));
+        if (GUILayout.Button("添加奖励", GUILayout.Width(100), GUILayout.Height(20)))
+        {
+            achievementInfo.reward_data += (EnumUtil.GetEnumName(RewardTypeEnum.AddWorkerNumber) + ":" + "1|");
+        }
+        List<string> listRewardData = StringUtil.SplitBySubstringForListStr(achievementInfo.reward_data, '|');
+        achievementInfo.reward_data = "";
+        for (int i = 0; i < listRewardData.Count; i++)
+        {
+            string itemRewardData = listRewardData[i];
+            if (CheckUtil.StringIsNull(itemRewardData))
+            {
+                continue;
+            }
+            EditorGUILayout.BeginHorizontal();
+            if (GUILayout.Button("删除", GUILayout.Width(100), GUILayout.Height(20)))
+            {
+                listRewardData.RemoveAt(i);
+                i--;
+                continue;
+            }
+            List<string> listItemRewardData = StringUtil.SplitBySubstringForListStr(itemRewardData, ':');
+            listItemRewardData[0] = EnumUtil.GetEnumName(EditorGUILayout.EnumPopup("奖励类型", EnumUtil.GetEnum<RewardTypeEnum>(listItemRewardData[0]), GUILayout.Width(300), GUILayout.Height(20)));
+            listItemRewardData[1] = EditorGUILayout.TextArea(listItemRewardData[1] + "", GUILayout.Width(100), GUILayout.Height(20));
+            EditorGUILayout.EndHorizontal();
+            achievementInfo.reward_data += (listItemRewardData[0] + ":" + listItemRewardData[1]) + "|";
+        }
+        EditorGUILayout.EndVertical();
+
+
+        if (!isCreate)
+        {
+            if (GUILayout.Button("更新", GUILayout.Width(100), GUILayout.Height(20)))
+            {
+                achievementInfoService.Update(achievementInfo);
+            }
+        }
+
+        EditorGUILayout.EndHorizontal();
+        EditorGUILayout.Space(20);
     }
 
     /// <summary>
@@ -76,7 +247,7 @@ public class ItemCreateWindowsEditor : EditorWindow, StoreInfoManager.ICallBack
     private void GUICreateStoreItem()
     {
         GUILayout.Label("创建商品");
-        GUIStoreItem(createStoreInfoBean, true);
+        GUIStoreItem(createStoreInfo, true);
     }
 
     private string findStoreIds = "";
@@ -181,10 +352,10 @@ public class ItemCreateWindowsEditor : EditorWindow, StoreInfoManager.ICallBack
     {
         GUILayout.Label("客栈等级：", GUILayout.Width(100), GUILayout.Height(20));
         storeInfo.mark_type = int.Parse(EditorGUILayout.TextArea(storeInfo.mark_type + "", GUILayout.Width(100), GUILayout.Height(20)));
-        GUILayout.Label("升级所需价格LMS：", GUILayout.Width(100), GUILayout.Height(20));
-        storeInfo.price_l = long.Parse(EditorGUILayout.TextArea(storeInfo.price_l + "", GUILayout.Width(100), GUILayout.Height(20)));
-        storeInfo.price_m = long.Parse(EditorGUILayout.TextArea(storeInfo.price_m + "", GUILayout.Width(100), GUILayout.Height(20)));
-        storeInfo.price_s = long.Parse(EditorGUILayout.TextArea(storeInfo.price_s + "", GUILayout.Width(100), GUILayout.Height(20)));
+        //GUILayout.Label("升级所需价格LMS：", GUILayout.Width(100), GUILayout.Height(20));
+        //storeInfo.price_l = long.Parse(EditorGUILayout.TextArea(storeInfo.price_l + "", GUILayout.Width(100), GUILayout.Height(20)));
+        //storeInfo.price_m = long.Parse(EditorGUILayout.TextArea(storeInfo.price_m + "", GUILayout.Width(100), GUILayout.Height(20)));
+        //storeInfo.price_s = long.Parse(EditorGUILayout.TextArea(storeInfo.price_s + "", GUILayout.Width(100), GUILayout.Height(20)));
 
         //前置相关
         EditorGUILayout.BeginVertical();

@@ -92,39 +92,6 @@ public class GameDataBean
     }
 
     /// <summary>
-    /// 添加成就和奖励
-    /// </summary>
-    /// <param name="achievementInfo"></param>
-    public void AddAchievement(AchievementInfoBean achievementInfo)
-    {
-        //扣除需要支付的数据
-        PayMoney(achievementInfo.achieve_pay_l, achievementInfo.achieve_pay_m, achievementInfo.achieve_pay_s);
-        //添加成就ID
-        GetAchievementData().AddAchievement(achievementInfo.id);
-        //添加奖励
-        if (achievementInfo.reward_guildcoin != 0)
-        {
-            guildCoin += achievementInfo.reward_guildcoin;
-        }
-        //添加装备
-        if (!CheckUtil.StringIsNull(achievementInfo.reward_items_ids))
-        {
-            foreach (long id in achievementInfo.GetRewardItems())
-            {
-                AddNewItems(id, 1);
-            }
-        }
-        //添加建筑材料
-        if (!CheckUtil.StringIsNull(achievementInfo.reward_build_ids))
-        {
-            foreach (long id in achievementInfo.GetRewardBuild())
-            {
-                ChangeBuildNumber(id, 1);
-            }
-        }
-    }
-
-    /// <summary>
     /// 添加事件
     /// </summary>
     /// <param name="eventId"></param>

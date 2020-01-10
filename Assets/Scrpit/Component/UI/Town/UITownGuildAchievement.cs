@@ -12,6 +12,7 @@ public class UITownGuildAchievement : UIBaseOne, IRadioGroupCallBack, IAchieveme
 
     private AchievementInfoController mAchievementInfoController;
     public List<AchievementInfoBean> listAchData;
+
     private void Awake()
     {
         mAchievementInfoController = new AchievementInfoController(this, this);

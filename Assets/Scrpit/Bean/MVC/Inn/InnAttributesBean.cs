@@ -14,6 +14,15 @@ public class InnAttributesBean
     public long richness;//菜品丰富度
 
     /// <summary>
+    /// 客栈升级
+    /// </summary>
+    public void SetInnLevelUp()
+    {
+        GetNextInnLevel(out int nextLevelTitle, out int nextLevelStar);
+        innLevel = nextLevelTitle * 10 + nextLevelStar;
+    }
+
+    /// <summary>
     /// 获取等级名称
     /// </summary>
     /// <param name="levelTitle"></param>
@@ -56,6 +65,7 @@ public class InnAttributesBean
         }
         return levelTitleStr + levelStarStr;
     }
+
     /// <summary>
     /// 获取客栈等级
     /// </summary>

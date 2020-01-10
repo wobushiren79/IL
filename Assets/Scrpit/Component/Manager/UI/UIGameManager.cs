@@ -24,6 +24,7 @@ public class UIGameManager : BaseUIManager
     public InnFoodManager innFoodManager;
     public NpcInfoManager npcInfoManager;
     public StoreInfoManager storeInfoManager;
+    public IconDataManager iconDataManager;
     //UI相关
     public DialogManager dialogManager;
     public ToastManager toastManager;
@@ -50,6 +51,7 @@ public class UIGameManager : BaseUIManager
         innFoodManager = Find<InnFoodManager>(ImportantTypeEnum.FoodManager);
         npcInfoManager = Find<NpcInfoManager>(ImportantTypeEnum.NpcManager);
         storeInfoManager = Find<StoreInfoManager>(ImportantTypeEnum.StoreInfoManager);
+        iconDataManager= Find<IconDataManager>(ImportantTypeEnum.UIManager);
 
         dialogManager = Find<DialogManager>(ImportantTypeEnum.DialogManager);
         toastManager = Find<ToastManager>(ImportantTypeEnum.ToastManager);

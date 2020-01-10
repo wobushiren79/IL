@@ -2,6 +2,8 @@
 using UnityEditor;
 using UnityEngine.UI;
 using DG.Tweening;
+using System.Collections.Generic;
+
 public class AchievementDialogView : DialogView
 {
     public Image ivIcon;
@@ -13,9 +15,19 @@ public class AchievementDialogView : DialogView
     public GameObject objRewardModel;
 
     public AchievementInfoBean achievementInfo;
-    public GameItemsManager gameItemsManager;
-    public InnBuildManager innBuildManager;
-    public InnFoodManager innFoodManager;
+
+    protected GameItemsManager gameItemsManager;
+    protected IconDataManager iconDataManager;
+    protected InnBuildManager innBuildManager;
+    protected InnFoodManager innFoodManager;
+
+    private void Awake()
+    {
+        gameItemsManager = Find<GameItemsManager>(ImportantTypeEnum.GameItemsManager);
+        iconDataManager = Find<IconDataManager>(ImportantTypeEnum.UIManager);
+        innBuildManager = Find<InnBuildManager>(ImportantTypeEnum.InnBuildManager);
+        innFoodManager = Find<InnFoodManager>(ImportantTypeEnum.FoodManager);
+    }
 
     public void SetData(AchievementInfoBean achievementInfo)
     {
@@ -81,57 +93,19 @@ public class AchievementDialogView : DialogView
     {
         float animTimeDelay = 1f;
         CptUtil.RemoveChildsByActive(objRewardContent.transform);
-        //添加奖励
-        if (achievementInfo.reward_guildcoin != 0)
+        Dictionary<RewardTypeEnum, string> listRewardData = RewardTypeEnumTools.GetRewardData(achievementInfo.reward_data);
+        foreach (var itemRewardData in listRewardData)
         {
-            Sprite spIcon = gameItemsManager.GetItemsSpriteByName("guild_coin_2");
-            CreateRewardItem(spIcon, animTimeDelay);
+            RewardTypeEnum rewardType = itemRewardData.Key;
+            Sprite spReward = RewardTypeEnumTools.GetRewardSprite(rewardType, iconDataManager);
+            CreateRewardItem(spReward, animTimeDelay);
             animTimeDelay += 0.5f;
-        }
-        //添加装备
-        if (!CheckUtil.StringIsNull(achievementInfo.reward_items_ids))
-        {
-            foreach (long id in achievementInfo.GetRewardItems())
-            {
-                Sprite spIcon = null;
-                ItemsInfoBean itemsInfo = gameItemsManager.GetItemsById(id);
-                if (itemsInfo.items_type == (int)GeneralEnum.Hat)
-                {
-                    spIcon = gameItemsManager.GetItemsSpriteByName("unknown_hat_1");
-                }
-                else if (itemsInfo.items_type == (int)GeneralEnum.Clothes)
-                {
-                    spIcon = gameItemsManager.GetItemsSpriteByName("unknown_clothes_1");
-                }
-                else if (itemsInfo.items_type == (int)GeneralEnum.Shoes)
-                {
-                    spIcon = gameItemsManager.GetItemsSpriteByName("unknown_shoes_1");
-                }
-                else
-                {
-                    spIcon = gameItemsManager.GetItemsSpriteByName(itemsInfo.icon_key);
-                }
-                CreateRewardItem(spIcon, animTimeDelay);
-                animTimeDelay += 0.5f;
-            }
-        }
-        //添加建筑材料
-        if (!CheckUtil.StringIsNull(achievementInfo.reward_build_ids))
-        {
-            foreach (long id in achievementInfo.GetRewardBuild())
-            {
-                BuildItemBean buildItem = innBuildManager.GetBuildDataById(id);
-                Sprite spIcon = innBuildManager.GetFurnitureSpriteByName(buildItem.icon_key);
-                CreateRewardItem(spIcon, animTimeDelay);
-                animTimeDelay += 0.5f;
-            }
         }
     }
 
     private void CreateRewardItem(Sprite spIcon, float delay)
     {
-        GameObject objReward = Instantiate(objRewardModel, objRewardContent.transform);
-        objReward.SetActive(true);
+        GameObject objReward = Instantiate(objRewardContent, objRewardModel);
         Image ivIcon = CptUtil.GetCptInChildrenByName<Image>(objReward, "Icon");
         if (ivIcon != null && spIcon != null)
             ivIcon.sprite = spIcon;

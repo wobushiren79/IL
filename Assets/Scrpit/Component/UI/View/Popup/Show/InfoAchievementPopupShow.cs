@@ -20,14 +20,25 @@ public class InfoAchievementPopupShow : PopupShowView
 
     public Material materialGray;
 
-    public GameDataManager gameDataManager;
-    public GameItemsManager gameItemsManager;
-    public CharacterDressManager characterDressManager;
-    public InnBuildManager innBuildManager;
-    public InnFoodManager innFoodManager;
+    protected GameDataManager gameDataManager;
+    protected GameItemsManager gameItemsManager;
+    protected IconDataManager iconDataManager;
+    protected CharacterDressManager characterDressManager;
+    protected InnBuildManager innBuildManager;
+    protected InnFoodManager innFoodManager;
 
     public AchievementInfoBean achievementInfo;
     public ItemTownGuildAchievementCpt.AchievementStatusEnum status;
+
+    private void Awake()
+    {
+        gameDataManager = Find<GameDataManager>(ImportantTypeEnum.GameDataManager);
+        gameItemsManager = Find<GameItemsManager>(ImportantTypeEnum.GameItemsManager);
+        iconDataManager = Find<IconDataManager>(ImportantTypeEnum.UIManager);
+        characterDressManager = Find<CharacterDressManager>(ImportantTypeEnum.CharacterManager);
+        innBuildManager = Find<InnBuildManager>(ImportantTypeEnum.InnBuildManager);
+        innFoodManager = Find<InnFoodManager>(ImportantTypeEnum.FoodManager);
+    }
 
     public void SetData(ItemTownGuildAchievementCpt.AchievementStatusEnum status, AchievementInfoBean achievementInfo)
     {
@@ -50,7 +61,7 @@ public class InfoAchievementPopupShow : PopupShowView
         }
         else
         {
-            spIcon = gameItemsManager.GetItemsSpriteByName(iconKey);
+            spIcon = iconDataManager.GetIconSpriteByName(iconKey);
         }
 
         if (spIcon != null && ivIcon != null && ivRemark != null)
@@ -74,10 +85,9 @@ public class InfoAchievementPopupShow : PopupShowView
         if (ivRemark != null && !CheckUtil.StringIsNull(iconKeyRemark))
         {
             ivRemark.gameObject.SetActive(true);
-            Sprite spIconRemark = gameItemsManager.GetItemsSpriteByName(iconKeyRemark);
+            Sprite spIconRemark = iconDataManager.GetIconSpriteByName(iconKey);
             if (spIconRemark != null)
                 ivRemark.sprite = spIconRemark;
-
         }
         else
         {
@@ -135,50 +145,12 @@ public class InfoAchievementPopupShow : PopupShowView
         CptUtil.RemoveChildsByActive(objAchieveContent.transform);
         if (data == null)
             return;
-        //携带金钱数
-        if (data.achieve_money_s != 0)
+        Dictionary<PreTypeEnum,string> listPreData= PreTypeEnumTools.GetPreData(data.pre_data);
+        foreach (var itemPreData in listPreData)
         {
-            CreateProStr(gameDataManager.gameData.moneyS, data.achieve_money_s, out string proStr, out float pro);
-            CreateAchieveItem(GameCommonInfo.GetUITextById(11101) + proStr, pro);
-        }
-        if (data.achieve_money_m != 0)
-        {
-            CreateProStr(gameDataManager.gameData.moneyM, data.achieve_money_m, out string proStr, out float pro);
-            CreateAchieveItem(GameCommonInfo.GetUITextById(11102) + proStr, pro);
-        }
-        if (data.achieve_money_l != 0)
-        {
-            CreateProStr(gameDataManager.gameData.moneyL, data.achieve_money_l, out string proStr, out float pro);
-            CreateAchieveItem(GameCommonInfo.GetUITextById(11103) + proStr, pro);
-        }
-        //支付金钱数
-        if (data.achieve_pay_s != 0)
-        {
-            CreateProStr(gameDataManager.gameData.moneyS, data.achieve_pay_s, out string proStr, out float pro);
-            CreateAchieveItem(GameCommonInfo.GetUITextById(11104) + proStr, pro);
-        }
-        if (data.achieve_pay_m != 0)
-        {
-            CreateProStr(gameDataManager.gameData.moneyM, data.achieve_pay_m, out string proStr, out float pro);
-            CreateAchieveItem(GameCommonInfo.GetUITextById(11105) + proStr, pro);
-        }
-        if (data.achieve_pay_l != 0)
-        {
-            CreateProStr(gameDataManager.gameData.moneyL, data.achieve_pay_l, out string proStr, out float pro);
-            CreateAchieveItem(GameCommonInfo.GetUITextById(11106) + proStr, pro);
-        }
-        //销售数量要求
-        if (data.achieve_sell_number != 0)
-        {
-            MenuOwnBean menuOwn = gameDataManager.gameData.GetMenuById(data.remark_id);
-            long sellNumber = 0;
-            if (menuOwn != null)
-            {
-                sellNumber = menuOwn.sellNumber;
-            }
-            MenuInfoBean menuInfo = innFoodManager.GetFoodDataById(data.remark_id);
-            CreateProStr(sellNumber, data.achieve_sell_number, out string proStr, out float pro);
-            CreateAchieveItem(string.Format(GameCommonInfo.GetUITextById(11107), menuInfo == null ? "???" : menuInfo.name, proStr), pro);
+            PreTypeEnum preType = itemPreData.Key;
+            string preDes=  PreTypeEnumTools.GetPreDescribe(preType, itemPreData.Value, gameDataManager.gameData,out bool isPre,out float progress);
+            CreateAchieveItem(preDes, progress);
         }
     }
 
@@ -191,58 +163,67 @@ public class InfoAchievementPopupShow : PopupShowView
         CptUtil.RemoveChildsByActive(objRewardContent.transform);
         if (data == null || gameItemsManager == null)
             return;
-        GameObject objTitle = Instantiate(objRewardTitle, objRewardContent.transform);
-        objTitle.SetActive(true);
-        //奖励-公会硬币
-        if (data.reward_guildcoin != 0)
+
+        Dictionary<RewardTypeEnum, string> listRewardData = RewardTypeEnumTools.GetRewardData(data.reward_data);
+        GameObject objTitle = Instantiate(objRewardContent, objRewardTitle);
+        foreach (var itemRewardData in listRewardData)
         {
-            Sprite spIcon = gameItemsManager.GetItemsSpriteByName("guild_coin_2");
-            CreateRewardItem(GameCommonInfo.GetUITextById(11206), data.reward_guildcoin, spIcon);
+            RewardTypeEnum rewardType = itemRewardData.Key;
+            string rewardDes=  RewardTypeEnumTools.GetRewardDescribe(rewardType, itemRewardData.Value);
+            Sprite spReward = RewardTypeEnumTools.GetRewardSprite(rewardType, iconDataManager);
+            CreateRewardItem(rewardDes, spReward);
         }
-        //奖励-道具
-        if (!CheckUtil.StringIsNull(data.reward_items_ids))
-        {
-            List<long> listItems = data.GetRewardItems();
-            foreach (long itemId in listItems)
-            {
-                ItemsInfoBean itemsInfo = gameItemsManager.GetItemsById(itemId);
-                if (itemsInfo == null)
-                    continue;
-                Sprite spIcon;
-                if (itemsInfo.items_type == (int)GeneralEnum.Hat)
-                {
-                    spIcon = gameItemsManager.GetItemsSpriteByName("unknown_hat_1");
-                }
-                else if (itemsInfo.items_type == (int)GeneralEnum.Clothes)
-                {
-                    spIcon = gameItemsManager.GetItemsSpriteByName("unknown_clothes_1");
-                }
-                else if (itemsInfo.items_type == (int)GeneralEnum.Shoes)
-                {
-                    spIcon = gameItemsManager.GetItemsSpriteByName("unknown_shoes_1");
-                }
-                else
-                {
-                    spIcon = gameItemsManager.GetItemsSpriteByName(itemsInfo.icon_key);
-                }
-                CreateRewardItem(itemsInfo.name, 0, spIcon);
-            }
-        }
-        //奖励-建筑材料
-        if (!CheckUtil.StringIsNull(data.reward_build_ids))
-        {
-            List<long> listBuild = data.GetRewardBuild();
-            foreach (long buildId in listBuild)
-            {
-                BuildItemBean buildItem = innBuildManager.GetBuildDataById(buildId);
-                if (buildItem == null)
-                    continue;
-                Sprite spIcon = innBuildManager.GetFurnitureSpriteByName(buildItem.icon_key);
-                CreateRewardItem(buildItem.name, 0, spIcon);
-            }
-        }
+   
+        //}
+        ////奖励-道具
+        //if (!CheckUtil.StringIsNull(data.reward_items_ids))
+        //{
+        //    List<long> listItems = data.GetRewardItems();
+        //    foreach (long itemId in listItems)
+        //    {
+        //        ItemsInfoBean itemsInfo = gameItemsManager.GetItemsById(itemId);
+        //        if (itemsInfo == null)
+        //            continue;
+        //        Sprite spIcon;
+        //        if (itemsInfo.items_type == (int)GeneralEnum.Hat)
+        //        {
+        //            spIcon = gameItemsManager.GetItemsSpriteByName("unknown_hat_1");
+        //        }
+        //        else if (itemsInfo.items_type == (int)GeneralEnum.Clothes)
+        //        {
+        //            spIcon = gameItemsManager.GetItemsSpriteByName("unknown_clothes_1");
+        //        }
+        //        else if (itemsInfo.items_type == (int)GeneralEnum.Shoes)
+        //        {
+        //            spIcon = gameItemsManager.GetItemsSpriteByName("unknown_shoes_1");
+        //        }
+        //        else
+        //        {
+        //            spIcon = gameItemsManager.GetItemsSpriteByName(itemsInfo.icon_key);
+        //        }
+        //        CreateRewardItem(itemsInfo.name, 0, spIcon);
+        //    }
+        //}
+        ////奖励-建筑材料
+        //if (!CheckUtil.StringIsNull(data.reward_build_ids))
+        //{
+        //    List<long> listBuild = data.GetRewardBuild();
+        //    foreach (long buildId in listBuild)
+        //    {
+        //        BuildItemBean buildItem = innBuildManager.GetBuildDataById(buildId);
+        //        if (buildItem == null)
+        //            continue;
+        //        Sprite spIcon = innBuildManager.GetFurnitureSpriteByName(buildItem.icon_key);
+        //        CreateRewardItem(buildItem.name, 0, spIcon);
+        //    }
+        //}
     }
 
+    /// <summary>
+    /// 创建成就前提条件Item
+    /// </summary>
+    /// <param name="name"></param>
+    /// <param name="pro"></param>
     private void CreateAchieveItem(string name, float pro)
     {
         GameObject objAchieve = Instantiate(objAchieveModel, objAchieveContent.transform);
@@ -251,34 +232,12 @@ public class InfoAchievementPopupShow : PopupShowView
         itemAchieve.SetData(name, pro);
     }
 
-    private void CreateRewardItem(string name, long number, Sprite spIcon)
+    private void CreateRewardItem(string name,Sprite spIcon)
     {
         GameObject objReward = Instantiate(objRewardModel, objRewardContent.transform);
         objReward.SetActive(true);
         ItemGamePopupAchRewardCpt itemAchieve = objReward.GetComponent<ItemGamePopupAchRewardCpt>();
-        itemAchieve.SetData(name, number, spIcon);
+        itemAchieve.SetData(name , spIcon);
     }
 
-    private void CreateProStr(long own, long achieve, out string proStr, out float pro)
-    {
-        if (status == ItemTownGuildAchievementCpt.AchievementStatusEnum.Completed)
-        {
-            proStr = "(" + achieve + "/" + achieve + ")";
-            pro = 1;
-        }
-        else
-        {
-            if (own >= achieve)
-            {
-                proStr = "(" + achieve + "/" + achieve + ")";
-                pro = 1;
-            }
-            else
-            {
-                proStr = "(" + own + "/" + achieve + ")";
-                pro = (float)own / (float)achieve;
-            }
-        }
-
-    }
 }
