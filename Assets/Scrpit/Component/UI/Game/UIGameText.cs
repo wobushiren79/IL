@@ -229,16 +229,18 @@ public class UIGameText : BaseUIComponent, ITextInfoView, DialogView.IDialogCall
     /// <returns></returns>
     public string SetContentDetails(string content)
     {
-        UIGameManager uiGameManager = GetUIMananger<UIGameManager>();
+       GameDataManager gameDataManager = GetUIMananger<UIGameManager>().gameDataManager;
         string userName = "";
         int sex = 1;
-        if (uiGameManager.gameDataManager.gameData.userCharacter != null
-            && uiGameManager.gameDataManager.gameData.userCharacter.baseInfo.name != null)
-            userName = uiGameManager.gameDataManager.gameData.userCharacter.baseInfo.name;
-        if (uiGameManager.gameDataManager.gameData.userCharacter != null)
-            sex = uiGameManager.gameDataManager.gameData.userCharacter.body.sex;
+        if (gameDataManager.gameData.userCharacter != null
+            && gameDataManager.gameData.userCharacter.baseInfo.name != null)
+            userName = gameDataManager.gameData.userCharacter.baseInfo.name;
+        if (gameDataManager.gameData.userCharacter != null)
+            sex = gameDataManager.gameData.userCharacter.body.sex;
         //去除空格 防止自动换行
         content = content.Replace(" ", "");
+        //替换客栈名字
+        content = content.Replace("{innname}", gameDataManager.gameData.GetInnAttributesData().innName);
         //替换名字
         content = content.Replace("{name}", userName);
         //替换小名

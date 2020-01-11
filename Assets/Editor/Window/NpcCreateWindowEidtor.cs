@@ -471,7 +471,6 @@ public class NpcCreateWindowEidtor : EditorWindow
         npcAI.gameItemsManager = gameItemsManager;
         npcAI.SetCharacterData(characterData);
         mCamera2D.Follow = objNpc.transform;
-        Camera.main.transform.position = new Vector3(objNpc.transform.position.x, objNpc.transform.position.y, Camera.main.transform.position.z);
         return objNpc;
     }
 }
