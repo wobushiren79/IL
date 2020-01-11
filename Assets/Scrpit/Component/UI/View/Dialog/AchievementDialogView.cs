@@ -25,7 +25,7 @@ public class AchievementDialogView : DialogView
     {
         gameItemsManager = Find<GameItemsManager>(ImportantTypeEnum.GameItemsManager);
         iconDataManager = Find<IconDataManager>(ImportantTypeEnum.UIManager);
-        innBuildManager = Find<InnBuildManager>(ImportantTypeEnum.InnBuildManager);
+        innBuildManager = Find<InnBuildManager>(ImportantTypeEnum.BuildManager);
         innFoodManager = Find<InnFoodManager>(ImportantTypeEnum.FoodManager);
     }
 
@@ -54,7 +54,7 @@ public class AchievementDialogView : DialogView
             }
             else
             {
-                spIcon = gameItemsManager.GetItemsSpriteByName(iconKey);
+                spIcon = iconDataManager.GetIconSpriteByName(iconKey);
             }
 
             if (spIcon != null)
@@ -93,13 +93,13 @@ public class AchievementDialogView : DialogView
     {
         float animTimeDelay = 1f;
         CptUtil.RemoveChildsByActive(objRewardContent.transform);
-        Dictionary<RewardTypeEnum, string> listRewardData = RewardTypeEnumTools.GetRewardData(achievementInfo.reward_data);
+        List<RewardTypeBean> listRewardData = RewardTypeEnumTools.GetListRewardData(achievementInfo.reward_data);
         foreach (var itemRewardData in listRewardData)
         {
-            RewardTypeEnum rewardType = itemRewardData.Key;
-            Sprite spReward = RewardTypeEnumTools.GetRewardSprite(rewardType, iconDataManager);
+            RewardTypeEnumTools.GetRewardDetails(itemRewardData, iconDataManager,gameItemsManager,innBuildManager);
+            Sprite spReward = itemRewardData.spRewardIcon;
             CreateRewardItem(spReward, animTimeDelay);
-            animTimeDelay += 0.5f;
+            animTimeDelay += 0.1f;
         }
     }
 

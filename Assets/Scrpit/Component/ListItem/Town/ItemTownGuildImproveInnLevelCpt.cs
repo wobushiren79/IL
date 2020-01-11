@@ -21,17 +21,21 @@ public class ItemTownGuildImproveInnLevelCpt : BaseMonoBehaviour
     public StoreInfoBean storeInfo;
     public bool isAllPre = true;
 
+    protected GameItemsManager gameItemsManager;
     protected IconDataManager iconDataManager;
     protected GameDataManager gameDataManager;
     protected ToastManager toastManager;
     protected UIGameManager uiGameManager;
+    protected InnBuildManager innBuildManager;
 
     private void Awake()
     {
+        gameItemsManager= Find<GameItemsManager>(ImportantTypeEnum.GameItemsManager);
         iconDataManager = Find<IconDataManager>(ImportantTypeEnum.UIManager);
         gameDataManager = Find<GameDataManager>(ImportantTypeEnum.GameDataManager);
         toastManager = Find<ToastManager>(ImportantTypeEnum.ToastManager);
         uiGameManager = Find<UIGameManager>(ImportantTypeEnum.GameUI);
+        innBuildManager = Find<InnBuildManager>(ImportantTypeEnum.BuildManager);
     }
 
     private void Start()
@@ -85,21 +89,22 @@ public class ItemTownGuildImproveInnLevelCpt : BaseMonoBehaviour
     /// <param name="preData"></param>
     public void CreatePreDataItem(string preData)
     {
-        Dictionary<PreTypeEnum, string> listPreData = PreTypeEnumTools.GetPreData(preData);
+        List<PreTypeBean> listPreData = PreTypeEnumTools.GetListPreData(preData);
         foreach (var itemData in listPreData)
         {
             GameObject objPre = Instantiate(objPreContainer, objPreModel);
+            PreTypeEnumTools.GetPreDetails(itemData, gameDataManager.gameData, iconDataManager);
             //设置图标
-            Sprite spIcon = PreTypeEnumTools.GetPreSprite(itemData.Key, iconDataManager);
+            Sprite spIcon = itemData.spPreIcon;
             Image ivIcon = CptUtil.GetCptInChildrenByName<Image>(objPre, "Icon");
             ivIcon.sprite = spIcon;
             //设置描述
-            string preDes = PreTypeEnumTools.GetPreDescribe(itemData.Key, itemData.Value, gameDataManager.gameData, out bool isPre,out float progress);
+            string preDes = itemData.preDescribe;
             Text tvContent = CptUtil.GetCptInChildrenByName<Text>(objPre, "Text");
             tvContent.text = preDes;
             //设置是否满足条件
             Image ivStatus = CptUtil.GetCptInChildrenByName<Image>(objPre, "Status");
-            if (isPre)
+            if (itemData.isPre)
             {
                 ivStatus.sprite = spRePre;
                 tvContent.color = Color.green;
@@ -122,16 +127,17 @@ public class ItemTownGuildImproveInnLevelCpt : BaseMonoBehaviour
     /// <param name="rewardData"></param>
     public void CreateRewardDataItem(string rewardData)
     {
-        Dictionary<RewardTypeEnum, string> listRewardData = RewardTypeEnumTools.GetRewardData(rewardData);
+        List<RewardTypeBean> listRewardData = RewardTypeEnumTools.GetListRewardData(rewardData);
         foreach (var itemData in listRewardData)
         {
             GameObject objReward = Instantiate(objRewardContainer, objRewardModel);
+            RewardTypeEnumTools.GetRewardDetails(itemData,iconDataManager,gameItemsManager,innBuildManager);
             //设置图标
-            Sprite spIcon = RewardTypeEnumTools.GetRewardSprite(itemData.Key, iconDataManager);
+            Sprite spIcon = itemData.spRewardIcon;
             Image ivIcon = CptUtil.GetCptInChildrenByName<Image>(objReward, "Icon");
             ivIcon.sprite = spIcon;
             //设置描述
-            string rewardDes = RewardTypeEnumTools.GetRewardDescribe(itemData.Key, itemData.Value);
+            string rewardDes = itemData.rewardDescribe;
             Text tvContent = CptUtil.GetCptInChildrenByName<Text>(objReward, "Text");
             tvContent.text = rewardDes;
             tvContent.color = Color.green;

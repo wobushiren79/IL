@@ -41,7 +41,7 @@ public class ItemGameBackpackCpt : ItemGameBaseCpt, IPointerClickHandler, PopupI
         this.itemBean = itemBean;
         if (infoBean != null)
         {
-            SetIcon(infoBean.icon_key, infoBean.items_type);
+            SetIcon(infoBean, infoBean.items_type);
             SetName(infoBean.name);
         }
         if (infoItemsPopup != null)
@@ -55,10 +55,11 @@ public class ItemGameBackpackCpt : ItemGameBaseCpt, IPointerClickHandler, PopupI
     /// </summary>
     /// <param name="iconKey"></param>
     /// <param name="itemType"></param>
-    public void SetIcon(string iconKey, int itemType)
+    public void SetIcon(ItemsInfoBean itemsInfo, int itemType)
     {
         CharacterDressManager characterDressManager = uiGameManager.characterDressManager;
         GameItemsManager gameItemsManager = uiGameManager.gameItemsManager;
+        IconDataManager iconDataManager = uiGameManager.iconDataManager;
 
         Vector2 offsetMin = new Vector2(0, 0);
         Vector2 offsetMax = new Vector2(0, 0);
@@ -66,25 +67,21 @@ public class ItemGameBackpackCpt : ItemGameBaseCpt, IPointerClickHandler, PopupI
         switch (itemType)
         {
             case (int)GeneralEnum.Hat:
-                spIcon = characterDressManager.GetHatSpriteByName(iconKey);
                 offsetMin = new Vector2(-30, -60);
                 offsetMax = new Vector2(30, 0);
                 break;
             case (int)GeneralEnum.Clothes:
-                spIcon = characterDressManager.GetClothesSpriteByName(iconKey);
                 offsetMin = new Vector2(-30, -20);
                 offsetMax = new Vector2(30, 40);
                 break;
             case (int)GeneralEnum.Shoes:
-                spIcon = characterDressManager.GetShoesSpriteByName(iconKey);
                 offsetMin = new Vector2(-30, 0);
                 offsetMax = new Vector2(30, 60);
                 break;
             default:
-                spIcon = gameItemsManager.GetItemsSpriteByName(iconKey);
                 break;
         }
-
+        spIcon = GeneralEnumTools.GetGeneralSprite(itemsInfo, iconDataManager, gameItemsManager, characterDressManager, false);
         if (spIcon != null)
             ivIcon.color = new Color(1, 1, 1, 1);
         else

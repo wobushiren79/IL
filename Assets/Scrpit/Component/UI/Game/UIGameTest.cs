@@ -47,7 +47,7 @@ public class UIGameTest : BaseUIComponent
             if (long.TryParse(etItemNumber.text, out long itemNumber))
             {
                 UIGameManager uiGameManager= GetUIMananger<UIGameManager>();
-                uiGameManager.gameDataManager.gameData.ChangeItemsNumber(itemId, itemNumber);
+                uiGameManager.gameDataManager.gameData.AddNewItems(itemId, itemNumber);
             }
             else
             {
@@ -72,7 +72,7 @@ public class UIGameTest : BaseUIComponent
             if (long.TryParse(etBuildItemNumber.text, out long itemNumber))
             {
                 UIGameManager uiGameManager = GetUIMananger<UIGameManager>();
-                uiGameManager.gameDataManager.gameData.ChangeBuildNumber(itemId, itemNumber);
+                uiGameManager.gameDataManager.gameData.AddBuildNumber(itemId, itemNumber);
             }
             else
             {

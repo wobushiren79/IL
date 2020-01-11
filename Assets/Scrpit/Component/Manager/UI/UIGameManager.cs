@@ -47,7 +47,7 @@ public class UIGameManager : BaseUIManager
         gameItemsManager = Find<GameItemsManager>(ImportantTypeEnum.GameItemsManager);
         characterDressManager = Find<CharacterDressManager>(ImportantTypeEnum.CharacterManager);
         characterBodyManager = Find<CharacterBodyManager>(ImportantTypeEnum.CharacterManager);
-        innBuildManager = Find<InnBuildManager>(ImportantTypeEnum.InnBuildManager);
+        innBuildManager = Find<InnBuildManager>(ImportantTypeEnum.BuildManager);
         innFoodManager = Find<InnFoodManager>(ImportantTypeEnum.FoodManager);
         npcInfoManager = Find<NpcInfoManager>(ImportantTypeEnum.NpcManager);
         storeInfoManager = Find<StoreInfoManager>(ImportantTypeEnum.StoreInfoManager);

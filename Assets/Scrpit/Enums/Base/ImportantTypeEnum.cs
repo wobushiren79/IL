@@ -19,7 +19,7 @@ public enum ImportantTypeEnum
     StoryManager,
     SceneManager,
     StoreInfoManager,
-    InnBuildManager,
+    BuildManager,
 
     StoryBuilder,
     NpcBuilder,

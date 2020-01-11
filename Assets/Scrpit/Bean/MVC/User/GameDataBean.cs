@@ -150,6 +150,58 @@ public class GameDataBean
     }
 
     /// <summary>
+    /// 增加公会勋章
+    /// </summary>
+    /// <param name="coin"></param>
+    public void AddGuildCoin(long coin)
+    {
+        guildCoin += coin;
+        if (guildCoin < 0)
+            guildCoin = 0;
+    }
+
+    /// <summary>
+    /// 修改建筑材料数量
+    /// </summary>
+    public void AddBuildNumber(long buildId, long number)
+    {
+        AddItem(buildId, number, listBuild);
+    }
+
+    /// <summary>
+    /// 修改道具数量
+    /// </summary>
+    public void AddItemsNumber(long itemsId, long number)
+    {
+        AddItem(itemsId, number, listItems);
+    }
+
+    public void AddItem(long buildId, long number, List<ItemBean> list)
+    {
+        bool hasData = false;
+        for (int i = 0; i < list.Count; i++)
+        {
+            ItemBean item = list[i];
+            if (item.itemId == buildId)
+            {
+                hasData = true;
+                item.itemNumber += number;
+                if (item.itemNumber <= 0)
+                {
+                    item.itemNumber = 0;
+                    list.RemoveAt(i);
+                    i--;
+                }
+                break;
+            }
+        }
+        if (!hasData && number > 0)
+        {
+            list.Add(new ItemBean(buildId, number));
+        }
+    }
+
+    /// <summary>
     /// 获取所有人员信息
     /// </summary>
     /// <returns></returns>
@@ -396,46 +448,6 @@ public class GameDataBean
         }
     }
 
-    /// <summary>
-    /// 修改建筑材料数量
-    /// </summary>
-    public void ChangeBuildNumber(long buildId, long number)
-    {
-        ChangeItem(buildId, number, listBuild);
-    }
-
-    /// <summary>
-    /// 修改道具数量
-    /// </summary>
-    public void ChangeItemsNumber(long itemsId, long number)
-    {
-        ChangeItem(itemsId, number, listItems);
-    }
-
-    public void ChangeItem(long buildId, long number, List<ItemBean> list)
-    {
-        bool hasData = false;
-        for (int i = 0; i < list.Count; i++)
-        {
-            ItemBean item = list[i];
-            if (item.itemId == buildId)
-            {
-                hasData = true;
-                item.itemNumber += number;
-                if (item.itemNumber <= 0)
-                {
-                    item.itemNumber = 0;
-                    list.RemoveAt(i);
-                    i--;
-                }
-                break;
-            }
-        }
-        if (!hasData && number > 0)
-        {
-            list.Add(new ItemBean(buildId, number));
-        }
-    }
     /// <summary>
     /// 扣除食材
     /// </summary>

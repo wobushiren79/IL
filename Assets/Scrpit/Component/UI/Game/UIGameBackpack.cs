@@ -34,7 +34,7 @@ public class UIGameBackpack : UIBaseOne
             objItem.SetActive(true);
             ItemGameBackpackCpt backpackCpt = objItem.GetComponent<ItemGameBackpackCpt>();
             backpackCpt.SetData(itemsInfoBean, itemBean);
-            objItem.transform.DOScale(new Vector3(0, 0, 0), 0.5f).SetEase(Ease.OutBack).SetDelay(i * 0.05f).From();
+            //objItem.transform.DOScale(new Vector3(0, 0, 0), 0.5f).SetEase(Ease.OutBack).SetDelay(i * 0.05f).From();
             hasData = true;
         }
         if (!hasData)

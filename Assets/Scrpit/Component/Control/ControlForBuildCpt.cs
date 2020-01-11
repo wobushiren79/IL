@@ -300,7 +300,7 @@ public class ControlForBuildCpt : BaseControl
                             innWallBuilder.StartBuild();
                         }
                         //背包里添加一个
-                        gameDataManager.gameData.ChangeBuildNumber(itemFurnitureData.id, 1);
+                        gameDataManager.gameData.AddBuildNumber(itemFurnitureData.id, 1);
                     }
                 }
                 else
@@ -315,7 +315,7 @@ public class ControlForBuildCpt : BaseControl
                         innWallBuilder.StartBuild();
                     }
                     //背包里删除一个
-                    gameDataManager.gameData.ChangeBuildNumber(buildItemCpt.buildItemData.id, -1);
+                    gameDataManager.gameData.AddBuildNumber(buildItemCpt.buildItemData.id, -1);
                     //动画
                     buildItemCpt.transform.DOScale(new Vector3(0.2f, 0.2f, 0.2f), 0.5f).From().SetEase(Ease.OutBack);
                     ClearBuild();

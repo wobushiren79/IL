@@ -244,7 +244,7 @@ public class UIGameWorkerDetails : BaseUIComponent, IRadioGroupCallBack
         if (tvLucky != null)
             tvLucky.text = GameCommonInfo.GetUITextById(6) + "：" + selfAttributes.lucky + (equipAttributes.lucky == 0 ? "" : "+" + equipAttributes.lucky);
         if (characterAttributeView != null)
-            characterAttributeView.SetData(totalAttributes.cook, totalAttributes.speed, totalAttributes.account, totalAttributes.charm, totalAttributes.force);
+            characterAttributeView.SetData(totalAttributes.cook, totalAttributes.speed, totalAttributes.account, totalAttributes.charm, totalAttributes.force,totalAttributes.lucky);
     }
 
     /// <summary>

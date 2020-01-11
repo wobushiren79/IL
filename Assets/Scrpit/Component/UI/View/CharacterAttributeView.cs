@@ -9,12 +9,14 @@ public class CharacterAttributeView : Graphic
     public RectTransform rtfContent;
     public RectTransform rtfThis;
 
+    public Text tvLucky;
     public Text tvCook;
     public Text tvSpeed;
     public Text tvAccount;
     public Text tvCharm;
     public Text tvForce;
 
+    public int lucky;
     public int cook;
     public int speed;
     public int account;
@@ -37,24 +39,27 @@ public class CharacterAttributeView : Graphic
     /// <param name="account"></param>
     /// <param name="charm"></param>
     /// <param name="force"></param>
-    public void SetData(int cook, int speed, int account, int charm, int force)
+    public void SetData(int cook, int speed, int account, int charm, int force,int lucky)
     {
         this.cook = cook;
         this.speed = speed;
         this.account = account;
         this.charm = charm;
         this.force = force;
+        this.lucky = lucky;
 
         if (tvCook != null)
-            tvCook.text = GameCommonInfo.GetUITextById(1) + "（" + cook + ")";
+            tvCook.text =  "(" + cook + ")" + GameCommonInfo.GetUITextById(1);
         if (tvSpeed != null)
-            tvSpeed.text = "（" + speed + ")" + GameCommonInfo.GetUITextById(2);
+            tvSpeed.text = "(" + speed + ")" + GameCommonInfo.GetUITextById(2);
         if (tvAccount != null)
-            tvAccount.text = "（" + account + ")" + GameCommonInfo.GetUITextById(3);
+            tvAccount.text = GameCommonInfo.GetUITextById(3)+ "(" + account + ")" ;
         if (tvCharm != null)
-            tvCharm.text = GameCommonInfo.GetUITextById(4) + "（" + charm + ")";
+            tvCharm.text = GameCommonInfo.GetUITextById(4) + "(" + charm + ")";
         if (tvForce != null)
-            tvForce.text = GameCommonInfo.GetUITextById(5) + "（" + force + ")";
+            tvForce.text = GameCommonInfo.GetUITextById(5) + "(" + force + ")";
+        if (tvLucky!=null)
+            tvLucky.text = GameCommonInfo.GetUITextById(6) + "(" + force + ")";
         StartCoroutine(CoroutineForInit());
     }
 
@@ -110,7 +115,8 @@ public class CharacterAttributeView : Graphic
         vh.AddTriangle(0, 2, 3);
         vh.AddTriangle(0, 3, 4);
         vh.AddTriangle(0, 4, 5);
-        vh.AddTriangle(0, 1, 5);
+        vh.AddTriangle(0, 5, 6);
+        vh.AddTriangle(0, 1, 6);
     }
 
     /// <summary>
@@ -131,6 +137,10 @@ public class CharacterAttributeView : Graphic
         for (int i = 0; i < rtfContent.childCount; i++)
         {
             RectTransform tfChild = (RectTransform)rtfContent.GetChild(i);
+            if (tfChild.name.Contains("Lucky"))
+            {
+                SetAttributePosition(tfChild, i, radius, lucky);
+            }
             if (tfChild.name.Contains("Cook"))
             {
                 SetAttributePosition(tfChild, i, radius, cook);
@@ -172,7 +182,7 @@ public class CharacterAttributeView : Graphic
         {
             attributeR = 1;
         }
-        float angle = 72 * (position - 1);
+        float angle = 60 * (position - 1);
 
         float positionY = Mathf.Cos(Mathf.PI * angle / 180) * attributeR;
         float positionX = Mathf.Sin(Mathf.PI * angle / 180) * attributeR;

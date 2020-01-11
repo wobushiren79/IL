@@ -172,6 +172,7 @@ public class ItemTownGuildAchievementCpt : ItemGameBaseCpt
         {
             //添加该成就和奖励
             gameDataManager.gameData.GetAchievementData().AddAchievement(achievementInfo.id);
+            RewardTypeEnumTools.CompleteReward(achievementInfo.reward_data, gameDataManager.gameData);
             //设置状态
             SetAchStatus(AchievementStatusEnum.Completed);
             //刷新UI

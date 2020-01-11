@@ -98,7 +98,7 @@ LightmapSettings:
     m_TrainingDataDestination: TrainingData
     m_LightProbeSampleCountMultiplier: 4
   m_LightingDataAsset: {fileID: 0}
-  m_UseShadowmask: 0
+  m_UseShadowmask: 1
 --- !u!196 &4
 NavMeshSettings:
   serializedVersion: 2
@@ -49648,6 +49648,21 @@ PrefabInstance:
       propertyPath: uiManager
       value: 
       objectReference: {fileID: 466882524}
+    - target: {fileID: 2062234783152933258, guid: 54879e323a2a32542b98a4756d4814b8,
+        type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2062234783221022455, guid: 54879e323a2a32542b98a4756d4814b8,
+        type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2062234783221022455, guid: 54879e323a2a32542b98a4756d4814b8,
+        type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 54879e323a2a32542b98a4756d4814b8, type: 3}
 --- !u!224 &374770967 stripped
@@ -50135,6 +50150,7 @@ MonoBehaviour:
   innFoodManager: {fileID: 744028635}
   npcInfoManager: {fileID: 144557391}
   storeInfoManager: {fileID: 0}
+  iconDataManager: {fileID: 0}
   dialogManager: {fileID: 907501863}
   toastManager: {fileID: 272139678}
   innHandler: {fileID: 1541606814}
@@ -69878,7 +69894,7 @@ PrefabInstance:
     - target: {fileID: 2414675617322255131, guid: 3b08cb01fecef4c47bd80f6bd0bc4d37,
         type: 3}
       propertyPath: m_Name
-      value: InnBuildManager
+      value: BuildManager
       objectReference: {fileID: 0}
     - target: {fileID: 2414675617322255133, guid: 3b08cb01fecef4c47bd80f6bd0bc4d37,
         type: 3}

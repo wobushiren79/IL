@@ -226,7 +226,7 @@ public class ItemTownCerpenterCpt : ItemGameBaseCpt, DialogView.IDialogCallBack
         }
         else
         {
-            gameDataManager.gameData.ChangeBuildNumber(buildItemData.id, 1);
+            gameDataManager.gameData.AddBuildNumber(buildItemData.id, 1);
             RefreshUI();
             toastStr = string.Format(GameCommonInfo.GetUITextById(1010), buildItemData.name);
         }

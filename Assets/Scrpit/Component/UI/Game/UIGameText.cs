@@ -416,7 +416,7 @@ public class UIGameText : BaseUIComponent, ITextInfoView, DialogView.IDialogCall
             characterFavorability.AddGiftNormalNumber(1);
         }
         //删减物品
-        gameDataManager.gameData.ChangeItemsNumber(itemData.itemId,-1);
+        gameDataManager.gameData.AddItemsNumber(itemData.itemId,-1);
         //增加每日限制
         GameCommonInfo.DailyLimitData.AddGiftNpc(mTalkUserId);
         //通过增加好感查询对话

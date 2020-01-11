@@ -67,6 +67,20 @@ public class StringUtil
     }
 
     /// <summary>
+    ///  string通过指定字符拆分成数组
+    /// </summary>
+    /// <param name="data"></param>
+    /// <param name="substring"></param>
+    /// <returns></returns>
+    public static string[] SplitBySubstringForArrayStr(string data, char substring)
+    {
+        if (data == null)
+            return new string[0];
+        string[] splitData = data.Split(substring);
+        return splitData;
+    }
+
+    /// <summary>
     /// string通过指定字符拆分成数组
     /// </summary>
     /// <param name="data"></param>
@@ -95,6 +109,7 @@ public class StringUtil
         int[] listData = TypeConversionUtil.ArrayStrToArrayInt(splitData);
         return listData;
     }
+
     /// <summary>
     /// string通过指定字符拆分成数组
     /// </summary>

@@ -36,7 +36,7 @@ public class InfoAchievementPopupShow : PopupShowView
         gameItemsManager = Find<GameItemsManager>(ImportantTypeEnum.GameItemsManager);
         iconDataManager = Find<IconDataManager>(ImportantTypeEnum.UIManager);
         characterDressManager = Find<CharacterDressManager>(ImportantTypeEnum.CharacterManager);
-        innBuildManager = Find<InnBuildManager>(ImportantTypeEnum.InnBuildManager);
+        innBuildManager = Find<InnBuildManager>(ImportantTypeEnum.BuildManager);
         innFoodManager = Find<InnFoodManager>(ImportantTypeEnum.FoodManager);
     }
 
@@ -145,11 +145,12 @@ public class InfoAchievementPopupShow : PopupShowView
         CptUtil.RemoveChildsByActive(objAchieveContent.transform);
         if (data == null)
             return;
-        Dictionary<PreTypeEnum,string> listPreData= PreTypeEnumTools.GetPreData(data.pre_data);
+        List<PreTypeBean> listPreData= PreTypeEnumTools.GetListPreData(data.pre_data);
         foreach (var itemPreData in listPreData)
         {
-            PreTypeEnum preType = itemPreData.Key;
-            string preDes=  PreTypeEnumTools.GetPreDescribe(preType, itemPreData.Value, gameDataManager.gameData,out bool isPre,out float progress);
+            PreTypeEnumTools.GetPreDetails(itemPreData, gameDataManager.gameData,iconDataManager);
+            string preDes = itemPreData.preDescribe;
+            float progress = itemPreData.progress;
             CreateAchieveItem(preDes, progress);
         }
     }
@@ -164,13 +165,13 @@ public class InfoAchievementPopupShow : PopupShowView
         if (data == null || gameItemsManager == null)
             return;
 
-        Dictionary<RewardTypeEnum, string> listRewardData = RewardTypeEnumTools.GetRewardData(data.reward_data);
+        List<RewardTypeBean> listRewardData = RewardTypeEnumTools.GetListRewardData(data.reward_data);
         GameObject objTitle = Instantiate(objRewardContent, objRewardTitle);
         foreach (var itemRewardData in listRewardData)
         {
-            RewardTypeEnum rewardType = itemRewardData.Key;
-            string rewardDes=  RewardTypeEnumTools.GetRewardDescribe(rewardType, itemRewardData.Value);
-            Sprite spReward = RewardTypeEnumTools.GetRewardSprite(rewardType, iconDataManager);
+            RewardTypeEnumTools.GetRewardDetails(itemRewardData, iconDataManager, gameItemsManager, innBuildManager);
+            string rewardDes = itemRewardData.rewardDescribe;
+            Sprite spReward = itemRewardData.spRewardIcon;
             CreateRewardItem(rewardDes, spReward);
         }
    
