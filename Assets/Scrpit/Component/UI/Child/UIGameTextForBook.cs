@@ -4,17 +4,15 @@ using UnityEngine.UI;
 
 public class UIGameTextForBook : BaseUIChildComponent<UIGameText>
 {
-
     public Text tvBookName;
     public Text tvBookContent;
     public Button btBookBack;
 
-    private void Start()
+    private void Awake()
     {
-        uiComponent.NextText();
+        if (btBookBack != null)
+            btBookBack.onClick.AddListener(OnClickBack);
     }
-
-
 
     /// <summary>
     /// 设置数据
@@ -46,5 +44,11 @@ public class UIGameTextForBook : BaseUIChildComponent<UIGameText>
     {
         if (tvBookContent != null)
             tvBookContent.text = bookContent;
+    }
+
+    public void OnClickBack()
+    {
+        uiComponent.NextText();
+       // uiComponent.uiManager.OpenUIAndCloseOtherByName(EnumUtil.GetEnumName(UIEnum.GameMain));
     }
 }
