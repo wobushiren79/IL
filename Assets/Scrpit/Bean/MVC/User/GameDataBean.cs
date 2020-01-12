@@ -11,6 +11,10 @@ public class GameDataBean
     public long moneyM;
     public long moneyL;
     public long guildCoin;//公会硬币
+    public long arenaTrophy1;//竞技场奖杯
+    public long arenaTrophy2;
+    public long arenaTrophy3;
+    public long arenaTrophy4;
 
     public InnAttributesBean innAttributes = new InnAttributesBean();//客栈属性
     public CharacterBean userCharacter = new CharacterBean();// 老板
@@ -39,6 +43,29 @@ public class GameDataBean
     public int workerNumberLimit = 3;//员工人员招聘上限
 
     public WeatherBean weatherToday;//当天天气
+
+    /// <summary>
+    /// 增加竞技场奖杯
+    /// </summary>
+    /// <param name="arenaTrophy1"></param>
+    /// <param name="arenaTrophy2"></param>
+    /// <param name="arenaTrophy3"></param>
+    /// <param name="arenaTrophy4"></param>
+    public void AddArenaTrophy(long arenaTrophy1, long arenaTrophy2, long arenaTrophy3, long arenaTrophy4)
+    {
+        this.arenaTrophy1 += arenaTrophy1;
+        this.arenaTrophy2 += arenaTrophy2;
+        this.arenaTrophy3 += arenaTrophy3;
+        this.arenaTrophy4 += arenaTrophy4;
+        if (this.arenaTrophy1 < 0)
+            this.arenaTrophy1 = 0;
+        if (this.arenaTrophy2 < 0)
+            this.arenaTrophy2 = 0;
+        if (this.arenaTrophy3 < 0)
+            this.arenaTrophy3 = 0;
+        if (this.arenaTrophy4 < 0)
+            this.arenaTrophy4 = 0;
+    }
 
     /// <summary>
     /// 增加食材

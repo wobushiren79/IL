@@ -12,7 +12,11 @@ public class UIBaseOne : BaseUIComponent
     public Text tvMoneyS;
     //公会硬币
     public Text tvGuildCoin;
-
+    //斗技场奖杯
+    public Text tvTrophy1;
+    public Text tvTrophy2;
+    public Text tvTrophy3;
+    public Text tvTrophy4;
     public virtual void Start()
     {
         if (btBack != null)
@@ -56,6 +60,22 @@ public class UIBaseOne : BaseUIComponent
             if (tvGuildCoin != null)
             {
                 tvGuildCoin.text = gameDataManager.gameData.guildCoin + "";
+            }
+            if (tvTrophy1 != null)
+            {
+                tvTrophy1.text = gameDataManager.gameData.arenaTrophy1+"";
+            }
+            if (tvTrophy2 != null)
+            {
+                tvTrophy2.text = gameDataManager.gameData.arenaTrophy2 + "";
+            }
+            if (tvTrophy3 != null)
+            {
+                tvTrophy3.text = gameDataManager.gameData.arenaTrophy3 + "";
+            }
+            if (tvTrophy4 != null)
+            {
+                tvTrophy4.text = gameDataManager.gameData.arenaTrophy4 + "";
             }
         }
     }
