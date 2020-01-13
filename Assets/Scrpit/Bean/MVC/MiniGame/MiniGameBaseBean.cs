@@ -122,6 +122,34 @@ public class MiniGameBaseBean
     }
 
     /// <summary>
+    /// 获取游戏名字
+    /// </summary>
+    /// <returns></returns>
+    public string GetGameName()
+    {
+        string gameName="???";
+        switch (gameType)
+        {
+            case MiniGameEnum.Cooking:
+                gameName = GameCommonInfo.GetUITextById(201);
+                break;
+            case MiniGameEnum.Barrage:
+                gameName = GameCommonInfo.GetUITextById(202);
+                break;
+            case MiniGameEnum.Account:
+                gameName = GameCommonInfo.GetUITextById(203);
+                break;
+            case MiniGameEnum.Debate:
+                gameName = GameCommonInfo.GetUITextById(204);
+                break;
+            case MiniGameEnum.Combat:
+                gameName = GameCommonInfo.GetUITextById(205);
+                break;
+        }
+        return gameName;
+    }
+
+    /// <summary>
     /// 添加奖励物品
     /// </summary>
     /// <param name="id"></param>

@@ -12,6 +12,11 @@ public class UserDailyLimitBean
     public List<long> listNpcGift = new List<long>();
     //当天招募者数据
     public List<CharacterBean> listRecruitmentCharacter;
+    //当天竞技场数据
+    public List<MiniGameBaseBean> listArenaDataFor1;
+    public List<MiniGameBaseBean> listArenaDataFor2;
+    public List<MiniGameBaseBean> listArenaDataFor3;
+    public List<MiniGameBaseBean> listArenaDataFor4;
 
     public void InitData()
     {
@@ -19,6 +24,37 @@ public class UserDailyLimitBean
         listNpcGift.Clear();
         listNpcTalk.Clear();
         listRecruitmentCharacter = null;
+        listArenaDataFor1 = null;
+        listArenaDataFor2 = null;
+        listArenaDataFor3 = null;
+        listArenaDataFor4 = null;
+    }
+
+    public void AddArenaDataByType(int type, List<MiniGameBaseBean> listMiniGameData)
+    {
+        switch (type)
+        {
+            case 1:
+                if (listArenaDataFor1 == null)
+                    listArenaDataFor1 = new List<MiniGameBaseBean>();
+                listArenaDataFor1.AddRange(listMiniGameData);
+                break;
+            case 2:
+                if (listArenaDataFor2 == null)
+                    listArenaDataFor2 = new List<MiniGameBaseBean>();
+                listArenaDataFor2.AddRange(listMiniGameData);
+                break;
+            case 3:
+                if (listArenaDataFor3 == null)
+                    listArenaDataFor3 = new List<MiniGameBaseBean>();
+                listArenaDataFor3.AddRange(listMiniGameData);
+                break;
+            case 4:
+                if (listArenaDataFor4 == null)
+                    listArenaDataFor4 = new List<MiniGameBaseBean>();
+                listArenaDataFor4.AddRange(listMiniGameData);
+                break;
+        }
     }
 
     /// <summary>

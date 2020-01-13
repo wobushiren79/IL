@@ -13,7 +13,6 @@ public class GameDataManager : BaseManager, IGameDataView
     //简略游戏数据
     public List<GameDataSimpleBean> listGameDataSimple;
 
-
     private IGameDataSimpleCallBack mSimpleGameDataCallBack;
 
 

@@ -316,7 +316,7 @@ public class ItemTownGuildImproveCharacterCpt : ItemGameBaseCpt, DialogView.IDia
         GameCommonInfo.ArenaPrepareData.gameCombatData = new MiniGameCombatBean
         {
             winBringDownNumber = 1,
-            winSurvivalNumber=1,
+            winSurvivalNumber = 1,
         };
         CharacterBean enemyData = npcInfoManager.GetCharacterDataById(110111);
         GameCommonInfo.ArenaPrepareData.gameCombatData.InitData(gameItemsManager, characterData, enemyData);
@@ -333,7 +333,7 @@ public class ItemTownGuildImproveCharacterCpt : ItemGameBaseCpt, DialogView.IDia
         {
             winLife = 1
         };
-        CharacterBean enemyData= npcInfoManager.GetCharacterDataById(110111);
+        CharacterBean enemyData = npcInfoManager.GetCharacterDataById(110111);
         GameCommonInfo.ArenaPrepareData.gameDebateData.InitData(gameItemsManager, characterData, enemyData);
     }
 
@@ -404,11 +404,16 @@ public class ItemTownGuildImproveCharacterCpt : ItemGameBaseCpt, DialogView.IDia
         {
             gameReason = MiniGameReasonEnum.Improve,
             gameLevel = levelData.mark_type,
-            winLife = levelData.minigame_win_life,
-            winSurvivalTime = levelData.minigame_win_survivaltime,
-            launchInterval = levelData.barrage_launch_interval,
-            launchSpeed = levelData.barrage_launch_speed,
-            launchTypes = StringUtil.SplitBySubstringForArrayEnum<MiniGameBarrageEjectorCpt.LaunchTypeEnum>(levelData.barrage_launch_types, ',')
+            winLife = 1,
+            winSurvivalTime = 60,
+            launchInterval = 3,
+            launchSpeed = 1,
+            launchTypes = new MiniGameBarrageEjectorCpt.LaunchTypeEnum[]
+            {
+                MiniGameBarrageEjectorCpt.LaunchTypeEnum.Double,
+                MiniGameBarrageEjectorCpt.LaunchTypeEnum.Single,
+                MiniGameBarrageEjectorCpt.LaunchTypeEnum.Triple
+            }
         };
         GameCommonInfo.ArenaPrepareData.gameBarrageData.InitData(gameItemsManager, characterData);
     }

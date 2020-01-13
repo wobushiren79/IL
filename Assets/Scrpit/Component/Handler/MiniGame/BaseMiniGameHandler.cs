@@ -138,25 +138,7 @@ public class BaseMiniGameHandler<B, D> : BaseHandler, UIMiniGameCountDown.ICallB
         uiCountDown.SetCallBack(this);
         //设置胜利条件
         List<string> listWinConditions = miniGameData.GetListWinConditions();
-        string targetTitleStr = "???";
-        switch (miniGameData.gameType)
-        {
-            case MiniGameEnum.Cooking:
-                targetTitleStr = GameCommonInfo.GetUITextById(201);
-                break;
-            case MiniGameEnum.Barrage:
-                targetTitleStr = GameCommonInfo.GetUITextById(202);
-                break;
-            case MiniGameEnum.Account:
-                targetTitleStr = GameCommonInfo.GetUITextById(203);
-                break;
-            case MiniGameEnum.Debate:
-                targetTitleStr = GameCommonInfo.GetUITextById(204);
-                break;
-            case MiniGameEnum.Combat:
-                targetTitleStr = GameCommonInfo.GetUITextById(205);
-                break;
-        }
+        string targetTitleStr = miniGameData.GetGameName();
         //设置准备UI的数据
         uiCountDown.SetData(targetTitleStr, listWinConditions, isCountDown);
     }

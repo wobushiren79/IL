@@ -76,6 +76,22 @@ public class StoreInfoManager : BaseMonoBehaviour, IStoreInfoView
         mStoreInfoController.GetGuildInnLevel();
     }
 
+    /// <summary>
+    /// 获取竞技场信息
+    /// </summary>
+    public void GetStoreInfoForArenaInfo()
+    {
+        mStoreInfoController.GetArenaInfo();
+    }
+
+    /// <summary>
+    /// 获取竞技场商品
+    /// </summary>
+    public void GetStoreInfoForArenaGoods()
+    {
+        mStoreInfoController.GetArenaGoods();
+    }
+
     #region 数据回调
     public void GetAllStoreInfoFail()
     {

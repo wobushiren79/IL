@@ -1,12 +1,15 @@
 ﻿using UnityEngine;
 using UnityEditor;
+using DG.Tweening;
+using System.Collections.Generic;
 
-public class UITownArena : UIBaseOne,IRadioGroupCallBack
+public class UITownArena : UIBaseOne, IRadioGroupCallBack, StoreInfoManager.ICallBack
 {
     public GameObject objArenaContainer;
     public GameObject objArenaModel;
 
     public RadioGroupView rgType;
+    private List<StoreInfoBean> listArenaInfo;
 
     public override void Start()
     {
@@ -21,23 +24,157 @@ public class UITownArena : UIBaseOne,IRadioGroupCallBack
     {
         base.OpenUI();
         rgType.SetPosition(0, false);
-        InitData(0);
+        StoreInfoManager storeInfoManager = GetUIMananger<UIGameManager>().storeInfoManager;
+        storeInfoManager.SetCallBack(this);
+        storeInfoManager.GetStoreInfoForArenaInfo();
     }
-    
+
+    /// <summary>
+    /// 初始化游戏数据
+    /// </summary>
+    /// <param name="type"></param>
     public void InitData(int type)
     {
+        CptUtil.RemoveChildsByActive(objArenaContainer);
+        List<MiniGameBaseBean> listMiniGameData = null;
+        switch (type)
+        {
+            case 1:
+                listMiniGameData = GameCommonInfo.DailyLimitData.listArenaDataFor1;
+                break;
+            case 2:
+                listMiniGameData = GameCommonInfo.DailyLimitData.listArenaDataFor2;
+                break;
+            case 3:
+                listMiniGameData = GameCommonInfo.DailyLimitData.listArenaDataFor3;
+                break;
+            case 4:
+                listMiniGameData = GameCommonInfo.DailyLimitData.listArenaDataFor4;
+                break;
+        }
+        if (listMiniGameData == null)
+        {
+            listMiniGameData = CreateMiniGameData(type);
+            GameCommonInfo.DailyLimitData.AddArenaDataByType(type, listMiniGameData);
+        }
+        for (int i = 0; i < listMiniGameData.Count; i++)
+        {
+            MiniGameBaseBean itemMiniGameData = listMiniGameData[i];
+            GameObject objItem = Instantiate(objArenaContainer, objArenaModel);
+            ItemTownArenaCpt arenaItem = objItem.GetComponent<ItemTownArenaCpt>();
+            arenaItem.SetData(itemMiniGameData);
+            //GameUtil.RefreshRectViewHight((RectTransform)objItem.transform,true);\
+            objItem.transform.DOScale(new Vector3(0,0,0),0.5f).From().SetEase(Ease.OutBack);
+        }
+    }
 
+    /// <summary>
+    /// 创建迷你游戏数据
+    /// </summary>
+    /// <returns></returns>
+    private List<MiniGameBaseBean> CreateMiniGameData(int type)
+    {
+        List<MiniGameBaseBean> listMiniGameData = new List<MiniGameBaseBean>();
+        int arenaNumber = Random.Range(1, 5);
+        for (int i = 0; i < arenaNumber; i++)
+        {
+            MiniGameEnum gameType = RandomUtil.GetRandomEnum<MiniGameEnum>();
+            StoreInfoBean storeInfo = null;
+            MiniGameBaseBean miniGameData = null;
+            switch (gameType)
+            {
+                case MiniGameEnum.Cooking:
+                    storeInfo = GetStoreInfoByTypeAndWorker(type, WorkerEnum.Chef);
+                    miniGameData = CreateCookingGameData(storeInfo);
+                    break;
+                case MiniGameEnum.Barrage:
+                    storeInfo = GetStoreInfoByTypeAndWorker(type, WorkerEnum.Waiter);
+                    miniGameData = CreateBarrageGameData(storeInfo);
+                    break;
+                case MiniGameEnum.Account:
+                    storeInfo = GetStoreInfoByTypeAndWorker(type, WorkerEnum.Accountant);
+                    miniGameData = CreateAccountGameData(storeInfo);
+                    break;
+                case MiniGameEnum.Debate:
+                    storeInfo = GetStoreInfoByTypeAndWorker(type, WorkerEnum.Accost);
+                    miniGameData = CreateDebateGameData(storeInfo);
+                    break;
+                case MiniGameEnum.Combat:
+                    storeInfo = GetStoreInfoByTypeAndWorker(type, WorkerEnum.Beater);
+                    miniGameData = CreateCombatGameData(storeInfo);
+                    break;
+            }
+            if (miniGameData != null)
+                listMiniGameData.Add(miniGameData);
+        }
+        return listMiniGameData;
+    }
+
+    /// <summary>
+    /// 根据职业和类型获取竞技场数据
+    /// </summary>
+    /// <param name="type"></param>
+    /// <param name="workerEnum"></param>
+    /// <returns></returns>
+    private StoreInfoBean GetStoreInfoByTypeAndWorker(int type, WorkerEnum workerEnum)
+    {
+        foreach (StoreInfoBean storeInfo in listArenaInfo)
+        {
+            if (storeInfo.mark_type == type && EnumUtil.GetEnum<WorkerEnum>(storeInfo.pre_data) == workerEnum)
+            {
+                return storeInfo;
+            }
+        }
+        return null;
+    }
+
+    private MiniGameCookingBean CreateCookingGameData(StoreInfoBean storeInfo)
+    {
+        MiniGameCookingBean miniGameData = new MiniGameCookingBean();
+        return miniGameData;
+    }
+
+    private MiniGameBarrageBean CreateBarrageGameData(StoreInfoBean storeInfo)
+    {
+        MiniGameBarrageBean miniGameData = new MiniGameBarrageBean();
+        return miniGameData;
+    }
+
+    private MiniGameAccountBean CreateAccountGameData(StoreInfoBean storeInfo)
+    {
+        MiniGameAccountBean miniGameData = new MiniGameAccountBean();
+        return miniGameData;
+    }
+
+    private MiniGameDebateBean CreateDebateGameData(StoreInfoBean storeInfo)
+    {
+        MiniGameDebateBean miniGameData = new MiniGameDebateBean();
+        return miniGameData;
+    }
+
+    private MiniGameCombatBean CreateCombatGameData(StoreInfoBean storeInfo)
+    {
+        MiniGameCombatBean miniGameData = new MiniGameCombatBean();
+        return miniGameData;
     }
 
     #region 等级选择回调
     public void RadioButtonSelected(RadioGroupView rgView, int position, RadioButtonView rbview)
     {
-
+        InitData(position + 1);
     }
 
     public void RadioButtonUnSelected(RadioGroupView rgView, int position, RadioButtonView rbview)
     {
 
+    }
+    #endregion
+
+    #region 数据回调
+    public void GetStoreInfoSuccess(StoreTypeEnum type, List<StoreInfoBean> listData)
+    {
+        listArenaInfo = listData;
+        InitData(1);
     }
     #endregion
 }

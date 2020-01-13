@@ -87,6 +87,22 @@ public class StoreInfoController : BaseMVCController<StoreInfoModel, IStoreInfoV
     }
 
     /// <summary>
+    /// 获取竞技场信息
+    /// </summary>
+    public void GetArenaInfo()
+    {
+        GetStoreInfoByType(StoreTypeEnum.ArenaInfo);
+    }
+
+    /// <summary>
+    /// 获取竞技场商品
+    /// </summary>
+    public void GetArenaGoods()
+    {
+        GetStoreInfoByType(StoreTypeEnum.ArenaGoods);
+    }
+
+    /// <summary>
     /// 查询所有商店信息
     /// </summary>
     public void GetStoreInfoByType(StoreTypeEnum type)
