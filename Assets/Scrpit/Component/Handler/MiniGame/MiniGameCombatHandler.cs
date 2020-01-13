@@ -43,7 +43,7 @@ public class MiniGameCombatHandler : BaseMiniGameHandler<MiniGameCombatBuilder, 
         }
         mTargetSelectedPosition = 0;
         //创建NPC
-        miniGameBuilder.CreateAllCharacter(gameCombatData.combatPosition, gameCombatData.listUserGameData, gameCombatData.listEnemyGameData);
+        miniGameBuilder.CreateAllCharacter(gameCombatData.miniGamePosition, gameCombatData.listUserGameData, gameCombatData.listEnemyGameData);
         //设置摄像机位置
         InitCameraPosition();
         //打开倒计时UI
@@ -73,7 +73,7 @@ public class MiniGameCombatHandler : BaseMiniGameHandler<MiniGameCombatBuilder, 
     public void InitCameraPosition()
     {
         controlHandler.StartControl(ControlHandler.ControlEnum.MiniGameCombat);
-        SetCameraPosition(miniGameData.combatPosition);
+        SetCameraPosition(miniGameData.miniGamePosition);
     }
 
     /// <summary>
@@ -118,7 +118,7 @@ public class MiniGameCombatHandler : BaseMiniGameHandler<MiniGameCombatBuilder, 
     /// <returns></returns>
     public Vector3 GetMiniGameCombatPosition()
     {
-        return miniGameData.combatPosition;
+        return miniGameData.miniGamePosition;
     }
 
     /// <summary>

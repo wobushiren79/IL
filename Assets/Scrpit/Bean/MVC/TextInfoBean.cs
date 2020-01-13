@@ -28,8 +28,6 @@ public class TextInfoBean : BaseBean
     //选择对话 的类型 0提示文本  1选项
     public int select_type;
 
-
-
     //是否停止时间
     public int is_stoptime;
     
@@ -37,16 +35,13 @@ public class TextInfoBean : BaseBean
     public int condition_min_favorability;
     public int condition_max_favorability;
 
-    //好处的前提条件 类型，人数，敌人ID
-    public string add_pre;
     //增加的好感
     public int add_favorability;
-    //增加的金钱
-    public string add_money;
-    //增加的角色
-    public string add_character;
-    //增加的物品
-    public string add_items;
+
+    //小游戏的前置数据
+    public string pre_data_minigame;
+   //奖励物品
+    public string reward_data;
 
     //场景人物表情
     public string scene_expression;
@@ -61,24 +56,5 @@ public class TextInfoBean : BaseBean
         this.select_type = selectType;
         this.content = content;
     }
-    /// <summary>
-    /// 获取增加的钱
-    /// </summary>
-    /// <param name="moneyL"></param>
-    /// <param name="moneyM"></param>
-    /// <param name="moneyS"></param>
-    public void GetAddMoney(out long moneyL, out long moneyM, out long moneyS)
-    {
-        if (CheckUtil.StringIsNull(add_money))
-        {
-            moneyL = 0;
-            moneyM = 0;
-            moneyS = 0;
-            return;
-        }
-        long[] listData= StringUtil.SplitBySubstringForArrayLong(add_money,',');
-        moneyL = listData[0];
-        moneyM = listData[1];
-        moneyS = listData[2];
-    }
+
 }

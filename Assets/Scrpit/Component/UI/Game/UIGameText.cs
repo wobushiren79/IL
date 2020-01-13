@@ -481,6 +481,6 @@ public class UIGameText : BaseUIComponent, ITextInfoView, DialogView.IDialogCall
         /// <summary>
         /// 文本选择结果处理
         /// </summary>
-        void UITextSelectResult(TextInfoBean textData, List<CharacterBean> listUserData);
+        void UITextSelectResult(TextInfoBean textData, List<CharacterBean> listPickCharacterData);
     }
 }

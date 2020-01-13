@@ -4,7 +4,7 @@ using UnityEditor;
 using System;
 using System.Collections.Generic;
 
-public class ItemGameTextSelectCpt : ItemGameBaseCpt,DialogView.IDialogCallBack
+public class ItemGameTextSelectCpt : ItemGameBaseCpt, DialogView.IDialogCallBack
 {
     [Header("控件")]
     public Text tvContent;
@@ -43,7 +43,7 @@ public class ItemGameTextSelectCpt : ItemGameBaseCpt,DialogView.IDialogCallBack
         }
         UIGameManager uiGameManager = uiGameText.GetUIMananger<UIGameManager>();
         //检测是否有钱
-        textData.GetAddMoney(out long moneyL, out long moneyM, out long moneyS);
+        RewardTypeEnumTools.GetRewardForAddMoney(textData.reward_data, out long moneyL, out long moneyM, out long moneyS);
         if (moneyL > 0 || moneyM > 0 || moneyS > 0)
         {
             if (uiGameManager.gameDataManager.gameData.HasEnoughMoney(moneyL, moneyM, moneyS))
@@ -52,7 +52,7 @@ public class ItemGameTextSelectCpt : ItemGameBaseCpt,DialogView.IDialogCallBack
             }
             else
             {
-                tvContent.text += "("+ GameCommonInfo.GetUITextById(1005) + ")";
+                tvContent.text += "(" + GameCommonInfo.GetUITextById(1005) + ")";
                 tvContent.color = Color.red;
             }
         }
@@ -62,10 +62,10 @@ public class ItemGameTextSelectCpt : ItemGameBaseCpt,DialogView.IDialogCallBack
     {
         UIGameText uiGameText = (UIGameText)uiComponent;
         UIGameManager uiGameManager = uiGameText.GetUIMananger<UIGameManager>();
-        if (CheckUtil.StringIsNull(textData.add_pre))
+        if (CheckUtil.StringIsNull(textData.pre_data_minigame))
         {
             //如果没有前置条件 则直接进行下一步
-            textData.GetAddMoney(out long moneyL, out long moneyM, out long moneyS);
+            RewardTypeEnumTools.GetRewardForAddMoney(textData.reward_data, out long moneyL, out long moneyM, out long moneyS);
             if (moneyL > 0 || moneyM > 0 || moneyS > 0)
             {
                 if (uiGameManager.gameDataManager.gameData.HasEnoughMoney(moneyL, moneyM, moneyS))
@@ -82,10 +82,10 @@ public class ItemGameTextSelectCpt : ItemGameBaseCpt,DialogView.IDialogCallBack
         }
         else
         {
-            List<string> listAddPre= StringUtil.SplitBySubstringForListStr(textData.add_pre,',');
             DialogBean dialogBean = new DialogBean();
-            PickForCharacterDialogView dialogView= (PickForCharacterDialogView)uiGameManager.dialogManager.CreateDialog(DialogEnum.PickForCharacter,this, dialogBean);
-            dialogView.SetPickCharacterMax(int.Parse(listAddPre[1]));
+            PickForCharacterDialogView dialogView = (PickForCharacterDialogView)uiGameManager.dialogManager.CreateDialog(DialogEnum.PickForCharacter, this, dialogBean);
+            PreTypeForMiniGameEnumTools.GetPlayerNumber(textData.pre_data_minigame, out int playerNumber);
+            dialogView.SetPickCharacterMax(playerNumber);
         }
 
     }
@@ -93,7 +93,7 @@ public class ItemGameTextSelectCpt : ItemGameBaseCpt,DialogView.IDialogCallBack
     #region dilaog回调
     public void Submit(DialogView dialogView, DialogBean dialogBean)
     {
-        if (CheckUtil.StringIsNull(textData.add_pre))
+        if (CheckUtil.StringIsNull(textData.pre_data_minigame))
             return;
         UIGameText uiGameText = (UIGameText)uiComponent;
         PickForCharacterDialogView pickDialog = (PickForCharacterDialogView)dialogView;

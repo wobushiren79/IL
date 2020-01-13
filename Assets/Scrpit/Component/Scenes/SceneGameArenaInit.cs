@@ -263,7 +263,7 @@ public class SceneGameArenaInit : BaseSceneInit, IBaseObserver
     {
         //找到竞技场战斗的地点
         sceneArenaManager.GetArenaForCombatBy1(out Vector3 combatPosition);
-        gameCombatData.combatPosition = combatPosition;
+        gameCombatData.miniGamePosition = combatPosition;
         //初始化游戏
         combatHandler.InitGame(gameCombatData);
     }

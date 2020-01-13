@@ -350,40 +350,35 @@ public class EventHandler : BaseHandler,
         }
     }
 
-    public void UITextSelectResult(TextInfoBean textData, List<CharacterBean> listUserData)
+    public void UITextSelectResult(TextInfoBean textData ,List<CharacterBean> listPickCharacterData)
     {
-        List<string> listAddPre = StringUtil.SplitBySubstringForListStr(textData.add_pre, ',');
-        List<long> listRewardCharacter = StringUtil.SplitBySubstringForArrayLong(textData.add_character, ',').ToList();
-        switch ((SelectResultTypeEnum)int.Parse(listAddPre[0]))
+        if (!CheckUtil.StringIsNull(textData.pre_data_minigame))
         {
-            case SelectResultTypeEnum.Combat:
-                MiniGameCombatInit(listAddPre, listRewardCharacter, listUserData);
-                break;
+            List<PreTypeForMiniGameBean> listPre = PreTypeForMiniGameEnumTools.GetListPreData(textData.pre_data_minigame);
+            List<RewardTypeBean> listReward = RewardTypeEnumTools.GetListRewardData(textData.reward_data);
+            MiniGameBaseBean miniGameData= PreTypeForMiniGameEnumTools.GetMiniGameData(textData.pre_data_minigame, listPickCharacterData,gameItemsManager,npcInfoManager);
+            miniGameData.listReward = listReward;
+            switch (miniGameData.gameType)
+            {
+                case MiniGameEnum.Combat:
+                    MiniGameCombatInit((MiniGameCombatBean)miniGameData);
+                    break;
+            }
         }
     }
     #endregion
 
-    private void MiniGameCombatInit(List<string> listAddPre, List<long> listRewardCharacter, List<CharacterBean> listUserData)
+    private void MiniGameCombatInit(MiniGameCombatBean miniGameData)
     {
         //隐藏重要NPC
         if (npcImportantBuilder != null)
             npcImportantBuilder.HideNpc();
 
-        long[] listEnemyId = StringUtil.SplitBySubstringForArrayLong(listAddPre[2], '|');
-        List<CharacterBean> listEnemyData = npcInfoManager.GetCharacterDataByIds(listEnemyId);
-        float[] combatPosition = StringUtil.SplitBySubstringForArrayFloat(listAddPre[3], '|');
-
-        MiniGameCombatBean miniGameCombatData = new MiniGameCombatBean();
-        miniGameCombatData.gameReason = MiniGameReasonEnum.Recruit;
-        miniGameCombatData.combatPosition = new Vector3(combatPosition[0], combatPosition[1]);
-        miniGameCombatData.winBringDownNumber = listEnemyData.Count;
-        miniGameCombatData.winSurvivalNumber = listUserData.Count;
-        miniGameCombatData.gameResultWinTalkMarkId = long.Parse(listAddPre[4]);
-        miniGameCombatData.gameResultLoseTalkMarkId = long.Parse(listAddPre[5]);
-        miniGameCombatData.listRewardCharacter = listRewardCharacter;
-        miniGameCombatData.InitData(gameItemsManager, listUserData, listEnemyData);
-        miniGameCombatHandler.InitGame(miniGameCombatData);
-        mEventPosition = miniGameCombatData.combatPosition;
+        miniGameData.gameReason = MiniGameReasonEnum.Recruit;
+        miniGameData.winBringDownNumber = miniGameData.listEnemyGameData.Count;
+        miniGameData.winSurvivalNumber = miniGameData.listUserGameData.Count;
+        miniGameCombatHandler.InitGame(miniGameData);
+        mEventPosition = miniGameData.miniGamePosition;
     }
 
     #region 回调处理

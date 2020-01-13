@@ -63,8 +63,8 @@ public class UITownArena : UIBaseOne, IRadioGroupCallBack, StoreInfoManager.ICal
             GameObject objItem = Instantiate(objArenaContainer, objArenaModel);
             ItemTownArenaCpt arenaItem = objItem.GetComponent<ItemTownArenaCpt>();
             arenaItem.SetData(itemMiniGameData);
-            //GameUtil.RefreshRectViewHight((RectTransform)objItem.transform,true);\
-            objItem.transform.DOScale(new Vector3(0,0,0),0.5f).From().SetEase(Ease.OutBack);
+            GameUtil.RefreshRectViewHight((RectTransform)objItem.transform,true);
+            objItem.transform.DOScale(new Vector3(0, 0, 0), 0.5f).From().SetEase(Ease.OutBack);
         }
     }
 
@@ -80,30 +80,39 @@ public class UITownArena : UIBaseOne, IRadioGroupCallBack, StoreInfoManager.ICal
         {
             MiniGameEnum gameType = RandomUtil.GetRandomEnum<MiniGameEnum>();
             StoreInfoBean storeInfo = null;
-            MiniGameBaseBean miniGameData = null;
+            MiniGameBaseBean miniGameData = MiniGameEnumTools.GetMiniGameData(gameType);
             switch (gameType)
             {
                 case MiniGameEnum.Cooking:
                     storeInfo = GetStoreInfoByTypeAndWorker(type, WorkerEnum.Chef);
-                    miniGameData = CreateCookingGameData(storeInfo);
+                    miniGameData = CreateCookingGameData((MiniGameCookingBean)miniGameData, storeInfo);
                     break;
                 case MiniGameEnum.Barrage:
                     storeInfo = GetStoreInfoByTypeAndWorker(type, WorkerEnum.Waiter);
-                    miniGameData = CreateBarrageGameData(storeInfo);
+                    miniGameData = CreateBarrageGameData((MiniGameBarrageBean)miniGameData, storeInfo);
                     break;
                 case MiniGameEnum.Account:
                     storeInfo = GetStoreInfoByTypeAndWorker(type, WorkerEnum.Accountant);
-                    miniGameData = CreateAccountGameData(storeInfo);
+                    miniGameData = CreateAccountGameData((MiniGameAccountBean)miniGameData, storeInfo);
                     break;
                 case MiniGameEnum.Debate:
                     storeInfo = GetStoreInfoByTypeAndWorker(type, WorkerEnum.Accost);
-                    miniGameData = CreateDebateGameData(storeInfo);
+                    miniGameData = CreateDebateGameData((MiniGameDebateBean)miniGameData, storeInfo);
                     break;
                 case MiniGameEnum.Combat:
                     storeInfo = GetStoreInfoByTypeAndWorker(type, WorkerEnum.Beater);
-                    miniGameData = CreateCombatGameData(storeInfo);
+                    miniGameData = CreateCombatGameData((MiniGameCombatBean)miniGameData, storeInfo);
                     break;
             }
+            //奖励添加
+            miniGameData.listReward = new List<RewardTypeBean>();
+            List<RewardTypeBean> listReward = RewardTypeEnumTools.GetListRewardData(storeInfo.reward_data);
+            if (!CheckUtil.ListIsNull(listReward))
+            {
+                RewardTypeBean randomReward = RandomUtil.GetRandomDataByList(listReward);
+                miniGameData.listReward.Add(randomReward);
+            }
+    
             if (miniGameData != null)
                 listMiniGameData.Add(miniGameData);
         }
@@ -128,33 +137,28 @@ public class UITownArena : UIBaseOne, IRadioGroupCallBack, StoreInfoManager.ICal
         return null;
     }
 
-    private MiniGameCookingBean CreateCookingGameData(StoreInfoBean storeInfo)
+    private MiniGameCookingBean CreateCookingGameData(MiniGameCookingBean miniGameData, StoreInfoBean storeInfo)
     {
-        MiniGameCookingBean miniGameData = new MiniGameCookingBean();
         return miniGameData;
     }
 
-    private MiniGameBarrageBean CreateBarrageGameData(StoreInfoBean storeInfo)
+    private MiniGameBarrageBean CreateBarrageGameData(MiniGameBarrageBean miniGameData, StoreInfoBean storeInfo)
     {
-        MiniGameBarrageBean miniGameData = new MiniGameBarrageBean();
         return miniGameData;
     }
 
-    private MiniGameAccountBean CreateAccountGameData(StoreInfoBean storeInfo)
+    private MiniGameAccountBean CreateAccountGameData(MiniGameAccountBean miniGameData, StoreInfoBean storeInfo)
     {
-        MiniGameAccountBean miniGameData = new MiniGameAccountBean();
         return miniGameData;
     }
 
-    private MiniGameDebateBean CreateDebateGameData(StoreInfoBean storeInfo)
+    private MiniGameDebateBean CreateDebateGameData(MiniGameDebateBean miniGameData, StoreInfoBean storeInfo)
     {
-        MiniGameDebateBean miniGameData = new MiniGameDebateBean();
         return miniGameData;
     }
 
-    private MiniGameCombatBean CreateCombatGameData(StoreInfoBean storeInfo)
+    private MiniGameCombatBean CreateCombatGameData(MiniGameCombatBean miniGameData, StoreInfoBean storeInfo)
     {
-        MiniGameCombatBean miniGameData = new MiniGameCombatBean();
         return miniGameData;
     }
 

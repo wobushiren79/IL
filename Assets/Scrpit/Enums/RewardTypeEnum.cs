@@ -6,12 +6,14 @@ using System;
 public enum RewardTypeEnum
 {
     AddWorkerNumber,//增加工作人数上限
+    AddWorker,//增加工作人员
     AddMoneyL,//增加金钱
     AddMoneyM,
     AddMoneyS,
     AddGuildCoin,//增加公会硬币
     AddItems,//增加道具
     AddBuildItems,//增加建筑材料
+
 }
 
 public class RewardTypeBean
@@ -21,6 +23,7 @@ public class RewardTypeBean
 
     public string rewardDescribe;
     public Sprite spRewardIcon;
+    public CharacterBean workerCharacterData;
 
     public RewardTypeBean(RewardTypeEnum rewardType, string rewardData)
     {
@@ -38,6 +41,10 @@ public class RewardTypeEnumTools
     public static List<RewardTypeBean> GetListRewardData(string data)
     {
         List<RewardTypeBean> listRewardData = new List<RewardTypeBean>();
+        if (CheckUtil.StringIsNull(data))
+        {
+            return listRewardData;
+        }
         List<string> listData = StringUtil.SplitBySubstringForListStr(data, '|');
         foreach (string itemData in listData)
         {
@@ -52,17 +59,44 @@ public class RewardTypeEnumTools
     }
 
     /// <summary>
-    /// 获取奖励描述
+    /// 根据类型获取奖励数据
     /// </summary>
     /// <param name="rewardType"></param>
+    /// <param name="data"></param>
+    /// <returns></returns>
+    public static List<RewardTypeBean> GetListRewardDataByType(RewardTypeEnum rewardType, string data)
+    {
+        List<RewardTypeBean> listAllReward = GetListRewardData(data);
+        List<RewardTypeBean> listReward = new List<RewardTypeBean>();
+        foreach (RewardTypeBean itemReward in listAllReward)
+        {
+            if (itemReward.rewardType == rewardType)
+            {
+                listReward.Add(itemReward);
+            }
+        }
+        return listReward;
+    }
+
+    /// <summary>
+    /// 获取奖励描述
+    /// </summary>
     /// <returns></returns>
     public static RewardTypeBean GetRewardDetails(RewardTypeBean rewardData, IconDataManager iconDataManager, GameItemsManager gameItemsManager, InnBuildManager innBuildManager)
+    {
+        return GetRewardDetails(rewardData, iconDataManager, gameItemsManager, innBuildManager, null);
+    }
+    public static RewardTypeBean GetRewardDetails(RewardTypeBean rewardData, IconDataManager iconDataManager, GameItemsManager gameItemsManager, InnBuildManager innBuildManager, NpcInfoManager npcInfoManager)
     {
         switch (rewardData.rewardType)
         {
             case RewardTypeEnum.AddWorkerNumber:
                 rewardData.spRewardIcon = iconDataManager.GetIconSpriteByName("ui_features_worker");
                 rewardData.rewardDescribe = string.Format(GameCommonInfo.GetUITextById(6001), rewardData.rewardData);
+                break;
+            case RewardTypeEnum.AddWorker:
+                long workerId = long.Parse(rewardData.rewardData);
+                rewardData.workerCharacterData = npcInfoManager.GetCharacterDataById(workerId);
                 break;
             case RewardTypeEnum.AddMoneyL:
                 rewardData.spRewardIcon = iconDataManager.GetIconSpriteByName("money_3");
@@ -88,6 +122,36 @@ public class RewardTypeEnumTools
                 break;
         }
         return rewardData;
+    }
+
+    /// <summary>
+    /// 获取奖励 增加的金钱
+    /// </summary>
+    /// <param name="data"></param>
+    /// <param name="addMoneyL"></param>
+    /// <param name="addMoneyM"></param>
+    /// <param name="addMoneyS"></param>
+    public static void GetRewardForAddMoney(string data, out long addMoneyL, out long addMoneyM, out long addMoneyS)
+    {
+        addMoneyL = 0;
+        addMoneyM = 0;
+        addMoneyS = 0;
+        List<RewardTypeBean> listAllReward = GetListRewardData(data);
+        foreach (RewardTypeBean rewardItem in listAllReward)
+        {
+            if (rewardItem.rewardType == RewardTypeEnum.AddMoneyL)
+            {
+                addMoneyL = long.Parse(rewardItem.rewardData);
+            }
+            else if (rewardItem.rewardType == RewardTypeEnum.AddMoneyM)
+            {
+                addMoneyM = long.Parse(rewardItem.rewardData);
+            }
+            else if (rewardItem.rewardType == RewardTypeEnum.AddMoneyS)
+            {
+                addMoneyS = long.Parse(rewardItem.rewardData);
+            }
+        }
     }
 
     /// <summary>
@@ -144,6 +208,10 @@ public class RewardTypeEnumTools
     public static void CompleteReward(string data, GameDataBean gameData)
     {
         List<RewardTypeBean> listRewardData = GetListRewardData(data);
+        CompleteReward(listRewardData, gameData);
+    }
+    public static void CompleteReward(List<RewardTypeBean> listRewardData, GameDataBean gameData)
+    {
         foreach (var itemData in listRewardData)
         {
             RewardTypeEnum rewardType = itemData.rewardType;
@@ -195,4 +263,5 @@ public class RewardTypeEnumTools
             }
         }
     }
+
 }

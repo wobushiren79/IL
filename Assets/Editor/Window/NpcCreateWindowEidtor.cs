@@ -256,18 +256,6 @@ public class NpcCreateWindowEidtor : EditorWindow
                 {
                     GUILayout.Label("选择类型：", GUILayout.Width(100), GUILayout.Height(20));
                     itemTalkInfo.select_type = int.Parse(EditorGUILayout.TextArea(itemTalkInfo.select_type + "", GUILayout.Width(50), GUILayout.Height(20)));
-                    if (itemTalkInfo.select_type == 1)
-                    {
-                        GUILayout.Label("好处的前提条件：类型（1战斗），己方人数，敌方角色ID(-分隔),位置xy(-分隔),后续赢对话markID,后续输对话markID");
-
-                        itemTalkInfo.add_pre = EditorGUILayout.TextArea(itemTalkInfo.add_pre + "", GUILayout.Width(300), GUILayout.Height(20));
-                        GUILayout.Label("增加的金钱：L,M,S");
-                        itemTalkInfo.add_money = EditorGUILayout.TextArea(itemTalkInfo.add_money + "", GUILayout.Width(50), GUILayout.Height(20));
-                        GUILayout.Label("增加的角色：id,id,id");
-                        itemTalkInfo.add_character = EditorGUILayout.TextArea(itemTalkInfo.add_character + "", GUILayout.Width(50), GUILayout.Height(20));
-                        GUILayout.Label("增加的物品：id,id,id");
-                        itemTalkInfo.add_items = EditorGUILayout.TextArea(itemTalkInfo.add_items + "", GUILayout.Width(50), GUILayout.Height(20));
-                    }
                 }
                 GUILayout.Label("增加的好感：", GUILayout.Width(100), GUILayout.Height(20));
                 itemTalkInfo.add_favorability = int.Parse(EditorGUILayout.TextArea(itemTalkInfo.add_favorability + "", GUILayout.Width(50), GUILayout.Height(20)));

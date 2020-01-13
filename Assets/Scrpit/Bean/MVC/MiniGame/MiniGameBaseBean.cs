@@ -27,10 +27,11 @@ public class MiniGameBaseBean
     public long gameResultWinTalkMarkId;
     public long gameResultLoseTalkMarkId;
 
-    //奖励道具
-    public Dictionary<long, int> listRewardItem = new Dictionary<long, int>();
-    //奖励的角色
-    public List<long> listRewardCharacter = new List<long>();
+    //游戏地点
+    public Vector3 miniGamePosition;
+
+    //奖励
+    public List<RewardTypeBean> listReward = new List<RewardTypeBean>();
 
     //玩家数据
     public List<MiniGameCharacterBean> listUserGameData = new List<MiniGameCharacterBean>();
@@ -147,25 +148,6 @@ public class MiniGameBaseBean
                 break;
         }
         return gameName;
-    }
-
-    /// <summary>
-    /// 添加奖励物品
-    /// </summary>
-    /// <param name="id"></param>
-    /// <param name="number"></param>
-    public void AddRewardItem(long id, int number)
-    {
-        if (listRewardItem == null)
-            listRewardItem = new Dictionary<long, int>();
-        if (listRewardItem.ContainsKey(id))
-        {
-            listRewardItem[id] += number;
-        }
-        else
-        {
-            listRewardItem.Add(id, number);
-        }
     }
 
     /// <summary>
