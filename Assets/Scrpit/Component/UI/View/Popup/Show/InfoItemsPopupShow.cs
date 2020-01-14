@@ -29,8 +29,7 @@ public class InfoItemsPopupShow : PopupShowView
     {
         if (data == null)
             return;
-        if (spIcon != null)
-            SetIcon(spIcon);
+        SetIcon(spIcon);
         SetName(data.name);
         SetContent(data.content);
         SetType(data.items_type);

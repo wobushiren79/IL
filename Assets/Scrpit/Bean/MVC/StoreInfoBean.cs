@@ -20,6 +20,7 @@ public class StoreInfoBean : BaseBean
 
     public string pre_ach_ids;//前置成就ID
     public string pre_data;//前置条件
+    public string pre_data_minigame;//小游戏前置条件
     public string reward_data;//奖励
 
     public string icon_key;//图标KEY

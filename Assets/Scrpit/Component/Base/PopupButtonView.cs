@@ -27,23 +27,26 @@ public abstract class PopupButtonView : BaseMonoBehaviour, IPointerEnterHandler,
 
     public void OnPointerEnter(PointerEventData eventData)
     {
-        if (popupShow != null)
-            popupShow.gameObject.SetActive(true);
+        if (popupShow == null)
+            return;
+       popupShow.gameObject.SetActive(true);
         OpenPopup();
         popupShow.RefreshViewSize();
     }
 
     public void OnPointerExit(PointerEventData eventData)
     {
-        if (popupShow != null)
-            popupShow.gameObject.SetActive(false);
+        if (popupShow == null)
+            return;
+        popupShow.gameObject.SetActive(false);
         ClosePopup();
     }
 
     private void OnDisable()
     {
-        if (popupShow != null)
-            popupShow.gameObject.SetActive(false);
+        if (popupShow == null)
+            return;
+        popupShow.gameObject.SetActive(false);
         ClosePopup();
     }
 

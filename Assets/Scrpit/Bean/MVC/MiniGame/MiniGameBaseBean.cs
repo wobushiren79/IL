@@ -10,7 +10,7 @@ public class MiniGameBaseBean
     public int gameLevel;//游戏等级
     //胜利条件
     public float winSurvivalTime;//生存时间(秒)
-    public float winLife;//生命值多少以上
+    public long winLife;//生命值多少以上
     public int winSurvivalNumber;//生存角色个数
     public int winBringDownNumber;//打到角色个数
     public int winScore;//胜利分数
@@ -18,6 +18,9 @@ public class MiniGameBaseBean
     public int winMoneyM;//胜利的金钱
     public int winMoneyL;//胜利的金钱
 
+    public long preMoneyL;//前置金钱
+    public long preMoneyM;
+    public long preMoneyS;
 
     //游戏结果 0输 1赢
     public int gameResult;

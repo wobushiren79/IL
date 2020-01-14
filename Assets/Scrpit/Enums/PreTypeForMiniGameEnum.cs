@@ -11,6 +11,9 @@ public enum PreTypeForMiniGameEnum
     MiniGamePosition = 5,
     TalkMarkIdForWin = 6,
     TalkMarkIdForLose = 7,
+
+    WinSurvivalTime = 21,
+    WinLife = 22,
 }
 
 public class PreTypeForMiniGameBean
@@ -89,20 +92,31 @@ public class PreTypeForMiniGameEnumTools
     /// <summary>
     /// 获取游戏数据
     /// </summary>
-    public static MiniGameBaseBean GetMiniGameData(string data, List<CharacterBean> listPickCharacter, GameItemsManager gameItemsManager, NpcInfoManager npcInfoManager)
+    public static MiniGameBaseBean GetMiniGameData(MiniGameBaseBean miniGameData, string data, GameItemsManager gameItemsManager, NpcInfoManager npcInfoManager)
+    {
+        return GetMiniGameData(miniGameData, data, null, gameItemsManager, npcInfoManager);
+    }
+
+    public static MiniGameBaseBean GetMiniGameData(MiniGameBaseBean miniGameData, string data, List<CharacterBean> listPickCharacter, GameItemsManager gameItemsManager, NpcInfoManager npcInfoManager)
     {
         List<PreTypeForMiniGameBean> listPreData = GetListPreData(data);
-        MiniGameBaseBean miniGameData = null;
         List<CharacterBean> listUserData = new List<CharacterBean>();
         List<CharacterBean> listEnemyData = new List<CharacterBean>();
         Vector2 minigamePosition = Vector2.zero;
+        //如果没有传入游戏数据则先根据条件生成一个
+        if (miniGameData == null)
+        {
+            GetMiniGameType(data, out MiniGameEnum miniGameType);
+            miniGameData = MiniGameEnumTools.GetMiniGameData(miniGameType);
+        }
+
         foreach (PreTypeForMiniGameBean itemPreData in listPreData)
         {
             switch (itemPreData.preType)
             {
                 case PreTypeForMiniGameEnum.MiniGameType:
                     MiniGameEnum miniGameType = (MiniGameEnum)int.Parse(itemPreData.preData);
-                    miniGameData = MiniGameEnumTools.GetMiniGameData(miniGameType);
+                    miniGameData.gameType = miniGameType;
                     break;
                 case PreTypeForMiniGameEnum.UserIds:
                     long[] userIds = StringUtil.SplitBySubstringForArrayLong(itemPreData.preData, ',');
@@ -122,10 +136,17 @@ public class PreTypeForMiniGameEnumTools
                 case PreTypeForMiniGameEnum.TalkMarkIdForLose:
                     miniGameData.gameResultLoseTalkMarkId = long.Parse(itemPreData.preData);
                     break;
+                case PreTypeForMiniGameEnum.WinLife:
+                    miniGameData.winLife = long.Parse(itemPreData.preData);
+                    break;
+                case PreTypeForMiniGameEnum.WinSurvivalTime:
+                    miniGameData.winSurvivalTime = float.Parse(itemPreData.preData);
+                    break;
             }
         }
         if (miniGameData == null)
             return miniGameData;
+        //如果有传入角色则把传入角色也加入到用户数据中
         if (listPickCharacter != null)
         {
             listUserData.AddRange(listPickCharacter);
@@ -135,9 +156,5 @@ public class PreTypeForMiniGameEnumTools
         return miniGameData;
     }
 
-    public static void GetMiniGameData(string data, GameItemsManager gameItemsManager, NpcInfoManager npcInfoManager)
-    {
-        GetMiniGameData(data, null, gameItemsManager, npcInfoManager);
-    }
 }
 

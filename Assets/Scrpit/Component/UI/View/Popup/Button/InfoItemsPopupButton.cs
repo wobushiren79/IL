@@ -19,6 +19,8 @@ public class InfoItemsPopupButton : PopupButtonView
 
     public override void OpenPopup()
     {
+        if (popupShow == null)
+            return;
         ((InfoItemsPopupShow)popupShow).SetData(spIcon, itemsInfo);
         if (itemsInfo == null || itemsInfo.id == 0)
         {

@@ -350,13 +350,13 @@ public class EventHandler : BaseHandler,
         }
     }
 
-    public void UITextSelectResult(TextInfoBean textData ,List<CharacterBean> listPickCharacterData)
+    public void UITextSelectResult(TextInfoBean textData, List<CharacterBean> listPickCharacterData)
     {
         if (!CheckUtil.StringIsNull(textData.pre_data_minigame))
         {
             List<PreTypeForMiniGameBean> listPre = PreTypeForMiniGameEnumTools.GetListPreData(textData.pre_data_minigame);
             List<RewardTypeBean> listReward = RewardTypeEnumTools.GetListRewardData(textData.reward_data);
-            MiniGameBaseBean miniGameData= PreTypeForMiniGameEnumTools.GetMiniGameData(textData.pre_data_minigame, listPickCharacterData,gameItemsManager,npcInfoManager);
+            MiniGameBaseBean miniGameData = PreTypeForMiniGameEnumTools.GetMiniGameData(null, textData.pre_data_minigame, listPickCharacterData, gameItemsManager, npcInfoManager);
             miniGameData.listReward = listReward;
             switch (miniGameData.gameType)
             {

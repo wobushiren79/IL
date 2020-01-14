@@ -74,12 +74,15 @@ public class UITownArena : UIBaseOne, IRadioGroupCallBack, StoreInfoManager.ICal
     /// <returns></returns>
     private List<MiniGameBaseBean> CreateMiniGameData(int type)
     {
+        GameItemsManager gameItemsManager = GetUIMananger<UIGameManager>().gameItemsManager;
+        NpcInfoManager npcInfoManager = GetUIMananger<UIGameManager>().npcInfoManager;
         List<MiniGameBaseBean> listMiniGameData = new List<MiniGameBaseBean>();
         int arenaNumber = Random.Range(1, 5);
         for (int i = 0; i < arenaNumber; i++)
         {
             MiniGameEnum gameType = RandomUtil.GetRandomEnum<MiniGameEnum>();
             StoreInfoBean storeInfo = null;
+
             MiniGameBaseBean miniGameData = MiniGameEnumTools.GetMiniGameData(gameType);
             switch (gameType)
             {
@@ -104,6 +107,10 @@ public class UITownArena : UIBaseOne, IRadioGroupCallBack, StoreInfoManager.ICal
                     miniGameData = CreateCombatGameData((MiniGameCombatBean)miniGameData, storeInfo);
                     break;
             }
+            PreTypeForMiniGameEnumTools.GetMiniGameData(miniGameData, storeInfo.pre_data_minigame, gameItemsManager, npcInfoManager);
+            miniGameData.preMoneyL = storeInfo.price_l;
+            miniGameData.preMoneyM = storeInfo.price_m;
+            miniGameData.preMoneyS = storeInfo.price_s;
             //奖励添加
             miniGameData.listReward = new List<RewardTypeBean>();
             List<RewardTypeBean> listReward = RewardTypeEnumTools.GetListRewardData(storeInfo.reward_data);
@@ -117,15 +124,19 @@ public class UITownArena : UIBaseOne, IRadioGroupCallBack, StoreInfoManager.ICal
             {
                 case 1:
                     miniGameData.listReward.Add(new RewardTypeBean(RewardTypeEnum.AddArenaTrophyElementary, "1"));
+                    miniGameData.listReward.Add(new RewardTypeBean(RewardTypeEnum.AddMoneyS, "1000"));
                     break;
                 case 2:
                     miniGameData.listReward.Add(new RewardTypeBean(RewardTypeEnum.AddArenaTrophyIntermediate, "1"));
+                    miniGameData.listReward.Add(new RewardTypeBean(RewardTypeEnum.AddMoneyS, "5000"));
                     break;
                 case 3:
                     miniGameData.listReward.Add(new RewardTypeBean(RewardTypeEnum.AddArenaTrophyAdvanced, "1"));
+                    miniGameData.listReward.Add(new RewardTypeBean(RewardTypeEnum.AddMoneyM, "10"));
                     break;
                 case 4:
                     miniGameData.listReward.Add(new RewardTypeBean(RewardTypeEnum.AddArenaTrophyLegendary, "1"));
+                    miniGameData.listReward.Add(new RewardTypeBean(RewardTypeEnum.AddMoneyL, "10"));
                     break;
             }
             if (miniGameData != null)

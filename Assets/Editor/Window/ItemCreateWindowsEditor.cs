@@ -359,7 +359,14 @@ public class ItemCreateWindowsEditor : EditorWindow, StoreInfoManager.ICallBack
         {
             storeInfo.pre_data = "Chef";
         }
-        storeInfo.pre_data = ((WorkerEnum)EditorGUILayout.EnumPopup("职业", EnumUtil.GetEnum<WorkerEnum>(storeInfo.pre_data), GUILayout.Width(300), GUILayout.Height(20)))+"";
+        storeInfo.pre_data = ((WorkerEnum)EditorGUILayout.EnumPopup("职业", EnumUtil.GetEnum<WorkerEnum>(storeInfo.pre_data), GUILayout.Width(300), GUILayout.Height(20))) + "";
+
+        GUILayout.Label("报名费LMS：", GUILayout.Width(100), GUILayout.Height(20));
+        storeInfo.price_l = long.Parse(EditorGUILayout.TextArea(storeInfo.price_l + "", GUILayout.Width(100), GUILayout.Height(20)));
+        storeInfo.price_m = long.Parse(EditorGUILayout.TextArea(storeInfo.price_m + "", GUILayout.Width(100), GUILayout.Height(20)));
+        storeInfo.price_s = long.Parse(EditorGUILayout.TextArea(storeInfo.price_s + "", GUILayout.Width(100), GUILayout.Height(20)));
+
+        GUIPreForMiniGame(storeInfo);
         GUIReward(storeInfo);
     }
 
@@ -635,6 +642,10 @@ public class ItemCreateWindowsEditor : EditorWindow, StoreInfoManager.ICallBack
         EditorGUILayout.EndVertical();
     }
 
+    /// <summary>
+    /// 前置条件UI
+    /// </summary>
+    /// <param name="storeInfo"></param>
     private void GUIPre(StoreInfoBean storeInfo)
     {
         //前置相关
@@ -665,6 +676,44 @@ public class ItemCreateWindowsEditor : EditorWindow, StoreInfoManager.ICallBack
             listItemPreData[1] = EditorGUILayout.TextArea(listItemPreData[1] + "", GUILayout.Width(100), GUILayout.Height(20));
             EditorGUILayout.EndHorizontal();
             storeInfo.pre_data += (listItemPreData[0] + ":" + listItemPreData[1]) + "|";
+        }
+        EditorGUILayout.EndVertical();
+    }
+
+    /// <summary>
+    /// 迷你游戏前置条件
+    /// </summary>
+    /// <param name="storeInfo"></param>
+    private void GUIPreForMiniGame(StoreInfoBean storeInfo)
+    {
+        //前置相关
+        EditorGUILayout.BeginVertical();
+        GUILayout.Label("小游戏前置：", GUILayout.Width(100), GUILayout.Height(20));
+        if (GUILayout.Button("添加前置", GUILayout.Width(100), GUILayout.Height(20)))
+        {
+            storeInfo.pre_data_minigame += ("|" + EnumUtil.GetEnumName(PreTypeForMiniGameEnum.WinSurvivalTime) + ":" + "1|");
+        }
+        List<string> listPreData = StringUtil.SplitBySubstringForListStr(storeInfo.pre_data_minigame, '|');
+        storeInfo.pre_data_minigame = "";
+        for (int i = 0; i < listPreData.Count; i++)
+        {
+            string itemPreData = listPreData[i];
+            if (CheckUtil.StringIsNull(itemPreData))
+            {
+                continue;
+            }
+            EditorGUILayout.BeginHorizontal();
+            if (GUILayout.Button("删除", GUILayout.Width(100), GUILayout.Height(20)))
+            {
+                listPreData.RemoveAt(i);
+                i--;
+                continue;
+            }
+            List<string> listItemPreData = StringUtil.SplitBySubstringForListStr(itemPreData, ':');
+            listItemPreData[0] = EnumUtil.GetEnumName(EditorGUILayout.EnumPopup("前置类型", EnumUtil.GetEnum<PreTypeForMiniGameEnum>(listItemPreData[0]), GUILayout.Width(300), GUILayout.Height(20)));
+            listItemPreData[1] = EditorGUILayout.TextArea(listItemPreData[1] + "", GUILayout.Width(100), GUILayout.Height(20));
+            EditorGUILayout.EndHorizontal();
+            storeInfo.pre_data_minigame += (listItemPreData[0] + ":" + listItemPreData[1]) + "|";
         }
         EditorGUILayout.EndVertical();
     }
