@@ -13,7 +13,10 @@ public enum RewardTypeEnum
     AddGuildCoin,//增加公会硬币
     AddItems,//增加道具
     AddBuildItems,//增加建筑材料
-
+    AddArenaTrophyElementary,//初级竞技场奖杯
+    AddArenaTrophyIntermediate,//中级竞技场奖杯
+    AddArenaTrophyAdvanced,//高级竞技场奖杯
+    AddArenaTrophyLegendary,//传说竞技场奖杯
 }
 
 public class RewardTypeBean
@@ -119,6 +122,22 @@ public class RewardTypeEnumTools
                 break;
             case RewardTypeEnum.AddBuildItems:
                 GetRewardDetailsForBuildItems(rewardData, iconDataManager, innBuildManager);
+                break;
+            case RewardTypeEnum.AddArenaTrophyElementary:
+                rewardData.spRewardIcon = iconDataManager.GetIconSpriteByName("Trophy_1_0");
+                rewardData.rewardDescribe = string.Format(GameCommonInfo.GetUITextById(54), rewardData.rewardData);
+                break;
+            case RewardTypeEnum.AddArenaTrophyIntermediate:
+                rewardData.spRewardIcon = iconDataManager.GetIconSpriteByName("Trophy_1_1");
+                rewardData.rewardDescribe = string.Format(GameCommonInfo.GetUITextById(55), rewardData.rewardData);
+                break;
+            case RewardTypeEnum.AddArenaTrophyAdvanced:
+                rewardData.spRewardIcon = iconDataManager.GetIconSpriteByName("Trophy_1_2");
+                rewardData.rewardDescribe = string.Format(GameCommonInfo.GetUITextById(56), rewardData.rewardData);
+                break;
+            case RewardTypeEnum.AddArenaTrophyLegendary:
+                rewardData.spRewardIcon = iconDataManager.GetIconSpriteByName("Trophy_1_3");
+                rewardData.rewardDescribe = string.Format(GameCommonInfo.GetUITextById(57), rewardData.rewardData);
                 break;
         }
         return rewardData;

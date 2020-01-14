@@ -63,7 +63,7 @@ public class UITownArena : UIBaseOne, IRadioGroupCallBack, StoreInfoManager.ICal
             GameObject objItem = Instantiate(objArenaContainer, objArenaModel);
             ItemTownArenaCpt arenaItem = objItem.GetComponent<ItemTownArenaCpt>();
             arenaItem.SetData(itemMiniGameData);
-            GameUtil.RefreshRectViewHight((RectTransform)objItem.transform,true);
+            GameUtil.RefreshRectViewHight((RectTransform)objItem.transform, true);
             objItem.transform.DOScale(new Vector3(0, 0, 0), 0.5f).From().SetEase(Ease.OutBack);
         }
     }
@@ -112,7 +112,22 @@ public class UITownArena : UIBaseOne, IRadioGroupCallBack, StoreInfoManager.ICal
                 RewardTypeBean randomReward = RandomUtil.GetRandomDataByList(listReward);
                 miniGameData.listReward.Add(randomReward);
             }
-    
+            //添加对应的奖杯
+            switch (type)
+            {
+                case 1:
+                    miniGameData.listReward.Add(new RewardTypeBean(RewardTypeEnum.AddArenaTrophyElementary, "1"));
+                    break;
+                case 2:
+                    miniGameData.listReward.Add(new RewardTypeBean(RewardTypeEnum.AddArenaTrophyIntermediate, "1"));
+                    break;
+                case 3:
+                    miniGameData.listReward.Add(new RewardTypeBean(RewardTypeEnum.AddArenaTrophyAdvanced, "1"));
+                    break;
+                case 4:
+                    miniGameData.listReward.Add(new RewardTypeBean(RewardTypeEnum.AddArenaTrophyLegendary, "1"));
+                    break;
+            }
             if (miniGameData != null)
                 listMiniGameData.Add(miniGameData);
         }
