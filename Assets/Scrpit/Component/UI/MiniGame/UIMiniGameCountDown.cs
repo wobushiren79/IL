@@ -28,8 +28,8 @@ public class UIMiniGameCountDown : BaseUIComponent
     public override void OpenUI()
     {
         base.OpenUI();
-        if (GetUIMananger<UIGameManager>().controlHandler != null)
-            GetUIMananger<UIGameManager>().controlHandler.StopControl();
+        if (GetUIManager<UIGameManager>().controlHandler != null)
+            GetUIManager<UIGameManager>().controlHandler.StopControl();
     }
 
     /// <summary>
@@ -75,8 +75,8 @@ public class UIMiniGameCountDown : BaseUIComponent
         objTarget.SetActive(false);
         objCountDown.SetActive(true);
         //恢复控制
-        if (GetUIMananger<UIGameManager>().controlHandler != null)
-            GetUIMananger<UIGameManager>().controlHandler.RestoreControl();
+        if (GetUIManager<UIGameManager>().controlHandler != null)
+            GetUIManager<UIGameManager>().controlHandler.RestoreControl();
 
         if (mIsCountDown)
         {
@@ -97,8 +97,8 @@ public class UIMiniGameCountDown : BaseUIComponent
         if (mCallBack != null)
             mCallBack.GamePreCountDownStart();
         //恢复控制
-        if (GetUIMananger<UIGameManager>().controlHandler != null)
-            GetUIMananger<UIGameManager>().controlHandler.RestoreControl();
+        if (GetUIManager<UIGameManager>().controlHandler != null)
+            GetUIManager<UIGameManager>().controlHandler.RestoreControl();
         tvCountDown.text = "";
         for (int i = 0; i <= 3; i++)
         {

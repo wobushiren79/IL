@@ -43,12 +43,12 @@ public class UIGameAttendance : BaseUIComponent, ItemGameAttendanceCpt.ICallBack
     /// </summary>
     public void StartWork()
     {
-        GameDataManager gameDataManager = GetUIMananger<UIGameManager>().gameDataManager;
-        GameTimeHandler gameTimeHandler = GetUIMananger<UIGameManager>().gameTimeHandler;
-        InnHandler innHandler = GetUIMananger<UIGameManager>().innHandler;
-        ControlHandler controlHandler = GetUIMananger<UIGameManager>().controlHandler;
-        ToastManager toastManager = GetUIMananger<UIGameManager>().toastManager;
-        NpcCustomerBuilder npcCustomerBuilder = GetUIMananger<UIGameManager>().npcCustomerBuilder;
+        GameDataManager gameDataManager = GetUIManager<UIGameManager>().gameDataManager;
+        GameTimeHandler gameTimeHandler = GetUIManager<UIGameManager>().gameTimeHandler;
+        InnHandler innHandler = GetUIManager<UIGameManager>().innHandler;
+        ControlHandler controlHandler = GetUIManager<UIGameManager>().controlHandler;
+        ToastManager toastManager = GetUIManager<UIGameManager>().toastManager;
+        NpcCustomerBuilder npcCustomerBuilder = GetUIManager<UIGameManager>().npcCustomerBuilder;
         //如果出勤人数太少
         if (attendanceNumber <= 0)
         {
@@ -79,7 +79,7 @@ public class UIGameAttendance : BaseUIComponent, ItemGameAttendanceCpt.ICallBack
     public void InitData()
     {
         CptUtil.RemoveChildsByActive(objListContent.transform);
-        GameDataManager gameDataManager = GetUIMananger<UIGameManager>().gameDataManager;
+        GameDataManager gameDataManager = GetUIManager<UIGameManager>().gameDataManager;
         if (gameDataManager == null)
             return;
         List<CharacterBean> listData = gameDataManager.gameData.GetAllCharacterData();

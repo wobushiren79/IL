@@ -45,7 +45,7 @@ public class UIGameSettle : BaseUIComponent
 
     public void InitData()
     {
-        InnHandler innHandler = GetUIMananger<UIGameManager>().innHandler;
+        InnHandler innHandler = GetUIManager<UIGameManager>().innHandler;
         CptUtil.RemoveChildsByActive(objListRecordContent.transform);
         animDelay = 0.1f;
         string consumeIngStr = GameCommonInfo.GetUITextById(4002);

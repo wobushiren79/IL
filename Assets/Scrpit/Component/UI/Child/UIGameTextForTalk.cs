@@ -58,7 +58,7 @@ public class UIGameTextForTalk : BaseUIChildComponent<UIGameText>
     /// <param name="listTextInfo"></param>
     public void SetData(TextInfoBean textData, List<TextInfoBean> listTextInfo)
     {
-        UIGameManager uiGameManager = uiComponent.GetUIMananger<UIGameManager>();
+        UIGameManager uiGameManager = uiComponent.GetUIManager<UIGameManager>();
         //清空选项
         CptUtil.RemoveChildsByName(objSelectContent.transform, "SelectButton", true);
         this.textData = textData;
@@ -192,7 +192,7 @@ public class UIGameTextForTalk : BaseUIChildComponent<UIGameText>
     {
         if (textData.add_favorability != 0)
         {
-            UIGameManager uiGameManager = uiComponent.GetUIMananger<UIGameManager>();
+            UIGameManager uiGameManager = uiComponent.GetUIManager<UIGameManager>();
             CharacterFavorabilityBean favorabilityData = uiGameManager.gameDataManager.gameData.GetCharacterFavorability(characterId);
             favorabilityData.AddFavorability(favorablility);
             //好感动画

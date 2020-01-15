@@ -130,13 +130,13 @@ public class UIMiniGameEnd : BaseUIComponent
         CptUtil.RemoveChildsByActive(objResultContainer.transform);
         if (miniGameData == null)
             return;
-        GameDataManager gameDataManager = GetUIMananger<UIGameManager>().gameDataManager;
-        GameItemsManager gameItemsManager = GetUIMananger<UIGameManager>().gameItemsManager;
-        IconDataManager iconDataManager = GetUIMananger<UIGameManager>().iconDataManager;
-        InnBuildManager innBuildManager = GetUIMananger<UIGameManager>().innBuildManager;
+        GameDataManager gameDataManager = GetUIManager<UIGameManager>().gameDataManager;
+        GameItemsManager gameItemsManager = GetUIManager<UIGameManager>().gameItemsManager;
+        IconDataManager iconDataManager = GetUIManager<UIGameManager>().iconDataManager;
+        InnBuildManager innBuildManager = GetUIManager<UIGameManager>().innBuildManager;
 
-        CharacterDressManager characterDressManager = GetUIMananger<UIGameManager>().characterDressManager;
-        NpcInfoManager npcInfoManager = GetUIMananger<UIGameManager>().npcInfoManager;
+        CharacterDressManager characterDressManager = GetUIManager<UIGameManager>().characterDressManager;
+        NpcInfoManager npcInfoManager = GetUIManager<UIGameManager>().npcInfoManager;
         //通常列表
         string reasonStr = "";
         switch (miniGameData.gameReason)

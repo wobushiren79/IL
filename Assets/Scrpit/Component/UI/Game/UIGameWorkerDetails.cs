@@ -53,7 +53,7 @@ public class UIGameWorkerDetails : BaseUIComponent, IRadioGroupCallBack
 
     private void Start()
     {
-        InfoItemsPopupShow infoItemsPopupShow = GetUIMananger<UIGameManager>().infoItemsPopup;
+        InfoItemsPopupShow infoItemsPopupShow = GetUIManager<UIGameManager>().infoItemsPopup;
         if (btBack != null)
             btBack.onClick.AddListener(OpenWorkUI);
 
@@ -88,7 +88,7 @@ public class UIGameWorkerDetails : BaseUIComponent, IRadioGroupCallBack
         switch (workerType)
         {
             case WorkerEnum.Chef:
-                InnFoodManager innFoodManager = GetUIMananger<UIGameManager>().innFoodManager;
+                InnFoodManager innFoodManager = GetUIManager<UIGameManager>().innFoodManager;
                 workerChefInfo.gameObject.SetActive(true);
                 workerChefInfo.SetData(innFoodManager,characterData.baseInfo.chefInfo);
                 break;
@@ -166,8 +166,8 @@ public class UIGameWorkerDetails : BaseUIComponent, IRadioGroupCallBack
     /// <param name="characterEquip"></param>
     public void SetEquip(CharacterEquipBean characterEquip)
     {
-        GameItemsManager gameItemsManager = GetUIMananger<UIGameManager>().gameItemsManager;
-        CharacterDressManager characterDressManager = GetUIMananger<UIGameManager>().characterDressManager;
+        GameItemsManager gameItemsManager = GetUIManager<UIGameManager>().gameItemsManager;
+        CharacterDressManager characterDressManager = GetUIManager<UIGameManager>().characterDressManager;
         Sprite spHand = null;
         Sprite spHat = null;
         Sprite spClothes = null;
@@ -229,7 +229,7 @@ public class UIGameWorkerDetails : BaseUIComponent, IRadioGroupCallBack
     /// <param name="characterEquip"></param>
     public void SetAttributes(CharacterBean characterData)
     {
-        characterData.GetAttributes(GetUIMananger<UIGameManager>().gameItemsManager,
+        characterData.GetAttributes(GetUIManager<UIGameManager>().gameItemsManager,
             out CharacterAttributesBean totalAttributes, out CharacterAttributesBean selfAttributes, out CharacterAttributesBean equipAttributes);
         if (tvCook != null)
             tvCook.text = GameCommonInfo.GetUITextById(1) + "：" + selfAttributes.cook + (equipAttributes.cook == 0 ? "" : "+" + equipAttributes.cook);

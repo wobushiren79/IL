@@ -100,7 +100,7 @@ public class ItemTownStoreForGoodsCpt : ItemGameBaseCpt, DialogView.IDialogCallB
         Sprite spIcon = null;
         Vector2 offsetMin = new Vector2(0, 0);
         Vector2 offsetMax = new Vector2(0, 0);
-        switch((GeneralEnum) int.Parse(mark))
+        switch ((GeneralEnum)int.Parse(mark))
         {
             case GeneralEnum.Hat:
                 spIcon = characterDressManager.GetHatSpriteByName(iconKey);
@@ -180,7 +180,7 @@ public class ItemTownStoreForGoodsCpt : ItemGameBaseCpt, DialogView.IDialogCallB
     {
         if (tvOwn == null)
             return;
-        tvOwn.text = (GameCommonInfo.GetUITextById(4001)+ "\n" + GetUIManager<UIGameManager>().gameDataManager.gameData.GetItemsNumber(storeInfo.mark_id));
+        tvOwn.text = (GameCommonInfo.GetUITextById(4001) + "\n" + GetUIManager<UIGameManager>().gameDataManager.gameData.GetItemsNumber(storeInfo.mark_id));
     }
 
     /// <summary>
@@ -232,11 +232,17 @@ public class ItemTownStoreForGoodsCpt : ItemGameBaseCpt, DialogView.IDialogCallB
         GameDataManager gameDataManager = GetUIManager<UIGameManager>().gameDataManager;
         ToastManager toastManager = GetUIManager<UIGameManager>().toastManager;
         DialogManager dialogManager = GetUIManager<UIGameManager>().dialogManager;
+
         if (gameDataManager == null || storeInfo == null)
             return;
         if (!gameDataManager.gameData.HasEnoughMoney(storeInfo.price_l, storeInfo.price_m, storeInfo.price_s))
         {
             toastManager.ToastHint(GameCommonInfo.GetUITextById(1005));
+            return;
+        }
+        if (!gameDataManager.gameData.HasEnoughGuildCoin(storeInfo.guild_coin))
+        {
+            toastManager.ToastHint(GameCommonInfo.GetUITextById(1012));
             return;
         }
         DialogBean dialogBean = new DialogBean();
@@ -257,8 +263,9 @@ public class ItemTownStoreForGoodsCpt : ItemGameBaseCpt, DialogView.IDialogCallB
             return;
         }
         gameDataManager.gameData.PayMoney(storeInfo.price_l, storeInfo.price_m, storeInfo.price_s);
+        gameDataManager.gameData.PayGuildCoin(storeInfo.guild_coin);
         toastManager.ToastHint(ivIcon.sprite, string.Format(GameCommonInfo.GetUITextById(1010), itemsInfo.name));
-        gameDataManager.gameData.AddNewItems(storeInfo.mark_id, 1);
+        gameDataManager.gameData.AddItemsNumber(storeInfo.mark_id, 1);
         RefreshUI();
     }
 

@@ -41,7 +41,7 @@ public class ItemGameTextSelectCpt : ItemGameBaseCpt, DialogView.IDialogCallBack
             string contentDetails = uiGameText.SetContentDetails(content);
             tvContent.text = contentDetails;
         }
-        UIGameManager uiGameManager = uiGameText.GetUIMananger<UIGameManager>();
+        UIGameManager uiGameManager = uiGameText.GetUIManager<UIGameManager>();
         //检测是否有钱
         RewardTypeEnumTools.GetRewardForAddMoney(textData.reward_data, out long moneyL, out long moneyM, out long moneyS);
         if (moneyL > 0 || moneyM > 0 || moneyS > 0)
@@ -61,7 +61,7 @@ public class ItemGameTextSelectCpt : ItemGameBaseCpt, DialogView.IDialogCallBack
     public void Submit()
     {
         UIGameText uiGameText = (UIGameText)uiComponent;
-        UIGameManager uiGameManager = uiGameText.GetUIMananger<UIGameManager>();
+        UIGameManager uiGameManager = uiGameText.GetUIManager<UIGameManager>();
         if (CheckUtil.StringIsNull(textData.pre_data_minigame))
         {
             //如果没有前置条件 则直接进行下一步

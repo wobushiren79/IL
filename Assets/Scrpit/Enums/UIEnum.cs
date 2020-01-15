@@ -28,6 +28,7 @@ public enum UIEnum
     TownGuildImprove,//公会晋升UI
     TownBank,//银行UI
     TownArena,//竞技场UI
+    TownArenaStore,//竞技场商店UI
     MiniGameEnd,
     MiniGameCountDown,
     MiniGameBarrage,//弹幕游戏UI

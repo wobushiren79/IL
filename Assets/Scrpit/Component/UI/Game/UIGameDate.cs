@@ -30,8 +30,8 @@ public class UIGameDate : BaseUIComponent
     public override void OpenUI()
     {
         base.OpenUI();
-        GameTimeHandler gameTimeHandler = GetUIMananger<UIGameManager>().gameTimeHandler;
-        GameDataManager gameDataManager = GetUIMananger<UIGameManager>().gameDataManager;
+        GameTimeHandler gameTimeHandler = GetUIManager<UIGameManager>().gameTimeHandler;
+        GameDataManager gameDataManager = GetUIManager<UIGameManager>().gameDataManager;
         if (gameTimeHandler != null)
         {
             gameTimeHandler.GetTime(out int year, out int month, out int day);
@@ -42,16 +42,16 @@ public class UIGameDate : BaseUIComponent
             //下一天
             StartCoroutine(CoroutineForNextDay());
         }
-        if (GetUIMananger<UIGameManager>().controlHandler != null)
-            GetUIMananger<UIGameManager>().controlHandler.StopControl();
+        if (GetUIManager<UIGameManager>().controlHandler != null)
+            GetUIManager<UIGameManager>().controlHandler.StopControl();
     }
 
     public override void CloseUI()
     {
         base.CloseUI();
         objDialog.SetActive(false);
-        if (GetUIMananger<UIGameManager>().controlHandler != null)
-            GetUIMananger<UIGameManager>().controlHandler.RestoreControl();
+        if (GetUIManager<UIGameManager>().controlHandler != null)
+            GetUIManager<UIGameManager>().controlHandler.RestoreControl();
     }
 
     /// <summary>
@@ -60,8 +60,8 @@ public class UIGameDate : BaseUIComponent
     /// <returns></returns>
     public IEnumerator CoroutineForNextDay()
     {
-        GameTimeHandler gameTimeHandler = GetUIMananger<UIGameManager>().gameTimeHandler;
-        GameDataManager gameDataManager = GetUIMananger<UIGameManager>().gameDataManager;
+        GameTimeHandler gameTimeHandler = GetUIManager<UIGameManager>().gameTimeHandler;
+        GameDataManager gameDataManager = GetUIManager<UIGameManager>().gameDataManager;
         yield return new WaitForSeconds(3);
         //进入下一天
         gameTimeHandler.GoToNextDay(1);
@@ -102,10 +102,10 @@ public class UIGameDate : BaseUIComponent
     /// </summary>
     public void InnRest()
     {
-        GameTimeHandler gameTimeHandler = GetUIMananger<UIGameManager>().gameTimeHandler;
-        ControlHandler controlHandler = GetUIMananger<UIGameManager>().controlHandler;
-        NpcCustomerBuilder npcCustomerBuilder = GetUIMananger<UIGameManager>().npcCustomerBuilder;
-        EventHandler eventHandler = GetUIMananger<UIGameManager>().eventHandler;
+        GameTimeHandler gameTimeHandler = GetUIManager<UIGameManager>().gameTimeHandler;
+        ControlHandler controlHandler = GetUIManager<UIGameManager>().controlHandler;
+        NpcCustomerBuilder npcCustomerBuilder = GetUIManager<UIGameManager>().npcCustomerBuilder;
+        EventHandler eventHandler = GetUIManager<UIGameManager>().eventHandler;
         gameTimeHandler.dayStauts = GameTimeHandler.DayEnum.Rest;
         gameTimeHandler.SetTimeStatus(false);
 

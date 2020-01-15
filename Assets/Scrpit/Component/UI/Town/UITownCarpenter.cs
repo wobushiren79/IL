@@ -24,7 +24,7 @@ public class UITownCarpenter : UIBaseOne, IRadioGroupCallBack, StoreInfoManager.
         base.OpenUI();
         rgCerpenterType.SetPosition(0, false);
 
-        StoreInfoManager storeInfoManager= GetUIMananger<UIGameManager>().storeInfoManager;
+        StoreInfoManager storeInfoManager= GetUIManager<UIGameManager>().storeInfoManager;
         storeInfoManager.SetCallBack(this);
         storeInfoManager.GetStoreInfoForCarpenter();
     }
@@ -62,7 +62,7 @@ public class UITownCarpenter : UIBaseOne, IRadioGroupCallBack, StoreInfoManager.
     /// <param name="listData"></param>
     public void CreateCarpenterData(List<StoreInfoBean> listData, int type)
     {
-        GameDataManager gameDataManager= GetUIMananger<UIGameManager>().gameDataManager;
+        GameDataManager gameDataManager= GetUIManager<UIGameManager>().gameDataManager;
         CptUtil.RemoveChildsByActive(objCarpenterContent.transform);
         if (listData == null || objCarpenterContent == null)
             return;

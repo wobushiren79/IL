@@ -56,8 +56,8 @@ public class UIGameMain : BaseUIComponent, DialogView.IDialogCallBack
         if (btSleep != null)
             btSleep.onClick.AddListener(EndDay);
 
-        GameDataManager gameDataManager = GetUIMananger<UIGameManager>().gameDataManager;
-        InfoPromptPopupShow infoPromptPopup = GetUIMananger<UIGameManager>().infoPromptPopup;
+        GameDataManager gameDataManager = GetUIManager<UIGameManager>().gameDataManager;
+        InfoPromptPopupShow infoPromptPopup = GetUIManager<UIGameManager>().infoPromptPopup;
         if (popupAesthetics != null)
             popupAesthetics.SetPopupShowView(infoPromptPopup);
         if (popupPraise != null)
@@ -74,9 +74,9 @@ public class UIGameMain : BaseUIComponent, DialogView.IDialogCallBack
 
     private void Update()
     {
-        InnHandler innHandler = GetUIMananger<UIGameManager>().innHandler;
-        GameTimeHandler gameTimeHandler = GetUIMananger<UIGameManager>().gameTimeHandler;
-        InnAttributesBean innAttributes = GetUIMananger<UIGameManager>().gameDataManager.gameData.GetInnAttributesData();
+        InnHandler innHandler = GetUIManager<UIGameManager>().innHandler;
+        GameTimeHandler gameTimeHandler = GetUIManager<UIGameManager>().gameTimeHandler;
+        InnAttributesBean innAttributes = GetUIManager<UIGameManager>().gameDataManager.gameData.GetInnAttributesData();
         if (tvInnStatus != null && innHandler != null)
             if (innHandler.GetInnStatus() == InnHandler.InnStatusEnum.Close)
             {
@@ -87,11 +87,11 @@ public class UIGameMain : BaseUIComponent, DialogView.IDialogCallBack
                 tvInnStatus.text = GameCommonInfo.GetUITextById(2001);
             }
         if (tvMoneyS != null)
-            tvMoneyS.text = GetUIMananger<UIGameManager>().gameDataManager.gameData.moneyS + "";
+            tvMoneyS.text = GetUIManager<UIGameManager>().gameDataManager.gameData.moneyS + "";
         if (tvMoneyM != null)
-            tvMoneyM.text = GetUIMananger<UIGameManager>().gameDataManager.gameData.moneyM + "";
+            tvMoneyM.text = GetUIManager<UIGameManager>().gameDataManager.gameData.moneyM + "";
         if (tvMoneyL != null)
-            tvMoneyL.text = GetUIMananger<UIGameManager>().gameDataManager.gameData.moneyL + "";
+            tvMoneyL.text = GetUIManager<UIGameManager>().gameDataManager.gameData.moneyL + "";
         if (clockView != null && gameTimeHandler != null)
         {
             gameTimeHandler.GetTime(out float hour, out float min);
@@ -119,7 +119,7 @@ public class UIGameMain : BaseUIComponent, DialogView.IDialogCallBack
     /// </summary>
     public void InitInnData()
     {
-        InnAttributesBean innAttributes = GetUIMananger<UIGameManager>().gameDataManager.gameData.GetInnAttributesData();
+        InnAttributesBean innAttributes = GetUIManager<UIGameManager>().gameDataManager.gameData.GetInnAttributesData();
         if (innAttributes == null)
             return;
         if (popupAesthetics != null)
@@ -133,7 +133,7 @@ public class UIGameMain : BaseUIComponent, DialogView.IDialogCallBack
         if (tvRichness != null)
             tvRichness.text = innAttributes.richness + "";
 
-        string innLevelStr = GetUIMananger<UIGameManager>().gameDataManager.gameData.innAttributes.GetInnLevel(out int innLevelTitle, out int innLevelStar);
+        string innLevelStr = GetUIManager<UIGameManager>().gameDataManager.gameData.innAttributes.GetInnLevel(out int innLevelTitle, out int innLevelStar);
         if (popupInnLevel != null)
         {
             popupInnLevel.SetContent(GameCommonInfo.GetUITextById(2006) + " " + innLevelStr);
@@ -141,7 +141,7 @@ public class UIGameMain : BaseUIComponent, DialogView.IDialogCallBack
 
         if (ivInnLevel != null)
         {
-            Sprite spIcon = GetUIMananger<UIGameManager>().gameItemsManager.GetItemsSpriteByName("inn_level_" + innLevelTitle + "_" + (innLevelStar - 1));
+            Sprite spIcon = GetUIManager<UIGameManager>().gameItemsManager.GetItemsSpriteByName("inn_level_" + innLevelTitle + "_" + (innLevelStar - 1));
             if (spIcon)
             {
                 ivInnLevel.gameObject.SetActive(true);
@@ -154,24 +154,24 @@ public class UIGameMain : BaseUIComponent, DialogView.IDialogCallBack
 
     public void SaveData()
     {
-        GetUIMananger<UIGameManager>().gameDataManager.SaveGameData();
+        GetUIManager<UIGameManager>().gameDataManager.SaveGameData();
     }
 
     public void OpenBuildUI()
     {
-        InnHandler innHandler = GetUIMananger<UIGameManager>().innHandler;
+        InnHandler innHandler = GetUIManager<UIGameManager>().innHandler;
 
         if (CheckUtil.ListIsNull(innHandler.rascalrQueue))
         {
             DialogBean dialogBean = new DialogBean();
             dialogBean.content = GameCommonInfo.GetUITextById(3007);
             dialogBean.dialogPosition = 1;
-            DialogManager dialogManager = GetUIMananger<UIGameManager>().dialogManager;
+            DialogManager dialogManager = GetUIManager<UIGameManager>().dialogManager;
             dialogManager.CreateDialog(DialogEnum.Normal, this, dialogBean);
         }
         else
         {
-            ToastManager toastManager = GetUIMananger<UIGameManager>().toastManager;
+            ToastManager toastManager = GetUIManager<UIGameManager>().toastManager;
             toastManager.ToastHint(GameCommonInfo.GetUITextById(1016));
         }
     }
@@ -201,7 +201,7 @@ public class UIGameMain : BaseUIComponent, DialogView.IDialogCallBack
         DialogBean dialogBean = new DialogBean();
         dialogBean.content = GameCommonInfo.GetUITextById(3004);
         dialogBean.dialogPosition = 0;
-        GetUIMananger<UIGameManager>().dialogManager.CreateDialog(DialogEnum.Normal, this, dialogBean);
+        GetUIManager<UIGameManager>().dialogManager.CreateDialog(DialogEnum.Normal, this, dialogBean);
     }
 
     #region dialog 回调
@@ -210,7 +210,7 @@ public class UIGameMain : BaseUIComponent, DialogView.IDialogCallBack
         if (dialogData.dialogPosition == 0)
         {
             //结束一天
-            BaseSceneInit sceneInit = GetUIMananger<UIGameManager>().sceneInit;
+            BaseSceneInit sceneInit = GetUIManager<UIGameManager>().sceneInit;
             Scene scene = SceneManager.GetActiveScene();
             //如果是客栈场景
             if (EnumUtil.GetEnumName(ScenesEnum.GameInnScene).Equals(scene.name))

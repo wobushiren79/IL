@@ -60,7 +60,7 @@ public class BaseUIComponent : BaseMonoBehaviour
         this.remarkData = remarkData;
     }
 
-    public T GetUIMananger<T>() where T : BaseUIManager
+    public T GetUIManager<T>() where T : BaseUIManager
     {
         return uiManager as T;
     }

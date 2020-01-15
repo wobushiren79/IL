@@ -29,8 +29,8 @@ public class UIGameFavorability : BaseUIComponent
     /// </summary>
     public void InitData()
     {
-        GameDataManager gameDataManager =  GetUIMananger<UIGameManager>().gameDataManager;
-        NpcInfoManager npcInfoManager = GetUIMananger<UIGameManager>().npcInfoManager;
+        GameDataManager gameDataManager =  GetUIManager<UIGameManager>().gameDataManager;
+        NpcInfoManager npcInfoManager = GetUIManager<UIGameManager>().npcInfoManager;
 
         List<CharacterFavorabilityBean> listData =  gameDataManager.gameData.listCharacterFavorability;
         if (listData == null)

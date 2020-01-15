@@ -26,23 +26,23 @@ public class UIBaseOne : BaseUIComponent
     public override void OpenUI()
     {
         base.OpenUI();
-        if (GetUIMananger<UIGameManager>().controlHandler != null)
-            GetUIMananger<UIGameManager>().controlHandler.StopControl();
+        if (GetUIManager<UIGameManager>().controlHandler != null)
+            GetUIManager<UIGameManager>().controlHandler.StopControl();
     }
 
     public override void CloseUI()
     {
         if (gameObject.activeSelf)
         {
-            if (GetUIMananger<UIGameManager>().controlHandler != null)
-                GetUIMananger<UIGameManager>().controlHandler.RestoreControl();
+            if (GetUIManager<UIGameManager>().controlHandler != null)
+                GetUIManager<UIGameManager>().controlHandler.RestoreControl();
         }
         base.CloseUI();
     }
 
     public void SetMoney()
     {
-        GameDataManager gameDataManager = GetUIMananger<UIGameManager>().gameDataManager;
+        GameDataManager gameDataManager = GetUIManager<UIGameManager>().gameDataManager;
         if (gameDataManager != null)
         {
             if (tvMoneyL != null)

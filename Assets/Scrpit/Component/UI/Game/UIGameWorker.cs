@@ -20,15 +20,15 @@ public class UIGameWorker : BaseUIComponent
     {
         base.OpenUI();
         InitData();
-        if (GetUIMananger<UIGameManager>().controlHandler != null)
-            GetUIMananger<UIGameManager>().controlHandler.StopControl();
+        if (GetUIManager<UIGameManager>().controlHandler != null)
+            GetUIManager<UIGameManager>().controlHandler.StopControl();
     }
 
     public override void CloseUI()
     {
         base.CloseUI();
-        if (GetUIMananger<UIGameManager>().controlHandler != null)
-            GetUIMananger<UIGameManager>().controlHandler.RestoreControl();
+        if (GetUIManager<UIGameManager>().controlHandler != null)
+            GetUIManager<UIGameManager>().controlHandler.RestoreControl();
     }
 
     public void OpenMainUI()
@@ -38,7 +38,7 @@ public class UIGameWorker : BaseUIComponent
 
     public void InitData()
     {
-        GameDataManager gameDataManager = GetUIMananger<UIGameManager>().gameDataManager;
+        GameDataManager gameDataManager = GetUIManager<UIGameManager>().gameDataManager;
         if (gameDataManager == null)
             return;  
         List<CharacterBean> listData = gameDataManager.gameData.GetAllCharacterData();

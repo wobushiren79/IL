@@ -268,38 +268,33 @@ public class ItemTownGuildImproveCharacterCpt : ItemGameBaseCpt, DialogView.IDia
         //支付金钱
         gameDataManager.gameData.PayMoney(levelData.price_l, levelData.price_m, levelData.price_s);
 
-        //设置竞技场数据
-        GameCommonInfo.ArenaPrepareData = new ArenaPrepareBean();
+
         //判断玩哪个游戏
-        MiniGameEnum gameType;
+        MiniGameBaseBean miniGameData = null;
         switch (workerType)
         {
             case WorkerEnum.Chef:
-                gameType = MiniGameEnum.Cooking;
-                InitChefGame();
+                miniGameData = InitChefGame();
                 break;
             case WorkerEnum.Waiter:
                 //设置弹幕游戏数据
-                gameType = MiniGameEnum.Barrage;
-                InitWaiterGame();
+                miniGameData = InitWaiterGame();
                 break;
             case WorkerEnum.Accountant:
-                gameType = MiniGameEnum.Account;
-                InitAccountantGame();
+                miniGameData = InitAccountantGame();
                 break;
             case WorkerEnum.Accost:
-                gameType = MiniGameEnum.Debate;
-                InitAccostGame();
+                miniGameData = InitAccostGame();
                 break;
             case WorkerEnum.Beater:
-                gameType = MiniGameEnum.Combat;
-                InitBeaterGame();
+                miniGameData = InitBeaterGame();
                 break;
             default:
-                gameType = MiniGameEnum.Barrage;
                 break;
         }
-        GameCommonInfo.ArenaPrepareData.gameType = gameType;
+        miniGameData.gameReason = MiniGameReasonEnum.Improve;
+        //设置竞技场数据
+        GameCommonInfo.SetAreanPrepareData(miniGameData);
         //保存之前的位置
         GameCommonInfo.ScenesChangeData.beforeUserPosition = controlHandler.GetControl(ControlHandler.ControlEnum.Normal).transform.position;
         //跳转到竞技场
@@ -309,67 +304,59 @@ public class ItemTownGuildImproveCharacterCpt : ItemGameBaseCpt, DialogView.IDia
     /// <summary>
     /// 初始化打手考试
     /// </summary>
-    private void InitBeaterGame()
+    private MiniGameBaseBean InitBeaterGame()
     {
         GameItemsManager gameItemsManager = GetUIManager<UIGameManager>().gameItemsManager;
         NpcInfoManager npcInfoManager = GetUIManager<UIGameManager>().npcInfoManager;
-        GameCommonInfo.ArenaPrepareData.gameCombatData = new MiniGameCombatBean
-        {
-            winBringDownNumber = 1,
-            winSurvivalNumber = 1,
-        };
+        MiniGameBaseBean miniGameData = MiniGameEnumTools.GetMiniGameData(MiniGameEnum.Combat);
+        miniGameData.winBringDownNumber = 1;
+        miniGameData.winSurvivalNumber = 1;
         CharacterBean enemyData = npcInfoManager.GetCharacterDataById(110111);
-        GameCommonInfo.ArenaPrepareData.gameCombatData.InitData(gameItemsManager, characterData, enemyData);
+        miniGameData.InitData(gameItemsManager, characterData, enemyData);
+        return miniGameData;
     }
 
     /// <summary>
     /// 初始化吆喝考试
     /// </summary>
-    private void InitAccostGame()
+    private MiniGameBaseBean InitAccostGame()
     {
         GameItemsManager gameItemsManager = GetUIManager<UIGameManager>().gameItemsManager;
         NpcInfoManager npcInfoManager = GetUIManager<UIGameManager>().npcInfoManager;
-        GameCommonInfo.ArenaPrepareData.gameDebateData = new MiniGameDebateBean
-        {
-            winLife = 1
-        };
+        MiniGameBaseBean miniGameData = MiniGameEnumTools.GetMiniGameData(MiniGameEnum.Debate);
+        miniGameData.winLife = 1;
         CharacterBean enemyData = npcInfoManager.GetCharacterDataById(110111);
-        GameCommonInfo.ArenaPrepareData.gameDebateData.InitData(gameItemsManager, characterData, enemyData);
+        miniGameData.InitData(gameItemsManager, characterData, enemyData);
+        return miniGameData;
     }
 
     /// <summary>
     /// 初始化计算考试
     /// </summary>
-    private void InitAccountantGame()
+    private MiniGameBaseBean InitAccountantGame()
     {
         GameItemsManager gameItemsManager = GetUIManager<UIGameManager>().gameItemsManager;
         NpcInfoManager npcInfoManager = GetUIManager<UIGameManager>().npcInfoManager;
-        GameCommonInfo.ArenaPrepareData.gameAccountData = new MiniGameAccountBean
-        {
-            winMoneyS = 10,
-            winMoneyM = 1,
-            winMoneyL = 0,
-        };
-        GameCommonInfo.ArenaPrepareData.gameAccountData.InitData(gameItemsManager, characterData);
+        MiniGameBaseBean miniGameData = MiniGameEnumTools.GetMiniGameData(MiniGameEnum.Account);
+        miniGameData.winMoneyL = 0;
+        miniGameData.winMoneyM = 1;
+        miniGameData.winMoneyS = 10;
+        miniGameData.InitData(gameItemsManager, characterData);
+        return miniGameData;
     }
 
     /// <summary>
     /// 初始化厨师考试
     /// </summary>
-    private void InitChefGame()
+    private MiniGameBaseBean InitChefGame()
     {
         GameItemsManager gameItemsManager = GetUIManager<UIGameManager>().gameItemsManager;
         CharacterBodyManager characterBodyManager = GetUIManager<UIGameManager>().characterBodyManager;
         NpcInfoManager npcInfoManager = GetUIManager<UIGameManager>().npcInfoManager;
-        GameCommonInfo.ArenaPrepareData.gameCookingData = new MiniGameCookingBean
-        {
-            gameReason = MiniGameReasonEnum.Improve,
-            winScore = 60,
-            //游戏开始动画
-            storyGameOpenId = 30000001,
-            //游戏审核动画
-            storyGameAuditId = 30000002,
-        };
+        MiniGameBaseBean miniGameData = MiniGameEnumTools.GetMiniGameData(MiniGameEnum.Cooking);
+        miniGameData.winScore = 60;
+        ((MiniGameCookingBean)miniGameData).storyGameOpenId = 30000001;
+        ((MiniGameCookingBean)miniGameData).storyGameAuditId = 30000002;
         //随机生成敌人
         List<CharacterBean> listEnemyData = new List<CharacterBean>();
         for (int i = 0; i < UnityEngine.Random.Range(1, 16); i++)
@@ -379,7 +366,7 @@ public class ItemTownGuildImproveCharacterCpt : ItemGameBaseCpt, DialogView.IDia
         }
         //主持由东方姑娘主持
         List<CharacterBean> listCompereData = new List<CharacterBean>();
-        CharacterBean compereData = npcInfoManager.GetCharacterDataById(110005);
+        CharacterBean compereData = npcInfoManager.GetCharacterDataById(110051);
         listCompereData.Add(compereData);
         //评审人员
         List<long> listAuditerIds = new List<long>() { 100011, 100021, 100031, 100041, 100051, 100061, 100071, 100081, 100091 };
@@ -390,32 +377,29 @@ public class ItemTownGuildImproveCharacterCpt : ItemGameBaseCpt, DialogView.IDia
             CharacterBean auditerData = npcInfoManager.GetCharacterDataById(itemId);
             listAuditerData.Add(auditerData);
         }
-
-        GameCommonInfo.ArenaPrepareData.gameCookingData.InitData(gameItemsManager, characterData, listEnemyData, listAuditerData, listCompereData);
+        ((MiniGameCookingBean)miniGameData).InitData(gameItemsManager, characterData, listEnemyData, listAuditerData, listCompereData);
+        return miniGameData;
     }
 
     /// <summary>
     /// 初始化跑堂游戏
     /// </summary>
-    private void InitWaiterGame()
+    private MiniGameBaseBean InitWaiterGame()
     {
         GameItemsManager gameItemsManager = GetUIManager<UIGameManager>().gameItemsManager;
-        GameCommonInfo.ArenaPrepareData.gameBarrageData = new MiniGameBarrageBean
-        {
-            gameReason = MiniGameReasonEnum.Improve,
-            gameLevel = levelData.mark_type,
-            winLife = 1,
-            winSurvivalTime = 60,
-            launchInterval = 3,
-            launchSpeed = 1,
-            launchTypes = new MiniGameBarrageEjectorCpt.LaunchTypeEnum[]
+        MiniGameBaseBean miniGameData = MiniGameEnumTools.GetMiniGameData(MiniGameEnum.Barrage);
+        miniGameData.winLife = 1;
+        miniGameData.winSurvivalTime = 60;
+        ((MiniGameBarrageBean)miniGameData).launchInterval = 3;
+        ((MiniGameBarrageBean)miniGameData).launchSpeed = 1;
+        ((MiniGameBarrageBean)miniGameData).launchTypes = new MiniGameBarrageEjectorCpt.LaunchTypeEnum[]
             {
                 MiniGameBarrageEjectorCpt.LaunchTypeEnum.Double,
                 MiniGameBarrageEjectorCpt.LaunchTypeEnum.Single,
                 MiniGameBarrageEjectorCpt.LaunchTypeEnum.Triple
-            }
-        };
-        GameCommonInfo.ArenaPrepareData.gameBarrageData.InitData(gameItemsManager, characterData);
+            };
+        miniGameData.InitData(gameItemsManager, characterData);
+        return miniGameData;
     }
 
     public void Cancel(DialogView dialogView, DialogBean dialogBean)

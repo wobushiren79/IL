@@ -142,24 +142,24 @@ public class SceneGameArenaInit : BaseSceneInit, IBaseObserver
         //arenaPrepareData.gameCombatData.AddRewardItem(200001, 3);
         //arenaPrepareData.gameCombatData.AddRewardItem(1100006, 3);
 
-        if (arenaPrepareData == null)
+        if (arenaPrepareData == null || arenaPrepareData.miniGameData == null)
             return;
-        switch (arenaPrepareData.gameType)
+        switch (arenaPrepareData.miniGameData.gameType)
         {
             case MiniGameEnum.Cooking:
-                InitGameCooking(arenaPrepareData.gameCookingData);
+                InitGameCooking((MiniGameCookingBean)arenaPrepareData.miniGameData);
                 break;
             case MiniGameEnum.Barrage:
-                InitGameBarrage(arenaPrepareData.gameBarrageData);
+                InitGameBarrage((MiniGameBarrageBean)arenaPrepareData.miniGameData);
                 break;
             case MiniGameEnum.Combat:
-                InitGameCombat(arenaPrepareData.gameCombatData);
+                InitGameCombat((MiniGameCombatBean)arenaPrepareData.miniGameData);
                 break;
             case MiniGameEnum.Account:
-                InitGameAccout(arenaPrepareData.gameAccountData);
+                InitGameAccout((MiniGameAccountBean)arenaPrepareData.miniGameData);
                 break;
             case MiniGameEnum.Debate:
-                InitGameDebate(arenaPrepareData.gameDebateData);
+                InitGameDebate((MiniGameDebateBean)arenaPrepareData.miniGameData);
                 break;
         }
         //初始化地形
@@ -214,10 +214,10 @@ public class SceneGameArenaInit : BaseSceneInit, IBaseObserver
                 List<Vector3> listComperePosition = sceneArenaManager.GetArenaForCookingComperePositionBy2(gameCookingData.listCompereGameData.Count);
                 gameCookingData.listCompereStartPosition = listComperePosition;
                 //设置游戏用通告版
-                List<MiniGameCookingCallBoardCpt> listCallBoard= sceneArenaManager.GetArenaForCookingCallBoardBy2();
+                List<MiniGameCookingCallBoardCpt> listCallBoard = sceneArenaManager.GetArenaForCookingCallBoardBy2();
                 cookingHandler.miniGameBuilder.SetListCallBoard(listCallBoard);
                 //设置游戏用评审桌子
-                List < MiniGameCookingAuditTableCpt > listAuditTable = sceneArenaManager.GetArenaForCookingAuditTableBy2();
+                List<MiniGameCookingAuditTableCpt> listAuditTable = sceneArenaManager.GetArenaForCookingAuditTableBy2();
                 cookingHandler.miniGameBuilder.SetListAuditTable(listAuditTable);
                 //设置游戏用灶台
                 List<MiniGameCookingStoveCpt> listStove = sceneArenaManager.GetArenaForCookingStoveBy2();

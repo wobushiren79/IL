@@ -77,7 +77,7 @@ public class UIGameEquip : BaseUIComponent
             characterUICpt.SetCharacterData(characterData.body, characterData.equips);
 
         //装备物品刷新
-        GameItemsManager gameItemsManager = GetUIMananger<UIGameManager>().gameItemsManager;
+        GameItemsManager gameItemsManager = GetUIManager<UIGameManager>().gameItemsManager;
         if (characterData.equips.handId != 0)
             equipHand.SetData(characterData, gameItemsManager.GetItemsById(characterData.equips.handId), null);
         if (characterData.equips.hatId != 0)
@@ -125,7 +125,7 @@ public class UIGameEquip : BaseUIComponent
     /// <param name="characterEquip"></param>
     public void SetAttributes(CharacterAttributesBean characterAttributes, CharacterEquipBean characterEquip)
     {
-        characterData.GetAttributes(GetUIMananger<UIGameManager>().gameItemsManager,
+        characterData.GetAttributes(GetUIManager<UIGameManager>().gameItemsManager,
             out CharacterAttributesBean totalAttributes, out CharacterAttributesBean selfAttributes, out CharacterAttributesBean equipAttributes);
         if (tvCook != null)
             tvCook.text = GameCommonInfo.GetUITextById(1) + "：" + selfAttributes.cook + (equipAttributes.cook == 0 ? "" : "+" + equipAttributes.cook);
@@ -151,7 +151,7 @@ public class UIGameEquip : BaseUIComponent
     /// <param name="itemId"></param>
     public void SetEquip(long itemId)
     {
-        GameItemsManager gameItemsManager = GetUIMananger<UIGameManager>().gameItemsManager;
+        GameItemsManager gameItemsManager = GetUIManager<UIGameManager>().gameItemsManager;
         if (gameItemsManager == null)
             return;
         ItemsInfoBean itemInfo = gameItemsManager.GetItemsById(itemId);
@@ -168,9 +168,9 @@ public class UIGameEquip : BaseUIComponent
 
         if (itemInfo == null)
             return;
-        CharacterDressManager characterDressManager = GetUIMananger<UIGameManager>().characterDressManager;
-        GameItemsManager gameItemsManager = GetUIMananger<UIGameManager>().gameItemsManager;
-        GameDataManager gameDataManager = GetUIMananger<UIGameManager>().gameDataManager;
+        CharacterDressManager characterDressManager = GetUIManager<UIGameManager>().characterDressManager;
+        GameItemsManager gameItemsManager = GetUIManager<UIGameManager>().gameItemsManager;
+        GameDataManager gameDataManager = GetUIManager<UIGameManager>().gameDataManager;
 
         if (characterDressManager == null || gameItemsManager == null)
             return;
@@ -226,13 +226,13 @@ public class UIGameEquip : BaseUIComponent
     public void CreateBackpackData()
     {
         CptUtil.RemoveChildsByActive(objItemContent.transform);
-        if (GetUIMananger<UIGameManager>().gameItemsManager == null || GetUIMananger<UIGameManager>().gameDataManager == null)
+        if (GetUIManager<UIGameManager>().gameItemsManager == null || GetUIManager<UIGameManager>().gameDataManager == null)
             return;
         bool hasData = false;
-        for (int i = 0; i < GetUIMananger<UIGameManager>().gameDataManager.gameData.listItems.Count; i++)
+        for (int i = 0; i < GetUIManager<UIGameManager>().gameDataManager.gameData.listItems.Count; i++)
         {
-            ItemBean itemBean = GetUIMananger<UIGameManager>().gameDataManager.gameData.listItems[i];
-            ItemsInfoBean itemsInfoBean = GetUIMananger<UIGameManager>().gameItemsManager.GetItemsById(itemBean.itemId);
+            ItemBean itemBean = GetUIManager<UIGameManager>().gameDataManager.gameData.listItems[i];
+            ItemsInfoBean itemsInfoBean = GetUIManager<UIGameManager>().gameItemsManager.GetItemsById(itemBean.itemId);
             if (itemsInfoBean == null)
                 continue;
             if (itemsInfoBean.items_type != (int)GeneralEnum.Hat

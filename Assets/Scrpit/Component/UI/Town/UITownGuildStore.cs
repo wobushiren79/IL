@@ -24,7 +24,7 @@ public class UITownGuildStore : UIBaseOne, StoreInfoManager.ICallBack, IRadioGro
         base.OpenUI();
         rgGuildStoreType.SetPosition(0, false);
 
-        StoreInfoManager storeInfoManager = GetUIMananger<UIGameManager>().storeInfoManager;
+        StoreInfoManager storeInfoManager = GetUIManager<UIGameManager>().storeInfoManager;
         storeInfoManager.SetCallBack(this);
         storeInfoManager.GetStoreInfoForGuildGoods();
     }
@@ -79,12 +79,12 @@ public class UITownGuildStore : UIBaseOne, StoreInfoManager.ICallBack, IRadioGro
         {
             StoreInfoBean itemData = listData[i];
             //检测是否满足前置成就
-            if (!itemData.CheckPreAchIds(GetUIMananger<UIGameManager>().gameDataManager.gameData))
+            if (!itemData.CheckPreAchIds(GetUIManager<UIGameManager>().gameDataManager.gameData))
             {
                 continue;
             }
             GameObject itemObj = Instantiate(objGuidStoreContent, objGuidStoreModel);
-            ItemTownGuildStoreCpt groceryCpt = itemObj.GetComponent<ItemTownGuildStoreCpt>();
+            ItemTownStoreForGoodsCpt groceryCpt = itemObj.GetComponent<ItemTownStoreForGoodsCpt>();
             groceryCpt.SetData(itemData);
             itemObj.transform.DOScale(new Vector3(0, 0, 0), 0.5f).SetEase(Ease.OutBack).SetDelay(i * 0.05f).From();
         }

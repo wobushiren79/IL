@@ -4,17 +4,11 @@ using System.Collections.Generic;
 
 public class ArenaPrepareBean
 {
-    //游戏类型
-    public MiniGameEnum gameType;
+    //游戏数据
+    public MiniGameBaseBean miniGameData;
 
-    //弹幕游戏数据
-    public MiniGameBarrageBean gameBarrageData;
-    //战斗游戏数据
-    public MiniGameCombatBean gameCombatData;
-    //烹饪游戏数据
-    public MiniGameCookingBean gameCookingData;
-    //算账游戏数据
-    public MiniGameAccountBean gameAccountData;
-    //辩论游戏数据
-    public MiniGameDebateBean gameDebateData;
+    public ArenaPrepareBean(MiniGameBaseBean miniGameData)
+    {
+        this.miniGameData = miniGameData;
+    }
 }

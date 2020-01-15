@@ -100,8 +100,8 @@ public class UIMainCreate : BaseUIComponent, IRadioGroupCallBack, ColorView.Call
 
     public void InitData()
     {
-        CharacterBodyManager characterBodyManager = GetUIMananger<UIGameManager>().characterBodyManager;
-        GameItemsManager gameItemsManager = GetUIMananger<UIGameManager>().gameItemsManager;
+        CharacterBodyManager characterBodyManager = GetUIManager<UIGameManager>().characterBodyManager;
+        GameItemsManager gameItemsManager = GetUIManager<UIGameManager>().gameItemsManager;
 
         //初始化可选择头型数据
         listSelectHair = TypeConversionUtil.IconBeanDictionaryToList(characterBodyManager.listIconBodyHair);
@@ -128,8 +128,8 @@ public class UIMainCreate : BaseUIComponent, IRadioGroupCallBack, ColorView.Call
     /// </summary>
     public void CreateNewGame()
     {
-        ToastManager toastManager = GetUIMananger<UIGameManager>().toastManager;
-        GameDataManager gameDataManager = GetUIMananger<UIGameManager>().gameDataManager;
+        ToastManager toastManager = GetUIManager<UIGameManager>().toastManager;
+        GameDataManager gameDataManager = GetUIManager<UIGameManager>().gameDataManager;
         if (CheckUtil.StringIsNull(etInnName.text))
         {
             toastManager.ToastHint(GameCommonInfo.GetUITextById(1000));
@@ -208,7 +208,7 @@ public class UIMainCreate : BaseUIComponent, IRadioGroupCallBack, ColorView.Call
     #region 选择回调
     public void ChangeSelectPosition(SelectView selectView, int position)
     {
-        GameItemsManager gameItemsManager = GetUIMananger<UIGameManager>().gameItemsManager;
+        GameItemsManager gameItemsManager = GetUIManager<UIGameManager>().gameItemsManager;
         if (selectView == selectHair)
         {
             characterBodyCpt.SetHair(listSelectHair[position].key);

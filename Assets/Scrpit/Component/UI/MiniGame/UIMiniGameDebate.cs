@@ -43,7 +43,7 @@ public class UIMiniGameDebate : BaseUIComponent
     public override void RefreshUI()
     {
         base.RefreshUI();
-        GameItemsManager gameItemsManager=  GetUIMananger<UIGameManager>().gameItemsManager;
+        GameItemsManager gameItemsManager=  GetUIManager<UIGameManager>().gameItemsManager;
         SetCharacter(userGameData.characterData, enemyGameData.characterData);
         SetCharacterName(userGameData.characterData.baseInfo.name, enemyGameData.characterData.baseInfo.name);
         SetLife(userGameData.characterCurrentLife, userGameData.characterMaxLife, enemyGameData.characterCurrentLife, enemyGameData.characterMaxLife);

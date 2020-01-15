@@ -22,7 +22,7 @@ public class ItemGameBaseCpt : BaseMonoBehaviour
     /// <returns></returns>
     public T GetUIManager<T>() where T : BaseUIManager
     {
-        return uiComponent.GetUIMananger<T>();
+        return uiComponent.GetUIManager<T>();
     }
 
     /// <summary>

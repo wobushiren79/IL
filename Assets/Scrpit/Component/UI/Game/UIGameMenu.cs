@@ -36,7 +36,7 @@ public class UIGameMenu : BaseUIComponent
 
     private void Update()
     {
-        GameDataManager gameDataManager = GetUIMananger<UIGameManager>().gameDataManager;
+        GameDataManager gameDataManager = GetUIManager<UIGameManager>().gameDataManager;
         if (tvOilsalt != null)
         {
             tvOilsalt.text =GameCommonInfo.GetUITextById(21) + gameDataManager.gameData.ingOilsalt;
@@ -73,8 +73,8 @@ public class UIGameMenu : BaseUIComponent
 
     public void CreateFoodList()
     {
-        GameDataManager gameDataManager = GetUIMananger<UIGameManager>().gameDataManager;
-        InnFoodManager innFoodManager = GetUIMananger<UIGameManager>().innFoodManager;
+        GameDataManager gameDataManager = GetUIManager<UIGameManager>().gameDataManager;
+        InnFoodManager innFoodManager = GetUIManager<UIGameManager>().innFoodManager;
         if (gameDataManager == null || innFoodManager == null)
             return;
         CptUtil.RemoveChildsByActive(objFoodListContent.transform);

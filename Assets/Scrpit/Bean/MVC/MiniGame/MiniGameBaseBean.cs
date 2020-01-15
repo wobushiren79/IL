@@ -6,7 +6,7 @@ public class MiniGameBaseBean
 {
     public MiniGameEnum gameType;//游戏类型
     public MiniGameReasonEnum gameReason;//玩游戏的原因
-    
+
     public int gameLevel;//游戏等级
     //胜利条件
     public float winSurvivalTime;//生存时间(秒)
@@ -21,6 +21,7 @@ public class MiniGameBaseBean
     public long preMoneyL;//前置金钱
     public long preMoneyM;
     public long preMoneyS;
+    public int preGameTime;//游戏进行时间
 
     //游戏结果 0输 1赢
     public int gameResult;
@@ -131,7 +132,7 @@ public class MiniGameBaseBean
     /// <returns></returns>
     public string GetGameName()
     {
-        string gameName="???";
+        string gameName = "???";
         switch (gameType)
         {
             case MiniGameEnum.Cooking:
@@ -223,26 +224,32 @@ public class MiniGameBaseBean
         return itemUserGameData;
     }
 
+    public virtual void InitData(GameItemsManager gameItemsManager, List<CharacterBean> listUserData)
+    {
+        InitData(gameItemsManager, listUserData, null);
+    }
     public virtual void InitData(GameItemsManager gameItemsManager, CharacterBean userData)
     {
         List<CharacterBean> listCharacterData = new List<CharacterBean>();
-        listCharacterData.Add(userData);
+        if (userData != null)
+            listCharacterData.Add(userData);
         InitData(gameItemsManager, listCharacterData, null);
     }
-
     public virtual void InitData(GameItemsManager gameItemsManager, CharacterBean userData, List<CharacterBean> listEnemyData)
     {
         List<CharacterBean> listCharacterData = new List<CharacterBean>();
-        listCharacterData.Add(userData);
+        if (userData != null)
+            listCharacterData.Add(userData);
         InitData(gameItemsManager, listCharacterData, listEnemyData);
     }
-
     public virtual void InitData(GameItemsManager gameItemsManager, CharacterBean userData, CharacterBean enemyData)
     {
         List<CharacterBean> listCharacterData = new List<CharacterBean>();
-        listCharacterData.Add(userData);
+        if (userData != null)
+            listCharacterData.Add(userData);
         List<CharacterBean> listEnemyData = new List<CharacterBean>();
-        listEnemyData.Add(enemyData);
+        if (enemyData != null)
+            listEnemyData.Add(enemyData);
         InitData(gameItemsManager, listCharacterData, listEnemyData);
     }
 }

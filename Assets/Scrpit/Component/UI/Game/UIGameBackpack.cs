@@ -20,7 +20,7 @@ public class UIGameBackpack : UIBaseOne
     public void CreateBackpackData()
     {
         CptUtil.RemoveChildsByActive(objItemContent.transform);
-        UIGameManager uiGameManager = GetUIMananger<UIGameManager>();
+        UIGameManager uiGameManager = GetUIManager<UIGameManager>();
         if (uiGameManager.gameItemsManager == null || uiGameManager.gameDataManager == null)
             return;
         bool hasData = false;

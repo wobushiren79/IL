@@ -24,7 +24,7 @@ public class UITownGuildImprove : UIBaseOne, IRadioGroupCallBack
     /// <param name="type"></param>
     public void ChangeUIType(int type)
     {
-        GameDataManager gameDataManager = GetUIMananger<UIGameManager>().gameDataManager;
+        GameDataManager gameDataManager = GetUIManager<UIGameManager>().gameDataManager;
 
         uiInnInfo.gameObject.SetActive(false);
         uiCharacterInfo.gameObject.SetActive(false);

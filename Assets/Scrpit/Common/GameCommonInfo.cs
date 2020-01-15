@@ -43,6 +43,14 @@ public class GameCommonInfo
         return mUITextController.GetTextById(id);
     }
 
+    /// <summary>
+    /// 设置竞技场数据
+    /// </summary>
+    /// <param name="miniGameData"></param>
+    public static void SetAreanPrepareData(MiniGameBaseBean miniGameData)
+    {
+        ArenaPrepareData = new ArenaPrepareBean(miniGameData);
+    }
 
     public class GameConfigCallBack : IGameConfigView
     {

@@ -31,7 +31,7 @@ public class UIGameTest : BaseUIComponent
     {
         if (long.TryParse(etStoryId.text,out long storyId))
         {
-            EventHandler eventHandler= GetUIMananger<UIGameManager>().eventHandler;
+            EventHandler eventHandler= GetUIManager<UIGameManager>().eventHandler;
             eventHandler.EventTriggerForStory(storyId);
         } 
     }
@@ -46,7 +46,7 @@ public class UIGameTest : BaseUIComponent
 
             if (long.TryParse(etItemNumber.text, out long itemNumber))
             {
-                UIGameManager uiGameManager= GetUIMananger<UIGameManager>();
+                UIGameManager uiGameManager= GetUIManager<UIGameManager>();
                 uiGameManager.gameDataManager.gameData.AddNewItems(itemId, itemNumber);
             }
             else
@@ -71,7 +71,7 @@ public class UIGameTest : BaseUIComponent
 
             if (long.TryParse(etBuildItemNumber.text, out long itemNumber))
             {
-                UIGameManager uiGameManager = GetUIMananger<UIGameManager>();
+                UIGameManager uiGameManager = GetUIManager<UIGameManager>();
                 uiGameManager.gameDataManager.gameData.AddBuildNumber(itemId, itemNumber);
             }
             else

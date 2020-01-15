@@ -30,7 +30,7 @@ public class UITownRecruitment : UIBaseOne, DialogView.IDialogCallBack
     public override void Start()
     {
         base.Start();
-        InfoPromptPopupShow infoPromptPopupShow = GetUIMananger<UIGameManager>().infoPromptPopup;
+        InfoPromptPopupShow infoPromptPopupShow = GetUIManager<UIGameManager>().infoPromptPopup;
         if (btFindWorker != null)
             btFindWorker.onClick.AddListener(FindWorkerByMoney);
         if (infoPromptPopupButton != null)
@@ -50,7 +50,7 @@ public class UITownRecruitment : UIBaseOne, DialogView.IDialogCallBack
     private new void Update()
     {
         base.Update();
-        GameDataManager gameDataManager = GetUIMananger<UIGameManager>().gameDataManager;
+        GameDataManager gameDataManager = GetUIManager<UIGameManager>().gameDataManager;
         if (gameDataManager != null && tvNumber != null)
         {
             tvNumber.text = gameDataManager.gameData.listWorkerCharacter.Count + "/" + gameDataManager.gameData.workerNumberLimit;
@@ -69,7 +69,7 @@ public class UITownRecruitment : UIBaseOne, DialogView.IDialogCallBack
     public void CreateCandidateData()
     {
         GameCommonInfo.InitRandomSeed();
-        CharacterBodyManager characterBodyManager = GetUIMananger<UIGameManager>().characterBodyManager;
+        CharacterBodyManager characterBodyManager = GetUIManager<UIGameManager>().characterBodyManager;
         for (int i = 0; i < Random.Range(1,15); i++)
         {
             CharacterBean characterData = CharacterBean.CreateRandomWorkerData(characterBodyManager);
@@ -113,14 +113,14 @@ public class UITownRecruitment : UIBaseOne, DialogView.IDialogCallBack
     public void FindWorkerByMoney()
     {
         //检测是否超过人员上限
-        GameDataManager gameDataManager = GetUIMananger<UIGameManager>().gameDataManager;
-        ToastManager toastManager = GetUIMananger<UIGameManager>().toastManager;
+        GameDataManager gameDataManager = GetUIManager<UIGameManager>().gameDataManager;
+        ToastManager toastManager = GetUIManager<UIGameManager>().toastManager;
         if (gameDataManager.gameData.listWorkerCharacter.Count >= gameDataManager.gameData.workerNumberLimit)
         {
             toastManager.ToastHint(GameCommonInfo.GetUITextById(1051));
             return;
         }
-        DialogManager dialogManager = GetUIMananger<UIGameManager>().dialogManager;
+        DialogManager dialogManager = GetUIManager<UIGameManager>().dialogManager;
         DialogBean dialogData = new DialogBean();
         dialogData.title = GameCommonInfo.GetUITextById(3062);
         PickForMoneyDialogView pickForMoneyDialog = (PickForMoneyDialogView)dialogManager.CreateDialog(DialogEnum.PickForMoney, this, dialogData);
@@ -133,8 +133,8 @@ public class UITownRecruitment : UIBaseOne, DialogView.IDialogCallBack
         if (dialogView is PickForMoneyDialogView)
         {
             //如果是金钱选择回调
-            DialogManager dialogManager = GetUIMananger<UIGameManager>().dialogManager;
-            CharacterBodyManager characterBodyManager = GetUIMananger<UIGameManager>().characterBodyManager;
+            DialogManager dialogManager = GetUIManager<UIGameManager>().dialogManager;
+            CharacterBodyManager characterBodyManager = GetUIManager<UIGameManager>().characterBodyManager;
             PickForMoneyDialogView pickForMoneyDialog = (PickForMoneyDialogView)dialogView;
             DialogBean dialogData = new DialogBean();
             //根据金额获取角色
@@ -145,7 +145,7 @@ public class UITownRecruitment : UIBaseOne, DialogView.IDialogCallBack
         else if (dialogView is FindCharacterDialogView)
         {
             //如果是招募回调
-            GameDataManager gameDataManager = GetUIMananger<UIGameManager>().gameDataManager;
+            GameDataManager gameDataManager = GetUIManager<UIGameManager>().gameDataManager;
             FindCharacterDialogView findCharacterDialog = (FindCharacterDialogView)dialogView;
             gameDataManager.gameData.listWorkerCharacter.Add(findCharacterDialog.characterData);
         }

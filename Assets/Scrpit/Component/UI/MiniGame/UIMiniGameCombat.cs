@@ -205,7 +205,7 @@ public class UIMiniGameCombat : UIBaseMiniGame, CombatPowerView.ICallBack
     /// </summary>
     public void CommandItem()
     {
-        ToastManager toastManager = GetUIMananger<UIGameManager>().toastManager;
+        ToastManager toastManager = GetUIManager<UIGameManager>().toastManager;
         toastManager.ToastHint("开发中");
     }
 
@@ -218,7 +218,7 @@ public class UIMiniGameCombat : UIBaseMiniGame, CombatPowerView.ICallBack
         //弹出进度条
         viewCombatPower.gameObject.SetActive(true);
         //获取属性
-        GameItemsManager gameItemsManager = GetUIMananger<UIGameManager>().gameItemsManager;
+        GameItemsManager gameItemsManager = GetUIManager<UIGameManager>().gameItemsManager;
         gameCharacterData.characterData.GetAttributes(gameItemsManager, out CharacterAttributesBean characterAttributes);
         //设置数据
         viewCombatPower.SetData(characterAttributes.force);
@@ -250,7 +250,7 @@ public class UIMiniGameCombat : UIBaseMiniGame, CombatPowerView.ICallBack
     /// </summary>
     public void StartRound()
     {
-        GameItemsManager gameItemsManager = GetUIMananger<UIGameManager>().gameItemsManager;
+        GameItemsManager gameItemsManager = GetUIManager<UIGameManager>().gameItemsManager;
         for (int i = 0; i < mListCharacterRound.Count; i++)
         {
             ItemMiniGameCombatCharacterRoundCpt itemCpt = mListCharacterRound[i];

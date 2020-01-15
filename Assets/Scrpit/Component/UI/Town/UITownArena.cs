@@ -24,7 +24,7 @@ public class UITownArena : UIBaseOne, IRadioGroupCallBack, StoreInfoManager.ICal
     {
         base.OpenUI();
         rgType.SetPosition(0, false);
-        StoreInfoManager storeInfoManager = GetUIMananger<UIGameManager>().storeInfoManager;
+        StoreInfoManager storeInfoManager = GetUIManager<UIGameManager>().storeInfoManager;
         storeInfoManager.SetCallBack(this);
         storeInfoManager.GetStoreInfoForArenaInfo();
     }
@@ -74,8 +74,8 @@ public class UITownArena : UIBaseOne, IRadioGroupCallBack, StoreInfoManager.ICal
     /// <returns></returns>
     private List<MiniGameBaseBean> CreateMiniGameData(int type)
     {
-        GameItemsManager gameItemsManager = GetUIMananger<UIGameManager>().gameItemsManager;
-        NpcInfoManager npcInfoManager = GetUIMananger<UIGameManager>().npcInfoManager;
+        GameItemsManager gameItemsManager = GetUIManager<UIGameManager>().gameItemsManager;
+        NpcInfoManager npcInfoManager = GetUIManager<UIGameManager>().npcInfoManager;
         List<MiniGameBaseBean> listMiniGameData = new List<MiniGameBaseBean>();
         int arenaNumber = Random.Range(1, 5);
         for (int i = 0; i < arenaNumber; i++)
@@ -119,28 +119,35 @@ public class UITownArena : UIBaseOne, IRadioGroupCallBack, StoreInfoManager.ICal
                 RewardTypeBean randomReward = RandomUtil.GetRandomDataByList(listReward);
                 miniGameData.listReward.Add(randomReward);
             }
+            int gameTime = 1;
             //添加对应的奖杯
             switch (type)
             {
                 case 1:
                     miniGameData.listReward.Add(new RewardTypeBean(RewardTypeEnum.AddArenaTrophyElementary, "1"));
                     miniGameData.listReward.Add(new RewardTypeBean(RewardTypeEnum.AddMoneyS, "1000"));
+                    gameTime = 1;
                     break;
                 case 2:
                     miniGameData.listReward.Add(new RewardTypeBean(RewardTypeEnum.AddArenaTrophyIntermediate, "1"));
                     miniGameData.listReward.Add(new RewardTypeBean(RewardTypeEnum.AddMoneyS, "5000"));
+                    gameTime = 2;
                     break;
                 case 3:
                     miniGameData.listReward.Add(new RewardTypeBean(RewardTypeEnum.AddArenaTrophyAdvanced, "1"));
                     miniGameData.listReward.Add(new RewardTypeBean(RewardTypeEnum.AddMoneyM, "10"));
+                    gameTime = 3;
                     break;
                 case 4:
                     miniGameData.listReward.Add(new RewardTypeBean(RewardTypeEnum.AddArenaTrophyLegendary, "1"));
                     miniGameData.listReward.Add(new RewardTypeBean(RewardTypeEnum.AddMoneyL, "10"));
+                    gameTime = 4;
                     break;
             }
-            if (miniGameData != null)
-                listMiniGameData.Add(miniGameData);
+            //设置游戏时间
+            miniGameData.preGameTime = gameTime;
+            //添加游戏数据
+            listMiniGameData.Add(miniGameData);
         }
         return listMiniGameData;
     }
@@ -165,6 +172,34 @@ public class UITownArena : UIBaseOne, IRadioGroupCallBack, StoreInfoManager.ICal
 
     private MiniGameCookingBean CreateCookingGameData(MiniGameCookingBean miniGameData, StoreInfoBean storeInfo)
     {
+        UIGameManager uiGameManager = GetUIManager<UIGameManager>();
+        GameItemsManager gameItemsManager = uiGameManager.gameItemsManager;
+        CharacterBodyManager characterBodyManager = uiGameManager.characterBodyManager;
+        NpcInfoManager npcInfoManager = uiGameManager.npcInfoManager;
+        miniGameData.winScore = 60;
+        miniGameData.storyGameOpenId = 30000001;
+        miniGameData.storyGameAuditId = 30000002;
+        //随机生成敌人
+        List<CharacterBean> listEnemyData = new List<CharacterBean>();
+        for (int i = 0; i < Random.Range(1, 16); i++)
+        {
+            CharacterBean randomEnemy = CharacterBean.CreateRandomWorkerData(characterBodyManager);
+            listEnemyData.Add(randomEnemy);
+        }
+        //主持由东方姑娘主持
+        List<CharacterBean> listCompereData = new List<CharacterBean>();
+        CharacterBean compereData = npcInfoManager.GetCharacterDataById(110051);
+        listCompereData.Add(compereData);
+        //评审人员
+        List<long> listAuditerIds = new List<long>() { 100011, 100021, 100031, 100041, 100051, 100061, 100071, 100081, 100091 };
+        List<CharacterBean> listAuditerData = new List<CharacterBean>();
+        listAuditerIds = RandomUtil.GetRandomDataByListForNumberNR(listAuditerIds, 5);
+        foreach (long itemId in listAuditerIds)
+        {
+            CharacterBean auditerData = npcInfoManager.GetCharacterDataById(itemId);
+            listAuditerData.Add(auditerData);
+        }
+        miniGameData.InitData(gameItemsManager, null, listEnemyData, listAuditerData, listCompereData);
         return miniGameData;
     }
 
@@ -175,16 +210,35 @@ public class UITownArena : UIBaseOne, IRadioGroupCallBack, StoreInfoManager.ICal
 
     private MiniGameAccountBean CreateAccountGameData(MiniGameAccountBean miniGameData, StoreInfoBean storeInfo)
     {
+        UIGameManager uiGameManager = GetUIManager<UIGameManager>();
+        GameItemsManager gameItemsManager = uiGameManager.gameItemsManager;
+        NpcInfoManager npcInfoManager = uiGameManager.npcInfoManager;
+        miniGameData.winMoneyL = 0;
+        miniGameData.winMoneyM = 1;
+        miniGameData.winMoneyS = 10;
         return miniGameData;
     }
 
     private MiniGameDebateBean CreateDebateGameData(MiniGameDebateBean miniGameData, StoreInfoBean storeInfo)
     {
+        UIGameManager uiGameManager = GetUIManager<UIGameManager>();
+        GameItemsManager gameItemsManager = uiGameManager.gameItemsManager;
+        NpcInfoManager npcInfoManager = uiGameManager.npcInfoManager;
+        miniGameData.winLife = 1;
+        CharacterBean enemyData = npcInfoManager.GetCharacterDataById(110111);
+        miniGameData.InitData(gameItemsManager, null, enemyData);
         return miniGameData;
     }
 
     private MiniGameCombatBean CreateCombatGameData(MiniGameCombatBean miniGameData, StoreInfoBean storeInfo)
     {
+        UIGameManager uiGameManager = GetUIManager<UIGameManager>();
+        GameItemsManager gameItemsManager = uiGameManager.gameItemsManager;
+        NpcInfoManager npcInfoManager = uiGameManager.npcInfoManager;
+        miniGameData.winBringDownNumber = 1;
+        miniGameData.winSurvivalNumber = 1;
+        CharacterBean enemyData = npcInfoManager.GetCharacterDataById(110111);
+        miniGameData.InitData(gameItemsManager, null, enemyData);
         return miniGameData;
     }
 

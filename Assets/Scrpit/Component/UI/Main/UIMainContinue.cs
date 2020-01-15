@@ -22,7 +22,7 @@ public class UIMainContinue : BaseUIComponent, GameDataManager.IGameDataSimpleCa
     public override void OpenUI()
     {
         base.OpenUI();
-        GameDataManager gameDataManager = GetUIMananger<UIGameManager>().gameDataManager;
+        GameDataManager gameDataManager = GetUIManager<UIGameManager>().gameDataManager;
         if (gameDataManager == null)
             return;
         gameDataManager.SetSimpleGameDataCallBack(this);

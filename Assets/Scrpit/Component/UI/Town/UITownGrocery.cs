@@ -23,7 +23,7 @@ public class UITownGrocery : UIBaseOne, StoreInfoManager.ICallBack, IRadioGroupC
     public override void OpenUI()
     {
         base.OpenUI();
-        StoreInfoManager storeInfoManager= GetUIMananger<UIGameManager>().storeInfoManager;
+        StoreInfoManager storeInfoManager= GetUIManager<UIGameManager>().storeInfoManager;
         storeInfoManager.SetCallBack(this);
         storeInfoManager.GetStoreInfoForGrocery();
         rgGroceryType.SetPosition(0, false);

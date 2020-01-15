@@ -14,7 +14,7 @@ public class UITownMarket : UIBaseOne, StoreInfoManager.ICallBack
     public override void OpenUI()
     {
         base.OpenUI();
-        StoreInfoManager storeInfoManager = GetUIMananger<UIGameManager>().storeInfoManager;
+        StoreInfoManager storeInfoManager = GetUIManager<UIGameManager>().storeInfoManager;
         storeInfoManager.SetCallBack(this);
         storeInfoManager.GetStoreInfoForMarket();
     }

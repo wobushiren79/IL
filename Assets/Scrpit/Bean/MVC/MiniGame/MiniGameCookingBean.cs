@@ -37,7 +37,10 @@ public class MiniGameCookingBean : MiniGameBaseBean
         List<CharacterBean> listAuditerData,
         List<CharacterBean> listCompereData)
     {
-        base.InitData(gameItemsManager, new List<CharacterBean>() { userData }, listEnemyData);
+        List<CharacterBean> listUserData = new List<CharacterBean>();
+        if (userData != null)
+            listUserData.Add(userData);
+        base.InitData(gameItemsManager, listUserData, listEnemyData);
 
         //创建评审角色数据
         if (!CheckUtil.ListIsNull(listAuditerData))

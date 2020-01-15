@@ -68,7 +68,7 @@ public class UIGameText : BaseUIComponent, ITextInfoView, DialogView.IDialogCall
             //如果是时停 需要回复时停
             if (currentTextData.is_stoptime == 1)
             {
-                GameTimeHandler gameTimeHandler = GetUIMananger<UIGameManager>().gameTimeHandler;
+                GameTimeHandler gameTimeHandler = GetUIManager<UIGameManager>().gameTimeHandler;
                 if (gameTimeHandler != null)
                     gameTimeHandler.SetTimeRestore();
             }
@@ -114,7 +114,7 @@ public class UIGameText : BaseUIComponent, ITextInfoView, DialogView.IDialogCall
     public void SetDataForTalk(long userId, NPCTypeEnum npcType)
     {
         this.mTalkUserId = userId;
-        GameDataManager gameDataManager = GetUIMananger<UIGameManager>().gameDataManager;
+        GameDataManager gameDataManager = GetUIManager<UIGameManager>().gameDataManager;
         mTextEnum = TextEnum.Talk;
         textOrder = 1;
         CharacterFavorabilityBean characterFavorability = gameDataManager.gameData.GetCharacterFavorability(userId);
@@ -196,7 +196,7 @@ public class UIGameText : BaseUIComponent, ITextInfoView, DialogView.IDialogCall
         uiForBook.Close();
         uiForBehind.Close();
 
-        UIGameManager uiGameManager = GetUIMananger<UIGameManager>();
+        UIGameManager uiGameManager = GetUIManager<UIGameManager>();
         //时停选择 特殊处理
         if (currentTextData.is_stoptime == 1)
             //设置时间彻底停止计时
@@ -229,7 +229,7 @@ public class UIGameText : BaseUIComponent, ITextInfoView, DialogView.IDialogCall
     /// <returns></returns>
     public string SetContentDetails(string content)
     {
-       GameDataManager gameDataManager = GetUIMananger<UIGameManager>().gameDataManager;
+       GameDataManager gameDataManager = GetUIManager<UIGameManager>().gameDataManager;
         string userName = "";
         int sex = 1;
         if (gameDataManager.gameData.userCharacter != null
@@ -272,9 +272,9 @@ public class UIGameText : BaseUIComponent, ITextInfoView, DialogView.IDialogCall
     /// <param name="textData"></param>
     public void SelectText(TextInfoBean textData)
     {
-        GameDataManager gameDataManager = GetUIMananger<UIGameManager>().gameDataManager;
-        ToastManager toastManager = GetUIMananger<UIGameManager>().toastManager;
-        DialogManager dialogManager = GetUIMananger<UIGameManager>().dialogManager;
+        GameDataManager gameDataManager = GetUIManager<UIGameManager>().gameDataManager;
+        ToastManager toastManager = GetUIManager<UIGameManager>().toastManager;
+        DialogManager dialogManager = GetUIManager<UIGameManager>().dialogManager;
         switch (mTextEnum)
         {
             case TextEnum.Story:
@@ -396,8 +396,8 @@ public class UIGameText : BaseUIComponent, ITextInfoView, DialogView.IDialogCall
     #region 弹窗回调
     public void Submit(DialogView dialogView, DialogBean dialogBean)
     {
-        NpcInfoManager npcInfoManager= GetUIMananger<UIGameManager>().npcInfoManager;
-        GameDataManager gameDataManager = GetUIMananger<UIGameManager>().gameDataManager;
+        NpcInfoManager npcInfoManager= GetUIManager<UIGameManager>().npcInfoManager;
+        GameDataManager gameDataManager = GetUIManager<UIGameManager>().gameDataManager;
         //获取选择物品
         PickForItemsDialogView pickForItemsDialog = (PickForItemsDialogView)dialogView;
         pickForItemsDialog.GetSelectedItems(out ItemsInfoBean itemsInfo,out ItemBean itemData);

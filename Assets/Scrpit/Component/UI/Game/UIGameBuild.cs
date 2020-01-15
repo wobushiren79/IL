@@ -23,7 +23,7 @@ public class UIGameBuild : BaseUIComponent
 
     public void Start()
     {
-        GameDataManager gameDataManager = GetUIMananger<UIGameManager>().gameDataManager;
+        GameDataManager gameDataManager = GetUIManager<UIGameManager>().gameDataManager;
         if (btBack != null)
             btBack.onClick.AddListener(OpenMainUI);
         if (btDismantle != null)
@@ -45,17 +45,17 @@ public class UIGameBuild : BaseUIComponent
     {
         base.OpenUI();
         //停止时间
-        GetUIMananger<UIGameManager>().gameTimeHandler.SetTimeStatus(true);
-        GetUIMananger<UIGameManager>().controlHandler.StartControl(ControlHandler.ControlEnum.Build);
-        GetUIMananger<UIGameManager>().innHandler.CloseInn();
+        GetUIManager<UIGameManager>().gameTimeHandler.SetTimeStatus(true);
+        GetUIManager<UIGameManager>().controlHandler.StartControl(ControlHandler.ControlEnum.Build);
+        GetUIManager<UIGameManager>().innHandler.CloseInn();
     }
     public override void CloseUI()
     {
         base.CloseUI();
         //时间添加1小时
-        GetUIMananger<UIGameManager>().gameTimeHandler.AddHour(1);
+        GetUIManager<UIGameManager>().gameTimeHandler.AddHour(1);
         //继续时间
-        GetUIMananger<UIGameManager>().gameTimeHandler.SetTimeStatus(false);
+        GetUIManager<UIGameManager>().gameTimeHandler.SetTimeStatus(false);
     }
 
     /// <summary>
@@ -63,8 +63,8 @@ public class UIGameBuild : BaseUIComponent
     /// </summary>
     public override void RefreshUI()
     {
-        GameDataManager gameDataManager = GetUIMananger<UIGameManager>().gameDataManager;
-        InnBuildManager innBuildManager = GetUIMananger<UIGameManager>().innBuildManager;
+        GameDataManager gameDataManager = GetUIManager<UIGameManager>().gameDataManager;
+        InnBuildManager innBuildManager = GetUIManager<UIGameManager>().innBuildManager;
         //刷新列表数据
         CreateBuildList(buildType);
         //刷新美观值
@@ -79,9 +79,9 @@ public class UIGameBuild : BaseUIComponent
     /// <param name="type"></param>
     public void CreateBuildList(BuildItemTypeEnum  type)
     {
-        GameDataManager gameDataManager = GetUIMananger<UIGameManager>().gameDataManager;
-        ControlHandler controlHandler = GetUIMananger<UIGameManager>().controlHandler;
-        InnBuildManager innBuildManager = GetUIMananger<UIGameManager>().innBuildManager;
+        GameDataManager gameDataManager = GetUIManager<UIGameManager>().gameDataManager;
+        ControlHandler controlHandler = GetUIManager<UIGameManager>().controlHandler;
+        InnBuildManager innBuildManager = GetUIManager<UIGameManager>().innBuildManager;
         buildType = type;
         //删除当前选中
         ((ControlForBuildCpt)(controlHandler.GetControl(ControlHandler.ControlEnum.Build))).DestoryBuildItem();
@@ -145,7 +145,7 @@ public class UIGameBuild : BaseUIComponent
 
     public void DismantleMode()
     {
-        ControlHandler controlHandler = GetUIMananger<UIGameManager>().controlHandler;
+        ControlHandler controlHandler = GetUIManager<UIGameManager>().controlHandler;
         ((ControlForBuildCpt)(controlHandler.GetControl(ControlHandler.ControlEnum.Build))).SetDismantleMode();
     }
 
@@ -154,10 +154,10 @@ public class UIGameBuild : BaseUIComponent
     /// </summary>
     public void OpenMainUI()
     {
-        ControlHandler controlHandler = GetUIMananger<UIGameManager>().controlHandler;
-        InnHandler innHandler = GetUIMananger<UIGameManager>().innHandler;
-        GameTimeHandler gameTimeHandler = GetUIMananger<UIGameManager>().gameTimeHandler;
-        NavMeshSurface navMesh = GetUIMananger<UIGameManager>().navMesh;
+        ControlHandler controlHandler = GetUIManager<UIGameManager>().controlHandler;
+        InnHandler innHandler = GetUIManager<UIGameManager>().innHandler;
+        GameTimeHandler gameTimeHandler = GetUIManager<UIGameManager>().gameTimeHandler;
+        NavMeshSurface navMesh = GetUIManager<UIGameManager>().navMesh;
 
         //删除当前选中
         ((ControlForBuildCpt)(controlHandler.GetControl(ControlHandler.ControlEnum.Build))).DestoryBuildItem();
