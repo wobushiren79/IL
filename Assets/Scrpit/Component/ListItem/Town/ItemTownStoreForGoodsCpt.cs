@@ -34,7 +34,14 @@ public class ItemTownStoreForGoodsCpt : ItemGameBaseCpt, DialogView.IDialogCallB
     public Text tvPriceS;
     public GameObject objGuildCoin;
     public Text tvGuildCoin;
-
+    public GameObject objTrophyElementary;
+    public Text tvTrophyElementary;
+    public GameObject objTrophyIntermediate;
+    public Text tvTrophyIntermediate;
+    public GameObject objTrophyAdvanced;
+    public Text tvTrophyAdvanced;
+    public GameObject objTrophyLegendary;
+    public Text tvTrophyLegendary;
 
     [Header("数据")]
     public StoreInfoBean storeInfo;
@@ -61,8 +68,10 @@ public class ItemTownStoreForGoodsCpt : ItemGameBaseCpt, DialogView.IDialogCallB
         if (CheckUtil.StringIsNull(iconKey))
             iconKey = itemsInfo.icon_key;
 
-        SetIcon(iconKey, storeInfo.mark, storeInfo.mark_id);
-        SetPrice(storeInfo.price_l, storeInfo.price_m, storeInfo.price_s, storeInfo.guild_coin);
+        SetIcon(itemsInfo, storeInfo.mark, storeInfo.mark_id);
+        SetPrice(storeInfo.price_l, storeInfo.price_m, storeInfo.price_s,
+            storeInfo.guild_coin,
+            storeInfo.trophy_elementary, storeInfo.trophy_intermediate, storeInfo.trophy_advanced, storeInfo.trophy_legendary);
         SetName(itemsInfo.name);
         SetContent(itemsInfo.content);
         SetOwn();
@@ -91,9 +100,10 @@ public class ItemTownStoreForGoodsCpt : ItemGameBaseCpt, DialogView.IDialogCallB
     /// <param name="iconKey"></param>
     /// <param name="mark"></param>
     /// <param name="markId"></param>
-    public void SetIcon(string iconKey, string mark, long markId)
+    public void SetIcon(ItemsInfoBean itemsInfo, string mark, long markId)
     {
         GameItemsManager gameItemsManager = GetUIManager<UIGameManager>().gameItemsManager;
+        IconDataManager iconDataManager = GetUIManager<UIGameManager>().iconDataManager;
         CharacterDressManager characterDressManager = GetUIManager<UIGameManager>().characterDressManager;
         if (gameItemsManager == null)
             return;
@@ -103,24 +113,21 @@ public class ItemTownStoreForGoodsCpt : ItemGameBaseCpt, DialogView.IDialogCallB
         switch ((GeneralEnum)int.Parse(mark))
         {
             case GeneralEnum.Hat:
-                spIcon = characterDressManager.GetHatSpriteByName(iconKey);
                 offsetMin = new Vector2(-50, -75);
                 offsetMax = new Vector2(50, 25);
                 break;
             case GeneralEnum.Clothes:
-                spIcon = characterDressManager.GetClothesSpriteByName(iconKey);
                 offsetMin = new Vector2(-50, -25);
                 offsetMax = new Vector2(50, 75);
                 break;
             case GeneralEnum.Shoes:
-                spIcon = characterDressManager.GetShoesSpriteByName(iconKey);
                 offsetMin = new Vector2(-50, 0);
                 offsetMax = new Vector2(50, 100);
                 break;
             default:
-                spIcon = gameItemsManager.GetItemsSpriteByName(iconKey);
                 break;
         }
+        spIcon = GeneralEnumTools.GetGeneralSprite(itemsInfo, iconDataManager, gameItemsManager, characterDressManager,false);
         if (ivIcon != null && spIcon != null)
             ivIcon.sprite = spIcon;
         if (rtIcon != null)
@@ -153,7 +160,10 @@ public class ItemTownStoreForGoodsCpt : ItemGameBaseCpt, DialogView.IDialogCallB
     /// <summary>
     /// 设置价格
     /// </summary>
-    public void SetPrice(long priceL, long priceM, long priceS, long coin)
+    public void SetPrice(
+        long priceL, long priceM, long priceS,
+        long coin,
+        long trophyElementary, long trophyIntermediate, long trophyAdvanced, long trophyLegendary)
     {
         if (priceL == 0 && objPriceL != null)
             objPriceL.SetActive(false);
@@ -163,6 +173,16 @@ public class ItemTownStoreForGoodsCpt : ItemGameBaseCpt, DialogView.IDialogCallB
             objPriceS.SetActive(false);
         if (coin == 0 && objGuildCoin != null)
             objGuildCoin.SetActive(false);
+
+        if (trophyElementary == 0 && objTrophyElementary != null)
+            objTrophyElementary.SetActive(false);
+        if (trophyIntermediate == 0 && objTrophyIntermediate != null)
+            objTrophyIntermediate.SetActive(false);
+        if (trophyAdvanced == 0 && objTrophyAdvanced != null)
+            objTrophyAdvanced.SetActive(false);
+        if (trophyLegendary == 0 && objTrophyLegendary != null)
+            objTrophyLegendary.SetActive(false);
+
         if (tvPriceL != null)
             tvPriceL.text = priceL + "";
         if (tvPriceM != null)
@@ -171,6 +191,15 @@ public class ItemTownStoreForGoodsCpt : ItemGameBaseCpt, DialogView.IDialogCallB
             tvPriceS.text = priceS + "";
         if (tvGuildCoin != null)
             tvGuildCoin.text = coin + "";
+
+        if (tvTrophyElementary != null)
+            tvTrophyElementary.text = trophyElementary + "";
+        if (tvTrophyIntermediate != null)
+            tvTrophyIntermediate.text = trophyIntermediate + "";
+        if (tvTrophyAdvanced != null)
+            tvTrophyAdvanced.text = trophyAdvanced + "";
+        if (tvTrophyLegendary != null)
+            tvTrophyLegendary.text = trophyLegendary + "";
     }
 
     /// <summary>
@@ -245,6 +274,11 @@ public class ItemTownStoreForGoodsCpt : ItemGameBaseCpt, DialogView.IDialogCallB
             toastManager.ToastHint(GameCommonInfo.GetUITextById(1012));
             return;
         }
+        if (!gameDataManager.gameData.HasEnoughTrophy(storeInfo.trophy_elementary, storeInfo.trophy_intermediate, storeInfo.trophy_advanced, storeInfo.trophy_legendary))
+        {
+            toastManager.ToastHint(GameCommonInfo.GetUITextById(1021));
+            return;
+        }
         DialogBean dialogBean = new DialogBean();
         dialogBean.content = string.Format(GameCommonInfo.GetUITextById(3002), itemsInfo.name);
         dialogManager.CreateDialog(DialogEnum.Normal, this, dialogBean);
@@ -257,13 +291,24 @@ public class ItemTownStoreForGoodsCpt : ItemGameBaseCpt, DialogView.IDialogCallB
         ToastManager toastManager = GetUIManager<UIGameManager>().toastManager;
         if (gameDataManager == null || storeInfo == null)
             return;
-        if (!gameDataManager.gameData.HasEnoughMoney(storeInfo.price_l, storeInfo.price_m, storeInfo.price_s))
-        {
-            toastManager.ToastHint(GameCommonInfo.GetUITextById(1005));
-            return;
-        }
+        //if (!gameDataManager.gameData.HasEnoughMoney(storeInfo.price_l, storeInfo.price_m, storeInfo.price_s))
+        //{
+        //    toastManager.ToastHint(GameCommonInfo.GetUITextById(1005));
+        //    return;
+        //}
+        //if (!gameDataManager.gameData.HasEnoughGuildCoin(storeInfo.guild_coin))
+        //{
+        //    toastManager.ToastHint(GameCommonInfo.GetUITextById(1012));
+        //    return;
+        //}
+        //if (!gameDataManager.gameData.HasEnoughTrophy(storeInfo.trophy_elementary, storeInfo.trophy_intermediate, storeInfo.trophy_advanced, storeInfo.trophy_legendary))
+        //{
+        //    toastManager.ToastHint(GameCommonInfo.GetUITextById(1021));
+        //    return;
+        //}
         gameDataManager.gameData.PayMoney(storeInfo.price_l, storeInfo.price_m, storeInfo.price_s);
         gameDataManager.gameData.PayGuildCoin(storeInfo.guild_coin);
+        gameDataManager.gameData.PayTrophy(storeInfo.trophy_elementary, storeInfo.trophy_intermediate, storeInfo.trophy_advanced, storeInfo.trophy_legendary);
         toastManager.ToastHint(ivIcon.sprite, string.Format(GameCommonInfo.GetUITextById(1010), itemsInfo.name));
         gameDataManager.gameData.AddItemsNumber(storeInfo.mark_id, 1);
         RefreshUI();

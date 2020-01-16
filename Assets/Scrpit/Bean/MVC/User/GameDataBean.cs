@@ -11,10 +11,10 @@ public class GameDataBean
     public long moneyM;
     public long moneyL;
     public long guildCoin;//公会硬币
-    public long arenaTrophyElementary; //竞技场初级奖杯
-    public long arenaTrophyIntermediate;//竞技场中级奖杯
-    public long arenaTrophyAdvanced;//竞技场高级奖杯
-    public long arenaTrophyLegendary;//竞技场传说奖杯
+    public long trophyElementary; //竞技场初级奖杯
+    public long trophyIntermediate;//竞技场中级奖杯
+    public long trophyAdvanced;//竞技场高级奖杯
+    public long trophyLegendary;//竞技场传说奖杯
 
     public InnAttributesBean innAttributes = new InnAttributesBean();//客栈属性
     public CharacterBean userCharacter = new CharacterBean();// 老板
@@ -51,20 +51,20 @@ public class GameDataBean
     /// <param name="arenaTrophy2"></param>
     /// <param name="arenaTrophy3"></param>
     /// <param name="arenaTrophy4"></param>
-    public void AddArenaTrophy(long arenaTrophyElementary, long arenaTrophyIntermediate, long arenaTrophyAdvanced, long arenaTrophyLegendary)
+    public void AddArenaTrophy(long trophyElementary, long trophyIntermediate, long trophyAdvanced, long trophyLegendary)
     {
-        this.arenaTrophyElementary += arenaTrophyElementary;
-        this.arenaTrophyIntermediate += arenaTrophyIntermediate;
-        this.arenaTrophyAdvanced += arenaTrophyAdvanced;
-        this.arenaTrophyLegendary += arenaTrophyLegendary;
-        if (this.arenaTrophyElementary < 0)
-            this.arenaTrophyElementary = 0;
-        if (this.arenaTrophyIntermediate < 0)
-            this.arenaTrophyIntermediate = 0;
-        if (this.arenaTrophyAdvanced < 0)
-            this.arenaTrophyAdvanced = 0;
-        if (this.arenaTrophyLegendary < 0)
-            this.arenaTrophyLegendary = 0;
+        this.trophyElementary += trophyElementary;
+        this.trophyIntermediate += trophyIntermediate;
+        this.trophyAdvanced += trophyAdvanced;
+        this.trophyLegendary += trophyLegendary;
+        if (this.trophyElementary < 0)
+            this.trophyElementary = 0;
+        if (this.trophyIntermediate < 0)
+            this.trophyIntermediate = 0;
+        if (this.trophyAdvanced < 0)
+            this.trophyAdvanced = 0;
+        if (this.trophyLegendary < 0)
+            this.trophyLegendary = 0;
     }
 
     /// <summary>
@@ -537,6 +537,26 @@ public class GameDataBean
     }
 
     /// <summary>
+    /// 是否有足够的奖杯
+    /// </summary>
+    /// <param name="trophyElementary"></param>
+    /// <param name="trophyIntermediate"></param>
+    /// <param name="trophyAdvanced"></param>
+    /// <param name="trophyLegendary"></param>
+    /// <returns></returns>
+    public bool HasEnoughTrophy(long trophyElementary, long trophyIntermediate, long trophyAdvanced, long trophyLegendary)
+    {
+        if (this.trophyElementary < trophyElementary
+            || this.trophyIntermediate < trophyIntermediate
+            || this.trophyAdvanced < trophyAdvanced
+            || this.trophyLegendary < trophyLegendary)
+        {
+            return false;
+        }
+        return true;
+    }
+
+    /// <summary>
     /// 支付金钱
     /// </summary>
     /// <param name="priceL"></param>
@@ -566,5 +586,26 @@ public class GameDataBean
             guildCoin = 0;
     }
 
-
+    /// <summary>
+    /// 支付奖杯
+    /// </summary>
+    /// <param name="trophyElementary"></param>
+    /// <param name="trophyIntermediate"></param>
+    /// <param name="trophyAdvanced"></param>
+    /// <param name="trophyLegendary"></param>
+    public void PayTrophy(long trophyElementary, long trophyIntermediate, long trophyAdvanced, long trophyLegendary)
+    {
+        this.trophyElementary -= trophyElementary;
+        this.trophyIntermediate -= trophyIntermediate;
+        this.trophyAdvanced -= trophyAdvanced;
+        this.trophyLegendary -= trophyLegendary;
+        if (trophyElementary < 0)
+            trophyElementary = 0;
+        if (trophyIntermediate < 0)
+            trophyIntermediate = 0;
+        if (trophyAdvanced < 0)
+            trophyAdvanced = 0;
+        if (trophyLegendary < 0)
+            trophyLegendary = 0;
+    }
 }

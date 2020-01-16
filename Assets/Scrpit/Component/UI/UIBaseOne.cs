@@ -63,19 +63,19 @@ public class UIBaseOne : BaseUIComponent
             }
             if (tvTrophy1 != null)
             {
-                tvTrophy1.text = gameDataManager.gameData.arenaTrophyElementary+"";
+                tvTrophy1.text = gameDataManager.gameData.trophyElementary+"";
             }
             if (tvTrophy2 != null)
             {
-                tvTrophy2.text = gameDataManager.gameData.arenaTrophyIntermediate + "";
+                tvTrophy2.text = gameDataManager.gameData.trophyIntermediate + "";
             }
             if (tvTrophy3 != null)
             {
-                tvTrophy3.text = gameDataManager.gameData.arenaTrophyAdvanced + "";
+                tvTrophy3.text = gameDataManager.gameData.trophyAdvanced + "";
             }
             if (tvTrophy4 != null)
             {
-                tvTrophy4.text = gameDataManager.gameData.arenaTrophyLegendary + "";
+                tvTrophy4.text = gameDataManager.gameData.trophyLegendary + "";
             }
         }
     }

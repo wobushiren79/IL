@@ -95,7 +95,6 @@ public class ItemGameBackpackEquipCpt : ItemGameBackpackCpt
         nullItems.id = 0;
         nullItems.items_type = itemsInfoBean.items_type;
         uiGameEquip.SetEquip(nullItems);
-        uiGameEquip.RefreshUI();
     }
     #endregion 
 }

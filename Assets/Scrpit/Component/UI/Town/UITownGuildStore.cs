@@ -31,18 +31,14 @@ public class UITownGuildStore : UIBaseOne, StoreInfoManager.ICallBack, IRadioGro
 
     public void InitDataByType(int type)
     {
+        List<StoreInfoBean> listData = new List<StoreInfoBean>();
         switch (type)
         {
             case 0:
-                CreateGroceryData(mGuidStoreListData);
-                break;
-            case 1:
-                CreateGroceryData(GetGroceryListDataByMark("12"));
-                break;
-            case 2:
-                CreateGroceryData(GetGroceryListDataByMark("11"));
+                listData = mGuidStoreListData;
                 break;
         }
+        CreateGroceryData(listData);
     }
 
     /// <summary>
@@ -50,21 +46,21 @@ public class UITownGuildStore : UIBaseOne, StoreInfoManager.ICallBack, IRadioGro
     /// </summary>
     /// <param name="mark"></param>
     /// <returns></returns>
-    public List<StoreInfoBean> GetGroceryListDataByMark(string mark)
-    {
-        List<StoreInfoBean> listData = new List<StoreInfoBean>();
-        if (mGuidStoreListData == null)
-            return listData;
-        for (int i = 0; i < mGuidStoreListData.Count; i++)
-        {
-            StoreInfoBean itemData = mGuidStoreListData[i];
-            if (itemData.mark.Equals(mark))
-            {
-                listData.Add(itemData);
-            }
-        }
-        return listData;
-    }
+    //public List<StoreInfoBean> GetGroceryListDataByMark(string mark)
+    //{
+    //    List<StoreInfoBean> listData = new List<StoreInfoBean>();
+    //    if (mGuidStoreListData == null)
+    //        return listData;
+    //    for (int i = 0; i < mGuidStoreListData.Count; i++)
+    //    {
+    //        StoreInfoBean itemData = mGuidStoreListData[i];
+    //        if (itemData.mark.Equals(mark))
+    //        {
+    //            listData.Add(itemData);
+    //        }
+    //    }
+    //    return listData;
+    //}
 
     /// <summary>
     /// 创建商品列表

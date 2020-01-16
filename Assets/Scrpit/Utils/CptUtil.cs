@@ -165,4 +165,21 @@ public class CptUtil
         return listCpt;
     }
 
+    /// <summary>
+    /// 获取启用中的子OBJ数量
+    /// </summary>
+    /// <param name="obj"></param>
+    /// <returns></returns>
+    public static int GetChildCountByActive(GameObject obj)
+    {
+        int number=0;
+        for (int i = 0; i < obj.transform.childCount; i++)
+        {
+            if (obj.transform.GetChild(i).gameObject.activeSelf)
+            {
+                number++;
+            }
+        }
+        return number;
+    }
 }

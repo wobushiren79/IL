@@ -17,6 +17,10 @@ public class StoreInfoBean : BaseBean
     public long price_m;
     public long price_s;
     public long guild_coin;
+    public long trophy_elementary;
+    public long trophy_intermediate;
+    public long trophy_advanced;
+    public long trophy_legendary;
 
     public string pre_ach_ids;//前置成就ID
     public string pre_data;//前置条件

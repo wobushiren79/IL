@@ -86,6 +86,12 @@ public class UIGameEquip : BaseUIComponent
             equipClothes.SetData(characterData, gameItemsManager.GetItemsById(characterData.equips.clothesId), null);
         if (characterData.equips.shoesId != 0)
             equipShoes.SetData(characterData, gameItemsManager.GetItemsById(characterData.equips.shoesId), null);
+
+        //装备列表是否为null   
+        if (CptUtil.GetChildCountByActive(objItemContent)!=0)
+            tvNull.gameObject.SetActive(false);
+        else
+            tvNull.gameObject.SetActive(true);
     }
 
     /// <summary>
@@ -99,7 +105,7 @@ public class UIGameEquip : BaseUIComponent
             tvLoyal.text = loyal + "";
         }
     }
-    
+
     /// <summary>
     /// 设置性别
     /// </summary>
@@ -108,7 +114,7 @@ public class UIGameEquip : BaseUIComponent
     {
         if (ivSex == null)
             return;
-        if (sex==1)
+        if (sex == 1)
         {
             ivSex.sprite = spSexMan;
         }
@@ -139,10 +145,10 @@ public class UIGameEquip : BaseUIComponent
             tvForce.text = GameCommonInfo.GetUITextById(5) + "：" + selfAttributes.force + (equipAttributes.force == 0 ? "" : "+" + equipAttributes.force);
         if (tvLucky != null)
             tvLucky.text = GameCommonInfo.GetUITextById(6) + "：" + selfAttributes.lucky + (equipAttributes.lucky == 0 ? "" : "+" + equipAttributes.lucky);
-        if (tvLife!=null)
+        if (tvLife != null)
             tvLife.text = GameCommonInfo.GetUITextById(9) + "：" + selfAttributes.life + (equipAttributes.life == 0 ? "" : "+" + equipAttributes.life);
         if (characterAttributeView != null)
-            characterAttributeView.SetData(totalAttributes.cook, totalAttributes.speed, totalAttributes.account, totalAttributes.charm, totalAttributes.force,totalAttributes.lucky);
+            characterAttributeView.SetData(totalAttributes.cook, totalAttributes.speed, totalAttributes.account, totalAttributes.charm, totalAttributes.force, totalAttributes.lucky);
     }
 
     /// <summary>
@@ -162,7 +168,6 @@ public class UIGameEquip : BaseUIComponent
     /// 设置装备
     /// </summary>
     /// <param name="itemInfo"></param>
-    /// <param name="unloadEquipId">卸载的装备ID</param>
     public void SetEquip(ItemsInfoBean itemInfo)
     {
 
@@ -207,8 +212,7 @@ public class UIGameEquip : BaseUIComponent
         itemCpt.SetData(characterData, itemInfo, null);
         //从背包里扣除装备
         gameDataManager.gameData.AddItemsNumber(itemInfo.id, -1);
-        //刷新显示
-        RefreshUI();
+  
         //如果有卸载的装备 则添加到背包
         if (unloadEquipId != 0)
         {
@@ -218,6 +222,9 @@ public class UIGameEquip : BaseUIComponent
             objItem.transform.DOScale(new Vector3(0, 0, 0), 0.5f).SetEase(Ease.OutBack).From();
             gameDataManager.gameData.AddItemsNumber(unloadEquipId, 1);
         }
+
+        //刷新显示
+        RefreshUI();
     }
 
     /// <summary>
@@ -228,7 +235,6 @@ public class UIGameEquip : BaseUIComponent
         CptUtil.RemoveChildsByActive(objItemContent.transform);
         if (GetUIManager<UIGameManager>().gameItemsManager == null || GetUIManager<UIGameManager>().gameDataManager == null)
             return;
-        bool hasData = false;
         for (int i = 0; i < GetUIManager<UIGameManager>().gameDataManager.gameData.listItems.Count; i++)
         {
             ItemBean itemBean = GetUIManager<UIGameManager>().gameDataManager.gameData.listItems[i];
@@ -247,12 +253,7 @@ public class UIGameEquip : BaseUIComponent
                 continue;
             GameObject objItem = CreateItemBackpackData(itemBean, itemsInfoBean);
             objItem.transform.DOScale(new Vector3(0, 0, 0), 0.5f).SetEase(Ease.OutBack).SetDelay(i * 0.05f).From();
-            hasData = true;
         }
-        if (hasData)
-            tvNull.gameObject.SetActive(false);
-        else
-            tvNull.gameObject.SetActive(true);
     }
 
     /// <summary>

@@ -6,6 +6,7 @@ public class ItemCreateWindowsEditor : EditorWindow, StoreInfoManager.ICallBack
 {
     GameItemsManager gameItemsManager;
     StoreInfoManager storeInfoManager;
+    InnBuildManager innBuildManager;
     ItemsInfoService itemsInfoService;
     StoreInfoService storeInfoService;
     AchievementInfoService achievementInfoService;
@@ -26,6 +27,8 @@ public class ItemCreateWindowsEditor : EditorWindow, StoreInfoManager.ICallBack
         gameItemsManager.Awake();
         storeInfoManager = new StoreInfoManager();
         storeInfoManager.Awake();
+        innBuildManager = new InnBuildManager();
+        innBuildManager.Awake();
         storeInfoManager.SetCallBack(this);
         gameItemsManager.itemsInfoController.GetAllItemsInfo();
         itemsInfoService = new ItemsInfoService();
@@ -280,7 +283,7 @@ public class ItemCreateWindowsEditor : EditorWindow, StoreInfoManager.ICallBack
         {
             storeInfoManager.GetStoreInfoForArenaInfo();
         }
-        if (GUILayout.Button("查询商品", GUILayout.Width(100), GUILayout.Height(20)))
+        if (GUILayout.Button("查询斗技场商品", GUILayout.Width(100), GUILayout.Height(20)))
         {
             storeInfoManager.GetStoreInfoForArenaGoods();
         }
@@ -332,8 +335,14 @@ public class ItemCreateWindowsEditor : EditorWindow, StoreInfoManager.ICallBack
             case StoreTypeEnum.InnLevel:
                 GUIStoreItemForInnLevel(storeInfo);
                 break;
+            case StoreTypeEnum.Guild:
+                GUIStoreItemForGoods(storeInfo);
+                break;
             case StoreTypeEnum.ArenaInfo:
                 GUIStoreItemForArenaInfo(storeInfo);
+                break;
+            case StoreTypeEnum.ArenaGoods:
+                GUIStoreItemForGoods(storeInfo);
                 break;
         }
 
@@ -349,13 +358,60 @@ public class ItemCreateWindowsEditor : EditorWindow, StoreInfoManager.ICallBack
         EditorGUILayout.Space(20);
     }
 
+    /// <summary>
+    /// 商品
+    /// </summary>
+    /// <param name="storeInfo"></param>
+    private void GUIStoreItemForGoods(StoreInfoBean storeInfo)
+    {
+        //if (CheckUtil.StringIsNull(storeInfo.mark))
+        //{
+        //    storeInfo.mark = "1";
+        //}
+        //storeInfo.mark = (int)(GeneralEnum)EditorGUILayout.EnumPopup("商品类型", (GeneralEnum)int.Parse(storeInfo.mark), GUILayout.Width(300), GUILayout.Height(20))+"";
+        GUILayout.Label("商品对应类型 1.item 2.建筑材料：", GUILayout.Width(200), GUILayout.Height(20));
+        storeInfo.mark_type = int.Parse(EditorGUILayout.TextArea(storeInfo.mark_type + "", GUILayout.Width(100), GUILayout.Height(20)));
 
+        if (storeInfo.mark_type.Equals("1"))
+        {
+            ItemsInfoBean itemsInfo = gameItemsManager.GetItemsById(storeInfo.mark_id);
+            if (itemsInfo != null)
+                storeInfo.mark = itemsInfo.items_type + "";
+        }
+        else if (storeInfo.mark_type.Equals("2"))
+        {
+            BuildItemBean buildInfo = innBuildManager.GetBuildDataById(storeInfo.mark_id);
+            if (buildInfo != null)
+                storeInfo.mark = buildInfo.build_type + "";
+        }
+        GUILayout.Label("商品对应物品ID：", GUILayout.Width(100), GUILayout.Height(20));
+        storeInfo.mark_id = long.Parse(EditorGUILayout.TextArea(storeInfo.mark_id + "", GUILayout.Width(100), GUILayout.Height(20)));
+        GUILayout.Label("价格--", GUILayout.Width(50), GUILayout.Height(20));
+        GUILayout.Label("LMS：", GUILayout.Width(50), GUILayout.Height(20));
+        storeInfo.price_l = long.Parse(EditorGUILayout.TextArea(storeInfo.price_l + "", GUILayout.Width(100), GUILayout.Height(20)));
+        storeInfo.price_m = long.Parse(EditorGUILayout.TextArea(storeInfo.price_m + "", GUILayout.Width(100), GUILayout.Height(20)));
+        storeInfo.price_s = long.Parse(EditorGUILayout.TextArea(storeInfo.price_s + "", GUILayout.Width(100), GUILayout.Height(20)));
+        switch ((StoreTypeEnum)storeInfo.type)
+        {
+            case StoreTypeEnum.ArenaGoods:
+                GUILayout.Label("奖杯1234：", GUILayout.Width(50), GUILayout.Height(20));
+                storeInfo.trophy_elementary = long.Parse(EditorGUILayout.TextArea(storeInfo.trophy_elementary + "", GUILayout.Width(100), GUILayout.Height(20)));
+                storeInfo.trophy_intermediate = long.Parse(EditorGUILayout.TextArea(storeInfo.trophy_intermediate + "", GUILayout.Width(100), GUILayout.Height(20)));
+                storeInfo.trophy_advanced = long.Parse(EditorGUILayout.TextArea(storeInfo.trophy_advanced + "", GUILayout.Width(100), GUILayout.Height(20)));
+                storeInfo.trophy_legendary = long.Parse(EditorGUILayout.TextArea(storeInfo.trophy_legendary + "", GUILayout.Width(100), GUILayout.Height(20)));
+                break;
+            case StoreTypeEnum.Guild:
+                GUILayout.Label("公会勋章：", GUILayout.Width(50), GUILayout.Height(20));
+                storeInfo.guild_coin = long.Parse(EditorGUILayout.TextArea(storeInfo.guild_coin + "", GUILayout.Width(100), GUILayout.Height(20)));
+                break;
+        }
+    }
 
     private void GUIStoreItemForArenaInfo(StoreInfoBean storeInfo)
     {
         GUILayout.Label("竞赛等级（1初级 2中级，3高级，4传说）：", GUILayout.Width(250), GUILayout.Height(20));
         storeInfo.mark_type = int.Parse(EditorGUILayout.TextArea(storeInfo.mark_type + "", GUILayout.Width(100), GUILayout.Height(20)));
-        if(CheckUtil.StringIsNull(storeInfo.pre_data))
+        if (CheckUtil.StringIsNull(storeInfo.pre_data))
         {
             storeInfo.pre_data = "Chef";
         }

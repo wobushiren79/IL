@@ -13,7 +13,7 @@ public class InnBuildManager : BaseManager, IBuildDataView
     //家具图标
     public IconBeanDictionary listFurnitureIcon = new IconBeanDictionary();
 
-    private void Awake()
+    public void Awake()
     {
         buildDataController = new BuildDataController(this, this);
     }

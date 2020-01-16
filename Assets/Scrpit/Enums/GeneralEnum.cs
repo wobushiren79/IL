@@ -29,6 +29,10 @@ public class GeneralEnumTools
     /// <param name="itemsInfo"></param>
     /// <param name="iconDataManager"></param>
     /// <param name="gameDataManager"></param>
+    public static Sprite GetGeneralSprite(ItemsInfoBean itemsInfo, IconDataManager iconDataManager, GameItemsManager gameItemsManager, CharacterDressManager characterDressManager)
+    {
+        return GetGeneralSprite(itemsInfo, iconDataManager, gameItemsManager, characterDressManager,false);
+    }
     public static Sprite GetGeneralSprite(ItemsInfoBean itemsInfo, IconDataManager iconDataManager, GameItemsManager gameItemsManager, CharacterDressManager characterDressManager, bool isHideDres)
     {
         Sprite spIcon = null;
