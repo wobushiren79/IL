@@ -36,7 +36,10 @@ public class SceneTownManager : BaseManager
     public Transform arenaOutDoor;
     public Transform arenaInDoor;
     public Transform arenaInside;
-
+    //银行
+    public Transform bankOutDoor;
+    public Transform bankInDoor;
+    public Transform bankInside;
     /// <summary>
     /// 获取随机城镇门坐标
     /// </summary>
@@ -73,8 +76,6 @@ public class SceneTownManager : BaseManager
         switch (townBuildingEnum)
         {
             case TownBuildingEnum.Market:
-                if (marketOutDoor == null || marketInDoor == null)
-                    return;
                 outDoorPosition = marketOutDoor.transform.position;
                 inDoorPosition = marketInDoor.transform.position;
                 break;
@@ -103,8 +104,8 @@ public class SceneTownManager : BaseManager
                 inDoorPosition = arenaInDoor.transform.position;
                 break;
             case TownBuildingEnum.Bank:
-                outDoorPosition = arenaOutDoor.transform.position;
-                inDoorPosition = arenaInDoor.transform.position;
+                outDoorPosition = bankOutDoor.transform.position;
+                inDoorPosition = bankInDoor.transform.position;
                 break;
         }
     }
@@ -143,6 +144,9 @@ public class SceneTownManager : BaseManager
                 break;
             case TownBuildingEnum.Arena:
                 tfBuilding = arenaInside;
+                break;
+            case TownBuildingEnum.Bank:
+                tfBuilding = bankInside;
                 break;
         }
         if (tfBuilding == null)

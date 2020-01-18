@@ -17,6 +17,10 @@ public class GameUtil
     {
         float tempX = tfTarget.localScale.x / 2f;
         float tempY = tfTarget.localScale.y / 2f;
+        //修正避免太靠边
+        //tempX -= 0.5f;
+        //tempY -= 0.5f;
+
         float randomXoff = Random.Range(-tempX, tempX);
         float randomYoff = Random.Range(-tempY, tempY);
         return new Vector3(tfTarget.position.x + randomXoff * size, tfTarget.position.y + randomYoff * size);
