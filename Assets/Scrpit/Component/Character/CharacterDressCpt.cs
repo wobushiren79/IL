@@ -20,7 +20,15 @@ public class CharacterDressCpt : BaseMonoBehaviour
     //角色属性
     public CharacterEquipBean characterEquipData;
     //服装管理
-    public CharacterDressManager characterDressManager;
+    protected CharacterDressManager characterDressManager;
+    //道具管理
+    protected GameItemsManager gameItemsManager;
+
+    public void Awake()
+    {
+        characterDressManager = Find<CharacterDressManager>(ImportantTypeEnum.CharacterManager);
+        gameItemsManager = Find<GameItemsManager>(ImportantTypeEnum.GameItemsManager);
+    }
 
     public CharacterEquipBean GetCharacterEquipData()
     {
@@ -38,7 +46,7 @@ public class CharacterDressCpt : BaseMonoBehaviour
         if (sprHat == null)
             return;
         Sprite hatSP;
-        if (itemsInfo == null||itemsInfo.icon_key==null)
+        if (itemsInfo == null || itemsInfo.icon_key == null)
         {
             sprHair.color = new Color(sprHair.color.r, sprHair.color.g, sprHair.color.b, 1);
             hatSP = null;
@@ -128,7 +136,7 @@ public class CharacterDressCpt : BaseMonoBehaviour
     /// 设置手持
     /// </summary>
     /// <param name="itemsInfo"></param>
-    public void SetHand(GameItemsManager gameItemsManager, ItemsInfoBean itemsInfo)
+    public void SetHand(ItemsInfoBean itemsInfo)
     {
         if (sprHand == null)
             return;
@@ -151,7 +159,7 @@ public class CharacterDressCpt : BaseMonoBehaviour
         }
         else
         {
-            sprHand.transform.localEulerAngles = new Vector3(0,0,45);
+            sprHand.transform.localEulerAngles = new Vector3(0, 0, 45);
         }
     }
 }

@@ -104,6 +104,6 @@ public class TimeUtil
     public static void GetMethodTimeEnd(string mark, Stopwatch stopwatch)
     {
         stopwatch.Stop();
-        LogUtil.Log("方法耗时"+mark+"："+ string.Format("total: {0} ms", stopwatch.ElapsedMilliseconds));
+        LogUtil.Log("方法耗时"+mark+"："+ stopwatch.Elapsed.Ticks.ToString());
     }
 }

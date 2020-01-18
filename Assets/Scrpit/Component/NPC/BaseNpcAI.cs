@@ -18,7 +18,7 @@ public class BaseNpcAI : BaseMonoBehaviour
     //角色表情
     public CharacterExpressionCpt characterExpression;
 
-    private void Awake()
+    public void Awake()
     {
         gameItemsManager = FindObjectOfType<GameItemsManager>();
     }
@@ -44,7 +44,7 @@ public class BaseNpcAI : BaseMonoBehaviour
             characterDress.SetMask(maskEquip);
 
             ItemsInfoBean handEquip = gameItemsManager.GetItemsById(characterBean.equips.handId);
-            characterDress.SetHand(gameItemsManager, handEquip);
+            characterDress.SetHand(handEquip);
 
             ItemsInfoBean hatEquip = gameItemsManager.GetItemsById(characterBean.equips.hatId);
             characterDress.SetHat(hatEquip);

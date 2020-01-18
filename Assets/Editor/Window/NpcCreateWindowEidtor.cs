@@ -457,6 +457,8 @@ public class NpcCreateWindowEidtor : EditorWindow
         objNpc.transform.position = new Vector3(characterData.npcInfoData.position_x, characterData.npcInfoData.position_y);
         BaseNpcAI npcAI = objNpc.GetComponent<BaseNpcAI>();
         npcAI.gameItemsManager = gameItemsManager;
+        CharacterDressCpt characterDress = CptUtil.GetCptInChildrenByName<CharacterDressCpt>(npcAI.gameObject, "Body");
+        characterDress.Awake();
         npcAI.SetCharacterData(characterData);
         mCamera2D.Follow = objNpc.transform;
         return objNpc;
