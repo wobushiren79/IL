@@ -5,6 +5,9 @@ using UnityEngine.UI;
 
 public class UIMainStart : BaseUIComponent
 {
+    public Text tvTitle;
+    public Text tvVersion;
+    
     //开始按钮
     public Button btStart;
     public Text tvStart;
@@ -17,6 +20,8 @@ public class UIMainStart : BaseUIComponent
     //离开按钮
     public Button btExit;
     public Text tvExit;
+
+
 
     private void Start()
     {
@@ -41,12 +46,25 @@ public class UIMainStart : BaseUIComponent
             tvSetting.text = GameCommonInfo.GetUITextById(4013);
         if (tvExit != null)
             tvExit.text = GameCommonInfo.GetUITextById(4014);
+
+        SetVersion(ProjectConfigInfo.GAME_VERSION);
     }
 
     public override void RefreshUI()
     {
         base.RefreshUI();
+    }
 
+    /// <summary>
+    /// 设置版本号
+    /// </summary>
+    /// <param name="version"></param>
+    public void SetVersion(string version)
+    {
+        if (tvVersion!=null)
+        {
+            tvVersion.text = "ver " + version;
+        }
     }
 
     /// <summary>
