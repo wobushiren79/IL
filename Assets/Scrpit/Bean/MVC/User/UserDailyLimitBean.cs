@@ -2,10 +2,10 @@
 using UnityEditor;
 using System.Collections.Generic;
 
-public class UserDailyLimitBean 
+public class UserDailyLimitBean
 {
     //银行换金上限
-    public int exchangeMoneyL=5;
+    public int exchangeMoneyL = 0;
     //当前对话过的NPC
     public List<long> listNpcTalk = new List<long>();
     //当前送过礼物的NPC
@@ -18,9 +18,15 @@ public class UserDailyLimitBean
     public List<MiniGameBaseBean> listArenaDataFor3;
     public List<MiniGameBaseBean> listArenaDataFor4;
 
-    public void InitData()
+    public void InitData(GameDataBean gameData)
     {
-        exchangeMoneyL = 5;
+        gameData.GetInnAttributesData().GetInnLevel(out int levelTitle, out int levelStar);
+
+        if (levelTitle == 0)
+            exchangeMoneyL = 0;
+        else
+            exchangeMoneyL = levelStar + (levelTitle - 1) * 5;
+
         listNpcGift.Clear();
         listNpcTalk.Clear();
         listRecruitmentCharacter = null;
@@ -89,7 +95,7 @@ public class UserDailyLimitBean
     /// <returns></returns>
     public bool CheckIsTalkNpc(long npcId)
     {
-       return listNpcTalk.Contains(npcId);
+        return listNpcTalk.Contains(npcId);
     }
 
     /// <summary>
@@ -109,7 +115,7 @@ public class UserDailyLimitBean
     /// <returns></returns>
     public bool AddTalkNpc(long npcId)
     {
-        if(CheckIsTalkNpc(npcId))
+        if (CheckIsTalkNpc(npcId))
         {
             return false;
         }
