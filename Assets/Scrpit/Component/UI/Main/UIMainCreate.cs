@@ -2,9 +2,12 @@
 using UnityEditor;
 using UnityEngine.UI;
 using System.Collections.Generic;
+using DG.Tweening;
 
 public class UIMainCreate : BaseUIComponent, IRadioGroupCallBack, ColorView.CallBack, SelectView.CallBack
 {
+    public GameObject objContent;
+
     //返回按钮
     public Button btBack;
     public Text tvBack;
@@ -98,6 +101,12 @@ public class UIMainCreate : BaseUIComponent, IRadioGroupCallBack, ColorView.Call
         }
     }
 
+    public override void OpenUI()
+    {
+        base.OpenUI();
+        AnimForInit();
+    }
+
     public void InitData()
     {
         CharacterBodyManager characterBodyManager = GetUIManager<UIGameManager>().characterBodyManager;
@@ -124,10 +133,27 @@ public class UIMainCreate : BaseUIComponent, IRadioGroupCallBack, ColorView.Call
     }
 
     /// <summary>
+    /// 初始化动画
+    /// </summary>
+    public void AnimForInit()
+    {
+        if (objContent!=null)
+            objContent.transform.DOScaleX(0, 0.5f).From().SetEase(Ease.OutExpo);
+        if (btCreate != null)
+            btCreate.transform.DOScaleX(0, 0.5f).From().SetEase(Ease.OutBack);
+        if (btBack != null)
+            btBack.transform.DOScaleX(0, 0.5f).From().SetEase(Ease.OutBack).SetDelay(0.1f);
+    }
+
+    /// <summary>
     /// 创建新游戏
     /// </summary>
     public void CreateNewGame()
-    {
+    {        
+        //按键音效
+        AudioHandler audioHandler = GetUIManager<UIGameManager>().audioHandler;
+        audioHandler.PlaySound(SoundEnum.ButtonForNormal);
+
         ToastManager toastManager = GetUIManager<UIGameManager>().toastManager;
         GameDataManager gameDataManager = GetUIManager<UIGameManager>().gameDataManager;
         if (CheckUtil.StringIsNull(etInnName.text))
@@ -159,7 +185,11 @@ public class UIMainCreate : BaseUIComponent, IRadioGroupCallBack, ColorView.Call
     /// 返回开始菜单
     /// </summary>
     public void OpenStartUI()
-    {
+    {        
+        //按键音效
+        AudioHandler audioHandler = GetUIManager<UIGameManager>().audioHandler;
+        audioHandler.PlaySound(SoundEnum.ButtonForBack);
+
         uiManager.OpenUIAndCloseOtherByName(EnumUtil.GetEnumName(UIEnum.MainStart));
     }
 

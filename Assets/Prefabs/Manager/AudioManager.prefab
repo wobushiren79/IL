@@ -1,0 +1,133 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &3236762669141490416
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3236762669141490417}
+  - component: {fileID: 3236762669141490418}
+  m_Layer: 0
+  m_Name: AudioManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3236762669141490417
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3236762669141490416}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &3236762669141490418
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3236762669141490416}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7601a06488d6c284ba10a8df251b033e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  listMusicData:
+    reorderableList:
+      canAdd: 1
+      canRemove: 1
+      draggable: 1
+      expandable: 1
+      multipleSelection: 1
+      isExpanded: 0
+      label:
+        m_Text: Keys
+        m_Image: {fileID: 0}
+        m_Tooltip: 
+      headerHeight: 18
+      footerHeight: 13
+      slideEasing: 0.15
+      verticalSpacing: 2
+      showDefaultBackground: 1
+      elementDisplayType: 0
+      elementNameProperty: 
+      elementNameOverride: 
+      elementIcon: {fileID: 0}
+    reqReferences: {fileID: 0}
+    isExpanded: 0
+    _keyValues: []
+    _keys: []
+    _values: []
+  listSoundData:
+    reorderableList:
+      canAdd: 1
+      canRemove: 1
+      draggable: 1
+      expandable: 1
+      multipleSelection: 1
+      isExpanded: 0
+      label:
+        m_Text: Keys
+        m_Image: {fileID: 0}
+        m_Tooltip: 
+      headerHeight: 18
+      footerHeight: 13
+      slideEasing: 0.15
+      verticalSpacing: 2
+      showDefaultBackground: 1
+      elementDisplayType: 0
+      elementNameProperty: 
+      elementNameOverride: 
+      elementIcon: {fileID: 0}
+    reqReferences: {fileID: 0}
+    isExpanded: 0
+    _keyValues:
+    - sound_btn_1
+    - sound_btn_2
+    - sound_btn_3
+    - sound_btn_4
+    - sound_btn_5
+    - sound_btn_6
+    - sound_btn_7
+    - sound_bubbling_1
+    - sound_bubbling_2
+    - sound_coin_1
+    - sound_time_countdown_1
+    - sound_turntable_1
+    _keys:
+    - sound_btn_1
+    - sound_btn_2
+    - sound_btn_3
+    - sound_btn_4
+    - sound_btn_5
+    - sound_btn_6
+    - sound_btn_7
+    - sound_bubbling_1
+    - sound_bubbling_2
+    - sound_coin_1
+    - sound_time_countdown_1
+    - sound_turntable_1
+    _values:
+    - {fileID: 8300000, guid: 57c1b9130685b5e4fa061c554af73f43, type: 3}
+    - {fileID: 8300000, guid: 66c9913a012c7d945884955ba640d894, type: 3}
+    - {fileID: 8300000, guid: 9b330dd3c0bf97a4782500be85eacbd0, type: 3}
+    - {fileID: 8300000, guid: d4274c004fcf4a640a7a941d6792a949, type: 3}
+    - {fileID: 8300000, guid: 1644a2f893a12254c9fa1d7e16673de5, type: 3}
+    - {fileID: 8300000, guid: 5cbf4eeba2d4ad64ebe00790a215e891, type: 3}
+    - {fileID: 8300000, guid: 766aa0557b9b21b4b83d6fca85fdb00f, type: 3}
+    - {fileID: 8300000, guid: 90e06ae60bfca3942bfaa760ca7450b0, type: 3}
+    - {fileID: 8300000, guid: 7d8ccaaf39dde42478dfd392b15e20c8, type: 3}
+    - {fileID: 8300000, guid: 5808d639b4e40074c9b393ad4b278e73, type: 3}
+    - {fileID: 8300000, guid: c5fa0fcab130d3643b11fc708ea4c1ca, type: 3}
+    - {fileID: 8300000, guid: 38b32708db1060d42a202da21a056c23, type: 3}

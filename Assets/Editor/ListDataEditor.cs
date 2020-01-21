@@ -20,6 +20,16 @@ public class ListDataEditor : Editor
         AddBodyMouth();
     }
 
+    [MenuItem("Custom/List/AddAudio")]
+    public static void AddAudio()
+    {
+        GameObject Target = Selection.gameObjects[0];
+        AudioManager audioManager = Target.GetComponent<AudioManager>();
+        audioManager.listMusicData.Clear();
+        audioManager.listSoundData.Clear();
+        AddAudioBeanDictionaryByFolder("Assets/Audio/Music/", audioManager.listMusicData);
+        AddAudioBeanDictionaryByFolder("Assets/Audio/Sound/", audioManager.listSoundData);
+    }
     [MenuItem("Custom/List/AddDressMask")]
     public static void AddDressMask()
     {
@@ -181,6 +191,27 @@ public class ListDataEditor : Editor
                 if (obj as Sprite != null)
                 {
                     map.Add(obj.name, obj as Sprite);
+                }
+            });
+        }
+    }
+
+    /// <summary>
+    /// 根据文件夹下所有文件添加字典
+    /// </summary>
+    /// <param name="folderPath"></param>
+    /// <param name="mapFood"></param>
+    public static void AddAudioBeanDictionaryByFolder(string folderPath, AudioBeanDictionary map)
+    {
+        FileInfo[] files = FileUtil.GetFilesByPath(folderPath);
+        foreach (FileInfo item in files)
+        {
+            Object[] objs = AssetDatabase.LoadAllAssetsAtPath(folderPath + item.Name);
+            objs.ToList().ForEach(obj =>
+            {
+                if (obj as AudioClip != null)
+                {
+                    map.Add(obj.name, obj as AudioClip);
                 }
             });
         }

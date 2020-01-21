@@ -6,6 +6,7 @@ public enum UIEnum
     MainStart,
     MainContinue,
     MainCreate,
+    MainMaker,
     GameDate,
     GameMain ,
     GameWorker,

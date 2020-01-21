@@ -4,6 +4,7 @@ using UnityEditor;
 public enum ImportantTypeEnum
 {
     Camera2D,
+    MainCamera,
     NavMesh,
     GameUI,
     DialogManager,
@@ -20,6 +21,7 @@ public enum ImportantTypeEnum
     SceneManager,
     StoreInfoManager,
     BuildManager,
+    AudioManager,
 
     StoryBuilder,
     NpcBuilder,
@@ -34,4 +36,5 @@ public enum ImportantTypeEnum
     EcologyHandler,
     MiniGameHandler,
     InnHandler,
+    AudioHandler,
 }

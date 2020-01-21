@@ -2,6 +2,7 @@
 using UnityEditor;
 using UnityEngine.UI;
 using System.Collections.Generic;
+using DG.Tweening;
 
 public class UIMainContinue : BaseUIComponent, GameDataManager.IGameDataSimpleCallBack
 {
@@ -27,6 +28,15 @@ public class UIMainContinue : BaseUIComponent, GameDataManager.IGameDataSimpleCa
             return;
         gameDataManager.SetSimpleGameDataCallBack(this);
         gameDataManager.GetSimpleGameDataList();
+        AnimForInit();
+    }
+
+    /// <summary>
+    /// 初始化动画
+    /// </summary>
+    public void AnimForInit()
+    {
+        transform.DOScaleX(0,0.5f).From().SetEase(Ease.OutBack);
     }
 
     /// <summary>
@@ -56,6 +66,10 @@ public class UIMainContinue : BaseUIComponent, GameDataManager.IGameDataSimpleCa
     /// </summary>
     public void OpenStartUI()
     {
+        //按键音效
+        AudioHandler audioHandler = GetUIManager<UIGameManager>().audioHandler;
+        audioHandler.PlaySound(SoundEnum.ButtonForBack);
+
         uiManager.OpenUIAndCloseOtherByName(EnumUtil.GetEnumName(UIEnum.MainStart));
     }
 

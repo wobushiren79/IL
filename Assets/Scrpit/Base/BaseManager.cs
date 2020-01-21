@@ -4,6 +4,23 @@ using System.Collections.Generic;
 
 public class BaseManager : BaseMonoBehaviour
 {
+
+    /// <summary>
+    /// 根据名字获取音频
+    /// </summary>
+    /// <param name="name"></param>
+    /// <param name="map"></param>
+    /// <returns></returns>
+    public virtual AudioClip GetAudioClipByName(string name,AudioBeanDictionary map)
+    {
+        if (name == null)
+            return null;
+        if (map.TryGetValue(name, out AudioClip audioClip))
+            return audioClip;
+        else
+            return null;
+    }
+
     /// <summary>
     /// 根据名字获取图标
     /// </summary>

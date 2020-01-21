@@ -34,6 +34,7 @@ public class UIGameManager : BaseUIManager
     public GameTimeHandler gameTimeHandler;
     public ControlHandler controlHandler;
     public EventHandler eventHandler;
+    public AudioHandler audioHandler;
 
     [Header("建造")]
     public NpcCustomerBuilder npcCustomerBuilder;
@@ -60,5 +61,6 @@ public class UIGameManager : BaseUIManager
         gameTimeHandler = Find<GameTimeHandler>(ImportantTypeEnum.TimeHandler);
         controlHandler = Find<ControlHandler>(ImportantTypeEnum.ControlHandler);
         eventHandler = Find<EventHandler>(ImportantTypeEnum.EventHandler);
+        audioHandler = Find<AudioHandler>(ImportantTypeEnum.AudioHandler);
     }
 }

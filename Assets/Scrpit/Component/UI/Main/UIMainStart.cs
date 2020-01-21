@@ -2,12 +2,13 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-
+using DG.Tweening;
 public class UIMainStart : BaseUIComponent
 {
+    public Button btMaker;
     public Text tvTitle;
     public Text tvVersion;
-    
+
     //开始按钮
     public Button btStart;
     public Text tvStart;
@@ -20,8 +21,6 @@ public class UIMainStart : BaseUIComponent
     //离开按钮
     public Button btExit;
     public Text tvExit;
-
-
 
     private void Start()
     {
@@ -37,7 +36,10 @@ public class UIMainStart : BaseUIComponent
         {
             btExit.onClick.AddListener(ExitGame);
         }
-
+        if (btMaker != null)
+        {
+            btMaker.onClick.AddListener(OpenMakerUI);
+        }
         if (tvStart != null)
             tvStart.text = GameCommonInfo.GetUITextById(4011);
         if (tvContinue != null)
@@ -48,11 +50,28 @@ public class UIMainStart : BaseUIComponent
             tvExit.text = GameCommonInfo.GetUITextById(4014);
 
         SetVersion(ProjectConfigInfo.GAME_VERSION);
+        AnimForInit();
     }
 
-    public override void RefreshUI()
+    public override void OpenUI()
     {
-        base.RefreshUI();
+        base.OpenUI();
+        AnimForInit();
+    }
+
+    /// <summary>
+    /// 初始化动画
+    /// </summary>
+    public void AnimForInit()
+    {
+        if (btStart != null)
+            btStart.transform.DOScaleX(0,0.5f).From().SetEase(Ease.OutBack);
+        if (btContinue != null)
+            btContinue.transform.DOScaleX(0, 0.5f).From().SetEase(Ease.OutBack).SetDelay(0.1f);
+        if (btSetting != null)
+            btSetting.transform.DOScaleX(0, 0.5f).From().SetEase(Ease.OutBack).SetDelay(0.2f);
+        if (btExit != null)
+            btExit.transform.DOScaleX(0, 0.5f).From().SetEase(Ease.OutBack).SetDelay(0.3f);
     }
 
     /// <summary>
@@ -61,7 +80,7 @@ public class UIMainStart : BaseUIComponent
     /// <param name="version"></param>
     public void SetVersion(string version)
     {
-        if (tvVersion!=null)
+        if (tvVersion != null)
         {
             tvVersion.text = "ver " + version;
         }
@@ -72,6 +91,10 @@ public class UIMainStart : BaseUIComponent
     /// </summary>
     public void OpenContinueUI()
     {
+        //按键音效
+        AudioHandler audioHandler =  GetUIManager<UIGameManager>().audioHandler;
+        audioHandler.PlaySound( SoundEnum.ButtonForNormal);
+
         uiManager.OpenUIAndCloseOtherByName(EnumUtil.GetEnumName(UIEnum.MainContinue));
     }
 
@@ -80,7 +103,23 @@ public class UIMainStart : BaseUIComponent
     /// </summary>
     public void OpenCreateUI()
     {
+        //按键音效
+        AudioHandler audioHandler = GetUIManager<UIGameManager>().audioHandler;
+        audioHandler.PlaySound(SoundEnum.ButtonForNormal);
+
         uiManager.OpenUIAndCloseOtherByName(EnumUtil.GetEnumName(UIEnum.MainCreate));
+    }
+
+    /// <summary>
+    /// 打开制作人UI
+    /// </summary>
+    public void OpenMakerUI()
+    {
+        //按键音效
+        AudioHandler audioHandler = GetUIManager<UIGameManager>().audioHandler;
+        audioHandler.PlaySound(SoundEnum.ButtonForNormal);
+
+        uiManager.OpenUIAndCloseOtherByName(EnumUtil.GetEnumName(UIEnum.MainMaker));
     }
 
     /// <summary>
@@ -88,6 +127,10 @@ public class UIMainStart : BaseUIComponent
     /// </summary>
     public void ExitGame()
     {
+        //按键音效
+        AudioHandler audioHandler = GetUIManager<UIGameManager>().audioHandler;
+        audioHandler.PlaySound(SoundEnum.ButtonForNormal);
+
         GameUtil.ExitGame();
     }
 
