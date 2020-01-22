@@ -2,6 +2,7 @@
 using UnityEditor;
 using System.Collections.Generic;
 using Cinemachine;
+using static CharacterExpressionCpt;
 
 public class StoryCreateWindowsEditor : EditorWindow
 {
@@ -82,7 +83,8 @@ public class StoryCreateWindowsEditor : EditorWindow
             listStoryInfo.Clear();
             listAllStoryInfoDetails.Clear();
             listOrderStoryInfoDetails.Clear();
-            listStoryTextInfo.Clear();
+            if (listStoryTextInfo != null)
+                listStoryTextInfo.Clear();
         }
         //NPC创建
         GUILayout.BeginHorizontal();
@@ -426,11 +428,10 @@ public class StoryCreateWindowsEditor : EditorWindow
             }
             else if (itemData.type == (int)StoryInfoDetailsBean.StoryInfoDetailsTypeEnum.Expression)
             {
-                GUILayout.Label("指定NPC展现表情 ");
-                GUILayout.Label("NPC编号：");
+                GUILayout.Label("指定NPC展现表情 ", GUILayout.Width(150), GUILayout.Height(20));
+                GUILayout.Label("NPC编号：", GUILayout.Width(120), GUILayout.Height(20));
                 itemData.npc_num = int.Parse(EditorGUILayout.TextArea(itemData.npc_num + "", GUILayout.Width(200), GUILayout.Height(20)));
-                GUILayout.Label("表情编号 1爱心 2无语 3生气 4羞愧 5惊讶 6烦恼 7死亡：");
-                itemData.expression = int.Parse(EditorGUILayout.TextArea(itemData.expression + "", GUILayout.Width(200), GUILayout.Height(20)));
+                itemData.expression = (int)(CharacterExpressionEnum)EditorGUILayout.EnumPopup("表情编号：", (CharacterExpressionEnum)itemData.expression, GUILayout.Width(300), GUILayout.Height(20));
             }
             else if (itemData.type == (int)StoryInfoDetailsBean.StoryInfoDetailsTypeEnum.SceneInt)
             {
@@ -567,6 +568,8 @@ public class StoryCreateWindowsEditor : EditorWindow
 
         objNpc = Instantiate(mObjNpcModel, mObjContent.transform);
         BaseNpcAI baseNpcAI = objNpc.GetComponent<BaseNpcAI>();
+        CharacterDressCpt characterDress = CptUtil.GetCptInChildrenByName<CharacterDressCpt>(baseNpcAI.gameObject, "Body");
+        characterDress.Awake();
         baseNpcAI.gameItemsManager = gameItemsManager;
         baseNpcAI.transform.localPosition = position;
         baseNpcAI.SetCharacterData(characterData);

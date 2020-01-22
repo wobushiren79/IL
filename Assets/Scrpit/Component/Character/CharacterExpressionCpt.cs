@@ -68,7 +68,7 @@ public class CharacterExpressionCpt : BaseMonoBehaviour
         if (spIcon == null)
             return;
         StopAllCoroutines();
-        spExpression.transform.localScale = new Vector3(0.5f, 0.5f, 0.5f);
+        spExpression.transform.localScale = new Vector3(1f, 1f,1f);
         spExpression.transform.DOKill();
         spExpression.sprite = spIcon;
         spExpression.gameObject.SetActive(true);

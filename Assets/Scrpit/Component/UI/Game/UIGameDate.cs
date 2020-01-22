@@ -6,6 +6,7 @@ using System.Collections;
 public class UIGameDate : BaseUIComponent
 {
     [Header("控件")]
+    public GameObject objContent;
     public CalendarView calendarView;
     public Text tvDialogContent;
 
@@ -30,6 +31,7 @@ public class UIGameDate : BaseUIComponent
     public override void OpenUI()
     {
         base.OpenUI();
+        AnimForInit();
         GameTimeHandler gameTimeHandler = GetUIManager<UIGameManager>().gameTimeHandler;
         GameDataManager gameDataManager = GetUIManager<UIGameManager>().gameDataManager;
         if (gameTimeHandler != null)
@@ -52,6 +54,15 @@ public class UIGameDate : BaseUIComponent
         objDialog.SetActive(false);
         if (GetUIManager<UIGameManager>().controlHandler != null)
             GetUIManager<UIGameManager>().controlHandler.RestoreControl();
+    }
+
+    /// <summary>
+    /// 初始化动画
+    /// </summary>
+    public void AnimForInit()
+    {
+        if (objContent != null)
+            objContent.transform.DOScaleY(0,0.5f).From().SetEase(Ease.OutBack);
     }
 
     /// <summary>
