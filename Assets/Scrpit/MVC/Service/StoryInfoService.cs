@@ -30,10 +30,24 @@ public class StoryInfoService : BaseMVCService
         return BaseQueryData<StoryInfoBean>("story_scene", scene + "");
     }
 
+    /// <summary>
+    /// 更新数据
+    /// </summary>
+    /// <param name="storyInfoBean"></param>
     public void UpdateStoryData(StoryInfoBean storyInfoBean)
     {
         BaseDeleteDataById(storyInfoBean.id);
         BaseInsertData(tableNameForMain, storyInfoBean);
+    }
+
+    /// <summary>
+    /// 删除数据
+    /// </summary>
+    /// <param name="id"></param>
+    public void DeleteDataById(long id)
+    {
+        BaseDeleteDataById(id);
+        BaseDeleteData(tableNameForLeft, "story_id", "" + id);
     }
 
     /// <summary>

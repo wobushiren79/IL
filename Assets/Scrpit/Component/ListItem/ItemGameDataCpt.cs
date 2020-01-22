@@ -5,6 +5,7 @@ public class ItemGameDataCpt : ItemGameBaseCpt, DialogView.IDialogCallBack
 {
     public Text tvInnName;
     public Text tvUserName;
+    public Text tvGameTime;
     public Text tvMoneyL;
     public Text tvMoneyM;
     public Text tvMoneyS;
@@ -33,6 +34,7 @@ public class ItemGameDataCpt : ItemGameBaseCpt, DialogView.IDialogCallBack
         SetCharacterUI(gameData.userCharacter);
         SetName(gameData.innName, gameData.userCharacter.baseInfo.name);
         SetMoney(gameData.moneyL, gameData.moneyM, gameData.moneyS);
+        SetGameTime(gameData.gameTime.year, gameData.gameTime.month, gameData.gameTime.day);
     }
 
     /// <summary>
@@ -57,7 +59,7 @@ public class ItemGameDataCpt : ItemGameBaseCpt, DialogView.IDialogCallBack
         if (tvInnName != null)
             tvInnName.text = innName;
         if (tvUserName != null)
-            tvUserName.text = userName;
+            tvUserName.text = GameCommonInfo.GetUITextById(58) + ":" + userName;
     }
 
     /// <summary>
@@ -74,6 +76,23 @@ public class ItemGameDataCpt : ItemGameBaseCpt, DialogView.IDialogCallBack
             tvMoneyM.text = "" + moneyM;
         if (tvMoneyS != null)
             tvMoneyS.text = "" + moneyS;
+    }
+
+    /// <summary>
+    /// 设置游戏时间
+    /// </summary>
+    /// <param name="year"></param>
+    /// <param name="month"></param>
+    /// <param name="day"></param>
+    public void SetGameTime(int year, int month, int day)
+    {
+        if (tvGameTime != null)
+        {
+            tvGameTime.text =
+                year + GameCommonInfo.GetUITextById(29) +
+                month + GameCommonInfo.GetUITextById(30) +
+                day + GameCommonInfo.GetUITextById(31);
+        }
     }
 
     /// <summary>

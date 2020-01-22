@@ -53,24 +53,9 @@ public class StoryInfoManager : BaseManager, IStoryInfoView
                 if (gameData.CheckTriggeredEvent(storyInfo.id))
                     continue;
             }
-            //是否触发
-            if (storyInfo.trigger_date_year != 0)
+            if (!EventTriggerEnumTools.CheckIsAllTrigger(gameData, storyInfo.trigger_condition))
             {
-                //年是否满足触发条件
-                if (storyInfo.trigger_date_year != gameData.gameTime.year)
-                    continue;
-            }
-            if (storyInfo.trigger_date_month != 0)
-            {
-                //月是否满足触发条件
-                if (storyInfo.trigger_date_month != gameData.gameTime.month)
-                    continue;
-            }
-            if (storyInfo.trigger_date_day != 0)
-            {
-                //日是否满足触发条件
-                if (storyInfo.trigger_date_day != gameData.gameTime.day)
-                    continue;
+                continue;
             }
             //如果是小镇
             if (storyInfo.story_scene == (int)ScenesEnum.GameTownScene)
@@ -78,22 +63,6 @@ public class StoryInfoManager : BaseManager, IStoryInfoView
                 //判断地点是否正确
                 if (positionType != (TownBuildingEnum)storyInfo.location_type || outOrIn != storyInfo.out_in)
                     continue;
-            }
-            if (!CheckUtil.StringIsNull(storyInfo.trigger_favorability))
-            {
-                List<string> listData = StringUtil.SplitBySubstringForListStr(storyInfo.trigger_favorability, '|');
-                bool isCheckFavorability = true;
-                foreach (string itemData in listData)
-                {
-                    long[] favorabilityData= StringUtil.SplitBySubstringForArrayLong(itemData,',');
-                    CharacterFavorabilityBean characterFavorability=  gameData.GetCharacterFavorability(favorabilityData[0]);
-                    if (characterFavorability.favorabilityLevel < favorabilityData[1])
-                    {
-                        isCheckFavorability = false;
-                    }
-                }
-                if (!isCheckFavorability)
-                    continue; 
             }
             return storyInfo;
         }

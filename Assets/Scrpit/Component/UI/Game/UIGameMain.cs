@@ -15,7 +15,6 @@ public class UIGameMain : BaseUIComponent, DialogView.IDialogCallBack
     public Button btSave;
     public Button btSleep;
 
-
     public Text tvInnStatus;
     public Text tvMoneyS;
     public Text tvMoneyM;

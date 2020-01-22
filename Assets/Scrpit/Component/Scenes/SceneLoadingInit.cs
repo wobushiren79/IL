@@ -7,16 +7,14 @@ public class SceneLoadingInit : MonoBehaviour
 {
     private float targetValue;
     private AsyncOperation mOperation;
-
-    // Use this for initialization
+    
     void Start()
     {
         //启动协程
        StartCoroutine(CoroutineForAsyncLoading());
        // StartCoroutine(prepareTime());
     }
-
-    // Update is called once per frame
+    
     void Update()
     {
         targetValue = mOperation.progress;

@@ -68,13 +68,6 @@ public class GameDataModel : BaseMVCModel
         gameData.listBuild.Add(new ItemBean(40001, 5));
         gameData.listBuild.Add(new ItemBean(50001, 5));
         gameData.listBuild.Add(new ItemBean(90001, 5));
-        //添加一个员工
-        CharacterBean worker = new CharacterBean();
-        CharacterBean worker2 = new CharacterBean();
-        worker.baseInfo.name = "张三";
-        worker2.baseInfo.name = "李四";
-        gameData.listWorkerCharacter.Add(worker);
-        gameData.listWorkerCharacter.Add(worker2);
 
         //添加菜单
         gameData.listMenu.Add(new MenuOwnBean(1));
@@ -84,7 +77,7 @@ public class GameDataModel : BaseMVCModel
 
         //设置时间
         TimeBean gameTime = new TimeBean();
-        gameTime.SetTimeForYMD(21, 1, 0);
+        gameTime.SetTimeForYMD(221, 1, 0);
         gameData.gameTime = gameTime;
 
         SetGameDataByUserId(userId, gameData);

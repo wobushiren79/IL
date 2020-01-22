@@ -56,10 +56,7 @@ public class StoryCreateWindowsEditor : EditorWindow
     StoryInfoService storyInfoService;
 
     private string mNpcCreateIdStr = "人物ID";
-    private int mStoryScene = 1;
-    private int mStorySceneBuilding = 1;
-    private long mStoryIdLast = 1;
-    private long mStoryId = 0;
+    private StoryInfoBean mCreateStoryInfo = new StoryInfoBean();
     private long mFindStoryId = 0;
     private int mFindStroyOrder = 1;
 
@@ -78,9 +75,15 @@ public class StoryCreateWindowsEditor : EditorWindow
         scrollPosition = GUILayout.BeginScrollView(scrollPosition);
         GUILayout.BeginVertical();
         //父对象
-       // mObjContent = EditorGUILayout.ObjectField(new GUIContent("剧情容器", ""), mObjContent, typeof(GameObject), true) as GameObject;
-       // mObjNpcModel = EditorGUILayout.ObjectField(new GUIContent("NPC模型", ""), mObjNpcModel, typeof(GameObject), true) as GameObject;
-
+        // mObjContent = EditorGUILayout.ObjectField(new GUIContent("剧情容器", ""), mObjContent, typeof(GameObject), true) as GameObject;
+        // mObjNpcModel = EditorGUILayout.ObjectField(new GUIContent("NPC模型", ""), mObjNpcModel, typeof(GameObject), true) as GameObject;
+        if (GUILayout.Button("刷新", GUILayout.Width(100), GUILayout.Height(20)))
+        {
+            listStoryInfo.Clear();
+            listAllStoryInfoDetails.Clear();
+            listOrderStoryInfoDetails.Clear();
+            listStoryTextInfo.Clear();
+        }
         //NPC创建
         GUILayout.BeginHorizontal();
         GUILayout.Label("人物创建：", GUILayout.Width(100), GUILayout.Height(20));
@@ -92,26 +95,7 @@ public class StoryCreateWindowsEditor : EditorWindow
         GUILayout.EndHorizontal();
 
         //故事数据生成
-        GUILayout.BeginHorizontal();
-        GUILayout.Label("故事数据生成：", GUILayout.Width(100), GUILayout.Height(20));
-        GUILayout.Label("场景：", GUILayout.Width(50), GUILayout.Height(20));
-        mStoryScene = (int)(ScenesEnum)EditorGUILayout.EnumPopup((ScenesEnum)mStoryScene, GUILayout.Width(150), GUILayout.Height(20));
-        mStoryId = mStoryScene * 10000000;
-        if (mStoryScene == (int)ScenesEnum.GameTownScene)
-        {
-            GUILayout.Label("城镇建筑：", GUILayout.Width(50), GUILayout.Height(20));
-            mStorySceneBuilding = (int)(TownBuildingEnum)EditorGUILayout.EnumPopup((TownBuildingEnum)mStorySceneBuilding, GUILayout.Width(150), GUILayout.Height(20));
-            mStoryId += mStorySceneBuilding * 100000;
-        }
-        mStoryIdLast = long.Parse(EditorGUILayout.TextArea(mStoryIdLast + "", GUILayout.Width(100), GUILayout.Height(20)));
-        mStoryId += mStoryIdLast;
-        GUILayout.Label("id：" + mStoryId, GUILayout.Width(150), GUILayout.Height(20));
-        mFindStroyOrder = int.Parse(EditorGUILayout.TextArea(mFindStroyOrder + "", GUILayout.Width(100), GUILayout.Height(20)));
-        if (GUILayout.Button("生成数据"))
-        {
-            CreateStoryData(mStoryScene, mStorySceneBuilding, mStoryId);
-        }
-        GUILayout.EndHorizontal();
+        GUICreateStory();
         //查询相关UI
         GUIFindStoryInfo();
         //故事信息UI
@@ -122,6 +106,31 @@ public class StoryCreateWindowsEditor : EditorWindow
 
         GUILayout.EndVertical();
         GUILayout.EndScrollView();
+    }
+
+    private long inputId = 0;
+    private void GUICreateStory()
+    {
+        GUILayout.BeginHorizontal();
+        if (GUILayout.Button("生成数据", GUILayout.Width(100), GUILayout.Height(20)))
+        {
+            CreateStoryData(mCreateStoryInfo);
+        }
+        GUILayout.Label("故事数据生成：", GUILayout.Width(100), GUILayout.Height(20));
+        mCreateStoryInfo.story_scene = (int)(ScenesEnum)EditorGUILayout.EnumPopup("场景：", (ScenesEnum)mCreateStoryInfo.story_scene, GUILayout.Width(300), GUILayout.Height(20));
+        mCreateStoryInfo.id = mCreateStoryInfo.story_scene * 10000000;
+        if (mCreateStoryInfo.story_scene == (int)ScenesEnum.GameTownScene)
+        {
+            GUILayout.Label("城镇建筑：", GUILayout.Width(50), GUILayout.Height(20));
+            mCreateStoryInfo.location_type = (int)(TownBuildingEnum)EditorGUILayout.EnumPopup((TownBuildingEnum)mCreateStoryInfo.location_type, GUILayout.Width(150), GUILayout.Height(20));
+            mCreateStoryInfo.id += mCreateStoryInfo.location_type * 100000;
+        }
+        inputId = long.Parse(EditorGUILayout.TextArea(inputId + "", GUILayout.Width(100), GUILayout.Height(20)));
+        mCreateStoryInfo.id += inputId;
+        GUILayout.Label("id：" + mCreateStoryInfo.id, GUILayout.Width(150), GUILayout.Height(20));
+        GUILayout.Label("备注：", GUILayout.Width(50), GUILayout.Height(20));
+        mCreateStoryInfo.note = EditorGUILayout.TextArea(mCreateStoryInfo.note + "", GUILayout.Width(100), GUILayout.Height(20));
+        GUILayout.EndHorizontal();
     }
 
     private void GUIFindStoryInfo()
@@ -167,6 +176,11 @@ public class StoryCreateWindowsEditor : EditorWindow
     private void GUIStoryInfoItem(StoryInfoBean storyInfo)
     {
         GUILayout.BeginHorizontal();
+        if (GUILayout.Button("删除", GUILayout.Width(50), GUILayout.Height(20)))
+        {
+            storyInfoService.DeleteDataById(storyInfo.id);
+            listStoryInfo.Remove(storyInfo);
+        }
         if (GUILayout.Button("更新", GUILayout.Width(50), GUILayout.Height(20)))
         {
             storyInfoService.UpdateStoryData(storyInfo);
@@ -182,17 +196,16 @@ public class StoryCreateWindowsEditor : EditorWindow
         storyInfo.note = EditorGUILayout.TextArea(storyInfo.note + "", GUILayout.Width(200), GUILayout.Height(20));
 
         GUILayout.Label("id：" + storyInfo.id, GUILayout.Width(150), GUILayout.Height(20));
-        GUILayout.Label("故事发生场景：" + storyInfo.id, GUILayout.Width(150), GUILayout.Height(20));
-        storyInfo.story_scene = (int)(ScenesEnum)EditorGUILayout.EnumPopup((ScenesEnum)storyInfo.story_scene, GUILayout.Width(150), GUILayout.Height(20));
+        storyInfo.story_scene = (int)(ScenesEnum)EditorGUILayout.EnumPopup("场景：", (ScenesEnum)storyInfo.story_scene, GUILayout.Width(300), GUILayout.Height(20));
         if (storyInfo.story_scene == (int)ScenesEnum.GameTownScene)
         {
             GUILayout.Label("故事发生地点：", GUILayout.Width(150), GUILayout.Height(20));
-            storyInfo.story_scene = (int)(ScenesEnum)EditorGUILayout.EnumPopup((ScenesEnum)storyInfo.story_scene, GUILayout.Width(150), GUILayout.Height(20));
+            storyInfo.location_type = (int)(TownBuildingEnum)EditorGUILayout.EnumPopup((TownBuildingEnum)storyInfo.location_type, GUILayout.Width(150), GUILayout.Height(20));
 
             GUILayout.Label("0外 1里：", GUILayout.Width(150), GUILayout.Height(20));
             storyInfo.out_in = int.Parse(EditorGUILayout.TextArea(storyInfo.out_in + "", GUILayout.Width(50), GUILayout.Height(20)));
         }
-        GUILayout.Label("坐标：" , GUILayout.Width(150), GUILayout.Height(20));
+        GUILayout.Label("坐标：", GUILayout.Width(150), GUILayout.Height(20));
         if (GUILayout.Button("获取容器坐标", GUILayout.Width(150), GUILayout.Height(20)))
         {
             if (mObjContent == null)
@@ -208,16 +221,7 @@ public class StoryCreateWindowsEditor : EditorWindow
         storyInfo.position_x = float.Parse(EditorGUILayout.TextArea(storyInfo.position_x + "", GUILayout.Width(100), GUILayout.Height(20)));
         storyInfo.position_y = float.Parse(EditorGUILayout.TextArea(storyInfo.position_y + "", GUILayout.Width(100), GUILayout.Height(20)));
 
-        GUILayout.Label("触发条件(日期)：" , GUILayout.Width(150), GUILayout.Height(20));
-        GUILayout.Label("年：", GUILayout.Width(50), GUILayout.Height(20));
-        storyInfo.trigger_date_year = int.Parse(EditorGUILayout.TextArea(storyInfo.trigger_date_year + "", GUILayout.Width(50), GUILayout.Height(20)));
-        GUILayout.Label("月：", GUILayout.Width(50), GUILayout.Height(20));
-        storyInfo.trigger_date_month = int.Parse(EditorGUILayout.TextArea(storyInfo.trigger_date_month + "", GUILayout.Width(50), GUILayout.Height(20)));
-        GUILayout.Label("日：", GUILayout.Width(50), GUILayout.Height(20));
-        storyInfo.trigger_date_day = int.Parse(EditorGUILayout.TextArea(storyInfo.trigger_date_day + "", GUILayout.Width(50), GUILayout.Height(20)));
-
-        GUILayout.Label("好感触发（人物ID，好感等级|人物ID，好感等级）：", GUILayout.Width(300), GUILayout.Height(20));
-        storyInfo.trigger_favorability = EditorGUILayout.TextArea(storyInfo.trigger_favorability + "", GUILayout.Width(300), GUILayout.Height(20));
+        GUITriggerCondition(storyInfo);
 
         if (GUILayout.Button("更新", GUILayout.Width(50), GUILayout.Height(20)))
         {
@@ -240,7 +244,7 @@ public class StoryCreateWindowsEditor : EditorWindow
             }
             if (GUILayout.Button("保存", GUILayout.Width(100), GUILayout.Height(20)))
             {
-                storyInfoService.UpdateStoryDetailsByIdAndOrder(mFindStoryId, mFindStroyOrder,listOrderStoryInfoDetails);
+                storyInfoService.UpdateStoryDetailsByIdAndOrder(mFindStoryId, mFindStroyOrder, listOrderStoryInfoDetails);
             }
             if (GUILayout.Button("<", GUILayout.Width(100), GUILayout.Height(20)))
             {
@@ -309,7 +313,7 @@ public class StoryCreateWindowsEditor : EditorWindow
                 GUILayout.Label("NPC朝向1左2右:", GUILayout.Width(120), GUILayout.Height(20));
                 itemData.npc_face = int.Parse(EditorGUILayout.TextArea(itemData.npc_face + "", GUILayout.Width(50), GUILayout.Height(20)));
 
-       
+
             }
             else if (itemData.type == (int)StoryInfoDetailsBean.StoryInfoDetailsTypeEnum.Talk)
             {
@@ -360,7 +364,7 @@ public class StoryCreateWindowsEditor : EditorWindow
                         textInfo.next_order = int.Parse(EditorGUILayout.TextArea(textInfo.next_order + "", GUILayout.Width(100), GUILayout.Height(20)));
                         if (textInfo.type == 0)
                         {
-                         
+
                             GUILayout.Label("userID", GUILayout.Width(100), GUILayout.Height(20));
                             textInfo.user_id = long.Parse(EditorGUILayout.TextArea(textInfo.user_id + "", GUILayout.Width(100), GUILayout.Height(20)));
                             GUILayout.Label("姓名", GUILayout.Width(100), GUILayout.Height(20));
@@ -377,7 +381,7 @@ public class StoryCreateWindowsEditor : EditorWindow
                             GUILayout.Label(npcInfo.title_name + "-" + npcInfo.name, GUILayout.Width(120), GUILayout.Height(20));
                             GUILayout.Label("指定的姓名", GUILayout.Width(120), GUILayout.Height(20));
                             textInfo.name = EditorGUILayout.TextArea(textInfo.name, GUILayout.Width(100), GUILayout.Height(20));
-                        
+
                         }
                         else if (textInfo.type == 1)
                         {
@@ -403,21 +407,22 @@ public class StoryCreateWindowsEditor : EditorWindow
 
                         GUILayout.Label("对话内容", GUILayout.Width(120), GUILayout.Height(20));
                         textInfo.content = EditorGUILayout.TextArea(textInfo.content, GUILayout.Width(400), GUILayout.Height(20));
-                
+
                         GUILayout.Label("增加的好感：", GUILayout.Width(120), GUILayout.Height(20));
                         textInfo.add_favorability = int.Parse(EditorGUILayout.TextArea(textInfo.add_favorability + "", GUILayout.Width(50), GUILayout.Height(20)));
                         if (GUILayout.Button("更新", GUILayout.Width(120), GUILayout.Height(20)))
                         {
                             textInfoService.UpdateDataById(TextEnum.Story, textInfo.id, textInfo);
                         }
-                        GUILayout.EndHorizontal();                    }
+                        GUILayout.EndHorizontal();
+                    }
 
                     if (removeTempText != null)
                         listStoryTextInfo.Remove(removeTempText);
                 }
 
                 GUILayout.EndVertical();
-              
+
             }
             else if (itemData.type == (int)StoryInfoDetailsBean.StoryInfoDetailsTypeEnum.Expression)
             {
@@ -528,7 +533,6 @@ public class StoryCreateWindowsEditor : EditorWindow
     /// <param name="idStr"></param>
     public GameObject CreateNpc(string idStr)
     {
-
         if (mObjContent == null)
         {
             LogUtil.LogError("还没有定义剧情容器");
@@ -578,12 +582,8 @@ public class StoryCreateWindowsEditor : EditorWindow
     /// <param name="scene"></param>
     /// <param name="positionType"></param>
     /// <param name="storyId"></param>
-    public void CreateStoryData(int scene, int positionType, long storyId)
+    public void CreateStoryData(StoryInfoBean storyInfo)
     {
-        StoryInfoBean storyInfo = new StoryInfoBean();
-        storyInfo.story_scene = scene;
-        storyInfo.id = storyId;
-        storyInfo.location_type = positionType;
         storyInfo.position_x = 0;
         storyInfo.position_y = 0;
         storyInfo.valid = 1;
@@ -685,7 +685,7 @@ public class StoryCreateWindowsEditor : EditorWindow
                             LogUtil.LogError("创建NPC失败 找不到ID为" + itemData.npc_id + "的NPC信息");
                         }
                     }
-                    GameObject objNpc= CreateNpc(npcInfoBean.npc_id, new Vector3(itemData.npc_position_x, itemData.npc_position_y), itemData.npc_num);
+                    GameObject objNpc = CreateNpc(npcInfoBean.npc_id, new Vector3(itemData.npc_position_x, itemData.npc_position_y), itemData.npc_num);
                     npcAI = objNpc.GetComponent<BaseNpcAI>();
                 }
                 else
@@ -703,7 +703,7 @@ public class StoryCreateWindowsEditor : EditorWindow
             }
             else if (itemData.type == (int)StoryInfoDetailsBean.StoryInfoDetailsTypeEnum.NpcDestory)
             {
-                int[] numList = StringUtil.SplitBySubstringForArrayInt(itemData.npc_destroy,',');
+                int[] numList = StringUtil.SplitBySubstringForArrayInt(itemData.npc_destroy, ',');
                 foreach (int num in numList)
                 {
                     BaseNpcAI npcAI = CptUtil.GetCptInChildrenByName<BaseNpcAI>(mObjContent, num + "");
@@ -712,7 +712,7 @@ public class StoryCreateWindowsEditor : EditorWindow
             }
             else if (itemData.type == (int)StoryInfoDetailsBean.StoryInfoDetailsTypeEnum.CameraPosition)
             {
-                Vector3 cameraWorldPosition = mObjContent.transform.TransformPoint(new Vector3(itemData.camera_position_x, itemData.camera_position_y,-10));
+                Vector3 cameraWorldPosition = mObjContent.transform.TransformPoint(new Vector3(itemData.camera_position_x, itemData.camera_position_y, -10));
                 mCamera2D.Follow = null;
                 mCamera2D.transform.position = cameraWorldPosition;
             }
@@ -788,5 +788,44 @@ public class StoryCreateWindowsEditor : EditorWindow
             }
         }
         return null;
+    }
+
+
+    /// <summary>
+    /// 前置条件UI
+    /// </summary>
+    /// <param name="storeInfo"></param>
+    private void GUITriggerCondition(StoryInfoBean storyInfo)
+    {
+        //前置相关
+        EditorGUILayout.BeginVertical();
+        GUILayout.Label("触发条件：", GUILayout.Width(100), GUILayout.Height(20));
+        if (GUILayout.Button("添加条件", GUILayout.Width(100), GUILayout.Height(20)))
+        {
+            storyInfo.trigger_condition += ("|" + EnumUtil.GetEnumName(EventTriggerEnum.Year) + ":" + "1|");
+        }
+        List<string> listTriggerData = StringUtil.SplitBySubstringForListStr(storyInfo.trigger_condition, '|');
+        storyInfo.trigger_condition = "";
+        for (int i = 0; i < listTriggerData.Count; i++)
+        {
+            string itemTriggerData = listTriggerData[i];
+            if (CheckUtil.StringIsNull(itemTriggerData))
+            {
+                continue;
+            }
+            EditorGUILayout.BeginHorizontal();
+            if (GUILayout.Button("删除", GUILayout.Width(100), GUILayout.Height(20)))
+            {
+                listTriggerData.RemoveAt(i);
+                i--;
+                continue;
+            }
+            List<string> listItemTriggerData = StringUtil.SplitBySubstringForListStr(itemTriggerData, ':');
+            listItemTriggerData[0] = EnumUtil.GetEnumName(EditorGUILayout.EnumPopup("触发条件", EnumUtil.GetEnum<EventTriggerEnum>(listItemTriggerData[0]), GUILayout.Width(300), GUILayout.Height(20)));
+            listItemTriggerData[1] = EditorGUILayout.TextArea(listItemTriggerData[1] + "", GUILayout.Width(100), GUILayout.Height(20));
+            EditorGUILayout.EndHorizontal();
+            storyInfo.trigger_condition += (listItemTriggerData[0] + ":" + listItemTriggerData[1]) + "|";
+        }
+        EditorGUILayout.EndVertical();
     }
 }

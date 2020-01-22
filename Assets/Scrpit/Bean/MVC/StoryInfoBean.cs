@@ -17,12 +17,9 @@ public class StoryInfoBean : BaseBean
 
     //该事件是否可以反复触发
     public int trigger_loop;
-    //事件触发条件
-    public int trigger_date_year;
-    public int trigger_date_month;
-    public int trigger_date_day;
-    //触发好感
-    public string trigger_favorability;
     //备注
     public string note;
+
+    //触发条件
+    public string trigger_condition;
 }

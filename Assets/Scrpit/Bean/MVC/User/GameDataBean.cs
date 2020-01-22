@@ -370,9 +370,10 @@ public class GameDataBean
                 return itemData;
             }
         }
-        CharacterFavorabilityBean characterFavorability = new CharacterFavorabilityBean(characterId);
-        listCharacterFavorability.Add(characterFavorability);
-        return characterFavorability;
+        return null;
+        //CharacterFavorabilityBean characterFavorability = new CharacterFavorabilityBean(characterId);
+        //listCharacterFavorability.Add(characterFavorability);
+        //return characterFavorability;
     }
 
     /// <summary>

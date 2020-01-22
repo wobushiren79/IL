@@ -4,7 +4,12 @@ using UnityEngine.UI;
 using System.Collections.Generic;
 using DG.Tweening;
 
-public class UIMainCreate : BaseUIComponent, IRadioGroupCallBack, ColorView.CallBack, SelectView.CallBack
+public class UIMainCreate : BaseUIComponent,
+    IRadioGroupCallBack,
+    ColorView.CallBack,
+    SelectView.CallBack,
+    DialogView.IDialogCallBack
+
 {
     public GameObject objContent;
 
@@ -137,7 +142,7 @@ public class UIMainCreate : BaseUIComponent, IRadioGroupCallBack, ColorView.Call
     /// </summary>
     public void AnimForInit()
     {
-        if (objContent!=null)
+        if (objContent != null)
             objContent.transform.DOScaleX(0, 0.5f).From().SetEase(Ease.OutExpo);
         if (btCreate != null)
             btCreate.transform.DOScaleX(0, 0.5f).From().SetEase(Ease.OutBack);
@@ -149,13 +154,13 @@ public class UIMainCreate : BaseUIComponent, IRadioGroupCallBack, ColorView.Call
     /// 创建新游戏
     /// </summary>
     public void CreateNewGame()
-    {        
+    {
         //按键音效
         AudioHandler audioHandler = GetUIManager<UIGameManager>().audioHandler;
         audioHandler.PlaySound(SoundEnum.ButtonForNormal);
 
         ToastManager toastManager = GetUIManager<UIGameManager>().toastManager;
-        GameDataManager gameDataManager = GetUIManager<UIGameManager>().gameDataManager;
+        DialogManager dialogManager = GetUIManager<UIGameManager>().dialogManager;
         if (CheckUtil.StringIsNull(etInnName.text))
         {
             toastManager.ToastHint(GameCommonInfo.GetUITextById(1000));
@@ -166,26 +171,16 @@ public class UIMainCreate : BaseUIComponent, IRadioGroupCallBack, ColorView.Call
             toastManager.ToastHint(GameCommonInfo.GetUITextById(1001));
             return;
         }
-        GameDataBean gameData = new GameDataBean();
-        gameData.innAttributes.innName = etInnName.text;
-
-        gameData.userCharacter = new CharacterBean();
-        gameData.userCharacter.baseInfo = new CharacterBaseBean();
-        gameData.userCharacter.attributes = new CharacterAttributesBean();
-
-        gameData.userCharacter.baseInfo.name = etUserName.text;
-        gameData.userCharacter.body = characterBodyCpt.GetCharacterBodyData();
-        gameData.userCharacter.equips = characterDressCpt.GetCharacterEquipData();
-        gameDataManager.CreateGameData(gameData);
-
-        SceneUtil.SceneChange(ScenesEnum.GameInnScene);
+        DialogBean dialogData = new DialogBean();
+        dialogData.content = GameCommonInfo.GetUITextById(3012);
+        dialogManager.CreateDialog(DialogEnum.Normal, this, dialogData);
     }
 
     /// <summary>
     /// 返回开始菜单
     /// </summary>
     public void OpenStartUI()
-    {        
+    {
         //按键音效
         AudioHandler audioHandler = GetUIManager<UIGameManager>().audioHandler;
         audioHandler.PlaySound(SoundEnum.ButtonForBack);
@@ -266,4 +261,25 @@ public class UIMainCreate : BaseUIComponent, IRadioGroupCallBack, ColorView.Call
     }
     #endregion
 
+    #region 确认回调
+    public void Submit(DialogView dialogView, DialogBean dialogBean)
+    {
+        GameDataManager gameDataManager = GetUIManager<UIGameManager>().gameDataManager;
+        GameDataBean gameData = new GameDataBean();
+        gameData.innAttributes.innName = etInnName.text;
+
+        gameData.userCharacter = new CharacterBean();
+        gameData.userCharacter.baseInfo.name = etUserName.text;
+        gameData.userCharacter.body = characterBodyCpt.GetCharacterBodyData();
+        gameData.userCharacter.equips = characterDressCpt.GetCharacterEquipData();
+        gameDataManager.CreateGameData(gameData);
+
+        SceneUtil.SceneChange(ScenesEnum.GameInnScene);
+    }
+
+    public void Cancel(DialogView dialogView, DialogBean dialogBean)
+    {
+
+    }
+    #endregion
 }
