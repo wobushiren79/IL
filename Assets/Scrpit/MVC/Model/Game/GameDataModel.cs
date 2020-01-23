@@ -71,9 +71,7 @@ public class GameDataModel : BaseMVCModel
 
         //添加菜单
         gameData.listMenu.Add(new MenuOwnBean(1));
-        gameData.listMenu.Add(new MenuOwnBean(10001));
-        gameData.ingOilsalt = 50;
-        gameData.ingVegetables = 50;
+        gameData.listMenu.Add(new MenuOwnBean(2));
 
         //设置时间
         TimeBean gameTime = new TimeBean();

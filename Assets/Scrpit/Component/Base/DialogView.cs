@@ -20,6 +20,12 @@ public class DialogView : BaseMonoBehaviour
     public DialogBean dialogData;
     private float mTimeDelayDelete;
 
+    protected AudioHandler audioHandler;
+    private void Awake()
+    {
+        audioHandler = Find<AudioHandler>(ImportantTypeEnum.AudioHandler);
+    }
+
     public virtual void Start()
     {
         InitData();
@@ -33,7 +39,6 @@ public class DialogView : BaseMonoBehaviour
 
     public virtual void InitData()
     {
-
         if (btSubmit != null)
         {
             btSubmit.onClick.RemoveAllListeners();
@@ -53,6 +58,8 @@ public class DialogView : BaseMonoBehaviour
 
     public virtual void SubmitOnClick()
     {
+        if (audioHandler != null)
+            audioHandler.PlaySound(SoundEnum.ButtonForNormal);
         if (mCallBack != null)
         {
             mCallBack.Submit(this, dialogData);
@@ -61,6 +68,8 @@ public class DialogView : BaseMonoBehaviour
     }
     public virtual void CancelOnClick()
     {
+        if (audioHandler != null)
+            audioHandler.PlaySound(SoundEnum.ButtonForBack);
         if (mCallBack != null)
         {
             mCallBack.Cancel(this, dialogData);
@@ -137,7 +146,7 @@ public class DialogView : BaseMonoBehaviour
     /// <param name="str"></param>
     public void SetSubmitStr(string str)
     {
-        if (tvSubmit!=null)
+        if (tvSubmit != null)
         {
             tvSubmit.text = str;
         }
@@ -166,7 +175,7 @@ public class DialogView : BaseMonoBehaviour
 
     public interface IDialogCallBack
     {
-        void Submit(DialogView dialogView,DialogBean dialogBean);
-        void Cancel(DialogView dialogView,DialogBean dialogBean);
+        void Submit(DialogView dialogView, DialogBean dialogBean);
+        void Cancel(DialogView dialogView, DialogBean dialogBean);
     }
 }

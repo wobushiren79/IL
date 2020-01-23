@@ -50,6 +50,7 @@ public class CharacterDressCpt : BaseMonoBehaviour
         {
             sprHair.color = new Color(sprHair.color.r, sprHair.color.g, sprHair.color.b, 1);
             hatSP = null;
+            characterEquipData.hatId = 0;
         }
         else
         {

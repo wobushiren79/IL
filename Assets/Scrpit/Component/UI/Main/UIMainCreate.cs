@@ -56,6 +56,23 @@ public class UIMainCreate : BaseUIComponent,
     public List<ItemsInfoBean> listSelectClothes;
     public List<ItemsInfoBean> listSelectShoes;
 
+    protected AudioHandler audioHandler;
+    protected CharacterBodyManager characterBodyManager;
+    protected GameItemsManager gameItemsManager;
+    protected ToastManager toastManager;
+    protected DialogManager dialogManager;
+    protected GameDataManager gameDataManager;
+
+    private void Awake()
+    {
+        audioHandler = GetUIManager<UIGameManager>().audioHandler;
+        characterBodyManager = GetUIManager<UIGameManager>().characterBodyManager;
+        gameItemsManager = GetUIManager<UIGameManager>().gameItemsManager;
+        toastManager = GetUIManager<UIGameManager>().toastManager;
+        dialogManager = GetUIManager<UIGameManager>().dialogManager;
+        gameDataManager = GetUIManager<UIGameManager>().gameDataManager;
+    }
+
     private void Start()
     {
         InitData();
@@ -114,9 +131,6 @@ public class UIMainCreate : BaseUIComponent,
 
     public void InitData()
     {
-        CharacterBodyManager characterBodyManager = GetUIManager<UIGameManager>().characterBodyManager;
-        GameItemsManager gameItemsManager = GetUIManager<UIGameManager>().gameItemsManager;
-
         //初始化可选择头型数据
         listSelectHair = TypeConversionUtil.IconBeanDictionaryToList(characterBodyManager.listIconBodyHair);
         ChangeSelectPosition(selectHair, 0);
@@ -156,11 +170,9 @@ public class UIMainCreate : BaseUIComponent,
     public void CreateNewGame()
     {
         //按键音效
-        AudioHandler audioHandler = GetUIManager<UIGameManager>().audioHandler;
-        audioHandler.PlaySound(SoundEnum.ButtonForNormal);
+        if (audioHandler != null)
+            audioHandler.PlaySound(SoundEnum.ButtonForNormal);
 
-        ToastManager toastManager = GetUIManager<UIGameManager>().toastManager;
-        DialogManager dialogManager = GetUIManager<UIGameManager>().dialogManager;
         if (CheckUtil.StringIsNull(etInnName.text))
         {
             toastManager.ToastHint(GameCommonInfo.GetUITextById(1000));
@@ -182,8 +194,8 @@ public class UIMainCreate : BaseUIComponent,
     public void OpenStartUI()
     {
         //按键音效
-        AudioHandler audioHandler = GetUIManager<UIGameManager>().audioHandler;
-        audioHandler.PlaySound(SoundEnum.ButtonForBack);
+        if (audioHandler != null)
+            audioHandler.PlaySound(SoundEnum.ButtonForBack);
 
         uiManager.OpenUIAndCloseOtherByName(EnumUtil.GetEnumName(UIEnum.MainStart));
     }
@@ -191,6 +203,9 @@ public class UIMainCreate : BaseUIComponent,
     #region 性别回调
     public void RadioButtonSelected(RadioGroupView rgView, int position, RadioButtonView view)
     {
+        if (audioHandler != null)
+            audioHandler.PlaySound(SoundEnum.ButtonForNormal);
+
         if (position == 0)
         {
             characterBodyCpt.SetSex(1);
@@ -264,7 +279,6 @@ public class UIMainCreate : BaseUIComponent,
     #region 确认回调
     public void Submit(DialogView dialogView, DialogBean dialogBean)
     {
-        GameDataManager gameDataManager = GetUIManager<UIGameManager>().gameDataManager;
         GameDataBean gameData = new GameDataBean();
         gameData.innAttributes.innName = etInnName.text;
 

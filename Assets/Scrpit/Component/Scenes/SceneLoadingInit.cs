@@ -12,23 +12,22 @@ public class SceneLoadingInit : MonoBehaviour
     {
         //启动协程
        StartCoroutine(CoroutineForAsyncLoading());
-       // StartCoroutine(prepareTime());
     }
     
     void Update()
     {
-        targetValue = mOperation.progress;
+        //targetValue = mOperation.progress;
 
-        if (mOperation.progress >= 0.9f)
-        {
-            //mOperation.progress的值最大为0.9
-            targetValue = 1.0f;
-        }
-        if (targetValue.Equals(1))
-        {
-            //允许异步加载完毕后自动切换场景
-            mOperation.allowSceneActivation = true;
-        }
+        //if (mOperation.progress >= 0.9f)
+        //{
+        //    //mOperation.progress的值最大为0.9
+        //    targetValue = 1.0f;
+        //}
+        //if (targetValue.Equals(1))
+        //{
+        //    //允许异步加载完毕后自动切换场景
+        //    mOperation.allowSceneActivation = true;
+        //}
     }
 
     /// <summary>
@@ -39,7 +38,7 @@ public class SceneLoadingInit : MonoBehaviour
     {
         mOperation = SceneManager.LoadSceneAsync(EnumUtil.GetEnumName(GameCommonInfo.ScenesChangeData.loadingScene));
         //阻止当加载完成自动切换
-        mOperation.allowSceneActivation = false;
+        //mOperation.allowSceneActivation = false;
         yield return mOperation;
     }
 }
