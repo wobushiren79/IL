@@ -18,22 +18,37 @@ public class UIGameDate : BaseUIComponent
     public float animTime = 1;//动画时间
     public float animDelay = 2;//动画延迟
 
+    protected GameTimeHandler gameTimeHandler;
+    protected GameDataManager gameDataManager;
+    protected ControlHandler controlHandler;
+    protected NpcCustomerBuilder npcCustomerBuilder;
+    protected EventHandler eventHandler;
+    protected AudioHandler audioHandler;
+    private void Awake()
+    {
+         gameTimeHandler = GetUIManager<UIGameManager>().gameTimeHandler;
+         gameDataManager = GetUIManager<UIGameManager>().gameDataManager;
+         controlHandler = GetUIManager<UIGameManager>().controlHandler ;
+         npcCustomerBuilder = GetUIManager<UIGameManager>().npcCustomerBuilder;
+         eventHandler = GetUIManager<UIGameManager>().eventHandler;
+         audioHandler = GetUIManager<UIGameManager>().audioHandler;
+    }
+
     private void Start()
     {
         if (tvDialogContent != null)
             tvDialogContent.text = GameCommonInfo.GetUITextById(3005);
         if (btWork != null)
-            btWork.onClick.AddListener(InnWork);
+            btWork.onClick.AddListener(OnClickInnWork);
         if (btRest != null)
-            btRest.onClick.AddListener(InnRest);
+            btRest.onClick.AddListener(OnClickInnRest);
     }
 
     public override void OpenUI()
     {
         base.OpenUI();
         AnimForInit();
-        GameTimeHandler gameTimeHandler = GetUIManager<UIGameManager>().gameTimeHandler;
-        GameDataManager gameDataManager = GetUIManager<UIGameManager>().gameDataManager;
+
         if (gameTimeHandler != null)
         {
             gameTimeHandler.GetTime(out int year, out int month, out int day);
@@ -44,16 +59,16 @@ public class UIGameDate : BaseUIComponent
             //下一天
             StartCoroutine(CoroutineForNextDay());
         }
-        if (GetUIManager<UIGameManager>().controlHandler != null)
-            GetUIManager<UIGameManager>().controlHandler.StopControl();
+        if (controlHandler != null)
+            controlHandler.StopControl();
     }
 
     public override void CloseUI()
     {
         base.CloseUI();
         objDialog.SetActive(false);
-        if (GetUIManager<UIGameManager>().controlHandler != null)
-            GetUIManager<UIGameManager>().controlHandler.RestoreControl();
+        if (controlHandler != null)
+            controlHandler.RestoreControl();
     }
 
     /// <summary>
@@ -66,13 +81,31 @@ public class UIGameDate : BaseUIComponent
     }
 
     /// <summary>
+    /// 按钮-工作
+    /// </summary>
+    public void OnClickInnWork()
+    {
+        if (audioHandler != null)
+            audioHandler.PlaySound(SoundEnum.ButtonForNormal);
+        InnWork();
+    }
+
+    /// <summary>
+    /// 按钮-休息
+    /// </summary>
+    public void OnClickInnRest()
+    {
+        if (audioHandler != null)
+            audioHandler.PlaySound(SoundEnum.ButtonForNormal);
+        InnRest();
+    }
+
+    /// <summary>
     /// 协程-下一天
     /// </summary>
     /// <returns></returns>
     public IEnumerator CoroutineForNextDay()
     {
-        GameTimeHandler gameTimeHandler = GetUIManager<UIGameManager>().gameTimeHandler;
-        GameDataManager gameDataManager = GetUIManager<UIGameManager>().gameDataManager;
         yield return new WaitForSeconds(3);
         //进入下一天
         gameTimeHandler.GoToNextDay(1);
@@ -113,10 +146,7 @@ public class UIGameDate : BaseUIComponent
     /// </summary>
     public void InnRest()
     {
-        GameTimeHandler gameTimeHandler = GetUIManager<UIGameManager>().gameTimeHandler;
-        ControlHandler controlHandler = GetUIManager<UIGameManager>().controlHandler;
-        NpcCustomerBuilder npcCustomerBuilder = GetUIManager<UIGameManager>().npcCustomerBuilder;
-        EventHandler eventHandler = GetUIManager<UIGameManager>().eventHandler;
+
         gameTimeHandler.dayStauts = GameTimeHandler.DayEnum.Rest;
         gameTimeHandler.SetTimeStatus(false);
 

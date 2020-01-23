@@ -17,8 +17,9 @@ public class AudioHandler : BaseHandler
     /// <summary>
     /// 播放音效
     /// </summary>
-    /// <param name="sound"></param>
-    public void PlaySound(SoundEnum sound)
+    /// <param name="sound">音效</param>
+    /// <param name="volumeScale">音量大小</param>
+    public void PlaySound(SoundEnum sound, float volumeScale)
     {
         AudioClip soundClip = null;
         switch (sound)
@@ -29,8 +30,16 @@ public class AudioHandler : BaseHandler
             case SoundEnum.ButtonForBack:
                 soundClip = audioManager.GetSoundClip("sound_btn_2");
                 break;
+            case SoundEnum.ButtonForHighLight:
+                soundClip = audioManager.GetSoundClip("sound_btn_1");
+                break;
         }
         if (soundClip != null)
-            AudioSource.PlayClipAtPoint(soundClip, Camera.main.transform.position);
+            AudioSource.PlayClipAtPoint(soundClip, Camera.main.transform.position, volumeScale);
+    }
+
+    public void PlaySound(SoundEnum sound)
+    {
+        PlaySound(sound, 1);
     }
 }

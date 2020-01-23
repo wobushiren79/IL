@@ -23,17 +23,17 @@ public class CharacterBaseBean
     public long priceM;
     public long priceL;
 
-    public CharacterWorkerForChefBean chefInfo=new CharacterWorkerForChefBean();
-    public CharacterWorkerForWaiterBean waiterInfo=new CharacterWorkerForWaiterBean();
-    public CharacterWorkerForAccountantBean accountantInfo=new CharacterWorkerForAccountantBean();
-    public CharacterWorkerForAccostBean accostInfo=new CharacterWorkerForAccostBean();
-    public CharacterWorkerForBeaterBean beaterInfo=new CharacterWorkerForBeaterBean();
+    public CharacterWorkerForChefBean chefInfo = new CharacterWorkerForChefBean();
+    public CharacterWorkerForWaiterBean waiterInfo = new CharacterWorkerForWaiterBean();
+    public CharacterWorkerForAccountantBean accountantInfo = new CharacterWorkerForAccountantBean();
+    public CharacterWorkerForAccostBean accostInfo = new CharacterWorkerForAccostBean();
+    public CharacterWorkerForBeaterBean beaterInfo = new CharacterWorkerForBeaterBean();
 
-    public bool isChef;//是否开启厨师
-    public bool isWaiter;//是否开启服务生
-    public bool isAccountant;//是否开启记帐
-    public bool isAccost;//是否开启招呼
-    public bool isBeater;//是否开启打手
+    public bool isChef = true;//是否开启厨师
+    public bool isWaiter = true;//是否开启服务生
+    public bool isAccountant = true;//是否开启记帐
+    public bool isAccost = true;//是否开启招呼
+    public bool isBeater = true;//是否开启打手
 
     //优先级
     public int priorityChef;

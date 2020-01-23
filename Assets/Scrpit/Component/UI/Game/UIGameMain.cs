@@ -6,13 +6,19 @@ using UnityEngine.SceneManagement;
 public class UIGameMain : BaseUIComponent, DialogView.IDialogCallBack
 {
     [Header("控件")]
+    public InfoPromptPopupButton popupWorker;
     public Button btWorker;
+    public InfoPromptPopupButton popupBuild;
     public Button btBuild;
+    public InfoPromptPopupButton popupMenu;
     public Button btMenu;
+    public InfoPromptPopupButton popupBackpack;
     public Button btBackpack;
+    public InfoPromptPopupButton popupFavorability;
     public Button btFavorability;
-
+    public InfoPromptPopupButton popupSave;
     public Button btSave;
+
     public Button btSleep;
 
     public Text tvInnStatus;
@@ -31,6 +37,27 @@ public class UIGameMain : BaseUIComponent, DialogView.IDialogCallBack
     public Image ivInnLevel;
 
     public ClockView clockView;//时钟
+
+    protected AudioHandler audioHandler;
+    protected InnHandler innHandler;
+    protected GameTimeHandler gameTimeHandler;
+    protected GameDataManager gameDataManager;
+    protected InfoPromptPopupShow infoPromptPopup;
+    protected DialogManager dialogManager;
+    protected ToastManager toastManager;
+    protected GameItemsManager gameItemsManager;
+    private void Awake()
+    {
+        UIGameManager uiGameManager = GetUIManager<UIGameManager>();
+        audioHandler = uiGameManager.audioHandler;
+        innHandler = uiGameManager.innHandler;
+        gameTimeHandler = uiGameManager.gameTimeHandler;
+        gameDataManager = uiGameManager.gameDataManager;
+        infoPromptPopup = uiGameManager.infoPromptPopup;
+        dialogManager = uiGameManager.dialogManager;
+        toastManager = uiGameManager.toastManager;
+        gameItemsManager = uiGameManager.gameItemsManager;
+    }
 
     public void Start()
     {
@@ -55,8 +82,19 @@ public class UIGameMain : BaseUIComponent, DialogView.IDialogCallBack
         if (btSleep != null)
             btSleep.onClick.AddListener(EndDay);
 
-        GameDataManager gameDataManager = GetUIManager<UIGameManager>().gameDataManager;
-        InfoPromptPopupShow infoPromptPopup = GetUIManager<UIGameManager>().infoPromptPopup;
+        if (popupWorker != null)
+            popupWorker.SetPopupShowView(infoPromptPopup);
+        if (popupBuild != null)
+            popupBuild.SetPopupShowView(infoPromptPopup);
+        if (popupMenu != null)
+            popupMenu.SetPopupShowView(infoPromptPopup);
+        if (popupBackpack != null)
+            popupBackpack.SetPopupShowView(infoPromptPopup);
+        if (popupFavorability != null)
+            popupFavorability.SetPopupShowView(infoPromptPopup);
+        if (popupSave != null)
+            popupSave.SetPopupShowView(infoPromptPopup);
+
         if (popupAesthetics != null)
             popupAesthetics.SetPopupShowView(infoPromptPopup);
         if (popupPraise != null)
@@ -73,9 +111,7 @@ public class UIGameMain : BaseUIComponent, DialogView.IDialogCallBack
 
     private void Update()
     {
-        InnHandler innHandler = GetUIManager<UIGameManager>().innHandler;
-        GameTimeHandler gameTimeHandler = GetUIManager<UIGameManager>().gameTimeHandler;
-        InnAttributesBean innAttributes = GetUIManager<UIGameManager>().gameDataManager.gameData.GetInnAttributesData();
+        InnAttributesBean innAttributes = gameDataManager.gameData.GetInnAttributesData();
         if (tvInnStatus != null && innHandler != null)
             if (innHandler.GetInnStatus() == InnHandler.InnStatusEnum.Close)
             {
@@ -86,11 +122,11 @@ public class UIGameMain : BaseUIComponent, DialogView.IDialogCallBack
                 tvInnStatus.text = GameCommonInfo.GetUITextById(2001);
             }
         if (tvMoneyS != null)
-            tvMoneyS.text = GetUIManager<UIGameManager>().gameDataManager.gameData.moneyS + "";
+            tvMoneyS.text = gameDataManager.gameData.moneyS + "";
         if (tvMoneyM != null)
-            tvMoneyM.text = GetUIManager<UIGameManager>().gameDataManager.gameData.moneyM + "";
+            tvMoneyM.text = gameDataManager.gameData.moneyM + "";
         if (tvMoneyL != null)
-            tvMoneyL.text = GetUIManager<UIGameManager>().gameDataManager.gameData.moneyL + "";
+            tvMoneyL.text = gameDataManager.gameData.moneyL + "";
         if (clockView != null && gameTimeHandler != null)
         {
             gameTimeHandler.GetTime(out float hour, out float min);
@@ -118,21 +154,35 @@ public class UIGameMain : BaseUIComponent, DialogView.IDialogCallBack
     /// </summary>
     public void InitInnData()
     {
-        InnAttributesBean innAttributes = GetUIManager<UIGameManager>().gameDataManager.gameData.GetInnAttributesData();
+        InnAttributesBean innAttributes = gameDataManager.gameData.GetInnAttributesData();
         if (innAttributes == null)
             return;
+
+        if (popupWorker != null)
+            popupWorker.SetContent(GameCommonInfo.GetUITextById(2003));
+        if (popupBuild != null)
+            popupBuild.SetContent(GameCommonInfo.GetUITextById(2003));
+        if (popupMenu != null)
+            popupMenu.SetContent(GameCommonInfo.GetUITextById(2003));
+        if (popupBackpack != null)
+            popupBackpack.SetContent(GameCommonInfo.GetUITextById(2003));
+        if (popupFavorability != null)
+            popupFavorability.SetContent(GameCommonInfo.GetUITextById(2003));
+        if (popupSave != null)
+            popupSave.SetContent(GameCommonInfo.GetUITextById(2003));
+
         if (popupAesthetics != null)
             popupAesthetics.SetContent(GameCommonInfo.GetUITextById(2003) + " " + innAttributes.aesthetics);
         if (tvAesthetics != null)
             tvAesthetics.text = innAttributes.aesthetics + "";
         if (popupPraise != null)
-            popupPraise.SetContent(GameCommonInfo.GetUITextById(2004) + " " + innAttributes.praise+"%");
+            popupPraise.SetContent(GameCommonInfo.GetUITextById(2004) + " " + innAttributes.praise + "%");
         if (popupRichness != null)
             popupRichness.SetContent(GameCommonInfo.GetUITextById(2005) + " " + innAttributes.richness);
         if (tvRichness != null)
             tvRichness.text = innAttributes.richness + "";
 
-        string innLevelStr = GetUIManager<UIGameManager>().gameDataManager.gameData.innAttributes.GetInnLevel(out int innLevelTitle, out int innLevelStar);
+        string innLevelStr = gameDataManager.gameData.innAttributes.GetInnLevel(out int innLevelTitle, out int innLevelStar);
         if (popupInnLevel != null)
         {
             popupInnLevel.SetContent(GameCommonInfo.GetUITextById(2006) + " " + innLevelStr);
@@ -140,7 +190,7 @@ public class UIGameMain : BaseUIComponent, DialogView.IDialogCallBack
 
         if (ivInnLevel != null)
         {
-            Sprite spIcon = GetUIManager<UIGameManager>().gameItemsManager.GetItemsSpriteByName("inn_level_" + innLevelTitle + "_" + (innLevelStar - 1));
+            Sprite spIcon = gameItemsManager.GetItemsSpriteByName("inn_level_" + innLevelTitle + "_" + (innLevelStar - 1));
             if (spIcon)
             {
                 ivInnLevel.gameObject.SetActive(true);
@@ -165,42 +215,50 @@ public class UIGameMain : BaseUIComponent, DialogView.IDialogCallBack
             DialogBean dialogBean = new DialogBean();
             dialogBean.content = GameCommonInfo.GetUITextById(3007);
             dialogBean.dialogPosition = 1;
-            DialogManager dialogManager = GetUIManager<UIGameManager>().dialogManager;
             dialogManager.CreateDialog(DialogEnum.Normal, this, dialogBean);
         }
         else
         {
-            ToastManager toastManager = GetUIManager<UIGameManager>().toastManager;
             toastManager.ToastHint(GameCommonInfo.GetUITextById(1016));
         }
     }
 
     public void OpenWorkerUI()
     {
+        if (audioHandler != null)
+            audioHandler.PlaySound(SoundEnum.ButtonForNormal);
         uiManager.OpenUIAndCloseOtherByName(EnumUtil.GetEnumName(UIEnum.GameWorker));
     }
 
     public void OpenMenuUI()
     {
+        if (audioHandler != null)
+            audioHandler.PlaySound(SoundEnum.ButtonForNormal);
         uiManager.OpenUIAndCloseOtherByName(EnumUtil.GetEnumName(UIEnum.GameMenu));
     }
 
     public void OpenBackpackUI()
     {
+        if (audioHandler != null)
+            audioHandler.PlaySound(SoundEnum.ButtonForNormal);
         uiManager.OpenUIAndCloseOtherByName(EnumUtil.GetEnumName(UIEnum.GameBackpack));
     }
 
     public void OpenFavorabilityUI()
     {
+        if (audioHandler != null)
+            audioHandler.PlaySound(SoundEnum.ButtonForNormal);
         uiManager.OpenUIAndCloseOtherByName(EnumUtil.GetEnumName(UIEnum.GameFavorability));
     }
 
     public void EndDay()
     {
+        if (audioHandler != null)
+            audioHandler.PlaySound(SoundEnum.ButtonForNormal);
         DialogBean dialogBean = new DialogBean();
         dialogBean.content = GameCommonInfo.GetUITextById(3004);
         dialogBean.dialogPosition = 0;
-        GetUIManager<UIGameManager>().dialogManager.CreateDialog(DialogEnum.Normal, this, dialogBean);
+        dialogManager.CreateDialog(DialogEnum.Normal, this, dialogBean);
     }
 
     #region dialog 回调
