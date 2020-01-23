@@ -49,6 +49,14 @@ public class StoryInfoService : BaseMVCService
         BaseDeleteDataById(id);
         BaseDeleteData(tableNameForLeft, "story_id", "" + id);
     }
+    /// <summary>
+    /// 删除详情数据
+    /// </summary>
+    /// <param name="id"></param>
+    public void DeleteDetailsDataByIdOrderType(long id, int order, int type)
+    {
+        BaseDeleteData(tableNameForLeft, "story_id", id + "", "story_order", order + "", "type", type + "");
+    }
 
     /// <summary>
     /// 根据场景查询故事数据

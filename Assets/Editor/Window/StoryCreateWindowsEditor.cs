@@ -83,8 +83,7 @@ public class StoryCreateWindowsEditor : EditorWindow
             listStoryInfo.Clear();
             listAllStoryInfoDetails.Clear();
             listOrderStoryInfoDetails.Clear();
-            if (listStoryTextInfo != null)
-                listStoryTextInfo.Clear();
+            listStoryTextInfo = null;
         }
         //NPC创建
         GUILayout.BeginHorizontal();
@@ -275,6 +274,14 @@ public class StoryCreateWindowsEditor : EditorWindow
         foreach (StoryInfoDetailsBean itemData in listOrderStoryInfoDetails)
         {
             GUILayout.BeginHorizontal();
+            if(itemData.type != (int)StoryInfoDetailsBean.StoryInfoDetailsTypeEnum.Talk)
+            {
+                if (GUILayout.Button("删除", GUILayout.Width(200), GUILayout.Height(20)))
+                {
+                    storyInfoService.DeleteDetailsDataByIdOrderType(itemData.story_id, itemData.story_order,itemData.type);
+                    listOrderStoryInfoDetails.Remove(itemData);
+                }
+            }
             if (itemData.type == (int)StoryInfoDetailsBean.StoryInfoDetailsTypeEnum.NpcPosition)
             {
                 if (GUILayout.Button("更新显示", GUILayout.Width(100), GUILayout.Height(20)))

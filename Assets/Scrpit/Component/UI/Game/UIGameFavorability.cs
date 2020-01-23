@@ -42,6 +42,9 @@ public class UIGameFavorability : BaseUIComponent
             //只显示小镇居民数据
             if (characterData.npcInfoData.npc_type != (int)NPCTypeEnum.Town)
                 continue;
+            //只显示好感1以上的
+            if (itemData.favorability<=0)
+                continue;
             GameObject objFavorability= Instantiate(objFavorabilityContainer, objFavorabilityModel);
             ItemGameFavorabilityCpt itemFavorability = objFavorability.GetComponent<ItemGameFavorabilityCpt>();
             itemFavorability.SetData(itemData, characterData);

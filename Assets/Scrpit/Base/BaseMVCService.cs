@@ -195,6 +195,13 @@ public class BaseMVCService
         return SQliteHandle.DeleteTableDataAndLeft(ProjectConfigInfo.DATA_BASE_INFO_NAME, tableName, colKeys, operations, colValues);
     }
 
+    public bool BaseDeleteData(string tableName, string key1, string value1, string key2, string value2, string key3, string value3)
+    {
+        string[] colKeys = new string[] { key1, key2,key3 };
+        string[] operations = new string[] { "=", "=", "=" };
+        string[] colValues = new string[] { value1, value2, value3 };
+        return SQliteHandle.DeleteTableDataAndLeft(ProjectConfigInfo.DATA_BASE_INFO_NAME, tableName, colKeys, operations, colValues);
+    }
     /// <summary>
     /// 插入数据
     /// </summary>
