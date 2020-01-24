@@ -1,7 +1,8 @@
 ﻿using UnityEngine;
 using UnityEditor;
 using UnityEngine.UI;
-public class ItemGameWorkerCpt : ItemGameBaseCpt, IRadioButtonCallBack
+using DG.Tweening;
+public class ItemGameWorkerCpt : ItemGameBaseCpt, IRadioButtonCallBack, DialogView.IDialogCallBack
 {
     [Header("控件")]
     public Text tvName;
@@ -45,52 +46,65 @@ public class ItemGameWorkerCpt : ItemGameBaseCpt, IRadioButtonCallBack
     public CharacterUICpt characterUICpt;
     public CharacterBean characterData;
 
+    protected InfoPromptPopupShow infoPromptPopup;
+    protected AudioHandler audioHandler;
+    protected DialogManager dialogManager;
+    protected GameDataManager gameDataManager;
+    protected GameItemsManager gameItemsManager;
+    private void Awake()
+    {
+        gameItemsManager = GetUIManager<UIGameManager>().gameItemsManager;
+        infoPromptPopup = GetUIManager<UIGameManager>().infoPromptPopup;
+        audioHandler = GetUIManager<UIGameManager>().audioHandler;
+        dialogManager = GetUIManager<UIGameManager>().dialogManager;
+        gameDataManager = GetUIManager<UIGameManager>().gameDataManager;
+    }
+
     private void Start()
     {
-        UIGameManager uIGameManager = GetUIManager<UIGameManager>();
         if (pbName != null)
         {
-            pbName.SetPopupShowView(uIGameManager.infoPromptPopup);
+            pbName.SetPopupShowView(infoPromptPopup);
             pbName.SetContent(GameCommonInfo.GetUITextById(11001));
         }
         if (pbPrice != null)
         {
-            pbPrice.SetPopupShowView(uIGameManager.infoPromptPopup);
+            pbPrice.SetPopupShowView(infoPromptPopup);
             pbPrice.SetContent(GameCommonInfo.GetUITextById(11002));
         }
         if (pbLoyal != null)
         {
-            pbLoyal.SetPopupShowView(uIGameManager.infoPromptPopup);
+            pbLoyal.SetPopupShowView(infoPromptPopup);
             pbLoyal.SetContent(GameCommonInfo.GetUITextById(11003));
         }
         if (pbCook != null)
         {
-            pbCook.SetPopupShowView(uIGameManager.infoPromptPopup);
+            pbCook.SetPopupShowView(infoPromptPopup);
             pbCook.SetContent(GameCommonInfo.GetUITextById(1));
         }
         if (pbSpeed != null)
         {
-            pbSpeed.SetPopupShowView(uIGameManager.infoPromptPopup);
+            pbSpeed.SetPopupShowView(infoPromptPopup);
             pbSpeed.SetContent(GameCommonInfo.GetUITextById(2));
         }
         if (pbAccount != null)
         {
-            pbAccount.SetPopupShowView(uIGameManager.infoPromptPopup);
+            pbAccount.SetPopupShowView(infoPromptPopup);
             pbAccount.SetContent(GameCommonInfo.GetUITextById(3));
         }
         if (pbCharm != null)
         {
-            pbCharm.SetPopupShowView(uIGameManager.infoPromptPopup);
+            pbCharm.SetPopupShowView(infoPromptPopup);
             pbCharm.SetContent(GameCommonInfo.GetUITextById(4));
         }
         if (pbForce != null)
         {
-            pbForce.SetPopupShowView(uIGameManager.infoPromptPopup);
+            pbForce.SetPopupShowView(infoPromptPopup);
             pbForce.SetContent(GameCommonInfo.GetUITextById(5));
         }
         if (pbLucky != null)
         {
-            pbLucky.SetPopupShowView(uIGameManager.infoPromptPopup);
+            pbLucky.SetPopupShowView(infoPromptPopup);
             pbLucky.SetContent(GameCommonInfo.GetUITextById(6));
         }
 
@@ -124,6 +138,10 @@ public class ItemGameWorkerCpt : ItemGameBaseCpt, IRadioButtonCallBack
             btFire.onClick.AddListener(FireWorker);
     }
 
+    /// <summary>
+    /// 设置数据
+    /// </summary>
+    /// <param name="data"></param>
     public virtual void SetData(CharacterBean data)
     {
         if (data == null)
@@ -145,6 +163,11 @@ public class ItemGameWorkerCpt : ItemGameBaseCpt, IRadioButtonCallBack
         }
         if (data.body != null && data.equips != null)
             characterUICpt.SetCharacterData(data.body, data.equips);
+        //如果是用户，则不能解雇
+        if (data == gameDataManager.gameData.userCharacter)
+        {
+            btFire.gameObject.SetActive(false);
+        }
     }
 
     /// <summary>
@@ -152,6 +175,8 @@ public class ItemGameWorkerCpt : ItemGameBaseCpt, IRadioButtonCallBack
     /// </summary>
     public void OpenEquipUI()
     {
+        if (audioHandler != null)
+            audioHandler.PlaySound(SoundEnum.ButtonForNormal);
         if (uiComponent != null)
         {
             UIGameEquip uiequip = (UIGameEquip)GetUIManager().GetUIByName(EnumUtil.GetEnumName(UIEnum.GameEquip));
@@ -165,6 +190,8 @@ public class ItemGameWorkerCpt : ItemGameBaseCpt, IRadioButtonCallBack
     /// </summary>
     public void OpenDeitalsUI()
     {
+        if (audioHandler != null)
+            audioHandler.PlaySound(SoundEnum.ButtonForNormal);
         if (uiComponent != null)
         {
             UIGameWorkerDetails uiWorkerDetails = (UIGameWorkerDetails)GetUIManager().GetUIByName(EnumUtil.GetEnumName(UIEnum.GameWorkerDetails));
@@ -178,7 +205,12 @@ public class ItemGameWorkerCpt : ItemGameBaseCpt, IRadioButtonCallBack
     /// </summary>
     public void FireWorker()
     {
+        if (audioHandler != null)
+            audioHandler.PlaySound(SoundEnum.ButtonForNormal);
 
+        DialogBean dialogData = new DialogBean();
+        dialogData.content = string.Format(GameCommonInfo.GetUITextById(3063), characterData.baseInfo.name);
+        dialogManager.CreateDialog(DialogEnum.Normal, this, dialogData);
     }
 
     /// <summary>
@@ -188,7 +220,6 @@ public class ItemGameWorkerCpt : ItemGameBaseCpt, IRadioButtonCallBack
     public void SetAttributes(CharacterAttributesBean characterAttributes, CharacterEquipBean characterEquip)
     {
 
-        GameItemsManager gameItemsManager = GetUIManager<UIGameManager>().gameItemsManager;
         characterData.GetAttributes(gameItemsManager,
         out CharacterAttributesBean totalAttributes, out CharacterAttributesBean selfAttributes, out CharacterAttributesBean equipAttributes);
 
@@ -390,4 +421,19 @@ public class ItemGameWorkerCpt : ItemGameBaseCpt, IRadioButtonCallBack
         if (GetUIManager<UIGameManager>().innHandler != null)
             GetUIManager<UIGameManager>().innHandler.InitWorker();
     }
+
+    #region 确认回调
+    public void Submit(DialogView dialogView, DialogBean dialogBean)
+    {
+        gameDataManager.gameData.RemoveWorker(characterData);
+        transform.DOScale(Vector3.zero, 0.5f).SetEase(Ease.InBack).OnComplete(delegate {
+            Destroy(gameObject);
+        });
+    }
+
+    public void Cancel(DialogView dialogView, DialogBean dialogBean)
+    {
+
+    }
+    #endregion
 }

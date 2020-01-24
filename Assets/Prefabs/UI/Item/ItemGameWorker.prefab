@@ -1881,7 +1881,7 @@ RectTransform:
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.15, y: 0}
-  m_AnchorMax: {x: 0.35, y: 0.5}
+  m_AnchorMax: {x: 0.3, y: 0.5}
   m_AnchoredPosition: {x: -2.5, y: 0}
   m_SizeDelta: {x: -5, y: -20}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -1935,6 +1935,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   popupShow: {fileID: 0}
   content: "\u65E5\u85AA"
+  isAudio: 0
 --- !u!1 &7664634356150698964
 GameObject:
   m_ObjectHideFlags: 0
@@ -2425,10 +2426,10 @@ RectTransform:
   m_Father: {fileID: 7664634357485668162}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.35, y: 0}
+  m_AnchorMin: {x: 0.3, y: 0}
   m_AnchorMax: {x: 0.65, y: 1}
-  m_AnchoredPosition: {x: 0.0000076293945, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: -0.0000038146973, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &7664634356362114091
 CanvasRenderer:
@@ -2486,7 +2487,7 @@ MonoBehaviour:
   m_ChildAlignment: 4
   m_StartCorner: 0
   m_StartAxis: 0
-  m_CellSize: {x: 65, y: 65}
+  m_CellSize: {x: 75, y: 65}
   m_Spacing: {x: 5, y: 5}
   m_Constraint: 1
   m_ConstraintCount: 3
@@ -2551,6 +2552,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   popupShow: {fileID: 0}
   content: "\u5FE0\u5FC3"
+  isAudio: 0
 --- !u!1 &7664634356409549270
 GameObject:
   m_ObjectHideFlags: 0
@@ -2926,6 +2928,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   popupShow: {fileID: 0}
   content: "\u5E78\u8FD0"
+  isAudio: 0
 --- !u!1 &7664634356659742430
 GameObject:
   m_ObjectHideFlags: 0
@@ -3427,6 +3430,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   popupShow: {fileID: 0}
   content: "\u6B66\u529B"
+  isAudio: 0
 --- !u!1 &7664634356865322834
 GameObject:
   m_ObjectHideFlags: 0
@@ -3488,6 +3492,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   popupShow: {fileID: 0}
   content: "\u53A8\u529B"
+  isAudio: 0
 --- !u!1 &7664634356878911433
 GameObject:
   m_ObjectHideFlags: 0
@@ -3523,7 +3528,7 @@ RectTransform:
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.15, y: 0.5}
-  m_AnchorMax: {x: 0.35, y: 1}
+  m_AnchorMax: {x: 0.3, y: 1}
   m_AnchoredPosition: {x: -2.5, y: 0}
   m_SizeDelta: {x: -5, y: -20}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -3577,6 +3582,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   popupShow: {fileID: 0}
   content: "\u540D\u5B57"
+  isAudio: 0
 --- !u!1 &7664634356890602209
 GameObject:
   m_ObjectHideFlags: 0
@@ -4114,6 +4120,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   popupShow: {fileID: 0}
   content: "\u8BA1\u7B97"
+  isAudio: 0
 --- !u!1 &7664634357273392783
 GameObject:
   m_ObjectHideFlags: 0
@@ -4735,6 +4742,7 @@ MonoBehaviour:
   characterData:
     baseInfo:
       characterId: 
+      characterType: 0
       titleName: 
       name: 
       workDay: 0
@@ -4755,7 +4763,7 @@ MonoBehaviour:
         cleanTotalNumber: 0
         sendTotalNumber: 0
         cleanTotalTime: 0
-      accountingInfo:
+      accountantInfo:
         workerType: 3
         workerLevel: 0
         workerExp: 0
@@ -4791,12 +4799,12 @@ MonoBehaviour:
         restTotalTime: 0
       isChef: 0
       isWaiter: 0
-      isAccounting: 0
+      isAccountant: 1
       isAccost: 0
       isBeater: 0
       priorityChef: 0
       priorityWaiter: 0
-      priorityAccounting: 0
+      priorityAccountant: 0
       priorityAccost: 0
       priorityBeater: 0
       isAttendance: 0
@@ -5993,6 +6001,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   popupShow: {fileID: 0}
   content: "\u9B45\u529B"
+  isAudio: 0
 --- !u!1 &7664634358120696771
 GameObject:
   m_ObjectHideFlags: 0
@@ -6054,6 +6063,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   popupShow: {fileID: 0}
   content: "\u901F\u5EA6"
+  isAudio: 0
 --- !u!1 &7664634358148056952
 GameObject:
   m_ObjectHideFlags: 0

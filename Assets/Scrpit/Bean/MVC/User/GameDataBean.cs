@@ -608,4 +608,16 @@ public class GameDataBean
         if (trophyLegendary < 0)
             trophyLegendary = 0;
     }
+
+    /// <summary>
+    /// 移除员工
+    /// </summary>
+    /// <param name="characterData"></param>
+    /// <returns></returns>
+    public bool RemoveWorker(CharacterBean characterData)
+    {
+        if (listWorkerCharacter != null&& characterData!=null)
+           return listWorkerCharacter.Remove(characterData);
+        return false;
+    }
 }

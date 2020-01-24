@@ -18,6 +18,8 @@ public class UIGameMain : BaseUIComponent, DialogView.IDialogCallBack
     public Button btFavorability;
     public InfoPromptPopupButton popupSave;
     public Button btSave;
+    public InfoPromptPopupButton popupInnData;
+    public Button btInnData;
 
     public Button btSleep;
 
@@ -94,6 +96,8 @@ public class UIGameMain : BaseUIComponent, DialogView.IDialogCallBack
             popupFavorability.SetPopupShowView(infoPromptPopup);
         if (popupSave != null)
             popupSave.SetPopupShowView(infoPromptPopup);
+        if (popupInnData != null)
+            popupInnData.SetPopupShowView(infoPromptPopup);
 
         if (popupAesthetics != null)
             popupAesthetics.SetPopupShowView(infoPromptPopup);
@@ -159,17 +163,19 @@ public class UIGameMain : BaseUIComponent, DialogView.IDialogCallBack
             return;
 
         if (popupWorker != null)
-            popupWorker.SetContent(GameCommonInfo.GetUITextById(2003));
+            popupWorker.SetContent(GameCommonInfo.GetUITextById(2031));
         if (popupBuild != null)
-            popupBuild.SetContent(GameCommonInfo.GetUITextById(2003));
+            popupBuild.SetContent(GameCommonInfo.GetUITextById(2032));
         if (popupMenu != null)
-            popupMenu.SetContent(GameCommonInfo.GetUITextById(2003));
+            popupMenu.SetContent(GameCommonInfo.GetUITextById(2033));
         if (popupBackpack != null)
-            popupBackpack.SetContent(GameCommonInfo.GetUITextById(2003));
+            popupBackpack.SetContent(GameCommonInfo.GetUITextById(2034));
         if (popupFavorability != null)
-            popupFavorability.SetContent(GameCommonInfo.GetUITextById(2003));
+            popupFavorability.SetContent(GameCommonInfo.GetUITextById(2035));
         if (popupSave != null)
-            popupSave.SetContent(GameCommonInfo.GetUITextById(2003));
+            popupSave.SetContent(GameCommonInfo.GetUITextById(2036));
+        if (popupInnData != null)
+            popupInnData.SetContent(GameCommonInfo.GetUITextById(2037));
 
         if (popupAesthetics != null)
             popupAesthetics.SetContent(GameCommonInfo.GetUITextById(2003) + " " + innAttributes.aesthetics);

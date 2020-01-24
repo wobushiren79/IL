@@ -2,12 +2,12 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-
+using UnityEngine.UI;
 public class SceneLoadingInit : MonoBehaviour
 {
-    private float targetValue;
+    public float targetValue;
     private AsyncOperation mOperation;
-    
+ 
     void Start()
     {
         //启动协程
@@ -36,6 +36,8 @@ public class SceneLoadingInit : MonoBehaviour
     /// <returns></returns>
     IEnumerator CoroutineForAsyncLoading()
     {
+        yield return new WaitForEndOfFrame();
+       // Application.backgroundLoadingPriority = ThreadPriority.Low; 
         mOperation = SceneManager.LoadSceneAsync(EnumUtil.GetEnumName(GameCommonInfo.ScenesChangeData.loadingScene));
         //阻止当加载完成自动切换
         //mOperation.allowSceneActivation = false;
