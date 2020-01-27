@@ -37,7 +37,7 @@ public class SceneLoadingInit : MonoBehaviour
     IEnumerator CoroutineForAsyncLoading()
     {
         yield return new WaitForEndOfFrame();
-       // Application.backgroundLoadingPriority = ThreadPriority.Low; 
+        Application.backgroundLoadingPriority = ThreadPriority.Low; 
         mOperation = SceneManager.LoadSceneAsync(EnumUtil.GetEnumName(GameCommonInfo.ScenesChangeData.loadingScene));
         //阻止当加载完成自动切换
         //mOperation.allowSceneActivation = false;

@@ -14,11 +14,10 @@ public class ControlForMoveCpt : BaseControl
         Scene scene = SceneManager.GetActiveScene();
         if (scene.name.Equals(EnumUtil.GetEnumName(ScenesEnum.GameInnScene)))
         {
-            cameraFollowObj.transform.position = new Vector3(0, 0);
-            characterMoveCpt.minMoveX = -5;
-            characterMoveCpt.maxMoveX = gameDataManager.gameData.GetInnBuildData().innWidth + 5;
-            characterMoveCpt.minMoveY = -5;
-            characterMoveCpt.maxMoveY = gameDataManager.gameData.GetInnBuildData().innHeight + 5;
+            //characterMoveCpt.minMoveX = -5;
+            //characterMoveCpt.maxMoveX = gameDataManager.gameData.GetInnBuildData().innWidth + 5;
+            //characterMoveCpt.minMoveY = -5;
+            //characterMoveCpt.maxMoveY = gameDataManager.gameData.GetInnBuildData().innHeight + 5;
         }
         InitCharacter();
     }
@@ -66,7 +65,6 @@ public class ControlForMoveCpt : BaseControl
     {
         base.StartControl();
         InitCharacter();
-        //transform.position = new Vector3(0, 0, 0);
     }
 
     public override void RestoreControl()

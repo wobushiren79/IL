@@ -31,6 +31,13 @@ public class UIGameSettle : BaseUIComponent
 
     private float animDelay;
 
+    protected ControlHandler controlHandler;
+
+    private void Awake()
+    {
+        controlHandler = GetUIManager<UIGameManager>().controlHandler;
+    }
+
     private void Start()
     {
         if (btSubmit != null)
@@ -41,6 +48,8 @@ public class UIGameSettle : BaseUIComponent
     {
         base.OpenUI();
         InitData();
+        if (controlHandler != null)
+            controlHandler.StopControl();
     }
 
     public void InitData()

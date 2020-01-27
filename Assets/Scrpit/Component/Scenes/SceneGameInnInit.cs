@@ -6,6 +6,7 @@ using UnityEngine.SceneManagement;
 
 public class SceneGameInnInit : BaseSceneInit, IBaseObserver, DialogView.IDialogCallBack
 {
+    protected SceneInnManager sceneInnManager;
     public InnBuildManager innBuildManager;
 
     public InnFloorBuilder innFloorBuilder;
@@ -19,6 +20,11 @@ public class SceneGameInnInit : BaseSceneInit, IBaseObserver, DialogView.IDialog
     public NavMeshSurface navMesh;
 
     public NpcCustomerBuilder npcCustomerBuilder;
+
+    private void Awake()
+    {
+        sceneInnManager = Find<SceneInnManager>(ImportantTypeEnum.SceneManager);
+    }
 
     private new void Start()
     {
@@ -67,6 +73,12 @@ public class SceneGameInnInit : BaseSceneInit, IBaseObserver, DialogView.IDialog
                 //建造NPC
                 npcCustomerBuilder.BuilderCustomerForInit(20);
                 npcCustomerBuilder.StartBuildCustomer();
+
+
+                //设置位置
+                Vector3 startPosition=  sceneInnManager.GetRandomSceneExportPosition();
+                BaseControl baseControl=  controlHandler.StartControl( ControlHandler.ControlEnum.Normal);
+                baseControl.SetFollowPosition(startPosition);
             }
         }
     }

@@ -73,14 +73,24 @@ public class BaseControl : BaseMonoBehaviour
     }
 
     /// <summary>
-    /// 设置摄像机位置
+    /// 设置摄像机跟随物体位置
     /// </summary>
     /// <param name="position"></param>
-    public void SetCameraPosition(Vector3 position)
+    public void SetFollowPosition(Vector3 position)
     {
         if (cameraFollowObj != null)
             cameraFollowObj.transform.position = position;
     }
+
+    /// <summary>
+    /// 设置摄像机位置
+    /// </summary>
+    /// <param name="position"></param>
+    public void SetCameraPosition(Vector2 position)
+    {
+        if (mCamera2D != null)
+            mCamera2D.transform.position = position;
+;    }
 
     /// <summary>
     /// 设置镜头远近

@@ -24,14 +24,16 @@ public class UIGameDate : BaseUIComponent
     protected NpcCustomerBuilder npcCustomerBuilder;
     protected EventHandler eventHandler;
     protected AudioHandler audioHandler;
+    protected InnHandler innHandler;
     private void Awake()
     {
-         gameTimeHandler = GetUIManager<UIGameManager>().gameTimeHandler;
-         gameDataManager = GetUIManager<UIGameManager>().gameDataManager;
-         controlHandler = GetUIManager<UIGameManager>().controlHandler ;
-         npcCustomerBuilder = GetUIManager<UIGameManager>().npcCustomerBuilder;
-         eventHandler = GetUIManager<UIGameManager>().eventHandler;
-         audioHandler = GetUIManager<UIGameManager>().audioHandler;
+        gameTimeHandler = GetUIManager<UIGameManager>().gameTimeHandler;
+        gameDataManager = GetUIManager<UIGameManager>().gameDataManager;
+        controlHandler = GetUIManager<UIGameManager>().controlHandler;
+        npcCustomerBuilder = GetUIManager<UIGameManager>().npcCustomerBuilder;
+        eventHandler = GetUIManager<UIGameManager>().eventHandler;
+        audioHandler = GetUIManager<UIGameManager>().audioHandler;
+        innHandler = GetUIManager<UIGameManager>().innHandler;
     }
 
     private void Start()
@@ -77,7 +79,7 @@ public class UIGameDate : BaseUIComponent
     public void AnimForInit()
     {
         if (objContent != null)
-            objContent.transform.DOScaleY(0,0.5f).From().SetEase(Ease.OutBack);
+            objContent.transform.DOScaleY(0, 0.5f).From().SetEase(Ease.OutBack);
     }
 
     /// <summary>
@@ -154,9 +156,13 @@ public class UIGameDate : BaseUIComponent
         if (!eventHandler.EventTriggerForStory())
         {
             uiManager.OpenUIAndCloseOtherByName(EnumUtil.GetEnumName(UIEnum.GameMain));
-            controlHandler.StartControl(ControlHandler.ControlEnum.Normal);
+
             //开始建造NPC
             npcCustomerBuilder.StartBuildCustomer();
+            //设置位置
+            Vector3 startPosition = innHandler.GetRandomEntrancePosition();
+            BaseControl baseControl = controlHandler.StartControl(ControlHandler.ControlEnum.Normal);
+            baseControl.SetFollowPosition(startPosition);
         }
     }
 
