@@ -37,4 +37,6 @@ public enum ImportantTypeEnum
     MiniGameHandler,
     InnHandler,
     AudioHandler,
+
+    Popup,
 }

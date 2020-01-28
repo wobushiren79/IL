@@ -46,6 +46,19 @@ public class UIGameWorkerDetails : BaseUIComponent, IRadioGroupCallBack
     public Sprite spSexMan;
     public Sprite spSexWoman;
 
+    protected AudioHandler audioHandler;
+    protected InfoItemsPopupShow infoItemsPopupShow;
+    protected GameItemsManager gameItemsManager;
+    protected CharacterDressManager characterDressManager;
+
+    private void Awake()
+    {
+        audioHandler = GetUIManager<UIGameManager>().audioHandler;
+        infoItemsPopupShow = GetUIManager<UIGameManager>().infoItemsPopup;
+        gameItemsManager = GetUIManager<UIGameManager>().gameItemsManager;
+        characterDressManager = GetUIManager<UIGameManager>().characterDressManager;
+    }
+
     public void SetCharacterData(CharacterBean characterData)
     {
         this.characterData = characterData;
@@ -53,7 +66,6 @@ public class UIGameWorkerDetails : BaseUIComponent, IRadioGroupCallBack
 
     private void Start()
     {
-        InfoItemsPopupShow infoItemsPopupShow = GetUIManager<UIGameManager>().infoItemsPopup;
         if (btBack != null)
             btBack.onClick.AddListener(OpenWorkUI);
 
@@ -69,7 +81,7 @@ public class UIGameWorkerDetails : BaseUIComponent, IRadioGroupCallBack
         {
             rgWorkerTitle.SetCallBack(this);
             rgWorkerTitle.SetPosition(0, true);
-        } 
+        }
     }
 
     /// <summary>
@@ -90,7 +102,7 @@ public class UIGameWorkerDetails : BaseUIComponent, IRadioGroupCallBack
             case WorkerEnum.Chef:
                 InnFoodManager innFoodManager = GetUIManager<UIGameManager>().innFoodManager;
                 workerChefInfo.gameObject.SetActive(true);
-                workerChefInfo.SetData(innFoodManager,characterData.baseInfo.chefInfo);
+                workerChefInfo.SetData(innFoodManager, characterData.baseInfo.chefInfo);
                 break;
             case WorkerEnum.Waiter:
                 workerWaiterInfo.gameObject.SetActive(true);
@@ -106,6 +118,7 @@ public class UIGameWorkerDetails : BaseUIComponent, IRadioGroupCallBack
                 break;
             case WorkerEnum.Beater:
                 workerBeaterInfo.gameObject.SetActive(true);
+                workerBeaterInfo.SetData(characterData.baseInfo.beaterInfo);
                 break;
         }
     }
@@ -122,11 +135,13 @@ public class UIGameWorkerDetails : BaseUIComponent, IRadioGroupCallBack
         SetEquip(characterData.equips);
         SetWorkerInfo(characterData.baseInfo);
         characterUICpt.SetCharacterData(characterData.body, characterData.equips);
-        rgWorkerTitle.SetPosition(0 , true);
+        rgWorkerTitle.SetPosition(0, true);
     }
 
     public void OpenWorkUI()
     {
+        if (audioHandler != null)
+            audioHandler.PlaySound(SoundEnum.ButtonForBack);
         uiManager.OpenUIAndCloseOtherByName(EnumUtil.GetEnumName(UIEnum.GameWorker));
     }
 
@@ -166,8 +181,6 @@ public class UIGameWorkerDetails : BaseUIComponent, IRadioGroupCallBack
     /// <param name="characterEquip"></param>
     public void SetEquip(CharacterEquipBean characterEquip)
     {
-        GameItemsManager gameItemsManager = GetUIManager<UIGameManager>().gameItemsManager;
-        CharacterDressManager characterDressManager = GetUIManager<UIGameManager>().characterDressManager;
         Sprite spHand = null;
         Sprite spHat = null;
         Sprite spClothes = null;
@@ -244,7 +257,7 @@ public class UIGameWorkerDetails : BaseUIComponent, IRadioGroupCallBack
         if (tvLucky != null)
             tvLucky.text = GameCommonInfo.GetUITextById(6) + "：" + selfAttributes.lucky + (equipAttributes.lucky == 0 ? "" : "+" + equipAttributes.lucky);
         if (characterAttributeView != null)
-            characterAttributeView.SetData(totalAttributes.cook, totalAttributes.speed, totalAttributes.account, totalAttributes.charm, totalAttributes.force,totalAttributes.lucky);
+            characterAttributeView.SetData(totalAttributes.cook, totalAttributes.speed, totalAttributes.account, totalAttributes.charm, totalAttributes.force, totalAttributes.lucky);
     }
 
     /// <summary>
@@ -286,6 +299,8 @@ public class UIGameWorkerDetails : BaseUIComponent, IRadioGroupCallBack
     #region 数据类型选择回调
     public void RadioButtonSelected(RadioGroupView rgView, int position, RadioButtonView rbview)
     {
+        if (audioHandler != null)
+            audioHandler.PlaySound(SoundEnum.ButtonForNormal);
         InitDataByWorker((WorkerEnum)(position + 1));
     }
 

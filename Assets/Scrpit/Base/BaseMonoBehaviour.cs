@@ -2,7 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BaseMonoBehaviour : MonoBehaviour {
+public class BaseMonoBehaviour : MonoBehaviour
+{
 
     /// <summary>
     /// 实例化一个物体
@@ -10,7 +11,7 @@ public class BaseMonoBehaviour : MonoBehaviour {
     /// <param name="objContent"></param>
     /// <param name="objModel"></param>
     /// <returns></returns>
-    public GameObject Instantiate(GameObject objContent,GameObject objModel)
+    public GameObject Instantiate(GameObject objContent, GameObject objModel)
     {
         GameObject objItem = Instantiate(objModel, objContent.transform);
         objItem.SetActive(true);
@@ -24,7 +25,7 @@ public class BaseMonoBehaviour : MonoBehaviour {
     /// <param name="objModel"></param>
     /// <param name="position"></param>
     /// <returns></returns>
-    public GameObject Instantiate(GameObject objContent, GameObject objModel,Vector3 position)
+    public GameObject Instantiate(GameObject objContent, GameObject objModel, Vector3 position)
     {
         GameObject objItem = Instantiate(objModel, objContent.transform);
         objItem.SetActive(true);
@@ -52,7 +53,7 @@ public class BaseMonoBehaviour : MonoBehaviour {
     /// <returns></returns>
     public T Find<T>(ImportantTypeEnum importantType)
     {
-       return Find<T>(EnumUtil.GetEnumName(importantType)); 
+        return Find<T>(EnumUtil.GetEnumName(importantType));
     }
     public T Find<T>(string name)
     {
@@ -79,7 +80,13 @@ public class BaseMonoBehaviour : MonoBehaviour {
         }
         else
         {
-            return objFind.GetComponentInChildren<T>();
+            for (int i = 0; i < objFind.transform.childCount; i++)
+            {
+                T data = objFind.transform.GetChild(i).GetComponent<T>();
+                if (data != null)
+                    return data;
+            }
+            return default;
         }
     }
 }

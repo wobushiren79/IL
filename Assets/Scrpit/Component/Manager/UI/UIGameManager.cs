@@ -52,7 +52,7 @@ public class UIGameManager : BaseUIManager
         innFoodManager = Find<InnFoodManager>(ImportantTypeEnum.FoodManager);
         npcInfoManager = Find<NpcInfoManager>(ImportantTypeEnum.NpcManager);
         storeInfoManager = Find<StoreInfoManager>(ImportantTypeEnum.StoreInfoManager);
-        iconDataManager= Find<IconDataManager>(ImportantTypeEnum.UIManager);
+        iconDataManager = Find<IconDataManager>(ImportantTypeEnum.UIManager);
 
         dialogManager = Find<DialogManager>(ImportantTypeEnum.DialogManager);
         toastManager = Find<ToastManager>(ImportantTypeEnum.ToastManager);
@@ -62,5 +62,12 @@ public class UIGameManager : BaseUIManager
         controlHandler = Find<ControlHandler>(ImportantTypeEnum.ControlHandler);
         eventHandler = Find<EventHandler>(ImportantTypeEnum.EventHandler);
         audioHandler = Find<AudioHandler>(ImportantTypeEnum.AudioHandler);
+
+        infoPromptPopup = FindInChildren<InfoPromptPopupShow>(ImportantTypeEnum.Popup);
+        infoItemsPopup = FindInChildren<InfoItemsPopupShow>(ImportantTypeEnum.Popup);
+        infoFoodPopup = FindInChildren<InfoFoodPopupShow>(ImportantTypeEnum.Popup);
+        infoAchievementPopup = FindInChildren<InfoAchievementPopupShow>(ImportantTypeEnum.Popup);
+        infoAbilityPopup = FindInChildren<InfoAbilityPopupShow>(ImportantTypeEnum.Popup);
+        popupItemsSelection = FindInChildren<PopupItemsSelection>(ImportantTypeEnum.Popup);
     }
 }

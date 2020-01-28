@@ -7,6 +7,12 @@ public class ItemGameBackpackEquipCpt : ItemGameBackpackCpt
     public CharacterBean characterData;
 
     public int type = 0;
+    
+
+    public override void Awake()
+    {
+        base.Awake();
+    }
 
     public void SetData(CharacterBean characterData, ItemsInfoBean infoBean, ItemBean itemBean)
     {
@@ -18,7 +24,7 @@ public class ItemGameBackpackEquipCpt : ItemGameBackpackCpt
     {
         if (itemsInfoBean == null || itemsInfoBean.id == 0)
             return;
-        PopupItemsSelection popupItemsSelection = GetUIManager<UIGameManager>().popupItemsSelection;
+
         if (popupItemsSelection != null)
             popupItemsSelection.SetCallBack(this);
         if (type == 1)

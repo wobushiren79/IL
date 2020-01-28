@@ -19,9 +19,12 @@ public class ItemGameBackpackCpt : ItemGameBaseCpt, IPointerClickHandler, PopupI
     public UnityEvent rightClick;
 
     protected UIGameManager uiGameManager;
-    private void Awake()
+    protected PopupItemsSelection popupItemsSelection;
+
+    public virtual void Awake()
     {
         uiGameManager = Find<UIGameManager>(ImportantTypeEnum.GameUI);
+        popupItemsSelection = uiGameManager.popupItemsSelection;
     }
 
     public void Start()
@@ -117,7 +120,6 @@ public class ItemGameBackpackCpt : ItemGameBaseCpt, IPointerClickHandler, PopupI
     {
         if (itemsInfoBean == null)
             return;
-        PopupItemsSelection popupItemsSelection = uiGameManager.popupItemsSelection;
         if (popupItemsSelection != null)
             popupItemsSelection.SetCallBack(this);
         switch (itemsInfoBean.items_type)
