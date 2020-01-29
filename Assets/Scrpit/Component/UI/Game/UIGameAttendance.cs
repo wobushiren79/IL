@@ -3,7 +3,7 @@ using UnityEditor;
 using UnityEngine.UI;
 using System.Collections.Generic;
 
-public class UIGameAttendance : BaseUIComponent, ItemGameAttendanceCpt.ICallBack
+public class UIGameAttendance : UIGameComponent, ItemGameAttendanceCpt.ICallBack
 {
     public Text tvPriceL;
     public Text tvPriceM;
@@ -43,37 +43,32 @@ public class UIGameAttendance : BaseUIComponent, ItemGameAttendanceCpt.ICallBack
     /// </summary>
     public void StartWork()
     {
-        GameDataManager gameDataManager = GetUIManager<UIGameManager>().gameDataManager;
-        GameTimeHandler gameTimeHandler = GetUIManager<UIGameManager>().gameTimeHandler;
-        InnHandler innHandler = GetUIManager<UIGameManager>().innHandler;
-        ControlHandler controlHandler = GetUIManager<UIGameManager>().controlHandler;
-        ToastManager toastManager = GetUIManager<UIGameManager>().toastManager;
-        NpcCustomerBuilder npcCustomerBuilder = GetUIManager<UIGameManager>().npcCustomerBuilder;
+        uiGameManager.audioHandler.PlaySound(SoundEnum.ButtonForNormal);
         //如果出勤人数太少
         if (attendanceNumber <= 0)
         {
-            toastManager.ToastHint(GameCommonInfo.GetUITextById(1013));
+            uiGameManager.toastManager.ToastHint(GameCommonInfo.GetUITextById(1013));
             return;
         }
-        if (!gameDataManager.gameData.HasEnoughMoney(attendancePriceL, attendancePriceM, attendancePriceS))
+        if (!uiGameManager.gameDataManager.gameData.HasEnoughMoney(attendancePriceL, attendancePriceM, attendancePriceS))
         {
-            toastManager.ToastHint(GameCommonInfo.GetUITextById(1014));
+            uiGameManager.toastManager.ToastHint(GameCommonInfo.GetUITextById(1014));
             return;
         }
         //支付出勤费用
-        gameDataManager.gameData.PayMoney(attendancePriceL, attendancePriceM, attendancePriceS);
+        uiGameManager.gameDataManager.gameData.PayMoney(attendancePriceL, attendancePriceM, attendancePriceS);
         //设置当天状态
-        gameTimeHandler.dayStauts = GameTimeHandler.DayEnum.Work;
+        uiGameManager.gameTimeHandler.dayStauts = GameTimeHandler.DayEnum.Work;
         //设置是否停止时间
-        gameTimeHandler.SetTimeStatus(false);
+        uiGameManager.gameTimeHandler.SetTimeStatus(false);
         //开启主UI
         uiManager.OpenUIAndCloseOtherByName(EnumUtil.GetEnumName(UIEnum.GameMain));
         //打开客栈
-        innHandler.OpenInn();
+        uiGameManager.innHandler.OpenInn();
         //放开控制
-        controlHandler.StartControl(ControlHandler.ControlEnum.Work);
+        uiGameManager.controlHandler.StartControl(ControlHandler.ControlEnum.Work);
         //开始建造NPC
-        npcCustomerBuilder.StartBuildCustomer();
+        uiGameManager.npcCustomerBuilder.StartBuildCustomer();
     }
 
     public void InitData()
@@ -111,7 +106,7 @@ public class UIGameAttendance : BaseUIComponent, ItemGameAttendanceCpt.ICallBack
             attendancePriceS += characterData.baseInfo.priceS;
             attendanceNumber += 1;
         }
-        
+
     }
 
     public void SetTotalData()

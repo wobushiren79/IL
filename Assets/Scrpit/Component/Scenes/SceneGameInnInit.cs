@@ -76,8 +76,8 @@ public class SceneGameInnInit : BaseSceneInit, IBaseObserver, DialogView.IDialog
 
 
                 //设置位置
-                Vector3 startPosition=  sceneInnManager.GetRandomSceneExportPosition();
-                BaseControl baseControl=  controlHandler.StartControl( ControlHandler.ControlEnum.Normal);
+                Vector3 startPosition=  sceneInnManager.GetTownEntranceLeft();
+                BaseControl baseControl=  controlHandler.StartControl(ControlHandler.ControlEnum.Normal);
                 baseControl.SetFollowPosition(startPosition);
             }
         }

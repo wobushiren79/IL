@@ -7,7 +7,9 @@ public class SceneInnManager : BaseManager
 
     //客栈区域出入口
     public List<Transform> listSceneExport;
-
+    //城镇入口
+    public Transform townEntranceLeft;
+    public Transform townEntranceRight;
 
     /// <summary>
     /// 获取随机客栈区域出入口坐标
@@ -36,5 +38,19 @@ public class SceneInnManager : BaseManager
         }
         Transform tfTownDoor = listSceneExport[num];
         return GameUtil.GetTransformInsidePosition2D(tfTownDoor);
+    }
+
+    /// <summary>
+    /// 获取城镇入口
+    /// </summary>
+    /// <returns></returns>
+    public Vector2 GetTownEntranceLeft()
+    {
+        return townEntranceLeft.transform.position;
+    }
+
+    public Vector2 GetTownEntranceRight()
+    {
+        return townEntranceRight.transform.position;
     }
 }

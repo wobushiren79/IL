@@ -164,7 +164,7 @@ public class ItemGameWorkerCpt : ItemGameBaseCpt, IRadioButtonCallBack, DialogVi
         if (data.body != null && data.equips != null)
             characterUICpt.SetCharacterData(data.body, data.equips);
         //如果是用户，则不能解雇
-        if (data == gameDataManager.gameData.userCharacter)
+        if (data == gameDataManager.gameData.userCharacter && btFire != null)
         {
             btFire.gameObject.SetActive(false);
         }
@@ -426,7 +426,8 @@ public class ItemGameWorkerCpt : ItemGameBaseCpt, IRadioButtonCallBack, DialogVi
     public void Submit(DialogView dialogView, DialogBean dialogBean)
     {
         gameDataManager.gameData.RemoveWorker(characterData);
-        transform.DOScale(Vector3.zero, 0.5f).SetEase(Ease.InBack).OnComplete(delegate {
+        transform.DOScale(Vector3.zero, 0.5f).SetEase(Ease.InBack).OnComplete(delegate
+        {
             Destroy(gameObject);
         });
     }
