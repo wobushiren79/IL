@@ -159,7 +159,7 @@ public class GameDataBean
     /// <param name="id"></param>
     public void AddNewItems(long id, long number)
     {
-        ItemBean itemBean = new ItemBean(id, 1);
+        ItemBean itemBean = new ItemBean(id, number);
         listItems.Add(itemBean);
     }
 

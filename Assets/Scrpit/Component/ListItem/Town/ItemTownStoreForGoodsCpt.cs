@@ -310,7 +310,7 @@ public class ItemTownStoreForGoodsCpt : ItemGameBaseCpt, DialogView.IDialogCallB
         gameDataManager.gameData.PayGuildCoin(storeInfo.guild_coin);
         gameDataManager.gameData.PayTrophy(storeInfo.trophy_elementary, storeInfo.trophy_intermediate, storeInfo.trophy_advanced, storeInfo.trophy_legendary);
         toastManager.ToastHint(ivIcon.sprite, string.Format(GameCommonInfo.GetUITextById(1010), itemsInfo.name));
-        gameDataManager.gameData.AddItemsNumber(storeInfo.mark_id, 1);
+        gameDataManager.gameData.AddNewItems(storeInfo.mark_id, 1);
         RefreshUI();
     }
 

@@ -5,17 +5,45 @@ using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 public class SceneLoadingInit : MonoBehaviour
 {
+    public Image ivLoading;
+
     public float targetValue;
     private AsyncOperation mOperation;
- 
+
+    public Sprite[] listSpLoading;
+
+    protected int loadingPosition=0;
+    protected int loadingTime = 0;
+    protected int loadingTimeScale = 2;
+
     void Start()
     {
         //启动协程
        StartCoroutine(CoroutineForAsyncLoading());
     }
-    
+
+    private void FixedUpdate()
+    {
+        if (loadingTime == loadingTimeScale)
+        {
+            ivLoading.sprite = listSpLoading[loadingPosition];
+            loadingPosition++;
+            if (loadingPosition >= listSpLoading.Length)
+            {
+                loadingPosition = 0;
+            }
+        }
+        loadingTime++;
+        if (loadingTime > loadingTimeScale)
+        {
+            loadingTime = 0;
+        }
+    }
+
     void Update()
     {
+
+
         //targetValue = mOperation.progress;
 
         //if (mOperation.progress >= 0.9f)

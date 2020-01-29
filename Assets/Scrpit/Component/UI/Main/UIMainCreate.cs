@@ -4,7 +4,7 @@ using UnityEngine.UI;
 using System.Collections.Generic;
 using DG.Tweening;
 
-public class UIMainCreate : BaseUIComponent,
+public class UIMainCreate : UIGameComponent,
     IRadioGroupCallBack,
     ColorView.CallBack,
     SelectView.CallBack,
@@ -55,23 +55,6 @@ public class UIMainCreate : BaseUIComponent,
     public List<ItemsInfoBean> listSelectHat;
     public List<ItemsInfoBean> listSelectClothes;
     public List<ItemsInfoBean> listSelectShoes;
-
-    protected AudioHandler audioHandler;
-    protected CharacterBodyManager characterBodyManager;
-    protected GameItemsManager gameItemsManager;
-    protected ToastManager toastManager;
-    protected DialogManager dialogManager;
-    protected GameDataManager gameDataManager;
-
-    private void Awake()
-    {
-        audioHandler = GetUIManager<UIGameManager>().audioHandler;
-        characterBodyManager = GetUIManager<UIGameManager>().characterBodyManager;
-        gameItemsManager = GetUIManager<UIGameManager>().gameItemsManager;
-        toastManager = GetUIManager<UIGameManager>().toastManager;
-        dialogManager = GetUIManager<UIGameManager>().dialogManager;
-        gameDataManager = GetUIManager<UIGameManager>().gameDataManager;
-    }
 
     private void Start()
     {
@@ -132,22 +115,22 @@ public class UIMainCreate : BaseUIComponent,
     public void InitData()
     {
         //初始化可选择头型数据
-        listSelectHair = TypeConversionUtil.IconBeanDictionaryToList(characterBodyManager.listIconBodyHair);
+        listSelectHair = TypeConversionUtil.IconBeanDictionaryToList(uiGameManager.characterBodyManager.listIconBodyHair);
         ChangeSelectPosition(selectHair, 0);
         //初始化可选择眼睛
-        listSelectEye = TypeConversionUtil.IconBeanDictionaryToList(characterBodyManager.listIconBodyEye);
+        listSelectEye = TypeConversionUtil.IconBeanDictionaryToList(uiGameManager.characterBodyManager.listIconBodyEye);
         ChangeSelectPosition(selectEye, 0);
         //初始化可选择嘴巴
-        listSelectMouth = TypeConversionUtil.IconBeanDictionaryToList(characterBodyManager.listIconBodyMouth);
+        listSelectMouth = TypeConversionUtil.IconBeanDictionaryToList(uiGameManager.characterBodyManager.listIconBodyMouth);
         ChangeSelectPosition(selectMouth, 0);
         //初始化帽子
-        listSelectHat = gameItemsManager.GetItemsById(new long[] { 100001 });
+        listSelectHat = uiGameManager.gameItemsManager.GetItemsById(new long[] { 100001 });
         listSelectHat.Insert(0, new ItemsInfoBean());
         //初始化衣服
-        listSelectClothes = gameItemsManager.GetItemsById(new long[] { 200001 });
+        listSelectClothes = uiGameManager.gameItemsManager.GetItemsById(new long[] { 200001 });
         listSelectClothes.Insert(0, new ItemsInfoBean());
         //初始化鞋子
-        listSelectShoes = gameItemsManager.GetItemsById(new long[] { 300001 });
+        listSelectShoes = uiGameManager.gameItemsManager.GetItemsById(new long[] { 300001 });
         listSelectShoes.Insert(0, new ItemsInfoBean());
     }
 
@@ -170,22 +153,21 @@ public class UIMainCreate : BaseUIComponent,
     public void CreateNewGame()
     {
         //按键音效
-        if (audioHandler != null)
-            audioHandler.PlaySound(SoundEnum.ButtonForNormal);
+        uiGameManager.audioHandler.PlaySound(SoundEnum.ButtonForNormal);
 
         if (CheckUtil.StringIsNull(etInnName.text))
         {
-            toastManager.ToastHint(GameCommonInfo.GetUITextById(1000));
+            uiGameManager.toastManager.ToastHint(GameCommonInfo.GetUITextById(1000));
             return;
         }
         if (CheckUtil.StringIsNull(etUserName.text))
         {
-            toastManager.ToastHint(GameCommonInfo.GetUITextById(1001));
+            uiGameManager.toastManager.ToastHint(GameCommonInfo.GetUITextById(1001));
             return;
         }
         DialogBean dialogData = new DialogBean();
         dialogData.content = GameCommonInfo.GetUITextById(3012);
-        dialogManager.CreateDialog(DialogEnum.Normal, this, dialogData);
+        uiGameManager.dialogManager.CreateDialog(DialogEnum.Normal, this, dialogData);
     }
 
     /// <summary>
@@ -194,8 +176,7 @@ public class UIMainCreate : BaseUIComponent,
     public void OpenStartUI()
     {
         //按键音效
-        if (audioHandler != null)
-            audioHandler.PlaySound(SoundEnum.ButtonForBack);
+       uiGameManager.audioHandler.PlaySound(SoundEnum.ButtonForBack);
 
         uiManager.OpenUIAndCloseOtherByName(EnumUtil.GetEnumName(UIEnum.MainStart));
     }
@@ -203,8 +184,7 @@ public class UIMainCreate : BaseUIComponent,
     #region 性别回调
     public void RadioButtonSelected(RadioGroupView rgView, int position, RadioButtonView view)
     {
-        if (audioHandler != null)
-            audioHandler.PlaySound(SoundEnum.ButtonForNormal);
+        uiGameManager.audioHandler.PlaySound(SoundEnum.ButtonForNormal);
 
         if (position == 0)
         {
@@ -248,7 +228,6 @@ public class UIMainCreate : BaseUIComponent,
     #region 选择回调
     public void ChangeSelectPosition(SelectView selectView, int position)
     {
-        GameItemsManager gameItemsManager = GetUIManager<UIGameManager>().gameItemsManager;
         if (selectView == selectHair)
         {
             characterBodyCpt.SetHair(listSelectHair[position].key);
@@ -286,7 +265,7 @@ public class UIMainCreate : BaseUIComponent,
         gameData.userCharacter.baseInfo.name = etUserName.text;
         gameData.userCharacter.body = characterBodyCpt.GetCharacterBodyData();
         gameData.userCharacter.equips = characterDressCpt.GetCharacterEquipData();
-        gameDataManager.CreateGameData(gameData);
+        uiGameManager.gameDataManager.CreateGameData(gameData);
 
         SceneUtil.SceneChange(ScenesEnum.GameInnScene);
     }

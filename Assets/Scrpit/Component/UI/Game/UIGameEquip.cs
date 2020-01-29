@@ -4,7 +4,7 @@ using UnityEngine.UI;
 using DG.Tweening;
 using System.Collections.Generic;
 
-public class UIGameEquip : BaseUIComponent
+public class UIGameEquip : UIGameComponent
 {
     [Header("控件")]
     public Button btBack;
@@ -39,19 +39,6 @@ public class UIGameEquip : BaseUIComponent
     public Sprite spSexMan;
     public Sprite spSexWoman;
 
-    protected AudioHandler audioHandler;
-    protected GameItemsManager gameItemsManager;
-    protected CharacterDressManager characterDressManager;
-    protected GameDataManager gameDataManager;
-
-    private void Awake()
-    {
-        gameItemsManager = GetUIManager<UIGameManager>().gameItemsManager;
-        audioHandler = GetUIManager<UIGameManager>().audioHandler;
-        characterDressManager = GetUIManager<UIGameManager>().characterDressManager;
-        gameDataManager = GetUIManager<UIGameManager>().gameDataManager;
-    }
-
     private void Start()
     {
         if (btBack != null)
@@ -67,6 +54,7 @@ public class UIGameEquip : BaseUIComponent
 
     public void OpenWorkUI()
     {
+        uiGameManager.audioHandler.PlaySound(SoundEnum.ButtonForBack);
         uiManager.OpenUIAndCloseOtherByName(EnumUtil.GetEnumName(UIEnum.GameWorker));
     }
 
@@ -91,13 +79,13 @@ public class UIGameEquip : BaseUIComponent
 
         //装备物品刷新
         if (characterData.equips.handId != 0)
-            equipHand.SetData(characterData, gameItemsManager.GetItemsById(characterData.equips.handId), null);
+            equipHand.SetData(characterData, uiGameManager.gameItemsManager.GetItemsById(characterData.equips.handId), null);
         if (characterData.equips.hatId != 0)
-            equipHat.SetData(characterData, gameItemsManager.GetItemsById(characterData.equips.hatId), null);
+            equipHat.SetData(characterData, uiGameManager.gameItemsManager.GetItemsById(characterData.equips.hatId), null);
         if (characterData.equips.clothesId != 0)
-            equipClothes.SetData(characterData, gameItemsManager.GetItemsById(characterData.equips.clothesId), null);
+            equipClothes.SetData(characterData, uiGameManager.gameItemsManager.GetItemsById(characterData.equips.clothesId), null);
         if (characterData.equips.shoesId != 0)
-            equipShoes.SetData(characterData, gameItemsManager.GetItemsById(characterData.equips.shoesId), null);
+            equipShoes.SetData(characterData, uiGameManager.gameItemsManager.GetItemsById(characterData.equips.shoesId), null);
 
         //装备列表是否为null   
         if (CptUtil.GetChildCountByActive(objItemContent) != 0)
@@ -143,7 +131,7 @@ public class UIGameEquip : BaseUIComponent
     /// <param name="characterEquip"></param>
     public void SetAttributes(CharacterAttributesBean characterAttributes, CharacterEquipBean characterEquip)
     {
-        characterData.GetAttributes(gameItemsManager,
+        characterData.GetAttributes(uiGameManager.gameItemsManager,
             out CharacterAttributesBean totalAttributes, out CharacterAttributesBean selfAttributes, out CharacterAttributesBean equipAttributes);
         if (tvCook != null)
             tvCook.text = GameCommonInfo.GetUITextById(1) + "：" + selfAttributes.cook + (equipAttributes.cook == 0 ? "" : "+" + equipAttributes.cook);
@@ -169,9 +157,9 @@ public class UIGameEquip : BaseUIComponent
     /// <param name="itemId"></param>
     public void SetEquip(long itemId)
     {
-        if (gameItemsManager == null)
+        if (uiGameManager.gameItemsManager == null)
             return;
-        ItemsInfoBean itemInfo = gameItemsManager.GetItemsById(itemId);
+        ItemsInfoBean itemInfo = uiGameManager.gameItemsManager.GetItemsById(itemId);
         SetEquip(itemInfo);
     }
 
@@ -183,7 +171,7 @@ public class UIGameEquip : BaseUIComponent
     {
         if (itemInfo == null)
             return;
-        if (characterDressManager == null || gameItemsManager == null)
+        if (uiGameManager.characterDressManager == null || uiGameManager.gameItemsManager == null)
             return;
 
         ItemGameBackpackEquipCpt itemCpt = null;
@@ -217,16 +205,16 @@ public class UIGameEquip : BaseUIComponent
         }
         itemCpt.SetData(characterData, itemInfo, null);
         //从背包里扣除装备
-        gameDataManager.gameData.AddItemsNumber(itemInfo.id, -1);
+        uiGameManager.gameDataManager.gameData.AddItemsNumber(itemInfo.id, -1);
 
         //如果有卸载的装备 则添加到背包
         if (unloadEquipId != 0)
         {
             ItemBean unloadItem = new ItemBean(unloadEquipId, 1);
-            ItemsInfoBean unloadInfo = gameItemsManager.GetItemsById(unloadEquipId);
+            ItemsInfoBean unloadInfo = uiGameManager.gameItemsManager.GetItemsById(unloadEquipId);
             GameObject objItem = CreateItemBackpackData(unloadItem, unloadInfo);
             objItem.transform.DOScale(new Vector3(0, 0, 0), 0.5f).SetEase(Ease.OutBack).From();
-            gameDataManager.gameData.AddItemsNumber(unloadEquipId, 1);
+            uiGameManager.gameDataManager.gameData.AddNewItems(unloadEquipId, 1);
         }
 
         //刷新显示
@@ -239,12 +227,12 @@ public class UIGameEquip : BaseUIComponent
     public void CreateBackpackData()
     {
         CptUtil.RemoveChildsByActive(objItemContent.transform);
-        if (gameItemsManager == null || gameDataManager == null)
+        if (uiGameManager.gameItemsManager == null || uiGameManager.gameDataManager == null)
             return;
-        for (int i = 0; i < gameDataManager.gameData.listItems.Count; i++)
+        for (int i = 0; i < uiGameManager.gameDataManager.gameData.listItems.Count; i++)
         {
-            ItemBean itemBean = gameDataManager.gameData.listItems[i];
-            ItemsInfoBean itemsInfoBean = gameItemsManager.GetItemsById(itemBean.itemId);
+            ItemBean itemBean = uiGameManager.gameDataManager.gameData.listItems[i];
+            ItemsInfoBean itemsInfoBean = uiGameManager.gameItemsManager.GetItemsById(itemBean.itemId);
             if (itemsInfoBean == null)
                 continue;
             if (itemsInfoBean.items_type != (int)GeneralEnum.Hat

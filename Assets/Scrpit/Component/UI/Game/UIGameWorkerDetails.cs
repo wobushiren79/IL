@@ -2,7 +2,7 @@
 using UnityEditor;
 using System;
 using UnityEngine.UI;
-public class UIGameWorkerDetails : BaseUIComponent, IRadioGroupCallBack
+public class UIGameWorkerDetails : UIGameComponent, IRadioGroupCallBack
 {
     [Header("控件")]
     public CharacterUICpt characterUICpt;
@@ -46,18 +46,6 @@ public class UIGameWorkerDetails : BaseUIComponent, IRadioGroupCallBack
     public Sprite spSexMan;
     public Sprite spSexWoman;
 
-    protected AudioHandler audioHandler;
-    protected InfoItemsPopupShow infoItemsPopupShow;
-    protected GameItemsManager gameItemsManager;
-    protected CharacterDressManager characterDressManager;
-
-    private void Awake()
-    {
-        audioHandler = GetUIManager<UIGameManager>().audioHandler;
-        infoItemsPopupShow = GetUIManager<UIGameManager>().infoItemsPopup;
-        gameItemsManager = GetUIManager<UIGameManager>().gameItemsManager;
-        characterDressManager = GetUIManager<UIGameManager>().characterDressManager;
-    }
 
     public void SetCharacterData(CharacterBean characterData)
     {
@@ -70,13 +58,13 @@ public class UIGameWorkerDetails : BaseUIComponent, IRadioGroupCallBack
             btBack.onClick.AddListener(OpenWorkUI);
 
         if (pbHand != null)
-            pbHand.SetPopupShowView(infoItemsPopupShow);
+            pbHand.SetPopupShowView(uiGameManager.infoItemsPopup);
         if (pbHat != null)
-            pbHat.SetPopupShowView(infoItemsPopupShow);
+            pbHat.SetPopupShowView(uiGameManager.infoItemsPopup);
         if (pbClothes != null)
-            pbClothes.SetPopupShowView(infoItemsPopupShow);
+            pbClothes.SetPopupShowView(uiGameManager.infoItemsPopup);
         if (pbShoes != null)
-            pbShoes.SetPopupShowView(infoItemsPopupShow);
+            pbShoes.SetPopupShowView(uiGameManager.infoItemsPopup);
         if (rgWorkerTitle != null)
         {
             rgWorkerTitle.SetCallBack(this);
@@ -140,8 +128,7 @@ public class UIGameWorkerDetails : BaseUIComponent, IRadioGroupCallBack
 
     public void OpenWorkUI()
     {
-        if (audioHandler != null)
-            audioHandler.PlaySound(SoundEnum.ButtonForBack);
+        uiGameManager.audioHandler.PlaySound(SoundEnum.ButtonForBack);
         uiManager.OpenUIAndCloseOtherByName(EnumUtil.GetEnumName(UIEnum.GameWorker));
     }
 
@@ -188,44 +175,44 @@ public class UIGameWorkerDetails : BaseUIComponent, IRadioGroupCallBack
         if (characterData.equips.handId != 0)
         {
             //查询装备数据
-            ItemsInfoBean itemHand = gameItemsManager.GetItemsById(characterData.equips.handId);
+            ItemsInfoBean itemHand = uiGameManager.gameItemsManager.GetItemsById(characterData.equips.handId);
             if (itemHand != null && !CheckUtil.StringIsNull(itemHand.icon_key))
             {
                 //获取装备图标
-                spHand = gameItemsManager.GetItemsSpriteByName(itemHand.icon_key);
+                spHand = uiGameManager.gameItemsManager.GetItemsSpriteByName(itemHand.icon_key);
                 pbHand.SetData(itemHand, spHand);
             }
         }
         if (characterData.equips.hatId != 0)
         {
             //查询装备数据
-            ItemsInfoBean itemsHat = gameItemsManager.GetItemsById(characterData.equips.hatId);
+            ItemsInfoBean itemsHat = uiGameManager.gameItemsManager.GetItemsById(characterData.equips.hatId);
             if (itemsHat != null && !CheckUtil.StringIsNull(itemsHat.icon_key))
             {
                 //获取装备图标
-                spHat = characterDressManager.GetHatSpriteByName(itemsHat.icon_key);
+                spHat = uiGameManager.characterDressManager.GetHatSpriteByName(itemsHat.icon_key);
                 pbHat.SetData(itemsHat, spHat);
             }
         }
         if (characterData.equips.clothesId != 0)
         {
             //查询装备数据
-            ItemsInfoBean itemsClothes = gameItemsManager.GetItemsById(characterData.equips.clothesId);
+            ItemsInfoBean itemsClothes = uiGameManager.gameItemsManager.GetItemsById(characterData.equips.clothesId);
             if (itemsClothes != null && !CheckUtil.StringIsNull(itemsClothes.icon_key))
             {
                 //获取装备图标
-                spClothes = characterDressManager.GetClothesSpriteByName(itemsClothes.icon_key);
+                spClothes = uiGameManager.characterDressManager.GetClothesSpriteByName(itemsClothes.icon_key);
                 pbClothes.SetData(itemsClothes, spClothes);
             }
         }
         if (characterData.equips.shoesId != 0)
         {
             //查询装备数据
-            ItemsInfoBean itemShoes = gameItemsManager.GetItemsById(characterData.equips.shoesId);
+            ItemsInfoBean itemShoes = uiGameManager.gameItemsManager.GetItemsById(characterData.equips.shoesId);
             if (itemShoes != null && !CheckUtil.StringIsNull(itemShoes.icon_key))
             {
                 //获取装备图标
-                spShoes = characterDressManager.GetShoesSpriteByName(itemShoes.icon_key);
+                spShoes = uiGameManager.characterDressManager.GetShoesSpriteByName(itemShoes.icon_key);
                 pbShoes.SetData(itemShoes, spShoes);
             }
         }
@@ -299,8 +286,7 @@ public class UIGameWorkerDetails : BaseUIComponent, IRadioGroupCallBack
     #region 数据类型选择回调
     public void RadioButtonSelected(RadioGroupView rgView, int position, RadioButtonView rbview)
     {
-        if (audioHandler != null)
-            audioHandler.PlaySound(SoundEnum.ButtonForNormal);
+        uiGameManager.audioHandler.PlaySound(SoundEnum.ButtonForNormal);
         InitDataByWorker((WorkerEnum)(position + 1));
     }
 

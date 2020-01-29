@@ -3,7 +3,7 @@ using UnityEngine.UI;
 using UnityEditor;
 using System.Collections.Generic;
 
-public class UIGameMenu : BaseUIComponent
+public class UIGameMenu : UIGameComponent
 {
     //返回按钮
     [Header("控件")]
@@ -25,7 +25,7 @@ public class UIGameMenu : BaseUIComponent
     {
         if (btBack != null)
             btBack.onClick.AddListener(OpenMainUI);
-     
+
     }
 
     public override void OpenUI()
@@ -36,54 +36,51 @@ public class UIGameMenu : BaseUIComponent
 
     private void Update()
     {
-        GameDataManager gameDataManager = GetUIManager<UIGameManager>().gameDataManager;
         if (tvOilsalt != null)
         {
-            tvOilsalt.text =GameCommonInfo.GetUITextById(21) + gameDataManager.gameData.ingOilsalt;
+            tvOilsalt.text = GameCommonInfo.GetUITextById(21) + " " + uiGameManager.gameDataManager.gameData.ingOilsalt;
         }
         if (tvMeat != null)
         {
-            tvMeat.text = GameCommonInfo.GetUITextById(22) + gameDataManager.gameData.ingMeat;
+            tvMeat.text = GameCommonInfo.GetUITextById(22) + " " + uiGameManager.gameDataManager.gameData.ingMeat;
         }
         if (tvRiverfresh != null)
         {
-            tvRiverfresh.text = GameCommonInfo.GetUITextById(23) + gameDataManager.gameData.ingRiverfresh;
+            tvRiverfresh.text = GameCommonInfo.GetUITextById(23) + " " + uiGameManager.gameDataManager.gameData.ingRiverfresh;
         }
         if (tvSeafood != null)
         {
-            tvSeafood.text = GameCommonInfo.GetUITextById(24) + gameDataManager.gameData.ingSeafood;
+            tvSeafood.text = GameCommonInfo.GetUITextById(24) + " " + uiGameManager.gameDataManager.gameData.ingSeafood;
         }
         if (tvVegetables != null)
         {
-            tvVegetables.text = GameCommonInfo.GetUITextById(25) + gameDataManager.gameData.ingVegetables;
+            tvVegetables.text = GameCommonInfo.GetUITextById(25) + " " + uiGameManager.gameDataManager.gameData.ingVegetables;
         }
         if (tvMelonfruit != null)
         {
-            tvMelonfruit.text = GameCommonInfo.GetUITextById(26) + gameDataManager.gameData.ingMelonfruit;
+            tvMelonfruit.text = GameCommonInfo.GetUITextById(26) + " " + uiGameManager.gameDataManager.gameData.ingMelonfruit;
         }
         if (tvWaterwine != null)
         {
-            tvWaterwine.text = GameCommonInfo.GetUITextById(27) + gameDataManager.gameData.ingWaterwine;
+            tvWaterwine.text = GameCommonInfo.GetUITextById(27) + " " + uiGameManager.gameDataManager.gameData.ingWaterwine;
         }
         if (tvflour != null)
         {
-            tvflour.text = GameCommonInfo.GetUITextById(28) + gameDataManager.gameData.ingFlour;
+            tvflour.text = GameCommonInfo.GetUITextById(28) + " " + uiGameManager.gameDataManager.gameData.ingFlour;
         }
     }
 
+
+
     public void CreateFoodList()
     {
-        GameDataManager gameDataManager = GetUIManager<UIGameManager>().gameDataManager;
-        InnFoodManager innFoodManager = GetUIManager<UIGameManager>().innFoodManager;
-        if (gameDataManager == null || innFoodManager == null)
-            return;
         CptUtil.RemoveChildsByActive(objFoodListContent.transform);
-        List<MenuOwnBean> listMenu = gameDataManager.gameData.listMenu;
+        List<MenuOwnBean> listMenu = uiGameManager.gameDataManager.gameData.listMenu;
 
         for (int i = 0; i < listMenu.Count; i++)
         {
             MenuOwnBean itemData = listMenu[i];
-            MenuInfoBean menuInfo = innFoodManager.GetFoodDataById(itemData.menuId);
+            MenuInfoBean menuInfo = uiGameManager.innFoodManager.GetFoodDataById(itemData.menuId);
             GameObject foodObj = Instantiate(objFoodItemModel, objFoodListContent.transform);
             foodObj.SetActive(true);
             ItemGameMenuFoodCpt foodCpt = foodObj.GetComponent<ItemGameMenuFoodCpt>();
@@ -96,6 +93,7 @@ public class UIGameMenu : BaseUIComponent
     /// </summary>
     public void OpenMainUI()
     {
+        uiGameManager.audioHandler.PlaySound(SoundEnum.ButtonForBack);
         uiManager.OpenUIAndCloseOtherByName(EnumUtil.GetEnumName(UIEnum.GameMain));
     }
 

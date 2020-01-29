@@ -4,23 +4,12 @@ using UnityEngine.UI;
 using System.Collections.Generic;
 using DG.Tweening;
 
-public class UIGameWorker : BaseUIComponent
+public class UIGameWorker : UIGameComponent
 {
     public Button btBack;
 
     public GameObject objListContent;
     public GameObject objItemWorkModle;
-
-    protected ControlHandler controlHandler;
-    protected GameDataManager gameDataManager;
-    protected AudioHandler audioHandler;
-
-    private void Awake()
-    {
-        controlHandler = GetUIManager<UIGameManager>().controlHandler;
-        gameDataManager = GetUIManager<UIGameManager>().gameDataManager;
-        audioHandler = GetUIManager<UIGameManager>().audioHandler;
-    }
 
     private void Start()
     {
@@ -32,29 +21,26 @@ public class UIGameWorker : BaseUIComponent
     {
         base.OpenUI();
         InitData();
-        if (controlHandler != null)
-            controlHandler.StopControl();
+        uiGameManager.controlHandler.StopControl();
     }
 
     public override void CloseUI()
     {
         base.CloseUI();
-        if (controlHandler != null)
-            controlHandler.RestoreControl();
+        uiGameManager.controlHandler.RestoreControl();
     }
 
     public void OpenMainUI()
     {
-        if (audioHandler != null)
-            audioHandler.PlaySound(SoundEnum.ButtonForBack);
+        uiGameManager.audioHandler.PlaySound(SoundEnum.ButtonForBack);
         uiManager.OpenUIAndCloseOtherByName(EnumUtil.GetEnumName(UIEnum.GameMain));
     }
 
     public void InitData()
     {
-        if (gameDataManager == null)
+        if (uiGameManager.gameDataManager == null)
             return;
-        List<CharacterBean> listData = gameDataManager.gameData.GetAllCharacterData();
+        List<CharacterBean> listData = uiGameManager.gameDataManager.gameData.GetAllCharacterData();
         CptUtil.RemoveChildsByActive(objListContent.transform);
         for (int i = 0; i < listData.Count; i++)
         {

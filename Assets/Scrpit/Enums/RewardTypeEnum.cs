@@ -268,7 +268,7 @@ public class RewardTypeEnumTools
                     gameData.AddMoney(addMoneyS, 0, 0);
                     break;
                 case RewardTypeEnum.AddItems:
-                    gameData.AddItemsNumber(itemData.rewardId, itemData.rewardNumber);
+                    gameData.AddNewItems(itemData.rewardId, itemData.rewardNumber);
                     break;
                 case RewardTypeEnum.AddBuildItems:
                     gameData.AddBuildNumber(itemData.rewardId, itemData.rewardNumber);

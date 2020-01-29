@@ -11,7 +11,7 @@ public class BaseUIComponent : BaseMonoBehaviour
     //备注数据
     public string remarkData;
 
-    private void Awake()
+    public virtual void Awake()
     {
         if (uiManager == null)
             uiManager = GetComponentInParent<BaseUIManager>();

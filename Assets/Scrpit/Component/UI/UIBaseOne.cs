@@ -2,7 +2,7 @@
 using UnityEditor;
 using UnityEngine.UI;
 
-public class UIBaseOne : BaseUIComponent
+public class UIBaseOne : UIGameComponent
 {
     //返回按钮
     public Button btBack;
@@ -17,6 +17,7 @@ public class UIBaseOne : BaseUIComponent
     public Text tvTrophy2;
     public Text tvTrophy3;
     public Text tvTrophy4;
+
     public virtual void Start()
     {
         if (btBack != null)
@@ -26,56 +27,55 @@ public class UIBaseOne : BaseUIComponent
     public override void OpenUI()
     {
         base.OpenUI();
-        if (GetUIManager<UIGameManager>().controlHandler != null)
-            GetUIManager<UIGameManager>().controlHandler.StopControl();
+        if (uiGameManager.controlHandler != null)
+            uiGameManager.controlHandler.StopControl();
     }
 
     public override void CloseUI()
     {
         if (gameObject.activeSelf)
         {
-            if (GetUIManager<UIGameManager>().controlHandler != null)
-                GetUIManager<UIGameManager>().controlHandler.RestoreControl();
+            if (uiGameManager.controlHandler != null)
+                uiGameManager.controlHandler.RestoreControl();
         }
         base.CloseUI();
     }
 
     public void SetMoney()
     {
-        GameDataManager gameDataManager = GetUIManager<UIGameManager>().gameDataManager;
-        if (gameDataManager != null)
+        if (uiGameManager.gameDataManager != null)
         {
             if (tvMoneyL != null)
             {
-                tvMoneyL.text = gameDataManager.gameData.moneyL + "";
+                tvMoneyL.text = uiGameManager.gameDataManager.gameData.moneyL + "";
             }
             if (tvMoneyM != null)
             {
-                tvMoneyM.text = gameDataManager.gameData.moneyM + "";
+                tvMoneyM.text = uiGameManager.gameDataManager.gameData.moneyM + "";
             }
             if (tvMoneyS != null)
             {
-                tvMoneyS.text = gameDataManager.gameData.moneyS + "";
+                tvMoneyS.text = uiGameManager.gameDataManager.gameData.moneyS + "";
             }
             if (tvGuildCoin != null)
             {
-                tvGuildCoin.text = gameDataManager.gameData.guildCoin + "";
+                tvGuildCoin.text = uiGameManager.gameDataManager.gameData.guildCoin + "";
             }
             if (tvTrophy1 != null)
             {
-                tvTrophy1.text = gameDataManager.gameData.trophyElementary+"";
+                tvTrophy1.text = uiGameManager.gameDataManager.gameData.trophyElementary+"";
             }
             if (tvTrophy2 != null)
             {
-                tvTrophy2.text = gameDataManager.gameData.trophyIntermediate + "";
+                tvTrophy2.text = uiGameManager.gameDataManager.gameData.trophyIntermediate + "";
             }
             if (tvTrophy3 != null)
             {
-                tvTrophy3.text = gameDataManager.gameData.trophyAdvanced + "";
+                tvTrophy3.text = uiGameManager.gameDataManager.gameData.trophyAdvanced + "";
             }
             if (tvTrophy4 != null)
             {
-                tvTrophy4.text = gameDataManager.gameData.trophyLegendary + "";
+                tvTrophy4.text = uiGameManager.gameDataManager.gameData.trophyLegendary + "";
             }
         }
     }
@@ -90,6 +90,7 @@ public class UIBaseOne : BaseUIComponent
     /// </summary>
     public void OpenMainUI()
     {
+        uiGameManager.audioHandler.PlaySound( SoundEnum.ButtonForBack);
         uiManager.OpenUIAndCloseOtherByName(EnumUtil.GetEnumName(UIEnum.GameMain));
     }
 }

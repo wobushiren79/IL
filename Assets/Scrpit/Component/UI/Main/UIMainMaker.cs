@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using UnityEditor;
 using UnityEngine.UI;
-public class UIMainMaker : BaseUIComponent
+public class UIMainMaker : UIGameComponent
 {
     public Button btBack;
 
@@ -15,8 +15,7 @@ public class UIMainMaker : BaseUIComponent
     public void OnClickBack()
     {        
         //按键音效
-        AudioHandler audioHandler = GetUIManager<UIGameManager>().audioHandler;
-        audioHandler.PlaySound(SoundEnum.ButtonForBack);
+        uiGameManager.audioHandler.PlaySound(SoundEnum.ButtonForBack);
 
         uiManager.OpenUIAndCloseOtherByName(EnumUtil.GetEnumName(UIEnum.MainStart));
     }

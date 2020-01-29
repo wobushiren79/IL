@@ -30,6 +30,12 @@ public class PopupItemsSelection : BaseMonoBehaviour
     public float offsetX = 0;
     public float offsetY = 0;
 
+    protected  AudioHandler audioHandler;
+    private void Awake()
+    {
+        audioHandler = Find<AudioHandler>(ImportantTypeEnum.AudioHandler);
+    }
+
     private void Start()
     {
         if (btBack != null)
@@ -54,15 +60,15 @@ public class PopupItemsSelection : BaseMonoBehaviour
 
     public void Close()
     {
+        if (audioHandler != null)
+            audioHandler.PlaySound(SoundEnum.ButtonForNormal);
         gameObject.SetActive(false);
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="type"></param>
     public void Open(SelectionTypeEnum type)
     {
+        if (audioHandler != null)
+            audioHandler.PlaySound(SoundEnum.ButtonForHighLight);
         btUse.gameObject.SetActive(false);
         btDiscard.gameObject.SetActive(false);
         btEquip.gameObject.SetActive(false);

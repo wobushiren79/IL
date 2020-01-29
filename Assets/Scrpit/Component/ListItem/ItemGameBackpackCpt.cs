@@ -8,6 +8,7 @@ using DG.Tweening;
 public class ItemGameBackpackCpt : ItemGameBaseCpt, IPointerClickHandler, PopupItemsSelection.ICallBack, DialogView.IDialogCallBack
 {
     public Text tvName;
+    public Text tvNumber;
     public RectTransform rtIcon;
     public Image ivIcon;
     public InfoItemsPopupButton infoItemsPopup;
@@ -46,6 +47,10 @@ public class ItemGameBackpackCpt : ItemGameBaseCpt, IPointerClickHandler, PopupI
         {
             SetIcon(infoBean, infoBean.items_type);
             SetName(infoBean.name);
+        }
+        if (itemBean != null)
+        {
+            SetNumber(itemBean.itemNumber);
         }
         if (infoItemsPopup != null)
         {
@@ -106,6 +111,16 @@ public class ItemGameBackpackCpt : ItemGameBaseCpt, IPointerClickHandler, PopupI
     {
         if (tvName != null)
             tvName.text = name;
+    }
+
+    /// <summary>
+    /// 设置数量
+    /// </summary>
+    /// <param name="number"></param>
+    public void SetNumber(long number)
+    {
+        if (tvNumber != null)
+            tvNumber.text = "x" + number;
     }
 
     public void OnPointerClick(PointerEventData eventData)

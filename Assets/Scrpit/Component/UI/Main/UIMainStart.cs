@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using DG.Tweening;
-public class UIMainStart : BaseUIComponent
+public class UIMainStart : UIGameComponent
 {
     public Button btMaker;
     public Text tvTitle;
@@ -92,8 +92,7 @@ public class UIMainStart : BaseUIComponent
     public void OpenContinueUI()
     {
         //按键音效
-        AudioHandler audioHandler =  GetUIManager<UIGameManager>().audioHandler;
-        audioHandler.PlaySound( SoundEnum.ButtonForNormal);
+        uiGameManager.audioHandler.PlaySound( SoundEnum.ButtonForNormal);
 
         uiManager.OpenUIAndCloseOtherByName(EnumUtil.GetEnumName(UIEnum.MainContinue));
     }
@@ -104,8 +103,7 @@ public class UIMainStart : BaseUIComponent
     public void OpenCreateUI()
     {
         //按键音效
-        AudioHandler audioHandler = GetUIManager<UIGameManager>().audioHandler;
-        audioHandler.PlaySound(SoundEnum.ButtonForNormal);
+        uiGameManager.audioHandler.PlaySound(SoundEnum.ButtonForNormal);
 
         uiManager.OpenUIAndCloseOtherByName(EnumUtil.GetEnumName(UIEnum.MainCreate));
     }
@@ -116,8 +114,7 @@ public class UIMainStart : BaseUIComponent
     public void OpenMakerUI()
     {
         //按键音效
-        AudioHandler audioHandler = GetUIManager<UIGameManager>().audioHandler;
-        audioHandler.PlaySound(SoundEnum.ButtonForNormal);
+        uiGameManager.audioHandler.PlaySound(SoundEnum.ButtonForNormal);
 
         uiManager.OpenUIAndCloseOtherByName(EnumUtil.GetEnumName(UIEnum.MainMaker));
     }
@@ -128,8 +125,7 @@ public class UIMainStart : BaseUIComponent
     public void ExitGame()
     {
         //按键音效
-        AudioHandler audioHandler = GetUIManager<UIGameManager>().audioHandler;
-        audioHandler.PlaySound(SoundEnum.ButtonForNormal);
+        uiGameManager.audioHandler.PlaySound(SoundEnum.ButtonForNormal);
 
         GameUtil.ExitGame();
     }

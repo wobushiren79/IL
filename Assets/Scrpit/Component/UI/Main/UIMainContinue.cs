@@ -4,7 +4,7 @@ using UnityEngine.UI;
 using System.Collections.Generic;
 using DG.Tweening;
 
-public class UIMainContinue : BaseUIComponent, GameDataManager.IGameDataSimpleCallBack
+public class UIMainContinue : UIGameComponent, GameDataManager.IGameDataSimpleCallBack
 {
     //返回按钮
     public Button btBack;
@@ -23,11 +23,10 @@ public class UIMainContinue : BaseUIComponent, GameDataManager.IGameDataSimpleCa
     public override void OpenUI()
     {
         base.OpenUI();
-        GameDataManager gameDataManager = GetUIManager<UIGameManager>().gameDataManager;
-        if (gameDataManager == null)
+        if (uiGameManager.gameDataManager == null)
             return;
-        gameDataManager.SetSimpleGameDataCallBack(this);
-        gameDataManager.GetSimpleGameDataList();
+        uiGameManager.gameDataManager.SetSimpleGameDataCallBack(this);
+        uiGameManager.gameDataManager.GetSimpleGameDataList();
         AnimForInit();
     }
 
@@ -36,7 +35,7 @@ public class UIMainContinue : BaseUIComponent, GameDataManager.IGameDataSimpleCa
     /// </summary>
     public void AnimForInit()
     {
-        transform.DOScaleX(0,0.5f).From().SetEase(Ease.OutBack);
+        transform.DOScaleX(0, 0.5f).From().SetEase(Ease.OutBack);
     }
 
     /// <summary>
@@ -46,17 +45,17 @@ public class UIMainContinue : BaseUIComponent, GameDataManager.IGameDataSimpleCa
     public void CreateListItem(List<GameDataSimpleBean> listGameData)
     {
         CptUtil.RemoveChildsByActive(objGameDataContent.transform);
-        if ( CheckUtil.ListIsNull(listGameData))
+        if (CheckUtil.ListIsNull(listGameData))
         {
             tvNull.gameObject.SetActive(true);
             return;
         }
         tvNull.gameObject.SetActive(false);
-        for(int i = 0; i < listGameData.Count; i++)
+        for (int i = 0; i < listGameData.Count; i++)
         {
-            GameObject itemGameObj= Instantiate(objGameDataModel, objGameDataContent.transform);
+            GameObject itemGameObj = Instantiate(objGameDataModel, objGameDataContent.transform);
             itemGameObj.SetActive(true);
-            ItemGameDataCpt itemGameDataCpt= itemGameObj.GetComponent<ItemGameDataCpt>();
+            ItemGameDataCpt itemGameDataCpt = itemGameObj.GetComponent<ItemGameDataCpt>();
             itemGameDataCpt.SetData(listGameData[i]);
         }
     }
@@ -67,8 +66,7 @@ public class UIMainContinue : BaseUIComponent, GameDataManager.IGameDataSimpleCa
     public void OpenStartUI()
     {
         //按键音效
-        AudioHandler audioHandler = GetUIManager<UIGameManager>().audioHandler;
-        audioHandler.PlaySound(SoundEnum.ButtonForBack);
+        uiGameManager.audioHandler.PlaySound(SoundEnum.ButtonForBack);
 
         uiManager.OpenUIAndCloseOtherByName(EnumUtil.GetEnumName(UIEnum.MainStart));
     }
