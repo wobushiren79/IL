@@ -18,7 +18,7 @@ public class ItemGameAttendanceCpt : ItemGameWorkerCpt,IRadioButtonCallBack
         if (characterData.baseInfo != null)
         {
             rbAttendance.SetCallBack(this);
-            SetAttendance(characterData.baseInfo.isAttendance);
+            SetAttendance(characterData.baseInfo.GetWorkerStatus());
         }
     }
 
@@ -31,21 +31,26 @@ public class ItemGameAttendanceCpt : ItemGameWorkerCpt,IRadioButtonCallBack
     /// 设置出勤
     /// </summary>
     /// <param name="isAttendance"></param>
-    public void SetAttendance(bool isAttendance)
+    public void SetAttendance(WorkerStatusEnum workerStatus)
     {
-        if (isAttendance)
+        characterData.baseInfo.SetWorkerStatus(workerStatus);
+        characterData.baseInfo.GetWorkerStatus(out string workerStatusStr);
+        if (workerStatus == WorkerStatusEnum.Work)
         {
             rbAttendance.ChangeStates(RadioButtonView.RadioButtonStates.Selected);
-            rbAttendance.rbText.text = "出勤";
+        }
+        else if (workerStatus == WorkerStatusEnum.Rest)
+        {
+            rbAttendance.ChangeStates(RadioButtonView.RadioButtonStates.Unselected);
         }
         else
         {
             rbAttendance.ChangeStates(RadioButtonView.RadioButtonStates.Unselected);
-            rbAttendance.rbText.text = "休息";
+            rbAttendance.SetEnabled(false);
         }
-        characterData.baseInfo.isAttendance = isAttendance;
+        rbAttendance.rbText.text = workerStatusStr;
         if (mCallBack != null)
-            mCallBack.AttendanceChange(this, isAttendance, characterData);
+            mCallBack.AttendanceChange(this, workerStatus, characterData);
     }
 
     #region RB回调
@@ -54,11 +59,11 @@ public class ItemGameAttendanceCpt : ItemGameWorkerCpt,IRadioButtonCallBack
         GetUIManager<UIGameManager>().audioHandler.PlaySound(SoundEnum.ButtonForNormal);
         if (buttonStates == RadioButtonView.RadioButtonStates.Selected)
         {
-            SetAttendance(true);
+            SetAttendance(WorkerStatusEnum.Work);
         }
         else
         {
-            SetAttendance(false);
+            SetAttendance(WorkerStatusEnum.Rest);
         }
       
     }
@@ -66,6 +71,6 @@ public class ItemGameAttendanceCpt : ItemGameWorkerCpt,IRadioButtonCallBack
 
     public interface ICallBack
     {
-        void AttendanceChange(ItemGameAttendanceCpt itemView, bool isAttendance, CharacterBean characterBean);
+        void AttendanceChange(ItemGameAttendanceCpt itemView, WorkerStatusEnum workerStatus, CharacterBean characterBean);
     }
 }

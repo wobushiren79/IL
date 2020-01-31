@@ -391,32 +391,6 @@ public class CharacterBean
     }
 
     /// <summary>
-    /// 计算不同食物等级的加成汇率
-    /// </summary>
-    /// <param name="foodLevel"></param>
-    /// <param name="foodLevelRate"></param>
-    public float CalculationAccountingFoodLevel(int foodLevel)
-    {
-        float foodLevelRate = 0;
-        switch (foodLevel)
-        {
-            case -1:
-                foodLevelRate = -0.5f;
-                break;
-            case 0:
-                foodLevelRate = 0;
-                break;
-            case 1:
-                foodLevelRate = 1.5f;
-                break;
-            case 2:
-                foodLevelRate = 1f;
-                break;
-        }
-        return foodLevelRate;
-    }
-
-    /// <summary>
     /// 计算打手打架事件
     /// </summary>
     /// <returns></returns>

@@ -42,7 +42,8 @@ public class CharacterBaseBean
     public int priorityAccost;
     public int priorityBeater;
 
-    public bool isAttendance;//是否出勤
+    //工作状态-关联 WorkerStatus
+    public int workerStatus = 0;
 
     public List<long> listLoveItems = new List<long>();//喜欢的物品
 
@@ -97,6 +98,43 @@ public class CharacterBaseBean
         }
         WorkerInfo workerInfo = new WorkerInfo(worker, priority, isWork);
         return workerInfo;
+    }
+
+    /// <summary>
+    /// 获取员工工作状态
+    /// </summary>
+    /// <returns></returns>
+    public WorkerStatusEnum GetWorkerStatus(out string workerStatusStr)
+    {
+        workerStatusStr = "";
+        WorkerStatusEnum workerStatus = (WorkerStatusEnum)this.workerStatus;
+        switch (workerStatus)
+        {
+            case WorkerStatusEnum.Rest:
+                workerStatusStr= GameCommonInfo.GetUITextById(282);
+                break;
+            case WorkerStatusEnum.Work:
+                workerStatusStr = GameCommonInfo.GetUITextById(281);
+                break;
+            case WorkerStatusEnum.Vacation:
+                workerStatusStr = GameCommonInfo.GetUITextById(283);
+                break;
+        }
+        return workerStatus;
+    }
+    public WorkerStatusEnum GetWorkerStatus()
+    {
+        WorkerStatusEnum workerStatus = (WorkerStatusEnum)this.workerStatus;
+        return workerStatus;
+    }
+
+    /// <summary>
+    /// 设置枚举
+    /// </summary>
+    /// <param name="workerStatus"></param>
+    public void SetWorkerStatus(WorkerStatusEnum workerStatus)
+    {
+        this.workerStatus = (int)workerStatus;
     }
 
 

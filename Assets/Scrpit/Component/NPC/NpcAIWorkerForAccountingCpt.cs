@@ -134,8 +134,6 @@ public class NpcAIWorkerForAccountingCpt : NpcAIWokerFoBaseCpt
         float time = npcAIWorker.characterData.CalculationAccountingTime(npcAIWorker.gameItemsManager);
         npcAIWorker.characterData.baseInfo.accountantInfo.AddAccountantTime(time);
         yield return new WaitForSeconds(time);
-        //计算不同食物等级的手艺
-        float foodLevelRate = npcAIWorker.characterData.CalculationAccountingFoodLevel(orderForCustomer.foodLevel);
         //是否出错
         bool isError = npcAIWorker.characterData.CalculationAccountingCheck(npcAIWorker.gameItemsManager, out float moreRate);
         if (isError)
@@ -143,9 +141,9 @@ public class NpcAIWorkerForAccountingCpt : NpcAIWokerFoBaseCpt
             //出错
             //记录数据
             npcAIWorker.characterData.baseInfo.accountantInfo.AddAccountantFail(
-                (long)(1 + foodLevelRate) * orderForCustomer.foodData.price_l,
-                (long)(1 + foodLevelRate) * orderForCustomer.foodData.price_m,
-                (long)(1 + foodLevelRate) * orderForCustomer.foodData.price_s,
+                orderForCustomer.foodData.price_l,
+                orderForCustomer.foodData.price_m,
+                orderForCustomer.foodData.price_s,
                 moreRate);
             //增加经验
             npcAIWorker.characterData.baseInfo.accountantInfo.AddExp(1);
@@ -161,9 +159,9 @@ public class NpcAIWorkerForAccountingCpt : NpcAIWokerFoBaseCpt
             //成功
             //记录数据
             npcAIWorker.characterData.baseInfo.accountantInfo.AddAccountantSuccess(
-                   (long)(1 + foodLevelRate) * orderForCustomer.foodData.price_l,
-                   (long)(1 + foodLevelRate) * orderForCustomer.foodData.price_m,
-                   (long)(1 + foodLevelRate) * orderForCustomer.foodData.price_s,
+                   orderForCustomer.foodData.price_l,
+                   orderForCustomer.foodData.price_m,
+                   orderForCustomer.foodData.price_s,
                    moreRate);
             //增加经验
             npcAIWorker.characterData.baseInfo.accountantInfo.AddExp(2);
@@ -174,7 +172,7 @@ public class NpcAIWorkerForAccountingCpt : NpcAIWokerFoBaseCpt
 
         if (npcAIWorker.innHandler != null)
         {
-            float tempRate = (1 + foodLevelRate) * (1 + moreRate);
+            float tempRate = (1 + moreRate);
             npcAIWorker.innHandler.PayMoney(orderForCustomer, tempRate);
         }
 

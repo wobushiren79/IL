@@ -3,7 +3,7 @@ using UnityEditor;
 using UnityEngine.UI;
 using System.Collections.Generic;
 
-public class UIGameAttendance : UIGameComponent, ItemGameAttendanceCpt.ICallBack
+public class UIGameAttendance : UIBaseOne, ItemGameAttendanceCpt.ICallBack
 {
     public Text tvPriceL;
     public Text tvPriceM;
@@ -22,8 +22,9 @@ public class UIGameAttendance : UIGameComponent, ItemGameAttendanceCpt.ICallBack
 
     public int attendanceNumber;//出勤人数
 
-    private void Start()
+    public override void Start()
     {
+        base.Start();
         if (btSubmit != null)
             btSubmit.onClick.AddListener(StartWork);
     }
@@ -99,7 +100,7 @@ public class UIGameAttendance : UIGameComponent, ItemGameAttendanceCpt.ICallBack
             workerItem.SetCallBack(this);
         }
         //初始化数据
-        if (characterData.baseInfo.isAttendance)
+        if (characterData.baseInfo.GetWorkerStatus() == WorkerStatusEnum.Work)
         {
             attendancePriceL += characterData.baseInfo.priceL;
             attendancePriceM += characterData.baseInfo.priceM;
@@ -118,9 +119,9 @@ public class UIGameAttendance : UIGameComponent, ItemGameAttendanceCpt.ICallBack
     }
 
     #region  出勤回调
-    public void AttendanceChange(ItemGameAttendanceCpt itemView, bool isAttendance, CharacterBean characterBean)
+    public void AttendanceChange(ItemGameAttendanceCpt itemView, WorkerStatusEnum workerStatus, CharacterBean characterBean)
     {
-        if (isAttendance)
+        if (workerStatus == WorkerStatusEnum.Work)
         {
             attendancePriceL += characterBean.baseInfo.priceL;
             attendancePriceM += characterBean.baseInfo.priceM;

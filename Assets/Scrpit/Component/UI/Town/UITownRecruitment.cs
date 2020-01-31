@@ -15,8 +15,9 @@ public class UITownRecruitment : UIBaseOne, DialogView.IDialogCallBack
     public GameObject objCandidateContent;
     public GameObject objCandidateModel;
 
-    private void Awake()
+    public override void Awake()
     {
+        base.Awake();
         if (GameCommonInfo.DailyLimitData.listRecruitmentCharacter == null)
         {
             CreateCandidateData();
@@ -30,15 +31,13 @@ public class UITownRecruitment : UIBaseOne, DialogView.IDialogCallBack
     public override void Start()
     {
         base.Start();
-        InfoPromptPopupShow infoPromptPopupShow = GetUIManager<UIGameManager>().infoPromptPopup;
         if (btFindWorker != null)
             btFindWorker.onClick.AddListener(FindWorkerByMoney);
         if (infoPromptPopupButton != null)
         {
-            infoPromptPopupButton.SetPopupShowView(infoPromptPopupShow);
-            infoPromptPopupButton.SetContent("根据寻聘金额随机获取角色，金额越高角色属性越强，获得稀有角色概率越高");
-        }
-            
+            infoPromptPopupButton.SetPopupShowView(uiGameManager.infoPromptPopup);
+            infoPromptPopupButton.SetContent(GameCommonInfo.GetUITextById(271));
+        }          
     }
 
     public override void RefreshUI()
@@ -50,10 +49,9 @@ public class UITownRecruitment : UIBaseOne, DialogView.IDialogCallBack
     private new void Update()
     {
         base.Update();
-        GameDataManager gameDataManager = GetUIManager<UIGameManager>().gameDataManager;
-        if (gameDataManager != null && tvNumber != null)
+        if (uiGameManager.gameDataManager != null && tvNumber != null)
         {
-            tvNumber.text = gameDataManager.gameData.listWorkerCharacter.Count + "/" + gameDataManager.gameData.workerNumberLimit;
+            tvNumber.text =uiGameManager.gameDataManager.gameData.listWorkerCharacter.Count + "/" + uiGameManager.gameDataManager.gameData.workerNumberLimit;
         }
     }
 
@@ -69,10 +67,9 @@ public class UITownRecruitment : UIBaseOne, DialogView.IDialogCallBack
     public void CreateCandidateData()
     {
         GameCommonInfo.InitRandomSeed();
-        CharacterBodyManager characterBodyManager = GetUIManager<UIGameManager>().characterBodyManager;
         for (int i = 0; i < Random.Range(1,15); i++)
         {
-            CharacterBean characterData = CharacterBean.CreateRandomWorkerData(characterBodyManager);
+            CharacterBean characterData = CharacterBean.CreateRandomWorkerData(uiGameManager.characterBodyManager);
             GameCommonInfo.DailyLimitData.AddRecruitmentCharacter(characterData);
         }
     }
@@ -113,17 +110,14 @@ public class UITownRecruitment : UIBaseOne, DialogView.IDialogCallBack
     public void FindWorkerByMoney()
     {
         //检测是否超过人员上限
-        GameDataManager gameDataManager = GetUIManager<UIGameManager>().gameDataManager;
-        ToastManager toastManager = GetUIManager<UIGameManager>().toastManager;
-        if (gameDataManager.gameData.listWorkerCharacter.Count >= gameDataManager.gameData.workerNumberLimit)
+        if (uiGameManager.gameDataManager.gameData.listWorkerCharacter.Count >=uiGameManager.gameDataManager.gameData.workerNumberLimit)
         {
-            toastManager.ToastHint(GameCommonInfo.GetUITextById(1051));
+            uiGameManager.toastManager.ToastHint(GameCommonInfo.GetUITextById(1051));
             return;
         }
-        DialogManager dialogManager = GetUIManager<UIGameManager>().dialogManager;
         DialogBean dialogData = new DialogBean();
         dialogData.title = GameCommonInfo.GetUITextById(3062);
-        PickForMoneyDialogView pickForMoneyDialog = (PickForMoneyDialogView)dialogManager.CreateDialog(DialogEnum.PickForMoney, this, dialogData);
+        PickForMoneyDialogView pickForMoneyDialog = (PickForMoneyDialogView)uiGameManager.dialogManager.CreateDialog(DialogEnum.PickForMoney, this, dialogData);
         pickForMoneyDialog.SetData(1, 1, 100);
     }
 

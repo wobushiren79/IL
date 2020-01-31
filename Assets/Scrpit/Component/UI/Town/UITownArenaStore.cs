@@ -22,9 +22,8 @@ public class UITownArenaStore : UIBaseOne, StoreInfoManager.ICallBack, IRadioGro
         base.OpenUI();
         rgType.SetPosition(0, false);
 
-        StoreInfoManager storeInfoManager = GetUIManager<UIGameManager>().storeInfoManager;
-        storeInfoManager.SetCallBack(this);
-        storeInfoManager.GetStoreInfoForArenaGoods();
+        uiGameManager.storeInfoManager.SetCallBack(this);
+        uiGameManager.storeInfoManager.GetStoreInfoForArenaGoods();
     }
 
     public void InitDataByType(int type)

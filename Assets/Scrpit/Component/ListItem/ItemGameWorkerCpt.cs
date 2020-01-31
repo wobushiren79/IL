@@ -14,6 +14,8 @@ public class ItemGameWorkerCpt : ItemGameBaseCpt, IRadioButtonCallBack, DialogVi
     public Text tvLoyal;
     public InfoPromptPopupButton pbLoyal;
 
+    public Text tvStatus;
+
     public Text tvSpeed;
     public InfoPromptPopupButton pbSpeed;
     public Text tvAccount;
@@ -51,6 +53,8 @@ public class ItemGameWorkerCpt : ItemGameBaseCpt, IRadioButtonCallBack, DialogVi
     protected DialogManager dialogManager;
     protected GameDataManager gameDataManager;
     protected GameItemsManager gameItemsManager;
+    protected GameTimeHandler gameTimeHandler;
+
     private void Awake()
     {
         gameItemsManager = GetUIManager<UIGameManager>().gameItemsManager;
@@ -58,6 +62,7 @@ public class ItemGameWorkerCpt : ItemGameBaseCpt, IRadioButtonCallBack, DialogVi
         audioHandler = GetUIManager<UIGameManager>().audioHandler;
         dialogManager = GetUIManager<UIGameManager>().dialogManager;
         gameDataManager = GetUIManager<UIGameManager>().gameDataManager;
+        gameTimeHandler = GetUIManager<UIGameManager>().gameTimeHandler;
     }
 
     private void Start()
@@ -154,6 +159,9 @@ public class ItemGameWorkerCpt : ItemGameBaseCpt, IRadioButtonCallBack, DialogVi
             SetPrice(characterBase.priceS, characterBase.priceM, characterBase.priceL);
             SetWork(characterBase.isChef, characterBase.isWaiter, characterBase.isAccountant, characterBase.isAccost, characterBase.isBeater);
             SetPriority(characterBase.priorityChef, characterBase.priorityWaiter, characterBase.priorityAccountant, characterBase.priorityAccost, characterBase.priorityBeater);
+
+            WorkerStatusEnum workerStatus= characterBase.GetWorkerStatus(out string workerStatusStr);
+            SetStatus(workerStatus, workerStatusStr);
         }
         if (characterData.attributes != null)
         {
@@ -339,6 +347,31 @@ public class ItemGameWorkerCpt : ItemGameBaseCpt, IRadioButtonCallBack, DialogVi
             etPriorityAccost.text = priorityAccost + "";
         if (etPriorityBeater != null)
             etPriorityBeater.text = priorityBeater + "";
+    }
+
+    /// <summary>
+    /// 设置状态
+    /// </summary>
+    /// <param name="workStatus"></param>
+    public void SetStatus(WorkerStatusEnum workerStatus, string workerStatusStr)
+    {
+        if (tvStatus != null)
+        {
+            tvStatus.text = workerStatusStr;
+            switch (workerStatus)
+            {
+                case WorkerStatusEnum.Work:
+                    tvStatus.color = Color.green;
+                    break;
+                case WorkerStatusEnum.Rest:
+                    tvStatus.color = Color.red;
+                    break;
+                default:
+                    tvStatus.color = Color.blue;
+                    break;
+            }
+        }
+           
     }
 
     /// <summary>

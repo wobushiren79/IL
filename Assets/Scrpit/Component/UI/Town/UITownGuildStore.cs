@@ -24,9 +24,8 @@ public class UITownGuildStore : UIBaseOne, StoreInfoManager.ICallBack, IRadioGro
         base.OpenUI();
         rgGuildStoreType.SetPosition(0, false);
 
-        StoreInfoManager storeInfoManager = GetUIManager<UIGameManager>().storeInfoManager;
-        storeInfoManager.SetCallBack(this);
-        storeInfoManager.GetStoreInfoForGuildGoods();
+        uiGameManager.storeInfoManager.SetCallBack(this);
+        uiGameManager.storeInfoManager.GetStoreInfoForGuildGoods();
     }
 
     public void InitDataByType(int type)
@@ -75,7 +74,7 @@ public class UITownGuildStore : UIBaseOne, StoreInfoManager.ICallBack, IRadioGro
         {
             StoreInfoBean itemData = listData[i];
             //检测是否满足前置成就
-            if (!itemData.CheckPreAchIds(GetUIManager<UIGameManager>().gameDataManager.gameData))
+            if (!itemData.CheckPreAchIds(uiGameManager.gameDataManager.gameData))
             {
                 continue;
             }

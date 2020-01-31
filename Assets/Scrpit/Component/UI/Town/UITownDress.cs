@@ -31,10 +31,8 @@ public class UITownDress : UIBaseOne, IRadioGroupCallBack, StoreInfoManager.ICal
     {
         base.OpenUI();
 
-        StoreInfoManager storeInfoManager = GetUIManager<UIGameManager>().storeInfoManager;
-        storeInfoManager.SetCallBack(this);
-        
-        storeInfoManager.GetStoreInfoForDress();
+        uiGameManager.storeInfoManager.SetCallBack(this);
+        uiGameManager.storeInfoManager.GetStoreInfoForDress();
 
         rgStyleType.SetPosition(0, false);
         rgPartType.SetPosition(0, false);

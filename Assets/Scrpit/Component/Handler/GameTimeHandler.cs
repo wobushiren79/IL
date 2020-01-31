@@ -268,4 +268,13 @@ public class GameTimeHandler : BaseObservable<IBaseObserver>
         }
         hour += addHour;
     }
+
+    /// <summary>
+    /// 获取当天状态
+    /// </summary>
+    /// <returns></returns>
+    public DayEnum GetDayStatus()
+    {
+        return dayStauts;
+    }
 }

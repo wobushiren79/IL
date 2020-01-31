@@ -34,6 +34,8 @@ public class InnHandler : BaseMonoBehaviour
     public InnFightHandler innFightHandler;
     // 入口处理
     public InnEntranceHandler innEntranceHandler;
+    //音效处理
+    protected AudioHandler audioHandler;
 
     //闹事的人的列表
     public List<NpcAIRascalCpt> rascalrQueue = new List<NpcAIRascalCpt>();
@@ -50,6 +52,11 @@ public class InnHandler : BaseMonoBehaviour
     public List<OrderForCustomer> orderList = new List<OrderForCustomer>();
     //当天记录流水
     public InnRecordBean innRecord = new InnRecordBean();
+
+    private void Awake()
+    {
+        audioHandler = Find<AudioHandler>(ImportantTypeEnum.AudioHandler);
+    }
 
     /// <summary>
     /// 初始化客栈
@@ -205,9 +212,9 @@ public class InnHandler : BaseMonoBehaviour
     /// <returns></returns>
     public Vector3 GetRandomInnPositon()
     {
-        int height= gameDataManager.gameData.GetInnBuildData().innHeight;
+        int height = gameDataManager.gameData.GetInnBuildData().innHeight;
         int width = gameDataManager.gameData.GetInnBuildData().innWidth;
-        Vector3 position = new Vector3(UnityEngine.Random.Range(1.5f,(float)width-1f), UnityEngine.Random.Range(1.5f, (float)height-1f));
+        Vector3 position = new Vector3(UnityEngine.Random.Range(1.5f, (float)width - 1f), UnityEngine.Random.Range(1.5f, (float)height - 1f));
         return position;
     }
 
@@ -278,12 +285,12 @@ public class InnHandler : BaseMonoBehaviour
     /// 付钱
     /// </summary>
     /// <param name="food"></param>
-    public void PayMoney(OrderForCustomer order, float multiple)
+    public void PayMoney(OrderForCustomer order, float rate)
     {
-        long getMoneyL = (long)(order.foodData.price_l * multiple);
-        long getMoneyM = (long)(order.foodData.price_m * multiple);
-        long getMoneyS = (long)(order.foodData.price_s * multiple);
-        
+        long getMoneyL = (long)Math.Round(order.foodData.price_l * rate, 0);
+        long getMoneyM = (long)Math.Round(order.foodData.price_m * rate, 0);
+        long getMoneyS = (long)Math.Round(order.foodData.price_s * rate, 0);
+
         //账本记录
         if (innRecord.sellNumber.ContainsKey(order.foodData.id))
             innRecord.sellNumber[order.foodData.id] += 1;
@@ -297,8 +304,10 @@ public class InnHandler : BaseMonoBehaviour
         gameDataManager.gameData.ChangeMenuSellNumber(1, order.foodData.id);
         //金钱增加
         gameDataManager.gameData.AddMoney(getMoneyL, getMoneyM, getMoneyS);
+        //播放音效
+        audioHandler.PlaySound(SoundEnum.PayMoney, order.customer.transform.position);
         //展示特效
-        innPayHandler.ShowPayEffects(order.customer.transform.position,getMoneyL,getMoneyM, getMoneyS);
+        innPayHandler.ShowPayEffects(order.customer.transform.position, getMoneyL, getMoneyM, getMoneyS);
     }
 
     /// <summary>
@@ -423,7 +432,7 @@ public class InnHandler : BaseMonoBehaviour
         //记录好评数量
         if (parise > 0)
             innRecord.praiseGoodNumber++;
-        else if(parise < 0)
+        else if (parise < 0)
             innRecord.praiseBadNumber++;
         //增加评价
         gameDataManager.gameData.GetInnAttributesData().AddPraise(parise);

@@ -97,4 +97,13 @@ public class RadioButtonView : BaseMonoBehaviour
         }
         ChangeStates(states);
     }
+
+    /// <summary>
+    /// 设置是否开启点击
+    /// </summary>
+    /// <param name="enabled"></param>
+    public void SetEnabled(bool enabled)
+    {
+        rbButton.enabled = enabled;
+    }
 }
