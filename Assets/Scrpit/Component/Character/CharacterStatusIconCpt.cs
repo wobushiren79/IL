@@ -29,6 +29,7 @@ public class CharacterStatusIconCpt : BaseMonoBehaviour
         GameObject objStatus = Instantiate(gameObject, objIconModel);
         objStatus.transform.localPosition = iconPosition;
         CharacterStatusIconItemCpt itemCpt = objStatus.GetComponent<CharacterStatusIconItemCpt>();
+        itemCpt.SetData(itemData);
         listStatusIcon.Add(itemCpt);
         objStatus.transform.DOScale(new Vector3(0, 0, 0), 0.5f).From().SetEase(Ease.OutBack);
         return objStatus;
