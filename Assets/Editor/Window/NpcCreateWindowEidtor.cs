@@ -123,6 +123,10 @@ public class NpcCreateWindowEidtor : EditorWindow
         {
             listFindNpcData = npcInfoManager.GetCharacterDataByType((int)NPCTypeEnum.RecruitTown);
         }
+        if (GUILayout.Button("查询团队顾客", GUILayout.Width(100), GUILayout.Height(20)))
+        {
+            listFindNpcData = npcInfoManager.GetCharacterDataByType((int)NPCTypeEnum.GuestTeam);
+        }
         if (GUILayout.Button("查询其他NPC", GUILayout.Width(100), GUILayout.Height(20)))
         {
             listFindNpcData = npcInfoManager.GetCharacterDataByType((int)NPCTypeEnum.Other);
@@ -438,6 +442,8 @@ public class NpcCreateWindowEidtor : EditorWindow
         npcInfo.attributes_force = int.Parse(EditorGUILayout.TextArea(npcInfo.attributes_force + "", GUILayout.Width(50), GUILayout.Height(20)));
         GUILayout.Label("运：", GUILayout.Width(30), GUILayout.Height(20));
         npcInfo.attributes_lucky = int.Parse(EditorGUILayout.TextArea(npcInfo.attributes_lucky + "", GUILayout.Width(50), GUILayout.Height(20)));
+
+        GUINPCShowCondition(npcInfo);
         GUILayout.EndHorizontal();
 
     }
@@ -447,6 +453,45 @@ public class NpcCreateWindowEidtor : EditorWindow
         Texture2D iconTex = EditorGUIUtility.FindTexture(picPath + picName + ".png");
         if (iconTex)
             GUILayout.Label(iconTex, GUILayout.Width(64), GUILayout.Height(64));
+    }
+
+
+    /// <summary>
+    /// NPC出现条件
+    /// </summary>
+    /// <param name="storeInfo"></param>
+    private void GUINPCShowCondition(NpcInfoBean npcInfo)
+    {
+        //前置相关
+        EditorGUILayout.BeginVertical();
+        GUILayout.Label("出现条件：", GUILayout.Width(100), GUILayout.Height(20));
+        if (GUILayout.Button("添加条件", GUILayout.Width(100), GUILayout.Height(20)))
+        {
+            npcInfo.condition += ("|" + EnumUtil.GetEnumName(NpcShowConditionEnum.NpcNumber) + ":" + "1|");
+        }
+        List<string> listConditionData = StringUtil.SplitBySubstringForListStr(npcInfo.condition, '|');
+        npcInfo.condition = "";
+        for (int i = 0; i < listConditionData.Count; i++)
+        {
+            string itemConditionData = listConditionData[i];
+            if (CheckUtil.StringIsNull(itemConditionData))
+            {
+                continue;
+            }
+            EditorGUILayout.BeginHorizontal();
+            if (GUILayout.Button("删除", GUILayout.Width(100), GUILayout.Height(20)))
+            {
+                listConditionData.RemoveAt(i);
+                i--;
+                continue;
+            }
+            List<string> listItemConditionData = StringUtil.SplitBySubstringForListStr(itemConditionData, ':');
+            listItemConditionData[0] = EnumUtil.GetEnumName(EditorGUILayout.EnumPopup("出现条件", EnumUtil.GetEnum<NpcShowConditionEnum>(listItemConditionData[0]), GUILayout.Width(300), GUILayout.Height(20)));
+            listItemConditionData[1] = EditorGUILayout.TextArea(listItemConditionData[1] + "", GUILayout.Width(100), GUILayout.Height(20));
+            EditorGUILayout.EndHorizontal();
+            npcInfo.condition += (listItemConditionData[0] + ":" + listItemConditionData[1]) + "|";
+        }
+        EditorGUILayout.EndVertical();
     }
 
     private GameObject ShowNpc(CharacterBean characterData)

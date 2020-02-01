@@ -14,6 +14,18 @@ public class UIGameTest : BaseUIComponent
     public InputField etBuildItemNumber;
     public Button btBuildItemCreate;
 
+    //团队顾客生成
+    public InputField etNpcGuestTeamId;
+    public Button btNpcGuestTeam;
+
+    protected NpcEventBuilder npcEventBuilder;
+
+    public override void Awake()
+    {
+        base.Awake();
+        npcEventBuilder = Find<NpcEventBuilder>(ImportantTypeEnum.NpcBuilder);
+    }
+
     private void Start()
     {
         if (btStoryCreate != null)
@@ -22,6 +34,8 @@ public class UIGameTest : BaseUIComponent
             btItemCreate.onClick.AddListener(AddItem);
         if (btBuildItemCreate != null)
             btBuildItemCreate.onClick.AddListener(AddBuildItem);
+        if (btNpcGuestTeam != null)
+            btNpcGuestTeam.onClick.AddListener(CreateGuestTeam);
     }
 
     /// <summary>
@@ -60,7 +74,6 @@ public class UIGameTest : BaseUIComponent
         }
     }
 
-
     /// <summary>
     /// 添加道具
     /// </summary>
@@ -83,5 +96,15 @@ public class UIGameTest : BaseUIComponent
         {
             LogUtil.LogError("建筑ID输入错误");
         }
+    }
+
+    /// <summary>
+    /// 生成指定团队
+    /// </summary>
+    public void CreateGuestTeam()
+    {
+        if (npcEventBuilder == null)
+            return;
+        npcEventBuilder.TeamEvent(long.Parse(etNpcGuestTeamId.text));
     }
 }

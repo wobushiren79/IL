@@ -27,7 +27,7 @@ public class NpcNormalBuilder : BaseMonoBehaviour
 
     protected virtual void Awake()
     {
-        npcInfoManager = Find<NpcInfoManager>( ImportantTypeEnum.NpcManager);
+        npcInfoManager = Find<NpcInfoManager>(ImportantTypeEnum.NpcManager);
         characterBodyManager = Find<CharacterBodyManager>(ImportantTypeEnum.CharacterManager);
         gameTimeHandler = Find<GameTimeHandler>(ImportantTypeEnum.TimeHandler);
         gameDataManager = Find<GameDataManager>(ImportantTypeEnum.GameDataManager);
@@ -76,17 +76,16 @@ public class NpcNormalBuilder : BaseMonoBehaviour
 
     public GameObject BuildNpc(CharacterBean characterData, Vector3 startPosition)
     {
-       return BuildNpc(objNormalModel, characterData, startPosition);
+        return BuildNpc(objNormalModel, characterData, startPosition);
     }
 
     public GameObject BuildNpc(GameObject objModel, CharacterBean characterData, Vector3 startPosition)
-        {
+    {
         if (npcInfoManager == null)
             return null;
         if (characterData == null)
             return null;
-        GameObject npcObj = Instantiate(objModel, objContainer.transform);
-        npcObj.SetActive(true);
+        GameObject npcObj = Instantiate(objContainer, objModel);
         npcObj.transform.localScale = new Vector3(1, 1);
         npcObj.transform.position = startPosition;
 

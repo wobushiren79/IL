@@ -18,7 +18,7 @@ public class BaseNpcAI : BaseMonoBehaviour
     //角色表情
     public CharacterExpressionCpt characterExpression;
 
-    public void Awake()
+    public virtual void Awake()
     {
         gameItemsManager = FindObjectOfType<GameItemsManager>();
     }

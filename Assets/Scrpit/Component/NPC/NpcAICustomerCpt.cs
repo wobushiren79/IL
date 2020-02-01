@@ -43,8 +43,9 @@ public class NpcAICustomerCpt : BaseNpcAI
     //评价数据
     public InnEvaluationBean innEvaluation = new InnEvaluationBean();
 
-    private void Awake()
+    public override void Awake()
     {
+        base.Awake();
         sceneInnManager = Find<SceneInnManager>(ImportantTypeEnum.SceneManager);
         innHandler = Find<InnHandler>(ImportantTypeEnum.InnHandler);
     }

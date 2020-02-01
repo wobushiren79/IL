@@ -43,6 +43,8 @@ public class NpcInfoBean : BaseBean
 
     //喜欢的东西
     public string love_items;
+    //出现条件
+    public string condition;
     /// <summary>
     /// NPC信息转为角色信息
     /// </summary>

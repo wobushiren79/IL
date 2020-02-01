@@ -82,7 +82,10 @@ public class NpcInfoManager : BaseManager, INpcInfoView
     {
         return GetCharacterDataByType(new int[] { type });
     }
-
+    public List<CharacterBean> GetCharacterDataByType(NPCTypeEnum type)
+    {
+        return GetCharacterDataByType(new int[] { (int)type });
+    }
     public List<CharacterBean> GetCharacterDataByType(int[] types)
     {
         List<CharacterBean> listData = new List<CharacterBean>();
