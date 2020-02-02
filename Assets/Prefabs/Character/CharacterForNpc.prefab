@@ -156,7 +156,7 @@ MonoBehaviour:
       priorityAccountant: 0
       priorityAccost: 0
       priorityBeater: 0
-      isAttendance: 0
+      workerStatus: 0
       listLoveItems: 
     attributes:
       loyal: 0
@@ -232,6 +232,7 @@ MonoBehaviour:
       attributes_force: 0
       attributes_lucky: 0
       love_items: 
+      condition: 
   characterFavorabilityData:
     characterId: 0
     favorability: 0
@@ -241,9 +242,11 @@ MonoBehaviour:
     giftNormalNumber: 0
     talkNumber: 0
   gameItemsManager: {fileID: 0}
+  iconDataManager: {fileID: 0}
   characterMoveCpt: {fileID: 4876987991408981619}
   characterShoutCpt: {fileID: 4717018018557957672}
   characterExpression: {fileID: 3936434963332890346}
+  characterStatusIcon: {fileID: 1177567597470619980}
 --- !u!195 &3067088595257032274
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -390,5 +393,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 545268fae3793df47b15468b2c869720, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1177567597470619980 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1996465716420037251, guid: 2b0fba09934c2934eb7fd9b31e6030fb,
+    type: 3}
+  m_PrefabInstance: {fileID: 856617965993939919}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 806aeb5598917a249bd2491309022927, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 

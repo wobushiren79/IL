@@ -106,7 +106,7 @@ public class NpcAIWorkerForBeaterCpt : NpcAIWokerFoBaseCpt
     /// </summary>
     public void SetIntentForRest()
     {
-        float restTime = npcAIWorker.characterData.CalculationBeaterRestTime(npcAIWorker.gameItemsManager);
+        float restTime = npcAIWorker.characterData.CalculationBeaterRestTime(gameItemsManager);
         //记录
         npcAIWorker.characterData.baseInfo.beaterInfo.AddRestTime(restTime);
         npcAIRascal = null;
@@ -138,11 +138,11 @@ public class NpcAIWorkerForBeaterCpt : NpcAIWokerFoBaseCpt
     /// <returns></returns>
     private IEnumerator StartFighting()
     {
-        float fightTime = npcAIWorker.characterData.CalculationBeaterFightTime(npcAIWorker.gameItemsManager);
+        float fightTime = npcAIWorker.characterData.CalculationBeaterFightTime(gameItemsManager);
         //记录
         npcAIWorker.characterData.baseInfo.beaterInfo.AddFightTime(fightTime);
         yield return new WaitForSeconds(fightTime);
-        int damage = npcAIWorker.characterData.CalculationBeaterDamage(npcAIWorker.gameItemsManager);
+        int damage = npcAIWorker.characterData.CalculationBeaterDamage(gameItemsManager);
         int life = npcAIRascal.AddLife(-damage);
 
         if (life <= 0)

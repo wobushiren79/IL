@@ -212,7 +212,7 @@ public class NpcAIWorkerForWaiterCpt : NpcAIWokerFoBaseCpt
     /// <returns></returns>
     public IEnumerator StartClean()
     {
-        float cleanTime = npcAIWorker.characterData.CalculationWaiterCleanTime(npcAIWorker.gameItemsManager);
+        float cleanTime = npcAIWorker.characterData.CalculationWaiterCleanTime(gameItemsManager);
         npcAIWorker.characterData.baseInfo.waiterInfo.AddCleanTime(cleanTime);
         yield return new WaitForSeconds(cleanTime);
         //记录数据

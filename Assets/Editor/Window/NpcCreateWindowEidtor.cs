@@ -443,6 +443,9 @@ public class NpcCreateWindowEidtor : EditorWindow
         GUILayout.Label("运：", GUILayout.Width(30), GUILayout.Height(20));
         npcInfo.attributes_lucky = int.Parse(EditorGUILayout.TextArea(npcInfo.attributes_lucky + "", GUILayout.Width(50), GUILayout.Height(20)));
 
+        GUILayout.Label("喜欢的菜品：", GUILayout.Width(30), GUILayout.Height(20));
+        npcInfo.attributes_life = int.Parse(EditorGUILayout.TextArea(npcInfo.attributes_life + "", GUILayout.Width(50), GUILayout.Height(20)));
+
         GUINPCShowCondition(npcInfo);
         GUILayout.EndHorizontal();
 
@@ -501,7 +504,7 @@ public class NpcCreateWindowEidtor : EditorWindow
         objNpc.SetActive(true);
         objNpc.transform.position = new Vector3(characterData.npcInfoData.position_x, characterData.npcInfoData.position_y);
         BaseNpcAI npcAI = objNpc.GetComponent<BaseNpcAI>();
-        npcAI.gameItemsManager = gameItemsManager;
+        npcAI.Awake();
         CharacterDressCpt characterDress = CptUtil.GetCptInChildrenByName<CharacterDressCpt>(npcAI.gameObject, "Body");
         characterDress.Awake();
         npcAI.SetCharacterData(characterData);

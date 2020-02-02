@@ -3,7 +3,7 @@ using UnityEditor;
 
 public class CharacterMoodCpt : BaseMonoBehaviour
 {
-    public SpriteRenderer srMood;
+    public CharacterStatusIconCpt characterStatusIcon;
 
     public Sprite spAnger;
     public Sprite spDisappointed;
@@ -12,42 +12,47 @@ public class CharacterMoodCpt : BaseMonoBehaviour
     public Sprite spHappy;
     public Sprite spExcited;
 
-    public void OpenMood()
-    {
-        srMood.gameObject.SetActive(true);
-    }
+    private Sprite spCurrent;
     public void CloseMood()
     {
-        srMood.gameObject.SetActive(false);
+        characterStatusIcon.RemoveStatusIconByType(CharacterStatusIconEnum.Mood);
     }
 
     public void SetMood(float mood)
     {
-        if (srMood == null)
-            return;
+        Sprite spIcon = null;
         if (mood <= 0)
         {
-            srMood.sprite = spAnger;
+            spIcon = spAnger;
         }
         else if (mood > 0 && mood <= 20)
         {
-            srMood.sprite = spDisappointed;
+            spIcon = spDisappointed;
         }
         else if (mood > 20 && mood <= 40)
         {
-            srMood.sprite = spOrdinary;
+            spIcon = spOrdinary;
         }
         else if (mood > 40 && mood <= 60)
         {
-            srMood.sprite = spOkay;
+            spIcon = spOkay;
         }
         else if (mood > 60 && mood <= 80)
         {
-            srMood.sprite = spHappy;
+            spIcon = spHappy;
         }
         else if (mood > 80 && mood <= 100)
         {
-            srMood.sprite = spExcited;
+            spIcon = spExcited;
         }
+        //避免实时更新带来的多次调用
+        if (spCurrent!= spIcon)
+        {
+            CharacterStatusIconBean statusIconData = new CharacterStatusIconBean();
+            statusIconData.iconStatus = CharacterStatusIconEnum.Mood;
+            statusIconData.spIcon = spIcon;
+            characterStatusIcon.ChangeStatusIcon(statusIconData);
+        }
+        spCurrent = spIcon;
     }
 }

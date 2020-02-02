@@ -131,11 +131,11 @@ public class NpcAIWorkerForAccountingCpt : NpcAIWokerFoBaseCpt
     /// <returns></returns>
     public IEnumerator StartAccounting()
     {
-        float time = npcAIWorker.characterData.CalculationAccountingTime(npcAIWorker.gameItemsManager);
+        float time = npcAIWorker.characterData.CalculationAccountingTime(gameItemsManager);
         npcAIWorker.characterData.baseInfo.accountantInfo.AddAccountantTime(time);
         yield return new WaitForSeconds(time);
         //是否出错
-        bool isError = npcAIWorker.characterData.CalculationAccountingCheck(npcAIWorker.gameItemsManager, out float moreRate);
+        bool isError = npcAIWorker.characterData.CalculationAccountingCheck(gameItemsManager, out float moreRate);
         if (isError)
         {
             //出错

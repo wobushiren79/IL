@@ -22,7 +22,12 @@ public class CharacterBodyCpt : BaseMonoBehaviour
     //角色属性
     public CharacterBodyBean characterBodyData;
     //角色身体资源管理
-    public CharacterBodyManager characterBodyManager;
+    protected CharacterBodyManager characterBodyManager;
+
+    private void Awake()
+    {
+        characterBodyManager = Find<CharacterBodyManager>(ImportantTypeEnum.CharacterManager);
+    }
 
     /// <summary>
     /// 获取身体属性

@@ -424,6 +424,7 @@ MonoBehaviour:
   characterData:
     baseInfo:
       characterId: 
+      characterType: 0
       titleName: 
       name: 
       workDay: 0
@@ -444,7 +445,7 @@ MonoBehaviour:
         cleanTotalNumber: 0
         sendTotalNumber: 0
         cleanTotalTime: 0
-      accountingInfo:
+      accountantInfo:
         workerType: 3
         workerLevel: 0
         workerExp: 0
@@ -480,15 +481,16 @@ MonoBehaviour:
         restTotalTime: 0
       isChef: 0
       isWaiter: 0
-      isAccounting: 0
+      isAccountant: 1
       isAccost: 0
       isBeater: 0
       priorityChef: 0
       priorityWaiter: 0
-      priorityAccounting: 0
+      priorityAccountant: 0
       priorityAccost: 0
       priorityBeater: 0
-      isAttendance: 0
+      workerStatus: 0
+      listLoveItems: 
     attributes:
       loyal: 0
       life: 0
@@ -531,14 +533,53 @@ MonoBehaviour:
       clothesId: 0
       shoesId: 0
       listLearnBook: 
+    npcInfoData:
+      id: 0
+      valid: 0
+      npc_id: 0
+      npc_type: 0
+      sex: 0
+      face: 0
+      mask_id: 0
+      hand_id: 0
+      hat_id: 0
+      clothes_id: 0
+      shoes_id: 0
+      hair_id: 
+      hair_color: 
+      eye_id: 
+      eye_color: 
+      mouth_id: 
+      mouth_color: 
+      title_name: 
+      name: 
+      position_x: 0
+      position_y: 0
+      talk_ids: 
+      attributes_loyal: 0
+      attributes_life: 0
+      attributes_cook: 0
+      attributes_speed: 0
+      attributes_account: 0
+      attributes_charm: 0
+      attributes_force: 0
+      attributes_lucky: 0
+      love_items: 
+      condition: 
   characterFavorabilityData:
     characterId: 0
     favorability: 0
+    favorabilityLevel: 0
     firstMeet: 0
+    giftLoveNumber: 0
+    giftNormalNumber: 0
+    talkNumber: 0
   gameItemsManager: {fileID: 0}
+  iconDataManager: {fileID: 0}
   characterMoveCpt: {fileID: 3262071503705689678}
   characterShoutCpt: {fileID: 3431049019408379413}
   characterExpression: {fileID: 6362100544653756119}
+  characterStatusIcon: {fileID: 9132228567301972337}
   aiForChef: {fileID: 8089863752262935693}
   aiForWaiter: {fileID: 5088782280854681849}
   aiForAccounting: {fileID: 1343993552124416576}
@@ -1322,10 +1363,20 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 8929081807208529404}
     m_Modifications:
-    - target: {fileID: 2478063932746049266, guid: 2b0fba09934c2934eb7fd9b31e6030fb,
+    - target: {fileID: 1047252903781998910, guid: 2b0fba09934c2934eb7fd9b31e6030fb,
         type: 3}
-      propertyPath: m_Name
-      value: Character
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1047252903781998910, guid: 2b0fba09934c2934eb7fd9b31e6030fb,
+        type: 3}
+      propertyPath: m_Radius
+      value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1047252903781998910, guid: 2b0fba09934c2934eb7fd9b31e6030fb,
+        type: 3}
+      propertyPath: m_Height
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 2478063931147506651, guid: 2b0fba09934c2934eb7fd9b31e6030fb,
         type: 3}
@@ -1382,9 +1433,25 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2478063932746049266, guid: 2b0fba09934c2934eb7fd9b31e6030fb,
+        type: 3}
+      propertyPath: m_Name
+      value: Character
+      objectReference: {fileID: 0}
     - target: {fileID: 4414186510013377829, guid: 2b0fba09934c2934eb7fd9b31e6030fb,
         type: 3}
       propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5035379056513621660, guid: 2b0fba09934c2934eb7fd9b31e6030fb,
+        type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: ab24ad2857d04084c81a99786b4021ef,
+        type: 3}
+    - target: {fileID: 5035379056513621660, guid: 2b0fba09934c2934eb7fd9b31e6030fb,
+        type: 3}
+      propertyPath: m_WasSpriteAssigned
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5210061400093648316, guid: 2b0fba09934c2934eb7fd9b31e6030fb,
@@ -1407,34 +1474,38 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 5035379056513621660, guid: 2b0fba09934c2934eb7fd9b31e6030fb,
-        type: 3}
-      propertyPath: m_Sprite
-      value: 
-      objectReference: {fileID: 21300000, guid: ab24ad2857d04084c81a99786b4021ef,
-        type: 3}
-    - target: {fileID: 5035379056513621660, guid: 2b0fba09934c2934eb7fd9b31e6030fb,
-        type: 3}
-      propertyPath: m_WasSpriteAssigned
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1047252903781998910, guid: 2b0fba09934c2934eb7fd9b31e6030fb,
-        type: 3}
-      propertyPath: m_Enabled
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1047252903781998910, guid: 2b0fba09934c2934eb7fd9b31e6030fb,
-        type: 3}
-      propertyPath: m_Radius
-      value: 0.1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1047252903781998910, guid: 2b0fba09934c2934eb7fd9b31e6030fb,
-        type: 3}
-      propertyPath: m_Height
-      value: 0.5
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2b0fba09934c2934eb7fd9b31e6030fb, type: 3}
+--- !u!1 &834773969608161383 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7970624781697389461, guid: 2b0fba09934c2934eb7fd9b31e6030fb,
+    type: 3}
+  m_PrefabInstance: {fileID: 7280332141832121330}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &9132228567301972337 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1996465716420037251, guid: 2b0fba09934c2934eb7fd9b31e6030fb,
+    type: 3}
+  m_PrefabInstance: {fileID: 7280332141832121330}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 806aeb5598917a249bd2491309022927, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &6362100544653756119 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4414186510013377829, guid: 2b0fba09934c2934eb7fd9b31e6030fb,
+    type: 3}
+  m_PrefabInstance: {fileID: 7280332141832121330}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 545268fae3793df47b15468b2c869720, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &3262071503705689678 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 5210061400093648316, guid: 2b0fba09934c2934eb7fd9b31e6030fb,
@@ -1465,21 +1536,3 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 7280332141832121330}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &834773969608161383 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 7970624781697389461, guid: 2b0fba09934c2934eb7fd9b31e6030fb,
-    type: 3}
-  m_PrefabInstance: {fileID: 7280332141832121330}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &6362100544653756119 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 4414186510013377829, guid: 2b0fba09934c2934eb7fd9b31e6030fb,
-    type: 3}
-  m_PrefabInstance: {fileID: 7280332141832121330}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 545268fae3793df47b15468b2c869720, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 

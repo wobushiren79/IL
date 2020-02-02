@@ -458,6 +458,27 @@ public class GameDataBean
     }
 
     /// <summary>
+    /// 检测是否有指定的菜品
+    /// </summary>
+    /// <param name="loveMenus"></param>
+    /// <param name="ownLoveMenus"></param>
+    /// <returns></returns>
+    public bool CheckHasLoveMenus(List<long> loveMenus,out List<MenuOwnBean> ownLoveMenus)
+    {
+        bool hasLove = false;
+        ownLoveMenus = new List<MenuOwnBean>();
+        foreach (MenuOwnBean itemMenu in listMenu)
+        {
+            if (loveMenus.Contains(itemMenu.menuId))
+            {
+                ownLoveMenus.Add(itemMenu);
+                hasLove = true;
+            }
+        }
+        return hasLove;
+    }
+
+    /// <summary>
     /// 修改食物销售数量
     /// </summary>
     /// <param name="number"></param>

@@ -28,9 +28,9 @@ public class NpcAICustomerCpt : BaseNpcAI
     public CharacterMoodCpt characterMoodCpt;
 
     //客栈处理
-    public InnHandler innHandler;
+    protected InnHandler innHandler;
     //客栈区域数据管理
-    public SceneInnManager sceneInnManager;
+    protected SceneInnManager sceneInnManager;
 
     //移动目标点
     public Vector3 movePosition;
@@ -74,24 +74,7 @@ public class NpcAICustomerCpt : BaseNpcAI
             case CustomerIntentEnum.GotoSeat:
                 if (characterMoveCpt.IsAutoMoveStop())
                 {
-                    //修改朝向
-                    SetCharacterFace(orderForCustomer.table.GetUserFace());
-                    //点餐
-                    innHandler.OrderForFood(orderForCustomer);
-                    if (orderForCustomer.foodData == null)
-                    {
-                        //如果没有菜品出售 心情直接降100 
-                        ChangeMood(-100);
-                        //离开
-                        SetIntent(CustomerIntentEnum.Leave);
-                    }
-                    else
-                    {
-                        //喊出需要的菜品
-                        characterShoutCpt.Shout(orderForCustomer.foodData.name);
-                        //设置等待食物
-                        SetIntent(CustomerIntentEnum.WaitFood);
-                    }
+                    OrderForFood();
                 }
                 break;
             case CustomerIntentEnum.WaitFood:
@@ -106,6 +89,31 @@ public class NpcAICustomerCpt : BaseNpcAI
             case CustomerIntentEnum.WaitPay:
                 ChangeMood(-Time.deltaTime);
                 break;
+        }
+    }
+
+    /// <summary>
+    /// 点餐
+    /// </summary>
+    public virtual void OrderForFood()
+    {
+        //首先调整修改朝向
+        SetCharacterFace(orderForCustomer.table.GetUserFace());
+        //点餐
+        innHandler.OrderForFood(orderForCustomer);
+        if (orderForCustomer.foodData == null)
+        {
+            //如果没有菜品出售 心情直接降100 
+            ChangeMood(-100);
+            //离开
+            SetIntent(CustomerIntentEnum.Leave);
+        }
+        else
+        {
+            //喊出需要的菜品
+            characterShoutCpt.Shout(orderForCustomer.foodData.name);
+            //设置等待食物
+            SetIntent(CustomerIntentEnum.WaitFood);
         }
     }
 
@@ -209,7 +217,6 @@ public class NpcAICustomerCpt : BaseNpcAI
         if (CheckUtil.CheckPath(transform.position, orderForCustomer.table.GetSeatPosition()))
         {
             //开启满意度
-            characterMoodCpt.OpenMood();
             characterMoodCpt.SetMood(innEvaluation.mood);
             //前往桌子
             movePosition = orderForCustomer.table.GetSeatPosition();

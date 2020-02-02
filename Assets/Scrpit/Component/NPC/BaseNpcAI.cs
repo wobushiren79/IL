@@ -10,17 +10,23 @@ public class BaseNpcAI : BaseMonoBehaviour
     public CharacterFavorabilityBean characterFavorabilityData;
 
     //装备控制管理
-    public GameItemsManager gameItemsManager;
+    protected GameItemsManager gameItemsManager;
+    //图标管理
+    protected IconDataManager iconDataManager;
+
     //角色移动控制
     public CharacterMoveCpt characterMoveCpt;
     //角色吼叫控制
     public CharacterShoutCpt characterShoutCpt;
     //角色表情
     public CharacterExpressionCpt characterExpression;
+    //角色图标控制
+    public CharacterStatusIconCpt characterStatusIcon;
 
     public virtual void Awake()
     {
-        gameItemsManager = FindObjectOfType<GameItemsManager>();
+        gameItemsManager = Find<GameItemsManager>(ImportantTypeEnum.GameItemsManager);
+        iconDataManager = Find<IconDataManager>(ImportantTypeEnum.UIManager);
     }
 
     /// <summary>
@@ -104,6 +110,20 @@ public class BaseNpcAI : BaseMonoBehaviour
     }
 
     /// <summary>
+    /// 增加团队图标
+    /// </summary>
+    /// <param name="iconColor"></param>
+    public void AddStatusIconForGuestTeam(Color iconColor)
+    {
+        CharacterStatusIconBean statusIconData = new CharacterStatusIconBean();
+        Sprite iconGuestTeam = iconDataManager.GetIconSpriteByName("team_2");
+        statusIconData.iconStatus = CharacterStatusIconEnum.NpcType;
+        statusIconData.spColor = iconColor;
+        statusIconData.spIcon = iconGuestTeam;
+        characterStatusIcon.AddStatusIcon(statusIconData);
+    }
+
+    /// <summary>
     /// 设置角色朝向 1左 2 右
     /// </summary>
     /// <param name="face"></param>
@@ -141,7 +161,7 @@ public class BaseNpcAI : BaseMonoBehaviour
         if (characterBody != null)
         {
             characterBody.SetEye("character_eye_special_dead", new Color(0, 0, 0), false);
-            characterBody.transform.DOLocalRotate(new Vector3(0,0,90),0.1f).SetEase(Ease.OutBack);
+            characterBody.transform.DOLocalRotate(new Vector3(0, 0, 90), 0.1f).SetEase(Ease.OutBack);
         }
     }
 

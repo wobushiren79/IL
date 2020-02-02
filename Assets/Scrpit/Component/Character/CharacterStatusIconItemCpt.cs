@@ -4,13 +4,13 @@ using UnityEditor;
 public class CharacterStatusIconItemCpt : BaseMonoBehaviour
 {
     public CharacterStatusIconBean statusIconData;
+    public SpriteRenderer srIcon;
 
     public void SetData(CharacterStatusIconBean statusIconData)
     {
         this.statusIconData = statusIconData;
-        SpriteRenderer spriteRenderer = GetComponent<SpriteRenderer>();
-        spriteRenderer.sprite = statusIconData.spIcon;
-        spriteRenderer.color = statusIconData.spColor;
+        srIcon.sprite = statusIconData.spIcon;
+        srIcon.color = statusIconData.spColor;
     }
 
 }

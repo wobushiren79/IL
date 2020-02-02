@@ -32,8 +32,8 @@ public class CharacterBaseBean
     public bool isChef = true;//是否开启厨师
     public bool isWaiter = true;//是否开启服务生
     public bool isAccountant = true;//是否开启记帐
-    public bool isAccost = true;//是否开启招呼
-    public bool isBeater = true;//是否开启打手
+    public bool isAccost = false;//是否开启招呼
+    public bool isBeater = false;//是否开启打手
 
     //优先级
     public int priorityChef;

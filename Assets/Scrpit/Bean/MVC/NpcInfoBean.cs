@@ -2,6 +2,8 @@
 using UnityEditor;
 using System;
 using System.Linq;
+using System.Collections.Generic;
+
 [Serializable]
 public class NpcInfoBean : BaseBean
 {
@@ -43,6 +45,8 @@ public class NpcInfoBean : BaseBean
 
     //喜欢的东西
     public string love_items;
+    //喜欢的菜单
+    public string love_menus;
     //出现条件
     public string condition;
     /// <summary>
@@ -101,5 +105,14 @@ public class NpcInfoBean : BaseBean
 
         characterData.npcInfoData = npcInfo;
         return characterData;
+    }
+
+    /// <summary>
+    /// 获取喜欢的菜品ID
+    /// </summary>
+    public List<long> GetLoveMenus()
+    {
+        long[] menusId = StringUtil.SplitBySubstringForArrayLong(love_menus, ',');
+        return menusId.ToList();
     }
 }

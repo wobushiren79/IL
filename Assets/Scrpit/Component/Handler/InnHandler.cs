@@ -258,7 +258,7 @@ public class InnHandler : BaseMonoBehaviour
     }
 
     /// <summary>
-    /// 点餐
+    /// 随机点餐
     /// </summary>
     /// <returns></returns>
     public MenuInfoBean OrderForFood(OrderForCustomer orderForCustomer)
@@ -271,8 +271,20 @@ public class InnHandler : BaseMonoBehaviour
         MenuOwnBean menuOwnItem = RandomUtil.GetRandomDataByList(listOwnMenu);
         if (menuOwnItem == null)
             return null;
+        return OrderForFood(orderForCustomer, menuOwnItem);
+    }
+
+    /// <summary>
+    /// 点餐
+    /// </summary>
+    /// <param name="orderForCustomer"></param>
+    /// <param name="menuOwn"></param>
+    /// <returns></returns>
+    public MenuInfoBean OrderForFood(OrderForCustomer orderForCustomer, MenuOwnBean menuOwn)
+    {
         //食物数据库里有这个数据
-        if (innFoodManager.listMenuData.TryGetValue(menuOwnItem.menuId, out MenuInfoBean menuInfo))
+        MenuInfoBean menuInfo = innFoodManager.GetFoodDataById(menuOwn.menuId);
+        if (menuInfo != null)
         {
             orderForCustomer.foodData = menuInfo;
             foodQueue.Add(orderForCustomer);
@@ -305,7 +317,7 @@ public class InnHandler : BaseMonoBehaviour
         //金钱增加
         gameDataManager.gameData.AddMoney(getMoneyL, getMoneyM, getMoneyS);
         //播放音效
-        audioHandler.PlaySound(SoundEnum.PayMoney, order.customer.transform.position);
+        audioHandler.PlaySound(SoundEnum.PayMoney,new Vector3(order.customer.transform.position.x, order.customer.transform.position.y,Camera.main.transform.position.z) );
         //展示特效
         innPayHandler.ShowPayEffects(order.customer.transform.position, getMoneyL, getMoneyM, getMoneyS);
     }

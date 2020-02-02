@@ -7,6 +7,8 @@ public class NpcEventBuilder : NpcNormalBuilder, IBaseObserver
 {
     //捣乱者模型
     public GameObject objRascalModel;
+    //团队模型
+    public GameObject objGuestTeamModel;
 
     private void Start()
     {
@@ -78,6 +80,9 @@ public class NpcEventBuilder : NpcNormalBuilder, IBaseObserver
     {
         List<NpcShowConditionBean> listConditionData = NpcShowConditionTools.GetListConditionData(characterData.npcInfoData.condition);
         int npcNumber = 1;
+        MenuOwnBean loveMenu = null;
+        Color teamColor = new Color(UnityEngine.Random.Range(0f,1f), UnityEngine.Random.Range(0f, 1f), UnityEngine.Random.Range(0f, 1f));
+        bool isWant = false;
         foreach (NpcShowConditionBean itemCondition in listConditionData)
         {
             NpcShowConditionTools.GetConditionDetails(itemCondition);
@@ -88,20 +93,53 @@ public class NpcEventBuilder : NpcNormalBuilder, IBaseObserver
                     break;
             }
         }
+        //想要吃饭概率
+        float eatProbability = UnityEngine.Random.Range(0f, 1f);
+        float rateWant = gameDataManager.gameData.GetInnAttributesData().CalculationCustomerWantRate();
+        //设定是否吃饭
+        //if (eatProbability <= rateWant)
+        //{
+        //    //判断是否有自己喜欢的菜
+        //    List<long> loveMenus= characterData.npcInfoData.GetLoveMenus();
+        //    if (gameDataManager.gameData.CheckHasLoveMenus(loveMenus, out List<long> ownLoveMenus))
+        //    {
+        //        //随机获取一个喜欢的菜
+        //        menuId = RandomUtil.GetRandomDataByList(ownLoveMenus);
+        //        isWant = true;
+        //    }
+        //}
+
+        List<long> loveMenus = characterData.npcInfoData.GetLoveMenus();
+        if (gameDataManager.gameData.CheckHasLoveMenus(loveMenus, out List<MenuOwnBean> ownLoveMenus))
+        {
+            //随机获取一个喜欢的菜
+            loveMenu = RandomUtil.GetRandomDataByList(ownLoveMenus);
+            isWant = true;
+        }
+
         for (int i = 0; i < npcNumber; i++)
         {
             //随机生成身体数据
-            CharacterBodyBean.CreateRandomBodyByManager(characterData.body, characterBodyManager);
-            GameObject npcObj = Instantiate(objContainer, objNormalModel);
+           // CharacterBodyBean.CreateRandomBodyByManager(characterData.body, characterBodyManager);
+            GameObject npcObj = Instantiate(objContainer, objGuestTeamModel);
 
             npcObj.transform.localScale = new Vector3(1, 1);
             npcObj.transform.position = npcPosition + new Vector3(UnityEngine.Random.Range(-1f, 1f), UnityEngine.Random.Range(-1f, 1f));
 
             BaseNpcAI baseNpcAI = npcObj.GetComponent<BaseNpcAI>();
             baseNpcAI.SetCharacterData(characterData);
+            baseNpcAI.AddStatusIconForGuestTeam(teamColor);
 
-            NpcAICustomerCpt npcAICustomer = baseNpcAI.GetComponent<NpcAICustomerCpt>();
-            npcAICustomer.SetIntent(NpcAICustomerCpt.CustomerIntentEnum.Walk);
+            NpcAICustomerForGuestTeamCpt customerAI = baseNpcAI.GetComponent<NpcAICustomerForGuestTeamCpt>();
+            if (isWant&& loveMenu!=null)
+            {
+                customerAI.SetIntent(NpcAICustomerCpt.CustomerIntentEnum.Want);
+                customerAI.SetMenu(loveMenu);
+            }
+            else
+            {
+                customerAI.SetIntent(NpcAICustomerCpt.CustomerIntentEnum.Walk);
+            }
         }
     }
 

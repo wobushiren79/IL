@@ -164,7 +164,7 @@ public class NpcAIWorkerForChefCpt : NpcAIWokerFoBaseCpt
     /// <returns></returns>
     public IEnumerator StartCook()
     {
-        float foodTime = npcAIWorker.characterData.CalculationChefMakeFoodTime(npcAIWorker.gameItemsManager,orderForCustomer.foodData.cook_time);
+        float foodTime = npcAIWorker.characterData.CalculationChefMakeFoodTime(gameItemsManager,orderForCustomer.foodData.cook_time);
         npcAIWorker.characterData.baseInfo.chefInfo.AddCookTime(foodTime);
         yield return new WaitForSeconds(foodTime);
         //记录数据
@@ -172,7 +172,7 @@ public class NpcAIWorkerForChefCpt : NpcAIWokerFoBaseCpt
         //添加经验
         npcAIWorker.characterData.baseInfo.chefInfo.AddExp(1);
         //计算食物生成等级
-        orderForCustomer.foodLevel = npcAIWorker.characterData.CalculationChefFoodLevel(npcAIWorker.gameItemsManager);
+        orderForCustomer.foodLevel = npcAIWorker.characterData.CalculationChefFoodLevel(gameItemsManager);
         //在灶台创建一个食物
         orderForCustomer.stove.CreateFood(innFoodManager, orderForCustomer);
         //通知送餐

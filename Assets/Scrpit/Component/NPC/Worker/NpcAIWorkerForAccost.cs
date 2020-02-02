@@ -183,12 +183,12 @@ public class NpcAIWorkerForAccost : NpcAIWokerFoBaseCpt
     public IEnumerator StartTalking()
     {
         //计算聊天时间
-        float talkTime = npcAIWorker.characterData.CalculationAccostTalkTime(npcAIWorker.gameItemsManager);
+        float talkTime = npcAIWorker.characterData.CalculationAccostTalkTime(gameItemsManager);
         //记录
         npcAIWorker.characterData.baseInfo.accostInfo.AddAccostTime(talkTime);
         yield return new WaitForSeconds(talkTime);
         //是否成功
-        if (npcAIWorker.characterData.CalculationAccostRate(npcAIWorker.gameItemsManager))
+        if (npcAIWorker.characterData.CalculationAccostRate(gameItemsManager))
         {
             npcAIWorker.SetExpression(CharacterExpressionCpt.CharacterExpressionEnum.Love);
             npcAICustomer.SetExpression(CharacterExpressionCpt.CharacterExpressionEnum.Love);
