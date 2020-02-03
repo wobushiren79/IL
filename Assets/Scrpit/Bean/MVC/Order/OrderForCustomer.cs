@@ -21,6 +21,12 @@ public class OrderForCustomer
     public NpcAIWorkerCpt waiterForSend;
     //做出的食物等级 -1 0 1 2
     public int foodLevel;
+
+    public OrderForCustomer(NpcAICustomerCpt customer)
+    {
+        this.customer = customer;
+    }
+
     /// <summary>
     /// 检测订单是否有效
     /// </summary>

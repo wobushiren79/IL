@@ -141,6 +141,7 @@ public class NpcAIWorkerForAccost : NpcAIWokerFoBaseCpt
         npcAIWorker.characterMoveCpt.SetDestination(movePosition);
         //展示表情
         npcAIWorker.SetExpression(CharacterExpressionCpt.CharacterExpressionEnum.Surprise);
+        
     }
 
     /// <summary>

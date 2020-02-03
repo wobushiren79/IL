@@ -17,12 +17,11 @@ public class NpcAICustomerCpt : BaseNpcAI
         GotoPay = 6,//去付钱
         WaitPay = 7,//等待付钱
         Pay = 8,//正在付钱
-        Leave =10,//离开
-
-        WaitAccost=11,//等待招待
+        Leave = 10,//离开
+        WaitAccost = 11,//等待招待
     }
 
-    public CustomerIntentEnum customerIntent= CustomerIntentEnum.Walk;//意图 顾客： 1路过 2思考 3进店 4找座位 5点菜 6吃 7结账 
+    public CustomerIntentEnum customerIntent = CustomerIntentEnum.Walk;//意图 顾客： 1路过 2思考 3进店 4找座位 5点菜 6吃 7结账 
 
     //表情控制
     public CharacterMoodCpt characterMoodCpt;
@@ -50,16 +49,13 @@ public class NpcAICustomerCpt : BaseNpcAI
         innHandler = Find<InnHandler>(ImportantTypeEnum.InnHandler);
     }
 
-    private void FixedUpdate()
+    public virtual void FixedUpdate()
     {
         switch (customerIntent)
         {
             case CustomerIntentEnum.Walk:
             case CustomerIntentEnum.Leave:
-                // if ( Vector2.Distance(transform.position, endPosition) < 3)
-                //到目标点就删除
-                if (characterMoveCpt.IsAutoMoveStop())
-                    Destroy(gameObject);
+                HandleForLeave();
                 break;
             case CustomerIntentEnum.Want:
                 if (characterMoveCpt.IsAutoMoveStop())
@@ -72,10 +68,7 @@ public class NpcAICustomerCpt : BaseNpcAI
                 }
                 break;
             case CustomerIntentEnum.GotoSeat:
-                if (characterMoveCpt.IsAutoMoveStop())
-                {
-                    OrderForFood();
-                }
+                HandleForOrderFood();
                 break;
             case CustomerIntentEnum.WaitFood:
                 ChangeMood(-Time.deltaTime);
@@ -93,10 +86,23 @@ public class NpcAICustomerCpt : BaseNpcAI
     }
 
     /// <summary>
+    /// 离开处理
+    /// </summary>
+    public virtual void HandleForLeave()
+    {
+        //到目标点就删除
+        if (!characterMoveCpt.IsAutoMoveStop())
+            return;
+        Destroy(gameObject);
+    }
+
+    /// <summary>
     /// 点餐
     /// </summary>
-    public virtual void OrderForFood()
+    public virtual void HandleForOrderFood()
     {
+        if (!characterMoveCpt.IsAutoMoveStop())
+            return;
         //首先调整修改朝向
         SetCharacterFace(orderForCustomer.table.GetUserFace());
         //点餐
@@ -182,25 +188,27 @@ public class NpcAICustomerCpt : BaseNpcAI
     /// <summary>
     /// 意图-想要就餐
     /// </summary>
-    public void IntentForWant()
+    public virtual void IntentForWant()
     {
+        movePosition = innHandler.GetRandomEntrancePosition();
         //移动到门口附近
-        Vector3 doorPosition = innHandler.GetRandomEntrancePosition();
-        if (doorPosition == null || doorPosition == Vector3.zero)
+        if (movePosition == null || movePosition == Vector3.zero)
             //如果找不到门则离开 散散步
             SetIntent(CustomerIntentEnum.Walk);
         else
             //前往门
-            characterMoveCpt.SetDestination(doorPosition);
+            characterMoveCpt.SetDestination(movePosition);
     }
 
     /// <summary>
     /// 意图-排队就餐
     /// </summary>
-    public void IntentForWaitSeat()
+    public virtual void IntentForWaitSeat()
     {
         //加入排队队伍
-        innHandler.cusomerQueue.Add(this);
+        //添加一个订单
+        OrderForCustomer orderForCustomer = innHandler.CreateOrder(this);
+        innHandler.cusomerQueue.Add(orderForCustomer);
         StartCoroutine(StartWaitSeat());
     }
 
@@ -293,13 +301,8 @@ public class NpcAICustomerCpt : BaseNpcAI
     /// <summary>
     /// 意图-离开
     /// </summary>
-    public void IntentForLeave()
+    public virtual void IntentForLeave()
     {
-        //如果在排队则移除排队列表
-        if (innHandler.cusomerQueue.Contains(this))
-        {
-            innHandler.cusomerQueue.Remove(this);
-        }
         //如果在订单列表 则移除订单列表
         if (innHandler.orderList.Contains(orderForCustomer))
         {
@@ -316,7 +319,7 @@ public class NpcAICustomerCpt : BaseNpcAI
     /// <summary>
     /// 意图-等待招待过来
     /// </summary>
-    public void IntentForWaitAccost()
+    public virtual void IntentForWaitAccost()
     {
         SetExpression(CharacterExpressionCpt.CharacterExpressionEnum.Surprise);
         StopMove();
@@ -335,14 +338,14 @@ public class NpcAICustomerCpt : BaseNpcAI
     /// 改变心情
     /// </summary>
     /// <param name="mood"></param>
-    public void ChangeMood(float mood)
+    public virtual void ChangeMood(float mood)
     {
         innEvaluation.mood += mood;
         characterMoodCpt.SetMood(innEvaluation.mood);
         if (innEvaluation.mood <= 0)
         {
             innHandler.EndOrderForForce(orderForCustomer);
-            SetIntent(CustomerIntentEnum.Leave); 
+            SetIntent(CustomerIntentEnum.Leave);
         }
     }
 

@@ -2,9 +2,9 @@
 using UnityEditor;
 using System;
 using System.Collections;
-public class NpcAIWorkerForAccountingCpt : NpcAIWokerFoBaseCpt
+public class NpcAIWorkerForAccountantCpt : NpcAIWokerFoBaseCpt
 {
-    public enum AccountingIntentEnum
+    public enum AccountantIntentEnum
     {
         Idle,//空闲
         GoToAccounting,//结账之前的路上
@@ -16,35 +16,34 @@ public class NpcAIWorkerForAccountingCpt : NpcAIWokerFoBaseCpt
     public GameObject accountingPro;
     //移动的目的点
     public Vector3 movePosition;
-    //厨师状态
-    public AccountingIntentEnum accountingIntent = AccountingIntentEnum.Idle;
-
+    //户籍
+    public AccountantIntentEnum accountantIntent = AccountantIntentEnum.Idle;
 
     private void Update()
     {
-        switch (accountingIntent)
+        switch (accountantIntent)
         {
-            case AccountingIntentEnum.Idle:
+            case AccountantIntentEnum.Idle:
                 break;
-            case AccountingIntentEnum.GoToAccounting:
+            case AccountantIntentEnum.GoToAccounting:
                 if (orderForCustomer.CheckOrder())
                 {
                     if (npcAIWorker.characterMoveCpt.IsAutoMoveStop())
                     {
                         //设置朝向
                         npcAIWorker.SetCharacterFace(orderForCustomer.counter.GetUserFace());
-                        SetIntent(AccountingIntentEnum.Accounting);
+                        SetIntent(AccountantIntentEnum.Accounting);
                     }
                 }
                 else
                 {
-                    SetIntent(AccountingIntentEnum.Idle);
+                    SetIntent(AccountantIntentEnum.Idle);
                 }
                 break;
-            case AccountingIntentEnum.Accounting:
+            case AccountantIntentEnum.Accounting:
                 if (!orderForCustomer.CheckOrder())
                 {
-                    SetIntent(AccountingIntentEnum.Idle);
+                    SetIntent(AccountantIntentEnum.Idle);
                 }
                 break;
         }
@@ -52,7 +51,7 @@ public class NpcAIWorkerForAccountingCpt : NpcAIWokerFoBaseCpt
 
     public void StartAccounting(OrderForCustomer orderForCustomer)
     {
-        SetIntent(AccountingIntentEnum.GoToAccounting, orderForCustomer);
+        SetIntent(AccountantIntentEnum.GoToAccounting, orderForCustomer);
     }
 
     /// <summary>
@@ -60,24 +59,24 @@ public class NpcAIWorkerForAccountingCpt : NpcAIWokerFoBaseCpt
     /// </summary>
     /// <param name="accountingIntent"></param>
     /// <param name="orderForCustomer"></param>
-    public void SetIntent(AccountingIntentEnum accountingIntent, OrderForCustomer orderForCustomer)
+    public void SetIntent(AccountantIntentEnum accountingIntent, OrderForCustomer orderForCustomer)
     {
-        this.accountingIntent = accountingIntent;
+        this.accountantIntent = accountingIntent;
         this.orderForCustomer = orderForCustomer;
         switch (accountingIntent)
         {
-            case AccountingIntentEnum.Idle:
+            case AccountantIntentEnum.Idle:
                 SetIntentForIdle();
                 break;
-            case AccountingIntentEnum.GoToAccounting:
+            case AccountantIntentEnum.GoToAccounting:
                 SetIntentForGoToAccounting(orderForCustomer);
                 break;
-            case AccountingIntentEnum.Accounting:
+            case AccountantIntentEnum.Accounting:
                 SetIntentForAccounting(orderForCustomer);
                 break;
         }
     }
-    public void SetIntent(AccountingIntentEnum accountingIntent)
+    public void SetIntent(AccountantIntentEnum accountingIntent)
     {
         SetIntent(accountingIntent, orderForCustomer);
     }
@@ -109,7 +108,7 @@ public class NpcAIWorkerForAccountingCpt : NpcAIWokerFoBaseCpt
         }
         else
         {
-            SetIntent(AccountingIntentEnum.Idle);
+            SetIntent(AccountantIntentEnum.Idle);
         }
     }
 
@@ -178,7 +177,7 @@ public class NpcAIWorkerForAccountingCpt : NpcAIWokerFoBaseCpt
 
         //通知离开
         orderForCustomer.customer.SetIntent(NpcAICustomerCpt.CustomerIntentEnum.Leave);
-        SetIntent(AccountingIntentEnum.Idle);
+        SetIntent(AccountantIntentEnum.Idle);
     }
 
 }

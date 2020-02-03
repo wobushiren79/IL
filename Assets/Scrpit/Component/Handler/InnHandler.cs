@@ -40,7 +40,7 @@ public class InnHandler : BaseMonoBehaviour
     //闹事的人的列表
     public List<NpcAIRascalCpt> rascalrQueue = new List<NpcAIRascalCpt>();
     //排队的人
-    public List<NpcAICustomerCpt> cusomerQueue = new List<NpcAICustomerCpt>();
+    public List<OrderForCustomer> cusomerQueue = new List<OrderForCustomer>();
     //排队等待烹饪的食物
     public List<OrderForCustomer> foodQueue = new List<OrderForCustomer>();
     //排队送餐的食物
@@ -92,12 +92,11 @@ public class InnHandler : BaseMonoBehaviour
                 if (tableCpt != null)
                 {
                     //排队成功
-                    NpcAICustomerCpt customer = cusomerQueue[0];
-                    //添加一个订单
-                    OrderForCustomer orderForCustomer = CreateOrder(customer, tableCpt);
-                    orderList.Add(orderForCustomer);
+                    OrderForCustomer orderForCustomer = cusomerQueue[0];
+                    //设置座位
+                    orderForCustomer.table = tableCpt;
                     //设置客户前往座位
-                    customer.SetIntent(NpcAICustomerCpt.CustomerIntentEnum.GotoSeat, orderForCustomer);
+                    orderForCustomer.customer.SetIntent(NpcAICustomerCpt.CustomerIntentEnum.GotoSeat, orderForCustomer);
                     //移除排队列表
                     cusomerQueue.RemoveAt(0);
                 }
@@ -121,11 +120,6 @@ public class InnHandler : BaseMonoBehaviour
                 Destroy(orderCusomer.customer.gameObject);
             if (orderCusomer.foodCpt != null && orderCusomer.foodCpt.gameObject != null)
                 Destroy(orderCusomer.foodCpt.gameObject);
-        }
-        //清理排队的客人
-        foreach (NpcAICustomerCpt itemCusomter in cusomerQueue)
-        {
-            Destroy(itemCusomter.gameObject);
         }
         //清理所有桌子
         for (int i = 0; i < innTableHandler.listTableCpt.Count; i++)
@@ -223,16 +217,16 @@ public class InnHandler : BaseMonoBehaviour
     /// </summary>
     /// <param name="npc"></param>
     /// <returns></returns>
-    public OrderForCustomer CreateOrder(NpcAICustomerCpt npc, BuildTableCpt table)
+    public OrderForCustomer CreateOrder(NpcAICustomerCpt npc)
     {
-        OrderForCustomer order = new OrderForCustomer();
-        order.customer = npc;
-        order.table = table;
+        OrderForCustomer order = new OrderForCustomer(npc);
+        npc.orderForCustomer = order;
+        orderList.Add(order);
         return order;
     }
 
     /// <summary>
-    /// 强制结束一个订单 不高兴时结束
+    /// 强制结束一个订单
     /// </summary>
     /// <param name="orderForCustomer"></param>
     public void EndOrderForForce(OrderForCustomer orderForCustomer)
@@ -240,13 +234,16 @@ public class InnHandler : BaseMonoBehaviour
         //如果食物已经做出来了
         if (orderForCustomer.foodCpt != null)
         {
-
             //支付一半的钱
             //PayMoney(orderForCustomer, 0.5f);
         }
         //如果桌子还属于这个顾客
         switch (orderForCustomer.customer.customerIntent)
         {
+            case NpcAICustomerCpt.CustomerIntentEnum.WaitSeat:
+                //如果在排队，移除排队
+                cusomerQueue.Remove(orderForCustomer);
+                break;
             case NpcAICustomerCpt.CustomerIntentEnum.GotoSeat:
             case NpcAICustomerCpt.CustomerIntentEnum.WaitFood:
             case NpcAICustomerCpt.CustomerIntentEnum.Eatting:

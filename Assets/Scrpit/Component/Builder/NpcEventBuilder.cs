@@ -81,6 +81,7 @@ public class NpcEventBuilder : NpcNormalBuilder, IBaseObserver
         List<NpcShowConditionBean> listConditionData = NpcShowConditionTools.GetListConditionData(characterData.npcInfoData.condition);
         int npcNumber = 1;
         MenuOwnBean loveMenu = null;
+        string teamId = SystemUtil.GetUUID(SystemUtil.UUIDTypeEnum.N);
         Color teamColor = new Color(UnityEngine.Random.Range(0f,1f), UnityEngine.Random.Range(0f, 1f), UnityEngine.Random.Range(0f, 1f));
         bool isWant = false;
         foreach (NpcShowConditionBean itemCondition in listConditionData)
@@ -99,22 +100,15 @@ public class NpcEventBuilder : NpcNormalBuilder, IBaseObserver
         //设定是否吃饭
         //if (eatProbability <= rateWant)
         //{
-        //    //判断是否有自己喜欢的菜
-        //    List<long> loveMenus= characterData.npcInfoData.GetLoveMenus();
-        //    if (gameDataManager.gameData.CheckHasLoveMenus(loveMenus, out List<long> ownLoveMenus))
-        //    {
-        //        //随机获取一个喜欢的菜
-        //        menuId = RandomUtil.GetRandomDataByList(ownLoveMenus);
-        //        isWant = true;
-        //    }
+        //    isWant = true;
         //}
-
+        isWant = false;
+        //判断是否有自己喜欢的菜
         List<long> loveMenus = characterData.npcInfoData.GetLoveMenus();
         if (gameDataManager.gameData.CheckHasLoveMenus(loveMenus, out List<MenuOwnBean> ownLoveMenus))
         {
             //随机获取一个喜欢的菜
             loveMenu = RandomUtil.GetRandomDataByList(ownLoveMenus);
-            isWant = true;
         }
 
         for (int i = 0; i < npcNumber; i++)
@@ -131,6 +125,7 @@ public class NpcEventBuilder : NpcNormalBuilder, IBaseObserver
             baseNpcAI.AddStatusIconForGuestTeam(teamColor);
 
             NpcAICustomerForGuestTeamCpt customerAI = baseNpcAI.GetComponent<NpcAICustomerForGuestTeamCpt>();
+            customerAI.SetTeamId(teamId);
             if (isWant&& loveMenu!=null)
             {
                 customerAI.SetIntent(NpcAICustomerCpt.CustomerIntentEnum.Want);
@@ -141,6 +136,25 @@ public class NpcEventBuilder : NpcNormalBuilder, IBaseObserver
                 customerAI.SetIntent(NpcAICustomerCpt.CustomerIntentEnum.Walk);
             }
         }
+    }
+    
+    /// <summary>
+    /// 通过团队ID获取团队成员
+    /// </summary>
+    /// <param name="teamId"></param>
+    /// <returns></returns>
+    public List<NpcAICustomerForGuestTeamCpt> GetGuestTeamByTeamId(string teamId)
+    {
+        List<NpcAICustomerForGuestTeamCpt> listTeamMember = new List<NpcAICustomerForGuestTeamCpt>();
+        NpcAICustomerForGuestTeamCpt[] arrayTeam= objContainer.GetComponentsInChildren<NpcAICustomerForGuestTeamCpt>();
+        foreach (NpcAICustomerForGuestTeamCpt itemData in arrayTeam)
+        {
+            if (itemData.teamId.EndsWith(teamId))
+            {
+                listTeamMember.Add(itemData);
+            }
+        }
+        return listTeamMember;
     }
 
     #region 时间回调通知

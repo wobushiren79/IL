@@ -21,7 +21,7 @@ public class NpcAIWorkerCpt : BaseNpcAI
     //跑堂AI控制
     public NpcAIWorkerForWaiterCpt aiForWaiter;
     //结账AI控制
-    public NpcAIWorkerForAccountingCpt aiForAccounting;
+    public NpcAIWorkerForAccountantCpt aiForAccountant;
     //招待AI控制
     public NpcAIWorkerForAccost aiForAccost;
     //打手AI控制
@@ -162,7 +162,7 @@ public class NpcAIWorkerCpt : BaseNpcAI
     /// <param name="customerCpt"></param>
     public void SetIntentForAccounting(OrderForCustomer orderForCustomer)
     {
-        aiForAccounting.StartAccounting(orderForCustomer);
+        aiForAccountant.StartAccounting(orderForCustomer);
     }
 
     /// <summary>
