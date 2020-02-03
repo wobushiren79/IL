@@ -68,7 +68,7 @@ public class NpcCustomerBuilder : NpcNormalBuilder,IBaseObserver
             //}
             yield return new WaitForSeconds(buildInterval);
             Vector3 npcPosition = GetRandomStartPosition();
-          //  BuildCustomer(npcPosition);
+            BuildCustomer(npcPosition);
         }
     }
 

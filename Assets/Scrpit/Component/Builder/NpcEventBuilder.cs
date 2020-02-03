@@ -82,7 +82,7 @@ public class NpcEventBuilder : NpcNormalBuilder, IBaseObserver
         int npcNumber = 1;
         MenuOwnBean loveMenu = null;
         string teamId = SystemUtil.GetUUID(SystemUtil.UUIDTypeEnum.N);
-        Color teamColor = new Color(UnityEngine.Random.Range(0f,1f), UnityEngine.Random.Range(0f, 1f), UnityEngine.Random.Range(0f, 1f));
+        Color teamColor = new Color(UnityEngine.Random.Range(0f, 1f), UnityEngine.Random.Range(0f, 1f), UnityEngine.Random.Range(0f, 1f));
         bool isWant = false;
         foreach (NpcShowConditionBean itemCondition in listConditionData)
         {
@@ -90,7 +90,7 @@ public class NpcEventBuilder : NpcNormalBuilder, IBaseObserver
             switch (itemCondition.dataType)
             {
                 case NpcShowConditionEnum.NpcNumber:
-                    npcNumber = itemCondition.npcNumber;
+                    npcNumber = UnityEngine.Random.Range(2, itemCondition.npcNumber + 1);
                     break;
             }
         }
@@ -114,7 +114,7 @@ public class NpcEventBuilder : NpcNormalBuilder, IBaseObserver
         for (int i = 0; i < npcNumber; i++)
         {
             //随机生成身体数据
-           // CharacterBodyBean.CreateRandomBodyByManager(characterData.body, characterBodyManager);
+            // CharacterBodyBean.CreateRandomBodyByManager(characterData.body, characterBodyManager);
             GameObject npcObj = Instantiate(objContainer, objGuestTeamModel);
 
             npcObj.transform.localScale = new Vector3(1, 1);
@@ -126,7 +126,7 @@ public class NpcEventBuilder : NpcNormalBuilder, IBaseObserver
 
             NpcAICustomerForGuestTeamCpt customerAI = baseNpcAI.GetComponent<NpcAICustomerForGuestTeamCpt>();
             customerAI.SetTeamId(teamId);
-            if (isWant&& loveMenu!=null)
+            if (isWant && loveMenu != null)
             {
                 customerAI.SetIntent(NpcAICustomerCpt.CustomerIntentEnum.Want);
                 customerAI.SetMenu(loveMenu);
@@ -137,7 +137,7 @@ public class NpcEventBuilder : NpcNormalBuilder, IBaseObserver
             }
         }
     }
-    
+
     /// <summary>
     /// 通过团队ID获取团队成员
     /// </summary>
@@ -146,7 +146,7 @@ public class NpcEventBuilder : NpcNormalBuilder, IBaseObserver
     public List<NpcAICustomerForGuestTeamCpt> GetGuestTeamByTeamId(string teamId)
     {
         List<NpcAICustomerForGuestTeamCpt> listTeamMember = new List<NpcAICustomerForGuestTeamCpt>();
-        NpcAICustomerForGuestTeamCpt[] arrayTeam= objContainer.GetComponentsInChildren<NpcAICustomerForGuestTeamCpt>();
+        NpcAICustomerForGuestTeamCpt[] arrayTeam = objContainer.GetComponentsInChildren<NpcAICustomerForGuestTeamCpt>();
         foreach (NpcAICustomerForGuestTeamCpt itemData in arrayTeam)
         {
             if (itemData.teamId.EndsWith(teamId))
