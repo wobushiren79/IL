@@ -565,6 +565,7 @@ MonoBehaviour:
       attributes_force: 0
       attributes_lucky: 0
       love_items: 
+      love_menus: 
       condition: 
   characterFavorabilityData:
     characterId: 0
@@ -574,15 +575,13 @@ MonoBehaviour:
     giftLoveNumber: 0
     giftNormalNumber: 0
     talkNumber: 0
-  gameItemsManager: {fileID: 0}
-  iconDataManager: {fileID: 0}
   characterMoveCpt: {fileID: 3262071503705689678}
   characterShoutCpt: {fileID: 3431049019408379413}
   characterExpression: {fileID: 6362100544653756119}
   characterStatusIcon: {fileID: 9132228567301972337}
   aiForChef: {fileID: 8089863752262935693}
   aiForWaiter: {fileID: 5088782280854681849}
-  aiForAccounting: {fileID: 1343993552124416576}
+  aiForAccountant: {fileID: 1343993552124416576}
   aiForAccost: {fileID: 2211740558533283340}
   aiForBeater: {fileID: 1814074578211177026}
   innHandler: {fileID: 0}
@@ -638,7 +637,7 @@ MonoBehaviour:
   npcAIWorker: {fileID: 0}
   accountingPro: {fileID: 491588413961666520}
   movePosition: {x: 0, y: 0, z: 0}
-  accountingIntent: 0
+  accountantIntent: 0
 --- !u!114 &2211740558533283340
 MonoBehaviour:
   m_ObjectHideFlags: 0

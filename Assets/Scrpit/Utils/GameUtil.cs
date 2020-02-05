@@ -65,8 +65,6 @@ public class GameUtil
         return topBorder - downBorder;
     }
 
-
-
     /// <summary>
     /// 刷新UI控件高
     /// </summary>

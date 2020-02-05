@@ -6,12 +6,12 @@ public class BaseUIChildComponent<T> : BaseMonoBehaviour
 {
     public T uiComponent;
 
-    public void Close()
+    public virtual void Close()
     {
         gameObject.SetActive(false);
     }
 
-    public void Open()
+    public virtual void Open()
     {
         gameObject.SetActive(true);
     }

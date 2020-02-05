@@ -7,10 +7,13 @@ using System.Collections.Generic;
 public class GameDataBean
 {
     public string userId;//用户ID
+
     public long moneyS;//1黄金=10白银  1白银=1000文
     public long moneyM;
     public long moneyL;
+
     public long guildCoin;//公会硬币
+
     public long trophyElementary; //竞技场初级奖杯
     public long trophyIntermediate;//竞技场中级奖杯
     public long trophyAdvanced;//竞技场高级奖杯

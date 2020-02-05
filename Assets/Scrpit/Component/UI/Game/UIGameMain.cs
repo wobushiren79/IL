@@ -57,6 +57,9 @@ public class UIGameMain : UIGameComponent, DialogView.IDialogCallBack
         if (btFavorability != null)
             btFavorability.onClick.AddListener(OpenFavorabilityUI);
 
+        if (btInnData != null)
+            btInnData.onClick.AddListener(OpenStatisticsUI);
+
         if (btSave != null)
             btSave.onClick.AddListener(SaveData);
 
@@ -230,6 +233,12 @@ public class UIGameMain : UIGameComponent, DialogView.IDialogCallBack
     {
         uiGameManager.audioHandler.PlaySound(SoundEnum.ButtonForNormal);
         uiManager.OpenUIAndCloseOtherByName(EnumUtil.GetEnumName(UIEnum.GameFavorability));
+    }
+
+    public void OpenStatisticsUI()
+    {
+        uiGameManager.audioHandler.PlaySound(SoundEnum.ButtonForNormal);
+        uiManager.OpenUIAndCloseOtherByName(EnumUtil.GetEnumName(UIEnum.GameStatistics));
     }
 
     public void EndDay()
