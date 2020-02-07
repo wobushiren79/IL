@@ -51,7 +51,11 @@ public class SceneGameInnInit : BaseSceneInit, IBaseObserver, DialogView.IDialog
             innFurnitureBuilder.StartBuild();
         //初始化客栈处理
         if (innHandler != null)
+        {
             innHandler.InitInn();
+            innHandler.InitRecord();
+        }
+          
 
         StartCoroutine(BuildNavMesh());
 
@@ -60,7 +64,7 @@ public class SceneGameInnInit : BaseSceneInit, IBaseObserver, DialogView.IDialog
             //增加回调
             gameTimeHandler.AddObserver(this);
             TimeBean timeData = gameDataManager.gameData.gameTime;
-            if (timeData.hour >= 24|| timeData.hour < 6)
+            if (timeData.hour >= 24 || timeData.hour < 6)
             {
                 //如果是需要切换第二天
                 EndDay();
@@ -76,8 +80,8 @@ public class SceneGameInnInit : BaseSceneInit, IBaseObserver, DialogView.IDialog
 
 
                 //设置位置
-                Vector3 startPosition=  sceneInnManager.GetTownEntranceLeft();
-                BaseControl baseControl=  controlHandler.StartControl(ControlHandler.ControlEnum.Normal);
+                Vector3 startPosition = sceneInnManager.GetTownEntranceLeft();
+                BaseControl baseControl = controlHandler.StartControl(ControlHandler.ControlEnum.Normal);
                 baseControl.SetFollowPosition(startPosition);
             }
         }
@@ -102,7 +106,7 @@ public class SceneGameInnInit : BaseSceneInit, IBaseObserver, DialogView.IDialog
         if (weatherHandler != null)
         {
             WeatherBean weatherData = weatherHandler.RandomWeather();
-            gameDataManager.gameData.weatherToday = weatherData;
+            GameCommonInfo.currentDayData.weatherToday = weatherData;
         }
     }
 
@@ -116,16 +120,25 @@ public class SceneGameInnInit : BaseSceneInit, IBaseObserver, DialogView.IDialog
         //重置游戏时间
         GameCommonInfo.GameData.gameTime.hour = 0;
         GameCommonInfo.GameData.gameTime.minute = 0;
-        //保存数据
-        gameDataManager.SaveGameData();
 
-        if (gameTimeHandler.dayStauts == GameTimeHandler.DayEnum.Work)
+        if (GameCommonInfo.currentDayData.dayStatus == GameTimeHandler.DayEnum.None)
         {
+            //重新进入游戏
+            //打开日历
+            uiGameManager.OpenUIAndCloseOtherByName(EnumUtil.GetEnumName(UIEnum.GameDate));
+        }
+        else if (GameCommonInfo.currentDayData.dayStatus == GameTimeHandler.DayEnum.Work)
+        {       
+            //保存数据
+            gameDataManager.SaveGameData(innHandler.GetInnRecord());
             //如果是工作状态结束一天 则进入结算画面
             uiGameManager.OpenUIAndCloseOtherByName(EnumUtil.GetEnumName(UIEnum.GameSettle));
         }
-        else if (gameTimeHandler.dayStauts == GameTimeHandler.DayEnum.Rest)
+        else if (GameCommonInfo.currentDayData.dayStatus == GameTimeHandler.DayEnum.Rest)
         {
+            //保存数据
+            gameDataManager.SaveGameData(innHandler.GetInnRecord());
+            //打开日历
             uiGameManager.OpenUIAndCloseOtherByName(EnumUtil.GetEnumName(UIEnum.GameDate));
         }
         //关闭店面

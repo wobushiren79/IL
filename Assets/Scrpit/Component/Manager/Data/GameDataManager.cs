@@ -24,8 +24,6 @@ public class GameDataManager : BaseManager, IGameDataView, IUserRevenueView
         userRevenueController = new UserRevenueController(this, this);
     }
 
-
-
     public void SetSimpleGameDataCallBack(IGameDataSimpleCallBack callBack)
     {
         simpleGameDataCallBack = callBack;
@@ -71,12 +69,15 @@ public class GameDataManager : BaseManager, IGameDataView, IUserRevenueView
         gameDataController.GetSimpleGameData();
     }
 
+
     /// <summary>
     /// 保存游戏数据
     /// </summary>
-    public void SaveGameData()
+    /// <param name="innRecord">客栈流水</param>
+    public void SaveGameData(InnRecordBean innRecordData)
     {
         gameDataController.SaveUserData(gameData);
+        userRevenueController.SetUserRevenue(gameData.userId,innRecordData);
     }
 
     /// <summary>

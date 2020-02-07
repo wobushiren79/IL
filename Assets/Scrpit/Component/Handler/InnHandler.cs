@@ -4,12 +4,12 @@ using System.Collections.Generic;
 using System;
 using System.Diagnostics;
 
-public class InnHandler : BaseMonoBehaviour
+public class InnHandler : BaseMonoBehaviour, IBaseObserver
 {
     public enum InnStatusEnum
     {
-        Open,
-        Close,
+        Close = 0,
+        Open = 1,
     }
 
     //客栈状态
@@ -36,6 +36,7 @@ public class InnHandler : BaseMonoBehaviour
     public InnEntranceHandler innEntranceHandler;
     //音效处理
     protected AudioHandler audioHandler;
+    protected GameTimeHandler gameTimeHandler;
 
     //闹事的人的列表
     public List<NpcAIRascalCpt> rascalrQueue = new List<NpcAIRascalCpt>();
@@ -51,11 +52,25 @@ public class InnHandler : BaseMonoBehaviour
     //订单列表
     public List<OrderForCustomer> orderList = new List<OrderForCustomer>();
     //当天记录流水
-    public InnRecordBean innRecord = new InnRecordBean();
+    protected InnRecordBean innRecord = new InnRecordBean();
 
     private void Awake()
     {
         audioHandler = Find<AudioHandler>(ImportantTypeEnum.AudioHandler);
+        gameTimeHandler = Find<GameTimeHandler>(ImportantTypeEnum.TimeHandler);
+        gameTimeHandler.AddObserver(this);
+    }
+
+    /// <summary>
+    /// 初始化流水
+    /// </summary>
+    public void InitRecord()
+    {
+        innRecord = new InnRecordBean();
+        gameTimeHandler.GetTime(out int year, out int month, out int day);
+        innRecord.year = year;
+        innRecord.month = month;
+        innRecord.day = day;
     }
 
     /// <summary>
@@ -170,6 +185,12 @@ public class InnHandler : BaseMonoBehaviour
         workerBuilder.BuildAllWorker();
         InitInn();
         innStatus = InnStatusEnum.Open;
+    }
+
+    public InnRecordBean GetInnRecord()
+    {
+        innRecord.status =(int)GameCommonInfo.currentDayData.dayStatus;
+        return innRecord;
     }
 
     /// <summary>
@@ -314,7 +335,7 @@ public class InnHandler : BaseMonoBehaviour
         //金钱增加
         gameDataManager.gameData.AddMoney(getMoneyL, getMoneyM, getMoneyS);
         //播放音效
-        audioHandler.PlaySound(SoundEnum.PayMoney,new Vector3(order.customer.transform.position.x, order.customer.transform.position.y,Camera.main.transform.position.z) );
+        audioHandler.PlaySound(SoundEnum.PayMoney, new Vector3(order.customer.transform.position.x, order.customer.transform.position.y, Camera.main.transform.position.z));
         //展示特效
         innPayHandler.ShowPayEffects(order.customer.transform.position, getMoneyL, getMoneyM, getMoneyS);
     }
@@ -446,4 +467,22 @@ public class InnHandler : BaseMonoBehaviour
         //增加评价
         gameDataManager.gameData.GetInnAttributesData().AddPraise(parise);
     }
+
+
+    #region 时间回调
+    public void ObserbableUpdate<T>(T observable, int type, params object[] obj) where T : UnityEngine.Object
+    {
+        if (observable == gameTimeHandler)
+        {
+            if (type == (int)GameTimeHandler.NotifyTypeEnum.NewDay)
+            {
+                InitRecord();
+            }
+            else if (type == (int)GameTimeHandler.NotifyTypeEnum.EndDay)
+            {
+
+            }
+        }
+    }
+    #endregion
 }

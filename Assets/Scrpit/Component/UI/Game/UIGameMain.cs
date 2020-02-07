@@ -192,7 +192,7 @@ public class UIGameMain : UIGameComponent, DialogView.IDialogCallBack
     public void SaveData()
     {
         uiGameManager.audioHandler.PlaySound(SoundEnum.ButtonForNormal);
-        GetUIManager<UIGameManager>().gameDataManager.SaveGameData();
+        uiGameManager.gameDataManager.SaveGameData(uiGameManager.innHandler.GetInnRecord());
     }
 
     public void OpenBuildUI()

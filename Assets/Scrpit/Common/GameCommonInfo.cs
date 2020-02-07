@@ -7,7 +7,7 @@ public class GameCommonInfo
     public static string GameUserId;
     //游戏设置
     public static GameConfigBean GameConfig;
-    //世界时间
+    //游戏数据
     public static GameDataBean GameData;
     //进入竞技场准备数据
     public static ArenaPrepareBean ArenaPrepareData;
@@ -15,6 +15,8 @@ public class GameCommonInfo
     public static int RandomSeed = 1564;
     //每日限制数据
     public static UserDailyLimitBean DailyLimitData = new UserDailyLimitBean();
+    //当日数据
+    public static CurrentDayBean currentDayData = new CurrentDayBean();
     // 预加载场景名字
     public static ScenesChangeBean ScenesChangeData = new ScenesChangeBean();
 
@@ -24,7 +26,6 @@ public class GameCommonInfo
     static GameCommonInfo()
     {
         GameConfig = new GameConfigBean();
-
         mGameConfigController = new GameConfigController(null, new GameConfigCallBack());
         mUITextController = new UITextController(null, null);
         mGameConfigController.GetGameConfigData();

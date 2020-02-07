@@ -8,8 +8,9 @@ public class GameTimeHandler : BaseObservable<IBaseObserver>
 {
     public enum DayEnum
     {
-        Rest,
-        Work,
+        Rest=0,
+        Work=1,
+        None=99,
     }
 
     public enum NotifyTypeEnum
@@ -28,7 +29,7 @@ public class GameTimeHandler : BaseObservable<IBaseObserver>
     public float hour;
     public float min;
 
-    public DayEnum dayStauts = DayEnum.Rest;
+    public DayEnum dayStauts = DayEnum.None;
 
     //是否停止时间
     public bool isStopTime = true;
@@ -276,5 +277,15 @@ public class GameTimeHandler : BaseObservable<IBaseObserver>
     public DayEnum GetDayStatus()
     {
         return dayStauts;
+    }
+
+    /// <summary>
+    /// 设置按天状态
+    /// </summary>
+    /// <param name="dayStauts"></param>
+    public void SetDayStatus(DayEnum dayStauts)
+    {
+        this.dayStauts = dayStauts;
+        GameCommonInfo.currentDayData.dayStatus= this.dayStauts;
     }
 }

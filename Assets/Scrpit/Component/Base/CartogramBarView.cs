@@ -38,6 +38,8 @@ public class CartogramBarView : CartogramBaseView
         //设置单个高度
         //获取列表中最高的值
         float itemMaxValue = listCartogramData.Max(data => data.value_1);
+        if (itemMaxValue == 0)
+            itemMaxValue = 1;
         float itemMaxHeight = (rtContent.rect.height) - 40;
         for (int i = 0; i < listCartogramData.Count; i++)
         {

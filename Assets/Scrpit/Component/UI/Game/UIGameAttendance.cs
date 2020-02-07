@@ -59,7 +59,7 @@ public class UIGameAttendance : UIBaseOne, ItemGameAttendanceCpt.ICallBack
         //支付出勤费用
         uiGameManager.gameDataManager.gameData.PayMoney(attendancePriceL, attendancePriceM, attendancePriceS);
         //设置当天状态
-        uiGameManager.gameTimeHandler.dayStauts = GameTimeHandler.DayEnum.Work;
+        uiGameManager.gameTimeHandler.SetDayStatus(GameTimeHandler.DayEnum.Work);
         //设置是否停止时间
         uiGameManager.gameTimeHandler.SetTimeStatus(false);
         //开启主UI

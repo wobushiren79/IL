@@ -13,6 +13,41 @@ public class UserRevenueController : BaseMVCController<UserRevenueModel, IUserRe
 
     }
 
+    public void SetUserRevenue(string userId, InnRecordBean innRecordData)
+    {
+        UserRevenueBean userRevenueData = GetModel().GetUserRevenueByYear(userId, innRecordData.year);
+        if (userRevenueData == null)
+        {
+            userRevenueData = new UserRevenueBean();
+            userRevenueData.year = innRecordData.year;
+            userRevenueData.userId = userId;
+        }
+        if (userRevenueData.listMonthData == null)
+        {
+            userRevenueData.listMonthData = new List<UserRevenueMonthBean>();
+        }
+        bool hasMonthData = false;
+        foreach (UserRevenueMonthBean itemMonth in userRevenueData.listMonthData)
+        {
+            if (itemMonth.month == innRecordData.month)
+            {
+                if (itemMonth.listDayData == null)
+                    itemMonth.listDayData = new List<InnRecordBean>();
+                itemMonth.listDayData.Add(innRecordData);
+                hasMonthData = true;
+            }
+        }
+        if (!hasMonthData)
+        {
+            UserRevenueMonthBean itemMonth = new UserRevenueMonthBean();
+            itemMonth.month = innRecordData.month;
+            itemMonth.listDayData = new List<InnRecordBean>();
+            itemMonth.listDayData.Add(innRecordData);
+            userRevenueData.listMonthData.Add(itemMonth);
+        }
+        SetUserRevenue(userRevenueData);
+    }
+
     public void SetUserRevenue(UserRevenueBean userRevenueData)
     {
         GetModel().SetUserRevenue(userRevenueData);

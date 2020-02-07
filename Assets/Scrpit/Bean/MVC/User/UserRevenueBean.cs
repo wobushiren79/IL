@@ -16,37 +16,27 @@ public class UserRevenueBean
 public class UserRevenueMonthBean
 {
     public int month;
-    public List<UserRevenueDayBean> listDayData;
+    public List<InnRecordBean> listDayData;
 
     /// <summary>
-    /// 转换为图表信息
+    /// 转换为图表信息-进账
     /// </summary>
     /// <returns></returns>
-    public List<CartogramDataBean> GetListCartogramData()
+    public List<CartogramDataBean> GetListCartogramDataForIncome()
     {
         List<CartogramDataBean> listCartogramData = new List<CartogramDataBean>();
         if (listDayData == null)
             return listCartogramData;
-        foreach (UserRevenueDayBean itemDay in listDayData)
+        foreach (InnRecordBean itemDay in listDayData)
         {
             CartogramDataBean cartogramData = new CartogramDataBean();
             cartogramData.key = itemDay.day;
-            cartogramData.value_1 = itemDay.money_l;
-            cartogramData.value_2 = itemDay.money_m;
-            cartogramData.value_3 = itemDay.money_s;
+            cartogramData.value_1 = itemDay.incomeL;
+            cartogramData.value_2 = itemDay.incomeM;
+            cartogramData.value_3 = itemDay.incomeS;
             cartogramData.value_4 = itemDay.status;
             listCartogramData.Add(cartogramData);
         }
         return listCartogramData;
     }
-}
-
-[Serializable]
-public class UserRevenueDayBean
-{
-    public int day;
-    public int status;//状态 0休息 1营业
-    public long money_l;
-    public long money_m;
-    public long money_s;
 }

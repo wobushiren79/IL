@@ -59,33 +59,33 @@ public class UIGameSettle : BaseUIComponent
         CptUtil.RemoveChildsByActive(objListRecordContent.transform);
         animDelay = 0.1f;
         string consumeIngStr = GameCommonInfo.GetUITextById(4002);
-        if (innHandler.innRecord.consumeIngOilsalt > 0)
-            CreateIngItem(innHandler.innRecord.consumeIngOilsalt, spIconOilsalt, consumeIngStr + " " + GameCommonInfo.GetUITextById(21));
-        if (innHandler.innRecord.consumeIngMeat > 0)
-            CreateIngItem(innHandler.innRecord.consumeIngMeat, spIconMeat, consumeIngStr + " " + GameCommonInfo.GetUITextById(22));
-        if (innHandler.innRecord.consumeIngRiverfresh > 0)
-            CreateIngItem(innHandler.innRecord.consumeIngRiverfresh, spIconRiverfresh, consumeIngStr + " " + GameCommonInfo.GetUITextById(23));
-        if (innHandler.innRecord.consumeIngSeafood > 0)
-            CreateIngItem(innHandler.innRecord.consumeIngSeafood, spIconSeafood, consumeIngStr + " " + GameCommonInfo.GetUITextById(24));
-        if (innHandler.innRecord.consumeIngVegetablest > 0)
-            CreateIngItem(innHandler.innRecord.consumeIngVegetablest, spIconVegetablest, consumeIngStr + " " + GameCommonInfo.GetUITextById(25));
-        if (innHandler.innRecord.consumeIngMelonfruit > 0)
-            CreateIngItem(innHandler.innRecord.consumeIngMelonfruit, spIconMelonfruit, consumeIngStr + " " + GameCommonInfo.GetUITextById(26));
-        if (innHandler.innRecord.consumeIngWaterwine > 0)
-            CreateIngItem(innHandler.innRecord.consumeIngWaterwine, spIconWaterwine, consumeIngStr + " " + GameCommonInfo.GetUITextById(27));
-        if (innHandler.innRecord.consumeIngFlour > 0)
-            CreateIngItem(innHandler.innRecord.consumeIngFlour, spIconFlour, consumeIngStr + " " + GameCommonInfo.GetUITextById(28));
+        if (innHandler.GetInnRecord().consumeIngOilsalt > 0)
+            CreateIngItem(innHandler.GetInnRecord().consumeIngOilsalt, spIconOilsalt, consumeIngStr + " " + GameCommonInfo.GetUITextById(21));
+        if (innHandler.GetInnRecord().consumeIngMeat > 0)
+            CreateIngItem(innHandler.GetInnRecord().consumeIngMeat, spIconMeat, consumeIngStr + " " + GameCommonInfo.GetUITextById(22));
+        if (innHandler.GetInnRecord().consumeIngRiverfresh > 0)
+            CreateIngItem(innHandler.GetInnRecord().consumeIngRiverfresh, spIconRiverfresh, consumeIngStr + " " + GameCommonInfo.GetUITextById(23));
+        if (innHandler.GetInnRecord().consumeIngSeafood > 0)
+            CreateIngItem(innHandler.GetInnRecord().consumeIngSeafood, spIconSeafood, consumeIngStr + " " + GameCommonInfo.GetUITextById(24));
+        if (innHandler.GetInnRecord().consumeIngVegetablest > 0)
+            CreateIngItem(innHandler.GetInnRecord().consumeIngVegetablest, spIconVegetablest, consumeIngStr + " " + GameCommonInfo.GetUITextById(25));
+        if (innHandler.GetInnRecord().consumeIngMelonfruit > 0)
+            CreateIngItem(innHandler.GetInnRecord().consumeIngMelonfruit, spIconMelonfruit, consumeIngStr + " " + GameCommonInfo.GetUITextById(26));
+        if (innHandler.GetInnRecord().consumeIngWaterwine > 0)
+            CreateIngItem(innHandler.GetInnRecord().consumeIngWaterwine, spIconWaterwine, consumeIngStr + " " + GameCommonInfo.GetUITextById(27));
+        if (innHandler.GetInnRecord().consumeIngFlour > 0)
+            CreateIngItem(innHandler.GetInnRecord().consumeIngFlour, spIconFlour, consumeIngStr + " " + GameCommonInfo.GetUITextById(28));
         //遍历食物
-        foreach (KeyValuePair<long, int> kvp in innHandler.innRecord.sellNumber)
+        foreach (KeyValuePair<long, int> kvp in innHandler.GetInnRecord().sellNumber)
         {
             CreateFoodItem(kvp.Key, kvp.Value);
         }
-        tvIncomeS.text = innHandler.innRecord.incomeS + "";
-        tvIncomeM.text = innHandler.innRecord.incomeM + "";
-        tvIncomeL.text = innHandler.innRecord.incomeL + "";
-        tvExpensesS.text = innHandler.innRecord.expensesS + "";
-        tvExpensesM.text = innHandler.innRecord.expensesM + "";
-        tvExpensesL.text = innHandler.innRecord.expensesL + "";
+        tvIncomeS.text = innHandler.GetInnRecord().incomeS + "";
+        tvIncomeM.text = innHandler.GetInnRecord().incomeM + "";
+        tvIncomeL.text = innHandler.GetInnRecord().incomeL + "";
+        tvExpensesS.text = innHandler.GetInnRecord().expensesS + "";
+        tvExpensesM.text = innHandler.GetInnRecord().expensesM + "";
+        tvExpensesL.text = innHandler.GetInnRecord().expensesL + "";
     }
 
     public void CreateIngItem(int number, Sprite ingIcon, string name)

@@ -11,7 +11,7 @@ public class RevenueCartogramBarForItem : CartogramBarForItem
 
     public override void SetVData(string data)
     {
-        if (cartogramData.value_4 == 0)
+        if (cartogramData.value_4 == (int)GameTimeHandler.DayEnum.Rest)
         {
             data = GameCommonInfo.GetUITextById(20);
         }
@@ -29,6 +29,10 @@ public class RevenueCartogramBarForItem : CartogramBarForItem
             if (cartogramData.value_3 != 0)
             {
                 data += (cartogramData.value_3 + GameCommonInfo.GetUITextById(18));
+            }
+            if(cartogramData.value_1==0&& cartogramData.value_2==0&& cartogramData.value_3==0)
+            {
+                data += GameCommonInfo.GetUITextById(47);
             }
         }
         base.SetVData(data);

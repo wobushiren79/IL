@@ -151,7 +151,7 @@ public class UIGameDate : BaseUIComponent
     public void InnRest()
     {
 
-        gameTimeHandler.dayStauts = GameTimeHandler.DayEnum.Rest;
+        gameTimeHandler.SetDayStatus(GameTimeHandler.DayEnum.Rest);
         gameTimeHandler.SetTimeStatus(false);
 
         //没有触发事件

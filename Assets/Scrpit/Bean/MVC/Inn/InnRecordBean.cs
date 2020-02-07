@@ -6,6 +6,12 @@ using System.Collections.Generic;
 [Serializable]
 public class InnRecordBean 
 {
+    public int year;
+    public int month;
+    public int day;
+
+    public int status;
+
     //消耗材料
     public int consumeIngOilsalt;
     public int consumeIngMeat;
@@ -19,7 +25,6 @@ public class InnRecordBean
     //售卖数量
     public Dictionary<long, int> sellNumber = new Dictionary<long, int>();
 
- 
     //进账
     public long incomeS;
     public long incomeM;

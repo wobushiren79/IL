@@ -23,11 +23,6 @@ public class UIGameStatisticsForRevenue : BaseUIChildComponent<UIGameStatistics>
             ddYear.onValueChanged.AddListener(OnValueChangedForYear);
     }
 
-    private void Start()
-    {
-
-    }
-
     public override void Open()
     {
         base.Open();
@@ -84,7 +79,14 @@ public class UIGameStatisticsForRevenue : BaseUIChildComponent<UIGameStatistics>
                 break;
         }
         UserRevenueMonthBean userRevenueMonthData = GetUserRevenueMonthData(month, userRevenueData);
-        cartogramBar.SetData(userRevenueMonthData.GetListCartogramData());
+        if (userRevenueMonthData == null)
+        {
+            cartogramBar.SetData(new List<CartogramDataBean>());
+        }
+        else
+        {
+            cartogramBar.SetData(userRevenueMonthData.GetListCartogramDataForIncome());
+        }
     }
 
     public void RadioButtonUnSelected(RadioGroupView rgView, int position, RadioButtonView rbview)
@@ -108,20 +110,22 @@ public class UIGameStatisticsForRevenue : BaseUIChildComponent<UIGameStatistics>
         {
             this.listYear = new List<int>
             {
-                1,
-                2
+                 gameDataManager.gameData.gameTime.year
             };
         }
+        List<Dropdown.OptionData> listOptionData = new List<Dropdown.OptionData>();
         foreach (int itemYear in this.listYear)
         {
             Dropdown.OptionData optionData = new Dropdown.OptionData
             {
                 text = string.Format(GameCommonInfo.GetUITextById(46), itemYear + "")
             };
-            ddYear.options.Add(optionData);
+            listOptionData.Add(optionData);
         }
-        ddYear.value = 1;
-        //OnValueChangedForYear(0);
+        ddYear.AddOptions(listOptionData);
+        //ddYear.value = 0;
+        ddYear.SetValueWithoutNotify(0);
+        OnValueChangedForYear(0);
     }
     #endregion
 }

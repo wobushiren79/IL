@@ -50,7 +50,7 @@ public class SceneGameTownInit : BaseSceneInit, IBaseObserver, DialogView.IDialo
         //设置天气
         if (weatherHandler != null)
         {
-            weatherHandler.SetWeahter(gameDataManager.gameData.weatherToday);
+            weatherHandler.SetWeahter(GameCommonInfo.currentDayData.weatherToday);
         }
         //设置角色位置
         InitUserPosition();
