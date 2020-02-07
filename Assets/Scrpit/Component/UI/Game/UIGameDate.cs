@@ -25,8 +25,10 @@ public class UIGameDate : BaseUIComponent
     protected EventHandler eventHandler;
     protected AudioHandler audioHandler;
     protected InnHandler innHandler;
-    private void Awake()
+
+    public override void Awake()
     {
+        base.Awake();
         gameTimeHandler = GetUIManager<UIGameManager>().gameTimeHandler;
         gameDataManager = GetUIManager<UIGameManager>().gameDataManager;
         controlHandler = GetUIManager<UIGameManager>().controlHandler;

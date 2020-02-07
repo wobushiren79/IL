@@ -144,7 +144,7 @@ MonoBehaviour:
   m_Elasticity: 0.1
   m_Inertia: 1
   m_DecelerationRate: 0.135
-  m_ScrollSensitivity: 1
+  m_ScrollSensitivity: 10
   m_Viewport: {fileID: 1706925603192627849}
   m_HorizontalScrollbar: {fileID: 0}
   m_VerticalScrollbar: {fileID: 2075712441718402700}
@@ -667,7 +667,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 0}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
@@ -2416,7 +2416,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   uiComponent: {fileID: 1607914779277413332}
+  rgMonth: {fileID: 8586585759060053285}
+  ddYear: {fileID: 1675484496709565633}
   cartogramBar: {fileID: 7655344826666404986}
+  listYear: 
 --- !u!1 &5758414133466860709
 GameObject:
   m_ObjectHideFlags: 0
@@ -3617,8 +3620,8 @@ MonoBehaviour:
   tvTrophy2: {fileID: 3914555386589399999}
   tvTrophy3: {fileID: 3914555387229646565}
   tvTrophy4: {fileID: 1047693560859435101}
-  revenueUI: {fileID: 2148569282244385372}
   innUI: {fileID: 8440894085222498997}
+  revenueUI: {fileID: 2148569282244385372}
   achUI: {fileID: 6124050525064534577}
   rgType: {fileID: 7163875734601977466}
 --- !u!1 &7228858969740951154

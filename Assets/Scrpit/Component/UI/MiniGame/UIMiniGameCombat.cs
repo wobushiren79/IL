@@ -66,8 +66,9 @@ public class UIMiniGameCombat : UIBaseMiniGame, CombatPowerView.ICallBack
             viewCombatPower.SetCallBack(this);
     }
 
-    private void Awake()
+    public override void Awake()
     {
+        base.Awake();
         if (rtfRoundContainer != null)
             mRoundContainerW = rtfRoundContainer.rect.width;
     }

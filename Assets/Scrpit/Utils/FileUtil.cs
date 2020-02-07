@@ -3,7 +3,7 @@ using System;
 using System.IO;
 using System.Windows.Forms;
 
-public class FileUtil : ScriptableObject
+public class FileUtil 
 {
 
     /// <summary>
@@ -24,7 +24,7 @@ public class FileUtil : ScriptableObject
         catch (Exception e)
         {
             string strError = "创建文件失败-" + e.Message;
-            LogUtil.LogError(strError);
+            LogUtil.LogWarning(strError);
         }
         finally
         {
@@ -50,7 +50,7 @@ public class FileUtil : ScriptableObject
         catch (Exception e)
         {
             string strError = "读取文件失败-" + e.Message;
-            LogUtil.LogError(strError);
+            LogUtil.LogWarning(strError);
             return null;
         }
         finally
@@ -117,6 +117,18 @@ public class FileUtil : ScriptableObject
         }
     }
 
+    /// <summary>
+    /// 删除文件夹
+    /// </summary>
+    /// <param name="directoryPath"></param>
+    public static void DeleteDirectory(string directoryPath)
+    {
+        if (Directory.Exists(directoryPath))
+        {
+            DeleteAllFile(directoryPath);
+            Directory.Delete(directoryPath);
+        }
+    }
 
     /// <summary>
     /// 删除文件
@@ -141,8 +153,6 @@ public class FileUtil : ScriptableObject
         {
             DirectoryInfo direction = new DirectoryInfo(fullPath);
             FileInfo[] files = direction.GetFiles("*", SearchOption.AllDirectories);
-
-            Debug.Log(files.Length);
 
             for (int i = 0; i < files.Length; i++)
             {

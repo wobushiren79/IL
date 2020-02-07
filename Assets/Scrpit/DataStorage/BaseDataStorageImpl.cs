@@ -4,14 +4,14 @@ using System.Collections.Generic;
 public abstract class BaseDataStorageImpl<T>
 {
     //数据保存路径
-    private string mDataStoragePath;
+    protected string dataStoragePath;
 
     /// <summary>
     /// 初始化参数
     /// </summary>
     public BaseDataStorageImpl()
     {
-        mDataStoragePath = Application.persistentDataPath;
+        dataStoragePath = Application.persistentDataPath;
     }
 
     /// <summary>
@@ -20,7 +20,7 @@ public abstract class BaseDataStorageImpl<T>
     /// <returns></returns>
     public string GetDataStoragePath()
     {
-        return mDataStoragePath;
+        return dataStoragePath;
     }
 
     /// <summary>
@@ -29,7 +29,7 @@ public abstract class BaseDataStorageImpl<T>
     /// <param name="dataStoragePath"></param>
     public void SetDataStoragePath(string dataStoragePath)
     {
-        this.mDataStoragePath = dataStoragePath;
+        this.dataStoragePath = dataStoragePath;
     }
 
     /// <summary>
@@ -37,7 +37,7 @@ public abstract class BaseDataStorageImpl<T>
     /// </summary>
     /// <param name="fileName"></param>
     /// <param name="dataBean"></param>
-    public void BaseStartSaveData(string fileName, T dataBean)
+    public void BaseSaveData(string fileName, T dataBean)
     {
         if (CheckUtil.StringIsNull(fileName))
         {
@@ -50,21 +50,21 @@ public abstract class BaseDataStorageImpl<T>
             return;
         }
         string strData = JsonUtil.ToJson(dataBean);
-        FileUtil.CreateTextFile(mDataStoragePath, fileName, strData);
+        FileUtil.CreateTextFile(dataStoragePath, fileName, strData);
     }
 
     /// <summary>
     /// 基础-删除文件
     /// </summary>
     /// <param name="fileName"></param>
-    public void BaseStartDeleteFile(string fileName)
+    public void BaseDeleteFile(string fileName)
     {
         if (CheckUtil.StringIsNull(fileName))
         {
             LogUtil.Log("删除文件失败-没有文件路径");
             return;
         }
-        FileUtil.DeleteFile(mDataStoragePath+"/"+ fileName);
+        FileUtil.DeleteFile(dataStoragePath+"/"+ fileName);
     }
 
    /// <summary>
@@ -72,7 +72,7 @@ public abstract class BaseDataStorageImpl<T>
    /// </summary>
    /// <param name="fileName"></param>
    /// <param name="dataBeanList"></param>
-    public void BaseStartSaveDataForList(string fileName, List<T> dataBeanList)
+    public void BaseSaveDataForList(string fileName, List<T> dataBeanList)
     {
         if (fileName == null)
         {
@@ -87,7 +87,7 @@ public abstract class BaseDataStorageImpl<T>
         DataStorageListBean<T> handBean = new DataStorageListBean<T>();
         handBean.listData = dataBeanList;
         string strData = JsonUtil.ToJson(handBean);
-        FileUtil.CreateTextFile(mDataStoragePath, fileName, strData);
+        FileUtil.CreateTextFile(dataStoragePath, fileName, strData);
     }
 
     /// <summary>
@@ -95,16 +95,16 @@ public abstract class BaseDataStorageImpl<T>
     /// </summary>
     /// <param name="fileName"></param>
     /// <returns></returns>
-    public T BaseStartLoadData(string fileName)
+    public T BaseLoadData(string fileName)
     {
         if (fileName == null)
         {
             LogUtil.Log("读取文件失败-没有文件名称");
-            return default(T);
+            return default;
         }
-        string strData = FileUtil.LoadTextFile(mDataStoragePath + "/" + fileName);
+        string strData = FileUtil.LoadTextFile(dataStoragePath + "/" + fileName);
         if (strData == null)
-            return default(T);
+            return default;
         T data = JsonUtil.FromJson<T>(strData);
         return data;
     }
@@ -114,19 +114,27 @@ public abstract class BaseDataStorageImpl<T>
     /// </summary>
     /// <param name="fileName"></param>
     /// <returns></returns>
-    public List<T> BaseStartLoadDataForList(string fileName)
+    public List<T> BaseLoadDataForList(string fileName)
     {
         if (fileName == null)
         {
             LogUtil.Log("读取文件失败-没有文件名称");
             return null;
         }
-        string strData = FileUtil.LoadTextFile(mDataStoragePath + "/" + fileName);
+        string strData = FileUtil.LoadTextFile(dataStoragePath + "/" + fileName);
         if (strData == null)
             return null;
         DataStorageListBean<T> handBean=  JsonUtil.FromJson<DataStorageListBean<T>>(strData);
         if (handBean == null)
             return null;
         return handBean.listData;
+    }
+
+    /// <summary>
+    /// 基础-删除文件夹
+    /// </summary>
+    public void BaseDeleteFolder(string folderName)
+    {
+        FileUtil.DeleteDirectory(dataStoragePath + "/" + folderName);
     }
 }

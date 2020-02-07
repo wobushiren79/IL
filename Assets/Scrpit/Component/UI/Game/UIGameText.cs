@@ -29,8 +29,9 @@ public class UIGameText : BaseUIComponent, ITextInfoView, DialogView.IDialogCall
     //备用文本替换数据
     public SortedList<string, string> listMarkData = new SortedList<string, string>();
 
-    private void Awake()
+    public override void Awake()
     {
+        base.Awake();
         mTextInfoController = new TextInfoController(this, this);
     }
 

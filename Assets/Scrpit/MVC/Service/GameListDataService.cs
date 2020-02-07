@@ -17,7 +17,7 @@ public class GameListDataService : BaseDataStorageImpl<GameDataSimpleBean>
     /// <returns></returns>
     public List<GameDataSimpleBean> QueryData()
     {
-        return BaseStartLoadDataForList(mSaveFileName);
+        return BaseLoadDataForList(mSaveFileName);
     }
 
     /// <summary>
@@ -26,6 +26,6 @@ public class GameListDataService : BaseDataStorageImpl<GameDataSimpleBean>
     /// <param name="gameConfig"></param>
     public void UpdateData(List<GameDataSimpleBean> gameDataList)
     {
-        BaseStartSaveDataForList(mSaveFileName, gameDataList);
+        BaseSaveDataForList(mSaveFileName, gameDataList);
     }
 }

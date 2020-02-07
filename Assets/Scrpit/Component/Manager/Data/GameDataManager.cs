@@ -3,28 +3,46 @@ using UnityEditor;
 using System.Collections.Generic;
 using System;
 
-public class GameDataManager : BaseManager, IGameDataView
+public class GameDataManager : BaseManager, IGameDataView, IUserRevenueView
 {
     //游戏数据控制
     public GameDataController gameDataController;
+    public UserRevenueController userRevenueController;
 
     //游戏数据
     public GameDataBean gameData;
     //简略游戏数据
     public List<GameDataSimpleBean> listGameDataSimple;
 
-    private IGameDataSimpleCallBack mSimpleGameDataCallBack;
-
+    protected IUserRevenueCallBack userRevenueCallBack;
+    protected IGameDataSimpleCallBack simpleGameDataCallBack;
 
     private void Awake()
     {
         gameData = new GameDataBean();
         gameDataController = new GameDataController(this, this);
+        userRevenueController = new UserRevenueController(this, this);
     }
+
+
 
     public void SetSimpleGameDataCallBack(IGameDataSimpleCallBack callBack)
     {
-        mSimpleGameDataCallBack = callBack;
+        simpleGameDataCallBack = callBack;
+    }
+
+    public void SetUserRevenueCallBack(IUserRevenueCallBack callBack)
+    {
+        userRevenueCallBack = callBack;
+    }
+
+    /// <summary>
+    ///  获取用户数据
+    /// </summary>
+    /// <param name="gameUserId"></param>
+    public void GetGameDataByUserId(string gameUserId)
+    {
+        gameDataController.GetGameDataByUserId(gameUserId);
     }
 
     /// <summary>
@@ -61,6 +79,27 @@ public class GameDataManager : BaseManager, IGameDataView
         gameDataController.SaveUserData(gameData);
     }
 
+    /// <summary>
+    /// 获取营收数据
+    /// </summary>
+    /// <param name="year"></param>
+    public void GetUserRevenueByYear(int year)
+    {
+        if (gameData == null)
+            return;
+        userRevenueController.GetUserRevenueByYear(gameData.userId, year);
+    }
+
+    /// <summary>
+    /// 获取所有营收年份
+    /// </summary>
+    public void GetUserRevenueYear()
+    {
+        if (gameData == null)
+            return;
+        userRevenueController.GetUserRevenueYear(gameData.userId);
+    }
+
     #region 数据回调
     public void DeleteGameDataFail()
     {
@@ -82,9 +121,9 @@ public class GameDataManager : BaseManager, IGameDataView
     public void GetGameDataSimpleListSuccess(List<GameDataSimpleBean> listData)
     {
         this.listGameDataSimple = listData;
-        if (mSimpleGameDataCallBack!=null)
+        if (simpleGameDataCallBack != null)
         {
-            mSimpleGameDataCallBack.GetSimpleGameDataSuccess(listData);
+            simpleGameDataCallBack.GetSimpleGameDataSuccess(listData);
         }
     }
 
@@ -102,17 +141,42 @@ public class GameDataManager : BaseManager, IGameDataView
 
     public void SetGameDataSuccess()
     {
+
     }
+
+    public void GetUserRevenueYearSuccess(List<int> listYear)
+    {
+        if (userRevenueCallBack != null)
+            userRevenueCallBack.GetUserRevenueYearSuccess(listYear);
+    }
+
+    public void GetUserRevenueSuccess(UserRevenueBean userRevenue)
+    {
+        if (userRevenueCallBack != null)
+            userRevenueCallBack.GetUserRevenueSuccess(userRevenue);
+    }
+
+    public void GetUserRevenueFail()
+    {
+    }
+
+
     #endregion
 
     public interface IGameDataCallBack
     {
-        
+
     }
 
     public interface IGameDataSimpleCallBack
     {
-         void GetSimpleGameDataSuccess(List<GameDataSimpleBean> listData);
+        void GetSimpleGameDataSuccess(List<GameDataSimpleBean> listData);
+    }
+
+    public interface IUserRevenueCallBack
+    {
+        void GetUserRevenueSuccess(UserRevenueBean userRevenue);
+        void GetUserRevenueYearSuccess(List<int> listYear);
     }
 
 }

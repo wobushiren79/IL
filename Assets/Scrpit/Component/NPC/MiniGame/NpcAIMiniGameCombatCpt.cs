@@ -25,8 +25,9 @@ public class NpcAIMiniGameCombatCpt : BaseNpcAI
     //防御图标
     public Sprite spStatusDefend;
 
-    private void Awake()
+    public override void Awake()
     {
+        base.Awake();
         gameCombatHandler = Find<MiniGameCombatHandler>(ImportantTypeEnum.MiniGameHandler);
     }
 

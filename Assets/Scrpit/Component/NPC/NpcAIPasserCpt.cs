@@ -34,8 +34,10 @@ public class NpcAIPasserCpt : BaseNpcAI
     //路人意图
     public PasserIntentEnum passerIntent = PasserIntentEnum.LeaveTown;
 
-    private void Awake()
+    public override void Awake()
     {
+        base.Awake();
+
         sceneTownManager = Find<SceneTownManager>(ImportantTypeEnum.SceneManager);
         miniGameCombatHandler = Find<MiniGameCombatHandler>(ImportantTypeEnum.MiniGameHandler);
     }

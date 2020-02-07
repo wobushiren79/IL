@@ -33,8 +33,9 @@ public class UIGameSettle : BaseUIComponent
 
     protected ControlHandler controlHandler;
 
-    private void Awake()
+    public override void Awake()
     {
+        base.Awake();
         controlHandler = GetUIManager<UIGameManager>().controlHandler;
     }
 

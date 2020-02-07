@@ -48,6 +48,10 @@ public class GameDataController : BaseMVCController<GameDataModel, IGameDataView
         GetView().SetGameDataSuccess();
     }
 
+    /// <summary>
+    /// 通过ID删除用户数据
+    /// </summary>
+    /// <param name="userId"></param>
     public void DeleteUserDataByUserId(string userId)
     {
         if (userId == null)

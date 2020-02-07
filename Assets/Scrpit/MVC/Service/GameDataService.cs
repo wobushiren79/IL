@@ -5,7 +5,7 @@ public class GameDataService : BaseDataStorageImpl<GameDataBean>
 {
     public GameDataService()
     {
-      
+
     }
 
     /// <summary>
@@ -14,7 +14,7 @@ public class GameDataService : BaseDataStorageImpl<GameDataBean>
     /// <returns></returns>
     public GameDataBean QueryDataByUserId(string userId)
     {
-        return BaseStartLoadData(userId);
+        return BaseLoadData(userId + "/Base");
     }
 
     /// <summary>
@@ -23,7 +23,8 @@ public class GameDataService : BaseDataStorageImpl<GameDataBean>
     /// <param name="gameConfig"></param>
     public void UpdateDataByUserId(string userId, GameDataBean gameData)
     {
-        BaseStartSaveData(userId, gameData);
+        FileUtil.CreateDirectory(dataStoragePath + "/" + userId);
+        BaseSaveData(userId + "/Base", gameData);
     }
 
     /// <summary>
@@ -31,6 +32,6 @@ public class GameDataService : BaseDataStorageImpl<GameDataBean>
     /// </summary>
     public void DeleteDataByUserId(string userId)
     {
-        BaseStartDeleteFile(userId);
+        BaseDeleteFolder(userId);
     }
 }

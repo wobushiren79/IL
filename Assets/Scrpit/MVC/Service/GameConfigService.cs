@@ -16,7 +16,7 @@ public class GameConfigService : BaseDataStorageImpl<GameConfigBean>
     /// <returns></returns>
     public GameConfigBean QueryData()
     {
-       return BaseStartLoadData(mSaveFileName);
+       return BaseLoadData(mSaveFileName);
     }
 
     /// <summary>
@@ -25,6 +25,6 @@ public class GameConfigService : BaseDataStorageImpl<GameConfigBean>
     /// <param name="gameConfig"></param>
     public void UpdateData(GameConfigBean gameConfig)
     {
-        BaseStartSaveData(mSaveFileName,gameConfig);
+        BaseSaveData(mSaveFileName,gameConfig);
     }
 }

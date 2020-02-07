@@ -22,8 +22,9 @@ public class NpcAIMiniGameBarrageCpt : BaseNpcAI, SightForMiniGameBarrageCpt.ICa
     //视野
     public SightForMiniGameBarrageCpt sightForMiniGameBarrage;
 
-    private void Awake()
+    public override void Awake()
     {
+        base.Awake();
         gameBarrageHandler = Find<MiniGameBarrageHandler>( ImportantTypeEnum.MiniGameHandler);
     }
 

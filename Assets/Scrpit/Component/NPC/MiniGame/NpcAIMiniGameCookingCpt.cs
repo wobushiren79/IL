@@ -51,8 +51,9 @@ public class NpcAIMiniGameCookingCpt : BaseNpcAI
     //被评审的对象
     public NpcAIMiniGameCookingCpt auditTargetNpc;
 
-    private void Awake()
+    public override void Awake()
     {
+        base.Awake();
         miniGameCookingHandler = Find<MiniGameCookingHandler>(ImportantTypeEnum.MiniGameHandler);
     }
 

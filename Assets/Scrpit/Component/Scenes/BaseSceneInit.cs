@@ -23,7 +23,8 @@ public class BaseSceneInit : BaseMonoBehaviour
             }
             else
             {
-                gameDataManager.gameDataController.GetGameDataByUserId(GameCommonInfo.GameUserId);
+
+                gameDataManager.GetGameDataByUserId(GameCommonInfo.GameUserId);
             }
         }
     }

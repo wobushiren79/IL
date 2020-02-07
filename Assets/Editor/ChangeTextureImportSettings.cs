@@ -35,33 +35,30 @@ public class ChangeTextureImportSettingsUnity3 : ScriptableObject
 
 
     [MenuItem("Custom/Texture/Change Texture Format/Auto Compressed")]
-
     static void ChangeTextureFormat_AutoCompressed()
     {
 
-        SelectedChangeTextureFormatSettings(TextureImporterFormat.AutomaticCompressed);
+        //SelectedChangeTextureFormatSettings(TextureImporterFormat.AutomaticCompressed);
 
     }
 
 
 
     [MenuItem("Custom/Texture/Change Texture Format/Auto 16bit")]
-
     static void ChangeTextureFormat_Auto16Bit()
     {
 
-        SelectedChangeTextureFormatSettings(TextureImporterFormat.Automatic16bit);
+        //SelectedChangeTextureFormatSettings(TextureImporterFormat.Automatic16bit);
 
     }
 
 
 
     [MenuItem("Custom/Texture/Change Texture Format/Auto Truecolor")]
-
     static void ChangeTextureFormat_AutoTruecolor()
     {
 
-        SelectedChangeTextureFormatSettings(TextureImporterFormat.AutomaticTruecolor);
+        //SelectedChangeTextureFormatSettings(TextureImporterFormat.AutomaticTruecolor);
 
     }
 
@@ -519,8 +516,9 @@ public class ChangeTextureImportSettingsUnity3 : ScriptableObject
             //Debug.Log("path: " + path);  
 
             TextureImporter textureImporter = AssetImporter.GetAtPath(path) as TextureImporter;
-
-            textureImporter.textureFormat = newFormat;
+            TextureImporterPlatformSettings settings = new TextureImporterPlatformSettings();
+            settings.format = newFormat;
+            textureImporter.SetPlatformTextureSettings(settings);
 
             AssetDatabase.ImportAsset(path);
 
