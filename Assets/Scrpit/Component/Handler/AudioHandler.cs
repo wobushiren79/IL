@@ -38,7 +38,8 @@ public class AudioHandler : BaseHandler
                 break;
         }
         if (soundClip != null)
-            AudioSource.PlayClipAtPoint(soundClip, soundPosition,volumeScale);
+            audioSourceForCamera.PlayOneShot(soundClip, volumeScale);
+        // AudioSource.PlayClipAtPoint(soundClip, soundPosition,volumeScale);
     }
 
     public void PlaySound(SoundEnum sound)
@@ -49,7 +50,7 @@ public class AudioHandler : BaseHandler
     {
         PlaySound(sound, Camera.main.transform.position, volumeScale);
     }
-    public void PlaySound(SoundEnum sound , Vector3 soundPosition)
+    public void PlaySound(SoundEnum sound, Vector3 soundPosition)
     {
         PlaySound(sound, soundPosition, 1);
     }
