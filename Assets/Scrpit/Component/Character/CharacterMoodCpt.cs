@@ -13,37 +13,35 @@ public class CharacterMoodCpt : BaseMonoBehaviour
     public Sprite spExcited;
 
     private Sprite spCurrent;
+
     public void CloseMood()
     {
         characterStatusIcon.RemoveStatusIconByType(CharacterStatusIconEnum.Mood);
     }
 
-    public void SetMood(float mood)
+    public void SetMood(PraiseTypeEnum mood)
     {
         Sprite spIcon = null;
-        if (mood <= 0)
+        switch (mood)
         {
-            spIcon = spAnger;
-        }
-        else if (mood > 0 && mood <= 20)
-        {
-            spIcon = spDisappointed;
-        }
-        else if (mood > 20 && mood <= 40)
-        {
-            spIcon = spOrdinary;
-        }
-        else if (mood > 40 && mood <= 60)
-        {
-            spIcon = spOkay;
-        }
-        else if (mood > 60 && mood <= 80)
-        {
-            spIcon = spHappy;
-        }
-        else if (mood > 80 && mood <= 100)
-        {
-            spIcon = spExcited;
+            case PraiseTypeEnum.Excited:
+                spIcon = spExcited;
+                break;
+            case PraiseTypeEnum.Happy:
+                spIcon = spHappy;
+                break;
+            case PraiseTypeEnum.Okay:
+                spIcon = spOkay;
+                break;
+            case PraiseTypeEnum.Ordinary:
+                spIcon = spOrdinary;
+                break;
+            case PraiseTypeEnum.Disappointed:
+                spIcon = spDisappointed;
+                break;
+            case PraiseTypeEnum.Anger:
+                spIcon = spAnger;
+                break;
         }
         //避免实时更新带来的多次调用
         if (spCurrent!= spIcon)

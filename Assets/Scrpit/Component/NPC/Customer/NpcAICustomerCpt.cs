@@ -225,7 +225,7 @@ public class NpcAICustomerCpt : BaseNpcAI
         if (CheckUtil.CheckPath(transform.position, orderForCustomer.table.GetSeatPosition()))
         {
             //开启满意度
-            characterMoodCpt.SetMood(innEvaluation.mood);
+            characterMoodCpt.SetMood(innEvaluation.GetPraise());
             //前往桌子
             movePosition = orderForCustomer.table.GetSeatPosition();
             characterMoveCpt.SetDestination(movePosition);
@@ -341,7 +341,7 @@ public class NpcAICustomerCpt : BaseNpcAI
     public virtual void ChangeMood(float mood)
     {
         innEvaluation.mood += mood;
-        characterMoodCpt.SetMood(innEvaluation.mood);
+        characterMoodCpt.SetMood(innEvaluation.GetPraise());
         if (innEvaluation.mood <= 0)
         {
             innHandler.EndOrderForForce(orderForCustomer);

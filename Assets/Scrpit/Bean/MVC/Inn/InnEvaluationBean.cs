@@ -9,19 +9,21 @@ public class InnEvaluationBean
     /// 根据心情不同给出不同的评价
     /// </summary>
     /// <returns></returns>
-    public float GetPraise()
+    public PraiseTypeEnum GetPraise()
     {
-        float praise = 0;
-        if (mood >= 80)
-            praise = 0.1f;
-        else if (mood >= 60 && mood < 80)
-            praise = 0.05f;
+        PraiseTypeEnum praise = PraiseTypeEnum.Excited;
+        if (mood > 80)
+            praise = PraiseTypeEnum.Excited;
+        else if (mood > 60 && mood <= 80)
+            praise = PraiseTypeEnum.Happy;
+        else if (mood > 40 && mood <= 60)
+            praise = PraiseTypeEnum.Okay;
         else if (mood > 20 && mood <= 40)
-            praise = -0.05f;
+            praise = PraiseTypeEnum.Ordinary;
         else if (mood > 0 && mood <= 20)
-            praise = -0.1f;
+            praise = PraiseTypeEnum.Disappointed;
         else if (mood <= 0)
-            praise = -0.2f;
+            praise = PraiseTypeEnum.Anger;
         return praise;
     }
 }

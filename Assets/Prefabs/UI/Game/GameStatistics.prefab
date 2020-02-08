@@ -1998,6 +1998,8 @@ GameObject:
   - component: {fileID: 7031089972706911243}
   - component: {fileID: 7459580259354247286}
   - component: {fileID: 9151137658585913088}
+  - component: {fileID: 2974014991205484880}
+  - component: {fileID: 6172311918900895103}
   m_Layer: 5
   m_Name: ItemCartogramBar
   m_TagString: Untagged
@@ -2076,6 +2078,62 @@ MonoBehaviour:
   tvHData: {fileID: 7728683224918877527}
   tvVData: {fileID: 3116378233426675752}
   ivBar: {fileID: 3308414563669086715}
+--- !u!114 &2974014991205484880
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4503661029085396861}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8d230d2213d1d1e4ea23e338fc927a9d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  popupShow: {fileID: 0}
+--- !u!114 &6172311918900895103
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4503661029085396861}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Navigation:
+    m_Mode: 3
+    m_SelectOnUp: {fileID: 0}
+    m_SelectOnDown: {fileID: 0}
+    m_SelectOnLeft: {fileID: 0}
+    m_SelectOnRight: {fileID: 0}
+  m_Transition: 0
+  m_Colors:
+    m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
+    m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
+    m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
+    m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
+    m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
+    m_ColorMultiplier: 1
+    m_FadeDuration: 0.1
+  m_SpriteState:
+    m_HighlightedSprite: {fileID: 0}
+    m_PressedSprite: {fileID: 0}
+    m_SelectedSprite: {fileID: 0}
+    m_DisabledSprite: {fileID: 0}
+  m_AnimationTriggers:
+    m_NormalTrigger: Normal
+    m_HighlightedTrigger: Highlighted
+    m_PressedTrigger: Pressed
+    m_SelectedTrigger: Selected
+    m_DisabledTrigger: Disabled
+  m_Interactable: 1
+  m_TargetGraphic: {fileID: 7459580259354247286}
+  m_OnClick:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &4605474815122472285
 GameObject:
   m_ObjectHideFlags: 0
@@ -2420,6 +2478,10 @@ MonoBehaviour:
   ddYear: {fileID: 1675484496709565633}
   cartogramBar: {fileID: 7655344826666404986}
   listYear: 
+  userRevenueData:
+    userId: 
+    year: 0
+    listMonthData: []
 --- !u!1 &5758414133466860709
 GameObject:
   m_ObjectHideFlags: 0

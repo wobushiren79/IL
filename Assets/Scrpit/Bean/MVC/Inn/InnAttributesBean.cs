@@ -10,8 +10,8 @@ public class InnAttributesBean
     public int innLevel;//客栈等级 （天地人1-5星  3 2 1）
 
     public long aesthetics;//客栈美观数
-    public float praise;//好评率
     public long richness;//菜品丰富度
+    public int praise;//好评
 
     /// <summary>
     /// 客栈升级
@@ -150,16 +150,16 @@ public class InnAttributesBean
     /// 增加好评
     /// </summary>
     /// <param name="addPraise"></param>
-    public void AddPraise(float addPraise)
+    public void AddPraise(int addPraise)
     {
         praise += addPraise;
         if (praise < 0)
         {
             praise = 0;
         }
-        if (praise > 100)
+        if (praise > 1000)
         {
-            praise = 100;
+            praise = 1000;
         }
     }
 

@@ -36,9 +36,12 @@ public class InnRecordBean
     public long expensesL;
 
     //好评数量
-    public long praiseGoodNumber;
-    //差评数量
-    public long praiseBadNumber;
+    public long praiseExciteNumber;
+    public long praiseHappyNumber;
+    public long praiseOkayNumber;
+    public long praiseOrdinaryNumber;
+    public long praiseDisappointedNumber;
+    public long praiseAngerNumber;
 
     /// <summary>
     /// 增加销售数量
@@ -73,5 +76,35 @@ public class InnRecordBean
         this.incomeL += incomeL;
         this.incomeM += incomeM;
         this.incomeS += incomeS;
+    }
+
+    /// <summary>
+    /// 增加评价
+    /// </summary>
+    /// <param name="type"></param>
+    /// <param name="number"></param>
+    public void AddPraise(PraiseTypeEnum type,int number)
+    {
+        switch (type)
+        {
+            case PraiseTypeEnum.Excited:
+                praiseExciteNumber += number;
+                break;
+            case PraiseTypeEnum.Happy:
+                praiseHappyNumber += number;
+                break;
+            case PraiseTypeEnum.Okay:
+                praiseOkayNumber += number;
+                break;
+            case PraiseTypeEnum.Ordinary:
+                praiseOrdinaryNumber += number;
+                break;
+            case PraiseTypeEnum.Disappointed:
+                praiseDisappointedNumber += number;
+                break;
+            case PraiseTypeEnum.Anger:
+                praiseAngerNumber += number;
+                break;
+        }
     }
 }

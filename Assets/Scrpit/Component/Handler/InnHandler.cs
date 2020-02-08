@@ -452,15 +452,12 @@ public class InnHandler : BaseMonoBehaviour, IBaseObserver
     /// <summary>
     /// 给客栈评价
     /// </summary>
-    public void InnPraise(float parise)
+    public void InnPraise(PraiseTypeEnum praiseType)
     {
         //记录好评数量
-        if (parise > 0)
-            innRecord.praiseGoodNumber++;
-        else if (parise < 0)
-            innRecord.praiseBadNumber++;
+        innRecord.AddPraise(praiseType,1);
         //增加评价
-        gameDataManager.gameData.GetInnAttributesData().AddPraise(parise);
+        gameDataManager.gameData.GetInnAttributesData().AddPraise((int)praiseType);
     }
 
 
