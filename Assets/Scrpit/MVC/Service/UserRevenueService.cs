@@ -16,31 +16,31 @@ public class UserRevenueService : BaseDataStorageImpl<UserRevenueBean>
     /// <returns></returns>
     public UserRevenueBean QueryDataByYear(string userId, int year)
     {
-        string filePath = "Revenue_" + year;
-        return BaseLoadData(userId + "/" + filePath);
-        //UserRevenueBean userRevenue = new UserRevenueBean();
-        //userRevenue.year = year;
-        //userRevenue.userId = userId;
-        //userRevenue.listMonthData = new List<UserRevenueMonthBean>();
-        //for (int i = 0; i < 4; i++)
-        //{
-        //    UserRevenueMonthBean userRevenueMonth = new UserRevenueMonthBean();
-        //    userRevenueMonth.month = i + 1;
-        //    userRevenueMonth.listDayData = new List<UserRevenueDayBean>();
-        //    for (int f = 0; f < Random.Range(1, 30);f++)
-        //    {
-        //        UserRevenueDayBean userRevenueDay = new UserRevenueDayBean();
-        //        userRevenueDay.day = f + i;
-        //        userRevenueDay.status = Random.Range(0, 2);
-        //        if (userRevenueDay.status != 0)
-        //        {
-        //            userRevenueDay.money_l = Random.Range(100, 9999);
-        //        }
-        //        userRevenueMonth.listDayData.Add(userRevenueDay);
-        //    }
-        //    userRevenue.listMonthData.Add(userRevenueMonth);
-        //}
-        //return userRevenue;
+        //string filePath = "Revenue_" + year;
+        //return BaseLoadData(userId + "/" + filePath);
+        UserRevenueBean userRevenue = new UserRevenueBean();
+        userRevenue.year = year;
+        userRevenue.userId = userId;
+        userRevenue.listMonthData = new List<UserRevenueMonthBean>();
+        for (int i = 0; i < 4; i++)
+        {
+            UserRevenueMonthBean userRevenueMonth = new UserRevenueMonthBean();
+            userRevenueMonth.month = i + 1;
+            userRevenueMonth.listDayData = new List<InnRecordBean>();
+            for (int f = 0; f < Random.Range(1, 30); f++)
+            {
+                InnRecordBean userRevenueDay = new InnRecordBean();
+                userRevenueDay.day = f + i;
+                userRevenueDay.status = Random.Range(0, 2);
+                if (userRevenueDay.status != 0)
+                {
+                    userRevenueDay.incomeS = Random.Range(100, 9999);
+                }
+                userRevenueMonth.listDayData.Add(userRevenueDay);
+            }
+            userRevenue.listMonthData.Add(userRevenueMonth);
+        }
+        return userRevenue;
     }
 
     /// <summary>

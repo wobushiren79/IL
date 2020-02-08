@@ -76,9 +76,9 @@ public class UIGameSettle : BaseUIComponent
         if (innHandler.GetInnRecord().consumeIngFlour > 0)
             CreateIngItem(innHandler.GetInnRecord().consumeIngFlour, spIconFlour, consumeIngStr + " " + GameCommonInfo.GetUITextById(28));
         //遍历食物
-        foreach (KeyValuePair<long, int> kvp in innHandler.GetInnRecord().sellNumber)
+        foreach (ItemBean itemData in innHandler.GetInnRecord().listSellNumber)
         {
-            CreateFoodItem(kvp.Key, kvp.Value);
+            CreateFoodItem(itemData.itemId, (int)itemData.itemNumber);
         }
         tvIncomeS.text = innHandler.GetInnRecord().incomeS + "";
         tvIncomeM.text = innHandler.GetInnRecord().incomeM + "";

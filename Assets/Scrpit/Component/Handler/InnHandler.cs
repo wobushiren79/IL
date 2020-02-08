@@ -322,13 +322,8 @@ public class InnHandler : BaseMonoBehaviour, IBaseObserver
         long getMoneyS = (long)Math.Round(order.foodData.price_s * rate, 0);
 
         //账本记录
-        if (innRecord.sellNumber.ContainsKey(order.foodData.id))
-            innRecord.sellNumber[order.foodData.id] += 1;
-        else
-            innRecord.sellNumber.Add(order.foodData.id, 1);
-        innRecord.incomeL += getMoneyL;
-        innRecord.incomeS += getMoneyM;
-        innRecord.incomeM += getMoneyS;
+        innRecord.AddSellNumber(order.foodData.id,1);
+        innRecord.AddIncome(getMoneyL, getMoneyM, getMoneyS);
 
         //记录+1
         gameDataManager.gameData.ChangeMenuSellNumber(1, order.foodData.id);
