@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using UnityEditor;
 using System;
+using DG.Tweening;
 
 public class PopupShowView : BaseMonoBehaviour
 {
@@ -29,11 +30,17 @@ public class PopupShowView : BaseMonoBehaviour
         }
     }
 
-    private void OnDisable()
+    public void OnEnable()
     {
-        if (popupRTF!=null)
+        transform.localScale = new Vector3(1, 1, 1);
+        transform.DOScale(new Vector3(0, 0, 0), 0.3f).From();
+    }
+
+    public void OnDisable()
+    {
+        if (popupRTF != null)
         {
-            popupRTF.anchoredPosition = new Vector2(0,0);
+            popupRTF.anchoredPosition = new Vector2(0, 0);
         }
     }
 

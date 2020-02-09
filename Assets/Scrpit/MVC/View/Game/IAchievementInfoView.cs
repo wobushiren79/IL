@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 public interface IAchievementInfoView 
 {
-    void GetAllAchievementInfoSuccess(List<AchievementInfoBean> listData);
+    void GetAchievementInfoSuccess(List<AchievementInfoBean> listData);
 
-    void GetAllAchievementInfoFail();
+    void GetAchievementInfoFail();
 }

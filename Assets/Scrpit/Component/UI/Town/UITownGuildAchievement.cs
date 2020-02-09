@@ -3,21 +3,14 @@ using UnityEditor;
 using System.Collections.Generic;
 using DG.Tweening;
 
-public class UITownGuildAchievement : UIBaseOne, IRadioGroupCallBack, IAchievementInfoView
+public class UITownGuildAchievement : UIBaseOne, IRadioGroupCallBack, AchievementInfoManager.ICallBack
 {
     public GameObject objGroceryContent;
     public GameObject objGroceryModel;
 
     public RadioGroupView rgGroceryType;
 
-    private AchievementInfoController mAchievementInfoController;
     public List<AchievementInfoBean> listAchData;
-
-    public override void Awake()
-    {
-        mAchievementInfoController = new AchievementInfoController(this, this);
-        mAchievementInfoController.GetAllAchievementInfo();
-    }
 
     public new void Start()
     {
@@ -29,8 +22,9 @@ public class UITownGuildAchievement : UIBaseOne, IRadioGroupCallBack, IAchieveme
     public override void OpenUI()
     {
         base.OpenUI();
+        uiGameManager.achievementInfoManager.SetCallBack(this);
+        uiGameManager.achievementInfoManager.GetAllAchievement();
         rgGroceryType.SetPosition(0, false);
-        InitDataByType(0);
     }
 
     public void InitDataByType(int type)
@@ -78,14 +72,10 @@ public class UITownGuildAchievement : UIBaseOne, IRadioGroupCallBack, IAchieveme
     #endregion
 
     #region 数据回调
-    public void GetAllAchievementInfoSuccess(List<AchievementInfoBean> listData)
+    public void GetAchievementInfoSuccess(List<AchievementInfoBean> listData)
     {
         listAchData = listData;
-    }
-
-    public void GetAllAchievementInfoFail()
-    {
-
+        InitDataByType(0);
     }
     #endregion 数据回调
 }

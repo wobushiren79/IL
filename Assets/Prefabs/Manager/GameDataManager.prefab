@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 566250345546063861}
   - component: {fileID: 566250345546063858}
+  - component: {fileID: 4660555182664234846}
   m_Layer: 0
   m_Name: GameDataManager
   m_TagString: Data
@@ -49,15 +50,20 @@ MonoBehaviour:
     moneyM: 0
     moneyL: 0
     guildCoin: 0
-    innName: 
-    innLevel: 0
+    trophyElementary: 0
+    trophyIntermediate: 0
+    trophyAdvanced: 0
+    trophyLegendary: 0
     innAttributes:
+      innName: 
+      innLevel: 0
       aesthetics: 0
-      praise: 0
       richness: 0
+      praise: 0
     userCharacter:
       baseInfo:
         characterId: 
+        characterType: 0
         titleName: 
         name: 
         workDay: 0
@@ -78,7 +84,7 @@ MonoBehaviour:
           cleanTotalNumber: 0
           sendTotalNumber: 0
           cleanTotalTime: 0
-        accountingInfo:
+        accountantInfo:
           workerType: 3
           workerLevel: 0
           workerExp: 0
@@ -114,15 +120,16 @@ MonoBehaviour:
           restTotalTime: 0
         isChef: 0
         isWaiter: 0
-        isAccounting: 0
+        isAccountant: 1
         isAccost: 0
         isBeater: 0
         priorityChef: 0
         priorityWaiter: 0
-        priorityAccounting: 0
+        priorityAccountant: 0
         priorityAccost: 0
         priorityBeater: 0
-        isAttendance: 0
+        workerStatus: 0
+        listLoveItems: 
       attributes:
         loyal: 0
         life: 0
@@ -196,6 +203,9 @@ MonoBehaviour:
         attributes_charm: 0
         attributes_force: 0
         attributes_lucky: 0
+        love_items: 
+        love_menus: 
+        condition: 
     listWorkerCharacter: []
     innBuildData:
       listWall: []
@@ -204,6 +214,9 @@ MonoBehaviour:
       innWidth: 9
       innHeight: 9
       buildLevel: 0
+      listBuildDay: []
+      buildInnWidth: 0
+      buildInnHeight: 0
     gameTime:
       year: 0
       month: 0
@@ -212,7 +225,15 @@ MonoBehaviour:
       minute: 0
       second: 0
     userAchievement:
-      achievementList: 
+      listAchievement: 
+      ownIngOilsalt: 0
+      ownIngMeat: 0
+      ownIngRiverfresh: 0
+      ownIngSeafood: 0
+      ownIngVegetables: 0
+      ownIngMelonfruit: 0
+      ownIngWaterwine: 0
+      ownIngFlour: 0
     listBuild: []
     listItems: []
     listMenu: []
@@ -227,7 +248,16 @@ MonoBehaviour:
     ingWaterwine: 0
     ingFlour: 0
     workerNumberLimit: 5
-    weatherToday:
-      weatherType: 0
-      weatherSize: 0
   listGameDataSimple: []
+--- !u!114 &4660555182664234846
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 566250345546063860}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 617e017fe3cbf7047a0b4012e18db439, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

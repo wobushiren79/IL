@@ -4,7 +4,7 @@ using System;
 using System.Collections.Generic;
 
 [Serializable]
-public class InnRecordBean 
+public class InnRecordBean
 {
     public int year;
     public int month;
@@ -23,7 +23,7 @@ public class InnRecordBean
     public int consumeIngFlour;
 
     //售卖数量
-    public List<ItemBean> listSellNumber = new List<ItemBean>();
+    public List<GameItemsBean> listSellNumber = new List<GameItemsBean>();
 
     //进账
     public long incomeS;
@@ -36,7 +36,7 @@ public class InnRecordBean
     public long expensesL;
 
     //好评数量
-    public long praiseExciteNumber;
+    public long praiseExcitedNumber;
     public long praiseHappyNumber;
     public long praiseOkayNumber;
     public long praiseOrdinaryNumber;
@@ -48,12 +48,12 @@ public class InnRecordBean
     /// </summary>
     /// <param name="id"></param>
     /// <param name="number"></param>
-    public void AddSellNumber(long id,int number)
+    public void AddSellNumber(long id, int number, long moneyL, long moneyM, long moneyS)
     {
         if (listSellNumber == null)
-            listSellNumber = new List<ItemBean>();
+            listSellNumber = new List<GameItemsBean>();
 
-        foreach (ItemBean item in listSellNumber)
+        foreach (GameItemsBean item in listSellNumber)
         {
             if (item.itemId == id)
             {
@@ -61,7 +61,14 @@ public class InnRecordBean
                 return;
             }
         }
-        ItemBean itemBean = new ItemBean(id, number);
+
+        GameItemsBean itemBean = new GameItemsBean(id, number);
+        itemBean.priceL += moneyL;
+        itemBean.priceM += moneyM;
+        itemBean.priceS += moneyS;
+        incomeL += moneyL;
+        incomeM += moneyM;
+        incomeS += moneyS;
         listSellNumber.Add(itemBean);
     }
 
@@ -71,7 +78,7 @@ public class InnRecordBean
     /// <param name="incomeL"></param>
     /// <param name="incomeM"></param>
     /// <param name="incomeS"></param>
-    public void AddIncome(long incomeL,long incomeM,long incomeS)
+    public void AddIncome(long incomeL, long incomeM, long incomeS)
     {
         this.incomeL += incomeL;
         this.incomeM += incomeM;
@@ -83,12 +90,12 @@ public class InnRecordBean
     /// </summary>
     /// <param name="type"></param>
     /// <param name="number"></param>
-    public void AddPraise(PraiseTypeEnum type,int number)
+    public void AddPraise(PraiseTypeEnum type, int number)
     {
         switch (type)
         {
             case PraiseTypeEnum.Excited:
-                praiseExciteNumber += number;
+                praiseExcitedNumber += number;
                 break;
             case PraiseTypeEnum.Happy:
                 praiseHappyNumber += number;

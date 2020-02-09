@@ -28,7 +28,7 @@ public class InfoAchievementPopupShow : PopupShowView
     protected InnFoodManager innFoodManager;
 
     public AchievementInfoBean achievementInfo;
-    public ItemTownGuildAchievementCpt.AchievementStatusEnum status;
+    public AchievementStatusEnum status;
 
     private void Awake()
     {
@@ -40,14 +40,14 @@ public class InfoAchievementPopupShow : PopupShowView
         innFoodManager = Find<InnFoodManager>(ImportantTypeEnum.FoodManager);
     }
 
-    public void SetData(ItemTownGuildAchievementCpt.AchievementStatusEnum status, AchievementInfoBean achievementInfo)
+    public void SetData(AchievementStatusEnum status, AchievementInfoBean achievementInfo)
     {
         this.status = status;
         this.achievementInfo = achievementInfo;
         SetIcon(achievementInfo.type, achievementInfo.icon_key, achievementInfo.icon_key_remark);
         SetName(achievementInfo.name);
         SetContent(achievementInfo.content);
-        SetAchieve(achievementInfo);
+        SetAchieve(status, achievementInfo);
         SetStatus(status);
         SetReward(achievementInfo);
     }
@@ -69,12 +69,12 @@ public class InfoAchievementPopupShow : PopupShowView
             ivIcon.sprite = spIcon;
             switch (status)
             {
-                case ItemTownGuildAchievementCpt.AchievementStatusEnum.Completed:
+                case AchievementStatusEnum.Completed:
                     ivIcon.material = null;
                     ivRemark.material = null;
                     break;
-                case ItemTownGuildAchievementCpt.AchievementStatusEnum.Processing:
-                case ItemTownGuildAchievementCpt.AchievementStatusEnum.ToBeConfirmed:
+                case AchievementStatusEnum.Processing:
+                case AchievementStatusEnum.ToBeConfirmed:
                     ivIcon.material = materialGray;
                     ivRemark.material = materialGray;
                     break;
@@ -111,22 +111,22 @@ public class InfoAchievementPopupShow : PopupShowView
     /// 设置状态
     /// </summary>
     /// <param name="status"></param>
-    public void SetStatus(ItemTownGuildAchievementCpt.AchievementStatusEnum status)
+    public void SetStatus(AchievementStatusEnum status)
     {
         if (tvStatus != null)
         {
             switch (status)
             {
-                case ItemTownGuildAchievementCpt.AchievementStatusEnum.Completed:
+                case AchievementStatusEnum.Completed:
                     tvStatus.text = GameCommonInfo.GetUITextById(12001);
                     tvStatus.color = new Color(0, 1, 0, 1);
                     break;
-                case ItemTownGuildAchievementCpt.AchievementStatusEnum.Processing:
+                case AchievementStatusEnum.Processing:
                     tvStatus.text = GameCommonInfo.GetUITextById(12002);
                     tvStatus.color = new Color();
                     tvStatus.color = new Color(0, 0, 0, 1);
                     break;
-                case ItemTownGuildAchievementCpt.AchievementStatusEnum.ToBeConfirmed:
+                case AchievementStatusEnum.ToBeConfirmed:
                     tvStatus.text = GameCommonInfo.GetUITextById(12003);
                     tvStatus.color = new Color();
                     tvStatus.color = new Color(1, 0.2f, 0, 1);
@@ -140,15 +140,22 @@ public class InfoAchievementPopupShow : PopupShowView
     /// 设置成就达成条件
     /// </summary>
     /// <param name="data"></param>
-    public void SetAchieve(AchievementInfoBean data)
+    public void SetAchieve(AchievementStatusEnum status, AchievementInfoBean data)
     {
         CptUtil.RemoveChildsByActive(objAchieveContent.transform);
         if (data == null)
             return;
-        List<PreTypeBean> listPreData= PreTypeEnumTools.GetListPreData(data.pre_data);
+        List<PreTypeBean> listPreData = PreTypeEnumTools.GetListPreData(data.pre_data);
         foreach (var itemPreData in listPreData)
         {
-            PreTypeEnumTools.GetPreDetails(itemPreData, gameDataManager.gameData,iconDataManager);
+            if (status == AchievementStatusEnum.Completed)
+            {
+                PreTypeEnumTools.GetPreDetails(itemPreData, gameDataManager.gameData, iconDataManager, true);
+            }
+            else
+            {
+                PreTypeEnumTools.GetPreDetails(itemPreData, gameDataManager.gameData, iconDataManager, false);
+            }
             string preDes = itemPreData.preDescribe;
             float progress = itemPreData.progress;
             CreateAchieveItem(preDes, progress);
@@ -174,7 +181,7 @@ public class InfoAchievementPopupShow : PopupShowView
             Sprite spReward = itemRewardData.spRewardIcon;
             CreateRewardItem(rewardDes, spReward);
         }
-   
+
         //}
         ////奖励-道具
         //if (!CheckUtil.StringIsNull(data.reward_items_ids))
@@ -233,12 +240,12 @@ public class InfoAchievementPopupShow : PopupShowView
         itemAchieve.SetData(name, pro);
     }
 
-    private void CreateRewardItem(string name,Sprite spIcon)
+    private void CreateRewardItem(string name, Sprite spIcon)
     {
         GameObject objReward = Instantiate(objRewardModel, objRewardContent.transform);
         objReward.SetActive(true);
         ItemGamePopupAchRewardCpt itemAchieve = objReward.GetComponent<ItemGamePopupAchRewardCpt>();
-        itemAchieve.SetData(name , spIcon);
+        itemAchieve.SetData(name, spIcon);
     }
 
 }

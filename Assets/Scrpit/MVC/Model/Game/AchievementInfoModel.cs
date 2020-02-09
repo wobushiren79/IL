@@ -30,4 +30,15 @@ public class AchievementInfoModel : BaseMVCModel
         List<AchievementInfoBean> listData = mAchievementInfoService.QueryDataByType(type);
         return listData;
     }
+
+    /// <summary>
+    /// 根据IDs获取成就信息
+    /// </summary>
+    /// <returns></returns>
+    public List<AchievementInfoBean> GeAchievementInfoByIds(List<long> ids)
+    {
+        List<AchievementInfoBean> listData = mAchievementInfoService.QueryDataByIds(ids.ToArray());
+        return listData;
+    }
+
 }

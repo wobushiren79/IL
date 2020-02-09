@@ -43,17 +43,32 @@ public class CartogramBarView : CartogramBaseView
         float itemMaxHeight = (rtContent.rect.height) - 40;
         for (int i = 0; i < listCartogramData.Count; i++)
         {
-            CartogramDataBean itemData = listCartogramData[i];
-            GameObject objItem = Instantiate(objItemContainer, objItemModel);
-            //设置大小
-            //计算单个高度
-            float itemHeight = (itemData.value_1 / itemMaxValue) * itemMaxHeight;
-            ((RectTransform)objItem.transform).sizeDelta = new Vector2(itemWidth, itemHeight);
-            CartogramBarForItem itemCpt = objItem.GetComponent<CartogramBarForItem>();
-            itemCpt.SetData(itemData, itemWidth, itemHeight);
-            itemCpt.AnimForInit(i);
+            CreateItemBar(i, itemWidth, itemMaxValue, itemMaxHeight);
         }
     }
 
+    /// <summary>
+    /// 创建单个柱状
+    /// </summary>
+    /// <param name="position"></param>
+    /// <param name="itemWidth"></param>
+    /// <param name="itemMaxValue"></param>
+    /// <param name="itemMaxHeight"></param>
+    /// <returns></returns>
+    public virtual CartogramBarForItem CreateItemBar(int position, float itemWidth, float itemMaxValue, float itemMaxHeight)
+    {
+        CartogramDataBean itemData = listCartogramData[position];
+        GameObject objItem = Instantiate(objItemContainer, objItemModel);
+        //设置大小
+        //计算单个高度
+        float itemHeight = (itemData.value_1 / itemMaxValue) * itemMaxHeight;
+        ((RectTransform)objItem.transform).sizeDelta = new Vector2(itemWidth, itemHeight);
+
+        CartogramBarForItem itemCpt = objItem.GetComponent<CartogramBarForItem>();
+        itemCpt.SetData(itemData, itemWidth, itemHeight);
+        itemCpt.AnimForInit(position);
+
+        return itemCpt;
+    }
 
 }

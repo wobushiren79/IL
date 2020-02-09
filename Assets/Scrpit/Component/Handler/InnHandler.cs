@@ -189,7 +189,7 @@ public class InnHandler : BaseMonoBehaviour, IBaseObserver
 
     public InnRecordBean GetInnRecord()
     {
-        innRecord.status =(int)GameCommonInfo.currentDayData.dayStatus;
+        innRecord.status = (int)GameCommonInfo.currentDayData.dayStatus;
         return innRecord;
     }
 
@@ -322,7 +322,7 @@ public class InnHandler : BaseMonoBehaviour, IBaseObserver
         long getMoneyS = (long)Math.Round(order.foodData.price_s * rate, 0);
 
         //账本记录
-        innRecord.AddSellNumber(order.foodData.id,1);
+        innRecord.AddSellNumber(order.foodData.id, 1, getMoneyL, getMoneyM, getMoneyS);
         innRecord.AddIncome(getMoneyL, getMoneyM, getMoneyS);
 
         //记录+1
@@ -455,7 +455,7 @@ public class InnHandler : BaseMonoBehaviour, IBaseObserver
     public void InnPraise(PraiseTypeEnum praiseType)
     {
         //记录好评数量
-        innRecord.AddPraise(praiseType,1);
+        innRecord.AddPraise(praiseType, 1);
         //增加评价
         gameDataManager.gameData.GetInnAttributesData().AddPraise((int)praiseType);
     }

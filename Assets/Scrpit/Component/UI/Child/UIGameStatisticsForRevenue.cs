@@ -86,7 +86,7 @@ public class UIGameStatisticsForRevenue : BaseUIChildComponent<UIGameStatistics>
         }
         else
         {
-            cartogramBar.SetData(userRevenueMonthData.GetListCartogramDataForIncome());
+            ((RevenueCartogramBarView)cartogramBar).SetData(userRevenueMonthData.GetListCartogramDataForIncome(), userRevenueMonthData.listDayData);
         }
     }
 

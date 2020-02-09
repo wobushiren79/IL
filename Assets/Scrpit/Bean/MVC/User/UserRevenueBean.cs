@@ -31,9 +31,9 @@ public class UserRevenueMonthBean
         {
             CartogramDataBean cartogramData = new CartogramDataBean();
             cartogramData.key = itemDay.day;
-            cartogramData.value_1 = itemDay.incomeL;
+            cartogramData.value_3 = itemDay.incomeL;
             cartogramData.value_2 = itemDay.incomeM;
-            cartogramData.value_3 = itemDay.incomeS;
+            cartogramData.value_1 = itemDay.incomeS;
             cartogramData.value_4 = itemDay.status;
             listCartogramData.Add(cartogramData);
         }

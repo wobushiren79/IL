@@ -6,7 +6,7 @@ using System.Collections.Generic;
 [Serializable]
 public class UserAchievementBean 
 {
-    public List<long> achievementList = new List<long>();//解锁成就列表
+    public List<long> listAchievement = new List<long>();//解锁成就列表
 
     public long ownIngOilsalt;//油盐
     public long ownIngMeat;//肉类
@@ -24,7 +24,7 @@ public class UserAchievementBean
     /// <returns></returns>
     public bool CheckHasAchievement(long achId)
     {
-       return achievementList.Contains(achId);
+       return listAchievement.Contains(achId);
     }
 
     /// <summary>
@@ -33,7 +33,7 @@ public class UserAchievementBean
     /// <param name="achId"></param>
     public void AddAchievement(long achId)
     {
-        achievementList.Add(achId);
+        listAchievement.Add(achId);
     }
 
 

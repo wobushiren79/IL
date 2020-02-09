@@ -4,9 +4,9 @@ using UnityEditor;
 public class InfoAchievementPopupButton : PopupButtonView
 {
     public AchievementInfoBean achievementInfo;
-    public ItemTownGuildAchievementCpt.AchievementStatusEnum status;
+    public AchievementStatusEnum status;
 
-    public void SetData(ItemTownGuildAchievementCpt.AchievementStatusEnum status, AchievementInfoBean achievementInfo)
+    public void SetData(AchievementStatusEnum status, AchievementInfoBean achievementInfo)
     {
         this.achievementInfo = achievementInfo;
         this.status = status;
@@ -25,9 +25,9 @@ public class InfoAchievementPopupButton : PopupButtonView
         }
         else
         {
-            ((InfoAchievementPopupShow)popupShow).SetData(status,achievementInfo);
+            ((InfoAchievementPopupShow)popupShow).SetData(status, achievementInfo);
         }
-       
+
     }
 
 }

@@ -3,14 +3,6 @@ using UnityEditor;
 using UnityEngine.UI;
 public class ItemTownGuildAchievementCpt : ItemGameBaseCpt
 {
-    public enum AchievementStatusEnum
-    {
-        UnKnown = 0,
-        Completed = 1,
-        Processing = 2,
-        ToBeConfirmed = 3
-    }
-
     public Image ivIcon;
     public Image ivIconRemark;
     public Image ivBackground;

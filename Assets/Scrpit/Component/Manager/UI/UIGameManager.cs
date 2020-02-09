@@ -25,6 +25,7 @@ public class UIGameManager : BaseUIManager
     public NpcInfoManager npcInfoManager;
     public StoreInfoManager storeInfoManager;
     public IconDataManager iconDataManager;
+    public AchievementInfoManager achievementInfoManager;
     //UI相关
     public DialogManager dialogManager;
     public ToastManager toastManager;
@@ -45,6 +46,8 @@ public class UIGameManager : BaseUIManager
     private void Awake()
     {
         gameDataManager = Find<GameDataManager>(ImportantTypeEnum.GameDataManager);
+        achievementInfoManager = Find<AchievementInfoManager>(ImportantTypeEnum.GameDataManager);
+
         gameItemsManager = Find<GameItemsManager>(ImportantTypeEnum.GameItemsManager);
         characterDressManager = Find<CharacterDressManager>(ImportantTypeEnum.CharacterManager);
         characterBodyManager = Find<CharacterBodyManager>(ImportantTypeEnum.CharacterManager);

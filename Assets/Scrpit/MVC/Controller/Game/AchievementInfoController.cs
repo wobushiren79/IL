@@ -12,18 +12,35 @@ public class AchievementInfoController : BaseMVCController<AchievementInfoModel,
     {
     }
     /// <summary>
-    /// 查询所有商店信息
+    /// 查询所有成就信息
     /// </summary>
     public void GetAllAchievementInfo()
     {
         List<AchievementInfoBean> listData = GetModel().GetAllAchievementInfo();
         if (!CheckUtil.ListIsNull(listData))
         {
-            GetView().GetAllAchievementInfoSuccess(listData);
+            GetView().GetAchievementInfoSuccess(listData);
         }
         else
         {
-            GetView().GetAllAchievementInfoFail();
+            GetView().GetAchievementInfoFail();
+        }
+    }
+
+    /// <summary>
+    /// 通过ID查询成就
+    /// </summary>
+    /// <param name="ids"></param>
+    public void GetAchievementInfoByIds(List<long> ids)
+    {
+        List<AchievementInfoBean> listData = GetModel().GeAchievementInfoByIds(ids);
+        if (!CheckUtil.ListIsNull(listData))
+        {
+            GetView().GetAchievementInfoSuccess(listData);
+        }
+        else
+        {
+            GetView().GetAchievementInfoFail();
         }
     }
 }

@@ -42,7 +42,7 @@ public class PreTypeEnumTools
         List<PreTypeBean> listPreData = GetListPreData(data);
         foreach (var itemPreData in listPreData)
         {
-            GetPreDetails(itemPreData, gameData,null);
+            GetPreDetails(itemPreData, gameData, null);
             if (!itemPreData.isPre)
             {
                 return false;
@@ -76,22 +76,26 @@ public class PreTypeEnumTools
     /// </summary>
     /// <param name="rewardType"></param>
     /// <returns></returns>
-    public static PreTypeBean GetPreDetails(PreTypeBean preTypeData, GameDataBean gameData, IconDataManager iconDataManager)
+    public static PreTypeBean GetPreDetails(PreTypeBean preTypeData, GameDataBean gameData, IconDataManager iconDataManager, bool isComplete)
     {
         switch (preTypeData.preType)
         {
             case PreTypeEnum.PayMoneyL:
             case PreTypeEnum.PayMoneyM:
             case PreTypeEnum.PayMoneyS:
-                GetPreDetailsForPayMoney(preTypeData, gameData, iconDataManager);
+                GetPreDetailsForPayMoney(preTypeData, gameData, iconDataManager, isComplete);
                 break;
             case PreTypeEnum.HaveMoneyL:
             case PreTypeEnum.HaveMoneyM:
             case PreTypeEnum.HaveMoneyS:
-                GetPreDetailsForHaveMoney(preTypeData, gameData, iconDataManager);
+                GetPreDetailsForHaveMoney(preTypeData, gameData, iconDataManager, isComplete);
                 break;
         }
         return preTypeData;
+    }
+    public static PreTypeBean GetPreDetails(PreTypeBean preTypeData, GameDataBean gameData, IconDataManager iconDataManager)
+    {
+        return GetPreDetails(preTypeData, gameData, iconDataManager, false);
     }
 
     /// <summary>
@@ -99,8 +103,10 @@ public class PreTypeEnumTools
     /// </summary>
     /// <param name="preTypeData"></param>
     /// <param name="gameData"></param>
+    /// <param name="iconDataManager"></param>
+    /// <param name="isComplete"></param>
     /// <returns></returns>
-    private static PreTypeBean GetPreDetailsForPayMoney(PreTypeBean preTypeData, GameDataBean gameData, IconDataManager iconDataManager)
+    private static PreTypeBean GetPreDetailsForPayMoney(PreTypeBean preTypeData, GameDataBean gameData, IconDataManager iconDataManager, bool isComplete)
     {
         string preMoneyStr = "";
         long payMoney = long.Parse(preTypeData.preData);
@@ -124,7 +130,7 @@ public class PreTypeEnumTools
                 iconKey = "money_1";
                 break;
         }
-        if (gameData.moneyL >= payMoney)
+        if (gameData.moneyL >= payMoney || isComplete)
         {
             preTypeData.isPre = true;
             preMoneyStr = "(" + payMoney + "/" + payMoney + ")";
@@ -142,14 +148,16 @@ public class PreTypeEnumTools
         return preTypeData;
     }
 
+
     /// <summary>
     /// 获取拥有金钱相关详情
     /// </summary>
     /// <param name="preTypeData"></param>
     /// <param name="gameData"></param>
     /// <param name="iconDataManager"></param>
+    /// <param name="isComplete"></param>
     /// <returns></returns>
-    private static PreTypeBean GetPreDetailsForHaveMoney(PreTypeBean preTypeData, GameDataBean gameData, IconDataManager iconDataManager)
+    private static PreTypeBean GetPreDetailsForHaveMoney(PreTypeBean preTypeData, GameDataBean gameData, IconDataManager iconDataManager, bool isComplete)
     {
         long haveMoney = long.Parse(preTypeData.preData);
         long ownMoney = 0;
@@ -173,7 +181,7 @@ public class PreTypeEnumTools
                 iconKey = "money_1";
                 break;
         }
-        if (ownMoney >= haveMoney)
+        if (ownMoney >= haveMoney || isComplete)
         {
             preTypeData.isPre = true;
             haveMoneyStr = "(" + haveMoney + "/" + haveMoney + ")";
