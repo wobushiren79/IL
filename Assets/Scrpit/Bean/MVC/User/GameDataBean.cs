@@ -55,9 +55,17 @@ public class GameDataBean
     public void AddArenaTrophy(long trophyElementary, long trophyIntermediate, long trophyAdvanced, long trophyLegendary)
     {
         this.trophyElementary += trophyElementary;
+        userAchievement.ownTrophyElementary += trophyElementary;
+
         this.trophyIntermediate += trophyIntermediate;
+        userAchievement.ownTrophyIntermediate += trophyIntermediate;
+
         this.trophyAdvanced += trophyAdvanced;
+        userAchievement.ownTrophyAdvanced += trophyAdvanced;
+
         this.trophyLegendary += trophyLegendary;
+        userAchievement.ownTrophyLegendary += trophyLegendary;
+
         if (this.trophyElementary < 0)
             this.trophyElementary = 0;
         if (this.trophyIntermediate < 0)
@@ -173,8 +181,11 @@ public class GameDataBean
     public void AddMoney(long priceL, long priceM, long priceS)
     {
         moneyL += priceL;
+        userAchievement.ownMoneyL += priceL;
         moneyM += priceM;
+        userAchievement.ownMoneyM += priceM;
         moneyS += priceS;
+        userAchievement.ownMoneyS += priceS;
     }
 
     /// <summary>
@@ -184,6 +195,7 @@ public class GameDataBean
     public void AddGuildCoin(long coin)
     {
         guildCoin += coin;
+        userAchievement.ownGuildCoin += coin;
         if (guildCoin < 0)
             guildCoin = 0;
     }

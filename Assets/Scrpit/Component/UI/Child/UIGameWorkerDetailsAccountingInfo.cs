@@ -1,26 +1,8 @@
 ﻿using UnityEngine;
 using UnityEditor;
 using UnityEngine.UI;
-public class UIGameWorkerDetailsAccountingInfo : BaseMonoBehaviour
+public class UIGameWorkerDetailsAccountingInfo : UIGameStatisticsDetailsBase<UIGameWorkerDetails>
 {
-    [Header("控件")]
-    public Text tvAccountingTotalNumber;
-    public Text tvTotalMoneyL;
-    public Text tvTotalMoneyM;
-    public Text tvTotalMoneyS;
-
-    public Text tvAccountingSuccessNumber;
-    public Text tvMoreMoneyL;
-    public Text tvMoreMoneyM;
-    public Text tvMoreMoneyS;
-
-    public Text tvAccountingFailNumber;
-    public Text tvLoseMoneyL;
-    public Text tvLoseMoneyM;
-    public Text tvLoseMoneyS;
-
-    public Text tvAccountingTime;
-
     [Header("数据")]
     public CharacterWorkerForAccountantBean accountingData;
 
@@ -31,13 +13,15 @@ public class UIGameWorkerDetailsAccountingInfo : BaseMonoBehaviour
     public void SetData(CharacterWorkerForAccountantBean accountingData)
     {
         this.accountingData = accountingData;
-        SetTotalData(accountingData.accountingTotalNumber,
+        CptUtil.RemoveChildsByActive(objItemContent);
+
+        AddTotalData(accountingData.accountingTotalNumber,
             accountingData.accountingMoneyL, accountingData.accountingMoneyM, accountingData.accountingMoneyS);
-        SetSuccessData(accountingData.accountingSuccessNumber,
+        AddSuccessData(accountingData.accountingSuccessNumber,
           accountingData.moreMoneyL, accountingData.moreMoneyM, accountingData.moreMoneyS);
-        SetFailData(accountingData.accountingErrorNumber,
+        AddFailData(accountingData.accountingErrorNumber,
           accountingData.loseMoneyL, accountingData.lostMoneyM, accountingData.lostMoneyS);
-        SetAccountingTime(accountingData.accountingTotalTime);
+        AddAccountingTime(accountingData.accountingTotalTime);
     }
 
     /// <summary>
@@ -47,16 +31,12 @@ public class UIGameWorkerDetailsAccountingInfo : BaseMonoBehaviour
     /// <param name="totalMoneL"></param>
     /// <param name="totalMoneM"></param>
     /// <param name="totalMoneS"></param>
-    public void SetTotalData(long totalNumber,long totalMoneL, long totalMoneM, long totalMoneS)
+    public void AddTotalData(long totalNumber, long totalMoneyL, long totalMoneyM, long totalMoneyS)
     {
-        if (tvAccountingTotalNumber != null)
-            tvAccountingTotalNumber.text = totalNumber + "";
-        if (tvTotalMoneyL != null)
-            tvTotalMoneyL.text = totalMoneL + "";
-        if (tvTotalMoneyM != null)
-            tvTotalMoneyM.text = totalMoneM + "";
-        if (tvTotalMoneyS != null)
-            tvTotalMoneyS.text = totalMoneS + "";
+        Sprite spIcon1 = GetSpriteByName("worker_accounting_pro_0");
+        CreateTextItem(spIcon1, GameCommonInfo.GetUITextById(316), totalNumber + "");
+        Sprite spIcon2 = GetSpriteByName("money_1");
+        CreateMoneyItem(spIcon2, GameCommonInfo.GetUITextById(317), totalMoneyL, totalMoneyM, totalMoneyS);
     }
 
     /// <summary>
@@ -66,16 +46,12 @@ public class UIGameWorkerDetailsAccountingInfo : BaseMonoBehaviour
     /// <param name="moreMoneL"></param>
     /// <param name="moreMoneM"></param>
     /// <param name="moreMoneS"></param>
-    public void SetSuccessData(long successNumber, long moreMoneL, long moreMoneM, long moreMoneS)
+    public void AddSuccessData(long successNumber, long moreMoneyL, long moreMoneyM, long moreMoneyS)
     {
-        if (tvAccountingSuccessNumber != null)
-            tvAccountingSuccessNumber.text = successNumber + "";
-        if (tvMoreMoneyL != null)
-            tvMoreMoneyL.text = moreMoneL + "";
-        if (tvMoreMoneyM != null)
-            tvMoreMoneyM.text = moreMoneM + "";
-        if (tvMoreMoneyS != null)
-            tvMoreMoneyS.text = moreMoneS + "";
+        Sprite spIcon1 = GetSpriteByName("worker_accounting_pro_0");
+        CreateTextItem(spIcon1, GameCommonInfo.GetUITextById(318), Color.green, successNumber + "");
+        Sprite spIcon2 = GetSpriteByName("money_1");
+        CreateMoneyItem(spIcon2, GameCommonInfo.GetUITextById(319), Color.green, moreMoneyL, moreMoneyM, moreMoneyS);
     }
 
     /// <summary>
@@ -85,25 +61,21 @@ public class UIGameWorkerDetailsAccountingInfo : BaseMonoBehaviour
     /// <param name="moreMoneL"></param>
     /// <param name="moreMoneM"></param>
     /// <param name="moreMoneS"></param>
-    public void SetFailData(long failNumber, long loseMoneL, long loseMoneM, long loseMoneS)
+    public void AddFailData(long failNumber, long loseMoneyL, long loseMoneyM, long loseMoneyS)
     {
-        if (tvAccountingFailNumber != null)
-            tvAccountingFailNumber.text = failNumber + "";
-        if (tvLoseMoneyL != null)
-            tvLoseMoneyL.text = loseMoneL + "";
-        if (tvLoseMoneyM != null)
-            tvLoseMoneyM.text = loseMoneM + "";
-        if (tvLoseMoneyS != null)
-            tvLoseMoneyS.text = loseMoneS + "";
+        Sprite spIcon1 = GetSpriteByName("worker_accounting_pro_0");
+        CreateTextItem(spIcon1, GameCommonInfo.GetUITextById(320), Color.red, failNumber + "");
+        Sprite spIcon2 = GetSpriteByName("money_1");
+        CreateMoneyItem(spIcon2, GameCommonInfo.GetUITextById(321), Color.red, loseMoneyL, loseMoneyM, loseMoneyS);
     }
 
     /// <summary>
     /// 设置结算时间
     /// </summary>
     /// <param name="time"></param>
-    public void SetAccountingTime(float time)
+    public void AddAccountingTime(float time)
     {
-        if (tvAccountingTime != null)
-            tvAccountingTime.text = time+GameCommonInfo.GetUITextById(38);
+        Sprite spIcon = GetSpriteByName("hourglass_1");
+        CreateTextItem(spIcon, GameCommonInfo.GetUITextById(322), time + GameCommonInfo.GetUITextById(38));
     }
 }
