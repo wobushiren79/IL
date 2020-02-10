@@ -17,7 +17,7 @@ public class InnRecordBean
     public int consumeIngMeat;
     public int consumeIngRiverfresh;
     public int consumeIngSeafood;
-    public int consumeIngVegetablest;
+    public int consumeIngVegetables;
     public int consumeIngMelonfruit;
     public int consumeIngWaterwine;
     public int consumeIngFlour;

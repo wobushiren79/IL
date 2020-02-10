@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using UnityEditor;
 using UnityEngine.UI;
-public class UIGameWorkerDetailsAccountingInfo : UIGameStatisticsDetailsBase<UIGameWorkerDetails>
+public class UIGameWorkerDetailsAccountantInfo : UIGameStatisticsDetailsBase<UIGameWorkerDetails>
 {
     [Header("数据")]
     public CharacterWorkerForAccountantBean accountingData;

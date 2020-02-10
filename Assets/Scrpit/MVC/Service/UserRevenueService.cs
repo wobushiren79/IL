@@ -54,7 +54,7 @@ public class UserRevenueService : BaseDataStorageImpl<UserRevenueBean>
         //            userRevenueDay.consumeIngMeat = 2;
         //            userRevenueDay.consumeIngRiverfresh = 3;
         //            userRevenueDay.consumeIngSeafood = 4;
-        //            userRevenueDay.consumeIngVegetablest = 5;
+        //            userRevenueDay.consumeIngVegetables = 5;
         //            userRevenueDay.consumeIngMelonfruit = 6;
         //            userRevenueDay.consumeIngWaterwine = 7;
         //            userRevenueDay.consumeIngFlour = 8;

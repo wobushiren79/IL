@@ -4,109 +4,70 @@ using UnityEditor;
 
 public class InfoFoodPopupShow : PopupShowView
 {
-    public GameObject objTime;
-    public Text tvTime;
+    public GameObject objItemBaseContainer;
+    public GameObject objItemStatisticsContainer;
+    public GameObject objItemTextModel;
 
-    public GameObject objOilsalt;
-    public GameObject objMeat;
-    public GameObject objRiverfresh;
-    public GameObject objSeafood;
-    public GameObject objVegetables;
-    public GameObject objMelonfruit;
-    public GameObject objWaterwine;
-    public GameObject objFlour;
-
-    public GameDataManager gameDataManager;
+    protected GameDataManager gameDataManager;
+    protected IconDataManager iconDataManager;
 
     public MenuOwnBean ownData;
     public MenuInfoBean foodData;
 
-    //public override void Update()
-    //{
-    //    base.Update();
-    //    if (gameDataManager == null)
-    //        return;
-
-    //    if (foodData.ing_oilsalt <= gameDataManager.gameData.ingOilsalt)
-    //        tvIngOilsalt.color = Color.black;
-    //    else
-    //        tvIngOilsalt.color = Color.red;
-
-    //    if (foodData.ing_meat <= gameDataManager.gameData.ingMeat)
-    //        tvIngMeat.color = Color.black;
-    //    else
-    //        tvIngMeat.color = Color.red;
-
-    //    if (foodData.ing_riverfresh <= gameDataManager.gameData.ingRiverfresh)
-    //        tvIngRiverfresh.color = Color.black;
-    //    else
-    //        tvIngRiverfresh.color = Color.red;
-
-    //    if (foodData.ing_seafood <= gameDataManager.gameData.ingSeafood)
-    //        tvIngSeafood.color = Color.black;
-    //    else
-    //        tvIngSeafood.color = Color.red;
-
-    //    if (foodData.ing_vegetables <= gameDataManager.gameData.ingVegetables)
-    //        tvIngVegetables.color = Color.black;
-    //    else
-    //        tvIngVegetables.color = Color.red;
-
-    //    if (foodData.ing_melonfruit <= gameDataManager.gameData.ingMelonfruit)
-    //        tvIngMelonfruit.color = Color.black;
-    //    else
-    //        tvIngMelonfruit.color = Color.red;
-
-    //    if (foodData.ing_waterwine <= gameDataManager.gameData.ingWaterwine)
-    //        tvIngWaterwine.color = Color.black;
-    //    else
-    //        tvIngWaterwine.color = Color.red;
-
-    //    if (foodData.ing_flour <= gameDataManager.gameData.ingFlour)
-    //        tvIngFlour.color = Color.black;
-    //    else
-    //        tvIngFlour.color = Color.red;
-    //}
-
+    private void Awake()
+    {
+        gameDataManager = Find<GameDataManager>(ImportantTypeEnum.GameDataManager);
+        iconDataManager = Find<IconDataManager>(ImportantTypeEnum.UIManager);
+    }
 
     public void SetData(MenuOwnBean ownData, MenuInfoBean foodData)
     {
         SetData(ownData, foodData, true);
     }
-    public void SetData(MenuOwnBean ownData, MenuInfoBean foodData,bool isShowTime)
+
+    public void SetData(MenuOwnBean ownData, MenuInfoBean foodData, bool isShowTime)
     {
         this.ownData = ownData;
         this.foodData = foodData;
-
+        CptUtil.RemoveChildsByActive(objItemBaseContainer);
+        CptUtil.RemoveChildsByActive(objItemStatisticsContainer);
         if (ownData != null && foodData != null)
         {
             //制作时间
-            if (tvTime != null)
-            {
-                if (isShowTime)
-                    objTime.SetActive(true);
-                else
-                    objTime.SetActive(false);
-                tvTime.text = foodData.cook_time + GameCommonInfo.GetUITextById(38);
-            }
-             
+            if (isShowTime)
+                AddItemForMakeTime(foodData.cook_time);
             //油烟类
-            SetItemForIng(IngredientsEnum.Oilsalt, foodData.ing_oilsalt);
+            AddItemForIng(IngredientsEnum.Oilsalt, foodData.ing_oilsalt);
             //肉类
-            SetItemForIng(IngredientsEnum.Meat, foodData.ing_meat);
+            AddItemForIng(IngredientsEnum.Meat, foodData.ing_meat);
             //河鲜
-            SetItemForIng(IngredientsEnum.Riverfresh, foodData.ing_riverfresh);
+            AddItemForIng(IngredientsEnum.Riverfresh, foodData.ing_riverfresh);
             //海鲜
-            SetItemForIng(IngredientsEnum.Seafood, foodData.ing_seafood);
+            AddItemForIng(IngredientsEnum.Seafood, foodData.ing_seafood);
             //蔬菜
-            SetItemForIng(IngredientsEnum.Vegetablest, foodData.ing_vegetables);
+            AddItemForIng(IngredientsEnum.Vegetables, foodData.ing_vegetables);
             //瓜果
-            SetItemForIng(IngredientsEnum.Melonfruit, foodData.ing_melonfruit);
+            AddItemForIng(IngredientsEnum.Melonfruit, foodData.ing_melonfruit);
             //酒水
-            SetItemForIng(IngredientsEnum.Waterwine, foodData.ing_waterwine);
+            AddItemForIng(IngredientsEnum.Waterwine, foodData.ing_waterwine);
             //面粉
-            SetItemForIng(IngredientsEnum.Flour, foodData.ing_flour);
+            AddItemForIng(IngredientsEnum.Flour, foodData.ing_flour);
+
+            AddItemForSellNumber(ownData.sellNumber);
+            AddItemForSellMoney(MoneyEnum.L, ownData.sellMoneyL);
+            AddItemForSellMoney(MoneyEnum.M, ownData.sellMoneyM);
+            AddItemForSellMoney(MoneyEnum.S, ownData.sellMoneyS);
         }
+    }
+
+    /// <summary>
+    /// 创建制作事件Item
+    /// </summary>
+    /// <param name="makeTime"></param>
+    public void AddItemForMakeTime(int makeTime)
+    {
+        Sprite spIcon = iconDataManager.GetIconSpriteByName("hourglass_1");
+        CreateItem(objItemBaseContainer, spIcon, GameCommonInfo.GetUITextById(40), makeTime + GameCommonInfo.GetUITextById(38));
     }
 
     /// <summary>
@@ -114,54 +75,106 @@ public class InfoFoodPopupShow : PopupShowView
     /// </summary>
     /// <param name="ingredient"></param>
     /// <param name="number"></param>
-    public void SetItemForIng(IngredientsEnum ingredient, int number)
+    public void AddItemForIng(IngredientsEnum ingredient, int number)
     {
+        if (number == 0)
+            return;
         string ingNameStr = "???";
-        GameObject objItem = null;
+        string iconKey = "";
         switch (ingredient)
         {
             case IngredientsEnum.Oilsalt://油盐
-                objItem = objOilsalt;
                 ingNameStr = GameCommonInfo.GetUITextById(21);
+                iconKey = "ui_ing_oilsalt";
                 break;
             case IngredientsEnum.Meat://鲜肉
-                objItem = objMeat;
                 ingNameStr = GameCommonInfo.GetUITextById(22);
+                iconKey = "ui_ing_meat";
                 break;
             case IngredientsEnum.Riverfresh://河鲜
-                objItem = objRiverfresh;
                 ingNameStr = GameCommonInfo.GetUITextById(23);
+                iconKey = "ui_ing_riverfresh";
                 break;
             case IngredientsEnum.Seafood://海鲜
-                objItem = objSeafood;
                 ingNameStr = GameCommonInfo.GetUITextById(24);
+                iconKey = "ui_ing_seafood";
                 break;
-            case IngredientsEnum.Vegetablest://蔬菜
-                objItem = objVegetables;
+            case IngredientsEnum.Vegetables://蔬菜
                 ingNameStr = GameCommonInfo.GetUITextById(25);
+                iconKey = "ui_ing_vegetables";
                 break;
             case IngredientsEnum.Melonfruit://瓜果
-                objItem = objMelonfruit;
                 ingNameStr = GameCommonInfo.GetUITextById(26);
+                iconKey = "ui_ing_melonfruit";
                 break;
             case IngredientsEnum.Waterwine://酒水
-                objItem = objWaterwine;
                 ingNameStr = GameCommonInfo.GetUITextById(27);
+                iconKey = "ui_ing_waterwine";
                 break;
             case IngredientsEnum.Flour://面粉
-                objItem = objFlour;
                 ingNameStr = GameCommonInfo.GetUITextById(28);
+                iconKey = "ui_ing_flour";
                 break;
         }
+        Sprite spIcon = iconDataManager.GetIconSpriteByName(iconKey);
+        CreateItem(objItemBaseContainer, spIcon, ingNameStr, number + "");
+    }
 
-        if (number == 0)
-            objItem.SetActive(false);
-        else
-            objItem.SetActive(true);
+    /// <summary>
+    /// 增加销售数量
+    /// </summary>
+    /// <param name="number"></param>
+    public void AddItemForSellNumber(long number)
+    {
+        Sprite spIcon = iconDataManager.GetIconSpriteByName("ui_features_menu");
+        CreateItem(objItemStatisticsContainer, spIcon, Color.red, GameCommonInfo.GetUITextById(332), number + "");
+    }
 
-        Text tvName = CptUtil.GetCptInChildrenByName<Text>(objItem, "Name");
-        tvName.text = ingNameStr;
-        Text tvNumber = CptUtil.GetCptInChildrenByName<Text>(objItem, "Number");
-        tvNumber.text = "" + number;
+    /// <summary>
+    /// 增加销售金额
+    /// </summary>
+    /// <param name="moneyType"></param>
+    /// <param name="money"></param>
+    public void AddItemForSellMoney(MoneyEnum moneyType, long money)
+    {
+        if (money == 0)
+            return;
+        string iconKey = "";
+        string contentStr = "";
+        switch (moneyType)
+        {
+            case MoneyEnum.L:
+                iconKey = "money_3";
+                contentStr = GameCommonInfo.GetUITextById(333);
+                break;
+            case MoneyEnum.M:
+                iconKey = "money_2";
+                contentStr = GameCommonInfo.GetUITextById(334);
+                break;
+            case MoneyEnum.S:
+                iconKey = "money_1";
+                contentStr = GameCommonInfo.GetUITextById(335);
+                break;
+        }
+        Sprite spIcon = iconDataManager.GetIconSpriteByName(iconKey);
+        CreateItem(objItemStatisticsContainer, spIcon, contentStr, money + "");
+    }
+
+    /// <summary>
+    /// 创建Item
+    /// </summary>
+    /// <param name="spIcon"></param>
+    /// <param name="name"></param>
+    /// <param name="content"></param>
+    protected void CreateItem(GameObject objContainer, Sprite spIcon, Color colorIcon, string name, string content)
+    {
+        GameObject objItem = Instantiate(objContainer, objItemTextModel);
+        ItemPopupFoodTextCpt itemCpt = objItem.GetComponent<ItemPopupFoodTextCpt>();
+        itemCpt.SetData(spIcon, colorIcon, name, content);
+    }
+
+    protected void CreateItem(GameObject objContainer, Sprite spIcon, string name, string content)
+    {
+        CreateItem(objContainer, spIcon, Color.white, name, content);
     }
 }

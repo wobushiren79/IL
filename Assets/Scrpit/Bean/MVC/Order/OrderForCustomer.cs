@@ -21,6 +21,8 @@ public class OrderForCustomer
     public NpcAIWorkerCpt waiterForSend;
     //做出的食物等级 -1 0 1 2
     public int foodLevel;
+    //评价数据
+    public InnEvaluationBean innEvaluation = new InnEvaluationBean();
 
     public OrderForCustomer(NpcAICustomerCpt customer)
     {

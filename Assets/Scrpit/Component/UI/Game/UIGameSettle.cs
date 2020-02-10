@@ -24,7 +24,7 @@ public class UIGameSettle : BaseUIComponent
     public Sprite spIconMeat;
     public Sprite spIconRiverfresh;
     public Sprite spIconSeafood;
-    public Sprite spIconVegetablest;
+    public Sprite spIconVegetables;
     public Sprite spIconMelonfruit;
     public Sprite spIconWaterwine;
     public Sprite spIconFlour;
@@ -67,8 +67,8 @@ public class UIGameSettle : BaseUIComponent
             CreateIngItem(innHandler.GetInnRecord().consumeIngRiverfresh, spIconRiverfresh, consumeIngStr + " " + GameCommonInfo.GetUITextById(23));
         if (innHandler.GetInnRecord().consumeIngSeafood > 0)
             CreateIngItem(innHandler.GetInnRecord().consumeIngSeafood, spIconSeafood, consumeIngStr + " " + GameCommonInfo.GetUITextById(24));
-        if (innHandler.GetInnRecord().consumeIngVegetablest > 0)
-            CreateIngItem(innHandler.GetInnRecord().consumeIngVegetablest, spIconVegetablest, consumeIngStr + " " + GameCommonInfo.GetUITextById(25));
+        if (innHandler.GetInnRecord().consumeIngVegetables > 0)
+            CreateIngItem(innHandler.GetInnRecord().consumeIngVegetables, spIconVegetables, consumeIngStr + " " + GameCommonInfo.GetUITextById(25));
         if (innHandler.GetInnRecord().consumeIngMelonfruit > 0)
             CreateIngItem(innHandler.GetInnRecord().consumeIngMelonfruit, spIconMelonfruit, consumeIngStr + " " + GameCommonInfo.GetUITextById(26));
         if (innHandler.GetInnRecord().consumeIngWaterwine > 0)

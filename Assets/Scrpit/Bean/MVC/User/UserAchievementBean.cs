@@ -4,7 +4,7 @@ using System;
 using System.Collections.Generic;
 
 [Serializable]
-public class UserAchievementBean 
+public class UserAchievementBean
 {
     public List<long> listAchievement = new List<long>();//解锁成就列表
 
@@ -26,9 +26,20 @@ public class UserAchievementBean
     public long ownIngWaterwine;//酒水
     public long ownIngFlour;//面粉
 
-    public long ownGuildCoin;//公会硬币
+    //公会硬币
+    public long ownGuildCoin;
 
-    public long numberForCustomer;//顾客数量
+    //顾客数量
+    public long numberForCustomer;
+
+    //评价
+    public long praiseForExcited;
+    public long praiseForHappy;
+    public long praiseForOkay;
+    public long praiseForOrdinary;
+    public long praiseForDisappointed;
+    public long praiseForAnger;
+
     /// <summary>
     /// 是否包含该成就
     /// </summary>
@@ -36,7 +47,7 @@ public class UserAchievementBean
     /// <returns></returns>
     public bool CheckHasAchievement(long achId)
     {
-       return listAchievement.Contains(achId);
+        return listAchievement.Contains(achId);
     }
 
     /// <summary>
@@ -46,6 +57,36 @@ public class UserAchievementBean
     public void AddAchievement(long achId)
     {
         listAchievement.Add(achId);
+    }
+
+    /// <summary>
+    /// 增加好评
+    /// </summary>
+    /// <param name="praiseType"></param>
+    /// <param name="number"></param>
+    public void AddPraise(PraiseTypeEnum praiseType,int number)
+    {
+        switch (praiseType)
+        {
+            case PraiseTypeEnum.Excited:
+                praiseForExcited += number;
+                break;
+            case PraiseTypeEnum.Happy:
+                praiseForHappy += number;
+                break;
+            case PraiseTypeEnum.Okay:
+                praiseForOkay += number;
+                break;
+            case PraiseTypeEnum.Ordinary:
+                praiseForOrdinary += number;
+                break;
+            case PraiseTypeEnum.Disappointed:
+                praiseForDisappointed += number;
+                break;
+            case PraiseTypeEnum.Anger:
+                praiseForAnger += number;
+                break;
+        }
     }
 
 

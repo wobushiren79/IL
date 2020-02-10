@@ -39,8 +39,7 @@ public class NpcAICustomerCpt : BaseNpcAI
 
     //等待座位的时间
     public float timeWaitSeat = 20;
-    //评价数据
-    public InnEvaluationBean innEvaluation = new InnEvaluationBean();
+
 
     public override void Awake()
     {
@@ -225,7 +224,7 @@ public class NpcAICustomerCpt : BaseNpcAI
         if (CheckUtil.CheckPath(transform.position, orderForCustomer.table.GetSeatPosition()))
         {
             //开启满意度
-            characterMoodCpt.SetMood(innEvaluation.GetPraise());
+            characterMoodCpt.SetMood(orderForCustomer.innEvaluation.GetPraise());
             //前往桌子
             movePosition = orderForCustomer.table.GetSeatPosition();
             characterMoveCpt.SetDestination(movePosition);
@@ -303,14 +302,10 @@ public class NpcAICustomerCpt : BaseNpcAI
     /// </summary>
     public virtual void IntentForLeave()
     {
-        //如果在订单列表 则移除订单列表
-        if (innHandler.orderList.Contains(orderForCustomer))
-        {
-            //根据心情评价客栈 前提订单里有他
-            innHandler.InnPraise(innEvaluation.GetPraise());
-            //移除订单列表
-            innHandler.orderList.Remove(orderForCustomer);
-        }
+        //如果有订单。强制结束订单
+        if (orderForCustomer != null)
+            innHandler.EndOrderForForce(orderForCustomer);
+
         //随机获取一个退出点
         movePosition = sceneInnManager.GetRandomSceneExportPosition();
         characterMoveCpt.SetDestination(movePosition);
@@ -331,7 +326,7 @@ public class NpcAICustomerCpt : BaseNpcAI
     public void SendForCanNotCook()
     {
         StopAllCoroutines();
-        ChangeMood(-100);
+        ChangeMood(-99999);
     }
 
     /// <summary>
@@ -340,11 +335,10 @@ public class NpcAICustomerCpt : BaseNpcAI
     /// <param name="mood"></param>
     public virtual void ChangeMood(float mood)
     {
-        innEvaluation.mood += mood;
-        characterMoodCpt.SetMood(innEvaluation.GetPraise());
-        if (innEvaluation.mood <= 0)
+        orderForCustomer.innEvaluation.mood += mood;
+        characterMoodCpt.SetMood(orderForCustomer.innEvaluation.GetPraise());
+        if (orderForCustomer.innEvaluation.mood <= 0)
         {
-            innHandler.EndOrderForForce(orderForCustomer);
             SetIntent(CustomerIntentEnum.Leave);
         }
     }

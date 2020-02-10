@@ -135,7 +135,7 @@ public class ItemTownGoodsMarketCpt : ItemGameBaseCpt,DialogView.IDialogCallBack
             case IngredientsEnum.Seafood:
                 ownNumber = gameDataManager.gameData.ingSeafood;
                 break;
-            case IngredientsEnum.Vegetablest:
+            case IngredientsEnum.Vegetables:
                 ownNumber = gameDataManager.gameData.ingVegetables;
                 break;
             case IngredientsEnum.Melonfruit:

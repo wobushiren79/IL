@@ -29,7 +29,7 @@ public class InfoRecordPopupShow : PopupShowView
     public Text tvConsumeIngMeat;
     public Text tvConsumeIngRiverfresh;
     public Text tvConsumeIngSeafood;
-    public Text tvConsumeIngVegetablest;
+    public Text tvConsumeIngVegetables;
     public Text tvConsumeIngMelonfruit;
     public Text tvConsumeIngWaterwine;
     public Text tvConsumeIngFlour;
@@ -66,7 +66,7 @@ public class InfoRecordPopupShow : PopupShowView
             innRecordData.consumeIngMeat,
             innRecordData.consumeIngRiverfresh,
             innRecordData.consumeIngSeafood,
-            innRecordData.consumeIngVegetablest,
+            innRecordData.consumeIngVegetables,
             innRecordData.consumeIngMelonfruit,
             innRecordData.consumeIngWaterwine,
             innRecordData.consumeIngFlour);
@@ -210,7 +210,7 @@ public class InfoRecordPopupShow : PopupShowView
     /// <param name="consumeIngMeat"></param>
     /// <param name="consumeIngRiverfresh"></param>
     /// <param name="consumeIngSeafood"></param>
-    /// <param name="consumeIngVegetablest"></param>
+    /// <param name="consumeIngVegetables"></param>
     /// <param name="consumeIngMelonfruit"></param>
     /// <param name="consumeIngWaterwine"></param>
     /// <param name="consumeIngFlour"></param>
@@ -219,7 +219,7 @@ public class InfoRecordPopupShow : PopupShowView
         int consumeIngMeat,
         int consumeIngRiverfresh,
         int consumeIngSeafood,
-        int consumeIngVegetablest,
+        int consumeIngVegetables,
         int consumeIngMelonfruit,
         int consumeIngWaterwine,
         int consumeIngFlour)
@@ -240,9 +240,9 @@ public class InfoRecordPopupShow : PopupShowView
         {
             tvConsumeIngSeafood.text = consumeIngSeafood + "";
         }
-        if (tvConsumeIngVegetablest)
+        if (tvConsumeIngVegetables)
         {
-            tvConsumeIngVegetablest.text = consumeIngVegetablest + "";
+            tvConsumeIngVegetables.text = consumeIngVegetables + "";
         }
         if (tvConsumeIngMelonfruit)
         {

@@ -30,6 +30,14 @@ public class UIGameStatisticsForInn : UIGameStatisticsDetailsBase<UIGameStatisti
             userAchievement.ownTrophyAdvanced, 
             userAchievement.ownTrophyLegendary
             );
+
+        //评价
+        AddItemForPraiseNumber(PraiseTypeEnum.Excited, userAchievement.praiseForExcited);
+        AddItemForPraiseNumber(PraiseTypeEnum.Happy, userAchievement.praiseForHappy);
+        AddItemForPraiseNumber(PraiseTypeEnum.Okay, userAchievement.praiseForOkay);
+        AddItemForPraiseNumber(PraiseTypeEnum.Ordinary, userAchievement.praiseForOrdinary);
+        AddItemForPraiseNumber(PraiseTypeEnum.Disappointed, userAchievement.praiseForDisappointed);
+        AddItemForPraiseNumber(PraiseTypeEnum.Anger, userAchievement.praiseForAnger);
     }
 
     /// <summary>
@@ -69,6 +77,13 @@ public class UIGameStatisticsForInn : UIGameStatisticsDetailsBase<UIGameStatisti
         CreateTextItem(spIconL, GameCommonInfo.GetUITextById(306), number + "");
     }
 
+    /// <summary>
+    /// 拥有京北
+    /// </summary>
+    /// <param name="ownTrophyElementary"></param>
+    /// <param name="ownTrophyIntermediate"></param>
+    /// <param name="ownTrophyAdvanced"></param>
+    /// <param name="ownTrophyLegendary"></param>
     public void AddItemForOwnTrophy(
         long ownTrophyElementary, //竞技场初级奖杯
         long ownTrophyIntermediate,//竞技场中级奖杯
@@ -83,6 +98,39 @@ public class UIGameStatisticsForInn : UIGameStatisticsDetailsBase<UIGameStatisti
         CreateTextItem(spIcon3, GameCommonInfo.GetUITextById(309), ownTrophyAdvanced + "");
         Sprite spIcon4 = iconDataManager.GetIconSpriteByName("trophy_1_3");
         CreateTextItem(spIcon4, GameCommonInfo.GetUITextById(310), ownTrophyLegendary + "");
+    }
+
+    /// <summary>
+    /// 好评数量
+    /// </summary>
+    /// <param name="praiseType"></param>
+    /// <param name="number"></param>
+    public void AddItemForPraiseNumber(PraiseTypeEnum praiseType,long number)
+    {
+        string iconKey = "";
+        switch (praiseType)
+        {
+            case PraiseTypeEnum.Excited:
+                iconKey = "customer_mood_0";
+                break;
+            case PraiseTypeEnum.Happy:
+                iconKey = "customer_mood_1";
+                break;
+            case PraiseTypeEnum.Okay:
+                iconKey = "customer_mood_2";
+                break;
+            case PraiseTypeEnum.Ordinary:
+                iconKey = "customer_mood_3";
+                break;
+            case PraiseTypeEnum.Disappointed:
+                iconKey = "customer_mood_4";
+                break;
+            case PraiseTypeEnum.Anger:
+                iconKey = "customer_mood_5";
+                break;
+        }
+        Sprite spIcon = iconDataManager.GetIconSpriteByName(iconKey);
+        CreateTextItem(spIcon, GameCommonInfo.GetUITextById(336), number + "");
     }
 
 }

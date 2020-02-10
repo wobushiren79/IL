@@ -50,7 +50,7 @@ public class InnHandler : BaseMonoBehaviour, IBaseObserver
     public List<OrderForCustomer> clearQueue = new List<OrderForCustomer>();
 
     //订单列表
-    public List<OrderForCustomer> orderList = new List<OrderForCustomer>();
+    public List<OrderForCustomer> listOrder = new List<OrderForCustomer>();
     //当天记录流水
     protected InnRecordBean innRecord = new InnRecordBean();
 
@@ -128,9 +128,9 @@ public class InnHandler : BaseMonoBehaviour, IBaseObserver
     {
         innStatus = InnStatusEnum.Close;
         //驱除所有顾客
-        for (int i = 0; i < orderList.Count; i++)
+        for (int i = 0; i < listOrder.Count; i++)
         {
-            OrderForCustomer orderCusomer = orderList[i];
+            OrderForCustomer orderCusomer = listOrder[i];
             if (orderCusomer.customer != null && orderCusomer.customer.gameObject != null)
                 Destroy(orderCusomer.customer.gameObject);
             if (orderCusomer.foodCpt != null && orderCusomer.foodCpt.gameObject != null)
@@ -173,7 +173,7 @@ public class InnHandler : BaseMonoBehaviour, IBaseObserver
         foodQueue.Clear();
         sendQueue.Clear();
         clearQueue.Clear();
-        orderList.Clear();
+        listOrder.Clear();
         workerBuilder.ClearAllWork();
     }
 
@@ -242,7 +242,7 @@ public class InnHandler : BaseMonoBehaviour, IBaseObserver
     {
         OrderForCustomer order = new OrderForCustomer(npc);
         npc.orderForCustomer = order;
-        orderList.Add(order);
+        listOrder.Add(order);
         return order;
     }
 
@@ -258,6 +258,8 @@ public class InnHandler : BaseMonoBehaviour, IBaseObserver
             //支付一半的钱
             //PayMoney(orderForCustomer, 0.5f);
         }
+        //根据心情评价客栈 前提订单里有他
+        InnPraise(orderForCustomer.innEvaluation.GetPraise());
         //如果桌子还属于这个顾客
         switch (orderForCustomer.customer.customerIntent)
         {
@@ -272,6 +274,11 @@ public class InnHandler : BaseMonoBehaviour, IBaseObserver
                 if (orderForCustomer.foodCpt != null)
                     Destroy(orderForCustomer.foodCpt.gameObject);
                 break;
+        }
+        //蟾蜍这个单子
+        if (listOrder.Contains(orderForCustomer))
+        {
+            listOrder.Remove(orderForCustomer);
         }
     }
 
@@ -324,9 +331,10 @@ public class InnHandler : BaseMonoBehaviour, IBaseObserver
         //账本记录
         innRecord.AddSellNumber(order.foodData.id, 1, getMoneyL, getMoneyM, getMoneyS);
         innRecord.AddIncome(getMoneyL, getMoneyM, getMoneyS);
-
+        //根据心情评价客栈 前提订单里有他
+        InnPraise(order.innEvaluation.GetPraise());
         //记录+1
-        gameDataManager.gameData.ChangeMenuSellNumber(1, order.foodData.id);
+        gameDataManager.gameData.AddMenuSellNumber(1, order.foodData.id, getMoneyL, getMoneyM, getMoneyS);
         //金钱增加
         gameDataManager.gameData.AddMoney(getMoneyL, getMoneyM, getMoneyS);
         //播放音效
@@ -344,7 +352,7 @@ public class InnHandler : BaseMonoBehaviour, IBaseObserver
         innRecord.consumeIngMeat += foodData.ing_meat;
         innRecord.consumeIngRiverfresh += foodData.ing_riverfresh;
         innRecord.consumeIngSeafood += foodData.ing_seafood;
-        innRecord.consumeIngVegetablest += foodData.ing_vegetables;
+        innRecord.consumeIngVegetables += foodData.ing_vegetables;
         innRecord.consumeIngMelonfruit += foodData.ing_melonfruit;
         innRecord.consumeIngWaterwine += foodData.ing_waterwine;
         innRecord.consumeIngFlour += foodData.ing_flour;
@@ -456,6 +464,8 @@ public class InnHandler : BaseMonoBehaviour, IBaseObserver
     {
         //记录好评数量
         innRecord.AddPraise(praiseType, 1);
+        //总记录
+        gameDataManager.gameData.GetAchievementData().AddPraise(praiseType, 1);
         //增加评价
         gameDataManager.gameData.GetInnAttributesData().AddPraise((int)praiseType);
     }

@@ -91,7 +91,7 @@ public class MiniGameCookingStoveCpt : BaseMonoBehaviour
         if (menuInfo.ing_seafood != 0)
             listIng.Add(IngredientsEnum.Seafood);
         if (menuInfo.ing_vegetables != 0)
-            listIng.Add(IngredientsEnum.Vegetablest);
+            listIng.Add(IngredientsEnum.Vegetables);
         if (menuInfo.ing_melonfruit != 0)
             listIng.Add(IngredientsEnum.Melonfruit);
         if (menuInfo.ing_waterwine != 0)
@@ -114,7 +114,7 @@ public class MiniGameCookingStoveCpt : BaseMonoBehaviour
             case IngredientsEnum.Seafood:
                 iconKey += "seafood_1";
                 break;
-            case IngredientsEnum.Vegetablest:
+            case IngredientsEnum.Vegetables:
                 iconKey += "vegetables_1";
                 break;
             case IngredientsEnum.Melonfruit:

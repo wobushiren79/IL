@@ -2,14 +2,8 @@
 using UnityEditor;
 using System;
 using UnityEngine.UI;
-public class UIGameWorkerDetailsAccostInfo : BaseMonoBehaviour
+public class UIGameWorkerDetailsAccostInfo : UIGameStatisticsDetailsBase<UIGameWorkerDetails>
 {
-    public Text tvAccostTotalNumber;
-    public Text tvAccostSuccessNumber;
-    public Text tvAccostFailNumber;
-
-    public Text tvAccostTime;
-
     [Header("数据")]
     public CharacterWorkerForAccostBean accostInfo;
 
@@ -20,49 +14,50 @@ public class UIGameWorkerDetailsAccostInfo : BaseMonoBehaviour
     public void SetData(CharacterWorkerForAccostBean accostInfo)
     {
         this.accostInfo = accostInfo;
-        SetAccostTotalNumber(accostInfo.accostTotalNumber);
-        SetAccostSuccessNumber(accostInfo.accostSuccessNumber);
-        SetAccostFailNumber(accostInfo.accostFailNumber);
-        SetAccostTime(accostInfo.accostTotalTime);
+        AddAccostTotalNumber(accostInfo.accostTotalNumber);
+        AddAccostSuccessNumber(accostInfo.accostSuccessNumber);
+        AddAccostFailNumber(accostInfo.accostFailNumber);
+        AddAccostTime(accostInfo.accostTotalTime);
     }
 
     /// <summary>
     /// 设置成功招揽次数
     /// </summary>
     /// <param name="number"></param>
-    public void SetAccostSuccessNumber(long number)
+    public void AddAccostSuccessNumber(long number)
     {
-        if (tvAccostSuccessNumber != null)
-            tvAccostSuccessNumber.text = number + "";
+        Sprite spIcon = GetSpriteByName("worker_accounting_pro_0");
+        CreateTextItem(spIcon, GameCommonInfo.GetUITextById(323), number + "");
     }
 
     /// <summary>
     /// 设置失败招揽次数
     /// </summary>
     /// <param name="number"></param>
-    public void SetAccostFailNumber(long number)
+    public void AddAccostFailNumber(long number)
     {
-        if (tvAccostFailNumber != null)
-            tvAccostFailNumber.text = number + "";
+        Sprite spIcon = GetSpriteByName("worker_accounting_pro_0");
+        CreateTextItem(spIcon, GameCommonInfo.GetUITextById(324), number + "");
     }
 
     /// <summary>
     /// 设置总共数量 
     /// </summary>
     /// <param name="nunber"></param>
-    public void SetAccostTotalNumber(long nunber)
+    public void AddAccostTotalNumber(long number)
     {
-        if (tvAccostTotalNumber != null)
-            tvAccostTotalNumber.text = nunber + "";
+        Sprite spIcon = GetSpriteByName("worker_accounting_pro_0");
+        CreateTextItem(spIcon, GameCommonInfo.GetUITextById(325), number + "");
     }
 
     /// <summary>
     /// 设置总共数量 
     /// </summary>
     /// <param name="nunber"></param>
-    public void SetAccostTime(float time)
+    public void AddAccostTime(float time)
     {
-        if (tvAccostTime != null)
-            tvAccostTime.text = time + GameCommonInfo.GetUITextById(38);
+        Sprite spIcon = GetSpriteByName("hourglass_1");
+        CreateTextItem(spIcon, GameCommonInfo.GetUITextById(326), time + GameCommonInfo.GetUITextById(38));
+
     }
 }

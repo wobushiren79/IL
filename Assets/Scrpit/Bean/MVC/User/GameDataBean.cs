@@ -99,7 +99,7 @@ public class GameDataBean
                 ingSeafood += number;
                 userAchievement.ownIngSeafood += number;
                 break;
-            case IngredientsEnum.Vegetablest:
+            case IngredientsEnum.Vegetables:
                 ingVegetables += number;
                 userAchievement.ownIngVegetables += number;
                 break;
@@ -238,6 +238,27 @@ public class GameDataBean
         if (!hasData && number > 0)
         {
             list.Add(new ItemBean(buildId, number));
+        }
+    }
+
+    /// <summary>
+    /// 修改食物销售数量
+    /// </summary>
+    /// <param name="number"></param>
+    /// <param name="menuId"></param>
+    public void AddMenuSellNumber(long number, long menuId, long priceL, long priceM, long priceS)
+    {
+        for (int i = 0; i < listMenu.Count; i++)
+        {
+            MenuOwnBean itemData = listMenu[i];
+            if (itemData.menuId == menuId)
+            {
+                itemData.sellNumber += number;
+                itemData.sellMoneyL += priceL;
+                itemData.sellMoneyM += priceM;
+                itemData.sellMoneyS += priceS;
+                return;
+            }
         }
     }
 
@@ -476,7 +497,7 @@ public class GameDataBean
     /// <param name="loveMenus"></param>
     /// <param name="ownLoveMenus"></param>
     /// <returns></returns>
-    public bool CheckHasLoveMenus(List<long> loveMenus,out List<MenuOwnBean> ownLoveMenus)
+    public bool CheckHasLoveMenus(List<long> loveMenus, out List<MenuOwnBean> ownLoveMenus)
     {
         bool hasLove = false;
         ownLoveMenus = new List<MenuOwnBean>();
@@ -489,24 +510,6 @@ public class GameDataBean
             }
         }
         return hasLove;
-    }
-
-    /// <summary>
-    /// 修改食物销售数量
-    /// </summary>
-    /// <param name="number"></param>
-    /// <param name="menuId"></param>
-    public void ChangeMenuSellNumber(long number, long menuId)
-    {
-        for (int i = 0; i < listMenu.Count; i++)
-        {
-            MenuOwnBean itemData = listMenu[i];
-            if (itemData.menuId == menuId)
-            {
-                itemData.sellNumber += number;
-                return;
-            }
-        }
     }
 
     /// <summary>
@@ -650,8 +653,8 @@ public class GameDataBean
     /// <returns></returns>
     public bool RemoveWorker(CharacterBean characterData)
     {
-        if (listWorkerCharacter != null&& characterData!=null)
-           return listWorkerCharacter.Remove(characterData);
+        if (listWorkerCharacter != null && characterData != null)
+            return listWorkerCharacter.Remove(characterData);
         return false;
     }
 }

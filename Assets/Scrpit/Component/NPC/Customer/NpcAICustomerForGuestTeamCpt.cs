@@ -164,14 +164,8 @@ public class NpcAICustomerForGuestTeamCpt : NpcAICustomerCpt
             }
             return;
         }
-        //如果在订单列表 则移除订单列表
-        if (innHandler.orderList.Contains(orderForCustomer))
-        {
-            //根据心情评价客栈 前提订单里有他
-            innHandler.InnPraise(innEvaluation.GetPraise());
-            //移除订单列表
-            innHandler.orderList.Remove(orderForCustomer);
-        }
+        //如果有订单则强制结束订单
+        innHandler.EndOrderForForce(orderForCustomer);
         //随机获取一个退出点
         togetherPosition = innHandler.GetRandomEntrancePosition();
         guestTeamIntent = CustomerIntentForGuestTeamEnum.GoToTeam;
@@ -189,7 +183,7 @@ public class NpcAICustomerForGuestTeamCpt : NpcAICustomerCpt
         List<NpcAICustomerForGuestTeamCpt> listTeamMember = npcEventBuilder.GetGuestTeamByTeamId(teamId);
         foreach (NpcAICustomerForGuestTeamCpt teamMember in listTeamMember)
         {
-            if (teamMember != this && teamMember.customerIntent!= CustomerIntentEnum.WaitAccost)
+            if (teamMember != this && teamMember.customerIntent != CustomerIntentEnum.WaitAccost)
             {
                 teamMember.SetIntent(CustomerIntentEnum.WaitAccost);
             }
@@ -205,15 +199,14 @@ public class NpcAICustomerForGuestTeamCpt : NpcAICustomerCpt
     {
         base.ChangeMood(mood);
         //通知其他团队成员
-        if (innEvaluation.mood <= 0 && isNotice)
+        if (orderForCustomer.innEvaluation.mood <= 0 && isNotice)
         {
             List<NpcAICustomerForGuestTeamCpt> listTeamMember = npcEventBuilder.GetGuestTeamByTeamId(teamId);
             foreach (NpcAICustomerForGuestTeamCpt teamMember in listTeamMember)
             {
                 if (teamMember != this)
                 {
-                    teamMember.ChangeMood(-100, false);
-                    teamMember.SetIntent(CustomerIntentEnum.Leave);
+                    teamMember.ChangeMood(-9999, false);
                 }
             }
         }

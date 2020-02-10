@@ -35,7 +35,7 @@ public class UIGameWorkerDetails : UIGameComponent, IRadioGroupCallBack
     public RadioGroupView rgWorkerTitle;
     public UIGameWorkerDetailsChefInfo workerChefInfo;
     public UIGameWorkerDetailsWaiterInfo workerWaiterInfo;
-    public UIGameWorkerDetailsAccountingInfo workerAccountingInfo;
+    public UIGameWorkerDetailsAccountantInfo workerAccountantInfo;
     public UIGameWorkerDetailsAccostInfo workerAccostInfo;
     public UIGameWorkerDetailsBeaterInfo workerBeaterInfo;
 
@@ -82,7 +82,7 @@ public class UIGameWorkerDetails : UIGameComponent, IRadioGroupCallBack
             return;
         workerChefInfo.gameObject.SetActive(false);
         workerWaiterInfo.gameObject.SetActive(false);
-        workerAccountingInfo.gameObject.SetActive(false);
+        workerAccountantInfo.gameObject.SetActive(false);
         workerAccostInfo.gameObject.SetActive(false);
         workerBeaterInfo.gameObject.SetActive(false);
         switch (workerType)
@@ -97,8 +97,8 @@ public class UIGameWorkerDetails : UIGameComponent, IRadioGroupCallBack
                 workerWaiterInfo.SetData(characterData.baseInfo.waiterInfo);
                 break;
             case WorkerEnum.Accountant:
-                workerAccountingInfo.gameObject.SetActive(true);
-                workerAccountingInfo.SetData(characterData.baseInfo.accountantInfo);
+                workerAccountantInfo.gameObject.SetActive(true);
+                workerAccountantInfo.SetData(characterData.baseInfo.accountantInfo);
                 break;
             case WorkerEnum.Accost:
                 workerAccostInfo.gameObject.SetActive(true);

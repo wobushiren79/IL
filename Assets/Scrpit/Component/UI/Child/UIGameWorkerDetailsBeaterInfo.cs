@@ -1,16 +1,8 @@
 ﻿using UnityEngine;
 using UnityEditor;
 using UnityEngine.UI;
-public class UIGameWorkerDetailsBeaterInfo : BaseMonoBehaviour
+public class UIGameWorkerDetailsBeaterInfo : UIGameStatisticsDetailsBase<UIGameWorkerDetails>
 {
-    public Text tvFightNumber;
-    public Text tvFightWinNumber;
-    public Text tvFightLoseNumber;
-
-    public Text tvFightTime;
-    public Text tvRestTime;
-
-
     [Header("数据")]
     public CharacterWorkerForBeaterBean beaterInfo;
 
@@ -21,66 +13,61 @@ public class UIGameWorkerDetailsBeaterInfo : BaseMonoBehaviour
     public void SetData(CharacterWorkerForBeaterBean beaterInfo)
     {
         this.beaterInfo = beaterInfo;
-        SetFightNumber(beaterInfo.fightTotalNumber);
-        SetFightWinNumber(beaterInfo.fightWinNumber);
-        SetFightLoseNumber(beaterInfo.fightLoseNumber);
-        SetFightTime(beaterInfo.fightTotalTime);
-        SetRestTime(beaterInfo.restTotalTime);
+        AddFightNumber(beaterInfo.fightTotalNumber);
+        AddFightTime(beaterInfo.fightTotalTime);
+        AddFightWinNumber(beaterInfo.fightWinNumber);
+        AddFightLoseNumber(beaterInfo.fightLoseNumber);
+        AddRestTime(beaterInfo.restTotalTime);
     }
 
     /// <summary>
     /// 设置打架次数
     /// </summary>
     /// <param name="number"></param>
-    public void SetFightNumber(long number)
+    public void AddFightNumber(long number)
     {
-        if (tvFightNumber != null)
-        {
-            tvFightNumber.text = number + "";
-        }
-    }
-
-    /// <summary>
-    /// 设置打架次数
-    /// </summary>
-    /// <param name="number"></param>
-    public void SetFightWinNumber(long number)
-    {
-        if (tvFightWinNumber != null)
-        {
-            tvFightWinNumber.text = number + "";
-        }
-    }
-
-    /// <summary>
-    /// 设置打架次数
-    /// </summary>
-    /// <param name="number"></param>
-    public void SetFightLoseNumber(long number)
-    {
-        if (tvFightLoseNumber != null)
-        {
-            tvFightLoseNumber.text = number + "";
-        }
+        Sprite spIcon = GetSpriteByName("worker_beater_pro_2");
+        CreateTextItem(spIcon,GameCommonInfo.GetUITextById(327), number+"");
     }
 
     /// <summary>
     /// 设置打架时间
     /// </summary>
     /// <param name="time"></param>
-    public void SetFightTime(float time)
+    public void AddFightTime(float time)
     {
-        if (tvFightTime != null)
-            tvFightTime.text = time + GameCommonInfo.GetUITextById(38);
+        Sprite spIcon = GetSpriteByName("hourglass_1");
+        CreateTextItem(spIcon, GameCommonInfo.GetUITextById(328), time + GameCommonInfo.GetUITextById(38));
     }
+
+    /// <summary>
+    /// 设置打架次数
+    /// </summary>
+    /// <param name="number"></param>
+    public void AddFightWinNumber(long number)
+    {
+        Sprite spIcon = GetSpriteByName("expression_love");
+        CreateTextItem(spIcon, GameCommonInfo.GetUITextById(329), number + "");
+    }
+
+    /// <summary>
+    /// 设置打架次数
+    /// </summary>
+    /// <param name="number"></param>
+    public void AddFightLoseNumber(long number)
+    {
+        Sprite spIcon = GetSpriteByName("expression_dead");
+        CreateTextItem(spIcon, GameCommonInfo.GetUITextById(330), number + "");
+    }
+
 
     /// <summary>
     /// 设置休息时间
     /// </summary>
     /// <param name="time"></param>
-    public void SetRestTime(float time)
+    public void AddRestTime(float time)
     {
-        if (tvRestTime != null)
-            tvRestTime.text = time + GameCommonInfo.GetUITextById(38);
+        Sprite spIcon = GetSpriteByName("hourglass_1");
+        CreateTextItem(spIcon, GameCommonInfo.GetUITextById(331), time + GameCommonInfo.GetUITextById(38));
     }
 }
