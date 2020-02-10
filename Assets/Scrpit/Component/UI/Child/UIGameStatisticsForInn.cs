@@ -22,15 +22,17 @@ public class UIGameStatisticsForInn : UIGameStatisticsDetailsBase<UIGameStatisti
     {
         CptUtil.RemoveChildsByActive(objItemContent);
         AddItemForCustomerNumber(userAchievement.numberForCustomer);
-        AddItemForOwnMoney(userAchievement.ownMoneyL, userAchievement.ownMoneyM, userAchievement.ownMoneyS);
+        //金钱
+        AddItemForOwnMoney(MoneyEnum.L, userAchievement.ownMoneyL);
+        AddItemForOwnMoney(MoneyEnum.M, userAchievement.ownMoneyM);
+        AddItemForOwnMoney(MoneyEnum.S, userAchievement.ownMoneyS);
+        //公会勋章
         AddItemForGuildCoin(userAchievement.ownGuildCoin);
-        AddItemForOwnTrophy(
-            userAchievement.ownTrophyElementary, 
-            userAchievement.ownTrophyIntermediate, 
-            userAchievement.ownTrophyAdvanced, 
-            userAchievement.ownTrophyLegendary
-            );
-
+        //奖杯
+        AddItemForOwnTrophy(TrophyTypeEnum.Elementary, userAchievement.ownTrophyElementary);
+        AddItemForOwnTrophy(TrophyTypeEnum.Intermediate, userAchievement.ownTrophyIntermediate);
+        AddItemForOwnTrophy(TrophyTypeEnum.Advanced, userAchievement.ownTrophyAdvanced);
+        AddItemForOwnTrophy(TrophyTypeEnum.Legendary, userAchievement.ownTrophyLegendary);
         //评价
         AddItemForPraiseNumber(PraiseTypeEnum.Excited, userAchievement.praiseForExcited);
         AddItemForPraiseNumber(PraiseTypeEnum.Happy, userAchievement.praiseForHappy);
@@ -56,14 +58,27 @@ public class UIGameStatisticsForInn : UIGameStatisticsDetailsBase<UIGameStatisti
     /// <param name="moneyL"></param>
     /// <param name="moneyM"></param>
     /// <param name="moneyS"></param>
-    public void AddItemForOwnMoney(long moneyL, long moneyM, long moneyS)
+    public void AddItemForOwnMoney(MoneyEnum moneyType,  long money)
     {
-        Sprite spIconS = iconDataManager.GetIconSpriteByName("money_1");
-        CreateTextItem(spIconS, GameCommonInfo.GetUITextById(303), moneyS + "");
-        Sprite spIconM = iconDataManager.GetIconSpriteByName("money_2");
-        CreateTextItem(spIconM, GameCommonInfo.GetUITextById(304), moneyM + "");
-        Sprite spIconL = iconDataManager.GetIconSpriteByName("money_3");
-        CreateTextItem(spIconL, GameCommonInfo.GetUITextById(305), moneyL + "");
+        string iconKey = "";
+        string contentStr = "";
+        switch(moneyType)
+        {
+            case MoneyEnum.L:
+                iconKey = "money_3";
+                contentStr = GameCommonInfo.GetUITextById(303);
+                break;
+            case MoneyEnum.M:
+                iconKey = "money_2";
+                contentStr = GameCommonInfo.GetUITextById(304);
+                break;
+            case MoneyEnum.S:
+                iconKey = "money_1";
+                contentStr = GameCommonInfo.GetUITextById(305);
+                break;
+        }
+        Sprite spIcon = iconDataManager.GetIconSpriteByName(iconKey);
+        CreateTextItem(spIcon, contentStr, money + "");
         //CreateMoneyItem(spIconL, GameCommonInfo.GetUITextById(305), moneyL, moneyM, moneyS);
     }
 
@@ -73,31 +88,40 @@ public class UIGameStatisticsForInn : UIGameStatisticsDetailsBase<UIGameStatisti
     /// <param name="number"></param>
     public void AddItemForGuildCoin(long number)
     {
-        Sprite spIconL = iconDataManager.GetIconSpriteByName("guild_coin_2");
-        CreateTextItem(spIconL, GameCommonInfo.GetUITextById(306), number + "");
+        Sprite spIcon = iconDataManager.GetIconSpriteByName("guild_coin_2");
+        CreateTextItem(spIcon, GameCommonInfo.GetUITextById(306), number + "");
     }
 
     /// <summary>
-    /// 拥有京北
+    /// 拥有奖杯
     /// </summary>
-    /// <param name="ownTrophyElementary"></param>
-    /// <param name="ownTrophyIntermediate"></param>
-    /// <param name="ownTrophyAdvanced"></param>
-    /// <param name="ownTrophyLegendary"></param>
-    public void AddItemForOwnTrophy(
-        long ownTrophyElementary, //竞技场初级奖杯
-        long ownTrophyIntermediate,//竞技场中级奖杯
-        long ownTrophyAdvanced,//竞技场高级奖杯
-        long ownTrophyLegendary)//竞技场传说奖杯)
+    /// <param name="trophyType"></param>
+    /// <param name="number"></param>
+    public void AddItemForOwnTrophy(TrophyTypeEnum trophyType,long number)
     {
-        Sprite spIcon1 = iconDataManager.GetIconSpriteByName("trophy_1_0");
-        CreateTextItem(spIcon1, GameCommonInfo.GetUITextById(307), ownTrophyElementary + "");
-        Sprite spIcon2 = iconDataManager.GetIconSpriteByName("trophy_1_1");
-        CreateTextItem(spIcon2, GameCommonInfo.GetUITextById(308), ownTrophyIntermediate + "");
-        Sprite spIcon3 = iconDataManager.GetIconSpriteByName("trophy_1_2");
-        CreateTextItem(spIcon3, GameCommonInfo.GetUITextById(309), ownTrophyAdvanced + "");
-        Sprite spIcon4 = iconDataManager.GetIconSpriteByName("trophy_1_3");
-        CreateTextItem(spIcon4, GameCommonInfo.GetUITextById(310), ownTrophyLegendary + "");
+        string iconKey = "";
+        string contentStr = "";
+        switch (trophyType)
+        {
+            case TrophyTypeEnum.Elementary:
+                iconKey = "trophy_1_0";
+                contentStr = GameCommonInfo.GetUITextById(307);
+                break;
+            case TrophyTypeEnum.Intermediate:
+                iconKey = "trophy_1_1";
+                contentStr = GameCommonInfo.GetUITextById(308);
+                break;
+            case TrophyTypeEnum.Advanced:
+                iconKey = "trophy_1_2";
+                contentStr = GameCommonInfo.GetUITextById(309);
+                break;
+            case TrophyTypeEnum.Legendary:
+                iconKey = "trophy_1_3";
+                contentStr = GameCommonInfo.GetUITextById(310);
+                break;
+        }
+        Sprite spIcon = iconDataManager.GetIconSpriteByName(iconKey);
+        CreateTextItem(spIcon, contentStr, number + "");
     }
 
     /// <summary>
