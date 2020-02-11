@@ -39,7 +39,13 @@ public class SceneGameInnInit : BaseSceneInit, IBaseObserver, DialogView.IDialog
         //故事数据
         if (storyInfoManager != null)
             storyInfoManager.storyInfoController.GetStoryInfoByScene(1);
-
+        //初始化场景
+        if (sceneInnManager != null)
+        {
+            InnBuildBean innBuildData = gameDataManager.gameData.GetInnBuildData();
+            sceneInnManager.InitScene(innBuildData.innWidth, innBuildData.innHeight);
+        }
+       
         //构建地板
         if (innFloorBuilder != null)
             innFloorBuilder.StartBuild();
@@ -49,6 +55,7 @@ public class SceneGameInnInit : BaseSceneInit, IBaseObserver, DialogView.IDialog
         //构建建筑
         if (innFurnitureBuilder != null)
             innFurnitureBuilder.StartBuild();
+
         //初始化客栈处理
         if (innHandler != null)
         {

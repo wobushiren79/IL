@@ -11,6 +11,32 @@ public class SceneInnManager : BaseManager
     public Transform townEntranceLeft;
     public Transform townEntranceRight;
 
+    public GameObject objEcologyContainer;
+
+    /// <summary>
+    /// 初始化场景
+    /// </summary>
+    public void InitScene(float innW, float innH)
+    {
+        //删除遮挡的生态物体
+        if (objEcologyContainer != null)
+        {
+            for (int i = 0; i < objEcologyContainer.transform.childCount; i++)
+            {
+                Transform tfItem = objEcologyContainer.transform.GetChild(i);
+                Vector3 itemPosition = tfItem.position;
+                if (itemPosition.x > 0
+                    && itemPosition.x < innW
+                    && itemPosition.y > 0
+                    && itemPosition.y < innH)
+                {
+                    GameObject.Destroy(tfItem.gameObject);
+                }
+            }
+        }
+
+    }
+
     /// <summary>
     /// 获取随机客栈区域出入口坐标
     /// </summary>

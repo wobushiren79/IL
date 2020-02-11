@@ -75,6 +75,9 @@ public class InnBuildManager : BaseManager, IBuildDataView
                     Sprite spDoor = GetFurnitureSpriteByName(listIcon[0]);
                     buildDoor.SetData(buildItemData, spDoor, spDoor, spDoor, spDoor);
                     break;
+                default:
+                    buildItemCpt.SetData(buildItemData);
+                    break;
             }
 
         }

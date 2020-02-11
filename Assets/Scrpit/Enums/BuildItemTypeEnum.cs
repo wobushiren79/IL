@@ -3,6 +3,7 @@ using UnityEditor;
 
 public enum BuildItemTypeEnum 
 {
+    Other=0,
     Floor=1,
     Wall=2,
     Table=3,

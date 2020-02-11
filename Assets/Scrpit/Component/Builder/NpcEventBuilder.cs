@@ -98,11 +98,10 @@ public class NpcEventBuilder : NpcNormalBuilder, IBaseObserver
         float eatProbability = UnityEngine.Random.Range(0f, 1f);
         float rateWant = gameDataManager.gameData.GetInnAttributesData().CalculationCustomerWantRate();
         //设定是否吃饭
-        //if (eatProbability <= rateWant)
-        //{
-        //    isWant = true;
-        //}
-        isWant = false;
+        if (eatProbability <= rateWant)
+        {
+            isWant = true;
+        }
         //判断是否有自己喜欢的菜
         List<long> loveMenus = characterData.npcInfoData.GetLoveMenus();
         if (gameDataManager.gameData.CheckHasLoveMenus(loveMenus, out List<MenuOwnBean> ownLoveMenus))
