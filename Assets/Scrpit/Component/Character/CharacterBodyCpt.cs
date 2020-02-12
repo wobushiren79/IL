@@ -24,7 +24,7 @@ public class CharacterBodyCpt : BaseMonoBehaviour
     //角色身体资源管理
     protected CharacterBodyManager characterBodyManager;
 
-    private void Awake()
+    public void Awake()
     {
         characterBodyManager = Find<CharacterBodyManager>(ImportantTypeEnum.CharacterManager);
     }

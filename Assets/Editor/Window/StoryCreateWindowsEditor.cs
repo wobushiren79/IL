@@ -575,11 +575,16 @@ public class StoryCreateWindowsEditor : EditorWindow
 
         objNpc = Instantiate(mObjNpcModel, mObjContent.transform);
         BaseNpcAI baseNpcAI = objNpc.GetComponent<BaseNpcAI>();
+        baseNpcAI.Awake();
+       
         CharacterDressCpt characterDress = CptUtil.GetCptInChildrenByName<CharacterDressCpt>(baseNpcAI.gameObject, "Body");
         characterDress.Awake();
-        baseNpcAI.Awake();
+
+        CharacterBodyCpt characterBody = CptUtil.GetCptInChildrenByName<CharacterBodyCpt>(baseNpcAI.gameObject, "Body");
+        characterBody.Awake();
+
         baseNpcAI.transform.localPosition = position;
-        baseNpcAI.SetCharacterData(characterData);
+        baseNpcAI.SetCharacterData(gameItemsManager, characterData);
         baseNpcAI.name = "" + number;
         objNpc.SetActive(true);
 

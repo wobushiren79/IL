@@ -9,11 +9,6 @@ public class BaseNpcAI : BaseMonoBehaviour
     //角色好感度
     public CharacterFavorabilityBean characterFavorabilityData;
 
-    //装备控制管理
-    protected GameItemsManager gameItemsManager;
-    //图标管理
-    protected IconDataManager iconDataManager;
-
     //角色移动控制
     public CharacterMoveCpt characterMoveCpt;
     //角色吼叫控制
@@ -23,27 +18,37 @@ public class BaseNpcAI : BaseMonoBehaviour
     //角色图标控制
     public CharacterStatusIconCpt characterStatusIcon;
 
+    //装备控制管理
+    protected GameItemsManager gameItemsManager;
+    //图标管理
+    protected IconDataManager iconDataManager;
+
+    protected CharacterBodyCpt characterBody;
+    protected CharacterDressCpt characterDress;
+
     public virtual void Awake()
     {
         gameItemsManager = Find<GameItemsManager>(ImportantTypeEnum.GameItemsManager);
         iconDataManager = Find<IconDataManager>(ImportantTypeEnum.UIManager);
+
+        characterBody = CptUtil.GetCptInChildrenByName<CharacterBodyCpt>(gameObject, "Body");
+        characterDress = CptUtil.GetCptInChildrenByName<CharacterDressCpt>(gameObject, "Body");
     }
 
     /// <summary>
-    /// 设置角色数据
+    ///  设置角色数据
     /// </summary>
+    /// <param name="gameItemsManager"></param>
     /// <param name="characterBean"></param>
-    public virtual void SetCharacterData(CharacterBean characterBean)
+    public void  SetCharacterData(GameItemsManager gameItemsManager, CharacterBean characterBean)
     {
         if (characterBean == null)
             return;
         this.characterData = characterBean;
         //设置身体数据
-        CharacterBodyCpt characterBody = CptUtil.GetCptInChildrenByName<CharacterBodyCpt>(gameObject, "Body");
         if (characterBody != null)
             characterBody.SetCharacterBody(characterData.body);
         //设置服装数据
-        CharacterDressCpt characterDress = CptUtil.GetCptInChildrenByName<CharacterDressCpt>(gameObject, "Body");
         if (characterDress != null)
         {
             ItemsInfoBean maskEquip = gameItemsManager.GetItemsById(characterBean.equips.maskId);
@@ -77,7 +82,10 @@ public class BaseNpcAI : BaseMonoBehaviour
             }
             characterMoveCpt.SetMoveSpeed(speed);
         }
-
+    }
+    public virtual void SetCharacterData(CharacterBean characterBean)
+    {
+        SetCharacterData(gameItemsManager, characterBean);
     }
 
     /// <summary>
@@ -130,14 +138,12 @@ public class BaseNpcAI : BaseMonoBehaviour
     public void SetCharacterFace(int face)
     {
         //设置身体数据
-        CharacterBodyCpt characterBody = CptUtil.GetCptInChildrenByName<CharacterBodyCpt>(gameObject, "Body");
         if (characterBody != null)
             characterBody.SetFace(face);
     }
     public int GetCharacterFace()
     {
         //设置身体数据
-        CharacterBodyCpt characterBody = CptUtil.GetCptInChildrenByName<CharacterBodyCpt>(gameObject, "Body");
         return characterBody.GetFace();
     }
 
@@ -157,7 +163,6 @@ public class BaseNpcAI : BaseMonoBehaviour
     {
         //设置角色死亡
         characterMoveCpt.SetAnimStatus(10);
-        CharacterBodyCpt characterBody = CptUtil.GetCptInChildrenByName<CharacterBodyCpt>(gameObject, "Body");
         if (characterBody != null)
         {
             characterBody.SetEye("character_eye_special_dead", new Color(0, 0, 0), false);
