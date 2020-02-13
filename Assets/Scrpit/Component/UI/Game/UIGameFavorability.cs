@@ -38,7 +38,7 @@ public class UIGameFavorability : UIGameComponent
         {
             CharacterBean characterData = uiGameManager.npcInfoManager.GetCharacterDataById(itemData.characterId);
             //只显示小镇居民数据
-            if (characterData.npcInfoData.npc_type != (int)NPCTypeEnum.Town)
+            if (characterData.npcInfoData.npc_type != (int)NpcTypeEnum.Town)
                 continue;
             //只显示好感1以上的
             if (itemData.favorability <= 0)

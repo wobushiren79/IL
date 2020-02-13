@@ -16,14 +16,14 @@ public class NpcImportantBuilder : BaseMonoBehaviour
     public void BuildImportant()
     {
         //创建小镇居民
-        List<CharacterBean> listTownCharacter=  npcInfoManager.GetCharacterDataByType((int)NPCTypeEnum.Town);
+        List<CharacterBean> listTownCharacter=  npcInfoManager.GetCharacterDataByType((int)NpcTypeEnum.Town);
         foreach (CharacterBean itemData in listTownCharacter)
         {
             NpcAIImportantCpt itemNpc= BuildNpc(itemData);
             listTownNpc.Add(itemNpc);
         }
         //创建小镇招募居民
-        List<CharacterBean> listRecruitTownCharacter = npcInfoManager.GetCharacterDataByType((int)NPCTypeEnum.RecruitTown);
+        List<CharacterBean> listRecruitTownCharacter = npcInfoManager.GetCharacterDataByType((int)NpcTypeEnum.RecruitTown);
         foreach (CharacterBean itemData in listRecruitTownCharacter)
         {
             NpcAIImportantCpt itemNpc = BuildNpc(itemData);

@@ -113,23 +113,23 @@ public class NpcCreateWindowEidtor : EditorWindow
         }
         if (GUILayout.Button("查询路人NPC", GUILayout.Width(100), GUILayout.Height(20)))
         {
-            listFindNpcData = npcInfoManager.GetCharacterDataByType((int)NPCTypeEnum.Passerby);
+            listFindNpcData = npcInfoManager.GetCharacterDataByType((int)NpcTypeEnum.Passerby);
         }
         if (GUILayout.Button("查询小镇NPC", GUILayout.Width(100), GUILayout.Height(20)))
         {
-            listFindNpcData = npcInfoManager.GetCharacterDataByType((int)NPCTypeEnum.Town);
+            listFindNpcData = npcInfoManager.GetCharacterDataByType((int)NpcTypeEnum.Town);
         }
         if (GUILayout.Button("查询小镇可招募NPC", GUILayout.Width(120), GUILayout.Height(20)))
         {
-            listFindNpcData = npcInfoManager.GetCharacterDataByType((int)NPCTypeEnum.RecruitTown);
+            listFindNpcData = npcInfoManager.GetCharacterDataByType((int)NpcTypeEnum.RecruitTown);
         }
         if (GUILayout.Button("查询团队顾客", GUILayout.Width(100), GUILayout.Height(20)))
         {
-            listFindNpcData = npcInfoManager.GetCharacterDataByType((int)NPCTypeEnum.GuestTeam);
+            listFindNpcData = npcInfoManager.GetCharacterDataByType((int)NpcTypeEnum.GuestTeam);
         }
         if (GUILayout.Button("查询其他NPC", GUILayout.Width(100), GUILayout.Height(20)))
         {
-            listFindNpcData = npcInfoManager.GetCharacterDataByType((int)NPCTypeEnum.Other);
+            listFindNpcData = npcInfoManager.GetCharacterDataByType((int)NpcTypeEnum.Other);
         }
 
         GUILayout.EndHorizontal();
@@ -330,7 +330,7 @@ public class NpcCreateWindowEidtor : EditorWindow
         GUILayout.Label("NPCID：", GUILayout.Width(100), GUILayout.Height(20));
         npcInfo.id = long.Parse(EditorGUILayout.TextArea(npcInfo.id + "", GUILayout.Width(100), GUILayout.Height(20)));
         npcInfo.npc_id = npcInfo.id;
-        npcInfo.npc_type = (int)(NPCTypeEnum)EditorGUILayout.EnumPopup("Npc类型：", (NPCTypeEnum)npcInfo.npc_type);
+        npcInfo.npc_type = (int)(NpcTypeEnum)EditorGUILayout.EnumPopup("Npc类型：", (NpcTypeEnum)npcInfo.npc_type);
         GUILayout.Label("姓名：", GUILayout.Width(100), GUILayout.Height(20));
         npcInfo.name = EditorGUILayout.TextArea(npcInfo.name + "", GUILayout.Width(100), GUILayout.Height(20));
         GUILayout.Label("性别：1男 2女", GUILayout.Width(100), GUILayout.Height(20));
@@ -470,7 +470,7 @@ public class NpcCreateWindowEidtor : EditorWindow
         GUILayout.Label("出现条件：", GUILayout.Width(100), GUILayout.Height(20));
         if (GUILayout.Button("添加条件", GUILayout.Width(100), GUILayout.Height(20)))
         {
-            npcInfo.condition += ("|" + EnumUtil.GetEnumName(NpcShowConditionEnum.NpcNumber) + ":" + "1|");
+            npcInfo.condition += ("|" + EnumUtil.GetEnumName(ShowConditionEnum.InnLevel) + ":" + "1|");
         }
         List<string> listConditionData = StringUtil.SplitBySubstringForListStr(npcInfo.condition, '|');
         npcInfo.condition = "";
@@ -489,7 +489,7 @@ public class NpcCreateWindowEidtor : EditorWindow
                 continue;
             }
             List<string> listItemConditionData = StringUtil.SplitBySubstringForListStr(itemConditionData, ':');
-            listItemConditionData[0] = EnumUtil.GetEnumName(EditorGUILayout.EnumPopup("出现条件", EnumUtil.GetEnum<NpcShowConditionEnum>(listItemConditionData[0]), GUILayout.Width(300), GUILayout.Height(20)));
+            listItemConditionData[0] = EnumUtil.GetEnumName(EditorGUILayout.EnumPopup("出现条件", EnumUtil.GetEnum<ShowConditionEnum>(listItemConditionData[0]), GUILayout.Width(300), GUILayout.Height(20)));
             listItemConditionData[1] = EditorGUILayout.TextArea(listItemConditionData[1] + "", GUILayout.Width(100), GUILayout.Height(20));
             EditorGUILayout.EndHorizontal();
             npcInfo.condition += (listItemConditionData[0] + ":" + listItemConditionData[1]) + "|";

@@ -78,7 +78,7 @@ public class EventHandler : BaseHandler,
     /// 对话事件触发
     /// </summary>
     /// <param name="markId"></param>
-    public void EventTriggerForTalk(long userId, NPCTypeEnum npcType)
+    public void EventTriggerForTalk(long userId, NpcTypeEnum npcType)
     {
         SetEventStatus(EventStatusEnum.EventIng);
         SetEventType(EventTypeEnum.Talk);

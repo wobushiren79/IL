@@ -17,12 +17,14 @@ public class SceneGameInnInit : BaseSceneInit, IBaseObserver, DialogView.IDialog
     public GameTimeHandler gameTimeHandler;
     public WeatherHandler weatherHandler;
 
+
     public NavMeshSurface navMesh;
 
     public NpcCustomerBuilder npcCustomerBuilder;
 
-    private void Awake()
+    public override void Awake()
     {
+        base.Awake();
         sceneInnManager = Find<SceneInnManager>(ImportantTypeEnum.SceneManager);
     }
 
@@ -34,6 +36,13 @@ public class SceneGameInnInit : BaseSceneInit, IBaseObserver, DialogView.IDialog
             gameItemsManager.itemsInfoController.GetAllItemsInfo();
         if (npcInfoManager != null)
             npcInfoManager.npcInfoController.GetAllNpcInfo();
+        if (npcTeamManager != null)
+        {
+            npcTeamManager.npcTeamController.GetNpcTeamByType(NpcTeamTypeEnum.Customer);
+            npcTeamManager.npcTeamController.GetNpcTeamByType(NpcTeamTypeEnum.Friend);
+            npcTeamManager.npcTeamController.GetNpcTeamByType(NpcTeamTypeEnum.Rascal);
+        }
+
         if (innBuildManager != null)
             innBuildManager.buildDataController.GetAllBuildItemsData();
         //故事数据
@@ -45,7 +54,7 @@ public class SceneGameInnInit : BaseSceneInit, IBaseObserver, DialogView.IDialog
             InnBuildBean innBuildData = gameDataManager.gameData.GetInnBuildData();
             sceneInnManager.InitScene(innBuildData.innWidth, innBuildData.innHeight);
         }
-       
+
         //构建地板
         if (innFloorBuilder != null)
             innFloorBuilder.StartBuild();
@@ -62,7 +71,7 @@ public class SceneGameInnInit : BaseSceneInit, IBaseObserver, DialogView.IDialog
             innHandler.InitInn();
             innHandler.InitRecord();
         }
-          
+
 
         StartCoroutine(BuildNavMesh());
 
@@ -135,7 +144,7 @@ public class SceneGameInnInit : BaseSceneInit, IBaseObserver, DialogView.IDialog
             uiGameManager.OpenUIAndCloseOtherByName(EnumUtil.GetEnumName(UIEnum.GameDate));
         }
         else if (GameCommonInfo.currentDayData.dayStatus == GameTimeHandler.DayEnum.Work)
-        {       
+        {
             //保存数据
             gameDataManager.SaveGameData(innHandler.GetInnRecord());
             //如果是工作状态结束一天 则进入结算画面

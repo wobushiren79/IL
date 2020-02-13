@@ -24,7 +24,7 @@ public class CharacterBean
     public static CharacterBean CreateRandomWorkerData(CharacterBodyManager characterBodyManager)
     {
         CharacterBean characterData = new CharacterBean();
-        characterData.baseInfo.characterType = (int)NPCTypeEnum.RecruitNormal;
+        characterData.baseInfo.characterType = (int)NpcTypeEnum.RecruitNormal;
         //设置随机名字
         characterData.baseInfo.name = RandomUtil.GetRandomGenerateChineseWord(UnityEngine.Random.Range(2, 4));
         //生成随机能力
@@ -100,7 +100,7 @@ public class CharacterBean
         //抽中稀有
         if ( UnityEngine.Random.Range(0f, 1f)<= getRatePro)
         {
-            characterData.baseInfo.characterType = (int)NPCTypeEnum.RecruitRare;
+            characterData.baseInfo.characterType = (int)NpcTypeEnum.RecruitRare;
 
              maxLife = 100;
              minLife = 200;
@@ -126,7 +126,7 @@ public class CharacterBean
         //没有抽中稀有
         else
         {
-            characterData.baseInfo.characterType = (int)NPCTypeEnum.RecruitNormal;
+            characterData.baseInfo.characterType = (int)NpcTypeEnum.RecruitNormal;
             while (totalPoint > 0)
             {
                 int type = UnityEngine.Random.Range(1, 8);

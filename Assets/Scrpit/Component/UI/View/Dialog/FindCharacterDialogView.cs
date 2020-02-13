@@ -60,18 +60,18 @@ public class FindCharacterDialogView : DialogView
         SetPrice(characterData.baseInfo.priceL, characterData.baseInfo.priceM, characterData.baseInfo.priceS);
         SetCharacterUI(characterData);
         SetPopupInfo(characterData);
-        SetBackground((NPCTypeEnum)characterData.baseInfo.characterType);
+        SetBackground((NpcTypeEnum)characterData.baseInfo.characterType);
     }
 
     /// <summary>
     /// 设置背景
     /// </summary>
     /// <param name="npcType"></param>
-    public void SetBackground(NPCTypeEnum npcType)
+    public void SetBackground(NpcTypeEnum npcType)
     {
         if (ivCardBG == null || ivHaloBG == null )
             return;
-        if (npcType == NPCTypeEnum.RecruitRare)
+        if (npcType == NpcTypeEnum.RecruitRare)
         {
             ivCardBG.sprite = spBGRare;
             ivHaloBG.color = colorForRare;

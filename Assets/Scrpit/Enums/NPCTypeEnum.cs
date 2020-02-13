@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using UnityEditor;
 
-public enum NPCTypeEnum
+public enum NpcTypeEnum
 {
     Other = 0,//其他
     Passerby = 1,//路人

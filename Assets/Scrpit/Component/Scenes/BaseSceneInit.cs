@@ -8,10 +8,17 @@ public class BaseSceneInit : BaseMonoBehaviour
     public GameDataManager gameDataManager;
     public GameItemsManager gameItemsManager;
     public NpcInfoManager npcInfoManager;
+    protected NpcTeamManager npcTeamManager;
     public DialogManager dialogManager;
     public StoryInfoManager storyInfoManager;
 
     public ControlHandler controlHandler;
+
+
+    public virtual void Awake()
+    {
+        npcTeamManager = Find<NpcTeamManager>(ImportantTypeEnum.NpcManager);
+    }
 
     public void Start()
     {

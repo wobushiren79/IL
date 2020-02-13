@@ -34,16 +34,15 @@ public class NpcEventBuilder : NpcNormalBuilder, IBaseObserver
     public void TeamEvent()
     {
         Vector3 npcPosition = GetRandomStartPosition();
-        List<CharacterBean> listTeam = npcInfoManager.GetCharacterDataByType(NPCTypeEnum.GuestTeam);
-        CharacterBean randomCharacterData = RandomUtil.GetRandomDataByList(listTeam);
-        BuildGuestTeam(randomCharacterData, npcPosition);
+        NpcTeamBean teamData = npcTeamManager.GetRandomCustomerTeam(gameDataManager.gameData);
+        BuildGuestTeam(teamData, npcPosition);
     }
 
-    public void TeamEvent(long teamNpcId)
+    public void TeamEvent(long teamId)
     {
         Vector3 npcPosition = GetRandomStartPosition();
-        CharacterBean characterData = npcInfoManager.GetCharacterDataById(teamNpcId);
-        BuildGuestTeam(characterData, npcPosition);
+        NpcTeamBean teamData = npcTeamManager.GetCustomerTeam(teamId);
+        BuildGuestTeam(teamData, npcPosition);
     }
 
     /// <summary>
@@ -60,7 +59,7 @@ public class NpcEventBuilder : NpcNormalBuilder, IBaseObserver
             if (characterData == null)
                 continue;
 
-            if (characterData.npcInfoData.npc_type == (int)NPCTypeEnum.Town
+            if (characterData.npcInfoData.npc_type == (int)NpcTypeEnum.Town
                 //生成的NPC中不包含这个角色
                 && !listExistNpcId.Contains(characterData.npcInfoData.id))
             {
@@ -118,40 +117,44 @@ public class NpcEventBuilder : NpcNormalBuilder, IBaseObserver
     /// </summary>
     /// <param name="characterData"></param>
     /// <param name="npcPosition"></param>
-    public void BuildGuestTeam(CharacterBean characterData, Vector3 npcPosition)
+    public void BuildGuestTeam(NpcTeamBean npcTeam, Vector3 npcPosition)
     {
-        List<NpcShowConditionBean> listConditionData = NpcShowConditionTools.GetListConditionData(characterData.npcInfoData.condition);
-        int npcNumber = 1;
+
         MenuOwnBean loveMenu = null;
+        //设置小队相关
         string teamId = SystemUtil.GetUUID(SystemUtil.UUIDTypeEnum.N);
         Color teamColor = new Color(UnityEngine.Random.Range(0f, 1f), UnityEngine.Random.Range(0f, 1f), UnityEngine.Random.Range(0f, 1f));
+        //设置是否想吃
         bool isWant = IsWantEat();
-        foreach (NpcShowConditionBean itemCondition in listConditionData)
-        {
-            NpcShowConditionTools.GetConditionDetails(itemCondition);
-            switch (itemCondition.dataType)
-            {
-                case NpcShowConditionEnum.NpcNumber:
-                    npcNumber = UnityEngine.Random.Range(2, itemCondition.npcNumber + 1);
-                    break;
-            }
-        }
-        //判断是否有自己喜欢的菜
-        List<long> loveMenus = characterData.npcInfoData.GetLoveMenus();
-        if (gameDataManager.gameData.CheckHasLoveMenus(loveMenus, out List<MenuOwnBean> ownLoveMenus))
-        {
-            //随机获取一个喜欢的菜
-            loveMenu = RandomUtil.GetRandomDataByList(ownLoveMenus);
-        }
-
+        //获取小队成员数据
+        npcTeam.GetTeamCharacterData(npcInfoManager, out List<CharacterBean> listLeader, out List<CharacterBean> listMembers);
+        //设置小队人数(团队领袖全生成，小队成员随机生成)
+        int npcNumber = UnityEngine.Random.Range(listLeader.Count + 1, listLeader.Count + 1 + npcTeam.team_number);
         for (int i = 0; i < npcNumber; i++)
         {
+            CharacterBean characterData = null;
+            if (i < listLeader.Count)
+            {
+                characterData = listLeader[i];
+            }
+            else
+            {
+                characterData = RandomUtil.GetRandomDataByList(listMembers);
+            }
+            //判断是否有自己喜欢的菜
+            List<long> loveMenus = characterData.npcInfoData.GetLoveMenus();
+            if (gameDataManager.gameData.CheckHasLoveMenus(loveMenus, out List<MenuOwnBean> ownLoveMenus))
+            {
+                //随机获取一个喜欢的菜
+                loveMenu = RandomUtil.GetRandomDataByList(ownLoveMenus);
+            }
+
             //随机生成身体数据
             // CharacterBodyBean.CreateRandomBodyByManager(characterData.body, characterBodyManager);
             GameObject npcObj = Instantiate(objContainer, objGuestTeamModel);
 
             npcObj.transform.localScale = new Vector3(1, 1);
-            npcObj.transform.position = npcPosition;
+            npcObj.transform.position = npcPosition + new Vector3(UnityEngine.Random.Range(-0.5f, 0.5f), UnityEngine.Random.Range(-0.5f, 0.5f));
 
             BaseNpcAI baseNpcAI = npcObj.GetComponent<BaseNpcAI>();
             baseNpcAI.SetCharacterData(characterData);

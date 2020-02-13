@@ -11,6 +11,7 @@ public class NpcNormalBuilder : BaseMonoBehaviour
 
     //NPC数据管理
     protected NpcInfoManager npcInfoManager;
+    protected NpcTeamManager npcTeamManager;
     protected CharacterBodyManager characterBodyManager;
     protected GameTimeHandler gameTimeHandler;
     protected GameDataManager gameDataManager;
@@ -28,6 +29,7 @@ public class NpcNormalBuilder : BaseMonoBehaviour
     protected virtual void Awake()
     {
         npcInfoManager = Find<NpcInfoManager>(ImportantTypeEnum.NpcManager);
+        npcTeamManager = Find<NpcTeamManager>(ImportantTypeEnum.NpcManager);
         characterBodyManager = Find<CharacterBodyManager>(ImportantTypeEnum.CharacterManager);
         gameTimeHandler = Find<GameTimeHandler>(ImportantTypeEnum.TimeHandler);
         gameDataManager = Find<GameDataManager>(ImportantTypeEnum.GameDataManager);

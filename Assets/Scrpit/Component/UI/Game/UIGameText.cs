@@ -112,7 +112,7 @@ public class UIGameText : BaseUIComponent, ITextInfoView, DialogView.IDialogCall
     }
 
     private long mTalkUserId = 0;
-    public void SetDataForTalk(long userId, NPCTypeEnum npcType)
+    public void SetDataForTalk(long userId, NpcTypeEnum npcType)
     {
         this.mTalkUserId = userId;
         GameDataManager gameDataManager = GetUIManager<UIGameManager>().gameDataManager;
@@ -120,7 +120,7 @@ public class UIGameText : BaseUIComponent, ITextInfoView, DialogView.IDialogCall
         textOrder = 1;
         CharacterFavorabilityBean characterFavorability = gameDataManager.gameData.GetCharacterFavorability(userId);
         //如果是小镇居民的第一次对话
-        if (npcType == NPCTypeEnum.Town && characterFavorability.firstMeet)
+        if (npcType == NpcTypeEnum.Town && characterFavorability.firstMeet)
         {
             characterFavorability.firstMeet = false;
             mTextInfoController.GetTextForTalkByFirstMeet(userId);
@@ -129,7 +129,7 @@ public class UIGameText : BaseUIComponent, ITextInfoView, DialogView.IDialogCall
         listTextData = new List<TextInfoBean>();
         switch (npcType)
         {
-            case NPCTypeEnum.Town:
+            case NpcTypeEnum.Town:
                 listTextData.Add(new TextInfoBean(0, GameCommonInfo.GetUITextById(99101)));
                 listTextData.Add(new TextInfoBean(1, GameCommonInfo.GetUITextById(99102)));
                 //检测是否送过礼物
@@ -139,7 +139,7 @@ public class UIGameText : BaseUIComponent, ITextInfoView, DialogView.IDialogCall
                 }
                 listTextData.Add(new TextInfoBean(1, GameCommonInfo.GetUITextById(99103)));
                 break;
-            case NPCTypeEnum.RecruitTown:
+            case NpcTypeEnum.RecruitTown:
                 listTextData.Add(new TextInfoBean(0, GameCommonInfo.GetUITextById(99101)));
                 listTextData.Add(new TextInfoBean(1, GameCommonInfo.GetUITextById(99102)));
                 if (!gameDataManager.gameData.CheckHasWorker(userId))
