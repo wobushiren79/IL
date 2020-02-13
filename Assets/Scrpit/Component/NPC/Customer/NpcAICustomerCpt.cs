@@ -40,7 +40,6 @@ public class NpcAICustomerCpt : BaseNpcAI
     //等待座位的时间
     public float timeWaitSeat = 20;
 
-
     public override void Awake()
     {
         base.Awake();

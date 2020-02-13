@@ -17,6 +17,7 @@ public class UIGameTest : BaseUIComponent
     //团队顾客生成
     public InputField etNpcGuestTeamId;
     public Button btNpcGuestTeam;
+    public Button btNpcFriend;
 
     protected NpcEventBuilder npcEventBuilder;
 
@@ -36,6 +37,8 @@ public class UIGameTest : BaseUIComponent
             btBuildItemCreate.onClick.AddListener(AddBuildItem);
         if (btNpcGuestTeam != null)
             btNpcGuestTeam.onClick.AddListener(CreateGuestTeam);
+        if (btNpcFriend != null)
+            btNpcFriend.onClick.AddListener(CreateFriend);
     }
 
     /// <summary>
@@ -106,5 +109,15 @@ public class UIGameTest : BaseUIComponent
         if (npcEventBuilder == null)
             return;
         npcEventBuilder.TeamEvent(long.Parse(etNpcGuestTeamId.text));
+    }
+
+    /// <summary>
+    /// 生成好友
+    /// </summary>
+    public void CreateFriend()
+    {
+        if (npcEventBuilder == null)
+            return;
+        npcEventBuilder.FriendsEvent(long.Parse(etNpcGuestTeamId.text));
     }
 }

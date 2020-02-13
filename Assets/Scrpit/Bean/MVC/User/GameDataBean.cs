@@ -409,6 +409,7 @@ public class GameDataBean
         return characterFavorability;
     }
 
+
     /// <summary>
     /// 检测是否拥有该ID的角色
     /// </summary>

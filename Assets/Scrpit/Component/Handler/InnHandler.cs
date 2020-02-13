@@ -261,21 +261,16 @@ public class InnHandler : BaseMonoBehaviour, IBaseObserver
         //根据心情评价客栈 前提订单里有他
         InnPraise(orderForCustomer.innEvaluation.GetPraise());
         //如果桌子还属于这个顾客
-        switch (orderForCustomer.customer.customerIntent)
-        {
-            case NpcAICustomerCpt.CustomerIntentEnum.WaitSeat:
-                //如果在排队，移除排队
-                cusomerQueue.Remove(orderForCustomer);
-                break;
-            case NpcAICustomerCpt.CustomerIntentEnum.GotoSeat:
-            case NpcAICustomerCpt.CustomerIntentEnum.WaitFood:
-            case NpcAICustomerCpt.CustomerIntentEnum.Eatting:
-                orderForCustomer.table.CleanTable();
-                if (orderForCustomer.foodCpt != null)
-                    Destroy(orderForCustomer.foodCpt.gameObject);
-                break;
-        }
-        //蟾蜍这个单子
+        //如果在排队，移除排队
+        if (cusomerQueue.Contains(orderForCustomer))
+            cusomerQueue.Remove(orderForCustomer);
+        //清理桌子
+        if (orderForCustomer.table != null)
+            orderForCustomer.table.CleanTable();
+        //清理食物
+        if (orderForCustomer.foodCpt != null)
+            Destroy(orderForCustomer.foodCpt.gameObject);
+        //删除这个单子
         if (listOrder.Contains(orderForCustomer))
         {
             listOrder.Remove(orderForCustomer);

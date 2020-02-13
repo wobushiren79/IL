@@ -132,6 +132,19 @@ public class BaseNpcAI : BaseMonoBehaviour
     }
 
     /// <summary>
+    /// 增加好友图标
+    /// </summary>
+    public void AddStatusIconForFriend()
+    {
+        CharacterStatusIconBean statusIconData = new CharacterStatusIconBean();
+        Sprite iconGuestTeam = iconDataManager.GetIconSpriteByName("ui_features_favorability");
+        statusIconData.iconStatus = CharacterStatusIconEnum.NpcType;
+        statusIconData.spColor = Color.red;
+        statusIconData.spIcon = iconGuestTeam;
+        characterStatusIcon.AddStatusIcon(statusIconData);
+    }
+
+    /// <summary>
     /// 设置角色朝向 1左 2 右
     /// </summary>
     /// <param name="face"></param>

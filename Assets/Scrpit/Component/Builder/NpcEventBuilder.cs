@@ -9,6 +9,10 @@ public class NpcEventBuilder : NpcNormalBuilder, IBaseObserver
     public GameObject objRascalModel;
     //团队模型
     public GameObject objGuestTeamModel;
+    //好友模型
+    public GameObject objFriendModel;
+    //当天已经生成过的NPCID
+    public List<long> listExistNpcId = new List<long>();
 
     private void Start()
     {
@@ -40,6 +44,44 @@ public class NpcEventBuilder : NpcNormalBuilder, IBaseObserver
         Vector3 npcPosition = GetRandomStartPosition();
         CharacterBean characterData = npcInfoManager.GetCharacterDataById(teamNpcId);
         BuildGuestTeam(characterData, npcPosition);
+    }
+
+    /// <summary>
+    /// 好友事件
+    /// </summary>
+    public void FriendsEvent()
+    {
+        List<CharacterFavorabilityBean> listFavorabilityData = gameDataManager.gameData.listCharacterFavorability;
+        //获取小镇角色
+        List<CharacterFavorabilityBean> listTownFavorabilityData = new List<CharacterFavorabilityBean>();
+        foreach (CharacterFavorabilityBean itemFavorability in listFavorabilityData)
+        {
+            CharacterBean characterData = npcInfoManager.GetCharacterDataById(itemFavorability.characterId);
+            if (characterData == null)
+                continue;
+
+            if (characterData.npcInfoData.npc_type == (int)NPCTypeEnum.Town
+                //生成的NPC中不包含这个角色
+                && !listExistNpcId.Contains(characterData.npcInfoData.id))
+            {
+                listTownFavorabilityData.Add(itemFavorability);
+            }
+        }
+        //符合条件的NPC中随机取一人
+        CharacterFavorabilityBean randomFavorabilityData = RandomUtil.GetRandomDataByList(listTownFavorabilityData);
+        if (randomFavorabilityData == null)
+            return;
+        CharacterBean randomCharacterData = npcInfoManager.GetCharacterDataById(randomFavorabilityData.characterId);
+        Vector3 npcPosition = GetRandomStartPosition();
+        BuildTownFriends(randomCharacterData, randomFavorabilityData, npcPosition);
+    }
+
+    public void FriendsEvent(long npcId)
+    {
+        Vector3 npcPosition = GetRandomStartPosition();
+        CharacterBean characterData = npcInfoManager.GetCharacterDataById(npcId);
+        CharacterFavorabilityBean characterFavorability = gameDataManager.gameData.GetCharacterFavorability(characterData.npcInfoData.id);
+        BuildTownFriends(characterData, characterFavorability, npcPosition);
     }
 
     /// <summary>
@@ -83,7 +125,7 @@ public class NpcEventBuilder : NpcNormalBuilder, IBaseObserver
         MenuOwnBean loveMenu = null;
         string teamId = SystemUtil.GetUUID(SystemUtil.UUIDTypeEnum.N);
         Color teamColor = new Color(UnityEngine.Random.Range(0f, 1f), UnityEngine.Random.Range(0f, 1f), UnityEngine.Random.Range(0f, 1f));
-        bool isWant = false;
+        bool isWant = IsWantEat();
         foreach (NpcShowConditionBean itemCondition in listConditionData)
         {
             NpcShowConditionTools.GetConditionDetails(itemCondition);
@@ -93,14 +135,6 @@ public class NpcEventBuilder : NpcNormalBuilder, IBaseObserver
                     npcNumber = UnityEngine.Random.Range(2, itemCondition.npcNumber + 1);
                     break;
             }
-        }
-        //想要吃饭概率
-        float eatProbability = UnityEngine.Random.Range(0f, 1f);
-        float rateWant = gameDataManager.gameData.GetInnAttributesData().CalculationCustomerWantRate();
-        //设定是否吃饭
-        if (eatProbability <= rateWant)
-        {
-            isWant = true;
         }
         //判断是否有自己喜欢的菜
         List<long> loveMenus = characterData.npcInfoData.GetLoveMenus();
@@ -117,7 +151,7 @@ public class NpcEventBuilder : NpcNormalBuilder, IBaseObserver
             GameObject npcObj = Instantiate(objContainer, objGuestTeamModel);
 
             npcObj.transform.localScale = new Vector3(1, 1);
-            npcObj.transform.position = npcPosition + new Vector3(UnityEngine.Random.Range(-1f, 1f), UnityEngine.Random.Range(-1f, 1f));
+            npcObj.transform.position = npcPosition;
 
             BaseNpcAI baseNpcAI = npcObj.GetComponent<BaseNpcAI>();
             baseNpcAI.SetCharacterData(characterData);
@@ -135,6 +169,29 @@ public class NpcEventBuilder : NpcNormalBuilder, IBaseObserver
                 customerAI.SetIntent(NpcAICustomerCpt.CustomerIntentEnum.Walk);
             }
         }
+    }
+
+    /// <summary>
+    /// 创建小镇好友
+    /// </summary>
+    /// <param name="characterData"></param>
+    /// <param name="npcPosition"></param>
+    public void BuildTownFriends(CharacterBean characterData, CharacterFavorabilityBean characterFavorability, Vector3 npcPosition)
+    {
+        //随机生成身体数据
+        GameObject npcObj = Instantiate(objContainer, objFriendModel);
+
+        npcObj.transform.localScale = new Vector3(1, 1);
+        npcObj.transform.position = npcPosition;
+
+        BaseNpcAI baseNpcAI = npcObj.GetComponent<BaseNpcAI>();
+        baseNpcAI.SetCharacterData(characterData);
+        baseNpcAI.SetFavorabilityData(characterFavorability);
+        baseNpcAI.AddStatusIconForFriend();
+
+        NpcAICostomerForFriendCpt customerAI = baseNpcAI.GetComponent<NpcAICostomerForFriendCpt>();
+        customerAI.SetIntent(NpcAICustomerCpt.CustomerIntentEnum.Want);
+
     }
 
     /// <summary>
@@ -156,12 +213,30 @@ public class NpcEventBuilder : NpcNormalBuilder, IBaseObserver
         return listTeamMember;
     }
 
+    /// <summary>
+    ///  计算是否想要吃饭
+    /// </summary>
+    /// <returns></returns>
+    private bool IsWantEat()
+    {
+        //想要吃饭概率
+        float eatProbability = UnityEngine.Random.Range(0f, 1f);
+        float rateWant = gameDataManager.gameData.GetInnAttributesData().CalculationCustomerWantRate();
+        //设定是否吃饭
+        if (eatProbability <= rateWant)
+        {
+            return true;
+        }
+        return false;
+    }
+
     #region 时间回调通知
     public void ObserbableUpdate<T>(T observable, int type, params System.Object[] obj) where T : UnityEngine.Object
     {
         if ((GameTimeHandler.NotifyTypeEnum)type == GameTimeHandler.NotifyTypeEnum.NewDay)
         {
             ClearNpc();
+            listExistNpcId.Clear();
         }
         else if ((GameTimeHandler.NotifyTypeEnum)type == GameTimeHandler.NotifyTypeEnum.EndDay)
         {
