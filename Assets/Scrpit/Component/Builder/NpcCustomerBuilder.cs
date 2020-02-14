@@ -31,7 +31,7 @@ public class NpcCustomerBuilder : NpcNormalBuilder,IBaseObserver
     public void StartBuildCustomer()
     {
         isBuildNpc = true;
-        StartCoroutine(StartBuild());
+        //StartCoroutine(StartBuild());
     }
     /// <summary>
     /// 停止建造NPC

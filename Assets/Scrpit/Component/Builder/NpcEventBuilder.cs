@@ -48,7 +48,7 @@ public class NpcEventBuilder : NpcNormalBuilder, IBaseObserver
     /// <summary>
     /// 好友事件
     /// </summary>
-    public void FriendsEvent()
+    public void FriendsEventForOne()
     {
         List<CharacterFavorabilityBean> listFavorabilityData = gameDataManager.gameData.listCharacterFavorability;
         //获取小镇角色
@@ -75,7 +75,14 @@ public class NpcEventBuilder : NpcNormalBuilder, IBaseObserver
         BuildTownFriends(randomCharacterData, randomFavorabilityData, npcPosition);
     }
 
-    public void FriendsEvent(long npcId)
+    public void FriendsEventForTeam(long teamId)
+    {
+        Vector3 npcPosition = GetRandomStartPosition();
+        NpcTeamBean teamData = npcTeamManager.GetFriendTeam(teamId);
+        BuildTownFriendsForTeam(teamData, npcPosition);
+    }
+
+    public void FriendsEventForOne(long npcId)
     {
         Vector3 npcPosition = GetRandomStartPosition();
         CharacterBean characterData = npcInfoManager.GetCharacterDataById(npcId);
@@ -119,8 +126,8 @@ public class NpcEventBuilder : NpcNormalBuilder, IBaseObserver
     /// <param name="npcPosition"></param>
     public void BuildGuestTeam(NpcTeamBean npcTeam, Vector3 npcPosition)
     {
-
-        MenuOwnBean loveMenu = null;
+        if (npcTeam == null)
+            return;
         //设置小队相关
         string teamId = SystemUtil.GetUUID(SystemUtil.UUIDTypeEnum.N);
         Color teamColor = new Color(UnityEngine.Random.Range(0f, 1f), UnityEngine.Random.Range(0f, 1f), UnityEngine.Random.Range(0f, 1f));
@@ -141,13 +148,6 @@ public class NpcEventBuilder : NpcNormalBuilder, IBaseObserver
             {
                 characterData = RandomUtil.GetRandomDataByList(listMembers);
             }
-            //判断是否有自己喜欢的菜
-            List<long> loveMenus = characterData.npcInfoData.GetLoveMenus();
-            if (gameDataManager.gameData.CheckHasLoveMenus(loveMenus, out List<MenuOwnBean> ownLoveMenus))
-            {
-                //随机获取一个喜欢的菜
-                loveMenu = RandomUtil.GetRandomDataByList(ownLoveMenus);
-            }
 
             //随机生成身体数据
             // CharacterBodyBean.CreateRandomBodyByManager(characterData.body, characterBodyManager);
@@ -162,10 +162,9 @@ public class NpcEventBuilder : NpcNormalBuilder, IBaseObserver
 
             NpcAICustomerForGuestTeamCpt customerAI = baseNpcAI.GetComponent<NpcAICustomerForGuestTeamCpt>();
             customerAI.SetTeamId(teamId);
-            if (isWant && loveMenu != null)
+            if (isWant)
             {
                 customerAI.SetIntent(NpcAICustomerCpt.CustomerIntentEnum.Want);
-                customerAI.SetMenu(loveMenu);
             }
             else
             {
@@ -197,6 +196,49 @@ public class NpcEventBuilder : NpcNormalBuilder, IBaseObserver
 
     }
 
+    public void BuildTownFriendsForTeam(NpcTeamBean npcTeam, Vector3 npcPosition)
+    {
+        if (npcTeam == null)
+            return;
+        //设置小队相关
+        string teamId = SystemUtil.GetUUID(SystemUtil.UUIDTypeEnum.N);
+        Color teamColor = new Color(UnityEngine.Random.Range(0f, 1f), UnityEngine.Random.Range(0f, 1f), UnityEngine.Random.Range(0f, 1f));
+        //获取小队成员数据
+        npcTeam.GetTeamCharacterData(npcInfoManager, out List<CharacterBean> listLeader, out List<CharacterBean> listMembers);
+        //设置小队人数(团队领袖全生成，小队成员随机生成)
+        int npcNumber = listLeader.Count + listMembers.Count;
+        for (int i = 0; i < npcNumber; i++)
+        {
+            CharacterBean characterData = null;
+            if (i < listLeader.Count)
+            {
+                characterData = listLeader[i];
+            }
+            else
+            {
+                characterData = listMembers[i - listLeader.Count];
+            }
+
+            //获取好感
+            CharacterFavorabilityBean characterFavorability = gameDataManager.gameData.GetCharacterFavorability(characterData.npcInfoData.id);
+
+            GameObject npcObj = Instantiate(objContainer, objGuestTeamModel);
+
+            npcObj.transform.localScale = new Vector3(1, 1);
+            npcObj.transform.position = npcPosition + new Vector3(UnityEngine.Random.Range(-0.5f, 0.5f), UnityEngine.Random.Range(-0.5f, 0.5f));
+
+            BaseNpcAI baseNpcAI = npcObj.GetComponent<BaseNpcAI>();
+            baseNpcAI.SetCharacterData(characterData);
+            baseNpcAI.AddStatusIconForFriend();
+            baseNpcAI.AddStatusIconForGuestTeam(teamColor);
+            baseNpcAI.SetFavorabilityData(characterFavorability);
+
+            NpcAICustomerForGuestTeamCpt customerAI = baseNpcAI.GetComponent<NpcAICustomerForGuestTeamCpt>();
+            customerAI.SetTeamId(teamId);
+            customerAI.SetIntent(NpcAICustomerCpt.CustomerIntentEnum.Want);
+        }
+    }
+
     /// <summary>
     /// 通过团队ID获取团队成员
     /// </summary>
@@ -205,6 +247,8 @@ public class NpcEventBuilder : NpcNormalBuilder, IBaseObserver
     public List<NpcAICustomerForGuestTeamCpt> GetGuestTeamByTeamId(string teamId)
     {
         List<NpcAICustomerForGuestTeamCpt> listTeamMember = new List<NpcAICustomerForGuestTeamCpt>();
+        if (CheckUtil.StringIsNull(teamId))
+            return listTeamMember;
         NpcAICustomerForGuestTeamCpt[] arrayTeam = objContainer.GetComponentsInChildren<NpcAICustomerForGuestTeamCpt>();
         foreach (NpcAICustomerForGuestTeamCpt itemData in arrayTeam)
         {

@@ -303,8 +303,16 @@ public class InnHandler : BaseMonoBehaviour, IBaseObserver
     public MenuInfoBean OrderForFood(OrderForCustomer orderForCustomer, MenuOwnBean menuOwn)
     {
         //食物数据库里有这个数据
-        MenuInfoBean menuInfo = innFoodManager.GetFoodDataById(menuOwn.menuId);
-        if (menuInfo != null)
+        if (menuOwn == null)
+            return null;
+        return OrderForFood( orderForCustomer, menuOwn.menuId);
+    }
+
+    public MenuInfoBean OrderForFood(OrderForCustomer orderForCustomer, long menuId)
+    {
+        //食物数据库里有这个数据
+        MenuInfoBean menuInfo = innFoodManager.GetFoodDataById(menuId);
+        if (menuInfo != null && gameDataManager.gameData.CheckIsSellMenu(menuId))
         {
             orderForCustomer.foodData = menuInfo;
             foodQueue.Add(orderForCustomer);

@@ -22,12 +22,15 @@ public class BaseNpcAI : BaseMonoBehaviour
     protected GameItemsManager gameItemsManager;
     //图标管理
     protected IconDataManager iconDataManager;
+    //游戏数据管理
+    protected GameDataManager gameDataManager;
 
     protected CharacterBodyCpt characterBody;
     protected CharacterDressCpt characterDress;
 
     public virtual void Awake()
     {
+        gameDataManager = Find<GameDataManager>(ImportantTypeEnum.GameDataManager);
         gameItemsManager = Find<GameItemsManager>(ImportantTypeEnum.GameItemsManager);
         iconDataManager = Find<IconDataManager>(ImportantTypeEnum.UIManager);
 

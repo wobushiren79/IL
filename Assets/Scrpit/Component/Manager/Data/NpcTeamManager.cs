@@ -39,6 +39,16 @@ public class NpcTeamManager : BaseManager, INpcTeamView
     }
 
     /// <summary>
+    ///  根据ID获取好友队伍
+    /// </summary>
+    /// <param name="teamId"></param>
+    /// <returns></returns>
+    public NpcTeamBean GetFriendTeam(long teamId)
+    {
+        return GetTeam(teamId, listFriendTeam);
+    }
+
+    /// <summary>
     /// 根据ID获取队伍
     /// </summary>
     /// <param name="teamId"></param>

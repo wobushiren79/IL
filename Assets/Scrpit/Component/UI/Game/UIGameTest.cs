@@ -18,7 +18,7 @@ public class UIGameTest : BaseUIComponent
     public InputField etNpcGuestTeamId;
     public Button btNpcGuestTeam;
     public Button btNpcFriend;
-
+    public Button btNpcFriendTeam;
     protected NpcEventBuilder npcEventBuilder;
 
     public override void Awake()
@@ -38,7 +38,9 @@ public class UIGameTest : BaseUIComponent
         if (btNpcGuestTeam != null)
             btNpcGuestTeam.onClick.AddListener(CreateGuestTeam);
         if (btNpcFriend != null)
-            btNpcFriend.onClick.AddListener(CreateFriend);
+            btNpcFriend.onClick.AddListener(CreateFriendForOne);
+        if (btNpcFriendTeam != null)
+            btNpcFriendTeam.onClick.AddListener(CreateFriendForTeam);
     }
 
     /// <summary>
@@ -114,10 +116,20 @@ public class UIGameTest : BaseUIComponent
     /// <summary>
     /// 生成好友
     /// </summary>
-    public void CreateFriend()
+    public void CreateFriendForOne()
     {
         if (npcEventBuilder == null)
             return;
-        npcEventBuilder.FriendsEvent(long.Parse(etNpcGuestTeamId.text));
+        npcEventBuilder.FriendsEventForOne(long.Parse(etNpcGuestTeamId.text));
+    }
+
+    /// <summary>
+    /// 生成好友
+    /// </summary>
+    public void CreateFriendForTeam()
+    {
+        if (npcEventBuilder == null)
+            return;
+        npcEventBuilder.FriendsEventForTeam(long.Parse(etNpcGuestTeamId.text));
     }
 }

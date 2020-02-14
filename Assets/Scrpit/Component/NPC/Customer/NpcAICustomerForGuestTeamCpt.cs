@@ -4,8 +4,6 @@ using System.Collections.Generic;
 
 public class NpcAICustomerForGuestTeamCpt : NpcAICustomerCpt
 {
-    //预备点菜
-    public MenuOwnBean menuOwn;
     //团队ID
     public string teamId;
     //集合点
@@ -29,21 +27,24 @@ public class NpcAICustomerForGuestTeamCpt : NpcAICustomerCpt
     }
 
     /// <summary>
-    /// 设置指定食物
-    /// </summary>
-    /// <param name="menuOwn"></param>
-    public void SetMenu(MenuOwnBean menuOwn)
-    {
-        this.menuOwn = menuOwn;
-    }
-
-    /// <summary>
     /// 设置队伍ID
     /// </summary>
     /// <param name="teamId"></param>
     public void SetTeamId(string teamId)
     {
         this.teamId = teamId;
+    }
+
+    /// <summary>
+    /// 获取所有小队成员
+    /// </summary>
+    /// <returns></returns>
+    public List<NpcAICustomerForGuestTeamCpt> GetGuestTeam()
+    {
+        List<NpcAICustomerForGuestTeamCpt> listTeamMember = npcEventBuilder.GetGuestTeamByTeamId(teamId);
+        if (listTeamMember.Count == 0)
+            listTeamMember.Add(this);
+        return listTeamMember;
     }
 
     /// <summary>
@@ -58,7 +59,7 @@ public class NpcAICustomerForGuestTeamCpt : NpcAICustomerCpt
             case CustomerIntentForGuestTeamEnum.GoToTeam:
                 //一起离开处理
                 guestTeamIntent = CustomerIntentForGuestTeamEnum.WaitTeam;
-                List<NpcAICustomerForGuestTeamCpt> listTeamMember = npcEventBuilder.GetGuestTeamByTeamId(teamId);
+                List<NpcAICustomerForGuestTeamCpt> listTeamMember = GetGuestTeam();
                 bool allReady = true;
                 foreach (NpcAICustomerForGuestTeamCpt teamMember in listTeamMember)
                 {
@@ -94,20 +95,32 @@ public class NpcAICustomerForGuestTeamCpt : NpcAICustomerCpt
         //首先调整修改朝向
         SetCharacterFace(orderForCustomer.table.GetUserFace());
         //点餐
-        innHandler.OrderForFood(orderForCustomer, menuOwn);
+        //判断是否有自己喜欢的菜
+        List<long> loveMenus = characterData.npcInfoData.GetLoveMenus();
+        //如果没有自己专有喜欢的菜，则随机点一个在卖的
+        if (loveMenus.Count == 0)
+        {
+            innHandler.OrderForFood(orderForCustomer);
+        }
+        else
+        {
+            //检测是否拥有自己喜欢的菜品
+            if (gameDataManager.gameData.CheckHasLoveMenus(loveMenus, out List<MenuOwnBean> ownLoveMenus))
+            {
+                //随机获取一个喜欢的菜
+                MenuOwnBean loveMenu = RandomUtil.GetRandomDataByList(ownLoveMenus);
+                innHandler.OrderForFood(orderForCustomer, loveMenu);
+            }
+            else
+            {
+                //如果没有自己喜欢的菜品则点一杯茶
+                innHandler.OrderForFood(orderForCustomer, 1);
+            }
+        }
         if (orderForCustomer.foodData != null)
         {
             //喊出需要的菜品
             characterShoutCpt.Shout(orderForCustomer.foodData.name);
-        }
-        //判断是否出售
-        if (!menuOwn.isSell)
-        {
-            //如果菜品没有出售 心情直接降100 
-            ChangeMood(-100);
-            //离开
-            SetIntent(CustomerIntentEnum.Leave);
-            return;
         }
         //如果没有这菜
         if (orderForCustomer.foodData == null)
@@ -131,7 +144,7 @@ public class NpcAICustomerForGuestTeamCpt : NpcAICustomerCpt
     {
         base.IntentForWant();
         //通知其他团队成员
-        List<NpcAICustomerForGuestTeamCpt> listTeamMember = npcEventBuilder.GetGuestTeamByTeamId(teamId);
+        List<NpcAICustomerForGuestTeamCpt> listTeamMember = GetGuestTeam();
         foreach (NpcAICustomerForGuestTeamCpt teamMember in listTeamMember)
         {
             if (teamMember != this && teamMember.customerIntent != CustomerIntentEnum.Want)
@@ -149,12 +162,12 @@ public class NpcAICustomerForGuestTeamCpt : NpcAICustomerCpt
     /// </summary>
     public override void IntentForLeave()
     {
-        //如果还没有生成订单
+        //如果还没有生成订单 （路上被招待）
         if (orderForCustomer == null)
         {
             characterMoveCpt.SetDestination(movePosition);
             //通知其他团队成员
-            List<NpcAICustomerForGuestTeamCpt> listTeamMember = npcEventBuilder.GetGuestTeamByTeamId(teamId);
+            List<NpcAICustomerForGuestTeamCpt> listTeamMember = GetGuestTeam();
             foreach (NpcAICustomerForGuestTeamCpt teamMember in listTeamMember)
             {
                 if (teamMember != this && teamMember.customerIntent != CustomerIntentEnum.Leave)
@@ -180,7 +193,7 @@ public class NpcAICustomerForGuestTeamCpt : NpcAICustomerCpt
     {
         base.IntentForWaitAccost();
         //通知其他团队成员
-        List<NpcAICustomerForGuestTeamCpt> listTeamMember = npcEventBuilder.GetGuestTeamByTeamId(teamId);
+        List<NpcAICustomerForGuestTeamCpt> listTeamMember = GetGuestTeam();
         foreach (NpcAICustomerForGuestTeamCpt teamMember in listTeamMember)
         {
             if (teamMember != this && teamMember.customerIntent != CustomerIntentEnum.WaitAccost)
@@ -201,7 +214,7 @@ public class NpcAICustomerForGuestTeamCpt : NpcAICustomerCpt
         //通知其他团队成员
         if (orderForCustomer.innEvaluation.mood <= 0 && isNotice)
         {
-            List<NpcAICustomerForGuestTeamCpt> listTeamMember = npcEventBuilder.GetGuestTeamByTeamId(teamId);
+            List<NpcAICustomerForGuestTeamCpt> listTeamMember = GetGuestTeam();
             foreach (NpcAICustomerForGuestTeamCpt teamMember in listTeamMember)
             {
                 if (teamMember != this)

@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using UnityEditor;
 
-public class NpcAICostomerForFriendCpt : NpcAICustomerCpt
+public class NpcAICostomerForFriendCpt : NpcAICustomerForGuestTeamCpt
 {
     public override void IntentForLeave()
     {

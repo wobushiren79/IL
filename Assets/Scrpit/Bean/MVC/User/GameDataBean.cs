@@ -493,6 +493,23 @@ public class GameDataBean
     }
 
     /// <summary>
+    /// 检测是否正在出售
+    /// </summary>
+    /// <returns></returns>
+    public bool CheckIsSellMenu(long menuId)
+    {
+        for (int i = 0; i < listMenu.Count; i++)
+        {
+            MenuOwnBean itemData = listMenu[i];
+            if (itemData.menuId == menuId && itemData.isSell)
+            {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /// <summary>
     /// 检测是否有指定的菜品
     /// </summary>
     /// <param name="loveMenus"></param>
