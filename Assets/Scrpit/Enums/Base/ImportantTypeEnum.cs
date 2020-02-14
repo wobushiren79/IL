@@ -22,6 +22,7 @@ public enum ImportantTypeEnum
     StoreInfoManager,
     BuildManager,
     AudioManager,
+    TextManager,
 
     StoryBuilder,
     NpcBuilder,

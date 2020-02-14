@@ -30,10 +30,7 @@ public class NpcAIRascalCpt : BaseNpcAI, ITextInfoView, IBaseObserver
     public Vector3 movePosition;
     //战斗对象
     public BaseNpcAI npcFight;
-    //客栈处理
-    public InnHandler innHandler;
-    //客栈区域数据管理
-    public SceneInnManager sceneInnManager;
+
 
     //想要说的对话
     public List<TextInfoBean> listTextInfoBean;
@@ -46,48 +43,22 @@ public class NpcAIRascalCpt : BaseNpcAI, ITextInfoView, IBaseObserver
 
     //制造麻烦的时间
     public float timeMakeTrouble = 60;
+    public string teamId = "";
+    
+    protected EventHandler eventHandler;
+    //客栈处理
+    protected InnHandler innHandler;
+    //客栈区域数据管理
+    protected SceneInnManager sceneInnManager;
 
-
-    private TextInfoController mTextInfoController;
-    private EventHandler mEventHandler;
-    private void Start()
+    public override void Awake()
     {
-        mTextInfoController = new TextInfoController(this, this);
-        mEventHandler = FindObjectOfType<EventHandler>();
+        base.Awake();
+        eventHandler = Find<EventHandler>( ImportantTypeEnum.EventHandler);
+        innHandler = Find<InnHandler>(ImportantTypeEnum.InnHandler);
+        sceneInnManager = Find<SceneInnManager>(ImportantTypeEnum.SceneManager);
     }
 
-    /// <summary>
-    /// 开始作恶
-    /// </summary>
-    public void StartEvil()
-    {
-        SetIntent(RascalIntentEnum.GoToInn);
-    }
-
-    /// <summary>
-    /// 修改生命值
-    /// </summary>
-    /// <param name="life"></param>
-    public int AddLife(int life)
-    {
-        characterLife += life;
-        if (characterLife <= 0)
-        {
-            characterLife = 0;
-            SetIntent(RascalIntentEnum.Leave);
-            //随机获取一句喊话
-            int shoutId = Random.Range(13201, 13206);
-            characterShoutCpt.Shout(GameCommonInfo.GetUITextById(shoutId));
-            //快速离开
-            characterMoveCpt.SetMoveSpeed(3);
-        }
-        else if (characterLife > characterMaxLife)
-        {
-            characterLife = characterMaxLife;
-        }
-        characterLifeCpt.SetData(characterLife, characterMaxLife);
-        return characterLife;
-    }
 
     private void Update()
     {
@@ -115,6 +86,42 @@ public class NpcAIRascalCpt : BaseNpcAI, ITextInfoView, IBaseObserver
                 break;
         }
     }
+
+    /// <summary>
+    /// 设置小队ID
+    /// </summary>
+    /// <param name="teamId"></param>
+    public void SetTeamId(string teamId)
+    {
+        this.teamId = teamId;
+    }
+
+    /// <summary>
+    /// 修改生命值
+    /// </summary>
+    /// <param name="life"></param>
+    public int AddLife(int life)
+    {
+        characterLife += life;
+        if (characterLife <= 0)
+        {
+            characterLife = 0;
+            SetIntent(RascalIntentEnum.Leave);
+            //随机获取一句喊话
+            int shoutId = Random.Range(13201, 13206);
+            characterShoutCpt.Shout(GameCommonInfo.GetUITextById(shoutId));
+            //快速离开
+            characterMoveCpt.SetMoveSpeed(3);
+        }
+        else if (characterLife > characterMaxLife)
+        {
+            characterLife = characterMaxLife;
+        }
+        characterLifeCpt.SetData(characterLife, characterMaxLife);
+        return characterLife;
+    }
+
+
 
     /// <summary>
     /// 设置意图
@@ -161,7 +168,7 @@ public class NpcAIRascalCpt : BaseNpcAI, ITextInfoView, IBaseObserver
     }
 
     /// <summary>
-    /// 意图-等待恢复
+    /// 意图-等待回复
     /// </summary>
     public void SetIntentForWaitingForReply()
     {
@@ -292,7 +299,7 @@ public class NpcAIRascalCpt : BaseNpcAI, ITextInfoView, IBaseObserver
         }
         TextInfoBean textInfo = RandomUtil.GetRandomDataByList(listTextInfoBean);
         // mEventHandler.EventTriggerForTalk(textInfo.mark_id, textInfo.);
-        mEventHandler.AddObserver(this);
+        eventHandler.AddObserver(this);
     }
     public void GetTextInfoForStorySuccess(List<TextInfoBean> listData)
     {
@@ -330,7 +337,7 @@ public class NpcAIRascalCpt : BaseNpcAI, ITextInfoView, IBaseObserver
 
     public void ObserbableUpdate<T>(T observable, int type, params object[] obj) where T : Object
     {
-        if (observable == mEventHandler)
+        if (observable == eventHandler)
         {
             if (type == (int)EventHandler.NotifyEventTypeEnum.TalkForAddFavorability)
             {

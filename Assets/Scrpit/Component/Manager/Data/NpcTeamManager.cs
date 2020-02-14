@@ -49,6 +49,16 @@ public class NpcTeamManager : BaseManager, INpcTeamView
     }
 
     /// <summary>
+    /// 获取捣乱者队伍
+    /// </summary>
+    /// <param name="teamId"></param>
+    /// <returns></returns>
+    public NpcTeamBean GetRascalTeam(long teamId)
+    {
+        return GetTeam(teamId, listRascalTeam);
+    }
+
+    /// <summary>
     /// 根据ID获取队伍
     /// </summary>
     /// <param name="teamId"></param>

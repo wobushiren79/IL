@@ -95,28 +95,48 @@ public class NpcEventBuilder : NpcNormalBuilder, IBaseObserver
     /// </summary>
     public void RascalEvent()
     {
+
+    }
+
+    public void RascalEvent(long teamId)
+    {
         Vector3 npcPosition = GetRandomStartPosition();
-        List<CharacterBean> listData = npcInfoManager.GetCharacterDataByType(21);
-        BuildRascal(RandomUtil.GetRandomDataByList(listData), npcPosition);
+        NpcTeamBean teamData = npcTeamManager.GetRascalTeam(teamId);
+        BuildRascal(teamData, npcPosition);
     }
 
     /// <summary>
-    /// 创建恶棍
+    /// 创建捣乱事件
     /// </summary>
-    /// <param name="characterData"></param>
+    /// <param name="npcTeam"></param>
     /// <param name="npcPosition"></param>
-    public void BuildRascal(CharacterBean characterData, Vector3 npcPosition)
-    {
-        //如果大于构建上线则不再创建新NPC
-        if (objContainer.transform.childCount > buildMaxNumber)
-            return;
-        //生成NPC
-        GameObject npcObj = BuildNpc(objRascalModel, characterData, npcPosition);
-        //设置意图
-        NpcAIRascalCpt rascalCpt = npcObj.GetComponent<NpcAIRascalCpt>();
-        CharacterFavorabilityBean characterFavorability = gameDataManager.gameData.GetCharacterFavorability(long.Parse(characterData.baseInfo.characterId));
-        rascalCpt.SetFavorabilityData(characterFavorability);
-        rascalCpt.StartEvil();
+    public void BuildRascal(NpcTeamBean npcTeam, Vector3 npcPosition)
+    {        
+        //获取小队成员数据
+        npcTeam.GetTeamCharacterData(npcInfoManager, out List<CharacterBean> listLeader, out List<CharacterBean> listMembers);
+        //设置小队相关
+        string teamId = SystemUtil.GetUUID(SystemUtil.UUIDTypeEnum.N);
+        int npcNumber = listLeader.Count + listMembers.Count;
+        for (int i = 0; i < npcNumber; i++)
+        {
+            CharacterBean characterData = null;
+            if (i < listLeader.Count)
+            {
+                characterData = listLeader[i];
+            }
+            else
+            {
+                characterData = listMembers[i - listLeader.Count];
+            }
+            //生成NPC
+            GameObject npcObj = BuildNpc(objRascalModel, characterData, npcPosition);
+            //设置意图
+            NpcAIRascalCpt rascalCpt = npcObj.GetComponent<NpcAIRascalCpt>();
+            CharacterFavorabilityBean characterFavorability = gameDataManager.gameData.GetCharacterFavorability(long.Parse(characterData.baseInfo.characterId));
+            rascalCpt.SetTeamId(teamId);
+            rascalCpt.SetFavorabilityData(characterFavorability);
+            rascalCpt.SetIntent(NpcAIRascalCpt.RascalIntentEnum.GoToInn);
+        }
     }
 
     /// <summary>
@@ -194,6 +214,7 @@ public class NpcEventBuilder : NpcNormalBuilder, IBaseObserver
         NpcAICostomerForFriendCpt customerAI = baseNpcAI.GetComponent<NpcAICostomerForFriendCpt>();
         customerAI.SetIntent(NpcAICustomerCpt.CustomerIntentEnum.Want);
 
+        listExistNpcId.Add(characterData.npcInfoData.id);
     }
 
     public void BuildTownFriendsForTeam(NpcTeamBean npcTeam, Vector3 npcPosition)
@@ -236,8 +257,11 @@ public class NpcEventBuilder : NpcNormalBuilder, IBaseObserver
             NpcAICustomerForGuestTeamCpt customerAI = baseNpcAI.GetComponent<NpcAICustomerForGuestTeamCpt>();
             customerAI.SetTeamId(teamId);
             customerAI.SetIntent(NpcAICustomerCpt.CustomerIntentEnum.Want);
+
+            listExistNpcId.Add(characterData.npcInfoData.id);
         }
     }
+
 
     /// <summary>
     /// 通过团队ID获取团队成员

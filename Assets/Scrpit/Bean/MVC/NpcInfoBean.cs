@@ -49,6 +49,16 @@ public class NpcInfoBean : BaseBean
     public string love_menus;
     //出现条件
     public string condition;
+
+    /// <summary>
+    /// 获取NPC类型
+    /// </summary>
+    /// <returns></returns>
+    public NpcTypeEnum GetNpcType()
+    {
+        return (NpcTypeEnum)npc_type;
+    }
+
     /// <summary>
     /// NPC信息转为角色信息
     /// </summary>

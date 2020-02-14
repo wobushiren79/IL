@@ -4,7 +4,7 @@ using UnityEngine.UI;
 using DG.Tweening;
 using System.Collections.Generic;
 
-public class UIGameText : BaseUIComponent, ITextInfoView, DialogView.IDialogCallBack
+public class UIGameText : UIGameComponent, TextInfoManager.ICallBack, DialogView.IDialogCallBack
 {
     [Header("控件")]
     public UIGameTextForBook uiForBook;
@@ -14,25 +14,24 @@ public class UIGameText : BaseUIComponent, ITextInfoView, DialogView.IDialogCall
     [Header("数据")]
     public int textOrder = 1;
 
-    public List<TextInfoBean> listTextData;
     public TextInfoBean currentTextData;
 
-    public Dictionary<long, List<TextInfoBean>> mapTalkNormalData;
-    public Dictionary<long, List<TextInfoBean>> mapTalkGiftData;
-    public Dictionary<long, List<TextInfoBean>> mapTalkRecruitData;
-
-    private TextInfoController mTextInfoController;
-
-    private TextEnum mTextEnum;
     public ICallBack callBack;
-
+    private TextEnum mTextEnum;
+    //谈话对象
+    private NpcInfoBean mTalkNpcInfo;
     //备用文本替换数据
     public SortedList<string, string> listMarkData = new SortedList<string, string>();
 
     public override void Awake()
     {
         base.Awake();
-        mTextInfoController = new TextInfoController(this, this);
+    }
+
+    public override void OpenUI()
+    {
+        base.OpenUI();
+        uiGameManager.textInfoManager.SetCallBack(this);
     }
 
     public void NextText()
@@ -51,7 +50,7 @@ public class UIGameText : BaseUIComponent, ITextInfoView, DialogView.IDialogCall
             order = currentTextData.next_order;
         }
         this.textOrder = order;
-        List<TextInfoBean> textListData = GetTextDataByOrder(textOrder);
+        List<TextInfoBean> textListData =uiGameManager.textInfoManager.GetTextDataByOrder(textOrder);
         if (!CheckUtil.ListIsNull(textListData))
             ShowText(textListData);
         else
@@ -69,9 +68,8 @@ public class UIGameText : BaseUIComponent, ITextInfoView, DialogView.IDialogCall
             //如果是时停 需要回复时停
             if (currentTextData.is_stoptime == 1)
             {
-                GameTimeHandler gameTimeHandler = GetUIManager<UIGameManager>().gameTimeHandler;
-                if (gameTimeHandler != null)
-                    gameTimeHandler.SetTimeRestore();
+                if (uiGameManager.gameTimeHandler != null)
+                    uiGameManager.gameTimeHandler.SetTimeRestore();
             }
             //回调
             if (callBack != null)
@@ -97,59 +95,30 @@ public class UIGameText : BaseUIComponent, ITextInfoView, DialogView.IDialogCall
     {
         mTextEnum = textEnum;
         textOrder = 1;
-        switch (textEnum)
-        {
-            case TextEnum.Look:
-                mTextInfoController.GetTextForLook(id);
-                break;
-            case TextEnum.Talk:
-                mTextInfoController.GetTextForTalkByMarkId(id);
-                break;
-            case TextEnum.Story:
-                mTextInfoController.GetTextForStory(id);
-                break;
-        }
+        uiGameManager.textInfoManager.GetTextByType(textEnum, id);
     }
 
-    private long mTalkUserId = 0;
-    public void SetDataForTalk(long userId, NpcTypeEnum npcType)
+
+    /// <summary>
+    /// 设置数据-聊天
+    /// </summary>
+    /// <param name="userId"></param>
+    /// <param name="npcType"></param>
+    public void SetDataForTalk(NpcInfoBean npcInfo)
     {
-        this.mTalkUserId = userId;
-        GameDataManager gameDataManager = GetUIManager<UIGameManager>().gameDataManager;
+        this.mTalkNpcInfo = npcInfo;
         mTextEnum = TextEnum.Talk;
         textOrder = 1;
-        CharacterFavorabilityBean characterFavorability = gameDataManager.gameData.GetCharacterFavorability(userId);
+        CharacterFavorabilityBean characterFavorability = uiGameManager.gameDataManager.gameData.GetCharacterFavorability(mTalkNpcInfo.id);
         //如果是小镇居民的第一次对话
-        if (npcType == NpcTypeEnum.Town && characterFavorability.firstMeet)
+        if (mTalkNpcInfo.GetNpcType() == NpcTypeEnum.Town && characterFavorability.firstMeet)
         {
             characterFavorability.firstMeet = false;
-            mTextInfoController.GetTextForTalkByFirstMeet(userId);
+            uiGameManager.textInfoManager.GetTextForTownFirstMeet(mTalkNpcInfo.id);
             return;
         }
-        listTextData = new List<TextInfoBean>();
-        switch (npcType)
-        {
-            case NpcTypeEnum.Town:
-                listTextData.Add(new TextInfoBean(0, GameCommonInfo.GetUITextById(99101)));
-                listTextData.Add(new TextInfoBean(1, GameCommonInfo.GetUITextById(99102)));
-                //检测是否送过礼物
-                if (!GameCommonInfo.DailyLimitData.CheckIsGiftNpc(mTalkUserId))
-                {
-                    listTextData.Add(new TextInfoBean(1, GameCommonInfo.GetUITextById(99105)));
-                }
-                listTextData.Add(new TextInfoBean(1, GameCommonInfo.GetUITextById(99103)));
-                break;
-            case NpcTypeEnum.RecruitTown:
-                listTextData.Add(new TextInfoBean(0, GameCommonInfo.GetUITextById(99101)));
-                listTextData.Add(new TextInfoBean(1, GameCommonInfo.GetUITextById(99102)));
-                if (!gameDataManager.gameData.CheckHasWorker(userId))
-                {
-                    listTextData.Add(new TextInfoBean(1, GameCommonInfo.GetUITextById(99104)));
-                }
-                listTextData.Add(new TextInfoBean(1, GameCommonInfo.GetUITextById(99103)));
-                break;
-        }
-        mTextInfoController.GetTextForTalkByMinFavorability(userId, characterFavorability.favorabilityLevel);
+        //获取对话选项
+        uiGameManager.textInfoManager.GetTextForTalkOptions(uiGameManager.gameDataManager.gameData, mTalkNpcInfo.id, mTalkNpcInfo.GetNpcType());
     }
 
     /// <summary>
@@ -159,26 +128,6 @@ public class UIGameText : BaseUIComponent, ITextInfoView, DialogView.IDialogCall
     public void SetListMark(SortedList<string, string> listMarkData)
     {
         this.listMarkData = listMarkData;
-    }
-
-    /// <summary>
-    /// 根据顺序获取文本数据
-    /// </summary>
-    /// <param name="order"></param>
-    /// <returns></returns>
-    public List<TextInfoBean> GetTextDataByOrder(int order)
-    {
-        List<TextInfoBean> listData = new List<TextInfoBean>();
-        if (listTextData == null || order > listTextData.Count)
-            return listData;
-        foreach (TextInfoBean itemData in listTextData)
-        {
-            if (itemData.text_order == order)
-            {
-                listData.Add(itemData);
-            }
-        }
-        return listData;
     }
 
     /// <summary>
@@ -196,8 +145,7 @@ public class UIGameText : BaseUIComponent, ITextInfoView, DialogView.IDialogCall
         uiForTalk.Close();
         uiForBook.Close();
         uiForBehind.Close();
-
-        UIGameManager uiGameManager = GetUIManager<UIGameManager>();
+        
         //时停选择 特殊处理
         if (currentTextData.is_stoptime == 1)
             //设置时间彻底停止计时
@@ -230,18 +178,17 @@ public class UIGameText : BaseUIComponent, ITextInfoView, DialogView.IDialogCall
     /// <returns></returns>
     public string SetContentDetails(string content)
     {
-       GameDataManager gameDataManager = GetUIManager<UIGameManager>().gameDataManager;
         string userName = "";
         int sex = 1;
-        if (gameDataManager.gameData.userCharacter != null
-            && gameDataManager.gameData.userCharacter.baseInfo.name != null)
-            userName = gameDataManager.gameData.userCharacter.baseInfo.name;
-        if (gameDataManager.gameData.userCharacter != null)
-            sex = gameDataManager.gameData.userCharacter.body.sex;
+        if (uiGameManager.gameDataManager.gameData.userCharacter != null
+            && uiGameManager.gameDataManager.gameData.userCharacter.baseInfo.name != null)
+            userName = uiGameManager.gameDataManager.gameData.userCharacter.baseInfo.name;
+        if (uiGameManager.gameDataManager.gameData.userCharacter != null)
+            sex = uiGameManager.gameDataManager.gameData.userCharacter.body.sex;
         //去除空格 防止自动换行
         content = content.Replace(" ", "");
         //替换客栈名字
-        content = content.Replace("{innname}", gameDataManager.gameData.GetInnAttributesData().innName);
+        content = content.Replace("{innname}", uiGameManager.gameDataManager.gameData.GetInnAttributesData().innName);
         //替换名字
         content = content.Replace("{name}", userName);
         //替换小名
@@ -273,52 +220,54 @@ public class UIGameText : BaseUIComponent, ITextInfoView, DialogView.IDialogCall
     /// <param name="textData"></param>
     public void SelectText(TextInfoBean textData)
     {
-        GameDataManager gameDataManager = GetUIManager<UIGameManager>().gameDataManager;
-        ToastManager toastManager = GetUIManager<UIGameManager>().toastManager;
-        DialogManager dialogManager = GetUIManager<UIGameManager>().dialogManager;
         switch (mTextEnum)
         {
+            case TextEnum.Look:
             case TextEnum.Story:
                 NextText(textData.next_order);
                 break;
             case TextEnum.Talk:
+                //不同的对话选项
+                //对话
                 if (textData.content.Equals(GameCommonInfo.GetUITextById(99102)))
                 {
                     //对话
-                    listTextData = RandomUtil.GetRandomDataByDictionary(mapTalkNormalData);
+                    uiGameManager.textInfoManager.listTextData = RandomUtil.GetRandomDataByDictionary(uiGameManager.textInfoManager.mapTalkNormalData);
                     NextText(1);
                     //增加好感
-                    if (GameCommonInfo.DailyLimitData.AddTalkNpc(mTalkUserId))
+                    if (GameCommonInfo.DailyLimitData.AddTalkNpc(mTalkNpcInfo.id))
                     {
-                        gameDataManager.gameData.GetCharacterFavorability(mTalkUserId).AddFavorability(1);
+                        uiGameManager.gameDataManager.gameData.GetCharacterFavorability(mTalkNpcInfo.id).AddFavorability(1);
                     }
                     //增加数据记录
-                    CharacterFavorabilityBean characterFavorability = gameDataManager.gameData.GetCharacterFavorability(mTalkUserId);
+                    CharacterFavorabilityBean characterFavorability = uiGameManager.gameDataManager.gameData.GetCharacterFavorability(mTalkNpcInfo.id);
                     characterFavorability.AddTalkNumber(1);
                 }
+                //退出
                 else if (textData.content.Equals(GameCommonInfo.GetUITextById(99103)))
                 {
-                    //退出
                     NextText();
                 }
+                //招募
                 else if (textData.content.Equals(GameCommonInfo.GetUITextById(99104)))
                 {
-                    //招募
-                    if (gameDataManager.gameData.CheckIsMaxWorker())
+                   
+                    if (uiGameManager.gameDataManager.gameData.CheckIsMaxWorker())
                     {
-                        toastManager.ToastHint(GameCommonInfo.GetUITextById(1051));
+                        uiGameManager.toastManager.ToastHint(GameCommonInfo.GetUITextById(1051));
                     }
                     else
                     {
-                        listTextData = RandomUtil.GetRandomDataByDictionary(mapTalkRecruitData);
+                        uiGameManager.textInfoManager.listTextData = RandomUtil.GetRandomDataByDictionary(uiGameManager.textInfoManager.mapTalkRecruitData);
                         NextText(1);
                     }
                 }
+                //送礼
                 else if (textData.content.Equals(GameCommonInfo.GetUITextById(99105)))
                 {
-                    //送礼
+                  
                     DialogBean dialogData = new DialogBean();
-                    PickForItemsDialogView pickForItemsDialog = (PickForItemsDialogView)dialogManager.CreateDialog(DialogEnum.PickForItems, this, dialogData);
+                    PickForItemsDialogView pickForItemsDialog = (PickForItemsDialogView)uiGameManager.dialogManager.CreateDialog(DialogEnum.PickForItems, this, dialogData);
                 }
                 else
                 {
@@ -329,66 +278,32 @@ public class UIGameText : BaseUIComponent, ITextInfoView, DialogView.IDialogCall
     }
 
     #region 文本获取回调
-    public void GetTextInfoForLookSuccess(List<TextInfoBean> listData)
+    public void SetTextInfoForLook(List<TextInfoBean> listData)
     {
-        listTextData = listData;
-        ShowText(listTextData);
+        ShowText(listData);
     }
 
-    public void GetTextInfoForTalkByUserIdSuccess(List<TextInfoBean> listData)
+    public void SetTextInfoForStory(List<TextInfoBean> listData)
     {
-        mapTalkNormalData = new Dictionary<long, List<TextInfoBean>>();
-        mapTalkGiftData = new Dictionary<long, List<TextInfoBean>>();
-        mapTalkRecruitData = new Dictionary<long, List<TextInfoBean>>();
-        foreach (TextInfoBean itemTalkInfo in listData)
-        {
-            long markId = itemTalkInfo.mark_id;
-            Dictionary<long, List<TextInfoBean>> addMap = new Dictionary<long, List<TextInfoBean>>();
-            switch ((TextTalkTypeEnum)itemTalkInfo.talk_type)
-            {
-                case TextTalkTypeEnum.Normal:
-                    addMap = mapTalkNormalData;
-                    break;
-                case TextTalkTypeEnum.Gift:
-                    addMap = mapTalkGiftData;
-                    break;
-                case TextTalkTypeEnum.Recruit:
-                    addMap = mapTalkRecruitData;
-                    break;
-            }
-            if (addMap.TryGetValue(markId, out List<TextInfoBean> value))
-            {
-                value.Add(itemTalkInfo);
-            }
-            else
-            {
-                List<TextInfoBean> listTemp = new List<TextInfoBean>();
-                listTemp.Add(itemTalkInfo);
-                addMap.Add(markId, listTemp);
-            }
-        }
-        ShowText(listTextData);
+        ShowText(listData);
     }
 
-    public void GetTextInfoForTalkByFirstMeetSuccess(List<TextInfoBean> listData)
+    public void SetTextInfoForTalkByFirstMeet(List<TextInfoBean> listData)
     {
-        listTextData = listData;
-        ShowText(listTextData);
+        ShowText(listData);
     }
 
-    public void GetTextInfoForTalkByMarkIdSuccess(List<TextInfoBean> listData)
+    public void SetTextInfoForTalkOptions(List<TextInfoBean> listData)
     {
-        listTextData = listData;
-        ShowText(listTextData);
+        ShowText(listData);
     }
 
-    public void GetTextInfoForStorySuccess(List<TextInfoBean> listData)
+    public void SetTextInfoForTalkByMarkId(List<TextInfoBean> listData)
     {
-        listTextData = listData;
-        ShowText(listTextData);
+        ShowText(listData);
     }
 
-    public void GetTextInfoFail()
+    public void SetTextInfoForTalkByUserId(List<TextInfoBean> listData)
     {
 
     }
@@ -403,8 +318,8 @@ public class UIGameText : BaseUIComponent, ITextInfoView, DialogView.IDialogCall
         PickForItemsDialogView pickForItemsDialog = (PickForItemsDialogView)dialogView;
         pickForItemsDialog.GetSelectedItems(out ItemsInfoBean itemsInfo,out ItemBean itemData);
         //获取赠送人
-        CharacterBean characterData = npcInfoManager.GetCharacterDataById(mTalkUserId);
-        CharacterFavorabilityBean characterFavorability= gameDataManager.gameData.GetCharacterFavorability(mTalkUserId);
+        CharacterBean characterData = npcInfoManager.GetCharacterDataById(mTalkNpcInfo.id);
+        CharacterFavorabilityBean characterFavorability= gameDataManager.gameData.GetCharacterFavorability(mTalkNpcInfo.id);
         int addFavorability = 0;
         if (characterData.baseInfo.CheckIsLoveItems(itemData.itemId))
         {
@@ -421,11 +336,10 @@ public class UIGameText : BaseUIComponent, ITextInfoView, DialogView.IDialogCall
         //删减物品
         gameDataManager.gameData.AddItemsNumber(itemData.itemId,-1);
         //增加每日限制
-        GameCommonInfo.DailyLimitData.AddGiftNpc(mTalkUserId);
+        GameCommonInfo.DailyLimitData.AddGiftNpc(mTalkNpcInfo.id);
         //通过增加好感查询对话
-        listTextData = GetGiftTalkByFavorability(addFavorability);
-        ShowText(listTextData);
-      
+        uiGameManager.textInfoManager.listTextData = uiGameManager.textInfoManager.GetGiftTalkByFavorability(addFavorability);
+        ShowText(uiGameManager.textInfoManager.listTextData);
     }
 
     public void Cancel(DialogView dialogView, DialogBean dialogBean)
@@ -433,31 +347,6 @@ public class UIGameText : BaseUIComponent, ITextInfoView, DialogView.IDialogCall
 
     }
     #endregion
-
-    /// <summary>
-    /// 通过等级获取赠送对话
-    /// </summary>
-    /// <param name="level"></param>
-    private List<TextInfoBean> GetGiftTalkByFavorability(int favorability)
-    {
-        List<List<TextInfoBean>> listData = new List<List<TextInfoBean>>();
-        foreach (var itemData in mapTalkGiftData)
-        {
-            if(itemData.Value[0].add_favorability == favorability)
-            {
-                listData.Add(itemData.Value);
-                break;
-            }
-        }
-        if (listData.Count == 0)
-        {
-            return new List<TextInfoBean>();
-        }
-        else
-        {
-            return RandomUtil.GetRandomDataByList(listData);
-        }
-    }
 
     public interface ICallBack
     {

@@ -26,6 +26,7 @@ public class UIGameManager : BaseUIManager
     public StoreInfoManager storeInfoManager;
     public IconDataManager iconDataManager;
     public AchievementInfoManager achievementInfoManager;
+    public TextInfoManager textInfoManager;
     //UI相关
     public DialogManager dialogManager;
     public ToastManager toastManager;
@@ -56,6 +57,7 @@ public class UIGameManager : BaseUIManager
         npcInfoManager = Find<NpcInfoManager>(ImportantTypeEnum.NpcManager);
         storeInfoManager = Find<StoreInfoManager>(ImportantTypeEnum.StoreInfoManager);
         iconDataManager = Find<IconDataManager>(ImportantTypeEnum.UIManager);
+        textInfoManager= Find<TextInfoManager>(ImportantTypeEnum.TextManager);
 
         dialogManager = Find<DialogManager>(ImportantTypeEnum.DialogManager);
         toastManager = Find<ToastManager>(ImportantTypeEnum.ToastManager);
@@ -72,5 +74,6 @@ public class UIGameManager : BaseUIManager
         infoAchievementPopup = FindInChildren<InfoAchievementPopupShow>(ImportantTypeEnum.Popup);
         infoAbilityPopup = FindInChildren<InfoAbilityPopupShow>(ImportantTypeEnum.Popup);
         popupItemsSelection = FindInChildren<PopupItemsSelection>(ImportantTypeEnum.Popup);
+
     }
 }

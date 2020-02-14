@@ -97,7 +97,8 @@ public class ItemGameTextSelectCpt : ItemGameBaseCpt, DialogView.IDialogCallBack
             return;
         UIGameText uiGameText = (UIGameText)uiComponent;
         PickForCharacterDialogView pickDialog = (PickForCharacterDialogView)dialogView;
-        uiGameText.callBack.UITextSelectResult(textData, pickDialog.GetPickCharacter());
+        if (uiGameText.callBack != null)
+            uiGameText.callBack.UITextSelectResult(textData, pickDialog.GetPickCharacter());
     }
 
     public void Cancel(DialogView dialogView, DialogBean dialogBean)

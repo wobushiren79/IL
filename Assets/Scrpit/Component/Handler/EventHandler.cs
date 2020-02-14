@@ -78,7 +78,7 @@ public class EventHandler : BaseHandler,
     /// 对话事件触发
     /// </summary>
     /// <param name="markId"></param>
-    public void EventTriggerForTalk(long userId, NpcTypeEnum npcType)
+    public void EventTriggerForTalk(NpcInfoBean npcInfo)
     {
         SetEventStatus(EventStatusEnum.EventIng);
         SetEventType(EventTypeEnum.Talk);
@@ -86,7 +86,7 @@ public class EventHandler : BaseHandler,
         if (controlHandler != null)
             controlHandler.StopControl();
         UIGameText uiGameText = (UIGameText)uiManager.OpenUIAndCloseOtherByName(EnumUtil.GetEnumName(UIEnum.GameText));
-        uiGameText.SetDataForTalk(userId, npcType);
+        uiGameText.SetDataForTalk(npcInfo);
         uiGameText.SetCallBack(this);
     }
     /// <summary>
