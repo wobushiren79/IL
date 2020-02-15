@@ -115,7 +115,7 @@ public class NpcEventBuilder : NpcNormalBuilder, IBaseObserver
         //获取小队成员数据
         npcTeam.GetTeamCharacterData(npcInfoManager, out List<CharacterBean> listLeader, out List<CharacterBean> listMembers);
         //设置小队相关
-        string teamId = SystemUtil.GetUUID(SystemUtil.UUIDTypeEnum.N);
+        string teamCode = SystemUtil.GetUUID(SystemUtil.UUIDTypeEnum.N);
         int npcNumber = listLeader.Count + listMembers.Count;
         for (int i = 0; i < npcNumber; i++)
         {
@@ -133,7 +133,7 @@ public class NpcEventBuilder : NpcNormalBuilder, IBaseObserver
             //设置意图
             NpcAIRascalCpt rascalCpt = npcObj.GetComponent<NpcAIRascalCpt>();
             CharacterFavorabilityBean characterFavorability = gameDataManager.gameData.GetCharacterFavorability(long.Parse(characterData.baseInfo.characterId));
-            rascalCpt.SetTeamId(teamId);
+            rascalCpt.SetTeamData(teamCode,npcTeam, i);
             rascalCpt.SetFavorabilityData(characterFavorability);
             rascalCpt.SetIntent(NpcAIRascalCpt.RascalIntentEnum.GoToInn);
         }
@@ -149,7 +149,7 @@ public class NpcEventBuilder : NpcNormalBuilder, IBaseObserver
         if (npcTeam == null)
             return;
         //设置小队相关
-        string teamId = SystemUtil.GetUUID(SystemUtil.UUIDTypeEnum.N);
+        string teamCode = SystemUtil.GetUUID(SystemUtil.UUIDTypeEnum.N);
         Color teamColor = new Color(UnityEngine.Random.Range(0f, 1f), UnityEngine.Random.Range(0f, 1f), UnityEngine.Random.Range(0f, 1f));
         //设置是否想吃
         bool isWant = IsWantEat();
@@ -181,7 +181,7 @@ public class NpcEventBuilder : NpcNormalBuilder, IBaseObserver
             baseNpcAI.AddStatusIconForGuestTeam(teamColor);
 
             NpcAICustomerForGuestTeamCpt customerAI = baseNpcAI.GetComponent<NpcAICustomerForGuestTeamCpt>();
-            customerAI.SetTeamId(teamId);
+            customerAI.SetTeamData(teamCode,npcTeam, i);
             if (isWant)
             {
                 customerAI.SetIntent(NpcAICustomerCpt.CustomerIntentEnum.Want);
@@ -217,15 +217,15 @@ public class NpcEventBuilder : NpcNormalBuilder, IBaseObserver
         listExistNpcId.Add(characterData.npcInfoData.id);
     }
 
-    public void BuildTownFriendsForTeam(NpcTeamBean npcTeam, Vector3 npcPosition)
+    public void BuildTownFriendsForTeam(NpcTeamBean teamData, Vector3 npcPosition)
     {
-        if (npcTeam == null)
+        if (teamData == null)
             return;
         //设置小队相关
-        string teamId = SystemUtil.GetUUID(SystemUtil.UUIDTypeEnum.N);
+        string teamCode = SystemUtil.GetUUID(SystemUtil.UUIDTypeEnum.N);
         Color teamColor = new Color(UnityEngine.Random.Range(0f, 1f), UnityEngine.Random.Range(0f, 1f), UnityEngine.Random.Range(0f, 1f));
         //获取小队成员数据
-        npcTeam.GetTeamCharacterData(npcInfoManager, out List<CharacterBean> listLeader, out List<CharacterBean> listMembers);
+        teamData.GetTeamCharacterData(npcInfoManager, out List<CharacterBean> listLeader, out List<CharacterBean> listMembers);
         //设置小队人数(团队领袖全生成，小队成员随机生成)
         int npcNumber = listLeader.Count + listMembers.Count;
         for (int i = 0; i < npcNumber; i++)
@@ -255,28 +255,27 @@ public class NpcEventBuilder : NpcNormalBuilder, IBaseObserver
             baseNpcAI.SetFavorabilityData(characterFavorability);
 
             NpcAICustomerForGuestTeamCpt customerAI = baseNpcAI.GetComponent<NpcAICustomerForGuestTeamCpt>();
-            customerAI.SetTeamId(teamId);
+            customerAI.SetTeamData(teamCode, teamData, i);
             customerAI.SetIntent(NpcAICustomerCpt.CustomerIntentEnum.Want);
 
             listExistNpcId.Add(characterData.npcInfoData.id);
         }
     }
 
-
     /// <summary>
-    /// 通过团队ID获取团队成员
+    /// 通过团队Code获取团队成员
     /// </summary>
     /// <param name="teamId"></param>
     /// <returns></returns>
-    public List<NpcAICustomerForGuestTeamCpt> GetGuestTeamByTeamId(string teamId)
+    public List<NpcAICustomerForGuestTeamCpt> GetGuestTeamByTeamCode(string teamCode)
     {
         List<NpcAICustomerForGuestTeamCpt> listTeamMember = new List<NpcAICustomerForGuestTeamCpt>();
-        if (CheckUtil.StringIsNull(teamId))
+        if (CheckUtil.StringIsNull(teamCode))
             return listTeamMember;
         NpcAICustomerForGuestTeamCpt[] arrayTeam = objContainer.GetComponentsInChildren<NpcAICustomerForGuestTeamCpt>();
         foreach (NpcAICustomerForGuestTeamCpt itemData in arrayTeam)
         {
-            if (itemData.teamId.EndsWith(teamId))
+            if (itemData.teamCode.EndsWith(teamCode))
             {
                 listTeamMember.Add(itemData);
             }

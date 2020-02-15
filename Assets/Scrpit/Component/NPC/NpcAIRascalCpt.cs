@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Collections;
 using DG.Tweening;
 
-public class NpcAIRascalCpt : BaseNpcAI, ITextInfoView, IBaseObserver
+public class NpcAIRascalCpt : BaseNpcAI, IBaseObserver
 {
     public enum RascalIntentEnum
     {
@@ -31,7 +31,6 @@ public class NpcAIRascalCpt : BaseNpcAI, ITextInfoView, IBaseObserver
     //战斗对象
     public BaseNpcAI npcFight;
 
-
     //想要说的对话
     public List<TextInfoBean> listTextInfoBean;
     //累计增加的好感
@@ -43,8 +42,14 @@ public class NpcAIRascalCpt : BaseNpcAI, ITextInfoView, IBaseObserver
 
     //制造麻烦的时间
     public float timeMakeTrouble = 60;
-    public string teamId = "";
-    
+
+    //小队唯一代码
+    public string teamCode;
+    //小队数据
+    public NpcTeamBean teamData;
+    //小队中的位置
+    public int teamRank;
+
     protected EventHandler eventHandler;
     //客栈处理
     protected InnHandler innHandler;
@@ -87,13 +92,17 @@ public class NpcAIRascalCpt : BaseNpcAI, ITextInfoView, IBaseObserver
         }
     }
 
+
     /// <summary>
-    /// 设置小队ID
+    /// 设置小队数据
     /// </summary>
-    /// <param name="teamId"></param>
-    public void SetTeamId(string teamId)
+    /// <param name="teamData"></param>
+    /// <param name="teamRank">该人物在小队中的位置</param>
+    public void SetTeamData(string teamCode,NpcTeamBean teamData,int teamRank)
     {
-        this.teamId = teamId;
+        this.teamCode = teamCode;
+        this.teamData = teamData;
+        this.teamRank = teamRank;
     }
 
     /// <summary>
@@ -172,6 +181,8 @@ public class NpcAIRascalCpt : BaseNpcAI, ITextInfoView, IBaseObserver
     /// </summary>
     public void SetIntentForWaitingForReply()
     {
+        long markId = 1;
+        eventHandler.EventTriggerForTalk(markId);
         ////获取文本信息
         //if (characterFavorabilityData.firstMeet)
         //{
@@ -345,9 +356,7 @@ public class NpcAIRascalCpt : BaseNpcAI, ITextInfoView, IBaseObserver
             }
         }
     }
-
-
-    #endregion
+   #endregion
 
 
 }

@@ -10,7 +10,7 @@ public class TextInfoManager : BaseManager,ITextInfoView
     public Dictionary<long, List<TextInfoBean>> mapTalkNormalData;
     public Dictionary<long, List<TextInfoBean>> mapTalkGiftData;
     public Dictionary<long, List<TextInfoBean>> mapTalkRecruitData;
-
+    public Dictionary<long, List<TextInfoBean>> mapTalkRascalData;
 
     protected TextInfoController textInfoController;
     protected ICallBack callBack;
@@ -30,7 +30,7 @@ public class TextInfoManager : BaseManager,ITextInfoView
     /// </summary>
     /// <param name="textEnum"></param>
     /// <param name="id">当 textEnum为Look 或 Story时 为markId</param>
-    public void GetTextByType(TextEnum textEnum, long id)
+    public void GetTextById(TextEnum textEnum, long id)
     {
         switch (textEnum)
         {
@@ -91,6 +91,16 @@ public class TextInfoManager : BaseManager,ITextInfoView
     }
 
     /// <summary>
+    /// 根据markID获取对话
+    /// </summary>
+    /// <param name="userId"></param>
+    /// <param name="favorabilityLevel"></param>
+    public void GetTextForTalkByMarkId(long markId)
+    {
+        textInfoController.GetTextForTalkByMarkId(markId);
+    }
+
+    /// <summary>
     /// 根据好感获取对话
     /// </summary>
     /// <param name="userId"></param>
@@ -98,6 +108,15 @@ public class TextInfoManager : BaseManager,ITextInfoView
     public void GetTextForTalkByMinFavorability(long userId,int favorabilityLevel)
     {
         textInfoController.GetTextForTalkByMinFavorability(userId, favorabilityLevel);
+    }
+
+    /// <summary>
+    /// 获取捣乱对话
+    /// </summary>
+    /// <param name="userId"></param>
+    public void GetTextForTalkType(long userId, TextTalkTypeEnum textTalkType)
+    {
+        textInfoController.GetTextForTalkByType(userId, textTalkType);
     }
 
     /// <summary>
@@ -183,6 +202,7 @@ public class TextInfoManager : BaseManager,ITextInfoView
         mapTalkNormalData = new Dictionary<long, List<TextInfoBean>>();
         mapTalkGiftData = new Dictionary<long, List<TextInfoBean>>();
         mapTalkRecruitData = new Dictionary<long, List<TextInfoBean>>();
+        mapTalkRascalData = new Dictionary<long, List<TextInfoBean>>();
         foreach (TextInfoBean itemTalkInfo in listData)
         {
             long markId = itemTalkInfo.mark_id;
@@ -197,6 +217,9 @@ public class TextInfoManager : BaseManager,ITextInfoView
                     break;
                 case TextTalkTypeEnum.Recruit:
                     addMap = mapTalkRecruitData;
+                    break;
+                case TextTalkTypeEnum.Rascal:
+                    addMap = mapTalkRascalData;
                     break;
             }
             if (addMap.TryGetValue(markId, out List<TextInfoBean> value))
@@ -214,6 +237,13 @@ public class TextInfoManager : BaseManager,ITextInfoView
             callBack.SetTextInfoForTalkByUserId(listData);
     }
 
+    public void GetTextInfoForTalkByTypeSuccess(TextTalkTypeEnum textTalkType, List<TextInfoBean> listData)
+    {
+        listTextData = listData;
+        if (callBack != null)
+            callBack.SetTextInfoForTalkByType(textTalkType,listData);
+    }
+
     public interface ICallBack
     {
         void SetTextInfoForLook(List<TextInfoBean> listData);
@@ -223,7 +253,9 @@ public class TextInfoManager : BaseManager,ITextInfoView
         void SetTextInfoForTalkByFirstMeet(List<TextInfoBean> listData);
         void SetTextInfoForTalkByMarkId(List<TextInfoBean> listData);
         void SetTextInfoForTalkByUserId(List<TextInfoBean> listData);
+        void SetTextInfoForTalkByType(TextTalkTypeEnum textTalkType, List<TextInfoBean> listData);
         void SetTextInfoForTalkOptions(List<TextInfoBean> listData);
+
     }
     #endregion
 }

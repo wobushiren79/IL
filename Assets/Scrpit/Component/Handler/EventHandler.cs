@@ -10,6 +10,7 @@ public class EventHandler : BaseHandler,
     public enum EventTypeEnum
     {
         Talk,//对话事件
+        TalkForRascal,//捣乱对话
         Look,//调查事件
         Story,//故事事件
         StoryForMiniGameCooking//故事烹饪游戏
@@ -89,6 +90,7 @@ public class EventHandler : BaseHandler,
         uiGameText.SetDataForTalk(npcInfo);
         uiGameText.SetCallBack(this);
     }
+
     /// <summary>
     /// 对话事件触发
     /// </summary>
@@ -104,6 +106,7 @@ public class EventHandler : BaseHandler,
         uiGameText.SetData(TextEnum.Talk, markId);
         uiGameText.SetCallBack(this);
     }
+
     /// <summary>
     /// 剧情触发
     /// </summary>
@@ -316,6 +319,11 @@ public class EventHandler : BaseHandler,
     }
 
     #region 对话文本回调
+    public void UITextInitReady()
+    {
+
+    }
+
     public void UITextEnd()
     {
         switch (mEventType)
@@ -409,5 +417,6 @@ public class EventHandler : BaseHandler,
                 break;
         }
     }
+
     #endregion
 }

@@ -7,10 +7,12 @@ public class NpcAIWokerFoBaseCpt : BaseMonoBehaviour
     public NpcAIWorkerCpt npcAIWorker;
 
     protected GameItemsManager gameItemsManager;
+    protected GameDataManager gameDataManager;
 
     public virtual void Awake()
     {
         gameItemsManager = Find<GameItemsManager>( ImportantTypeEnum.GameItemsManager);
+        gameDataManager = Find<GameDataManager>(ImportantTypeEnum.GameDataManager);
     }
 
     public virtual void Start()

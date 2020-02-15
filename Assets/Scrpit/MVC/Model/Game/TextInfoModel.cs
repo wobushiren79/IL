@@ -36,6 +36,11 @@ public class TextInfoModel : BaseMVCModel
         return mTextInfoService.QueryDataByMinFavorability(TextEnum.Talk, userId,minFavorability);
     }
 
+    public List<TextInfoBean> GetTextForTalkByType(long userId, TextTalkTypeEnum textTalkType)
+    {
+        return mTextInfoService.QueryDataByTalkType(TextEnum.Talk, textTalkType, userId);
+    }
+
     public List<TextInfoBean> GetTextForStory(long markId)
     {
         return mTextInfoService.QueryDataByMarkId(TextEnum.Story, markId);

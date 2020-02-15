@@ -186,6 +186,10 @@ public class NpcCreateWindowEidtor : EditorWindow
         {
             GetNpcTalkInfoList(TextTalkTypeEnum.Special);
         }
+        if (GUILayout.Button("查询捣乱事件对话", GUILayout.Width(120), GUILayout.Height(20)))
+        {
+            GetNpcTalkInfoList(TextTalkTypeEnum.Rascal);
+        }
         if (GUILayout.Button("添加对话逻辑(警告：一定要先查询对应对话再添加)", GUILayout.Width(300), GUILayout.Height(20)))
         {
             long markId = long.Parse(findIds) * 100000;
@@ -503,11 +507,17 @@ public class NpcCreateWindowEidtor : EditorWindow
         GameObject objNpc = Instantiate(mObjNpcModel, mObjContent.transform);
         objNpc.SetActive(true);
         objNpc.transform.position = new Vector3(characterData.npcInfoData.position_x, characterData.npcInfoData.position_y);
-        BaseNpcAI npcAI = objNpc.GetComponent<BaseNpcAI>();
-        npcAI.Awake();
-        CharacterDressCpt characterDress = CptUtil.GetCptInChildrenByName<CharacterDressCpt>(npcAI.gameObject, "Body");
+
+        BaseNpcAI baseNpcAI = objNpc.GetComponent<BaseNpcAI>();
+        baseNpcAI.Awake();
+
+        CharacterDressCpt characterDress = CptUtil.GetCptInChildrenByName<CharacterDressCpt>(baseNpcAI.gameObject, "Body");
         characterDress.Awake();
-        npcAI.SetCharacterData(characterData);
+
+        CharacterBodyCpt characterBody = CptUtil.GetCptInChildrenByName<CharacterBodyCpt>(baseNpcAI.gameObject, "Body");
+        characterBody.Awake();
+
+        baseNpcAI.SetCharacterData(gameItemsManager, characterData);
         mCamera2D.Follow = objNpc.transform;
         return objNpc;
     }

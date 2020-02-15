@@ -139,11 +139,11 @@ public class NpcAIWorkerForChefCpt : NpcAIWokerFoBaseCpt
     public void SetIntentForCooking(OrderForCustomer orderForCustomer)
     {
         //检测是否能烹饪
-        bool canCook = npcAIWorker.gameDataManager.gameData.CheckCookFood(orderForCustomer.foodData);
+        bool canCook = gameDataManager.gameData.CheckCookFood(orderForCustomer.foodData);
         if (canCook)
         {
             //扣除食材
-            npcAIWorker.gameDataManager.gameData.DeductIng(orderForCustomer.foodData);
+            gameDataManager.gameData.DeductIng(orderForCustomer.foodData);
             //记录食材消耗
             npcAIWorker.innHandler.ConsumeIngRecord(orderForCustomer.foodData);
             //设置灶台状态
@@ -164,7 +164,7 @@ public class NpcAIWorkerForChefCpt : NpcAIWokerFoBaseCpt
     /// <returns></returns>
     public IEnumerator StartCook()
     {
-        float foodTime = npcAIWorker.characterData.CalculationChefMakeFoodTime(gameItemsManager,orderForCustomer.foodData.cook_time);
+        float foodTime = npcAIWorker.characterData.CalculationChefMakeFoodTime(gameItemsManager, orderForCustomer.foodData.cook_time);
         npcAIWorker.characterData.baseInfo.chefInfo.AddCookTime(foodTime);
         yield return new WaitForSeconds(foodTime);
         //记录数据

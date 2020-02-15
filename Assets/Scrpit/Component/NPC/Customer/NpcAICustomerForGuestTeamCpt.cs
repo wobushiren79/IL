@@ -4,8 +4,13 @@ using System.Collections.Generic;
 
 public class NpcAICustomerForGuestTeamCpt : NpcAICustomerCpt
 {
-    //团队ID
-    public string teamId;
+    //团队代码
+    public string teamCode;
+    //团队数据
+    public NpcTeamBean teamData;
+    //团队地位
+    public int teamRank;
+
     //集合点
     public Vector3 togetherPosition;
 
@@ -30,9 +35,11 @@ public class NpcAICustomerForGuestTeamCpt : NpcAICustomerCpt
     /// 设置队伍ID
     /// </summary>
     /// <param name="teamId"></param>
-    public void SetTeamId(string teamId)
+    public void SetTeamData(string teamCode,NpcTeamBean teamData,int teamRank)
     {
-        this.teamId = teamId;
+        this.teamCode = teamCode;
+        this.teamData = teamData;
+        this.teamRank = teamRank;
     }
 
     /// <summary>
@@ -41,7 +48,7 @@ public class NpcAICustomerForGuestTeamCpt : NpcAICustomerCpt
     /// <returns></returns>
     public List<NpcAICustomerForGuestTeamCpt> GetGuestTeam()
     {
-        List<NpcAICustomerForGuestTeamCpt> listTeamMember = npcEventBuilder.GetGuestTeamByTeamId(teamId);
+        List<NpcAICustomerForGuestTeamCpt> listTeamMember = npcEventBuilder.GetGuestTeamByTeamCode(teamCode);
         if (listTeamMember.Count == 0)
             listTeamMember.Add(this);
         return listTeamMember;

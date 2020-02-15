@@ -95,9 +95,8 @@ public class UIGameText : UIGameComponent, TextInfoManager.ICallBack, DialogView
     {
         mTextEnum = textEnum;
         textOrder = 1;
-        uiGameManager.textInfoManager.GetTextByType(textEnum, id);
+        uiGameManager.textInfoManager.GetTextById(textEnum, id);
     }
-
 
     /// <summary>
     /// 设置数据-聊天
@@ -281,31 +280,48 @@ public class UIGameText : UIGameComponent, TextInfoManager.ICallBack, DialogView
     public void SetTextInfoForLook(List<TextInfoBean> listData)
     {
         ShowText(listData);
+        if (callBack != null)
+            callBack.UITextInitReady();
     }
 
     public void SetTextInfoForStory(List<TextInfoBean> listData)
     {
         ShowText(listData);
+        if (callBack != null)
+            callBack.UITextInitReady();
     }
 
     public void SetTextInfoForTalkByFirstMeet(List<TextInfoBean> listData)
     {
         ShowText(listData);
+        if (callBack != null)
+            callBack.UITextInitReady();
     }
 
     public void SetTextInfoForTalkOptions(List<TextInfoBean> listData)
     {
         ShowText(listData);
+        if (callBack != null)
+            callBack.UITextInitReady();
     }
 
     public void SetTextInfoForTalkByMarkId(List<TextInfoBean> listData)
     {
         ShowText(listData);
+        if (callBack != null)
+            callBack.UITextInitReady();
     }
 
     public void SetTextInfoForTalkByUserId(List<TextInfoBean> listData)
     {
+        if (callBack != null)
+            callBack.UITextInitReady();
+    }
 
+    public void SetTextInfoForTalkByType(TextTalkTypeEnum textTalkType, List<TextInfoBean> listData)
+    {
+        if (callBack != null)
+            callBack.UITextInitReady();
     }
     #endregion
 
@@ -346,10 +362,16 @@ public class UIGameText : UIGameComponent, TextInfoManager.ICallBack, DialogView
     {
 
     }
+
     #endregion
 
     public interface ICallBack
     {
+        /// <summary>
+        /// 文本准备完成
+        /// </summary>
+        void UITextInitReady();
+
         /// <summary>
         /// 文本展示结束
         /// </summary>

@@ -29,8 +29,6 @@ public class NpcAIWorkerCpt : BaseNpcAI
 
     //客栈数据
     public InnHandler innHandler;
-    //游戏数据
-    public GameDataManager gameDataManager;
     //工作者的想法
     public WorkerIntentEnum workerIntent = WorkerIntentEnum.Idle;
     //工作信息

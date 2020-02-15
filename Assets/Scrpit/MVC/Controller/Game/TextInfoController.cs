@@ -2,7 +2,7 @@
 using UnityEditor;
 using System.Collections.Generic;
 
-public class TextInfoController : BaseMVCController<TextInfoModel,ITextInfoView>
+public class TextInfoController : BaseMVCController<TextInfoModel, ITextInfoView>
 {
     public TextInfoController(BaseMonoBehaviour content, ITextInfoView view) : base(content, view)
     {
@@ -10,13 +10,13 @@ public class TextInfoController : BaseMVCController<TextInfoModel,ITextInfoView>
 
     public override void InitData()
     {
-        
+
     }
 
     public void GetTextForLook(long markId)
     {
         List<TextInfoBean> listData = GetModel().GetTextForLook(markId);
-        if(listData != null)
+        if (listData != null)
             GetView().GetTextInfoForLookSuccess(listData);
         else
             GetView().GetTextInfoFail();
@@ -40,7 +40,7 @@ public class TextInfoController : BaseMVCController<TextInfoModel,ITextInfoView>
     /// </summary>
     /// <param name="userId"></param>
     /// <param name="minFavorability"></param>
-    public void GetTextForTalkByMinFavorability(long userId,int minFavorability)
+    public void GetTextForTalkByMinFavorability(long userId, int minFavorability)
     {
         List<TextInfoBean> listData = GetModel().GetTextForTalkByMinFavorability(userId, minFavorability);
         if (listData != null)
@@ -75,6 +75,24 @@ public class TextInfoController : BaseMVCController<TextInfoModel,ITextInfoView>
             GetView().GetTextInfoFail();
     }
 
+    /// <summary>
+    /// 根据类型查询对话数据
+    /// </summary>
+    /// <param name="userId"></param>
+    /// <param name="textTalkType"></param>
+    public void GetTextForTalkByType(long userId, TextTalkTypeEnum textTalkType)
+    {
+        List<TextInfoBean> listData = GetModel().GetTextForTalkByType(userId, textTalkType);
+        if (listData != null)
+            GetView().GetTextInfoForTalkByTypeSuccess(textTalkType, listData);
+        else
+            GetView().GetTextInfoFail();
+    }
+
+    /// <summary>
+    /// 获取故事文本
+    /// </summary>
+    /// <param name="markId"></param>
     public void GetTextForStory(long markId)
     {
         List<TextInfoBean> listData = GetModel().GetTextForStory(markId);
