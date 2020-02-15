@@ -135,6 +135,7 @@ public class NpcEventBuilder : NpcNormalBuilder, IBaseObserver
             CharacterFavorabilityBean characterFavorability = gameDataManager.gameData.GetCharacterFavorability(long.Parse(characterData.baseInfo.characterId));
             rascalCpt.SetTeamData(teamCode,npcTeam, i);
             rascalCpt.SetFavorabilityData(characterFavorability);
+            rascalCpt.AddStatusIconForRascal();
             rascalCpt.SetIntent(NpcAIRascalCpt.RascalIntentEnum.GoToInn);
         }
     }

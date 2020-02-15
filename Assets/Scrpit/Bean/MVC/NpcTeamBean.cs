@@ -13,7 +13,7 @@ public class NpcTeamBean : BaseBean
     public string team_members;
     public int team_number;
     public string condition;//出现条件
-
+    public string talk_ids;//对话IDS
     public string name;
 
     /// <summary>
@@ -37,6 +37,13 @@ public class NpcTeamBean : BaseBean
             if (characterData != null)
                 listMembers.Add(characterData);
         }
+    }
+
+    public long[] GetTalkIds()
+    {
+        if (talk_ids == null)
+            return new long[0];
+        return StringUtil.SplitBySubstringForArrayLong(talk_ids, ',');
     }
 
     public long[] GetTeamLeaderId()

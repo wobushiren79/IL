@@ -135,6 +135,18 @@ public class BaseNpcAI : BaseMonoBehaviour
     }
 
     /// <summary>
+    /// 增加恶棍图标
+    /// </summary>
+    public void AddStatusIconForRascal()
+    {
+        CharacterStatusIconBean statusIconData = new CharacterStatusIconBean();
+        Sprite iconGuestTeam = iconDataManager.GetIconSpriteByName("devil_1");
+        statusIconData.iconStatus = CharacterStatusIconEnum.NpcType;
+        statusIconData.spIcon = iconGuestTeam;
+        characterStatusIcon.AddStatusIcon(statusIconData);
+    }
+
+    /// <summary>
     /// 增加好友图标
     /// </summary>
     public void AddStatusIconForFriend()

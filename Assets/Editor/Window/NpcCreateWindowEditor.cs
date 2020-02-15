@@ -5,24 +5,30 @@ using System;
 using Cinemachine;
 using System.Collections;
 
-public class NpcCreateWindowEidtor : EditorWindow
+public class NpcCreateWindowEditor : EditorWindow
 {
     GameItemsManager gameItemsManager;
     NpcInfoManager npcInfoManager;
     NpcInfoService npcInfoService;
     TextInfoService textInfoService;
+    NpcTeamService npcTeamService;
 
     private CinemachineVirtualCamera mCamera2D;
     private GameObject mObjContent;
     private GameObject mObjNpcModel;
 
+    //NPC团队创建数据
+    public NpcTeamBean npcTeamDataForCreate = new NpcTeamBean();
+    //查询的NPC团队数据
+    public List<NpcTeamBean> listNpcTeamDataForFind = new List<NpcTeamBean>();
+
     [MenuItem("Tools/Window/NpcCreate")]
     static void CreateWindows()
     {
-        EditorWindow.GetWindow(typeof(NpcCreateWindowEidtor));
+        EditorWindow.GetWindow(typeof(NpcCreateWindowEditor));
     }
 
-    public NpcCreateWindowEidtor()
+    public NpcCreateWindowEditor()
     {
         this.titleContent = new GUIContent("Npc创建工具");
     }
@@ -39,6 +45,7 @@ public class NpcCreateWindowEidtor : EditorWindow
         npcInfoManager = new NpcInfoManager();
         npcInfoService = new NpcInfoService();
         textInfoService = new TextInfoService();
+        npcTeamService = new NpcTeamService();
 
         gameItemsManager.Awake();
         npcInfoManager.Awake();
@@ -68,11 +75,17 @@ public class NpcCreateWindowEidtor : EditorWindow
 
         mObjContent = EditorGUILayout.ObjectField(new GUIContent("Npc容器", ""), mObjContent, typeof(GameObject), true) as GameObject;
         mObjNpcModel = EditorGUILayout.ObjectField(new GUIContent("NPC模型", ""), mObjNpcModel, typeof(GameObject), true) as GameObject;
+        GUILayout.Label("-----------------------------------------------------------------------------------------------------------");
         GUICreateNpc();
         GUIFindNpc();
         GUINpcTalk();
+        GUILayout.Label("-----------------------------------------------------------------------------------------------------------");
+        EditorUI.GUICreateNpcTeam(npcTeamDataForCreate, npcTeamService);
+        listNpcTeamDataForFind = EditorUI.GUIFindNpcTeam(npcTeamService, listNpcTeamDataForFind);
+
         GUILayout.EndScrollView();
     }
+
 
     public NpcInfoBean createNpcInfo = new NpcInfoBean();
     private void GUICreateNpc()

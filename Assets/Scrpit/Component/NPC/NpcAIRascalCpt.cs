@@ -59,7 +59,7 @@ public class NpcAIRascalCpt : BaseNpcAI, IBaseObserver
     public override void Awake()
     {
         base.Awake();
-        eventHandler = Find<EventHandler>( ImportantTypeEnum.EventHandler);
+        eventHandler = Find<EventHandler>(ImportantTypeEnum.EventHandler);
         innHandler = Find<InnHandler>(ImportantTypeEnum.InnHandler);
         sceneInnManager = Find<SceneInnManager>(ImportantTypeEnum.SceneManager);
     }
@@ -98,7 +98,7 @@ public class NpcAIRascalCpt : BaseNpcAI, IBaseObserver
     /// </summary>
     /// <param name="teamData"></param>
     /// <param name="teamRank">该人物在小队中的位置</param>
-    public void SetTeamData(string teamCode,NpcTeamBean teamData,int teamRank)
+    public void SetTeamData(string teamCode, NpcTeamBean teamData, int teamRank)
     {
         this.teamCode = teamCode;
         this.teamData = teamData;
@@ -181,8 +181,8 @@ public class NpcAIRascalCpt : BaseNpcAI, IBaseObserver
     /// </summary>
     public void SetIntentForWaitingForReply()
     {
-        long markId = 1;
-        eventHandler.EventTriggerForTalk(markId);
+        long talk_ids = RandomUtil.GetRandomDataByArray(teamData.GetTalkIds());
+        eventHandler.EventTriggerForTalk(talk_ids);
         ////获取文本信息
         //if (characterFavorabilityData.firstMeet)
         //{
@@ -356,7 +356,7 @@ public class NpcAIRascalCpt : BaseNpcAI, IBaseObserver
             }
         }
     }
-   #endregion
+    #endregion
 
 
 }

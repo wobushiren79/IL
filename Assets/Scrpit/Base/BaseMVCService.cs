@@ -157,6 +157,7 @@ public class BaseMVCService
         string[] colValue = new string[] { value1, value2, value3 };
         return SQliteHandle.LoadTableData<T>(ProjectConfigInfo.DATA_BASE_INFO_NAME, tableNameForMain, leftTable, mainKey, leftKey, colName, operations, colValue);
     }
+   
     /// <summary>
     /// 通过ID删除数据
     /// </summary>
@@ -169,6 +170,25 @@ public class BaseMVCService
         string[] operations = new string[] { "=" };
         string[] colValues = new string[] { id + "" };
         return SQliteHandle.DeleteTableDataAndLeft(ProjectConfigInfo.DATA_BASE_INFO_NAME, tableNameForMain, colKeys, operations, colValues);
+    }
+
+    /// <summary>
+    /// 链表删除
+    /// </summary>
+    /// <param name="mainName"></param>
+    /// <param name="leftName"></param>
+    /// <param name="value"></param>
+    /// <returns></returns>
+    public bool BaseDeleteDataWithLeft(string mainName,string leftName,string value)
+    {
+        bool isDeleteAll = true;
+        if (BaseDeleteData(tableNameForMain, mainName, value))
+        {
+            isDeleteAll = BaseDeleteData(tableNameForLeft, leftName, value);
+        }
+        else
+            isDeleteAll = false;
+        return isDeleteAll;
     }
 
     public bool BaseDeleteData(string key, string value)

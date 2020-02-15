@@ -40,6 +40,7 @@ public class UIGameManager : BaseUIManager
 
     [Header("建造")]
     public NpcCustomerBuilder npcCustomerBuilder;
+    public NpcEventBuilder npcEventBuilder;
 
     [Header("地形")]
     public NavMeshSurface navMesh;
@@ -75,5 +76,8 @@ public class UIGameManager : BaseUIManager
         infoAbilityPopup = FindInChildren<InfoAbilityPopupShow>(ImportantTypeEnum.Popup);
         popupItemsSelection = FindInChildren<PopupItemsSelection>(ImportantTypeEnum.Popup);
 
+
+        npcCustomerBuilder = Find<NpcCustomerBuilder>(ImportantTypeEnum.NpcBuilder);
+        npcEventBuilder = Find<NpcEventBuilder>(ImportantTypeEnum.NpcBuilder);
     }
 }

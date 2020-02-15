@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using UnityEditor;
 using UnityEngine.UI;
-public class UIGameTest : BaseUIComponent
+public class UIGameTest : UIGameComponent
 {
     public InputField etStoryId;
     public Button btStoryCreate;
@@ -19,13 +19,7 @@ public class UIGameTest : BaseUIComponent
     public Button btNpcGuestTeam;
     public Button btNpcFriend;
     public Button btNpcFriendTeam;
-    protected NpcEventBuilder npcEventBuilder;
-
-    public override void Awake()
-    {
-        base.Awake();
-        npcEventBuilder = Find<NpcEventBuilder>(ImportantTypeEnum.NpcBuilder);
-    }
+    public Button btNpcRascal;
 
     private void Start()
     {
@@ -41,6 +35,8 @@ public class UIGameTest : BaseUIComponent
             btNpcFriend.onClick.AddListener(CreateFriendForOne);
         if (btNpcFriendTeam != null)
             btNpcFriendTeam.onClick.AddListener(CreateFriendForTeam);
+        if (btNpcRascal != null)
+            btNpcRascal.onClick.AddListener(CreateRascal);
     }
 
     /// <summary>
@@ -65,7 +61,6 @@ public class UIGameTest : BaseUIComponent
 
             if (long.TryParse(etItemNumber.text, out long itemNumber))
             {
-                UIGameManager uiGameManager= GetUIManager<UIGameManager>();
                 uiGameManager.gameDataManager.gameData.AddNewItems(itemId, itemNumber);
             }
             else
@@ -89,7 +84,6 @@ public class UIGameTest : BaseUIComponent
 
             if (long.TryParse(etBuildItemNumber.text, out long itemNumber))
             {
-                UIGameManager uiGameManager = GetUIManager<UIGameManager>();
                 uiGameManager.gameDataManager.gameData.AddBuildNumber(itemId, itemNumber);
             }
             else
@@ -108,9 +102,9 @@ public class UIGameTest : BaseUIComponent
     /// </summary>
     public void CreateGuestTeam()
     {
-        if (npcEventBuilder == null)
+        if (uiGameManager.npcEventBuilder == null)
             return;
-        npcEventBuilder.TeamEvent(long.Parse(etNpcGuestTeamId.text));
+       uiGameManager.npcEventBuilder.TeamEvent(long.Parse(etNpcGuestTeamId.text));
     }
 
     /// <summary>
@@ -118,9 +112,9 @@ public class UIGameTest : BaseUIComponent
     /// </summary>
     public void CreateFriendForOne()
     {
-        if (npcEventBuilder == null)
+        if (uiGameManager.npcEventBuilder == null)
             return;
-        npcEventBuilder.FriendsEventForOne(long.Parse(etNpcGuestTeamId.text));
+        uiGameManager.npcEventBuilder.FriendsEventForOne(long.Parse(etNpcGuestTeamId.text));
     }
 
     /// <summary>
@@ -128,8 +122,18 @@ public class UIGameTest : BaseUIComponent
     /// </summary>
     public void CreateFriendForTeam()
     {
-        if (npcEventBuilder == null)
+        if (uiGameManager.npcEventBuilder == null)
             return;
-        npcEventBuilder.FriendsEventForTeam(long.Parse(etNpcGuestTeamId.text));
+      uiGameManager. npcEventBuilder.FriendsEventForTeam(long.Parse(etNpcGuestTeamId.text));
+    }
+
+    /// <summary>
+    /// 生成捣乱者
+    /// </summary>
+    public void CreateRascal()
+    {
+        if (uiGameManager.npcEventBuilder == null)
+            return;
+        uiGameManager.npcEventBuilder.RascalEvent(long.Parse(etNpcGuestTeamId.text));
     }
 }
