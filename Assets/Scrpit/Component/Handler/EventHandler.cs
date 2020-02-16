@@ -26,6 +26,7 @@ public class EventHandler : BaseHandler,
     {
         EventEnd,//事件结束
         TalkForAddFavorability,//对话增加高感
+        TextSelectResult,//文本选择
     }
 
     protected GameDataManager gameDataManager;
@@ -373,6 +374,7 @@ public class EventHandler : BaseHandler,
                     break;
             }
         }
+        NotifyAllObserver((int)NotifyEventTypeEnum.TextSelectResult, textData);
     }
     #endregion
 

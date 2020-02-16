@@ -111,7 +111,7 @@ public class NpcEventBuilder : NpcNormalBuilder, IBaseObserver
     /// <param name="npcTeam"></param>
     /// <param name="npcPosition"></param>
     public void BuildRascal(NpcTeamBean npcTeam, Vector3 npcPosition)
-    {        
+    {
         //获取小队成员数据
         npcTeam.GetTeamCharacterData(npcInfoManager, out List<CharacterBean> listLeader, out List<CharacterBean> listMembers);
         //设置小队相关
@@ -129,11 +129,11 @@ public class NpcEventBuilder : NpcNormalBuilder, IBaseObserver
                 characterData = listMembers[i - listLeader.Count];
             }
             //生成NPC
-            GameObject npcObj = BuildNpc(objRascalModel, characterData, npcPosition);
+            GameObject npcObj = BuildNpc(objRascalModel, characterData, npcPosition + new Vector3(UnityEngine.Random.Range(-0.5f, 0.5f), UnityEngine.Random.Range(-0.5f, 0.5f)));
             //设置意图
             NpcAIRascalCpt rascalCpt = npcObj.GetComponent<NpcAIRascalCpt>();
             CharacterFavorabilityBean characterFavorability = gameDataManager.gameData.GetCharacterFavorability(long.Parse(characterData.baseInfo.characterId));
-            rascalCpt.SetTeamData(teamCode,npcTeam, i);
+            rascalCpt.SetTeamData(teamCode, npcTeam, i);
             rascalCpt.SetFavorabilityData(characterFavorability);
             rascalCpt.AddStatusIconForRascal();
             rascalCpt.SetIntent(NpcAIRascalCpt.RascalIntentEnum.GoToInn);
@@ -182,7 +182,7 @@ public class NpcEventBuilder : NpcNormalBuilder, IBaseObserver
             baseNpcAI.AddStatusIconForGuestTeam(teamColor);
 
             NpcAICustomerForGuestTeamCpt customerAI = baseNpcAI.GetComponent<NpcAICustomerForGuestTeamCpt>();
-            customerAI.SetTeamData(teamCode,npcTeam, i);
+            customerAI.SetTeamData(teamCode, npcTeam, i);
             if (isWant)
             {
                 customerAI.SetIntent(NpcAICustomerCpt.CustomerIntentEnum.Want);

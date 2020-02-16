@@ -33,8 +33,6 @@ public class NpcAIRascalCpt : BaseNpcAI, IBaseObserver
 
     //想要说的对话
     public List<TextInfoBean> listTextInfoBean;
-    //累计增加的好感
-    public int addFavorability = 0;
 
     //角色生命值
     public int characterMaxLife = 10;
@@ -90,6 +88,11 @@ public class NpcAIRascalCpt : BaseNpcAI, IBaseObserver
                     Destroy(gameObject);
                 break;
         }
+    }
+
+    private void OnDestroy()
+    {
+        eventHandler.RemoveObserver(this);
     }
 
 
@@ -181,18 +184,17 @@ public class NpcAIRascalCpt : BaseNpcAI, IBaseObserver
     /// </summary>
     public void SetIntentForWaitingForReply()
     {
-        long talk_ids = RandomUtil.GetRandomDataByArray(teamData.GetTalkIds());
-        eventHandler.EventTriggerForTalk(talk_ids);
-        ////获取文本信息
-        //if (characterFavorabilityData.firstMeet)
-        //{
-        //    //获取第一次对话的文本
-        //    mTextInfoController.GetTextForTalkByFirst(characterFavorabilityData.characterId);
-        //}
-        //else
-        //{
-        //    mTextInfoController.GetTextForTalkByFavorability(characterFavorabilityData.characterId, characterFavorabilityData.favorability);
-        //}
+        if (teamRank==0)
+        {
+            long talk_ids = RandomUtil.GetRandomDataByArray(teamData.GetTalkIds());
+            if (talk_ids == 0)
+            {
+                SetIntent(RascalIntentEnum.Leave);
+                return;
+            }
+            eventHandler.AddObserver(this);
+            eventHandler.EventTriggerForTalk(talk_ids);
+        }
     }
 
     /// <summary>
@@ -289,70 +291,28 @@ public class NpcAIRascalCpt : BaseNpcAI, IBaseObserver
         }
     }
 
-    #region 对话信息回调
-    public void GetTextInfoForLookSuccess(List<TextInfoBean> listData)
-    {
-
-    }
-
-    public void GetTextInfoForTalkByUserIdSuccess(List<TextInfoBean> listData)
-    {
-
-    }
-
-    public void GetTextInfoForTalkByMarkIdSuccess(List<TextInfoBean> listData)
-    {
-        this.listTextInfoBean = listData;
-        if (CheckUtil.ListIsNull(listTextInfoBean))
-        {
-            SetIntent(RascalIntentEnum.Leave);
-            return;
-        }
-        TextInfoBean textInfo = RandomUtil.GetRandomDataByList(listTextInfoBean);
-        // mEventHandler.EventTriggerForTalk(textInfo.mark_id, textInfo.);
-        eventHandler.AddObserver(this);
-    }
-    public void GetTextInfoForStorySuccess(List<TextInfoBean> listData)
-    {
-
-    }
-
-    public void GetTextInfoForTalkByFirstMeetSuccess(List<TextInfoBean> listData)
-    {
-
-    }
-
-    public void GetTextInfoFail()
-    {
-
-    }
-    #endregion
-
     #region 事件通知
     public void TextEnd()
     {
-        if (addFavorability >= 0)
-        {
-            SetIntent(RascalIntentEnum.Leave);
-        }
-        else
-        {
-            SetIntent(RascalIntentEnum.MakeTrouble);
-        }
-    }
 
-    public void AddFavorability(long characterId, int favorability)
-    {
-        addFavorability += favorability;
     }
 
     public void ObserbableUpdate<T>(T observable, int type, params object[] obj) where T : Object
     {
         if (observable == eventHandler)
         {
+            //根据对话的好感加成 不同的反应
             if (type == (int)EventHandler.NotifyEventTypeEnum.TalkForAddFavorability)
             {
-                addFavorability += (int)obj[1];
+                int addFavorability = (int)obj[1];
+                if (addFavorability >= 0)
+                {
+                    SetIntent(RascalIntentEnum.Leave);
+                }
+                else
+                {
+                    SetIntent(RascalIntentEnum.MakeTrouble);
+                }
             }
         }
     }

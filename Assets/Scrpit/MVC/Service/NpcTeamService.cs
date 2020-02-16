@@ -10,6 +10,17 @@ public class NpcTeamService : BaseMVCService
     }
 
     /// <summary>
+    /// 根据Id查询数据
+    /// </summary>
+    /// <param name="type"></param>
+    /// <returns></returns>
+    public List<NpcTeamBean> QueryDataById(long[] teamId)
+    {
+        string values = TypeConversionUtil.ArrayToStringBySplit(teamId, ",");
+        return BaseQueryData<NpcTeamBean>("team_id", tableNameForMain + ".valid", "=", "1", tableNameForMain + ".id", "in", "(" + values + ")");
+    }
+
+    /// <summary>
     /// 查询所有装备数据
     /// </summary>
     /// <returns></returns>
@@ -24,7 +35,7 @@ public class NpcTeamService : BaseMVCService
     /// <param name="teamId"></param>
     public bool DeleteDataById(long teamId)
     {
-       return BaseDeleteDataWithLeft("id","team_id",""+ teamId);
+        return BaseDeleteDataWithLeft("id", "team_id", "" + teamId);
     }
 
     /// <summary>
