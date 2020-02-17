@@ -40,7 +40,8 @@ public class NpcAIRascalCpt : BaseNpcAI, IBaseObserver
 
     //制造麻烦的时间
     public float timeMakeTrouble = 60;
-
+    //增加的好感
+    public int addFavorability = 0;
     //小队唯一代码
     public string teamCode;
     //小队数据
@@ -192,11 +193,19 @@ public class NpcAIRascalCpt : BaseNpcAI, IBaseObserver
             long talk_ids = RandomUtil.GetRandomDataByArray(teamData.GetTalkIds());
             if (talk_ids == 0)
             {
-                SetIntent(RascalIntentEnum.Leave);
+                SetTeamIntent(RascalIntentEnum.Leave);
                 return;
             }
-            eventHandler.AddObserver(this);
-            eventHandler.EventTriggerForTalk(talk_ids);
+            bool isTrigger = eventHandler.EventTriggerForTalk(talk_ids);
+            if (isTrigger)
+            {
+                eventHandler.AddObserver(this);
+            }
+            else
+            {
+                //如果没有触发事件 则全体离开
+                SetTeamIntent(RascalIntentEnum.Leave);
+            }
         }
     }
 
@@ -209,7 +218,7 @@ public class NpcAIRascalCpt : BaseNpcAI, IBaseObserver
         AddLife(characterMaxLife);
 
         characterLifeCpt.gameObject.SetActive(true);
-        characterLifeCpt.gameObject.transform.localScale=new Vector3(1,1,1);
+        characterLifeCpt.gameObject.transform.localScale = new Vector3(1, 1, 1);
         characterLifeCpt.gameObject.transform.DOScale(new Vector3(0.2f, 0.2f), 0.5f).From().SetEase(Ease.OutBack);
         //展示范围
         objRascalSpaceShow.SetActive(true);
@@ -296,31 +305,37 @@ public class NpcAIRascalCpt : BaseNpcAI, IBaseObserver
         }
     }
 
-    #region 事件通知
-    public void TextEnd()
+    /// <summary>
+    /// 设置全体离开
+    /// </summary>
+    public void SetTeamIntent(RascalIntentEnum rascalIntent)
     {
-
+        List<NpcAIRascalCpt> listNpc = npcEventBuilder.GetRascalTeamByTeamCode(teamCode);
+        foreach (NpcAIRascalCpt itemNpc in listNpc)
+        {
+            itemNpc.SetIntent(rascalIntent);
+        }
     }
 
+    #region 事件通知
     public void ObserbableUpdate<T>(T observable, int type, params object[] obj) where T : Object
     {
         if (observable == eventHandler)
         {
-            //根据对话的好感加成 不同的反应
             if (type == (int)EventHandler.NotifyEventTypeEnum.TalkForAddFavorability)
             {
-                int addFavorability = (int)obj[1];
+                addFavorability += (int)obj[1];
+            }
+            else if (type == (int)EventHandler.NotifyEventTypeEnum.EventEnd)
+            {
+                //根据对话的好感加成 不同的反应
                 if (addFavorability > 0)
                 {
-                    SetIntent(RascalIntentEnum.Leave);
+                    SetTeamIntent(RascalIntentEnum.Leave);
                 }
                 else if (addFavorability < 0)
                 {
-                    List<NpcAIRascalCpt> listNpc = npcEventBuilder.GetRascalTeamByTeamCode(teamCode);
-                    foreach (NpcAIRascalCpt itemNpc in listNpc)
-                    {
-                        itemNpc.SetIntent(RascalIntentEnum.MakeTrouble);
-                    }
+                    SetTeamIntent(RascalIntentEnum.MakeTrouble);
                 }
             }
         }

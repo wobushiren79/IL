@@ -61,11 +61,31 @@ public class EventHandler : BaseHandler,
     }
 
     /// <summary>
+    /// 检测是否能触发事件
+    /// </summary>
+    /// <returns></returns>
+    public bool CheckEventTrigger()
+    {
+        if(mEventStatus== EventStatusEnum.EventEnd)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }  
+    }
+
+    /// <summary>
     /// 调查事件触发
     /// </summary>
     /// <param name="markId"></param>
-    public void EventTriggerForLook(long markId)
+    public bool EventTriggerForLook(long markId)
     {
+        if (!CheckEventTrigger())
+        {
+            return false ;
+        }
         SetEventStatus(EventStatusEnum.EventIng);
         SetEventType(EventTypeEnum.Look);
         //控制模式修改
@@ -74,14 +94,19 @@ public class EventHandler : BaseHandler,
         UIGameText uiGameText = (UIGameText)uiManager.OpenUIAndCloseOtherByName(EnumUtil.GetEnumName(UIEnum.GameText));
         uiGameText.SetCallBack(this);
         uiGameText.SetData(TextEnum.Look, markId);
+        return true;
     }
 
     /// <summary>
     /// 对话事件触发
     /// </summary>
     /// <param name="markId"></param>
-    public void EventTriggerForTalk(NpcInfoBean npcInfo)
+    public bool EventTriggerForTalk(NpcInfoBean npcInfo)
     {
+        if (!CheckEventTrigger())
+        {
+            return false;
+        }
         SetEventStatus(EventStatusEnum.EventIng);
         SetEventType(EventTypeEnum.Talk);
         //控制模式修改
@@ -90,14 +115,19 @@ public class EventHandler : BaseHandler,
         UIGameText uiGameText = (UIGameText)uiManager.OpenUIAndCloseOtherByName(EnumUtil.GetEnumName(UIEnum.GameText));
         uiGameText.SetDataForTalk(npcInfo);
         uiGameText.SetCallBack(this);
+        return true;
     }
 
     /// <summary>
     /// 对话事件触发
     /// </summary>
     /// <param name="markId"></param>
-    public void EventTriggerForTalk(long markId)
+    public bool EventTriggerForTalk(long markId)
     {
+        if (!CheckEventTrigger())
+        {
+            return false;
+        }
         SetEventStatus(EventStatusEnum.EventIng);
         SetEventType(EventTypeEnum.Talk);
         //控制模式修改
@@ -106,14 +136,19 @@ public class EventHandler : BaseHandler,
         UIGameText uiGameText = (UIGameText)uiManager.OpenUIAndCloseOtherByName(EnumUtil.GetEnumName(UIEnum.GameText));
         uiGameText.SetData(TextEnum.Talk, markId);
         uiGameText.SetCallBack(this);
+        return true;
     }
 
     /// <summary>
     /// 剧情触发
     /// </summary>
     /// <param name="markId"></param>
-    public void EventTriggerForStory(StoryInfoBean storyInfo)
+    public bool EventTriggerForStory(StoryInfoBean storyInfo)
     {
+        if (!CheckEventTrigger())
+        {
+            return false;
+        }
         this.mStoryInfo = storyInfo;
         mEventPosition = new Vector3(storyInfo.position_x, storyInfo.position_y);
         SetEventStatus(EventStatusEnum.EventIng);
@@ -132,19 +167,25 @@ public class EventHandler : BaseHandler,
         UIGameText uiGameText = (UIGameText)uiManager.GetUIByName(EnumUtil.GetEnumName(UIEnum.GameText));
         uiGameText.SetCallBack(this);
         storyBuilder.BuildStory(storyInfo);
+        return true;
     }
 
     /// <summary>
     /// 根据ID触发故事
     /// </summary>
     /// <param name="id"></param>
-    public void EventTriggerForStory(long id)
+    public bool EventTriggerForStory(long id)
     {
+        if (!CheckEventTrigger())
+        {
+            return false;
+        }
         if (storyInfoManager == null)
-            return;
+            return false;
         StoryInfoBean storyInfo = storyInfoManager.GetStoryInfoDataById(id);
         if (storyInfo != null)
             EventTriggerForStory(storyInfo);
+        return true;
     }
 
     /// <summary>
@@ -152,6 +193,10 @@ public class EventHandler : BaseHandler,
     /// </summary>
     public bool EventTriggerForStory(TownBuildingEnum positionType, int OutOrIn)
     {
+        if (!CheckEventTrigger())
+        {
+            return false;
+        }
         if (storyInfoManager == null)
             return false;
         StoryInfoBean storyInfo = storyInfoManager.CheckStory(gameDataManager.gameData, positionType, OutOrIn);
@@ -165,6 +210,10 @@ public class EventHandler : BaseHandler,
     }
     public bool EventTriggerForStory()
     {
+        if (!CheckEventTrigger())
+        {
+            return false;
+        }
         if (storyInfoManager == null)
             return false;
         StoryInfoBean storyInfo = storyInfoManager.CheckStory(gameDataManager.gameData);
@@ -182,13 +231,13 @@ public class EventHandler : BaseHandler,
     /// </summary>
     /// <param name="gameCookingData"></param>
     /// <param name="id"></param>
-    public void EventTriggerForStoryCooking(MiniGameCookingBean gameCookingData, long id)
+    public bool EventTriggerForStoryCooking(MiniGameCookingBean gameCookingData, long id)
     {
         if (storyInfoManager == null)
-            return;
+            return false;
         StoryInfoBean storyInfo = storyInfoManager.GetStoryInfoDataById(id);
         if (storyInfo == null)
-            return;
+            return false;
         this.mStoryInfo = storyInfo;
         SetEventStatus(EventStatusEnum.EventIng);
         SetEventType(EventTypeEnum.StoryForMiniGameCooking);
@@ -207,6 +256,7 @@ public class EventHandler : BaseHandler,
         SortedList<string, string> listMarkData = GetMiniGameMarkStrData(gameCookingData);
         uiGameText.SetListMark(listMarkData);
         storyBuilder.BuildStory(storyInfo);
+        return true;
     }
 
     /// <summary>
@@ -339,7 +389,6 @@ public class EventHandler : BaseHandler,
                 storyBuilder.NextStoryOrder();
                 break;
         }
-
     }
 
     public void UITextAddFavorability(long characterId, int favorability)

@@ -7,20 +7,18 @@ public class InteractiveLookCpt : BaseInteractiveCpt
 
     public long markId;//交互ID
 
-    private EventHandler mEventHandler;
+    protected EventHandler eventHandler;
 
-    private void Start()
+    private void Awake()
     {
-        mEventHandler = FindObjectOfType<EventHandler>();
+        eventHandler = Find<EventHandler>(ImportantTypeEnum.EventHandler);
     }
 
     public override void InteractiveDetection(CharacterInteractiveCpt characterInt)
     {
-        if (Input.GetButtonDown(InputInfo.Interactive_E) && mEventHandler != null)
+        if (Input.GetButtonDown(InputInfo.Interactive_E) && eventHandler != null)
         {
-            //如果没有事件
-            if (mEventHandler.GetEventStatus() == EventHandler.EventStatusEnum.EventEnd)
-                mEventHandler.EventTriggerForLook(markId);
+            eventHandler.EventTriggerForLook(markId);
         }
     }
 
