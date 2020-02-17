@@ -129,7 +129,8 @@ public class NpcAIWorkerForBeaterCpt : NpcAIWokerFoBaseCpt
     {
         yield return new WaitForSeconds(restTime);
         npcAIWorker.SetCharacterData(npcAIWorker.characterData);
-        SetIntent(BeaterIntentEnum.Idle);
+        npcAIWorker.SetCharacterLive();
+        SetIntent(BeaterIntentEnum.Idle);      
     }
 
     /// <summary>

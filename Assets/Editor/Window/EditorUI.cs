@@ -26,7 +26,7 @@ public class EditorUI
             npcInfoService.InsertData(npcInfo);
         }
         GUILayout.EndHorizontal();
-        GUINpcInfoItem(gameItemsManager, objNpcContainer,npcInfo);
+        GUINpcInfoItem(gameItemsManager, objNpcContainer, npcInfo);
     }
 
     /// <summary>
@@ -34,8 +34,8 @@ public class EditorUI
     /// </summary>
     public static void GUINpcInfoFind(
         NpcInfoService npcInfoService,
-        NpcInfoManager npcInfoManager,GameItemsManager gameItemsManager,
-        GameObject objNpcContainer,GameObject objNpcModel,
+        NpcInfoManager npcInfoManager, GameItemsManager gameItemsManager,
+        GameObject objNpcContainer, GameObject objNpcModel,
         string findIdsStr, List<CharacterBean> listNpcDataForFind,
         out string outFindIdStr, out List<CharacterBean> outListNpcDataForFind)
     {
@@ -79,7 +79,7 @@ public class EditorUI
             GUILayout.BeginHorizontal();
             if (GUILayout.Button("显示", GUILayout.Width(100), GUILayout.Height(20)))
             {
-                ShowNpc(gameItemsManager,objNpcContainer,objNpcModel, itemData);
+                ShowNpc(gameItemsManager, objNpcContainer, objNpcModel, itemData);
             }
             if (GUILayout.Button("更新", GUILayout.Width(100), GUILayout.Height(20)))
             {
@@ -214,41 +214,6 @@ public class EditorUI
     }
 
     /// <summary>
-    /// Npc对话查询 UI
-    /// </summary>
-    public static void GUINpcTalkFind(TextInfoService textInfoService, long npcId, Dictionary<long, List<TextInfoBean>> mapNpcTalkInfoForFind)
-    {
-        GUILayout.BeginHorizontal();
-        GUILayout.Label("NpcID:" + npcId, GUILayout.Width(120));
-        if (GUILayout.Button("查询普通对话", GUILayout.Width(120), GUILayout.Height(20)))
-        {
-            GetNpcTalkInfoList(textInfoService, TextTalkTypeEnum.Normal, npcId, mapNpcTalkInfoForFind);
-        }
-        if (GUILayout.Button("查询第一次对话", GUILayout.Width(120), GUILayout.Height(20)))
-        {
-            GetNpcTalkInfoList(textInfoService, TextTalkTypeEnum.First, npcId, mapNpcTalkInfoForFind);
-        }
-        if (GUILayout.Button("查询招募对话", GUILayout.Width(120), GUILayout.Height(20)))
-        {
-            GetNpcTalkInfoList(textInfoService, TextTalkTypeEnum.Recruit, npcId, mapNpcTalkInfoForFind);
-        }
-        if (GUILayout.Button("查询礼物对话", GUILayout.Width(120), GUILayout.Height(20)))
-        {
-            GetNpcTalkInfoList(textInfoService, TextTalkTypeEnum.Gift, npcId, mapNpcTalkInfoForFind);
-        }
-        if (GUILayout.Button("查询后续事件对话", GUILayout.Width(120), GUILayout.Height(20)))
-        {
-            GetNpcTalkInfoList(textInfoService, TextTalkTypeEnum.Special, npcId, mapNpcTalkInfoForFind);
-        }
-        if (GUILayout.Button("查询捣乱事件对话", GUILayout.Width(120), GUILayout.Height(20)))
-        {
-            GetNpcTalkInfoList(textInfoService, TextTalkTypeEnum.Rascal, npcId, mapNpcTalkInfoForFind);
-        }
-        GUILayout.EndHorizontal();
-    }
-
-
-    /// <summary>
     /// 团队创建 UI
     /// </summary>
     public static void GUINpcTeamCreate(NpcTeamService npcTeamService, NpcTeamBean npcTeamData)
@@ -268,7 +233,10 @@ public class EditorUI
     /// <summary>
     /// 团队查询 UI
     /// </summary>
-    public static void GUINpcTeamFind(NpcTeamService npcTeamService, string findIdsStr, List<NpcTeamBean> listFindData, out string outFindIdsStr, out List<NpcTeamBean> outlistFindData)
+    public static void GUINpcTeamFind(
+        TextInfoService textInfoService, NpcTeamService npcTeamService,
+        string findIdsStr, List<NpcTeamBean> listFindData, Dictionary<long, List<TextInfoBean>> mapTeamTalkInfo,
+        out string outFindIdsStr, out List<NpcTeamBean> outlistFindData, out Dictionary<long, List<TextInfoBean>> outMapTeamTalkInfo)
     {
         GUILayout.Label("Npc团队查询", GUILayout.Width(100), GUILayout.Height(20));
         GUILayout.BeginHorizontal();
@@ -308,14 +276,23 @@ public class EditorUI
                     npcTeamService.DeleteDataById(itemData.id);
                     itemRemoveData = itemData;
                 }
+                if (GUILayout.Button("查询团队对话", GUILayout.Width(100), GUILayout.Height(20)))
+                {
+                    List<TextInfoBean> listNpcTeamTalkInfo = textInfoService.QueryDataByMarkId(TextEnum.Talk, itemData.GetTalkIds());
+                    HandleTalkInfoDataByMarkId(listNpcTeamTalkInfo, mapTeamTalkInfo);
+                }
                 GUILayout.EndHorizontal();
                 GUINpcTeamItem(itemData);
                 GUILayout.Space(20);
             }
             if (itemRemoveData != null)
+            {
                 listFindData.Remove(itemRemoveData);
+                itemRemoveData = null;
+            }
         }
         outlistFindData = listFindData;
+        outMapTeamTalkInfo = mapTeamTalkInfo;
     }
 
     /// <summary>
@@ -344,14 +321,209 @@ public class EditorUI
             case NpcTeamTypeEnum.Friend:
                 break;
             case NpcTeamTypeEnum.Rascal:
-                GUILayout.Label("对话markId", GUILayout.Width(100), GUILayout.Height(20));
+                GUILayout.Label("对话markId(,)", GUILayout.Width(100), GUILayout.Height(20));
                 npcTeamData.talk_ids = EditorGUILayout.TextArea(npcTeamData.talk_ids + "", GUILayout.Width(200), GUILayout.Height(20));
                 break;
         }
+        npcTeamData.condition = GUIListData<ShowConditionEnum>("团队出现条件", npcTeamData.condition);
 
         GUILayout.Label("是否启用", GUILayout.Width(100), GUILayout.Height(20));
         npcTeamData.valid = (int)(ValidEnum)EditorGUILayout.EnumPopup((ValidEnum)npcTeamData.valid, GUILayout.Width(100), GUILayout.Height(20));
         GUILayout.EndHorizontal();
+    }
+
+    /// <summary>
+    /// Npc对话逻辑添加
+    /// </summary>
+    /// <param name="npcId"></param>
+    /// <param name="talkType"></param>
+    /// <param name="mapNpcTalkInfoForFind"></param>
+    public static void GUINpcTalkCreateByMarkId(long npcId, int talkType, Dictionary<long, List<TextInfoBean>> mapNpcTalkInfoForFind)
+    {
+        GUILayout.BeginHorizontal();
+        GUILayout.Label("NpcId:" + npcId, GUILayout.Width(100), GUILayout.Height(20));
+        GUILayout.Label("talkType:" + talkType, GUILayout.Width(100), GUILayout.Height(20));
+        if (GUILayout.Button("添加对话逻辑(警告：一定要先查询对应对话再添加)", GUILayout.Width(300), GUILayout.Height(20)))
+        {
+            long markId = npcId * 100000;
+            markId += talkType * 10000;
+            markId += (mapNpcTalkInfoForFind.Count + 1);
+            List<TextInfoBean> listTemp = new List<TextInfoBean>();
+            mapNpcTalkInfoForFind.Add(markId, listTemp);
+        }
+        GUILayout.EndHorizontal();
+    }
+
+    /// <summary>
+    /// Npc对话查询 UI
+    /// </summary>
+    public static void GUINpcTalkFind(TextInfoService textInfoService, long npcId, Dictionary<long, List<TextInfoBean>> mapNpcTalkInfoForFind)
+    {
+        GUILayout.BeginHorizontal();
+        GUILayout.Label("NpcID:" + npcId, GUILayout.Width(120));
+
+        if (GUILayout.Button("查询普通对话", GUILayout.Width(120), GUILayout.Height(20)))
+        {
+            List<TextInfoBean> listNpcTalkInfo = textInfoService.QueryDataByTalkType(TextEnum.Talk, TextTalkTypeEnum.Normal, npcId);
+            HandleTalkInfoDataByMarkId(listNpcTalkInfo, mapNpcTalkInfoForFind);
+        }
+        if (GUILayout.Button("查询第一次对话", GUILayout.Width(120), GUILayout.Height(20)))
+        {
+            List<TextInfoBean> listNpcTalkInfo = textInfoService.QueryDataByTalkType(TextEnum.Talk, TextTalkTypeEnum.First, npcId);
+            HandleTalkInfoDataByMarkId(listNpcTalkInfo, mapNpcTalkInfoForFind);
+        }
+        if (GUILayout.Button("查询招募对话", GUILayout.Width(120), GUILayout.Height(20)))
+        {
+            List<TextInfoBean> listNpcTalkInfo = textInfoService.QueryDataByTalkType(TextEnum.Talk, TextTalkTypeEnum.Recruit, npcId);
+            HandleTalkInfoDataByMarkId(listNpcTalkInfo, mapNpcTalkInfoForFind);
+        }
+        if (GUILayout.Button("查询礼物对话", GUILayout.Width(120), GUILayout.Height(20)))
+        {
+            List<TextInfoBean> listNpcTalkInfo = textInfoService.QueryDataByTalkType(TextEnum.Talk, TextTalkTypeEnum.Gift, npcId);
+            HandleTalkInfoDataByMarkId(listNpcTalkInfo, mapNpcTalkInfoForFind);
+        }
+        if (GUILayout.Button("查询后续事件对话", GUILayout.Width(120), GUILayout.Height(20)))
+        {
+            List<TextInfoBean> listNpcTalkInfo = textInfoService.QueryDataByTalkType(TextEnum.Talk, TextTalkTypeEnum.Special, npcId);
+            HandleTalkInfoDataByMarkId(listNpcTalkInfo, mapNpcTalkInfoForFind);
+        }
+        if (GUILayout.Button("查询捣乱事件对话", GUILayout.Width(120), GUILayout.Height(20)))
+        {
+            List<TextInfoBean> listNpcTalkInfo = textInfoService.QueryDataByTalkType(TextEnum.Talk, TextTalkTypeEnum.Rascal, npcId);
+            HandleTalkInfoDataByMarkId(listNpcTalkInfo, mapNpcTalkInfoForFind);
+        }
+        GUILayout.EndHorizontal();
+        if (mapNpcTalkInfoForFind == null)
+            return;
+        long deleteMarkId = 0;
+        foreach (var mapItemTalkInfo in mapNpcTalkInfoForFind)
+        {
+            long markId = mapItemTalkInfo.Key;
+            List<TextInfoBean> listTextData = mapItemTalkInfo.Value;
+            if (GUILayout.Button("删除markId下所有对话", GUILayout.Width(150), GUILayout.Height(20)))
+            {
+                textInfoService.DeleteDataByMarkId(TextEnum.Talk, markId);
+                deleteMarkId = markId;
+            }
+            GUINpcTextInfoItemForMarkId(textInfoService, markId, listTextData);
+        }
+        if (deleteMarkId != 0)
+        {
+            mapNpcTalkInfoForFind.Remove(deleteMarkId);
+            deleteMarkId = 0;
+        }
+    }
+
+    /// <summary>
+    ///  团队对话查询
+    /// </summary>
+    public static void GUINpcTeamTalkFind(TextInfoService textInfoService, Dictionary<long, List<TextInfoBean>> mapNpcTalkInfoForFind)
+    {
+        if (mapNpcTalkInfoForFind == null)
+            return;
+        foreach (var mapItemTalkInfo in mapNpcTalkInfoForFind)
+        {
+            long markId = mapItemTalkInfo.Key;
+            List<TextInfoBean> listTextData = mapItemTalkInfo.Value;
+            GUINpcTextInfoItemForMarkId(textInfoService, markId, listTextData);
+        }
+    }
+
+    /// <summary>
+    /// NPC 对话ITEM
+    /// </summary>
+    /// <param name="textInfoService"></param>
+    /// <param name="markId"></param>
+    /// <param name="listTextData"></param>
+    public static void GUINpcTextInfoItemForMarkId(TextInfoService textInfoService, long markId, List<TextInfoBean> listTextData)
+    {
+        GUILayout.Space(20);
+        GUILayout.BeginHorizontal();
+        GUILayout.Label("markId：" + markId, GUILayout.Width(120), GUILayout.Height(20));
+        if (listTextData.Count > 0)
+        {
+            GUILayout.Label("对话类型：", GUILayout.Width(120), GUILayout.Height(20));
+            listTextData[0].talk_type = (int)(TextTalkTypeEnum)EditorGUILayout.EnumPopup((TextTalkTypeEnum)listTextData[0].talk_type, GUILayout.Width(100), GUILayout.Height(20));
+            GUILayout.Label("条件-好感对话：", GUILayout.Width(120), GUILayout.Height(20));
+            listTextData[0].condition_min_favorability = int.Parse(EditorGUILayout.TextArea(listTextData[0].condition_min_favorability + "", GUILayout.Width(50), GUILayout.Height(20)));
+
+        }
+        if (listTextData != null)
+            foreach (TextInfoBean itemTalkInfo in listTextData)
+            {
+                itemTalkInfo.talk_type = listTextData[0].talk_type;
+                itemTalkInfo.condition_min_favorability = listTextData[0].condition_min_favorability;
+            }
+        if (GUILayout.Button("添加对话", GUILayout.Width(120), GUILayout.Height(20)))
+        {
+            TextInfoBean addText = new TextInfoBean();
+            addText.mark_id = markId;
+            addText.id = addText.mark_id * 1000 + (listTextData.Count + 1);
+            addText.text_id = addText.id;
+            addText.user_id = listTextData.Count > 0 ? listTextData[0].user_id : 0;
+            addText.valid = 1;
+            addText.text_order = 1;
+            addText.talk_type = listTextData.Count > 0 ? listTextData[0].talk_type : 0;
+            listTextData.Add(addText);
+        }
+        if (GUILayout.Button("保存当前所有对话", GUILayout.Width(120), GUILayout.Height(20)))
+        {
+            foreach (TextInfoBean itemTalkInfo in listTextData)
+            {
+                textInfoService.UpdateDataById(TextEnum.Talk, itemTalkInfo.id, itemTalkInfo);
+            }
+        }
+        GUILayout.EndHorizontal();
+        TextInfoBean removeTalkInfo = null;
+        foreach (TextInfoBean itemTalkInfo in listTextData)
+        {
+            GUILayout.BeginHorizontal();
+            if (GUILayout.Button("更新", GUILayout.Width(120), GUILayout.Height(20)))
+            {
+                textInfoService.UpdateDataById(TextEnum.Talk, itemTalkInfo.id, itemTalkInfo);
+            }
+            if (GUILayout.Button("删除对话", GUILayout.Width(120), GUILayout.Height(20)))
+            {
+                removeTalkInfo = itemTalkInfo;
+                textInfoService.DeleteDataById(TextEnum.Talk, itemTalkInfo.id);
+            }
+            GUILayout.Label("talkId：", GUILayout.Width(100), GUILayout.Height(20));
+            itemTalkInfo.id = long.Parse(EditorGUILayout.TextArea(itemTalkInfo.id + "", GUILayout.Width(150), GUILayout.Height(20)));
+            GUILayout.Label("对话顺序：", GUILayout.Width(100), GUILayout.Height(20));
+            itemTalkInfo.text_order = int.Parse(EditorGUILayout.TextArea(itemTalkInfo.text_order + "", GUILayout.Width(50), GUILayout.Height(20)));
+
+            itemTalkInfo.type = (int)(TextInfoTypeEnum)EditorGUILayout.EnumPopup((TextInfoTypeEnum)itemTalkInfo.type, GUILayout.Width(100), GUILayout.Height(20));
+            if (itemTalkInfo.type == (int)TextInfoTypeEnum.Select)
+            {
+                GUILayout.Label("选择类型：", GUILayout.Width(100), GUILayout.Height(20));
+                itemTalkInfo.select_type = int.Parse(EditorGUILayout.TextArea(itemTalkInfo.select_type + "", GUILayout.Width(50), GUILayout.Height(20)));
+            }
+            GUILayout.Label("增加的好感：", GUILayout.Width(100), GUILayout.Height(20));
+            itemTalkInfo.add_favorability = int.Parse(EditorGUILayout.TextArea(itemTalkInfo.add_favorability + "", GUILayout.Width(50), GUILayout.Height(20)));
+            GUILayout.Label("指定下一句对话：", GUILayout.Width(120), GUILayout.Height(20));
+            itemTalkInfo.next_order = int.Parse(EditorGUILayout.TextArea(itemTalkInfo.next_order + "", GUILayout.Width(50), GUILayout.Height(20)));
+            GUILayout.Label("触发条件-最低好感：", GUILayout.Width(120), GUILayout.Height(20));
+            itemTalkInfo.condition_min_favorability = int.Parse(EditorGUILayout.TextArea(itemTalkInfo.condition_min_favorability + "", GUILayout.Width(50), GUILayout.Height(20)));
+            GUILayout.Label("预设名字：", GUILayout.Width(100), GUILayout.Height(20));
+            itemTalkInfo.name = EditorGUILayout.TextArea(itemTalkInfo.name + "", GUILayout.Width(50), GUILayout.Height(20));
+            GUILayout.Label("对话内容：", GUILayout.Width(100), GUILayout.Height(20));
+            itemTalkInfo.content = EditorGUILayout.TextArea(itemTalkInfo.content + "", GUILayout.Width(500), GUILayout.Height(20));
+            if (GUILayout.Button("更新", GUILayout.Width(120), GUILayout.Height(20)))
+            {
+                textInfoService.UpdateDataById(TextEnum.Talk, itemTalkInfo.id, itemTalkInfo);
+            }
+            if (GUILayout.Button("删除对话", GUILayout.Width(120), GUILayout.Height(20)))
+            {
+                removeTalkInfo = itemTalkInfo;
+                textInfoService.DeleteDataById(TextEnum.Talk, itemTalkInfo.id);
+            }
+            GUILayout.EndHorizontal();
+        }
+        if (removeTalkInfo != null)
+        {
+            listTextData.Remove(removeTalkInfo);
+            removeTalkInfo = null;
+        }
     }
 
     /// <summary>
@@ -377,16 +549,17 @@ public class EditorUI
     }
 
     /// <summary>
-    /// 获取NPC对话数据
+    /// 通过markID处理聊天信息
     /// </summary>
-    private static void GetNpcTalkInfoList(TextInfoService textInfoService, TextTalkTypeEnum talkType, long userId, Dictionary<long, List<TextInfoBean>> mapNpcTalkInfoForFind)
+    /// <param name="listNpcTalkInfo"></param>
+    /// <param name="mapNpcTeamTalkInfoForFind"></param>
+    private static void HandleTalkInfoDataByMarkId(List<TextInfoBean> listNpcTalkInfo, Dictionary<long, List<TextInfoBean>> mapNpcTeamTalkInfoForFind)
     {
-        List<TextInfoBean> listNpcTalkInfo = textInfoService.QueryDataByTalkType(TextEnum.Talk, talkType, userId);
-        mapNpcTalkInfoForFind.Clear();
+        mapNpcTeamTalkInfoForFind.Clear();
         foreach (TextInfoBean itemTalkInfo in listNpcTalkInfo)
         {
             long markId = itemTalkInfo.mark_id;
-            if (mapNpcTalkInfoForFind.TryGetValue(markId, out List<TextInfoBean> value))
+            if (mapNpcTeamTalkInfoForFind.TryGetValue(markId, out List<TextInfoBean> value))
             {
                 value.Add(itemTalkInfo);
             }
@@ -394,7 +567,7 @@ public class EditorUI
             {
                 List<TextInfoBean> listTemp = new List<TextInfoBean>();
                 listTemp.Add(itemTalkInfo);
-                mapNpcTalkInfoForFind.Add(markId, listTemp);
+                mapNpcTeamTalkInfoForFind.Add(markId, listTemp);
             }
         }
     }
@@ -422,12 +595,11 @@ public class EditorUI
         return objNpc;
     }
 
-
     /// <summary>
     /// 数据列表
     /// </summary>
     /// <param name="storeInfo"></param>
-    private static string GUIListData<E>(string titleName,string content) where E : System.Enum
+    private static string GUIListData<E>(string titleName, string content) where E : System.Enum
     {
         //前置相关
         EditorGUILayout.BeginVertical();
@@ -437,7 +609,7 @@ public class EditorUI
             content += ("|" + EnumUtil.GetEnumName(EnumUtil.GetEnumValueByPosition<E>(0)) + ":" + "1|");
         }
         List<string> listConditionData = StringUtil.SplitBySubstringForListStr(content, '|');
-        content  =  "";
+        content = "";
         for (int i = 0; i < listConditionData.Count; i++)
         {
             string itemConditionData = listConditionData[i];

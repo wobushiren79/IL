@@ -285,6 +285,27 @@ public class NpcEventBuilder : NpcNormalBuilder, IBaseObserver
     }
 
     /// <summary>
+    /// 通过团队Code获取捣乱成员
+    /// </summary>
+    /// <param name="teamCode"></param>
+    /// <returns></returns>
+    public List<NpcAIRascalCpt> GetRascalTeamByTeamCode(string teamCode)
+    {
+        List<NpcAIRascalCpt> listTeamMember = new List<NpcAIRascalCpt>();
+        if (CheckUtil.StringIsNull(teamCode))
+            return listTeamMember;
+        NpcAIRascalCpt[] arrayTeam = objContainer.GetComponentsInChildren<NpcAIRascalCpt>();
+        foreach (NpcAIRascalCpt itemData in arrayTeam)
+        {
+            if (itemData.teamCode.EndsWith(teamCode))
+            {
+                listTeamMember.Add(itemData);
+            }
+        }
+        return listTeamMember;
+    }
+
+    /// <summary>
     ///  计算是否想要吃饭
     /// </summary>
     /// <returns></returns>

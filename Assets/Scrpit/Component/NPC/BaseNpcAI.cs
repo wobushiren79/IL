@@ -199,6 +199,14 @@ public class BaseNpcAI : BaseMonoBehaviour
     }
 
     /// <summary>
+    /// 设置角色复活
+    /// </summary>
+    public virtual void SetCharacterLive()
+    {
+        characterBody.transform.DOLocalRotate(new Vector3(0, 0, 0), 0.1f).SetEase(Ease.OutBack);
+    }
+
+    /// <summary>
     /// 设置喊叫
     /// </summary>
     /// <param name="content"></param>

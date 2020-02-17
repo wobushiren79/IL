@@ -53,6 +53,8 @@ public class NpcAIRascalCpt : BaseNpcAI, IBaseObserver
     protected InnHandler innHandler;
     //客栈区域数据管理
     protected SceneInnManager sceneInnManager;
+    //Npc生成器
+    protected NpcEventBuilder npcEventBuilder;
 
     public override void Awake()
     {
@@ -60,6 +62,7 @@ public class NpcAIRascalCpt : BaseNpcAI, IBaseObserver
         eventHandler = Find<EventHandler>(ImportantTypeEnum.EventHandler);
         innHandler = Find<InnHandler>(ImportantTypeEnum.InnHandler);
         sceneInnManager = Find<SceneInnManager>(ImportantTypeEnum.SceneManager);
+        npcEventBuilder = Find<NpcEventBuilder>(ImportantTypeEnum.NpcBuilder);
     }
 
 
@@ -184,7 +187,7 @@ public class NpcAIRascalCpt : BaseNpcAI, IBaseObserver
     /// </summary>
     public void SetIntentForWaitingForReply()
     {
-        if (teamRank==0)
+        if (teamRank == 0)
         {
             long talk_ids = RandomUtil.GetRandomDataByArray(teamData.GetTalkIds());
             if (talk_ids == 0)
@@ -206,9 +209,11 @@ public class NpcAIRascalCpt : BaseNpcAI, IBaseObserver
         AddLife(characterMaxLife);
 
         characterLifeCpt.gameObject.SetActive(true);
+        characterLifeCpt.gameObject.transform.localScale=new Vector3(1,1,1);
         characterLifeCpt.gameObject.transform.DOScale(new Vector3(0.2f, 0.2f), 0.5f).From().SetEase(Ease.OutBack);
         //展示范围
         objRascalSpaceShow.SetActive(true);
+        objRascalSpaceShow.transform.localScale = new Vector3(1, 1, 1);
         objRascalSpaceShow.transform.DOScale(new Vector3(0.2f, 0.2f), 0.5f).From().SetEase(Ease.OutBack);
         //闹事人员添加
         innHandler.rascalrQueue.Add(this);
@@ -305,13 +310,17 @@ public class NpcAIRascalCpt : BaseNpcAI, IBaseObserver
             if (type == (int)EventHandler.NotifyEventTypeEnum.TalkForAddFavorability)
             {
                 int addFavorability = (int)obj[1];
-                if (addFavorability >= 0)
+                if (addFavorability > 0)
                 {
                     SetIntent(RascalIntentEnum.Leave);
                 }
-                else
+                else if (addFavorability < 0)
                 {
-                    SetIntent(RascalIntentEnum.MakeTrouble);
+                    List<NpcAIRascalCpt> listNpc = npcEventBuilder.GetRascalTeamByTeamCode(teamCode);
+                    foreach (NpcAIRascalCpt itemNpc in listNpc)
+                    {
+                        itemNpc.SetIntent(RascalIntentEnum.MakeTrouble);
+                    }
                 }
             }
         }

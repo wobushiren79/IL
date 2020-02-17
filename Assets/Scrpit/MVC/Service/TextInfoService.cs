@@ -70,6 +70,13 @@ public class TextInfoService : BaseMVCService
         return BaseQueryData<TextInfoBean>("text_id", tableNameForMain + ".mark_id", markId + "");
     }
 
+    public List<TextInfoBean> QueryDataByMarkId(TextEnum textEnum, long[] markIds)
+    {
+        InitTableByTextType(textEnum);
+        string values = TypeConversionUtil.ArrayToStringBySplit(markIds, ",");
+        return BaseQueryData<TextInfoBean>("text_id", tableNameForMain + ".mark_id","in","("+ values + ")");
+    }
+
     /// <summary>
     /// 通过用户ID查询对话
     /// </summary>

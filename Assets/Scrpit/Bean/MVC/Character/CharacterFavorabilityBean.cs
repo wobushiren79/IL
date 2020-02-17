@@ -61,6 +61,10 @@ public class CharacterFavorabilityBean
         {
             favorabilityLevel = 5;
         }
+        if (favorability < 0)
+        {
+            favorability = 0;
+        }
     }
 
     /// <summary>

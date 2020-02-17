@@ -196,13 +196,13 @@ public class UIGameTextForTalk : BaseUIChildComponent<UIGameText>
     /// <param name="favorablility"></param>
     public void AddFavorability(long characterId, int favorablility)
     {
-        if (textData.add_favorability != 0)
+        if (favorablility != 0)
         {
             UIGameManager uiGameManager = uiComponent.GetUIManager<UIGameManager>();
             CharacterFavorabilityBean favorabilityData = uiGameManager.gameDataManager.gameData.GetCharacterFavorability(characterId);
             favorabilityData.AddFavorability(favorablility);
             //好感动画
-            if (ivFavorability != null)
+            if (ivFavorability != null&& favorablility>0)
             {
                 ivFavorability.transform.localScale = new Vector3(1, 1, 1);
                 ivFavorability.transform.DOComplete();
