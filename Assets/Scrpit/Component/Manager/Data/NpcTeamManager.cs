@@ -9,6 +9,7 @@ public class NpcTeamManager : BaseManager, INpcTeamView
     public List<NpcTeamBean> listCustomerTeam;
     public List<NpcTeamBean> listFriendTeam;
     public List<NpcTeamBean> listRascalTeam;
+    public List<NpcTeamBean> listSundryTeam;
 
     private void Awake()
     {
@@ -56,6 +57,16 @@ public class NpcTeamManager : BaseManager, INpcTeamView
     public NpcTeamBean GetRascalTeam(long teamId)
     {
         return GetTeam(teamId, listRascalTeam);
+    }
+
+    /// <summary>
+    /// 获取杂项队伍
+    /// </summary>
+    /// <param name="teamId"></param>
+    /// <returns></returns>
+    public NpcTeamBean GetSundryTeam(long teamId)
+    {
+        return GetTeam(teamId, listSundryTeam);
     }
 
     /// <summary>
@@ -108,6 +119,9 @@ public class NpcTeamManager : BaseManager, INpcTeamView
                 break;
             case NpcTeamTypeEnum.Rascal:
                 listRascalTeam = listData;
+                break;
+            case NpcTeamTypeEnum.Sundry:
+                listSundryTeam = listData;
                 break;
         }
     }

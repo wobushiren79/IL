@@ -98,32 +98,35 @@ public class NpcCreateWindowEditor : EditorWindow
         mObjNpcModel = EditorGUILayout.ObjectField(new GUIContent("NPC模型", ""), mObjNpcModel, typeof(GameObject), true) as GameObject;
         GUILayout.Label("-----------------------------------------------------------------------------------------------------------");
         //Npc 创建UI
-        EditorUI.GUINpcInfoCreate(npcInfoService,gameItemsManager, mObjNpcContainer, mObjNpcModel, npcInfoForCreate);
+        EditorUI.GUINpcInfoCreate(npcInfoService, gameItemsManager, mObjNpcContainer, mObjNpcModel, npcInfoForCreate);
         //NPC 查询UI
         EditorUI.GUINpcInfoFind(
-            npcInfoService,npcInfoManager,gameItemsManager,
-            mObjNpcContainer,mObjNpcModel,
+            npcInfoService, npcInfoManager, gameItemsManager,
+            mObjNpcContainer, mObjNpcModel,
             findNpcIdsStr, listNpcDataForFind,
             out findNpcIdsStr, out listNpcDataForFind
             );
 
         GUILayout.Label("-----------------------------------------------------------------------------------------------------------");
         //Npc 对话逻辑添加UI
-        long[] findIDs= StringUtil.SplitBySubstringForArrayLong(findNpcIdsStr,',');
+        long[] findIDs = StringUtil.SplitBySubstringForArrayLong(findNpcIdsStr, ',');
         if (findIDs != null && findIDs.Length > 0)
         {
             EditorUI.GUINpcTalkCreateByMarkId(findIDs[0], (int)npcTalkInfoTypeForCreate, mapNpcTalkInfoForFind);
         }
         //NPC 对话查询UI
-        EditorUI.GUINpcTalkFind(textInfoService, long.Parse(findNpcIdsStr), mapNpcTalkInfoForFind);
+        EditorUI.GUINpcTalkFind(
+            textInfoService, 
+            long.Parse(findNpcIdsStr), npcTalkInfoTypeForCreate, mapNpcTalkInfoForFind,
+            out npcTalkInfoTypeForCreate);
         GUILayout.Label("-----------------------------------------------------------------------------------------------------------");
         //团队 创建UI
         EditorUI.GUINpcTeamCreate(npcTeamService, npcTeamDataForCreate);
         //团队 查询UI
         EditorUI.GUINpcTeamFind(
-            textInfoService,npcTeamService, 
+            textInfoService, npcTeamService,
             npcTeamFindId, listNpcTeamDataForFind, mapNpcTeamTalkInfoForFind,
-            out npcTeamFindId, out listNpcTeamDataForFind,out mapNpcTeamTalkInfoForFind);
+            out npcTeamFindId, out listNpcTeamDataForFind, out mapNpcTeamTalkInfoForFind);
 
         GUILayout.Label("-----------------------------------------------------------------------------------------------------------");
         //团队 对话查询

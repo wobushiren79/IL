@@ -11,6 +11,8 @@ public class NpcEventBuilder : NpcNormalBuilder, IBaseObserver
     public GameObject objGuestTeamModel;
     //好友模型
     public GameObject objFriendModel;
+    //杂项模型
+    public GameObject objSundryModel;
     //当天已经生成过的NPCID
     public List<long> listExistNpcId = new List<long>();
 
@@ -91,6 +93,21 @@ public class NpcEventBuilder : NpcNormalBuilder, IBaseObserver
     }
 
     /// <summary>
+    /// 杂项事件
+    /// </summary>
+    public void SundryEvent()
+    {
+
+    }
+
+    public void SundryEvent(long teamId)
+    {
+        Vector3 npcPosition = GetRandomStartPosition();
+        NpcTeamBean teamData = npcTeamManager.GetSundryTeam(teamId);
+        BuildSundry(teamData, npcPosition);
+    }
+
+    /// <summary>
     /// 恶棍事件
     /// </summary>
     public void RascalEvent()
@@ -103,6 +120,39 @@ public class NpcEventBuilder : NpcNormalBuilder, IBaseObserver
         Vector3 npcPosition = GetRandomStartPosition();
         NpcTeamBean teamData = npcTeamManager.GetRascalTeam(teamId);
         BuildRascal(teamData, npcPosition);
+    }
+
+    /// <summary>
+    /// 创建杂项时间
+    /// </summary>
+    /// <param name="npcTeam"></param>
+    /// <param name="npcPosition"></param>
+    public void BuildSundry(NpcTeamBean npcTeam, Vector3 npcPosition)
+    {
+        //获取小队成员数据
+        npcTeam.GetTeamCharacterData(npcInfoManager, out List<CharacterBean> listLeader, out List<CharacterBean> listMembers);
+        //设置小队相关
+        string teamCode = SystemUtil.GetUUID(SystemUtil.UUIDTypeEnum.N);
+        int npcNumber = listLeader.Count + listMembers.Count;
+        for (int i = 0; i < npcNumber; i++)
+        {
+            CharacterBean characterData = null;
+            if (i < listLeader.Count)
+            {
+                characterData = listLeader[i];
+            }
+            else
+            {
+                characterData = listMembers[i - listLeader.Count];
+            }
+            //生成NPC
+            GameObject npcObj = BuildNpc(objSundryModel, characterData, npcPosition + new Vector3(UnityEngine.Random.Range(-0.5f, 0.5f), UnityEngine.Random.Range(-0.5f, 0.5f)));
+            //设置意图
+            NpcAISundry sundryCpt = npcObj.GetComponent<NpcAISundry>();
+            CharacterFavorabilityBean characterFavorability = gameDataManager.gameData.GetCharacterFavorability(long.Parse(characterData.baseInfo.characterId));
+            sundryCpt.SetTeamData(teamCode, npcTeam, i);
+            sundryCpt.SetIntent( NpcAISundry.SundryIntentEnum.GoToInn);
+        }
     }
 
     /// <summary>

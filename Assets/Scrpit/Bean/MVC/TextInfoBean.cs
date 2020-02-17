@@ -40,7 +40,9 @@ public class TextInfoBean : BaseBean
 
     //小游戏的前置数据
     public string pre_data_minigame;
-   //奖励物品
+    //支付条件
+    public string pre_data;
+    //奖励物品
     public string reward_data;
 
     //场景人物表情

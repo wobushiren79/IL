@@ -41,6 +41,7 @@ public class SceneGameInnInit : BaseSceneInit, IBaseObserver, DialogView.IDialog
             npcTeamManager.npcTeamController.GetNpcTeamByType(NpcTeamTypeEnum.Customer);
             npcTeamManager.npcTeamController.GetNpcTeamByType(NpcTeamTypeEnum.Friend);
             npcTeamManager.npcTeamController.GetNpcTeamByType(NpcTeamTypeEnum.Rascal);
+            npcTeamManager.npcTeamController.GetNpcTeamByType(NpcTeamTypeEnum.Sundry);
         }
 
         if (innBuildManager != null)

@@ -92,6 +92,23 @@ public class BaseNpcAI : BaseMonoBehaviour
     }
 
     /// <summary>
+    /// 设置角色移动
+    /// </summary>
+    /// <param name="movePosition"></param>
+    public void SetCharacterMove(Vector3 movePosition)
+    {
+        characterMoveCpt.SetDestination(movePosition);
+    }
+
+    /// <summary>
+    /// 检测角色是否到达目的地
+    /// </summary>
+    public bool CheckCharacterIsArrive()
+    {
+       return characterMoveCpt.IsAutoMoveStop();
+    }
+
+    /// <summary>
     /// 设置角色好感度
     /// </summary>
     /// <param name="characterFavorabilityData"></param>
@@ -169,6 +186,11 @@ public class BaseNpcAI : BaseMonoBehaviour
         if (characterBody != null)
             characterBody.SetFace(face);
     }
+
+    /// <summary>
+    /// 获取角色朝向
+    /// </summary>
+    /// <returns></returns>
     public int GetCharacterFace()
     {
         //设置身体数据

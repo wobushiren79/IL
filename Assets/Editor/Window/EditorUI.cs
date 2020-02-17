@@ -223,6 +223,7 @@ public class EditorUI
         GUILayout.BeginHorizontal();
         if (GUILayout.Button("创建", GUILayout.Width(100), GUILayout.Height(20)))
         {
+            npcTeamData.valid = 1;
             npcTeamService.InsertData(npcTeamData);
         }
         GUILayout.EndHorizontal();
@@ -259,6 +260,10 @@ public class EditorUI
         if (GUILayout.Button("查询捣乱团队", GUILayout.Width(100), GUILayout.Height(20)))
         {
             listFindData = npcTeamService.QueryDataByType((int)NpcTeamTypeEnum.Rascal);
+        }
+        if (GUILayout.Button("查询杂项团队", GUILayout.Width(100), GUILayout.Height(20)))
+        {
+            listFindData = npcTeamService.QueryDataByType((int)NpcTeamTypeEnum.Sundry);
         }
         GUILayout.EndHorizontal();
         if (listFindData != null)
@@ -301,6 +306,8 @@ public class EditorUI
     public static void GUINpcTeamItem(NpcTeamBean npcTeamData)
     {
         GUILayout.BeginHorizontal();
+        GUILayout.Label("是否启用", GUILayout.Width(100), GUILayout.Height(20));
+        npcTeamData.valid = (int)(ValidEnum)EditorGUILayout.EnumPopup((ValidEnum)npcTeamData.valid, GUILayout.Width(100), GUILayout.Height(20));
         GUILayout.Label("团队类型 " + npcTeamData.team_type, GUILayout.Width(100), GUILayout.Height(20));
         npcTeamData.team_type = (int)(NpcTeamTypeEnum)EditorGUILayout.EnumPopup((NpcTeamTypeEnum)npcTeamData.team_type, GUILayout.Width(100), GUILayout.Height(20));
         GUILayout.Label("团队名称", GUILayout.Width(100), GUILayout.Height(20));
@@ -321,14 +328,13 @@ public class EditorUI
             case NpcTeamTypeEnum.Friend:
                 break;
             case NpcTeamTypeEnum.Rascal:
+            case NpcTeamTypeEnum.Sundry:
                 GUILayout.Label("对话markId(,)", GUILayout.Width(100), GUILayout.Height(20));
                 npcTeamData.talk_ids = EditorGUILayout.TextArea(npcTeamData.talk_ids + "", GUILayout.Width(200), GUILayout.Height(20));
                 break;
         }
         npcTeamData.condition = GUIListData<ShowConditionEnum>("团队出现条件", npcTeamData.condition);
 
-        GUILayout.Label("是否启用", GUILayout.Width(100), GUILayout.Height(20));
-        npcTeamData.valid = (int)(ValidEnum)EditorGUILayout.EnumPopup((ValidEnum)npcTeamData.valid, GUILayout.Width(100), GUILayout.Height(20));
         GUILayout.EndHorizontal();
     }
 
@@ -357,42 +363,55 @@ public class EditorUI
     /// <summary>
     /// Npc对话查询 UI
     /// </summary>
-    public static void GUINpcTalkFind(TextInfoService textInfoService, long npcId, Dictionary<long, List<TextInfoBean>> mapNpcTalkInfoForFind)
+    public static void GUINpcTalkFind(TextInfoService textInfoService,
+        long npcId, TextTalkTypeEnum talkType, Dictionary<long, List<TextInfoBean>> mapNpcTalkInfoForFind,
+        out TextTalkTypeEnum outTalkType)
     {
         GUILayout.BeginHorizontal();
         GUILayout.Label("NpcID:" + npcId, GUILayout.Width(120));
-
+        bool isFind = false;
         if (GUILayout.Button("查询普通对话", GUILayout.Width(120), GUILayout.Height(20)))
         {
-            List<TextInfoBean> listNpcTalkInfo = textInfoService.QueryDataByTalkType(TextEnum.Talk, TextTalkTypeEnum.Normal, npcId);
-            HandleTalkInfoDataByMarkId(listNpcTalkInfo, mapNpcTalkInfoForFind);
+            isFind = true;
+            talkType = TextTalkTypeEnum.Normal;
         }
         if (GUILayout.Button("查询第一次对话", GUILayout.Width(120), GUILayout.Height(20)))
         {
-            List<TextInfoBean> listNpcTalkInfo = textInfoService.QueryDataByTalkType(TextEnum.Talk, TextTalkTypeEnum.First, npcId);
-            HandleTalkInfoDataByMarkId(listNpcTalkInfo, mapNpcTalkInfoForFind);
+            isFind = true;
+            talkType = TextTalkTypeEnum.First;
         }
         if (GUILayout.Button("查询招募对话", GUILayout.Width(120), GUILayout.Height(20)))
         {
-            List<TextInfoBean> listNpcTalkInfo = textInfoService.QueryDataByTalkType(TextEnum.Talk, TextTalkTypeEnum.Recruit, npcId);
-            HandleTalkInfoDataByMarkId(listNpcTalkInfo, mapNpcTalkInfoForFind);
+            isFind = true;
+            talkType = TextTalkTypeEnum.Recruit;
         }
         if (GUILayout.Button("查询礼物对话", GUILayout.Width(120), GUILayout.Height(20)))
         {
-            List<TextInfoBean> listNpcTalkInfo = textInfoService.QueryDataByTalkType(TextEnum.Talk, TextTalkTypeEnum.Gift, npcId);
-            HandleTalkInfoDataByMarkId(listNpcTalkInfo, mapNpcTalkInfoForFind);
+            isFind = true;
+            talkType = TextTalkTypeEnum.Gift;
         }
         if (GUILayout.Button("查询后续事件对话", GUILayout.Width(120), GUILayout.Height(20)))
         {
-            List<TextInfoBean> listNpcTalkInfo = textInfoService.QueryDataByTalkType(TextEnum.Talk, TextTalkTypeEnum.Special, npcId);
-            HandleTalkInfoDataByMarkId(listNpcTalkInfo, mapNpcTalkInfoForFind);
+            isFind = true;
+            talkType = TextTalkTypeEnum.Special;
         }
         if (GUILayout.Button("查询捣乱事件对话", GUILayout.Width(120), GUILayout.Height(20)))
         {
-            List<TextInfoBean> listNpcTalkInfo = textInfoService.QueryDataByTalkType(TextEnum.Talk, TextTalkTypeEnum.Rascal, npcId);
+            isFind = true;
+            talkType = TextTalkTypeEnum.Rascal;
+        }
+        if (GUILayout.Button("查询杂项事件对话", GUILayout.Width(120), GUILayout.Height(20)))
+        {
+            isFind = true;
+            talkType = TextTalkTypeEnum.Sundry;
+        }
+        if(isFind)
+        {
+            List<TextInfoBean> listNpcTalkInfo = textInfoService.QueryDataByTalkType(TextEnum.Talk, talkType, npcId);
             HandleTalkInfoDataByMarkId(listNpcTalkInfo, mapNpcTalkInfoForFind);
         }
         GUILayout.EndHorizontal();
+        outTalkType = talkType;
         if (mapNpcTalkInfoForFind == null)
             return;
         long deleteMarkId = 0;
@@ -405,7 +424,7 @@ public class EditorUI
                 textInfoService.DeleteDataByMarkId(TextEnum.Talk, markId);
                 deleteMarkId = markId;
             }
-            GUINpcTextInfoItemForMarkId(textInfoService, markId, listTextData);
+            GUINpcTextInfoItemForMarkId(textInfoService, npcId, talkType, markId, listTextData, out listTextData);
         }
         if (deleteMarkId != 0)
         {
@@ -417,7 +436,8 @@ public class EditorUI
     /// <summary>
     ///  团队对话查询
     /// </summary>
-    public static void GUINpcTeamTalkFind(TextInfoService textInfoService, Dictionary<long, List<TextInfoBean>> mapNpcTalkInfoForFind)
+    public static void GUINpcTeamTalkFind(TextInfoService textInfoService, 
+        Dictionary<long, List<TextInfoBean>> mapNpcTalkInfoForFind)
     {
         if (mapNpcTalkInfoForFind == null)
             return;
@@ -425,7 +445,7 @@ public class EditorUI
         {
             long markId = mapItemTalkInfo.Key;
             List<TextInfoBean> listTextData = mapItemTalkInfo.Value;
-            GUINpcTextInfoItemForMarkId(textInfoService, markId, listTextData);
+            GUINpcTextInfoItemForMarkId(textInfoService,0, TextTalkTypeEnum.Normal, markId, listTextData,out listTextData);
         }
     }
 
@@ -435,11 +455,13 @@ public class EditorUI
     /// <param name="textInfoService"></param>
     /// <param name="markId"></param>
     /// <param name="listTextData"></param>
-    public static void GUINpcTextInfoItemForMarkId(TextInfoService textInfoService, long markId, List<TextInfoBean> listTextData)
+    public static void GUINpcTextInfoItemForMarkId(TextInfoService textInfoService,
+        long userId, TextTalkTypeEnum talkType, long markId, List<TextInfoBean> listTextData,
+        out List<TextInfoBean> outListTextData)
     {
         GUILayout.Space(20);
         GUILayout.BeginHorizontal();
-        GUILayout.Label("markId：" + markId, GUILayout.Width(120), GUILayout.Height(20));
+        GUILayout.Label("markId：" + markId, GUILayout.Width(150), GUILayout.Height(20));
         if (listTextData.Count > 0)
         {
             GUILayout.Label("对话类型：", GUILayout.Width(120), GUILayout.Height(20));
@@ -460,10 +482,10 @@ public class EditorUI
             addText.mark_id = markId;
             addText.id = addText.mark_id * 1000 + (listTextData.Count + 1);
             addText.text_id = addText.id;
-            addText.user_id = listTextData.Count > 0 ? listTextData[0].user_id : 0;
+            addText.user_id = listTextData.Count > 0 ? listTextData[0].user_id : userId;
             addText.valid = 1;
             addText.text_order = 1;
-            addText.talk_type = listTextData.Count > 0 ? listTextData[0].talk_type : 0;
+            addText.talk_type = listTextData.Count > 0 ? listTextData[0].talk_type : (int)talkType;
             listTextData.Add(addText);
         }
         if (GUILayout.Button("保存当前所有对话", GUILayout.Width(120), GUILayout.Height(20)))
@@ -508,6 +530,10 @@ public class EditorUI
             itemTalkInfo.name = EditorGUILayout.TextArea(itemTalkInfo.name + "", GUILayout.Width(50), GUILayout.Height(20));
             GUILayout.Label("对话内容：", GUILayout.Width(100), GUILayout.Height(20));
             itemTalkInfo.content = EditorGUILayout.TextArea(itemTalkInfo.content + "", GUILayout.Width(500), GUILayout.Height(20));
+            itemTalkInfo.pre_data = GUIListData<PreTypeEnum>("付出", itemTalkInfo.pre_data);
+            itemTalkInfo.reward_data = GUIListData<RewardTypeEnum>("奖励", itemTalkInfo.reward_data);
+
+
             if (GUILayout.Button("更新", GUILayout.Width(120), GUILayout.Height(20)))
             {
                 textInfoService.UpdateDataById(TextEnum.Talk, itemTalkInfo.id, itemTalkInfo);
@@ -524,6 +550,7 @@ public class EditorUI
             listTextData.Remove(removeTalkInfo);
             removeTalkInfo = null;
         }
+        outListTextData = listTextData;
     }
 
     /// <summary>

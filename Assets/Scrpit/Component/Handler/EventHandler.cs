@@ -36,6 +36,7 @@ public class EventHandler : BaseHandler,
     protected NpcInfoManager npcInfoManager;
     protected StoryBuilder storyBuilder;
     protected ControlHandler controlHandler;
+    protected GameTimeHandler gameTimeHandler;
     protected NpcImportantBuilder npcImportantBuilder;
     protected MiniGameCombatHandler miniGameCombatHandler;
 
@@ -58,6 +59,8 @@ public class EventHandler : BaseHandler,
         npcImportantBuilder = Find<NpcImportantBuilder>(ImportantTypeEnum.NpcBuilder);
         if (miniGameCombatHandler != null)
             miniGameCombatHandler.AddObserver(this);
+        if (gameTimeHandler != null)
+            gameTimeHandler.AddObserver(this);
     }
 
     /// <summary>
@@ -137,6 +140,36 @@ public class EventHandler : BaseHandler,
         uiGameText.SetData(TextEnum.Talk, markId);
         uiGameText.SetCallBack(this);
         return true;
+    }
+
+    /// <summary>
+    /// 对话事件触发-捣乱者
+    /// </summary>
+    /// <param name="npcAIRascal"></param>
+    /// <param name="markId"></param>
+    /// <returns></returns>
+    public bool EventTriggerForTalkByRascal(NpcAIRascalCpt  npcAIRascal, long markId)
+    {
+        if (controlHandler != null)
+        {
+            controlHandler.GetControl().SetFollowPosition(npcAIRascal.transform.position);
+        }
+        return EventTriggerForTalk(markId);
+    }
+
+    /// <summary>
+    /// 对话事件触发-杂项
+    /// </summary>
+    /// <param name="npcAISundry"></param>
+    /// <param name="markId"></param>
+    /// <returns></returns>
+    public bool EventTriggerForTalkBySundry(NpcAISundry npcAISundry, long markId)
+    {
+        if (controlHandler != null)
+        {
+            controlHandler.GetControl().SetFollowPosition(npcAISundry.transform.position);
+        }
+        return EventTriggerForTalk(markId);
     }
 
     /// <summary>
@@ -443,29 +476,43 @@ public class EventHandler : BaseHandler,
     #region 回调处理
     public void ObserbableUpdate<T>(T observable, int type, params object[] obj) where T : Object
     {
-        switch (type)
+        if(observable == miniGameCombatHandler)
         {
-            case (int)BaseMiniGameHandler<BaseMiniGameBuilder, MiniGameBaseBean>.MiniGameStatusEnum.Gameing:
-                break;
-            case (int)BaseMiniGameHandler<BaseMiniGameBuilder, MiniGameBaseBean>.MiniGameStatusEnum.GameEnd:
-                break;
-            case (int)BaseMiniGameHandler<BaseMiniGameBuilder, MiniGameBaseBean>.MiniGameStatusEnum.GameClose:
-                MiniGameBaseBean miniGameData = (MiniGameBaseBean)obj[0];
-                controlHandler.StartControl(ControlHandler.ControlEnum.Normal);
-                if (miniGameData.gameResult == 0)
-                {
-                    if (miniGameData.gameResultLoseTalkMarkId != 0)
-                        EventTriggerForTalk(miniGameData.gameResultLoseTalkMarkId);
-                }
-                else
-                {
-                    if (miniGameData.gameResultWinTalkMarkId != 0)
-                        EventTriggerForTalk(miniGameData.gameResultWinTalkMarkId);
-                }
-                //显示重要NPC
-                if (npcImportantBuilder != null)
-                    npcImportantBuilder.ShowNpc();
-                break;
+            switch (type)
+            {
+                case (int)BaseMiniGameHandler<BaseMiniGameBuilder, MiniGameBaseBean>.MiniGameStatusEnum.Gameing:
+                    break;
+                case (int)BaseMiniGameHandler<BaseMiniGameBuilder, MiniGameBaseBean>.MiniGameStatusEnum.GameEnd:
+                    break;
+                case (int)BaseMiniGameHandler<BaseMiniGameBuilder, MiniGameBaseBean>.MiniGameStatusEnum.GameClose:
+                    MiniGameBaseBean miniGameData = (MiniGameBaseBean)obj[0];
+                    controlHandler.StartControl(ControlHandler.ControlEnum.Normal);
+                    if (miniGameData.gameResult == 0)
+                    {
+                        if (miniGameData.gameResultLoseTalkMarkId != 0)
+                            EventTriggerForTalk(miniGameData.gameResultLoseTalkMarkId);
+                    }
+                    else
+                    {
+                        if (miniGameData.gameResultWinTalkMarkId != 0)
+                            EventTriggerForTalk(miniGameData.gameResultWinTalkMarkId);
+                    }
+                    //显示重要NPC
+                    if (npcImportantBuilder != null)
+                        npcImportantBuilder.ShowNpc();
+                    break;
+            }
+        }
+        else if (observable == gameTimeHandler)
+        {
+            if (type == (int)GameTimeHandler.NotifyTypeEnum.NewDay)
+            {
+                SetEventStatus( EventStatusEnum.EventEnd);
+            }
+            else if (type == (int)GameTimeHandler.NotifyTypeEnum.EndDay)
+            {
+
+            }
         }
     }
 

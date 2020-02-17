@@ -72,24 +72,10 @@ public class NpcAIRascalCpt : BaseNpcAI, IBaseObserver
         switch (rascalIntent)
         {
             case RascalIntentEnum.GoToInn:
-                //是否到达目的地
-                if (characterMoveCpt.IsAutoMoveStop())
-                {
-                    //判断是否关门
-                    if (innHandler.GetInnStatus() == InnHandler.InnStatusEnum.Close)
-                    {
-                        SetIntent(RascalIntentEnum.Leave);
-                    }
-                    else
-                    {
-                        SetIntent(RascalIntentEnum.WaitingForReply);
-                    }
-                }
+                HandleGoToInn();
                 break;
             case RascalIntentEnum.Leave:
-                //到底目的地删除对象
-                if (characterMoveCpt.IsAutoMoveStop())
-                    Destroy(gameObject);
+                HandlerLeave();
                 break;
         }
     }
@@ -99,6 +85,161 @@ public class NpcAIRascalCpt : BaseNpcAI, IBaseObserver
         eventHandler.RemoveObserver(this);
     }
 
+    /// <summary>
+    /// 设置意图
+    /// </summary>
+    /// <param name="intentEnum"></param>
+    public void SetIntent(RascalIntentEnum intentEnum)
+    {
+        StopAllCoroutines();
+        this.rascalIntent = intentEnum;
+        switch (intentEnum)
+        {
+            case RascalIntentEnum.GoToInn:
+                SetIntentForGoToInn();
+                break;
+            case RascalIntentEnum.WaitingForReply:
+                SetIntentForWaitingForReply();
+                break;
+            case RascalIntentEnum.MakeTrouble:
+                SetIntentForMakeTrouble();
+                break;
+            case RascalIntentEnum.Fighting:
+                SetIntentForFighting();
+                break;
+            case RascalIntentEnum.ContinueMakeTrouble:
+                SetIntentForContinueMakeTrouble();
+                break;
+            case RascalIntentEnum.Leave:
+                SetIntentForLeave();
+                break;
+        }
+    }
+
+    /// <summary>
+    /// 处理-前往客栈
+    /// </summary>
+    protected void HandleGoToInn()
+    {
+        //是否到达目的地
+        if (CheckCharacterIsArrive())
+        {
+            //判断是否关门
+            if (innHandler.GetInnStatus() == InnHandler.InnStatusEnum.Close)
+            {
+                SetIntent(RascalIntentEnum.Leave);
+            }
+            else
+            {
+                SetIntent(RascalIntentEnum.WaitingForReply);
+            }
+        }
+    }
+
+    /// <summary>
+    /// 处理-离开客栈
+    /// </summary>
+    protected void HandlerLeave()
+    {
+        //到底目的地删除对象
+        if (characterMoveCpt.IsAutoMoveStop())
+            Destroy(gameObject);
+    }
+
+    /// <summary>
+    /// 意图-前往客栈
+    /// </summary>
+    protected void SetIntentForGoToInn()
+    {
+        //移动到门口附近
+        movePosition = innHandler.GetRandomEntrancePosition();
+        if (movePosition == null)
+            movePosition = Vector3.zero;
+        //前往门
+        characterMoveCpt.SetDestination(movePosition);
+    }
+
+    /// <summary>
+    /// 意图-等待回复
+    /// </summary>
+    protected void SetIntentForWaitingForReply()
+    {
+        if (teamRank == 0)
+        {
+            long talk_ids = RandomUtil.GetRandomDataByArray(teamData.GetTalkIds());
+            if (talk_ids == 0)
+            {
+                SetTeamIntent(RascalIntentEnum.Leave);
+                return;
+            }
+            bool isTrigger = eventHandler.EventTriggerForTalkByRascal(this, talk_ids);
+            if (isTrigger)
+            {
+                eventHandler.AddObserver(this);
+
+            }
+            else
+            {
+                //如果没有触发事件 则全体离开
+                SetTeamIntent(RascalIntentEnum.Leave);
+            }
+        }
+    }
+
+    /// <summary>
+    /// 意图-制造麻烦
+    /// </summary>
+    protected void SetIntentForMakeTrouble()
+    {
+        //展示生命条
+        AddLife(characterMaxLife);
+
+        characterLifeCpt.gameObject.SetActive(true);
+        characterLifeCpt.gameObject.transform.localScale = new Vector3(1, 1, 1);
+        characterLifeCpt.gameObject.transform.DOScale(new Vector3(0.2f, 0.2f), 0.5f).From().SetEase(Ease.OutBack);
+        //展示范围
+        objRascalSpaceShow.SetActive(true);
+        objRascalSpaceShow.transform.localScale = new Vector3(1, 1, 1);
+        objRascalSpaceShow.transform.DOScale(new Vector3(0.2f, 0.2f), 0.5f).From().SetEase(Ease.OutBack);
+        //闹事人员添加
+        innHandler.rascalrQueue.Add(this);
+        StartCoroutine(StartMakeTrouble());
+    }
+
+    /// <summary>
+    /// 意图-打架
+    /// </summary>
+    protected void SetIntentForFighting()
+    {
+        StopAllCoroutines();
+        characterMoveCpt.StopAutoMove();
+        objFightShow.SetActive(true);
+    }
+
+    /// <summary>
+    /// 意图-继续闹事
+    /// </summary>
+    protected void SetIntentForContinueMakeTrouble()
+    {
+        npcFight = null;
+        objFightShow.SetActive(false);
+        StartCoroutine(StartMakeTrouble());
+    }
+
+    /// <summary>
+    /// 意图-离开
+    /// </summary>
+    protected void SetIntentForLeave()
+    {
+        innHandler.rascalrQueue.Remove(this);
+        npcFight = null;
+        characterLifeCpt.gameObject.SetActive(false);
+        objFightShow.SetActive(false);
+        objRascalSpaceShow.SetActive(false);
+        //随机获取一个退出点
+        movePosition = sceneInnManager.GetRandomSceneExportPosition();
+        characterMoveCpt.SetDestination(movePosition);
+    }
 
     /// <summary>
     /// 设置小队数据
@@ -135,133 +276,6 @@ public class NpcAIRascalCpt : BaseNpcAI, IBaseObserver
         }
         characterLifeCpt.SetData(characterLife, characterMaxLife);
         return characterLife;
-    }
-
-
-
-    /// <summary>
-    /// 设置意图
-    /// </summary>
-    /// <param name="intentEnum"></param>
-    public void SetIntent(RascalIntentEnum intentEnum)
-    {
-        StopAllCoroutines();
-        this.rascalIntent = intentEnum;
-        switch (intentEnum)
-        {
-            case RascalIntentEnum.GoToInn:
-                SetIntentForGoToInn();
-                break;
-            case RascalIntentEnum.WaitingForReply:
-                SetIntentForWaitingForReply();
-                break;
-            case RascalIntentEnum.MakeTrouble:
-                SetIntentForMakeTrouble();
-                break;
-            case RascalIntentEnum.Fighting:
-                SetIntentForFighting();
-                break;
-            case RascalIntentEnum.ContinueMakeTrouble:
-                SetIntentForContinueMakeTrouble();
-                break;
-            case RascalIntentEnum.Leave:
-                SetIntentForLeave();
-                break;
-        }
-    }
-
-    /// <summary>
-    /// 意图-前往客栈
-    /// </summary>
-    public void SetIntentForGoToInn()
-    {
-        //移动到门口附近
-        movePosition = innHandler.GetRandomEntrancePosition();
-        if (movePosition == null)
-            movePosition = Vector3.zero;
-        //前往门
-        characterMoveCpt.SetDestination(movePosition);
-    }
-
-    /// <summary>
-    /// 意图-等待回复
-    /// </summary>
-    public void SetIntentForWaitingForReply()
-    {
-        if (teamRank == 0)
-        {
-            long talk_ids = RandomUtil.GetRandomDataByArray(teamData.GetTalkIds());
-            if (talk_ids == 0)
-            {
-                SetTeamIntent(RascalIntentEnum.Leave);
-                return;
-            }
-            bool isTrigger = eventHandler.EventTriggerForTalk(talk_ids);
-            if (isTrigger)
-            {
-                eventHandler.AddObserver(this);
-            }
-            else
-            {
-                //如果没有触发事件 则全体离开
-                SetTeamIntent(RascalIntentEnum.Leave);
-            }
-        }
-    }
-
-    /// <summary>
-    /// 意图-制造麻烦
-    /// </summary>
-    public void SetIntentForMakeTrouble()
-    {
-        //展示生命条
-        AddLife(characterMaxLife);
-
-        characterLifeCpt.gameObject.SetActive(true);
-        characterLifeCpt.gameObject.transform.localScale = new Vector3(1, 1, 1);
-        characterLifeCpt.gameObject.transform.DOScale(new Vector3(0.2f, 0.2f), 0.5f).From().SetEase(Ease.OutBack);
-        //展示范围
-        objRascalSpaceShow.SetActive(true);
-        objRascalSpaceShow.transform.localScale = new Vector3(1, 1, 1);
-        objRascalSpaceShow.transform.DOScale(new Vector3(0.2f, 0.2f), 0.5f).From().SetEase(Ease.OutBack);
-        //闹事人员添加
-        innHandler.rascalrQueue.Add(this);
-        StartCoroutine(StartMakeTrouble());
-    }
-
-    /// <summary>
-    /// 意图-打架
-    /// </summary>
-    public void SetIntentForFighting()
-    {
-        StopAllCoroutines();
-        characterMoveCpt.StopAutoMove();
-        objFightShow.SetActive(true);
-    }
-
-    /// <summary>
-    /// 意图-继续闹事
-    /// </summary>
-    public void SetIntentForContinueMakeTrouble()
-    {
-        npcFight = null;
-        objFightShow.SetActive(false);
-        StartCoroutine(StartMakeTrouble());
-    }
-
-    /// <summary>
-    /// 意图-离开
-    /// </summary>
-    public void SetIntentForLeave()
-    {
-        innHandler.rascalrQueue.Remove(this);
-        npcFight = null;
-        characterLifeCpt.gameObject.SetActive(false);
-        objFightShow.SetActive(false);
-        objRascalSpaceShow.SetActive(false);
-        //随机获取一个退出点
-        movePosition = sceneInnManager.GetRandomSceneExportPosition();
-        characterMoveCpt.SetDestination(movePosition);
     }
 
     /// <summary>
