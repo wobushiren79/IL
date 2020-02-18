@@ -16,20 +16,14 @@ public enum PreTypeForMiniGameEnum
     WinLife = 22,
 }
 
-public class PreTypeForMiniGameBean
+public class PreTypeForMiniGameBean : DataBean<PreTypeForMiniGameEnum>
 {
-    public PreTypeForMiniGameEnum preType;
-    public string preData;
-
-
-    public PreTypeForMiniGameBean(PreTypeForMiniGameEnum preType, string preData)
+    public PreTypeForMiniGameBean():base(PreTypeForMiniGameEnum.MiniGameType,"")
     {
-        this.preType = preType;
-        this.preData = preData;
     }
 }
 
-public class PreTypeForMiniGameEnumTools
+public class PreTypeForMiniGameEnumTools : DataTools
 {
     /// <summary>
     /// 获取前置条件
@@ -37,18 +31,7 @@ public class PreTypeForMiniGameEnumTools
     /// <returns></returns>
     public static List<PreTypeForMiniGameBean> GetListPreData(string data)
     {
-        List<PreTypeForMiniGameBean> listPreData = new List<PreTypeForMiniGameBean>();
-        List<string> listData = StringUtil.SplitBySubstringForListStr(data, '|');
-        foreach (string itemData in listData)
-        {
-            if (CheckUtil.StringIsNull(itemData))
-                continue;
-            List<string> itemListData = StringUtil.SplitBySubstringForListStr(itemData, ':');
-            PreTypeForMiniGameEnum preType = EnumUtil.GetEnum<PreTypeForMiniGameEnum>(itemListData[0]);
-            string preValue = itemListData[1];
-            listPreData.Add(new PreTypeForMiniGameBean(preType, preValue));
-        }
-        return listPreData;
+        return GetListData<PreTypeForMiniGameBean, PreTypeForMiniGameEnum>(data);
     }
 
     /// <summary>
@@ -62,9 +45,9 @@ public class PreTypeForMiniGameEnumTools
         List<PreTypeForMiniGameBean> listPreData = GetListPreData(data);
         foreach (PreTypeForMiniGameBean itemData in listPreData)
         {
-            if (itemData.preType == PreTypeForMiniGameEnum.PlayerNumber)
+            if (itemData.dataType == PreTypeForMiniGameEnum.PlayerNumber)
             {
-                playNumber = int.Parse(itemData.preData);
+                playNumber = int.Parse(itemData.data);
                 return;
             }
         }
@@ -81,9 +64,9 @@ public class PreTypeForMiniGameEnumTools
         List<PreTypeForMiniGameBean> listPreData = GetListPreData(data);
         foreach (PreTypeForMiniGameBean itemData in listPreData)
         {
-            if (itemData.preType == PreTypeForMiniGameEnum.MiniGameType)
+            if (itemData.dataType == PreTypeForMiniGameEnum.MiniGameType)
             {
-                miniGameType = (MiniGameEnum)int.Parse(itemData.preData);
+                miniGameType = (MiniGameEnum)int.Parse(itemData.data);
                 return;
             }
         }
@@ -112,35 +95,35 @@ public class PreTypeForMiniGameEnumTools
 
         foreach (PreTypeForMiniGameBean itemPreData in listPreData)
         {
-            switch (itemPreData.preType)
+            switch (itemPreData.dataType)
             {
                 case PreTypeForMiniGameEnum.MiniGameType:
-                    MiniGameEnum miniGameType = (MiniGameEnum)int.Parse(itemPreData.preData);
+                    MiniGameEnum miniGameType = (MiniGameEnum)int.Parse(itemPreData.data);
                     miniGameData.gameType = miniGameType;
                     break;
                 case PreTypeForMiniGameEnum.UserIds:
-                    long[] userIds = StringUtil.SplitBySubstringForArrayLong(itemPreData.preData, ',');
+                    long[] userIds = StringUtil.SplitBySubstringForArrayLong(itemPreData.data, ',');
                     listUserData = npcInfoManager.GetCharacterDataByIds(userIds);
                     break;
                 case PreTypeForMiniGameEnum.EnemyIds:
-                    long[] enemyIds = StringUtil.SplitBySubstringForArrayLong(itemPreData.preData, ',');
+                    long[] enemyIds = StringUtil.SplitBySubstringForArrayLong(itemPreData.data, ',');
                     listEnemyData = npcInfoManager.GetCharacterDataByIds(enemyIds);
                     break;
                 case PreTypeForMiniGameEnum.MiniGamePosition:
-                    float[] arrayPosition = StringUtil.SplitBySubstringForArrayFloat(itemPreData.preData, ',');
+                    float[] arrayPosition = StringUtil.SplitBySubstringForArrayFloat(itemPreData.data, ',');
                     minigamePosition = new Vector2(arrayPosition[0], arrayPosition[1]);
                     break;
                 case PreTypeForMiniGameEnum.TalkMarkIdForWin:
-                    miniGameData.gameResultWinTalkMarkId = long.Parse(itemPreData.preData);
+                    miniGameData.gameResultWinTalkMarkId = long.Parse(itemPreData.data);
                     break;
                 case PreTypeForMiniGameEnum.TalkMarkIdForLose:
-                    miniGameData.gameResultLoseTalkMarkId = long.Parse(itemPreData.preData);
+                    miniGameData.gameResultLoseTalkMarkId = long.Parse(itemPreData.data);
                     break;
                 case PreTypeForMiniGameEnum.WinLife:
-                    miniGameData.winLife = long.Parse(itemPreData.preData);
+                    miniGameData.winLife = long.Parse(itemPreData.data);
                     break;
                 case PreTypeForMiniGameEnum.WinSurvivalTime:
-                    miniGameData.winSurvivalTime = float.Parse(itemPreData.preData);
+                    miniGameData.winSurvivalTime = float.Parse(itemPreData.data);
                     break;
             }
         }

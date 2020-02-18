@@ -16,7 +16,7 @@ public class ItemGameTextSelectCpt : ItemGameBaseCpt, DialogView.IDialogCallBack
     private void Start()
     {
         if (btSubmit != null)
-            btSubmit.onClick.AddListener(Submit);
+            btSubmit.onClick.AddListener(OnClickSubmit);
     }
 
     /// <summary>
@@ -41,43 +41,36 @@ public class ItemGameTextSelectCpt : ItemGameBaseCpt, DialogView.IDialogCallBack
             string contentDetails = uiGameText.SetContentDetails(content);
             tvContent.text = contentDetails;
         }
-        UIGameManager uiGameManager = uiGameText.GetUIManager<UIGameManager>();
-        //检测是否有钱
-        RewardTypeEnumTools.GetRewardForAddMoney(textData.reward_data, out long moneyL, out long moneyM, out long moneyS);
-        if (moneyL > 0 || moneyM > 0 || moneyS > 0)
-        {
-            if (uiGameManager.gameDataManager.gameData.HasEnoughMoney(moneyL, moneyM, moneyS))
-            {
-
-            }
-            else
-            {
-                tvContent.text += "(" + GameCommonInfo.GetUITextById(1005) + ")";
-                tvContent.color = Color.red;
-            }
-        }
     }
 
-    public void Submit()
+    /// <summary>
+    /// 提交按钮
+    /// </summary>
+    public void OnClickSubmit()
     {
         UIGameText uiGameText = (UIGameText)uiComponent;
-        UIGameManager uiGameManager = uiGameText.GetUIManager<UIGameManager>();
+        UIGameManager uiGameManager = uiGameText.uiGameManager;
+        //检测是否启用小游戏
         if (CheckUtil.StringIsNull(textData.pre_data_minigame))
         {
-            //如果没有前置条件 则直接进行下一步
-            RewardTypeEnumTools.GetRewardForAddMoney(textData.reward_data, out long moneyL, out long moneyM, out long moneyS);
-            if (moneyL > 0 || moneyM > 0 || moneyS > 0)
+            List<PreTypeBean> listPre = PreTypeEnumTools.GetListPreData(textData.pre_data);
+            foreach (PreTypeBean itemPreData in listPre)
             {
-                if (uiGameManager.gameDataManager.gameData.HasEnoughMoney(moneyL, moneyM, moneyS))
+                PreTypeEnumTools.GetPreDetails(itemPreData, uiGameManager.gameDataManager.gameData, uiGameManager.iconDataManager);
+                if (!itemPreData.isPre)
                 {
-                    uiGameManager.gameDataManager.gameData.PayMoney(moneyL, moneyM, moneyS);
-                }
-                else
-                {
-                    //uiGameManager.toastManager.ToastHint(GameCommonInfo.GetUITextById(1005));
+                    uiGameText.uiGameManager.toastManager.ToastHint(itemPreData.spPreIcon, itemPreData.preFailStr);
                     return;
                 }
             }
+            PreTypeEnumTools.CompletePre(listPre, uiGameManager.gameDataManager.gameData);
+            RewardTypeEnumTools.CompleteReward(
+                uiGameManager.iconDataManager,
+                uiGameManager.gameItemsManager,
+                uiGameManager.innBuildManager,
+                uiGameManager.gameDataManager,
+                textData.reward_data);
+            RewardTypeEnumTools.GetRewardForAddMoney(textData.reward_data, out long moneyL, out long moneyM, out long moneyS);
             uiGameText.SelectText(textData);
         }
         else

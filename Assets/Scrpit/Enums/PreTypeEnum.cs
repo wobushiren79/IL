@@ -12,24 +12,24 @@ public enum PreTypeEnum
     HaveMoneyS,//当前拥有金钱
 }
 
-public class PreTypeBean
+public class PreTypeBean : DataBean<PreTypeEnum>
 {
-    public PreTypeEnum preType;
-    public string preData;
-
     public bool isPre;
     public float progress;
     public Sprite spPreIcon;
     public string preDescribe;
+    //准备失败文字
+    public string preFailStr;
 
-    public PreTypeBean(PreTypeEnum preType, string preData)
+
+    public PreTypeBean() : base(PreTypeEnum.PayMoneyS, "")
     {
-        this.preType = preType;
-        this.preData = preData;
+
     }
+
 }
 
-public class PreTypeEnumTools
+public class PreTypeEnumTools : DataTools
 {
     /// <summary>
     /// 检测是否全部准备就绪
@@ -57,28 +57,17 @@ public class PreTypeEnumTools
     /// <returns></returns>
     public static List<PreTypeBean> GetListPreData(string data)
     {
-        List<PreTypeBean> listPreData = new List<PreTypeBean>();
-        List<string> listData = StringUtil.SplitBySubstringForListStr(data, '|');
-        foreach (string itemData in listData)
-        {
-            if (CheckUtil.StringIsNull(itemData))
-                continue;
-            List<string> itemListData = StringUtil.SplitBySubstringForListStr(itemData, ':');
-            PreTypeEnum preType = EnumUtil.GetEnum<PreTypeEnum>(itemListData[0]);
-            string preValue = itemListData[1];
-            listPreData.Add(new PreTypeBean(preType, preValue));
-        }
-        return listPreData;
+        return GetListData<PreTypeBean, PreTypeEnum>(data);
     }
 
     /// <summary>
-    /// 获取前置描述
+    /// 获取前置详情
     /// </summary>
     /// <param name="rewardType"></param>
     /// <returns></returns>
     public static PreTypeBean GetPreDetails(PreTypeBean preTypeData, GameDataBean gameData, IconDataManager iconDataManager, bool isComplete)
     {
-        switch (preTypeData.preType)
+        switch (preTypeData.dataType)
         {
             case PreTypeEnum.PayMoneyL:
             case PreTypeEnum.PayMoneyM:
@@ -109,10 +98,10 @@ public class PreTypeEnumTools
     private static PreTypeBean GetPreDetailsForPayMoney(PreTypeBean preTypeData, GameDataBean gameData, IconDataManager iconDataManager, bool isComplete)
     {
         string preMoneyStr = "";
-        long payMoney = long.Parse(preTypeData.preData);
+        long payMoney = long.Parse(preTypeData.data);
         long haveMoney = 0;
         string iconKey = "";
-        switch (preTypeData.preType)
+        switch (preTypeData.dataType)
         {
             case PreTypeEnum.PayMoneyL:
                 haveMoney = gameData.moneyL;
@@ -130,7 +119,8 @@ public class PreTypeEnumTools
                 iconKey = "money_1";
                 break;
         }
-        if (gameData.moneyL >= payMoney || isComplete)
+        preTypeData.preFailStr = GameCommonInfo.GetUITextById(1005);
+        if (haveMoney >= payMoney || isComplete)
         {
             preTypeData.isPre = true;
             preMoneyStr = "(" + payMoney + "/" + payMoney + ")";
@@ -159,11 +149,11 @@ public class PreTypeEnumTools
     /// <returns></returns>
     private static PreTypeBean GetPreDetailsForHaveMoney(PreTypeBean preTypeData, GameDataBean gameData, IconDataManager iconDataManager, bool isComplete)
     {
-        long haveMoney = long.Parse(preTypeData.preData);
+        long haveMoney = long.Parse(preTypeData.data);
         long ownMoney = 0;
         string haveMoneyStr = "";
         string iconKey = "";
-        switch (preTypeData.preType)
+        switch (preTypeData.dataType)
         {
             case PreTypeEnum.HaveMoneyL:
                 ownMoney = gameData.moneyL;
@@ -181,6 +171,7 @@ public class PreTypeEnumTools
                 iconKey = "money_1";
                 break;
         }
+        preTypeData.preFailStr = GameCommonInfo.GetUITextById(1005);
         if (ownMoney >= haveMoney || isComplete)
         {
             preTypeData.isPre = true;
@@ -208,25 +199,34 @@ public class PreTypeEnumTools
     public static void CompletePre(string data, GameDataBean gameData)
     {
         List<PreTypeBean> listPreData = GetListPreData(data);
+        CompletePre(listPreData, gameData);
+    }
+
+    /// <summary>
+    ///  完成前置条件
+    /// </summary>
+    /// <param name="listPreData"></param>
+    /// <param name="gameData"></param>
+    public static void CompletePre(List<PreTypeBean> listPreData, GameDataBean gameData)
+    {
         foreach (var itemData in listPreData)
         {
-            PreTypeEnum preType = itemData.preType;
+            PreTypeEnum preType = itemData.dataType;
             switch (preType)
             {
                 case PreTypeEnum.PayMoneyL:
-                    long moneyL = long.Parse(itemData.preData);
+                    long moneyL = long.Parse(itemData.data);
                     gameData.PayMoney(moneyL, 0, 0);
                     break;
                 case PreTypeEnum.PayMoneyM:
-                    long moneyM = long.Parse(itemData.preData);
+                    long moneyM = long.Parse(itemData.data);
                     gameData.PayMoney(0, moneyM, 0);
                     break;
                 case PreTypeEnum.PayMoneyS:
-                    long moneyS = long.Parse(itemData.preData);
+                    long moneyS = long.Parse(itemData.data);
                     gameData.PayMoney(0, 0, moneyS);
                     break;
             }
         }
     }
-
 }

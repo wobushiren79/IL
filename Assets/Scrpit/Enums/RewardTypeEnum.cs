@@ -17,27 +17,33 @@ public enum RewardTypeEnum
     AddArenaTrophyIntermediate,//中级竞技场奖杯
     AddArenaTrophyAdvanced,//高级竞技场奖杯
     AddArenaTrophyLegendary,//传说竞技场奖杯
+    AddIngOilsalt,//油盐
+    AddIngMeat,//肉类
+    AddIngRiverfresh,//河鲜
+    AddIngSeafood,//海鲜
+    AddIngVegetables,//蔬菜
+    AddIngMelonfruit,//瓜果
+    AddIngWaterwine,//酒水
+    AddIngFlour,//面粉
 }
 
-public class RewardTypeBean
+public class RewardTypeBean : DataBean<RewardTypeEnum>
 {
-    public RewardTypeEnum rewardType;
-    public string rewardData;
-
     public string rewardDescribe;
     public Sprite spRewardIcon;
     public long rewardId;
     public int rewardNumber = 1;
     public CharacterBean workerCharacterData;
 
-    public RewardTypeBean(RewardTypeEnum rewardType, string rewardData)
+    public RewardTypeBean() : base(RewardTypeEnum.AddMoneyS, "")
     {
-        this.rewardData = rewardData;
-        this.rewardType = rewardType;
+    }
+    public RewardTypeBean(RewardTypeEnum dataType,string data) : base(dataType, data)
+    {
     }
 }
 
-public class RewardTypeEnumTools
+public class RewardTypeEnumTools : DataTools
 {
     /// <summary>
     /// 获取奖励数据
@@ -45,37 +51,22 @@ public class RewardTypeEnumTools
     /// <returns></returns>
     public static List<RewardTypeBean> GetListRewardData(string data)
     {
-        List<RewardTypeBean> listRewardData = new List<RewardTypeBean>();
-        if (CheckUtil.StringIsNull(data))
-        {
-            return listRewardData;
-        }
-        List<string> listData = StringUtil.SplitBySubstringForListStr(data, '|');
-        foreach (string itemData in listData)
-        {
-            if (CheckUtil.StringIsNull(itemData))
-                continue;
-            List<string> itemListData = StringUtil.SplitBySubstringForListStr(itemData, ':');
-            RewardTypeEnum rewardType = EnumUtil.GetEnum<RewardTypeEnum>(itemListData[0]);
-            string rewardValue = itemListData[1];
-            listRewardData.Add(new RewardTypeBean(rewardType, rewardValue));
-        }
-        return listRewardData;
+        return GetListData<RewardTypeBean, RewardTypeEnum>(data);
     }
 
     /// <summary>
     /// 根据类型获取奖励数据
     /// </summary>
-    /// <param name="rewardType"></param>
+    /// <param name="dataType"></param>
     /// <param name="data"></param>
     /// <returns></returns>
-    public static List<RewardTypeBean> GetListRewardDataByType(RewardTypeEnum rewardType, string data)
+    public static List<RewardTypeBean> GetListRewardDataByType(RewardTypeEnum dataType, string data)
     {
         List<RewardTypeBean> listAllReward = GetListRewardData(data);
         List<RewardTypeBean> listReward = new List<RewardTypeBean>();
         foreach (RewardTypeBean itemReward in listAllReward)
         {
-            if (itemReward.rewardType == rewardType)
+            if (itemReward.dataType == dataType)
             {
                 listReward.Add(itemReward);
             }
@@ -83,76 +74,66 @@ public class RewardTypeEnumTools
         return listReward;
     }
 
+
     /// <summary>
     /// 获取奖励描述
     /// </summary>
     /// <returns></returns>
-    public static RewardTypeBean GetRewardDetails(RewardTypeBean rewardData, IconDataManager iconDataManager, GameItemsManager gameItemsManager, InnBuildManager innBuildManager)
+    public static RewardTypeBean GetRewardDetails(RewardTypeBean data, IconDataManager iconDataManager, GameItemsManager gameItemsManager, InnBuildManager innBuildManager)
     {
-        return GetRewardDetails(rewardData, iconDataManager, gameItemsManager, innBuildManager, null);
+        return GetRewardDetails(data, iconDataManager, gameItemsManager, innBuildManager, null);
     }
-    public static RewardTypeBean GetRewardDetails(RewardTypeBean rewardData, IconDataManager iconDataManager, GameItemsManager gameItemsManager, InnBuildManager innBuildManager, NpcInfoManager npcInfoManager)
+    public static RewardTypeBean GetRewardDetails(RewardTypeBean data, IconDataManager iconDataManager, GameItemsManager gameItemsManager, InnBuildManager innBuildManager, NpcInfoManager npcInfoManager)
     {
-        switch (rewardData.rewardType)
+        switch (data.dataType)
         {
             case RewardTypeEnum.AddWorkerNumber:
-                rewardData.spRewardIcon = iconDataManager.GetIconSpriteByName("ui_features_worker");
-                rewardData.rewardDescribe = string.Format(GameCommonInfo.GetUITextById(6001), rewardData.rewardData);
-                rewardData.rewardNumber = int.Parse(rewardData.rewardData);
+                data.spRewardIcon = iconDataManager.GetIconSpriteByName("ui_features_worker");
+                data.rewardDescribe = string.Format(GameCommonInfo.GetUITextById(6001), data.data);
+                data.rewardNumber = int.Parse(data.data);
                 break;
             case RewardTypeEnum.AddWorker:
-                long workerId = long.Parse(rewardData.rewardData);
-                rewardData.workerCharacterData = npcInfoManager.GetCharacterDataById(workerId);
+                long workerId = long.Parse(data.data);
+                data.workerCharacterData = npcInfoManager.GetCharacterDataById(workerId);
                 break;
             case RewardTypeEnum.AddMoneyL:
-                rewardData.spRewardIcon = iconDataManager.GetIconSpriteByName("money_3");
-                rewardData.rewardDescribe = string.Format(GameCommonInfo.GetUITextById(6002), rewardData.rewardData);
-                rewardData.rewardNumber = int.Parse(rewardData.rewardData);
-                break;
             case RewardTypeEnum.AddMoneyM:
-                rewardData.spRewardIcon = iconDataManager.GetIconSpriteByName("money_2");
-                rewardData.rewardDescribe = string.Format(GameCommonInfo.GetUITextById(6003), rewardData.rewardData);
-                rewardData.rewardNumber = int.Parse(rewardData.rewardData);
-                break;
             case RewardTypeEnum.AddMoneyS:
-                rewardData.spRewardIcon = iconDataManager.GetIconSpriteByName("money_1");
-                rewardData.rewardDescribe = string.Format(GameCommonInfo.GetUITextById(6004), rewardData.rewardData);
-                rewardData.rewardNumber = int.Parse(rewardData.rewardData);
+                GetRewardDetailsForAddMoney(data, iconDataManager);
                 break;
             case RewardTypeEnum.AddGuildCoin:
-                rewardData.spRewardIcon = iconDataManager.GetIconSpriteByName("guild_coin_2");
-                rewardData.rewardDescribe = string.Format(GameCommonInfo.GetUITextById(6005), rewardData.rewardData);
-                rewardData.rewardNumber = int.Parse(rewardData.rewardData);
+                data.spRewardIcon = iconDataManager.GetIconSpriteByName("guild_coin_2");
+                data.rewardDescribe = string.Format(GameCommonInfo.GetUITextById(6005), data.data);
+                data.rewardNumber = int.Parse(data.data);
                 break;
             case RewardTypeEnum.AddItems:
-                rewardData = GetRewardDetailsForItems(rewardData, iconDataManager, gameItemsManager);
+                data = GetRewardDetailsForItems(data, iconDataManager, gameItemsManager);
                 break;
             case RewardTypeEnum.AddBuildItems:
-                rewardData = GetRewardDetailsForBuildItems(rewardData, iconDataManager, innBuildManager);
+                data = GetRewardDetailsForBuildItems(data, iconDataManager, innBuildManager);
                 break;
             case RewardTypeEnum.AddArenaTrophyElementary:
-                rewardData.spRewardIcon = iconDataManager.GetIconSpriteByName("Trophy_1_0");
-                rewardData.rewardDescribe = string.Format(GameCommonInfo.GetUITextById(54), rewardData.rewardData);
-                rewardData.rewardNumber = int.Parse(rewardData.rewardData);
-                break;
             case RewardTypeEnum.AddArenaTrophyIntermediate:
-                rewardData.spRewardIcon = iconDataManager.GetIconSpriteByName("Trophy_1_1");
-                rewardData.rewardDescribe = string.Format(GameCommonInfo.GetUITextById(55), rewardData.rewardData);
-                rewardData.rewardNumber = int.Parse(rewardData.rewardData);
-                break;
             case RewardTypeEnum.AddArenaTrophyAdvanced:
-                rewardData.spRewardIcon = iconDataManager.GetIconSpriteByName("Trophy_1_2");
-                rewardData.rewardDescribe = string.Format(GameCommonInfo.GetUITextById(56), rewardData.rewardData);
-                rewardData.rewardNumber = int.Parse(rewardData.rewardData);
-                break;
             case RewardTypeEnum.AddArenaTrophyLegendary:
-                rewardData.spRewardIcon = iconDataManager.GetIconSpriteByName("Trophy_1_3");
-                rewardData.rewardDescribe = string.Format(GameCommonInfo.GetUITextById(57), rewardData.rewardData);
-                rewardData.rewardNumber = int.Parse(rewardData.rewardData);
+                GetRewardDetailsForAddTrophy(data,iconDataManager);
+                break;
+            case RewardTypeEnum.AddIngOilsalt:
+            case RewardTypeEnum.AddIngMeat:
+            case RewardTypeEnum.AddIngRiverfresh:
+            case RewardTypeEnum.AddIngSeafood:
+            case RewardTypeEnum.AddIngVegetables:
+            case RewardTypeEnum.AddIngMelonfruit:
+            case RewardTypeEnum.AddIngWaterwine:
+            case RewardTypeEnum.AddIngFlour:
+                GetRewardDetailsForIng(iconDataManager, data);
                 break;
         }
-        return rewardData;
+        return data;
     }
+
+
+
 
     /// <summary>
     /// 获取奖励 增加的金钱
@@ -169,65 +150,183 @@ public class RewardTypeEnumTools
         List<RewardTypeBean> listAllReward = GetListRewardData(data);
         foreach (RewardTypeBean rewardItem in listAllReward)
         {
-            if (rewardItem.rewardType == RewardTypeEnum.AddMoneyL)
+            if (rewardItem.dataType == RewardTypeEnum.AddMoneyL)
             {
-                addMoneyL = long.Parse(rewardItem.rewardData);
+                addMoneyL = long.Parse(rewardItem.data);
             }
-            else if (rewardItem.rewardType == RewardTypeEnum.AddMoneyM)
+            else if (rewardItem.dataType == RewardTypeEnum.AddMoneyM)
             {
-                addMoneyM = long.Parse(rewardItem.rewardData);
+                addMoneyM = long.Parse(rewardItem.data);
             }
-            else if (rewardItem.rewardType == RewardTypeEnum.AddMoneyS)
+            else if (rewardItem.dataType == RewardTypeEnum.AddMoneyS)
             {
-                addMoneyS = long.Parse(rewardItem.rewardData);
+                addMoneyS = long.Parse(rewardItem.data);
             }
         }
+    }
+
+
+    /// <summary>
+    /// 获取奖杯详情
+    /// </summary>
+    /// <param name="rewardTypeData"></param>
+    /// <param name="iconDataManager"></param>
+    /// <returns></returns>
+    private static RewardTypeBean GetRewardDetailsForAddTrophy(RewardTypeBean rewardTypeData, IconDataManager iconDataManager)
+    {
+        string iconKey = "";
+        string rewardDescribe = "???";
+        switch (rewardTypeData.dataType)
+        {
+            case RewardTypeEnum.AddArenaTrophyElementary:
+                iconKey = "Trophy_1_0";
+                rewardDescribe = string.Format(GameCommonInfo.GetUITextById(6006), rewardTypeData.data);
+                break;
+            case RewardTypeEnum.AddArenaTrophyIntermediate:
+                iconKey = "Trophy_1_1";
+                rewardDescribe = string.Format(GameCommonInfo.GetUITextById(6007), rewardTypeData.data);
+                break;
+            case RewardTypeEnum.AddArenaTrophyAdvanced:
+                iconKey = "Trophy_1_2";
+                rewardDescribe = string.Format(GameCommonInfo.GetUITextById(6008), rewardTypeData.data);
+                break;
+            case RewardTypeEnum.AddArenaTrophyLegendary:
+                iconKey = "Trophy_1_3";
+                rewardDescribe = string.Format(GameCommonInfo.GetUITextById(6009), rewardTypeData.data);
+                break;
+        }
+        rewardTypeData.spRewardIcon = iconDataManager.GetIconSpriteByName(iconKey);
+        rewardTypeData.rewardDescribe = string.Format(GameCommonInfo.GetUITextById(6009), rewardTypeData.data);
+        rewardTypeData.rewardNumber = int.Parse(rewardTypeData.data);
+        return rewardTypeData;
+    }
+
+    /// <summary>
+    /// 获取金钱详情
+    /// </summary>
+    /// <param name="rewardTypeData"></param>
+    /// <param name="iconDataManager"></param>
+    /// <returns></returns>
+    private static RewardTypeBean GetRewardDetailsForAddMoney(RewardTypeBean rewardTypeData, IconDataManager iconDataManager)
+    {
+        string iconKey = "";
+        string rewardDescribe = "???";
+        switch (rewardTypeData.dataType)
+        {
+            case RewardTypeEnum.AddMoneyL:
+                iconKey = "money_3";
+                rewardDescribe= string.Format(GameCommonInfo.GetUITextById(6002), rewardTypeData.data);
+                break;
+            case RewardTypeEnum.AddMoneyM:
+                iconKey = "money_2";
+                rewardDescribe = string.Format(GameCommonInfo.GetUITextById(6003), rewardTypeData.data);
+                break;
+            case RewardTypeEnum.AddMoneyS:
+                iconKey = "money_1";
+                rewardDescribe = string.Format(GameCommonInfo.GetUITextById(6004), rewardTypeData.data);
+                break;
+        }
+        rewardTypeData.spRewardIcon = iconDataManager.GetIconSpriteByName(iconKey);
+        rewardTypeData.rewardDescribe = rewardDescribe;
+        rewardTypeData.rewardNumber = int.Parse(rewardTypeData.data);
+        return rewardTypeData;
     }
 
     /// <summary>
     /// 获取建筑数据详情
     /// </summary>
-    /// <param name="rewardData"></param>
+    /// <param name="data"></param>
     /// <param name="iconDataManager"></param>
     /// <param name="innBuildManager"></param>
     /// <returns></returns>
-    private static RewardTypeBean GetRewardDetailsForBuildItems(RewardTypeBean rewardData, IconDataManager iconDataManager, InnBuildManager innBuildManager)
+    private static RewardTypeBean GetRewardDetailsForBuildItems(RewardTypeBean data, IconDataManager iconDataManager, InnBuildManager innBuildManager)
     {
-        string[] listBuildItemsData = StringUtil.SplitBySubstringForArrayStr(rewardData.rewardData, ',');
+        string[] listBuildItemsData = StringUtil.SplitBySubstringForArrayStr(data.data, ',');
         long buildItemId = long.Parse(listBuildItemsData[0]);
         BuildItemBean buildItemInfo = innBuildManager.GetBuildDataById(buildItemId);
-        rewardData.rewardDescribe = buildItemInfo.name;
+        data.rewardDescribe = buildItemInfo.name;
         if (listBuildItemsData.Length == 2)
         {
-            rewardData.rewardNumber = int.Parse(listBuildItemsData[2]);
+            data.rewardNumber = int.Parse(listBuildItemsData[2]);
         }
-        rewardData.rewardId = buildItemId;
-        rewardData.rewardDescribe += (" x" + rewardData.rewardNumber);
-        rewardData.spRewardIcon = innBuildManager.GetFurnitureSpriteByName(buildItemInfo.icon_key);
-        return rewardData;
+        data.rewardId = buildItemId;
+        data.rewardDescribe += (" x" + data.rewardNumber);
+        data.spRewardIcon = innBuildManager.GetFurnitureSpriteByName(buildItemInfo.icon_key);
+        return data;
     }
 
     /// <summary>
     /// 获取道具的奖励详情
     /// </summary>
-    /// <param name="rewardData"></param>
+    /// <param name="data"></param>
     /// <param name="iconDataManager"></param>
     /// <param name="gameItemsManager"></param>
     /// <returns></returns>
-    private static RewardTypeBean GetRewardDetailsForItems(RewardTypeBean rewardData, IconDataManager iconDataManager, GameItemsManager gameItemsManager)
+    private static RewardTypeBean GetRewardDetailsForItems(RewardTypeBean data, IconDataManager iconDataManager, GameItemsManager gameItemsManager)
     {
-        string[] listItemsData = StringUtil.SplitBySubstringForArrayStr(rewardData.rewardData, ',');
+        string[] listItemsData = StringUtil.SplitBySubstringForArrayStr(data.data, ',');
         long itemId = long.Parse(listItemsData[0]);
         ItemsInfoBean itemsInfo = gameItemsManager.GetItemsById(itemId);
-        rewardData.rewardDescribe = itemsInfo.name;
+        data.rewardDescribe = itemsInfo.name;
         if (listItemsData.Length == 2)
         {
-            rewardData.rewardNumber = int.Parse(listItemsData[1]);
+            data.rewardNumber = int.Parse(listItemsData[1]);
         }
-        rewardData.rewardId = itemId;
-        rewardData.rewardDescribe += (" x" + rewardData.rewardNumber);
-        rewardData.spRewardIcon = GeneralEnumTools.GetGeneralSprite(itemsInfo, iconDataManager, gameItemsManager, null, true);
-        return rewardData;
+        data.rewardId = itemId;
+        data.rewardDescribe += (" x" + data.rewardNumber);
+        data.spRewardIcon = GeneralEnumTools.GetGeneralSprite(itemsInfo, iconDataManager, gameItemsManager, null, true);
+        return data;
+    }
+
+    /// <summary>
+    /// 获取食材的奖励详情
+    /// </summary>
+    /// <param name="rewardTypeData"></param>
+    /// <param name="ingName"></param>
+    /// <returns></returns>
+    private static RewardTypeBean GetRewardDetailsForIng(IconDataManager iconDataManager, RewardTypeBean rewardTypeData)
+    {
+        string ingName = "???";
+        string iconKey = "";
+        switch (rewardTypeData.dataType)
+        {
+            case RewardTypeEnum.AddIngOilsalt:
+                ingName = GameCommonInfo.GetUITextById(21);
+                iconKey = "ui_ing_oilsalt";
+                break;
+            case RewardTypeEnum.AddIngMeat:
+                ingName = GameCommonInfo.GetUITextById(22);
+                iconKey = "ui_ing_meat";
+                break;
+            case RewardTypeEnum.AddIngRiverfresh:
+                ingName = GameCommonInfo.GetUITextById(23);
+                iconKey = "ui_ing_riverfresh";
+                break;
+            case RewardTypeEnum.AddIngSeafood:
+                ingName = GameCommonInfo.GetUITextById(24);
+                iconKey = "ui_ing_seafood";
+                break;
+            case RewardTypeEnum.AddIngVegetables:
+                ingName = GameCommonInfo.GetUITextById(25);
+                iconKey = "ui_ing_vegetables";
+                break;
+            case RewardTypeEnum.AddIngMelonfruit:
+                ingName = GameCommonInfo.GetUITextById(26);
+                iconKey = "ui_ing_melonfruit";
+                break;
+            case RewardTypeEnum.AddIngWaterwine:
+                ingName = GameCommonInfo.GetUITextById(27);
+                iconKey = "ui_ing_waterwine";
+                break;
+            case RewardTypeEnum.AddIngFlour:
+                ingName = GameCommonInfo.GetUITextById(28);
+                iconKey = "ui_ing_flour";
+                break;
+        }
+        rewardTypeData.rewardDescribe = string.Format(GameCommonInfo.GetUITextById(6010), ingName, rewardTypeData.data);
+        rewardTypeData.rewardNumber = int.Parse(rewardTypeData.data);
+        rewardTypeData.spRewardIcon = iconDataManager.GetIconSpriteByName(iconKey);
+        return rewardTypeData;
     }
 
     /// <summary>
@@ -235,17 +334,22 @@ public class RewardTypeEnumTools
     /// </summary>
     /// <param name="reward_data"></param>
     /// <param name="gameData"></param>
-    public static void CompleteReward(string data, GameDataBean gameData)
+    public static void CompleteReward(IconDataManager iconDataManager,GameItemsManager gameItemsManager,InnBuildManager innBuildManager, GameDataManager gameDataManager, string data)
     {
         List<RewardTypeBean> listRewardData = GetListRewardData(data);
-        CompleteReward(listRewardData, gameData);
+        foreach (RewardTypeBean itemData in listRewardData)
+        {
+            GetRewardDetails(itemData, iconDataManager, gameItemsManager, innBuildManager);
+        }
+        CompleteReward(listRewardData,gameDataManager.gameData);
     }
+
     public static void CompleteReward(List<RewardTypeBean> listRewardData, GameDataBean gameData)
     {
         foreach (var itemData in listRewardData)
         {
-            RewardTypeEnum rewardType = itemData.rewardType;
-            switch (rewardType)
+            RewardTypeEnum dataType = itemData.dataType;
+            switch (dataType)
             {
                 case RewardTypeEnum.AddWorkerNumber:
                     int addWorkerNumber = itemData.rewardNumber;
@@ -272,6 +376,28 @@ public class RewardTypeEnumTools
                     break;
                 case RewardTypeEnum.AddBuildItems:
                     gameData.AddBuildNumber(itemData.rewardId, itemData.rewardNumber);
+                    break;
+
+                case RewardTypeEnum.AddIngMeat:
+                    gameData.AddIng(IngredientsEnum.Oilsalt, itemData.rewardNumber);
+                    break;
+                case RewardTypeEnum.AddIngRiverfresh:
+                    gameData.AddIng(IngredientsEnum.Riverfresh, itemData.rewardNumber);
+                    break;
+                case RewardTypeEnum.AddIngSeafood:
+                    gameData.AddIng(IngredientsEnum.Seafood, itemData.rewardNumber);
+                    break;
+                case RewardTypeEnum.AddIngVegetables:
+                    gameData.AddIng(IngredientsEnum.Vegetables, itemData.rewardNumber);
+                    break;
+                case RewardTypeEnum.AddIngMelonfruit:
+                    gameData.AddIng(IngredientsEnum.Melonfruit, itemData.rewardNumber);
+                    break;
+                case RewardTypeEnum.AddIngWaterwine:
+                    gameData.AddIng(IngredientsEnum.Waterwine, itemData.rewardNumber);
+                    break;
+                case RewardTypeEnum.AddIngFlour:
+                    gameData.AddIng(IngredientsEnum.Flour, itemData.rewardNumber);
                     break;
             }
         }

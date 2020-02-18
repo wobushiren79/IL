@@ -156,7 +156,12 @@ public class ItemTownGuildImproveInnLevelCpt : BaseMonoBehaviour
             //前置如果有需要临时支付的条件
             PreTypeEnumTools.CompletePre(storeInfo.pre_data, gameDataManager.gameData);
             //获取所有奖励
-            RewardTypeEnumTools.CompleteReward(storeInfo.reward_data, gameDataManager.gameData);
+            RewardTypeEnumTools.CompleteReward(
+                iconDataManager,
+                gameItemsManager,
+                innBuildManager,
+                gameDataManager,
+                storeInfo.reward_data);
             //客栈升级
             gameDataManager.gameData.innAttributes.SetInnLevelUp();
 

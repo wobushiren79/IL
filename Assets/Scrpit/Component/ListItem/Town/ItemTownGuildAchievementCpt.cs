@@ -157,14 +157,20 @@ public class ItemTownGuildAchievementCpt : ItemGameBaseCpt
     /// </summary>
     public void SubmitAchievement()
     {
-        GameDataManager gameDataManager = GetUIManager<UIGameManager>().gameDataManager;
-        if (gameDataManager == null || achievementInfo == null)
+        UIGameManager uiGameManager = GetUIManager<UIGameManager>();
+
+        if (uiGameManager.gameDataManager == null || achievementInfo == null)
             return;
         if (status == AchievementStatusEnum.ToBeConfirmed)
         {
             //添加该成就和奖励
-            gameDataManager.gameData.GetAchievementData().AddAchievement(achievementInfo.id);
-            RewardTypeEnumTools.CompleteReward(achievementInfo.reward_data, gameDataManager.gameData);
+            uiGameManager.gameDataManager.gameData.GetAchievementData().AddAchievement(achievementInfo.id);
+            RewardTypeEnumTools.CompleteReward(
+                uiGameManager.iconDataManager,
+                uiGameManager.gameItemsManager,
+                uiGameManager.innBuildManager,
+                uiGameManager.gameDataManager,
+                achievementInfo.reward_data);
             //设置状态
             SetAchStatus(AchievementStatusEnum.Completed);
             //刷新UI

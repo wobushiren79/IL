@@ -530,8 +530,11 @@ public class EditorUI
             itemTalkInfo.name = EditorGUILayout.TextArea(itemTalkInfo.name + "", GUILayout.Width(50), GUILayout.Height(20));
             GUILayout.Label("对话内容：", GUILayout.Width(100), GUILayout.Height(20));
             itemTalkInfo.content = EditorGUILayout.TextArea(itemTalkInfo.content + "", GUILayout.Width(500), GUILayout.Height(20));
-            itemTalkInfo.pre_data = GUIListData<PreTypeEnum>("付出", itemTalkInfo.pre_data);
-            itemTalkInfo.reward_data = GUIListData<RewardTypeEnum>("奖励", itemTalkInfo.reward_data);
+            if(itemTalkInfo.type == (int)TextInfoTypeEnum.Select && itemTalkInfo.select_type==1)
+            {
+                itemTalkInfo.pre_data = GUIListData<PreTypeEnum>("付出", itemTalkInfo.pre_data);
+                itemTalkInfo.reward_data = GUIListData<RewardTypeEnum>("奖励", itemTalkInfo.reward_data);
+            }
 
 
             if (GUILayout.Button("更新", GUILayout.Width(120), GUILayout.Height(20)))

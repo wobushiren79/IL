@@ -91,7 +91,7 @@ public class ItemTownArenaCpt : ItemGameBaseCpt, DialogView.IDialogCallBack
             RewardTypeEnumTools.GetRewardDetails(itemReward, iconDataManager, gameItemsManager, innBuildManager);
             ivIcon.sprite = itemReward.spRewardIcon;
             tvNumber.text = "x" + itemReward.rewardNumber;
-            if (itemReward.rewardType == RewardTypeEnum.AddItems)
+            if (itemReward.dataType == RewardTypeEnum.AddItems)
             {
                 InfoItemsPopupButton infoItemsPopup = objReward.GetComponent<InfoItemsPopupButton>();
                 infoItemsPopup.SetPopupShowView(infoItemsPopupShow);
