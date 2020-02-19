@@ -93,12 +93,6 @@ public class UIGameMain : UIGameComponent, DialogView.IDialogCallBack, IRadioGro
             popupRichness.SetPopupShowView(uiGameManager.infoPromptPopup);
         if (popupInnLevel != null)
             popupInnLevel.SetPopupShowView(uiGameManager.infoPromptPopup);
-        //设置美观值
-        if (tvAesthetics != null)
-        {
-            long attributes = uiGameManager.gameDataManager.gameData.GetInnAttributesData().GetAesthetics(out string aestheticsLevel);
-            tvAesthetics.text = attributes + " "+ aestheticsLevel;
-        }  
 
         if (rgTimeScale != null)
             rgTimeScale.SetCallBack(this);
@@ -129,14 +123,7 @@ public class UIGameMain : UIGameComponent, DialogView.IDialogCallBack, IRadioGro
             uiGameManager.gameTimeHandler.GetTime(out int year, out int month, out int day);
             clockView.SetTime(month, day, (int)hour, (int)min);
         }
-        if (sliderPraise != null)
-        {
-            sliderPraise.value = innAttributes.GetPraise();
-        }
-        if (tvPraise != null)
-        {
-            tvPraise.text = innAttributes.GetPraise() + "%";
-        }
+        SetInnPraise(innAttributes);
     }
 
     public override void CloseUI()
@@ -179,20 +166,53 @@ public class UIGameMain : UIGameComponent, DialogView.IDialogCallBack, IRadioGro
             popupSave.SetContent(GameCommonInfo.GetUITextById(2036));
         if (popupInnData != null)
             popupInnData.SetContent(GameCommonInfo.GetUITextById(2037));
-
-        if (popupAesthetics != null)
-            popupAesthetics.SetContent(GameCommonInfo.GetUITextById(2003) + " " + innAttributes.aesthetics);
-        if (tvAesthetics != null)
-            tvAesthetics.text = innAttributes.aesthetics + "";
         if (popupPraise != null)
             popupPraise.SetContent(GameCommonInfo.GetUITextById(2004) + " " + innAttributes.praise + "%");
+
+        SetInnAesthetics(innAttributes);
+
         if (popupRichness != null)
             popupRichness.SetContent(GameCommonInfo.GetUITextById(2005) + " " + innAttributes.richness);
         if (tvRichness != null)
             tvRichness.text = innAttributes.richness + "";
 
+        SetInnLevel(innAttributes);
+
+        //设置是否显示时间缩放
+        if (rgTimeScale != null && uiGameManager.innHandler != null && uiGameManager.innHandler.GetInnStatus() == InnHandler.InnStatusEnum.Close)
+        {
+            rgTimeScale.gameObject.SetActive(false);
+        }
+        else
+        {
+            rgTimeScale.gameObject.SetActive(true);
+        }
+    }
+
+    /// <summary>
+    /// 设置美观值
+    /// </summary>
+    public void SetInnAesthetics(InnAttributesBean innAttributes)
+    {
+        long aesthetics = innAttributes.GetAesthetics(out string aestheticsLevel);
+        if (popupAesthetics != null)
+        {
+            popupAesthetics.SetContent(GameCommonInfo.GetUITextById(2003) + " " + aesthetics + " " + aestheticsLevel);
+        }
+        if (tvAesthetics != null)
+        {
+            tvAesthetics.text = aesthetics + " " + aestheticsLevel;
+        }
+    }
+
+    /// <summary>
+    /// 设置客栈等级
+    /// </summary>
+    /// <param name="innAttributes"></param>
+    public void SetInnLevel(InnAttributesBean innAttributes)
+    {
         //设置客栈等级
-        string innLevelStr = uiGameManager.gameDataManager.gameData.innAttributes.GetInnLevel(out int innLevelTitle, out int innLevelStar);
+        string innLevelStr = innAttributes.GetInnLevel(out int innLevelTitle, out int innLevelStar);
         if (popupInnLevel != null)
         {
             popupInnLevel.SetContent(GameCommonInfo.GetUITextById(2006) + " " + innLevelStr);
@@ -209,15 +229,21 @@ public class UIGameMain : UIGameComponent, DialogView.IDialogCallBack, IRadioGro
             else
                 ivInnLevel.gameObject.SetActive(false);
         }
+    }
 
-        //设置是否显示时间缩放
-        if (rgTimeScale != null && uiGameManager.innHandler != null && uiGameManager.innHandler.GetInnStatus() == InnHandler.InnStatusEnum.Close)
+    /// <summary>
+    /// 设置客栈点赞
+    /// </summary>
+    /// <param name="innAttributes"></param>
+    public void SetInnPraise(InnAttributesBean innAttributes)
+    {
+        if (sliderPraise != null)
         {
-            rgTimeScale.gameObject.SetActive(false);
+            sliderPraise.value = innAttributes.GetPraise();
         }
-        else
+        if (tvPraise != null)
         {
-            rgTimeScale.gameObject.SetActive(true);
+            tvPraise.text = innAttributes.GetPraise() + "%";
         }
     }
 

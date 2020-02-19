@@ -3,7 +3,7 @@ using UnityEditor;
 using UnityEngine.UI;
 using UnityEngine.AI;
 
-public class UIGameBuild : BaseUIComponent
+public class UIGameBuild : UIGameComponent
 {
     public Text tvAesthetics;
 
@@ -23,7 +23,6 @@ public class UIGameBuild : BaseUIComponent
 
     public void Start()
     {
-        GameDataManager gameDataManager = GetUIManager<UIGameManager>().gameDataManager;
         if (btBack != null)
             btBack.onClick.AddListener(OpenMainUI);
         if (btDismantle != null)
@@ -36,8 +35,8 @@ public class UIGameBuild : BaseUIComponent
             btTypeCounter.onClick.AddListener(CreateCounterList);
         if (btTypeDoor != null)
             btTypeDoor.onClick.AddListener(CreateDoorList);
-        if (tvAesthetics != null)
-            tvAesthetics.text = gameDataManager.gameData.GetInnAttributesData().GetAesthetics() + "";
+
+        SetInnAesthetics();
         CreateBuildList(BuildItemTypeEnum.Table);
     }
 
@@ -45,17 +44,17 @@ public class UIGameBuild : BaseUIComponent
     {
         base.OpenUI();
         //停止时间
-        GetUIManager<UIGameManager>().gameTimeHandler.SetTimeStatus(true);
-        GetUIManager<UIGameManager>().controlHandler.StartControl(ControlHandler.ControlEnum.Build);
-        GetUIManager<UIGameManager>().innHandler.CloseInn();
+        uiGameManager.gameTimeHandler.SetTimeStatus(true);
+        uiGameManager.controlHandler.StartControl(ControlHandler.ControlEnum.Build);
+        uiGameManager.innHandler.CloseInn();
     }
     public override void CloseUI()
     {
         base.CloseUI();
         //时间添加1小时
-        GetUIManager<UIGameManager>().gameTimeHandler.AddHour(1);
+        uiGameManager.gameTimeHandler.AddHour(1);
         //继续时间
-        GetUIManager<UIGameManager>().gameTimeHandler.SetTimeStatus(false);
+        uiGameManager.gameTimeHandler.SetTimeStatus(false);
     }
 
     /// <summary>
@@ -63,14 +62,24 @@ public class UIGameBuild : BaseUIComponent
     /// </summary>
     public override void RefreshUI()
     {
-        GameDataManager gameDataManager = GetUIManager<UIGameManager>().gameDataManager;
-        InnBuildManager innBuildManager = GetUIManager<UIGameManager>().innBuildManager;
         //刷新列表数据
         CreateBuildList(buildType);
         //刷新美观值
-        gameDataManager.gameData.GetInnAttributesData().SetAesthetics(innBuildManager, gameDataManager.gameData.GetInnBuildData());
+        uiGameManager.gameDataManager.gameData.GetInnAttributesData().SetAesthetics
+            (uiGameManager.innBuildManager, uiGameManager.gameDataManager.gameData.GetInnBuildData());
+        SetInnAesthetics();
+    }
+
+    /// <summary>
+    /// 设置客栈美观
+    /// </summary>
+    public void SetInnAesthetics()
+    {
         if (tvAesthetics != null)
-            tvAesthetics.text = gameDataManager.gameData.GetInnAttributesData().GetAesthetics() + "";
+        {
+            long aesthetics = uiGameManager.gameDataManager.gameData.GetInnAttributesData().GetAesthetics(out string aestheticsLevel);
+            tvAesthetics.text = aesthetics + " " + aestheticsLevel;
+        }
     }
 
     /// <summary>
@@ -79,28 +88,21 @@ public class UIGameBuild : BaseUIComponent
     /// <param name="type"></param>
     public void CreateBuildList(BuildItemTypeEnum  type)
     {
-        GameDataManager gameDataManager = GetUIManager<UIGameManager>().gameDataManager;
-        ControlHandler controlHandler = GetUIManager<UIGameManager>().controlHandler;
-        InnBuildManager innBuildManager = GetUIManager<UIGameManager>().innBuildManager;
         buildType = type;
         //删除当前选中
-        ((ControlForBuildCpt)(controlHandler.GetControl(ControlHandler.ControlEnum.Build))).DestoryBuildItem();
+        ((ControlForBuildCpt)(uiGameManager.controlHandler.GetControl(ControlHandler.ControlEnum.Build))).DestoryBuildItem();
         if (listBuildContent == null)
             return;
         if (itemBuildModel == null)
             return;
-        if (gameDataManager == null)
-            return;
-        if (gameDataManager.gameData == null)
-            return;
-        if (gameDataManager.gameData.listBuild == null)
+        if (uiGameManager.gameDataManager.gameData.listBuild == null)
             return;
         CptUtil.RemoveChildsByActive(listBuildContent.transform);
 
-        for (int i = 0; i < gameDataManager.gameData.listBuild.Count; i++)
+        for (int i = 0; i < uiGameManager.gameDataManager.gameData.listBuild.Count; i++)
         {
-            ItemBean itemData = gameDataManager.gameData.listBuild[i];
-            BuildItemBean buildData = innBuildManager.GetBuildDataById(itemData.itemId);
+            ItemBean itemData = uiGameManager.gameDataManager.gameData.listBuild[i];
+            BuildItemBean buildData = uiGameManager.innBuildManager.GetBuildDataById(itemData.itemId);
             if (buildData == null)
                 continue;
             if ((int)type == buildData.build_type)
@@ -138,6 +140,7 @@ public class UIGameBuild : BaseUIComponent
     {
         CreateBuildList(BuildItemTypeEnum.Counter);
     }
+
     public void CreateDoorList()
     {
         CreateBuildList(BuildItemTypeEnum.Door);
@@ -145,8 +148,7 @@ public class UIGameBuild : BaseUIComponent
 
     public void DismantleMode()
     {
-        ControlHandler controlHandler = GetUIManager<UIGameManager>().controlHandler;
-        ((ControlForBuildCpt)(controlHandler.GetControl(ControlHandler.ControlEnum.Build))).SetDismantleMode();
+        ((ControlForBuildCpt)(uiGameManager.controlHandler.GetControl(ControlHandler.ControlEnum.Build))).SetDismantleMode();
     }
 
     /// <summary>
@@ -154,29 +156,24 @@ public class UIGameBuild : BaseUIComponent
     /// </summary>
     public void OpenMainUI()
     {
-        ControlHandler controlHandler = GetUIManager<UIGameManager>().controlHandler;
-        InnHandler innHandler = GetUIManager<UIGameManager>().innHandler;
-        GameTimeHandler gameTimeHandler = GetUIManager<UIGameManager>().gameTimeHandler;
-        NavMeshSurface navMesh = GetUIManager<UIGameManager>().navMesh;
-
         //删除当前选中
-        ((ControlForBuildCpt)(controlHandler.GetControl(ControlHandler.ControlEnum.Build))).DestoryBuildItem();
+        ((ControlForBuildCpt)(uiGameManager.controlHandler.GetControl(ControlHandler.ControlEnum.Build))).DestoryBuildItem();
         //重新构建地形
-        navMesh.BuildNavMesh();
+        uiGameManager.navMesh.BuildNavMesh();
         //打开主UI
         uiManager.OpenUIAndCloseOtherByName(EnumUtil.GetEnumName(UIEnum.GameMain));
 
-        if (gameTimeHandler.dayStauts == GameTimeHandler.DayEnum.Work)
+        if (uiGameManager.gameTimeHandler.dayStauts == GameTimeHandler.DayEnum.Work)
         {
             //如果是工作日 开店继续营业
-            innHandler.OpenInn();
+            uiGameManager.innHandler.OpenInn();
             //恢复工作日控制器
-            controlHandler.StartControl(ControlHandler.ControlEnum.Work);
+            uiGameManager.controlHandler.StartControl(ControlHandler.ControlEnum.Work);
         }
         else
         {
             //恢复休息日控制器
-            controlHandler.StartControl(ControlHandler.ControlEnum.Normal);
+            uiGameManager.controlHandler.StartControl(ControlHandler.ControlEnum.Normal);
         }
     }
 }
