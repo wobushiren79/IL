@@ -3,15 +3,16 @@ using UnityEditor;
 using System.Collections.Generic;
 using System.Collections;
 
-public class NpcCustomerBuilder : NpcNormalBuilder,IBaseObserver
+public class NpcCustomerBuilder : NpcNormalBuilder, IBaseObserver
 {
     //团队顾客
     public GameObject objGuestTeamModel;
 
     private void Start()
     {
+        buildMaxNumber = 500;
         gameTimeHandler.AddObserver(this);
-        //StartBuildCustomer();
+        StartBuildCustomer();
     }
 
     /// <summary>
@@ -33,9 +34,11 @@ public class NpcCustomerBuilder : NpcNormalBuilder,IBaseObserver
     /// </summary>
     public void StartBuildCustomer()
     {
+        StopAllCoroutines();
         isBuildNpc = true;
-        //StartCoroutine(StartBuild());
+        StartCoroutine(StartBuild());
     }
+
     /// <summary>
     /// 停止建造NPC
     /// </summary>
@@ -45,12 +48,22 @@ public class NpcCustomerBuilder : NpcNormalBuilder,IBaseObserver
         StopAllCoroutines();
     }
 
+    /// <summary>
+    /// 开始创建NPC
+    /// </summary>
+    /// <returns></returns>
     private IEnumerator StartBuild()
     {
         while (isBuildNpc)
         {
             yield return new WaitForSeconds(buildInterval);
             BuildCustomer();
+            //有一定概率创建团队
+            float buildTeamRate = Random.Range(0, 1f);
+            if (buildTeamRate <= 0.05f)
+            {
+                BuildGuestTeam();
+            }
         }
     }
 
@@ -89,7 +102,7 @@ public class NpcCustomerBuilder : NpcNormalBuilder,IBaseObserver
     public void BuildGuestTeam()
     {
         Vector3 npcPosition = GetRandomStartPosition();
-        NpcTeamBean teamData = npcTeamManager.GetRandomTeamMeetConditionByType(NpcTeamTypeEnum.Customer,gameDataManager.gameData);
+        NpcTeamBean teamData = npcTeamManager.GetRandomTeamMeetConditionByType(NpcTeamTypeEnum.Customer, gameDataManager.gameData);
         BuildGuestTeam(teamData, npcPosition);
     }
 
@@ -106,13 +119,13 @@ public class NpcCustomerBuilder : NpcNormalBuilder,IBaseObserver
             return;
         //设置小队相关
         string teamCode = SystemUtil.GetUUID(SystemUtil.UUIDTypeEnum.N);
-        Color teamColor = new Color(UnityEngine.Random.Range(0f, 1f), UnityEngine.Random.Range(0f, 1f), UnityEngine.Random.Range(0f, 1f));
+        Color teamColor = new Color(Random.Range(0f, 1f), Random.Range(0f, 1f), Random.Range(0f, 1f));
         //设置是否想吃
         bool isWant = IsWantEat();
         //获取小队成员数据
         npcTeam.GetTeamCharacterData(npcInfoManager, out List<CharacterBean> listLeader, out List<CharacterBean> listMembers);
         //设置小队人数(团队领袖全生成，小队成员随机生成)
-        int npcNumber = UnityEngine.Random.Range(listLeader.Count + 1, listLeader.Count + 1 + npcTeam.team_number);
+        int npcNumber = Random.Range(listLeader.Count + 1, listLeader.Count + 1 + npcTeam.team_number);
         for (int i = 0; i < npcNumber; i++)
         {
             CharacterBean characterData = null;
@@ -124,18 +137,15 @@ public class NpcCustomerBuilder : NpcNormalBuilder,IBaseObserver
             {
                 characterData = RandomUtil.GetRandomDataByList(listMembers);
             }
-
             //随机生成身体数据
             // CharacterBodyBean.CreateRandomBodyByManager(characterData.body, characterBodyManager);
             GameObject npcObj = Instantiate(objContainer, objGuestTeamModel);
 
             npcObj.transform.localScale = new Vector3(1, 1);
             npcObj.transform.position = npcPosition + new Vector3(UnityEngine.Random.Range(-0.5f, 0.5f), UnityEngine.Random.Range(-0.5f, 0.5f));
-
             BaseNpcAI baseNpcAI = npcObj.GetComponent<BaseNpcAI>();
             baseNpcAI.SetCharacterData(characterData);
             baseNpcAI.AddStatusIconForGuestTeam(teamColor);
-
             NpcAICustomerForGuestTeamCpt customerAI = baseNpcAI.GetComponent<NpcAICustomerForGuestTeamCpt>();
             customerAI.SetTeamData(teamCode, npcTeam, i);
             if (isWant)
@@ -188,6 +198,40 @@ public class NpcCustomerBuilder : NpcNormalBuilder,IBaseObserver
     }
 
     /// <summary>
+    /// 处理NPC刷新时间
+    /// </summary>
+    /// <param name="hour"></param>
+    /// <returns></returns>
+    private float HandleNpcBuildTime(int hour)
+    {
+        if (hour > 6 && hour <= 9)
+        {
+            buildInterval = 3;
+        }
+        else if (hour > 9 && hour <= 12)
+        {
+            buildInterval = 2;
+        }
+        else if (hour > 12 && hour <= 18)
+        {
+            buildInterval = 1;
+        }
+        else if (hour > 18 && hour <= 21)
+        {
+            buildInterval = 2;
+        }
+        else if (hour > 21 && hour <= 24)
+        {
+            buildInterval = 3;
+        }
+        else
+        {
+            buildInterval = 5;
+        }
+        return buildInterval;
+    }
+
+    /// <summary>
     /// 时间回调
     /// </summary>
     /// <typeparam name="T"></typeparam>
@@ -196,15 +240,20 @@ public class NpcCustomerBuilder : NpcNormalBuilder,IBaseObserver
     /// <param name="obj"></param>
     public void ObserbableUpdate<T>(T observable, int type, params System.Object[] obj) where T : Object
     {
-        if((GameTimeHandler.NotifyTypeEnum)type== GameTimeHandler.NotifyTypeEnum.NewDay)
+        if ((GameTimeHandler.NotifyTypeEnum)type == GameTimeHandler.NotifyTypeEnum.NewDay)
         {
-            StopBuildCustomer();
+            StartBuildCustomer();
             ClearNpc();
         }
         else if ((GameTimeHandler.NotifyTypeEnum)type == GameTimeHandler.NotifyTypeEnum.EndDay)
         {
             StopBuildCustomer();
             ClearNpc();
+        }
+        else if ((GameTimeHandler.NotifyTypeEnum)type == GameTimeHandler.NotifyTypeEnum.TimePoint)
+        {
+            int hour = System.Convert.ToInt32(obj[0]);
+            HandleNpcBuildTime(hour);
         }
     }
 }

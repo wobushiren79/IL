@@ -143,6 +143,7 @@ public class UIGameMain : UIGameComponent, DialogView.IDialogCallBack, IRadioGro
         if (uiGameManager.gameTimeHandler != null)
         {
             uiGameManager.gameTimeHandler.SetTimeScale(1);
+            rgTimeScale.SetPosition(-1, false);
         }
     }
 

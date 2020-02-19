@@ -115,7 +115,7 @@ public class NpcTeamManager : BaseManager, INpcTeamView
         List<NpcTeamBean> listMeet = new List<NpcTeamBean>();
         foreach (NpcTeamBean itemTeam in listData)
         {
-            if (itemTeam.condition != null&& ShowConditionTools.CheckIsMeetAllCondition(gameData, itemTeam.condition))
+            if (CheckUtil.StringIsNull(itemTeam.condition)&& ShowConditionTools.CheckIsMeetAllCondition(gameData, itemTeam.condition))
             {
                 listMeet.Add(itemTeam);
             }

@@ -68,8 +68,6 @@ public class UIGameAttendance : UIBaseOne, ItemGameAttendanceCpt.ICallBack
         uiGameManager.innHandler.OpenInn();
         //放开控制
         uiGameManager.controlHandler.StartControl(ControlHandler.ControlEnum.Work);
-        //开始建造NPC
-        uiGameManager.npcCustomerBuilder.StartBuildCustomer();
     }
 
     public void InitData()

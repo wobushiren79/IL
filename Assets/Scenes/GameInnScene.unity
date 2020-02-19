@@ -55034,6 +55034,12 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 1134227791}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &721603722 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 377874546984278071, guid: 41c187e8ef9bc4546b404b7527a7fb7e,
+    type: 3}
+  m_PrefabInstance: {fileID: 1260841292}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &732636006 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5619206363611094098, guid: 5f8690f4386051d4e8483543b8d8b63c,
@@ -78072,9 +78078,9 @@ MonoBehaviour:
   - {fileID: 180496406}
   - {fileID: 558286067}
   isBuildNpc: 0
-  buildInterval: 1
+  buildInterval: 5
   buildMaxNumber: 100
-  objGuestTeamModel: {fileID: 0}
+  objGuestTeamModel: {fileID: 721603722}
 --- !u!114 &1716359876
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -78094,7 +78100,7 @@ MonoBehaviour:
   - {fileID: 180496406}
   - {fileID: 558286067}
   isBuildNpc: 1
-  buildInterval: 3
+  buildInterval: 5
   buildMaxNumber: 100
   objRascalModel: {fileID: 4843764253275138398}
   objFriendModel: {fileID: 1418092189}

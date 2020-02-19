@@ -191,8 +191,10 @@ public class NpcAICustomerCpt : BaseNpcAI
         movePosition = innHandler.GetRandomEntrancePosition();
         //移动到门口附近
         if (movePosition == null || movePosition == Vector3.zero)
+        {
             //如果找不到门则离开 散散步
             SetIntent(CustomerIntentEnum.Walk);
+        }
         else
             //前往门
             characterMoveCpt.SetDestination(movePosition);

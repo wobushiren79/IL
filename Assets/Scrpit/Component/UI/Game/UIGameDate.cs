@@ -158,9 +158,6 @@ public class UIGameDate : BaseUIComponent
         if (!eventHandler.EventTriggerForStory())
         {
             uiManager.OpenUIAndCloseOtherByName(EnumUtil.GetEnumName(UIEnum.GameMain));
-
-            //开始建造NPC
-            npcCustomerBuilder.StartBuildCustomer();
             //设置位置
             Vector3 startPosition = innHandler.GetRandomEntrancePosition();
             BaseControl baseControl = controlHandler.StartControl(ControlHandler.ControlEnum.Normal);

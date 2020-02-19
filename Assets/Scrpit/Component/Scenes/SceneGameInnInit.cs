@@ -93,8 +93,6 @@ public class SceneGameInnInit : BaseSceneInit, IBaseObserver, DialogView.IDialog
                 gameTimeHandler.SetTimeStatus(false);
                 //建造NPC
                 npcCustomerBuilder.BuilderCustomerForInit(20);
-                npcCustomerBuilder.StartBuildCustomer();
-
 
                 //设置位置
                 Vector3 startPosition = sceneInnManager.GetTownEntranceLeft();

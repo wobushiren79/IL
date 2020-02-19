@@ -149,17 +149,28 @@ public class NpcAICustomerForGuestTeamCpt : NpcAICustomerCpt
     /// </summary>
     public override void IntentForWant()
     {
-        base.IntentForWant();
-        //通知其他团队成员
-        List<NpcAICustomerForGuestTeamCpt> listTeamMember = GetGuestTeam();
-        foreach (NpcAICustomerForGuestTeamCpt teamMember in listTeamMember)
+        movePosition = innHandler.GetRandomEntrancePosition();
+        //移动到门口附近
+        if (movePosition == null || movePosition == Vector3.zero)
         {
-            if (teamMember != this && teamMember.customerIntent != CustomerIntentEnum.Want)
+            //如果找不到门则离开 散散步
+            SetIntent(CustomerIntentEnum.Walk);
+        }
+        else
+        {
+            //前往门
+            characterMoveCpt.SetDestination(movePosition);
+            //通知其他团队成员
+            List<NpcAICustomerForGuestTeamCpt> listTeamMember = GetGuestTeam();
+            foreach (NpcAICustomerForGuestTeamCpt teamMember in listTeamMember)
             {
-                teamMember.SetIntent(CustomerIntentEnum.Want);
-                //统一入口
-                teamMember.movePosition = movePosition;
-                teamMember.characterMoveCpt.SetDestination(movePosition);
+                if (teamMember != this && teamMember.customerIntent != CustomerIntentEnum.Want)
+                {
+                    teamMember.SetIntent(CustomerIntentEnum.Want);
+                    //统一入口
+                    teamMember.movePosition = movePosition;
+                    teamMember.characterMoveCpt.SetDestination(movePosition);
+                }
             }
         }
     }

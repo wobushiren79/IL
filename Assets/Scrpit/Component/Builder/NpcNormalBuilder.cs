@@ -23,8 +23,8 @@ public class NpcNormalBuilder : BaseMonoBehaviour
     //是否生成NPC
     public bool isBuildNpc = false;
     //生成间隔
-    public float buildInterval = 3;
-    public float buildMaxNumber = 100;
+    public float buildInterval = 5;
+    public int buildMaxNumber = 100;
 
     protected virtual void Awake()
     {

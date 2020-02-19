@@ -14,6 +14,8 @@ public class NpcEventBuilder : NpcNormalBuilder, IBaseObserver
 
     //当天已经生成过的NPCID
     public List<long> listExistNpcId = new List<long>();
+    //当天已经生成过的团队ID
+    public List<long> listExistTeamId = new List<long>();
 
     private void Start()
     {
@@ -25,24 +27,25 @@ public class NpcEventBuilder : NpcNormalBuilder, IBaseObserver
     /// </summary>
     public void StartEvent()
     {
-        float isStartRate = UnityEngine.Random.Range(0,2f);
+        float isStartRate = UnityEngine.Random.Range(0, 2f);
         //0.5的概率触发事件
-        if (isStartRate > 1f) 
+        if (isStartRate > 1f)
         {
-            int eventType= UnityEngine.Random.Range(0, 5);
+            int eventType = UnityEngine.Random.Range(0, 3);
             switch (eventType)
             {
-                case 1:
+                case 0:
                     BuildTownFriendsForOne();
-                    break;
-                case 2:
-                    BuildTownFriendsForTeam();
-                    break;
-                case 3:
+                    break;   
+                case 1:
                     BuildSundry();
                     break;
-                case 4:
+                case 2:
                     BuildRascal();
+                    break;
+                case 3:
+                    //TODO 待定 需要处理单个朋友和团队朋友重复出现的问题
+                    //BuildTownFriendsForTeam();
                     break;
             }
         }
@@ -67,6 +70,10 @@ public class NpcEventBuilder : NpcNormalBuilder, IBaseObserver
 
     public void BuildRascal(NpcTeamBean npcTeam, Vector3 npcPosition)
     {
+        if (npcTeam == null)
+            return;
+        if (listExistTeamId.Contains(npcTeam.id))
+            return;
         //获取小队成员数据
         npcTeam.GetTeamCharacterData(npcInfoManager, out List<CharacterBean> listLeader, out List<CharacterBean> listMembers);
         //设置小队相关
@@ -93,6 +100,7 @@ public class NpcEventBuilder : NpcNormalBuilder, IBaseObserver
             rascalCpt.AddStatusIconForRascal();
             rascalCpt.SetIntent(NpcAIRascalCpt.RascalIntentEnum.GoToInn);
         }
+        listExistTeamId.Add(npcTeam.id);
     }
 
 
@@ -115,6 +123,8 @@ public class NpcEventBuilder : NpcNormalBuilder, IBaseObserver
 
     public void BuildSundry(NpcTeamBean npcTeam, Vector3 npcPosition)
     {
+        if (listExistTeamId.Contains(npcTeam.id))
+            return;
         //获取小队成员数据
         npcTeam.GetTeamCharacterData(npcInfoManager, out List<CharacterBean> listLeader, out List<CharacterBean> listMembers);
         //设置小队相关
@@ -137,8 +147,9 @@ public class NpcEventBuilder : NpcNormalBuilder, IBaseObserver
             NpcAISundry sundryCpt = npcObj.GetComponent<NpcAISundry>();
             CharacterFavorabilityBean characterFavorability = gameDataManager.gameData.GetCharacterFavorability(long.Parse(characterData.baseInfo.characterId));
             sundryCpt.SetTeamData(teamCode, npcTeam, i);
-            sundryCpt.SetIntent( NpcAISundry.SundryIntentEnum.GoToInn);
+            sundryCpt.SetIntent(NpcAISundry.SundryIntentEnum.GoToInn);
         }
+        listExistTeamId.Add(npcTeam.id);
     }
 
 
@@ -217,6 +228,8 @@ public class NpcEventBuilder : NpcNormalBuilder, IBaseObserver
     {
         if (teamData == null)
             return;
+        if (listExistTeamId.Contains(teamData.id))
+            return;
         //设置小队相关
         string teamCode = SystemUtil.GetUUID(SystemUtil.UUIDTypeEnum.N);
         Color teamColor = new Color(UnityEngine.Random.Range(0f, 1f), UnityEngine.Random.Range(0f, 1f), UnityEngine.Random.Range(0f, 1f));
@@ -254,8 +267,8 @@ public class NpcEventBuilder : NpcNormalBuilder, IBaseObserver
             customerAI.SetTeamData(teamCode, teamData, i);
             customerAI.SetIntent(NpcAICustomerCpt.CustomerIntentEnum.Want);
 
-            listExistNpcId.Add(characterData.npcInfoData.id);
         }
+        listExistTeamId.Add(teamData.id);
     }
 
     /// <summary>
@@ -286,6 +299,7 @@ public class NpcEventBuilder : NpcNormalBuilder, IBaseObserver
         {
             ClearNpc();
             listExistNpcId.Clear();
+            listExistTeamId.Clear();
         }
         else if ((GameTimeHandler.NotifyTypeEnum)type == GameTimeHandler.NotifyTypeEnum.EndDay)
         {
