@@ -21,11 +21,28 @@ public class NpcTeamManager : BaseManager, INpcTeamView
     /// </summary>
     /// <param name="gameData"></param>
     /// <returns></returns>
-    public NpcTeamBean GetRandomCustomerTeam(GameDataBean gameData)
+    public NpcTeamBean GetRandomTeamMeetConditionByType(NpcTeamTypeEnum npcTeamType, GameDataBean gameData)
     {
-        if (listCustomerTeam == null)
+        List<NpcTeamBean> listData =null;
+        switch (npcTeamType)
+        {
+            case NpcTeamTypeEnum.Customer:
+                listData = listCustomerTeam;
+                break;
+            case NpcTeamTypeEnum.Friend:
+                listData = listFriendTeam;
+                break;
+            case NpcTeamTypeEnum.Rascal:
+                listData = listRascalTeam;
+                break;
+            case NpcTeamTypeEnum.Sundry:
+                listData = listSundryTeam;
+                break;
+
+        }
+        if (listData == null)
             return null;
-        List<NpcTeamBean> listMeetData = GetMeetConditionTeam(gameData, listCustomerTeam);
+        List<NpcTeamBean> listMeetData = GetMeetConditionTeam(gameData, listData);
         return RandomUtil.GetRandomDataByList(listMeetData);
     }
 

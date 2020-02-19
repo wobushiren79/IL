@@ -21,6 +21,7 @@ public class UIGameTest : UIGameComponent
     public Button btNpcFriendTeam;
     public Button btNpcRascal;
     public Button btNpcSundry;
+
     private void Start()
     {
         if (btStoryCreate != null)
@@ -106,7 +107,7 @@ public class UIGameTest : UIGameComponent
     {
         if (uiGameManager.npcEventBuilder == null)
             return;
-       uiGameManager.npcEventBuilder.TeamEvent(long.Parse(etNpcGuestTeamId.text));
+       uiGameManager.npcCustomerBuilder.BuildGuestTeam(long.Parse(etNpcGuestTeamId.text));
     }
 
     /// <summary>
@@ -116,7 +117,7 @@ public class UIGameTest : UIGameComponent
     {
         if (uiGameManager.npcEventBuilder == null)
             return;
-        uiGameManager.npcEventBuilder.FriendsEventForOne(long.Parse(etNpcGuestTeamId.text));
+        uiGameManager.npcEventBuilder.BuildTownFriendsForOne(long.Parse(etNpcGuestTeamId.text));
     }
 
     /// <summary>
@@ -126,7 +127,7 @@ public class UIGameTest : UIGameComponent
     {
         if (uiGameManager.npcEventBuilder == null)
             return;
-      uiGameManager. npcEventBuilder.FriendsEventForTeam(long.Parse(etNpcGuestTeamId.text));
+      uiGameManager. npcEventBuilder.BuildTownFriendsForTeam(long.Parse(etNpcGuestTeamId.text));
     }
 
     /// <summary>
@@ -136,7 +137,7 @@ public class UIGameTest : UIGameComponent
     {
         if (uiGameManager.npcEventBuilder == null)
             return;
-        uiGameManager.npcEventBuilder.RascalEvent(long.Parse(etNpcGuestTeamId.text));
+        uiGameManager.npcEventBuilder.BuildRascal(long.Parse(etNpcGuestTeamId.text));
     }
 
     /// <summary>
@@ -146,6 +147,6 @@ public class UIGameTest : UIGameComponent
     {
         if (uiGameManager.npcEventBuilder == null)
             return;
-        uiGameManager.npcEventBuilder.SundryEvent(long.Parse(etNpcGuestTeamId.text));
+        uiGameManager.npcEventBuilder.BuildSundry(long.Parse(etNpcGuestTeamId.text));
     }
 }

@@ -4,7 +4,6 @@ using System.Collections.Generic;
 
 public class NpcImportantBuilder : BaseMonoBehaviour
 {
-
     public GameObject objNpcModel;
     public GameObject objNpcContainer;
     //NPC数据管理

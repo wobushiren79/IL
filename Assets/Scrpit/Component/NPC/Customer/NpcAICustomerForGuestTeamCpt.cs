@@ -14,7 +14,7 @@ public class NpcAICustomerForGuestTeamCpt : NpcAICustomerCpt
     //集合点
     public Vector3 togetherPosition;
 
-    protected NpcEventBuilder npcEventBuilder;
+    protected NpcCustomerBuilder npcCustomerBuilder;
 
     public enum CustomerIntentForGuestTeamEnum
     {
@@ -28,7 +28,7 @@ public class NpcAICustomerForGuestTeamCpt : NpcAICustomerCpt
     public override void Awake()
     {
         base.Awake();
-        npcEventBuilder = Find<NpcEventBuilder>(ImportantTypeEnum.NpcBuilder);
+        npcCustomerBuilder = Find<NpcCustomerBuilder>(ImportantTypeEnum.NpcBuilder);
     }
 
     /// <summary>
@@ -48,7 +48,7 @@ public class NpcAICustomerForGuestTeamCpt : NpcAICustomerCpt
     /// <returns></returns>
     public List<NpcAICustomerForGuestTeamCpt> GetGuestTeam()
     {
-        List<NpcAICustomerForGuestTeamCpt> listTeamMember = npcEventBuilder.GetGuestTeamByTeamCode(teamCode);
+        List<NpcAICustomerForGuestTeamCpt> listTeamMember = npcCustomerBuilder.GetGuestTeamByTeamCode(teamCode);
         if (listTeamMember.Count == 0)
             listTeamMember.Add(this);
         return listTeamMember;
