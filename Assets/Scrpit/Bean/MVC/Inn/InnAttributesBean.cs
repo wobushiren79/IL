@@ -167,8 +167,37 @@ public class InnAttributesBean
     /// 获取美观值
     /// </summary>
     /// <returns></returns>
-    public long GetAesthetics()
+    public long GetAesthetics(out string level)
     {
+        level = "???";
+        if (aesthetics <= 100)
+        {
+            level = "F";
+        }
+        else if (aesthetics > 100&& aesthetics <= 200)
+        {
+            level = "E";
+        }
+        else if (aesthetics > 200 && aesthetics <= 300)
+        {
+            level = "D";
+        }
+        else if (aesthetics > 300 && aesthetics <= 400)
+        {
+            level = "C";
+        }
+        else if (aesthetics > 400 && aesthetics <= 500)
+        {
+            level = "B";
+        }
+        else if (aesthetics > 500 && aesthetics <= 1000)
+        {
+            level = "A";
+        }
+        else if (aesthetics > 1000 && aesthetics <= 2000)
+        {
+            level = "S";
+        }
         return aesthetics;
     }
 
@@ -178,7 +207,7 @@ public class InnAttributesBean
     /// <returns></returns>
     public float GetPraise()
     {
-        return praise;
+        return praise/1000f;
     }
 
     /// <summary>
@@ -193,11 +222,11 @@ public class InnAttributesBean
         if (rateAesthetics > 1)
             rateAesthetics = 1;
         //点赞率所占比重
-        float ratePraise = (praise);
+        float ratePraise = GetPraise();
         if (ratePraise > 1)
             ratePraise = 1;
         //菜品丰富度所占比重
-        float rateRichness = (richness * 0.01f);
+        float rateRichness = (richness * 0.02f);
         if (rateRichness > 1)
             rateRichness = 1;
         rate = 0.32f * rateRichness + 0.32f * ratePraise + 0.32f * rateAesthetics + 0.04f;

@@ -95,7 +95,10 @@ public class UIGameMain : UIGameComponent, DialogView.IDialogCallBack, IRadioGro
             popupInnLevel.SetPopupShowView(uiGameManager.infoPromptPopup);
         //设置美观值
         if (tvAesthetics != null)
-            tvAesthetics.text = uiGameManager.gameDataManager.gameData.GetInnAttributesData().GetAesthetics() + "";
+        {
+            long attributes = uiGameManager.gameDataManager.gameData.GetInnAttributesData().GetAesthetics(out string aestheticsLevel);
+            tvAesthetics.text = attributes + " "+ aestheticsLevel;
+        }  
 
         if (rgTimeScale != null)
             rgTimeScale.SetCallBack(this);
@@ -128,7 +131,7 @@ public class UIGameMain : UIGameComponent, DialogView.IDialogCallBack, IRadioGro
         }
         if (sliderPraise != null)
         {
-            sliderPraise.value = innAttributes.GetPraise() / 100f;
+            sliderPraise.value = innAttributes.GetPraise();
         }
         if (tvPraise != null)
         {
