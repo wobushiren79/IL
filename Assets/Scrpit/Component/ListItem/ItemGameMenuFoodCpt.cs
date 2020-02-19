@@ -144,31 +144,31 @@ public class ItemGameMenuFoodCpt : ItemGameBaseCpt, IRadioButtonCallBack
         if (menuOwnData.isSell)
         {
             if (rbShow != null)
-                rbShow.ChangeStates(RadioButtonView.RadioButtonStates.Selected);
+                rbShow.ChangeStates(RadioButtonView.RadioButtonStatus.Selected);
             if (tvShow != null)
                 tvShow.text = GameCommonInfo.GetUITextById(2021);
         }
         else
         {
             if (rbShow != null)
-                rbShow.ChangeStates(RadioButtonView.RadioButtonStates.Unselected);
+                rbShow.ChangeStates(RadioButtonView.RadioButtonStatus.Unselected);
             if (tvShow != null)
                 tvShow.text = GameCommonInfo.GetUITextById(2020);
         }
 
     }
 
-    public void RadioButtonSelected(RadioButtonView view, RadioButtonView.RadioButtonStates buttonStates)
+    public void RadioButtonSelected(RadioButtonView view, RadioButtonView.RadioButtonStatus buttonStatus)
     {
         if (view == rbShow && tvShow != null)
         {
-            switch (buttonStates)
+            switch (buttonStatus)
             {
-                case RadioButtonView.RadioButtonStates.Selected:
+                case RadioButtonView.RadioButtonStatus.Selected:
                     tvShow.text = GameCommonInfo.GetUITextById(2021);
                     menuOwnData.isSell = true;
                     break;
-                case RadioButtonView.RadioButtonStates.Unselected:
+                case RadioButtonView.RadioButtonStatus.Unselected:
                     tvShow.text = GameCommonInfo.GetUITextById(2020);
                     menuOwnData.isSell = false;
                     break;

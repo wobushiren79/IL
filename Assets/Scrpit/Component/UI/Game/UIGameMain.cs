@@ -3,7 +3,7 @@ using UnityEditor;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
-public class UIGameMain : UIGameComponent, DialogView.IDialogCallBack
+public class UIGameMain : UIGameComponent, DialogView.IDialogCallBack, IRadioGroupCallBack
 {
     [Header("控件")]
     public InfoPromptPopupButton popupWorker;
@@ -39,6 +39,10 @@ public class UIGameMain : UIGameComponent, DialogView.IDialogCallBack
     public Image ivInnLevel;
 
     public ClockView clockView;//时钟
+    public RadioGroupView rgTimeScale;
+    public RadioButtonView rbTimeScale2;
+    public RadioButtonView rbTimeScale3;
+    public RadioButtonView rbTimeScale5;
 
     public void Start()
     {
@@ -92,6 +96,9 @@ public class UIGameMain : UIGameComponent, DialogView.IDialogCallBack
         //设置美观值
         if (tvAesthetics != null)
             tvAesthetics.text = uiGameManager.gameDataManager.gameData.GetInnAttributesData().GetAesthetics() + "";
+
+        if (rgTimeScale != null)
+            rgTimeScale.SetCallBack(this);
         InitInnData();
     }
 
@@ -126,6 +133,16 @@ public class UIGameMain : UIGameComponent, DialogView.IDialogCallBack
         if (tvPraise != null)
         {
             tvPraise.text = innAttributes.GetPraise() + "%";
+        }
+    }
+
+    public override void CloseUI()
+    {
+        base.CloseUI();
+        //时间加速回归正常
+        if (uiGameManager.gameTimeHandler != null)
+        {
+            uiGameManager.gameTimeHandler.SetTimeScale(1);
         }
     }
 
@@ -170,6 +187,7 @@ public class UIGameMain : UIGameComponent, DialogView.IDialogCallBack
         if (tvRichness != null)
             tvRichness.text = innAttributes.richness + "";
 
+        //设置客栈等级
         string innLevelStr = uiGameManager.gameDataManager.gameData.innAttributes.GetInnLevel(out int innLevelTitle, out int innLevelStar);
         if (popupInnLevel != null)
         {
@@ -186,6 +204,16 @@ public class UIGameMain : UIGameComponent, DialogView.IDialogCallBack
             }
             else
                 ivInnLevel.gameObject.SetActive(false);
+        }
+
+        //设置是否显示时间缩放
+        if (rgTimeScale != null && uiGameManager.innHandler != null && uiGameManager.innHandler.GetInnStatus() == InnHandler.InnStatusEnum.Close)
+        {
+            rgTimeScale.gameObject.SetActive(false);
+        }
+        else
+        {
+            rgTimeScale.gameObject.SetActive(true);
         }
     }
 
@@ -276,6 +304,38 @@ public class UIGameMain : UIGameComponent, DialogView.IDialogCallBack
     }
 
     public void Cancel(DialogView dialogView, DialogBean dialogData)
+    {
+
+    }
+    #endregion
+
+    #region 单选回调
+    public void RadioButtonSelected(RadioGroupView rgView, int position, RadioButtonView rbview)
+    {
+        int timeScale = 1;
+        if (rbview == rbTimeScale2)
+        {
+            timeScale = 2;
+        }
+        else if (rbview == rbTimeScale3)
+        {
+            timeScale = 3;
+        }
+        else if (rbview == rbTimeScale5)
+        {
+            timeScale = 5;
+        }
+        if (rbview.status == RadioButtonView.RadioButtonStatus.Selected)
+        {
+            uiGameManager.gameTimeHandler.SetTimeScale(timeScale);
+        }
+        else
+        {
+            uiGameManager.gameTimeHandler.SetTimeScale(1);
+        }
+    }
+
+    public void RadioButtonUnSelected(RadioGroupView rgView, int position, RadioButtonView rbview)
     {
 
     }

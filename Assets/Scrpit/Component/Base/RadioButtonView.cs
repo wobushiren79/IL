@@ -20,17 +20,17 @@ public class RadioButtonView : BaseMonoBehaviour
 
     private IRadioButtonCallBack mRBCallBack;
 
-    public enum RadioButtonStates
+    public enum RadioButtonStatus
     {
         Selected,//选中状态
         Unselected,//未选中状态
     }
 
-    public RadioButtonStates states = RadioButtonStates.Selected;
+    public RadioButtonStatus status = RadioButtonStatus.Selected;
 
     private void Start()
     {
-        ChangeStates(states);
+        ChangeStates(status);
         rbButton.onClick.AddListener(RadioButtonSelected);
     }
 
@@ -42,7 +42,7 @@ public class RadioButtonView : BaseMonoBehaviour
         ChangeStates();
         if (mRBCallBack != null)
         {
-            mRBCallBack.RadioButtonSelected(this, states);
+            mRBCallBack.RadioButtonSelected(this, status);
         }
     }
 
@@ -59,13 +59,13 @@ public class RadioButtonView : BaseMonoBehaviour
     /// <summary>
     /// 改变状态
     /// </summary>
-    /// <param name="states"></param>
-    public void ChangeStates(RadioButtonStates states)
+    /// <param name="status"></param>
+    public void ChangeStates(RadioButtonStatus status)
     {
-        this.states = states;
-        switch (states)
+        this.status = status;
+        switch (status)
         {
-            case RadioButtonStates.Selected:
+            case RadioButtonStatus.Selected:
                 if (rbImage) {
                     rbImage.sprite = spSelected;
                     rbImage.color = colorIVSelected;
@@ -73,7 +73,7 @@ public class RadioButtonView : BaseMonoBehaviour
                 if (rbText)
                     rbText.color = colorTVSelected;
                 break;
-            case RadioButtonStates.Unselected:
+            case RadioButtonStatus.Unselected:
                 if (rbImage) {
                     rbImage.sprite = spUnselected;
                     rbImage.color = colorIVUnselected;
@@ -87,15 +87,15 @@ public class RadioButtonView : BaseMonoBehaviour
 
     public void ChangeStates()
     {
-        if (states == RadioButtonStates.Selected)
+        if (status == RadioButtonStatus.Selected)
         {
-            states = RadioButtonStates.Unselected;
+            status = RadioButtonStatus.Unselected;
         }
         else
         {
-            states = RadioButtonStates.Selected;
+            status = RadioButtonStatus.Selected;
         }
-        ChangeStates(states);
+        ChangeStates(status);
     }
 
     /// <summary>

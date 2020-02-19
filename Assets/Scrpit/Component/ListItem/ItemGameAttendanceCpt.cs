@@ -37,15 +37,15 @@ public class ItemGameAttendanceCpt : ItemGameWorkerCpt,IRadioButtonCallBack
         characterData.baseInfo.GetWorkerStatus(out string workerStatusStr);
         if (workerStatus == WorkerStatusEnum.Work)
         {
-            rbAttendance.ChangeStates(RadioButtonView.RadioButtonStates.Selected);
+            rbAttendance.ChangeStates(RadioButtonView.RadioButtonStatus.Selected);
         }
         else if (workerStatus == WorkerStatusEnum.Rest)
         {
-            rbAttendance.ChangeStates(RadioButtonView.RadioButtonStates.Unselected);
+            rbAttendance.ChangeStates(RadioButtonView.RadioButtonStatus.Unselected);
         }
         else
         {
-            rbAttendance.ChangeStates(RadioButtonView.RadioButtonStates.Unselected);
+            rbAttendance.ChangeStates(RadioButtonView.RadioButtonStatus.Unselected);
             rbAttendance.SetEnabled(false);
         }
         rbAttendance.rbText.text = workerStatusStr;
@@ -54,10 +54,10 @@ public class ItemGameAttendanceCpt : ItemGameWorkerCpt,IRadioButtonCallBack
     }
 
     #region RB回调
-    public override void RadioButtonSelected(RadioButtonView view, RadioButtonView.RadioButtonStates buttonStates)
+    public override void RadioButtonSelected(RadioButtonView view, RadioButtonView.RadioButtonStatus buttonStatus)
     {
         GetUIManager<UIGameManager>().audioHandler.PlaySound(SoundEnum.ButtonForNormal);
-        if (buttonStates == RadioButtonView.RadioButtonStates.Selected)
+        if (buttonStatus == RadioButtonView.RadioButtonStatus.Selected)
         {
             SetAttendance(WorkerStatusEnum.Work);
         }

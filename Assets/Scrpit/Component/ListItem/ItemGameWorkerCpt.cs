@@ -293,37 +293,37 @@ public class ItemGameWorkerCpt : ItemGameBaseCpt, IRadioButtonCallBack, DialogVi
         if (rbAccounting != null)
         {
             if (isAccountant)
-                rbAccounting.ChangeStates(RadioButtonView.RadioButtonStates.Selected);
+                rbAccounting.ChangeStates(RadioButtonView.RadioButtonStatus.Selected);
             else
-                rbAccounting.ChangeStates(RadioButtonView.RadioButtonStates.Unselected);
+                rbAccounting.ChangeStates(RadioButtonView.RadioButtonStatus.Unselected);
         }
         if (rbChef != null)
         {
             if (isChef)
-                rbChef.ChangeStates(RadioButtonView.RadioButtonStates.Selected);
+                rbChef.ChangeStates(RadioButtonView.RadioButtonStatus.Selected);
             else
-                rbChef.ChangeStates(RadioButtonView.RadioButtonStates.Unselected);
+                rbChef.ChangeStates(RadioButtonView.RadioButtonStatus.Unselected);
         }
         if (rbWaiter != null)
         {
             if (isWaiter)
-                rbWaiter.ChangeStates(RadioButtonView.RadioButtonStates.Selected);
+                rbWaiter.ChangeStates(RadioButtonView.RadioButtonStatus.Selected);
             else
-                rbWaiter.ChangeStates(RadioButtonView.RadioButtonStates.Unselected);
+                rbWaiter.ChangeStates(RadioButtonView.RadioButtonStatus.Unselected);
         }
         if (rbAccost != null)
         {
             if (isAccost)
-                rbAccost.ChangeStates(RadioButtonView.RadioButtonStates.Selected);
+                rbAccost.ChangeStates(RadioButtonView.RadioButtonStatus.Selected);
             else
-                rbAccost.ChangeStates(RadioButtonView.RadioButtonStates.Unselected);
+                rbAccost.ChangeStates(RadioButtonView.RadioButtonStatus.Unselected);
         }
         if (rbBeater != null)
         {
             if (isBeater)
-                rbBeater.ChangeStates(RadioButtonView.RadioButtonStates.Selected);
+                rbBeater.ChangeStates(RadioButtonView.RadioButtonStatus.Selected);
             else
-                rbBeater.ChangeStates(RadioButtonView.RadioButtonStates.Unselected);
+                rbBeater.ChangeStates(RadioButtonView.RadioButtonStatus.Unselected);
         }
     }
 
@@ -426,30 +426,30 @@ public class ItemGameWorkerCpt : ItemGameBaseCpt, IRadioButtonCallBack, DialogVi
         PriorityChange(WorkerEnum.Beater, content);
     }
 
-    public virtual void RadioButtonSelected(RadioButtonView view, RadioButtonView.RadioButtonStates buttonStates)
+    public virtual void RadioButtonSelected(RadioButtonView view, RadioButtonView.RadioButtonStatus buttonStates)
     {
         if (characterData == null || characterData.baseInfo == null)
             return;
         CharacterBaseBean characterBase = characterData.baseInfo;
         if (view == rbAccounting)
         {
-            characterBase.isAccountant = (buttonStates == RadioButtonView.RadioButtonStates.Selected) ? true : false;
+            characterBase.isAccountant = (buttonStates == RadioButtonView.RadioButtonStatus.Selected) ? true : false;
         }
         else if (view == rbWaiter)
         {
-            characterBase.isWaiter = (buttonStates == RadioButtonView.RadioButtonStates.Selected) ? true : false;
+            characterBase.isWaiter = (buttonStates == RadioButtonView.RadioButtonStatus.Selected) ? true : false;
         }
         else if (view == rbChef)
         {
-            characterBase.isChef = (buttonStates == RadioButtonView.RadioButtonStates.Selected) ? true : false;
+            characterBase.isChef = (buttonStates == RadioButtonView.RadioButtonStatus.Selected) ? true : false;
         }
         else if (view == rbAccost)
         {
-            characterBase.isAccost = (buttonStates == RadioButtonView.RadioButtonStates.Selected) ? true : false;
+            characterBase.isAccost = (buttonStates == RadioButtonView.RadioButtonStatus.Selected) ? true : false;
         }
         else if (view == rbBeater)
         {
-            characterBase.isBeater = (buttonStates == RadioButtonView.RadioButtonStates.Selected) ? true : false;
+            characterBase.isBeater = (buttonStates == RadioButtonView.RadioButtonStatus.Selected) ? true : false;
         }
         if (GetUIManager<UIGameManager>().innHandler != null)
             GetUIManager<UIGameManager>().innHandler.InitWorker();

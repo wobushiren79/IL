@@ -32,7 +32,7 @@ public class RadioGroupView : BaseMonoBehaviour, IRadioButtonCallBack
             RadioButtonView itemRB = listButton[i];
             if (i == position)
             {
-                itemRB.ChangeStates(RadioButtonView.RadioButtonStates.Selected);
+                itemRB.ChangeStates(RadioButtonView.RadioButtonStatus.Selected);
                 if (isCallBack)
                 {
                     if (mRGCallBack != null)
@@ -41,7 +41,7 @@ public class RadioGroupView : BaseMonoBehaviour, IRadioButtonCallBack
             }
             else
             {
-                itemRB.ChangeStates(RadioButtonView.RadioButtonStates.Unselected);
+                itemRB.ChangeStates(RadioButtonView.RadioButtonStatus.Unselected);
             }
         }
     }
@@ -73,7 +73,7 @@ public class RadioGroupView : BaseMonoBehaviour, IRadioButtonCallBack
         this.mRGCallBack = callback;
     }
 
-    public void RadioButtonSelected(RadioButtonView view, RadioButtonView.RadioButtonStates buttonStates)
+    public void RadioButtonSelected(RadioButtonView view, RadioButtonView.RadioButtonStatus buttonStates)
     {
         if (CheckUtil.ListIsNull(listButton))
         {
@@ -84,13 +84,13 @@ public class RadioGroupView : BaseMonoBehaviour, IRadioButtonCallBack
             RadioButtonView itemRB = listButton[i];
             if (itemRB.Equals(view))
             {
-                itemRB.ChangeStates(RadioButtonView.RadioButtonStates.Selected);
+                //itemRB.ChangeStates(RadioButtonView.RadioButtonStatus.Selected);
                 if (mRGCallBack != null)
                     mRGCallBack.RadioButtonSelected(this,i, itemRB);
             }
             else
             {
-                itemRB.ChangeStates(RadioButtonView.RadioButtonStates.Unselected);
+                itemRB.ChangeStates(RadioButtonView.RadioButtonStatus.Unselected);
                 if (mRGCallBack != null)
                     mRGCallBack.RadioButtonUnSelected(this,i, itemRB);
             }

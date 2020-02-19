@@ -8,5 +8,5 @@ public interface IRadioButtonCallBack
     /// </summary>
     /// <param name="position"></param>
     /// <param name="view"></param>
-    void RadioButtonSelected(RadioButtonView view, RadioButtonView.RadioButtonStates buttonStates);
+    void RadioButtonSelected(RadioButtonView view, RadioButtonView.RadioButtonStatus buttonStates);
 }
