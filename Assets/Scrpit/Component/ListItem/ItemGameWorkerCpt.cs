@@ -70,7 +70,7 @@ public class ItemGameWorkerCpt : ItemGameBaseCpt, IRadioButtonCallBack, DialogVi
         if (pbName != null)
         {
             pbName.SetPopupShowView(infoPromptPopup);
-            pbName.SetContent(GameCommonInfo.GetUITextById(11001));
+            pbName.SetContent(GameCommonInfo.GetUITextById(61));
         }
         if (pbPrice != null)
         {

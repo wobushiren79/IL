@@ -33,6 +33,11 @@ public class ControlForWorkCpt : BaseControl,DialogView.IDialogCallBack
         HandleForFollowMove();
     }
 
+    private void OnDisable()
+    {
+        ClearSelect();
+    }
+
     /// <summary>
     /// 移动处理
     /// </summary>
@@ -98,6 +103,7 @@ public class ControlForWorkCpt : BaseControl,DialogView.IDialogCallBack
                     {
                         DialogBean dialogData = new DialogBean();
                         dialogSelectView = dialogManager.CreateDialog(DialogEnum.SelectForNpc, this,dialogData);
+                        ((SelectForNpcDialogView)dialogSelectView).SetData(selectNpc);
                         return;
                     }
                 }
