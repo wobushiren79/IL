@@ -5,7 +5,8 @@ using Cinemachine;
 public class BaseControl : BaseMonoBehaviour
 {
     //镜头
-    private CinemachineVirtualCamera mCamera2D;
+    protected CinemachineVirtualCamera camera2D;
+    protected CinemachineConfiner cameraConfiner;
     //镜头跟随对象
     public GameObject cameraFollowObj;
 
@@ -13,9 +14,10 @@ public class BaseControl : BaseMonoBehaviour
     /// 设置摄像头
     /// </summary>
     /// <param name="camera"></param>
-    public void SetCamera2D(CinemachineVirtualCamera camera)
+    public void SetCamera2D(CinemachineVirtualCamera camera2D)
     {
-        mCamera2D = camera;
+        this.camera2D = camera2D;
+        cameraConfiner = this.camera2D.GetComponent<CinemachineConfiner>();
     }
 
     /// <summary>
@@ -32,7 +34,7 @@ public class BaseControl : BaseMonoBehaviour
         {
             cameraFollowObj = gameObject;
         }
-        mCamera2D.Follow = cameraFollowObj.transform;
+        camera2D.Follow = cameraFollowObj.transform;
     }
 
     /// <summary>
@@ -43,7 +45,7 @@ public class BaseControl : BaseMonoBehaviour
         gameObject.SetActive(true);
         this.enabled = true;
         if (cameraFollowObj != null)
-            mCamera2D.Follow = cameraFollowObj.transform;
+            camera2D.Follow = cameraFollowObj.transform;
     }
 
     /// <summary>
@@ -61,7 +63,7 @@ public class BaseControl : BaseMonoBehaviour
     {
         this.enabled = true;
         if (cameraFollowObj != null)
-            mCamera2D.Follow = cameraFollowObj.transform;
+            camera2D.Follow = cameraFollowObj.transform;
     }
 
     /// <summary>
@@ -88,8 +90,8 @@ public class BaseControl : BaseMonoBehaviour
     /// <param name="position"></param>
     public void SetCameraPosition(Vector2 position)
     {
-        if (mCamera2D != null)
-            mCamera2D.transform.position = position;
+        if (camera2D != null)
+            camera2D.transform.position = position;
 ;    }
 
     /// <summary>
@@ -99,9 +101,9 @@ public class BaseControl : BaseMonoBehaviour
     ///
     public void SetCameraOrthographicSize(float orthographicSize)
     {
-        if (mCamera2D != null)
+        if (camera2D != null)
         {
-            mCamera2D.m_Lens.OrthographicSize = orthographicSize;
+            camera2D.m_Lens.OrthographicSize = orthographicSize;
         }
 
     }

@@ -4778,7 +4778,7 @@ GameObject:
   - component: {fileID: 5797480705104217649}
   m_Layer: 0
   m_Name: CharacterForRascal
-  m_TagString: Untagged
+  m_TagString: NPC
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -4957,6 +4957,7 @@ MonoBehaviour:
       attributes_force: 0
       attributes_lucky: 0
       love_items: 
+      love_menus: 
       condition: 
   characterFavorabilityData:
     characterId: 0
@@ -4966,8 +4967,6 @@ MonoBehaviour:
     giftLoveNumber: 0
     giftNormalNumber: 0
     talkNumber: 0
-  gameItemsManager: {fileID: 0}
-  iconDataManager: {fileID: 0}
   characterMoveCpt: {fileID: 1998467708474260743}
   characterShoutCpt: {fileID: 1829384568721300828}
   characterExpression: {fileID: 7977132549272450462}
@@ -4978,13 +4977,24 @@ MonoBehaviour:
   characterLifeCpt: {fileID: 4157317443798205715}
   movePosition: {x: 0, y: 0, z: 0}
   npcFight: {fileID: 0}
-  innHandler: {fileID: 0}
-  sceneInnManager: {fileID: 0}
   listTextInfoBean: []
-  addFavorability: 0
   characterMaxLife: 10
   characterLife: 10
   timeMakeTrouble: 60
+  addFavorability: 0
+  teamCode: 
+  teamData:
+    id: 0
+    valid: 0
+    team_id: 0
+    team_type: 0
+    team_leader: 
+    team_members: 
+    team_number: 0
+    condition: 
+    talk_ids: 
+    name: 
+  teamRank: 0
 --- !u!195 &582104591787824883
 NavMeshAgent:
   m_ObjectHideFlags: 0

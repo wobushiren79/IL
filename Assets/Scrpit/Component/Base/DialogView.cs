@@ -5,6 +5,8 @@ using UnityEngine.UI;
 
 public class DialogView : BaseMonoBehaviour
 {
+    public GameObject objDialog;
+
     public Button btSubmit;
     public Text tvSubmit;
 
@@ -18,8 +20,8 @@ public class DialogView : BaseMonoBehaviour
     private IDialogCallBack mCallBack;
 
     public DialogBean dialogData;
-    private float mTimeDelayDelete;
 
+    private float mTimeDelayDelete;
     protected AudioHandler audioHandler;
     private void Awake()
     {
@@ -35,6 +37,8 @@ public class DialogView : BaseMonoBehaviour
     {
         if (cgDialog != null)
             cgDialog.DOFade(1, 0.5f);
+        if(objDialog!=null)
+            objDialog.transform.DOScale(new Vector3(0, 0, 0), 0.5f).SetEase(Ease.OutBack).From();
     }
 
     public virtual void InitData()

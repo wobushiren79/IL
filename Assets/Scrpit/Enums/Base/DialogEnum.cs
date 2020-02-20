@@ -10,4 +10,5 @@ public enum DialogEnum
     PickForItems=4,
     PickForMoney=5,
     FindCharacter=6,
+    SelectForNpc=7,
 }

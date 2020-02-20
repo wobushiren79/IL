@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 5117759219927285301}
   m_Layer: 0
   m_Name: CharacterForCustomerGuestTeam
-  m_TagString: Untagged
+  m_TagString: NPC
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -270,6 +270,7 @@ MonoBehaviour:
       attributes_force: 0
       attributes_lucky: 0
       love_items: 
+      love_menus: 
       condition: 
   characterFavorabilityData:
     characterId: 0
@@ -279,8 +280,6 @@ MonoBehaviour:
     giftLoveNumber: 0
     giftNormalNumber: 0
     talkNumber: 0
-  gameItemsManager: {fileID: 0}
-  iconDataManager: {fileID: 0}
   characterMoveCpt: {fileID: 6900432911670793083}
   characterShoutCpt: {fileID: 6709236943882416928}
   characterExpression: {fileID: 3084067646814559202}
@@ -289,6 +288,21 @@ MonoBehaviour:
   characterMoodCpt: {fileID: 6355272750433371025}
   movePosition: {x: 0, y: 0, z: 0}
   timeWaitSeat: 20
+  teamCode: 
+  teamData:
+    id: 0
+    valid: 0
+    team_id: 0
+    team_type: 0
+    team_leader: 
+    team_members: 
+    team_number: 0
+    condition: 
+    talk_ids: 
+    name: 
+  teamRank: 0
+  togetherPosition: {x: 0, y: 0, z: 0}
+  guestTeamIntent: 0
 --- !u!1001 &1697461308649322183
 PrefabInstance:
   m_ObjectHideFlags: 0
