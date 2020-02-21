@@ -62,7 +62,7 @@ public class ControlForWorkCpt : BaseControl,DialogView.IDialogCallBack
     /// </summary>
     public void HandleForFollowMove()
     {
-        if (selectNpc)
+        if (dialogSelectView)
         {
             SetFollowPosition(selectNpc.transform.position);
             //如果超出边界则取消选择
@@ -80,11 +80,8 @@ public class ControlForWorkCpt : BaseControl,DialogView.IDialogCallBack
     {
         if (Input.GetButtonDown(InputInfo.Confirm))
         {
-            if (selectNpc != null)
-            {
-                ClearSelect();
+            if (dialogSelectView != null)
                 return;
-            }
             Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             //如果超出边界则不选择
             if (!CheckIsInBorder(mousePos))

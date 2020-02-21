@@ -149,11 +149,19 @@ public class BuildTableCpt : BaseBuildItemCpt
     /// </summary>
     public void CleanTable()
     {
-        FoodForCustomerCpt food = GetTable().GetComponentInChildren<FoodForCustomerCpt>();
+        FoodForCustomerCpt food = GetTableFood();
         if (food != null)
             //删除桌子上的食物
             Destroy(food.gameObject);
         SetTableStatus(TableStatusEnum.Idle);
     }
 
+    /// <summary>
+    /// 获取桌子上的食物
+    /// </summary>
+    /// <returns></returns>
+    public FoodForCustomerCpt GetTableFood()
+    {
+       return  GetTable().GetComponentInChildren<FoodForCustomerCpt>();
+    }
 }

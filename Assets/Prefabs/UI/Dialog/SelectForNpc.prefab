@@ -616,11 +616,11 @@ GameObject:
   m_Component:
   - component: {fileID: 4065241614981735618}
   - component: {fileID: 2451389445005524242}
-  - component: {fileID: 3330128580498927141}
-  - component: {fileID: 4897284806250063402}
   - component: {fileID: 1426013567634773985}
+  - component: {fileID: 4273100038052300453}
+  - component: {fileID: 3944656489859881863}
   m_Layer: 0
-  m_Name: SelectNpc
+  m_Name: SelectForNpc
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -654,7 +654,47 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3799538328478873956}
   m_CullTransparentMesh: 0
---- !u!114 &3330128580498927141
+--- !u!114 &1426013567634773985
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3799538328478873956}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a1a281058bff94c4a9c59c7fafa09ad3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  objDialog: {fileID: 9081265482624345439}
+  btSubmit: {fileID: 0}
+  tvSubmit: {fileID: 0}
+  btCancel: {fileID: 0}
+  tvCancel: {fileID: 0}
+  btBackground: {fileID: 3944656489859881863}
+  tvTitle: {fileID: 0}
+  tvContent: {fileID: 0}
+  cgDialog: {fileID: 0}
+  dialogData:
+    title: 
+    content: 
+    submitStr: 
+    cancelStr: 
+    dialogPosition: 0
+  characterUI: {fileID: 3987301954832111226}
+  objNpcName: {fileID: 1466356737234607781}
+  tvNpcName: {fileID: 1095521583598767577}
+  objNpcType: {fileID: 1065954248646684471}
+  tvNpcType: {fileID: 7678207170446939770}
+  objMood: {fileID: 8046453420327941665}
+  ivMood: {fileID: 6929946549254823491}
+  tvMood: {fileID: 7707103961804859671}
+  objTeam: {fileID: 8067108135198308275}
+  ivTeam: {fileID: 4967349439772018653}
+  objFriend: {fileID: 6063251348767070331}
+  objFunction: {fileID: 447755259200718502}
+  btExpel: {fileID: 7745203621242676490}
+--- !u!114 &4273100038052300453
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -682,7 +722,7 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!114 &4897284806250063402
+--- !u!114 &3944656489859881863
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -721,47 +761,10 @@ MonoBehaviour:
     m_SelectedTrigger: Selected
     m_DisabledTrigger: Disabled
   m_Interactable: 1
-  m_TargetGraphic: {fileID: 3330128580498927141}
+  m_TargetGraphic: {fileID: 4273100038052300453}
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
---- !u!114 &1426013567634773985
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3799538328478873956}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a1a281058bff94c4a9c59c7fafa09ad3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  objDialog: {fileID: 9081265482624345439}
-  btSubmit: {fileID: 0}
-  tvSubmit: {fileID: 0}
-  btCancel: {fileID: 0}
-  tvCancel: {fileID: 0}
-  btBackground: {fileID: 4897284806250063402}
-  tvTitle: {fileID: 0}
-  tvContent: {fileID: 0}
-  cgDialog: {fileID: 0}
-  dialogData:
-    title: 
-    content: 
-    submitStr: 
-    cancelStr: 
-    dialogPosition: 0
-  characterUI: {fileID: 3987301954832111226}
-  objNpcName: {fileID: 1466356737234607781}
-  tvNpcName: {fileID: 1095521583598767577}
-  objNpcType: {fileID: 1065954248646684471}
-  tvNpcType: {fileID: 7678207170446939770}
-  objMood: {fileID: 8046453420327941665}
-  ivMood: {fileID: 6929946549254823491}
-  tvMood: {fileID: 7707103961804859671}
-  objTeam: {fileID: 8067108135198308275}
-  objFriend: {fileID: 6063251348767070331}
 --- !u!1 &5438992316277248589
 GameObject:
   m_ObjectHideFlags: 0
@@ -1611,7 +1614,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &5796235974037767410
 RectTransform:
   m_ObjectHideFlags: 0

@@ -2,7 +2,7 @@
 using UnityEditor;
 using UnityEngine.UI;
 
-public class SelectForNpcDialogView : DialogView
+public class SelectForNpcDialogView : DialogView, IBaseObserver
 {
     public CharacterUICpt characterUI;
 
@@ -14,15 +14,35 @@ public class SelectForNpcDialogView : DialogView
     public GameObject objMood;
     public Image ivMood;
     public Text tvMood;
+
     public GameObject objTeam;
+    public Image ivTeam;
+
     public GameObject objFriend;
 
+    public GameObject objFunction;
+    public Button btExpel;
 
-    private NpcAICustomerCpt npcAICustomer;
+    private BaseNpcAI targetNpcAI;
+    private NpcAICustomerCpt targetNpcAIForCustomer;
+
+    public override void Start()
+    {
+        base.Start();
+        if (btExpel != null)
+            btExpel.onClick.AddListener(OnClickExpel);
+    }
 
     private void Update()
     {
         HandleForMood();
+    }
+
+    private void OnDestroy()
+    {
+        //移除通知
+        if (targetNpcAI != null)
+            targetNpcAI.RemoveObserver(this);
     }
 
     /// <summary>
@@ -31,6 +51,10 @@ public class SelectForNpcDialogView : DialogView
     /// <param name="baseNpc"></param>
     public void SetData(BaseNpcAI baseNpc)
     {
+        this.targetNpcAI = baseNpc;
+        //添加通知
+        baseNpc.AddObserver(this);
+
         CharacterBean characterData = baseNpc.characterData;
         if (characterData == null)
             return;
@@ -105,8 +129,15 @@ public class SelectForNpcDialogView : DialogView
     /// <param name="npcAICustomer"></param>
     public void SetDataForCustomer(NpcAICustomerCpt npcAICustomer)
     {
-        this.npcAICustomer = npcAICustomer;
-        SetType(GameCommonInfo.GetUITextById(60));
+        this.targetNpcAIForCustomer = npcAICustomer;
+        if (npcAICustomer.orderForCustomer == null)
+        {
+            SetType(GameCommonInfo.GetUITextById(70));
+        }
+        else
+        {
+            SetType(GameCommonInfo.GetUITextById(60));
+        }
         if (npcAICustomer as NpcAICostomerForFriendCpt)
         {
             objFriend.SetActive(true);
@@ -117,9 +148,10 @@ public class SelectForNpcDialogView : DialogView
             if (!CheckUtil.StringIsNull(npcTeam.teamCode))
             {
                 objTeam.SetActive(true);
+                ivTeam.color = npcTeam.teamColor;
             }
         }
-        objMood.SetActive(true);
+        ShowCustomerData();
     }
 
     /// <summary>
@@ -145,13 +177,63 @@ public class SelectForNpcDialogView : DialogView
     /// </summary>
     public void HandleForMood()
     {
-        if (npcAICustomer != null && npcAICustomer.orderForCustomer != null)
+        if (targetNpcAIForCustomer != null)
         {
-            PraiseTypeEnum praiseType = npcAICustomer.orderForCustomer.innEvaluation.GetPraise();
-            string praiseTypeStr = npcAICustomer.orderForCustomer.innEvaluation.GetPraiseDetails();
-            SetMood(praiseTypeStr, npcAICustomer.characterMoodCpt.GetCurrentMoodSprite());
+            if (targetNpcAIForCustomer.orderForCustomer != null)
+            {
+                PraiseTypeEnum praiseType = targetNpcAIForCustomer.orderForCustomer.innEvaluation.GetPraise();
+                string praiseTypeStr = targetNpcAIForCustomer.orderForCustomer.innEvaluation.GetPraiseDetails();
+                SetMood(praiseTypeStr, targetNpcAIForCustomer.characterMoodCpt.GetCurrentMoodSprite());
+            }
         }
     }
 
+    /// <summary>
+    /// 点击-驱除
+    /// </summary>
+    public void OnClickExpel()
+    {
+        if (targetNpcAIForCustomer != null)
+        {
+            targetNpcAIForCustomer.ChangeMood(-99999);
+        }
+    }
 
+    /// <summary>
+    /// 展示客户数据
+    /// </summary>
+    public void ShowCustomerData()
+    {
+        if (targetNpcAIForCustomer!=null && targetNpcAIForCustomer.orderForCustomer != null)
+        {
+            objMood.SetActive(true);
+            if (targetNpcAIForCustomer.customerIntent== NpcAICustomerCpt.CustomerIntentEnum.Leave)
+            {
+                objFunction.SetActive(false);
+                btExpel.gameObject.SetActive(false);
+            }
+            else
+            {
+                objFunction.SetActive(true);
+                btExpel.gameObject.SetActive(true);
+            }
+        }
+   
+    }
+
+    #region 通知回调
+    public void ObserbableUpdate<T>(T observable, int type, params object[] obj) where T : Object
+    {
+        if (observable == targetNpcAI)
+        {
+            if(targetNpcAI as NpcAICustomerCpt)
+            {
+                if (type == (int)NpcAICustomerCpt.CustomerNotifyEnum.StatusChange)
+                {
+                    SetDataForCustomer((NpcAICustomerCpt)targetNpcAI);
+                }
+            }
+        }
+    }
+    #endregion
 }

@@ -13,8 +13,9 @@ public class SceneGameTownInit : BaseSceneInit, IBaseObserver, DialogView.IDialo
     public GameTimeHandler gameTimeHandler;
     public WeatherHandler weatherHandler;
 
-    private void Awake()
+    public override void Awake()
     {
+        base.Awake();
         sceneTownManager = Find<SceneTownManager>(ImportantTypeEnum.SceneManager);
     }
 

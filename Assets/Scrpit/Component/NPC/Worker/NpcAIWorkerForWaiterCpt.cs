@@ -219,8 +219,10 @@ public class NpcAIWorkerForWaiterCpt : NpcAIWokerFoBaseCpt
         npcAIWorker.characterData.baseInfo.waiterInfo.AddCleanNumber(1);
         //增加经验
         npcAIWorker.characterData.baseInfo.waiterInfo.AddExp(1);
-
+        // 清理桌子
         orderForCustomer.table.CleanTable();
+        //结束订单
+        npcAIWorker.innHandler.EndOrder(orderForCustomer);
         SetIntent(WaiterIntentEnum.Idle);
     }
 

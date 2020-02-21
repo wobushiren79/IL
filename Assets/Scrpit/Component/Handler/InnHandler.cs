@@ -247,37 +247,6 @@ public class InnHandler : BaseMonoBehaviour, IBaseObserver
     }
 
     /// <summary>
-    /// 强制结束一个订单
-    /// </summary>
-    /// <param name="orderForCustomer"></param>
-    public void EndOrderForForce(OrderForCustomer orderForCustomer)
-    {
-        //如果食物已经做出来了
-        if (orderForCustomer.foodCpt != null)
-        {
-            //支付一半的钱
-            //PayMoney(orderForCustomer, 0.5f);
-        }
-        //根据心情评价客栈 前提订单里有他
-        InnPraise(orderForCustomer.innEvaluation.GetPraise());
-        //如果桌子还属于这个顾客
-        //如果在排队，移除排队
-        if (cusomerQueue.Contains(orderForCustomer))
-            cusomerQueue.Remove(orderForCustomer);
-        //清理桌子
-        if (orderForCustomer.table != null)
-            orderForCustomer.table.CleanTable();
-        //清理食物
-        if (orderForCustomer.foodCpt != null)
-            Destroy(orderForCustomer.foodCpt.gameObject);
-        //删除这个单子
-        if (listOrder.Contains(orderForCustomer))
-        {
-            listOrder.Remove(orderForCustomer);
-        }
-    }
-
-    /// <summary>
     /// 随机点餐
     /// </summary>
     /// <returns></returns>
@@ -305,7 +274,7 @@ public class InnHandler : BaseMonoBehaviour, IBaseObserver
         //食物数据库里有这个数据
         if (menuOwn == null)
             return null;
-        return OrderForFood( orderForCustomer, menuOwn.menuId);
+        return OrderForFood(orderForCustomer, menuOwn.menuId);
     }
 
     public MenuInfoBean OrderForFood(OrderForCustomer orderForCustomer, long menuId)
@@ -321,6 +290,57 @@ public class InnHandler : BaseMonoBehaviour, IBaseObserver
         return null;
     }
 
+
+
+    /// <summary>
+    /// 强制结束一个订单 
+    /// </summary>
+    /// <param name="orderForCustomer"></param>
+    /// <param name="isPraise">是否评价</param>
+    public void EndOrderForForce(OrderForCustomer orderForCustomer, bool isPraise)
+    {
+        //如果食物已经做出来了
+        if (orderForCustomer.table != null)
+        {
+            //如果桌子上有食物 并且清理列表里面没有 则加入清理列表
+            if (orderForCustomer.customer.customerIntent == NpcAICustomerCpt.CustomerIntentEnum.GotoSeat
+                || orderForCustomer.customer.customerIntent == NpcAICustomerCpt.CustomerIntentEnum.WaitFood
+                || orderForCustomer.customer.customerIntent == NpcAICustomerCpt.CustomerIntentEnum.Eatting)
+            {
+                orderForCustomer.table.CleanTable();
+            }
+            //支付一半的钱
+            //PayMoney(orderForCustomer, 0.5f);
+        }
+        //根据心情评价客栈 前提订单里有他
+        if (isPraise)
+            InnPraise(orderForCustomer.innEvaluation.GetPraise());
+        //如果桌子还属于这个顾客
+        //如果在排队，移除排队
+        if (cusomerQueue.Contains(orderForCustomer))
+            cusomerQueue.Remove(orderForCustomer);
+        if (foodQueue.Contains(orderForCustomer))
+            foodQueue.Remove(orderForCustomer);
+        if (sendQueue.Contains(orderForCustomer))
+            sendQueue.Remove(orderForCustomer);
+        EndOrder(orderForCustomer);
+    }
+
+    /// <summary>
+    /// 尝试结束订单
+    /// </summary>
+    /// <param name="orderForCustomer"></param>
+    public void EndOrder(OrderForCustomer orderForCustomer)
+    {
+        //食物已被清理
+        if (orderForCustomer.foodCpt == null
+            //顾客已经离开
+            && listOrder.Contains(orderForCustomer))
+        {
+            listOrder.Remove(orderForCustomer);
+        }
+    }
+
     /// <summary>
     /// 付钱
     /// </summary>
@@ -330,6 +350,12 @@ public class InnHandler : BaseMonoBehaviour, IBaseObserver
         long getMoneyL = (long)Math.Round(order.foodData.price_l * rate, 0);
         long getMoneyM = (long)Math.Round(order.foodData.price_m * rate, 0);
         long getMoneyS = (long)Math.Round(order.foodData.price_s * rate, 0);
+
+        //最小
+        if (getMoneyL == 0 && getMoneyM == 0 && getMoneyS == 0)
+        {
+            getMoneyS = 1;
+        }
 
         //账本记录
         innRecord.AddSellNumber(order.foodData.id, 1, getMoneyL, getMoneyM, getMoneyS);
@@ -344,6 +370,8 @@ public class InnHandler : BaseMonoBehaviour, IBaseObserver
         audioHandler.PlaySound(SoundEnum.PayMoney, new Vector3(order.customer.transform.position.x, order.customer.transform.position.y, Camera.main.transform.position.z));
         //展示特效
         innPayHandler.ShowPayEffects(order.customer.transform.position, getMoneyL, getMoneyM, getMoneyS);
+        //结束订单
+        EndOrder(order);
     }
 
     /// <summary>

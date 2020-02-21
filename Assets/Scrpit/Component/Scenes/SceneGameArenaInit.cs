@@ -26,8 +26,9 @@ public class SceneGameArenaInit : BaseSceneInit, IBaseObserver
     //地形控制
     protected NavMeshSurface navMesh;
 
-    private void Awake()
+    public override void Awake()
     {
+        base.Awake();
         sceneArenaManager = Find<SceneArenaManager>(ImportantTypeEnum.SceneManager);
         innFoodManager = Find<InnFoodManager>(ImportantTypeEnum.FoodManager);
         barrageHandler = Find<MiniGameBarrageHandler>(ImportantTypeEnum.MiniGameHandler);

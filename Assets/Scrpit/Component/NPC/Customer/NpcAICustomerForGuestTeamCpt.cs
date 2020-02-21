@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using UnityEditor;
 using System.Collections.Generic;
+using System.Collections;
 
 public class NpcAICustomerForGuestTeamCpt : NpcAICustomerCpt
 {
@@ -107,7 +108,7 @@ public class NpcAICustomerForGuestTeamCpt : NpcAICustomerCpt
         //点餐
         //判断是否有自己喜欢的菜
         List<long> loveMenus = characterData.npcInfoData.GetLoveMenus();
-        //如果没有自己专有喜欢的菜，则随机点一个在卖的
+        //如果没有自己专有喜欢的菜，没有则随机点一个在卖的
         if (loveMenus.Count == 0)
         {
             innHandler.OrderForFood(orderForCustomer);
@@ -136,9 +137,7 @@ public class NpcAICustomerForGuestTeamCpt : NpcAICustomerCpt
         if (orderForCustomer.foodData == null)
         {
             //如果没有菜品出售 心情直接降100 
-            ChangeMood(-100);
-            //离开
-            SetIntent(CustomerIntentEnum.Leave);
+            ChangeMood(-9999);
         }
         else
         {
@@ -198,8 +197,6 @@ public class NpcAICustomerForGuestTeamCpt : NpcAICustomerCpt
             }
             return;
         }
-        //如果有订单则强制结束订单
-        innHandler.EndOrderForForce(orderForCustomer);
         //随机获取一个退出点
         togetherPosition = innHandler.GetRandomEntrancePosition();
         guestTeamIntent = CustomerIntentForGuestTeamEnum.GoToTeam;
@@ -240,7 +237,7 @@ public class NpcAICustomerForGuestTeamCpt : NpcAICustomerCpt
             {
                 if (teamMember != this)
                 {
-                    teamMember.ChangeMood(-9999, false);
+                    teamMember.ChangeMood(-99999, false);
                 }
             }
         }
@@ -256,7 +253,39 @@ public class NpcAICustomerForGuestTeamCpt : NpcAICustomerCpt
     /// </summary>
     public override void IntentForWaitSeat()
     {
+        //加入排队队伍
+        //添加一个订单
         OrderForCustomer orderForCustomer = innHandler.CreateOrder(this);
         innHandler.cusomerQueue.Add(orderForCustomer);
+        if (teamRank == 0)
+        {
+            StartCoroutine(StartWaitSeat());
+        }
+    }
+
+    /// <summary>
+    /// 开始等待就餐计时
+    /// </summary>
+    /// <returns></returns>
+    public override IEnumerator StartWaitSeat()
+    {
+        yield return new WaitForSeconds(timeWaitSeat);
+        List<NpcAICustomerForGuestTeamCpt> listTeamMember = GetGuestTeam();
+        bool allWait = true;
+        foreach (NpcAICustomerForGuestTeamCpt teamMember in listTeamMember)
+        {
+            if (teamMember.customerIntent != CustomerIntentEnum.WaitSeat)
+            {
+                allWait = false;
+            }
+        }
+        if (allWait)
+        {
+            foreach (NpcAICustomerForGuestTeamCpt teamMember in listTeamMember)
+            {
+                innHandler.EndOrderForForce(teamMember.orderForCustomer, false);
+                teamMember.SetIntent(CustomerIntentEnum.Leave);
+            }
+        }
     }
 }

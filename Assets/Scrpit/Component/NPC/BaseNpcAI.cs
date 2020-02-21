@@ -2,7 +2,7 @@
 using UnityEditor;
 using UnityEngine.AI;
 using DG.Tweening;
-public class BaseNpcAI : BaseMonoBehaviour
+public class BaseNpcAI : BaseObservable<IBaseObserver>
 {
     //角色数据
     public CharacterBean characterData;

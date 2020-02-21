@@ -521,7 +521,7 @@ public class GameDataBean
         ownLoveMenus = new List<MenuOwnBean>();
         foreach (MenuOwnBean itemMenu in listMenu)
         {
-            if (loveMenus.Contains(itemMenu.menuId))
+            if (loveMenus.Contains(itemMenu.menuId)&& itemMenu.isSell)
             {
                 ownLoveMenus.Add(itemMenu);
                 hasLove = true;

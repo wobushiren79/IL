@@ -6,6 +6,12 @@ using System.Collections.Generic;
 
 public class NpcAICustomerCpt : BaseNpcAI
 {
+    public enum CustomerNotifyEnum
+    {
+        StatusChange = 1,//状态改变
+    }
+
+
     public enum CustomerIntentEnum
     {
         Walk = 0,//路过
@@ -108,9 +114,7 @@ public class NpcAICustomerCpt : BaseNpcAI
         if (orderForCustomer.foodData == null)
         {
             //如果没有菜品出售 心情直接降100 
-            ChangeMood(-100);
-            //离开
-            SetIntent(CustomerIntentEnum.Leave);
+            ChangeMood(-99999);
         }
         else
         {
@@ -165,6 +169,7 @@ public class NpcAICustomerCpt : BaseNpcAI
                 IntentForWaitAccost();
                 break;
         }
+        NotifyAllObserver((int)CustomerNotifyEnum.StatusChange, (int)intent);
     }
 
     /// <summary>
@@ -303,10 +308,6 @@ public class NpcAICustomerCpt : BaseNpcAI
     /// </summary>
     public virtual void IntentForLeave()
     {
-        //如果有订单。强制结束订单
-        if (orderForCustomer != null)
-            innHandler.EndOrderForForce(orderForCustomer);
-
         //随机获取一个退出点
         movePosition = sceneInnManager.GetRandomSceneExportPosition();
         characterMoveCpt.SetDestination(movePosition);
@@ -340,6 +341,10 @@ public class NpcAICustomerCpt : BaseNpcAI
         characterMoodCpt.SetMood(orderForCustomer.innEvaluation.GetPraise());
         if (orderForCustomer.innEvaluation.mood <= 0)
         {
+            StopAllCoroutines();
+            //如果有订单。强制结束订单
+            if (orderForCustomer != null)
+                innHandler.EndOrderForForce(orderForCustomer,true);
             SetIntent(CustomerIntentEnum.Leave);
         }
     }
@@ -366,9 +371,10 @@ public class NpcAICustomerCpt : BaseNpcAI
     /// 开始等待就餐计时
     /// </summary>
     /// <returns></returns>
-    public IEnumerator StartWaitSeat()
+    public virtual IEnumerator StartWaitSeat()
     {
         yield return new WaitForSeconds(timeWaitSeat);
+        innHandler.EndOrderForForce(orderForCustomer,false);
         SetIntent(CustomerIntentEnum.Leave);
     }
 }
