@@ -53,4 +53,12 @@ public class CharacterMoodCpt : BaseMonoBehaviour
         }
         spCurrent = spIcon;
     }
+
+    /// <summary>
+    /// 获取当前表情
+    /// </summary>
+    public Sprite GetCurrentMoodSprite()
+    {
+        return spCurrent;
+    }
 }

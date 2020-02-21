@@ -26,4 +26,36 @@ public class InnEvaluationBean
             praise = PraiseTypeEnum.Anger;
         return praise;
     }
+
+    /// <summary>
+    /// 获取评价描述
+    /// </summary>
+    /// <returns></returns>
+    public string GetPraiseDetails()
+    {
+        PraiseTypeEnum praiseType = GetPraise();
+        string praiseStr = "???";
+        switch (praiseType)
+        {
+            case PraiseTypeEnum.Excited:
+                praiseStr = GameCommonInfo.GetUITextById(64);
+                break;
+            case PraiseTypeEnum.Happy:
+                praiseStr = GameCommonInfo.GetUITextById(65);
+                break;
+            case PraiseTypeEnum.Okay:
+                praiseStr = GameCommonInfo.GetUITextById(66);
+                break;
+            case PraiseTypeEnum.Ordinary:
+                praiseStr = GameCommonInfo.GetUITextById(67);
+                break;
+            case PraiseTypeEnum.Disappointed:
+                praiseStr = GameCommonInfo.GetUITextById(68);
+                break;
+            case PraiseTypeEnum.Anger:
+                praiseStr = GameCommonInfo.GetUITextById(69);
+                break;
+        }
+        return praiseStr;
+    }
 }

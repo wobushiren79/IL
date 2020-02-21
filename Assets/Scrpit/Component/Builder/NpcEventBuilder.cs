@@ -264,7 +264,7 @@ public class NpcEventBuilder : NpcNormalBuilder, IBaseObserver
             baseNpcAI.SetFavorabilityData(characterFavorability);
 
             NpcAICostomerForFriendCpt customerAI = baseNpcAI.GetComponent<NpcAICostomerForFriendCpt>();
-            customerAI.SetTeamData(teamCode, teamData, i);
+            customerAI.SetTeamData(teamCode, teamData, i, teamColor);
             customerAI.SetIntent(NpcAICustomerCpt.CustomerIntentEnum.Want);
 
         }

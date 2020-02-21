@@ -147,7 +147,7 @@ public class NpcCustomerBuilder : NpcNormalBuilder, IBaseObserver
             baseNpcAI.SetCharacterData(characterData);
             baseNpcAI.AddStatusIconForGuestTeam(teamColor);
             NpcAICustomerForGuestTeamCpt customerAI = baseNpcAI.GetComponent<NpcAICustomerForGuestTeamCpt>();
-            customerAI.SetTeamData(teamCode, npcTeam, i);
+            customerAI.SetTeamData(teamCode, npcTeam, i, teamColor);
             if (isWant)
             {
                 customerAI.SetIntent(NpcAICustomerCpt.CustomerIntentEnum.Want);

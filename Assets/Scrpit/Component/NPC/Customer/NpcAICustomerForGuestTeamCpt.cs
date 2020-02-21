@@ -10,6 +10,8 @@ public class NpcAICustomerForGuestTeamCpt : NpcAICustomerCpt
     public NpcTeamBean teamData;
     //团队地位
     public int teamRank;
+    //团队颜色
+    public Color teamColor;
 
     //集合点
     public Vector3 togetherPosition;
@@ -35,11 +37,12 @@ public class NpcAICustomerForGuestTeamCpt : NpcAICustomerCpt
     /// 设置队伍ID
     /// </summary>
     /// <param name="teamId"></param>
-    public void SetTeamData(string teamCode,NpcTeamBean teamData,int teamRank)
+    public void SetTeamData(string teamCode,NpcTeamBean teamData,int teamRank,Color teamColor)
     {
         this.teamCode = teamCode;
         this.teamData = teamData;
         this.teamRank = teamRank;
+        this.teamColor = teamColor;
     }
 
     /// <summary>
