@@ -52,6 +52,23 @@ public class BaseTilemapBuilder : BaseMonoBehaviour
         Build(tileName,new Vector3Int(x,y,0));
     }
 
+    /// <summary>
+    /// 替换tile
+    /// </summary>
+    /// <param name="changeBase"></param>
+    /// <param name="newBase"></param>
+    public void SwapTile(TileBase changeBase, TileBase newBase)
+    {
+        buildTilemap.SwapTile(changeBase, newBase);
+    }
+    public void SwapTile(Tilemap tilemap, TileBase changeBase, TileBase newBase)
+    {
+        tilemap.SwapTile(changeBase, newBase);
+    }
+
+    /// <summary>
+    /// 清空所有tiles
+    /// </summary>
     public void ClearAllTiles()
     {
         buildTilemap.ClearAllTiles();

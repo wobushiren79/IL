@@ -28,6 +28,7 @@ public enum ImportantTypeEnum
     NpcBuilder,
     InnBuilder,
     MiniGameBuilder,
+    SceneBuilder,
 
     EventHandler,
     TimeHandler,
