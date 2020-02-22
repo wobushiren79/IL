@@ -138,6 +138,7 @@ public class NpcAICustomerForGuestTeamCpt : NpcAICustomerCpt
         {
             //如果没有菜品出售 心情直接降100 
             ChangeMood(-9999);
+            characterShoutCpt.Shout(GameCommonInfo.GetUITextById(13002));
         }
         else
         {

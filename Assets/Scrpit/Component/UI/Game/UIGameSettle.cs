@@ -4,7 +4,7 @@ using UnityEngine.UI;
 using DG.Tweening;
 using System.Collections.Generic;
 
-public class UIGameSettle : BaseUIComponent
+public class UIGameSettle : UIGameComponent
 {
     public Button btSubmit;
 
@@ -31,12 +31,9 @@ public class UIGameSettle : BaseUIComponent
 
     private float animDelay;
 
-    protected ControlHandler controlHandler;
-
     public override void Awake()
     {
         base.Awake();
-        controlHandler = GetUIManager<UIGameManager>().controlHandler;
     }
 
     private void Start()
@@ -49,8 +46,7 @@ public class UIGameSettle : BaseUIComponent
     {
         base.OpenUI();
         InitData();
-        if (controlHandler != null)
-            controlHandler.StopControl();
+        uiGameManager.controlHandler.StopControl();
     }
 
     public void InitData()

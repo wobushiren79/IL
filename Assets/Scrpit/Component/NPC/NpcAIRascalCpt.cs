@@ -199,7 +199,7 @@ public class NpcAIRascalCpt : BaseNpcAI, IBaseObserver
         characterLifeCpt.gameObject.transform.DOScale(new Vector3(0.2f, 0.2f), 0.5f).From().SetEase(Ease.OutBack);
         //展示范围
         objRascalSpaceShow.SetActive(true);
-        objRascalSpaceShow.transform.localScale = new Vector3(1, 1, 1);
+        objRascalSpaceShow.transform.localScale = new Vector3(2, 2, 2);
         objRascalSpaceShow.transform.DOScale(new Vector3(0.2f, 0.2f), 0.5f).From().SetEase(Ease.OutBack);
         //闹事人员添加
         innHandler.rascalrQueue.Add(this);

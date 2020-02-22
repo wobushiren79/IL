@@ -11,7 +11,6 @@ public class NpcAICustomerCpt : BaseNpcAI
         StatusChange = 1,//状态改变
     }
 
-
     public enum CustomerIntentEnum
     {
         Walk = 0,//路过
@@ -90,6 +89,53 @@ public class NpcAICustomerCpt : BaseNpcAI
     }
 
     /// <summary>
+    /// 获取顾客状态
+    /// </summary>
+    /// <param name="intentStr"></param>
+    /// <returns></returns>
+    public virtual CustomerIntentEnum GetCustomerStatus(out string intentStr)
+    {
+        intentStr = "???";
+        switch (customerIntent)
+        {
+            case CustomerIntentEnum.Walk:
+                intentStr = GameCommonInfo.GetUITextById(151);
+                break;
+            case CustomerIntentEnum.Want:
+                intentStr = GameCommonInfo.GetUITextById(152);
+                break;
+            case CustomerIntentEnum.WaitSeat:
+                intentStr = GameCommonInfo.GetUITextById(153);
+                break;
+            case CustomerIntentEnum.GotoSeat:
+                intentStr = GameCommonInfo.GetUITextById(154);
+                break;
+            case CustomerIntentEnum.WaitFood:
+                intentStr = GameCommonInfo.GetUITextById(155);
+                break;
+            case CustomerIntentEnum.Eatting:
+                intentStr = GameCommonInfo.GetUITextById(156);
+                break;
+            case CustomerIntentEnum.GotoPay:
+                intentStr = GameCommonInfo.GetUITextById(157);
+                break;
+            case CustomerIntentEnum.WaitPay:
+                intentStr = GameCommonInfo.GetUITextById(158);
+                break;
+            case CustomerIntentEnum.Pay:
+                intentStr = GameCommonInfo.GetUITextById(159);
+                break;
+            case CustomerIntentEnum.Leave:
+                intentStr = GameCommonInfo.GetUITextById(160);
+                break;
+            case CustomerIntentEnum.WaitAccost:
+                intentStr = GameCommonInfo.GetUITextById(161);
+                break;
+        }
+        return customerIntent;
+    }
+
+    /// <summary>
     /// 离开处理
     /// </summary>
     public virtual void HandleForLeave()
@@ -115,6 +161,7 @@ public class NpcAICustomerCpt : BaseNpcAI
         {
             //如果没有菜品出售 心情直接降100 
             ChangeMood(-99999);
+            characterShoutCpt.Shout(GameCommonInfo.GetUITextById(13002));
         }
         else
         {

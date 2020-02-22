@@ -172,31 +172,31 @@ public class InnAttributesBean
         level = "???";
         if (aesthetics <= 100)
         {
-            level = "F";
+            level = GameCommonInfo.GetUITextById(120);
         }
         else if (aesthetics > 100&& aesthetics <= 200)
         {
-            level = "E";
+            level = GameCommonInfo.GetUITextById(121);
         }
         else if (aesthetics > 200 && aesthetics <= 300)
         {
-            level = "D";
+            level = GameCommonInfo.GetUITextById(122);
         }
         else if (aesthetics > 300 && aesthetics <= 400)
         {
-            level = "C";
+            level = GameCommonInfo.GetUITextById(123);
         }
         else if (aesthetics > 400 && aesthetics <= 500)
         {
-            level = "B";
+            level = GameCommonInfo.GetUITextById(124);
         }
         else if (aesthetics > 500 && aesthetics <= 1000)
         {
-            level = "A";
+            level = GameCommonInfo.GetUITextById(125);
         }
         else if (aesthetics > 1000 && aesthetics <= 2000)
         {
-            level = "S";
+            level = GameCommonInfo.GetUITextById(126);
         }
         return aesthetics;
     }

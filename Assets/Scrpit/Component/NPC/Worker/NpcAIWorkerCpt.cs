@@ -5,6 +5,11 @@ using System.Collections.Generic;
 
 public class NpcAIWorkerCpt : BaseNpcAI
 {
+    public enum WorkerNotifyEnum
+    {
+        StatusChange = 1,//状态改变
+    }
+
     public enum WorkerIntentEnum
     {
         Idle,//空闲
@@ -44,6 +49,45 @@ public class NpcAIWorkerCpt : BaseNpcAI
         }
     }
 
+    /// <summary>
+    /// 获取工作者状态
+    /// </summary>
+    /// <param name="statusStr"></param>
+    /// <returns></returns>
+    public WorkerIntentEnum GetWorkerStatus(out string statusStr)
+    {
+        statusStr = "???";
+        switch (workerIntent)
+        {
+            case WorkerIntentEnum.Idle:
+                statusStr = GameCommonInfo.GetUITextById(171);
+                break;
+            case WorkerIntentEnum.WaiterSend:
+                statusStr = GameCommonInfo.GetUITextById(172);
+                break;
+            case WorkerIntentEnum.WaiterClean:
+                statusStr = GameCommonInfo.GetUITextById(173);
+                break;
+            case WorkerIntentEnum.Cook:
+                statusStr = GameCommonInfo.GetUITextById(174);
+                break;
+            case WorkerIntentEnum.Accounting:
+                statusStr = GameCommonInfo.GetUITextById(175);
+                break;
+            case WorkerIntentEnum.Accost:
+                statusStr = GameCommonInfo.GetUITextById(176);
+                break;
+            case WorkerIntentEnum.Beater:
+                statusStr = GameCommonInfo.GetUITextById(177);
+                break;
+        }
+        return workerIntent;
+    }
+
+    /// <summary>
+    /// 设置角色数据
+    /// </summary>
+    /// <param name="characterBean"></param>
     public override void SetCharacterData(CharacterBean characterBean)
     {
         base.SetCharacterData(characterBean);
@@ -59,7 +103,7 @@ public class NpcAIWorkerCpt : BaseNpcAI
         {
             if (!itemWorkerInfo.isWork)
                 continue;
-            bool isDistributionSuccess=innHandler.DistributionWorkForType(itemWorkerInfo.worker,this);
+            bool isDistributionSuccess = innHandler.DistributionWorkForType(itemWorkerInfo.worker, this);
             if (isDistributionSuccess)
                 return;
         }
@@ -106,14 +150,16 @@ public class NpcAIWorkerCpt : BaseNpcAI
                 SetIntentForBeater(npcAIRascal);
                 break;
         }
+        NotifyAllObserver((int)WorkerNotifyEnum.StatusChange, (int)workerIntent);
     }
+
     public void SetIntent(WorkerIntentEnum workerIntent)
     {
-        SetIntent(workerIntent, null,null);
+        SetIntent(workerIntent, null, null);
     }
     public void SetIntent(WorkerIntentEnum workerIntent, OrderForCustomer orderForCustomer)
     {
-        SetIntent(workerIntent, orderForCustomer,null);
+        SetIntent(workerIntent, orderForCustomer, null);
     }
     public void SetIntent(WorkerIntentEnum workerIntent, NpcAIRascalCpt npcAIRascal)
     {

@@ -6,25 +6,33 @@ public class SelectForNpcDialogView : DialogView, IBaseObserver
 {
     public CharacterUICpt characterUI;
 
+    //姓名
     public GameObject objNpcName;
     public Text tvNpcName;
+    //类型
     public GameObject objNpcType;
     public Text tvNpcType;
-
+    //状态
+    public GameObject objNpcStatus;
+    public Text tvStatus;
+    //心情
     public GameObject objMood;
     public Image ivMood;
     public Text tvMood;
 
+    //团队
     public GameObject objTeam;
     public Image ivTeam;
-
+    //好友
     public GameObject objFriend;
 
+    //功能
     public GameObject objFunction;
     public Button btExpel;
 
-    private BaseNpcAI targetNpcAI;
-    private NpcAICustomerCpt targetNpcAIForCustomer;
+    protected BaseNpcAI targetNpcAI;
+    protected NpcAICustomerCpt targetNpcAIForCustomer;
+    protected NpcAIWorkerCpt targetNpcAIForWorker;
 
     public override void Start()
     {
@@ -124,12 +132,23 @@ public class SelectForNpcDialogView : DialogView, IBaseObserver
     }
 
     /// <summary>
+    /// 设置状态
+    /// </summary>
+    /// <param name="status"></param>
+    public void SetStatus(string status)
+    {
+        if (tvStatus != null)
+            tvStatus.text = GameCommonInfo.GetUITextById(74) + ":" + status;
+    }
+
+    /// <summary>
     /// 设置顾客数据
     /// </summary>
     /// <param name="npcAICustomer"></param>
     public void SetDataForCustomer(NpcAICustomerCpt npcAICustomer)
     {
         this.targetNpcAIForCustomer = npcAICustomer;
+        //设置类型
         if (npcAICustomer.orderForCustomer == null)
         {
             SetType(GameCommonInfo.GetUITextById(70));
@@ -137,11 +156,17 @@ public class SelectForNpcDialogView : DialogView, IBaseObserver
         else
         {
             SetType(GameCommonInfo.GetUITextById(60));
+            //设置状态
+            objNpcStatus.SetActive(true);
+            npcAICustomer.GetCustomerStatus(out string customerStatus);
+            SetStatus(customerStatus);
         }
+        //设置好友
         if (npcAICustomer as NpcAICostomerForFriendCpt)
         {
             objFriend.SetActive(true);
         }
+        //设置团队
         if (npcAICustomer as NpcAICustomerForGuestTeamCpt)
         {
             NpcAICustomerForGuestTeamCpt npcTeam = (NpcAICustomerForGuestTeamCpt)npcAICustomer;
@@ -160,7 +185,12 @@ public class SelectForNpcDialogView : DialogView, IBaseObserver
     /// <param name="npcAIWorker"></param>
     public void SetDataForWork(NpcAIWorkerCpt npcAIWorker)
     {
+        this.targetNpcAIForWorker = npcAIWorker;
         SetType(GameCommonInfo.GetUITextById(63));
+        //设置状态
+        objNpcStatus.SetActive(true);
+        npcAIWorker.GetWorkerStatus(out string workerStatus);
+        SetStatus(workerStatus);
     }
 
     /// <summary>
@@ -204,10 +234,10 @@ public class SelectForNpcDialogView : DialogView, IBaseObserver
     /// </summary>
     public void ShowCustomerData()
     {
-        if (targetNpcAIForCustomer!=null && targetNpcAIForCustomer.orderForCustomer != null)
+        if (targetNpcAIForCustomer != null && targetNpcAIForCustomer.orderForCustomer != null)
         {
             objMood.SetActive(true);
-            if (targetNpcAIForCustomer.customerIntent== NpcAICustomerCpt.CustomerIntentEnum.Leave)
+            if (targetNpcAIForCustomer.customerIntent == NpcAICustomerCpt.CustomerIntentEnum.Leave)
             {
                 objFunction.SetActive(false);
                 btExpel.gameObject.SetActive(false);
@@ -218,7 +248,7 @@ public class SelectForNpcDialogView : DialogView, IBaseObserver
                 btExpel.gameObject.SetActive(true);
             }
         }
-   
+
     }
 
     #region 通知回调
@@ -226,11 +256,18 @@ public class SelectForNpcDialogView : DialogView, IBaseObserver
     {
         if (observable == targetNpcAI)
         {
-            if(targetNpcAI as NpcAICustomerCpt)
+            if (targetNpcAI as NpcAICustomerCpt)
             {
                 if (type == (int)NpcAICustomerCpt.CustomerNotifyEnum.StatusChange)
                 {
                     SetDataForCustomer((NpcAICustomerCpt)targetNpcAI);
+                }
+            }
+            else if (targetNpcAI as NpcAIWorkerCpt)
+            {
+                if (type == (int)NpcAIWorkerCpt.WorkerNotifyEnum.StatusChange)
+                {
+                    SetDataForWork((NpcAIWorkerCpt)targetNpcAI);
                 }
             }
         }
