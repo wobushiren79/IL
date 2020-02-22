@@ -16,7 +16,6 @@ public class GameTimeHandler : BaseObservable<IBaseObserver>
     public enum NotifyTypeEnum
     {
         NewDay,//新的一天
-        Night,//夜晚
         EndDay,
         TimePoint,//整点报时
     }
@@ -117,11 +116,7 @@ public class GameTimeHandler : BaseObservable<IBaseObserver>
             min = 0;
             hour += 1;
 
-            //晚上通知
-            if (hour == 18)
-            {
-                NotifyAllObserver((int)NotifyTypeEnum.Night, null);
-            }
+            //整点通知
             NotifyAllObserver((int)NotifyTypeEnum.TimePoint, hour);
         }
         if (hour >= 24)
@@ -263,10 +258,6 @@ public class GameTimeHandler : BaseObservable<IBaseObserver>
     /// <param name="min"></param>
     public void AddHour(int addHour)
     {
-        if (hour < 18 && (hour + addHour) >= 18)
-        {
-            NotifyAllObserver((int)NotifyTypeEnum.Night, null);
-        }
         hour += addHour;
     }
 

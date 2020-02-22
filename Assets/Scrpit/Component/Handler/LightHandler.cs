@@ -2,12 +2,21 @@
 using UnityEditor;
 using System.Collections.Generic;
 
-public class LightHandler : BaseMonoBehaviour, IBaseObserver
+public class LightHandler : BaseHandler, IBaseObserver
 {
+    //太阳光
+    public SunLightCpt sunLight;
     //灯光容器列表
     public List<GameObject> listLightContainer = new List<GameObject>();
+    //开灯时间
+    public int openLightTime = 19;
 
-    public GameTimeHandler gameTimeHandler;
+    protected GameTimeHandler gameTimeHandler;
+
+    private void Awake()
+    {
+        gameTimeHandler = Find<GameTimeHandler>(ImportantTypeEnum.TimeHandler);
+    }
 
     private void Start()
     {
@@ -16,7 +25,7 @@ public class LightHandler : BaseMonoBehaviour, IBaseObserver
             gameTimeHandler.AddObserver(this);
             //转换场景检测时间
             gameTimeHandler.GetTime(out float hour, out float min);
-            if (hour >= 18)
+            if (hour >= openLightTime)
             {
                 SetAllLightStatus(true);
             }
@@ -53,9 +62,13 @@ public class LightHandler : BaseMonoBehaviour, IBaseObserver
             {
                 SetAllLightStatus(false);
             }
-            else if (type == (int)GameTimeHandler.NotifyTypeEnum.Night)
+            else if (type == (int)GameTimeHandler.NotifyTypeEnum.TimePoint)
             {
-                SetAllLightStatus(true);
+                int hour = System.Convert.ToInt32(obj[0]);
+                if (hour == openLightTime)
+                {
+                    SetAllLightStatus(true);
+                }
             }
         }
     }

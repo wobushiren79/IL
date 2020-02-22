@@ -14,15 +14,18 @@ public class WeatherHandler : BaseMonoBehaviour
         Wind = 5,//大风
     }
 
-    [Header("控件")]
-    //太阳光
-    public SunLightCpt sunLight;
     [Header("数据")]
-    public GameTimeHandler gameTimeHandler;
     public List<WeatherCpt> listWeather = new List<WeatherCpt>();
 
     public WeatherTypeEnum weatherType = WeatherTypeEnum.Sunny;
     public WeatherBean weatherData = new WeatherBean();
+
+    protected GameTimeHandler gameTimeHandler;
+
+    private void Awake()
+    {
+        gameTimeHandler = Find<GameTimeHandler>(ImportantTypeEnum.TimeHandler);
+    }
 
     private void Update()
     {
@@ -83,31 +86,31 @@ public class WeatherHandler : BaseMonoBehaviour
     /// </summary>
     public void SetWeahterSunny()
     {
-        if (gameTimeHandler == null || sunLight == null)
+        if (gameTimeHandler == null)
             return;
         gameTimeHandler.GetTime(out float hour, out float min);
-        if (hour >= 0 && hour < 7)
-        {
-            sunLight.SetSunColor(0.7f, 0.7f, 0.8f);
-        }
-        else if (hour >= 7 && hour < 10)
-        {
-            ChangeColor(new Vector3(0.7f, 0.7f, 0.8f), new Vector3(1, 1, 1), 3f, (hour - 7) + (min / 60f), out Vector3 outColor);
-            sunLight.SetSunColor(outColor.x, outColor.y, outColor.z);
-        }
-        else if (hour >= 10 && hour < 17)
-        {
-            sunLight.SetSunColor(1, 1, 1);
-        }
-        else if (hour >= 17 && hour < 24)
-        {
-            ChangeColor(new Vector3(1, 1, 1), new Vector3(0.2f, 0.2f, 0.3f), 7f, (hour - 17) + (min / 60f), out Vector3 outColor);
-            sunLight.SetSunColor(outColor.x, outColor.y, outColor.z);
-        }
-        else
-        {
-            sunLight.SetSunColor(0.2f, 0.2f, 0.3f);
-        }
+        //if (hour >= 0 && hour < 7)
+        //{
+        //    sunLight.SetSunColor(0.7f, 0.7f, 0.8f);
+        //}
+        //else if (hour >= 7 && hour < 10)
+        //{
+        //    ChangeColor(new Vector3(0.7f, 0.7f, 0.8f), new Vector3(1, 1, 1), 3f, (hour - 7) + (min / 60f), out Vector3 outColor);
+        //    sunLight.SetSunColor(outColor.x, outColor.y, outColor.z);
+        //}
+        //else if (hour >= 10 && hour < 17)
+        //{
+        //    sunLight.SetSunColor(1, 1, 1);
+        //}
+        //else if (hour >= 17 && hour < 24)
+        //{
+        //    ChangeColor(new Vector3(1, 1, 1), new Vector3(0.2f, 0.2f, 0.3f), 7f, (hour - 17) + (min / 60f), out Vector3 outColor);
+        //    sunLight.SetSunColor(outColor.x, outColor.y, outColor.z);
+        //}
+        //else
+        //{
+        //    sunLight.SetSunColor(0.2f, 0.2f, 0.3f);
+        //}
     }
 
     private void ChangeColor(Vector3 oldChange, Vector3 newChange, float changeHour, float valueHour, out Vector3 outColor)

@@ -3,7 +3,12 @@ using UnityEditor;
 
 public class InnLightCpt : LightCpt
 {
-    public GameDataManager gameDataManager;
+    protected GameDataManager gameDataManager;
+
+    private void Awake()
+    {
+        gameDataManager = Find<GameDataManager>(ImportantTypeEnum.GameDataManager);
+    }
 
     public override void OpenLight()
     {
@@ -26,7 +31,7 @@ public class InnLightCpt : LightCpt
         if (light2D != null)
         {
             light2D.transform.position = new Vector3(with / 2f, high / 2f);
-            light2D.transform.localScale = new Vector3(with, high+1);
+            light2D.transform.localScale = new Vector3(with, high);
             //light2D.pointLightOuterRadius = with;
         }
             
