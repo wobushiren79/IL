@@ -12,6 +12,8 @@ public class BuildStoveCpt : BaseBuildItemCpt
     public GameObject objTakePosition;
     public GameObject objFoodContainer;
 
+    public GameObject objCookSmoke;
+    public Transform tfCookPosition;
     //食物模型
     public GameObject itemFoodModel;
     public StoveStatusEnum stoveStatus = StoveStatusEnum.Idle;
@@ -68,5 +70,15 @@ public class BuildStoveCpt : BaseBuildItemCpt
     {
         CptUtil.RemoveChild(objFoodContainer.transform);
         SetStoveStatus(StoveStatusEnum.Idle);
+    }
+
+    /// <summary>
+    /// 设置方向
+    /// </summary>
+    /// <param name="direction"></param>
+    public override void SetDirection(int direction)
+    {
+        base.SetDirection(direction);
+        objCookSmoke.transform.position = tfCookPosition.position;
     }
 }

@@ -19,8 +19,8 @@ public class SeasonsHandler : BaseHandler, IBaseObserver
     {
         if (gameTimeHandler != null)
         {
-            //gameTimeHandler.AddObserver(this);
-            ChangeSeasons(SeasonsEnum.Autumn);
+            gameTimeHandler.AddObserver(this);
+            ChangeSeasons();
         }
     }
 

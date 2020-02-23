@@ -176,8 +176,7 @@ public class UIMainCreate : UIGameComponent,
     public void OpenStartUI()
     {
         //按键音效
-       uiGameManager.audioHandler.PlaySound(SoundEnum.ButtonForBack);
-
+        uiGameManager.audioHandler.PlaySound(SoundEnum.ButtonForBack);
         uiManager.OpenUIAndCloseOtherByName(EnumUtil.GetEnumName(UIEnum.MainStart));
     }
 

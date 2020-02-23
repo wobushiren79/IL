@@ -61,6 +61,7 @@ public class GameDataManager : BaseManager, IGameDataView, IUserRevenueView
         gameDataController.CreateUserData(gameDataBean);
     }
 
+
     /// <summary>
     /// 获取简介数据
     /// </summary>

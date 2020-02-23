@@ -1,6 +1,8 @@
 ﻿using UnityEngine;
 using UnityEditor;
 using UnityEngine.UI;
+using System.Collections.Generic;
+
 public class UIGameTest : UIGameComponent
 {
     public InputField etStoryId;
@@ -22,6 +24,7 @@ public class UIGameTest : UIGameComponent
     public Button btNpcRascal;
     public Button btNpcSundry;
 
+    public Button btAddAll;
     private void Start()
     {
         if (btStoryCreate != null)
@@ -40,6 +43,9 @@ public class UIGameTest : UIGameComponent
             btNpcRascal.onClick.AddListener(CreateRascal);
         if (btNpcSundry != null)
             btNpcSundry.onClick.AddListener(CreateSundry);
+
+        if (btAddAll != null)
+            btAddAll.onClick.AddListener(AddAll);
     }
 
     /// <summary>
@@ -47,11 +53,30 @@ public class UIGameTest : UIGameComponent
     /// </summary>
     public void CreateStory()
     {
-        if (long.TryParse(etStoryId.text,out long storyId))
+        if (long.TryParse(etStoryId.text, out long storyId))
         {
-            EventHandler eventHandler= GetUIManager<UIGameManager>().eventHandler;
+            EventHandler eventHandler = GetUIManager<UIGameManager>().eventHandler;
             eventHandler.EventTriggerForStory(storyId);
-        } 
+        }
+    }
+
+    /// <summary>
+    /// 增加所有
+    /// </summary>
+    public void AddAll()
+    {
+        GameDataBean gameData = uiGameManager.gameDataManager.gameData;
+        List<ItemsInfoBean> listItem = uiGameManager.gameItemsManager.GetAllItems();
+        foreach (ItemsInfoBean itemsInfo in listItem)
+        {
+            gameData.AddNewItems(itemsInfo.id, 1);
+        }
+        Dictionary<long, BuildItemBean> mapbuild = uiGameManager.innBuildManager.listBuildData;
+        foreach (var itemBuild in mapbuild)
+        {
+            gameData.AddBuildNumber(itemBuild.Key, 99);
+        }
+        gameData.GetInnBuildData().ChangeInnSize(30, 30);
     }
 
     /// <summary>
@@ -69,7 +94,7 @@ public class UIGameTest : UIGameComponent
             else
             {
                 LogUtil.LogError("道具数量输入错误");
-            } 
+            }
         }
         else
         {
@@ -107,7 +132,7 @@ public class UIGameTest : UIGameComponent
     {
         if (uiGameManager.npcEventBuilder == null)
             return;
-       uiGameManager.npcCustomerBuilder.BuildGuestTeam(long.Parse(etNpcGuestTeamId.text));
+        uiGameManager.npcCustomerBuilder.BuildGuestTeam(long.Parse(etNpcGuestTeamId.text));
     }
 
     /// <summary>
@@ -127,7 +152,7 @@ public class UIGameTest : UIGameComponent
     {
         if (uiGameManager.npcEventBuilder == null)
             return;
-      uiGameManager. npcEventBuilder.BuildTownFriendsForTeam(long.Parse(etNpcGuestTeamId.text));
+        uiGameManager.npcEventBuilder.BuildTownFriendsForTeam(long.Parse(etNpcGuestTeamId.text));
     }
 
     /// <summary>

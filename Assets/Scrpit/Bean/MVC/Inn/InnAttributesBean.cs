@@ -207,7 +207,7 @@ public class InnAttributesBean
     /// <returns></returns>
     public float GetPraise()
     {
-        return praise/1000f;
+        return (float)Math.Round(praise / 1000f, 2);
     }
 
     /// <summary>

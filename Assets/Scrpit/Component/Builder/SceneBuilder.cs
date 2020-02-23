@@ -22,13 +22,20 @@ public class SceneBuilder : BaseTilemapBuilder
     {
         //替换地面
         TileBean newTileDataForGround = GetTileByName(EnumUtil.GetEnumName(seasons), listTileGroundForSeasons);
-        tileMapForGround.SwapTile(tileDataForGround.value, newTileDataForGround.value);
-        tileDataForGround = newTileDataForGround;
+        if (!newTileDataForGround.key.Equals(tileDataForGround.key))
+        {
+            tileMapForGround.SwapTile(tileDataForGround.value, newTileDataForGround.value);
+            tileDataForGround = newTileDataForGround;
+        }
 
         //替换草地
+
         TileBean newTileDataForGress = GetTileByName(EnumUtil.GetEnumName(seasons), listTileGressForSeasons);
-        tileMapForGroundElement. SwapTile(tileDataForGress.value, newTileDataForGress.value);
-        tileDataForGress = newTileDataForGress;
+        if (!newTileDataForGress.key.Equals(tileDataForGress.key))
+        {
+            tileMapForGroundElement.SwapTile(tileDataForGress.value, newTileDataForGress.value);
+            tileDataForGress = newTileDataForGress;
+        }
 
 
         switch (seasons)

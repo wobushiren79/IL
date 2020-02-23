@@ -23,6 +23,19 @@ public class InnBuildBean
     public int buildInnHeight = 0;
 
     /// <summary>
+    /// 改变客栈大小
+    /// </summary>
+    /// <param name="width"></param>
+    /// <param name="height"></param>
+    public void ChangeInnSize(int width,int height)
+    {
+        this.innWidth = width;
+        this.innHeight = height;
+        InitWall();
+        InitFloor();
+    }
+
+    /// <summary>
     /// 初始化墙壁
     /// </summary>
     public void InitWall()

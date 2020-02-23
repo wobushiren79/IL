@@ -1,6 +1,8 @@
 ﻿using UnityEngine;
 using UnityEditor;
+using System;
 
+[Serializable]
 public class OrderForCustomer 
 {
     //需要的顾客

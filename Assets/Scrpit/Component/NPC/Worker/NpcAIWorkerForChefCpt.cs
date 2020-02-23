@@ -172,8 +172,9 @@ public class NpcAIWorkerForChefCpt : NpcAIWokerFoBaseCpt
         //添加经验
         npcAIWorker.characterData.baseInfo.chefInfo.AddExp(1);
         //计算食物生成等级
-        orderForCustomer.foodLevel = npcAIWorker.characterData.CalculationChefFoodLevel(gameItemsManager);
-        //在灶台创建一个食物
+        // orderForCustomer.foodLevel = npcAIWorker.characterData.CalculationChefFoodLevel(gameItemsManager);
+        orderForCustomer.foodLevel = 0;
+         //在灶台创建一个食物
         orderForCustomer.stove.CreateFood(innFoodManager, orderForCustomer);
         //通知送餐
         npcAIWorker.innHandler.sendQueue.Add(orderForCustomer);

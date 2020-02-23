@@ -27,14 +27,13 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
-  - {fileID: 2144245680516780260}
   - {fileID: 7002952142884473301}
   - {fileID: 7969935702344187039}
   - {fileID: 5240366230723691659}
   - {fileID: 7877881793780933405}
   - {fileID: 758106374854226575}
   m_Father: {fileID: 3085979124016098596}
-  m_RootOrder: 3
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &934767766760176674
 GameObject:
@@ -176,7 +175,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 3495503384092488405}
-  m_RootOrder: 4
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2842474317040511372
 GameObject:
@@ -206,7 +205,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 3495503384092488405}
-  m_RootOrder: 5
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &3085979124016098595
 GameObject:
@@ -220,7 +219,7 @@ GameObject:
   - component: {fileID: 3085979124016098597}
   - component: {fileID: 687486612641477810}
   m_Layer: 0
-  m_Name: Stove_Wooden_1
+  m_Name: Stove_1x3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -240,6 +239,7 @@ Transform:
   - {fileID: 7955240628534086943}
   - {fileID: 3947738149722412568}
   - {fileID: 1808711557162810083}
+  - {fileID: 6009481383028929799}
   - {fileID: 3495503384092488405}
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -256,7 +256,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a0f5ff8c2b382854e8849cc8427dc349, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  buildId: 40001
+  buildItemData:
+    id: 0
+    valid: 0
+    build_type: 0
+    model_id: 0
+    icon_key: 
+    icon_list: 
+    name: 
+    content: 
+    aesthetics: 0
   direction: 1
   spLeft: {fileID: -9033058693428045840, guid: 5d452fd6aa62bba4eaf30244d625b2f8, type: 3}
   spRight: {fileID: -6194349890972702979, guid: 5d452fd6aa62bba4eaf30244d625b2f8,
@@ -275,6 +284,8 @@ MonoBehaviour:
   objCookPosition: {fileID: 2399883535864595841}
   objTakePosition: {fileID: 2842474317040511372}
   objFoodContainer: {fileID: 4916540376759918248}
+  objCookSmoke: {fileID: 7075832070690963358}
+  tfCookPosition: {fileID: 2588105598932367026}
   itemFoodModel: {fileID: 5328740976241071941, guid: 1b12f62d116de8e4ba915aa78ab2cb2b,
     type: 3}
   stoveStatus: 0
@@ -323,7 +334,7 @@ Transform:
   - {fileID: 2588105598932367026}
   - {fileID: 1052089458397955068}
   m_Father: {fileID: 3495503384092488405}
-  m_RootOrder: 3
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &4542346473880117973
 GameObject:
@@ -354,7 +365,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 3495503384092488405}
-  m_RootOrder: 1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!61 &5615171988898888258
 BoxCollider2D:
@@ -575,7 +586,7 @@ Transform:
   m_LocalScale: {x: 1, y: 3, z: 1}
   m_Children: []
   m_Father: {fileID: 3495503384092488405}
-  m_RootOrder: 2
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &5981961891504588514
 MeshFilter:
@@ -750,17 +761,22 @@ Transform:
   m_Father: {fileID: 5240366230723691659}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1001 &4304596788281506650
+--- !u!1001 &8437754037298994873
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
-    m_TransformParent: {fileID: 3495503384092488405}
+    m_TransformParent: {fileID: 3085979124016098596}
     m_Modifications:
     - target: {fileID: 1669299788019589415, guid: 35c36388fba9fcd459b416f5d7060397,
         type: 3}
       propertyPath: m_Name
       value: PSCookingSmoke_1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1669299788019589415, guid: 35c36388fba9fcd459b416f5d7060397,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2773403650529176510, guid: 35c36388fba9fcd459b416f5d7060397,
         type: 3}
@@ -770,7 +786,7 @@ PrefabInstance:
     - target: {fileID: 2773403650529176510, guid: 35c36388fba9fcd459b416f5d7060397,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.9
+      value: 0.11
       objectReference: {fileID: 0}
     - target: {fileID: 2773403650529176510, guid: 35c36388fba9fcd459b416f5d7060397,
         type: 3}
@@ -780,17 +796,17 @@ PrefabInstance:
     - target: {fileID: 2773403650529176510, guid: 35c36388fba9fcd459b416f5d7060397,
         type: 3}
       propertyPath: m_LocalRotation.x
-      value: -0
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2773403650529176510, guid: 35c36388fba9fcd459b416f5d7060397,
         type: 3}
       propertyPath: m_LocalRotation.y
-      value: -0
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2773403650529176510, guid: 35c36388fba9fcd459b416f5d7060397,
         type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2773403650529176510, guid: 35c36388fba9fcd459b416f5d7060397,
         type: 3}
@@ -800,7 +816,7 @@ PrefabInstance:
     - target: {fileID: 2773403650529176510, guid: 35c36388fba9fcd459b416f5d7060397,
         type: 3}
       propertyPath: m_RootOrder
-      value: 0
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 2773403650529176510, guid: 35c36388fba9fcd459b416f5d7060397,
         type: 3}
@@ -819,9 +835,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 35c36388fba9fcd459b416f5d7060397, type: 3}
---- !u!4 &2144245680516780260 stripped
+--- !u!1 &7075832070690963358 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1669299788019589415, guid: 35c36388fba9fcd459b416f5d7060397,
+    type: 3}
+  m_PrefabInstance: {fileID: 8437754037298994873}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &6009481383028929799 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2773403650529176510, guid: 35c36388fba9fcd459b416f5d7060397,
     type: 3}
-  m_PrefabInstance: {fileID: 4304596788281506650}
+  m_PrefabInstance: {fileID: 8437754037298994873}
   m_PrefabAsset: {fileID: 0}

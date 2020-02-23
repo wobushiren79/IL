@@ -117,7 +117,7 @@ public class UIGameDate : BaseUIComponent
         calendarView.ChangeData(newYear, newMonth, newDay);
 
         //展示是否营业框
-        yield return new WaitForSeconds(3);
+        yield return new WaitForSeconds(1);
         // 第一天默认不营业
         gameTimeHandler.GetTime(out int year, out int month, out int day);
         if (year == 221 && day == 1 && day == 1)

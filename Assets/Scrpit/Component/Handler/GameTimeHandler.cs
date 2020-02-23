@@ -160,12 +160,9 @@ public class GameTimeHandler : BaseObservable<IBaseObserver>
             if (!isBuildDay)
             {
                 innBuildData.listBuildDay.Clear();
-                innBuildData.innWidth = innBuildData.buildInnWidth;
+                innBuildData.ChangeInnSize(innBuildData.buildInnWidth, innBuildData.buildInnHeight);
                 innBuildData.buildInnWidth = 0;
-                innBuildData.innHeight = innBuildData.buildInnHeight;
                 innBuildData.buildInnHeight = 0;
-                innBuildData.InitFloor();
-                innBuildData.InitWall();
                 if (innFloorBuilder != null)
                     innFloorBuilder.StartBuild();
                 if (innWallBuilder != null)
