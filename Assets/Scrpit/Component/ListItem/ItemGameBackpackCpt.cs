@@ -39,6 +39,11 @@ public class ItemGameBackpackCpt : ItemGameBaseCpt, IPointerClickHandler, PopupI
         }
     }
 
+    /// <summary>
+    /// 设置数据
+    /// </summary>
+    /// <param name="infoBean"></param>
+    /// <param name="itemBean"></param>
     public void SetData(ItemsInfoBean infoBean, ItemBean itemBean)
     {
         this.itemsInfoBean = infoBean;
@@ -144,10 +149,10 @@ public class ItemGameBackpackCpt : ItemGameBaseCpt, IPointerClickHandler, PopupI
             return;
         if (popupItemsSelection != null)
             popupItemsSelection.SetCallBack(this);
-        switch (itemsInfoBean.items_type)
+        switch ((GeneralEnum)itemsInfoBean.items_type)
         {
-            case (int)GeneralEnum.Menu:
-                popupItemsSelection.Open(PopupItemsSelection.SelectionTypeEnum.EquipAndDiscard);
+            case GeneralEnum.Menu:
+                popupItemsSelection.Open(PopupItemsSelection.SelectionTypeEnum.UseAndDiscard);
                 break;
             default:
                 popupItemsSelection.Open(PopupItemsSelection.SelectionTypeEnum.Discard);

@@ -133,35 +133,49 @@ public class NpcAIWorkerForAccountantCpt : NpcAIWokerFoBaseCpt
         float time = npcAIWorker.characterData.CalculationAccountingTime(gameItemsManager);
         npcAIWorker.characterData.baseInfo.accountantInfo.AddAccountantTime(time);
         yield return new WaitForSeconds(time);
+        long payMoneyL = orderForCustomer.foodData.price_l;
+        long payMoneyM = orderForCustomer.foodData.price_m;
+        long payMoneyS = orderForCustomer.foodData.price_s;
         //是否出错
         bool isError = npcAIWorker.characterData.CalculationAccountingCheck(gameItemsManager, out float moreRate);
+
+        long AddMoneyL = (long)(moreRate * payMoneyL);
+        long AddMoneyM = (long)(moreRate * payMoneyM);
+        long AddMoneyS = (long)(moreRate * payMoneyS);
+
         if (isError)
         {
             //出错
             //记录数据
-            npcAIWorker.characterData.baseInfo.accountantInfo.AddAccountantFail(
-                orderForCustomer.foodData.price_l,
-                orderForCustomer.foodData.price_m,
-                orderForCustomer.foodData.price_s,
-                moreRate);
+            payMoneyL -= AddMoneyL;
+            payMoneyM -= AddMoneyM;
+            payMoneyS -= AddMoneyS;
+
+            npcAIWorker.characterData.baseInfo.accountantInfo.AddAccountantFail
+                (
+                payMoneyL, payMoneyM, payMoneyS,
+                AddMoneyL, AddMoneyM, AddMoneyS
+                );
             //增加经验
             npcAIWorker.characterData.baseInfo.accountantInfo.AddExp(1);
 
             //工作者表示抱歉
-            //npcAIWorker.SetExpression(CharacterExpressionCpt.CharacterExpressionEnum.Wordless);
+            npcAIWorker.SetExpression(CharacterExpressionCpt.CharacterExpressionEnum.Wordless);
             //顾客生气
-            //orderForCustomer.customer.SetExpression(CharacterExpressionCpt.CharacterExpressionEnum.Mad);
-            moreRate = (-moreRate);
+            orderForCustomer.customer.SetExpression(CharacterExpressionCpt.CharacterExpressionEnum.Mad);
         }
         else
         {
             //成功
+            payMoneyL += AddMoneyL;
+            payMoneyM += AddMoneyM;
+            payMoneyS += AddMoneyS;
             //记录数据
-            npcAIWorker.characterData.baseInfo.accountantInfo.AddAccountantSuccess(
-                   orderForCustomer.foodData.price_l,
-                   orderForCustomer.foodData.price_m,
-                   orderForCustomer.foodData.price_s,
-                   moreRate);
+            npcAIWorker.characterData.baseInfo.accountantInfo.AddAccountantSuccess
+                (
+                payMoneyL, payMoneyM, payMoneyS,
+                AddMoneyL, AddMoneyM, AddMoneyS
+                );
             //增加经验
             npcAIWorker.characterData.baseInfo.accountantInfo.AddExp(2);
 
@@ -171,8 +185,7 @@ public class NpcAIWorkerForAccountantCpt : NpcAIWokerFoBaseCpt
 
         if (npcAIWorker.innHandler != null)
         {
-            float tempRate = (1 + moreRate);
-            npcAIWorker.innHandler.PayMoney(orderForCustomer, tempRate);
+            npcAIWorker.innHandler.PayMoney(orderForCustomer, payMoneyL,payMoneyM,payMoneyS);
         }
 
         //通知离开

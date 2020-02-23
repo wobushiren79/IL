@@ -206,23 +206,23 @@ public class NpcCustomerBuilder : NpcNormalBuilder, IBaseObserver
     {
         if (hour > 6 && hour <= 9)
         {
-            buildInterval = 3;
+            buildInterval = 4;
         }
         else if (hour > 9 && hour <= 12)
         {
-            buildInterval = 2;
+            buildInterval = 3;
         }
         else if (hour > 12 && hour <= 18)
         {
-            buildInterval = 1;
+            buildInterval = 2;
         }
         else if (hour > 18 && hour <= 21)
         {
-            buildInterval = 2;
+            buildInterval = 3;
         }
         else if (hour > 21 && hour <= 24)
         {
-            buildInterval = 3;
+            buildInterval = 5;
         }
         else
         {

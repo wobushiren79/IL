@@ -48,11 +48,11 @@ public class ItemGameStatisticsDataForMoneyCpt : BaseMonoBehaviour
         }
         if (tvMoneyM)
         {
-            tvMoneyM.text = moneyL + "";
+            tvMoneyM.text = moneyM + "";
         }
         if (tvMoneyS)
         {
-            tvMoneyS.text = moneyL + "";
+            tvMoneyS.text = moneyS + "";
         }
     }
 }

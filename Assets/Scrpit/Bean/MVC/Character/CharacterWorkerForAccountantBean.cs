@@ -42,7 +42,7 @@ public class CharacterWorkerForAccountantBean : CharacterWorkerBaseBean
     /// <param name="moneyM"></param>
     /// <param name="moneyS"></param>
     /// <param name="moreProportion">多余获取比例</param>
-    public void AddAccountantSuccess(long moneyL, long moneyM, long moneyS, float moreProportion)
+    public void AddAccountantSuccess(long moneyL, long moneyM, long moneyS, long addMoneyL, long addMoneyM, long addMoneyS)
     {
         accountingTotalNumber += 1;
         accountingMoneyL += moneyL;
@@ -50,9 +50,9 @@ public class CharacterWorkerForAccountantBean : CharacterWorkerBaseBean
         accountingMoneyS += moneyS;
 
         accountingSuccessNumber += 1;
-        moreMoneyL += (long)(moneyL * moreProportion);
-        moreMoneyM += (long)(moneyM * moreProportion);
-        moreMoneyS += (long)(moneyS * moreProportion);
+        moreMoneyL += addMoneyL;
+        moreMoneyM += addMoneyM;
+        moreMoneyS += addMoneyS;
     }
 
 
@@ -63,21 +63,17 @@ public class CharacterWorkerForAccountantBean : CharacterWorkerBaseBean
     /// <param name="moneyM"></param>
     /// <param name="moneyS"></param>
     /// <param name="loseProportion">失去比例</param>
-    public void AddAccountantFail(long moneyL, long moneyM, long moneyS, float loseProportion)
+    public void AddAccountantFail(long moneyL, long moneyM, long moneyS,long loseMoneyL,long loseMoneyM,long loseMoneyS)
     {
-        long loseTempL = (long)(moneyL * loseProportion);
-        long loseTempM = (long)(moneyM * loseProportion);
-        long loseTempS = (long)(moneyS * loseProportion);
-
         accountingTotalNumber += 1;
-        accountingMoneyL += (moneyL - loseTempL);
-        accountingMoneyM += (moneyM - loseTempM);
-        accountingMoneyS += (moneyS - loseTempS);
+        accountingMoneyL += moneyL;
+        accountingMoneyM += moneyM;
+        accountingMoneyS += moneyS;
 
         accountingErrorNumber += 1;
-        loseMoneyL += loseTempL;
-        lostMoneyM += loseTempM;
-        lostMoneyS += loseTempS;
+        loseMoneyL += loseMoneyL;
+        lostMoneyM += loseMoneyM;
+        lostMoneyS += loseMoneyS;
     }
 
     /// <summary>

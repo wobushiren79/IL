@@ -347,7 +347,7 @@ public class CharacterBean
     /// <summary>
     /// 计算账房结算
     /// </summary>
-    public bool CalculationAccountingCheck(GameItemsManager gameItemsManager, out float moreRate)
+    public bool CalculationAccountingCheck(GameItemsManager gameItemsManager,out float moreRate)
     {
         //获取数据
         moreRate = 0;
@@ -359,17 +359,13 @@ public class CharacterBean
         {
             //没有出错
             //计算额外获取百分比
-            moreRate = (totalAttributes.account * 0.007f) + (totalAttributes.charm * 0.003f);
-            if (moreRate < 0)
-                moreRate = 0;
+            moreRate = 0f;
             return false;
         }
         else
         {
             //出错
-            moreRate = 0.5f - (totalAttributes.account * 0.004f) - (totalAttributes.charm * 0.001f);
-            if (moreRate < 0)
-                moreRate = 0;
+            moreRate = 0.1f;
             return true;
         }
     }

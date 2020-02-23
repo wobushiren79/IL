@@ -345,31 +345,26 @@ public class InnHandler : BaseMonoBehaviour, IBaseObserver
     /// 付钱
     /// </summary>
     /// <param name="food"></param>
-    public void PayMoney(OrderForCustomer order, float rate)
+    public void PayMoney(OrderForCustomer order, long payMoneyL, long payMoneyM, long payMoneyS)
     {
-        long getMoneyL = (long)Math.Round(order.foodData.price_l * rate, 0);
-        long getMoneyM = (long)Math.Round(order.foodData.price_m * rate, 0);
-        long getMoneyS = (long)Math.Round(order.foodData.price_s * rate, 0);
-
         //最小
-        if (getMoneyL == 0 && getMoneyM == 0 && getMoneyS == 0)
+        if (payMoneyL == 0 && payMoneyM == 0 && payMoneyS == 0)
         {
-            getMoneyS = 1;
+            payMoneyS = 1;
         }
 
         //账本记录
-        innRecord.AddSellNumber(order.foodData.id, 1, getMoneyL, getMoneyM, getMoneyS);
-        innRecord.AddIncome(getMoneyL, getMoneyM, getMoneyS);
+        innRecord.AddSellNumber(order.foodData.id, 1, payMoneyL, payMoneyM, payMoneyS);
         //根据心情评价客栈 前提订单里有他
         InnPraise(order.innEvaluation.GetPraise());
         //记录+1
-        gameDataManager.gameData.AddMenuSellNumber(1, order.foodData.id, getMoneyL, getMoneyM, getMoneyS);
+        gameDataManager.gameData.AddMenuSellNumber(1, order.foodData.id, payMoneyL, payMoneyM, payMoneyS);
         //金钱增加
-        gameDataManager.gameData.AddMoney(getMoneyL, getMoneyM, getMoneyS);
+        gameDataManager.gameData.AddMoney(payMoneyL, payMoneyM, payMoneyS);
         //播放音效
         audioHandler.PlaySound(SoundEnum.PayMoney, new Vector3(order.customer.transform.position.x, order.customer.transform.position.y, Camera.main.transform.position.z));
         //展示特效
-        innPayHandler.ShowPayEffects(order.customer.transform.position, getMoneyL, getMoneyM, getMoneyS);
+        innPayHandler.ShowPayEffects(order.customer.transform.position, payMoneyL, payMoneyM, payMoneyS);
         //结束订单
         EndOrder(order);
     }

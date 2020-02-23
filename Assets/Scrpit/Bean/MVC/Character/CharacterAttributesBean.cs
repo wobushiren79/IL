@@ -79,11 +79,11 @@ public class CharacterAttributesBean
     {
         priceL = 0;
         priceM = 0;
-        priceS = 100;
+        priceS = 50;
         int totalAttribute = cook + speed + charm + force + lucky + account;
         if (totalAttribute > 6)
         {
-            priceS += (totalAttribute - 6) * 10;
+            priceS += (totalAttribute - 6) * 5;
         }
     }
 }

@@ -42,6 +42,7 @@ public class UIGameManager : BaseUIManager
     public NpcCustomerBuilder npcCustomerBuilder;
     public NpcEventBuilder npcEventBuilder;
     public NpcWorkerBuilder npcWorkerBuilder;
+
     [Header("地形")]
     public NavMeshSurface navMesh;
 
