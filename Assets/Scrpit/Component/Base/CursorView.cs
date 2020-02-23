@@ -6,8 +6,11 @@ public class CursorView : BaseMonoBehaviour
     public Texture2D cursorDef;
     public Texture2D cursorDown;
 
+    protected Vector2 offsetCursor;
+
     private void Awake()
     {
+        offsetCursor = new Vector2(40,0);
         Cursor.SetCursor(cursorDef,Vector2.zero,CursorMode.Auto);
     }
 
@@ -15,11 +18,11 @@ public class CursorView : BaseMonoBehaviour
     {
         if (Input.GetMouseButtonDown(0))
         {
-            Cursor.SetCursor(cursorDown, Vector2.zero, CursorMode.Auto);
+            Cursor.SetCursor(cursorDown, offsetCursor, CursorMode.Auto);
         }
         if (Input.GetMouseButtonUp(0))
         {
-            Cursor.SetCursor(cursorDef, Vector2.zero, CursorMode.Auto);
+            Cursor.SetCursor(cursorDef, offsetCursor, CursorMode.Auto);
         }
     }
 }

@@ -14,6 +14,8 @@ public class ItemGameWorkerCpt : ItemGameBaseCpt, IRadioButtonCallBack, DialogVi
     public Text tvLoyal;
     public InfoPromptPopupButton pbLoyal;
 
+    public Image ivSex;
+
     public Text tvStatus;
 
     public Text tvSpeed;
@@ -156,6 +158,7 @@ public class ItemGameWorkerCpt : ItemGameBaseCpt, IRadioButtonCallBack, DialogVi
         {
             CharacterBaseBean characterBase = characterData.baseInfo;
             SetName(characterBase.name);
+
             SetPrice(characterBase.priceS, characterBase.priceM, characterBase.priceL);
             SetWork(characterBase.isChef, characterBase.isWaiter, characterBase.isAccountant, characterBase.isAccost, characterBase.isBeater);
             SetPriority(characterBase.priorityChef, characterBase.priorityWaiter, characterBase.priorityAccountant, characterBase.priorityAccost, characterBase.priorityBeater);
@@ -170,7 +173,11 @@ public class ItemGameWorkerCpt : ItemGameBaseCpt, IRadioButtonCallBack, DialogVi
             SetAttributes(characterData.attributes, characterData.equips);
         }
         if (data.body != null && data.equips != null)
+        {
             characterUICpt.SetCharacterData(data.body, data.equips);
+            SetSex(data.body.sex);
+        }
+     
         //如果是用户，则不能解雇
         if (data == gameDataManager.gameData.userCharacter && btFire != null)
         {
@@ -254,6 +261,26 @@ public class ItemGameWorkerCpt : ItemGameBaseCpt, IRadioButtonCallBack, DialogVi
         if (tvName == null)
             return;
         tvName.text = name;
+    }
+
+    /// <summary>
+    /// 设置性别
+    /// </summary>
+    /// <param name="sex"></param>
+    public void SetSex(int sex)
+    {
+      IconDataManager iconDataManager=  ((UIGameManager)uiComponent.uiManager).iconDataManager;
+        if (ivSex != null)
+        {
+            if (sex == 1)
+            {
+                ivSex.sprite = iconDataManager.GetIconSpriteByName("sex_man");
+            }
+            else if (sex == 2)
+            {
+                ivSex.sprite = iconDataManager.GetIconSpriteByName("sex_woman");
+            }
+        }     
     }
 
     /// <summary>

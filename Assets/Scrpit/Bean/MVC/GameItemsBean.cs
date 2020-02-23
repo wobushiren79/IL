@@ -9,6 +9,10 @@ public class GameItemsBean : ItemBean
     public long priceM;
     public long priceS;
 
+    public GameItemsBean(long id) : base(id, 0)
+    {
+    }
+
     public GameItemsBean(long id, long number) : base(id, number)
     {
     }

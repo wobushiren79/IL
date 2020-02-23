@@ -13,7 +13,7 @@ public class NpcWorkerBuilder : BaseMonoBehaviour
 
     public GameDataManager gameDataManager;
 
-    public List<NpcAIWorkerCpt> npcWorkerList = new List<NpcAIWorkerCpt>();
+    public List<NpcAIWorkerCpt> listNpcWorker = new List<NpcAIWorkerCpt>();
 
     public void BuildAllWorker()
     {
@@ -24,7 +24,9 @@ public class NpcWorkerBuilder : BaseMonoBehaviour
         List<CharacterBean> listAllWork = gameDataManager.gameData.listWorkerCharacter;
         //获取门的坐标 并在门周围生成NPC
         Vector3 doorPosition = innHandler.GetRandomEntrancePosition();
-        if (gameDataManager.gameData.userCharacter.baseInfo.GetWorkerStatus()== WorkerStatusEnum.Work)
+        //向下2个单位
+        doorPosition += new Vector3(0, -1.5f, 0);
+        if (gameDataManager.gameData.userCharacter.baseInfo.GetWorkerStatus() == WorkerStatusEnum.Work)
         {
             BuildWork(gameDataManager.gameData.userCharacter, doorPosition);
         }
@@ -38,17 +40,17 @@ public class NpcWorkerBuilder : BaseMonoBehaviour
         }
     }
 
-    public void BuildWork(CharacterBean characterBean,Vector3 position)
+    public void BuildWork(CharacterBean characterBean, Vector3 position)
     {
         GameObject workerObj = Instantiate(objWorkModel, objWorkModel.transform);
         workerObj.transform.SetParent(objContainer.transform);
         workerObj.SetActive(true);
         workerObj.transform.localScale = new Vector3(1, 1);
-        workerObj.transform.position = position;
+        workerObj.transform.position = (position + new Vector3(Random.Range(-1, 1), 0));
 
         NpcAIWorkerCpt npcAI = workerObj.GetComponent<NpcAIWorkerCpt>();
         npcAI.SetCharacterData(characterBean);
-        npcWorkerList.Add(npcAI);
+        listNpcWorker.Add(npcAI);
     }
 
     /// <summary>
@@ -56,7 +58,7 @@ public class NpcWorkerBuilder : BaseMonoBehaviour
     /// </summary>
     public void ClearAllWork()
     {
-        npcWorkerList.Clear();
+        listNpcWorker.Clear();
         CptUtil.RemoveChild(objContainer.transform);
     }
 
@@ -66,10 +68,23 @@ public class NpcWorkerBuilder : BaseMonoBehaviour
     public void InitWorkerData()
     {
         //初始化优先级
-        for (int i = 0; i < npcWorkerList.Count; i++)
+        for (int i = 0; i < listNpcWorker.Count; i++)
         {
-            NpcAIWorkerCpt npcAI = npcWorkerList[i];
+            NpcAIWorkerCpt npcAI = listNpcWorker[i];
             npcAI.InitWorkerInfo();
+        }
+    }
+
+    /// <summary>
+    /// 刷新工作者数据
+    /// </summary>
+    public void RefreshWorkerData()
+    {
+        if (listNpcWorker == null)
+            return;
+        foreach (NpcAIWorkerCpt npcAIWorker in listNpcWorker)
+        {
+            npcAIWorker.SetCharacterData(npcAIWorker.characterData);
         }
     }
 

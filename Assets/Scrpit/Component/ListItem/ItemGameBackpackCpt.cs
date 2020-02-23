@@ -45,9 +45,13 @@ public class ItemGameBackpackCpt : ItemGameBaseCpt, IPointerClickHandler, PopupI
         this.itemBean = itemBean;
         if (infoBean != null)
         {
-            SetIcon(infoBean, infoBean.items_type);
             SetName(infoBean.name);
         }
+        else
+        {
+            SetName("");
+        }
+        SetIcon(infoBean);
         if (itemBean != null)
         {
             SetNumber(itemBean.itemNumber);
@@ -63,7 +67,7 @@ public class ItemGameBackpackCpt : ItemGameBaseCpt, IPointerClickHandler, PopupI
     /// </summary>
     /// <param name="iconKey"></param>
     /// <param name="itemType"></param>
-    public void SetIcon(ItemsInfoBean itemsInfo, int itemType)
+    public void SetIcon(ItemsInfoBean itemsInfo)
     {
         CharacterDressManager characterDressManager = uiGameManager.characterDressManager;
         GameItemsManager gameItemsManager = uiGameManager.gameItemsManager;
@@ -72,24 +76,27 @@ public class ItemGameBackpackCpt : ItemGameBaseCpt, IPointerClickHandler, PopupI
         Vector2 offsetMin = new Vector2(0, 0);
         Vector2 offsetMax = new Vector2(0, 0);
         Sprite spIcon = null;
-        switch (itemType)
+        if (itemsInfo != null)
         {
-            case (int)GeneralEnum.Hat:
-                offsetMin = new Vector2(-30, -60);
-                offsetMax = new Vector2(30, 0);
-                break;
-            case (int)GeneralEnum.Clothes:
-                offsetMin = new Vector2(-30, -20);
-                offsetMax = new Vector2(30, 40);
-                break;
-            case (int)GeneralEnum.Shoes:
-                offsetMin = new Vector2(-30, 0);
-                offsetMax = new Vector2(30, 60);
-                break;
-            default:
-                break;
+            switch (itemsInfo.items_type)
+            {
+                case (int)GeneralEnum.Hat:
+                    offsetMin = new Vector2(-30, -60);
+                    offsetMax = new Vector2(30, 0);
+                    break;
+                case (int)GeneralEnum.Clothes:
+                    offsetMin = new Vector2(-30, -20);
+                    offsetMax = new Vector2(30, 40);
+                    break;
+                case (int)GeneralEnum.Shoes:
+                    offsetMin = new Vector2(-30, 0);
+                    offsetMax = new Vector2(30, 60);
+                    break;
+                default:
+                    break;
+            }
+            spIcon = GeneralEnumTools.GetGeneralSprite(itemsInfo, iconDataManager, gameItemsManager, characterDressManager, false);
         }
-        spIcon = GeneralEnumTools.GetGeneralSprite(itemsInfo, iconDataManager, gameItemsManager, characterDressManager, false);
         if (spIcon != null)
             ivIcon.color = new Color(1, 1, 1, 1);
         else

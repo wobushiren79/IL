@@ -66,11 +66,13 @@ public class UIGameTest : UIGameComponent
     public void AddAll()
     {
         GameDataBean gameData = uiGameManager.gameDataManager.gameData;
+        gameData.listItems.Clear();
         List<ItemsInfoBean> listItem = uiGameManager.gameItemsManager.GetAllItems();
         foreach (ItemsInfoBean itemsInfo in listItem)
         {
             gameData.AddNewItems(itemsInfo.id, 1);
         }
+        gameData.listBuild.Clear();
         Dictionary<long, BuildItemBean> mapbuild = uiGameManager.innBuildManager.listBuildData;
         foreach (var itemBuild in mapbuild)
         {

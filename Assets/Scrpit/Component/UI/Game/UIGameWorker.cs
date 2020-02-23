@@ -21,13 +21,6 @@ public class UIGameWorker : UIGameComponent
     {
         base.OpenUI();
         InitData();
-        uiGameManager.controlHandler.StopControl();
-    }
-
-    public override void CloseUI()
-    {
-        base.CloseUI();
-        uiGameManager.controlHandler.RestoreControl();
     }
 
     public void OpenMainUI()

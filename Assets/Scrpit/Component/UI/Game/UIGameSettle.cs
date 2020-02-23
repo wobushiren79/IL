@@ -46,7 +46,6 @@ public class UIGameSettle : UIGameComponent
     {
         base.OpenUI();
         InitData();
-        uiGameManager.controlHandler.StopControl();
     }
 
     public void InitData()

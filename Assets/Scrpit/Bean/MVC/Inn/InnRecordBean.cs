@@ -52,24 +52,25 @@ public class InnRecordBean
     {
         if (listSellNumber == null)
             listSellNumber = new List<GameItemsBean>();
-
+        GameItemsBean sellItem = null;
         foreach (GameItemsBean item in listSellNumber)
         {
             if (item.itemId == id)
             {
-                item.itemNumber += number;
-                return;
+                sellItem = item;
+                break;
             }
         }
-
-        GameItemsBean itemBean = new GameItemsBean(id, number);
-        itemBean.priceL += moneyL;
-        itemBean.priceM += moneyM;
-        itemBean.priceS += moneyS;
-        incomeL += moneyL;
-        incomeM += moneyM;
-        incomeS += moneyS;
-        listSellNumber.Add(itemBean);
+        if (sellItem == null)
+        {
+            sellItem = new GameItemsBean(id);
+            listSellNumber.Add(sellItem);
+        }
+        sellItem.itemNumber += number;
+        sellItem.priceL += moneyL;
+        sellItem.priceM += moneyM;
+        sellItem.priceS += moneyS;
+        AddIncome(moneyL, moneyM, moneyS);
     }
 
     /// <summary>

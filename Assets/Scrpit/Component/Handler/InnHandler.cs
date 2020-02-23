@@ -155,7 +155,7 @@ public class InnHandler : BaseMonoBehaviour, IBaseObserver
             buildStoveCpt.ClearStove();
         };
         //结束所有拉人活动
-        foreach (NpcAIWorkerCpt itemWorker in workerBuilder.npcWorkerList)
+        foreach (NpcAIWorkerCpt itemWorker in workerBuilder.listNpcWorker)
         {
             if (itemWorker != null && itemWorker.aiForAccost.npcAICustomer != null)
             {
@@ -395,7 +395,7 @@ public class InnHandler : BaseMonoBehaviour, IBaseObserver
     public void DistributionWorkForIdleWorker()
     {
         //获取所有工作者
-        List<NpcAIWorkerCpt> listWork = workerBuilder.npcWorkerList;
+        List<NpcAIWorkerCpt> listWork = workerBuilder.listNpcWorker;
         if (listWork == null)
             return;
         for (int i = 0; i < listWork.Count; i++)

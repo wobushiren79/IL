@@ -45,6 +45,7 @@ public class NpcAIWorkerCpt : BaseNpcAI
         {
             case WorkerIntentEnum.Idle:
                 //TODO  瞎逛
+                HandleForIdle();
                 break;
         }
     }
@@ -118,6 +119,17 @@ public class NpcAIWorkerCpt : BaseNpcAI
     }
 
     /// <summary>
+    /// 处理-闲置
+    /// </summary>
+    public void HandleForIdle()
+    {
+        if (CheckCharacterIsArrive())
+        {
+            SetIntent( WorkerIntentEnum.Idle);
+        }
+    }
+
+    /// <summary>
     /// 设置意图
     /// </summary>
     /// <param name="workerIntent"></param>
@@ -171,7 +183,8 @@ public class NpcAIWorkerCpt : BaseNpcAI
     /// </summary>
     private void SetIntentForIdle()
     {
-
+        Vector3 movePosition= innHandler.GetRandomInnPositon();
+        SetCharacterMove(movePosition);
     }
 
     /// <summary>
@@ -224,4 +237,6 @@ public class NpcAIWorkerCpt : BaseNpcAI
     {
         aiForBeater.StartFight(npcAIRascal);
     }
+
+
 }

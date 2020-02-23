@@ -52,6 +52,11 @@ public class UIGameEquip : UIGameComponent
         RefreshUI();
     }
 
+    public override void CloseUI()
+    {
+        base.CloseUI();
+    }
+
     public void OpenWorkUI()
     {
         uiGameManager.audioHandler.PlaySound(SoundEnum.ButtonForBack);
@@ -78,14 +83,10 @@ public class UIGameEquip : UIGameComponent
             characterUICpt.SetCharacterData(characterData.body, characterData.equips);
 
         //装备物品刷新
-        if (characterData.equips.handId != 0)
-            equipHand.SetData(characterData, uiGameManager.gameItemsManager.GetItemsById(characterData.equips.handId), null);
-        if (characterData.equips.hatId != 0)
-            equipHat.SetData(characterData, uiGameManager.gameItemsManager.GetItemsById(characterData.equips.hatId), null);
-        if (characterData.equips.clothesId != 0)
-            equipClothes.SetData(characterData, uiGameManager.gameItemsManager.GetItemsById(characterData.equips.clothesId), null);
-        if (characterData.equips.shoesId != 0)
-            equipShoes.SetData(characterData, uiGameManager.gameItemsManager.GetItemsById(characterData.equips.shoesId), null);
+        equipHand.SetData(characterData, uiGameManager.gameItemsManager.GetItemsById(characterData.equips.handId), null);
+        equipHat.SetData(characterData, uiGameManager.gameItemsManager.GetItemsById(characterData.equips.hatId), null);
+        equipClothes.SetData(characterData, uiGameManager.gameItemsManager.GetItemsById(characterData.equips.clothesId), null);
+        equipShoes.SetData(characterData, uiGameManager.gameItemsManager.GetItemsById(characterData.equips.shoesId), null);
 
         //装备列表是否为null   
         if (CptUtil.GetChildCountByActive(objItemContent) != 0)
@@ -219,6 +220,12 @@ public class UIGameEquip : UIGameComponent
 
         //刷新显示
         RefreshUI();
+        //刷新场景中的人物
+        if (uiGameManager.npcWorkerBuilder != null)
+        {
+            uiGameManager.npcWorkerBuilder.RefreshWorkerData();
+        }
+
     }
 
     /// <summary>
@@ -246,7 +253,7 @@ public class UIGameEquip : UIGameComponent
                 && itemsInfoBean.items_type != (int)GeneralEnum.Book)
                 continue;
             GameObject objItem = CreateItemBackpackData(itemBean, itemsInfoBean);
-            objItem.transform.DOScale(new Vector3(0, 0, 0), 0.5f).SetEase(Ease.OutBack).SetDelay(i * 0.05f).From();
+            //objItem.transform.DOScale(new Vector3(0, 0, 0), 0.5f).SetEase(Ease.OutBack).SetDelay(i * 0.05f).From();
         }
     }
 

@@ -654,7 +654,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -385, y: 0}
+  m_AnchoredPosition: {x: -335, y: 0}
   m_SizeDelta: {x: 250, y: 650}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &4140619151037850663
@@ -1020,7 +1020,7 @@ MonoBehaviour:
       priorityAccountant: 0
       priorityAccost: 0
       priorityBeater: 0
-      isAttendance: 0
+      workerStatus: 0
       listLoveItems: 
     attributes:
       loyal: 0
@@ -1096,6 +1096,8 @@ MonoBehaviour:
       attributes_force: 0
       attributes_lucky: 0
       love_items: 
+      love_menus: 
+      condition: 
   type: 1
 --- !u!114 &5592363253601266309
 MonoBehaviour:
@@ -1523,6 +1525,7 @@ MonoBehaviour:
   uiManager: {fileID: 0}
   uiAnimator: {fileID: 0}
   remarkData: 
+  uiGameManager: {fileID: 0}
   btBack: {fileID: 4140619151777980432}
   equipHand: {fileID: 4140619151103012906}
   equipHat: {fileID: 4140619152221243282}
@@ -1610,7 +1613,7 @@ MonoBehaviour:
       priorityAccountant: 0
       priorityAccost: 0
       priorityBeater: 0
-      isAttendance: 0
+      workerStatus: 0
       listLoveItems: 
     attributes:
       loyal: 0
@@ -1686,6 +1689,8 @@ MonoBehaviour:
       attributes_force: 0
       attributes_lucky: 0
       love_items: 
+      love_menus: 
+      condition: 
   spSexMan: {fileID: 21300000, guid: c74dadfc811858b48abd12f5c2c6170e, type: 3}
   spSexWoman: {fileID: 21300000, guid: c14f38d399b2cf445aaae24c0344b9db, type: 3}
 --- !u!1 &4140619151445946949
@@ -2262,7 +2267,7 @@ RectTransform:
   m_GameObject: {fileID: 4140619151777980433}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1.0001299, y: 1.0001299, z: 1.0001299}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4140619151399399098}
   m_RootOrder: 0
@@ -2738,7 +2743,7 @@ MonoBehaviour:
       priorityAccountant: 0
       priorityAccost: 0
       priorityBeater: 0
-      isAttendance: 0
+      workerStatus: 0
       listLoveItems: 
     attributes:
       loyal: 0
@@ -2814,6 +2819,8 @@ MonoBehaviour:
       attributes_force: 0
       attributes_lucky: 0
       love_items: 
+      love_menus: 
+      condition: 
   type: 1
 --- !u!114 &3833167137714841585
 MonoBehaviour:
@@ -3674,7 +3681,7 @@ MonoBehaviour:
       priorityAccountant: 0
       priorityAccost: 0
       priorityBeater: 0
-      isAttendance: 0
+      workerStatus: 0
       listLoveItems: 
     attributes:
       loyal: 0
@@ -3750,6 +3757,8 @@ MonoBehaviour:
       attributes_force: 0
       attributes_lucky: 0
       love_items: 
+      love_menus: 
+      condition: 
   type: 1
 --- !u!114 &6170019904488030133
 MonoBehaviour:
@@ -4018,7 +4027,7 @@ MonoBehaviour:
       priorityAccountant: 0
       priorityAccost: 0
       priorityBeater: 0
-      isAttendance: 0
+      workerStatus: 0
       listLoveItems: 
     attributes:
       loyal: 0
@@ -4094,6 +4103,8 @@ MonoBehaviour:
       attributes_force: 0
       attributes_lucky: 0
       love_items: 
+      love_menus: 
+      condition: 
   type: 1
 --- !u!114 &1374256342111912693
 MonoBehaviour:
@@ -4892,7 +4903,7 @@ RectTransform:
   m_GameObject: {fileID: 4140619152856805244}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1.0001299, y: 1.0001299, z: 1.0001299}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4140619151016441727}
   m_Father: {fileID: 4140619151399399098}
@@ -4900,8 +4911,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 90, y: 0}
-  m_SizeDelta: {x: 700, y: 650}
+  m_AnchoredPosition: {x: 115, y: 0}
+  m_SizeDelta: {x: 650, y: 650}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &4140619152856797313
 CanvasRenderer:

@@ -135,12 +135,14 @@ public class UIGameMain : UIGameComponent, DialogView.IDialogCallBack, IRadioGro
             uiGameManager.gameTimeHandler.SetTimeScale(1);
             rgTimeScale.SetPosition(-1, false);
         }
+        uiGameManager.controlHandler.StopControl();
     }
 
     public override void OpenUI()
     {
         base.OpenUI();
         InitInnData();
+        uiGameManager.controlHandler.RestoreControl();
     }
 
     /// <summary>
