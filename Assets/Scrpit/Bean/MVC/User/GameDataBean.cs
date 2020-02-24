@@ -25,6 +25,7 @@ public class GameDataBean
 
     public InnBuildBean innBuildData;//客栈建筑数据
     public TimeBean gameTime = new TimeBean();//游戏时间
+    public TimeBean playTime = new TimeBean();//游玩时间
     public UserAchievementBean userAchievement = new UserAchievementBean();//成就相关
 
     public List<ItemBean> listBuild = new List<ItemBean>();//所拥有的建筑材料

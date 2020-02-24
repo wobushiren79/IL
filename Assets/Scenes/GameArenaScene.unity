@@ -776,6 +776,81 @@ Transform:
   m_Father: {fileID: 1490223931}
   m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1001 &78614690
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 867965365}
+    m_Modifications:
+    - target: {fileID: 8944748230584918156, guid: e8d215ffd9fac994a89ad4b1f37079c5,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8944748230584918156, guid: e8d215ffd9fac994a89ad4b1f37079c5,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8944748230584918156, guid: e8d215ffd9fac994a89ad4b1f37079c5,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8944748230584918156, guid: e8d215ffd9fac994a89ad4b1f37079c5,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8944748230584918156, guid: e8d215ffd9fac994a89ad4b1f37079c5,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8944748230584918156, guid: e8d215ffd9fac994a89ad4b1f37079c5,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8944748230584918156, guid: e8d215ffd9fac994a89ad4b1f37079c5,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8944748230584918156, guid: e8d215ffd9fac994a89ad4b1f37079c5,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 8944748230584918156, guid: e8d215ffd9fac994a89ad4b1f37079c5,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8944748230584918156, guid: e8d215ffd9fac994a89ad4b1f37079c5,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8944748230584918156, guid: e8d215ffd9fac994a89ad4b1f37079c5,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8944748230584918159, guid: e8d215ffd9fac994a89ad4b1f37079c5,
+        type: 3}
+      propertyPath: m_Name
+      value: GameDataHandler
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: e8d215ffd9fac994a89ad4b1f37079c5, type: 3}
+--- !u!4 &78614691 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 8944748230584918156, guid: e8d215ffd9fac994a89ad4b1f37079c5,
+    type: 3}
+  m_PrefabInstance: {fileID: 78614690}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &96835130 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 855175973831488347, guid: c06bf77163878c34c93c10a0256ee84b,
@@ -3982,12 +4057,16 @@ MonoBehaviour:
     winMoneyS: 0
     winMoneyM: 0
     winMoneyL: 0
+    preMoneyL: 0
+    preMoneyM: 0
+    preMoneyS: 0
+    preGameTime: 0
     gameResult: 0
     gameResultWinStoryId: 0
     gameResultLoseStoryId: 0
     gameResultWinTalkMarkId: 0
     gameResultLoseTalkMarkId: 0
-    listRewardCharacter: 
+    miniGamePosition: {x: 0, y: 0, z: 0}
     launchInterval: 0
     launchTypes: 
     launchSpeed: 10
@@ -7528,6 +7607,7 @@ Transform:
   - {fileID: 196521811}
   - {fileID: 1631365414}
   - {fileID: 464746863}
+  - {fileID: 78614691}
   m_Father: {fileID: 0}
   m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -17482,13 +17562,19 @@ MonoBehaviour:
   innFoodManager: {fileID: 690591439}
   npcInfoManager: {fileID: 685079889}
   storeInfoManager: {fileID: 0}
+  iconDataManager: {fileID: 0}
+  achievementInfoManager: {fileID: 0}
+  textInfoManager: {fileID: 0}
   dialogManager: {fileID: 2045760031}
   toastManager: {fileID: 413333787}
   innHandler: {fileID: 0}
   gameTimeHandler: {fileID: 0}
   controlHandler: {fileID: 1631365415}
   eventHandler: {fileID: 0}
+  audioHandler: {fileID: 0}
   npcCustomerBuilder: {fileID: 0}
+  npcEventBuilder: {fileID: 0}
+  npcWorkerBuilder: {fileID: 0}
   navMesh: {fileID: 404978616}
 --- !u!224 &1390201003 stripped
 RectTransform:

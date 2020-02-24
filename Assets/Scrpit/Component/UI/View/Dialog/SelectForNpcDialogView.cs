@@ -23,6 +23,7 @@ public class SelectForNpcDialogView : DialogView, IBaseObserver
     //团队
     public GameObject objTeam;
     public Image ivTeam;
+    public Text tvTeamName;
     //好友
     public GameObject objFriend;
 
@@ -174,6 +175,7 @@ public class SelectForNpcDialogView : DialogView, IBaseObserver
             {
                 objTeam.SetActive(true);
                 ivTeam.color = npcTeam.teamColor;
+                tvTeamName.text =GameCommonInfo.GetUITextById(49)+":"+ npcTeam.teamData.name;
             }
         }
         ShowCustomerData();

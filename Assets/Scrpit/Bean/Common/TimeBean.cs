@@ -39,4 +39,28 @@ public class TimeBean
         this.hour = hour;
         this.minute = minute;
     }
+
+    /// <summary>
+    /// 增加时间-针对小时
+    /// </summary>
+    /// <param name="hour"></param>
+    /// <param name="min"></param>
+    public void AddTimeForHMS(int addHour, int addMin, int Addsecond)
+    {
+        second += Addsecond;
+        if (second >= 60)
+        {
+            addMin += (second / 60);
+            second = second % 60;
+        }
+
+        minute += addMin;
+        if (minute >= 60)
+        {
+            addHour += (minute / 60);
+            minute = minute % 60;
+        }
+
+        hour += addHour;
+    }
 }

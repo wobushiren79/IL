@@ -487,6 +487,10 @@ public class ItemCreateWindowsEditor : EditorWindow, StoreInfoManager.ICallBack
                 {
                     autoId += 3 * 10000;
                 }
+                else if (spriteCreateIcon.name.Contains("team"))
+                {
+                    autoId += 4 * 10000;
+                }
             }
         }
         if (createItemType == GeneralEnum.Menu)

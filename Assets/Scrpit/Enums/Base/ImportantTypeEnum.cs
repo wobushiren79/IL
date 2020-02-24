@@ -30,6 +30,7 @@ public enum ImportantTypeEnum
     MiniGameBuilder,
     SceneBuilder,
 
+    GameDataHandler,
     EventHandler,
     TimeHandler,
     ControlHandler,

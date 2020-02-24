@@ -6,9 +6,11 @@ public class ItemGameDataCpt : ItemGameBaseCpt, DialogView.IDialogCallBack
     public Text tvInnName;
     public Text tvUserName;
     public Text tvGameTime;
+    public Text tvPlayTime;
     public Text tvMoneyL;
     public Text tvMoneyM;
     public Text tvMoneyS;
+    public Text tvGuildCoin;
 
     public Button btContinue;
     public Button btDelete;
@@ -18,6 +20,7 @@ public class ItemGameDataCpt : ItemGameBaseCpt, DialogView.IDialogCallBack
 
     protected AudioHandler audioHandler;
     protected DialogManager dialogManager;
+
     private void Awake()
     {
         audioHandler = GetUIManager<UIGameManager>().audioHandler;
@@ -43,6 +46,8 @@ public class ItemGameDataCpt : ItemGameBaseCpt, DialogView.IDialogCallBack
         SetName(gameData.innName, gameData.userCharacter.baseInfo.name);
         SetMoney(gameData.moneyL, gameData.moneyM, gameData.moneyS);
         SetGameTime(gameData.gameTime.year, gameData.gameTime.month, gameData.gameTime.day);
+        SetGuildCoin(gameData.guildCoin);
+        SetPlayTime(gameData.playTime.hour, gameData.playTime.minute);
     }
 
     /// <summary>
@@ -87,6 +92,16 @@ public class ItemGameDataCpt : ItemGameBaseCpt, DialogView.IDialogCallBack
     }
 
     /// <summary>
+    /// 设置公会英贝利
+    /// </summary>
+    /// <param name="number"></param>
+    public void SetGuildCoin(long number)
+    {
+        if (tvGuildCoin != null)
+            tvGuildCoin.text = "" + number;
+    }
+
+    /// <summary>
     /// 设置游戏时间
     /// </summary>
     /// <param name="year"></param>
@@ -100,6 +115,19 @@ public class ItemGameDataCpt : ItemGameBaseCpt, DialogView.IDialogCallBack
                 year + GameCommonInfo.GetUITextById(29) +
                 month + GameCommonInfo.GetUITextById(30) +
                 day + GameCommonInfo.GetUITextById(31);
+        }
+    }
+
+    /// <summary>
+    /// 设置游玩时间
+    /// </summary>
+    /// <param name="hour"></param>
+    /// <param name="min"></param>
+    public void SetPlayTime(int hour, int min)
+    {
+        if (tvPlayTime != null)
+        {
+            tvPlayTime.text = GameCommonInfo.GetUITextById(48) + " " + hour + ":" + min;
         }
     }
 

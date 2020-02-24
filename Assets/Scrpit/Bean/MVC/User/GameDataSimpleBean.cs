@@ -9,9 +9,11 @@ public class GameDataSimpleBean
     public long moneyL;//用户金钱
     public long moneyS;
     public long moneyM;
+    public long guildCoin;
     public string innName;//客栈名字
     public CharacterBean userCharacter;//用户角色
     public TimeBean gameTime;//游戏时间
+    public TimeBean playTime;//游玩时间
 
     /// <summary>
     /// 获取数据
@@ -30,6 +32,8 @@ public class GameDataSimpleBean
         gameDataSimple.moneyM = gameData.moneyM;
         gameDataSimple.gameTime = gameData.gameTime;
         gameDataSimple.userCharacter = gameData.userCharacter;
+        gameDataSimple.guildCoin = gameData.guildCoin;
+        gameDataSimple.playTime = gameData.playTime;
         return gameDataSimple;
     }
 }
