@@ -12,11 +12,11 @@ public class BaseTilemapBuilder : BaseMonoBehaviour
 
     public void Build(string tileName, int startX, int startY, int endX, int endY)
     {
-        if (buildTilemap == null|| buildTileList==null)
+        if (buildTilemap == null || buildTileList == null)
             return;
         TileBase tile = null;
 
-        for(int i=0;i< buildTileList.Count; i++)
+        for (int i = 0; i < buildTileList.Count; i++)
         {
             TileBean tileBean = buildTileList[i];
             if (tileBean.key.Equals(tileName))
@@ -29,7 +29,7 @@ public class BaseTilemapBuilder : BaseMonoBehaviour
         buildTilemap.BoxFill(Vector3Int.zero, tile, startX, startY, endX, endY);
     }
 
-    public void Build(string tileName,Vector3Int position)
+    public void Build(string tileName, Vector3Int position)
     {
         if (buildTilemap == null || buildTileList == null)
             return;
@@ -42,14 +42,19 @@ public class BaseTilemapBuilder : BaseMonoBehaviour
                 tile = tileBean.value;
             }
         }
+        Build(tile, position);
+    }
+
+    public void Build(TileBase tile, Vector3Int position)
+    {
         if (tile == null)
             return;
         buildTilemap.SetTile(position, tile);
     }
 
-    public void Build(string tileName,int x, int y)
+    public void Build(string tileName, int x, int y)
     {
-        Build(tileName,new Vector3Int(x,y,0));
+        Build(tileName, new Vector3Int(x, y, 0));
     }
 
     /// <summary>
@@ -72,5 +77,14 @@ public class BaseTilemapBuilder : BaseMonoBehaviour
     public void ClearAllTiles()
     {
         buildTilemap.ClearAllTiles();
+    }
+
+    /// <summary>
+    /// 获取tilemap容器
+    /// </summary>
+    /// <returns></returns>
+    public GameObject GetTilemapContainer()
+    {
+        return buildTilemap.gameObject;
     }
 }

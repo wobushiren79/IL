@@ -3,18 +3,21 @@ using UnityEditor;
 using UnityEngine.UI;
 using UnityEngine.AI;
 
-public class UIGameBuild : UIGameComponent
+public class UIGameBuild : UIGameComponent, IRadioGroupCallBack
 {
     public Text tvAesthetics;
 
     //返回按钮
     public Button btBack;
     public Button btDismantle;
+
+    public RadioGroupView rgType;
     //类型按钮
-    public Button btTypeTable;
-    public Button btTypeStove;
-    public Button btTypeCounter;
-    public Button btTypeDoor;
+    public RadioButtonView rbTypeTable;
+    public RadioButtonView rbTypeStove;
+    public RadioButtonView rbTypeCounter;
+    public RadioButtonView rbTypeDoor;
+    public RadioButtonView rbTypeFloor;
 
     public GameObject listBuildContent;
     public GameObject itemBuildModel;
@@ -23,26 +26,23 @@ public class UIGameBuild : UIGameComponent
 
     public void Start()
     {
+        if (rgType != null)
+            rgType.SetCallBack(this);
         if (btBack != null)
             btBack.onClick.AddListener(OpenMainUI);
         if (btDismantle != null)
             btDismantle.onClick.AddListener(DismantleMode);
-        if (btTypeTable != null)
-            btTypeTable.onClick.AddListener(CreateTableList);
-        if (btTypeStove != null)
-            btTypeStove.onClick.AddListener(CreateStoveList);
-        if (btTypeCounter != null)
-            btTypeCounter.onClick.AddListener(CreateCounterList);
-        if (btTypeDoor != null)
-            btTypeDoor.onClick.AddListener(CreateDoorList);
 
         SetInnAesthetics();
-        CreateBuildList(BuildItemTypeEnum.Table);
+
     }
 
     public override void OpenUI()
     {
         base.OpenUI();
+
+        rgType.SetPosition(0, false);
+        CreateBuildList(BuildItemTypeEnum.Table);
         //停止时间
         uiGameManager.gameTimeHandler.SetTimeStatus(true);
         uiGameManager.controlHandler.StartControl(ControlHandler.ControlEnum.Build);
@@ -51,6 +51,7 @@ public class UIGameBuild : UIGameComponent
     public override void CloseUI()
     {
         base.CloseUI();
+        SetInnBuildActive(true, true);
         //时间添加1小时
         uiGameManager.gameTimeHandler.AddHour(1);
         //继续时间
@@ -86,11 +87,11 @@ public class UIGameBuild : UIGameComponent
     /// 创建建筑列表
     /// </summary>
     /// <param name="type"></param>
-    public void CreateBuildList(BuildItemTypeEnum  type)
+    public void CreateBuildList(BuildItemTypeEnum type)
     {
         buildType = type;
         //删除当前选中
-        ((ControlForBuildCpt)(uiGameManager.controlHandler.GetControl(ControlHandler.ControlEnum.Build))).DestoryBuildItem();
+        ((ControlForBuildCpt)(uiGameManager.controlHandler.GetControl(ControlHandler.ControlEnum.Build))).ClearBuildItem();
         if (listBuildContent == null)
             return;
         if (itemBuildModel == null)
@@ -126,26 +127,9 @@ public class UIGameBuild : UIGameComponent
         itemCpt.SetData(itemData, buildData);
     }
 
-    public void CreateTableList()
-    {
-        CreateBuildList(BuildItemTypeEnum.Table);
-    }
-
-    public void CreateStoveList()
-    {
-        CreateBuildList(BuildItemTypeEnum.Stove);
-    }
-
-    public void CreateCounterList()
-    {
-        CreateBuildList(BuildItemTypeEnum.Counter);
-    }
-
-    public void CreateDoorList()
-    {
-        CreateBuildList(BuildItemTypeEnum.Door);
-    }
-
+    /// <summary>
+    /// 拆除模式
+    /// </summary>
     public void DismantleMode()
     {
         ((ControlForBuildCpt)(uiGameManager.controlHandler.GetControl(ControlHandler.ControlEnum.Build))).SetDismantleMode();
@@ -157,7 +141,7 @@ public class UIGameBuild : UIGameComponent
     public void OpenMainUI()
     {
         //删除当前选中
-        ((ControlForBuildCpt)(uiGameManager.controlHandler.GetControl(ControlHandler.ControlEnum.Build))).DestoryBuildItem();
+        ((ControlForBuildCpt)(uiGameManager.controlHandler.GetControl(ControlHandler.ControlEnum.Build))).ClearBuildItem();
         //重新构建地形
         uiGameManager.navMesh.BuildNavMesh();
         //打开主UI
@@ -176,4 +160,54 @@ public class UIGameBuild : UIGameComponent
             uiGameManager.controlHandler.StartControl(ControlHandler.ControlEnum.Normal);
         }
     }
+
+    /// <summary>
+    /// 设置建造相关是否展示
+    /// </summary>
+    /// <param name="wall"></param>
+    /// <param name="furniture"></param>
+    private void SetInnBuildActive(bool wall,bool furniture)
+    {
+        if (uiGameManager.innWallBuilder != null)
+            uiGameManager.innWallBuilder.GetTilemapContainer().SetActive(wall);
+        if (uiGameManager.innFurnitureBuilder != null)
+            uiGameManager.innFurnitureBuilder.buildContainer.SetActive(furniture);
+    }
+
+    #region  类型选择回调
+    public void RadioButtonSelected(RadioGroupView rgView, int position, RadioButtonView rbview)
+    {
+        if (rbview == rbTypeTable)
+        {
+            SetInnBuildActive(true, true);
+            CreateBuildList(BuildItemTypeEnum.Table);
+        }
+        else if (rbview == rbTypeStove)
+        {
+            SetInnBuildActive(true, true);
+            CreateBuildList(BuildItemTypeEnum.Stove);
+
+        }
+        else if (rbview == rbTypeCounter)
+        {
+            SetInnBuildActive(true, true);
+            CreateBuildList(BuildItemTypeEnum.Counter);
+        }
+        else if (rbview == rbTypeDoor)
+        {
+            SetInnBuildActive(true, true);
+            CreateBuildList(BuildItemTypeEnum.Door);
+        }
+        else if (rbview == rbTypeFloor)
+        {
+            SetInnBuildActive(false, false);
+            CreateBuildList(BuildItemTypeEnum.Floor);
+        }
+    }
+
+    public void RadioButtonUnSelected(RadioGroupView rgView, int position, RadioButtonView rbview)
+    {
+
+    }
+    #endregion 
 }

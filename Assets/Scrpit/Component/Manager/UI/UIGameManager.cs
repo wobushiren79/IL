@@ -42,6 +42,9 @@ public class UIGameManager : BaseUIManager
     public NpcCustomerBuilder npcCustomerBuilder;
     public NpcEventBuilder npcEventBuilder;
     public NpcWorkerBuilder npcWorkerBuilder;
+    public InnFurnitureBuilder innFurnitureBuilder;
+    public InnFloorBuilder innFloorBuilder;
+    public InnWallBuilder innWallBuilder;
 
     [Header("地形")]
     public NavMeshSurface navMesh;
@@ -80,5 +83,9 @@ public class UIGameManager : BaseUIManager
         npcCustomerBuilder = Find<NpcCustomerBuilder>(ImportantTypeEnum.NpcBuilder);
         npcEventBuilder = Find<NpcEventBuilder>(ImportantTypeEnum.NpcBuilder);
         npcWorkerBuilder = Find<NpcWorkerBuilder>(ImportantTypeEnum.NpcBuilder);
+
+        innFurnitureBuilder = Find<InnFurnitureBuilder>(ImportantTypeEnum.InnBuilder);
+        innFloorBuilder = Find<InnFloorBuilder>(ImportantTypeEnum.InnBuilder);
+        innWallBuilder = Find<InnWallBuilder>(ImportantTypeEnum.InnBuilder);
     }
 }

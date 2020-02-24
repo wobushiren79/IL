@@ -4,14 +4,21 @@ using System.Collections.Generic;
 
 public class InnBuildManager : BaseManager, IBuildDataView
 {
+    //建造物品数据
     public Dictionary<long, BuildItemBean> listBuildData;
-
+    
     public BuildDataController buildDataController;
 
-    //家具列表
+    //墙体tile列表
+    public TileBeanDictionary listWallTile = new TileBeanDictionary();
+    //地板tile列表
+    public TileBeanDictionary listFloorTile = new TileBeanDictionary();
+    //家具模型列表
     public GameObjectDictionary listFurnitureCpt = new GameObjectDictionary();
     //家具图标
     public IconBeanDictionary listFurnitureIcon = new IconBeanDictionary();
+    //地板图标
+    public IconBeanDictionary listFloorIcon = new IconBeanDictionary();
 
     public void Awake()
     {
@@ -25,6 +32,16 @@ public class InnBuildManager : BaseManager, IBuildDataView
     public Sprite GetFurnitureSpriteByName(string name)
     {
         return GetSpriteByName(name, listFurnitureIcon);
+    }
+
+    /// <summary>
+    /// 通过名字获取地板图标
+    /// </summary>
+    /// <param name="name"></param>
+    /// <returns></returns>
+    public Sprite GetFloorSpriteByName(string name) {
+
+        return GetSpriteByName(name, listFloorIcon);
     }
 
     /// <summary>

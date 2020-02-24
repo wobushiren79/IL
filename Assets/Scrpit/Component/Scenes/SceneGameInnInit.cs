@@ -9,9 +9,9 @@ public class SceneGameInnInit : BaseSceneInit, IBaseObserver, DialogView.IDialog
     protected SceneInnManager sceneInnManager;
     public InnBuildManager innBuildManager;
 
-    public InnFloorBuilder innFloorBuilder;
-    public InnWallBuilder innWallBuilder;
-    public InnFurnitureBuilder innFurnitureBuilder;
+    protected InnFloorBuilder innFloorBuilder;
+    protected InnWallBuilder innWallBuilder;
+    protected InnFurnitureBuilder innFurnitureBuilder;
 
     public InnHandler innHandler;
     public GameTimeHandler gameTimeHandler;
@@ -26,6 +26,9 @@ public class SceneGameInnInit : BaseSceneInit, IBaseObserver, DialogView.IDialog
     {
         base.Awake();
         sceneInnManager = Find<SceneInnManager>(ImportantTypeEnum.SceneManager);
+        innFloorBuilder = Find<InnFloorBuilder>(ImportantTypeEnum.InnBuilder);
+        innWallBuilder = Find<InnWallBuilder>(ImportantTypeEnum.InnBuilder);
+        innFurnitureBuilder = Find<InnFurnitureBuilder>(ImportantTypeEnum.InnBuilder);
     }
 
     private new void Start()

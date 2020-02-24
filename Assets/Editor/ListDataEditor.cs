@@ -122,8 +122,8 @@ public class ListDataEditor : Editor
     }
 
 
-    [MenuItem("Custom/List/AddFurnitureIcon")]
-    public static void AddFurnitureIcon()
+    [MenuItem("Custom/List/AddBuildIcon")]
+    public static void AddBuildIcon()
     {
         GameObject Target = Selection.gameObjects[0];
         InnBuildManager innBuildManager = Target.GetComponent<InnBuildManager>();
@@ -132,6 +132,7 @@ public class ListDataEditor : Editor
         AddIconBeanDictionaryByFolder("Assets/Texture/InnBuild/Stove/", innBuildManager.listFurnitureIcon);
         AddIconBeanDictionaryByFolder("Assets/Texture/InnBuild/Counter/", innBuildManager.listFurnitureIcon);
         AddIconBeanDictionaryByFolder("Assets/Texture/InnBuild/Door/", innBuildManager.listFurnitureIcon);
+        AddIconBeanDictionaryByFolder("Assets/Texture/Tile/Floor/", innBuildManager.listFloorIcon);
     }
 
     //[MenuItem("Custom/List/AddFurnitureCpt")]

@@ -31,19 +31,66 @@ public class ItemGameBuildCpt : ItemGameBaseCpt
     {
         this.itemData = itemData;
         this.buildData = buildData;
-
-
-        Sprite spFurniture = GetUIManager<UIGameManager>().innBuildManager.GetFurnitureSpriteByName(buildData.icon_key);
-        if (ivIcon != null)
-            ivIcon.sprite = spFurniture;
-        if (tvNumber != null)
-            tvNumber.text = "x " + itemData.itemNumber;
-        if (tvName != null)
-            tvName.text = buildData.name;
-        if (tvAesthetics != null)
-            tvAesthetics.text = "+ " + buildData.aesthetics;
+        SetName(buildData.name);
+        SetNumber(itemData.itemNumber);
+        SetAesthetics(buildData.aesthetics);
+        SetIcon((BuildItemTypeEnum)buildData.build_type, buildData.icon_key);
     }
 
+    /// <summary>
+    /// 设置头像
+    /// </summary>
+    /// <param name="buildItemType"></param>
+    /// <param name="iconKey"></param>
+    public void SetIcon(BuildItemTypeEnum buildItemType, string iconKey)
+    {
+        Sprite spIcon = null;
+        InnBuildManager innBuildManager = GetUIManager<UIGameManager>().innBuildManager;
+        if (buildItemType == BuildItemTypeEnum.Floor)
+        {
+            spIcon = innBuildManager.GetFloorSpriteByName(iconKey);
+        }
+        else
+        {
+            spIcon = innBuildManager.GetFurnitureSpriteByName(iconKey);
+        }
+        if (ivIcon != null)
+            ivIcon.sprite = spIcon;
+    }
+
+    /// <summary>
+    /// 设置数量
+    /// </summary>
+    /// <param name="number"></param>
+    public void SetNumber(long number)
+    {
+        if (tvNumber != null)
+            tvNumber.text = "x " + number;
+    }
+
+    /// <summary>
+    /// 设置名字
+    /// </summary>
+    /// <param name="name"></param>
+    public void SetName(string name)
+    {
+        if (tvName != null)
+            tvName.text = name;
+    }
+
+    /// <summary>
+    /// 设置美观值
+    /// </summary>
+    /// <param name="aesthetics"></param>
+    public void SetAesthetics(int aesthetics)
+    {
+        if (tvAesthetics != null)
+            tvAesthetics.text = "+ " + aesthetics;
+    }
+
+    /// <summary>
+    /// 开始建造
+    /// </summary>
     public void StartBuild()
     {
         ControlForBuildCpt controlForBuild = (ControlForBuildCpt)GetUIManager<UIGameManager>().controlHandler.GetControl(ControlEnum.Build);
