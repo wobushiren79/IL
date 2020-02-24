@@ -38,7 +38,7 @@ public class CharacterBean
             1, 5,
             1, 5);
         //随机身体数据
-        CharacterBodyBean.CreateRandomBodyByManager(characterData.body, characterBodyManager);
+        characterData.body.CreateRandomBody(characterBodyManager);
         //根据性别装备服装
         if (characterData.body.sex == 1)
         {
@@ -170,7 +170,7 @@ public class CharacterBean
             minForce, maxForce,
             minLucky, maxLucky);
         //随机身体数据
-        CharacterBodyBean.CreateRandomBodyByManager(characterData.body, characterBodyManager);
+        characterData.body.CreateRandomBody(characterBodyManager);
         //根据性别装备服装
         if (characterData.body.sex == 1)
         {

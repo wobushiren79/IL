@@ -86,6 +86,25 @@ public class RandomUtil
     }
 
     /// <summary>
+    /// 获取IconBeanDictionary 中 随机一个数 排开
+    /// </summary>
+    /// <param name="list"></param>
+    /// <param name="expelNameStr"></param>
+    /// <returns></returns>
+    public static IconBean GetRandomDataByIconBeanDictionaryExpel(IconBeanDictionary list,string expelNameStr)
+    {
+        IconBean iconData= GetRandomDataByIconBeanDictionary(list);
+        if (iconData.key.Contains(expelNameStr))
+        {
+            return GetRandomDataByIconBeanDictionaryExpel(list, expelNameStr);
+        }
+        else
+        {
+            return iconData;
+        }
+    }
+
+    /// <summary>
     /// 获取List随机数
     /// </summary>
     /// <typeparam name="T"></typeparam>

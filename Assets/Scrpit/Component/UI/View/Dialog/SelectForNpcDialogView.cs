@@ -67,7 +67,6 @@ public class SelectForNpcDialogView : DialogView, IBaseObserver
         CharacterBean characterData = baseNpc.characterData;
         if (characterData == null)
             return;
-        SetName(characterData.baseInfo.name);
         SetCharacterUI(characterData);
         if (baseNpc as NpcAICustomerCpt)
         {
@@ -75,10 +74,12 @@ public class SelectForNpcDialogView : DialogView, IBaseObserver
         }
         else if (baseNpc as NpcAIWorkerCpt)
         {
+            SetName(characterData.baseInfo.name);
             SetDataForWork((NpcAIWorkerCpt)baseNpc);
         }
         else if (baseNpc as NpcAIRascalCpt)
         {
+            SetName(characterData.baseInfo.name);
             SetDataForRascal((NpcAIRascalCpt)baseNpc);
         }
     }
@@ -150,7 +151,7 @@ public class SelectForNpcDialogView : DialogView, IBaseObserver
     {
         this.targetNpcAIForCustomer = npcAICustomer;
         //设置类型
-        if (npcAICustomer.orderForCustomer == null)
+        if (npcAICustomer.GetOrderForCustomer() == null)
         {
             SetType(GameCommonInfo.GetUITextById(70));
         }
@@ -211,10 +212,10 @@ public class SelectForNpcDialogView : DialogView, IBaseObserver
     {
         if (targetNpcAIForCustomer != null)
         {
-            if (targetNpcAIForCustomer.orderForCustomer != null)
+            if (targetNpcAIForCustomer.GetOrderForCustomer() != null)
             {
-                PraiseTypeEnum praiseType = targetNpcAIForCustomer.orderForCustomer.innEvaluation.GetPraise();
-                string praiseTypeStr = targetNpcAIForCustomer.orderForCustomer.innEvaluation.GetPraiseDetails();
+                PraiseTypeEnum praiseType = targetNpcAIForCustomer.GetOrderForCustomer().innEvaluation.GetPraise();
+                string praiseTypeStr = targetNpcAIForCustomer.GetOrderForCustomer().innEvaluation.GetPraiseDetails();
                 SetMood(praiseTypeStr, targetNpcAIForCustomer.characterMoodCpt.GetCurrentMoodSprite());
             }
         }
@@ -236,7 +237,7 @@ public class SelectForNpcDialogView : DialogView, IBaseObserver
     /// </summary>
     public void ShowCustomerData()
     {
-        if (targetNpcAIForCustomer != null && targetNpcAIForCustomer.orderForCustomer != null)
+        if (targetNpcAIForCustomer != null && targetNpcAIForCustomer.GetOrderForCustomer() != null)
         {
             objMood.SetActive(true);
             if (targetNpcAIForCustomer.customerIntent == NpcAICustomerCpt.CustomerIntentEnum.Leave)

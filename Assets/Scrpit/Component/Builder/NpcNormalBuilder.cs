@@ -72,7 +72,7 @@ public class NpcNormalBuilder : BaseMonoBehaviour
         if (characterData == null)
             return null;
         //随机生成身体数据
-        CharacterBodyBean.CreateRandomBodyByManager(characterData.body, characterBodyManager);
+        characterData.body.CreateRandomBody(characterBodyManager);
         return BuildNpc(characterData, startPosition);
     }
 

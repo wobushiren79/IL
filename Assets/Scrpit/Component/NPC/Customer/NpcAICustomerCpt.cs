@@ -40,7 +40,7 @@ public class NpcAICustomerCpt : BaseNpcAI
     public Vector3 movePosition;
 
     //根据客人点餐生成的点餐数据
-    public OrderForCustomer orderForCustomer;
+    protected OrderForCustomer orderForCustomer;
 
     //等待座位的时间
     public float timeWaitSeat = 20;
@@ -133,6 +133,24 @@ public class NpcAICustomerCpt : BaseNpcAI
                 break;
         }
         return customerIntent;
+    }
+
+    /// <summary>
+    /// 获取订单信息
+    /// </summary>
+    /// <returns></returns>
+    public OrderForCustomer GetOrderForCustomer()
+    {
+        return orderForCustomer;
+    }
+
+    /// <summary>
+    /// 设置订单信息
+    /// </summary>
+    /// <param name="order"></param>
+    public void SetOrderForCustomer(OrderForCustomer order)
+    {
+        orderForCustomer = order;
     }
 
     /// <summary>

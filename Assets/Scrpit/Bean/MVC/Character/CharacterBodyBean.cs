@@ -30,24 +30,29 @@ public class CharacterBodyBean
         mouthColor = ColorBean.White();
     }
 
-    public static void CreateRandomBodyByManager(CharacterBodyBean characterBody, CharacterBodyManager characterBodyManager)
+    public void CreateRandomBody(CharacterBodyManager characterBodyManager)
     {
         //随机生成性别
-        characterBody.sex = UnityEngine.Random.Range(1, 3);
+        sex = UnityEngine.Random.Range(1, 3);
         //随机生成头型
         IconBean itemHair = RandomUtil.GetRandomDataByIconBeanDictionary(characterBodyManager.listIconBodyHair);
-        characterBody.hair = itemHair.key;
-        characterBody.hairColor = ColorBean.Random();
+        hair = itemHair.key;
+        hairColor = ColorBean.Random();
 
         //随机生成眼睛
-        IconBean itemEye = RandomUtil.GetRandomDataByIconBeanDictionary(characterBodyManager.listIconBodyEye);
-        characterBody.eye = itemEye.key;
-        characterBody.eyeColor = ColorBean.Random();
+        CreateRandomEye(characterBodyManager);
 
         //随机生成嘴巴
         IconBean itemMouth = RandomUtil.GetRandomDataByIconBeanDictionary(characterBodyManager.listIconBodyMouth);
-        characterBody.mouth = itemMouth.key;
-        characterBody.mouthColor = ColorBean.Random();
+        mouth = itemMouth.key;
+        mouthColor = ColorBean.Random();
+    }
 
+    public void CreateRandomEye(CharacterBodyManager characterBodyManager)
+    {
+        //随机生成眼睛
+        IconBean itemEye = RandomUtil.GetRandomDataByIconBeanDictionaryExpel(characterBodyManager.listIconBodyEye, "special");
+        eye = itemEye.key;
+        eyeColor = ColorBean.Random();
     }
 }

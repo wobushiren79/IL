@@ -138,7 +138,8 @@ public class NpcCustomerBuilder : NpcNormalBuilder, IBaseObserver
                 characterData = RandomUtil.GetRandomDataByList(listMembers);
             }
             //随机生成身体数据
-            // CharacterBodyBean.CreateRandomBodyByManager(characterData.body, characterBodyManager);
+            characterData.body.CreateRandomEye(characterBodyManager);
+
             GameObject npcObj = Instantiate(objContainer, objGuestTeamModel);
 
             npcObj.transform.localScale = new Vector3(1, 1);

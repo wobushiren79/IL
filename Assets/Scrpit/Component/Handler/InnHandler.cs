@@ -241,7 +241,7 @@ public class InnHandler : BaseMonoBehaviour, IBaseObserver
     public OrderForCustomer CreateOrder(NpcAICustomerCpt npc)
     {
         OrderForCustomer order = new OrderForCustomer(npc);
-        npc.orderForCustomer = order;
+        npc.SetOrderForCustomer(order);
         listOrder.Add(order);
         return order;
     }
