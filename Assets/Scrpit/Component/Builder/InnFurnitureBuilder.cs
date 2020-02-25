@@ -10,8 +10,6 @@ public class InnFurnitureBuilder : BaseMonoBehaviour
     public GameObject buildContainer;
     //客栈处理
     public InnHandler innHandler;
-    //食物资源管理
-    public InnFoodManager innFoodManager;
 
     /// <summary>
     /// 开始建造

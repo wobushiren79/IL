@@ -24,6 +24,7 @@ public class GameTimeHandler : BaseObservable<IBaseObserver>
     protected InnFloorBuilder innFloorBuilder;
     protected InnWallBuilder innWallBuilder;
     protected NavMeshSurface navMesh;
+    protected InnBuildManager innBuildManager;
 
     public float hour;
     public float min;
@@ -41,6 +42,7 @@ public class GameTimeHandler : BaseObservable<IBaseObserver>
         innFloorBuilder = Find<InnFloorBuilder>(ImportantTypeEnum.InnBuilder);
         innWallBuilder = Find<InnWallBuilder>(ImportantTypeEnum.InnBuilder);
         navMesh = Find<NavMeshSurface>(ImportantTypeEnum.NavMesh);
+        innBuildManager = Find<InnBuildManager>(ImportantTypeEnum.BuildManager);
     }
 
     private void Update()
@@ -160,7 +162,7 @@ public class GameTimeHandler : BaseObservable<IBaseObserver>
             if (!isBuildDay)
             {
                 innBuildData.listBuildDay.Clear();
-                innBuildData.ChangeInnSize(innBuildData.buildInnWidth, innBuildData.buildInnHeight);
+                innBuildData.ChangeInnSize(innBuildManager, innBuildData.buildInnWidth, innBuildData.buildInnHeight);
                 innBuildData.buildInnWidth = 0;
                 innBuildData.buildInnHeight = 0;
                 if (innFloorBuilder != null)

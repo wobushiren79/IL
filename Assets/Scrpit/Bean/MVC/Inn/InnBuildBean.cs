@@ -7,11 +7,11 @@ using System.Collections.Generic;
 public class InnBuildBean
 {
     //墙数据
-    public List<InnResBean> listWall;
+    public List<InnResBean> listWall = new List<InnResBean>();
     //地板数据
-    public List<InnResBean> listFloor;
+    public List<InnResBean> listFloor=new List<InnResBean>();
     //家具数据
-    public List<InnResBean> listFurniture;
+    public List<InnResBean> listFurniture = new List<InnResBean>();
 
     public int innWidth = 9;//客栈宽
     public int innHeight = 9;//客栈高
@@ -27,42 +27,34 @@ public class InnBuildBean
     /// </summary>
     /// <param name="width"></param>
     /// <param name="height"></param>
-    public void ChangeInnSize(int width, int height)
+    public void ChangeInnSize(InnBuildManager innBuildManager,int width, int height)
     {
         this.innWidth = width;
         this.innHeight = height;
-        InitWall();
+        InitWall(innBuildManager);
         InitFloor();
     }
+
+    public void ChangeInnSize(List<InnResBean> listDoor, int width, int height)
+    {
+        this.innWidth = width;
+        this.innHeight = height;
+        InitWall(listDoor);
+        InitFloor();
+    }
+
 
     /// <summary>
     /// 初始化墙壁
     /// </summary>
-    public void InitWall()
+    public void InitWall(List<InnResBean> listDoor)
     {
-        List<InnResBean> doorList = GetDoorList();
-        if (listWall == null)
+        InnResBean wallTempData = null;
+        if (!CheckUtil.ListIsNull(listWall))
         {
-            //没有墙时处理
-            listWall = new List<InnResBean>();
+            wallTempData = listWall[0];
         }
-        else
-        {
-            //扩建时的处理
-            //先删除不在范围内的
-            for (int i = 0; i < listWall.Count; i++)
-            {
-                InnResBean itemData = listWall[i];
-                if (itemData.startPosition.x <= innWidth - 2
-                    && itemData.startPosition.x > 0
-                     && itemData.startPosition.y > 0
-                      && itemData.startPosition.y <= innHeight - 2)
-                {
-                    listWall.RemoveAt(i);
-                    i--;
-                }
-            }
-        }
+        listWall = new List<InnResBean>();
         //建造墙壁
         for (int i = 0; i < innWidth; i++)
         {
@@ -82,30 +74,26 @@ public class InnBuildBean
                 }
                 if (isBuild)
                 {
-                    bool isHas = false;
-                    for (int h = 0; h < listWall.Count; h++)
+                    InnResBean itemData = new InnResBean();
+                    itemData.startPosition = new Vector3Bean(i, f);
+                    //如果有预设 就使用预设墙壁
+                    if (wallTempData == null)
                     {
-                        InnResBean itemWall = listWall[i];
-                        if (itemWall.startPosition.x == i && itemWall.startPosition.y == f)
-                        {
-                            isHas = true;
-                            break;
-                        }
+                        itemData.id = wallTempData.id;
                     }
-                    if (!isHas)
+                    //没有预设就使用默认墙壁
+                    else
                     {
-                        InnResBean itemData = new InnResBean();
                         itemData.id = 20001;
-                        itemData.startPosition = new Vector3Bean(i, f);
-                        listWall.Add(itemData);
                     }
+                    listWall.Add(itemData);
                 }
             }
         }
         ///移除门所占墙壁
-        for (int i = 0; i < doorList.Count; i++)
+        for (int i = 0; i < listDoor.Count; i++)
         {
-            InnResBean itemData = doorList[i];
+            InnResBean itemData = listDoor[i];
             for (int f = 0; f < itemData.listPosition.Count; f++)
             {
                 Vector3Bean doorPositon = itemData.listPosition[f];
@@ -121,7 +109,11 @@ public class InnBuildBean
             }
         }
     }
-
+    public void InitWall(InnBuildManager innBuildManager)
+    {
+        List<InnResBean> listDoor = GetDoorList(innBuildManager);
+        InitWall(listDoor);
+    }
     /// <summary>
     /// 初始化地板
     /// </summary>
@@ -198,14 +190,15 @@ public class InnBuildBean
     /// 获取门
     /// </summary>
     /// <returns></returns>
-    public List<InnResBean> GetDoorList()
+    public List<InnResBean> GetDoorList(InnBuildManager innBuildManager)
     {
         List<InnResBean> doorList = new List<InnResBean>();
         List<InnResBean> allData = GetFurnitureList();
         for (int i = 0; i < allData.Count; i++)
         {
             InnResBean itemData = allData[i];
-            if (itemData.id >= 90000 && itemData.id < 100000)
+            BuildItemBean buildItemData = innBuildManager.GetBuildDataById(itemData.id);
+            if (buildItemData.build_type == (int)BuildItemTypeEnum.Door)
             {
                 doorList.Add(itemData);
             }

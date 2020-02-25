@@ -204,22 +204,23 @@ public class GameDataBean
     /// <summary>
     /// 修改建筑材料数量
     /// </summary>
-    public void AddBuildNumber(long buildId, long number)
+    public long AddBuildNumber(long buildId, long number)
     {
-        AddItem(buildId, number, listBuild);
+       return AddItem(buildId, number, listBuild);
     }
 
     /// <summary>
     /// 修改道具数量
     /// </summary>
-    public void AddItemsNumber(long itemsId, long number)
+    public long AddItemsNumber(long itemsId, long number)
     {
-        AddItem(itemsId, number, listItems);
+        return AddItem(itemsId, number, listItems);
     }
 
-    public void AddItem(long buildId, long number, List<ItemBean> list)
+    public long AddItem(long buildId, long number, List<ItemBean> list)
     {
         bool hasData = false;
+        long remainNumber = 0;
         for (int i = 0; i < list.Count; i++)
         {
             ItemBean item = list[i];
@@ -233,13 +234,16 @@ public class GameDataBean
                     list.RemoveAt(i);
                     i--;
                 }
+                remainNumber = item.itemNumber;
                 break;
             }
         }
         if (!hasData && number > 0)
         {
             list.Add(new ItemBean(buildId, number));
+            remainNumber = number;
         }
+        return remainNumber;
     }
 
     /// <summary>

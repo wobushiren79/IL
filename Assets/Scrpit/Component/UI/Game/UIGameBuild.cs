@@ -51,6 +51,8 @@ public class UIGameBuild : UIGameComponent, IRadioGroupCallBack
     public override void CloseUI()
     {
         base.CloseUI();
+        //删除当前选中
+        ((ControlForBuildCpt)(uiGameManager.controlHandler.GetControl(ControlHandler.ControlEnum.Build))).ClearBuildItem();
         SetInnBuildActive(true, true);
         //时间添加1小时
         uiGameManager.gameTimeHandler.AddHour(1);
@@ -90,8 +92,6 @@ public class UIGameBuild : UIGameComponent, IRadioGroupCallBack
     public void CreateBuildList(BuildItemTypeEnum type)
     {
         buildType = type;
-        //删除当前选中
-        ((ControlForBuildCpt)(uiGameManager.controlHandler.GetControl(ControlHandler.ControlEnum.Build))).ClearBuildItem();
         if (listBuildContent == null)
             return;
         if (itemBuildModel == null)
@@ -177,6 +177,9 @@ public class UIGameBuild : UIGameComponent, IRadioGroupCallBack
     #region  类型选择回调
     public void RadioButtonSelected(RadioGroupView rgView, int position, RadioButtonView rbview)
     {
+        //删除当前选中
+        ((ControlForBuildCpt)(uiGameManager.controlHandler.GetControl(ControlHandler.ControlEnum.Build))).ClearBuildItem();
+        btDismantle.gameObject.SetActive(true);
         if (rbview == rbTypeTable)
         {
             SetInnBuildActive(true, true);
@@ -201,6 +204,7 @@ public class UIGameBuild : UIGameComponent, IRadioGroupCallBack
         else if (rbview == rbTypeFloor)
         {
             SetInnBuildActive(false, false);
+            btDismantle.gameObject.SetActive(false);
             CreateBuildList(BuildItemTypeEnum.Floor);
         }
     }

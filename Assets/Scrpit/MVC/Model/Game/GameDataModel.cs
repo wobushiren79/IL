@@ -54,9 +54,10 @@ public class GameDataModel : BaseMVCModel
         doorPositionList.Add(new Vector3(4, 0, 0));
         doorPositionList.Add(new Vector3(5, 0, 0));
         doorPositionList.Add(new Vector3(6, 0, 0));
-        gameData.innBuildData.AddFurniture(new InnResBean(90001, new Vector3(4.5f, 0.5f, 0), doorPositionList, Direction2DEnum.Left));
+        InnResBean innResDoor = new InnResBean(90001, new Vector3(4.5f, 0.5f, 0), doorPositionList, Direction2DEnum.Left);
+        gameData.innBuildData.AddFurniture(innResDoor);
         //修改客栈大小
-        gameData.innBuildData.ChangeInnSize(9, 9);
+        gameData.innBuildData.ChangeInnSize(new List<InnResBean>() { innResDoor }, 9, 9);
 
         //添加家具
         //TODO 测试 

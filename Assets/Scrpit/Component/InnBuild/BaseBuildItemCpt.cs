@@ -48,6 +48,17 @@ public class BaseBuildItemCpt : BaseMonoBehaviour
     /// 设置数据
     /// </summary>
     /// <param name="buildItemData"></param>
+    /// <param name="spIcon"></param>
+    public void SetData(BuildItemBean buildItemData, Sprite spIcon)
+    {
+        SetData(buildItemData);
+        SetSprite(spIcon, spIcon, spIcon, spIcon);
+    }
+
+    /// <summary>
+    /// 设置数据
+    /// </summary>
+    /// <param name="buildItemData"></param>
     /// <param name="spLeft"></param>
     /// <param name="spRight"></param>
     /// <param name="spDown"></param>

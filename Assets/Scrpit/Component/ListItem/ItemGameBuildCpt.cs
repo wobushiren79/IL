@@ -82,7 +82,7 @@ public class ItemGameBuildCpt : ItemGameBaseCpt
     /// 设置美观值
     /// </summary>
     /// <param name="aesthetics"></param>
-    public void SetAesthetics(int aesthetics)
+    public void SetAesthetics(float aesthetics)
     {
         if (tvAesthetics != null)
             tvAesthetics.text = "+ " + aesthetics;

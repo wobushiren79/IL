@@ -94,6 +94,11 @@ public class InnBuildManager : BaseManager, IBuildDataView
                     Sprite spDoor = GetFurnitureSpriteByName(listIcon[0]);
                     buildDoor.SetData(buildItemData, spDoor, spDoor, spDoor, spDoor);
                     break;
+                case BuildItemTypeEnum.Floor:
+                    BuildFloorCpt buildFloor = (BuildFloorCpt)buildItemCpt;
+                    Sprite spFloor = GetFloorSpriteByName(buildItemData.icon_key);
+                    buildFloor.SetData(buildItemData, spFloor);
+                    break;
                 default:
                     buildItemCpt.SetData(buildItemData);
                     break;

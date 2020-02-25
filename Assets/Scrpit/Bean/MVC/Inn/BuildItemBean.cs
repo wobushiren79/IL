@@ -13,7 +13,7 @@ public class BuildItemBean : BaseBean
     public string tile_name;
     public string name;
     public string content;
-    public int aesthetics;//美观值
+    public float aesthetics;//美观值
 
     /// <summary>
     /// 获取图标数据
@@ -23,4 +23,5 @@ public class BuildItemBean : BaseBean
     {
         return StringUtil.SplitBySubstringForListStr(icon_list, ',');
     }
+
 }

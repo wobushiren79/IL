@@ -43,7 +43,7 @@ public class ItemTownCerpenterCpt : ItemGameBaseCpt, DialogView.IDialogCallBack
         InnBuildManager innBuildManager = GetUIManager<UIGameManager>().innBuildManager;
 
         storeInfo = itemData;
-        int aesthetics = 0;
+        float aesthetics = 0;
         string iconKey = "";
         string name = "";
         string content = "";
@@ -74,7 +74,7 @@ public class ItemTownCerpenterCpt : ItemGameBaseCpt, DialogView.IDialogCallBack
     /// </summary>
     /// <param name="type"></param>
     /// <param name="a"></param>
-    public void SetAttribute(int type, int aesthetics)
+    public void SetAttribute(int type, float aesthetics)
     {
         if (type == 0)
         {

@@ -9,7 +9,7 @@ public class InnAttributesBean
     public string innName;//客栈名称
     public int innLevel;//客栈等级 （天地人1-5星  3 2 1）
 
-    public long aesthetics;//客栈美观数
+    public float aesthetics;//客栈美观数
     public long richness;//菜品丰富度
     public int praise;//好评
 
@@ -167,7 +167,7 @@ public class InnAttributesBean
     /// 获取美观值
     /// </summary>
     /// <returns></returns>
-    public long GetAesthetics(out string level)
+    public int GetAesthetics(out string level)
     {
         level = "???";
         if (aesthetics <= 100)
@@ -198,7 +198,7 @@ public class InnAttributesBean
         {
             level = GameCommonInfo.GetUITextById(126);
         }
-        return aesthetics;
+        return (int)aesthetics;
     }
 
     /// <summary>
