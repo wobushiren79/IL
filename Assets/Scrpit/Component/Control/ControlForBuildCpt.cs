@@ -9,14 +9,11 @@ public class ControlForBuildCpt : BaseControl
     public RectTransform screenRTF;
     //镜头对象
     public CharacterMoveCpt cameraMove;
-    //建筑放置容器
-    public GameObject buildContainer;
-
+    //建筑临时存放容器
+    public GameObject buildItemTempContainer;
 
     public UIGameBuild uiGameBuild;
-    //建造者
-    public InnFurnitureBuilder innFurnitureBuilder;
-    public InnWallBuilder innWallBuilder;
+
     //地形模型
     public GameObject listBuildSpaceContent;
     public GameObject itemBuildSpaceModel;
@@ -37,11 +34,19 @@ public class ControlForBuildCpt : BaseControl
     protected GameDataManager gameDataManager;
     //提示框
     protected ToastManager toastManager;
+    //建造者
+    protected InnFurnitureBuilder innFurnitureBuilder;
+    protected InnWallBuilder innWallBuilder;
+    protected InnFloorBuilder innFloorBuilder;
 
     private void Awake()
     {
         gameDataManager = Find<GameDataManager>(ImportantTypeEnum.GameDataManager);
         toastManager = Find<ToastManager>(ImportantTypeEnum.ToastManager);
+
+        innFurnitureBuilder = Find<InnFurnitureBuilder>(ImportantTypeEnum.InnBuilder);
+        innWallBuilder = Find<InnWallBuilder>(ImportantTypeEnum.InnBuilder);
+        innFloorBuilder = Find<InnFloorBuilder>(ImportantTypeEnum.InnBuilder);
     }
 
     private void Update()
@@ -61,7 +66,7 @@ public class ControlForBuildCpt : BaseControl
         //是否能建造
         bool isCanBuild = CheckCanBuild();
         //检测是否控制建造
-        CheckBuildConfirm(isCanBuild, buildPosition);
+        HandleForBuildConfirm(isCanBuild, buildPosition);
     }
 
     public override void StartControl()
@@ -106,105 +111,6 @@ public class ControlForBuildCpt : BaseControl
     }
 
     /// <summary>
-    /// 检测是否操作建造
-    /// </summary>
-    /// <param name="isCanBuild"></param>
-    public void CheckBuildConfirm(bool isCanBuild, Vector3 buildPosition)
-    {
-        if (buildItemCpt == null)
-            return;
-        if (Input.GetButtonDown(InputInfo.Confirm))
-        {
-            //防止误触右边的UI
-            if (UnityEngine.Screen.width - Input.mousePosition.x - 350 < 0)
-                return;
-            //能建造
-            if (isCanBuild)
-            {
-                //镜头正对建造点
-                SetFollowPosition(buildPosition);
-                //建筑物位置设置
-                buildItemCpt.transform.position = buildPosition + new Vector3(-0.5f, 0.5f);
-                //获取提示区域所占点
-                List<Vector3> listBuildPosition = new List<Vector3>();
-                for (int i = 0; i < listBuildSpaceSR.Count; i++)
-                {
-                    //精度修正
-                    listBuildPosition.Add(Vector3Int.CeilToInt(listBuildSpaceSR[i].transform.position));
-                }
-
-                //如果是拆除
-                if (buildItemCpt.buildItemData.id == -1)
-                {
-                    //获取拆除位置的家具数据
-                    InnBuildBean buildData = gameDataManager.gameData.GetInnBuildData();
-                    InnResBean itemFurnitureData = buildData.GetFurnitureByPosition(buildPosition);
-                    if (itemFurnitureData == null)
-                        return;
-                    //如果是最后一扇门则不能删除
-                    if (itemFurnitureData.id > 90000 && itemFurnitureData.id < 100000 && buildData.GetDoorList().Count <= 1)
-                    {
-                        toastManager.ToastHint(GameCommonInfo.GetUITextById(1004));
-                    }
-                    else
-                    {
-                        buildData.GetFurnitureList().Remove(itemFurnitureData);
-                        innFurnitureBuilder.DestroyFurnitureByPosition(listBuildPosition[0]);
-                        //如果是门。需要重置一下墙体
-                        if (itemFurnitureData.id > 90000 && itemFurnitureData.id < 100000)
-                        {
-                            gameDataManager.gameData.GetInnBuildData().InitWall();
-                            innWallBuilder.StartBuild();
-                        }
-                        //背包里添加一个
-                        gameDataManager.gameData.AddBuildNumber(itemFurnitureData.id, 1);
-                    }
-                }
-                else
-                {
-                    //增加一个家具
-                    InnResBean addData = new InnResBean(buildItemCpt.buildItemData.id, buildItemCpt.transform.position, listBuildPosition, buildItemCpt.direction);
-                    gameDataManager.gameData.GetInnBuildData().AddFurniture(addData);
-                    //如果是门。需要重置一下墙体
-                    if (buildItemCpt.buildItemData.id > 90000 && buildItemCpt.buildItemData.id < 100000)
-                    {
-                        gameDataManager.gameData.GetInnBuildData().InitWall();
-                        innWallBuilder.StartBuild();
-                    }
-                    //背包里删除一个
-                    gameDataManager.gameData.AddBuildNumber(buildItemCpt.buildItemData.id, -1);
-                    //动画
-                    buildItemCpt.transform
-                        .DOScale(new Vector3(0.2f, 0.2f, 0.2f), 0.5f)
-                        .From()
-                        .SetEase(Ease.OutBack);
-                    ClearSelectBuildItem();
-                }
-                //刷新一下建筑占地
-                InitBuildingExist();
-                //刷新UI
-                //里面有移除选中功能
-                uiGameBuild.RefreshUI();
-            }
-            //不能建造 相关提示
-            else
-            {
-                //不能建造的原因
-                if (buildItemCpt.buildItemData.id == -1)
-                {
-                    //如果是拆除模式提示
-                    toastManager.ToastHint(GameCommonInfo.GetUITextById(1003));
-                }
-                else
-                {
-                    //如果是正常模式提示
-                    toastManager.ToastHint(GameCommonInfo.GetUITextById(1002));
-                }
-            }
-        }
-    }
-
-    /// <summary>
     /// 根据ID展示建筑
     /// </summary>
     /// <param name="id"></param>
@@ -214,6 +120,8 @@ public class ControlForBuildCpt : BaseControl
         ClearBuildItem();
         //建造建筑
         GameObject buildItemObj = innFurnitureBuilder.BuildFurniture(id);
+        //物体先在建筑控件上显示
+        buildItemObj.transform.parent = buildItemTempContainer.transform;
         if (buildItemObj == null)
             return;
         buildItemCpt = buildItemObj.GetComponent<BaseBuildItemCpt>();
@@ -344,6 +252,164 @@ public class ControlForBuildCpt : BaseControl
     }
 
     /// <summary>
+    /// 检测是否操作建造
+    /// </summary>
+    /// <param name="isCanBuild"></param>
+    protected void HandleForBuildConfirm(bool isCanBuild, Vector3 buildPosition)
+    {
+        if (buildItemCpt == null)
+            return;
+        if (Input.GetButtonDown(InputInfo.Confirm))
+        {
+            //防止误触右边的UI
+            if (UnityEngine.Screen.width - Input.mousePosition.x - 350 < 0)
+                return;
+            //能建造
+            if (isCanBuild)
+            {
+                //镜头正对建造点
+                SetFollowPosition(buildPosition);
+                //建筑物位置设置
+                buildItemCpt.transform.position = buildPosition + new Vector3(-0.5f, 0.5f);
+                //获取提示区域所占点
+                List<Vector3> listBuildPosition = new List<Vector3>();
+                for (int i = 0; i < listBuildSpaceSR.Count; i++)
+                {
+                    //精度修正
+                    listBuildPosition.Add(Vector3Int.CeilToInt(listBuildSpaceSR[i].transform.position));
+                }
+
+                //如果是拆除
+                if (buildItemCpt.buildItemData.build_type == (int)BuildItemTypeEnum.Other && buildItemCpt.buildItemData.id == -1)
+                {
+                    BuildItemForDismantle(buildPosition, listBuildPosition[0]);
+                }
+                //如果是地板
+                else if (buildItemCpt.buildItemData.build_type == (int)BuildItemTypeEnum.Floor)
+                {
+                    BuildItemForFloor(buildPosition);
+                }
+                //如果是家具
+                else
+                {
+                    BuildItemForFurniture(listBuildPosition);
+                }
+                //刷新一下建筑占地
+                InitBuildingExist();
+                //刷新UI
+                //里面有移除选中功能
+                uiGameBuild.RefreshUI();
+            }
+            //不能建造 相关提示
+            else
+            {
+                //不能建造的原因
+                if (buildItemCpt.buildItemData.id == -1)
+                {
+                    //如果是拆除模式提示
+                    toastManager.ToastHint(GameCommonInfo.GetUITextById(1003));
+                }
+                else
+                {
+                    //如果是正常模式提示
+                    toastManager.ToastHint(GameCommonInfo.GetUITextById(1002));
+                }
+            }
+        }
+    }
+
+    /// <summary>
+    /// 拆除
+    /// </summary>
+    /// <param name="buildPosition">家具的位置</param>
+    /// <param name="sceneFurniturePosition">家具在场景中的位置</param>
+    protected void BuildItemForDismantle(Vector3 buildPosition, Vector3 sceneFurniturePosition)
+    {
+        //获取拆除位置的家具数据
+        InnBuildBean buildData = gameDataManager.gameData.GetInnBuildData();
+        InnResBean itemFurnitureData = buildData.GetFurnitureByPosition(buildPosition);
+        if (itemFurnitureData == null)
+            return;
+        //如果是最后一扇门则不能删除
+        if (itemFurnitureData.id > 90000 && itemFurnitureData.id < 100000 && buildData.GetDoorList().Count <= 1)
+        {
+            toastManager.ToastHint(GameCommonInfo.GetUITextById(1004));
+        }
+        else
+        {
+            //移除数据
+            buildData.GetFurnitureList().Remove(itemFurnitureData);
+            //移除场景中的建筑物
+            innFurnitureBuilder.DestroyFurnitureByPosition(sceneFurniturePosition);
+            //如果是门。需要重置一下墙体
+            if (itemFurnitureData.id > 90000 && itemFurnitureData.id < 100000)
+            {
+                gameDataManager.gameData.GetInnBuildData().InitWall();
+                innWallBuilder.StartBuild();
+            }
+            //背包里添加一个
+            gameDataManager.gameData.AddBuildNumber(itemFurnitureData.id, 1);
+        }
+    }
+
+    /// <summary>
+    /// 建造家具
+    /// </summary>
+    /// <param name="listBuildPosition"></param>
+    protected void BuildItemForFurniture(List<Vector3> listBuildPosition)
+    {
+        //将家具添加到家具容器中
+        buildItemCpt.transform.parent = innFurnitureBuilder.buildContainer.transform;
+        //增加一个家具
+        InnResBean addData = new InnResBean(buildItemCpt.buildItemData.id, buildItemCpt.transform.position, listBuildPosition, buildItemCpt.direction);
+        gameDataManager.gameData.GetInnBuildData().AddFurniture(addData);
+        //如果是门。需要重置一下墙体
+        if (buildItemCpt.buildItemData.build_type == (int)BuildItemTypeEnum.Door)
+        {
+            gameDataManager.gameData.GetInnBuildData().InitWall();
+            innWallBuilder.StartBuild();
+        }
+        //背包里删除一个
+        gameDataManager.gameData.AddBuildNumber(buildItemCpt.buildItemData.id, -1);
+        //动画
+        buildItemCpt.transform
+            .DOScale(new Vector3(0.2f, 0.2f, 0.2f), 0.5f)
+            .From()
+            .SetEase(Ease.OutBack);
+        ClearSelectBuildItem();
+    }
+
+    /// <summary>
+    /// 建造地板
+    /// </summary>
+    /// <param name="buildPosition"></param>
+    protected void BuildItemForFloor(Vector3 buildPosition)
+    {
+        if (buildItemCpt == null)
+            return;
+        //tile坐标需要从左下角计算 所以需要x-1
+        buildPosition -= new Vector3(1, 0, 0);
+        //获取该点地板数据
+        InnResBean floorData = gameDataManager.gameData.GetInnBuildData().GetFloorByPosition(buildPosition);
+        Vector3Int changePosition = Vector3Int.zero;
+        //如果没有地板则直接在建造点上建造
+        if (floorData == null)
+        {
+            changePosition = Vector3Int.CeilToInt(buildPosition);
+            floorData = new InnResBean(buildItemCpt.buildItemData.id, buildItemCpt.transform.position, null, Direction2DEnum.Left);
+            gameDataManager.gameData.GetInnBuildData().listFloor.Add(floorData);   
+        }
+        //如果有地板则替换地板
+        else
+        {
+            changePosition = Vector3Int.CeilToInt(floorData.GetStartPosition());
+            floorData.id = buildItemCpt.buildItemData.id;
+        }
+        innFloorBuilder.ChangeFloor(changePosition, buildItemCpt.buildItemData.tile_name);
+        ClearBuildItem();
+    }
+
+    /// <summary>
     /// 检测是否能建造
     /// </summary>
     /// <returns></returns>
@@ -398,7 +464,15 @@ public class ControlForBuildCpt : BaseControl
     protected bool CheckHasBuild(Vector3 position)
     {
         BuildItemTypeEnum buildType = (BuildItemTypeEnum)buildItemCpt.buildItemData.build_type;
-        return listBuildingExist.Contains(position);
+        if (buildType == BuildItemTypeEnum.Floor)
+        {
+            return false;
+        }
+        else
+        {
+            return listBuildingExist.Contains(position);
+        }
+
     }
 
     /// <summary>

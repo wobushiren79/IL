@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.Tilemaps;
 
 public class ListDataEditor : Editor
 {
@@ -122,8 +123,8 @@ public class ListDataEditor : Editor
     }
 
 
-    [MenuItem("Custom/List/AddBuildIcon")]
-    public static void AddBuildIcon()
+    [MenuItem("Custom/List/AddBuildItemData")]
+    public static void AddBuildItemData()
     {
         GameObject Target = Selection.gameObjects[0];
         InnBuildManager innBuildManager = Target.GetComponent<InnBuildManager>();
@@ -132,7 +133,12 @@ public class ListDataEditor : Editor
         AddIconBeanDictionaryByFolder("Assets/Texture/InnBuild/Stove/", innBuildManager.listFurnitureIcon);
         AddIconBeanDictionaryByFolder("Assets/Texture/InnBuild/Counter/", innBuildManager.listFurnitureIcon);
         AddIconBeanDictionaryByFolder("Assets/Texture/InnBuild/Door/", innBuildManager.listFurnitureIcon);
+        innBuildManager.listFloorIcon.Clear();
         AddIconBeanDictionaryByFolder("Assets/Texture/Tile/Floor/", innBuildManager.listFloorIcon);
+        innBuildManager.listFloorTile.Clear();
+        AddTileBeanDictionaryByFolder("Assets/Tile/Tiles/Floor/", innBuildManager.listFloorTile);
+        innBuildManager.listWallTile.Clear();
+        AddTileBeanDictionaryByFolder("Assets/Tile/Tiles/Wall/", innBuildManager.listWallTile);
     }
 
     //[MenuItem("Custom/List/AddFurnitureCpt")]
@@ -196,6 +202,28 @@ public class ListDataEditor : Editor
             });
         }
     }
+
+    /// <summary>
+    ///  根据文件夹下所有文件添加字典
+    /// </summary>
+    /// <param name="folderPath"></param>
+    /// <param name="map"></param>
+    public static void AddTileBeanDictionaryByFolder(string folderPath, TileBeanDictionary map)
+    {
+        FileInfo[] files = FileUtil.GetFilesByPath(folderPath);
+        foreach (FileInfo item in files)
+        {
+            Object[] objs = AssetDatabase.LoadAllAssetsAtPath(folderPath + item.Name);
+            objs.ToList().ForEach(obj =>
+            {
+                if (obj as TileBase != null)
+                {
+                    map.Add(obj.name, obj as TileBase);
+                }
+            });
+        }
+    }
+
     /// <summary>
     /// 根据文件夹下所有文件添加字典
     /// </summary>

@@ -1,0 +1,88 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &5005817469697310067
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5005817469697310066}
+  - component: {fileID: 5005817469697310065}
+  - component: {fileID: 5005817469697310064}
+  - component: {fileID: 5005817469697310063}
+  m_Layer: 0
+  m_Name: InnBuilder
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5005817469697310066
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5005817469697310067}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &5005817469697310065
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5005817469697310067}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 575e44ee5cb8d054a9714193be33d3e5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  buildTilemap: {fileID: 0}
+  buildTileList:
+  - key: floor_wooden_1
+    value: {fileID: 11400000, guid: b27b0368cf5c92b49b52f2308daffc5a, type: 2}
+  innBuildManager: {fileID: 0}
+  gameDataManager: {fileID: 0}
+--- !u!114 &5005817469697310064
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5005817469697310067}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1428910c44f7a054a937c4d99825199c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  buildTilemap: {fileID: 0}
+  buildTileList:
+  - key: wall_wooden_1
+    value: {fileID: 11400000, guid: 838c236eb0cdab04ea5b2560837b4086, type: 2}
+  innBuildManager: {fileID: 0}
+  gameDataManager: {fileID: 0}
+--- !u!114 &5005817469697310063
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5005817469697310067}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 950b5fbf49461fe4c9554c4990a45d0d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  innBuildManager: {fileID: 0}
+  gameDataManager: {fileID: 0}
+  buildContainer: {fileID: 0}
+  innHandler: {fileID: 0}
+  innFoodManager: {fileID: 0}

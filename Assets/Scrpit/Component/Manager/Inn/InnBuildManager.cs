@@ -1,12 +1,13 @@
 ﻿using UnityEngine;
 using UnityEditor;
 using System.Collections.Generic;
+using UnityEngine.Tilemaps;
 
 public class InnBuildManager : BaseManager, IBuildDataView
 {
     //建造物品数据
     public Dictionary<long, BuildItemBean> listBuildData;
-    
+
     public BuildDataController buildDataController;
 
     //墙体tile列表
@@ -39,7 +40,8 @@ public class InnBuildManager : BaseManager, IBuildDataView
     /// </summary>
     /// <param name="name"></param>
     /// <returns></returns>
-    public Sprite GetFloorSpriteByName(string name) {
+    public Sprite GetFloorSpriteByName(string name)
+    {
 
         return GetSpriteByName(name, listFloorIcon);
     }
@@ -112,6 +114,25 @@ public class InnBuildManager : BaseManager, IBuildDataView
         return GetDataById(id, listBuildData);
     }
 
+    /// <summary>
+    /// 根据名字获取tile
+    /// </summary>
+    /// <param name="name"></param>
+    /// <returns></returns>
+    public TileBase GetFloorTileByName(string name)
+    {
+        return GetTileBaseByName(name, listFloorTile);
+    }
+
+    /// <summary>
+    /// 根据名字获取tile
+    /// </summary>
+    /// <param name="name"></param>
+    /// <returns></returns>
+    public TileBase GetWallTileByName(string name)
+    {
+        return GetTileBaseByName(name, listWallTile);
+    }
 
     #region 建筑数据回调
     public void GetAllBuildItemsSuccess(List<BuildItemBean> listData)

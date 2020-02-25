@@ -10,6 +10,7 @@ public class BuildItemBean : BaseBean
     public long model_id;
     public string icon_key;
     public string icon_list;
+    public string tile_name;
     public string name;
     public string content;
     public int aesthetics;//美观值

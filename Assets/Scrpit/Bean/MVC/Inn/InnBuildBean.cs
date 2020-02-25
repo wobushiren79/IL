@@ -27,7 +27,7 @@ public class InnBuildBean
     /// </summary>
     /// <param name="width"></param>
     /// <param name="height"></param>
-    public void ChangeInnSize(int width,int height)
+    public void ChangeInnSize(int width, int height)
     {
         this.innWidth = width;
         this.innHeight = height;
@@ -102,7 +102,7 @@ public class InnBuildBean
                 }
             }
         }
-        ///移除墙壁
+        ///移除门所占墙壁
         for (int i = 0; i < doorList.Count; i++)
         {
             InnResBean itemData = doorList[i];
@@ -127,15 +127,26 @@ public class InnBuildBean
     /// </summary>
     public void InitFloor()
     {
-        listFloor = new List<InnResBean>();
+        if (listFloor == null)
+            listFloor = new List<InnResBean>();
         for (int i = 0; i < innWidth; i++)
         {
             for (int f = 0; f < innHeight; f++)
             {
-                InnResBean itemData = new InnResBean();
-                itemData.id = 10001;
-                itemData.startPosition = new Vector3Bean(i, f);
-                listFloor.Add(itemData);
+                bool hasFloor = false;
+                foreach (InnResBean innItem in listFloor)
+                {
+                    //如果已经有这个点的地板
+                    if (innItem.startPosition.x == i && innItem.startPosition.y == f)
+                    {
+                        hasFloor = true;
+                        break;
+                    }
+                }
+                if (!hasFloor)
+                {
+                    InnResBean itemData = new InnResBean(10001, new Vector3(i, f), null, Direction2DEnum.Left);
+                }
             }
         }
     }
@@ -151,6 +162,25 @@ public class InnBuildBean
         if (listFurniture == null)
             listFurniture = new List<InnResBean>();
         listFurniture.Add(innRes);
+    }
+
+    /// <summary>
+    /// 通过坐标获取地板
+    /// </summary>
+    /// <param name="position"></param>
+    /// <returns></returns>
+    public InnResBean GetFloorByPosition(Vector3 position)
+    {
+        if (listFloor == null)
+            return null;
+        foreach (InnResBean itemData in listFloor)
+        {
+            if (itemData.GetStartPosition() == position)
+            {
+                return itemData;
+            }
+        }
+        return null;
     }
 
     /// <summary>
@@ -194,7 +224,7 @@ public class InnBuildBean
             return null;
         foreach (InnResBean itemData in listFurniture)
         {
-            foreach(Vector3Bean itemPosition in  itemData.listPosition)
+            foreach (Vector3Bean itemPosition in itemData.listPosition)
             {
                 if (itemPosition.x == position.x && itemPosition.y == position.y)
                 {

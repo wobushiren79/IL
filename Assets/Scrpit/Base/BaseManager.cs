@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using UnityEditor;
 using System.Collections.Generic;
+using UnityEngine.Tilemaps;
 
 public class BaseManager : BaseMonoBehaviour
 {
@@ -17,6 +18,22 @@ public class BaseManager : BaseMonoBehaviour
             return null;
         if (map.TryGetValue(name, out AudioClip audioClip))
             return audioClip;
+        else
+            return null;
+    }
+
+    /// <summary>
+    /// 根据名字获取tile
+    /// </summary>
+    /// <param name="name"></param>
+    /// <param name="map"></param>
+    /// <returns></returns>
+    public virtual TileBase GetTileBaseByName(string name, TileBeanDictionary map)
+    {
+        if (name == null)
+            return null;
+        if (map.TryGetValue(name, out TileBase tile))
+            return tile;
         else
             return null;
     }

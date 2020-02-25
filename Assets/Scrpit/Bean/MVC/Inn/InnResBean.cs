@@ -34,4 +34,9 @@ public class InnResBean
             listPosition = new List<Vector3Bean>();
         return listPosition;
     }
+
+    public Vector3 GetStartPosition()
+    {
+        return TypeConversionUtil.Vector3BeanToVector3(startPosition);
+    }
 }

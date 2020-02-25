@@ -1,19 +1,20 @@
 ﻿using UnityEngine;
 using UnityEditor;
 using System.Collections.Generic;
+using UnityEngine.Tilemaps;
 
 public class InnFloorBuilder : BaseTilemapBuilder
 {
-    public InnBuildManager innBuildManager;
-    public GameDataManager gameDataManager;
+    protected InnBuildManager innBuildManager;
+    protected GameDataManager gameDataManager;
 
     private void Awake()
     {
         gameDataManager = Find<GameDataManager>(ImportantTypeEnum.GameDataManager);
-        innBuildManager = Find<InnBuildManager>(ImportantTypeEnum.InnBuilder);
+        innBuildManager = Find<InnBuildManager>(ImportantTypeEnum.BuildManager);
     }
 
-    public  void StartBuild()
+    public void StartBuild()
     {
         if (gameDataManager != null && gameDataManager.gameData != null && gameDataManager.gameData.innBuildData != null)
         {
@@ -32,10 +33,31 @@ public class InnFloorBuilder : BaseTilemapBuilder
             return;
         for (int i = 0; i < listData.Count; i++)
         {
-            InnResBean itemData = listData[i];
-            BuildItemBean buildItemData= innBuildManager.GetBuildDataById(itemData.id);
-            //todo
-            Build(buildItemData.icon_key, (int)itemData.startPosition.x, (int)itemData.startPosition.y);
+            BuildFloor(listData[i]);
         }
+    }
+
+    /// <summary>
+    /// 修建地板
+    /// </summary>
+    /// <param name="itemData"></param>
+    public void BuildFloor(InnResBean itemData)
+    {
+        if (itemData == null)
+            return;
+        BuildItemBean buildItemData = innBuildManager.GetBuildDataById(itemData.id);
+        TileBase floorTile = innBuildManager.GetFloorTileByName(buildItemData.tile_name);
+        Build(floorTile, new Vector3Int((int)itemData.startPosition.x, (int)itemData.startPosition.y, 0));
+    }
+
+    /// <summary>
+    /// 改变地板
+    /// </summary>
+    /// <param name="itemData"></param>
+    /// <param name="changeTileName"></param>
+    public void ChangeFloor(Vector3Int changePosition,string changeTileName)
+    {
+        TileBase floorTile = innBuildManager.GetFloorTileByName(changeTileName);
+        Build(floorTile, changePosition);
     }
 }
