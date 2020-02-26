@@ -43,6 +43,20 @@ public class InnBuildBean
         InitFloor();
     }
 
+    /// <summary>
+    /// 改变墙体
+    /// </summary>
+    public void ChangeWall(InnBuildManager innBuildManager, long wallId)
+    {
+        if (listWall == null)
+            listWall = new List<InnResBean>();
+        listWall.Clear();
+        InnResBean innRes = new InnResBean();
+        innRes.id = wallId;
+        innRes.startPosition = new Vector3Bean(0,0);
+        listWall.Add(innRes);
+        InitWall(innBuildManager);
+    }
 
     /// <summary>
     /// 初始化墙壁
@@ -77,7 +91,7 @@ public class InnBuildBean
                     InnResBean itemData = new InnResBean();
                     itemData.startPosition = new Vector3Bean(i, f);
                     //如果有预设 就使用预设墙壁
-                    if (wallTempData == null)
+                    if (wallTempData != null)
                     {
                         itemData.id = wallTempData.id;
                     }

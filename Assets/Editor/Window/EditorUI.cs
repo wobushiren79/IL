@@ -684,14 +684,23 @@ public class EditorUI
                 break;
         }
         GUIPic(picPath, buildItem.icon_key);
-        buildItem.model_id = long.Parse(EditorGUILayout.TextArea(buildItem.model_id + "", GUILayout.Width(100), GUILayout.Height(20)));
+
+        switch ((BuildItemTypeEnum)buildItem.build_type)
+        {
+            case BuildItemTypeEnum.Floor:
+            case BuildItemTypeEnum.Wall:
+                GUILayout.Label("tile名字：", GUILayout.Width(50), GUILayout.Height(20));
+                buildItem.tile_name = EditorGUILayout.TextArea(buildItem.tile_name + "", GUILayout.Width(100), GUILayout.Height(20));
+                break;
+            default:
+                break;
+        }
 
         GUILayout.Label("名称：", GUILayout.Width(50), GUILayout.Height(20));
         buildItem.name = EditorGUILayout.TextArea(buildItem.name + "", GUILayout.Width(100), GUILayout.Height(20));
 
         GUILayout.Label("形容：", GUILayout.Width(50), GUILayout.Height(20));
         buildItem.content = EditorGUILayout.TextArea(buildItem.content + "", GUILayout.Width(100), GUILayout.Height(20));
-
         GUILayout.EndHorizontal();
     }
 

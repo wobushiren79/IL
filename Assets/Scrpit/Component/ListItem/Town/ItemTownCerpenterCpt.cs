@@ -207,15 +207,19 @@ public class ItemTownCerpenterCpt : ItemGameBaseCpt, DialogView.IDialogCallBack
             toastManager.ToastHint(GameCommonInfo.GetUITextById(1005));
             return;
         }
-        if (storeInfo.mark_type == 0 && innBuildData.listBuildDay.Count != 0)
+        if (storeInfo.store_goods_type == (int) StoreForCarpenterTypeEnum.Expansion && innBuildData.listBuildDay.Count != 0)
         {
             toastManager.ToastHint(GameCommonInfo.GetUITextById(1019));
             return;
         }
         DialogBean dialogBean = new DialogBean();
-        if (storeInfo.mark_type == 0)
+        if (storeInfo.store_goods_type == (int)StoreForCarpenterTypeEnum.Expansion)
         {
             dialogBean.content = string.Format(GameCommonInfo.GetUITextById(3010), 1 + "");
+        }
+        else if (storeInfo.store_goods_type == (int)StoreForCarpenterTypeEnum.Wall)
+        {
+            dialogBean.content = string.Format(GameCommonInfo.GetUITextById(3013), buildItemData.name + "");
         }
         else
             dialogBean.content = string.Format(GameCommonInfo.GetUITextById(3002), buildItemData.name);
@@ -229,10 +233,11 @@ public class ItemTownCerpenterCpt : ItemGameBaseCpt, DialogView.IDialogCallBack
         GameDataManager gameDataManager = GetUIManager<UIGameManager>().gameDataManager;
         ToastManager toastManager = GetUIManager<UIGameManager>().toastManager;
         GameTimeHandler gameTimeHandler = GetUIManager<UIGameManager>().gameTimeHandler;
+        InnBuildManager innBuildManager = GetUIManager<UIGameManager>().innBuildManager;
 
         gameDataManager.gameData.PayMoney(storeInfo.price_l, storeInfo.price_m, storeInfo.price_s);
         string toastStr;
-        if (storeInfo.mark_type == 0)
+        if (storeInfo.store_goods_type == (int)StoreForCarpenterTypeEnum.Expansion)
         {
             InnBuildBean innBuildData = gameDataManager.gameData.GetInnBuildData();
             innBuildData.buildLevel = int.Parse(storeInfo.mark);
@@ -245,6 +250,12 @@ public class ItemTownCerpenterCpt : ItemGameBaseCpt, DialogView.IDialogCallBack
 
             GetUIComponent<UITownCarpenter>().RefreshUI();
             toastStr = string.Format(GameCommonInfo.GetUITextById(1011), storeInfo.name);
+        }
+        else if (storeInfo.store_goods_type == (int)StoreForCarpenterTypeEnum.Wall)
+        {
+            InnBuildBean innBuildData = gameDataManager.gameData.GetInnBuildData();
+            innBuildData.ChangeWall(innBuildManager, buildItemData.id);
+            toastStr = GameCommonInfo.GetUITextById(1022);
         }
         else
         {
