@@ -2,15 +2,10 @@
 using UnityEditor;
 using System.Collections.Generic;
 
-public class BuildItemService 
+public class BuildItemService : BaseMVCService
 {
-    private readonly string tableNameForMain;
-    private readonly string tableNameForLeft;
-
-    public BuildItemService()
+    public BuildItemService() : base("build_item", "build_item_details_" + GameCommonInfo.GameConfig.language)
     {
-        tableNameForMain = "build_item";
-        tableNameForLeft = "build_item_details_" + GameCommonInfo.GameConfig.language;
     }
 
     /// <summary>
@@ -19,11 +14,7 @@ public class BuildItemService
     /// <returns></returns>
     public List<BuildItemBean> QueryAllData()
     {
-        return SQliteHandle.LoadTableData<BuildItemBean>
-            (ProjectConfigInfo.DATA_BASE_INFO_NAME, tableNameForMain,
-            new string[] { tableNameForLeft },
-            new string[] { "id" },
-            new string[] { "build_id" });
+        return BaseQueryAllData<BuildItemBean>("build_id");
     }
 
     /// <summary>
@@ -33,13 +24,43 @@ public class BuildItemService
     /// <returns></returns>
     public List<BuildItemBean> QueryDataByType(int type)
     {
-        string[] leftTable = new string[] { tableNameForLeft };
-        string[] mainKey = new string[] { "id" };
-        string[] leftKey = new string[] { "build_id" };
-        string[] colName = new string[] { tableNameForMain + ".build_type" };
-        string[] operations = new string[] { "=" };
-        string[] colValue = new string[] { ""+ type };
-        return SQliteHandle.LoadTableData<BuildItemBean>(ProjectConfigInfo.DATA_BASE_INFO_NAME, tableNameForMain, leftTable, mainKey, leftKey, colName, operations, colValue);
+        return BaseQueryData<BuildItemBean>("build_id", tableNameForMain + ".build_type", "" + type);
     }
 
+    /// <summary>
+    /// 插入数据
+    /// </summary>
+    /// <param name="buildItem"></param>
+    /// <returns></returns>
+    public bool InsertData(BuildItemBean buildItem)
+    {
+        List<string> listLeftKey = new List<string>
+        {
+            "build_id",
+            "name",
+            "content"
+        };
+        return BaseInsertDataWithLeft(buildItem, listLeftKey);
+    }
+
+    /// <summary>
+    /// 删除数据
+    /// </summary>
+    /// <param name="id"></param>
+    /// <returns></returns>
+    public bool DeleteData(long id)
+    {
+        return BaseDeleteDataWithLeft("id", "build_id", id+"");
+    }
+
+    /// <summary>
+    /// 更新数据
+    /// </summary>
+    public void Update(BuildItemBean buildItem)
+    {
+        if(DeleteData(buildItem.id))
+        {
+            InsertData(buildItem);
+        }
+    }
 }

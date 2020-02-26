@@ -27,15 +27,20 @@ public class ItemTownCerpenterCpt : ItemGameBaseCpt, DialogView.IDialogCallBack
     public StoreInfoBean storeInfo;
     public BuildItemBean buildItemData;
 
-    private void Start()
+    public InfoPromptPopupButton infoPromptPopup;
+
+    private void Awake()
     {
+        UIGameManager uiGameManager = GetUIManager<UIGameManager>();
         if (btSubmit != null)
             btSubmit.onClick.AddListener(SubmitBuy);
+        if (infoPromptPopup != null)
+            infoPromptPopup.SetPopupShowView(uiGameManager.infoPromptPopup);
     }
 
     public void RefreshUI()
     {
-        SetOwn(storeInfo.mark_type);
+        SetOwn((StoreForCarpenterTypeEnum)storeInfo.store_goods_type);
     }
 
     public void SetData(StoreInfoBean itemData)
@@ -47,7 +52,8 @@ public class ItemTownCerpenterCpt : ItemGameBaseCpt, DialogView.IDialogCallBack
         string iconKey = "";
         string name = "";
         string content = "";
-        if (storeInfo.mark_type == 0)
+        StoreForCarpenterTypeEnum type = (StoreForCarpenterTypeEnum)storeInfo.store_goods_type;
+        if (type == StoreForCarpenterTypeEnum.Expansion)
         {
             iconKey = storeInfo.icon_key;
             name = storeInfo.name;
@@ -56,17 +62,33 @@ public class ItemTownCerpenterCpt : ItemGameBaseCpt, DialogView.IDialogCallBack
         else
         {
             buildItemData = innBuildManager.GetBuildDataById(itemData.mark_id);
-            aesthetics = buildItemData.aesthetics;
-            iconKey = buildItemData.icon_key;
-            name = buildItemData.name;
-            content = buildItemData.content;
+            if (buildItemData != null)
+            {
+                aesthetics = buildItemData.aesthetics;
+                iconKey = buildItemData.icon_key;
+                name = buildItemData.name;
+                content = buildItemData.content;
+            }
+
         }
+
         SetPrice(storeInfo.price_l, storeInfo.price_m, storeInfo.price_s);
         SetName(name);
-        SetIcon(storeInfo.mark_type, iconKey);
-        SetAttribute(storeInfo.mark_type, aesthetics);
-        SetContent(storeInfo.mark_type, content);
-        SetOwn(storeInfo.mark_type);
+        SetIcon(type,buildItemData);
+        SetAttribute(type, aesthetics);
+        SetContent(type, content);
+        SetOwn(type);
+        SetPopup(content);
+    }
+
+    /// <summary>
+    /// 设置弹出框
+    /// </summary>
+    /// <param name="content"></param>
+    public void SetPopup(string content)
+    {
+        if (infoPromptPopup != null)
+            infoPromptPopup.SetContent(content);
     }
 
     /// <summary>
@@ -74,9 +96,9 @@ public class ItemTownCerpenterCpt : ItemGameBaseCpt, DialogView.IDialogCallBack
     /// </summary>
     /// <param name="type"></param>
     /// <param name="a"></param>
-    public void SetAttribute(int type, float aesthetics)
+    public void SetAttribute(StoreForCarpenterTypeEnum type, float aesthetics)
     {
-        if (type == 0)
+        if (type == StoreForCarpenterTypeEnum.Expansion)
         {
             objAttribute.gameObject.SetActive(false);
         }
@@ -94,20 +116,20 @@ public class ItemTownCerpenterCpt : ItemGameBaseCpt, DialogView.IDialogCallBack
     /// <param name="iconKey"></param>
     /// <param name="mark"></param>
     /// <param name="markId"></param>
-    public void SetIcon(int type, string iconKey)
+    public void SetIcon(StoreForCarpenterTypeEnum type, BuildItemBean buildItem)
     {
-        GameItemsManager gameItemsManager = GetUIManager<UIGameManager>().gameItemsManager;
+        IconDataManager iconDataManager = GetUIManager<UIGameManager>().iconDataManager;
         InnBuildManager innBuildManager = GetUIManager<UIGameManager>().innBuildManager;
-        if (gameItemsManager == null)
+        if (iconDataManager == null)
             return;
         Sprite spIcon = null;
-        if (type == 0)
+        if (type == StoreForCarpenterTypeEnum.Expansion)
         {
-            spIcon = gameItemsManager.GetItemsSpriteByName(iconKey);
+            spIcon = iconDataManager.GetIconSpriteByName(buildItem.icon_key);
         }
         else
         {
-            spIcon = innBuildManager.GetFurnitureSpriteByName(iconKey);
+            spIcon = BuildItemTypeEnumTools.GetBuildItemSprite(innBuildManager, buildItem);
         }
 
         if (ivIcon != null && spIcon != null)
@@ -128,7 +150,7 @@ public class ItemTownCerpenterCpt : ItemGameBaseCpt, DialogView.IDialogCallBack
     /// 设置描述
     /// </summary>
     /// <param name="content"></param>
-    public void SetContent(int type, string content)
+    public void SetContent(StoreForCarpenterTypeEnum type, string content)
     {
         if (tvContent != null)
             tvContent.text = content;
@@ -153,9 +175,9 @@ public class ItemTownCerpenterCpt : ItemGameBaseCpt, DialogView.IDialogCallBack
     /// <summary>
     /// 设置拥有数量
     /// </summary>
-    public void SetOwn(int type)
+    public void SetOwn(StoreForCarpenterTypeEnum type)
     {
-        if (type == 0)
+        if (type == StoreForCarpenterTypeEnum.Expansion)
         {
             objOwn.gameObject.SetActive(false);
         }

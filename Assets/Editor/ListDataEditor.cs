@@ -133,8 +133,12 @@ public class ListDataEditor : Editor
         AddIconBeanDictionaryByFolder("Assets/Texture/InnBuild/Stove/", innBuildManager.listFurnitureIcon);
         AddIconBeanDictionaryByFolder("Assets/Texture/InnBuild/Counter/", innBuildManager.listFurnitureIcon);
         AddIconBeanDictionaryByFolder("Assets/Texture/InnBuild/Door/", innBuildManager.listFurnitureIcon);
+
         innBuildManager.listFloorIcon.Clear();
         AddIconBeanDictionaryByFolder("Assets/Texture/Tile/Floor/", innBuildManager.listFloorIcon);
+        innBuildManager.listWallIcon.Clear();
+        AddIconBeanDictionaryByFolder("Assets/Texture/Tile/Wall/", innBuildManager.listWallIcon);
+
         innBuildManager.listFloorTile.Clear();
         AddTileBeanDictionaryByFolder("Assets/Tile/Tiles/Floor/", innBuildManager.listFloorTile);
         innBuildManager.listWallTile.Clear();

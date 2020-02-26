@@ -6,6 +6,7 @@ using System.Collections.Generic;
 [Serializable]
 public class BuildItemBean : BaseBean
 {
+    public long build_id;
     public int build_type;
     public long model_id;
     public string icon_key;

@@ -98,7 +98,7 @@ LightmapSettings:
     m_TrainingDataDestination: TrainingData
     m_LightProbeSampleCountMultiplier: 4
   m_LightingDataAsset: {fileID: 0}
-  m_UseShadowmask: 0
+  m_UseShadowmask: 1
 --- !u!196 &4
 NavMeshSettings:
   serializedVersion: 2
@@ -19186,6 +19186,9 @@ MonoBehaviour:
   npcCustomerBuilder: {fileID: 0}
   npcEventBuilder: {fileID: 0}
   npcWorkerBuilder: {fileID: 0}
+  innFurnitureBuilder: {fileID: 0}
+  innFloorBuilder: {fileID: 0}
+  innWallBuilder: {fileID: 0}
   navMesh: {fileID: 1498491156}
 --- !u!1 &611757026
 GameObject:
@@ -39129,7 +39132,7 @@ PrefabInstance:
     - target: {fileID: 7362692425160318330, guid: eac23c2d72574c74698e32d71a49378a,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: -592.6
+      value: -492.6
       objectReference: {fileID: 0}
     - target: {fileID: 7362692425160318330, guid: eac23c2d72574c74698e32d71a49378a,
         type: 3}

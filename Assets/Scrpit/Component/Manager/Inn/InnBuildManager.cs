@@ -20,6 +20,8 @@ public class InnBuildManager : BaseManager, IBuildDataView
     public IconBeanDictionary listFurnitureIcon = new IconBeanDictionary();
     //地板图标
     public IconBeanDictionary listFloorIcon = new IconBeanDictionary();
+    //墙体图标
+    public IconBeanDictionary listWallIcon = new IconBeanDictionary();
 
     public void Awake()
     {
@@ -42,8 +44,16 @@ public class InnBuildManager : BaseManager, IBuildDataView
     /// <returns></returns>
     public Sprite GetFloorSpriteByName(string name)
     {
-
         return GetSpriteByName(name, listFloorIcon);
+    }
+    /// <summary>
+    /// 通过名字获取墙体图标
+    /// </summary>
+    /// <param name="name"></param>
+    /// <returns></returns>
+    public Sprite GetWallSpriteByName(string name)
+    {
+        return GetSpriteByName(name, listWallIcon);
     }
 
     /// <summary>

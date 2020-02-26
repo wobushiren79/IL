@@ -557,6 +557,145 @@ public class EditorUI
     }
 
     /// <summary>
+    /// 建造物品创建
+    /// </summary>
+    /// <param name="buildItemService"></param>
+    /// <param name="buildItem"></param>
+    public static void GUIBuildItemCreate(BuildItemService buildItemService, BuildItemBean buildItem)
+    {
+        GUILayout.BeginVertical();
+        GUILayout.Label("建造物品创建：", GUILayout.Width(100), GUILayout.Height(20));
+        if (GUILayout.Button("创建", GUILayout.Width(120), GUILayout.Height(20)))
+        {
+            buildItemService.InsertData(buildItem);
+        }
+        GUIBuildItem(buildItem);
+        GUILayout.EndVertical();
+    }
+
+    /// <summary>
+    /// 建造物品查询
+    /// </summary>
+    /// <param name="buildItemService"></param>
+    /// <param name="listBuildItem"></param>
+    /// <param name="outListBuildItem"></param>
+    public static void GUIBuildItemFind(BuildItemService buildItemService,
+        List<BuildItemBean> listBuildItem,
+        out List<BuildItemBean> outListBuildItem)
+    {
+        GUILayout.Label("建造物品查询：", GUILayout.Width(100), GUILayout.Height(20));
+        GUILayout.BeginHorizontal();
+        if (GUILayout.Button("查询所有", GUILayout.Width(120), GUILayout.Height(20)))
+        {
+            listBuildItem = buildItemService.QueryAllData();
+        }
+        if (GUILayout.Button("查询地板", GUILayout.Width(120), GUILayout.Height(20)))
+        {
+            listBuildItem = buildItemService.QueryDataByType((int)BuildItemTypeEnum.Floor);
+        }
+        if (GUILayout.Button("查询墙壁", GUILayout.Width(120), GUILayout.Height(20)))
+        {
+            listBuildItem = buildItemService.QueryDataByType((int)BuildItemTypeEnum.Wall);
+        }
+        if (GUILayout.Button("查询桌椅", GUILayout.Width(120), GUILayout.Height(20)))
+        {
+            listBuildItem = buildItemService.QueryDataByType((int)BuildItemTypeEnum.Table);
+        }
+        if (GUILayout.Button("查询灶台", GUILayout.Width(120), GUILayout.Height(20)))
+        {
+            listBuildItem = buildItemService.QueryDataByType((int)BuildItemTypeEnum.Stove);
+        }
+        if (GUILayout.Button("查询柜台", GUILayout.Width(120), GUILayout.Height(20)))
+        {
+            listBuildItem = buildItemService.QueryDataByType((int)BuildItemTypeEnum.Counter);
+        }
+        if (GUILayout.Button("查询正门", GUILayout.Width(120), GUILayout.Height(20)))
+        {
+            listBuildItem = buildItemService.QueryDataByType((int)BuildItemTypeEnum.Door);
+        }
+        GUILayout.EndHorizontal();
+        if (listBuildItem != null)
+        {
+            BuildItemBean removeData = null;
+            foreach (BuildItemBean itemData in listBuildItem)
+            {
+                GUILayout.Space(20);
+                GUILayout.BeginHorizontal();
+                if (GUILayout.Button("更新", GUILayout.Width(120), GUILayout.Height(20)))
+                {
+                    buildItemService.Update(itemData);
+                }
+                if (GUILayout.Button("删除", GUILayout.Width(120), GUILayout.Height(20)))
+                {
+                    if (buildItemService.DeleteData(itemData.id))
+                    {
+                        removeData = itemData;
+                    };
+                }
+                GUILayout.EndHorizontal();
+                GUIBuildItem(itemData);
+            }
+            if (removeData!=null)
+            {
+                listBuildItem.Remove(removeData);
+            }
+        }
+        outListBuildItem = listBuildItem;
+    }
+
+    /// <summary>
+    /// 建造物品展示
+    /// </summary>
+    /// <param name="buildItem"></param>
+    public static void GUIBuildItem(BuildItemBean buildItem)
+    {
+        GUILayout.BeginHorizontal();
+        GUILayout.Label("id：", GUILayout.Width(50), GUILayout.Height(20));
+        buildItem.id = long.Parse(EditorGUILayout.TextArea(buildItem.id + "", GUILayout.Width(100), GUILayout.Height(20)));
+        buildItem.build_id = buildItem.id;
+        buildItem.build_type = (int)(BuildItemTypeEnum)EditorGUILayout.EnumPopup((BuildItemTypeEnum)buildItem.build_type, GUILayout.Width(100), GUILayout.Height(20));
+        GUILayout.Label("模型ID：", GUILayout.Width(50), GUILayout.Height(20));
+        buildItem.model_id = long.Parse(EditorGUILayout.TextArea(buildItem.model_id + "", GUILayout.Width(100), GUILayout.Height(20)));
+   
+        GUILayout.Label(" 图标：", GUILayout.Width(50), GUILayout.Height(20));
+        buildItem.icon_key = EditorGUILayout.TextArea(buildItem.icon_key + "", GUILayout.Width(150), GUILayout.Height(20));
+        string picPath = "";
+        switch ((BuildItemTypeEnum)buildItem.build_type)
+        {
+            case BuildItemTypeEnum.Floor:
+                picPath = "Assets/Texture/Tile/Floor/";
+                break;
+            case BuildItemTypeEnum.Wall:
+                picPath = "Assets/Texture/Tile/Wall/";
+                break;
+            case BuildItemTypeEnum.Table:
+                picPath = "Assets/Texture/InnBuild/TableAndChair/";
+                break;
+            case BuildItemTypeEnum.Stove:
+                picPath = "Assets/Texture/InnBuild/Stove/";
+                break;
+            case BuildItemTypeEnum.Counter:
+                picPath = "Assets/Texture/InnBuild/Counter/";
+                break;
+            case BuildItemTypeEnum.Door:
+                picPath = "Assets/Texture/InnBuild/Door/";
+                break;
+            default:
+                break;
+        }
+        GUIPic(picPath, buildItem.icon_key);
+        buildItem.model_id = long.Parse(EditorGUILayout.TextArea(buildItem.model_id + "", GUILayout.Width(100), GUILayout.Height(20)));
+
+        GUILayout.Label("名称：", GUILayout.Width(50), GUILayout.Height(20));
+        buildItem.name = EditorGUILayout.TextArea(buildItem.name + "", GUILayout.Width(100), GUILayout.Height(20));
+
+        GUILayout.Label("形容：", GUILayout.Width(50), GUILayout.Height(20));
+        buildItem.content = EditorGUILayout.TextArea(buildItem.content + "", GUILayout.Width(100), GUILayout.Height(20));
+
+        GUILayout.EndHorizontal();
+    }
+
+    /// <summary>
     /// 展示图片
     /// </summary>
     /// <param name="picPath"></param>
@@ -573,7 +712,7 @@ public class EditorUI
     /// </summary>
     /// <param name="spIcon"></param>
     /// <param name="iconName"></param>
-    private static void GUIPicSelect(Sprite spIcon, string iconName)
+    private static void GUIPicSelect(string iconName, Sprite spIcon)
     {
         spIcon = EditorGUILayout.ObjectField(new GUIContent(iconName, ""), spIcon, typeof(Sprite), true) as Sprite;
     }

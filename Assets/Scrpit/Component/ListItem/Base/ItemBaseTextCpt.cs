@@ -2,7 +2,7 @@
 using UnityEditor;
 using UnityEngine.UI;
 
-public class ItemBaseTextCpt : BaseMonoBehaviour
+public class ItemBaseTextCpt : ItemGameBaseCpt
 {
     public Image ivIcon;
     public Text tvName;

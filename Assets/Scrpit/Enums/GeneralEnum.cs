@@ -19,6 +19,7 @@ public enum GeneralEnum
     Menu = 12,//菜谱
 
     Mask = 21,//面具
+
 }
 
 public class GeneralEnumTools

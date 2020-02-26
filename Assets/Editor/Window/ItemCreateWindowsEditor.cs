@@ -9,6 +9,7 @@ public class ItemCreateWindowsEditor : EditorWindow, StoreInfoManager.ICallBack
     InnBuildManager innBuildManager;
     ItemsInfoService itemsInfoService;
     StoreInfoService storeInfoService;
+    BuildItemService buildItemService;
     AchievementInfoService achievementInfoService;
     [MenuItem("Tools/Window/ItemCreate")]
     static void CreateWindows()
@@ -33,6 +34,7 @@ public class ItemCreateWindowsEditor : EditorWindow, StoreInfoManager.ICallBack
         gameItemsManager.itemsInfoController.GetAllItemsInfo();
         itemsInfoService = new ItemsInfoService();
         storeInfoService = new StoreInfoService();
+        buildItemService = new BuildItemService();
         achievementInfoService = new AchievementInfoService();
     }
 
@@ -51,15 +53,16 @@ public class ItemCreateWindowsEditor : EditorWindow, StoreInfoManager.ICallBack
 
     public StoreInfoBean createStoreInfo = new StoreInfoBean();
     public StoreTypeEnum createStoreItemType;
+    //建造物品创建数据
+    public BuildItemBean createBuildItem = new BuildItemBean();
 
     public AchievementInfoBean createAchInfo = new AchievementInfoBean();
     long inputId = 0;
 
-
-
     public List<ItemsInfoBean> listFindItem = new List<ItemsInfoBean>();
     public List<StoreInfoBean> listFindStoreItem = new List<StoreInfoBean>();
     public List<AchievementInfoBean> listFindAchItem = new List<AchievementInfoBean>();
+    public List<BuildItemBean> listFindBuildItem = new List<BuildItemBean>();
     private void OnGUI()
     {
         //滚动布局
@@ -73,6 +76,10 @@ public class ItemCreateWindowsEditor : EditorWindow, StoreInfoManager.ICallBack
         GUICreateItem();
         GUIFindItem();
         GUILayout.Label("------------------------------------------------------------------------------------------------");
+        EditorUI.GUIBuildItemCreate(buildItemService, createBuildItem);
+        EditorUI.GUIBuildItemFind(buildItemService, listFindBuildItem, out listFindBuildItem);
+        GUILayout.Label("------------------------------------------------------------------------------------------------");
+
         GUICreateStoreItem();
         GUIFindStoreItem();
         GUILayout.Label("------------------------------------------------------------------------------------------------");
@@ -254,6 +261,7 @@ public class ItemCreateWindowsEditor : EditorWindow, StoreInfoManager.ICallBack
     }
 
     private string findStoreIds = "";
+
     /// <summary>
     /// 查询商品UI
     /// </summary>
@@ -266,6 +274,10 @@ public class ItemCreateWindowsEditor : EditorWindow, StoreInfoManager.ICallBack
         if (GUILayout.Button("查询", GUILayout.Width(100), GUILayout.Height(20)))
         {
 
+        }
+        if (GUILayout.Button("查询建造商品", GUILayout.Width(100), GUILayout.Height(20)))
+        {
+            storeInfoManager.GetStoreInfoForCarpenter();
         }
         if (GUILayout.Button("查询公会商品", GUILayout.Width(100), GUILayout.Height(20)))
         {
@@ -344,6 +356,9 @@ public class ItemCreateWindowsEditor : EditorWindow, StoreInfoManager.ICallBack
             case StoreTypeEnum.ArenaGoods:
                 GUIStoreItemForGoods(storeInfo);
                 break;
+            case StoreTypeEnum.Carpenter:
+                GUIStoreItemForGoods(storeInfo);
+                break;
         }
 
         if (!isCreate)
@@ -356,6 +371,11 @@ public class ItemCreateWindowsEditor : EditorWindow, StoreInfoManager.ICallBack
 
         EditorGUILayout.EndHorizontal();
         EditorGUILayout.Space(20);
+    }
+
+    private void GUIStoreItemForBuild()
+    {
+
     }
 
     /// <summary>
@@ -403,6 +423,10 @@ public class ItemCreateWindowsEditor : EditorWindow, StoreInfoManager.ICallBack
             case StoreTypeEnum.Guild:
                 GUILayout.Label("公会勋章：", GUILayout.Width(50), GUILayout.Height(20));
                 storeInfo.guild_coin = long.Parse(EditorGUILayout.TextArea(storeInfo.guild_coin + "", GUILayout.Width(100), GUILayout.Height(20)));
+                break;
+            case StoreTypeEnum.Carpenter:
+                storeInfo.store_goods_type = (int)(StoreForCarpenterTypeEnum)EditorGUILayout.EnumPopup("商品类型", (StoreForCarpenterTypeEnum)storeInfo.store_goods_type, GUILayout.Width(300), GUILayout.Height(20));
+
                 break;
         }
     }
