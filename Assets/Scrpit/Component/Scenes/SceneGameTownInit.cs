@@ -11,7 +11,7 @@ public class SceneGameTownInit : BaseSceneInit, IBaseObserver, DialogView.IDialo
     public NpcPasserBuilder npcPasserBuilder;
 
     public GameTimeHandler gameTimeHandler;
-    public WeatherHandler weatherHandler;
+
 
     public override void Awake()
     {

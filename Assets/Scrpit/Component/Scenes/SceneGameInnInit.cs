@@ -15,7 +15,6 @@ public class SceneGameInnInit : BaseSceneInit, IBaseObserver, DialogView.IDialog
 
     public InnHandler innHandler;
     public GameTimeHandler gameTimeHandler;
-    public WeatherHandler weatherHandler;
 
 
     public NavMeshSurface navMesh;

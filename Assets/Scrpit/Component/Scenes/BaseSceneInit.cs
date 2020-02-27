@@ -12,12 +12,14 @@ public class BaseSceneInit : BaseMonoBehaviour
     public DialogManager dialogManager;
     public StoryInfoManager storyInfoManager;
 
+    protected WeatherHandler weatherHandler;
     public ControlHandler controlHandler;
 
 
     public virtual void Awake()
     {
         npcTeamManager = Find<NpcTeamManager>(ImportantTypeEnum.NpcManager);
+        weatherHandler = Find<WeatherHandler>( ImportantTypeEnum.WeatherHandler);
     }
 
     public void Start()
