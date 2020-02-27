@@ -28,8 +28,10 @@ public class ListDataEditor : Editor
         AudioManager audioManager = Target.GetComponent<AudioManager>();
         audioManager.listMusicData.Clear();
         audioManager.listSoundData.Clear();
+        audioManager.listEnvironmentData.Clear();
         AddAudioBeanDictionaryByFolder("Assets/Audio/Music/", audioManager.listMusicData);
         AddAudioBeanDictionaryByFolder("Assets/Audio/Sound/", audioManager.listSoundData);
+        AddAudioBeanDictionaryByFolder("Assets/Audio/Environment/", audioManager.listEnvironmentData);
     }
     [MenuItem("Custom/List/AddDressMask")]
     public static void AddDressMask()

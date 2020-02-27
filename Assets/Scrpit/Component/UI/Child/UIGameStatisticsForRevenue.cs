@@ -62,7 +62,7 @@ public class UIGameStatisticsForRevenue : BaseUIChildComponent<UIGameStatistics>
     #region 季节选择回调
     public void RadioButtonSelected(RadioGroupView rgView, int position, RadioButtonView rbview)
     {
-        uiComponent.uiGameManager.audioHandler.PlaySound(SoundEnum.ButtonForNormal);
+        uiComponent.uiGameManager.audioHandler.PlaySound(AudioSoundEnum.ButtonForNormal);
         int month = 1;
         switch (rbview.name)
         {

@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using UnityEditor;
 using System;
+using System.Collections.Generic;
 
 public class EnumUtil
 {
@@ -32,5 +33,22 @@ public class EnumUtil
             i++;
         }
         return default;
+    }
+
+    /// <summary>
+    /// 获取所有枚举类型
+    /// </summary>
+    /// <typeparam name="E"></typeparam>
+    /// <returns></returns>
+    public static List<E> GetEnumValue<E>()
+    {
+        List<E> listDat = new List<E>();
+       int i = 0;
+        foreach (E item in Enum.GetValues(typeof(E)))
+        {
+            listDat.Add(item);
+            i++;
+        }
+        return listDat;
     }
 }

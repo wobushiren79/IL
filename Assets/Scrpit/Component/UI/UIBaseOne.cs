@@ -90,7 +90,7 @@ public class UIBaseOne : UIGameComponent
     /// </summary>
     public void OpenMainUI()
     {
-        uiGameManager.audioHandler.PlaySound( SoundEnum.ButtonForBack);
+        uiGameManager.audioHandler.PlaySound( AudioSoundEnum.ButtonForBack);
         uiManager.OpenUIAndCloseOtherByName(EnumUtil.GetEnumName(UIEnum.GameMain));
     }
 }

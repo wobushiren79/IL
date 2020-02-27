@@ -191,7 +191,7 @@ public class ItemGameWorkerCpt : ItemGameBaseCpt, IRadioButtonCallBack, DialogVi
     public void OpenEquipUI()
     {
         if (audioHandler != null)
-            audioHandler.PlaySound(SoundEnum.ButtonForNormal);
+            audioHandler.PlaySound(AudioSoundEnum.ButtonForNormal);
         if (uiComponent != null)
         {
             UIGameEquip uiequip = (UIGameEquip)GetUIManager().GetUIByName(EnumUtil.GetEnumName(UIEnum.GameEquip));
@@ -206,7 +206,7 @@ public class ItemGameWorkerCpt : ItemGameBaseCpt, IRadioButtonCallBack, DialogVi
     public void OpenDeitalsUI()
     {
         if (audioHandler != null)
-            audioHandler.PlaySound(SoundEnum.ButtonForNormal);
+            audioHandler.PlaySound(AudioSoundEnum.ButtonForNormal);
         if (uiComponent != null)
         {
             UIGameWorkerDetails uiWorkerDetails = (UIGameWorkerDetails)GetUIManager().GetUIByName(EnumUtil.GetEnumName(UIEnum.GameWorkerDetails));
@@ -221,7 +221,7 @@ public class ItemGameWorkerCpt : ItemGameBaseCpt, IRadioButtonCallBack, DialogVi
     public void FireWorker()
     {
         if (audioHandler != null)
-            audioHandler.PlaySound(SoundEnum.ButtonForNormal);
+            audioHandler.PlaySound(AudioSoundEnum.ButtonForNormal);
 
         DialogBean dialogData = new DialogBean();
         dialogData.content = string.Format(GameCommonInfo.GetUITextById(3063), characterData.baseInfo.name);

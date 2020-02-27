@@ -23,7 +23,7 @@ public class UIGameStatistics : UIBaseOne,IRadioGroupCallBack
     #region 类型选择回调
     public void RadioButtonSelected(RadioGroupView rgView, int position, RadioButtonView rbview)
     {
-        uiGameManager.audioHandler.PlaySound(SoundEnum.ButtonForNormal);
+        uiGameManager.audioHandler.PlaySound(AudioSoundEnum.ButtonForNormal);
 
         innUI.Close();
         revenueUI.Close();

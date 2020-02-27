@@ -137,7 +137,7 @@ public class ItemGameDataCpt : ItemGameBaseCpt, DialogView.IDialogCallBack
     public void GameContinue()
     {
         if (audioHandler != null)
-            audioHandler.PlaySound(SoundEnum.ButtonForNormal);
+            audioHandler.PlaySound(AudioSoundEnum.ButtonForNormal);
 
         GameCommonInfo.GameUserId = gameData.userId;
         SceneUtil.SceneChange(ScenesEnum.GameInnScene);
@@ -149,7 +149,7 @@ public class ItemGameDataCpt : ItemGameBaseCpt, DialogView.IDialogCallBack
     public void GameDataDelete()
     {
         if (audioHandler != null)
-            audioHandler.PlaySound(SoundEnum.ButtonForBack);
+            audioHandler.PlaySound(AudioSoundEnum.ButtonForBack);
 
         DialogBean dialogData = new DialogBean();
         dialogData.content = GameCommonInfo.GetUITextById(3011);

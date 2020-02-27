@@ -38,7 +38,7 @@ public class SelectView : BaseMonoBehaviour
     public void LeftSelect()
     {
         if (audioHandler != null)
-            audioHandler.PlaySound(SoundEnum.ButtonForNormal);
+            audioHandler.PlaySound(AudioSoundEnum.ButtonForNormal);
         if (listDataNumber == 0)
         {
             return;
@@ -57,7 +57,7 @@ public class SelectView : BaseMonoBehaviour
     public void RightSelect()
     {
         if (audioHandler != null)
-            audioHandler.PlaySound(SoundEnum.ButtonForNormal);
+            audioHandler.PlaySound(AudioSoundEnum.ButtonForNormal);
         if (listDataNumber==0)
         {
             return;

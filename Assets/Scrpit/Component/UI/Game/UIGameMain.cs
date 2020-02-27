@@ -251,13 +251,13 @@ public class UIGameMain : UIGameComponent, DialogView.IDialogCallBack, IRadioGro
 
     public void SaveData()
     {
-        uiGameManager.audioHandler.PlaySound(SoundEnum.ButtonForNormal);
+        uiGameManager.audioHandler.PlaySound(AudioSoundEnum.ButtonForNormal);
         uiGameManager.gameDataManager.SaveGameData(uiGameManager.innHandler.GetInnRecord());
     }
 
     public void OpenBuildUI()
     {
-        uiGameManager.audioHandler.PlaySound(SoundEnum.ButtonForNormal);
+        uiGameManager.audioHandler.PlaySound(AudioSoundEnum.ButtonForNormal);
         if (CheckUtil.ListIsNull(uiGameManager.innHandler.rascalrQueue))
         {
             DialogBean dialogBean = new DialogBean();
@@ -273,37 +273,37 @@ public class UIGameMain : UIGameComponent, DialogView.IDialogCallBack, IRadioGro
 
     public void OpenWorkerUI()
     {
-        uiGameManager.audioHandler.PlaySound(SoundEnum.ButtonForNormal);
+        uiGameManager.audioHandler.PlaySound(AudioSoundEnum.ButtonForNormal);
         uiManager.OpenUIAndCloseOtherByName(EnumUtil.GetEnumName(UIEnum.GameWorker));
     }
 
     public void OpenMenuUI()
     {
-        uiGameManager.audioHandler.PlaySound(SoundEnum.ButtonForNormal);
+        uiGameManager.audioHandler.PlaySound(AudioSoundEnum.ButtonForNormal);
         uiManager.OpenUIAndCloseOtherByName(EnumUtil.GetEnumName(UIEnum.GameMenu));
     }
 
     public void OpenBackpackUI()
     {
-        uiGameManager.audioHandler.PlaySound(SoundEnum.ButtonForNormal);
+        uiGameManager.audioHandler.PlaySound(AudioSoundEnum.ButtonForNormal);
         uiManager.OpenUIAndCloseOtherByName(EnumUtil.GetEnumName(UIEnum.GameBackpack));
     }
 
     public void OpenFavorabilityUI()
     {
-        uiGameManager.audioHandler.PlaySound(SoundEnum.ButtonForNormal);
+        uiGameManager.audioHandler.PlaySound(AudioSoundEnum.ButtonForNormal);
         uiManager.OpenUIAndCloseOtherByName(EnumUtil.GetEnumName(UIEnum.GameFavorability));
     }
 
     public void OpenStatisticsUI()
     {
-        uiGameManager.audioHandler.PlaySound(SoundEnum.ButtonForNormal);
+        uiGameManager.audioHandler.PlaySound(AudioSoundEnum.ButtonForNormal);
         uiManager.OpenUIAndCloseOtherByName(EnumUtil.GetEnumName(UIEnum.GameStatistics));
     }
 
     public void EndDay()
     {
-        uiGameManager.audioHandler.PlaySound(SoundEnum.ButtonForNormal);
+        uiGameManager.audioHandler.PlaySound(AudioSoundEnum.ButtonForNormal);
         DialogBean dialogBean = new DialogBean();
         dialogBean.content = GameCommonInfo.GetUITextById(3004);
         dialogBean.dialogPosition = 0;

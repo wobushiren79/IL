@@ -362,7 +362,7 @@ public class InnHandler : BaseMonoBehaviour, IBaseObserver
         //金钱增加
         gameDataManager.gameData.AddMoney(payMoneyL, payMoneyM, payMoneyS);
         //播放音效
-        audioHandler.PlaySound(SoundEnum.PayMoney, new Vector3(order.customer.transform.position.x, order.customer.transform.position.y, Camera.main.transform.position.z));
+        audioHandler.PlaySound(AudioSoundEnum.PayMoney, new Vector3(order.customer.transform.position.x, order.customer.transform.position.y, Camera.main.transform.position.z));
         //展示特效
         innPayHandler.ShowPayEffects(order.customer.transform.position, payMoneyL, payMoneyM, payMoneyS);
         //结束订单

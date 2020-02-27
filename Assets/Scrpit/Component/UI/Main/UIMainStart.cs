@@ -92,7 +92,7 @@ public class UIMainStart : UIGameComponent
     public void OpenContinueUI()
     {
         //按键音效
-        uiGameManager.audioHandler.PlaySound( SoundEnum.ButtonForNormal);
+        uiGameManager.audioHandler.PlaySound( AudioSoundEnum.ButtonForNormal);
 
         uiManager.OpenUIAndCloseOtherByName(EnumUtil.GetEnumName(UIEnum.MainContinue));
     }
@@ -103,7 +103,7 @@ public class UIMainStart : UIGameComponent
     public void OpenCreateUI()
     {
         //按键音效
-        uiGameManager.audioHandler.PlaySound(SoundEnum.ButtonForNormal);
+        uiGameManager.audioHandler.PlaySound(AudioSoundEnum.ButtonForNormal);
 
         uiManager.OpenUIAndCloseOtherByName(EnumUtil.GetEnumName(UIEnum.MainCreate));
     }
@@ -114,7 +114,7 @@ public class UIMainStart : UIGameComponent
     public void OpenMakerUI()
     {
         //按键音效
-        uiGameManager.audioHandler.PlaySound(SoundEnum.ButtonForNormal);
+        uiGameManager.audioHandler.PlaySound(AudioSoundEnum.ButtonForNormal);
 
         uiManager.OpenUIAndCloseOtherByName(EnumUtil.GetEnumName(UIEnum.MainMaker));
     }
@@ -125,7 +125,7 @@ public class UIMainStart : UIGameComponent
     public void ExitGame()
     {
         //按键音效
-        uiGameManager.audioHandler.PlaySound(SoundEnum.ButtonForNormal);
+        uiGameManager.audioHandler.PlaySound(AudioSoundEnum.ButtonForNormal);
 
         GameUtil.ExitGame();
     }

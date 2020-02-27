@@ -51,7 +51,7 @@ public class UIGameFavorability : UIGameComponent
 
     public void OpenMainUI()
     {
-        uiGameManager.audioHandler.PlaySound(SoundEnum.ButtonForBack);
+        uiGameManager.audioHandler.PlaySound(AudioSoundEnum.ButtonForBack);
         uiManager.OpenUIAndCloseOtherByName(EnumUtil.GetEnumName(UIEnum.GameMain));
     }
 }

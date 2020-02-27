@@ -4,14 +4,16 @@ using UnityEditor;
 public class AudioHandler : BaseHandler
 {
     protected AudioListener audioListener;
-    protected AudioSource audioSourceForCamera;
+    protected AudioSource audioSourceForMusic;
+    protected AudioSource audioSourceForEnvironment;
     protected AudioManager audioManager;
 
     public virtual void Awake()
     {
         audioListener = Find<AudioListener>(ImportantTypeEnum.MainCamera);
-        audioSourceForCamera = Find<AudioSource>(ImportantTypeEnum.MainCamera);
         audioManager = Find<AudioManager>(ImportantTypeEnum.AudioManager);
+        audioSourceForMusic = CptUtil.GetCptInChildrenByName<AudioSource>(Camera.main.gameObject, "Music");
+        audioSourceForEnvironment = CptUtil.GetCptInChildrenByName<AudioSource>(Camera.main.gameObject, "Environment");
     }
 
     /// <summary>
@@ -19,39 +21,68 @@ public class AudioHandler : BaseHandler
     /// </summary>
     /// <param name="sound">音效</param>
     /// <param name="volumeScale">音量大小</param>
-    public void PlaySound(SoundEnum sound, Vector3 soundPosition, float volumeScale)
+    public void PlaySound(AudioSoundEnum sound, Vector3 soundPosition, float volumeScale)
     {
-        AudioClip soundClip = null;
+        AudioClip audioClip = null;
         switch (sound)
         {
-            case SoundEnum.ButtonForNormal:
-                soundClip = audioManager.GetSoundClip("sound_btn_3");
+            case AudioSoundEnum.ButtonForNormal:
+                audioClip = audioManager.GetSoundClip("sound_btn_3");
                 break;
-            case SoundEnum.ButtonForBack:
-                soundClip = audioManager.GetSoundClip("sound_btn_2");
+            case AudioSoundEnum.ButtonForBack:
+                audioClip = audioManager.GetSoundClip("sound_btn_2");
                 break;
-            case SoundEnum.ButtonForHighLight:
-                soundClip = audioManager.GetSoundClip("sound_btn_1");
+            case AudioSoundEnum.ButtonForHighLight:
+                audioClip = audioManager.GetSoundClip("sound_btn_1");
                 break;
-            case SoundEnum.PayMoney:
-                soundClip = audioManager.GetSoundClip("sound_pay_1");
+            case AudioSoundEnum.PayMoney:
+                audioClip = audioManager.GetSoundClip("sound_pay_1");
+                break;
+            case AudioSoundEnum.Thunderstorm:
+                audioClip = audioManager.GetSoundClip("sound_thunderstorm_1");
                 break;
         }
-        if (soundClip != null)
-            audioSourceForCamera.PlayOneShot(soundClip, volumeScale);
+        if (audioClip != null)
+            audioSourceForMusic.PlayOneShot(audioClip, volumeScale);
         // AudioSource.PlayClipAtPoint(soundClip, soundPosition,volumeScale);
     }
 
-    public void PlaySound(SoundEnum sound)
+    public void PlaySound(AudioSoundEnum sound)
     {
         PlaySound(sound, Camera.main.transform.position, 1);
     }
-    public void PlaySound(SoundEnum sound, float volumeScale)
+    public void PlaySound(AudioSoundEnum sound, float volumeScale)
     {
         PlaySound(sound, Camera.main.transform.position, volumeScale);
     }
-    public void PlaySound(SoundEnum sound, Vector3 soundPosition)
+    public void PlaySound(AudioSoundEnum sound, Vector3 soundPosition)
     {
         PlaySound(sound, soundPosition, 1);
+    }
+
+    /// <summary>
+    /// 播放环境音乐
+    /// </summary>
+    /// <param name="audioEnvironment"></param>
+    public void PlayEnvironment(AudioEnvironmentEnum audioEnvironment)
+    {
+        AudioClip audioClip = null;
+        switch (audioEnvironment)
+        {
+            case AudioEnvironmentEnum.Rain:
+                audioClip = audioManager.GetEnvironmentClip("environment_rain_1");
+                break;
+
+        }
+        audioSourceForEnvironment.clip = audioClip;
+        audioSourceForEnvironment.Play();
+    }
+    /// <summary>
+    /// 停止播放
+    /// </summary>
+    public void StopEnvironment()
+    {
+        audioSourceForEnvironment.clip = null;
+        audioSourceForEnvironment.Stop();
     }
 }

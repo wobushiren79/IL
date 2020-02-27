@@ -8,12 +8,16 @@ public class SunLightCpt : LightCpt
     public Color whiteColor;
     //最暗时颜色
     public Color darkColor;
+    //可控颜色加成
+    public Color offsetColor;
 
     protected GameTimeHandler gameTimeHandler;
+    protected WeatherHandler weatherHandler;
 
     private void Awake()
     {
         gameTimeHandler = Find<GameTimeHandler>(ImportantTypeEnum.TimeHandler);
+        weatherHandler = Find<WeatherHandler>(ImportantTypeEnum.WeatherHandler);
     }
 
     private void Update()
@@ -47,7 +51,7 @@ public class SunLightCpt : LightCpt
         {
             leap = 0;
         }
-        Color sunColor = Color.Lerp(darkColor, whiteColor, leap);
+        Color sunColor = Color.Lerp(darkColor + offsetColor, whiteColor + offsetColor, leap);
         SetSunColor(sunColor);
     }
 

@@ -44,7 +44,7 @@ public class UIGameAttendance : UIBaseOne, ItemGameAttendanceCpt.ICallBack
     /// </summary>
     public void StartWork()
     {
-        uiGameManager.audioHandler.PlaySound(SoundEnum.ButtonForNormal);
+        uiGameManager.audioHandler.PlaySound(AudioSoundEnum.ButtonForNormal);
         //如果出勤人数太少
         if (attendanceNumber <= 0)
         {

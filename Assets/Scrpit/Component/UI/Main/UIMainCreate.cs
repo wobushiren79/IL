@@ -153,7 +153,7 @@ public class UIMainCreate : UIGameComponent,
     public void CreateNewGame()
     {
         //按键音效
-        uiGameManager.audioHandler.PlaySound(SoundEnum.ButtonForNormal);
+        uiGameManager.audioHandler.PlaySound(AudioSoundEnum.ButtonForNormal);
 
         if (CheckUtil.StringIsNull(etInnName.text))
         {
@@ -176,14 +176,14 @@ public class UIMainCreate : UIGameComponent,
     public void OpenStartUI()
     {
         //按键音效
-        uiGameManager.audioHandler.PlaySound(SoundEnum.ButtonForBack);
+        uiGameManager.audioHandler.PlaySound(AudioSoundEnum.ButtonForBack);
         uiManager.OpenUIAndCloseOtherByName(EnumUtil.GetEnumName(UIEnum.MainStart));
     }
 
     #region 性别回调
     public void RadioButtonSelected(RadioGroupView rgView, int position, RadioButtonView view)
     {
-        uiGameManager.audioHandler.PlaySound(SoundEnum.ButtonForNormal);
+        uiGameManager.audioHandler.PlaySound(AudioSoundEnum.ButtonForNormal);
 
         if (position == 0)
         {

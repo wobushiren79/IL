@@ -90,7 +90,7 @@ public class UIGameDate : BaseUIComponent
     public void OnClickInnWork()
     {
         if (audioHandler != null)
-            audioHandler.PlaySound(SoundEnum.ButtonForNormal);
+            audioHandler.PlaySound(AudioSoundEnum.ButtonForNormal);
         InnWork();
     }
 
@@ -100,7 +100,7 @@ public class UIGameDate : BaseUIComponent
     public void OnClickInnRest()
     {
         if (audioHandler != null)
-            audioHandler.PlaySound(SoundEnum.ButtonForNormal);
+            audioHandler.PlaySound(AudioSoundEnum.ButtonForNormal);
         InnRest();
     }
 

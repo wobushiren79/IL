@@ -59,7 +59,7 @@ public class UIGameEquip : UIGameComponent
 
     public void OpenWorkUI()
     {
-        uiGameManager.audioHandler.PlaySound(SoundEnum.ButtonForBack);
+        uiGameManager.audioHandler.PlaySound(AudioSoundEnum.ButtonForBack);
         uiManager.OpenUIAndCloseOtherByName(EnumUtil.GetEnumName(UIEnum.GameWorker));
     }
 

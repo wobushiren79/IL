@@ -63,7 +63,7 @@ public class DialogView : BaseMonoBehaviour
     public virtual void SubmitOnClick()
     {
         if (audioHandler != null)
-            audioHandler.PlaySound(SoundEnum.ButtonForNormal);
+            audioHandler.PlaySound(AudioSoundEnum.ButtonForNormal);
         if (mCallBack != null)
         {
             mCallBack.Submit(this, dialogData);
@@ -73,7 +73,7 @@ public class DialogView : BaseMonoBehaviour
     public virtual void CancelOnClick()
     {
         if (audioHandler != null)
-            audioHandler.PlaySound(SoundEnum.ButtonForBack);
+            audioHandler.PlaySound(AudioSoundEnum.ButtonForBack);
         if (mCallBack != null)
         {
             mCallBack.Cancel(this, dialogData);
