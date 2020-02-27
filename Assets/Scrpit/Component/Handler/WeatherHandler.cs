@@ -5,9 +5,14 @@ using System;
 
 public class WeatherHandler : BaseMonoBehaviour
 {
-    [Header("数据")]
+    //太阳光
+    public SunLightCpt sunLight;
+
     public WeatherForSunnyCpt weatherSunny;
     public WeatherForRainCpt weatherRain;
+    public WeatherForFogCpt weatherFog;
+    public WeatherForSnowCpt weatherSnow;
+    public WeatherForWindCpt weatherWind;
 
     public WeatherBean weatherData;
 
@@ -40,7 +45,7 @@ public class WeatherHandler : BaseMonoBehaviour
             List<WeatherTypeEnum> listWeather = WeatherTypeEnumTools.GetWeahterListByMonth(month);
             weatherStatusRandom = RandomUtil.GetRandomDataByList(listWeather);
         }
-        weatherStatusRandom = WeatherTypeEnum.Thunderstorm;
+        weatherStatusRandom = WeatherTypeEnum.Rain;
         WeatherBean weatherData = new WeatherBean(weatherStatusRandom);
         SetWeahter(weatherData);
         return weatherData;
@@ -55,8 +60,14 @@ public class WeatherHandler : BaseMonoBehaviour
         if (weatherData == null)
             return;
         this.weatherData = weatherData;
+
         weatherSunny.CloseWeather();
         weatherRain.CloseWeather();
+        weatherFog.CloseWeather();
+        weatherSnow.CloseWeather();
+        weatherWind.CloseWeather();
+
+        Color sunLightOffset = Color.black;
         switch (weatherData.weatherType)
         {
             case WeatherTypeEnum.Sunny:
@@ -67,8 +78,23 @@ public class WeatherHandler : BaseMonoBehaviour
             case WeatherTypeEnum.Rain:
             case WeatherTypeEnum.Thunderstorm:
                 weatherRain.OpenWeather(weatherData);
+                sunLightOffset = new Color(-0.2f,-0.2f,-0.2f,1);
+                break;
+            case WeatherTypeEnum.Fog:
+                weatherFog.OpenWeather(weatherData);
+                break;
+            case WeatherTypeEnum.LightSnow:
+            case WeatherTypeEnum.Snow:
+                weatherSnow.OpenWeather(weatherData);
+                sunLightOffset = new Color(-0.1f, -0.1f, -0.1f, 1);
+                break;
+            case WeatherTypeEnum.Wind:
+            case WeatherTypeEnum.Defoliation:
+                weatherWind.OpenWeather(weatherData);
+                sunLightOffset = new Color(-0.1f, -0.1f, -0.1f, 1);
                 break;
         }
+        sunLight.SetOffsetColor(sunLightOffset);
     }
 
 

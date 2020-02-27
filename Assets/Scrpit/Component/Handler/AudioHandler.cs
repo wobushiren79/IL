@@ -72,7 +72,9 @@ public class AudioHandler : BaseHandler
             case AudioEnvironmentEnum.Rain:
                 audioClip = audioManager.GetEnvironmentClip("environment_rain_1");
                 break;
-
+            case AudioEnvironmentEnum.Wind:
+                audioClip = audioManager.GetEnvironmentClip("environment_wind_1");
+                break;
         }
         audioSourceForEnvironment.clip = audioClip;
         audioSourceForEnvironment.Play();

@@ -229,6 +229,11 @@ public class NpcCustomerBuilder : NpcNormalBuilder, IBaseObserver
         {
             buildInterval = 5;
         }
+        //天气加成
+        if (weatherHandler != null)
+        {
+            buildInterval -= weatherHandler.weatherData.weatherAddition;
+        }
         return buildInterval;
     }
 

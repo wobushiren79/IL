@@ -51,7 +51,7 @@ public class SunLightCpt : LightCpt
         {
             leap = 0;
         }
-        Color sunColor = Color.Lerp(darkColor + offsetColor, whiteColor + offsetColor, leap);
+        Color sunColor = Color.Lerp(darkColor , whiteColor + offsetColor, leap);
         SetSunColor(sunColor);
     }
 
@@ -73,6 +73,15 @@ public class SunLightCpt : LightCpt
     public void SetSunColor(Color color)
     {
         SetLightColor(color);
+    }
+
+    /// <summary>
+    /// 设置加成颜色
+    /// </summary>
+    /// <param name="offsetColor"></param>
+    public void SetOffsetColor(Color offsetColor)
+    {
+        this.offsetColor = offsetColor;
     }
 
 }
