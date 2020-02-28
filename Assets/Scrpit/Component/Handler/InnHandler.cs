@@ -253,7 +253,7 @@ public class InnHandler : BaseMonoBehaviour, IBaseObserver
     public MenuInfoBean OrderForFood(OrderForCustomer orderForCustomer)
     {
         //获取正在出售的菜品
-        List<MenuOwnBean> listOwnMenu = gameDataManager.gameData.GetSellMenuList();
+        List<MenuOwnBean> listOwnMenu = gameDataManager.gameData.GetMenuListForSell();
         if (listOwnMenu.Count == 0)
             return null;
         //随机获取一个菜品

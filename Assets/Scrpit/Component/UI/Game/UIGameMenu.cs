@@ -81,6 +81,8 @@ public class UIGameMenu : UIGameComponent
         {
             MenuOwnBean itemData = listMenu[i];
             MenuInfoBean menuInfo = uiGameManager.innFoodManager.GetFoodDataById(itemData.menuId);
+            if (menuInfo == null)
+                continue;
             GameObject foodObj = Instantiate(objFoodItemModel, objFoodListContent.transform);
             foodObj.SetActive(true);
             ItemGameMenuFoodCpt foodCpt = foodObj.GetComponent<ItemGameMenuFoodCpt>();

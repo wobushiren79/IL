@@ -388,17 +388,20 @@ public class ItemGameWorkerCpt : ItemGameBaseCpt, IRadioButtonCallBack, DialogVi
             switch (workerStatus)
             {
                 case WorkerStatusEnum.Work:
-                    tvStatus.color = Color.green;
-                    break;
-                case WorkerStatusEnum.Rest:
+                case WorkerStatusEnum.Research:
                     tvStatus.color = Color.red;
                     break;
-                default:
+                case WorkerStatusEnum.Rest:
+                    tvStatus.color = Color.green;
+                    break;
+                case WorkerStatusEnum.Vacation:
                     tvStatus.color = Color.blue;
                     break;
+                default:
+                    tvStatus.color = Color.red;
+                    break;
             }
-        }
-           
+        }    
     }
 
     /// <summary>

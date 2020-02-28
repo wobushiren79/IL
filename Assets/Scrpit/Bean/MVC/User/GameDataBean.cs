@@ -258,10 +258,7 @@ public class GameDataBean
             MenuOwnBean itemData = listMenu[i];
             if (itemData.menuId == menuId)
             {
-                itemData.sellNumber += number;
-                itemData.sellMoneyL += priceL;
-                itemData.sellMoneyM += priceM;
-                itemData.sellMoneyS += priceS;
+                itemData.SellMenu(number, priceL, priceM, priceS);
                 return;
             }
         }
@@ -316,16 +313,34 @@ public class GameDataBean
     }
 
     /// <summary>
-    /// 获取正在出售的食物
+    /// 获取正在出售的菜品
     /// </summary>
     /// <returns></returns>
-    public List<MenuOwnBean> GetSellMenuList()
+    public List<MenuOwnBean> GetMenuListForSell()
     {
         List<MenuOwnBean> listData = new List<MenuOwnBean>();
         for (int i = 0; i < listMenu.Count; i++)
         {
             MenuOwnBean itemData = listMenu[i];
             if (itemData.isSell)
+            {
+                listData.Add(itemData);
+            }
+        }
+        return listData;
+    }
+
+    /// <summary>
+    /// 获取研究中的菜品
+    /// </summary>
+    /// <returns></returns>
+    public List<MenuOwnBean> GetMenuListForResearching()
+    {
+        List<MenuOwnBean> listData = new List<MenuOwnBean>();
+        for (int i = 0; i < listMenu.Count; i++)
+        {
+            MenuOwnBean itemData = listMenu[i];
+            if (itemData.GetMenuStatus()== MenuStatusEnum.Researching)
             {
                 listData.Add(itemData);
             }
@@ -359,6 +374,9 @@ public class GameDataBean
     {
         return listMenu;
     }
+
+  
+
 
     /// <summary>
     /// 获取某一物品数量

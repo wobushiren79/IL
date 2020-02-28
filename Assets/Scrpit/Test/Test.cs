@@ -9,9 +9,16 @@ using System.Diagnostics;
 public class Test : BaseMonoBehaviour
 {
 
+   public  GameObject objModel;
     private void Awake()
     {
 
+    }
+
+    public void Start()
+    {
+        Instantiate(gameObject, objModel);
+        LogUtil.Log("1");
     }
 
 }

@@ -16,8 +16,9 @@ public class PickForItemsDialogView : DialogView, ItemGameBackpackPickCpt.ICallB
     private ItemsInfoBean mSelectedItemsInfo;
 
 
-    private void Awake()
+    public override void Awake()
     {
+        base.Awake();
         gameDataManager = Find<GameDataManager>(ImportantTypeEnum.GameDataManager);
         gameItemsManager = Find<GameItemsManager>(ImportantTypeEnum.GameItemsManager);
     }

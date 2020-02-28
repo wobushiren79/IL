@@ -3,26 +3,47 @@ using UnityEditor;
 using UnityEngine.UI;
 using System.Collections.Generic;
 
-public class PickForCharacterDialogView : DialogView,ItemGameDialogPickCharacterCpt.ICallBack
+public class PickForCharacterDialogView : DialogView, ItemGameDialogPickCharacterCpt.ICallBack
 {
+    public Text tvNull;
     public GameObject objPickCharacterContainer;
     public GameObject objPickCharacterModel;
 
-    private GameDataManager mGameDataManager;
-    private ToastManager mToastManager;
+    protected GameDataManager gameDataManager;
+    protected ToastManager toastManager;
 
     public int pickCharacterMax = 0;
     public List<CharacterBean> listPickCharacter = new List<CharacterBean>();
+    public List<string> listExpelCharacterId = new List<string>();
 
-    private void Awake()
+    public override void Awake()
     {
-        mGameDataManager = FindObjectOfType<GameDataManager>();
-        mToastManager = FindObjectOfType<ToastManager>();
+        base.Awake();
+        gameDataManager = Find< GameDataManager >( ImportantTypeEnum.GameDataManager);
+        toastManager = Find<ToastManager>(ImportantTypeEnum.ToastManager);
     }
 
+    /// <summary>
+    /// 设置选择角色上限
+    /// </summary>
+    /// <param name="pickCharacterMax"></param>
     public void SetPickCharacterMax(int pickCharacterMax)
     {
         this.pickCharacterMax = pickCharacterMax;
+    }
+
+    /// <summary>
+    /// 设置排出角色
+    /// </summary>
+    /// <param name="characterId"></param>
+    public void SetExpelCharacter(List<string> listCharacterId)
+    {
+        this.listExpelCharacterId = listCharacterId;
+    }
+
+    public void SetExpelCharacter(string characterId)
+    {
+        SetExpelCharacter(new List<string>() { characterId });
     }
 
     public override void InitData()
@@ -30,10 +51,39 @@ public class PickForCharacterDialogView : DialogView,ItemGameDialogPickCharacter
         base.InitData();
         listPickCharacter.Clear();
         CptUtil.RemoveChildsByActive(objPickCharacterContainer);
-        List<CharacterBean> listCharacter = mGameDataManager.gameData.GetAllCharacterData();
+        List<CharacterBean> listCharacter = gameDataManager.gameData.GetAllCharacterData();
+        bool isNull = true;
         foreach (CharacterBean characterData in listCharacter)
         {
-            CreatePickItem(characterData);
+            //筛选不能选择的角色
+            bool isExpel = false;
+            if (listExpelCharacterId != null)
+                foreach (string itemId in listExpelCharacterId)
+                {
+                    if (itemId.Equals(characterData.baseInfo.characterId))
+                    {
+                        isExpel = true;
+                        break;
+                    }
+                }
+            //排出没有在休息中的员工
+            if (characterData.baseInfo.GetWorkerStatus() != WorkerStatusEnum.Rest)
+            {
+                isExpel = true;
+            }
+            if (!isExpel)
+            {
+                CreatePickItem(characterData);
+                isNull = false;
+            }
+        }
+        if (isNull)
+        {
+            tvNull.gameObject.SetActive(true);
+        }
+        else
+        {
+            tvNull.gameObject.SetActive(false);
         }
         RefreshUI();
     }
@@ -67,18 +117,27 @@ public class PickForCharacterDialogView : DialogView,ItemGameDialogPickCharacter
     {
         if (tvTitle != null)
         {
-            tvTitle.text =GameCommonInfo.GetUITextById(4015) +"(" + listPickCharacter.Count + "/" + pickCharacterMax + ")";
+            if(CheckUtil.StringIsNull(dialogData.title))
+            {
+                tvTitle.text = GameCommonInfo.GetUITextById(4015) + "(" + listPickCharacter.Count + "/" + pickCharacterMax + ")";
+            }
+            else
+            {
+                tvTitle.text = dialogData.title + "(" + listPickCharacter.Count + "/" + pickCharacterMax + ")";
+            }
         }
     }
 
     #region 选择回调
-    public void PickCharacter(ItemGameDialogPickCharacterCpt itemView,bool isPick, CharacterBean characterData)
+    public void PickCharacter(ItemGameDialogPickCharacterCpt itemView, bool isPick, CharacterBean characterData)
     {
+        if (audioHandler != null)
+            audioHandler.PlaySound(AudioSoundEnum.ButtonForNormal);
         if (isPick)
         {
             if (listPickCharacter.Count >= pickCharacterMax)
             {
-                mToastManager.ToastHint(GameCommonInfo.GetUITextById(1052));
+                toastManager.ToastHint(GameCommonInfo.GetUITextById(1052));
                 itemView.ChangeStatus();
             }
             else

@@ -24,6 +24,7 @@ public class CharacterBean
     public static CharacterBean CreateRandomWorkerData(CharacterBodyManager characterBodyManager)
     {
         CharacterBean characterData = new CharacterBean();
+        characterData.baseInfo.characterId = SystemUtil.GetUUID(SystemUtil.UUIDTypeEnum.N);
         characterData.baseInfo.characterType = (int)NpcTypeEnum.RecruitNormal;
         //设置随机名字
         characterData.baseInfo.name = RandomUtil.GetRandomGenerateChineseWord(UnityEngine.Random.Range(2, 4));
@@ -234,6 +235,18 @@ public class CharacterBean
     public void GetAttributes(GameItemsManager gameItemsManager, out CharacterAttributesBean totalAttributes)
     {
         GetAttributes(gameItemsManager, out totalAttributes, out CharacterAttributesBean selfAttributes, out CharacterAttributesBean equipAttributes);
+    }
+
+    /// <summary>
+    /// 计算菜单研究经验加成
+    /// </summary>
+    /// <returns></returns>
+    public long CalculationMenuResearchAddExp(GameItemsManager gameItemsManager)
+    {
+        //获取数据
+        GetAttributes(gameItemsManager,
+        out CharacterAttributesBean totalAttributes, out CharacterAttributesBean selfAttributes, out CharacterAttributesBean equipAttributes);
+        return totalAttributes.cook;
     }
 
     /// <summary>

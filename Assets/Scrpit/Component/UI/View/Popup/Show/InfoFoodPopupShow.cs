@@ -4,12 +4,24 @@ using UnityEditor;
 
 public class InfoFoodPopupShow : PopupShowView
 {
+    public GameObject objLevel;
+    public Image ivLevel;
+    public Text tvLevelProgress;
+    public Slider progressLevel;
+
+    public GameObject objResearch;
+    public Text tvResearcherName;
+    public Text tvResearcherAbility;
+    public Text tvResearchProgress;
+    public Slider progressResearch;
+
     public GameObject objItemBaseContainer;
     public GameObject objItemStatisticsContainer;
     public GameObject objItemTextModel;
 
     protected GameDataManager gameDataManager;
     protected IconDataManager iconDataManager;
+    protected GameItemsManager gameItemsManager;
 
     public MenuOwnBean ownData;
     public MenuInfoBean foodData;
@@ -17,6 +29,7 @@ public class InfoFoodPopupShow : PopupShowView
     private void Awake()
     {
         gameDataManager = Find<GameDataManager>(ImportantTypeEnum.GameDataManager);
+        gameItemsManager = Find<GameItemsManager>(ImportantTypeEnum.GameItemsManager);
         iconDataManager = Find<IconDataManager>(ImportantTypeEnum.UIManager);
     }
 
@@ -58,6 +71,64 @@ public class InfoFoodPopupShow : PopupShowView
             AddItemForSellMoney(MoneyEnum.M, ownData.sellMoneyM);
             AddItemForSellMoney(MoneyEnum.S, ownData.sellMoneyS);
         }
+        //设置等级相关
+        SetLevel(ownData);
+        //设置研究相关
+        SetResearch(ownData);
+    }
+
+    /// <summary>
+    /// 设置等级
+    /// </summary>
+    public void SetLevel(MenuOwnBean ownData)
+    {
+        int level = ownData.GetMenuLevel(out string levelStr, out int nextLevelExp);
+        Sprite spIcon = ownData.GetMenuLevelIcon(iconDataManager);
+        if (spIcon == null)
+        {
+            ivLevel.gameObject.SetActive(false);
+        }
+        else
+        {
+            ivLevel.gameObject.SetActive(true);
+        }
+        ivLevel.sprite = spIcon;
+        progressLevel.value = ownData.menuExp / (float)nextLevelExp;
+        tvLevelProgress.text = ownData.menuExp + "/" + nextLevelExp;
+        if (ownData.GetMenuStatus() == MenuStatusEnum.WaitForResearch)
+        {
+            tvLevelProgress.text += "(可研究升级)";
+        }
+    }
+
+    /// <summary>
+    /// 设置研究数据
+    /// </summary>
+    /// <param name="ownData"></param>
+    public void SetResearch(MenuOwnBean ownData)
+    {
+        if (ownData.GetMenuStatus() == MenuStatusEnum.Normal)
+        {
+            objResearch.SetActive(false);
+            return;
+        }
+        objResearch.SetActive(true);
+        CharacterBean researcher = ownData.GetResearchCharacter(gameDataManager.gameData);
+        float progress = ownData.GetResearchProgress(out long completeExp);
+        if (researcher != null)
+        {
+            tvResearcherName.text = researcher.baseInfo.name;
+            long addExp = researcher.CalculationMenuResearchAddExp(gameItemsManager);
+            tvResearcherAbility.text = addExp + "/s";
+        }
+        else
+        {
+            tvResearcherName.text = "无";
+            tvResearcherAbility.text = "0/s";
+        }
+        //设置进度
+        tvResearchProgress.text = ownData.researchExp + "/" + completeExp;
+        progressResearch.value = progress;
     }
 
     /// <summary>

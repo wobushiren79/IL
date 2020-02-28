@@ -23,7 +23,8 @@ public class DialogView : BaseMonoBehaviour
 
     private float mTimeDelayDelete;
     protected AudioHandler audioHandler;
-    private void Awake()
+
+    public virtual void Awake()
     {
         audioHandler = Find<AudioHandler>(ImportantTypeEnum.AudioHandler);
     }

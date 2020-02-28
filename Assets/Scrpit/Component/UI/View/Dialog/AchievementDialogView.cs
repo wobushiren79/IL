@@ -21,8 +21,9 @@ public class AchievementDialogView : DialogView
     protected InnBuildManager innBuildManager;
     protected InnFoodManager innFoodManager;
 
-    private void Awake()
+    public override void Awake()
     {
+        base.Awake();
         gameItemsManager = Find<GameItemsManager>(ImportantTypeEnum.GameItemsManager);
         iconDataManager = Find<IconDataManager>(ImportantTypeEnum.UIManager);
         innBuildManager = Find<InnBuildManager>(ImportantTypeEnum.BuildManager);

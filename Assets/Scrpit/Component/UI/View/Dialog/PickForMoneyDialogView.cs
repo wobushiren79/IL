@@ -27,8 +27,9 @@ public class PickForMoneyDialogView : DialogView
     protected GameDataManager gameDataManager;
     protected ToastManager toastManager;
 
-    private void Awake()
+    public override void Awake()
     {
+        base.Awake();
         gameDataManager = Find<GameDataManager>(ImportantTypeEnum.GameDataManager);
         toastManager = Find<ToastManager>(ImportantTypeEnum.ToastManager);
     }

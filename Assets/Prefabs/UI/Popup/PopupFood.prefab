@@ -484,7 +484,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 0}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
@@ -643,7 +643,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 20, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &7231034075509290921
 CanvasRenderer:
@@ -666,7 +666,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 0}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
@@ -1218,8 +1218,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 70, y: -689}
-  m_SizeDelta: {x: -20, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &4429147347150599515
 GameObject:
@@ -2052,8 +2052,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 70, y: -689}
-  m_SizeDelta: {x: -20, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &8545485380655408437
 MonoBehaviour:
@@ -2212,6 +2212,15 @@ MonoBehaviour:
   popupRTF: {fileID: 8339408650766707177}
   offsetX: 0
   offsetY: 0
+  objLevel: {fileID: 14772703157756066}
+  ivLevel: {fileID: 4867422613443058023}
+  tvLevelProgress: {fileID: 1841091763512632952}
+  progressLevel: {fileID: 6906961122360433096}
+  objResearch: {fileID: 7233083330105598173}
+  tvResearcherName: {fileID: 5651389513944753338}
+  tvResearcherAbility: {fileID: 7930152797895192098}
+  tvResearchProgress: {fileID: 5032774838414141409}
+  progressResearch: {fileID: 9203734690004022191}
   objItemBaseContainer: {fileID: 3287418600162089151}
   objItemStatisticsContainer: {fileID: 3511429900193201069}
   objItemTextModel: {fileID: 8339408650632432695}
@@ -2222,6 +2231,10 @@ MonoBehaviour:
     sellMoneyL: 0
     sellMoneyM: 0
     sellMoneyS: 0
+    menuStatus: 0
+    menuLevel: 0
+    listResearchCharacterId: []
+    menuExp: 0
   foodData:
     id: 0
     valid: 0

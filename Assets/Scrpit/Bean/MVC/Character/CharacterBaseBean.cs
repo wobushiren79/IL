@@ -119,9 +119,13 @@ public class CharacterBaseBean
             case WorkerStatusEnum.Vacation:
                 workerStatusStr = GameCommonInfo.GetUITextById(283);
                 break;
+            case WorkerStatusEnum.Research:
+                workerStatusStr = GameCommonInfo.GetUITextById(284);
+                break;
         }
         return workerStatus;
     }
+
     public WorkerStatusEnum GetWorkerStatus()
     {
         WorkerStatusEnum workerStatus = (WorkerStatusEnum)this.workerStatus;
