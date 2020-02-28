@@ -45,7 +45,6 @@ public class WeatherHandler : BaseMonoBehaviour
             List<WeatherTypeEnum> listWeather = WeatherTypeEnumTools.GetWeahterListByMonth(month);
             weatherStatusRandom = RandomUtil.GetRandomDataByList(listWeather);
         }
-        weatherStatusRandom = WeatherTypeEnum.Rain;
         WeatherBean weatherData = new WeatherBean(weatherStatusRandom);
         SetWeahter(weatherData);
         return weatherData;
