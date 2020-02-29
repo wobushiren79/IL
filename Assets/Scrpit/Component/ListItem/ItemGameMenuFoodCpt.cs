@@ -23,9 +23,12 @@ public class ItemGameMenuFoodCpt : ItemGameBaseCpt, IRadioButtonCallBack, Dialog
 
     public GameObject objResearch;
     public Button btResearch;
+    public InfoPromptPopupButton popupForResearch;
+
     public GameObject objResearchCancel;
     public Button btResearchCancel;
 
+    public Image ivBackground;
     [Header("数据")]
     public Sprite spReputation1;
     public Sprite spReputation2;
@@ -33,6 +36,13 @@ public class ItemGameMenuFoodCpt : ItemGameBaseCpt, IRadioButtonCallBack, Dialog
 
     public MenuOwnBean menuOwnData;
     public MenuInfoBean foodData;
+
+    private void Awake()
+    {
+        UIGameManager uiGameManager = GetUIManager<UIGameManager>();
+        if (popupForResearch != null)
+            popupForResearch.SetPopupShowView(uiGameManager.infoPromptPopup);
+    }
 
     private void Start()
     {
@@ -52,13 +62,15 @@ public class ItemGameMenuFoodCpt : ItemGameBaseCpt, IRadioButtonCallBack, Dialog
             btResearch.onClick.AddListener(OnClickResearch);
         if (btResearchCancel != null)
             btResearchCancel.onClick.AddListener(OnClickResearchCancel);
+
     }
+
 
     private void Update()
     {
         if (menuOwnData == null || foodData == null)
             return;
-
+ 
         //设置材料是否足够
         GameDataManager gameDataManager = GetUIManager<UIGameManager>().gameDataManager;
         if (gameDataManager.gameData.CheckCookFood(foodData))
@@ -72,8 +84,6 @@ public class ItemGameMenuFoodCpt : ItemGameBaseCpt, IRadioButtonCallBack, Dialog
             tvShow.color = Color.red;
         }
     }
-
-
 
     /// <summary>
     /// 设置数据
@@ -92,8 +102,33 @@ public class ItemGameMenuFoodCpt : ItemGameBaseCpt, IRadioButtonCallBack, Dialog
         SetFoodIcon(foodData.icon_key);
         SetName(data.name);
         SetSellStatus(menuOwnData);
-        SetPrice(foodData.price_l, foodData.price_m, foodData.price_s);
+        menuOwn.GetPrice(data, out long priceL, out long priceM, out long priceS);
+        SetPrice(priceL, priceM, priceS);
         SetResearch(menuOwn.GetMenuStatus());
+        SetResearchPopup(menuOwn, data);
+    }
+
+    /// <summary>
+    /// 设置研究弹出框内容
+    /// </summary>
+    /// <param name="menuOwn"></param>
+    /// <param name="data"></param>
+    public void SetResearchPopup(MenuOwnBean menuOwn, MenuInfoBean data)
+    {
+        if (popupForResearch == null)
+            return;
+        string content = GameCommonInfo.GetUITextById(285);
+
+        SortedList<IngredientsEnum, long> listIng = menuOwn.GetResearchIngredients(data);
+        if (listIng != null && listIng.Count != 0)
+        {
+            content += (" " + GameCommonInfo.GetUITextById(286) + "\n");
+        }
+        foreach (var item in listIng)
+        {
+            content += (IngredientsEnumTools.GetIngredientName(item.Key) + "x" + item.Value + " ");
+        }
+        popupForResearch.SetContent(content);
     }
 
     /// <summary>
@@ -101,14 +136,26 @@ public class ItemGameMenuFoodCpt : ItemGameBaseCpt, IRadioButtonCallBack, Dialog
     /// </summary>
     /// <param name="level"></param>
     /// <param name="spIcon"></param>
-    public void SetLevel(int level,Sprite spIcon)
-    { 
-        if (level==0)
+    public void SetLevel(int level, Sprite spIcon)
+    {
+        if (level == 0)
         {
             pbReputation.gameObject.SetActive(false);
         }
         else
         {
+            if (level == 1)
+            {
+                ivBackground.sprite = spReputation1;
+            }
+            else if (level == 2)
+            {
+                ivBackground.sprite = spReputation2;
+            }
+            else if (level == 3)
+            {
+                ivBackground.sprite = spReputation3;
+            }
             pbReputation.gameObject.SetActive(true);
             ivReputation.sprite = spIcon;
         }
@@ -255,7 +302,7 @@ public class ItemGameMenuFoodCpt : ItemGameBaseCpt, IRadioButtonCallBack, Dialog
     public void OnClickResearchCancel()
     {
         UIGameManager uiGameManager = GetUIManager<UIGameManager>();
-        uiGameManager.audioHandler.PlaySound( AudioSoundEnum.ButtonForNormal);
+        uiGameManager.audioHandler.PlaySound(AudioSoundEnum.ButtonForNormal);
         DialogBean dialogData = new DialogBean
         {
             content = GameCommonInfo.GetUITextById(3072)
@@ -286,6 +333,7 @@ public class ItemGameMenuFoodCpt : ItemGameBaseCpt, IRadioButtonCallBack, Dialog
     #region 弹出框回调
     public void Submit(DialogView dialogView, DialogBean dialogBean)
     {
+        UIGameManager uiGameManager = GetUIManager<UIGameManager>();
         if (dialogView as PickForCharacterDialogView)
         {
             //角色选择
@@ -293,6 +341,26 @@ public class ItemGameMenuFoodCpt : ItemGameBaseCpt, IRadioButtonCallBack, Dialog
             List<CharacterBean> listPickCharacter = pickForCharacterDialog.GetPickCharacter();
             if (!CheckUtil.ListIsNull(listPickCharacter))
             {
+
+                SortedList<IngredientsEnum, long> listIng = menuOwnData.GetResearchIngredients(foodData);
+                bool hasEnoughIng = true;
+                foreach (var itemIng in listIng)
+                {
+                    if (!uiGameManager.gameDataManager.gameData.HasEnoughIng(itemIng.Key, itemIng.Value))
+                    {
+                        hasEnoughIng = false;
+                        break;
+                    }
+                }
+                if (!hasEnoughIng)
+                {
+                    uiGameManager.toastManager.ToastHint(GameCommonInfo.GetUITextById(1045));
+                    return;
+                }
+                foreach (var itemIng in listIng)
+                {
+                    uiGameManager.gameDataManager.gameData.DeductIng(itemIng.Key, itemIng.Value);
+                }
                 //开始研究
                 menuOwnData.StartResearch(listPickCharacter);
             }
@@ -300,7 +368,6 @@ public class ItemGameMenuFoodCpt : ItemGameBaseCpt, IRadioButtonCallBack, Dialog
         else
         {
             //普通弹窗（取消研究）
-            UIGameManager uiGameManager = GetUIManager<UIGameManager>();
             menuOwnData.CancelResearch(uiGameManager.gameDataManager.gameData);
         }
         //重新设置数据

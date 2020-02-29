@@ -8,7 +8,8 @@ public class InfoPromptPopupButton : PopupButtonView
     public string content;
     //是否播放音效
     public bool isAudio = false;
-
+    //延迟时间
+    public float delayTime = 1;
     protected AudioHandler audioHandler;
     private void Awake()
     {
@@ -47,7 +48,7 @@ public class InfoPromptPopupButton : PopupButtonView
     /// <returns></returns>
     private IEnumerator CoroutineForShow()
     {
-        yield return new WaitForSeconds(1);
+        yield return new WaitForSeconds(delayTime);
         popupShow.gameObject.SetActive(true);
     }
 }

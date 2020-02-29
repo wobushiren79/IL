@@ -206,7 +206,7 @@ public class GameDataBean
     /// </summary>
     public long AddBuildNumber(long buildId, long number)
     {
-       return AddItem(buildId, number, listBuild);
+        return AddItem(buildId, number, listBuild);
     }
 
     /// <summary>
@@ -340,7 +340,7 @@ public class GameDataBean
         for (int i = 0; i < listMenu.Count; i++)
         {
             MenuOwnBean itemData = listMenu[i];
-            if (itemData.GetMenuStatus()== MenuStatusEnum.Researching)
+            if (itemData.GetMenuStatus() == MenuStatusEnum.Researching)
             {
                 listData.Add(itemData);
             }
@@ -375,7 +375,7 @@ public class GameDataBean
         return listMenu;
     }
 
-  
+
 
 
     /// <summary>
@@ -467,35 +467,35 @@ public class GameDataBean
     /// <returns></returns>
     public bool CheckCookFood(MenuInfoBean foodData)
     {
-        if (foodData.ing_oilsalt != 0 && ingOilsalt < foodData.ing_oilsalt)
+        if (!HasEnoughIng(IngredientsEnum.Oilsalt, foodData.ing_oilsalt))
         {
             return false;
         }
-        if (foodData.ing_meat != 0 && ingMeat < foodData.ing_meat)
+        if (!HasEnoughIng(IngredientsEnum.Meat, foodData.ing_meat))
         {
             return false;
         }
-        if (foodData.ing_riverfresh != 0 && ingRiverfresh < foodData.ing_riverfresh)
+        if (!HasEnoughIng(IngredientsEnum.Riverfresh, foodData.ing_riverfresh))
         {
             return false;
         }
-        if (foodData.ing_seafood != 0 && ingSeafood < foodData.ing_seafood)
+        if (!HasEnoughIng(IngredientsEnum.Seafood, foodData.ing_seafood))
         {
             return false;
         }
-        if (foodData.ing_vegetables != 0 && ingVegetables < foodData.ing_vegetables)
+        if (!HasEnoughIng(IngredientsEnum.Vegetables, foodData.ing_vegetables))
         {
             return false;
         }
-        if (foodData.ing_melonfruit != 0 && ingMelonfruit < foodData.ing_melonfruit)
+        if (!HasEnoughIng(IngredientsEnum.Melonfruit, foodData.ing_melonfruit))
         {
             return false;
         }
-        if (foodData.ing_waterwine != 0 && ingWaterwine < foodData.ing_waterwine)
+        if (!HasEnoughIng(IngredientsEnum.Waterwine, foodData.ing_waterwine))
         {
             return false;
         }
-        if (foodData.ing_flour != 0 && ingFlour < foodData.ing_flour)
+        if (!HasEnoughIng(IngredientsEnum.Flour, foodData.ing_flour))
         {
             return false;
         }
@@ -544,7 +544,7 @@ public class GameDataBean
         ownLoveMenus = new List<MenuOwnBean>();
         foreach (MenuOwnBean itemMenu in listMenu)
         {
-            if (loveMenus.Contains(itemMenu.menuId)&& itemMenu.isSell)
+            if (loveMenus.Contains(itemMenu.menuId) && itemMenu.isSell)
             {
                 ownLoveMenus.Add(itemMenu);
                 hasLove = true;
@@ -567,6 +567,58 @@ public class GameDataBean
         ingMelonfruit -= foodData.ing_melonfruit;
         ingWaterwine -= foodData.ing_waterwine;
         ingFlour -= foodData.ing_flour;
+        if (ingOilsalt < 0)
+            ingOilsalt = 0;
+        if (ingMeat < 0)
+            ingMeat = 0;
+        if (ingRiverfresh < 0)
+            ingRiverfresh = 0;
+        if (ingSeafood < 0)
+            ingSeafood = 0;
+        if (ingVegetables < 0)
+            ingVegetables = 0;
+        if (ingMelonfruit < 0)
+            ingMelonfruit = 0;
+        if (ingWaterwine < 0)
+            ingWaterwine = 0;
+        if (ingFlour < 0)
+            ingFlour = 0;
+    }
+
+    /// <summary>
+    /// 扣除材料
+    /// </summary>
+    /// <param name="ingredients"></param>
+    /// <param name="number"></param>
+    public void DeductIng(IngredientsEnum ingredients, long number)
+    {
+        switch (ingredients)
+        {
+            case IngredientsEnum.Oilsalt:
+                ingOilsalt -= number;
+                break;
+            case IngredientsEnum.Meat:
+                ingMeat -= number;
+                break;
+            case IngredientsEnum.Riverfresh:
+                ingRiverfresh -= number;
+                break;
+            case IngredientsEnum.Seafood:
+                ingSeafood -= number;
+                break;
+            case IngredientsEnum.Vegetables:
+                ingVegetables -= number;
+                break;
+            case IngredientsEnum.Melonfruit:
+                ingMelonfruit -= number;
+                break;
+            case IngredientsEnum.Waterwine:
+                ingWaterwine -= number;
+                break;
+            case IngredientsEnum.Flour:
+                ingFlour -= number;
+                break;
+        }
         if (ingOilsalt < 0)
             ingOilsalt = 0;
         if (ingMeat < 0)
@@ -632,6 +684,48 @@ public class GameDataBean
             return false;
         }
         return true;
+    }
+
+    /// <summary>
+    /// 是否有足够的材料
+    /// </summary>
+    /// <param name="ingredients"></param>
+    /// <param name="number"></param>
+    /// <returns></returns>
+    public bool HasEnoughIng(IngredientsEnum ingredients, long number)
+    {
+        long hasNumber = 0;
+        switch (ingredients)
+        {
+            case IngredientsEnum.Oilsalt:
+                hasNumber = ingOilsalt;
+                break;
+            case IngredientsEnum.Meat:
+                hasNumber = ingMeat;
+                break;
+            case IngredientsEnum.Riverfresh:
+                hasNumber = ingRiverfresh;
+                break;
+            case IngredientsEnum.Seafood:
+                hasNumber = ingSeafood;
+                break;
+            case IngredientsEnum.Vegetables:
+                hasNumber = ingVegetables;
+                break;
+            case IngredientsEnum.Melonfruit:
+                hasNumber = ingMelonfruit;
+                break;
+            case IngredientsEnum.Waterwine:
+                hasNumber = ingWaterwine;
+                break;
+            case IngredientsEnum.Flour:
+                hasNumber = ingFlour;
+                break;
+        }
+        if (hasNumber >= number)
+            return true;
+        else
+            return false;
     }
 
     /// <summary>

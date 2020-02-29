@@ -133,9 +133,8 @@ public class NpcAIWorkerForAccountantCpt : NpcAIWokerFoBaseCpt
         float time = npcAIWorker.characterData.CalculationAccountingTime(gameItemsManager);
         npcAIWorker.characterData.baseInfo.accountantInfo.AddAccountantTime(time);
         yield return new WaitForSeconds(time);
-        long payMoneyL = orderForCustomer.foodData.price_l;
-        long payMoneyM = orderForCustomer.foodData.price_m;
-        long payMoneyS = orderForCustomer.foodData.price_s;
+        MenuOwnBean menuOwn = gameDataManager.gameData.GetMenuById(orderForCustomer.foodData.id);
+        menuOwn.GetPrice(orderForCustomer.foodData, out long payMoneyL, out long payMoneyM, out long payMoneyS);
         //是否出错
         bool isError = npcAIWorker.characterData.CalculationAccountingCheck(gameItemsManager, out float moreRate);
 
@@ -185,7 +184,7 @@ public class NpcAIWorkerForAccountantCpt : NpcAIWokerFoBaseCpt
 
         if (npcAIWorker.innHandler != null)
         {
-            npcAIWorker.innHandler.PayMoney(orderForCustomer, payMoneyL,payMoneyM,payMoneyS);
+            npcAIWorker.innHandler.PayMoney(orderForCustomer, payMoneyL, payMoneyM, payMoneyS);
         }
 
         //通知离开

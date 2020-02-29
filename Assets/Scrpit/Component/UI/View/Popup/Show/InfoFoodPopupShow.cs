@@ -5,7 +5,9 @@ using UnityEditor;
 public class InfoFoodPopupShow : PopupShowView
 {
     public GameObject objLevel;
+    public GameObject objLevelProgress;
     public Image ivLevel;
+    public Text tvLevelName;
     public Text tvLevelProgress;
     public Slider progressLevel;
 
@@ -93,11 +95,20 @@ public class InfoFoodPopupShow : PopupShowView
             ivLevel.gameObject.SetActive(true);
         }
         ivLevel.sprite = spIcon;
+        tvLevelName.text = levelStr;
         progressLevel.value = ownData.menuExp / (float)nextLevelExp;
         tvLevelProgress.text = ownData.menuExp + "/" + nextLevelExp;
         if (ownData.GetMenuStatus() == MenuStatusEnum.WaitForResearch)
         {
-            tvLevelProgress.text += "(可研究升级)";
+            tvLevelProgress.text += GameCommonInfo.GetUITextById(287);
+        }
+        if (level >= 3)
+        {
+            objLevelProgress.SetActive(false);
+        }
+        else
+        {
+            objLevelProgress.SetActive(true);
         }
     }
 

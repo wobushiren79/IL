@@ -34,6 +34,37 @@ public class MenuOwnBean
     }
 
     /// <summary>
+    /// 获取价格
+    /// </summary>
+    /// <param name="menuInfo"></param>
+    /// <param name="priceL"></param>
+    /// <param name="priceM"></param>
+    /// <param name="priceS"></param>
+    public void GetPrice(MenuInfoBean menuInfo, out long priceL, out long priceM, out long priceS)
+    {
+        float addRate = 1;
+        if (menuLevel==0)
+        {
+            addRate = 1;
+        }
+        else  if (menuLevel == 1)
+        {
+            addRate = 2;
+        }
+        else if (menuLevel == 2)
+        {
+            addRate = 3;
+        }
+        else if (menuLevel == 3)
+        {
+            addRate = 4;
+        }
+        priceL = (long)(menuInfo.price_l * addRate);
+        priceM = (long)(menuInfo.price_m * addRate);
+        priceS = (long)(menuInfo.price_s * addRate);
+    }
+
+    /// <summary>
     /// 卖出菜品
     /// </summary>
     /// <param name="number"></param>
@@ -123,7 +154,7 @@ public class MenuOwnBean
         nextLevelExp = 0;
         if (menuLevel == 0)
         {
-            levelStr = "";
+            levelStr = "初";
             nextLevelExp = 100;
         }
         else if (menuLevel == 1)
@@ -156,19 +187,61 @@ public class MenuOwnBean
          completeResearchExp = 0;
         if (menuLevel == 0)
         {
-            completeResearchExp = 1000;
+            completeResearchExp = 10000;
         }
         else if (menuLevel == 1)
         {
-            completeResearchExp = 10000;
+            completeResearchExp = 100000;
         }
         else if (menuLevel == 2)
         {
-            completeResearchExp = 100000;
+            completeResearchExp = 1000000;
         }
+        
         float progress = (float)researchExp / completeResearchExp;
         return (float)Math.Round(progress,4);
     }
+
+    /// <summary>
+    /// 获取研究材料消耗
+    /// </summary>
+    /// <param name="menuInfo"></param>
+    /// <returns></returns>
+    public SortedList<IngredientsEnum,long> GetResearchIngredients(MenuInfoBean menuInfo)
+    {
+        SortedList<IngredientsEnum, long> listIng = new SortedList<IngredientsEnum, long>();
+        float addRate = 1;
+        if (menuLevel == 0)
+        {
+            addRate = 10;
+        }
+        else if (menuLevel == 1)
+        {
+            addRate = 100;
+        }
+        else if (menuLevel == 2)
+        {
+            addRate = 1000;
+        }
+        if (menuInfo.ing_oilsalt!=0)
+            listIng.Add(IngredientsEnum.Oilsalt, (long)(menuInfo.ing_oilsalt * addRate));
+        if (menuInfo.ing_meat != 0)
+            listIng.Add(IngredientsEnum.Meat, (long)(menuInfo.ing_meat * addRate));
+        if (menuInfo.ing_riverfresh != 0)
+            listIng.Add(IngredientsEnum.Riverfresh, (long)(menuInfo.ing_riverfresh * addRate));
+        if (menuInfo.ing_seafood != 0)
+            listIng.Add(IngredientsEnum.Seafood, (long)(menuInfo.ing_seafood * addRate));
+        if (menuInfo.ing_vegetables != 0)
+            listIng.Add(IngredientsEnum.Vegetables, (long)(menuInfo.ing_vegetables * addRate));
+        if (menuInfo.ing_melonfruit != 0)
+            listIng.Add(IngredientsEnum.Melonfruit, (long)(menuInfo.ing_melonfruit * addRate));
+        if (menuInfo.ing_waterwine != 0)
+            listIng.Add(IngredientsEnum.Waterwine, (long)(menuInfo.ing_waterwine * addRate));
+        if (menuInfo.ing_flour != 0)
+            listIng.Add(IngredientsEnum.Flour, (long)(menuInfo.ing_flour * addRate));
+        return listIng;
+    }
+
 
     /// <summary>
     /// 获取对应等级图标
@@ -191,7 +264,7 @@ public class MenuOwnBean
         }
         else if (menuLevel == 3)
         {
-            spIcon = iconDataManager.GetIconSpriteByName("reputation_level_1_1");
+            spIcon = iconDataManager.GetIconSpriteByName("reputation_level_3_1");
         }
         return spIcon; 
     }

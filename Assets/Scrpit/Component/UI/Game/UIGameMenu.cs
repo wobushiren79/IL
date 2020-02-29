@@ -36,41 +36,47 @@ public class UIGameMenu : UIGameComponent
 
     private void Update()
     {
+        SetIngredients();
+    }
+
+    /// <summary>
+    /// 设置材料
+    /// </summary>
+    public void SetIngredients()
+    {
         if (tvOilsalt != null)
         {
-            tvOilsalt.text = GameCommonInfo.GetUITextById(21) + " " + uiGameManager.gameDataManager.gameData.ingOilsalt;
+            tvOilsalt.text = IngredientsEnumTools.GetIngredientName(IngredientsEnum.Oilsalt) + " " + uiGameManager.gameDataManager.gameData.ingOilsalt;
         }
         if (tvMeat != null)
         {
-            tvMeat.text = GameCommonInfo.GetUITextById(22) + " " + uiGameManager.gameDataManager.gameData.ingMeat;
+            tvMeat.text = IngredientsEnumTools.GetIngredientName(IngredientsEnum.Meat) + " " + uiGameManager.gameDataManager.gameData.ingMeat;
         }
         if (tvRiverfresh != null)
         {
-            tvRiverfresh.text = GameCommonInfo.GetUITextById(23) + " " + uiGameManager.gameDataManager.gameData.ingRiverfresh;
+            tvRiverfresh.text = IngredientsEnumTools.GetIngredientName(IngredientsEnum.Riverfresh) + " " + uiGameManager.gameDataManager.gameData.ingRiverfresh;
         }
         if (tvSeafood != null)
         {
-            tvSeafood.text = GameCommonInfo.GetUITextById(24) + " " + uiGameManager.gameDataManager.gameData.ingSeafood;
+            tvSeafood.text = IngredientsEnumTools.GetIngredientName(IngredientsEnum.Seafood) + " " + uiGameManager.gameDataManager.gameData.ingSeafood;
         }
         if (tvVegetables != null)
         {
-            tvVegetables.text = GameCommonInfo.GetUITextById(25) + " " + uiGameManager.gameDataManager.gameData.ingVegetables;
+            tvVegetables.text = IngredientsEnumTools.GetIngredientName(IngredientsEnum.Vegetables) + " " + uiGameManager.gameDataManager.gameData.ingVegetables;
         }
         if (tvMelonfruit != null)
         {
-            tvMelonfruit.text = GameCommonInfo.GetUITextById(26) + " " + uiGameManager.gameDataManager.gameData.ingMelonfruit;
+            tvMelonfruit.text = IngredientsEnumTools.GetIngredientName(IngredientsEnum.Melonfruit) + " " + uiGameManager.gameDataManager.gameData.ingMelonfruit;
         }
         if (tvWaterwine != null)
         {
-            tvWaterwine.text = GameCommonInfo.GetUITextById(27) + " " + uiGameManager.gameDataManager.gameData.ingWaterwine;
+            tvWaterwine.text = IngredientsEnumTools.GetIngredientName(IngredientsEnum.Waterwine) + " " + uiGameManager.gameDataManager.gameData.ingWaterwine;
         }
         if (tvflour != null)
         {
-            tvflour.text = GameCommonInfo.GetUITextById(28) + " " + uiGameManager.gameDataManager.gameData.ingFlour;
+            tvflour.text = IngredientsEnumTools.GetIngredientName(IngredientsEnum.Flour) + " " + uiGameManager.gameDataManager.gameData.ingFlour;
         }
     }
-
-
 
     public void CreateFoodList()
     {
