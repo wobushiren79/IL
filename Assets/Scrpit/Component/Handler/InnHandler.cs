@@ -21,7 +21,8 @@ public class InnHandler : BaseMonoBehaviour, IBaseObserver
     public ToastManager toastManager;
     //NPC创建
     public NpcWorkerBuilder workerBuilder;
-
+    //游戏数据处理
+    public GameDataHandler gameDataHandler;
     //客栈桌子处理
     public InnTableHandler innTableHandler;
     //烹饪处理
@@ -57,6 +58,7 @@ public class InnHandler : BaseMonoBehaviour, IBaseObserver
     private void Awake()
     {
         audioHandler = Find<AudioHandler>(ImportantTypeEnum.AudioHandler);
+        gameDataHandler= Find<GameDataHandler>(ImportantTypeEnum.GameDataHandler);
         gameTimeHandler = Find<GameTimeHandler>(ImportantTypeEnum.TimeHandler);
         gameTimeHandler.AddObserver(this);
     }
@@ -360,7 +362,7 @@ public class InnHandler : BaseMonoBehaviour, IBaseObserver
         //记录+1
         gameDataManager.gameData.AddMenuSellNumber(1, order.foodData.id, payMoneyL, payMoneyM, payMoneyS);
         //金钱增加
-        gameDataManager.gameData.AddMoney(payMoneyL, payMoneyM, payMoneyS);
+        gameDataHandler.AddMoney(payMoneyL, payMoneyM, payMoneyS);
         //播放音效
         audioHandler.PlaySound(AudioSoundEnum.PayMoney, new Vector3(order.customer.transform.position.x, order.customer.transform.position.y, Camera.main.transform.position.z));
         //展示特效

@@ -37,7 +37,7 @@ public class UIGameManager : BaseUIManager
     public ControlHandler controlHandler;
     public EventHandler eventHandler;
     public AudioHandler audioHandler;
-
+    public GameDataHandler gameDataHandler;
     [Header("建造")]
     public NpcCustomerBuilder npcCustomerBuilder;
     public NpcEventBuilder npcEventBuilder;
@@ -72,6 +72,7 @@ public class UIGameManager : BaseUIManager
         controlHandler = Find<ControlHandler>(ImportantTypeEnum.ControlHandler);
         eventHandler = Find<EventHandler>(ImportantTypeEnum.EventHandler);
         audioHandler = Find<AudioHandler>(ImportantTypeEnum.AudioHandler);
+        gameDataHandler = Find<GameDataHandler>(ImportantTypeEnum.GameDataHandler);
 
         infoPromptPopup = FindInChildren<InfoPromptPopupShow>(ImportantTypeEnum.Popup);
         infoItemsPopup = FindInChildren<InfoItemsPopupShow>(ImportantTypeEnum.Popup);

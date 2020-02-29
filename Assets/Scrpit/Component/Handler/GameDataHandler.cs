@@ -5,11 +5,19 @@ using System.Collections.Generic;
 
 public class GameDataHandler : BaseHandler
 {
+
+    public enum NotifyTypeEnum
+    {
+        AddMoney = 1,
+        PayMoney = 2,
+    }
+
     protected GameDataManager gameDataManager;
     protected GameTimeHandler gameTimeHandler;
     protected GameItemsManager gameItemsManager;
     protected ToastManager toastManager;
     protected InnFoodManager innFoodManager;
+
 
     private void Awake()
     {
@@ -17,7 +25,7 @@ public class GameDataHandler : BaseHandler
         gameDataManager = Find<GameDataManager>(ImportantTypeEnum.GameDataManager);
         gameItemsManager = Find<GameItemsManager>(ImportantTypeEnum.GameItemsManager);
         toastManager = Find<ToastManager>(ImportantTypeEnum.ToastManager);
-        innFoodManager = Find<InnFoodManager>(ImportantTypeEnum.FoodManager) ;
+        innFoodManager = Find<InnFoodManager>(ImportantTypeEnum.FoodManager);
     }
 
     private void Start()
@@ -70,7 +78,7 @@ public class GameDataHandler : BaseHandler
                 itemMenu.CancelResearch(gameDataManager.gameData);
                 continue;
             }
-            MenuInfoBean menuInfo=  innFoodManager.GetFoodDataById(itemMenu.menuId);
+            MenuInfoBean menuInfo = innFoodManager.GetFoodDataById(itemMenu.menuId);
             if (menuInfo == null)
                 continue;
             long addExp = researcher.CalculationMenuResearchAddExp(gameItemsManager);
@@ -78,9 +86,21 @@ public class GameDataHandler : BaseHandler
             if (isCompleteResearch)
             {
                 itemMenu.CompleteResearch(gameDataManager.gameData);
-                string toastStr =string.Format(GameCommonInfo.GetUITextById(1071), menuInfo.name);
+                string toastStr = string.Format(GameCommonInfo.GetUITextById(1071), menuInfo.name);
                 toastManager.ToastHint(innFoodManager.GetFoodSpriteByName(menuInfo.icon_key), toastStr);
             }
         }
+    }
+
+    /// <summary>
+    /// 增加
+    /// </summary>
+    /// <param name="priceL"></param>
+    /// <param name="priceM"></param>
+    /// <param name="priceS"></param>
+    public void AddMoney(long priceL, long priceM, long priceS)
+    {
+        gameDataManager.gameData.AddMoney(priceL, priceM, priceS);
+        NotifyAllObserver((int)NotifyTypeEnum.AddMoney, priceL, priceM, priceS);
     }
 }

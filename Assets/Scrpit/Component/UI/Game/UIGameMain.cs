@@ -2,8 +2,8 @@
 using UnityEditor;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
-
-public class UIGameMain : UIGameComponent, DialogView.IDialogCallBack, IRadioGroupCallBack
+using DG.Tweening;
+public class UIGameMain : UIGameComponent, DialogView.IDialogCallBack, IRadioGroupCallBack, IBaseObserver
 {
     [Header("控件")]
     public InfoPromptPopupButton popupWorker;
@@ -43,6 +43,17 @@ public class UIGameMain : UIGameComponent, DialogView.IDialogCallBack, IRadioGro
     public RadioButtonView rbTimeScale2;
     public RadioButtonView rbTimeScale3;
     public RadioButtonView rbTimeScale5;
+
+
+    protected Tween tweenForMoneyL;
+    protected Tween tweenForMoneyM;
+    protected Tween tweenForMoneyS;
+
+    public override void Awake()
+    {
+        base.Awake();
+        uiGameManager.gameDataHandler.AddObserver(this);
+    }
 
     public void Start()
     {
@@ -111,12 +122,6 @@ public class UIGameMain : UIGameComponent, DialogView.IDialogCallBack, IRadioGro
             {
                 tvInnStatus.text = GameCommonInfo.GetUITextById(2001);
             }
-        if (tvMoneyS != null)
-            tvMoneyS.text = uiGameManager.gameDataManager.gameData.moneyS + "";
-        if (tvMoneyM != null)
-            tvMoneyM.text = uiGameManager.gameDataManager.gameData.moneyM + "";
-        if (tvMoneyL != null)
-            tvMoneyL.text = uiGameManager.gameDataManager.gameData.moneyL + "";
         if (clockView != null && uiGameManager.gameTimeHandler != null)
         {
             uiGameManager.gameTimeHandler.GetTime(out float hour, out float min);
@@ -124,6 +129,15 @@ public class UIGameMain : UIGameComponent, DialogView.IDialogCallBack, IRadioGro
             clockView.SetTime(month, day, (int)hour, (int)min);
         }
         SetInnPraise(innAttributes);
+    }
+
+    public override void RefreshUI()
+    {
+        base.RefreshUI();
+
+        SetMoney(MoneyEnum.L, uiGameManager.gameDataManager.gameData.moneyL);
+        SetMoney(MoneyEnum.M, uiGameManager.gameDataManager.gameData.moneyM);
+        SetMoney(MoneyEnum.S, uiGameManager.gameDataManager.gameData.moneyS);
     }
 
     public override void CloseUI()
@@ -143,6 +157,7 @@ public class UIGameMain : UIGameComponent, DialogView.IDialogCallBack, IRadioGro
         base.OpenUI();
         InitInnData();
         uiGameManager.controlHandler.RestoreControl();
+        RefreshUI();
     }
 
     /// <summary>
@@ -188,6 +203,30 @@ public class UIGameMain : UIGameComponent, DialogView.IDialogCallBack, IRadioGro
         else
         {
             rgTimeScale.gameObject.SetActive(true);
+        }
+    }
+
+    /// <summary>
+    /// 设置金钱
+    /// </summary>
+    /// <param name="moneyType"></param>
+    /// <param name="price"></param>
+    public void SetMoney(MoneyEnum moneyType, long price)
+    {
+        switch (moneyType)
+        {
+            case MoneyEnum.L:
+                if (tvMoneyL != null)
+                    tvMoneyL.text = price + "";
+                break;
+            case MoneyEnum.M:
+                if (tvMoneyM != null)
+                    tvMoneyM.text = price + "";
+                break;
+            case MoneyEnum.S:
+                if (tvMoneyS != null)
+                    tvMoneyS.text = price + "";
+                break;
         }
     }
 
@@ -310,6 +349,38 @@ public class UIGameMain : UIGameComponent, DialogView.IDialogCallBack, IRadioGro
         uiGameManager.dialogManager.CreateDialog(DialogEnum.Normal, this, dialogBean);
     }
 
+    /// <summary>
+    /// 增加金钱动画
+    /// </summary>
+    /// <param name="priceL"></param>
+    /// <param name="priceM"></param>
+    /// <param name="priceS"></param>
+    private void AddMoneyAnim(long priceL, long priceM, long priceS)
+    {
+        GameDataBean gameData = uiGameManager.gameDataManager.gameData;
+        if (priceL != 0)
+        {
+            if (tweenForMoneyL != null)
+                tweenForMoneyL.Kill();
+            long startMoney = gameData.moneyL - priceL;
+            tweenForMoneyL = DOTween.To(() => startMoney, x => { SetMoney(MoneyEnum.L, x); }, gameData.moneyL, 1);
+        }
+        if (priceM != 0)
+        {
+            if (tweenForMoneyM != null)
+                tweenForMoneyM.Kill();
+            long startMoney = gameData.moneyM - priceM;
+            tweenForMoneyM = DOTween.To(() => startMoney, x => { SetMoney(MoneyEnum.M, x); }, gameData.moneyM, 1);
+        }
+        if (priceS != 0)
+        {
+            if (tweenForMoneyS != null)
+                tweenForMoneyS.Kill();
+            long startMoney = gameData.moneyS - priceS;
+            tweenForMoneyS = DOTween.To(() => startMoney, x => { SetMoney(MoneyEnum.S, x); }, gameData.moneyS, 1);
+        }
+    }
+
     #region dialog 回调
     public void Submit(DialogView dialogView, DialogBean dialogData)
     {
@@ -370,6 +441,22 @@ public class UIGameMain : UIGameComponent, DialogView.IDialogCallBack, IRadioGro
     public void RadioButtonUnSelected(RadioGroupView rgView, int position, RadioButtonView rbview)
     {
 
+    }
+    #endregion
+
+    #region 通知回调
+    public void ObserbableUpdate<T>(T observable, int type, params object[] obj) where T : Object
+    {
+        if (observable as GameDataHandler)
+        {
+            if (type == (int)GameDataHandler.NotifyTypeEnum.AddMoney)
+            {
+                long priceL = System.Convert.ToInt64(obj[0]);
+                long priceM = System.Convert.ToInt64(obj[1]);
+                long priceS = System.Convert.ToInt64(obj[2]);
+                AddMoneyAnim(priceL, priceM, priceS);
+            }
+        }
     }
     #endregion
 }
