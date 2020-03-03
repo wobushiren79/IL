@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using UnityEditor;
 using System.Collections;
+using UnityEngine.AI;
 
 public class NpcAIPasserCpt : BaseNpcAI
 {
@@ -19,6 +20,8 @@ public class NpcAIPasserCpt : BaseNpcAI
     protected SceneTownManager sceneTownManager;
     //事件处理
     protected MiniGameCombatHandler miniGameCombatHandler;
+    //AI
+    public NavMeshAgent navMeshAgent;
 
     //移动目标点
     public Vector2 movePosition;

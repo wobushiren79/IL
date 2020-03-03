@@ -55,6 +55,7 @@ public class NpcPasserBuilder : NpcNormalBuilder
         GameObject npcObj = BuildNpc(npcPosition);
         //设置意图
         NpcAIPasserCpt npcAI = npcObj.GetComponent<NpcAIPasserCpt>();
+        npcAI.navMeshAgent.enabled = true;
         if (npcAI != null)
         {
             //设置天前所在地

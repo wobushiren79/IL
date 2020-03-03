@@ -139,8 +139,7 @@ MeshRenderer:
   m_RayTracingMode: 2
   m_RenderingLayerMask: 0
   m_RendererPriority: 0
-  m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  m_Materials: []
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -245,7 +244,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 37cb32e1d2b5742498252e0c1572037a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  colliderInteractive: {fileID: 5256790713843728420}
+  characterInt: {fileID: 0}
   canInteractive: 0
   interactiveContent: "\u5BA2\u6808\u516C\u4F1A"
   positionChange: 0
@@ -411,7 +410,7 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
-  m_SpriteSortPoint: 0
+  m_SpriteSortPoint: 1
 --- !u!1 &7882594854237712947
 GameObject:
   m_ObjectHideFlags: 0
@@ -421,7 +420,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7882594854237712944}
-  - component: {fileID: 7694056279974181546}
   - component: {fileID: 957698759058776554}
   m_Layer: 0
   m_Name: Guild
@@ -449,17 +447,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!210 &7694056279974181546
-SortingGroup:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7882594854237712947}
-  m_Enabled: 1
-  m_SortingLayerID: -63496745
-  m_SortingLayer: 9
-  m_SortingOrder: 0
 --- !u!61 &957698759058776554
 BoxCollider2D:
   m_ObjectHideFlags: 0
