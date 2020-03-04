@@ -69090,8 +69090,8 @@ TilemapRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: -846319371
-  m_SortingLayer: 2
+  m_SortingLayerID: 632417037
+  m_SortingLayer: 4
   m_SortingOrder: 1
   m_ChunkSize: {x: 32, y: 32, z: 32}
   m_ChunkCullingBounds: {x: 0, y: 0, z: 0}
@@ -85949,6 +85949,16 @@ Tilemap:
     m_Data: {fileID: 0}
   - m_RefCount: 0
     m_Data: {fileID: 0}
+  - m_RefCount: 0
+    m_Data: {fileID: 0}
+  - m_RefCount: 0
+    m_Data: {fileID: 0}
+  - m_RefCount: 0
+    m_Data: {fileID: 0}
+  - m_RefCount: 0
+    m_Data: {fileID: 0}
+  - m_RefCount: 0
+    m_Data: {fileID: 0}
   m_TileMatrixArray:
   - m_RefCount: 0
     m_Data:
@@ -85957,7 +85967,7 @@ Tilemap:
       e02: 1
       e03: NaN
       e10: NaN
-      e11: 5.2e-43
+      e11: 7e-43
       e12: 0
       e13: NaN
       e20: 0
@@ -85970,14 +85980,15 @@ Tilemap:
       e33: 0
   m_TileColorArray:
   - m_RefCount: 0
-    m_Data: {r: 2.8133622e+10, g: 2.8133622e+10, b: 2.8133622e+10, a: 2.8133622e+10}
+    m_Data: {r: 0.0000000028197604, g: 0.0000000028197604, b: 0.0000000028197604,
+      a: 0.0000000028197604}
   m_TileObjectToInstantiateArray:
   - m_RefCount: 0
     m_Data: {fileID: 0}
   m_AnimationFrameRate: 1
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_Origin: {x: -37, y: 0, z: 0}
-  m_Size: {x: 46, y: 9, z: 1}
+  m_Size: {x: 68, y: 29, z: 1}
   m_TileAnchor: {x: 0.5, y: 0.5, z: 0}
   m_TileOrientation: 0
   m_TileOrientationMatrix:
@@ -88851,6 +88862,26 @@ PrefabInstance:
       propertyPath: listFurnitureCpt.reorderableList.isExpanded
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 2414675617322255133, guid: 3b08cb01fecef4c47bd80f6bd0bc4d37,
+        type: 3}
+      propertyPath: listFloorIcon.isExpanded
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2414675617322255133, guid: 3b08cb01fecef4c47bd80f6bd0bc4d37,
+        type: 3}
+      propertyPath: listFloorIcon.reorderableList.isExpanded
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2414675617322255133, guid: 3b08cb01fecef4c47bd80f6bd0bc4d37,
+        type: 3}
+      propertyPath: listWallIcon.isExpanded
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2414675617322255133, guid: 3b08cb01fecef4c47bd80f6bd0bc4d37,
+        type: 3}
+      propertyPath: listWallIcon.reorderableList.isExpanded
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3b08cb01fecef4c47bd80f6bd0bc4d37, type: 3}
 --- !u!4 &2414675618469901522 stripped
@@ -90764,6 +90795,31 @@ PrefabInstance:
       propertyPath: m_SizeDelta.y
       value: 4
       objectReference: {fileID: 0}
+    - target: {fileID: 963839605324390078, guid: ad62647ae11e7c4478901b1a2fa4a8eb,
+        type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 963839605324390078, guid: ad62647ae11e7c4478901b1a2fa4a8eb,
+        type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 963839605324390078, guid: ad62647ae11e7c4478901b1a2fa4a8eb,
+        type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 50.000008
+      objectReference: {fileID: 0}
+    - target: {fileID: 963839605324390078, guid: ad62647ae11e7c4478901b1a2fa4a8eb,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -323
+      objectReference: {fileID: 0}
+    - target: {fileID: 963839605324390078, guid: ad62647ae11e7c4478901b1a2fa4a8eb,
+        type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 100.000015
+      objectReference: {fileID: 0}
     - target: {fileID: 1152892008080048387, guid: ad62647ae11e7c4478901b1a2fa4a8eb,
         type: 3}
       propertyPath: m_AnchoredPosition.y
@@ -90837,7 +90893,7 @@ PrefabInstance:
     - target: {fileID: 4688988667026818645, guid: ad62647ae11e7c4478901b1a2fa4a8eb,
         type: 3}
       propertyPath: m_SizeDelta.y
-      value: 286
+      value: 358
       objectReference: {fileID: 0}
     - target: {fileID: 5352602745801416271, guid: ad62647ae11e7c4478901b1a2fa4a8eb,
         type: 3}

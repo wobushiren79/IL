@@ -251,12 +251,6 @@ public class ItemTownCerpenterCpt : ItemGameBaseCpt, DialogView.IDialogCallBack
             GetUIComponent<UITownCarpenter>().RefreshUI();
             toastStr = string.Format(GameCommonInfo.GetUITextById(1011), storeInfo.name);
         }
-        else if (storeInfo.store_goods_type == (int)StoreForCarpenterTypeEnum.Wall)
-        {
-            InnBuildBean innBuildData = gameDataManager.gameData.GetInnBuildData();
-            innBuildData.ChangeWall(innBuildManager, buildItemData.id);
-            toastStr = GameCommonInfo.GetUITextById(1022);
-        }
         else
         {
             gameDataManager.gameData.AddBuildNumber(buildItemData.id, 1);

@@ -78,7 +78,14 @@ public class BaseTilemapBuilder : BaseMonoBehaviour
     {
         buildTilemap.ClearAllTiles();
     }
-
+    /// <summary>
+    /// 清理一个tile
+    /// </summary>
+    /// <param name="position"></param>
+    public void ClearTile(Vector3Int position)
+    {
+        buildTilemap.SetTile(position,null);
+    }
     /// <summary>
     /// 获取tilemap容器
     /// </summary>

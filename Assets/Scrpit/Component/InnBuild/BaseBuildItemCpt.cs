@@ -78,6 +78,10 @@ public class BaseBuildItemCpt : BaseMonoBehaviour
     /// <param name="spUp"></param>
     public void SetSprite(Sprite spLeft, Sprite spRight, Sprite spDown, Sprite spUp)
     {
+        if (srMainBuild != null)
+            srMainBuild.sprite = spLeft;
+        if (srShadow != null && spLeft != null)
+            srShadow.sprite = spLeft;
         this.spLeft = spLeft;
         this.spRight = spRight;
         this.spDown = spDown;

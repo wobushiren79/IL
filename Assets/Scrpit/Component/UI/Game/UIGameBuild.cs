@@ -6,7 +6,7 @@ using UnityEngine.AI;
 public class UIGameBuild : UIGameComponent, IRadioGroupCallBack
 {
     public Text tvAesthetics;
-
+    public Text tvNull;
     //返回按钮
     public Button btBack;
     public Button btDismantle;
@@ -18,6 +18,7 @@ public class UIGameBuild : UIGameComponent, IRadioGroupCallBack
     public RadioButtonView rbTypeCounter;
     public RadioButtonView rbTypeDoor;
     public RadioButtonView rbTypeFloor;
+    public RadioButtonView rbTypeWall;
 
     public GameObject listBuildContent;
     public GameObject itemBuildModel;
@@ -91,6 +92,7 @@ public class UIGameBuild : UIGameComponent, IRadioGroupCallBack
     /// <param name="type"></param>
     public void CreateBuildList(BuildItemTypeEnum type)
     {
+        uiGameManager.audioHandler.PlaySound(AudioSoundEnum.ButtonForNormal);
         buildType = type;
         if (listBuildContent == null)
             return;
@@ -100,6 +102,7 @@ public class UIGameBuild : UIGameComponent, IRadioGroupCallBack
             return;
         CptUtil.RemoveChildsByActive(listBuildContent.transform);
 
+        bool hasData = false;
         for (int i = 0; i < uiGameManager.gameDataManager.gameData.listBuild.Count; i++)
         {
             ItemBean itemData = uiGameManager.gameDataManager.gameData.listBuild[i];
@@ -109,8 +112,13 @@ public class UIGameBuild : UIGameComponent, IRadioGroupCallBack
             if ((int)type == buildData.build_type)
             {
                 CreateBuildItem(itemData, buildData);
+                hasData = true;
             }
         }
+        if (hasData)
+            tvNull.gameObject.SetActive(false);
+        else
+            tvNull.gameObject.SetActive(true);
     }
 
     /// <summary>
@@ -140,6 +148,7 @@ public class UIGameBuild : UIGameComponent, IRadioGroupCallBack
     /// </summary>
     public void OpenMainUI()
     {
+        uiGameManager.audioHandler.PlaySound(AudioSoundEnum.ButtonForBack);
         //删除当前选中
         ((ControlForBuildCpt)(uiGameManager.controlHandler.GetControl(ControlHandler.ControlEnum.Build))).ClearBuildItem();
         //重新构建地形
@@ -206,6 +215,11 @@ public class UIGameBuild : UIGameComponent, IRadioGroupCallBack
             SetInnBuildActive(false, false);
             btDismantle.gameObject.SetActive(false);
             CreateBuildList(BuildItemTypeEnum.Floor);
+        }
+        else if (rbview==rbTypeWall)
+        {
+            SetInnBuildActive(true, true);
+            CreateBuildList(BuildItemTypeEnum.Wall);
         }
     }
 

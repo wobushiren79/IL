@@ -42,20 +42,26 @@ public class ImageEditor : Editor
     [MenuItem("Custom/Image/Multiple_5x2")]
     public static void Multiple5x2()
     {
-        BaseSpriteEditor(SpriteImportMode.Multiple, 5,2);
+        BaseSpriteEditor(SpriteImportMode.Multiple, 5, 2);
     }
     [MenuItem("Custom/Image/Multiple_5x3")]
     public static void Multiple5x3()
     {
-        BaseSpriteEditor(SpriteImportMode.Multiple, 5,3);
+        BaseSpriteEditor(SpriteImportMode.Multiple, 5, 3);
     }
 
 
     [MenuItem("Custom/Image/Multiple_5x4")]
     public static void Multiple5x4()
     {
-        BaseSpriteEditor(SpriteImportMode.Multiple, 5,4);
+        BaseSpriteEditor(SpriteImportMode.Multiple, 5, 4);
     }
+    [MenuItem("Custom/Image/Multiple_5x4_Extrude")]
+    public static void Multiple5x4ForExtrude()
+    {
+        BaseSpriteEditorForExtrude(SpriteImportMode.Multiple, 5, 4);
+    }
+
     [MenuItem("Custom/Image/Multiple_5x5")]
     public static void Multiple5x5()
     {
@@ -76,11 +82,11 @@ public class ImageEditor : Editor
     {
         BaseSpriteEditor(SpriteImportMode.Multiple, 5, 7);
     }
-    static void BaseSpriteEditor(SpriteImportMode spriteType,int cNumber, int rNumber)
+    static void BaseSpriteEditor(SpriteImportMode spriteType, int cNumber, int rNumber)
     {
         Object[] objs = GetSelectedTextures();
 
-       // Selection.objects = new Object[0];
+        // Selection.objects = new Object[0];
 
         if (objs.Length <= 0)
         {
@@ -112,8 +118,8 @@ public class ImageEditor : Editor
             for (int r = rNumber; r > 0; r--)
             {
                 for (int c = 0; c < cNumber; c++)
-            {
-               
+                {
+
                     SpriteMetaData smd = new SpriteMetaData();
                     smd.pivot = new Vector2(0.5f, 0.5f);
                     smd.alignment = 9;
@@ -128,7 +134,58 @@ public class ImageEditor : Editor
             AssetDatabase.ImportAsset(path, ImportAssetOptions.ForceUpdate);
         }
     }
+    static void BaseSpriteEditorForExtrude(SpriteImportMode spriteType, int cNumber, int rNumber)
+    {
+        Object[] objs = GetSelectedTextures();
 
+        // Selection.objects = new Object[0];
+
+        if (objs.Length <= 0)
+        {
+            LogUtil.LogError("没有选中图片");
+            return;
+        }
+        for (int i = 0; i < objs.Length; i++)
+        {
+            Texture2D itemTexture = (Texture2D)objs[i];
+            string path = AssetDatabase.GetAssetPath(itemTexture);
+
+            TextureImporter textureImporter = AssetImporter.GetAtPath(path) as TextureImporter;
+
+            textureImporter.textureType = TextureImporterType.Sprite;
+            textureImporter.spriteImportMode = spriteType;
+            textureImporter.filterMode = FilterMode.Point;
+            textureImporter.maxTextureSize = 8192;
+            textureImporter.spritePixelsPerUnit = 32;
+            textureImporter.compressionQuality = 100;
+            textureImporter.isReadable = true;
+
+            if (cNumber == 0 && rNumber == 0)
+                continue;
+            List<SpriteMetaData> newData = new List<SpriteMetaData>();
+
+            float cItemSize = (itemTexture.width - 2 * cNumber) / cNumber;
+            float rItemSize = (itemTexture.height - 2 * rNumber) / rNumber;
+            int position = 0;
+            for (int r = rNumber; r > 0; r--)
+            {
+                for (int c = 0; c < cNumber; c++)
+                {
+
+                    SpriteMetaData smd = new SpriteMetaData();
+                    smd.pivot = new Vector2(0.5f, 0.5f);
+                    smd.alignment = 9;
+                    smd.name = itemTexture.name + "_" + position;
+                    smd.rect = new Rect(c * cItemSize + 1 + c * 2, (r - 1) * rItemSize + 1 + (r - 1) * 2, cItemSize, rItemSize);
+                    newData.Add(smd);
+                    position++;
+                }
+            }
+
+            textureImporter.spritesheet = newData.ToArray();
+            AssetDatabase.ImportAsset(path, ImportAssetOptions.ForceUpdate);
+        }
+    }
     static Object[] GetSelectedTextures()
     {
         return Selection.GetFiltered(typeof(Texture2D), SelectionMode.DeepAssets);

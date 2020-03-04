@@ -102,12 +102,17 @@ public class InnBuildManager : BaseManager, IBuildDataView
                 case BuildItemTypeEnum.Door:
                     BuildDoorCpt buildDoor = (BuildDoorCpt)buildItemCpt;
                     Sprite spDoor = GetFurnitureSpriteByName(listIcon[0]);
-                    buildDoor.SetData(buildItemData, spDoor, spDoor, spDoor, spDoor);
+                    buildDoor.SetData(buildItemData, spDoor);
                     break;
                 case BuildItemTypeEnum.Floor:
                     BuildFloorCpt buildFloor = (BuildFloorCpt)buildItemCpt;
                     Sprite spFloor = GetFloorSpriteByName(buildItemData.icon_key);
                     buildFloor.SetData(buildItemData, spFloor);
+                    break;
+                case BuildItemTypeEnum.Wall:
+                    BuildWallCpt buildWall = (BuildWallCpt)buildItemCpt;
+                    Sprite spWall = GetWallSpriteByName(buildItemData.icon_key);
+                    buildWall.SetData(buildItemData, spWall);
                     break;
                 default:
                     buildItemCpt.SetData(buildItemData);

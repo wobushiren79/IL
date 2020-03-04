@@ -23,7 +23,7 @@ public class InnWallBuilder : BaseTilemapBuilder
     }
 
     /// <summary>
-    /// 开始修建地板
+    /// 开始修建墙壁
     /// </summary>
     /// <param name="listData"></param>
     public void BuildWall(List<InnResBean> listData)
@@ -38,5 +38,39 @@ public class InnWallBuilder : BaseTilemapBuilder
             TileBase wallTile = innBuildManager.GetWallTileByName(buildItemData.tile_name);
             Build(wallTile, new Vector3Int((int)itemData.startPosition.x, (int)itemData.startPosition.y, 0));
         }
+    }
+
+
+    /// <summary>
+    /// 修建墙壁
+    /// </summary>
+    /// <param name="itemData"></param>
+    public void BuildWall(InnResBean itemData)
+    {
+        if (itemData == null)
+            return;
+        BuildItemBean buildItemData = innBuildManager.GetBuildDataById(itemData.id);
+        TileBase wallTile = innBuildManager.GetWallTileByName(buildItemData.tile_name);
+        Build(wallTile, new Vector3Int((int)itemData.startPosition.x, (int)itemData.startPosition.y, 0));
+    }
+
+    /// <summary>
+    /// 改变墙壁
+    /// </summary>
+    /// <param name="itemData"></param>
+    /// <param name="changeTileName"></param>
+    public void ChangeWall(Vector3Int changePosition, string changeTileName)
+    {
+        TileBase floorTile = innBuildManager.GetWallTileByName(changeTileName);
+        Build(floorTile, changePosition);
+    }
+
+    /// <summary>
+    /// 清理墙壁
+    /// </summary>
+    /// <param name="position"></param>
+    public void ClearWall(Vector3Int position)
+    {
+        ClearTile(position);
     }
 }

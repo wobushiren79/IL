@@ -29,6 +29,8 @@ public class UIBaseOne : UIGameComponent
         base.OpenUI();
         if (uiGameManager.controlHandler != null)
             uiGameManager.controlHandler.StopControl();
+        if (uiGameManager.gameTimeHandler != null)
+            uiGameManager.gameTimeHandler.SetTimeStatus(true);
     }
 
     public override void CloseUI()
@@ -38,6 +40,8 @@ public class UIBaseOne : UIGameComponent
             if (uiGameManager.controlHandler != null)
                 uiGameManager.controlHandler.RestoreControl();
         }
+        if (uiGameManager.gameTimeHandler != null)
+            uiGameManager.gameTimeHandler.SetTimeRestore();
         base.CloseUI();
     }
 

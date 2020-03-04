@@ -50,6 +50,10 @@ public class ItemGameBuildCpt : ItemGameBaseCpt
         {
             spIcon = innBuildManager.GetFloorSpriteByName(iconKey);
         }
+        else if (buildItemType == BuildItemTypeEnum.Wall)
+        {
+            spIcon = innBuildManager.GetWallSpriteByName(iconKey);
+        }
         else
         {
             spIcon = innBuildManager.GetFurnitureSpriteByName(iconKey);
