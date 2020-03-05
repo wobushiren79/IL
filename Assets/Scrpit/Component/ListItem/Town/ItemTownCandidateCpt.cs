@@ -28,9 +28,13 @@ public class ItemTownCandidateCpt : ItemGameBaseCpt, DialogView.IDialogCallBack
     /// </summary>
     public void EmploymentCandidate()
     {
-        GameDataManager gameDataManager = GetUIManager<UIGameManager>().gameDataManager;
-        ToastManager toastManager = GetUIManager<UIGameManager>().toastManager;
-        DialogManager dialogManager = GetUIManager<UIGameManager>().dialogManager;
+        UIGameManager uiGameManager= GetUIManager<UIGameManager>();
+        GameDataManager gameDataManager = uiGameManager.gameDataManager;
+        ToastManager toastManager = uiGameManager.toastManager;
+        DialogManager dialogManager = uiGameManager.dialogManager;
+        AudioHandler audioHandler = uiGameManager.audioHandler;
+
+        audioHandler.PlaySound(AudioSoundEnum.ButtonForNormal);
         //检测是否超过人员上限
         if (gameDataManager == null)
             return;
@@ -97,6 +101,10 @@ public class ItemTownCandidateCpt : ItemGameBaseCpt, DialogView.IDialogCallBack
         }
     }
 
+    /// <summary>
+    /// 设置性别
+    /// </summary>
+    /// <param name="sex"></param>
     public void SetSex(int sex)
     {
         if (ivSex != null)
@@ -136,6 +144,8 @@ public class ItemTownCandidateCpt : ItemGameBaseCpt, DialogView.IDialogCallBack
         gameDataManager.gameData.PayMoney(characterData.baseInfo.priceL, characterData.baseInfo.priceM, characterData.baseInfo.priceS);
         gameDataManager.gameData.listWorkerCharacter.Add(characterData);
         GetUIComponent<UITownRecruitment>().RemoveCandidate(characterData);
+
+        toastManager.ToastHint(string.Format(GameCommonInfo.GetUITextById(1053), characterData.baseInfo.name));
     }
 
     public void Cancel(DialogView dialogView, DialogBean dialogData)

@@ -71,6 +71,7 @@ public class ItemTownGoodsMarketCpt : ItemGameBaseCpt,DialogView.IDialogCallBack
 
     public void BuyGoods()
     {
+        GetUIManager<UIGameManager>().audioHandler.PlaySound(AudioSoundEnum.ButtonForNormal);
         int buyNumber = int.Parse(etNumber.text);
         DialogManager dialogManager = GetUIManager<UIGameManager>().dialogManager;
         DialogBean dialogData = new DialogBean();
@@ -83,6 +84,7 @@ public class ItemTownGoodsMarketCpt : ItemGameBaseCpt,DialogView.IDialogCallBack
     /// </summary>
     public void SubGoodsNumber()
     {
+        GetUIManager<UIGameManager>().audioHandler.PlaySound(AudioSoundEnum.ButtonForNormal);
         SetNumber(int.Parse(etNumber.text) - 1);
     }
 
@@ -91,6 +93,7 @@ public class ItemTownGoodsMarketCpt : ItemGameBaseCpt,DialogView.IDialogCallBack
     /// </summary>
     public void AddGoodsNumber()
     {
+        GetUIManager<UIGameManager>().audioHandler.PlaySound(AudioSoundEnum.ButtonForNormal);
         SetNumber(int.Parse(etNumber.text) + 1);
     }
 

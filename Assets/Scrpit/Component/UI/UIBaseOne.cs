@@ -27,6 +27,8 @@ public class UIBaseOne : UIGameComponent
     public override void OpenUI()
     {
         base.OpenUI();
+        if (uiGameManager.audioHandler != null)
+            uiGameManager.audioHandler.PlaySound(AudioSoundEnum.ButtonForNormal);
         if (uiGameManager.controlHandler != null)
             uiGameManager.controlHandler.StopControl();
         if (uiGameManager.gameTimeHandler != null)
@@ -35,6 +37,8 @@ public class UIBaseOne : UIGameComponent
 
     public override void CloseUI()
     {
+        if (uiGameManager.audioHandler != null)
+            uiGameManager.audioHandler.PlaySound(AudioSoundEnum.ButtonForBack);
         if (gameObject.activeSelf)
         {
             if (uiGameManager.controlHandler != null)

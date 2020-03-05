@@ -443,6 +443,7 @@ MonoBehaviour:
   characterData:
     baseInfo:
       characterId: 
+      characterType: 0
       titleName: 
       name: 
       workDay: 0
@@ -463,7 +464,7 @@ MonoBehaviour:
         cleanTotalNumber: 0
         sendTotalNumber: 0
         cleanTotalTime: 0
-      accountingInfo:
+      accountantInfo:
         workerType: 3
         workerLevel: 0
         workerExp: 0
@@ -499,15 +500,15 @@ MonoBehaviour:
         restTotalTime: 0
       isChef: 0
       isWaiter: 0
-      isAccounting: 0
+      isAccountant: 1
       isAccost: 0
       isBeater: 0
       priorityChef: 0
       priorityWaiter: 0
-      priorityAccounting: 0
+      priorityAccountant: 0
       priorityAccost: 0
       priorityBeater: 0
-      isAttendance: 0
+      workerStatus: 0
       listLoveItems: 
     attributes:
       loyal: 0
@@ -583,6 +584,8 @@ MonoBehaviour:
       attributes_force: 0
       attributes_lucky: 0
       love_items: 
+      love_menus: 
+      condition: 
   characterFavorabilityData:
     characterId: 0
     favorability: 0
@@ -591,10 +594,10 @@ MonoBehaviour:
     giftLoveNumber: 0
     giftNormalNumber: 0
     talkNumber: 0
-  gameItemsManager: {fileID: 0}
   characterMoveCpt: {fileID: 5707193527457681228}
   characterShoutCpt: {fileID: 0}
   characterExpression: {fileID: 0}
+  characterStatusIcon: {fileID: 0}
 --- !u!1 &8961375385621450159
 GameObject:
   m_ObjectHideFlags: 0

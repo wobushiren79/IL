@@ -128,7 +128,7 @@ MonoBehaviour:
     m_SelectOnDown: {fileID: 0}
     m_SelectOnLeft: {fileID: 0}
     m_SelectOnRight: {fileID: 0}
-  m_Transition: 1
+  m_Transition: 2
   m_Colors:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
     m_HighlightedColor: {r: 1, g: 0.8254717, b: 0.8254717, a: 1}
@@ -138,9 +138,10 @@ MonoBehaviour:
     m_ColorMultiplier: 1
     m_FadeDuration: 0.1
   m_SpriteState:
-    m_HighlightedSprite: {fileID: 0}
-    m_PressedSprite: {fileID: 0}
-    m_SelectedSprite: {fileID: 0}
+    m_HighlightedSprite: {fileID: 21300000, guid: b97923f6dd610cf4ea064cf440ddd325,
+      type: 3}
+    m_PressedSprite: {fileID: 21300000, guid: 63ed20cb483624c4888c5f3672c9f05c, type: 3}
+    m_SelectedSprite: {fileID: 21300000, guid: b97923f6dd610cf4ea064cf440ddd325, type: 3}
     m_DisabledSprite: {fileID: 0}
   m_AnimationTriggers:
     m_NormalTrigger: Normal
@@ -1098,7 +1099,9 @@ MonoBehaviour:
   goodsData:
     id: 0
     valid: 0
+    store_id: 0
     type: 0
+    store_goods_type: 0
     mark: 
     mark_id: 0
     mark_type: 0
@@ -1108,13 +1111,14 @@ MonoBehaviour:
     price_m: 0
     price_s: 0
     guild_coin: 0
+    trophy_elementary: 0
+    trophy_intermediate: 0
+    trophy_advanced: 0
+    trophy_legendary: 0
     pre_ach_ids: 
-    minigame_player_number: 0
-    minigame_win_survivaltime: 0
-    minigame_win_life: 0
-    barrage_launch_interval: 0
-    barrage_launch_speed: 0
-    barrage_launch_types: 
+    pre_data: 
+    pre_data_minigame: 
+    reward_data: 
     icon_key: 
     name: 
     content: 
@@ -2164,7 +2168,7 @@ MonoBehaviour:
     m_SelectOnDown: {fileID: 0}
     m_SelectOnLeft: {fileID: 0}
     m_SelectOnRight: {fileID: 0}
-  m_Transition: 1
+  m_Transition: 2
   m_Colors:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
     m_HighlightedColor: {r: 1, g: 0.7783019, b: 0.7783019, a: 1}
@@ -2174,9 +2178,10 @@ MonoBehaviour:
     m_ColorMultiplier: 1
     m_FadeDuration: 0.1
   m_SpriteState:
-    m_HighlightedSprite: {fileID: 0}
-    m_PressedSprite: {fileID: 0}
-    m_SelectedSprite: {fileID: 0}
+    m_HighlightedSprite: {fileID: 21300000, guid: b97923f6dd610cf4ea064cf440ddd325,
+      type: 3}
+    m_PressedSprite: {fileID: 21300000, guid: 63ed20cb483624c4888c5f3672c9f05c, type: 3}
+    m_SelectedSprite: {fileID: 21300000, guid: b97923f6dd610cf4ea064cf440ddd325, type: 3}
     m_DisabledSprite: {fileID: 0}
   m_AnimationTriggers:
     m_NormalTrigger: Normal
@@ -2541,11 +2546,16 @@ MonoBehaviour:
   uiManager: {fileID: 0}
   uiAnimator: {fileID: 0}
   remarkData: 
+  uiGameManager: {fileID: 0}
   btBack: {fileID: 7041178839491165471}
   tvMoneyL: {fileID: 8289046127150795563}
   tvMoneyM: {fileID: 8289046127825880945}
   tvMoneyS: {fileID: 8289046127387959851}
   tvGuildCoin: {fileID: 0}
+  tvTrophy1: {fileID: 0}
+  tvTrophy2: {fileID: 0}
+  tvTrophy3: {fileID: 0}
+  tvTrophy4: {fileID: 0}
   objGoodsContent: {fileID: 7041178839618162632}
   objGoodsModel: {fileID: 7041178839023270093}
   listGoodsIcon:

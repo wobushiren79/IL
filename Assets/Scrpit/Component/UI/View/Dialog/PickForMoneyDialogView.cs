@@ -138,6 +138,7 @@ public class PickForMoneyDialogView : DialogView
                     moneyS = 0;
                 break;
         }
+        audioHandler.PlaySound(AudioSoundEnum.ButtonForNormal);
         RefreshUI();
     }
 

@@ -22,6 +22,8 @@ public class FindCharacterDialogView : DialogView
     public Color colorForRare;
     public Sprite spBGNormal;
     public Sprite spBGRare;
+
+
     public override void Start()
     {
         base.Start();

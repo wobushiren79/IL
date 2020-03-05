@@ -381,11 +381,16 @@ MonoBehaviour:
   uiManager: {fileID: 0}
   uiAnimator: {fileID: 0}
   remarkData: 
+  uiGameManager: {fileID: 0}
   btBack: {fileID: 6889042820548315794}
   tvMoneyL: {fileID: 85263340731101812}
   tvMoneyM: {fileID: 85263341675019822}
   tvMoneyS: {fileID: 85263341035723636}
   tvGuildCoin: {fileID: 0}
+  tvTrophy1: {fileID: 0}
+  tvTrophy2: {fileID: 0}
+  tvTrophy3: {fileID: 0}
+  tvTrophy4: {fileID: 0}
   tvNumber: {fileID: 6889042821587579160}
   btFindWorker: {fileID: 5393362795828007528}
   infoPromptPopupButton: {fileID: 5945066136245400247}
@@ -847,7 +852,7 @@ MonoBehaviour:
         cleanTotalNumber: 0
         sendTotalNumber: 0
         cleanTotalTime: 0
-      accountingInfo:
+      accountantInfo:
         workerType: 3
         workerLevel: 0
         workerExp: 0
@@ -883,15 +888,15 @@ MonoBehaviour:
         restTotalTime: 0
       isChef: 0
       isWaiter: 0
-      isAccounting: 0
+      isAccountant: 1
       isAccost: 0
       isBeater: 0
       priorityChef: 0
       priorityWaiter: 0
-      priorityAccounting: 0
+      priorityAccountant: 0
       priorityAccost: 0
       priorityBeater: 0
-      isAttendance: 0
+      workerStatus: 0
       listLoveItems: 
     attributes:
       loyal: 0
@@ -967,6 +972,8 @@ MonoBehaviour:
       attributes_force: 0
       attributes_lucky: 0
       love_items: 
+      love_menus: 
+      condition: 
 --- !u!114 &347549874218800788
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1315,7 +1322,7 @@ MonoBehaviour:
     m_SelectOnDown: {fileID: 0}
     m_SelectOnLeft: {fileID: 0}
     m_SelectOnRight: {fileID: 0}
-  m_Transition: 1
+  m_Transition: 2
   m_Colors:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
     m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
@@ -1325,9 +1332,10 @@ MonoBehaviour:
     m_ColorMultiplier: 1
     m_FadeDuration: 0.1
   m_SpriteState:
-    m_HighlightedSprite: {fileID: 0}
-    m_PressedSprite: {fileID: 0}
-    m_SelectedSprite: {fileID: 0}
+    m_HighlightedSprite: {fileID: 21300000, guid: 138fd785a0381874a962be70c927831e,
+      type: 3}
+    m_PressedSprite: {fileID: 21300000, guid: 0658fb4aa4385f841977481bcbbb5837, type: 3}
+    m_SelectedSprite: {fileID: 21300000, guid: b1b9d475874167c46b009a67f32a98c3, type: 3}
     m_DisabledSprite: {fileID: 0}
   m_AnimationTriggers:
     m_NormalTrigger: Normal
@@ -2386,6 +2394,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   popupShow: {fileID: 0}
   content: 
+  isAudio: 0
+  delayTime: 1
 --- !u!1001 &7303851052700177773
 PrefabInstance:
   m_ObjectHideFlags: 0

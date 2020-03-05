@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using UnityEditor;
 using UnityEngine.UI;
+using DG.Tweening;
 using System.Collections.Generic;
 
 public class UITownRecruitment : UIBaseOne, DialogView.IDialogCallBack
@@ -91,6 +92,11 @@ public class UITownRecruitment : UIBaseOne, DialogView.IDialogCallBack
             GameObject objCandidate = Instantiate(objCandidateContent, objCandidateModel);
             ItemTownCandidateCpt itemCpt = objCandidate.GetComponent<ItemTownCandidateCpt>();
             itemCpt.SetData(itemData);
+            objCandidate.transform
+                .DOScale(new Vector3(0, 0, 0), 0.5f)
+                .From()
+                .SetEase(Ease.OutBack)
+                .SetDelay(i * 0.05f);
         }
     }
 
@@ -109,6 +115,7 @@ public class UITownRecruitment : UIBaseOne, DialogView.IDialogCallBack
     /// </summary>
     public void FindWorkerByMoney()
     {
+        uiGameManager.audioHandler.PlaySound(AudioSoundEnum.ButtonForNormal);
         //检测是否超过人员上限
         if (uiGameManager.gameDataManager.gameData.listWorkerCharacter.Count >=uiGameManager.gameDataManager.gameData.workerNumberLimit)
         {
@@ -140,8 +147,10 @@ public class UITownRecruitment : UIBaseOne, DialogView.IDialogCallBack
         {
             //如果是招募回调
             GameDataManager gameDataManager = GetUIManager<UIGameManager>().gameDataManager;
+            ToastManager toastManager = GetUIManager<UIGameManager>().toastManager;
             FindCharacterDialogView findCharacterDialog = (FindCharacterDialogView)dialogView;
             gameDataManager.gameData.listWorkerCharacter.Add(findCharacterDialog.characterData);
+            toastManager.ToastHint(string.Format(GameCommonInfo.GetUITextById(1053), findCharacterDialog.characterData.baseInfo.name));
         }
     }
 
