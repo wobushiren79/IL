@@ -258,9 +258,13 @@ public class ItemTownStoreForGoodsCpt : ItemGameBaseCpt, DialogView.IDialogCallB
     /// </summary>
     public void SubmitBuy()
     {
-        GameDataManager gameDataManager = GetUIManager<UIGameManager>().gameDataManager;
-        ToastManager toastManager = GetUIManager<UIGameManager>().toastManager;
-        DialogManager dialogManager = GetUIManager<UIGameManager>().dialogManager;
+        UIGameManager uiGameManager= GetUIManager<UIGameManager>();
+        AudioHandler audioHandler = uiGameManager.audioHandler;
+        GameDataManager gameDataManager = uiGameManager.gameDataManager;
+        ToastManager toastManager = uiGameManager.toastManager;
+        DialogManager dialogManager = uiGameManager.dialogManager;
+
+        audioHandler.PlaySound( AudioSoundEnum.ButtonForNormal);
 
         if (gameDataManager == null || storeInfo == null)
             return;

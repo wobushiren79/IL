@@ -275,6 +275,10 @@ public class ItemCreateWindowsEditor : EditorWindow, StoreInfoManager.ICallBack
         {
 
         }
+        if (GUILayout.Button("查询百宝斋商品", GUILayout.Width(100), GUILayout.Height(20)))
+        {
+            storeInfoManager.GetStoreInfoForGrocery();
+        }
         if (GUILayout.Button("查询建造商品", GUILayout.Width(100), GUILayout.Height(20)))
         {
             storeInfoManager.GetStoreInfoForCarpenter();
@@ -357,6 +361,8 @@ public class ItemCreateWindowsEditor : EditorWindow, StoreInfoManager.ICallBack
                 GUIStoreItemForGoods(storeInfo);
                 break;
             case StoreTypeEnum.Carpenter:
+            case StoreTypeEnum.Grocery:
+
                 GUIStoreItemForGoods(storeInfo);
                 break;
         }
@@ -390,22 +396,29 @@ public class ItemCreateWindowsEditor : EditorWindow, StoreInfoManager.ICallBack
         //}
         //storeInfo.mark = (int)(GeneralEnum)EditorGUILayout.EnumPopup("商品类型", (GeneralEnum)int.Parse(storeInfo.mark), GUILayout.Width(300), GUILayout.Height(20))+"";
         GUILayout.Label("商品对应类型 1.item 2.建筑材料：", GUILayout.Width(200), GUILayout.Height(20));
-        storeInfo.mark_type = int.Parse(EditorGUILayout.TextArea(storeInfo.mark_type + "", GUILayout.Width(100), GUILayout.Height(20)));
+        storeInfo.mark_type = int.Parse(EditorGUILayout.TextArea(storeInfo.mark_type + "", GUILayout.Width(20), GUILayout.Height(20)));
 
-        if (storeInfo.mark_type.Equals("1"))
+        GUILayout.Label("商品对应物品ID：", GUILayout.Width(100), GUILayout.Height(20));
+        storeInfo.mark_id = long.Parse(EditorGUILayout.TextArea(storeInfo.mark_id + "", GUILayout.Width(100), GUILayout.Height(20)));
+        if (storeInfo.mark_type == 1)
         {
             ItemsInfoBean itemsInfo = gameItemsManager.GetItemsById(storeInfo.mark_id);
             if (itemsInfo != null)
+            {
                 storeInfo.mark = itemsInfo.items_type + "";
+                GUILayout.Label("名字：" + itemsInfo.name, GUILayout.Width(250), GUILayout.Height(20));
+            }
         }
-        else if (storeInfo.mark_type.Equals("2"))
+        else if (storeInfo.mark_type == 2)
         {
             BuildItemBean buildInfo = innBuildManager.GetBuildDataById(storeInfo.mark_id);
             if (buildInfo != null)
+            {
                 storeInfo.mark = buildInfo.build_type + "";
+                GUILayout.Label("名字：" + buildInfo.name, GUILayout.Width(250), GUILayout.Height(20));
+            }
         }
-        GUILayout.Label("商品对应物品ID：", GUILayout.Width(100), GUILayout.Height(20));
-        storeInfo.mark_id = long.Parse(EditorGUILayout.TextArea(storeInfo.mark_id + "", GUILayout.Width(100), GUILayout.Height(20)));
+
         GUILayout.Label("价格--", GUILayout.Width(50), GUILayout.Height(20));
         GUILayout.Label("LMS：", GUILayout.Width(50), GUILayout.Height(20));
         storeInfo.price_l = long.Parse(EditorGUILayout.TextArea(storeInfo.price_l + "", GUILayout.Width(100), GUILayout.Height(20)));
@@ -426,7 +439,9 @@ public class ItemCreateWindowsEditor : EditorWindow, StoreInfoManager.ICallBack
                 break;
             case StoreTypeEnum.Carpenter:
                 storeInfo.store_goods_type = (int)(StoreForCarpenterTypeEnum)EditorGUILayout.EnumPopup("商品类型", (StoreForCarpenterTypeEnum)storeInfo.store_goods_type, GUILayout.Width(300), GUILayout.Height(20));
-
+                break;
+            case StoreTypeEnum.Grocery:
+                storeInfo.store_goods_type = (int)(StoreForGroceryTypeEnum)EditorGUILayout.EnumPopup("商品类型", (StoreForGroceryTypeEnum)storeInfo.store_goods_type, GUILayout.Width(300), GUILayout.Height(20));
                 break;
         }
     }
@@ -587,6 +602,26 @@ public class ItemCreateWindowsEditor : EditorWindow, StoreInfoManager.ICallBack
         {
             listFindItem = gameItemsManager.GetAllItems();
         }
+        if (GUILayout.Button("查询厨师用道具", GUILayout.Width(100), GUILayout.Height(20)))
+        {
+            listFindItem = gameItemsManager.GetItemsListByType( GeneralEnum.Chef);
+        }
+        if (GUILayout.Button("查询伙计用道具", GUILayout.Width(100), GUILayout.Height(20)))
+        {
+            listFindItem = gameItemsManager.GetItemsListByType(GeneralEnum.Waiter);
+        }
+        if (GUILayout.Button("查询账房用道具", GUILayout.Width(100), GUILayout.Height(20)))
+        {
+            listFindItem = gameItemsManager.GetItemsListByType(GeneralEnum.Accoutant);
+        }
+        if (GUILayout.Button("查询接待用道具", GUILayout.Width(100), GUILayout.Height(20)))
+        {
+            listFindItem = gameItemsManager.GetItemsListByType(GeneralEnum.Accost);
+        }
+        if (GUILayout.Button("查询打手用道具", GUILayout.Width(100), GUILayout.Height(20)))
+        {
+            listFindItem = gameItemsManager.GetItemsListByType(GeneralEnum.Beater);
+        }
         if (GUILayout.Button("查询所有服装", GUILayout.Width(100), GUILayout.Height(20)))
         {
             listFindItem = gameItemsManager.GetClothesList();
@@ -634,8 +669,8 @@ public class ItemCreateWindowsEditor : EditorWindow, StoreInfoManager.ICallBack
                 case GeneralEnum.Waiter:
                     path += "Items/Waiter/";
                     break;
-                case GeneralEnum.Accouting:
-                    path += "Items/Accouting/";
+                case GeneralEnum.Accoutant:
+                    path += "Items/Accountant/";
                     break;
                 case GeneralEnum.Accost:
                     path += "Items/Accost/";

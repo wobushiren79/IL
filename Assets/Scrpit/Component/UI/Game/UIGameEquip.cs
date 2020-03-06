@@ -247,7 +247,7 @@ public class UIGameEquip : UIGameComponent
                 && itemsInfoBean.items_type != (int)GeneralEnum.Shoes
                 && itemsInfoBean.items_type != (int)GeneralEnum.Chef
                 && itemsInfoBean.items_type != (int)GeneralEnum.Waiter
-                && itemsInfoBean.items_type != (int)GeneralEnum.Accouting
+                && itemsInfoBean.items_type != (int)GeneralEnum.Accoutant
                 && itemsInfoBean.items_type != (int)GeneralEnum.Accost
                 && itemsInfoBean.items_type != (int)GeneralEnum.Beater
                 && itemsInfoBean.items_type != (int)GeneralEnum.Book)

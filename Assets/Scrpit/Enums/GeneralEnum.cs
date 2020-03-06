@@ -10,7 +10,7 @@ public enum GeneralEnum
 
     Chef = 4,
     Waiter = 5,
-    Accouting = 6,
+    Accoutant = 6,
     Accost = 7,
     Beater = 8,
 

@@ -22,7 +22,7 @@ public class GameItemsManager : BaseManager, IItemsInfoView
     /// <returns></returns>
     public List<ItemsInfoBean> GetHatList()
     {
-        return GetItemsListByType(1);
+        return GetItemsListByType(GeneralEnum.Hat);
     }
 
     /// <summary>
@@ -31,7 +31,7 @@ public class GameItemsManager : BaseManager, IItemsInfoView
     /// <returns></returns>
     public List<ItemsInfoBean> GetClothesList()
     {
-        return GetItemsListByType(2);
+        return GetItemsListByType(GeneralEnum.Clothes);
     }
 
     /// <summary>
@@ -40,7 +40,7 @@ public class GameItemsManager : BaseManager, IItemsInfoView
     /// <returns></returns>
     public List<ItemsInfoBean> GetShoesList()
     {
-        return GetItemsListByType(3);
+        return GetItemsListByType(GeneralEnum.Shoes);
     }
 
     /// <summary>
@@ -66,7 +66,7 @@ public class GameItemsManager : BaseManager, IItemsInfoView
     /// </summary>
     /// <param name="type"></param>
     /// <returns></returns>
-    public List<ItemsInfoBean> GetItemsListByType(int type)
+    public List<ItemsInfoBean> GetItemsListByType(GeneralEnum type)
     {
         List<ItemsInfoBean> tempList = new List<ItemsInfoBean>();
         if (listDataItems == null)
@@ -75,7 +75,7 @@ public class GameItemsManager : BaseManager, IItemsInfoView
         foreach (long key in this.listDataItems.Keys)
         {
             ItemsInfoBean itemData = this.listDataItems[key];
-            if (itemData.items_type == type)
+            if (itemData.items_type == (int)type)
             {
                 tempList.Add(itemData);
             }

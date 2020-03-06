@@ -10,7 +10,7 @@ public class UITownGrocery : UIBaseOne, StoreInfoManager.ICallBack, IRadioGroupC
     public GameObject objGroceryModel;
 
     public RadioGroupView rgGroceryType;
-    
+
     private List<StoreInfoBean> mGroceryListData;
 
     public new void Start()
@@ -23,41 +23,15 @@ public class UITownGrocery : UIBaseOne, StoreInfoManager.ICallBack, IRadioGroupC
     public override void OpenUI()
     {
         base.OpenUI();
+        rgGroceryType.SetPosition(0, false);
         uiGameManager.storeInfoManager.SetCallBack(this);
         uiGameManager.storeInfoManager.GetStoreInfoForGrocery();
-        rgGroceryType.SetPosition(0, false);
-
     }
 
-    public void InitDataByType(int type)
+    public void InitDataByType(StoreForGroceryTypeEnum type)
     {
-        switch (type)
-        {
-            case 0:
-                CreateGroceryData(mGroceryListData);
-                break;
-            case 1:
-                CreateGroceryData(GetGroceryListDataByMark("12"));
-                break;
-            case 2:
-                CreateGroceryData(GetGroceryListDataByMark("11"));
-                break;
-            case 3:
-                CreateGroceryData(GetGroceryListDataByMark("4"));
-                break;
-            case 4:
-                CreateGroceryData(GetGroceryListDataByMark("5"));
-                break;
-            case 5:
-                CreateGroceryData(GetGroceryListDataByMark("6"));
-                break;
-            case 6:
-                CreateGroceryData(GetGroceryListDataByMark("7"));
-                break;
-            case 7:
-                CreateGroceryData(GetGroceryListDataByMark("8"));
-                break;
-        }
+        List<StoreInfoBean> listData = GetGroceryListDataByType(type);
+        CreateGroceryData(listData);
     }
 
     /// <summary>
@@ -65,7 +39,7 @@ public class UITownGrocery : UIBaseOne, StoreInfoManager.ICallBack, IRadioGroupC
     /// </summary>
     /// <param name="mark"></param>
     /// <returns></returns>
-    public List<StoreInfoBean> GetGroceryListDataByMark(string mark)
+    public List<StoreInfoBean> GetGroceryListDataByType(StoreForGroceryTypeEnum type)
     {
         List<StoreInfoBean> listData = new List<StoreInfoBean>();
         if (mGroceryListData == null)
@@ -73,7 +47,7 @@ public class UITownGrocery : UIBaseOne, StoreInfoManager.ICallBack, IRadioGroupC
         for (int i = 0; i < mGroceryListData.Count; i++)
         {
             StoreInfoBean itemData = mGroceryListData[i];
-            if (itemData.mark.Equals(mark))
+            if (itemData.store_goods_type == (int)type)
             {
                 listData.Add(itemData);
             }
@@ -96,7 +70,6 @@ public class UITownGrocery : UIBaseOne, StoreInfoManager.ICallBack, IRadioGroupC
             GameObject itemObj = Instantiate(objGroceryContent, objGroceryModel);
             ItemTownStoreForGoodsCpt goodsCpt = itemObj.GetComponent<ItemTownStoreForGoodsCpt>();
             goodsCpt.SetData(itemData);
-            itemObj.transform.DOScale(new Vector3(0, 0, 0), 0.5f).SetEase(Ease.OutBack).SetDelay(i * 0.05f).From();
         }
     }
 
@@ -104,14 +77,16 @@ public class UITownGrocery : UIBaseOne, StoreInfoManager.ICallBack, IRadioGroupC
     public void GetStoreInfoSuccess(StoreTypeEnum type, List<StoreInfoBean> listData)
     {
         mGroceryListData = listData;
-        InitDataByType(0);
+        InitDataByType(StoreForGroceryTypeEnum.Menu);
     }
     #endregion
 
     #region 类型选择回调
     public void RadioButtonSelected(RadioGroupView rgView, int position, RadioButtonView view)
     {
-        InitDataByType(position);
+        uiGameManager.audioHandler.PlaySound(AudioSoundEnum.ButtonForNormal);
+        StoreForGroceryTypeEnum type = EnumUtil.GetEnum<StoreForGroceryTypeEnum>(view.name);
+        InitDataByType(type);
     }
 
     public void RadioButtonUnSelected(RadioGroupView rgView, int position, RadioButtonView view)

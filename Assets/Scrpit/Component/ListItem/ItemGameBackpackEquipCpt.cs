@@ -33,19 +33,20 @@ public class ItemGameBackpackEquipCpt : ItemGameBackpackCpt
         }
         else
         {
-            switch (itemsInfoBean.items_type)
+            GeneralEnum itemsType = (GeneralEnum)itemsInfoBean.items_type;
+            switch (itemsType)
             {
-                case (int)GeneralEnum.Hat:
-                case (int)GeneralEnum.Clothes:
-                case (int)GeneralEnum.Shoes:
-                case (int)GeneralEnum.Chef:
-                case (int)GeneralEnum.Waiter:
-                case (int)GeneralEnum.Accouting:
-                case (int)GeneralEnum.Accost:
-                case (int)GeneralEnum.Beater:
+                case GeneralEnum.Hat:
+                case GeneralEnum.Clothes:
+                case GeneralEnum.Shoes:
+                case GeneralEnum.Chef:
+                case GeneralEnum.Waiter:
+                case GeneralEnum.Accoutant:
+                case GeneralEnum.Accost:
+                case GeneralEnum.Beater:
                     popupItemsSelection.Open(PopupItemsSelection.SelectionTypeEnum.EquipAndDiscard);
                     break;
-                case (int)GeneralEnum.Book:
+                case GeneralEnum.Book:
                     popupItemsSelection.Open(PopupItemsSelection.SelectionTypeEnum.UseAndDiscard);
                     break;
                 default:

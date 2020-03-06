@@ -4,6 +4,8 @@ using System.Collections.Generic;
 
 public class RadioGroupView : BaseMonoBehaviour, IRadioButtonCallBack
 {
+    //是否能取消选择想
+    public bool isCancelSelect = false;
     //按钮列表
     public List<RadioButtonView> listButton;
     private IRadioGroupCallBack mRGCallBack;
@@ -84,7 +86,10 @@ public class RadioGroupView : BaseMonoBehaviour, IRadioButtonCallBack
             RadioButtonView itemRB = listButton[i];
             if (itemRB.Equals(view))
             {
-                //itemRB.ChangeStates(RadioButtonView.RadioButtonStatus.Selected);
+                if (!isCancelSelect)
+                {
+                    itemRB.ChangeStates(RadioButtonView.RadioButtonStatus.Selected);
+                }
                 if (mRGCallBack != null)
                     mRGCallBack.RadioButtonSelected(this,i, itemRB);
             }
