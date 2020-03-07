@@ -609,6 +609,10 @@ public class EditorUI
         {
             listBuildItem = buildItemService.QueryDataByType((int)BuildItemTypeEnum.Counter);
         }
+        if (GUILayout.Button("查询装饰", GUILayout.Width(120), GUILayout.Height(20)))
+        {
+            listBuildItem = buildItemService.QueryDataByType((int)BuildItemTypeEnum.Decoration);
+        }
         if (GUILayout.Button("查询正门", GUILayout.Width(120), GUILayout.Height(20)))
         {
             listBuildItem = buildItemService.QueryDataByType((int)BuildItemTypeEnum.Door);
@@ -677,6 +681,9 @@ public class EditorUI
             case BuildItemTypeEnum.Counter:
                 picPath = "Assets/Texture/InnBuild/Counter/";
                 break;
+            case BuildItemTypeEnum.Decoration:
+                picPath = "Assets/Texture/InnBuild/Decoration/";
+                break;
             case BuildItemTypeEnum.Door:
                 picPath = "Assets/Texture/InnBuild/Door/";
                 break;
@@ -695,7 +702,8 @@ public class EditorUI
             default:
                 break;
         }
-
+        GUILayout.Label("美观：", GUILayout.Width(50), GUILayout.Height(20));
+        buildItem.aesthetics =float.Parse( EditorGUILayout.TextArea(buildItem.aesthetics + "", GUILayout.Width(100), GUILayout.Height(20)));
         GUILayout.Label("名称：", GUILayout.Width(50), GUILayout.Height(20));
         buildItem.name = EditorGUILayout.TextArea(buildItem.name + "", GUILayout.Width(100), GUILayout.Height(20));
 

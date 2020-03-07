@@ -196,13 +196,20 @@ public class UIGameMain : UIGameComponent, DialogView.IDialogCallBack, IRadioGro
         SetInnLevel(innAttributes);
 
         //设置是否显示时间缩放
-        if (rgTimeScale != null && uiGameManager.innHandler != null && uiGameManager.innHandler.GetInnStatus() == InnHandler.InnStatusEnum.Close)
+        if (uiGameManager.innHandler == null)
         {
             rgTimeScale.gameObject.SetActive(false);
         }
         else
         {
-            rgTimeScale.gameObject.SetActive(true);
+            if (uiGameManager.innHandler.GetInnStatus() == InnHandler.InnStatusEnum.Close)
+            {
+                rgTimeScale.gameObject.SetActive(false);
+            }
+            else
+            {
+                rgTimeScale.gameObject.SetActive(true);
+            }
         }
     }
 

@@ -43,14 +43,19 @@ public class ItemTownStoreForGoodsCpt : ItemGameBaseCpt, DialogView.IDialogCallB
     public GameObject objTrophyLegendary;
     public Text tvTrophyLegendary;
 
+    public InfoItemsPopupButton infoItemsPopup;
+
     [Header("数据")]
     public StoreInfoBean storeInfo;
     public ItemsInfoBean itemsInfo;
 
     private void Start()
     {
+    
         if (btSubmit != null)
             btSubmit.onClick.AddListener(SubmitBuy);
+        if (infoItemsPopup != null)
+            infoItemsPopup.SetPopupShowView(GetUIManager<UIGameManager>().infoItemsPopup);
     }
 
     /// <summary>
@@ -84,6 +89,17 @@ public class ItemTownStoreForGoodsCpt : ItemGameBaseCpt, DialogView.IDialogCallB
             itemsInfo.add_charm,
             itemsInfo.add_force,
             itemsInfo.add_lucky);
+        SetPopupData( itemsInfo);
+    }
+
+    /// <summary>
+    /// 设置弹出框内容
+    /// </summary>
+    /// <param name="itemsInfo"></param>
+    public void SetPopupData(ItemsInfoBean itemsInfo)
+    {
+         if (infoItemsPopup != null)
+            infoItemsPopup.SetData(itemsInfo, ivIcon.sprite);
     }
 
     /// <summary>

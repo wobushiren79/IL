@@ -22,7 +22,8 @@ public class UITownCarpenter : UIBaseOne, IRadioGroupCallBack, StoreInfoManager.
     public override void OpenUI()
     {
         base.OpenUI();
- 
+        rgCerpenterType.SetPosition(0, false);
+
         uiGameManager.storeInfoManager.SetCallBack(this);
         uiGameManager.storeInfoManager.GetStoreInfoForCarpenter();
     }
@@ -77,7 +78,7 @@ public class UITownCarpenter : UIBaseOne, IRadioGroupCallBack, StoreInfoManager.
             GameObject itemObj = Instantiate(objCarpenterContent, objCarpenterModel);
             ItemTownCerpenterCpt cerpenterCpt = itemObj.GetComponent<ItemTownCerpenterCpt>();
             cerpenterCpt.SetData(itemData);
-            itemObj.transform.DOScale(new Vector3(0, 0, 0), 0.5f).SetEase(Ease.OutBack).SetDelay(i * 0.05f).From();
+            //itemObj.transform.DOScale(new Vector3(0, 0, 0), 0.5f).SetEase(Ease.OutBack).SetDelay(i * 0.05f).From();
         }
     }
 
@@ -85,13 +86,15 @@ public class UITownCarpenter : UIBaseOne, IRadioGroupCallBack, StoreInfoManager.
     public void GetStoreInfoSuccess(StoreTypeEnum type, List<StoreInfoBean> listData)
     {
         mCarpenterListData = listData;
-        rgCerpenterType.SetPosition(0, true);
+        InitDataByType(StoreForCarpenterTypeEnum.Expansion);
     }
     #endregion
 
     #region 类型选择回调
     public void RadioButtonSelected(RadioGroupView rgView, int position, RadioButtonView rbview)
     {
+        uiGameManager.audioHandler.PlaySound(AudioSoundEnum.ButtonForNormal);
+
         StoreForCarpenterTypeEnum type = EnumUtil.GetEnum<StoreForCarpenterTypeEnum>(rbview.name);
         InitDataByType(type);
     }

@@ -9,6 +9,7 @@ public enum BuildItemTypeEnum
     Table = 3,
     Stove = 4,
     Counter = 5,
+    Decoration = 6,
     Door = 9,
 }
 

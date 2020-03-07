@@ -17,6 +17,7 @@ public class UIGameBuild : UIGameComponent, IRadioGroupCallBack
     public RadioButtonView rbTypeStove;
     public RadioButtonView rbTypeCounter;
     public RadioButtonView rbTypeDoor;
+    public RadioButtonView rbTypeDecoration;
     public RadioButtonView rbTypeFloor;
     public RadioButtonView rbTypeWall;
 
@@ -175,7 +176,7 @@ public class UIGameBuild : UIGameComponent, IRadioGroupCallBack
     /// </summary>
     /// <param name="wall"></param>
     /// <param name="furniture"></param>
-    private void SetInnBuildActive(bool wall,bool furniture)
+    private void SetInnBuildActive(bool wall, bool furniture)
     {
         if (uiGameManager.innWallBuilder != null)
             uiGameManager.innWallBuilder.GetTilemapContainer().SetActive(wall);
@@ -210,17 +211,23 @@ public class UIGameBuild : UIGameComponent, IRadioGroupCallBack
             SetInnBuildActive(true, true);
             CreateBuildList(BuildItemTypeEnum.Door);
         }
+        else if (rbview == rbTypeDecoration)
+        {
+            SetInnBuildActive(true, true);
+            CreateBuildList(BuildItemTypeEnum.Decoration);
+        }
         else if (rbview == rbTypeFloor)
         {
             SetInnBuildActive(false, false);
             btDismantle.gameObject.SetActive(false);
             CreateBuildList(BuildItemTypeEnum.Floor);
         }
-        else if (rbview==rbTypeWall)
+        else if (rbview == rbTypeWall)
         {
             SetInnBuildActive(true, true);
             CreateBuildList(BuildItemTypeEnum.Wall);
         }
+
     }
 
     public void RadioButtonUnSelected(RadioGroupView rgView, int position, RadioButtonView rbview)

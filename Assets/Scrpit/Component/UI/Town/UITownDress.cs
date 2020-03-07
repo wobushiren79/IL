@@ -11,11 +11,11 @@ public class UITownDress : UIBaseOne, IRadioGroupCallBack, StoreInfoManager.ICal
 
     public RadioGroupView rgStyleType;
     public RadioGroupView rgPartType;
-    
+
     private List<StoreInfoBean> mClothesListData;
 
-    private int mStyleType = 0;
-    private int mPartType = 0;
+    private StoreForDressTypeEnum mStyleType = 0;
+    private GeneralEnum mPartType = 0;
 
 
     public new void Start()
@@ -36,34 +36,38 @@ public class UITownDress : UIBaseOne, IRadioGroupCallBack, StoreInfoManager.ICal
 
         rgStyleType.SetPosition(0, false);
         rgPartType.SetPosition(0, false);
-
-
-        InitDataByType(0, 0);
     }
 
-    public void InitDataByType(int styleType, int partType)
+    /// <summary>
+    /// 根据类型和部位初始化数据
+    /// </summary>
+    /// <param name="styleType"></param>
+    /// <param name="partType"></param>
+    public void InitDataByType(StoreForDressTypeEnum styleType, GeneralEnum partType)
     {
         List<StoreInfoBean> createListData = new List<StoreInfoBean>();
         switch (partType)
         {
-            case 0:
+            case GeneralEnum.Null:
                 createListData = mClothesListData;
                 break;
-            case 1:
-            case 2:
-            case 3:
-                createListData = GetClothesListDataByMark(partType + "");
+            case GeneralEnum.Mask:
+            case GeneralEnum.Hat:
+            case GeneralEnum.Clothes:
+            case GeneralEnum.Shoes:
+                createListData = GetClothesListDataByPart(partType);
                 break;
         }
-        CreateClothesData(GetClothesListDataByMarkType(styleType, createListData));
+        List<StoreInfoBean> listData = GetClothesListDataByType(styleType, createListData);
+        CreateClothesData(listData);
     }
 
     /// <summary>
-    ///  根据备注获取数据
+    ///  根据类型获取数据
     /// </summary>
     /// <param name="mark"></param>
     /// <returns></returns>
-    public List<StoreInfoBean> GetClothesListDataByMarkType(int styleType, List<StoreInfoBean> listStoreData)
+    public List<StoreInfoBean> GetClothesListDataByType(StoreForDressTypeEnum styleType, List<StoreInfoBean> listStoreData)
     {
         if (styleType == 0)
         {
@@ -76,7 +80,7 @@ public class UITownDress : UIBaseOne, IRadioGroupCallBack, StoreInfoManager.ICal
         for (int i = 0; i < listStoreData.Count; i++)
         {
             StoreInfoBean itemData = listStoreData[i];
-            if (itemData.mark_type == styleType)
+            if (itemData.store_goods_type == (int)styleType)
             {
                 listData.Add(itemData);
             }
@@ -89,7 +93,7 @@ public class UITownDress : UIBaseOne, IRadioGroupCallBack, StoreInfoManager.ICal
     /// </summary>
     /// <param name="mark"></param>
     /// <returns></returns>
-    public List<StoreInfoBean> GetClothesListDataByMark(string mark)
+    public List<StoreInfoBean> GetClothesListDataByPart(GeneralEnum partType)
     {
         List<StoreInfoBean> listData = new List<StoreInfoBean>();
         if (mClothesListData == null)
@@ -97,7 +101,8 @@ public class UITownDress : UIBaseOne, IRadioGroupCallBack, StoreInfoManager.ICal
         for (int i = 0; i < mClothesListData.Count; i++)
         {
             StoreInfoBean itemData = mClothesListData[i];
-            if (itemData.mark.Equals(mark))
+            ItemsInfoBean itemsInfo = uiGameManager.gameItemsManager.GetItemsById(itemData.mark_id);
+            if (itemsInfo.items_type == (int)partType)
             {
                 listData.Add(itemData);
             }
@@ -120,7 +125,6 @@ public class UITownDress : UIBaseOne, IRadioGroupCallBack, StoreInfoManager.ICal
             GameObject itemObj = Instantiate(objGroceryContent, objGroceryModel);
             ItemTownStoreForGoodsCpt goodsCpt = itemObj.GetComponent<ItemTownStoreForGoodsCpt>();
             goodsCpt.SetData(itemData);
-            itemObj.transform.DOScale(new Vector3(0, 0, 0), 0.5f).SetEase(Ease.OutBack).SetDelay(i * 0.05f).From();
         }
     }
 
@@ -129,19 +133,22 @@ public class UITownDress : UIBaseOne, IRadioGroupCallBack, StoreInfoManager.ICal
     public void GetStoreInfoSuccess(StoreTypeEnum type, List<StoreInfoBean> listData)
     {
         mClothesListData = listData;
+        InitDataByType(StoreForDressTypeEnum.Fashion, GeneralEnum.Null);
     }
     #endregion
 
     #region 类型选择回调
     public void RadioButtonSelected(RadioGroupView rgView, int position, RadioButtonView rbview)
     {
+        uiGameManager.audioHandler.PlaySound(AudioSoundEnum.ButtonForNormal);
         if (rgView == rgStyleType)
         {
-            mStyleType = position;
+            mStyleType = EnumUtil.GetEnum<StoreForDressTypeEnum>(rbview.name);
         }
         else if (rgView == rgPartType)
         {
-            mPartType = position;
+            mPartType = EnumUtil.GetEnum<GeneralEnum>(rbview.name);
+
         }
         InitDataByType(mStyleType, mPartType);
     }

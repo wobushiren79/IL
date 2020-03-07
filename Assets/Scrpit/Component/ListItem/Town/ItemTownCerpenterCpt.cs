@@ -74,7 +74,7 @@ public class ItemTownCerpenterCpt : ItemGameBaseCpt, DialogView.IDialogCallBack
 
         SetPrice(storeInfo.price_l, storeInfo.price_m, storeInfo.price_s);
         SetName(name);
-        SetIcon(type,buildItemData);
+        SetIcon(type, buildItemData, itemData);
         SetAttribute(type, aesthetics);
         SetContent(type, content);
         SetOwn(type);
@@ -116,7 +116,7 @@ public class ItemTownCerpenterCpt : ItemGameBaseCpt, DialogView.IDialogCallBack
     /// <param name="iconKey"></param>
     /// <param name="mark"></param>
     /// <param name="markId"></param>
-    public void SetIcon(StoreForCarpenterTypeEnum type, BuildItemBean buildItem)
+    public void SetIcon(StoreForCarpenterTypeEnum type, BuildItemBean buildItem, StoreInfoBean storeInfo)
     {
         IconDataManager iconDataManager = GetUIManager<UIGameManager>().iconDataManager;
         InnBuildManager innBuildManager = GetUIManager<UIGameManager>().innBuildManager;
@@ -125,7 +125,7 @@ public class ItemTownCerpenterCpt : ItemGameBaseCpt, DialogView.IDialogCallBack
         Sprite spIcon = null;
         if (type == StoreForCarpenterTypeEnum.Expansion)
         {
-            spIcon = iconDataManager.GetIconSpriteByName(buildItem.icon_key);
+            spIcon = iconDataManager.GetIconSpriteByName(storeInfo.icon_key);
         }
         else
         {
@@ -196,18 +196,25 @@ public class ItemTownCerpenterCpt : ItemGameBaseCpt, DialogView.IDialogCallBack
     /// </summary>
     public void SubmitBuy()
     {
-        GameDataManager gameDataManager = GetUIManager<UIGameManager>().gameDataManager;
-        ToastManager toastManager = GetUIManager<UIGameManager>().toastManager;
-        DialogManager dialogManager = GetUIManager<UIGameManager>().dialogManager;
+        UIGameManager uiGameManager = GetUIManager<UIGameManager>();
+        GameDataManager gameDataManager = uiGameManager.gameDataManager;
+        ToastManager toastManager = uiGameManager.toastManager;
+        DialogManager dialogManager = uiGameManager.dialogManager;
+        AudioHandler audioHandler = uiGameManager.audioHandler;
+
+        audioHandler.PlaySound(AudioSoundEnum.ButtonForNormal);
+
         InnBuildBean innBuildData = gameDataManager.gameData.GetInnBuildData();
         if (gameDataManager == null || storeInfo == null)
             return;
+        //检测金钱
         if (!gameDataManager.gameData.HasEnoughMoney(storeInfo.price_l, storeInfo.price_m, storeInfo.price_s))
         {
             toastManager.ToastHint(GameCommonInfo.GetUITextById(1005));
             return;
         }
-        if (storeInfo.store_goods_type == (int) StoreForCarpenterTypeEnum.Expansion && innBuildData.listBuildDay.Count != 0)
+        //检测是否正在修建客栈
+        if (storeInfo.store_goods_type == (int)StoreForCarpenterTypeEnum.Expansion && innBuildData.listBuildDay.Count != 0)
         {
             toastManager.ToastHint(GameCommonInfo.GetUITextById(1019));
             return;

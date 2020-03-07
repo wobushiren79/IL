@@ -9,18 +9,20 @@ public class InfoItemsPopupShow : PopupShowView
     public Text tvContent;
     public Text tvType;
 
-    public GameObject objCook;
-    public Text tvCook;
-    public GameObject objSpeed;
-    public Text tvSpeed;
-    public GameObject objAccount;
-    public Text tvAccount;
-    public GameObject objCharm;
-    public Text tvCharm;
-    public GameObject objForce;
-    public Text tvForce;
-    public GameObject objLucky;
-    public Text tvLucky;
+    public GameObject objAttributeContainer;
+    public GameObject objAttributeModel;
+
+    public Color colorForAttribute;
+
+    public ItemsInfoBean itemsInfoData;
+
+    protected IconDataManager iconDataManager;
+
+    private void Awake()
+    {
+        iconDataManager = Find<IconDataManager>( ImportantTypeEnum.UIManager);
+    }
+
     /// <summary>
     /// 设置文本内容
     /// </summary>
@@ -29,11 +31,12 @@ public class InfoItemsPopupShow : PopupShowView
     {
         if (data == null)
             return;
+        this.itemsInfoData = data;
         SetIcon(spIcon);
         SetName(data.name);
         SetContent(data.content);
         SetType(data.items_type);
-        SetAttributes( data);
+        SetAttributes(data);
     }
 
     public void SetName(string name)
@@ -75,29 +78,34 @@ public class InfoItemsPopupShow : PopupShowView
             tvType.text = typeStr;
     }
 
+    /// <summary>
+    /// 设置属性
+    /// </summary>
+    /// <param name="data"></param>
     public void SetAttributes(ItemsInfoBean data)
     {
-        SetItemAttributes(objCook, tvCook, data.add_cook, GameCommonInfo.GetUITextById(1));
-        SetItemAttributes(objSpeed, tvSpeed, data.add_speed, GameCommonInfo.GetUITextById(2));
-        SetItemAttributes(objAccount, tvAccount, data.add_account, GameCommonInfo.GetUITextById(3));
-        SetItemAttributes(objCharm, tvCharm, data.add_charm, GameCommonInfo.GetUITextById(4));
-        SetItemAttributes(objForce, tvForce, data.add_force, GameCommonInfo.GetUITextById(5));
-        SetItemAttributes(objLucky, tvLucky, data.add_lucky, GameCommonInfo.GetUITextById(6));
+        CptUtil.RemoveChildsByActive(objAttributeContainer);
+        CreateItemAttributes("ui_ability_cook",data.add_cook, GameCommonInfo.GetUITextById(1));
+        CreateItemAttributes("ui_ability_speed", data.add_speed, GameCommonInfo.GetUITextById(2));
+        CreateItemAttributes("ui_ability_account", data.add_account, GameCommonInfo.GetUITextById(3));
+        CreateItemAttributes("ui_ability_charm", data.add_charm, GameCommonInfo.GetUITextById(4));
+        CreateItemAttributes("ui_ability_force", data.add_force, GameCommonInfo.GetUITextById(5));
+        CreateItemAttributes("ui_ability_lucky", data.add_lucky, GameCommonInfo.GetUITextById(6));
     }
 
-    private void SetItemAttributes(GameObject objAttributes, Text tvAttributes, int attributes, string attributesStr)
+
+    /// <summary>
+    /// 创建属性信息
+    /// </summary>
+    /// <param name="attributes"></param>
+    /// <param name="attributesStr"></param>
+    private void CreateItemAttributes(string iconKey ,int attributes, string attributesStr)
     {
-        if (objCook != null && tvAttributes != null)
-        {
-            if (attributes == 0)
-            {
-                objAttributes.SetActive(false);
-            }
-            else
-            {
-                objAttributes.SetActive(true);
-            }
-            tvAttributes.text = attributesStr + "+" + attributes;
-        }
+        if (attributes == 0)
+            return;
+        GameObject objItem = Instantiate(objAttributeContainer, objAttributeModel);
+        ItemBaseTextCpt itemAttributes = objItem.GetComponent<ItemBaseTextCpt>();
+        Sprite spIcon = iconDataManager.GetIconSpriteByName(iconKey);
+        itemAttributes.SetData(spIcon, colorForAttribute, attributesStr + "+" + attributes, colorForAttribute,"");
     }
 }

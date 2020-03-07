@@ -280,7 +280,7 @@ public class ControlForBuildCpt : BaseControl
         if (Input.GetButtonDown(InputInfo.Confirm))
         {
             //防止误触右边的UI
-            if (UnityEngine.Screen.width - Input.mousePosition.x - 350 < 0)
+            if (UnityEngine.Screen.width - Input.mousePosition.x - 400 < 0)
                 return;
             //能建造
             if (isCanBuild)

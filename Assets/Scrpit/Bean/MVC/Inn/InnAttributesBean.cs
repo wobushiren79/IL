@@ -138,7 +138,15 @@ public class InnAttributesBean
         if (innBuildManager == null || innBuildData == null)
             return;
         this.aesthetics = 0;
-        List<InnResBean> listData = innBuildData.GetFurnitureList();
+        List<InnResBean> listFurnitureData = innBuildData.GetFurnitureList();
+        List<InnResBean> listFloorData = innBuildData.GetFloorList();
+        List<InnResBean> listWallData = innBuildData.GetWallList();
+
+        List<InnResBean> listData = new List<InnResBean>();
+        listData.AddRange(listFurnitureData);
+        listData.AddRange(listFloorData);
+        listData.AddRange(listWallData);
+
         foreach (InnResBean itemData in listData)
         {
             BuildItemBean buildItem = innBuildManager.GetBuildDataById(itemData.id);

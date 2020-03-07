@@ -226,7 +226,16 @@ public class InnBuildBean
             listWall = new List<InnResBean>();
         return listWall;
     }
-
+    /// <summary>
+    /// 获取所有的地板
+    /// </summary>
+    /// <returns></returns>
+    public List<InnResBean> GetFloorList()
+    {
+        if (listFloor == null)
+            listFloor = new List<InnResBean>();
+        return listFloor;
+    }
     /// <summary>
     /// 通过坐标获取家具
     /// </summary>

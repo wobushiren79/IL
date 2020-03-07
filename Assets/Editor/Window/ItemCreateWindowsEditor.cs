@@ -32,6 +32,7 @@ public class ItemCreateWindowsEditor : EditorWindow, StoreInfoManager.ICallBack
         innBuildManager.Awake();
         storeInfoManager.SetCallBack(this);
         gameItemsManager.itemsInfoController.GetAllItemsInfo();
+        innBuildManager.buildDataController.GetAllBuildItemsData();
         itemsInfoService = new ItemsInfoService();
         storeInfoService = new StoreInfoService();
         buildItemService = new BuildItemService();
@@ -43,6 +44,8 @@ public class ItemCreateWindowsEditor : EditorWindow, StoreInfoManager.ICallBack
         gameItemsManager.itemsInfoController.GetAllItemsInfo();
         listFindItem.Clear();
         listFindStoreItem.Clear();
+        listFindAchItem.Clear();
+        listFindBuildItem.Clear();
     }
 
     private Vector2 scrollPosition = Vector2.zero;
@@ -279,6 +282,10 @@ public class ItemCreateWindowsEditor : EditorWindow, StoreInfoManager.ICallBack
         {
             storeInfoManager.GetStoreInfoForGrocery();
         }
+        if (GUILayout.Button("查询绸缎庄商品", GUILayout.Width(100), GUILayout.Height(20)))
+        {
+            storeInfoManager.GetStoreInfoForDress();
+        }
         if (GUILayout.Button("查询建造商品", GUILayout.Width(100), GUILayout.Height(20)))
         {
             storeInfoManager.GetStoreInfoForCarpenter();
@@ -362,7 +369,7 @@ public class ItemCreateWindowsEditor : EditorWindow, StoreInfoManager.ICallBack
                 break;
             case StoreTypeEnum.Carpenter:
             case StoreTypeEnum.Grocery:
-
+            case StoreTypeEnum.Dress:
                 GUIStoreItemForGoods(storeInfo);
                 break;
         }
@@ -439,9 +446,21 @@ public class ItemCreateWindowsEditor : EditorWindow, StoreInfoManager.ICallBack
                 break;
             case StoreTypeEnum.Carpenter:
                 storeInfo.store_goods_type = (int)(StoreForCarpenterTypeEnum)EditorGUILayout.EnumPopup("商品类型", (StoreForCarpenterTypeEnum)storeInfo.store_goods_type, GUILayout.Width(300), GUILayout.Height(20));
+                if(storeInfo.store_goods_type==(int)StoreForCarpenterTypeEnum.Expansion)
+                {
+                    GUILayout.Label("扩建等级", GUILayout.Width(50), GUILayout.Height(20));
+                    storeInfo.mark = EditorGUILayout.TextArea(storeInfo.mark + "", GUILayout.Width(20), GUILayout.Height(20));
+                    GUILayout.Label("w", GUILayout.Width(20), GUILayout.Height(20));
+                    storeInfo.mark_x =int.Parse( EditorGUILayout.TextArea(storeInfo.mark_x + "", GUILayout.Width(20), GUILayout.Height(20)));
+                    GUILayout.Label("h", GUILayout.Width(20), GUILayout.Height(20));
+                    storeInfo.mark_y = int.Parse(EditorGUILayout.TextArea(storeInfo.mark_y + "", GUILayout.Width(20), GUILayout.Height(20)));
+                }
                 break;
             case StoreTypeEnum.Grocery:
                 storeInfo.store_goods_type = (int)(StoreForGroceryTypeEnum)EditorGUILayout.EnumPopup("商品类型", (StoreForGroceryTypeEnum)storeInfo.store_goods_type, GUILayout.Width(300), GUILayout.Height(20));
+                break;
+            case StoreTypeEnum.Dress:
+                storeInfo.store_goods_type = (int)(StoreForDressTypeEnum)EditorGUILayout.EnumPopup("商品类型", (StoreForDressTypeEnum)storeInfo.store_goods_type, GUILayout.Width(300), GUILayout.Height(20));
                 break;
         }
     }
