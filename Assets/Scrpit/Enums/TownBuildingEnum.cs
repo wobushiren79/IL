@@ -12,6 +12,6 @@ public enum TownBuildingEnum
     Carpenter = 5,
     Guild = 6,
     Arena = 7,
-    Bank=8
-
+    Bank = 8,
+    Pharmacy = 9,//药房
 }

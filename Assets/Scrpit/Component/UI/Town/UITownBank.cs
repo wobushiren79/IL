@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 using UnityEditor;
-
+using DG.Tweening;
 public class UITownBank : UIBaseOne
 {
     public ItemTownBankExchangeCpt SToM;
@@ -12,6 +12,14 @@ public class UITownBank : UIBaseOne
     {
         base.Start();
         InitData();
+    }
+    public override void OpenUI()
+    {
+        base.OpenUI();
+        AnimForInit(SToM.gameObject);
+        AnimForInit(MToS.gameObject);
+        AnimForInit(MToL.gameObject);
+        AnimForInit(LToM.gameObject);
     }
 
     public void InitData()
@@ -42,5 +50,18 @@ public class UITownBank : UIBaseOne
         {
             LToM.SetData(ItemTownBankExchangeCpt.ExchangeMoneyEnum.LToM, 1, randomMLRate);
         }
+    }
+
+    
+
+    /// <summary>
+    /// 初始化动画
+    /// </summary>
+    /// <param name="obj"></param>
+    public void AnimForInit(GameObject obj)
+    {
+        obj.transform.DOKill();
+        obj.transform.localScale = new Vector3(1, 1, 1);
+        obj.transform.DOScale(new Vector3(0, 0, 0), 0.5f).SetEase(Ease.OutBack).From();
     }
 }

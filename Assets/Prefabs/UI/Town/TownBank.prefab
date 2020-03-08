@@ -626,7 +626,7 @@ MonoBehaviour:
   rbButton: {fileID: 7163875733259846958}
   rbImage: {fileID: 7163875733259846957}
   rbText: {fileID: 7163875733158229579}
-  states: 0
+  status: 0
 --- !u!1 &7163875733262755445
 GameObject:
   m_ObjectHideFlags: 0
@@ -730,16 +730,16 @@ RectTransform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
+  - {fileID: 6534107319745805563}
   - {fileID: 8306935589027271186}
   - {fileID: 3757385868342490476}
-  - {fileID: 6534107319745805563}
   - {fileID: 4922726371195243193}
   m_Father: {fileID: 7163875733583255016}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -0.00002493192, y: 0.000028323353}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &7163875733579027262
@@ -1349,6 +1349,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 50544a99bb5fa4d4e902c016dd920541, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isCancelSelect: 0
   listButton:
   - {fileID: 7163875733259846959}
 --- !u!114 &7163875734601977467
@@ -1440,6 +1441,7 @@ MonoBehaviour:
   uiManager: {fileID: 0}
   uiAnimator: {fileID: 0}
   remarkData: 
+  uiGameManager: {fileID: 0}
   btBack: {fileID: 7163875733877318529}
   tvMoneyL: {fileID: 7163875735125750748}
   tvMoneyM: {fileID: 7163875734458531718}
@@ -1554,12 +1556,12 @@ PrefabInstance:
     - target: {fileID: 7238013969030672226, guid: 9175f4ced977de748b2e2e1a94c34871,
         type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: -969
+      value: -483.5
       objectReference: {fileID: 0}
     - target: {fileID: 7238013969030672226, guid: 9175f4ced977de748b2e2e1a94c34871,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 148.75
+      value: -228.25
       objectReference: {fileID: 0}
     - target: {fileID: 7238013969030672226, guid: 9175f4ced977de748b2e2e1a94c34871,
         type: 3}
@@ -1574,22 +1576,22 @@ PrefabInstance:
     - target: {fileID: 7238013969030672226, guid: 9175f4ced977de748b2e2e1a94c34871,
         type: 3}
       propertyPath: m_AnchorMin.x
-      value: 1
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 7238013969030672226, guid: 9175f4ced977de748b2e2e1a94c34871,
         type: 3}
       propertyPath: m_AnchorMin.y
-      value: 0
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 7238013969030672226, guid: 9175f4ced977de748b2e2e1a94c34871,
         type: 3}
       propertyPath: m_AnchorMax.x
-      value: 1
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 7238013969030672226, guid: 9175f4ced977de748b2e2e1a94c34871,
         type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 7238013969030672226, guid: 9175f4ced977de748b2e2e1a94c34871,
         type: 3}
@@ -1662,6 +1664,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: ItemTownBankMoneyExchange_ML
       objectReference: {fileID: 0}
+    - target: {fileID: 1100681143109939010, guid: 751872d0aab401a498ec6af3e5bcf8dd,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1129255324137808110, guid: 751872d0aab401a498ec6af3e5bcf8dd,
         type: 3}
       propertyPath: m_RootOrder
@@ -1711,7 +1718,7 @@ PrefabInstance:
     - target: {fileID: 7134381919399761693, guid: 751872d0aab401a498ec6af3e5bcf8dd,
         type: 3}
       propertyPath: m_RootOrder
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7134381919399761693, guid: 751872d0aab401a498ec6af3e5bcf8dd,
         type: 3}
@@ -1860,6 +1867,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: ItemTownBankMoneyExchange_MS
+      objectReference: {fileID: 0}
+    - target: {fileID: 1100681143109939010, guid: 751872d0aab401a498ec6af3e5bcf8dd,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1129255324137808110, guid: 751872d0aab401a498ec6af3e5bcf8dd,
         type: 3}
@@ -2060,6 +2072,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: ItemTownBankMoneyExchange_SM
       objectReference: {fileID: 0}
+    - target: {fileID: 1100681143109939010, guid: 751872d0aab401a498ec6af3e5bcf8dd,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1129255324137808110, guid: 751872d0aab401a498ec6af3e5bcf8dd,
         type: 3}
       propertyPath: m_RootOrder
@@ -2118,7 +2135,7 @@ PrefabInstance:
     - target: {fileID: 7134381919399761693, guid: 751872d0aab401a498ec6af3e5bcf8dd,
         type: 3}
       propertyPath: m_RootOrder
-      value: 2
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7134381919399761693, guid: 751872d0aab401a498ec6af3e5bcf8dd,
         type: 3}
@@ -2217,12 +2234,6 @@ PrefabInstance:
       objectReference: {fileID: 8681992148593535342}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 751872d0aab401a498ec6af3e5bcf8dd, type: 3}
---- !u!224 &6534107319745805563 stripped
-RectTransform:
-  m_CorrespondingSourceObject: {fileID: 7134381919399761693, guid: 751872d0aab401a498ec6af3e5bcf8dd,
-    type: 3}
-  m_PrefabInstance: {fileID: 4156722892957068262}
-  m_PrefabAsset: {fileID: 0}
 --- !u!114 &4994203649099317857 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 8998575443610626439, guid: 751872d0aab401a498ec6af3e5bcf8dd,
@@ -2235,6 +2246,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fd64c498d5b18144eaafa7441311cefe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!224 &6534107319745805563 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 7134381919399761693, guid: 751872d0aab401a498ec6af3e5bcf8dd,
+    type: 3}
+  m_PrefabInstance: {fileID: 4156722892957068262}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &6279847487019328113
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2246,6 +2263,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: ItemTownBankMoneyExchange_LM
+      objectReference: {fileID: 0}
+    - target: {fileID: 1100681143109939010, guid: 751872d0aab401a498ec6af3e5bcf8dd,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1129255324137808110, guid: 751872d0aab401a498ec6af3e5bcf8dd,
         type: 3}
@@ -2290,7 +2312,7 @@ PrefabInstance:
     - target: {fileID: 7134381919399761693, guid: 751872d0aab401a498ec6af3e5bcf8dd,
         type: 3}
       propertyPath: m_RootOrder
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 7134381919399761693, guid: 751872d0aab401a498ec6af3e5bcf8dd,
         type: 3}
@@ -2410,6 +2432,12 @@ PrefabInstance:
         type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 751872d0aab401a498ec6af3e5bcf8dd, type: 3}
+--- !u!224 &3757385868342490476 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 7134381919399761693, guid: 751872d0aab401a498ec6af3e5bcf8dd,
+    type: 3}
+  m_PrefabInstance: {fileID: 6279847487019328113}
+  m_PrefabAsset: {fileID: 0}
 --- !u!114 &3154732733735652342 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 8998575443610626439, guid: 751872d0aab401a498ec6af3e5bcf8dd,
@@ -2422,9 +2450,3 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fd64c498d5b18144eaafa7441311cefe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!224 &3757385868342490476 stripped
-RectTransform:
-  m_CorrespondingSourceObject: {fileID: 7134381919399761693, guid: 751872d0aab401a498ec6af3e5bcf8dd,
-    type: 3}
-  m_PrefabInstance: {fileID: 6279847487019328113}
-  m_PrefabAsset: {fileID: 0}
