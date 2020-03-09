@@ -40,6 +40,11 @@ public class SceneTownManager : BaseManager
     public Transform bankOutDoor;
     public Transform bankInDoor;
     public Transform bankInside;
+
+    //药房
+    public Transform pharmacyOutDoor;
+    public Transform pharmacyInDoor;
+    public Transform pharmacyInside;
     /// <summary>
     /// 获取随机城镇门坐标
     /// </summary>
@@ -107,6 +112,10 @@ public class SceneTownManager : BaseManager
                 outDoorPosition = bankOutDoor.transform.position;
                 inDoorPosition = bankInDoor.transform.position;
                 break;
+            case TownBuildingEnum.Pharmacy:
+                outDoorPosition =pharmacyOutDoor.transform.position;
+                inDoorPosition = pharmacyInDoor.transform.position;
+                break;
         }
     }
 
@@ -147,6 +156,9 @@ public class SceneTownManager : BaseManager
                 break;
             case TownBuildingEnum.Bank:
                 tfBuilding = bankInside;
+                break;
+            case TownBuildingEnum.Pharmacy:
+                tfBuilding = pharmacyInside;
                 break;
         }
         if (tfBuilding == null)
