@@ -52,7 +52,7 @@ public class CharacterMoveCpt : BaseMonoBehaviour
     {
         if (!isManualMove && navMeshAgent != null)
         {
-            if (Mathf.Abs(navMeshAgent.remainingDistance) > 0.1)
+            if (navMeshAgent.isActiveAndEnabled && Mathf.Abs(navMeshAgent.remainingDistance) > 0.1)
             {
                 SetAnimStatus(1);
                 //Move(navMeshAgent.nextPosition);
@@ -257,7 +257,7 @@ public class CharacterMoveCpt : BaseMonoBehaviour
         {
             return false;
         }
-        if (navMeshAgent != null && Mathf.Abs(navMeshAgent.remainingDistance) > 0.1)
+        if (navMeshAgent != null && navMeshAgent.isActiveAndEnabled && Mathf.Abs(navMeshAgent.remainingDistance) > 0.1)
         {
             return false;
         }
