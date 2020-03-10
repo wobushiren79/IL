@@ -50,8 +50,7 @@ public class ItemTownStoreForGoodsCpt : ItemGameBaseCpt, DialogView.IDialogCallB
     public ItemsInfoBean itemsInfo;
 
     private void Start()
-    {
-    
+    {  
         if (btSubmit != null)
             btSubmit.onClick.AddListener(SubmitBuy);
         if (infoItemsPopup != null)

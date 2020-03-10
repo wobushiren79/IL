@@ -53,6 +53,13 @@ public class StoreInfoManager : BaseMonoBehaviour, IStoreInfoView
     }
 
     /// <summary>
+    /// 获取建筑坊数据
+    /// </summary>
+    public void GetStoreInfoForPharmacy()
+    {
+        mStoreInfoController.GetPharmacyInfo();
+    }
+    /// <summary>
     /// 获取公会角色提升数据
     /// </summary>
     public void GetStoreInfoForGuildImprove()

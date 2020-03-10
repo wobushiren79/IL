@@ -18,6 +18,8 @@ public enum GeneralEnum
     Book = 11,
     Menu = 12,//菜谱
 
+    Medicine=13,//药
+
     Mask = 21,//面具
 
 }
@@ -73,4 +75,46 @@ public class GeneralEnumTools
         return spIcon;
     }
 
+
+    public static string GetGeneralName(GeneralEnum type)
+    {
+        string itemsnTypeName = "???";
+        switch (type)
+        {
+            case GeneralEnum.Mask:
+                itemsnTypeName = GameCommonInfo.GetUITextById(401);
+                break;
+            case GeneralEnum.Hat:
+                itemsnTypeName = GameCommonInfo.GetUITextById(402);
+                break;
+            case GeneralEnum.Clothes:
+                itemsnTypeName = GameCommonInfo.GetUITextById(403);
+                break;
+            case GeneralEnum.Shoes:
+                itemsnTypeName = GameCommonInfo.GetUITextById(404);
+                break;
+            case GeneralEnum.Chef:
+            case GeneralEnum.Waiter:
+            case GeneralEnum.Accoutant:
+            case GeneralEnum.Accost:
+            case GeneralEnum.Beater:
+                itemsnTypeName = GameCommonInfo.GetUITextById(405);
+                break;
+            case GeneralEnum.Ing:
+                itemsnTypeName = GameCommonInfo.GetUITextById(406);
+                break;
+            case GeneralEnum.Book:
+                itemsnTypeName = GameCommonInfo.GetUITextById(407);
+                break;
+            case GeneralEnum.Menu:
+                itemsnTypeName = GameCommonInfo.GetUITextById(408);
+                break;
+            case GeneralEnum.Medicine:
+                itemsnTypeName = GameCommonInfo.GetUITextById(409);
+                break;
+            default:
+                break;
+        }
+        return itemsnTypeName;
+    }
 }

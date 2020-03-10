@@ -173,12 +173,12 @@ RectTransform:
   m_Children:
   - {fileID: 3099589669982050477}
   m_Father: {fileID: 3099589670011634863}
-  m_RootOrder: 2
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 10, y: 0}
-  m_SizeDelta: {x: 230, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 1}
 --- !u!222 &3099589669488851463
 CanvasRenderer:
@@ -287,12 +287,12 @@ RectTransform:
   m_Children:
   - {fileID: 3099589668574827532}
   m_Father: {fileID: 3099589670011634863}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 125, y: 0}
-  m_SizeDelta: {x: 230, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &3099589669578655003
 CanvasRenderer:
@@ -336,7 +336,7 @@ MonoBehaviour:
   m_ChildAlignment: 0
   m_StartCorner: 0
   m_StartAxis: 0
-  m_CellSize: {x: 115, y: 40}
+  m_CellSize: {x: 140, y: 40}
   m_Spacing: {x: 0, y: 0}
   m_Constraint: 0
   m_ConstraintCount: 2
@@ -448,8 +448,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 5, y: 0}
-  m_SizeDelta: {x: 220, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 1}
 --- !u!222 &3099589669982050472
 CanvasRenderer:
@@ -540,15 +540,15 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 3099589668193024106}
-  - {fileID: 3099589669578655004}
   - {fileID: 3099589669488851467}
+  - {fileID: 3099589669578655004}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 250, y: 0}
+  m_SizeDelta: {x: 300, y: 0}
   m_Pivot: {x: 1, y: 1}
 --- !u!222 &3099589670011634854
 CanvasRenderer:
@@ -692,6 +692,7 @@ MonoBehaviour:
     add_loyal: 0
     rotation_angle: 0
     add_id: 0
+    effect: 
     name: 
     content: 
 --- !u!1 &3099589670172479854
@@ -936,7 +937,7 @@ PrefabInstance:
     - target: {fileID: 732365276233668258, guid: 9ee482420050b674b8b66697af13c7c5,
         type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 57.5
+      value: 70
       objectReference: {fileID: 0}
     - target: {fileID: 732365276233668258, guid: 9ee482420050b674b8b66697af13c7c5,
         type: 3}
@@ -946,7 +947,7 @@ PrefabInstance:
     - target: {fileID: 732365276233668258, guid: 9ee482420050b674b8b66697af13c7c5,
         type: 3}
       propertyPath: m_SizeDelta.x
-      value: 115
+      value: 140
       objectReference: {fileID: 0}
     - target: {fileID: 732365276233668258, guid: 9ee482420050b674b8b66697af13c7c5,
         type: 3}
@@ -983,6 +984,16 @@ PrefabInstance:
       propertyPath: m_Pivot.y
       value: 0.5
       objectReference: {fileID: 0}
+    - target: {fileID: 732365276506697699, guid: 9ee482420050b674b8b66697af13c7c5,
+        type: 3}
+      propertyPath: m_Text
+      value: ???
+      objectReference: {fileID: 0}
+    - target: {fileID: 732365276506697699, guid: 9ee482420050b674b8b66697af13c7c5,
+        type: 3}
+      propertyPath: m_FontData.m_Font
+      value: 
+      objectReference: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9ee482420050b674b8b66697af13c7c5, type: 3}
 --- !u!1 &3099589668574827535 stripped

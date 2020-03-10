@@ -290,6 +290,10 @@ public class ItemCreateWindowsEditor : EditorWindow, StoreInfoManager.ICallBack
         {
             storeInfoManager.GetStoreInfoForCarpenter();
         }
+        if (GUILayout.Button("查询药店商品", GUILayout.Width(100), GUILayout.Height(20)))
+        {
+            storeInfoManager.GetStoreInfoForPharmacy();
+        }
         if (GUILayout.Button("查询公会商品", GUILayout.Width(100), GUILayout.Height(20)))
         {
             storeInfoManager.GetStoreInfoForGuildGoods();
@@ -370,6 +374,7 @@ public class ItemCreateWindowsEditor : EditorWindow, StoreInfoManager.ICallBack
             case StoreTypeEnum.Carpenter:
             case StoreTypeEnum.Grocery:
             case StoreTypeEnum.Dress:
+            case StoreTypeEnum.Pharmacy:
                 GUIStoreItemForGoods(storeInfo);
                 break;
         }
@@ -461,6 +466,9 @@ public class ItemCreateWindowsEditor : EditorWindow, StoreInfoManager.ICallBack
                 break;
             case StoreTypeEnum.Dress:
                 storeInfo.store_goods_type = (int)(StoreForDressTypeEnum)EditorGUILayout.EnumPopup("商品类型", (StoreForDressTypeEnum)storeInfo.store_goods_type, GUILayout.Width(300), GUILayout.Height(20));
+                break;
+            case StoreTypeEnum.Pharmacy:
+                storeInfo.store_goods_type = (int)(StoreForPharmacyTypeEnum)EditorGUILayout.EnumPopup("商品类型", (StoreForPharmacyTypeEnum)storeInfo.store_goods_type, GUILayout.Width(300), GUILayout.Height(20));
                 break;
         }
     }
@@ -621,6 +629,10 @@ public class ItemCreateWindowsEditor : EditorWindow, StoreInfoManager.ICallBack
         {
             listFindItem = gameItemsManager.GetAllItems();
         }
+        if (GUILayout.Button("查询所有药", GUILayout.Width(100), GUILayout.Height(20)))
+        {
+            listFindItem = gameItemsManager.GetMedicineList();
+        }
         if (GUILayout.Button("查询厨师用道具", GUILayout.Width(100), GUILayout.Height(20)))
         {
             listFindItem = gameItemsManager.GetItemsListByType( GeneralEnum.Chef);
@@ -682,6 +694,9 @@ public class ItemCreateWindowsEditor : EditorWindow, StoreInfoManager.ICallBack
                 case GeneralEnum.Mask:
                     path += "Character/Dress/Mask/";
                     break;
+                case GeneralEnum.Medicine:
+                    path += "Items/Medicine/";
+                    break;
                 case GeneralEnum.Chef:
                     path += "Items/Chef/";
                     break;
@@ -737,6 +752,10 @@ public class ItemCreateWindowsEditor : EditorWindow, StoreInfoManager.ICallBack
             GUILayout.Label("忠");
             itemInfo.add_loyal = int.Parse(EditorGUILayout.TextArea(itemInfo.add_loyal + "", GUILayout.Width(150), GUILayout.Height(20)));
 
+            if ((GeneralEnum)itemInfo.items_type == GeneralEnum.Medicine)
+            {
+                 itemInfo.effect= EditorUI.GUIListData<EffectTypeEnum>("效果", itemInfo.effect);
+            }
 
             GUILayout.EndHorizontal();
         }

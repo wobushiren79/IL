@@ -35,6 +35,14 @@ public class GameItemsManager : BaseManager, IItemsInfoView
     }
 
     /// <summary>
+    /// 获取所有药数据
+    /// </summary>
+    /// <returns></returns>
+    public List<ItemsInfoBean> GetMedicineList()
+    {
+        return GetItemsListByType(GeneralEnum.Medicine);
+    }
+    /// <summary>
     /// 获取所有鞋子信息
     /// </summary>
     /// <returns></returns>

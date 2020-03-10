@@ -23,9 +23,19 @@ public class ItemsInfoBean : BaseBean
     public int rotation_angle;//选择角度
 
     public long add_id;//增加的内容ID
+    public string effect;//效果 增加效果
 
     //public int intact_number;//套装触发数量
 
     public string name;//名字
     public string content;//内容
+
+    /// <summary>
+    /// 获取类型
+    /// </summary>
+    /// <returns></returns>
+    public GeneralEnum GetItemsType()
+    {
+        return (GeneralEnum)items_type;
+    }
 }

@@ -121,6 +121,7 @@ public class ListDataEditor : Editor
         AddIconBeanDictionaryByFolder("Assets/Texture/Items/Accountant/", itemsManager.listItemsIcon);
         AddIconBeanDictionaryByFolder("Assets/Texture/Items/Accost/", itemsManager.listItemsIcon);
         AddIconBeanDictionaryByFolder("Assets/Texture/Items/Beater/", itemsManager.listItemsIcon);
+        AddIconBeanDictionaryByFolder("Assets/Texture/Items/Medicine/", itemsManager.listItemsIcon);
         AddIconBeanDictionaryByFolder("Assets/Texture/Element/Ingredients/", itemsManager.listItemsIcon);
     }
 

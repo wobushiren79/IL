@@ -55,6 +55,14 @@ public class StoreInfoController : BaseMVCController<StoreInfoModel, IStoreInfoV
     }
 
     /// <summary>
+    /// 获取建筑坊数据
+    /// </summary>
+    public void GetPharmacyInfo()
+    {
+        GetStoreInfoByType(StoreTypeEnum.Pharmacy);
+    }
+
+    /// <summary>
     /// 获取市场数据
     /// </summary>
     public void GetMarketStoreInfo()

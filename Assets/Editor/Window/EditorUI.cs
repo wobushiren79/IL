@@ -717,7 +717,7 @@ public class EditorUI
     /// </summary>
     /// <param name="picPath"></param>
     /// <param name="picName"></param>
-    private static void GUIPic(string picPath, string picName)
+    public static void GUIPic(string picPath, string picName)
     {
         Texture2D iconTex = EditorGUIUtility.FindTexture(picPath + picName + ".png");
         if (iconTex)
@@ -729,7 +729,7 @@ public class EditorUI
     /// </summary>
     /// <param name="spIcon"></param>
     /// <param name="iconName"></param>
-    private static void GUIPicSelect(string iconName, Sprite spIcon)
+    public static void GUIPicSelect(string iconName, Sprite spIcon)
     {
         spIcon = EditorGUILayout.ObjectField(new GUIContent(iconName, ""), spIcon, typeof(Sprite), true) as Sprite;
     }
@@ -739,7 +739,7 @@ public class EditorUI
     /// </summary>
     /// <param name="listNpcTalkInfo"></param>
     /// <param name="mapNpcTeamTalkInfoForFind"></param>
-    private static void HandleTalkInfoDataByMarkId(List<TextInfoBean> listNpcTalkInfo, Dictionary<long, List<TextInfoBean>> mapNpcTeamTalkInfoForFind)
+    public static void HandleTalkInfoDataByMarkId(List<TextInfoBean> listNpcTalkInfo, Dictionary<long, List<TextInfoBean>> mapNpcTeamTalkInfoForFind)
     {
         mapNpcTeamTalkInfoForFind.Clear();
         foreach (TextInfoBean itemTalkInfo in listNpcTalkInfo)
@@ -761,7 +761,7 @@ public class EditorUI
     /// <summary>
     ///  展示NPC
     /// </summary>
-    private static GameObject ShowNpc(GameItemsManager gameItemsManager, GameObject objNpcContainer, GameObject objNpcModel, CharacterBean characterData)
+    public static GameObject ShowNpc(GameItemsManager gameItemsManager, GameObject objNpcContainer, GameObject objNpcModel, CharacterBean characterData)
     {
         CptUtil.RemoveChildsByActiveInEditor(objNpcContainer);
         GameObject objNpc = GameObject.Instantiate(objNpcModel, objNpcContainer.transform);
@@ -785,7 +785,7 @@ public class EditorUI
     /// 数据列表
     /// </summary>
     /// <param name="storeInfo"></param>
-    private static string GUIListData<E>(string titleName, string content) where E : System.Enum
+    public static string GUIListData<E>(string titleName, string content) where E : System.Enum
     {
         //前置相关
         EditorGUILayout.BeginVertical();

@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using UnityEditor;
 using UnityEngine.UI;
+using System.Collections.Generic;
 
 public class InfoItemsPopupShow : PopupShowView
 {
@@ -20,7 +21,7 @@ public class InfoItemsPopupShow : PopupShowView
 
     private void Awake()
     {
-        iconDataManager = Find<IconDataManager>( ImportantTypeEnum.UIManager);
+        iconDataManager = Find<IconDataManager>(ImportantTypeEnum.UIManager);
     }
 
     /// <summary>
@@ -35,7 +36,7 @@ public class InfoItemsPopupShow : PopupShowView
         SetIcon(spIcon);
         SetName(data.name);
         SetContent(data.content);
-        SetType(data.items_type);
+        SetType(data.GetItemsType());
         SetAttributes(data);
     }
 
@@ -57,23 +58,9 @@ public class InfoItemsPopupShow : PopupShowView
             ivIcon.sprite = spIcon;
     }
 
-    public void SetType(int type)
+    public void SetType(GeneralEnum type)
     {
-        string typeStr = "类型：";
-        switch (type)
-        {
-            case 1:
-            case 2:
-            case 3:
-                typeStr += "装备";
-                break;
-            case 11:
-                typeStr += "书籍";
-                break;
-            case 12:
-                typeStr += "料理";
-                break;
-        }
+        string typeStr = GameCommonInfo.GetUITextById(400) + "：" + GeneralEnumTools.GetGeneralName(type);
         if (tvType != null)
             tvType.text = typeStr;
     }
@@ -85,27 +72,48 @@ public class InfoItemsPopupShow : PopupShowView
     public void SetAttributes(ItemsInfoBean data)
     {
         CptUtil.RemoveChildsByActive(objAttributeContainer);
-        CreateItemAttributes("ui_ability_cook",data.add_cook, GameCommonInfo.GetUITextById(1));
+        CreateItemAttributes("ui_ability_cook", data.add_cook, GameCommonInfo.GetUITextById(1));
         CreateItemAttributes("ui_ability_speed", data.add_speed, GameCommonInfo.GetUITextById(2));
         CreateItemAttributes("ui_ability_account", data.add_account, GameCommonInfo.GetUITextById(3));
         CreateItemAttributes("ui_ability_charm", data.add_charm, GameCommonInfo.GetUITextById(4));
         CreateItemAttributes("ui_ability_force", data.add_force, GameCommonInfo.GetUITextById(5));
         CreateItemAttributes("ui_ability_lucky", data.add_lucky, GameCommonInfo.GetUITextById(6));
+        if (CheckUtil.StringIsNull(data.effect))
+            return;
+        List<EffectTypeBean> listEffectData= EffectTypeEnumTools.GetListEffectData(data.effect);
+        if (listEffectData == null)
+            return;
+        foreach (EffectTypeBean itemData in listEffectData)
+        {
+            EffectTypeEnumTools.GetEffectDetails(iconDataManager, itemData);
+            CreateItemAttributes(itemData.spIcon, itemData.effectDescribe);
+        }
     }
 
+    /// <summary>
+    /// 创建效果信息
+    /// </summary>
+    /// <param name="attributes"></param>
+    /// <param name="attributesStr"></param>
+    private void CreateItemAttributes(Sprite spIcon, string details)
+    {
+        GameObject objItem = Instantiate(objAttributeContainer, objAttributeModel);
+        ItemBaseTextCpt itemAttributes = objItem.GetComponent<ItemBaseTextCpt>();
+        itemAttributes.SetData(spIcon, colorForAttribute, details, "");
+    }
 
     /// <summary>
     /// 创建属性信息
     /// </summary>
     /// <param name="attributes"></param>
     /// <param name="attributesStr"></param>
-    private void CreateItemAttributes(string iconKey ,int attributes, string attributesStr)
+    private void CreateItemAttributes(string iconKey, int attributes, string attributesStr)
     {
         if (attributes == 0)
             return;
         GameObject objItem = Instantiate(objAttributeContainer, objAttributeModel);
         ItemBaseTextCpt itemAttributes = objItem.GetComponent<ItemBaseTextCpt>();
         Sprite spIcon = iconDataManager.GetIconSpriteByName(iconKey);
-        itemAttributes.SetData(spIcon, colorForAttribute, attributesStr + "+" + attributes, colorForAttribute,"");
+        itemAttributes.SetData(spIcon, colorForAttribute, attributesStr + "+" + attributes, colorForAttribute, "");
     }
 }

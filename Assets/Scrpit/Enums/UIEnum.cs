@@ -20,6 +20,7 @@ public enum UIEnum
     GameText = 1011,
     GameFavorability = 1012,//人物好感UI
     GameStatistics=1013,//统计UI
+
     TownMarket = 2001,//市场UI
     TownRecruitment = 2002,//招人UI
     TownGrocery = 2003,//杂货店UI
@@ -31,6 +32,8 @@ public enum UIEnum
     TownBank = 2009,//银行UI
     TownArena = 2010,//竞技场UI
     TownArenaStore = 2011,//竞技场商店UI
+    TownPharmacy=2012,//药房
+
     MiniGameEnd = 3001,
     MiniGameCountDown = 3002,
     MiniGameBarrage = 3003,//弹幕游戏UI
