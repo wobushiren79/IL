@@ -28,38 +28,37 @@ public class UITownGuildStore : UIBaseOne, StoreInfoManager.ICallBack, IRadioGro
         uiGameManager.storeInfoManager.GetStoreInfoForGuildGoods();
     }
 
-    public void InitDataByType(int type)
+    /// <summary>
+    /// 初始化数据
+    /// </summary>
+    /// <param name="type"></param>
+    public void InitDataByType(StoreForGuildGoodsTypeEnum type)
     {
         List<StoreInfoBean> listData = new List<StoreInfoBean>();
-        switch (type)
-        {
-            case 0:
-                listData = mGuidStoreListData;
-                break;
-        }
+        listData = GetListDataByType(type);
         CreateGroceryData(listData);
     }
 
     /// <summary>
-    ///  根据备注获取数据
+    /// 通过类型获取数据
     /// </summary>
-    /// <param name="mark"></param>
+    /// <param name="type"></param>
     /// <returns></returns>
-    //public List<StoreInfoBean> GetGroceryListDataByMark(string mark)
-    //{
-    //    List<StoreInfoBean> listData = new List<StoreInfoBean>();
-    //    if (mGuidStoreListData == null)
-    //        return listData;
-    //    for (int i = 0; i < mGuidStoreListData.Count; i++)
-    //    {
-    //        StoreInfoBean itemData = mGuidStoreListData[i];
-    //        if (itemData.mark.Equals(mark))
-    //        {
-    //            listData.Add(itemData);
-    //        }
-    //    }
-    //    return listData;
-    //}
+    protected List<StoreInfoBean> GetListDataByType(StoreForGuildGoodsTypeEnum type)
+    {
+        List<StoreInfoBean> listData = new List<StoreInfoBean>();
+        if (mGuidStoreListData == null)
+            return listData;
+        for (int i = 0; i < mGuidStoreListData.Count; i++)
+        {
+            StoreInfoBean itemData = mGuidStoreListData[i];
+            if (itemData.store_goods_type== (int)type)
+            {
+                listData.Add(itemData);
+            }
+        }
+        return listData;
+    }
 
     /// <summary>
     /// 创建商品列表
@@ -90,14 +89,15 @@ public class UITownGuildStore : UIBaseOne, StoreInfoManager.ICallBack, IRadioGro
     public void GetStoreInfoSuccess(StoreTypeEnum type, List<StoreInfoBean> listData)
     {
         mGuidStoreListData = listData;
-        InitDataByType(0);
+        InitDataByType(StoreForGuildGoodsTypeEnum.Menu);
     }
     #endregion
 
     #region 类型选择回调
     public void RadioButtonSelected(RadioGroupView rgView, int position, RadioButtonView view)
     {
-        InitDataByType(position);
+        StoreForGuildGoodsTypeEnum type = EnumUtil.GetEnum<StoreForGuildGoodsTypeEnum>(view.name);
+        InitDataByType(type);
     }
 
     public void RadioButtonUnSelected(RadioGroupView rgView, int position, RadioButtonView view)

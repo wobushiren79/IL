@@ -42,7 +42,15 @@ public class GameDataModel : BaseMVCModel
         string userId = "UserId_" + SystemUtil.GetUUID(SystemUtil.UUIDTypeEnum.N);
         GameCommonInfo.GameUserId = userId;
         gameData.userId = userId;
-        gameData.moneyS = 1000;
+        gameData.moneyS = 9999;
+        gameData.moneyM = 9999;
+        gameData.moneyL = 9999;
+        gameData.userCharacter.attributes.cook = 5;
+        gameData.userCharacter.attributes.speed = 5;
+        gameData.userCharacter.attributes.account = 5;
+        gameData.userCharacter.attributes.charm = 5;
+        gameData.userCharacter.attributes.force = 5;
+        gameData.userCharacter.attributes.lucky = 5;
         gameData.innBuildData = new InnBuildBean();
         gameData.listBuild = new List<ItemBean>();
         gameData.listItems = new List<ItemBean>();

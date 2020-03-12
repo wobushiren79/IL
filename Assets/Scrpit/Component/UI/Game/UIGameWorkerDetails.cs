@@ -68,7 +68,6 @@ public class UIGameWorkerDetails : UIGameComponent, IRadioGroupCallBack
         if (rgWorkerTitle != null)
         {
             rgWorkerTitle.SetCallBack(this);
-            rgWorkerTitle.SetPosition(0, true);
         }
     }
 
@@ -123,7 +122,8 @@ public class UIGameWorkerDetails : UIGameComponent, IRadioGroupCallBack
         SetEquip(characterData.equips);
         SetWorkerInfo(characterData.baseInfo);
         characterUICpt.SetCharacterData(characterData.body, characterData.equips);
-        rgWorkerTitle.SetPosition(0, true);
+        rgWorkerTitle.SetPosition(0, false);
+        InitDataByWorker(WorkerEnum.Chef);
     }
 
     public void OpenWorkUI()

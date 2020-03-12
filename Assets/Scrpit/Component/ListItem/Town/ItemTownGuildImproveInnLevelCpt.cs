@@ -3,7 +3,7 @@ using UnityEditor;
 using UnityEngine.UI;
 using System.Collections.Generic;
 
-public class ItemTownGuildImproveInnLevelCpt : BaseMonoBehaviour
+public class ItemTownGuildImproveInnLevelCpt : BaseMonoBehaviour,DialogView.IDialogCallBack
 {
     public Text tvTitle;
     public Image ivTitleIcon;
@@ -27,7 +27,7 @@ public class ItemTownGuildImproveInnLevelCpt : BaseMonoBehaviour
     protected ToastManager toastManager;
     protected UIGameManager uiGameManager;
     protected InnBuildManager innBuildManager;
-
+    protected DialogManager dialogManager;
     private void Awake()
     {
         gameItemsManager= Find<GameItemsManager>(ImportantTypeEnum.GameItemsManager);
@@ -36,6 +36,7 @@ public class ItemTownGuildImproveInnLevelCpt : BaseMonoBehaviour
         toastManager = Find<ToastManager>(ImportantTypeEnum.ToastManager);
         uiGameManager = Find<UIGameManager>(ImportantTypeEnum.GameUI);
         innBuildManager = Find<InnBuildManager>(ImportantTypeEnum.BuildManager);
+        dialogManager = Find<DialogManager>(ImportantTypeEnum.DialogManager);
     }
 
     private void Start()
@@ -167,10 +168,25 @@ public class ItemTownGuildImproveInnLevelCpt : BaseMonoBehaviour
 
             toastManager.ToastHint(ivTitleIcon.sprite, GameCommonInfo.GetUITextById(1062));
             uiGameManager.OpenUIAndCloseOtherByName(EnumUtil.GetEnumName(UIEnum.GameMain));
+
+            DialogBean dialogData = new DialogBean();
+            DialogView dialogView = dialogManager.CreateDialog(DialogEnum.Achievement, this, dialogData);
+            AchievementDialogView achievementDialog = (AchievementDialogView)dialogView;
+            achievementDialog.SetData(storeInfo);
         }
         else
         {
             toastManager.ToastHint(GameCommonInfo.GetUITextById(1061));
         }
     }
+
+    #region
+    public void Submit(DialogView dialogView, DialogBean dialogBean)
+    {
+    }
+
+    public void Cancel(DialogView dialogView, DialogBean dialogBean)
+    {
+    }
+    #endregion
 }

@@ -8,6 +8,9 @@ public enum AudioSoundEnum
     ButtonForHighLight = 3,//高亮音效
 
     PayMoney=10,//支付音效
+    Reward = 20,//奖励音效
 
-    Thunderstorm=101,//打雷音效
+    Thunderstorm =101,//打雷音效
+
+
 }

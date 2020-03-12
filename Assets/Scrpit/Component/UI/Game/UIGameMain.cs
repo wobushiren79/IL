@@ -268,7 +268,7 @@ public class UIGameMain : UIGameComponent, DialogView.IDialogCallBack, IRadioGro
 
         if (ivInnLevel != null)
         {
-            Sprite spIcon = uiGameManager.gameItemsManager.GetItemsSpriteByName("inn_level_" + innLevelTitle + "_" + (innLevelStar - 1));
+            Sprite spIcon = uiGameManager.iconDataManager.GetIconSpriteByName("inn_level_" + innLevelTitle + "_" + (innLevelStar - 1));
             if (spIcon)
             {
                 ivInnLevel.gameObject.SetActive(true);

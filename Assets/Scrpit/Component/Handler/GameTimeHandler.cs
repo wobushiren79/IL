@@ -197,11 +197,10 @@ public class GameTimeHandler : BaseObservable<IBaseObserver>
     }
 
     /// <summary>
-    /// 设置时间彻底停止
+    /// 设置时间停止
     /// </summary>
     public void SetTimeStop()
     {
-        SetTimeScale(0);
         SetTimeStatus(true);
     }
 
@@ -210,7 +209,6 @@ public class GameTimeHandler : BaseObservable<IBaseObserver>
     /// </summary>
     public void SetTimeRestore()
     {
-        SetTimeScale(1);
         SetTimeStatus(false);
     }
 

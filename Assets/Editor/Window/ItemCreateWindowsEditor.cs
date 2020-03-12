@@ -362,8 +362,6 @@ public class ItemCreateWindowsEditor : EditorWindow, StoreInfoManager.ICallBack
             case StoreTypeEnum.InnLevel:
                 GUIStoreItemForInnLevel(storeInfo);
                 break;
-            case StoreTypeEnum.Guild:
-                GUIStoreItemForGoods(storeInfo);
                 break;
             case StoreTypeEnum.ArenaInfo:
                 GUIStoreItemForArenaInfo(storeInfo);
@@ -371,6 +369,7 @@ public class ItemCreateWindowsEditor : EditorWindow, StoreInfoManager.ICallBack
             case StoreTypeEnum.ArenaGoods:
                 GUIStoreItemForGoods(storeInfo);
                 break;
+            case StoreTypeEnum.Guild:
             case StoreTypeEnum.Carpenter:
             case StoreTypeEnum.Grocery:
             case StoreTypeEnum.Dress:
@@ -448,15 +447,16 @@ public class ItemCreateWindowsEditor : EditorWindow, StoreInfoManager.ICallBack
             case StoreTypeEnum.Guild:
                 GUILayout.Label("公会勋章：", GUILayout.Width(50), GUILayout.Height(20));
                 storeInfo.guild_coin = long.Parse(EditorGUILayout.TextArea(storeInfo.guild_coin + "", GUILayout.Width(100), GUILayout.Height(20)));
+                storeInfo.store_goods_type = (int)(StoreForGuildGoodsTypeEnum)EditorGUILayout.EnumPopup("商品类型", (StoreForGuildGoodsTypeEnum)storeInfo.store_goods_type, GUILayout.Width(300), GUILayout.Height(20));
                 break;
             case StoreTypeEnum.Carpenter:
                 storeInfo.store_goods_type = (int)(StoreForCarpenterTypeEnum)EditorGUILayout.EnumPopup("商品类型", (StoreForCarpenterTypeEnum)storeInfo.store_goods_type, GUILayout.Width(300), GUILayout.Height(20));
-                if(storeInfo.store_goods_type==(int)StoreForCarpenterTypeEnum.Expansion)
+                if (storeInfo.store_goods_type == (int)StoreForCarpenterTypeEnum.Expansion)
                 {
                     GUILayout.Label("扩建等级", GUILayout.Width(50), GUILayout.Height(20));
                     storeInfo.mark = EditorGUILayout.TextArea(storeInfo.mark + "", GUILayout.Width(20), GUILayout.Height(20));
                     GUILayout.Label("w", GUILayout.Width(20), GUILayout.Height(20));
-                    storeInfo.mark_x =int.Parse( EditorGUILayout.TextArea(storeInfo.mark_x + "", GUILayout.Width(20), GUILayout.Height(20)));
+                    storeInfo.mark_x = int.Parse(EditorGUILayout.TextArea(storeInfo.mark_x + "", GUILayout.Width(20), GUILayout.Height(20)));
                     GUILayout.Label("h", GUILayout.Width(20), GUILayout.Height(20));
                     storeInfo.mark_y = int.Parse(EditorGUILayout.TextArea(storeInfo.mark_y + "", GUILayout.Width(20), GUILayout.Height(20)));
                 }
@@ -471,6 +471,10 @@ public class ItemCreateWindowsEditor : EditorWindow, StoreInfoManager.ICallBack
                 storeInfo.store_goods_type = (int)(StoreForPharmacyTypeEnum)EditorGUILayout.EnumPopup("商品类型", (StoreForPharmacyTypeEnum)storeInfo.store_goods_type, GUILayout.Width(300), GUILayout.Height(20));
                 break;
         }
+        GUILayout.Label("备用名字", GUILayout.Width(50), GUILayout.Height(20));
+        storeInfo.name = EditorGUILayout.TextArea(storeInfo.name + "", GUILayout.Width(100), GUILayout.Height(20));
+        GUILayout.Label("备用描述", GUILayout.Width(50), GUILayout.Height(20));
+        storeInfo.content = EditorGUILayout.TextArea(storeInfo.content + "", GUILayout.Width(100), GUILayout.Height(20));
     }
 
     private void GUIStoreItemForArenaInfo(StoreInfoBean storeInfo)
@@ -500,17 +504,20 @@ public class ItemCreateWindowsEditor : EditorWindow, StoreInfoManager.ICallBack
         storeInfo.price_l = long.Parse(EditorGUILayout.TextArea(storeInfo.price_l + "", GUILayout.Width(100), GUILayout.Height(20)));
         storeInfo.price_m = long.Parse(EditorGUILayout.TextArea(storeInfo.price_m + "", GUILayout.Width(100), GUILayout.Height(20)));
         storeInfo.price_s = long.Parse(EditorGUILayout.TextArea(storeInfo.price_s + "", GUILayout.Width(100), GUILayout.Height(20)));
+        GUILayout.Label("名字", GUILayout.Width(50), GUILayout.Height(20));
+        storeInfo.name = EditorGUILayout.TextArea(storeInfo.name + "", GUILayout.Width(100), GUILayout.Height(20));
+        GUILayout.Label("描述", GUILayout.Width(50), GUILayout.Height(20));
+        storeInfo.content = EditorGUILayout.TextArea(storeInfo.content + "", GUILayout.Width(100), GUILayout.Height(20));
     }
 
     private void GUIStoreItemForInnLevel(StoreInfoBean storeInfo)
     {
         GUILayout.Label("客栈等级：", GUILayout.Width(100), GUILayout.Height(20));
         storeInfo.mark_type = int.Parse(EditorGUILayout.TextArea(storeInfo.mark_type + "", GUILayout.Width(100), GUILayout.Height(20)));
-        //GUILayout.Label("升级所需价格LMS：", GUILayout.Width(100), GUILayout.Height(20));
-        //storeInfo.price_l = long.Parse(EditorGUILayout.TextArea(storeInfo.price_l + "", GUILayout.Width(100), GUILayout.Height(20)));
-        //storeInfo.price_m = long.Parse(EditorGUILayout.TextArea(storeInfo.price_m + "", GUILayout.Width(100), GUILayout.Height(20)));
-        //storeInfo.price_s = long.Parse(EditorGUILayout.TextArea(storeInfo.price_s + "", GUILayout.Width(100), GUILayout.Height(20)));
-
+        GUILayout.Label("名字", GUILayout.Width(50), GUILayout.Height(20));
+        storeInfo.name = EditorGUILayout.TextArea(storeInfo.name + "", GUILayout.Width(100), GUILayout.Height(20));
+        GUILayout.Label("描述", GUILayout.Width(50), GUILayout.Height(20));
+        storeInfo.content = EditorGUILayout.TextArea(storeInfo.content + "", GUILayout.Width(100), GUILayout.Height(20));
         //前置
         GUIPre(storeInfo);
         //奖励相关
@@ -635,7 +642,7 @@ public class ItemCreateWindowsEditor : EditorWindow, StoreInfoManager.ICallBack
         }
         if (GUILayout.Button("查询厨师用道具", GUILayout.Width(100), GUILayout.Height(20)))
         {
-            listFindItem = gameItemsManager.GetItemsListByType( GeneralEnum.Chef);
+            listFindItem = gameItemsManager.GetItemsListByType(GeneralEnum.Chef);
         }
         if (GUILayout.Button("查询伙计用道具", GUILayout.Width(100), GUILayout.Height(20)))
         {
@@ -754,7 +761,7 @@ public class ItemCreateWindowsEditor : EditorWindow, StoreInfoManager.ICallBack
 
             if ((GeneralEnum)itemInfo.items_type == GeneralEnum.Medicine)
             {
-                 itemInfo.effect= EditorUI.GUIListData<EffectTypeEnum>("效果", itemInfo.effect);
+                itemInfo.effect = EditorUI.GUIListData<EffectTypeEnum>("效果", itemInfo.effect);
             }
 
             GUILayout.EndHorizontal();

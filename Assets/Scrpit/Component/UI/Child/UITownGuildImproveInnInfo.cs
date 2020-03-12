@@ -3,7 +3,7 @@ using UnityEditor;
 using System.Collections.Generic;
 using UnityEngine.UI;
 
-public class UITownGuildImproveInnInfo : BaseMonoBehaviour, StoreInfoManager.ICallBack
+public class UITownGuildImproveInnInfo : BaseUIChildComponent<UITownGuildImprove>, StoreInfoManager.ICallBack
 {
     public Text tvNull;
 

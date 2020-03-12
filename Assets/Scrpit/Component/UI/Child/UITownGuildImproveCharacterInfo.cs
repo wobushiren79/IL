@@ -2,7 +2,7 @@
 using UnityEditor;
 using System.Collections.Generic;
 
-public class UITownGuildImproveCharacterInfo : BaseMonoBehaviour, StoreInfoManager.ICallBack
+public class UITownGuildImproveCharacterInfo : BaseUIChildComponent<UITownGuildImprove>, StoreInfoManager.ICallBack
 {
     //游戏数据
     public GameDataBean gameData;
@@ -50,7 +50,7 @@ public class UITownGuildImproveCharacterInfo : BaseMonoBehaviour, StoreInfoManag
     /// <returns></returns>
     private bool CheckCanImprove(CharacterWorkerBaseBean workerData, out StoreInfoBean levelInfo)
     {
-        workerData.GetWorkerExp(out float nextLevelExp, out float currentExp, out float levelProportion);
+        workerData.GetWorkerExp(out int nextLevelExp, out int currentExp, out float levelProportion);
 
         //获取升级数据
         levelInfo = null;

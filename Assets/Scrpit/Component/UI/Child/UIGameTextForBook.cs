@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using UnityEditor;
 using UnityEngine.UI;
-
+using DG.Tweening;
 public class UIGameTextForBook : BaseUIChildComponent<UIGameText>
 {
     public Text tvBookName;
@@ -12,6 +12,21 @@ public class UIGameTextForBook : BaseUIChildComponent<UIGameText>
     {
         if (btBookBack != null)
             btBookBack.onClick.AddListener(OnClickBack);
+    }
+    public override void Open()
+    {
+        base.Open();
+        transform.DOKill();
+        transform.localScale = new Vector3(1, 1, 1);
+        transform.DOScaleX(0, 0.2f).From();
+        if (uiComponent.uiGameManager.gameTimeHandler != null)
+            uiComponent.uiGameManager.gameTimeHandler.SetTimeStop();
+    }
+
+    private void OnDisable()
+    {
+        if (uiComponent.uiGameManager.gameTimeHandler != null)
+            uiComponent.uiGameManager.gameTimeHandler.SetTimeRestore();
     }
 
     /// <summary>
@@ -49,6 +64,6 @@ public class UIGameTextForBook : BaseUIChildComponent<UIGameText>
     public void OnClickBack()
     {
         uiComponent.NextText();
-       // uiComponent.uiManager.OpenUIAndCloseOtherByName(EnumUtil.GetEnumName(UIEnum.GameMain));
+        // uiComponent.uiManager.OpenUIAndCloseOtherByName(EnumUtil.GetEnumName(UIEnum.GameMain));
     }
 }

@@ -7,6 +7,7 @@ public class ItemGameWorkerDetailsWorkerCpt : BaseMonoBehaviour
 {
     public Text tvLevelName;
     public Image ivLevel;
+    public Text tvLevel;
     public Slider sliderExperience;
     public Image ivSliderFill;
 
@@ -20,6 +21,9 @@ public class ItemGameWorkerDetailsWorkerCpt : BaseMonoBehaviour
     public Sprite spLevel_5;
     public Sprite spLevel_6;
 
+    public Color colorLevel_1;
+    public Color colorLevel_2;
+
     public void SetData(WorkerEnum workerType, CharacterWorkerBaseBean workInfo)
     {
         if (workInfo == null)
@@ -29,8 +33,8 @@ public class ItemGameWorkerDetailsWorkerCpt : BaseMonoBehaviour
             CharacterWorkerBaseBean.GetWorkerLevelName(workInfo.workerLevel) + CharacterWorkerBaseBean.GetWorkerName(workerType);
         SetLevelName(workerLevelName);
         //设置经验条
-        workInfo.GetWorkerExp(out float nextLevelExp, out float currentExp, out float levelProportion);
-        SetExp(levelProportion);
+        workInfo.GetWorkerExp(out int nextLevelExp, out int currentExp, out float levelProportion);
+        SetExp(currentExp, nextLevelExp, levelProportion);
         // 设置等级图标
         SetLevelIcon(workInfo.workerLevel);
     }
@@ -84,17 +88,26 @@ public class ItemGameWorkerDetailsWorkerCpt : BaseMonoBehaviour
     /// 设置经验条
     /// </summary>
     /// <param name="exp"></param>
-    public void SetExp(float exp)
+    public void SetExp(float expCurrent, float expLevelUp, float exp)
     {
         if (sliderExperience != null)
             sliderExperience.value = exp;
+        string levelStr = "";
         if (exp == 1)
         {
             ivSliderFill.sprite = spSliderMax;
+            levelStr = GameCommonInfo.GetUITextById(75);
+            tvLevel.color = colorLevel_1;
         }
         else
         {
             ivSliderFill.sprite = spSliderNormal;
+            levelStr = expCurrent + "/" + expLevelUp;
+            tvLevel.color = colorLevel_2;
+        }
+        if (tvLevel != null)
+        {
+            tvLevel.text = levelStr;
         }
     }
 

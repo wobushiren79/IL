@@ -427,7 +427,7 @@ MonoBehaviour:
   rbButton: {fileID: 4190522670891824479}
   rbImage: {fileID: 2117648802021232866}
   rbText: {fileID: 6848814144595362446}
-  states: 0
+  status: 0
 --- !u!1 &628698011575632223
 GameObject:
   m_ObjectHideFlags: 0
@@ -574,6 +574,7 @@ MonoBehaviour:
     valid: 0
     store_id: 0
     type: 0
+    store_goods_type: 0
     mark: 
     mark_id: 0
     mark_type: 0
@@ -583,15 +584,14 @@ MonoBehaviour:
     price_m: 0
     price_s: 0
     guild_coin: 0
+    trophy_elementary: 0
+    trophy_intermediate: 0
+    trophy_advanced: 0
+    trophy_legendary: 0
     pre_ach_ids: 
     pre_data: 
+    pre_data_minigame: 
     reward_data: 
-    minigame_player_number: 0
-    minigame_win_survivaltime: 0
-    minigame_win_life: 0
-    barrage_launch_interval: 0
-    barrage_launch_speed: 0
-    barrage_launch_types: 
     icon_key: 
     name: 
     content: 
@@ -1736,9 +1736,10 @@ MonoBehaviour:
     m_ColorMultiplier: 1
     m_FadeDuration: 0.1
   m_SpriteState:
-    m_HighlightedSprite: {fileID: 0}
+    m_HighlightedSprite: {fileID: 21300000, guid: 138fd785a0381874a962be70c927831e,
+      type: 3}
     m_PressedSprite: {fileID: 21300000, guid: 0658fb4aa4385f841977481bcbbb5837, type: 3}
-    m_SelectedSprite: {fileID: 21300000, guid: 0658fb4aa4385f841977481bcbbb5837, type: 3}
+    m_SelectedSprite: {fileID: 21300000, guid: b1b9d475874167c46b009a67f32a98c3, type: 3}
     m_DisabledSprite: {fileID: 0}
   m_AnimationTriggers:
     m_NormalTrigger: Normal
@@ -2136,6 +2137,7 @@ MonoBehaviour:
     valid: 0
     store_id: 0
     type: 0
+    store_goods_type: 0
     mark: 
     mark_id: 0
     mark_type: 0
@@ -2145,15 +2147,14 @@ MonoBehaviour:
     price_m: 0
     price_s: 0
     guild_coin: 0
+    trophy_elementary: 0
+    trophy_intermediate: 0
+    trophy_advanced: 0
+    trophy_legendary: 0
     pre_ach_ids: 
     pre_data: 
+    pre_data_minigame: 
     reward_data: 
-    minigame_player_number: 0
-    minigame_win_survivaltime: 0
-    minigame_win_life: 0
-    barrage_launch_interval: 0
-    barrage_launch_speed: 0
-    barrage_launch_types: 
     icon_key: 
     name: 
     content: 
@@ -2225,7 +2226,7 @@ MonoBehaviour:
       priorityAccountant: 0
       priorityAccost: 0
       priorityBeater: 0
-      isAttendance: 0
+      workerStatus: 0
       listLoveItems: 
     attributes:
       loyal: 0
@@ -2301,6 +2302,8 @@ MonoBehaviour:
       attributes_force: 0
       attributes_lucky: 0
       love_items: 
+      love_menus: 
+      condition: 
   workerType: 0
 --- !u!1 &2418279529039129992
 GameObject:
@@ -2505,12 +2508,16 @@ MonoBehaviour:
     moneyM: 0
     moneyL: 0
     guildCoin: 0
+    trophyElementary: 0
+    trophyIntermediate: 0
+    trophyAdvanced: 0
+    trophyLegendary: 0
     innAttributes:
       innName: 
       innLevel: 0
       aesthetics: 0
-      praise: 0
       richness: 0
+      praise: 0
     userCharacter:
       baseInfo:
         characterId: 
@@ -2579,7 +2586,7 @@ MonoBehaviour:
         priorityAccountant: 0
         priorityAccost: 0
         priorityBeater: 0
-        isAttendance: 0
+        workerStatus: 0
         listLoveItems: 
       attributes:
         loyal: 0
@@ -2655,6 +2662,8 @@ MonoBehaviour:
         attributes_force: 0
         attributes_lucky: 0
         love_items: 
+        love_menus: 
+        condition: 
     listWorkerCharacter: []
     innBuildData:
       listWall: []
@@ -2673,8 +2682,22 @@ MonoBehaviour:
       hour: 0
       minute: 0
       second: 0
+    playTime:
+      year: 0
+      month: 0
+      day: 0
+      hour: 0
+      minute: 0
+      second: 0
     userAchievement:
-      achievementList: 
+      listAchievement: 
+      ownMoneyL: 0
+      ownMoneyM: 0
+      ownMoneyS: 0
+      ownTrophyElementary: 0
+      ownTrophyIntermediate: 0
+      ownTrophyAdvanced: 0
+      ownTrophyLegendary: 0
       ownIngOilsalt: 0
       ownIngMeat: 0
       ownIngRiverfresh: 0
@@ -2683,6 +2706,14 @@ MonoBehaviour:
       ownIngMelonfruit: 0
       ownIngWaterwine: 0
       ownIngFlour: 0
+      ownGuildCoin: 0
+      numberForCustomer: 0
+      praiseForExcited: 0
+      praiseForHappy: 0
+      praiseForOkay: 0
+      praiseForOrdinary: 0
+      praiseForDisappointed: 0
+      praiseForAnger: 0
     listBuild: []
     listItems: []
     listMenu: []
@@ -2697,9 +2728,6 @@ MonoBehaviour:
     ingWaterwine: 0
     ingFlour: 0
     workerNumberLimit: 5
-    weatherToday:
-      weatherType: 0
-      weatherSize: 0
   objImproveContent: {fileID: 6823442147488453131}
   objImproveModel: {fileID: 2031747049822077552}
   objImproveEmpty: {fileID: 6853176066088540158}
@@ -5313,7 +5341,7 @@ MonoBehaviour:
   rbButton: {fileID: 7163875733259846958}
   rbImage: {fileID: 7163875733259846957}
   rbText: {fileID: 7163875733158229579}
-  states: 0
+  status: 0
 --- !u!1 &7163875733262755445
 GameObject:
   m_ObjectHideFlags: 0
@@ -5874,12 +5902,16 @@ MonoBehaviour:
     moneyM: 0
     moneyL: 0
     guildCoin: 0
+    trophyElementary: 0
+    trophyIntermediate: 0
+    trophyAdvanced: 0
+    trophyLegendary: 0
     innAttributes:
       innName: 
       innLevel: 0
       aesthetics: 0
-      praise: 0
       richness: 0
+      praise: 0
     userCharacter:
       baseInfo:
         characterId: 
@@ -5948,7 +5980,7 @@ MonoBehaviour:
         priorityAccountant: 0
         priorityAccost: 0
         priorityBeater: 0
-        isAttendance: 0
+        workerStatus: 0
         listLoveItems: 
       attributes:
         loyal: 0
@@ -6024,6 +6056,8 @@ MonoBehaviour:
         attributes_force: 0
         attributes_lucky: 0
         love_items: 
+        love_menus: 
+        condition: 
     listWorkerCharacter: []
     innBuildData:
       listWall: []
@@ -6042,8 +6076,22 @@ MonoBehaviour:
       hour: 0
       minute: 0
       second: 0
+    playTime:
+      year: 0
+      month: 0
+      day: 0
+      hour: 0
+      minute: 0
+      second: 0
     userAchievement:
-      achievementList: 
+      listAchievement: 
+      ownMoneyL: 0
+      ownMoneyM: 0
+      ownMoneyS: 0
+      ownTrophyElementary: 0
+      ownTrophyIntermediate: 0
+      ownTrophyAdvanced: 0
+      ownTrophyLegendary: 0
       ownIngOilsalt: 0
       ownIngMeat: 0
       ownIngRiverfresh: 0
@@ -6052,6 +6100,14 @@ MonoBehaviour:
       ownIngMelonfruit: 0
       ownIngWaterwine: 0
       ownIngFlour: 0
+      ownGuildCoin: 0
+      numberForCustomer: 0
+      praiseForExcited: 0
+      praiseForHappy: 0
+      praiseForOkay: 0
+      praiseForOrdinary: 0
+      praiseForDisappointed: 0
+      praiseForAnger: 0
     listBuild: []
     listItems: []
     listMenu: []
@@ -6066,9 +6122,6 @@ MonoBehaviour:
     ingWaterwine: 0
     ingFlour: 0
     workerNumberLimit: 3
-    weatherToday:
-      weatherType: 0
-      weatherSize: 0
 --- !u!1 &7163875734420654446
 GameObject:
   m_ObjectHideFlags: 0
@@ -6252,6 +6305,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 50544a99bb5fa4d4e902c016dd920541, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isCancelSelect: 0
   listButton:
   - {fileID: 7163875733259846959}
   - {fileID: 3705825032786574452}
@@ -6345,11 +6399,16 @@ MonoBehaviour:
   uiManager: {fileID: 0}
   uiAnimator: {fileID: 0}
   remarkData: 
+  uiGameManager: {fileID: 0}
   btBack: {fileID: 7163875733877318529}
   tvMoneyL: {fileID: 1254473825601045354}
   tvMoneyM: {fileID: 1254473826536574768}
   tvMoneyS: {fileID: 1254473825829399146}
   tvGuildCoin: {fileID: 1311207178592666081}
+  tvTrophy1: {fileID: 0}
+  tvTrophy2: {fileID: 0}
+  tvTrophy3: {fileID: 0}
+  tvTrophy4: {fileID: 0}
   rgType: {fileID: 7163875734601977466}
   uiInnInfo: {fileID: 1584171021712734669}
   uiCharacterInfo: {fileID: 2230692868956889384}

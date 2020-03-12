@@ -6,6 +6,7 @@ using DG.Tweening;
 
 public class UIGameWorker : UIGameComponent
 {
+    public Text tvNumber;
     public Button btBack;
 
     public GameObject objListContent;
@@ -15,6 +16,14 @@ public class UIGameWorker : UIGameComponent
     {
         if (btBack != null)
             btBack.onClick.AddListener(OpenMainUI);
+    }
+
+    private void Update()
+    {
+        if (uiGameManager.gameDataManager != null && tvNumber != null)
+        {
+            tvNumber.text = uiGameManager.gameDataManager.gameData.listWorkerCharacter.Count + "/" + uiGameManager.gameDataManager.gameData.workerNumberLimit;
+        }
     }
 
     public override void OpenUI()

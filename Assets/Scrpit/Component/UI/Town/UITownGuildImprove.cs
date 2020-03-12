@@ -26,16 +26,16 @@ public class UITownGuildImprove : UIBaseOne, IRadioGroupCallBack
     public void ChangeUIType(int type)
     {
 
-        uiInnInfo.gameObject.SetActive(false);
-        uiCharacterInfo.gameObject.SetActive(false);
+        uiInnInfo.Close() ;
+        uiCharacterInfo.Close();
         switch (type)
         {
             case 0:
-                uiInnInfo.gameObject.SetActive(true);
+                uiInnInfo.Open();
                 uiInnInfo.InitData(uiGameManager.gameDataManager.gameData);
                 break;
             case 1:
-                uiCharacterInfo.gameObject.SetActive(true);
+                uiCharacterInfo.Open();
                 uiCharacterInfo.InitData(uiGameManager.gameDataManager.gameData);
                 break;
         }

@@ -37,11 +37,11 @@ public class CharacterWorkerBaseBean
     /// <param name="nextLevelExp">升级所需经验</param>
     /// <param name="currentExp">当前经验</param>
     /// <param name="levelProportion">经验百分比</param>
-    public void GetWorkerExp(out float nextLevelExp, out float currentExp, out float levelProportion)
+    public void GetWorkerExp(out int nextLevelExp, out int currentExp, out float levelProportion)
     {
         nextLevelExp = GetLevelUpExp(workerLevel + 1);
         currentExp = workerExp;
-        levelProportion = currentExp / nextLevelExp;
+        levelProportion = (float)currentExp / nextLevelExp;
     }
 
     /// <summary>

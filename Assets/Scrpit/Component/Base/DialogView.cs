@@ -105,7 +105,7 @@ public class DialogView : BaseMonoBehaviour
 
         if (dialogData.title != null)
         {
-            SetTitile(dialogData.title);
+            SetTitle(dialogData.title);
         }
         if (dialogData.content != null)
         {
@@ -125,7 +125,7 @@ public class DialogView : BaseMonoBehaviour
     /// 设置标题
     /// </summary>
     /// <param name="title"></param>
-    public void SetTitile(string title)
+    public void SetTitle(string title)
     {
         if (tvTitle != null)
         {

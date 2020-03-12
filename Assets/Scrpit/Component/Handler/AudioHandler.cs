@@ -38,6 +38,9 @@ public class AudioHandler : BaseHandler
             case AudioSoundEnum.PayMoney:
                 audioClip = audioManager.GetSoundClip("sound_pay_1");
                 break;
+            case AudioSoundEnum.Reward:
+                audioClip = audioManager.GetSoundClip("sound_reward_2");
+                break;
             case AudioSoundEnum.Thunderstorm:
                 audioClip = audioManager.GetSoundClip("sound_thunderstorm_1");
                 break;

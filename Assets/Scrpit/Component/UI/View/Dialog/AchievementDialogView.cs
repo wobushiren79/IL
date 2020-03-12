@@ -20,33 +20,58 @@ public class AchievementDialogView : DialogView
     protected IconDataManager iconDataManager;
     protected InnBuildManager innBuildManager;
     protected InnFoodManager innFoodManager;
-
+    protected AudioHandler audioHandler;
     public override void Awake()
     {
         base.Awake();
         gameItemsManager = Find<GameItemsManager>(ImportantTypeEnum.GameItemsManager);
         iconDataManager = Find<IconDataManager>(ImportantTypeEnum.UIManager);
         innBuildManager = Find<InnBuildManager>(ImportantTypeEnum.BuildManager);
-        innFoodManager = Find<InnFoodManager>(ImportantTypeEnum.FoodManager);
+        audioHandler = Find<AudioHandler>(ImportantTypeEnum.AudioHandler);
+
     }
 
+    /// <summary>
+    /// 成就展示
+    /// </summary>
+    /// <param name="achievementInfo"></param>
     public void SetData(AchievementInfoBean achievementInfo)
     {
         this.achievementInfo = achievementInfo;
-        SetIcon(achievementInfo.type, achievementInfo.icon_key);
+        SetIcon(achievementInfo.type, achievementInfo.icon_key, achievementInfo.icon_key_remark);
         SetName(achievementInfo.name);
-        SetReward(achievementInfo);
+        SetTitle(GameCommonInfo.GetUITextById(76));
+        SetReward(achievementInfo.reward_data);
+        SetDataForCommon();
+    }
+
+    /// <summary>
+    /// 设置相关购买成功展示
+    /// </summary>
+    /// <param name="storeInfo"></param>
+    public void SetData(StoreInfoBean storeInfo)
+    {
+        SetTitle(GameCommonInfo.GetUITextById(43));
+        SetIcon(2, "keyboard_button_up_1", "");
+        SetName(storeInfo.name);
+        SetReward(storeInfo.reward_data);
+        SetDataForCommon();
+    }
+
+    public void SetDataForCommon()
+    {
         objAchContainer.transform.DOKill();
         objAchContainer.transform.DOScale(new Vector3(0, 0, 0), 1.5f).From().SetEase(Ease.OutElastic);
+        audioHandler.PlaySound(AudioSoundEnum.Reward);
     }
 
     /// <summary>
     /// 设置图标
     /// </summary>
     /// <param name="iconKey"></param>
-    public void SetIcon(int type, string iconKey)
+    public void SetIcon(int type, string iconKey,string remarkIconKey)
     {
-        if (ivIcon != null && gameItemsManager != null && achievementInfo != null)
+        if (ivIcon != null && gameItemsManager != null)
         {
             Sprite spIcon;
             if (type == 1)
@@ -62,10 +87,10 @@ public class AchievementDialogView : DialogView
                 ivIcon.sprite = spIcon;
         }
         //设置备用图标
-        if (ivRemark != null && achievementInfo != null && !CheckUtil.StringIsNull(achievementInfo.icon_key_remark))
+        if (ivRemark != null && !CheckUtil.StringIsNull(remarkIconKey))
         {
             ivRemark.gameObject.SetActive(true);
-            Sprite spIconRemark = gameItemsManager.GetItemsSpriteByName(achievementInfo.icon_key_remark);
+            Sprite spIconRemark = gameItemsManager.GetItemsSpriteByName(remarkIconKey);
             if (spIconRemark != null)
                 ivRemark.sprite = spIconRemark;
         }
@@ -81,7 +106,7 @@ public class AchievementDialogView : DialogView
     /// <param name="name"></param>
     public void SetName(string name)
     {
-        if (tvName != null && achievementInfo != null)
+        if (tvName != null)
         {
             tvName.text = name;
         }
@@ -90,11 +115,11 @@ public class AchievementDialogView : DialogView
     /// <summary>
     /// 设置奖励
     /// </summary>
-    public void SetReward(AchievementInfoBean achievementInfo)
+    public void SetReward(string rewardData )
     {
         float animTimeDelay = 1f;
         CptUtil.RemoveChildsByActive(objRewardContent.transform);
-        List<RewardTypeBean> listRewardData = RewardTypeEnumTools.GetListRewardData(achievementInfo.reward_data);
+        List<RewardTypeBean> listRewardData = RewardTypeEnumTools.GetListRewardData(rewardData);
         foreach (var itemRewardData in listRewardData)
         {
             RewardTypeEnumTools.GetRewardDetails(itemRewardData, iconDataManager,gameItemsManager,innBuildManager);

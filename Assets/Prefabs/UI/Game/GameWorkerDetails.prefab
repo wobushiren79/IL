@@ -2156,6 +2156,7 @@ MonoBehaviour:
     add_loyal: 0
     rotation_angle: 0
     add_id: 0
+    effect: 
     name: 
     content: 
   spIcon: {fileID: 0}
@@ -3695,6 +3696,7 @@ MonoBehaviour:
     add_loyal: 0
     rotation_angle: 0
     add_id: 0
+    effect: 
     name: 
     content: 
   spIcon: {fileID: 0}
@@ -4439,6 +4441,7 @@ MonoBehaviour:
     add_loyal: 0
     rotation_angle: 0
     add_id: 0
+    effect: 
     name: 
     content: 
   spIcon: {fileID: 0}
@@ -4591,6 +4594,7 @@ MonoBehaviour:
     add_loyal: 0
     rotation_angle: 0
     add_id: 0
+    effect: 
     name: 
     content: 
   spIcon: {fileID: 0}
@@ -6162,6 +6166,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 50544a99bb5fa4d4e902c016dd920541, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isCancelSelect: 0
   listButton:
   - {fileID: 6363371752525993878}
   - {fileID: 7266814095796552709}
@@ -8305,6 +8310,11 @@ PrefabInstance:
       propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 878044222445023175, guid: 5cca1ea4e03ea65429806f1eb6305659,
+        type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1689383642807230826, guid: 5cca1ea4e03ea65429806f1eb6305659,
         type: 3}
       propertyPath: m_AnchorMin.x
@@ -8363,10 +8373,15 @@ PrefabInstance:
       propertyPath: m_Type
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 8262201427433514732, guid: 5cca1ea4e03ea65429806f1eb6305659,
+        type: 3}
+      propertyPath: m_Text
+      value: "\u53EF\u664B\u5347"
+      objectReference: {fileID: 0}
     - target: {fileID: 8559534046526939218, guid: 5cca1ea4e03ea65429806f1eb6305659,
         type: 3}
       propertyPath: m_Value
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8752851378261137909, guid: 5cca1ea4e03ea65429806f1eb6305659,
         type: 3}

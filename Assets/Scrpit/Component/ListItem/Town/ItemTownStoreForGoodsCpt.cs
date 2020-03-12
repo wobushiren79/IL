@@ -186,6 +186,7 @@ public class ItemTownStoreForGoodsCpt : ItemGameBaseCpt, DialogView.IDialogCallB
             objPriceM.SetActive(false);
         if (priceS == 0 && objPriceS != null)
             objPriceS.SetActive(false);
+
         if (coin == 0 && objGuildCoin != null)
             objGuildCoin.SetActive(false);
 
