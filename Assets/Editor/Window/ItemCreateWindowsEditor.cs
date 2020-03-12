@@ -362,7 +362,6 @@ public class ItemCreateWindowsEditor : EditorWindow, StoreInfoManager.ICallBack
             case StoreTypeEnum.InnLevel:
                 GUIStoreItemForInnLevel(storeInfo);
                 break;
-                break;
             case StoreTypeEnum.ArenaInfo:
                 GUIStoreItemForArenaInfo(storeInfo);
                 break;
@@ -508,6 +507,8 @@ public class ItemCreateWindowsEditor : EditorWindow, StoreInfoManager.ICallBack
         storeInfo.name = EditorGUILayout.TextArea(storeInfo.name + "", GUILayout.Width(100), GUILayout.Height(20));
         GUILayout.Label("描述", GUILayout.Width(50), GUILayout.Height(20));
         storeInfo.content = EditorGUILayout.TextArea(storeInfo.content + "", GUILayout.Width(100), GUILayout.Height(20));
+
+        storeInfo.pre_data_minigame = EditorUI.GUIListData<PreTypeForMiniGameEnum>("小游戏数据", storeInfo.pre_data_minigame);
     }
 
     private void GUIStoreItemForInnLevel(StoreInfoBean storeInfo)

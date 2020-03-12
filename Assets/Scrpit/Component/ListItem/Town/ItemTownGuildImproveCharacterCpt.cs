@@ -387,17 +387,10 @@ public class ItemTownGuildImproveCharacterCpt : ItemGameBaseCpt, DialogView.IDia
     private MiniGameBaseBean InitWaiterGame()
     {
         GameItemsManager gameItemsManager = GetUIManager<UIGameManager>().gameItemsManager;
+        NpcInfoManager npcInfoManager = GetUIManager<UIGameManager>().npcInfoManager;
+
         MiniGameBaseBean miniGameData = MiniGameEnumTools.GetMiniGameData(MiniGameEnum.Barrage);
-        miniGameData.winLife = 1;
-        miniGameData.winSurvivalTime = 60;
-        ((MiniGameBarrageBean)miniGameData).launchInterval = 3;
-        ((MiniGameBarrageBean)miniGameData).launchSpeed = 1;
-        ((MiniGameBarrageBean)miniGameData).launchTypes = new MiniGameBarrageEjectorCpt.LaunchTypeEnum[]
-            {
-                MiniGameBarrageEjectorCpt.LaunchTypeEnum.Double,
-                MiniGameBarrageEjectorCpt.LaunchTypeEnum.Single,
-                MiniGameBarrageEjectorCpt.LaunchTypeEnum.Triple
-            };
+        miniGameData = PreTypeForMiniGameEnumTools.GetMiniGameData(miniGameData,levelData.pre_data_minigame,gameItemsManager,npcInfoManager);
         miniGameData.InitData(gameItemsManager, characterData);
         return miniGameData;
     }

@@ -20,15 +20,14 @@ public class AchievementDialogView : DialogView
     protected IconDataManager iconDataManager;
     protected InnBuildManager innBuildManager;
     protected InnFoodManager innFoodManager;
-    protected AudioHandler audioHandler;
+
     public override void Awake()
     {
         base.Awake();
         gameItemsManager = Find<GameItemsManager>(ImportantTypeEnum.GameItemsManager);
         iconDataManager = Find<IconDataManager>(ImportantTypeEnum.UIManager);
         innBuildManager = Find<InnBuildManager>(ImportantTypeEnum.BuildManager);
-        audioHandler = Find<AudioHandler>(ImportantTypeEnum.AudioHandler);
-
+        innFoodManager = Find<InnFoodManager>(ImportantTypeEnum.FoodManager);
     }
 
     /// <summary>

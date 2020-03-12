@@ -83,22 +83,22 @@ public class CharacterWorkerBaseBean
         switch (leve)
         {
             case 1:
-                nextLevelExp = 1000;
+                nextLevelExp = 100;
                 break;
             case 2:
-                nextLevelExp = 2000;
+                nextLevelExp = 1000;
                 break;
             case 3:
-                nextLevelExp = 4000;
+                nextLevelExp = 2000;
                 break;
             case 4:
-                nextLevelExp = 8000;
+                nextLevelExp = 4000;
                 break;
             case 5:
-                nextLevelExp = 16000;
+                nextLevelExp = 8000;
                 break;
             case 6:
-                nextLevelExp = 50000;
+                nextLevelExp = 10000;
                 break;
         }
         return nextLevelExp;

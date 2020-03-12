@@ -4,6 +4,7 @@ using System.Collections.Generic;
 
 public enum PreTypeForMiniGameEnum
 {
+
     MiniGameType = 1,
     PlayerNumber = 2,
     UserIds = 3,
@@ -11,9 +12,15 @@ public enum PreTypeForMiniGameEnum
     MiniGamePosition = 5,
     TalkMarkIdForWin = 6,
     TalkMarkIdForLose = 7,
+    GameReason=8,
 
     WinSurvivalTime = 21,
     WinLife = 22,
+
+    BarrageForLaunchSpeed=101,
+    BarrageForLaunchTypes=102,
+    BarrageForLaunchInterval=103,
+    BarrageForLaunchNumber=104,
 }
 
 public class PreTypeForMiniGameBean : DataBean<PreTypeForMiniGameEnum>
@@ -101,6 +108,10 @@ public class PreTypeForMiniGameEnumTools : DataTools
                     MiniGameEnum miniGameType = (MiniGameEnum)int.Parse(itemPreData.data);
                     miniGameData.gameType = miniGameType;
                     break;
+                case PreTypeForMiniGameEnum.GameReason:
+                    MiniGameReasonEnum miniGameReason = (MiniGameReasonEnum)int.Parse(itemPreData.data);
+                    miniGameData.gameReason = miniGameReason;
+                    break;
                 case PreTypeForMiniGameEnum.UserIds:
                     long[] userIds = StringUtil.SplitBySubstringForArrayLong(itemPreData.data, ',');
                     listUserData = npcInfoManager.GetCharacterDataByIds(userIds);
@@ -125,6 +136,12 @@ public class PreTypeForMiniGameEnumTools : DataTools
                 case PreTypeForMiniGameEnum.WinSurvivalTime:
                     miniGameData.winSurvivalTime = float.Parse(itemPreData.data);
                     break;
+                case PreTypeForMiniGameEnum.BarrageForLaunchInterval:
+                case PreTypeForMiniGameEnum.BarrageForLaunchSpeed:
+                case PreTypeForMiniGameEnum.BarrageForLaunchTypes:
+                case PreTypeForMiniGameEnum.BarrageForLaunchNumber:
+                    GetMiniGameDataForBarrage(itemPreData, miniGameData);
+                    break;
             }
         }
         if (miniGameData == null)
@@ -139,5 +156,32 @@ public class PreTypeForMiniGameEnumTools : DataTools
         return miniGameData;
     }
 
+    /// <summary>
+    /// 获取弹幕游戏数据
+    /// </summary>
+    /// <param name="itemPreData"></param>
+    /// <param name="miniGameData"></param>
+    private static void GetMiniGameDataForBarrage(PreTypeForMiniGameBean itemPreData ,MiniGameBaseBean miniGameData)
+    {
+        if (miniGameData.gameType != MiniGameEnum.Barrage)
+            return;
+        MiniGameBarrageBean miniGameBarrage = (MiniGameBarrageBean)miniGameData;
+        switch (itemPreData.dataType)
+        {
+            case PreTypeForMiniGameEnum.BarrageForLaunchInterval:
+                miniGameBarrage.launchInterval = float.Parse( itemPreData.data);
+                break;
+            case PreTypeForMiniGameEnum.BarrageForLaunchSpeed:
+                miniGameBarrage.launchSpeed = float.Parse(itemPreData.data);
+                break;
+            case PreTypeForMiniGameEnum.BarrageForLaunchTypes:
+                MiniGameBarrageEjectorCpt.LaunchTypeEnum[] launchTypes= StringUtil.SplitBySubstringForArrayEnum<MiniGameBarrageEjectorCpt.LaunchTypeEnum>(itemPreData.data,',');
+                miniGameBarrage.launchTypes = launchTypes;
+                break;
+            case PreTypeForMiniGameEnum.BarrageForLaunchNumber:
+                miniGameBarrage.launchNumber = int.Parse(itemPreData.data);
+                break;
+        }
+    }
 }
 

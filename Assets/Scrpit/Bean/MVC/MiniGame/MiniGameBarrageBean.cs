@@ -6,6 +6,8 @@ using System;
 [Serializable]
 public class MiniGameBarrageBean : MiniGameBaseBean
 {
+    //发射台个数
+    public int launchNumber;
     //发射间隔
     public float launchInterval;
     //发射器发射类型

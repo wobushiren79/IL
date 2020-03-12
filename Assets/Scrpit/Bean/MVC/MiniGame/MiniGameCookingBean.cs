@@ -4,6 +4,8 @@ using System.Collections.Generic;
 
 public class MiniGameCookingBean : MiniGameBaseBean
 {
+
+
     //评审员
     public List<MiniGameCharacterBean> listAuditerGameData = new List<MiniGameCharacterBean>();
     //主持人
@@ -25,6 +27,8 @@ public class MiniGameCookingBean : MiniGameBaseBean
 
     //料理的主题
     public CookingThemeBean cookingTheme;
+    //烹饪按钮个数
+    public int cookButtonNumber;
 
     public MiniGameCookingBean()
     {

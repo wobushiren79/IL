@@ -147,17 +147,17 @@ public class UIMiniGameCooking : BaseUIComponent
         List<ItemMiniGameCookingButtonCpt.MiniGameCookingButtonTypeEnum> listRandomType = new List<ItemMiniGameCookingButtonCpt.MiniGameCookingButtonTypeEnum>();
         listRandomType.Add(ItemMiniGameCookingButtonCpt.MiniGameCookingButtonTypeEnum.Left);
         listRandomType.Add(ItemMiniGameCookingButtonCpt.MiniGameCookingButtonTypeEnum.Right);
-        if (gameCookingData.gameLevel > 2)
+        if (gameCookingData.cookButtonNumber == 4 )
         {
             listRandomType.Add(ItemMiniGameCookingButtonCpt.MiniGameCookingButtonTypeEnum.Up);
             listRandomType.Add(ItemMiniGameCookingButtonCpt.MiniGameCookingButtonTypeEnum.Down);
         }
-        if (gameCookingData.gameLevel > 4)
+        if (gameCookingData.cookButtonNumber == 6)
         {
             listRandomType.Add(ItemMiniGameCookingButtonCpt.MiniGameCookingButtonTypeEnum.One);
             listRandomType.Add(ItemMiniGameCookingButtonCpt.MiniGameCookingButtonTypeEnum.Two);
         }
-        if (gameCookingData.gameLevel > 6)
+        if (gameCookingData.cookButtonNumber == 8)
         {
             listRandomType.Add(ItemMiniGameCookingButtonCpt.MiniGameCookingButtonTypeEnum.Three);
             listRandomType.Add(ItemMiniGameCookingButtonCpt.MiniGameCookingButtonTypeEnum.Four);

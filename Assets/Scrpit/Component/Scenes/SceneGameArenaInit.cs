@@ -237,15 +237,15 @@ public class SceneGameArenaInit : BaseSceneInit, IBaseObserver
     public void InitGameBarrage(MiniGameBarrageBean gameBarrageData)
     {
         //添加竞技场发射台坐标
-        if (gameBarrageData.gameLevel <= 2)
+        if (gameBarrageData.launchNumber <= 1)
         {
             gameBarrageData.listEjectorPosition = sceneArenaManager.GetArenaForBarrageEjectorBy1(1);
         }
-        else if (gameBarrageData.gameLevel > 2 && gameBarrageData.gameLevel <= 4)
+        else if (gameBarrageData.launchNumber == 2)
         {
             gameBarrageData.listEjectorPosition = sceneArenaManager.GetArenaForBarrageEjectorBy1(2);
         }
-        else if (gameBarrageData.gameLevel > 4)
+        else if (gameBarrageData.launchNumber == 3)
         {
             gameBarrageData.listEjectorPosition = sceneArenaManager.GetArenaForBarrageEjectorBy1(3);
         }
