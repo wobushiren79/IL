@@ -63,6 +63,9 @@ public class AudioHandler : BaseHandler
             case AudioSoundEnum.Shot:
                 audioClip = audioManager.GetSoundClip("sound_shot_1");
                 break;
+            case AudioSoundEnum.GetCard:
+                audioClip = audioManager.GetSoundClip("sound_card_1");
+                break;
         }
         if (audioClip != null)
             audioSourceForMusic.PlayOneShot(audioClip, volumeScale);

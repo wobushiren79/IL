@@ -3,7 +3,7 @@ using UnityEditor;
 using UnityEngine.UI;
 using System;
 using DG.Tweening;
-public class UIMiniGameEnd : BaseUIComponent
+public class UIMiniGameEnd : UIGameComponent
 {
     //游戏结果
     public GameObject objHalo;
@@ -71,6 +71,7 @@ public class UIMiniGameEnd : BaseUIComponent
     /// </summary>
     public void SetWin()
     {
+        uiGameManager.audioHandler.PlaySound(AudioSoundEnum.Reward);
         if (tvGameResult != null)
         {
             tvGameResult.text = GameCommonInfo.GetUITextById(41);

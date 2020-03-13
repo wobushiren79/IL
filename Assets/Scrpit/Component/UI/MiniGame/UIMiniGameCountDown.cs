@@ -72,6 +72,7 @@ public class UIMiniGameCountDown : UIGameComponent
     /// </summary>
     public void StartCountDown()
     {
+        uiGameManager.audioHandler.PlaySound(AudioSoundEnum.ButtonForNormal);
         objTarget.SetActive(false);
         objCountDown.SetActive(true);
         //恢复控制

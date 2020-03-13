@@ -19,6 +19,6 @@ public enum AudioSoundEnum
 
     CountDownStart = 211,//倒计时开始
     CountDownEnd = 221,//倒计时结束
-
+    GetCard=301,//抽卡
 
 }

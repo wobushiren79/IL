@@ -25,7 +25,7 @@ public class ItemTownGuildImproveCharacterCpt : ItemGameBaseCpt, DialogView.IDia
     [Header("数据")]
     public Sprite spWorkerChef;
     public Sprite spWorkerWaiter;
-    public Sprite spWorkerAccounting;
+    public Sprite spWorkerAccountant;
     public Sprite spWorkerAccost;
     public Sprite spWorkerBeater;
 
@@ -53,6 +53,7 @@ public class ItemTownGuildImproveCharacterCpt : ItemGameBaseCpt, DialogView.IDia
     protected ToastManager toastManager;
     protected ControlHandler controlHandler;
     protected CharacterBodyManager characterBodyManager;
+
     private void Awake()
     {
         uiGameManager = GetUIManager<UIGameManager>();
@@ -128,7 +129,7 @@ public class ItemTownGuildImproveCharacterCpt : ItemGameBaseCpt, DialogView.IDia
                 spWorker = spWorkerWaiter;
                 break;
             case WorkerEnum.Accountant:
-                spWorker = spWorkerAccounting;
+                spWorker = spWorkerAccountant;
                 break;
             case WorkerEnum.Accost:
                 spWorker = spWorkerAccost;

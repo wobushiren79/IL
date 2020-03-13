@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using System.Collections;
 using DG.Tweening;
 
-public class UIMiniGameDebate : BaseUIComponent
+public class UIMiniGameDebate : UIGameComponent
 {
     [Header("控件")]
     public CharacterUICpt characterUser;
@@ -29,6 +29,7 @@ public class UIMiniGameDebate : BaseUIComponent
     public GameObject objCombatEnemyEndPosition;
 
     public ParticleSystem psCombat;
+
     [Header("数据")]
     public MiniGameCharacterForDebateBean userGameData;
     public MiniGameCharacterForDebateBean enemyGameData;
@@ -151,7 +152,6 @@ public class UIMiniGameDebate : BaseUIComponent
             listEnemyDebate.Add(RandomUtil.GetRandomEnum<ItemMiniGameDebateCardCpt.DebateCardTypeEnun>());
         }
         CreateCardItemList(listUserDebate, listEnemyDebate);
-
     }
 
     /// <summary>
@@ -282,15 +282,42 @@ public class UIMiniGameDebate : BaseUIComponent
         if (objContainer == objUserDebateCardContainer)
         {
             cardItem.SetData(itemType, 1);
-            rtfItem.DOLocalMoveY(120, 1).From().SetEase(Ease.OutBack).SetDelay(position * 0.2f).OnStart(delegate () { cgItem.alpha = 1; }).OnComplete(delegate () { cardItem.OpenPointerListener(); });
-            //rtfItem.DOScale(new Vector3(0, 0, 0), 1).From().SetEase(Ease.OutBack).SetDelay(position * 0.1f);
+            rtfItem
+                .DOLocalMoveY(120, 1)
+                .From()
+                .SetEase(Ease.OutBack)
+                .SetDelay(position * 0.2f)
+                .OnStart(
+                    delegate () 
+                        {
+                            cgItem.alpha = 1;
+                            uiGameManager.audioHandler.PlaySound(AudioSoundEnum.GetCard);
+                        })
+                .OnComplete(
+                    delegate () 
+                        {
+                            cardItem.OpenPointerListener();
+                        });
             listUserCard.Add(cardItem);
         }
         else if (objContainer == objEnemyDebateCardContainer)
         {
             cardItem.SetData(itemType, 2);
-            rtfItem.DOLocalMoveY(120, 1).From().SetEase(Ease.OutBack).SetDelay(position * 0.2f).OnStart(delegate () { cgItem.alpha = 1; }).OnComplete(delegate () { cardItem.OpenPointerListener(); });
-            //rtfItem.DOScale(new Vector3(0, 0, 0), 1).From().SetEase(Ease.OutBack).SetDelay(position * 0.1f);
+            rtfItem
+                .DOLocalMoveY(120, 1)
+                .From()
+                .SetEase(Ease.OutBack)
+                .SetDelay(position * 0.2f)
+                .OnStart(
+                    delegate () 
+                        {
+                            cgItem.alpha = 1;
+                        })
+                .OnComplete(
+                    delegate () 
+                        {
+                            cardItem.OpenPointerListener();
+                        });
             listEnemyCard.Add(cardItem);
         }
         return objItem;
