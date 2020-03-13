@@ -3,7 +3,9 @@ using UnityEditor;
 
 public class MiniGameAccountMoneyCpt : BaseMonoBehaviour
 {
+    public ParticleSystem psMoney;
     public SpriteRenderer srMoney;
+    public SpriteRenderer srShadow;
     public Sprite spMoneyS;
     public Sprite spMoneyM;
     public Sprite spMoneyL;
@@ -19,15 +21,26 @@ public class MiniGameAccountMoneyCpt : BaseMonoBehaviour
         {
             case MoneyEnum.L:
                 srMoney.sprite = spMoneyL;
+                srShadow.sprite = spMoneyL;
                 break;
             case MoneyEnum.M:
                 srMoney.sprite = spMoneyM;
+                srShadow.sprite = spMoneyM;
                 break;
             case MoneyEnum.S:
                 srMoney.sprite = spMoneyS;
+                srShadow.sprite = spMoneyS;
                 break;
         }
         float scaleSize = money / 5f;
+        if (money >= 10)
+        {
+            psMoney.gameObject.SetActive(true);
+        }
+        else
+        {
+            psMoney.gameObject.SetActive(false);
+        }
         transform.localScale = new Vector3(1f + scaleSize, 1f + scaleSize,1f + scaleSize);
         transform.eulerAngles =new Vector3(0,0, Random.Range(0, 360));
     }

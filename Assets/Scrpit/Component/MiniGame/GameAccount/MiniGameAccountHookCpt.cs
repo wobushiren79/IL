@@ -5,12 +5,20 @@ public class MiniGameAccountHookCpt : BaseMonoBehaviour
 {
     public MiniGameAccountEjectorCpt ejectorCpt;
 
+    protected AudioHandler audioHandler;
+
+    private void Awake()
+    {
+        audioHandler = Find<AudioHandler>( ImportantTypeEnum.AudioHandler);
+    }
+
     private void OnTriggerEnter2D(Collider2D collision)
     {
         MiniGameAccountMoneyCpt money = collision.GetComponent<MiniGameAccountMoneyCpt>();
         //如果撞到钱了
         if (money)
         {
+            audioHandler.PlaySound(AudioSoundEnum.HitCoin);
             money.transform.SetParent(transform);
             ejectorCpt.Recycle();
             return;
@@ -20,6 +28,7 @@ public class MiniGameAccountHookCpt : BaseMonoBehaviour
         //如果撞到墙了
         if (wall)
         {
+            audioHandler.PlaySound(AudioSoundEnum.HitWall);
             ejectorCpt.Recycle();
         }
     }

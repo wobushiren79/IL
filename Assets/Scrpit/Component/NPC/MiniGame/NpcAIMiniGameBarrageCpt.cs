@@ -13,6 +13,9 @@ public class NpcAIMiniGameBarrageCpt : BaseNpcAI, SightForMiniGameBarrageCpt.ICa
 
     //弹幕游戏处理
     protected MiniGameBarrageHandler gameBarrageHandler;
+    //音效处理
+    protected AudioHandler audioHandler;
+
     //迷你游戏数据
     public MiniGameCharacterBean characterMiniGameData;
     //寻路AI
@@ -22,10 +25,12 @@ public class NpcAIMiniGameBarrageCpt : BaseNpcAI, SightForMiniGameBarrageCpt.ICa
     //视野
     public SightForMiniGameBarrageCpt sightForMiniGameBarrage;
 
+
     public override void Awake()
     {
         base.Awake();
         gameBarrageHandler = Find<MiniGameBarrageHandler>( ImportantTypeEnum.MiniGameHandler);
+        audioHandler = Find<AudioHandler>(ImportantTypeEnum.AudioHandler);
     }
 
     /// <summary>
@@ -53,6 +58,7 @@ public class NpcAIMiniGameBarrageCpt : BaseNpcAI, SightForMiniGameBarrageCpt.ICa
             || gameBarrageHandler == null
             || gameBarrageHandler.GetMiniGameStatus() != BaseMiniGameHandler<MiniGameBarrageBuilder,MiniGameBarrageBean>.MiniGameStatusEnum.Gameing)
             return;
+        audioHandler.PlaySound(AudioSoundEnum.Damage);
         characterMiniGameData.ChangeLife(-damage);
         psBlood.Play();
         //如果是控制的角色并且生命值

@@ -62,6 +62,7 @@ public class UITownGuildAchievement : UIBaseOne, IRadioGroupCallBack, Achievemen
     #region 类型选择回调
     public void RadioButtonSelected(RadioGroupView rgView, int position, RadioButtonView view)
     {
+        uiGameManager.audioHandler.PlaySound(AudioSoundEnum.ButtonForNormal);
         InitDataByType(position);
     }
 

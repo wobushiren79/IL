@@ -27,7 +27,11 @@ public class MiniGameAccountBean : MiniGameBaseBean
         base.InitData(gameItemsManager, userData);
         userData.GetAttributes(gameItemsManager,out CharacterAttributesBean attributesData);
         //设置游戏时间
-        winSurvivalTime = attributesData.account + 30;
+        winSurvivalTime = attributesData.account + winSurvivalTime;
+        if (winSurvivalTime < 30)
+        {
+            winSurvivalTime = 30;
+        }
         //当前时间
         currentTime = winSurvivalTime;
     }

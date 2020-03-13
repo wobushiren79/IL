@@ -74,55 +74,34 @@ public class MiniGameBaseBean
     /// 获取胜利条件列表
     /// </summary>
     /// <returns></returns>
-    public List<string> GetListWinConditions()
+    public virtual List<string> GetListWinConditions()
     {
         List<string> listWinConditions = new List<string>();
-        if (winSurvivalTime != 0)
+        switch (gameType)
         {
-            string winSurvivalTimeStr = string.Format(GameCommonInfo.GetUITextById(211), winSurvivalTime + GameCommonInfo.GetUITextById(39));
-            listWinConditions.Add(winSurvivalTimeStr);
+            case MiniGameEnum.Cooking:
+                GetListWinConditionsForWinScore(listWinConditions);
+                break;
+            case MiniGameEnum.Barrage:
+                GetListWinConditionsForWinSurvivalTime(listWinConditions);
+                GetListWinConditionsForWinLife(listWinConditions);
+                break;
+            case MiniGameEnum.Account:
+                GetListWinConditionsForWinSurvivalTime(listWinConditions);
+                GetListWinConditionsForWinMoney(listWinConditions);
+                GetListWinConditionsForWinBringDownNumber(listWinConditions);
+                break;
+            case MiniGameEnum.Debate:
+                GetListWinConditionsForWinLife(listWinConditions);
+                break;
+            case MiniGameEnum.Combat:
+                GetListWinConditionsForWinSurvivalNumber(listWinConditions);
+                break;
         }
-        if (winLife != 0)
-        {
-            string winLifeStr = string.Format(GameCommonInfo.GetUITextById(212), winLife + "");
-            listWinConditions.Add(winLifeStr);
-        }
-        if (winSurvivalNumber != 0)
-        {
-            string winSurvivalNumberStr = string.Format(GameCommonInfo.GetUITextById(213), winSurvivalNumber + "");
-            listWinConditions.Add(winSurvivalNumberStr);
-        }
-        if (winBringDownNumber != 0)
-        {
-            string winBringDownNumberStr = string.Format(GameCommonInfo.GetUITextById(214), winBringDownNumber + "");
-            listWinConditions.Add(winBringDownNumberStr);
-        }
-        if (winScore != 0)
-        {
-            string winScoreStr = string.Format(GameCommonInfo.GetUITextById(215), winScore + "");
-            listWinConditions.Add(winScoreStr);
-        }
-        if (winMoneyL != 0 || winMoneyM != 0 || winMoneyS != 0)
-        {
-            string moneyStr = "";
-            if (winMoneyL != 0)
-            {
-                moneyStr += winMoneyL + GameCommonInfo.GetUITextById(16);
-            }
-            if (winMoneyM != 0)
-            {
-                moneyStr += winMoneyM + GameCommonInfo.GetUITextById(17);
-            }
-            if (winMoneyS != 0)
-            {
-                moneyStr += winMoneyS + GameCommonInfo.GetUITextById(18);
-            }
-            string winMoneyStr = string.Format(GameCommonInfo.GetUITextById(216), moneyStr);
-            listWinConditions.Add(winMoneyStr);
-        }
-
         return listWinConditions;
     }
+
+
 
     /// <summary>
     /// 获取游戏名字
@@ -250,4 +229,69 @@ public class MiniGameBaseBean
             listEnemyData.Add(enemyData);
         InitData(gameItemsManager, listCharacterData, listEnemyData);
     }
+
+
+    #region 胜利列表
+    protected void GetListWinConditionsForWinSurvivalTime(List<string> listData)
+    {
+        if (winSurvivalTime != 0)
+        {
+            string data = string.Format(GameCommonInfo.GetUITextById(211), winSurvivalTime + GameCommonInfo.GetUITextById(39));
+            listData.Add(data);
+        }
+    }
+    protected void GetListWinConditionsForWinLife(List<string> listData)
+    {
+        if (winLife != 0)
+        {
+            string data = string.Format(GameCommonInfo.GetUITextById(212), winLife + "");
+            listData.Add(data);
+        }
+    }
+    protected void GetListWinConditionsForWinSurvivalNumber(List<string> listData)
+    {
+        if (winSurvivalNumber != 0)
+        {
+            string data = string.Format(GameCommonInfo.GetUITextById(213), winSurvivalNumber + "");
+            listData.Add(data);
+        }
+    }
+    protected void GetListWinConditionsForWinBringDownNumber(List<string> listData)
+    {
+        if (winBringDownNumber != 0)
+        {
+            string winBringDownNumberStr = string.Format(GameCommonInfo.GetUITextById(214), winBringDownNumber + "");
+            listData.Add(winBringDownNumberStr);
+        }
+    }
+    protected void GetListWinConditionsForWinScore(List<string> listData)
+    {
+        if (winScore != 0)
+        {
+            string data = string.Format(GameCommonInfo.GetUITextById(215), winScore + "");
+            listData.Add(data);
+        }
+    }
+    protected void GetListWinConditionsForWinMoney(List<string> listData)
+    {
+        if (winMoneyL != 0 || winMoneyM != 0 || winMoneyS != 0)
+        {
+            string moneyStr = "";
+            if (winMoneyL != 0)
+            {
+                moneyStr += winMoneyL + GameCommonInfo.GetUITextById(16);
+            }
+            if (winMoneyM != 0)
+            {
+                moneyStr += winMoneyM + GameCommonInfo.GetUITextById(17);
+            }
+            if (winMoneyS != 0)
+            {
+                moneyStr += winMoneyS + GameCommonInfo.GetUITextById(18);
+            }
+            string winMoneyStr = string.Format(GameCommonInfo.GetUITextById(216), moneyStr);
+            listData.Add(winMoneyStr);
+        }
+    }
+    #endregion
 }

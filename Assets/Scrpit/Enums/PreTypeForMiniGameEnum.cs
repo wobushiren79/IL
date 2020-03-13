@@ -12,20 +12,24 @@ public enum PreTypeForMiniGameEnum
     MiniGamePosition = 5,
     TalkMarkIdForWin = 6,
     TalkMarkIdForLose = 7,
-    GameReason=8,
+    GameReason = 8,
 
     WinSurvivalTime = 21,
     WinLife = 22,
 
-    BarrageForLaunchSpeed=101,
-    BarrageForLaunchTypes=102,
-    BarrageForLaunchInterval=103,
-    BarrageForLaunchNumber=104,
+    BarrageForLaunchSpeed = 101,
+    BarrageForLaunchTypes = 102,
+    BarrageForLaunchInterval = 103,
+    BarrageForLaunchNumber = 104,
+
+    AccountForWinMoneyL = 201,
+    AccountForWinMoneyM = 202,
+    AccountForWinMoneyS = 203,
 }
 
 public class PreTypeForMiniGameBean : DataBean<PreTypeForMiniGameEnum>
 {
-    public PreTypeForMiniGameBean():base(PreTypeForMiniGameEnum.MiniGameType,"")
+    public PreTypeForMiniGameBean() : base(PreTypeForMiniGameEnum.MiniGameType, "")
     {
     }
 }
@@ -142,6 +146,11 @@ public class PreTypeForMiniGameEnumTools : DataTools
                 case PreTypeForMiniGameEnum.BarrageForLaunchNumber:
                     GetMiniGameDataForBarrage(itemPreData, miniGameData);
                     break;
+                case PreTypeForMiniGameEnum.AccountForWinMoneyL:
+                case PreTypeForMiniGameEnum.AccountForWinMoneyM:
+                case PreTypeForMiniGameEnum.AccountForWinMoneyS:
+                    GetMiniGameDataForAccount(itemPreData, miniGameData);
+                    break;
             }
         }
         if (miniGameData == null)
@@ -161,7 +170,7 @@ public class PreTypeForMiniGameEnumTools : DataTools
     /// </summary>
     /// <param name="itemPreData"></param>
     /// <param name="miniGameData"></param>
-    private static void GetMiniGameDataForBarrage(PreTypeForMiniGameBean itemPreData ,MiniGameBaseBean miniGameData)
+    private static void GetMiniGameDataForBarrage(PreTypeForMiniGameBean itemPreData, MiniGameBaseBean miniGameData)
     {
         if (miniGameData.gameType != MiniGameEnum.Barrage)
             return;
@@ -169,17 +178,41 @@ public class PreTypeForMiniGameEnumTools : DataTools
         switch (itemPreData.dataType)
         {
             case PreTypeForMiniGameEnum.BarrageForLaunchInterval:
-                miniGameBarrage.launchInterval = float.Parse( itemPreData.data);
+                miniGameBarrage.launchInterval = float.Parse(itemPreData.data);
                 break;
             case PreTypeForMiniGameEnum.BarrageForLaunchSpeed:
                 miniGameBarrage.launchSpeed = float.Parse(itemPreData.data);
                 break;
             case PreTypeForMiniGameEnum.BarrageForLaunchTypes:
-                MiniGameBarrageEjectorCpt.LaunchTypeEnum[] launchTypes= StringUtil.SplitBySubstringForArrayEnum<MiniGameBarrageEjectorCpt.LaunchTypeEnum>(itemPreData.data,',');
+                MiniGameBarrageEjectorCpt.LaunchTypeEnum[] launchTypes = StringUtil.SplitBySubstringForArrayEnum<MiniGameBarrageEjectorCpt.LaunchTypeEnum>(itemPreData.data, ',');
                 miniGameBarrage.launchTypes = launchTypes;
                 break;
             case PreTypeForMiniGameEnum.BarrageForLaunchNumber:
                 miniGameBarrage.launchNumber = int.Parse(itemPreData.data);
+                break;
+        }
+    }
+
+    /// <summary>
+    /// 获取算账游戏游戏数据
+    /// </summary>
+    /// <param name="itemPreData"></param>
+    /// <param name="miniGameData"></param>
+    private static void GetMiniGameDataForAccount(PreTypeForMiniGameBean itemPreData, MiniGameBaseBean miniGameData)
+    {
+        if (miniGameData.gameType != MiniGameEnum.Account)
+            return;
+        MiniGameAccountBean miniGameAccount = (MiniGameAccountBean)miniGameData;
+        switch (itemPreData.dataType)
+        {
+            case PreTypeForMiniGameEnum.AccountForWinMoneyL:
+                miniGameData.winMoneyL = int.Parse(itemPreData.data);
+                break;
+            case PreTypeForMiniGameEnum.AccountForWinMoneyM:
+                miniGameData.winMoneyM = int.Parse(itemPreData.data);
+                break;
+            case PreTypeForMiniGameEnum.AccountForWinMoneyS:
+                miniGameData.winMoneyS = int.Parse(itemPreData.data);
                 break;
         }
     }

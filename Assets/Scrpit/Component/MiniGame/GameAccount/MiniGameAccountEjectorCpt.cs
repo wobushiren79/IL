@@ -13,6 +13,7 @@ public class MiniGameAccountEjectorCpt : MonoBehaviour
     private int mLaunchStatus = 0;//0等待发射，1发射中，2回收中
     private float mRotateSpeed = 45f;//每秒
     private float mLaunchSpeed = 5f;//每秒
+    private float mRecycleSpeed = 1f;//每秒
     private float mRotatingDirection = 1;
     public ICallBack mCallBack;
 
@@ -88,10 +89,17 @@ public class MiniGameAccountEjectorCpt : MonoBehaviour
     public void Recycle()
     {
         mLaunchStatus = 2;
-        srHook.transform.DOLocalMove(new Vector3(0, 0, 0), 3).OnComplete(delegate ()
-        {
-            Settlement();
-        });
+        //计算回收距离
+        float distance = Vector3.Distance(srHook.transform.position,transform.position);
+        LogUtil.Log("distance:"+distance);
+        srHook.transform
+            .DOLocalMove(new Vector3(0, 0, 0), distance / mRecycleSpeed)
+            .SetEase(Ease.Linear)
+            .OnComplete(
+            delegate ()
+                {
+                    Settlement();
+                });
     }
 
     /// <summary>

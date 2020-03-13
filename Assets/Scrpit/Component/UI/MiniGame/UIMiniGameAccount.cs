@@ -4,7 +4,7 @@ using DG.Tweening;
 using UnityEngine.UI;
 using System;
 
-public class UIMiniGameAccount : BaseUIComponent
+public class UIMiniGameAccount : UIGameComponent
 {
     public GameObject objMoneyL;
     public Text tvMoneyL;
@@ -173,6 +173,7 @@ public class UIMiniGameAccount : BaseUIComponent
                 tvMoney = tvMoneyS;
                 break;
         }
+        uiGameManager.audioHandler.PlaySound(AudioSoundEnum.PayMoney);
         tvMoney.transform.DOKill();
         tvMoney.transform.localScale = new Vector3(1,1,1);
         tvMoney.transform.DOPunchScale(new Vector3(1.5f, 1.5f, 1.5f),0.2f);

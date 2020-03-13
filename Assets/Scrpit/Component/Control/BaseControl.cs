@@ -91,7 +91,9 @@ public class BaseControl : BaseMonoBehaviour
     public void SetCameraPosition(Vector2 position)
     {
         if (camera2D != null)
-            camera2D.transform.position = position;
+        {
+            camera2D.transform.position = new Vector3(position.x, position.y, camera2D.transform.position.z);
+        }   
 ;    }
 
     /// <summary>

@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using System.Collections;
 using DG.Tweening;
 
-public class UIMiniGameCountDown : BaseUIComponent
+public class UIMiniGameCountDown : UIGameComponent
 {
     public GameObject objTarget;
     public GameObject objCountDown;
@@ -28,8 +28,8 @@ public class UIMiniGameCountDown : BaseUIComponent
     public override void OpenUI()
     {
         base.OpenUI();
-        if (GetUIManager<UIGameManager>().controlHandler != null)
-            GetUIManager<UIGameManager>().controlHandler.StopControl();
+        if (uiGameManager.controlHandler != null)
+            uiGameManager.controlHandler.StopControl();
     }
 
     /// <summary>
@@ -114,6 +114,14 @@ public class UIMiniGameCountDown : BaseUIComponent
             tvCountDown.text = numberStr;
             tvCountDown.transform.localScale = new Vector3(1, 1, 1);
             tvCountDown.transform.DOScale(new Vector3(0.2f, 0.2f, 0.2f), 0.5f).From().SetEase(Ease.OutBack);
+            if (i == 3)
+            {
+                uiGameManager.audioHandler.PlaySound(AudioSoundEnum.CountDownEnd);
+            }
+            else
+            {
+                uiGameManager.audioHandler.PlaySound(AudioSoundEnum.CountDownStart);
+            }
             yield return new WaitForSeconds(1.3f);
         }
         if (mCallBack != null)

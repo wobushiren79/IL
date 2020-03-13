@@ -152,6 +152,7 @@ public class ItemTownGuildImproveInnLevelCpt : BaseMonoBehaviour,DialogView.IDia
     /// </summary>
     public void OnClickSubmit()
     {
+        uiGameManager.audioHandler.PlaySound(AudioSoundEnum.ButtonForNormal);
         if (isAllPre)
         {
             //前置如果有需要临时支付的条件

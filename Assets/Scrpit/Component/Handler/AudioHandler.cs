@@ -44,6 +44,21 @@ public class AudioHandler : BaseHandler
             case AudioSoundEnum.Thunderstorm:
                 audioClip = audioManager.GetSoundClip("sound_thunderstorm_1");
                 break;
+            case AudioSoundEnum.Damage:
+                audioClip = audioManager.GetSoundClip("sound_damage_1");
+                break;
+            case AudioSoundEnum.CountDownStart:
+                audioClip = audioManager.GetSoundClip("sound_countdown_2");
+                break;
+            case AudioSoundEnum.CountDownEnd:
+                audioClip = audioManager.GetSoundClip("sound_countdown_1");
+                break;
+            case AudioSoundEnum.HitWall:
+                audioClip = audioManager.GetSoundClip("sound_hit_1");
+                break;
+            case AudioSoundEnum.HitCoin:
+                audioClip = audioManager.GetSoundClip("sound_hit_2");
+                break;
         }
         if (audioClip != null)
             audioSourceForMusic.PlayOneShot(audioClip, volumeScale);

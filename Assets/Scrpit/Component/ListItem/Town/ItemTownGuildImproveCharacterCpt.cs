@@ -44,6 +44,28 @@ public class ItemTownGuildImproveCharacterCpt : ItemGameBaseCpt, DialogView.IDia
     public CharacterBean characterData;
     public WorkerEnum workerType;
 
+    protected UIGameManager uiGameManager;
+    protected GameItemsManager gameItemsManager;
+    protected NpcInfoManager npcInfoManager;
+    protected GameDataManager gameDataManager;
+    protected GameTimeHandler gameTimeHandler;
+    protected DialogManager dialogManager;
+    protected ToastManager toastManager;
+    protected ControlHandler controlHandler;
+    protected CharacterBodyManager characterBodyManager;
+    private void Awake()
+    {
+        uiGameManager = GetUIManager<UIGameManager>();
+        gameItemsManager = uiGameManager.gameItemsManager;
+        npcInfoManager = uiGameManager.npcInfoManager;
+        gameDataManager = uiGameManager.gameDataManager;
+        gameTimeHandler = uiGameManager.gameTimeHandler;
+        dialogManager = uiGameManager.dialogManager;
+        toastManager = uiGameManager.toastManager;
+        controlHandler = uiGameManager.controlHandler;
+        characterBodyManager = uiGameManager.characterBodyManager;
+    }
+
     private void Start()
     {
         if (btSubmit != null)
@@ -235,13 +257,10 @@ public class ItemTownGuildImproveCharacterCpt : ItemGameBaseCpt, DialogView.IDia
     /// </summary>
     public void ImproveCheck()
     {
-        GameDataManager gameDataManager = GetUIManager<UIGameManager>().gameDataManager;
-        GameTimeHandler gameTimeHandler = GetUIManager<UIGameManager>().gameTimeHandler;
-        DialogManager dialogManager = GetUIManager<UIGameManager>().dialogManager;
+        uiGameManager.audioHandler.PlaySound(AudioSoundEnum.ButtonForNormal);
         //判断是否有足够的金钱
         if (!gameDataManager.gameData.HasEnoughMoney(levelData.price_l, levelData.price_m, levelData.price_s))
         {
-            ToastManager toastManager = GetUIManager<UIGameManager>().toastManager;
             toastManager.ToastHint(GameCommonInfo.GetUITextById(1005));
             return;
         }
@@ -249,7 +268,6 @@ public class ItemTownGuildImproveCharacterCpt : ItemGameBaseCpt, DialogView.IDia
         gameTimeHandler.GetTime(out float hour, out float min);
         if (hour >= 18 && hour < 6)
         {
-            ToastManager toastManager = GetUIManager<UIGameManager>().toastManager;
             toastManager.ToastHint(GameCommonInfo.GetUITextById(1031));
             return;
         }
@@ -263,12 +281,8 @@ public class ItemTownGuildImproveCharacterCpt : ItemGameBaseCpt, DialogView.IDia
     #region 弹窗回调
     public void Submit(DialogView dialogView, DialogBean dialogBean)
     {
-        GameDataManager gameDataManager = GetUIManager<UIGameManager>().gameDataManager;
-        ControlHandler controlHandler = GetUIManager<UIGameManager>().controlHandler;
         //支付金钱
         gameDataManager.gameData.PayMoney(levelData.price_l, levelData.price_m, levelData.price_s);
-
-
         //判断玩哪个游戏
         MiniGameBaseBean miniGameData = null;
         switch (workerType)
@@ -281,6 +295,7 @@ public class ItemTownGuildImproveCharacterCpt : ItemGameBaseCpt, DialogView.IDia
                 miniGameData = InitWaiterGame();
                 break;
             case WorkerEnum.Accountant:
+                //设置算账游戏
                 miniGameData = InitAccountantGame();
                 break;
             case WorkerEnum.Accost:
@@ -306,8 +321,6 @@ public class ItemTownGuildImproveCharacterCpt : ItemGameBaseCpt, DialogView.IDia
     /// </summary>
     private MiniGameBaseBean InitBeaterGame()
     {
-        GameItemsManager gameItemsManager = GetUIManager<UIGameManager>().gameItemsManager;
-        NpcInfoManager npcInfoManager = GetUIManager<UIGameManager>().npcInfoManager;
         MiniGameBaseBean miniGameData = MiniGameEnumTools.GetMiniGameData(MiniGameEnum.Combat);
         miniGameData.winBringDownNumber = 1;
         miniGameData.winSurvivalNumber = 1;
@@ -321,8 +334,6 @@ public class ItemTownGuildImproveCharacterCpt : ItemGameBaseCpt, DialogView.IDia
     /// </summary>
     private MiniGameBaseBean InitAccostGame()
     {
-        GameItemsManager gameItemsManager = GetUIManager<UIGameManager>().gameItemsManager;
-        NpcInfoManager npcInfoManager = GetUIManager<UIGameManager>().npcInfoManager;
         MiniGameBaseBean miniGameData = MiniGameEnumTools.GetMiniGameData(MiniGameEnum.Debate);
         miniGameData.winLife = 1;
         CharacterBean enemyData = npcInfoManager.GetCharacterDataById(110111);
@@ -330,29 +341,13 @@ public class ItemTownGuildImproveCharacterCpt : ItemGameBaseCpt, DialogView.IDia
         return miniGameData;
     }
 
-    /// <summary>
-    /// 初始化计算考试
-    /// </summary>
-    private MiniGameBaseBean InitAccountantGame()
-    {
-        GameItemsManager gameItemsManager = GetUIManager<UIGameManager>().gameItemsManager;
-        NpcInfoManager npcInfoManager = GetUIManager<UIGameManager>().npcInfoManager;
-        MiniGameBaseBean miniGameData = MiniGameEnumTools.GetMiniGameData(MiniGameEnum.Account);
-        miniGameData.winMoneyL = 0;
-        miniGameData.winMoneyM = 1;
-        miniGameData.winMoneyS = 10;
-        miniGameData.InitData(gameItemsManager, characterData);
-        return miniGameData;
-    }
+
 
     /// <summary>
     /// 初始化厨师考试
     /// </summary>
     private MiniGameBaseBean InitChefGame()
     {
-        GameItemsManager gameItemsManager = GetUIManager<UIGameManager>().gameItemsManager;
-        CharacterBodyManager characterBodyManager = GetUIManager<UIGameManager>().characterBodyManager;
-        NpcInfoManager npcInfoManager = GetUIManager<UIGameManager>().npcInfoManager;
         MiniGameBaseBean miniGameData = MiniGameEnumTools.GetMiniGameData(MiniGameEnum.Cooking);
         miniGameData.winScore = 60;
         ((MiniGameCookingBean)miniGameData).storyGameOpenId = 30000001;
@@ -386,11 +381,19 @@ public class ItemTownGuildImproveCharacterCpt : ItemGameBaseCpt, DialogView.IDia
     /// </summary>
     private MiniGameBaseBean InitWaiterGame()
     {
-        GameItemsManager gameItemsManager = GetUIManager<UIGameManager>().gameItemsManager;
-        NpcInfoManager npcInfoManager = GetUIManager<UIGameManager>().npcInfoManager;
-
         MiniGameBaseBean miniGameData = MiniGameEnumTools.GetMiniGameData(MiniGameEnum.Barrage);
-        miniGameData = PreTypeForMiniGameEnumTools.GetMiniGameData(miniGameData,levelData.pre_data_minigame,gameItemsManager,npcInfoManager);
+        miniGameData = PreTypeForMiniGameEnumTools.GetMiniGameData(miniGameData, levelData.pre_data_minigame, gameItemsManager, npcInfoManager);
+        miniGameData.InitData(gameItemsManager, characterData);
+        return miniGameData;
+    }
+
+    /// <summary>
+    /// 初始化计算考试
+    /// </summary>
+    private MiniGameBaseBean InitAccountantGame()
+    {
+        MiniGameBaseBean miniGameData = MiniGameEnumTools.GetMiniGameData(MiniGameEnum.Account);
+        miniGameData = PreTypeForMiniGameEnumTools.GetMiniGameData(miniGameData, levelData.pre_data_minigame, gameItemsManager, npcInfoManager);
         miniGameData.InitData(gameItemsManager, characterData);
         return miniGameData;
     }
