@@ -57,7 +57,11 @@ public class AudioHandler : BaseHandler
                 audioClip = audioManager.GetSoundClip("sound_hit_1");
                 break;
             case AudioSoundEnum.HitCoin:
-                audioClip = audioManager.GetSoundClip("sound_hit_2");
+               // audioClip = audioManager.GetSoundClip("sound_hit_2");
+                audioClip = audioManager.GetSoundClip("sound_pay_3");
+                break;
+            case AudioSoundEnum.Shot:
+                audioClip = audioManager.GetSoundClip("sound_shot_1");
                 break;
         }
         if (audioClip != null)

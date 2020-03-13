@@ -3,6 +3,13 @@ using UnityEditor;
 
 public class MiniGameBarrageEjectorCpt : BaseMonoBehaviour
 {
+    protected AudioHandler audioHandler;
+
+    private void Awake()
+    {
+        audioHandler = Find<AudioHandler>(ImportantTypeEnum.AudioHandler);
+    }
+
     /// <summary>
     /// 发射类型
     /// </summary>
@@ -39,6 +46,7 @@ public class MiniGameBarrageEjectorCpt : BaseMonoBehaviour
     /// <param name="launchType"></param>
     public void StartLaunch(LaunchTypeEnum launchType, Vector3 targetPositon, float launchSpeed)
     {
+        audioHandler.PlaySound(AudioSoundEnum.Shot);
         animEjector.SetTrigger("Launch");
         switch (launchType)
         {

@@ -11,6 +11,7 @@ public enum AudioSoundEnum
     Reward = 20,//奖励音效
     HitWall=30,//撞墙
     HitCoin=40,//撞金
+    Shot=50,//发射
 
     Thunderstorm = 101,//打雷音效
 

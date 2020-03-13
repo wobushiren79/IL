@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
 [ExecuteInEditMode]
-public class MiniGameAccountEjectorCpt : MonoBehaviour
+public class MiniGameAccountEjectorCpt : BaseMonoBehaviour
 {
     public SpriteRenderer srHook;
     public SpriteRenderer srHookPlatform;
@@ -16,6 +16,13 @@ public class MiniGameAccountEjectorCpt : MonoBehaviour
     private float mRecycleSpeed = 1f;//每秒
     private float mRotatingDirection = 1;
     public ICallBack mCallBack;
+
+    protected AudioHandler audioHandler;
+
+    protected void Awake()
+    {
+        audioHandler = Find<AudioHandler>( ImportantTypeEnum.AudioHandler);
+    }
 
     public void SetCallBack(ICallBack mCallBack)
     {
@@ -81,6 +88,7 @@ public class MiniGameAccountEjectorCpt : MonoBehaviour
         //停止旋转
         StopRotate();
         mLaunchStatus = 1;
+        audioHandler.PlaySound( AudioSoundEnum.Shot);
     }
 
     /// <summary>

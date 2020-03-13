@@ -162,7 +162,7 @@ public class CharacterMoveCpt : BaseMonoBehaviour
 
         //Vector2 lerpPosition = Vector3.Lerp(Vector2.zero, new Vector2(x, y), lerpOffset);
         // transform.Translate(movePosition * moveSpeed * Time.deltaTime);
-        Vector3 movePosition = objMove.transform.position + new Vector3(x, y) * moveSpeed * Time.deltaTime;
+        Vector3 movePosition = objMove.transform.position + new Vector3(x * moveSpeed * Time.deltaTime, y * moveSpeed * Time.deltaTime) ;
         characterRigidbody.MovePosition(movePosition);
         BoundaryMove();
 
