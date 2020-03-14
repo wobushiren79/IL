@@ -66,6 +66,18 @@ public class AudioHandler : BaseHandler
             case AudioSoundEnum.GetCard:
                 audioClip = audioManager.GetSoundClip("sound_card_1");
                 break;
+            case AudioSoundEnum.SetCard:
+                audioClip = audioManager.GetSoundClip("sound_btn_3");
+                break;
+            case AudioSoundEnum.CardDraw:
+                audioClip = audioManager.GetSoundClip("sound_btn_5");
+                break;
+            case AudioSoundEnum.CardWin:
+                audioClip = audioManager.GetSoundClip("sound_btn_7");
+                break;
+            case AudioSoundEnum.CardLose:
+                audioClip = audioManager.GetSoundClip("sound_hit_1");
+                break;
         }
         if (audioClip != null)
             audioSourceForMusic.PlayOneShot(audioClip, volumeScale);

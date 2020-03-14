@@ -81,8 +81,6 @@ public class BaseMiniGameHandler<B, D> : BaseHandler, UIMiniGameCountDown.ICallB
         NotifyAllObserver((int)MiniGameStatusEnum.Gameing, miniGameData);
     }
 
-
-
     /// <summary>
     /// 游戏结束
     /// </summary>

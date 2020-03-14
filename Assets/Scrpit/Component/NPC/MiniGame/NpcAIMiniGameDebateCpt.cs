@@ -25,9 +25,7 @@ public class NpcAIMiniGameDebateCpt : BaseNpcAI
     {
         characterMiniGameData.ChangeLife(-damage);
 
-        TextMesh tvItem = ShowTextInfo("-" + damage);
-        tvItem.characterSize = 0.15f;
-        tvItem.color = Color.red;
+        ShowTextInfo("-" + damage);
         //流血特效
         if (damage != 0)
         {
@@ -46,18 +44,11 @@ public class NpcAIMiniGameDebateCpt : BaseNpcAI
     /// </summary>
     /// <param name="text"></param>
     /// <returns></returns>
-    public TextMesh ShowTextInfo(string text)
+    public GameObject ShowTextInfo(string text)
     {
         GameObject objItemDamage = Instantiate(gameObject, objDamageModel);
-        TextMesh tvItem = objItemDamage.GetComponentInChildren<TextMesh>();
-        tvItem.text = text + "";
-        //数字特效
-        objItemDamage.transform.DOScale(new Vector3(0, 0, 0), 1f).From().SetEase(Ease.OutElastic);
-        objItemDamage.transform.DOLocalMoveY(1.5f, 2.5f).OnComplete(delegate ()
-        {
-            Destroy(objItemDamage);
-        });
-        DOTween.To(() => 1f, alpha => tvItem.color = new Color(tvItem.color.r, tvItem.color.g, tvItem.color.b, alpha), 0f, 1).SetDelay(4);
-        return tvItem;
+        JumpTextCpt jumpText = objItemDamage.GetComponent<JumpTextCpt>();
+        jumpText.SetData(text, Color.red);
+        return objItemDamage;
     }
 }

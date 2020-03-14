@@ -78,4 +78,13 @@ public class MiniGameCookingBean : MiniGameBaseBean
             }
         }
     }
+
+    /// <summary>
+    /// 获取玩家数据
+    /// </summary>
+    /// <returns></returns>
+    public MiniGameCharacterForCookingBean GetUserGameData()
+    {
+        return (MiniGameCharacterForCookingBean)listUserGameData[0];
+    }
 }

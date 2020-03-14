@@ -25,6 +25,8 @@ public enum PreTypeForMiniGameEnum
     AccountForWinMoneyL = 201,
     AccountForWinMoneyM = 202,
     AccountForWinMoneyS = 203,
+
+    
 }
 
 public class PreTypeForMiniGameBean : DataBean<PreTypeForMiniGameEnum>
@@ -88,9 +90,12 @@ public class PreTypeForMiniGameEnumTools : DataTools
     /// </summary>
     public static MiniGameBaseBean GetMiniGameData(MiniGameBaseBean miniGameData, string data, GameItemsManager gameItemsManager, NpcInfoManager npcInfoManager)
     {
-        return GetMiniGameData(miniGameData, data, null, gameItemsManager, npcInfoManager);
+        return GetMiniGameData(miniGameData, data, new List<CharacterBean> { }, gameItemsManager, npcInfoManager);
     }
-
+    public static MiniGameBaseBean GetMiniGameData(MiniGameBaseBean miniGameData, string data, CharacterBean userCharacter, GameItemsManager gameItemsManager, NpcInfoManager npcInfoManager)
+    {
+        return GetMiniGameData(miniGameData, data, new List<CharacterBean> { userCharacter }, gameItemsManager, npcInfoManager);
+    }
     public static MiniGameBaseBean GetMiniGameData(MiniGameBaseBean miniGameData, string data, List<CharacterBean> listPickCharacter, GameItemsManager gameItemsManager, NpcInfoManager npcInfoManager)
     {
         List<PreTypeForMiniGameBean> listPreData = GetListPreData(data);

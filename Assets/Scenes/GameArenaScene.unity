@@ -98,7 +98,7 @@ LightmapSettings:
     m_TrainingDataDestination: TrainingData
     m_LightProbeSampleCountMultiplier: 4
   m_LightingDataAsset: {fileID: 0}
-  m_UseShadowmask: 0
+  m_UseShadowmask: 1
 --- !u!196 &4
 NavMeshSettings:
   serializedVersion: 2
@@ -3993,6 +3993,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   miniGameBuilder: {fileID: 0}
   gameItemsManager: {fileID: 1057893566}
+  preCombatTime: 0.5
+  combatTime: 1
+  uiMiniGameDebate: {fileID: 0}
 --- !u!114 &464746865
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -31286,6 +31289,11 @@ PrefabInstance:
       propertyPath: characterBodyManager
       value: 
       objectReference: {fileID: 1881033343}
+    - target: {fileID: 5375425941931898310, guid: cddcf600d59224246b6c7c7982bbdc16,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5892917632098135984, guid: cddcf600d59224246b6c7c7982bbdc16,
         type: 3}
       propertyPath: m_LocalPosition.x

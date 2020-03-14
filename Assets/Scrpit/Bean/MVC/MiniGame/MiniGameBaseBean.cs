@@ -44,7 +44,7 @@ public class MiniGameBaseBean
     /// 获取友方数据
     /// </summary>
     /// <returns></returns>
-    public List<MiniGameCharacterBean> GetUserGameData()
+    public virtual List<MiniGameCharacterBean> GetListUserGameData()
     {
         return listUserGameData;
     }
@@ -53,7 +53,7 @@ public class MiniGameBaseBean
     /// 获取敌人数据
     /// </summary>
     /// <returns></returns>
-    public List<MiniGameCharacterBean> GetEnemyGameData()
+    public virtual List<MiniGameCharacterBean> GetListEnemyGameData()
     {
         return listEnemyGameData;
     }

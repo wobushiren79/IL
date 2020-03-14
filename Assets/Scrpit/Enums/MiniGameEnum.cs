@@ -22,20 +22,20 @@ public class MiniGameEnumTools
         MiniGameBaseBean miniGameData = null;
         switch (miniGameType)
         {
-            case MiniGameEnum.Account:
-                miniGameData = new MiniGameAccountBean();
-                break;
             case MiniGameEnum.Cooking:
                 miniGameData = new MiniGameCookingBean();
-                break;
-            case MiniGameEnum.Combat:
-                miniGameData = new MiniGameCombatBean();
                 break;
             case MiniGameEnum.Barrage:
                 miniGameData = new MiniGameBarrageBean();
                 break;
+            case MiniGameEnum.Account:
+                miniGameData = new MiniGameAccountBean();
+                break;
             case MiniGameEnum.Debate:
                 miniGameData = new MiniGameDebateBean();
+                break;
+            case MiniGameEnum.Combat:
+                miniGameData = new MiniGameCombatBean();
                 break;
         }
         return miniGameData;

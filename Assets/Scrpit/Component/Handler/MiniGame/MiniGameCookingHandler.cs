@@ -378,8 +378,7 @@ public class MiniGameCookingHandler : BaseMiniGameHandler<MiniGameCookingBuilder
         //如果是晋升则按照分数计算是否胜利
         if(miniGameData.gameReason== MiniGameReasonEnum.Improve)
         {
-            List<MiniGameCharacterBean> listCharacterGameData = miniGameData.GetUserGameData();
-            MiniGameCharacterForCookingBean characterMiniGameData = (MiniGameCharacterForCookingBean)listCharacterGameData[0];
+            MiniGameCharacterForCookingBean characterMiniGameData = miniGameData.GetUserGameData();
             if (characterMiniGameData.scoreForTotal >= miniGameData.winScore)
             {
                 EndGame(true, false);

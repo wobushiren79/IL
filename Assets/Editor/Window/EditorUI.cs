@@ -205,8 +205,8 @@ public class EditorUI
         GUILayout.Label("运：", GUILayout.Width(30), GUILayout.Height(20));
         npcInfo.attributes_lucky = int.Parse(EditorGUILayout.TextArea(npcInfo.attributes_lucky + "", GUILayout.Width(50), GUILayout.Height(20)));
 
-        GUILayout.Label("喜欢的菜品：", GUILayout.Width(30), GUILayout.Height(20));
-        npcInfo.attributes_life = int.Parse(EditorGUILayout.TextArea(npcInfo.attributes_life + "", GUILayout.Width(50), GUILayout.Height(20)));
+        GUILayout.Label("喜欢的菜品：", GUILayout.Width(100), GUILayout.Height(20));
+        npcInfo.love_menus = EditorGUILayout.TextArea(npcInfo.love_menus + "", GUILayout.Width(50), GUILayout.Height(20));
 
         npcInfo.condition = GUIListData<ShowConditionEnum>("Npc出现条件", npcInfo.condition);
         GUILayout.EndHorizontal();

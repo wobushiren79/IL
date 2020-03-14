@@ -10,6 +10,9 @@ public class MiniGameDebateBuilder : BaseMiniGameBuilder
     //角色模型
     public GameObject objCharacterModel;
 
+    //攻击特效
+    public GameObject objCombatEffect;
+
     public NpcAIMiniGameDebateCpt aiUserCharacter;
     public NpcAIMiniGameDebateCpt aiEnemyCharacter;
 
@@ -29,6 +32,17 @@ public class MiniGameDebateBuilder : BaseMiniGameBuilder
     public NpcAIMiniGameDebateCpt GetEnemyCharacter()
     {
         return aiEnemyCharacter;
+    }
+   
+    /// <summary>
+    /// 创建攻击特效
+    /// </summary>
+    /// <param name="position"></param>
+    /// <returns></returns>
+    public GameObject CreateCombatEffect(Vector3 position)
+    {
+        GameObject objCharacter = Instantiate(objCharacterContainer, objCombatEffect, position);
+        return objCharacter;
     }
 
     /// <summary>
@@ -78,4 +92,6 @@ public class MiniGameDebateBuilder : BaseMiniGameBuilder
         npcCpt.SetData(miniGameCharacterData);
         return npcCpt;
     }
+
+
 }

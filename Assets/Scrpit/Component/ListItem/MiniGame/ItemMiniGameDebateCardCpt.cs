@@ -4,13 +4,13 @@ using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using DG.Tweening;
 
-public class ItemMiniGameDebateCardCpt : ItemGameBaseCpt, IPointerEnterHandler,IPointerExitHandler,IPointerClickHandler
+public class ItemMiniGameDebateCardCpt : ItemGameBaseCpt, IPointerEnterHandler, IPointerExitHandler, IPointerClickHandler
 {
     public enum DebateCardTypeEnun
     {
-        Rock=1,//石头
-        Scissors=2,//剪刀
-        Paper=3,//布
+        Rock = 1,//石头
+        Scissors = 2,//剪刀
+        Paper = 3,//布
     }
 
     [Header("控件")]
@@ -26,11 +26,18 @@ public class ItemMiniGameDebateCardCpt : ItemGameBaseCpt, IPointerEnterHandler,I
     public int ownType;//拥有着类型。1 玩家 2敌人
     public bool isOpenPointer = false;
 
+
+    protected MiniGameDebateHandler debateHandler;
+    private void Start()
+    {
+        debateHandler = Find<MiniGameDebateHandler>(ImportantTypeEnum.MiniGameHandler);
+    }
+
     /// <summary>
     /// 设置数据
     /// </summary>
     /// <param name="cardType"></param>
-    public void SetData(DebateCardTypeEnun cardType,int ownType)
+    public void SetData(DebateCardTypeEnun cardType, int ownType)
     {
         this.debateCardType = cardType;
         this.ownType = ownType;
@@ -93,7 +100,7 @@ public class ItemMiniGameDebateCardCpt : ItemGameBaseCpt, IPointerEnterHandler,I
     {
         if (!isOpenPointer)
             return;
-        transform.DOScale(new Vector3(1.2f,1.2f,1.2f),0.5f).SetLoops(-1,LoopType.Yoyo);
+        transform.DOScale(new Vector3(1.2f, 1.2f, 1.2f), 0.5f).SetLoops(-1, LoopType.Yoyo);
     }
 
     public void OnPointerExit(PointerEventData eventData)
@@ -106,15 +113,14 @@ public class ItemMiniGameDebateCardCpt : ItemGameBaseCpt, IPointerEnterHandler,I
 
     public void OnPointerClick(PointerEventData eventData)
     {
-        UIMiniGameDebate uIMiniGameDebate = ((UIMiniGameDebate)uiComponent);
-        if (!isOpenPointer|| uIMiniGameDebate.isCombat)
+        if (!isOpenPointer)
             return;
-        if (ownType==1)
+        if (ownType == 1)
         {
-            uiComponent.GetUIManager<UIGameManager>().audioHandler.PlaySound(AudioSoundEnum.ButtonForNormal);
+            uiComponent.GetUIManager<UIGameManager>().audioHandler.PlaySound(AudioSoundEnum.SetCard);
             transform.DOKill();
             transform.localScale = new Vector3(1, 1, 1);
-            uIMiniGameDebate.SelectCard(this);
+            debateHandler.StartCombat(this);
         }
     }
 }

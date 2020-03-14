@@ -3,7 +3,7 @@ using UnityEditor;
 using UnityEngine.UI;
 using System.Collections;
 using DG.Tweening;
-public class UIMiniGameBarrage : UIBaseMiniGame
+public class UIMiniGameBarrage : UIBaseMiniGame<MiniGameBarrageBean>
 {
     //血条
     public Slider sliderLife;
@@ -15,10 +15,9 @@ public class UIMiniGameBarrage : UIBaseMiniGame
     private void Update()
     {
         //更新血量
-        if (gameData != null)
+        if (miniGameData != null)
         {
-            MiniGameBarrageBean barrageData = ((MiniGameBarrageBean)gameData);
-            MiniGameCharacterBean userGameData = barrageData.listUserGameData[0];
+            MiniGameCharacterForBarrageBean userGameData = miniGameData.GetUserGameData();
             SetUserLife(userGameData.characterMaxLife, userGameData.characterCurrentLife);
         }
     }
@@ -27,10 +26,10 @@ public class UIMiniGameBarrage : UIBaseMiniGame
     /// 设置数据
     /// </summary>
     /// <param name="barrageData"></param>
-    public void SetData(MiniGameBarrageBean barrageData)
+    public override void SetData(MiniGameBarrageBean barrageData)
     {
-        gameData = barrageData;
-        MiniGameCharacterBean userGameData = barrageData.listUserGameData[0];
+        base.SetData(barrageData);
+        MiniGameCharacterForBarrageBean userGameData = miniGameData.GetUserGameData();
         SetUserLife(userGameData.characterMaxLife, userGameData.characterCurrentLife);
     }
 

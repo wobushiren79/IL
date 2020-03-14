@@ -1,8 +1,18 @@
 ﻿using UnityEngine;
 using UnityEditor;
 
-public class UIBaseMiniGame : BaseUIComponent
+public class UIBaseMiniGame<T> : UIGameComponent where T: MiniGameBaseBean
 {
     //游戏数据
-    public MiniGameBaseBean gameData;
+    public T miniGameData;
+
+    /// <summary>
+    /// 设置数据
+    /// </summary>
+    /// <param name="gameData"></param>
+    public virtual void SetData(T gameData)
+    {
+        this.miniGameData = gameData;
+        RefreshUI();
+    }
 }

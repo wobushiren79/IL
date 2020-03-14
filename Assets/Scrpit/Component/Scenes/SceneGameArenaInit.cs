@@ -63,10 +63,10 @@ public class SceneGameArenaInit : BaseSceneInit, IBaseObserver
 
         ArenaPrepareBean arenaPrepareData = GameCommonInfo.ArenaPrepareData;
         //测试数据 
-        arenaPrepareData = new ArenaPrepareBean(new MiniGameDebateBean());
-        arenaPrepareData.miniGameData.gameType = MiniGameEnum.Debate;
-        arenaPrepareData.miniGameData.InitData(gameItemsManager, npcInfoManager.GetCharacterDataById(100011), npcInfoManager.GetCharacterDataById(100021));
-        arenaPrepareData.miniGameData.winLife = 1;
+        //arenaPrepareData = new ArenaPrepareBean(new MiniGameDebateBean());
+        //arenaPrepareData.miniGameData.gameType = MiniGameEnum.Debate;
+        //arenaPrepareData.miniGameData.InitData(gameItemsManager, npcInfoManager.GetCharacterDataById(100011), npcInfoManager.GetCharacterDataById(100021));
+        //arenaPrepareData.miniGameData.winLife = 1;
 
         //arenaPrepareData.gameType = MiniGameEnum.Account;
         //arenaPrepareData.gameAccountData = new MiniGameAccountBean();

@@ -28,6 +28,11 @@ public class MiniGameBarrageBean : MiniGameBaseBean
         gameType = MiniGameEnum.Barrage;
     }
 
+    public MiniGameCharacterForBarrageBean GetUserGameData()
+    {
+        return (MiniGameCharacterForBarrageBean)listUserGameData[0];
+    }
+
     public override void InitData(GameItemsManager gameItemsManager, List<CharacterBean> listUserData, List<CharacterBean> listEnemyData)
     {
         base.InitData(gameItemsManager, listUserData, listEnemyData);

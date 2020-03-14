@@ -340,6 +340,7 @@ MonoBehaviour:
   uiManager: {fileID: 0}
   uiAnimator: {fileID: 0}
   remarkData: 
+  uiGameManager: {fileID: 0}
   characterUser: {fileID: 7963210721778824843}
   characterEnemy: {fileID: 7220807646978776836}
   tvUserName: {fileID: 567755848502880444}
@@ -357,9 +358,6 @@ MonoBehaviour:
   objCombatUserEndPosition: {fileID: 4996106363003699804}
   objCombatEnemyEndPosition: {fileID: 4562441972432015235}
   psCombat: {fileID: 8052170301239155560}
-  listUserCard: []
-  listEnemyCard: []
-  isCombat: 0
 --- !u!1 &1613703069347665187
 GameObject:
   m_ObjectHideFlags: 0
@@ -965,7 +963,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_FontData:
-    m_Font: {fileID: 12800000, guid: 5af80356261d6ff4f8aeec8a15c0cab5, type: 3}
+    m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
     m_FontSize: 1
     m_FontStyle: 1
     m_BestFit: 1
@@ -1552,7 +1550,7 @@ ParticleSystem:
     startLifetime:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 0.2
+      scalar: 0.1
       minScalar: 5
       maxCurve:
         serializedVersion: 2
@@ -2302,7 +2300,7 @@ ParticleSystem:
     rateOverTime:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 200
+      scalar: 500
       minScalar: 10
       maxCurve:
         serializedVersion: 2
@@ -5316,7 +5314,7 @@ ParticleSystem:
   TrailModule:
     enabled: 1
     mode: 0
-    ratio: 0.5
+    ratio: 1
     lifetime:
       serializedVersion: 2
       minMaxState: 0
@@ -6147,7 +6145,7 @@ ParticleSystemRenderer:
   m_RendererPriority: 0
   m_Materials:
   - {fileID: 2100000, guid: 7dd371ba1ff02ff4f87b272c8e2f884c, type: 2}
-  - {fileID: 2100000, guid: 7dd371ba1ff02ff4f87b272c8e2f884c, type: 2}
+  - {fileID: 2100000, guid: 3902ffcd8ef8d11489652567e321750f, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -6166,7 +6164,7 @@ ParticleSystemRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -1395321523
-  m_SortingLayer: 10
+  m_SortingLayer: 11
   m_SortingOrder: 1
   m_RenderMode: 0
   m_SortMode: 0
@@ -6342,7 +6340,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_FontData:
-    m_Font: {fileID: 12800000, guid: 5af80356261d6ff4f8aeec8a15c0cab5, type: 3}
+    m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
     m_FontSize: 1
     m_FontStyle: 1
     m_BestFit: 1
@@ -7172,11 +7170,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 6088083286484190062}
     m_Modifications:
-    - target: {fileID: 6202850148858248711, guid: dbdedefdbd5ca8045a10545a8d921571,
-        type: 3}
-      propertyPath: m_Name
-      value: CharacterUI
-      objectReference: {fileID: 0}
     - target: {fileID: 6202850148858248704, guid: dbdedefdbd5ca8045a10545a8d921571,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -7291,6 +7284,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalScale.y
       value: 1.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 6202850148858248711, guid: dbdedefdbd5ca8045a10545a8d921571,
+        type: 3}
+      propertyPath: m_Name
+      value: CharacterUI
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: dbdedefdbd5ca8045a10545a8d921571, type: 3}
@@ -7319,11 +7317,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 6348651956474969446}
     m_Modifications:
-    - target: {fileID: 6202850148858248711, guid: dbdedefdbd5ca8045a10545a8d921571,
-        type: 3}
-      propertyPath: m_Name
-      value: CharacterUI
-      objectReference: {fileID: 0}
     - target: {fileID: 6202850148858248704, guid: dbdedefdbd5ca8045a10545a8d921571,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -7438,6 +7431,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalScale.y
       value: 1.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 6202850148858248711, guid: dbdedefdbd5ca8045a10545a8d921571,
+        type: 3}
+      propertyPath: m_Name
+      value: CharacterUI
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: dbdedefdbd5ca8045a10545a8d921571, type: 3}

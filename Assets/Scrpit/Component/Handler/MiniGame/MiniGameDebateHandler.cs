@@ -1,11 +1,19 @@
 ﻿using UnityEngine;
 using UnityEditor;
+using System.Collections;
 using System.Collections.Generic;
+using DG.Tweening;
 
 public class MiniGameDebateHandler : BaseMiniGameHandler<MiniGameDebateBuilder, MiniGameDebateBean>,
     UIMiniGameDebate.ICallBack
 {
     public GameItemsManager gameItemsManager;
+    //预备战斗时间
+    public float preCombatTime = 0.5f;
+    //战斗时间
+    public float combatTime = 1f;
+    //斗魅的UI
+    public UIMiniGameDebate uiMiniGameDebate;
 
     public override void InitGame(MiniGameDebateBean miniGameData)
     {
@@ -24,15 +32,146 @@ public class MiniGameDebateHandler : BaseMiniGameHandler<MiniGameDebateBuilder, 
     {
         base.StartGame();
         //打开UI
-        UIMiniGameDebate uiMiniGameDebate = (UIMiniGameDebate)uiGameManager.OpenUIAndCloseOtherByName(EnumUtil.GetEnumName(UIEnum.MiniGameDebate));
+        uiMiniGameDebate = (UIMiniGameDebate)uiGameManager.OpenUIAndCloseOtherByName(EnumUtil.GetEnumName(UIEnum.MiniGameDebate));
+        ClearAllCard();
         uiMiniGameDebate.SetCallBack(this);
-        uiMiniGameDebate.SetData((MiniGameCharacterForDebateBean)miniGameData.listUserGameData[0], (MiniGameCharacterForDebateBean)miniGameData.listEnemyGameData[0]);
-        uiMiniGameDebate.DrawCard();
+        uiMiniGameDebate.SetData(miniGameData);
+        DrawCard();
     }
 
     public override void EndGame(bool isWinGame)
     {
         base.EndGame(isWinGame);
+    }
+
+    /// <summary>
+    /// 抽卡
+    /// </summary>
+    public void DrawCard()
+    {
+        if (miniGameData.listUserCard.Count >= 5)
+            return;
+        List<ItemMiniGameDebateCardCpt.DebateCardTypeEnun> listUserDebate = new List<ItemMiniGameDebateCardCpt.DebateCardTypeEnun>();
+        List<ItemMiniGameDebateCardCpt.DebateCardTypeEnun> listEnemyDebate = new List<ItemMiniGameDebateCardCpt.DebateCardTypeEnun>();
+        for (int i = 0; i < 5 - miniGameData.listUserCard.Count; i++)
+        {
+            listUserDebate.Add(RandomUtil.GetRandomEnum<ItemMiniGameDebateCardCpt.DebateCardTypeEnun>());
+        }
+        for (int i = 0; i < 5 - miniGameData.listUserCard.Count; i++)
+        {
+            listEnemyDebate.Add(RandomUtil.GetRandomEnum<ItemMiniGameDebateCardCpt.DebateCardTypeEnun>());
+        }
+        uiMiniGameDebate.CreateCardItemList(listUserDebate, listEnemyDebate);
+    }
+
+    /// <summary>
+    /// 清理所有卡片
+    /// </summary>
+    public void ClearAllCard()
+    {
+        miniGameData.listUserCard.Clear();
+        miniGameData.listEnemyCard.Clear();
+        uiMiniGameDebate.ClearAllCard();
+    }
+
+    /// <summary>
+    /// 选择了卡片 开始战斗
+    /// </summary>
+    /// <param name="selectCard"></param>
+    public void StartCombat(ItemMiniGameDebateCardCpt selectCard)
+    {
+        if (miniGameData.GetDebateStatus() != MiniGameDebateBean.DebateStatus.Idle)
+            return;
+        //设置状态为开始战斗
+        miniGameData.SetDebateStatus(MiniGameDebateBean.DebateStatus.Combat);
+        //获取敌人的卡片
+        ItemMiniGameDebateCardCpt enemyCard = GetEnemyCombatCard();
+        //检测谁胜利
+        CheckCombatWinner(selectCard, enemyCard, out ItemMiniGameDebateCardCpt winner, out ItemMiniGameDebateCardCpt loser);
+        //创建战斗动画
+        uiMiniGameDebate.CreateCombatAnim(selectCard, enemyCard, winner, loser, preCombatTime, combatTime);
+        //从卡堆中移除选择的卡
+        miniGameData.listUserCard.Remove(selectCard);
+        miniGameData.listEnemyCard.Remove(enemyCard);
+        NpcAIMiniGameDebateCpt winnerNpc = null;
+        NpcAIMiniGameDebateCpt loserNpc = null;
+        if (winner == null || loser == null)
+        {
+
+        }
+        else if (selectCard == winner)
+        {
+            winnerNpc = miniGameBuilder.GetUserCharacter();
+            loserNpc = miniGameBuilder.GetEnemyCharacter();
+        }
+        else
+        {
+            winnerNpc = miniGameBuilder.GetEnemyCharacter();
+            loserNpc = miniGameBuilder.GetUserCharacter();
+        }
+        //创建攻击粒子
+        float allComabtTime = preCombatTime + combatTime;
+        if (winnerNpc != null && loserNpc != null)
+        {
+            GameObject objWinEffect = miniGameBuilder.CreateCombatEffect(winnerNpc.transform.position + new Vector3(0, 0.5f));
+            GameObject objLoseEffect = miniGameBuilder.CreateCombatEffect(loserNpc.transform.position + new Vector3(0, 0.5f));
+
+            AnimForCombatEffect(objWinEffect, loserNpc.transform.position + new Vector3(0, 0.5f), allComabtTime);
+            AnimForCombatEffect(objLoseEffect, (winnerNpc.transform.position + loserNpc.transform.position) / 2f + new Vector3(0, 0.5f), allComabtTime / 2f);
+        }
+        //战斗过程
+        StartCoroutine(CoroutineForCombat(allComabtTime, winnerNpc, loserNpc));
+    }
+
+    /// <summary>
+    /// 开始新的回合
+    /// </summary>
+    public void StartNewRound()
+    {
+        if (miniGameData.listUserCard.Count <= 2)
+        {
+            DrawCard();
+        }
+        miniGameData.SetDebateStatus(MiniGameDebateBean.DebateStatus.Idle);
+    }
+
+    /// <summary>
+    /// 获取敌人战斗的卡片
+    /// </summary>
+    /// <returns></returns>
+    public ItemMiniGameDebateCardCpt GetEnemyCombatCard()
+    {
+        return RandomUtil.GetRandomDataByList(miniGameData.listEnemyCard);
+    }
+
+    /// <summary>
+    /// 检测胜利者
+    /// </summary>
+    /// <param name="userCard"></param>
+    /// <param name="enemyCard"></param>
+    /// <returns></returns>
+    public void CheckCombatWinner(
+        ItemMiniGameDebateCardCpt userCard, ItemMiniGameDebateCardCpt enemyCard,
+        out ItemMiniGameDebateCardCpt winnerCard, out ItemMiniGameDebateCardCpt loserCard)
+    {
+        ItemMiniGameDebateCardCpt.DebateCardTypeEnun userCardType = userCard.debateCardType;
+        ItemMiniGameDebateCardCpt.DebateCardTypeEnun enemyCardType = enemyCard.debateCardType;
+        int result = (int)userCardType - (int)enemyCardType;
+        if (result == -1 || result == 2)
+        {
+            winnerCard = userCard;
+            loserCard = enemyCard;
+        }
+        else if (result == 0)
+        {
+            winnerCard = null;
+            loserCard = null;
+        }
+        else
+        {
+            winnerCard = enemyCard;
+            loserCard = userCard;
+        }
     }
 
     /// <summary>
@@ -60,6 +199,34 @@ public class MiniGameDebateHandler : BaseMiniGameHandler<MiniGameDebateBuilder, 
         return false;
     }
 
+    /// <summary>
+    /// 协程战斗
+    /// </summary>
+    /// <param name="time"></param>
+    /// <param name="winner"></param>
+    /// <param name="loser"></param>
+    /// <returns></returns>
+    public IEnumerator CoroutineForCombat(float time, NpcAIMiniGameDebateCpt winner, NpcAIMiniGameDebateCpt loser)
+    {
+        yield return new WaitForSeconds(time);
+        if (winner != null && loser != null)
+        {
+            winner.characterData.GetAttributes(gameItemsManager, out CharacterAttributesBean characterAttributes);
+            int damageNumber = characterAttributes.charm * 2;
+            loser.UnderAttack(damageNumber);
+        }
+        uiMiniGameDebate.RefreshUI();
+        //检测是否结束游戏
+        if (CheckIsGameOver(out bool isWinGame))
+        {
+            EndGame(isWinGame);
+        }
+        else
+        {
+            StartNewRound();
+        }
+    }
+
     #region 倒计时UI回调
     public override void GamePreCountDownStart()
     {
@@ -75,33 +242,27 @@ public class MiniGameDebateHandler : BaseMiniGameHandler<MiniGameDebateBuilder, 
     #endregion
 
     #region UI操作回调
-    public void DamageForCharacter(int characterType)
+    public void CombatAnimEnd()
     {
-        NpcAIMiniGameDebateCpt aiAttackerCharacter = null;
-        NpcAIMiniGameDebateCpt aiDamageCharacter = null;
-        if (characterType == 1)
-        {
-            aiAttackerCharacter = miniGameBuilder.GetEnemyCharacter();
-            aiDamageCharacter = miniGameBuilder.GetUserCharacter();
-        }
-        else if (characterType == 2)
-        {
-            aiAttackerCharacter = miniGameBuilder.GetUserCharacter();
-            aiDamageCharacter = miniGameBuilder.GetEnemyCharacter();
-        }
-        if (aiAttackerCharacter != null && aiDamageCharacter != null)
-        {
-            aiAttackerCharacter.characterData.GetAttributes(gameItemsManager, out CharacterAttributesBean characterAttributes);
-            int damageNumber = characterAttributes.charm * 5;
-            aiDamageCharacter.UnderAttack(damageNumber);
-        }
-        UIMiniGameDebate uiMiniGameDebate = (UIMiniGameDebate)uiGameManager.GetOpenUI();
-        uiMiniGameDebate.RefreshUI();
 
-        if (CheckIsGameOver(out bool isWinGame))
-        {
-            EndGame(isWinGame);
-        }
     }
     #endregion
+
+    /// <summary>
+    /// 战斗粒子动画
+    /// </summary>
+    /// <param name="objEffect"></param>
+    /// <param name="targetPostion"></param>
+    /// <param name="time"></param>
+    private void AnimForCombatEffect(GameObject objEffect, Vector3 targetPostion, float time)
+    {
+        objEffect.transform
+            .DOMove(targetPostion, time)
+            .SetEase(Ease.Linear)
+            .OnComplete
+                (() =>
+                {
+                    Destroy(objEffect);
+                });
+    }
 }

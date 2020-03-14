@@ -300,6 +300,7 @@ public class ItemTownGuildImproveCharacterCpt : ItemGameBaseCpt, DialogView.IDia
                 miniGameData = InitAccountantGame();
                 break;
             case WorkerEnum.Accost:
+                //设置辩论游戏
                 miniGameData = InitAccostGame();
                 break;
             case WorkerEnum.Beater:
@@ -318,6 +319,39 @@ public class ItemTownGuildImproveCharacterCpt : ItemGameBaseCpt, DialogView.IDia
     }
 
     /// <summary>
+    /// 初始化跑堂游戏
+    /// </summary>
+    private MiniGameBaseBean InitWaiterGame()
+    {
+        MiniGameBaseBean miniGameData = MiniGameEnumTools.GetMiniGameData(MiniGameEnum.Barrage);
+        miniGameData = PreTypeForMiniGameEnumTools.GetMiniGameData(miniGameData, levelData.pre_data_minigame, gameItemsManager, npcInfoManager);
+        miniGameData.InitData(gameItemsManager, characterData);
+        return miniGameData;
+    }
+
+    /// <summary>
+    /// 初始化计算考试
+    /// </summary>
+    private MiniGameBaseBean InitAccountantGame()
+    {
+        MiniGameBaseBean miniGameData = MiniGameEnumTools.GetMiniGameData(MiniGameEnum.Account);
+        miniGameData = PreTypeForMiniGameEnumTools.GetMiniGameData(miniGameData, levelData.pre_data_minigame, gameItemsManager, npcInfoManager);
+        miniGameData.InitData(gameItemsManager, characterData);
+        return miniGameData;
+    }
+
+    /// <summary>
+    /// 初始化吆喝考试
+    /// </summary>
+    private MiniGameBaseBean InitAccostGame()
+    {
+        MiniGameBaseBean miniGameData = MiniGameEnumTools.GetMiniGameData(MiniGameEnum.Debate);
+        miniGameData = PreTypeForMiniGameEnumTools.GetMiniGameData(miniGameData, levelData.pre_data_minigame, gameItemsManager, npcInfoManager);
+        miniGameData.InitData(gameItemsManager, characterData);
+        return miniGameData;
+    }
+
+    /// <summary>
     /// 初始化打手考试
     /// </summary>
     private MiniGameBaseBean InitBeaterGame()
@@ -329,20 +363,6 @@ public class ItemTownGuildImproveCharacterCpt : ItemGameBaseCpt, DialogView.IDia
         miniGameData.InitData(gameItemsManager, characterData, enemyData);
         return miniGameData;
     }
-
-    /// <summary>
-    /// 初始化吆喝考试
-    /// </summary>
-    private MiniGameBaseBean InitAccostGame()
-    {
-        MiniGameBaseBean miniGameData = MiniGameEnumTools.GetMiniGameData(MiniGameEnum.Debate);
-        miniGameData.winLife = 1;
-        CharacterBean enemyData = npcInfoManager.GetCharacterDataById(110111);
-        miniGameData.InitData(gameItemsManager, characterData, enemyData);
-        return miniGameData;
-    }
-
-
 
     /// <summary>
     /// 初始化厨师考试
@@ -377,27 +397,6 @@ public class ItemTownGuildImproveCharacterCpt : ItemGameBaseCpt, DialogView.IDia
         return miniGameData;
     }
 
-    /// <summary>
-    /// 初始化跑堂游戏
-    /// </summary>
-    private MiniGameBaseBean InitWaiterGame()
-    {
-        MiniGameBaseBean miniGameData = MiniGameEnumTools.GetMiniGameData(MiniGameEnum.Barrage);
-        miniGameData = PreTypeForMiniGameEnumTools.GetMiniGameData(miniGameData, levelData.pre_data_minigame, gameItemsManager, npcInfoManager);
-        miniGameData.InitData(gameItemsManager, characterData);
-        return miniGameData;
-    }
-
-    /// <summary>
-    /// 初始化计算考试
-    /// </summary>
-    private MiniGameBaseBean InitAccountantGame()
-    {
-        MiniGameBaseBean miniGameData = MiniGameEnumTools.GetMiniGameData(MiniGameEnum.Account);
-        miniGameData = PreTypeForMiniGameEnumTools.GetMiniGameData(miniGameData, levelData.pre_data_minigame, gameItemsManager, npcInfoManager);
-        miniGameData.InitData(gameItemsManager, characterData);
-        return miniGameData;
-    }
 
     public void Cancel(DialogView dialogView, DialogBean dialogBean)
     {

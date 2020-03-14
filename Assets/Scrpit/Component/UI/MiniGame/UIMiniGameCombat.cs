@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System;
 
-public class UIMiniGameCombat : UIBaseMiniGame, CombatPowerView.ICallBack
+public class UIMiniGameCombat : UIBaseMiniGame<MiniGameCombatBean>, CombatPowerView.ICallBack
 {
     //指令UI
     public GameObject objCommand;
@@ -108,11 +108,9 @@ public class UIMiniGameCombat : UIBaseMiniGame, CombatPowerView.ICallBack
     /// 设置数据
     /// </summary>
     /// <param name="miniGameCombatData"></param>
-    public void SetData(MiniGameCombatBean gameCombatData)
+    public override void SetData(MiniGameCombatBean gameCombatData)
     {
-        if (gameCombatData == null)
-            return;
-        this.gameCombatData = gameCombatData;
+        base.SetData(gameCombatData);
         //清空数据
         mListCharacterInfo.Clear();
         mListCharacterRound.Clear();
