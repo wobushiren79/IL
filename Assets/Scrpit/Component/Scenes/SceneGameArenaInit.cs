@@ -123,24 +123,18 @@ public class SceneGameArenaInit : BaseSceneInit, IBaseObserver
         //arenaPrepareData.gameBarrageData.AddRewardItem(200001, 3);
         //arenaPrepareData.gameBarrageData.AddRewardItem(1100006, 3);
 
-        //arenaPrepareData = new ArenaPrepareBean();
-        //arenaPrepareData.gameType = MiniGameEnum.Combat;
-        //arenaPrepareData.gameCombatData = new MiniGameCombatBean();
-        //arenaPrepareData.gameCombatData.winBringDownNumber = 3;
-        //arenaPrepareData.gameCombatData.winSurvivalNumber = 3;
-        //List<CharacterBean> listOurData = new List<CharacterBean>();
-        //listOurData.Add(npcInfoManager.GetCharacterDataById(200001));
-        //listOurData.Add(npcInfoManager.GetCharacterDataById(200101));
-        //listOurData.Add(npcInfoManager.GetCharacterDataById(210001));
-        //List<CharacterBean> listEnemyData = new List<CharacterBean>();
-        //listEnemyData.Add(npcInfoManager.GetCharacterDataById(100001));
-        //listEnemyData.Add(npcInfoManager.GetCharacterDataById(100002));
-        //listEnemyData.Add(npcInfoManager.GetCharacterDataById(100003));
-        //arenaPrepareData.gameCombatData.InitData(gameItemsManager, listOurData, listEnemyData);
-        //arenaPrepareData.gameCombatData.AddRewardItem(100001, 1);
-        //arenaPrepareData.gameCombatData.AddRewardItem(100001, 2);
-        //arenaPrepareData.gameCombatData.AddRewardItem(200001, 3);
-        //arenaPrepareData.gameCombatData.AddRewardItem(1100006, 3);
+        arenaPrepareData = new ArenaPrepareBean(new MiniGameCombatBean());
+        arenaPrepareData.miniGameData.winBringDownNumber = 3;
+        arenaPrepareData.miniGameData.winSurvivalNumber = 1;
+        List<CharacterBean> listOurData = new List<CharacterBean>();
+        listOurData.Add(npcInfoManager.GetCharacterDataById(100011));
+        listOurData.Add(npcInfoManager.GetCharacterDataById(100021));
+        listOurData.Add(npcInfoManager.GetCharacterDataById(100031));
+        List<CharacterBean> listEnemyData = new List<CharacterBean>();
+        listEnemyData.Add(npcInfoManager.GetCharacterDataById(100041));
+        listEnemyData.Add(npcInfoManager.GetCharacterDataById(100051));
+        listEnemyData.Add(npcInfoManager.GetCharacterDataById(100061));
+        arenaPrepareData.miniGameData.InitData(gameItemsManager, listOurData, listEnemyData);
 
         if (arenaPrepareData == null || arenaPrepareData.miniGameData == null)
             return;

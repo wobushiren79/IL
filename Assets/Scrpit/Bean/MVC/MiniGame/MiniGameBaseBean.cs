@@ -89,13 +89,13 @@ public class MiniGameBaseBean
             case MiniGameEnum.Account:
                 GetListWinConditionsForWinSurvivalTime(listWinConditions);
                 GetListWinConditionsForWinMoney(listWinConditions);
-                GetListWinConditionsForWinBringDownNumber(listWinConditions);
                 break;
             case MiniGameEnum.Debate:
                 GetListWinConditionsForWinLife(listWinConditions);
                 break;
             case MiniGameEnum.Combat:
                 GetListWinConditionsForWinSurvivalNumber(listWinConditions);
+                GetListWinConditionsForWinBringDownNumber(listWinConditions);
                 break;
         }
         return listWinConditions;

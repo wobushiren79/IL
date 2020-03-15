@@ -8,8 +8,15 @@ public enum EffectTypeEnum
 }
 public class EffectTypeBean : DataBean<EffectTypeEnum>
 {
+    //说明
     public string effectDescribe;
+    //图标
     public Sprite spIcon;
+    //持续回合
+    public int durationForRound;
+    //持续时间
+    public float durationForTime;
+
     public EffectTypeBean() : base(EffectTypeEnum.AddLife, "")
     {
 

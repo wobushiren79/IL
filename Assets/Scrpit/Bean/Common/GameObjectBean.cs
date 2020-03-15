@@ -9,7 +9,7 @@ public class GameObjectBean
 }
 
 [Serializable]
-public class GameObjectDictionary : SerializableDictionaryBase<long, GameObject>
+public class GameObjectDictionary : SerializableDictionaryBase<string, GameObject>
 {
 
 }

@@ -8,7 +8,7 @@ public class BuildItemBean : BaseBean
 {
     public long build_id;
     public int build_type;
-    public long model_id;
+    public string model_name;
     public string icon_key;
     public string icon_list;
     public string tile_name;

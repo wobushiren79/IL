@@ -15,15 +15,10 @@ public class NpcAIMiniGameCombatCpt : BaseNpcAI
     public ParticleSystem psBlood;
     //伤害特效
     public ParticleSystem psDamage;
-    //选中特效
-    public ParticleSystem psSelected;
     //战斗状态
     public SpriteRenderer srCombatStatus;
     //伤害数字
     public GameObject objDamageModel;
-
-    //防御图标
-    public Sprite spStatusDefend;
 
     public override void Awake()
     {
@@ -34,9 +29,7 @@ public class NpcAIMiniGameCombatCpt : BaseNpcAI
     public override void SetCharacterDead()
     {
         base.SetCharacterDead();
-        SetExpression(CharacterExpressionCpt.CharacterExpressionEnum.Dead, -1);
-        //清空状态
-        SetCombatStatus(0);
+        SetExpression(CharacterExpressionCpt.CharacterExpressionEnum.Dead, -1);;
         //关闭血量展示
         characterLifeCpt.gameObject.SetActive(false);
     }
@@ -49,44 +42,6 @@ public class NpcAIMiniGameCombatCpt : BaseNpcAI
     {
         this.characterMiniGameData = characterMiniGameData;
         SetCharacterData(characterMiniGameData.characterData);
-    }
-
-    /// <summary>
-    /// 设置选中
-    /// </summary>
-    /// <param name="isSelected"></param>
-    public void SetSelected(bool isSelected)
-    {
-        if (isSelected)
-        {
-            psSelected.gameObject.SetActive(true);
-            psSelected.Play();
-        }
-        else
-            psSelected.gameObject.SetActive(false);
-    }
-
-    /// <summary>
-    /// 设置战斗状态
-    /// </summary>
-    /// <param name="status">0,没有  1防御</param>
-    public void SetCombatStatus(int status)
-    {
-        srCombatStatus.color = new Color(1, 1, 1, 1);
-        switch (status)
-        {
-            case 0:
-                srCombatStatus.color = new Color(1, 1, 1, 0);
-                break;
-            case 1:
-                srCombatStatus.sprite = spStatusDefend;
-                srCombatStatus.transform.localScale = new Vector3(1, 1, 1);
-                srCombatStatus.transform.DOScale(new Vector3(0.2f, 0.2f, 0.2f), 0.5f).From().SetEase(Ease.OutBack);
-                break;
-            case 2:
-                break;
-        }
-
     }
 
     /// <summary>
@@ -164,29 +119,6 @@ public class NpcAIMiniGameCombatCpt : BaseNpcAI
             relativeOurList = gameCombatHandler.miniGameBuilder.GetCharacter(0);
             relativeEnemyList = gameCombatHandler.miniGameBuilder.GetCharacter(1);
         }
-        //如果友方人数大于两人，自己的血量是友方最低 并且低于0.3辣么就防御 
-        if (relativeOurList.Count >= 2)
-        {
-            bool isMinimumLife = true;
-            float lifeRate = ((float)characterMiniGameData.characterCurrentLife / (float)characterMiniGameData.characterMaxLife);
-            for (int i = 0; i < relativeOurList.Count; i++)
-            {
-                NpcAIMiniGameCombatCpt itemNpc = relativeOurList[i];
-                if (itemNpc != this)
-                {
-                    if (characterMiniGameData.characterCurrentLife >= itemNpc.characterMiniGameData.characterCurrentLife)
-                    {
-                        isMinimumLife = false;
-                    }
-                }
-            }
-            //判断是否是最低血量 并且低于0.3
-            if (isMinimumLife && lifeRate < 0.3f)
-            {
-                StartCoroutine(IntentForDefend());
-                return;
-            }
-        }
         //如果不防御就攻击
         StartCoroutine(IntentForFight(relativeEnemyList));
     }
@@ -196,29 +128,13 @@ public class NpcAIMiniGameCombatCpt : BaseNpcAI
     /// </summary>
     public IEnumerator IntentForFight(List<NpcAIMiniGameCombatCpt> relativeEnemyList)
     {
-        //逻辑首先选择不防御的
         if (!CheckUtil.ListIsNull(relativeEnemyList))
         {
-            List<NpcAIMiniGameCombatCpt> noDefendCharacter = new List<NpcAIMiniGameCombatCpt>();
-
+            //选择血最少的
+            NpcAIMiniGameCombatCpt targetNpc = null;
             for (int i = 0; i < relativeEnemyList.Count; i++)
             {
                 NpcAIMiniGameCombatCpt itemNPC = relativeEnemyList[i];
-                if (!itemNPC.characterMiniGameData.combatIsDefend)
-                {
-                    noDefendCharacter.Add(itemNPC);
-                }
-            }
-            //如果没有不防御的 则选择所有防御的人
-            if (CheckUtil.ListIsNull(noDefendCharacter))
-            {
-                noDefendCharacter = relativeEnemyList;
-            }
-            //其次选择血最少的
-            NpcAIMiniGameCombatCpt targetNpc = null;
-            for (int i = 0; i < noDefendCharacter.Count; i++)
-            {
-                NpcAIMiniGameCombatCpt itemNPC = noDefendCharacter[i];
                 if (targetNpc == null)
                 {
                     targetNpc = itemNPC;
@@ -240,9 +156,8 @@ public class NpcAIMiniGameCombatCpt : BaseNpcAI
                 }
             }
             yield return new WaitForSeconds(1);
-            gameCombatHandler.SetRoundTargetCharacter(targetNpc);
-            gameCombatHandler.SelectedCharacter(targetNpc);
-            gameCombatHandler.StartFight(1, 1);
+            gameCombatHandler.miniGameData.SetRoundTargetCharacter(targetNpc);
+            //gameCombatHandler.SelectedCharacter(targetNpc);
             gameCombatHandler.InitCameraPosition();
         }
     }
@@ -250,16 +165,14 @@ public class NpcAIMiniGameCombatCpt : BaseNpcAI
     /// <summary>
     /// 意图-防御
     /// </summary>
-    public IEnumerator IntentForDefend()
+    public IEnumerator IntentForSkill()
     {
         yield return new WaitForSeconds(2);
-        gameCombatHandler.CommandDefend(0);
-        gameCombatHandler.InitCameraPosition();
     }
     /// <summary>
     /// 意图-攻击
     /// </summary>
-    public void IntentForItem()
+    public void IntentForItems()
     {
 
     }

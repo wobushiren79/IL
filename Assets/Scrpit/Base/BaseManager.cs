@@ -5,6 +5,21 @@ using UnityEngine.Tilemaps;
 
 public class BaseManager : BaseMonoBehaviour
 {
+    /// <summary>
+    /// 根据名字获取音频
+    /// </summary>
+    /// <param name="name"></param>
+    /// <param name="map"></param>
+    /// <returns></returns>
+    public virtual GameObject GetGameObjectByName(string name, GameObjectDictionary map)
+    {
+        if (name == null)
+            return null;
+        if (map.TryGetValue(name, out GameObject obj))
+            return obj;
+        else
+            return null;
+    }
 
     /// <summary>
     /// 根据名字获取音频

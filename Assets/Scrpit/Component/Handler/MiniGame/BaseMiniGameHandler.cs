@@ -47,10 +47,10 @@ public class BaseMiniGameHandler<B, D> : BaseHandler, UIMiniGameCountDown.ICallB
     /// 设置摄像头位置
     /// </summary>
     /// <param name="cameraPosition"></param>
-    public void SetCameraPosition(Vector3 cameraPosition)
+    public virtual void SetCameraPosition(Vector3 cameraPosition)
     {
         //设置摄像机位置
-        controlHandler.GetControl().SetCameraPosition(cameraPosition);
+        controlHandler.GetControl().SetFollowPosition(cameraPosition);
     }
 
     /// <summary>

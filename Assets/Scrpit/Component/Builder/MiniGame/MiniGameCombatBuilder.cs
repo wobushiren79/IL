@@ -5,13 +5,22 @@ using System.Collections.Generic;
 
 public class MiniGameCombatBuilder : BaseMiniGameBuilder
 {
+    protected EffectManager effectManager;
+
     public GameObject objPlayerContainer;
     public GameObject objPlayerModel;
+    //选择特效容器
+    public GameObject objSelectEffectContainer;
 
     //我方角色
     public List<NpcAIMiniGameCombatCpt> listOurCharacter = new List<NpcAIMiniGameCombatCpt>();
     //地方角色
     public List<NpcAIMiniGameCombatCpt> listEnemyCharacter = new List<NpcAIMiniGameCombatCpt>();
+
+    private void Awake()
+    {
+        effectManager = Find<EffectManager>(ImportantTypeEnum.EffectManager);
+    }
 
     /// <summary>
     /// 获取所有角色
@@ -24,7 +33,7 @@ public class MiniGameCombatBuilder : BaseMiniGameBuilder
         allCharacter.AddRange(listEnemyCharacter);
         return allCharacter;
     }
-    public List<NpcAIMiniGameCombatCpt> GetOurCharacter()
+    public List<NpcAIMiniGameCombatCpt> GetUserCharacter()
     {
         return listOurCharacter;
     }
@@ -62,7 +71,7 @@ public class MiniGameCombatBuilder : BaseMiniGameBuilder
     public void CreateOurCharacter(Vector3 combatPosition, List<MiniGameCharacterBean> listCharacterData)
     {
         listOurCharacter.Clear();
-        float characterPositionY = combatPosition.y+((listCharacterData.Count - 1) / 2f) * 1.5f;
+        float characterPositionY = combatPosition.y + ((listCharacterData.Count - 1) / 2f) * 1.5f;
         for (int i = 0; i < listCharacterData.Count; i++)
         {
             Vector3 characterPosition = new Vector3(combatPosition.x - 3, characterPositionY);
@@ -82,7 +91,7 @@ public class MiniGameCombatBuilder : BaseMiniGameBuilder
     public void CreateEnemyCharacter(Vector3 combatPosition, List<MiniGameCharacterBean> listCharacterData)
     {
         listEnemyCharacter.Clear();
-        float characterPositionY = combatPosition.y+((listCharacterData.Count - 1) / 2f) * 1.5f;
+        float characterPositionY = combatPosition.y + ((listCharacterData.Count - 1) / 2f) * 1.5f;
         for (int i = 0; i < listCharacterData.Count; i++)
         {
             Vector3 characterPosition = new Vector3(combatPosition.x + 3, characterPositionY);
@@ -108,6 +117,29 @@ public class MiniGameCombatBuilder : BaseMiniGameBuilder
     }
 
     /// <summary>
+    /// 创建选择特效
+    /// </summary>
+    public GameObject CreateSelectEffect(Vector3 position)
+    {
+        GameObject objEffectModel = effectManager.GetCombatEffectByName("Effect_Select_1");
+        GameObject objEffect = Instantiate(objSelectEffectContainer, objEffectModel, position);
+        return objEffect;
+    }
+
+    /// <summary>
+    /// 删除选择特效
+    /// </summary>
+    /// <param name="objEffect"></param>
+    public void DeleteSelectEffect(GameObject objEffect)
+    {
+        Destroy(objEffect);
+    }
+    public void DeleteSelectEffect()
+    {
+        CptUtil.RemoveChildsByActive(objSelectEffectContainer);
+    }
+
+    /// <summary>
     /// 删除所有角色
     /// </summary>
     public void DestroyAllCharacter()
@@ -116,6 +148,7 @@ public class MiniGameCombatBuilder : BaseMiniGameBuilder
         listOurCharacter.Clear();
         listEnemyCharacter.Clear();
     }
+
 
     public override void DestroyAll()
     {

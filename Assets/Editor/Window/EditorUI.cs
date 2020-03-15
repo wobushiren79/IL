@@ -659,7 +659,7 @@ public class EditorUI
         buildItem.build_id = buildItem.id;
         buildItem.build_type = (int)(BuildItemTypeEnum)EditorGUILayout.EnumPopup((BuildItemTypeEnum)buildItem.build_type, GUILayout.Width(100), GUILayout.Height(20));
         GUILayout.Label("模型ID：", GUILayout.Width(50), GUILayout.Height(20));
-        buildItem.model_id = long.Parse(EditorGUILayout.TextArea(buildItem.model_id + "", GUILayout.Width(100), GUILayout.Height(20)));
+        buildItem.model_name = EditorGUILayout.TextArea(buildItem.model_name + "", GUILayout.Width(100), GUILayout.Height(20));
    
         GUILayout.Label(" 图标：", GUILayout.Width(50), GUILayout.Height(20));
         buildItem.icon_key = EditorGUILayout.TextArea(buildItem.icon_key + "", GUILayout.Width(150), GUILayout.Height(20));

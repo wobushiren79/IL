@@ -147,6 +147,16 @@ public class ListDataEditor : Editor
         AddTileBeanDictionaryByFolder("Assets/Tile/Tiles/Floor/", innBuildManager.listFloorTile);
         innBuildManager.listWallTile.Clear();
         AddTileBeanDictionaryByFolder("Assets/Tile/Tiles/Wall/", innBuildManager.listWallTile);
+
+        innBuildManager.listFurnitureCpt.Clear();
+        AddGameObjectDictionaryByFolder("Assets/Prefabs/BuildItem/Counter/", innBuildManager.listFurnitureCpt);
+        AddGameObjectDictionaryByFolder("Assets/Prefabs/BuildItem/Decoration/", innBuildManager.listFurnitureCpt);
+        AddGameObjectDictionaryByFolder("Assets/Prefabs/BuildItem/Door/", innBuildManager.listFurnitureCpt);
+        AddGameObjectDictionaryByFolder("Assets/Prefabs/BuildItem/Floor/", innBuildManager.listFurnitureCpt);
+        AddGameObjectDictionaryByFolder("Assets/Prefabs/BuildItem/Other/", innBuildManager.listFurnitureCpt);
+        AddGameObjectDictionaryByFolder("Assets/Prefabs/BuildItem/Stove/", innBuildManager.listFurnitureCpt);
+        AddGameObjectDictionaryByFolder("Assets/Prefabs/BuildItem/Table/", innBuildManager.listFurnitureCpt);
+        AddGameObjectDictionaryByFolder("Assets/Prefabs/BuildItem/Wall/", innBuildManager.listFurnitureCpt);
     }
 
     //[MenuItem("Custom/List/AddFurnitureCpt")]
@@ -171,6 +181,15 @@ public class ListDataEditor : Editor
         //AddIconBeanDictionaryByFolder("Assets/Texture/Background/", iconDataManager.listIcon);
         //AddIconBeanDictionaryByFolder("Assets/Texture/Common/", iconDataManager.listIcon);
         AddIconBeanDictionaryByFolder("Assets/Texture/Common/UI/", iconDataManager.listIcon);
+    }
+
+    [MenuItem("Custom/List/AddEffect")]
+    public static void AddEffect()
+    {
+        GameObject Target = Selection.gameObjects[0];
+        EffectManager combatEffectManager = Target.GetComponent<EffectManager>();
+        combatEffectManager.listCombatEffect.Clear();
+        AddGameObjectDictionaryByFolder("Assets/Prefabs/Effects/Combat/", combatEffectManager.listCombatEffect);
     }
 
     /// <summary>
@@ -261,8 +280,7 @@ public class ListDataEditor : Editor
             Object obj = AssetDatabase.LoadMainAssetAtPath(folderPath + item.Name);
             if (obj as GameObject != null)
             {
-                BaseBuildItemCpt buildItemCpt = ((GameObject)obj).GetComponent<BaseBuildItemCpt>();
-                map.Add(buildItemCpt.buildItemData.id, obj as GameObject);
+                map.Add(obj.name+"", obj as GameObject);
             }
         }
     }

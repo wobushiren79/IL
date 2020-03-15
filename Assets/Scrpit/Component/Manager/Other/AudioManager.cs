@@ -3,7 +3,6 @@ using UnityEditor;
 
 public class AudioManager : BaseManager
 {
-
     public AudioBeanDictionary listMusicData;
     public AudioBeanDictionary listSoundData;
     public AudioBeanDictionary listEnvironmentData;

@@ -67,7 +67,7 @@ public class InnBuildManager : BaseManager, IBuildDataView
         if (listFurnitureCpt == null)
             return furnitureObj;
         BuildItemBean buildItemData = GetBuildDataById(id);
-        if (listFurnitureCpt.TryGetValue(buildItemData.model_id, out GameObject objItem))
+        if (listFurnitureCpt.TryGetValue(buildItemData.model_name , out GameObject objItem))
         {
             furnitureObj = Instantiate(tfFather.gameObject, objItem);
             BaseBuildItemCpt buildItemCpt = furnitureObj.GetComponent<BaseBuildItemCpt>();

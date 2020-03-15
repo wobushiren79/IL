@@ -3,19 +3,50 @@ using UnityEditor;
 
 public class ControlForMiniGameCombatCpt : BaseControl
 {
-    public MiniGameCombatHandler gameCombatHandler;
-
-    private void Update()
+    protected UIGameManager uiGameManager;
+    protected MiniGameCombatHandler gameCombatHandler;
+    protected UIMiniGameCombat uiMiniGameCombat;
+    private void Awake()
     {
-
+        gameCombatHandler = Find<MiniGameCombatHandler>(ImportantTypeEnum.MiniGameHandler);
+        uiGameManager = Find<UIGameManager>(ImportantTypeEnum.GameUI);
+        uiMiniGameCombat = (UIMiniGameCombat)uiGameManager.GetUIByName(EnumUtil.GetEnumName(UIEnum.MiniGameCombat));
     }
 
     /// <summary>
     /// 选中一个角色
     /// </summary>
     /// <param name="npcAI"></param>
-    public void ChangeCharacter( NpcAIMiniGameCombatCpt currentNpc)
+    public void ChangeCharacter(NpcAIMiniGameCombatCpt currentNpc)
     {
 
     }
+
+    private void Update()
+    {
+        HandleForSelectCharacter();
+    }
+
+    /// <summary>
+    /// 角色选择处理
+    /// </summary>
+    public void HandleForSelectCharacter()
+    {
+        //如果没有在玩家回合 切没有在选择人物中则不处理
+        if (gameCombatHandler.miniGameData.GetCombatStatus() != MiniGameCombatBean.MiniGameCombatStatusEnum.OurRound
+            || !uiMiniGameCombat.isSelecting)
+        {
+            return;
+        }
+        if (Input.GetButtonDown(InputInfo.Direction_Down))
+        {
+            uiMiniGameCombat.uiForSelectCharacter.ChangeCharacter(1);
+        }
+        if (Input.GetButtonDown(InputInfo.Direction_Up))
+        {
+            uiMiniGameCombat.uiForSelectCharacter.ChangeCharacter(-1);
+        }
+    }
+
+
 }
