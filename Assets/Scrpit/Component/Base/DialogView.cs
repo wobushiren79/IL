@@ -21,7 +21,7 @@ public class DialogView : BaseMonoBehaviour
 
     public DialogBean dialogData;
 
-    private float mTimeDelayDelete;
+    protected float timeDelayDelete;
     protected AudioHandler audioHandler;
 
     public virtual void Awake()
@@ -82,11 +82,11 @@ public class DialogView : BaseMonoBehaviour
         DestroyDialog();
     }
 
-    public void DestroyDialog()
+    public virtual void DestroyDialog()
     {
-        if (mTimeDelayDelete != 0)
+        if (timeDelayDelete != 0)
         {
-            transform.DOScale(new Vector3(1, 1, 1), mTimeDelayDelete).OnComplete(delegate () { Destroy(gameObject); });
+            transform.DOScale(new Vector3(1, 1, 1), timeDelayDelete).OnComplete(delegate () { Destroy(gameObject); });
         }
         else
             Destroy(gameObject);
@@ -175,7 +175,7 @@ public class DialogView : BaseMonoBehaviour
     /// <param name="delayTime"></param>
     public void SetDelayDelete(float delayTime)
     {
-        this.mTimeDelayDelete = delayTime;
+        this.timeDelayDelete = delayTime;
     }
 
     public interface IDialogCallBack

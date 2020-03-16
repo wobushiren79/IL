@@ -27,10 +27,12 @@ public class StrengthTestView : BaseMonoBehaviour
                     mCallBack.StrengthTestEnd(this, sliderStrength.value);
                 return;
             }
+            //if (sliderStrength.value >= 1)
+            //    mDirection = -1;
+            //else if (sliderStrength.value <= 0)
+            //    mDirection = 1;
             if (sliderStrength.value >= 1)
-                mDirection = -1;
-            else if (sliderStrength.value <= 0)
-                mDirection = 1;
+                sliderStrength.value = 0;
             sliderStrength.value += (strengthSpeed * Time.deltaTime * mDirection);
         }
     }

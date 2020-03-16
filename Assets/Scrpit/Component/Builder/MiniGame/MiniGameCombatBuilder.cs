@@ -13,7 +13,7 @@ public class MiniGameCombatBuilder : BaseMiniGameBuilder
     public GameObject objSelectEffectContainer;
 
     //我方角色
-    public List<NpcAIMiniGameCombatCpt> listOurCharacter = new List<NpcAIMiniGameCombatCpt>();
+    public List<NpcAIMiniGameCombatCpt> listUserCharacter = new List<NpcAIMiniGameCombatCpt>();
     //地方角色
     public List<NpcAIMiniGameCombatCpt> listEnemyCharacter = new List<NpcAIMiniGameCombatCpt>();
 
@@ -29,13 +29,13 @@ public class MiniGameCombatBuilder : BaseMiniGameBuilder
     public List<NpcAIMiniGameCombatCpt> GetAllCharacter()
     {
         List<NpcAIMiniGameCombatCpt> allCharacter = new List<NpcAIMiniGameCombatCpt>();
-        allCharacter.AddRange(listOurCharacter);
+        allCharacter.AddRange(listUserCharacter);
         allCharacter.AddRange(listEnemyCharacter);
         return allCharacter;
     }
     public List<NpcAIMiniGameCombatCpt> GetUserCharacter()
     {
-        return listOurCharacter;
+        return listUserCharacter;
     }
     public List<NpcAIMiniGameCombatCpt> GetEnemyCharacter()
     {
@@ -45,7 +45,7 @@ public class MiniGameCombatBuilder : BaseMiniGameBuilder
     {
         if (type == 1)
         {
-            return listOurCharacter;
+            return listUserCharacter;
         }
         else
         {
@@ -70,7 +70,7 @@ public class MiniGameCombatBuilder : BaseMiniGameBuilder
     /// <param name="listCharacterData"></param>
     public void CreateOurCharacter(Vector3 combatPosition, List<MiniGameCharacterBean> listCharacterData)
     {
-        listOurCharacter.Clear();
+        listUserCharacter.Clear();
         float characterPositionY = combatPosition.y + ((listCharacterData.Count - 1) / 2f) * 1.5f;
         for (int i = 0; i < listCharacterData.Count; i++)
         {
@@ -78,7 +78,7 @@ public class MiniGameCombatBuilder : BaseMiniGameBuilder
             characterPositionY -= 1.5f;
             MiniGameCharacterBean itemData = listCharacterData[i];
             NpcAIMiniGameCombatCpt npcCpt = CreateCharacter(characterPosition, itemData);
-            listOurCharacter.Add(npcCpt);
+            listUserCharacter.Add(npcCpt);
             //设置角色朝向
             npcCpt.SetCharacterFace(2);
         }
@@ -145,7 +145,7 @@ public class MiniGameCombatBuilder : BaseMiniGameBuilder
     public void DestroyAllCharacter()
     {
         CptUtil.RemoveChildsByActive(objPlayerContainer);
-        listOurCharacter.Clear();
+        listUserCharacter.Clear();
         listEnemyCharacter.Clear();
     }
 

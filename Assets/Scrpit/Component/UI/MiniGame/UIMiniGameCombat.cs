@@ -6,19 +6,17 @@ using System.Collections.Generic;
 using System.Linq;
 using System;
 
-public class UIMiniGameCombat : UIBaseMiniGame<MiniGameCombatBean>, CombatPowerView.ICallBack
+public class UIMiniGameCombat : UIBaseMiniGame<MiniGameCombatBean>
+    , UIMiniGameCombatSelectCharacter.ICallBack
+    , DialogView.IDialogCallBack
+    , PowerTestDialogView.ICallBack
 {
-    //指令UI
-    public GameObject objCommand;
-    public Button btCommandFight;
-    public Button btCommandSkill;
-    public Button btCommandItem;
 
     //角色选择UI
     public UIMiniGameCombatSelectCharacter uiForSelectCharacter;
+    //战斗指令
+    public UIMiniGameCombatCommand uiForCombatCommand;
 
-    //攻击力道 
-    public CombatPowerView viewCombatPower;
     //进度条
     public RectTransform rtfRoundContainer;
     //友方角色信息容器
@@ -45,15 +43,8 @@ public class UIMiniGameCombat : UIBaseMiniGame<MiniGameCombatBean>, CombatPowerV
 
     private void Start()
     {
-        if (btCommandFight)
-            btCommandFight.onClick.AddListener(CommandFight);
-        if (btCommandSkill)
-            btCommandSkill.onClick.AddListener(CommandSkill);
-        if (btCommandItem)
-            btCommandItem.onClick.AddListener(CommandItem);
-
-        if (viewCombatPower != null)
-            viewCombatPower.SetCallBack(this);
+        if (uiForSelectCharacter != null)
+            uiForSelectCharacter.SetCallBack(this);
     }
 
     private void Update()
@@ -183,7 +174,7 @@ public class UIMiniGameCombat : UIBaseMiniGame<MiniGameCombatBean>, CombatPowerV
     /// 回合条移动处理
     /// </summary>
     public void HandleForRoundMove()
-    {   
+    {
         if (!isRounding)
             return;
         for (int i = 0; i < listCharacterRound.Count; i++)
@@ -191,7 +182,7 @@ public class UIMiniGameCombat : UIBaseMiniGame<MiniGameCombatBean>, CombatPowerV
             ItemMiniGameCombatCharacterRoundCpt itemCpt = listCharacterRound[i];
             //获取角色属性
             itemCpt.gameCharacterData.characterData.GetAttributes(uiGameManager.gameItemsManager, out CharacterAttributesBean characterAttributes);
-            float roundSpeed = (0.5f + characterAttributes.speed/10f);
+            float roundSpeed = (0.5f + characterAttributes.speed / 10f);
             //回合条向右移动
             itemCpt.transform.Translate(new Vector3(1, 0) * Time.deltaTime * roundSpeed);
             //检测是否到达目标点
@@ -230,65 +221,49 @@ public class UIMiniGameCombat : UIBaseMiniGame<MiniGameCombatBean>, CombatPowerV
     /// <summary>
     /// 开启指令UI
     /// </summary>
-    public void OpenCommand()
+    public void OpenCombatCommand()
     {
-        objCommand.SetActive(true);
-        objCommand.transform.localScale = new Vector3(1, 1, 1);
-        objCommand.transform.DOScale(new Vector3(0f, 0f, 0f), 0.5f).From().SetEase(Ease.OutBack).SetDelay(0.2f);
+        uiForSelectCharacter.Close();
+        uiForCombatCommand.Open();
     }
 
     /// <summary>
-    /// 关闭指令
+    /// 打开任务选择
     /// </summary>
-    public void CloseCommand()
+    /// <param name="selectNumber"></param>
+    /// <param name="selectType"></param>
+    public void OpenSelectCharacter(int selectNumber, int selectType)
     {
-        objCommand.SetActive(false);
-    }
-
-    /// <summary>
-    /// 指令-战斗
-    /// </summary>
-    public void CommandFight()
-    {
-        isSelecting = true;
+        uiForCombatCommand.Close();
         uiForSelectCharacter.Open();
-        uiForSelectCharacter.SetData(1,2);
-
-        if (mCallBack != null)
-            mCallBack.CommandFight(0);
-        objCommand.SetActive(false);
+        uiForSelectCharacter.SetData(selectNumber, selectType);
     }
 
     /// <summary>
-    /// 指令 技能
+    /// 打开力度测试
     /// </summary>
-    public void CommandSkill()
+    public void OpenPowerTest(MiniGameCharacterBean gameCharacterData)
     {
-
-    }
-
-    /// <summary>
-    /// 指令物品
-    /// </summary>
-    public void CommandItem()
-    {
-        ToastManager toastManager = GetUIManager<UIGameManager>().toastManager;
-        toastManager.ToastHint("开发中");
-    }
-
-    /// <summary>
-    /// 开启力道测试
-    /// </summary>
-    /// <param name="gameCharacterData"></param>
-    public void OpenCombatPowerTest(MiniGameCharacterBean gameCharacterData)
-    {
-        //弹出进度条
-        viewCombatPower.gameObject.SetActive(true);
+        uiForCombatCommand.Close();
+        uiForSelectCharacter.Close();
         //获取属性
         GameItemsManager gameItemsManager = GetUIManager<UIGameManager>().gameItemsManager;
+        DialogManager dialogManager = GetUIManager<UIGameManager>().dialogManager;
         gameCharacterData.characterData.GetAttributes(gameItemsManager, out CharacterAttributesBean characterAttributes);
-        //设置数据
-        viewCombatPower.SetData(characterAttributes.force);
+
+        DialogBean dialogData = new DialogBean();
+        PowerTestDialogView powerTestDialog = (PowerTestDialogView)dialogManager.CreateDialog(DialogEnum.PowerTest, this, dialogData);
+        powerTestDialog.SetCallBack(this);
+        powerTestDialog.SetData(3, 1);
+    }
+
+    /// <summary>
+    /// 关闭所有功能界面
+    /// </summary>
+    public void CloseAll()
+    {
+        uiForCombatCommand.Close();
+        uiForSelectCharacter.Close();
     }
 
     /// <summary>
@@ -313,11 +288,44 @@ public class UIMiniGameCombat : UIBaseMiniGame<MiniGameCombatBean>, CombatPowerV
     }
 
     #region 力度测试回调
-    public void PowerTestEnd(float resultsAccuracy, float resultsForce)
+    public void PowerTestEnd(float resultsPower)
     {
-        viewCombatPower.gameObject.SetActive(false);
+        miniGameData.SetPowerTest(resultsPower);
         if (mCallBack != null)
-            mCallBack.PowerTestEnd(resultsAccuracy, resultsForce);
+            mCallBack.CommandEnd();
+    }
+    #endregion
+
+
+    #region 角色选择回调
+    public void SelectComplete(List<NpcAIMiniGameCombatCpt> listData)
+    {
+        miniGameData.SetRoundTargetCharacter(listData);
+        MiniGameCombatCommand miniGameCombatCommand = miniGameData.GetRoundActionCommand();
+        if (miniGameCombatCommand == MiniGameCombatCommand.Fight
+            || miniGameCombatCommand == MiniGameCombatCommand.Skill)
+        {
+            //如果是攻击和技能 则开启力度测试
+            OpenPowerTest(miniGameData.GetRoundActionCharacter().characterMiniGameData);
+        }
+        else
+        {
+            if (mCallBack != null)
+                mCallBack.CommandEnd();
+        }
+    }
+    #endregion
+
+
+    #region 弹出框回调
+    public void Submit(DialogView dialogView, DialogBean dialogBean)
+    {
+
+    }
+
+    public void Cancel(DialogView dialogView, DialogBean dialogBean)
+    {
+
     }
     #endregion
 
@@ -330,24 +338,9 @@ public class UIMiniGameCombat : UIBaseMiniGame<MiniGameCombatBean>, CombatPowerV
         void CharacterRound(MiniGameCharacterForCombatBean gameCharacterData);
 
         /// <summary>
-        /// 指令 战斗
+        /// 指令 结束
         /// </summary>
-        void CommandFight(int detials);
-
-        /// <summary>
-        /// 指令 技能
-        /// </summary>
-        void CommandSkill();
-
-        /// <summary>
-        /// 指令 技能
-        /// </summary>
-        void CommandItems();
-
-        /// <summary>
-        /// 力度测试
-        /// </summary>
-        void PowerTestEnd(float resultsAccuracy, float resultsForce);
+        void CommandEnd();
     }
 
 }

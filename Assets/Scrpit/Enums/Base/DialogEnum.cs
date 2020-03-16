@@ -7,8 +7,9 @@ public enum DialogEnum
     Text = 1,
     PickForCharacter = 2,
     Achievement = 3,
-    PickForItems=4,
-    PickForMoney=5,
-    FindCharacter=6,
-    SelectForNpc=7,
+    PickForItems = 4,
+    PickForMoney = 5,
+    FindCharacter = 6,
+    SelectForNpc = 7,
+    PowerTest = 8,
 }

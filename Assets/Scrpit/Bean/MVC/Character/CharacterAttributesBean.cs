@@ -16,6 +16,9 @@ public class CharacterAttributesBean
     public int force;// 武力
     public int lucky;// 幸运
 
+    //技能列表
+    public List<long> listSkills = new List<long>();
+
     /// <summary>
     /// 增加属性
     /// </summary>

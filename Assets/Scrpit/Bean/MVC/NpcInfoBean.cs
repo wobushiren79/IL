@@ -32,7 +32,7 @@ public class NpcInfoBean : BaseBean
     public float position_y;
 
     public string talk_ids;//人物对话ID
-
+    public string skill_ids;
 
     public int attributes_loyal;
     public int attributes_life;
@@ -112,6 +112,8 @@ public class NpcInfoBean : BaseBean
         characterData.attributes.charm = npcInfo.attributes_charm;
         characterData.attributes.force = npcInfo.attributes_force;
         characterData.attributes.lucky = npcInfo.attributes_lucky;
+        //设置技能
+        characterData.attributes.listSkills = npcInfo.GetSkillIds();
 
         characterData.npcInfoData = npcInfo;
         return characterData;
@@ -124,5 +126,14 @@ public class NpcInfoBean : BaseBean
     {
         long[] menusId = StringUtil.SplitBySubstringForArrayLong(love_menus, ',');
         return menusId.ToList();
+    }
+
+    /// <summary>
+    /// 获取技能ID
+    /// </summary>
+    /// <returns></returns>
+    public List<long> GetSkillIds() {
+        long[] skillIds = StringUtil.SplitBySubstringForArrayLong(skill_ids, ',');
+        return skillIds.ToList();
     }
 }

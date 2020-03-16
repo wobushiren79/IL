@@ -76,6 +76,7 @@ public class MiniGameCombatHandler : BaseMiniGameHandler<MiniGameCombatBuilder, 
     /// <param name="character"></param>
     public void SelectCharacter(NpcAIMiniGameCombatCpt character)
     {
+        miniGameBuilder.DeleteSelectEffect();
         miniGameBuilder.CreateSelectEffect(character.transform.position);
         SetCameraPosition(character.transform.position);
     }
@@ -114,7 +115,7 @@ public class MiniGameCombatHandler : BaseMiniGameHandler<MiniGameCombatBuilder, 
     public void StartNextRound()
     {
         //关闭指令UI
-        uiMiniGameCombat.CloseCommand();
+        uiMiniGameCombat.CloseAll();
         //设置当前角色重新开始
         uiMiniGameCombat.InitCharacterRound(miniGameData.GetRoundActionCharacter().characterMiniGameData);
         //结束当前回合
@@ -169,19 +170,21 @@ public class MiniGameCombatHandler : BaseMiniGameHandler<MiniGameCombatBuilder, 
     }
 
     /// <summary>
-    /// 开始战斗
+    /// 回合行动
     /// </summary>
     /// <param name="resultsAccuracy"></param>
     /// <param name="resultsForce"></param>
-    public void FightForStart(float resultsAccuracy, float resultsForce)
+    public void RoundForAction()
     {
-        StartCoroutine(CoroutineForFight(resultsAccuracy, resultsForce));
+        //先调整镜头
+        InitCameraPosition();
+        StartCoroutine(CoroutineForAction());
     }
 
     /// <summary>
-    /// 战斗准备
+    /// 回合准备
     /// </summary>
-    public void FightForPre(MiniGameCharacterForCombatBean gameCharacterData)
+    public void RoundForPre(MiniGameCharacterForCombatBean gameCharacterData)
     {
         //初始化数据
         gameCharacterData.CombatEffectExecute();
@@ -201,7 +204,7 @@ public class MiniGameCombatHandler : BaseMiniGameHandler<MiniGameCombatBuilder, 
         {
             //友方行动
             miniGameData.SetCombatStatus(MiniGameCombatStatusEnum.OurRound);
-            uiMiniGameCombat.OpenCommand();
+            uiMiniGameCombat.OpenCombatCommand();
         }
         //开启选中特效
         SelectCharacter(npcCpt);
@@ -229,133 +232,113 @@ public class MiniGameCombatHandler : BaseMiniGameHandler<MiniGameCombatBuilder, 
     /// <param name="gameCharacterData"></param>
     public void CharacterRound(MiniGameCharacterForCombatBean gameCharacterData)
     {
-        FightForPre(gameCharacterData);
+        RoundForPre(gameCharacterData);
     }
 
     /// <summary>
-    /// 指令 战斗
+    /// 指令 结束
     /// </summary>
     /// <param name="details"></param>
-    public void CommandFight(int details)
+    public void CommandEnd()
     {
-        List<NpcAIMiniGameCombatCpt> listEnemy = miniGameBuilder.GetEnemyCharacter();
-        switch (details)
-        {
-            ////选择攻击
-            //case 0:
-            //    //设置选中特效 默认选中第一个]
-            //    SetRoundTargetCharacter(listEnemy[mTargetSelectedPosition]);
-            //    SelectedCharacter(mRoundTargetCharacter);
-            //    break;
-            ////交换 
-            //case 1:
-            //    mTargetSelectedPosition++;
-            //    if (mTargetSelectedPosition >= listEnemy.Count)
-            //        mTargetSelectedPosition = 0;
-            //    //取消选中
-            //    UnSelectedCharacter(mRoundTargetCharacter);
-            //    //设置新目标
-            //    SetRoundTargetCharacter(listEnemy[mTargetSelectedPosition]);
-            //    SelectedCharacter(mRoundTargetCharacter);
-            //    break;
-            ////确认
-            //case 2:
-            //    //打开力道测试
-            //    UIMiniGameCombat uiMiniGameCombat = (UIMiniGameCombat)uiGameManager.GetOpenUI();
-            //    uiMiniGameCombat.OpenCombatPowerTest(mRoundActionCharacter.characterMiniGameData);
-            //    break;
-            ////取消
-            //case 3:
-            //    UnSelectedCharacter(mRoundTargetCharacter);
-            //    SelectedCharacter(mRoundActionCharacter);
-            //    SetRoundTargetCharacter(null);
-            //    break;
-        }
-
-    }
-    /// <summary>
-    /// 指令 技能
-    /// </summary>
-    public void CommandSkill()
-    {
-    }
-
-    /// <summary>
-    /// 指令 物品
-    /// </summary>
-    public void CommandItems()
-    {
-    }
-
-    /// <summary>
-    /// 力道测试结束
-    /// </summary>
-    /// <param name="resultsAccuracy"></param>
-    /// <param name="resultsForce"></param>
-    public void PowerTestEnd(float resultsAccuracy, float resultsForce)
-    {
-        FightForStart(resultsAccuracy, resultsForce);
+        RoundForAction();
     }
     #endregion
 
-    public IEnumerator CoroutineForFight(float resultsAccuracy, float resultsForce)
+    /// <summary>
+    /// 协程 行动
+    /// </summary>
+    /// <returns></returns>
+    public IEnumerator CoroutineForAction()
     {
-        ////获取属性
-        //mRoundActionCharacter.characterMiniGameData.characterData.GetAttributes(gameItemsManager, out CharacterAttributesBean characterAttributes);
-        ////让行动角色移动到被攻击对象面前
-        //Vector3 offsetPosition;
-        ////根据角色朝向决定位置
-        //if (mRoundTargetCharacter.GetCharacterFace() == 1)
-        //    offsetPosition = new Vector3(-1, 0);
-        //else
-        //    offsetPosition = new Vector3(1, 0);
-        ////记录之前的位置
-        //Vector3 oldPosition = mRoundActionCharacter.transform.position;
-        ////行动角色移动到目标角色面前
-        //mRoundActionCharacter.transform.DOMove(mRoundTargetCharacter.transform.position + offsetPosition, 0.5f);
-        //yield return new WaitForSeconds(0.5f);
-        ////计算闪避
-        //float dodgeRate = UnityEngine.Random.Range(0f, 1f);
-        //if (dodgeRate <= resultsAccuracy)
-        //{
-        //    //如果角色防御了
-        //    if (mRoundTargetCharacter.characterMiniGameData.combatIsDefend)
-        //        resultsForce = resultsForce / 2f;
-        //    //计算伤害
-        //    int damage = (int)((resultsForce + 0.2f) * characterAttributes.force) * 2;
-        //    //角色伤害
-        //    mRoundTargetCharacter.UnderAttack(resultsForce, damage);
-        //    //如果角色阵亡
-        //    if (mRoundTargetCharacter.characterMiniGameData.characterCurrentLife <= 0)
-        //    {
-        //        //设置角色死亡
-        //        mRoundTargetCharacter.SetCharacterDead();
-        //        //移除这个角色
-        //        if (miniGameBuilder.GetOurCharacter().Contains(mRoundTargetCharacter))
-        //            miniGameBuilder.GetOurCharacter().Remove(mRoundTargetCharacter);
-        //        if (miniGameBuilder.GetEnemyCharacter().Contains(mRoundTargetCharacter))
-        //            miniGameBuilder.GetEnemyCharacter().Remove(mRoundTargetCharacter);
-        //        //ui回合移除该角色
-        //        UIMiniGameCombat uiMiniGameCombat = (UIMiniGameCombat)uiGameManager.GetOpenUI();
-        //        uiMiniGameCombat.RemoveCharacterRound(mRoundTargetCharacter.characterMiniGameData);
-        //        //检测是否游戏结束
-        //        bool isGameOver = CheckIsGameOver(out bool isWinGame);
-        //        if (isGameOver)
-        //            //结束游戏
-        //            EndGame(isWinGame);
-        //    }
-        //}
-        //else
-        //{
-        //    //角色闪避了
-        //    mRoundTargetCharacter.ShowTextInfo(GameCommonInfo.GetUITextById(14001));
-        //}
-        ////行动角色回到自己的位置
-        //yield return new WaitForSeconds(0.5f);
-        //mRoundActionCharacter.transform.DOMove(oldPosition, 0.5f);
+        //先取消选中框
+        miniGameBuilder.DeleteSelectEffect();
+
+        switch (miniGameData.GetRoundActionCommand())
+        {
+            case MiniGameCombatCommand.Fight:
+                yield return StartCoroutine(CoroutineForCommandFight());
+                break;
+            case MiniGameCombatCommand.Skill:
+                break;
+            case MiniGameCombatCommand.Items:
+                break;
+        }
+        CheckCharacterLife();
         yield return new WaitForSeconds(0.5f);
-        //StartNextRound();
+        StartNextRound();
     }
 
+    /// <summary>
+    /// 协程 战斗指令
+    /// </summary>
+    /// <returns></returns>
+    private IEnumerator CoroutineForCommandFight()
+    {
+        NpcAIMiniGameCombatCpt actionNpc = miniGameData.GetRoundActionCharacter();
+        NpcAIMiniGameCombatCpt targetNpc = miniGameData.GetRoundTargetCharacter();
+        //获取属性
+        actionNpc.characterData.GetAttributes(gameItemsManager, out CharacterAttributesBean actionCharacterAttributes);
+
+        //让行动角色移动到被攻击对象面前
+        Vector3 offsetPosition;
+        //根据角色朝向决定位置
+        if (targetNpc.GetCharacterFace() == 1)
+            offsetPosition = new Vector3(-1, 0);
+        else
+            offsetPosition = new Vector3(1, 0);
+        //记录之前的位置
+        Vector3 oldPosition = actionNpc.transform.position;
+        //行动角色移动到目标角色面前
+        actionNpc.transform.DOMove(targetNpc.transform.position + offsetPosition, 0.5f);
+        yield return new WaitForSeconds(0.5f);
+        //TODO 计算闪避(待定)
+        float dodgeRate = UnityEngine.Random.Range(0f, 1f);
+        if (dodgeRate <= 1)
+        {
+            float damageRate = (miniGameData.GetPowerTest() + 0.2f);
+            //计算伤害
+            int damage = (int)(damageRate * actionCharacterAttributes.force * 10);
+            //角色伤害
+            targetNpc.UnderAttack(damageRate, damage);
+        }
+        else
+        {
+            //角色闪避了
+            targetNpc.ShowTextInfo(GameCommonInfo.GetUITextById(14001),Color.blue);
+        }
+        //行动角色回到自己的位置
+        yield return new WaitForSeconds(0.5f);
+        actionNpc.transform.DOMove(oldPosition, 0.5f);
+    }
+
+    /// <summary>
+    /// 检测所有角色生命值
+    /// </summary>
+    private void CheckCharacterLife()
+    {
+        List<NpcAIMiniGameCombatCpt> listNpc = miniGameBuilder.GetAllCharacter();
+        foreach (NpcAIMiniGameCombatCpt itemNpc in listNpc)
+        {
+            //如果角色阵亡
+            if (itemNpc.characterMiniGameData.characterCurrentLife <= 0)
+            {
+                //设置角色死亡
+                itemNpc.SetCharacterDead();
+                //移除这个角色
+                if (miniGameBuilder.GetUserCharacter().Contains(itemNpc))
+                    miniGameBuilder.GetUserCharacter().Remove(itemNpc);
+                if (miniGameBuilder.GetEnemyCharacter().Contains(itemNpc))
+                    miniGameBuilder.GetEnemyCharacter().Remove(itemNpc);
+                //ui回合移除该角色
+                uiMiniGameCombat.RemoveCharacterRound(itemNpc.characterMiniGameData);
+                //检测是否游戏结束
+                bool isGameOver = CheckIsGameOver(out bool isWinGame);
+                if (isGameOver)
+                    //结束游戏
+                    EndGame(isWinGame);
+            }
+        }
+    }
 
 }

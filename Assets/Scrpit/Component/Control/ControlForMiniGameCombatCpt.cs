@@ -38,15 +38,24 @@ public class ControlForMiniGameCombatCpt : BaseControl
         {
             return;
         }
-        if (Input.GetButtonDown(InputInfo.Direction_Down))
-        {
-            uiMiniGameCombat.uiForSelectCharacter.ChangeCharacter(1);
-        }
-        if (Input.GetButtonDown(InputInfo.Direction_Up))
+        if (Input.GetButtonDown(InputInfo.Direction_Up)
+            || Input.GetButtonDown(InputInfo.Direction_Left)
+  )
         {
             uiMiniGameCombat.uiForSelectCharacter.ChangeCharacter(-1);
         }
+        if (Input.GetButtonDown(InputInfo.Direction_Right)
+            || Input.GetButtonDown(InputInfo.Direction_Down))
+        {
+            uiMiniGameCombat.uiForSelectCharacter.ChangeCharacter(1);
+        }
+        if (Input.GetButtonDown(InputInfo.Interactive_E))
+        {
+            uiMiniGameCombat.uiForSelectCharacter.ConfirmSelect();
+        }
+        if (Input.GetButtonDown(InputInfo.Cancel))
+        {
+            gameCombatHandler.RoundForPre(gameCombatHandler.miniGameData.GetRoundActionCharacter().characterMiniGameData);
+        }
     }
-
-
 }

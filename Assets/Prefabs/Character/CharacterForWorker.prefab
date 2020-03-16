@@ -500,6 +500,7 @@ MonoBehaviour:
       charm: 0
       force: 0
       lucky: 0
+      listSkills: 
     body:
       sex: 1
       skinColor:
@@ -556,6 +557,7 @@ MonoBehaviour:
       position_x: 0
       position_y: 0
       talk_ids: 
+      skill_ids: 
       attributes_loyal: 0
       attributes_life: 0
       attributes_cook: 0
@@ -579,6 +581,7 @@ MonoBehaviour:
   characterShoutCpt: {fileID: 3431049019408379413}
   characterExpression: {fileID: 6362100544653756119}
   characterStatusIcon: {fileID: 9132228567301972337}
+  objTake: {fileID: 834773969608161383}
   aiForChef: {fileID: 8089863752262935693}
   aiForWaiter: {fileID: 5088782280854681849}
   aiForAccountant: {fileID: 1343993552124416576}
@@ -601,6 +604,36 @@ MonoBehaviour:
   npcAIWorker: {fileID: 0}
   innFoodManager: {fileID: 0}
   cookPro: {fileID: 8305544707907389067}
+  orderForCustomer:
+    customer: {fileID: 0}
+    foodData:
+      id: 0
+      valid: 0
+      menu_id: 0
+      icon_key: 
+      cook_time: 0
+      ing_oilsalt: 0
+      ing_meat: 0
+      ing_riverfresh: 0
+      ing_seafood: 0
+      ing_vegetables: 0
+      ing_melonfruit: 0
+      ing_waterwine: 0
+      ing_flour: 0
+      name: 
+      content: 
+      price_s: 0
+      price_m: 0
+      price_l: 0
+    table: {fileID: 0}
+    stove: {fileID: 0}
+    counter: {fileID: 0}
+    foodCpt: {fileID: 0}
+    chef: {fileID: 0}
+    waiterForSend: {fileID: 0}
+    foodLevel: 0
+    innEvaluation:
+      mood: 100
   chefIntent: 0
   movePosition: {x: 0, y: 0, z: 0}
 --- !u!114 &5088782280854681849
@@ -616,7 +649,36 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   npcAIWorker: {fileID: 0}
-  objTake: {fileID: 834773969608161383}
+  orderForCustomer:
+    customer: {fileID: 0}
+    foodData:
+      id: 0
+      valid: 0
+      menu_id: 0
+      icon_key: 
+      cook_time: 0
+      ing_oilsalt: 0
+      ing_meat: 0
+      ing_riverfresh: 0
+      ing_seafood: 0
+      ing_vegetables: 0
+      ing_melonfruit: 0
+      ing_waterwine: 0
+      ing_flour: 0
+      name: 
+      content: 
+      price_s: 0
+      price_m: 0
+      price_l: 0
+    table: {fileID: 0}
+    stove: {fileID: 0}
+    counter: {fileID: 0}
+    foodCpt: {fileID: 0}
+    chef: {fileID: 0}
+    waiterForSend: {fileID: 0}
+    foodLevel: 0
+    innEvaluation:
+      mood: 100
   sendPro: {fileID: 8539609259031682879}
   clearPro: {fileID: 5333232922662795324}
   movePosition: {x: 0, y: 0, z: 0}
@@ -634,6 +696,36 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   npcAIWorker: {fileID: 0}
+  orderForCustomer:
+    customer: {fileID: 0}
+    foodData:
+      id: 0
+      valid: 0
+      menu_id: 0
+      icon_key: 
+      cook_time: 0
+      ing_oilsalt: 0
+      ing_meat: 0
+      ing_riverfresh: 0
+      ing_seafood: 0
+      ing_vegetables: 0
+      ing_melonfruit: 0
+      ing_waterwine: 0
+      ing_flour: 0
+      name: 
+      content: 
+      price_s: 0
+      price_m: 0
+      price_l: 0
+    table: {fileID: 0}
+    stove: {fileID: 0}
+    counter: {fileID: 0}
+    foodCpt: {fileID: 0}
+    chef: {fileID: 0}
+    waiterForSend: {fileID: 0}
+    foodLevel: 0
+    innEvaluation:
+      mood: 100
   accountingPro: {fileID: 491588413961666520}
   movePosition: {x: 0, y: 0, z: 0}
   accountantIntent: 0

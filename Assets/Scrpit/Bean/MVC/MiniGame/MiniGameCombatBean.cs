@@ -4,10 +4,14 @@ using System.Collections.Generic;
 
 public class MiniGameCombatBean : MiniGameBaseBean
 {
+    //回合行动指令
+    protected MiniGameCombatCommand roundCombatCommand = MiniGameCombatCommand.None;
     //回合的行动角色数据
     protected NpcAIMiniGameCombatCpt roundActionCharacter;
     //回合对象角色数据
     protected List<NpcAIMiniGameCombatCpt> roundListTargetCharacter;
+    //力度测试
+    protected float powerTest;
 
     public enum MiniGameCombatStatusEnum
     {
@@ -72,6 +76,55 @@ public class MiniGameCombatBean : MiniGameBaseBean
         if (roundListTargetCharacter == null)
             roundListTargetCharacter = new List<NpcAIMiniGameCombatCpt>();
         roundListTargetCharacter.AddRange(roundActionCharacter);
+    }
+
+    /// <summary>
+    /// 获取回合目标角色
+    /// </summary>
+    /// <returns></returns>
+    public NpcAIMiniGameCombatCpt GetRoundTargetCharacter()
+    {
+        return roundListTargetCharacter[0];
+    }
+    public List<NpcAIMiniGameCombatCpt> GetRoundTargetListCharacter()
+    {
+        return roundListTargetCharacter;
+    }
+
+
+    /// <summary>
+    /// 设置回合行动指令
+    /// </summary>
+    /// <param name="roundCombatCommand"></param>
+    public void SetRoundActionCommand(MiniGameCombatCommand roundCombatCommand)
+    {
+        this.roundCombatCommand = roundCombatCommand;
+    }
+    /// <summary>
+    /// 返回回合行动指令
+    /// </summary>
+    /// <param name="roundCombatCommand"></param>
+    public MiniGameCombatCommand GetRoundActionCommand()
+    {
+        return roundCombatCommand;
+    }
+
+    /// <summary>
+    /// 设置测试
+    /// </summary>
+    /// <param name="powerTest"></param>
+    public void SetPowerTest(float powerTest)
+    {
+        this.powerTest = powerTest;
+    }
+
+    /// <summary>
+    /// 获取力量测试
+    /// </summary>
+    /// <returns></returns>
+    public float GetPowerTest()
+    {
+        return powerTest;
     }
 
     /// <summary>

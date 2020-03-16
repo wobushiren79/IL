@@ -14,8 +14,6 @@ public class NpcAIWorkerForWaiterCpt : NpcAIWokerFoBaseCpt
         GoToClear,//清理的路上
         Cleaning,//清理中
     }
-
-    public GameObject objTake;
     //订单
     public OrderForCustomer orderForCustomer;
     //送菜的进度图标
@@ -177,7 +175,7 @@ public class NpcAIWorkerForWaiterCpt : NpcAIWokerFoBaseCpt
     public void SetIntentForSendFood(OrderForCustomer orderForCustomer)
     {
         sendPro.SetActive(true);
-        orderForCustomer.foodCpt.transform.SetParent(objTake.transform);
+        npcAIWorker.SetTake(orderForCustomer.foodCpt.gameObject);
         orderForCustomer.foodCpt.transform.DOLocalMove(Vector3.zero, 0.2f);
         //orderForCustomer.foodCpt.transform.localPosition = Vector3.zero;
         movePosition = orderForCustomer.table.GetTablePosition();

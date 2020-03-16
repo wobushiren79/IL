@@ -29,7 +29,7 @@ public class NpcAIMiniGameCombatCpt : BaseNpcAI
     public override void SetCharacterDead()
     {
         base.SetCharacterDead();
-        SetExpression(CharacterExpressionCpt.CharacterExpressionEnum.Dead, -1);;
+        SetExpression(CharacterExpressionCpt.CharacterExpressionEnum.Dead, -1); ;
         //关闭血量展示
         characterLifeCpt.gameObject.SetActive(false);
     }
@@ -52,18 +52,16 @@ public class NpcAIMiniGameCombatCpt : BaseNpcAI
     public void UnderAttack(float powerLevel, int damage)
     {
         characterMiniGameData.ChangeLife(-damage);
-
-        TextMesh tvItem = ShowTextInfo("-" + damage);
-        if (powerLevel > 0.8f)
+        Color colorDamage;
+        if (powerLevel > 1f)
         {
-            tvItem.characterSize = 0.15f;
-            tvItem.color = Color.red;
+            colorDamage = Color.red;
         }
         else
         {
-            tvItem.characterSize = 0.1f;
-            tvItem.color = Color.white;
+            colorDamage = Color.gray;
         }
+        ShowTextInfo("-" + damage, colorDamage);
         //流血特效
         if (damage != 0)
         {
@@ -83,19 +81,12 @@ public class NpcAIMiniGameCombatCpt : BaseNpcAI
     /// </summary>
     /// <param name="text"></param>
     /// <returns></returns>
-    public TextMesh ShowTextInfo(string text)
+    public GameObject ShowTextInfo(string text, Color colorText)
     {
         GameObject objItemDamage = Instantiate(gameObject, objDamageModel);
-        TextMesh tvItem = objItemDamage.GetComponentInChildren<TextMesh>();
-        tvItem.text = text + "";
-        //数字特效
-        objItemDamage.transform.DOScale(new Vector3(0, 0, 0), 1f).From().SetEase(Ease.OutElastic);
-        objItemDamage.transform.DOLocalMoveY(1.5f, 2.5f).OnComplete(delegate ()
-        {
-            Destroy(objItemDamage);
-        });
-        DOTween.To(() => 1f, alpha => tvItem.color = new Color(tvItem.color.r, tvItem.color.g, tvItem.color.b, alpha), 0f, 1).SetDelay(4);
-        return tvItem;
+        JumpTextCpt jumpText = objItemDamage.GetComponent<JumpTextCpt>();
+        jumpText.SetData(text, colorText);
+        return objItemDamage;
     }
 
     /// <summary>
@@ -119,61 +110,78 @@ public class NpcAIMiniGameCombatCpt : BaseNpcAI
             relativeOurList = gameCombatHandler.miniGameBuilder.GetCharacter(0);
             relativeEnemyList = gameCombatHandler.miniGameBuilder.GetCharacter(1);
         }
-        //如果不防御就攻击
-        StartCoroutine(IntentForFight(relativeEnemyList));
-    }
-
-    /// <summary>
-    /// 意图-攻击
-    /// </summary>
-    public IEnumerator IntentForFight(List<NpcAIMiniGameCombatCpt> relativeEnemyList)
-    {
-        if (!CheckUtil.ListIsNull(relativeEnemyList))
+        float intentRate = Random.Range(0f, 1f);
+        if (intentRate <= 0.5f)
         {
-            //选择血最少的
-            NpcAIMiniGameCombatCpt targetNpc = null;
-            for (int i = 0; i < relativeEnemyList.Count; i++)
+            //一定概率攻击
+            StartCoroutine(CoroutineForIntentFight(relativeOurList, relativeEnemyList));
+        }
+        else
+        {
+            //一定概率使用技能
+            List<long> skillIds = characterMiniGameData.characterData.attributes.listSkills;
+            //如果没有技能 默认攻击
+            if (skillIds == null || skillIds.Count == 0)
             {
-                NpcAIMiniGameCombatCpt itemNPC = relativeEnemyList[i];
-                if (targetNpc == null)
-                {
-                    targetNpc = itemNPC;
-                }
-                else
-                {
-                    //选择血少的
-                    if (targetNpc.characterMiniGameData.characterCurrentLife > itemNPC.characterMiniGameData.characterCurrentLife)
-                    {
-                        targetNpc = itemNPC;
-                    }
-                    else if (targetNpc.characterMiniGameData.characterCurrentLife == itemNPC.characterMiniGameData.characterCurrentLife)
-                    {
-                        if (Random.Range(0, 2) == 1)
-                        {
-                            targetNpc = itemNPC;
-                        }
-                    }
-                }
+                StartCoroutine(CoroutineForIntentFight(relativeOurList, relativeEnemyList));
             }
-            yield return new WaitForSeconds(1);
-            gameCombatHandler.miniGameData.SetRoundTargetCharacter(targetNpc);
-            //gameCombatHandler.SelectedCharacter(targetNpc);
-            gameCombatHandler.InitCameraPosition();
+            else
+            {
+                StartCoroutine(CoroutineForIntentSkill(relativeOurList, relativeEnemyList));
+            }
         }
     }
 
     /// <summary>
-    /// 意图-防御
+    /// 协程意图-攻击
     /// </summary>
-    public IEnumerator IntentForSkill()
+    public IEnumerator CoroutineForIntentFight(List<NpcAIMiniGameCombatCpt> relativeOurList, List<NpcAIMiniGameCombatCpt> relativeEnemyList)
     {
-        yield return new WaitForSeconds(2);
+        gameCombatHandler.miniGameData.SetRoundActionCommand(MiniGameCombatCommand.Fight);
+        gameCombatHandler.miniGameData.SetPowerTest(1);
+        //选择血最少的
+        NpcAIMiniGameCombatCpt targetNpc = null;
+        //for (int i = 0; i < relativeEnemyList.Count; i++)
+        //{
+        //    NpcAIMiniGameCombatCpt itemNPC = relativeEnemyList[i];
+        //    if (targetNpc == null)
+        //    {
+        //        targetNpc = itemNPC;
+        //    }
+        //    else
+        //    {
+        //        //选择血少的
+        //        if (targetNpc.characterMiniGameData.characterCurrentLife > itemNPC.characterMiniGameData.characterCurrentLife)
+        //        {
+        //            targetNpc = itemNPC;
+        //        }
+        //        else if (targetNpc.characterMiniGameData.characterCurrentLife == itemNPC.characterMiniGameData.characterCurrentLife)
+        //        {
+        //            if (Random.Range(0, 2) == 1)
+        //            {
+        //                targetNpc = itemNPC;
+        //            }
+        //        }
+        //    }
+        //}
+        //随机选一个
+        targetNpc = RandomUtil.GetRandomDataByList(relativeEnemyList);
+        gameCombatHandler.miniGameData.SetRoundTargetCharacter(targetNpc);
+        yield return new WaitForSeconds(1);
+        gameCombatHandler.RoundForAction();
     }
-    /// <summary>
-    /// 意图-攻击
-    /// </summary>
-    public void IntentForItems()
-    {
 
+    /// <summary>
+    ///协程意图-技能
+    /// </summary>
+    public IEnumerator CoroutineForIntentSkill(List<NpcAIMiniGameCombatCpt> relativeOurList, List<NpcAIMiniGameCombatCpt> relativeEnemyList)
+    {
+        gameCombatHandler.miniGameData.SetRoundActionCommand(MiniGameCombatCommand.Skill);
+        gameCombatHandler.miniGameData.SetPowerTest(1);
+        //随机选一个
+        NpcAIMiniGameCombatCpt targetNpc = RandomUtil.GetRandomDataByList(relativeEnemyList);
+        gameCombatHandler.miniGameData.SetRoundTargetCharacter(targetNpc);
+        yield return new WaitForSeconds(2);
+        gameCombatHandler.RoundForAction();
     }
 }

@@ -28,6 +28,9 @@ public class BaseNpcAI : BaseObservable<IBaseObserver>
     protected CharacterBodyCpt characterBody;
     protected CharacterDressCpt characterDress;
 
+    //拿取
+    public GameObject objTake;
+
     public virtual void Awake()
     {
         gameDataManager = Find<GameDataManager>(ImportantTypeEnum.GameDataManager);
@@ -216,7 +219,8 @@ public class BaseNpcAI : BaseObservable<IBaseObserver>
         if (characterBody != null)
         {
             characterBody.SetEye("character_eye_special_dead", new Color(0, 0, 0), false);
-            characterBody.transform.DOLocalRotate(new Vector3(0, 0, 90), 0.1f).SetEase(Ease.OutBack);
+            characterBody.transform.DOLocalRotate(new Vector3(0, 0, -90), 0.1f).SetEase(Ease.OutBack);
+            characterBody.transform.localPosition = new Vector3(0, 0.3f, 0);
         }
     }
 
@@ -226,6 +230,7 @@ public class BaseNpcAI : BaseObservable<IBaseObserver>
     public virtual void SetCharacterLive()
     {
         characterBody.transform.DOLocalRotate(new Vector3(0, 0, 0), 0.1f).SetEase(Ease.OutBack);
+        characterBody.transform.localPosition = new Vector3(0, 0.5f, 0);
     }
 
     /// <summary>
@@ -235,5 +240,23 @@ public class BaseNpcAI : BaseObservable<IBaseObserver>
     public void SetShout(string content)
     {
         characterShoutCpt.Shout(content);
+    }
+
+    /// <summary>
+    /// 设置拿取
+    /// </summary>
+    /// <param name="objThings"></param>
+    public void SetTake(GameObject objThings)
+    {
+        if(objTake!=null)
+            objThings.transform.SetParent(objTake.transform);
+    }
+
+    /// <summary>
+    /// 展示手拿物品
+    /// </summary>
+    public void ShowHand()
+    {
+       
     }
 }
