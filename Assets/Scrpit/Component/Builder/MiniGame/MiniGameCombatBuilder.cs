@@ -127,6 +127,25 @@ public class MiniGameCombatBuilder : BaseMiniGameBuilder
     }
 
     /// <summary>
+    /// 创建战斗特效
+    /// </summary>
+    /// <param name="combatEffectName"></param>
+    /// <param name="position"></param>
+    /// <returns></returns>
+    public GameObject CreateCombatEffect(string combatEffectName, Vector3 position)
+    {
+        if (CheckUtil.StringIsNull(combatEffectName))
+            return null;
+        GameObject objEffectModel = effectManager.GetCombatEffectByName(combatEffectName);
+        if (objEffectModel == null)
+            return null;
+        GameObject objEffect = Instantiate(objSelectEffectContainer, objEffectModel, position);
+        CombatPSCpt combatPS = objEffect.GetComponent<CombatPSCpt>();
+        combatPS.Play();
+        return objEffect;
+    }
+
+    /// <summary>
     /// 删除选择特效
     /// </summary>
     /// <param name="objEffect"></param>

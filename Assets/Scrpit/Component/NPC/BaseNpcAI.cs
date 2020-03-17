@@ -180,6 +180,30 @@ public class BaseNpcAI : BaseObservable<IBaseObserver>
     }
 
     /// <summary>
+    /// 增加状态效果图标
+    /// </summary>
+    /// <param name="iconName"></param>
+    /// <param name="spColor"></param>
+    public void AddStatusIconForEffect(Sprite spIcon,Color spColor,string markId)
+    {
+        if (spIcon == null)
+            return;
+        CharacterStatusIconBean statusIconData = new CharacterStatusIconBean();
+        statusIconData.spColor = Color.red;
+        statusIconData.spIcon = spIcon;
+        statusIconData.markId = markId;
+        characterStatusIcon.AddStatusIcon(statusIconData);
+    }
+    
+    /// <summary>
+    /// 通过标记ID 删除图标
+    /// </summary>
+    /// <param name="markId"></param>
+    public void RemoveStatusIconByMarkId(string markId)
+    {
+        characterStatusIcon.RemoveStatusIconByMarkId(markId);
+    }
+    /// <summary>
     /// 设置角色朝向 1左 2 右
     /// </summary>
     /// <param name="face"></param>

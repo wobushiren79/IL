@@ -6,7 +6,10 @@ using System.Collections;
 public class NpcAIMiniGameCombatCpt : BaseNpcAI
 {
     //战斗游戏处理
-    public MiniGameCombatHandler gameCombatHandler;
+    protected MiniGameCombatHandler gameCombatHandler;
+    //战斗游戏创建
+    protected MiniGameCombatBuilder gameCombatBuilder;
+
     //角色数据
     public MiniGameCharacterForCombatBean characterMiniGameData;
     //角色血量
@@ -24,6 +27,7 @@ public class NpcAIMiniGameCombatCpt : BaseNpcAI
     {
         base.Awake();
         gameCombatHandler = Find<MiniGameCombatHandler>(ImportantTypeEnum.MiniGameHandler);
+        gameCombatBuilder = FindInChildren<MiniGameCombatBuilder>(ImportantTypeEnum.MiniGameBuilder);
     }
 
     public override void SetCharacterDead()
@@ -32,6 +36,12 @@ public class NpcAIMiniGameCombatCpt : BaseNpcAI
         SetExpression(CharacterExpressionCpt.CharacterExpressionEnum.Dead, -1); ;
         //关闭血量展示
         characterLifeCpt.gameObject.SetActive(false);
+        //移除所有效果
+        foreach (MiniGameCombatEffectBean combatEffectData in characterMiniGameData.listCombatEffect)
+        {
+            RemoveStatusIconByMarkId(combatEffectData.iconMarkId);
+        }
+        characterMiniGameData.listCombatEffect.Clear();
     }
 
     /// <summary>
@@ -138,7 +148,7 @@ public class NpcAIMiniGameCombatCpt : BaseNpcAI
     public IEnumerator CoroutineForIntentFight(List<NpcAIMiniGameCombatCpt> relativeOurList, List<NpcAIMiniGameCombatCpt> relativeEnemyList)
     {
         gameCombatHandler.miniGameData.SetRoundActionCommand(MiniGameCombatCommand.Fight);
-        gameCombatHandler.miniGameData.SetPowerTest(1);
+        gameCombatHandler.miniGameData.SetRoundActionPowerTest(1);
         //选择血最少的
         NpcAIMiniGameCombatCpt targetNpc = null;
         //for (int i = 0; i < relativeEnemyList.Count; i++)
@@ -177,11 +187,94 @@ public class NpcAIMiniGameCombatCpt : BaseNpcAI
     public IEnumerator CoroutineForIntentSkill(List<NpcAIMiniGameCombatCpt> relativeOurList, List<NpcAIMiniGameCombatCpt> relativeEnemyList)
     {
         gameCombatHandler.miniGameData.SetRoundActionCommand(MiniGameCombatCommand.Skill);
-        gameCombatHandler.miniGameData.SetPowerTest(1);
+        gameCombatHandler.miniGameData.SetRoundActionPowerTest(1);
         //随机选一个
         NpcAIMiniGameCombatCpt targetNpc = RandomUtil.GetRandomDataByList(relativeEnemyList);
         gameCombatHandler.miniGameData.SetRoundTargetCharacter(targetNpc);
         yield return new WaitForSeconds(2);
         gameCombatHandler.RoundForAction();
     }
+
+    /// <summary>
+    /// 战斗效果执行
+    /// </summary>
+    public IEnumerator CombatEffectExecute()
+    {
+        for (int i = 0; i < characterMiniGameData.listCombatEffect.Count; i++)
+        {
+            MiniGameCombatEffectBean itemCombatEffect = characterMiniGameData.listCombatEffect[i];
+            CombatEffectExecute(itemCombatEffect,out bool isCharacterDead);
+            //如果角色已经死了 则不进行一下操作
+            if (isCharacterDead)
+                break;
+            if (itemCombatEffect.durationForRound <= 0)
+            {
+                //移除图标
+                RemoveStatusIconByMarkId(itemCombatEffect.iconMarkId);
+                //删除数据
+                characterMiniGameData.listCombatEffect.Remove(itemCombatEffect);
+                i--;
+            }
+            yield return new WaitForSeconds(0.5f);
+        }
+    }
+
+    /// <summary>
+    /// 战斗效果执行
+    /// </summary>
+    /// <param name="itemCombatEffect"></param>
+    public void CombatEffectExecute(MiniGameCombatEffectBean itemCombatEffect,out bool isDead)
+    {
+        //播放粒子特效
+        gameCombatBuilder.CreateCombatEffect(itemCombatEffect.effectPSName,transform.position + new Vector3(0,0.5f));
+        //完成数据
+        itemCombatEffect.CompleteEffect(characterMiniGameData,this);
+        //检测角色血量
+        gameCombatHandler.CheckCharacterLife();
+
+        if (characterMiniGameData.characterCurrentLife <= 0)
+        {
+            isDead = true;
+        }
+        else
+        {
+            isDead = false;
+        }
+    }
+
+    /// <summary>
+    /// 增加效果
+    /// </summary>
+    /// <param name="effectTypeData"></param>
+    /// <param name="effectDetailsData"></param>
+    public void AddCombatEffect(string effectTypeData, string effectDetailsData)
+    {
+        List<EffectTypeBean> listTypeData = EffectTypeEnumTools.GetListEffectData(effectTypeData);
+        EffectDetailsEnumTools.GetEffectDetailsForCombat(effectDetailsData, out string effectPSName, out int durationForRound);
+
+        foreach (EffectTypeBean itemType in listTypeData)
+        {
+            EffectTypeEnumTools.GetEffectDetails(iconDataManager ,itemType);
+            MiniGameCombatEffectBean gameCombatEffectData = new MiniGameCombatEffectBean();
+            gameCombatEffectData.effectType = itemType.dataType;
+            gameCombatEffectData.spIcon = itemType.spIcon;
+            gameCombatEffectData.effectData = float.Parse(itemType.data);
+            gameCombatEffectData.durationForRound = durationForRound;
+            gameCombatEffectData.effectPSName = effectPSName;
+            gameCombatEffectData.iconMarkId = SystemUtil.GetUUID( SystemUtil.UUIDTypeEnum.N);
+            //回合数小于0则是立即执行效果
+            if (gameCombatEffectData.durationForRound <= 0)
+            {
+                CombatEffectExecute(gameCombatEffectData,out bool isDead);
+                if (isDead)
+                    return;
+            }
+            else
+            {
+                AddStatusIconForEffect(itemType.spIcon, Color.white, gameCombatEffectData.iconMarkId);
+                characterMiniGameData.listCombatEffect.Add(gameCombatEffectData);
+            }
+        }
+    }
+
 }

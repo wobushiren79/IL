@@ -68,6 +68,32 @@ public class CharacterStatusIconCpt : BaseMonoBehaviour
     }
 
     /// <summary>
+    /// 根据类型移除图标
+    /// </summary>
+    /// <param name="characterStatus"></param>
+    public void RemoveStatusIconByMarkId(string markId)
+    {
+        for (int i = 0; i < listStatusIcon.Count; i++)
+        {
+            CharacterStatusIconItemCpt itemData = listStatusIcon[i];
+            if (itemData.statusIconData.markId.Equals(markId))
+            {
+                itemData.transform.DOScale(new Vector3(0, 0, 0), 0.5f).OnComplete(delegate { Destroy(itemData.gameObject); });
+                listStatusIcon.Remove(itemData);
+                i--;
+            }
+        }
+        float totalX = (listStatusIcon.Count - 1) * 0.5f;
+        float startX = -(totalX / 2f);
+        //设置新的位置
+        for (int i = 0; i < listStatusIcon.Count; i++)
+        {
+            CharacterStatusIconItemCpt itemCpt = listStatusIcon[i];
+            itemCpt.transform.DOLocalMoveX(startX + i * 0.5f, 0.5f);
+        }
+    }
+
+    /// <summary>
     /// 修改图标
     /// </summary>
     /// <param name="statusData"></param>
@@ -98,6 +124,7 @@ public enum CharacterStatusIconEnum
 {
     Mood = 1,//心情
     NpcType = 2,//Npc类型
+    Effect = 3,//状态效果
 }
 
 public class CharacterStatusIconBean
@@ -105,4 +132,5 @@ public class CharacterStatusIconBean
     public CharacterStatusIconEnum iconStatus;
     public Sprite spIcon;
     public Color spColor = Color.white;
+    public string markId;//标记ID
 }

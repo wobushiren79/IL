@@ -12,6 +12,7 @@ public enum AudioSoundEnum
     HitWall = 30,//撞墙
     HitCoin = 40,//撞金
     Shot = 50,//发射
+    ChangeSelect=60,//改变选择
 
     Thunderstorm = 101,//打雷音效
 
@@ -24,4 +25,6 @@ public enum AudioSoundEnum
     CardDraw = 321,//设置点击卡片
     CardWin = 331,//设置点击卡片
     CardLose = 341,//设置点击卡片
+    Fight = 401,//打击
+    UseMedicine=501,//使用药品
 }

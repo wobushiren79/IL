@@ -87,6 +87,7 @@ public class UIMiniGameCombatSelectCharacter : BaseUIChildComponent<UIMiniGameCo
     /// <param name="isAddCurrent">是否增加上一个角色</param>
     public void ChangeCharacter(int next)
     {
+        uiComponent.uiGameManager.audioHandler.PlaySound(AudioSoundEnum.ChangeSelect);
         List<NpcAIMiniGameCombatCpt> listData = new List<NpcAIMiniGameCombatCpt>();
         //友方
         if (selectType == 1)
@@ -102,6 +103,11 @@ public class UIMiniGameCombatSelectCharacter : BaseUIChildComponent<UIMiniGameCo
         else
         {
             listData = miniGameCombatBuilder.GetAllCharacter();
+        }
+        //如果选择的人数大于=一共的对象，那么默认选择全部
+        if(selectNumber >= listData.Count)
+        {
+            selectNumber = 0;
         }
         //如果还没有选择角色 则选择第一个
         if (currentSelectNpc == null)
@@ -167,6 +173,7 @@ public class UIMiniGameCombatSelectCharacter : BaseUIChildComponent<UIMiniGameCo
     {
         if (callBack == null)
             return;
+        uiComponent.uiGameManager.audioHandler.PlaySound(AudioSoundEnum.ButtonForNormal);
         List<NpcAIMiniGameCombatCpt> listData = new List<NpcAIMiniGameCombatCpt>();
         foreach (var itemData in listSelectNpc)
         {

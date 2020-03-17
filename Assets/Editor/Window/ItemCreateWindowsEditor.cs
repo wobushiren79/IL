@@ -763,6 +763,7 @@ public class ItemCreateWindowsEditor : EditorWindow, StoreInfoManager.ICallBack
             if ((GeneralEnum)itemInfo.items_type == GeneralEnum.Medicine)
             {
                 itemInfo.effect = EditorUI.GUIListData<EffectTypeEnum>("效果", itemInfo.effect);
+                itemInfo.effect_details = EditorUI.GUIListData<EffectDetailsEnum>("效果详情", itemInfo.effect_details);
             }
 
             GUILayout.EndHorizontal();

@@ -7,6 +7,7 @@ public class PopupItemsSelection : BaseMonoBehaviour
     public enum SelectionTypeEnum
     {
         Discard,//只有丢弃
+        Use,//使用
         UseAndDiscard,//使用和丢弃
         EquipAndDiscard,//装备和丢弃
         Unload,//卸除 用于装备界面
@@ -79,6 +80,9 @@ public class PopupItemsSelection : BaseMonoBehaviour
             case SelectionTypeEnum.Discard:
                 btDiscard.gameObject.SetActive(true);
                 break;
+            case SelectionTypeEnum.Use:
+                btUse.gameObject.SetActive(true);
+                break;
             case SelectionTypeEnum.UseAndDiscard:
                 btUse.gameObject.SetActive(true);
                 btDiscard.gameObject.SetActive(true);
@@ -93,6 +97,7 @@ public class PopupItemsSelection : BaseMonoBehaviour
             case SelectionTypeEnum.Gift:
                 btGift.gameObject.SetActive(true);
                 break;
+
         }
         gameObject.SetActive(true);
         objContent.transform.DOScale(new Vector3(0, 0, 0), 0.2f).SetEase(Ease.OutBack).From();

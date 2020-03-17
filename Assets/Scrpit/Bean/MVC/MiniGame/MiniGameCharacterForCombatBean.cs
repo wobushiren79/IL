@@ -5,12 +5,6 @@ using System.Collections.Generic;
 public class MiniGameCharacterForCombatBean : MiniGameCharacterBean
 {
     //战斗效果加成或负面
-    public List<EffectTypeBean> listCombatEffect = new List<EffectTypeBean>();
-
-    //战斗效果执行
-    public void CombatEffectExecute()
-    {
-
-    }
+    public List<MiniGameCombatEffectBean> listCombatEffect = new List<MiniGameCombatEffectBean>();
 
 }

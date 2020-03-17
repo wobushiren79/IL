@@ -60,6 +60,9 @@ public class AudioHandler : BaseHandler
                // audioClip = audioManager.GetSoundClip("sound_hit_2");
                 audioClip = audioManager.GetSoundClip("sound_pay_3");
                 break;
+            case AudioSoundEnum.ChangeSelect:
+                audioClip = audioManager.GetSoundClip("sound_btn_5");
+                break;
             case AudioSoundEnum.Shot:
                 audioClip = audioManager.GetSoundClip("sound_shot_1");
                 break;
@@ -77,6 +80,12 @@ public class AudioHandler : BaseHandler
                 break;
             case AudioSoundEnum.CardLose:
                 audioClip = audioManager.GetSoundClip("sound_hit_1");
+                break;
+            case AudioSoundEnum.Fight:
+                audioClip = audioManager.GetSoundClip("sound_fight_1");
+                break;
+            case AudioSoundEnum.UseMedicine:
+                audioClip = audioManager.GetSoundClip("sound_medicine_1");
                 break;
         }
         if (audioClip != null)

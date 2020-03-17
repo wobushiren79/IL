@@ -269,6 +269,7 @@ public class UIGameText : UIGameComponent, TextInfoManager.ICallBack, DialogView
                   
                     DialogBean dialogData = new DialogBean();
                     PickForItemsDialogView pickForItemsDialog = (PickForItemsDialogView)uiGameManager.dialogManager.CreateDialog(DialogEnum.PickForItems, this, dialogData);
+                    pickForItemsDialog.SetData(null, PopupItemsSelection.SelectionTypeEnum.Gift);
                 }
                 else
                 {

@@ -24,6 +24,7 @@ public class ItemsInfoBean : BaseBean
 
     public long add_id;//增加的内容ID
     public string effect;//效果 增加效果
+    public string effect_details;//效果详情
 
     //public int intact_number;//套装触发数量
 

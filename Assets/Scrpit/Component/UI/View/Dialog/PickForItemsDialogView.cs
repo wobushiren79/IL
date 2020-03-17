@@ -15,6 +15,8 @@ public class PickForItemsDialogView : DialogView, ItemGameBackpackPickCpt.ICallB
     private ItemBean mSelectedItems;
     private ItemsInfoBean mSelectedItemsInfo;
 
+    protected PopupItemsSelection.SelectionTypeEnum itemSelectionType;
+    protected List<GeneralEnum> listPickType = new List<GeneralEnum>();
 
     public override void Awake()
     {
@@ -29,6 +31,12 @@ public class PickForItemsDialogView : DialogView, ItemGameBackpackPickCpt.ICallB
         CreateItems();
     }
 
+    public void SetData(List<GeneralEnum> listPickType, PopupItemsSelection.SelectionTypeEnum  itemSelectionType)
+    {
+        this.listPickType = listPickType;
+        this.itemSelectionType = itemSelectionType;
+    }
+
     public void CreateItems()
     {
         CptUtil.RemoveChildsByActive(objItemsContainer);
@@ -38,11 +46,21 @@ public class PickForItemsDialogView : DialogView, ItemGameBackpackPickCpt.ICallB
         bool hasData = false;
         foreach (ItemBean itemData in listItems)
         {
+            ItemsInfoBean itemsInfo = gameItemsManager.GetItemsById(itemData.itemId);
+            if (!CheckUtil.ListIsNull(listPickType))
+            {
+                //如果没有该类型
+                if(!listPickType.Contains(itemsInfo.GetItemsType()))
+                {
+                    continue;
+                }
+            }
+
             GameObject objItem = Instantiate(objItemsContainer, objItemsModel);
             ItemGameBackpackPickCpt itemBackpack = objItem.GetComponent<ItemGameBackpackPickCpt>();
-            itemBackpack.SetCallBack(this);
-            ItemsInfoBean itemsInfo = gameItemsManager.GetItemsById(itemData.itemId);
+            itemBackpack.SetCallBack(this);    
             itemBackpack.SetData(itemsInfo, itemData);
+            itemBackpack.SetSelectionType(itemSelectionType);
             hasData = true;
         }
         if (!hasData)
@@ -67,7 +85,7 @@ public class PickForItemsDialogView : DialogView, ItemGameBackpackPickCpt.ICallB
     /// 选择赠送
     /// </summary>
     /// <param name="itemsInfo"></param>
-    public void ItemsSelectionForGift(ItemsInfoBean itemsInfo,ItemBean itemBean)
+    public void ItemsSelection(ItemsInfoBean itemsInfo,ItemBean itemBean)
     {
         mSelectedItemsInfo = itemsInfo;
         mSelectedItems = itemBean;

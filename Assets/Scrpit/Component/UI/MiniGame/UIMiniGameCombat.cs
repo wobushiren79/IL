@@ -8,6 +8,7 @@ using System;
 
 public class UIMiniGameCombat : UIBaseMiniGame<MiniGameCombatBean>
     , UIMiniGameCombatSelectCharacter.ICallBack
+    , UIMiniGameCombatCommand.ICallBack
     , DialogView.IDialogCallBack
     , PowerTestDialogView.ICallBack
 {
@@ -35,7 +36,7 @@ public class UIMiniGameCombat : UIBaseMiniGame<MiniGameCombatBean>
     public List<ItemMiniGameCombatCharacterInfoCpt> mListCharacterInfo = new List<ItemMiniGameCombatCharacterInfoCpt>();
     public List<ItemMiniGameCombatCharacterRoundCpt> listCharacterRound = new List<ItemMiniGameCombatCharacterRoundCpt>();
 
-    private ICallBack mCallBack;
+    protected ICallBack callBack;
 
 
     public bool isRounding = false;//是否回合进行中
@@ -45,6 +46,8 @@ public class UIMiniGameCombat : UIBaseMiniGame<MiniGameCombatBean>
     {
         if (uiForSelectCharacter != null)
             uiForSelectCharacter.SetCallBack(this);
+        if (uiForCombatCommand != null)
+            uiForCombatCommand.SetCallBack(this);
     }
 
     private void Update()
@@ -77,7 +80,7 @@ public class UIMiniGameCombat : UIBaseMiniGame<MiniGameCombatBean>
     /// <param name="callBack"></param>
     public void SetCallBack(ICallBack callBack)
     {
-        this.mCallBack = callBack;
+        this.callBack = callBack;
     }
 
     /// <summary>
@@ -192,8 +195,8 @@ public class UIMiniGameCombat : UIBaseMiniGame<MiniGameCombatBean>
                 //设置为选中状态
                 itemCpt.SetStatus(true);
                 //通知轮到角色回合
-                if (mCallBack != null)
-                    mCallBack.CharacterRound(itemCpt.gameCharacterData);
+                if (callBack != null)
+                    callBack.CharacterRound(itemCpt.gameCharacterData);
                 isRounding = false;
                 break;
             }
@@ -290,9 +293,10 @@ public class UIMiniGameCombat : UIBaseMiniGame<MiniGameCombatBean>
     #region 力度测试回调
     public void PowerTestEnd(float resultsPower)
     {
-        miniGameData.SetPowerTest(resultsPower);
-        if (mCallBack != null)
-            mCallBack.CommandEnd();
+        uiGameManager.audioHandler.PlaySound(AudioSoundEnum.ButtonForNormal);
+        miniGameData.SetRoundActionPowerTest(resultsPower);
+        if (callBack != null)
+            callBack.CommandEnd();
     }
     #endregion
 
@@ -310,12 +314,26 @@ public class UIMiniGameCombat : UIBaseMiniGame<MiniGameCombatBean>
         }
         else
         {
-            if (mCallBack != null)
-                mCallBack.CommandEnd();
+            CloseAll();
+            if (callBack != null)
+                callBack.CommandEnd();
         }
     }
     #endregion
 
+
+    #region 物品和技能选择回调
+    public void PickItemsComplete(ItemsInfoBean itemsInfo)
+    {
+        EffectDetailsEnumTools.GetEffectRange(itemsInfo.effect_details,out int impactNumber,out int impactType);
+        OpenSelectCharacter(impactNumber, impactType);
+    }
+
+    public void PickSkillComplete(long skillId)
+    {
+
+    }
+    #endregion
 
     #region 弹出框回调
     public void Submit(DialogView dialogView, DialogBean dialogBean)
