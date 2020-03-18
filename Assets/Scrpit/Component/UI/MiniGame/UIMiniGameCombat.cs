@@ -237,9 +237,17 @@ public class UIMiniGameCombat : UIBaseMiniGame<MiniGameCombatBean>
     /// <param name="selectType"></param>
     public void OpenSelectCharacter(int selectNumber, int selectType)
     {
-        uiForCombatCommand.Close();
-        uiForSelectCharacter.Open();
-        uiForSelectCharacter.SetData(selectNumber, selectType);
+        //如果选择是选择自己
+        if (selectType == -1)
+        {
+            SelectComplete(new List<NpcAIMiniGameCombatCpt>() { miniGameData.GetRoundActionCharacter() });
+        }
+        else
+        {
+            uiForCombatCommand.Close();
+            uiForSelectCharacter.Open();
+            uiForSelectCharacter.SetData(selectNumber, selectType);
+        }
     }
 
     /// <summary>
@@ -306,8 +314,7 @@ public class UIMiniGameCombat : UIBaseMiniGame<MiniGameCombatBean>
     {
         miniGameData.SetRoundTargetCharacter(listData);
         MiniGameCombatCommand miniGameCombatCommand = miniGameData.GetRoundActionCommand();
-        if (miniGameCombatCommand == MiniGameCombatCommand.Fight
-            || miniGameCombatCommand == MiniGameCombatCommand.Skill)
+        if (miniGameCombatCommand == MiniGameCombatCommand.Fight)
         {
             //如果是攻击和技能 则开启力度测试
             OpenPowerTest(miniGameData.GetRoundActionCharacter().characterMiniGameData);
@@ -329,9 +336,17 @@ public class UIMiniGameCombat : UIBaseMiniGame<MiniGameCombatBean>
         OpenSelectCharacter(impactNumber, impactType);
     }
 
-    public void PickSkillComplete(long skillId)
+    public void PickSkillComplete(SkillInfoBean skillInfo)
     {
+        EffectDetailsEnumTools.GetEffectRange(skillInfo.effect_details, out int impactNumber, out int impactType);
+        OpenSelectCharacter(impactNumber, impactType);
+    }
 
+    public void PassComplete()
+    {
+        CloseAll();
+        if (callBack != null)
+            callBack.CommandEnd();
     }
     #endregion
 
@@ -345,6 +360,8 @@ public class UIMiniGameCombat : UIBaseMiniGame<MiniGameCombatBean>
     {
 
     }
+
+
     #endregion
 
     public interface ICallBack

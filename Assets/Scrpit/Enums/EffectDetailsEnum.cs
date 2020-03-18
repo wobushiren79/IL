@@ -66,7 +66,7 @@ public class EffectDetailsEnumTools : DataTools
     /// <param name="durationForRound"></param>
     public static void GetEffectDetailsForCombat(string data,out string effectPSName, out int durationForRound)
     {
-        effectPSName = "Effect_Medicine_1";
+        effectPSName = "";
         durationForRound = 0;
 
         List<EffectDetailsBean> listData = GetListEffectData(data);

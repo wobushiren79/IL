@@ -24,6 +24,7 @@ public enum ImportantTypeEnum
     AudioManager,
     TextManager,
     EffectManager,
+    SkillManager,
 
     StoryBuilder,
     NpcBuilder,

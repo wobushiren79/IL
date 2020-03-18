@@ -55,7 +55,9 @@ public class ControlForMiniGameCombatCpt : BaseControl
         }
         if (Input.GetButtonDown(InputInfo.Cancel))
         {
-            gameCombatHandler.RoundForPre(gameCombatHandler.miniGameData.GetRoundActionCharacter().characterMiniGameData);
+            uiMiniGameCombat.OpenCombatCommand();
+            //开启选中特效
+            gameCombatHandler.SelectCharacter(gameCombatHandler.miniGameData.GetRoundActionCharacter());
         }
     }
 }

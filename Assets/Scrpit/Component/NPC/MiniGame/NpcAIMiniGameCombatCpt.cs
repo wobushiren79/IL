@@ -63,7 +63,7 @@ public class NpcAIMiniGameCombatCpt : BaseNpcAI
     {
         characterMiniGameData.ChangeLife(-damage);
         Color colorDamage;
-        if (powerLevel > 1f)
+        if (powerLevel >= 1f)
         {
             colorDamage = Color.red;
         }
@@ -148,7 +148,7 @@ public class NpcAIMiniGameCombatCpt : BaseNpcAI
     public IEnumerator CoroutineForIntentFight(List<NpcAIMiniGameCombatCpt> relativeOurList, List<NpcAIMiniGameCombatCpt> relativeEnemyList)
     {
         gameCombatHandler.miniGameData.SetRoundActionCommand(MiniGameCombatCommand.Fight);
-        gameCombatHandler.miniGameData.SetRoundActionPowerTest(1);
+        gameCombatHandler.miniGameData.SetRoundActionPowerTest(0.8f);
         //选择血最少的
         NpcAIMiniGameCombatCpt targetNpc = null;
         //for (int i = 0; i < relativeEnemyList.Count; i++)
@@ -187,7 +187,6 @@ public class NpcAIMiniGameCombatCpt : BaseNpcAI
     public IEnumerator CoroutineForIntentSkill(List<NpcAIMiniGameCombatCpt> relativeOurList, List<NpcAIMiniGameCombatCpt> relativeEnemyList)
     {
         gameCombatHandler.miniGameData.SetRoundActionCommand(MiniGameCombatCommand.Skill);
-        gameCombatHandler.miniGameData.SetRoundActionPowerTest(1);
         //随机选一个
         NpcAIMiniGameCombatCpt targetNpc = RandomUtil.GetRandomDataByList(relativeEnemyList);
         gameCombatHandler.miniGameData.SetRoundTargetCharacter(targetNpc);
@@ -256,9 +255,7 @@ public class NpcAIMiniGameCombatCpt : BaseNpcAI
         {
             EffectTypeEnumTools.GetEffectDetails(iconDataManager ,itemType);
             MiniGameCombatEffectBean gameCombatEffectData = new MiniGameCombatEffectBean();
-            gameCombatEffectData.effectType = itemType.dataType;
-            gameCombatEffectData.spIcon = itemType.spIcon;
-            gameCombatEffectData.effectData = float.Parse(itemType.data);
+            gameCombatEffectData.effectTypeData = itemType;
             gameCombatEffectData.durationForRound = durationForRound;
             gameCombatEffectData.effectPSName = effectPSName;
             gameCombatEffectData.iconMarkId = SystemUtil.GetUUID( SystemUtil.UUIDTypeEnum.N);
@@ -276,5 +273,4 @@ public class NpcAIMiniGameCombatCpt : BaseNpcAI
             }
         }
     }
-
 }

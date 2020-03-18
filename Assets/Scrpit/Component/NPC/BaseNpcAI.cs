@@ -189,7 +189,7 @@ public class BaseNpcAI : BaseObservable<IBaseObserver>
         if (spIcon == null)
             return;
         CharacterStatusIconBean statusIconData = new CharacterStatusIconBean();
-        statusIconData.spColor = Color.red;
+        statusIconData.spColor = Color.white;
         statusIconData.spIcon = spIcon;
         statusIconData.markId = markId;
         characterStatusIcon.AddStatusIcon(statusIconData);

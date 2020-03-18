@@ -75,6 +75,7 @@ public class UIMiniGameCombatSelectCharacter : BaseUIChildComponent<UIMiniGameCo
     /// <param name="selectNumber">1 为友方 2 为敌方</param>
     public void SetData(int selectNumber, int selectType)
     {
+       
         this.selectNumber = selectNumber;
         this.selectType = selectType;
         ChangeCharacter(1);

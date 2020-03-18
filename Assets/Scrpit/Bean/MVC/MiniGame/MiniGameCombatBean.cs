@@ -14,6 +14,8 @@ public class MiniGameCombatBean : MiniGameBaseBean
     protected float roundActionPowerTest;
     //回合行动角色使用道具ID
     protected long roundActionItemsId = 0;
+    //回合行动角色使用技能ID
+    protected SkillInfoBean roundActionSkill ;
 
     public enum MiniGameCombatStatusEnum
     {
@@ -148,6 +150,24 @@ public class MiniGameCombatBean : MiniGameBaseBean
     }
 
     /// <summary>
+    /// 设置技能ID
+    /// </summary>
+    /// <param name="roundActionSkillId"></param>
+    public void SetRoundActionSkill(SkillInfoBean roundActionSkill)
+    {
+        this.roundActionSkill = roundActionSkill;
+    }
+
+    /// <summary>
+    /// 获取技能ID
+    /// </summary>
+    /// <returns></returns>
+    public SkillInfoBean GetRoundActionSkill()
+    {
+        return roundActionSkill;
+    }
+
+    /// <summary>
     /// 结束回合
     /// </summary>
     public void EndRound()
@@ -156,6 +176,7 @@ public class MiniGameCombatBean : MiniGameBaseBean
         roundListTargetCharacter = null;
         roundActionPowerTest = 0;
         roundActionItemsId = 0;
+        roundActionSkill = null;
         roundCombatCommand = MiniGameCombatCommand.None;
     }
 }

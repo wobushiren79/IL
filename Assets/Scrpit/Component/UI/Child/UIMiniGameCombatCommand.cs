@@ -4,11 +4,12 @@ using UnityEngine.UI;
 using DG.Tweening;
 using System.Collections.Generic;
 
-public class UIMiniGameCombatCommand :   BaseUIChildComponent<UIMiniGameCombat>,DialogView.IDialogCallBack
+public class UIMiniGameCombatCommand : BaseUIChildComponent<UIMiniGameCombat>, DialogView.IDialogCallBack,SkillInfoManager.ICallBack
 {
     public Button btCommandFight;
     public Button btCommandSkill;
     public Button btCommandItems;
+    public Button btCommandPass;
 
     protected ICallBack callBack;
 
@@ -20,6 +21,8 @@ public class UIMiniGameCombatCommand :   BaseUIChildComponent<UIMiniGameCombat>,
             btCommandSkill.onClick.AddListener(CommandSkill);
         if (btCommandItems)
             btCommandItems.onClick.AddListener(CommandItems);
+        if (btCommandPass)
+            btCommandPass.onClick.AddListener(CommandPass);
     }
 
     public override void Open()
@@ -52,8 +55,12 @@ public class UIMiniGameCombatCommand :   BaseUIChildComponent<UIMiniGameCombat>,
     {
         uiComponent.uiGameManager.audioHandler.PlaySound(AudioSoundEnum.ButtonForNormal);
         uiComponent.miniGameData.SetRoundActionCommand(MiniGameCombatCommand.Skill);
-        ToastManager toastManager = uiComponent.GetUIManager<UIGameManager>().toastManager;
-        toastManager.ToastHint("开发中");
+        NpcAIMiniGameCombatCpt npcCpt = uiComponent.miniGameData.GetRoundActionCharacter();
+        SkillInfoManager skillInfoManager = uiComponent.uiGameManager.skillInfoManager;
+        skillInfoManager.SetCallBack(this);
+        //获取角色拥有的技能
+        List<long> listSkill = npcCpt.characterMiniGameData.characterData.attributes.listSkills;
+        skillInfoManager.GetSkillByIds(listSkill);
     }
 
     /// <summary>
@@ -64,38 +71,74 @@ public class UIMiniGameCombatCommand :   BaseUIChildComponent<UIMiniGameCombat>,
         uiComponent.uiGameManager.audioHandler.PlaySound(AudioSoundEnum.ButtonForNormal);
         uiComponent.miniGameData.SetRoundActionCommand(MiniGameCombatCommand.Items);
 
-        DialogManager dialogManager= uiComponent.uiGameManager.dialogManager;
+        DialogManager dialogManager = uiComponent.uiGameManager.dialogManager;
         DialogBean dialogData = new DialogBean();
-        PickForItemsDialogView pickForItemsDialog=(PickForItemsDialogView) dialogManager.CreateDialog( DialogEnum.PickForItems,this, dialogData);
+        PickForItemsDialogView pickForItemsDialog = (PickForItemsDialogView)dialogManager.CreateDialog(DialogEnum.PickForItems, this, dialogData);
         pickForItemsDialog.SetData(new List<GeneralEnum>() { GeneralEnum.Medicine }, PopupItemsSelection.SelectionTypeEnum.Use);
+    }
+
+    /// <summary>
+    /// 指令物品
+    /// </summary>
+    public void CommandPass()
+    {
+        uiComponent.uiGameManager.audioHandler.PlaySound(AudioSoundEnum.ButtonForNormal);
+        uiComponent.miniGameData.SetRoundActionCommand(MiniGameCombatCommand.Pass);
+        if (callBack != null)
+            callBack.PassComplete();
     }
 
     #region 弹窗回调
     public void Submit(DialogView dialogView, DialogBean dialogBean)
     {
-        if(dialogView as PickForItemsDialogView)
+        if (dialogView as PickForItemsDialogView)
         {
             PickForItemsDialogView pickForItemsDialog = (PickForItemsDialogView)dialogView;
-            pickForItemsDialog.GetSelectedItems(out ItemsInfoBean  itemsInfo,out ItemBean itemData);
+            pickForItemsDialog.GetSelectedItems(out ItemsInfoBean itemsInfo, out ItemBean itemData);
             //设置使用的物品
             uiComponent.miniGameData.SetRoundActionItemsId(itemsInfo.id);
 
             if (callBack != null)
                 callBack.PickItemsComplete(itemsInfo);
         }
+        else if (dialogView as PickForSkillDialogView)
+        {
+            PickForSkillDialogView pickForSkillDialog = (PickForSkillDialogView)dialogView;
+            pickForSkillDialog.GetSelectedSkill(out SkillInfoBean skillInfo);
+            //设置使用的物品
+            uiComponent.miniGameData.SetRoundActionSkill(skillInfo);
+
+            if (callBack != null)
+                callBack.PickSkillComplete(skillInfo);
+        }
+       
     }
 
     public void Cancel(DialogView dialogView, DialogBean dialogBean)
     {
-        uiComponent.OpenCombatCommand();
+        //uiComponent.OpenCombatCommand();
     }
     #endregion
 
+    #region
+    public void GetSkillInfoSuccess(List<SkillInfoBean> listData)
+    {
+        NpcAIMiniGameCombatCpt npcCpt = uiComponent.miniGameData.GetRoundActionCharacter();
+
+        DialogManager dialogManager = uiComponent.uiGameManager.dialogManager;
+        DialogBean dialogData = new DialogBean();
+        PickForSkillDialogView pickForSkillDialog = (PickForSkillDialogView)dialogManager.CreateDialog(DialogEnum.PickForSkill, this, dialogData);
+        Dictionary<long, int> listUsedSkill = npcCpt.characterMiniGameData.listUsedSkill;
+        pickForSkillDialog.SetData(listData, listUsedSkill);
+    }
+    #endregion
 
     public interface ICallBack
     {
         void PickItemsComplete(ItemsInfoBean itemsInfo);
 
-        void PickSkillComplete(long skillId);
+        void PickSkillComplete(SkillInfoBean skillInfo);
+
+        void PassComplete();
     }
 }

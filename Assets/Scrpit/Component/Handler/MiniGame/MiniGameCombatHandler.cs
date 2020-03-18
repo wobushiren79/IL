@@ -9,12 +9,14 @@ using static MiniGameCombatBean;
 public class MiniGameCombatHandler : BaseMiniGameHandler<MiniGameCombatBuilder, MiniGameCombatBean>, UIMiniGameCountDown.ICallBack, UIMiniGameCombat.ICallBack
 {
     protected GameItemsManager gameItemsManager;
+    protected SkillInfoManager skillInfoManager;
     //游戏UI
     protected UIMiniGameCombat uiMiniGameCombat;
     protected override void Awake()
     {
         base.Awake();
         gameItemsManager = Find<GameItemsManager>(ImportantTypeEnum.GameItemsManager);
+        skillInfoManager = Find<SkillInfoManager>(ImportantTypeEnum.SkillManager);
     }
 
     /// <summary>
@@ -272,6 +274,8 @@ public class MiniGameCombatHandler : BaseMiniGameHandler<MiniGameCombatBuilder, 
             case MiniGameCombatCommand.Items:
                 yield return StartCoroutine(CoroutineForCommandItems());
                 break;
+            case MiniGameCombatCommand.Pass:
+                break;
         }
         CheckCharacterLife();
         yield return new WaitForSeconds(0.5f);
@@ -305,11 +309,14 @@ public class MiniGameCombatHandler : BaseMiniGameHandler<MiniGameCombatBuilder, 
         float dodgeRate = UnityEngine.Random.Range(0f, 1f);
         if (dodgeRate <= 1)
         {
-            float damageRate = (miniGameData.GetRoundActionPowerTest() + 0.2f);
+            //力量测试加成
+            float damagePowerRate = (miniGameData.GetRoundActionPowerTest() + 0.2f);
             //计算伤害
-            int damage = (int)(damageRate * actionCharacterAttributes.force * 2);
+            int damage = (int)(damagePowerRate  * actionCharacterAttributes.force * 2);
+            //效果伤害加成
+            damage = targetNpc.characterMiniGameData.GetEffectDamageRate(damage);
             //角色伤害
-            targetNpc.UnderAttack(damageRate, damage);
+            targetNpc.UnderAttack(damagePowerRate, damage);
             audioHandler.PlaySound(AudioSoundEnum.Fight);
         }
         else
@@ -321,14 +328,23 @@ public class MiniGameCombatHandler : BaseMiniGameHandler<MiniGameCombatBuilder, 
         yield return new WaitForSeconds(0.5f);
         actionNpc.transform.DOMove(oldPosition, 0.5f);
     }
+
     /// <summary>
     /// 协程 技能使用
     /// </summary>
     /// <returns></returns>
     private IEnumerator CoroutineForCommandSkill()
     {
-
-       yield return new WaitForSeconds(0.5f);
+        NpcAIMiniGameCombatCpt actionNpc = miniGameData.GetRoundActionCharacter();
+        List<NpcAIMiniGameCombatCpt> listTargetNpc = miniGameData.GetRoundTargetListCharacter();
+        SkillInfoBean skillData = miniGameData.GetRoundActionSkill();
+        actionNpc.characterMiniGameData.AddUsedSkill(skillData.id, 1);
+        //增加技能效果
+        foreach (NpcAIMiniGameCombatCpt itemNpc in listTargetNpc)
+        {
+            itemNpc.AddCombatEffect(skillData.effect, skillData.effect_details);
+        }
+        yield return new WaitForSeconds(1f);
     }
 
     /// <summary>

@@ -12,4 +12,5 @@ public enum DialogEnum
     FindCharacter = 6,
     SelectForNpc = 7,
     PowerTest = 8,
+    PickForSkill=9,
 }

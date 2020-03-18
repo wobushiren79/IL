@@ -7,4 +7,5 @@ public enum MiniGameCombatCommand
     Fight = 1,
     Skill = 2,
     Items = 3,
+    Pass = 4,
 }

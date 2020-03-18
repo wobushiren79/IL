@@ -14,6 +14,7 @@ public class UIGameManager : BaseUIManager
     public InfoAchievementPopupShow infoAchievementPopup;
     public InfoAbilityPopupShow infoAbilityPopup;
     public PopupItemsSelection popupItemsSelection;
+    public InfoSkillPopupShow infoSkillPopup;
     //数据
     [Header("数据")]
     public GameDataManager gameDataManager;
@@ -27,6 +28,7 @@ public class UIGameManager : BaseUIManager
     public IconDataManager iconDataManager;
     public AchievementInfoManager achievementInfoManager;
     public TextInfoManager textInfoManager;
+    public SkillInfoManager skillInfoManager;
     //UI相关
     public DialogManager dialogManager;
     public ToastManager toastManager;
@@ -63,7 +65,7 @@ public class UIGameManager : BaseUIManager
         storeInfoManager = Find<StoreInfoManager>(ImportantTypeEnum.StoreInfoManager);
         iconDataManager = Find<IconDataManager>(ImportantTypeEnum.UIManager);
         textInfoManager= Find<TextInfoManager>(ImportantTypeEnum.TextManager);
-
+        skillInfoManager = Find<SkillInfoManager>(ImportantTypeEnum.SkillManager);
         dialogManager = Find<DialogManager>(ImportantTypeEnum.DialogManager);
         toastManager = Find<ToastManager>(ImportantTypeEnum.ToastManager);
 
@@ -79,7 +81,10 @@ public class UIGameManager : BaseUIManager
         infoFoodPopup = FindInChildren<InfoFoodPopupShow>(ImportantTypeEnum.Popup);
         infoAchievementPopup = FindInChildren<InfoAchievementPopupShow>(ImportantTypeEnum.Popup);
         infoAbilityPopup = FindInChildren<InfoAbilityPopupShow>(ImportantTypeEnum.Popup);
+        infoSkillPopup = FindInChildren<InfoSkillPopupShow>(ImportantTypeEnum.Popup);
         popupItemsSelection = FindInChildren<PopupItemsSelection>(ImportantTypeEnum.Popup);
+
+
 
         npcCustomerBuilder = Find<NpcCustomerBuilder>(ImportantTypeEnum.NpcBuilder);
         npcEventBuilder = Find<NpcEventBuilder>(ImportantTypeEnum.NpcBuilder);
