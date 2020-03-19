@@ -6,6 +6,12 @@ public class InfoItemsPopupButton : PopupButtonView
     public ItemsInfoBean itemsInfo;
     public Sprite spIcon;
 
+    private void Awake()
+    {
+        UIGameManager uiGameManager = Find<UIGameManager>(ImportantTypeEnum.GameUI);
+        SetPopupShowView(uiGameManager.infoItemsPopup);
+    }
+
     public void SetData(ItemsInfoBean itemsInfo,Sprite spIcon)
     {
         this.itemsInfo  = itemsInfo;

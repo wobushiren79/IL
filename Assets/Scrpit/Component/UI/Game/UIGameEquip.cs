@@ -95,6 +95,7 @@ public class UIGameEquip : UIGameComponent
             tvNull.gameObject.SetActive(true);
     }
 
+
     /// <summary>
     /// 设置忠诚
     /// </summary>
@@ -206,21 +207,23 @@ public class UIGameEquip : UIGameComponent
                 break;
         }
         itemCpt.SetData(characterData, itemInfo, null);
-        //从背包里扣除装备
-        uiGameManager.gameDataManager.gameData.AddItemsNumber(itemInfo.id, -1);
 
         //如果有卸载的装备 则添加到背包
         if (unloadEquipId != 0)
         {
-            ItemBean unloadItem = new ItemBean(unloadEquipId, 1);
-            ItemsInfoBean unloadInfo = uiGameManager.gameItemsManager.GetItemsById(unloadEquipId);
-            GameObject objItem = CreateItemBackpackData(unloadItem, unloadInfo);
-            objItem.transform.DOScale(new Vector3(0, 0, 0), 0.5f).SetEase(Ease.OutBack).From();
-            uiGameManager.gameDataManager.gameData.AddNewItems(unloadEquipId, 1);
+            ItemBean unloadItemData =  uiGameManager.gameDataManager.gameData.AddItemsNumber(unloadEquipId, 1);
+            ItemsInfoBean unloadItemInfo = uiGameManager.gameItemsManager.GetItemsById(unloadEquipId);
+            //如果是背包里没有
+            if (unloadItemData.itemNumber == 1)
+            {
+                GameObject objItem = CreateItemBackpackData(unloadItemData, unloadItemInfo);
+                objItem.transform.DOScale(new Vector3(0, 0, 0), 0.2f).SetEase(Ease.OutBack).From();
+            }
         }
 
         //刷新显示
         RefreshUI();
+        RefreshBackpackData();
         //刷新场景中的人物
         if (uiGameManager.npcWorkerBuilder != null)
         {
@@ -243,20 +246,7 @@ public class UIGameEquip : UIGameComponent
             ItemsInfoBean itemInfo = uiGameManager.gameItemsManager.GetItemsById(itemBean.itemId);
             if (itemInfo == null)
                 continue;
-            GeneralEnum itemType = itemInfo.GetItemsType();
-            if (itemType != GeneralEnum.Hat
-                && itemType != GeneralEnum.Clothes
-                && itemType != GeneralEnum.Shoes
-                && itemType != GeneralEnum.Chef
-                && itemType != GeneralEnum.Waiter
-                && itemType != GeneralEnum.Accoutant
-                && itemType != GeneralEnum.Accost
-                && itemType != GeneralEnum.Beater
-                && itemType != GeneralEnum.Book
-                && itemType != GeneralEnum.SkillBook)
-                continue;
             GameObject objItem = CreateItemBackpackData(itemBean, itemInfo);
-            //objItem.transform.DOScale(new Vector3(0, 0, 0), 0.5f).SetEase(Ease.OutBack).SetDelay(i * 0.05f).From();
         }
     }
 
@@ -266,12 +256,36 @@ public class UIGameEquip : UIGameComponent
     /// <param name="itemBean"></param>
     /// <param name="itemsInfoBean"></param>
     /// <returns></returns>
-    public GameObject CreateItemBackpackData(ItemBean itemBean, ItemsInfoBean itemsInfoBean)
+    public GameObject CreateItemBackpackData(ItemBean itemBean, ItemsInfoBean itemInfo)
     {
-        GameObject objItem = Instantiate(objItemModel, objItemContent.transform);
-        objItem.SetActive(true);
+        GeneralEnum itemType = itemInfo.GetItemsType();
+        if (itemType != GeneralEnum.Hat
+            && itemType != GeneralEnum.Clothes
+            && itemType != GeneralEnum.Shoes
+            && itemType != GeneralEnum.Chef
+            && itemType != GeneralEnum.Waiter
+            && itemType != GeneralEnum.Accoutant
+            && itemType != GeneralEnum.Accost
+            && itemType != GeneralEnum.Beater
+            && itemType != GeneralEnum.Book
+            && itemType != GeneralEnum.SkillBook)
+            return null;
+        GameObject objItem = Instantiate(objItemContent, objItemModel);
         ItemGameBackpackEquipCpt backpackCpt = objItem.GetComponent<ItemGameBackpackEquipCpt>();
-        backpackCpt.SetData(characterData, itemsInfoBean, itemBean);
+        backpackCpt.SetData(characterData, itemInfo, itemBean);
         return objItem;
     }
+
+    /// <summary>
+    /// 刷新背包数据
+    /// </summary>
+    public void RefreshBackpackData()
+    {
+        ItemGameBackpackEquipCpt[] allItems= objItemContent.GetComponentsInChildren<ItemGameBackpackEquipCpt>();
+        foreach (ItemGameBackpackEquipCpt itemData in allItems)
+        { 
+            itemData.SetData(characterData, itemData.itemsInfoData, itemData.itemData);
+        }
+    }
+
 }

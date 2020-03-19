@@ -11,6 +11,6 @@ public enum StoreForGroceryTypeEnum
    Accountant=5,
    Accost=6,
    Beater=7,
-
-   All=99,
+   SkillBook = 8,
+   All =99,
 }

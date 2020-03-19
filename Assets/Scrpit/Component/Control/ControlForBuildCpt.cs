@@ -459,9 +459,9 @@ public class ControlForBuildCpt : BaseControl
         }
         innFloorBuilder.ChangeFloor(changePosition, buildItemCpt.buildItemData.tile_name);
         //背包里删除一个
-        long remainNumber = gameDataManager.gameData.AddBuildNumber(buildItemCpt.buildItemData.id, -1);
+        ItemBean itemData = gameDataManager.gameData.AddBuildNumber(buildItemCpt.buildItemData.id, -1);
         //如果没有了，则不能继续建造
-        if (remainNumber <= 0)
+        if (itemData.itemNumber <= 0)
         {
             ClearBuildItem();
         }
@@ -497,9 +497,9 @@ public class ControlForBuildCpt : BaseControl
         }
         innWallBuilder.ChangeWall(changePosition, buildItemCpt.buildItemData.tile_name);
         //背包里删除一个
-        long remainNumber = gameDataManager.gameData.AddBuildNumber(buildItemCpt.buildItemData.id, -1);
+        ItemBean itemData = gameDataManager.gameData.AddBuildNumber(buildItemCpt.buildItemData.id, -1);
         //如果没有了，则不能继续建造
-        if (remainNumber <= 0)
+        if (itemData.itemNumber <= 0)
         {
             ClearBuildItem();
         }

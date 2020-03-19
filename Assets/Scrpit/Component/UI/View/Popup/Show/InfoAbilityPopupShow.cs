@@ -14,8 +14,9 @@ public class InfoAbilityPopupShow : PopupShowView
 
     private GameItemsManager mGameItemsManager;
 
-    private void Awake()
+    public override void Awake()
     {
+        base.Awake();
         mGameItemsManager = FindObjectOfType<GameItemsManager>();
     }
 

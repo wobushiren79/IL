@@ -7,17 +7,21 @@ public class ItemGameBackpackEquipCpt : ItemGameBackpackCpt
     public CharacterBean characterData;
 
     public int type = 0;
-    
+
+    public ItemsInfoBean itemsInfoData;
+    public ItemBean itemData;
 
     public override void Awake()
     {
         base.Awake();
     }
 
-    public void SetData(CharacterBean characterData, ItemsInfoBean infoBean, ItemBean itemBean)
+    public void SetData(CharacterBean characterData, ItemsInfoBean itemsInfoData, ItemBean itemData)
     {
         this.characterData = characterData;
-        SetData(infoBean, itemBean);
+        this.itemsInfoData = itemsInfoData;
+        this.itemData = itemData;
+        SetData(itemsInfoData, itemData);
     }
 
     public override void ButtonClick()
@@ -67,7 +71,7 @@ public class ItemGameBackpackEquipCpt : ItemGameBackpackCpt
         {
             case GeneralEnum.Book:
                 //读书
-                if (characterData.equips.CheckLearnBook(itemsInfoBean.id))
+                if (characterData.attributes.CheckLearnBook(itemsInfoBean.id))
                 {
                     //已经学习过该图书
                     string toastStr = string.Format(GameCommonInfo.GetUITextById(1009), characterData.baseInfo.name, itemsInfoBean.name);
@@ -76,17 +80,28 @@ public class ItemGameBackpackEquipCpt : ItemGameBackpackCpt
                 else
                 {
                     //学习该图书
-                    characterData.equips.listLearnBook.Add(itemsInfoBean.id);
+                    characterData.attributes.LearnBook(itemsInfoBean.id);
                     characterData.attributes.AddAttributes(itemsInfoBean);
-
                     string toastStr = string.Format(GameCommonInfo.GetUITextById(1008), characterData.baseInfo.name, itemsInfoBean.name);
                     toastManager.ToastHint(ivIcon.sprite, toastStr);
-                    RemoveItems();
+                    RefreshItems(itemsInfoBean.id, -1);
                 }
                 break;
             case GeneralEnum.SkillBook:
-
-                //TODO 学习技能
+                if (characterData.attributes.CheckLearnSkills(itemsInfoBean.add_id))
+                {
+                    //已经学习过该技能
+                    string toastStr = string.Format(GameCommonInfo.GetUITextById(1063), characterData.baseInfo.name, itemsInfoBean.name);
+                    toastManager.ToastHint(toastStr);
+                }
+                else
+                {
+                    //学习该技能
+                    characterData.attributes.LearnSkill(itemsInfoBean.add_id);
+                    string toastStr = string.Format(GameCommonInfo.GetUITextById(1064), characterData.baseInfo.name, itemsInfoBean.name);
+                    toastManager.ToastHint(ivIcon.sprite, toastStr);
+                    RefreshItems(itemsInfoBean.id, -1);
+                }
                 break;
             default:
                 break;
@@ -98,7 +113,7 @@ public class ItemGameBackpackEquipCpt : ItemGameBackpackCpt
     {
         UIGameEquip uiGameEquip = GetUIComponent<UIGameEquip>();
         uiGameEquip.SetEquip(itemsInfoBean);
-        RemoveItems();
+        RefreshItems(itemsInfoBean.id, -1);
     }
 
     public override void SelectionUnload(PopupItemsSelection view)

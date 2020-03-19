@@ -13,6 +13,7 @@ public class UIGameWorkerDetailsBeaterInfo : UIGameStatisticsDetailsBase<UIGameW
     public void SetData(CharacterWorkerForBeaterBean beaterInfo)
     {
         this.beaterInfo = beaterInfo;
+        CptUtil.RemoveChildsByActive(objItemContent);
         AddFightNumber(beaterInfo.fightTotalNumber);
         AddFightTime(beaterInfo.fightTotalTime);
         AddFightWinNumber(beaterInfo.fightWinNumber);

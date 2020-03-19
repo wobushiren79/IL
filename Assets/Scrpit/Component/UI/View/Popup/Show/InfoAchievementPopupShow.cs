@@ -30,8 +30,9 @@ public class InfoAchievementPopupShow : PopupShowView
     public AchievementInfoBean achievementInfo;
     public AchievementStatusEnum status;
 
-    private void Awake()
+    public override void Awake()
     {
+        base.Awake();
         gameDataManager = Find<GameDataManager>(ImportantTypeEnum.GameDataManager);
         gameItemsManager = Find<GameItemsManager>(ImportantTypeEnum.GameItemsManager);
         iconDataManager = Find<IconDataManager>(ImportantTypeEnum.UIManager);

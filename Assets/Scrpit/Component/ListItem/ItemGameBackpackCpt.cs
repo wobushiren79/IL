@@ -32,11 +32,6 @@ public class ItemGameBackpackCpt : ItemGameBaseCpt, IPointerClickHandler, PopupI
     {
         leftClick.AddListener(new UnityAction(ButtonClick));
         rightClick.AddListener(new UnityAction(ButtonClick));
-        if (infoItemsPopup != null)
-        {
-            infoItemsPopup.SetPopupShowView(uiGameManager.infoItemsPopup);
-            infoItemsPopup.SetData(itemsInfoBean, ivIcon.sprite);
-        }
     }
 
     /// <summary>
@@ -61,10 +56,7 @@ public class ItemGameBackpackCpt : ItemGameBaseCpt, IPointerClickHandler, PopupI
         {
             SetNumber(itemBean.itemNumber);
         }
-        if (infoItemsPopup != null)
-        {
-            infoItemsPopup.SetData(itemsInfoBean, ivIcon.sprite);
-        }
+        infoItemsPopup.SetData(itemsInfoBean, ivIcon.sprite);
     }
 
     /// <summary>
@@ -174,7 +166,7 @@ public class ItemGameBackpackCpt : ItemGameBaseCpt, IPointerClickHandler, PopupI
                 //添加菜谱
                 if (gameDataManager.gameData.AddFoodMenu(itemsInfoBean.add_id))
                 {
-                    RemoveItems();
+                    RefreshItems(itemsInfoBean.id,-1);
                     toastManager.ToastHint(ivIcon.sprite, GameCommonInfo.GetUITextById(1006));
                 }
                 else
@@ -218,7 +210,7 @@ public class ItemGameBackpackCpt : ItemGameBaseCpt, IPointerClickHandler, PopupI
     #region 删除确认回调
     public void Submit(DialogView dialogView, DialogBean dialogData)
     {
-        RemoveItems();
+        RefreshItems(itemsInfoBean.id, -1);
     }
 
     public void Cancel(DialogView dialogView, DialogBean dialogData)
@@ -230,14 +222,19 @@ public class ItemGameBackpackCpt : ItemGameBaseCpt, IPointerClickHandler, PopupI
     /// <summary>
     /// 删除物品
     /// </summary>
-    public void RemoveItems()
+    public void RefreshItems(long id, int changeNumber)
     {
         GameDataManager gameDataManager = uiGameManager.gameDataManager;
-        gameObject.transform.DOLocalMove(new Vector3(0, 0), 0.2f).SetEase(Ease.InCirc).OnComplete(delegate
+        ItemBean itemData = gameDataManager.gameData.AddItemsNumber(id, changeNumber);
+        SetNumber(itemData.itemNumber);
+        if (itemData.itemNumber <= 0)
         {
-            gameDataManager.gameData.listItems.Remove(itemBean);
+            //gameObject.transform.DOLocalMove(new Vector3(0, 0), 0.1f).SetEase(Ease.InCirc).OnComplete(delegate
+            //{
+            //    Destroy(gameObject);
+            //});
             Destroy(gameObject);
-        });
+        }
     }
 
 }

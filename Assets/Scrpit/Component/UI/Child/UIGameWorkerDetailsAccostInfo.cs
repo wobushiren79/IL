@@ -14,6 +14,7 @@ public class UIGameWorkerDetailsAccostInfo : UIGameStatisticsDetailsBase<UIGameW
     public void SetData(CharacterWorkerForAccostBean accostInfo)
     {
         this.accostInfo = accostInfo;
+        CptUtil.RemoveChildsByActive(objItemContent);
         AddAccostTotalNumber(accostInfo.accostTotalNumber);
         AddAccostSuccessNumber(accostInfo.accostSuccessNumber);
         AddAccostFailNumber(accostInfo.accostFailNumber);

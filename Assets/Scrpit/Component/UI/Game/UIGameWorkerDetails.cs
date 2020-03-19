@@ -38,6 +38,8 @@ public class UIGameWorkerDetails : UIGameComponent, IRadioGroupCallBack
     public UIGameWorkerDetailsAccountantInfo workerAccountantInfo;
     public UIGameWorkerDetailsAccostInfo workerAccostInfo;
     public UIGameWorkerDetailsBeaterInfo workerBeaterInfo;
+    public UIGameWorkerDetailsSkillInfo workerSkillInfo;
+    public UIGameWorkerDetailsBookInfo workerBookInfo;
 
     public Button btBack;
 
@@ -45,7 +47,6 @@ public class UIGameWorkerDetails : UIGameComponent, IRadioGroupCallBack
     public CharacterBean characterData;
     public Sprite spSexMan;
     public Sprite spSexWoman;
-
 
     public void SetCharacterData(CharacterBean characterData)
     {
@@ -75,41 +76,56 @@ public class UIGameWorkerDetails : UIGameComponent, IRadioGroupCallBack
     /// 初始化数据
     /// </summary>
     /// <param name="workerType"></param>
-    public void InitDataByWorker(WorkerEnum workerType)
+    public void InitDataByWorker(string name)
     {
         if (characterData == null)
             return;
-        workerChefInfo.gameObject.SetActive(false);
-        workerWaiterInfo.gameObject.SetActive(false);
-        workerAccountantInfo.gameObject.SetActive(false);
-        workerAccostInfo.gameObject.SetActive(false);
-        workerBeaterInfo.gameObject.SetActive(false);
-        switch (workerType)
+
+        workerChefInfo.Close();
+        workerWaiterInfo.Close();
+        workerAccountantInfo.Close();
+        workerAccostInfo.Close();
+        workerBeaterInfo.Close();
+        workerSkillInfo.Close();
+        workerBookInfo.Close();
+
+        if (name.Contains("Skill"))
         {
-            case WorkerEnum.Chef:
-                InnFoodManager innFoodManager = GetUIManager<UIGameManager>().innFoodManager;
-                workerChefInfo.gameObject.SetActive(true);
-                workerChefInfo.SetData(innFoodManager, characterData.baseInfo.chefInfo);
-                break;
-            case WorkerEnum.Waiter:
-                workerWaiterInfo.gameObject.SetActive(true);
-                workerWaiterInfo.SetData(characterData.baseInfo.waiterInfo);
-                break;
-            case WorkerEnum.Accountant:
-                workerAccountantInfo.gameObject.SetActive(true);
-                workerAccountantInfo.SetData(characterData.baseInfo.accountantInfo);
-                break;
-            case WorkerEnum.Accost:
-                workerAccostInfo.gameObject.SetActive(true);
-                workerAccostInfo.SetData(characterData.baseInfo.accostInfo);
-                break;
-            case WorkerEnum.Beater:
-                workerBeaterInfo.gameObject.SetActive(true);
-                workerBeaterInfo.SetData(characterData.baseInfo.beaterInfo);
-                break;
+            workerSkillInfo.Open();
+            workerSkillInfo.SetData(characterData.attributes.listSkills);
+        }
+        else if (name.Contains("Book"))
+        {
+            workerBookInfo.Open();
+            workerBookInfo.SetData(characterData.attributes.listLearnBook);
+        }
+        else if (name.Contains("Chef"))
+        {
+            InnFoodManager innFoodManager = GetUIManager<UIGameManager>().innFoodManager;
+            workerChefInfo.Open();
+            workerChefInfo.SetData(innFoodManager, characterData.baseInfo.chefInfo);
+        }
+        else if (name.Contains("Waiter"))
+        {
+            workerWaiterInfo.Open();
+            workerWaiterInfo.SetData(characterData.baseInfo.waiterInfo);
+        }
+        else if (name.Contains("Accountant"))
+        {
+            workerAccountantInfo.Open();
+            workerAccountantInfo.SetData(characterData.baseInfo.accountantInfo);
+        }
+        else if (name.Contains("Accost"))
+        {
+            workerAccostInfo.Open();
+            workerAccostInfo.SetData(characterData.baseInfo.accostInfo);
+        }
+        else if (name.Contains("Beater"))
+        {
+            workerBeaterInfo.Open();
+            workerBeaterInfo.SetData(characterData.baseInfo.beaterInfo);
         }
     }
-
 
     public override void OpenUI()
     {
@@ -123,7 +139,7 @@ public class UIGameWorkerDetails : UIGameComponent, IRadioGroupCallBack
         SetWorkerInfo(characterData.baseInfo);
         characterUICpt.SetCharacterData(characterData.body, characterData.equips);
         rgWorkerTitle.SetPosition(0, false);
-        InitDataByWorker(WorkerEnum.Chef);
+        InitDataByWorker("Skill");
     }
 
     public void OpenWorkUI()
@@ -287,7 +303,7 @@ public class UIGameWorkerDetails : UIGameComponent, IRadioGroupCallBack
     public void RadioButtonSelected(RadioGroupView rgView, int position, RadioButtonView rbview)
     {
         uiGameManager.audioHandler.PlaySound(AudioSoundEnum.ButtonForNormal);
-        InitDataByWorker((WorkerEnum)(position + 1));
+        InitDataByWorker(rbview.name);
     }
 
     public void RadioButtonUnSelected(RadioGroupView rgView, int position, RadioButtonView rbview)

@@ -6,12 +6,17 @@ using DG.Tweening;
 public class PopupShowView : BaseMonoBehaviour
 {
     //屏幕(用来找到鼠标点击的相对位置)
-    public RectTransform screenRTF;
+    protected RectTransform screenRTF;
     public RectTransform popupRTF;
 
     //鼠标位置和弹窗偏移量
     public float offsetX = 0;
     public float offsetY = 0;
+
+    public virtual void Awake()
+    {
+        screenRTF = (RectTransform)transform.parent.transform;
+    }
 
     public virtual void Update()
     {

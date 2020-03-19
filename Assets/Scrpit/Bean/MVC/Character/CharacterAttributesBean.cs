@@ -18,6 +18,44 @@ public class CharacterAttributesBean
 
     //技能列表
     public List<long> listSkills = new List<long>();
+    //学会的书籍
+    public List<long> listLearnBook = new List<long>();
+
+    /// <summary>
+    /// 学习书籍
+    /// </summary>
+    /// <param name="bookId"></param>
+    public void LearnBook(long bookId)
+    {
+        listLearnBook.Add(bookId);
+    }
+
+    /// <summary>
+    /// 学习技能
+    /// </summary>
+    /// <param name="skillId"></param>
+    public void LearnSkill(long skillId)
+    {
+        listSkills.Add(skillId);
+    }
+    /// <summary>
+    /// 检测是否学习过该书籍
+    /// </summary>
+    /// <param name="bookId"></param>
+    /// <returns></returns>
+    public bool CheckLearnBook(long bookId)
+    {
+      return listLearnBook.Contains(bookId);
+    }
+    /// <summary>
+    /// 检测是否学习过该技能
+    /// </summary>
+    /// <param name="bookId"></param>
+    /// <returns></returns>
+    public bool CheckLearnSkills(long skillId)
+    {
+        return listSkills.Contains(skillId);
+    }
 
     /// <summary>
     /// 增加属性
@@ -35,6 +73,8 @@ public class CharacterAttributesBean
         force += itemsInfo.add_force;
         lucky += itemsInfo.add_lucky;
     }
+
+
 
     /// <summary>
     /// 生成随机身体属性

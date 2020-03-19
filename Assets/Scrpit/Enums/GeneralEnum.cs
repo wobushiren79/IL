@@ -62,9 +62,8 @@ public class GeneralEnumTools
                     spIcon = characterDressManager.GetShoesSpriteByName(itemsInfo.icon_key);
                 break;
             case GeneralEnum.Book:
-                spIcon = iconDataManager.GetIconSpriteByName("book_1");
-                break;
             case GeneralEnum.Menu:
+            case GeneralEnum.SkillBook:
                 spIcon = iconDataManager.GetIconSpriteByName(itemsInfo.icon_key);
                 break;
             default:
@@ -110,6 +109,9 @@ public class GeneralEnumTools
                 break;
             case GeneralEnum.Medicine:
                 itemsnTypeName = GameCommonInfo.GetUITextById(409);
+                break;
+            case GeneralEnum.SkillBook:
+                itemsnTypeName = GameCommonInfo.GetUITextById(410);
                 break;
             default:
                 break;

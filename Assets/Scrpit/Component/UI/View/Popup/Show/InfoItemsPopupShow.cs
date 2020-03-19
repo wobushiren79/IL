@@ -19,8 +19,9 @@ public class InfoItemsPopupShow : PopupShowView
 
     protected IconDataManager iconDataManager;
 
-    private void Awake()
+    public override void Awake()
     {
+        base.Awake();
         iconDataManager = Find<IconDataManager>(ImportantTypeEnum.UIManager);
     }
 

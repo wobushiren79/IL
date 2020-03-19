@@ -39,8 +39,9 @@ public class InfoRecordPopupShow : PopupShowView
 
     protected InnFoodManager innFoodManager;
 
-    private void Awake()
+    public override void Awake()
     {
+        base.Awake();
         innFoodManager = Find<InnFoodManager>(ImportantTypeEnum.FoodManager);
     }
 
