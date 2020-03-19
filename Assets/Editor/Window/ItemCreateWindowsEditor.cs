@@ -720,6 +720,12 @@ public class ItemCreateWindowsEditor : EditorWindow, StoreInfoManager.ICallBack
                 case GeneralEnum.Beater:
                     path += "Items/Beater/";
                     break;
+                case GeneralEnum.Book:
+                case GeneralEnum.SkillBook:
+                case GeneralEnum.Menu:
+                    path += "Common/UI/";
+                    
+                    break;
                 default:
                     path += "Items/";
                     break;
@@ -759,11 +765,21 @@ public class ItemCreateWindowsEditor : EditorWindow, StoreInfoManager.ICallBack
             itemInfo.add_lucky = int.Parse(EditorGUILayout.TextArea(itemInfo.add_lucky + "", GUILayout.Width(150), GUILayout.Height(20)));
             GUILayout.Label("忠");
             itemInfo.add_loyal = int.Parse(EditorGUILayout.TextArea(itemInfo.add_loyal + "", GUILayout.Width(150), GUILayout.Height(20)));
-
-            if ((GeneralEnum)itemInfo.items_type == GeneralEnum.Medicine)
+            GeneralEnum itemType = (GeneralEnum)itemInfo.items_type;
+            if (itemType == GeneralEnum.Medicine)
             {
                 itemInfo.effect = EditorUI.GUIListData<EffectTypeEnum>("效果", itemInfo.effect);
                 itemInfo.effect_details = EditorUI.GUIListData<EffectDetailsEnum>("效果详情", itemInfo.effect_details);
+            }
+            else if (itemType== GeneralEnum.Menu)
+            {
+                GUILayout.Label("绑定菜谱ID：");
+                itemInfo.add_id =long.Parse( EditorGUILayout.TextArea(itemInfo.add_id + "", GUILayout.Width(150), GUILayout.Height(20)));
+            }
+            else if (itemType == GeneralEnum.SkillBook)
+            {
+                GUILayout.Label("绑定技能ID：");
+                itemInfo.add_id = long.Parse(EditorGUILayout.TextArea(itemInfo.add_id + "", GUILayout.Width(150), GUILayout.Height(20)));
             }
 
             GUILayout.EndHorizontal();

@@ -15,7 +15,6 @@ public class InfoSkillPopupShow : PopupShowView
     public Color colorForAttribute;
 
     public SkillInfoBean skillInfoData;
-    public int usedNumber;
 
     protected IconDataManager iconDataManager;
 
@@ -28,12 +27,11 @@ public class InfoSkillPopupShow : PopupShowView
     /// 设置文本内容
     /// </summary>
     /// <param name="content"></param>
-    public void SetData(SkillInfoBean skillInfoData, int usedNumber)
+    public void SetData(SkillInfoBean skillInfoData)
     {
         if (skillInfoData == null)
             return;
         this.skillInfoData = skillInfoData;
-        this.usedNumber = usedNumber;
         SetIcon(skillInfoData.icon_key);
         SetName(skillInfoData.name);
         SetContent(skillInfoData.content);

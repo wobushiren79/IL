@@ -17,9 +17,8 @@ public enum GeneralEnum
     Ing = 9,
     Book = 11,
     Menu = 12,//菜谱
-
     Medicine=13,//药
-
+    SkillBook = 14,//技能书
     Mask = 21,//面具
 
 }

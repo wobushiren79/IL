@@ -33,7 +33,7 @@ public class ItemGameBackpackEquipCpt : ItemGameBackpackCpt
         }
         else
         {
-            GeneralEnum itemsType = (GeneralEnum)itemsInfoBean.items_type;
+            GeneralEnum itemsType = itemsInfoBean.GetItemsType();
             switch (itemsType)
             {
                 case GeneralEnum.Hat:
@@ -47,6 +47,7 @@ public class ItemGameBackpackEquipCpt : ItemGameBackpackCpt
                     popupItemsSelection.Open(PopupItemsSelection.SelectionTypeEnum.EquipAndDiscard);
                     break;
                 case GeneralEnum.Book:
+                case GeneralEnum.SkillBook:
                     popupItemsSelection.Open(PopupItemsSelection.SelectionTypeEnum.UseAndDiscard);
                     break;
                 default:
@@ -61,9 +62,10 @@ public class ItemGameBackpackEquipCpt : ItemGameBackpackCpt
     public override void SelectionUse(PopupItemsSelection view)
     {
         ToastManager toastManager = GetUIManager<UIGameManager>().toastManager;
-        switch (itemsInfoBean.items_type)
+        GeneralEnum itemsType = itemsInfoBean.GetItemsType();
+        switch (itemsType)
         {
-            case (int)GeneralEnum.Book:
+            case GeneralEnum.Book:
                 //读书
                 if (characterData.equips.CheckLearnBook(itemsInfoBean.id))
                 {
@@ -81,6 +83,10 @@ public class ItemGameBackpackEquipCpt : ItemGameBackpackCpt
                     toastManager.ToastHint(ivIcon.sprite, toastStr);
                     RemoveItems();
                 }
+                break;
+            case GeneralEnum.SkillBook:
+
+                //TODO 学习技能
                 break;
             default:
                 break;

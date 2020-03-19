@@ -4,7 +4,6 @@ using UnityEditor;
 public class InfoSkillPopupButton : PopupButtonView
 {
     public SkillInfoBean skillInfo;
-    public int usedNumber;
 
     private void Awake()
     {
@@ -12,10 +11,9 @@ public class InfoSkillPopupButton : PopupButtonView
         SetPopupShowView(uiGameManager.infoSkillPopup);
     }
 
-    public void SetData(SkillInfoBean skillInfo, int usedNumber)
+    public void SetData(SkillInfoBean skillInfo)
     {
         this.skillInfo = skillInfo;
-        this.usedNumber = usedNumber;
     }
 
     public override void ClosePopup()
@@ -25,6 +23,6 @@ public class InfoSkillPopupButton : PopupButtonView
 
     public override void OpenPopup()
     {
-        ((InfoSkillPopupShow)popupShow).SetData(skillInfo, usedNumber);
+        ((InfoSkillPopupShow)popupShow).SetData(skillInfo);
     }
 }

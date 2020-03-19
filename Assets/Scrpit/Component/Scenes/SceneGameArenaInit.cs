@@ -123,18 +123,18 @@ public class SceneGameArenaInit : BaseSceneInit, IBaseObserver
         //arenaPrepareData.gameBarrageData.AddRewardItem(200001, 3);
         //arenaPrepareData.gameBarrageData.AddRewardItem(1100006, 3);
 
-        arenaPrepareData = new ArenaPrepareBean(new MiniGameCombatBean());
-        arenaPrepareData.miniGameData.winBringDownNumber = 3;
-        arenaPrepareData.miniGameData.winSurvivalNumber = 1;
-        List<CharacterBean> listOurData = new List<CharacterBean>();
-        listOurData.Add(npcInfoManager.GetCharacterDataById(100011));
-        listOurData.Add(npcInfoManager.GetCharacterDataById(100021));
-        listOurData.Add(npcInfoManager.GetCharacterDataById(100031));
-        List<CharacterBean> listEnemyData = new List<CharacterBean>();
-        listEnemyData.Add(npcInfoManager.GetCharacterDataById(100041));
-        listEnemyData.Add(npcInfoManager.GetCharacterDataById(100051));
-        listEnemyData.Add(npcInfoManager.GetCharacterDataById(100061));
-        arenaPrepareData.miniGameData.InitData(gameItemsManager, listOurData, listEnemyData);
+        //arenaPrepareData = new ArenaPrepareBean(new MiniGameCombatBean());
+        //arenaPrepareData.miniGameData.winBringDownNumber = 3;
+        //arenaPrepareData.miniGameData.winSurvivalNumber = 1;
+        //List<CharacterBean> listOurData = new List<CharacterBean>();
+        //listOurData.Add(npcInfoManager.GetCharacterDataById(100011));
+        //listOurData.Add(npcInfoManager.GetCharacterDataById(100021));
+        //listOurData.Add(npcInfoManager.GetCharacterDataById(100031));
+        //List<CharacterBean> listEnemyData = new List<CharacterBean>();
+        //listEnemyData.Add(npcInfoManager.GetCharacterDataById(100041));
+        //listEnemyData.Add(npcInfoManager.GetCharacterDataById(100051));
+        //listEnemyData.Add(npcInfoManager.GetCharacterDataById(100061));
+        //arenaPrepareData.miniGameData.InitData(gameItemsManager, listOurData, listEnemyData);
 
         if (arenaPrepareData == null || arenaPrepareData.miniGameData == null)
             return;

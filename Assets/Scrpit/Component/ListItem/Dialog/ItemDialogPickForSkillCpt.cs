@@ -48,7 +48,7 @@ public class ItemDialogPickForSkillCpt : BaseMonoBehaviour
         SetNumber(restNumber);
         SetIcon(skillInfoData.icon_key);
 
-        infoSkillPopup.SetData(skillInfoData, usedNumber);
+        infoSkillPopup.SetData(skillInfoData);
     }
 
     /// <summary>
@@ -110,7 +110,9 @@ public class ItemDialogPickForSkillCpt : BaseMonoBehaviour
             callBack.SelectedSkill(skillInfoData);
     }
 
-
+    /// <summary>
+    /// 回调
+    /// </summary>
     public interface ICallBack
     {
         void SelectedSkill(SkillInfoBean skillInfo);

@@ -177,28 +177,29 @@ public class UIGameEquip : UIGameComponent
 
         ItemGameBackpackEquipCpt itemCpt = null;
         long unloadEquipId = 0;
-        switch (itemInfo.items_type)
+        GeneralEnum itemType = itemInfo.GetItemsType();
+        switch (itemType)
         {
-            case 1:
+            case GeneralEnum.Hat:
                 itemCpt = equipHat;
                 unloadEquipId = characterData.equips.hatId;
                 characterData.equips.hatId = itemInfo.id;
                 break;
-            case 2:
+            case GeneralEnum.Clothes:
                 itemCpt = equipClothes;
                 unloadEquipId = characterData.equips.clothesId;
                 characterData.equips.clothesId = itemInfo.id;
                 break;
-            case 3:
+            case GeneralEnum.Shoes:
                 itemCpt = equipShoes;
                 unloadEquipId = characterData.equips.shoesId;
                 characterData.equips.shoesId = itemInfo.id;
                 break;
-            case 4:
-            case 5:
-            case 6:
-            case 7:
-            case 8:
+            case GeneralEnum.Chef:
+            case GeneralEnum.Waiter:
+            case GeneralEnum.Accoutant:
+            case GeneralEnum.Accost:
+            case GeneralEnum.Beater:
                 itemCpt = equipHand;
                 unloadEquipId = characterData.equips.handId;
                 characterData.equips.handId = itemInfo.id;
@@ -239,20 +240,22 @@ public class UIGameEquip : UIGameComponent
         for (int i = 0; i < uiGameManager.gameDataManager.gameData.listItems.Count; i++)
         {
             ItemBean itemBean = uiGameManager.gameDataManager.gameData.listItems[i];
-            ItemsInfoBean itemsInfoBean = uiGameManager.gameItemsManager.GetItemsById(itemBean.itemId);
-            if (itemsInfoBean == null)
+            ItemsInfoBean itemInfo = uiGameManager.gameItemsManager.GetItemsById(itemBean.itemId);
+            if (itemInfo == null)
                 continue;
-            if (itemsInfoBean.items_type != (int)GeneralEnum.Hat
-                && itemsInfoBean.items_type != (int)GeneralEnum.Clothes
-                && itemsInfoBean.items_type != (int)GeneralEnum.Shoes
-                && itemsInfoBean.items_type != (int)GeneralEnum.Chef
-                && itemsInfoBean.items_type != (int)GeneralEnum.Waiter
-                && itemsInfoBean.items_type != (int)GeneralEnum.Accoutant
-                && itemsInfoBean.items_type != (int)GeneralEnum.Accost
-                && itemsInfoBean.items_type != (int)GeneralEnum.Beater
-                && itemsInfoBean.items_type != (int)GeneralEnum.Book)
+            GeneralEnum itemType = itemInfo.GetItemsType();
+            if (itemType != GeneralEnum.Hat
+                && itemType != GeneralEnum.Clothes
+                && itemType != GeneralEnum.Shoes
+                && itemType != GeneralEnum.Chef
+                && itemType != GeneralEnum.Waiter
+                && itemType != GeneralEnum.Accoutant
+                && itemType != GeneralEnum.Accost
+                && itemType != GeneralEnum.Beater
+                && itemType != GeneralEnum.Book
+                && itemType != GeneralEnum.SkillBook)
                 continue;
-            GameObject objItem = CreateItemBackpackData(itemBean, itemsInfoBean);
+            GameObject objItem = CreateItemBackpackData(itemBean, itemInfo);
             //objItem.transform.DOScale(new Vector3(0, 0, 0), 0.5f).SetEase(Ease.OutBack).SetDelay(i * 0.05f).From();
         }
     }

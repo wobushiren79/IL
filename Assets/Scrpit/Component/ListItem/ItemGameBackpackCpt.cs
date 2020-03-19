@@ -149,7 +149,7 @@ public class ItemGameBackpackCpt : ItemGameBaseCpt, IPointerClickHandler, PopupI
             return;
         if (popupItemsSelection != null)
             popupItemsSelection.SetCallBack(this);
-        switch ((GeneralEnum)itemsInfoBean.items_type)
+        switch (itemsInfoBean.GetItemsType())
         {
             case GeneralEnum.Menu:
                 popupItemsSelection.Open(PopupItemsSelection.SelectionTypeEnum.UseAndDiscard);
@@ -168,9 +168,9 @@ public class ItemGameBackpackCpt : ItemGameBaseCpt, IPointerClickHandler, PopupI
 
         if (itemsInfoBean == null || itemBean == null || gameDataManager == null)
             return;
-        switch (itemsInfoBean.items_type)
+        switch (itemsInfoBean.GetItemsType())
         {
-            case (int)GeneralEnum.Menu:
+            case GeneralEnum.Menu:
                 //添加菜谱
                 if (gameDataManager.gameData.AddFoodMenu(itemsInfoBean.add_id))
                 {
