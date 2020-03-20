@@ -13,4 +13,5 @@ public enum DialogEnum
     SelectForNpc = 7,
     PowerTest = 8,
     PickForSkill=9,
+    PickForNumber=10,
 }

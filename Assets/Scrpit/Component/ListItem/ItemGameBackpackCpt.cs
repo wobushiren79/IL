@@ -153,6 +153,10 @@ public class ItemGameBackpackCpt : ItemGameBaseCpt, IPointerClickHandler, PopupI
     }
 
     #region 选择回调
+    /// <summary>
+    /// 使用
+    /// </summary>
+    /// <param name="view"></param>
     public virtual void SelectionUse(PopupItemsSelection view)
     {
         GameDataManager gameDataManager = uiGameManager.gameDataManager;
@@ -166,7 +170,7 @@ public class ItemGameBackpackCpt : ItemGameBaseCpt, IPointerClickHandler, PopupI
                 //添加菜谱
                 if (gameDataManager.gameData.AddFoodMenu(itemsInfoBean.add_id))
                 {
-                    RefreshItems(itemsInfoBean.id,-1);
+                    RefreshItems(itemsInfoBean.id, -1);
                     toastManager.ToastHint(ivIcon.sprite, GameCommonInfo.GetUITextById(1006));
                 }
                 else
@@ -179,16 +183,34 @@ public class ItemGameBackpackCpt : ItemGameBaseCpt, IPointerClickHandler, PopupI
         }
     }
 
+    /// <summary>
+    /// 删除
+    /// </summary>
+    /// <param name="view"></param>
     public virtual void SelectionDiscard(PopupItemsSelection view)
     {
         DialogManager dialogManager = uiGameManager.dialogManager;
         if (dialogManager == null || itemsInfoBean == null)
             return;
-        DialogBean dialogBean = new DialogBean
+        if (itemBean.itemNumber == 1)
         {
-            content = string.Format(GameCommonInfo.GetUITextById(3001), itemsInfoBean.name)
-        };
-        dialogManager.CreateDialog(DialogEnum.Normal, this, dialogBean);
+            DialogBean dialogBean = new DialogBean
+            {
+                content = string.Format(GameCommonInfo.GetUITextById(3001), itemsInfoBean.name),
+                remark = "1"
+            };
+            dialogManager.CreateDialog(DialogEnum.Normal, this, dialogBean);
+        }
+        else
+        {
+            DialogBean dialogBean = new DialogBean
+            {
+                content = string.Format(GameCommonInfo.GetUITextById(3001), itemsInfoBean.name)
+            };
+            PickForNumberDialogView pickForNumberDialog = (PickForNumberDialogView)dialogManager.CreateDialog(DialogEnum.PickForNumber, this, dialogBean);
+            pickForNumberDialog.SetData(ivIcon.sprite, itemBean.itemNumber);
+        }
+
     }
 
     public virtual void SelectionEquip(PopupItemsSelection view)
@@ -210,7 +232,24 @@ public class ItemGameBackpackCpt : ItemGameBaseCpt, IPointerClickHandler, PopupI
     #region 删除确认回调
     public void Submit(DialogView dialogView, DialogBean dialogData)
     {
-        RefreshItems(itemsInfoBean.id, -1);
+        if (dialogView as PickForNumberDialogView)
+        {
+            PickForNumberDialogView pickForNumberDialog = (PickForNumberDialogView)dialogView;
+            long pickNumber = pickForNumberDialog.GetPickNumber();
+
+            //创建确认弹窗
+            DialogBean dialogBean = new DialogBean
+            {
+                content = string.Format(GameCommonInfo.GetUITextById(3001), itemsInfoBean.name+"x"+ pickNumber),
+                remark = "" + pickNumber
+            };
+            DialogManager dialogManager = uiGameManager.dialogManager;
+            dialogManager.CreateDialog(DialogEnum.Normal, this, dialogBean);
+        }
+        else
+        {
+            RefreshItems(itemsInfoBean.id, -long.Parse(dialogData.remark));
+        }
     }
 
     public void Cancel(DialogView dialogView, DialogBean dialogData)
@@ -222,7 +261,7 @@ public class ItemGameBackpackCpt : ItemGameBaseCpt, IPointerClickHandler, PopupI
     /// <summary>
     /// 删除物品
     /// </summary>
-    public void RefreshItems(long id, int changeNumber)
+    public void RefreshItems(long id, long changeNumber)
     {
         GameDataManager gameDataManager = uiGameManager.gameDataManager;
         ItemBean itemData = gameDataManager.gameData.AddItemsNumber(id, changeNumber);
