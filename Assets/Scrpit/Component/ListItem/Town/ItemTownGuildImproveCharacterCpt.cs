@@ -357,10 +357,8 @@ public class ItemTownGuildImproveCharacterCpt : ItemGameBaseCpt, DialogView.IDia
     private MiniGameBaseBean InitBeaterGame()
     {
         MiniGameBaseBean miniGameData = MiniGameEnumTools.GetMiniGameData(MiniGameEnum.Combat);
-        miniGameData.winBringDownNumber = 1;
-        miniGameData.winSurvivalNumber = 1;
-        CharacterBean enemyData = npcInfoManager.GetCharacterDataById(110111);
-        miniGameData.InitData(gameItemsManager, characterData, enemyData);
+        miniGameData = PreTypeForMiniGameEnumTools.GetMiniGameData(miniGameData, levelData.pre_data_minigame, gameItemsManager, npcInfoManager);
+        miniGameData.InitData(gameItemsManager, characterData);
         return miniGameData;
     }
 
@@ -370,9 +368,7 @@ public class ItemTownGuildImproveCharacterCpt : ItemGameBaseCpt, DialogView.IDia
     private MiniGameBaseBean InitChefGame()
     {
         MiniGameBaseBean miniGameData = MiniGameEnumTools.GetMiniGameData(MiniGameEnum.Cooking);
-        miniGameData.winScore = 60;
-        ((MiniGameCookingBean)miniGameData).storyGameOpenId = 30000001;
-        ((MiniGameCookingBean)miniGameData).storyGameAuditId = 30000002;
+        miniGameData = PreTypeForMiniGameEnumTools.GetMiniGameData(miniGameData, levelData.pre_data_minigame, gameItemsManager, npcInfoManager);
         //随机生成敌人
         List<CharacterBean> listEnemyData = new List<CharacterBean>();
         for (int i = 0; i < UnityEngine.Random.Range(1, 16); i++)
@@ -380,20 +376,7 @@ public class ItemTownGuildImproveCharacterCpt : ItemGameBaseCpt, DialogView.IDia
             CharacterBean randomEnemy = CharacterBean.CreateRandomWorkerData(characterBodyManager);
             listEnemyData.Add(randomEnemy);
         }
-        //主持由东方姑娘主持
-        List<CharacterBean> listCompereData = new List<CharacterBean>();
-        CharacterBean compereData = npcInfoManager.GetCharacterDataById(110051);
-        listCompereData.Add(compereData);
-        //评审人员
-        List<long> listAuditerIds = new List<long>() { 100011, 100021, 100031, 100041, 100051, 100061, 100071, 100081, 100091 };
-        List<CharacterBean> listAuditerData = new List<CharacterBean>();
-        listAuditerIds = RandomUtil.GetRandomDataByListForNumberNR(listAuditerIds, 5);
-        foreach (long itemId in listAuditerIds)
-        {
-            CharacterBean auditerData = npcInfoManager.GetCharacterDataById(itemId);
-            listAuditerData.Add(auditerData);
-        }
-        ((MiniGameCookingBean)miniGameData).InitData(gameItemsManager, characterData, listEnemyData, listAuditerData, listCompereData);
+        miniGameData.InitData(gameItemsManager, characterData, listEnemyData);
         return miniGameData;
     }
 

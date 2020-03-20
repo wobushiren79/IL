@@ -171,7 +171,7 @@ public class UITownArena : UIBaseOne, IRadioGroupCallBack, StoreInfoManager.ICal
     private MiniGameCookingBean CreateCookingGameData(MiniGameCookingBean miniGameData, StoreInfoBean storeInfo)
     {
         miniGameData.winScore = 60;
-        miniGameData.storyGameOpenId = 30000001;
+        miniGameData.storyGameStartId = 30000001;
         miniGameData.storyGameAuditId = 30000002;
         //随机生成敌人
         List<CharacterBean> listEnemyData = new List<CharacterBean>();

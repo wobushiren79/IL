@@ -26,7 +26,14 @@ public enum PreTypeForMiniGameEnum
     AccountForWinMoneyM = 202,
     AccountForWinMoneyS = 203,
 
-    
+    CombatForSurvivalNumber = 301,
+    CombatForBringDownNumber = 302,
+
+    CookingForScore = 401,
+    CookingForStoryStartId = 402,
+    CookingForStoryAuditId = 403,
+    CookingForAuditCharacter = 404,
+    CookingForCompereCharacter=405,
 }
 
 public class PreTypeForMiniGameBean : DataBean<PreTypeForMiniGameEnum>
@@ -156,6 +163,17 @@ public class PreTypeForMiniGameEnumTools : DataTools
                 case PreTypeForMiniGameEnum.AccountForWinMoneyS:
                     GetMiniGameDataForAccount(itemPreData, miniGameData);
                     break;
+                case PreTypeForMiniGameEnum.CombatForBringDownNumber:
+                case PreTypeForMiniGameEnum.CombatForSurvivalNumber:
+                    GetMiniGameDataForCombat(itemPreData, miniGameData);
+                    break;
+                case PreTypeForMiniGameEnum.CookingForScore:
+                case PreTypeForMiniGameEnum.CookingForStoryStartId:
+                case PreTypeForMiniGameEnum.CookingForStoryAuditId:
+                case PreTypeForMiniGameEnum.CookingForAuditCharacter:
+                case PreTypeForMiniGameEnum.CookingForCompereCharacter:
+                    GetMiniGameDataForCook(gameItemsManager, npcInfoManager,itemPreData, miniGameData);
+                    break;
             }
         }
         if (miniGameData == null)
@@ -220,6 +238,75 @@ public class PreTypeForMiniGameEnumTools : DataTools
                 miniGameData.winMoneyS = int.Parse(itemPreData.data);
                 break;
         }
+    }
+
+    /// <summary>
+    /// 获取战斗游戏数据
+    /// </summary>
+    /// <param name="itemPreData"></param>
+    /// <param name="miniGameData"></param>
+    private static void GetMiniGameDataForCombat(PreTypeForMiniGameBean itemPreData, MiniGameBaseBean miniGameData)
+    {
+        if (miniGameData.gameType != MiniGameEnum.Combat)
+            return;
+        MiniGameCombatBean miniGameCombat = (MiniGameCombatBean)miniGameData;
+        switch (itemPreData.dataType)
+        {
+            case PreTypeForMiniGameEnum.CombatForBringDownNumber:
+                miniGameData.winBringDownNumber = int.Parse(itemPreData.data);
+                break;
+            case PreTypeForMiniGameEnum.CombatForSurvivalNumber:
+                miniGameData.winSurvivalNumber = int.Parse(itemPreData.data);
+                break;
+        }
+    }
+
+    /// <summary>
+    /// 获取烹饪游戏数据
+    /// </summary>
+    /// <param name="itemPreData"></param>
+    /// <param name="miniGameData"></param>
+    private static void GetMiniGameDataForCook(GameItemsManager gameItemsManager, NpcInfoManager npcInfoManager, PreTypeForMiniGameBean itemPreData, MiniGameBaseBean miniGameData)
+    {
+        if (miniGameData.gameType != MiniGameEnum.Cooking)
+            return;
+        MiniGameCookingBean miniGameCooking = (MiniGameCookingBean)miniGameData;
+        //审核人员
+        List<CharacterBean> listAuditData = new List<CharacterBean>();
+        //主持人
+        List<CharacterBean> listCompereData = new List<CharacterBean>();
+
+        switch (itemPreData.dataType)
+        {
+            case PreTypeForMiniGameEnum.CookingForScore:
+                miniGameData.winScore = int.Parse(itemPreData.data);
+                break;
+            case PreTypeForMiniGameEnum.CookingForStoryStartId:
+                miniGameCooking.storyGameStartId = long.Parse(itemPreData.data);
+                break;
+            case PreTypeForMiniGameEnum.CookingForStoryAuditId:
+                miniGameCooking.storyGameAuditId = long.Parse(itemPreData.data);
+                break;
+            case PreTypeForMiniGameEnum.CookingForAuditCharacter:
+                long[] auditIds=   StringUtil.SplitBySubstringForArrayLong(itemPreData.data,',');
+                listAuditData = npcInfoManager.GetCharacterDataByIds(auditIds);
+                //评审人员只有5位
+                listAuditData = RandomUtil.GetRandomDataByListForNumberNR(listAuditData, 5);
+                //如果评审人员不够 就随机增加小镇人员
+                if (listAuditData.Count < 5)
+                {
+                    int tempNumber = 5 - listAuditData.Count;
+                    List<CharacterBean> listTempCharacterData = npcInfoManager.GetCharacterDataByType(NpcTypeEnum.Town);
+                    listAuditData.AddRange(RandomUtil.GetRandomDataByListForNumberNR(listTempCharacterData, tempNumber));
+                }
+                break;
+            case PreTypeForMiniGameEnum.CookingForCompereCharacter:
+                long[] compereIds = StringUtil.SplitBySubstringForArrayLong(itemPreData.data, ',');
+                listCompereData = npcInfoManager.GetCharacterDataByIds(compereIds);
+                break;
+        }
+
+        miniGameCooking.InitData(gameItemsManager, null, null, listAuditData, listCompereData);
     }
 }
 

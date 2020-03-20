@@ -191,7 +191,7 @@ public class MiniGameCookingHandler : BaseMiniGameHandler<MiniGameCookingBuilder
         if (eventHandler != null)
         {
             eventHandler.AddObserver(this);
-            eventHandler.EventTriggerForStoryCooking(miniGameData, miniGameData.storyGameOpenId);
+            eventHandler.EventTriggerForStoryCooking(miniGameData, miniGameData.storyGameStartId);
         }
     }
 
@@ -299,7 +299,7 @@ public class MiniGameCookingHandler : BaseMiniGameHandler<MiniGameCookingBuilder
         {
             if (type == (int)EventHandler.NotifyEventTypeEnum.EventEnd)
             {
-                if (Convert.ToInt64(obj[0]) == miniGameData.storyGameOpenId)
+                if (Convert.ToInt64(obj[0]) == miniGameData.storyGameStartId)
                 {
                     StartGame();
                 }

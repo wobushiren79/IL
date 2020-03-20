@@ -40,8 +40,12 @@ public class RandomUtil
     public static List<T> GetRandomDataByListForNumberNR<T>(List<T> list, int number)
     {
         List<T> listData = new List<T>();
-        if (CheckUtil.ListIsNull(list)||number > list.Count)
+        if (CheckUtil.ListIsNull(list))
             return listData;
+        if (list.Count< number)
+        {
+            number = list.Count;
+        }
         List<int> tempList = new List<int>();
         for(int i = 0; i < number; i++)
         {

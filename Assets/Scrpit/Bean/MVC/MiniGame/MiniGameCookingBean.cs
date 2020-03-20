@@ -21,7 +21,7 @@ public class MiniGameCookingBean : MiniGameBaseBean
     public List<Vector3> listCompereStartPosition = new List<Vector3>();
 
     //游戏开幕故事ID
-    public long storyGameOpenId;
+    public long storyGameStartId;
     //游戏审核故事ID
     public long storyGameAuditId;
 
