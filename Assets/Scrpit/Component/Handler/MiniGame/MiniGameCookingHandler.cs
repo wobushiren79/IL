@@ -13,12 +13,14 @@ public class MiniGameCookingHandler : BaseMiniGameHandler<MiniGameCookingBuilder
     //事件处理
     protected EventHandler eventHandler;
     protected GameItemsManager gameItemsManager;
+    protected InnFoodManager innFoodManager;
 
     protected override void Awake()
     {
         base.Awake();
         gameItemsManager = Find<GameItemsManager>(ImportantTypeEnum.GameItemsManager);
         eventHandler = Find<EventHandler>(ImportantTypeEnum.EventHandler);
+        innFoodManager = Find<InnFoodManager>( ImportantTypeEnum.FoodManager);
     }
 
     /// <summary>
@@ -33,13 +35,21 @@ public class MiniGameCookingHandler : BaseMiniGameHandler<MiniGameCookingBuilder
             miniGameData.listEnemyGameData, miniGameData.listEnemyStartPosition,
             miniGameData.listAuditerGameData, miniGameData.listAuditerStartPosition,
             miniGameData.listCompereGameData, miniGameData.listCompereStartPosition);
-
+        //设置主题
+        if (miniGameData.cookingThemeLevel != 0)
+        {
+            miniGameData.SetCookingThemeByLevel(innFoodManager, miniGameData.cookingThemeLevel);
+        }
+        if (miniGameData.cookingThemeId != 0)
+        {
+            miniGameData.SetCookingThemeById(innFoodManager, miniGameData.cookingThemeId);
+        }
         //初始化摄像头位置
         InitCameraPosition();
         //设置通告板内容
         List<MiniGameCookingCallBoardCpt> listCallBoard = miniGameBuilder.GetListCallBoard();
         foreach (MiniGameCookingCallBoardCpt itemCpt in listCallBoard)
-            itemCpt.SetCallBoardContent(miniGameData.cookingTheme.name);
+            itemCpt.SetCallBoardContent(miniGameData.GetCookingTheme().name);
         //给评审人员分配桌子
         List<MiniGameCookingAuditTableCpt> listAuditTable = miniGameBuilder.GetListAuditTable();
         List<NpcAIMiniGameCookingCpt> listAuditNpcAI = miniGameBuilder.GetCharacterByType(NpcAIMiniGameCookingCpt.MiniGameCookingNpcTypeEnum.Auditer);
@@ -58,7 +68,7 @@ public class MiniGameCookingHandler : BaseMiniGameHandler<MiniGameCookingBuilder
             NpcAIMiniGameCookingCpt itemNpc = listPlayerNpcAI[i];
             if (itemNpc.characterMiniGameData.cookingMenuInfo == null && itemNpc.characterMiniGameData.characterType == 0)
             {
-                itemNpc.characterMiniGameData.cookingMenuInfo = uiGameManager.innFoodManager.GetRandomFoodDataByCookingTheme(miniGameData.cookingTheme);
+                itemNpc.characterMiniGameData.cookingMenuInfo = uiGameManager.innFoodManager.GetRandomFoodDataByCookingTheme(miniGameData.GetCookingTheme());
             }
             //给参赛选手分配灶台
             MiniGameCookingStoveCpt itemTable = listStove[i];

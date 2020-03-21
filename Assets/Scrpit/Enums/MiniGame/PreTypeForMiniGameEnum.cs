@@ -34,6 +34,8 @@ public enum PreTypeForMiniGameEnum
     CookingForStoryAuditId = 403,
     CookingForAuditCharacter = 404,
     CookingForCompereCharacter=405,
+    CookingForThemeLevel=406,
+    CookingForThemeId = 407,
 }
 
 public class PreTypeForMiniGameBean : DataBean<PreTypeForMiniGameEnum>
@@ -172,6 +174,8 @@ public class PreTypeForMiniGameEnumTools : DataTools
                 case PreTypeForMiniGameEnum.CookingForStoryAuditId:
                 case PreTypeForMiniGameEnum.CookingForAuditCharacter:
                 case PreTypeForMiniGameEnum.CookingForCompereCharacter:
+                case PreTypeForMiniGameEnum.CookingForThemeId:
+                case PreTypeForMiniGameEnum.CookingForThemeLevel:
                     GetMiniGameDataForCook(gameItemsManager, npcInfoManager,itemPreData, miniGameData);
                     break;
             }
@@ -303,6 +307,12 @@ public class PreTypeForMiniGameEnumTools : DataTools
             case PreTypeForMiniGameEnum.CookingForCompereCharacter:
                 long[] compereIds = StringUtil.SplitBySubstringForArrayLong(itemPreData.data, ',');
                 listCompereData = npcInfoManager.GetCharacterDataByIds(compereIds);
+                break;
+            case PreTypeForMiniGameEnum.CookingForThemeLevel:
+                miniGameCooking.cookingThemeLevel = int.Parse(itemPreData.data);
+                break;
+            case PreTypeForMiniGameEnum.CookingForThemeId:
+                miniGameCooking.cookingThemeId = long.Parse(itemPreData.data);
                 break;
         }
 

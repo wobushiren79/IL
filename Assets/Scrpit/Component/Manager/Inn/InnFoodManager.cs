@@ -99,6 +99,7 @@ public class InnFoodManager : BaseManager, IMenuInfoView, ICookingThemeView
         }
         return null;
     }
+
     /// <summary>
     /// 随机获取一个料理主题
     /// </summary>
@@ -123,13 +124,34 @@ public class InnFoodManager : BaseManager, IMenuInfoView, ICookingThemeView
     /// </summary>
     /// <param name="themeId"></param>
     /// <returns></returns>
-    public CookingThemeBean GetCookingTheme(long themeId)
+    public CookingThemeBean GetCookingThemeById(long themeId)
     {
         if (listCookingTheme.TryGetValue(themeId, out CookingThemeBean cookingTheme))
         {
             return cookingTheme;
         }
         return null;
+    }
+
+    /// <summary>
+    /// 通过等级获取烹饪主题
+    /// </summary>
+    /// <param name="themeLevel"></param>
+    /// <returns></returns>
+    public List<CookingThemeBean> GetCookingThemeByLevel(int themeLevel)
+    {
+        List<CookingThemeBean> listData = new List<CookingThemeBean>();
+        if (listCookingTheme == null)
+            return listData;
+        foreach ( var itemData in listCookingTheme)
+        {
+            CookingThemeBean itemCookingTheme = itemData.Value;
+            if (itemCookingTheme.theme_level== themeLevel)
+            {
+                listData.Add(itemCookingTheme);
+            }
+        }
+        return listData;
     }
 
     /// <summary>

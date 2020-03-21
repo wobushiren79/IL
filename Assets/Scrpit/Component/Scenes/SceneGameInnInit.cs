@@ -50,7 +50,7 @@ public class SceneGameInnInit : BaseSceneInit, IBaseObserver, DialogView.IDialog
             innBuildManager.buildDataController.GetAllBuildItemsData();
         //故事数据
         if (storyInfoManager != null)
-            storyInfoManager.storyInfoController.GetStoryInfoByScene(1);
+            storyInfoManager.storyInfoController.GetStoryInfoByScene(ScenesEnum.GameInnScene);
         //初始化场景
         if (sceneInnManager != null)
         {

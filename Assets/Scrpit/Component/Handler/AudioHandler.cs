@@ -87,6 +87,15 @@ public class AudioHandler : BaseHandler
             case AudioSoundEnum.UseMedicine:
                 audioClip = audioManager.GetSoundClip("sound_medicine_1");
                 break;
+            case AudioSoundEnum.Show:
+                audioClip = audioManager.GetSoundClip("sound_show_1");
+                break;
+            case AudioSoundEnum.Correct:
+                audioClip = audioManager.GetSoundClip("sound_btn_5");
+                break;
+            case AudioSoundEnum.Error:
+                audioClip = audioManager.GetSoundClip("sound_error_1");
+                break;
         }
         if (audioClip != null)
             audioSourceForMusic.PlayOneShot(audioClip, volumeScale);

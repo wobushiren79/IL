@@ -4,8 +4,6 @@ using System.Collections.Generic;
 
 public class MiniGameCookingBean : MiniGameBaseBean
 {
-
-
     //评审员
     public List<MiniGameCharacterBean> listAuditerGameData = new List<MiniGameCharacterBean>();
     //主持人
@@ -24,9 +22,13 @@ public class MiniGameCookingBean : MiniGameBaseBean
     public long storyGameStartId;
     //游戏审核故事ID
     public long storyGameAuditId;
+    //游戏烹饪主题ID
+    public long cookingThemeId;
+    //游戏烹饪主题等级
+    public int cookingThemeLevel;
 
     //料理的主题
-    public CookingThemeBean cookingTheme;
+    protected CookingThemeBean cookingTheme;
     //烹饪按钮个数
     public int cookButtonNumber;
 
@@ -86,5 +88,34 @@ public class MiniGameCookingBean : MiniGameBaseBean
     public MiniGameCharacterForCookingBean GetUserGameData()
     {
         return (MiniGameCharacterForCookingBean)listUserGameData[0];
+    }
+
+    /// <summary>
+    /// 获取烹饪主题
+    /// </summary>
+    public CookingThemeBean GetCookingTheme()
+    {
+        return cookingTheme;
+    }
+
+    /// <summary>
+    /// 通过ID设置食物主题
+    /// </summary>
+    /// <param name="innFoodManager"></param>
+    /// <param name="themeId"></param>
+    public void SetCookingThemeById(InnFoodManager innFoodManager,long themeId)
+    {
+        cookingTheme =  innFoodManager.GetCookingThemeById(themeId);
+    }
+
+    /// <summary>
+    /// 通过等级设置食物主题
+    /// </summary>
+    /// <param name="innFoodManager"></param>
+    /// <param name="themeLevel"></param>
+    public void SetCookingThemeByLevel(InnFoodManager innFoodManager, int themeLevel)
+    {
+        List<CookingThemeBean> listData= innFoodManager.GetCookingThemeByLevel(themeLevel);
+        cookingTheme = RandomUtil.GetRandomDataByList(listData);
     }
 }

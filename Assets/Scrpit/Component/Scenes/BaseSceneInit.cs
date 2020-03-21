@@ -25,7 +25,7 @@ public class BaseSceneInit : BaseMonoBehaviour
         gameDataManager = Find<GameDataManager>(ImportantTypeEnum.GameDataManager);
         npcInfoManager = Find<NpcInfoManager>(ImportantTypeEnum.NpcManager);
         dialogManager = Find<DialogManager>(ImportantTypeEnum.DialogManager);
-        storyInfoManager = Find<StoryInfoManager>(ImportantTypeEnum.StoreInfoManager);
+        storyInfoManager = Find<StoryInfoManager>(ImportantTypeEnum.StoryManager);
         controlHandler = Find<ControlHandler>(ImportantTypeEnum.ControlHandler);
     }
 

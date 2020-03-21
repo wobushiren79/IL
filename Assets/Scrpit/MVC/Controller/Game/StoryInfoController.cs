@@ -13,7 +13,7 @@ public class StoryInfoController : BaseMVCController<StoryInfoModel, IStoryInfoV
 
     }
 
-    public void GetStoryInfoByScene(int scene)
+    public void GetStoryInfoByScene(ScenesEnum scene)
     {
         List<StoryInfoBean> listData = GetModel().GetStoryInfoByScene(scene);
         if (listData != null)

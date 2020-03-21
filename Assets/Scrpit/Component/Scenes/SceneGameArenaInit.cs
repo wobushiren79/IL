@@ -59,7 +59,7 @@ public class SceneGameArenaInit : BaseSceneInit, IBaseObserver
         if (npcInfoManager != null)
             npcInfoManager.npcInfoController.GetAllNpcInfo();
         if (storyInfoManager != null)
-            storyInfoManager.storyInfoController.GetStoryInfoByScene(3);
+            storyInfoManager.storyInfoController.GetStoryInfoByScene(ScenesEnum.GameArenaScene);
 
         ArenaPrepareBean arenaPrepareData = GameCommonInfo.ArenaPrepareData;
         //测试数据 
@@ -97,6 +97,9 @@ public class SceneGameArenaInit : BaseSceneInit, IBaseObserver
         listAuditerData.Add(npcInfoManager.GetCharacterDataById(100061));
         List<CharacterBean> listCompereData = new List<CharacterBean>();
         listCompereData.Add(npcInfoManager.GetCharacterDataById(110051));
+        ((MiniGameCookingBean)(arenaPrepareData.miniGameData)).storyGameStartId = 30000001;
+        ((MiniGameCookingBean)(arenaPrepareData.miniGameData)).storyGameAuditId = 30000002;
+        ((MiniGameCookingBean)(arenaPrepareData.miniGameData)).cookingThemeLevel = 1;
         ((MiniGameCookingBean)(arenaPrepareData.miniGameData)).InitData(gameItemsManager, ourData, listEnemyData, listAuditerData, listCompereData);
 
         //arenaPrepareData = new ArenaPrepareBean();
@@ -161,11 +164,6 @@ public class SceneGameArenaInit : BaseSceneInit, IBaseObserver
     /// <param name="gameCookingData"></param>
     private void InitGameCooking(MiniGameCookingBean gameCookingData)
     {
-        //如果没有料理主题 则随机获取一个
-        if (gameCookingData.cookingTheme == null)
-        {
-            gameCookingData.cookingTheme = innFoodManager.GetRandomCookingTheme();
-        }
         switch (gameCookingData.gameReason)
         {
             //如果是晋升 

@@ -30,7 +30,7 @@ public class SceneGameTownInit : BaseSceneInit, IBaseObserver, DialogView.IDialo
         if (npcInfoManager != null)
             npcInfoManager.npcInfoController.GetAllNpcInfo();
         if (storyInfoManager != null)
-            storyInfoManager.storyInfoController.GetStoryInfoByScene(2);
+            storyInfoManager.storyInfoController.GetStoryInfoByScene(ScenesEnum.GameTownScene);
 
         //构建重要的NPC
         if (npcImportantBuilder != null)

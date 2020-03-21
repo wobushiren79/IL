@@ -28,11 +28,17 @@ public class StoryCreateWindowsEditor : EditorWindow
         CptUtil.RemoveChildsByActiveInEditor(mObjContent);
     }
 
+    private void OnFocus()
+    {
+        mCamera2D = mObjCarmera.GetComponent<CinemachineVirtualCamera>();
+    }
+
     private void OnEnable()
     {
         mObjContent = GameObject.Find("StoryBuilder");
         mObjNpcModel = mObjContent.transform.Find("CharacterForStory").gameObject;
         mObjCarmera = GameObject.Find("Camera2D");
+
         mCamera2D = mObjCarmera.GetComponent<CinemachineVirtualCamera>();
         //查询所有NPC数据
         listAllStoryInfoDetails = null;
@@ -64,9 +70,9 @@ public class StoryCreateWindowsEditor : EditorWindow
 
     List<StoryInfoBean> listStoryInfo = new List<StoryInfoBean>();
 
-    List<StoryInfoDetailsBean> listAllStoryInfoDetails;
-    List<StoryInfoDetailsBean> listOrderStoryInfoDetails;
-    List<TextInfoBean> listStoryTextInfo;
+    List<StoryInfoDetailsBean> listAllStoryInfoDetails=new List<StoryInfoDetailsBean>();
+    List<StoryInfoDetailsBean> listOrderStoryInfoDetails=new List<StoryInfoDetailsBean>();
+    List<TextInfoBean> listStoryTextInfo = new List<TextInfoBean>();
     Dictionary<long, NpcInfoBean> mapNpcInfo = new Dictionary<long, NpcInfoBean>();
 
     private Vector2 scrollPosition = Vector2.zero;
@@ -490,6 +496,14 @@ public class StoryCreateWindowsEditor : EditorWindow
                 GUILayout.Label("摄像头跟随角色序号 ", GUILayout.Width(200), GUILayout.Height(20));
                 itemData.camera_follow_character = int.Parse(EditorGUILayout.TextArea(itemData.camera_follow_character + "", GUILayout.Width(100), GUILayout.Height(20)));
             }
+            else if (itemData.type == (int)StoryInfoDetailsBean.StoryInfoDetailsTypeEnum.AudioSound)
+            {
+                if (GUILayout.Button("删除", GUILayout.Width(100), GUILayout.Height(20)))
+                {
+                    removeTempData = itemData;
+                }
+                itemData.audio_sound = (int)(AudioSoundEnum)EditorGUILayout.EnumPopup("音效类型：", (AudioSoundEnum)itemData.audio_sound, GUILayout.Width(300), GUILayout.Height(20));
+            }
             GUILayout.EndHorizontal();
         }
         if (removeTempData != null)
@@ -529,6 +543,10 @@ public class StoryCreateWindowsEditor : EditorWindow
         if (GUILayout.Button("添加摄像头跟随角色", GUILayout.Width(200), GUILayout.Height(20)))
         {
             CreateStoryInfoDetailsDataByType(mFindStoryId, StoryInfoDetailsBean.StoryInfoDetailsTypeEnum.CameraFollowCharacter);
+        }
+        if (GUILayout.Button("添加音效播放", GUILayout.Width(200), GUILayout.Height(20)))
+        {
+            CreateStoryInfoDetailsDataByType(mFindStoryId, StoryInfoDetailsBean.StoryInfoDetailsTypeEnum.AudioSound);
         }
         if (GUILayout.Button("保存该序号下的故事数据", GUILayout.Width(200), GUILayout.Height(20)))
         {
@@ -571,6 +589,12 @@ public class StoryCreateWindowsEditor : EditorWindow
         else
         {
             characterData = NpcInfoBean.NpcInfoToCharacterData(mapNpcInfo[createNpcId]);
+        }
+
+        if (characterData == null)
+        {
+            LogUtil.LogError("没有找到id为"+ createNpcId + "的NPC");
+            return null;
         }
 
         objNpc = Instantiate(mObjNpcModel, mObjContent.transform);
@@ -764,6 +788,9 @@ public class StoryCreateWindowsEditor : EditorWindow
             case StoryInfoDetailsBean.StoryInfoDetailsTypeEnum.CameraPosition:
                 break;
             case StoryInfoDetailsBean.StoryInfoDetailsTypeEnum.CameraFollowCharacter:
+                break;
+            case StoryInfoDetailsBean.StoryInfoDetailsTypeEnum.AudioSound:
+                itemDetailsInfo.audio_sound = (int)AudioSoundEnum.ButtonForNormal;
                 break;
         }
 

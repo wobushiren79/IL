@@ -9,11 +9,13 @@ public class StoryInfoDetailsBean
         Expression=2,//表情
         SceneInt=3,//场景互动
         NpcDestory=4,//销毁NPC
+
         Talk =11,//对话
         AutoNext=12,//指定时间跳转
 
         CameraPosition = 21,//摄像机位置
         CameraFollowCharacter=22,//摄像头跟随目标
+        AudioSound = 31,//音效播放
     }
 
     public long story_id;
@@ -42,6 +44,7 @@ public class StoryInfoDetailsBean
     public float camera_position_x;
     public float camera_position_y;
     public int camera_follow_character;
+
     //摧毁的NPCID
     public string npc_destroy;
 
@@ -53,4 +56,16 @@ public class StoryInfoDetailsBean
     public string scene_intcomponent_method;
     //场景互动物体方法参数
     public string scene_intcomponent_parameters;
+
+    //播放的音效
+    public int audio_sound;
+
+    /// <summary>
+    /// 获取播放的音效
+    /// </summary>
+    /// <returns></returns>
+    public AudioSoundEnum GetAudioSound()
+    {
+        return (AudioSoundEnum)audio_sound;
+    }
 }

@@ -16,6 +16,8 @@ public class CookingThemeBean : BaseBean
     public int ing_waterwine;
     public int ing_flour;
 
+    public int theme_level;
+
     /// <summary>
     /// 获取菜单和主题的相似度
     /// </summary>

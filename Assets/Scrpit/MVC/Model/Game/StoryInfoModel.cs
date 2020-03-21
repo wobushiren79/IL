@@ -11,9 +11,9 @@ public class StoryInfoModel : BaseMVCModel
         mStoryInfoService = new StoryInfoService();
     }
 
-    public List<StoryInfoBean> GetStoryInfoByScene(int scene)
+    public List<StoryInfoBean> GetStoryInfoByScene(ScenesEnum scene)
     {
-        return mStoryInfoService.QueryStoryInfoByScene(scene);
+        return mStoryInfoService.QueryStoryInfoByScene((int)scene);
     }
 
     public List<StoryInfoBean> GetAllStoryInfo()

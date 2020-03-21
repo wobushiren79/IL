@@ -13,7 +13,9 @@ public enum AudioSoundEnum
     HitCoin = 40,//撞金
     Shot = 50,//发射
     ChangeSelect=60,//改变选择
-
+    Show = 70,//登场展示
+    Correct=80,//正确
+    Error=90,//错误
     Thunderstorm = 101,//打雷音效
 
     Damage = 201,//伤害声
@@ -27,4 +29,7 @@ public enum AudioSoundEnum
     CardLose = 341,//设置点击卡片
     Fight = 401,//打击
     UseMedicine=501,//使用药品
+
+
+
 }

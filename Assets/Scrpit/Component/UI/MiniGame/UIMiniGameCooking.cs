@@ -5,7 +5,7 @@ using DG.Tweening;
 using System.Collections.Generic;
 using System.Collections;
 
-public class UIMiniGameCooking : BaseUIComponent
+public class UIMiniGameCooking : UIGameComponent
 {
     public enum MiniGameCookingPhaseTypeEnum
     {
@@ -258,10 +258,12 @@ public class UIMiniGameCooking : BaseUIComponent
         ItemMiniGameCookingButtonCpt itemButton= mListButton[mButtonPosition];
         if(itemButton.buttonType== type)
         {
+            uiGameManager.audioHandler.PlaySound(AudioSoundEnum.Correct);
             itemButton.SetButtonClickCorrect();
         }
         else
         {
+            uiGameManager.audioHandler.PlaySound(AudioSoundEnum.Error);
             itemButton.SetButtonClickError();
         }
         //取消选中状态
@@ -288,15 +290,19 @@ public class UIMiniGameCooking : BaseUIComponent
         tvCountDown.text = tvTitle.text;
         tvCountDown.transform.DOScale(new Vector3(3, 3, 3), 0.5f).From().SetEase(Ease.OutBack);
         yield return new WaitForSeconds(5);
+        uiGameManager.audioHandler.PlaySound(AudioSoundEnum.CountDownStart);
         tvCountDown.text = GameCommonInfo.GetUITextById(252);
         tvCountDown.transform.DOScale(new Vector3(3, 3, 3), 0.5f).From().SetEase(Ease.OutBack);
         yield return new WaitForSeconds(1);
+        uiGameManager.audioHandler.PlaySound(AudioSoundEnum.CountDownStart);
         tvCountDown.text = GameCommonInfo.GetUITextById(253);
         tvCountDown.transform.DOScale(new Vector3(3, 3, 3), 0.5f).From().SetEase(Ease.OutBack);
         yield return new WaitForSeconds(1);
+        uiGameManager.audioHandler.PlaySound(AudioSoundEnum.CountDownStart);
         tvCountDown.text = GameCommonInfo.GetUITextById(254);
         tvCountDown.transform.DOScale(new Vector3(3, 3, 3), 0.5f).From().SetEase(Ease.OutBack);
         yield return new WaitForSeconds(1);
+        uiGameManager.audioHandler.PlaySound(AudioSoundEnum.CountDownEnd);
         tvCountDown.text = GameCommonInfo.GetUITextById(255);
         tvCountDown.transform.DOScale(new Vector3(3, 3, 3), 0.5f).From().SetEase(Ease.OutBack);
         yield return new WaitForSeconds(1);

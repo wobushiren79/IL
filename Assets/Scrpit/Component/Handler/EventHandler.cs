@@ -390,7 +390,7 @@ public class EventHandler : BaseHandler,
             }
             listData.Add("{minigame_cooking_auditernamelist}", auditerCharaterList);
             //料理的主题
-            listData.Add("{minigame_cooking_theme}", gameCookingData.cookingTheme.name);
+            listData.Add("{minigame_cooking_theme}", gameCookingData.GetCookingTheme().name);
             //所有友方角色
             foreach (MiniGameCharacterBean itemCharacter in gameCookingData.listUserGameData)
             {

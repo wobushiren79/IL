@@ -61,6 +61,25 @@ MonoBehaviour:
   srCover: {fileID: 7496077836271630160}
   foodCustomerCpt: {fileID: 8306937388336567346}
   innFoodManager: {fileID: 0}
+  menuInfo:
+    id: 0
+    valid: 0
+    menu_id: 0
+    icon_key: 
+    cook_time: 0
+    ing_oilsalt: 0
+    ing_meat: 0
+    ing_riverfresh: 0
+    ing_seafood: 0
+    ing_vegetables: 0
+    ing_melonfruit: 0
+    ing_waterwine: 0
+    ing_flour: 0
+    name: 
+    content: 
+    price_s: 0
+    price_m: 0
+    price_l: 0
 --- !u!1 &7821327323398913003
 GameObject:
   m_ObjectHideFlags: 0
@@ -230,6 +249,27 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 3916003464961602216}
     m_Modifications:
+    - target: {fileID: 348980899896524852, guid: 1b12f62d116de8e4ba915aa78ab2cb2b,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 849013569974010366, guid: 1b12f62d116de8e4ba915aa78ab2cb2b,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4529766413023507430, guid: 1b12f62d116de8e4ba915aa78ab2cb2b,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5328740974829804379, guid: 1b12f62d116de8e4ba915aa78ab2cb2b,
+        type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 0ab2eb3971b32ae4e86be18cc10596a3,
+        type: 3}
     - target: {fileID: 5328740976241071939, guid: 1b12f62d116de8e4ba915aa78ab2cb2b,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -238,7 +278,7 @@ PrefabInstance:
     - target: {fileID: 5328740976241071939, guid: 1b12f62d116de8e4ba915aa78ab2cb2b,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.1
+      value: -0.1
       objectReference: {fileID: 0}
     - target: {fileID: 5328740976241071939, guid: 1b12f62d116de8e4ba915aa78ab2cb2b,
         type: 3}
@@ -285,27 +325,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 4529766413023507430, guid: 1b12f62d116de8e4ba915aa78ab2cb2b,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 849013569974010366, guid: 1b12f62d116de8e4ba915aa78ab2cb2b,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 348980899896524852, guid: 1b12f62d116de8e4ba915aa78ab2cb2b,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5328740974829804379, guid: 1b12f62d116de8e4ba915aa78ab2cb2b,
-        type: 3}
-      propertyPath: m_Sprite
-      value: 
-      objectReference: {fileID: 21300000, guid: 0ab2eb3971b32ae4e86be18cc10596a3,
-        type: 3}
     - target: {fileID: 5328740976241071941, guid: 1b12f62d116de8e4ba915aa78ab2cb2b,
         type: 3}
       propertyPath: m_Name

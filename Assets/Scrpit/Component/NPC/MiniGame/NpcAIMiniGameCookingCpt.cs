@@ -296,7 +296,7 @@ public class NpcAIMiniGameCookingCpt : BaseNpcAI
     /// <returns></returns>
     private int AuditFoodForTheme()
     {
-        CookingThemeBean cookingTheme = miniGameCookingHandler.miniGameData.cookingTheme;
+        CookingThemeBean cookingTheme = miniGameCookingHandler.miniGameData.GetCookingTheme();
         MenuInfoBean menuInfo = auditTargetNpc.characterMiniGameData.cookingMenuInfo;
         float similarity = cookingTheme.GetSimilarity(menuInfo);
         return ScoreDeal((int)(similarity * 100));
