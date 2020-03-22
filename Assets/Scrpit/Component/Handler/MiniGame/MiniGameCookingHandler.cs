@@ -15,6 +15,9 @@ public class MiniGameCookingHandler : BaseMiniGameHandler<MiniGameCookingBuilder
     protected GameItemsManager gameItemsManager;
     protected InnFoodManager innFoodManager;
 
+    protected UIMiniGameCooking uiMiniGameCooking;
+    protected UIMiniGameCookingSelect uiMiniGameCookingSelect;
+    protected UIMiniGameCookingSettlement uiMiniGameCookingSettlement;
     protected override void Awake()
     {
         base.Awake();
@@ -127,7 +130,7 @@ public class MiniGameCookingHandler : BaseMiniGameHandler<MiniGameCookingBuilder
     public void StartSelectMenu()
     {
         //打开游戏UI
-        UIMiniGameCookingSelect uiMiniGameCookingSelect = (UIMiniGameCookingSelect)uiGameManager.OpenUIAndCloseOtherByName(EnumUtil.GetEnumName(UIEnum.MiniGameCookingSelect));
+        uiMiniGameCookingSelect = (UIMiniGameCookingSelect)uiGameManager.OpenUIAndCloseOtherByName(EnumUtil.GetEnumName(UIEnum.MiniGameCookingSelect));
         uiMiniGameCookingSelect.SetCallBack(this);
         uiMiniGameCookingSelect.SetData(miniGameData);
     }
@@ -142,7 +145,7 @@ public class MiniGameCookingHandler : BaseMiniGameHandler<MiniGameCookingBuilder
         miniGameBuilder.GetUserCharacter().characterData.GetAttributes(gameItemsManager, out CharacterAttributesBean attributes);
         gameTiming += (attributes.cook * 0.5f);
         //打开UI
-        UIMiniGameCooking uiMiniGameCooking = (UIMiniGameCooking)uiGameManager.OpenUIAndCloseOtherByName(EnumUtil.GetEnumName(UIEnum.MiniGameCooking));
+        uiMiniGameCooking = (UIMiniGameCooking)uiGameManager.OpenUIAndCloseOtherByName(EnumUtil.GetEnumName(UIEnum.MiniGameCooking));
         uiMiniGameCooking.SetData(miniGameData, gameTiming);
         uiMiniGameCooking.SetCallBack(this);
         uiMiniGameCooking.StartCookingPre();
@@ -157,8 +160,6 @@ public class MiniGameCookingHandler : BaseMiniGameHandler<MiniGameCookingBuilder
     /// </summary>
     public void StartMakingCooking()
     {
-        //打开UI
-        UIMiniGameCooking uiMiniGameCooking = (UIMiniGameCooking)uiGameManager.GetOpenUI();
         uiMiniGameCooking.StartCookingMaking();
         //角色就位
         NpcAIMiniGameCookingCpt npcAI = miniGameBuilder.GetUserCharacter();
@@ -171,7 +172,6 @@ public class MiniGameCookingHandler : BaseMiniGameHandler<MiniGameCookingBuilder
     public void StartEndCooking()
     {
         //打开UI
-        UIMiniGameCooking uiMiniGameCooking = (UIMiniGameCooking)uiGameManager.GetOpenUI();
         uiMiniGameCooking.StartCookingEnd();
         //角色就位
         NpcAIMiniGameCookingCpt npcAI = miniGameBuilder.GetUserCharacter();
@@ -254,12 +254,26 @@ public class MiniGameCookingHandler : BaseMiniGameHandler<MiniGameCookingBuilder
     /// </summary>
     public void ShowFoodForAudit()
     {
+        audioHandler.PlaySound(AudioSoundEnum.Correct);
         List<MiniGameCookingAuditTableCpt> listTable = miniGameBuilder.GetListAuditTable();
         foreach (MiniGameCookingAuditTableCpt itemTable in listTable)
         {
             FoodForCoverCpt foodCoverCpt = itemTable.GetFood();
             if (foodCoverCpt != null)
                 foodCoverCpt.ShowFood();
+        }
+    }
+
+    /// <summary>
+    /// 隐藏所有参赛者手上的食物
+    /// </summary>
+    public void HideAllPlayFood()
+    {
+        List<NpcAIMiniGameCookingCpt> listAllPlayer = miniGameBuilder.GetCharacterByType(NpcAIMiniGameCookingCpt.MiniGameCookingNpcTypeEnum.Player);
+        foreach (NpcAIMiniGameCookingCpt itemPlayer in listAllPlayer)
+        {
+            //隐藏自己手上的食物
+            itemPlayer.foodForCover.gameObject.SetActive(false);
         }
     }
 
@@ -328,9 +342,9 @@ public class MiniGameCookingHandler : BaseMiniGameHandler<MiniGameCookingBuilder
                     //按分数排名
                     listPlayer = listPlayer.OrderByDescending(item => item.characterMiniGameData.scoreForTotal).ToList();
                     //打开结算UI
-                    UIMiniGameCookingSettlement uiSettlement = (UIMiniGameCookingSettlement)uiGameManager.OpenUIAndCloseOtherByName(EnumUtil.GetEnumName(UIEnum.MiniGameCookingSettlement));
-                    uiSettlement.SetCallBack(this);
-                    uiSettlement.SetData(listPlayer);
+                    uiMiniGameCookingSettlement = (UIMiniGameCookingSettlement)uiGameManager.OpenUIAndCloseOtherByName(EnumUtil.GetEnumName(UIEnum.MiniGameCookingSettlement));
+                    uiMiniGameCookingSettlement.SetCallBack(this);
+                    uiMiniGameCookingSettlement.SetData(listPlayer);
                 }
             }
         }

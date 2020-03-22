@@ -272,7 +272,7 @@ public class NpcAIMiniGameCookingCpt : BaseNpcAI
         {
             case 1:
                 score = AuditFoodForTheme();
-                auditTargetNpc.characterMiniGameData.listScoreForColor.Add(score);
+                auditTargetNpc.characterMiniGameData.listScoreForTheme.Add(score);
                 break;
             case 2:
                 score = AuditFoodForColor();

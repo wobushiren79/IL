@@ -369,6 +369,8 @@ public class ItemTownGuildImproveCharacterCpt : ItemGameBaseCpt, DialogView.IDia
     {
         MiniGameBaseBean miniGameData = MiniGameEnumTools.GetMiniGameData(MiniGameEnum.Cooking);
         miniGameData = PreTypeForMiniGameEnumTools.GetMiniGameData(miniGameData, levelData.pre_data_minigame, gameItemsManager, npcInfoManager);
+        //先清除数据中的指定敌人
+        miniGameData.listEnemyGameData.Clear();
         //随机生成敌人
         List<CharacterBean> listEnemyData = new List<CharacterBean>();
         for (int i = 0; i < UnityEngine.Random.Range(1, 16); i++)

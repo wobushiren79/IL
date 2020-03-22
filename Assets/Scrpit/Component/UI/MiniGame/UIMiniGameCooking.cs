@@ -263,6 +263,7 @@ public class UIMiniGameCooking : UIGameComponent
         }
         else
         {
+            sliderTime.value -= 1;
             uiGameManager.audioHandler.PlaySound(AudioSoundEnum.Error);
             itemButton.SetButtonClickError();
         }

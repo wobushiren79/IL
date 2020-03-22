@@ -6,6 +6,7 @@ using System;
 public class ItemMiniGameCookingSettlementCpt : ItemGameBaseCpt
 {
     public CharacterUICpt characterUI;
+
     public Text tvName;
     public Text tvThemeScore;
     public Text tvColorScore;
@@ -16,10 +17,13 @@ public class ItemMiniGameCookingSettlementCpt : ItemGameBaseCpt
 
     public Image ivLevel;
     public Text tvLevel;
-    
-    public void SetData(NpcAIMiniGameCookingCpt itemNpc,int rank)
+
+    public Image ivBackground;
+    public Color colorUser;
+
+    public void SetData(NpcAIMiniGameCookingCpt itemNpc, int rank)
     {
-        MiniGameCharacterForCookingBean characterGameData =  itemNpc.characterMiniGameData;
+        MiniGameCharacterForCookingBean characterGameData = itemNpc.characterMiniGameData;
         SetCharacter(characterGameData.characterData);
         SetName(characterGameData.characterData.baseInfo.name);
         SetScore(characterGameData.scoreForTheme,
@@ -29,6 +33,16 @@ public class ItemMiniGameCookingSettlementCpt : ItemGameBaseCpt
             characterGameData.scoreForTotal);
         SetRank(rank);
         SetLevel(characterGameData.characterData.baseInfo.chefInfo.workerLevel);
+        SetBackground(characterGameData.characterType);
+    }
+
+    public void SetBackground(int characterType)
+    {
+        if (ivBackground != null)
+            if (characterType == 1)
+            {
+                ivBackground.color = colorUser;
+            }
     }
 
     public void SetCharacter(CharacterBean characterData)
@@ -43,7 +57,7 @@ public class ItemMiniGameCookingSettlementCpt : ItemGameBaseCpt
             tvName.text = name;
     }
 
-    public void SetScore(int themeScore,int colorScore,int sweetScore,int tasteScore,int totalScore)
+    public void SetScore(int themeScore, int colorScore, int sweetScore, int tasteScore, int totalScore)
     {
         if (tvThemeScore != null)
             tvThemeScore.text = themeScore + "";

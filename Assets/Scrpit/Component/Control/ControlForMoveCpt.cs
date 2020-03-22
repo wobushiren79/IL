@@ -6,8 +6,18 @@ public class ControlForMoveCpt : BaseControl
 {
     //角色移动组建
     public CharacterMoveCpt characterMoveCpt;
-    public GameDataManager gameDataManager;
+
+    //走路声音
+    public AudioSource audioForWalk;
     public BaseNpcAI npcAI;
+
+    //是否控制移动
+    protected bool isControlForMove=false;
+    protected GameDataManager gameDataManager;
+    private void Awake()
+    {
+        gameDataManager = Find<GameDataManager>(ImportantTypeEnum.GameDataManager);
+    }
 
     private void Start()
     {
@@ -30,11 +40,21 @@ public class ControlForMoveCpt : BaseControl
         float vMove = Input.GetAxis(InputInfo.Vertical);
         if (hMove == 0 && vMove == 0)
         {
+            isControlForMove = false;
             characterMoveCpt.SetAnimStatus(0);
+            if (audioForWalk.isPlaying)
+            {
+                audioForWalk.Stop();
+            }
         }
         else
         {
+            isControlForMove = true;
             characterMoveCpt.Move(hMove, vMove);
+            if (!audioForWalk.isPlaying)
+            {
+                audioForWalk.Play();
+            }
         }
     }
 

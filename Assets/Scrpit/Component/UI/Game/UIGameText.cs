@@ -76,7 +76,7 @@ public class UIGameText : UIGameComponent, TextInfoManager.ICallBack, DialogView
             if (callBack != null)
                 callBack.UITextEnd();
         }
-        uiGameManager.audioHandler.PlaySound(AudioSoundEnum.ButtonForNormal);
+        uiGameManager.audioHandler.PlaySound(AudioSoundEnum.Correct);
     }
 
     /// <summary>
