@@ -93,6 +93,20 @@ public class PickForCharacterDialogView : DialogView, ItemGameDialogPickCharacte
         SetTitle();
     }
 
+    public override void SubmitOnClick()
+    {
+        if (CheckUtil.ListIsNull(listPickCharacter))
+        {
+            if (audioHandler != null)
+                audioHandler.PlaySound(AudioSoundEnum.ButtonForNormal);
+            toastManager.ToastHint(GameCommonInfo.GetUITextById(1032));
+        }
+        else
+        {
+            base.SubmitOnClick();
+        }
+    }
+
     private void CreatePickItem(CharacterBean characterData)
     {
         GameObject objPick = Instantiate(objPickCharacterContainer, objPickCharacterModel);

@@ -14,6 +14,8 @@ public class MiniGameBarrageBean : MiniGameBaseBean
     public MiniGameBarrageEjectorCpt.LaunchTypeEnum[] launchTypes;
     //发射速度
     public float launchSpeed = 10;
+    //子弹类型
+    public  MiniGameBarrageBulletTypeEnum bulletType = MiniGameBarrageBulletTypeEnum.Stone;
     //用户起始位置
     public Vector2 userStartPosition;
     //发射台位置

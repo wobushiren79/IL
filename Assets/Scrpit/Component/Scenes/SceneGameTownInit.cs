@@ -12,7 +12,6 @@ public class SceneGameTownInit : BaseSceneInit, IBaseObserver, DialogView.IDialo
 
     public GameTimeHandler gameTimeHandler;
 
-
     public override void Awake()
     {
         base.Awake();

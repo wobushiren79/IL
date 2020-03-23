@@ -4,10 +4,12 @@ using UnityEditor;
 public class MiniGameBarrageEjectorCpt : BaseMonoBehaviour
 {
     protected AudioHandler audioHandler;
+    protected MiniGameBarrageBuilder miniGameBarrageBuilder;
 
     private void Awake()
     {
         audioHandler = Find<AudioHandler>(ImportantTypeEnum.AudioHandler);
+        miniGameBarrageBuilder = FindInChildren < MiniGameBarrageBuilder > (ImportantTypeEnum.MiniGameBuilder);
     }
 
     /// <summary>
@@ -33,6 +35,7 @@ public class MiniGameBarrageEjectorCpt : BaseMonoBehaviour
     //发射器朝向角度
     private float mAngelsTarget = 90;
 
+
     private void Update()
     {
         //旋转发射器朝向 
@@ -44,20 +47,20 @@ public class MiniGameBarrageEjectorCpt : BaseMonoBehaviour
     /// 开始发射
     /// </summary>
     /// <param name="launchType"></param>
-    public void StartLaunch(LaunchTypeEnum launchType, Vector3 targetPositon, float launchSpeed)
+    public void StartLaunch(LaunchTypeEnum launchType, MiniGameBarrageBulletTypeEnum bulletType, Vector3 targetPositon, float launchSpeed)
     {
         audioHandler.PlaySound(AudioSoundEnum.Shot);
         animEjector.SetTrigger("Launch");
         switch (launchType)
         {
             case LaunchTypeEnum.Single:
-                LaunchSingle(targetPositon, launchSpeed);
+                LaunchSingle(bulletType, targetPositon, launchSpeed);
                 break;
             case LaunchTypeEnum.Double:
-                LaunchDouble(targetPositon, launchSpeed);
+                LaunchDouble(bulletType, targetPositon, launchSpeed);
                 break;
             case LaunchTypeEnum.Triple:
-                LaunchTriple(targetPositon, launchSpeed);
+                LaunchTriple(bulletType, targetPositon, launchSpeed);
                 break;
         }
     }
@@ -67,9 +70,9 @@ public class MiniGameBarrageEjectorCpt : BaseMonoBehaviour
     /// </summary>
     /// <param name="targetPositon">目标位置</param>
     /// <param name="shotSpeed">发射速度</param>
-    public void LaunchSingle(Vector3 targetPositon, float shotSpeed)
+    public void LaunchSingle(MiniGameBarrageBulletTypeEnum bulletType, Vector3 targetPositon, float shotSpeed)
     {
-        CreateBullet(targetPositon, shotSpeed);
+        CreateBullet(bulletType, targetPositon, shotSpeed);
     }
 
     /// <summary>
@@ -77,10 +80,10 @@ public class MiniGameBarrageEjectorCpt : BaseMonoBehaviour
     /// </summary>
     /// <param name="targetPositon"></param>
     /// <param name="shotSpeed"></param>
-    public void LaunchDouble(Vector3 targetPositon, float shotSpeed)
+    public void LaunchDouble(MiniGameBarrageBulletTypeEnum bulletType, Vector3 targetPositon, float shotSpeed)
     {
-        CreateBullet(targetPositon + new Vector3(2, 2, 1), shotSpeed);
-        CreateBullet(targetPositon + new Vector3(-2, -2, 1), shotSpeed);
+        CreateBullet(bulletType, targetPositon + new Vector3(2, 2, 1), shotSpeed);
+        CreateBullet(bulletType, targetPositon + new Vector3(-2, -2, 1), shotSpeed);
     }
 
     /// <summary>
@@ -88,11 +91,11 @@ public class MiniGameBarrageEjectorCpt : BaseMonoBehaviour
     /// </summary>
     /// <param name="targetPositon"></param>
     /// <param name="shotSpeed"></param>
-    public void LaunchTriple(Vector3 targetPositon, float shotSpeed)
+    public void LaunchTriple(MiniGameBarrageBulletTypeEnum bulletType, Vector3 targetPositon, float shotSpeed)
     {
-        CreateBullet(targetPositon + new Vector3(4, 4, 1), shotSpeed);
-        CreateBullet(targetPositon + new Vector3(-4, -4, 1), shotSpeed);
-        CreateBullet(targetPositon, shotSpeed);
+        CreateBullet(bulletType, targetPositon + new Vector3(4, 4, 1), shotSpeed);
+        CreateBullet(bulletType, targetPositon + new Vector3(-4, -4, 1), shotSpeed);
+        CreateBullet(bulletType, targetPositon, shotSpeed);
     }
 
     /// <summary>
@@ -100,8 +103,21 @@ public class MiniGameBarrageEjectorCpt : BaseMonoBehaviour
     /// </summary>
     /// <param name="launchPositon"></param>
     /// <param name="force"></param>
-    private void CreateBullet(Vector3 targetPositon, float force)
+    private void CreateBullet(MiniGameBarrageBulletTypeEnum bulletType, Vector3 targetPositon, float force)
     {
+        Sprite spBullet = null;
+        RuntimeAnimatorController animatorController = null;
+        switch (bulletType)
+        {
+            case MiniGameBarrageBulletTypeEnum.Stone:
+                spBullet = miniGameBarrageBuilder.spStone;
+                animatorController = miniGameBarrageBuilder.animatorControllerForStone;
+                break;
+            case MiniGameBarrageBulletTypeEnum.Arrow:
+                spBullet = miniGameBarrageBuilder.spArrow;
+                animatorController = miniGameBarrageBuilder.animatorControllerForArrow;
+                break;
+        }
         //设置发射器朝向角度
         mAngelsTarget = VectorUtil.GetAngle(objEjector.transform.position, targetPositon);
         //创建子弹
@@ -109,6 +125,7 @@ public class MiniGameBarrageEjectorCpt : BaseMonoBehaviour
         objBullet.SetActive(true);
         objBullet.transform.position = objEjector.transform.position;
         MiniGameBarrageBulletCpt bulletCpt = objBullet.GetComponent<MiniGameBarrageBulletCpt>();
+        bulletCpt.SetBulletData(bulletType, spBullet, animatorController);
         //发射子弹
         bulletCpt.LaunchBullet(targetPositon, force);
     }

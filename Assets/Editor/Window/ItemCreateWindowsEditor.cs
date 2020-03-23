@@ -365,9 +365,8 @@ public class ItemCreateWindowsEditor : EditorWindow, StoreInfoManager.ICallBack
             case StoreTypeEnum.ArenaInfo:
                 GUIStoreItemForArenaInfo(storeInfo);
                 break;
+
             case StoreTypeEnum.ArenaGoods:
-                GUIStoreItemForGoods(storeInfo);
-                break;
             case StoreTypeEnum.Guild:
             case StoreTypeEnum.Carpenter:
             case StoreTypeEnum.Grocery:
@@ -437,6 +436,7 @@ public class ItemCreateWindowsEditor : EditorWindow, StoreInfoManager.ICallBack
         switch ((StoreTypeEnum)storeInfo.type)
         {
             case StoreTypeEnum.ArenaGoods:
+                storeInfo.store_goods_type = (int)(StoreForArenaGoodsTypeEnum)EditorGUILayout.EnumPopup("商品类型", (StoreForArenaGoodsTypeEnum)storeInfo.store_goods_type, GUILayout.Width(300), GUILayout.Height(20));
                 GUILayout.Label("奖杯1234：", GUILayout.Width(50), GUILayout.Height(20));
                 storeInfo.trophy_elementary = long.Parse(EditorGUILayout.TextArea(storeInfo.trophy_elementary + "", GUILayout.Width(100), GUILayout.Height(20)));
                 storeInfo.trophy_intermediate = long.Parse(EditorGUILayout.TextArea(storeInfo.trophy_intermediate + "", GUILayout.Width(100), GUILayout.Height(20)));
@@ -478,8 +478,8 @@ public class ItemCreateWindowsEditor : EditorWindow, StoreInfoManager.ICallBack
 
     private void GUIStoreItemForArenaInfo(StoreInfoBean storeInfo)
     {
-        GUILayout.Label("竞赛等级（1初级 2中级，3高级，4传说）：", GUILayout.Width(250), GUILayout.Height(20));
-        storeInfo.mark_type = int.Parse(EditorGUILayout.TextArea(storeInfo.mark_type + "", GUILayout.Width(100), GUILayout.Height(20)));
+        GUILayout.Label("竞赛等级：", GUILayout.Width(100), GUILayout.Height(20));
+        storeInfo.mark_type =(int)(TrophyTypeEnum)EditorGUILayout.EnumPopup("职业", EnumUtil.GetEnum<TrophyTypeEnum>(storeInfo.mark_type+""), GUILayout.Width(300), GUILayout.Height(20)) ;
         if (CheckUtil.StringIsNull(storeInfo.pre_data))
         {
             storeInfo.pre_data = "Chef";

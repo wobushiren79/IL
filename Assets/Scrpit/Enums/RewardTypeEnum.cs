@@ -41,6 +41,11 @@ public class RewardTypeBean : DataBean<RewardTypeEnum>
     public RewardTypeBean(RewardTypeEnum dataType,string data) : base(dataType, data)
     {
     }
+
+    public RewardTypeEnum GetRewardType()
+    {
+        return dataType;
+    }
 }
 
 public class RewardTypeEnumTools : DataTools
@@ -179,19 +184,19 @@ public class RewardTypeEnumTools : DataTools
         switch (rewardTypeData.dataType)
         {
             case RewardTypeEnum.AddArenaTrophyElementary:
-                iconKey = "Trophy_1_0";
+                iconKey = "trophy_1_0";
                 rewardDescribe = string.Format(GameCommonInfo.GetUITextById(6006), rewardTypeData.data);
                 break;
             case RewardTypeEnum.AddArenaTrophyIntermediate:
-                iconKey = "Trophy_1_1";
+                iconKey = "trophy_1_1";
                 rewardDescribe = string.Format(GameCommonInfo.GetUITextById(6007), rewardTypeData.data);
                 break;
             case RewardTypeEnum.AddArenaTrophyAdvanced:
-                iconKey = "Trophy_1_2";
+                iconKey = "trophy_1_2";
                 rewardDescribe = string.Format(GameCommonInfo.GetUITextById(6008), rewardTypeData.data);
                 break;
             case RewardTypeEnum.AddArenaTrophyLegendary:
-                iconKey = "Trophy_1_3";
+                iconKey = "trophy_1_3";
                 rewardDescribe = string.Format(GameCommonInfo.GetUITextById(6009), rewardTypeData.data);
                 break;
         }

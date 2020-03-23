@@ -26,7 +26,7 @@ public class UITownArenaStore : UIBaseOne, StoreInfoManager.ICallBack, IRadioGro
         uiGameManager.storeInfoManager.GetStoreInfoForArenaGoods();
     }
 
-    public void InitDataByType(int type)
+    public void InitDataByType(StoreForArenaGoodsTypeEnum type)
     {
         CptUtil.RemoveChildsByActive(objGoodsContainer);
         List<StoreInfoBean> listData = GetListArenaGoodsByType(type);
@@ -41,15 +41,20 @@ public class UITownArenaStore : UIBaseOne, StoreInfoManager.ICallBack, IRadioGro
     /// </summary>
     /// <param name="type"></param>
     /// <returns></returns>
-    public List<StoreInfoBean> GetListArenaGoodsByType(int type)
+    public List<StoreInfoBean> GetListArenaGoodsByType(StoreForArenaGoodsTypeEnum type)
     {
-        //TODO 首先按照是否是建筑材料区分
-        switch (type)
+        List<StoreInfoBean> listData = new List<StoreInfoBean>();
+        if (arenaStoreListData == null)
+            return listData;
+
+        foreach (StoreInfoBean itemStoreinfo in arenaStoreListData)
         {
-            case 0:
-                return arenaStoreListData;
+            if ((StoreForArenaGoodsTypeEnum)itemStoreinfo.store_goods_type == type)
+            {
+                listData.Add(itemStoreinfo);
+            }
         }
-        return arenaStoreListData;
+        return listData;
     }
     
     /// <summary>
@@ -67,14 +72,15 @@ public class UITownArenaStore : UIBaseOne, StoreInfoManager.ICallBack, IRadioGro
     public void GetStoreInfoSuccess(StoreTypeEnum type, List<StoreInfoBean> listData)
     {
         arenaStoreListData = listData;
-        InitDataByType(0);
+        InitDataByType(StoreForArenaGoodsTypeEnum.Equip);
     }
     #endregion
 
     #region 类型选择回调
     public void RadioButtonSelected(RadioGroupView rgView, int position, RadioButtonView rbview)
     {
-        InitDataByType(position);
+        StoreForArenaGoodsTypeEnum goodsType= EnumUtil.GetEnum<StoreForArenaGoodsTypeEnum>(rbview.name);
+        InitDataByType(goodsType);
     }
 
     public void RadioButtonUnSelected(RadioGroupView rgView, int position, RadioButtonView rbview)

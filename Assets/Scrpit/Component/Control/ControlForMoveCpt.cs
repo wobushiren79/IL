@@ -12,7 +12,7 @@ public class ControlForMoveCpt : BaseControl
     public BaseNpcAI npcAI;
 
     //是否控制移动
-    protected bool isControlForMove=false;
+    protected bool isControlForMove = false;
     protected GameDataManager gameDataManager;
     private void Awake()
     {
@@ -32,6 +32,14 @@ public class ControlForMoveCpt : BaseControl
         InitCharacter();
     }
 
+    private void OnDisable()
+    {
+        if (audioForWalk != null && audioForWalk.isPlaying)
+        {
+            audioForWalk.Stop();
+        }
+    }
+
     public void FixedUpdate()
     {
         if (characterMoveCpt == null)
@@ -42,7 +50,7 @@ public class ControlForMoveCpt : BaseControl
         {
             isControlForMove = false;
             characterMoveCpt.SetAnimStatus(0);
-            if (audioForWalk.isPlaying)
+            if (audioForWalk != null && audioForWalk.isPlaying)
             {
                 audioForWalk.Stop();
             }
@@ -51,12 +59,13 @@ public class ControlForMoveCpt : BaseControl
         {
             isControlForMove = true;
             characterMoveCpt.Move(hMove, vMove);
-            if (!audioForWalk.isPlaying)
+            if (audioForWalk != null && !audioForWalk.isPlaying)
             {
                 audioForWalk.Play();
             }
         }
     }
+
 
     /// <summary>
     /// 设置位置

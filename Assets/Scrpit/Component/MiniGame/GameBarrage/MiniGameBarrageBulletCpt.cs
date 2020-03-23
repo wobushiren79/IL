@@ -5,11 +5,15 @@ public class MiniGameBarrageBulletCpt : BaseMonoBehaviour
 {
     public Animator animBullet;
     public Rigidbody2D rbBullet;
+    public SpriteRenderer srBullet;
 
-    //石头伤害
     public int bulletDamage = 10;
-    //石头是否摧毁
     public bool mIsDestroy = false;
+
+    public bool hasDestroyAnim= false;
+    public bool hasMoveAnim = false;
+
+    public MiniGameBarrageBuilder barrageBuilder;
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
@@ -21,7 +25,15 @@ public class MiniGameBarrageBulletCpt : BaseMonoBehaviour
             {
                 mIsDestroy = true;
                 StopMove();
-                animBullet.SetBool("IsDestroy", true);
+                //摧毁处理
+                if (hasDestroyAnim)
+                {
+                    animBullet.SetBool("IsDestroy", true);
+                }
+                else
+                {
+                    DestroyBullet();
+                }
                 //如果是NPC 扣血
                 if (npcCpt)
                 {
@@ -32,10 +44,35 @@ public class MiniGameBarrageBulletCpt : BaseMonoBehaviour
     }
 
     /// <summary>
+    /// 设置子弹数据
+    /// </summary>
+    public void SetBulletData(
+        MiniGameBarrageBulletTypeEnum miniGameBarrageBulletType, 
+        Sprite spIcon,
+        RuntimeAnimatorController animatorController)
+    {
+        animBullet.runtimeAnimatorController = animatorController;
+        switch (miniGameBarrageBulletType)
+        {
+            case MiniGameBarrageBulletTypeEnum.Stone:
+                hasDestroyAnim = true;
+                bulletDamage = 10;
+                srBullet.sprite = spIcon;
+                break;
+            case MiniGameBarrageBulletTypeEnum.Arrow:
+                bulletDamage = 10;
+                srBullet.sprite = spIcon;
+                break;
+        }
+    }
+
+    /// <summary>
     /// 发射子弹
     /// </summary>
     public void LaunchBullet(Vector3 targetPositon, float force)
     {
+        float angle= VectorUtil.GetAngle(transform.position, targetPositon);
+        transform.Rotate(new Vector3(0,0,1),-90 + angle);
         if (rbBullet != null)
             rbBullet.velocity = (targetPositon - transform.position).normalized * force;
     }

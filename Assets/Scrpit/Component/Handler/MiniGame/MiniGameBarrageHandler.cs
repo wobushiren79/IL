@@ -90,8 +90,7 @@ public class MiniGameBarrageHandler : BaseMiniGameHandler<MiniGameBarrageBuilder
                     }
                     MiniGameBarrageEjectorCpt.LaunchTypeEnum launchType = RandomUtil.GetRandomDataByArray(miniGameData.launchTypes);
 
-
-                    itemEjector.StartLaunch(launchType, launchTarget, miniGameData.launchSpeed);
+                    itemEjector.StartLaunch(launchType,miniGameData.bulletType,launchTarget, miniGameData.launchSpeed);
                 }
             }
             //发射间隔时间

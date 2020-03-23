@@ -12,11 +12,13 @@ public class UserDailyLimitBean
     public List<long> listNpcGift = new List<long>();
     //当天招募者数据
     public List<CharacterBean> listRecruitmentCharacter;
+    //当天参加过竞技场游戏的人物
+    public List<string> listArenaAttendedCharacter = new List<string>();
     //当天竞技场数据
-    public List<MiniGameBaseBean> listArenaDataFor1;
-    public List<MiniGameBaseBean> listArenaDataFor2;
-    public List<MiniGameBaseBean> listArenaDataFor3;
-    public List<MiniGameBaseBean> listArenaDataFor4;
+    public List<MiniGameBaseBean> listArenaDataForElementary;
+    public List<MiniGameBaseBean> listArenaDataForIntermediate;
+    public List<MiniGameBaseBean> listArenaDataForAdvanced;
+    public List<MiniGameBaseBean> listArenaDataForLegendary;
 
     public void InitData(GameDataBean gameData)
     {
@@ -29,36 +31,118 @@ public class UserDailyLimitBean
 
         listNpcGift.Clear();
         listNpcTalk.Clear();
+        listArenaAttendedCharacter.Clear();
         listRecruitmentCharacter = null;
-        listArenaDataFor1 = null;
-        listArenaDataFor2 = null;
-        listArenaDataFor3 = null;
-        listArenaDataFor4 = null;
+        listArenaDataForElementary = null;
+        listArenaDataForIntermediate = null;
+        listArenaDataForAdvanced = null;
+        listArenaDataForLegendary = null;
     }
 
-    public void AddArenaDataByType(int type, List<MiniGameBaseBean> listMiniGameData)
+    /// <summary>
+    /// 增加参加过竞技场的名单
+    /// </summary>
+    /// <param name="listCharacter"></param>
+    public void AddArenaAttendedCharacter(List<CharacterBean> listCharacter)
+    {
+        List<string> listId = new List<string>();
+        foreach (CharacterBean itemData in listCharacter)
+        {
+            listId.Add(itemData.baseInfo.characterId);
+        }
+        AddArenaAttendedCharacter(listId);
+    }
+    public void AddArenaAttendedCharacter(List<string> listCharacter)
+    {
+        listArenaAttendedCharacter.AddRange(listCharacter);
+    }
+
+    /// <summary>
+    /// 获取参加过竞技场的名单
+    /// </summary>
+    /// <returns></returns>
+    public List<string> GetArenaAttendedCharacter()
+    {
+        return listArenaAttendedCharacter;
+    }
+
+    /// <summary>
+    /// 获取竞技场数据
+    /// </summary>
+    /// <param name="type"></param>
+    /// <returns></returns>
+    public List<MiniGameBaseBean> GetArenaDataByType(TrophyTypeEnum type)
     {
         switch (type)
         {
-            case 1:
-                if (listArenaDataFor1 == null)
-                    listArenaDataFor1 = new List<MiniGameBaseBean>();
-                listArenaDataFor1.AddRange(listMiniGameData);
+            case TrophyTypeEnum.Elementary:
+                return listArenaDataForElementary;
+            case TrophyTypeEnum.Intermediate:
+                return listArenaDataForIntermediate;
+            case TrophyTypeEnum.Advanced:
+                return listArenaDataForAdvanced;
+            case TrophyTypeEnum.Legendary:
+                return listArenaDataForLegendary;
+        }
+        return null;
+    }
+
+    /// <summary>
+    /// 增加竞技场数据
+    /// </summary>
+    /// <param name="type"></param>
+    /// <param name="listMiniGameData"></param>
+    public void AddArenaDataByType(TrophyTypeEnum type, List<MiniGameBaseBean> listMiniGameData)
+    {
+        switch (type)
+        {
+            case TrophyTypeEnum.Elementary:
+                if (listArenaDataForElementary == null)
+                    listArenaDataForElementary = new List<MiniGameBaseBean>();
+                listArenaDataForElementary.AddRange(listMiniGameData);
                 break;
-            case 2:
-                if (listArenaDataFor2 == null)
-                    listArenaDataFor2 = new List<MiniGameBaseBean>();
-                listArenaDataFor2.AddRange(listMiniGameData);
+            case TrophyTypeEnum.Intermediate:
+                if (listArenaDataForIntermediate == null)
+                    listArenaDataForIntermediate = new List<MiniGameBaseBean>();
+                listArenaDataForIntermediate.AddRange(listMiniGameData);
                 break;
-            case 3:
-                if (listArenaDataFor3 == null)
-                    listArenaDataFor3 = new List<MiniGameBaseBean>();
-                listArenaDataFor3.AddRange(listMiniGameData);
+            case TrophyTypeEnum.Advanced:
+                if (listArenaDataForAdvanced == null)
+                    listArenaDataForAdvanced = new List<MiniGameBaseBean>();
+                listArenaDataForAdvanced.AddRange(listMiniGameData);
                 break;
-            case 4:
-                if (listArenaDataFor4 == null)
-                    listArenaDataFor4 = new List<MiniGameBaseBean>();
-                listArenaDataFor4.AddRange(listMiniGameData);
+            case TrophyTypeEnum.Legendary:
+                if (listArenaDataForLegendary == null)
+                    listArenaDataForLegendary = new List<MiniGameBaseBean>();
+                listArenaDataForLegendary.AddRange(listMiniGameData);
+                break;
+        }
+    }
+
+    /// <summary>
+    /// 删除数据
+    /// </summary>
+    /// <param name="type"></param>
+    /// <param name="miniGameData"></param>
+    public void RemoveArenaDataByType(TrophyTypeEnum type, MiniGameBaseBean miniGameData)
+    {
+        switch (type)
+        {
+            case TrophyTypeEnum.Elementary:
+                if(listArenaDataForElementary!=null)
+                    listArenaDataForElementary.Remove(miniGameData);
+                break;
+            case TrophyTypeEnum.Intermediate:
+                if (listArenaDataForIntermediate != null)
+                    listArenaDataForIntermediate.Remove(miniGameData);
+                break;
+            case TrophyTypeEnum.Advanced:
+                if (listArenaDataForAdvanced != null)
+                    listArenaDataForAdvanced.Remove(miniGameData);
+                break;
+            case TrophyTypeEnum.Legendary:
+                if (listArenaDataForLegendary != null)
+                    listArenaDataForLegendary.Remove(miniGameData);
                 break;
         }
     }
@@ -75,6 +159,7 @@ public class UserDailyLimitBean
         }
         listRecruitmentCharacter.Add(characterData);
     }
+
 
     /// <summary>
     /// 移除招募者

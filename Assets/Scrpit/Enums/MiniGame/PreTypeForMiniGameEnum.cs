@@ -4,7 +4,6 @@ using System.Collections.Generic;
 
 public enum PreTypeForMiniGameEnum
 {
-
     MiniGameType = 1,
     PlayerNumber = 2,
     UserIds = 3,
@@ -21,6 +20,7 @@ public enum PreTypeForMiniGameEnum
     BarrageForLaunchTypes = 102,
     BarrageForLaunchInterval = 103,
     BarrageForLaunchNumber = 104,
+    BarrageForBulletType = 105,
 
     AccountForWinMoneyL = 201,
     AccountForWinMoneyM = 202,
@@ -158,6 +158,7 @@ public class PreTypeForMiniGameEnumTools : DataTools
                 case PreTypeForMiniGameEnum.BarrageForLaunchSpeed:
                 case PreTypeForMiniGameEnum.BarrageForLaunchTypes:
                 case PreTypeForMiniGameEnum.BarrageForLaunchNumber:
+                case PreTypeForMiniGameEnum.BarrageForBulletType:
                     GetMiniGameDataForBarrage(itemPreData, miniGameData);
                     break;
                 case PreTypeForMiniGameEnum.AccountForWinMoneyL:
@@ -216,6 +217,9 @@ public class PreTypeForMiniGameEnumTools : DataTools
                 break;
             case PreTypeForMiniGameEnum.BarrageForLaunchNumber:
                 miniGameBarrage.launchNumber = int.Parse(itemPreData.data);
+                break;
+            case PreTypeForMiniGameEnum.BarrageForBulletType:
+                miniGameBarrage.bulletType = (MiniGameBarrageBulletTypeEnum)(int.Parse(itemPreData.data));
                 break;
         }
     }

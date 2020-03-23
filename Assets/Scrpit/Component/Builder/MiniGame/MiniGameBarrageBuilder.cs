@@ -21,6 +21,11 @@ public class MiniGameBarrageBuilder : BaseMiniGameBuilder
 
     //控制器
     public ControlForMiniGameBarrageCpt controlForMiniGameBarrageCpt;
+
+    public Sprite spStone;
+    public RuntimeAnimatorController animatorControllerForStone;
+    public Sprite spArrow;
+    public RuntimeAnimatorController animatorControllerForArrow;
     /// <summary>
     /// 获取所有的发射器
     /// </summary>

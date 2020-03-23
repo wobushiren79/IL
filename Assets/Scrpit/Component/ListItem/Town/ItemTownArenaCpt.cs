@@ -19,7 +19,9 @@ public class ItemTownArenaCpt : ItemGameBaseCpt, DialogView.IDialogCallBack
 
     public GameObject objRewardContainer;
     public GameObject objRewardModel;
+
     public MiniGameBaseBean miniGameData;
+    public TrophyTypeEnum trophyType;
 
     private void Start()
     {
@@ -27,14 +29,15 @@ public class ItemTownArenaCpt : ItemGameBaseCpt, DialogView.IDialogCallBack
             btJoin.onClick.AddListener(OnClickJoin);
     }
 
-    public void SetData(MiniGameBaseBean miniGameData)
+    public void SetData(TrophyTypeEnum trophyType, MiniGameBaseBean miniGameData)
     {
-        InitDataForType(miniGameData.gameType, miniGameData);
+        InitDataForType(miniGameData.gameType, trophyType, miniGameData);
     }
 
-    public void InitDataForType(MiniGameEnum gameType, MiniGameBaseBean miniGameData)
+    public void InitDataForType(MiniGameEnum gameType,TrophyTypeEnum trophyType,  MiniGameBaseBean miniGameData)
     {
         this.miniGameData = miniGameData;
+        this.trophyType = trophyType;
         SetTitle(miniGameData.GetGameName());
         SetReward(miniGameData.listReward);
         SetPrice(miniGameData.preMoneyL, miniGameData.preMoneyM, miniGameData.preMoneyS);
@@ -189,6 +192,10 @@ public class ItemTownArenaCpt : ItemGameBaseCpt, DialogView.IDialogCallBack
             PickForCharacterDialogView pickForCharacterDialog = (PickForCharacterDialogView)dialogView;
             List<CharacterBean> listCharacter = pickForCharacterDialog.GetPickCharacter();
             miniGameData.InitData(gameItemsManager, listCharacter);
+            //今日不能再参加
+            GameCommonInfo.DailyLimitData.AddArenaAttendedCharacter(listCharacter);
+            //删除该条数据
+            GameCommonInfo.DailyLimitData.RemoveArenaDataByType(trophyType, miniGameData);
             //设置竞技场数据
             GameCommonInfo.SetAreanPrepareData(miniGameData);
             //保存之前的位置
@@ -201,6 +208,8 @@ public class ItemTownArenaCpt : ItemGameBaseCpt, DialogView.IDialogCallBack
             DialogBean dialogData = new DialogBean();
             PickForCharacterDialogView pickForCharacterDialog = (PickForCharacterDialogView)dialogManager.CreateDialog(DialogEnum.PickForCharacter, this, dialogData);
             pickForCharacterDialog.SetPickCharacterMax(1);
+            List<string> listExpelCharacterId = GameCommonInfo.DailyLimitData.GetArenaAttendedCharacter();
+            pickForCharacterDialog.SetExpelCharacter(listExpelCharacterId);
         }
     }
 
