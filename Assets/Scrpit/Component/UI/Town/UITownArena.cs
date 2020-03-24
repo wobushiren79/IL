@@ -6,6 +6,7 @@ using System.Collections.Generic;
 
 public class UITownArena : UIBaseOne, IRadioGroupCallBack, StoreInfoManager.ICallBack
 {
+    public ScrollRect scrollRectContainer;
     public GameObject objArenaContainer;
     public GameObject objArenaModel;
 
@@ -49,14 +50,17 @@ public class UITownArena : UIBaseOne, IRadioGroupCallBack, StoreInfoManager.ICal
             MiniGameBaseBean itemMiniGameData = listMiniGameData[i];
             GameObject objItem = Instantiate(objArenaContainer, objArenaModel);
             ItemTownArenaCpt arenaItem = objItem.GetComponent<ItemTownArenaCpt>();
-            arenaItem.SetData(type,itemMiniGameData);
-            GameUtil.RefreshRectViewHight((RectTransform)objItem.transform, true);
+            arenaItem.SetData(type, itemMiniGameData);
+            //GameUtil.RefreshRectViewHight((RectTransform)objItem.transform, true);
             objItem.transform.DOScale(new Vector3(0, 0, 0), 0.5f).From().SetEase(Ease.OutBack);
+            hasData = true;
         }
         if (hasData)
             tvNull.gameObject.SetActive(false);
         else
             tvNull.gameObject.SetActive(true);
+        GameUtil.RefreshRectViewHight((RectTransform)objArenaContainer.transform, true);
+        scrollRectContainer.content.localPosition = Vector2.zero;
     }
 
     /// <summary>
@@ -66,11 +70,11 @@ public class UITownArena : UIBaseOne, IRadioGroupCallBack, StoreInfoManager.ICal
     private List<MiniGameBaseBean> CreateMiniGameData(TrophyTypeEnum type)
     {
         List<MiniGameBaseBean> listMiniGameData = new List<MiniGameBaseBean>();
-        int arenaNumber = Random.Range(1, 5);
+        int arenaNumber = Random.Range(1, 10);
         for (int i = 0; i < arenaNumber; i++)
         {
-           // MiniGameEnum gameType = RandomUtil.GetRandomEnum<MiniGameEnum>();
-            MiniGameEnum gameType = MiniGameEnum.Barrage;
+            // MiniGameEnum gameType = RandomUtil.GetRandomEnum<MiniGameEnum>();
+            MiniGameEnum gameType = MiniGameEnum.Combat;
             StoreInfoBean storeInfo = null;
 
             MiniGameBaseBean miniGameData = MiniGameEnumTools.GetMiniGameData(gameType);
@@ -189,38 +193,29 @@ public class UITownArena : UIBaseOne, IRadioGroupCallBack, StoreInfoManager.ICal
         switch (type)
         {
             case TrophyTypeEnum.Elementary:
+                miniGameData.cookingThemeLevel = 1;
                 break;
             case TrophyTypeEnum.Intermediate:
+                miniGameData.cookingThemeLevel = 2;
                 break;
             case TrophyTypeEnum.Advanced:
+                miniGameData.cookingThemeLevel = 3;
                 break;
             case TrophyTypeEnum.Legendary:
+                miniGameData.cookingThemeLevel = 4;
                 break;
         }
-        miniGameData.winScore = 60;
-        miniGameData.storyGameStartId = 30000001;
-        miniGameData.storyGameAuditId = 30000002;
         //随机生成敌人
         List<CharacterBean> listEnemyData = new List<CharacterBean>();
-        for (int i = 0; i < Random.Range(1, 16); i++)
+        for (int i = 0; i < 16; i++)
         {
             CharacterBean randomEnemy = CharacterBean.CreateRandomWorkerData(uiGameManager.characterBodyManager);
             listEnemyData.Add(randomEnemy);
         }
-        //主持由东方姑娘主持
-        List<CharacterBean> listCompereData = new List<CharacterBean>();
-        CharacterBean compereData = uiGameManager.npcInfoManager.GetCharacterDataById(110051);
-        listCompereData.Add(compereData);
         //评审人员
-        List<long> listAuditerIds = new List<long>() { 100011, 100021, 100031, 100041, 100051, 100061, 100071, 100081, 100091 };
-        List<CharacterBean> listAuditerData = new List<CharacterBean>();
-        listAuditerIds = RandomUtil.GetRandomDataByListForNumberNR(listAuditerIds, 5);
-        foreach (long itemId in listAuditerIds)
-        {
-            CharacterBean auditerData = uiGameManager.npcInfoManager.GetCharacterDataById(itemId);
-            listAuditerData.Add(auditerData);
-        }
-        miniGameData.InitData(uiGameManager.gameItemsManager, null, listEnemyData, listAuditerData, listCompereData);
+        List<CharacterBean> listTownNpc  = uiGameManager.npcInfoManager.GetCharacterDataByType(NpcTypeEnum.Town);
+        List<CharacterBean> listAuditerData = RandomUtil.GetRandomDataByListForNumberNR(listTownNpc,5);
+        miniGameData.InitData(uiGameManager.gameItemsManager, null, listEnemyData, listAuditerData, null);
         return miniGameData;
     }
 
@@ -235,13 +230,6 @@ public class UITownArena : UIBaseOne, IRadioGroupCallBack, StoreInfoManager.ICal
         switch (type)
         {
             case TrophyTypeEnum.Elementary:
-                miniGameData.launchNumber = 2;
-                miniGameData.launchSpeed = 20;
-                miniGameData.launchInterval = 0.1f;
-                miniGameData.launchTypes = new MiniGameBarrageEjectorCpt.LaunchTypeEnum[]{
-                    MiniGameBarrageEjectorCpt.LaunchTypeEnum.Single,
-                    MiniGameBarrageEjectorCpt.LaunchTypeEnum.Double,
-                    MiniGameBarrageEjectorCpt.LaunchTypeEnum.Triple};
                 break;
             case TrophyTypeEnum.Intermediate:
                 break;
@@ -272,9 +260,6 @@ public class UITownArena : UIBaseOne, IRadioGroupCallBack, StoreInfoManager.ICal
             case TrophyTypeEnum.Legendary:
                 break;
         }
-        miniGameData.winMoneyL = 0;
-        miniGameData.winMoneyM = 1;
-        miniGameData.winMoneyS = 10;
         return miniGameData;
     }
 
@@ -286,9 +271,11 @@ public class UITownArena : UIBaseOne, IRadioGroupCallBack, StoreInfoManager.ICal
     /// <returns></returns>
     private MiniGameDebateBean CreateDebateGameData(MiniGameDebateBean miniGameData, StoreInfoBean storeInfo, TrophyTypeEnum type)
     {
+        CharacterBean randomEnemy = null;
         switch (type)
         {
             case TrophyTypeEnum.Elementary:
+                randomEnemy = CharacterBean.CreateRandomEnemyData(uiGameManager.characterBodyManager, 10);
                 break;
             case TrophyTypeEnum.Intermediate:
                 break;
@@ -297,9 +284,7 @@ public class UITownArena : UIBaseOne, IRadioGroupCallBack, StoreInfoManager.ICal
             case TrophyTypeEnum.Legendary:
                 break;
         }
-        miniGameData.winLife = 1;
-        CharacterBean enemyData = uiGameManager.npcInfoManager.GetCharacterDataById(110111);
-        miniGameData.InitData(uiGameManager.gameItemsManager, null, enemyData);
+        miniGameData.InitData(uiGameManager.gameItemsManager, null, randomEnemy);
         return miniGameData;
     }
 
@@ -311,9 +296,11 @@ public class UITownArena : UIBaseOne, IRadioGroupCallBack, StoreInfoManager.ICal
     /// <returns></returns>
     private MiniGameCombatBean CreateCombatGameData(MiniGameCombatBean miniGameData, StoreInfoBean storeInfo, TrophyTypeEnum type)
     {
+        int enemyBaseAttribute = 10;
         switch (type)
         {
             case TrophyTypeEnum.Elementary:
+                enemyBaseAttribute = 10;
                 break;
             case TrophyTypeEnum.Intermediate:
                 break;
@@ -322,10 +309,15 @@ public class UITownArena : UIBaseOne, IRadioGroupCallBack, StoreInfoManager.ICal
             case TrophyTypeEnum.Legendary:
                 break;
         }
-        miniGameData.winBringDownNumber = 1;
-        miniGameData.winSurvivalNumber = 1;
-        CharacterBean enemyData = uiGameManager.npcInfoManager.GetCharacterDataById(110111);
-        miniGameData.InitData(uiGameManager.gameItemsManager, null, enemyData);
+        miniGameData.winBringDownNumber = Random.Range(1, 6);
+        //生成敌人
+        List<CharacterBean> listEnemyData = new List<CharacterBean>();
+        for (int i = 0; i < miniGameData.winBringDownNumber; i++)
+        {
+            CharacterBean enemyData = CharacterBean.CreateRandomEnemyData(uiGameManager.characterBodyManager, enemyBaseAttribute);
+            listEnemyData.Add(enemyData);
+        }
+        miniGameData.InitData(uiGameManager.gameItemsManager, new List<CharacterBean>(), listEnemyData);
         return miniGameData;
     }
 

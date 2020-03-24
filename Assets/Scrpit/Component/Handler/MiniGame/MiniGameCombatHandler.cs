@@ -8,14 +8,12 @@ using static MiniGameCombatBean;
 
 public class MiniGameCombatHandler : BaseMiniGameHandler<MiniGameCombatBuilder, MiniGameCombatBean>, UIMiniGameCountDown.ICallBack, UIMiniGameCombat.ICallBack
 {
-    protected GameItemsManager gameItemsManager;
     protected SkillInfoManager skillInfoManager;
     //游戏UI
     protected UIMiniGameCombat uiMiniGameCombat;
     protected override void Awake()
     {
         base.Awake();
-        gameItemsManager = Find<GameItemsManager>(ImportantTypeEnum.GameItemsManager);
         skillInfoManager = Find<SkillInfoManager>(ImportantTypeEnum.SkillManager);
     }
 

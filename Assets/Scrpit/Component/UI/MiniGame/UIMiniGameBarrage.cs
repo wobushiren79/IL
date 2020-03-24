@@ -17,7 +17,7 @@ public class UIMiniGameBarrage : UIBaseMiniGame<MiniGameBarrageBean>
         //更新血量
         if (miniGameData != null)
         {
-            MiniGameCharacterForBarrageBean userGameData = miniGameData.GetUserGameData();
+            MiniGameCharacterForBarrageBean userGameData = (MiniGameCharacterForBarrageBean)miniGameData.GetUserGameData();
             SetUserLife(userGameData.characterMaxLife, userGameData.characterCurrentLife);
         }
     }
@@ -29,7 +29,7 @@ public class UIMiniGameBarrage : UIBaseMiniGame<MiniGameBarrageBean>
     public override void SetData(MiniGameBarrageBean barrageData)
     {
         base.SetData(barrageData);
-        MiniGameCharacterForBarrageBean userGameData = miniGameData.GetUserGameData();
+        MiniGameCharacterForBarrageBean userGameData = (MiniGameCharacterForBarrageBean)miniGameData.GetUserGameData();
         SetUserLife(userGameData.characterMaxLife, userGameData.characterCurrentLife);
     }
 

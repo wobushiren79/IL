@@ -22,12 +22,8 @@ public class MiniGameAccountBean : MiniGameBaseBean
         gameType = MiniGameEnum.Account;
     }
 
-    public override void InitData(GameItemsManager gameItemsManager, CharacterBean userData)
+    public override void InitForMiniGame(GameItemsManager gameItemsManager)
     {
-        base.InitData(gameItemsManager, userData);
-        userData.GetAttributes(gameItemsManager,out CharacterAttributesBean attributesData);
-        //设置游戏时间
-        winSurvivalTime = attributesData.account + winSurvivalTime;
         if (winSurvivalTime < 30)
         {
             winSurvivalTime = 30;

@@ -29,6 +29,19 @@ public class MiniGameAccountEjectorCpt : BaseMonoBehaviour
         this.mCallBack = mCallBack;
     }
 
+    /// <summary>
+    /// 设置数据
+    /// </summary>
+    public void SetData(float recycleSpeed)
+    {
+        mRecycleSpeed = recycleSpeed;
+        if (mRecycleSpeed < 1)
+        {
+            mRecycleSpeed = 1;
+        }
+    }
+
+
     void Update()
     {
         if (srHook && srHookPlatform && srRope)

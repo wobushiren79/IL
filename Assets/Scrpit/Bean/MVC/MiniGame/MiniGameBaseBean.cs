@@ -2,7 +2,7 @@
 using UnityEditor;
 using System.Collections.Generic;
 
-public class MiniGameBaseBean
+public abstract class MiniGameBaseBean
 {
     public MiniGameEnum gameType;//游戏类型
     public MiniGameReasonEnum gameReason;//玩游戏的原因
@@ -49,6 +49,18 @@ public class MiniGameBaseBean
         return listUserGameData;
     }
 
+    public virtual MiniGameCharacterBean GetUserGameData()
+    {
+        if (CheckUtil.ListIsNull(listUserGameData))
+        {
+            return null;
+        }
+        else
+        {
+            return listUserGameData[0];
+        }
+    }
+
     /// <summary>
     /// 获取敌人数据
     /// </summary>
@@ -56,6 +68,18 @@ public class MiniGameBaseBean
     public virtual List<MiniGameCharacterBean> GetListEnemyGameData()
     {
         return listEnemyGameData;
+    }
+
+    public virtual MiniGameCharacterBean GetEnemyGameData()
+    {
+        if (CheckUtil.ListIsNull(listEnemyGameData))
+        {
+            return null;
+        }
+        else
+        {
+            return listEnemyGameData[0];
+        }
     }
 
     /// <summary>
@@ -171,7 +195,13 @@ public class MiniGameBaseBean
                 listEnemyGameData.Add(itemEnemyGameData);
             }
         }
+        InitForMiniGame(gameItemsManager);
     }
+
+    /// <summary>
+    /// 初始化对应的游戏数据 
+    /// </summary>
+    public abstract void InitForMiniGame(GameItemsManager gameItemsManager);
 
     /// <summary>
     /// 通过游戏类型获取角色数据类型

@@ -34,11 +34,12 @@ public class ItemTownArenaCpt : ItemGameBaseCpt, DialogView.IDialogCallBack
         InitDataForType(miniGameData.gameType, trophyType, miniGameData);
     }
 
-    public void InitDataForType(MiniGameEnum gameType,TrophyTypeEnum trophyType,  MiniGameBaseBean miniGameData)
+    public void InitDataForType(MiniGameEnum gameType, TrophyTypeEnum trophyType, MiniGameBaseBean miniGameData)
     {
         this.miniGameData = miniGameData;
         this.trophyType = trophyType;
-        SetTitle(miniGameData.GetGameName());
+
+        SetTitle(miniGameData);
         SetReward(miniGameData.listReward);
         SetPrice(miniGameData.preMoneyL, miniGameData.preMoneyM, miniGameData.preMoneyS);
         SetRuleContent(miniGameData.GetListWinConditions());
@@ -56,6 +57,7 @@ public class ItemTownArenaCpt : ItemGameBaseCpt, DialogView.IDialogCallBack
             case MiniGameEnum.Combat:
                 break;
         }
+        GameUtil.RefreshRectViewHight((RectTransform)transform, true);
     }
 
     public void InitDataForCooking(MiniGameBaseBean miniGameData)
@@ -67,8 +69,24 @@ public class ItemTownArenaCpt : ItemGameBaseCpt, DialogView.IDialogCallBack
     /// 设置标题
     /// </summary>
     /// <param name="title"></param>
-    public void SetTitle(string title)
+    public void SetTitle(MiniGameBaseBean miniGameData)
     {
+        string title = "";
+        if (miniGameData.gameType == MiniGameEnum.Combat)
+        {
+            if (miniGameData.winBringDownNumber == 1)
+            {
+                title = miniGameData.GetGameName() + "(" + GameCommonInfo.GetUITextById(92) + ")";
+            }
+            else
+            {
+                title = miniGameData.GetGameName() + "(" + string.Format(GameCommonInfo.GetUITextById(91), miniGameData.winBringDownNumber) + ")";
+            }
+        }
+        else
+        {
+            title = miniGameData.GetGameName();
+        }
         if (tvTitle != null)
         {
             tvTitle.text = title;
@@ -163,7 +181,8 @@ public class ItemTownArenaCpt : ItemGameBaseCpt, DialogView.IDialogCallBack
         GameDataManager gameDataManager = uiGameManager.gameDataManager;
         ToastManager toastManager = uiGameManager.toastManager;
         DialogManager dialogManager = uiGameManager.dialogManager;
-
+        AudioHandler audioHandler = uiGameManager.audioHandler;
+        audioHandler.PlaySound(AudioSoundEnum.ButtonForNormal);
         if (!gameDataManager.gameData.HasEnoughMoney(miniGameData.preMoneyL, miniGameData.preMoneyM, miniGameData.preMoneyS))
         {
             toastManager.ToastHint(GameCommonInfo.GetUITextById(1020));
@@ -210,6 +229,10 @@ public class ItemTownArenaCpt : ItemGameBaseCpt, DialogView.IDialogCallBack
             pickForCharacterDialog.SetPickCharacterMax(1);
             List<string> listExpelCharacterId = GameCommonInfo.DailyLimitData.GetArenaAttendedCharacter();
             pickForCharacterDialog.SetExpelCharacter(listExpelCharacterId);
+            if (miniGameData.gameType == MiniGameEnum.Combat)
+            {
+                pickForCharacterDialog.SetPickCharacterMax(miniGameData.winBringDownNumber);
+            }
         }
     }
 

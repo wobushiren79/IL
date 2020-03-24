@@ -6,6 +6,8 @@ public class MiniGameAccountHandler : BaseMiniGameHandler<MiniGameAccountBuilder
     ControlForMiniGameAccountCpt.ICallBack,
     MiniGameAccountEjectorCpt.ICallBack
 {
+
+
     public override void InitGame(MiniGameAccountBean miniGameData)
     {
         base.InitGame(miniGameData);
@@ -27,6 +29,9 @@ public class MiniGameAccountHandler : BaseMiniGameHandler<MiniGameAccountBuilder
         base.StartGame();
         //发射器开始旋转
         MiniGameAccountEjectorCpt ejectorCpt = miniGameBuilder.GetEjector();
+        MiniGameCharacterForAccountBean userCharacterData =(MiniGameCharacterForAccountBean) miniGameData.GetUserGameData();
+        userCharacterData.characterData.GetAttributes(gameItemsManager, out CharacterAttributesBean characterAttributes);
+        ejectorCpt.SetData(1 + characterAttributes.account/20f);
         ejectorCpt.SetCallBack(this);
         ejectorCpt.StartRotate();
         //打开游戏UI

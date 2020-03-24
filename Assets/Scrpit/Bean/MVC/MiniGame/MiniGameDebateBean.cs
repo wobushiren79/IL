@@ -22,6 +22,11 @@ public class MiniGameDebateBean : MiniGameBaseBean
         gameType = MiniGameEnum.Debate;
     }
 
+    public override void InitForMiniGame(GameItemsManager gameItemsManager)
+    {
+
+    }
+
     /// <summary>
     /// 设置状态
     /// </summary>
@@ -38,24 +43,6 @@ public class MiniGameDebateBean : MiniGameBaseBean
     public DebateStatus GetDebateStatus()
     {
         return debateStatus; 
-    }
-
-    /// <summary>
-    /// 获取友方角色数据
-    /// </summary>
-    /// <returns></returns>
-    public MiniGameCharacterForDebateBean GetUserGameData()
-    {
-       return (MiniGameCharacterForDebateBean)listUserGameData[0];
-    }
-
-    /// <summary>
-    /// 获取地方角色数据
-    /// </summary>
-    /// <returns></returns>
-    public MiniGameCharacterForDebateBean GetEnemyGameData()
-    {
-        return  (MiniGameCharacterForDebateBean)listEnemyGameData[0];
     }
 
 

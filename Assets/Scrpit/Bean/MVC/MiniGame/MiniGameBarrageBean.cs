@@ -30,14 +30,8 @@ public class MiniGameBarrageBean : MiniGameBaseBean
         gameType = MiniGameEnum.Barrage;
     }
 
-    public MiniGameCharacterForBarrageBean GetUserGameData()
+    public override void InitForMiniGame(GameItemsManager gameItemsManager)
     {
-        return (MiniGameCharacterForBarrageBean)listUserGameData[0];
-    }
-
-    public override void InitData(GameItemsManager gameItemsManager, List<CharacterBean> listUserData, List<CharacterBean> listEnemyData)
-    {
-        base.InitData(gameItemsManager, listUserData, listEnemyData);
         //初始化时间
         if (winSurvivalTime != 0)
         {

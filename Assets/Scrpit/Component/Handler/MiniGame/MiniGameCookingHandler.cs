@@ -12,7 +12,6 @@ public class MiniGameCookingHandler : BaseMiniGameHandler<MiniGameCookingBuilder
 {
     //事件处理
     protected EventHandler eventHandler;
-    protected GameItemsManager gameItemsManager;
     protected InnFoodManager innFoodManager;
 
     protected UIMiniGameCooking uiMiniGameCooking;
@@ -21,7 +20,6 @@ public class MiniGameCookingHandler : BaseMiniGameHandler<MiniGameCookingBuilder
     protected override void Awake()
     {
         base.Awake();
-        gameItemsManager = Find<GameItemsManager>(ImportantTypeEnum.GameItemsManager);
         eventHandler = Find<EventHandler>(ImportantTypeEnum.EventHandler);
         innFoodManager = Find<InnFoodManager>( ImportantTypeEnum.FoodManager);
     }
@@ -402,7 +400,7 @@ public class MiniGameCookingHandler : BaseMiniGameHandler<MiniGameCookingBuilder
         //如果是晋升则按照分数计算是否胜利
         if(miniGameData.gameReason== MiniGameReasonEnum.Improve)
         {
-            MiniGameCharacterForCookingBean characterMiniGameData = miniGameData.GetUserGameData();
+            MiniGameCharacterForCookingBean characterMiniGameData = (MiniGameCharacterForCookingBean)miniGameData.GetUserGameData();
             if (characterMiniGameData.scoreForTotal >= miniGameData.winScore)
             {
                 EndGame(true, false);

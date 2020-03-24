@@ -324,8 +324,7 @@ public class ItemTownGuildImproveCharacterCpt : ItemGameBaseCpt, DialogView.IDia
     private MiniGameBaseBean InitWaiterGame()
     {
         MiniGameBaseBean miniGameData = MiniGameEnumTools.GetMiniGameData(MiniGameEnum.Barrage);
-        miniGameData = PreTypeForMiniGameEnumTools.GetMiniGameData(miniGameData, levelData.pre_data_minigame, gameItemsManager, npcInfoManager);
-        miniGameData.InitData(gameItemsManager, characterData);
+        miniGameData = PreTypeForMiniGameEnumTools.GetMiniGameData(miniGameData, levelData.pre_data_minigame, characterData, gameItemsManager, npcInfoManager);
         return miniGameData;
     }
 
@@ -335,8 +334,7 @@ public class ItemTownGuildImproveCharacterCpt : ItemGameBaseCpt, DialogView.IDia
     private MiniGameBaseBean InitAccountantGame()
     {
         MiniGameBaseBean miniGameData = MiniGameEnumTools.GetMiniGameData(MiniGameEnum.Account);
-        miniGameData = PreTypeForMiniGameEnumTools.GetMiniGameData(miniGameData, levelData.pre_data_minigame, gameItemsManager, npcInfoManager);
-        miniGameData.InitData(gameItemsManager, characterData);
+        miniGameData = PreTypeForMiniGameEnumTools.GetMiniGameData(miniGameData, levelData.pre_data_minigame, characterData, gameItemsManager, npcInfoManager);
         return miniGameData;
     }
 
@@ -346,8 +344,7 @@ public class ItemTownGuildImproveCharacterCpt : ItemGameBaseCpt, DialogView.IDia
     private MiniGameBaseBean InitAccostGame()
     {
         MiniGameBaseBean miniGameData = MiniGameEnumTools.GetMiniGameData(MiniGameEnum.Debate);
-        miniGameData = PreTypeForMiniGameEnumTools.GetMiniGameData(miniGameData, levelData.pre_data_minigame, gameItemsManager, npcInfoManager);
-        miniGameData.InitData(gameItemsManager, characterData);
+        miniGameData = PreTypeForMiniGameEnumTools.GetMiniGameData(miniGameData, levelData.pre_data_minigame, characterData, gameItemsManager, npcInfoManager);
         return miniGameData;
     }
 
@@ -357,8 +354,7 @@ public class ItemTownGuildImproveCharacterCpt : ItemGameBaseCpt, DialogView.IDia
     private MiniGameBaseBean InitBeaterGame()
     {
         MiniGameBaseBean miniGameData = MiniGameEnumTools.GetMiniGameData(MiniGameEnum.Combat);
-        miniGameData = PreTypeForMiniGameEnumTools.GetMiniGameData(miniGameData, levelData.pre_data_minigame, gameItemsManager, npcInfoManager);
-        miniGameData.InitData(gameItemsManager, characterData);
+        miniGameData = PreTypeForMiniGameEnumTools.GetMiniGameData(miniGameData, levelData.pre_data_minigame, characterData, gameItemsManager, npcInfoManager);
         return miniGameData;
     }
 

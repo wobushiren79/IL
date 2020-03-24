@@ -17,6 +17,45 @@ public class CharacterBean
     public NpcInfoBean npcInfoData = new NpcInfoBean();
 
     /// <summary>
+    /// 创建随机敌人数据
+    /// </summary>
+    /// <param name="characterBodyManager"></param>
+    /// <returns></returns>
+    public static CharacterBean CreateRandomEnemyData( CharacterBodyManager characterBodyManager,int baseAttributes)
+    {
+        CharacterBean characterData = new CharacterBean();
+        characterData.baseInfo.characterId = SystemUtil.GetUUID(SystemUtil.UUIDTypeEnum.N);
+        characterData.baseInfo.characterType = (int)NpcTypeEnum.Other;
+        //设置随机名字
+        characterData.baseInfo.name = RandomUtil.GetRandomGenerateChineseWord(UnityEngine.Random.Range(2, 4));
+
+        //随机身体数据
+        characterData.body.CreateRandomBody(characterBodyManager);
+
+        //根据性别装备服装
+        if (characterData.body.sex == 1)
+        {
+            characterData.equips.clothesId = 210039;
+        }
+        else if (characterData.body.sex == 2)
+        {
+            characterData.equips.clothesId = 210040;
+        }
+        //生成随机能力
+        characterData.attributes.CreateRandomData(
+            baseAttributes * 10 - 50 , baseAttributes * 10 + 50,
+            0, 1,
+            baseAttributes - 5, baseAttributes + 5,
+            baseAttributes - 5, baseAttributes + 5,
+            baseAttributes - 5, baseAttributes + 5,
+            baseAttributes - 5, baseAttributes + 5,
+            baseAttributes - 5, baseAttributes + 5,
+            baseAttributes - 5, baseAttributes + 5);
+        characterData.equips.shoesId = 310039;
+        return characterData;
+    }
+
+    /// <summary>
     /// 创建随机工作者角色数据
     /// </summary>
     /// <param name="type"></param>

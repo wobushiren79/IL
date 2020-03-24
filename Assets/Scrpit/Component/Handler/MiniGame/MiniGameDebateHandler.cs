@@ -7,7 +7,6 @@ using DG.Tweening;
 public class MiniGameDebateHandler : BaseMiniGameHandler<MiniGameDebateBuilder, MiniGameDebateBean>,
     UIMiniGameDebate.ICallBack
 {
-    public GameItemsManager gameItemsManager;
     //预备战斗时间
     public float preCombatTime = 0.5f;
     //战斗时间

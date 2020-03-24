@@ -81,13 +81,10 @@ public class MiniGameCookingBean : MiniGameBaseBean
         }
     }
 
-    /// <summary>
-    /// 获取玩家数据
-    /// </summary>
-    /// <returns></returns>
-    public MiniGameCharacterForCookingBean GetUserGameData()
+
+    public override void InitForMiniGame(GameItemsManager gameItemsManager)
     {
-        return (MiniGameCharacterForCookingBean)listUserGameData[0];
+
     }
 
     /// <summary>
@@ -118,4 +115,6 @@ public class MiniGameCookingBean : MiniGameBaseBean
         List<CookingThemeBean> listData= innFoodManager.GetCookingThemeByLevel(themeLevel);
         cookingTheme = RandomUtil.GetRandomDataByList(listData);
     }
+
+
 }

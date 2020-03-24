@@ -23,6 +23,7 @@ public class BaseMiniGameHandler<B, D> : BaseHandler, UIMiniGameCountDown.ICallB
     protected AudioHandler audioHandler;
     //数据
     protected GameDataManager gameDataManager;
+    protected GameItemsManager gameItemsManager;
     //游戏构建器
     public B miniGameBuilder;
     //游戏数据
@@ -34,6 +35,7 @@ public class BaseMiniGameHandler<B, D> : BaseHandler, UIMiniGameCountDown.ICallB
     protected virtual void Awake()
     {
         gameDataManager = Find<GameDataManager>(ImportantTypeEnum.GameDataManager);
+        gameItemsManager = Find<GameItemsManager>(ImportantTypeEnum.GameItemsManager);
         uiGameManager = Find<UIGameManager>(ImportantTypeEnum.GameUI);
         controlHandler = Find<ControlHandler>(ImportantTypeEnum.ControlHandler);
         audioHandler = Find<AudioHandler>(ImportantTypeEnum.AudioHandler);

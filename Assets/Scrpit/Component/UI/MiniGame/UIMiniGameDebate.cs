@@ -36,8 +36,8 @@ public class UIMiniGameDebate : UIBaseMiniGame<MiniGameDebateBean>
     {
         base.RefreshUI();
 
-        MiniGameCharacterForDebateBean userGameData =  miniGameData.GetUserGameData();
-        MiniGameCharacterForDebateBean enemyGameData = miniGameData.GetEnemyGameData();
+        MiniGameCharacterForDebateBean userGameData =  (MiniGameCharacterForDebateBean)miniGameData.GetUserGameData();
+        MiniGameCharacterForDebateBean enemyGameData = (MiniGameCharacterForDebateBean)miniGameData.GetEnemyGameData();
 
         SetCharacter(userGameData.characterData, enemyGameData.characterData);
         SetCharacterName(userGameData.characterData.baseInfo.name, enemyGameData.characterData.baseInfo.name);
