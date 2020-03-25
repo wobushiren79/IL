@@ -490,7 +490,8 @@ public class ItemCreateWindowsEditor : EditorWindow, StoreInfoManager.ICallBack
         storeInfo.price_l = long.Parse(EditorGUILayout.TextArea(storeInfo.price_l + "", GUILayout.Width(100), GUILayout.Height(20)));
         storeInfo.price_m = long.Parse(EditorGUILayout.TextArea(storeInfo.price_m + "", GUILayout.Width(100), GUILayout.Height(20)));
         storeInfo.price_s = long.Parse(EditorGUILayout.TextArea(storeInfo.price_s + "", GUILayout.Width(100), GUILayout.Height(20)));
-
+        GUILayout.Label("消耗时间(小时)", GUILayout.Width(100), GUILayout.Height(20));
+        storeInfo.mark = EditorGUILayout.TextArea(storeInfo.mark + "", GUILayout.Width(100), GUILayout.Height(20));
         GUIPreForMiniGame(storeInfo);
         GUIReward(storeInfo);
     }
@@ -503,6 +504,8 @@ public class ItemCreateWindowsEditor : EditorWindow, StoreInfoManager.ICallBack
         storeInfo.price_l = long.Parse(EditorGUILayout.TextArea(storeInfo.price_l + "", GUILayout.Width(100), GUILayout.Height(20)));
         storeInfo.price_m = long.Parse(EditorGUILayout.TextArea(storeInfo.price_m + "", GUILayout.Width(100), GUILayout.Height(20)));
         storeInfo.price_s = long.Parse(EditorGUILayout.TextArea(storeInfo.price_s + "", GUILayout.Width(100), GUILayout.Height(20)));
+        GUILayout.Label("消耗时间(小时)", GUILayout.Width(100), GUILayout.Height(20));
+        storeInfo.mark = EditorGUILayout.TextArea(storeInfo.mark + "", GUILayout.Width(100), GUILayout.Height(20));
         GUILayout.Label("名字", GUILayout.Width(50), GUILayout.Height(20));
         storeInfo.name = EditorGUILayout.TextArea(storeInfo.name + "", GUILayout.Width(100), GUILayout.Height(20));
         GUILayout.Label("描述", GUILayout.Width(50), GUILayout.Height(20));

@@ -207,6 +207,8 @@ public class ItemTownArenaCpt : ItemGameBaseCpt, DialogView.IDialogCallBack
         {
             //支付金钱
             gameDataManager.gameData.PayMoney(miniGameData.preMoneyL, miniGameData.preMoneyM, miniGameData.preMoneyS);
+            //扣除时间
+            gameDataManager.gameData.gameTime.hour += miniGameData.preGameTime;
             //设置参赛人员
             PickForCharacterDialogView pickForCharacterDialog = (PickForCharacterDialogView)dialogView;
             List<CharacterBean> listCharacter = pickForCharacterDialog.GetPickCharacter();

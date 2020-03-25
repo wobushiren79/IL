@@ -73,8 +73,7 @@ public class UITownArena : UIBaseOne, IRadioGroupCallBack, StoreInfoManager.ICal
         int arenaNumber = Random.Range(1, 10);
         for (int i = 0; i < arenaNumber; i++)
         {
-            // MiniGameEnum gameType = RandomUtil.GetRandomEnum<MiniGameEnum>();
-            MiniGameEnum gameType = MiniGameEnum.Combat;
+            MiniGameEnum gameType = RandomUtil.GetRandomEnum<MiniGameEnum>();
             StoreInfoBean storeInfo = null;
 
             MiniGameBaseBean miniGameData = MiniGameEnumTools.GetMiniGameData(gameType);
@@ -135,25 +134,21 @@ public class UITownArena : UIBaseOne, IRadioGroupCallBack, StoreInfoManager.ICal
                 miniGameData.listReward.Add(randomReward);
             }
 
-            int gameTime = 1;
             //添加对应的奖杯
             switch (type)
             {
                 case TrophyTypeEnum.Elementary:
-                    gameTime = 1;
                     break;
                 case TrophyTypeEnum.Intermediate:
-                    gameTime = 2;
                     break;
                 case TrophyTypeEnum.Advanced:
-                    gameTime = 3;
                     break;
                 case TrophyTypeEnum.Legendary:
-                    gameTime = 4;
                     break;
             }
             //设置游戏时间
-            miniGameData.preGameTime = gameTime;
+            if (storeInfo.mark != null)
+                miniGameData.preGameTime = int.Parse(storeInfo.mark);
             //设置前置金钱
             miniGameData.preMoneyL = storeInfo.price_l;
             miniGameData.preMoneyM = storeInfo.price_m;
@@ -193,28 +188,34 @@ public class UITownArena : UIBaseOne, IRadioGroupCallBack, StoreInfoManager.ICal
         switch (type)
         {
             case TrophyTypeEnum.Elementary:
-                miniGameData.cookingThemeLevel = 1;
                 break;
             case TrophyTypeEnum.Intermediate:
-                miniGameData.cookingThemeLevel = 2;
                 break;
             case TrophyTypeEnum.Advanced:
-                miniGameData.cookingThemeLevel = 3;
                 break;
             case TrophyTypeEnum.Legendary:
-                miniGameData.cookingThemeLevel = 4;
                 break;
         }
         //随机生成敌人
         List<CharacterBean> listEnemyData = new List<CharacterBean>();
-        for (int i = 0; i < 16; i++)
+        for (int i = 0; i < 15; i++)
         {
             CharacterBean randomEnemy = CharacterBean.CreateRandomWorkerData(uiGameManager.characterBodyManager);
             listEnemyData.Add(randomEnemy);
         }
         //评审人员
-        List<CharacterBean> listTownNpc  = uiGameManager.npcInfoManager.GetCharacterDataByType(NpcTypeEnum.Town);
-        List<CharacterBean> listAuditerData = RandomUtil.GetRandomDataByListForNumberNR(listTownNpc,5);
+        List<CharacterBean> listTownNpc = uiGameManager.npcInfoManager.GetCharacterDataByType(NpcTypeEnum.Town);
+        PreTypeForMiniGameEnumTools.GetAllCharacter(storeInfo.pre_data_minigame, out string allCharacterIds);
+        for (int i = 0; i < listTownNpc.Count; i++)
+        {
+            CharacterBean itemNpc = listTownNpc[i];
+            if (allCharacterIds.Contains(itemNpc.baseInfo.characterId))
+            {
+                listTownNpc.Remove(itemNpc);
+                i--;
+            }
+        }
+        List<CharacterBean> listAuditerData = RandomUtil.GetRandomDataByListForNumberNR(listTownNpc, 5);
         miniGameData.InitData(uiGameManager.gameItemsManager, null, listEnemyData, listAuditerData, null);
         return miniGameData;
     }

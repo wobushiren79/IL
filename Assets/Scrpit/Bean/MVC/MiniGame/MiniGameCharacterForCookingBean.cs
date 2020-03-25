@@ -40,7 +40,7 @@ public class MiniGameCharacterForCookingBean : MiniGameCharacterBean
     {
         if (CheckUtil.ListIsNull(listData))
         {
-            scoreForExpect = Random.Range(50,90);
+            scoreForExpect = Random.Range(70,90);
             //如果是敌人
             if (characterType == 0)
             {

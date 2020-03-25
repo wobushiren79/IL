@@ -21,7 +21,7 @@ public class MiniGameCookingHandler : BaseMiniGameHandler<MiniGameCookingBuilder
     {
         base.Awake();
         eventHandler = Find<EventHandler>(ImportantTypeEnum.EventHandler);
-        innFoodManager = Find<InnFoodManager>( ImportantTypeEnum.FoodManager);
+        innFoodManager = Find<InnFoodManager>(ImportantTypeEnum.FoodManager);
     }
 
     /// <summary>
@@ -84,7 +84,7 @@ public class MiniGameCookingHandler : BaseMiniGameHandler<MiniGameCookingBuilder
     /// </summary>
     public void InitCameraPosition()
     {
-        BaseControl baseControl= controlHandler.StartControl(ControlHandler.ControlEnum.MiniGameCooking);
+        BaseControl baseControl = controlHandler.StartControl(ControlHandler.ControlEnum.MiniGameCooking);
         baseControl.SetCameraFollowObj(baseControl.gameObject);
         SetCameraPosition(miniGameData.userStartPosition);
     }
@@ -398,7 +398,7 @@ public class MiniGameCookingHandler : BaseMiniGameHandler<MiniGameCookingBuilder
             baseControl.SetCameraFollowObj(miniGameBuilder.GetUserCharacter().gameObject);
         }
         //如果是晋升则按照分数计算是否胜利
-        if(miniGameData.gameReason== MiniGameReasonEnum.Improve)
+        if (miniGameData.gameReason == MiniGameReasonEnum.Improve)
         {
             MiniGameCharacterForCookingBean characterMiniGameData = (MiniGameCharacterForCookingBean)miniGameData.GetUserGameData();
             if (characterMiniGameData.scoreForTotal >= miniGameData.winScore)
@@ -416,17 +416,17 @@ public class MiniGameCookingHandler : BaseMiniGameHandler<MiniGameCookingBuilder
             List<MiniGameCharacterBean> listCharacterGameData = miniGameData.GetPlayerGameData();
             //按分数排名
             listCharacterGameData = listCharacterGameData.OrderByDescending(item => ((MiniGameCharacterForCookingBean)item).scoreForTotal).ToList();
-            MiniGameCharacterForCookingBean firstCharacterData =(MiniGameCharacterForCookingBean) listCharacterGameData[0];
-            if (firstCharacterData.characterType==1)
+            for (int i = 0; i < miniGameData.winRank; i++)
             {
-                EndGame(true, false);
+                MiniGameCharacterForCookingBean characterData = (MiniGameCharacterForCookingBean)listCharacterGameData[i];
+                if (characterData.characterType == 1)
+                {
+                    EndGame(true, false);
+                    return;
+                }
             }
-            else
-            {
-                EndGame(false, false);
-            }
+            EndGame(false, false);
         }
-      
     }
     #endregion
 }

@@ -168,52 +168,53 @@ public class SceneGameArenaInit : BaseSceneInit, IBaseObserver
         {
             //如果是晋升 
             case MiniGameReasonEnum.Improve:
-                //设置每个玩家的初始位置
-                sceneArenaManager.GetArenaForCookingPlayerPositionBy2(out Vector3 playerStartPosition);
-                //总共玩家数量为单数 则初始点为playerStartPosition，如果是双数则从playerStartPosition.x -0.5f开始
-                float positionX = playerStartPosition.x + gameCookingData.listEnemyGameData.Count / 2f;
-                float positionY = playerStartPosition.y;
-                //随机站位
-                int userRandomPositionNumber = UnityEngine.Random.Range(0, gameCookingData.listEnemyGameData.Count + 1);
-                for (int i = 0; i < gameCookingData.listEnemyGameData.Count + 1; i++)
-                {
-                    if (i == userRandomPositionNumber)
-                    {
-                        gameCookingData.userStartPosition = new Vector3(positionX, positionY);
-                    }
-                    else
-                    {
-                        gameCookingData.listEnemyStartPosition.Add(new Vector3(positionX, positionY));
-                    }
-                    positionX -= 1;
-                }
-
-                //设置评审员位置
-                sceneArenaManager.GetArenaForCookingAuditorPositionBy2(out Vector3 auditorStartPosition);
-                positionX = auditorStartPosition.x + ((gameCookingData.listAuditerGameData.Count - 1) / 2f);
-                positionY = auditorStartPosition.y;
-                for (int i = 0; i < gameCookingData.listAuditerGameData.Count; i++)
-                {
-                    gameCookingData.listAuditerStartPosition.Add(new Vector3(positionX, positionY));
-                    positionX -= 1;
-                }
-                //设置主持人位置
-                List<Vector3> listComperePosition = sceneArenaManager.GetArenaForCookingComperePositionBy2(gameCookingData.listCompereGameData.Count);
-                gameCookingData.listCompereStartPosition = listComperePosition;
-                //设置游戏用通告版
-                List<MiniGameCookingCallBoardCpt> listCallBoard = sceneArenaManager.GetArenaForCookingCallBoardBy2();
-                cookingHandler.miniGameBuilder.SetListCallBoard(listCallBoard);
-                //设置游戏用评审桌子
-                List<MiniGameCookingAuditTableCpt> listAuditTable = sceneArenaManager.GetArenaForCookingAuditTableBy2();
-                cookingHandler.miniGameBuilder.SetListAuditTable(listAuditTable);
-                //设置游戏用灶台
-                List<MiniGameCookingStoveCpt> listStove = sceneArenaManager.GetArenaForCookingStoveBy2();
-                cookingHandler.miniGameBuilder.SetListStove(listStove);
-                cookingHandler.miniGameBuilder.SetListStove(listStove);
-                //准备游戏
-                cookingHandler.InitGame(gameCookingData);
+                break;
+            default:
                 break;
         }
+        //设置每个玩家的初始位置
+        sceneArenaManager.GetArenaForCookingPlayerPositionBy2(out Vector3 playerStartPosition);
+        //总共玩家数量为单数 则初始点为playerStartPosition，如果是双数则从playerStartPosition.x -0.5f开始
+        float positionX = playerStartPosition.x + gameCookingData.listEnemyGameData.Count / 2f;
+        float positionY = playerStartPosition.y;
+        //随机站位
+        int userRandomPositionNumber = UnityEngine.Random.Range(0, gameCookingData.listEnemyGameData.Count + 1);
+        for (int i = 0; i < gameCookingData.listEnemyGameData.Count + 1; i++)
+        {
+            if (i == userRandomPositionNumber)
+            {
+                gameCookingData.userStartPosition = new Vector3(positionX, positionY);
+            }
+            else
+            {
+                gameCookingData.listEnemyStartPosition.Add(new Vector3(positionX, positionY));
+            }
+            positionX -= 1;
+        }
+        //设置评审员位置
+        sceneArenaManager.GetArenaForCookingAuditorPositionBy2(out Vector3 auditorStartPosition);
+        positionX = auditorStartPosition.x + ((gameCookingData.listAuditerGameData.Count - 1) / 2f);
+        positionY = auditorStartPosition.y;
+        for (int i = 0; i < gameCookingData.listAuditerGameData.Count; i++)
+        {
+            gameCookingData.listAuditerStartPosition.Add(new Vector3(positionX, positionY));
+            positionX -= 1;
+        }
+        //设置主持人位置
+        List<Vector3> listComperePosition = sceneArenaManager.GetArenaForCookingComperePositionBy2(gameCookingData.listCompereGameData.Count);
+        gameCookingData.listCompereStartPosition = listComperePosition;
+        //设置游戏用通告版
+        List<MiniGameCookingCallBoardCpt> listCallBoard = sceneArenaManager.GetArenaForCookingCallBoardBy2();
+        cookingHandler.miniGameBuilder.SetListCallBoard(listCallBoard);
+        //设置游戏用评审桌子
+        List<MiniGameCookingAuditTableCpt> listAuditTable = sceneArenaManager.GetArenaForCookingAuditTableBy2();
+        cookingHandler.miniGameBuilder.SetListAuditTable(listAuditTable);
+        //设置游戏用灶台
+        List<MiniGameCookingStoveCpt> listStove = sceneArenaManager.GetArenaForCookingStoveBy2();
+        cookingHandler.miniGameBuilder.SetListStove(listStove);
+        cookingHandler.miniGameBuilder.SetListStove(listStove);
+        //准备游戏
+        cookingHandler.InitGame(gameCookingData);
     }
 
     /// <summary>

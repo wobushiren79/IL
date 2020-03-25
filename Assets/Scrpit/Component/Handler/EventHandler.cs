@@ -370,14 +370,14 @@ public class EventHandler : BaseHandler,
         {
             userCharacterList += (itemCharacter.characterData.baseInfo.titleName + "" + itemCharacter.characterData.baseInfo.name) + " ";
         }
-        listData.Add("{minigame_usernamelist}", userCharacterList);
+        listData.Add(GameSubstitutionInfo.MiniGame_UserNameList, userCharacterList);
         //为所有敌方角色称呼 和 姓名
         string enemyCharacterList = "";
         foreach (MiniGameCharacterBean itemCharacter in miniGameData.listEnemyGameData)
         {
             enemyCharacterList += (itemCharacter.characterData.baseInfo.titleName + "" + itemCharacter.characterData.baseInfo.name) + " ";
         }
-        listData.Add("{minigame_enemynamelist}", enemyCharacterList);
+        listData.Add(GameSubstitutionInfo.MiniGame_EnemyNameList, enemyCharacterList);
 
         if (miniGameData.gameType == MiniGameEnum.Cooking)
         {
@@ -388,15 +388,15 @@ public class EventHandler : BaseHandler,
             {
                 auditerCharaterList += (itemCharacter.characterData.baseInfo.titleName + "" + itemCharacter.characterData.baseInfo.name) + " ";
             }
-            listData.Add("{minigame_cooking_auditernamelist}", auditerCharaterList);
+            listData.Add(GameSubstitutionInfo.MiniGame_Cooking_AuditerNameList, auditerCharaterList);
             //料理的主题
-            listData.Add("{minigame_cooking_theme}", gameCookingData.GetCookingTheme().name);
+            listData.Add(GameSubstitutionInfo.MiniGame_Cooking_Theme, gameCookingData.GetCookingTheme().name);
             //所有友方角色
             foreach (MiniGameCharacterBean itemCharacter in gameCookingData.listUserGameData)
             {
                 MiniGameCharacterForCookingBean cookingCharacterData = (MiniGameCharacterForCookingBean)itemCharacter;
                 if (cookingCharacterData.cookingMenuInfo != null)
-                    listData.Add("{minigame_cooking_user_cooking_foodname}", cookingCharacterData.cookingMenuInfo.name);
+                    listData.Add(GameSubstitutionInfo.MiniGame_Cooking_UserFoodName, cookingCharacterData.cookingMenuInfo.name);
             }
         }
         return listData;

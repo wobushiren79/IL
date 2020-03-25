@@ -284,6 +284,8 @@ public class ItemTownGuildImproveCharacterCpt : ItemGameBaseCpt, DialogView.IDia
     {
         //支付金钱
         gameDataManager.gameData.PayMoney(levelData.price_l, levelData.price_m, levelData.price_s);
+        //扣除时间
+        gameDataManager.gameData.gameTime.hour += int.Parse(levelData.mark);
         //判断玩哪个游戏
         MiniGameBaseBean miniGameData = null;
         switch (workerType)

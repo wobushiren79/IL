@@ -15,6 +15,7 @@ public abstract class MiniGameBaseBean
     public int winMoneyS;//胜利的金钱
     public int winMoneyM;//胜利的金钱
     public int winMoneyL;//胜利的金钱
+    public int winRank;//胜利排名
 
     public long preMoneyL;//前置金钱
     public long preMoneyM;
@@ -105,6 +106,7 @@ public abstract class MiniGameBaseBean
         {
             case MiniGameEnum.Cooking:
                 GetListWinConditionsForWinScore(listWinConditions);
+                GetListWinConditionsForWinRank(listWinConditions);
                 break;
             case MiniGameEnum.Barrage:
                 GetListWinConditionsForWinSurvivalTime(listWinConditions);
@@ -302,6 +304,15 @@ public abstract class MiniGameBaseBean
             listData.Add(data);
         }
     }
+    protected void GetListWinConditionsForWinRank(List<string> listData)
+    {
+        if (winRank != 0)
+        {
+            string data = string.Format(GameCommonInfo.GetUITextById(217), winRank + "");
+            listData.Add(data);
+        }
+    }
+
     protected void GetListWinConditionsForWinMoney(List<string> listData)
     {
         if (winMoneyL != 0 || winMoneyM != 0 || winMoneyS != 0)

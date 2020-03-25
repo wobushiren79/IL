@@ -36,6 +36,8 @@ public enum PreTypeForMiniGameEnum
     CookingForCompereCharacter=405,
     CookingForThemeLevel=406,
     CookingForThemeId = 407,
+    CookingForButtonNumber=408,
+    CookingForWinRank=409,
 }
 
 public class PreTypeForMiniGameBean : DataBean<PreTypeForMiniGameEnum>
@@ -71,6 +73,27 @@ public class PreTypeForMiniGameEnumTools : DataTools
             {
                 playNumber = int.Parse(itemData.data);
                 return;
+            }
+        }
+    }
+
+    /// <summary>
+    /// 获取所有角色ID
+    /// </summary>
+    /// <param name="data"></param>
+    /// <param name="characterIds"></param>
+    public static void GetAllCharacter(string data,out string characterIds)
+    {
+        List<PreTypeForMiniGameBean> listPreData = GetListPreData(data);
+        characterIds = "";
+        foreach (PreTypeForMiniGameBean itemData in listPreData)
+        {
+            if (itemData.dataType == PreTypeForMiniGameEnum.CookingForAuditCharacter
+                || itemData.dataType == PreTypeForMiniGameEnum.CookingForCompereCharacter
+                || itemData.dataType == PreTypeForMiniGameEnum.UserIds
+                || itemData.dataType == PreTypeForMiniGameEnum.EnemyIds)
+            {
+                characterIds += itemData.data+",";
             }
         }
     }
@@ -177,6 +200,9 @@ public class PreTypeForMiniGameEnumTools : DataTools
                 case PreTypeForMiniGameEnum.CookingForCompereCharacter:
                 case PreTypeForMiniGameEnum.CookingForThemeId:
                 case PreTypeForMiniGameEnum.CookingForThemeLevel:
+                case PreTypeForMiniGameEnum.CookingForButtonNumber:
+                case PreTypeForMiniGameEnum.CookingForWinRank:
+
                     GetMiniGameDataForCook(gameItemsManager, npcInfoManager,itemPreData, miniGameData);
                     break;
             }
@@ -317,6 +343,12 @@ public class PreTypeForMiniGameEnumTools : DataTools
                 break;
             case PreTypeForMiniGameEnum.CookingForThemeId:
                 miniGameCooking.cookingThemeId = long.Parse(itemPreData.data);
+                break;
+            case PreTypeForMiniGameEnum.CookingForButtonNumber:
+                miniGameCooking.cookButtonNumber = int.Parse(itemPreData.data);
+                break;
+            case PreTypeForMiniGameEnum.CookingForWinRank:
+                miniGameCooking.winRank = int.Parse(itemPreData.data);
                 break;
         }
 
