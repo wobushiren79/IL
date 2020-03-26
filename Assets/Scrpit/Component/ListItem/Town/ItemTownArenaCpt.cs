@@ -103,13 +103,14 @@ public class ItemTownArenaCpt : ItemGameBaseCpt, DialogView.IDialogCallBack
         GameItemsManager gameItemsManager = uiGameManager.gameItemsManager;
         IconDataManager iconDataManager = uiGameManager.iconDataManager;
         InnBuildManager innBuildManager = uiGameManager.innBuildManager;
+        NpcInfoManager npcInfoManager = uiGameManager.npcInfoManager;
         InfoItemsPopupShow infoItemsPopupShow = uiGameManager.infoItemsPopup;
         foreach (RewardTypeBean itemReward in listReward)
         {
             GameObject objReward = Instantiate(objRewardContainer, objRewardModel);
             Image ivIcon = CptUtil.GetCptInChildrenByName<Image>(objReward, "Icon");
             Text tvNumber = CptUtil.GetCptInChildrenByName<Text>(objReward, "Text");
-            RewardTypeEnumTools.GetRewardDetails(itemReward, iconDataManager, gameItemsManager, innBuildManager);
+            RewardTypeEnumTools.GetRewardDetails(itemReward, iconDataManager, gameItemsManager, innBuildManager, npcInfoManager);
             ivIcon.sprite = itemReward.spRewardIcon;
             tvNumber.text = "x" + itemReward.rewardNumber;
             if (itemReward.dataType == RewardTypeEnum.AddItems)

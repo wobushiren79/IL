@@ -534,6 +534,7 @@ public class EditorUI
             {
                 itemTalkInfo.pre_data = GUIListData<PreTypeEnum>("付出", itemTalkInfo.pre_data);
                 itemTalkInfo.reward_data = GUIListData<RewardTypeEnum>("奖励", itemTalkInfo.reward_data);
+                itemTalkInfo.pre_data_minigame = GUIListData<PreTypeForMiniGameEnum>("小游戏数据", itemTalkInfo.pre_data_minigame);
             }
 
 

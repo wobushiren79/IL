@@ -20,7 +20,7 @@ public class AchievementDialogView : DialogView
     protected IconDataManager iconDataManager;
     protected InnBuildManager innBuildManager;
     protected InnFoodManager innFoodManager;
-
+    protected NpcInfoManager npcInfoManager;
     public override void Awake()
     {
         base.Awake();
@@ -28,6 +28,7 @@ public class AchievementDialogView : DialogView
         iconDataManager = Find<IconDataManager>(ImportantTypeEnum.UIManager);
         innBuildManager = Find<InnBuildManager>(ImportantTypeEnum.BuildManager);
         innFoodManager = Find<InnFoodManager>(ImportantTypeEnum.FoodManager);
+        npcInfoManager = Find<NpcInfoManager>(ImportantTypeEnum.NpcManager);
     }
 
     /// <summary>
@@ -121,7 +122,7 @@ public class AchievementDialogView : DialogView
         List<RewardTypeBean> listRewardData = RewardTypeEnumTools.GetListRewardData(rewardData);
         foreach (var itemRewardData in listRewardData)
         {
-            RewardTypeEnumTools.GetRewardDetails(itemRewardData, iconDataManager,gameItemsManager,innBuildManager);
+            RewardTypeEnumTools.GetRewardDetails(itemRewardData, iconDataManager,gameItemsManager,innBuildManager,npcInfoManager);
             Sprite spReward = itemRewardData.spRewardIcon;
             CreateRewardItem(spReward, animTimeDelay);
             animTimeDelay += 0.1f;

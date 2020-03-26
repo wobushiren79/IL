@@ -60,6 +60,7 @@ public class UIMiniGameCountDown : UIGameComponent
             tvTargetTitle.text = titleStr;
         if (tvTargetWinConditions != null && listWinRequired != null)
         {
+            tvTargetWinConditions.text = "";
             foreach (string required in listWinRequired)
             {
                 tvTargetWinConditions.text += ("►" + required + "\n");

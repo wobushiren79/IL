@@ -57,10 +57,30 @@ public class EventHandler : BaseHandler,
         controlHandler = Find<ControlHandler>(ImportantTypeEnum.ControlHandler);
         miniGameCombatHandler = Find<MiniGameCombatHandler>(ImportantTypeEnum.MiniGameHandler);
         npcImportantBuilder = Find<NpcImportantBuilder>(ImportantTypeEnum.NpcBuilder);
+        gameTimeHandler = Find<GameTimeHandler>(ImportantTypeEnum.TimeHandler);
         if (miniGameCombatHandler != null)
             miniGameCombatHandler.AddObserver(this);
         if (gameTimeHandler != null)
             gameTimeHandler.AddObserver(this);
+    }
+
+    public void InitData()
+    {
+        mEventStatus = EventStatusEnum.EventEnd;
+        mEventPosition = Vector3.zero;
+        //通知事件结束
+        if (mStoryInfo == null)
+            NotifyAllObserver((int)NotifyEventTypeEnum.EventEnd);
+        else
+            NotifyAllObserver((int)NotifyEventTypeEnum.EventEnd, mStoryInfo.id);
+        //移除所有观察者
+        RemoveAllObserver();
+        //显示重要NPC
+        if (npcImportantBuilder != null)
+            npcImportantBuilder.ShowNpc();
+        //恢复时间
+        if (gameTimeHandler != null)
+            gameTimeHandler.SetTimeRestore();
     }
 
     /// <summary>
@@ -91,6 +111,9 @@ public class EventHandler : BaseHandler,
         }
         SetEventStatus(EventStatusEnum.EventIng);
         SetEventType(EventTypeEnum.Look);
+        //暂停时间
+        if (gameTimeHandler != null)
+            gameTimeHandler.SetTimeStop();
         //控制模式修改
         if (controlHandler != null)
             controlHandler.StopControl();
@@ -104,7 +127,7 @@ public class EventHandler : BaseHandler,
     /// 对话事件触发
     /// </summary>
     /// <param name="markId"></param>
-    public bool EventTriggerForTalk(NpcInfoBean npcInfo)
+    public bool EventTriggerForTalk(NpcInfoBean npcInfo, bool isStopTime)
     {
         if (!CheckEventTrigger())
         {
@@ -112,6 +135,9 @@ public class EventHandler : BaseHandler,
         }
         SetEventStatus(EventStatusEnum.EventIng);
         SetEventType(EventTypeEnum.Talk);
+        //暂停时间
+        if (gameTimeHandler != null && isStopTime)
+            gameTimeHandler.SetTimeStop();
         //控制模式修改
         if (controlHandler != null)
             controlHandler.StopControl();
@@ -125,7 +151,7 @@ public class EventHandler : BaseHandler,
     /// 对话事件触发
     /// </summary>
     /// <param name="markId"></param>
-    public bool EventTriggerForTalk(long markId)
+    public bool EventTriggerForTalk(long markId,bool isStopTime)
     {
         if (!CheckEventTrigger())
         {
@@ -133,6 +159,9 @@ public class EventHandler : BaseHandler,
         }
         SetEventStatus(EventStatusEnum.EventIng);
         SetEventType(EventTypeEnum.Talk);
+        //暂停时间
+        if (gameTimeHandler != null&& isStopTime)
+            gameTimeHandler.SetTimeStop();
         //控制模式修改
         if (controlHandler != null)
             controlHandler.StopControl();
@@ -154,7 +183,7 @@ public class EventHandler : BaseHandler,
         {
             controlHandler.GetControl().SetFollowPosition(npcAIRascal.transform.position);
         }
-        return EventTriggerForTalk(markId);
+        return EventTriggerForTalk(markId,false);
     }
 
     /// <summary>
@@ -169,7 +198,7 @@ public class EventHandler : BaseHandler,
         {
             controlHandler.GetControl().SetFollowPosition(npcAISundry.transform.position);
         }
-        return EventTriggerForTalk(markId);
+        return EventTriggerForTalk(markId,false);
     }
 
     /// <summary>
@@ -186,6 +215,9 @@ public class EventHandler : BaseHandler,
         mEventPosition = new Vector3(storyInfo.position_x, storyInfo.position_y);
         SetEventStatus(EventStatusEnum.EventIng);
         SetEventType(EventTypeEnum.Story);
+        //暂停时间
+        if (gameTimeHandler != null)
+            gameTimeHandler.SetTimeStop();
         //控制模式修改
         if (controlHandler != null)
         {
@@ -317,16 +349,7 @@ public class EventHandler : BaseHandler,
                 gameDataManager.gameData.AddTraggeredEvent(mStoryInfo.id);
             //打开主界面UI
             uiManager.OpenUIAndCloseOtherByName(EnumUtil.GetEnumName(UIEnum.GameMain));
-            //通知事件结束
-            if (mStoryInfo == null)
-                NotifyAllObserver((int)NotifyEventTypeEnum.EventEnd);
-            else
-                NotifyAllObserver((int)NotifyEventTypeEnum.EventEnd, mStoryInfo.id);
-            //移除所有观察者
-            RemoveAllObserver();
-            //显示重要NPC
-            if (npcImportantBuilder != null)
-                npcImportantBuilder.ShowNpc();
+            InitData();
         }
     }
 
@@ -465,10 +488,7 @@ public class EventHandler : BaseHandler,
         //隐藏重要NPC
         if (npcImportantBuilder != null)
             npcImportantBuilder.HideNpc();
-
-        miniGameData.gameReason = MiniGameReasonEnum.Recruit;
-        miniGameData.winBringDownNumber = miniGameData.listEnemyGameData.Count;
-        miniGameData.winSurvivalNumber = miniGameData.listUserGameData.Count;
+       
         miniGameCombatHandler.InitGame(miniGameData);
         mEventPosition = miniGameData.miniGamePosition;
     }
@@ -487,19 +507,17 @@ public class EventHandler : BaseHandler,
                 case (int)BaseMiniGameHandler<BaseMiniGameBuilder, MiniGameBaseBean>.MiniGameStatusEnum.GameClose:
                     MiniGameBaseBean miniGameData = (MiniGameBaseBean)obj[0];
                     controlHandler.StartControl(ControlHandler.ControlEnum.Normal);
+                    SetEventStatus(EventStatusEnum.EventEnd);
                     if (miniGameData.gameResult == 0)
                     {
                         if (miniGameData.gameResultLoseTalkMarkId != 0)
-                            EventTriggerForTalk(miniGameData.gameResultLoseTalkMarkId);
+                            EventTriggerForTalk(miniGameData.gameResultLoseTalkMarkId,true);
                     }
                     else
                     {
                         if (miniGameData.gameResultWinTalkMarkId != 0)
-                            EventTriggerForTalk(miniGameData.gameResultWinTalkMarkId);
+                            EventTriggerForTalk(miniGameData.gameResultWinTalkMarkId, true);
                     }
-                    //显示重要NPC
-                    if (npcImportantBuilder != null)
-                        npcImportantBuilder.ShowNpc();
                     break;
             }
         }
@@ -507,7 +525,7 @@ public class EventHandler : BaseHandler,
         {
             if (type == (int)GameTimeHandler.NotifyTypeEnum.NewDay)
             {
-                SetEventStatus( EventStatusEnum.EventEnd);
+                InitData();
             }
             else if (type == (int)GameTimeHandler.NotifyTypeEnum.EndDay)
             {

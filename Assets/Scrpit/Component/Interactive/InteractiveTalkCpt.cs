@@ -27,7 +27,7 @@ public class InteractiveTalkCpt : BaseInteractiveCpt
                     mNpcAI.SetCharacterFace(1);
                 //获取人物信息
                 NpcInfoBean npcInfo = mNpcAI.characterData.npcInfoData;
-                mEventHandler.EventTriggerForTalk(npcInfo);
+                mEventHandler.EventTriggerForTalk(npcInfo,true);
             }
         }
     }

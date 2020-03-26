@@ -65,6 +65,7 @@ public class ItemGameTextSelectCpt : ItemGameBaseCpt, DialogView.IDialogCallBack
             }
             PreTypeEnumTools.CompletePre(listPre, uiGameManager.gameDataManager.gameData);
             RewardTypeEnumTools.CompleteReward(
+                uiGameManager.npcInfoManager,
                 uiGameManager.iconDataManager,
                 uiGameManager.gameItemsManager,
                 uiGameManager.innBuildManager,

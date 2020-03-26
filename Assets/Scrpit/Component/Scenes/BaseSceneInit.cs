@@ -33,13 +33,13 @@ public class BaseSceneInit : BaseMonoBehaviour
     {
         if (gameDataManager != null)
         {
-            if (GameCommonInfo.GameData != null)
+            if (GameCommonInfo.GameData==null|| CheckUtil.StringIsNull(GameCommonInfo.GameData.userId))
             {
-                gameDataManager.gameData = GameCommonInfo.GameData;
+                gameDataManager.GetGameDataByUserId(GameCommonInfo.GameUserId);
             }
             else
             {
-                gameDataManager.GetGameDataByUserId(GameCommonInfo.GameUserId);
+                gameDataManager.gameData = GameCommonInfo.GameData;
             }
         }
     }

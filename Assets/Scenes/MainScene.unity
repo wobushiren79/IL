@@ -197,7 +197,7 @@ ParticleSystemRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -1395321523
-  m_SortingLayer: 10
+  m_SortingLayer: 11
   m_SortingOrder: -1
   m_RenderMode: 0
   m_SortMode: 0
@@ -5036,7 +5036,7 @@ ParticleSystemRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -1395321523
-  m_SortingLayer: 10
+  m_SortingLayer: 11
   m_SortingOrder: -2
   m_RenderMode: 0
   m_SortMode: 0
@@ -9864,7 +9864,7 @@ ParticleSystemRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -1395321523
-  m_SortingLayer: 10
+  m_SortingLayer: 11
   m_SortingOrder: 1
   m_RenderMode: 0
   m_SortMode: 0
@@ -14935,6 +14935,7 @@ MonoBehaviour:
   infoAchievementPopup: {fileID: 0}
   infoAbilityPopup: {fileID: 0}
   popupItemsSelection: {fileID: 0}
+  infoSkillPopup: {fileID: 0}
   gameDataManager: {fileID: 0}
   gameItemsManager: {fileID: 1245980739}
   characterDressManager: {fileID: 1672669449}
@@ -14946,6 +14947,7 @@ MonoBehaviour:
   iconDataManager: {fileID: 0}
   achievementInfoManager: {fileID: 0}
   textInfoManager: {fileID: 0}
+  skillInfoManager: {fileID: 0}
   dialogManager: {fileID: 1522694745}
   toastManager: {fileID: 2416887347260389239}
   innHandler: {fileID: 0}
@@ -14953,9 +14955,13 @@ MonoBehaviour:
   controlHandler: {fileID: 0}
   eventHandler: {fileID: 0}
   audioHandler: {fileID: 0}
+  gameDataHandler: {fileID: 0}
   npcCustomerBuilder: {fileID: 0}
   npcEventBuilder: {fileID: 0}
   npcWorkerBuilder: {fileID: 0}
+  innFurnitureBuilder: {fileID: 0}
+  innFloorBuilder: {fileID: 0}
+  innWallBuilder: {fileID: 0}
   navMesh: {fileID: 0}
 --- !u!1001 &1245980738
 PrefabInstance:
@@ -15298,13 +15304,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fb1d3c27d7a5f68408904cdc9a0e6fbd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  uiGameManager: {fileID: 0}
-  gameDataManager: {fileID: 0}
-  gameItemsManager: {fileID: 1245980739}
-  npcInfoManager: {fileID: 0}
-  dialogManager: {fileID: 0}
-  storyInfoManager: {fileID: 0}
-  controlHandler: {fileID: 0}
 --- !u!1 &1649143937
 GameObject:
   m_ObjectHideFlags: 0
@@ -15750,7 +15749,7 @@ ParticleSystemRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -1395321523
-  m_SortingLayer: 10
+  m_SortingLayer: 11
   m_SortingOrder: -1
   m_RenderMode: 0
   m_SortMode: 0
@@ -21558,6 +21557,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_AnchorMax.y
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7806116749914120260, guid: d9299c8ff17b8514abe6662549a9d4a0,
+        type: 3}
+      propertyPath: m_SortingLayer
+      value: 11
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d9299c8ff17b8514abe6662549a9d4a0, type: 3}

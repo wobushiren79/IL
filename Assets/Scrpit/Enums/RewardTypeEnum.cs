@@ -79,15 +79,6 @@ public class RewardTypeEnumTools : DataTools
         return listReward;
     }
 
-
-    /// <summary>
-    /// 获取奖励描述
-    /// </summary>
-    /// <returns></returns>
-    public static RewardTypeBean GetRewardDetails(RewardTypeBean data, IconDataManager iconDataManager, GameItemsManager gameItemsManager, InnBuildManager innBuildManager)
-    {
-        return GetRewardDetails(data, iconDataManager, gameItemsManager, innBuildManager, null);
-    }
     public static RewardTypeBean GetRewardDetails(RewardTypeBean data, IconDataManager iconDataManager, GameItemsManager gameItemsManager, InnBuildManager innBuildManager, NpcInfoManager npcInfoManager)
     {
         switch (data.dataType)
@@ -100,6 +91,7 @@ public class RewardTypeEnumTools : DataTools
             case RewardTypeEnum.AddWorker:
                 long workerId = long.Parse(data.data);
                 data.workerCharacterData = npcInfoManager.GetCharacterDataById(workerId);
+                data.rewardDescribe = string.Format(GameCommonInfo.GetUITextById(6011), data.workerCharacterData.baseInfo.name);
                 break;
             case RewardTypeEnum.AddMoneyL:
             case RewardTypeEnum.AddMoneyM:
@@ -339,26 +331,27 @@ public class RewardTypeEnumTools : DataTools
     /// </summary>
     /// <param name="reward_data"></param>
     /// <param name="gameData"></param>
-    public static void CompleteReward(IconDataManager iconDataManager,GameItemsManager gameItemsManager,InnBuildManager innBuildManager, GameDataManager gameDataManager, string data)
+    public static void CompleteReward(NpcInfoManager npcInfoManager, IconDataManager iconDataManager,GameItemsManager gameItemsManager,InnBuildManager innBuildManager, GameDataManager gameDataManager, string data)
     {
         List<RewardTypeBean> listRewardData = GetListRewardData(data);
-        foreach (RewardTypeBean itemData in listRewardData)
-        {
-            GetRewardDetails(itemData, iconDataManager, gameItemsManager, innBuildManager);
-        }
-        CompleteReward(listRewardData,gameDataManager.gameData);
+        CompleteReward(npcInfoManager,iconDataManager,gameItemsManager, innBuildManager, gameDataManager,  listRewardData);
     }
 
-    public static void CompleteReward(List<RewardTypeBean> listRewardData, GameDataBean gameData)
+    public static void CompleteReward(NpcInfoManager npcInfoManager, IconDataManager iconDataManager, GameItemsManager gameItemsManager, InnBuildManager innBuildManager, GameDataManager gameDataManager, List<RewardTypeBean> listRewardData)
     {
+        GameDataBean gameData = gameDataManager.gameData;
         foreach (var itemData in listRewardData)
         {
+            GetRewardDetails(itemData, iconDataManager, gameItemsManager, innBuildManager, npcInfoManager);
             RewardTypeEnum dataType = itemData.dataType;
             switch (dataType)
             {
                 case RewardTypeEnum.AddWorkerNumber:
                     int addWorkerNumber = itemData.rewardNumber;
                     gameData.workerNumberLimit += addWorkerNumber;
+                    break;
+                case RewardTypeEnum.AddWorker:
+                    gameData.AddWorkCharacter(itemData.workerCharacterData);
                     break;
                 case RewardTypeEnum.AddGuildCoin:
                     long addGuildCoin = itemData.rewardNumber;

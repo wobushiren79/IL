@@ -19,11 +19,13 @@ public class BaseMiniGameHandler<B, D> : BaseHandler, UIMiniGameCountDown.ICallB
     protected UIGameManager uiGameManager;
     //控制器
     protected ControlHandler controlHandler;
+    protected GameTimeHandler gameTimeHandler;
     // 音效
     protected AudioHandler audioHandler;
     //数据
     protected GameDataManager gameDataManager;
     protected GameItemsManager gameItemsManager;
+
     //游戏构建器
     public B miniGameBuilder;
     //游戏数据
@@ -38,6 +40,7 @@ public class BaseMiniGameHandler<B, D> : BaseHandler, UIMiniGameCountDown.ICallB
         gameItemsManager = Find<GameItemsManager>(ImportantTypeEnum.GameItemsManager);
         uiGameManager = Find<UIGameManager>(ImportantTypeEnum.GameUI);
         controlHandler = Find<ControlHandler>(ImportantTypeEnum.ControlHandler);
+        gameTimeHandler = Find<GameTimeHandler>(ImportantTypeEnum.TimeHandler);
         audioHandler = Find<AudioHandler>(ImportantTypeEnum.AudioHandler);
         miniGameBuilder = FindInChildren<B>(ImportantTypeEnum.MiniGameBuilder);
     }
@@ -76,6 +79,8 @@ public class BaseMiniGameHandler<B, D> : BaseHandler, UIMiniGameCountDown.ICallB
     public virtual void InitGame(D miniGameData)
     {
         this.miniGameData = miniGameData;
+        if (gameTimeHandler != null)
+            gameTimeHandler.SetTimeStop();
         SetMiniGameStatus(MiniGameStatusEnum.GamePre);
     }
 
@@ -168,6 +173,8 @@ public class BaseMiniGameHandler<B, D> : BaseHandler, UIMiniGameCountDown.ICallB
     #region 游戏结束按钮回调
     public void OnClickClose()
     {
+        if (gameTimeHandler != null)
+            gameTimeHandler.SetTimeRestore();
         //通知 关闭游戏
         NotifyAllObserver((int)MiniGameStatusEnum.GameClose, miniGameData);
     }

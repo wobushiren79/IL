@@ -26,6 +26,7 @@ public class InfoAchievementPopupShow : PopupShowView
     protected CharacterDressManager characterDressManager;
     protected InnBuildManager innBuildManager;
     protected InnFoodManager innFoodManager;
+    protected NpcInfoManager npcInfoManager;
 
     public AchievementInfoBean achievementInfo;
     public AchievementStatusEnum status;
@@ -39,6 +40,7 @@ public class InfoAchievementPopupShow : PopupShowView
         characterDressManager = Find<CharacterDressManager>(ImportantTypeEnum.CharacterManager);
         innBuildManager = Find<InnBuildManager>(ImportantTypeEnum.BuildManager);
         innFoodManager = Find<InnFoodManager>(ImportantTypeEnum.FoodManager);
+        npcInfoManager = Find<NpcInfoManager>(ImportantTypeEnum.NpcManager);
     }
 
     public void SetData(AchievementStatusEnum status, AchievementInfoBean achievementInfo)
@@ -177,7 +179,7 @@ public class InfoAchievementPopupShow : PopupShowView
         GameObject objTitle = Instantiate(objRewardContent, objRewardTitle);
         foreach (var itemRewardData in listRewardData)
         {
-            RewardTypeEnumTools.GetRewardDetails(itemRewardData, iconDataManager, gameItemsManager, innBuildManager);
+            RewardTypeEnumTools.GetRewardDetails(itemRewardData, iconDataManager, gameItemsManager, innBuildManager,npcInfoManager);
             string rewardDes = itemRewardData.rewardDescribe;
             Sprite spReward = itemRewardData.spRewardIcon;
             CreateRewardItem(rewardDes, spReward);

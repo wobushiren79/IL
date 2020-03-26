@@ -131,13 +131,6 @@ public class UIMiniGameEnd : UIGameComponent
         CptUtil.RemoveChildsByActive(objResultContainer.transform);
         if (miniGameData == null)
             return;
-        GameDataManager gameDataManager = GetUIManager<UIGameManager>().gameDataManager;
-        GameItemsManager gameItemsManager = GetUIManager<UIGameManager>().gameItemsManager;
-        IconDataManager iconDataManager = GetUIManager<UIGameManager>().iconDataManager;
-        InnBuildManager innBuildManager = GetUIManager<UIGameManager>().innBuildManager;
-
-        CharacterDressManager characterDressManager = GetUIManager<UIGameManager>().characterDressManager;
-        NpcInfoManager npcInfoManager = GetUIManager<UIGameManager>().npcInfoManager;
         //通常列表
         string reasonStr = "";
         GameObject objReasonItem = Instantiate(objResultContainer, objResultWinModel);
@@ -177,8 +170,8 @@ public class UIMiniGameEnd : UIGameComponent
                     }
                 }
                 //创建属性奖励
-                attributeIcon = iconDataManager.GetIconSpriteByName("keyboard_button_up_1");
-                CreateWinReward(attributeIcon,null, attributeRewardContent);
+                attributeIcon = uiGameManager.iconDataManager.GetIconSpriteByName("keyboard_button_up_1");
+                CreateWinReward(attributeIcon, null, attributeRewardContent);
                 break;
             case MiniGameReasonEnum.Fight:
                 //决斗胜利
@@ -192,11 +185,16 @@ public class UIMiniGameEnd : UIGameComponent
         itemReasonWin.SetContent(reasonStr);
         itemReasonWin.SetIcon(null);
         //添加奖励
-        RewardTypeEnumTools.CompleteReward(miniGameData.listReward, gameDataManager.gameData);
+        RewardTypeEnumTools.CompleteReward(
+            uiGameManager.npcInfoManager,
+            uiGameManager.iconDataManager,
+            uiGameManager.gameItemsManager,
+            uiGameManager.innBuildManager,
+            uiGameManager.gameDataManager,
+            miniGameData.listReward);
         //遍历奖励列表
         foreach (var itemReward in miniGameData.listReward)
         {
-            RewardTypeEnumTools.GetRewardDetails(itemReward, iconDataManager, gameItemsManager, innBuildManager);
             CreateWinReward(itemReward.spRewardIcon, itemReward.workerCharacterData, itemReward.rewardDescribe);
         }
     }
@@ -207,7 +205,7 @@ public class UIMiniGameEnd : UIGameComponent
     /// <param name="rewardIcon"></param>
     /// <param name="rewardCharacterData"></param>
     /// <param name="rewardContent"></param>
-    private void CreateWinReward(Sprite rewardIcon,CharacterBean rewardCharacterData,string rewardContent)
+    private void CreateWinReward(Sprite rewardIcon, CharacterBean rewardCharacterData, string rewardContent)
     {
         //生成奖励列表
         GameObject objItem = Instantiate(objResultContainer, objResultWinModel);

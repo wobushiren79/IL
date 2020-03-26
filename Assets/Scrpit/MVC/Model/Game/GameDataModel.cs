@@ -43,8 +43,8 @@ public class GameDataModel : BaseMVCModel
         GameCommonInfo.GameUserId = userId;
         gameData.userId = userId;
         gameData.moneyS = 9999;
-        gameData.moneyM = 9999;
-        gameData.moneyL = 9999;
+        gameData.moneyM = 0;
+        gameData.moneyL = 0;
         gameData.userCharacter.attributes.cook = 5;
         gameData.userCharacter.attributes.speed = 5;
         gameData.userCharacter.attributes.account = 5;
