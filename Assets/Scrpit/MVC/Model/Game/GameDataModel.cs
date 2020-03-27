@@ -45,12 +45,6 @@ public class GameDataModel : BaseMVCModel
         gameData.moneyS = 9999;
         gameData.moneyM = 0;
         gameData.moneyL = 0;
-        gameData.userCharacter.attributes.cook = 5;
-        gameData.userCharacter.attributes.speed = 5;
-        gameData.userCharacter.attributes.account = 5;
-        gameData.userCharacter.attributes.charm = 5;
-        gameData.userCharacter.attributes.force = 5;
-        gameData.userCharacter.attributes.lucky = 5;
         gameData.innBuildData = new InnBuildBean();
         gameData.listBuild = new List<ItemBean>();
         gameData.listItems = new List<ItemBean>();

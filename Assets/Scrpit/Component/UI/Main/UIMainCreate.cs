@@ -7,7 +7,7 @@ using DG.Tweening;
 public class UIMainCreate : UIGameComponent,
     IRadioGroupCallBack,
     ColorView.CallBack,
-    SelectView.CallBack,
+    SelectView.ICallBack,
     DialogView.IDialogCallBack
 
 {
@@ -42,6 +42,8 @@ public class UIMainCreate : UIGameComponent,
     public SelectView selectClothes;
     //鞋子
     public SelectView selectShoes;
+    //属性
+    public UIMainCreateAttributesChange attributesChange;
 
     //角色身体控制
     public CharacterBodyCpt characterBodyCpt;
@@ -264,6 +266,13 @@ public class UIMainCreate : UIGameComponent,
         gameData.userCharacter.baseInfo.name = etUserName.text;
         gameData.userCharacter.body = characterBodyCpt.GetCharacterBodyData();
         gameData.userCharacter.equips = characterDressCpt.GetCharacterEquipData();
+        attributesChange.GetAttributesPoints(out int cook,out int speed,out int account,out int charm, out int force,out int lucky);
+        gameData.userCharacter.attributes.cook = cook;
+        gameData.userCharacter.attributes.speed = speed;
+        gameData.userCharacter.attributes.account = account;
+        gameData.userCharacter.attributes.charm = charm;
+        gameData.userCharacter.attributes.force = force;
+        gameData.userCharacter.attributes.lucky = lucky;
         uiGameManager.gameDataManager.CreateGameData(gameData);
 
         SceneUtil.SceneChange(ScenesEnum.GameInnScene);

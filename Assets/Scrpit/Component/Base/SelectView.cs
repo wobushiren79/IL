@@ -12,7 +12,7 @@ public class SelectView : BaseMonoBehaviour
 
     private int itemPosition = 0;
     private int listDataNumber = 0;
-    private CallBack callBack;
+    private ICallBack callBack;
 
 
     protected AudioHandler audioHandler;
@@ -30,7 +30,7 @@ public class SelectView : BaseMonoBehaviour
             rightSelect.onClick.AddListener(RightSelect);
     }
 
-    public void SetCallBack(CallBack callBack)
+    public void SetCallBack(ICallBack callBack)
     {
         this.callBack = callBack;
     }
@@ -106,7 +106,7 @@ public class SelectView : BaseMonoBehaviour
        
     }
 
-    public interface CallBack
+    public interface ICallBack
     {
         void ChangeSelectPosition(SelectView selectView, int position);
     }

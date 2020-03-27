@@ -32,6 +32,10 @@ public class UIMainStart : UIGameComponent
         {
             btContinue.onClick.AddListener(OpenContinueUI);
         }
+        if (btSetting != null)
+        {
+            btSetting.onClick.AddListener(OpenSettingUI);
+        }
         if (btExit != null)
         {
             btExit.onClick.AddListener(ExitGame);
@@ -97,6 +101,7 @@ public class UIMainStart : UIGameComponent
         uiManager.OpenUIAndCloseOtherByName(EnumUtil.GetEnumName(UIEnum.MainContinue));
     }
 
+
     /// <summary>
     /// 打开创建页面
     /// </summary>
@@ -106,6 +111,17 @@ public class UIMainStart : UIGameComponent
         uiGameManager.audioHandler.PlaySound(AudioSoundEnum.ButtonForNormal);
 
         uiManager.OpenUIAndCloseOtherByName(EnumUtil.GetEnumName(UIEnum.MainCreate));
+    }
+
+    /// <summary>
+    /// 打开创建页面
+    /// </summary>
+    public void OpenSettingUI()
+    {
+        //按键音效
+        uiGameManager.audioHandler.PlaySound(AudioSoundEnum.ButtonForNormal);
+        uiGameManager.toastManager.ToastHint(GameCommonInfo.GetUITextById(1999));
+        //uiManager.OpenUIAndCloseOtherByName(EnumUtil.GetEnumName(UIEnum.MainCreate));
     }
 
     /// <summary>
