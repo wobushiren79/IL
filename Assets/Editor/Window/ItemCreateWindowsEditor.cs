@@ -10,6 +10,7 @@ public class ItemCreateWindowsEditor : EditorWindow, StoreInfoManager.ICallBack
     ItemsInfoService itemsInfoService;
     StoreInfoService storeInfoService;
     BuildItemService buildItemService;
+    MenuInfoService menuInfoService;
     AchievementInfoService achievementInfoService;
     [MenuItem("Tools/Window/ItemCreate")]
     static void CreateWindows()
@@ -36,6 +37,7 @@ public class ItemCreateWindowsEditor : EditorWindow, StoreInfoManager.ICallBack
         itemsInfoService = new ItemsInfoService();
         storeInfoService = new StoreInfoService();
         buildItemService = new BuildItemService();
+        menuInfoService = new MenuInfoService();
         achievementInfoService = new AchievementInfoService();
     }
 
@@ -46,6 +48,7 @@ public class ItemCreateWindowsEditor : EditorWindow, StoreInfoManager.ICallBack
         listFindStoreItem.Clear();
         listFindAchItem.Clear();
         listFindBuildItem.Clear();
+        listFindMenuItem.Clear();
     }
 
     private Vector2 scrollPosition = Vector2.zero;
@@ -62,10 +65,15 @@ public class ItemCreateWindowsEditor : EditorWindow, StoreInfoManager.ICallBack
     public AchievementInfoBean createAchInfo = new AchievementInfoBean();
     long inputId = 0;
 
+    //创建菜单数据
+    public MenuInfoBean createMenuInfo = new MenuInfoBean();
+    public string menuFindIds = "";
+
     public List<ItemsInfoBean> listFindItem = new List<ItemsInfoBean>();
     public List<StoreInfoBean> listFindStoreItem = new List<StoreInfoBean>();
     public List<AchievementInfoBean> listFindAchItem = new List<AchievementInfoBean>();
     public List<BuildItemBean> listFindBuildItem = new List<BuildItemBean>();
+    public List<MenuInfoBean> listFindMenuItem = new List<MenuInfoBean>();
     private void OnGUI()
     {
         //滚动布局
@@ -88,8 +96,15 @@ public class ItemCreateWindowsEditor : EditorWindow, StoreInfoManager.ICallBack
         GUILayout.Label("------------------------------------------------------------------------------------------------");
         GUICreateAchItem();
         GUIFindAchItem();
+        GUILayout.Label("------------------------------------------------------------------------------------------------");
+        EditorUI.GUIMenuCreate(menuInfoService,createMenuInfo);
+        EditorUI.GUIMenuFind(menuInfoService, menuFindIds, listFindMenuItem, out menuFindIds,  out listFindMenuItem);
+
+
         GUILayout.EndVertical();
         GUILayout.EndScrollView();
+
+       
     }
 
     /// <summary>

@@ -147,7 +147,7 @@ public class InfoFoodPopupShow : PopupShowView
     /// 创建制作事件Item
     /// </summary>
     /// <param name="makeTime"></param>
-    public void AddItemForMakeTime(int makeTime)
+    public void AddItemForMakeTime(float makeTime)
     {
         Sprite spIcon = iconDataManager.GetIconSpriteByName("hourglass_1");
         CreateItem(objItemBaseContainer, spIcon, GameCommonInfo.GetUITextById(40), makeTime + GameCommonInfo.GetUITextById(38));

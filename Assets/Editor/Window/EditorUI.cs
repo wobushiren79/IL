@@ -586,35 +586,35 @@ public class EditorUI
     {
         GUILayout.Label("建造物品查询：", GUILayout.Width(100), GUILayout.Height(20));
         GUILayout.BeginHorizontal();
-        if (GUILayout.Button("查询所有", GUILayout.Width(120), GUILayout.Height(20)))
+        if (GUIButton("查询所有"))
         {
             listBuildItem = buildItemService.QueryAllData();
         }
-        if (GUILayout.Button("查询地板", GUILayout.Width(120), GUILayout.Height(20)))
+        if (GUIButton("查询地板"))
         {
             listBuildItem = buildItemService.QueryDataByType((int)BuildItemTypeEnum.Floor);
         }
-        if (GUILayout.Button("查询墙壁", GUILayout.Width(120), GUILayout.Height(20)))
+        if (GUIButton("查询墙壁"))
         {
             listBuildItem = buildItemService.QueryDataByType((int)BuildItemTypeEnum.Wall);
         }
-        if (GUILayout.Button("查询桌椅", GUILayout.Width(120), GUILayout.Height(20)))
+        if (GUIButton("查询桌椅"))
         {
             listBuildItem = buildItemService.QueryDataByType((int)BuildItemTypeEnum.Table);
         }
-        if (GUILayout.Button("查询灶台", GUILayout.Width(120), GUILayout.Height(20)))
+        if (GUIButton("查询灶台"))
         {
             listBuildItem = buildItemService.QueryDataByType((int)BuildItemTypeEnum.Stove);
         }
-        if (GUILayout.Button("查询柜台", GUILayout.Width(120), GUILayout.Height(20)))
+        if (GUIButton("查询柜台"))
         {
             listBuildItem = buildItemService.QueryDataByType((int)BuildItemTypeEnum.Counter);
         }
-        if (GUILayout.Button("查询装饰", GUILayout.Width(120), GUILayout.Height(20)))
+        if (GUIButton("查询装饰"))
         {
             listBuildItem = buildItemService.QueryDataByType((int)BuildItemTypeEnum.Decoration);
         }
-        if (GUILayout.Button("查询正门", GUILayout.Width(120), GUILayout.Height(20)))
+        if (GUIButton("查询正门"))
         {
             listBuildItem = buildItemService.QueryDataByType((int)BuildItemTypeEnum.Door);
         }
@@ -626,11 +626,11 @@ public class EditorUI
             {
                 GUILayout.Space(20);
                 GUILayout.BeginHorizontal();
-                if (GUILayout.Button("更新", GUILayout.Width(120), GUILayout.Height(20)))
+                if (GUIButton("更新"))
                 {
                     buildItemService.Update(itemData);
                 }
-                if (GUILayout.Button("删除", GUILayout.Width(120), GUILayout.Height(20)))
+                if (GUIButton("删除"))
                 {
                     if (buildItemService.DeleteData(itemData.id))
                     {
@@ -711,6 +711,204 @@ public class EditorUI
         GUILayout.Label("形容：", GUILayout.Width(50), GUILayout.Height(20));
         buildItem.content = EditorGUILayout.TextArea(buildItem.content + "", GUILayout.Width(100), GUILayout.Height(20));
         GUILayout.EndHorizontal();
+    }
+
+    /// <summary>
+    /// 创建菜单
+    /// </summary>
+    public static void GUIMenuCreate(MenuInfoService menuInfoService, MenuInfoBean menuInfo)
+    {
+        if (GUIButton("创建"))
+        {
+            menuInfo.valid = 1;
+            menuInfoService.InsertData(menuInfo);
+        }
+        GUIMenuItem(menuInfo);
+        GUILayout.Space(20);
+    }
+
+    /// <summary>
+    /// 菜单查询
+    /// </summary>
+    /// <param name="menuInfoService"></param>
+    /// <param name="listData"></param>
+    public static void GUIMenuFind(MenuInfoService menuInfoService,string findIds, List<MenuInfoBean> listData,out string outFindIds, out List<MenuInfoBean> outListData)
+    {
+        GUILayout.BeginHorizontal();
+        GUIText("查询IDs");
+        findIds = GUIEditorText(findIds);
+        if (GUIButton("查询指定ID"))
+        {
+            long[] ids= StringUtil.SplitBySubstringForArrayLong(findIds,',');
+            listData = menuInfoService.QueryDataByIds(ids);
+        }
+        if (GUIButton("查询所有菜单"))
+        {
+            listData = menuInfoService.QueryAllData();
+        }
+        GUILayout.EndHorizontal();
+        if (!CheckUtil.ListIsNull(listData))
+        {
+  
+            for (int i=0;i< listData.Count; i++)
+            {
+                MenuInfoBean itemData = listData[i];
+                GUILayout.BeginHorizontal();
+                GUILayout.Space(20);
+                if (GUIButton("更新"))
+                {
+                    menuInfoService.Update(itemData);
+                }
+                if (GUIButton("删除"))
+                {
+                    menuInfoService.DeleteData(itemData.id);
+                }
+                GUILayout.EndHorizontal();
+                GUIMenuItem(itemData);
+            }
+        }
+        outListData = listData;
+        outFindIds = findIds;
+    }
+
+    /// <summary>
+    /// 菜单展示
+    /// </summary>
+    public static void GUIMenuItem(MenuInfoBean menuInfo)
+    {
+        GUILayout.BeginHorizontal();
+        GUIText("ID:");
+        menuInfo.id = GUIEditorText(menuInfo.id);
+        menuInfo.menu_id = menuInfo.id;
+        GUIText("名称:");
+        menuInfo.name = GUIEditorText(menuInfo.name, 150);
+        GUIText("内容:");
+        menuInfo.content = GUIEditorText(menuInfo.content, 300);
+        GUIText("图片名称:");
+        menuInfo.icon_key = GUIEditorText(menuInfo.icon_key, 150);
+        string menuPicPath = "Assets/Texture/Food/";
+        GUIPic(menuPicPath, menuInfo.icon_key);
+        GUIText("烹饪时间:");
+        menuInfo.cook_time = GUIEditorText(menuInfo.cook_time);
+        GUIText("价格LMS:");
+        menuInfo.price_l = GUIEditorText(menuInfo.price_l, 50);
+        menuInfo.price_m = GUIEditorText(menuInfo.price_m, 50);
+        menuInfo.price_s = GUIEditorText(menuInfo.price_s, 50);
+
+        GUIText("材料 油盐:");
+        menuInfo.ing_oilsalt = GUIEditorText(menuInfo.ing_oilsalt, 50);
+        GUIText("材料 鲜肉:");
+        menuInfo.ing_meat = GUIEditorText(menuInfo.ing_meat, 50);
+        GUIText("材料 河鲜:");
+        menuInfo.ing_riverfresh = GUIEditorText(menuInfo.ing_riverfresh, 50);
+        GUIText("材料 海鲜:");
+        menuInfo.ing_seafood = GUIEditorText(menuInfo.ing_seafood, 50);
+        GUIText("材料 蔬菜:");
+        menuInfo.ing_vegetables = GUIEditorText(menuInfo.ing_vegetables, 50);
+        GUIText("材料 瓜果:");
+        menuInfo.ing_melonfruit = GUIEditorText(menuInfo.ing_melonfruit, 50);
+        GUIText("材料 酒水:");
+        menuInfo.ing_waterwine = GUIEditorText(menuInfo.ing_waterwine, 50);
+        GUIText("材料 面粉:");
+        menuInfo.ing_flour = GUIEditorText(menuInfo.ing_flour, 50);
+
+        GUILayout.EndHorizontal();
+    }
+
+
+    /// <summary>
+    /// 按钮
+    /// </summary>
+    /// <param name="name"></param>
+    /// <param name="width"></param>
+    /// <param name="height"></param>
+    /// <returns></returns>
+    public static bool GUIButton(string name,int width,int height)
+    {
+        return GUILayout.Button(name, GUILayout.Width(width), GUILayout.Height(height));
+    }
+    public static bool GUIButton(string name, int width)
+    {
+        return GUIButton(name, width,20);
+    }
+    public static bool GUIButton(string name)
+    {
+        return GUIButton(name, 100,20);
+    }
+
+    /// <summary>
+    /// 输入文本
+    /// </summary>
+    /// <param name="text"></param>
+    /// <param name="width"></param>
+    /// <param name="height"></param>
+    /// <returns></returns>
+    public static string GUIEditorText(string text, int width, int height)
+    {
+       return EditorGUILayout.TextArea(text, GUILayout.Width(width), GUILayout.Height(height));
+    }
+    public static string GUIEditorText(string text, int width)
+    {
+        return GUIEditorText(text, width, 20);
+    }
+    public static string GUIEditorText(string text)
+    {
+        return GUIEditorText( text,  100, 20);
+    }
+    public static long GUIEditorText(long text, int width, int height)
+    {
+        return long.Parse(GUIEditorText(text + "", width, height));
+    }
+    public static long GUIEditorText(long text, int width)
+    {
+        return GUIEditorText(text, width, 20);
+    }
+    public static long GUIEditorText(long text)
+    {
+        return GUIEditorText(text, 100, 20);
+    }
+    public static float GUIEditorText(float text, int width, int height)
+    {
+        return float.Parse(GUIEditorText(text + "", width, height));
+    }
+    public static float GUIEditorText(float text, int width)
+    {
+        return GUIEditorText(text, width, 20);
+    }
+    public static float GUIEditorText(float text)
+    {
+        return GUIEditorText(text, 100, 20);
+    }
+    public static int GUIEditorText(int text, int width, int height)
+    {
+        return int.Parse(GUIEditorText(text + "", width, height));
+    }
+    public static int GUIEditorText(int text, int width)
+    {
+        return GUIEditorText(text, width, 20);
+    }
+    public static int GUIEditorText(int text)
+    {
+        return GUIEditorText(text, 100, 20);
+    }
+
+    /// <summary>
+    /// 文本
+    /// </summary>
+    /// <param name="text"></param>
+    /// <param name="width"></param>
+    /// <param name="height"></param>
+    public static void GUIText(string text, int width, int height)
+    {
+        GUILayout.Label(text, GUILayout.Width(width), GUILayout.Height(height));
+    }
+    public static void GUIText(string text, int width)
+    {
+        GUIText( text,  width,  20);
+    }
+    public static void GUIText(string text)
+    {
+        GUIText(text, 100, 20);
     }
 
     /// <summary>
