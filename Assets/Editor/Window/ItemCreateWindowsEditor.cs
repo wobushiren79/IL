@@ -655,6 +655,10 @@ public class ItemCreateWindowsEditor : EditorWindow, StoreInfoManager.ICallBack
         {
             listFindItem = gameItemsManager.GetAllItems();
         }
+        if (GUILayout.Button("查询菜谱", GUILayout.Width(100), GUILayout.Height(20)))
+        {
+            listFindItem = gameItemsManager.GetItemsListByType( GeneralEnum.Menu);
+        }
         if (GUILayout.Button("查询所有药", GUILayout.Width(100), GUILayout.Height(20)))
         {
             listFindItem = gameItemsManager.GetMedicineList();
@@ -702,7 +706,7 @@ public class ItemCreateWindowsEditor : EditorWindow, StoreInfoManager.ICallBack
                 LogUtil.Log("删除成功");
             }
 
-            GUILayout.Label("物品ID：");
+            EditorUI.GUIText("物品ID：");
             itemInfo.id = long.Parse(EditorGUILayout.TextArea(itemInfo.id + "", GUILayout.Width(100), GUILayout.Height(20)));
 
             string path = "Assets/Texture/";
@@ -757,33 +761,34 @@ public class ItemCreateWindowsEditor : EditorWindow, StoreInfoManager.ICallBack
                 //EditorGUI.DrawPreviewTexture(new Rect(0, 0, 100, 100), iconTex);
                 //spIcon = EditorGUILayout.ObjectField(new GUIContent("图标", ""), spIcon, typeof(Sprite), true) as Sprite;
             }
-            GUILayout.Label("icon_key：");
+            EditorUI.GUIText("icon_key：");
             itemInfo.icon_key = EditorGUILayout.TextArea(itemInfo.icon_key + "", GUILayout.Width(150), GUILayout.Height(20));
-
-            itemInfo.items_type = (int)(GeneralEnum)EditorGUILayout.EnumPopup("物品类型", (GeneralEnum)itemInfo.items_type);
-
-            GUILayout.Label("名字：");
+            itemInfo.items_type=(int) EditorUI.GUIEnum<GeneralEnum>("物品类型", itemInfo.items_type);
+            EditorUI.GUIText("名字：");
             itemInfo.name = EditorGUILayout.TextArea(itemInfo.name + "", GUILayout.Width(150), GUILayout.Height(20));
-            GUILayout.Label("描述：");
+            EditorUI.GUIText("描述：");
             itemInfo.content = EditorGUILayout.TextArea(itemInfo.content + "", GUILayout.Width(150), GUILayout.Height(20));
-            GUILayout.Label("增加属性：");
-            GUILayout.Label("命");
-            itemInfo.add_life = int.Parse(EditorGUILayout.TextArea(itemInfo.add_life + "", GUILayout.Width(150), GUILayout.Height(20)));
-            GUILayout.Label("厨");
-            itemInfo.add_cook = int.Parse(EditorGUILayout.TextArea(itemInfo.add_cook + "", GUILayout.Width(150), GUILayout.Height(20)));
-            GUILayout.Label("速");
-            itemInfo.add_speed = int.Parse(EditorGUILayout.TextArea(itemInfo.add_speed + "", GUILayout.Width(150), GUILayout.Height(20)));
-            GUILayout.Label("算");
-            itemInfo.add_account = int.Parse(EditorGUILayout.TextArea(itemInfo.add_account + "", GUILayout.Width(150), GUILayout.Height(20)));
-            GUILayout.Label("魅");
-            itemInfo.add_charm = int.Parse(EditorGUILayout.TextArea(itemInfo.add_charm + "", GUILayout.Width(150), GUILayout.Height(20)));
-            GUILayout.Label("武");
-            itemInfo.add_force = int.Parse(EditorGUILayout.TextArea(itemInfo.add_force + "", GUILayout.Width(150), GUILayout.Height(20)));
-            GUILayout.Label("运");
-            itemInfo.add_lucky = int.Parse(EditorGUILayout.TextArea(itemInfo.add_lucky + "", GUILayout.Width(150), GUILayout.Height(20)));
-            GUILayout.Label("忠");
-            itemInfo.add_loyal = int.Parse(EditorGUILayout.TextArea(itemInfo.add_loyal + "", GUILayout.Width(150), GUILayout.Height(20)));
             GeneralEnum itemType = (GeneralEnum)itemInfo.items_type;
+            if (itemType != GeneralEnum.Menu)
+            {
+                EditorUI.GUIText("增加属性：");
+                EditorUI.GUIText("命");
+                itemInfo.add_life = int.Parse(EditorGUILayout.TextArea(itemInfo.add_life + "", GUILayout.Width(150), GUILayout.Height(20)));
+                EditorUI.GUIText("厨");
+                itemInfo.add_cook = int.Parse(EditorGUILayout.TextArea(itemInfo.add_cook + "", GUILayout.Width(150), GUILayout.Height(20)));
+                EditorUI.GUIText("速");
+                itemInfo.add_speed = int.Parse(EditorGUILayout.TextArea(itemInfo.add_speed + "", GUILayout.Width(150), GUILayout.Height(20)));
+                EditorUI.GUIText("算");
+                itemInfo.add_account = int.Parse(EditorGUILayout.TextArea(itemInfo.add_account + "", GUILayout.Width(150), GUILayout.Height(20)));
+                EditorUI.GUIText("魅");
+                itemInfo.add_charm = int.Parse(EditorGUILayout.TextArea(itemInfo.add_charm + "", GUILayout.Width(150), GUILayout.Height(20)));
+                EditorUI.GUIText("武");
+                itemInfo.add_force = int.Parse(EditorGUILayout.TextArea(itemInfo.add_force + "", GUILayout.Width(150), GUILayout.Height(20)));
+                EditorUI.GUIText("运");
+                itemInfo.add_lucky = int.Parse(EditorGUILayout.TextArea(itemInfo.add_lucky + "", GUILayout.Width(150), GUILayout.Height(20)));
+                EditorUI.GUIText("忠");
+                itemInfo.add_loyal = int.Parse(EditorGUILayout.TextArea(itemInfo.add_loyal + "", GUILayout.Width(150), GUILayout.Height(20)));
+            }
             if (itemType == GeneralEnum.Medicine)
             {
                 itemInfo.effect = EditorUI.GUIListData<EffectTypeEnum>("效果", itemInfo.effect);
@@ -791,12 +796,12 @@ public class ItemCreateWindowsEditor : EditorWindow, StoreInfoManager.ICallBack
             }
             else if (itemType== GeneralEnum.Menu)
             {
-                GUILayout.Label("绑定菜谱ID：");
+                EditorUI.GUIText("绑定菜谱ID：");
                 itemInfo.add_id =long.Parse( EditorGUILayout.TextArea(itemInfo.add_id + "", GUILayout.Width(150), GUILayout.Height(20)));
             }
             else if (itemType == GeneralEnum.SkillBook)
             {
-                GUILayout.Label("绑定技能ID：");
+                EditorUI.GUIText("绑定技能ID：");
                 itemInfo.add_id = long.Parse(EditorGUILayout.TextArea(itemInfo.add_id + "", GUILayout.Width(150), GUILayout.Height(20)));
             }
 

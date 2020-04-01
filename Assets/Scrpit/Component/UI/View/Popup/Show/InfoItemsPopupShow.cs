@@ -18,11 +18,12 @@ public class InfoItemsPopupShow : PopupShowView
     public ItemsInfoBean itemsInfoData;
 
     protected IconDataManager iconDataManager;
-
+    protected InnFoodManager innFoodManager;
     public override void Awake()
     {
         base.Awake();
         iconDataManager = Find<IconDataManager>(ImportantTypeEnum.UIManager);
+        innFoodManager = Find<InnFoodManager>(ImportantTypeEnum.FoodManager);
     }
 
     /// <summary>
@@ -36,7 +37,7 @@ public class InfoItemsPopupShow : PopupShowView
         this.itemsInfoData = data;
         SetIcon(spIcon);
         SetName(data.name);
-        SetContent(data.content);
+        SetContent(data);
         SetType(data.GetItemsType());
         SetAttributes(data);
     }
@@ -47,8 +48,19 @@ public class InfoItemsPopupShow : PopupShowView
             tvName.text = name;
     }
 
-    public void SetContent(string content)
+    public void SetContent(ItemsInfoBean data)
     {
+        string content = "???";
+        if(data.GetItemsType() == GeneralEnum.Menu && CheckUtil.StringIsNull(data.content))
+        {
+           MenuInfoBean menuInfo= innFoodManager.GetFoodDataById(data.add_id);
+            if (menuInfo != null)
+                content = menuInfo.content;
+        }
+        else
+        {
+            content = data.content;
+        }
         if (tvContent != null)
             tvContent.text = content;
     }

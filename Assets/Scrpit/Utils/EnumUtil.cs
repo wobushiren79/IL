@@ -15,6 +15,11 @@ public class EnumUtil
         return (T)Enum.Parse(typeof(T), data);
     }
 
+    public static E GetEnum<E>(int type)
+    {
+        return (E)Enum.ToObject(typeof(E), type);
+    }
+
     /// <summary>
     /// 获取枚举第几项
     /// </summary>
@@ -51,4 +56,5 @@ public class EnumUtil
         }
         return listDat;
     }
+
 }

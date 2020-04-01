@@ -82,10 +82,10 @@ public class ControlForBuildCpt : BaseControl
         //定义镜头的初始位置
         SetFollowPosition(new Vector3(5, 5));
         //定义镜头的移动范围
-        cameraMove.minMoveX = -1;
-        cameraMove.maxMoveX = gameDataManager.gameData.GetInnBuildData().innWidth + 1;
-        cameraMove.minMoveY = -1;
-        cameraMove.maxMoveY = gameDataManager.gameData.GetInnBuildData().innHeight + 1;
+        //cameraMove.minMoveX = -1;
+        //cameraMove.maxMoveX = gameDataManager.gameData.GetInnBuildData().innWidth + 1;
+        //cameraMove.minMoveY = -1;
+        //cameraMove.maxMoveY = gameDataManager.gameData.GetInnBuildData().innHeight + 1;
         //初始化建筑占地坐标
         InitBuildingExist();
     }

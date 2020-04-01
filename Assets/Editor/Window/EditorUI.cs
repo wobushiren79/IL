@@ -912,6 +912,28 @@ public class EditorUI
     }
 
     /// <summary>
+    /// 枚举
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
+    /// <param name="title"></param>
+    /// <param name="type"></param>
+    /// <param name="width"></param>
+    /// <param name="height"></param>
+    /// <returns></returns>
+    public static T GUIEnum<T>(string title, int type, int width, int height) where T : Enum
+    {
+        return (T)EditorGUILayout.EnumPopup(title, EnumUtil.GetEnum<T>(type), GUILayout.Width(width), GUILayout.Height(height));
+    }
+    public static T GUIEnum<T>(string title, int type, int width) where T : Enum
+    {
+        return (T)EditorGUILayout.EnumPopup(title, EnumUtil.GetEnum<T>(type), GUILayout.Width(width), GUILayout.Height(20));
+    }
+    public static T GUIEnum<T>(string title, int type) where T : Enum
+    {
+        return (T)EditorGUILayout.EnumPopup(title, EnumUtil.GetEnum<T>(type), GUILayout.Width(300), GUILayout.Height(20));
+    }
+
+    /// <summary>
     /// 展示图片
     /// </summary>
     /// <param name="picPath"></param>
