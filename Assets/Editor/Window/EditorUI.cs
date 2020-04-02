@@ -655,15 +655,14 @@ public class EditorUI
     public static void GUIBuildItem(BuildItemBean buildItem)
     {
         GUILayout.BeginHorizontal();
-        GUILayout.Label("id：", GUILayout.Width(50), GUILayout.Height(20));
-        buildItem.id = long.Parse(EditorGUILayout.TextArea(buildItem.id + "", GUILayout.Width(100), GUILayout.Height(20)));
+        GUIText("id：");
+        buildItem.id = GUIEditorText(buildItem.id);
         buildItem.build_id = buildItem.id;
-        buildItem.build_type = (int)(BuildItemTypeEnum)EditorGUILayout.EnumPopup((BuildItemTypeEnum)buildItem.build_type, GUILayout.Width(100), GUILayout.Height(20));
-        GUILayout.Label("模型ID：", GUILayout.Width(50), GUILayout.Height(20));
-        buildItem.model_name = EditorGUILayout.TextArea(buildItem.model_name + "", GUILayout.Width(100), GUILayout.Height(20));
-   
-        GUILayout.Label(" 图标：", GUILayout.Width(50), GUILayout.Height(20));
-        buildItem.icon_key = EditorGUILayout.TextArea(buildItem.icon_key + "", GUILayout.Width(150), GUILayout.Height(20));
+        buildItem.build_type =(int) GUIEnum<BuildItemTypeEnum>("类型：", buildItem.build_type);
+        GUIText("模型ID：");
+        buildItem.model_name = GUIEditorText(buildItem.model_name);
+        GUIText(" 图标：");
+        buildItem.icon_key = GUIEditorText(buildItem.icon_key);
         string picPath = "";
         switch ((BuildItemTypeEnum)buildItem.build_type)
         {
@@ -695,21 +694,25 @@ public class EditorUI
 
         switch ((BuildItemTypeEnum)buildItem.build_type)
         {
+            case BuildItemTypeEnum.Table:
+                GUIText("icon_list");
+                buildItem.icon_list = GUIEditorText(buildItem.icon_list,300);
+                break;
             case BuildItemTypeEnum.Floor:
             case BuildItemTypeEnum.Wall:
-                GUILayout.Label("tile名字：", GUILayout.Width(50), GUILayout.Height(20));
-                buildItem.tile_name = EditorGUILayout.TextArea(buildItem.tile_name + "", GUILayout.Width(100), GUILayout.Height(20));
+                GUIText("tile名字：");
+                buildItem.tile_name = GUIEditorText(buildItem.tile_name);
                 break;
             default:
                 break;
         }
-        GUILayout.Label("美观：", GUILayout.Width(50), GUILayout.Height(20));
-        buildItem.aesthetics =float.Parse( EditorGUILayout.TextArea(buildItem.aesthetics + "", GUILayout.Width(100), GUILayout.Height(20)));
-        GUILayout.Label("名称：", GUILayout.Width(50), GUILayout.Height(20));
-        buildItem.name = EditorGUILayout.TextArea(buildItem.name + "", GUILayout.Width(100), GUILayout.Height(20));
+        GUIText("美观：");
+        buildItem.aesthetics = GUIEditorText(buildItem.aesthetics);
+        GUIText("名称：");
+        buildItem.name = GUIEditorText(buildItem.name);
 
-        GUILayout.Label("形容：", GUILayout.Width(50), GUILayout.Height(20));
-        buildItem.content = EditorGUILayout.TextArea(buildItem.content + "", GUILayout.Width(100), GUILayout.Height(20));
+        GUIText("形容：");
+        buildItem.content = GUIEditorText(buildItem.content, 300);
         GUILayout.EndHorizontal();
     }
 
