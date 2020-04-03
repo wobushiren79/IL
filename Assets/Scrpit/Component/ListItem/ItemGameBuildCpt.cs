@@ -34,7 +34,7 @@ public class ItemGameBuildCpt : ItemGameBaseCpt
         SetName(buildData.name);
         SetNumber(itemData.itemNumber);
         SetAesthetics(buildData.aesthetics);
-        SetIcon((BuildItemTypeEnum)buildData.build_type, buildData.icon_key);
+        SetIcon(buildData);
     }
 
     /// <summary>
@@ -42,22 +42,11 @@ public class ItemGameBuildCpt : ItemGameBaseCpt
     /// </summary>
     /// <param name="buildItemType"></param>
     /// <param name="iconKey"></param>
-    public void SetIcon(BuildItemTypeEnum buildItemType, string iconKey)
+    public void SetIcon(BuildItemBean buildData)
     {
         Sprite spIcon = null;
         InnBuildManager innBuildManager = GetUIManager<UIGameManager>().innBuildManager;
-        if (buildItemType == BuildItemTypeEnum.Floor)
-        {
-            spIcon = innBuildManager.GetFloorSpriteByName(iconKey);
-        }
-        else if (buildItemType == BuildItemTypeEnum.Wall)
-        {
-            spIcon = innBuildManager.GetWallSpriteByName(iconKey);
-        }
-        else
-        {
-            spIcon = innBuildManager.GetFurnitureSpriteByName(iconKey);
-        }
+        spIcon = BuildItemTypeEnumTools.GetBuildItemSprite(innBuildManager, buildData); 
         if (ivIcon != null)
             ivIcon.sprite = spIcon;
     }

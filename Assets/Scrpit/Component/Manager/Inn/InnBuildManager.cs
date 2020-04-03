@@ -92,12 +92,27 @@ public class InnBuildManager : BaseManager, IBuildDataView
                     break;
                 case BuildItemTypeEnum.Table:
                     BuildTableCpt buildTable = (BuildTableCpt)buildItemCpt;
-                    Sprite spTable = GetFurnitureSpriteByName(listIcon[0]);
+     
                     Sprite spLeftChair = GetFurnitureSpriteByName(listIcon[1] + "_0");
                     Sprite spRightChair = GetFurnitureSpriteByName(listIcon[1] + "_1");
                     Sprite spDownChair = GetFurnitureSpriteByName(listIcon[1] + "_2");
                     Sprite spUpChair = GetFurnitureSpriteByName(listIcon[1] + "_3");
-                    buildTable.SetData(buildItemData, spTable, spLeftChair, spRightChair, spDownChair, spUpChair);
+
+                    if (buildItemData.model_name.Equals("Table_1"))
+                    {
+                        Sprite spTable = GetFurnitureSpriteByName(listIcon[0]);
+                        buildTable.SetData(buildItemData, spTable, spLeftChair, spRightChair, spDownChair, spUpChair);
+                    }
+                    else if (buildItemData.model_name.Equals("Table_2"))
+                    {
+                        Sprite spLeftTable = GetFurnitureSpriteByName(listIcon[0] + "_0");
+                        Sprite spRightTable = GetFurnitureSpriteByName(listIcon[0] + "_1");
+                        Sprite spDownTable = GetFurnitureSpriteByName(listIcon[0] + "_2");
+                        Sprite spUpTable = GetFurnitureSpriteByName(listIcon[0] + "_3");
+                        buildTable.SetData(buildItemData, spLeftTable, spRightTable, spDownTable, spUpTable, spLeftChair, spRightChair, spDownChair, spUpChair);
+                    }
+
+  
                     break;
                 case BuildItemTypeEnum.Door:
                     BuildDoorCpt buildDoor = (BuildDoorCpt)buildItemCpt;

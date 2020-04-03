@@ -31,8 +31,10 @@ public class BuildTableCpt : BaseBuildItemCpt
     public GameObject objUpSeat;
     public SpriteRenderer srUpChair;
 
-    public GameObject tablePosition;
-
+    public GameObject objTableLeftPosition;
+    public GameObject objTableRightPosition;
+    public GameObject objTableDownPosition;
+    public GameObject objTableUpPosition;
     /// <summary>
     /// 设置数据
     /// </summary>
@@ -42,10 +44,20 @@ public class BuildTableCpt : BaseBuildItemCpt
     /// <param name="spUpChair"></param>
     /// <param name="spRightChair"></param>
     /// <param name="spDownChair"></param>
-    public void SetData(BuildItemBean buildItemData, Sprite spTable, Sprite spLeftChair, Sprite spRightChair,Sprite spDownChair, Sprite spUpChair)
+    public void SetData(BuildItemBean buildItemData, 
+        Sprite spLeftTable,  Sprite spRightTable, Sprite spDownTable, Sprite spUpTable,
+        Sprite spLeftChair, Sprite spRightChair,Sprite spDownChair, Sprite spUpChair)
     {
         base.SetData(buildItemData);
-        SetTableData(spTable);
+        SetTableData(spLeftTable, spRightTable, spDownTable, spUpTable);
+        SetChairData(spLeftChair, spUpChair, spRightChair, spDownChair);
+    }
+    public void SetData(BuildItemBean buildItemData,
+    Sprite spTable,
+    Sprite spLeftChair, Sprite spRightChair, Sprite spDownChair, Sprite spUpChair)
+    {
+        base.SetData(buildItemData);
+        SetTableData(spTable, spTable, spTable, spTable);
         SetChairData(spLeftChair, spUpChair, spRightChair, spDownChair);
     }
 
@@ -68,9 +80,9 @@ public class BuildTableCpt : BaseBuildItemCpt
     /// 设置桌子数据
     /// </summary>
     /// <param name="spTable"></param>
-    public void SetTableData(Sprite spTable)
+    public void SetTableData(Sprite spLeftTable, Sprite spUpTable, Sprite spRightTable, Sprite spDownTable)
     {
-        SetSprite(spTable, spTable, spTable, spTable);
+        SetSprite(spLeftTable, spUpTable, spRightTable, spDownTable);
     }
 
     public override void SetDirection(Direction2DEnum direction)
@@ -123,7 +135,18 @@ public class BuildTableCpt : BaseBuildItemCpt
     /// <returns></returns>
     public GameObject GetTable()
     {
-        return tablePosition;
+        switch (direction)
+        {
+            case Direction2DEnum.Left:
+               return objTableLeftPosition;
+            case Direction2DEnum.Right:
+                return objTableRightPosition;
+            case Direction2DEnum.Down:
+                return objTableDownPosition;
+            case Direction2DEnum.UP:
+                return objTableUpPosition;
+        }
+        return null;
     }
 
     /// <summary>
@@ -132,7 +155,18 @@ public class BuildTableCpt : BaseBuildItemCpt
     /// <returns></returns>
     public Vector3 GetTablePosition()
     {
-        return tablePosition.transform.position;
+        switch (direction)
+        {
+            case Direction2DEnum.Left:
+                return objTableLeftPosition.transform.position;
+            case Direction2DEnum.Right:
+                return objTableRightPosition.transform.position;
+            case Direction2DEnum.Down:
+                return objTableDownPosition.transform.position;
+            case Direction2DEnum.UP:
+                return objTableUpPosition.transform.position;
+        }
+        return Vector3.zero;
     }
 
     /// <summary>

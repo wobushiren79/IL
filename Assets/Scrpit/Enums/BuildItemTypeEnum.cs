@@ -25,6 +25,19 @@ public class BuildItemTypeEnumTools
                 return innBuildManager.GetFloorSpriteByName(buildItem.icon_key);
             case BuildItemTypeEnum.Wall:
                 return innBuildManager.GetWallSpriteByName(buildItem.icon_key);
+            case BuildItemTypeEnum.Table:
+                if (buildItem.model_name.Equals(EnumUtil.GetEnumName(BuildItemModelTypeEnum.Table_1)))
+                {
+                    return innBuildManager.GetFurnitureSpriteByName(buildItem.icon_key);
+                }
+                else if (buildItem.model_name.Equals(EnumUtil.GetEnumName(BuildItemModelTypeEnum.Table_2)))
+                {
+                    return innBuildManager.GetFurnitureSpriteByName(buildItem.icon_key + "_2");
+                }
+                else
+                {
+                    return innBuildManager.GetFurnitureSpriteByName(buildItem.icon_key);
+                }
             default:
                 return innBuildManager.GetFurnitureSpriteByName(buildItem.icon_key);
         }
