@@ -95,15 +95,19 @@ public class BuildTableCpt : BaseBuildItemCpt
         switch (direction)
         {
             case Direction2DEnum.Left:
+                srMainBuild.transform.position = objTableLeftPosition.transform.position;
                 objLeftChair.SetActive(true);
                 break;
             case Direction2DEnum.Right:
+                srMainBuild.transform.position = objTableRightPosition.transform.position;
                 objRightChair.SetActive(true);
                 break;
             case Direction2DEnum.Down:
+                srMainBuild.transform.position = objTableDownPosition.transform.position;
                 objDownChair.SetActive(true);
                 break;
             case Direction2DEnum.UP:
+                srMainBuild.transform.position = objTableUpPosition.transform.position;
                 objUpChair.SetActive(true);
                 break;
         }
