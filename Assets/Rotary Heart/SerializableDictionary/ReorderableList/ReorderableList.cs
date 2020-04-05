@@ -790,7 +790,7 @@ namespace RotaryHeart.Lib.SerializableDictionary
                 Style.footerBackground.Draw(new Rect(labelRect.xMin - 1, rect.y, isHeader ? rect.width + 1 : 185, 15), false, false, false, false);
             }
 
-            pagesCount = Mathf.CeilToInt((float)list.arraySize / (float)perPageCount);
+            pagesCount = Mathf.RoundToInt((float)list.arraySize / (float)perPageCount);
 
             GUI.Label(labelRect, (currentPage + 1) + "/" + pagesCount, Style.preButton);
 

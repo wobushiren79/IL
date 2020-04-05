@@ -182,7 +182,7 @@ public class ItemTownBankExchangeCpt : ItemGameBaseCpt, DialogView.IDialogCallBa
                 valueInt = outInt;
             }
         }
-        tvOldMoney.text = Mathf.CeilToInt(exchangeRate * valueInt) + "";
+        tvOldMoney.text = Mathf.RoundToInt(exchangeRate * valueInt) + "";
     }
 
     /// <summary>

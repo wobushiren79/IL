@@ -82,10 +82,10 @@ public class ControlForBuildCpt : BaseControl
         //定义镜头的初始位置
         SetFollowPosition(new Vector3(5, 5));
         //定义镜头的移动范围
-        //cameraMove.minMoveX = -1;
-        //cameraMove.maxMoveX = gameDataManager.gameData.GetInnBuildData().innWidth + 1;
-        //cameraMove.minMoveY = -1;
-        //cameraMove.maxMoveY = gameDataManager.gameData.GetInnBuildData().innHeight + 1;
+        cameraMove.minMoveX = -1;
+        cameraMove.maxMoveX = gameDataManager.gameData.GetInnBuildData().innWidth + 1;
+        cameraMove.minMoveY = -1;
+        cameraMove.maxMoveY = gameDataManager.gameData.GetInnBuildData().innHeight + 1;
         //初始化建筑占地坐标
         InitBuildingExist();
     }
@@ -156,7 +156,7 @@ public class ControlForBuildCpt : BaseControl
     /// <summary>
     /// 修建建筑占地提示
     /// </summary>
-    public void ShowBuildSpace()
+    protected void ShowBuildSpace()
     {
         //清空原有的占地提示
         CptUtil.RemoveChildsByActive(listBuildSpaceContent.transform);
@@ -294,7 +294,7 @@ public class ControlForBuildCpt : BaseControl
                 for (int i = 0; i < listBuildSpaceSR.Count; i++)
                 {
                     //精度修正
-                    listBuildPosition.Add(Vector3Int.CeilToInt(listBuildSpaceSR[i].transform.position));
+                    listBuildPosition.Add(Vector3Int.RoundToInt(listBuildSpaceSR[i].transform.position));
                 }
 
                 //如果是拆除
@@ -393,7 +393,7 @@ public class ControlForBuildCpt : BaseControl
                 //移除数据
                 buildData.GetWallList().Remove(itemWallData);
                 //移除场景中的建筑物
-                innWallBuilder.ClearWall(Vector3Int.CeilToInt(startPosition));
+                innWallBuilder.ClearWall(Vector3Int.RoundToInt(startPosition));
                 //背包里添加一个
                 gameDataManager.gameData.AddBuildNumber(itemWallData.id, 1);
             }
@@ -445,7 +445,7 @@ public class ControlForBuildCpt : BaseControl
         //如果没有地板则直接在建造点上建造
         if (floorData == null)
         {
-            changePosition = Vector3Int.CeilToInt(buildPosition);
+            changePosition = Vector3Int.RoundToInt(buildPosition);
             floorData = new InnResBean(buildItemCpt.buildItemData.id, changePosition, null, Direction2DEnum.Left);
             gameDataManager.gameData.GetInnBuildData().listFloor.Add(floorData);
         }
@@ -454,7 +454,7 @@ public class ControlForBuildCpt : BaseControl
         {
             //背包里添加一个
             gameDataManager.gameData.AddBuildNumber(floorData.id, 1);
-            changePosition = Vector3Int.CeilToInt(floorData.GetStartPosition());
+            changePosition = Vector3Int.RoundToInt(floorData.GetStartPosition());
             floorData.id = buildItemCpt.buildItemData.id;
         }
         innFloorBuilder.ChangeFloor(changePosition, buildItemCpt.buildItemData.tile_name);
@@ -483,7 +483,7 @@ public class ControlForBuildCpt : BaseControl
         //如果没有墙壁则直接在建造点上建造
         if (wallData == null)
         {
-            changePosition = Vector3Int.CeilToInt(buildPosition);
+            changePosition = Vector3Int.RoundToInt(buildPosition);
             wallData = new InnResBean(buildItemCpt.buildItemData.id, changePosition, null, Direction2DEnum.Left);
             gameDataManager.gameData.GetInnBuildData().listWall.Add(wallData);
         }
@@ -492,7 +492,7 @@ public class ControlForBuildCpt : BaseControl
         {
             //背包里添加一个
             gameDataManager.gameData.AddBuildNumber(wallData.id, 1);
-            changePosition = Vector3Int.CeilToInt(wallData.GetStartPosition());
+            changePosition = Vector3Int.RoundToInt(wallData.GetStartPosition());
             wallData.id = buildItemCpt.buildItemData.id;
         }
         innWallBuilder.ChangeWall(changePosition, buildItemCpt.buildItemData.tile_name);
@@ -517,7 +517,7 @@ public class ControlForBuildCpt : BaseControl
         foreach (SpriteRenderer itemRenderer in listBuildSpaceSR)
         {
             Vector3 srPosition = itemRenderer.transform.position;
-            srPosition = Vector3Int.CeilToInt(srPosition);
+            srPosition = Vector3Int.RoundToInt(srPosition);
             //检测是否超出建造范围
             bool isOutBuild = CheckOutOfRange(srPosition);
             if (isOutBuild)

@@ -661,7 +661,7 @@ public class EditorUI
         buildItem.build_type =(int) GUIEnum<BuildItemTypeEnum>("类型：", buildItem.build_type);
         GUIText("模型ID：");
         buildItem.model_name = GUIEditorText(buildItem.model_name);
-        GUIText(" 图标：");
+        GUIText(" 图标：",200);
         buildItem.icon_key = GUIEditorText(buildItem.icon_key);
         string picPath = "";
         switch ((BuildItemTypeEnum)buildItem.build_type)
@@ -695,6 +695,10 @@ public class EditorUI
         switch ((BuildItemTypeEnum)buildItem.build_type)
         {
             case BuildItemTypeEnum.Table:
+            case BuildItemTypeEnum.Counter:
+            case BuildItemTypeEnum.Stove:
+            case BuildItemTypeEnum.Door:
+            case BuildItemTypeEnum.Decoration:
                 GUIText("icon_list");
                 buildItem.icon_list = GUIEditorText(buildItem.icon_list,300);
                 break;
