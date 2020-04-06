@@ -16,6 +16,7 @@ public enum AudioSoundEnum
     Show = 70,//登场展示
     Correct=80,//正确
     Error=90,//错误
+    Set=100,//设置
     Thunderstorm = 101,//打雷音效
 
     Damage = 201,//伤害声

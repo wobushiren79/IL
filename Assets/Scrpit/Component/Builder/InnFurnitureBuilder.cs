@@ -59,7 +59,7 @@ public class InnFurnitureBuilder : BaseMonoBehaviour
     public void DestroyFurnitureByPosition(Vector3 position)
     {
         BaseBuildItemCpt buildCpt = GetFurnitureByPosition(position);
-        if(buildCpt != null)
+        if (buildCpt != null)
             Destroy(buildCpt.gameObject);
     }
 
@@ -79,7 +79,7 @@ public class InnFurnitureBuilder : BaseMonoBehaviour
             List<Vector3> listPosition = itemData.GetBuildWorldPosition();
             foreach (Vector3 itemPosition in listPosition)
             {
-                if (itemPosition.x == position.x-0.5f && itemPosition.y == position.y+0.5f)
+                if (Mathf.RoundToInt((itemPosition.x + 0.5f))  == position.x && Mathf.RoundToInt((itemPosition.y - 0.5f)) == position.y)
                 {
                     target = itemData;
                     break;

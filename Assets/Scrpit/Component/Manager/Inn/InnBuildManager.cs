@@ -112,7 +112,11 @@ public class InnBuildManager : BaseManager, IBuildDataView
                         buildTable.SetData(buildItemData, spLeftTable, spRightTable, spDownTable, spUpTable, spLeftChair, spRightChair, spDownChair, spUpChair);
                     }
 
-  
+                    break;
+                case BuildItemTypeEnum.Decoration:
+                    BuildDecorationCpt buildDecoration = (BuildDecorationCpt)buildItemCpt;
+                    Sprite spDecoration = GetFurnitureSpriteByName(listIcon[0]);
+                    buildDecoration.SetData(buildItemData, spDecoration);
                     break;
                 case BuildItemTypeEnum.Door:
                     BuildDoorCpt buildDoor = (BuildDoorCpt)buildItemCpt;

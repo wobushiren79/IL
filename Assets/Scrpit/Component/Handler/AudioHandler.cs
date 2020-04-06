@@ -96,6 +96,9 @@ public class AudioHandler : BaseHandler
             case AudioSoundEnum.Error:
                 audioClip = audioManager.GetSoundClip("sound_error_1");
                 break;
+            case AudioSoundEnum.Set:
+                audioClip = audioManager.GetSoundClip("sound_set_1");
+                break;
         }
         if (audioClip != null)
             audioSourceForMusic.PlayOneShot(audioClip, volumeScale);

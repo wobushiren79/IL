@@ -285,6 +285,7 @@ public class ControlForBuildCpt : BaseControl
             //能建造
             if (isCanBuild)
             {
+                audioHandler.PlaySound(AudioSoundEnum.Set);
                 //镜头正对建造点
                 //SetFollowPosition(buildPosition);
                 //建筑物位置设置

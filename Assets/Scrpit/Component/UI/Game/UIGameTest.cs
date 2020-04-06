@@ -78,7 +78,6 @@ public class UIGameTest : UIGameComponent
         {
             gameData.AddBuildNumber(itemBuild.Key, 99);
         }
-        gameData.GetInnBuildData().ChangeInnSize(uiGameManager.innBuildManager, 30, 30);
     }
 
     /// <summary>

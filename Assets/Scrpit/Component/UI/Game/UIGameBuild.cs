@@ -93,7 +93,6 @@ public class UIGameBuild : UIGameComponent, IRadioGroupCallBack
     /// <param name="type"></param>
     public void CreateBuildList(BuildItemTypeEnum type)
     {
-        uiGameManager.audioHandler.PlaySound(AudioSoundEnum.ButtonForNormal);
         buildType = type;
         if (listBuildContent == null)
             return;
@@ -187,6 +186,7 @@ public class UIGameBuild : UIGameComponent, IRadioGroupCallBack
     #region  类型选择回调
     public void RadioButtonSelected(RadioGroupView rgView, int position, RadioButtonView rbview)
     {
+        uiGameManager.audioHandler.PlaySound(AudioSoundEnum.ButtonForNormal);
         //删除当前选中
         ((ControlForBuildCpt)(uiGameManager.controlHandler.GetControl(ControlHandler.ControlEnum.Build))).ClearBuildItem();
         btDismantle.gameObject.SetActive(true);

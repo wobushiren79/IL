@@ -3,7 +3,8 @@ using UnityEditor;
 using System.Collections.Generic;
 public class BuildStoveCpt : BaseBuildItemCpt
 {
-    public enum StoveStatusEnum {
+    public enum StoveStatusEnum
+    {
         Idle = 0,//空闲
         Ready = 1,//准备中
         Cooking = 2,//料理中
@@ -36,11 +37,11 @@ public class BuildStoveCpt : BaseBuildItemCpt
         //创建食物
         GameObject foodObj = Instantiate(itemFoodModel, objFoodContainer.transform);
         foodObj.SetActive(true);
-        foodObj.transform.position = GameUtil.GetTransformInsidePosition2D(foodObj.transform,0.5f);
+        foodObj.transform.position = GameUtil.GetTransformInsidePosition2D(foodObj.transform, 0.5f);
         FoodForCustomerCpt foodCpt = foodObj.GetComponent<FoodForCustomerCpt>();
         foodCpt.innFoodManager = innFoodManager;
-        foodCpt.SetData(innFoodManager,orderForCustomer.foodData, orderForCustomer.foodLevel);
-        orderForCustomer.foodCpt= foodCpt;
+        foodCpt.SetData(innFoodManager, orderForCustomer.foodData, orderForCustomer.foodLevel);
+        orderForCustomer.foodCpt = foodCpt;
         //食物创建动画
         foodCpt.CreateAnim();
     }
@@ -79,6 +80,7 @@ public class BuildStoveCpt : BaseBuildItemCpt
     public override void SetDirection(int direction)
     {
         base.SetDirection(direction);
-        objCookSmoke.transform.position = tfCookPosition.position;
+        if (objCookSmoke != null)
+            objCookSmoke.transform.position = tfCookPosition.position;
     }
 }
