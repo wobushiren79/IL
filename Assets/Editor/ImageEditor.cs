@@ -11,6 +11,11 @@ public class ImageEditor : Editor
     {
         BaseSpriteEditor(SpriteImportMode.Single, 0, 0);
     }
+    [MenuItem("Custom/Image/SingleDown")]
+    public static void SingleDown()
+    {
+        BaseSpriteEditor(SpriteImportMode.Single, 1, 1,0.5f,0.01f);
+    }
 
     [MenuItem("Custom/Image/Multiple_2x1")]
     public static void Multiple2x1()
@@ -84,6 +89,10 @@ public class ImageEditor : Editor
     }
     static void BaseSpriteEditor(SpriteImportMode spriteType, int cNumber, int rNumber)
     {
+         BaseSpriteEditor( spriteType,  cNumber,  rNumber, 0.5f, 0.5f);
+    }
+    static void BaseSpriteEditor(SpriteImportMode spriteType, int cNumber, int rNumber, float pivotX, float pivotY)
+    {
         Object[] objs = GetSelectedTextures();
 
         // Selection.objects = new Object[0];
@@ -121,20 +130,25 @@ public class ImageEditor : Editor
                 {
 
                     SpriteMetaData smd = new SpriteMetaData();
-                    smd.pivot = new Vector2(0.5f, 0.5f);
                     smd.alignment = 9;
                     smd.name = itemTexture.name + "_" + position;
                     smd.rect = new Rect(c * cItemSize, (r - 1) * rItemSize, cItemSize, rItemSize);
+                    smd.pivot = new Vector2(pivotX, pivotY);
                     newData.Add(smd);
                     position++;
                 }
             }
-
+            textureImporter.spritePivot = new Vector2(pivotX, pivotY);
             textureImporter.spritesheet = newData.ToArray();
             AssetDatabase.ImportAsset(path, ImportAssetOptions.ForceUpdate);
         }
     }
+
     static void BaseSpriteEditorForExtrude(SpriteImportMode spriteType, int cNumber, int rNumber)
+    {
+        BaseSpriteEditorForExtrude(spriteType, cNumber, rNumber, 0.5f, 0.5f);
+    }
+    static void BaseSpriteEditorForExtrude(SpriteImportMode spriteType, int cNumber, int rNumber,float pivotX,float pivotY)
     {
         Object[] objs = GetSelectedTextures();
 
@@ -173,7 +187,7 @@ public class ImageEditor : Editor
                 {
 
                     SpriteMetaData smd = new SpriteMetaData();
-                    smd.pivot = new Vector2(0.5f, 0.5f);
+                    smd.pivot = new Vector2(pivotX, pivotY);
                     smd.alignment = 9;
                     smd.name = itemTexture.name + "_" + position;
                     smd.rect = new Rect(c * cItemSize + 1 + c * 2, (r - 1) * rItemSize + 1 + (r - 1) * 2, cItemSize, rItemSize);

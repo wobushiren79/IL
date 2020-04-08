@@ -710,12 +710,11 @@ public class EditorUI
             default:
                 break;
         }
-        GUIText("美观：");
+        GUIText("美观：", 50);
         buildItem.aesthetics = GUIEditorText(buildItem.aesthetics);
-        GUIText("名称：");
-        buildItem.name = GUIEditorText(buildItem.name);
-
-        GUIText("形容：");
+        GUIText("名称：",50);
+        buildItem.name = GUIEditorText(buildItem.name,200);    
+        GUIText("形容：", 50);
         buildItem.content = GUIEditorText(buildItem.content, 300);
         GUILayout.EndHorizontal();
     }
