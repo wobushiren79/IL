@@ -99,6 +99,9 @@ public class AudioHandler : BaseHandler
             case AudioSoundEnum.Set:
                 audioClip = audioManager.GetSoundClip("sound_set_1");
                 break;
+            case AudioSoundEnum.Cook:
+                audioClip = audioManager.GetSoundClip("sound_cook_1");
+                break;
         }
         if (audioClip != null)
             audioSourceForMusic.PlayOneShot(audioClip, volumeScale);

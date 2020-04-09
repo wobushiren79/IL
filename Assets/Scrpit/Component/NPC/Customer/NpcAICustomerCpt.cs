@@ -289,6 +289,10 @@ public class NpcAICustomerCpt : BaseNpcAI
     public void IntentForGoToSeat(OrderForCustomer orderForCustomer)
     {
         //停止等待
+        if (!gameObject)
+        {
+            return;
+        }
         StopAllCoroutines();
         this.orderForCustomer = orderForCustomer;
         //判断路径是否有效
