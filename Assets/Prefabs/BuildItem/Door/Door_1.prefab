@@ -109,7 +109,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 222267411021835342}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: -0.5, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4952996212233395173}
@@ -164,7 +164,7 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
-  m_SpriteSortPoint: 0
+  m_SpriteSortPoint: 1
 --- !u!1 &2038471993353718212
 GameObject:
   m_ObjectHideFlags: 0
@@ -219,7 +219,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3574057649542325031}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: -0.49, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 3598571614868307161}
@@ -266,7 +266,7 @@ GameObject:
   - component: {fileID: 4952996212233395173}
   - component: {fileID: 4952996212233395172}
   m_Layer: 0
-  m_Name: Door_Wooden_1
+  m_Name: Door_1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -300,7 +300,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c1bb9225aeb0ad24eade11fc8b44a7ca, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  buildId: 90001
+  buildItemData:
+    id: 0
+    valid: 0
+    build_id: 0
+    build_type: 0
+    model_name: 
+    icon_key: 
+    icon_list: 
+    tile_name: 
+    name: 
+    content: 
+    aesthetics: 0
   direction: 1
   spLeft: {fileID: 21300000, guid: 74b1a2d02b60cb94b9582da2c579bd7c, type: 3}
   spRight: {fileID: 0}
@@ -406,9 +417,9 @@ MeshCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  serializedVersion: 3
+  serializedVersion: 4
   m_Convex: 0
-  m_CookingOptions: 14
+  m_CookingOptions: 30
   m_Mesh: {fileID: 10210, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!1 &5427982608304465629
 GameObject:
@@ -500,9 +511,9 @@ MeshCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  serializedVersion: 3
+  serializedVersion: 4
   m_Convex: 0
-  m_CookingOptions: 14
+  m_CookingOptions: 30
   m_Mesh: {fileID: 10210, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!1 &6062703278346444528
 GameObject:
