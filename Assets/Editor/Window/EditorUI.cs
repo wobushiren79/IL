@@ -568,6 +568,7 @@ public class EditorUI
         GUILayout.Label("建造物品创建：", GUILayout.Width(100), GUILayout.Height(20));
         if (GUILayout.Button("创建", GUILayout.Width(120), GUILayout.Height(20)))
         {
+            buildItem.valid = 1;
             buildItemService.InsertData(buildItem);
         }
         GUIBuildItem(buildItem);
