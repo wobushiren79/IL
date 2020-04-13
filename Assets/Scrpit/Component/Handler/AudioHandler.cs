@@ -17,6 +17,41 @@ public class AudioHandler : BaseHandler
     }
 
     /// <summary>
+    ///  循环播放音乐
+    /// </summary>
+    /// <param name="audioMusic"></param>
+    public void PlayMusicForLoop(AudioMusicEnum audioMusic)
+    {
+        PlayMusicForLoop(audioMusic, 1);
+    }
+
+    /// <summary>
+    /// 循环播放音乐
+    /// </summary>
+    /// <param name="audioMusic"></param>
+    /// <param name="volumeScale"></param>
+    public void PlayMusicForLoop(AudioMusicEnum audioMusic, float volumeScale)
+    {
+        AudioClip audioClip = null;
+        switch (audioMusic)
+        {
+            case AudioMusicEnum.LangTaoSha:
+                audioClip = audioManager.GetMusicClip("music_langtaosha_1");
+                break;
+            case AudioMusicEnum.YangChunBaiXue:
+                audioClip = audioManager.GetMusicClip("music_yangchunbaixue_1");
+                break;
+        }
+        if (audioClip != null)
+        {
+            audioSourceForMusic.clip = audioClip;
+            audioSourceForMusic.volume = volumeScale;
+            audioSourceForMusic.loop = true;
+            audioSourceForMusic.Play();
+        }     
+    }
+
+    /// <summary>
     /// 播放音效
     /// </summary>
     /// <param name="sound">音效</param>
@@ -107,7 +142,6 @@ public class AudioHandler : BaseHandler
             audioSourceForMusic.PlayOneShot(audioClip, volumeScale);
         // AudioSource.PlayClipAtPoint(soundClip, soundPosition,volumeScale);
     }
-
     public void PlaySound(AudioSoundEnum sound)
     {
         PlaySound(sound, Camera.main.transform.position, 1);

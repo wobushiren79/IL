@@ -1977,7 +1977,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0, g: 1, b: 0, a: 1}
+  m_Color: {r: 0.9921569, g: 0.8431373, b: 0, a: 1}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
@@ -1985,7 +1985,7 @@ MonoBehaviour:
   m_FontData:
     m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
     m_FontSize: 1
-    m_FontStyle: 0
+    m_FontStyle: 1
     m_BestFit: 1
     m_MinSize: 1
     m_MaxSize: 40
@@ -2048,8 +2048,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.15, y: 0}
   m_AnchorMax: {x: 0.3, y: 0.5}
-  m_AnchoredPosition: {x: -2.5, y: 0}
-  m_SizeDelta: {x: -5, y: -20}
+  m_AnchoredPosition: {x: -2.5, y: 5}
+  m_SizeDelta: {x: -5, y: -10}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &7664634356128936830
 CanvasRenderer:
@@ -2102,6 +2102,7 @@ MonoBehaviour:
   popupShow: {fileID: 0}
   content: "\u65E5\u85AA"
   isAudio: 0
+  delayTime: 1
 --- !u!1 &7664634356150698964
 GameObject:
   m_ObjectHideFlags: 0
@@ -2735,6 +2736,7 @@ MonoBehaviour:
   popupShow: {fileID: 0}
   content: "\u5FE0\u5FC3"
   isAudio: 0
+  delayTime: 1
 --- !u!1 &7664634356409549270
 GameObject:
   m_ObjectHideFlags: 0
@@ -3113,6 +3115,7 @@ MonoBehaviour:
   popupShow: {fileID: 0}
   content: "\u5E78\u8FD0"
   isAudio: 0
+  delayTime: 1
 --- !u!1 &7664634356659742430
 GameObject:
   m_ObjectHideFlags: 0
@@ -3338,7 +3341,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0, g: 1, b: 0, a: 1}
+  m_Color: {r: 0.9960785, g: 0.8431373, b: 0, a: 1}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
@@ -3346,7 +3349,7 @@ MonoBehaviour:
   m_FontData:
     m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
     m_FontSize: 1
-    m_FontStyle: 0
+    m_FontStyle: 1
     m_BestFit: 1
     m_MinSize: 1
     m_MaxSize: 40
@@ -3615,6 +3618,7 @@ MonoBehaviour:
   popupShow: {fileID: 0}
   content: "\u6B66\u529B"
   isAudio: 0
+  delayTime: 1
 --- !u!1 &7664634356865322834
 GameObject:
   m_ObjectHideFlags: 0
@@ -3677,6 +3681,7 @@ MonoBehaviour:
   popupShow: {fileID: 0}
   content: "\u53A8\u529B"
   isAudio: 0
+  delayTime: 1
 --- !u!1 &7664634356878911433
 GameObject:
   m_ObjectHideFlags: 0
@@ -3713,8 +3718,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.15, y: 0.5}
   m_AnchorMax: {x: 0.3, y: 1}
-  m_AnchoredPosition: {x: -2.5, y: 0}
-  m_SizeDelta: {x: -5, y: -20}
+  m_AnchoredPosition: {x: -2.5, y: -5}
+  m_SizeDelta: {x: -5, y: -10}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &7664634356878911429
 CanvasRenderer:
@@ -3767,6 +3772,7 @@ MonoBehaviour:
   popupShow: {fileID: 0}
   content: "\u540D\u5B57"
   isAudio: 0
+  delayTime: 1
 --- !u!1 &7664634356890602209
 GameObject:
   m_ObjectHideFlags: 0
@@ -3826,7 +3832,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0, g: 1, b: 0, a: 1}
+  m_Color: {r: 0.9921569, g: 0.8431373, b: 0, a: 1}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
@@ -3834,7 +3840,7 @@ MonoBehaviour:
   m_FontData:
     m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
     m_FontSize: 1
-    m_FontStyle: 0
+    m_FontStyle: 1
     m_BestFit: 1
     m_MinSize: 1
     m_MaxSize: 40
@@ -4305,6 +4311,7 @@ MonoBehaviour:
   popupShow: {fileID: 0}
   content: "\u8BA1\u7B97"
   isAudio: 0
+  delayTime: 1
 --- !u!1 &7664634357273392783
 GameObject:
   m_ObjectHideFlags: 0
@@ -5004,6 +5011,8 @@ MonoBehaviour:
       charm: 0
       force: 0
       lucky: 0
+      listSkills: 
+      listLearnBook: 
     body:
       sex: 1
       skinColor:
@@ -5036,7 +5045,6 @@ MonoBehaviour:
       hatId: 0
       clothesId: 0
       shoesId: 0
-      listLearnBook: 
     npcInfoData:
       id: 0
       valid: 0
@@ -5060,6 +5068,7 @@ MonoBehaviour:
       position_x: 0
       position_y: 0
       talk_ids: 
+      skill_ids: 
       attributes_loyal: 0
       attributes_life: 0
       attributes_cook: 0
@@ -5337,7 +5346,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0, g: 1, b: 0, a: 1}
+  m_Color: {r: 0.9921569, g: 0.8431373, b: 0, a: 1}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
@@ -5345,7 +5354,7 @@ MonoBehaviour:
   m_FontData:
     m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
     m_FontSize: 1
-    m_FontStyle: 0
+    m_FontStyle: 1
     m_BestFit: 1
     m_MinSize: 1
     m_MaxSize: 40
@@ -5523,7 +5532,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0, g: 1, b: 0, a: 1}
+  m_Color: {r: 1, g: 0.8437066, b: 0, a: 1}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
@@ -5531,7 +5540,7 @@ MonoBehaviour:
   m_FontData:
     m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
     m_FontSize: 1
-    m_FontStyle: 0
+    m_FontStyle: 1
     m_BestFit: 1
     m_MinSize: 1
     m_MaxSize: 40
@@ -6001,7 +6010,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0, g: 1, b: 0, a: 1}
+  m_Color: {r: 0.9960785, g: 0.8431373, b: 0, a: 1}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
@@ -6009,7 +6018,7 @@ MonoBehaviour:
   m_FontData:
     m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
     m_FontSize: 1
-    m_FontStyle: 0
+    m_FontStyle: 1
     m_BestFit: 1
     m_MinSize: 1
     m_MaxSize: 40
@@ -6190,6 +6199,7 @@ MonoBehaviour:
   popupShow: {fileID: 0}
   content: "\u9B45\u529B"
   isAudio: 0
+  delayTime: 1
 --- !u!1 &7664634358120696771
 GameObject:
   m_ObjectHideFlags: 0
@@ -6252,6 +6262,7 @@ MonoBehaviour:
   popupShow: {fileID: 0}
   content: "\u901F\u5EA6"
   isAudio: 0
+  delayTime: 1
 --- !u!1 &7664634358148056952
 GameObject:
   m_ObjectHideFlags: 0

@@ -291,7 +291,7 @@ public class UIGameMain : UIGameComponent, DialogView.IDialogCallBack, IRadioGro
         }
         if (tvPraise != null)
         {
-            tvPraise.text = innAttributes.GetPraise() + "%";
+            tvPraise.text = (innAttributes.GetPraise()*100) + "%";
         }
     }
 
