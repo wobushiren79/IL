@@ -3,7 +3,9 @@ using UnityEditor;
 using UnityEngine.UI;
 using DG.Tweening;
 using System.Collections;
-public class UIGameDate : BaseUIComponent
+using System.Collections.Generic;
+
+public class UIGameDate : UIGameComponent
 {
     [Header("控件")]
     public GameObject objContent;
@@ -20,6 +22,7 @@ public class UIGameDate : BaseUIComponent
 
     protected GameTimeHandler gameTimeHandler;
     protected GameDataManager gameDataManager;
+    protected GameItemsManager gameItemsManager;
     protected ControlHandler controlHandler;
     protected NpcCustomerBuilder npcCustomerBuilder;
     protected EventHandler eventHandler;
@@ -29,13 +32,14 @@ public class UIGameDate : BaseUIComponent
     public override void Awake()
     {
         base.Awake();
-        gameTimeHandler = GetUIManager<UIGameManager>().gameTimeHandler;
-        gameDataManager = GetUIManager<UIGameManager>().gameDataManager;
-        controlHandler = GetUIManager<UIGameManager>().controlHandler;
-        npcCustomerBuilder = GetUIManager<UIGameManager>().npcCustomerBuilder;
-        eventHandler = GetUIManager<UIGameManager>().eventHandler;
-        audioHandler = GetUIManager<UIGameManager>().audioHandler;
-        innHandler = GetUIManager<UIGameManager>().innHandler;
+        gameTimeHandler = uiGameManager.gameTimeHandler;
+        gameDataManager = uiGameManager.gameDataManager;
+        gameItemsManager = uiGameManager.gameItemsManager;
+        controlHandler = uiGameManager.controlHandler;
+        npcCustomerBuilder = uiGameManager.npcCustomerBuilder;
+        eventHandler = uiGameManager.eventHandler;
+        audioHandler = uiGameManager.audioHandler;
+        innHandler = uiGameManager.innHandler;
     }
 
     private void Start()
@@ -120,6 +124,16 @@ public class UIGameDate : BaseUIComponent
         yield return new WaitForSeconds(1.5f);
         // 第一天默认不营业
         gameTimeHandler.GetTime(out int year, out int month, out int day);
+
+        List<CharacterBean> listWorker= gameDataManager.gameData.GetAllCharacterData();
+        //如果有请假的员工 新的一天结束请假
+        foreach (CharacterBean itemWork in listWorker)
+        {
+            if(itemWork.baseInfo.GetWorkerStatus()== WorkerStatusEnum.Vacation)
+            {
+                itemWork.baseInfo.SetWorkerStatus(WorkerStatusEnum.Rest);
+            }
+        }
         if (year == 221 && day == 1 && day == 1)
         {
             InnRest();
@@ -142,6 +156,22 @@ public class UIGameDate : BaseUIComponent
     /// </summary>
     public void InnWork()
     {
+        List<CharacterBean> listWorker = gameDataManager.gameData.GetAllCharacterData();
+        //计算员工请假概率
+        foreach (CharacterBean itemWork in listWorker)
+        {
+            if (itemWork.baseInfo.GetWorkerStatus() == WorkerStatusEnum.Rest
+                || itemWork.baseInfo.GetWorkerStatus() == WorkerStatusEnum.Work)
+            {
+                if (itemWork.CalculationWorkerVacation(gameItemsManager, gameDataManager))
+                {
+                    long vacationId = Random.Range(1101, 1111);
+                    string vacationStr = string.Format(GameCommonInfo.GetUITextById(vacationId), itemWork.baseInfo.name);
+                    uiGameManager.toastManager.ToastHint(vacationStr);
+                    itemWork.baseInfo.SetWorkerStatus(WorkerStatusEnum.Vacation);
+                }
+            }
+        }
         uiManager.OpenUIAndCloseOtherByName(EnumUtil.GetEnumName(UIEnum.GameAttendance));
     }
 

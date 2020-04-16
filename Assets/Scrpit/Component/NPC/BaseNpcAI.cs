@@ -203,6 +203,7 @@ public class BaseNpcAI : BaseObservable<IBaseObserver>
     {
         characterStatusIcon.RemoveStatusIconByMarkId(markId);
     }
+
     /// <summary>
     /// 设置角色朝向 1左 2 右
     /// </summary>

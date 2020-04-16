@@ -21,7 +21,7 @@ public class CharacterBean
     /// </summary>
     /// <param name="characterBodyManager"></param>
     /// <returns></returns>
-    public static CharacterBean CreateRandomEnemyData( CharacterBodyManager characterBodyManager,int baseAttributes)
+    public static CharacterBean CreateRandomEnemyData(CharacterBodyManager characterBodyManager, int baseAttributes)
     {
         CharacterBean characterData = new CharacterBean();
         characterData.baseInfo.characterId = SystemUtil.GetUUID(SystemUtil.UUIDTypeEnum.N);
@@ -43,7 +43,7 @@ public class CharacterBean
         }
         //生成随机能力
         characterData.attributes.CreateRandomData(
-            baseAttributes * 10 - 50 , baseAttributes * 10 + 50,
+            baseAttributes * 10 - 50, baseAttributes * 10 + 50,
             0, 1,
             baseAttributes - 5, baseAttributes + 5,
             baseAttributes - 5, baseAttributes + 5,
@@ -138,30 +138,30 @@ public class CharacterBean
         //稀有角色
         float getRatePro = totalPoint * 0.001f + findPriceL * 0.05f + findPriceM * 0.002f;
         //抽中稀有
-        if ( UnityEngine.Random.Range(0f, 1f)<= getRatePro)
+        if (UnityEngine.Random.Range(0f, 1f) <= getRatePro)
         {
             characterData.baseInfo.characterType = (int)NpcTypeEnum.RecruitRare;
 
-             maxLife = 100;
-             minLife = 200;
+            maxLife = 100;
+            minLife = 200;
 
-             maxCook = 15;
-             minCook = 10;
+            maxCook = 15;
+            minCook = 10;
 
-             maxSpeed = 15;
-             minSpeed = 10;
+            maxSpeed = 15;
+            minSpeed = 10;
 
-             maxAccount = 15;
-             minAccount = 10;
+            maxAccount = 15;
+            minAccount = 10;
 
-             maxCharm = 15;
-             minCharm = 10;
+            maxCharm = 15;
+            minCharm = 10;
 
-             maxForce = 15;
-             minForce = 10;
+            maxForce = 15;
+            minForce = 10;
 
-             maxLucky = 15;
-             minLucky = 10;
+            maxLucky = 15;
+            minLucky = 10;
         }
         //没有抽中稀有
         else
@@ -277,6 +277,71 @@ public class CharacterBean
     }
 
     /// <summary>
+    /// 计算员工请假概率
+    /// </summary>
+    /// <param name="gameItemsManager"></param>
+    /// <param name="gameDataManager"></param>
+    /// <returns></returns>
+    public bool CalculationWorkerVacation(GameItemsManager gameItemsManager, GameDataManager gameDataManager) {
+        //获取数据
+        GetAttributes(gameItemsManager,
+        out CharacterAttributesBean totalAttributes, out CharacterAttributesBean selfAttributes, out CharacterAttributesBean equipAttributes);
+        float randomRate = UnityEngine.Random.Range(0f, 1f);
+        float successRate = 0;
+        //如果是掌柜
+        if (this == gameDataManager.gameData.userCharacter)
+        {
+            successRate = 1;
+        }
+        else
+        {
+            successRate = 0.4f + totalAttributes.loyal * 0.006f;
+        }
+
+        if (successRate >= randomRate)
+        {
+            return false;
+        }
+        else
+        {
+            return true;
+        }
+    }
+
+
+    /// <summary>
+    /// 计算员工发呆概率和时间
+    /// </summary>
+    /// <param name="rate"></param>
+    /// <param name="dazeTime"></param>
+    public bool CalculationWorkerDaze(GameItemsManager gameItemsManager, GameDataManager gameDataManager)
+    {
+        //获取数据
+        GetAttributes(gameItemsManager,
+        out CharacterAttributesBean totalAttributes, out CharacterAttributesBean selfAttributes, out CharacterAttributesBean equipAttributes);
+        float randomRate = UnityEngine.Random.Range(0f, 1f);
+        float successRate = 0;
+        //如果是掌柜
+        if (this == gameDataManager.gameData.userCharacter)
+        {
+            successRate = 1;
+        }
+        else
+        {
+            successRate = 0.5f + totalAttributes.loyal * 0.005f;
+        }
+
+        if (successRate >= randomRate)
+        {
+            return false;
+        }
+        else
+        {
+            return true;
+        }
+    }
+
+    /// <summary>
     /// 计算菜单研究经验加成
     /// </summary>
     /// <returns></returns>
@@ -298,7 +363,7 @@ public class CharacterBean
         GetAttributes(gameItemsManager,
         out CharacterAttributesBean totalAttributes, out CharacterAttributesBean selfAttributes, out CharacterAttributesBean equipAttributes);
         float randomRate = UnityEngine.Random.Range(0f, 1f);
-        float successRate = 0.5f + totalAttributes.charm * 0.04f + totalAttributes.lucky * 0.01f;
+        float successRate = 0.5f + totalAttributes.charm * 0.004f + totalAttributes.lucky * 0.001f;
         if (successRate >= randomRate)
             return true;
         else
@@ -399,7 +464,7 @@ public class CharacterBean
     /// <summary>
     /// 计算账房结算
     /// </summary>
-    public bool CalculationAccountingCheck(GameItemsManager gameItemsManager,out float moreRate)
+    public bool CalculationAccountingCheck(GameItemsManager gameItemsManager, out float moreRate)
     {
         //获取数据
         moreRate = 0;

@@ -9,7 +9,6 @@ using System.Diagnostics;
 public class Test : BaseMonoBehaviour
 {
 
-   public  GameObject objModel;
     private void Awake()
     {
 
@@ -17,8 +16,13 @@ public class Test : BaseMonoBehaviour
 
     public void Start()
     {
-        Instantiate(gameObject, objModel);
-        LogUtil.Log("1");
+        int a = 0;
+        for(int i = 0; i < 200; i++)
+        {
+            float value = Mathf.Pow(0.9f, a);
+            LogUtil.Log(a +" :" + value);
+            a += 1;
+        }
     }
 
 }

@@ -2,6 +2,7 @@
 using UnityEditor;
 using System;
 using System.Collections.Generic;
+using System.Collections;
 
 public class NpcAIWorkerCpt : BaseNpcAI
 {
@@ -13,6 +14,7 @@ public class NpcAIWorkerCpt : BaseNpcAI
     public enum WorkerIntentEnum
     {
         Idle,//空闲
+        Daze,//发呆
         WaiterSend,//跑堂
         WaiterClean,//清扫
         Cook,//做菜
@@ -62,6 +64,9 @@ public class NpcAIWorkerCpt : BaseNpcAI
         {
             case WorkerIntentEnum.Idle:
                 statusStr = GameCommonInfo.GetUITextById(171);
+                break;
+            case WorkerIntentEnum.Daze:
+                statusStr = GameCommonInfo.GetUITextById(178);
                 break;
             case WorkerIntentEnum.WaiterSend:
                 statusStr = GameCommonInfo.GetUITextById(172);
@@ -125,7 +130,7 @@ public class NpcAIWorkerCpt : BaseNpcAI
     {
         if (CheckCharacterIsArrive())
         {
-            SetIntent( WorkerIntentEnum.Idle);
+            SetIntent(WorkerIntentEnum.Idle);
         }
     }
 
@@ -142,6 +147,9 @@ public class NpcAIWorkerCpt : BaseNpcAI
         {
             case WorkerIntentEnum.Idle:
                 SetIntentForIdle();
+                break;
+            case WorkerIntentEnum.Daze:
+                SetIntentForDaze();
                 break;
             case WorkerIntentEnum.Cook:
                 SetIntentForCook(orderForCustomer);
@@ -181,10 +189,27 @@ public class NpcAIWorkerCpt : BaseNpcAI
     /// <summary>
     /// 设置闲置
     /// </summary>
-    private void SetIntentForIdle()
+    public void SetIntentForIdle()
     {
-        Vector3 movePosition= innHandler.GetRandomInnPositon();
-        SetCharacterMove(movePosition);
+        if (characterData.CalculationWorkerDaze(gameItemsManager,gameDataManager))
+        {
+            SetIntent(WorkerIntentEnum.Daze);
+        }
+        else
+        {
+            Vector3 movePosition = innHandler.GetRandomInnPositon();
+            SetCharacterMove(movePosition);
+        }
+    }
+
+
+    /// <summary>
+    /// 意图 -发呆
+    /// </summary>
+    public void SetIntentForDaze()
+    {
+        float dazeTime = UnityEngine.Random.Range(10f, 30f);
+        StartCoroutine(CoroutineForDaze(dazeTime));
     }
 
     /// <summary>
@@ -238,5 +263,19 @@ public class NpcAIWorkerCpt : BaseNpcAI
         aiForBeater.StartFight(npcAIRascal);
     }
 
+    /// <summary>
+    /// 协程 发呆
+    /// </summary>
+    /// <param name="dazeTime"></param>
+    /// <returns></returns>
+    public IEnumerator CoroutineForDaze(float dazeTime)
+    {
+        Sprite spDaze = iconDataManager.GetIconSpriteByName("daze_1");
+        string markId = SystemUtil.GetUUID(SystemUtil.UUIDTypeEnum.N);
+        AddStatusIconForEffect(spDaze, Color.white, markId);
+        yield return new WaitForSeconds(dazeTime);
+        SetIntent(WorkerIntentEnum.Idle);
+        RemoveStatusIconByMarkId(markId);
+    }
 
 }

@@ -101,6 +101,11 @@ public class ControlForWorkCpt : BaseControl,DialogView.IDialogCallBack
                         DialogBean dialogData = new DialogBean();
                         dialogSelectView = dialogManager.CreateDialog(DialogEnum.SelectForNpc, this,dialogData);
                         ((SelectForNpcDialogView)dialogSelectView).SetData(selectNpc);
+                        //如果是员工
+                        if(selectNpc as NpcAIWorkerCpt)
+                        {
+
+                        }
                         return;
                     }
                 }

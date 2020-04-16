@@ -73,7 +73,7 @@ public class UIGameAttendance : UIBaseOne, ItemGameAttendanceCpt.ICallBack
     public void InitData()
     {
         CptUtil.RemoveChildsByActive(objListContent.transform);
-        GameDataManager gameDataManager = GetUIManager<UIGameManager>().gameDataManager;
+        GameDataManager gameDataManager =uiGameManager.gameDataManager;
         if (gameDataManager == null)
             return;
         List<CharacterBean> listData = gameDataManager.gameData.GetAllCharacterData();
