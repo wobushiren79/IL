@@ -56,6 +56,15 @@ public class UIGameAttendance : UIBaseOne, ItemGameAttendanceCpt.ICallBack
             uiGameManager.toastManager.ToastHint(GameCommonInfo.GetUITextById(1014));
             return;
         }
+        //没有出勤的人员减少忠诚
+        List<CharacterBean> listCharacter =  uiGameManager.gameDataManager.gameData.GetAllCharacterData();
+        foreach (CharacterBean itemCharacter in  listCharacter)
+        {
+            if (itemCharacter.baseInfo.GetWorkerStatus()== WorkerStatusEnum.Rest)
+            {
+                itemCharacter.attributes.AddLoyal(-1);
+            }
+        }
         //支付出勤费用
         uiGameManager.gameDataManager.gameData.PayMoney(attendancePriceL, attendancePriceM, attendancePriceS);
         //设置当天状态

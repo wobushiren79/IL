@@ -39,6 +39,7 @@ public class CharacterBaseBean
     public int priorityChef;
     public int priorityWaiter;
     public int priorityAccountant;
+
     public int priorityAccost;
     public int priorityBeater;
 

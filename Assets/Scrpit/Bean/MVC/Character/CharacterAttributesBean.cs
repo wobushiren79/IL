@@ -21,6 +21,7 @@ public class CharacterAttributesBean
     //学会的书籍
     public List<long> listLearnBook = new List<long>();
 
+
     /// <summary>
     /// 学习书籍
     /// </summary>
@@ -45,7 +46,7 @@ public class CharacterAttributesBean
     /// <returns></returns>
     public bool CheckLearnBook(long bookId)
     {
-      return listLearnBook.Contains(bookId);
+        return listLearnBook.Contains(bookId);
     }
     /// <summary>
     /// 检测是否学习过该技能
@@ -72,6 +73,22 @@ public class CharacterAttributesBean
         charm += itemsInfo.add_charm;
         force += itemsInfo.add_force;
         lucky += itemsInfo.add_lucky;
+    }
+    /// <summary>
+    /// 增加忠诚
+    /// </summary>
+    /// <param name="addLoyal"></param>
+    public void AddLoyal(int addLoyal)
+    {
+        loyal += addLoyal;
+        if (loyal > 100)
+        {
+            loyal = 100;
+        }
+        if (loyal < 0)
+        {
+            loyal = 0;
+        }
     }
 
 
@@ -104,7 +121,7 @@ public class CharacterAttributesBean
         int forceMin, int forceMax,
         int luckyMin, int luckyMax)
     {
-        life = UnityEngine.Random.Range(lifeMin, lifeMax+1);
+        life = UnityEngine.Random.Range(lifeMin, lifeMax + 1);
         loyal = UnityEngine.Random.Range(loyalMin, loyalMax + 1);
         speed = UnityEngine.Random.Range(speedMin, speedMax + 1);
         account = UnityEngine.Random.Range(accountMin, accountMax + 1);
