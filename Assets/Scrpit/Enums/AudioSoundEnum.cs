@@ -19,6 +19,7 @@ public enum AudioSoundEnum
     Set=100,//设置
     Thunderstorm = 101,//打雷音效
     Cook=110,//做菜声
+    Eat=120,//吃东西
 
     Damage = 201,//伤害声
 

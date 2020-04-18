@@ -46,7 +46,6 @@ public class NpcAIWorkerCpt : BaseNpcAI
         switch (workerIntent)
         {
             case WorkerIntentEnum.Idle:
-                //TODO  瞎逛
                 HandleForIdle();
                 break;
         }
@@ -128,10 +127,7 @@ public class NpcAIWorkerCpt : BaseNpcAI
     /// </summary>
     public void HandleForIdle()
     {
-        if (CheckCharacterIsArrive())
-        {
-            SetIntent(WorkerIntentEnum.Idle);
-        }
+  
     }
 
     /// <summary>
@@ -142,6 +138,7 @@ public class NpcAIWorkerCpt : BaseNpcAI
     /// <param name="npcAIRascal"></param>
     public void SetIntent(WorkerIntentEnum workerIntent, OrderForCustomer orderForCustomer, NpcAIRascalCpt npcAIRascal)
     {
+        StopAllCoroutines();
         this.workerIntent = workerIntent;
         switch (workerIntent)
         {
@@ -191,14 +188,22 @@ public class NpcAIWorkerCpt : BaseNpcAI
     /// </summary>
     public void SetIntentForIdle()
     {
+       //有一定概率发呆
         if (characterData.CalculationWorkerDaze(gameItemsManager,gameDataManager))
         {
             SetIntent(WorkerIntentEnum.Daze);
         }
         else
         {
-            Vector3 movePosition = innHandler.GetRandomInnPositon();
-            SetCharacterMove(movePosition);
+            //闲逛或者待在原地
+            int action = UnityEngine.Random.Range(0, 2);
+            if (action == 0)
+            {
+                //闲逛
+               Vector3 movePosition = innHandler.GetRandomInnPositon();
+               SetCharacterMove(movePosition);
+            }
+            StartCoroutine(CoroutineForIdle());
         }
     }
 
@@ -278,4 +283,13 @@ public class NpcAIWorkerCpt : BaseNpcAI
         RemoveStatusIconByMarkId(markId);
     }
 
+    /// <summary>
+    /// 协程 闲置
+    /// </summary>
+    /// <returns></returns>
+    public IEnumerator CoroutineForIdle()
+    {
+        yield return new WaitForSeconds(5);
+        SetIntent(WorkerIntentEnum.Idle);
+    }
 }

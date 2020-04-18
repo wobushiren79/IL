@@ -260,7 +260,7 @@ public class NpcAICustomerForGuestTeamCpt : NpcAICustomerCpt
         innHandler.cusomerQueue.Add(orderForCustomer);
         if (teamRank == 0)
         {
-            StartCoroutine(StartWaitSeat());
+            StartCoroutine(CoroutineForStartWaitSeat());
         }
     }
 
@@ -268,7 +268,7 @@ public class NpcAICustomerForGuestTeamCpt : NpcAICustomerCpt
     /// 开始等待就餐计时
     /// </summary>
     /// <returns></returns>
-    public override IEnumerator StartWaitSeat()
+    public override IEnumerator CoroutineForStartWaitSeat()
     {
         yield return new WaitForSeconds(timeWaitSeat);
         List<NpcAICustomerForGuestTeamCpt> listTeamMember = GetGuestTeam();

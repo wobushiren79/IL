@@ -67,6 +67,9 @@ public class NpcAIWorkerForAccost : NpcAIWokerFoBaseCpt
     /// <param name="accostIntent"></param>
     public void SetIntent(AccostIntentEnum accostIntent)
     {
+        //暂停查询倒计时
+        StopAllCoroutines();
+
         this.accostIntent = accostIntent;
         switch (accostIntent)
         {
@@ -125,6 +128,7 @@ public class NpcAIWorkerForAccost : NpcAIWokerFoBaseCpt
             mAccostBox.enabled = true;
         if (accostPro != null)
             accostPro.SetActive(true);
+        StartCoroutine(CoroutineForFind());
     }
 
     /// <summary>
@@ -153,7 +157,7 @@ public class NpcAIWorkerForAccost : NpcAIWokerFoBaseCpt
             accostPro.SetActive(false);
         if (talkPro != null)
             talkPro.SetActive(true);
-        StartCoroutine(StartTalking());
+        StartCoroutine(CoroutineForStartTalking());
     }
 
     /// <summary>
@@ -181,7 +185,7 @@ public class NpcAIWorkerForAccost : NpcAIWokerFoBaseCpt
     /// 开始交谈
     /// </summary>
     /// <returns></returns>
-    public IEnumerator StartTalking()
+    public IEnumerator CoroutineForStartTalking()
     {
         //计算聊天时间
         float talkTime = npcAIWorker.characterData.CalculationAccostTalkTime(gameItemsManager);
@@ -213,5 +217,14 @@ public class NpcAIWorkerForAccost : NpcAIWokerFoBaseCpt
         SetIntent(AccostIntentEnum.Idle);
     }
 
+    /// <summary>
+    /// 协程搜索
+    /// </summary>
+    /// <returns></returns>
+    public IEnumerator CoroutineForFind()
+    {
+        yield return new WaitForSeconds(3);
+        SetIntent(AccostIntentEnum.Idle);
+    }
 
 }

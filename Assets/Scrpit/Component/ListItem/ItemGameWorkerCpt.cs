@@ -33,7 +33,9 @@ public class ItemGameWorkerCpt : ItemGameBaseCpt, IRadioButtonCallBack, DialogVi
 
     public Button btEquip;
     public Button btDetails;
+    public Button btGift;
     public Button btFire;
+
 
     public RadioButtonView rbChef;
     public InputField etPriorityChef;
@@ -143,6 +145,8 @@ public class ItemGameWorkerCpt : ItemGameBaseCpt, IRadioButtonCallBack, DialogVi
             btDetails.onClick.AddListener(OpenDeitalsUI);
         if (btFire != null)
             btFire.onClick.AddListener(FireWorker);
+        if (btGift != null)
+            btGift.onClick.AddListener(SendGift);
     }
 
     /// <summary>
@@ -163,7 +167,7 @@ public class ItemGameWorkerCpt : ItemGameBaseCpt, IRadioButtonCallBack, DialogVi
             SetWork(characterBase.isChef, characterBase.isWaiter, characterBase.isAccountant, characterBase.isAccost, characterBase.isBeater);
             SetPriority(characterBase.priorityChef, characterBase.priorityWaiter, characterBase.priorityAccountant, characterBase.priorityAccost, characterBase.priorityBeater);
 
-            WorkerStatusEnum workerStatus= characterBase.GetWorkerStatus(out string workerStatusStr);
+            WorkerStatusEnum workerStatus = characterBase.GetWorkerStatus(out string workerStatusStr);
             SetStatus(workerStatus, workerStatusStr);
         }
         if (characterData.attributes != null)
@@ -177,11 +181,13 @@ public class ItemGameWorkerCpt : ItemGameBaseCpt, IRadioButtonCallBack, DialogVi
             characterUICpt.SetCharacterData(data.body, data.equips);
             SetSex(data.body.sex);
         }
-     
-        //如果是用户，则不能解雇
-        if (data == gameDataManager.gameData.userCharacter && btFire != null)
+        //如果是用户，则不能解雇 也不能送礼
+        if (data == gameDataManager.gameData.userCharacter)
         {
-            btFire.gameObject.SetActive(false);
+            if (btFire != null)
+                btFire.gameObject.SetActive(false);
+            if (btGift != null)
+                btGift.gameObject.SetActive(false);
         }
     }
 
@@ -229,6 +235,17 @@ public class ItemGameWorkerCpt : ItemGameBaseCpt, IRadioButtonCallBack, DialogVi
     }
 
     /// <summary>
+    ///  送礼
+    /// </summary>
+    public void SendGift()
+    {
+        DialogBean dialogData = new DialogBean();
+        // dialogData.content = string.Format(GameCommonInfo.GetUITextById(3063), characterData.baseInfo.name);
+        PickForItemsDialogView dialogView = (PickForItemsDialogView)dialogManager.CreateDialog(DialogEnum.PickForItems, this, dialogData);
+        dialogView.SetData(null, PopupItemsSelection.SelectionTypeEnum.Gift);
+    }
+
+    /// <summary>
     /// 设置属性
     /// </summary>
     /// <param name="characterAttributes"></param>
@@ -269,7 +286,7 @@ public class ItemGameWorkerCpt : ItemGameBaseCpt, IRadioButtonCallBack, DialogVi
     /// <param name="sex"></param>
     public void SetSex(int sex)
     {
-      IconDataManager iconDataManager=  ((UIGameManager)uiComponent.uiManager).iconDataManager;
+        IconDataManager iconDataManager = ((UIGameManager)uiComponent.uiManager).iconDataManager;
         if (ivSex != null)
         {
             if (sex == 1)
@@ -280,7 +297,7 @@ public class ItemGameWorkerCpt : ItemGameBaseCpt, IRadioButtonCallBack, DialogVi
             {
                 ivSex.sprite = iconDataManager.GetIconSpriteByName("sex_woman");
             }
-        }     
+        }
     }
 
     /// <summary>
@@ -401,7 +418,7 @@ public class ItemGameWorkerCpt : ItemGameBaseCpt, IRadioButtonCallBack, DialogVi
                     tvStatus.color = Color.red;
                     break;
             }
-        }    
+        }
     }
 
     /// <summary>
@@ -488,11 +505,28 @@ public class ItemGameWorkerCpt : ItemGameBaseCpt, IRadioButtonCallBack, DialogVi
     #region 确认回调
     public void Submit(DialogView dialogView, DialogBean dialogBean)
     {
-        gameDataManager.gameData.RemoveWorker(characterData);
-        transform.DOScale(Vector3.zero, 0.5f).SetEase(Ease.InBack).OnComplete(delegate
+        if (dialogView as PickForItemsDialogView)
         {
-            Destroy(gameObject);
-        });
+            // 如果送礼
+            PickForItemsDialogView pickForItems = (PickForItemsDialogView)dialogView;
+            pickForItems.GetSelectedItems(out ItemsInfoBean itemsInfo, out ItemBean itemData);
+            //减去礼物
+            gameDataManager.gameData.AddItemsNumber(itemsInfo.id, -1);
+            //添加忠诚
+            characterData.attributes.AddLoyal(1);
+            //刷新UI
+            SetData(characterData);
+        }
+        else
+        {
+            //如果是确认
+            gameDataManager.gameData.RemoveWorker(characterData);
+            transform.DOScale(Vector3.zero, 0.5f).SetEase(Ease.InBack).OnComplete(delegate
+            {
+                Destroy(gameObject);
+            });
+        }
+
     }
 
     public void Cancel(DialogView dialogView, DialogBean dialogBean)

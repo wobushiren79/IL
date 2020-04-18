@@ -137,6 +137,17 @@ public class AudioHandler : BaseHandler
             case AudioSoundEnum.Cook:
                 audioClip = audioManager.GetSoundClip("sound_cook_1");
                 break;
+            case AudioSoundEnum.Eat:
+               int eatRandom= Random.Range(0, 2);
+                if (eatRandom == 0)
+                {
+                    audioClip = audioManager.GetSoundClip("sound_eat_1");
+                }
+                else if (eatRandom == 1)
+                {
+                    audioClip = audioManager.GetSoundClip("sound_eat_2");
+                }
+                break;
         }
         if (audioClip != null)
             audioSourceForMusic.PlayOneShot(audioClip, volumeScale);

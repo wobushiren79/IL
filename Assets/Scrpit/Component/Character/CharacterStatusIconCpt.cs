@@ -109,7 +109,7 @@ public class CharacterStatusIconCpt : BaseMonoBehaviour
                 itemData.statusIconData.spIcon = statusData.spIcon;
                 itemData.statusIconData.spColor = statusData.spColor;
                 itemData.SetData(itemData.statusIconData);
-                itemData.transform.DOScale(new Vector3(0,0,0),0.5f).From().SetEase(Ease.OutBack); ;
+                itemData.transform.DOScale(new Vector3(0, 0, 0), 0.5f).From().SetEase(Ease.OutBack); ;
             }
         }
         if (!hasData)
@@ -125,6 +125,7 @@ public enum CharacterStatusIconEnum
     Mood = 1,//心情
     NpcType = 2,//Npc类型
     Effect = 3,//状态效果
+    Pro=4,//进度图标
 }
 
 public class CharacterStatusIconBean
@@ -133,4 +134,6 @@ public class CharacterStatusIconBean
     public Sprite spIcon;
     public Color spColor = Color.white;
     public string markId;//标记ID
+    //图标动画
+    public RuntimeAnimatorController iconAnimatorController;
 }

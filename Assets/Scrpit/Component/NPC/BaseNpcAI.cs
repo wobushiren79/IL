@@ -27,6 +27,7 @@ public class BaseNpcAI : BaseObservable<IBaseObserver>
 
     protected CharacterBodyCpt characterBody;
     protected CharacterDressCpt characterDress;
+    protected AudioHandler audioHandler;
 
     //拿取
     public GameObject objTake;
@@ -36,6 +37,7 @@ public class BaseNpcAI : BaseObservable<IBaseObserver>
         gameDataManager = Find<GameDataManager>(ImportantTypeEnum.GameDataManager);
         gameItemsManager = Find<GameItemsManager>(ImportantTypeEnum.GameItemsManager);
         iconDataManager = Find<IconDataManager>(ImportantTypeEnum.UIManager);
+        audioHandler = Find<AudioHandler>(ImportantTypeEnum.AudioHandler);
 
         characterBody = CptUtil.GetCptInChildrenByName<CharacterBodyCpt>(gameObject, "Body");
         characterDress = CptUtil.GetCptInChildrenByName<CharacterDressCpt>(gameObject, "Body");
@@ -189,12 +191,31 @@ public class BaseNpcAI : BaseObservable<IBaseObserver>
         if (spIcon == null)
             return;
         CharacterStatusIconBean statusIconData = new CharacterStatusIconBean();
+        statusIconData.iconStatus = CharacterStatusIconEnum.Effect;
         statusIconData.spColor = Color.white;
         statusIconData.spIcon = spIcon;
         statusIconData.markId = markId;
         characterStatusIcon.AddStatusIcon(statusIconData);
     }
     
+   /// <summary>
+   /// 添加进度图标
+   /// </summary>
+   /// <param name="spIcon"></param>
+   /// <param name="markId"></param>
+    public void AddStatusIconForPro(Sprite spIcon, RuntimeAnimatorController runtimeAnimator, string markId)
+    {
+        if (spIcon == null)
+            return;
+        CharacterStatusIconBean statusIconData = new CharacterStatusIconBean();
+        statusIconData.iconStatus = CharacterStatusIconEnum.Pro;
+        statusIconData.spColor = Color.white;
+        statusIconData.spIcon = spIcon;
+        statusIconData.markId = markId;
+        statusIconData.iconAnimatorController = runtimeAnimator;
+        characterStatusIcon.AddStatusIcon(statusIconData);
+    }
+
     /// <summary>
     /// 通过标记ID 删除图标
     /// </summary>
@@ -202,6 +223,15 @@ public class BaseNpcAI : BaseObservable<IBaseObserver>
     public void RemoveStatusIconByMarkId(string markId)
     {
         characterStatusIcon.RemoveStatusIconByMarkId(markId);
+    }
+
+    /// <summary>
+    /// 通过类型删除图标
+    /// </summary>
+    /// <param name="type"></param>
+    public void RemoveStatusIconByType(CharacterStatusIconEnum type)
+    {
+        characterStatusIcon.RemoveStatusIconByType(type);
     }
 
     /// <summary>

@@ -205,6 +205,8 @@ MonoBehaviour:
       charm: 0
       force: 0
       lucky: 0
+      listSkills: 
+      listLearnBook: 
     body:
       sex: 1
       skinColor:
@@ -237,7 +239,6 @@ MonoBehaviour:
       hatId: 0
       clothesId: 0
       shoesId: 0
-      listLearnBook: 
     npcInfoData:
       id: 0
       valid: 0
@@ -261,6 +262,7 @@ MonoBehaviour:
       position_x: 0
       position_y: 0
       talk_ids: 
+      skill_ids: 
       attributes_loyal: 0
       attributes_life: 0
       attributes_cook: 0
@@ -284,10 +286,12 @@ MonoBehaviour:
   characterShoutCpt: {fileID: 6709236943882416928}
   characterExpression: {fileID: 3084067646814559202}
   characterStatusIcon: {fileID: 881094660212489284}
+  objTake: {fileID: 0}
   customerIntent: 0
   characterMoodCpt: {fileID: 6355272750433371025}
   movePosition: {x: 0, y: 0, z: 0}
   timeWaitSeat: 20
+  eatIconAnim: {fileID: 9100000, guid: 062481fad4836704abd8c1762a8b98c8, type: 2}
   teamCode: 
   teamData:
     id: 0
@@ -301,6 +305,7 @@ MonoBehaviour:
     talk_ids: 
     name: 
   teamRank: 0
+  teamColor: {r: 0, g: 0, b: 0, a: 0}
   togetherPosition: {x: 0, y: 0, z: 0}
   guestTeamIntent: 0
 --- !u!1001 &1697461308649322183

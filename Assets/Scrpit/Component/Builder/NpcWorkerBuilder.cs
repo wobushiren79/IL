@@ -50,6 +50,7 @@ public class NpcWorkerBuilder : BaseMonoBehaviour
 
         NpcAIWorkerCpt npcAI = workerObj.GetComponent<NpcAIWorkerCpt>();
         npcAI.SetCharacterData(characterBean);
+        npcAI.SetIntent(NpcAIWorkerCpt.WorkerIntentEnum.Idle);
         listNpcWorker.Add(npcAI);
     }
 

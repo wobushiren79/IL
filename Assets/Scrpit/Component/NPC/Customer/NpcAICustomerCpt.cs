@@ -45,6 +45,9 @@ public class NpcAICustomerCpt : BaseNpcAI
     //等待座位的时间
     public float timeWaitSeat = 20;
 
+    //吃饭动画
+    public RuntimeAnimatorController eatIconAnim;
+
     public override void Awake()
     {
         base.Awake();
@@ -200,6 +203,10 @@ public class NpcAICustomerCpt : BaseNpcAI
 
     public void SetIntent(CustomerIntentEnum intent, OrderForCustomer orderForCustomer)
     {
+        //删除进度图标
+        RemoveStatusIconByType(CharacterStatusIconEnum.Pro);
+        //停止所有进程
+        StopAllCoroutines();
         this.customerIntent = intent;
         switch (customerIntent)
         {
@@ -279,7 +286,7 @@ public class NpcAICustomerCpt : BaseNpcAI
         //添加一个订单
         OrderForCustomer orderForCustomer = innHandler.CreateOrder(this);
         innHandler.cusomerQueue.Add(orderForCustomer);
-        StartCoroutine(StartWaitSeat());
+        StartCoroutine(CoroutineForStartWaitSeat());
     }
 
     /// <summary>
@@ -343,7 +350,7 @@ public class NpcAICustomerCpt : BaseNpcAI
         if (orderForCustomer.table != null)
             orderForCustomer.table.SetTableStatus(BuildTableCpt.TableStatusEnum.Eating);
         //开始吃
-        StartCoroutine(StartEat());
+        StartCoroutine(CoroutineForStartEat());
     }
 
     /// <summary>
@@ -422,8 +429,16 @@ public class NpcAICustomerCpt : BaseNpcAI
     /// 开始吃计时
     /// </summary>
     /// <returns></returns>
-    public IEnumerator StartEat()
+    public IEnumerator CoroutineForStartEat()
     {
+        //添加吃饭图标
+        string eatIconMarkId= SystemUtil.GetUUID( SystemUtil.UUIDTypeEnum.N);
+        Sprite spEatIcon= iconDataManager.GetIconSpriteByName("customer_eat_pro_0");
+        AddStatusIconForPro(spEatIcon, eatIconAnim, eatIconMarkId);
+        //播放吃饭动画
+        characterMoveCpt.characterAnimtor.SetTrigger("Eat");
+        // 播放音效
+        audioHandler.PlaySound(AudioSoundEnum.Eat);
         yield return new WaitForSeconds(5);
         //吃完食物
         orderForCustomer.foodCpt.FinishFood(orderForCustomer.foodData);
@@ -440,7 +455,7 @@ public class NpcAICustomerCpt : BaseNpcAI
     /// 开始等待就餐计时
     /// </summary>
     /// <returns></returns>
-    public virtual IEnumerator StartWaitSeat()
+    public virtual IEnumerator CoroutineForStartWaitSeat()
     {
         yield return new WaitForSeconds(timeWaitSeat);
         innHandler.EndOrderForForce(orderForCustomer,false);
