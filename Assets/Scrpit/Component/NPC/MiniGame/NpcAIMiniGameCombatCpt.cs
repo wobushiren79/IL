@@ -201,11 +201,19 @@ public class NpcAIMiniGameCombatCpt : BaseNpcAI
     {
         for (int i = 0; i < characterMiniGameData.listCombatEffect.Count; i++)
         {
+
             MiniGameCombatEffectBean itemCombatEffect = characterMiniGameData.listCombatEffect[i];
-            CombatEffectExecute(itemCombatEffect,out bool isCharacterDead);
-            //如果角色已经死了 则不进行一下操作
-            if (isCharacterDead)
-                break;
+            if (itemCombatEffect.effectTypeData.dataType== EffectTypeEnum.AddLife
+                || itemCombatEffect.effectTypeData.dataType == EffectTypeEnum.Damage
+                || itemCombatEffect.effectTypeData.dataType == EffectTypeEnum.DamageRate)
+            {
+                CombatEffectExecute(itemCombatEffect, out bool isCharacterDead);
+                //如果角色已经死了 则不进行一下操作
+                if (isCharacterDead)
+                    break;
+                yield return new WaitForSeconds(0.5f);
+            }
+            itemCombatEffect.durationForRound--;
             if (itemCombatEffect.durationForRound <= 0)
             {
                 //移除图标
@@ -214,7 +222,6 @@ public class NpcAIMiniGameCombatCpt : BaseNpcAI
                 characterMiniGameData.listCombatEffect.Remove(itemCombatEffect);
                 i--;
             }
-            yield return new WaitForSeconds(0.5f);
         }
     }
 
@@ -268,6 +275,8 @@ public class NpcAIMiniGameCombatCpt : BaseNpcAI
             }
             else
             {
+                //播放粒子特效
+                gameCombatBuilder.CreateCombatEffect(effectPSName, transform.position + new Vector3(0, 0.5f));
                 AddStatusIconForEffect(itemType.spIcon, Color.white, gameCombatEffectData.iconMarkId);
                 characterMiniGameData.listCombatEffect.Add(gameCombatEffectData);
             }

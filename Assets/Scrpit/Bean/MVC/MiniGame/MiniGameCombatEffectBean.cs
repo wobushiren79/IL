@@ -31,7 +31,6 @@ public class MiniGameCombatEffectBean
                 float damageRate =  miniGameCharacter.GetEffectDamageRate((int)effectTypeData.effectData);
                 break;
         }
-        durationForRound--;
     }
 
 

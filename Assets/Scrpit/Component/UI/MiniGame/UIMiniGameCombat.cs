@@ -185,7 +185,8 @@ public class UIMiniGameCombat : UIBaseMiniGame<MiniGameCombatBean>
             ItemMiniGameCombatCharacterRoundCpt itemCpt = listCharacterRound[i];
             //获取角色属性
             itemCpt.gameCharacterData.characterData.GetAttributes(uiGameManager.gameItemsManager, out CharacterAttributesBean characterAttributes);
-            float roundSpeed = (0.5f + characterAttributes.speed / 10f);
+            int speed = itemCpt.gameCharacterData.GetEffectSpeedRate(characterAttributes.speed);
+            float roundSpeed = (0.5f + speed / 10f);
             //回合条向右移动
             itemCpt.transform.Translate(new Vector3(1, 0) * Time.deltaTime * roundSpeed);
             //检测是否到达目标点

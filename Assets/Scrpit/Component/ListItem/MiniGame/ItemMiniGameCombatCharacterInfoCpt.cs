@@ -14,8 +14,8 @@ public class ItemMiniGameCombatCharacterInfoCpt : ItemGameBaseCpt
     public Image ivDead;
     public Text tvDead;
 
-    public MiniGameCharacterBean gameCharacterData;
-    
+    public MiniGameCharacterForCombatBean gameCharacterData;
+    public int oriForce;
 
     private void Update()
     {
@@ -25,7 +25,28 @@ public class ItemMiniGameCombatCharacterInfoCpt : ItemGameBaseCpt
                 SetLife(gameCharacterData.characterCurrentLife, gameCharacterData.characterMaxLife);
             else
                 SetDead();
+            int totalForce = this.gameCharacterData.GetEffectForceRate(oriForce);
+            SetForce(totalForce);
         }
+    }
+
+    /// <summary>
+    /// 设置数据
+    /// </summary>
+    /// <param name="gameCharacterData"></param>
+    public void SetData(MiniGameCharacterBean gameCharacterData)
+    {
+        this.gameCharacterData = (MiniGameCharacterForCombatBean)gameCharacterData;
+
+        SetCharacterUI(this.gameCharacterData.characterData);
+        SetName(this.gameCharacterData.characterData.baseInfo.name);
+        SetLife(this.gameCharacterData.characterCurrentLife, gameCharacterData.characterMaxLife);
+
+        GameItemsManager gameItemsManager = GetUIManager<UIGameManager>().gameItemsManager;
+        this.gameCharacterData.characterData.GetAttributes(gameItemsManager, out CharacterAttributesBean characterAttributes);
+        oriForce = characterAttributes.force;
+        int totalForce= this.gameCharacterData.GetEffectForceRate(oriForce);
+        SetForce(totalForce);
     }
 
     public void SetDead()
@@ -37,23 +58,6 @@ public class ItemMiniGameCombatCharacterInfoCpt : ItemGameBaseCpt
             tvDead.transform.DOScale(new Vector3(1.5f, 1.5f, 1.5f), 1).From();
             tvDead.transform.DOLocalRotate(new Vector3(0,0,-45),1).From();
         }
-    }
-
-    /// <summary>
-    /// 设置数据
-    /// </summary>
-    /// <param name="gameCharacterData"></param>
-    public void SetData(MiniGameCharacterBean gameCharacterData)
-    {
-        this.gameCharacterData = gameCharacterData;
-
-        SetCharacterUI(gameCharacterData.characterData);
-        SetName(gameCharacterData.characterData.baseInfo.name);
-        SetLife(gameCharacterData.characterCurrentLife, gameCharacterData.characterMaxLife);
-
-        GameItemsManager gameItemsManager = GetUIManager<UIGameManager>().gameItemsManager;
-        gameCharacterData.characterData.GetAttributes(gameItemsManager, out CharacterAttributesBean characterAttributes);
-        SetForce(characterAttributes.force);
     }
 
     /// <summary>

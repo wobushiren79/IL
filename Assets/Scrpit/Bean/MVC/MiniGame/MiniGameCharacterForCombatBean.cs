@@ -43,4 +43,34 @@ public class MiniGameCharacterForCombatBean : MiniGameCharacterBean
         }
         return EffectTypeEnumTools.GetEffectDamageRate(listEffect, damage);
     }
+
+    /// <summary>
+    /// 获取所有武力加成
+    /// </summary>
+    /// <param name="force"></param>
+    /// <returns></returns>
+    public int GetEffectForceRate(int force)
+    {
+        List<EffectTypeBean> listEffect = new List<EffectTypeBean>();
+        foreach (MiniGameCombatEffectBean itemData in listCombatEffect)
+        {
+            listEffect.Add(itemData.effectTypeData);
+        }
+        return EffectTypeEnumTools.GetEffectForceRate(listEffect, force);
+    }
+
+    /// <summary>
+    /// 获取所有速度加成
+    /// </summary>
+    /// <param name="speed"></param>
+    /// <returns></returns>
+    public int GetEffectSpeedRate(int speed)
+    {
+        List<EffectTypeBean> listEffect = new List<EffectTypeBean>();
+        foreach (MiniGameCombatEffectBean itemData in listCombatEffect)
+        {
+            listEffect.Add(itemData.effectTypeData);
+        }
+        return EffectTypeEnumTools.GetEffectSpeedRate(listEffect, speed);
+    }
 }

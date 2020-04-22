@@ -769,7 +769,8 @@ public class ItemCreateWindowsEditor : EditorWindow, StoreInfoManager.ICallBack
             EditorUI.GUIText("描述：");
             itemInfo.content = EditorGUILayout.TextArea(itemInfo.content + "", GUILayout.Width(150), GUILayout.Height(20));
             GeneralEnum itemType = (GeneralEnum)itemInfo.items_type;
-            if (itemType != GeneralEnum.Menu)
+            if (itemType != GeneralEnum.Menu
+                && itemType != GeneralEnum.Medicine)
             {
                 EditorUI.GUIText("增加属性：");
                 EditorUI.GUIText("命");

@@ -5,9 +5,13 @@ using System.Collections.Generic;
 public enum EffectTypeEnum 
 {
     AddLife,//增加生命值
+    AddSpeed,//增加速度
+    AddForce,//增加武力
     Def,//增加防御力
     DefRate,//增加防御百分比
+
     Damage,//直接伤害
+    DamageRate,//直接伤害百分比
 }
 
 public class EffectTypeBean : DataBean<EffectTypeEnum>
@@ -48,6 +52,12 @@ public class EffectTypeEnumTools : DataTools
             case EffectTypeEnum.AddLife:
                 effectTypeData = GetEffectDetailsForAddLife(iconDataManager,effectTypeData);
                 break;
+            case EffectTypeEnum.AddForce:
+                effectTypeData = GetEffectDetailsForAddForce(iconDataManager, effectTypeData);
+                break;
+            case EffectTypeEnum.AddSpeed:
+                effectTypeData = GetEffectDetailsForAddSpeed(iconDataManager, effectTypeData);
+                break;
             case EffectTypeEnum.DefRate:
                 effectTypeData = GetEffectDetailsForAddDef(iconDataManager, effectTypeData);
                 break;
@@ -67,7 +77,6 @@ public class EffectTypeEnumTools : DataTools
         effectTypeData.spIcon = iconDataManager.GetIconSpriteByName("ui_effect_addlife_1");
         return effectTypeData;
     }
-
     /// <summary>
     /// 获取增加防御力的相关数据
     /// </summary>
@@ -78,10 +87,23 @@ public class EffectTypeEnumTools : DataTools
         float defRate = float.Parse(effectTypeData.data);
         effectTypeData.effectData = float.Parse(effectTypeData.data);
         effectTypeData.effectDescribe = string.Format(GameCommonInfo.GetUITextById(503), (defRate*100)+"%");
-        effectTypeData.spIcon = iconDataManager.GetIconSpriteByName("defend_1");
+        effectTypeData.spIcon = iconDataManager.GetIconSpriteByName("ui_effect_defend_1");
         return effectTypeData;
     }
-
+    private static EffectTypeBean GetEffectDetailsForAddSpeed(IconDataManager iconDataManager, EffectTypeBean effectTypeData)
+    {
+        effectTypeData.effectData = float.Parse(effectTypeData.data);
+        effectTypeData.effectDescribe = string.Format(GameCommonInfo.GetUITextById(505), effectTypeData.data);
+        effectTypeData.spIcon = iconDataManager.GetIconSpriteByName("ui_effect_speed_1");
+        return effectTypeData;
+    }
+    private static EffectTypeBean GetEffectDetailsForAddForce(IconDataManager iconDataManager, EffectTypeBean effectTypeData)
+    {
+        effectTypeData.effectData = float.Parse(effectTypeData.data);
+        effectTypeData.effectDescribe = string.Format(GameCommonInfo.GetUITextById(506), effectTypeData.data);
+        effectTypeData.spIcon = iconDataManager.GetIconSpriteByName("ui_effect_force_1");
+        return effectTypeData;
+    }
     /// <summary>
     /// 获取所有效果的伤害加成
     /// </summary>
@@ -108,4 +130,55 @@ public class EffectTypeEnumTools : DataTools
             damage = 0;
         return damage; 
     }
+
+    /// <summary>
+    /// 获取所有武力加成效果
+    /// </summary>
+    /// <param name="listData"></param>
+    /// <param name="force"></param>
+    /// <returns></returns>
+    public static int GetEffectForceRate(List<EffectTypeBean> listData,int force)
+    {
+        float forceRate = 1;
+        float forceAdd = 0;
+        foreach (EffectTypeBean itemData in listData)
+        {
+            switch (itemData.dataType)
+            {
+                case EffectTypeEnum.AddForce:
+                    forceAdd += int.Parse(itemData.data);
+                    break;
+            }
+        }
+        force = (int)((force + forceAdd) * forceRate);
+        if (force < 0)
+            force = 0;
+        return force;
+    }
+
+    /// <summary>
+    /// 获取所有武力加成效果
+    /// </summary>
+    /// <param name="listData"></param>
+    /// <param name="force"></param>
+    /// <returns></returns>
+    public static int GetEffectSpeedRate(List<EffectTypeBean> listData, int speed)
+    {
+        float speedRate = 1;
+        float speedAdd = 0;
+        foreach (EffectTypeBean itemData in listData)
+        {
+            switch (itemData.dataType)
+            {
+                case EffectTypeEnum.AddSpeed:
+                    speedAdd += int.Parse(itemData.data);
+                    break;
+            }
+        }
+        speed = (int)((speed + speedAdd) * speedRate);
+        if (speed < 0)
+            speed = 0;
+        return speed;
+    }
+
 }

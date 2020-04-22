@@ -309,8 +309,10 @@ public class MiniGameCombatHandler : BaseMiniGameHandler<MiniGameCombatBuilder, 
         {
             //力量测试加成
             float damagePowerRate = (miniGameData.GetRoundActionPowerTest() + 0.2f);
+            //计算所有武力加成
+            int force = actionNpc.characterMiniGameData.GetEffectForceRate(actionCharacterAttributes.force);
             //计算伤害
-            int damage = (int)(damagePowerRate  * actionCharacterAttributes.force * 2);
+            int damage = (int)(damagePowerRate  * force * 2);
             //效果伤害加成
             damage = targetNpc.characterMiniGameData.GetEffectDamageRate(damage);
             //角色伤害
