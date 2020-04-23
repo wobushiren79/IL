@@ -115,102 +115,107 @@ public class EditorUI
         GUILayout.Label("NPCID：", GUILayout.Width(100), GUILayout.Height(20));
         npcInfo.id = long.Parse(EditorGUILayout.TextArea(npcInfo.id + "", GUILayout.Width(100), GUILayout.Height(20)));
         npcInfo.npc_id = npcInfo.id;
-        npcInfo.npc_type = (int)(NpcTypeEnum)EditorGUILayout.EnumPopup("Npc类型：", (NpcTypeEnum)npcInfo.npc_type);
-        GUILayout.Label("姓名：", GUILayout.Width(100), GUILayout.Height(20));
-        npcInfo.name = EditorGUILayout.TextArea(npcInfo.name + "", GUILayout.Width(100), GUILayout.Height(20));
-        GUILayout.Label("性别：1男 2女", GUILayout.Width(100), GUILayout.Height(20));
-        npcInfo.sex = int.Parse(EditorGUILayout.TextArea(npcInfo.sex + "", GUILayout.Width(30), GUILayout.Height(20)));
-        GUILayout.Label("朝向 1左 2右", GUILayout.Width(100), GUILayout.Height(20));
-        npcInfo.face = int.Parse(EditorGUILayout.TextArea(npcInfo.face + "", GUILayout.Width(30), GUILayout.Height(20)));
-        GUILayout.Label("称号：", GUILayout.Width(100), GUILayout.Height(20));
-        npcInfo.title_name = EditorGUILayout.TextArea(npcInfo.title_name + "", GUILayout.Width(100), GUILayout.Height(20));
-        GUILayout.Label("位置XY：", GUILayout.Width(100), GUILayout.Height(20));
-        npcInfo.position_x = float.Parse(EditorGUILayout.TextArea(npcInfo.position_x + "", GUILayout.Width(100), GUILayout.Height(20)));
-        npcInfo.position_y = float.Parse(EditorGUILayout.TextArea(npcInfo.position_y + "", GUILayout.Width(100), GUILayout.Height(20)));
+        npcInfo.npc_type = (int)GUIEnum<NpcTypeEnum>("Npc类型：", npcInfo.npc_type);
+        NpcTypeEnum npcType = (NpcTypeEnum)npcInfo.npc_type;
+        if (npcType !=  NpcTypeEnum.Passerby)
+        {
+            GUILayout.Label("姓名：", GUILayout.Width(100), GUILayout.Height(20));
+            npcInfo.name = EditorGUILayout.TextArea(npcInfo.name + "", GUILayout.Width(100), GUILayout.Height(20));
+            GUILayout.Label("性别：1男 2女", GUILayout.Width(100), GUILayout.Height(20));
+            npcInfo.sex = int.Parse(EditorGUILayout.TextArea(npcInfo.sex + "", GUILayout.Width(30), GUILayout.Height(20)));
+            GUILayout.Label("称号：", GUILayout.Width(100), GUILayout.Height(20));
+            npcInfo.title_name = EditorGUILayout.TextArea(npcInfo.title_name + "", GUILayout.Width(100), GUILayout.Height(20));
+            GUILayout.Label("朝向 1左 2右", GUILayout.Width(100), GUILayout.Height(20));
+            npcInfo.face = int.Parse(EditorGUILayout.TextArea(npcInfo.face + "", GUILayout.Width(30), GUILayout.Height(20)));
+            GUILayout.Label("位置XY：", GUILayout.Width(100), GUILayout.Height(20));
+            npcInfo.position_x = float.Parse(EditorGUILayout.TextArea(npcInfo.position_x + "", GUILayout.Width(100), GUILayout.Height(20)));
+            npcInfo.position_y = float.Parse(EditorGUILayout.TextArea(npcInfo.position_y + "", GUILayout.Width(100), GUILayout.Height(20)));
 
-        GUILayout.Label("头发：", GUILayout.Width(100), GUILayout.Height(20));
-        npcInfo.hair_id = EditorGUILayout.TextArea(npcInfo.hair_id + "", GUILayout.Width(200), GUILayout.Height(20));
-        string hairPath = "Assets/Texture/Character/Hair/";
-        GUIPic(hairPath, npcInfo.hair_id);
-        GUILayout.Label("头发颜色：", GUILayout.Width(100), GUILayout.Height(20));
-        ColorBean hairColorData = new ColorBean(npcInfo.hair_color);
-        Color hairColor = hairColorData.GetColor(); ;
-        hairColor = EditorGUILayout.ColorField(hairColor);
-        npcInfo.hair_color = hairColor.r + "," + hairColor.g + "," + hairColor.b + "," + hairColor.a;
+            GUILayout.Label("头发：", GUILayout.Width(100), GUILayout.Height(20));
+            npcInfo.hair_id = EditorGUILayout.TextArea(npcInfo.hair_id + "", GUILayout.Width(200), GUILayout.Height(20));
+            string hairPath = "Assets/Texture/Character/Hair/";
+            GUIPic(hairPath, npcInfo.hair_id);
+            GUILayout.Label("头发颜色：", GUILayout.Width(100), GUILayout.Height(20));
+            ColorBean hairColorData = new ColorBean(npcInfo.hair_color);
+            Color hairColor = hairColorData.GetColor(); ;
+            hairColor = EditorGUILayout.ColorField(hairColor);
+            npcInfo.hair_color = hairColor.r + "," + hairColor.g + "," + hairColor.b + "," + hairColor.a;
 
-        GUILayout.Label("眼睛：", GUILayout.Width(100), GUILayout.Height(20));
-        npcInfo.eye_id = EditorGUILayout.TextArea(npcInfo.eye_id + "", GUILayout.Width(200), GUILayout.Height(20));
-        string eyePath = "Assets/Texture/Character/Eye/";
-        GUIPic(eyePath, npcInfo.eye_id);
-        GUILayout.Label("眼睛颜色：", GUILayout.Width(100), GUILayout.Height(20));
-        ColorBean eyeColorData = new ColorBean(npcInfo.eye_color);
-        Color eyeColor = eyeColorData.GetColor(); ;
-        eyeColor = EditorGUILayout.ColorField(eyeColor);
-        npcInfo.eye_color = eyeColor.r + "," + eyeColor.g + "," + eyeColor.b + "," + eyeColor.a;
+            GUILayout.Label("眼睛：", GUILayout.Width(100), GUILayout.Height(20));
+            npcInfo.eye_id = EditorGUILayout.TextArea(npcInfo.eye_id + "", GUILayout.Width(200), GUILayout.Height(20));
+            string eyePath = "Assets/Texture/Character/Eye/";
+            GUIPic(eyePath, npcInfo.eye_id);
+            GUILayout.Label("眼睛颜色：", GUILayout.Width(100), GUILayout.Height(20));
+            ColorBean eyeColorData = new ColorBean(npcInfo.eye_color);
+            Color eyeColor = eyeColorData.GetColor(); ;
+            eyeColor = EditorGUILayout.ColorField(eyeColor);
+            npcInfo.eye_color = eyeColor.r + "," + eyeColor.g + "," + eyeColor.b + "," + eyeColor.a;
 
-        GUILayout.Label("嘴巴：", GUILayout.Width(100), GUILayout.Height(20));
-        npcInfo.mouth_id = EditorGUILayout.TextArea(npcInfo.mouth_id + "", GUILayout.Width(200), GUILayout.Height(20));
-        string mouthPath = "Assets/Texture/Character/Mouth/";
-        GUIPic(mouthPath, npcInfo.mouth_id);
-        GUILayout.Label("嘴巴颜色：", GUILayout.Width(100), GUILayout.Height(20));
-        ColorBean mouthColorData = new ColorBean(npcInfo.mouth_color);
-        Color mouthColor = mouthColorData.GetColor(); ;
-        mouthColor = EditorGUILayout.ColorField(mouthColor);
-        npcInfo.mouth_color = mouthColor.r + "," + mouthColor.g + "," + mouthColor.b + "," + mouthColor.a;
+            GUILayout.Label("嘴巴：", GUILayout.Width(100), GUILayout.Height(20));
+            npcInfo.mouth_id = EditorGUILayout.TextArea(npcInfo.mouth_id + "", GUILayout.Width(200), GUILayout.Height(20));
+            string mouthPath = "Assets/Texture/Character/Mouth/";
+            GUIPic(mouthPath, npcInfo.mouth_id);
+            GUILayout.Label("嘴巴颜色：", GUILayout.Width(100), GUILayout.Height(20));
+            ColorBean mouthColorData = new ColorBean(npcInfo.mouth_color);
+            Color mouthColor = mouthColorData.GetColor(); ;
+            mouthColor = EditorGUILayout.ColorField(mouthColor);
+            npcInfo.mouth_color = mouthColor.r + "," + mouthColor.g + "," + mouthColor.b + "," + mouthColor.a;
 
-        GUILayout.Label("面具：", GUILayout.Width(100), GUILayout.Height(20));
+            GUILayout.Label("喜欢的东西ID（用,分隔）：", GUILayout.Width(150), GUILayout.Height(20));
+            npcInfo.love_items = EditorGUILayout.TextArea(npcInfo.love_items + "", GUILayout.Width(100), GUILayout.Height(20));
+
+
+
+            GUILayout.Label("命：", GUILayout.Width(30), GUILayout.Height(20));
+            npcInfo.attributes_life = int.Parse(EditorGUILayout.TextArea(npcInfo.attributes_life + "", GUILayout.Width(50), GUILayout.Height(20)));
+            GUILayout.Label("厨：", GUILayout.Width(30), GUILayout.Height(20));
+            npcInfo.attributes_cook = int.Parse(EditorGUILayout.TextArea(npcInfo.attributes_cook + "", GUILayout.Width(50), GUILayout.Height(20)));
+            GUILayout.Label("速：", GUILayout.Width(30), GUILayout.Height(20));
+            npcInfo.attributes_speed = int.Parse(EditorGUILayout.TextArea(npcInfo.attributes_speed + "", GUILayout.Width(50), GUILayout.Height(20)));
+            GUILayout.Label("算：", GUILayout.Width(30), GUILayout.Height(20));
+            npcInfo.attributes_account = int.Parse(EditorGUILayout.TextArea(npcInfo.attributes_account + "", GUILayout.Width(50), GUILayout.Height(20)));
+            GUILayout.Label("魅：", GUILayout.Width(30), GUILayout.Height(20));
+            npcInfo.attributes_charm = int.Parse(EditorGUILayout.TextArea(npcInfo.attributes_charm + "", GUILayout.Width(50), GUILayout.Height(20)));
+            GUILayout.Label("武：", GUILayout.Width(30), GUILayout.Height(20));
+            npcInfo.attributes_force = int.Parse(EditorGUILayout.TextArea(npcInfo.attributes_force + "", GUILayout.Width(50), GUILayout.Height(20)));
+            GUILayout.Label("运：", GUILayout.Width(30), GUILayout.Height(20));
+            npcInfo.attributes_lucky = int.Parse(EditorGUILayout.TextArea(npcInfo.attributes_lucky + "", GUILayout.Width(50), GUILayout.Height(20)));
+
+
+            GUILayout.Label("喜欢的菜品：", GUILayout.Width(100), GUILayout.Height(20));
+            npcInfo.love_menus = EditorGUILayout.TextArea(npcInfo.love_menus + "", GUILayout.Width(50), GUILayout.Height(20));
+        }
+        GUIText("|",10);
+        GUIText("面具：", 50);
         npcInfo.mask_id = long.Parse(EditorGUILayout.TextArea(npcInfo.mask_id + "", GUILayout.Width(100), GUILayout.Height(20)));
         string maskPath = "Assets/Texture/Character/Dress/Mask/";
         ItemsInfoBean maskInfo = gameItemsManager.GetItemsById(npcInfo.mask_id);
         if (maskInfo != null)
             GUIPic(maskPath, maskInfo.icon_key);
-
-        GUILayout.Label("帽子：", GUILayout.Width(100), GUILayout.Height(20));
+        GUIText("|", 10);
+        GUIText("帽子：", 50);
         npcInfo.hat_id = long.Parse(EditorGUILayout.TextArea(npcInfo.hat_id + "", GUILayout.Width(100), GUILayout.Height(20)));
         string hatPath = "Assets/Texture/Character/Dress/Hat/";
         ItemsInfoBean hatInfo = gameItemsManager.GetItemsById(npcInfo.hat_id);
         if (hatInfo != null)
             GUIPic(hatPath, hatInfo.icon_key);
-
-        GUILayout.Label("衣服：", GUILayout.Width(100), GUILayout.Height(20));
+        GUIText("|", 10);
+        GUIText("衣服：",50);
         npcInfo.clothes_id = long.Parse(EditorGUILayout.TextArea(npcInfo.clothes_id + "", GUILayout.Width(100), GUILayout.Height(20)));
         string clothesPath = "Assets/Texture/Character/Dress/Clothes/";
         ItemsInfoBean clothesInfo = gameItemsManager.GetItemsById(npcInfo.clothes_id);
         if (clothesInfo != null)
             GUIPic(clothesPath, clothesInfo.icon_key);
-
-        GUILayout.Label("鞋子：", GUILayout.Width(100), GUILayout.Height(20));
+        GUIText("|", 10);
+        GUIText("鞋子：", 50);
         npcInfo.shoes_id = long.Parse(EditorGUILayout.TextArea(npcInfo.shoes_id + "", GUILayout.Width(100), GUILayout.Height(20)));
         string shoesPath = "Assets/Texture/Character/Dress/Shoes/";
         ItemsInfoBean shoesInfo = gameItemsManager.GetItemsById(npcInfo.shoes_id);
         if (shoesInfo != null)
             GUIPic(shoesPath, shoesInfo.icon_key);
-
-        GUILayout.Label("喜欢的东西ID（用,分隔）：", GUILayout.Width(150), GUILayout.Height(20));
-        npcInfo.love_items = EditorGUILayout.TextArea(npcInfo.love_items + "", GUILayout.Width(100), GUILayout.Height(20));
-
-
-        GUILayout.Label("命：", GUILayout.Width(30), GUILayout.Height(20));
-        npcInfo.attributes_life = int.Parse(EditorGUILayout.TextArea(npcInfo.attributes_life + "", GUILayout.Width(50), GUILayout.Height(20)));
-        GUILayout.Label("厨：", GUILayout.Width(30), GUILayout.Height(20));
-        npcInfo.attributes_cook = int.Parse(EditorGUILayout.TextArea(npcInfo.attributes_cook + "", GUILayout.Width(50), GUILayout.Height(20)));
-        GUILayout.Label("速：", GUILayout.Width(30), GUILayout.Height(20));
-        npcInfo.attributes_speed = int.Parse(EditorGUILayout.TextArea(npcInfo.attributes_speed + "", GUILayout.Width(50), GUILayout.Height(20)));
-        GUILayout.Label("算：", GUILayout.Width(30), GUILayout.Height(20));
-        npcInfo.attributes_account = int.Parse(EditorGUILayout.TextArea(npcInfo.attributes_account + "", GUILayout.Width(50), GUILayout.Height(20)));
-        GUILayout.Label("魅：", GUILayout.Width(30), GUILayout.Height(20));
-        npcInfo.attributes_charm = int.Parse(EditorGUILayout.TextArea(npcInfo.attributes_charm + "", GUILayout.Width(50), GUILayout.Height(20)));
-        GUILayout.Label("武：", GUILayout.Width(30), GUILayout.Height(20));
-        npcInfo.attributes_force = int.Parse(EditorGUILayout.TextArea(npcInfo.attributes_force + "", GUILayout.Width(50), GUILayout.Height(20)));
-        GUILayout.Label("运：", GUILayout.Width(30), GUILayout.Height(20));
-        npcInfo.attributes_lucky = int.Parse(EditorGUILayout.TextArea(npcInfo.attributes_lucky + "", GUILayout.Width(50), GUILayout.Height(20)));
-
-        GUILayout.Label("喜欢的菜品：", GUILayout.Width(100), GUILayout.Height(20));
-        npcInfo.love_menus = EditorGUILayout.TextArea(npcInfo.love_menus + "", GUILayout.Width(50), GUILayout.Height(20));
-
+        GUIText("|", 10);
         npcInfo.condition = GUIListData<ShowConditionEnum>("Npc出现条件", npcInfo.condition);
         GUILayout.EndHorizontal();
-
     }
 
     /// <summary>
