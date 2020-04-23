@@ -725,6 +725,7 @@ public class EditorUI
     /// </summary>
     public static void GUIMenuCreate(MenuInfoService menuInfoService, MenuInfoBean menuInfo)
     {
+        GUIText("技能创建");
         if (GUIButton("创建"))
         {
             menuInfo.valid = 1;
@@ -819,6 +820,95 @@ public class EditorUI
         GUIText("材料 面粉:");
         menuInfo.ing_flour = GUIEditorText(menuInfo.ing_flour, 50);
 
+        GUILayout.EndHorizontal();
+    }
+
+    /// <summary>
+    /// 技能创建
+    /// </summary>
+    /// <param name="skillInfoService"></param>
+    /// <param name="skillInfo"></param>
+    public static void GUISkillCreate(SkillInfoService skillInfoService,SkillInfoBean skillInfo)
+    {
+        if (GUIButton("创建"))
+        {
+            skillInfo.valid = 1;
+            skillInfoService.InsertData(skillInfo);
+        }
+        GUISkillItem(skillInfo);
+        GUILayout.Space(20);
+    }
+
+    /// <summary>
+    /// 技能查询
+    /// </summary>
+    /// <param name="skillInfoService"></param>
+    /// <param name="findIds"></param>
+    /// <param name="listData"></param>
+    /// <param name="outFindIds"></param>
+    /// <param name="outListData"></param>
+    public static void GUISkillFind(SkillInfoService skillInfoService, string findIds, List<SkillInfoBean> listData, out string outFindIds, out List<SkillInfoBean> outListData)
+    {
+        GUILayout.BeginHorizontal();
+        GUIText("查询IDs");
+        findIds = GUIEditorText(findIds);
+        if (GUIButton("查询指定ID"))
+        {
+            long[] ids = StringUtil.SplitBySubstringForArrayLong(findIds, ',');
+            listData = skillInfoService.QueryDataByIds(ids);
+        }
+        if (GUIButton("查询所有技能"))
+        {
+            listData = skillInfoService.QueryAllData();
+        }
+        GUILayout.EndHorizontal();
+        if (!CheckUtil.ListIsNull(listData))
+        {
+
+            for (int i = 0; i < listData.Count; i++)
+            {
+                SkillInfoBean itemData = listData[i];
+                GUILayout.BeginHorizontal();
+                GUILayout.Space(20);
+                if (GUIButton("更新"))
+                {
+                    skillInfoService.Update(itemData);
+                }
+                if (GUIButton("删除"))
+                {
+                    skillInfoService.DeleteData(itemData.id);
+                }
+                GUISkillItem(itemData);
+                GUILayout.EndHorizontal();    
+            }
+        }
+        outListData = listData;
+        outFindIds = findIds;
+    }
+
+    /// <summary>
+    /// 技能展示
+    /// </summary>
+    /// <param name="skillInfo"></param>
+    public static void GUISkillItem(SkillInfoBean skillInfo)
+    {
+        GUILayout.BeginHorizontal();
+        GUIText("ID:");
+        skillInfo.id = GUIEditorText(skillInfo.id);
+        skillInfo.skill_id = skillInfo.id;
+        GUIText("名称");
+        skillInfo.name = GUIEditorText(skillInfo.name);
+        GUIText("介绍");
+        skillInfo.content = GUIEditorText(skillInfo.content,200);
+        GUIText("图片名称:");
+        skillInfo.icon_key = GUIEditorText(skillInfo.icon_key, 150);
+        string menuPicPath = "Assets/Texture/Common/UI/";
+        GUIPic(menuPicPath, skillInfo.icon_key);
+        GUIText("使用数量");
+        skillInfo.use_number = GUIEditorText(skillInfo.use_number);
+        skillInfo.effect = GUIListData<EffectTypeEnum>("效果", skillInfo.effect);
+        skillInfo.effect_details = GUIListData<EffectDetailsEnum>("效果详情", skillInfo.effect_details);
+        skillInfo.pre_data= GUIListData<PreTypeEnum>("解锁条件", skillInfo.pre_data);
         GUILayout.EndHorizontal();
     }
 

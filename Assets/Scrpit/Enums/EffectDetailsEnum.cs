@@ -6,7 +6,7 @@ public enum EffectDetailsEnum
 {
     EffectPSName,//粒子特效名字
     ImpactNumber,//作用人数
-    ImpactType,//作用人群类型 1友方 2敌方 
+    ImpactType,//作用人群类型 0自己 1友方 2敌方 
     DurationForRound,//持续回合数
 }
 

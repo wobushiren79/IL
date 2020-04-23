@@ -1,8 +1,9 @@
 ﻿using UnityEngine;
 using UnityEditor;
 using UnityEngine.Events;
+using System.Collections.Generic;
 
-public class ItemGameBackpackEquipCpt : ItemGameBackpackCpt
+public class ItemGameBackpackEquipCpt : ItemGameBackpackCpt, SkillInfoManager.ICallBack
 {
     public CharacterBean characterData;
 
@@ -65,7 +66,7 @@ public class ItemGameBackpackEquipCpt : ItemGameBackpackCpt
     #region  装备回调
     public override void SelectionUse(PopupItemsSelection view)
     {
-        ToastManager toastManager = GetUIManager<UIGameManager>().toastManager;
+        ToastManager toastManager = uiGameManager.toastManager;
         GeneralEnum itemsType = itemsInfoBean.GetItemsType();
         switch (itemsType)
         {
@@ -96,11 +97,9 @@ public class ItemGameBackpackEquipCpt : ItemGameBackpackCpt
                 }
                 else
                 {
-                    //学习该技能
-                    characterData.attributes.LearnSkill(itemsInfoBean.add_id);
-                    string toastStr = string.Format(GameCommonInfo.GetUITextById(1064), characterData.baseInfo.name, itemsInfoBean.name);
-                    toastManager.ToastHint(ivIcon.sprite, toastStr);
-                    RefreshItems(itemsInfoBean.id, -1);
+                    //判断是否可学习
+                    uiGameManager.skillInfoManager.SetCallBack(this);
+                    uiGameManager.skillInfoManager.GetSkillById(itemsInfoBean.add_id);
                 }
                 break;
             default:
@@ -124,5 +123,32 @@ public class ItemGameBackpackEquipCpt : ItemGameBackpackCpt
         nullItems.items_type = itemsInfoBean.items_type;
         uiGameEquip.SetEquip(nullItems);
     }
-    #endregion 
+    #endregion
+
+
+    #region  技能回调
+    public void GetSkillInfoSuccess(List<SkillInfoBean> listData)
+    {
+        ToastManager toastManager = uiGameManager.toastManager;
+        if (listData == null || listData.Count == 0)
+        {
+            toastManager.ToastHint(ivIcon.sprite, GameCommonInfo.GetUITextById(1065));
+            return;
+        }
+        SkillInfoBean skillInfo = listData[0];
+        bool isPre = PreTypeEnumTools.CheckIsAllPre(uiGameManager.gameDataManager.gameData, characterData, skillInfo.pre_data, out string reason);
+        if (!isPre)
+        {
+            toastManager.ToastHint(ivIcon.sprite, reason);
+        }
+        else
+        {
+            //学习该技能
+            characterData.attributes.LearnSkill(itemsInfoBean.add_id);
+            string toastStr = string.Format(GameCommonInfo.GetUITextById(1064), characterData.baseInfo.name, itemsInfoBean.name);
+            toastManager.ToastHint(ivIcon.sprite, toastStr);
+            RefreshItems(itemsInfoBean.id, -1);
+        }
+    }
+    #endregion
 }

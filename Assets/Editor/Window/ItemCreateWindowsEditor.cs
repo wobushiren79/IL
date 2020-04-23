@@ -11,6 +11,7 @@ public class ItemCreateWindowsEditor : EditorWindow, StoreInfoManager.ICallBack
     StoreInfoService storeInfoService;
     BuildItemService buildItemService;
     MenuInfoService menuInfoService;
+    SkillInfoService skillInfoService;
     AchievementInfoService achievementInfoService;
     [MenuItem("Tools/Window/ItemCreate")]
     static void CreateWindows()
@@ -38,6 +39,7 @@ public class ItemCreateWindowsEditor : EditorWindow, StoreInfoManager.ICallBack
         storeInfoService = new StoreInfoService();
         buildItemService = new BuildItemService();
         menuInfoService = new MenuInfoService();
+        skillInfoService = new SkillInfoService();
         achievementInfoService = new AchievementInfoService();
     }
 
@@ -49,6 +51,7 @@ public class ItemCreateWindowsEditor : EditorWindow, StoreInfoManager.ICallBack
         listFindAchItem.Clear();
         listFindBuildItem.Clear();
         listFindMenuItem.Clear();
+        listFindSkillItem.Clear();
     }
 
     private Vector2 scrollPosition = Vector2.zero;
@@ -69,11 +72,16 @@ public class ItemCreateWindowsEditor : EditorWindow, StoreInfoManager.ICallBack
     public MenuInfoBean createMenuInfo = new MenuInfoBean();
     public string menuFindIds = "";
 
+    //技能创建数据
+    public SkillInfoBean createSkillInfo = new SkillInfoBean();
+    public string skillFindIds = "";
+
     public List<ItemsInfoBean> listFindItem = new List<ItemsInfoBean>();
     public List<StoreInfoBean> listFindStoreItem = new List<StoreInfoBean>();
     public List<AchievementInfoBean> listFindAchItem = new List<AchievementInfoBean>();
     public List<BuildItemBean> listFindBuildItem = new List<BuildItemBean>();
     public List<MenuInfoBean> listFindMenuItem = new List<MenuInfoBean>();
+    public List<SkillInfoBean> listFindSkillItem = new List<SkillInfoBean>();
     private void OnGUI()
     {
         //滚动布局
@@ -99,7 +107,9 @@ public class ItemCreateWindowsEditor : EditorWindow, StoreInfoManager.ICallBack
         GUILayout.Label("------------------------------------------------------------------------------------------------");
         EditorUI.GUIMenuCreate(menuInfoService,createMenuInfo);
         EditorUI.GUIMenuFind(menuInfoService, menuFindIds, listFindMenuItem, out menuFindIds,  out listFindMenuItem);
-
+        GUILayout.Label("------------------------------------------------------------------------------------------------");
+        EditorUI.GUISkillCreate(skillInfoService, createSkillInfo);
+        EditorUI.GUISkillFind(skillInfoService, skillFindIds, listFindSkillItem, out skillFindIds,out listFindSkillItem);
 
         GUILayout.EndVertical();
         GUILayout.EndScrollView();
@@ -659,6 +669,10 @@ public class ItemCreateWindowsEditor : EditorWindow, StoreInfoManager.ICallBack
         {
             listFindItem = gameItemsManager.GetItemsListByType( GeneralEnum.Menu);
         }
+        if (GUILayout.Button("查询技能书", GUILayout.Width(100), GUILayout.Height(20)))
+        {
+            listFindItem = gameItemsManager.GetItemsListByType(GeneralEnum.SkillBook);
+        }
         if (GUILayout.Button("查询所有药", GUILayout.Width(100), GUILayout.Height(20)))
         {
             listFindItem = gameItemsManager.GetMedicineList();
@@ -770,7 +784,8 @@ public class ItemCreateWindowsEditor : EditorWindow, StoreInfoManager.ICallBack
             itemInfo.content = EditorGUILayout.TextArea(itemInfo.content + "", GUILayout.Width(150), GUILayout.Height(20));
             GeneralEnum itemType = (GeneralEnum)itemInfo.items_type;
             if (itemType != GeneralEnum.Menu
-                && itemType != GeneralEnum.Medicine)
+                && itemType != GeneralEnum.Medicine
+                && itemType != GeneralEnum.SkillBook)
             {
                 EditorUI.GUIText("增加属性：");
                 EditorUI.GUIText("命");

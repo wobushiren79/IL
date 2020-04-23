@@ -35,7 +35,7 @@ public class ItemTownGuildAchievementCpt : ItemGameBaseCpt
     public void SetIcon(long achId, long preId, string iconKey, string preData)
     {
         GameDataManager gameDataManager = GetUIManager<UIGameManager>().gameDataManager;
-        bool isAllPre = PreTypeEnumTools.CheckIsAllPre(gameDataManager.gameData, preData);
+        bool isAllPre = PreTypeEnumTools.CheckIsAllPre(gameDataManager.gameData, gameDataManager.gameData.userCharacter, preData,out string reason);
 
         if (ivIcon == null || gameDataManager == null || ivBackground == null)
             return;

@@ -239,7 +239,7 @@ public class UIMiniGameCombat : UIBaseMiniGame<MiniGameCombatBean>
     public void OpenSelectCharacter(int selectNumber, int selectType)
     {
         //如果选择是选择自己
-        if (selectType == -1)
+        if (selectType == 0)
         {
             SelectComplete(new List<NpcAIMiniGameCombatCpt>() { miniGameData.GetRoundActionCharacter() });
         }

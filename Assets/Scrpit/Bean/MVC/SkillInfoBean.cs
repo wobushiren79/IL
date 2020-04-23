@@ -12,6 +12,8 @@ public class SkillInfoBean : BaseBean
     public string effect_details;
     //使用次数
     public int use_number;
+    //前置解锁条件
+    public string pre_data;
 
     //名字
     public string name;

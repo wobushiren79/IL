@@ -10,6 +10,8 @@ public enum PreTypeEnum
     HaveMoneyL,//当前拥有金钱
     HaveMoneyM,//当前拥有金钱
     HaveMoneyS,//当前拥有金钱
+    AttributeForForce,//达标属性
+    AttributeForSpeed,
 }
 
 public class PreTypeBean : DataBean<PreTypeEnum>
@@ -37,14 +39,16 @@ public class PreTypeEnumTools : DataTools
     /// <param name="gameData"></param>
     /// <param name="data"></param>
     /// <returns></returns>
-    public static bool CheckIsAllPre(GameDataBean gameData, string data)
+    public static bool CheckIsAllPre(GameDataBean gameData, CharacterBean characterData, string data,out string reason)
     {
         List<PreTypeBean> listPreData = GetListPreData(data);
+        reason = "";
         foreach (var itemPreData in listPreData)
         {
-            GetPreDetails(itemPreData, gameData, null);
+            GetPreDetails(itemPreData, gameData, characterData,null,false);
             if (!itemPreData.isPre)
             {
+                reason = itemPreData.preFailStr;
                 return false;
             }
         }
@@ -65,7 +69,7 @@ public class PreTypeEnumTools : DataTools
     /// </summary>
     /// <param name="rewardType"></param>
     /// <returns></returns>
-    public static PreTypeBean GetPreDetails(PreTypeBean preTypeData, GameDataBean gameData, IconDataManager iconDataManager, bool isComplete)
+    public static PreTypeBean GetPreDetails(PreTypeBean preTypeData, GameDataBean gameData, CharacterBean characterData, IconDataManager iconDataManager, bool isComplete)
     {
         switch (preTypeData.dataType)
         {
@@ -79,12 +83,20 @@ public class PreTypeEnumTools : DataTools
             case PreTypeEnum.HaveMoneyS:
                 GetPreDetailsForHaveMoney(preTypeData, gameData, iconDataManager, isComplete);
                 break;
+            case PreTypeEnum.AttributeForForce:
+            case PreTypeEnum.AttributeForSpeed:
+                GetPreDetailsForAttributes(preTypeData, characterData, iconDataManager);
+                break;
         }
         return preTypeData;
     }
+    public static PreTypeBean GetPreDetails(PreTypeBean preTypeData, GameDataBean gameData,  IconDataManager iconDataManager, bool isComplete)
+    {
+        return GetPreDetails(preTypeData, gameData, null, iconDataManager, isComplete);
+    }
     public static PreTypeBean GetPreDetails(PreTypeBean preTypeData, GameDataBean gameData, IconDataManager iconDataManager)
     {
-        return GetPreDetails(preTypeData, gameData, iconDataManager, false);
+        return GetPreDetails(preTypeData, gameData, null,iconDataManager, false);
     }
 
     /// <summary>
@@ -189,7 +201,47 @@ public class PreTypeEnumTools : DataTools
         preTypeData.preDescribe = string.Format(preTypeData.preDescribe, haveMoneyStr);
         return preTypeData;
     }
-
+    
+    /// <summary>
+    /// 获取属性相关详情
+    /// </summary>
+    /// <param name="preTypeData"></param>
+    /// <param name="characterData"></param>
+    /// <param name="iconDataManager"></param>
+    /// <returns></returns>
+    private static PreTypeBean GetPreDetailsForAttributes(PreTypeBean preTypeData,CharacterBean characterData, IconDataManager iconDataManager)
+    {
+        if (characterData == null)
+            return preTypeData;
+        int targetAttributes = 0;
+        string iconKey = "";
+        int dataAttributes = int.Parse(preTypeData.data);
+        switch (preTypeData.dataType)
+        {
+            case PreTypeEnum.AttributeForForce:
+                targetAttributes = characterData.attributes.force;
+                iconKey = "ui_ability_force";
+                preTypeData.preFailStr = GameCommonInfo.GetUITextById(5010);
+                break;
+            case PreTypeEnum.AttributeForSpeed:
+                targetAttributes = characterData.attributes.speed;
+                iconKey = "ui_ability_speed";
+                preTypeData.preFailStr = GameCommonInfo.GetUITextById(5011);
+                break;
+        }
+        if (iconDataManager != null)
+            preTypeData.spPreIcon = iconDataManager.GetIconSpriteByName(iconKey);
+        preTypeData.preFailStr = string.Format(preTypeData.preFailStr, dataAttributes+"");
+        if (targetAttributes< dataAttributes)
+        {
+            preTypeData.isPre = false;
+        }
+        else
+        {
+            preTypeData.isPre = true;
+        }
+        return preTypeData;
+    }
 
     /// <summary>
     /// 完成前置条件
