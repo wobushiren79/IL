@@ -120,7 +120,7 @@ public class InfoItemsPopupShow : PopupShowView
     {
         GameObject objItem = Instantiate(objAttributeContainer, objAttributeModel);
         ItemBaseTextCpt itemAttributes = objItem.GetComponent<ItemBaseTextCpt>();
-        itemAttributes.SetData(spIcon, colorForAttribute, details, "");
+        itemAttributes.SetData(spIcon, Color.white, details, "");
     }
 
     /// <summary>
