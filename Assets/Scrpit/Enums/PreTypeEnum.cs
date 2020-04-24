@@ -12,6 +12,7 @@ public enum PreTypeEnum
     HaveMoneyS,//当前拥有金钱
     AttributeForForce,//达标属性
     AttributeForSpeed,
+    AttributeForLucky,
 }
 
 public class PreTypeBean : DataBean<PreTypeEnum>
@@ -85,6 +86,7 @@ public class PreTypeEnumTools : DataTools
                 break;
             case PreTypeEnum.AttributeForForce:
             case PreTypeEnum.AttributeForSpeed:
+            case PreTypeEnum.AttributeForLucky:
                 GetPreDetailsForAttributes(preTypeData, characterData, iconDataManager);
                 break;
         }
@@ -227,6 +229,11 @@ public class PreTypeEnumTools : DataTools
                 targetAttributes = characterData.attributes.speed;
                 iconKey = "ui_ability_speed";
                 preTypeData.preFailStr = GameCommonInfo.GetUITextById(5011);
+                break;
+            case PreTypeEnum.AttributeForLucky:
+                targetAttributes = characterData.attributes.lucky;
+                iconKey = "ui_ability_lucky";
+                preTypeData.preFailStr = GameCommonInfo.GetUITextById(5012);
                 break;
         }
         if (iconDataManager != null)

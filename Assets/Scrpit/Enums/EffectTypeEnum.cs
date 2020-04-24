@@ -12,6 +12,8 @@ public enum EffectTypeEnum
 
     Damage,//直接伤害
     DamageRate,//直接伤害百分比
+    DamageRateForForce,//武力值加成
+    DamageRateForSpeed,//武力值加成
 }
 
 public class EffectTypeBean : DataBean<EffectTypeEnum>
@@ -20,6 +22,8 @@ public class EffectTypeBean : DataBean<EffectTypeEnum>
     public string effectDescribe;
     //图标
     public Sprite spIcon;
+    //图标颜色
+    public Color colorIcon;
     //具体数值
     public float effectData;
 
@@ -60,6 +64,15 @@ public class EffectTypeEnumTools : DataTools
                 break;
             case EffectTypeEnum.DefRate:
                 effectTypeData = GetEffectDetailsForAddDef(iconDataManager, effectTypeData);
+                break;
+            case EffectTypeEnum.Damage:
+                effectTypeData = GetEffectDetailsForDamage(iconDataManager, effectTypeData);
+                break;
+            case EffectTypeEnum.DamageRateForForce:
+                effectTypeData = GetEffectDetailsForDamageRateForForce(iconDataManager, effectTypeData);
+                break;
+            case EffectTypeEnum.DamageRateForSpeed:
+                effectTypeData = GetEffectDetailsForDamageRateForSpeed(iconDataManager, effectTypeData);
                 break;
         }
         return effectTypeData;
@@ -104,14 +117,70 @@ public class EffectTypeEnumTools : DataTools
         effectTypeData.spIcon = iconDataManager.GetIconSpriteByName("ui_effect_force_1");
         return effectTypeData;
     }
+    private static EffectTypeBean GetEffectDetailsForDamage(IconDataManager iconDataManager, EffectTypeBean effectTypeData)
+    {
+        effectTypeData.effectData = int.Parse(effectTypeData.data);
+        effectTypeData.effectDescribe = string.Format(GameCommonInfo.GetUITextById(504), effectTypeData.data);
+        effectTypeData.spIcon = iconDataManager.GetIconSpriteByName("ui_features_favorability");
+        effectTypeData.colorIcon = Color.red;
+        return effectTypeData;
+    }
+
+    private static EffectTypeBean GetEffectDetailsForDamageRateForForce(IconDataManager iconDataManager, EffectTypeBean effectTypeData)
+    {
+        effectTypeData.effectData = float.Parse(effectTypeData.data);
+        effectTypeData.effectDescribe = string.Format(GameCommonInfo.GetUITextById(521), effectTypeData.data);
+        effectTypeData.colorIcon = Color.red;
+        effectTypeData.spIcon = iconDataManager.GetIconSpriteByName("ui_ability_force");
+        return effectTypeData;
+    }
+    private static EffectTypeBean GetEffectDetailsForDamageRateForSpeed(IconDataManager iconDataManager, EffectTypeBean effectTypeData)
+    {
+        effectTypeData.effectData = float.Parse(effectTypeData.data);
+        effectTypeData.effectDescribe = string.Format(GameCommonInfo.GetUITextById(522), effectTypeData.data);
+        effectTypeData.colorIcon = Color.red;
+        effectTypeData.spIcon = iconDataManager.GetIconSpriteByName("ui_ability_speed");
+        return effectTypeData;
+    }
+
+    /// <summary>
+    /// 获取角色造成的总伤害
+    /// </summary>
+    /// <param name="gameItemsManager"></param>
+    /// <param name="actionCharacterData"></param>
+    /// <param name="listData"></param>
+    /// <returns></returns>
+    public static int GetTotalDamage(GameItemsManager gameItemsManager, CharacterBean actionCharacterData, List<EffectTypeBean> listData)
+    {
+        float damageAdd = 0;
+        actionCharacterData.GetAttributes(gameItemsManager, out CharacterAttributesBean characterAttributes);
+        foreach (EffectTypeBean itemData in listData)
+        {
+            switch (itemData.dataType)
+            {
+                case EffectTypeEnum.Damage:
+                    damageAdd +=  float.Parse(itemData.data);
+                    break;
+                case EffectTypeEnum.DamageRateForForce:
+                    damageAdd += characterAttributes.force * float.Parse(itemData.data);
+                    break;
+                case EffectTypeEnum.DamageRateForSpeed:
+                    damageAdd += characterAttributes.speed * float.Parse(itemData.data);
+                    break;
+            }
+        }
+        return (int)Mathf.Round(damageAdd);
+    }
+
     /// <summary>
     /// 获取所有效果的伤害加成
     /// </summary>
     /// <param name="listData"></param>
-    public static int GetEffectDamageRate(List<EffectTypeBean> listData,int damage)
+    public static int GetEffectDamageRate(GameItemsManager gameItemsManager, CharacterBean characterData,  List<EffectTypeBean> listData,int damage)
     {
         float damageRate = 1;
         float damageAdd = 0;
+        characterData.GetAttributes(gameItemsManager,out CharacterAttributesBean characterAttributes);
         foreach (EffectTypeBean itemData in listData)
         {
             switch (itemData.dataType)
@@ -122,7 +191,6 @@ public class EffectTypeEnumTools : DataTools
                 case EffectTypeEnum.DefRate:
                     damageRate -= float.Parse(itemData.data);
                     break;
-        
             }
         }
         damage = (int)((damage + damageAdd) * damageRate);

@@ -73,6 +73,10 @@ public class CharacterStatusIconCpt : BaseMonoBehaviour
     /// <param name="characterStatus"></param>
     public void RemoveStatusIconByMarkId(string markId)
     {
+        if (CheckUtil.StringIsNull(markId))
+        {
+            return;
+        }
         for (int i = 0; i < listStatusIcon.Count; i++)
         {
             CharacterStatusIconItemCpt itemData = listStatusIcon[i];

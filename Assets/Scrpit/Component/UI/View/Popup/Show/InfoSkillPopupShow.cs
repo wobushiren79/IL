@@ -65,7 +65,7 @@ public class InfoSkillPopupShow : PopupShowView
     public void SetAttributes(SkillInfoBean data)
     {
         CptUtil.RemoveChildsByActive(objAttributeContainer);
-        CreateItemAttributes("hourglass_1", GameCommonInfo.GetUITextById(510)+ " "+ data.GetUseNumber());
+        CreateItemAttributes("hourglass_1", GameCommonInfo.GetUITextById(510) + " " + data.GetUseNumber());
 
 
         if (CheckUtil.StringIsNull(data.effect))
@@ -84,7 +84,7 @@ public class InfoSkillPopupShow : PopupShowView
             {
                 describe += ("\n" + string.Format(GameCommonInfo.GetUITextById(502), "" + durationForRound));
             }
-            CreateItemAttributes(itemData.spIcon, describe);
+            CreateItemAttributes(itemData.spIcon, itemData.colorIcon, describe);
         }
     }
 
@@ -93,16 +93,19 @@ public class InfoSkillPopupShow : PopupShowView
     /// </summary>
     /// <param name="attributes"></param>
     /// <param name="attributesStr"></param>
-    private void CreateItemAttributes(Sprite spIcon, string details)
+    private void CreateItemAttributes(Sprite spIcon, Color colorSp, string details)
     {
         GameObject objItem = Instantiate(objAttributeContainer, objAttributeModel);
         ItemBaseTextCpt itemAttributes = objItem.GetComponent<ItemBaseTextCpt>();
-        itemAttributes.SetData(spIcon, Color.white, details, "");
+        if (colorSp == null)
+            itemAttributes.SetData(spIcon, Color.white, details, "");
+        else
+            itemAttributes.SetData(spIcon, colorSp, details, "");
     }
 
     private void CreateItemAttributes(string iconKey, string details)
     {
         Sprite spIcon = iconDataManager.GetIconSpriteByName(iconKey);
-        CreateItemAttributes(spIcon, details);
+        CreateItemAttributes(spIcon, Color.white, details);
     }
 }

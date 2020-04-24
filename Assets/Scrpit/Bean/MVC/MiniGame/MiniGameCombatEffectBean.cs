@@ -12,7 +12,7 @@ public class MiniGameCombatEffectBean
     //图标备注Id
     public string iconMarkId;
 
-    public void CompleteEffect(MiniGameCharacterForCombatBean miniGameCharacter,NpcAIMiniGameCombatCpt npcCpt)
+    public void CompleteEffect(GameItemsManager gameItemsManager,AudioHandler audioHandler, MiniGameCharacterForCombatBean miniGameCharacter,NpcAIMiniGameCombatCpt npcCpt)
     {
         switch (effectTypeData.dataType)
         {
@@ -28,7 +28,9 @@ public class MiniGameCombatEffectBean
                 npcCpt.characterLifeCpt.SetData(miniGameCharacter.characterCurrentLife, miniGameCharacter.characterMaxLife);
                 break;
             case EffectTypeEnum.Damage:
-                float damageRate =  miniGameCharacter.GetEffectDamageRate((int)effectTypeData.effectData);
+                int damage = (int)effectTypeData.effectData;
+                //角色伤害
+                npcCpt.UnderAttack(1, damage);
                 break;
         }
     }

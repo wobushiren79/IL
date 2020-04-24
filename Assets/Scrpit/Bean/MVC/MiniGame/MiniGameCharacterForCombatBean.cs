@@ -34,14 +34,14 @@ public class MiniGameCharacterForCombatBean : MiniGameCharacterBean
     /// 获取所有效果的伤害加成
     /// </summary>
     /// <returns></returns>
-    public int GetEffectDamageRate(int damage)
+    public int GetEffectDamageRate(GameItemsManager gameItemsManager, int damage)
     {
         List<EffectTypeBean> listEffect = new List<EffectTypeBean>();
         foreach (MiniGameCombatEffectBean itemData in listCombatEffect)
         {
             listEffect.Add(itemData.effectTypeData);
         }
-        return EffectTypeEnumTools.GetEffectDamageRate(listEffect, damage);
+        return EffectTypeEnumTools.GetEffectDamageRate(gameItemsManager, characterData, listEffect, damage);
     }
 
     /// <summary>

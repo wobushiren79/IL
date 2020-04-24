@@ -31,7 +31,8 @@ public enum AudioSoundEnum
     CardWin = 331,//设置点击卡片
     CardLose = 341,//设置点击卡片
     Fight = 401,//打击
-    UseMedicine=501,//使用药品
+    FightForKnife=411,//刀
+    UseMedicine =501,//使用药品
 
 
 

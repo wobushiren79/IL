@@ -119,6 +119,9 @@ public class AudioHandler : BaseHandler
             case AudioSoundEnum.Fight:
                 audioClip = audioManager.GetSoundClip("sound_fight_1");
                 break;
+            case AudioSoundEnum.FightForKnife:
+                audioClip = audioManager.GetSoundClip("sound_fight_knife_1");
+                break;
             case AudioSoundEnum.UseMedicine:
                 audioClip = audioManager.GetSoundClip("sound_medicine_1");
                 break;

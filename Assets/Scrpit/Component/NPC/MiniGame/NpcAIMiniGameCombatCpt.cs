@@ -234,7 +234,7 @@ public class NpcAIMiniGameCombatCpt : BaseNpcAI
         //播放粒子特效
         gameCombatBuilder.CreateCombatEffect(itemCombatEffect.effectPSName,transform.position + new Vector3(0,0.5f));
         //完成数据
-        itemCombatEffect.CompleteEffect(characterMiniGameData,this);
+        itemCombatEffect.CompleteEffect(gameItemsManager,audioHandler, characterMiniGameData,this);
         //检测角色血量
         gameCombatHandler.CheckCharacterLife();
 
@@ -257,7 +257,6 @@ public class NpcAIMiniGameCombatCpt : BaseNpcAI
     {
         List<EffectTypeBean> listTypeData = EffectTypeEnumTools.GetListEffectData(effectTypeData);
         EffectDetailsEnumTools.GetEffectDetailsForCombat(effectDetailsData, out string effectPSName, out int durationForRound);
-
         foreach (EffectTypeBean itemType in listTypeData)
         {
             EffectTypeEnumTools.GetEffectDetails(iconDataManager ,itemType);
@@ -266,20 +265,29 @@ public class NpcAIMiniGameCombatCpt : BaseNpcAI
             gameCombatEffectData.durationForRound = durationForRound;
             gameCombatEffectData.effectPSName = effectPSName;
             gameCombatEffectData.iconMarkId = SystemUtil.GetUUID( SystemUtil.UUIDTypeEnum.N);
-            //回合数小于0则是立即执行效果
-            if (gameCombatEffectData.durationForRound <= 0)
+
+            if (gameCombatEffectData.effectTypeData.dataType == EffectTypeEnum.Damage)
             {
-                CombatEffectExecute(gameCombatEffectData,out bool isDead);
-                if (isDead)
-                    return;
+                //如果是伤害计算，则一开始就要保存对手伤害值加成
+                NpcAIMiniGameCombatCpt actionNpc = gameCombatHandler.miniGameData.GetRoundActionCharacter();
+                gameCombatEffectData.effectTypeData.effectData = EffectTypeEnumTools.GetTotalDamage(gameItemsManager, actionNpc.characterData, listTypeData );
             }
-            else
+            characterMiniGameData.listCombatEffect.Add(gameCombatEffectData);
+            //如果是持续 则需要加上BUFF图标
+            if (durationForRound>0)
             {
-                //播放粒子特效
-                gameCombatBuilder.CreateCombatEffect(effectPSName, transform.position + new Vector3(0, 0.5f));
                 AddStatusIconForEffect(itemType.spIcon, Color.white, gameCombatEffectData.iconMarkId);
-                characterMiniGameData.listCombatEffect.Add(gameCombatEffectData);
             }
+        }
+        //回合数小于0则是立即执行效果
+        if (durationForRound <= 0)
+        {
+            StartCoroutine(CombatEffectExecute());
+        }
+        else
+        {
+            //播放粒子特效
+            gameCombatBuilder.CreateCombatEffect(effectPSName, transform.position + new Vector3(0, 0.5f));
         }
     }
 }

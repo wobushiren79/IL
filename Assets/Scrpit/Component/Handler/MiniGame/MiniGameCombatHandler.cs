@@ -312,9 +312,9 @@ public class MiniGameCombatHandler : BaseMiniGameHandler<MiniGameCombatBuilder, 
             //计算所有武力加成
             int force = actionNpc.characterMiniGameData.GetEffectForceRate(actionCharacterAttributes.force);
             //计算伤害
-            int damage = (int)(damagePowerRate  * force * 2);
+            int damage = (int)(damagePowerRate  * force);
             //效果伤害加成
-            damage = targetNpc.characterMiniGameData.GetEffectDamageRate(damage);
+            damage = targetNpc.characterMiniGameData.GetEffectDamageRate(gameItemsManager, damage);
             //角色伤害
             targetNpc.UnderAttack(damagePowerRate, damage);
             audioHandler.PlaySound(AudioSoundEnum.Fight);
