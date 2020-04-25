@@ -23,29 +23,49 @@ public class PopupShowView : BaseMonoBehaviour
         if (screenRTF == null)
             return;
         //如果显示Popup 则调整位置为鼠标位置
-        if (gameObject.activeSelf)
-        {
-            Vector2 outPosition;
-            //屏幕坐标转换为UI坐标
-            RectTransformUtility.ScreenPointToLocalPointInRectangle(screenRTF, Input.mousePosition, Camera.main, out outPosition);
-            float moveX = outPosition.x;
-            float moveY = outPosition.y;
-            //Vector3 newPosition= Vector3.Lerp(transform.localPosition, new Vector3(moveX + offsetX, moveY + offsetY, transform.localPosition.z),0.5f);
-            transform.localPosition = new Vector3(moveX + offsetX, moveY + offsetY, transform.localPosition.z);
-        }
+        InitPosition();
+
     }
 
     public void OnEnable()
     {
+        InitPosition();
         transform.localScale = new Vector3(1, 1, 1);
         transform.DOScale(new Vector3(0, 0, 0), 0.3f).From();
     }
+
 
     public void OnDisable()
     {
         if (popupRTF != null)
         {
             popupRTF.anchoredPosition = new Vector2(0, 0);
+        }
+    }
+
+    
+    public void InitPosition()
+    {
+        if (gameObject.activeSelf)
+        {
+            //判断鼠标在屏幕的左右
+            if (Input.mousePosition.x <= (Screen.width / 2))
+            {
+                //左
+                popupRTF.pivot = new Vector2(0, 0.5f);
+            }
+            else
+            {
+                popupRTF.pivot = new Vector2(1, 0.5f);
+                //右
+            }
+            //屏幕坐标转换为UI坐标
+            RectTransformUtility.ScreenPointToLocalPointInRectangle(screenRTF, Input.mousePosition, Camera.main, out Vector2 outPosition);
+            float moveX = outPosition.x;
+            float moveY = outPosition.y;
+
+            transform.localPosition = new Vector3(moveX + offsetX, moveY + offsetY, transform.localPosition.z);
+            //Vector3 newPosition= Vector3.Lerp(transform.localPosition, new Vector3(moveX + offsetX, moveY + offsetY, transform.localPosition.z),0.5f);
         }
     }
 

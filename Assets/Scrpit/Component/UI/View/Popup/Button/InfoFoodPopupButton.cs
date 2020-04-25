@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using UnityEditor;
 
-public class InfoFoodPopupButton : PopupButtonView
+public class InfoFoodPopupButton : PopupButtonView<InfoFoodPopupShow>
 {
     public MenuOwnBean ownData;
     public MenuInfoBean foodData;
@@ -13,7 +13,7 @@ public class InfoFoodPopupButton : PopupButtonView
         SetData(ownData, foodData, true);
     }
 
-    public void SetData(MenuOwnBean ownData, MenuInfoBean foodData,bool isShowTime)
+    public void SetData(MenuOwnBean ownData, MenuInfoBean foodData, bool isShowTime)
     {
         this.ownData = ownData;
         this.foodData = foodData;
@@ -27,6 +27,6 @@ public class InfoFoodPopupButton : PopupButtonView
 
     public override void OpenPopup()
     {
-        ((InfoFoodPopupShow)popupShow).SetData(ownData, foodData, isShowTime);
+        popupShow.SetData(ownData, foodData, isShowTime);
     }
 }

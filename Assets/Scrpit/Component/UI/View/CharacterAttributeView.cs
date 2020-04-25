@@ -34,12 +34,21 @@ public class CharacterAttributeView : Graphic
     /// <summary>
     /// 设置数据
     /// </summary>
+    /// <param name="characterAttributes"></param>
+    public void SetData(CharacterAttributesBean characterAttributes)
+    {
+        SetData(characterAttributes.cook, characterAttributes.speed, characterAttributes.account, characterAttributes.charm, characterAttributes.force, characterAttributes.lucky);
+    }
+
+    /// <summary>
+    /// 设置数据
+    /// </summary>
     /// <param name="cook"></param>
     /// <param name="speed"></param>
     /// <param name="account"></param>
     /// <param name="charm"></param>
     /// <param name="force"></param>
-    public void SetData(int cook, int speed, int account, int charm, int force,int lucky)
+    public void SetData(int cook, int speed, int account, int charm, int force, int lucky)
     {
         this.cook = cook;
         this.speed = speed;
@@ -49,16 +58,16 @@ public class CharacterAttributeView : Graphic
         this.lucky = lucky;
 
         if (tvCook != null)
-            tvCook.text =  "(" + cook + ")" + GameCommonInfo.GetUITextById(1);
+            tvCook.text = "(" + cook + ")" + GameCommonInfo.GetUITextById(1);
         if (tvSpeed != null)
             tvSpeed.text = "(" + speed + ")" + GameCommonInfo.GetUITextById(2);
         if (tvAccount != null)
-            tvAccount.text = GameCommonInfo.GetUITextById(3)+ "(" + account + ")" ;
+            tvAccount.text = GameCommonInfo.GetUITextById(3) + "(" + account + ")";
         if (tvCharm != null)
             tvCharm.text = GameCommonInfo.GetUITextById(4) + "(" + charm + ")";
         if (tvForce != null)
             tvForce.text = GameCommonInfo.GetUITextById(5) + "(" + force + ")";
-        if (tvLucky!=null)
+        if (tvLucky != null)
             tvLucky.text = GameCommonInfo.GetUITextById(6) + "(" + force + ")";
         StartCoroutine(CoroutineForInit());
     }

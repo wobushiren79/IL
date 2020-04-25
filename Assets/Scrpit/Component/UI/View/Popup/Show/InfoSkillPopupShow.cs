@@ -97,7 +97,7 @@ public class InfoSkillPopupShow : PopupShowView
     {
         GameObject objItem = Instantiate(objAttributeContainer, objAttributeModel);
         ItemBaseTextCpt itemAttributes = objItem.GetComponent<ItemBaseTextCpt>();
-        if (colorSp == null)
+        if (colorSp == null || colorSp.a == 0)
             itemAttributes.SetData(spIcon, Color.white, details, "");
         else
             itemAttributes.SetData(spIcon, colorSp, details, "");

@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using UnityEditor;
 
-public class InfoAbilityPopupButton : PopupButtonView
+public class InfoAbilityPopupButton : PopupButtonView<InfoAbilityPopupShow>
 {
     private CharacterBean mCharacterData;
 
@@ -16,6 +16,6 @@ public class InfoAbilityPopupButton : PopupButtonView
 
     public override void OpenPopup()
     {
-        ((InfoAbilityPopupShow)popupShow).SetData(mCharacterData);
+        popupShow.SetData(mCharacterData);
     }
 }

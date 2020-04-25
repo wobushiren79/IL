@@ -7,6 +7,10 @@ public enum EffectTypeEnum
     AddLife,//增加生命值
     AddSpeed,//增加速度
     AddForce,//增加武力
+
+    SubSpeed,//减少速度
+    SubForce,//减少速度
+
     Def,//增加防御力
     DefRate,//增加防御百分比
 
@@ -61,6 +65,12 @@ public class EffectTypeEnumTools : DataTools
                 break;
             case EffectTypeEnum.AddSpeed:
                 effectTypeData = GetEffectDetailsForAddSpeed(iconDataManager, effectTypeData);
+                break;
+            case EffectTypeEnum.SubSpeed:
+                effectTypeData = GetEffectDetailsForSubSpeed(iconDataManager, effectTypeData);
+                break;
+            case EffectTypeEnum.SubForce:
+                effectTypeData = GetEffectDetailsForSubForce(iconDataManager, effectTypeData);
                 break;
             case EffectTypeEnum.DefRate:
                 effectTypeData = GetEffectDetailsForAddDef(iconDataManager, effectTypeData);
@@ -117,6 +127,22 @@ public class EffectTypeEnumTools : DataTools
         effectTypeData.spIcon = iconDataManager.GetIconSpriteByName("ui_effect_force_1");
         return effectTypeData;
     }
+
+    private static EffectTypeBean GetEffectDetailsForSubSpeed(IconDataManager iconDataManager, EffectTypeBean effectTypeData)
+    {
+        effectTypeData.effectData = float.Parse(effectTypeData.data);
+        effectTypeData.effectDescribe = string.Format(GameCommonInfo.GetUITextById(531), effectTypeData.data);
+        effectTypeData.spIcon = iconDataManager.GetIconSpriteByName("ui_effect_sub_speed_1");
+        return effectTypeData;
+    }
+    private static EffectTypeBean GetEffectDetailsForSubForce(IconDataManager iconDataManager, EffectTypeBean effectTypeData)
+    {
+        effectTypeData.effectData = float.Parse(effectTypeData.data);
+        effectTypeData.effectDescribe = string.Format(GameCommonInfo.GetUITextById(532), effectTypeData.data);
+        effectTypeData.spIcon = iconDataManager.GetIconSpriteByName("ui_effect_sub_force_1");
+        return effectTypeData;
+    }
+    
     private static EffectTypeBean GetEffectDetailsForDamage(IconDataManager iconDataManager, EffectTypeBean effectTypeData)
     {
         effectTypeData.effectData = int.Parse(effectTypeData.data);
@@ -216,6 +242,9 @@ public class EffectTypeEnumTools : DataTools
                 case EffectTypeEnum.AddForce:
                     forceAdd += int.Parse(itemData.data);
                     break;
+                case EffectTypeEnum.SubForce:
+                    forceAdd -= int.Parse(itemData.data);
+                    break;
             }
         }
         force = (int)((force + forceAdd) * forceRate);
@@ -240,6 +269,9 @@ public class EffectTypeEnumTools : DataTools
             {
                 case EffectTypeEnum.AddSpeed:
                     speedAdd += int.Parse(itemData.data);
+                    break;
+                case EffectTypeEnum.SubSpeed:
+                    speedAdd -= int.Parse(itemData.data);
                     break;
             }
         }

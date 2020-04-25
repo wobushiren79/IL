@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using UnityEditor;
 
-public class InfoAchievementPopupButton : PopupButtonView
+public class InfoAchievementPopupButton : PopupButtonView<InfoAchievementPopupShow>
 {
     public AchievementInfoBean achievementInfo;
     public AchievementStatusEnum status;
@@ -25,7 +25,7 @@ public class InfoAchievementPopupButton : PopupButtonView
         }
         else
         {
-            ((InfoAchievementPopupShow)popupShow).SetData(status, achievementInfo);
+            popupShow.SetData(status, achievementInfo);
         }
 
     }

@@ -20,7 +20,7 @@ public enum AudioSoundEnum
     Thunderstorm = 101,//打雷音效
     Cook=110,//做菜声
     Eat=120,//吃东西
-
+    Lock = 130,//锁
     Damage = 201,//伤害声
 
     CountDownStart = 211,//倒计时开始
@@ -32,6 +32,7 @@ public enum AudioSoundEnum
     CardLose = 341,//设置点击卡片
     Fight = 401,//打击
     FightForKnife=411,//刀
+
     UseMedicine =501,//使用药品
 
 

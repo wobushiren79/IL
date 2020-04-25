@@ -12,7 +12,11 @@ public enum PreTypeEnum
     HaveMoneyS,//当前拥有金钱
     AttributeForForce,//达标属性
     AttributeForSpeed,
+    AttributeForAccount,
+    AttributeForCharm,
+    AttributeForCook,
     AttributeForLucky,
+    AttributeForLife,
 }
 
 public class PreTypeBean : DataBean<PreTypeEnum>
@@ -87,6 +91,10 @@ public class PreTypeEnumTools : DataTools
             case PreTypeEnum.AttributeForForce:
             case PreTypeEnum.AttributeForSpeed:
             case PreTypeEnum.AttributeForLucky:
+            case PreTypeEnum.AttributeForCook:
+            case PreTypeEnum.AttributeForCharm:
+            case PreTypeEnum.AttributeForAccount:
+            case PreTypeEnum.AttributeForLife:
                 GetPreDetailsForAttributes(preTypeData, characterData, iconDataManager);
                 break;
         }
@@ -234,6 +242,26 @@ public class PreTypeEnumTools : DataTools
                 targetAttributes = characterData.attributes.lucky;
                 iconKey = "ui_ability_lucky";
                 preTypeData.preFailStr = GameCommonInfo.GetUITextById(5012);
+                break;
+            case PreTypeEnum.AttributeForCook:
+                targetAttributes = characterData.attributes.lucky;
+                iconKey = "ui_ability_cook";
+                preTypeData.preFailStr = GameCommonInfo.GetUITextById(5013);
+                break;
+            case PreTypeEnum.AttributeForAccount:
+                targetAttributes = characterData.attributes.lucky;
+                iconKey = "ui_ability_account";
+                preTypeData.preFailStr = GameCommonInfo.GetUITextById(5014);
+                break;
+            case PreTypeEnum.AttributeForCharm:
+                targetAttributes = characterData.attributes.lucky;
+                iconKey = "ui_ability_charm";
+                preTypeData.preFailStr = GameCommonInfo.GetUITextById(5015);
+                break;
+            case PreTypeEnum.AttributeForLife:
+                targetAttributes = characterData.attributes.lucky;
+                iconKey = "ui_ability_life";
+                preTypeData.preFailStr = GameCommonInfo.GetUITextById(5016);
                 break;
         }
         if (iconDataManager != null)

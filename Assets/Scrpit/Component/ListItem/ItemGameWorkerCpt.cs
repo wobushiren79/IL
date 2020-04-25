@@ -48,6 +48,8 @@ public class ItemGameWorkerCpt : ItemGameBaseCpt, IRadioButtonCallBack, DialogVi
     public RadioButtonView rbBeater;
     public InputField etPriorityBeater;
 
+    public InfoCharacterPopupButton infoCharacterPopup;
+
     [Header("数据")]
     public CharacterUICpt characterUICpt;
     public CharacterBean characterData;
@@ -147,6 +149,11 @@ public class ItemGameWorkerCpt : ItemGameBaseCpt, IRadioButtonCallBack, DialogVi
             btFire.onClick.AddListener(FireWorker);
         if (btGift != null)
             btGift.onClick.AddListener(SendGift);
+
+        if (infoCharacterPopup != null)
+        {
+            infoCharacterPopup.SetData(characterData);
+        }
     }
 
     /// <summary>

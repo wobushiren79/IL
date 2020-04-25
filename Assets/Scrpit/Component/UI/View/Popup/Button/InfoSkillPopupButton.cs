@@ -1,15 +1,9 @@
 ﻿using UnityEngine;
 using UnityEditor;
 
-public class InfoSkillPopupButton : PopupButtonView
+public class InfoSkillPopupButton : PopupButtonView<InfoSkillPopupShow>
 {
     public SkillInfoBean skillInfo;
-
-    private void Awake()
-    {
-        UIGameManager uiGameManager = Find<UIGameManager>(ImportantTypeEnum.GameUI);
-        SetPopupShowView(uiGameManager.infoSkillPopup);
-    }
 
     public void SetData(SkillInfoBean skillInfo)
     {
@@ -23,6 +17,6 @@ public class InfoSkillPopupButton : PopupButtonView
 
     public override void OpenPopup()
     {
-        ((InfoSkillPopupShow)popupShow).SetData(skillInfo);
+        popupShow.SetData(skillInfo);
     }
 }

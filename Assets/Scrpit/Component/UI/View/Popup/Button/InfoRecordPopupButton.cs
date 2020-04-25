@@ -2,7 +2,7 @@
 using UnityEditor;
 using System;
 
-public class InfoRecordPopupButton : PopupButtonView
+public class InfoRecordPopupButton : PopupButtonView<InfoRecordPopupShow>
 {
     public InnRecordBean innRecordData;
 
@@ -13,7 +13,7 @@ public class InfoRecordPopupButton : PopupButtonView
 
     public override void OpenPopup()
     {
-        ((InfoRecordPopupShow)popupShow).SetData(innRecordData);
+        popupShow.SetData(innRecordData);
     }
 
     public void SetData(InnRecordBean innRecordData)

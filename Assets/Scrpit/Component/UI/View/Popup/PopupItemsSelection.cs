@@ -109,9 +109,8 @@ public class PopupItemsSelection : BaseMonoBehaviour
         //如果显示Popup 则调整位置为鼠标位置
         if (gameObject.activeSelf)
         {
-            Vector2 outPosition;
             //屏幕坐标转换为UI坐标
-            RectTransformUtility.ScreenPointToLocalPointInRectangle(screenRTF, Input.mousePosition, Camera.main, out outPosition);
+            RectTransformUtility.ScreenPointToLocalPointInRectangle(screenRTF, Input.mousePosition, Camera.main, out Vector2 outPosition);
             float moveX = outPosition.x;
             float moveY = outPosition.y;
             //Vector3 newPosition= Vector3.Lerp(transform.localPosition, new Vector3(moveX + offsetX, moveY + offsetY, transform.localPosition.z),0.5f);

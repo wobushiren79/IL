@@ -14,6 +14,8 @@ public class ItemMiniGameCombatCharacterInfoCpt : ItemGameBaseCpt
     public Image ivDead;
     public Text tvDead;
 
+    public InfoCharacterPopupButton characterPopupButton;
+
     public MiniGameCharacterForCombatBean gameCharacterData;
     public int oriForce;
 
@@ -37,7 +39,7 @@ public class ItemMiniGameCombatCharacterInfoCpt : ItemGameBaseCpt
     public void SetData(MiniGameCharacterBean gameCharacterData)
     {
         this.gameCharacterData = (MiniGameCharacterForCombatBean)gameCharacterData;
-
+        characterPopupButton.SetData(gameCharacterData.characterData, this.gameCharacterData.listCombatEffect);
         SetCharacterUI(this.gameCharacterData.characterData);
         SetName(this.gameCharacterData.characterData.baseInfo.name);
         SetLife(this.gameCharacterData.characterCurrentLife, gameCharacterData.characterMaxLife);

@@ -2,7 +2,7 @@
 using UnityEditor;
 using UnityEngine.EventSystems;
 using System.Collections;
-public class InfoPromptPopupButton : PopupButtonView
+public class InfoPromptPopupButton : PopupButtonView<InfoPromptPopupShow>
 {
     // 内容
     public string content;
@@ -11,8 +11,10 @@ public class InfoPromptPopupButton : PopupButtonView
     //延迟时间
     public float delayTime = 1;
     protected AudioHandler audioHandler;
-    private void Awake()
+
+    public override void Awake()
     {
+        base.Awake();
         audioHandler = Find<AudioHandler>(ImportantTypeEnum.AudioHandler);
     }
 
@@ -26,7 +28,7 @@ public class InfoPromptPopupButton : PopupButtonView
         if (popupShow != null)
         {
             //设置内容
-            ((InfoPromptPopupShow)popupShow).SetContent(content);
+            popupShow.SetContent(content);
             //设置音效
             if (audioHandler != null && isAudio)
                 audioHandler.PlaySound(AudioSoundEnum.ButtonForHighLight, 0.1f);

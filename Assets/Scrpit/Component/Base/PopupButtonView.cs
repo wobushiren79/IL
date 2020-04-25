@@ -3,14 +3,14 @@ using UnityEditor;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 
-public abstract class PopupButtonView : BaseMonoBehaviour, IPointerEnterHandler, IPointerExitHandler
+public abstract class PopupButtonView<T>  : BaseMonoBehaviour, IPointerEnterHandler, IPointerExitHandler  where T : PopupShowView
 {
-    public PopupShowView popupShow;
+    protected T popupShow;
     private Button mThisButton;
 
-    public void SetPopupShowView(PopupShowView popupShow)
+    public virtual void Awake()
     {
-        this.popupShow = popupShow;
+        popupShow = FindInChildren<T>(ImportantTypeEnum.Popup);
     }
 
     private void Start()
@@ -19,6 +19,13 @@ public abstract class PopupButtonView : BaseMonoBehaviour, IPointerEnterHandler,
         if (mThisButton != null)
             mThisButton.onClick.AddListener(ButtonClick);
     }
+
+    public void SetPopupShowView(T popupShow)
+    {
+        this.popupShow = popupShow;
+    }
+
+
 
     public void ButtonClick()
     {

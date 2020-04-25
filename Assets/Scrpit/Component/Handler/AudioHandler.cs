@@ -151,6 +151,9 @@ public class AudioHandler : BaseHandler
                     audioClip = audioManager.GetSoundClip("sound_eat_2");
                 }
                 break;
+            case AudioSoundEnum.Lock:
+                audioClip = audioManager.GetSoundClip("sound_lock_1");
+                break;
         }
         if (audioClip != null)
             audioSourceForMusic.PlayOneShot(audioClip, volumeScale);

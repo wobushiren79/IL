@@ -7214,6 +7214,7 @@ GameObject:
   - component: {fileID: 1534034776703260548}
   - component: {fileID: 7835878172452446003}
   - component: {fileID: 3701015846603752384}
+  - component: {fileID: 7444298015191219856}
   m_Layer: 0
   m_Name: ItemLife
   m_TagString: Untagged
@@ -7301,6 +7302,20 @@ MonoBehaviour:
   objDead: {fileID: 6723583556853940851}
   ivDead: {fileID: 5248226539665623279}
   tvDead: {fileID: 6016294778201904248}
+  characterPopupButton: {fileID: 7444298015191219856}
+  oriForce: 0
+--- !u!114 &7444298015191219856
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8230281532692650324}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bb81d3a3c47e10d4e9eb0b07c5c2d952, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &8443920516695673971
 GameObject:
   m_ObjectHideFlags: 0
@@ -8072,12 +8087,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: dbdedefdbd5ca8045a10545a8d921571, type: 3}
---- !u!224 &4322191206916745691 stripped
-RectTransform:
-  m_CorrespondingSourceObject: {fileID: 6202850148858248704, guid: dbdedefdbd5ca8045a10545a8d921571,
-    type: 3}
-  m_PrefabInstance: {fileID: 7921674892711974875}
-  m_PrefabAsset: {fileID: 0}
 --- !u!114 &4322191206916745688 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 6202850148858248707, guid: dbdedefdbd5ca8045a10545a8d921571,
@@ -8090,3 +8099,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3e42d425c72705442b4e5e7ae17eb6ee, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!224 &4322191206916745691 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 6202850148858248704, guid: dbdedefdbd5ca8045a10545a8d921571,
+    type: 3}
+  m_PrefabInstance: {fileID: 7921674892711974875}
+  m_PrefabAsset: {fileID: 0}

@@ -1,15 +1,14 @@
 ﻿using UnityEngine;
 using UnityEditor;
 
-public class InfoItemsPopupButton : PopupButtonView
+public class InfoItemsPopupButton : PopupButtonView<InfoItemsPopupShow>
 {
     public ItemsInfoBean itemsInfo;
     public Sprite spIcon;
 
-    private void Awake()
+    public override void Awake()
     {
-        UIGameManager uiGameManager = Find<UIGameManager>(ImportantTypeEnum.GameUI);
-        SetPopupShowView(uiGameManager.infoItemsPopup);
+        base.Awake();
     }
 
     public void SetData(ItemsInfoBean itemsInfo,Sprite spIcon)
@@ -27,7 +26,7 @@ public class InfoItemsPopupButton : PopupButtonView
     {
         if (popupShow == null)
             return;
-        ((InfoItemsPopupShow)popupShow).SetData(spIcon, itemsInfo);
+        popupShow.SetData(spIcon, itemsInfo);
         if (itemsInfo == null || itemsInfo.id == 0)
         {
             if (popupShow != null)
