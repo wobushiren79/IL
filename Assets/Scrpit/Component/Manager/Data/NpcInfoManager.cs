@@ -32,7 +32,7 @@ public class NpcInfoManager : BaseManager, INpcInfoView
     /// </summary>
     public CharacterBean GetRandomCharacterData()
     {
-        return GetRandomCharacterData(1, 9);
+        return GetRandomCharacterData(1, 38);
     }
 
     /// <summary>
