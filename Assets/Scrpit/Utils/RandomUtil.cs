@@ -202,34 +202,37 @@ public class RandomUtil
             return "";
 
         string chineseWords = "";
-        Encoding gb = Encoding.GetEncoding("gb2312");
+       // Encoding gb = Encoding.GetEncoding("gb2312");
         //添加姓
         chineseWords += GetRandomDataByArray(GeneralDataUtil.ChinesNameWords);
         //添加名
         for (int i = 0; i < count - 1; i++)
         {
-            // 获取区码(常用汉字的区码范围为16-55)
-            int regionCode = Random.Range(16, 56);
+            int position = Random.Range(0, GeneralDataUtil.ChinesNameWordsForLastName.Length - 1);
+            char name = GeneralDataUtil.ChinesNameWordsForLastName[position];
+            //// 获取区码(常用汉字的区码范围为16-55)
+            //int regionCode = Random.Range(16, 56);
 
-            // 获取位码(位码范围为1-94 由于55区的90,91,92,93,94为空,故将其排除)
-            int positionCode;
-            if (regionCode == 55)
-            {
-                // 55区排除90,91,92,93,94
-                positionCode = Random.Range(1, 90);
-            }
-            else
-            {
-                positionCode = Random.Range(1, 95);
-            }
+            //// 获取位码(位码范围为1-94 由于55区的90,91,92,93,94为空,故将其排除)
+            //int positionCode;
+            //if (regionCode == 55)
+            //{
+            //    // 55区排除90,91,92,93,94
+            //    positionCode = Random.Range(1, 90);
+            //}
+            //else
+            //{
+            //    positionCode = Random.Range(1, 95);
+            //}
 
-            // 转换区位码为机内码
-            int regionCode_Machine = regionCode + 160;// 160即为十六进制的20H+80H=A0H
-            int positionCode_Machine = positionCode + 160;// 160即为十六进制的20H+80H=A0H
+            //// 转换区位码为机内码
+            //int regionCode_Machine = regionCode + 160;// 160即为十六进制的20H+80H=A0H
+            //int positionCode_Machine = positionCode + 160;// 160即为十六进制的20H+80H=A0H
 
-            // 转换为汉字
-            byte[] bytes = new byte[] { (byte)regionCode_Machine, (byte)positionCode_Machine };
-            chineseWords += gb.GetString(bytes);
+            //// 转换为汉字
+            //byte[] bytes = new byte[] { (byte)regionCode_Machine, (byte)positionCode_Machine };\
+            //chineseWords += gb.GetString(bytes);
+            chineseWords += name;
         }
         return chineseWords;
     }
