@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 public class SceneMainInit : BaseSceneInit
 {
-    private new void Start()
+    public override void Start()
     {
         base.Start();
         if (gameItemsManager != null)

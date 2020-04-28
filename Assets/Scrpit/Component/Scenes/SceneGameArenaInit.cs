@@ -39,7 +39,7 @@ public class SceneGameArenaInit : BaseSceneInit, IBaseObserver
         navMesh = Find<NavMeshSurface>(ImportantTypeEnum.NavMesh);
     }
 
-    private new void Start()
+    public override void Start()
     {
         base.Start();
         InitSceneData();

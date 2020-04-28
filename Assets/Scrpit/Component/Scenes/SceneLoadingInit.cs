@@ -18,6 +18,7 @@ public class SceneLoadingInit : MonoBehaviour
 
     void Start()
     {
+        
         //启动协程
        StartCoroutine(CoroutineForAsyncLoading());
     }

@@ -14,7 +14,6 @@ public class SceneGameInnInit : BaseSceneInit, IBaseObserver, DialogView.IDialog
     protected InnFurnitureBuilder innFurnitureBuilder;
 
     public InnHandler innHandler;
-    public GameTimeHandler gameTimeHandler;
 
 
     public NavMeshSurface navMesh;
@@ -30,7 +29,7 @@ public class SceneGameInnInit : BaseSceneInit, IBaseObserver, DialogView.IDialog
         innFurnitureBuilder = Find<InnFurnitureBuilder>(ImportantTypeEnum.InnBuilder);
     }
 
-    private new void Start()
+    public override void Start()
     {
         base.Start();
         //获取相关数据

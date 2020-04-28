@@ -11,6 +11,7 @@ public class BaseSceneInit : BaseMonoBehaviour
     protected NpcTeamManager npcTeamManager;
     protected DialogManager dialogManager;
     protected StoryInfoManager storyInfoManager;
+    protected GameTimeHandler gameTimeHandler;
 
     protected WeatherHandler weatherHandler;
     protected ControlHandler controlHandler;
@@ -29,9 +30,10 @@ public class BaseSceneInit : BaseMonoBehaviour
         storyInfoManager = Find<StoryInfoManager>(ImportantTypeEnum.StoryManager);
         controlHandler = Find<ControlHandler>(ImportantTypeEnum.ControlHandler);
         audioHandler = Find<AudioHandler>(ImportantTypeEnum.AudioHandler);
+        gameTimeHandler = Find<GameTimeHandler>(ImportantTypeEnum.TimeHandler);
     }
 
-    public void Start()
+    public virtual void Start()
     {
         if (gameDataManager != null)
         {
