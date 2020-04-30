@@ -47,6 +47,9 @@ public class SceneGameTownInit : BaseNormalSceneInit
                 Vector3 doorPosition = sceneTownManager.GetMainTownDoorPosition();
                 moveControl.SetPosition(doorPosition);
                 break;
+            case ScenesEnum.GameMountainScene:
+                moveControl.SetPosition(sceneTownManager.GetMountainDoorPosition());
+                break;
         }
         return moveControl;
     }

@@ -6,6 +6,8 @@ public class SceneTownManager : BaseManager
 {
     //小镇出入口
     public List<Transform> listTownDoor;
+    //山顶入口
+    public List<Transform> listMountainDoor;
     //小镇
     public Transform townInside;
     //市场
@@ -57,6 +59,20 @@ public class SceneTownManager : BaseManager
         }
         Transform tfTownDoor = RandomUtil.GetRandomDataByList(listTownDoor);
         return GameUtil.GetTransformInsidePosition2D(tfTownDoor);
+    }
+
+    /// <summary>
+    /// 获取山顶门坐标
+    /// </summary>
+    /// <returns></returns>
+    public Vector3 GetMountainDoorPosition()
+    {
+        if (CheckUtil.ListIsNull(listTownDoor))
+        {
+            return Vector3.zero;
+        }
+        Transform tfDoor = RandomUtil.GetRandomDataByList(listMountainDoor);
+        return tfDoor.transform.position;
     }
 
     /// <summary>
