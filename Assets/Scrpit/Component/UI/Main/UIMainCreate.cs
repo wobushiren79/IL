@@ -126,13 +126,13 @@ public class UIMainCreate : UIGameComponent,
         listSelectMouth = TypeConversionUtil.IconBeanDictionaryToList(uiGameManager.characterBodyManager.listIconBodyMouth);
         ChangeSelectPosition(selectMouth, 0);
         //初始化帽子
-        listSelectHat = uiGameManager.gameItemsManager.GetItemsById(new long[] { 100001 });
+        listSelectHat = uiGameManager.gameItemsManager.GetItemsById(new long[] { 100001, 100003 });
         listSelectHat.Insert(0, new ItemsInfoBean());
         //初始化衣服
-        listSelectClothes = uiGameManager.gameItemsManager.GetItemsById(new long[] { 200001 });
+        listSelectClothes = uiGameManager.gameItemsManager.GetItemsById(new long[] { 200001, 200003, 210039, 210040, 220001 , 220002 });
         listSelectClothes.Insert(0, new ItemsInfoBean());
         //初始化鞋子
-        listSelectShoes = uiGameManager.gameItemsManager.GetItemsById(new long[] { 300001 });
+        listSelectShoes = uiGameManager.gameItemsManager.GetItemsById(new long[] { 300001, 310039, 310040, 320001, 320002 });
         listSelectShoes.Insert(0, new ItemsInfoBean());
     }
 
