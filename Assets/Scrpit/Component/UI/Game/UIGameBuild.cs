@@ -60,6 +60,9 @@ public class UIGameBuild : UIGameComponent, IRadioGroupCallBack
         uiGameManager.gameTimeHandler.AddHour(1);
         //继续时间
         uiGameManager.gameTimeHandler.SetTimeStatus(false);
+        //设置角色到门口
+        Vector3 startPosition = uiGameManager.innHandler.GetRandomEntrancePosition();
+        uiGameManager.controlHandler.GetControl(ControlHandler.ControlEnum.Normal).SetFollowPosition(startPosition + new Vector3(0, -2, 0));
     }
 
     /// <summary>
@@ -82,8 +85,8 @@ public class UIGameBuild : UIGameComponent, IRadioGroupCallBack
     {
         if (tvAesthetics != null)
         {
-            long aesthetics = uiGameManager.gameDataManager.gameData.GetInnAttributesData().GetAesthetics(out string aestheticsLevel);
-            tvAesthetics.text = aesthetics + " " + aestheticsLevel;
+            uiGameManager.gameDataManager.gameData.GetInnAttributesData().GetAesthetics(out float maxAesthetics, out float aesthetics);
+            tvAesthetics.text = aesthetics + "/" + maxAesthetics;
         }
     }
 

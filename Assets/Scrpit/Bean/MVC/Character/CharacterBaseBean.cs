@@ -112,7 +112,7 @@ public class CharacterBaseBean
         switch (workerStatus)
         {
             case WorkerStatusEnum.Rest:
-                workerStatusStr= GameCommonInfo.GetUITextById(282);
+                workerStatusStr = GameCommonInfo.GetUITextById(282);
                 break;
             case WorkerStatusEnum.Work:
                 workerStatusStr = GameCommonInfo.GetUITextById(281);

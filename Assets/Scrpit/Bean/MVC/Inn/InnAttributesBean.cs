@@ -10,7 +10,7 @@ public class InnAttributesBean
     public int innLevel;//客栈等级 （天地人1-5星  3 2 1）
 
     public float aesthetics;//客栈美观数
-    public long richness;//菜品丰富度
+    public int richness;//菜品丰富度
     public int praise;//好评
 
     /// <summary>
@@ -89,7 +89,7 @@ public class InnAttributesBean
     {
         int levelStar = (innLevel % 10);
         int levelTitle = (innLevel % 100) / 10;
-        
+
         nextLevelStar = 1;
         nextLevelTitle = 1;
         if (levelStar + 1 > 5)
@@ -105,7 +105,7 @@ public class InnAttributesBean
             nextLevelTitle = levelTitle;
         }
 
-        return GetInnLevelStr(nextLevelTitle,nextLevelStar);
+        return GetInnLevelStr(nextLevelTitle, nextLevelStar);
     }
 
     /// <summary>
@@ -124,6 +124,7 @@ public class InnAttributesBean
                 richness += 1;
             }
         }
+        LimitRichnessMax();
     }
 
     /// <summary>
@@ -132,6 +133,7 @@ public class InnAttributesBean
     public void SetAesthetics(long aesthetics)
     {
         this.aesthetics = aesthetics;
+        LimitAestheticsMax();
     }
     public void SetAesthetics(InnBuildManager innBuildManager, InnBuildBean innBuildData)
     {
@@ -152,6 +154,7 @@ public class InnAttributesBean
             BuildItemBean buildItem = innBuildManager.GetBuildDataById(itemData.id);
             aesthetics += buildItem.aesthetics;
         }
+        LimitAestheticsMax();
     }
 
     /// <summary>
@@ -175,47 +178,92 @@ public class InnAttributesBean
     /// 获取美观值
     /// </summary>
     /// <returns></returns>
-    public int GetAesthetics(out string level)
+    public void GetAesthetics(out float maxAesthetics, out float aesthetics)
     {
-        level = "???";
-        if (aesthetics <= 100)
-        {
-            level = GameCommonInfo.GetUITextById(120);
-        }
-        else if (aesthetics > 100&& aesthetics <= 200)
-        {
-            level = GameCommonInfo.GetUITextById(121);
-        }
-        else if (aesthetics > 200 && aesthetics <= 300)
-        {
-            level = GameCommonInfo.GetUITextById(122);
-        }
-        else if (aesthetics > 300 && aesthetics <= 400)
-        {
-            level = GameCommonInfo.GetUITextById(123);
-        }
-        else if (aesthetics > 400 && aesthetics <= 500)
-        {
-            level = GameCommonInfo.GetUITextById(124);
-        }
-        else if (aesthetics > 500 && aesthetics <= 1000)
-        {
-            level = GameCommonInfo.GetUITextById(125);
-        }
-        else if (aesthetics > 1000 && aesthetics <= 2000)
-        {
-            level = GameCommonInfo.GetUITextById(126);
-        }
-        return (int)aesthetics;
+        maxAesthetics = 0;
+        aesthetics = this.aesthetics;
+        GetInnLevel(out int levelTitle, out int levelStar);
+        maxAesthetics = levelTitle * 300 + levelStar * 50 + 100;
+        //string level = "???";
+        //if (aesthetics <= 100)
+        //{
+        //    level = GameCommonInfo.GetUITextById(120);
+        //}
+        //else if (aesthetics > 100&& aesthetics <= 200)
+        //{
+        //    level = GameCommonInfo.GetUITextById(121);
+        //}
+        //else if (aesthetics > 200 && aesthetics <= 300)
+        //{
+        //    level = GameCommonInfo.GetUITextById(122);
+        //}
+        //else if (aesthetics > 300 && aesthetics <= 400)
+        //{
+        //    level = GameCommonInfo.GetUITextById(123);
+        //}
+        //else if (aesthetics > 400 && aesthetics <= 500)
+        //{
+        //    level = GameCommonInfo.GetUITextById(124);
+        //}
+        //else if (aesthetics > 500 && aesthetics <= 1000)
+        //{
+        //    level = GameCommonInfo.GetUITextById(125);
+        //}
+        //else if (aesthetics > 1000 && aesthetics <= 2000)
+        //{
+        //    level = GameCommonInfo.GetUITextById(126);
+        //}
+    }
+
+    /// <summary>
+    /// 获取菜品丰富度
+    /// </summary>
+    /// <param name="maxRichness"></param>
+    /// <param name="richness"></param>
+    public void GetRichness(out int maxRichness, out int richness)
+    {
+        maxRichness = 0;
+        richness = this.richness;
+        GetInnLevel(out int levelTitle, out int levelStar);
+        maxRichness = levelTitle * 15 + levelStar * 2 + 5;
     }
 
     /// <summary>
     /// 获取好评
     /// </summary>
     /// <returns></returns>
-    public float GetPraise()
+    public void GetPraise(out int maxPraise, out int praise)
     {
-        return (float)Math.Round(praise / 1000f, 2);
+        maxPraise = 1000;
+        praise = this.praise;
+    }
+
+    /// <summary>
+    /// 限制美观上线
+    /// </summary>
+    public void LimitAestheticsMax()
+    {
+        //限制上限
+        GetInnLevel(out int levelTitle, out int levelStar);
+        float maxAesthetics = levelTitle * 300 + levelStar * 50 + 100;
+        if (this.aesthetics > maxAesthetics)
+        {
+            this.aesthetics = maxAesthetics;
+        }
+    }
+
+    /// <summary>
+    /// 限制菜品丰富度上限
+    /// </summary>
+    public void LimitRichnessMax()
+    {
+        //限制上限
+        GetInnLevel(out int levelTitle, out int levelStar);
+        int maxRichNess = levelTitle * 15 + levelStar * 2 + 5;
+        if (this.richness > maxRichNess)
+        {
+            this.richness = maxRichNess;
+        }
     }
 
     /// <summary>
@@ -230,7 +278,7 @@ public class InnAttributesBean
         if (rateAesthetics > 1)
             rateAesthetics = 1;
         //点赞率所占比重
-        float ratePraise = GetPraise();
+        float ratePraise = praise / (float)1000;
         if (ratePraise > 1)
             ratePraise = 1;
         //菜品丰富度所占比重

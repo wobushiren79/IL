@@ -255,6 +255,8 @@ public class StoryBuilder : BaseMonoBehaviour, StoryInfoManager.CallBack
         //设置编号
         objNpc.name = itemData.npc_num + "";
         aiNpc.SetCharacterData(characterData);
+        //默认设置NPC速度为1
+        aiNpc.characterMoveCpt.SetMoveSpeed(1);
         return aiNpc;
     }
 

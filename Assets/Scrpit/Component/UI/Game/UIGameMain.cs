@@ -3,6 +3,7 @@ using UnityEditor;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using DG.Tweening;
+
 public class UIGameMain : UIGameComponent, DialogView.IDialogCallBack, IRadioGroupCallBack, IBaseObserver
 {
     [Header("控件")]
@@ -20,6 +21,8 @@ public class UIGameMain : UIGameComponent, DialogView.IDialogCallBack, IRadioGro
     public Button btSave;
     public InfoPromptPopupButton popupInnData;
     public Button btInnData;
+    public InfoPromptPopupButton popupSetting;
+    public Button btSetting;
 
     public Button btSleep;
 
@@ -29,12 +32,12 @@ public class UIGameMain : UIGameComponent, DialogView.IDialogCallBack, IRadioGro
     public Text tvMoneyL;
 
     public InfoPromptPopupButton popupAesthetics;
-    public Text tvAesthetics;
     public InfoPromptPopupButton popupPraise;
-    public Slider sliderPraise;
-    public Text tvPraise;
     public InfoPromptPopupButton popupRichness;
-    public Text tvRichness;
+    public ProgressView proAesthetics;
+    public ProgressView proPraise;
+    public ProgressView proRichness;
+
     public InfoPromptPopupButton popupInnLevel;
     public Image ivInnLevel;
 
@@ -75,35 +78,20 @@ public class UIGameMain : UIGameComponent, DialogView.IDialogCallBack, IRadioGro
         if (btInnData != null)
             btInnData.onClick.AddListener(OpenStatisticsUI);
 
+        if (btSetting != null)
+            btSetting.onClick.AddListener(OpenSettingUI);
+
         if (btSave != null)
             btSave.onClick.AddListener(SaveData);
 
         if (btSleep != null)
             btSleep.onClick.AddListener(EndDay);
 
-        if (popupWorker != null)
-            popupWorker.SetPopupShowView(uiGameManager.infoPromptPopup);
-        if (popupBuild != null)
-            popupBuild.SetPopupShowView(uiGameManager.infoPromptPopup);
-        if (popupMenu != null)
-            popupMenu.SetPopupShowView(uiGameManager.infoPromptPopup);
-        if (popupBackpack != null)
-            popupBackpack.SetPopupShowView(uiGameManager.infoPromptPopup);
-        if (popupFavorability != null)
-            popupFavorability.SetPopupShowView(uiGameManager.infoPromptPopup);
-        if (popupSave != null)
-            popupSave.SetPopupShowView(uiGameManager.infoPromptPopup);
-        if (popupInnData != null)
-            popupInnData.SetPopupShowView(uiGameManager.infoPromptPopup);
 
-        if (popupAesthetics != null)
-            popupAesthetics.SetPopupShowView(uiGameManager.infoPromptPopup);
-        if (popupPraise != null)
-            popupPraise.SetPopupShowView(uiGameManager.infoPromptPopup);
-        if (popupRichness != null)
-            popupRichness.SetPopupShowView(uiGameManager.infoPromptPopup);
-        if (popupInnLevel != null)
-            popupInnLevel.SetPopupShowView(uiGameManager.infoPromptPopup);
+        if (popupSetting!=null)
+        {
+
+        }
 
         if (rgTimeScale != null)
             rgTimeScale.SetCallBack(this);
@@ -183,15 +171,13 @@ public class UIGameMain : UIGameComponent, DialogView.IDialogCallBack, IRadioGro
             popupSave.SetContent(GameCommonInfo.GetUITextById(2036));
         if (popupInnData != null)
             popupInnData.SetContent(GameCommonInfo.GetUITextById(2037));
-        if (popupPraise != null)
-            popupPraise.SetContent(GameCommonInfo.GetUITextById(2004) + " " + innAttributes.praise + "%");
 
+        if (popupSetting != null)
+            popupSetting.SetContent(GameCommonInfo.GetUITextById(2038));
+
+        SetInnPraise(innAttributes);
         SetInnAesthetics(innAttributes);
-
-        if (popupRichness != null)
-            popupRichness.SetContent(GameCommonInfo.GetUITextById(2005) + " " + innAttributes.richness);
-        if (tvRichness != null)
-            tvRichness.text = innAttributes.richness + "";
+        SetInnRichNess(innAttributes);
 
         SetInnLevel(innAttributes);
 
@@ -242,14 +228,49 @@ public class UIGameMain : UIGameComponent, DialogView.IDialogCallBack, IRadioGro
     /// </summary>
     public void SetInnAesthetics(InnAttributesBean innAttributes)
     {
-        long aesthetics = innAttributes.GetAesthetics(out string aestheticsLevel);
+        innAttributes.GetAesthetics(out float maxAesthetics,out float aesthetics);
         if (popupAesthetics != null)
         {
-            popupAesthetics.SetContent(GameCommonInfo.GetUITextById(2003) + " " + aesthetics + " " + aestheticsLevel);
+            popupAesthetics.SetContent(GameCommonInfo.GetUITextById(2003) + ":" + aesthetics + "/" + maxAesthetics);
         }
-        if (tvAesthetics != null)
+        if (proAesthetics != null)
         {
-            tvAesthetics.text = aesthetics + " " + aestheticsLevel;
+            proAesthetics.SetData(maxAesthetics, aesthetics);
+        }
+    }
+
+    /// <summary>
+    /// 设置菜品丰富度
+    /// </summary>
+    /// <param name="innAttributes"></param>
+    public void SetInnRichNess(InnAttributesBean innAttributes)
+    {
+        innAttributes.GetRichness(out int maxRichness, out int richness);
+        if (popupRichness != null)
+        {
+            popupRichness.SetContent(GameCommonInfo.GetUITextById(2005) + ":" + richness + "/" + maxRichness);
+        }
+        if (proRichness != null)
+        {
+            proRichness.SetData(maxRichness, richness);
+        }
+    }
+
+
+    /// <summary>
+    /// 设置客栈点赞
+    /// </summary>
+    /// <param name="innAttributes"></param>
+    public void SetInnPraise(InnAttributesBean innAttributes)
+    {
+        innAttributes.GetPraise(out int maxPraise,out int praise);
+        if (popupPraise != null)
+        {
+            popupPraise.SetContent(GameCommonInfo.GetUITextById(2004) + " " + (System.Math.Round((float)praise / maxPraise, 4) * 100) + "%" );
+        }
+        if (proPraise != null)
+        {
+            proPraise.SetData(maxPraise, praise);
         }
     }
 
@@ -279,21 +300,7 @@ public class UIGameMain : UIGameComponent, DialogView.IDialogCallBack, IRadioGro
         }
     }
 
-    /// <summary>
-    /// 设置客栈点赞
-    /// </summary>
-    /// <param name="innAttributes"></param>
-    public void SetInnPraise(InnAttributesBean innAttributes)
-    {
-        if (sliderPraise != null)
-        {
-            sliderPraise.value = innAttributes.GetPraise();
-        }
-        if (tvPraise != null)
-        {
-            tvPraise.text = (innAttributes.GetPraise()*100) + "%";
-        }
-    }
+
 
     public void SaveData()
     {
@@ -345,6 +352,12 @@ public class UIGameMain : UIGameComponent, DialogView.IDialogCallBack, IRadioGro
     {
         uiGameManager.audioHandler.PlaySound(AudioSoundEnum.ButtonForNormal);
         uiManager.OpenUIAndCloseOtherByName(EnumUtil.GetEnumName(UIEnum.GameStatistics));
+    }
+
+    public void OpenSettingUI()
+    {
+        uiGameManager.audioHandler.PlaySound(AudioSoundEnum.ButtonForNormal);
+        uiManager.OpenUIAndCloseOtherByName(EnumUtil.GetEnumName(UIEnum.GameSetting));
     }
 
     public void EndDay()

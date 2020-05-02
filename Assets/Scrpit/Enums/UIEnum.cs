@@ -20,6 +20,7 @@ public enum UIEnum
     GameText = 1011,
     GameFavorability = 1012,//人物好感UI
     GameStatistics=1013,//统计UI
+    GameSetting = 1014,
 
     TownMarket = 2001,//市场UI
     TownRecruitment = 2002,//招人UI

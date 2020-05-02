@@ -191,7 +191,7 @@ public class UIGameDate : UIGameComponent
             //设置位置
             Vector3 startPosition = innHandler.GetRandomEntrancePosition();
             BaseControl baseControl = controlHandler.StartControl(ControlHandler.ControlEnum.Normal);
-            baseControl.SetFollowPosition(startPosition);
+            baseControl.SetFollowPosition(startPosition + new Vector3(0,-2,0));
         }
     }
 

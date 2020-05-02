@@ -174,7 +174,7 @@ public class ItemGameWorkerCpt : ItemGameBaseCpt, IRadioButtonCallBack, DialogVi
             SetWork(characterBase.isChef, characterBase.isWaiter, characterBase.isAccountant, characterBase.isAccost, characterBase.isBeater);
             SetPriority(characterBase.priorityChef, characterBase.priorityWaiter, characterBase.priorityAccountant, characterBase.priorityAccost, characterBase.priorityBeater);
 
-            WorkerStatusEnum workerStatus = characterBase.GetWorkerStatus(out string workerStatusStr);
+            WorkerStatusEnum workerStatus = characterBase.GetWorkerStatus( out string workerStatusStr);
             SetStatus(workerStatus, workerStatusStr);
         }
         if (characterData.attributes != null)
@@ -408,10 +408,19 @@ public class ItemGameWorkerCpt : ItemGameBaseCpt, IRadioButtonCallBack, DialogVi
     {
         if (tvStatus != null)
         {
-            tvStatus.text = workerStatusStr;
             switch (workerStatus)
             {
                 case WorkerStatusEnum.Work:
+                    if (gameTimeHandler.dayStauts == GameTimeHandler.DayEnum.Rest)
+                    {
+                        tvStatus.color = Color.green;
+                        workerStatusStr = GameCommonInfo.GetUITextById(282);
+                    }
+                    else if (gameTimeHandler.dayStauts == GameTimeHandler.DayEnum.Work)
+                    {
+                        tvStatus.color = Color.red;
+                    }
+                    break;
                 case WorkerStatusEnum.Research:
                     tvStatus.color = Color.red;
                     break;
@@ -425,6 +434,7 @@ public class ItemGameWorkerCpt : ItemGameBaseCpt, IRadioButtonCallBack, DialogVi
                     tvStatus.color = Color.red;
                     break;
             }
+            tvStatus.text = workerStatusStr;
         }
     }
 
