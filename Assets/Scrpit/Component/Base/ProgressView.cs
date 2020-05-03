@@ -16,6 +16,19 @@ public class ProgressView : BaseMonoBehaviour
     public Text tvContent;
     public Slider sliderPro;
 
+    protected ICallBack callBack;
+
+    private void Start()
+    {
+        sliderPro.onValueChanged.AddListener(OnSliderValueChange);
+    }
+
+    public void SetData(float value)
+    {
+        SetContent((Math.Round(value, 4) * 100) + "%");
+        SetSlider(value);
+    }
+
     public void SetData(float maxData, float data)
     {
         float pro = data / maxData;
@@ -29,6 +42,11 @@ public class ProgressView : BaseMonoBehaviour
                 break;
         }
         SetSlider(pro);
+    }
+
+    public void SetCallBack(ICallBack callBack)
+    {
+        this.callBack = callBack;
     }
 
     /// <summary>
@@ -49,5 +67,24 @@ public class ProgressView : BaseMonoBehaviour
     {
         if (sliderPro != null)
             sliderPro.value = pro;
+    }
+
+
+    public void OnSliderValueChange(float value)
+    {
+        //是否可互动，如果是可互动的 则按百分比显示
+        if (sliderPro.IsInteractable())
+        {
+            SetContent((Math.Round(value, 4) * 100) + "%");
+        }
+        if (callBack != null)
+        {
+            callBack.OnProgressViewValueChange(this, value);
+        }
+    }
+
+    public interface ICallBack
+    {
+        void OnProgressViewValueChange(ProgressView progressView, float value);
     }
 }

@@ -94,4 +94,5 @@ public class UIGameManager : BaseUIManager
         innFloorBuilder = Find<InnFloorBuilder>(ImportantTypeEnum.InnBuilder);
         innWallBuilder = Find<InnWallBuilder>(ImportantTypeEnum.InnBuilder);
     }
+
 }

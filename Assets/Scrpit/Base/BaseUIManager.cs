@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class BaseUIManager : BaseMonoBehaviour
@@ -149,6 +150,11 @@ public class BaseUIManager : BaseMonoBehaviour
         return uiComponent;
     }
 
+    public BaseUIComponent OpenUIAndCloseOther(UIEnum ui)
+    {
+       return OpenUIAndCloseOtherByName(EnumUtil.GetEnumName(ui));
+    }
+
     /// <summary>
     /// 通过UI开启UI并关闭其他UI
     /// </summary>
@@ -199,4 +205,23 @@ public class BaseUIManager : BaseMonoBehaviour
             }
         }
     }
+
+    /// <summary>
+    /// 初始化所有UI
+    /// </summary>
+    public void InitListUI()
+    {
+        uiList = new List<BaseUIComponent>();
+        for (int i = 0; i < transform.childCount; i++)
+        {
+            Transform tfChild = transform.GetChild(i);
+            BaseUIComponent childUI = tfChild.GetComponent<BaseUIComponent>();
+            if (childUI)
+            {
+                childUI.uiManager = this;
+                uiList.Add(childUI);
+            }
+        }
+    }
+
 }

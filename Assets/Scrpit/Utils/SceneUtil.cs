@@ -14,4 +14,15 @@ public class SceneUtil {
         SceneManager.LoadSceneAsync(EnumUtil.GetEnumName(ScenesEnum.LoadingScene));
     }
 
+    /// <summary>
+    /// 获取当前场景
+    /// </summary>
+    /// <returns></returns>
+    public static ScenesEnum GetCurrentScene()
+    {
+        //获取当前场景名字
+        string sceneName = SceneManager.GetActiveScene().name;
+       return EnumUtil.GetEnum<ScenesEnum>(sceneName);
+    }
+
 }

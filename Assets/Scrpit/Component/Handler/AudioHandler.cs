@@ -5,6 +5,7 @@ public class AudioHandler : BaseHandler
 {
     protected AudioListener audioListener;
     protected AudioSource audioSourceForMusic;
+    protected AudioSource audioSourceForSound;
     protected AudioSource audioSourceForEnvironment;
     protected AudioManager audioManager;
 
@@ -13,7 +14,17 @@ public class AudioHandler : BaseHandler
         audioListener = Find<AudioListener>(ImportantTypeEnum.MainCamera);
         audioManager = Find<AudioManager>(ImportantTypeEnum.AudioManager);
         audioSourceForMusic = CptUtil.GetCptInChildrenByName<AudioSource>(Camera.main.gameObject, "Music");
+        audioSourceForSound = CptUtil.GetCptInChildrenByName<AudioSource>(Camera.main.gameObject, "Sound");
         audioSourceForEnvironment = CptUtil.GetCptInChildrenByName<AudioSource>(Camera.main.gameObject, "Environment");
+    }
+
+    /// <summary>
+    /// 初始化
+    /// </summary>
+    public void InitAudio()
+    {
+        audioSourceForMusic.volume = GameCommonInfo.GameConfig.musicVolume;
+        audioSourceForEnvironment.volume = GameCommonInfo.GameConfig.soundVolume;
     }
 
     /// <summary>
@@ -22,7 +33,7 @@ public class AudioHandler : BaseHandler
     /// <param name="audioMusic"></param>
     public void PlayMusicForLoop(AudioMusicEnum audioMusic)
     {
-        PlayMusicForLoop(audioMusic, 1);
+        PlayMusicForLoop(audioMusic, GameCommonInfo.GameConfig.musicVolume);
     }
 
     /// <summary>
@@ -156,12 +167,12 @@ public class AudioHandler : BaseHandler
                 break;
         }
         if (audioClip != null)
-            audioSourceForMusic.PlayOneShot(audioClip, volumeScale);
+            audioSourceForSound.PlayOneShot(audioClip, volumeScale);
         // AudioSource.PlayClipAtPoint(soundClip, soundPosition,volumeScale);
     }
     public void PlaySound(AudioSoundEnum sound)
     {
-        PlaySound(sound, Camera.main.transform.position, 1);
+        PlaySound(sound, Camera.main.transform.position, GameCommonInfo.GameConfig.soundVolume);
     }
     public void PlaySound(AudioSoundEnum sound, float volumeScale)
     {

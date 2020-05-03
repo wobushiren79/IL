@@ -53,6 +53,11 @@ public class GameCommonInfo
         ArenaPrepareData = new ArenaPrepareBean(miniGameData);
     }
 
+    public static void SaveGameConfig()
+    {
+        mGameConfigController.SaveGameConfigData(GameConfig);
+    }
+
     public class GameConfigCallBack : IGameConfigView
     {
         public void GetGameConfigFail()
@@ -76,4 +81,5 @@ public class GameCommonInfo
 
         }
     }
+
 }
