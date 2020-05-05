@@ -25,9 +25,9 @@ public class CharacterAttributeView : Graphic
 
     //是否在初始化中
     private bool mIsIniting = false;
+
     //private void Update()
     //{
-    //   
     //        SetAllDirty(); //设置更改，请求渲染（可以在需要的时候手动调用，而不是在update中）
     //}
 
@@ -58,17 +58,17 @@ public class CharacterAttributeView : Graphic
         this.lucky = lucky;
 
         if (tvCook != null)
-            tvCook.text = "(" + cook + ")" + GameCommonInfo.GetUITextById(1);
+            tvCook.text =  cook + " " + GameCommonInfo.GetUITextById(1);
         if (tvSpeed != null)
-            tvSpeed.text = "(" + speed + ")" + GameCommonInfo.GetUITextById(2);
+            tvSpeed.text = speed + " " + GameCommonInfo.GetUITextById(2);
         if (tvAccount != null)
-            tvAccount.text = GameCommonInfo.GetUITextById(3) + "(" + account + ")";
+            tvAccount.text = GameCommonInfo.GetUITextById(3) + " " + account;
         if (tvCharm != null)
-            tvCharm.text = GameCommonInfo.GetUITextById(4) + "(" + charm + ")";
+            tvCharm.text = GameCommonInfo.GetUITextById(4) + " " + charm;
         if (tvForce != null)
-            tvForce.text = GameCommonInfo.GetUITextById(5) + "(" + force + ")";
+            tvForce.text = GameCommonInfo.GetUITextById(5) + " " + force;
         if (tvLucky != null)
-            tvLucky.text = GameCommonInfo.GetUITextById(6) + "(" + force + ")";
+            tvLucky.text = GameCommonInfo.GetUITextById(6) + " " + lucky;
         StartCoroutine(CoroutineForInit());
     }
 

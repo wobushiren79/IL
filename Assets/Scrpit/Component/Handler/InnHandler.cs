@@ -191,7 +191,7 @@ public class InnHandler : BaseMonoBehaviour, IBaseObserver
 
     public InnRecordBean GetInnRecord()
     {
-        innRecord.status = (int)GameCommonInfo.currentDayData.dayStatus;
+        innRecord.status = (int)GameCommonInfo.CurrentDayData.dayStatus;
         return innRecord;
     }
 

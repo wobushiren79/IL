@@ -154,7 +154,7 @@ public class MenuOwnBean
         nextLevelExp = 0;
         if (menuLevel == 0)
         {
-            levelStr = "初";
+            levelStr = GameCommonInfo.GetUITextById(104);
             nextLevelExp = 100;
         }
         else if (menuLevel == 1)

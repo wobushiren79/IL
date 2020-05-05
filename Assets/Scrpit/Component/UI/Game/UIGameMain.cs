@@ -96,6 +96,7 @@ public class UIGameMain : UIGameComponent, DialogView.IDialogCallBack, IRadioGro
         if (rgTimeScale != null)
             rgTimeScale.SetCallBack(this);
         InitInnData();
+        RefreshUI();
     }
 
     private void Update()

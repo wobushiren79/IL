@@ -47,6 +47,8 @@ public class NpcAICustomerCpt : BaseNpcAI
 
     //吃饭动画
     public RuntimeAnimatorController eatIconAnim;
+    //等待动画
+    public RuntimeAnimatorController waitIconAnim;
 
     public override void Awake()
     {
@@ -457,6 +459,11 @@ public class NpcAICustomerCpt : BaseNpcAI
     /// <returns></returns>
     public virtual IEnumerator CoroutineForStartWaitSeat()
     {
+        //添加等待图标
+        string waitIconMarkId = SystemUtil.GetUUID(SystemUtil.UUIDTypeEnum.N);
+        Sprite spWaitIcon = iconDataManager.GetIconSpriteByName("time_wait_1_0");
+        AddStatusIconForPro(spWaitIcon, waitIconAnim, waitIconMarkId);
+
         yield return new WaitForSeconds(timeWaitSeat);
         innHandler.EndOrderForForce(orderForCustomer,false);
         SetIntent(CustomerIntentEnum.Leave);

@@ -122,7 +122,7 @@ public class SceneGameInnInit : BaseSceneInit, IBaseObserver, DialogView.IDialog
         if (weatherHandler != null)
         {
             WeatherBean weatherData = weatherHandler.RandomWeather();
-            GameCommonInfo.currentDayData.weatherToday = weatherData;
+            GameCommonInfo.CurrentDayData.weatherToday = weatherData;
         }
     }
 
@@ -137,20 +137,20 @@ public class SceneGameInnInit : BaseSceneInit, IBaseObserver, DialogView.IDialog
         GameCommonInfo.GameData.gameTime.hour = 0;
         GameCommonInfo.GameData.gameTime.minute = 0;
 
-        if (GameCommonInfo.currentDayData.dayStatus == GameTimeHandler.DayEnum.None)
+        if (GameCommonInfo.CurrentDayData.dayStatus == GameTimeHandler.DayEnum.None)
         {
             //重新进入游戏
             //打开日历
             uiGameManager.OpenUIAndCloseOtherByName(EnumUtil.GetEnumName(UIEnum.GameDate));
         }
-        else if (GameCommonInfo.currentDayData.dayStatus == GameTimeHandler.DayEnum.Work)
+        else if (GameCommonInfo.CurrentDayData.dayStatus == GameTimeHandler.DayEnum.Work)
         {
             //保存数据
             gameDataManager.SaveGameData(innHandler.GetInnRecord());
             //如果是工作状态结束一天 则进入结算画面
             uiGameManager.OpenUIAndCloseOtherByName(EnumUtil.GetEnumName(UIEnum.GameSettle));
         }
-        else if (GameCommonInfo.currentDayData.dayStatus == GameTimeHandler.DayEnum.Rest)
+        else if (GameCommonInfo.CurrentDayData.dayStatus == GameTimeHandler.DayEnum.Rest)
         {
             //保存数据
             gameDataManager.SaveGameData(innHandler.GetInnRecord());

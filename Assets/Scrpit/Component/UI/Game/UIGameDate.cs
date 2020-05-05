@@ -119,7 +119,7 @@ public class UIGameDate : UIGameComponent
         gameTimeHandler.GoToNextDay(1);
         gameTimeHandler.GetTime(out int newYear, out int newMonth, out int newDay);
         calendarView.ChangeData(newYear, newMonth, newDay);
-
+        audioHandler.PlaySound( AudioSoundEnum.ButtonForShow);
         //展示是否营业框
         yield return new WaitForSeconds(1.5f);
         // 第一天默认不营业

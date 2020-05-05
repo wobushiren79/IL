@@ -52,7 +52,7 @@ public class CharacterMoveCpt : BaseMonoBehaviour
     {
         if (!isManualMove && navMeshAgent != null)
         {
-            if (navMeshAgent.isActiveAndEnabled && Mathf.Abs(navMeshAgent.remainingDistance) > 0.1)
+            if (navMeshAgent.isActiveAndEnabled && Mathf.Abs(navMeshAgent.remainingDistance) > 0.1f)
             {
                 SetAnimStatus(1);
                 //Move(navMeshAgent.nextPosition);
@@ -60,14 +60,18 @@ public class CharacterMoveCpt : BaseMonoBehaviour
                 if (objCharacterBody != null)
                 {
                     Vector3 theScale = objCharacterBody.transform.localScale;
-                    if (objCharacterBody.transform.position.x - mLastPosition.x < 0)
+                    float offsetMove = objCharacterBody.transform.position.x - mLastPosition.x;
+                    if (Mathf.Abs(offsetMove)>=0.001f)
                     {
-                        theScale.x = -Mathf.Abs(theScale.x);
-                    }
-                    else if (objCharacterBody.transform.position.x - mLastPosition.x > 0)
-                    {
-                        theScale.x = Mathf.Abs(theScale.x);
-                    }
+                        if (offsetMove < 0)
+                        {
+                            theScale.x = -Mathf.Abs(theScale.x);
+                        }
+                        else if (offsetMove > 0)
+                        {
+                            theScale.x = Mathf.Abs(theScale.x);
+                        }
+                    } 
                     objCharacterBody.transform.localScale = theScale;
                 }
             }
@@ -110,8 +114,8 @@ public class CharacterMoveCpt : BaseMonoBehaviour
     /// <returns></returns>
     public bool SetDestinationLocal(Transform tfPar, Vector3 position)
     {
-       Vector3 worldPos= tfPar.TransformPoint(position);
-       return SetDestination(worldPos);
+        Vector3 worldPos = tfPar.TransformPoint(position);
+        return SetDestination(worldPos);
     }
 
     /// <summary>
@@ -162,7 +166,7 @@ public class CharacterMoveCpt : BaseMonoBehaviour
 
         //Vector2 lerpPosition = Vector3.Lerp(Vector2.zero, new Vector2(x, y), lerpOffset);
         // transform.Translate(movePosition * moveSpeed * Time.deltaTime);
-        Vector3 movePosition = objMove.transform.position + new Vector3(x * moveSpeed * Time.deltaTime, y * moveSpeed * Time.deltaTime) ;
+        Vector3 movePosition = objMove.transform.position + new Vector3(x * moveSpeed * Time.deltaTime, y * moveSpeed * Time.deltaTime);
         characterRigidbody.MovePosition(movePosition);
         BoundaryMove();
 
@@ -221,7 +225,7 @@ public class CharacterMoveCpt : BaseMonoBehaviour
     /// <param name="status"></param>
     public void SetAnimStatus(int status)
     {
-        if (mAnimState == 10&& status==0)
+        if (mAnimState == 10 && status == 0)
         {
             //如果角色已经死亡 则IDLE为不动
             status = 10;
@@ -267,9 +271,9 @@ public class CharacterMoveCpt : BaseMonoBehaviour
         }
     }
 
-   /// <summary>
-   /// 关闭自动寻路
-   /// </summary>
+    /// <summary>
+    /// 关闭自动寻路
+    /// </summary>
     public void CloseNavMeshAgent()
     {
         if (navMeshAgent != null)

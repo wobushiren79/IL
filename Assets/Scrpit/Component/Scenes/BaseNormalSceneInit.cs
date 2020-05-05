@@ -28,7 +28,7 @@ public abstract class BaseNormalSceneInit : BaseSceneInit,IBaseObserver, DialogV
         //设置天气
         if (weatherHandler != null)
         {
-            weatherHandler.SetWeahter(GameCommonInfo.currentDayData.weatherToday);
+            weatherHandler.SetWeahter(GameCommonInfo.CurrentDayData.weatherToday);
         }
         //设置角色位置
         InitUserPosition();

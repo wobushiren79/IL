@@ -81,6 +81,9 @@ public class AudioHandler : BaseHandler
             case AudioSoundEnum.ButtonForHighLight:
                 audioClip = audioManager.GetSoundClip("sound_btn_1");
                 break;
+            case AudioSoundEnum.ButtonForShow:
+                audioClip = audioManager.GetSoundClip("sound_btn_6");
+                break;
             case AudioSoundEnum.PayMoney:
                 audioClip = audioManager.GetSoundClip("sound_pay_1");
                 break;

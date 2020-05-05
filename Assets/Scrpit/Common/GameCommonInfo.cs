@@ -16,12 +16,22 @@ public class GameCommonInfo
     //每日限制数据
     public static UserDailyLimitBean DailyLimitData = new UserDailyLimitBean();
     //当日数据
-    public static CurrentDayBean currentDayData = new CurrentDayBean();
+    public static CurrentDayBean CurrentDayData = new CurrentDayBean();
     // 预加载场景名字
     public static ScenesChangeBean ScenesChangeData = new ScenesChangeBean();
 
     private static GameConfigController mGameConfigController;
     private static UITextController mUITextController;
+
+    public static void ClearData()
+    {
+        GameUserId = null;
+        GameData = null;
+        ArenaPrepareData = null;
+        DailyLimitData = new UserDailyLimitBean();
+        CurrentDayData = new CurrentDayBean();
+        ScenesChangeData = new ScenesChangeBean();
+    }
 
     static GameCommonInfo()
     {

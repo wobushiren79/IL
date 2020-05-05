@@ -42,7 +42,7 @@ public class GameDataModel : BaseMVCModel
         string userId = "UserId_" + SystemUtil.GetUUID(SystemUtil.UUIDTypeEnum.N);
         GameCommonInfo.GameUserId = userId;
         gameData.userId = userId;
-        gameData.moneyS = 9999;
+        gameData.moneyS = 500;
         gameData.moneyM = 0;
         gameData.moneyL = 0;
         gameData.innBuildData = new InnBuildBean();
@@ -63,10 +63,9 @@ public class GameDataModel : BaseMVCModel
 
         //添加家具
         //TODO 测试 
-        gameData.listBuild.Add(new ItemBean(30001, 100));
-        gameData.listBuild.Add(new ItemBean(40001, 5));
-        gameData.listBuild.Add(new ItemBean(50001, 5));
-        gameData.listBuild.Add(new ItemBean(90001, 5));
+        gameData.listBuild.Add(new ItemBean(30001, 3));
+        gameData.listBuild.Add(new ItemBean(40001, 1));
+        gameData.listBuild.Add(new ItemBean(50001, 1));
 
         //添加菜单
         gameData.listMenu.Add(new MenuOwnBean(1));

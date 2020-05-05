@@ -317,7 +317,7 @@ public class ItemGameWorkerCpt : ItemGameBaseCpt, IRadioButtonCallBack, DialogVi
     {
         if (tvPrice == null)
             return;
-        tvPrice.text = priceS + " / 天";
+        tvPrice.text = priceS + "/天";
     }
 
     /// <summary>

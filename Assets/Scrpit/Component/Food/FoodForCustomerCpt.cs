@@ -13,6 +13,7 @@ public class FoodForCustomerCpt : BaseMonoBehaviour
     public GameObject objGoodFood;
     public GameObject objPrefectFood;
 
+
     /// <summary>
     /// 设置数据
     /// </summary>
@@ -48,10 +49,16 @@ public class FoodForCustomerCpt : BaseMonoBehaviour
     public void FinishFood(MenuInfoBean foodData)
     {
         if (foodData != null && innFoodManager != null)
+        {
             srFood.sprite = innFoodManager.GetFoodLastSpriteByName(foodData.icon_key);
+        }
+   
         objBadFood.SetActive(false);
         objGoodFood.SetActive(false);
         objPrefectFood.SetActive(false);
+
+        //食物完结动画
+        transform.DOPunchScale(new Vector3(0.5f, 0.5f, 0.5f), 0.3f, 10, 1f);
     }
 
     /// <summary>

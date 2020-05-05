@@ -274,6 +274,6 @@ public class GameTimeHandler : BaseObservable<IBaseObserver>
     public void SetDayStatus(DayEnum dayStauts)
     {
         this.dayStauts = dayStauts;
-        GameCommonInfo.currentDayData.dayStatus= this.dayStauts;
+        GameCommonInfo.CurrentDayData.dayStatus= this.dayStauts;
     }
 }
