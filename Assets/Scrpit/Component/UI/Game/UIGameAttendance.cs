@@ -67,6 +67,8 @@ public class UIGameAttendance : UIBaseOne, ItemGameAttendanceCpt.ICallBack
         }
         //支付出勤费用
         uiGameManager.gameDataManager.gameData.PayMoney(attendancePriceL, attendancePriceM, attendancePriceS);
+        //记录出勤费用
+        uiGameManager.innHandler.GetInnRecord().AddPayWage(attendancePriceL, attendancePriceM, attendancePriceS);
         //设置当天状态
         uiGameManager.gameTimeHandler.SetDayStatus(GameTimeHandler.DayEnum.Work);
         //设置是否停止时间

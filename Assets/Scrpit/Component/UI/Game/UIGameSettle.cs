@@ -17,8 +17,9 @@ public class UIGameSettle : UIGameComponent
     public Text tvExpensesL;
 
     public GameObject objListRecordContent;
-    public GameObject objItemIngModel;
-    public GameObject objItemFoodModel;
+
+    public GameObject objItemModelForMoney;
+    public GameObject objItemModelForOther;
 
     public Sprite spIconOilsalt;
     public Sprite spIconMeat;
@@ -50,30 +51,51 @@ public class UIGameSettle : UIGameComponent
 
     public void InitData()
     {
-        InnHandler innHandler = GetUIManager<UIGameManager>().innHandler;
+        InnHandler innHandler = uiGameManager.innHandler;
+        InnFoodManager innFoodManager = uiGameManager.innFoodManager;
+        IconDataManager iconDataManager = uiGameManager.iconDataManager;
+
         CptUtil.RemoveChildsByActive(objListRecordContent.transform);
-        animDelay = 0.1f;
+        animDelay =0f;
+        InnRecordBean innRecord = innHandler.GetInnRecord();
+        //员工支出
+        CreateItemForMoney(
+                iconDataManager.GetIconSpriteByName("money_1"),
+                GameCommonInfo.GetUITextById(183),
+                0,
+                innRecord.payWageL,
+                innRecord.payWageM,
+                innRecord.payWageS);
+        //食材消耗
         string consumeIngStr = GameCommonInfo.GetUITextById(4002);
         if (innHandler.GetInnRecord().consumeIngOilsalt > 0)
-            CreateIngItem(innHandler.GetInnRecord().consumeIngOilsalt, spIconOilsalt, consumeIngStr + " " + GameCommonInfo.GetUITextById(21));
+            CreateItemForOther(innHandler.GetInnRecord().consumeIngOilsalt, spIconOilsalt, consumeIngStr + " " + GameCommonInfo.GetUITextById(21));
         if (innHandler.GetInnRecord().consumeIngMeat > 0)
-            CreateIngItem(innHandler.GetInnRecord().consumeIngMeat, spIconMeat, consumeIngStr + " " + GameCommonInfo.GetUITextById(22));
+            CreateItemForOther(innHandler.GetInnRecord().consumeIngMeat, spIconMeat, consumeIngStr + " " + GameCommonInfo.GetUITextById(22));
         if (innHandler.GetInnRecord().consumeIngRiverfresh > 0)
-            CreateIngItem(innHandler.GetInnRecord().consumeIngRiverfresh, spIconRiverfresh, consumeIngStr + " " + GameCommonInfo.GetUITextById(23));
+            CreateItemForOther(innHandler.GetInnRecord().consumeIngRiverfresh, spIconRiverfresh, consumeIngStr + " " + GameCommonInfo.GetUITextById(23));
         if (innHandler.GetInnRecord().consumeIngSeafood > 0)
-            CreateIngItem(innHandler.GetInnRecord().consumeIngSeafood, spIconSeafood, consumeIngStr + " " + GameCommonInfo.GetUITextById(24));
+            CreateItemForOther(innHandler.GetInnRecord().consumeIngSeafood, spIconSeafood, consumeIngStr + " " + GameCommonInfo.GetUITextById(24));
         if (innHandler.GetInnRecord().consumeIngVegetables > 0)
-            CreateIngItem(innHandler.GetInnRecord().consumeIngVegetables, spIconVegetables, consumeIngStr + " " + GameCommonInfo.GetUITextById(25));
+            CreateItemForOther(innHandler.GetInnRecord().consumeIngVegetables, spIconVegetables, consumeIngStr + " " + GameCommonInfo.GetUITextById(25));
         if (innHandler.GetInnRecord().consumeIngMelonfruit > 0)
-            CreateIngItem(innHandler.GetInnRecord().consumeIngMelonfruit, spIconMelonfruit, consumeIngStr + " " + GameCommonInfo.GetUITextById(26));
+            CreateItemForOther(innHandler.GetInnRecord().consumeIngMelonfruit, spIconMelonfruit, consumeIngStr + " " + GameCommonInfo.GetUITextById(26));
         if (innHandler.GetInnRecord().consumeIngWaterwine > 0)
-            CreateIngItem(innHandler.GetInnRecord().consumeIngWaterwine, spIconWaterwine, consumeIngStr + " " + GameCommonInfo.GetUITextById(27));
+            CreateItemForOther(innHandler.GetInnRecord().consumeIngWaterwine, spIconWaterwine, consumeIngStr + " " + GameCommonInfo.GetUITextById(27));
         if (innHandler.GetInnRecord().consumeIngFlour > 0)
-            CreateIngItem(innHandler.GetInnRecord().consumeIngFlour, spIconFlour, consumeIngStr + " " + GameCommonInfo.GetUITextById(28));
+            CreateItemForOther(innHandler.GetInnRecord().consumeIngFlour, spIconFlour, consumeIngStr + " " + GameCommonInfo.GetUITextById(28));
         //遍历食物
         foreach (ItemBean itemData in innHandler.GetInnRecord().listSellNumber)
         {
-            CreateFoodItem(itemData.itemId, (int)itemData.itemNumber);
+            MenuInfoBean foodData = innFoodManager.GetFoodDataById(itemData.itemId);
+            Sprite foodIcon = innFoodManager.GetFoodSpriteByName(foodData.icon_key);
+            CreateItemForMoney(
+                foodIcon,
+                foodData.name + " x" + itemData.itemNumber,
+                1,
+                foodData.price_l * itemData.itemNumber,
+                foodData.price_m * itemData.itemNumber,
+                foodData.price_s * itemData.itemNumber);
         }
         tvIncomeS.text = innHandler.GetInnRecord().incomeS + "";
         tvIncomeM.text = innHandler.GetInnRecord().incomeM + "";
@@ -83,27 +105,29 @@ public class UIGameSettle : UIGameComponent
         tvExpensesL.text = innHandler.GetInnRecord().expensesL + "";
     }
 
-    public void CreateIngItem(int number, Sprite ingIcon, string name)
+    public void CreateItemForMoney(Sprite spIcon, string name, int status, long moneyL, long moneyM, long moneyS)
     {
-        GameObject objIngItem = Instantiate(objItemIngModel, objListRecordContent.transform);
-        objIngItem.SetActive(true);
-        ItemSettleConsumeIngCpt itemCpt = objIngItem.GetComponent<ItemSettleConsumeIngCpt>();
+        GameObject objMoneyItem = Instantiate(objListRecordContent, objItemModelForMoney);
+        ItemSettleForMoneyCpt itemCpt = objMoneyItem.GetComponent<ItemSettleForMoneyCpt>();
+        itemCpt.SetData(spIcon, name, status, moneyL, moneyM, moneyS);
+        AnimForItemShow(objMoneyItem);
+    }
+
+    public void CreateItemForOther(int number, Sprite ingIcon, string name)
+    {
+        GameObject objOtherItem = Instantiate(objListRecordContent, objItemModelForOther);
+        ItemSettleForOtherCpt itemCpt = objOtherItem.GetComponent<ItemSettleForOtherCpt>();
         itemCpt.SetData(number, ingIcon, name);
-        ItemAnim(objIngItem);
+        AnimForItemShow(objOtherItem);
     }
 
-    public void CreateFoodItem(long foodId, int number)
+    /// <summary>
+    /// item出现动画
+    /// </summary>
+    /// <param name="objItem"></param>
+    public void AnimForItemShow(GameObject objItem)
     {
-        GameObject objFoodItem = Instantiate(objItemFoodModel, objListRecordContent.transform);
-        objFoodItem.SetActive(true);
-        ItemSettleFoodCpt itemCpt = objFoodItem.GetComponent<ItemSettleFoodCpt>();
-        itemCpt.SetData(foodId, number);
-        ItemAnim(objFoodItem);
-    }
-
-    public void ItemAnim(GameObject objItem)
-    {
-        objItem.transform.DOScale(new Vector3(0, 0, 0), 1).From().SetEase(Ease.OutBack).SetDelay(animDelay + 0.1f);
+        objItem.transform.DOScale(new Vector3(0, 0, 0), 0.2f).From().SetDelay(animDelay + 0.1f);
         animDelay += 0.1f;
     }
 

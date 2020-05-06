@@ -22,6 +22,11 @@ public class InnRecordBean
     public int consumeIngWaterwine;
     public int consumeIngFlour;
 
+    //支付工资
+    public long payWageS;
+    public long payWageM;
+    public long payWageL;
+
     //售卖数量
     public List<GameItemsBean> listSellNumber = new List<GameItemsBean>();
 
@@ -42,6 +47,20 @@ public class InnRecordBean
     public long praiseOrdinaryNumber;
     public long praiseDisappointedNumber;
     public long praiseAngerNumber;
+
+    /// <summary>
+    /// 增加支付工资
+    /// </summary>
+    public void AddPayWage(long moneyL, long moneyM, long moneyS)
+    {
+        payWageS += moneyS;
+        payWageM += moneyM;
+        payWageL += moneyL;
+
+        expensesS += moneyS;
+        expensesM += moneyM;
+        expensesL += moneyL;
+    }
 
     /// <summary>
     /// 增加销售数量

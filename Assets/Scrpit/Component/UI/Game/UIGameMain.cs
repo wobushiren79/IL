@@ -376,7 +376,7 @@ public class UIGameMain : UIGameComponent, DialogView.IDialogCallBack, IRadioGro
     /// <param name="priceL"></param>
     /// <param name="priceM"></param>
     /// <param name="priceS"></param>
-    private void AddMoneyAnim(long priceL, long priceM, long priceS)
+    private void AnimForAddMoney(long priceL, long priceM, long priceS)
     {
         GameDataBean gameData = uiGameManager.gameDataManager.gameData;
         if (priceL != 0)
@@ -475,7 +475,7 @@ public class UIGameMain : UIGameComponent, DialogView.IDialogCallBack, IRadioGro
                 long priceL = System.Convert.ToInt64(obj[0]);
                 long priceM = System.Convert.ToInt64(obj[1]);
                 long priceS = System.Convert.ToInt64(obj[2]);
-                AddMoneyAnim(priceL, priceM, priceS);
+                AnimForAddMoney(priceL, priceM, priceS);
             }
         }
     }

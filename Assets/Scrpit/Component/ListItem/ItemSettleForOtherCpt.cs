@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using UnityEditor;
 using UnityEngine.UI;
-public class ItemSettleConsumeIngCpt : BaseMonoBehaviour
+public class ItemSettleForOtherCpt : BaseMonoBehaviour
 {
     public Image ivIcon;
     public Text tvName;
