@@ -13,5 +13,8 @@ public class GameConfigBean
     public float musicVolume = 1;
     //自动保存时间
     public float autoSaveTime = 30;
+
+    //按键提示状态 1显示 0隐藏
+    public int statusForKeyTip = 1;
    
 }

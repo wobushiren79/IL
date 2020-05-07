@@ -45,10 +45,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 862d6b2130a46314e931bf3d58d2f080, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  camera2D: {fileID: 0}
   cameraFollowObj: {fileID: 3148206784604620135}
   cameraMove: {fileID: 3148206784604620154}
-  gameDataManager: {fileID: 0}
+  selectNpc: {fileID: 0}
 --- !u!114 &3148206784604620154
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -65,7 +64,8 @@ MonoBehaviour:
   moveSpeed: 10
   characterAnimtor: {fileID: 0}
   navMeshAgent: {fileID: 0}
-  characterBodyObj: {fileID: 3148206784604620135}
+  objMove: {fileID: 0}
+  objCharacterBody: {fileID: 0}
   characterRigidbody: {fileID: 3677209761248648269}
   isManualMove: 0
   minMoveX: 0

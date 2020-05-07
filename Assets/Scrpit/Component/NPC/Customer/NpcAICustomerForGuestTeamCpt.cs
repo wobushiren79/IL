@@ -270,6 +270,7 @@ public class NpcAICustomerForGuestTeamCpt : NpcAICustomerCpt
     /// <returns></returns>
     public override IEnumerator CoroutineForStartWaitSeat()
     {
+        AddWaitIcon();
         yield return new WaitForSeconds(timeWaitSeat);
         List<NpcAICustomerForGuestTeamCpt> listTeamMember = GetGuestTeam();
         bool allWait = true;

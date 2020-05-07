@@ -156,8 +156,6 @@ public class UIGameBuild : UIGameComponent, IRadioGroupCallBack
         ((ControlForBuildCpt)(uiGameManager.controlHandler.GetControl(ControlHandler.ControlEnum.Build))).ClearBuildItem();
         //重新构建地形
         uiGameManager.navMesh.BuildNavMesh();
-        //打开主UI
-        uiManager.OpenUIAndCloseOtherByName(EnumUtil.GetEnumName(UIEnum.GameMain));
 
         if (uiGameManager.gameTimeHandler.dayStauts == GameTimeHandler.DayEnum.Work)
         {
@@ -171,6 +169,8 @@ public class UIGameBuild : UIGameComponent, IRadioGroupCallBack
             //恢复休息日控制器
             uiGameManager.controlHandler.StartControl(ControlHandler.ControlEnum.Normal);
         }
+        //打开主UI
+        uiManager.OpenUIAndCloseOtherByName(EnumUtil.GetEnumName(UIEnum.GameMain));
     }
 
     /// <summary>

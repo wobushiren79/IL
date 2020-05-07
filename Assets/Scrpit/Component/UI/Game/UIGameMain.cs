@@ -88,11 +88,6 @@ public class UIGameMain : UIGameComponent, DialogView.IDialogCallBack, IRadioGro
             btSleep.onClick.AddListener(EndDay);
 
 
-        if (popupSetting!=null)
-        {
-
-        }
-
         if (rgTimeScale != null)
             rgTimeScale.SetCallBack(this);
         InitInnData();
@@ -172,14 +167,12 @@ public class UIGameMain : UIGameComponent, DialogView.IDialogCallBack, IRadioGro
             popupSave.SetContent(GameCommonInfo.GetUITextById(2036));
         if (popupInnData != null)
             popupInnData.SetContent(GameCommonInfo.GetUITextById(2037));
-
         if (popupSetting != null)
             popupSetting.SetContent(GameCommonInfo.GetUITextById(2038));
 
         SetInnPraise(innAttributes);
         SetInnAesthetics(innAttributes);
         SetInnRichNess(innAttributes);
-
         SetInnLevel(innAttributes);
 
         //设置是否显示时间缩放

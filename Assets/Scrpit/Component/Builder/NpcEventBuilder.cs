@@ -56,9 +56,13 @@ public class NpcEventBuilder : NpcNormalBuilder, IBaseObserver
     /// </summary>
     public void BuildRascal()
     {
-        Vector3 npcPosition = GetRandomStartPosition();
-        NpcTeamBean teamData = npcTeamManager.GetRandomTeamMeetConditionByType(NpcTeamTypeEnum.Rascal, gameDataManager.gameData);
-        BuildRascal(teamData, npcPosition);
+        //先检测是否超过当天生成恶人上限
+        if (GameCommonInfo.DailyLimitData.CheckRascalNumber(1))
+        {
+            Vector3 npcPosition = GetRandomStartPosition();
+            NpcTeamBean teamData = npcTeamManager.GetRandomTeamMeetConditionByType(NpcTeamTypeEnum.Rascal, gameDataManager.gameData);
+            BuildRascal(teamData, npcPosition);
+        } 
     }
 
     public void BuildRascal(long teamId)

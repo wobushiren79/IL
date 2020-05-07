@@ -5,6 +5,9 @@ using System;
 [Serializable]
 public class OrderForCustomer 
 {
+    //订单支付状态
+    public OrderStautsForPayEnum orderStauts;
+
     //需要的顾客
     public NpcAICustomerCpt customer;
     //需求的食物

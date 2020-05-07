@@ -41,7 +41,7 @@ public class MiniGameAccountMoneyCpt : BaseMonoBehaviour
         {
             psMoney.gameObject.SetActive(false);
         }
-        transform.localScale = new Vector3(1f + scaleSize, 1f + scaleSize,1f + scaleSize);
+        transform.localScale = new Vector3( scaleSize, scaleSize, scaleSize);
         transform.eulerAngles =new Vector3(0,0, Random.Range(0, 360));
     }
 }

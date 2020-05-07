@@ -378,6 +378,7 @@ public class NpcAICustomerCpt : BaseNpcAI
     /// </summary>
     public void IntentForWaitPay()
     {
+        AddPayIcon();
         orderForCustomer.counter.payQueue.Add(orderForCustomer);
     }
 
@@ -459,13 +460,31 @@ public class NpcAICustomerCpt : BaseNpcAI
     /// <returns></returns>
     public virtual IEnumerator CoroutineForStartWaitSeat()
     {
+        AddWaitIcon();
+        yield return new WaitForSeconds(timeWaitSeat);
+        innHandler.EndOrderForForce(orderForCustomer,false);
+        SetIntent(CustomerIntentEnum.Leave);
+    }
+
+    /// <summary>
+    /// 添加等待图标
+    /// </summary>
+    public void AddWaitIcon()
+    {
         //添加等待图标
         string waitIconMarkId = SystemUtil.GetUUID(SystemUtil.UUIDTypeEnum.N);
         Sprite spWaitIcon = iconDataManager.GetIconSpriteByName("time_wait_1_0");
         AddStatusIconForPro(spWaitIcon, waitIconAnim, waitIconMarkId);
+    }
 
-        yield return new WaitForSeconds(timeWaitSeat);
-        innHandler.EndOrderForForce(orderForCustomer,false);
-        SetIntent(CustomerIntentEnum.Leave);
+    /// <summary>
+    /// 添加支付图标
+    /// </summary>
+    public void AddPayIcon()
+    {
+        //添加等待图标
+        string payIconMarkId = SystemUtil.GetUUID(SystemUtil.UUIDTypeEnum.N);
+        Sprite spPayIcon = iconDataManager.GetIconSpriteByName("money_1");
+        AddStatusIconForPro(spPayIcon, null, payIconMarkId);
     }
 }

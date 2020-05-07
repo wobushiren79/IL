@@ -279,6 +279,12 @@ public class InnHandler : BaseMonoBehaviour, IBaseObserver
         return OrderForFood(orderForCustomer, menuOwn.menuId);
     }
 
+    /// <summary>
+    /// 点指定食物
+    /// </summary>
+    /// <param name="orderForCustomer"></param>
+    /// <param name="menuId"></param>
+    /// <returns></returns>
     public MenuInfoBean OrderForFood(OrderForCustomer orderForCustomer, long menuId)
     {
         //食物数据库里有这个数据

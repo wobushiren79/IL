@@ -3,7 +3,7 @@ using UnityEditor;
 using UnityEngine.UI;
 using System.Collections.Generic;
 
-public class UIGameSetting : UIGameComponent, DropdownView.ICallBack, ProgressView.ICallBack,DialogView.IDialogCallBack
+public class UIGameSetting : UIGameComponent, DropdownView.ICallBack, ProgressView.ICallBack, DialogView.IDialogCallBack, IRadioButtonCallBack
 {
     public Button btExitGame;
     public Button btGoMain;
@@ -13,12 +13,15 @@ public class UIGameSetting : UIGameComponent, DropdownView.ICallBack, ProgressVi
     public ProgressView pvMusic;
     public ProgressView pvSound;
 
+    public RadioButtonView rbKeyTip;
+
     public void Start()
     {
         if (btBack != null)
         {
             btBack.onClick.AddListener(OnClickBack);
         }
+        //语言选择初始化
         if (dvLanguage != null)
         {
             dvLanguage.SetCallBack(this);
@@ -32,22 +35,37 @@ public class UIGameSetting : UIGameComponent, DropdownView.ICallBack, ProgressVi
             {
                 case "cn":
                     dvLanguage.SetPosition("简体中文");
-                    break;    
+                    break;
             }
-  
+
         }
+        //音乐选择初始化
         if (pvMusic != null)
         {
             pvMusic.SetData(GameCommonInfo.GameConfig.musicVolume);
             pvMusic.SetCallBack(this);
         }
+        //音效选择初始化
         if (pvSound != null)
         {
             pvSound.SetData(GameCommonInfo.GameConfig.soundVolume);
             pvSound.SetCallBack(this);
         }
+        //按键提示初始化
+        if (rbKeyTip != null)
+        {
+            rbKeyTip.SetCallBack(this);
+            if (GameCommonInfo.GameConfig.statusForKeyTip==0)
+            {
+                rbKeyTip.ChangeStates(RadioButtonView.RadioButtonStatus.Unselected);
+            }
+            else if (GameCommonInfo.GameConfig.statusForKeyTip == 1)
+            {
+                rbKeyTip.ChangeStates(RadioButtonView.RadioButtonStatus.Selected);
+            }   
+        }
 
-
+        //离开游戏回到主菜单初始化
         if (SceneUtil.GetCurrentScene() == ScenesEnum.MainScene)
         {
             btExitGame.gameObject.SetActive(false);
@@ -60,6 +78,7 @@ public class UIGameSetting : UIGameComponent, DropdownView.ICallBack, ProgressVi
         }
         btExitGame.onClick.AddListener(OnClickExitGame);
         btGoMain.onClick.AddListener(OnClickGoMain);
+
     }
 
     public override void OpenUI()
@@ -132,7 +151,7 @@ public class UIGameSetting : UIGameComponent, DropdownView.ICallBack, ProgressVi
         {
             GameCommonInfo.GameConfig.musicVolume = value;
         }
-        else if(progressView == pvSound)
+        else if (progressView == pvSound)
         {
             GameCommonInfo.GameConfig.soundVolume = value;
         }
@@ -160,6 +179,26 @@ public class UIGameSetting : UIGameComponent, DropdownView.ICallBack, ProgressVi
 
     public void Cancel(DialogView dialogView, DialogBean dialogBean)
     {
+    }
+
+    #endregion
+
+
+    #region checkBox回调
+    public void RadioButtonSelected(RadioButtonView view, RadioButtonView.RadioButtonStatus buttonStates)
+    {
+        if (view == rbKeyTip)
+        {
+            //按键提示
+            if (buttonStates == RadioButtonView.RadioButtonStatus.Selected)
+            {
+                GameCommonInfo.GameConfig.statusForKeyTip = 1;
+            }
+            else if (buttonStates == RadioButtonView.RadioButtonStatus.Unselected)
+            {
+                GameCommonInfo.GameConfig.statusForKeyTip = 0;
+            }
+        }
     }
     #endregion
 }

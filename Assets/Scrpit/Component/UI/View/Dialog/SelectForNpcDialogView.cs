@@ -176,7 +176,7 @@ public class SelectForNpcDialogView : DialogView, IBaseObserver
             {
                 objTeam.SetActive(true);
                 ivTeam.color = npcTeam.teamColor;
-                tvTeamName.text =GameCommonInfo.GetUITextById(49)+":"+ npcTeam.teamData.name;
+                tvTeamName.text = GameCommonInfo.GetUITextById(49) + ":" + npcTeam.teamData.name;
             }
         }
         ShowCustomerData();
@@ -212,10 +212,11 @@ public class SelectForNpcDialogView : DialogView, IBaseObserver
     {
         if (targetNpcAIForCustomer != null)
         {
-            if (targetNpcAIForCustomer.GetOrderForCustomer() != null)
+            OrderForCustomer order = targetNpcAIForCustomer.GetOrderForCustomer();
+            if (order != null && order.table != null)
             {
-                PraiseTypeEnum praiseType = targetNpcAIForCustomer.GetOrderForCustomer().innEvaluation.GetPraise();
-                string praiseTypeStr = targetNpcAIForCustomer.GetOrderForCustomer().innEvaluation.GetPraiseDetails();
+                PraiseTypeEnum praiseType = order.innEvaluation.GetPraise();
+                string praiseTypeStr = order.innEvaluation.GetPraiseDetails();
                 SetMood(praiseTypeStr, targetNpcAIForCustomer.characterMoodCpt.GetCurrentMoodSprite());
             }
         }
@@ -237,9 +238,13 @@ public class SelectForNpcDialogView : DialogView, IBaseObserver
     /// </summary>
     public void ShowCustomerData()
     {
-        if (targetNpcAIForCustomer != null && targetNpcAIForCustomer.GetOrderForCustomer() != null)
+        OrderForCustomer orderForCustomer = targetNpcAIForCustomer.GetOrderForCustomer();
+        if (targetNpcAIForCustomer != null && orderForCustomer != null)
         {
-            objMood.SetActive(true);
+            if (orderForCustomer.table)
+            {
+                objMood.SetActive(true);
+            }
             if (targetNpcAIForCustomer.customerIntent == NpcAICustomerCpt.CustomerIntentEnum.Leave)
             {
                 objFunction.SetActive(false);
