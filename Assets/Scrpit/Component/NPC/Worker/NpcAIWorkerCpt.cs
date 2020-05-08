@@ -139,6 +139,7 @@ public class NpcAIWorkerCpt : BaseNpcAI
     public void SetIntent(WorkerIntentEnum workerIntent, OrderForCustomer orderForCustomer, NpcAIRascalCpt npcAIRascal)
     {
         StopAllCoroutines();
+        RemoveStatusIconByType(CharacterStatusIconEnum.Pro);
         this.workerIntent = workerIntent;
         switch (workerIntent)
         {
@@ -277,10 +278,9 @@ public class NpcAIWorkerCpt : BaseNpcAI
     {
         Sprite spDaze = iconDataManager.GetIconSpriteByName("daze_1");
         string markId = SystemUtil.GetUUID(SystemUtil.UUIDTypeEnum.N);
-        AddStatusIconForEffect(spDaze, Color.white, markId);
+        AddStatusIconForPro(spDaze, null, markId);
         yield return new WaitForSeconds(dazeTime);
         SetIntent(WorkerIntentEnum.Idle);
-        RemoveStatusIconByMarkId(markId);
     }
 
     /// <summary>

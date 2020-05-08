@@ -315,6 +315,8 @@ public class ItemGameMenuFoodCpt : ItemGameBaseCpt, IRadioButtonCallBack, Dialog
     {
         if (view == rbShow && tvShow != null)
         {
+            UIGameManager uiGameManager = GetUIManager<UIGameManager>();
+            uiGameManager.audioHandler.PlaySound(AudioSoundEnum.ButtonForNormal);
             switch (buttonStatus)
             {
                 case RadioButtonView.RadioButtonStatus.Selected:

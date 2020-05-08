@@ -4,8 +4,6 @@ using System.Collections.Generic;
 
 public class LightHandler : BaseHandler, IBaseObserver
 {
-    //太阳光
-    public SunLightCpt sunLight;
     //灯光容器列表
     public List<GameObject> listLightContainer = new List<GameObject>();
     //开灯时间

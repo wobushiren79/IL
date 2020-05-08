@@ -12,8 +12,8 @@ public class NpcAIWorkerForAccost : NpcAIWokerFoBaseCpt
         Finding,//寻找中
         GoToCustomer,//走向客户
         Talking//交流中
-
     }
+
 
     //招募图标
     public GameObject accostPro;
@@ -69,7 +69,6 @@ public class NpcAIWorkerForAccost : NpcAIWokerFoBaseCpt
     {
         //暂停查询倒计时
         StopAllCoroutines();
-
         this.accostIntent = accostIntent;
         switch (accostIntent)
         {

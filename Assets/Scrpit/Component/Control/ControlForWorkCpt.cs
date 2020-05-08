@@ -8,6 +8,7 @@ public class ControlForWorkCpt : BaseControl,DialogView.IDialogCallBack
 
     protected GameDataManager gameDataManager;
     protected DialogManager dialogManager;
+    protected AudioHandler audioHandler;
 
     //选中的NPC
     public BaseNpcAI selectNpc;
@@ -20,6 +21,7 @@ public class ControlForWorkCpt : BaseControl,DialogView.IDialogCallBack
     {
         gameDataManager = Find<GameDataManager>(ImportantTypeEnum.GameDataManager);
         dialogManager= Find<DialogManager>(ImportantTypeEnum.DialogManager);
+        audioHandler= Find<AudioHandler>(ImportantTypeEnum.AudioHandler);
     }
 
     private void Update()
@@ -98,6 +100,7 @@ public class ControlForWorkCpt : BaseControl,DialogView.IDialogCallBack
                     selectNpc = objSelect.GetComponentInParent<BaseNpcAI>();
                     if (selectNpc)
                     {
+                        audioHandler.PlaySound(AudioSoundEnum.ButtonForShow);
                         DialogBean dialogData = new DialogBean();
                         dialogSelectView = dialogManager.CreateDialog(DialogEnum.SelectForNpc, this,dialogData);
                         ((SelectForNpcDialogView)dialogSelectView).SetData(selectNpc);

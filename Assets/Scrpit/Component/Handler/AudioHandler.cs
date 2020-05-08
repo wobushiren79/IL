@@ -27,6 +27,8 @@ public class AudioHandler : BaseHandler
         audioSourceForEnvironment.volume = GameCommonInfo.GameConfig.soundVolume;
     }
 
+
+
     /// <summary>
     ///  循环播放音乐
     /// </summary>
@@ -213,4 +215,19 @@ public class AudioHandler : BaseHandler
         audioSourceForEnvironment.clip = null;
         audioSourceForEnvironment.Stop();
     }
+    /// <summary>
+    /// 暂停
+    /// </summary>
+    public void PauseEnvironment()
+    {
+        audioSourceForEnvironment.Pause();
+    }
+    /// <summary>
+    /// 恢复
+    /// </summary>
+    public void RestoreEnvironment()
+    {
+        audioSourceForEnvironment.Play();
+    }
+
 }

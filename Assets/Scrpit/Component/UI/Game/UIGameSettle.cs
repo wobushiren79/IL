@@ -54,6 +54,7 @@ public class UIGameSettle : UIGameComponent
         InnHandler innHandler = uiGameManager.innHandler;
         InnFoodManager innFoodManager = uiGameManager.innFoodManager;
         IconDataManager iconDataManager = uiGameManager.iconDataManager;
+        AudioHandler audioHandler = uiGameManager.audioHandler;
 
         CptUtil.RemoveChildsByActive(objListRecordContent.transform);
         animDelay =0f;
@@ -96,6 +97,7 @@ public class UIGameSettle : UIGameComponent
                 foodData.price_l * itemData.itemNumber,
                 foodData.price_m * itemData.itemNumber,
                 foodData.price_s * itemData.itemNumber);
+            audioHandler.PlaySound(AudioSoundEnum.PayMoney);
         }
         tvIncomeS.text = innHandler.GetInnRecord().incomeS + "";
         tvIncomeM.text = innHandler.GetInnRecord().incomeM + "";
@@ -133,6 +135,7 @@ public class UIGameSettle : UIGameComponent
 
     public void OpenDateUI()
     {
+        uiGameManager.audioHandler.PlaySound(AudioSoundEnum.ButtonForNormal);
         uiManager.OpenUIAndCloseOtherByName(EnumUtil.GetEnumName(UIEnum.GameDate));
     }
 

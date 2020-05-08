@@ -11,11 +11,9 @@ public class NpcAIMiniGameBarrageCpt : BaseNpcAI, SightForMiniGameBarrageCpt.ICa
         Dodge = 1,//躲避
     }
 
+
     //弹幕游戏处理
     protected MiniGameBarrageHandler gameBarrageHandler;
-    //音效处理
-    protected AudioHandler audioHandler;
-
     //迷你游戏数据
     public MiniGameCharacterBean characterMiniGameData;
     //寻路AI
@@ -30,7 +28,6 @@ public class NpcAIMiniGameBarrageCpt : BaseNpcAI, SightForMiniGameBarrageCpt.ICa
     {
         base.Awake();
         gameBarrageHandler = Find<MiniGameBarrageHandler>( ImportantTypeEnum.MiniGameHandler);
-        audioHandler = Find<AudioHandler>(ImportantTypeEnum.AudioHandler);
     }
 
     /// <summary>

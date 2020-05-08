@@ -14,11 +14,12 @@ public class InteractivePositionChangeCpt : BaseInteractiveCpt
 
     protected EventHandler eventHandler;
     protected SceneTownManager sceneTownManager;
-
+    protected AudioHandler audioHandler;
     private void Awake()
     {
         eventHandler = Find<EventHandler>(ImportantTypeEnum.EventHandler);
         sceneTownManager = Find<SceneTownManager>(ImportantTypeEnum.SceneManager);
+        audioHandler = Find<AudioHandler>(ImportantTypeEnum.AudioHandler);
     }
 
     public override void InteractiveDetection(CharacterInteractiveCpt characterInt)
@@ -30,10 +31,14 @@ public class InteractivePositionChangeCpt : BaseInteractiveCpt
                 sceneTownManager.GetBuildingDoorPosition(positionChange,out Vector2 outDoorPosition,out Vector2 inDoorPosition);
                 if (OutOrIn==0)
                 {
+                    //如果是外 开启环境音效
+                    audioHandler.RestoreEnvironment();
                     mInteractiveObj.transform.position = inDoorPosition;
                 }
                 else
                 {
+                    //如果是内，关闭环境音效
+                    audioHandler.PauseEnvironment();
                     mInteractiveObj.transform.position = outDoorPosition;
                 }
                 //检测故事

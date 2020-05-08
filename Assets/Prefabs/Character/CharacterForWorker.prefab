@@ -189,7 +189,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1939622181802141381}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0.05, z: 0}
   m_LocalScale: {x: 2, y: 2, z: 1}
   m_Children:
   - {fileID: 157258194290775047}
@@ -605,6 +605,7 @@ MonoBehaviour:
   innFoodManager: {fileID: 0}
   cookPro: {fileID: 8305544707907389067}
   orderForCustomer:
+    orderStauts: 0
     customer: {fileID: 0}
     foodData:
       id: 0
@@ -650,6 +651,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   npcAIWorker: {fileID: 0}
   orderForCustomer:
+    orderStauts: 0
     customer: {fileID: 0}
     foodData:
       id: 0
@@ -697,6 +699,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   npcAIWorker: {fileID: 0}
   orderForCustomer:
+    orderStauts: 0
     customer: {fileID: 0}
     foodData:
       id: 0
@@ -1559,6 +1562,11 @@ PrefabInstance:
       propertyPath: navMeshAgent
       value: 
       objectReference: {fileID: 7354873128230069989}
+    - target: {fileID: 6278157875939508613, guid: 2b0fba09934c2934eb7fd9b31e6030fb,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7014457080795894761, guid: 2b0fba09934c2934eb7fd9b31e6030fb,
         type: 3}
       propertyPath: m_IsActive

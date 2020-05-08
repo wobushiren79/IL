@@ -103,11 +103,11 @@ public class NpcAIWorkerForChefCpt : NpcAIWokerFoBaseCpt
         StopAllCoroutines();
         cookPro.SetActive(false);
         chefIntent = ChefIntentEnum.Idle;
-        npcAIWorker.SetIntent(NpcAIWorkerCpt.WorkerIntentEnum.Idle);
         //设置灶台为空闲
         if (orderForCustomer != null && orderForCustomer.stove != null)
             orderForCustomer.stove.SetStoveStatus(BuildStoveCpt.StoveStatusEnum.Idle);
         orderForCustomer = null;
+        npcAIWorker.SetIntent(NpcAIWorkerCpt.WorkerIntentEnum.Idle);
     }
 
     /// <summary>

@@ -60,7 +60,7 @@ public class ItemGameWorkerCpt : ItemGameBaseCpt, IRadioButtonCallBack, DialogVi
     protected GameDataManager gameDataManager;
     protected GameItemsManager gameItemsManager;
     protected GameTimeHandler gameTimeHandler;
-
+    protected ToastManager toastManager;
     private void Awake()
     {
         gameItemsManager = GetUIManager<UIGameManager>().gameItemsManager;
@@ -69,6 +69,7 @@ public class ItemGameWorkerCpt : ItemGameBaseCpt, IRadioButtonCallBack, DialogVi
         dialogManager = GetUIManager<UIGameManager>().dialogManager;
         gameDataManager = GetUIManager<UIGameManager>().gameDataManager;
         gameTimeHandler = GetUIManager<UIGameManager>().gameTimeHandler;
+        toastManager = GetUIManager<UIGameManager>().toastManager;
     }
 
     private void Start()
@@ -537,6 +538,7 @@ public class ItemGameWorkerCpt : ItemGameBaseCpt, IRadioButtonCallBack, DialogVi
         else
         {
             //如果是确认
+            toastManager.ToastHint(string.Format(GameCommonInfo.GetUITextById(1081), characterData.baseInfo.name));
             gameDataManager.gameData.RemoveWorker(characterData);
             transform.DOScale(Vector3.zero, 0.5f).SetEase(Ease.InBack).OnComplete(delegate
             {

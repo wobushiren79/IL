@@ -146,8 +146,8 @@ public class NpcAIWorkerForWaiterCpt : NpcAIWokerFoBaseCpt
         StopAllCoroutines();
         sendPro.SetActive(false);
         clearPro.SetActive(false);
-        npcAIWorker.SetIntent(NpcAIWorkerCpt.WorkerIntentEnum.Idle);
         orderForCustomer = null;
+        npcAIWorker.SetIntent(NpcAIWorkerCpt.WorkerIntentEnum.Idle);
     }
 
     /// <summary>

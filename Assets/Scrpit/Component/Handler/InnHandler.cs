@@ -29,7 +29,7 @@ public class InnHandler : BaseMonoBehaviour, IBaseObserver
     public InnCookHandler innCookHandler;
     //服务处理
     public InnWaiterHandler innWaiterHandler;
-    // 支付处理
+    //支付处理
     public InnPayHandler innPayHandler;
     //客栈战斗处理
     public InnFightHandler innFightHandler;
@@ -41,6 +41,7 @@ public class InnHandler : BaseMonoBehaviour, IBaseObserver
 
     //闹事的人的列表
     public List<NpcAIRascalCpt> rascalrQueue = new List<NpcAIRascalCpt>();
+
     //排队的人
     public List<OrderForCustomer> cusomerQueue = new List<OrderForCustomer>();
     //排队等待烹饪的食物
@@ -58,7 +59,7 @@ public class InnHandler : BaseMonoBehaviour, IBaseObserver
     private void Awake()
     {
         audioHandler = Find<AudioHandler>(ImportantTypeEnum.AudioHandler);
-        gameDataHandler= Find<GameDataHandler>(ImportantTypeEnum.GameDataHandler);
+        gameDataHandler = Find<GameDataHandler>(ImportantTypeEnum.GameDataHandler);
         gameTimeHandler = Find<GameTimeHandler>(ImportantTypeEnum.TimeHandler);
         gameTimeHandler.AddObserver(this);
     }

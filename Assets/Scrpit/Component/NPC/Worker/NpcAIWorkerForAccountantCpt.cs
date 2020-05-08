@@ -61,6 +61,7 @@ public class NpcAIWorkerForAccountantCpt : NpcAIWokerFoBaseCpt
     /// <param name="orderForCustomer"></param>
     public void SetIntent(AccountantIntentEnum accountingIntent, OrderForCustomer orderForCustomer)
     {
+        StopAllCoroutines();
         this.accountantIntent = accountingIntent;
         this.orderForCustomer = orderForCustomer;
         switch (accountingIntent)
@@ -86,12 +87,11 @@ public class NpcAIWorkerForAccountantCpt : NpcAIWokerFoBaseCpt
     /// </summary>
     public void SetIntentForIdle()
     {
-        StopAllCoroutines();
         accountingPro.SetActive(false);
-        npcAIWorker.SetIntent(NpcAIWorkerCpt.WorkerIntentEnum.Idle);
         if (orderForCustomer != null && orderForCustomer.counter != null)
             orderForCustomer.counter.SetCounterStatus(BuildCounterCpt.CounterStatusEnum.Idle);
         orderForCustomer = null;
+        npcAIWorker.SetIntent(NpcAIWorkerCpt.WorkerIntentEnum.Idle);
     }
 
     /// <summary>
