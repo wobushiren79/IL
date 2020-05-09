@@ -11,7 +11,7 @@ public class UITownCarpenter : UIBaseOne, IRadioGroupCallBack, StoreInfoManager.
     public GameObject objCarpenterModel;
 
     private List<StoreInfoBean> mCarpenterListData;
-
+    protected StoreForCarpenterTypeEnum selectType;
     public override void Awake()
     {
         base.Awake();
@@ -26,6 +26,12 @@ public class UITownCarpenter : UIBaseOne, IRadioGroupCallBack, StoreInfoManager.
 
         uiGameManager.storeInfoManager.SetCallBack(this);
         uiGameManager.storeInfoManager.GetStoreInfoForCarpenter();
+    }
+
+    public override void RefreshUI()
+    {
+        base.RefreshUI();
+        InitDataByType(selectType);
     }
 
     public void InitDataByType(StoreForCarpenterTypeEnum type)
@@ -86,7 +92,8 @@ public class UITownCarpenter : UIBaseOne, IRadioGroupCallBack, StoreInfoManager.
     public void GetStoreInfoSuccess(StoreTypeEnum type, List<StoreInfoBean> listData)
     {
         mCarpenterListData = listData;
-        InitDataByType(StoreForCarpenterTypeEnum.Expansion);
+        selectType = StoreForCarpenterTypeEnum.Expansion;
+        InitDataByType(selectType);
     }
     #endregion
 
@@ -95,8 +102,8 @@ public class UITownCarpenter : UIBaseOne, IRadioGroupCallBack, StoreInfoManager.
     {
         uiGameManager.audioHandler.PlaySound(AudioSoundEnum.ButtonForNormal);
 
-        StoreForCarpenterTypeEnum type = EnumUtil.GetEnum<StoreForCarpenterTypeEnum>(rbview.name);
-        InitDataByType(type);
+        selectType = EnumUtil.GetEnum<StoreForCarpenterTypeEnum>(rbview.name);
+        InitDataByType(selectType);
     }
 
     public void RadioButtonUnSelected(RadioGroupView rgView, int position, RadioButtonView rbview)

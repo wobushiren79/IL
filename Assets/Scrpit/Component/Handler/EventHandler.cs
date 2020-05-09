@@ -38,7 +38,9 @@ public class EventHandler : BaseHandler,
     protected ControlHandler controlHandler;
     protected GameTimeHandler gameTimeHandler;
     protected NpcImportantBuilder npcImportantBuilder;
+
     protected MiniGameCombatHandler miniGameCombatHandler;
+    protected MiniGameDebateHandler miniGameDebateHandler;
 
     private EventStatusEnum mEventStatus = EventStatusEnum.EventEnd;
     private EventTypeEnum mEventType;
@@ -55,7 +57,10 @@ public class EventHandler : BaseHandler,
         npcInfoManager = Find<NpcInfoManager>(ImportantTypeEnum.NpcManager);
         storyBuilder = Find<StoryBuilder>(ImportantTypeEnum.StoryBuilder);
         controlHandler = Find<ControlHandler>(ImportantTypeEnum.ControlHandler);
+
         miniGameCombatHandler = Find<MiniGameCombatHandler>(ImportantTypeEnum.MiniGameHandler);
+        miniGameDebateHandler = Find<MiniGameDebateHandler>(ImportantTypeEnum.MiniGameHandler);
+
         npcImportantBuilder = Find<NpcImportantBuilder>(ImportantTypeEnum.NpcBuilder);
         gameTimeHandler = Find<GameTimeHandler>(ImportantTypeEnum.TimeHandler);
         if (miniGameCombatHandler != null)
@@ -468,6 +473,7 @@ public class EventHandler : BaseHandler,
     {
         if (!CheckUtil.StringIsNull(textData.pre_data_minigame))
         {
+            //小游戏初始化
             List<PreTypeForMiniGameBean> listPre = PreTypeForMiniGameEnumTools.GetListPreData(textData.pre_data_minigame);
             List<RewardTypeBean> listReward = RewardTypeEnumTools.GetListRewardData(textData.reward_data);
             MiniGameBaseBean miniGameData = PreTypeForMiniGameEnumTools.GetMiniGameData(null, textData.pre_data_minigame, listPickCharacterData, gameItemsManager, npcInfoManager);
@@ -475,23 +481,21 @@ public class EventHandler : BaseHandler,
             switch (miniGameData.gameType)
             {
                 case MiniGameEnum.Combat:
-                    MiniGameCombatInit((MiniGameCombatBean)miniGameData);
+                    miniGameCombatHandler.InitGame((MiniGameCombatBean)miniGameData);
+                    break;
+                case MiniGameEnum.Debate:
+                    miniGameDebateHandler.InitGame((MiniGameDebateBean)miniGameData);
                     break;
             }
+            mEventPosition = miniGameData.miniGamePosition;
+            //隐藏重要NPC
+            if (npcImportantBuilder != null)
+                npcImportantBuilder.HideNpc();
         }
         NotifyAllObserver((int)NotifyEventTypeEnum.TextSelectResult, textData);
     }
     #endregion
 
-    private void MiniGameCombatInit(MiniGameCombatBean miniGameData)
-    {
-        //隐藏重要NPC
-        if (npcImportantBuilder != null)
-            npcImportantBuilder.HideNpc();
-       
-        miniGameCombatHandler.InitGame(miniGameData);
-        mEventPosition = miniGameData.miniGamePosition;
-    }
 
     #region 回调处理
     public void ObserbableUpdate<T>(T observable, int type, params object[] obj) where T : Object

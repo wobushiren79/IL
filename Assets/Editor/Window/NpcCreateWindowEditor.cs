@@ -22,7 +22,7 @@ public class NpcCreateWindowEditor : EditorWindow
     //NPC查询IDS
     public string findNpcIdsStr = "0";
     //NPC查询数据
-    public List<CharacterBean> listNpcDataForFind = new List<CharacterBean>();
+    public List<NpcInfoBean> listNpcDataForFind = new List<NpcInfoBean>();
 
     //NPC 谈话创建数据
     public TextTalkTypeEnum npcTalkInfoTypeForCreate;
@@ -101,7 +101,7 @@ public class NpcCreateWindowEditor : EditorWindow
         EditorUI.GUINpcInfoCreate(npcInfoService, gameItemsManager, mObjNpcContainer, mObjNpcModel, npcInfoForCreate);
         //NPC 查询UI
         EditorUI.GUINpcInfoFind(
-            npcInfoService, npcInfoManager, gameItemsManager,
+            npcInfoService, gameItemsManager,
             mObjNpcContainer, mObjNpcModel,
             findNpcIdsStr, listNpcDataForFind,
             out findNpcIdsStr, out listNpcDataForFind

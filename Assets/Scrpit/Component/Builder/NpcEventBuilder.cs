@@ -103,6 +103,11 @@ public class NpcEventBuilder : NpcNormalBuilder, IBaseObserver
             rascalCpt.SetFavorabilityData(characterFavorability);
             rascalCpt.AddStatusIconForRascal();
             rascalCpt.SetIntent(NpcAIRascalCpt.RascalIntentEnum.GoToInn);
+
+            //设置捣乱者血量
+            characterData.GetAttributes(gameItemsManager, out CharacterAttributesBean characterAttributes);
+            rascalCpt.characterMaxLife = characterAttributes.life;
+            rascalCpt.characterLife = characterAttributes.life;
         }
         listExistTeamId.Add(npcTeam.id);
     }

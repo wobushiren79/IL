@@ -114,7 +114,7 @@ public class NpcAIWorkerForAccost : NpcAIWokerFoBaseCpt
         if (accostPro != null)
             accostPro.SetActive(false);
         movePosition = npcAIWorker.innHandler.GetRandomEntrancePosition();
-        npcAIWorker.characterMoveCpt.SetDestination(movePosition);
+        npcAIWorker.characterMoveCpt.SetDestination(movePosition + new Vector3(0, -1, 0));
     }
 
     /// <summary>
@@ -140,11 +140,11 @@ public class NpcAIWorkerForAccost : NpcAIWokerFoBaseCpt
         //设置客户等待
         npcAICustomer.SetIntent(NpcAICustomerCpt.CustomerIntentEnum.WaitAccost);
         //走向客户
-        movePosition = Vector3.Lerp(transform.transform.position, npcAICustomer.transform.position, 0.9f);          
+        movePosition = Vector3.Lerp(transform.transform.position, npcAICustomer.transform.position, 0.9f);
         npcAIWorker.characterMoveCpt.SetDestination(movePosition);
         //展示表情
         npcAIWorker.SetExpression(CharacterExpressionCpt.CharacterExpressionEnum.Surprise);
-        
+
     }
 
     /// <summary>

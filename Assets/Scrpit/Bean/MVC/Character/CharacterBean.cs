@@ -530,7 +530,7 @@ public class CharacterBean
     {
         GetAttributes(gameItemsManager,
         out CharacterAttributesBean totalAttributes, out CharacterAttributesBean selfAttributes, out CharacterAttributesBean equipAttributes);
-        return totalAttributes.force;
+        return totalAttributes.force*10;
     }
 
     /// <summary>

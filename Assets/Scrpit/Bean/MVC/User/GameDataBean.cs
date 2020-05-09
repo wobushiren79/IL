@@ -534,6 +534,27 @@ public class GameDataBean
     }
 
     /// <summary>
+    /// 检测是否有items
+    /// </summary>
+    /// <param name="id"></param>
+    /// <param name="hasItems"></param>
+    /// <param name="number"></param>
+    public void CheckHasItems(long id,out bool hasItems,out long number)
+    {
+        hasItems = false;
+        number = 0;
+        foreach ( ItemBean itemData in listItems)
+        {
+            if (itemData.itemId == id)
+            {
+                hasItems = true;
+                number = itemData.itemNumber;
+                return;
+            }
+        }
+    }
+
+    /// <summary>
     /// 检测是否有指定的菜品
     /// </summary>
     /// <param name="loveMenus"></param>

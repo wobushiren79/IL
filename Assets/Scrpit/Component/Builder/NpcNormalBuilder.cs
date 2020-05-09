@@ -16,6 +16,7 @@ public class NpcNormalBuilder : BaseMonoBehaviour
     protected GameTimeHandler gameTimeHandler;
     protected GameDataManager gameDataManager;
     protected WeatherHandler weatherHandler;
+    protected GameItemsManager gameItemsManager;
 
     //初始化大量随机NPC位置
     public List<Transform> listInitStartPosition;
@@ -35,6 +36,7 @@ public class NpcNormalBuilder : BaseMonoBehaviour
         gameTimeHandler = Find<GameTimeHandler>(ImportantTypeEnum.TimeHandler);
         gameDataManager = Find<GameDataManager>(ImportantTypeEnum.GameDataManager);
         weatherHandler = Find<WeatherHandler>(ImportantTypeEnum.WeatherHandler);
+        gameItemsManager = Find<GameItemsManager>(ImportantTypeEnum.GameItemsManager);
     }
 
     /// <summary>

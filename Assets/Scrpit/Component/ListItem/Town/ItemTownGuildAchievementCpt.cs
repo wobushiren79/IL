@@ -34,13 +34,18 @@ public class ItemTownGuildAchievementCpt : ItemGameBaseCpt
 
     public void SetIcon(long achId, long preId, string iconKey, string preData)
     {
-        GameDataManager gameDataManager = GetUIManager<UIGameManager>().gameDataManager;
-        bool isAllPre = PreTypeEnumTools.CheckIsAllPre(gameDataManager.gameData, gameDataManager.gameData.userCharacter, preData,out string reason);
+        UIGameManager uiGameManager = GetUIManager<UIGameManager>();
 
-        if (ivIcon == null || gameDataManager == null || ivBackground == null)
+        bool isAllPre = PreTypeEnumTools.CheckIsAllPre(
+            uiGameManager.gameItemsManager,
+            uiGameManager.iconDataManager,
+            uiGameManager.characterDressManager,
+            uiGameManager.gameDataManager.gameData, uiGameManager.gameDataManager.gameData.userCharacter, preData, out string reason);
+
+        if (ivIcon == null || uiGameManager.gameDataManager == null || ivBackground == null)
             return;
         //检测是否拥有该成就
-        bool hasAch = gameDataManager.gameData.GetAchievementData().CheckHasAchievement(achId);
+        bool hasAch = uiGameManager.gameDataManager.gameData.GetAchievementData().CheckHasAchievement(achId);
         if (hasAch)
         {
             SetAchStatus(AchievementStatusEnum.Completed);
@@ -61,7 +66,7 @@ public class ItemTownGuildAchievementCpt : ItemGameBaseCpt
         }
         else
         {
-            bool hasPre = gameDataManager.gameData.GetAchievementData().CheckHasAchievement(preId);
+            bool hasPre = uiGameManager.gameDataManager.gameData.GetAchievementData().CheckHasAchievement(preId);
             if (hasPre)
             {
                 //检测是否符合条件
@@ -166,6 +171,7 @@ public class ItemTownGuildAchievementCpt : ItemGameBaseCpt
             //添加该成就和奖励
             uiGameManager.gameDataManager.gameData.GetAchievementData().AddAchievement(achievementInfo.id);
             RewardTypeEnumTools.CompleteReward(
+                uiGameManager.toastManager,
                 uiGameManager.npcInfoManager,
                 uiGameManager.iconDataManager,
                 uiGameManager.gameItemsManager,

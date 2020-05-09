@@ -27,14 +27,8 @@ public class NpcInfoService: BaseMVCService
     /// <returns></returns>
     public List<NpcInfoBean> QueryDataByIds(long[] ids)
     {
-        string[] leftTable = new string[] { tableNameForLeft };
-        string[] mainKey = new string[] { "id" };
-        string[] leftKey = new string[] { "npc_id" };
-        string[] colName = new string[] { tableNameForMain + ".id" };
-        string[] operations = new string[] { "IN" };
         string values = TypeConversionUtil.ArrayToStringBySplit(ids, ",");
-        string[] colValue = new string[] { "(" + values + ")" };
-        return SQliteHandle.LoadTableData<NpcInfoBean>(ProjectConfigInfo.DATA_BASE_INFO_NAME, tableNameForMain, leftTable, mainKey, leftKey, colName, operations, colValue);
+        return BaseQueryData<NpcInfoBean>("npc_id", tableNameForMain + ".id", "IN", "(" + values + ")");
     }
 
     /// <summary>
@@ -44,7 +38,7 @@ public class NpcInfoService: BaseMVCService
     /// <returns></returns>
     public List<NpcInfoBean> QueryDataById(long id)
     {
-        return BaseQueryData<NpcInfoBean>("npc_id", tableNameForMain + ".id", id + "");
+       return  QueryDataByIds(new long[] { id });
     }
 
     /// <summary>
@@ -54,14 +48,13 @@ public class NpcInfoService: BaseMVCService
     /// <returns></returns>
     public List<NpcInfoBean> QueryDataByType(int[] type)
     {
-        string[] leftTable = new string[] { tableNameForLeft };
-        string[] mainKey = new string[] { "id" };
-        string[] leftKey = new string[] { "npc_id" };
-        string[] colName = new string[] { tableNameForMain + ".npc_type" };
-        string[] operations = new string[] { "IN" };
         string values = TypeConversionUtil.ArrayToStringBySplit(type, ",");
-        string[] colValue = new string[] { "(" + values + ")" };
-        return SQliteHandle.LoadTableData<NpcInfoBean>(ProjectConfigInfo.DATA_BASE_INFO_NAME, tableNameForMain, leftTable, mainKey, leftKey, colName, operations, colValue);
+        return BaseQueryData<NpcInfoBean>("npc_id", tableNameForMain + ".npc_type", "IN", "(" + values + ")");
+    }
+
+    public List<NpcInfoBean> QueryDataByType(int type)
+    {
+        return QueryDataByType(new int[] { type } );
     }
 
     /// <summary>

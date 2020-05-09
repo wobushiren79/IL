@@ -3,7 +3,7 @@ using UnityEditor;
 using UnityEngine.UI;
 using System.Collections.Generic;
 
-public class ItemTownGuildImproveInnLevelCpt : BaseMonoBehaviour,DialogView.IDialogCallBack
+public class ItemTownGuildImproveInnLevelCpt : BaseMonoBehaviour, DialogView.IDialogCallBack
 {
     public Text tvTitle;
     public Image ivTitleIcon;
@@ -29,9 +29,10 @@ public class ItemTownGuildImproveInnLevelCpt : BaseMonoBehaviour,DialogView.IDia
     protected InnBuildManager innBuildManager;
     protected DialogManager dialogManager;
     protected NpcInfoManager npcInfoManager;
+    protected CharacterDressManager characterDressManager;
     private void Awake()
     {
-        gameItemsManager= Find<GameItemsManager>(ImportantTypeEnum.GameItemsManager);
+        gameItemsManager = Find<GameItemsManager>(ImportantTypeEnum.GameItemsManager);
         iconDataManager = Find<IconDataManager>(ImportantTypeEnum.UIManager);
         gameDataManager = Find<GameDataManager>(ImportantTypeEnum.GameDataManager);
         toastManager = Find<ToastManager>(ImportantTypeEnum.ToastManager);
@@ -39,6 +40,7 @@ public class ItemTownGuildImproveInnLevelCpt : BaseMonoBehaviour,DialogView.IDia
         innBuildManager = Find<InnBuildManager>(ImportantTypeEnum.BuildManager);
         dialogManager = Find<DialogManager>(ImportantTypeEnum.DialogManager);
         npcInfoManager = Find<NpcInfoManager>(ImportantTypeEnum.NpcManager);
+        characterDressManager = Find<CharacterDressManager>(ImportantTypeEnum.CharacterManager);
     }
 
     private void Start()
@@ -96,7 +98,12 @@ public class ItemTownGuildImproveInnLevelCpt : BaseMonoBehaviour,DialogView.IDia
         foreach (var itemData in listPreData)
         {
             GameObject objPre = Instantiate(objPreContainer, objPreModel);
-            PreTypeEnumTools.GetPreDetails(itemData, gameDataManager.gameData, iconDataManager);
+            PreTypeEnumTools.GetPreDetails(
+                itemData,
+                gameDataManager.gameData,
+                iconDataManager,
+                gameItemsManager,
+                characterDressManager);
             //设置图标
             Sprite spIcon = itemData.spPreIcon;
             Image ivIcon = CptUtil.GetCptInChildrenByName<Image>(objPre, "Icon");
@@ -134,7 +141,7 @@ public class ItemTownGuildImproveInnLevelCpt : BaseMonoBehaviour,DialogView.IDia
         foreach (var itemData in listRewardData)
         {
             GameObject objReward = Instantiate(objRewardContainer, objRewardModel);
-            RewardTypeEnumTools.GetRewardDetails(itemData,iconDataManager,gameItemsManager,innBuildManager, npcInfoManager);
+            RewardTypeEnumTools.GetRewardDetails(itemData, iconDataManager, gameItemsManager, innBuildManager, npcInfoManager);
             //设置图标
             Sprite spIcon = itemData.spRewardIcon;
             Image ivIcon = CptUtil.GetCptInChildrenByName<Image>(objReward, "Icon");
@@ -161,6 +168,7 @@ public class ItemTownGuildImproveInnLevelCpt : BaseMonoBehaviour,DialogView.IDia
             PreTypeEnumTools.CompletePre(storeInfo.pre_data, gameDataManager.gameData);
             //获取所有奖励
             RewardTypeEnumTools.CompleteReward(
+                toastManager,
                 npcInfoManager,
                 iconDataManager,
                 gameItemsManager,

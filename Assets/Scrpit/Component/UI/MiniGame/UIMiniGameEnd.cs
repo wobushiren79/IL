@@ -186,6 +186,7 @@ public class UIMiniGameEnd : UIGameComponent
         itemReasonWin.SetIcon(null);
         //添加奖励
         RewardTypeEnumTools.CompleteReward(
+            uiGameManager.toastManager,
             uiGameManager.npcInfoManager,
             uiGameManager.iconDataManager,
             uiGameManager.gameItemsManager,

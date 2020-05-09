@@ -130,39 +130,6 @@ public class RewardTypeEnumTools : DataTools
     }
 
 
-
-
-    /// <summary>
-    /// 获取奖励 增加的金钱
-    /// </summary>
-    /// <param name="data"></param>
-    /// <param name="addMoneyL"></param>
-    /// <param name="addMoneyM"></param>
-    /// <param name="addMoneyS"></param>
-    public static void GetRewardForAddMoney(string data, out long addMoneyL, out long addMoneyM, out long addMoneyS)
-    {
-        addMoneyL = 0;
-        addMoneyM = 0;
-        addMoneyS = 0;
-        List<RewardTypeBean> listAllReward = GetListRewardData(data);
-        foreach (RewardTypeBean rewardItem in listAllReward)
-        {
-            if (rewardItem.dataType == RewardTypeEnum.AddMoneyL)
-            {
-                addMoneyL = long.Parse(rewardItem.data);
-            }
-            else if (rewardItem.dataType == RewardTypeEnum.AddMoneyM)
-            {
-                addMoneyM = long.Parse(rewardItem.data);
-            }
-            else if (rewardItem.dataType == RewardTypeEnum.AddMoneyS)
-            {
-                addMoneyS = long.Parse(rewardItem.data);
-            }
-        }
-    }
-
-
     /// <summary>
     /// 获取奖杯详情
     /// </summary>
@@ -331,13 +298,13 @@ public class RewardTypeEnumTools : DataTools
     /// </summary>
     /// <param name="reward_data"></param>
     /// <param name="gameData"></param>
-    public static void CompleteReward(NpcInfoManager npcInfoManager, IconDataManager iconDataManager,GameItemsManager gameItemsManager,InnBuildManager innBuildManager, GameDataManager gameDataManager, string data)
+    public static void CompleteReward(ToastManager toastManager, NpcInfoManager npcInfoManager, IconDataManager iconDataManager,GameItemsManager gameItemsManager,InnBuildManager innBuildManager, GameDataManager gameDataManager, string data)
     {
         List<RewardTypeBean> listRewardData = GetListRewardData(data);
-        CompleteReward(npcInfoManager,iconDataManager,gameItemsManager, innBuildManager, gameDataManager,  listRewardData);
+        CompleteReward(toastManager , npcInfoManager, iconDataManager,gameItemsManager, innBuildManager, gameDataManager,  listRewardData);
     }
 
-    public static void CompleteReward(NpcInfoManager npcInfoManager, IconDataManager iconDataManager, GameItemsManager gameItemsManager, InnBuildManager innBuildManager, GameDataManager gameDataManager, List<RewardTypeBean> listRewardData)
+    public static void CompleteReward(ToastManager toastManager, NpcInfoManager npcInfoManager, IconDataManager iconDataManager, GameItemsManager gameItemsManager, InnBuildManager innBuildManager, GameDataManager gameDataManager, List<RewardTypeBean> listRewardData)
     {
         GameDataBean gameData = gameDataManager.gameData;
         foreach (var itemData in listRewardData)
@@ -352,6 +319,7 @@ public class RewardTypeEnumTools : DataTools
                     break;
                 case RewardTypeEnum.AddWorker:
                     gameData.AddWorkCharacter(itemData.workerCharacterData);
+                    toastManager.ToastHint(string.Format(GameCommonInfo.GetUITextById(6011), itemData.workerCharacterData.baseInfo.name));
                     break;
                 case RewardTypeEnum.AddGuildCoin:
                     long addGuildCoin = itemData.rewardNumber;
@@ -375,7 +343,6 @@ public class RewardTypeEnumTools : DataTools
                 case RewardTypeEnum.AddBuildItems:
                     gameData.AddBuildNumber(itemData.rewardId, itemData.rewardNumber);
                     break;
-
                 case RewardTypeEnum.AddIngMeat:
                     gameData.AddIng(IngredientsEnum.Oilsalt, itemData.rewardNumber);
                     break;

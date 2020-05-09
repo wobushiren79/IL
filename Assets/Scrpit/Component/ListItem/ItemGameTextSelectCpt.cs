@@ -56,22 +56,29 @@ public class ItemGameTextSelectCpt : ItemGameBaseCpt, DialogView.IDialogCallBack
             List<PreTypeBean> listPre = PreTypeEnumTools.GetListPreData(textData.pre_data);
             foreach (PreTypeBean itemPreData in listPre)
             {
-                PreTypeEnumTools.GetPreDetails(itemPreData, uiGameManager.gameDataManager.gameData, uiGameManager.iconDataManager);
+                PreTypeEnumTools.GetPreDetails(
+                    itemPreData, 
+                    uiGameManager.gameDataManager.gameData,
+                    uiGameManager.iconDataManager,
+                    uiGameManager.gameItemsManager,
+                    uiGameManager.characterDressManager);
                 if (!itemPreData.isPre)
                 {
                     uiGameText.uiGameManager.toastManager.ToastHint(itemPreData.spPreIcon, itemPreData.preFailStr);
                     return;
                 }
             }
+            //完成前置条件
             PreTypeEnumTools.CompletePre(listPre, uiGameManager.gameDataManager.gameData);
+            //完成所有奖励
             RewardTypeEnumTools.CompleteReward(
+                uiGameManager.toastManager,
                 uiGameManager.npcInfoManager,
                 uiGameManager.iconDataManager,
                 uiGameManager.gameItemsManager,
                 uiGameManager.innBuildManager,
                 uiGameManager.gameDataManager,
                 textData.reward_data);
-            RewardTypeEnumTools.GetRewardForAddMoney(textData.reward_data, out long moneyL, out long moneyM, out long moneyS);
             uiGameText.SelectText(textData);
         }
         else

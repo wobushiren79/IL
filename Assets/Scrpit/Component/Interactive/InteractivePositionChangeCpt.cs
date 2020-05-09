@@ -28,17 +28,18 @@ public class InteractivePositionChangeCpt : BaseInteractiveCpt
         {
             if (mInteractiveObj != null)
             {
+                audioHandler.PlaySound(AudioSoundEnum.ButtonForNormal);
                 sceneTownManager.GetBuildingDoorPosition(positionChange,out Vector2 outDoorPosition,out Vector2 inDoorPosition);
-                if (OutOrIn==0)
+                if (OutOrIn == 0)
                 {
-                    //如果是外 开启环境音效
-                    audioHandler.RestoreEnvironment();
+                    //如果是内，关闭环境音效
+                    audioHandler.PauseEnvironment();
                     mInteractiveObj.transform.position = inDoorPosition;
                 }
                 else
                 {
-                    //如果是内，关闭环境音效
-                    audioHandler.PauseEnvironment();
+                    //如果是外 开启环境音效
+                    audioHandler.RestoreEnvironment();
                     mInteractiveObj.transform.position = outDoorPosition;
                 }
                 //检测故事

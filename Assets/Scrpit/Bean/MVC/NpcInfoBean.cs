@@ -42,7 +42,9 @@ public class NpcInfoBean : BaseBean
     public int attributes_charm;
     public int attributes_force;
     public int attributes_lucky;
-
+    public int wage_l;
+    public int wage_m;
+    public int wage_s;
     //喜欢的东西
     public string love_items;
     //喜欢的菜单
@@ -71,6 +73,9 @@ public class NpcInfoBean : BaseBean
         characterData.baseInfo.characterId = npcInfo.id + "";
         characterData.baseInfo.titleName = npcInfo.title_name;
         characterData.baseInfo.name = npcInfo.name;
+        characterData.baseInfo.priceL = npcInfo.wage_l;
+        characterData.baseInfo.priceM = npcInfo.wage_m;
+        characterData.baseInfo.priceS = npcInfo.wage_s;
         //设置最喜欢的东西
         if (!CheckUtil.StringIsNull(npcInfo.love_items))
             characterData.baseInfo.listLoveItems = StringUtil.SplitBySubstringForArrayLong(npcInfo.love_items, ',').ToList();

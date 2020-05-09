@@ -8,6 +8,7 @@ public class UIGameTextForTalk : BaseUIChildComponent<UIGameText>
 {
     //文本容器
     public RectTransform rtfTextContent;
+    public ScrollRect scrollRect;
     //内容
     public Text tvContent;
     public Text tvName;
@@ -27,7 +28,7 @@ public class UIGameTextForTalk : BaseUIChildComponent<UIGameText>
         {
             return;
         }
-        if (Input.GetButtonDown(InputInfo.Interactive_E))
+        if (Input.GetButtonDown(InputInfo.Interactive_E)||Input.GetButtonDown(InputInfo.Confirm))
         {
             if (tweenerText != null && tweenerText.IsActive() && tweenerText.IsPlaying())
             {
@@ -61,6 +62,11 @@ public class UIGameTextForTalk : BaseUIChildComponent<UIGameText>
         UIGameManager uiGameManager = uiComponent.GetUIManager<UIGameManager>();
         //清空选项
         CptUtil.RemoveChildsByName(objSelectContent.transform, "SelectButton", true);
+        //清空文本
+        tvContent.text = "";
+        tvName.text = "";
+        //回到顶部
+        scrollRect.verticalNormalizedPosition = 0;
         this.textData = textData;
         //选择对话 特殊处理 增加选择框
         if (textData.type == (int)TextInfoTypeEnum.Select)

@@ -35,8 +35,8 @@ public class NpcAIRascalCpt : BaseNpcAI, IBaseObserver
     public List<TextInfoBean> listTextInfoBean;
 
     //角色生命值
-    public int characterMaxLife = 10;
-    public int characterLife = 10;
+    public int characterMaxLife = 50;
+    public int characterLife = 50;
 
     //制造麻烦的时间
     public float timeMakeTrouble = 60;
@@ -65,7 +65,6 @@ public class NpcAIRascalCpt : BaseNpcAI, IBaseObserver
         sceneInnManager = Find<SceneInnManager>(ImportantTypeEnum.SceneManager);
         npcEventBuilder = Find<NpcEventBuilder>(ImportantTypeEnum.NpcBuilder);
     }
-
 
     private void Update()
     {
@@ -192,8 +191,6 @@ public class NpcAIRascalCpt : BaseNpcAI, IBaseObserver
     protected void SetIntentForMakeTrouble()
     {
         //展示生命条
-        AddLife(characterMaxLife);
-
         characterLifeCpt.gameObject.SetActive(true);
         characterLifeCpt.gameObject.transform.localScale = new Vector3(1, 1, 1);
         characterLifeCpt.gameObject.transform.DOScale(new Vector3(0.2f, 0.2f), 0.5f).From().SetEase(Ease.OutBack);

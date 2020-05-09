@@ -236,10 +236,16 @@ public class ItemGameWorkerCpt : ItemGameBaseCpt, IRadioButtonCallBack, DialogVi
     {
         if (audioHandler != null)
             audioHandler.PlaySound(AudioSoundEnum.ButtonForNormal);
-
-        DialogBean dialogData = new DialogBean();
-        dialogData.content = string.Format(GameCommonInfo.GetUITextById(3063), characterData.baseInfo.name);
-        dialogManager.CreateDialog(DialogEnum.Normal, this, dialogData);
+        if (gameTimeHandler.GetDayStatus() == GameTimeHandler.DayEnum.Work)
+        {
+            toastManager.ToastHint(GameCommonInfo.GetUITextById(1082));
+        }
+        else
+        {
+            DialogBean dialogData = new DialogBean();
+            dialogData.content = string.Format(GameCommonInfo.GetUITextById(3063), characterData.baseInfo.name);
+            dialogManager.CreateDialog(DialogEnum.Normal, this, dialogData);
+        }
     }
 
     /// <summary>
@@ -540,12 +546,11 @@ public class ItemGameWorkerCpt : ItemGameBaseCpt, IRadioButtonCallBack, DialogVi
             //如果是确认
             toastManager.ToastHint(string.Format(GameCommonInfo.GetUITextById(1081), characterData.baseInfo.name));
             gameDataManager.gameData.RemoveWorker(characterData);
-            transform.DOScale(Vector3.zero, 0.5f).SetEase(Ease.InBack).OnComplete(delegate
+            transform.DOScale(Vector3.zero, 0.5f).OnComplete(delegate
             {
                 Destroy(gameObject);
             });
         }
-
     }
 
     public void Cancel(DialogView dialogView, DialogBean dialogBean)

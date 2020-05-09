@@ -10,6 +10,8 @@ public enum PreTypeEnum
     HaveMoneyL,//当前拥有金钱
     HaveMoneyM,//当前拥有金钱
     HaveMoneyS,//当前拥有金钱
+    PayItems,//支付道具  ,分隔 前ID 后数量
+    HaveItems,//有道具 ,分隔 前ID 后数量
     AttributeForForce,//达标属性
     AttributeForSpeed,
     AttributeForAccount,
@@ -44,13 +46,13 @@ public class PreTypeEnumTools : DataTools
     /// <param name="gameData"></param>
     /// <param name="data"></param>
     /// <returns></returns>
-    public static bool CheckIsAllPre(GameDataBean gameData, CharacterBean characterData, string data,out string reason)
+    public static bool CheckIsAllPre(GameItemsManager gameItemsManager,IconDataManager iconDataManager,CharacterDressManager characterDressManager, GameDataBean gameData, CharacterBean characterData, string data, out string reason)
     {
         List<PreTypeBean> listPreData = GetListPreData(data);
         reason = "";
         foreach (var itemPreData in listPreData)
         {
-            GetPreDetails(itemPreData, gameData, characterData,null,false);
+            GetPreDetails(itemPreData, gameData, characterData, iconDataManager, gameItemsManager, characterDressManager, false);
             if (!itemPreData.isPre)
             {
                 reason = itemPreData.preFailStr;
@@ -74,7 +76,7 @@ public class PreTypeEnumTools : DataTools
     /// </summary>
     /// <param name="rewardType"></param>
     /// <returns></returns>
-    public static PreTypeBean GetPreDetails(PreTypeBean preTypeData, GameDataBean gameData, CharacterBean characterData, IconDataManager iconDataManager, bool isComplete)
+    public static PreTypeBean GetPreDetails(PreTypeBean preTypeData, GameDataBean gameData, CharacterBean characterData, IconDataManager iconDataManager, GameItemsManager gameItemsManager, CharacterDressManager characterDressManager, bool isComplete)
     {
         switch (preTypeData.dataType)
         {
@@ -97,16 +99,66 @@ public class PreTypeEnumTools : DataTools
             case PreTypeEnum.AttributeForLife:
                 GetPreDetailsForAttributes(preTypeData, characterData, iconDataManager);
                 break;
+            case PreTypeEnum.PayItems:
+            case PreTypeEnum.HaveItems:
+                GetPreDetailsForItems(gameItemsManager, iconDataManager, characterDressManager, preTypeData, gameData, isComplete);
+                break;
         }
         return preTypeData;
     }
-    public static PreTypeBean GetPreDetails(PreTypeBean preTypeData, GameDataBean gameData,  IconDataManager iconDataManager, bool isComplete)
+    public static PreTypeBean GetPreDetails(PreTypeBean preTypeData, GameDataBean gameData, IconDataManager iconDataManager, GameItemsManager gameItemsManager, CharacterDressManager characterDressManager, bool isComplete)
     {
-        return GetPreDetails(preTypeData, gameData, null, iconDataManager, isComplete);
+        return GetPreDetails(preTypeData, gameData, null, iconDataManager, gameItemsManager, characterDressManager, isComplete);
     }
-    public static PreTypeBean GetPreDetails(PreTypeBean preTypeData, GameDataBean gameData, IconDataManager iconDataManager)
+    public static PreTypeBean GetPreDetails(PreTypeBean preTypeData, GameDataBean gameData, IconDataManager iconDataManager, GameItemsManager gameItemsManager, CharacterDressManager characterDressManager)
     {
-        return GetPreDetails(preTypeData, gameData, null,iconDataManager, false);
+        return GetPreDetails(preTypeData, gameData, null, iconDataManager, gameItemsManager, characterDressManager, false);
+    }
+
+    /// <summary>
+    /// 获取拥有物品详情
+    /// </summary>
+    /// <param name="gameItemsManager"></param>
+    /// <param name="iconDataManager"></param>
+    /// <param name="characterDressManager"></param>
+    /// <param name="preTypeData"></param>
+    /// <param name="gameData"></param>
+    /// <param name="isComplete"></param>
+    /// <returns></returns>
+    private static PreTypeBean GetPreDetailsForItems(
+        GameItemsManager gameItemsManager,
+        IconDataManager iconDataManager,
+        CharacterDressManager characterDressManager,
+        PreTypeBean preTypeData, GameDataBean gameData, bool isComplete)
+    {
+        long[] listItems = StringUtil.SplitBySubstringForArrayLong(preTypeData.data, ',');
+        preTypeData.isPre = true;
+        long itemsId = listItems[0];
+        long itemsNumber = listItems[1];
+        gameData.CheckHasItems(itemsId, out bool hasItems, out long number);
+        if ((hasItems && number >= itemsNumber) || isComplete)
+        {
+            preTypeData.progress = 1;
+            preTypeData.isPre = true;
+        }
+        else
+        {
+            preTypeData.progress = number / (float)itemsNumber;
+            preTypeData.isPre = false;
+        }
+        ItemsInfoBean itemsInfo = gameItemsManager.GetItemsById(itemsId);
+        preTypeData.spPreIcon = GeneralEnumTools.GetGeneralSprite(itemsInfo, iconDataManager, gameItemsManager, characterDressManager);
+        switch (preTypeData.dataType)
+        {
+            case PreTypeEnum.HaveItems:
+                preTypeData.preDescribe = string.Format(GameCommonInfo.GetUITextById(5021), itemsInfo.name, itemsNumber + "");
+                break;
+            case PreTypeEnum.PayItems:
+                preTypeData.preDescribe = string.Format(GameCommonInfo.GetUITextById(5022), itemsInfo.name, itemsNumber + "");
+                break;
+        }
+        preTypeData.preFailStr = string.Format(GameCommonInfo.GetUITextById(5023), itemsInfo.name, itemsNumber + "");
+        return preTypeData;
     }
 
     /// <summary>
@@ -211,7 +263,7 @@ public class PreTypeEnumTools : DataTools
         preTypeData.preDescribe = string.Format(preTypeData.preDescribe, haveMoneyStr);
         return preTypeData;
     }
-    
+
     /// <summary>
     /// 获取属性相关详情
     /// </summary>
@@ -219,7 +271,7 @@ public class PreTypeEnumTools : DataTools
     /// <param name="characterData"></param>
     /// <param name="iconDataManager"></param>
     /// <returns></returns>
-    private static PreTypeBean GetPreDetailsForAttributes(PreTypeBean preTypeData,CharacterBean characterData, IconDataManager iconDataManager)
+    private static PreTypeBean GetPreDetailsForAttributes(PreTypeBean preTypeData, CharacterBean characterData, IconDataManager iconDataManager)
     {
         if (characterData == null)
             return preTypeData;
@@ -266,8 +318,8 @@ public class PreTypeEnumTools : DataTools
         }
         if (iconDataManager != null)
             preTypeData.spPreIcon = iconDataManager.GetIconSpriteByName(iconKey);
-        preTypeData.preFailStr = string.Format(preTypeData.preFailStr, dataAttributes+"");
-        if (targetAttributes< dataAttributes)
+        preTypeData.preFailStr = string.Format(preTypeData.preFailStr, dataAttributes + "");
+        if (targetAttributes < dataAttributes)
         {
             preTypeData.isPre = false;
         }
@@ -312,6 +364,12 @@ public class PreTypeEnumTools : DataTools
                 case PreTypeEnum.PayMoneyS:
                     long moneyS = long.Parse(itemData.data);
                     gameData.PayMoney(0, 0, moneyS);
+                    break;
+                case PreTypeEnum.PayItems:
+                    long[] listItems = StringUtil.SplitBySubstringForArrayLong(itemData.data, ',');
+                    long itemsId = listItems[0];
+                    long itemsNumber = listItems[1];
+                    gameData.AddItemsNumber(itemsId, itemsNumber);
                     break;
             }
         }

@@ -153,11 +153,19 @@ public class InfoAchievementPopupShow : PopupShowView
         {
             if (status == AchievementStatusEnum.Completed)
             {
-                PreTypeEnumTools.GetPreDetails(itemPreData, gameDataManager.gameData, iconDataManager, true);
+                PreTypeEnumTools.GetPreDetails(itemPreData, gameDataManager.gameData, 
+                    iconDataManager,
+                    gameItemsManager,
+                    characterDressManager,
+                    true);
             }
             else
             {
-                PreTypeEnumTools.GetPreDetails(itemPreData, gameDataManager.gameData, iconDataManager, false);
+                PreTypeEnumTools.GetPreDetails(itemPreData, gameDataManager.gameData, 
+                    iconDataManager,
+                    gameItemsManager,
+                    characterDressManager,
+                    false);
             }
             string preDes = itemPreData.preDescribe;
             float progress = itemPreData.progress;

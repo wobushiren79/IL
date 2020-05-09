@@ -34,10 +34,10 @@ public class EditorUI
     /// </summary>
     public static void GUINpcInfoFind(
         NpcInfoService npcInfoService,
-        NpcInfoManager npcInfoManager, GameItemsManager gameItemsManager,
+        GameItemsManager gameItemsManager,
         GameObject objNpcContainer, GameObject objNpcModel,
-        string findIdsStr, List<CharacterBean> listNpcDataForFind,
-        out string outFindIdStr, out List<CharacterBean> outListNpcDataForFind)
+        string findIdsStr, List<NpcInfoBean> listNpcDataForFind,
+        out string outFindIdStr, out List<NpcInfoBean> outListNpcDataForFind)
     {
         GUILayout.Label("查询NPC", GUILayout.Width(100), GUILayout.Height(20));
         GUILayout.BeginHorizontal();
@@ -46,55 +46,53 @@ public class EditorUI
         if (GUILayout.Button("查询", GUILayout.Width(100), GUILayout.Height(20)))
         {
             long[] ids = StringUtil.SplitBySubstringForArrayLong(findIdsStr, ',');
-            listNpcDataForFind = npcInfoManager.GetCharacterDataByIds(ids);
+            listNpcDataForFind = npcInfoService.QueryDataByIds(ids);
         }
         if (GUILayout.Button("查询全部", GUILayout.Width(100), GUILayout.Height(20)))
         {
-            listNpcDataForFind = npcInfoManager.GetAllCharacterData();
+            listNpcDataForFind = npcInfoService.QueryAllData();
         }
         if (GUILayout.Button("查询路人NPC", GUILayout.Width(100), GUILayout.Height(20)))
         {
-            listNpcDataForFind = npcInfoManager.GetCharacterDataByType((int)NpcTypeEnum.Passerby);
+            listNpcDataForFind = npcInfoService.QueryDataByType((int)NpcTypeEnum.Passerby);
         }
         if (GUILayout.Button("查询小镇NPC", GUILayout.Width(100), GUILayout.Height(20)))
         {
-            listNpcDataForFind = npcInfoManager.GetCharacterDataByType((int)NpcTypeEnum.Town);
+            listNpcDataForFind = npcInfoService.QueryDataByType((int)NpcTypeEnum.Town);
         }
         if (GUILayout.Button("查询小镇可招募NPC", GUILayout.Width(120), GUILayout.Height(20)))
         {
-            listNpcDataForFind = npcInfoManager.GetCharacterDataByType((int)NpcTypeEnum.RecruitTown);
+            listNpcDataForFind = npcInfoService.QueryDataByType((int)NpcTypeEnum.RecruitTown);
         }
         if (GUILayout.Button("查询团队顾客", GUILayout.Width(100), GUILayout.Height(20)))
         {
-            listNpcDataForFind = npcInfoManager.GetCharacterDataByType((int)NpcTypeEnum.GuestTeam);
+            listNpcDataForFind = npcInfoService.QueryDataByType((int)NpcTypeEnum.GuestTeam);
         }
         if (GUILayout.Button("查询其他NPC", GUILayout.Width(100), GUILayout.Height(20)))
         {
-            listNpcDataForFind = npcInfoManager.GetCharacterDataByType((int)NpcTypeEnum.Other);
+            listNpcDataForFind = npcInfoService.QueryDataByType((int)NpcTypeEnum.Other);
         }
 
         GUILayout.EndHorizontal();
-        foreach (CharacterBean itemData in listNpcDataForFind)
+        foreach (NpcInfoBean itemData in listNpcDataForFind)
         {
             GUILayout.BeginHorizontal();
             if (GUILayout.Button("显示", GUILayout.Width(100), GUILayout.Height(20)))
             {
-                ShowNpc(gameItemsManager, objNpcContainer, objNpcModel, itemData);
+                CharacterBean characterData= NpcInfoBean.NpcInfoToCharacterData(itemData);
+                ShowNpc(gameItemsManager, objNpcContainer, objNpcModel, characterData);
             }
             if (GUILayout.Button("更新", GUILayout.Width(100), GUILayout.Height(20)))
             {
-                npcInfoService.Update(itemData.npcInfoData);
+                npcInfoService.Update(itemData);
             }
             if (GUILayout.Button("删除", GUILayout.Width(100), GUILayout.Height(20)))
             {
-                npcInfoService.DeleteData(itemData.npcInfoData);
+                npcInfoService.DeleteData(itemData);
                 listNpcDataForFind.Remove(itemData);
             }
             GUILayout.EndHorizontal();
-            GUINpcInfoItem(gameItemsManager, objNpcContainer, itemData.npcInfoData);
-            itemData.body.hairColor = new ColorBean(itemData.npcInfoData.hair_color);
-            itemData.body.eyeColor = new ColorBean(itemData.npcInfoData.eye_color);
-            itemData.body.mouthColor = new ColorBean(itemData.npcInfoData.mouth_color);
+            GUINpcInfoItem(gameItemsManager, objNpcContainer, itemData);
         }
         outFindIdStr = findIdsStr;
         outListNpcDataForFind = listNpcDataForFind;
@@ -180,7 +178,13 @@ public class EditorUI
             npcInfo.attributes_force = int.Parse(EditorGUILayout.TextArea(npcInfo.attributes_force + "", GUILayout.Width(50), GUILayout.Height(20)));
             GUILayout.Label("运：", GUILayout.Width(30), GUILayout.Height(20));
             npcInfo.attributes_lucky = int.Parse(EditorGUILayout.TextArea(npcInfo.attributes_lucky + "", GUILayout.Width(50), GUILayout.Height(20)));
-
+            if (npcType == NpcTypeEnum.RecruitTown)
+            {
+                GUILayout.Label("忠诚：", GUILayout.Width(30), GUILayout.Height(20));
+                npcInfo.attributes_loyal = int.Parse(EditorGUILayout.TextArea(npcInfo.attributes_loyal + "", GUILayout.Width(50), GUILayout.Height(20)));
+                GUILayout.Label("工资 S：", GUILayout.Width(30), GUILayout.Height(20));
+                npcInfo.wage_s = int.Parse(EditorGUILayout.TextArea(npcInfo.wage_s + "", GUILayout.Width(50), GUILayout.Height(20)));
+            }
 
             GUILayout.Label("喜欢的菜品：", GUILayout.Width(100), GUILayout.Height(20));
             npcInfo.love_menus = EditorGUILayout.TextArea(npcInfo.love_menus + "", GUILayout.Width(50), GUILayout.Height(20));

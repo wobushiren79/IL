@@ -152,7 +152,7 @@ public class TextInfoManager : BaseManager,ITextInfoView
     public List<TextInfoBean> GetTextDataByOrder(int order)
     {
         List<TextInfoBean> listData = new List<TextInfoBean>();
-        if (listTextData == null || order > listTextData.Count)
+        if (listTextData == null)
             return listData;
         foreach (TextInfoBean itemData in listTextData)
         {

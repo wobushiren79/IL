@@ -65,7 +65,7 @@ public class PreTypeForMiniGameEnumTools : DataTools
     /// <param name="playNumber"></param>
     public static void GetPlayerNumber(string data, out int playNumber)
     {
-        playNumber = 0;
+        playNumber = 1;
         List<PreTypeForMiniGameBean> listPreData = GetListPreData(data);
         foreach (PreTypeForMiniGameBean itemData in listPreData)
         {

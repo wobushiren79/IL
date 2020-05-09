@@ -66,8 +66,8 @@ public class PickForCharacterDialogView : DialogView, ItemGameDialogPickCharacte
                         break;
                     }
                 }
-            //排出没有在休息中的员工
-            if (characterData.baseInfo.GetWorkerStatus() != WorkerStatusEnum.Rest)
+            //排出研究中的角色
+            if (characterData.baseInfo.GetWorkerStatus() == WorkerStatusEnum.Research)
             {
                 isExpel = true;
             }

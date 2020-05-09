@@ -237,10 +237,11 @@ public class ItemTownCerpenterCpt : ItemGameBaseCpt, DialogView.IDialogCallBack
     #region 确认回调
     public void Submit(DialogView dialogView, DialogBean dialogData)
     {
-        GameDataManager gameDataManager = GetUIManager<UIGameManager>().gameDataManager;
-        ToastManager toastManager = GetUIManager<UIGameManager>().toastManager;
-        GameTimeHandler gameTimeHandler = GetUIManager<UIGameManager>().gameTimeHandler;
-        InnBuildManager innBuildManager = GetUIManager<UIGameManager>().innBuildManager;
+        UIGameManager uiGameManager = GetUIManager<UIGameManager>();
+        GameDataManager gameDataManager = uiGameManager.gameDataManager;
+        ToastManager toastManager = uiGameManager.toastManager;
+        GameTimeHandler gameTimeHandler = uiGameManager.gameTimeHandler;
+        InnBuildManager innBuildManager = uiGameManager.innBuildManager;
 
         gameDataManager.gameData.PayMoney(storeInfo.price_l, storeInfo.price_m, storeInfo.price_s);
         string toastStr;
