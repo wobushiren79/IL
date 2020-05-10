@@ -72,6 +72,15 @@ public class BaseMiniGameHandler<B, D> : BaseHandler, UIMiniGameCountDown.ICallB
     {
         return mMiniGameStatus;
     }
+    
+    /// <summary>
+    /// 获取游戏地点
+    /// </summary>
+    /// <returns></returns>
+    public Vector3 GetMiniGamePosition()
+    {
+        return miniGameData.miniGamePosition;
+    }
 
     /// <summary>
     /// 初始化游戏

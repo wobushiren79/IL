@@ -127,9 +127,9 @@ public class NpcAIPasserCpt : BaseNpcAI
         if (passerIntent != PasserIntentEnum.GoToEvent
             && passerIntent != PasserIntentEnum.LookOnEvent
             && miniGameCombatHandler.GetMiniGameStatus() == BaseMiniGameHandler<MiniGameCombatBuilder, MiniGameCombatBean>.MiniGameStatusEnum.Gameing
-            && Vector2.Distance(transform.position, miniGameCombatHandler.GetMiniGameCombatPosition()) <= 10)
+            && Vector2.Distance(transform.position, miniGameCombatHandler.GetMiniGamePosition()) <= 10)
         {
-            SetIntent(PasserIntentEnum.GoToEvent, miniGameCombatHandler.GetMiniGameCombatPosition());
+            SetIntent(PasserIntentEnum.GoToEvent, miniGameCombatHandler.GetMiniGamePosition());
             return true;
         }
         else

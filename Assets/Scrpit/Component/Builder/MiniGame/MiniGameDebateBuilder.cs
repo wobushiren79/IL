@@ -93,5 +93,19 @@ public class MiniGameDebateBuilder : BaseMiniGameBuilder
         return npcCpt;
     }
 
+    /// <summary>
+    /// 删除所有角色
+    /// </summary>
+    public void DestroyAllCharacter()
+    {
+        CptUtil.RemoveChildsByActive(objCharacterContainer);
+        aiUserCharacter = null;
+        aiEnemyCharacter = null;
+    }
 
+    public override void DestroyAll()
+    {
+        base.DestroyAll();
+        DestroyAllCharacter();
+    }
 }

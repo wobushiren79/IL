@@ -65,6 +65,8 @@ public class EventHandler : BaseHandler,
         gameTimeHandler = Find<GameTimeHandler>(ImportantTypeEnum.TimeHandler);
         if (miniGameCombatHandler != null)
             miniGameCombatHandler.AddObserver(this);
+        if (miniGameDebateHandler != null)
+            miniGameDebateHandler.AddObserver(this);
         if (gameTimeHandler != null)
             gameTimeHandler.AddObserver(this);
     }
@@ -94,14 +96,14 @@ public class EventHandler : BaseHandler,
     /// <returns></returns>
     public bool CheckEventTrigger()
     {
-        if(mEventStatus== EventStatusEnum.EventEnd)
+        if (mEventStatus == EventStatusEnum.EventEnd)
         {
             return true;
         }
         else
         {
             return false;
-        }  
+        }
     }
 
     /// <summary>
@@ -112,7 +114,7 @@ public class EventHandler : BaseHandler,
     {
         if (!CheckEventTrigger())
         {
-            return false ;
+            return false;
         }
         SetEventStatus(EventStatusEnum.EventIng);
         SetEventType(EventTypeEnum.Look);
@@ -156,7 +158,7 @@ public class EventHandler : BaseHandler,
     /// 对话事件触发
     /// </summary>
     /// <param name="markId"></param>
-    public bool EventTriggerForTalk(long markId,bool isStopTime)
+    public bool EventTriggerForTalk(long markId, bool isStopTime)
     {
         if (!CheckEventTrigger())
         {
@@ -165,7 +167,7 @@ public class EventHandler : BaseHandler,
         SetEventStatus(EventStatusEnum.EventIng);
         SetEventType(EventTypeEnum.Talk);
         //暂停时间
-        if (gameTimeHandler != null&& isStopTime)
+        if (gameTimeHandler != null && isStopTime)
             gameTimeHandler.SetTimeStop();
         //控制模式修改
         if (controlHandler != null)
@@ -182,13 +184,13 @@ public class EventHandler : BaseHandler,
     /// <param name="npcAIRascal"></param>
     /// <param name="markId"></param>
     /// <returns></returns>
-    public bool EventTriggerForTalkByRascal(NpcAIRascalCpt  npcAIRascal, long markId)
+    public bool EventTriggerForTalkByRascal(NpcAIRascalCpt npcAIRascal, long markId)
     {
         if (controlHandler != null)
         {
             controlHandler.GetControl().SetFollowPosition(npcAIRascal.transform.position);
         }
-        return EventTriggerForTalk(markId,false);
+        return EventTriggerForTalk(markId, false);
     }
 
     /// <summary>
@@ -203,7 +205,7 @@ public class EventHandler : BaseHandler,
         {
             controlHandler.GetControl().SetFollowPosition(npcAISundry.transform.position);
         }
-        return EventTriggerForTalk(markId,false);
+        return EventTriggerForTalk(markId, false);
     }
 
     /// <summary>
@@ -500,7 +502,8 @@ public class EventHandler : BaseHandler,
     #region 回调处理
     public void ObserbableUpdate<T>(T observable, int type, params object[] obj) where T : Object
     {
-        if(observable == miniGameCombatHandler)
+        if (observable as MiniGameCombatHandler
+            || observable as MiniGameDebateHandler)
         {
             switch (type)
             {
@@ -515,7 +518,7 @@ public class EventHandler : BaseHandler,
                     if (miniGameData.gameResult == 0)
                     {
                         if (miniGameData.gameResultLoseTalkMarkId != 0)
-                            EventTriggerForTalk(miniGameData.gameResultLoseTalkMarkId,true);
+                            EventTriggerForTalk(miniGameData.gameResultLoseTalkMarkId, true);
                     }
                     else
                     {

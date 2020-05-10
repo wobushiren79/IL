@@ -81,15 +81,6 @@ public class MiniGameCombatHandler : BaseMiniGameHandler<MiniGameCombatBuilder, 
     }
 
     /// <summary>
-    /// 获取战斗地点
-    /// </summary>
-    /// <returns></returns>
-    public Vector3 GetMiniGameCombatPosition()
-    {
-        return miniGameData.miniGamePosition;
-    }
-
-    /// <summary>
     /// 获取某一个角色
     /// </summary>
     /// <param name="gameCharacterData"></param>

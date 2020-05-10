@@ -10,8 +10,6 @@ public class MiniGameDebateBean : MiniGameBaseBean
         Combat=1,//战斗中
     }
 
-    public Vector3 debatePosition;
-
     public List<ItemMiniGameDebateCardCpt> listUserCard = new List<ItemMiniGameDebateCardCpt>();
     public List<ItemMiniGameDebateCardCpt> listEnemyCard = new List<ItemMiniGameDebateCardCpt>();
 
