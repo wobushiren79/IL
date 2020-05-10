@@ -5,8 +5,7 @@ using System;
 
 public class WeatherHandler : BaseMonoBehaviour
 {
-    //太阳光
-    public SunLightCpt sunLight;
+
 
     public WeatherForSunnyCpt weatherSunny;
     public WeatherForRainCpt weatherRain;
@@ -17,9 +16,12 @@ public class WeatherHandler : BaseMonoBehaviour
     public WeatherBean weatherData;
 
     protected GameTimeHandler gameTimeHandler;
+    //太阳光
+    protected SunLightCpt sunLight;
 
     private void Awake()
     {
+        sunLight = Find<SunLightCpt>(ImportantTypeEnum.Sun);
         gameTimeHandler = Find<GameTimeHandler>(ImportantTypeEnum.TimeHandler);
     }
 

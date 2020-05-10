@@ -4,12 +4,20 @@ using System.Collections.Generic;
 
 public class InnFurnitureBuilder : BaseMonoBehaviour
 {
-    public InnBuildManager innBuildManager;
-    public GameDataManager gameDataManager;
     //装饰容器
     public GameObject buildContainer;
+
     //客栈处理
-    public InnHandler innHandler;
+    protected InnHandler innHandler;
+    protected InnBuildManager innBuildManager;
+    protected GameDataManager gameDataManager;
+
+    private void Awake()
+    {
+        innBuildManager = Find<InnBuildManager>(ImportantTypeEnum.BuildManager);
+        gameDataManager = Find<GameDataManager>(ImportantTypeEnum.GameDataManager);
+        innHandler = Find<InnHandler>(ImportantTypeEnum.InnHandler);
+    }
 
     /// <summary>
     /// 开始建造

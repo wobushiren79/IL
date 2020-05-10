@@ -21,9 +21,8 @@ public class MoveByGameTimeCpt : BaseMonoBehaviour
         gameTimeHandler.GetTime(out float hour, out float min);
         if (hour >= startTimeHour && hour < endTimeHour)
         {
-           float lerp = ((hour- startTimeHour) * 60 + min) / ((endTimeHour - startTimeHour) * 60);
-            LogUtil.Log("lerp:"+ lerp);
-           transform.position = Vector3.Lerp(startPosition, endPosition, lerp);
+            float lerp = ((hour - startTimeHour) * 60 + min) / ((endTimeHour - startTimeHour) * 60);
+            transform.position = Vector3.Lerp(startPosition, endPosition, lerp);
         }
     }
 }

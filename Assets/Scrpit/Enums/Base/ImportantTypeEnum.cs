@@ -45,4 +45,5 @@ public enum ImportantTypeEnum
     SceneHandler,
 
     Popup,
+    Sun,
 }

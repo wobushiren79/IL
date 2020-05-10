@@ -1,0 +1,156 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &7854356681963976422
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7854356681963976416}
+  - component: {fileID: 7854356681963976419}
+  - component: {fileID: 7854356681963976417}
+  - component: {fileID: 7854356681963976418}
+  - component: {fileID: 7854356681963976413}
+  - component: {fileID: 7854356681963976412}
+  - component: {fileID: 7854356681963976415}
+  - component: {fileID: 7854356681963976414}
+  m_Layer: 0
+  m_Name: InnHandler
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7854356681963976416
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7854356681963976422}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &7854356681963976419
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7854356681963976422}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5e0242186a70c9c45a3ef5a66f580057, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gameDataManager: {fileID: 0}
+  innFoodManager: {fileID: 0}
+  toastManager: {fileID: 0}
+  workerBuilder: {fileID: 0}
+  gameDataHandler: {fileID: 0}
+  innTableHandler: {fileID: 7854356681963976417}
+  innCookHandler: {fileID: 7854356681963976418}
+  innWaiterHandler: {fileID: 7854356681963976413}
+  innPayHandler: {fileID: 7854356681963976412}
+  innFightHandler: {fileID: 7854356681963976414}
+  innEntranceHandler: {fileID: 7854356681963976415}
+  rascalrQueue: []
+  cusomerQueue: []
+  foodQueue: []
+  sendQueue: []
+  clearQueue: []
+  listOrder: []
+--- !u!114 &7854356681963976417
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7854356681963976422}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8e544bdfc481f19478f9a583bc5ab9a5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  listTableCpt: []
+  tableContainer: {fileID: 0}
+--- !u!114 &7854356681963976418
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7854356681963976422}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: de0d31411259560419dbdc40c6838bd3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  listStoveCpt: []
+  listChefCpt: []
+  stoveContainer: {fileID: 0}
+  ChefContainer: {fileID: 0}
+--- !u!114 &7854356681963976413
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7854356681963976422}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6d2a6359508f2894d8022f34916eb2b6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  waiterContainer: {fileID: 0}
+  listWaiterCpt: []
+--- !u!114 &7854356681963976412
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7854356681963976422}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 96c4ef28c94ba3d4f8708b9a86db6c19, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  listCounterCpt: []
+  listAccountingCpt: []
+  counterContainer: {fileID: 0}
+  accountingContainer: {fileID: 0}
+  objPayEffects: {fileID: 8189525478468517173, guid: dff96189dff18824988b6de8925a8dd0,
+    type: 3}
+--- !u!114 &7854356681963976415
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7854356681963976422}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8d0e4bff64dfdfe479f5bc9d7bd036b6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  listDoorCpt: []
+  doorContainer: {fileID: 0}
+--- !u!114 &7854356681963976414
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7854356681963976422}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5dfbaa35ace846d4daa0f01552b4ee5a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

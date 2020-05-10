@@ -1,0 +1,226 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &2617289236587884468
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2617289236587884469}
+  m_Layer: 0
+  m_Name: InnData
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2617289236587884469
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2617289236587884468}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 2617289237059306735}
+  - {fileID: 2617289236551380287}
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1001 &5283352898715136527
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 2617289236587884469}
+    m_Modifications:
+    - target: {fileID: 7854356681963976412, guid: b016c8dd8722b4e43af3b830d24f79dd,
+        type: 3}
+      propertyPath: counterContainer
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 7854356681963976412, guid: b016c8dd8722b4e43af3b830d24f79dd,
+        type: 3}
+      propertyPath: accountingContainer
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 7854356681963976413, guid: b016c8dd8722b4e43af3b830d24f79dd,
+        type: 3}
+      propertyPath: waiterContainer
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 7854356681963976415, guid: b016c8dd8722b4e43af3b830d24f79dd,
+        type: 3}
+      propertyPath: doorContainer
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 7854356681963976416, guid: b016c8dd8722b4e43af3b830d24f79dd,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7854356681963976416, guid: b016c8dd8722b4e43af3b830d24f79dd,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7854356681963976416, guid: b016c8dd8722b4e43af3b830d24f79dd,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7854356681963976416, guid: b016c8dd8722b4e43af3b830d24f79dd,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7854356681963976417, guid: b016c8dd8722b4e43af3b830d24f79dd,
+        type: 3}
+      propertyPath: tableContainer
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 7854356681963976418, guid: b016c8dd8722b4e43af3b830d24f79dd,
+        type: 3}
+      propertyPath: stoveContainer
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 7854356681963976418, guid: b016c8dd8722b4e43af3b830d24f79dd,
+        type: 3}
+      propertyPath: ChefContainer
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 7854356681963976419, guid: b016c8dd8722b4e43af3b830d24f79dd,
+        type: 3}
+      propertyPath: innFoodManager
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 7854356681963976419, guid: b016c8dd8722b4e43af3b830d24f79dd,
+        type: 3}
+      propertyPath: toastManager
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 7854356681963976419, guid: b016c8dd8722b4e43af3b830d24f79dd,
+        type: 3}
+      propertyPath: workerBuilder
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 7854356681963976422, guid: b016c8dd8722b4e43af3b830d24f79dd,
+        type: 3}
+      propertyPath: m_Name
+      value: InnHandler
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: b016c8dd8722b4e43af3b830d24f79dd, type: 3}
+--- !u!4 &2617289237059306735 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 7854356681963976416, guid: b016c8dd8722b4e43af3b830d24f79dd,
+    type: 3}
+  m_PrefabInstance: {fileID: 5283352898715136527}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &2617289237059306732 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7854356681963976419, guid: b016c8dd8722b4e43af3b830d24f79dd,
+    type: 3}
+  m_PrefabInstance: {fileID: 5283352898715136527}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5e0242186a70c9c45a3ef5a66f580057, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!1001 &7001486390824898637
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 2617289236587884469}
+    m_Modifications:
+    - target: {fileID: 5005817469697310063, guid: 12cead9884e111046b5a10d844a03943,
+        type: 3}
+      propertyPath: innBuildManager
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 5005817469697310063, guid: 12cead9884e111046b5a10d844a03943,
+        type: 3}
+      propertyPath: gameDataManager
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 5005817469697310063, guid: 12cead9884e111046b5a10d844a03943,
+        type: 3}
+      propertyPath: buildContainer
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 5005817469697310063, guid: 12cead9884e111046b5a10d844a03943,
+        type: 3}
+      propertyPath: innHandler
+      value: 
+      objectReference: {fileID: 2617289237059306732}
+    - target: {fileID: 5005817469697310063, guid: 12cead9884e111046b5a10d844a03943,
+        type: 3}
+      propertyPath: innFoodManager
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 5005817469697310064, guid: 12cead9884e111046b5a10d844a03943,
+        type: 3}
+      propertyPath: buildTilemap
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 5005817469697310064, guid: 12cead9884e111046b5a10d844a03943,
+        type: 3}
+      propertyPath: innBuildManager
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 5005817469697310064, guid: 12cead9884e111046b5a10d844a03943,
+        type: 3}
+      propertyPath: gameDataManager
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 5005817469697310065, guid: 12cead9884e111046b5a10d844a03943,
+        type: 3}
+      propertyPath: buildTilemap
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 5005817469697310065, guid: 12cead9884e111046b5a10d844a03943,
+        type: 3}
+      propertyPath: gameDataManager
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 5005817469697310066, guid: 12cead9884e111046b5a10d844a03943,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5005817469697310066, guid: 12cead9884e111046b5a10d844a03943,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5005817469697310066, guid: 12cead9884e111046b5a10d844a03943,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5005817469697310066, guid: 12cead9884e111046b5a10d844a03943,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5005817469697310067, guid: 12cead9884e111046b5a10d844a03943,
+        type: 3}
+      propertyPath: m_Name
+      value: InnBuilder
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 12cead9884e111046b5a10d844a03943, type: 3}
+--- !u!4 &2617289236551380287 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 5005817469697310066, guid: 12cead9884e111046b5a10d844a03943,
+    type: 3}
+  m_PrefabInstance: {fileID: 7001486390824898637}
+  m_PrefabAsset: {fileID: 0}
