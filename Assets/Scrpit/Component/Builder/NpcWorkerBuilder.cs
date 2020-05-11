@@ -9,11 +9,16 @@ public class NpcWorkerBuilder : BaseMonoBehaviour
     //工作模型
     public GameObject objWorkModel;
 
-    public InnHandler innHandler;
-
-    public GameDataManager gameDataManager;
-
     public List<NpcAIWorkerCpt> listNpcWorker = new List<NpcAIWorkerCpt>();
+
+    protected InnHandler innHandler;
+    protected GameDataManager gameDataManager;
+
+    private void Awake()
+    {
+        innHandler = Find<InnHandler>(ImportantTypeEnum.InnHandler);
+        gameDataManager = Find<GameDataManager>(ImportantTypeEnum.GameDataManager);
+    }
 
     public void BuildAllWorker()
     {

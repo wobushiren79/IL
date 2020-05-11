@@ -15,14 +15,7 @@ public class InnHandler : BaseMonoBehaviour, IBaseObserver
     //客栈状态
     private InnStatusEnum innStatus = InnStatusEnum.Close;
 
-    //数据管理
-    public GameDataManager gameDataManager;
-    public InnFoodManager innFoodManager;
-    public ToastManager toastManager;
-    //NPC创建
-    public NpcWorkerBuilder workerBuilder;
-    //游戏数据处理
-    public GameDataHandler gameDataHandler;
+
     //客栈桌子处理
     public InnTableHandler innTableHandler;
     //烹饪处理
@@ -35,9 +28,18 @@ public class InnHandler : BaseMonoBehaviour, IBaseObserver
     public InnFightHandler innFightHandler;
     // 入口处理
     public InnEntranceHandler innEntranceHandler;
+
     //音效处理
     protected AudioHandler audioHandler;
     protected GameTimeHandler gameTimeHandler;
+    //数据管理
+    protected GameDataManager gameDataManager;
+    protected InnFoodManager innFoodManager;
+    protected ToastManager toastManager;
+    //NPC创建
+    protected NpcWorkerBuilder workerBuilder;
+    //游戏数据处理
+    protected GameDataHandler gameDataHandler;
 
     //闹事的人的列表
     public List<NpcAIRascalCpt> rascalrQueue = new List<NpcAIRascalCpt>();
@@ -58,6 +60,11 @@ public class InnHandler : BaseMonoBehaviour, IBaseObserver
 
     private void Awake()
     {
+        gameDataManager = Find<GameDataManager>(ImportantTypeEnum.GameDataManager);
+        innFoodManager = Find<InnFoodManager>(ImportantTypeEnum.FoodManager);
+        toastManager = Find<ToastManager>(ImportantTypeEnum.ToastManager);
+        workerBuilder = Find<NpcWorkerBuilder>(ImportantTypeEnum.NpcBuilder);
+
         audioHandler = Find<AudioHandler>(ImportantTypeEnum.AudioHandler);
         gameDataHandler = Find<GameDataHandler>(ImportantTypeEnum.GameDataHandler);
         gameTimeHandler = Find<GameTimeHandler>(ImportantTypeEnum.TimeHandler);
@@ -216,12 +223,28 @@ public class InnHandler : BaseMonoBehaviour, IBaseObserver
     }
 
     /// <summary>
-    ///  获取随机一个入口附近的坐标
+    ///  获取随机一个入口附近的坐标 默认获取最近的坐标
     /// </summary>
     /// <returns></returns>
     public Vector3 GetRandomEntrancePosition()
     {
         return innEntranceHandler.GetRandomEntrancePosition();
+    }
+    public Vector3 GetCloseRandomEntrancePosition(Vector3 position)
+    {
+        List<BuildDoorCpt> listDoor=  innEntranceHandler.GetEntranceList();
+        float dis = 0;
+        BuildDoorCpt targetDoor = null;
+        foreach (BuildDoorCpt buildDoor in listDoor)
+        {
+            float disTemp = Vector3.Distance(position,buildDoor.transform.position);
+            if(dis == 0 || disTemp < dis)
+            {
+                dis = disTemp;
+                targetDoor = buildDoor;
+            }
+        }
+        return GameUtil.GetTransformInsidePosition2D(targetDoor.transform);
     }
 
     /// <summary>

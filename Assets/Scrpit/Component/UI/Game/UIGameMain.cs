@@ -429,6 +429,7 @@ public class UIGameMain : UIGameComponent, DialogView.IDialogCallBack, IRadioGro
     #region 单选回调
     public void RadioButtonSelected(RadioGroupView rgView, int position, RadioButtonView rbview)
     {
+        uiGameManager.audioHandler.PlaySound(AudioSoundEnum.ButtonForNormal);
         int timeScale = 1;
         if (rbview == rbTimeScale2)
         {

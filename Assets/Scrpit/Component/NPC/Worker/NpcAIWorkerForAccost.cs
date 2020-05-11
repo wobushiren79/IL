@@ -11,7 +11,7 @@ public class NpcAIWorkerForAccost : NpcAIWokerFoBaseCpt
         GoToDoor,//前往门口
         Finding,//寻找中
         GoToCustomer,//走向客户
-        Talking//交流中
+        Talking,//交流中
     }
 
 
@@ -113,7 +113,8 @@ public class NpcAIWorkerForAccost : NpcAIWokerFoBaseCpt
     {
         if (accostPro != null)
             accostPro.SetActive(false);
-        movePosition = npcAIWorker.innHandler.GetRandomEntrancePosition();
+        //回去最靠近的门的嘴表
+        movePosition = npcAIWorker.innHandler.GetCloseRandomEntrancePosition(transform.position);
         npcAIWorker.characterMoveCpt.SetDestination(movePosition + new Vector3(0, -1, 0));
     }
 
@@ -122,12 +123,12 @@ public class NpcAIWorkerForAccost : NpcAIWokerFoBaseCpt
     /// </summary>
     public void SetIntentForFinding()
     {
+        StartCoroutine(CoroutineForFind());
         //开启范围检测
         if (mAccostBox != null)
             mAccostBox.enabled = true;
         if (accostPro != null)
             accostPro.SetActive(true);
-        StartCoroutine(CoroutineForFind());
     }
 
     /// <summary>
@@ -144,7 +145,6 @@ public class NpcAIWorkerForAccost : NpcAIWokerFoBaseCpt
         npcAIWorker.characterMoveCpt.SetDestination(movePosition);
         //展示表情
         npcAIWorker.SetExpression(CharacterExpressionCpt.CharacterExpressionEnum.Surprise);
-
     }
 
     /// <summary>
@@ -168,7 +168,10 @@ public class NpcAIWorkerForAccost : NpcAIWokerFoBaseCpt
         if (collision != null)
         {
             NpcAICustomerCpt npcAICustomer = collision.GetComponent<NpcAICustomerCpt>();
-            if (this.npcAICustomer == null && npcAICustomer != null && npcAICustomer.customerIntent == NpcAICustomerCpt.CustomerIntentEnum.Walk)
+            if ( accostIntent == AccostIntentEnum.Finding
+                && this.npcAICustomer == null
+                && npcAICustomer != null
+                && npcAICustomer.customerIntent == NpcAICustomerCpt.CustomerIntentEnum.Walk)
             {
                 //设置顾客
                 this.npcAICustomer = npcAICustomer;
@@ -190,6 +193,8 @@ public class NpcAIWorkerForAccost : NpcAIWokerFoBaseCpt
         float talkTime = npcAIWorker.characterData.CalculationAccostTalkTime(gameItemsManager);
         //记录
         npcAIWorker.characterData.baseInfo.accostInfo.AddAccostTime(talkTime);
+        //设置状态
+        npcAICustomer.SetIntent(NpcAICustomerCpt.CustomerIntentEnum.TalkWithAccost);
         yield return new WaitForSeconds(talkTime);
         //是否成功
         if (npcAIWorker.characterData.CalculationAccostRate(gameItemsManager))

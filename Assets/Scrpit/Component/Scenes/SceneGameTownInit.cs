@@ -17,7 +17,6 @@ public class SceneGameTownInit : BaseNormalSceneInit
         innBuildManager = Find<InnBuildManager>(ImportantTypeEnum.BuildManager);
     }
 
-
     public override void Start()
     {
         base.Start();

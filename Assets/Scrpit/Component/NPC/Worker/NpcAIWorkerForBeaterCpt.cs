@@ -20,6 +20,11 @@ public class NpcAIWorkerForBeaterCpt : NpcAIWokerFoBaseCpt
     public Vector3 movePosition;
     public NpcAIRascalCpt npcAIRascal;//闹事者
 
+    public override void Awake()
+    {
+        base.Awake();
+    }
+
     private void Update()
     {
         switch (beaterIntent)
@@ -116,7 +121,7 @@ public class NpcAIWorkerForBeaterCpt : NpcAIWokerFoBaseCpt
         npcAIWorker.SetCharacterDead();
         //弹窗提示
         string toastStr = string.Format(GameCommonInfo.GetUITextById(1015), npcAIWorker.characterData.baseInfo.name, restTime + "");
-        npcAIWorker.innHandler.toastManager.ToastHint(toastStr, 5);
+        toastManager.ToastHint(toastStr, 5);
         //设置不工作
         StartCoroutine(StartRest(restTime));
     }

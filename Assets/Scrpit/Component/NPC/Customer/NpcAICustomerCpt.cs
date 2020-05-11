@@ -24,6 +24,7 @@ public class NpcAICustomerCpt : BaseNpcAI
         Pay = 8,//正在付钱
         Leave = 10,//离开
         WaitAccost = 11,//等待招待
+        TalkWithAccost = 12,//和招待交流
     }
 
     public CustomerIntentEnum customerIntent = CustomerIntentEnum.Walk;//意图 顾客： 1路过 2思考 3进店 4找座位 5点菜 6吃 7结账 

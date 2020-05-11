@@ -501,6 +501,7 @@ public class ItemGameWorkerCpt : ItemGameBaseCpt, IRadioButtonCallBack, DialogVi
     {
         if (characterData == null || characterData.baseInfo == null)
             return;
+        audioHandler.PlaySound(AudioSoundEnum.ButtonForNormal);
         CharacterBaseBean characterBase = characterData.baseInfo;
         if (view == rbAccounting)
         {
