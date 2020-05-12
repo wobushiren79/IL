@@ -154,7 +154,11 @@ public class NpcAIWorkerForBeaterCpt : NpcAIWokerFoBaseCpt
         if (life <= 0)
         {
             //添加经验
-            npcAIWorker.characterData.baseInfo.beaterInfo.AddExp(10);
+            npcAIWorker.characterData.baseInfo.beaterInfo.AddExp(10, out bool isLevelUp);
+            if (isLevelUp)
+            {
+                ToastForLevelUp(WorkerEnum.Beater);
+            }
             //记录
             npcAIWorker.characterData.baseInfo.beaterInfo.AddFightWinNumber(1);
             SetIntent(BeaterIntentEnum.Idle);
@@ -162,7 +166,11 @@ public class NpcAIWorkerForBeaterCpt : NpcAIWokerFoBaseCpt
         else
         {
             //添加经验
-            npcAIWorker.characterData.baseInfo.beaterInfo.AddExp(5);
+            npcAIWorker.characterData.baseInfo.beaterInfo.AddExp(5, out bool isLevelUp);
+            if (isLevelUp)
+            {
+                ToastForLevelUp(WorkerEnum.Beater);
+            }
             //记录
             npcAIWorker.characterData.baseInfo.beaterInfo.AddFightLoseNumber(1);
             //设置继续闹事

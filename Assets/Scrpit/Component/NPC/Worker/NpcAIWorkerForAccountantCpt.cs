@@ -156,7 +156,11 @@ public class NpcAIWorkerForAccountantCpt : NpcAIWokerFoBaseCpt
                 AddMoneyL, AddMoneyM, AddMoneyS
                 );
             //增加经验
-            npcAIWorker.characterData.baseInfo.accountantInfo.AddExp(1);
+            npcAIWorker.characterData.baseInfo.accountantInfo.AddExp(1,out bool isLevelUp);
+            if (isLevelUp)
+            {
+                ToastForLevelUp(WorkerEnum.Accountant);
+            }
 
             //工作者表示抱歉
             npcAIWorker.SetExpression(CharacterExpressionCpt.CharacterExpressionEnum.Wordless);
@@ -176,8 +180,11 @@ public class NpcAIWorkerForAccountantCpt : NpcAIWokerFoBaseCpt
                 AddMoneyL, AddMoneyM, AddMoneyS
                 );
             //增加经验
-            npcAIWorker.characterData.baseInfo.accountantInfo.AddExp(2);
-
+            npcAIWorker.characterData.baseInfo.accountantInfo.AddExp(2, out bool isLevelUp);
+            if (isLevelUp)
+            {
+                ToastForLevelUp(WorkerEnum.Accountant);
+            }
             //如果有额外的加成 工作者和店员都应该高兴
             //orderForCustomer.customer.SetExpression(CharacterExpressionCpt.CharacterExpressionEnum.Love);
         }

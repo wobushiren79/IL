@@ -7,7 +7,7 @@ public class ControlForMiniGameBarrageCpt : ControlForMoveCpt
     /// 设置镜头对象
     /// </summary>
     /// <param name="npcCpt"></param>
-    public  void SetCameraFollowObj(NpcAIMiniGameBarrageCpt npcCpt)
+    public void SetCameraFollowObj(NpcAIMiniGameBarrageCpt npcCpt)
     {
         base.SetCameraFollowObj(npcCpt.gameObject);
         characterMoveCpt = npcCpt.characterMoveCpt;

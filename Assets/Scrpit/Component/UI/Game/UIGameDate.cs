@@ -59,6 +59,7 @@ public class UIGameDate : UIGameComponent
 
         if (gameTimeHandler != null)
         {
+            gameTimeHandler.SetTimeStop();
             gameTimeHandler.GetTime(out int year, out int month, out int day);
             //设置日历
             calendarView.InitData(year, month, day);

@@ -17,7 +17,7 @@ public class GameDataHandler : BaseHandler
     protected GameItemsManager gameItemsManager;
     protected ToastManager toastManager;
     protected InnFoodManager innFoodManager;
-
+    protected AudioHandler audioHandler;
 
     private void Awake()
     {
@@ -25,6 +25,7 @@ public class GameDataHandler : BaseHandler
         gameDataManager = Find<GameDataManager>(ImportantTypeEnum.GameDataManager);
         gameItemsManager = Find<GameItemsManager>(ImportantTypeEnum.GameItemsManager);
         toastManager = Find<ToastManager>(ImportantTypeEnum.ToastManager);
+        audioHandler = Find<AudioHandler>(ImportantTypeEnum.AudioHandler);
         innFoodManager = Find<InnFoodManager>(ImportantTypeEnum.FoodManager);
     }
 
@@ -83,11 +84,13 @@ public class GameDataHandler : BaseHandler
                 continue;
             long addExp = researcher.CalculationMenuResearchAddExp(gameItemsManager);
             bool isCompleteResearch = itemMenu.AddResearchExp((int)addExp);
+            //完成研究
             if (isCompleteResearch)
             {
                 itemMenu.CompleteResearch(gameDataManager.gameData);
                 string toastStr = string.Format(GameCommonInfo.GetUITextById(1071), menuInfo.name);
-                toastManager.ToastHint(innFoodManager.GetFoodSpriteByName(menuInfo.icon_key), toastStr);
+                audioHandler.PlaySound(AudioSoundEnum.Reward);
+                toastManager.ToastHint(innFoodManager.GetFoodSpriteByName(menuInfo.icon_key), toastStr,5);
             }
         }
     }

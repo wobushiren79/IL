@@ -205,7 +205,11 @@ public class NpcAIWorkerForAccost : NpcAIWokerFoBaseCpt
             //记录
             npcAIWorker.characterData.baseInfo.accostInfo.AddAccostSuccessNumber(1);
             //添加经验
-            npcAIWorker.characterData.baseInfo.accostInfo.AddExp(1);
+            npcAIWorker.characterData.baseInfo.accostInfo.AddExp(1,out bool isLevelUp);
+            if (isLevelUp)
+            {
+                ToastForLevelUp(WorkerEnum.Accost);
+            }
         }
         else
         {

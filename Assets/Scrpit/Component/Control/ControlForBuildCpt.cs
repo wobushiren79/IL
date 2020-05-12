@@ -330,12 +330,12 @@ public class ControlForBuildCpt : BaseControl
                 if (buildItemCpt.buildItemData.id == -1)
                 {
                     //如果是拆除模式提示
-                    toastManager.ToastHint(GameCommonInfo.GetUITextById(1003));
+                    // toastManager.ToastHint(GameCommonInfo.GetUITextById(1003));
                 }
                 else
                 {
                     //如果是正常模式提示
-                    toastManager.ToastHint(GameCommonInfo.GetUITextById(1002));
+                   //  toastManager.ToastHint(GameCommonInfo.GetUITextById(1002));
                 }
             }
         }

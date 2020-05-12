@@ -101,12 +101,16 @@ public class ControlForMoveCpt : BaseControl
         base.RestoreControl();
         InitCharacter();
     }
+
     /// <summary>
     /// 初始化角色
     /// </summary>
     public void InitCharacter()
     {
-        if (gameDataManager != null && gameDataManager.gameData.userCharacter != null && npcAI != null)
+        if (gameDataManager != null 
+            && gameDataManager.gameData.userCharacter != null 
+            && npcAI != null
+            && npcAI as NpcAIUserCpt)
             npcAI.SetCharacterData(gameDataManager.gameData.userCharacter);
     }
 

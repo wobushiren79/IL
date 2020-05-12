@@ -16,18 +16,27 @@ public class CharacterWorkerBaseBean
     /// 增加经验
     /// </summary>
     /// <param name="addExp"></param>
-    public void AddExp(int addExp)
+    public void AddExp(int addExp,out bool isLevelUp)
     {
-        workerExp += addExp;
-        //数据如果出现异常则修复
+        isLevelUp = false;
         int nextLevelExp = GetLevelUpExp(workerLevel + 1);
-        if (workerExp > nextLevelExp)
+        if (workerExp == nextLevelExp)
         {
-            workerExp = nextLevelExp;
+
         }
-        else if (workerExp < 0)
+        else
         {
-            workerExp = 0;
+            workerExp += addExp;
+            //数据如果出现异常则修复
+            if (workerExp >= nextLevelExp)
+            {
+                isLevelUp = true;
+                workerExp = nextLevelExp;
+            }
+            else if (workerExp < 0)
+            {
+                workerExp = 0;
+            }
         }
     }
 

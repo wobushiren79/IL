@@ -29,11 +29,8 @@ public class ItemGameMenuFoodCpt : ItemGameBaseCpt, IRadioButtonCallBack, Dialog
     public Button btResearchCancel;
 
     public Image ivBackground;
-    [Header("数据")]
-    public Sprite spReputation1;
-    public Sprite spReputation2;
-    public Sprite spReputation3;
 
+    [Header("数据")]
     public MenuOwnBean menuOwnData;
     public MenuInfoBean foodData;
 
@@ -144,18 +141,6 @@ public class ItemGameMenuFoodCpt : ItemGameBaseCpt, IRadioButtonCallBack, Dialog
         }
         else
         {
-            if (level == 1)
-            {
-                ivBackground.sprite = spReputation1;
-            }
-            else if (level == 2)
-            {
-                ivBackground.sprite = spReputation2;
-            }
-            else if (level == 3)
-            {
-                ivBackground.sprite = spReputation3;
-            }
             pbReputation.gameObject.SetActive(true);
             ivReputation.sprite = spIcon;
         }
@@ -365,6 +350,8 @@ public class ItemGameMenuFoodCpt : ItemGameBaseCpt, IRadioButtonCallBack, Dialog
                 }
                 //开始研究
                 menuOwnData.StartResearch(listPickCharacter);
+                string toastStr = string.Format(GameCommonInfo.GetUITextById(1201), listPickCharacter[0].baseInfo.name, foodData.name);
+                uiGameManager.toastManager.ToastHint(ivFood.sprite, toastStr);
             }
         }
         else

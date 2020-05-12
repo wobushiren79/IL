@@ -29,6 +29,10 @@ public class ToastManager : BaseMonoBehaviour
         CreateToast(ToastEnum.Normal, toastIconSp, hintContent, 3);
     }
 
+    public void ToastHint(Sprite toastIconSp, string hintContent,float destoryTime)
+    {
+        CreateToast(ToastEnum.Normal, toastIconSp, hintContent, destoryTime);
+    }
 
     /// <summary>
     /// 创建toast

@@ -85,9 +85,6 @@ public class EventHandler : BaseHandler,
         //显示重要NPC
         if (npcImportantBuilder != null)
             npcImportantBuilder.ShowNpc();
-        //恢复时间
-        if (gameTimeHandler != null)
-            gameTimeHandler.SetTimeRestore();
     }
 
     /// <summary>
@@ -355,8 +352,13 @@ public class EventHandler : BaseHandler,
             if (gameDataManager != null && mStoryInfo != null)
                 gameDataManager.gameData.AddTraggeredEvent(mStoryInfo.id);
             //打开主界面UI
-            uiManager.OpenUIAndCloseOtherByName(EnumUtil.GetEnumName(UIEnum.GameMain));
+            uiManager.OpenUIAndCloseOtherByName(EnumUtil.GetEnumName(UIEnum.GameMain));    
+            //恢复时间
+            if (gameTimeHandler != null)
+                gameTimeHandler.SetTimeRestore();
+            //初始化数据
             InitData();
+
         }
     }
 

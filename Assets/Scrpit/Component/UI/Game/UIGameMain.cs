@@ -402,15 +402,9 @@ public class UIGameMain : UIGameComponent, DialogView.IDialogCallBack, IRadioGro
         {
             //结束一天
             Scene scene = SceneManager.GetActiveScene();
-            //如果是客栈场景
             if (EnumUtil.GetEnumName(ScenesEnum.GameInnScene).Equals(scene.name))
             {
-                ((SceneGameInnInit)uiGameManager.sceneInit).EndDay();
-            }
-            //如果是城镇 则先回到客栈
-            else if (EnumUtil.GetEnumName(ScenesEnum.GameTownScene).Equals(scene.name))
-            {
-                ((SceneGameTownInit)uiGameManager.sceneInit).EndDay();
+                ((BaseNormalSceneInit)uiGameManager.sceneInit).EndDay();
             }
         }
         else if (dialogData.dialogPosition == 1)

@@ -326,7 +326,7 @@ GameObject:
   - component: {fileID: 4921963546102894238}
   - component: {fileID: 4921963546102894242}
   - component: {fileID: 4921963546102894237}
-  - component: {fileID: 8246437030031608964}
+  - component: {fileID: 6043288730509202601}
   m_Layer: 0
   m_Name: Normal
   m_TagString: Untagged
@@ -413,7 +413,7 @@ MonoBehaviour:
   cameraFollowObj: {fileID: 7362692423562799187}
   characterMoveCpt: {fileID: 5707193527457681228}
   audioForWalk: {fileID: 1597907326829023088}
-  npcAI: {fileID: 8246437030031608964}
+  npcAI: {fileID: 6043288730509202601}
 --- !u!114 &4921963546102894237
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -429,7 +429,7 @@ MonoBehaviour:
   interactiveObj: {fileID: 1991930030743993231}
   tvContent: {fileID: 8025829236911442805}
   srIcon: {fileID: 3851512198678228951}
---- !u!114 &8246437030031608964
+--- !u!114 &6043288730509202601
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -438,7 +438,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 7362692423562799187}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a1d23bb67fe45fc4cbf114c492d36c78, type: 3}
+  m_Script: {fileID: 11500000, guid: aa9617d35609782498f2ffb3c72eca3d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   characterData:
@@ -499,8 +499,8 @@ MonoBehaviour:
         fightLoseNumber: 0
         fightTotalTime: 0
         restTotalTime: 0
-      isChef: 0
-      isWaiter: 0
+      isChef: 1
+      isWaiter: 1
       isAccountant: 1
       isAccost: 0
       isBeater: 0
@@ -586,6 +586,9 @@ MonoBehaviour:
       attributes_charm: 0
       attributes_force: 0
       attributes_lucky: 0
+      wage_l: 0
+      wage_m: 0
+      wage_s: 0
       love_items: 
       love_menus: 
       condition: 

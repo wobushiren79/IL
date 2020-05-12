@@ -49,15 +49,15 @@ public class MenuOwnBean
         }
         else  if (menuLevel == 1)
         {
-            addRate = 2;
+            addRate = 1.5f;
         }
         else if (menuLevel == 2)
         {
-            addRate = 3;
+            addRate = 2f;
         }
         else if (menuLevel == 3)
         {
-            addRate = 4;
+            addRate = 3f;
         }
         priceL = (long)(menuInfo.price_l * addRate);
         priceM = (long)(menuInfo.price_m * addRate);
@@ -89,7 +89,10 @@ public class MenuOwnBean
             if (menuExp >= 100)
             {
                 menuExp = 100;
-                menuStatus =(int)MenuStatusEnum.WaitForResearch;
+                if (menuStatus== (int)MenuStatusEnum.Normal)
+                {
+                    menuStatus = (int)MenuStatusEnum.WaitForResearch;
+                }
             }
         }
         else if (menuLevel == 1)
@@ -97,7 +100,10 @@ public class MenuOwnBean
             if (menuExp >= 1000)
             {
                 menuExp = 1000;
-                menuStatus = (int)MenuStatusEnum.WaitForResearch;
+                if (menuStatus == (int)MenuStatusEnum.Normal)
+                {
+                    menuStatus = (int)MenuStatusEnum.WaitForResearch;
+                }
             }
         }
         else if (menuLevel == 2)
@@ -105,7 +111,10 @@ public class MenuOwnBean
             if (menuExp >= 10000)
             {
                 menuExp = 10000;
-                menuStatus = (int)MenuStatusEnum.WaitForResearch;
+                if (menuStatus == (int)MenuStatusEnum.Normal)
+                {
+                    menuStatus = (int)MenuStatusEnum.WaitForResearch;
+                }
             }
         }
     }
@@ -119,25 +128,25 @@ public class MenuOwnBean
         researchExp += exp;
         if (menuLevel == 0)
         {
-            if (researchExp >= 1000)
-            {
-                researchExp = 1000;
-                return true;
-            }
-        }
-        else if (menuLevel == 1)
-        {
             if (researchExp >= 10000)
             {
                 researchExp = 10000;
                 return true;
             }
         }
-        else if (menuLevel == 2)
+        else if (menuLevel == 1)
         {
             if (researchExp >= 100000)
             {
                 researchExp = 100000;
+                return true;
+            }
+        }
+        else if (menuLevel == 2)
+        {
+            if (researchExp >= 1000000)
+            {
+                researchExp = 1000000;
                 return true;
             }
         }
@@ -184,7 +193,7 @@ public class MenuOwnBean
     /// <returns></returns>
     public float GetResearchProgress(out long completeResearchExp)
     {
-         completeResearchExp = 0;
+        completeResearchExp = 0;
         if (menuLevel == 0)
         {
             completeResearchExp = 10000;

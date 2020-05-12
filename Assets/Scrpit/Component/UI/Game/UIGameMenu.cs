@@ -19,7 +19,10 @@ public class UIGameMenu : UIGameComponent
 
     [Header("模型")]
     public GameObject objFoodListContent;
-    public GameObject objFoodItemModel;
+    public GameObject objFoodItemModelFor0;
+    public GameObject objFoodItemModelFor1;
+    public GameObject objFoodItemModelFor2;
+    public GameObject objFoodItemModelFor3;
 
     private void Start()
     {
@@ -89,8 +92,26 @@ public class UIGameMenu : UIGameComponent
             MenuInfoBean menuInfo = uiGameManager.innFoodManager.GetFoodDataById(itemData.menuId);
             if (menuInfo == null)
                 continue;
-            GameObject foodObj = Instantiate(objFoodItemModel, objFoodListContent.transform);
-            foodObj.SetActive(true);
+            GameObject objModel = null;
+            int level = itemData.GetMenuLevel(out string levelStr, out int nextLevelExp);
+            if (level == 1)
+            {
+                objModel = objFoodItemModelFor1;
+            }
+            else if (level == 2)
+            {
+                objModel = objFoodItemModelFor2;
+            }
+            else if (level == 3)
+            {
+                objModel = objFoodItemModelFor3;
+            }
+            else
+            {
+                objModel = objFoodItemModelFor0;
+            }
+
+            GameObject foodObj = Instantiate(objFoodListContent, objModel);
             ItemGameMenuFoodCpt foodCpt = foodObj.GetComponent<ItemGameMenuFoodCpt>();
             foodCpt.SetData(itemData, menuInfo);
         }

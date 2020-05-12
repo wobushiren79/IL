@@ -64,6 +64,7 @@ public class NpcAIWorkerForChefCpt : NpcAIWokerFoBaseCpt
     /// <param name="orderForCustomer"></param>
     public void SetIntent(ChefIntentEnum chefIntent, OrderForCustomer orderForCustomer)
     {
+        StopAllCoroutines();
         this.chefIntent = chefIntent;
         this.orderForCustomer = orderForCustomer;
         switch (chefIntent)
@@ -100,7 +101,6 @@ public class NpcAIWorkerForChefCpt : NpcAIWokerFoBaseCpt
     /// </summary>
     public void SetIntentForIdle()
     {
-        StopAllCoroutines();
         cookPro.SetActive(false);
         chefIntent = ChefIntentEnum.Idle;
         //设置灶台为空闲
@@ -168,10 +168,15 @@ public class NpcAIWorkerForChefCpt : NpcAIWokerFoBaseCpt
         npcAIWorker.characterData.baseInfo.chefInfo.AddCookTime(foodTime);
         audioHandler.PlaySound(AudioSoundEnum.Cook);
         yield return new WaitForSeconds(foodTime);
+        //如果顾客已经没人
         //记录数据
         npcAIWorker.characterData.baseInfo.chefInfo.AddCookNumber(1, orderForCustomer.foodData.id);
         //添加经验
-        npcAIWorker.characterData.baseInfo.chefInfo.AddExp(1);
+        npcAIWorker.characterData.baseInfo.chefInfo.AddExp(1 , out bool isLevelUp);
+        if (isLevelUp)
+        {
+            ToastForLevelUp(WorkerEnum.Chef);
+        }
         //计算食物生成等级
         // orderForCustomer.foodLevel = npcAIWorker.characterData.CalculationChefFoodLevel(gameItemsManager);
         orderForCustomer.foodLevel = 0;

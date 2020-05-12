@@ -55,7 +55,9 @@ public class UIGameSettle : UIGameComponent
         InnFoodManager innFoodManager = uiGameManager.innFoodManager;
         IconDataManager iconDataManager = uiGameManager.iconDataManager;
         AudioHandler audioHandler = uiGameManager.audioHandler;
-
+        GameTimeHandler gameTimeHandler = uiGameManager.gameTimeHandler;
+        //停止时间
+        gameTimeHandler.SetTimeStatus(true);
         CptUtil.RemoveChildsByActive(objListRecordContent.transform);
         animDelay =0f;
         InnRecordBean innRecord = innHandler.GetInnRecord();

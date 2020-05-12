@@ -56,7 +56,11 @@ public class NpcAIWorkerForWaiterCpt : NpcAIWokerFoBaseCpt
                         //记录数据
                         npcAIWorker.characterData.baseInfo.waiterInfo.AddSendNumber(1);
                         //增加经验
-                        npcAIWorker.characterData.baseInfo.waiterInfo.AddExp(1);
+                        npcAIWorker.characterData.baseInfo.waiterInfo.AddExp(1,out bool isLevelUp);
+                        if (isLevelUp)
+                        {
+                            ToastForLevelUp(WorkerEnum.Waiter);
+                        }
                         //放下食物
                         orderForCustomer.foodCpt.transform.SetParent(orderForCustomer.table.GetTable().transform);
                         orderForCustomer.foodCpt.transform.DOLocalMove(Vector3.zero,0.2f);
@@ -111,6 +115,7 @@ public class NpcAIWorkerForWaiterCpt : NpcAIWokerFoBaseCpt
     /// <param name="orderForCustomer"></param>
     public void SetIntent(WaiterIntentEnum waiterIntent, OrderForCustomer orderForCustomer)
     {
+        StopAllCoroutines();
         this.waiterIntent = waiterIntent;
         this.orderForCustomer = orderForCustomer;
         switch (waiterIntent)
@@ -143,7 +148,6 @@ public class NpcAIWorkerForWaiterCpt : NpcAIWokerFoBaseCpt
     /// </summary>
     public void SetIntentForIdle()
     {
-        StopAllCoroutines();
         sendPro.SetActive(false);
         clearPro.SetActive(false);
         orderForCustomer = null;
@@ -216,7 +220,11 @@ public class NpcAIWorkerForWaiterCpt : NpcAIWokerFoBaseCpt
         //记录数据
         npcAIWorker.characterData.baseInfo.waiterInfo.AddCleanNumber(1);
         //增加经验
-        npcAIWorker.characterData.baseInfo.waiterInfo.AddExp(1);
+        npcAIWorker.characterData.baseInfo.waiterInfo.AddExp(1, out bool isLevelUp);
+        if (isLevelUp)
+        {
+            ToastForLevelUp(WorkerEnum.Waiter);
+        }
         // 清理桌子
         orderForCustomer.table.CleanTable();
         //结束订单

@@ -102,24 +102,18 @@ public class SceneGameArenaInit : BaseSceneInit, IBaseObserver
         //((MiniGameCookingBean)(arenaPrepareData.miniGameData)).cookingThemeLevel = 1;
         //((MiniGameCookingBean)(arenaPrepareData.miniGameData)).InitData(gameItemsManager, ourData, listEnemyData, listAuditerData, listCompereData);
 
-        //arenaPrepareData = new ArenaPrepareBean();
-        //arenaPrepareData.gameType = MiniGameEnum.Barrage;
-        //arenaPrepareData.gameBarrageData = new MiniGameBarrageBean();
-        //arenaPrepareData.gameBarrageData.gameLevel = 1;
-        //arenaPrepareData.gameBarrageData.launchInterval = 1;
-        //arenaPrepareData.gameBarrageData.launchTypes = new MiniGameBarrageEjectorCpt.LaunchTypeEnum[] {
+        //MiniGameBarrageBean miniGameBarrage = new MiniGameBarrageBean();
+        //miniGameBarrage.launchInterval = 1;
+        //miniGameBarrage.launchTypes = new MiniGameBarrageEjectorCpt.LaunchTypeEnum[] {
         //    MiniGameBarrageEjectorCpt.LaunchTypeEnum.Single,
         //    MiniGameBarrageEjectorCpt.LaunchTypeEnum.Double,
         //    MiniGameBarrageEjectorCpt.LaunchTypeEnum.Triple
         //};
-        //arenaPrepareData.gameBarrageData.launchSpeed = 1;
-        //arenaPrepareData.gameBarrageData.winSurvivalTime = 60;
-        //arenaPrepareData.gameBarrageData.winLife = 1;
-        //arenaPrepareData.gameBarrageData.InitData(gameItemsManager, gameDataManager.gameData.userCharacter);
-        //arenaPrepareData.gameBarrageData.AddRewardItem(100001, 1);
-        //arenaPrepareData.gameBarrageData.AddRewardItem(100001, 2);
-        //arenaPrepareData.gameBarrageData.AddRewardItem(200001, 3);
-        //arenaPrepareData.gameBarrageData.AddRewardItem(1100006, 3);
+        //miniGameBarrage.launchSpeed = 1;
+        //miniGameBarrage.winSurvivalTime = 60;
+        //miniGameBarrage.winLife = 1;
+        //miniGameBarrage.InitData(gameItemsManager, npcInfoManager.GetCharacterDataById(100061));
+        //arenaPrepareData = new ArenaPrepareBean(miniGameBarrage);
 
         //arenaPrepareData = new ArenaPrepareBean(new MiniGameCombatBean());
         //arenaPrepareData.miniGameData.winBringDownNumber = 3;

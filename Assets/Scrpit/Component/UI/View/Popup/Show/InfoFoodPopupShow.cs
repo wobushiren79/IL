@@ -8,14 +8,13 @@ public class InfoFoodPopupShow : PopupShowView
     public GameObject objLevelProgress;
     public Image ivLevel;
     public Text tvLevelName;
-    public Text tvLevelProgress;
-    public Slider progressLevel;
+    public ProgressView proLevel;
+
 
     public GameObject objResearch;
     public Text tvResearcherName;
     public Text tvResearcherAbility;
-    public Text tvResearchProgress;
-    public Slider progressResearch;
+    public ProgressView proResearch;
 
     public GameObject objItemBaseContainer;
     public GameObject objItemStatisticsContainer;
@@ -97,11 +96,10 @@ public class InfoFoodPopupShow : PopupShowView
         }
         ivLevel.sprite = spIcon;
         tvLevelName.text = levelStr;
-        progressLevel.value = ownData.menuExp / (float)nextLevelExp;
-        tvLevelProgress.text = ownData.menuExp + "/" + nextLevelExp;
+        proLevel.SetData(nextLevelExp, ownData.menuExp );
         if (ownData.GetMenuStatus() == MenuStatusEnum.WaitForResearch)
         {
-            tvLevelProgress.text += GameCommonInfo.GetUITextById(287);
+            proLevel.SetContent(GameCommonInfo.GetUITextById(287));
         }
         if (level >= 3)
         {
@@ -139,8 +137,7 @@ public class InfoFoodPopupShow : PopupShowView
             tvResearcherAbility.text = "0/s";
         }
         //设置进度
-        tvResearchProgress.text = ownData.researchExp + "/" + completeExp;
-        progressResearch.value = progress;
+        proResearch.SetData(completeExp, ownData.researchExp);
     }
 
     /// <summary>
