@@ -15,10 +15,11 @@ public enum GeneralEnum
     Beater = 8,
 
     Ing = 9,
-    Book = 11,
+    Book = 11,//属性书
     Menu = 12,//菜谱
     Medicine=13,//药
     SkillBook = 14,//技能书
+    Read = 15,//读物
     Mask = 21,//面具
 
 }
@@ -64,6 +65,7 @@ public class GeneralEnumTools
             case GeneralEnum.Book:
             case GeneralEnum.Menu:
             case GeneralEnum.SkillBook:
+            case GeneralEnum.Read:
                 spIcon = iconDataManager.GetIconSpriteByName(itemsInfo.icon_key);
                 break;
             default:
@@ -112,6 +114,9 @@ public class GeneralEnumTools
                 break;
             case GeneralEnum.SkillBook:
                 itemsnTypeName = GameCommonInfo.GetUITextById(410);
+                break;
+            case GeneralEnum.Read:
+                itemsnTypeName = GameCommonInfo.GetUITextById(411);
                 break;
             default:
                 break;

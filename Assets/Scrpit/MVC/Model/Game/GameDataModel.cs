@@ -60,7 +60,8 @@ public class GameDataModel : BaseMVCModel
         gameData.innBuildData.AddFurniture(innResDoor);
         //修改客栈大小
         gameData.innBuildData.ChangeInnSize(new List<InnResBean>() { innResDoor }, 9, 9);
-
+        //母亲的信
+        gameData.listItems.Add(new ItemBean(1500001, 1));
         //添加家具
         //TODO 测试 
         gameData.listBuild.Add(new ItemBean(30001, 3));

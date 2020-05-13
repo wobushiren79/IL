@@ -31,7 +31,7 @@ public class UIGameText : UIGameComponent, TextInfoManager.ICallBack, DialogView
     public override void OpenUI()
     {
         base.OpenUI();
-        uiGameManager.audioHandler.PlaySound(AudioSoundEnum.ButtonForNormal);
+        //uiGameManager.audioHandler.PlaySound(AudioSoundEnum.ButtonForNormal);
         uiGameManager.textInfoManager.SetCallBack(this);
     }
 

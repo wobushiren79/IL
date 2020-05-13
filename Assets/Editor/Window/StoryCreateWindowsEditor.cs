@@ -359,6 +359,7 @@ public class StoryCreateWindowsEditor : EditorWindow
                     TextInfoBean removeTempText = null;
                     foreach (TextInfoBean textInfo in listStoryTextInfo)
                     {
+
                         GUILayout.BeginHorizontal();
                         if (GUILayout.Button("删除子对话", GUILayout.Width(120), GUILayout.Height(20)))
                         {
@@ -512,6 +513,8 @@ public class StoryCreateWindowsEditor : EditorWindow
             listOrderStoryInfoDetails.Remove(removeTempData);
             RemoveSceneCharacterByName(removeTempData.npc_num + "");
         }
+
+        GUILayout.Space(50);
         if (GUILayout.Button("添加站位", GUILayout.Width(200), GUILayout.Height(20)))
         {
             CreateStoryInfoDetailsDataByType(mFindStoryId, StoryInfoDetailsBean.StoryInfoDetailsTypeEnum.NpcPosition);

@@ -12,6 +12,7 @@ public class PopupItemsSelection : BaseMonoBehaviour
         EquipAndDiscard,//装备和丢弃
         Unload,//卸除 用于装备界面
         Gift,//赠送
+        ReadAndDiscard,//阅读和丢弃
     }
 
     public ICallBack callBack;
@@ -22,6 +23,7 @@ public class PopupItemsSelection : BaseMonoBehaviour
     public Button btEquip;
     public Button btUnload;
     public Button btGift;
+    public Button btRead;
     public GameObject objContent;
 
     //屏幕(用来找到鼠标点击的相对位置)
@@ -51,6 +53,8 @@ public class PopupItemsSelection : BaseMonoBehaviour
             btUnload.onClick.AddListener(UnloadItems);
         if (btGift != null)
             btGift.onClick.AddListener(GiftItems);
+        if (btRead != null)
+            btRead.onClick.AddListener(ReadItems);
     }
 
     public void SetCallBack(ICallBack callBack)
@@ -75,6 +79,9 @@ public class PopupItemsSelection : BaseMonoBehaviour
         btEquip.gameObject.SetActive(false);
         btUnload.gameObject.SetActive(false);
         btGift.gameObject.SetActive(false);
+        btRead.gameObject.SetActive(false);
+
+
         switch (type)
         {
             case SelectionTypeEnum.Discard:
@@ -97,7 +104,10 @@ public class PopupItemsSelection : BaseMonoBehaviour
             case SelectionTypeEnum.Gift:
                 btGift.gameObject.SetActive(true);
                 break;
-
+            case SelectionTypeEnum.ReadAndDiscard:
+                btRead.gameObject.SetActive(true);
+                btDiscard.gameObject.SetActive(true);
+                break;
         }
         gameObject.SetActive(true);
         objContent.transform.DOScale(new Vector3(0, 0, 0), 0.2f).SetEase(Ease.OutBack).From();
@@ -168,6 +178,16 @@ public class PopupItemsSelection : BaseMonoBehaviour
         Close();
     }
 
+    /// <summary>
+    /// 阅读
+    /// </summary>
+    public void ReadItems()
+    {
+        if (callBack != null)
+            callBack.SelectionRead(this);
+        Close();
+    }
+
     public interface ICallBack
     {
         /// <summary>
@@ -199,5 +219,11 @@ public class PopupItemsSelection : BaseMonoBehaviour
         /// </summary>
         /// <param name="view"></param>
         void SelectionGift(PopupItemsSelection view);
+
+        /// <summary>
+        /// 选择阅读
+        /// </summary>
+        /// <param name="view"></param>
+        void SelectionRead(PopupItemsSelection view);
     }
 }

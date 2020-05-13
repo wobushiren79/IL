@@ -665,6 +665,10 @@ public class ItemCreateWindowsEditor : EditorWindow, StoreInfoManager.ICallBack
         {
             listFindItem = gameItemsManager.GetAllItems();
         }
+        if (GUILayout.Button("查询读物", GUILayout.Width(100), GUILayout.Height(20)))
+        {
+            listFindItem = gameItemsManager.GetItemsListByType(GeneralEnum.Read);
+        }
         if (GUILayout.Button("查询菜谱", GUILayout.Width(100), GUILayout.Height(20)))
         {
             listFindItem = gameItemsManager.GetItemsListByType( GeneralEnum.Menu);
@@ -785,7 +789,8 @@ public class ItemCreateWindowsEditor : EditorWindow, StoreInfoManager.ICallBack
             GeneralEnum itemType = (GeneralEnum)itemInfo.items_type;
             if (itemType != GeneralEnum.Menu
                 && itemType != GeneralEnum.Medicine
-                && itemType != GeneralEnum.SkillBook)
+                && itemType != GeneralEnum.SkillBook
+                 && itemType != GeneralEnum.Read)
             {
                 EditorUI.GUIText("增加属性：");
                 EditorUI.GUIText("命");
@@ -818,6 +823,11 @@ public class ItemCreateWindowsEditor : EditorWindow, StoreInfoManager.ICallBack
             else if (itemType == GeneralEnum.SkillBook)
             {
                 EditorUI.GUIText("绑定技能ID：");
+                itemInfo.add_id = long.Parse(EditorGUILayout.TextArea(itemInfo.add_id + "", GUILayout.Width(150), GUILayout.Height(20)));
+            }
+            else if (itemType == GeneralEnum.Read)
+            {
+                EditorUI.GUIText("绑定textlook markID：");
                 itemInfo.add_id = long.Parse(EditorGUILayout.TextArea(itemInfo.add_id + "", GUILayout.Width(150), GUILayout.Height(20)));
             }
 

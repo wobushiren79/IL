@@ -146,6 +146,9 @@ public class ItemGameBackpackCpt : ItemGameBaseCpt, IPointerClickHandler, PopupI
             case GeneralEnum.Menu:
                 popupItemsSelection.Open(PopupItemsSelection.SelectionTypeEnum.UseAndDiscard);
                 break;
+            case GeneralEnum.Read:
+                popupItemsSelection.Open(PopupItemsSelection.SelectionTypeEnum.ReadAndDiscard);
+                break;
             default:
                 popupItemsSelection.Open(PopupItemsSelection.SelectionTypeEnum.Discard);
                 break;
@@ -227,6 +230,12 @@ public class ItemGameBackpackCpt : ItemGameBaseCpt, IPointerClickHandler, PopupI
     {
 
     }
+
+    public virtual void SelectionRead(PopupItemsSelection view)
+    {
+        uiGameManager.eventHandler.EventTriggerForLook(itemsInfoBean.add_id);
+    }
+
     #endregion
 
     #region 删除确认回调
@@ -240,7 +249,7 @@ public class ItemGameBackpackCpt : ItemGameBaseCpt, IPointerClickHandler, PopupI
             //创建确认弹窗
             DialogBean dialogBean = new DialogBean
             {
-                content = string.Format(GameCommonInfo.GetUITextById(3001), itemsInfoBean.name+"x"+ pickNumber),
+                content = string.Format(GameCommonInfo.GetUITextById(3001), itemsInfoBean.name + "x" + pickNumber),
                 remark = "" + pickNumber
             };
             DialogManager dialogManager = uiGameManager.dialogManager;
@@ -275,5 +284,6 @@ public class ItemGameBackpackCpt : ItemGameBaseCpt, IPointerClickHandler, PopupI
             Destroy(gameObject);
         }
     }
+
 
 }
