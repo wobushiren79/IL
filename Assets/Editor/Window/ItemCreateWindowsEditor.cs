@@ -763,6 +763,7 @@ public class ItemCreateWindowsEditor : EditorWindow, StoreInfoManager.ICallBack
                 case GeneralEnum.Book:
                 case GeneralEnum.SkillBook:
                 case GeneralEnum.Menu:
+                case GeneralEnum.Read:
                     path += "Common/UI/";
                     
                     break;
