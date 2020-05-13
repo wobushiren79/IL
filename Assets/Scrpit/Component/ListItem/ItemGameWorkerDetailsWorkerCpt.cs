@@ -33,7 +33,7 @@ public class ItemGameWorkerDetailsWorkerCpt : BaseMonoBehaviour
             CharacterWorkerBaseBean.GetWorkerLevelName(workInfo.workerLevel) + CharacterWorkerBaseBean.GetWorkerName(workerType);
         SetLevelName(workerLevelName);
         //设置经验条
-        workInfo.GetWorkerExp(out int nextLevelExp, out int currentExp, out float levelProportion);
+        workInfo.GetWorkerExp(out long nextLevelExp, out long currentExp, out float levelProportion);
         SetExp(currentExp, nextLevelExp, levelProportion);
         // 设置等级图标
         SetLevelIcon(workInfo.workerLevel);
@@ -88,7 +88,7 @@ public class ItemGameWorkerDetailsWorkerCpt : BaseMonoBehaviour
     /// 设置经验条
     /// </summary>
     /// <param name="exp"></param>
-    public void SetExp(float expCurrent, float expLevelUp, float exp)
+    public void SetExp(long expCurrent, long expLevelUp, float exp)
     {
         if (sliderExperience != null)
             sliderExperience.value = exp;

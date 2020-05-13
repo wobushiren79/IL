@@ -50,7 +50,7 @@ public class UITownGuildImproveCharacterInfo : BaseUIChildComponent<UITownGuildI
     /// <returns></returns>
     private bool CheckCanImprove(CharacterWorkerBaseBean workerData, out StoreInfoBean levelInfo)
     {
-        workerData.GetWorkerExp(out int nextLevelExp, out int currentExp, out float levelProportion);
+        workerData.GetWorkerExp(out long nextLevelExp, out long currentExp, out float levelProportion);
 
         //获取升级数据
         levelInfo = null;

@@ -15,7 +15,7 @@ public class MenuOwnBean
     public long sellMoneyS;
     //菜品状态（MenuStatusEnum）
     public int menuStatus = 0;
-   //菜品等级
+    //菜品等级
     public int menuLevel = 0;
     //菜品经验
     public long menuExp = 0;
@@ -43,21 +43,21 @@ public class MenuOwnBean
     public void GetPrice(MenuInfoBean menuInfo, out long priceL, out long priceM, out long priceS)
     {
         float addRate = 1;
-        if (menuLevel==0)
+        if (menuLevel == 0)
         {
             addRate = 1;
         }
-        else  if (menuLevel == 1)
+        else if (menuLevel == 1)
         {
-            addRate = 1.5f;
+            GameCommonInfo.baseDataController.GetBaseData(BaseDataTypeEnum.MenuForPriceAddRate1, out addRate);
         }
         else if (menuLevel == 2)
         {
-            addRate = 2f;
+            GameCommonInfo.baseDataController.GetBaseData(BaseDataTypeEnum.MenuForPriceAddRate2, out addRate);
         }
         else if (menuLevel == 3)
         {
-            addRate = 3f;
+            GameCommonInfo.baseDataController.GetBaseData(BaseDataTypeEnum.MenuForPriceAddRate3, out addRate);
         }
         priceL = (long)(menuInfo.price_l * addRate);
         priceM = (long)(menuInfo.price_m * addRate);
@@ -68,7 +68,7 @@ public class MenuOwnBean
     /// 卖出菜品
     /// </summary>
     /// <param name="number"></param>
-    public void SellMenu(long number,long priceL, long priceM, long priceS)
+    public void SellMenu(long number, long priceL, long priceM, long priceS)
     {
         sellNumber += number;
         sellMoneyL += priceL;
@@ -84,37 +84,30 @@ public class MenuOwnBean
     public void AddLevelExp(int exp)
     {
         menuExp += exp;
+        int levelExp = 0;
         if (menuLevel == 0)
         {
-            if (menuExp >= 100)
-            {
-                menuExp = 100;
-                if (menuStatus== (int)MenuStatusEnum.Normal)
-                {
-                    menuStatus = (int)MenuStatusEnum.WaitForResearch;
-                }
-            }
+            GameCommonInfo.baseDataController.GetBaseData(BaseDataTypeEnum.MenuForLevelUpExp1, out levelExp);
         }
         else if (menuLevel == 1)
         {
-            if (menuExp >= 1000)
-            {
-                menuExp = 1000;
-                if (menuStatus == (int)MenuStatusEnum.Normal)
-                {
-                    menuStatus = (int)MenuStatusEnum.WaitForResearch;
-                }
-            }
+            GameCommonInfo.baseDataController.GetBaseData(BaseDataTypeEnum.MenuForLevelUpExp2, out levelExp);
         }
         else if (menuLevel == 2)
         {
-            if (menuExp >= 10000)
+            GameCommonInfo.baseDataController.GetBaseData(BaseDataTypeEnum.MenuForLevelUpExp3, out levelExp);
+        }
+
+        if (levelExp == 0)
+        {
+            menuExp = 0;
+        }
+        else if (menuExp >= levelExp)
+        {
+            menuExp = levelExp;
+            if (menuStatus == (int)MenuStatusEnum.Normal)
             {
-                menuExp = 10000;
-                if (menuStatus == (int)MenuStatusEnum.Normal)
-                {
-                    menuStatus = (int)MenuStatusEnum.WaitForResearch;
-                }
+                menuStatus = (int)MenuStatusEnum.WaitForResearch;
             }
         }
     }
@@ -126,29 +119,28 @@ public class MenuOwnBean
     public bool AddResearchExp(int exp)
     {
         researchExp += exp;
+        int researchLevelExp = 0;
         if (menuLevel == 0)
         {
-            if (researchExp >= 10000)
-            {
-                researchExp = 10000;
-                return true;
-            }
+            GameCommonInfo.baseDataController.GetBaseData(BaseDataTypeEnum.MenuForLevelResearchExp1, out researchLevelExp);
         }
         else if (menuLevel == 1)
         {
-            if (researchExp >= 100000)
-            {
-                researchExp = 100000;
-                return true;
-            }
+            GameCommonInfo.baseDataController.GetBaseData(BaseDataTypeEnum.MenuForLevelResearchExp2, out researchLevelExp);
         }
         else if (menuLevel == 2)
         {
-            if (researchExp >= 1000000)
-            {
-                researchExp = 1000000;
-                return true;
-            }
+            GameCommonInfo.baseDataController.GetBaseData(BaseDataTypeEnum.MenuForLevelResearchExp3, out researchLevelExp);
+        }
+
+        if (researchLevelExp == 0)
+        {
+            researchExp = 0;
+        }
+        else if (researchExp >= researchLevelExp)
+        {
+            researchExp = researchLevelExp;
+            return true;
         }
         return false;
     }
@@ -164,17 +156,17 @@ public class MenuOwnBean
         if (menuLevel == 0)
         {
             levelStr = GameCommonInfo.GetUITextById(104);
-            nextLevelExp = 100;
+            GameCommonInfo.baseDataController.GetBaseData(BaseDataTypeEnum.MenuForLevelUpExp1, out nextLevelExp);
         }
         else if (menuLevel == 1)
         {
             levelStr = GameCommonInfo.GetUITextById(101);
-            nextLevelExp = 1000;
+            GameCommonInfo.baseDataController.GetBaseData(BaseDataTypeEnum.MenuForLevelUpExp2, out nextLevelExp);
         }
         else if (menuLevel == 2)
         {
             levelStr = GameCommonInfo.GetUITextById(102);
-            nextLevelExp = 10000;
+            GameCommonInfo.baseDataController.GetBaseData(BaseDataTypeEnum.MenuForLevelUpExp3, out nextLevelExp);
         }
         else if (menuLevel == 3)
         {
@@ -196,19 +188,19 @@ public class MenuOwnBean
         completeResearchExp = 0;
         if (menuLevel == 0)
         {
-            completeResearchExp = 10000;
+            GameCommonInfo.baseDataController.GetBaseData(BaseDataTypeEnum.MenuForLevelResearchExp1, out completeResearchExp);
         }
         else if (menuLevel == 1)
         {
-            completeResearchExp = 100000;
+            GameCommonInfo.baseDataController.GetBaseData(BaseDataTypeEnum.MenuForLevelResearchExp2, out completeResearchExp);
         }
         else if (menuLevel == 2)
         {
-            completeResearchExp = 1000000;
+            GameCommonInfo.baseDataController.GetBaseData(BaseDataTypeEnum.MenuForLevelResearchExp3, out completeResearchExp);
         }
-        
+
         float progress = (float)researchExp / completeResearchExp;
-        return (float)Math.Round(progress,4);
+        return (float)Math.Round(progress, 4);
     }
 
     /// <summary>
@@ -216,7 +208,7 @@ public class MenuOwnBean
     /// </summary>
     /// <param name="menuInfo"></param>
     /// <returns></returns>
-    public SortedList<IngredientsEnum,long> GetResearchIngredients(MenuInfoBean menuInfo)
+    public SortedList<IngredientsEnum, long> GetResearchIngredients(MenuInfoBean menuInfo)
     {
         SortedList<IngredientsEnum, long> listIng = new SortedList<IngredientsEnum, long>();
         float addRate = 1;
@@ -232,7 +224,7 @@ public class MenuOwnBean
         {
             addRate = 1000;
         }
-        if (menuInfo.ing_oilsalt!=0)
+        if (menuInfo.ing_oilsalt != 0)
             listIng.Add(IngredientsEnum.Oilsalt, (long)(menuInfo.ing_oilsalt * addRate));
         if (menuInfo.ing_meat != 0)
             listIng.Add(IngredientsEnum.Meat, (long)(menuInfo.ing_meat * addRate));
@@ -259,13 +251,13 @@ public class MenuOwnBean
     /// <returns></returns>
     public Sprite GetMenuLevelIcon(IconDataManager iconDataManager)
     {
-        Sprite spIcon=null;
+        Sprite spIcon = null;
         if (menuLevel == 0)
         {
         }
         else if (menuLevel == 1)
         {
-            spIcon= iconDataManager.GetIconSpriteByName("reputation_level_1_1");
+            spIcon = iconDataManager.GetIconSpriteByName("reputation_level_1_1");
         }
         else if (menuLevel == 2)
         {
@@ -275,7 +267,7 @@ public class MenuOwnBean
         {
             spIcon = iconDataManager.GetIconSpriteByName("reputation_level_3_1");
         }
-        return spIcon; 
+        return spIcon;
     }
 
     /// <summary>

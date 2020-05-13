@@ -10,16 +10,16 @@ public class CharacterWorkerBaseBean
     //职业等级
     public int workerLevel;
     //当前职业经验值
-    public int workerExp;
+    public long workerExp;
 
     /// <summary>
     /// 增加经验
     /// </summary>
     /// <param name="addExp"></param>
-    public void AddExp(int addExp,out bool isLevelUp)
+    public void AddExp(int addExp, out bool isLevelUp)
     {
         isLevelUp = false;
-        int nextLevelExp = GetLevelUpExp(workerLevel + 1);
+        long nextLevelExp = GetLevelUpExp(workerLevel + 1);
         if (workerExp == nextLevelExp)
         {
 
@@ -46,7 +46,7 @@ public class CharacterWorkerBaseBean
     /// <param name="nextLevelExp">升级所需经验</param>
     /// <param name="currentExp">当前经验</param>
     /// <param name="levelProportion">经验百分比</param>
-    public void GetWorkerExp(out int nextLevelExp, out int currentExp, out float levelProportion)
+    public void GetWorkerExp(out long nextLevelExp, out long currentExp, out float levelProportion)
     {
         nextLevelExp = GetLevelUpExp(workerLevel + 1);
         currentExp = workerExp;
@@ -86,28 +86,28 @@ public class CharacterWorkerBaseBean
     /// </summary>
     /// <param name="leve">升级等级</param>
     /// <returns></returns>
-    public static int GetLevelUpExp(int leve)
+    public static long GetLevelUpExp(int leve)
     {
-        int nextLevelExp = int.MaxValue;
+        long nextLevelExp = long.MaxValue;
         switch (leve)
         {
             case 1:
-                nextLevelExp = 100;
+                GameCommonInfo.baseDataController.GetBaseData(BaseDataTypeEnum.WorkerForLevelUpExp1, out nextLevelExp);
                 break;
             case 2:
-                nextLevelExp = 1000;
+                GameCommonInfo.baseDataController.GetBaseData(BaseDataTypeEnum.WorkerForLevelUpExp2, out nextLevelExp);
                 break;
             case 3:
-                nextLevelExp = 2000;
+                GameCommonInfo.baseDataController.GetBaseData(BaseDataTypeEnum.WorkerForLevelUpExp3, out nextLevelExp);
                 break;
             case 4:
-                nextLevelExp = 4000;
+                GameCommonInfo.baseDataController.GetBaseData(BaseDataTypeEnum.WorkerForLevelUpExp4, out nextLevelExp);
                 break;
             case 5:
-                nextLevelExp = 8000;
+                GameCommonInfo.baseDataController.GetBaseData(BaseDataTypeEnum.WorkerForLevelUpExp5, out nextLevelExp);
                 break;
             case 6:
-                nextLevelExp = 10000;
+                GameCommonInfo.baseDataController.GetBaseData(BaseDataTypeEnum.WorkerForLevelUpExp6, out nextLevelExp);
                 break;
         }
         return nextLevelExp;

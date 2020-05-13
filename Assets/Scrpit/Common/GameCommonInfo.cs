@@ -23,6 +23,8 @@ public class GameCommonInfo
     private static GameConfigController mGameConfigController;
     private static UITextController mUITextController;
 
+    public static BaseDataController baseDataController;
+
     public static void ClearData()
     {
         GameUserId = null;
@@ -37,8 +39,10 @@ public class GameCommonInfo
     {
         GameConfig = new GameConfigBean();
         mGameConfigController = new GameConfigController(null, new GameConfigCallBack());
+        baseDataController = new BaseDataController(null,null);
         mUITextController = new UITextController(null, null);
         mGameConfigController.GetGameConfigData();
+        baseDataController.InitBaseData();
     }
 
     /// <summary>
