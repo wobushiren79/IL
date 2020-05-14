@@ -92,6 +92,8 @@ public class UIGameTextForTalk : BaseUIChildComponent<UIGameText>
         else
         {
             objNext.gameObject.SetActive(true);
+            //添加奖励
+            AddReward(textData.reward_data);
         }
         //正常文本处理
       
@@ -223,6 +225,26 @@ public class UIGameTextForTalk : BaseUIChildComponent<UIGameText>
             if (uiComponent.callBack != null)
                 uiComponent.callBack.UITextAddFavorability(characterId, favorablility);
         }
+    }
+
+    /// <summary>
+    /// 增加奖励
+    /// </summary>
+    /// <param name="reward"></param>
+    public void AddReward(string reward)
+    {
+        if (CheckUtil.StringIsNull(reward))
+            return;
+        UIGameManager uiGameManager = uiComponent.GetUIManager<UIGameManager>();
+        RewardTypeEnumTools.CompleteReward(
+            uiGameManager.toastManager,
+            uiGameManager.npcInfoManager,
+            uiGameManager.iconDataManager,
+            uiGameManager.gameItemsManager,
+            uiGameManager.innBuildManager,
+            uiGameManager.gameDataManager,
+            reward
+            );
     }
 
     /// <summary>

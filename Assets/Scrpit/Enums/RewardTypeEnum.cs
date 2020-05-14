@@ -328,14 +328,17 @@ public class RewardTypeEnumTools : DataTools
                 case RewardTypeEnum.AddMoneyL:
                     long addMoneyL = itemData.rewardNumber;
                     gameData.AddMoney(addMoneyL, 0, 0);
+                    toastManager.ToastHint(iconDataManager.GetIconSpriteByName("money_3"), string.Format(GameCommonInfo.GetUITextById(6014), addMoneyL + ""));
                     break;
                 case RewardTypeEnum.AddMoneyM:
                     long addMoneyM = itemData.rewardNumber;
-                    gameData.AddMoney(addMoneyM, 0, 0);
+                    gameData.AddMoney(0, addMoneyM, 0);
+                    toastManager.ToastHint(iconDataManager.GetIconSpriteByName("money_2"), string.Format(GameCommonInfo.GetUITextById(6013), addMoneyM + ""));
                     break;
                 case RewardTypeEnum.AddMoneyS:
                     long addMoneyS = itemData.rewardNumber;
-                    gameData.AddMoney(addMoneyS, 0, 0);
+                    gameData.AddMoney(0, 0, addMoneyS);
+                    toastManager.ToastHint(iconDataManager.GetIconSpriteByName("money_1"), string.Format(GameCommonInfo.GetUITextById(6012), addMoneyS+""));
                     break;
                 case RewardTypeEnum.AddItems:
                     gameData.AddNewItems(itemData.rewardId, itemData.rewardNumber);

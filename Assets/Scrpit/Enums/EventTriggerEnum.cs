@@ -11,6 +11,7 @@ public enum EventTriggerEnum
     Month,
     Day,
     Favorability,//好感
+    EventIds,//需触发事件ID
 }
 
 public class EventTriggerBean
@@ -89,6 +90,9 @@ public class EventTriggerEnumTools
             case EventTriggerEnum.Favorability:
                 GetTriggerDetailsForFavorability(triggerData, gameData);
                 break;
+            case EventTriggerEnum.EventIds:
+                GetTriggerDetailsForEventIds(triggerData, gameData);
+                break;
         }
         return triggerData;
     }
@@ -134,6 +138,24 @@ public class EventTriggerEnumTools
             return;
         }
         if (triggerDate == date)
+        {
+            triggerData.isTrigger = true;
+        }
+        else
+        {
+            triggerData.isTrigger = false;
+        }
+    }
+
+    /// <summary>
+    /// 获取触发条件详情 已经触发过的事件ID
+    /// </summary>
+    /// <param name="triggerData"></param>
+    /// <param name="gameData"></param>
+    private static void GetTriggerDetailsForEventIds(EventTriggerBean triggerData, GameDataBean gameData)
+    {
+        long[] idsData = StringUtil.SplitBySubstringForArrayLong(triggerData.triggerData, ',');
+        if (gameData.CheckTriggeredEvent(idsData))
         {
             triggerData.isTrigger = true;
         }

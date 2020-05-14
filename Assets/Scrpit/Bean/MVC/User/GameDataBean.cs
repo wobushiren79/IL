@@ -461,6 +461,18 @@ public class GameDataBean
         return listTriggeredEvent.Contains(eventId);
     }
 
+    public bool CheckTriggeredEvent(long[] eventIds)
+    {
+        foreach(long itemId in eventIds)
+        {
+            if (!CheckTriggeredEvent(itemId))
+            {
+                return false;
+            } 
+        }
+        return true;
+    }
+
     /// <summary>
     /// 检测是否能做出食物
     /// </summary>

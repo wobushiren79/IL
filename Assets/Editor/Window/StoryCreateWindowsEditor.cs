@@ -430,6 +430,8 @@ public class StoryCreateWindowsEditor : EditorWindow
                         {
                             textInfoService.UpdateDataById(TextEnum.Story, textInfo.id, textInfo);
                         }
+
+                        textInfo.reward_data = EditorUI.GUIListData<RewardTypeEnum>("奖励", textInfo.reward_data);
                         GUILayout.EndHorizontal();
                     }
 

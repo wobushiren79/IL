@@ -189,9 +189,9 @@ public class UIGameText : UIGameComponent, TextInfoManager.ICallBack, DialogView
         //去除空格 防止自动换行
         content = content.Replace(" ", "");
         //替换客栈名字
-        content = content.Replace("{innname}", uiGameManager.gameDataManager.gameData.GetInnAttributesData().innName);
+        content = content.Replace(GameSubstitutionInfo.Inn_Name, uiGameManager.gameDataManager.gameData.GetInnAttributesData().innName);
         //替换名字
-        content = content.Replace("{name}", userName);
+        content = content.Replace(GameSubstitutionInfo.User_Name, userName);
         //替换小名
         string otherName = "";
         if (userName.Length > 1)
@@ -201,7 +201,7 @@ public class UIGameText : UIGameComponent, TextInfoManager.ICallBack, DialogView
             string otherStr = sex == 1 ? GameCommonInfo.GetUITextById(99001) : GameCommonInfo.GetUITextById(99002);
             otherName += otherStr;
         }
-        content = content.Replace("{othername}", otherName);
+        content = content.Replace(GameSubstitutionInfo.User_Other_Name, otherName);
 
         //替换备用数据
         if (listMarkData != null)
