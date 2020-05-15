@@ -52,4 +52,5 @@ public class SceneGameTownInit : BaseNormalSceneInit
         }
         return moveControl;
     }
+
 }

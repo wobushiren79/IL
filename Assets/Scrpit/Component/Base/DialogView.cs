@@ -23,10 +23,12 @@ public class DialogView : BaseMonoBehaviour
 
     protected float timeDelayDelete;
     protected AudioHandler audioHandler;
+    protected DialogManager dialogManager;
 
     public virtual void Awake()
     {
         audioHandler = Find<AudioHandler>(ImportantTypeEnum.AudioHandler);
+        dialogManager = Find<DialogManager>(ImportantTypeEnum.DialogManager);
     }
 
     public virtual void Start()
@@ -40,6 +42,11 @@ public class DialogView : BaseMonoBehaviour
             cgDialog.DOFade(1, 0.5f);
         if(objDialog!=null)
             objDialog.transform.DOScale(new Vector3(0, 0, 0), 0.5f).SetEase(Ease.OutBack).From();
+    }
+
+    public virtual void OnDestroy()
+    {
+        dialogManager.RemoveDialog(this);
     }
 
     public virtual void InitData()
@@ -89,7 +96,10 @@ public class DialogView : BaseMonoBehaviour
             transform.DOScale(new Vector3(1, 1, 1), timeDelayDelete).OnComplete(delegate () { Destroy(gameObject); });
         }
         else
+        {
+            gameObject.SetActive(false);
             Destroy(gameObject);
+        } 
     }
 
     public void SetCallBack(IDialogCallBack callBack)

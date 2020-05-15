@@ -402,7 +402,11 @@ public class UIGameMain : UIGameComponent, DialogView.IDialogCallBack, IRadioGro
         {
             //结束一天
             Scene scene = SceneManager.GetActiveScene();
-            if (EnumUtil.GetEnumName(ScenesEnum.GameInnScene).Equals(scene.name))
+            if (scene.name.Equals(EnumUtil.GetEnumName(ScenesEnum.GameInnScene)))
+            {
+                ((SceneGameInnInit)uiGameManager.sceneInit).EndDay();
+            }
+            else
             {
                 ((BaseNormalSceneInit)uiGameManager.sceneInit).EndDay();
             }

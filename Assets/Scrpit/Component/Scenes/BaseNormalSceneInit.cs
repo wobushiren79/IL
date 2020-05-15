@@ -24,15 +24,39 @@ public abstract class BaseNormalSceneInit : BaseSceneInit,IBaseObserver, DialogV
             //增加回调
             gameTimeHandler.AddObserver(this);
         }
+        //设置角色位置
+        InitUserPosition();
+        //设置天气
+        InitWeather();
+    }
 
+    /// <summary>
+    /// 初始化天气
+    /// </summary>
+    public virtual void InitWeather()
+    {
         //设置天气
         if (weatherHandler != null)
         {
             weatherHandler.SetWeahter(GameCommonInfo.CurrentDayData.weatherToday);
         }
-        //设置角色位置
-        InitUserPosition();
+        //如果是在室内
+        if (controlHandler.GetControl().transform.position.y < -50)
+        {
+            audioHandler.PauseEnvironment();
+        }
     }
+
+
+    /// <summary>
+    /// 初始化角色位置
+    /// </summary>
+    public virtual ControlForMoveCpt InitUserPosition() {
+        //开始角色控制
+        ControlForMoveCpt moveControl = (ControlForMoveCpt)controlHandler.StartControl(ControlHandler.ControlEnum.Normal);
+        return moveControl;
+    }
+
 
     /// <summary>
     /// 结束一天
@@ -60,17 +84,6 @@ public abstract class BaseNormalSceneInit : BaseSceneInit,IBaseObserver, DialogV
             SceneUtil.SceneChange(ScenesEnum.GameInnScene);
         }
     }
-
-    /// <summary>
-    /// 初始化角色位置
-    /// </summary>
-    public virtual ControlForMoveCpt InitUserPosition() {
-        //开始角色控制
-        ControlForMoveCpt moveControl = (ControlForMoveCpt)controlHandler.StartControl(ControlHandler.ControlEnum.Normal);
-        return moveControl;
-    }
-
-
     #region  时间通知回调
     public void ObserbableUpdate<T>(T observable, int type, params System.Object[] obj) where T : UnityEngine.Object
     {

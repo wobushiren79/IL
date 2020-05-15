@@ -139,7 +139,7 @@ public class UIGameText : UIGameComponent, TextInfoManager.ICallBack, DialogView
     {
         if (CheckUtil.ListIsNull(textListData))
         {
-            LogUtil.LogError("没有查询到相应文本对话数据");
+            LogUtil.LogWarning("没有查询到相应文本对话数据");
             return;
         }
         currentTextData = textListData[0];

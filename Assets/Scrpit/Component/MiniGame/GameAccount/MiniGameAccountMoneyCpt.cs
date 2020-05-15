@@ -32,7 +32,8 @@ public class MiniGameAccountMoneyCpt : BaseMonoBehaviour
                 srShadow.sprite = spMoneyS;
                 break;
         }
-        float scaleSize = money / 5f;
+         
+        float scaleSize =0.5f +  money * 0.15f;
         if (money >= 10)
         {
             psMoney.gameObject.SetActive(true);

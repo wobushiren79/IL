@@ -11,4 +11,5 @@ public class UIGameComponent : BaseUIComponent
         base.Awake();
         uiGameManager = (UIGameManager)uiManager;
     }
+
 }

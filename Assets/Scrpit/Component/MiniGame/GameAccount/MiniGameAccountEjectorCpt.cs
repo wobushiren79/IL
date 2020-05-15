@@ -112,7 +112,6 @@ public class MiniGameAccountEjectorCpt : BaseMonoBehaviour
         mLaunchStatus = 2;
         //计算回收距离
         float distance = Vector3.Distance(srHook.transform.position,transform.position);
-        LogUtil.Log("distance:"+distance);
         srHook.transform
             .DOLocalMove(new Vector3(0, 0, 0), distance / mRecycleSpeed)
             .SetEase(Ease.Linear)

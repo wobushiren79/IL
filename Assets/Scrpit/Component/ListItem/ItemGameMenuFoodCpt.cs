@@ -278,7 +278,28 @@ public class ItemGameMenuFoodCpt : ItemGameBaseCpt, IRadioButtonCallBack, Dialog
         pickForCharacterDialog.SetPickCharacterMax(1);
         //设置排出人员 （老板和没有在休息的员工）
         List<CharacterBean> listCharacter = uiGameManager.gameDataManager.gameData.listWorkerCharacter;
-        pickForCharacterDialog.SetExpelCharacter(uiGameManager.gameDataManager.gameData.userCharacter.baseInfo.characterId);
+        List<string> listExpelIds = new List<string>();
+        listExpelIds.Add(uiGameManager.gameDataManager.gameData.userCharacter.baseInfo.characterId);
+        foreach (CharacterBean itemData in listCharacter)
+        {
+            //休息日 排出不是工作或者休息的
+            if (uiGameManager.gameTimeHandler.GetDayStatus() == GameTimeHandler.DayEnum.Rest)
+            {
+                if(itemData.baseInfo.GetWorkerStatus()!= WorkerStatusEnum.Rest && itemData.baseInfo.GetWorkerStatus() != WorkerStatusEnum.Work)
+                {
+                    listExpelIds.Add(itemData.baseInfo.characterId);
+                }
+            }
+            //工作日 排出除休息中的所有员工
+            else if (uiGameManager.gameTimeHandler.GetDayStatus() == GameTimeHandler.DayEnum.Work)
+            {
+                if (itemData.baseInfo.GetWorkerStatus() != WorkerStatusEnum.Rest)
+                {
+                    listExpelIds.Add(itemData.baseInfo.characterId);
+                }
+            }
+        }
+        pickForCharacterDialog.SetExpelCharacter(listExpelIds);
     }
 
     /// <summary>

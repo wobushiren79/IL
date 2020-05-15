@@ -10,13 +10,19 @@ public class ToastManager : BaseMonoBehaviour
     //Item模板
     public List<GameObject> listObjToastModel = new List<GameObject>();
 
+    protected AudioHandler audioHandler;
+    public void Awake()
+    {
+        audioHandler = Find<AudioHandler>(ImportantTypeEnum.AudioHandler);
+    }
+
     /// <summary>
     /// Toast提示
     /// </summary>
     /// <param name="hintContent"></param>
     public void ToastHint(string hintContent)
     {
-        CreateToast(ToastEnum.Normal, null, hintContent, 3);
+        CreateToast(ToastEnum.Normal, null, hintContent, 5);
     }
 
     public void ToastHint(string hintContent, float destoryTime)
@@ -26,7 +32,7 @@ public class ToastManager : BaseMonoBehaviour
 
     public void ToastHint(Sprite toastIconSp, string hintContent)
     {
-        CreateToast(ToastEnum.Normal, toastIconSp, hintContent, 3);
+        CreateToast(ToastEnum.Normal, toastIconSp, hintContent, 5);
     }
 
     public void ToastHint(Sprite toastIconSp, string hintContent,float destoryTime)
@@ -43,6 +49,7 @@ public class ToastManager : BaseMonoBehaviour
     /// <param name="destoryTime"></param>
     public void CreateToast(ToastEnum toastType, Sprite toastIconSp, string toastContentStr, float destoryTime)
     {
+        audioHandler.PlaySound(AudioSoundEnum.ButtonForShow);
         if (objToastContainer == null || listObjToastModel == null)
             return;
 

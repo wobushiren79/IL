@@ -7,11 +7,12 @@ public class DialogManager : BaseMonoBehaviour
 {
 
     public GameObject objDialogContainer;
-    public List<GameObject> listObjDialogModel=new List<GameObject>();
+    public List<GameObject> listObjDialogModel = new List<GameObject>();
+    public List<DialogView> listDialog = new List<DialogView>();
 
     public DialogView CreateDialog(DialogEnum dialogType, DialogView.IDialogCallBack callBack, DialogBean dialogBean)
     {
-       return CreateDialog(dialogType, callBack, dialogBean, 0);
+        return CreateDialog(dialogType, callBack, dialogBean, 0);
     }
 
     public DialogView CreateDialog(DialogEnum dialogType, DialogView.IDialogCallBack callBack, DialogBean dialogBean, float delayDelete)
@@ -43,6 +44,24 @@ public class DialogManager : BaseMonoBehaviour
 
         //改变焦点
         EventSystem.current.SetSelectedGameObject(objDialog);
+
+        listDialog.Add(dialogView);
         return dialogView;
+    }
+
+    public void CloseAllDialog()
+    {
+        foreach (DialogView dialogView in listDialog)
+        {
+            if (dialogView != null)
+                dialogView.DestroyDialog();
+        }
+        listDialog.Clear();
+    }
+
+    public void RemoveDialog(DialogView dialogView)
+    {
+        if (dialogView != null && listDialog.Contains(dialogView))
+            listDialog.Remove(dialogView);
     }
 }

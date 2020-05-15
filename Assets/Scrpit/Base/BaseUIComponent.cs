@@ -11,8 +11,10 @@ public class BaseUIComponent : BaseMonoBehaviour
     //备注数据
     public string remarkData;
 
+    protected DialogManager dialogManager;
     public virtual void Awake()
     {
+        dialogManager = Find<DialogManager>(ImportantTypeEnum.DialogManager);
         if (uiManager == null)
             uiManager = GetComponentInParent<BaseUIManager>();
         if (uiAnimator == null)
@@ -29,6 +31,7 @@ public class BaseUIComponent : BaseMonoBehaviour
         this.gameObject.SetActive(true);
         if (uiAnimator != null)
             uiAnimator.SetInteger("UIStates", 1);
+        dialogManager.CloseAllDialog();
     }
 
     /// <summary>
