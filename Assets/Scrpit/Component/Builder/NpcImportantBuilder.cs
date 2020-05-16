@@ -43,6 +43,11 @@ public class NpcImportantBuilder : BaseMonoBehaviour
     {
         if (objNpcModel == null || objNpcContainer == null)
             return null;
+        //检测是否已经招募
+        if (gameDataManager.gameData.CheckHasWorker(characterData.baseInfo.characterId)) {
+            return null;
+        }
+        //检测是否满足出现条件
         if (!CheckUtil.StringIsNull(characterData.npcInfoData.condition) && !ShowConditionTools.CheckIsMeetAllCondition(gameDataManager.gameData, characterData.npcInfoData.condition))
         {
             return null;

@@ -25,6 +25,7 @@ public enum RewardTypeEnum
     AddIngMelonfruit,//瓜果
     AddIngWaterwine,//酒水
     AddIngFlour,//面粉
+    RandomAddItems,//随机增加道具
 }
 
 public class RewardTypeBean : DataBean<RewardTypeEnum>
@@ -105,6 +106,9 @@ public class RewardTypeEnumTools : DataTools
                 break;
             case RewardTypeEnum.AddItems:
                 data = GetRewardDetailsForItems(data, iconDataManager, gameItemsManager);
+                break;
+            case RewardTypeEnum.RandomAddItems:
+                data = GetRewardDetailsForRandomItems(data, iconDataManager, gameItemsManager);
                 break;
             case RewardTypeEnum.AddBuildItems:
                 data = GetRewardDetailsForBuildItems(data, iconDataManager, innBuildManager);
@@ -243,6 +247,29 @@ public class RewardTypeEnumTools : DataTools
     }
 
     /// <summary>
+    /// 获取随机道具的奖励详情
+    /// </summary>
+    /// <param name="data"></param>
+    /// <param name="iconDataManager"></param>
+    /// <param name="gameItemsManager"></param>
+    /// <returns></returns>
+    private static RewardTypeBean GetRewardDetailsForRandomItems(RewardTypeBean data, IconDataManager iconDataManager, GameItemsManager gameItemsManager)
+    {
+        long[] listItemsData = StringUtil.SplitBySubstringForArrayLong(data.data, ',');
+        long randomItemsId = RandomUtil.GetRandomDataByArray(listItemsData);
+        ItemsInfoBean itemsInfo = gameItemsManager.GetItemsById(randomItemsId);
+        data.rewardDescribe = itemsInfo.name;
+        if (listItemsData.Length == 2)
+        {
+            data.rewardNumber = 1;
+        }
+        data.rewardId = randomItemsId;
+        data.rewardDescribe += (" x" + data.rewardNumber);
+        data.spRewardIcon = GeneralEnumTools.GetGeneralSprite(itemsInfo, iconDataManager, gameItemsManager, null, true);
+        return data;
+    }
+
+    /// <summary>
     /// 获取食材的奖励详情
     /// </summary>
     /// <param name="rewardTypeData"></param>
@@ -251,45 +278,45 @@ public class RewardTypeEnumTools : DataTools
     private static RewardTypeBean GetRewardDetailsForIng(IconDataManager iconDataManager, RewardTypeBean rewardTypeData)
     {
         string ingName = "???";
-        string iconKey = "";
+        Sprite spIcon = null;
         switch (rewardTypeData.dataType)
         {
             case RewardTypeEnum.AddIngOilsalt:
                 ingName = GameCommonInfo.GetUITextById(21);
-                iconKey = "ui_ing_oilsalt";
+                spIcon = IngredientsEnumTools.GetIngredientIcon(iconDataManager, IngredientsEnum.Oilsalt);
                 break;
             case RewardTypeEnum.AddIngMeat:
                 ingName = GameCommonInfo.GetUITextById(22);
-                iconKey = "ui_ing_meat";
+                spIcon = IngredientsEnumTools.GetIngredientIcon(iconDataManager, IngredientsEnum.Meat);
                 break;
             case RewardTypeEnum.AddIngRiverfresh:
                 ingName = GameCommonInfo.GetUITextById(23);
-                iconKey = "ui_ing_riverfresh";
+                spIcon = IngredientsEnumTools.GetIngredientIcon(iconDataManager, IngredientsEnum.Riverfresh);
                 break;
             case RewardTypeEnum.AddIngSeafood:
                 ingName = GameCommonInfo.GetUITextById(24);
-                iconKey = "ui_ing_seafood";
+                spIcon = IngredientsEnumTools.GetIngredientIcon(iconDataManager, IngredientsEnum.Seafood);
                 break;
             case RewardTypeEnum.AddIngVegetables:
                 ingName = GameCommonInfo.GetUITextById(25);
-                iconKey = "ui_ing_vegetables";
+                spIcon = IngredientsEnumTools.GetIngredientIcon(iconDataManager, IngredientsEnum.Vegetables);
                 break;
             case RewardTypeEnum.AddIngMelonfruit:
                 ingName = GameCommonInfo.GetUITextById(26);
-                iconKey = "ui_ing_melonfruit";
+                spIcon = IngredientsEnumTools.GetIngredientIcon(iconDataManager, IngredientsEnum.Melonfruit);
                 break;
             case RewardTypeEnum.AddIngWaterwine:
                 ingName = GameCommonInfo.GetUITextById(27);
-                iconKey = "ui_ing_waterwine";
+                spIcon = IngredientsEnumTools.GetIngredientIcon(iconDataManager, IngredientsEnum.Waterwine);
                 break;
             case RewardTypeEnum.AddIngFlour:
                 ingName = GameCommonInfo.GetUITextById(28);
-                iconKey = "ui_ing_flour";
+                spIcon = IngredientsEnumTools.GetIngredientIcon(iconDataManager, IngredientsEnum.Flour);
                 break;
         }
         rewardTypeData.rewardDescribe = string.Format(GameCommonInfo.GetUITextById(6010), ingName, rewardTypeData.data);
         rewardTypeData.rewardNumber = int.Parse(rewardTypeData.data);
-        rewardTypeData.spRewardIcon = iconDataManager.GetIconSpriteByName(iconKey);
+        rewardTypeData.spRewardIcon = spIcon;
         return rewardTypeData;
     }
 
@@ -342,6 +369,7 @@ public class RewardTypeEnumTools : DataTools
                     toastManager.ToastHint(itemData.spRewardIcon, string.Format(GameCommonInfo.GetUITextById(6012), addMoneyS+""));
                     break;
                 case RewardTypeEnum.AddItems:
+                case RewardTypeEnum.RandomAddItems:
                     gameData.AddNewItems(itemData.rewardId, itemData.rewardNumber);
                     toastManager.ToastHint(itemData.spRewardIcon, string.Format(GameCommonInfo.GetUITextById(6099), itemData.rewardDescribe));
                     break;

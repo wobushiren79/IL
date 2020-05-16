@@ -1,4 +1,6 @@
-﻿public enum IngredientsEnum
+﻿using UnityEngine;
+
+public enum IngredientsEnum
 {
     Oilsalt = 1,//油盐
     Meat = 2,//鲜肉
@@ -43,5 +45,38 @@ public class IngredientsEnumTools
                 break;
         }
         return name;
+    }
+
+    public static Sprite GetIngredientIcon(IconDataManager iconDataManager, IngredientsEnum ingredients)
+    {
+        string iconKey = "";
+        switch (ingredients)
+        {
+            case IngredientsEnum.Oilsalt:
+                iconKey = "ui_ing_oilsalt";
+                break;
+            case IngredientsEnum.Meat:
+                iconKey = "ui_ing_meat";
+                break;
+            case IngredientsEnum.Riverfresh:
+                iconKey = "ui_ing_riverfresh";
+                break;
+            case IngredientsEnum.Seafood:
+                iconKey = "ui_ing_seafood";
+                break;
+            case IngredientsEnum.Vegetables:
+                iconKey = "ui_ing_vegetables";
+                break;
+            case IngredientsEnum.Melonfruit:
+                iconKey = "ui_ing_melonfruit";
+                break;
+            case IngredientsEnum.Waterwine:
+                iconKey = "ui_ing_waterwine";
+                break;
+            case IngredientsEnum.Flour:
+                iconKey = "ui_ing_flour";
+                break;
+        }
+       return iconDataManager.GetIconSpriteByName(iconKey);
     }
 }

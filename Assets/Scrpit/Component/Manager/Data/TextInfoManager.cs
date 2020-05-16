@@ -76,7 +76,7 @@ public class TextInfoManager : BaseManager,ITextInfoView
             case NpcTypeEnum.RecruitTown:
                 listTextData.Add(new TextInfoBean(0, GameCommonInfo.GetUITextById(99101)));
                 listTextData.Add(new TextInfoBean(1, GameCommonInfo.GetUITextById(99102)));
-                if (!gameData.CheckHasWorker(talkUserId))
+                if (!gameData.CheckHasWorker(talkUserId+""))
                 {
                     listTextData.Add(new TextInfoBean(1, GameCommonInfo.GetUITextById(99104)));
                 }

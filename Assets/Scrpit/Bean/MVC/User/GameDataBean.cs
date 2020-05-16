@@ -87,34 +87,50 @@ public class GameDataBean
             case IngredientsEnum.Oilsalt:
                 ingOilsalt += number;
                 userAchievement.ownIngOilsalt += number;
+                if (ingOilsalt < 0)
+                    ingOilsalt = 0;
                 break;
             case IngredientsEnum.Meat:
                 ingMeat += number;
                 userAchievement.ownIngMeat += number;
+                if (ingMeat < 0)
+                    ingMeat = 0;
                 break;
             case IngredientsEnum.Riverfresh:
                 ingRiverfresh += number;
                 userAchievement.ownIngRiverfresh += number;
+                if (ingRiverfresh < 0)
+                    ingRiverfresh = 0;
                 break;
             case IngredientsEnum.Seafood:
                 ingSeafood += number;
                 userAchievement.ownIngSeafood += number;
+                if (ingSeafood < 0)
+                    ingSeafood = 0;
                 break;
             case IngredientsEnum.Vegetables:
                 ingVegetables += number;
                 userAchievement.ownIngVegetables += number;
+                if (ingVegetables < 0)
+                    ingVegetables = 0;
                 break;
             case IngredientsEnum.Melonfruit:
                 ingMelonfruit += number;
                 userAchievement.ownIngMelonfruit += number;
+                if (ingMelonfruit < 0)
+                    ingMelonfruit = 0;
                 break;
             case IngredientsEnum.Waterwine:
                 ingWaterwine += number;
                 userAchievement.ownIngWaterwine += number;
+                if (ingWaterwine < 0)
+                    ingWaterwine = 0;
                 break;
             case IngredientsEnum.Flour:
                 ingFlour += number;
                 userAchievement.ownIngFlour += number;
+                if (ingFlour < 0)
+                    ingFlour = 0;
                 break;
         }
     }
@@ -439,11 +455,11 @@ public class GameDataBean
     /// </summary>
     /// <param name="characterId"></param>
     /// <returns></returns>
-    public bool CheckHasWorker(long characterId)
+    public bool CheckHasWorker(string characterId)
     {
         foreach (CharacterBean characterData in listWorkerCharacter)
         {
-            if (characterData.baseInfo.characterId.Equals(characterId + ""))
+            if (characterData.baseInfo.characterId.Equals(characterId))
             {
                 return true;
             }

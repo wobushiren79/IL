@@ -131,7 +131,7 @@ public class UIGameSettle : UIGameComponent
     /// <param name="objItem"></param>
     public void AnimForItemShow(GameObject objItem)
     {
-        objItem.transform.DOScale(new Vector3(0, 0, 0), 0.2f).From().SetDelay(animDelay + 0.1f);
+        objItem.transform.DOScale(new Vector3(0, 0, 0), 0.5f).From().SetDelay(animDelay + 0.1f);
         animDelay += 0.1f;
     }
 

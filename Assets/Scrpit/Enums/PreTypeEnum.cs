@@ -19,6 +19,15 @@ public enum PreTypeEnum
     AttributeForCook,
     AttributeForLucky,
     AttributeForLife,
+
+    PayIngForOilsalt,//油盐
+    PayIngForMeat,//鲜肉
+    PayIngForRiverfresh,//河鲜
+    PayIngForSeafood,//海鲜
+    PayIngForVegetables,//蔬菜
+    PayIngForMelonfruit,//水果
+    PayIngForWaterwine,//酒水
+    PayIngForFlour,//面粉
 }
 
 public class PreTypeBean : DataBean<PreTypeEnum>
@@ -29,7 +38,6 @@ public class PreTypeBean : DataBean<PreTypeEnum>
     public string preDescribe;
     //准备失败文字
     public string preFailStr;
-
 
     public PreTypeBean() : base(PreTypeEnum.PayMoneyS, "")
     {
@@ -46,7 +54,7 @@ public class PreTypeEnumTools : DataTools
     /// <param name="gameData"></param>
     /// <param name="data"></param>
     /// <returns></returns>
-    public static bool CheckIsAllPre(GameItemsManager gameItemsManager,IconDataManager iconDataManager,CharacterDressManager characterDressManager, GameDataBean gameData, CharacterBean characterData, string data, out string reason)
+    public static bool CheckIsAllPre(GameItemsManager gameItemsManager, IconDataManager iconDataManager, CharacterDressManager characterDressManager, GameDataBean gameData, CharacterBean characterData, string data, out string reason)
     {
         List<PreTypeBean> listPreData = GetListPreData(data);
         reason = "";
@@ -103,6 +111,17 @@ public class PreTypeEnumTools : DataTools
             case PreTypeEnum.HaveItems:
                 GetPreDetailsForItems(gameItemsManager, iconDataManager, characterDressManager, preTypeData, gameData, isComplete);
                 break;
+            case PreTypeEnum.PayIngForOilsalt:
+            case PreTypeEnum.PayIngForMeat:
+            case PreTypeEnum.PayIngForRiverfresh:
+            case PreTypeEnum.PayIngForSeafood:
+            case PreTypeEnum.PayIngForVegetables:
+            case PreTypeEnum.PayIngForMelonfruit:
+            case PreTypeEnum.PayIngForWaterwine:
+            case PreTypeEnum.PayIngForFlour:
+                GetPreDetailsForPayIng(preTypeData, gameData, iconDataManager);
+                break;
+
         }
         return preTypeData;
     }
@@ -330,6 +349,63 @@ public class PreTypeEnumTools : DataTools
         return preTypeData;
     }
 
+
+    /// <summary>
+    /// 获取支付食材相关详情
+    /// </summary>
+    /// <param name="preTypeData"></param>
+    /// <param name="gameData"></param>
+    /// <param name="iconDataManager"></param>
+    /// <returns></returns>
+    private static PreTypeBean GetPreDetailsForPayIng(PreTypeBean preTypeData, GameDataBean gameData, IconDataManager iconDataManager)
+    {
+        Sprite spIcon = null;
+        int dataIng = int.Parse(preTypeData.data);
+        IngredientsEnum ingredients = IngredientsEnum.Oilsalt;
+        switch (preTypeData.dataType)
+        {
+            case PreTypeEnum.PayIngForOilsalt:
+                ingredients = IngredientsEnum.Oilsalt;
+                break;
+            case PreTypeEnum.PayIngForMeat:
+                ingredients = IngredientsEnum.Meat;
+                break;
+            case PreTypeEnum.PayIngForRiverfresh:
+                ingredients = IngredientsEnum.Riverfresh;
+                break;
+            case PreTypeEnum.PayIngForSeafood:
+                ingredients = IngredientsEnum.Seafood;
+                break;
+            case PreTypeEnum.PayIngForVegetables:
+                ingredients = IngredientsEnum.Vegetables;
+                break;
+            case PreTypeEnum.PayIngForMelonfruit:
+                ingredients = IngredientsEnum.Melonfruit;
+                break;
+            case PreTypeEnum.PayIngForWaterwine:
+                ingredients = IngredientsEnum.Waterwine;
+                break;
+            case PreTypeEnum.PayIngForFlour:
+                ingredients = IngredientsEnum.Oilsalt;
+
+                break;
+        }
+        string ingName = IngredientsEnumTools.GetIngredientName(ingredients);
+        spIcon = IngredientsEnumTools.GetIngredientIcon(iconDataManager, ingredients);
+        if (gameData.HasEnoughIng(ingredients, dataIng))
+        {
+            preTypeData.isPre = true;
+        }
+        else
+        {
+            preTypeData.isPre = false;
+        }
+        preTypeData.spPreIcon = spIcon;
+        preTypeData.preDescribe = string.Format(GameCommonInfo.GetUITextById(5031), ingName, dataIng + "");
+        preTypeData.preFailStr = string.Format(GameCommonInfo.GetUITextById(5023), ingName, dataIng + "");
+        return preTypeData;
+    }
+
     /// <summary>
     /// 完成前置条件
     /// </summary>
@@ -370,6 +446,30 @@ public class PreTypeEnumTools : DataTools
                     long itemsId = listItems[0];
                     long itemsNumber = listItems[1];
                     gameData.AddItemsNumber(itemsId, itemsNumber);
+                    break;
+                case PreTypeEnum.PayIngForOilsalt:
+                    gameData.AddIng(IngredientsEnum.Oilsalt, int.Parse(itemData.data));
+                    break;
+                case PreTypeEnum.PayIngForMeat:
+                    gameData.AddIng(IngredientsEnum.Meat, int.Parse(itemData.data));
+                    break;
+                case PreTypeEnum.PayIngForRiverfresh:
+                    gameData.AddIng(IngredientsEnum.Riverfresh, int.Parse(itemData.data));
+                    break;
+                case PreTypeEnum.PayIngForSeafood:
+                    gameData.AddIng(IngredientsEnum.Seafood, int.Parse(itemData.data));
+                    break;
+                case PreTypeEnum.PayIngForVegetables:
+                    gameData.AddIng(IngredientsEnum.Vegetables, int.Parse(itemData.data));
+                    break;
+                case PreTypeEnum.PayIngForMelonfruit:
+                    gameData.AddIng(IngredientsEnum.Melonfruit, int.Parse(itemData.data));
+                    break;
+                case PreTypeEnum.PayIngForWaterwine:
+                    gameData.AddIng(IngredientsEnum.Waterwine, int.Parse(itemData.data));
+                    break;
+                case PreTypeEnum.PayIngForFlour:
+                    gameData.AddIng(IngredientsEnum.Flour, int.Parse(itemData.data));
                     break;
             }
         }
