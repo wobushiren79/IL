@@ -259,10 +259,7 @@ public class RewardTypeEnumTools : DataTools
         long randomItemsId = RandomUtil.GetRandomDataByArray(listItemsData);
         ItemsInfoBean itemsInfo = gameItemsManager.GetItemsById(randomItemsId);
         data.rewardDescribe = itemsInfo.name;
-        if (listItemsData.Length == 2)
-        {
-            data.rewardNumber = 1;
-        }
+        data.rewardNumber = 1;
         data.rewardId = randomItemsId;
         data.rewardDescribe += (" x" + data.rewardNumber);
         data.spRewardIcon = GeneralEnumTools.GetGeneralSprite(itemsInfo, iconDataManager, gameItemsManager, null, true);
