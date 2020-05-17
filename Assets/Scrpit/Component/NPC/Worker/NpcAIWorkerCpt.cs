@@ -39,7 +39,7 @@ public class NpcAIWorkerCpt : BaseNpcAI
     //工作者的想法
     public WorkerIntentEnum workerIntent = WorkerIntentEnum.Idle;
     //工作信息
-    public List<WorkerInfo> listWorkerInfo = new List<WorkerInfo>();
+    public List<CharacterWorkerBaseBean> listWorkerInfo = new List<CharacterWorkerBaseBean>();
 
     private void FixedUpdate()
     {
@@ -104,11 +104,11 @@ public class NpcAIWorkerCpt : BaseNpcAI
     /// </summary>
     public void SetWorkByPriority()
     {
-        foreach (WorkerInfo itemWorkerInfo in listWorkerInfo)
+        foreach (CharacterWorkerBaseBean itemWorkerInfo in listWorkerInfo)
         {
-            if (!itemWorkerInfo.isWork)
+            if (!itemWorkerInfo.isWorking)
                 continue;
-            bool isDistributionSuccess = innHandler.DistributionWorkForType(itemWorkerInfo.worker, this);
+            bool isDistributionSuccess = innHandler.DistributionWorkForType(itemWorkerInfo.workerType, this);
             if (isDistributionSuccess)
                 return;
         }

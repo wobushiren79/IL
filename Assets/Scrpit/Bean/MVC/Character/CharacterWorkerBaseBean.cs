@@ -11,6 +11,19 @@ public class CharacterWorkerBaseBean
     public int workerLevel;
     //当前职业经验值
     public long workerExp;
+    //职业优先度
+    public int priority = 0;
+    //是否开启
+    public bool isWorking = true;
+
+    /// <summary>
+    /// 设置优先度
+    /// </summary>
+    /// <param name="priority"></param>
+    public void SetPriority(int priority)
+    {
+        this.priority = priority;
+    }
 
     /// <summary>
     /// 增加经验
@@ -51,6 +64,15 @@ public class CharacterWorkerBaseBean
         nextLevelExp = GetLevelUpExp(workerLevel + 1);
         currentExp = workerExp;
         levelProportion = (float)currentExp / nextLevelExp;
+    }
+
+    /// <summary>
+    /// 获取等级
+    /// </summary>
+    /// <returns></returns>
+    public int GetLevel()
+    {
+        return workerLevel;
     }
 
     /// <summary>

@@ -22,6 +22,7 @@ public class ItemTownArenaCpt : ItemGameBaseCpt, DialogView.IDialogCallBack
 
     public MiniGameBaseBean miniGameData;
     public TrophyTypeEnum trophyType;
+    public MiniGameEnum gameType;
 
     private void Start()
     {
@@ -36,9 +37,9 @@ public class ItemTownArenaCpt : ItemGameBaseCpt, DialogView.IDialogCallBack
 
     public void InitDataForType(MiniGameEnum gameType, TrophyTypeEnum trophyType, MiniGameBaseBean miniGameData)
     {
+        this.gameType = gameType;
         this.miniGameData = miniGameData;
         this.trophyType = trophyType;
-
         SetTitle(miniGameData);
         SetReward(miniGameData.listReward);
         SetPrice(miniGameData.preMoneyL, miniGameData.preMoneyM, miniGameData.preMoneyS);
@@ -151,6 +152,45 @@ public class ItemTownArenaCpt : ItemGameBaseCpt, DialogView.IDialogCallBack
             string itemRule = listRule[i];
             ruleStr += ((i + 1) + "." + itemRule + "\n");
         }
+        //设置参与等级提示
+        string levelToastWorker = "???";
+        string levelToastLevel = "???";
+        switch (gameType)
+        {
+            case MiniGameEnum.Cooking:
+                levelToastWorker = CharacterWorkerBaseBean.GetWorkerName(WorkerEnum.Chef);
+                break;
+            case MiniGameEnum.Barrage:
+                levelToastWorker = CharacterWorkerBaseBean.GetWorkerName(WorkerEnum.Waiter);
+                break;
+            case MiniGameEnum.Account:
+                levelToastWorker = CharacterWorkerBaseBean.GetWorkerName(WorkerEnum.Accountant);
+                break;
+            case MiniGameEnum.Debate:
+                levelToastWorker = CharacterWorkerBaseBean.GetWorkerName(WorkerEnum.Accost);
+                break;
+            case MiniGameEnum.Combat:
+                levelToastWorker = CharacterWorkerBaseBean.GetWorkerName(WorkerEnum.Beater);
+                break;
+        }
+
+        switch (trophyType)
+        {
+            case TrophyTypeEnum.Elementary:
+                levelToastLevel = " " + CharacterWorkerBaseBean.GetWorkerLevelName(0) + " " + CharacterWorkerBaseBean.GetWorkerLevelName(1);
+                break;
+            case TrophyTypeEnum.Intermediate:
+                levelToastLevel = " " + CharacterWorkerBaseBean.GetWorkerLevelName(2) + " " + CharacterWorkerBaseBean.GetWorkerLevelName(3);
+                break;
+            case TrophyTypeEnum.Advanced:
+                levelToastLevel = " " + CharacterWorkerBaseBean.GetWorkerLevelName(4) + " " + CharacterWorkerBaseBean.GetWorkerLevelName(5);
+                break;
+            case TrophyTypeEnum.Legendary:
+                levelToastLevel = " " + CharacterWorkerBaseBean.GetWorkerLevelName(6);
+                break;
+        }
+        string levelToast = string.Format(GameCommonInfo.GetUITextById(221), levelToastWorker, levelToastLevel);
+        ruleStr += (levelToast + "\n");
         SetRuleContent(ruleStr);
     }
 
@@ -227,10 +267,71 @@ public class ItemTownArenaCpt : ItemGameBaseCpt, DialogView.IDialogCallBack
         }
         else
         {
+            //弹出选人界面
             DialogBean dialogData = new DialogBean();
             PickForCharacterDialogView pickForCharacterDialog = (PickForCharacterDialogView)dialogManager.CreateDialog(DialogEnum.PickForCharacter, this, dialogData);
             pickForCharacterDialog.SetPickCharacterMax(1);
-            List<string> listExpelCharacterId = GameCommonInfo.DailyLimitData.GetArenaAttendedCharacter();
+            List<string> listExpelCharacterId = new List<string>();
+            //排出今日已经参加过的人
+            List<string> listAttendedCharacterId = GameCommonInfo.DailyLimitData.GetArenaAttendedCharacter();
+            //排出等级不符合的人
+            List<CharacterBean> listWorker= gameDataManager.gameData.GetAllCharacterData();
+            foreach (CharacterBean itemWorker in listWorker)
+            {
+                bool isExpel = false;
+                CharacterWorkerBaseBean workerInfo = null;
+                switch (gameType)
+                {
+                    case MiniGameEnum.Cooking:
+                        workerInfo = itemWorker.baseInfo.GetWorkerInfoByType( WorkerEnum.Chef);
+                        break;
+                    case MiniGameEnum.Barrage:
+                        workerInfo = itemWorker.baseInfo.GetWorkerInfoByType(WorkerEnum.Waiter);
+                        break;
+                    case MiniGameEnum.Account:
+                        workerInfo = itemWorker.baseInfo.GetWorkerInfoByType(WorkerEnum.Accountant);
+                        break;
+                    case MiniGameEnum.Debate:
+                        workerInfo = itemWorker.baseInfo.GetWorkerInfoByType(WorkerEnum.Accost);
+                        break;
+                    case MiniGameEnum.Combat:
+                        workerInfo = itemWorker.baseInfo.GetWorkerInfoByType(WorkerEnum.Beater);
+                        break;
+                }
+                int workLevel = workerInfo.GetLevel();
+                switch (trophyType)
+                {
+                    case TrophyTypeEnum.Elementary:
+                        if (workLevel != 0 && workLevel != 1)
+                        {
+                            isExpel = true;
+                        }
+                        break;
+                    case TrophyTypeEnum.Intermediate:
+                        if (workLevel != 2 && workLevel != 3)
+                        {
+                            isExpel = true;
+                        }
+                        break;
+                    case TrophyTypeEnum.Advanced:
+                        if (workLevel != 4 && workLevel != 5)
+                        {
+                            isExpel = true;
+                        }
+                        break;
+                    case TrophyTypeEnum.Legendary:
+                        if (workLevel != 6 )
+                        {
+                            isExpel = true;
+                        }
+                        break;
+                }
+                if (isExpel)
+                {
+                    listExpelCharacterId.Add(itemWorker.baseInfo.characterId);
+                }
+            }
+            listExpelCharacterId.AddRange(listAttendedCharacterId);
             pickForCharacterDialog.SetExpelCharacter(listExpelCharacterId);
             if (miniGameData.gameType == MiniGameEnum.Combat)
             {

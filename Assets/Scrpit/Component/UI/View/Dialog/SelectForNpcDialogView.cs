@@ -47,8 +47,9 @@ public class SelectForNpcDialogView : DialogView, IBaseObserver
         HandleForMood();
     }
 
-    private void OnDestroy()
+    public override void OnDestroy()
     {
+        base.OnDestroy();
         //移除通知
         if (targetNpcAI != null)
             targetNpcAI.RemoveObserver(this);

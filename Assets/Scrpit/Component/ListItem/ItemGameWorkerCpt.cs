@@ -172,8 +172,18 @@ public class ItemGameWorkerCpt : ItemGameBaseCpt, IRadioButtonCallBack, DialogVi
             SetName(characterBase.name);
 
             SetPrice(characterBase.priceS, characterBase.priceM, characterBase.priceL);
-            SetWork(characterBase.isChef, characterBase.isWaiter, characterBase.isAccountant, characterBase.isAccost, characterBase.isBeater);
-            SetPriority(characterBase.priorityChef, characterBase.priorityWaiter, characterBase.priorityAccountant, characterBase.priorityAccost, characterBase.priorityBeater);
+            SetWork(
+                characterBase.chefInfo.isWorking,
+                characterBase.waiterInfo.isWorking,
+                characterBase.accountantInfo.isWorking, 
+                characterBase.accostInfo.isWorking,
+                characterBase.beaterInfo.isWorking );
+            SetPriority(
+                characterBase.chefInfo.priority,
+                characterBase.waiterInfo.priority,
+                characterBase.accountantInfo.priority,
+                characterBase.accostInfo.priority,
+                characterBase.beaterInfo.priority);
 
             WorkerStatusEnum workerStatus = characterBase.GetWorkerStatus( out string workerStatusStr);
             SetStatus(workerStatus, workerStatusStr);
@@ -454,24 +464,8 @@ public class ItemGameWorkerCpt : ItemGameBaseCpt, IRadioButtonCallBack, DialogVi
     {
         if (int.TryParse(content, out int priority))
         {
-            switch (worker)
-            {
-                case WorkerEnum.Chef:
-                    characterData.baseInfo.priorityChef = priority;
-                    break;
-                case WorkerEnum.Waiter:
-                    characterData.baseInfo.priorityWaiter = priority;
-                    break;
-                case WorkerEnum.Accountant:
-                    characterData.baseInfo.priorityAccountant = priority;
-                    break;
-                case WorkerEnum.Accost:
-                    characterData.baseInfo.priorityAccost = priority;
-                    break;
-                case WorkerEnum.Beater:
-                    characterData.baseInfo.priorityBeater = priority;
-                    break;
-            }
+            CharacterWorkerBaseBean characterWorker= characterData.baseInfo.GetWorkerInfoByType(worker);
+            characterWorker.SetPriority(priority);
             if (GetUIManager<UIGameManager>().innHandler != null)
                 GetUIManager<UIGameManager>().innHandler.InitWorker();
         }
@@ -503,25 +497,25 @@ public class ItemGameWorkerCpt : ItemGameBaseCpt, IRadioButtonCallBack, DialogVi
             return;
         audioHandler.PlaySound(AudioSoundEnum.ButtonForNormal);
         CharacterBaseBean characterBase = characterData.baseInfo;
-        if (view == rbAccounting)
+        if (view == rbChef)
         {
-            characterBase.isAccountant = (buttonStates == RadioButtonView.RadioButtonStatus.Selected) ? true : false;
+            characterBase.chefInfo.isWorking  = (buttonStates == RadioButtonView.RadioButtonStatus.Selected) ? true : false;
         }
         else if (view == rbWaiter)
         {
-            characterBase.isWaiter = (buttonStates == RadioButtonView.RadioButtonStatus.Selected) ? true : false;
+            characterBase.waiterInfo.isWorking = (buttonStates == RadioButtonView.RadioButtonStatus.Selected) ? true : false;
         }
-        else if (view == rbChef)
+        else if (view == rbAccounting)
         {
-            characterBase.isChef = (buttonStates == RadioButtonView.RadioButtonStatus.Selected) ? true : false;
+            characterBase.accountantInfo.isWorking = (buttonStates == RadioButtonView.RadioButtonStatus.Selected) ? true : false;
         }
         else if (view == rbAccost)
         {
-            characterBase.isAccost = (buttonStates == RadioButtonView.RadioButtonStatus.Selected) ? true : false;
+            characterBase.accostInfo.isWorking = (buttonStates == RadioButtonView.RadioButtonStatus.Selected) ? true : false;
         }
         else if (view == rbBeater)
         {
-            characterBase.isBeater = (buttonStates == RadioButtonView.RadioButtonStatus.Selected) ? true : false;
+            characterBase.beaterInfo.isWorking = (buttonStates == RadioButtonView.RadioButtonStatus.Selected) ? true : false;
         }
         if (GetUIManager<UIGameManager>().innHandler != null)
             GetUIManager<UIGameManager>().innHandler.InitWorker();

@@ -28,7 +28,7 @@ public class InnWaiterHandler : BaseMonoBehaviour
         for (int i = 0; i < chefArray.Length; i++)
         {
             NpcAIWorkerCpt npcAI= chefArray[i];
-            if (npcAI.characterData.baseInfo.isWaiter)
+            if (npcAI.characterData.baseInfo.waiterInfo.isWorking)
             {
                 listWaiterCpt.Add(npcAI);
             }

@@ -29,20 +29,6 @@ public class CharacterBaseBean
     public CharacterWorkerForAccostBean accostInfo = new CharacterWorkerForAccostBean();
     public CharacterWorkerForBeaterBean beaterInfo = new CharacterWorkerForBeaterBean();
 
-    public bool isChef = true;//是否开启厨师
-    public bool isWaiter = true;//是否开启服务生
-    public bool isAccountant = true;//是否开启记帐
-    public bool isAccost = false;//是否开启招呼
-    public bool isBeater = false;//是否开启打手
-
-    //优先级
-    public int priorityChef;
-    public int priorityWaiter;
-    public int priorityAccountant;
-
-    public int priorityAccost;
-    public int priorityBeater;
-
     //工作状态-关联 WorkerStatus
     public int workerStatus = 0;
 
@@ -52,9 +38,9 @@ public class CharacterBaseBean
     /// 获取所有职业的工作数据
     /// </summary>
     /// <returns></returns>
-    public List<WorkerInfo> GetAllWorkerInfo()
+    public List<CharacterWorkerBaseBean> GetAllWorkerInfo()
     {
-        List<WorkerInfo> workerInfos = new List<WorkerInfo>();
+        List<CharacterWorkerBaseBean> workerInfos = new List<CharacterWorkerBaseBean>();
         workerInfos.Add(GetWorkerInfoByType(WorkerEnum.Chef));
         workerInfos.Add(GetWorkerInfoByType(WorkerEnum.Waiter));
         workerInfos.Add(GetWorkerInfoByType(WorkerEnum.Accountant));
@@ -70,34 +56,27 @@ public class CharacterBaseBean
     /// </summary>
     /// <param name="worker"></param>
     /// <returns></returns>
-    public WorkerInfo GetWorkerInfoByType(WorkerEnum worker)
+    public CharacterWorkerBaseBean GetWorkerInfoByType(WorkerEnum worker)
     {
-        bool isWork = true;
-        int priority = 1;
+        CharacterWorkerBaseBean workerInfo = null;
         switch (worker)
         {
             case WorkerEnum.Chef:
-                isWork = isChef;
-                priority = priorityChef;
+                workerInfo = chefInfo;
                 break;
             case WorkerEnum.Waiter:
-                isWork = isWaiter;
-                priority = priorityWaiter;
+                workerInfo = waiterInfo;
                 break;
             case WorkerEnum.Accountant:
-                isWork = isAccountant;
-                priority = priorityAccountant;
+                workerInfo = accountantInfo;
                 break;
             case WorkerEnum.Accost:
-                isWork = isAccost;
-                priority = priorityAccost;
+                workerInfo = accostInfo;
                 break;
             case WorkerEnum.Beater:
-                isWork = isBeater;
-                priority = priorityBeater;
+                workerInfo = beaterInfo;
                 break;
         }
-        WorkerInfo workerInfo = new WorkerInfo(worker, priority, isWork);
         return workerInfo;
     }
 

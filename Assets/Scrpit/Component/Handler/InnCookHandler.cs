@@ -46,7 +46,7 @@ public class InnCookHandler : BaseMonoBehaviour
         for (int i = 0; i < chefArray.Length; i++)
         {
             NpcAIWorkerCpt itemCpt = chefArray[i];
-            if (itemCpt.characterData.baseInfo.isChef)
+            if (itemCpt.characterData.baseInfo.chefInfo.isWorking)
             {
                 listChefCpt.Add(itemCpt);
             }
