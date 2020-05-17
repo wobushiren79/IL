@@ -7,7 +7,7 @@ using System.Collections.Generic;
 public class InnAttributesBean
 {
     public string innName;//客栈名称
-    public int innLevel;//客栈等级 （天地人1-5星  3 2 1）
+    public int innLevel;//客栈等级 （天地人1-3星）
 
     public float aesthetics;//客栈美观数
     public int richness;//菜品丰富度
@@ -184,35 +184,6 @@ public class InnAttributesBean
         aesthetics = this.aesthetics;
         GetInnLevel(out int levelTitle, out int levelStar);
         maxAesthetics = levelTitle * 300 + levelStar * 50 + 100;
-        //string level = "???";
-        //if (aesthetics <= 100)
-        //{
-        //    level = GameCommonInfo.GetUITextById(120);
-        //}
-        //else if (aesthetics > 100&& aesthetics <= 200)
-        //{
-        //    level = GameCommonInfo.GetUITextById(121);
-        //}
-        //else if (aesthetics > 200 && aesthetics <= 300)
-        //{
-        //    level = GameCommonInfo.GetUITextById(122);
-        //}
-        //else if (aesthetics > 300 && aesthetics <= 400)
-        //{
-        //    level = GameCommonInfo.GetUITextById(123);
-        //}
-        //else if (aesthetics > 400 && aesthetics <= 500)
-        //{
-        //    level = GameCommonInfo.GetUITextById(124);
-        //}
-        //else if (aesthetics > 500 && aesthetics <= 1000)
-        //{
-        //    level = GameCommonInfo.GetUITextById(125);
-        //}
-        //else if (aesthetics > 1000 && aesthetics <= 2000)
-        //{
-        //    level = GameCommonInfo.GetUITextById(126);
-        //}
     }
 
     /// <summary>

@@ -88,7 +88,7 @@ public class UIGameSettle : UIGameComponent
         if (innHandler.GetInnRecord().consumeIngFlour > 0)
             CreateItemForOther(innHandler.GetInnRecord().consumeIngFlour, spIconFlour, consumeIngStr + " " + GameCommonInfo.GetUITextById(28));
         //遍历食物
-        foreach (ItemBean itemData in innHandler.GetInnRecord().listSellNumber)
+        foreach (GameItemsBean itemData in innHandler.GetInnRecord().listSellNumber)
         {
             MenuInfoBean foodData = innFoodManager.GetFoodDataById(itemData.itemId);
             Sprite foodIcon = innFoodManager.GetFoodSpriteByName(foodData.icon_key);
@@ -96,9 +96,9 @@ public class UIGameSettle : UIGameComponent
                 foodIcon,
                 foodData.name + " x" + itemData.itemNumber,
                 1,
-                foodData.price_l * itemData.itemNumber,
-                foodData.price_m * itemData.itemNumber,
-                foodData.price_s * itemData.itemNumber);
+                itemData.priceL,
+                itemData.priceM,
+                itemData.priceS);
             audioHandler.PlaySound(AudioSoundEnum.PayMoney);
         }
         tvIncomeS.text = innHandler.GetInnRecord().incomeS + "";
