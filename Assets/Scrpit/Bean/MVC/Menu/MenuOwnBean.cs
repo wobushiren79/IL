@@ -145,6 +145,8 @@ public class MenuOwnBean
         return false;
     }
 
+
+
     /// <summary>
     /// 获取菜品等级
     /// </summary>
@@ -178,6 +180,11 @@ public class MenuOwnBean
         }
         return menuLevel;
     }
+    public int GetMenuLevel()
+    {
+        return menuLevel;
+    }
+
 
     /// <summary>
     /// 获取研究进度
@@ -381,5 +388,46 @@ public class MenuOwnBean
         menuStatus = (int)MenuStatusEnum.Normal;
         researchExp = 0;
         LevelUp();
+    }
+
+
+    /// <summary>
+    /// 检测是否能研究
+    /// </summary>
+    /// <returns></returns>
+    public bool CheckCanResearch(GameDataBean gameData,out string failStr)
+    {
+        failStr = "";
+        string levelStr=  gameData.GetInnAttributesData().GetInnLevel(out int levelTitle,out int levelStart);
+        if (menuLevel == 0)
+        {
+            if (levelTitle <= 0)
+            {
+                failStr = string.Format(GameCommonInfo.GetUITextById(1072), levelStr);
+                return false;
+            }
+        }
+        else if (menuLevel == 1)
+        {
+            if (levelTitle <= 1)
+            {
+                failStr = string.Format(GameCommonInfo.GetUITextById(1072), levelStr);
+                return false;
+            }
+        }
+        else if (menuLevel == 2)
+        {
+            if (levelTitle <= 2)
+            {
+                failStr = string.Format(GameCommonInfo.GetUITextById(1072), levelStr);
+                return false;
+            }
+        }
+        else if (menuLevel == 3)
+        {
+            failStr = GameCommonInfo.GetUITextById(1073);
+            return false;
+        }
+        return true;
     }
 }

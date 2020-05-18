@@ -96,6 +96,12 @@ public class NpcNormalBuilder : BaseMonoBehaviour
         npcObj.transform.position = startPosition;
 
         BaseNpcAI baseNpcAI = npcObj.GetComponent<BaseNpcAI>();
+        //如果没有眼睛
+        if (CheckUtil.StringIsNull(characterData.body.eye))
+        {
+            //随机生成身体数据
+            characterData.body.CreateRandomEye(characterBodyManager);
+        }
         baseNpcAI.SetCharacterData(characterData);
         return npcObj;
     }

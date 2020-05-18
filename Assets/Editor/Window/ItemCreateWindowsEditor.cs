@@ -669,6 +669,10 @@ public class ItemCreateWindowsEditor : EditorWindow, StoreInfoManager.ICallBack
         {
             listFindItem = gameItemsManager.GetItemsListByType(GeneralEnum.Read);
         }
+        if (GUILayout.Button("查询书籍", GUILayout.Width(100), GUILayout.Height(20)))
+        {
+            listFindItem = gameItemsManager.GetItemsListByType(GeneralEnum.Book);
+        }
         if (GUILayout.Button("查询菜谱", GUILayout.Width(100), GUILayout.Height(20)))
         {
             listFindItem = gameItemsManager.GetItemsListByType( GeneralEnum.Menu);

@@ -270,6 +270,13 @@ public class ItemGameMenuFoodCpt : ItemGameBaseCpt, IRadioButtonCallBack, Dialog
     {
         UIGameManager uiGameManager = GetUIManager<UIGameManager>();
         uiGameManager.audioHandler.PlaySound(AudioSoundEnum.ButtonForNormal);
+        //首先判断客栈等级是否足够
+        if (!menuOwnData.CheckCanResearch(uiGameManager.gameDataManager.gameData, out string failStr))
+        {
+            uiGameManager.toastManager.ToastHint(failStr);
+            return;
+        }
+
         DialogBean dialogData = new DialogBean
         {
             title = GameCommonInfo.GetUITextById(3071)

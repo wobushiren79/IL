@@ -44,7 +44,7 @@ public class GameDataBean
     public long ingWaterwine;//酒水
     public long ingFlour;//面粉
 
-    public int workerNumberLimit = 3;//员工人员招聘上限
+    public int workerNumberLimit = 2;//员工人员招聘上限
 
     /// <summary>
     /// 增加竞技场奖杯
