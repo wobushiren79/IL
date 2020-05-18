@@ -82,6 +82,14 @@ public class TextInfoManager : BaseManager,ITextInfoView
                 }
                 listTextData.Add(new TextInfoBean(1, GameCommonInfo.GetUITextById(99103)));
                 break;
+            case NpcTypeEnum.Special:
+                listTextData.Add(new TextInfoBean(0, GameCommonInfo.GetUITextById(99101)));
+                if (!GameCommonInfo.DailyLimitData.CheckIsTalkNpc(talkUserId))
+                {
+                    listTextData.Add(new TextInfoBean(1, GameCommonInfo.GetUITextById(99102)));
+                }
+                listTextData.Add(new TextInfoBean(1, GameCommonInfo.GetUITextById(99103)));
+                break;
         }
         if (callBack != null)
             callBack.SetTextInfoForTalkOptions(listTextData);

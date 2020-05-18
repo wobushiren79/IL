@@ -24,6 +24,9 @@ public class NpcInfoBean : BaseBean
     public string eye_color;
     public string mouth_id;
     public string mouth_color;
+    
+    public string skin_color;
+
 
     public string title_name;//称号
     public string name;//npc名字
@@ -97,7 +100,10 @@ public class NpcInfoBean : BaseBean
             characterData.body.mouthColor = mouthColor;
         characterData.body.sex = npcInfo.sex;
         characterData.body.face = npcInfo.face;
-
+        //设置皮肤颜色
+        ColorBean skinColor = new ColorBean(npcInfo.skin_color);
+        if (skinColor != null)
+            characterData.body.skinColor = skinColor;
         //设置装备
         characterData.equips = new CharacterEquipBean();
         characterData.equips.maskId = npcInfo.mask_id;

@@ -12,7 +12,7 @@ public class NpcImportantBuilder : BaseMonoBehaviour
 
     public List<NpcAIImportantCpt> listTownNpc = new List<NpcAIImportantCpt>();
     public List<NpcAIImportantCpt> listRecruitTownNpc = new List<NpcAIImportantCpt>();
-
+    public List<NpcAIImportantCpt> listSpecialTownNpc = new List<NpcAIImportantCpt>();
     public void Awake()
     {
         npcInfoManager = Find<NpcInfoManager>(ImportantTypeEnum.NpcManager);
@@ -28,6 +28,14 @@ public class NpcImportantBuilder : BaseMonoBehaviour
             NpcAIImportantCpt itemNpc = BuildNpc(itemData);
             if (itemNpc != null)
                 listTownNpc.Add(itemNpc);
+        }
+        //创建特殊NPC
+        List<CharacterBean> listSpecialCharacter = npcInfoManager.GetCharacterDataByType((int)NpcTypeEnum.Special);
+        foreach (CharacterBean itemData in listSpecialCharacter)
+        {
+            NpcAIImportantCpt itemNpc = BuildNpc(itemData);
+            if (itemNpc != null)
+                listSpecialTownNpc.Add(itemNpc);
         }
         //创建小镇招募居民
         List<CharacterBean> listRecruitTownCharacter = npcInfoManager.GetCharacterDataByType((int)NpcTypeEnum.RecruitTown);

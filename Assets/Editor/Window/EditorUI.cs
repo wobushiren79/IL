@@ -60,6 +60,10 @@ public class EditorUI
         {
             listNpcDataForFind = npcInfoService.QueryDataByType((int)NpcTypeEnum.Town);
         }
+        if (GUILayout.Button("查询特殊NPC", GUILayout.Width(100), GUILayout.Height(20)))
+        {
+            listNpcDataForFind = npcInfoService.QueryDataByType((int)NpcTypeEnum.Special);
+        }
         if (GUILayout.Button("查询小镇可招募NPC", GUILayout.Width(120), GUILayout.Height(20)))
         {
             listNpcDataForFind = npcInfoService.QueryDataByType((int)NpcTypeEnum.RecruitTown);
@@ -128,6 +132,12 @@ public class EditorUI
             GUILayout.Label("位置XY：", GUILayout.Width(100), GUILayout.Height(20));
             npcInfo.position_x = float.Parse(EditorGUILayout.TextArea(npcInfo.position_x + "", GUILayout.Width(100), GUILayout.Height(20)));
             npcInfo.position_y = float.Parse(EditorGUILayout.TextArea(npcInfo.position_y + "", GUILayout.Width(100), GUILayout.Height(20)));
+
+            GUILayout.Label("皮肤颜色：", GUILayout.Width(100), GUILayout.Height(20));
+            ColorBean skinColorData = new ColorBean(npcInfo.skin_color);
+            Color skinColor = skinColorData.GetColor(); ;
+            skinColor = EditorGUILayout.ColorField(skinColor);
+            npcInfo.skin_color = skinColor.r + "," + skinColor.g + "," + skinColor.b + "," + skinColor.a;
 
             GUILayout.Label("头发：", GUILayout.Width(100), GUILayout.Height(20));
             npcInfo.hair_id = EditorGUILayout.TextArea(npcInfo.hair_id + "", GUILayout.Width(200), GUILayout.Height(20));
