@@ -215,7 +215,7 @@ public class RewardTypeEnumTools : DataTools
         data.rewardDescribe = buildItemInfo.name;
         if (listBuildItemsData.Length == 2)
         {
-            data.rewardNumber = int.Parse(listBuildItemsData[2]);
+            data.rewardNumber = int.Parse(listBuildItemsData[1]);
         }
         data.rewardId = buildItemId;
         data.rewardDescribe += (" x" + data.rewardNumber);

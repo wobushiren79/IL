@@ -814,6 +814,9 @@ public class ItemCreateWindowsEditor : EditorWindow, StoreInfoManager.ICallBack
                 itemInfo.add_lucky = int.Parse(EditorGUILayout.TextArea(itemInfo.add_lucky + "", GUILayout.Width(150), GUILayout.Height(20)));
                 EditorUI.GUIText("忠");
                 itemInfo.add_loyal = int.Parse(EditorGUILayout.TextArea(itemInfo.add_loyal + "", GUILayout.Width(150), GUILayout.Height(20)));
+
+                EditorUI.GUIText("旋转角度");
+                itemInfo.rotation_angle = EditorUI.GUIEditorText(itemInfo.rotation_angle);
             }
             if (itemType == GeneralEnum.Medicine)
             {
@@ -835,6 +838,8 @@ public class ItemCreateWindowsEditor : EditorWindow, StoreInfoManager.ICallBack
                 EditorUI.GUIText("绑定textlook markID：");
                 itemInfo.add_id = long.Parse(EditorGUILayout.TextArea(itemInfo.add_id + "", GUILayout.Width(150), GUILayout.Height(20)));
             }
+
+
 
             GUILayout.EndHorizontal();
         }

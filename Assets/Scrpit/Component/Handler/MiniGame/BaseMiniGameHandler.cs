@@ -72,7 +72,7 @@ public class BaseMiniGameHandler<B, D> : BaseHandler, UIMiniGameCountDown.ICallB
     {
         return mMiniGameStatus;
     }
-    
+
     /// <summary>
     /// 获取游戏地点
     /// </summary>
@@ -129,10 +129,42 @@ public class BaseMiniGameHandler<B, D> : BaseHandler, UIMiniGameCountDown.ICallB
 
                 miniGameBuilder.DestroyAll();
                 //设置游戏数据
+
                 if (isWinGame)
+                {
                     miniGameData.gameResult = 1;
+                }
                 else
+                {
                     miniGameData.gameResult = 0;
+                }
+                //经验加成
+                List<MiniGameCharacterBean> listUserData = miniGameData.GetListUserGameData();
+                List<CharacterBean> listWorkerData = gameDataManager.gameData.GetAllCharacterData();
+                foreach (MiniGameCharacterBean itemCharacterData in listUserData)
+                {
+                    foreach (CharacterBean itemWorkerData in listWorkerData)
+                    {
+                        if (itemWorkerData.baseInfo.characterId==null|| itemCharacterData.characterData.baseInfo.characterId==null)
+                        {
+                            continue;
+                        }
+                        if (itemWorkerData.baseInfo.characterId.Equals(itemCharacterData.characterData.baseInfo.characterId))
+                        {
+                            WorkerEnum workerType = MiniGameEnumTools.GetWorkerTypeByMiniGameType(miniGameData.gameType);
+                            CharacterWorkerBaseBean characterWorker = itemWorkerData.baseInfo.GetWorkerInfoByType(workerType);
+                            if (isWinGame)
+                            {
+                                characterWorker.AddExp(10, out bool isLevelUp);
+                            }
+                            else
+                            {
+                                characterWorker.AddExp(5, out bool isLevelUp);
+                            }
+                        }
+                    }
+
+                }
                 //打开游戏结束UI
                 UIMiniGameEnd uiMiniGameEnd = (UIMiniGameEnd)uiGameManager.OpenUIAndCloseOtherByName(EnumUtil.GetEnumName(UIEnum.MiniGameEnd));
                 uiMiniGameEnd.SetData(miniGameData);

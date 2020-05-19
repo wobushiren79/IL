@@ -11,6 +11,7 @@ public class ItemGameDataCpt : ItemGameBaseCpt, DialogView.IDialogCallBack
     public Text tvMoneyM;
     public Text tvMoneyS;
     public Text tvGuildCoin;
+    public Text tvWorkerNumber;
 
     public Button btContinue;
     public Button btDelete;
@@ -48,6 +49,19 @@ public class ItemGameDataCpt : ItemGameBaseCpt, DialogView.IDialogCallBack
         SetGameTime(gameData.gameTime.year, gameData.gameTime.month, gameData.gameTime.day);
         SetGuildCoin(gameData.guildCoin);
         SetPlayTime(gameData.playTime.hour, gameData.playTime.minute);
+        SetWorkerNumber(gameData.workerNumber);
+    }
+
+    /// <summary>
+    /// 设置工作者数量
+    /// </summary>
+    /// <param name="workerNumber"></param>
+    public void SetWorkerNumber(int workerNumber)
+    {
+        if (tvWorkerNumber != null)
+        {
+            tvWorkerNumber.text = workerNumber+"";
+        }
     }
 
     /// <summary>

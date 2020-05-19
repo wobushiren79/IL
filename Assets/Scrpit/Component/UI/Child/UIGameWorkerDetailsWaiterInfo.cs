@@ -15,7 +15,7 @@ public class UIGameWorkerDetailsWaiterInfo : UIGameStatisticsDetailsBase<UIGameW
         CptUtil.RemoveChildsByActive(objItemContent);
         AddSendNumber(waiterData.sendTotalNumber);
         AddCleanNumber(waiterData.cleanTotalNumber);
-        AddCleanTime(waiterData.cleanTotalTime);
+       //AddCleanTime(waiterData.cleanTotalTime);
     }
 
     /// <summary>

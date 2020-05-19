@@ -15,10 +15,10 @@ public class UIGameWorkerDetailsBeaterInfo : UIGameStatisticsDetailsBase<UIGameW
         this.beaterInfo = beaterInfo;
         CptUtil.RemoveChildsByActive(objItemContent);
         AddFightNumber(beaterInfo.fightTotalNumber);
-        AddFightTime(beaterInfo.fightTotalTime);
+        //AddFightTime(beaterInfo.fightTotalTime);
         AddFightWinNumber(beaterInfo.fightWinNumber);
         AddFightLoseNumber(beaterInfo.fightLoseNumber);
-        AddRestTime(beaterInfo.restTotalTime);
+        //AddRestTime(beaterInfo.restTotalTime);
     }
 
     /// <summary>

@@ -11,6 +11,7 @@ public class GameDataSimpleBean
     public long moneyM;
     public long guildCoin;
     public string innName;//客栈名字
+    public int workerNumber;
     public CharacterBean userCharacter;//用户角色
     public TimeBean gameTime;//游戏时间
     public TimeBean playTime;//游玩时间
@@ -34,6 +35,7 @@ public class GameDataSimpleBean
         gameDataSimple.userCharacter = gameData.userCharacter;
         gameDataSimple.guildCoin = gameData.guildCoin;
         gameDataSimple.playTime = gameData.playTime;
+        gameDataSimple.workerNumber = gameData.GetAllCharacterData().Count;
         return gameDataSimple;
     }
 }

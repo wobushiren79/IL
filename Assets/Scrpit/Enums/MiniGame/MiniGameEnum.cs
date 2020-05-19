@@ -40,4 +40,27 @@ public class MiniGameEnumTools
         }
         return miniGameData;
     }
+
+    /// <summary>
+    /// 通过游戏类型获取职业
+    /// </summary>
+    /// <param name="miniGameType"></param>
+    /// <returns></returns>
+    public static WorkerEnum GetWorkerTypeByMiniGameType(MiniGameEnum miniGameType)
+    {
+        switch (miniGameType)
+        {
+            case MiniGameEnum.Cooking:
+                return WorkerEnum.Chef;
+            case MiniGameEnum.Barrage:
+                return WorkerEnum.Waiter;
+            case MiniGameEnum.Account:
+                return WorkerEnum.Accountant;
+            case MiniGameEnum.Debate:
+                return WorkerEnum.Accost;
+            case MiniGameEnum.Combat:
+                return WorkerEnum.Beater;
+        }
+        return WorkerEnum.Chef;
+    }
 }

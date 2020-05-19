@@ -73,12 +73,12 @@ public class UIGameAttendance : UIBaseOne, ItemGameAttendanceCpt.ICallBack
         uiGameManager.gameTimeHandler.SetDayStatus(GameTimeHandler.DayEnum.Work);
         //设置是否停止时间
         uiGameManager.gameTimeHandler.SetTimeStatus(false);
-        //开启主UI
-        uiManager.OpenUIAndCloseOtherByName(EnumUtil.GetEnumName(UIEnum.GameMain));
         //打开客栈
         uiGameManager.innHandler.OpenInn();
         //放开控制
         uiGameManager.controlHandler.StartControl(ControlHandler.ControlEnum.Work);
+        //开启主UI
+        uiManager.OpenUIAndCloseOtherByName(EnumUtil.GetEnumName(UIEnum.GameMain));
     }
 
     public void InitData()

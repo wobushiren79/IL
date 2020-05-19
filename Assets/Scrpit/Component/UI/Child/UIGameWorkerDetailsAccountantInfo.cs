@@ -21,7 +21,7 @@ public class UIGameWorkerDetailsAccountantInfo : UIGameStatisticsDetailsBase<UIG
           accountingData.moreMoneyL, accountingData.moreMoneyM, accountingData.moreMoneyS);
         AddFailData(accountingData.accountingErrorNumber,
           accountingData.loseMoneyL, accountingData.lostMoneyM, accountingData.lostMoneyS);
-        AddAccountingTime(accountingData.accountingTotalTime);
+        //AddAccountingTime(accountingData.accountingTotalTime);
     }
 
     /// <summary>

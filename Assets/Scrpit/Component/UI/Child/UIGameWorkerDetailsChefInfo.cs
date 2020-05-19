@@ -17,7 +17,7 @@ public class UIGameWorkerDetailsChefInfo : UIGameStatisticsDetailsBase<UIGameWor
         this.chefData = chefData;
         CptUtil.RemoveChildsByName(objItemContent.transform, "Item", true);
         AddCookNumber(chefData.cookNumber);
-        AddCookTime(chefData.cookTime);
+        //AddCookTime(chefData.cookTime);
         AddFoodData(innFoodManager, chefData.listFoodCookNumer);
     }
 

@@ -18,7 +18,7 @@ public class UIGameWorkerDetailsAccostInfo : UIGameStatisticsDetailsBase<UIGameW
         AddAccostTotalNumber(accostInfo.accostTotalNumber);
         AddAccostSuccessNumber(accostInfo.accostSuccessNumber);
         AddAccostFailNumber(accostInfo.accostFailNumber);
-        AddAccostTime(accostInfo.accostTotalTime);
+        //AddAccostTime(accostInfo.accostTotalTime);
     }
 
     /// <summary>
