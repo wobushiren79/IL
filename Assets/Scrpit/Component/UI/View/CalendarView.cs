@@ -28,7 +28,7 @@ public class CalendarView : BaseMonoBehaviour, IDateInfoView
         RectTransform rtfDayContent = objDayContent.GetComponent<RectTransform>();
         GridLayoutGroup glgDayContent = objDayContent.GetComponent<GridLayoutGroup>();
         float itemW = rtfDayContent.rect.width / 7f;
-        float itemH = rtfDayContent.rect.height / 4f;
+        float itemH = rtfDayContent.rect.height / 6f;
         glgDayContent.cellSize = new Vector2(itemW, itemH);
     }
 

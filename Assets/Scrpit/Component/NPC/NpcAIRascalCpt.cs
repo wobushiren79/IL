@@ -90,7 +90,8 @@ public class NpcAIRascalCpt : BaseNpcAI, IBaseObserver
     /// <param name="intentEnum"></param>
     public void SetIntent(RascalIntentEnum intentEnum)
     {
-        StopAllCoroutines();
+        if(this)
+            StopAllCoroutines();
         this.rascalIntent = intentEnum;
         switch (intentEnum)
         {

@@ -352,8 +352,9 @@ public class EditorUI
                 npcTeamData.talk_ids = EditorGUILayout.TextArea(npcTeamData.talk_ids + "", GUILayout.Width(200), GUILayout.Height(20));
                 break;
         }
+        GUIText("喜欢的菜品");
+        npcTeamData.love_menus = EditorGUILayout.TextArea(npcTeamData.love_menus, GUILayout.Width(250), GUILayout.Height(20));
         npcTeamData.condition = GUIListData<ShowConditionEnum>("团队出现条件", npcTeamData.condition);
-
         GUILayout.EndHorizontal();
     }
 

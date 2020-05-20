@@ -117,12 +117,7 @@ public class InnPayHandler : BaseMonoBehaviour
     public void ShowPayEffects(Vector3 position, long priceL, long priceM, long priceS)
     {
         GameObject payEffects = Instantiate(objPayEffects, position, new Quaternion());
-        SpriteRenderer pay = payEffects.GetComponent<SpriteRenderer>();
-        pay.DOFade(0, 2).SetDelay(2); ;
-        payEffects.transform.DOMoveY(position.y + 1f, 4).OnComplete(delegate ()
-          {
-              Destroy(payEffects);
-          });
-        payEffects.transform.DOPunchScale(new Vector3(0.8f, 0.8f, 0.8f), 1f, 5).From();
+        PayMoneyCpt payMoneyCpt= payEffects.GetComponent<PayMoneyCpt>();
+        payMoneyCpt.SetData(position, priceL, priceM, priceS);
     }
 }

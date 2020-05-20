@@ -54,7 +54,6 @@ public class UIGameSettle : UIGameComponent
         InnHandler innHandler = uiGameManager.innHandler;
         InnFoodManager innFoodManager = uiGameManager.innFoodManager;
         IconDataManager iconDataManager = uiGameManager.iconDataManager;
-        AudioHandler audioHandler = uiGameManager.audioHandler;
         GameTimeHandler gameTimeHandler = uiGameManager.gameTimeHandler;
         //停止时间
         gameTimeHandler.SetTimeStatus(true);
@@ -99,7 +98,6 @@ public class UIGameSettle : UIGameComponent
                 itemData.priceL,
                 itemData.priceM,
                 itemData.priceS);
-            audioHandler.PlaySound(AudioSoundEnum.PayMoney);
         }
         tvIncomeS.text = innHandler.GetInnRecord().incomeS + "";
         tvIncomeM.text = innHandler.GetInnRecord().incomeM + "";
@@ -131,7 +129,10 @@ public class UIGameSettle : UIGameComponent
     /// <param name="objItem"></param>
     public void AnimForItemShow(GameObject objItem)
     {
-        objItem.transform.DOScale(new Vector3(0, 0, 0), 0.5f).From().SetDelay(animDelay + 0.1f);
+        objItem.transform.DOScale(new Vector3(0, 0, 0), 0.5f).From().SetDelay(animDelay + 0.1f).OnPlay( delegate(){
+            AudioHandler audioHandler = uiGameManager.audioHandler;
+            audioHandler.PlaySound(AudioSoundEnum.PayMoney);
+        });
         animDelay += 0.1f;
     }
 

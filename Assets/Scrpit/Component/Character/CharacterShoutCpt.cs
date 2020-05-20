@@ -12,7 +12,6 @@ public class CharacterShoutCpt : BaseMonoBehaviour
         if (shoutObj == null || tvShout == null)
             return;
         tvShout.text = content;
-        tvShout.color = Color.red;
 
         //调整大小
         if (content.Length <= 4)

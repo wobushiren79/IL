@@ -106,9 +106,9 @@ public class NpcAICustomerForGuestTeamCpt : NpcAICustomerCpt
         //首先调整修改朝向
         SetCharacterFace(orderForCustomer.table.GetUserFace());
         //点餐
-        //判断是否有自己喜欢的菜
-        List<long> loveMenus = characterData.npcInfoData.GetLoveMenus();
-        //如果没有自己专有喜欢的菜，没有则随机点一个在卖的
+        //判断是否有团队喜欢的菜
+        List<long> loveMenus = teamData.GetLoveMenus();
+        //如果没有团队专有喜欢的菜，没有则随机点
         if (loveMenus.Count == 0)
         {
             innHandler.OrderForFood(orderForCustomer);
@@ -125,25 +125,23 @@ public class NpcAICustomerForGuestTeamCpt : NpcAICustomerCpt
             else
             {
                 //如果没有自己喜欢的菜品则点一杯茶
-                innHandler.OrderForFood(orderForCustomer, 1);
+                //innHandler.OrderForFood(orderForCustomer, 1);
             }
         }
+        //如果有这菜
         if (orderForCustomer.foodData != null)
         {
             //喊出需要的菜品
             characterShoutCpt.Shout(orderForCustomer.foodData.name);
+            //设置等待食物
+            SetIntent(CustomerIntentEnum.WaitFood);
         }
-        //如果没有这菜
-        if (orderForCustomer.foodData == null)
+        //如果没有这菜 甚至连茶都没有
+        else
         {
             //如果没有菜品出售 心情直接降100 
             ChangeMood(-9999);
             characterShoutCpt.Shout(GameCommonInfo.GetUITextById(13002));
-        }
-        else
-        {
-            //设置等待食物
-            SetIntent(CustomerIntentEnum.WaitFood);
         }
     }
 

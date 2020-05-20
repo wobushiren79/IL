@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 3873794516648867485}
   - component: {fileID: 3873794516648867490}
   - component: {fileID: 3873794516648867491}
+  - component: {fileID: 4804195916273130179}
   m_Layer: 5
   m_Name: Icon
   m_TagString: Untagged
@@ -62,6 +63,7 @@ MonoBehaviour:
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
+  m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -102,6 +104,25 @@ MonoBehaviour:
   m_EffectColor: {r: 0, g: 0, b: 0, a: 0.5}
   m_EffectDistance: {x: 1, y: -1}
   m_UseGraphicAlpha: 1
+--- !u!95 &4804195916273130179
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3873794516648867489}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 58a0d76e48235b844b0e92367ce908c5, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &3873794517372139315
 GameObject:
   m_ObjectHideFlags: 0
@@ -117,6 +138,7 @@ GameObject:
   - component: {fileID: 3873794517372139309}
   - component: {fileID: 3409717296471551505}
   - component: {fileID: 6269065077258770732}
+  - component: {fileID: 8006120620604555467}
   m_Layer: 5
   m_Name: ItemGameBackpackForPick
   m_TagString: Untagged
@@ -169,6 +191,7 @@ MonoBehaviour:
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
+  m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -249,7 +272,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9f50fe07f4e6e024f961413f0733e03f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  popupShow: {fileID: 0}
   itemsInfo:
     id: 0
     valid: 0
@@ -320,6 +342,19 @@ MonoBehaviour:
   rightClick:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &8006120620604555467
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3873794517372139315}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1ab81886ac50ea547b5ce98d442389ca, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  selectAnim: {fileID: 4804195916273130179}
 --- !u!1 &3873794517669730073
 GameObject:
   m_ObjectHideFlags: 0
@@ -380,13 +415,14 @@ MonoBehaviour:
   m_Material: {fileID: 0}
   m_Color: {r: 0.81568635, g: 0.2784314, b: 0.1137255, a: 1}
   m_RaycastTarget: 1
+  m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
   m_FontData:
-    m_Font: {fileID: 12800000, guid: 5af80356261d6ff4f8aeec8a15c0cab5, type: 3}
+    m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
     m_FontSize: 16
-    m_FontStyle: 0
+    m_FontStyle: 1
     m_BestFit: 0
     m_MinSize: 1
     m_MaxSize: 20
@@ -458,6 +494,7 @@ MonoBehaviour:
   m_Material: {fileID: 0}
   m_Color: {r: 0, g: 0.8867924, b: 0.11024987, a: 1}
   m_RaycastTarget: 1
+  m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []

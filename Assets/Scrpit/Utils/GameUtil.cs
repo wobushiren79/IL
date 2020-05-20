@@ -15,6 +15,8 @@ public class GameUtil
     }
     public static Vector3 GetTransformInsidePosition2D(Transform tfTarget, float size)
     {
+        if (tfTarget == null)
+            return Vector3.zero;
         float tempX = tfTarget.localScale.x / 2f;
         float tempY = tfTarget.localScale.y / 2f;
         //修正避免太靠边

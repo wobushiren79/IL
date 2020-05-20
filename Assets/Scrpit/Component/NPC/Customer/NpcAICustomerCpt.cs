@@ -209,7 +209,8 @@ public class NpcAICustomerCpt : BaseNpcAI
         //删除进度图标
         RemoveStatusIconByType(CharacterStatusIconEnum.Pro);
         //停止所有进程
-        StopAllCoroutines();
+        if(this)
+            StopAllCoroutines();
         this.customerIntent = intent;
         switch (customerIntent)
         {

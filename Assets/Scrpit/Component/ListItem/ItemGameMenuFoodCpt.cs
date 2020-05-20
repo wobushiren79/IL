@@ -72,12 +72,10 @@ public class ItemGameMenuFoodCpt : ItemGameBaseCpt, IRadioButtonCallBack, Dialog
         GameDataManager gameDataManager = GetUIManager<UIGameManager>().gameDataManager;
         if (gameDataManager.gameData.CheckCookFood(foodData))
         {
-            tvName.color = Color.black;
             tvShow.color = Color.black;
         }
         else
         {
-            tvName.color = Color.red;
             tvShow.color = Color.red;
         }
     }

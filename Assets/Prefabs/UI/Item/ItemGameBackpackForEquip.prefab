@@ -61,6 +61,7 @@ MonoBehaviour:
   m_Material: {fileID: 0}
   m_Color: {r: 0, g: 0.8773585, b: 0.109077, a: 1}
   m_RaycastTarget: 1
+  m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -105,8 +106,8 @@ GameObject:
   - component: {fileID: 3873794516648867484}
   - component: {fileID: 3873794516648867485}
   - component: {fileID: 3873794516648867490}
-  - component: {fileID: 3873794516648867491}
   - component: {fileID: 8671810242292249877}
+  - component: {fileID: 4532491063867273487}
   m_Layer: 5
   m_Name: Icon
   m_TagString: Untagged
@@ -156,6 +157,7 @@ MonoBehaviour:
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
+  m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -181,21 +183,6 @@ CanvasGroup:
   m_Interactable: 1
   m_BlocksRaycasts: 0
   m_IgnoreParentGroups: 0
---- !u!114 &3873794516648867491
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3873794516648867489}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cfabb0440166ab443bba8876756fdfa9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_EffectColor: {r: 0, g: 0, b: 0, a: 0.5}
-  m_EffectDistance: {x: 1, y: -1}
-  m_UseGraphicAlpha: 1
 --- !u!114 &8671810242292249877
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -211,6 +198,25 @@ MonoBehaviour:
   m_EffectColor: {r: 0, g: 0, b: 0, a: 0.5}
   m_EffectDistance: {x: 1, y: -1}
   m_UseGraphicAlpha: 1
+--- !u!95 &4532491063867273487
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3873794516648867489}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 58a0d76e48235b844b0e92367ce908c5, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &3873794517372139315
 GameObject:
   m_ObjectHideFlags: 0
@@ -226,6 +232,7 @@ GameObject:
   - component: {fileID: 3873794517372139309}
   - component: {fileID: 3409717296471551505}
   - component: {fileID: 5063714416960623473}
+  - component: {fileID: 673818028657333158}
   m_Layer: 5
   m_Name: ItemGameBackpackForEquip
   m_TagString: Untagged
@@ -278,6 +285,7 @@ MonoBehaviour:
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
+  m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -358,7 +366,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9f50fe07f4e6e024f961413f0733e03f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  popupShow: {fileID: 0}
   itemsInfo:
     id: 0
     valid: 0
@@ -443,6 +450,8 @@ MonoBehaviour:
         workerType: 1
         workerLevel: 0
         workerExp: 0
+        priority: 0
+        isWorking: 1
         cookNumber: 0
         cookTime: 0
         listFoodCookNumer: []
@@ -450,6 +459,8 @@ MonoBehaviour:
         workerType: 2
         workerLevel: 0
         workerExp: 0
+        priority: 0
+        isWorking: 1
         cleanTotalNumber: 0
         sendTotalNumber: 0
         cleanTotalTime: 0
@@ -457,6 +468,8 @@ MonoBehaviour:
         workerType: 3
         workerLevel: 0
         workerExp: 0
+        priority: 0
+        isWorking: 1
         accountingTotalNumber: 0
         accountingErrorNumber: 0
         accountingSuccessNumber: 0
@@ -474,6 +487,8 @@ MonoBehaviour:
         workerType: 4
         workerLevel: 0
         workerExp: 0
+        priority: 0
+        isWorking: 1
         accostTotalNumber: 0
         accostSuccessNumber: 0
         accostFailNumber: 0
@@ -482,21 +497,13 @@ MonoBehaviour:
         workerType: 5
         workerLevel: 0
         workerExp: 0
+        priority: 0
+        isWorking: 1
         fightTotalNumber: 0
         fightWinNumber: 0
         fightLoseNumber: 0
         fightTotalTime: 0
         restTotalTime: 0
-      isChef: 0
-      isWaiter: 0
-      isAccountant: 0
-      isAccost: 0
-      isBeater: 0
-      priorityChef: 0
-      priorityWaiter: 0
-      priorityAccountant: 0
-      priorityAccost: 0
-      priorityBeater: 0
       workerStatus: 0
       listLoveItems: 
     attributes:
@@ -560,6 +567,7 @@ MonoBehaviour:
       eye_color: 
       mouth_id: 
       mouth_color: 
+      skin_color: 
       title_name: 
       name: 
       position_x: 0
@@ -574,6 +582,9 @@ MonoBehaviour:
       attributes_charm: 0
       attributes_force: 0
       attributes_lucky: 0
+      wage_l: 0
+      wage_m: 0
+      wage_s: 0
       love_items: 
       love_menus: 
       condition: 
@@ -602,6 +613,19 @@ MonoBehaviour:
   itemData:
     itemId: 0
     itemNumber: 0
+--- !u!114 &673818028657333158
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3873794517372139315}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1ab81886ac50ea547b5ce98d442389ca, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  selectAnim: {fileID: 4532491063867273487}
 --- !u!1 &3873794517669730073
 GameObject:
   m_ObjectHideFlags: 0
@@ -662,13 +686,14 @@ MonoBehaviour:
   m_Material: {fileID: 0}
   m_Color: {r: 0.81568635, g: 0.2784314, b: 0.1137255, a: 1}
   m_RaycastTarget: 1
+  m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
   m_FontData:
-    m_Font: {fileID: 12800000, guid: 5af80356261d6ff4f8aeec8a15c0cab5, type: 3}
+    m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
     m_FontSize: 16
-    m_FontStyle: 0
+    m_FontStyle: 1
     m_BestFit: 0
     m_MinSize: 1
     m_MaxSize: 20

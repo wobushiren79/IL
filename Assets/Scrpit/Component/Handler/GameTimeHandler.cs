@@ -63,7 +63,7 @@ public class GameTimeHandler : BaseObservable<IBaseObserver>
         for (int i = 0; i < nextDay; i++)
         {
             timeData.day += 1;
-            if (timeData.day > 28)
+            if (timeData.day > 42)
             {
                 timeData.day = 1;
                 timeData.month += 1;

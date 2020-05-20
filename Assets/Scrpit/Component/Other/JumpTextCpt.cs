@@ -8,7 +8,7 @@ public class JumpTextCpt : BaseMonoBehaviour
     public TextMesh tvContentShadow;
 
 
-    public void SetData(string content,Color colorContent)
+    public void SetData(string content, Color colorContent)
     {
         SetText(content, colorContent);
         AnimForInit();
@@ -37,7 +37,7 @@ public class JumpTextCpt : BaseMonoBehaviour
     public void AnimForInit()
     {
         //数字特效
-        transform.DOScale(new Vector3(0, 0, 0), 1f).From().SetEase(Ease.OutElastic);
+        transform.DOPunchScale(new Vector3(1.2f, 1.2f, 1.2f), 0.5f, 5, 1);
         transform.DOLocalMoveY(1.5f, 2.5f).OnComplete(delegate ()
         {
             Destroy(this);

@@ -62,6 +62,8 @@ MonoBehaviour:
         workerType: 1
         workerLevel: 0
         workerExp: 0
+        priority: 0
+        isWorking: 1
         cookNumber: 0
         cookTime: 0
         listFoodCookNumer: []
@@ -69,6 +71,8 @@ MonoBehaviour:
         workerType: 2
         workerLevel: 0
         workerExp: 0
+        priority: 0
+        isWorking: 1
         cleanTotalNumber: 0
         sendTotalNumber: 0
         cleanTotalTime: 0
@@ -76,6 +80,8 @@ MonoBehaviour:
         workerType: 3
         workerLevel: 0
         workerExp: 0
+        priority: 0
+        isWorking: 1
         accountingTotalNumber: 0
         accountingErrorNumber: 0
         accountingSuccessNumber: 0
@@ -93,6 +99,8 @@ MonoBehaviour:
         workerType: 4
         workerLevel: 0
         workerExp: 0
+        priority: 0
+        isWorking: 1
         accostTotalNumber: 0
         accostSuccessNumber: 0
         accostFailNumber: 0
@@ -101,21 +109,13 @@ MonoBehaviour:
         workerType: 5
         workerLevel: 0
         workerExp: 0
+        priority: 0
+        isWorking: 1
         fightTotalNumber: 0
         fightWinNumber: 0
         fightLoseNumber: 0
         fightTotalTime: 0
         restTotalTime: 0
-      isChef: 0
-      isWaiter: 0
-      isAccountant: 1
-      isAccost: 0
-      isBeater: 0
-      priorityChef: 0
-      priorityWaiter: 0
-      priorityAccountant: 0
-      priorityAccost: 0
-      priorityBeater: 0
       workerStatus: 0
       listLoveItems: 
     attributes:
@@ -128,6 +128,7 @@ MonoBehaviour:
       force: 0
       lucky: 0
       listSkills: 
+      listLearnBook: 
     body:
       sex: 1
       skinColor:
@@ -160,7 +161,6 @@ MonoBehaviour:
       hatId: 0
       clothesId: 0
       shoesId: 0
-      listLearnBook: 
     npcInfoData:
       id: 0
       valid: 0
@@ -179,6 +179,7 @@ MonoBehaviour:
       eye_color: 
       mouth_id: 
       mouth_color: 
+      skin_color: 
       title_name: 
       name: 
       position_x: 0
@@ -193,6 +194,9 @@ MonoBehaviour:
       attributes_charm: 0
       attributes_force: 0
       attributes_lucky: 0
+      wage_l: 0
+      wage_m: 0
+      wage_s: 0
       love_items: 
       love_menus: 
       condition: 
@@ -455,6 +459,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: JumpText
       objectReference: {fileID: 0}
+    - target: {fileID: 7450241391330930294, guid: 06c5c51d22051514b8e7077a139bfb37,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 06c5c51d22051514b8e7077a139bfb37, type: 3}
 --- !u!1 &5078008983015142432 stripped
@@ -557,11 +566,21 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 8937234797044043919}
     m_Modifications:
+    - target: {fileID: 1113426731506489471, guid: 396d649587531514099fd0f3ba9f5726,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 10100, guid: 0000000000000000e000000000000000, type: 0}
     - target: {fileID: 5668537668717952368, guid: 396d649587531514099fd0f3ba9f5726,
         type: 3}
       propertyPath: m_Name
       value: CharacterLife
       objectReference: {fileID: 0}
+    - target: {fileID: 7610580067726228388, guid: 396d649587531514099fd0f3ba9f5726,
+        type: 3}
+      propertyPath: m_Font
+      value: 
+      objectReference: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
     - target: {fileID: 8766315679752820975, guid: 396d649587531514099fd0f3ba9f5726,
         type: 3}
       propertyPath: m_SortingLayer

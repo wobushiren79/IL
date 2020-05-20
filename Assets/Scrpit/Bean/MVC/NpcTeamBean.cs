@@ -15,6 +15,7 @@ public class NpcTeamBean : BaseBean
     public string condition;//出现条件
     public string talk_ids;//对话IDS
     public string name;
+    public string love_menus;//喜欢的菜单
 
     /// <summary>
     /// 获取小队所有成员信息
@@ -58,5 +59,15 @@ public class NpcTeamBean : BaseBean
         if (team_members == null)
             return new long[0];
         return StringUtil.SplitBySubstringForArrayLong(team_members, ',');
+    }
+
+
+    /// <summary>
+    /// 获取喜欢的菜品ID
+    /// </summary>
+    public List<long> GetLoveMenus()
+    {
+        long[] menusId = StringUtil.SplitBySubstringForArrayLong(love_menus, ',');
+        return menusId.ToList();
     }
 }
