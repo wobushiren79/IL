@@ -21,7 +21,7 @@ public class UIGameStatisticsForInn : UIGameStatisticsDetailsBase<UIGameStatisti
     public void CreateDataList(UserAchievementBean userAchievement)
     {
         CptUtil.RemoveChildsByActive(objItemContent);
-        AddItemForCustomerNumber(userAchievement.numberForCustomer);
+        AddItemForCustomerNumber(userAchievement.GetNumberForAllCustomer());
         //金钱
         AddItemForOwnMoney(MoneyEnum.L, userAchievement.ownMoneyL);
         AddItemForOwnMoney(MoneyEnum.M, userAchievement.ownMoneyM);

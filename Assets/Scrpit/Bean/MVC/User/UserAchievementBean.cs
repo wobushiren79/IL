@@ -30,7 +30,9 @@ public class UserAchievementBean
     public long ownGuildCoin;
 
     //顾客数量
-    public long numberForCustomer;
+    public long numberForNormalCustomer;
+    public long numberForTeamCustomer;
+    public long numberForFriendsCustomer;
 
     //评价
     public long praiseForExcited;
@@ -39,6 +41,8 @@ public class UserAchievementBean
     public long praiseForOrdinary;
     public long praiseForDisappointed;
     public long praiseForAnger;
+    
+
 
     /// <summary>
     /// 是否包含该成就
@@ -89,5 +93,51 @@ public class UserAchievementBean
         }
     }
 
+    /// <summary>
+    /// 记录顾客
+    /// </summary>
+    public void AddNumberForCustomer(CustomerTypeEnum customerType,int number)
+    {
+        switch (customerType)
+        {
+            case CustomerTypeEnum.Normal:
+                numberForNormalCustomer += number;
+                break;
+            case CustomerTypeEnum.Team:
+                numberForTeamCustomer += number;
+                break;
+            case CustomerTypeEnum.Friend:
+                numberForFriendsCustomer += number;
+                break;
+        }
+    }
 
+
+    /// <summary>
+    /// 返回所有顾客数量
+    /// </summary>
+    /// <returns></returns>
+    public long GetNumberForAllCustomer()
+    {
+        return numberForNormalCustomer + numberForTeamCustomer + numberForFriendsCustomer;
+    }
+
+    /// <summary>
+    /// 根据类型返回顾客数量
+    /// </summary>
+    /// <param name="customerType"></param>
+    /// <returns></returns>
+    public long GetNumberForCustomerByType(CustomerTypeEnum customerType)
+    {
+        switch(customerType)
+        {
+            case CustomerTypeEnum.Normal:
+                return numberForNormalCustomer;
+            case CustomerTypeEnum.Team:
+                return numberForTeamCustomer;
+            case CustomerTypeEnum.Friend:
+                return numberForFriendsCustomer;
+        }
+        return 0;
+    }
 }

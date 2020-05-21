@@ -3,6 +3,12 @@ using UnityEditor;
 
 public class NpcAICostomerForFriendCpt : NpcAICustomerForGuestTeamCpt
 {
+    public override void Awake()
+    {
+        base.Awake();
+        customerType = CustomerTypeEnum.Friend;
+    }
+
     public override void IntentForLeave()
     {
         //添加好感

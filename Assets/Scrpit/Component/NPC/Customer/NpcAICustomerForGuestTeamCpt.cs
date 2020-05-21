@@ -31,6 +31,7 @@ public class NpcAICustomerForGuestTeamCpt : NpcAICustomerCpt
     public override void Awake()
     {
         base.Awake();
+        customerType = CustomerTypeEnum.Team;
         npcCustomerBuilder = Find<NpcCustomerBuilder>(ImportantTypeEnum.NpcBuilder);
     }
 

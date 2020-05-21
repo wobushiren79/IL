@@ -266,7 +266,7 @@ public class InnHandler : BaseMonoBehaviour, IBaseObserver
     /// <returns></returns>
     public OrderForCustomer CreateOrder(NpcAICustomerCpt npc)
     {
-        OrderForCustomer order = new OrderForCustomer(npc);
+        OrderForCustomer order = new OrderForCustomer(npc.customerType,npc);
         npc.SetOrderForCustomer(order);
         listOrder.Add(order);
         return order;
@@ -528,6 +528,17 @@ public class InnHandler : BaseMonoBehaviour, IBaseObserver
         gameDataManager.gameData.GetInnAttributesData().AddPraise((int)praiseType);
     }
 
+    /// <summary>
+    /// 记录顾客 用于顾客正式进店
+    /// </summary>
+    public void RecordCustomer(OrderForCustomer order)
+    {
+        //成就记录
+        UserAchievementBean userAchievement = gameDataManager.gameData.GetAchievementData();  
+        userAchievement.AddNumberForCustomer(order.customerType,1);
+        //流水记录
+        innRecord.AddCutomerNumber(order.customerType, 1);
+    }
 
     #region 时间回调
     public void ObserbableUpdate<T>(T observable, int type, params object[] obj) where T : UnityEngine.Object

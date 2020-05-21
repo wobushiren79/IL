@@ -6,6 +6,8 @@ using System.Collections.Generic;
 
 public class NpcAICustomerCpt : BaseNpcAI
 {
+    public CustomerTypeEnum customerType;
+
     public enum CustomerNotifyEnum
     {
         StatusChange = 1,//状态改变
@@ -54,6 +56,7 @@ public class NpcAICustomerCpt : BaseNpcAI
     public override void Awake()
     {
         base.Awake();
+        customerType = CustomerTypeEnum.Normal;
         sceneInnManager = Find<SceneInnManager>(ImportantTypeEnum.SceneManager);
         innHandler = Find<InnHandler>(ImportantTypeEnum.InnHandler);
     }
@@ -314,6 +317,8 @@ public class NpcAICustomerCpt : BaseNpcAI
             //前往桌子
             movePosition = orderForCustomer.table.GetSeatPosition();
             characterMoveCpt.SetDestination(movePosition);
+            //记录该顾客
+            innHandler.RecordCustomer(orderForCustomer);
         }
         else
         {

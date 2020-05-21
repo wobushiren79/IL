@@ -7,7 +7,8 @@ public class OrderForCustomer
 {
     //订单支付状态
     public OrderStautsForPayEnum orderStauts;
-
+    //顾客类型
+    public CustomerTypeEnum customerType;
     //需要的顾客
     public NpcAICustomerCpt customer;
     //需求的食物
@@ -29,9 +30,10 @@ public class OrderForCustomer
     //评价数据
     public InnEvaluationBean innEvaluation = new InnEvaluationBean();
 
-    public OrderForCustomer(NpcAICustomerCpt customer)
+    public OrderForCustomer(CustomerTypeEnum customerType, NpcAICustomerCpt customer)
     {
         this.customer = customer;
+        this.customerType = customerType;
     }
 
     /// <summary>

@@ -6,7 +6,13 @@ public class UIGameStatistics : UIBaseOne,IRadioGroupCallBack
     public UIGameStatisticsForInn innUI;
     public UIGameStatisticsForRevenue revenueUI;
     public UIGameStatisticsForAch achUI;
+    public UIGameStatisticsForCustomer customerUI;
     public RadioGroupView rgType;
+
+    public RadioButtonView rbTypeInn;
+    public RadioButtonView rbTypeRevenue;
+    public RadioButtonView rbTypeAch;
+    public RadioButtonView rbTypeCustomer;
 
     public override void Start()
     {
@@ -28,18 +34,22 @@ public class UIGameStatistics : UIBaseOne,IRadioGroupCallBack
         innUI.Close();
         revenueUI.Close();
         achUI.Close();
-
-        switch (rbview.name)
+        customerUI.Close();
+        if (rbview== rbTypeInn)
         {
-            case "Inn":
-                innUI.Open();
-                break;
-            case "Revenue":
-                revenueUI.Open();
-                break;
-            case "Ach":
-                achUI.Open();
-                break;
+            innUI.Open();
+        }
+        else if (rbview == rbTypeRevenue)
+        {
+            revenueUI.Open();
+        }
+        else if (rbview == rbTypeAch)
+        {
+            achUI.Open();
+        }
+        else if (rbview == rbTypeCustomer)
+        {
+            customerUI.Open();
         }
     }
 

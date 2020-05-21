@@ -48,6 +48,31 @@ public class InnRecordBean
     public long praiseDisappointedNumber;
     public long praiseAngerNumber;
 
+    public long numberForNormalCustomer;
+    public long numberForTeamCustomer;
+    public long numberForFriendsCustomer;
+
+    /// <summary>
+    /// 增加顾客数量
+    /// </summary>
+    /// <param name="customerType"></param>
+    /// <param name="number"></param>
+    public void AddCutomerNumber(CustomerTypeEnum customerType,int number)
+    {
+        switch (customerType)
+        {
+            case CustomerTypeEnum.Normal:
+                numberForNormalCustomer += number;
+                break;
+            case CustomerTypeEnum.Team:
+                numberForTeamCustomer += number;
+                break;
+            case CustomerTypeEnum.Friend:
+                numberForFriendsCustomer += number;
+                break;
+        }
+    }
+
     /// <summary>
     /// 增加支付工资
     /// </summary>
