@@ -33,6 +33,8 @@ public class UserAchievementBean
     public long numberForNormalCustomer;
     public long numberForTeamCustomer;
     public long numberForFriendsCustomer;
+    //团队顾客数据
+    public List<UserCustomerBean> listForTeamCustomerData;
 
     //评价
     public long praiseForExcited;
@@ -42,7 +44,6 @@ public class UserAchievementBean
     public long praiseForDisappointed;
     public long praiseForAnger;
     
-
 
     /// <summary>
     /// 是否包含该成就
@@ -96,7 +97,7 @@ public class UserAchievementBean
     /// <summary>
     /// 记录顾客
     /// </summary>
-    public void AddNumberForCustomer(CustomerTypeEnum customerType,int number)
+    public void AddNumberForCustomer(CustomerTypeEnum customerType,long teamId, int number)
     {
         switch (customerType)
         {
@@ -104,14 +105,64 @@ public class UserAchievementBean
                 numberForNormalCustomer += number;
                 break;
             case CustomerTypeEnum.Team:
-                numberForTeamCustomer += number;
+                AddNumberForTeamCustomer(teamId, number);
                 break;
             case CustomerTypeEnum.Friend:
                 numberForFriendsCustomer += number;
                 break;
         }
     }
+    public void AddNumberForCustomer(CustomerTypeEnum customerType, int number)
+    {
+        AddNumberForCustomer(customerType, 0, number);
+    }
 
+    public void AddNumberForTeamCustomer(long teamId, int number)
+    {
+        numberForTeamCustomer += number;
+        if (listForTeamCustomerData == null)
+            listForTeamCustomerData = new List<UserCustomerBean>();
+        bool hasData = false;
+        foreach (UserCustomerBean itemCustomerData in listForTeamCustomerData)
+        {
+            if (itemCustomerData.id == teamId)
+            {
+                itemCustomerData.AddNumber(number);
+                hasData = true;
+                break;
+            }
+        }
+        if (!hasData)
+        {
+            UserCustomerBean userCustomerData = new UserCustomerBean
+            {
+                id = teamId
+            };
+            userCustomerData.AddNumber(number);
+            listForTeamCustomerData.Add(userCustomerData);
+        }
+    }
+
+    public void AddMenuForCustomer(CustomerTypeEnum customerType, long teamId,long menuId)
+    {
+        switch (customerType)
+        {
+            case CustomerTypeEnum.Normal:
+                break;
+            case CustomerTypeEnum.Team:
+                foreach (UserCustomerBean itemCustomerData in listForTeamCustomerData)
+                {
+                    if (itemCustomerData.id == teamId)
+                    {
+                        itemCustomerData.AddMenu(menuId);
+                        break;
+                    }
+                }
+                break;
+            case CustomerTypeEnum.Friend:
+                break;
+        }
+    }
 
     /// <summary>
     /// 返回所有顾客数量

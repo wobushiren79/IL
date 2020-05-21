@@ -55,6 +55,10 @@ public class NpcTeamManager : BaseManager, INpcTeamView
     {
         return GetTeam(teamId, listCustomerTeam);
     }
+    public List<NpcTeamBean> GetCustomerTeam()
+    {
+        return listCustomerTeam;
+    }
 
     /// <summary>
     ///  根据ID获取好友队伍

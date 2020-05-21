@@ -317,6 +317,7 @@ public class InnHandler : BaseMonoBehaviour, IBaseObserver
         {
             orderForCustomer.foodData = menuInfo;
             foodQueue.Add(orderForCustomer);
+            RecordCustomerForMenu(orderForCustomer, menuId);
             return menuInfo;
         }
         return null;
@@ -535,9 +536,33 @@ public class InnHandler : BaseMonoBehaviour, IBaseObserver
     {
         //成就记录
         UserAchievementBean userAchievement = gameDataManager.gameData.GetAchievementData();  
-        userAchievement.AddNumberForCustomer(order.customerType,1);
+        //如果是团队需要记录团队ID
+        if(order.customerType == CustomerTypeEnum.Team)
+        {
+            NpcTeamBean teamData= ((NpcAICustomerForGuestTeamCpt)order.customer).teamData;
+            userAchievement.AddNumberForCustomer(order.customerType, teamData.id, 1);
+        }
+        else
+        {
+            userAchievement.AddNumberForCustomer(order.customerType, 1);
+        }
         //流水记录
         innRecord.AddCutomerNumber(order.customerType, 1);
+    }
+
+    /// <summary>
+    /// 记录顾客点菜
+    /// </summary>
+    public void RecordCustomerForMenu(OrderForCustomer order, long menuId)
+    {
+        //成就记录
+        UserAchievementBean userAchievement = gameDataManager.gameData.GetAchievementData();
+        //如果是团队
+        if (order.customerType == CustomerTypeEnum.Team)
+        {
+            NpcTeamBean teamData = ((NpcAICustomerForGuestTeamCpt)order.customer).teamData;
+            userAchievement.AddMenuForCustomer(order.customerType, teamData.id, menuId);
+        }
     }
 
     #region 时间回调

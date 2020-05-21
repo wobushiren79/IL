@@ -1,6 +1,8 @@
 ﻿using UnityEngine;
 using UnityEditor;
 using UnityEngine.UI;
+using System.Collections.Generic;
+
 public class UIGameStatisticsForCustomer : BaseUIChildComponent<UIGameStatistics>
 {
     public Text tvNormalCustomerNumber;
@@ -34,10 +36,24 @@ public class UIGameStatisticsForCustomer : BaseUIChildComponent<UIGameStatistics
     /// </summary>
     public void InitTeamCustomer()
     {
+        CptUtil.RemoveChildsByActive(objTeamCustomerContainer);
+        NpcInfoManager npcInfoManager = uiComponent.uiGameManager.npcInfoManager;
+        NpcTeamManager npcTeamManager = uiComponent.uiGameManager.npcTeamManager;
+
         UserAchievementBean userAchievement = uiComponent.uiGameManager.gameDataManager.gameData.GetAchievementData();
         if (tvTeamCustomerNumber != null)
             tvTeamCustomerNumber.text = GameCommonInfo.GetUITextById(323) + " " + userAchievement.GetNumberForCustomerByType(CustomerTypeEnum.Team) + GameCommonInfo.GetUITextById(82);
+        //查询所有团队
+        List<NpcTeamBean> listNpcTeamData =   npcTeamManager.GetCustomerTeam();
 
+        foreach (NpcTeamBean itemNpcTeamData in listNpcTeamData)
+        {
+            GameObject objItem = Instantiate(objTeamCustomerContainer, objItemCustomerModel);
+            ItemGameStatisticsForCustomerCpt itemCustomer = objItem.GetComponent<ItemGameStatisticsForCustomerCpt>();
+            long[] teamLeaderIds = itemNpcTeamData.GetTeamLeaderId();
+            CharacterBean teamLeaderData= npcInfoManager.GetCharacterDataById(teamLeaderIds[0]);
+            itemCustomer.SetData(teamLeaderData, true, itemNpcTeamData.name);
+        }
     }
 
     /// <summary>
@@ -45,11 +61,27 @@ public class UIGameStatisticsForCustomer : BaseUIChildComponent<UIGameStatistics
     /// </summary>
     public void InitFriendCustomer()
     {
+        CptUtil.RemoveChildsByActive(objFriendCustomerContainer);
+
+        NpcInfoManager npcInfoManager = uiComponent.uiGameManager.npcInfoManager;
         GameDataManager gameDataManager = uiComponent.uiGameManager.gameDataManager;
         UserAchievementBean userAchievement = gameDataManager.gameData.GetAchievementData();
-        gameDataManager.gameData.GetCharacterFavorability();
+
+        //设置数量
         if (tvFriendCustomerNumber != null)
             tvFriendCustomerNumber.text = GameCommonInfo.GetUITextById(323) + " " + userAchievement.GetNumberForCustomerByType(CustomerTypeEnum.Friend) + GameCommonInfo.GetUITextById(82);
+        List<CharacterFavorabilityBean> listData = gameDataManager.gameData.listCharacterFavorability;
 
+        foreach (CharacterFavorabilityBean itemData in listData)
+        {
+            CharacterBean itemCharacterData = npcInfoManager.GetCharacterDataById(itemData.characterId);
+            //如果是小镇居民
+            if (itemCharacterData.baseInfo.characterType == (int)NpcTypeEnum.Town)
+            {
+                GameObject objItem = Instantiate(objFriendCustomerContainer, objItemCustomerModel);
+                ItemGameStatisticsForCustomerCpt itemCustomer = objItem.GetComponent<ItemGameStatisticsForCustomerCpt>();
+                itemCustomer.SetData(itemCharacterData,true,null);
+            }
+        }
     }
 }

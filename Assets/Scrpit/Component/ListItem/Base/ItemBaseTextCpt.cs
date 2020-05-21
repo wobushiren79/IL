@@ -24,12 +24,20 @@ public class ItemBaseTextCpt : ItemGameBaseCpt
     }
 
 
-    public void SetIcon(Sprite spIcon, Color spColor)
+    public virtual void SetIcon(Sprite spIcon, Color spColor)
     {
         if (ivIcon != null)
         {
             ivIcon.sprite = spIcon;
             ivIcon.color = spColor;
+        }
+    }
+
+    public void SetName(string name)
+    {
+        if (tvName != null)
+        {
+            tvName.text = name;
         }
     }
 
