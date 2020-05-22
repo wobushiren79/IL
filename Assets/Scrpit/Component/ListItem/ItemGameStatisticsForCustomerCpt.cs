@@ -1,13 +1,17 @@
 ﻿using UnityEngine;
 using UnityEditor;
-
 public class ItemGameStatisticsForCustomerCpt : ItemBaseTextCpt
 {
     public CharacterUICpt characterUI;
-
+    public InfoLoveMenusPopupButton infoLoveMenusPopup;
     //是否解锁
     protected bool isUnLock;
-    public void SetData(CharacterBean characterData, bool isUnLock,string name)
+    public void SetData(CharacterBean characterData, bool isUnLock, string name)
+    {
+        SetData(characterData, isUnLock, name, 0);
+    }
+
+    public void SetData(CharacterBean characterData, bool isUnLock, string name,long teamId)
     {
         this.isUnLock = isUnLock;
         SetCharacterUI(characterData, isUnLock);
@@ -26,8 +30,16 @@ public class ItemGameStatisticsForCustomerCpt : ItemBaseTextCpt
         }
         else
         {
-            SetName("???");
+            SetName("???",Color.gray);
             ivIcon.gameObject.SetActive(true);
+        }
+        if (teamId !=0 )
+        {
+            infoLoveMenusPopup.SetDataForTeamCustomer(teamId);
+        }
+        else
+        {
+            infoLoveMenusPopup.SetActive(false);
         }
     }
 

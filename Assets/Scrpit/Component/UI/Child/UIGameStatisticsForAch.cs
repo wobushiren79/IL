@@ -22,15 +22,7 @@ public class UIGameStatisticsForAch : BaseUIChildComponent<UIGameStatistics>, Ac
     {
         base.Open();
         achievementInfoManager.SetCallBack(this);
-        UserAchievementBean userAchievement = gameDataManager.gameData.GetAchievementData();
-        List<long> achievementList = userAchievement.listAchievement;
-        if (achievementList == null || achievementList.Count == 0)
-        {
-            tvNull.gameObject.SetActive(true);
-            return;
-        }
-        tvNull.gameObject.SetActive(false);
-        achievementInfoManager.GetAchievementByIds(achievementList);
+        achievementInfoManager.GetAllAchievement();
     }
 
     public override void Close()
@@ -45,12 +37,27 @@ public class UIGameStatisticsForAch : BaseUIChildComponent<UIGameStatistics>, Ac
     /// <param name="listData"></param>
     public void CreateAchList(List<AchievementInfoBean> listData)
     {
+        UserAchievementBean userAchievement = gameDataManager.gameData.GetAchievementData();
+        List<long> achievementList = userAchievement.listAchievement;
+        //if (achievementList == null || achievementList.Count == 0)
+        //{
+        //    tvNull.gameObject.SetActive(true);
+        //    return;
+        //}
+        tvNull.gameObject.SetActive(false);
         for (int i = 0; i < listData.Count; i++)
         {
             AchievementInfoBean achievementInfo = listData[i];
             GameObject objItem = Instantiate(objAchContainer, objAchItem);
             ItemGameStatisticsForAchCpt achCpt = objItem.GetComponent<ItemGameStatisticsForAchCpt>();
-            achCpt.SetData(achievementInfo);
+            if (achievementList.Contains(achievementInfo.id))
+            {
+                achCpt.SetData(achievementInfo,true);
+            }
+            else
+            {
+                achCpt.SetData(achievementInfo,false);
+            }
         }
     }
 

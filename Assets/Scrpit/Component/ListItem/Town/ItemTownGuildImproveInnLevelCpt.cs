@@ -18,6 +18,9 @@ public class ItemTownGuildImproveInnLevelCpt : BaseMonoBehaviour, DialogView.IDi
     public Sprite spRePre;
     public Sprite spUnPre;
 
+    public Color colorPre;
+    public Color colorUnPre;
+
     public StoreInfoBean storeInfo;
     public bool isAllPre = true;
 
@@ -117,13 +120,13 @@ public class ItemTownGuildImproveInnLevelCpt : BaseMonoBehaviour, DialogView.IDi
             if (itemData.isPre)
             {
                 ivStatus.sprite = spRePre;
-                tvContent.color = Color.green;
+                tvContent.color = colorPre;
             }
             else
             {
                 isAllPre = false;
                 ivStatus.sprite = spUnPre;
-                tvContent.color = Color.red;
+                tvContent.color = colorUnPre;
             }
 
         }
@@ -150,7 +153,7 @@ public class ItemTownGuildImproveInnLevelCpt : BaseMonoBehaviour, DialogView.IDi
             string rewardDes = itemData.rewardDescribe;
             Text tvContent = CptUtil.GetCptInChildrenByName<Text>(objReward, "Text");
             tvContent.text = rewardDes;
-            tvContent.color = Color.green;
+            tvContent.color = colorPre;
         }
         GameUtil.RefreshRectViewHight((RectTransform)objRewardContainer.transform, true);
         GameUtil.RefreshRectViewHight((RectTransform)transform, true);

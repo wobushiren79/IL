@@ -5,6 +5,7 @@ using UnityEngine.UI;
 public class ItemBaseTextCpt : ItemGameBaseCpt
 {
     public Image ivIcon;
+    public Image ivBackground;
     public Text tvName;
     public Text tvContent;
 
@@ -16,13 +17,16 @@ public class ItemBaseTextCpt : ItemGameBaseCpt
     }
     public void SetData(Sprite spIcon, Color colorIcon, string name, string content)
     {
-        SetData(spIcon, colorIcon, name, Color.black, content);
+        SetData(spIcon, colorIcon, name, tvName.color, content);
     }
     public void SetData(Sprite spIcon, string name, string content)
     {
-        SetData(spIcon, Color.white, name, Color.black, content);
+        SetData(spIcon, ivIcon.color, name, tvName.color, content);
     }
-
+    public void SetData(Sprite spIcon, string name, Color colorName, string content)
+    {
+        SetData(spIcon, ivIcon.color, name, colorName, content);
+    }
 
     public virtual void SetIcon(Sprite spIcon, Color spColor)
     {
@@ -54,5 +58,13 @@ public class ItemBaseTextCpt : ItemGameBaseCpt
     {
         if (tvContent != null)
             tvContent.text = content;
+    }
+
+    public void SetBackground(Sprite spBackground)
+    {
+        if (ivBackground != null)
+        {
+            ivBackground.sprite = spBackground;
+        }
     }
 }

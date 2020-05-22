@@ -5,6 +5,10 @@ public class ItemGameStatisticsForAchCpt : ItemGameBaseCpt
 {
     public InfoAchievementPopupButton popupButton;
     public Image ivIcon;
+    public Image ivBackground;
+
+    public Sprite spLock;
+    public Sprite spLockBackground;
     private void Start()
     {
         InfoAchievementPopupShow popupShow = FindInChildren<InfoAchievementPopupShow>(ImportantTypeEnum.Popup);
@@ -16,13 +20,22 @@ public class ItemGameStatisticsForAchCpt : ItemGameBaseCpt
     /// </summary>
     /// <param name="achievementInfo"></param>
     /// <param name="spIcon"></param>
-    public void SetData(AchievementInfoBean achievementInfo)
+    /// <param name="isUnLock"></param>
+    public void SetData(AchievementInfoBean achievementInfo,bool isUnLock)
     {
-        popupButton.SetData(AchievementStatusEnum.Completed, achievementInfo);
-
-        UIGameManager uiGameManager = uiComponent.GetUIManager<UIGameManager>();
-        Sprite spIcon = uiGameManager.iconDataManager.GetIconSpriteByName(achievementInfo.icon_key);
-        SetIcon(spIcon);
+        if (isUnLock)
+        {
+            UIGameManager uiGameManager = uiComponent.GetUIManager<UIGameManager>();
+            Sprite spIcon = uiGameManager.iconDataManager.GetIconSpriteByName(achievementInfo.icon_key);
+            SetIcon(spIcon);
+            popupButton.SetData(AchievementStatusEnum.Completed, achievementInfo);
+        }
+        else
+        {
+            SetIcon(spLock);
+            ivBackground.sprite = spLockBackground;
+            popupButton.SetData(AchievementStatusEnum.UnKnown, achievementInfo);
+        }
     }
 
     /// <summary>

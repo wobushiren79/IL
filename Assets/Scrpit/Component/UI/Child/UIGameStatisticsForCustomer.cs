@@ -19,6 +19,9 @@ public class UIGameStatisticsForCustomer : BaseUIChildComponent<UIGameStatistics
         InitNormalCustomer();
         InitTeamCustomer();
         InitFriendCustomer();
+
+        GameUtil.RefreshRectViewHight((RectTransform)objTeamCustomerContainer.transform, true);
+        GameUtil.RefreshRectViewHight((RectTransform)objFriendCustomerContainer.transform, true);
     }
 
     /// <summary>
@@ -52,7 +55,15 @@ public class UIGameStatisticsForCustomer : BaseUIChildComponent<UIGameStatistics
             ItemGameStatisticsForCustomerCpt itemCustomer = objItem.GetComponent<ItemGameStatisticsForCustomerCpt>();
             long[] teamLeaderIds = itemNpcTeamData.GetTeamLeaderId();
             CharacterBean teamLeaderData= npcInfoManager.GetCharacterDataById(teamLeaderIds[0]);
-            itemCustomer.SetData(teamLeaderData, true, itemNpcTeamData.name);
+            //检测是否解锁该顾客团队
+            if (userAchievement.CheckHasTeamCustomer(itemNpcTeamData.id))
+            {
+                itemCustomer.SetData(teamLeaderData, true, itemNpcTeamData.name, itemNpcTeamData.id);
+            }
+            else
+            {
+                itemCustomer.SetData(teamLeaderData, false, itemNpcTeamData.name, itemNpcTeamData.id);
+            }
         }
     }
 

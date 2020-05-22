@@ -23,4 +23,16 @@ public class UserCustomerBean
             unlockLoveMenu.Add(menuId);
         }
     }
+
+    public bool CheckHasMenu(long menuId)
+    {
+        if (unlockLoveMenu.Contains(menuId))
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
 }

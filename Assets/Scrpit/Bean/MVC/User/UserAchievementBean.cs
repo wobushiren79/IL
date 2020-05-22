@@ -34,7 +34,7 @@ public class UserAchievementBean
     public long numberForTeamCustomer;
     public long numberForFriendsCustomer;
     //团队顾客数据
-    public List<UserCustomerBean> listForTeamCustomerData;
+    public List<UserCustomerBean> listForTeamCustomerData = new List<UserCustomerBean>();
 
     //评价
     public long praiseForExcited;
@@ -54,6 +54,39 @@ public class UserAchievementBean
     {
         return listAchievement.Contains(achId);
     }
+
+    /// <summary>
+    /// 检测是否有指定团队顾客
+    /// </summary>
+    /// <param name="teamId"></param>
+    /// <returns></returns>
+    public bool CheckHasTeamCustomer(long teamId)
+    {
+        if (listForTeamCustomerData == null)
+            listForTeamCustomerData = new List<UserCustomerBean>();
+        foreach (UserCustomerBean itemCustomer in listForTeamCustomerData)
+        {
+            if ( teamId== itemCustomer.id)
+            {
+                return true;
+            }
+        }
+        return false;
+    }
+    public bool CheckHasTeamCustomerLoveMenu(long teamId,long menuId)
+    {
+        if (listForTeamCustomerData == null)
+            listForTeamCustomerData = new List<UserCustomerBean>();
+        foreach (UserCustomerBean itemCustomer in listForTeamCustomerData)
+        {
+            if (teamId == itemCustomer.id&& itemCustomer.CheckHasMenu(menuId))
+            {
+                return true;
+            }
+        }
+        return false;
+    }
+
 
     /// <summary>
     /// 添加成就

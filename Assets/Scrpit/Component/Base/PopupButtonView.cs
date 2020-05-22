@@ -7,7 +7,7 @@ public abstract class PopupButtonView<T>  : BaseMonoBehaviour, IPointerEnterHand
 {
     protected T popupShow;
     private Button mThisButton;
-
+    protected bool isActive = true;
     public virtual void Awake()
     {
         popupShow = FindInChildren<T>(ImportantTypeEnum.Popup);
@@ -25,7 +25,10 @@ public abstract class PopupButtonView<T>  : BaseMonoBehaviour, IPointerEnterHand
         this.popupShow = popupShow;
     }
 
-
+    public void SetActive(bool isActive)
+    {
+        this.isActive = isActive;
+    }
 
     public void ButtonClick()
     {
@@ -34,7 +37,7 @@ public abstract class PopupButtonView<T>  : BaseMonoBehaviour, IPointerEnterHand
 
     public virtual void OnPointerEnter(PointerEventData eventData)
     {
-        if (popupShow == null)
+        if (popupShow == null || !isActive)
             return;
         popupShow.gameObject.SetActive(true);
         OpenPopup();
