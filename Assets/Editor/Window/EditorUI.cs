@@ -83,7 +83,7 @@ public class EditorUI
             GUILayout.BeginHorizontal();
             if (GUILayout.Button("显示", GUILayout.Width(100), GUILayout.Height(20)))
             {
-                CharacterBean characterData= NpcInfoBean.NpcInfoToCharacterData(itemData);
+                CharacterBean characterData = NpcInfoBean.NpcInfoToCharacterData(itemData);
                 ShowNpc(gameItemsManager, objNpcContainer, objNpcModel, characterData);
             }
             if (GUILayout.Button("更新", GUILayout.Width(100), GUILayout.Height(20)))
@@ -119,7 +119,7 @@ public class EditorUI
         npcInfo.npc_id = npcInfo.id;
         npcInfo.npc_type = (int)GUIEnum<NpcTypeEnum>("Npc类型：", npcInfo.npc_type);
         NpcTypeEnum npcType = (NpcTypeEnum)npcInfo.npc_type;
-        if (npcType !=  NpcTypeEnum.Passerby)
+        if (npcType != NpcTypeEnum.Passerby)
         {
             GUILayout.Label("姓名：", GUILayout.Width(100), GUILayout.Height(20));
             npcInfo.name = EditorGUILayout.TextArea(npcInfo.name + "", GUILayout.Width(100), GUILayout.Height(20));
@@ -199,7 +199,7 @@ public class EditorUI
             GUILayout.Label("喜欢的菜品：", GUILayout.Width(100), GUILayout.Height(20));
             npcInfo.love_menus = EditorGUILayout.TextArea(npcInfo.love_menus + "", GUILayout.Width(50), GUILayout.Height(20));
         }
-        GUIText("|",10);
+        GUIText("|", 10);
         GUIText("面具：", 50);
         npcInfo.mask_id = long.Parse(EditorGUILayout.TextArea(npcInfo.mask_id + "", GUILayout.Width(100), GUILayout.Height(20)));
         string maskPath = "Assets/Texture/Character/Dress/Mask/";
@@ -214,7 +214,7 @@ public class EditorUI
         if (hatInfo != null)
             GUIPic(hatPath, hatInfo.icon_key);
         GUIText("|", 10);
-        GUIText("衣服：",50);
+        GUIText("衣服：", 50);
         npcInfo.clothes_id = long.Parse(EditorGUILayout.TextArea(npcInfo.clothes_id + "", GUILayout.Width(100), GUILayout.Height(20)));
         string clothesPath = "Assets/Texture/Character/Dress/Clothes/";
         ItemsInfoBean clothesInfo = gameItemsManager.GetItemsById(npcInfo.clothes_id);
@@ -227,6 +227,13 @@ public class EditorUI
         ItemsInfoBean shoesInfo = gameItemsManager.GetItemsById(npcInfo.shoes_id);
         if (shoesInfo != null)
             GUIPic(shoesPath, shoesInfo.icon_key);
+        GUIText("|", 10);
+        GUIText("武器：", 50);
+        npcInfo.hand_id = long.Parse(EditorGUILayout.TextArea(npcInfo.hand_id + "", GUILayout.Width(100), GUILayout.Height(20)));
+        ItemsInfoBean handInfo = gameItemsManager.GetItemsById(npcInfo.hand_id);
+        if (handInfo != null)
+            GUIText(handInfo.name, 50);
+
         GUIText("|", 10);
         npcInfo.condition = GUIListData<ShowConditionEnum>("Npc出现条件", npcInfo.condition);
         GUILayout.EndHorizontal();
@@ -425,7 +432,7 @@ public class EditorUI
             isFind = true;
             talkType = TextTalkTypeEnum.Sundry;
         }
-        if(isFind)
+        if (isFind)
         {
             List<TextInfoBean> listNpcTalkInfo = textInfoService.QueryDataByTalkType(TextEnum.Talk, talkType, npcId);
             HandleTalkInfoDataByMarkId(listNpcTalkInfo, mapNpcTalkInfoForFind);
@@ -456,7 +463,7 @@ public class EditorUI
     /// <summary>
     ///  团队对话查询
     /// </summary>
-    public static void GUINpcTeamTalkFind(TextInfoService textInfoService, 
+    public static void GUINpcTeamTalkFind(TextInfoService textInfoService,
         Dictionary<long, List<TextInfoBean>> mapNpcTalkInfoForFind)
     {
         if (mapNpcTalkInfoForFind == null)
@@ -465,7 +472,7 @@ public class EditorUI
         {
             long markId = mapItemTalkInfo.Key;
             List<TextInfoBean> listTextData = mapItemTalkInfo.Value;
-            GUINpcTextInfoItemForMarkId(textInfoService,0, TextTalkTypeEnum.Normal, markId, listTextData,out listTextData);
+            GUINpcTextInfoItemForMarkId(textInfoService, 0, TextTalkTypeEnum.Normal, markId, listTextData, out listTextData);
         }
     }
 
@@ -551,7 +558,7 @@ public class EditorUI
             GUILayout.Label("对话内容：", GUILayout.Width(100), GUILayout.Height(20));
             itemTalkInfo.content = EditorGUILayout.TextArea(itemTalkInfo.content + "", GUILayout.Width(500), GUILayout.Height(20));
             itemTalkInfo.reward_data = GUIListData<RewardTypeEnum>("奖励", itemTalkInfo.reward_data);
-            if (itemTalkInfo.type == (int)TextInfoTypeEnum.Select && itemTalkInfo.select_type==1)
+            if (itemTalkInfo.type == (int)TextInfoTypeEnum.Select && itemTalkInfo.select_type == 1)
             {
                 itemTalkInfo.pre_data = GUIListData<PreTypeEnum>("付出", itemTalkInfo.pre_data);
                 itemTalkInfo.pre_data_minigame = GUIListData<PreTypeForMiniGameEnum>("小游戏数据", itemTalkInfo.pre_data_minigame);
@@ -660,7 +667,7 @@ public class EditorUI
                 GUILayout.EndHorizontal();
                 GUIBuildItem(itemData);
             }
-            if (removeData!=null)
+            if (removeData != null)
             {
                 listBuildItem.Remove(removeData);
             }
@@ -678,10 +685,10 @@ public class EditorUI
         GUIText("id：");
         buildItem.id = GUIEditorText(buildItem.id);
         buildItem.build_id = buildItem.id;
-        buildItem.build_type =(int) GUIEnum<BuildItemTypeEnum>("类型：", buildItem.build_type);
+        buildItem.build_type = (int)GUIEnum<BuildItemTypeEnum>("类型：", buildItem.build_type);
         GUIText("模型ID：");
         buildItem.model_name = GUIEditorText(buildItem.model_name);
-        GUIText(" 图标：",200);
+        GUIText(" 图标：", 200);
         buildItem.icon_key = GUIEditorText(buildItem.icon_key);
         string picPath = "";
         switch ((BuildItemTypeEnum)buildItem.build_type)
@@ -720,7 +727,7 @@ public class EditorUI
             case BuildItemTypeEnum.Door:
             case BuildItemTypeEnum.Decoration:
                 GUIText("icon_list");
-                buildItem.icon_list = GUIEditorText(buildItem.icon_list,300);
+                buildItem.icon_list = GUIEditorText(buildItem.icon_list, 300);
                 break;
             case BuildItemTypeEnum.Floor:
             case BuildItemTypeEnum.Wall:
@@ -732,8 +739,8 @@ public class EditorUI
         }
         GUIText("美观：", 50);
         buildItem.aesthetics = GUIEditorText(buildItem.aesthetics);
-        GUIText("名称：",50);
-        buildItem.name = GUIEditorText(buildItem.name,200);    
+        GUIText("名称：", 50);
+        buildItem.name = GUIEditorText(buildItem.name, 200);
         GUIText("形容：", 50);
         buildItem.content = GUIEditorText(buildItem.content, 300);
         GUILayout.EndHorizontal();
@@ -759,14 +766,14 @@ public class EditorUI
     /// </summary>
     /// <param name="menuInfoService"></param>
     /// <param name="listData"></param>
-    public static void GUIMenuFind(MenuInfoService menuInfoService,string findIds, List<MenuInfoBean> listData,out string outFindIds, out List<MenuInfoBean> outListData)
+    public static void GUIMenuFind(MenuInfoService menuInfoService, string findIds, List<MenuInfoBean> listData, out string outFindIds, out List<MenuInfoBean> outListData)
     {
         GUILayout.BeginHorizontal();
         GUIText("查询IDs");
         findIds = GUIEditorText(findIds);
         if (GUIButton("查询指定ID"))
         {
-            long[] ids= StringUtil.SplitBySubstringForArrayLong(findIds,',');
+            long[] ids = StringUtil.SplitBySubstringForArrayLong(findIds, ',');
             listData = menuInfoService.QueryDataByIds(ids);
         }
         if (GUIButton("查询所有菜单"))
@@ -776,8 +783,8 @@ public class EditorUI
         GUILayout.EndHorizontal();
         if (!CheckUtil.ListIsNull(listData))
         {
-  
-            for (int i=0;i< listData.Count; i++)
+
+            for (int i = 0; i < listData.Count; i++)
             {
                 MenuInfoBean itemData = listData[i];
                 GUILayout.BeginHorizontal();
@@ -847,7 +854,7 @@ public class EditorUI
     /// </summary>
     /// <param name="skillInfoService"></param>
     /// <param name="skillInfo"></param>
-    public static void GUISkillCreate(SkillInfoService skillInfoService,SkillInfoBean skillInfo)
+    public static void GUISkillCreate(SkillInfoService skillInfoService, SkillInfoBean skillInfo)
     {
         if (GUIButton("创建"))
         {
@@ -898,7 +905,7 @@ public class EditorUI
                     skillInfoService.DeleteData(itemData.id);
                 }
                 GUISkillItem(itemData);
-                GUILayout.EndHorizontal();    
+                GUILayout.EndHorizontal();
             }
         }
         outListData = listData;
@@ -918,7 +925,7 @@ public class EditorUI
         GUIText("名称");
         skillInfo.name = GUIEditorText(skillInfo.name);
         GUIText("介绍");
-        skillInfo.content = GUIEditorText(skillInfo.content,200);
+        skillInfo.content = GUIEditorText(skillInfo.content, 200);
         GUIText("图片名称:");
         skillInfo.icon_key = GUIEditorText(skillInfo.icon_key, 150);
         string menuPicPath = "Assets/Texture/Common/UI/";
@@ -927,7 +934,7 @@ public class EditorUI
         skillInfo.use_number = GUIEditorText(skillInfo.use_number);
         skillInfo.effect = GUIListData<EffectTypeEnum>("效果", skillInfo.effect);
         skillInfo.effect_details = GUIListData<EffectDetailsEnum>("效果详情", skillInfo.effect_details);
-        skillInfo.pre_data= GUIListData<PreTypeEnum>("解锁条件", skillInfo.pre_data);
+        skillInfo.pre_data = GUIListData<PreTypeEnum>("解锁条件", skillInfo.pre_data);
         GUILayout.EndHorizontal();
     }
 
@@ -939,17 +946,17 @@ public class EditorUI
     /// <param name="width"></param>
     /// <param name="height"></param>
     /// <returns></returns>
-    public static bool GUIButton(string name,int width,int height)
+    public static bool GUIButton(string name, int width, int height)
     {
         return GUILayout.Button(name, GUILayout.Width(width), GUILayout.Height(height));
     }
     public static bool GUIButton(string name, int width)
     {
-        return GUIButton(name, width,20);
+        return GUIButton(name, width, 20);
     }
     public static bool GUIButton(string name)
     {
-        return GUIButton(name, 100,20);
+        return GUIButton(name, 100, 20);
     }
 
     /// <summary>
@@ -961,7 +968,7 @@ public class EditorUI
     /// <returns></returns>
     public static string GUIEditorText(string text, int width, int height)
     {
-       return EditorGUILayout.TextArea(text, GUILayout.Width(width), GUILayout.Height(height));
+        return EditorGUILayout.TextArea(text, GUILayout.Width(width), GUILayout.Height(height));
     }
     public static string GUIEditorText(string text, int width)
     {
@@ -969,7 +976,7 @@ public class EditorUI
     }
     public static string GUIEditorText(string text)
     {
-        return GUIEditorText( text,  100, 20);
+        return GUIEditorText(text, 100, 20);
     }
     public static long GUIEditorText(long text, int width, int height)
     {
@@ -1020,7 +1027,7 @@ public class EditorUI
     }
     public static void GUIText(string text, int width)
     {
-        GUIText( text,  width,  20);
+        GUIText(text, width, 20);
     }
     public static void GUIText(string text)
     {

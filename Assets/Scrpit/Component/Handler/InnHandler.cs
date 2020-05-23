@@ -244,6 +244,8 @@ public class InnHandler : BaseMonoBehaviour, IBaseObserver
                 targetDoor = buildDoor;
             }
         }
+        if (targetDoor == null)
+            return Vector3.zero;
         return GameUtil.GetTransformInsidePosition2D(targetDoor.transform);
     }
 

@@ -105,16 +105,16 @@ public class ItemCreateWindowsEditor : EditorWindow, StoreInfoManager.ICallBack
         GUICreateAchItem();
         GUIFindAchItem();
         GUILayout.Label("------------------------------------------------------------------------------------------------");
-        EditorUI.GUIMenuCreate(menuInfoService,createMenuInfo);
-        EditorUI.GUIMenuFind(menuInfoService, menuFindIds, listFindMenuItem, out menuFindIds,  out listFindMenuItem);
+        EditorUI.GUIMenuCreate(menuInfoService, createMenuInfo);
+        EditorUI.GUIMenuFind(menuInfoService, menuFindIds, listFindMenuItem, out menuFindIds, out listFindMenuItem);
         GUILayout.Label("------------------------------------------------------------------------------------------------");
         EditorUI.GUISkillCreate(skillInfoService, createSkillInfo);
-        EditorUI.GUISkillFind(skillInfoService, skillFindIds, listFindSkillItem, out skillFindIds,out listFindSkillItem);
+        EditorUI.GUISkillFind(skillInfoService, skillFindIds, listFindSkillItem, out skillFindIds, out listFindSkillItem);
 
         GUILayout.EndVertical();
         GUILayout.EndScrollView();
 
-       
+
     }
 
     /// <summary>
@@ -504,7 +504,7 @@ public class ItemCreateWindowsEditor : EditorWindow, StoreInfoManager.ICallBack
     private void GUIStoreItemForArenaInfo(StoreInfoBean storeInfo)
     {
         GUILayout.Label("竞赛等级：", GUILayout.Width(100), GUILayout.Height(20));
-        storeInfo.mark_type =(int)(TrophyTypeEnum)EditorGUILayout.EnumPopup("职业", EnumUtil.GetEnum<TrophyTypeEnum>(storeInfo.mark_type+""), GUILayout.Width(300), GUILayout.Height(20)) ;
+        storeInfo.mark_type = (int)(TrophyTypeEnum)EditorGUILayout.EnumPopup("职业", EnumUtil.GetEnum<TrophyTypeEnum>(storeInfo.mark_type + ""), GUILayout.Width(300), GUILayout.Height(20));
         if (CheckUtil.StringIsNull(storeInfo.pre_data))
         {
             storeInfo.pre_data = "Chef";
@@ -592,6 +592,19 @@ public class ItemCreateWindowsEditor : EditorWindow, StoreInfoManager.ICallBack
                 else if (spriteCreateIcon.name.Contains("team"))
                 {
                     autoId += 4 * 10000;
+                }
+            }
+        } else if (createItemType == GeneralEnum.Chef
+            || createItemType == GeneralEnum.Waiter 
+            || createItemType == GeneralEnum.Accoutant 
+            || createItemType == GeneralEnum.Accost 
+            || createItemType == GeneralEnum.Beater )
+        {
+            if (spriteCreateIcon)
+            {
+                if (spriteCreateIcon.name.Contains("special"))
+                {
+                    autoId += 1 * 10000;
                 }
             }
         }
