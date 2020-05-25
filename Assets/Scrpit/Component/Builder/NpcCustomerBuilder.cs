@@ -8,6 +8,8 @@ public class NpcCustomerBuilder : NpcNormalBuilder, IBaseObserver
     //团队顾客
     public GameObject objGuestTeamModel;
 
+    protected List<NpcTeamBean> listTeamCustomer=new List<NpcTeamBean>();
+
     private void Start()
     {
         buildMaxNumber = 500;
@@ -102,7 +104,7 @@ public class NpcCustomerBuilder : NpcNormalBuilder, IBaseObserver
     public void BuildGuestTeam()
     {
         Vector3 npcPosition = GetRandomStartPosition();
-        NpcTeamBean teamData = npcTeamManager.GetRandomTeamMeetConditionByType(NpcTeamTypeEnum.Customer, gameDataManager.gameData);
+        NpcTeamBean teamData = RandomUtil.GetRandomDataByList(listTeamCustomer);
         BuildGuestTeam(teamData, npcPosition);
     }
 
@@ -248,6 +250,9 @@ public class NpcCustomerBuilder : NpcNormalBuilder, IBaseObserver
     {
         if ((GameTimeHandler.NotifyTypeEnum)type == GameTimeHandler.NotifyTypeEnum.NewDay)
         {
+            //重新获取顾客信息
+            listTeamCustomer = npcTeamManager.GetRandomTeamMeetConditionByType(NpcTeamTypeEnum.Customer, gameDataManager.gameData);
+            //开始建造顾客
             StartBuildCustomer();
             ClearNpc();
         }

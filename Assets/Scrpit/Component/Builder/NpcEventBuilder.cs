@@ -17,6 +17,9 @@ public class NpcEventBuilder : NpcNormalBuilder, IBaseObserver
     //当天已经生成过的团队ID
     public List<long> listExistTeamId = new List<long>();
 
+    public List<NpcTeamBean> listRascal = new List<NpcTeamBean>();
+    public List<NpcTeamBean> listSundry = new List<NpcTeamBean>();
+    public List<NpcTeamBean> listFriend = new List<NpcTeamBean>();
     private void Start()
     {
         gameTimeHandler.AddObserver(this);
@@ -60,7 +63,7 @@ public class NpcEventBuilder : NpcNormalBuilder, IBaseObserver
         if (GameCommonInfo.DailyLimitData.CheckRascalNumber(1))
         {
             Vector3 npcPosition = GetRandomStartPosition();
-            NpcTeamBean teamData = npcTeamManager.GetRandomTeamMeetConditionByType(NpcTeamTypeEnum.Rascal, gameDataManager.gameData);
+            NpcTeamBean teamData = RandomUtil.GetRandomDataByList(listRascal); 
             BuildRascal(teamData, npcPosition);
         } 
     }
@@ -119,7 +122,7 @@ public class NpcEventBuilder : NpcNormalBuilder, IBaseObserver
     public void BuildSundry()
     {
         Vector3 npcPosition = GetRandomStartPosition();
-        NpcTeamBean teamData = npcTeamManager.GetRandomTeamMeetConditionByType(NpcTeamTypeEnum.Sundry, gameDataManager.gameData);
+        NpcTeamBean teamData = RandomUtil.GetRandomDataByList(listSundry);
         BuildSundry(teamData, npcPosition);
     }
 
@@ -195,7 +198,7 @@ public class NpcEventBuilder : NpcNormalBuilder, IBaseObserver
     public void BuildTownFriendsForTeam()
     {
         Vector3 npcPosition = GetRandomStartPosition();
-        NpcTeamBean teamData = npcTeamManager.GetRandomTeamMeetConditionByType(NpcTeamTypeEnum.Friend, gameDataManager.gameData);
+        NpcTeamBean  teamData = RandomUtil.GetRandomDataByList(listFriend);
         BuildTownFriendsForTeam(teamData, npcPosition);
     }
 
@@ -309,6 +312,10 @@ public class NpcEventBuilder : NpcNormalBuilder, IBaseObserver
             ClearNpc();
             listExistNpcId.Clear();
             listExistTeamId.Clear();
+            //更新数据
+            listRascal = npcTeamManager.GetRandomTeamMeetConditionByType(NpcTeamTypeEnum.Rascal, gameDataManager.gameData);
+            listSundry = npcTeamManager.GetRandomTeamMeetConditionByType(NpcTeamTypeEnum.Sundry, gameDataManager.gameData);
+            listFriend = npcTeamManager.GetRandomTeamMeetConditionByType(NpcTeamTypeEnum.Friend, gameDataManager.gameData);
         }
         else if ((GameTimeHandler.NotifyTypeEnum)type == GameTimeHandler.NotifyTypeEnum.EndDay)
         {

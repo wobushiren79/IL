@@ -183,7 +183,7 @@ public class InnAttributesBean
         maxAesthetics = 0;
         aesthetics = this.aesthetics;
         GetInnLevel(out int levelTitle, out int levelStar);
-        maxAesthetics = levelTitle * 300 + levelStar * 50 + 100;
+        maxAesthetics = levelTitle == 0 ? (100) : ((levelTitle - 1) * 300 + levelStar * 50 + 100);
     }
 
     /// <summary>
@@ -196,7 +196,7 @@ public class InnAttributesBean
         maxRichness = 0;
         richness = this.richness;
         GetInnLevel(out int levelTitle, out int levelStar);
-        maxRichness = levelTitle * 15 + levelStar * 2 + 5;
+        maxRichness = levelTitle == 0 ? (5) : ((levelTitle - 1) * 20 + levelStar * 4 + 5);
     }
 
     /// <summary>
@@ -215,9 +215,8 @@ public class InnAttributesBean
     public void LimitAestheticsMax()
     {
         //限制上限
-        GetInnLevel(out int levelTitle, out int levelStar);
-        float maxAesthetics = levelTitle * 300 + levelStar * 50 + 100;
-        if (this.aesthetics > maxAesthetics)
+        GetAesthetics(out float maxAesthetics, out float aesthetics);
+        if (aesthetics > maxAesthetics)
         {
             this.aesthetics = maxAesthetics;
         }
@@ -229,11 +228,10 @@ public class InnAttributesBean
     public void LimitRichnessMax()
     {
         //限制上限
-        GetInnLevel(out int levelTitle, out int levelStar);
-        int maxRichNess = levelTitle * 15 + levelStar * 2 + 5;
-        if (this.richness > maxRichNess)
+        GetRichness(out int maxRichness, out int richness);
+        if(richness> maxRichness)
         {
-            this.richness = maxRichNess;
+            this.richness = maxRichness;
         }
     }
 

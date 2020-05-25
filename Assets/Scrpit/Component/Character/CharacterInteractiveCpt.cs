@@ -7,6 +7,7 @@ public class CharacterInteractiveCpt : BaseMonoBehaviour
 {
     public GameObject interactiveObj;
     public TextMesh tvContent;
+    public TextMesh tvContentShadow;
     public SpriteRenderer srIcon;
 
     /// <summary>
@@ -17,6 +18,7 @@ public class CharacterInteractiveCpt : BaseMonoBehaviour
     {
         interactiveObj.SetActive(true);
         tvContent.text = content;
+        tvContentShadow.text = content;
         AnimForInteractive();
     }
 

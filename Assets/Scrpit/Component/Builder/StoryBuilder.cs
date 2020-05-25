@@ -40,7 +40,7 @@ public class StoryBuilder : BaseMonoBehaviour, StoryInfoManager.CallBack
 
         eventHandler = Find<EventHandler>(ImportantTypeEnum.EventHandler);
         controlHandler = Find<ControlHandler>(ImportantTypeEnum.ControlHandler);
-        audioHandler = Find<AudioHandler>( ImportantTypeEnum.AudioHandler);
+        audioHandler = Find<AudioHandler>(ImportantTypeEnum.AudioHandler);
 
         listStoryDetails = new List<StoryInfoDetailsBean>();
         listNpcObj = new List<GameObject>();
@@ -121,11 +121,20 @@ public class StoryBuilder : BaseMonoBehaviour, StoryInfoManager.CallBack
                     break;
                 case StoryInfoDetailsBean.StoryInfoDetailsTypeEnum.NpcDestory:
                     //删除角色
-                    int[] npcNum= StringUtil.SplitBySubstringForArrayInt(itemData.npc_destroy,',');
+                    int[] npcNum = StringUtil.SplitBySubstringForArrayInt(itemData.npc_destroy, ',');
+                    float destroyTime = itemData.wait_time;
                     foreach (int itemNpcNum in npcNum)
                     {
                         objNpc = GetNpcByNpcNum(itemNpcNum);
-                        Destroy(objNpc);
+                        if (destroyTime == 0)
+                        {
+                            Destroy(objNpc);
+                        }
+                        else
+                        {
+                            //延迟删除
+                            StartCoroutine(CoroutineForDelayDestoryNpc(destroyTime, objNpc));
+                        }
                     }
                     break;
                 case StoryInfoDetailsBean.StoryInfoDetailsTypeEnum.Expression:
@@ -294,6 +303,20 @@ public class StoryBuilder : BaseMonoBehaviour, StoryInfoManager.CallBack
             MergeDataForGameCooking(listOrderData, mGameCookingData);
         }
         CreateStoryScene(listOrderData);
+
     }
     #endregion
+
+    /// <summary>
+    /// 协程 延迟删除NPC
+    /// </summary>
+    /// <param name="waitTime"></param>
+    /// <param name="objNpc"></param>
+    /// <returns></returns>
+    protected IEnumerator CoroutineForDelayDestoryNpc(float waitTime, GameObject objNpc)
+    {
+        yield return new WaitForSeconds(waitTime);
+        if (objNpc != null)
+            Destroy(objNpc);
+    }
 }

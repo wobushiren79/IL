@@ -466,7 +466,8 @@ public class StoryCreateWindowsEditor : EditorWindow
             {
                 GUILayout.Label("删除角色(num,num)：", GUILayout.Width(120), GUILayout.Height(20));
                 itemData.npc_destroy = EditorGUILayout.TextArea(itemData.npc_destroy, GUILayout.Width(200), GUILayout.Height(20));
-
+                GUILayout.Label("延迟删除时间s：", GUILayout.Width(120), GUILayout.Height(20));
+                itemData.wait_time= EditorUI.GUIEditorText(itemData.wait_time);
             }
             else if (itemData.type == (int)StoryInfoDetailsBean.StoryInfoDetailsTypeEnum.AutoNext)
             {

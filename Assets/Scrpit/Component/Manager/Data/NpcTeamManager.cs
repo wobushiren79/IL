@@ -21,7 +21,7 @@ public class NpcTeamManager : BaseManager, INpcTeamView
     /// </summary>
     /// <param name="gameData"></param>
     /// <returns></returns>
-    public NpcTeamBean GetRandomTeamMeetConditionByType(NpcTeamTypeEnum npcTeamType, GameDataBean gameData)
+    public List<NpcTeamBean> GetRandomTeamMeetConditionByType(NpcTeamTypeEnum npcTeamType, GameDataBean gameData)
     {
         List<NpcTeamBean> listData =null;
         switch (npcTeamType)
@@ -43,7 +43,7 @@ public class NpcTeamManager : BaseManager, INpcTeamView
         if (listData == null)
             return null;
         List<NpcTeamBean> listMeetData = GetMeetConditionTeam(gameData, listData);
-        return RandomUtil.GetRandomDataByList(listMeetData);
+        return listMeetData;
     }
 
     /// <summary>
@@ -119,7 +119,7 @@ public class NpcTeamManager : BaseManager, INpcTeamView
         List<NpcTeamBean> listMeet = new List<NpcTeamBean>();
         foreach (NpcTeamBean itemTeam in listData)
         {
-            if (CheckUtil.StringIsNull(itemTeam.condition)&& ShowConditionTools.CheckIsMeetAllCondition(gameData, itemTeam.condition))
+            if (CheckUtil.StringIsNull(itemTeam.condition) || ShowConditionTools.CheckIsMeetAllCondition(gameData, itemTeam.condition))
             {
                 listMeet.Add(itemTeam);
             }
