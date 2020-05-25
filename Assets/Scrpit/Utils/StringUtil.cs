@@ -88,7 +88,7 @@ public class StringUtil
     /// <returns></returns>
     public static long[] SplitBySubstringForArrayLong(string data, char substring)
     {
-        if (data == null)
+        if (CheckUtil.StringIsNull(data))
             return new long[0];
         string[] splitData = data.Split(substring);
         long[] listData = TypeConversionUtil.ArrayStrToArrayLong(splitData);

@@ -35,7 +35,7 @@ public class UserAchievementBean
     public long numberForFriendsCustomer;
     //团队顾客数据
     public List<UserCustomerBean> listForTeamCustomerData = new List<UserCustomerBean>();
-
+    public List<UserCustomerBean> listForFriendCustomerData = new List<UserCustomerBean>();
     //评价
     public long praiseForExcited;
     public long praiseForHappy;
@@ -43,7 +43,35 @@ public class UserAchievementBean
     public long praiseForOrdinary;
     public long praiseForDisappointed;
     public long praiseForAnger;
-    
+
+    /// <summary>
+    /// 获取团队顾客数据
+    /// </summary>
+    /// <param name="teamId"></param>
+    /// <returns></returns>
+    public UserCustomerBean GetCustomerData(CustomerTypeEnum customerType, string teamId)
+    {
+        List<UserCustomerBean> listData = null;
+        switch (customerType)
+        {
+            case CustomerTypeEnum.Friend:
+                listData = listForFriendCustomerData;
+                break;
+            case CustomerTypeEnum.Team:
+                listData = listForTeamCustomerData;
+                break;
+        }
+        if (listData == null)
+            return null;
+        foreach (UserCustomerBean itemData in listData)
+        {
+            if (teamId.Equals(itemData.id))
+            {
+                return itemData;
+            }
+        }
+        return null;
+    }
 
     /// <summary>
     /// 是否包含该成就
@@ -60,26 +88,26 @@ public class UserAchievementBean
     /// </summary>
     /// <param name="teamId"></param>
     /// <returns></returns>
-    public bool CheckHasTeamCustomer(long teamId)
+    public bool CheckHasTeamCustomer(string teamId)
     {
         if (listForTeamCustomerData == null)
             listForTeamCustomerData = new List<UserCustomerBean>();
         foreach (UserCustomerBean itemCustomer in listForTeamCustomerData)
         {
-            if ( teamId== itemCustomer.id)
+            if (teamId.Equals(itemCustomer.id))
             {
                 return true;
             }
         }
         return false;
     }
-    public bool CheckHasTeamCustomerLoveMenu(long teamId,long menuId)
+    public bool CheckHasTeamCustomerLoveMenu(long teamId, long menuId)
     {
         if (listForTeamCustomerData == null)
             listForTeamCustomerData = new List<UserCustomerBean>();
         foreach (UserCustomerBean itemCustomer in listForTeamCustomerData)
         {
-            if (teamId == itemCustomer.id&& itemCustomer.CheckHasMenu(menuId))
+            if (itemCustomer.id.Equals(teamId + "") && itemCustomer.CheckHasMenu(menuId))
             {
                 return true;
             }
@@ -102,7 +130,7 @@ public class UserAchievementBean
     /// </summary>
     /// <param name="praiseType"></param>
     /// <param name="number"></param>
-    public void AddPraise(PraiseTypeEnum praiseType,int number)
+    public void AddPraise(PraiseTypeEnum praiseType, int number)
     {
         switch (praiseType)
         {
@@ -130,35 +158,29 @@ public class UserAchievementBean
     /// <summary>
     /// 记录顾客
     /// </summary>
-    public void AddNumberForCustomer(CustomerTypeEnum customerType,long teamId, int number)
+    public void AddNumberForCustomer(CustomerTypeEnum customerType, string id, int number)
     {
+        List<UserCustomerBean> listData = null;
         switch (customerType)
         {
             case CustomerTypeEnum.Normal:
                 numberForNormalCustomer += number;
                 break;
             case CustomerTypeEnum.Team:
-                AddNumberForTeamCustomer(teamId, number);
+                numberForTeamCustomer += number;
+                listData = listForTeamCustomerData;
                 break;
             case CustomerTypeEnum.Friend:
                 numberForFriendsCustomer += number;
+                listData = listForFriendCustomerData;
                 break;
         }
-    }
-    public void AddNumberForCustomer(CustomerTypeEnum customerType, int number)
-    {
-        AddNumberForCustomer(customerType, 0, number);
-    }
-
-    public void AddNumberForTeamCustomer(long teamId, int number)
-    {
-        numberForTeamCustomer += number;
-        if (listForTeamCustomerData == null)
-            listForTeamCustomerData = new List<UserCustomerBean>();
+        if (listData == null)
+            return;
         bool hasData = false;
-        foreach (UserCustomerBean itemCustomerData in listForTeamCustomerData)
+        foreach (UserCustomerBean itemCustomerData in listData)
         {
-            if (itemCustomerData.id == teamId)
+            if (itemCustomerData.id.Equals(id))
             {
                 itemCustomerData.AddNumber(number);
                 hasData = true;
@@ -167,16 +189,14 @@ public class UserAchievementBean
         }
         if (!hasData)
         {
-            UserCustomerBean userCustomerData = new UserCustomerBean
-            {
-                id = teamId
-            };
+            UserCustomerBean userCustomerData = new UserCustomerBean();
+            userCustomerData.id = id;
             userCustomerData.AddNumber(number);
-            listForTeamCustomerData.Add(userCustomerData);
+            listData.Add(userCustomerData);
         }
     }
 
-    public void AddMenuForCustomer(CustomerTypeEnum customerType, long teamId,long menuId)
+    public void AddMenuForCustomer(CustomerTypeEnum customerType, string id, long menuId)
     {
         switch (customerType)
         {
@@ -185,7 +205,7 @@ public class UserAchievementBean
             case CustomerTypeEnum.Team:
                 foreach (UserCustomerBean itemCustomerData in listForTeamCustomerData)
                 {
-                    if (itemCustomerData.id == teamId)
+                    if (itemCustomerData.id.Equals(id))
                     {
                         itemCustomerData.AddMenu(menuId);
                         break;
@@ -213,7 +233,7 @@ public class UserAchievementBean
     /// <returns></returns>
     public long GetNumberForCustomerByType(CustomerTypeEnum customerType)
     {
-        switch(customerType)
+        switch (customerType)
         {
             case CustomerTypeEnum.Normal:
                 return numberForNormalCustomer;

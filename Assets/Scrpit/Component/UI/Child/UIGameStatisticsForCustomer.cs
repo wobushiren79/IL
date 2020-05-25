@@ -47,22 +47,29 @@ public class UIGameStatisticsForCustomer : BaseUIChildComponent<UIGameStatistics
         if (tvTeamCustomerNumber != null)
             tvTeamCustomerNumber.text = GameCommonInfo.GetUITextById(323) + " " + userAchievement.GetNumberForCustomerByType(CustomerTypeEnum.Team) + GameCommonInfo.GetUITextById(82);
         //查询所有团队
-        List<NpcTeamBean> listNpcTeamData =   npcTeamManager.GetCustomerTeam();
+        List<NpcTeamBean> listNpcTeamData = npcTeamManager.GetCustomerTeam();
 
         foreach (NpcTeamBean itemNpcTeamData in listNpcTeamData)
         {
             GameObject objItem = Instantiate(objTeamCustomerContainer, objItemCustomerModel);
             ItemGameStatisticsForCustomerCpt itemCustomer = objItem.GetComponent<ItemGameStatisticsForCustomerCpt>();
             long[] teamLeaderIds = itemNpcTeamData.GetTeamLeaderId();
-            CharacterBean teamLeaderData= npcInfoManager.GetCharacterDataById(teamLeaderIds[0]);
+            CharacterBean teamLeaderData = npcInfoManager.GetCharacterDataById(teamLeaderIds[0]);
+            UserCustomerBean userCustomerData = userAchievement.GetCustomerData(CustomerTypeEnum.Team, itemNpcTeamData.id + "");
             //检测是否解锁该顾客团队
-            if (userAchievement.CheckHasTeamCustomer(itemNpcTeamData.id))
+            if (userAchievement.CheckHasTeamCustomer(itemNpcTeamData.id + ""))
             {
-                itemCustomer.SetData(teamLeaderData, true, itemNpcTeamData.name, itemNpcTeamData.id);
+                long number = 0;
+                if (userCustomerData != null)
+                    number = userCustomerData.number;
+                itemCustomer.SetData(teamLeaderData, true, itemNpcTeamData.name, number, itemNpcTeamData.id + "");
             }
             else
             {
-                itemCustomer.SetData(teamLeaderData, false, itemNpcTeamData.name, itemNpcTeamData.id);
+                long number = 0;
+                if (userCustomerData != null)
+                    number = userCustomerData.number;
+                itemCustomer.SetData(teamLeaderData, false, itemNpcTeamData.name, number, itemNpcTeamData.id + "");
             }
         }
     }
@@ -91,7 +98,13 @@ public class UIGameStatisticsForCustomer : BaseUIChildComponent<UIGameStatistics
             {
                 GameObject objItem = Instantiate(objFriendCustomerContainer, objItemCustomerModel);
                 ItemGameStatisticsForCustomerCpt itemCustomer = objItem.GetComponent<ItemGameStatisticsForCustomerCpt>();
-                itemCustomer.SetData(itemCharacterData,true,null);
+                UserCustomerBean userCustomerData = userAchievement.GetCustomerData(CustomerTypeEnum.Friend, itemCharacterData.baseInfo.characterId + "");
+                long number = 0;
+                if (userCustomerData != null)
+                {
+                    number = userCustomerData.number;
+                }
+                itemCustomer.SetData(itemCharacterData, true, null, number);
             }
         }
     }

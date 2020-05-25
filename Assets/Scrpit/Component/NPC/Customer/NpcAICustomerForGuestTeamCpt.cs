@@ -108,7 +108,11 @@ public class NpcAICustomerForGuestTeamCpt : NpcAICustomerCpt
         SetCharacterFace(orderForCustomer.table.GetUserFace());
         //点餐
         //判断是否有团队喜欢的菜
-        List<long> loveMenus = teamData.GetLoveMenus();
+        List<long> loveMenus = new List<long>() ;
+        if (teamData != null)
+        {
+            loveMenus = teamData.GetLoveMenus();
+        }
         //如果没有团队专有喜欢的菜，没有则随机点
         if (loveMenus.Count == 0)
         {

@@ -3,9 +3,9 @@ using UnityEditor;
 
 public class InfoLoveMenusPopupButton : PopupButtonView<InfoLoveMenusPopupShow>
 {
-    public long idForTeamCustomer;
+    public string idForTeamCustomer;
 
-    public void SetDataForTeamCustomer(long id)
+    public void SetDataForTeamCustomer(string id)
     {
         this.idForTeamCustomer = id;
     }
@@ -16,7 +16,7 @@ public class InfoLoveMenusPopupButton : PopupButtonView<InfoLoveMenusPopupShow>
 
     public override void OpenPopup()
     {
-        popupShow.SetDataForTeamCustomer(idForTeamCustomer);
+        popupShow.SetDataForTeamCustomer(long.Parse(idForTeamCustomer));
     }
 
 }

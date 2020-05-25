@@ -1,11 +1,13 @@
 ﻿using UnityEngine;
 using UnityEditor;
 using System.Collections.Generic;
+using System;
 
+[Serializable]
 public class UserCustomerBean
 {
     //ID
-    public long id;
+    public string id;
     //接客数量
     public long number;
     //解锁的喜爱菜单

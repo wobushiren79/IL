@@ -6,16 +6,17 @@ public class ItemGameStatisticsForCustomerCpt : ItemBaseTextCpt
     public InfoLoveMenusPopupButton infoLoveMenusPopup;
     //是否解锁
     protected bool isUnLock;
-    public void SetData(CharacterBean characterData, bool isUnLock, string name)
+
+    public void SetData(CharacterBean characterData, bool isUnLock, string name, long number)
     {
-        SetData(characterData, isUnLock, name, 0);
+        SetData(characterData, isUnLock, name, number, "");
     }
 
-    public void SetData(CharacterBean characterData, bool isUnLock, string name,long teamId)
+    public void SetData(CharacterBean characterData, bool isUnLock, string name, long number, string id)
     {
         this.isUnLock = isUnLock;
         SetCharacterUI(characterData, isUnLock);
-
+        SetNumber(isUnLock, number);
         if (isUnLock)
         {
             if (CheckUtil.StringIsNull(name))
@@ -30,16 +31,29 @@ public class ItemGameStatisticsForCustomerCpt : ItemBaseTextCpt
         }
         else
         {
-            SetName("???",Color.gray);
+            SetName("???", Color.gray);
             ivIcon.gameObject.SetActive(true);
         }
-        if (teamId !=0 )
+        if (!CheckUtil.StringIsNull(id))
         {
-            infoLoveMenusPopup.SetDataForTeamCustomer(teamId);
+            infoLoveMenusPopup.SetDataForTeamCustomer(id);
         }
         else
         {
             infoLoveMenusPopup.SetActive(false);
+        }
+    }
+
+    public void SetNumber(bool isUnLock, long number)
+    {
+        if (isUnLock)
+        {
+            SetContent(number + "");
+        }
+        else
+        {
+            SetContent("???");
+            tvContent.color =Color.gray;
         }
     }
 

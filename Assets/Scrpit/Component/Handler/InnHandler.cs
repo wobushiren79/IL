@@ -232,13 +232,13 @@ public class InnHandler : BaseMonoBehaviour, IBaseObserver
     }
     public Vector3 GetCloseRandomEntrancePosition(Vector3 position)
     {
-        List<BuildDoorCpt> listDoor=  innEntranceHandler.GetEntranceList();
+        List<BuildDoorCpt> listDoor = innEntranceHandler.GetEntranceList();
         float dis = 0;
         BuildDoorCpt targetDoor = null;
         foreach (BuildDoorCpt buildDoor in listDoor)
         {
-            float disTemp = Vector3.Distance(position,buildDoor.transform.position);
-            if(dis == 0 || disTemp < dis)
+            float disTemp = Vector3.Distance(position, buildDoor.transform.position);
+            if (dis == 0 || disTemp < dis)
             {
                 dis = disTemp;
                 targetDoor = buildDoor;
@@ -268,7 +268,7 @@ public class InnHandler : BaseMonoBehaviour, IBaseObserver
     /// <returns></returns>
     public OrderForCustomer CreateOrder(NpcAICustomerCpt npc)
     {
-        OrderForCustomer order = new OrderForCustomer(npc.customerType,npc);
+        OrderForCustomer order = new OrderForCustomer(npc.customerType, npc);
         npc.SetOrderForCustomer(order);
         listOrder.Add(order);
         return order;
@@ -537,16 +537,22 @@ public class InnHandler : BaseMonoBehaviour, IBaseObserver
     public void RecordCustomer(OrderForCustomer order)
     {
         //成就记录
-        UserAchievementBean userAchievement = gameDataManager.gameData.GetAchievementData();  
+        UserAchievementBean userAchievement = gameDataManager.gameData.GetAchievementData();
         //如果是团队需要记录团队ID
-        if(order.customerType == CustomerTypeEnum.Team)
+        if (order.customerType == CustomerTypeEnum.Team)
         {
-            NpcTeamBean teamData= ((NpcAICustomerForGuestTeamCpt)order.customer).teamData;
-            userAchievement.AddNumberForCustomer(order.customerType, teamData.id, 1);
+            NpcTeamBean teamData = ((NpcAICustomerForGuestTeamCpt)order.customer).teamData;
+            userAchievement.AddNumberForCustomer(order.customerType, teamData.id + "", 1);
+        }
+        else if (order.customerType == CustomerTypeEnum.Friend)
+        {
+            CharacterBean characterData = ((NpcAICostomerForFriendCpt)order.customer).characterData;
+            userAchievement.AddNumberForCustomer(order.customerType, characterData.baseInfo.characterId, 1);
         }
         else
         {
-            userAchievement.AddNumberForCustomer(order.customerType, 1);
+            CharacterBean characterData = order.customer.characterData;
+            userAchievement.AddNumberForCustomer(order.customerType, characterData.baseInfo.characterId, 1);
         }
         //流水记录
         innRecord.AddCutomerNumber(order.customerType, 1);
@@ -563,7 +569,12 @@ public class InnHandler : BaseMonoBehaviour, IBaseObserver
         if (order.customerType == CustomerTypeEnum.Team)
         {
             NpcTeamBean teamData = ((NpcAICustomerForGuestTeamCpt)order.customer).teamData;
-            userAchievement.AddMenuForCustomer(order.customerType, teamData.id, menuId);
+            userAchievement.AddMenuForCustomer(order.customerType, teamData.id + "", menuId);
+        }
+        else if (order.customerType == CustomerTypeEnum.Friend)
+        {
+            CharacterBean characterData = ((NpcAICostomerForFriendCpt)order.customer).characterData;
+            userAchievement.AddMenuForCustomer(order.customerType, characterData.baseInfo.characterId, menuId);
         }
     }
 
