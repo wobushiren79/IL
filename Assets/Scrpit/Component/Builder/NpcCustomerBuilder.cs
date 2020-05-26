@@ -9,9 +9,11 @@ public class NpcCustomerBuilder : NpcNormalBuilder, IBaseObserver
     public GameObject objGuestTeamModel;
 
     protected List<NpcTeamBean> listTeamCustomer=new List<NpcTeamBean>();
-
+    protected float buildTeamGustomerRate = 0;
     private void Start()
     {
+        InnAttributesBean innAttributes = gameDataManager.gameData.GetInnAttributesData();
+        buildTeamGustomerRate =  innAttributes.CalculationTeamCustomerBuildRate();
         buildMaxNumber = 500;
         gameTimeHandler.AddObserver(this);
         StartBuildCustomer();
@@ -62,7 +64,7 @@ public class NpcCustomerBuilder : NpcNormalBuilder, IBaseObserver
             BuildCustomer();
             //有一定概率创建团队
             float buildTeamRate = Random.Range(0, 1f);
-            if (buildTeamRate <= 0.05f)
+            if (buildTeamRate <= buildTeamGustomerRate)
             {
                 BuildGuestTeam();
             }

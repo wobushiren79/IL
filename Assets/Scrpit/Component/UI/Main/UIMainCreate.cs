@@ -126,13 +126,19 @@ public class UIMainCreate : UIGameComponent,
         listSelectMouth = TypeConversionUtil.IconBeanDictionaryToList(uiGameManager.characterBodyManager.listIconBodyMouth);
         ChangeSelectPosition(selectMouth, 0);
         //初始化帽子
-        listSelectHat = uiGameManager.gameItemsManager.GetItemsById(new long[] { 100001, 100003 });
+        GameCommonInfo.baseDataController.GetBaseData(BaseDataTypeEnum.HatForLevel0, out string hatListStr);
+        long[] listHat = StringUtil.SplitBySubstringForArrayLong(hatListStr, ',');
+        listSelectHat = uiGameManager.gameItemsManager.GetItemsById(listHat);
         listSelectHat.Insert(0, new ItemsInfoBean());
         //初始化衣服
-        listSelectClothes = uiGameManager.gameItemsManager.GetItemsById(new long[] { 200001, 200003, 210039, 210040  });
+        GameCommonInfo.baseDataController.GetBaseData(BaseDataTypeEnum.ClothesForLevel0, out string clothesListStr);
+        long[] listClothes= StringUtil.SplitBySubstringForArrayLong(clothesListStr, ',');
+        listSelectClothes = uiGameManager.gameItemsManager.GetItemsById(listClothes);
         listSelectClothes.Insert(0, new ItemsInfoBean());
         //初始化鞋子
-        listSelectShoes = uiGameManager.gameItemsManager.GetItemsById(new long[] { 300001, 310039, 310040 });
+        GameCommonInfo.baseDataController.GetBaseData(BaseDataTypeEnum.ShoesForLevel0, out string shoesListStr);
+        long[] listShoes = StringUtil.SplitBySubstringForArrayLong(shoesListStr, ',');
+        listSelectShoes = uiGameManager.gameItemsManager.GetItemsById(listShoes);
         listSelectShoes.Insert(0, new ItemsInfoBean());
     }
 
@@ -266,7 +272,7 @@ public class UIMainCreate : UIGameComponent,
         gameData.userCharacter.baseInfo.name = etUserName.text;
         gameData.userCharacter.body = characterBodyCpt.GetCharacterBodyData();
         gameData.userCharacter.equips = characterDressCpt.GetCharacterEquipData();
-        attributesChange.GetAttributesPoints(out int cook,out int speed,out int account,out int charm, out int force,out int lucky);
+        attributesChange.GetAttributesPoints(out int cook, out int speed, out int account, out int charm, out int force, out int lucky);
         gameData.userCharacter.attributes.cook = cook;
         gameData.userCharacter.attributes.speed = speed;
         gameData.userCharacter.attributes.account = account;

@@ -243,19 +243,49 @@ public class InnAttributesBean
     {
         float rate = 0;
         //美观所占比重
-        float rateAesthetics = aesthetics * 0.001f;
+        GetAesthetics(out float maxAesthetics,out float aesthetics);
+        float rateAesthetics = aesthetics / maxAesthetics;
         if (rateAesthetics > 1)
             rateAesthetics = 1;
         //点赞率所占比重
-        float ratePraise = praise / (float)1000;
+        GetPraise(out int maxPraise,out int praise);
+        float ratePraise = (float)praise / maxPraise;
         if (ratePraise > 1)
             ratePraise = 1;
         //菜品丰富度所占比重
-        float rateRichness = (richness * 0.02f);
+        GetRichness(out int maxRichness,out int richness);
+        float rateRichness = richness / maxRichness;
         if (rateRichness > 1)
             rateRichness = 1;
         rate = 0.32f * rateRichness + 0.32f * ratePraise + 0.32f * rateAesthetics + 0.04f;
         rate = rate / 2f;
         return rate;
+    }
+
+    /// <summary>
+    /// 计算生成团队顾客概率
+    /// </summary>
+    /// <returns></returns>
+    public float CalculationTeamCustomerBuildRate()
+    {
+        float rate = 0;
+        //美观所占比重
+        GetAesthetics(out float maxAesthetics, out float aesthetics);
+        float rateAesthetics = aesthetics / maxAesthetics;
+        if (rateAesthetics > 1)
+            rateAesthetics = 1;
+        //点赞率所占比重
+        GetPraise(out int maxPraise, out int praise);
+        float ratePraise = (float)praise / maxPraise;
+        if (ratePraise > 1)
+            ratePraise = 1;
+        //菜品丰富度所占比重
+        GetRichness(out int maxRichness, out int richness);
+        float rateRichness = richness / maxRichness;
+        if (rateRichness > 1)
+            rateRichness = 1;
+        rate = 0.32f * rateRichness + 0.32f * ratePraise + 0.32f * rateAesthetics + 0.04f;
+        rate = rate / 4f;
+        return 0.1f;
     }
 }

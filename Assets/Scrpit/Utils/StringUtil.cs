@@ -96,6 +96,22 @@ public class StringUtil
     }
 
     /// <summary>
+    /// 拆分并随机获取一个数值
+    /// </summary>
+    /// <param name="data"></param>
+    /// <param name="substring"></param>
+    /// <returns></returns>
+    public static long SplitAndRandomForLong(string data, char substring)
+    {
+        long[] arrayData= SplitBySubstringForArrayLong(data, substring);
+        if (CheckUtil.ArrayIsNull(arrayData))
+        {
+            return 0;
+        }
+        return RandomUtil.GetRandomDataByArray(arrayData);
+    }
+
+    /// <summary>
     /// string通过指定字符拆分成数组
     /// </summary>
     /// <param name="data"></param>

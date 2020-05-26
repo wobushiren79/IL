@@ -33,14 +33,9 @@ public class CharacterBean
         characterData.body.CreateRandomBody(characterBodyManager);
 
         //根据性别装备服装
-        if (characterData.body.sex == 1)
-        {
-            characterData.equips.clothesId = 210039;
-        }
-        else if (characterData.body.sex == 2)
-        {
-            characterData.equips.clothesId = 210040;
-        }
+        GetRandomDressByLevel(0, out long randomHat, out long randomClothes, out long randomShoes);
+        characterData.equips.clothesId = randomClothes;
+        characterData.equips.shoesId = randomShoes;
         //生成随机能力
         characterData.attributes.CreateRandomData(
             baseAttributes * 10 - 50, baseAttributes * 10 + 50,
@@ -80,15 +75,9 @@ public class CharacterBean
         //随机身体数据
         characterData.body.CreateRandomBody(characterBodyManager);
         //根据性别装备服装
-        if (characterData.body.sex == 1)
-        {
-            characterData.equips.clothesId = 210039;
-        }
-        else if (characterData.body.sex == 2)
-        {
-            characterData.equips.clothesId = 210040;
-        }
-        characterData.equips.shoesId = 310039;
+        GetRandomDressByLevel(0, out long randomHat, out long randomClothes, out long randomShoes);
+        characterData.equips.clothesId = randomClothes;
+        characterData.equips.shoesId = randomShoes;
         //根据能力生成工资
         characterData.attributes.CreatePriceByAttributes(out long priceL, out long priceM, out long priceS);
         characterData.baseInfo.priceL = priceL;
@@ -271,6 +260,43 @@ public class CharacterBean
         };
     }
 
+    /// <summary>
+    /// 通过不同的等级随机获取衣服
+    /// </summary>
+    /// <param name="level"></param>
+    public static void GetRandomDressByLevel(int level, out long randomHat, out long randomClothes, out long randomShoes)
+    {
+        string randomHatListStr = "";
+        string randomClothesListStr = "";
+        string randomShoesListStr = "";
+        switch (level)
+        {
+            case 1:
+                GameCommonInfo.baseDataController.GetBaseData(BaseDataTypeEnum.HatForLevel1, out randomHatListStr);
+                GameCommonInfo.baseDataController.GetBaseData(BaseDataTypeEnum.ClothesForLevel1, out randomClothesListStr);
+                GameCommonInfo.baseDataController.GetBaseData(BaseDataTypeEnum.ShoesForLevel1, out randomShoesListStr);
+                break;
+            case 2:
+                GameCommonInfo.baseDataController.GetBaseData(BaseDataTypeEnum.HatForLevel2, out randomHatListStr);
+                GameCommonInfo.baseDataController.GetBaseData(BaseDataTypeEnum.ClothesForLevel2, out randomClothesListStr);
+                GameCommonInfo.baseDataController.GetBaseData(BaseDataTypeEnum.ShoesForLevel2, out randomShoesListStr);
+                break;
+            case 3:
+                GameCommonInfo.baseDataController.GetBaseData(BaseDataTypeEnum.HatForLevel3, out randomHatListStr);
+                GameCommonInfo.baseDataController.GetBaseData(BaseDataTypeEnum.ClothesForLevel3, out randomClothesListStr);
+                GameCommonInfo.baseDataController.GetBaseData(BaseDataTypeEnum.ShoesForLevel3, out randomShoesListStr);
+                break;
+            default:
+                GameCommonInfo.baseDataController.GetBaseData(BaseDataTypeEnum.HatForLevel0, out randomHatListStr);
+                GameCommonInfo.baseDataController.GetBaseData(BaseDataTypeEnum.ClothesForLevel0, out randomClothesListStr);
+                GameCommonInfo.baseDataController.GetBaseData(BaseDataTypeEnum.ShoesForLevel0, out randomShoesListStr);
+                break;
+        }
+        randomHat = StringUtil.SplitAndRandomForLong(randomHatListStr, ',');
+        randomClothes = StringUtil.SplitAndRandomForLong(randomClothesListStr, ',');
+        randomShoes = StringUtil.SplitAndRandomForLong(randomShoesListStr, ',');
+    }
+
     public void GetAttributes(GameItemsManager gameItemsManager, out CharacterAttributesBean totalAttributes)
     {
         GetAttributes(gameItemsManager, out totalAttributes, out CharacterAttributesBean selfAttributes, out CharacterAttributesBean equipAttributes);
@@ -282,7 +308,8 @@ public class CharacterBean
     /// <param name="gameItemsManager"></param>
     /// <param name="gameDataManager"></param>
     /// <returns></returns>
-    public bool CalculationWorkerVacation(GameItemsManager gameItemsManager, GameDataManager gameDataManager) {
+    public bool CalculationWorkerVacation(GameItemsManager gameItemsManager, GameDataManager gameDataManager)
+    {
         //获取数据
         GetAttributes(gameItemsManager,
         out CharacterAttributesBean totalAttributes, out CharacterAttributesBean selfAttributes, out CharacterAttributesBean equipAttributes);
@@ -530,7 +557,7 @@ public class CharacterBean
     {
         GetAttributes(gameItemsManager,
         out CharacterAttributesBean totalAttributes, out CharacterAttributesBean selfAttributes, out CharacterAttributesBean equipAttributes);
-        return totalAttributes.force*10;
+        return totalAttributes.force * 10;
     }
 
     /// <summary>
