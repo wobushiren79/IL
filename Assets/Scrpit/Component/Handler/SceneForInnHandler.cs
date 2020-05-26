@@ -37,7 +37,7 @@ public class SceneForInnHandler : BaseHandler, IBaseObserver
                     InnBuildBean innBuildData = gameDataManager.gameData.GetInnBuildData();
                     sceneInnManager.InitScene(innBuildData.innWidth, innBuildData.innHeight);
                 }
-                StartCoroutine(CoroutineForBuildNavMesh());
+                //StartCoroutine(CoroutineForBuildNavMesh());
             }
         }
     }

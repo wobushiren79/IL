@@ -7,15 +7,12 @@ using UnityEngine.SceneManagement;
 public class SceneGameInnInit : BaseSceneInit, IBaseObserver, DialogView.IDialogCallBack
 {
     protected SceneInnManager sceneInnManager;
-    public InnBuildManager innBuildManager;
 
     protected InnFloorBuilder innFloorBuilder;
     protected InnWallBuilder innWallBuilder;
     protected InnFurnitureBuilder innFurnitureBuilder;
 
     public InnHandler innHandler;
-
-
     public NavMeshSurface navMesh;
 
     public NpcCustomerBuilder npcCustomerBuilder;
@@ -32,21 +29,7 @@ public class SceneGameInnInit : BaseSceneInit, IBaseObserver, DialogView.IDialog
     public override void Start()
     {
         base.Start();
-        //获取相关数据
-        if (gameItemsManager != null)
-            gameItemsManager.itemsInfoController.GetAllItemsInfo();
-        if (npcInfoManager != null)
-            npcInfoManager.npcInfoController.GetAllNpcInfo();
-        if (npcTeamManager != null)
-        {
-            npcTeamManager.npcTeamController.GetNpcTeamByType(NpcTeamTypeEnum.Customer);
-            npcTeamManager.npcTeamController.GetNpcTeamByType(NpcTeamTypeEnum.Friend);
-            npcTeamManager.npcTeamController.GetNpcTeamByType(NpcTeamTypeEnum.Rascal);
-            npcTeamManager.npcTeamController.GetNpcTeamByType(NpcTeamTypeEnum.Sundry);
-        }
 
-        if (innBuildManager != null)
-            innBuildManager.buildDataController.GetAllBuildItemsData();
         //故事数据
         if (storyInfoManager != null)
             storyInfoManager.storyInfoController.GetStoryInfoByScene(ScenesEnum.GameInnScene);

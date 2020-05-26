@@ -3,7 +3,7 @@ using UnityEditor;
 
 public class BaseSceneInit : BaseMonoBehaviour
 {
-
+    protected InnBuildManager innBuildManager;
     protected UIGameManager uiGameManager;
     protected GameDataManager gameDataManager;
     protected GameItemsManager gameItemsManager;
@@ -31,6 +31,7 @@ public class BaseSceneInit : BaseMonoBehaviour
         controlHandler = Find<ControlHandler>(ImportantTypeEnum.ControlHandler);
         audioHandler = Find<AudioHandler>(ImportantTypeEnum.AudioHandler);
         gameTimeHandler = Find<GameTimeHandler>(ImportantTypeEnum.TimeHandler);
+        innBuildManager = Find<InnBuildManager>(ImportantTypeEnum.BuildManager);
     }
 
     public virtual void Start()
@@ -46,6 +47,26 @@ public class BaseSceneInit : BaseMonoBehaviour
                 gameDataManager.gameData = GameCommonInfo.GameData;
             }
         }
+        //获取相关数据
+        if (gameItemsManager != null)
+        {
+            gameItemsManager.itemsInfoController.GetAllItemsInfo();
+        }  
+        if (npcInfoManager != null)
+        {
+            npcInfoManager.npcInfoController.GetAllNpcInfo();
+        }    
+        if (npcTeamManager != null)
+        {
+            npcTeamManager.npcTeamController.GetNpcTeamByType(NpcTeamTypeEnum.Customer);
+            npcTeamManager.npcTeamController.GetNpcTeamByType(NpcTeamTypeEnum.Friend);
+            npcTeamManager.npcTeamController.GetNpcTeamByType(NpcTeamTypeEnum.Rascal);
+            npcTeamManager.npcTeamController.GetNpcTeamByType(NpcTeamTypeEnum.Sundry);
+        }
+        if (innBuildManager != null)
+        {
+            innBuildManager.buildDataController.GetAllBuildItemsData();
+        }  
     }
 
 }

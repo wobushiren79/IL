@@ -14,6 +14,9 @@ public class SceneGameMountainInit : BaseNormalSceneInit
     public override void Start()
     {
         base.Start();
+        //故事数据
+        if (storyInfoManager != null)
+            storyInfoManager.storyInfoController.GetStoryInfoByScene(ScenesEnum.GameMountainScene);
     }
 
 

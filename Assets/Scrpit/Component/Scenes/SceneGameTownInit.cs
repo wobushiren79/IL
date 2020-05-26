@@ -7,7 +7,6 @@ public class SceneGameTownInit : BaseNormalSceneInit
     public NpcImportantBuilder npcImportantBuilder;
     public NpcPasserBuilder npcPasserBuilder;
 
-    protected InnBuildManager innBuildManager;
     protected SceneTownManager sceneTownManager;
 
     public override void Awake()
@@ -20,8 +19,9 @@ public class SceneGameTownInit : BaseNormalSceneInit
     public override void Start()
     {
         base.Start();
-        if (innBuildManager != null)
-            innBuildManager.buildDataController.GetAllBuildItemsData();
+        //故事数据
+        if (storyInfoManager != null)
+            storyInfoManager.storyInfoController.GetStoryInfoByScene(ScenesEnum.GameTownScene);
         //构建重要的NPC
         if (npcImportantBuilder != null)
             npcImportantBuilder.BuildImportant();

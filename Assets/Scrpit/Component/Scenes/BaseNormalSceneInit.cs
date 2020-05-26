@@ -7,14 +7,6 @@ public abstract class BaseNormalSceneInit : BaseSceneInit,IBaseObserver, DialogV
     public override void Start()
     {
         base.Start();
-        //获取相关数据
-        if (gameItemsManager != null)
-            gameItemsManager.itemsInfoController.GetAllItemsInfo();
-        if (npcInfoManager != null)
-            npcInfoManager.npcInfoController.GetAllNpcInfo();
-        if (storyInfoManager != null)
-            storyInfoManager.storyInfoController.GetStoryInfoByScene(ScenesEnum.GameTownScene);
-
         //设置时间
         if (gameTimeHandler != null && gameDataManager != null)
         {

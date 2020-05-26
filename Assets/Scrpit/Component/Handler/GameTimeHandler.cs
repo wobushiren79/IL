@@ -169,14 +169,26 @@ public class GameTimeHandler : BaseObservable<IBaseObserver>
                     innFloorBuilder.StartBuild();
                 if (innWallBuilder != null)
                     innWallBuilder.StartBuild();
-                if (navMesh!=null)
-                    navMesh.BuildNavMesh();
+                if (navMesh != null)
+                {
+                    StartCoroutine(CoroutineForBuildNavMesh());
+                }
             }
         }
         //通知新的一天
         NotifyAllObserver((int)NotifyTypeEnum.NewDay, null);
     }
 
+
+    /// <summary>
+    /// 生成地形
+    /// </summary>
+    /// <returns></returns>
+    public IEnumerator CoroutineForBuildNavMesh()
+    {
+        yield return new WaitForEndOfFrame();
+        navMesh.BuildNavMesh();
+    }
 
     /// <summary>
     /// 设置时间状态
