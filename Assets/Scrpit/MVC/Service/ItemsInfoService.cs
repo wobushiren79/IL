@@ -46,11 +46,11 @@ public class ItemsInfoService : BaseMVCService
     /// 删除数据
     /// </summary>
     /// <param name="itemsInfo"></param>
-    public void DeleteData(ItemsInfoBean itemsInfo)
+    public bool DeleteData(ItemsInfoBean itemsInfo)
     {
         if (itemsInfo == null)
-            return;
-        BaseDeleteDataById(itemsInfo.id);
+            return false;
+        return BaseDeleteDataWithLeft("id", "items_id", itemsInfo.id+"");
     }
 
     /// <summary>
@@ -73,9 +73,12 @@ public class ItemsInfoService : BaseMVCService
         if (itemsInfo == null)
             return;
         //先删除该ID下的所有数据
-        DeleteData(itemsInfo);
-        //插入数据
-        InsertData(itemsInfo);
+        if (DeleteData(itemsInfo))
+        {
+            //插入数据
+            InsertData(itemsInfo);
+        }
+        
     }
 
 }

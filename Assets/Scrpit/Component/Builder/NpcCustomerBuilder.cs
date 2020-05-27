@@ -10,6 +10,7 @@ public class NpcCustomerBuilder : NpcNormalBuilder, IBaseObserver
 
     protected List<NpcTeamBean> listTeamCustomer=new List<NpcTeamBean>();
     protected float buildTeamGustomerRate = 0;
+
     private void Start()
     {
         InnAttributesBean innAttributes = gameDataManager.gameData.GetInnAttributesData();

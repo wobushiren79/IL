@@ -49,14 +49,14 @@ public class CharacterStatusIconCpt : BaseMonoBehaviour
     {
         for (int i = 0; i < listStatusIcon.Count; i++)
         {
-            CharacterStatusIconItemCpt itemData = listStatusIcon[i];
-            if (itemData.statusIconData.iconStatus == characterStatus)
+            CharacterStatusIconItemCpt itemCpt = listStatusIcon[i];
+            if (itemCpt.statusIconData.iconStatus == characterStatus)
             {
-                itemData.transform.DOScale(new Vector3(0, 0, 0), 0.5f).OnComplete(delegate {
-                    if(itemData.gameObject)
-                        Destroy(itemData.gameObject);
+                itemCpt.transform.DOScale(new Vector3(0, 0, 0), 0.5f).OnComplete(delegate {
+                    if(itemCpt && itemCpt.gameObject)
+                        Destroy(itemCpt.gameObject);
                 });
-                listStatusIcon.Remove(itemData);
+                listStatusIcon.Remove(itemCpt);
                 i--;
             }
         }
@@ -66,7 +66,8 @@ public class CharacterStatusIconCpt : BaseMonoBehaviour
         for (int i = 0; i < listStatusIcon.Count; i++)
         {
             CharacterStatusIconItemCpt itemCpt = listStatusIcon[i];
-            itemCpt.transform.DOLocalMoveX(startX + i * 0.5f, 0.5f);
+            if (itemCpt && itemCpt.gameObject)
+                itemCpt.transform.DOLocalMoveX(startX + i * 0.5f, 0.5f);
         }
     }
 

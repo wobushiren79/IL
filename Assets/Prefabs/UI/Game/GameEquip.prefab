@@ -434,7 +434,6 @@ GameObject:
   - component: {fileID: 4140619150896513832}
   - component: {fileID: 4140619150896513837}
   - component: {fileID: 4140619150896513838}
-  - component: {fileID: 4140619150896513839}
   m_Layer: 5
   m_Name: Content
   m_TagString: Untagged
@@ -489,9 +488,9 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_FontData:
-    m_Font: {fileID: 12800000, guid: 5af80356261d6ff4f8aeec8a15c0cab5, type: 3}
+    m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
     m_FontSize: 20
-    m_FontStyle: 0
+    m_FontStyle: 1
     m_BestFit: 1
     m_MinSize: 1
     m_MaxSize: 20
@@ -502,21 +501,6 @@ MonoBehaviour:
     m_VerticalOverflow: 0
     m_LineSpacing: 1
   m_Text: "\u53A8\u529B\uFF1A0+0"
---- !u!114 &4140619150896513839
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4140619150896513833}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cfabb0440166ab443bba8876756fdfa9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_EffectColor: {r: 0, g: 0, b: 0, a: 0.5}
-  m_EffectDistance: {x: 1, y: -1}
-  m_UseGraphicAlpha: 1
 --- !u!1 &4140619151016441720
 GameObject:
   m_ObjectHideFlags: 0
@@ -712,7 +696,6 @@ GameObject:
   - component: {fileID: 4140619151060069008}
   - component: {fileID: 4140619151060069013}
   - component: {fileID: 4140619151060069014}
-  - component: {fileID: 4140619151060069015}
   m_Layer: 5
   m_Name: Content
   m_TagString: Untagged
@@ -767,9 +750,9 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_FontData:
-    m_Font: {fileID: 12800000, guid: 5af80356261d6ff4f8aeec8a15c0cab5, type: 3}
+    m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
     m_FontSize: 20
-    m_FontStyle: 0
+    m_FontStyle: 1
     m_BestFit: 1
     m_MinSize: 1
     m_MaxSize: 20
@@ -780,21 +763,6 @@ MonoBehaviour:
     m_VerticalOverflow: 0
     m_LineSpacing: 1
   m_Text: "\u53A8\u529B\uFF1A0+0"
---- !u!114 &4140619151060069015
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4140619151060069009}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cfabb0440166ab443bba8876756fdfa9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_EffectColor: {r: 0, g: 0, b: 0, a: 0.5}
-  m_EffectDistance: {x: 1, y: -1}
-  m_UseGraphicAlpha: 1
 --- !u!1 &4140619151103012907
 GameObject:
   m_ObjectHideFlags: 0
@@ -978,6 +946,8 @@ MonoBehaviour:
         workerType: 1
         workerLevel: 0
         workerExp: 0
+        priority: 0
+        isWorking: 1
         cookNumber: 0
         cookTime: 0
         listFoodCookNumer: []
@@ -985,6 +955,8 @@ MonoBehaviour:
         workerType: 2
         workerLevel: 0
         workerExp: 0
+        priority: 0
+        isWorking: 1
         cleanTotalNumber: 0
         sendTotalNumber: 0
         cleanTotalTime: 0
@@ -992,6 +964,8 @@ MonoBehaviour:
         workerType: 3
         workerLevel: 0
         workerExp: 0
+        priority: 0
+        isWorking: 1
         accountingTotalNumber: 0
         accountingErrorNumber: 0
         accountingSuccessNumber: 0
@@ -1009,6 +983,8 @@ MonoBehaviour:
         workerType: 4
         workerLevel: 0
         workerExp: 0
+        priority: 0
+        isWorking: 1
         accostTotalNumber: 0
         accostSuccessNumber: 0
         accostFailNumber: 0
@@ -1017,21 +993,13 @@ MonoBehaviour:
         workerType: 5
         workerLevel: 0
         workerExp: 0
+        priority: 0
+        isWorking: 1
         fightTotalNumber: 0
         fightWinNumber: 0
         fightLoseNumber: 0
         fightTotalTime: 0
         restTotalTime: 0
-      isChef: 0
-      isWaiter: 0
-      isAccountant: 0
-      isAccost: 0
-      isBeater: 0
-      priorityChef: 0
-      priorityWaiter: 0
-      priorityAccountant: 0
-      priorityAccost: 0
-      priorityBeater: 0
       workerStatus: 0
       listLoveItems: 
     attributes:
@@ -1095,6 +1063,7 @@ MonoBehaviour:
       eye_color: 
       mouth_id: 
       mouth_color: 
+      skin_color: 
       title_name: 
       name: 
       position_x: 0
@@ -1185,7 +1154,6 @@ GameObject:
   - component: {fileID: 4140619151174857213}
   - component: {fileID: 4140619151174856962}
   - component: {fileID: 4140619151174856963}
-  - component: {fileID: 4140619151174857212}
   m_Layer: 5
   m_Name: Content
   m_TagString: Untagged
@@ -1240,9 +1208,9 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_FontData:
-    m_Font: {fileID: 12800000, guid: 5af80356261d6ff4f8aeec8a15c0cab5, type: 3}
+    m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
     m_FontSize: 20
-    m_FontStyle: 0
+    m_FontStyle: 1
     m_BestFit: 1
     m_MinSize: 1
     m_MaxSize: 20
@@ -1253,21 +1221,6 @@ MonoBehaviour:
     m_VerticalOverflow: 0
     m_LineSpacing: 1
   m_Text: "\u53A8\u529B\uFF1A0+0"
---- !u!114 &4140619151174857212
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4140619151174857214}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cfabb0440166ab443bba8876756fdfa9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_EffectColor: {r: 0, g: 0, b: 0, a: 0.5}
-  m_EffectDistance: {x: 1, y: -1}
-  m_UseGraphicAlpha: 1
 --- !u!1 &4140619151186211101
 GameObject:
   m_ObjectHideFlags: 0
@@ -1605,6 +1558,8 @@ MonoBehaviour:
         workerType: 1
         workerLevel: 0
         workerExp: 0
+        priority: 0
+        isWorking: 1
         cookNumber: 0
         cookTime: 0
         listFoodCookNumer: []
@@ -1612,6 +1567,8 @@ MonoBehaviour:
         workerType: 2
         workerLevel: 0
         workerExp: 0
+        priority: 0
+        isWorking: 1
         cleanTotalNumber: 0
         sendTotalNumber: 0
         cleanTotalTime: 0
@@ -1619,6 +1576,8 @@ MonoBehaviour:
         workerType: 3
         workerLevel: 0
         workerExp: 0
+        priority: 0
+        isWorking: 1
         accountingTotalNumber: 0
         accountingErrorNumber: 0
         accountingSuccessNumber: 0
@@ -1636,6 +1595,8 @@ MonoBehaviour:
         workerType: 4
         workerLevel: 0
         workerExp: 0
+        priority: 0
+        isWorking: 1
         accostTotalNumber: 0
         accostSuccessNumber: 0
         accostFailNumber: 0
@@ -1644,21 +1605,13 @@ MonoBehaviour:
         workerType: 5
         workerLevel: 0
         workerExp: 0
+        priority: 0
+        isWorking: 1
         fightTotalNumber: 0
         fightWinNumber: 0
         fightLoseNumber: 0
         fightTotalTime: 0
         restTotalTime: 0
-      isChef: 0
-      isWaiter: 0
-      isAccountant: 0
-      isAccost: 0
-      isBeater: 0
-      priorityChef: 0
-      priorityWaiter: 0
-      priorityAccountant: 0
-      priorityAccost: 0
-      priorityBeater: 0
       workerStatus: 0
       listLoveItems: 
     attributes:
@@ -1722,6 +1675,7 @@ MonoBehaviour:
       eye_color: 
       mouth_id: 
       mouth_color: 
+      skin_color: 
       title_name: 
       name: 
       position_x: 0
@@ -2108,7 +2062,6 @@ GameObject:
   - component: {fileID: 4140619151553733491}
   - component: {fileID: 4140619151553733488}
   - component: {fileID: 4140619151553733489}
-  - component: {fileID: 4140619151553733490}
   m_Layer: 5
   m_Name: Content
   m_TagString: Untagged
@@ -2163,9 +2116,9 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_FontData:
-    m_Font: {fileID: 12800000, guid: 5af80356261d6ff4f8aeec8a15c0cab5, type: 3}
+    m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
     m_FontSize: 20
-    m_FontStyle: 0
+    m_FontStyle: 1
     m_BestFit: 1
     m_MinSize: 1
     m_MaxSize: 20
@@ -2176,21 +2129,6 @@ MonoBehaviour:
     m_VerticalOverflow: 0
     m_LineSpacing: 1
   m_Text: "\u53A8\u529B\uFF1A0+0"
---- !u!114 &4140619151553733490
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4140619151553733484}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cfabb0440166ab443bba8876756fdfa9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_EffectColor: {r: 0, g: 0, b: 0, a: 0.5}
-  m_EffectDistance: {x: 1, y: -1}
-  m_UseGraphicAlpha: 1
 --- !u!1 &4140619151599833524
 GameObject:
   m_ObjectHideFlags: 0
@@ -2751,6 +2689,8 @@ MonoBehaviour:
         workerType: 1
         workerLevel: 0
         workerExp: 0
+        priority: 0
+        isWorking: 1
         cookNumber: 0
         cookTime: 0
         listFoodCookNumer: []
@@ -2758,6 +2698,8 @@ MonoBehaviour:
         workerType: 2
         workerLevel: 0
         workerExp: 0
+        priority: 0
+        isWorking: 1
         cleanTotalNumber: 0
         sendTotalNumber: 0
         cleanTotalTime: 0
@@ -2765,6 +2707,8 @@ MonoBehaviour:
         workerType: 3
         workerLevel: 0
         workerExp: 0
+        priority: 0
+        isWorking: 1
         accountingTotalNumber: 0
         accountingErrorNumber: 0
         accountingSuccessNumber: 0
@@ -2782,6 +2726,8 @@ MonoBehaviour:
         workerType: 4
         workerLevel: 0
         workerExp: 0
+        priority: 0
+        isWorking: 1
         accostTotalNumber: 0
         accostSuccessNumber: 0
         accostFailNumber: 0
@@ -2790,21 +2736,13 @@ MonoBehaviour:
         workerType: 5
         workerLevel: 0
         workerExp: 0
+        priority: 0
+        isWorking: 1
         fightTotalNumber: 0
         fightWinNumber: 0
         fightLoseNumber: 0
         fightTotalTime: 0
         restTotalTime: 0
-      isChef: 0
-      isWaiter: 0
-      isAccountant: 0
-      isAccost: 0
-      isBeater: 0
-      priorityChef: 0
-      priorityWaiter: 0
-      priorityAccountant: 0
-      priorityAccost: 0
-      priorityBeater: 0
       workerStatus: 0
       listLoveItems: 
     attributes:
@@ -2868,6 +2806,7 @@ MonoBehaviour:
       eye_color: 
       mouth_id: 
       mouth_color: 
+      skin_color: 
       title_name: 
       name: 
       position_x: 0
@@ -3729,6 +3668,8 @@ MonoBehaviour:
         workerType: 1
         workerLevel: 0
         workerExp: 0
+        priority: 0
+        isWorking: 1
         cookNumber: 0
         cookTime: 0
         listFoodCookNumer: []
@@ -3736,6 +3677,8 @@ MonoBehaviour:
         workerType: 2
         workerLevel: 0
         workerExp: 0
+        priority: 0
+        isWorking: 1
         cleanTotalNumber: 0
         sendTotalNumber: 0
         cleanTotalTime: 0
@@ -3743,6 +3686,8 @@ MonoBehaviour:
         workerType: 3
         workerLevel: 0
         workerExp: 0
+        priority: 0
+        isWorking: 1
         accountingTotalNumber: 0
         accountingErrorNumber: 0
         accountingSuccessNumber: 0
@@ -3760,6 +3705,8 @@ MonoBehaviour:
         workerType: 4
         workerLevel: 0
         workerExp: 0
+        priority: 0
+        isWorking: 1
         accostTotalNumber: 0
         accostSuccessNumber: 0
         accostFailNumber: 0
@@ -3768,21 +3715,13 @@ MonoBehaviour:
         workerType: 5
         workerLevel: 0
         workerExp: 0
+        priority: 0
+        isWorking: 1
         fightTotalNumber: 0
         fightWinNumber: 0
         fightLoseNumber: 0
         fightTotalTime: 0
         restTotalTime: 0
-      isChef: 0
-      isWaiter: 0
-      isAccountant: 0
-      isAccost: 0
-      isBeater: 0
-      priorityChef: 0
-      priorityWaiter: 0
-      priorityAccountant: 0
-      priorityAccost: 0
-      priorityBeater: 0
       workerStatus: 0
       listLoveItems: 
     attributes:
@@ -3846,6 +3785,7 @@ MonoBehaviour:
       eye_color: 
       mouth_id: 
       mouth_color: 
+      skin_color: 
       title_name: 
       name: 
       position_x: 0
@@ -4108,6 +4048,8 @@ MonoBehaviour:
         workerType: 1
         workerLevel: 0
         workerExp: 0
+        priority: 0
+        isWorking: 1
         cookNumber: 0
         cookTime: 0
         listFoodCookNumer: []
@@ -4115,6 +4057,8 @@ MonoBehaviour:
         workerType: 2
         workerLevel: 0
         workerExp: 0
+        priority: 0
+        isWorking: 1
         cleanTotalNumber: 0
         sendTotalNumber: 0
         cleanTotalTime: 0
@@ -4122,6 +4066,8 @@ MonoBehaviour:
         workerType: 3
         workerLevel: 0
         workerExp: 0
+        priority: 0
+        isWorking: 1
         accountingTotalNumber: 0
         accountingErrorNumber: 0
         accountingSuccessNumber: 0
@@ -4139,6 +4085,8 @@ MonoBehaviour:
         workerType: 4
         workerLevel: 0
         workerExp: 0
+        priority: 0
+        isWorking: 1
         accostTotalNumber: 0
         accostSuccessNumber: 0
         accostFailNumber: 0
@@ -4147,21 +4095,13 @@ MonoBehaviour:
         workerType: 5
         workerLevel: 0
         workerExp: 0
+        priority: 0
+        isWorking: 1
         fightTotalNumber: 0
         fightWinNumber: 0
         fightLoseNumber: 0
         fightTotalTime: 0
         restTotalTime: 0
-      isChef: 0
-      isWaiter: 0
-      isAccountant: 0
-      isAccost: 0
-      isBeater: 0
-      priorityChef: 0
-      priorityWaiter: 0
-      priorityAccountant: 0
-      priorityAccost: 0
-      priorityBeater: 0
       workerStatus: 0
       listLoveItems: 
     attributes:
@@ -4225,6 +4165,7 @@ MonoBehaviour:
       eye_color: 
       mouth_id: 
       mouth_color: 
+      skin_color: 
       title_name: 
       name: 
       position_x: 0
@@ -4389,7 +4330,6 @@ GameObject:
   - component: {fileID: 4140619152341404841}
   - component: {fileID: 4140619152341404846}
   - component: {fileID: 4140619152341404847}
-  - component: {fileID: 4140619152341404840}
   m_Layer: 5
   m_Name: Content
   m_TagString: Untagged
@@ -4444,9 +4384,9 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_FontData:
-    m_Font: {fileID: 12800000, guid: 5af80356261d6ff4f8aeec8a15c0cab5, type: 3}
+    m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
     m_FontSize: 20
-    m_FontStyle: 0
+    m_FontStyle: 1
     m_BestFit: 1
     m_MinSize: 1
     m_MaxSize: 20
@@ -4457,21 +4397,6 @@ MonoBehaviour:
     m_VerticalOverflow: 0
     m_LineSpacing: 1
   m_Text: "\u53A8\u529B\uFF1A0+0"
---- !u!114 &4140619152341404840
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4140619152341404842}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cfabb0440166ab443bba8876756fdfa9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_EffectColor: {r: 0, g: 0, b: 0, a: 0.5}
-  m_EffectDistance: {x: 1, y: -1}
-  m_UseGraphicAlpha: 1
 --- !u!1 &4140619152357465169
 GameObject:
   m_ObjectHideFlags: 0
@@ -4483,7 +4408,6 @@ GameObject:
   - component: {fileID: 4140619152357465168}
   - component: {fileID: 4140619152357465173}
   - component: {fileID: 4140619152357465174}
-  - component: {fileID: 4140619152357465175}
   m_Layer: 5
   m_Name: Content
   m_TagString: Untagged
@@ -4538,9 +4462,9 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_FontData:
-    m_Font: {fileID: 12800000, guid: 5af80356261d6ff4f8aeec8a15c0cab5, type: 3}
+    m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
     m_FontSize: 20
-    m_FontStyle: 0
+    m_FontStyle: 1
     m_BestFit: 1
     m_MinSize: 1
     m_MaxSize: 20
@@ -4551,21 +4475,6 @@ MonoBehaviour:
     m_VerticalOverflow: 0
     m_LineSpacing: 1
   m_Text: "\u53A8\u529B\uFF1A0+0"
---- !u!114 &4140619152357465175
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4140619152357465169}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cfabb0440166ab443bba8876756fdfa9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_EffectColor: {r: 0, g: 0, b: 0, a: 0.5}
-  m_EffectDistance: {x: 1, y: -1}
-  m_UseGraphicAlpha: 1
 --- !u!1 &4140619152549029171
 GameObject:
   m_ObjectHideFlags: 0
@@ -5209,7 +5118,6 @@ GameObject:
   - component: {fileID: 5115978225364473777}
   - component: {fileID: 4122200875013479009}
   - component: {fileID: 5000827006479061160}
-  - component: {fileID: 2776929137741401204}
   m_Layer: 5
   m_Name: Content
   m_TagString: Untagged
@@ -5264,9 +5172,9 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_FontData:
-    m_Font: {fileID: 12800000, guid: 5af80356261d6ff4f8aeec8a15c0cab5, type: 3}
+    m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
     m_FontSize: 20
-    m_FontStyle: 0
+    m_FontStyle: 1
     m_BestFit: 1
     m_MinSize: 1
     m_MaxSize: 20
@@ -5277,21 +5185,6 @@ MonoBehaviour:
     m_VerticalOverflow: 0
     m_LineSpacing: 1
   m_Text: "\u53A8\u529B\uFF1A0+0"
---- !u!114 &2776929137741401204
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6541553224754842470}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cfabb0440166ab443bba8876756fdfa9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_EffectColor: {r: 0, g: 0, b: 0, a: 0.5}
-  m_EffectDistance: {x: 1, y: -1}
-  m_UseGraphicAlpha: 1
 --- !u!1001 &1405223270063649492
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -5603,6 +5496,12 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: dbdedefdbd5ca8045a10545a8d921571, type: 3}
+--- !u!224 &4881742324054553012 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 6202850148858248704, guid: dbdedefdbd5ca8045a10545a8d921571,
+    type: 3}
+  m_PrefabInstance: {fileID: 1561515005594980276}
+  m_PrefabAsset: {fileID: 0}
 --- !u!114 &4881742324054553015 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 6202850148858248707, guid: dbdedefdbd5ca8045a10545a8d921571,
@@ -5615,12 +5514,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3e42d425c72705442b4e5e7ae17eb6ee, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!224 &4881742324054553012 stripped
-RectTransform:
-  m_CorrespondingSourceObject: {fileID: 6202850148858248704, guid: dbdedefdbd5ca8045a10545a8d921571,
-    type: 3}
-  m_PrefabInstance: {fileID: 1561515005594980276}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &2433259427260445782
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -5755,15 +5648,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 336c6c2866957a049b46c70ecaa9af17, type: 3}
---- !u!1 &1443077230793638757 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 3873794517372139315, guid: 336c6c2866957a049b46c70ecaa9af17,
-    type: 3}
-  m_PrefabInstance: {fileID: 2433259427260445782}
-  m_PrefabAsset: {fileID: 0}
 --- !u!224 &1443077230793638756 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 3873794517372139314, guid: 336c6c2866957a049b46c70ecaa9af17,
+    type: 3}
+  m_PrefabInstance: {fileID: 2433259427260445782}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &1443077230793638757 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3873794517372139315, guid: 336c6c2866957a049b46c70ecaa9af17,
     type: 3}
   m_PrefabInstance: {fileID: 2433259427260445782}
   m_PrefabAsset: {fileID: 0}

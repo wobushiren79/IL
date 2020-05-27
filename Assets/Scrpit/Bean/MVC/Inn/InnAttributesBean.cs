@@ -285,7 +285,7 @@ public class InnAttributesBean
         if (rateRichness > 1)
             rateRichness = 1;
         rate = 0.32f * rateRichness + 0.32f * ratePraise + 0.32f * rateAesthetics + 0.04f;
-        rate = rate / 4f;
+        rate = rate / 8f;
         return 0.1f;
     }
 }

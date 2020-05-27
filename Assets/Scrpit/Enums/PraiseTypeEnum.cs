@@ -7,6 +7,6 @@ public enum PraiseTypeEnum
     Happy = 2,
     Okay = 1,
     Ordinary = 0,
-    Disappointed = -1,
-    Anger = -3,
+    Disappointed = - 3,
+    Anger = - 10,
 }

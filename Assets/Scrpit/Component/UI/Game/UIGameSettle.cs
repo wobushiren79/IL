@@ -129,7 +129,7 @@ public class UIGameSettle : UIGameComponent
     /// <param name="objItem"></param>
     public void AnimForItemShow(GameObject objItem)
     {
-        objItem.transform.DOScale(new Vector3(0, 0, 0), 0.5f).From().SetDelay(animDelay + 0.1f).OnPlay( delegate(){
+        objItem.transform.DOScale(new Vector3(0, 0, 0), 0.5f).From().SetDelay(animDelay + 0.1f).OnComplete( delegate(){
             AudioHandler audioHandler = uiGameManager.audioHandler;
             audioHandler.PlaySound(AudioSoundEnum.PayMoney);
         });

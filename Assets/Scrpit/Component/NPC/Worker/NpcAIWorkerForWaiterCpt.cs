@@ -56,14 +56,14 @@ public class NpcAIWorkerForWaiterCpt : NpcAIWokerFoBaseCpt
                         //记录数据
                         npcAIWorker.characterData.baseInfo.waiterInfo.AddSendNumber(1);
                         //增加经验
-                        npcAIWorker.characterData.baseInfo.waiterInfo.AddExp(1,out bool isLevelUp);
+                        npcAIWorker.characterData.baseInfo.waiterInfo.AddExp(1, out bool isLevelUp);
                         if (isLevelUp)
                         {
                             ToastForLevelUp(WorkerEnum.Waiter);
                         }
                         //放下食物
                         orderForCustomer.foodCpt.transform.SetParent(orderForCustomer.table.GetTable().transform);
-                        orderForCustomer.foodCpt.transform.DOLocalMove(Vector3.zero,0.2f);
+                        orderForCustomer.foodCpt.transform.DOLocalMove(Vector3.zero, 0.2f);
                         //orderForCustomer.foodCpt.transform.localPosition = Vector3.zero;
                         //通知客人吃饭
                         orderForCustomer.customer.SetIntent(NpcAICustomerCpt.CustomerIntentEnum.Eatting);
@@ -115,6 +115,8 @@ public class NpcAIWorkerForWaiterCpt : NpcAIWokerFoBaseCpt
     /// <param name="orderForCustomer"></param>
     public void SetIntent(WaiterIntentEnum waiterIntent, OrderForCustomer orderForCustomer)
     {
+        if (gameObject == null)
+            return;
         StopAllCoroutines();
         this.waiterIntent = waiterIntent;
         this.orderForCustomer = orderForCustomer;
@@ -214,6 +216,8 @@ public class NpcAIWorkerForWaiterCpt : NpcAIWokerFoBaseCpt
     /// <returns></returns>
     public IEnumerator StartClean()
     {
+        //audioHandler.PlaySound(AudioSoundEnum.Clean);
+        //计算清理时间
         float cleanTime = npcAIWorker.characterData.CalculationWaiterCleanTime(gameItemsManager);
         npcAIWorker.characterData.baseInfo.waiterInfo.AddCleanTime(cleanTime);
         yield return new WaitForSeconds(cleanTime);

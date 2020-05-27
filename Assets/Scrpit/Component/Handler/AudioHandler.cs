@@ -156,6 +156,9 @@ public class AudioHandler : BaseHandler
             case AudioSoundEnum.Cook:
                 audioClip = audioManager.GetSoundClip("sound_cook_1");
                 break;
+            case AudioSoundEnum.Clean:
+                audioClip = audioManager.GetSoundClip("sound_clean_1");
+                break;
             case AudioSoundEnum.Eat:
                int eatRandom= Random.Range(0, 2);
                 if (eatRandom == 0)

@@ -378,6 +378,8 @@ public class UIGameMain : UIGameComponent, DialogView.IDialogCallBack, IRadioGro
                 tweenForMoneyL.Kill();
             long startMoney = gameData.moneyL - priceL;
             tweenForMoneyL = DOTween.To(() => startMoney, x => { SetMoney(MoneyEnum.L, x); }, gameData.moneyL, 1);
+            tvMoneyL.transform.localScale = new Vector3(1,1,1);
+            tvMoneyL.transform.DOPunchScale(new Vector3(1f, 1f, 1f),1f,10,1);
         }
         if (priceM != 0)
         {
@@ -385,6 +387,8 @@ public class UIGameMain : UIGameComponent, DialogView.IDialogCallBack, IRadioGro
                 tweenForMoneyM.Kill();
             long startMoney = gameData.moneyM - priceM;
             tweenForMoneyM = DOTween.To(() => startMoney, x => { SetMoney(MoneyEnum.M, x); }, gameData.moneyM, 1);
+            tvMoneyM.transform.localScale = new Vector3(1, 1, 1);
+            tvMoneyM.transform.DOPunchScale(new Vector3(1f, 1f, 1f), 1f, 10, 1);
         }
         if (priceS != 0)
         {
@@ -392,6 +396,8 @@ public class UIGameMain : UIGameComponent, DialogView.IDialogCallBack, IRadioGro
                 tweenForMoneyS.Kill();
             long startMoney = gameData.moneyS - priceS;
             tweenForMoneyS = DOTween.To(() => startMoney, x => { SetMoney(MoneyEnum.S, x); }, gameData.moneyS, 1);
+            tvMoneyS.transform.localScale = new Vector3(1, 1, 1);
+            tvMoneyS.transform.DOPunchScale(new Vector3(1f, 1f, 1f), 1f, 10, 1);
         }
     }
 
