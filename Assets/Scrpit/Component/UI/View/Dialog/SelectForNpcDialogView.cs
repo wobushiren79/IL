@@ -72,6 +72,11 @@ public class SelectForNpcDialogView : DialogView, IBaseObserver
         if (baseNpc as NpcAICustomerCpt)
         {
             SetDataForCustomer((NpcAICustomerCpt)baseNpc);
+            //如果时好友顾客也显示名字
+            if (baseNpc as NpcAICostomerForFriendCpt)
+            {
+                SetName(characterData.baseInfo.name);
+            }
         }
         else if (baseNpc as NpcAIWorkerCpt)
         {

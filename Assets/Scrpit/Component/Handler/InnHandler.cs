@@ -393,7 +393,12 @@ public class InnHandler : BaseMonoBehaviour, IBaseObserver
         //根据心情评价客栈 前提订单里有他
         InnPraise(order.innEvaluation.GetPraise());
         //记录+1
-        gameDataManager.gameData.AddMenuSellNumber(1, order.foodData.id, payMoneyL, payMoneyM, payMoneyS);
+        gameDataManager.gameData.AddMenuSellNumber(1, order.foodData.id, payMoneyL, payMoneyM, payMoneyS,out bool isMenuLevelUp);
+        if (isMenuLevelUp)
+        {
+            Sprite spFoodIcon = innFoodManager.GetFoodSpriteByName(order.foodData.icon_key);
+            toastManager.ToastHint(spFoodIcon,string.Format(GameCommonInfo.GetUITextById(1131), order.foodData.name));
+        }
         //金钱增加
         gameDataHandler.AddMoney(payMoneyL, payMoneyM, payMoneyS);
         //播放音效

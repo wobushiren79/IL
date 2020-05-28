@@ -100,17 +100,17 @@ public class ItemTownGuildAchievementCpt : ItemGameBaseCpt
                 break;
             case AchievementStatusEnum.Completed:
                 //已解锁
-                SetIcon(achievementInfo.type, achievementInfo.icon_key, achievementInfo.icon_key_remark, null);
+                SetIcon(achievementInfo.GetAchievementType(), achievementInfo.icon_key, achievementInfo.icon_key_remark, null);
                 ivBackground.sprite = spBackUnLock;
                 break;
             case AchievementStatusEnum.Processing:
                 //未解锁 不满足条件
-                SetIcon(achievementInfo.type, achievementInfo.icon_key, achievementInfo.icon_key_remark, materialGray);
+                SetIcon(achievementInfo.GetAchievementType(), achievementInfo.icon_key, achievementInfo.icon_key_remark, materialGray);
                 ivBackground.sprite = spBackLock;
                 break;
             case AchievementStatusEnum.ToBeConfirmed:
                 //未解锁 满足条件  
-                SetIcon(achievementInfo.type, achievementInfo.icon_key, achievementInfo.icon_key_remark, materialGray);
+                SetIcon(achievementInfo.GetAchievementType(), achievementInfo.icon_key, achievementInfo.icon_key_remark, materialGray);
                 ivBackground.sprite = spBackPass;
                 break;
         }
@@ -119,22 +119,14 @@ public class ItemTownGuildAchievementCpt : ItemGameBaseCpt
             popupButton.SetData(status, achievementInfo);
     }
 
-    public void SetIcon(int type, string iconKey, string iconKeyRemark, Material material)
+    public void SetIcon(AchievementTypeEnum type, string iconKey, string iconKeyRemark, Material material)
     {
         IconDataManager iconDataManager = GetUIManager<UIGameManager>().iconDataManager;
         InnFoodManager innFoodManager = GetUIManager<UIGameManager>().innFoodManager;
 
         if (iconDataManager == null || ivIcon == null)
             return;
-        Sprite spIcon;
-        if (type == 1)
-        {
-            spIcon = innFoodManager.GetFoodSpriteByName(iconKey);
-        }
-        else
-        {
-            spIcon = iconDataManager.GetIconSpriteByName(iconKey);
-        }
+        Sprite spIcon = iconDataManager.GetIconSpriteByName(iconKey);
         if (spIcon != null)
             ivIcon.sprite = spIcon;
         else

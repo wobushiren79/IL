@@ -9,9 +9,6 @@ public class InnWaiterHandler : BaseMonoBehaviour
     //服务员列表
     public List<NpcAIWorkerCpt> listWaiterCpt = new List<NpcAIWorkerCpt>();
 
-    //锁
-    private static Object mSetWaiterLock = new Object();
-
     /// <summary>
     /// 找到所有服务员
     /// </summary>
@@ -27,7 +24,7 @@ public class InnWaiterHandler : BaseMonoBehaviour
 
         for (int i = 0; i < chefArray.Length; i++)
         {
-            NpcAIWorkerCpt npcAI= chefArray[i];
+            NpcAIWorkerCpt npcAI = chefArray[i];
             if (npcAI.characterData.baseInfo.waiterInfo.isWorking)
             {
                 listWaiterCpt.Add(npcAI);
@@ -42,15 +39,12 @@ public class InnWaiterHandler : BaseMonoBehaviour
     /// <returns></returns>
     public bool SetSendFood(OrderForCustomer orderForCustomer, NpcAIWorkerCpt waiterCpt)
     {
-        lock (mSetWaiterLock)
+        if (waiterCpt != null)
         {
-            if (waiterCpt != null)
-            {
-                waiterCpt.SetIntent(NpcAIWorkerCpt.WorkerIntentEnum.WaiterSend, orderForCustomer);
-                return true;
-            }
-            return false;
+            waiterCpt.SetIntent(NpcAIWorkerCpt.WorkerIntentEnum.WaiterSend, orderForCustomer);
+            return true;
         }
+        return false;
     }
 
     /// <summary>
@@ -59,31 +53,28 @@ public class InnWaiterHandler : BaseMonoBehaviour
     /// <returns></returns>
     public bool SetSendFood(OrderForCustomer orderForCustomer)
     {
-        lock (mSetWaiterLock)
+        NpcAIWorkerCpt waiterCpt = null;
+        float distance = 0;
+        for (int i = 0; i < listWaiterCpt.Count; i++)
         {
-            NpcAIWorkerCpt waiterCpt = null;
-            float distance = 0;
-            for (int i = 0; i < listWaiterCpt.Count; i++)
+            NpcAIWorkerCpt npcAI = listWaiterCpt[i];
+            //服务员空闲 并且能到达指定地点
+            if (npcAI.workerIntent == NpcAIWorkerCpt.WorkerIntentEnum.Idle)
             {
-                NpcAIWorkerCpt npcAI = listWaiterCpt[i];
-                //服务员空闲 并且能到达指定地点
-                if (npcAI.workerIntent == NpcAIWorkerCpt.WorkerIntentEnum.Idle)
+                float tempDistance = Vector2.Distance(orderForCustomer.foodCpt.transform.position, npcAI.transform.position);
+                if (distance == 0 || tempDistance < distance)
                 {
-                    float  tempDistance = Vector2.Distance(orderForCustomer.foodCpt.transform.position, npcAI.transform.position);
-                    if(distance==0 || tempDistance < distance)
-                    {
-                        distance = tempDistance;
-                        waiterCpt = npcAI;
-                    }
+                    distance = tempDistance;
+                    waiterCpt = npcAI;
                 }
             }
-            if (waiterCpt != null)
-            {
-                waiterCpt.SetIntent(NpcAIWorkerCpt.WorkerIntentEnum.WaiterSend, orderForCustomer);
-                return true;
-            }
-            return false;
         }
+        if (waiterCpt != null)
+        {
+            waiterCpt.SetIntent(NpcAIWorkerCpt.WorkerIntentEnum.WaiterSend, orderForCustomer);
+            return true;
+        }
+        return false;
     }
 
     /// <summary>
@@ -92,15 +83,12 @@ public class InnWaiterHandler : BaseMonoBehaviour
     /// <returns></returns>
     public bool SetClearFood(OrderForCustomer orderForCustomer, NpcAIWorkerCpt waiterCpt)
     {
-        lock (mSetWaiterLock)
+        if (waiterCpt != null)
         {
-            if (waiterCpt != null)
-            {
-                waiterCpt.SetIntent(NpcAIWorkerCpt.WorkerIntentEnum.WaiterClean, orderForCustomer);
-                return true;
-            }
-            return false;
+            waiterCpt.SetIntent(NpcAIWorkerCpt.WorkerIntentEnum.WaiterClean, orderForCustomer);
+            return true;
         }
+        return false;
     }
 
     /// <summary>
@@ -109,24 +97,21 @@ public class InnWaiterHandler : BaseMonoBehaviour
     /// <returns></returns>
     public bool SetClearFood(OrderForCustomer orderForCustomer)
     {
-        lock (mSetWaiterLock)
+        NpcAIWorkerCpt waiterCpt = null;
+        for (int i = 0; i < listWaiterCpt.Count; i++)
         {
-            NpcAIWorkerCpt waiterCpt = null;
-            for (int i = 0; i < listWaiterCpt.Count; i++)
+            NpcAIWorkerCpt npcAI = listWaiterCpt[i];
+            if (npcAI.workerIntent == NpcAIWorkerCpt.WorkerIntentEnum.Idle)
             {
-                NpcAIWorkerCpt npcAI = listWaiterCpt[i];
-                if (npcAI.workerIntent == NpcAIWorkerCpt.WorkerIntentEnum.Idle)
-                {
-                    waiterCpt = npcAI;
-                    break;
-                }
+                waiterCpt = npcAI;
+                break;
             }
-            if (waiterCpt != null)
-            {
-                waiterCpt.SetIntent(NpcAIWorkerCpt.WorkerIntentEnum.WaiterClean, orderForCustomer);
-                return true;
-            }
-            return false;
         }
+        if (waiterCpt != null)
+        {
+            waiterCpt.SetIntent(NpcAIWorkerCpt.WorkerIntentEnum.WaiterClean, orderForCustomer);
+            return true;
+        }
+        return false;
     }
 }

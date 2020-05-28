@@ -268,14 +268,15 @@ public class GameDataBean
     /// </summary>
     /// <param name="number"></param>
     /// <param name="menuId"></param>
-    public void AddMenuSellNumber(long number, long menuId, long priceL, long priceM, long priceS)
+    public void AddMenuSellNumber(long number, long menuId, long priceL, long priceM, long priceS, out bool isMenuLevelUp)
     {
+        isMenuLevelUp = false;
         for (int i = 0; i < listMenu.Count; i++)
         {
             MenuOwnBean itemData = listMenu[i];
             if (itemData.menuId == menuId)
             {
-                itemData.SellMenu(number, priceL, priceM, priceS);
+                itemData.SellMenu(number, priceL, priceM, priceS, out  bool isLevelUp);
                 return;
             }
         }
@@ -448,7 +449,6 @@ public class GameDataBean
         listCharacterFavorability.Add(characterFavorability);
         return characterFavorability;
     }
-
 
     /// <summary>
     /// 检测是否拥有该ID的角色

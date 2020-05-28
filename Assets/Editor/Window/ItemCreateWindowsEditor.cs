@@ -149,6 +149,26 @@ public class ItemCreateWindowsEditor : EditorWindow, StoreInfoManager.ICallBack
         {
             listFindAchItem = achievementInfoService.QueryDataByType((int)AchievementTypeEnum.Normal);
         }
+        if (GUILayout.Button("查询厨师成就", GUILayout.Width(100), GUILayout.Height(20)))
+        {
+            listFindAchItem = achievementInfoService.QueryDataByType((int)AchievementTypeEnum.Chef);
+        }
+        if (GUILayout.Button("查询伙计成就", GUILayout.Width(100), GUILayout.Height(20)))
+        {
+            listFindAchItem = achievementInfoService.QueryDataByType((int)AchievementTypeEnum.Waiter);
+        }
+        if (GUILayout.Button("查询账房成就", GUILayout.Width(100), GUILayout.Height(20)))
+        {
+            listFindAchItem = achievementInfoService.QueryDataByType((int)AchievementTypeEnum.Account);
+        }
+        if (GUILayout.Button("查询接待成就", GUILayout.Width(100), GUILayout.Height(20)))
+        {
+            listFindAchItem = achievementInfoService.QueryDataByType((int)AchievementTypeEnum.Accost);
+        }
+        if (GUILayout.Button("查询打手成就", GUILayout.Width(100), GUILayout.Height(20)))
+        {
+            listFindAchItem = achievementInfoService.QueryDataByType((int)AchievementTypeEnum.Beater);
+        }
         GUILayout.EndHorizontal();
         if (listFindAchItem == null)
             return;

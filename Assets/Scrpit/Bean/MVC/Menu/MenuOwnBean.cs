@@ -26,6 +26,7 @@ public class MenuOwnBean
 
     public MenuOwnBean()
     {
+
     }
 
     public MenuOwnBean(long menuId)
@@ -68,22 +69,23 @@ public class MenuOwnBean
     /// 卖出菜品
     /// </summary>
     /// <param name="number"></param>
-    public void SellMenu(long number, long priceL, long priceM, long priceS)
+    public void SellMenu(long number, long priceL, long priceM, long priceS,out bool isLevelUp)
     {
         sellNumber += number;
         sellMoneyL += priceL;
         sellMoneyM += priceM;
         sellMoneyS += priceS;
-        AddLevelExp((int)number);
+        AddLevelExp((int)number,out isLevelUp);
     }
 
     /// <summary>
     /// 增加经验
     /// </summary>
     /// <param name="exp"></param>
-    public void AddLevelExp(int exp)
+    public void AddLevelExp(int exp, out bool isLevelUp)
     {
         menuExp += exp;
+        isLevelUp = false;
         int levelExp = 0;
         if (menuLevel == 0)
         {
@@ -108,6 +110,7 @@ public class MenuOwnBean
             if (menuStatus == (int)MenuStatusEnum.Normal)
             {
                 menuStatus = (int)MenuStatusEnum.WaitForResearch;
+                isLevelUp = true;
             }
         }
     }

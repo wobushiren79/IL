@@ -21,6 +21,7 @@ public class AchievementDialogView : DialogView
     protected InnBuildManager innBuildManager;
     protected InnFoodManager innFoodManager;
     protected NpcInfoManager npcInfoManager;
+
     public override void Awake()
     {
         base.Awake();

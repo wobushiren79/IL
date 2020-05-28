@@ -10,9 +10,11 @@ public enum PreTypeEnum
     HaveMoneyL,//当前拥有金钱
     HaveMoneyM,//当前拥有金钱
     HaveMoneyS,//当前拥有金钱
+
     PayItems,//支付道具  ,分隔 前ID 后数量
     HaveItems,//有道具 ,分隔 前ID 后数量
     AttributeForForce,//达标属性
+
     AttributeForSpeed,
     AttributeForAccount,
     AttributeForCharm,
@@ -28,6 +30,32 @@ public enum PreTypeEnum
     PayIngForMelonfruit,//水果
     PayIngForWaterwine,//酒水
     PayIngForFlour,//面粉
+
+    OrderNumberForTotal,//总共接客数量
+
+    GetMoneyL,//赚取金钱
+    GetMoneyM,
+    GetMoneyS,
+
+    InnPraiseNumberForExcited,//评价数量
+    InnPraiseNumberForHappy,
+    InnPraiseNumberForOkay,
+    InnPraiseNumberForOrdinary,
+    InnPraiseNumberForDisappointed,
+    InnPraiseNumberForAnger,
+
+    MenuNumber,//拥有菜品数量
+    SellMenuNumber,//卖出菜品数量
+
+    WorkerForCookFoodNumber,//工作相关统计
+    WorkerForCleanFoodNumber,
+    WorkerForSendFoodNumber,
+    WorkerForAccountantSuccessNumber,
+    WorkerForAccountantFailNumber,
+    WorkerForAccostSuccessNumber,
+    WorkerForAccostFailNumber,
+    WorkerForFightSuccessNumber,
+    WorkerForFightFailNumber,
 }
 
 public class PreTypeBean : DataBean<PreTypeEnum>
@@ -121,7 +149,39 @@ public class PreTypeEnumTools : DataTools
             case PreTypeEnum.PayIngForFlour:
                 GetPreDetailsForPayIng(preTypeData, gameData, iconDataManager);
                 break;
-
+            case PreTypeEnum.OrderNumberForTotal:
+                GetPreDetailsForOrderNumber(preTypeData, gameData, iconDataManager, isComplete);
+                break;
+            case PreTypeEnum.GetMoneyL:
+            case PreTypeEnum.GetMoneyM:
+            case PreTypeEnum.GetMoneyS:
+                GetPreDetailsForGetMoney(preTypeData, gameData, iconDataManager, isComplete);
+                break;
+            case PreTypeEnum.InnPraiseNumberForExcited:
+            case PreTypeEnum.InnPraiseNumberForHappy:
+            case PreTypeEnum.InnPraiseNumberForOkay:
+            case PreTypeEnum.InnPraiseNumberForOrdinary:
+            case PreTypeEnum.InnPraiseNumberForDisappointed:
+            case PreTypeEnum.InnPraiseNumberForAnger:
+                GetPreDetailsForInnPraiseNumber(preTypeData, gameData, iconDataManager, isComplete);
+                break;
+            case PreTypeEnum.MenuNumber:
+                GetPreDetailsForMenuNumber(preTypeData, gameData, iconDataManager, isComplete);
+                break;
+            case PreTypeEnum.SellMenuNumber:
+                GetPreDetailsForSellMenuNumber(preTypeData, gameData, iconDataManager, isComplete);
+                break;
+            case PreTypeEnum.WorkerForCookFoodNumber:
+            case PreTypeEnum.WorkerForCleanFoodNumber:
+            case PreTypeEnum.WorkerForSendFoodNumber:
+            case PreTypeEnum.WorkerForAccountantSuccessNumber:
+            case PreTypeEnum.WorkerForAccountantFailNumber:
+            case PreTypeEnum.WorkerForAccostSuccessNumber:
+            case PreTypeEnum.WorkerForAccostFailNumber:
+            case PreTypeEnum.WorkerForFightSuccessNumber:
+            case PreTypeEnum.WorkerForFightFailNumber:
+                GetPreDetailsForWorker(preTypeData, gameData, iconDataManager, isComplete);
+                        break;
         }
         return preTypeData;
     }
@@ -403,6 +463,313 @@ public class PreTypeEnumTools : DataTools
         preTypeData.spPreIcon = spIcon;
         preTypeData.preDescribe = string.Format(GameCommonInfo.GetUITextById(5031), ingName, dataIng + "");
         preTypeData.preFailStr = string.Format(GameCommonInfo.GetUITextById(5023), ingName, dataIng + "");
+        return preTypeData;
+    }
+
+    /// <summary>
+    /// 获取订单数量相关详情
+    /// </summary>
+    /// <param name="preTypeData"></param>
+    /// <param name="gameData"></param>
+    /// <param name="iconDataManager"></param>
+    /// <returns></returns>
+    private static PreTypeBean GetPreDetailsForOrderNumber(PreTypeBean preTypeData, GameDataBean gameData, IconDataManager iconDataManager, bool isComplete)
+    {
+        Sprite spIcon = null;
+        long dataNumber = long.Parse(preTypeData.data);
+        string preProStr = "";
+        switch (preTypeData.dataType)
+        {
+            case PreTypeEnum.OrderNumberForTotal:
+                spIcon = iconDataManager.GetIconSpriteByName("team_2");
+                break;
+        }
+        UserAchievementBean userAchievement = gameData.GetAchievementData();
+        long numberTotal = userAchievement.GetNumberForAllCustomer();
+        if (numberTotal >= dataNumber || isComplete)
+        {
+            preTypeData.isPre = true;
+            preProStr = "(" + dataNumber + "/" + dataNumber + ")";
+            preTypeData.progress = 1;
+        }
+        else
+        {
+            preTypeData.isPre = false;
+            preProStr = "(" + numberTotal + "/" + dataNumber + ")";
+            preTypeData.progress = numberTotal / (float)dataNumber;
+        }
+        preTypeData.spPreIcon = spIcon;
+        preTypeData.preDescribe = string.Format(GameCommonInfo.GetUITextById(5041), preProStr + "");
+        preTypeData.preFailStr = string.Format(GameCommonInfo.GetUITextById(5042), dataNumber + "");
+        return preTypeData;
+    }
+
+    /// <summary>
+    /// 获取支付金钱相关详情
+    /// </summary>
+    /// <param name="preTypeData"></param>
+    /// <param name="gameData"></param>
+    /// <param name="iconDataManager"></param>
+    /// <param name="isComplete"></param>
+    /// <returns></returns>
+    private static PreTypeBean GetPreDetailsForGetMoney(PreTypeBean preTypeData, GameDataBean gameData, IconDataManager iconDataManager, bool isComplete)
+    {
+        string preMoneyStr = "";
+        long getMoney = long.Parse(preTypeData.data);
+        long haveMoney = 0;
+        string iconKey = "";
+        switch (preTypeData.dataType)
+        {
+            case PreTypeEnum.GetMoneyL:
+                haveMoney = gameData.moneyL;
+                preTypeData.preDescribe = GameCommonInfo.GetUITextById(5007);
+                iconKey = "money_3";
+                break;
+            case PreTypeEnum.GetMoneyM:
+                haveMoney = gameData.moneyM;
+                preTypeData.preDescribe = GameCommonInfo.GetUITextById(5008);
+                iconKey = "money_2";
+                break;
+            case PreTypeEnum.GetMoneyS:
+                haveMoney = gameData.moneyS;
+                preTypeData.preDescribe = GameCommonInfo.GetUITextById(5009);
+                iconKey = "money_1";
+                break;
+        }
+        if (haveMoney >= getMoney || isComplete)
+        {
+            preTypeData.isPre = true;
+            preMoneyStr = "(" + getMoney + "/" + getMoney + ")";
+            preTypeData.progress = 1;
+        }
+        else
+        {
+            preTypeData.isPre = false;
+            preMoneyStr = "(" + haveMoney + "/" + getMoney + ")";
+            preTypeData.progress = haveMoney / (float)getMoney;
+        }
+        if (iconDataManager != null)
+            preTypeData.spPreIcon = iconDataManager.GetIconSpriteByName(iconKey);
+        preTypeData.preDescribe = string.Format(preTypeData.preDescribe, preMoneyStr);
+        preTypeData.preFailStr = GameCommonInfo.GetUITextById(1024);
+        return preTypeData;
+    }
+
+    private static PreTypeBean GetPreDetailsForInnPraiseNumber(PreTypeBean preTypeData, GameDataBean gameData, IconDataManager iconDataManager, bool isComplete)
+    {
+        Sprite spIcon = null;
+        long dataNumber = long.Parse(preTypeData.data);
+        string preProStr = "";
+        string preDesStr = "";
+        PraiseTypeEnum praiseType = PraiseTypeEnum.Happy;
+        switch (preTypeData.dataType)
+        {
+            case PreTypeEnum.InnPraiseNumberForExcited:
+                praiseType = PraiseTypeEnum.Excited;
+                preDesStr = GameCommonInfo.GetUITextById(5051);
+                spIcon = iconDataManager.GetIconSpriteByName("customer_mood_0");
+                break;
+            case PreTypeEnum.InnPraiseNumberForHappy:
+                praiseType = PraiseTypeEnum.Happy;
+                preDesStr = GameCommonInfo.GetUITextById(5052);
+                spIcon = iconDataManager.GetIconSpriteByName("customer_mood_1");
+                break;
+            case PreTypeEnum.InnPraiseNumberForOkay:
+                praiseType = PraiseTypeEnum.Okay;
+                preDesStr = GameCommonInfo.GetUITextById(5053);
+                spIcon = iconDataManager.GetIconSpriteByName("customer_mood_2");
+                break;
+            case PreTypeEnum.InnPraiseNumberForOrdinary:
+                praiseType = PraiseTypeEnum.Ordinary;
+                preDesStr = GameCommonInfo.GetUITextById(5054);
+                spIcon = iconDataManager.GetIconSpriteByName("customer_mood_3");
+                break;
+            case PreTypeEnum.InnPraiseNumberForDisappointed:
+                praiseType = PraiseTypeEnum.Disappointed;
+                preDesStr = GameCommonInfo.GetUITextById(5055);
+                spIcon = iconDataManager.GetIconSpriteByName("customer_mood_4");
+                break;
+            case PreTypeEnum.InnPraiseNumberForAnger:
+                praiseType = PraiseTypeEnum.Anger;
+                preDesStr = GameCommonInfo.GetUITextById(5056);
+                spIcon = iconDataManager.GetIconSpriteByName("customer_mood_5");
+                break;
+        }
+        UserAchievementBean userAchievement = gameData.GetAchievementData();
+        long praiseNumber = userAchievement.GetPraiseNumber(praiseType);
+        if (praiseNumber >= dataNumber || isComplete)
+        {
+            preTypeData.isPre = true;
+            preProStr = "(" + dataNumber + "/" + dataNumber + ")";
+            preTypeData.progress = 1;
+        }
+        else
+        {
+            preTypeData.isPre = false;
+            preProStr = "(" + praiseNumber + "/" + dataNumber + ")";
+            preTypeData.progress = praiseNumber / (float)dataNumber;
+        }
+        preTypeData.spPreIcon = spIcon;
+        preTypeData.preDescribe = string.Format(preDesStr, preProStr + "");
+        preTypeData.preFailStr = GameCommonInfo.GetUITextById(5057);
+        return preTypeData;
+    }
+
+    private static PreTypeBean GetPreDetailsForMenuNumber(PreTypeBean preTypeData, GameDataBean gameData, IconDataManager iconDataManager, bool isComplete)
+    {
+        Sprite spIcon = null;
+        long dataNumber = long.Parse(preTypeData.data);
+        string preProStr = "";
+        switch (preTypeData.dataType)
+        {
+            case PreTypeEnum.MenuNumber:
+                spIcon = iconDataManager.GetIconSpriteByName("ui_features_menu");
+                break;
+        }
+        List<MenuOwnBean> listMenu = gameData.GetMenuList();
+        if (listMenu.Count >= dataNumber || isComplete)
+        {
+            preTypeData.isPre = true;
+            preProStr = "(" + dataNumber + "/" + dataNumber + ")";
+            preTypeData.progress = 1;
+        }
+        else
+        {
+            preTypeData.isPre = false;
+            preProStr = "(" + listMenu.Count + "/" + dataNumber + ")";
+            preTypeData.progress = listMenu.Count / (float)dataNumber;
+        }
+        preTypeData.spPreIcon = spIcon;
+        preTypeData.preDescribe = string.Format(GameCommonInfo.GetUITextById(5061), preProStr + "");
+        preTypeData.preFailStr = string.Format(GameCommonInfo.GetUITextById(5062), dataNumber + "");
+        return preTypeData;
+    }
+
+    private static PreTypeBean GetPreDetailsForSellMenuNumber(PreTypeBean preTypeData, GameDataBean gameData, IconDataManager iconDataManager, bool isComplete)
+    {
+        Sprite spIcon = null;
+        long dataNumber = long.Parse(preTypeData.data);
+        string preProStr = "";
+        switch (preTypeData.dataType)
+        {
+            case PreTypeEnum.SellMenuNumber:
+                spIcon = iconDataManager.GetIconSpriteByName("ui_features_menu");
+                break;
+        }
+        List<MenuOwnBean> listMenu = gameData.GetMenuList();
+        long sellNumber = 0;
+        foreach (MenuOwnBean itemMenu in listMenu)
+        {
+            sellNumber += itemMenu.sellNumber;
+        }
+        if (sellNumber >= dataNumber || isComplete)
+        {
+            preTypeData.isPre = true;
+            preProStr = "(" + dataNumber + "/" + dataNumber + ")";
+            preTypeData.progress = 1;
+        }
+        else
+        {
+            preTypeData.isPre = false;
+            preProStr = "(" + sellNumber + "/" + dataNumber + ")";
+            preTypeData.progress = sellNumber / (float)dataNumber;
+        }
+        preTypeData.spPreIcon = spIcon;
+        preTypeData.preDescribe = string.Format(GameCommonInfo.GetUITextById(5071), preProStr + "");
+        preTypeData.preFailStr = GameCommonInfo.GetUITextById(5072);
+        return preTypeData;
+    }
+
+    private static PreTypeBean GetPreDetailsForWorker(PreTypeBean preTypeData, GameDataBean gameData, IconDataManager iconDataManager, bool isComplete)
+    {
+        Sprite spIcon = null;
+        long dataNumber = long.Parse(preTypeData.data);
+        long workerNumber = 0;
+        string preDesStr = "";
+        string preProStr = "";
+        List<CharacterBean> listWorker = gameData.GetAllCharacterData();
+        foreach (CharacterBean itemWorkerData in listWorker)
+        {
+            switch (preTypeData.dataType)
+            {
+                case PreTypeEnum.WorkerForCookFoodNumber:
+                    preDesStr = GameCommonInfo.GetUITextById(311);
+                    CharacterWorkerForChefBean characterWorkerForChef =  (CharacterWorkerForChefBean)itemWorkerData.baseInfo.GetWorkerInfoByType(WorkerEnum.Chef);
+                    workerNumber += characterWorkerForChef.cookNumber;
+                break;
+                case PreTypeEnum.WorkerForCleanFoodNumber:
+                case PreTypeEnum.WorkerForSendFoodNumber:
+                    CharacterWorkerForWaiterBean characterWorkerForWaiter = (CharacterWorkerForWaiterBean)itemWorkerData.baseInfo.GetWorkerInfoByType(WorkerEnum.Waiter);
+                    if (preTypeData.dataType== PreTypeEnum.WorkerForCleanFoodNumber)
+                    {
+                        preDesStr = GameCommonInfo.GetUITextById(314);
+                        workerNumber += characterWorkerForWaiter.cleanTotalNumber;
+                    }
+                    else if (preTypeData.dataType == PreTypeEnum.WorkerForSendFoodNumber)
+                    {
+                        preDesStr = GameCommonInfo.GetUITextById(313);
+                        workerNumber += characterWorkerForWaiter.sendTotalNumber;
+                    }
+                    break;
+                case PreTypeEnum.WorkerForAccountantSuccessNumber:
+                case PreTypeEnum.WorkerForAccountantFailNumber:
+                    CharacterWorkerForAccountantBean characterWorkerForAccountant = (CharacterWorkerForAccountantBean)itemWorkerData.baseInfo.GetWorkerInfoByType(WorkerEnum.Accountant);
+                    if (preTypeData.dataType == PreTypeEnum.WorkerForAccountantSuccessNumber)
+                    {
+                        preDesStr = GameCommonInfo.GetUITextById(318);
+                        workerNumber += characterWorkerForAccountant.accountingSuccessNumber;
+                    }
+                    else if (preTypeData.dataType == PreTypeEnum.WorkerForAccountantFailNumber)
+                    {
+                        preDesStr = GameCommonInfo.GetUITextById(320);
+                        workerNumber += characterWorkerForAccountant.accountingErrorNumber;
+                    }
+                    break;
+                case PreTypeEnum.WorkerForAccostSuccessNumber:
+                case PreTypeEnum.WorkerForAccostFailNumber:
+                    CharacterWorkerForAccostBean characterWorkerForAccost = (CharacterWorkerForAccostBean)itemWorkerData.baseInfo.GetWorkerInfoByType(WorkerEnum.Accost);
+                    if (preTypeData.dataType == PreTypeEnum.WorkerForAccostSuccessNumber)
+                    {
+                        preDesStr = GameCommonInfo.GetUITextById(324);
+                        workerNumber += characterWorkerForAccost.accostSuccessNumber;
+                    }
+                    else if (preTypeData.dataType == PreTypeEnum.WorkerForAccostFailNumber)
+                    {
+                        preDesStr = GameCommonInfo.GetUITextById(325);
+                        workerNumber += characterWorkerForAccost.accostFailNumber;
+                    }
+                    break;
+                case PreTypeEnum.WorkerForFightSuccessNumber:
+                case PreTypeEnum.WorkerForFightFailNumber:
+                    CharacterWorkerForBeaterBean characterWorkerForBeater = (CharacterWorkerForBeaterBean)itemWorkerData.baseInfo.GetWorkerInfoByType(WorkerEnum.Beater);
+                    if (preTypeData.dataType == PreTypeEnum.WorkerForFightSuccessNumber)
+                    {
+                        preDesStr = GameCommonInfo.GetUITextById(329);
+                        workerNumber += characterWorkerForBeater.fightWinNumber;
+                    }
+                    else if (preTypeData.dataType == PreTypeEnum.WorkerForFightFailNumber)
+                    {
+                        preDesStr = GameCommonInfo.GetUITextById(330);
+                        workerNumber += characterWorkerForBeater.fightLoseNumber;
+                    }
+                    break;
+            }
+        }
+        if (workerNumber >= dataNumber || isComplete)
+        {
+            preTypeData.isPre = true;
+            preProStr = "(" + dataNumber + "/" + dataNumber + ")";
+            preTypeData.progress = 1;
+        }
+        else
+        {
+            preTypeData.isPre = false;
+            preProStr = "(" + workerNumber + "/" + dataNumber + ")";
+            preTypeData.progress = workerNumber / (float)dataNumber;
+        }
+        preTypeData.spPreIcon = spIcon;
+        preTypeData.preDescribe = preDesStr + preProStr;
+        preTypeData.preFailStr = GameCommonInfo.GetUITextById(5081);
         return preTypeData;
     }
 

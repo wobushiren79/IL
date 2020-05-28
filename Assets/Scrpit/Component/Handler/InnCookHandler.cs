@@ -14,9 +14,6 @@ public class InnCookHandler : BaseMonoBehaviour
     //厨师容器
     public GameObject ChefContainer;
 
-    //锁
-    private static Object mSetChefLock = new Object();
-
     /// <summary>
     /// 找到所有灶台
     /// </summary>
@@ -59,35 +56,32 @@ public class InnCookHandler : BaseMonoBehaviour
     /// </summary>
     public bool SetChefForCook(OrderForCustomer orderForCustomer, NpcAIWorkerCpt chefCpt)
     {
-        lock (mSetChefLock)
+        BuildStoveCpt stoveCpt = null;
+        if (chefCpt == null)
         {
-            BuildStoveCpt stoveCpt = null;
-            if (chefCpt == null)
+            return false;
+        }
+        for (int i = 0; i < listStoveCpt.Count; i++)
+        {
+            BuildStoveCpt itemStove = listStoveCpt[i];
+            //检测是否能到达烹饪点
+            if (itemStove.stoveStatus == BuildStoveCpt.StoveStatusEnum.Idle && CheckUtil.CheckPath(chefCpt.transform.position, itemStove.GetCookPosition()))
             {
-                return false;
+                stoveCpt = itemStove;
+                break;
             }
-            for (int i = 0; i < listStoveCpt.Count; i++)
-            {
-                BuildStoveCpt itemStove = listStoveCpt[i];
-                //检测是否能到达烹饪点
-                if (itemStove.stoveStatus == BuildStoveCpt.StoveStatusEnum.Idle && CheckUtil.CheckPath(chefCpt.transform.position, itemStove.GetCookPosition()))
-                {
-                    stoveCpt = itemStove;
-                    break;
-                }
-            }
-            if (chefCpt != null && stoveCpt != null)
-            {
-                orderForCustomer.stove = stoveCpt;
-                orderForCustomer.stove.SetStoveStatus(BuildStoveCpt.StoveStatusEnum.Ready);
-                orderForCustomer.chef = chefCpt;
-                chefCpt.SetIntent(NpcAIWorkerCpt.WorkerIntentEnum.Cook, orderForCustomer);
-                return true;
-            }
-            else
-            {
-                return false;
-            }
+        }
+        if (chefCpt != null && stoveCpt != null)
+        {
+            orderForCustomer.stove = stoveCpt;
+            orderForCustomer.stove.SetStoveStatus(BuildStoveCpt.StoveStatusEnum.Ready);
+            orderForCustomer.chef = chefCpt;
+            chefCpt.SetIntent(NpcAIWorkerCpt.WorkerIntentEnum.Cook, orderForCustomer);
+            return true;
+        }
+        else
+        {
+            return false;
         }
     }
 
@@ -96,45 +90,42 @@ public class InnCookHandler : BaseMonoBehaviour
     /// </summary>
     public bool SetChefForCook(OrderForCustomer orderForCustomer)
     {
-        lock (mSetChefLock)
+        NpcAIWorkerCpt chefCpt = null;
+        BuildStoveCpt stoveCpt = null;
+        for (int i = 0; i < listChefCpt.Count; i++)
         {
-            NpcAIWorkerCpt chefCpt = null;
-            BuildStoveCpt stoveCpt = null;
-            for (int i = 0; i < listChefCpt.Count; i++)
+            NpcAIWorkerCpt npcAI = listChefCpt[i];
+            if (npcAI.workerIntent == NpcAIWorkerCpt.WorkerIntentEnum.Idle)
             {
-                NpcAIWorkerCpt npcAI = listChefCpt[i];
-                if (npcAI.workerIntent == NpcAIWorkerCpt.WorkerIntentEnum.Idle)
-                {
-                    chefCpt = npcAI;
-                    break;
-                }
+                chefCpt = npcAI;
+                break;
             }
-            if (chefCpt == null)
+        }
+        if (chefCpt == null)
+        {
+            return false;
+        }
+        for (int i = 0; i < listStoveCpt.Count; i++)
+        {
+            BuildStoveCpt itemStove = listStoveCpt[i];
+            //检测是否能到达烹饪点
+            if (itemStove.stoveStatus == BuildStoveCpt.StoveStatusEnum.Idle && CheckUtil.CheckPath(chefCpt.transform.position, itemStove.GetCookPosition()))
             {
-                return false;
+                stoveCpt = itemStove;
+                break;
             }
-            for (int i = 0; i < listStoveCpt.Count; i++)
-            {
-                BuildStoveCpt itemStove = listStoveCpt[i];
-                //检测是否能到达烹饪点
-                if (itemStove.stoveStatus == BuildStoveCpt.StoveStatusEnum.Idle && CheckUtil.CheckPath(chefCpt.transform.position, itemStove.GetCookPosition()))
-                {
-                    stoveCpt = itemStove;
-                    break;
-                }
-            }
-            if (chefCpt != null && stoveCpt != null)
-            {
-                orderForCustomer.stove = stoveCpt;
-                orderForCustomer.stove.SetStoveStatus(BuildStoveCpt.StoveStatusEnum.Ready);
-                orderForCustomer.chef = chefCpt;
-                chefCpt.SetIntent(NpcAIWorkerCpt.WorkerIntentEnum.Cook, orderForCustomer);
-                return true;
-            }
-            else
-            {
-                return false;
-            }
+        }
+        if (chefCpt != null && stoveCpt != null)
+        {
+            orderForCustomer.stove = stoveCpt;
+            orderForCustomer.stove.SetStoveStatus(BuildStoveCpt.StoveStatusEnum.Ready);
+            orderForCustomer.chef = chefCpt;
+            chefCpt.SetIntent(NpcAIWorkerCpt.WorkerIntentEnum.Cook, orderForCustomer);
+            return true;
+        }
+        else
+        {
+            return false;
         }
     }
 }

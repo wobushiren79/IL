@@ -33,9 +33,11 @@ public class UserAchievementBean
     public long numberForNormalCustomer;
     public long numberForTeamCustomer;
     public long numberForFriendsCustomer;
+
     //团队顾客数据
     public List<UserCustomerBean> listForTeamCustomerData = new List<UserCustomerBean>();
     public List<UserCustomerBean> listForFriendCustomerData = new List<UserCustomerBean>();
+
     //评价
     public long praiseForExcited;
     public long praiseForHappy;
@@ -155,6 +157,26 @@ public class UserAchievementBean
         }
     }
 
+    public long GetPraiseNumber(PraiseTypeEnum praiseType)
+    {
+        switch (praiseType)
+        {
+            case PraiseTypeEnum.Excited:
+                return praiseForExcited;
+            case PraiseTypeEnum.Happy:
+                return praiseForHappy;
+            case PraiseTypeEnum.Okay:
+                return praiseForOkay;
+            case PraiseTypeEnum.Ordinary:
+                return praiseForOrdinary;
+            case PraiseTypeEnum.Disappointed:
+                return praiseForDisappointed;
+            case PraiseTypeEnum.Anger:
+                return praiseForAnger;
+        }
+        return 0;
+    }
+
     /// <summary>
     /// 记录顾客
     /// </summary>
@@ -233,6 +255,8 @@ public class UserAchievementBean
     /// <returns></returns>
     public long GetNumberForCustomerByType(CustomerTypeEnum customerType)
     {
+
+
         switch (customerType)
         {
             case CustomerTypeEnum.Normal:

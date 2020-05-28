@@ -8,7 +8,7 @@ public class AchievementInfoBean : BaseBean
 {
     public long ach_id;
     public long pre_ach_id;//前置成就
-    public int type;//类型 1通用  2菜品
+    public int type;
     public string icon_key;
     public string icon_key_remark;
     public long remark_id;
@@ -19,4 +19,8 @@ public class AchievementInfoBean : BaseBean
     public string name;
     public string content;
 
+    public AchievementTypeEnum GetAchievementType()
+    {
+        return (AchievementTypeEnum)type;
+    }
 }

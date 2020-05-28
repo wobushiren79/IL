@@ -16,8 +16,6 @@ public class InnPayHandler : BaseMonoBehaviour
     public GameObject accountingContainer;
     //支付特效
     public GameObject objPayEffects;
-    //锁
-    private static Object mSetPayLock = new Object();
 
     /// <summary>
     /// 找到所有柜台
@@ -60,18 +58,16 @@ public class InnPayHandler : BaseMonoBehaviour
     /// </summary>
     public bool SetPay(OrderForCustomer orderForCustomer, NpcAIWorkerCpt workNpc)
     {
-        lock (mSetPayLock)
+
+        if (workNpc != null && orderForCustomer.counter.counterStatus == BuildCounterCpt.CounterStatusEnum.Idle)
         {
-            if (workNpc != null && orderForCustomer.counter.counterStatus == BuildCounterCpt.CounterStatusEnum.Idle)
-            {
-                orderForCustomer.counter.SetCounterStatus(BuildCounterCpt.CounterStatusEnum.Ready);
-                workNpc.SetIntent(NpcAIWorkerCpt.WorkerIntentEnum.Accounting, orderForCustomer);
-                return true;
-            }
-            else
-            {
-                return false;
-            }
+            orderForCustomer.counter.SetCounterStatus(BuildCounterCpt.CounterStatusEnum.Ready);
+            workNpc.SetIntent(NpcAIWorkerCpt.WorkerIntentEnum.Accounting, orderForCustomer);
+            return true;
+        }
+        else
+        {
+            return false;
         }
     }
 
@@ -80,34 +76,31 @@ public class InnPayHandler : BaseMonoBehaviour
     /// </summary>
     public bool SetPay(OrderForCustomer orderForCustomer)
     {
-        lock (mSetPayLock)
+        NpcAIWorkerCpt accountingCpt = null;
+        float distance = 0;
+        //选取距离最近的NPC
+        for (int i = 0; i < listAccountingCpt.Count; i++)
         {
-            NpcAIWorkerCpt accountingCpt = null;
-            float distance = 0;
-            //选取距离最近的NPC
-            for (int i = 0; i < listAccountingCpt.Count; i++)
+            NpcAIWorkerCpt npcAI = listAccountingCpt[i];
+            if (npcAI.workerIntent == NpcAIWorkerCpt.WorkerIntentEnum.Idle)
             {
-                NpcAIWorkerCpt npcAI = listAccountingCpt[i];
-                if (npcAI.workerIntent == NpcAIWorkerCpt.WorkerIntentEnum.Idle)
+                float tempDistance = Vector2.Distance(orderForCustomer.counter.GetAccountingPosition(), npcAI.transform.position);
+                if (distance == 0 || tempDistance < distance)
                 {
-                    float tempDistance = Vector2.Distance(orderForCustomer.counter.GetAccountingPosition(), npcAI.transform.position);
-                    if (distance == 0 || tempDistance < distance)
-                    {
-                        distance = tempDistance;
-                        accountingCpt = npcAI;
-                    }
+                    distance = tempDistance;
+                    accountingCpt = npcAI;
                 }
             }
-            if (accountingCpt != null && orderForCustomer.counter.counterStatus == BuildCounterCpt.CounterStatusEnum.Idle)
-            {
-                orderForCustomer.counter.SetCounterStatus(BuildCounterCpt.CounterStatusEnum.Ready);
-                accountingCpt.SetIntent(NpcAIWorkerCpt.WorkerIntentEnum.Accounting, orderForCustomer);
-                return true;
-            }
-            else
-            {
-                return false;
-            }
+        }
+        if (accountingCpt != null && orderForCustomer.counter.counterStatus == BuildCounterCpt.CounterStatusEnum.Idle)
+        {
+            orderForCustomer.counter.SetCounterStatus(BuildCounterCpt.CounterStatusEnum.Ready);
+            accountingCpt.SetIntent(NpcAIWorkerCpt.WorkerIntentEnum.Accounting, orderForCustomer);
+            return true;
+        }
+        else
+        {
+            return false;
         }
     }
 
@@ -117,7 +110,7 @@ public class InnPayHandler : BaseMonoBehaviour
     public void ShowPayEffects(Vector3 position, long priceL, long priceM, long priceS)
     {
         GameObject payEffects = Instantiate(objPayEffects, position, new Quaternion());
-        PayMoneyCpt payMoneyCpt= payEffects.GetComponent<PayMoneyCpt>();
+        PayMoneyCpt payMoneyCpt = payEffects.GetComponent<PayMoneyCpt>();
         payMoneyCpt.SetData(position, priceL, priceM, priceS);
     }
 }
