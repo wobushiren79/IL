@@ -72,7 +72,7 @@ public class UITownArenaStore : UIBaseOne, StoreInfoManager.ICallBack, IRadioGro
     public void GetStoreInfoSuccess(StoreTypeEnum type, List<StoreInfoBean> listData)
     {
         arenaStoreListData = listData;
-        InitDataByType(StoreForArenaGoodsTypeEnum.Equip);
+        InitDataByType(StoreForArenaGoodsTypeEnum.Dress);
     }
     #endregion
 

@@ -3,8 +3,9 @@ using UnityEditor;
 
 public enum StoreForArenaGoodsTypeEnum
 {
-    Equip = 1,
+    Dress = 1,
     Menu = 2,
     Book = 3,
     Skill = 4,
+    Worker=5,
 }

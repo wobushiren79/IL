@@ -204,15 +204,25 @@ public class UIGameMain : UIGameComponent, DialogView.IDialogCallBack, IRadioGro
         {
             case MoneyEnum.L:
                 if (tvMoneyL != null)
+                {
                     tvMoneyL.text = price + "";
+                    tvMoneyL.transform.localScale = new Vector3(1,1,1);
+                }
                 break;
             case MoneyEnum.M:
                 if (tvMoneyM != null)
+                {
                     tvMoneyM.text = price + "";
+                    tvMoneyM.transform.localScale = new Vector3(1, 1, 1);
+                }
+                  
                 break;
             case MoneyEnum.S:
                 if (tvMoneyS != null)
+                {
                     tvMoneyS.text = price + "";
+                    tvMoneyS.transform.localScale = new Vector3(1, 1, 1);
+                } 
                 break;
         }
     }

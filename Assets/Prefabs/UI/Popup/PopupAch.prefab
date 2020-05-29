@@ -251,7 +251,6 @@ GameObject:
   - component: {fileID: 304943429966672517}
   - component: {fileID: 304943429966672536}
   - component: {fileID: 304943429966672519}
-  - component: {fileID: 304943429966672518}
   m_Layer: 5
   m_Name: Type
   m_TagString: Untagged
@@ -319,21 +318,6 @@ MonoBehaviour:
     m_VerticalOverflow: 0
     m_LineSpacing: 1
   m_Text: "\u7C7B\u578B:"
---- !u!114 &304943429966672518
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 304943429966672516}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cfabb0440166ab443bba8876756fdfa9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_EffectColor: {r: 0, g: 0, b: 0, a: 0.5}
-  m_EffectDistance: {x: 1, y: -1}
-  m_UseGraphicAlpha: 1
 --- !u!1 &304943429996072682
 GameObject:
   m_ObjectHideFlags: 0
@@ -1024,8 +1008,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 115, y: -25}
-  m_SizeDelta: {x: 230, y: 50}
+  m_AnchoredPosition: {x: 115, y: -30}
+  m_SizeDelta: {x: 230, y: 60}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &304943430628791433
 CanvasRenderer:
@@ -1081,6 +1065,8 @@ MonoBehaviour:
   sliderFill: {fileID: 304943429896045620}
   spSliderFull: {fileID: 21300000, guid: eedafc2ae0d43e044955791dbb2ba2be, type: 3}
   spSliderUnFull: {fileID: 21300000, guid: 70fc9a9d94768a74f900360c694bef12, type: 3}
+  colorStatusCompleted: {r: 0, g: 0.7019608, b: 0.20000002, a: 1}
+  colorStatusProcessing: {r: 0.16078432, g: 0.16078432, b: 0.16078432, a: 1}
 --- !u!1 &304943430763738181
 GameObject:
   m_ObjectHideFlags: 0
@@ -1270,6 +1256,8 @@ MonoBehaviour:
     name: 
     content: 
   status: 0
+  colorStatusCompleted: {r: 0, g: 0.7, b: 0.2, a: 1}
+  colorStatusProcessing: {r: 0.16037738, g: 0.16037738, b: 0.16037738, a: 1}
 --- !u!1 &304943430773331159
 GameObject:
   m_ObjectHideFlags: 0
@@ -1794,7 +1782,6 @@ GameObject:
   - component: {fileID: 304943431644707549}
   - component: {fileID: 304943431644707536}
   - component: {fileID: 304943431644707551}
-  - component: {fileID: 304943431644707550}
   m_Layer: 5
   m_Name: Text
   m_TagString: Untagged
@@ -1854,7 +1841,7 @@ MonoBehaviour:
     m_FontStyle: 1
     m_BestFit: 1
     m_MinSize: 1
-    m_MaxSize: 15
+    m_MaxSize: 20
     m_Alignment: 4
     m_AlignByGeometry: 0
     m_RichText: 1
@@ -1862,21 +1849,6 @@ MonoBehaviour:
     m_VerticalOverflow: 0
     m_LineSpacing: 1
   m_Text: "\u6761\u4EF6(1/2)"
---- !u!114 &304943431644707550
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 304943431644707548}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cfabb0440166ab443bba8876756fdfa9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_EffectColor: {r: 0, g: 0, b: 0, a: 0.5}
-  m_EffectDistance: {x: 1, y: -1}
-  m_UseGraphicAlpha: 1
 --- !u!1 &304943431668864312
 GameObject:
   m_ObjectHideFlags: 0

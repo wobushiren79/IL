@@ -64,7 +64,7 @@ public class CharacterBean
         characterData.baseInfo.name = RandomUtil.GetRandomGenerateChineseWord(UnityEngine.Random.Range(2, 4));
         //生成随机能力
         characterData.attributes.CreateRandomData(
-            0, 50,
+            10, 50,
             50, 100,
             1, 5,
             1, 5,
@@ -249,7 +249,7 @@ public class CharacterBean
         equipAttributes = equips.GetEquipAttributes(gameItemsManager);
         totalAttributes = new CharacterAttributesBean
         {
-            life = 50 + selfAttributes.life + equipAttributes.life,
+            life = selfAttributes.life + equipAttributes.life,
             cook = selfAttributes.cook + equipAttributes.cook,
             speed = selfAttributes.speed + equipAttributes.speed,
             account = selfAttributes.account + equipAttributes.account,

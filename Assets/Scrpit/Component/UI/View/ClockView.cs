@@ -13,6 +13,10 @@ public class ClockView : BaseMonoBehaviour
     // 当前时间
     public int timeHour;
 
+    public Color colorForSpring;
+    public Color colorForSummer;
+    public Color colorForAutumn;
+    public Color colorForWinter;
 
     /// <summary>
     /// 设置时间
@@ -55,21 +59,18 @@ public class ClockView : BaseMonoBehaviour
         {
             case 1:
                 seasons = GameCommonInfo.GetUITextById(33);
-                tvMonthAndDay.color = new Color(0.22f, 0.87f, 0f);
                 break;
             case 2:
                 seasons = GameCommonInfo.GetUITextById(34);
-                tvMonthAndDay.color = new Color(1f, 0.8f, 0f);
                 break;
             case 3:
                 seasons = GameCommonInfo.GetUITextById(35);
-                tvMonthAndDay.color = new Color(1f, 0.32f, 0f);
                 break;
             case 4:
                 seasons = GameCommonInfo.GetUITextById(36);
-                tvMonthAndDay.color = new Color(0f, 0.9f, 1f);
                 break;
         }
+        tvMonthAndDay.color = SeasonsEnumTools.GetSeasonsColor((SeasonsEnum)month);
         tvMonthAndDay.text = seasons + " " + day + GameCommonInfo.GetUITextById(31);
     }
 }

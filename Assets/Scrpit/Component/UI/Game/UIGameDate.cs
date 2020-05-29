@@ -135,7 +135,7 @@ public class UIGameDate : UIGameComponent
                 itemWork.baseInfo.SetWorkerStatus(WorkerStatusEnum.Rest);
             }
         }
-        if (year == 221 && day == 1 && day == 1)
+        if (year == 221 && month == 1 && day == 1)
         {
             InnRest();
         }

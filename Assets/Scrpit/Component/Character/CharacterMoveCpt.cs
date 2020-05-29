@@ -93,7 +93,7 @@ public class CharacterMoveCpt : BaseMonoBehaviour
     {
         isManualMove = false;
         bool canGo = true;
-        if (navMeshAgent != null)
+        if (navMeshAgent != null && navMeshAgent.isActiveAndEnabled)
         {
             navMeshAgent.isStopped = false;
             navMeshAgent.updateRotation = false;

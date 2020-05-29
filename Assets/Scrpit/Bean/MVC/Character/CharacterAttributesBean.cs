@@ -8,13 +8,13 @@ public class CharacterAttributesBean
 {
     public int loyal;//忠诚
 
-    public int life;//生命值
-    public int cook;// 厨力
-    public int speed;// 速度
-    public int account;// 计算
-    public int charm;// 魅力
-    public int force;// 武力
-    public int lucky;// 幸运
+    public int life = 50;//生命值
+    public int cook = 1;// 厨力
+    public int speed = 1;// 速度dw
+    public int account = 1;// 计算
+    public int charm = 1;// 魅力
+    public int force = 1;// 武力
+    public int lucky = 1;// 幸运
 
     //技能列表
     public List<long> listSkills = new List<long>();

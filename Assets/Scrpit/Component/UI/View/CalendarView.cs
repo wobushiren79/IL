@@ -107,7 +107,7 @@ public class CalendarView : BaseMonoBehaviour, IDateInfoView
                 foreach (ItemGameCalendarCpt itemGameCalendar in mListItemDay)
                 {
                     if (itemGameCalendar.dateInfo.day == itemBuildDay.day
-                        && itemGameCalendar.dateInfo.month== itemBuildDay.month
+                        && itemGameCalendar.dateInfo.month == itemBuildDay.month
                         && year == itemBuildDay.year)
                     {
                         itemGameCalendar.SetRemark("建");
@@ -139,24 +139,21 @@ public class CalendarView : BaseMonoBehaviour, IDateInfoView
         {
             case SeasonsEnum.Spring:
                 tvSeasons.text = GameCommonInfo.GetUITextById(33);
-                tvSeasons.color = new Color(0.22f, 0.87f, 0f);
                 break;
             case SeasonsEnum.Summer:
                 tvSeasons.text = GameCommonInfo.GetUITextById(34);
-                tvSeasons.color = new Color(1f, 0.8f, 0f);
                 break;
             case SeasonsEnum.Autumn:
                 tvSeasons.text = GameCommonInfo.GetUITextById(35);
-                tvSeasons.color = new Color(1f, 0.32f, 0f);
                 break;
             case SeasonsEnum.Winter:
                 tvSeasons.text = GameCommonInfo.GetUITextById(36);
-                tvSeasons.color = new Color(0f, 0.9f, 1f);
                 break;
             default:
                 tvSeasons.text = "";
                 break;
         }
+        tvSeasons.color = SeasonsEnumTools.GetSeasonsColor((SeasonsEnum)month);
     }
 
     /// <summary>

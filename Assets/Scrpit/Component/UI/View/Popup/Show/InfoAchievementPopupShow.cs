@@ -31,6 +31,8 @@ public class InfoAchievementPopupShow : PopupShowView
     public AchievementInfoBean achievementInfo;
     public AchievementStatusEnum status;
 
+    public Color colorStatusCompleted;
+    public Color colorStatusProcessing;
     public override void Awake()
     {
         base.Awake();
@@ -47,7 +49,7 @@ public class InfoAchievementPopupShow : PopupShowView
     {
         this.status = status;
         this.achievementInfo = achievementInfo;
-        SetIcon(achievementInfo.type, achievementInfo.icon_key, achievementInfo.icon_key_remark);
+        SetIcon(achievementInfo.GetAchievementType(), achievementInfo.icon_key, achievementInfo.icon_key_remark);
         SetName(achievementInfo.name);
         SetContent(achievementInfo.content);
         SetAchieve(status, achievementInfo);
@@ -55,17 +57,10 @@ public class InfoAchievementPopupShow : PopupShowView
         SetReward(achievementInfo);
     }
 
-    public void SetIcon(int type, string iconKey, string iconKeyRemark)
+    public void SetIcon(AchievementTypeEnum type, string iconKey, string iconKeyRemark)
     {
         Sprite spIcon;
-        if (type == 1)
-        {
-            spIcon = innFoodManager.GetFoodSpriteByName(iconKey);
-        }
-        else
-        {
-            spIcon = iconDataManager.GetIconSpriteByName(iconKey);
-        }
+        spIcon = iconDataManager.GetIconSpriteByName(iconKey);
 
         if (spIcon != null && ivIcon != null && ivRemark != null)
         {
@@ -122,12 +117,12 @@ public class InfoAchievementPopupShow : PopupShowView
             {
                 case AchievementStatusEnum.Completed:
                     tvStatus.text = GameCommonInfo.GetUITextById(12001);
-                    tvStatus.color = new Color(0, 1, 0, 1);
+                    tvStatus.color = colorStatusCompleted;
                     break;
                 case AchievementStatusEnum.Processing:
                     tvStatus.text = GameCommonInfo.GetUITextById(12002);
                     tvStatus.color = new Color();
-                    tvStatus.color = new Color(0, 0, 0, 1);
+                    tvStatus.color = colorStatusProcessing;
                     break;
                 case AchievementStatusEnum.ToBeConfirmed:
                     tvStatus.text = GameCommonInfo.GetUITextById(12003);

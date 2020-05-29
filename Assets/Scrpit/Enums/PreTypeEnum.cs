@@ -812,7 +812,7 @@ public class PreTypeEnumTools : DataTools
                     long[] listItems = StringUtil.SplitBySubstringForArrayLong(itemData.data, ',');
                     long itemsId = listItems[0];
                     long itemsNumber = listItems[1];
-                    gameData.AddItemsNumber(itemsId, itemsNumber);
+                    gameData.AddItemsNumber(itemsId, -itemsNumber);
                     break;
                 case PreTypeEnum.PayIngForOilsalt:
                     gameData.AddIng(IngredientsEnum.Oilsalt, int.Parse(itemData.data));

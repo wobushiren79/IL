@@ -11,6 +11,9 @@ public class ItemGamePopupAchCpt : BaseMonoBehaviour
     public Sprite spSliderFull;
     public Sprite spSliderUnFull;
 
+    public Color colorStatusCompleted;
+    public Color colorStatusProcessing;
+
     public void SetData(string name, float pro)
     {
         if (tvName != null)
@@ -20,12 +23,12 @@ public class ItemGamePopupAchCpt : BaseMonoBehaviour
         if (pro >= 1)
         {
             sliderFill.sprite = spSliderFull;
-            tvName.color = new Color(0, 1, 0, 1);
+            tvName.color = colorStatusCompleted;
         }
         else
         {
             sliderFill.sprite = spSliderUnFull;
-            tvName.color = new Color(0, 0, 0, 1);
+            tvName.color = colorStatusProcessing;
         }
     }
 }

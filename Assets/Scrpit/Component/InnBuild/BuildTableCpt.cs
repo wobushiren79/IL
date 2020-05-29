@@ -200,6 +200,9 @@ public class BuildTableCpt : BaseBuildItemCpt
     /// <returns></returns>
     public FoodForCustomerCpt GetTableFood()
     {
-       return  GetTable().GetComponentInChildren<FoodForCustomerCpt>();
+       GameObject objTable =   GetTable();
+       if (!objTable)
+            return null;
+       return objTable.GetComponentInChildren<FoodForCustomerCpt>();
     }
 }
