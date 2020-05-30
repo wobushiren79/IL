@@ -38,7 +38,7 @@ public class UITownRecruitment : UIBaseOne, DialogView.IDialogCallBack
         {
             infoPromptPopupButton.SetPopupShowView(uiGameManager.infoPromptPopup);
             infoPromptPopupButton.SetContent(GameCommonInfo.GetUITextById(271));
-        }          
+        }
     }
 
     public override void RefreshUI()
@@ -52,7 +52,7 @@ public class UITownRecruitment : UIBaseOne, DialogView.IDialogCallBack
         base.Update();
         if (uiGameManager.gameDataManager != null && tvNumber != null)
         {
-            tvNumber.text =uiGameManager.gameDataManager.gameData.listWorkerCharacter.Count + "/" + uiGameManager.gameDataManager.gameData.workerNumberLimit;
+            tvNumber.text = uiGameManager.gameDataManager.gameData.listWorkerCharacter.Count + "/" + uiGameManager.gameDataManager.gameData.workerNumberLimit;
         }
     }
 
@@ -68,7 +68,7 @@ public class UITownRecruitment : UIBaseOne, DialogView.IDialogCallBack
     public void CreateCandidateData()
     {
         GameCommonInfo.InitRandomSeed();
-        for (int i = 0; i < Random.Range(1,15); i++)
+        for (int i = 0; i < Random.Range(1, 15); i++)
         {
             CharacterBean characterData = CharacterBean.CreateRandomWorkerData(uiGameManager.characterBodyManager);
             GameCommonInfo.DailyLimitData.AddRecruitmentCharacter(characterData);
@@ -117,7 +117,7 @@ public class UITownRecruitment : UIBaseOne, DialogView.IDialogCallBack
     {
         uiGameManager.audioHandler.PlaySound(AudioSoundEnum.ButtonForNormal);
         //检测是否超过人员上限
-        if (uiGameManager.gameDataManager.gameData.listWorkerCharacter.Count >=uiGameManager.gameDataManager.gameData.workerNumberLimit)
+        if (uiGameManager.gameDataManager.gameData.listWorkerCharacter.Count >= uiGameManager.gameDataManager.gameData.workerNumberLimit)
         {
             uiGameManager.toastManager.ToastHint(GameCommonInfo.GetUITextById(1051));
             return;

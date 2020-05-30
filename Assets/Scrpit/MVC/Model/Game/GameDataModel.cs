@@ -57,21 +57,45 @@ public class GameDataModel : BaseMVCModel
         doorPositionList.Add(new Vector3(5, 0, 0));
         doorPositionList.Add(new Vector3(6, 0, 0));
         InnResBean innResDoor = new InnResBean(90001, new Vector3(4.5f, 0.5f, 0), doorPositionList, Direction2DEnum.Left);
+        //添加家具
+        List<Vector3> counterPositionList = new List<Vector3>();
+        counterPositionList.Add(new Vector3(7, 1, 0));
+        counterPositionList.Add(new Vector3(6, 1, 0));
+        counterPositionList.Add(new Vector3(7, 2, 0));
+        counterPositionList.Add(new Vector3(6, 2, 0));
+        counterPositionList.Add(new Vector3(7, 3, 0));
+        counterPositionList.Add(new Vector3(6, 3, 0));
+        InnResBean innResCounter = new InnResBean(50001, new Vector3(6.5f, 2.5f, 0), counterPositionList, Direction2DEnum.Right);
+
+        List<Vector3> stovePositionList = new List<Vector3>();
+        stovePositionList.Add(new Vector3(3, 6, 0));
+        stovePositionList.Add(new Vector3(4, 6, 0));
+        stovePositionList.Add(new Vector3(3, 5, 0));
+        stovePositionList.Add(new Vector3(4, 5, 0));
+        stovePositionList.Add(new Vector3(3, 4, 0));
+        stovePositionList.Add(new Vector3(4, 4, 0));
+        InnResBean innResStove = new InnResBean(40001, new Vector3(2.5f, 5.5f, 0), stovePositionList, Direction2DEnum.Left);
+
+        List<Vector3> tablePositionList = new List<Vector3>();
+        tablePositionList.Add(new Vector3(2, 2, 0));
+        tablePositionList.Add(new Vector3(3, 2, 0));
+        InnResBean innResTable = new InnResBean(30001, new Vector3(1.5f, 2.5f, 0), tablePositionList, Direction2DEnum.Left);
+
         gameData.innBuildData.AddFurniture(innResDoor);
+        gameData.innBuildData.AddFurniture(innResCounter);
+        gameData.innBuildData.AddFurniture(innResStove);
+        gameData.innBuildData.AddFurniture(innResTable);
         //修改客栈大小
         gameData.innBuildData.ChangeInnSize(new List<InnResBean>() { innResDoor }, 9, 9);
         //母亲的信
         gameData.listItems.Add(new ItemBean(1500001, 1));
         //添加家具
-        //TODO 测试 
-        gameData.listBuild.Add(new ItemBean(30001, 3));
-        gameData.listBuild.Add(new ItemBean(40001, 1));
-        gameData.listBuild.Add(new ItemBean(50001, 1));
+        gameData.listBuild.Add(new ItemBean(30001, 2));
 
         //添加菜单
         gameData.listMenu.Add(new MenuOwnBean(1));
         gameData.listMenu.Add(new MenuOwnBean(2));
-
+    
         //设置时间
         TimeBean gameTime = new TimeBean();
         gameTime.SetTimeForYMD(221, 1, 0);

@@ -31,6 +31,8 @@ public class NpcAICustomerCpt : BaseNpcAI
 
     public CustomerIntentEnum customerIntent = CustomerIntentEnum.Walk;//意图 顾客： 1路过 2思考 3进店 4找座位 5点菜 6吃 7结账 
 
+    //例子效果容器
+    public GameObject objEffectContainer;
     //表情控制
     public CharacterMoodCpt characterMoodCpt;
 
@@ -423,7 +425,7 @@ public class NpcAICustomerCpt : BaseNpcAI
     /// <param name="mood"></param>
     public virtual void ChangeMood(float mood)
     {
-        orderForCustomer.innEvaluation.mood += mood;
+        orderForCustomer.innEvaluation.AddMood(mood);
         characterMoodCpt.SetMood(orderForCustomer.innEvaluation.GetPraise());
         if (orderForCustomer.innEvaluation.mood <= 0)
         {

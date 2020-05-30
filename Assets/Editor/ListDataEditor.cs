@@ -188,8 +188,8 @@ public class ListDataEditor : Editor
     {
         GameObject Target = Selection.gameObjects[0];
         EffectManager combatEffectManager = Target.GetComponent<EffectManager>();
-        combatEffectManager.listCombatEffect.Clear();
-        AddGameObjectDictionaryByFolder("Assets/Prefabs/Effects/Combat/", combatEffectManager.listCombatEffect);
+        combatEffectManager.listEffectPS.Clear();
+        AddGameObjectDictionaryByFolder("Assets/Prefabs/Effects/Common/", combatEffectManager.listEffectPS);
     }
 
     /// <summary>

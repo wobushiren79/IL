@@ -32,7 +32,7 @@ public class UserDailyLimitBean
         else
             exchangeMoneyL = levelStar + (levelTitle - 1) * 5;
         //每日恶人数量
-        numberForRascal = levelTitle + 1;
+        numberForRascal =(levelTitle==0 ? 1:  (levelTitle - 1) * 5 + levelStar + 1);
 
         listNpcGift.Clear();
         listNpcTalk.Clear();

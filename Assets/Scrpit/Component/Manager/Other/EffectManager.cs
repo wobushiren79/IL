@@ -3,15 +3,16 @@ using UnityEditor;
 
 public class EffectManager : BaseManager
 {
-    public GameObjectDictionary listCombatEffect;
+    public GameObjectDictionary listEffectPS;
 
     /// <summary>
     /// 通过名字获取特效
     /// </summary>
     /// <param name="name"></param>
     /// <returns></returns>
-    public GameObject GetCombatEffectByName(string name)
+    public GameObject GetEffectPSByName(string name)
     {
-        return GetGameObjectByName(name, listCombatEffect);
+        return GetGameObjectByName(name, listEffectPS);
     }
+
 }

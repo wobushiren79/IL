@@ -23,6 +23,7 @@ public class UIGameTest : UIGameComponent
     public Button btNpcFriendTeam;
     public Button btNpcRascal;
     public Button btNpcSundry;
+    public Button btNpcConvert;
 
     public Button btAddAll;
     private void Start()
@@ -43,7 +44,8 @@ public class UIGameTest : UIGameComponent
             btNpcRascal.onClick.AddListener(CreateRascal);
         if (btNpcSundry != null)
             btNpcSundry.onClick.AddListener(CreateSundry);
-
+        if (btNpcConvert != null)
+            btNpcConvert.onClick.AddListener(CreateConvert);
         if (btAddAll != null)
             btAddAll.onClick.AddListener(AddAll);
     }
@@ -174,5 +176,12 @@ public class UIGameTest : UIGameComponent
         if (uiGameManager.npcEventBuilder == null)
             return;
         uiGameManager.npcEventBuilder.BuildSundry(long.Parse(etNpcGuestTeamId.text));
+    }
+
+    public void CreateConvert()
+    {
+        if (uiGameManager.npcEventBuilder == null)
+            return;
+        uiGameManager.npcEventBuilder.BuildConvert(long.Parse(etNpcGuestTeamId.text));
     }
 }

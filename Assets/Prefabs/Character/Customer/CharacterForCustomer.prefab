@@ -33,6 +33,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 3885834711599310108}
+  - {fileID: 13220404270503696}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -129,6 +130,8 @@ MonoBehaviour:
         workerType: 1
         workerLevel: 0
         workerExp: 0
+        priority: 0
+        isWorking: 1
         cookNumber: 0
         cookTime: 0
         listFoodCookNumer: []
@@ -136,6 +139,8 @@ MonoBehaviour:
         workerType: 2
         workerLevel: 0
         workerExp: 0
+        priority: 0
+        isWorking: 1
         cleanTotalNumber: 0
         sendTotalNumber: 0
         cleanTotalTime: 0
@@ -143,6 +148,8 @@ MonoBehaviour:
         workerType: 3
         workerLevel: 0
         workerExp: 0
+        priority: 0
+        isWorking: 1
         accountingTotalNumber: 0
         accountingErrorNumber: 0
         accountingSuccessNumber: 0
@@ -160,6 +167,8 @@ MonoBehaviour:
         workerType: 4
         workerLevel: 0
         workerExp: 0
+        priority: 0
+        isWorking: 1
         accostTotalNumber: 0
         accostSuccessNumber: 0
         accostFailNumber: 0
@@ -168,21 +177,13 @@ MonoBehaviour:
         workerType: 5
         workerLevel: 0
         workerExp: 0
+        priority: 0
+        isWorking: 1
         fightTotalNumber: 0
         fightWinNumber: 0
         fightLoseNumber: 0
         fightTotalTime: 0
         restTotalTime: 0
-      isChef: 0
-      isWaiter: 0
-      isAccountant: 1
-      isAccost: 0
-      isBeater: 0
-      priorityChef: 0
-      priorityWaiter: 0
-      priorityAccountant: 0
-      priorityAccost: 0
-      priorityBeater: 0
       workerStatus: 0
       listLoveItems: 
     attributes:
@@ -246,6 +247,7 @@ MonoBehaviour:
       eye_color: 
       mouth_id: 
       mouth_color: 
+      skin_color: 
       title_name: 
       name: 
       position_x: 0
@@ -260,6 +262,9 @@ MonoBehaviour:
       attributes_charm: 0
       attributes_force: 0
       attributes_lucky: 0
+      wage_l: 0
+      wage_m: 0
+      wage_s: 0
       love_items: 
       love_menus: 
       condition: 
@@ -276,7 +281,9 @@ MonoBehaviour:
   characterExpression: {fileID: 3084067646814559202}
   characterStatusIcon: {fileID: 881094660212489284}
   objTake: {fileID: 0}
+  customerType: 0
   customerIntent: 0
+  objEffectContainer: {fileID: 4128651983290646168}
   characterMoodCpt: {fileID: 6355272750433371025}
   movePosition: {x: 0, y: 0, z: 0}
   timeWaitSeat: 20
@@ -293,6 +300,36 @@ SortingGroup:
   m_SortingLayerID: -63496745
   m_SortingLayer: 9
   m_SortingOrder: 0
+--- !u!1 &4128651983290646168
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 13220404270503696}
+  m_Layer: 0
+  m_Name: EffectContainer
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &13220404270503696
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4128651983290646168}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 7655322892841990357}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1697461308649322183
 PrefabInstance:
   m_ObjectHideFlags: 0

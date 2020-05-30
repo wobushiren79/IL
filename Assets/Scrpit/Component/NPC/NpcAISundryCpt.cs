@@ -1,8 +1,8 @@
 ﻿using UnityEngine;
 using UnityEditor;
-using System;
+using System.Collections.Generic;
 
-public class NpcAISundry : BaseNpcAI, IBaseObserver
+public class NpcAISundryCpt : BaseNpcAI, IBaseObserver
 {
     public enum SundryIntentEnum
     {
@@ -12,6 +12,7 @@ public class NpcAISundry : BaseNpcAI, IBaseObserver
         Leave = 10,//离开
     }
 
+    public Vector3 leavePosition = Vector3.zero;
     public Vector3 movePosition = Vector3.zero;
     public SundryIntentEnum sundryIntent = SundryIntentEnum.Idle;
     //小队唯一代码
@@ -26,6 +27,7 @@ public class NpcAISundry : BaseNpcAI, IBaseObserver
     protected InnHandler innHandler;
     protected EventHandler eventHandler;
     protected SceneInnManager sceneInnManager;
+    protected NpcEventBuilder npcEventBuilder;
 
     public override void Awake()
     {
@@ -33,9 +35,10 @@ public class NpcAISundry : BaseNpcAI, IBaseObserver
         innHandler = Find<InnHandler>(ImportantTypeEnum.InnHandler);
         eventHandler = Find<EventHandler>(ImportantTypeEnum.EventHandler);
         sceneInnManager = Find<SceneInnManager>(ImportantTypeEnum.SceneManager);
+        npcEventBuilder = Find<NpcEventBuilder>(ImportantTypeEnum.NpcBuilder);
     }
 
-    private void Update()
+    public virtual void Update()
     {
         switch (sundryIntent)
         {
@@ -156,8 +159,46 @@ public class NpcAISundry : BaseNpcAI, IBaseObserver
     /// </summary>
     protected void SetIntentForLeave()
     {
-        movePosition = sceneInnManager.GetRandomSceneExportPosition();
+        if(leavePosition== Vector3.zero)
+        {
+            leavePosition = sceneInnManager.GetRandomSceneExportPosition();
+        }
+        movePosition = leavePosition + new Vector3(Random.Range(-0.5f, 0.5f), Random.Range(-0.5f, 0.5f));
         SetCharacterMove(movePosition);
+    }
+
+    /// <summary>
+    /// 设置全体意图
+    /// </summary>
+    public void SetTeamIntent(SundryIntentEnum sundryIntent)
+    {
+        List<NpcAISundryCpt> listNpc = npcEventBuilder.GetSundryTeamByTeamCode(teamCode);
+        if (sundryIntent == SundryIntentEnum.Leave)
+        {
+            leavePosition = sceneInnManager.GetRandomSceneExportPosition();
+        }
+        foreach (NpcAISundryCpt itemNpc in listNpc)
+        {
+            itemNpc.leavePosition = leavePosition;
+            itemNpc.SetIntent(sundryIntent);
+        }
+    }
+
+    /// <summary>
+    /// 对话结束
+    /// </summary>
+    protected virtual void EventEnd()
+    {
+        //根据对话的好感加成 不同的反应
+        if (addFavorability > 0)
+        {
+
+        }
+        else if (addFavorability < 0)
+        {
+
+        }
+        SetTeamIntent(SundryIntentEnum.Leave);
     }
 
     #region 通知
@@ -171,16 +212,10 @@ public class NpcAISundry : BaseNpcAI, IBaseObserver
             }
             else if (type == (int)EventHandler.NotifyEventTypeEnum.EventEnd)
             {
-                //根据对话的好感加成 不同的反应
-                if (addFavorability > 0)
-                {
-                }
-                else if (addFavorability < 0)
-                {
-                }
-                SetIntent(SundryIntentEnum.Leave);
+                EventEnd();
             }
         }
     }
     #endregion
+
 }

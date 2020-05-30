@@ -89,7 +89,6 @@ public class ItemGameTextSelectCpt : ItemGameBaseCpt, DialogView.IDialogCallBack
             PreTypeForMiniGameEnumTools.GetPlayerNumber(textData.pre_data_minigame, out int playerNumber);
             dialogView.SetPickCharacterMax(playerNumber);
         }
-
     }
 
     #region dilaog回调

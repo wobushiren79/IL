@@ -43,6 +43,7 @@ public enum ImportantTypeEnum
     InnHandler,
     AudioHandler,
     SceneHandler,
+    EffectHandler,
 
     Popup,
     Sun,

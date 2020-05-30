@@ -196,7 +196,7 @@ public class EventHandler : BaseHandler,
     /// <param name="npcAISundry"></param>
     /// <param name="markId"></param>
     /// <returns></returns>
-    public bool EventTriggerForTalkBySundry(NpcAISundry npcAISundry, long markId)
+    public bool EventTriggerForTalkBySundry(NpcAISundryCpt npcAISundry, long markId)
     {
         if (controlHandler != null)
         {

@@ -89,7 +89,6 @@ public class NpcAICustomerForGuestTeamCpt : NpcAICustomerCpt
                         teamMember.characterMoveCpt.SetDestination(leavePostion);
                     }
                 }
-
                 break;
             case CustomerIntentForGuestTeamEnum.Together:
                 Destroy(gameObject);

@@ -11,6 +11,8 @@ public class NpcEventBuilder : NpcNormalBuilder, IBaseObserver
     public GameObject objFriendModel;
     //杂项模型
     public GameObject objSundryModel;
+    //转换心情者模型
+    public GameObject objConvertModel;
 
     //当天已经生成过的NPCID
     public List<long> listExistNpcId = new List<long>();
@@ -20,6 +22,8 @@ public class NpcEventBuilder : NpcNormalBuilder, IBaseObserver
     public List<NpcTeamBean> listRascal = new List<NpcTeamBean>();
     public List<NpcTeamBean> listSundry = new List<NpcTeamBean>();
     public List<NpcTeamBean> listFriend = new List<NpcTeamBean>();
+    public List<NpcTeamBean> listConvert = new List<NpcTeamBean>();
+
     private void Start()
     {
         gameTimeHandler.AddObserver(this);
@@ -34,12 +38,12 @@ public class NpcEventBuilder : NpcNormalBuilder, IBaseObserver
         //0.5的概率触发事件
         if (isStartRate > 1f)
         {
-            int eventType = UnityEngine.Random.Range(0, 3);
+            int eventType = UnityEngine.Random.Range(0, 4);
             switch (eventType)
             {
                 case 0:
                     BuildTownFriendsForOne();
-                    break;   
+                    break;
                 case 1:
                     BuildSundry();
                     break;
@@ -47,11 +51,62 @@ public class NpcEventBuilder : NpcNormalBuilder, IBaseObserver
                     BuildRascal();
                     break;
                 case 3:
+                    BuildConvert();
+                    break;
+                case 4:
                     //TODO 待定 需要处理单个朋友和团队朋友重复出现的问题
                     //BuildTownFriendsForTeam();
                     break;
             }
         }
+    }
+
+    /// <summary>
+    /// 创建转换者事件
+    /// </summary>
+    public void BuildConvert()
+    {
+        Vector3 npcPosition = GetRandomStartPosition();
+        NpcTeamBean teamData = RandomUtil.GetRandomDataByList(listRascal);
+        BuildConvert(teamData, npcPosition);
+    }
+
+    public void BuildConvert(long teamId)
+    {
+        Vector3 npcPosition = GetRandomStartPosition();
+        NpcTeamBean teamData = npcTeamManager.GetConvertTeam(teamId);
+        BuildConvert(teamData, npcPosition);
+    }
+
+    public void BuildConvert(NpcTeamBean npcTeam, Vector3 npcPosition)
+    {
+        if (npcTeam == null || listExistTeamId.Contains(npcTeam.id))
+            return;
+        //获取小队成员数据
+        npcTeam.GetTeamCharacterData(npcInfoManager, out List<CharacterBean> listLeader, out List<CharacterBean> listMembers);
+        //设置小队相关
+        string teamCode = SystemUtil.GetUUID(SystemUtil.UUIDTypeEnum.N);
+        int npcNumber = listLeader.Count + listMembers.Count;
+        for (int i = 0; i < npcNumber; i++)
+        {
+            CharacterBean characterData = null;
+            if (i < listLeader.Count)
+            {
+                characterData = listLeader[i];
+            }
+            else
+            {
+                characterData = listMembers[i - listLeader.Count];
+            }
+            //生成NPC
+            GameObject npcObj = BuildNpc(objConvertModel, characterData, npcPosition + new Vector3(UnityEngine.Random.Range(-0.5f, 0.5f), UnityEngine.Random.Range(-0.5f, 0.5f)));
+            //设置意图
+            NpcAIConvertCpt convertCpt = npcObj.GetComponent<NpcAIConvertCpt>();
+            CharacterFavorabilityBean characterFavorability = gameDataManager.gameData.GetCharacterFavorability(long.Parse(characterData.baseInfo.characterId));
+            convertCpt.SetTeamData(teamCode, npcTeam, i);
+            convertCpt.SetIntent(NpcAISundryCpt.SundryIntentEnum.GoToInn);
+        }
+        listExistTeamId.Add(npcTeam.id);
     }
 
     /// <summary>
@@ -63,9 +118,9 @@ public class NpcEventBuilder : NpcNormalBuilder, IBaseObserver
         if (GameCommonInfo.DailyLimitData.CheckRascalNumber(1))
         {
             Vector3 npcPosition = GetRandomStartPosition();
-            NpcTeamBean teamData = RandomUtil.GetRandomDataByList(listRascal); 
+            NpcTeamBean teamData = RandomUtil.GetRandomDataByList(listRascal);
             BuildRascal(teamData, npcPosition);
-        } 
+        }
     }
 
     public void BuildRascal(long teamId)
@@ -156,10 +211,10 @@ public class NpcEventBuilder : NpcNormalBuilder, IBaseObserver
             //生成NPC
             GameObject npcObj = BuildNpc(objSundryModel, characterData, npcPosition + new Vector3(UnityEngine.Random.Range(-0.5f, 0.5f), UnityEngine.Random.Range(-0.5f, 0.5f)));
             //设置意图
-            NpcAISundry sundryCpt = npcObj.GetComponent<NpcAISundry>();
+            NpcAISundryCpt sundryCpt = npcObj.GetComponent<NpcAISundryCpt>();
             CharacterFavorabilityBean characterFavorability = gameDataManager.gameData.GetCharacterFavorability(long.Parse(characterData.baseInfo.characterId));
             sundryCpt.SetTeamData(teamCode, npcTeam, i);
-            sundryCpt.SetIntent(NpcAISundry.SundryIntentEnum.GoToInn);
+            sundryCpt.SetIntent(NpcAISundryCpt.SundryIntentEnum.GoToInn);
         }
         listExistTeamId.Add(npcTeam.id);
     }
@@ -198,7 +253,7 @@ public class NpcEventBuilder : NpcNormalBuilder, IBaseObserver
     public void BuildTownFriendsForTeam()
     {
         Vector3 npcPosition = GetRandomStartPosition();
-        NpcTeamBean  teamData = RandomUtil.GetRandomDataByList(listFriend);
+        NpcTeamBean teamData = RandomUtil.GetRandomDataByList(listFriend);
         BuildTownFriendsForTeam(teamData, npcPosition);
     }
 
@@ -304,6 +359,27 @@ public class NpcEventBuilder : NpcNormalBuilder, IBaseObserver
         return listTeamMember;
     }
 
+    /// <summary>
+    /// 通过团队Code获取杂项成员
+    /// </summary>
+    /// <param name="teamCode"></param>
+    /// <returns></returns>
+    public List<NpcAISundryCpt> GetSundryTeamByTeamCode(string teamCode)
+    {
+        List<NpcAISundryCpt> listTeamMember = new List<NpcAISundryCpt>();
+        if (CheckUtil.StringIsNull(teamCode))
+            return listTeamMember;
+        NpcAISundryCpt[] arrayTeam = objContainer.GetComponentsInChildren<NpcAISundryCpt>();
+        foreach (NpcAISundryCpt itemData in arrayTeam)
+        {
+            if (itemData.teamCode.EndsWith(teamCode))
+            {
+                listTeamMember.Add(itemData);
+            }
+        }
+        return listTeamMember;
+    }
+
     #region 时间回调通知
     public void ObserbableUpdate<T>(T observable, int type, params System.Object[] obj) where T : UnityEngine.Object
     {
@@ -316,6 +392,9 @@ public class NpcEventBuilder : NpcNormalBuilder, IBaseObserver
             listRascal = npcTeamManager.GetRandomTeamMeetConditionByType(NpcTeamTypeEnum.Rascal, gameDataManager.gameData);
             listSundry = npcTeamManager.GetRandomTeamMeetConditionByType(NpcTeamTypeEnum.Sundry, gameDataManager.gameData);
             listFriend = npcTeamManager.GetRandomTeamMeetConditionByType(NpcTeamTypeEnum.Friend, gameDataManager.gameData);
+            listConvert.Clear();
+            listConvert.AddRange(npcTeamManager.GetRandomTeamMeetConditionByType(NpcTeamTypeEnum.Entertain, gameDataManager.gameData));
+            listConvert.AddRange(npcTeamManager.GetRandomTeamMeetConditionByType(NpcTeamTypeEnum.Disappointed, gameDataManager.gameData));
         }
         else if ((GameTimeHandler.NotifyTypeEnum)type == GameTimeHandler.NotifyTypeEnum.EndDay)
         {

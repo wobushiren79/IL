@@ -29,7 +29,16 @@ public class SceneGameInnInit : BaseSceneInit, IBaseObserver, DialogView.IDialog
     public override void Start()
     {
         base.Start();
-
+        //获取团队NPC信息
+        if (npcTeamManager != null)
+        {
+            npcTeamManager.npcTeamController.GetNpcTeamByType(NpcTeamTypeEnum.Customer);
+            npcTeamManager.npcTeamController.GetNpcTeamByType(NpcTeamTypeEnum.Friend);
+            npcTeamManager.npcTeamController.GetNpcTeamByType(NpcTeamTypeEnum.Rascal);
+            npcTeamManager.npcTeamController.GetNpcTeamByType(NpcTeamTypeEnum.Sundry);
+            npcTeamManager.npcTeamController.GetNpcTeamByType(NpcTeamTypeEnum.Entertain);
+            npcTeamManager.npcTeamController.GetNpcTeamByType(NpcTeamTypeEnum.Disappointed);
+        }
         //故事数据
         if (storyInfoManager != null)
             storyInfoManager.storyInfoController.GetStoryInfoByScene(ScenesEnum.GameInnScene);

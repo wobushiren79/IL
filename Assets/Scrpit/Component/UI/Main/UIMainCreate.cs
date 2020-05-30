@@ -279,6 +279,7 @@ public class UIMainCreate : UIGameComponent,
         gameData.userCharacter.attributes.charm = charm;
         gameData.userCharacter.attributes.force = force;
         gameData.userCharacter.attributes.lucky = lucky;
+        gameData.userCharacter.attributes.life = 50;
         uiGameManager.gameDataManager.CreateGameData(gameData);
 
         SceneUtil.SceneChange(ScenesEnum.GameInnScene);

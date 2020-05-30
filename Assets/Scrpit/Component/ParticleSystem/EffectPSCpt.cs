@@ -2,9 +2,9 @@
 using UnityEditor;
 using System;
 
-public class CombatPSCpt : BaseMonoBehaviour
+public class EffectPSCpt : BaseMonoBehaviour
 {
-    public ParticleSystem combatPS;
+    public ParticleSystem effectPS;
     public AudioSoundEnum soundType;
     protected AudioHandler audioHandler;
 
@@ -13,8 +13,8 @@ public class CombatPSCpt : BaseMonoBehaviour
         //音效
         audioHandler = Find<AudioHandler>( ImportantTypeEnum.AudioHandler);
 
-        combatPS = GetComponent<ParticleSystem>();
-        ParticleSystem.MainModule mainModule = combatPS.main;
+        effectPS = GetComponent<ParticleSystem>();
+        ParticleSystem.MainModule mainModule = effectPS.main;
         mainModule.loop = false;
         mainModule.stopAction = ParticleSystemStopAction.Callback;
     }
@@ -24,7 +24,7 @@ public class CombatPSCpt : BaseMonoBehaviour
     /// </summary>
     public void Play()
     {
-        combatPS.Play();
+        effectPS.Play();
         audioHandler.PlaySound(soundType);
     }
 

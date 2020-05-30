@@ -35,7 +35,7 @@ public enum AudioSoundEnum
     FightForKnife=411,//刀
 
     UseMedicine =501,//使用药品
-
+    Passive=601,//消极失败
 
 
 }

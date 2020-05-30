@@ -52,8 +52,9 @@ public class CharacterStatusIconCpt : BaseMonoBehaviour
             CharacterStatusIconItemCpt itemCpt = listStatusIcon[i];
             if (itemCpt.statusIconData.iconStatus == characterStatus)
             {
-                itemCpt.transform.DOScale(new Vector3(0, 0, 0), 0.5f).OnComplete(delegate {
-                    if(itemCpt && itemCpt.gameObject)
+                itemCpt.transform.DOScale(new Vector3(0, 0, 0), 0.5f).OnComplete(delegate
+                {
+                    if (itemCpt && itemCpt.gameObject)
                         Destroy(itemCpt.gameObject);
                 });
                 listStatusIcon.Remove(itemCpt);
@@ -117,6 +118,7 @@ public class CharacterStatusIconCpt : BaseMonoBehaviour
                 itemData.statusIconData.spIcon = statusData.spIcon;
                 itemData.statusIconData.spColor = statusData.spColor;
                 itemData.SetData(itemData.statusIconData);
+                itemData.transform.localScale = new Vector3(1, 1, 1);
                 itemData.transform.DOScale(new Vector3(0, 0, 0), 0.5f).From().SetEase(Ease.OutBack); ;
             }
         }
@@ -133,7 +135,7 @@ public enum CharacterStatusIconEnum
     Mood = 1,//心情
     NpcType = 2,//Npc类型
     Effect = 3,//状态效果
-    Pro=4,//进度图标
+    Pro = 4,//进度图标
 }
 
 public class CharacterStatusIconBean

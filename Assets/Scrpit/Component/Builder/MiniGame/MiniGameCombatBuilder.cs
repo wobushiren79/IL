@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 public class MiniGameCombatBuilder : BaseMiniGameBuilder
 {
-    protected EffectManager effectManager;
+    protected EffectHandler effectHandler;
 
     public GameObject objPlayerContainer;
     public GameObject objPlayerModel;
@@ -19,7 +19,7 @@ public class MiniGameCombatBuilder : BaseMiniGameBuilder
 
     private void Awake()
     {
-        effectManager = Find<EffectManager>(ImportantTypeEnum.EffectManager);
+        effectHandler = Find<EffectHandler>(ImportantTypeEnum.EffectHandler);
     }
 
     /// <summary>
@@ -121,9 +121,7 @@ public class MiniGameCombatBuilder : BaseMiniGameBuilder
     /// </summary>
     public GameObject CreateSelectEffect(Vector3 position)
     {
-        GameObject objEffectModel = effectManager.GetCombatEffectByName("Effect_Select_1");
-        GameObject objEffect = Instantiate(objSelectEffectContainer, objEffectModel, position);
-        return objEffect;
+        return effectHandler.PlayEffectPS(objSelectEffectContainer, "Effect_Select_1", position);
     }
 
     /// <summary>
@@ -134,15 +132,7 @@ public class MiniGameCombatBuilder : BaseMiniGameBuilder
     /// <returns></returns>
     public GameObject CreateCombatEffect(string combatEffectName, Vector3 position)
     {
-        if (CheckUtil.StringIsNull(combatEffectName))
-            return null;
-        GameObject objEffectModel = effectManager.GetCombatEffectByName(combatEffectName);
-        if (objEffectModel == null)
-            return null;
-        GameObject objEffect = Instantiate(objSelectEffectContainer, objEffectModel, position);
-        CombatPSCpt combatPS = objEffect.GetComponent<CombatPSCpt>();
-        combatPS.Play();
-        return objEffect;
+       return effectHandler.PlayEffectPS(objSelectEffectContainer,combatEffectName, position);
     }
 
     /// <summary>

@@ -291,6 +291,14 @@ public class EditorUI
         {
             listFindData = npcTeamService.QueryDataByType((int)NpcTeamTypeEnum.Sundry);
         }
+        if (GUILayout.Button("查询助兴团队", GUILayout.Width(100), GUILayout.Height(20)))
+        {
+            listFindData = npcTeamService.QueryDataByType((int)NpcTeamTypeEnum.Entertain);
+        }
+        if (GUILayout.Button("查询扫兴团队", GUILayout.Width(100), GUILayout.Height(20)))
+        {
+            listFindData = npcTeamService.QueryDataByType((int)NpcTeamTypeEnum.Disappointed);
+        }
         GUILayout.EndHorizontal();
         if (listFindData != null)
         {
@@ -355,6 +363,8 @@ public class EditorUI
                 break;
             case NpcTeamTypeEnum.Rascal:
             case NpcTeamTypeEnum.Sundry:
+            case NpcTeamTypeEnum.Entertain:
+            case NpcTeamTypeEnum.Disappointed:
                 GUILayout.Label("对话markId(,)", GUILayout.Width(100), GUILayout.Height(20));
                 npcTeamData.talk_ids = EditorGUILayout.TextArea(npcTeamData.talk_ids + "", GUILayout.Width(200), GUILayout.Height(20));
                 break;

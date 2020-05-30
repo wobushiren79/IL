@@ -14,6 +14,7 @@ public class NpcTeamBean : BaseBean
     public int team_number;
     public string condition;//出现条件
     public string talk_ids;//对话IDS
+    public string shout_ids;//喊话的ID
     public string name;
     public string love_menus;//喜欢的菜单
 
@@ -47,6 +48,13 @@ public class NpcTeamBean : BaseBean
         return StringUtil.SplitBySubstringForArrayLong(talk_ids, ',');
     }
 
+    public long[] GetShoutIds()
+    {
+        if (shout_ids == null)
+            return new long[0];
+        return StringUtil.SplitBySubstringForArrayLong(shout_ids, ',');
+    }
+
     public long[] GetTeamLeaderId()
     {
         if (team_leader == null)
@@ -69,5 +77,14 @@ public class NpcTeamBean : BaseBean
     {
         long[] menusId = StringUtil.SplitBySubstringForArrayLong(love_menus, ',');
         return menusId.ToList();
+    }
+
+    /// <summary>
+    /// 获取团队类型
+    /// </summary>
+    /// <returns></returns>
+    public NpcTeamTypeEnum GetTeamType()
+    {
+        return (NpcTeamTypeEnum)team_type;
     }
 }

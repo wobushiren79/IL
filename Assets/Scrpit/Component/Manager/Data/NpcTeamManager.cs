@@ -10,6 +10,8 @@ public class NpcTeamManager : BaseManager, INpcTeamView
     public List<NpcTeamBean> listFriendTeam;
     public List<NpcTeamBean> listRascalTeam;
     public List<NpcTeamBean> listSundryTeam;
+    public List<NpcTeamBean> listEntertainTeam;
+    public List<NpcTeamBean> listDisappointedTeam;
 
     private void Awake()
     {
@@ -38,7 +40,12 @@ public class NpcTeamManager : BaseManager, INpcTeamView
             case NpcTeamTypeEnum.Sundry:
                 listData = listSundryTeam;
                 break;
-
+            case NpcTeamTypeEnum.Entertain:
+                listData = listEntertainTeam;
+                break;
+            case NpcTeamTypeEnum.Disappointed:
+                listData = listDisappointedTeam;
+                break;
         }
         if (listData == null)
             return null;
@@ -88,6 +95,19 @@ public class NpcTeamManager : BaseManager, INpcTeamView
     public NpcTeamBean GetSundryTeam(long teamId)
     {
         return GetTeam(teamId, listSundryTeam);
+    }
+
+    /// <summary>
+    /// 获取转换者队伍
+    /// </summary>
+    /// <param name="teamId"></param>
+    /// <returns></returns>
+    public NpcTeamBean GetConvertTeam(long teamId)
+    {
+        List<NpcTeamBean> listData = new List<NpcTeamBean>();
+        listData.AddRange(listEntertainTeam);
+        listData.AddRange(listDisappointedTeam);
+        return GetTeam(teamId, listData);
     }
 
     /// <summary>
@@ -143,6 +163,12 @@ public class NpcTeamManager : BaseManager, INpcTeamView
                 break;
             case NpcTeamTypeEnum.Sundry:
                 listSundryTeam = listData;
+                break;
+            case NpcTeamTypeEnum.Entertain:
+                listEntertainTeam = listData;
+                break;
+            case NpcTeamTypeEnum.Disappointed:
+                listDisappointedTeam = listData;
                 break;
         }
     }

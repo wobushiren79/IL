@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Collections;
 using DG.Tweening;
 
-public class NpcAIRascalCpt : BaseNpcAI, IBaseObserver
+public class NpcAIRascalCpt : BaseNpcAI, IBaseObserver,TextInfoHandler.ICallBack
 {
     public enum RascalIntentEnum
     {
@@ -26,13 +26,15 @@ public class NpcAIRascalCpt : BaseNpcAI, IBaseObserver
     //生命条
     public CharacterLifeCpt characterLifeCpt;
 
+    //离开点
+    public Vector3 leavePosition;
     //下一个移动点
     public Vector3 movePosition;
     //战斗对象
     public BaseNpcAI npcFight;
 
     //想要说的对话
-    public List<TextInfoBean> listTextInfoBean;
+    public List<TextInfoBean> listShoutTextInfo = new List<TextInfoBean>();
 
     //角色生命值
     public int characterMaxLife = 50;
@@ -56,6 +58,8 @@ public class NpcAIRascalCpt : BaseNpcAI, IBaseObserver
     protected SceneInnManager sceneInnManager;
     //Npc生成器
     protected NpcEventBuilder npcEventBuilder;
+    //文本
+    protected TextInfoHandler textInfoHandler;
 
     public override void Awake()
     {
@@ -64,6 +68,7 @@ public class NpcAIRascalCpt : BaseNpcAI, IBaseObserver
         innHandler = Find<InnHandler>(ImportantTypeEnum.InnHandler);
         sceneInnManager = Find<SceneInnManager>(ImportantTypeEnum.SceneManager);
         npcEventBuilder = Find<NpcEventBuilder>(ImportantTypeEnum.NpcBuilder);
+        textInfoHandler = Find<TextInfoHandler>(ImportantTypeEnum.TextManager);
     }
 
     private void Update()
@@ -90,7 +95,7 @@ public class NpcAIRascalCpt : BaseNpcAI, IBaseObserver
     /// <param name="intentEnum"></param>
     public void SetIntent(RascalIntentEnum intentEnum)
     {
-        if(this)
+        if (this)
             StopAllCoroutines();
         this.rascalIntent = intentEnum;
         switch (intentEnum)
@@ -234,8 +239,12 @@ public class NpcAIRascalCpt : BaseNpcAI, IBaseObserver
         characterLifeCpt.gameObject.SetActive(false);
         objFightShow.SetActive(false);
         objRascalSpaceShow.SetActive(false);
-        //随机获取一个退出点
-        movePosition = sceneInnManager.GetRandomSceneExportPosition();
+        //随机获取一个退出点 如果已经有团队的点则不需要获取
+        if (leavePosition == Vector3.zero)
+        {
+            leavePosition = sceneInnManager.GetRandomSceneExportPosition();
+        }
+        movePosition = leavePosition + new Vector3(Random.Range(-0.5f, 0.5f), Random.Range(-0.5f, 0.5f));
         characterMoveCpt.SetDestination(movePosition);
     }
 
@@ -284,12 +293,16 @@ public class NpcAIRascalCpt : BaseNpcAI, IBaseObserver
     {
         if (objRascalSpaceShow.activeSelf)
         {
-            if (collision.name.Contains("Customer"))
+            NpcAICustomerCpt customerCpt = collision.GetComponent<NpcAICustomerCpt>();
+            if (customerCpt)
             {
-                NpcAICustomerCpt customerCpt = collision.GetComponent<NpcAICustomerCpt>();
                 if (customerCpt.customerIntent != NpcAICustomerCpt.CustomerIntentEnum.Leave
-                    && customerCpt.customerIntent != NpcAICustomerCpt.CustomerIntentEnum.Want)
-                    customerCpt.ChangeMood(-100);
+                    && customerCpt.customerIntent != NpcAICustomerCpt.CustomerIntentEnum.Walk
+                    && customerCpt.customerIntent != NpcAICustomerCpt.CustomerIntentEnum.Want
+                    && customerCpt.customerIntent != NpcAICustomerCpt.CustomerIntentEnum.WaitAccost
+                    && customerCpt.customerIntent != NpcAICustomerCpt.CustomerIntentEnum.TalkWithAccost)
+                    audioHandler.PlaySound(AudioSoundEnum.Passive);
+                    customerCpt.ChangeMood(-99999);
             }
         }
     }
@@ -300,13 +313,20 @@ public class NpcAIRascalCpt : BaseNpcAI, IBaseObserver
     /// <returns></returns>
     public IEnumerator StartMakeTrouble()
     {
+        long[] shoutIds = teamData.GetShoutIds();
+        textInfoHandler.GetTextInfoFotTalkByMarkId(shoutIds[0]);
         while (rascalIntent == RascalIntentEnum.MakeTrouble || rascalIntent == RascalIntentEnum.ContinueMakeTrouble)
         {
             movePosition = innHandler.GetRandomInnPositon();
             characterMoveCpt.SetDestination(movePosition);
             //随机获取一句喊话
-            int shoutId = Random.Range(13101, 13106);
-            characterShoutCpt.Shout(GameCommonInfo.GetUITextById(shoutId));
+            //int shoutId = Random.Range(13101, 13106);
+            if (!CheckUtil.ListIsNull(listShoutTextInfo))
+            {
+                TextInfoBean textInfo = RandomUtil.GetRandomDataByList(listShoutTextInfo);
+                characterShoutCpt.Shout(textInfo.content);
+            }
+
             yield return new WaitForSeconds(5);
             //时间到了就离开
             timeMakeTrouble -= 5;
@@ -318,13 +338,18 @@ public class NpcAIRascalCpt : BaseNpcAI, IBaseObserver
     }
 
     /// <summary>
-    /// 设置全体离开
+    /// 设置全体意图
     /// </summary>
     public void SetTeamIntent(RascalIntentEnum rascalIntent)
     {
         List<NpcAIRascalCpt> listNpc = npcEventBuilder.GetRascalTeamByTeamCode(teamCode);
+        if (rascalIntent == RascalIntentEnum.Leave)
+        {
+            leavePosition = sceneInnManager.GetRandomSceneExportPosition();
+        }
         foreach (NpcAIRascalCpt itemNpc in listNpc)
         {
+            itemNpc.leavePosition = leavePosition;
             itemNpc.SetIntent(rascalIntent);
         }
     }
@@ -354,5 +379,15 @@ public class NpcAIRascalCpt : BaseNpcAI, IBaseObserver
     }
     #endregion
 
+    #region  文本数据回调
+    public void GetTextInfoSuccess(List<TextInfoBean> listData)
+    {
+        listShoutTextInfo = listData;
+    }
 
+    public void GetTextInfoFail()
+    {
+
+    }
+    #endregion
 }
