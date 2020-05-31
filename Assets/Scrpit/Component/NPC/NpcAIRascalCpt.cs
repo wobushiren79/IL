@@ -196,6 +196,9 @@ public class NpcAIRascalCpt : BaseNpcAI, IBaseObserver,TextInfoHandler.ICallBack
     /// </summary>
     protected void SetIntentForMakeTrouble()
     {
+        long[] shoutIds = teamData.GetShoutIds();
+        textInfoHandler.SetCallBack(this);
+        textInfoHandler.GetTextInfoFotTalkByMarkId(shoutIds[0]);
         //展示生命条
         characterLifeCpt.gameObject.SetActive(true);
         characterLifeCpt.gameObject.transform.localScale = new Vector3(1, 1, 1);
@@ -271,9 +274,17 @@ public class NpcAIRascalCpt : BaseNpcAI, IBaseObserver,TextInfoHandler.ICallBack
         {
             characterLife = 0;
             SetIntent(RascalIntentEnum.Leave);
+
+            long[] shoutIds = teamData.GetShoutIds();
+            textInfoHandler.SetCallBack(this);
+            textInfoHandler.GetTextInfoFotTalkByMarkId(shoutIds[1]);
+
             //随机获取一句喊话
-            int shoutId = Random.Range(13201, 13206);
-            characterShoutCpt.Shout(GameCommonInfo.GetUITextById(shoutId));
+            if (!CheckUtil.ListIsNull(listShoutTextInfo))
+            {
+                TextInfoBean textInfo = RandomUtil.GetRandomDataByList(listShoutTextInfo);
+                characterShoutCpt.Shout(textInfo.content);
+            }  
             //快速离开
             characterMoveCpt.SetMoveSpeed(3);
         }
@@ -313,8 +324,6 @@ public class NpcAIRascalCpt : BaseNpcAI, IBaseObserver,TextInfoHandler.ICallBack
     /// <returns></returns>
     public IEnumerator StartMakeTrouble()
     {
-        long[] shoutIds = teamData.GetShoutIds();
-        textInfoHandler.GetTextInfoFotTalkByMarkId(shoutIds[0]);
         while (rascalIntent == RascalIntentEnum.MakeTrouble || rascalIntent == RascalIntentEnum.ContinueMakeTrouble)
         {
             movePosition = innHandler.GetRandomInnPositon();

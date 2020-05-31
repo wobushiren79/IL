@@ -20,7 +20,7 @@ public class CharacterShoutCpt : BaseMonoBehaviour
         }
         else
         {
-            objBackground.transform.localScale = new Vector3(1 + (0.15f * (content.Length - 4)), 1, 1);
+            objBackground.transform.localScale = new Vector3(1 + (0.12f * (content.Length - 4)), 1, 1);
         }
 
         shoutObj.SetActive(true);

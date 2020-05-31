@@ -3,7 +3,7 @@ using UnityEditor;
 using System.Collections;
 using System.Collections.Generic;
 
-public class NpcAIConvertCpt : NpcAISundryCpt
+public class NpcAIConvertCpt : NpcAISundryCpt,TextInfoHandler.ICallBack
 {
     //检测范围展示
     public GameObject objConvertSpaceShow;
@@ -17,11 +17,18 @@ public class NpcAIConvertCpt : NpcAISundryCpt
     public GameObject objEntertainPS;
 
     protected EffectHandler effectHandler;
+    //想要说的对话
+    public List<TextInfoBean> listShoutTextInfo = new List<TextInfoBean>();
+    //文本
+    protected TextInfoHandler textInfoHandler;
+
+    public float timeForConvert = 60;
 
     public override void Awake()
     {
         base.Awake();
         effectHandler = Find<EffectHandler>(ImportantTypeEnum.EffectHandler);
+        textInfoHandler = Find<TextInfoHandler>(ImportantTypeEnum.TextManager);
     }
 
     public enum ConvertIntentEnum
@@ -104,10 +111,14 @@ public class NpcAIConvertCpt : NpcAISundryCpt
     /// </summary>
     protected void SetIntentForEntertain()
     {
+        long[] shoutIds = teamData.GetShoutIds();
+        textInfoHandler.SetCallBack(this);
+        textInfoHandler.GetTextInfoFotTalkByMarkId(shoutIds[0]);
+
         objEntertainPS.SetActive(true);
         objConvertSpaceShow.SetActive(true);
         srConvertSpaceShow.sprite = spEntertainSpaceShow;
-        StartCoroutine(CoroutineForEntertain(60));
+        StartCoroutine(CoroutineForEntertain(timeForConvert));
 
     }
 
@@ -116,11 +127,14 @@ public class NpcAIConvertCpt : NpcAISundryCpt
     /// </summary>
     protected void SetIntentForDisappointed()
     {
+        long[] shoutIds = teamData.GetShoutIds();
+        textInfoHandler.SetCallBack(this);
+        textInfoHandler.GetTextInfoFotTalkByMarkId(shoutIds[0]);
+
         objEntertainPS.SetActive(false);
         objConvertSpaceShow.SetActive(true);
         srConvertSpaceShow.sprite = spDisappointedSpaceShow;
-        StartCoroutine(CoroutineForDisappointed(60));
- 
+        StartCoroutine(CoroutineForDisappointed(timeForConvert));
     }
 
     /// <summary>
@@ -206,9 +220,21 @@ public class NpcAIConvertCpt : NpcAISundryCpt
     /// <returns></returns>
     protected IEnumerator CoroutineForEntertain(float time)
     {
-        yield return new WaitForSeconds(time);
-        SetIntent(ConvertIntentEnum.Idle);
-        SetIntent(SundryIntentEnum.Leave);
+        while (convertIntent == ConvertIntentEnum.Entertain)
+        {
+            if (!CheckUtil.ListIsNull(listShoutTextInfo))
+            {
+                TextInfoBean textInfo = RandomUtil.GetRandomDataByList(listShoutTextInfo);
+                characterShoutCpt.Shout(textInfo.content);
+            }
+            yield return new WaitForSeconds(time/10);
+            time -= (time / 10);
+            if (time <= 0)
+            {
+                SetIntent(ConvertIntentEnum.Idle);
+                SetIntent(SundryIntentEnum.Leave);
+            }
+        }
     }
 
     /// <summary>
@@ -218,8 +244,33 @@ public class NpcAIConvertCpt : NpcAISundryCpt
     /// <returns></returns>
     protected IEnumerator CoroutineForDisappointed(float time)
     {
-        yield return new WaitForSeconds(time);
-        SetIntent(ConvertIntentEnum.Idle);
-        SetIntent(SundryIntentEnum.Leave);
+        while (convertIntent == ConvertIntentEnum.Entertain)
+        {
+            if (!CheckUtil.ListIsNull(listShoutTextInfo))
+            {
+                TextInfoBean textInfo = RandomUtil.GetRandomDataByList(listShoutTextInfo);
+                characterShoutCpt.Shout(textInfo.content);
+            }
+            yield return new WaitForSeconds(time / 10);
+            time -= (time / 10);
+            if (time <= 0)
+            {
+                SetIntent(ConvertIntentEnum.Idle);
+                SetIntent(SundryIntentEnum.Leave);
+            }
+        }
+
     }
+
+    #region 文本回调
+    public void GetTextInfoSuccess(List<TextInfoBean> listData)
+    {
+        listShoutTextInfo = listData;
+    }
+
+    public void GetTextInfoFail()
+    {
+
+    }
+    #endregion
 }

@@ -19,6 +19,7 @@ public class TextInfoHandler : BaseHandler, TextInfoManager.ICallBack
 
     public void GetTextInfoFotTalkByMarkId(long markId)
     {
+        textInfoManager.SetCallBack(this);
         textInfoManager.GetTextForTalkByMarkId(markId);
     }
 

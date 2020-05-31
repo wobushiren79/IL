@@ -367,6 +367,8 @@ public class EditorUI
             case NpcTeamTypeEnum.Disappointed:
                 GUILayout.Label("对话markId(,)", GUILayout.Width(100), GUILayout.Height(20));
                 npcTeamData.talk_ids = EditorGUILayout.TextArea(npcTeamData.talk_ids + "", GUILayout.Width(200), GUILayout.Height(20));
+                GUILayout.Label("喊话markId(,)", GUILayout.Width(100), GUILayout.Height(20));
+                npcTeamData.shout_ids = EditorGUILayout.TextArea(npcTeamData.shout_ids + "", GUILayout.Width(200), GUILayout.Height(20));
                 break;
         }
         GUIText("喜欢的菜品");
@@ -441,6 +443,11 @@ public class EditorUI
         {
             isFind = true;
             talkType = TextTalkTypeEnum.Sundry;
+        }
+        if (GUILayout.Button("查询喊话", GUILayout.Width(120), GUILayout.Height(20)))
+        {
+            isFind = true;
+            talkType = TextTalkTypeEnum.Shout;
         }
         if (isFind)
         {
