@@ -62,7 +62,7 @@ public class NpcCustomerBuilder : NpcNormalBuilder, IBaseObserver
         while (isBuildNpc)
         {
             yield return new WaitForSeconds(buildInterval);
-            BuildCustomer();
+           // BuildCustomer();
             //有一定概率创建团队
             float buildTeamRate = Random.Range(0, 1f);
             if (buildTeamRate <= buildTeamGustomerRate)

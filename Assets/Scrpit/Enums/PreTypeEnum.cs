@@ -815,28 +815,28 @@ public class PreTypeEnumTools : DataTools
                     gameData.AddItemsNumber(itemsId, -itemsNumber);
                     break;
                 case PreTypeEnum.PayIngForOilsalt:
-                    gameData.AddIng(IngredientsEnum.Oilsalt, int.Parse(itemData.data));
+                    gameData.AddIng(IngredientsEnum.Oilsalt, -int.Parse(itemData.data));
                     break;
                 case PreTypeEnum.PayIngForMeat:
-                    gameData.AddIng(IngredientsEnum.Meat, int.Parse(itemData.data));
+                    gameData.AddIng(IngredientsEnum.Meat, -int.Parse(itemData.data));
                     break;
                 case PreTypeEnum.PayIngForRiverfresh:
-                    gameData.AddIng(IngredientsEnum.Riverfresh, int.Parse(itemData.data));
+                    gameData.AddIng(IngredientsEnum.Riverfresh, -int.Parse(itemData.data));
                     break;
                 case PreTypeEnum.PayIngForSeafood:
-                    gameData.AddIng(IngredientsEnum.Seafood, int.Parse(itemData.data));
+                    gameData.AddIng(IngredientsEnum.Seafood, -int.Parse(itemData.data));
                     break;
                 case PreTypeEnum.PayIngForVegetables:
-                    gameData.AddIng(IngredientsEnum.Vegetables, int.Parse(itemData.data));
+                    gameData.AddIng(IngredientsEnum.Vegetables, -int.Parse(itemData.data));
                     break;
                 case PreTypeEnum.PayIngForMelonfruit:
-                    gameData.AddIng(IngredientsEnum.Melonfruit, int.Parse(itemData.data));
+                    gameData.AddIng(IngredientsEnum.Melonfruit, -int.Parse(itemData.data));
                     break;
                 case PreTypeEnum.PayIngForWaterwine:
-                    gameData.AddIng(IngredientsEnum.Waterwine, int.Parse(itemData.data));
+                    gameData.AddIng(IngredientsEnum.Waterwine, -int.Parse(itemData.data));
                     break;
                 case PreTypeEnum.PayIngForFlour:
-                    gameData.AddIng(IngredientsEnum.Flour, int.Parse(itemData.data));
+                    gameData.AddIng(IngredientsEnum.Flour,-int.Parse(itemData.data));
                     break;
             }
         }

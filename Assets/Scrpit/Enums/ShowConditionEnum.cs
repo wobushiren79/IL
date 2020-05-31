@@ -10,6 +10,7 @@ public enum ShowConditionEnum
     TimeForMonth,
     TimeForDay,
     TimeForHour,
+    NpcFavorability,//NPC好感
 }
 
 public class ShowConditionBean : DataBean<ShowConditionEnum>
@@ -73,6 +74,9 @@ public class ShowConditionTools : DataTools
             case ShowConditionEnum.TimeForHour:
                 GetConditionDetailsForTime(gameData, conditionData);
                 break;
+            case ShowConditionEnum.NpcFavorability:
+                GetConditionDetailsForNpcFavorability(gameData, conditionData);
+                break;
         }
         return conditionData;
     }
@@ -105,7 +109,7 @@ public class ShowConditionTools : DataTools
     /// <param name="gameData"></param>
     /// <param name="conditionData"></param>
     /// <returns></returns>
-    private static ShowConditionBean GetConditionDetailsForTime(GameDataBean gameData, ShowConditionBean conditionData)
+    protected static ShowConditionBean GetConditionDetailsForTime(GameDataBean gameData, ShowConditionBean conditionData)
     {
         List<int> listTime = StringUtil.SplitBySubstringForArrayInt(conditionData.data, ',').ToList();
         TimeBean gameTime = gameData.gameTime;
@@ -135,6 +139,29 @@ public class ShowConditionTools : DataTools
                     conditionData.isCondition = true;
                 }
                 break;
+        }
+        return conditionData;
+    }
+
+    /// <summary>
+    /// 获取出现详情  NPC好感
+    /// </summary>
+    /// <param name="gameData"></param>
+    /// <param name="conditionData"></param>
+    /// <returns></returns>
+    protected static ShowConditionBean GetConditionDetailsForNpcFavorability(GameDataBean gameData, ShowConditionBean conditionData)
+    {
+        long[] listData = StringUtil.SplitBySubstringForArrayLong(conditionData.data, ',');
+        long npcId = listData[0];
+        long npcFavorability = listData[1];
+        CharacterFavorabilityBean characterFavorability = gameData.GetCharacterFavorability(npcId);
+        if (characterFavorability.favorability >= npcFavorability)
+        {
+            conditionData.isCondition = true;
+        }
+        else
+        {
+            conditionData.isCondition = false;
         }
         return conditionData;
     }

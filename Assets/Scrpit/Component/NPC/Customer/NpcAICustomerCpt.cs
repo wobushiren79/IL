@@ -279,7 +279,7 @@ public class NpcAICustomerCpt : BaseNpcAI
         if (movePosition == null || movePosition == Vector3.zero)
         {
             //如果找不到门则离开 散散步
-            SetIntent(CustomerIntentEnum.Walk);
+            SetIntent(CustomerIntentEnum.Leave);
         }
         else
             //前往门
