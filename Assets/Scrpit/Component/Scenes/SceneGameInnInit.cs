@@ -172,7 +172,14 @@ public class SceneGameInnInit : BaseSceneInit, IBaseObserver, DialogView.IDialog
                 {   //停止时间
                     gameTimeHandler.SetTimeStatus(true);
                     DialogBean dialogBean = new DialogBean();
-                    dialogBean.content = GameCommonInfo.GetUITextById(3006);
+                    if (gameTimeHandler.GetDayStatus() == GameTimeHandler.DayEnum.Work)
+                    {
+                        dialogBean.content = GameCommonInfo.GetUITextById(3006);
+                    }
+                    else if (gameTimeHandler.GetDayStatus() == GameTimeHandler.DayEnum.Rest)
+                    {
+                        dialogBean.content = GameCommonInfo.GetUITextById(3014);
+                    }
                     dialogManager.CreateDialog(DialogEnum.Text, this, dialogBean);
                 }
                 else

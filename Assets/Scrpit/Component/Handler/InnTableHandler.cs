@@ -22,35 +22,28 @@ public class InnTableHandler : BaseMonoBehaviour
         return listTableCpt;
     }
 
-    //锁
-    private static Object GetIdleTableLock = new Object();
-
     /// <summary>
     /// 获取随机空闲的座位
     /// </summary>
     /// <returns></returns>
     public BuildTableCpt GetIdleTable()
     {
-        //加锁 防止出现1桌2人
-        lock (GetIdleTableLock)
+        if (listTableCpt == null)
+            return null;
+        List<BuildTableCpt> idleTableList = new List<BuildTableCpt>();
+        for (int i = 0; i < listTableCpt.Count; i++)
         {
-            if (listTableCpt == null)
-                return null;
-            List<BuildTableCpt> idleTableList = new List<BuildTableCpt>();
-            for (int i = 0; i < listTableCpt.Count; i++)
+            BuildTableCpt itemTable = listTableCpt[i];
+            if (itemTable.tableStatus == BuildTableCpt.TableStatusEnum.Idle)
             {
-                BuildTableCpt itemTable = listTableCpt[i];
-                if (itemTable.tableStatus == BuildTableCpt.TableStatusEnum.Idle)
-                {
-                    idleTableList.Add(itemTable);
-                }
+                idleTableList.Add(itemTable);
             }
-            if (idleTableList.Count == 0)
-                return null;
-            BuildTableCpt buildTable = RandomUtil.GetRandomDataByList(idleTableList);
-            buildTable.SetTableStatus(BuildTableCpt.TableStatusEnum.Ready);
-            return buildTable;
         }
+        if (idleTableList.Count == 0)
+            return null;
+        BuildTableCpt buildTable = RandomUtil.GetRandomDataByList(idleTableList);
+        buildTable.SetTableStatus(BuildTableCpt.TableStatusEnum.Ready);
+        return buildTable;
     }
 
 }

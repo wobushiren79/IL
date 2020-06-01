@@ -68,7 +68,14 @@ public abstract class BaseNormalSceneInit : BaseSceneInit,IBaseObserver, DialogV
         if (dialogManager != null)
         {
             DialogBean dialogBean = new DialogBean();
-            dialogBean.content = GameCommonInfo.GetUITextById(3006);
+            if (gameTimeHandler.GetDayStatus()== GameTimeHandler.DayEnum.Work)
+            {
+                dialogBean.content = GameCommonInfo.GetUITextById(3006);
+            }
+            else if (gameTimeHandler.GetDayStatus() == GameTimeHandler.DayEnum.Rest)
+            {
+                dialogBean.content = GameCommonInfo.GetUITextById(3014);
+            }
             dialogManager.CreateDialog(DialogEnum.Text, this, dialogBean, 5);
         }
         else

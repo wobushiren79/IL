@@ -156,7 +156,8 @@ public class UIGameBuild : UIGameComponent, IRadioGroupCallBack
         ((ControlForBuildCpt)(uiGameManager.controlHandler.GetControl(ControlHandler.ControlEnum.Build))).ClearBuildItem();
         //重新构建地形
         uiGameManager.navMesh.BuildNavMesh();
-
+        //重新构建客栈
+        uiGameManager.innHandler.InitInn();
         if (uiGameManager.gameTimeHandler.dayStauts == GameTimeHandler.DayEnum.Work)
         {
             //如果是工作日 开店继续营业

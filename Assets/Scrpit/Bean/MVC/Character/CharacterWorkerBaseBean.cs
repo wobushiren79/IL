@@ -108,10 +108,10 @@ public class CharacterWorkerBaseBean
     /// </summary>
     /// <param name="leve">升级等级</param>
     /// <returns></returns>
-    public static long GetLevelUpExp(int leve)
+    public static long GetLevelUpExp(int level)
     {
         long nextLevelExp = long.MaxValue;
-        switch (leve)
+        switch (level)
         {
             case 1:
                 GameCommonInfo.baseDataController.GetBaseData(BaseDataTypeEnum.WorkerForLevelUpExp1, out nextLevelExp);

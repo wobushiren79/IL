@@ -15,6 +15,8 @@ public class NpcAIMiniGameDebateCpt : BaseNpcAI
     {
         this.characterMiniGameData = miniGameCharacterData;
         SetCharacterData(miniGameCharacterData.characterData);
+        //更新血量显示
+        characterLifeCpt.SetData(characterMiniGameData.characterCurrentLife, characterMiniGameData.characterMaxLife);
     }
 
     /// <summary>

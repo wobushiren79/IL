@@ -2,6 +2,8 @@
 using UnityEditor;
 using UnityEngine.UI;
 using DG.Tweening;
+using System.Collections.Generic;
+
 public class ItemGameWorkerCpt : ItemGameBaseCpt, IRadioButtonCallBack, DialogView.IDialogCallBack
 {
     [Header("控件")]
@@ -13,6 +15,8 @@ public class ItemGameWorkerCpt : ItemGameBaseCpt, IRadioButtonCallBack, DialogVi
 
     public Text tvLoyal;
     public InfoPromptPopupButton pbLoyal;
+
+    public Text tvLevelUp;
 
     public Image ivSex;
 
@@ -207,7 +211,36 @@ public class ItemGameWorkerCpt : ItemGameBaseCpt, IRadioButtonCallBack, DialogVi
             if (btGift != null)
                 btGift.gameObject.SetActive(false);
         }
+        SetLevelUp(characterData);
     }
+
+    /// <summary>
+    /// 设置升级
+    /// </summary>
+    /// <param name="isCanLevelUp"></param>
+    public void SetLevelUp(CharacterBean characterData)
+    {
+        List<CharacterWorkerBaseBean> listWorker = characterData.baseInfo.GetAllWorkerInfo();
+        bool isCanLevelUp = false;
+        foreach (CharacterWorkerBaseBean characterWorker in listWorker)
+        {
+            characterWorker.GetWorkerExp(out long nextLevelExp, out long currentExp, out float levelProportion);
+            if (levelProportion == 1)
+            {
+                isCanLevelUp = true;
+                break;
+            }
+        }
+        if (isCanLevelUp)
+        {
+            tvLevelUp.gameObject.SetActive(true);
+        }
+        else
+        {
+            tvLevelUp.gameObject.SetActive(false);
+        }
+    }
+
 
     /// <summary>
     /// 打开装备UI

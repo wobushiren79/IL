@@ -34,30 +34,25 @@ public class NpcEventBuilder : NpcNormalBuilder, IBaseObserver
     /// </summary>
     public void StartEvent()
     {
-        float isStartRate = UnityEngine.Random.Range(0, 2f);
-        //0.5的概率触发事件
-        if (isStartRate > 1f)
+        int eventType = UnityEngine.Random.Range(0, 6);
+        switch (eventType)
         {
-            int eventType = UnityEngine.Random.Range(0, 4);
-            switch (eventType)
-            {
-                case 0:
-                    BuildTownFriendsForOne();
-                    break;
-                case 1:
-                    BuildSundry();
-                    break;
-                case 2:
-                    BuildRascal();
-                    break;
-                case 3:
-                    BuildConvert();
-                    break;
-                case 4:
-                    //TODO 待定 需要处理单个朋友和团队朋友重复出现的问题
-                    //BuildTownFriendsForTeam();
-                    break;
-            }
+            case 0:
+                BuildTownFriendsForOne();
+                break;
+            case 1:
+                BuildSundry();
+                break;
+            case 2:
+                BuildRascal();
+                break;
+            case 3:
+                BuildConvert();
+                break;
+            case 4:
+                //TODO 待定 需要处理单个朋友和团队朋友重复出现的问题
+                //BuildTownFriendsForTeam();
+                break;
         }
     }
 
@@ -67,7 +62,7 @@ public class NpcEventBuilder : NpcNormalBuilder, IBaseObserver
     public void BuildConvert()
     {
         Vector3 npcPosition = GetRandomStartPosition();
-        NpcTeamBean teamData = RandomUtil.GetRandomDataByList(listRascal);
+        NpcTeamBean teamData = RandomUtil.GetRandomDataByList(listConvert);
         BuildConvert(teamData, npcPosition);
     }
 

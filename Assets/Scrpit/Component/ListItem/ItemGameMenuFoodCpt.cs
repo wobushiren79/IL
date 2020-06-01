@@ -30,6 +30,10 @@ public class ItemGameMenuFoodCpt : ItemGameBaseCpt, IRadioButtonCallBack, Dialog
 
     public Image ivBackground;
 
+    public Color colorForSell;
+    public Color colorForNoSell;
+    public Color colorForNoIng;
+
     [Header("数据")]
     public MenuOwnBean menuOwnData;
     public MenuInfoBean foodData;
@@ -72,11 +76,18 @@ public class ItemGameMenuFoodCpt : ItemGameBaseCpt, IRadioButtonCallBack, Dialog
         GameDataManager gameDataManager = GetUIManager<UIGameManager>().gameDataManager;
         if (gameDataManager.gameData.CheckCookFood(foodData))
         {
-            tvShow.color = Color.black;
+            if (menuOwnData.isSell)
+            {
+                tvShow.color = colorForSell;
+            }
+            else
+            {
+                tvShow.color = colorForNoSell;
+            }
         }
         else
         {
-            tvShow.color = Color.red;
+            tvShow.color = colorForNoIng;
         }
     }
 

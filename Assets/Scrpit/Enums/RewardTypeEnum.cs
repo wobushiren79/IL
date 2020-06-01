@@ -39,7 +39,7 @@ public class RewardTypeBean : DataBean<RewardTypeEnum>
     public RewardTypeBean() : base(RewardTypeEnum.AddMoneyS, "")
     {
     }
-    public RewardTypeBean(RewardTypeEnum dataType,string data) : base(dataType, data)
+    public RewardTypeBean(RewardTypeEnum dataType, string data) : base(dataType, data)
     {
     }
 
@@ -117,7 +117,7 @@ public class RewardTypeEnumTools : DataTools
             case RewardTypeEnum.AddArenaTrophyIntermediate:
             case RewardTypeEnum.AddArenaTrophyAdvanced:
             case RewardTypeEnum.AddArenaTrophyLegendary:
-                GetRewardDetailsForAddTrophy(data,iconDataManager);
+                GetRewardDetailsForAddTrophy(data, iconDataManager);
                 break;
             case RewardTypeEnum.AddIngOilsalt:
             case RewardTypeEnum.AddIngMeat:
@@ -183,7 +183,7 @@ public class RewardTypeEnumTools : DataTools
         {
             case RewardTypeEnum.AddMoneyL:
                 iconKey = "money_3";
-                rewardDescribe= string.Format(GameCommonInfo.GetUITextById(6002), rewardTypeData.data);
+                rewardDescribe = string.Format(GameCommonInfo.GetUITextById(6002), rewardTypeData.data);
                 break;
             case RewardTypeEnum.AddMoneyM:
                 iconKey = "money_2";
@@ -322,10 +322,10 @@ public class RewardTypeEnumTools : DataTools
     /// </summary>
     /// <param name="reward_data"></param>
     /// <param name="gameData"></param>
-    public static void CompleteReward(ToastManager toastManager, NpcInfoManager npcInfoManager, IconDataManager iconDataManager,GameItemsManager gameItemsManager,InnBuildManager innBuildManager, GameDataManager gameDataManager, string data)
+    public static void CompleteReward(ToastManager toastManager, NpcInfoManager npcInfoManager, IconDataManager iconDataManager, GameItemsManager gameItemsManager, InnBuildManager innBuildManager, GameDataManager gameDataManager, string data)
     {
         List<RewardTypeBean> listRewardData = GetListRewardData(data);
-        CompleteReward(toastManager , npcInfoManager, iconDataManager,gameItemsManager, innBuildManager, gameDataManager,  listRewardData);
+        CompleteReward(toastManager, npcInfoManager, iconDataManager, gameItemsManager, innBuildManager, gameDataManager, listRewardData);
     }
 
     public static void CompleteReward(ToastManager toastManager, NpcInfoManager npcInfoManager, IconDataManager iconDataManager, GameItemsManager gameItemsManager, InnBuildManager innBuildManager, GameDataManager gameDataManager, List<RewardTypeBean> listRewardData)
@@ -363,7 +363,27 @@ public class RewardTypeEnumTools : DataTools
                 case RewardTypeEnum.AddMoneyS:
                     long addMoneyS = itemData.rewardNumber;
                     gameData.AddMoney(0, 0, addMoneyS);
-                    toastManager.ToastHint(itemData.spRewardIcon, string.Format(GameCommonInfo.GetUITextById(6012), addMoneyS+""));
+                    toastManager.ToastHint(itemData.spRewardIcon, string.Format(GameCommonInfo.GetUITextById(6012), addMoneyS + ""));
+                    break;
+                case RewardTypeEnum.AddArenaTrophyElementary:
+                    long addTrophy1 = itemData.rewardNumber;
+                    gameData.AddArenaTrophy(addTrophy1, 0, 0, 0);
+                    toastManager.ToastHint(itemData.spRewardIcon, string.Format(GameCommonInfo.GetUITextById(6099), string.Format(GameCommonInfo.GetUITextById(6006), addTrophy1 + "")));
+                    break;
+                case RewardTypeEnum.AddArenaTrophyIntermediate:
+                    long addTrophy2 = itemData.rewardNumber;
+                    gameData.AddArenaTrophy(0, addTrophy2, 0, 0);
+                    toastManager.ToastHint(itemData.spRewardIcon, string.Format(GameCommonInfo.GetUITextById(6099), string.Format(GameCommonInfo.GetUITextById(6007), addTrophy2 + "")));
+                    break;
+                case RewardTypeEnum.AddArenaTrophyAdvanced:
+                    long addTrophy3 = itemData.rewardNumber;
+                    gameData.AddArenaTrophy(0, 0, addTrophy3, 0);
+                    toastManager.ToastHint(itemData.spRewardIcon, string.Format(GameCommonInfo.GetUITextById(6099), string.Format(GameCommonInfo.GetUITextById(6008), addTrophy3 + "")));
+                    break;
+                case RewardTypeEnum.AddArenaTrophyLegendary:
+                    long addTrophy4 = itemData.rewardNumber;
+                    gameData.AddArenaTrophy(0, 0, 0, addTrophy4);
+                    toastManager.ToastHint(itemData.spRewardIcon, string.Format(GameCommonInfo.GetUITextById(6099), string.Format(GameCommonInfo.GetUITextById(6009), addTrophy4 + "")));
                     break;
                 case RewardTypeEnum.AddItems:
                 case RewardTypeEnum.RandomAddItems:

@@ -183,7 +183,7 @@ public class UIMiniGameEnd : UIGameComponent
                 break;
         }
         itemReasonWin.SetContent(reasonStr);
-        itemReasonWin.SetIcon(null);
+        itemReasonWin.SetIcon(uiGameManager.iconDataManager.GetIconSpriteByName("text_win_1"));
         //添加奖励
         RewardTypeEnumTools.CompleteReward(
             uiGameManager.toastManager,

@@ -69,7 +69,8 @@ public class BuildStoveCpt : BaseBuildItemCpt
     /// </summary>
     public void ClearStove()
     {
-        CptUtil.RemoveChild(objFoodContainer.transform);
+        if (gameObject && objFoodContainer)
+            CptUtil.RemoveChild(objFoodContainer.transform);
         SetStoveStatus(StoveStatusEnum.Idle);
     }
 
