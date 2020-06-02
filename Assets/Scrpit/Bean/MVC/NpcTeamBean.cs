@@ -17,6 +17,7 @@ public class NpcTeamBean : BaseBean
     public string shout_ids;//喊话的ID
     public string name;
     public string love_menus;//喜欢的菜单
+    public float effect_time;//效果时间
 
     /// <summary>
     /// 获取小队所有成员信息

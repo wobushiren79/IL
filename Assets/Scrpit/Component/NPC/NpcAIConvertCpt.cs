@@ -118,6 +118,16 @@ public class NpcAIConvertCpt : NpcAISundryCpt,TextInfoHandler.ICallBack
         objEntertainPS.SetActive(true);
         objConvertSpaceShow.SetActive(true);
         srConvertSpaceShow.sprite = spEntertainSpaceShow;
+
+        //设置持续时间
+        if (teamData.effect_time == 0)
+        {
+            timeForConvert = 60;
+        }
+        else
+        {
+            timeForConvert = teamData.effect_time;
+        }
         StartCoroutine(CoroutineForEntertain(timeForConvert));
 
     }
@@ -134,6 +144,16 @@ public class NpcAIConvertCpt : NpcAISundryCpt,TextInfoHandler.ICallBack
         objEntertainPS.SetActive(false);
         objConvertSpaceShow.SetActive(true);
         srConvertSpaceShow.sprite = spDisappointedSpaceShow;
+
+        //设置持续时间
+        if (teamData.effect_time == 0)
+        {
+            timeForConvert = 60;
+        }
+        else
+        {
+            timeForConvert = teamData.effect_time;
+        }
         StartCoroutine(CoroutineForDisappointed(timeForConvert));
     }
 
@@ -244,7 +264,7 @@ public class NpcAIConvertCpt : NpcAISundryCpt,TextInfoHandler.ICallBack
     /// <returns></returns>
     protected IEnumerator CoroutineForDisappointed(float time)
     {
-        while (convertIntent == ConvertIntentEnum.Entertain)
+        while (convertIntent == ConvertIntentEnum.Disappointed)
         {
             if (!CheckUtil.ListIsNull(listShoutTextInfo))
             {

@@ -25,4 +25,12 @@ public class MenuInfoBean : BaseBean
     public long price_m;
     public long price_l;
 
+    public int rarity;//稀有度
+
+
+    public RarityEnum GetRarity()
+    {
+        return (RarityEnum)rarity;
+    }
+
 }

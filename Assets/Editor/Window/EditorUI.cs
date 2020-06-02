@@ -365,10 +365,12 @@ public class EditorUI
             case NpcTeamTypeEnum.Sundry:
             case NpcTeamTypeEnum.Entertain:
             case NpcTeamTypeEnum.Disappointed:
+                GUILayout.Label("持续时间", GUILayout.Width(100), GUILayout.Height(20));
+                npcTeamData.effect_time = GUIEditorText(npcTeamData.effect_time, 100);
                 GUILayout.Label("对话markId(,)", GUILayout.Width(100), GUILayout.Height(20));
-                npcTeamData.talk_ids = EditorGUILayout.TextArea(npcTeamData.talk_ids + "", GUILayout.Width(200), GUILayout.Height(20));
+                npcTeamData.talk_ids = GUIEditorText(npcTeamData.talk_ids, 200);
                 GUILayout.Label("喊话markId(,)", GUILayout.Width(100), GUILayout.Height(20));
-                npcTeamData.shout_ids = EditorGUILayout.TextArea(npcTeamData.shout_ids + "", GUILayout.Width(200), GUILayout.Height(20));
+                npcTeamData.shout_ids = GUIEditorText(npcTeamData.shout_ids, 200);
                 break;
         }
         GUIText("喜欢的菜品");
@@ -557,15 +559,19 @@ public class EditorUI
             itemTalkInfo.id = long.Parse(EditorGUILayout.TextArea(itemTalkInfo.id + "", GUILayout.Width(150), GUILayout.Height(20)));
             GUILayout.Label("对话顺序：", GUILayout.Width(100), GUILayout.Height(20));
             itemTalkInfo.text_order = int.Parse(EditorGUILayout.TextArea(itemTalkInfo.text_order + "", GUILayout.Width(50), GUILayout.Height(20)));
-
+            GUILayout.Label("说话者ID：", GUILayout.Width(100), GUILayout.Height(20));
+            itemTalkInfo.user_id = GUIEditorText(itemTalkInfo.user_id, 150);
             itemTalkInfo.type = (int)(TextInfoTypeEnum)EditorGUILayout.EnumPopup((TextInfoTypeEnum)itemTalkInfo.type, GUILayout.Width(100), GUILayout.Height(20));
             if (itemTalkInfo.type == (int)TextInfoTypeEnum.Select)
             {
                 GUILayout.Label("选择类型：", GUILayout.Width(100), GUILayout.Height(20));
                 itemTalkInfo.select_type = int.Parse(EditorGUILayout.TextArea(itemTalkInfo.select_type + "", GUILayout.Width(50), GUILayout.Height(20)));
             }
-            GUILayout.Label("增加的好感：", GUILayout.Width(100), GUILayout.Height(20));
-            itemTalkInfo.add_favorability = int.Parse(EditorGUILayout.TextArea(itemTalkInfo.add_favorability + "", GUILayout.Width(50), GUILayout.Height(20)));
+            else
+            {
+                GUILayout.Label("增加的好感：", GUILayout.Width(100), GUILayout.Height(20));
+                itemTalkInfo.add_favorability = int.Parse(EditorGUILayout.TextArea(itemTalkInfo.add_favorability + "", GUILayout.Width(50), GUILayout.Height(20)));
+            }
             GUILayout.Label("指定下一句对话：", GUILayout.Width(120), GUILayout.Height(20));
             itemTalkInfo.next_order = int.Parse(EditorGUILayout.TextArea(itemTalkInfo.next_order + "", GUILayout.Width(50), GUILayout.Height(20)));
             GUILayout.Label("触发条件-最低好感：", GUILayout.Width(120), GUILayout.Height(20));

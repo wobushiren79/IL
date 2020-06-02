@@ -20,6 +20,7 @@ public class ItemGameMenuFoodCpt : ItemGameBaseCpt, IRadioButtonCallBack, Dialog
     public Text tvShow;
     public InfoPromptPopupButton pbReputation;
     public Image ivReputation;
+    public Text tvMenuRarity;
 
     public GameObject objResearch;
     public Button btResearch;
@@ -33,6 +34,7 @@ public class ItemGameMenuFoodCpt : ItemGameBaseCpt, IRadioButtonCallBack, Dialog
     public Color colorForSell;
     public Color colorForNoSell;
     public Color colorForNoIng;
+
 
     [Header("数据")]
     public MenuOwnBean menuOwnData;
@@ -112,6 +114,18 @@ public class ItemGameMenuFoodCpt : ItemGameBaseCpt, IRadioButtonCallBack, Dialog
         SetPrice(priceL, priceM, priceS);
         SetResearch(menuOwn.GetMenuStatus());
         SetResearchPopup(menuOwn, data);
+        SetMenuClass(data.GetRarity());
+    }
+
+    /// <summary>
+    /// 设置菜单等级
+    /// </summary>
+    /// <param name="menuClass"></param>
+    public void SetMenuClass(RarityEnum menuRarity)
+    {
+        RarityEnumTools.GetRarityDetails(menuRarity, out string rarityName,out Color rarityColor);
+        tvMenuRarity.text = rarityName;
+        tvMenuRarity.color = rarityColor;
     }
 
     /// <summary>
