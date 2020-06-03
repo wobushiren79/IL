@@ -223,7 +223,8 @@ public class ItemCreateWindowsEditor : EditorWindow, StoreInfoManager.ICallBack
         achievementInfo.name = EditorGUILayout.TextArea(achievementInfo.name + "", GUILayout.Width(150), GUILayout.Height(20));
         GUILayout.Label("内容：", GUILayout.Width(100), GUILayout.Height(20));
         achievementInfo.content = EditorGUILayout.TextArea(achievementInfo.content + "", GUILayout.Width(150), GUILayout.Height(20));
-
+        EditorUI.GUIText("前置成就:");
+        achievementInfo.pre_ach_ids= EditorUI.GUIEditorText(achievementInfo.pre_ach_ids);
         //前置相关
         EditorGUILayout.BeginVertical();
         GUILayout.Label("前置：", GUILayout.Width(100), GUILayout.Height(20));

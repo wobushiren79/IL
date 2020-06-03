@@ -29,10 +29,10 @@ public class ItemTownGuildAchievementCpt : ItemGameBaseCpt
     public void SetData(AchievementInfoBean data)
     {
         this.achievementInfo = data;
-        SetIcon(data.id, data.pre_ach_id, data.icon_key, data.pre_data);
+        SetIcon(data.id, data.GetPreAchIds(), data.icon_key, data.pre_data);
     }
 
-    public void SetIcon(long achId, long preId, string iconKey, string preData)
+    public void SetIcon(long achId, long[] preIds, string iconKey, string preData)
     {
         UIGameManager uiGameManager = GetUIManager<UIGameManager>();
 
@@ -52,7 +52,7 @@ public class ItemTownGuildAchievementCpt : ItemGameBaseCpt
             return;
         }
         //检测前置成就
-        if (preId == 0)
+        if (CheckUtil.ArrayIsNull(preIds))
         {
             //检测是否符合条件
             if (isAllPre)
@@ -66,7 +66,7 @@ public class ItemTownGuildAchievementCpt : ItemGameBaseCpt
         }
         else
         {
-            bool hasPre = uiGameManager.gameDataManager.gameData.GetAchievementData().CheckHasAchievement(preId);
+            bool hasPre = uiGameManager.gameDataManager.gameData.GetAchievementData().CheckHasAchievement(preIds);
             if (hasPre)
             {
                 //检测是否符合条件

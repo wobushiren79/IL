@@ -21,7 +21,7 @@ public class CharacterShoutCpt : BaseMonoBehaviour
         else
         {
             byte[] byte_len = System.Text.Encoding.Default.GetBytes(content);
-            objBackground.transform.localScale = new Vector3(1 + (0.06f * (byte_len.Length - 4)), 1, 1);
+            objBackground.transform.localScale = new Vector3(1 + (0.04f * (byte_len.Length - 4)), 1, 1);
         }
 
         shoutObj.SetActive(true);

@@ -76,13 +76,24 @@ public class UserAchievementBean
     }
 
     /// <summary>
-    /// 是否包含该成就
+    /// 是否包含成就
     /// </summary>
     /// <param name="achId"></param>
     /// <returns></returns>
+    public bool CheckHasAchievement(long[]  achIds)
+    {
+        foreach (long achId in  achIds)
+        {
+            if (!listAchievement.Contains(achId))
+            {
+                return false;
+            }
+        }
+        return true;
+    }
     public bool CheckHasAchievement(long achId)
     {
-        return listAchievement.Contains(achId);
+        return CheckHasAchievement(new long[] { achId });
     }
 
     /// <summary>

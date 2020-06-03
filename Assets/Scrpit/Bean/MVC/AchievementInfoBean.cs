@@ -7,7 +7,7 @@ using System.Collections.Generic;
 public class AchievementInfoBean : BaseBean
 {
     public long ach_id;
-    public long pre_ach_id;//前置成就
+    public string pre_ach_ids;//前置成就
     public int type;
     public string icon_key;
     public string icon_key_remark;
@@ -22,5 +22,10 @@ public class AchievementInfoBean : BaseBean
     public AchievementTypeEnum GetAchievementType()
     {
         return (AchievementTypeEnum)type;
+    }
+
+    public long[]  GetPreAchIds()
+    {
+       return StringUtil.SplitBySubstringForArrayLong(pre_ach_ids,',');
     }
 }
