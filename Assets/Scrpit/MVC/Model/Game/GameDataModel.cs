@@ -65,6 +65,7 @@ public class GameDataModel : BaseMVCModel
         counterPositionList.Add(new Vector3(6, 2, 0));
         counterPositionList.Add(new Vector3(7, 3, 0));
         counterPositionList.Add(new Vector3(6, 3, 0));
+        counterPositionList.Add(new Vector3(8, 2, 0));
         InnResBean innResCounter = new InnResBean(50001, new Vector3(6.5f, 2.5f, 0), counterPositionList, Direction2DEnum.Right);
 
         List<Vector3> stovePositionList = new List<Vector3>();
@@ -74,6 +75,7 @@ public class GameDataModel : BaseMVCModel
         stovePositionList.Add(new Vector3(4, 5, 0));
         stovePositionList.Add(new Vector3(3, 4, 0));
         stovePositionList.Add(new Vector3(4, 4, 0));
+        stovePositionList.Add(new Vector3(2, 5, 0));
         InnResBean innResStove = new InnResBean(40001, new Vector3(2.5f, 5.5f, 0), stovePositionList, Direction2DEnum.Left);
 
         List<Vector3> tablePositionList = new List<Vector3>();

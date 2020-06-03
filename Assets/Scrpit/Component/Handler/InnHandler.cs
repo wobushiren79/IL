@@ -334,16 +334,22 @@ public class InnHandler : BaseMonoBehaviour, IBaseObserver
     /// <param name="isPraise">是否评价</param>
     public void EndOrderForForce(OrderForCustomer orderForCustomer, bool isPraise)
     {
-        //如果食物已经做出来了
+         //如果已经安排了位置
         if (orderForCustomer.table != null)
         {
-            //如果桌子上有食物 并且清理列表里面没有 则加入清理列表
+            //如果食物还没有吃完时 则直接删除食物
             if (orderForCustomer.customer.customerIntent == NpcAICustomerCpt.CustomerIntentEnum.GotoSeat
                 || orderForCustomer.customer.customerIntent == NpcAICustomerCpt.CustomerIntentEnum.WaitFood
                 || orderForCustomer.customer.customerIntent == NpcAICustomerCpt.CustomerIntentEnum.Eatting)
             {
                 orderForCustomer.table.CleanTable();
+                //如果食物是正在做或者还没有送过来，也直接删除
+                if (orderForCustomer.foodCpt != null)
+                {
+                    Destroy(orderForCustomer.foodCpt.gameObject);
+                }
             }
+            //如果食物已经吃完，则应该在清理列表中
             //支付一半的钱
             //PayMoney(orderForCustomer, 0.5f);
         }
