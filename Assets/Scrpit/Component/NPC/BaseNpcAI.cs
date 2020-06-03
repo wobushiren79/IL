@@ -48,7 +48,7 @@ public class BaseNpcAI : BaseObservable<IBaseObserver>
     /// </summary>
     /// <param name="gameItemsManager"></param>
     /// <param name="characterBean"></param>
-    public void  SetCharacterData(GameItemsManager gameItemsManager, CharacterBean characterBean)
+    public void SetCharacterData(GameItemsManager gameItemsManager, CharacterBean characterBean)
     {
         if (characterBean == null)
             return;
@@ -81,7 +81,7 @@ public class BaseNpcAI : BaseObservable<IBaseObserver>
         //设置速度
         if (characterMoveCpt != null)
         {
-            float speed = totalAttributes.speed * 0.05f + 1;
+            float speed = totalAttributes.speed * 0.05f + 1.2f;
             //速度修正
             if (speed <= 0.1f)
             {
@@ -110,7 +110,7 @@ public class BaseNpcAI : BaseObservable<IBaseObserver>
     /// </summary>
     public bool CheckCharacterIsArrive()
     {
-       return characterMoveCpt.IsAutoMoveStop();
+        return characterMoveCpt.IsAutoMoveStop();
     }
 
     /// <summary>
@@ -186,7 +186,7 @@ public class BaseNpcAI : BaseObservable<IBaseObserver>
     /// </summary>
     /// <param name="iconName"></param>
     /// <param name="spColor"></param>
-    public void AddStatusIconForEffect(Sprite spIcon,Color spColor,string markId)
+    public void AddStatusIconForEffect(Sprite spIcon, Color spColor, string markId)
     {
         if (spIcon == null)
             return;
@@ -197,12 +197,12 @@ public class BaseNpcAI : BaseObservable<IBaseObserver>
         statusIconData.markId = markId;
         characterStatusIcon.AddStatusIcon(statusIconData);
     }
-    
-   /// <summary>
-   /// 添加进度图标
-   /// </summary>
-   /// <param name="spIcon"></param>
-   /// <param name="markId"></param>
+
+    /// <summary>
+    /// 添加进度图标
+    /// </summary>
+    /// <param name="spIcon"></param>
+    /// <param name="markId"></param>
     public void AddStatusIconForPro(Sprite spIcon, RuntimeAnimatorController runtimeAnimator, string markId)
     {
         if (spIcon == null)
@@ -303,7 +303,7 @@ public class BaseNpcAI : BaseObservable<IBaseObserver>
     /// <param name="objThings"></param>
     public void SetTake(GameObject objThings)
     {
-        if(objTake!=null)
+        if (objTake != null)
             objThings.transform.SetParent(objTake.transform);
     }
 
@@ -312,6 +312,6 @@ public class BaseNpcAI : BaseObservable<IBaseObserver>
     /// </summary>
     public void ShowHand()
     {
-       
+
     }
 }
