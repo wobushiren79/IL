@@ -70,6 +70,7 @@ public class UITownGrocery : UIBaseOne, StoreInfoManager.ICallBack, IRadioGroupC
             GameObject itemObj = Instantiate(objGroceryContent, objGroceryModel);
             ItemTownStoreForGoodsCpt goodsCpt = itemObj.GetComponent<ItemTownStoreForGoodsCpt>();
             goodsCpt.SetData(itemData);
+            itemObj.transform.DOScale(new Vector3(0, 0, 0), 0.5f).SetEase(Ease.OutBack).From();
         }
     }
 

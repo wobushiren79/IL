@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using UnityEditor;
 using System.Collections.Generic;
+using DG.Tweening;
 
 public class UITownArenaStore : UIBaseOne, StoreInfoManager.ICallBack, IRadioGroupCallBack
 {
@@ -66,6 +67,7 @@ public class UITownArenaStore : UIBaseOne, StoreInfoManager.ICallBack, IRadioGro
         GameObject objItem = Instantiate(objGoodsContainer, objGoodsModel);
         ItemTownStoreForGoodsCpt goodsItem= objItem.GetComponent<ItemTownStoreForGoodsCpt>();
         goodsItem.SetData(storeInfo);
+        objItem.transform.DOScale(new Vector3(0, 0, 0), 0.5f).SetEase(Ease.OutBack).From();
     }
 
     #region 数据回调
@@ -79,6 +81,7 @@ public class UITownArenaStore : UIBaseOne, StoreInfoManager.ICallBack, IRadioGro
     #region 类型选择回调
     public void RadioButtonSelected(RadioGroupView rgView, int position, RadioButtonView rbview)
     {
+        uiGameManager.audioHandler.PlaySound(AudioSoundEnum.ButtonForNormal);
         StoreForArenaGoodsTypeEnum goodsType= EnumUtil.GetEnum<StoreForArenaGoodsTypeEnum>(rbview.name);
         InitDataByType(goodsType);
     }
