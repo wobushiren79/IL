@@ -334,7 +334,7 @@ public class InnHandler : BaseMonoBehaviour, IBaseObserver
     /// <param name="isPraise">是否评价</param>
     public void EndOrderForForce(OrderForCustomer orderForCustomer, bool isPraise)
     {
-         //如果已经安排了位置
+        //如果已经安排了位置
         if (orderForCustomer.table != null)
         {
             //如果食物还没有吃完时 则直接删除食物
@@ -368,6 +368,30 @@ public class InnHandler : BaseMonoBehaviour, IBaseObserver
     }
 
     /// <summary>
+    /// 结算所有客户
+    /// </summary>
+    public void SettlementAllCustomer()
+    {
+        if (CheckUtil.ListIsNull(listOrder))
+            return;
+        foreach (OrderForCustomer itemOrder in listOrder)
+        {
+            if (itemOrder.customer != null &&
+                (itemOrder.customer.customerIntent == NpcAICustomerCpt.CustomerIntentEnum.Eatting
+                || itemOrder.customer.customerIntent == NpcAICustomerCpt.CustomerIntentEnum.GotoPay
+                || itemOrder.customer.customerIntent == NpcAICustomerCpt.CustomerIntentEnum.WaitPay
+                 || itemOrder.customer.customerIntent == NpcAICustomerCpt.CustomerIntentEnum.Pay))
+            {
+                if (itemOrder.foodData == null)
+                    continue;
+                MenuOwnBean menuOwn = gameDataManager.gameData.GetMenuById(itemOrder.foodData.id);
+                menuOwn.GetPrice(itemOrder.foodData, out long payMoneyL, out long payMoneyM, out long payMoneyS);
+                PayMoney(itemOrder, payMoneyL, payMoneyM, payMoneyS, false);
+            }
+        }
+    }
+
+    /// <summary>
     /// 尝试结束订单
     /// </summary>
     /// <param name="orderForCustomer"></param>
@@ -386,7 +410,7 @@ public class InnHandler : BaseMonoBehaviour, IBaseObserver
     /// 付钱
     /// </summary>
     /// <param name="food"></param>
-    public void PayMoney(OrderForCustomer order, long payMoneyL, long payMoneyM, long payMoneyS)
+    public void PayMoney(OrderForCustomer order, long payMoneyL, long payMoneyM, long payMoneyS, bool isPlaySound)
     {
         //最小
         if (payMoneyL == 0 && payMoneyM == 0 && payMoneyS == 0)
@@ -399,16 +423,19 @@ public class InnHandler : BaseMonoBehaviour, IBaseObserver
         //根据心情评价客栈 前提订单里有他
         InnPraise(order.innEvaluation.GetPraise());
         //记录+1
-        gameDataManager.gameData.AddMenuSellNumber(1, order.foodData.id, payMoneyL, payMoneyM, payMoneyS,out bool isMenuLevelUp);
+        gameDataManager.gameData.AddMenuSellNumber(1, order.foodData.id, payMoneyL, payMoneyM, payMoneyS, out bool isMenuLevelUp);
         if (isMenuLevelUp)
         {
             Sprite spFoodIcon = innFoodManager.GetFoodSpriteByName(order.foodData.icon_key);
-            toastManager.ToastHint(spFoodIcon,string.Format(GameCommonInfo.GetUITextById(1131), order.foodData.name));
+            toastManager.ToastHint(spFoodIcon, string.Format(GameCommonInfo.GetUITextById(1131), order.foodData.name));
         }
         //金钱增加
         gameDataHandler.AddMoney(payMoneyL, payMoneyM, payMoneyS);
         //播放音效
-        audioHandler.PlaySound(AudioSoundEnum.PayMoney);
+        if (isPlaySound)
+        {
+            audioHandler.PlaySound(AudioSoundEnum.PayMoney);
+        }
         //展示特效
         innPayHandler.ShowPayEffects(order.customer.transform.position, payMoneyL, payMoneyM, payMoneyS);
         //结束订单

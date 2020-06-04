@@ -518,20 +518,21 @@ public class PreTypeEnumTools : DataTools
         long getMoney = long.Parse(preTypeData.data);
         long haveMoney = 0;
         string iconKey = "";
+       UserAchievementBean userAchievement=  gameData.GetAchievementData();
         switch (preTypeData.dataType)
         {
             case PreTypeEnum.GetMoneyL:
-                haveMoney = gameData.moneyL;
+                haveMoney = userAchievement.ownMoneyL;
                 preTypeData.preDescribe = GameCommonInfo.GetUITextById(5007);
                 iconKey = "money_3";
                 break;
             case PreTypeEnum.GetMoneyM:
-                haveMoney = gameData.moneyM;
+                haveMoney = userAchievement.ownMoneyM;
                 preTypeData.preDescribe = GameCommonInfo.GetUITextById(5008);
                 iconKey = "money_2";
                 break;
             case PreTypeEnum.GetMoneyS:
-                haveMoney = gameData.moneyS;
+                haveMoney = userAchievement.ownMoneyS;
                 preTypeData.preDescribe = GameCommonInfo.GetUITextById(5009);
                 iconKey = "money_1";
                 break;

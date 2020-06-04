@@ -191,7 +191,7 @@ public class NpcAIWorkerForAccountantCpt : NpcAIWokerFoBaseCpt
 
         if (npcAIWorker.innHandler != null)
         {
-            npcAIWorker.innHandler.PayMoney(orderForCustomer, payMoneyL, payMoneyM, payMoneyS);
+            npcAIWorker.innHandler.PayMoney(orderForCustomer, payMoneyL, payMoneyM, payMoneyS,true);
         }
 
         //通知离开

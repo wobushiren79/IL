@@ -253,16 +253,16 @@ public class NpcCustomerBuilder : NpcNormalBuilder, IBaseObserver
     {
         if ((GameTimeHandler.NotifyTypeEnum)type == GameTimeHandler.NotifyTypeEnum.NewDay)
         {
+            ClearNpc();
             //重新获取顾客信息
             listTeamCustomer = npcTeamManager.GetRandomTeamMeetConditionByType(NpcTeamTypeEnum.Customer, gameDataManager.gameData);
             //开始建造顾客
-            StartBuildCustomer();
-            ClearNpc();
+            StartBuildCustomer(); 
         }
         else if ((GameTimeHandler.NotifyTypeEnum)type == GameTimeHandler.NotifyTypeEnum.EndDay)
         {
             StopBuildCustomer();
-            ClearNpc();
+            //ClearNpc();
         }
         else if ((GameTimeHandler.NotifyTypeEnum)type == GameTimeHandler.NotifyTypeEnum.TimePoint)
         {

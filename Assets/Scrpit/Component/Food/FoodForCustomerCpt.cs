@@ -6,13 +6,18 @@ public class FoodForCustomerCpt : BaseMonoBehaviour
 {
     //食物样式
     public SpriteRenderer srFood;
-    //食物数据管理
-    public InnFoodManager innFoodManager;
 
     public GameObject objBadFood;
     public GameObject objGoodFood;
     public GameObject objPrefectFood;
 
+    //食物数据管理
+    protected InnFoodManager innFoodManager;
+
+    public void Awake()
+    {
+        innFoodManager = Find<InnFoodManager>( ImportantTypeEnum.FoodManager);
+    }
 
     /// <summary>
     /// 设置数据

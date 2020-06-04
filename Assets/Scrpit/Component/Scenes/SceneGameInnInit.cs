@@ -11,19 +11,22 @@ public class SceneGameInnInit : BaseSceneInit, IBaseObserver, DialogView.IDialog
     protected InnFloorBuilder innFloorBuilder;
     protected InnWallBuilder innWallBuilder;
     protected InnFurnitureBuilder innFurnitureBuilder;
+    protected InnHandler innHandler;
+    protected NpcCustomerBuilder npcCustomerBuilder;
 
-    public InnHandler innHandler;
     public NavMeshSurface navMesh;
 
-    public NpcCustomerBuilder npcCustomerBuilder;
 
     public override void Awake()
     {
         base.Awake();
+
+        innHandler = Find<InnHandler>(ImportantTypeEnum.InnHandler);
         sceneInnManager = Find<SceneInnManager>(ImportantTypeEnum.SceneManager);
         innFloorBuilder = Find<InnFloorBuilder>(ImportantTypeEnum.InnBuilder);
         innWallBuilder = Find<InnWallBuilder>(ImportantTypeEnum.InnBuilder);
         innFurnitureBuilder = Find<InnFurnitureBuilder>(ImportantTypeEnum.InnBuilder);
+        npcCustomerBuilder = Find<NpcCustomerBuilder>(ImportantTypeEnum.NpcBuilder);
     }
 
     public override void Start()
@@ -171,6 +174,12 @@ public class SceneGameInnInit : BaseSceneInit, IBaseObserver, DialogView.IDialog
             }
             else if (type == (int)GameTimeHandler.NotifyTypeEnum.EndDay)
             {
+                //结算所有客户
+                if (innHandler != null)
+                    innHandler.SettlementAllCustomer();
+                //清楚所有NPC
+                if (npcCustomerBuilder != null)
+                    npcCustomerBuilder.ClearNpc();
                 //停止控制
                 if (controlHandler != null)
                     controlHandler.StopControl();
