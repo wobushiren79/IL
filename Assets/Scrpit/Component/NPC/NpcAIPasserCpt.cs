@@ -371,7 +371,7 @@ public class NpcAIPasserCpt : BaseNpcAI
             yield return new WaitForSeconds(UnityEngine.Random.Range(10, 60));
             //int expression = UnityEngine.Random.Range(1, 7);
             //SetExpression((CharacterExpressionCpt.CharacterExpressionEnum)expression, 2);
-            int shoutId= Random.Range(13301, 13306);     
+            int shoutId = Random.Range(13301, 13306);
             SetShout(GameCommonInfo.GetUITextById(shoutId));
         }
     }
