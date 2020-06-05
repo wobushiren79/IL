@@ -181,7 +181,7 @@ public class PreTypeEnumTools : DataTools
             case PreTypeEnum.WorkerForFightSuccessNumber:
             case PreTypeEnum.WorkerForFightFailNumber:
                 GetPreDetailsForWorker(preTypeData, gameData, iconDataManager, isComplete);
-                        break;
+                break;
         }
         return preTypeData;
     }
@@ -213,7 +213,11 @@ public class PreTypeEnumTools : DataTools
         long[] listItems = StringUtil.SplitBySubstringForArrayLong(preTypeData.data, ',');
         preTypeData.isPre = true;
         long itemsId = listItems[0];
-        long itemsNumber = listItems[1];
+        long itemsNumber = 1;
+        if (listItems.Length >= 2)
+        {
+            itemsNumber = listItems[1];
+        }
         gameData.CheckHasItems(itemsId, out bool hasItems, out long number);
         if ((hasItems && number >= itemsNumber) || isComplete)
         {
@@ -518,7 +522,7 @@ public class PreTypeEnumTools : DataTools
         long getMoney = long.Parse(preTypeData.data);
         long haveMoney = 0;
         string iconKey = "";
-       UserAchievementBean userAchievement=  gameData.GetAchievementData();
+        UserAchievementBean userAchievement = gameData.GetAchievementData();
         switch (preTypeData.dataType)
         {
             case PreTypeEnum.GetMoneyL:
@@ -695,13 +699,13 @@ public class PreTypeEnumTools : DataTools
             {
                 case PreTypeEnum.WorkerForCookFoodNumber:
                     preDesStr = GameCommonInfo.GetUITextById(311);
-                    CharacterWorkerForChefBean characterWorkerForChef =  (CharacterWorkerForChefBean)itemWorkerData.baseInfo.GetWorkerInfoByType(WorkerEnum.Chef);
+                    CharacterWorkerForChefBean characterWorkerForChef = (CharacterWorkerForChefBean)itemWorkerData.baseInfo.GetWorkerInfoByType(WorkerEnum.Chef);
                     workerNumber += characterWorkerForChef.cookNumber;
-                break;
+                    break;
                 case PreTypeEnum.WorkerForCleanFoodNumber:
                 case PreTypeEnum.WorkerForSendFoodNumber:
                     CharacterWorkerForWaiterBean characterWorkerForWaiter = (CharacterWorkerForWaiterBean)itemWorkerData.baseInfo.GetWorkerInfoByType(WorkerEnum.Waiter);
-                    if (preTypeData.dataType== PreTypeEnum.WorkerForCleanFoodNumber)
+                    if (preTypeData.dataType == PreTypeEnum.WorkerForCleanFoodNumber)
                     {
                         preDesStr = GameCommonInfo.GetUITextById(314);
                         workerNumber += characterWorkerForWaiter.cleanTotalNumber;
@@ -812,7 +816,11 @@ public class PreTypeEnumTools : DataTools
                 case PreTypeEnum.PayItems:
                     long[] listItems = StringUtil.SplitBySubstringForArrayLong(itemData.data, ',');
                     long itemsId = listItems[0];
-                    long itemsNumber = listItems[1];
+                    long itemsNumber = 1;
+                    if (listItems.Length >= 2)
+                    {
+                        itemsNumber = listItems[1];
+                    }
                     gameData.AddItemsNumber(itemsId, -itemsNumber);
                     break;
                 case PreTypeEnum.PayIngForOilsalt:
@@ -837,7 +845,7 @@ public class PreTypeEnumTools : DataTools
                     gameData.AddIng(IngredientsEnum.Waterwine, -int.Parse(itemData.data));
                     break;
                 case PreTypeEnum.PayIngForFlour:
-                    gameData.AddIng(IngredientsEnum.Flour,-int.Parse(itemData.data));
+                    gameData.AddIng(IngredientsEnum.Flour, -int.Parse(itemData.data));
                     break;
             }
         }
