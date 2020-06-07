@@ -56,16 +56,22 @@ public enum PreTypeEnum
     WorkerForAccostFailNumber,
     WorkerForFightSuccessNumber,
     WorkerForFightFailNumber,
+
+    InnPraise,//客栈好评度
+    InnAesthetics,//客栈美观值
 }
 
 public class PreTypeBean : DataBean<PreTypeEnum>
 {
     public bool isPre;
     public float progress;
+    //图标颜色
+    public Color colorPreIcon = Color.white;
     public Sprite spPreIcon;
     public string preDescribe;
     //准备失败文字
     public string preFailStr;
+
 
     public PreTypeBean() : base(PreTypeEnum.PayMoneyS, "")
     {
@@ -181,6 +187,12 @@ public class PreTypeEnumTools : DataTools
             case PreTypeEnum.WorkerForFightSuccessNumber:
             case PreTypeEnum.WorkerForFightFailNumber:
                 GetPreDetailsForWorker(preTypeData, gameData, iconDataManager, isComplete);
+                break;
+            case PreTypeEnum.InnPraise:
+                GetPreDetailsForInnPraise(preTypeData, gameData, iconDataManager, isComplete);
+                break;
+            case PreTypeEnum.InnAesthetics:
+                GetPreDetailsForInnAesthetics(preTypeData, gameData, iconDataManager, isComplete);
                 break;
         }
         return preTypeData;
@@ -777,6 +789,90 @@ public class PreTypeEnumTools : DataTools
         preTypeData.preFailStr = GameCommonInfo.GetUITextById(5081);
         return preTypeData;
     }
+
+    /// <summary>
+    /// 获取客栈好评相关详情
+    /// </summary>
+    /// <param name="preTypeData"></param>
+    /// <param name="gameData"></param>
+    /// <param name="iconDataManager"></param>
+    /// <param name="isComplete"></param>
+    /// <returns></returns>
+    private static PreTypeBean GetPreDetailsForInnPraise(PreTypeBean preTypeData, GameDataBean gameData, IconDataManager iconDataManager, bool isComplete)
+    {
+        Sprite spIcon = null;
+        float dataNumber = float.Parse(preTypeData.data);
+        string preProStr = "";
+        string preDesStr = "";
+        switch (preTypeData.dataType)
+        {
+            case PreTypeEnum.InnPraise:
+                preDesStr = GameCommonInfo.GetUITextById(5091);
+                spIcon = iconDataManager.GetIconSpriteByName("ui_praise");
+                break;
+        }
+        InnAttributesBean innAttributes = gameData.GetInnAttributesData();
+        innAttributes.GetPraise(out int maxPraise,out int praise);
+        float praiseRate = (float) praise / maxPraise;
+        if (praiseRate >= dataNumber || isComplete)
+        {
+            preTypeData.isPre = true;
+            preProStr = "(" + dataNumber * 100 + "%/" + dataNumber * 100 + "%)";
+            preTypeData.progress = 1;
+        }
+        else
+        {
+            preTypeData.isPre = false;
+            preProStr = "(" + praiseRate * 100 + "%/" + dataNumber * 100 + "%)";
+            preTypeData.progress = praiseRate;
+        }
+        preTypeData.spPreIcon = spIcon;
+        preTypeData.preDescribe = preDesStr + preProStr;
+        preTypeData.preFailStr = GameCommonInfo.GetUITextById(5092);
+        return preTypeData;
+    }
+
+    /// <summary>
+    /// 获取客栈美观值相关详情
+    /// </summary>
+    /// <param name="preTypeData"></param>
+    /// <param name="gameData"></param>
+    /// <param name="iconDataManager"></param>
+    /// <param name="isComplete"></param>
+    /// <returns></returns>
+    private static PreTypeBean GetPreDetailsForInnAesthetics(PreTypeBean preTypeData, GameDataBean gameData, IconDataManager iconDataManager, bool isComplete)
+    {
+        Sprite spIcon = null;
+        float dataNumber = float.Parse(preTypeData.data);
+        string preProStr = "";
+        string preDesStr = "";
+        switch (preTypeData.dataType)
+        {
+            case PreTypeEnum.InnAesthetics:
+                preDesStr = GameCommonInfo.GetUITextById(5101);
+                spIcon = iconDataManager.GetIconSpriteByName("ui_aesthetics");
+                break;
+        }
+        InnAttributesBean innAttributes = gameData.GetInnAttributesData();
+        innAttributes.GetAesthetics(out float maxAesthetics, out float aesthetics);
+        if (aesthetics >= dataNumber || isComplete)
+        {
+            preTypeData.isPre = true;
+            preProStr = "(" + dataNumber + "/" + dataNumber + ")";
+            preTypeData.progress = 1;
+        }
+        else
+        {
+            preTypeData.isPre = false;
+            preProStr = "(" + aesthetics  + "/" + dataNumber  + ")";
+            preTypeData.progress = aesthetics / dataNumber;
+        }
+        preTypeData.spPreIcon = spIcon;
+        preTypeData.preDescribe = preDesStr + preProStr;
+        preTypeData.preFailStr = GameCommonInfo.GetUITextById(5102);
+        return preTypeData;
+    }
+
 
     /// <summary>
     /// 完成前置条件

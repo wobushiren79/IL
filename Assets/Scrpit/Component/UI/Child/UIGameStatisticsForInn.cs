@@ -66,7 +66,7 @@ public class UIGameStatisticsForInn : UIGameStatisticsDetailsBase<UIGameStatisti
         {
             case MoneyEnum.L:
                 iconKey = "money_3";
-                contentStr = GameCommonInfo.GetUITextById(303);
+                contentStr = GameCommonInfo.GetUITextById(305);
                 break;
             case MoneyEnum.M:
                 iconKey = "money_2";
@@ -74,7 +74,7 @@ public class UIGameStatisticsForInn : UIGameStatisticsDetailsBase<UIGameStatisti
                 break;
             case MoneyEnum.S:
                 iconKey = "money_1";
-                contentStr = GameCommonInfo.GetUITextById(305);
+                contentStr = GameCommonInfo.GetUITextById(303);
                 break;
         }
         Sprite spIcon = iconDataManager.GetIconSpriteByName(iconKey);
