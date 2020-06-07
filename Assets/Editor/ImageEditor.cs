@@ -49,6 +49,12 @@ public class ImageEditor : Editor
     {
         BaseSpriteEditor(SpriteImportMode.Multiple, 5, 2);
     }
+    [MenuItem("Custom/Image/Multiple_5x2_Extrude")]
+    public static void Multiple5x2ForExtrude()
+    {
+        BaseSpriteEditorForExtrude(SpriteImportMode.Multiple, 5, 2);
+    }
+
     [MenuItem("Custom/Image/Multiple_5x3")]
     public static void Multiple5x3()
     {
@@ -61,6 +67,7 @@ public class ImageEditor : Editor
     {
         BaseSpriteEditor(SpriteImportMode.Multiple, 5, 4);
     }
+
     [MenuItem("Custom/Image/Multiple_5x4_Extrude")]
     public static void Multiple5x4ForExtrude()
     {
