@@ -47,10 +47,11 @@ public class UIGameMain : UIGameComponent, DialogView.IDialogCallBack, IRadioGro
     public RadioButtonView rbTimeScale3;
     public RadioButtonView rbTimeScale5;
 
-
     protected Tween tweenForMoneyL;
     protected Tween tweenForMoneyM;
     protected Tween tweenForMoneyS;
+
+    public Text tvMoneyForAnimModel;
 
     public override void Awake()
     {
@@ -390,6 +391,7 @@ public class UIGameMain : UIGameComponent, DialogView.IDialogCallBack, IRadioGro
             tweenForMoneyL = DOTween.To(() => startMoney, x => { SetMoney(MoneyEnum.L, x); }, gameData.moneyL, 1);
             tvMoneyL.transform.localScale = new Vector3(1,1,1);
             tvMoneyL.transform.DOPunchScale(new Vector3(1f, 1f, 1f),1f,10,1);
+            AnimForMoneyItem(MoneyEnum.L, priceL);
         }
         if (priceM != 0)
         {
@@ -399,6 +401,7 @@ public class UIGameMain : UIGameComponent, DialogView.IDialogCallBack, IRadioGro
             tweenForMoneyM = DOTween.To(() => startMoney, x => { SetMoney(MoneyEnum.M, x); }, gameData.moneyM, 1);
             tvMoneyM.transform.localScale = new Vector3(1, 1, 1);
             tvMoneyM.transform.DOPunchScale(new Vector3(1f, 1f, 1f), 1f, 10, 1);
+            AnimForMoneyItem(MoneyEnum.M, priceM);
         }
         if (priceS != 0)
         {
@@ -408,7 +411,36 @@ public class UIGameMain : UIGameComponent, DialogView.IDialogCallBack, IRadioGro
             tweenForMoneyS = DOTween.To(() => startMoney, x => { SetMoney(MoneyEnum.S, x); }, gameData.moneyS, 1);
             tvMoneyS.transform.localScale = new Vector3(1, 1, 1);
             tvMoneyS.transform.DOPunchScale(new Vector3(1f, 1f, 1f), 1f, 10, 1);
+            AnimForMoneyItem(MoneyEnum.S, priceS);
         }
+    }
+
+    private void AnimForMoneyItem(MoneyEnum moneyType,long money)
+    {
+        Vector3 startPosition = Vector3.zero;
+        Color tvColor = Color.black;
+        switch (moneyType)
+        {
+            case MoneyEnum.L:
+                startPosition = tvMoneyL.transform.position;
+                tvColor = tvMoneyL.color;
+                break;
+            case MoneyEnum.M:
+                startPosition = tvMoneyM.transform.position;
+                tvColor = tvMoneyM.color;
+                break;
+            case MoneyEnum.S:
+                startPosition = tvMoneyS.transform.position;
+                tvColor = tvMoneyS.color;
+                break;
+        }
+        GameObject itemMoney = Instantiate(gameObject, tvMoneyForAnimModel.gameObject, startPosition);
+        Text tvItem = itemMoney.GetComponent<Text>();
+        tvItem.DOFade(0, 1).SetDelay(1);
+        tvItem.color = tvColor;
+        tvItem.text = money + "";
+        RectTransform rtItem = ((RectTransform)itemMoney.transform);
+        rtItem.DOAnchorPosY(rtItem.anchoredPosition.y + 30, 2).OnComplete(delegate () { Destroy(itemMoney); });
     }
 
     #region dialog 回调
