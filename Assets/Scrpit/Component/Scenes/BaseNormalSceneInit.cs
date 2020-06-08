@@ -16,6 +16,12 @@ public abstract class BaseNormalSceneInit : BaseSceneInit,IBaseObserver, DialogV
             //增加回调
             gameTimeHandler.AddObserver(this);
         }
+        //获取团队NPC信息
+        if (npcTeamManager != null)
+        {
+            npcTeamManager.npcTeamController.GetNpcTeamByType(NpcTeamTypeEnum.Customer);
+        }
+
         //设置角色位置
         InitUserPosition();
         //设置天气
