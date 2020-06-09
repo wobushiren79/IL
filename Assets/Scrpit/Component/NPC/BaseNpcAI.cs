@@ -48,7 +48,7 @@ public class BaseNpcAI : BaseObservable<IBaseObserver>
     /// </summary>
     /// <param name="gameItemsManager"></param>
     /// <param name="characterBean"></param>
-    public void SetCharacterData(GameItemsManager gameItemsManager, CharacterBean characterBean)
+    public virtual void SetCharacterData(GameItemsManager gameItemsManager, CharacterBean characterBean)
     {
         if (characterBean == null)
             return;
@@ -81,7 +81,7 @@ public class BaseNpcAI : BaseObservable<IBaseObserver>
         //设置速度
         if (characterMoveCpt != null)
         {
-            float speed = totalAttributes.speed * 0.05f + 1.2f;
+            float speed = totalAttributes.speed * 0.05f + 1f;
             //速度修正
             if (speed <= 0.1f)
             {

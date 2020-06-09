@@ -17,8 +17,8 @@ public class UIGameDate : UIGameComponent
     public Button btRest;
 
     [Header("数据")]
-    public float animTime = 1;//动画时间
-    public float animDelay = 2;//动画延迟
+    public float animTimeForWaitNext = 1f;//动画时间
+    public float animTimeForShowDialog = 1;//动画延迟
 
     protected GameTimeHandler gameTimeHandler;
     protected GameDataManager gameDataManager;
@@ -115,14 +115,14 @@ public class UIGameDate : UIGameComponent
     /// <returns></returns>
     public IEnumerator CoroutineForNextDay()
     {
-        yield return new WaitForSeconds(3);
+        yield return new WaitForSeconds(animTimeForWaitNext);
         //进入下一天
         gameTimeHandler.GoToNextDay(1);
         gameTimeHandler.GetTime(out int newYear, out int newMonth, out int newDay);
         calendarView.ChangeData(newYear, newMonth, newDay);
         audioHandler.PlaySound( AudioSoundEnum.ButtonForShow);
         //展示是否营业框
-        yield return new WaitForSeconds(1.5f);
+        yield return new WaitForSeconds(animTimeForShowDialog);
         // 第一天默认不营业
         gameTimeHandler.GetTime(out int year, out int month, out int day);
 

@@ -66,6 +66,7 @@ public class CharacterAttributesBean
     {
         if (itemsInfo == null)
             return;
+        life += itemsInfo.add_life;
         loyal += itemsInfo.add_loyal;
         cook += itemsInfo.add_cook;
         speed += itemsInfo.add_speed;
