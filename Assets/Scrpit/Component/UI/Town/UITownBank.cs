@@ -2,18 +2,31 @@
 using UnityEditor;
 using DG.Tweening;
 using System;
-
-public class UITownBank : UIBaseOne,IRadioGroupCallBack 
+using UnityEngine.UI;
+public class UITownBank : UIBaseOne, IRadioGroupCallBack
 {
     public UITownBankChangeMoney uITownBankChange;
     public UITownBankLoans uITownBankLoans;
 
     public RadioGroupView rgType;
+    public Text tvLoansNumber;
 
+    protected string loansStr;
     public override void Start()
     {
         base.Start();
         rgType.SetCallBack(this);
+        loansStr = GameCommonInfo.GetUITextById(191);
+    }
+
+    public override void Update()
+    {
+        base.Update();
+        if (tvLoansNumber != null)
+        {
+            GameDataBean gameData = uiGameManager.gameDataManager.gameData;
+            tvLoansNumber.text = loansStr + "\n" + "(" + gameData.listLoans.Count + "/" + gameData.loansNumberLimit + ")";
+        }
     }
 
     public override void OpenUI()

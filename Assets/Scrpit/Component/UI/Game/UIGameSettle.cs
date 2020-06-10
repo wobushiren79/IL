@@ -55,10 +55,11 @@ public class UIGameSettle : UIGameComponent
         InnFoodManager innFoodManager = uiGameManager.innFoodManager;
         IconDataManager iconDataManager = uiGameManager.iconDataManager;
         GameTimeHandler gameTimeHandler = uiGameManager.gameTimeHandler;
+        GameDataManager gameDataManager = uiGameManager.gameDataManager;
         //停止时间
         gameTimeHandler.SetTimeStatus(true);
         CptUtil.RemoveChildsByActive(objListRecordContent.transform);
-        animDelay =0f;
+        animDelay = 0f;
         InnRecordBean innRecord = innHandler.GetInnRecord();
         //员工支出
         CreateItemForMoney(
@@ -68,26 +69,42 @@ public class UIGameSettle : UIGameComponent
                 innRecord.payWageL,
                 innRecord.payWageM,
                 innRecord.payWageS);
+        //借贷还款
+        if (gameDataManager.gameData.listLoans.Count > 0)
+        {
+            gameDataManager.gameData.PayLoans(out List<UserLoansBean> listPayLoans);
+            foreach (UserLoansBean itemPayLoans in listPayLoans)
+            {
+                CreateItemForMoney(
+                    iconDataManager.GetIconSpriteByName("money_1"),
+                    GameCommonInfo.GetUITextById(184),
+                    0,
+                    0,
+                    0,
+                    itemPayLoans.moneySForDay);
+                innRecord.AddPayLoans(0,0, itemPayLoans.moneySForDay);
+            }
+        }
         //食材消耗
         string consumeIngStr = GameCommonInfo.GetUITextById(4002);
-        if (innHandler.GetInnRecord().consumeIngOilsalt > 0)
-            CreateItemForOther(innHandler.GetInnRecord().consumeIngOilsalt, spIconOilsalt, consumeIngStr + " " + GameCommonInfo.GetUITextById(21));
-        if (innHandler.GetInnRecord().consumeIngMeat > 0)
-            CreateItemForOther(innHandler.GetInnRecord().consumeIngMeat, spIconMeat, consumeIngStr + " " + GameCommonInfo.GetUITextById(22));
-        if (innHandler.GetInnRecord().consumeIngRiverfresh > 0)
-            CreateItemForOther(innHandler.GetInnRecord().consumeIngRiverfresh, spIconRiverfresh, consumeIngStr + " " + GameCommonInfo.GetUITextById(23));
-        if (innHandler.GetInnRecord().consumeIngSeafood > 0)
-            CreateItemForOther(innHandler.GetInnRecord().consumeIngSeafood, spIconSeafood, consumeIngStr + " " + GameCommonInfo.GetUITextById(24));
-        if (innHandler.GetInnRecord().consumeIngVegetables > 0)
-            CreateItemForOther(innHandler.GetInnRecord().consumeIngVegetables, spIconVegetables, consumeIngStr + " " + GameCommonInfo.GetUITextById(25));
-        if (innHandler.GetInnRecord().consumeIngMelonfruit > 0)
-            CreateItemForOther(innHandler.GetInnRecord().consumeIngMelonfruit, spIconMelonfruit, consumeIngStr + " " + GameCommonInfo.GetUITextById(26));
-        if (innHandler.GetInnRecord().consumeIngWaterwine > 0)
-            CreateItemForOther(innHandler.GetInnRecord().consumeIngWaterwine, spIconWaterwine, consumeIngStr + " " + GameCommonInfo.GetUITextById(27));
-        if (innHandler.GetInnRecord().consumeIngFlour > 0)
-            CreateItemForOther(innHandler.GetInnRecord().consumeIngFlour, spIconFlour, consumeIngStr + " " + GameCommonInfo.GetUITextById(28));
+        if (innRecord.consumeIngOilsalt > 0)
+            CreateItemForOther(innRecord.consumeIngOilsalt, spIconOilsalt, consumeIngStr + " " + GameCommonInfo.GetUITextById(21));
+        if (innRecord.consumeIngMeat > 0)
+            CreateItemForOther(innRecord.consumeIngMeat, spIconMeat, consumeIngStr + " " + GameCommonInfo.GetUITextById(22));
+        if (innRecord.consumeIngRiverfresh > 0)
+            CreateItemForOther(innRecord.consumeIngRiverfresh, spIconRiverfresh, consumeIngStr + " " + GameCommonInfo.GetUITextById(23));
+        if (innRecord.consumeIngSeafood > 0)
+            CreateItemForOther(innRecord.consumeIngSeafood, spIconSeafood, consumeIngStr + " " + GameCommonInfo.GetUITextById(24));
+        if (innRecord.consumeIngVegetables > 0)
+            CreateItemForOther(innRecord.consumeIngVegetables, spIconVegetables, consumeIngStr + " " + GameCommonInfo.GetUITextById(25));
+        if (innRecord.consumeIngMelonfruit > 0)
+            CreateItemForOther(innRecord.consumeIngMelonfruit, spIconMelonfruit, consumeIngStr + " " + GameCommonInfo.GetUITextById(26));
+        if (innRecord.consumeIngWaterwine > 0)
+            CreateItemForOther(innRecord.consumeIngWaterwine, spIconWaterwine, consumeIngStr + " " + GameCommonInfo.GetUITextById(27));
+        if (innRecord.consumeIngFlour > 0)
+            CreateItemForOther(innRecord.consumeIngFlour, spIconFlour, consumeIngStr + " " + GameCommonInfo.GetUITextById(28));
         //遍历食物
-        foreach (GameItemsBean itemData in innHandler.GetInnRecord().listSellNumber)
+        foreach (GameItemsBean itemData in innRecord.listSellNumber)
         {
             MenuInfoBean foodData = innFoodManager.GetFoodDataById(itemData.itemId);
             Sprite foodIcon = innFoodManager.GetFoodSpriteByName(foodData.icon_key);
@@ -99,12 +116,12 @@ public class UIGameSettle : UIGameComponent
                 itemData.priceM,
                 itemData.priceS);
         }
-        tvIncomeS.text = innHandler.GetInnRecord().incomeS + "";
-        tvIncomeM.text = innHandler.GetInnRecord().incomeM + "";
-        tvIncomeL.text = innHandler.GetInnRecord().incomeL + "";
-        tvExpensesS.text = innHandler.GetInnRecord().expensesS + "";
-        tvExpensesM.text = innHandler.GetInnRecord().expensesM + "";
-        tvExpensesL.text = innHandler.GetInnRecord().expensesL + "";
+        tvIncomeS.text =innRecord.incomeS + "";
+        tvIncomeM.text =innRecord.incomeM + "";
+        tvIncomeL.text =innRecord.incomeL + "";
+        tvExpensesS.text =innRecord.expensesS + "";
+        tvExpensesM.text =innRecord.expensesM + "";
+        tvExpensesL.text =innRecord.expensesL + "";
     }
 
     public void CreateItemForMoney(Sprite spIcon, string name, int status, long moneyL, long moneyM, long moneyS)
@@ -129,7 +146,8 @@ public class UIGameSettle : UIGameComponent
     /// <param name="objItem"></param>
     public void AnimForItemShow(GameObject objItem)
     {
-        objItem.transform.DOScale(new Vector3(0, 0, 0), 0.5f).From().SetDelay(animDelay + 0.1f).OnComplete( delegate(){
+        objItem.transform.DOScale(new Vector3(0, 0, 0), 0.5f).From().SetDelay(animDelay + 0.1f).OnComplete(delegate ()
+        {
             AudioHandler audioHandler = uiGameManager.audioHandler;
             audioHandler.PlaySound(AudioSoundEnum.PayMoney);
         });

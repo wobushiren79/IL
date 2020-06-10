@@ -26,7 +26,10 @@ public class InnRecordBean
     public long payWageS;
     public long payWageM;
     public long payWageL;
-
+    //支付贷款
+    public long payLoansS;
+    public long payLoansM;
+    public long payLoansL;
     //售卖数量
     public List<GameItemsBean> listSellNumber = new List<GameItemsBean>();
 
@@ -81,6 +84,23 @@ public class InnRecordBean
         payWageS += moneyS;
         payWageM += moneyM;
         payWageL += moneyL;
+
+        expensesS += moneyS;
+        expensesM += moneyM;
+        expensesL += moneyL;
+    }
+    
+    /// <summary>
+    /// 增加贷款还款
+    /// </summary>
+    /// <param name="moneyL"></param>
+    /// <param name="moneyM"></param>
+    /// <param name="moneyS"></param>
+    public void AddPayLoans(long moneyL, long moneyM, long moneyS)
+    {
+        payLoansS += moneyS;
+        payLoansM += moneyM;
+        payLoansL += moneyL;
 
         expensesS += moneyS;
         expensesM += moneyM;

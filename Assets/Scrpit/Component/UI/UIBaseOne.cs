@@ -24,6 +24,11 @@ public class UIBaseOne : UIGameComponent
             btBack.onClick.AddListener(OpenMainUI);
     }
 
+    public virtual void Update()
+    {
+        SetMoney();
+    }
+
     public override void OpenUI()
     {
         base.OpenUI();
@@ -88,10 +93,7 @@ public class UIBaseOne : UIGameComponent
         }
     }
 
-    public void Update()
-    {
-        SetMoney();
-    }
+
 
     /// <summary>
     /// 返回游戏主UI

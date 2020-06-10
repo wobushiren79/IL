@@ -34,6 +34,7 @@ public class GameDataBean
 
     public List<CharacterFavorabilityBean> listCharacterFavorability = new List<CharacterFavorabilityBean>();//角色好感度
     public List<long> listTriggeredEvent = new List<long>();//触发过的事件
+    public List<UserLoansBean> listLoans = new List<UserLoansBean>();//贷款
 
     public long ingOilsalt;//油盐
     public long ingMeat;//肉类
@@ -45,6 +46,25 @@ public class GameDataBean
     public long ingFlour;//面粉
 
     public int workerNumberLimit = 2;//员工人员招聘上限
+    public int loansNumberLimit = 3;//贷款上限
+
+    /// <summary>
+    /// 增加贷款
+    /// </summary>
+    /// <param name="loans"></param>
+    /// <returns></returns>
+    public bool AddLoans(UserLoansBean loans)
+    {
+        if (listLoans.Count >= loansNumberLimit)
+        {
+            return false;
+        }
+        else
+        {
+            listLoans.Add(loans);
+            return true;
+        }
+    }
 
     /// <summary>
     /// 增加竞技场奖杯
@@ -276,7 +296,7 @@ public class GameDataBean
             MenuOwnBean itemData = listMenu[i];
             if (itemData.menuId == menuId)
             {
-                itemData.SellMenu(number, priceL, priceM, priceS, out  bool isLevelUp);
+                itemData.SellMenu(number, priceL, priceM, priceS, out bool isLevelUp);
                 return;
             }
         }
@@ -479,12 +499,12 @@ public class GameDataBean
 
     public bool CheckTriggeredEvent(long[] eventIds)
     {
-        foreach(long itemId in eventIds)
+        foreach (long itemId in eventIds)
         {
             if (!CheckTriggeredEvent(itemId))
             {
                 return false;
-            } 
+            }
         }
         return true;
     }
@@ -567,11 +587,11 @@ public class GameDataBean
     /// <param name="id"></param>
     /// <param name="hasItems"></param>
     /// <param name="number"></param>
-    public void CheckHasItems(long id,out bool hasItems,out long number)
+    public void CheckHasItems(long id, out bool hasItems, out long number)
     {
         hasItems = false;
         number = 0;
-        foreach ( ItemBean itemData in listItems)
+        foreach (ItemBean itemData in listItems)
         {
             if (itemData.itemId == id)
             {
@@ -806,6 +826,38 @@ public class GameDataBean
         guildCoin -= coin;
         if (guildCoin < 0)
             guildCoin = 0;
+    }
+
+    /// <summary>
+    /// 还贷
+    /// </summary>
+    /// <returns></returns>
+    public void PayLoans(out List<UserLoansBean> listPayLoans)
+    {
+        listPayLoans = new List<UserLoansBean>();
+        if (CheckUtil.ListIsNull(listLoans))
+        {
+            return;
+        }
+        for (int i = 0; i < listLoans.Count; i++)
+        {
+            UserLoansBean itemLoans = listLoans[i];
+            if (HasEnoughMoney(0, 0, itemLoans.moneySForDay))
+            {
+                //支付金钱
+                PayMoney(0, 0, itemLoans.moneySForDay);
+                //剩余的还贷日期-1
+                itemLoans.residueDays -= 1;
+                //已经还过的列表+1
+                listPayLoans.Add(itemLoans);
+                //如果已经还完
+                if (itemLoans.residueDays <= 0)
+                {
+                    listLoans.Remove(itemLoans);
+                    i--;
+                }
+            }
+        }
     }
 
     /// <summary>
