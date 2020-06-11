@@ -54,8 +54,8 @@ public class ItemTownBankLoansCpt : ItemGameBaseCpt, DialogView.IDialogCallBack
 
     public void OnClickForSubmit()
     {
-
         UIGameManager uiGameManager = uiComponent.GetUIManager<UIGameManager>();
+        uiGameManager.audioHandler.PlaySound(AudioSoundEnum.ButtonForNormal);
         GameDataBean gameData = uiGameManager.gameDataManager.gameData;
         if (gameData.listLoans.Count >= gameData.loansNumberLimit)
         {

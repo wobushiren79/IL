@@ -53,6 +53,20 @@ public class SteamUserStatsImpl : ISteamUserStats
     }
 
     /// <summary>
+    /// 直接激活成就
+    /// </summary>
+    /// <param name="pchName"></param>
+    public void UserCompleteAchievement(string pchName)
+    {
+        if (SteamManager.Initialized)
+        {
+            bool isSetAchievement = SteamUserStats.SetAchievement(pchName);
+            bool isUpdateStat = SteamUserStats.StoreStats();
+        }
+    }
+
+
+    /// <summary>
     /// 充值所有统计数据
     /// </summary>
     public void ResetAllStats()

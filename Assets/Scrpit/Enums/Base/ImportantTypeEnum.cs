@@ -47,4 +47,5 @@ public enum ImportantTypeEnum
 
     Popup,
     Sun,
+    Steam,
 }

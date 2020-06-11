@@ -181,6 +181,8 @@ public class ItemTownGuildAchievementCpt : ItemGameBaseCpt
             achDialog.SetData(achievementInfo);
             //播放音效
             uiGameManager.audioHandler.PlaySound(AudioSoundEnum.ButtonForNormal);
+            //解锁steam成就
+            uiGameManager.steamHandler.UnLockAchievement(achievementInfo.id);
         }
     }
 }

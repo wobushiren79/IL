@@ -557,6 +557,7 @@ public class EditorUI
             }
             GUILayout.Label("talkId：", GUILayout.Width(100), GUILayout.Height(20));
             itemTalkInfo.id = long.Parse(EditorGUILayout.TextArea(itemTalkInfo.id + "", GUILayout.Width(150), GUILayout.Height(20)));
+            itemTalkInfo.text_id = itemTalkInfo.id;
             GUILayout.Label("对话顺序：", GUILayout.Width(100), GUILayout.Height(20));
             itemTalkInfo.text_order = int.Parse(EditorGUILayout.TextArea(itemTalkInfo.text_order + "", GUILayout.Width(50), GUILayout.Height(20)));
             GUILayout.Label("说话者ID：", GUILayout.Width(100), GUILayout.Height(20));
