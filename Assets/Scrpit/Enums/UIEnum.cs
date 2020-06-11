@@ -44,4 +44,7 @@ public enum UIEnum
     MiniGameCookingSettlement = 3007,//料理游戏 结算UI
     MiniGameAccount = 3008,//算账小游戏UI
     MiniGameDebate = 3009,//辩论小游戏UI
+
+    GambleTrickyCup = 4001,//赌博 猜蛊
+    GambleTrickySize = 4002,//赌博 猜大小
 }

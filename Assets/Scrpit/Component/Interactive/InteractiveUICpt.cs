@@ -8,7 +8,13 @@ public class InteractiveUICpt : BaseInteractiveCpt
 
     //备注信息
     public string remarkData;
-    public BaseUIManager uiManager;
+
+    protected BaseUIManager uiManager;
+
+    private void Start()
+    {
+        uiManager = Find<BaseUIManager>(ImportantTypeEnum.GameUI);
+    }
 
     public override void InteractiveDetection(CharacterInteractiveCpt characterInt)
     {

@@ -37,4 +37,23 @@ public class GambleBaseBean
     }
 
 
+    /// <summary>
+    /// 获取赌博名称
+    /// </summary>
+    /// <param name="gambleName"></param>
+    public void GetGambleName(out string gambleName)
+    {
+        gambleName = "";
+        switch (gambleType)
+        {
+            case GambleTypeEnum.TrickyCup:
+                gambleName = GameCommonInfo.GetUITextById(601);
+                break;
+            case GambleTypeEnum.TrickySize:
+                gambleName = GameCommonInfo.GetUITextById(602);
+                break;
+        }      
+    }
+
+
 }
