@@ -7,7 +7,7 @@ public class ItemGameStatisticsForAchCpt : ItemGameBaseCpt
     public Image ivIcon;
     public Image ivBackground;
 
-    public Sprite spLock;
+    public Sprite spUnLockBackground;
     public Sprite spLockBackground;
     private void Start()
     {
@@ -21,7 +21,7 @@ public class ItemGameStatisticsForAchCpt : ItemGameBaseCpt
     /// <param name="achievementInfo"></param>
     /// <param name="spIcon"></param>
     /// <param name="isUnLock"></param>
-    public void SetData(AchievementInfoBean achievementInfo,bool isUnLock)
+    public void SetData(AchievementInfoBean achievementInfo, bool isUnLock)
     {
         if (isUnLock)
         {
@@ -29,10 +29,11 @@ public class ItemGameStatisticsForAchCpt : ItemGameBaseCpt
             Sprite spIcon = uiGameManager.iconDataManager.GetIconSpriteByName(achievementInfo.icon_key);
             SetIcon(spIcon);
             popupButton.SetData(AchievementStatusEnum.Completed, achievementInfo);
+            ivBackground.sprite = spUnLockBackground;
         }
         else
         {
-            SetIcon(spLock);
+            SetIcon(null);
             ivBackground.sprite = spLockBackground;
             popupButton.SetData(AchievementStatusEnum.UnKnown, achievementInfo);
         }
@@ -46,7 +47,16 @@ public class ItemGameStatisticsForAchCpt : ItemGameBaseCpt
     {
         if (ivIcon)
         {
-            ivIcon.sprite = spIcon;
+            if (spIcon == null)
+            {
+                ivIcon.color = Color.clear;
+            }
+            else
+            {
+                ivIcon.color = Color.white;
+                ivIcon.sprite = spIcon;
+            }
+
         }
     }
 }

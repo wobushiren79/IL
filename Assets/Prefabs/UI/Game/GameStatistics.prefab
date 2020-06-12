@@ -846,7 +846,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 1f4332a1c89bc6a4792d12be2b5808ca, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 6c49d0fd086fd8f4fa7c708f3b42a5fb, type: 3}
   m_Type: 1
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -872,7 +872,7 @@ MonoBehaviour:
     id: 0
     valid: 0
     ach_id: 0
-    pre_ach_id: 0
+    pre_ach_ids: 
     type: 0
     icon_key: 
     icon_key_remark: 
@@ -956,8 +956,8 @@ MonoBehaviour:
   popupButton: {fileID: 543055346692934953}
   ivIcon: {fileID: 5249008225227282977}
   ivBackground: {fileID: 2446480612225731402}
-  spLock: {fileID: 21300000, guid: fb70d527c7aa8314e9d2b66df663e1a0, type: 3}
-  spLockBackground: {fileID: 21300000, guid: 8ff288df98a3baa4b8cf10cad35e1daf, type: 3}
+  spUnLockBackground: {fileID: 21300000, guid: c5cbd4e5c928df440be0a5f1689d43ad, type: 3}
+  spLockBackground: {fileID: 21300000, guid: 6c49d0fd086fd8f4fa7c708f3b42a5fb, type: 3}
 --- !u!1 &1053711336875989337
 GameObject:
   m_ObjectHideFlags: 0
@@ -2930,6 +2930,9 @@ MonoBehaviour:
     payWageS: 0
     payWageM: 0
     payWageL: 0
+    payLoansS: 0
+    payLoansM: 0
+    payLoansL: 0
     listSellNumber: []
     incomeS: 0
     incomeM: 0
@@ -2974,6 +2977,9 @@ MonoBehaviour:
     payWageS: 0
     payWageM: 0
     payWageL: 0
+    payLoansS: 0
+    payLoansM: 0
+    payLoansL: 0
     listSellNumber: []
     incomeS: 0
     incomeM: 0
