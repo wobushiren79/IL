@@ -775,7 +775,7 @@ public class EditorUI
     /// </summary>
     public static void GUIMenuCreate(MenuInfoService menuInfoService, MenuInfoBean menuInfo)
     {
-        GUIText("技能创建");
+        GUIText("菜谱创建");
         if (GUIButton("创建"))
         {
             menuInfo.valid = 1;
