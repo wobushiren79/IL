@@ -31,6 +31,7 @@ public enum ImportantTypeEnum
     InnBuilder,
     MiniGameBuilder,
     SceneBuilder,
+    GambleBuilder,
 
     GameDataHandler,
     EventHandler,
@@ -44,6 +45,7 @@ public enum ImportantTypeEnum
     AudioHandler,
     SceneHandler,
     EffectHandler,
+    GambleHandler,
 
     Popup,
     Sun,

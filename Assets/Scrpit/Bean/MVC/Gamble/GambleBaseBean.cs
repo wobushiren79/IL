@@ -6,6 +6,7 @@ using System;
 public class GambleBaseBean
 {
     public GambleTypeEnum gambleType;
+    public GambleStatusType gambleStatus;
 
     //下注金额
     public long betForMoneyL;
@@ -17,10 +18,53 @@ public class GambleBaseBean
     public long betMaxForMoneyM;
     public long betMaxForMoneyS;
 
+    public bool isWin = false;
+
+
 
     public GambleBaseBean(GambleTypeEnum gambleType)
     {
         this.gambleType = gambleType;
+        ResetData();
+    }
+
+    /// <summary>
+    /// 重置数据
+    /// </summary>
+    public void ResetData()
+    {
+        betForMoneyL = 0;
+        betForMoneyM = 0;
+        betForMoneyS = 0;
+        this.gambleStatus = GambleStatusType.Prepare;
+        isWin = false;
+    }
+
+    /// <summary>
+    /// 设置输赢
+    /// </summary>
+    /// <param name="isWin"></param>
+    public void SetIsWin(bool isWin)
+    {
+        this.isWin = isWin;
+    }
+
+    /// <summary>
+    /// 设置游戏状态
+    /// </summary>
+    /// <param name="gambleStatus"></param>
+    public void SetGambleStatus(GambleStatusType gambleStatus)
+    {
+        this.gambleStatus = gambleStatus;
+    }
+
+    /// <summary>
+    /// 获取游戏状态
+    /// </summary>
+    /// <returns></returns>
+    public GambleStatusType GetGambleStatus()
+    {
+        return gambleStatus;
     }
 
     /// <summary>
@@ -52,7 +96,7 @@ public class GambleBaseBean
             case GambleTypeEnum.TrickySize:
                 gambleName = GameCommonInfo.GetUITextById(602);
                 break;
-        }      
+        }
     }
 
 

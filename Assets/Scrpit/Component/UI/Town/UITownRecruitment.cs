@@ -131,19 +131,28 @@ public class UITownRecruitment : UIBaseOne, DialogView.IDialogCallBack
     #region 弹窗回调
     public void Submit(DialogView dialogView, DialogBean dialogBean)
     {
-        if (dialogView is PickForMoneyDialogView)
+        if (dialogView as PickForMoneyDialogView)
         {
             //如果是金钱选择回调
-            DialogManager dialogManager = GetUIManager<UIGameManager>().dialogManager;
-            CharacterBodyManager characterBodyManager = GetUIManager<UIGameManager>().characterBodyManager;
-            PickForMoneyDialogView pickForMoneyDialog = (PickForMoneyDialogView)dialogView;
+            PickForMoneyDialogView pickForMoneyDialog = dialogView as PickForMoneyDialogView;
+            pickForMoneyDialog.GetPickMoney(out long moneyL, out long moneyM, out long moneyS);
+            if (!uiGameManager.gameDataManager.gameData.HasEnoughMoney(moneyL, moneyM, moneyS))
+            {
+                uiGameManager.toastManager.ToastHint(GameCommonInfo.GetUITextById(1005));
+                return;
+            }
+            uiGameManager.gameDataManager.gameData.PayMoney(moneyL, moneyM, moneyS);
+  
+            DialogManager dialogManager = uiGameManager.dialogManager;
+            CharacterBodyManager characterBodyManager = uiGameManager.characterBodyManager;
+    
             DialogBean dialogData = new DialogBean();
             //根据金额获取角色
-            CharacterBean characterData = CharacterBean.CreateRandomWorkerDataByPrice(characterBodyManager, pickForMoneyDialog.moneyL, pickForMoneyDialog.moneyM, pickForMoneyDialog.moneyS);
+            CharacterBean characterData = CharacterBean.CreateRandomWorkerDataByPrice(characterBodyManager, moneyL, moneyM, moneyS);
             FindCharacterDialogView findCharacterDialog = (FindCharacterDialogView)dialogManager.CreateDialog(DialogEnum.FindCharacter, this, dialogData);
             findCharacterDialog.SetData(characterData);
         }
-        else if (dialogView is FindCharacterDialogView)
+        else if (dialogView as FindCharacterDialogView)
         {
             //如果是招募回调
             GameDataManager gameDataManager = GetUIManager<UIGameManager>().gameDataManager;
