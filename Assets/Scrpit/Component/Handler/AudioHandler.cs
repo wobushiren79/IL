@@ -176,6 +176,9 @@ public class AudioHandler : BaseHandler
             case AudioSoundEnum.Passive:
                 audioClip = audioManager.GetSoundClip("sound_passive_1");
                 break;
+            case AudioSoundEnum.Dice:
+                audioClip = audioManager.GetSoundClip("sound_dice_1");
+                break;
         }
         if (audioClip != null)
             audioSourceForSound.PlayOneShot(audioClip, volumeScale);

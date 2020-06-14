@@ -20,6 +20,9 @@ public class GambleBaseBean
 
     public bool isWin = false;
 
+    //奖励倍率
+    public float winRewardRate = 2;
+
 
 
     public GambleBaseBean(GambleTypeEnum gambleType)

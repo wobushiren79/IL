@@ -76,6 +76,10 @@ public class GambleTrickyCupHandler : BaseGambleHandler<GambleTrickyCupBean , Ga
         StartGame();
     }
 
+    /// <summary>
+    /// 协程-结算
+    /// </summary>
+    /// <returns></returns>
     public IEnumerator CoroutineForSettlement()
     {
         //延迟半秒结算 结果展示有动画所以需要延迟

@@ -36,6 +36,6 @@ public enum AudioSoundEnum
 
     UseMedicine =501,//使用药品
     Passive=601,//消极失败
-
+    Dice=701,//骰子声音
 
 }

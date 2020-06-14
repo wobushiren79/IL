@@ -17,6 +17,7 @@ public class UIBaseGamble<T, H, B> : UIGameComponent, DialogView.IDialogCallBack
     public Text tvMoneyL;
     public Text tvMoneyM;
     public Text tvMoneyS;
+    public Text winRewardRate;
 
     //按钮-下注
     public Button btBet;
@@ -98,6 +99,8 @@ public class UIBaseGamble<T, H, B> : UIGameComponent, DialogView.IDialogCallBack
     {
         if (tvBetMoneyS != null)
             tvBetMoneyS.text = gambleData.betForMoneyS + "/" + gambleData.betMaxForMoneyS;
+        if (winRewardRate != null)
+            winRewardRate.text = GameCommonInfo.GetUITextById(612) + "x" + gambleData.winRewardRate;
     }
 
     /// <summary>
@@ -171,7 +174,7 @@ public class UIBaseGamble<T, H, B> : UIGameComponent, DialogView.IDialogCallBack
         {
             GameObject objWinMoney = Instantiate(gameObject, objWinMoneyModel);
             RectTransform trfItem = (RectTransform)objWinMoney.transform;
-            Image ivIcon= trfItem.GetComponent<Image>();
+            Image ivIcon = trfItem.GetComponent<Image>();
             ivIcon
                 .DOFade(0, 0.5f)
                 .SetDelay(i * 0.1f);
@@ -184,11 +187,11 @@ public class UIBaseGamble<T, H, B> : UIGameComponent, DialogView.IDialogCallBack
                 })
                 .OnComplete(delegate ()
                 {
-                    gameData.AddMoney(0, 0, gambleData.betForMoneyS * 2 / 10);
+                    gameData.AddMoney(0, 0, (long)(gambleData.betForMoneyS * gambleData.winRewardRate / 10));
                     Destroy(objWinMoney);
-            
+
                 });
-        
+
         }
         transform.DOScale(new Vector3(1, 1, 1), moneyNumber * 0.1f + 0.5f).OnComplete(delegate ()
         {
