@@ -570,6 +570,11 @@ public class EditorUI
             }
             else
             {
+                if (itemTalkInfo.type == (int)TextInfoTypeEnum.Behind)
+                {
+                    GUILayout.Label("黑屏时间：", GUILayout.Width(100), GUILayout.Height(20));
+                    itemTalkInfo.wait_time = GUIEditorText(itemTalkInfo.wait_time, 50);
+                }
                 GUILayout.Label("增加的好感：", GUILayout.Width(100), GUILayout.Height(20));
                 itemTalkInfo.add_favorability = int.Parse(EditorGUILayout.TextArea(itemTalkInfo.add_favorability + "", GUILayout.Width(50), GUILayout.Height(20)));
             }

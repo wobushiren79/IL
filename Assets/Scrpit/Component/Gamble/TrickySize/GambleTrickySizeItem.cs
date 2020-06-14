@@ -114,13 +114,14 @@ public class GambleTrickySizeItem : BaseMonoBehaviour
         ivCup.rectTransform
             .DOAnchorPosY(ivCup.rectTransform.anchoredPosition.y - 100, 0.5f);
         //摇晃
-       ((RectTransform)transform)
-              .DOAnchorPosY(ivCup.rectTransform.anchoredPosition.y + 20, 0.2f)
-              .SetLoops(10,LoopType.Yoyo)
-              .SetDelay(0.6f)
-              .OnStart(()=> {
-                  audioHandler.PlaySound(AudioSoundEnum.Dice);
-              });
+        ((RectTransform)transform)
+               .DOAnchorPosY(ivCup.rectTransform.anchoredPosition.y + 20, 0.2f)
+               .SetLoops(10, LoopType.Yoyo)
+               .SetDelay(0.6f)
+               .OnStart(() =>
+               {
+                   audioHandler.PlaySound(AudioSoundEnum.Dice);
+               });
     }
 
     protected void SetStatusForChoosing()

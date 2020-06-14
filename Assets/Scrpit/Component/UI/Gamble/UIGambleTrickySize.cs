@@ -14,7 +14,7 @@ public class UIGambleTrickySize : UIBaseGamble<GambleTrickySizeBean,GambleTricky
         gambleData = new GambleTrickySizeBean
         {
             winRate = 0.5f - (0.08f * level),
-            winRewardRate = level + 1,
+            winRewardRate = level * 0.5f + 1.5f,
             betMaxForMoneyS = 100 * ((long)Math.Pow(10, level - 1))
         };
         SetData(gambleData);
