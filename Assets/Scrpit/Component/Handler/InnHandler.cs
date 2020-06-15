@@ -374,13 +374,14 @@ public class InnHandler : BaseMonoBehaviour, IBaseObserver
     {
         if (CheckUtil.ListIsNull(listOrder))
             return;
-        foreach (OrderForCustomer itemOrder in listOrder)
+        for (int i = 0; i < listOrder.Count; i++)
         {
+            OrderForCustomer itemOrder = listOrder[i];
             if (itemOrder.customer != null &&
-                (itemOrder.customer.customerIntent == NpcAICustomerCpt.CustomerIntentEnum.Eatting
-                || itemOrder.customer.customerIntent == NpcAICustomerCpt.CustomerIntentEnum.GotoPay
-                || itemOrder.customer.customerIntent == NpcAICustomerCpt.CustomerIntentEnum.WaitPay
-                 || itemOrder.customer.customerIntent == NpcAICustomerCpt.CustomerIntentEnum.Pay))
+                      (itemOrder.customer.customerIntent == NpcAICustomerCpt.CustomerIntentEnum.Eatting
+                      || itemOrder.customer.customerIntent == NpcAICustomerCpt.CustomerIntentEnum.GotoPay
+                      || itemOrder.customer.customerIntent == NpcAICustomerCpt.CustomerIntentEnum.WaitPay
+                       || itemOrder.customer.customerIntent == NpcAICustomerCpt.CustomerIntentEnum.Pay))
             {
                 if (itemOrder.foodData == null)
                     continue;
@@ -389,6 +390,7 @@ public class InnHandler : BaseMonoBehaviour, IBaseObserver
                 PayMoney(itemOrder, payMoneyL, payMoneyM, payMoneyS, false);
             }
         }
+
     }
 
     /// <summary>
@@ -435,11 +437,9 @@ public class InnHandler : BaseMonoBehaviour, IBaseObserver
         if (isPlaySound)
         {
             audioHandler.PlaySound(AudioSoundEnum.PayMoney);
+            //展示特效
+            innPayHandler.ShowPayEffects(order.customer.transform.position, payMoneyL, payMoneyM, payMoneyS);
         }
-        //展示特效
-        innPayHandler.ShowPayEffects(order.customer.transform.position, payMoneyL, payMoneyM, payMoneyS);
-        //结束订单
-        EndOrder(order);
     }
 
     /// <summary>

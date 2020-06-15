@@ -9,7 +9,7 @@ public class CharacterShoutCpt : BaseMonoBehaviour
 
     public void Shout(string content)
     {
-        if (shoutObj == null || tvShout == null)
+        if (shoutObj == null || tvShout == null|| content==null)
             return;
         tvShout.text = content;
 
