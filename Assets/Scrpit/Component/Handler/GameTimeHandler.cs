@@ -91,7 +91,7 @@ public class GameTimeHandler : BaseObservable<IBaseObserver>
         for (int i = 0; i < afterDay; i++)
         {
             tempDay += 1;
-            if (tempDay > 28)
+            if (tempDay > 42)
             {
                 tempDay = 1;
                 tempMonth += 1;
