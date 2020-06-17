@@ -98,6 +98,7 @@ public class BaseMiniGameHandler<B, D> : BaseHandler, UIMiniGameCountDown.ICallB
     /// </summary>
     public virtual void StartGame()
     {
+        audioHandler.PlayMusicForLoop(AudioMusicEnum.Battle);
         SetMiniGameStatus(MiniGameStatusEnum.Gameing);
         //通知 游戏开始
         NotifyAllObserver((int)MiniGameStatusEnum.Gameing, miniGameData);
@@ -177,6 +178,7 @@ public class BaseMiniGameHandler<B, D> : BaseHandler, UIMiniGameCountDown.ICallB
     public virtual void EndGame(bool isWinGame)
     {
         EndGame(isWinGame, true);
+        audioHandler.StopMusic();
     }
 
     /// <summary>

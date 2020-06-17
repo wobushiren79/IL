@@ -27,6 +27,11 @@ public class ItemGameBuildCpt : ItemGameBaseCpt
             btBuild.onClick.AddListener(StartBuild);
     }
 
+    public void RefreshUI()
+    {
+        SetNumber(itemData.itemNumber);
+    }
+
     public void SetData(ItemBean itemData, BuildItemBean buildData)
     {
         this.itemData = itemData;

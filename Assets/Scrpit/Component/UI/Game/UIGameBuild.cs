@@ -2,6 +2,7 @@
 using UnityEditor;
 using UnityEngine.UI;
 using UnityEngine.AI;
+using System.Collections.Generic;
 
 public class UIGameBuild : UIGameComponent, IRadioGroupCallBack
 {
@@ -26,6 +27,7 @@ public class UIGameBuild : UIGameComponent, IRadioGroupCallBack
 
     public BuildItemTypeEnum buildType = BuildItemTypeEnum.Table;
 
+    public List<ItemGameBuildCpt> listBuildItem = new List<ItemGameBuildCpt>();
     public void Start()
     {
         if (rgType != null)
@@ -42,7 +44,7 @@ public class UIGameBuild : UIGameComponent, IRadioGroupCallBack
     public override void OpenUI()
     {
         base.OpenUI();
-
+        btDismantle.gameObject.SetActive(true);
         rgType.SetPosition(0, false);
         CreateBuildList(BuildItemTypeEnum.Table);
         //停止时间
@@ -71,7 +73,38 @@ public class UIGameBuild : UIGameComponent, IRadioGroupCallBack
     public override void RefreshUI()
     {
         //刷新列表数据
-        CreateBuildList(buildType);
+        List<ItemBean> listBuildData = uiGameManager.gameDataManager.gameData.GetBuildDataByType(uiGameManager.innBuildManager,buildType);
+        for (int i = 0; i < listBuildItem.Count; i++)
+        {
+            ItemGameBuildCpt itemBuild = listBuildItem[i];
+            //如果数据已经没有了则删除该项
+            if (itemBuild.itemData == null || itemBuild.itemData.itemNumber == 0)
+            {
+                listBuildItem.Remove(itemBuild);
+                Destroy(itemBuild.gameObject);
+                i--;
+            }
+        }
+        //如果有新增的数据
+        foreach (ItemBean itemData in listBuildData)
+        {
+            bool hasData = false;
+            for (int i = 0; i < listBuildItem.Count; i++)
+            {
+                ItemGameBuildCpt itemBuild = listBuildItem[i];
+                itemBuild.RefreshUI();
+                if (itemData.itemId == itemBuild.itemData.itemId)
+                {
+                    hasData = true;
+                }
+            }
+            if (!hasData)
+            {
+                BuildItemBean buildData = uiGameManager.innBuildManager.GetBuildDataById(itemData.itemId);
+                CreateBuildItem(itemData, buildData);
+                tvNull.gameObject.SetActive(false);
+            }
+        }
         //刷新美观值
         uiGameManager.gameDataManager.gameData.GetInnAttributesData().SetAesthetics
             (uiGameManager.innBuildManager, uiGameManager.gameDataManager.gameData.GetInnBuildData());
@@ -104,7 +137,7 @@ public class UIGameBuild : UIGameComponent, IRadioGroupCallBack
         if (uiGameManager.gameDataManager.gameData.listBuild == null)
             return;
         CptUtil.RemoveChildsByActive(listBuildContent.transform);
-
+        listBuildItem.Clear();
         bool hasData = false;
         for (int i = 0; i < uiGameManager.gameDataManager.gameData.listBuild.Count; i++)
         {
@@ -112,7 +145,7 @@ public class UIGameBuild : UIGameComponent, IRadioGroupCallBack
             BuildItemBean buildData = uiGameManager.innBuildManager.GetBuildDataById(itemData.itemId);
             if (buildData == null)
                 continue;
-            if ((int)type == buildData.build_type)
+            if (type == buildData.GetBuildType())
             {
                 CreateBuildItem(itemData, buildData);
                 hasData = true;
@@ -136,6 +169,7 @@ public class UIGameBuild : UIGameComponent, IRadioGroupCallBack
         itemBuildObj.transform.SetParent(listBuildContent.transform);
         ItemGameBuildCpt itemCpt = itemBuildObj.GetComponent<ItemGameBuildCpt>();
         itemCpt.SetData(itemData, buildData);
+        listBuildItem.Add(itemCpt);
     }
 
     /// <summary>

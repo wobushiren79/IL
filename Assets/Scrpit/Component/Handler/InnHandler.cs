@@ -136,6 +136,7 @@ public class InnHandler : BaseMonoBehaviour, IBaseObserver
     /// </summary>
     public void CloseInn()
     {
+        audioHandler.StopMusic();
         innStatus = InnStatusEnum.Close;
         //驱除所有顾客
         for (int i = 0; i < listOrder.Count; i++)
@@ -192,6 +193,7 @@ public class InnHandler : BaseMonoBehaviour, IBaseObserver
     /// </summary>
     public void OpenInn()
     {
+        audioHandler.PlayMusicForLoop(AudioMusicEnum.Game);
         workerBuilder.BuildAllWorker();
         InitInn();
         innStatus = InnStatusEnum.Open;

@@ -351,6 +351,26 @@ public class GameDataBean
     }
 
     /// <summary>
+    /// 获取
+    /// </summary>
+    /// <param name="innBuildManager"></param>
+    /// <param name="type"></param>
+    /// <returns></returns>
+    public List<ItemBean> GetBuildDataByType(InnBuildManager innBuildManager, BuildItemTypeEnum type)
+    {
+        List<ItemBean> listData = new List<ItemBean>();
+        foreach (ItemBean itemData in listBuild)
+        {
+            BuildItemBean buildItemData= innBuildManager.GetBuildDataById(itemData.itemId);
+            if (buildItemData.GetBuildType() == type)
+            {
+                listData.Add(itemData);
+            }
+        }
+        return listData;
+    }
+
+    /// <summary>
     /// 获取正在出售的菜品
     /// </summary>
     /// <returns></returns>

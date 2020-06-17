@@ -154,6 +154,7 @@ public class InnAttributesBean
             BuildItemBean buildItem = innBuildManager.GetBuildDataById(itemData.id);
             aesthetics += buildItem.aesthetics;
         }
+        aesthetics = (float)Math.Round(aesthetics, 2);
         LimitAestheticsMax();
     }
 

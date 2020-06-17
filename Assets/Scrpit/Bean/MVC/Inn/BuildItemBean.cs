@@ -25,4 +25,12 @@ public class BuildItemBean : BaseBean
         return StringUtil.SplitBySubstringForListStr(icon_list, ',');
     }
 
+    /// <summary>
+    /// 获取建筑类型
+    /// </summary>
+    /// <returns></returns>
+    public  BuildItemTypeEnum GetBuildType()
+    {
+        return (BuildItemTypeEnum)build_type;
+    }
 }

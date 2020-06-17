@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using UnityEditor;
+using System.Collections.Generic;
 
 public class AudioHandler : BaseHandler
 {
@@ -54,6 +55,20 @@ public class AudioHandler : BaseHandler
             case AudioMusicEnum.YangChunBaiXue:
                 audioClip = audioManager.GetMusicClip("music_yangchunbaixue_1");
                 break;
+            case AudioMusicEnum.Main:
+                audioClip = audioManager.GetMusicClip("music_1");
+                break;
+            case AudioMusicEnum.Game:
+                List<AudioClip> listClip = new List<AudioClip>()
+                {
+                     audioManager.GetMusicClip("music_2"),
+                     audioManager.GetMusicClip("music_3")
+                };
+                audioClip = RandomUtil.GetRandomDataByList(listClip);
+                break;
+            case AudioMusicEnum.Battle:
+                audioClip = audioManager.GetMusicClip("music_4");
+                break;
         }
         if (audioClip != null)
         {
@@ -61,7 +76,7 @@ public class AudioHandler : BaseHandler
             audioSourceForMusic.volume = volumeScale;
             audioSourceForMusic.loop = true;
             audioSourceForMusic.Play();
-        }     
+        }
     }
 
     /// <summary>
@@ -108,7 +123,7 @@ public class AudioHandler : BaseHandler
                 audioClip = audioManager.GetSoundClip("sound_hit_1");
                 break;
             case AudioSoundEnum.HitCoin:
-               // audioClip = audioManager.GetSoundClip("sound_hit_2");
+                // audioClip = audioManager.GetSoundClip("sound_hit_2");
                 audioClip = audioManager.GetSoundClip("sound_pay_3");
                 break;
             case AudioSoundEnum.ChangeSelect:
@@ -160,7 +175,7 @@ public class AudioHandler : BaseHandler
                 audioClip = audioManager.GetSoundClip("sound_clean_1");
                 break;
             case AudioSoundEnum.Eat:
-               int eatRandom= Random.Range(0, 2);
+                int eatRandom = Random.Range(0, 2);
                 if (eatRandom == 0)
                 {
                     audioClip = audioManager.GetSoundClip("sound_eat_1");
@@ -224,6 +239,13 @@ public class AudioHandler : BaseHandler
         audioSourceForEnvironment.clip = null;
         audioSourceForEnvironment.Stop();
     }
+
+    public void StopMusic()
+    {
+        audioSourceForMusic.clip = null;
+        audioSourceForMusic.Stop();
+    }
+
     /// <summary>
     /// 暂停
     /// </summary>
@@ -231,12 +253,25 @@ public class AudioHandler : BaseHandler
     {
         audioSourceForEnvironment.Pause();
     }
+
+
+    public void PauseMusic()
+    {
+        audioSourceForMusic.Pause();
+    }
+
+
     /// <summary>
     /// 恢复
     /// </summary>
     public void RestoreEnvironment()
     {
         audioSourceForEnvironment.Play();
+    }
+
+    public void RestoreMusic()
+    {
+        audioSourceForMusic.Play();
     }
 
 }

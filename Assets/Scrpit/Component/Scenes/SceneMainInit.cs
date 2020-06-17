@@ -9,6 +9,6 @@ public class SceneMainInit : BaseSceneInit
         base.Start();
         if (gameItemsManager != null)
             gameItemsManager.itemsInfoController.GetAllItemsInfo();
-        audioHandler.PlayMusicForLoop( AudioMusicEnum.LangTaoSha);
+        audioHandler.PlayMusicForLoop( AudioMusicEnum.Main);
     }
 }
