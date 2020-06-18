@@ -39,6 +39,7 @@ public class BaseUIComponent : BaseMonoBehaviour
     /// </summary>
     public virtual void CloseUI()
     {
+        StopAllCoroutines();
         if (!this.gameObject.activeSelf)
             return;
         this.gameObject.SetActive(false);

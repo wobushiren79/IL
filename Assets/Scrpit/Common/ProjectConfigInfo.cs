@@ -22,4 +22,9 @@ public class ProjectConfigInfo
     /// 数据库名称
     /// </summary>
     public readonly static string DATA_BASE_INFO_NAME = "ILDB.db";
+
+    /// <summary>
+    /// 数据单词刷新个数
+    /// </summary>
+    public readonly static int ITEM_REFRESH_NUMBER = 10;
 }

@@ -2,7 +2,7 @@
 using UnityEditor;
 using UnityEngine.UI;
 using System.Collections.Generic;
-
+using System.Collections;
 public class UIGameStatisticsForCustomer : BaseUIChildComponent<UIGameStatistics>
 {
     public Text tvNormalCustomerNumber;
@@ -17,7 +17,7 @@ public class UIGameStatisticsForCustomer : BaseUIChildComponent<UIGameStatistics
     {
         base.Open();
         InitNormalCustomer();
-        InitTeamCustomer();
+        StartCoroutine(InitTeamCustomer());
         InitFriendCustomer();
 
         GameUtil.RefreshRectViewHight((RectTransform)objTeamCustomerContainer.transform, true);
@@ -37,7 +37,7 @@ public class UIGameStatisticsForCustomer : BaseUIChildComponent<UIGameStatistics
     /// <summary>
     /// 初始化客人团队
     /// </summary>
-    public void InitTeamCustomer()
+    public IEnumerator InitTeamCustomer()
     {
         CptUtil.RemoveChildsByActive(objTeamCustomerContainer);
         NpcInfoManager npcInfoManager = uiComponent.uiGameManager.npcInfoManager;
@@ -48,9 +48,9 @@ public class UIGameStatisticsForCustomer : BaseUIChildComponent<UIGameStatistics
             tvTeamCustomerNumber.text = GameCommonInfo.GetUITextById(323) + " " + userAchievement.GetNumberForCustomerByType(CustomerTypeEnum.Team) + GameCommonInfo.GetUITextById(82);
         //查询所有团队
         List<NpcTeamBean> listNpcTeamData = npcTeamManager.GetCustomerTeam();
-
-        foreach (NpcTeamBean itemNpcTeamData in listNpcTeamData)
+        for (int i = 0; i < listNpcTeamData.Count; i++)
         {
+            NpcTeamBean itemNpcTeamData = listNpcTeamData[i];
             GameObject objItem = Instantiate(objTeamCustomerContainer, objItemCustomerModel);
             ItemGameStatisticsForCustomerCpt itemCustomer = objItem.GetComponent<ItemGameStatisticsForCustomerCpt>();
             long[] teamLeaderIds = itemNpcTeamData.GetTeamLeaderId();
@@ -71,7 +71,10 @@ public class UIGameStatisticsForCustomer : BaseUIChildComponent<UIGameStatistics
                     number = userCustomerData.number;
                 itemCustomer.SetData(teamLeaderData, false, itemNpcTeamData.name, number, itemNpcTeamData.id + "");
             }
+            if (i %  ProjectConfigInfo.ITEM_REFRESH_NUMBER == 0)
+                yield return new WaitForEndOfFrame();
         }
+
     }
 
     /// <summary>

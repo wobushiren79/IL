@@ -2,6 +2,7 @@
 using UnityEditor;
 using UnityEngine.UI;
 using System.Collections.Generic;
+using System.Collections;
 
 public class UIGameStatisticsForAch : BaseUIChildComponent<UIGameStatistics>, AchievementInfoManager.ICallBack
 {
@@ -35,7 +36,7 @@ public class UIGameStatisticsForAch : BaseUIChildComponent<UIGameStatistics>, Ac
     /// 创建成就列表
     /// </summary>
     /// <param name="listData"></param>
-    public void CreateAchList(List<AchievementInfoBean> listData)
+    public IEnumerator CreateAchList(List<AchievementInfoBean> listData)
     {
         UserAchievementBean userAchievement = gameDataManager.gameData.GetAchievementData();
         List<long> achievementList = userAchievement.listAchievement;
@@ -58,13 +59,15 @@ public class UIGameStatisticsForAch : BaseUIChildComponent<UIGameStatistics>, Ac
             {
                 achCpt.SetData(achievementInfo,false);
             }
+            if (i % ProjectConfigInfo.ITEM_REFRESH_NUMBER == 0)
+                yield return new WaitForEndOfFrame();
         }
     }
 
     #region 成就数据回调
     public void GetAchievementInfoSuccess(List<AchievementInfoBean> listData)
     {
-        CreateAchList(listData);
+        StartCoroutine(CreateAchList(listData));
     }
     #endregion
 }

@@ -8,6 +8,7 @@ public class BaseUIChildComponent<T> : BaseMonoBehaviour
 
     public virtual void Close()
     {
+        StopAllCoroutines();
         gameObject.SetActive(false);
     }
 

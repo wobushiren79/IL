@@ -1,9 +1,7 @@
 ﻿using UnityEngine;
-using UnityEditor;
-using System.Collections.Generic;
 using DG.Tweening;
 using UnityEngine.UI;
-
+using System.Collections;
 public class UIGameBackpack : UIBaseOne
 {
     public GameObject objItemContent;
@@ -14,14 +12,14 @@ public class UIGameBackpack : UIBaseOne
     public override void OpenUI()
     {
         base.OpenUI();
-        CreateBackpackData();
+        StartCoroutine(CreateBackpackData());
     }
 
-    public void CreateBackpackData()
+    public IEnumerator CreateBackpackData()
     {
         CptUtil.RemoveChildsByActive(objItemContent.transform);
         if (uiGameManager.gameItemsManager == null || uiGameManager.gameDataManager == null)
-            return;
+            yield return null;
         bool hasData = false;
         for (int i = 0; i < uiGameManager.gameDataManager.gameData.listItems.Count; i++)
         {
@@ -33,7 +31,8 @@ public class UIGameBackpack : UIBaseOne
             objItem.SetActive(true);
             ItemGameBackpackCpt backpackCpt = objItem.GetComponent<ItemGameBackpackCpt>();
             backpackCpt.SetData(itemsInfoBean, itemBean);
-            //objItem.transform.DOScale(new Vector3(0, 0, 0), 0.5f).SetEase(Ease.OutBack).SetDelay(i * 0.05f).From();
+            if (i % ProjectConfigInfo.ITEM_REFRESH_NUMBER == 0)
+                yield return new WaitForEndOfFrame();
             hasData = true;
         }
         if (!hasData)
@@ -41,5 +40,6 @@ public class UIGameBackpack : UIBaseOne
         else
             tvNull.gameObject.SetActive(false);
     }
+
 
 }

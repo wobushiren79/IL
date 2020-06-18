@@ -2,8 +2,7 @@
 using UnityEditor;
 using UnityEngine.UI;
 using DG.Tweening;
-using System.Collections.Generic;
-
+using System.Collections;
 public class UIGameEquip : UIGameComponent
 {
     [Header("控件")]
@@ -48,7 +47,7 @@ public class UIGameEquip : UIGameComponent
     public override void OpenUI()
     {
         base.OpenUI();
-        CreateBackpackData();
+        StartCoroutine(CreateBackpackData());
         RefreshUI();
     }
 
@@ -235,11 +234,11 @@ public class UIGameEquip : UIGameComponent
     /// <summary>
     /// 创建背包里的装备
     /// </summary>
-    public void CreateBackpackData()
+    public IEnumerator CreateBackpackData()
     {
         CptUtil.RemoveChildsByActive(objItemContent.transform);
         if (uiGameManager.gameItemsManager == null || uiGameManager.gameDataManager == null)
-            return;
+            yield return null;
         for (int i = 0; i < uiGameManager.gameDataManager.gameData.listItems.Count; i++)
         {
             ItemBean itemBean = uiGameManager.gameDataManager.gameData.listItems[i];
@@ -247,6 +246,8 @@ public class UIGameEquip : UIGameComponent
             if (itemInfo == null)
                 continue;
             GameObject objItem = CreateItemBackpackData(itemBean, itemInfo);
+            if (i % ProjectConfigInfo.ITEM_REFRESH_NUMBER == 0)
+                yield return new WaitForEndOfFrame();
         }
     }
 
