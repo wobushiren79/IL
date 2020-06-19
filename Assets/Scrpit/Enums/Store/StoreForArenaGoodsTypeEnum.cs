@@ -7,5 +7,6 @@ public enum StoreForArenaGoodsTypeEnum
     Menu = 2,
     Book = 3,
     Skill = 4,
-    Worker=5,
+    Worker = 5,
+    Build = 6,
 }

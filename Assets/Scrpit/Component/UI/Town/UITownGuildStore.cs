@@ -6,7 +6,8 @@ using DG.Tweening;
 public class UITownGuildStore : UIBaseOne, StoreInfoManager.ICallBack, IRadioGroupCallBack
 {
     public GameObject objGuidStoreContent;
-    public GameObject objGuidStoreModel;
+    public GameObject objGuidStoreForItemsModel;
+    public GameObject objGuidStoreForBuildModel;
 
     public RadioGroupView rgGuildStoreType;
     
@@ -67,7 +68,7 @@ public class UITownGuildStore : UIBaseOne, StoreInfoManager.ICallBack, IRadioGro
     public void CreateGroceryData(List<StoreInfoBean> listData)
     {
         CptUtil.RemoveChildsByActive(objGuidStoreContent.transform);
-        if (listData == null || objGuidStoreContent == null || objGuidStoreModel == null)
+        if (listData == null || objGuidStoreContent == null)
             return;
         for (int i = 0; i < listData.Count; i++)
         {
@@ -77,9 +78,19 @@ public class UITownGuildStore : UIBaseOne, StoreInfoManager.ICallBack, IRadioGro
             {
                 continue;
             }
-            GameObject itemObj = Instantiate(objGuidStoreContent, objGuidStoreModel);
-            ItemTownStoreForGoodsCpt groceryCpt = itemObj.GetComponent<ItemTownStoreForGoodsCpt>();
-            groceryCpt.SetData(itemData);
+            GameObject itemObj = null;
+            if (itemData.mark_type == 1)
+            {
+                 itemObj = Instantiate(objGuidStoreContent, objGuidStoreForItemsModel);
+                ItemTownStoreForGoodsCpt groceryCpt = itemObj.GetComponent<ItemTownStoreForGoodsCpt>();
+                groceryCpt.SetData(itemData);
+            }
+            else if (itemData.mark_type == 2)
+            {
+                itemObj = Instantiate(objGuidStoreContent, objGuidStoreForBuildModel);
+                ItemTownCerpenterCpt cerpenterCpt = itemObj.GetComponent<ItemTownCerpenterCpt>();
+                cerpenterCpt.SetData(itemData);
+            }
             itemObj.transform.DOScale(new Vector3(0, 0, 0), 0.5f).SetEase(Ease.OutBack).SetDelay(i * 0.05f).From();
         }
     }

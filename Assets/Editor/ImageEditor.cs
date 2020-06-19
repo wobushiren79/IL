@@ -38,6 +38,13 @@ public class ImageEditor : Editor
     {
         BaseSpriteEditor(SpriteImportMode.Multiple, 5, 1);
     }
+
+    [MenuItem("Custom/Image/Multiple_5x1_Extrude")]
+    public static void Multiple5x1ForExtrude()
+    {
+        BaseSpriteEditorForExtrude(SpriteImportMode.Multiple, 5, 1);
+    }
+
     [MenuItem("Custom/Image/Multiple_12x1")]
     public static void Multiple12x1()
     {

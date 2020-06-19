@@ -4,41 +4,25 @@ using System;
 using UnityEngine.UI;
 using System.Collections.Generic;
 
-public class ItemTownCerpenterCpt : ItemGameBaseCpt, DialogView.IDialogCallBack
+public class ItemTownCerpenterCpt : ItemTownStoreCpt, DialogView.IDialogCallBack
 {
-    public Image ivIcon;
-    public Text tvName;
-    public Text tvContent;
-    public Button btSubmit;
-
-    public GameObject objPriceL;
-    public Text tvPriceL;
-    public GameObject objPriceM;
-    public Text tvPriceM;
-    public GameObject objPriceS;
-    public Text tvPriceS;
-
     public GameObject objAttribute;
     public Text tvAttribute;
 
     public GameObject objOwn;
-    public Text tvOwn;
-
-    public StoreInfoBean storeInfo;
     public BuildItemBean buildItemData;
 
     public InfoPromptPopupButton infoPromptPopup;
 
-    private void Awake()
+    public override void Start()
     {
+        base.Start();
         UIGameManager uiGameManager = GetUIManager<UIGameManager>();
-        if (btSubmit != null)
-            btSubmit.onClick.AddListener(SubmitBuy);
         if (infoPromptPopup != null)
             infoPromptPopup.SetPopupShowView(uiGameManager.infoPromptPopup);
     }
 
-    public void RefreshUI()
+    public override void RefreshUI()
     {
         SetOwn((StoreForCarpenterTypeEnum)storeInfo.store_goods_type);
     }
@@ -69,14 +53,15 @@ public class ItemTownCerpenterCpt : ItemGameBaseCpt, DialogView.IDialogCallBack
                 name = buildItemData.name;
                 content = buildItemData.content;
             }
-
         }
 
-        SetPrice(storeInfo.price_l, storeInfo.price_m, storeInfo.price_s);
+        SetPrice(storeInfo.price_l, storeInfo.price_m, storeInfo.price_s,
+                   storeInfo.guild_coin,
+                   storeInfo.trophy_elementary, storeInfo.trophy_intermediate, storeInfo.trophy_advanced, storeInfo.trophy_legendary);
         SetName(name);
         SetIcon(type, buildItemData, itemData);
         SetAttribute(type, aesthetics);
-        SetContent(type, content);
+        SetContent(content);
         SetOwn(type);
         SetPopup(content);
     }
@@ -136,41 +121,7 @@ public class ItemTownCerpenterCpt : ItemGameBaseCpt, DialogView.IDialogCallBack
             ivIcon.sprite = spIcon;
     }
 
-    /// <summary>
-    /// 设置名字
-    /// </summary>
-    /// <param name="name"></param>
-    public void SetName(string name)
-    {
-        if (tvName != null)
-            tvName.text = name;
-    }
 
-    /// <summary>
-    /// 设置描述
-    /// </summary>
-    /// <param name="content"></param>
-    public void SetContent(StoreForCarpenterTypeEnum type, string content)
-    {
-        if (tvContent != null)
-            tvContent.text = content;
-    }
-
-    /// <summary>
-    /// 设置价格
-    /// </summary>
-    public void SetPrice(long priceL, long priceM, long priceS)
-    {
-        if (priceL == 0)
-            objPriceL.SetActive(false);
-        if (priceM == 0)
-            objPriceM.SetActive(false);
-        if (priceS == 0)
-            objPriceS.SetActive(false);
-        tvPriceL.text = priceL + "";
-        tvPriceM.text = priceM + "";
-        tvPriceS.text = priceS + "";
-    }
 
     /// <summary>
     /// 设置拥有数量
@@ -194,15 +145,14 @@ public class ItemTownCerpenterCpt : ItemGameBaseCpt, DialogView.IDialogCallBack
     /// <summary>
     /// 购买确认
     /// </summary>
-    public void SubmitBuy()
+    public override void OnClickSubmitBuy()
     {
+        base.OnClickSubmitBuy();
+
         UIGameManager uiGameManager = GetUIManager<UIGameManager>();
         GameDataManager gameDataManager = uiGameManager.gameDataManager;
         ToastManager toastManager = uiGameManager.toastManager;
         DialogManager dialogManager = uiGameManager.dialogManager;
-        AudioHandler audioHandler = uiGameManager.audioHandler;
-
-        audioHandler.PlaySound(AudioSoundEnum.ButtonForNormal);
 
         InnBuildBean innBuildData = gameDataManager.gameData.GetInnBuildData();
         if (gameDataManager == null || storeInfo == null)

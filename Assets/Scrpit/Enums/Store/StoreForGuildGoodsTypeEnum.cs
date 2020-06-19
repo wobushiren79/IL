@@ -7,4 +7,5 @@ public enum StoreForGuildGoodsTypeEnum
    Book=2,
    Dress=3,
    Worker=4,
+   Build=5,
 }

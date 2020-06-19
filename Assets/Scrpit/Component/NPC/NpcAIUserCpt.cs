@@ -6,6 +6,9 @@ public class NpcAIUserCpt : BaseNpcAI
     public override void SetCharacterData(GameItemsManager gameItemsManager, CharacterBean characterBean)
     {
         base.SetCharacterData(gameItemsManager, characterBean);
-        characterMoveCpt.SetMoveSpeed(2);
+        characterData.GetAttributes(gameItemsManager,
+          out CharacterAttributesBean totalAttributes, out CharacterAttributesBean selfAttributes, out CharacterAttributesBean equipAttributes);
+        float speed = 2 + (totalAttributes.speed / 50f);
+        characterMoveCpt.SetMoveSpeed(speed);
     }
 }

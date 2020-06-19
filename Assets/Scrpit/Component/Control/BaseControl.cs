@@ -111,6 +111,6 @@ public class BaseControl : BaseMonoBehaviour
     }
     public void SetCameraOrthographicSize()
     {
-        SetCameraOrthographicSize(8);
+        SetCameraOrthographicSize(7);
     }
 }

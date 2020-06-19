@@ -7,8 +7,8 @@ public class UITownArenaStore : UIBaseOne, StoreInfoManager.ICallBack, IRadioGro
 {
     public RadioGroupView rgType;
     public GameObject objGoodsContainer;
-    public GameObject objGoodsModel;
-
+    public GameObject objGoodsForItemsModel;
+    public GameObject objGoodsForBuildModel;
     public List<StoreInfoBean> arenaStoreListData;
 
     public new void Start()
@@ -57,16 +57,26 @@ public class UITownArenaStore : UIBaseOne, StoreInfoManager.ICallBack, IRadioGro
         }
         return listData;
     }
-    
+
     /// <summary>
     /// 创建商品ITEM
     /// </summary>
     /// <param name="storeInfo"></param>
     public void CreateArenaGoodsItem(StoreInfoBean storeInfo)
     {
-        GameObject objItem = Instantiate(objGoodsContainer, objGoodsModel);
-        ItemTownStoreForGoodsCpt goodsItem= objItem.GetComponent<ItemTownStoreForGoodsCpt>();
-        goodsItem.SetData(storeInfo);
+        GameObject objItem = null;
+        if (storeInfo.mark_type == 1)
+        {
+            objItem = Instantiate(objGoodsContainer, objGoodsForItemsModel);
+            ItemTownStoreForGoodsCpt goodsItem = objItem.GetComponent<ItemTownStoreForGoodsCpt>();
+            goodsItem.SetData(storeInfo);
+        }
+        else if (storeInfo.mark_type == 2)
+        {
+            objItem = Instantiate(objGoodsContainer, objGoodsForBuildModel);
+            ItemTownCerpenterCpt cerpenterCpt = objItem.GetComponent<ItemTownCerpenterCpt>();
+            cerpenterCpt.SetData(storeInfo);
+        }
         objItem.transform.DOScale(new Vector3(0, 0, 0), 0.5f).SetEase(Ease.OutBack).From();
     }
 
@@ -82,7 +92,7 @@ public class UITownArenaStore : UIBaseOne, StoreInfoManager.ICallBack, IRadioGro
     public void RadioButtonSelected(RadioGroupView rgView, int position, RadioButtonView rbview)
     {
         uiGameManager.audioHandler.PlaySound(AudioSoundEnum.ButtonForNormal);
-        StoreForArenaGoodsTypeEnum goodsType= EnumUtil.GetEnum<StoreForArenaGoodsTypeEnum>(rbview.name);
+        StoreForArenaGoodsTypeEnum goodsType = EnumUtil.GetEnum<StoreForArenaGoodsTypeEnum>(rbview.name);
         InitDataByType(goodsType);
     }
 
