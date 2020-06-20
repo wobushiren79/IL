@@ -7,6 +7,7 @@ public enum ShowConditionEnum
 {
     InnLevel,
     TimeForYear,
+    TimeForYearAfter,
     TimeForMonth,
     TimeForDay,
     TimeForHour,
@@ -72,6 +73,7 @@ public class ShowConditionTools : DataTools
             case ShowConditionEnum.TimeForMonth:
             case ShowConditionEnum.TimeForDay:
             case ShowConditionEnum.TimeForHour:
+            case ShowConditionEnum.TimeForYearAfter:
                 GetConditionDetailsForTime(gameData, conditionData);
                 break;
             case ShowConditionEnum.NpcFavorability:
@@ -117,6 +119,13 @@ public class ShowConditionTools : DataTools
         {
             case ShowConditionEnum.TimeForYear:
                 if (listTime.Contains(gameTime.year))
+                {
+                    conditionData.isCondition = true;
+                }
+                break;
+            case ShowConditionEnum.TimeForYearAfter:
+                int year = listTime[0];
+                if (gameTime.year>= year)
                 {
                     conditionData.isCondition = true;
                 }
