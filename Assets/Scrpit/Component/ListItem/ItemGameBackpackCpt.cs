@@ -164,7 +164,8 @@ public class ItemGameBackpackCpt : ItemGameBaseCpt, IPointerClickHandler, PopupI
     {
         GameDataManager gameDataManager = uiGameManager.gameDataManager;
         ToastManager toastManager = uiGameManager.toastManager;
-
+        DialogManager dialogManager = uiGameManager.dialogManager;
+        InnFoodManager foodManager = uiGameManager.innFoodManager;
         if (itemsInfoBean == null || itemBean == null || gameDataManager == null)
             return;
         switch (itemsInfoBean.GetItemsType())
@@ -172,9 +173,17 @@ public class ItemGameBackpackCpt : ItemGameBaseCpt, IPointerClickHandler, PopupI
             case GeneralEnum.Menu:
                 //添加菜谱
                 if (gameDataManager.gameData.AddFoodMenu(itemsInfoBean.add_id))
-                {
+                { 
+                    MenuInfoBean menuInfo= foodManager.GetFoodDataById(itemsInfoBean.add_id);
                     RefreshItems(itemsInfoBean.id, -1);
-                    toastManager.ToastHint(ivIcon.sprite, GameCommonInfo.GetUITextById(1006));
+                    DialogBean dialogData = new DialogBean
+                    {
+                        title = GameCommonInfo.GetUITextById(1047),
+                        content = menuInfo.name
+                    };
+                    AchievementDialogView achievementDialog=(AchievementDialogView)dialogManager.CreateDialog(DialogEnum.Achievement, this, dialogData);
+                    achievementDialog.SetData(1, menuInfo.icon_key);
+                    toastManager.ToastHint(ivIcon.sprite,GameCommonInfo.GetUITextById(1006));
                 }
                 else
                 {
@@ -254,6 +263,10 @@ public class ItemGameBackpackCpt : ItemGameBaseCpt, IPointerClickHandler, PopupI
             };
             DialogManager dialogManager = uiGameManager.dialogManager;
             dialogManager.CreateDialog(DialogEnum.Normal, this, dialogBean);
+        }
+        else if (dialogView as AchievementDialogView)
+        {
+
         }
         else
         {

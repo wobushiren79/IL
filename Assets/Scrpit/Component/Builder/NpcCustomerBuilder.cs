@@ -91,7 +91,7 @@ public class NpcCustomerBuilder : NpcNormalBuilder, IBaseObserver
         //设置意图
         NpcAICustomerCpt customerAI = npcObj.GetComponent<NpcAICustomerCpt>();
         //想要吃饭概率
-        if (IsWantEat())
+        if (IsWantEat(CustomerTypeEnum.Normal))
         {
             customerAI.SetIntent(NpcAICustomerCpt.CustomerIntentEnum.Want);
         }
@@ -126,7 +126,7 @@ public class NpcCustomerBuilder : NpcNormalBuilder, IBaseObserver
         string teamCode = SystemUtil.GetUUID(SystemUtil.UUIDTypeEnum.N);
         Color teamColor = new Color(Random.Range(0f, 1f), Random.Range(0f, 1f), Random.Range(0f, 1f));
         //设置是否想吃
-        bool isWant = IsWantEat();
+        bool isWant = IsWantEat( CustomerTypeEnum.Team);
         //获取小队成员数据
         npcTeam.GetTeamCharacterData(npcInfoManager, out List<CharacterBean> listLeader, out List<CharacterBean> listMembers);
         //设置小队人数(团队领袖全生成，小队成员随机生成)
@@ -190,11 +190,11 @@ public class NpcCustomerBuilder : NpcNormalBuilder, IBaseObserver
     ///  计算是否想要吃饭
     /// </summary>
     /// <returns></returns>
-    private bool IsWantEat()
+    private bool IsWantEat(CustomerTypeEnum customerType)
     {
         //想要吃饭概率
         float eatProbability = UnityEngine.Random.Range(0f, 1f);
-        float rateWant = gameDataManager.gameData.GetInnAttributesData().CalculationCustomerWantRate();
+        float rateWant = rateWant = gameDataManager.gameData.GetInnAttributesData().CalculationCustomerWantRate(customerType);
         //设定是否吃饭
         if (eatProbability <= rateWant)
         {

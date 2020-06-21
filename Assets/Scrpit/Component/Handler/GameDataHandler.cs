@@ -3,7 +3,7 @@ using UnityEditor;
 using System.Collections;
 using System.Collections.Generic;
 
-public class GameDataHandler : BaseHandler
+public class GameDataHandler : BaseHandler, DialogView.IDialogCallBack
 {
 
     public enum NotifyTypeEnum
@@ -18,6 +18,7 @@ public class GameDataHandler : BaseHandler
     protected ToastManager toastManager;
     protected InnFoodManager innFoodManager;
     protected AudioHandler audioHandler;
+    protected DialogManager dialogManager;
 
     private void Awake()
     {
@@ -27,6 +28,8 @@ public class GameDataHandler : BaseHandler
         toastManager = Find<ToastManager>(ImportantTypeEnum.ToastManager);
         audioHandler = Find<AudioHandler>(ImportantTypeEnum.AudioHandler);
         innFoodManager = Find<InnFoodManager>(ImportantTypeEnum.FoodManager);
+        dialogManager = Find<DialogManager>(ImportantTypeEnum.DialogManager);
+
     }
 
     private void Start()
@@ -90,7 +93,15 @@ public class GameDataHandler : BaseHandler
                 itemMenu.CompleteResearch(gameDataManager.gameData);
                 string toastStr = string.Format(GameCommonInfo.GetUITextById(1071), menuInfo.name);
                 audioHandler.PlaySound(AudioSoundEnum.Reward);
-                toastManager.ToastHint(innFoodManager.GetFoodSpriteByName(menuInfo.icon_key), toastStr,5);
+                toastManager.ToastHint(innFoodManager.GetFoodSpriteByName(menuInfo.icon_key), toastStr, 5);
+
+                DialogBean dialogData = new DialogBean
+                {
+                    title = GameCommonInfo.GetUITextById(1048),
+                    content = toastStr
+                };
+                AchievementDialogView achievementDialog=(AchievementDialogView) dialogManager.CreateDialog(DialogEnum.Achievement, this, dialogData);
+                achievementDialog.SetData(1, menuInfo.icon_key);
             }
         }
     }
@@ -106,4 +117,18 @@ public class GameDataHandler : BaseHandler
         gameDataManager.gameData.AddMoney(priceL, priceM, priceS);
         NotifyAllObserver((int)NotifyTypeEnum.AddMoney, priceL, priceM, priceS);
     }
+
+    #region 弹窗回调
+    public void Submit(DialogView dialogView, DialogBean dialogBean)
+    {
+        if (dialogView as AchievementDialogView)
+        {
+
+        }
+    }
+
+    public void Cancel(DialogView dialogView, DialogBean dialogBean)
+    {
+    }
+    #endregion
 }

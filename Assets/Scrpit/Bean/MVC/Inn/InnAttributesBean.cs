@@ -240,7 +240,7 @@ public class InnAttributesBean
     /// 计算顾客想要吃饭的概率
     /// </summary>
     /// <returns></returns>
-    public float CalculationCustomerWantRate()
+    public float CalculationCustomerWantRate(CustomerTypeEnum customerType)
     {
         float rate = 0;
         //美观所占比重
@@ -258,7 +258,19 @@ public class InnAttributesBean
         float rateRichness = richness / maxRichness;
         if (rateRichness > 1)
             rateRichness = 1;
-        rate = 0.5f * rateRichness + 0.23f * ratePraise + 0.23f * rateAesthetics + 0.04f;
+
+        if (customerType == CustomerTypeEnum.Normal)
+        {
+            rate = 0.32f * rateRichness + 0.32f * ratePraise + 0.32f * rateAesthetics + 0.04f;
+        }
+        else if (customerType == CustomerTypeEnum.Team)
+        {
+            rate = 0.32f * rateRichness + 0.64f * ratePraise + 0.04f;
+        }
+        else
+        {
+            rate = 0.32f * rateRichness + 0.32f * ratePraise + 0.32f * rateAesthetics + 0.04f;
+        }
         rate = rate / 2f;
         return rate;
     }

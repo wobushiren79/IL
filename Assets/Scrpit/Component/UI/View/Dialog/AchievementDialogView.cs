@@ -32,6 +32,12 @@ public class AchievementDialogView : DialogView
         npcInfoManager = Find<NpcInfoManager>(ImportantTypeEnum.NpcManager);
     }
 
+    public void SetData(int iconType,string iconKey)
+    {
+        SetIcon(1, iconKey, null);
+        SetDataForCommon();
+    }
+
     /// <summary>
     /// 成就展示
     /// </summary>

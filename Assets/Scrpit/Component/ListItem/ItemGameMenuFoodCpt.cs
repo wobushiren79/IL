@@ -34,7 +34,7 @@ public class ItemGameMenuFoodCpt : ItemGameBaseCpt, IRadioButtonCallBack, Dialog
     public Color colorForSell;
     public Color colorForNoSell;
     public Color colorForNoIng;
-
+    public string stringForNoIng;
 
     [Header("数据")]
     public MenuOwnBean menuOwnData;
@@ -45,6 +45,7 @@ public class ItemGameMenuFoodCpt : ItemGameBaseCpt, IRadioButtonCallBack, Dialog
         UIGameManager uiGameManager = GetUIManager<UIGameManager>();
         if (popupForResearch != null)
             popupForResearch.SetPopupShowView(uiGameManager.infoPromptPopup);
+
     }
 
     private void Start()
@@ -65,7 +66,7 @@ public class ItemGameMenuFoodCpt : ItemGameBaseCpt, IRadioButtonCallBack, Dialog
             btResearch.onClick.AddListener(OnClickResearch);
         if (btResearchCancel != null)
             btResearchCancel.onClick.AddListener(OnClickResearchCancel);
-
+        stringForNoIng = GameCommonInfo.GetUITextById(13001);
     }
 
 
@@ -90,6 +91,7 @@ public class ItemGameMenuFoodCpt : ItemGameBaseCpt, IRadioButtonCallBack, Dialog
         else
         {
             tvShow.color = colorForNoIng;
+            tvShow.text = stringForNoIng;
         }
     }
 
