@@ -126,15 +126,8 @@ public class StoryBuilder : BaseMonoBehaviour, StoryInfoManager.CallBack
                     foreach (int itemNpcNum in npcNum)
                     {
                         objNpc = GetNpcByNpcNum(itemNpcNum);
-                        if (destroyTime == 0)
-                        {
-                            Destroy(objNpc);
-                        }
-                        else
-                        {
                             //延迟删除
-                            StartCoroutine(CoroutineForDelayDestoryNpc(destroyTime, objNpc));
-                        }
+                        StartCoroutine(CoroutineForDelayDestoryNpc(destroyTime, objNpc));
                     }
                     break;
                 case StoryInfoDetailsBean.StoryInfoDetailsTypeEnum.Expression:
@@ -317,6 +310,10 @@ public class StoryBuilder : BaseMonoBehaviour, StoryInfoManager.CallBack
     {
         yield return new WaitForSeconds(waitTime);
         if (objNpc != null)
-            Destroy(objNpc);
+        {
+            listNpcObj.Remove(objNpc);
+            Destroy(objNpc);      
+        }
+ 
     }
 }

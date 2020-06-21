@@ -166,7 +166,6 @@ public class UIGameText : UIGameComponent, TextInfoManager.ICallBack, DialogView
                 break;
             case TextInfoTypeEnum.Behind:
                 //黑幕
-                LogUtil.Log("111");
                 uiForBehind.Open();
                 uiForBehind.SetData(currentTextData.content, currentTextData.wait_time);
                 break;
