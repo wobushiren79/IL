@@ -94,7 +94,6 @@ public class UIGameEquip : UIGameComponent
             tvNull.gameObject.SetActive(true);
     }
 
-
     /// <summary>
     /// 设置忠诚
     /// </summary>
@@ -249,6 +248,11 @@ public class UIGameEquip : UIGameComponent
             if (i % ProjectConfigInfo.ITEM_REFRESH_NUMBER == 0)
                 yield return new WaitForEndOfFrame();
         }
+        //装备列表是否为null   
+        if (CptUtil.GetChildCountByActive(objItemContent) != 0)
+            tvNull.gameObject.SetActive(false);
+        else
+            tvNull.gameObject.SetActive(true);
     }
 
     /// <summary>

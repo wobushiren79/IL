@@ -10579,8 +10579,8 @@ Tilemap:
   - first: {x: -16, y: 1, z: 0}
     second:
       serializedVersion: 2
-      m_TileIndex: 4
-      m_TileSpriteIndex: 4
+      m_TileIndex: 11
+      m_TileSpriteIndex: 7
       m_TileMatrixIndex: 0
       m_TileColorIndex: 0
       m_TileObjectToInstantiateIndex: 65535
@@ -11396,7 +11396,7 @@ Tilemap:
     m_Data: {fileID: 0}
   - m_RefCount: 135
     m_Data: {fileID: 11400000, guid: f9cf4d0ca45dd0a4ca8eb2c2f83cbbf1, type: 2}
-  - m_RefCount: 28
+  - m_RefCount: 27
     m_Data: {fileID: 11400000, guid: 7cee914e826333949a12730fd51b5dd8, type: 2}
   - m_RefCount: 10
     m_Data: {fileID: 11400000, guid: 2c566be6ac1cc4d4499e67c80d046209, type: 2}
@@ -11410,8 +11410,8 @@ Tilemap:
     m_Data: {fileID: 0}
   - m_RefCount: 0
     m_Data: {fileID: 0}
-  - m_RefCount: 0
-    m_Data: {fileID: 0}
+  - m_RefCount: 1
+    m_Data: {fileID: 11400000, guid: b9e493dc68847624b822288ff3ed2906, type: 2}
   - m_RefCount: 1
     m_Data: {fileID: 11400000, guid: 77b809b569783774982fff489d8770b1, type: 2}
   - m_RefCount: 13
@@ -11436,7 +11436,7 @@ Tilemap:
   - m_RefCount: 135
     m_Data: {fileID: 4329313893546410461, guid: d43cc91df6755974a9456ae758f21f92,
       type: 3}
-  - m_RefCount: 28
+  - m_RefCount: 27
     m_Data: {fileID: 9204634543065052386, guid: d43cc91df6755974a9456ae758f21f92,
       type: 3}
   - m_RefCount: 10
@@ -11445,8 +11445,8 @@ Tilemap:
   - m_RefCount: 10
     m_Data: {fileID: 5937930382342687737, guid: d43cc91df6755974a9456ae758f21f92,
       type: 3}
-  - m_RefCount: 0
-    m_Data: {fileID: 0}
+  - m_RefCount: 1
+    m_Data: {fileID: 524928625155043091, guid: d43cc91df6755974a9456ae758f21f92, type: 3}
   - m_RefCount: 1
     m_Data: {fileID: -7373023809796970641, guid: d43cc91df6755974a9456ae758f21f92,
       type: 3}
@@ -11562,15 +11562,7 @@ CompositeCollider2D:
   m_ColliderPaths:
   - m_Collider: {fileID: 541700479}
     m_ColliderPaths:
-    - - X: -10000000
-        Y: -40000000
-      - X: -10000000
-        Y: 20000000
-      - X: -150000000
-        Y: 20000000
-      - X: -150000000
-        Y: 150000000
-      - X: 160000000
+    - - X: 160000000
         Y: 150000000
       - X: 160000000
         Y: 20000000
@@ -11591,12 +11583,38 @@ CompositeCollider2D:
       - X: -160000000
         Y: 160000000
       - X: -160000000
+        Y: 20000100
+      - X: -160000041
+        Y: 20000100
+      - X: -160000100
+        Y: 20000041
+      - X: -160000100
+        Y: 9999959
+      - X: -160000041
+        Y: 9999900
+      - X: -160000000
+        Y: 9999900
+      - X: -160000000
         Y: -40000000
+      - X: -10000000
+        Y: -40000000
+      - X: -10000000
+        Y: 20000000
+      - X: -149999900
+        Y: 20000000
+      - X: -149999900
+        Y: 20000041
+      - X: -149999959
+        Y: 20000100
+      - X: -150000000
+        Y: 20000100
+      - X: -150000000
+        Y: 150000000
   m_CompositePaths:
     m_Paths:
     - - {x: -1.0000293, y: -4}
       - {x: -1.0000293, y: 2}
-      - {x: -15, y: 2.0000293}
+      - {x: -15, y: 2.0000393}
       - {x: -14.999971, y: 15}
       - {x: 16, y: 14.999971}
       - {x: 15.999971, y: 2}
@@ -17695,6 +17713,7 @@ MonoBehaviour:
   achievementInfoManager: {fileID: 0}
   textInfoManager: {fileID: 0}
   skillInfoManager: {fileID: 0}
+  npcTeamManager: {fileID: 0}
   dialogManager: {fileID: 0}
   toastManager: {fileID: 0}
   innHandler: {fileID: 0}
@@ -17703,6 +17722,7 @@ MonoBehaviour:
   eventHandler: {fileID: 0}
   audioHandler: {fileID: 0}
   gameDataHandler: {fileID: 0}
+  steamHandler: {fileID: 0}
   npcCustomerBuilder: {fileID: 0}
   npcEventBuilder: {fileID: 0}
   npcWorkerBuilder: {fileID: 0}
