@@ -27,9 +27,6 @@ public class CharacterWorkerForAccountantBean : CharacterWorkerBaseBean
     public long accountingMoneyM;
     public long accountingMoneyS;
 
-    //总计结算时间
-    public float accountingTotalTime;
-
     public CharacterWorkerForAccountantBean()
     {
         workerType = WorkerEnum.Accountant;
@@ -74,14 +71,5 @@ public class CharacterWorkerForAccountantBean : CharacterWorkerBaseBean
         loseMoneyL += loseMoneyL;
         lostMoneyM += loseMoneyM;
         lostMoneyS += loseMoneyS;
-    }
-
-    /// <summary>
-    /// 增加结算时间
-    /// </summary>
-    /// <param name="time"></param>
-    public void AddAccountantTime(float time)
-    {
-        accountingTotalTime += time;
     }
 }

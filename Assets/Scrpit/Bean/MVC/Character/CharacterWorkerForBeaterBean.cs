@@ -8,8 +8,6 @@ public class CharacterWorkerForBeaterBean : CharacterWorkerBaseBean
     public long fightTotalNumber ;
     public long fightWinNumber;
     public long fightLoseNumber;
-    public float fightTotalTime;
-    public float restTotalTime;
 
     public CharacterWorkerForBeaterBean()
     {
@@ -26,15 +24,5 @@ public class CharacterWorkerForBeaterBean : CharacterWorkerBaseBean
     {
         fightTotalNumber += number;
         fightLoseNumber += number;
-    }
-
-    public void AddFightTime(float fightTime)
-    {
-        fightTotalTime += fightTime;
-    }
-
-    public void AddRestTime(float restTime)
-    {
-        restTotalTime += restTime;
     }
 }

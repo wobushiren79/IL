@@ -219,7 +219,6 @@ public class NpcAIWorkerForWaiterCpt : NpcAIWokerFoBaseCpt
         //audioHandler.PlaySound(AudioSoundEnum.Clean);
         //计算清理时间
         float cleanTime = npcAIWorker.characterData.CalculationWaiterCleanTime(gameItemsManager);
-        npcAIWorker.characterData.baseInfo.waiterInfo.AddCleanTime(cleanTime);
         yield return new WaitForSeconds(cleanTime);
         //记录数据
         npcAIWorker.characterData.baseInfo.waiterInfo.AddCleanNumber(1);

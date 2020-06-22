@@ -191,8 +191,6 @@ public class NpcAIWorkerForAccost : NpcAIWokerFoBaseCpt
     {
         //计算聊天时间
         float talkTime = npcAIWorker.characterData.CalculationAccostTalkTime(gameItemsManager);
-        //记录
-        npcAIWorker.characterData.baseInfo.accostInfo.AddAccostTime(talkTime);
         //设置状态
         npcAICustomer.SetIntent(NpcAICustomerCpt.CustomerIntentEnum.TalkWithAccost);
         yield return new WaitForSeconds(talkTime);

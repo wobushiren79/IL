@@ -131,7 +131,6 @@ public class NpcAIWorkerForAccountantCpt : NpcAIWokerFoBaseCpt
     public IEnumerator StartAccounting()
     {
         float time = npcAIWorker.characterData.CalculationAccountingTime(gameItemsManager);
-        npcAIWorker.characterData.baseInfo.accountantInfo.AddAccountantTime(time);
         yield return new WaitForSeconds(time);
         MenuOwnBean menuOwn = gameDataManager.gameData.GetMenuById(orderForCustomer.foodData.id);
         menuOwn.GetPrice(orderForCustomer.foodData, out long payMoneyL, out long payMoneyM, out long payMoneyS);
