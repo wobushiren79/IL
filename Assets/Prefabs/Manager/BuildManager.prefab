@@ -112,7 +112,7 @@ MonoBehaviour:
       draggable: 1
       expandable: 1
       multipleSelection: 1
-      isExpanded: 1
+      isExpanded: 0
       label:
         m_Text: Keys
         m_Image: {fileID: 0}
@@ -127,7 +127,7 @@ MonoBehaviour:
       elementNameOverride: 
       elementIcon: {fileID: 0}
     reqReferences: {fileID: 0}
-    isExpanded: 1
+    isExpanded: 0
     _keyValues:
     - Floor_Gorgeous_2
     - tile_floor_glass_1
@@ -290,6 +290,8 @@ MonoBehaviour:
     - Decoration_2
     - Decoration_3
     - Door_1
+    - Door_1_Name
+    - Door_2
     - Floor
     - Dismantle
     - Stove_1
@@ -304,6 +306,8 @@ MonoBehaviour:
     - Decoration_2
     - Decoration_3
     - Door_1
+    - Door_1_Name
+    - Door_2
     - Floor
     - Dismantle
     - Stove_1
@@ -318,6 +322,8 @@ MonoBehaviour:
     - {fileID: 8874255799018278908, guid: 8bf7834538a7ab6428d60c2308851d0f, type: 3}
     - {fileID: 8874255799018278908, guid: 2439b2db6caae9a4faf5fa308cfd579b, type: 3}
     - {fileID: 4952996212233395174, guid: 575b2a5dca15a9740b7c26b9bbb35f7c, type: 3}
+    - {fileID: 4952996212233395174, guid: b640fefce9e83e04facf5ddc073e29e8, type: 3}
+    - {fileID: 4952996212233395174, guid: cfaabae7b786b3245a57f49ed6a69171, type: 3}
     - {fileID: 5699967885463446781, guid: bbde095f1f4dd2d4791509763a93979f, type: 3}
     - {fileID: 5699967885463446781, guid: 7a9c6dab9505df24cb20f429d347c7db, type: 3}
     - {fileID: 3085979124016098595, guid: 8d8246c5c9b71c5419c580db0966bd04, type: 3}
@@ -470,7 +476,14 @@ MonoBehaviour:
     - counter_401_2
     - counter_401_3
     - door_1
+    - door_1001
+    - door_1002
+    - door_1003
+    - door_1004
     - door_2
+    - door_2001
+    - door_2002
+    - door_2003
     - door_3
     - door_4
     - door_5
@@ -654,7 +667,14 @@ MonoBehaviour:
     - counter_401_2
     - counter_401_3
     - door_1
+    - door_1001
+    - door_1002
+    - door_1003
+    - door_1004
     - door_2
+    - door_2001
+    - door_2002
+    - door_2003
     - door_3
     - door_4
     - door_5
@@ -838,7 +858,14 @@ MonoBehaviour:
     - {fileID: 4761619065326700913, guid: 4e56e59334b5fe543901601b27fa6e4b, type: 3}
     - {fileID: 4891591998192775783, guid: 4e56e59334b5fe543901601b27fa6e4b, type: 3}
     - {fileID: 21300000, guid: 74b1a2d02b60cb94b9582da2c579bd7c, type: 3}
+    - {fileID: 21300000, guid: 6637db8f9d53fdf43a4ce029afc5be0d, type: 3}
+    - {fileID: 21300000, guid: ffbf63f415f3c7347b24cc41025bc782, type: 3}
+    - {fileID: 21300000, guid: cc6ad7c87ab1e334f9d9cb908fb11fa7, type: 3}
+    - {fileID: 21300000, guid: c747055fa38f5b44aacbc2ffabd2f2fc, type: 3}
     - {fileID: 21300000, guid: 0c1104ecc4b525c4f9fcf43187120b50, type: 3}
+    - {fileID: 21300000, guid: 5cc414ed2548cec409b2d9f6cf78c7c0, type: 3}
+    - {fileID: 21300000, guid: 7b84ba229e1a4cc46b182ad9a7bbda2d, type: 3}
+    - {fileID: 21300000, guid: dddd205f41b4d484fb0cbe5692378780, type: 3}
     - {fileID: 21300000, guid: 38b940efe316fad4197688009a3ef80c, type: 3}
     - {fileID: 21300000, guid: 0b0e994435661eb4fa2fe2cc2c10b116, type: 3}
     - {fileID: 21300000, guid: 8a258110db6114443b8edfcbe41f0d8c, type: 3}
@@ -1225,10 +1252,10 @@ MonoBehaviour:
     - tile_wall_town_1_9
     - tile_wall_town_1_10
     - tile_wall_town_1_11
-    - tile_wall_wooden_1_3
     - tile_wall_wooden_1_0
     - tile_wall_wooden_1_1
     - tile_wall_wooden_1_2
+    - tile_wall_wooden_1_3
     - tile_wall_wooden_1_4
     - tile_wall_wooden_1_5
     - tile_wall_wooden_1_6
@@ -1448,10 +1475,10 @@ MonoBehaviour:
     - tile_wall_town_1_9
     - tile_wall_town_1_10
     - tile_wall_town_1_11
-    - tile_wall_wooden_1_3
     - tile_wall_wooden_1_0
     - tile_wall_wooden_1_1
     - tile_wall_wooden_1_2
+    - tile_wall_wooden_1_3
     - tile_wall_wooden_1_4
     - tile_wall_wooden_1_5
     - tile_wall_wooden_1_6
@@ -1671,10 +1698,10 @@ MonoBehaviour:
     - {fileID: -35582013012952671, guid: 205f54248c5e5334fb72fcb217ed41a1, type: 3}
     - {fileID: -7926003798241420814, guid: 205f54248c5e5334fb72fcb217ed41a1, type: 3}
     - {fileID: -2688606873128527168, guid: 205f54248c5e5334fb72fcb217ed41a1, type: 3}
-    - {fileID: 2161277139019833679, guid: 1c2021702171b6d488b0492b89c72db2, type: 3}
     - {fileID: -2507609473545348892, guid: 1c2021702171b6d488b0492b89c72db2, type: 3}
     - {fileID: 3661975881240618143, guid: 1c2021702171b6d488b0492b89c72db2, type: 3}
     - {fileID: 4223267785685882662, guid: 1c2021702171b6d488b0492b89c72db2, type: 3}
+    - {fileID: 2161277139019833679, guid: 1c2021702171b6d488b0492b89c72db2, type: 3}
     - {fileID: 4852548519652258995, guid: 1c2021702171b6d488b0492b89c72db2, type: 3}
     - {fileID: -4746700618074479778, guid: 1c2021702171b6d488b0492b89c72db2, type: 3}
     - {fileID: -4590519699767221633, guid: 1c2021702171b6d488b0492b89c72db2, type: 3}
