@@ -10,6 +10,7 @@ public class GameDataHandler : BaseHandler, DialogView.IDialogCallBack
     {
         AddMoney = 1,
         PayMoney = 2,
+        MenuResearchChange = 3,
     }
 
     protected GameDataManager gameDataManager;
@@ -104,6 +105,7 @@ public class GameDataHandler : BaseHandler, DialogView.IDialogCallBack
                 achievementDialog.SetData(1, menuInfo.icon_key);
             }
         }
+        NotifyAllObserver((int)NotifyTypeEnum.MenuResearchChange, listMenu);
     }
 
     /// <summary>

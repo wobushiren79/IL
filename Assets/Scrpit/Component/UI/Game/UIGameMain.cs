@@ -3,6 +3,7 @@ using UnityEditor;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using DG.Tweening;
+using System.Collections.Generic;
 
 public class UIGameMain : UIGameComponent, DialogView.IDialogCallBack, IRadioGroupCallBack, IBaseObserver
 {
@@ -52,6 +53,8 @@ public class UIGameMain : UIGameComponent, DialogView.IDialogCallBack, IRadioGro
     protected Tween tweenForMoneyS;
 
     public Text tvMoneyForAnimModel;
+
+    public UIGameMainForHint uiHint;
 
     public override void Awake()
     {
@@ -207,7 +210,7 @@ public class UIGameMain : UIGameComponent, DialogView.IDialogCallBack, IRadioGro
                 if (tvMoneyL != null)
                 {
                     tvMoneyL.text = price + "";
-                    tvMoneyL.transform.localScale = new Vector3(1,1,1);
+                    tvMoneyL.transform.localScale = new Vector3(1, 1, 1);
                 }
                 break;
             case MoneyEnum.M:
@@ -216,14 +219,14 @@ public class UIGameMain : UIGameComponent, DialogView.IDialogCallBack, IRadioGro
                     tvMoneyM.text = price + "";
                     tvMoneyM.transform.localScale = new Vector3(1, 1, 1);
                 }
-                  
+
                 break;
             case MoneyEnum.S:
                 if (tvMoneyS != null)
                 {
                     tvMoneyS.text = price + "";
                     tvMoneyS.transform.localScale = new Vector3(1, 1, 1);
-                } 
+                }
                 break;
         }
     }
@@ -233,7 +236,7 @@ public class UIGameMain : UIGameComponent, DialogView.IDialogCallBack, IRadioGro
     /// </summary>
     public void SetInnAesthetics(InnAttributesBean innAttributes)
     {
-        innAttributes.GetAesthetics(out float maxAesthetics,out float aesthetics);
+        innAttributes.GetAesthetics(out float maxAesthetics, out float aesthetics);
         if (popupAesthetics != null)
         {
             popupAesthetics.SetContent(GameCommonInfo.GetUITextById(2003) + ":" + aesthetics + "/" + maxAesthetics);
@@ -268,10 +271,10 @@ public class UIGameMain : UIGameComponent, DialogView.IDialogCallBack, IRadioGro
     /// <param name="innAttributes"></param>
     public void SetInnPraise(InnAttributesBean innAttributes)
     {
-        innAttributes.GetPraise(out int maxPraise,out int praise);
+        innAttributes.GetPraise(out int maxPraise, out int praise);
         if (popupPraise != null)
         {
-            popupPraise.SetContent(GameCommonInfo.GetUITextById(2004) + " " + (System.Math.Round((float)praise / maxPraise, 4) * 100) + "%" );
+            popupPraise.SetContent(GameCommonInfo.GetUITextById(2004) + " " + (System.Math.Round((float)praise / maxPraise, 4) * 100) + "%");
         }
         if (proPraise != null)
         {
@@ -389,8 +392,8 @@ public class UIGameMain : UIGameComponent, DialogView.IDialogCallBack, IRadioGro
                 tweenForMoneyL.Kill();
             long startMoney = gameData.moneyL - priceL;
             tweenForMoneyL = DOTween.To(() => startMoney, x => { SetMoney(MoneyEnum.L, x); }, gameData.moneyL, 1);
-            tvMoneyL.transform.localScale = new Vector3(1,1,1);
-            tvMoneyL.transform.DOPunchScale(new Vector3(1f, 1f, 1f),1f,10,1);
+            tvMoneyL.transform.localScale = new Vector3(1, 1, 1);
+            tvMoneyL.transform.DOPunchScale(new Vector3(1f, 1f, 1f), 1f, 10, 1);
             AnimForMoneyItem(MoneyEnum.L, priceL);
         }
         if (priceM != 0)
@@ -415,7 +418,7 @@ public class UIGameMain : UIGameComponent, DialogView.IDialogCallBack, IRadioGro
         }
     }
 
-    private void AnimForMoneyItem(MoneyEnum moneyType,long money)
+    private void AnimForMoneyItem(MoneyEnum moneyType, long money)
     {
         Vector3 startPosition = Vector3.zero;
         Color tvColor = Color.black;
@@ -516,6 +519,23 @@ public class UIGameMain : UIGameComponent, DialogView.IDialogCallBack, IRadioGro
                 long priceM = System.Convert.ToInt64(obj[1]);
                 long priceS = System.Convert.ToInt64(obj[2]);
                 AnimForAddMoney(priceL, priceM, priceS);
+            }
+            else if (type == (int)GameDataHandler.NotifyTypeEnum.MenuResearchChange)
+            {
+                List<MenuOwnBean> listMenu = (List<MenuOwnBean>)obj[0];
+                if (listMenu.Count > 0)
+                {
+                    uiHint.Open();
+                    bool isAllComplete = uiHint.SetData(listMenu);
+                    if (isAllComplete)
+                    {
+                        uiHint.Close();
+                    }
+                }
+                else
+                {
+                    uiHint.Close();
+                }
             }
         }
     }

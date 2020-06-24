@@ -124,7 +124,7 @@ public class InfoFoodPopupShow : PopupShowView
         }
         objResearch.SetActive(true);
         CharacterBean researcher = ownData.GetResearchCharacter(gameDataManager.gameData);
-        float progress = ownData.GetResearchProgress(out long completeExp);
+        float progress = ownData.GetResearchProgress(out long completeExp, out long researchExp);
         if (researcher != null)
         {
             tvResearcherName.text = researcher.baseInfo.name;
@@ -137,7 +137,7 @@ public class InfoFoodPopupShow : PopupShowView
             tvResearcherAbility.text = "0/s";
         }
         //设置进度
-        proResearch.SetData(completeExp, ownData.researchExp);
+        proResearch.SetData(completeExp, researchExp);
     }
 
     /// <summary>

@@ -194,7 +194,7 @@ public class MenuOwnBean
     /// 获取研究进度
     /// </summary>
     /// <returns></returns>
-    public float GetResearchProgress(out long completeResearchExp)
+    public float GetResearchProgress(out long completeResearchExp,out long researchExp)
     {
         completeResearchExp = 0;
         MenuLevelTypeEnum menuLevel = GetMenuLevel();
@@ -210,7 +210,7 @@ public class MenuOwnBean
         {
             GameCommonInfo.baseDataController.GetBaseData(BaseDataTypeEnum.MenuForLevelResearchExp3, out completeResearchExp);
         }
-
+        researchExp = this.researchExp;
         float progress = (float)researchExp / completeResearchExp;
         return (float)Math.Round(progress, 4);
     }
