@@ -425,14 +425,15 @@ public class NpcAICustomerCpt : BaseNpcAI
     /// <param name="mood"></param>
     public virtual void ChangeMood(float mood)
     {
+        if (orderForCustomer == null)
+            return;
         orderForCustomer.innEvaluation.AddMood(mood);
         characterMoodCpt.SetMood(orderForCustomer.innEvaluation.GetPraise());
         if (orderForCustomer.innEvaluation.mood <= 0)
         {
             StopAllCoroutines();
             //如果有订单。强制结束订单
-            if (orderForCustomer != null)
-                innHandler.EndOrderForForce(orderForCustomer,true);
+            innHandler.EndOrderForForce(orderForCustomer,true);
             SetIntent(CustomerIntentEnum.Leave);
         }
     }

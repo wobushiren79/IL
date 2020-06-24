@@ -433,6 +433,23 @@ public class GameDataBean
         return listMenu;
     }
 
+    /// <summary>
+    /// 通过等级获取菜品数量
+    /// </summary>
+    /// <param name="level"></param>
+    /// <returns></returns>
+    public int GetMenuNumberByLevel(MenuLevelTypeEnum menuLevel)
+    {
+        int number = 0;
+        foreach (MenuOwnBean itemMenu in listMenu)
+        {
+            if(itemMenu.GetMenuLevel() == menuLevel)
+            {
+                number++;
+            }
+        }
+        return number;
+    }
 
 
 

@@ -44,19 +44,20 @@ public class MenuOwnBean
     public void GetPrice(MenuInfoBean menuInfo, out long priceL, out long priceM, out long priceS)
     {
         float addRate = 1;
-        if (menuLevel == 0)
+        MenuLevelTypeEnum menuLevel = GetMenuLevel();
+        if (menuLevel == MenuLevelTypeEnum.Init)
         {
             addRate = 1;
         }
-        else if (menuLevel == 1)
+        else if (menuLevel == MenuLevelTypeEnum.Star)
         {
             GameCommonInfo.baseDataController.GetBaseData(BaseDataTypeEnum.MenuForPriceAddRate1, out addRate);
         }
-        else if (menuLevel == 2)
+        else if (menuLevel == MenuLevelTypeEnum.Moon)
         {
             GameCommonInfo.baseDataController.GetBaseData(BaseDataTypeEnum.MenuForPriceAddRate2, out addRate);
         }
-        else if (menuLevel == 3)
+        else if (menuLevel == MenuLevelTypeEnum.Sun)
         {
             GameCommonInfo.baseDataController.GetBaseData(BaseDataTypeEnum.MenuForPriceAddRate3, out addRate);
         }
@@ -69,13 +70,13 @@ public class MenuOwnBean
     /// 卖出菜品
     /// </summary>
     /// <param name="number"></param>
-    public void SellMenu(long number, long priceL, long priceM, long priceS,out bool isLevelUp)
+    public void SellMenu(long number, long priceL, long priceM, long priceS, out bool isLevelUp)
     {
         sellNumber += number;
         sellMoneyL += priceL;
         sellMoneyM += priceM;
         sellMoneyS += priceS;
-        AddLevelExp((int)number,out isLevelUp);
+        AddLevelExp((int)number, out isLevelUp);
     }
 
     /// <summary>
@@ -87,15 +88,16 @@ public class MenuOwnBean
         menuExp += exp;
         isLevelUp = false;
         int levelExp = 0;
-        if (menuLevel == 0)
+        MenuLevelTypeEnum menuLevel = GetMenuLevel();
+        if (menuLevel == MenuLevelTypeEnum.Init)
         {
             GameCommonInfo.baseDataController.GetBaseData(BaseDataTypeEnum.MenuForLevelUpExp1, out levelExp);
         }
-        else if (menuLevel == 1)
+        else if (menuLevel == MenuLevelTypeEnum.Star)
         {
             GameCommonInfo.baseDataController.GetBaseData(BaseDataTypeEnum.MenuForLevelUpExp2, out levelExp);
         }
-        else if (menuLevel == 2)
+        else if (menuLevel == MenuLevelTypeEnum.Moon)
         {
             GameCommonInfo.baseDataController.GetBaseData(BaseDataTypeEnum.MenuForLevelUpExp3, out levelExp);
         }
@@ -123,15 +125,16 @@ public class MenuOwnBean
     {
         researchExp += exp;
         int researchLevelExp = 0;
-        if (menuLevel == 0)
+        MenuLevelTypeEnum menuLevel = GetMenuLevel();
+        if (menuLevel == MenuLevelTypeEnum.Init)
         {
             GameCommonInfo.baseDataController.GetBaseData(BaseDataTypeEnum.MenuForLevelResearchExp1, out researchLevelExp);
         }
-        else if (menuLevel == 1)
+        else if (menuLevel == MenuLevelTypeEnum.Star)
         {
             GameCommonInfo.baseDataController.GetBaseData(BaseDataTypeEnum.MenuForLevelResearchExp2, out researchLevelExp);
         }
-        else if (menuLevel == 2)
+        else if (menuLevel == MenuLevelTypeEnum.Moon)
         {
             GameCommonInfo.baseDataController.GetBaseData(BaseDataTypeEnum.MenuForLevelResearchExp3, out researchLevelExp);
         }
@@ -154,28 +157,26 @@ public class MenuOwnBean
     /// 获取菜品等级
     /// </summary>
     /// <returns></returns>
-    public int GetMenuLevel(out string levelStr, out int nextLevelExp)
+    public MenuLevelTypeEnum GetMenuLevel(out string levelStr, out int nextLevelExp)
     {
         levelStr = "???";
         nextLevelExp = 0;
-        if (menuLevel == 0)
+        MenuLevelTypeEnum menuLevel = GetMenuLevel();
+        levelStr = MenuLevelTypeEnumTools.GetMenuLevelStr(menuLevel);
+        if (menuLevel == MenuLevelTypeEnum.Init)
         {
-            levelStr = GameCommonInfo.GetUITextById(104);
             GameCommonInfo.baseDataController.GetBaseData(BaseDataTypeEnum.MenuForLevelUpExp1, out nextLevelExp);
         }
-        else if (menuLevel == 1)
+        else if (menuLevel == MenuLevelTypeEnum.Star)
         {
-            levelStr = GameCommonInfo.GetUITextById(101);
             GameCommonInfo.baseDataController.GetBaseData(BaseDataTypeEnum.MenuForLevelUpExp2, out nextLevelExp);
         }
-        else if (menuLevel == 2)
+        else if (menuLevel == MenuLevelTypeEnum.Moon)
         {
-            levelStr = GameCommonInfo.GetUITextById(102);
             GameCommonInfo.baseDataController.GetBaseData(BaseDataTypeEnum.MenuForLevelUpExp3, out nextLevelExp);
         }
-        else if (menuLevel == 3)
+        else if (menuLevel == MenuLevelTypeEnum.Sun)
         {
-            levelStr = GameCommonInfo.GetUITextById(103);
         }
         else
         {
@@ -183,9 +184,9 @@ public class MenuOwnBean
         }
         return menuLevel;
     }
-    public int GetMenuLevel()
+    public MenuLevelTypeEnum GetMenuLevel()
     {
-        return menuLevel;
+        return (MenuLevelTypeEnum)menuLevel;
     }
 
 
@@ -196,15 +197,16 @@ public class MenuOwnBean
     public float GetResearchProgress(out long completeResearchExp)
     {
         completeResearchExp = 0;
-        if (menuLevel == 0)
+        MenuLevelTypeEnum menuLevel = GetMenuLevel();
+        if (menuLevel == MenuLevelTypeEnum.Init)
         {
             GameCommonInfo.baseDataController.GetBaseData(BaseDataTypeEnum.MenuForLevelResearchExp1, out completeResearchExp);
         }
-        else if (menuLevel == 1)
+        else if (menuLevel == MenuLevelTypeEnum.Star)
         {
             GameCommonInfo.baseDataController.GetBaseData(BaseDataTypeEnum.MenuForLevelResearchExp2, out completeResearchExp);
         }
-        else if (menuLevel == 2)
+        else if (menuLevel == MenuLevelTypeEnum.Moon)
         {
             GameCommonInfo.baseDataController.GetBaseData(BaseDataTypeEnum.MenuForLevelResearchExp3, out completeResearchExp);
         }
@@ -222,15 +224,16 @@ public class MenuOwnBean
     {
         SortedList<IngredientsEnum, long> listIng = new SortedList<IngredientsEnum, long>();
         float addRate = 1;
-        if (menuLevel == 0)
+        MenuLevelTypeEnum menuLevel = GetMenuLevel();
+        if (menuLevel == MenuLevelTypeEnum.Init)
         {
             addRate = 10;
         }
-        else if (menuLevel == 1)
+        else if (menuLevel == MenuLevelTypeEnum.Star)
         {
             addRate = 100;
         }
-        else if (menuLevel == 2)
+        else if (menuLevel == MenuLevelTypeEnum.Moon)
         {
             addRate = 1000;
         }
@@ -262,18 +265,19 @@ public class MenuOwnBean
     public Sprite GetMenuLevelIcon(IconDataManager iconDataManager)
     {
         Sprite spIcon = null;
-        if (menuLevel == 0)
+        MenuLevelTypeEnum menuLevel = GetMenuLevel();
+        if (menuLevel == MenuLevelTypeEnum.Init)
         {
         }
-        else if (menuLevel == 1)
+        else if (menuLevel == MenuLevelTypeEnum.Star)
         {
             spIcon = iconDataManager.GetIconSpriteByName("reputation_level_1_1");
         }
-        else if (menuLevel == 2)
+        else if (menuLevel == MenuLevelTypeEnum.Moon)
         {
             spIcon = iconDataManager.GetIconSpriteByName("reputation_level_2_1");
         }
-        else if (menuLevel == 3)
+        else if (menuLevel == MenuLevelTypeEnum.Sun)
         {
             spIcon = iconDataManager.GetIconSpriteByName("reputation_level_3_1");
         }
@@ -398,11 +402,12 @@ public class MenuOwnBean
     /// 检测是否能研究
     /// </summary>
     /// <returns></returns>
-    public bool CheckCanResearch(GameDataBean gameData,out string failStr)
+    public bool CheckCanResearch(GameDataBean gameData, out string failStr)
     {
         failStr = "";
-        string levelStr=  gameData.GetInnAttributesData().GetInnLevel(out int levelTitle,out int levelStart);
-        if (menuLevel == 0)
+        string levelStr = gameData.GetInnAttributesData().GetInnLevel(out int levelTitle, out int levelStart);
+        MenuLevelTypeEnum menuLevel = GetMenuLevel();
+        if (menuLevel ==  MenuLevelTypeEnum.Init)
         {
             if (levelTitle <= 0)
             {
@@ -410,7 +415,7 @@ public class MenuOwnBean
                 return false;
             }
         }
-        else if (menuLevel == 1)
+        else if (menuLevel == MenuLevelTypeEnum.Star)
         {
             if (levelTitle <= 1)
             {
@@ -418,7 +423,7 @@ public class MenuOwnBean
                 return false;
             }
         }
-        else if (menuLevel == 2)
+        else if (menuLevel == MenuLevelTypeEnum.Moon)
         {
             if (levelTitle <= 2)
             {
@@ -426,11 +431,12 @@ public class MenuOwnBean
                 return false;
             }
         }
-        else if (menuLevel == 3)
+        else if (menuLevel == MenuLevelTypeEnum.Sun)
         {
             failStr = GameCommonInfo.GetUITextById(1073);
             return false;
         }
         return true;
     }
+
 }

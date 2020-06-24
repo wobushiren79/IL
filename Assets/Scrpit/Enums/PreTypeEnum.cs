@@ -45,6 +45,10 @@ public enum PreTypeEnum
     InnPraiseNumberForAnger,
 
     MenuNumber,//拥有菜品数量
+    MenuLevelStarNumber,
+    MenuLevelMoonNumber,
+    MenuLevelSunNumber,
+
     SellMenuNumber,//卖出菜品数量
 
     WorkerForCookFoodNumber,//工作相关统计
@@ -59,6 +63,8 @@ public enum PreTypeEnum
 
     InnPraise,//客栈好评度
     InnAesthetics,//客栈美观值
+
+
 }
 
 public class PreTypeBean : DataBean<PreTypeEnum>
@@ -172,6 +178,9 @@ public class PreTypeEnumTools : DataTools
                 GetPreDetailsForInnPraiseNumber(preTypeData, gameData, iconDataManager, isComplete);
                 break;
             case PreTypeEnum.MenuNumber:
+            case PreTypeEnum.MenuLevelStarNumber:
+            case PreTypeEnum.MenuLevelMoonNumber:
+            case PreTypeEnum.MenuLevelSunNumber:
                 GetPreDetailsForMenuNumber(preTypeData, gameData, iconDataManager, isComplete);
                 break;
             case PreTypeEnum.SellMenuNumber:
@@ -632,19 +641,54 @@ public class PreTypeEnumTools : DataTools
         return preTypeData;
     }
 
+    /// <summary>
+    /// 获取菜单数量相关详情
+    /// </summary>
+    /// <param name="preTypeData"></param>
+    /// <param name="gameData"></param>
+    /// <param name="iconDataManager"></param>
+    /// <param name="isComplete"></param>
+    /// <returns></returns>
     private static PreTypeBean GetPreDetailsForMenuNumber(PreTypeBean preTypeData, GameDataBean gameData, IconDataManager iconDataManager, bool isComplete)
     {
         Sprite spIcon = null;
         long dataNumber = long.Parse(preTypeData.data);
         string preProStr = "";
+        spIcon = iconDataManager.GetIconSpriteByName("ui_features_menu");
+        int menuNumber = 0;
+        string content = "";
+        string contentFail = "";
+        string levelStr = "";
         switch (preTypeData.dataType)
         {
             case PreTypeEnum.MenuNumber:
-                spIcon = iconDataManager.GetIconSpriteByName("ui_features_menu");
+                List<MenuOwnBean> listMenu = gameData.GetMenuList();
+                menuNumber = listMenu.Count;
+                content = GameCommonInfo.GetUITextById(5061);
+                contentFail = GameCommonInfo.GetUITextById(5062);
                 break;
+            case PreTypeEnum.MenuLevelStarNumber:
+                menuNumber = gameData.GetMenuNumberByLevel(MenuLevelTypeEnum.Star);
+                content = GameCommonInfo.GetUITextById(5063);
+                contentFail = GameCommonInfo.GetUITextById(5064);
+                levelStr = MenuLevelTypeEnumTools.GetMenuLevelStr( MenuLevelTypeEnum.Star);
+                break;
+            case PreTypeEnum.MenuLevelMoonNumber:
+                menuNumber = gameData.GetMenuNumberByLevel(MenuLevelTypeEnum.Moon);
+                content = GameCommonInfo.GetUITextById(5063);
+                contentFail = GameCommonInfo.GetUITextById(5064);
+                levelStr = MenuLevelTypeEnumTools.GetMenuLevelStr(MenuLevelTypeEnum.Moon);
+                break;
+            case PreTypeEnum.MenuLevelSunNumber:
+                menuNumber = gameData.GetMenuNumberByLevel(MenuLevelTypeEnum.Sun);
+                content = GameCommonInfo.GetUITextById(5063);
+                contentFail = GameCommonInfo.GetUITextById(5064);
+                levelStr = MenuLevelTypeEnumTools.GetMenuLevelStr(MenuLevelTypeEnum.Sun);
+                break;
+
         }
-        List<MenuOwnBean> listMenu = gameData.GetMenuList();
-        if (listMenu.Count >= dataNumber || isComplete)
+
+        if (menuNumber >= dataNumber || isComplete)
         {
             preTypeData.isPre = true;
             preProStr = "(" + dataNumber + "/" + dataNumber + ")";
@@ -653,12 +697,12 @@ public class PreTypeEnumTools : DataTools
         else
         {
             preTypeData.isPre = false;
-            preProStr = "(" + listMenu.Count + "/" + dataNumber + ")";
-            preTypeData.progress = listMenu.Count / (float)dataNumber;
+            preProStr = "(" + menuNumber + "/" + dataNumber + ")";
+            preTypeData.progress = menuNumber / (float)dataNumber;
         }
         preTypeData.spPreIcon = spIcon;
-        preTypeData.preDescribe = string.Format(GameCommonInfo.GetUITextById(5061), preProStr + "");
-        preTypeData.preFailStr = string.Format(GameCommonInfo.GetUITextById(5062), dataNumber + "");
+        preTypeData.preDescribe = string.Format(content, preProStr + "", levelStr);
+        preTypeData.preFailStr = string.Format(contentFail, dataNumber + "", levelStr);
         return preTypeData;
     }
 

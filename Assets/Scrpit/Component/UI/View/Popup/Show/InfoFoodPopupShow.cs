@@ -84,7 +84,7 @@ public class InfoFoodPopupShow : PopupShowView
     /// </summary>
     public void SetLevel(MenuOwnBean ownData)
     {
-        int level = ownData.GetMenuLevel(out string levelStr, out int nextLevelExp);
+        MenuLevelTypeEnum level = ownData.GetMenuLevel(out string levelStr, out int nextLevelExp);
         Sprite spIcon = ownData.GetMenuLevelIcon(iconDataManager);
         if (spIcon == null)
         {
@@ -101,7 +101,7 @@ public class InfoFoodPopupShow : PopupShowView
         {
             proLevel.SetContent(GameCommonInfo.GetUITextById(287));
         }
-        if (level >= 3)
+        if ((int)level >= 3)
         {
             objLevelProgress.SetActive(false);
         }
