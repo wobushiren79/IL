@@ -434,7 +434,7 @@ public class EditorUI
         if (GUILayout.Button("查询后续事件对话", GUILayout.Width(120), GUILayout.Height(20)))
         {
             isFind = true;
-            talkType = TextTalkTypeEnum.Special;
+            talkType = TextTalkTypeEnum.Subsequent;
         }
         if (GUILayout.Button("查询捣乱事件对话", GUILayout.Width(120), GUILayout.Height(20)))
         {
@@ -450,6 +450,11 @@ public class EditorUI
         {
             isFind = true;
             talkType = TextTalkTypeEnum.Shout;
+        }
+        if (GUILayout.Button("查询交换对话", GUILayout.Width(120), GUILayout.Height(20)))
+        {
+            isFind = true;
+            talkType = TextTalkTypeEnum.Exchange;
         }
         if (isFind)
         {

@@ -34,7 +34,7 @@ public class NpcInfoBean : BaseBean
     public float position_x;
     public float position_y;
 
-    public string talk_ids;//人物对话ID
+    public string talk_types;//人物对话ID
     public string skill_ids;
 
     public int attributes_loyal;
@@ -146,5 +146,15 @@ public class NpcInfoBean : BaseBean
     public List<long> GetSkillIds() {
         long[] skillIds = StringUtil.SplitBySubstringForArrayLong(skill_ids, ',');
         return skillIds.ToList();
+    }
+
+    /// <summary>
+    /// 获取对话的选项
+    /// </summary>
+    /// <returns></returns>
+    public List<NpcTalkTypeEnum> GetTalkTypes()
+    {
+        NpcTalkTypeEnum[] talkTypes = StringUtil.SplitBySubstringForArrayEnum<NpcTalkTypeEnum>(talk_types, ',');
+        return talkTypes.ToList();
     }
 }

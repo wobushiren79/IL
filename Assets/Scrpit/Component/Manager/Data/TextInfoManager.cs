@@ -2,7 +2,7 @@
 using UnityEditor;
 using System.Collections.Generic;
 
-public class TextInfoManager : BaseManager,ITextInfoView
+public class TextInfoManager : BaseManager, ITextInfoView
 {
     //查询的对话内容
     public List<TextInfoBean> listTextData;
@@ -11,6 +11,7 @@ public class TextInfoManager : BaseManager,ITextInfoView
     public Dictionary<long, List<TextInfoBean>> mapTalkGiftData;
     public Dictionary<long, List<TextInfoBean>> mapTalkRecruitData;
     public Dictionary<long, List<TextInfoBean>> mapTalkRascalData;
+    public Dictionary<long, List<TextInfoBean>> mapTalkExchangeData;
 
     protected TextInfoController textInfoController;
     protected ICallBack callBack;
@@ -53,49 +54,53 @@ public class TextInfoManager : BaseManager,ITextInfoView
     {
         textInfoController.GetTextForTalkByFirstMeet(userId);
     }
-    
+
     /// <summary>
     /// 获取交流对话选项
     /// </summary>
-    public void GetTextForTalkOptions(GameDataBean gameData, long talkUserId, NpcTypeEnum npcType)
+    public void GetTextForTalkOptions(GameDataBean gameData, NpcInfoBean npcInfo)
     {
         //如果不是第一次对话则有以下选项
         listTextData = new List<TextInfoBean>();
-        switch (npcType)
+
+        List<NpcTalkTypeEnum>  npcTalkTypes= npcInfo.GetTalkTypes();
+        listTextData.Add(new TextInfoBean(TextInfoTypeEnum.Talk,0, GameCommonInfo.GetUITextById(99101)));
+        foreach (NpcTalkTypeEnum itemType in npcTalkTypes)
         {
-            case NpcTypeEnum.Town:
-                listTextData.Add(new TextInfoBean(0, GameCommonInfo.GetUITextById(99101)));
-                listTextData.Add(new TextInfoBean(1, GameCommonInfo.GetUITextById(99102)));
-                //检测是否送过礼物
-                if (!GameCommonInfo.DailyLimitData.CheckIsGiftNpc(talkUserId))
-                {
-                    listTextData.Add(new TextInfoBean(1, GameCommonInfo.GetUITextById(99105)));
-                }
-                listTextData.Add(new TextInfoBean(1, GameCommonInfo.GetUITextById(99103)));
-                break;
-            case NpcTypeEnum.RecruitTown:
-                listTextData.Add(new TextInfoBean(0, GameCommonInfo.GetUITextById(99101)));
-                listTextData.Add(new TextInfoBean(1, GameCommonInfo.GetUITextById(99102)));
-                if (!gameData.CheckHasWorker(talkUserId+""))
-                {
-                    listTextData.Add(new TextInfoBean(1, GameCommonInfo.GetUITextById(99104)));
-                }
-                listTextData.Add(new TextInfoBean(1, GameCommonInfo.GetUITextById(99103)));
-                break;
-            case NpcTypeEnum.Special:
-                listTextData.Add(new TextInfoBean(0, GameCommonInfo.GetUITextById(99101)));
-                if (!GameCommonInfo.DailyLimitData.CheckIsTalkNpc(talkUserId))
-                {
-                    listTextData.Add(new TextInfoBean(1, GameCommonInfo.GetUITextById(99102)));
-                }
-                listTextData.Add(new TextInfoBean(1, GameCommonInfo.GetUITextById(99103)));
-                break;
+            switch (itemType)
+            {
+                case NpcTalkTypeEnum.Talk:
+                    listTextData.Add(new TextInfoBean(TextInfoTypeEnum.Talk, 1, GameCommonInfo.GetUITextById(99102)));
+                    break;
+                case NpcTalkTypeEnum.OneTalk:
+                    if (!GameCommonInfo.DailyLimitData.CheckIsTalkNpc(npcInfo.id))
+                    {
+                        listTextData.Add(new TextInfoBean(TextInfoTypeEnum.Talk, 1, GameCommonInfo.GetUITextById(99102)));
+                    }
+                    break;
+                case NpcTalkTypeEnum.Recruit:
+                    if (!gameData.CheckHasWorker(npcInfo.id + ""))
+                    {
+                        listTextData.Add(new TextInfoBean(TextInfoTypeEnum.Talk, 1, GameCommonInfo.GetUITextById(99104)));
+                    }
+                    break;
+                case NpcTalkTypeEnum.Gift:
+                    if (!GameCommonInfo.DailyLimitData.CheckIsGiftNpc(npcInfo.id))
+                    {
+                        listTextData.Add(new TextInfoBean(TextInfoTypeEnum.Talk, 1, GameCommonInfo.GetUITextById(99105)));
+                    }
+                    break;
+                case NpcTalkTypeEnum.GuildCoinExchange:
+                    listTextData.Add(new TextInfoBean(TextInfoTypeEnum.Talk, 1, GameCommonInfo.GetUITextById(99201)));
+                    break;
+            }
         }
+        listTextData.Add(new TextInfoBean(TextInfoTypeEnum.Talk, 1, GameCommonInfo.GetUITextById(99103)));
         if (callBack != null)
             callBack.SetTextInfoForTalkOptions(listTextData);
         //继续查询该人物的所有对话
-        CharacterFavorabilityBean characterFavorability = gameData.GetCharacterFavorability(talkUserId);
-        GetTextForTalkByMinFavorability(talkUserId, characterFavorability.favorabilityLevel);
+        CharacterFavorabilityBean characterFavorability = gameData.GetCharacterFavorability(npcInfo.id);
+        GetTextForTalkByMinFavorability(npcInfo.id, characterFavorability.favorabilityLevel);
     }
 
     /// <summary>
@@ -113,7 +118,7 @@ public class TextInfoManager : BaseManager,ITextInfoView
     /// </summary>
     /// <param name="userId"></param>
     /// <param name="favorabilityLevel"></param>
-    public void GetTextForTalkByMinFavorability(long userId,int favorabilityLevel)
+    public void GetTextForTalkByMinFavorability(long userId, int favorabilityLevel)
     {
         textInfoController.GetTextForTalkByMinFavorability(userId, favorabilityLevel);
     }
@@ -211,11 +216,12 @@ public class TextInfoManager : BaseManager,ITextInfoView
         mapTalkGiftData = new Dictionary<long, List<TextInfoBean>>();
         mapTalkRecruitData = new Dictionary<long, List<TextInfoBean>>();
         mapTalkRascalData = new Dictionary<long, List<TextInfoBean>>();
+        mapTalkExchangeData = new Dictionary<long, List<TextInfoBean>>();
         foreach (TextInfoBean itemTalkInfo in listData)
         {
             long markId = itemTalkInfo.mark_id;
             Dictionary<long, List<TextInfoBean>> addMap = new Dictionary<long, List<TextInfoBean>>();
-            switch ((TextTalkTypeEnum)itemTalkInfo.talk_type)
+            switch (itemTalkInfo.GetTextTalkType())
             {
                 case TextTalkTypeEnum.Normal:
                     addMap = mapTalkNormalData;
@@ -228,6 +234,9 @@ public class TextInfoManager : BaseManager,ITextInfoView
                     break;
                 case TextTalkTypeEnum.Rascal:
                     addMap = mapTalkRascalData;
+                    break;
+                case TextTalkTypeEnum.Exchange:
+                    addMap = mapTalkExchangeData;
                     break;
             }
             if (addMap.TryGetValue(markId, out List<TextInfoBean> value))
@@ -249,7 +258,7 @@ public class TextInfoManager : BaseManager,ITextInfoView
     {
         listTextData = listData;
         if (callBack != null)
-            callBack.SetTextInfoForTalkByType(textTalkType,listData);
+            callBack.SetTextInfoForTalkByType(textTalkType, listData);
     }
 
     public interface ICallBack

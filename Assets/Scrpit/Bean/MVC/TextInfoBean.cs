@@ -7,7 +7,7 @@ using System.Collections.Generic;
 public class TextInfoBean : BaseBean
 {
     public long text_id;
-    //类型 0默认文本 1选择对话    4书本详情  5黑幕标题
+    //类型 0默认文本 1选择对话    4书本详情  5黑幕标题  99默认
     public int type;
     //对话类型 0普通对话，1送礼回复对话  2招募对话  3后续对话  4第一次对话
     public int talk_type;
@@ -51,12 +51,21 @@ public class TextInfoBean : BaseBean
     public TextInfoBean() {
 
     }
-    public TextInfoBean(int selectType,string content)
+    public TextInfoBean(TextInfoTypeEnum type ,int selectType,string content)
     {
+        this.type = (int)type;
         text_order = 1;
-        type = 1;
         this.select_type = selectType;
         this.content = content;
     }
 
+    public TextInfoTypeEnum GetTextType()
+    {
+        return (TextInfoTypeEnum)type;
+    }
+
+    public TextTalkTypeEnum GetTextTalkType()
+    {
+        return (TextTalkTypeEnum)talk_type;
+    }
 }

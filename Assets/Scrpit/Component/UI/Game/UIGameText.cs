@@ -119,7 +119,7 @@ public class UIGameText : UIGameComponent, TextInfoManager.ICallBack, DialogView
             return;
         }
         //获取对话选项
-        uiGameManager.textInfoManager.GetTextForTalkOptions(uiGameManager.gameDataManager.gameData, mTalkNpcInfo.id, mTalkNpcInfo.GetNpcType());
+        uiGameManager.textInfoManager.GetTextForTalkOptions(uiGameManager.gameDataManager.gameData, mTalkNpcInfo);
     }
 
     /// <summary>
@@ -151,11 +151,12 @@ public class UIGameText : UIGameComponent, TextInfoManager.ICallBack, DialogView
         if (currentTextData.is_stoptime == 1)
             //设置时间彻底停止计时
             uiGameManager.gameTimeHandler.SetTimeStop();
-        switch ((TextInfoTypeEnum)currentTextData.type)
+        switch (currentTextData.GetTextType())
         {
             //对话和选择对话
             case TextInfoTypeEnum.Normal:
             case TextInfoTypeEnum.Select:
+            case TextInfoTypeEnum.Talk:
                 uiForTalk.Open();
                 uiForTalk.SetData(currentTextData, textListData);
                 break;
@@ -169,6 +170,7 @@ public class UIGameText : UIGameComponent, TextInfoManager.ICallBack, DialogView
                 uiForBehind.Open();
                 uiForBehind.SetData(currentTextData.content, currentTextData.wait_time);
                 break;
+  
         }
     }
 
@@ -230,46 +232,57 @@ public class UIGameText : UIGameComponent, TextInfoManager.ICallBack, DialogView
             case TextEnum.Talk:
                 //不同的对话选项
                 //对话
-                if (textData.content.Equals(GameCommonInfo.GetUITextById(99102)))
+                //如果是对话选项
+                if(textData.GetTextType()== TextInfoTypeEnum.Talk)
                 {
-                    //对话
-                    uiGameManager.textInfoManager.listTextData = RandomUtil.GetRandomDataByDictionary(uiGameManager.textInfoManager.mapTalkNormalData);
-                    NextText(1);
-                    //增加好感
-                    if (GameCommonInfo.DailyLimitData.AddTalkNpc(mTalkNpcInfo.id))
+                    if (textData.content.Equals(GameCommonInfo.GetUITextById(99102)))
                     {
-                        uiGameManager.gameDataManager.gameData.GetCharacterFavorability(mTalkNpcInfo.id).AddFavorability(1);
+                        //对话
+                        uiGameManager.textInfoManager.listTextData = RandomUtil.GetRandomDataByDictionary(uiGameManager.textInfoManager.mapTalkNormalData);
+                        NextText(1);
+                        //增加好感
+                        if (GameCommonInfo.DailyLimitData.AddTalkNpc(mTalkNpcInfo.id))
+                        {
+                            uiGameManager.gameDataManager.gameData.GetCharacterFavorability(mTalkNpcInfo.id).AddFavorability(1);
+                        }
+                        //增加数据记录
+                        CharacterFavorabilityBean characterFavorability = uiGameManager.gameDataManager.gameData.GetCharacterFavorability(mTalkNpcInfo.id);
+                        characterFavorability.AddTalkNumber(1);
                     }
-                    //增加数据记录
-                    CharacterFavorabilityBean characterFavorability = uiGameManager.gameDataManager.gameData.GetCharacterFavorability(mTalkNpcInfo.id);
-                    characterFavorability.AddTalkNumber(1);
-                }
-                //退出
-                else if (textData.content.Equals(GameCommonInfo.GetUITextById(99103)))
-                {
-                    NextText();
-                }
-                //招募
-                else if (textData.content.Equals(GameCommonInfo.GetUITextById(99104)))
-                {
-                   
-                    if (uiGameManager.gameDataManager.gameData.CheckIsMaxWorker())
+                    //退出
+                    else if (textData.content.Equals(GameCommonInfo.GetUITextById(99103)))
                     {
-                        uiGameManager.toastManager.ToastHint(GameCommonInfo.GetUITextById(1051));
+                        NextText();
                     }
-                    else
+                    //招募
+                    else if (textData.content.Equals(GameCommonInfo.GetUITextById(99104)))
                     {
-                        uiGameManager.textInfoManager.listTextData = RandomUtil.GetRandomDataByDictionary(uiGameManager.textInfoManager.mapTalkRecruitData);
+
+                        if (uiGameManager.gameDataManager.gameData.CheckIsMaxWorker())
+                        {
+                            uiGameManager.toastManager.ToastHint(GameCommonInfo.GetUITextById(1051));
+                        }
+                        else
+                        {
+                            uiGameManager.textInfoManager.listTextData = RandomUtil.GetRandomDataByDictionary(uiGameManager.textInfoManager.mapTalkRecruitData);
+                            NextText(1);
+                        }
+                    }
+                    //送礼
+                    else if (textData.content.Equals(GameCommonInfo.GetUITextById(99105)))
+                    {
+
+                        DialogBean dialogData = new DialogBean();
+                        PickForItemsDialogView pickForItemsDialog = (PickForItemsDialogView)uiGameManager.dialogManager.CreateDialog(DialogEnum.PickForItems, this, dialogData);
+                        pickForItemsDialog.SetData(null, PopupItemsSelection.SelectionTypeEnum.Gift);
+                    }
+                    //换取公会勋章
+                    else if (textData.content.Equals(GameCommonInfo.GetUITextById(99201)))
+                    {
+                        //对话
+                        uiGameManager.textInfoManager.listTextData = RandomUtil.GetRandomDataByDictionary(uiGameManager.textInfoManager.mapTalkExchangeData);
                         NextText(1);
                     }
-                }
-                //送礼
-                else if (textData.content.Equals(GameCommonInfo.GetUITextById(99105)))
-                {
-                  
-                    DialogBean dialogData = new DialogBean();
-                    PickForItemsDialogView pickForItemsDialog = (PickForItemsDialogView)uiGameManager.dialogManager.CreateDialog(DialogEnum.PickForItems, this, dialogData);
-                    pickForItemsDialog.SetData(null, PopupItemsSelection.SelectionTypeEnum.Gift);
                 }
                 else
                 {

@@ -40,7 +40,7 @@ public class UIGameTextForTalk : BaseUIChildComponent<UIGameText>
             else
             {
                 //当时选择对话 不能跳过
-                if (textData.type == 1)
+                if (textData.GetTextType() ==  TextInfoTypeEnum.Select|| textData.GetTextType() == TextInfoTypeEnum.Talk )
                 {
 
                 }
@@ -69,7 +69,8 @@ public class UIGameTextForTalk : BaseUIChildComponent<UIGameText>
         scrollRect.verticalNormalizedPosition = 0;
         this.textData = textData;
         //选择对话 特殊处理 增加选择框
-        if (textData.type == (int)TextInfoTypeEnum.Select)
+        if (textData.GetTextType() == TextInfoTypeEnum.Select
+            || textData.GetTextType() == TextInfoTypeEnum.Talk)
         {
             objNext.gameObject.SetActive(false);
             foreach (TextInfoBean itemData in listTextInfo)
