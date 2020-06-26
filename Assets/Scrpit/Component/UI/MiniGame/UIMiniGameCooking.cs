@@ -147,20 +147,32 @@ public class UIMiniGameCooking : UIGameComponent
         List<ItemMiniGameCookingButtonCpt.MiniGameCookingButtonTypeEnum> listRandomType = new List<ItemMiniGameCookingButtonCpt.MiniGameCookingButtonTypeEnum>();
         listRandomType.Add(ItemMiniGameCookingButtonCpt.MiniGameCookingButtonTypeEnum.Left);
         listRandomType.Add(ItemMiniGameCookingButtonCpt.MiniGameCookingButtonTypeEnum.Right);
-        if (gameCookingData.cookButtonNumber == 4 )
+        if (gameCookingData.cookButtonNumber > 2)
         {
-            listRandomType.Add(ItemMiniGameCookingButtonCpt.MiniGameCookingButtonTypeEnum.Up);
-            listRandomType.Add(ItemMiniGameCookingButtonCpt.MiniGameCookingButtonTypeEnum.Down);
-        }
-        if (gameCookingData.cookButtonNumber == 6)
-        {
-            listRandomType.Add(ItemMiniGameCookingButtonCpt.MiniGameCookingButtonTypeEnum.One);
-            listRandomType.Add(ItemMiniGameCookingButtonCpt.MiniGameCookingButtonTypeEnum.Two);
-        }
-        if (gameCookingData.cookButtonNumber == 8)
-        {
-            listRandomType.Add(ItemMiniGameCookingButtonCpt.MiniGameCookingButtonTypeEnum.Three);
-            listRandomType.Add(ItemMiniGameCookingButtonCpt.MiniGameCookingButtonTypeEnum.Four);
+            if (gameCookingData.cookButtonNumber >= 3)
+            {
+                listRandomType.Add(ItemMiniGameCookingButtonCpt.MiniGameCookingButtonTypeEnum.Up);
+            }
+            if (gameCookingData.cookButtonNumber >= 4)
+            {
+                listRandomType.Add(ItemMiniGameCookingButtonCpt.MiniGameCookingButtonTypeEnum.Down);
+            }
+            if (gameCookingData.cookButtonNumber >= 5)
+            {
+                listRandomType.Add(ItemMiniGameCookingButtonCpt.MiniGameCookingButtonTypeEnum.One);
+            }
+            if (gameCookingData.cookButtonNumber >= 6)
+            {
+                listRandomType.Add(ItemMiniGameCookingButtonCpt.MiniGameCookingButtonTypeEnum.Two);
+            }
+            if (gameCookingData.cookButtonNumber >= 7)
+            {
+                listRandomType.Add(ItemMiniGameCookingButtonCpt.MiniGameCookingButtonTypeEnum.Three);
+            }
+            if (gameCookingData.cookButtonNumber >= 8)
+            {
+                listRandomType.Add(ItemMiniGameCookingButtonCpt.MiniGameCookingButtonTypeEnum.Four);
+            }
         }
         for (int i = 0; i < mButtonNumber; i++)
         {

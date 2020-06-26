@@ -20,7 +20,8 @@ public class MiniGameBarrageEjectorCpt : BaseMonoBehaviour
         Single = 1,//单发
         Double = 2,//双发、
         Triple = 3,//三连发
-
+        Four = 4,//四连发
+        Five = 5 ,//五连发
     }
 
     //发射动画
@@ -62,6 +63,12 @@ public class MiniGameBarrageEjectorCpt : BaseMonoBehaviour
             case LaunchTypeEnum.Triple:
                 LaunchTriple(bulletType, targetPositon, launchSpeed);
                 break;
+            case LaunchTypeEnum.Four:
+                LaunchFour(bulletType, targetPositon, launchSpeed);
+                break;
+            case LaunchTypeEnum.Five:
+                LaunchFive(bulletType, targetPositon, launchSpeed);
+                break;
         }
     }
 
@@ -96,6 +103,33 @@ public class MiniGameBarrageEjectorCpt : BaseMonoBehaviour
         CreateBullet(bulletType, targetPositon + new Vector3(4, 4, 1), shotSpeed);
         CreateBullet(bulletType, targetPositon + new Vector3(-4, -4, 1), shotSpeed);
         CreateBullet(bulletType, targetPositon, shotSpeed);
+    }
+
+    /// <summary>
+    /// 四连发
+    /// </summary>
+    /// <param name="targetPositon"></param>
+    /// <param name="shotSpeed"></param>
+    public void LaunchFour(MiniGameBarrageBulletTypeEnum bulletType, Vector3 targetPositon, float shotSpeed)
+    {
+        CreateBullet(bulletType, targetPositon + new Vector3(2, 2, 1), shotSpeed);
+        CreateBullet(bulletType, targetPositon + new Vector3(-2, -2, 1), shotSpeed);
+        CreateBullet(bulletType, targetPositon + new Vector3(5, 5, 1), shotSpeed);
+        CreateBullet(bulletType, targetPositon + new Vector3(-5, -5, 1), shotSpeed);
+    }
+
+    /// <summary>
+    /// 五连发
+    /// </summary>
+    /// <param name="targetPositon"></param>
+    /// <param name="shotSpeed"></param>
+    public void LaunchFive(MiniGameBarrageBulletTypeEnum bulletType, Vector3 targetPositon, float shotSpeed)
+    {
+        CreateBullet(bulletType, targetPositon, shotSpeed);
+        CreateBullet(bulletType, targetPositon + new Vector3(3, 3, 1), shotSpeed);
+        CreateBullet(bulletType, targetPositon + new Vector3(-3, -3, 1), shotSpeed);
+        CreateBullet(bulletType, targetPositon + new Vector3(6, 6, 1), shotSpeed);
+        CreateBullet(bulletType, targetPositon + new Vector3(-6, -6, 1), shotSpeed);
     }
 
     /// <summary>

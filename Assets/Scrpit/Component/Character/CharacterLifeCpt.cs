@@ -12,6 +12,10 @@ public class CharacterLifeCpt : BaseMonoBehaviour
     public void SetData(int currentLife, int maxLife)
     {
         tvLife.text = currentLife + "/" + maxLife;
+        if (maxLife == 0)
+        {
+            maxLife =1;
+        }
         ivLife.transform.localScale = new Vector3((float)currentLife / (float)maxLife, 1, 1);
     }
 }
