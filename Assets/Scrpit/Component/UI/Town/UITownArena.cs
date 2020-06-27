@@ -120,6 +120,11 @@ public class UITownArena : UIBaseOne, IRadioGroupCallBack, StoreInfoManager.ICal
                     case RewardTypeEnum.AddArenaTrophyIntermediate:
                     case RewardTypeEnum.AddArenaTrophyAdvanced:
                     case RewardTypeEnum.AddArenaTrophyLegendary:
+                        if (miniGameData.winBringDownNumber > 0)
+                        {
+                            //针对多人战 奖励提升
+                            itemReward.data = long.Parse(itemReward.data) * miniGameData.winBringDownNumber + "";
+                        }
                         listFixedReward.Add(itemReward);
                         break;
                     default:
@@ -276,13 +281,16 @@ public class UITownArena : UIBaseOne, IRadioGroupCallBack, StoreInfoManager.ICal
         switch (type)
         {
             case TrophyTypeEnum.Elementary:
-                randomEnemy = CharacterBean.CreateRandomEnemyData(uiGameManager.characterBodyManager, 10);
+                randomEnemy = CharacterBean.CreateRandomEnemyData(uiGameManager.characterBodyManager, 10, 0);
                 break;
             case TrophyTypeEnum.Intermediate:
+                randomEnemy = CharacterBean.CreateRandomEnemyData(uiGameManager.characterBodyManager, 30, 1);
                 break;
             case TrophyTypeEnum.Advanced:
+                randomEnemy = CharacterBean.CreateRandomEnemyData(uiGameManager.characterBodyManager, 50, 2);
                 break;
             case TrophyTypeEnum.Legendary:
+                randomEnemy = CharacterBean.CreateRandomEnemyData(uiGameManager.characterBodyManager, 80, 3);
                 break;
         }
         miniGameData.InitData(uiGameManager.gameItemsManager, null, randomEnemy);
@@ -298,16 +306,24 @@ public class UITownArena : UIBaseOne, IRadioGroupCallBack, StoreInfoManager.ICal
     private MiniGameCombatBean CreateCombatGameData(MiniGameCombatBean miniGameData, StoreInfoBean storeInfo, TrophyTypeEnum type)
     {
         int enemyBaseAttribute = 10;
+        int equipLevel = 0;
         switch (type)
         {
             case TrophyTypeEnum.Elementary:
                 enemyBaseAttribute = 10;
+                equipLevel = 0;
                 break;
             case TrophyTypeEnum.Intermediate:
+                enemyBaseAttribute = 30;
+                equipLevel = 1;
                 break;
             case TrophyTypeEnum.Advanced:
+                enemyBaseAttribute = 50;
+                equipLevel = 2;
                 break;
             case TrophyTypeEnum.Legendary:
+                enemyBaseAttribute = 80;
+                equipLevel = 3;
                 break;
         }
         miniGameData.winBringDownNumber = Random.Range(1, 6);
@@ -315,7 +331,7 @@ public class UITownArena : UIBaseOne, IRadioGroupCallBack, StoreInfoManager.ICal
         List<CharacterBean> listEnemyData = new List<CharacterBean>();
         for (int i = 0; i < miniGameData.winBringDownNumber; i++)
         {
-            CharacterBean enemyData = CharacterBean.CreateRandomEnemyData(uiGameManager.characterBodyManager, enemyBaseAttribute);
+            CharacterBean enemyData = CharacterBean.CreateRandomEnemyData(uiGameManager.characterBodyManager, enemyBaseAttribute, equipLevel);
             listEnemyData.Add(enemyData);
         }
         miniGameData.InitData(uiGameManager.gameItemsManager, new List<CharacterBean>(), listEnemyData);

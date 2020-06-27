@@ -30,6 +30,7 @@ public class ItemsInfoBean : BaseBean
 
     public string name;//名字
     public string content;//内容
+    public int rarity;//稀有度
 
     /// <summary>
     /// 获取类型
@@ -38,5 +39,14 @@ public class ItemsInfoBean : BaseBean
     public GeneralEnum GetItemsType()
     {
         return (GeneralEnum)items_type;
+    }
+
+    /// <summary>
+    /// 获取物品稀有度
+    /// </summary>
+    /// <returns></returns>
+    public RarityEnum GetItemRarity()
+    {
+        return (RarityEnum)rarity;
     }
 }

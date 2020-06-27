@@ -15,12 +15,22 @@ public class NpcAICostomerForFriendCpt : NpcAICustomerForGuestTeamCpt
         if (orderForCustomer != null)
         {
             PraiseTypeEnum praiseType = orderForCustomer.innEvaluation.GetPraise();
-            //小于0则不增加好感，大于0则增加数值好感
-            int AddFavorability = (int)praiseType < 0 ? 0 : (int)praiseType;
-            characterFavorabilityData.AddFavorability(AddFavorability);
-            //弹出喜爱图标
-            if (AddFavorability > 0)
-                SetExpression(CharacterExpressionCpt.CharacterExpressionEnum.Love);
+            if (praiseType == PraiseTypeEnum.Excited || praiseType == PraiseTypeEnum.Happy)
+            {
+                int AddFavorability = 0;
+                if (praiseType == PraiseTypeEnum.Excited)
+                {
+                    AddFavorability = 2;
+                }
+                else if (praiseType == PraiseTypeEnum.Happy)
+                {
+                    AddFavorability = 1;
+                }
+                characterFavorabilityData.AddFavorability(AddFavorability);
+                //弹出喜爱图标
+                if (AddFavorability > 0)
+                    SetExpression(CharacterExpressionCpt.CharacterExpressionEnum.Love , 10);
+            }
         }
         base.IntentForLeave();
     }

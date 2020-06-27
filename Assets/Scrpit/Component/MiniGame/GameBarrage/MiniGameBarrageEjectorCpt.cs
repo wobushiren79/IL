@@ -141,15 +141,36 @@ public class MiniGameBarrageEjectorCpt : BaseMonoBehaviour
     {
         Sprite spBullet = null;
         RuntimeAnimatorController animatorController = null;
+        int damage = 10;
+        bool hasDesAnim = false;
         switch (bulletType)
         {
             case MiniGameBarrageBulletTypeEnum.Stone:
+                damage = 10;
                 spBullet = miniGameBarrageBuilder.spStone;
                 animatorController = miniGameBarrageBuilder.animatorControllerForStone;
+                hasDesAnim = true;  
                 break;
             case MiniGameBarrageBulletTypeEnum.Arrow:
+                damage = 10;
                 spBullet = miniGameBarrageBuilder.spArrow;
                 animatorController = miniGameBarrageBuilder.animatorControllerForArrow;
+                break;
+            case MiniGameBarrageBulletTypeEnum.Darts:
+                damage = 20;
+                spBullet = miniGameBarrageBuilder.spDarts;
+                animatorController = miniGameBarrageBuilder.animatorControllerForDarts;
+                break;
+            case MiniGameBarrageBulletTypeEnum.Fireball:
+                damage = 30;
+                spBullet = miniGameBarrageBuilder.spFireball;
+                animatorController = miniGameBarrageBuilder.animatorControllerForFireball;
+                break;
+            case MiniGameBarrageBulletTypeEnum.Egg:
+                damage = 40;
+                spBullet = miniGameBarrageBuilder.spEgg;
+                animatorController = miniGameBarrageBuilder.animatorControllerForEgg;
+                hasDesAnim = true;
                 break;
         }
         //设置发射器朝向角度
@@ -159,7 +180,7 @@ public class MiniGameBarrageEjectorCpt : BaseMonoBehaviour
         objBullet.SetActive(true);
         objBullet.transform.position = objEjector.transform.position;
         MiniGameBarrageBulletCpt bulletCpt = objBullet.GetComponent<MiniGameBarrageBulletCpt>();
-        bulletCpt.SetBulletData(bulletType, spBullet, animatorController);
+        bulletCpt.SetBulletData(bulletType, spBullet, animatorController, damage, hasDesAnim);
         //发射子弹
         bulletCpt.LaunchBullet(targetPositon, force);
     }

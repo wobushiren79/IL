@@ -21,7 +21,7 @@ public class CharacterBean
     /// </summary>
     /// <param name="characterBodyManager"></param>
     /// <returns></returns>
-    public static CharacterBean CreateRandomEnemyData(CharacterBodyManager characterBodyManager, int baseAttributes)
+    public static CharacterBean CreateRandomEnemyData(CharacterBodyManager characterBodyManager, int baseAttributes,int equipLevel)
     {
         CharacterBean characterData = new CharacterBean();
         characterData.baseInfo.characterId = SystemUtil.GetUUID(SystemUtil.UUIDTypeEnum.N);
@@ -33,25 +33,24 @@ public class CharacterBean
         characterData.body.CreateRandomBody(characterBodyManager);
 
         //根据性别装备服装
-        GetRandomDressByLevel(0, out long randomHat, out long randomClothes, out long randomShoes);
+        GetRandomDressByLevel(equipLevel, out long randomHat, out long randomClothes, out long randomShoes);
         characterData.equips.clothesId = randomClothes;
         characterData.equips.shoesId = randomShoes;
         //生成随机能力
         characterData.attributes.CreateRandomData(
             baseAttributes * 10 - 50, baseAttributes * 10 + 50,
             0, 1,
-            baseAttributes - 5, baseAttributes + 5,
-            baseAttributes - 5, baseAttributes + 5,
-            baseAttributes - 5, baseAttributes + 5,
-            baseAttributes - 5, baseAttributes + 5,
-            baseAttributes - 5, baseAttributes + 5,
-            baseAttributes - 5, baseAttributes + 5);
-        characterData.equips.shoesId = 310039;
+            baseAttributes - 3, baseAttributes + 3,
+            baseAttributes - 3, baseAttributes + 3,
+            baseAttributes - 3, baseAttributes + 3,
+            baseAttributes - 3, baseAttributes + 3,
+            baseAttributes - 3, baseAttributes + 3,
+            baseAttributes - 3, baseAttributes + 3);
         return characterData;
     }
 
     /// <summary>
-    /// 创建随机工作者角色数据
+    /// 创建随机工作者角色数据  用于黄金台招人
     /// </summary>
     /// <param name="type"></param>
     /// <returns></returns>

@@ -43,5 +43,10 @@ public enum BaseDataTypeEnum
     ShoesForLevel2 = 2202,
     ShoesForLevel3 = 2203,
 
-
+    //NPC好感
+    NpcFavorabilityFor1 = 3001,
+    NpcFavorabilityFor2 = 3002,
+    NpcFavorabilityFor3 = 3003,
+    NpcFavorabilityFor4 = 3004,
+    NpcFavorabilityFor5 = 3005,
 }

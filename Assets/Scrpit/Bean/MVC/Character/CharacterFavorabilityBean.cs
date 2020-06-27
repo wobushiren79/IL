@@ -14,8 +14,7 @@ public class CharacterFavorabilityBean
     public bool firstMeet = true;
 
     //送礼次数
-    public int giftLoveNumber = 0;
-    public int giftNormalNumber = 0;
+    public int giftNumber = 0;
     //谈话次数
     public int talkNumber = 0;
 
@@ -37,27 +36,32 @@ public class CharacterFavorabilityBean
     public void AddFavorability(int addFavorability)
     {
         favorability += addFavorability;
-        if (favorability >=0 && favorability<=100)
+        GameCommonInfo.baseDataController.GetBaseData(BaseDataTypeEnum.NpcFavorabilityFor1, out int love1);
+        GameCommonInfo.baseDataController.GetBaseData(BaseDataTypeEnum.NpcFavorabilityFor2, out int love2);
+        GameCommonInfo.baseDataController.GetBaseData(BaseDataTypeEnum.NpcFavorabilityFor3, out int love3);
+        GameCommonInfo.baseDataController.GetBaseData(BaseDataTypeEnum.NpcFavorabilityFor4, out int love4);
+        GameCommonInfo.baseDataController.GetBaseData(BaseDataTypeEnum.NpcFavorabilityFor5, out int love5);
+        if (favorability >= 0 && favorability <= love1)
         {
             favorabilityLevel = 0;
         }
-        else if (favorability > 100 && favorability <= 200)
+        else if (favorability > love1 && favorability <= love2)
         {
             favorabilityLevel = 1;
         }
-        else if (favorability > 200 && favorability <= 300)
+        else if (favorability > love2 && favorability <= love3)
         {
             favorabilityLevel = 2;
         }
-        else if (favorability > 300 && favorability <= 400)
+        else if (favorability > love3 && favorability <= love4)
         {
             favorabilityLevel = 3;
         }
-        else if (favorability > 400 && favorability <= 500)
+        else if (favorability > love4 && favorability <= love5)
         {
             favorabilityLevel = 4;
         }
-        else if (favorability > 500)
+        else if (favorability > love5)
         {
             favorabilityLevel = 5;
         }
@@ -79,19 +83,11 @@ public class CharacterFavorabilityBean
     /// 增加普通礼物赠送次数
     /// </summary>
     /// <param name="number"></param>
-    public void AddGiftNormalNumber( int number)
+    public void AddGiftNumber(int number)
     {
-        giftNormalNumber += number;
+        giftNumber += number;
     }
 
-    /// <summary>
-    /// 增加喜爱礼物赠送次数
-    /// </summary>
-    /// <param name="number"></param>
-    public void AddGiftLoveNumber(int number)
-    {
-        giftLoveNumber += number;
-    }
 
     /// <summary>
     /// 增加谈话次数

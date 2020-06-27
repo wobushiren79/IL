@@ -351,26 +351,44 @@ public class UIGameText : UIGameComponent, TextInfoManager.ICallBack, DialogView
         pickForItemsDialog.GetSelectedItems(out ItemsInfoBean itemsInfo,out ItemBean itemData);
         //获取赠送人
         CharacterBean characterData = npcInfoManager.GetCharacterDataById(mTalkNpcInfo.id);
-        CharacterFavorabilityBean characterFavorability= gameDataManager.gameData.GetCharacterFavorability(mTalkNpcInfo.id);
-        int addFavorability = 0;
-        if (characterData.baseInfo.CheckIsLoveItems(itemData.itemId))
+        CharacterFavorabilityBean characterFavorability = gameDataManager.gameData.GetCharacterFavorability(mTalkNpcInfo.id);
+        int addFavorability;
+        int favorabilityForTalk;
+        //根据物品稀有度增加好感
+        switch (itemsInfo.GetItemRarity())
         {
-            addFavorability = 3;
-            //增加数据记录
-            characterFavorability.AddGiftLoveNumber(1);
+            case RarityEnum.Normal:
+                addFavorability = 1;
+                favorabilityForTalk = 1;
+                break;
+            case RarityEnum.Rare:
+                addFavorability = 3;
+                favorabilityForTalk = 3;
+                break;
+            case RarityEnum.SuperRare:
+                addFavorability = 6;
+                favorabilityForTalk = 3;
+                break;
+            case RarityEnum.SuperiorSuperRare:
+                addFavorability = 10;
+                favorabilityForTalk = 3;
+                break;
+            case RarityEnum.UltraRare:
+                addFavorability = 15;
+                favorabilityForTalk = 3;
+                break;
+            default:
+                addFavorability = 1;
+                favorabilityForTalk = 1;
+                break;
         }
-        else
-        {
-            addFavorability = 1;
-            //增加数据记录
-            characterFavorability.AddGiftNormalNumber(1);
-        }
+        characterFavorability.AddGiftNumber(addFavorability);
         //删减物品
         gameDataManager.gameData.AddItemsNumber(itemData.itemId,-1);
         //增加每日限制
         GameCommonInfo.DailyLimitData.AddGiftNpc(mTalkNpcInfo.id);
         //通过增加好感查询对话
-        uiGameManager.textInfoManager.listTextData = uiGameManager.textInfoManager.GetGiftTalkByFavorability(addFavorability);
+        uiGameManager.textInfoManager.listTextData = uiGameManager.textInfoManager.GetGiftTalkByFavorability(favorabilityForTalk);
         ShowText(uiGameManager.textInfoManager.listTextData);
     }
 

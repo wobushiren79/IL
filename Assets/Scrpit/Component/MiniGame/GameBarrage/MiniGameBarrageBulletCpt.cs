@@ -10,7 +10,7 @@ public class MiniGameBarrageBulletCpt : BaseMonoBehaviour
     public int bulletDamage = 10;
     public bool mIsDestroy = false;
 
-    public bool hasDestroyAnim= false;
+    public bool hasDestroyAnim = false;
     public bool hasMoveAnim = false;
 
     public MiniGameBarrageBuilder barrageBuilder;
@@ -47,23 +47,16 @@ public class MiniGameBarrageBulletCpt : BaseMonoBehaviour
     /// 设置子弹数据
     /// </summary>
     public void SetBulletData(
-        MiniGameBarrageBulletTypeEnum miniGameBarrageBulletType, 
+        MiniGameBarrageBulletTypeEnum miniGameBarrageBulletType,
         Sprite spIcon,
-        RuntimeAnimatorController animatorController)
+        RuntimeAnimatorController animatorController,
+        int damage,
+        bool hasDestroyAnim)
     {
         animBullet.runtimeAnimatorController = animatorController;
-        switch (miniGameBarrageBulletType)
-        {
-            case MiniGameBarrageBulletTypeEnum.Stone:
-                hasDestroyAnim = true;
-                bulletDamage = 10;
-                srBullet.sprite = spIcon;
-                break;
-            case MiniGameBarrageBulletTypeEnum.Arrow:
-                bulletDamage = 10;
-                srBullet.sprite = spIcon;
-                break;
-        }
+        this.hasDestroyAnim = hasDestroyAnim;
+        bulletDamage = damage;
+        srBullet.sprite = spIcon;
     }
 
     /// <summary>
@@ -71,8 +64,8 @@ public class MiniGameBarrageBulletCpt : BaseMonoBehaviour
     /// </summary>
     public void LaunchBullet(Vector3 targetPositon, float force)
     {
-        float angle= VectorUtil.GetAngle(transform.position, targetPositon);
-        transform.Rotate(new Vector3(0,0,1),-90 + angle);
+        float angle = VectorUtil.GetAngle(transform.position, targetPositon);
+        transform.Rotate(new Vector3(0, 0, 1), -90 + angle);
         if (rbBullet != null)
             rbBullet.velocity = (targetPositon - transform.position).normalized * force;
     }

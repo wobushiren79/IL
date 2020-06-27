@@ -32,7 +32,7 @@ public class ItemMiniGameCookingSettlementCpt : ItemGameBaseCpt
             characterGameData.scoreForTaste,
             characterGameData.scoreForTotal);
         SetRank(rank);
-        SetLevel(characterGameData.characterData.baseInfo.chefInfo.workerLevel);
+        //SetLevel(characterGameData.characterData.baseInfo.chefInfo.workerLevel);
         SetBackground(characterGameData.characterType);
     }
 

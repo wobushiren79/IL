@@ -179,9 +179,9 @@ public class ItemGameWorkerCpt : ItemGameBaseCpt, IRadioButtonCallBack, DialogVi
             SetWork(
                 characterBase.chefInfo.isWorking,
                 characterBase.waiterInfo.isWorking,
-                characterBase.accountantInfo.isWorking, 
+                characterBase.accountantInfo.isWorking,
                 characterBase.accostInfo.isWorking,
-                characterBase.beaterInfo.isWorking );
+                characterBase.beaterInfo.isWorking);
             SetPriority(
                 characterBase.chefInfo.priority,
                 characterBase.waiterInfo.priority,
@@ -189,7 +189,7 @@ public class ItemGameWorkerCpt : ItemGameBaseCpt, IRadioButtonCallBack, DialogVi
                 characterBase.accostInfo.priority,
                 characterBase.beaterInfo.priority);
 
-            WorkerStatusEnum workerStatus = characterBase.GetWorkerStatus( out string workerStatusStr);
+            WorkerStatusEnum workerStatus = characterBase.GetWorkerStatus(out string workerStatusStr);
             SetStatus(workerStatus, workerStatusStr);
         }
         if (characterData.attributes != null)
@@ -497,7 +497,7 @@ public class ItemGameWorkerCpt : ItemGameBaseCpt, IRadioButtonCallBack, DialogVi
     {
         if (int.TryParse(content, out int priority))
         {
-            CharacterWorkerBaseBean characterWorker= characterData.baseInfo.GetWorkerInfoByType(worker);
+            CharacterWorkerBaseBean characterWorker = characterData.baseInfo.GetWorkerInfoByType(worker);
             characterWorker.SetPriority(priority);
             if (GetUIManager<UIGameManager>().innHandler != null)
                 GetUIManager<UIGameManager>().innHandler.InitWorker();
@@ -532,7 +532,7 @@ public class ItemGameWorkerCpt : ItemGameBaseCpt, IRadioButtonCallBack, DialogVi
         CharacterBaseBean characterBase = characterData.baseInfo;
         if (view == rbChef)
         {
-            characterBase.chefInfo.isWorking  = (buttonStates == RadioButtonView.RadioButtonStatus.Selected) ? true : false;
+            characterBase.chefInfo.isWorking = (buttonStates == RadioButtonView.RadioButtonStatus.Selected) ? true : false;
         }
         else if (view == rbWaiter)
         {
@@ -565,7 +565,8 @@ public class ItemGameWorkerCpt : ItemGameBaseCpt, IRadioButtonCallBack, DialogVi
             //减去礼物
             gameDataManager.gameData.AddItemsNumber(itemsInfo.id, -1);
             //添加忠诚
-            characterData.attributes.AddLoyal(1);
+            int addLoyal = ((int)itemsInfo.GetItemRarity() + 1) * 5;
+            characterData.attributes.AddLoyal(addLoyal);
             //刷新UI
             SetData(characterData);
         }

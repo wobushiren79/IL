@@ -371,9 +371,11 @@ public class ItemTownGuildImproveCharacterCpt : ItemGameBaseCpt, DialogView.IDia
         miniGameData.listEnemyGameData.Clear();
         //随机生成敌人
         List<CharacterBean> listEnemyData = new List<CharacterBean>();
+        CharacterWorkerBaseBean characterWorkerData= characterData.baseInfo.GetWorkerInfoByType(WorkerEnum.Chef);
+        int equipLevel = (characterWorkerData.GetLevel() + 1) / 2;
         for (int i = 0; i < UnityEngine.Random.Range(1, 16); i++)
         {
-            CharacterBean randomEnemy = CharacterBean.CreateRandomWorkerData(characterBodyManager);
+            CharacterBean randomEnemy = CharacterBean.CreateRandomEnemyData(characterBodyManager, 10 , equipLevel);
             listEnemyData.Add(randomEnemy);
         }
         miniGameData.InitData(gameItemsManager, characterData, listEnemyData);

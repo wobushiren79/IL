@@ -452,7 +452,8 @@ public class NpcAICustomerCpt : BaseNpcAI
         characterMoveCpt.characterAnimtor.SetTrigger("Eat");
         // 播放音效
         audioHandler.PlaySound(AudioSoundEnum.Eat);
-        yield return new WaitForSeconds(5);
+        float eatTime = Random.Range(3f, 7f);
+        yield return new WaitForSeconds(eatTime);
         //吃完食物
         orderForCustomer.foodCpt.FinishFood(orderForCustomer.foodData);
         //设置桌子为待清理

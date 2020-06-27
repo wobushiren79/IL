@@ -339,7 +339,8 @@ public class PreTypeForMiniGameEnumTools : DataTools
                 listCompereData = npcInfoManager.GetCharacterDataByIds(compereIds);
                 break;
             case PreTypeForMiniGameEnum.CookingForThemeLevel:
-                miniGameCooking.cookingThemeLevel = int.Parse(itemPreData.data);
+                int[] themeLevels = StringUtil.SplitBySubstringForArrayInt(itemPreData.data, ',');
+                miniGameCooking.cookingThemeLevel = RandomUtil.GetRandomDataByArray(themeLevels);
                 break;
             case PreTypeForMiniGameEnum.CookingForThemeId:
                 miniGameCooking.cookingThemeId = long.Parse(itemPreData.data);
