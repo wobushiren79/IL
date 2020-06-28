@@ -231,7 +231,9 @@ public class NpcEventBuilder : NpcNormalBuilder, IBaseObserver
 
             if (characterData.npcInfoData.npc_type == (int)NpcTypeEnum.Town
                 //生成的NPC中不包含这个角色
-                && !listExistNpcId.Contains(characterData.npcInfoData.id))
+                && !listExistNpcId.Contains(characterData.npcInfoData.id)
+                //好感度大于1
+                && itemFavorability.GetFavorabilityLevel() >= 1)
             {
                 listTownFavorabilityData.Add(itemFavorability);
             }

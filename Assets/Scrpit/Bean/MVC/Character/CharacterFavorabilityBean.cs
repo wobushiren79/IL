@@ -29,6 +29,11 @@ public class CharacterFavorabilityBean
         this.favorability = favorability;
     }
 
+    public int GetFavorabilityLevel()
+    {
+        return favorabilityLevel;
+    }
+
     /// <summary>
     /// 增加好感
     /// </summary>

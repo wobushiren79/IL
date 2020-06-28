@@ -56,13 +56,20 @@ public class UIGameAttendance : UIBaseOne, ItemGameAttendanceCpt.ICallBack
             uiGameManager.toastManager.ToastHint(GameCommonInfo.GetUITextById(1014));
             return;
         }
-        //没有出勤的人员减少忠诚
+
         List<CharacterBean> listCharacter =  uiGameManager.gameDataManager.gameData.GetAllCharacterData();
         foreach (CharacterBean itemCharacter in  listCharacter)
         {
-            if (itemCharacter.baseInfo.GetWorkerStatus()== WorkerStatusEnum.Rest)
+            //没有出勤的人员减少忠诚
+            if (itemCharacter.baseInfo.GetWorkerStatus()== WorkerStatusEnum.Rest
+                || itemCharacter.baseInfo.GetWorkerStatus() == WorkerStatusEnum.Research)
             {
-                itemCharacter.attributes.AddLoyal(-1);
+                itemCharacter.attributes.AddLoyal( -2 );
+            }
+            //增加出勤天数
+            else if (itemCharacter.baseInfo.GetWorkerStatus() == WorkerStatusEnum.Work)
+            {
+                itemCharacter.baseInfo.AddWorkDay(1);
             }
         }
         //支付出勤费用

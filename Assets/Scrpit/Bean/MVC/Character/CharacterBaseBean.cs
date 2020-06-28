@@ -138,4 +138,17 @@ public class CharacterBaseBean
             return false;
         }
     }
+
+    /// <summary>
+    /// 增加工作天数
+    /// </summary>
+    /// <param name="days"></param>
+    public void AddWorkDay(int days)
+    {
+        workDay += days;
+        if (workDay < 0)
+        {
+            workDay = 0;
+        }
+    }
 }

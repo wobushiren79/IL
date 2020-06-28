@@ -17,9 +17,10 @@ public enum GeneralEnum
     Ing = 9,
     Book = 11,//属性书
     Menu = 12,//菜谱
-    Medicine=13,//药
+    Medicine = 13,//药
     SkillBook = 14,//技能书
     Read = 15,//读物
+    Gift = 16,//礼物
     Mask = 21,//面具
 
 }
@@ -34,7 +35,7 @@ public class GeneralEnumTools
     /// <param name="gameDataManager"></param>
     public static Sprite GetGeneralSprite(ItemsInfoBean itemsInfo, IconDataManager iconDataManager, GameItemsManager gameItemsManager, CharacterDressManager characterDressManager)
     {
-        return GetGeneralSprite(itemsInfo, iconDataManager, gameItemsManager, characterDressManager,false);
+        return GetGeneralSprite(itemsInfo, iconDataManager, gameItemsManager, characterDressManager, false);
     }
     public static Sprite GetGeneralSprite(ItemsInfoBean itemsInfo, IconDataManager iconDataManager, GameItemsManager gameItemsManager, CharacterDressManager characterDressManager, bool isHideDres)
     {
@@ -66,6 +67,7 @@ public class GeneralEnumTools
             case GeneralEnum.Menu:
             case GeneralEnum.SkillBook:
             case GeneralEnum.Read:
+            case GeneralEnum.Gift:
                 spIcon = iconDataManager.GetIconSpriteByName(itemsInfo.icon_key);
                 break;
             default:
@@ -117,6 +119,9 @@ public class GeneralEnumTools
                 break;
             case GeneralEnum.Read:
                 itemsnTypeName = GameCommonInfo.GetUITextById(411);
+                break;
+            case GeneralEnum.Gift:
+                itemsnTypeName = GameCommonInfo.GetUITextById(412);
                 break;
             default:
                 break;

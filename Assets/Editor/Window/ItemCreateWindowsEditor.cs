@@ -699,6 +699,10 @@ public class ItemCreateWindowsEditor : EditorWindow, StoreInfoManager.ICallBack
         {
             listFindItem = gameItemsManager.GetAllItems();
         }
+        if (GUILayout.Button("查询礼物", GUILayout.Width(100), GUILayout.Height(20)))
+        {
+            listFindItem = gameItemsManager.GetItemsListByType(GeneralEnum.Gift);
+        }
         if (GUILayout.Button("查询读物", GUILayout.Width(100), GUILayout.Height(20)))
         {
             listFindItem = gameItemsManager.GetItemsListByType(GeneralEnum.Read);
@@ -764,7 +768,8 @@ public class ItemCreateWindowsEditor : EditorWindow, StoreInfoManager.ICallBack
 
             EditorUI.GUIText("物品ID：");
             itemInfo.id = long.Parse(EditorGUILayout.TextArea(itemInfo.id + "", GUILayout.Width(100), GUILayout.Height(20)));
-
+            EditorUI.GUIText("物品稀有度：");
+            itemInfo.rarity= EditorUI.GUIEditorText(itemInfo.rarity, 20);
             string path = "Assets/Texture/";
             switch ((GeneralEnum)itemInfo.items_type)
             {
@@ -802,6 +807,7 @@ public class ItemCreateWindowsEditor : EditorWindow, StoreInfoManager.ICallBack
                 case GeneralEnum.SkillBook:
                 case GeneralEnum.Menu:
                 case GeneralEnum.Read:
+                case GeneralEnum.Gift:
                     path += "Common/UI/";
                     
                     break;

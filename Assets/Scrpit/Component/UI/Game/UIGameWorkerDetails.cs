@@ -33,6 +33,7 @@ public class UIGameWorkerDetails : UIGameComponent, IRadioGroupCallBack
     public ItemGameWorkerDetailsWorkerCpt detailsForBeater;
 
     public RadioGroupView rgWorkerTitle;
+    public UIGameWorkerDetailsGeneralInfo generalInfo;
     public UIGameWorkerDetailsChefInfo workerChefInfo;
     public UIGameWorkerDetailsWaiterInfo workerWaiterInfo;
     public UIGameWorkerDetailsAccountantInfo workerAccountantInfo;
@@ -88,8 +89,13 @@ public class UIGameWorkerDetails : UIGameComponent, IRadioGroupCallBack
         workerBeaterInfo.Close();
         workerSkillInfo.Close();
         workerBookInfo.Close();
-
-        if (name.Contains("Skill"))
+        generalInfo.Close();
+        if (name.Contains("General"))
+        {
+            generalInfo.Open();
+            generalInfo.SetData(characterData);
+        }
+       else if (name.Contains("Skill"))
         {
             workerSkillInfo.Open();
             workerSkillInfo.SetData(characterData.attributes.listSkills);
@@ -139,7 +145,7 @@ public class UIGameWorkerDetails : UIGameComponent, IRadioGroupCallBack
         SetWorkerInfo(characterData.baseInfo);
         characterUICpt.SetCharacterData(characterData.body, characterData.equips);
         rgWorkerTitle.SetPosition(0, false);
-        InitDataByWorker("Skill");
+        InitDataByWorker("General");
     }
 
     public void OpenWorkUI()
