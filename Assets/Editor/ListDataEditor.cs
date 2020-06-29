@@ -40,6 +40,10 @@ public class ListDataEditor : Editor
         CharacterDressManager dressManager = Target.GetComponent<CharacterDressManager>();
         dressManager.listIconMask.Clear();
         AddIconBeanDictionaryByFolder("Assets/Texture/Character/Dress/Mask/", dressManager.listIconMask);
+
+
+        dressManager.listMaskAnim.Clear();
+        AddAnimBeanDictionaryByFolder("Assets/Anim/Animation/Equip/Mask/", dressManager.listMaskAnim);
     }
 
     [MenuItem("Custom/List/AddDressHat")]
@@ -49,6 +53,9 @@ public class ListDataEditor : Editor
         CharacterDressManager dressManager = Target.GetComponent<CharacterDressManager>();
         dressManager.listIconHat.Clear();
         AddIconBeanDictionaryByFolder("Assets/Texture/Character/Dress/Hat/", dressManager.listIconHat);
+
+        dressManager.listHatAnim.Clear();
+        AddAnimBeanDictionaryByFolder("Assets/Anim/Animation/Equip/Hat/", dressManager.listHatAnim);
     }
 
     [MenuItem("Custom/List/AddDressClothes")]
@@ -58,6 +65,9 @@ public class ListDataEditor : Editor
         CharacterDressManager dressManager = Target.GetComponent<CharacterDressManager>();
         dressManager.listIconClothes.Clear();
         AddIconBeanDictionaryByFolder("Assets/Texture/Character/Dress/Clothes/", dressManager.listIconClothes);
+
+        dressManager.listClothesAnim.Clear();
+        AddAnimBeanDictionaryByFolder("Assets/Anim/Animation/Equip/Clothes/", dressManager.listClothesAnim);
     }
 
     [MenuItem("Custom/List/AddDressShoes")]
@@ -67,6 +77,9 @@ public class ListDataEditor : Editor
         CharacterDressManager dressManager = Target.GetComponent<CharacterDressManager>();
         dressManager.listIconShoes.Clear();
         AddIconBeanDictionaryByFolder("Assets/Texture/Character/Dress/Shoes/", dressManager.listIconShoes);
+
+        dressManager.listShoesAnim.Clear();
+        AddAnimBeanDictionaryByFolder("Assets/Anim/Animation/Equip/Shoes/", dressManager.listShoesAnim);
     }
 
     [MenuItem("Custom/List/AddBodyHair")]
@@ -123,6 +136,9 @@ public class ListDataEditor : Editor
         AddIconBeanDictionaryByFolder("Assets/Texture/Items/Beater/", itemsManager.listItemsIcon);
         AddIconBeanDictionaryByFolder("Assets/Texture/Items/Medicine/", itemsManager.listItemsIcon);
         AddIconBeanDictionaryByFolder("Assets/Texture/Element/Ingredients/", itemsManager.listItemsIcon);
+
+        itemsManager.listItemsAnim.Clear();
+        AddAnimBeanDictionaryByFolder("Assets/Anim/Animation/Equip/Items/", itemsManager.listItemsAnim);
     }
 
 
@@ -229,7 +245,26 @@ public class ListDataEditor : Editor
             });
         }
     }
-
+    /// <summary>
+    /// 根据文件夹下所有文件添加字典
+    /// </summary>
+    /// <param name="folderPath"></param>
+    /// <param name="mapFood"></param>
+    public static void AddAnimBeanDictionaryByFolder(string folderPath, AnimBeanDictionary map)
+    {
+        FileInfo[] files = FileUtil.GetFilesByPath(folderPath);
+        foreach (FileInfo item in files)
+        {
+            Object[] objs = AssetDatabase.LoadAllAssetsAtPath(folderPath + item.Name);
+            objs.ToList().ForEach(obj =>
+            {
+                if (obj as AnimationClip != null)
+                {
+                    map.Add(obj.name, obj as AnimationClip);
+                }
+            });
+        }
+    }
     /// <summary>
     ///  根据文件夹下所有文件添加字典
     /// </summary>

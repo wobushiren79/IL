@@ -10,6 +10,10 @@ public class GameItemsManager : BaseManager, IItemsInfoView
     public ItemsInfoController itemsInfoController;
     //装备数据
     public Dictionary<long, ItemsInfoBean> listDataItems;
+    //动画列表
+    public AnimBeanDictionary listItemsAnim;
+
+
 
     public void Awake()
     {
@@ -187,6 +191,15 @@ public class GameItemsManager : BaseManager, IItemsInfoView
         return GetSpriteByName(name, listItemsIcon);
     }
 
+    /// <summary>
+    /// 根据名字获取物品动画
+    /// </summary>
+    /// <param name="name"></param>
+    /// <returns></returns>
+    public AnimationClip GetItemsAnimClipByName(string name)
+    {
+        return GetAnimClipByName(name, listItemsAnim);
+    }
 
     #region   装备获取回调
     public void GetItemsInfoSuccess(List<ItemsInfoBean> listData)

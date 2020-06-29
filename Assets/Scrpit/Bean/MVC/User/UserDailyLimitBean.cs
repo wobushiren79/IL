@@ -19,8 +19,8 @@ public class UserDailyLimitBean
     public List<MiniGameBaseBean> listArenaDataForIntermediate;
     public List<MiniGameBaseBean> listArenaDataForAdvanced;
     public List<MiniGameBaseBean> listArenaDataForLegendary;
-    //每日恶人数量上限
-    public int numberForRascal = 0;
+    //每日事件数量上限
+    public int numberForEvent = 0;
 
     public void InitData(GameDataBean gameData)
     {
@@ -31,8 +31,8 @@ public class UserDailyLimitBean
             exchangeMoneyL = 0;
         else
             exchangeMoneyL = levelStar + (levelTitle - 1) * 5;
-        //每日恶人数量
-        numberForRascal =(levelTitle==0 ? 1:  (levelTitle - 1) * 5 + levelStar + 1);
+        //每日事件数量
+        numberForEvent = (levelTitle==0 ? 1:  (levelTitle - 1) * 5 + levelStar + 1);
 
         listNpcGift.Clear();
         listNpcTalk.Clear();
@@ -199,18 +199,18 @@ public class UserDailyLimitBean
     }
 
     /// <summary>
-    /// 检测是否还有恶人数量
+    /// 检测是否还有事件数量
     /// </summary>
     /// <returns></returns>
-    public bool CheckRascalNumber(int number)
+    public bool CheckEventNumber(int number)
     {
-        if(numberForRascal - number < 0)
+        if(numberForEvent - number < 0)
         {
             return false;
         }
         else
         {
-            numberForRascal -= number;
+            numberForEvent -= number;
             return true;
         }
     }

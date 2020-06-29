@@ -10,6 +10,7 @@ public class ItemsInfoBean : BaseBean
 
     public int items_type;//装备类型 1帽子 2衣服  3鞋子
     public string icon_key;//装备图标
+    public string anim_key;//动画名字
 
     public int add_life;//添加生命值
     public int add_cook;//增加 做菜
@@ -31,6 +32,7 @@ public class ItemsInfoBean : BaseBean
     public string name;//名字
     public string content;//内容
     public int rarity;//稀有度
+
 
     /// <summary>
     /// 获取类型

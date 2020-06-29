@@ -24,10 +24,44 @@ public class CharacterDressCpt : BaseMonoBehaviour
     //道具管理
     protected GameItemsManager gameItemsManager;
 
+    //动画
+    public Animator animForClothes;
+    protected AnimatorOverrideController aocForClothes;
+    public Animator animForMask;
+    protected AnimatorOverrideController aocForMask;
+    public Animator animForHat;
+    protected AnimatorOverrideController aocForHat;
+    public Animator animForShoes;
+    protected AnimatorOverrideController aocForShoes;
+    public Animator animForHand;
+    protected AnimatorOverrideController aocForHand;
+
+    public AnimationClip animForOriginalClip;
+
     public void Awake()
     {
         characterDressManager = Find<CharacterDressManager>(ImportantTypeEnum.CharacterManager);
         gameItemsManager = Find<GameItemsManager>(ImportantTypeEnum.GameItemsManager);
+
+        aocForMask = new AnimatorOverrideController(animForMask.runtimeAnimatorController);
+        animForMask.runtimeAnimatorController = aocForMask;
+
+        aocForHat = new AnimatorOverrideController(animForHat.runtimeAnimatorController);
+        animForHat.runtimeAnimatorController = aocForHat;
+
+        aocForClothes = new AnimatorOverrideController(animForClothes.runtimeAnimatorController);
+        animForClothes.runtimeAnimatorController = aocForClothes;
+
+        //aocForShoes = new AnimatorOverrideController(animForShoes.runtimeAnimatorController);
+        //animForShoes.runtimeAnimatorController = aocForShoes;
+
+        aocForHand = new AnimatorOverrideController(animForHand.runtimeAnimatorController);
+        animForHand.runtimeAnimatorController = aocForHand;
+    }
+
+    private void Start()
+    {
+ 
     }
 
     public CharacterEquipBean GetCharacterEquipData()
@@ -62,6 +96,8 @@ public class CharacterDressCpt : BaseMonoBehaviour
             characterEquipData.hatId = itemsInfo.id;
         }
         sprHat.sprite = hatSP;
+        //设置动画
+        SetAnimForEquip(aocForHat, itemsInfo);
     }
 
     /// <summary>
@@ -85,6 +121,8 @@ public class CharacterDressCpt : BaseMonoBehaviour
             characterEquipData.maskId = itemsInfo.id;
         }
         sprMask.sprite = maskSP;
+        //设置动画
+        SetAnimForEquip(aocForMask, itemsInfo);
     }
 
     /// <summary>
@@ -97,17 +135,25 @@ public class CharacterDressCpt : BaseMonoBehaviour
             return;
         Sprite clothesSP = null;
         if (itemsInfo == null)
+        {
             clothesSP = null;
+        }
         else
         {
             if (itemsInfo.id != 0)
+            {
                 clothesSP = characterDressManager.GetClothesSpriteByName(itemsInfo.icon_key);
+            }
+               
             //设置装备数据
             if (characterEquipData == null)
                 characterEquipData = new CharacterEquipBean();
             characterEquipData.clothesId = itemsInfo.id;
+
         }
         sprClothes.sprite = clothesSP;
+        //设置动画
+        SetAnimForEquip(aocForClothes, itemsInfo);
     }
 
     /// <summary>
@@ -131,6 +177,9 @@ public class CharacterDressCpt : BaseMonoBehaviour
         }
         sprShoesLeft.sprite = shoesSP;
         sprShoesRight.sprite = shoesSP;
+        //设置动画
+        //需要考虑左右脚
+        //SetAnimForEquip(aocForShoes, itemsInfo);
     }
 
     /// <summary>
@@ -161,6 +210,56 @@ public class CharacterDressCpt : BaseMonoBehaviour
         else
         {
             sprHand.transform.localEulerAngles = new Vector3(0, 0, 45);
+        }
+        //设置动画
+        SetAnimForEquip(aocForHand, itemsInfo);
+    }
+
+    /// <summary>
+    /// 设置动画
+    /// </summary>
+    /// <param name="itemsInfo"></param>
+    public void SetAnimForEquip(AnimatorOverrideController animatorForTarget,ItemsInfoBean itemsInfo)
+    {
+        if(animatorForTarget==null||itemsInfo == null)
+        {
+            animatorForTarget["Original"] = animForOriginalClip;
+            return;
+        }       
+        //设置动画
+        if (!CheckUtil.StringIsNull(itemsInfo.anim_key))
+        {
+            GeneralEnum itemType = itemsInfo.GetItemsType();
+            AnimationClip animationClip = null;
+            switch (itemType)
+            {
+                case GeneralEnum.Mask:
+                case GeneralEnum.Hat:
+                case GeneralEnum.Clothes:
+                case GeneralEnum.Shoes:
+                    animationClip = characterDressManager.GetAnimByName(itemType, itemsInfo.anim_key);
+                    break;
+                case GeneralEnum.Chef:
+                case GeneralEnum.Waiter:
+                case GeneralEnum.Accoutant:
+                case GeneralEnum.Accost:
+                case GeneralEnum.Beater:
+                    animationClip = gameItemsManager.GetItemsAnimClipByName(itemsInfo.anim_key);
+                    break;
+            }
+   
+            if (animationClip != null)
+            {
+                animatorForTarget["Original"] = animationClip;
+            }
+            else
+            {
+                animatorForTarget["Original"] = animForOriginalClip;
+            }
+        }
+        else
+        {
+            animatorForTarget["Original"] = animForOriginalClip;
         }
     }
 }

@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4599423974181893435}
   - component: {fileID: 1378592715260125474}
+  - component: {fileID: 2929060192200101465}
   m_Layer: 0
   m_Name: Mask
   m_TagString: Untagged
@@ -81,6 +82,25 @@ SpriteRenderer:
   m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!95 &2929060192200101465
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1912407798814233026}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 4190389a6eb322a48bca9b51d25a508f, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &2478063930735958557
 GameObject:
   m_ObjectHideFlags: 0
@@ -501,6 +521,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2478063931239832717}
   - component: {fileID: 2478063931239832706}
+  - component: {fileID: 6833171839255911746}
   m_Layer: 0
   m_Name: Clothes
   m_TagString: Untagged
@@ -572,6 +593,25 @@ SpriteRenderer:
   m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!95 &6833171839255911746
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2478063931239832716}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 4190389a6eb322a48bca9b51d25a508f, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &2478063931638561575
 GameObject:
   m_ObjectHideFlags: 0
@@ -665,6 +705,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2478063931736842984}
   - component: {fileID: 2478063931736842985}
+  - component: {fileID: 6994748747545488040}
   m_Layer: 0
   m_Name: Hat
   m_TagString: Untagged
@@ -736,6 +777,25 @@ SpriteRenderer:
   m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!95 &6994748747545488040
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2478063931736842987}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 4190389a6eb322a48bca9b51d25a508f, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &2478063931806359367
 GameObject:
   m_ObjectHideFlags: 0
@@ -843,6 +903,12 @@ MonoBehaviour:
     hatId: 0
     clothesId: 0
     shoesId: 0
+  animForClothes: {fileID: 6833171839255911746}
+  animForMask: {fileID: 2929060192200101465}
+  animForHat: {fileID: 6994748747545488040}
+  animForShoes: {fileID: 0}
+  animForHand: {fileID: 5295224861780728219}
+  animForOriginalClip: {fileID: 7400000, guid: d0c05dbb148fbca45895e0439722de8c, type: 2}
 --- !u!61 &2844603011259667479
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -1877,6 +1943,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1175158646132625137}
   - component: {fileID: 8914859433872606258}
+  - component: {fileID: 5295224861780728219}
   m_Layer: 0
   m_Name: Hand
   m_TagString: Untagged
@@ -1948,6 +2015,25 @@ SpriteRenderer:
   m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!95 &5295224861780728219
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7880705407815819464}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 4190389a6eb322a48bca9b51d25a508f, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &7970624781697389461
 GameObject:
   m_ObjectHideFlags: 0

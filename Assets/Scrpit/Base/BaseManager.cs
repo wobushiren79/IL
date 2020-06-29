@@ -38,6 +38,23 @@ public class BaseManager : BaseMonoBehaviour
     }
 
     /// <summary>
+    /// 根据名字获取动画
+    /// </summary>
+    /// <param name="name"></param>
+    /// <param name="map"></param>
+    /// <returns></returns>
+    public virtual AnimationClip GetAnimClipByName(string name, AnimBeanDictionary map)
+    {
+        if (name == null)
+            return null;
+        if (map.TryGetValue(name, out AnimationClip animClip))
+            return animClip;
+        else
+            return null;
+    }
+
+
+    /// <summary>
     /// 根据名字获取tile
     /// </summary>
     /// <param name="name"></param>

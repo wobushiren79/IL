@@ -34,7 +34,17 @@ public class NpcEventBuilder : NpcNormalBuilder, IBaseObserver
     /// </summary>
     public void StartEvent()
     {
-        int eventType = UnityEngine.Random.Range(0, 6);
+        int eventType = UnityEngine.Random.Range(0, 8);
+        if (eventType > 3)
+        {
+            return;
+        }
+        //先检测是否超过当天生成事件上限
+        if (!GameCommonInfo.DailyLimitData.CheckEventNumber(1))
+        {
+            return;
+        }
+  
         switch (eventType)
         {
             case 0:
@@ -109,13 +119,11 @@ public class NpcEventBuilder : NpcNormalBuilder, IBaseObserver
     /// </summary>
     public void BuildRascal()
     {
-        //先检测是否超过当天生成恶人上限
-        if (GameCommonInfo.DailyLimitData.CheckRascalNumber(1))
-        {
-            Vector3 npcPosition = GetRandomStartPosition();
-            NpcTeamBean teamData = RandomUtil.GetRandomDataByList(listRascal);
-            BuildRascal(teamData, npcPosition);
-        }
+
+        Vector3 npcPosition = GetRandomStartPosition();
+        NpcTeamBean teamData = RandomUtil.GetRandomDataByList(listRascal);
+        BuildRascal(teamData, npcPosition);
+
     }
 
     public void BuildRascal(long teamId)
@@ -400,7 +408,7 @@ public class NpcEventBuilder : NpcNormalBuilder, IBaseObserver
         else if ((GameTimeHandler.NotifyTypeEnum)type == GameTimeHandler.NotifyTypeEnum.TimePoint)
         {
             int hour = Convert.ToInt32(obj[0]);
-            if (hour > 9 && hour <= 20)
+            if (hour >= 9 && hour <= 20)
             {
                 StartEvent();
             }
