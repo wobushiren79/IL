@@ -218,9 +218,10 @@ public class InnHandler : BaseMonoBehaviour, IBaseObserver
     /// 获取柜台
     /// </summary>
     /// <returns></returns>
-    public BuildCounterCpt GetCounter()
+    public BuildCounterCpt GetCounter(NpcAICustomerCpt npcAICustomer)
     {
-        BuildCounterCpt counterCpt = RandomUtil.GetRandomDataByList(innPayHandler.listCounterCpt);
+        BuildCounterCpt counterCpt = innPayHandler.GetCloseCounter(npcAICustomer);
+       // BuildCounterCpt counterCpt = RandomUtil.GetRandomDataByList(innPayHandler.listCounterCpt);
         return counterCpt;
     }
 

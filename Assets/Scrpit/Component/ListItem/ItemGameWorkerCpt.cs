@@ -13,6 +13,7 @@ public class ItemGameWorkerCpt : ItemGameBaseCpt, IRadioButtonCallBack, DialogVi
     public Text tvPrice;
     public InfoPromptPopupButton pbPrice;
 
+    public Image ivLoyal;
     public Text tvLoyal;
     public InfoPromptPopupButton pbLoyal;
 
@@ -296,6 +297,8 @@ public class ItemGameWorkerCpt : ItemGameBaseCpt, IRadioButtonCallBack, DialogVi
     /// </summary>
     public void SendGift()
     {
+        if (audioHandler != null)
+            audioHandler.PlaySound(AudioSoundEnum.ButtonForNormal);
         DialogBean dialogData = new DialogBean();
         // dialogData.content = string.Format(GameCommonInfo.GetUITextById(3063), characterData.baseInfo.name);
         PickForItemsDialogView dialogView = (PickForItemsDialogView)dialogManager.CreateDialog(DialogEnum.PickForItems, this, dialogData);
@@ -569,6 +572,8 @@ public class ItemGameWorkerCpt : ItemGameBaseCpt, IRadioButtonCallBack, DialogVi
             characterData.attributes.AddLoyal(addLoyal);
             //刷新UI
             SetData(characterData);
+            //提示
+            toastManager.ToastHint(ivLoyal.sprite, string.Format(GameCommonInfo.GetUITextById(1132), characterData.baseInfo.name, addLoyal + ""));
         }
         else
         {

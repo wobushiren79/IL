@@ -31,6 +31,30 @@ public class InnPayHandler : BaseMonoBehaviour
     }
 
     /// <summary>
+    /// 获取最近的柜台
+    /// </summary>
+    /// <param name="npcAICustomer"></param>
+    /// <returns></returns>
+    public BuildCounterCpt GetCloseCounter(NpcAICustomerCpt npcAICustomer)
+    {
+        BuildCounterCpt closeCounter = null;
+        float minDistance = 0;
+        foreach (BuildCounterCpt itemCounter in listCounterCpt)
+        { 
+            float distance = Vector3.Distance(npcAICustomer.transform.position, itemCounter.transform.position);
+            if (minDistance == 0)
+            {
+                closeCounter = itemCounter;
+            }
+            else if (distance < minDistance)
+            {
+                closeCounter = itemCounter;
+            }
+        }
+        return closeCounter;
+    }
+
+    /// <summary>
     /// 找到所有算账人
     /// </summary>
     /// <returns></returns>

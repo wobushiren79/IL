@@ -369,7 +369,7 @@ public class NpcAICustomerCpt : BaseNpcAI
     /// </summary>
     public void IntentForGotoPay()
     {
-        orderForCustomer.counter = innHandler.GetCounter();
+        orderForCustomer.counter = innHandler.GetCounter(this);
         //如果判断有无结算台
         if (orderForCustomer.counter == null)
         {
