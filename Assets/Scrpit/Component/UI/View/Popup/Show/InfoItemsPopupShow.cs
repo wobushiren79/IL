@@ -85,7 +85,7 @@ public class InfoItemsPopupShow : PopupShowView
     public void SetAttributes(ItemsInfoBean data)
     {
         CptUtil.RemoveChildsByActive(objAttributeContainer);
-        CreateItemAttributes("ui_ability_life", data.add_lucky, GameCommonInfo.GetUITextById(9), colorForAttribute);
+        CreateItemAttributes("ui_ability_life", data.add_life, GameCommonInfo.GetUITextById(9), colorForAttribute);
         CreateItemAttributes("ui_ability_cook", data.add_cook, GameCommonInfo.GetUITextById(1),colorForAttribute);
         CreateItemAttributes("ui_ability_speed", data.add_speed, GameCommonInfo.GetUITextById(2), colorForAttribute);
         CreateItemAttributes("ui_ability_account", data.add_account, GameCommonInfo.GetUITextById(3), colorForAttribute);

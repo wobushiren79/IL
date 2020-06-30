@@ -28,7 +28,7 @@ public class AnimEditor : Editor
 
         string path = AssetDatabase.GetAssetPath(itemPicTex);
         Object[] objs = AssetDatabase.LoadAllAssetsAtPath(path);
-        keyFrames = new ObjectReferenceKeyframe[objs.Length - 1];
+        keyFrames = new ObjectReferenceKeyframe[objs.Length];
         //动画长度是按秒为单位，1/10就表示1秒切10张图片，根据项目的情况可以自己调节
         float frameTime = 1 / (float)numberForS;
         int i = 0;
@@ -43,6 +43,10 @@ public class AnimEditor : Editor
                 i++;
             }
         });
+        //最后结束再加一个第一帧
+        keyFrames[i] = new ObjectReferenceKeyframe();
+        keyFrames[i].time = frameTime * i;
+        keyFrames[i].value = keyFrames[0].value;
 
         //设置idle文件为循环动画
         AnimationClipSettings clipSetting = AnimationUtility.GetAnimationClipSettings(clip);

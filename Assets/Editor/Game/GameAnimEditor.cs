@@ -10,7 +10,7 @@ public class GameAnimEditor : AnimEditor
         Texture2D[] listText = Selection.GetFiltered<Texture2D>(SelectionMode.DeepAssets);
         foreach (Texture2D itemPicTex in listText)
         {
-            CreateAnimForTex(itemPicTex, "Assets/Anim/Animation/Equip/Mask", 10);
+            CreateAnimForTex(itemPicTex, "Assets/Anim/Animation/Equip/Mask", 5);
         }
     }
 
@@ -20,7 +20,7 @@ public class GameAnimEditor : AnimEditor
         Texture2D[] listText = Selection.GetFiltered<Texture2D>(SelectionMode.DeepAssets);
         foreach (Texture2D itemPicTex in listText)
         {
-            CreateAnimForTex(itemPicTex, "Assets/Anim/Animation/Equip/Hat", 10);
+            CreateAnimForTex(itemPicTex, "Assets/Anim/Animation/Equip/Hat", 5);
         }
     }
 
@@ -30,7 +30,7 @@ public class GameAnimEditor : AnimEditor
         Texture2D[] listText = Selection.GetFiltered<Texture2D>(SelectionMode.DeepAssets);
         foreach (Texture2D itemPicTex in listText)
         {
-            CreateAnimForTex(itemPicTex, "Assets/Anim/Animation/Equip/Clothes", 10);
+            CreateAnimForTex(itemPicTex, "Assets/Anim/Animation/Equip/Clothes", 5);
         }
     }
 
@@ -40,7 +40,7 @@ public class GameAnimEditor : AnimEditor
         Texture2D[] listText = Selection.GetFiltered<Texture2D>(SelectionMode.DeepAssets);
         foreach (Texture2D itemPicTex in listText)
         {
-            CreateAnimForTex(itemPicTex, "Assets/Anim/Animation/Equip/Shoes", 10);
+            CreateAnimForTex(itemPicTex, "Assets/Anim/Animation/Equip/Shoes", 5);
         }
     }
 
@@ -50,7 +50,7 @@ public class GameAnimEditor : AnimEditor
         Texture2D[] listText = Selection.GetFiltered<Texture2D>(SelectionMode.DeepAssets);
         foreach (Texture2D itemPicTex in listText)
         {
-            CreateAnimForTex(itemPicTex, "Assets/Anim/Animation/Equip/Items", 10);
+            CreateAnimForTex(itemPicTex, "Assets/Anim/Animation/Equip/Items", 5);
         }
     }
 }

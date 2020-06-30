@@ -195,10 +195,8 @@ public class CharacterUICpt : BaseMonoBehaviour
         }
         else
         {
-            int scaleX = spHand.texture.width / 32;
             int scaleY = spHand.texture.height / 32;
-            float scale = (scaleX >= scaleY ? scaleX : scaleY);
-            scale = (0.5f * scale);
+            float scale = (0.5f * scaleY);
             ivHand.transform.localScale = new Vector3(scale , scale, scale);
             ivHand.color = new Color(1, 1, 1, 1);
         }

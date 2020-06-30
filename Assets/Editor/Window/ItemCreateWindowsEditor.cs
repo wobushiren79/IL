@@ -224,7 +224,7 @@ public class ItemCreateWindowsEditor : EditorWindow, StoreInfoManager.ICallBack
         GUILayout.Label("内容：", GUILayout.Width(100), GUILayout.Height(20));
         achievementInfo.content = EditorGUILayout.TextArea(achievementInfo.content + "", GUILayout.Width(150), GUILayout.Height(20));
         EditorUI.GUIText("前置成就:");
-        achievementInfo.pre_ach_ids= EditorUI.GUIEditorText(achievementInfo.pre_ach_ids);
+        achievementInfo.pre_ach_ids = EditorUI.GUIEditorText(achievementInfo.pre_ach_ids);
         //前置相关
         EditorGUILayout.BeginVertical();
         GUILayout.Label("前置：", GUILayout.Width(100), GUILayout.Height(20));
@@ -614,12 +614,17 @@ public class ItemCreateWindowsEditor : EditorWindow, StoreInfoManager.ICallBack
                 {
                     autoId += 4 * 10000;
                 }
+                else if (spriteCreateIcon.name.Contains("anim"))
+                {
+                    autoId += 5 * 10000;
+                }
             }
-        } else if (createItemType == GeneralEnum.Chef
-            || createItemType == GeneralEnum.Waiter 
-            || createItemType == GeneralEnum.Accoutant 
-            || createItemType == GeneralEnum.Accost 
-            || createItemType == GeneralEnum.Beater )
+        }
+        else if (createItemType == GeneralEnum.Chef
+          || createItemType == GeneralEnum.Waiter
+          || createItemType == GeneralEnum.Accoutant
+          || createItemType == GeneralEnum.Accost
+          || createItemType == GeneralEnum.Beater)
         {
             if (spriteCreateIcon)
             {
@@ -713,7 +718,7 @@ public class ItemCreateWindowsEditor : EditorWindow, StoreInfoManager.ICallBack
         }
         if (GUILayout.Button("查询菜谱", GUILayout.Width(100), GUILayout.Height(20)))
         {
-            listFindItem = gameItemsManager.GetItemsListByType( GeneralEnum.Menu);
+            listFindItem = gameItemsManager.GetItemsListByType(GeneralEnum.Menu);
         }
         if (GUILayout.Button("查询技能书", GUILayout.Width(100), GUILayout.Height(20)))
         {
@@ -769,7 +774,11 @@ public class ItemCreateWindowsEditor : EditorWindow, StoreInfoManager.ICallBack
             EditorUI.GUIText("物品ID：");
             itemInfo.id = long.Parse(EditorGUILayout.TextArea(itemInfo.id + "", GUILayout.Width(100), GUILayout.Height(20)));
             EditorUI.GUIText("物品稀有度：");
-            itemInfo.rarity= EditorUI.GUIEditorText(itemInfo.rarity, 20);
+            itemInfo.rarity = EditorUI.GUIEditorText(itemInfo.rarity, 20);
+
+            EditorUI.GUIText("动画key：");
+            itemInfo.anim_key = EditorUI.GUIEditorText(itemInfo.anim_key, 50);
+
             string path = "Assets/Texture/";
             switch ((GeneralEnum)itemInfo.items_type)
             {
@@ -809,7 +818,7 @@ public class ItemCreateWindowsEditor : EditorWindow, StoreInfoManager.ICallBack
                 case GeneralEnum.Read:
                 case GeneralEnum.Gift:
                     path += "Common/UI/";
-                    
+
                     break;
                 default:
                     path += "Items/";
@@ -826,7 +835,7 @@ public class ItemCreateWindowsEditor : EditorWindow, StoreInfoManager.ICallBack
             }
             EditorUI.GUIText("icon_key：");
             itemInfo.icon_key = EditorGUILayout.TextArea(itemInfo.icon_key + "", GUILayout.Width(150), GUILayout.Height(20));
-            itemInfo.items_type=(int) EditorUI.GUIEnum<GeneralEnum>("物品类型", itemInfo.items_type);
+            itemInfo.items_type = (int)EditorUI.GUIEnum<GeneralEnum>("物品类型", itemInfo.items_type);
             EditorUI.GUIText("名字：");
             itemInfo.name = EditorGUILayout.TextArea(itemInfo.name + "", GUILayout.Width(150), GUILayout.Height(20));
             EditorUI.GUIText("描述：");
@@ -863,10 +872,10 @@ public class ItemCreateWindowsEditor : EditorWindow, StoreInfoManager.ICallBack
                 itemInfo.effect = EditorUI.GUIListData<EffectTypeEnum>("效果", itemInfo.effect);
                 itemInfo.effect_details = EditorUI.GUIListData<EffectDetailsEnum>("效果详情", itemInfo.effect_details);
             }
-            else if (itemType== GeneralEnum.Menu)
+            else if (itemType == GeneralEnum.Menu)
             {
                 EditorUI.GUIText("绑定菜谱ID：");
-                itemInfo.add_id =long.Parse( EditorGUILayout.TextArea(itemInfo.add_id + "", GUILayout.Width(150), GUILayout.Height(20)));
+                itemInfo.add_id = long.Parse(EditorGUILayout.TextArea(itemInfo.add_id + "", GUILayout.Width(150), GUILayout.Height(20)));
             }
             else if (itemType == GeneralEnum.SkillBook)
             {
