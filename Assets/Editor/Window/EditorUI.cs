@@ -80,6 +80,7 @@ public class EditorUI
         GUILayout.EndHorizontal();
         foreach (NpcInfoBean itemData in listNpcDataForFind)
         {
+            GUILayout.Label("------------------------------------");
             GUILayout.BeginHorizontal();
             if (GUILayout.Button("显示", GUILayout.Width(100), GUILayout.Height(20)))
             {
@@ -97,6 +98,7 @@ public class EditorUI
             }
             GUILayout.EndHorizontal();
             GUINpcInfoItem(gameItemsManager, objNpcContainer, itemData);
+            GUILayout.Label("------------------------------------");
         }
         outFindIdStr = findIdsStr;
         outListNpcDataForFind = listNpcDataForFind;
@@ -107,7 +109,6 @@ public class EditorUI
     /// </summary>
     public static void GUINpcInfoItem(GameItemsManager gameItemsManager, GameObject objNpcContainer, NpcInfoBean npcInfo)
     {
-        GUILayout.BeginHorizontal();
         if (GUILayout.Button("获取场景位置数据", GUILayout.Width(120), GUILayout.Height(20)))
         {
             BaseNpcAI npcAI = objNpcContainer.GetComponentInChildren<BaseNpcAI>();
@@ -121,6 +122,7 @@ public class EditorUI
         NpcTypeEnum npcType = (NpcTypeEnum)npcInfo.npc_type;
         if (npcType != NpcTypeEnum.Passerby)
         {
+            GUILayout.BeginHorizontal();
             GUILayout.Label("姓名：", GUILayout.Width(100), GUILayout.Height(20));
             npcInfo.name = EditorGUILayout.TextArea(npcInfo.name + "", GUILayout.Width(100), GUILayout.Height(20));
             GUILayout.Label("性别：1男 2女", GUILayout.Width(100), GUILayout.Height(20));
@@ -132,7 +134,9 @@ public class EditorUI
             GUILayout.Label("位置XY：", GUILayout.Width(100), GUILayout.Height(20));
             npcInfo.position_x = float.Parse(EditorGUILayout.TextArea(npcInfo.position_x + "", GUILayout.Width(100), GUILayout.Height(20)));
             npcInfo.position_y = float.Parse(EditorGUILayout.TextArea(npcInfo.position_y + "", GUILayout.Width(100), GUILayout.Height(20)));
+            GUILayout.EndHorizontal();
 
+            GUILayout.BeginHorizontal();
             GUILayout.Label("皮肤颜色：", GUILayout.Width(100), GUILayout.Height(20));
             ColorBean skinColorData = new ColorBean(npcInfo.skin_color);
             Color skinColor = skinColorData.GetColor(); ;
@@ -168,12 +172,12 @@ public class EditorUI
             Color mouthColor = mouthColorData.GetColor(); ;
             mouthColor = EditorGUILayout.ColorField(mouthColor);
             npcInfo.mouth_color = mouthColor.r + "," + mouthColor.g + "," + mouthColor.b + "," + mouthColor.a;
+            GUILayout.EndHorizontal();
 
             GUILayout.Label("喜欢的东西ID（用,分隔）：", GUILayout.Width(150), GUILayout.Height(20));
             npcInfo.love_items = EditorGUILayout.TextArea(npcInfo.love_items + "", GUILayout.Width(100), GUILayout.Height(20));
 
-
-
+            GUILayout.BeginHorizontal();
             GUILayout.Label("命：", GUILayout.Width(30), GUILayout.Height(20));
             npcInfo.attributes_life = int.Parse(EditorGUILayout.TextArea(npcInfo.attributes_life + "", GUILayout.Width(50), GUILayout.Height(20)));
             GUILayout.Label("厨：", GUILayout.Width(30), GUILayout.Height(20));
@@ -198,7 +202,9 @@ public class EditorUI
 
             GUILayout.Label("喜欢的菜品：", GUILayout.Width(100), GUILayout.Height(20));
             npcInfo.love_menus = EditorGUILayout.TextArea(npcInfo.love_menus + "", GUILayout.Width(50), GUILayout.Height(20));
+            GUILayout.EndHorizontal();
         }
+        GUILayout.BeginHorizontal();
         GUIText("|", 10);
         GUIText("面具：", 50);
         npcInfo.mask_id = long.Parse(EditorGUILayout.TextArea(npcInfo.mask_id + "", GUILayout.Width(100), GUILayout.Height(20)));
@@ -235,8 +241,8 @@ public class EditorUI
             GUIText(handInfo.name, 50);
 
         GUIText("|", 10);
-        npcInfo.condition = GUIListData<ShowConditionEnum>("Npc出现条件", npcInfo.condition);
         GUILayout.EndHorizontal();
+        npcInfo.condition = GUIListData<ShowConditionEnum>("Npc出现条件", npcInfo.condition);
     }
 
     /// <summary>
