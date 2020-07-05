@@ -137,21 +137,6 @@ public class EditorUI
             GUILayout.EndHorizontal();
 
             GUILayout.BeginHorizontal();
-            GUILayout.Label("皮肤颜色：", GUILayout.Width(100), GUILayout.Height(20));
-            ColorBean skinColorData = new ColorBean(npcInfo.skin_color);
-            Color skinColor = skinColorData.GetColor(); ;
-            skinColor = EditorGUILayout.ColorField(skinColor);
-            npcInfo.skin_color = skinColor.r + "," + skinColor.g + "," + skinColor.b + "," + skinColor.a;
-
-            GUILayout.Label("头发：", GUILayout.Width(100), GUILayout.Height(20));
-            npcInfo.hair_id = EditorGUILayout.TextArea(npcInfo.hair_id + "", GUILayout.Width(200), GUILayout.Height(20));
-            string hairPath = "Assets/Texture/Character/Hair/";
-            GUIPic(hairPath, npcInfo.hair_id);
-            GUILayout.Label("头发颜色：", GUILayout.Width(100), GUILayout.Height(20));
-            ColorBean hairColorData = new ColorBean(npcInfo.hair_color);
-            Color hairColor = hairColorData.GetColor(); ;
-            hairColor = EditorGUILayout.ColorField(hairColor);
-            npcInfo.hair_color = hairColor.r + "," + hairColor.g + "," + hairColor.b + "," + hairColor.a;
 
             GUILayout.Label("眼睛：", GUILayout.Width(100), GUILayout.Height(20));
             npcInfo.eye_id = EditorGUILayout.TextArea(npcInfo.eye_id + "", GUILayout.Width(200), GUILayout.Height(20));
@@ -160,7 +145,7 @@ public class EditorUI
             GUILayout.Label("眼睛颜色：", GUILayout.Width(100), GUILayout.Height(20));
             ColorBean eyeColorData = new ColorBean(npcInfo.eye_color);
             Color eyeColor = eyeColorData.GetColor(); ;
-            eyeColor = EditorGUILayout.ColorField(eyeColor);
+            eyeColor = EditorGUILayout.ColorField(eyeColor, GUILayout.Width(50), GUILayout.Height(20));
             npcInfo.eye_color = eyeColor.r + "," + eyeColor.g + "," + eyeColor.b + "," + eyeColor.a;
 
             GUILayout.Label("嘴巴：", GUILayout.Width(100), GUILayout.Height(20));
@@ -170,14 +155,30 @@ public class EditorUI
             GUILayout.Label("嘴巴颜色：", GUILayout.Width(100), GUILayout.Height(20));
             ColorBean mouthColorData = new ColorBean(npcInfo.mouth_color);
             Color mouthColor = mouthColorData.GetColor(); ;
-            mouthColor = EditorGUILayout.ColorField(mouthColor);
+            mouthColor = EditorGUILayout.ColorField(mouthColor, GUILayout.Width(50), GUILayout.Height(20));
             npcInfo.mouth_color = mouthColor.r + "," + mouthColor.g + "," + mouthColor.b + "," + mouthColor.a;
+
+            GUILayout.Label("头发：", GUILayout.Width(100), GUILayout.Height(20));
+            npcInfo.hair_id = EditorGUILayout.TextArea(npcInfo.hair_id + "", GUILayout.Width(200), GUILayout.Height(20));
+            string hairPath = "Assets/Texture/Character/Hair/";
+            GUIPic(hairPath, npcInfo.hair_id);
+            GUILayout.Label("头发颜色：", GUILayout.Width(100), GUILayout.Height(20));
+            ColorBean hairColorData = new ColorBean(npcInfo.hair_color);
+            Color hairColor = hairColorData.GetColor(); ;
+            hairColor = EditorGUILayout.ColorField(hairColor, GUILayout.Width(50), GUILayout.Height(20));
+            npcInfo.hair_color = hairColor.r + "," + hairColor.g + "," + hairColor.b + "," + hairColor.a;
+
+            GUILayout.Label("皮肤颜色：", GUILayout.Width(100), GUILayout.Height(20));
+            ColorBean skinColorData = new ColorBean(npcInfo.skin_color);
+            Color skinColor = skinColorData.GetColor(); ;
+            skinColor = EditorGUILayout.ColorField(skinColor, GUILayout.Width(50), GUILayout.Height(20));
+            npcInfo.skin_color = skinColor.r + "," + skinColor.g + "," + skinColor.b + "," + skinColor.a;
+
             GUILayout.EndHorizontal();
 
-            GUILayout.Label("喜欢的东西ID（用,分隔）：", GUILayout.Width(150), GUILayout.Height(20));
-            npcInfo.love_items = EditorGUILayout.TextArea(npcInfo.love_items + "", GUILayout.Width(100), GUILayout.Height(20));
 
             GUILayout.BeginHorizontal();
+
             GUILayout.Label("命：", GUILayout.Width(30), GUILayout.Height(20));
             npcInfo.attributes_life = int.Parse(EditorGUILayout.TextArea(npcInfo.attributes_life + "", GUILayout.Width(50), GUILayout.Height(20)));
             GUILayout.Label("厨：", GUILayout.Width(30), GUILayout.Height(20));
@@ -199,7 +200,8 @@ public class EditorUI
                 GUILayout.Label("工资 S：", GUILayout.Width(30), GUILayout.Height(20));
                 npcInfo.wage_s = int.Parse(EditorGUILayout.TextArea(npcInfo.wage_s + "", GUILayout.Width(50), GUILayout.Height(20)));
             }
-
+            GUILayout.Label("喜欢的东西ID（用,分隔）：", GUILayout.Width(150), GUILayout.Height(20));
+            npcInfo.love_items = EditorGUILayout.TextArea(npcInfo.love_items + "", GUILayout.Width(100), GUILayout.Height(20));
             GUILayout.Label("喜欢的菜品：", GUILayout.Width(100), GUILayout.Height(20));
             npcInfo.love_menus = EditorGUILayout.TextArea(npcInfo.love_menus + "", GUILayout.Width(50), GUILayout.Height(20));
             GUILayout.EndHorizontal();

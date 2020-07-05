@@ -585,6 +585,9 @@ public class ItemCreateWindowsEditor : EditorWindow, StoreInfoManager.ICallBack
         createItemType = (GeneralEnum)EditorGUILayout.EnumPopup("物品类型", createItemType);
         createItemsInfo.items_type = (int)createItemType;
 
+        GUILayout.Label("名字：");
+        createItemsInfo.name = EditorGUILayout.TextArea(createItemsInfo.name + "", GUILayout.Width(150), GUILayout.Height(20));
+
         spriteCreateIcon = EditorGUILayout.ObjectField(new GUIContent("选择图片", ""), spriteCreateIcon, typeof(Sprite), true) as Sprite;
         if (spriteCreateIcon)
         {
@@ -652,9 +655,6 @@ public class ItemCreateWindowsEditor : EditorWindow, StoreInfoManager.ICallBack
 
         createItemsInfo.id = (inputId + autoId);
         createItemsInfo.items_id = createItemsInfo.id;
-
-        GUILayout.Label("名字：");
-        createItemsInfo.name = EditorGUILayout.TextArea(createItemsInfo.name + "", GUILayout.Width(150), GUILayout.Height(20));
 
         GUILayout.Label("描述：");
         createItemsInfo.content = EditorGUILayout.TextArea(createItemsInfo.content + "", GUILayout.Width(150), GUILayout.Height(20));
