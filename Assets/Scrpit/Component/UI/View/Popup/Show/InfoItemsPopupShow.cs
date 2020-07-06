@@ -7,6 +7,7 @@ public class InfoItemsPopupShow : PopupShowView
 {
     public Image ivIcon;
     public Text tvName;
+    public GameObject objContent;
     public Text tvContent;
     public Text tvType;
 
@@ -61,8 +62,16 @@ public class InfoItemsPopupShow : PopupShowView
         {
             content = data.content;
         }
-        if (tvContent != null)
-            tvContent.text = content;
+        if (CheckUtil.StringIsNull(content))
+        {
+            objContent.SetActive(false);
+        }
+        else
+        {
+            objContent.SetActive(true);
+            if (tvContent != null)
+                tvContent.text = content;
+        }
     }
 
     public void SetIcon(Sprite spIcon)
