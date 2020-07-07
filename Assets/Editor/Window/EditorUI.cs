@@ -856,10 +856,14 @@ public class EditorUI
         GUIText("ID:");
         menuInfo.id = GUIEditorText(menuInfo.id);
         menuInfo.menu_id = menuInfo.id;
+        GUIText("稀有度:");
+        menuInfo.rarity = GUIEditorText(menuInfo.rarity);
         GUIText("名称:");
         menuInfo.name = GUIEditorText(menuInfo.name, 150);
         GUIText("内容:");
         menuInfo.content = GUIEditorText(menuInfo.content, 300);
+        GUIText("动画名称:");
+        menuInfo.anim_key = GUIEditorText(menuInfo.anim_key, 150);
         GUIText("图片名称:");
         menuInfo.icon_key = GUIEditorText(menuInfo.icon_key, 150);
         string menuPicPath = "Assets/Texture/Food/";

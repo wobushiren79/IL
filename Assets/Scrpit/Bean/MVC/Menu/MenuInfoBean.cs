@@ -7,6 +7,7 @@ public class MenuInfoBean : BaseBean
 {
     public long menu_id;
     public string icon_key;//图标
+    public string anim_key;//动画名称
     public float cook_time;//烹饪时间
 
     public int ing_oilsalt;//油盐类

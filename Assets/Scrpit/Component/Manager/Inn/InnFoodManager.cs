@@ -6,10 +6,13 @@ public class InnFoodManager : BaseManager, IMenuInfoView, ICookingThemeView
 {
     //食物图标
     public IconBeanDictionary listFoodIcon;
+    //食物动画
+    public AnimBeanDictionary listFoodAnim;
+    
     //菜单数据
     public Dictionary<long, MenuInfoBean> listMenuData;
     //料理主题数据
-    public Dictionary<long, CookingThemeBean> listCookingTheme;
+    public Dictionary<long, CookingThemeBean> listCookingTheme;  
 
     public MenuInfoController mMenuInfoController;
     public CookingThemeController mCookingThemeController;
@@ -21,6 +24,16 @@ public class InnFoodManager : BaseManager, IMenuInfoView, ICookingThemeView
 
         mMenuInfoController.GetAllMenuInfo();
         mCookingThemeController.GetAllCookingTheme();
+    }
+
+    /// <summary>
+    /// 获取食物动画
+    /// </summary>
+    /// <param name="name"></param>
+    /// <returns></returns>
+    public AnimationClip GetFoodAnimByName(string name)
+    {
+       return GetAnimClipByName(name, listFoodAnim);
     }
 
     /// <summary>

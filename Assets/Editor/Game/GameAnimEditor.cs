@@ -53,4 +53,14 @@ public class GameAnimEditor : AnimEditor
             CreateAnimForTex(itemPicTex, "Assets/Anim/Animation/Equip/Items", 5);
         }
     }
+
+    [MenuItem("Custom/Anim/CreateAnimForFood")]
+    public static void CreateAnimForFood()
+    {
+        Texture2D[] listText = Selection.GetFiltered<Texture2D>(SelectionMode.DeepAssets);
+        foreach (Texture2D itemPicTex in listText)
+        {
+            CreateAnimForTex(itemPicTex, "Assets/Anim/Animation/Food/", 5);
+        }
+    }
 }

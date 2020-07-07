@@ -11,12 +11,20 @@ public class FoodForCustomerCpt : BaseMonoBehaviour
     public GameObject objGoodFood;
     public GameObject objPrefectFood;
 
+    //食物动画
+    public Animator animForFood;
+    protected AnimatorOverrideController aocForFood;
+    public AnimationClip animForOriginalClip;
+
     //食物数据管理
     protected InnFoodManager innFoodManager;
 
     public void Awake()
     {
         innFoodManager = Find<InnFoodManager>( ImportantTypeEnum.FoodManager);
+
+        aocForFood = new AnimatorOverrideController(animForFood.runtimeAnimatorController);
+        animForFood.runtimeAnimatorController = aocForFood;
     }
 
     /// <summary>
@@ -27,7 +35,20 @@ public class FoodForCustomerCpt : BaseMonoBehaviour
     {
         this.innFoodManager = innFoodManager;
         if (foodData != null && innFoodManager != null)
+        {
+            //设置图标
             srFood.sprite = innFoodManager.GetFoodSpriteByName(foodData.icon_key);
+            //设置动画
+            if (!CheckUtil.StringIsNull(foodData.anim_key))
+            {
+                AnimationClip animationClip = innFoodManager.GetFoodAnimByName(foodData.anim_key);
+                if (animationClip != null)
+                {
+                    aocForFood["Original"] = animationClip;
+                }
+            }
+        }
+      
 
         objBadFood.SetActive(false);
         objGoodFood.SetActive(false);
@@ -46,6 +67,8 @@ public class FoodForCustomerCpt : BaseMonoBehaviour
                 objPrefectFood.SetActive(true);
                 break;
         }
+
+
     }
 
     /// <summary>
@@ -53,6 +76,9 @@ public class FoodForCustomerCpt : BaseMonoBehaviour
     /// </summary>
     public void FinishFood(MenuInfoBean foodData)
     {
+        //还原动画
+        aocForFood["Original"] = animForOriginalClip;
+
         if (foodData != null && innFoodManager != null)
         {
             srFood.sprite = innFoodManager.GetFoodLastSpriteByName(foodData.icon_key);
@@ -62,8 +88,11 @@ public class FoodForCustomerCpt : BaseMonoBehaviour
         objGoodFood.SetActive(false);
         objPrefectFood.SetActive(false);
 
+
         //食物完结动画
         transform.DOPunchScale(new Vector3(0.5f, 0.5f, 0.5f), 0.3f, 10, 1f);
+
+
     }
 
     /// <summary>

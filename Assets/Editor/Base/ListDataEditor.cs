@@ -119,7 +119,9 @@ public class ListDataEditor : Editor
         GameObject Target = Selection.gameObjects[0];
         InnFoodManager foodManager = Target.GetComponent<InnFoodManager>();
         foodManager.listFoodIcon.Clear();
+        foodManager.listFoodAnim.Clear();
         AddIconBeanDictionaryByFolder("Assets/Texture/Food/", foodManager.listFoodIcon);
+        AddAnimBeanDictionaryByFolder("Assets/Anim/Animation/Food/", foodManager.listFoodAnim);
     }
 
     [MenuItem("Custom/List/AddItems")]

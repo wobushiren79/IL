@@ -14290,6 +14290,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5328740974829804380}
   - component: {fileID: 5328740974829804379}
+  - component: {fileID: 2285849629967626729}
   m_Layer: 0
   m_Name: FoodIcon
   m_TagString: Untagged
@@ -14361,6 +14362,25 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!95 &2285849629967626729
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5328740974829804381}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 2526b822f223000428eaef6f73daedab, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &5328740976241071941
 GameObject:
   m_ObjectHideFlags: 0
@@ -14410,10 +14430,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   srFood: {fileID: 5328740974829804379}
-  innFoodManager: {fileID: 0}
   objBadFood: {fileID: 348980899896524852}
   objGoodFood: {fileID: 849013569974010366}
   objPrefectFood: {fileID: 4529766413023507430}
+  animForFood: {fileID: 2285849629967626729}
+  animForOriginalClip: {fileID: 7400000, guid: d0c05dbb148fbca45895e0439722de8c, type: 2}
 --- !u!210 &6346293558189468630
 SortingGroup:
   m_ObjectHideFlags: 0
