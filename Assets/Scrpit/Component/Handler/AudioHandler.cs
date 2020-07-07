@@ -59,16 +59,23 @@ public class AudioHandler : BaseHandler
                 audioClip = audioManager.GetMusicClip("music_1");
                 break;
             case AudioMusicEnum.Game:
-                List<AudioClip> listClip = new List<AudioClip>()
+                List<AudioClip> listGameClip = new List<AudioClip>()
                 {
                     audioManager.GetMusicClip("music_1"),
                     audioManager.GetMusicClip("music_2"),
-                    audioManager.GetMusicClip("music_3")
+                    audioManager.GetMusicClip("music_3"),
+                    audioManager.GetMusicClip("music_6"),
+                    audioManager.GetMusicClip("music_7")
                 };
-                audioClip = RandomUtil.GetRandomDataByList(listClip);
+                audioClip = RandomUtil.GetRandomDataByList(listGameClip);
                 break;
             case AudioMusicEnum.Battle:
-                audioClip = audioManager.GetMusicClip("music_4");
+                List<AudioClip> listBattleClip = new List<AudioClip>()
+                {
+                    audioManager.GetMusicClip("music_4"),
+                    audioManager.GetMusicClip("music_8")
+                };
+                audioClip = RandomUtil.GetRandomDataByList(listBattleClip);
                 break;
         }
         if (audioClip != null)
