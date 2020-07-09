@@ -11,6 +11,7 @@ public class ImageEditor : Editor
     {
         BaseSpriteEditor(SpriteImportMode.Single, 0, 0);
     }
+
     [MenuItem("Custom/Image/SingleDown")]
     public static void SingleDown()
     {
@@ -22,11 +23,13 @@ public class ImageEditor : Editor
     {
         BaseSpriteEditor(SpriteImportMode.Multiple, 2, 1);
     }
+
     [MenuItem("Custom/Image/Multiple_3x1")]
     public static void Multiple3x1()
     {
         BaseSpriteEditor(SpriteImportMode.Multiple, 3, 1);
     }
+
     [MenuItem("Custom/Image/Multiple_4x1")]
     public static void Multiple4x1()
     {
@@ -45,6 +48,12 @@ public class ImageEditor : Editor
         BaseSpriteEditorForExtrude(SpriteImportMode.Multiple, 5, 1);
     }
 
+    [MenuItem("Custom/Image/Multiple_7x1")]
+    public static void Multiple7x1()
+    {
+        BaseSpriteEditor(SpriteImportMode.Multiple, 7, 1);
+    }
+
     [MenuItem("Custom/Image/Multiple_12x1")]
     public static void Multiple12x1()
     {
@@ -56,6 +65,7 @@ public class ImageEditor : Editor
     {
         BaseSpriteEditor(SpriteImportMode.Multiple, 5, 2);
     }
+
     [MenuItem("Custom/Image/Multiple_5x2_Extrude")]
     public static void Multiple5x2ForExtrude()
     {
@@ -67,7 +77,6 @@ public class ImageEditor : Editor
     {
         BaseSpriteEditor(SpriteImportMode.Multiple, 5, 3);
     }
-
 
     [MenuItem("Custom/Image/Multiple_5x4")]
     public static void Multiple5x4()
@@ -86,25 +95,30 @@ public class ImageEditor : Editor
     {
         BaseSpriteEditor(SpriteImportMode.Multiple, 5, 5);
     }
+
     [MenuItem("Custom/Image/Multiple_5x6")]
     public static void Multiple5x6()
     {
         BaseSpriteEditor(SpriteImportMode.Multiple, 5, 6);
     }
+
     [MenuItem("Custom/Image/Multiple_5x7")]
     public static void Multiple5x7()
     {
         BaseSpriteEditor(SpriteImportMode.Multiple, 5, 7);
     }
+
     [MenuItem("Custom/Image/Multiple_5x8")]
     public static void Multiple5x8()
     {
         BaseSpriteEditor(SpriteImportMode.Multiple, 5, 7);
     }
+
     static void BaseSpriteEditor(SpriteImportMode spriteType, int cNumber, int rNumber)
     {
          BaseSpriteEditor( spriteType,  cNumber,  rNumber, 0.5f, 0.5f);
     }
+
     static void BaseSpriteEditor(SpriteImportMode spriteType, int cNumber, int rNumber, float pivotX, float pivotY)
     {
         Object[] objs = GetSelectedTextures();

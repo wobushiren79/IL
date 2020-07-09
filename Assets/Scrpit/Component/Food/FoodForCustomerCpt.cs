@@ -49,24 +49,27 @@ public class FoodForCustomerCpt : BaseMonoBehaviour
             }
         }
       
-
         objBadFood.SetActive(false);
         objGoodFood.SetActive(false);
         objPrefectFood.SetActive(false);
-        switch (foodLevel)
+        if(foodData.GetRarity()== RarityEnum.SuperRare)
         {
-            case -1:
-                objBadFood.SetActive(true);
-                break;
-            case 0:
-                break;
-            case 1:
-                objGoodFood.SetActive(true);
-                break;
-            case 2:
-                objPrefectFood.SetActive(true);
-                break;
+            objPrefectFood.SetActive(true);
         }
+        //switch (foodLevel)
+        //{
+        //    case -1:
+        //        objBadFood.SetActive(true);
+        //        break;
+        //    case 0:
+        //        break;
+        //    case 1:
+        //        objGoodFood.SetActive(true);
+        //        break;
+        //    case 2:
+        //        objPrefectFood.SetActive(true);
+        //        break;
+        //}
 
 
     }
