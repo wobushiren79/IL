@@ -78,6 +78,10 @@ public class NpcImportantBuilder : BaseMonoBehaviour
         {
             itemNpc.gameObject.SetActive(false);
         }
+        foreach (NpcAIImportantCpt itemNpc in listSpecialTownNpc)
+        {
+            itemNpc.gameObject.SetActive(false);
+        }
     }
 
     public void ShowNpc()
@@ -87,6 +91,10 @@ public class NpcImportantBuilder : BaseMonoBehaviour
             itemNpc.gameObject.SetActive(true);
         }
         foreach (NpcAIImportantCpt itemNpc in listRecruitTownNpc)
+        {
+            itemNpc.gameObject.SetActive(true);
+        }
+        foreach (NpcAIImportantCpt itemNpc in listSpecialTownNpc)
         {
             itemNpc.gameObject.SetActive(true);
         }
