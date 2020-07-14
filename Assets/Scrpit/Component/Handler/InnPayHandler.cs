@@ -44,10 +44,12 @@ public class InnPayHandler : BaseMonoBehaviour
             float distance = Vector3.Distance(npcAICustomer.transform.position, itemCounter.transform.position);
             if (minDistance == 0)
             {
+                minDistance = distance;
                 closeCounter = itemCounter;
             }
             else if (distance < minDistance)
             {
+                minDistance = distance;
                 closeCounter = itemCounter;
             }
         }
