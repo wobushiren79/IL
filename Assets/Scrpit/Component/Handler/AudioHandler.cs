@@ -224,7 +224,7 @@ public class AudioHandler : BaseHandler
     /// 播放环境音乐
     /// </summary>
     /// <param name="audioEnvironment"></param>
-    public void PlayEnvironment(AudioEnvironmentEnum audioEnvironment)
+    public void PlayEnvironment(AudioEnvironmentEnum audioEnvironment,float volumeScale)
     {
         AudioClip audioClip = null;
         switch (audioEnvironment)
@@ -236,6 +236,7 @@ public class AudioHandler : BaseHandler
                 audioClip = audioManager.GetEnvironmentClip("environment_wind_1");
                 break;
         }
+        audioSourceForMusic.volume = volumeScale;
         audioSourceForEnvironment.clip = audioClip;
         audioSourceForEnvironment.Play();
     }

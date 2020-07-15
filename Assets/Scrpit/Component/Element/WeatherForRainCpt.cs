@@ -34,7 +34,7 @@ public class WeatherForRainCpt : WeatherCpt
                 break;
         }
         if (audioHandler != null)
-            audioHandler.PlayEnvironment(AudioEnvironmentEnum.Rain);
+            audioHandler.PlayEnvironment(AudioEnvironmentEnum.Rain,GameCommonInfo.GameConfig.environmentVolume);
     }
 
     public override void CloseWeather()

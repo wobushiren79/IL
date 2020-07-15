@@ -11,6 +11,8 @@ public class GameConfigBean
     public float soundVolume = 1;
     //音乐大小
     public float musicVolume = 1;
+    //环境音乐大小
+    public float environmentVolume = 1;
     //自动保存时间
     public float autoSaveTime = 30;
 

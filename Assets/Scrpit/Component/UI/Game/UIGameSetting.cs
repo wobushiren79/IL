@@ -12,7 +12,7 @@ public class UIGameSetting : UIGameComponent, DropdownView.ICallBack, ProgressVi
     public DropdownView dvLanguage;
     public ProgressView pvMusic;
     public ProgressView pvSound;
-
+    public ProgressView pvEnvironment;
     public RadioButtonView rbKeyTip;
 
     public void Start()
@@ -50,6 +50,12 @@ public class UIGameSetting : UIGameComponent, DropdownView.ICallBack, ProgressVi
         {
             pvSound.SetData(GameCommonInfo.GameConfig.soundVolume);
             pvSound.SetCallBack(this);
+        }
+        //环境音乐初始化
+        if (pvEnvironment != null)
+        {
+            pvEnvironment.SetData(GameCommonInfo.GameConfig.environmentVolume);
+            pvEnvironment.SetCallBack(this);
         }
         //按键提示初始化
         if (rbKeyTip != null)
@@ -154,6 +160,10 @@ public class UIGameSetting : UIGameComponent, DropdownView.ICallBack, ProgressVi
         else if (progressView == pvSound)
         {
             GameCommonInfo.GameConfig.soundVolume = value;
+        }
+        else if (progressView == pvEnvironment)
+        {
+            GameCommonInfo.GameConfig.environmentVolume = value;
         }
         uiGameManager.audioHandler.InitAudio();
     }
