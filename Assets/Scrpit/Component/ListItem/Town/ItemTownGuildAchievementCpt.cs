@@ -40,7 +40,11 @@ public class ItemTownGuildAchievementCpt : ItemGameBaseCpt
             uiGameManager.gameItemsManager,
             uiGameManager.iconDataManager,
             uiGameManager.characterDressManager,
-            uiGameManager.gameDataManager.gameData, uiGameManager.gameDataManager.gameData.userCharacter, preData, out string reason);
+            uiGameManager.innFoodManager,
+            uiGameManager.npcInfoManager,
+            uiGameManager.gameDataManager.gameData, 
+            uiGameManager.gameDataManager.gameData.userCharacter,
+            preData, out string reason);
 
         if (ivIcon == null || uiGameManager.gameDataManager == null || ivBackground == null)
             return;

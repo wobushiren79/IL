@@ -152,6 +152,8 @@ public class InfoAchievementPopupShow : PopupShowView
                     iconDataManager,
                     gameItemsManager,
                     characterDressManager,
+                    innFoodManager,
+                    npcInfoManager,
                     true);
             }
             else
@@ -160,6 +162,8 @@ public class InfoAchievementPopupShow : PopupShowView
                     iconDataManager,
                     gameItemsManager,
                     characterDressManager,
+                    innFoodManager,
+                    npcInfoManager,
                     false);
             }
             string preDes = itemPreData.preDescribe;

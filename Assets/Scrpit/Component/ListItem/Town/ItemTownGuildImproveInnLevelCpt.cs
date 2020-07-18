@@ -33,6 +33,7 @@ public class ItemTownGuildImproveInnLevelCpt : BaseMonoBehaviour, DialogView.IDi
     protected DialogManager dialogManager;
     protected NpcInfoManager npcInfoManager;
     protected CharacterDressManager characterDressManager;
+    protected InnFoodManager innFoodManager;
     private void Awake()
     {
         gameItemsManager = Find<GameItemsManager>(ImportantTypeEnum.GameItemsManager);
@@ -44,6 +45,7 @@ public class ItemTownGuildImproveInnLevelCpt : BaseMonoBehaviour, DialogView.IDi
         dialogManager = Find<DialogManager>(ImportantTypeEnum.DialogManager);
         npcInfoManager = Find<NpcInfoManager>(ImportantTypeEnum.NpcManager);
         characterDressManager = Find<CharacterDressManager>(ImportantTypeEnum.CharacterManager);
+        innFoodManager = Find<InnFoodManager>(ImportantTypeEnum.FoodManager);
     }
 
     private void Start()
@@ -106,7 +108,9 @@ public class ItemTownGuildImproveInnLevelCpt : BaseMonoBehaviour, DialogView.IDi
                 gameDataManager.gameData,
                 iconDataManager,
                 gameItemsManager,
-                characterDressManager);
+                characterDressManager,
+                innFoodManager,
+                npcInfoManager);
             //设置图标
             Sprite spIcon = itemData.spPreIcon;
             Image ivIcon = CptUtil.GetCptInChildrenByName<Image>(objPre, "Icon");

@@ -140,6 +140,8 @@ public class ItemGameBackpackEquipCpt : ItemGameBackpackCpt, SkillInfoManager.IC
             uiGameManager.gameItemsManager,
             uiGameManager.iconDataManager,
             uiGameManager.characterDressManager,
+            uiGameManager.innFoodManager,
+            uiGameManager.npcInfoManager,
             uiGameManager.gameDataManager.gameData, characterData, skillInfo.pre_data, out string reason);
         if (!isPre)
         {

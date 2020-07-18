@@ -118,8 +118,12 @@ public class EditorUI
         GUILayout.Label("NPCID：", GUILayout.Width(100), GUILayout.Height(20));
         npcInfo.id = long.Parse(EditorGUILayout.TextArea(npcInfo.id + "", GUILayout.Width(100), GUILayout.Height(20)));
         npcInfo.npc_id = npcInfo.id;
+        GUILayout.BeginHorizontal();
         npcInfo.npc_type = (int)GUIEnum<NpcTypeEnum>("Npc类型：", npcInfo.npc_type);
         NpcTypeEnum npcType = (NpcTypeEnum)npcInfo.npc_type;
+        GUILayout.Label("对话选项：", GUILayout.Width(100), GUILayout.Height(20));
+        npcInfo.talk_types = EditorUI.GUIEditorText(npcInfo.talk_types,50);
+        GUILayout.EndHorizontal();
         if (npcType != NpcTypeEnum.Passerby)
         {
             GUILayout.BeginHorizontal();

@@ -183,13 +183,12 @@ public class GameDataBean
     /// <returns></returns>
     public bool AddFoodMenu(long menuId)
     {
-        //检测是否已经学过
-        foreach (MenuOwnBean itemData in listMenu)
+        // 检测是否已经学过
+        bool hasMenu =  CheckHasMenu(menuId);
+        if (hasMenu)
         {
-            if (itemData.menuId == menuId)
-            {
-                return false;
-            }
+            //已经有了 添加失败
+            return false;
         }
         MenuOwnBean menuOwn = new MenuOwnBean
         {
@@ -198,6 +197,8 @@ public class GameDataBean
         listMenu.Add(menuOwn);
         return true;
     }
+
+
 
     /// <summary>
     /// 增加一个新的道具
@@ -544,6 +545,23 @@ public class GameDataBean
             }
         }
         return true;
+    }
+
+    /// <summary>
+    /// 检测是否已经学过
+    /// </summary>
+    /// <param name="menuId"></param>
+    /// <returns></returns>
+    public bool CheckHasMenu(long menuId)
+    {
+        foreach (MenuOwnBean itemData in listMenu)
+        {
+            if (itemData.menuId == menuId)
+            {
+                return true;
+            }
+        }
+        return false;
     }
 
     /// <summary>

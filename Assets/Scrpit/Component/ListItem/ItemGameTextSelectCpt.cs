@@ -62,7 +62,9 @@ public class ItemGameTextSelectCpt : ItemGameBaseCpt, DialogView.IDialogCallBack
                     uiGameManager.gameDataManager.gameData,
                     uiGameManager.iconDataManager,
                     uiGameManager.gameItemsManager,
-                    uiGameManager.characterDressManager);
+                    uiGameManager.characterDressManager,
+                    uiGameManager.innFoodManager,
+                    uiGameManager.npcInfoManager);
                 if (!itemPreData.isPre)
                 {
                     uiGameText.uiGameManager.toastManager.ToastHint(itemPreData.spPreIcon, itemPreData.preFailStr);
