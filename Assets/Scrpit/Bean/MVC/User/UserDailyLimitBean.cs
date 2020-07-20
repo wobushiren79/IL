@@ -32,7 +32,7 @@ public class UserDailyLimitBean
         else
             exchangeMoneyL = levelStar + (levelTitle - 1) * 5;
         //每日事件数量
-        numberForEvent = (levelTitle==0 ? 1:  (levelTitle - 1) * 5 + levelStar + 1);
+        numberForEvent = (levelTitle==0 ? 3 :  (levelTitle - 1) * 5 + levelStar + 3);
 
         listNpcGift.Clear();
         listNpcTalk.Clear();

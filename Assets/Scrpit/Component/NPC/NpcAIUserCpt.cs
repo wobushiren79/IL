@@ -8,7 +8,7 @@ public class NpcAIUserCpt : BaseNpcAI
         base.SetCharacterData(gameItemsManager, characterBean);
         characterData.GetAttributes(gameItemsManager,
           out CharacterAttributesBean totalAttributes, out CharacterAttributesBean selfAttributes, out CharacterAttributesBean equipAttributes);
-        float speed = 2 + (totalAttributes.speed / 50f);
+        float speed = 2.5f + (totalAttributes.speed / 100f);
         characterMoveCpt.SetMoveSpeed(speed);
     }
 }

@@ -8,11 +8,11 @@ public class GameConfigBean
     //语言
     public string language="cn";
     //音效大小
-    public float soundVolume = 1;
+    public float soundVolume = 0.5f;
     //音乐大小
-    public float musicVolume = 1;
+    public float musicVolume = 0.5f;
     //环境音乐大小
-    public float environmentVolume = 1;
+    public float environmentVolume = 0.5f;
     //自动保存时间
     public float autoSaveTime = 30;
 

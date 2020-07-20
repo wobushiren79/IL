@@ -84,7 +84,6 @@ public class InnPayHandler : BaseMonoBehaviour
     /// </summary>
     public bool SetPay(OrderForCustomer orderForCustomer, NpcAIWorkerCpt workNpc)
     {
-
         if (workNpc != null && orderForCustomer.counter.counterStatus == BuildCounterCpt.CounterStatusEnum.Idle)
         {
             orderForCustomer.counter.SetCounterStatus(BuildCounterCpt.CounterStatusEnum.Ready);
@@ -98,7 +97,7 @@ public class InnPayHandler : BaseMonoBehaviour
     }
 
     /// <summary>
-    /// 设置算账数据
+    /// 设置算账数据  
     /// </summary>
     public bool SetPay(OrderForCustomer orderForCustomer)
     {

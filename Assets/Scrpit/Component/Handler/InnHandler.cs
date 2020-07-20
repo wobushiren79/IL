@@ -472,19 +472,15 @@ public class InnHandler : BaseMonoBehaviour, IBaseObserver
         for (int i = 0; i < listWork.Count; i++)
         {
             NpcAIWorkerCpt itemWorker = listWork[i];
-            //如果该工作者此时空闲
-            if (itemWorker.workerIntent == NpcAIWorkerCpt.WorkerIntentEnum.Idle)
-            {
-                //通过优先级设置工作
-                itemWorker.SetWorkByPriority();
-            }
+            //通过优先级设置工作
+            itemWorker.SetWorkByPriority();
         }
     }
 
     /// <summary>
     /// 通过不同的工作类型分配不同的工作
     /// </summary>
-    public bool DistributionWorkForType(WorkerEnum workType, NpcAIWorkerCpt workNpc)
+    public bool DistributionWorkForType(WorkerEnum workType,NpcAIWorkerCpt workNpc)
     {
         switch (workType)
         {

@@ -184,7 +184,7 @@ public class InnAttributesBean
         maxAesthetics = 0;
         aesthetics = this.aesthetics;
         GetInnLevel(out int levelTitle, out int levelStar);
-        maxAesthetics = levelTitle == 0 ? (100) : ((levelTitle - 1) * 300 + levelStar * 50 + 100);
+        maxAesthetics = levelTitle == 0 ? (50) : ((levelTitle - 1) * 300 + levelStar * 50 + 50);
     }
 
     /// <summary>

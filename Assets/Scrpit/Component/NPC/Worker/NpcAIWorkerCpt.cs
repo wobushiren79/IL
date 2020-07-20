@@ -102,16 +102,22 @@ public class NpcAIWorkerCpt : BaseNpcAI
     /// <summary>
     /// 通过优先级设置工作
     /// </summary>
-    public void SetWorkByPriority()
-    {
+    public bool SetWorkByPriority()
+    {   
+        //如果该工作者此时空闲
+        if (workerIntent != WorkerIntentEnum.Idle)
+        {
+            return false;
+        }
         foreach (CharacterWorkerBaseBean itemWorkerInfo in listWorkerInfo)
         {
             if (!itemWorkerInfo.isWorking)
                 continue;
             bool isDistributionSuccess = innHandler.DistributionWorkForType(itemWorkerInfo.workerType, this);
             if (isDistributionSuccess)
-                return;
+                return true;
         }
+        return false;
     }
 
     /// <summary>
@@ -127,7 +133,7 @@ public class NpcAIWorkerCpt : BaseNpcAI
     /// </summary>
     public void HandleForIdle()
     {
-  
+
     }
 
     /// <summary>
@@ -189,8 +195,8 @@ public class NpcAIWorkerCpt : BaseNpcAI
     /// </summary>
     public void SetIntentForIdle()
     {
-       //有一定概率发呆
-        if (characterData.CalculationWorkerDaze(gameItemsManager,gameDataManager))
+        //有一定概率发呆
+        if (characterData.CalculationWorkerDaze(gameItemsManager, gameDataManager))
         {
             SetIntent(WorkerIntentEnum.Daze);
         }
@@ -201,8 +207,8 @@ public class NpcAIWorkerCpt : BaseNpcAI
             if (action == 0)
             {
                 //闲逛
-               Vector3 movePosition = innHandler.GetRandomInnPositon();
-               SetCharacterMove(movePosition);
+                Vector3 movePosition = innHandler.GetRandomInnPositon();
+                SetCharacterMove(movePosition);
             }
             StartCoroutine(CoroutineForIdle());
         }

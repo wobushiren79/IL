@@ -53,13 +53,13 @@ MonoBehaviour:
   m_Padding:
     m_Left: 5
     m_Right: 5
-    m_Top: 15
-    m_Bottom: 15
+    m_Top: 10
+    m_Bottom: 10
   m_ChildAlignment: 4
   m_StartCorner: 0
   m_StartAxis: 0
-  m_CellSize: {x: 180, y: 230}
-  m_Spacing: {x: 20, y: 20}
+  m_CellSize: {x: 190, y: 250}
+  m_Spacing: {x: 5, y: 5}
   m_Constraint: 0
   m_ConstraintCount: 2
 --- !u!114 &6889042820277592119
@@ -634,8 +634,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 401.5, y: -130}
-  m_SizeDelta: {x: 180, y: 230}
+  m_AnchoredPosition: {x: 401.5, y: -135}
+  m_SizeDelta: {x: 190, y: 250}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &6889042821273704602
 CanvasRenderer:
@@ -712,7 +712,6 @@ MonoBehaviour:
         priority: 0
         isWorking: 1
         cookNumber: 0
-        cookTime: 0
         listFoodCookNumer: []
       waiterInfo:
         workerType: 2
@@ -722,7 +721,6 @@ MonoBehaviour:
         isWorking: 1
         cleanTotalNumber: 0
         sendTotalNumber: 0
-        cleanTotalTime: 0
       accountantInfo:
         workerType: 3
         workerLevel: 0
@@ -741,7 +739,6 @@ MonoBehaviour:
         accountingMoneyL: 0
         accountingMoneyM: 0
         accountingMoneyS: 0
-        accountingTotalTime: 0
       accostInfo:
         workerType: 4
         workerLevel: 0
@@ -751,7 +748,6 @@ MonoBehaviour:
         accostTotalNumber: 0
         accostSuccessNumber: 0
         accostFailNumber: 0
-        accostTotalTime: 0
       beaterInfo:
         workerType: 5
         workerLevel: 0
@@ -761,8 +757,6 @@ MonoBehaviour:
         fightTotalNumber: 0
         fightWinNumber: 0
         fightLoseNumber: 0
-        fightTotalTime: 0
-        restTotalTime: 0
       workerStatus: 0
       listLoveItems: 
     attributes:
@@ -831,7 +825,7 @@ MonoBehaviour:
       name: 
       position_x: 0
       position_y: 0
-      talk_ids: 
+      talk_types: 
       skill_ids: 
       attributes_loyal: 0
       attributes_life: 0

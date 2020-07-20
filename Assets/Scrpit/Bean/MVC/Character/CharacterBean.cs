@@ -321,7 +321,7 @@ public class CharacterBean
         }
         else
         {
-            successRate = 0.4f + totalAttributes.loyal * 0.006f;
+            successRate = 0.8f + totalAttributes.loyal * 0.002f;
         }
 
         if (successRate >= randomRate)
