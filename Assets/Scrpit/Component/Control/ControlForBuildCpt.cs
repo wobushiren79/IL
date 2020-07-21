@@ -59,6 +59,7 @@ public class ControlForBuildCpt : BaseControl
 
     private void Update()
     {
+        HandleForMouseMove();
         //检测是否控制镜头移动
         HandleForCameraMove();
         //如果没有选中则不进行以下检测
@@ -215,6 +216,16 @@ public class ControlForBuildCpt : BaseControl
         }
     }
 
+    /// <summary>
+    /// 处理-镜头移动
+    /// </summary>
+    protected void HandleForMouseMove()
+    {
+        if (cameraMove == null)
+            return;
+        base.HandleForMouseMove(out float moveX,out float moveY);
+        cameraMove.Move(moveX, moveY);
+    }
     /// <summary>
     ///  处理-建筑旋转
     /// </summary>

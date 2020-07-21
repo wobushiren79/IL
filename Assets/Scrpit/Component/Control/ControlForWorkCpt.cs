@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using UnityEditor;
+using System;
 
 public class ControlForWorkCpt : BaseControl,DialogView.IDialogCallBack
 {
@@ -31,6 +32,7 @@ public class ControlForWorkCpt : BaseControl,DialogView.IDialogCallBack
 
     private void FixedUpdate()
     {
+        HandleForMouseMove();
         HandleForControlMove();
         HandleForFollowMove();
     }
@@ -117,6 +119,7 @@ public class ControlForWorkCpt : BaseControl,DialogView.IDialogCallBack
         }
     }
 
+
     public override void StartControl()
     {
         base.StartControl();
@@ -125,6 +128,21 @@ public class ControlForWorkCpt : BaseControl,DialogView.IDialogCallBack
         cameraMove.maxMoveX = gameDataManager.gameData.GetInnBuildData().innWidth + 5;
         cameraMove.minMoveY = -5;
         cameraMove.maxMoveY = gameDataManager.gameData.GetInnBuildData().innHeight + 5;
+    }
+
+
+    /// <summary>
+    /// 鼠标控制镜头移动
+    /// </summary>
+    public void HandleForMouseMove()
+    {
+        if (cameraMove == null)
+            return;
+        //如果有选中NPC查看则无法控制镜头移动
+        if (dialogSelectView)
+            return;
+        base.HandleForMouseMove(out float moveX,out float moveY);
+        cameraMove.Move(moveX, moveY);
     }
 
     /// <summary>

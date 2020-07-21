@@ -93,8 +93,9 @@ public class BaseControl : BaseMonoBehaviour
         if (camera2D != null)
         {
             camera2D.transform.position = new Vector3(position.x, position.y, camera2D.transform.position.z);
-        }   
-;    }
+        }
+;
+    }
 
     /// <summary>
     /// 设置镜头远近
@@ -112,5 +113,35 @@ public class BaseControl : BaseMonoBehaviour
     public void SetCameraOrthographicSize()
     {
         SetCameraOrthographicSize(7);
+    }
+
+
+    /// <summary>
+    /// 鼠标移动处理
+    /// </summary>
+    public virtual void HandleForMouseMove(out float moveX, out float moveY)
+    {
+        moveX = 0;
+        moveY = 0;
+
+        Vector3 mousePosition = Input.mousePosition;
+
+        if (mousePosition.x <= 25)
+        {
+            moveX = -1f;
+        }
+        else if (mousePosition.x >= Screen.width - 25)
+        {
+            moveX = 1f;
+        }
+
+        if (mousePosition.y <= 25)
+        {
+            moveY = -1f;
+        }
+        else if (mousePosition.y >= Screen.height - 25)
+        {
+            moveY = 1f;
+        }
     }
 }
