@@ -25,10 +25,9 @@ public class AudioHandler : BaseHandler
     public void InitAudio()
     {
         audioSourceForMusic.volume = GameCommonInfo.GameConfig.musicVolume;
-        audioSourceForEnvironment.volume = GameCommonInfo.GameConfig.soundVolume;
+        audioSourceForSound.volume = GameCommonInfo.GameConfig.soundVolume;
+        audioSourceForEnvironment.volume = GameCommonInfo.GameConfig.environmentVolume;
     }
-
-
 
     /// <summary>
     ///  循环播放音乐
@@ -95,6 +94,7 @@ public class AudioHandler : BaseHandler
     public void PlaySound(AudioSoundEnum sound, Vector3 soundPosition, float volumeScale)
     {
         AudioClip audioClip = null;
+        AudioSource audioSource = audioSourceForSound;
         switch (sound)
         {
             case AudioSoundEnum.ButtonForNormal:
@@ -117,6 +117,7 @@ public class AudioHandler : BaseHandler
                 break;
             case AudioSoundEnum.Thunderstorm:
                 audioClip = audioManager.GetSoundClip("sound_thunderstorm_1");
+                audioSource = audioSourceForEnvironment;
                 break;
             case AudioSoundEnum.Damage:
                 audioClip = audioManager.GetSoundClip("sound_damage_1");
@@ -204,7 +205,7 @@ public class AudioHandler : BaseHandler
                 break;
         }
         if (audioClip != null)
-            audioSourceForSound.PlayOneShot(audioClip, volumeScale);
+            audioSource.PlayOneShot(audioClip, volumeScale);
         // AudioSource.PlayClipAtPoint(soundClip, soundPosition,volumeScale);
     }
     public void PlaySound(AudioSoundEnum sound)
@@ -236,7 +237,7 @@ public class AudioHandler : BaseHandler
                 audioClip = audioManager.GetEnvironmentClip("environment_wind_1");
                 break;
         }
-        audioSourceForMusic.volume = volumeScale;
+        audioSourceForEnvironment.volume = volumeScale;
         audioSourceForEnvironment.clip = audioClip;
         audioSourceForEnvironment.Play();
     }
