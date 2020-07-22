@@ -126,20 +126,20 @@ public class BaseControl : BaseMonoBehaviour
 
         Vector3 mousePosition = Input.mousePosition;
 
-        if (mousePosition.x <= 25)
+        if (mousePosition.x <= 25 && mousePosition.x >=0)
         {
             moveX = -1f;
         }
-        else if (mousePosition.x >= Screen.width - 25)
+        else if (mousePosition.x >= Screen.width - 25 && mousePosition.x <= Screen.width)
         {
             moveX = 1f;
         }
 
-        if (mousePosition.y <= 25)
+        if (mousePosition.y <= 25 && mousePosition.y >= 0)
         {
             moveY = -1f;
         }
-        else if (mousePosition.y >= Screen.height - 25)
+        else if (mousePosition.y >= Screen.height - 25 && mousePosition.y <= Screen.height)
         {
             moveY = 1f;
         }

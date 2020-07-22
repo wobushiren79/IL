@@ -39,7 +39,7 @@ public class NpcAICustomerForGuestTeamCpt : NpcAICustomerCpt
     /// 设置队伍ID
     /// </summary>
     /// <param name="teamId"></param>
-    public void SetTeamData(string teamCode,NpcTeamBean teamData,int teamRank,Color teamColor)
+    public void SetTeamData(string teamCode, NpcTeamBean teamData, int teamRank, Color teamColor)
     {
         this.teamCode = teamCode;
         this.teamData = teamData;
@@ -107,7 +107,7 @@ public class NpcAICustomerForGuestTeamCpt : NpcAICustomerCpt
         SetCharacterFace(orderForCustomer.table.GetUserFace());
         //点餐
         //判断是否有团队喜欢的菜
-        List<long> loveMenus = new List<long>() ;
+        List<long> loveMenus = new List<long>();
         if (teamData != null)
         {
             loveMenus = teamData.GetLoveMenus();
@@ -143,8 +143,10 @@ public class NpcAICustomerForGuestTeamCpt : NpcAICustomerCpt
         //如果没有这菜 甚至连茶都没有
         else
         {
-            //如果没有菜品出售 心情直接降100 
-            ChangeMood(-9999);
+            //如果没有菜品出售 心情直接降为不加好感
+            SetMood(30,true);
+            EndOrderAndLeave(true);
+
             characterShoutCpt.Shout(GameCommonInfo.GetUITextById(13002));
         }
     }
@@ -154,7 +156,7 @@ public class NpcAICustomerForGuestTeamCpt : NpcAICustomerCpt
     /// </summary>
     public override void IntentForWant()
     {
-       Vector3 doorPosition = innHandler.GetRandomEntrancePosition();
+        Vector3 doorPosition = innHandler.GetRandomEntrancePosition();
         //移动到门口附近
         if (doorPosition == null || doorPosition == Vector3.zero)
         {
@@ -249,6 +251,38 @@ public class NpcAICustomerForGuestTeamCpt : NpcAICustomerCpt
     public override void ChangeMood(float mood)
     {
         ChangeMood(mood, true);
+    }
+
+    public void SetMood(float mood, bool isNotice)
+    {
+        base.SetMood(mood);
+        //通知其他团队成员
+        if (!isNotice)
+            return;
+        List<NpcAICustomerForGuestTeamCpt> listTeamMember = GetGuestTeam();
+        foreach (NpcAICustomerForGuestTeamCpt teamMember in listTeamMember)
+        {
+            if (teamMember != this)
+            {
+                teamMember.SetMood(mood, false);
+            }
+        }
+    }
+
+    public void EndOrderAndLeave(bool isNotice)
+    {
+        base.EndOrderAndLeave();
+        if (!isNotice)
+            return;
+        //通知其他团队成员
+        List<NpcAICustomerForGuestTeamCpt> listTeamMember = GetGuestTeam();
+        foreach (NpcAICustomerForGuestTeamCpt teamMember in listTeamMember)
+        {
+            if (teamMember != this)
+            {
+                teamMember.EndOrderAndLeave(false);
+            }
+        }
     }
 
     /// <summary>

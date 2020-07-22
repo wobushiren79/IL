@@ -431,9 +431,37 @@ public class NpcAICustomerCpt : BaseNpcAI
         characterMoodCpt.SetMood(orderForCustomer.innEvaluation.GetPraise());
         if (orderForCustomer.innEvaluation.mood <= 0)
         {
-            StopAllCoroutines();
             //如果有订单。强制结束订单
-            innHandler.EndOrderForForce(orderForCustomer,true);
+            EndOrderAndLeave();
+        }
+    }
+
+    /// <summary>
+    /// 设置心情
+    /// </summary>
+    /// <param name="mood"></param>
+    public virtual void SetMood(float mood)
+    {
+        if (orderForCustomer == null)
+            return;
+        orderForCustomer.innEvaluation.SetMood(mood);
+        characterMoodCpt.SetMood(orderForCustomer.innEvaluation.GetPraise());
+        if (orderForCustomer.innEvaluation.mood <= 0)
+        {
+            //如果有订单。强制结束订单
+            EndOrderAndLeave();
+        }
+    }
+    
+    /// <summary>
+    /// 结束订单并且离开
+    /// </summary>
+    public virtual void EndOrderAndLeave()
+    {
+        if (orderForCustomer != null)
+        {
+            StopAllCoroutines();
+            innHandler.EndOrderForForce(orderForCustomer, true);
             SetIntent(CustomerIntentEnum.Leave);
         }
     }

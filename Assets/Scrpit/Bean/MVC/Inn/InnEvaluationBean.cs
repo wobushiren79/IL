@@ -16,6 +16,11 @@ public class InnEvaluationBean
             mood = 100;
     }
 
+    public void SetMood(float mood)
+    {
+        this.mood = mood;
+    }
+
     /// <summary>
     /// 根据心情不同给出不同的评价
     /// </summary>

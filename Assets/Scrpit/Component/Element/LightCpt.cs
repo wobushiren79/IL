@@ -44,7 +44,7 @@ public class LightCpt : BaseMonoBehaviour
             light2D.gameObject.SetActive(true);
         float changeIntensity = 0;
         Tween tween = DOTween
-            .To(() => changeIntensity, x => changeIntensity = x, targetIntensity, 3)
+            .To(() => changeIntensity, x => changeIntensity = x, targetIntensity, 10)
             .OnUpdate(() => { light2D.intensity = changeIntensity; })
             .OnKill(() => { light2D.intensity = targetIntensity; });
     }
