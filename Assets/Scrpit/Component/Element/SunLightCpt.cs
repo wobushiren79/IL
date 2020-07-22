@@ -39,7 +39,7 @@ public class SunLightCpt : LightCpt
         {
             leap = (hour * 60 + min) / (12f * 60f);
         }
-        else if (hour > 12 && hour < 16)
+        else if (hour > 12 && hour < 15)
         {
             leap = 1;
         }
