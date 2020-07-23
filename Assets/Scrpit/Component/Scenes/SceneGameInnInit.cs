@@ -122,7 +122,18 @@ public class SceneGameInnInit : BaseSceneInit, IBaseObserver, DialogView.IDialog
         //随机化一个天气
         if (weatherHandler != null)
         {
-            WeatherBean weatherData = weatherHandler.RandomWeather();
+            WeatherBean weatherData = null;
+            if (gameDataManager.gameData.gameTime.month == 4 && gameDataManager.gameData.gameTime.day == 1)
+            {
+                //冬月的第一天必定下大雪
+                weatherData = new WeatherBean(WeatherTypeEnum.Snow);
+                weatherHandler.SetWeahter(weatherData);
+            }
+            else
+            {
+                weatherData = weatherHandler.RandomWeather();
+
+            }
             GameCommonInfo.CurrentDayData.weatherToday = weatherData;
         }
     }
