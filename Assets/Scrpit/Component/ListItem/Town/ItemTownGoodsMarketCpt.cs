@@ -4,7 +4,7 @@ using UnityEngine.UI;
 using System.Collections.Generic;
 using System.Linq;
 
-public class ItemTownGoodsMarketCpt : ItemGameBaseCpt,DialogView.IDialogCallBack
+public class ItemTownGoodsMarketCpt : ItemGameBaseCpt, DialogView.IDialogCallBack
 {
     public Image ivIcon;
     public Text tvName;
@@ -213,14 +213,14 @@ public class ItemTownGoodsMarketCpt : ItemGameBaseCpt,DialogView.IDialogCallBack
         {
             //price_l = goodsData.price_l * 2;
             //price_m = goodsData.price_m * 2;
-            price_s = goodsData.price_s * 2;
+            price_s = (long)(goodsData.price_s * 1.5f);
 
         }
         else if (listSeasonsFall.Contains(currentSeasons))
         {
             //price_l = goodsData.price_l / 2;
             //price_m = goodsData.price_m / 2;
-            price_s = goodsData.price_s / 2;
+            price_s = (long)(goodsData.price_s / 1.5f);
         }
         else
         {
@@ -235,9 +235,9 @@ public class ItemTownGoodsMarketCpt : ItemGameBaseCpt,DialogView.IDialogCallBack
         price_s += Random.Range(-2, 3);
 
         //好感加成
-        CharacterFavorabilityBean marketBossFavorability= gameDataManager.gameData.GetCharacterFavorability(10001);
-        int addPriceForFavorability = (int)System.Math.Round(price_s * (marketBossFavorability.favorabilityLevel * 0.04f), 0);
-        price_s = price_s - addPriceForFavorability;
+        //CharacterFavorabilityBean marketBossFavorability= gameDataManager.gameData.GetCharacterFavorability(10001);
+        //int addPriceForFavorability = (int)System.Math.Round(price_s * (marketBossFavorability.favorabilityLevel * 0.04f), 0);
+        //price_s = price_s - addPriceForFavorability;
 
         //最低价格控制
         if (price_s < 1)
