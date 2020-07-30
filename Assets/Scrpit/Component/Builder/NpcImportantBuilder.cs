@@ -65,6 +65,15 @@ public class NpcImportantBuilder : BaseMonoBehaviour
         npcObj.transform.localScale = new Vector3(1, 1);
         NpcAIImportantCpt aiCpt = npcObj.GetComponent<NpcAIImportantCpt>();
         aiCpt.SetCharacterData(characterData);
+        //如果没有对话选项则不能互动
+        BoxCollider2D talkBox = npcObj.GetComponent<BoxCollider2D>();
+        if (talkBox != null)
+        {
+            if (CheckUtil.StringIsNull(characterData.npcInfoData.talk_types) )
+            {
+                talkBox.enabled = false;
+            }
+        }
         return aiCpt;
     }
 

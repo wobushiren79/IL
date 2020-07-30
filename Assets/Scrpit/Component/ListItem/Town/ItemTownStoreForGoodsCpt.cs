@@ -89,23 +89,28 @@ public class ItemTownStoreForGoodsCpt : ItemTownStoreCpt, DialogView.IDialogCall
         Sprite spIcon = null;
         Vector2 offsetMin = new Vector2(0, 0);
         Vector2 offsetMax = new Vector2(0, 0);
-        switch ((GeneralEnum)int.Parse(mark))
+
+        if (!CheckUtil.StringIsNull(mark))
         {
-            case GeneralEnum.Hat:
-                offsetMin = new Vector2(-50, -75);
-                offsetMax = new Vector2(50, 25);
-                break;
-            case GeneralEnum.Clothes:
-                offsetMin = new Vector2(-50, -25);
-                offsetMax = new Vector2(50, 75);
-                break;
-            case GeneralEnum.Shoes:
-                offsetMin = new Vector2(-50, 0);
-                offsetMax = new Vector2(50, 100);
-                break;
-            default:
-                break;
+            switch ((GeneralEnum)int.Parse(mark))
+            {
+                case GeneralEnum.Hat:
+                    offsetMin = new Vector2(-50, -75);
+                    offsetMax = new Vector2(50, 25);
+                    break;
+                case GeneralEnum.Clothes:
+                    offsetMin = new Vector2(-50, -25);
+                    offsetMax = new Vector2(50, 75);
+                    break;
+                case GeneralEnum.Shoes:
+                    offsetMin = new Vector2(-50, 0);
+                    offsetMax = new Vector2(50, 100);
+                    break;
+                default:
+                    break;
+            }
         }
+
         spIcon = GeneralEnumTools.GetGeneralSprite(itemsInfo, iconDataManager, gameItemsManager, characterDressManager,false);
         if (ivIcon != null && spIcon != null)
             ivIcon.sprite = spIcon;
