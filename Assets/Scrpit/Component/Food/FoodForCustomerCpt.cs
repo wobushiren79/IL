@@ -93,7 +93,7 @@ public class FoodForCustomerCpt : BaseMonoBehaviour
 
 
         //食物完结动画
-        transform.DOPunchScale(new Vector3(0.5f, 0.5f, 0.5f), 0.3f, 10, 1f);
+        transform.DOPunchScale(new Vector3(0.5f, 0.5f, 0.5f), 0.3f);
 
 
     }
