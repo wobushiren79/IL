@@ -40,6 +40,10 @@ public class NpcAIWorkerCpt : BaseNpcAI
     public WorkerIntentEnum workerIntent = WorkerIntentEnum.Idle;
     //工作信息
     public List<CharacterWorkerBaseBean> listWorkerInfo = new List<CharacterWorkerBaseBean>();
+    //是否开启偷懒
+    public bool dazeEnabled = true;
+    //偷懒缓冲时间
+    public float dazeBufferTime = 0;
 
     private void FixedUpdate()
     {
@@ -49,6 +53,29 @@ public class NpcAIWorkerCpt : BaseNpcAI
                 HandleForIdle();
                 break;
         }
+
+        if (dazeBufferTime > 0)
+        {
+            dazeBufferTime -= Time.deltaTime;
+        }
+    }
+
+    /// <summary>
+    /// 设置偷懒开关
+    /// </summary>
+    /// <param name="isOpenDaze"></param>
+    public void SetDazeEnabled(bool dazeEnabled)
+    {
+        this.dazeEnabled = dazeEnabled;
+    }
+
+    /// <summary>
+    /// 设置偷懒缓冲时间
+    /// </summary>
+    /// <param name="bufferTime"></param>
+    public void SetDazeBufferTime(float bufferTime)
+    {
+        dazeBufferTime = bufferTime;
     }
 
     /// <summary>
@@ -86,6 +113,11 @@ public class NpcAIWorkerCpt : BaseNpcAI
                 statusStr = GameCommonInfo.GetUITextById(177);
                 break;
         }
+        return workerIntent;
+    }
+
+    public WorkerIntentEnum GetWorkerStatus()
+    {
         return workerIntent;
     }
 
@@ -177,6 +209,7 @@ public class NpcAIWorkerCpt : BaseNpcAI
         NotifyAllObserver((int)WorkerNotifyEnum.StatusChange, (int)workerIntent);
     }
 
+
     public void SetIntent(WorkerIntentEnum workerIntent)
     {
         SetIntent(workerIntent, null, null);
@@ -196,7 +229,7 @@ public class NpcAIWorkerCpt : BaseNpcAI
     public void SetIntentForIdle()
     {
         //有一定概率发呆
-        if (characterData.CalculationWorkerDaze(gameItemsManager, gameDataManager))
+        if (dazeEnabled &&  dazeBufferTime <= 0 && characterData.CalculationWorkerDaze(gameItemsManager, gameDataManager))
         {
             SetIntent(WorkerIntentEnum.Daze);
         }

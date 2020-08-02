@@ -1,8 +1,9 @@
 ﻿using UnityEngine;
 using UnityEditor;
 using System;
+using System.Collections.Generic;
 
-public class ControlForWorkCpt : BaseControl,DialogView.IDialogCallBack
+public class ControlForWorkCpt : BaseControl, DialogView.IDialogCallBack
 {
     //角色移动组建
     public CharacterMoveCpt cameraMove;
@@ -10,6 +11,10 @@ public class ControlForWorkCpt : BaseControl,DialogView.IDialogCallBack
     protected GameDataManager gameDataManager;
     protected DialogManager dialogManager;
     protected AudioHandler audioHandler;
+
+    //指针控制
+    public CursorHandler cursorHandler;
+    public List<Texture2D> listTexCursorDaze;
 
     //选中的NPC
     public BaseNpcAI selectNpc;
@@ -21,8 +26,9 @@ public class ControlForWorkCpt : BaseControl,DialogView.IDialogCallBack
     private void Awake()
     {
         gameDataManager = Find<GameDataManager>(ImportantTypeEnum.GameDataManager);
-        dialogManager= Find<DialogManager>(ImportantTypeEnum.DialogManager);
-        audioHandler= Find<AudioHandler>(ImportantTypeEnum.AudioHandler);
+        dialogManager = Find<DialogManager>(ImportantTypeEnum.DialogManager);
+        audioHandler = Find<AudioHandler>(ImportantTypeEnum.AudioHandler);
+        cursorHandler = Find<CursorHandler>(ImportantTypeEnum.CursorHandler);
     }
 
     private void Update()
@@ -73,8 +79,36 @@ public class ControlForWorkCpt : BaseControl,DialogView.IDialogCallBack
             if (!CheckIsInBorder(selectNpc.transform.position))
             {
                 ClearSelect();
-            }      
+            }
         }
+    }
+
+    /// <summary>
+    /// 偷懒员工处理
+    /// </summary>
+    public NpcAIWorkerCpt HandleForDazeWorker()
+    {
+        Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        RaycastHit2D[] hitAll = Physics2D.RaycastAll(mousePos, Vector2.zero);
+        foreach (RaycastHit2D itemHit in hitAll)
+        {
+            if (itemHit.collider.transform.tag.Equals(TagInfo.Tag_NpcBody))
+            {
+                GameObject objSelect = itemHit.collider.gameObject;
+                NpcAIWorkerCpt npcAIWorker = objSelect.GetComponentInParent<NpcAIWorkerCpt>();
+                if (npcAIWorker)
+                {
+                    //如果在偷懒 则惊醒
+                    if (npcAIWorker.GetWorkerStatus() == NpcAIWorkerCpt.WorkerIntentEnum.Daze)
+                    {
+                        cursorHandler.SetCursor( CursorHandler.CursorType.Knock);
+                        return npcAIWorker;
+                    }
+                }
+            }
+        }
+        cursorHandler.SetCursor(CursorHandler.CursorType.Def);
+        return null;
     }
 
     /// <summary>
@@ -82,6 +116,9 @@ public class ControlForWorkCpt : BaseControl,DialogView.IDialogCallBack
     /// </summary>
     public void HandleForSelect()
     {
+        //偷懒员工选中处理
+        NpcAIWorkerCpt workerDaze = HandleForDazeWorker();
+
         if (Input.GetButtonDown(InputInfo.Confirm))
         {
             if (dialogSelectView != null)
@@ -92,7 +129,15 @@ public class ControlForWorkCpt : BaseControl,DialogView.IDialogCallBack
             {
                 return;
             }
-
+            //如有已经提前选中了偷懒的员工
+            if (workerDaze != null)
+            {
+                audioHandler.PlaySound(AudioSoundEnum.Fight);
+                workerDaze.SetExpression(CharacterExpressionCpt.CharacterExpressionEnum.Surprise, 3);
+                workerDaze.SetDazeBufferTime(10);
+                workerDaze.SetIntent(NpcAIWorkerCpt.WorkerIntentEnum.Idle);
+                return;
+            }
             RaycastHit2D[] hitAll = Physics2D.RaycastAll(mousePos, Vector2.zero);
             foreach (RaycastHit2D itemHit in hitAll)
             {
@@ -104,12 +149,13 @@ public class ControlForWorkCpt : BaseControl,DialogView.IDialogCallBack
                     {
                         audioHandler.PlaySound(AudioSoundEnum.ButtonForShow);
                         DialogBean dialogData = new DialogBean();
-                        dialogSelectView = dialogManager.CreateDialog(DialogEnum.SelectForNpc, this,dialogData);
+                        dialogSelectView = dialogManager.CreateDialog(DialogEnum.SelectForNpc, this, dialogData);
                         ((SelectForNpcDialogView)dialogSelectView).SetData(selectNpc);
                         //如果是员工
-                        if(selectNpc as NpcAIWorkerCpt)
+                        if (selectNpc as NpcAIWorkerCpt)
                         {
-
+                            NpcAIWorkerCpt npcAIWorker = selectNpc as NpcAIWorkerCpt;
+                            npcAIWorker.SetDazeEnabled(false);
                         }
                         return;
                     }
@@ -141,7 +187,7 @@ public class ControlForWorkCpt : BaseControl,DialogView.IDialogCallBack
         //如果有选中NPC查看则无法控制镜头移动
         if (dialogSelectView)
             return;
-        base.HandleForMouseMove(out float moveX,out float moveY);
+        base.HandleForMouseMove(out float moveX, out float moveY);
         cameraMove.Move(moveX, moveY);
     }
 
@@ -150,12 +196,19 @@ public class ControlForWorkCpt : BaseControl,DialogView.IDialogCallBack
     /// </summary>
     protected void ClearSelect()
     {
+        //如果是员工
+        if (selectNpc != null && selectNpc as NpcAIWorkerCpt)
+        {
+            NpcAIWorkerCpt npcAIWorker = selectNpc as NpcAIWorkerCpt;
+            //恢复偷懒
+            npcAIWorker.SetDazeEnabled(true);
+        }
         selectNpc = null;
         if (dialogSelectView != null)
         {
             Destroy(dialogSelectView.gameObject);
             dialogSelectView = null;
-        }   
+        }
     }
 
     /// <summary>
@@ -165,7 +218,7 @@ public class ControlForWorkCpt : BaseControl,DialogView.IDialogCallBack
     /// <returns></returns>
     private bool CheckIsInBorder(Vector3 position)
     {
-        if(position.x >= cameraMove.minMoveX
+        if (position.x >= cameraMove.minMoveX
             && position.x <= cameraMove.maxMoveX
             && position.y >= cameraMove.minMoveY
             && position.y <= cameraMove.maxMoveY)
@@ -178,12 +231,12 @@ public class ControlForWorkCpt : BaseControl,DialogView.IDialogCallBack
     #region 选中弹窗回调
     public void Submit(DialogView dialogView, DialogBean dialogBean)
     {
-
+        ClearSelect();
     }
 
     public void Cancel(DialogView dialogView, DialogBean dialogBean)
     {
-
+        ClearSelect();
     }
     #endregion
 }

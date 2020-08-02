@@ -6,6 +6,7 @@ public class AudioManager : BaseManager
     public AudioBeanDictionary listMusicData;
     public AudioBeanDictionary listSoundData;
     public AudioBeanDictionary listEnvironmentData;
+
     /// <summary>
     /// 根据名字获取音乐
     /// </summary>
