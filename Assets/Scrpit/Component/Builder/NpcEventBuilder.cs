@@ -34,8 +34,8 @@ public class NpcEventBuilder : NpcNormalBuilder, IBaseObserver
     /// </summary>
     public void StartEvent()
     {
-        int eventType = UnityEngine.Random.Range(0, 8);
-        if (eventType > 3)
+        int eventType = UnityEngine.Random.Range(0, 7);
+        if (eventType > 2)
         {
             return;
         }
@@ -44,26 +44,23 @@ public class NpcEventBuilder : NpcNormalBuilder, IBaseObserver
         {
             return;
         }
-  
         switch (eventType)
         {
             case 0:
-                BuildTownFriendsForOne();
-                break;
-            case 1:
                 BuildSundry();
                 break;
-            case 2:
+            case 1:
                 BuildRascal();
                 break;
-            case 3:
+            case 2:
                 BuildConvert();
                 break;
-            case 4:
+            case 3:
                 //TODO 待定 需要处理单个朋友和团队朋友重复出现的问题
                 //BuildTownFriendsForTeam();
                 break;
         }
+        BuildTownFriendsForOne();
     }
 
     /// <summary>
