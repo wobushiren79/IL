@@ -17,8 +17,8 @@ public class UIGameDate : UIGameComponent
     public Button btRest;
 
     [Header("数据")]
-    public float animTimeForWaitNext = 1f;//动画时间
-    public float animTimeForShowDialog = 1;//动画延迟
+    protected float animTimeForWaitNext = 1f;//动画时间
+    protected float animTimeForShowDialog = 2f;//动画延迟
 
     protected GameTimeHandler gameTimeHandler;
     protected GameDataManager gameDataManager;
@@ -123,7 +123,7 @@ public class UIGameDate : UIGameComponent
         audioHandler.PlaySound( AudioSoundEnum.ButtonForShow);
         //展示是否营业框
         yield return new WaitForSeconds(animTimeForShowDialog);
-        // 第一天默认不营业
+ 
         gameTimeHandler.GetTime(out int year, out int month, out int day);
 
         List<CharacterBean> listWorker= gameDataManager.gameData.GetAllCharacterData();
@@ -135,6 +135,7 @@ public class UIGameDate : UIGameComponent
                 itemWork.baseInfo.SetWorkerStatus(WorkerStatusEnum.Rest);
             }
         }
+        // 第一年和第二年 第一天默认不营业
         if ((year == 221|| year == 222) && month == 1 && day == 1)
         {
             InnRest();
@@ -181,18 +182,25 @@ public class UIGameDate : UIGameComponent
     /// </summary>
     public void InnRest()
     {
-
         gameTimeHandler.SetDayStatus(GameTimeHandler.DayEnum.Rest);
         gameTimeHandler.SetTimeStatus(false);
 
-        //没有触发事件
+        //设置位置
+        Vector3 startPosition = innHandler.GetRandomEntrancePosition();
+        BaseControl baseControl = controlHandler.StartControl(ControlHandler.ControlEnum.Normal);
+        baseControl.SetFollowPosition(startPosition + new Vector3(0, -2, 0));
+
+        //触发事件检测 
         if (!eventHandler.EventTriggerForStory())
         {
+            //没有触发事件 直接打开UI
             uiManager.OpenUIAndCloseOtherByName(EnumUtil.GetEnumName(UIEnum.GameMain));
-            //设置位置
-            Vector3 startPosition = innHandler.GetRandomEntrancePosition();
-            BaseControl baseControl = controlHandler.StartControl(ControlHandler.ControlEnum.Normal);
-            baseControl.SetFollowPosition(startPosition + new Vector3(0,-2,0));
+        }
+        else
+        {
+            //触发了事件
+
+
         }
     }
 

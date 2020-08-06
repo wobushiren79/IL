@@ -5,6 +5,7 @@ using UnityEngine.UI;
 public class ItemGameAttendanceCpt : ItemGameWorkerCpt,IRadioButtonCallBack
 {
     public RadioButtonView rbAttendance;
+    public Image ivAttendance;
 
     private ICallBack mCallBack;
 
@@ -47,6 +48,7 @@ public class ItemGameAttendanceCpt : ItemGameWorkerCpt,IRadioButtonCallBack
         {
             rbAttendance.ChangeStates(RadioButtonView.RadioButtonStatus.Unselected);
             rbAttendance.SetEnabled(false);
+            ivAttendance.gameObject.SetActive(false);
         }
         rbAttendance.rbText.text = workerStatusStr;
         if (mCallBack != null)

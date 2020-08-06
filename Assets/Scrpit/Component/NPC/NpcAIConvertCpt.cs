@@ -247,8 +247,9 @@ public class NpcAIConvertCpt : NpcAISundryCpt,TextInfoHandler.ICallBack
                 TextInfoBean textInfo = RandomUtil.GetRandomDataByList(listShoutTextInfo);
                 characterShoutCpt.Shout(textInfo.content);
             }
-            yield return new WaitForSeconds(5);
-            time -= 5;
+            float intervalTime = Random.Range(3f,5f);
+            yield return new WaitForSeconds(intervalTime);
+            time -= intervalTime;
             if (time <= 0)
             {
                 SetIntent(ConvertIntentEnum.Idle);
@@ -271,8 +272,9 @@ public class NpcAIConvertCpt : NpcAISundryCpt,TextInfoHandler.ICallBack
                 TextInfoBean textInfo = RandomUtil.GetRandomDataByList(listShoutTextInfo);
                 characterShoutCpt.Shout(textInfo.content);
             }
-            yield return new WaitForSeconds(5);
-            time -= 5;
+            float intervalTime = Random.Range(3f, 5f);
+            yield return new WaitForSeconds(intervalTime);
+            time -= intervalTime;
             if (time <= 0)
             {
                 SetIntent(ConvertIntentEnum.Idle);

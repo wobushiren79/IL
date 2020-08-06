@@ -3,6 +3,7 @@ using UnityEditor;
 using UnityEngine.UI;
 using DG.Tweening;
 using System.Collections.Generic;
+using TMPro;
 
 public class ItemGameWorkerCpt : ItemGameBaseCpt, IRadioButtonCallBack, DialogView.IDialogCallBack
 {
@@ -23,17 +24,17 @@ public class ItemGameWorkerCpt : ItemGameBaseCpt, IRadioButtonCallBack, DialogVi
 
     public Text tvStatus;
 
-    public Text tvSpeed;
-    public InfoPromptPopupButton pbSpeed;
-    public Text tvAccount;
-    public InfoPromptPopupButton pbAccount;
-    public Text tvCharm;
-    public InfoPromptPopupButton pbCharm;
-    public Text tvCook;
+    public TextMeshProUGUI tvCook;
     public InfoPromptPopupButton pbCook;
-    public Text tvForce;
+    public TextMeshProUGUI tvSpeed;
+    public InfoPromptPopupButton pbSpeed;
+    public TextMeshProUGUI tvAccount;
+    public InfoPromptPopupButton pbAccount;
+    public TextMeshProUGUI tvCharm;
+    public InfoPromptPopupButton pbCharm;
+    public TextMeshProUGUI tvForce;
     public InfoPromptPopupButton pbForce;
-    public Text tvLucky;
+    public TextMeshProUGUI tvLucky;
     public InfoPromptPopupButton pbLucky;
 
     public Button btEquip;
@@ -314,19 +315,39 @@ public class ItemGameWorkerCpt : ItemGameBaseCpt, IRadioButtonCallBack, DialogVi
 
         characterData.GetAttributes(gameItemsManager,
         out CharacterAttributesBean totalAttributes, out CharacterAttributesBean selfAttributes, out CharacterAttributesBean equipAttributes);
+        SetAttributesItem(tvCook, totalAttributes.cook);
+        SetAttributesItem(tvSpeed, totalAttributes.speed);
+        SetAttributesItem(tvAccount, totalAttributes.account);
+        SetAttributesItem(tvCharm, totalAttributes.charm);
+        SetAttributesItem(tvForce, totalAttributes.force);
+        SetAttributesItem(tvLucky, totalAttributes.lucky);
+    }
 
-        if (tvCook != null)
-            tvCook.text = totalAttributes.cook + "";
-        if (tvSpeed != null)
-            tvSpeed.text = totalAttributes.speed + "";
-        if (tvAccount != null)
-            tvAccount.text = totalAttributes.account + "";
-        if (tvCharm != null)
-            tvCharm.text = totalAttributes.charm + "";
-        if (tvForce != null)
-            tvForce.text = totalAttributes.force + "";
-        if (tvLucky != null)
-            tvLucky.text = totalAttributes.lucky + "";
+    public void SetAttributesItem(TextMeshProUGUI tvAttributes, int attributes)
+    {
+        if (tvAttributes == null)
+            return;
+        tvAttributes.text = attributes + "";
+        if (attributes < 20)
+        {
+            tvAttributes.color = new Color(1, 1, 1, 1);
+        }
+        else if (attributes >= 20 && attributes < 40)
+        {
+            tvAttributes.color = new Color(0, 1, 0, 1);
+        }
+        else if (attributes >= 40 && attributes < 60)
+        {
+            tvAttributes.color = new Color(0, 1, 1, 1);
+        }
+        else if (attributes >= 60 && attributes < 80)
+        {
+            tvAttributes.color = new Color(1, 0, 1, 1);
+        }
+        else if (attributes >= 80)
+        {
+            tvAttributes.color = new Color(1, 1, 0, 1);
+        }
     }
 
     /// <summary>
@@ -451,6 +472,7 @@ public class ItemGameWorkerCpt : ItemGameBaseCpt, IRadioButtonCallBack, DialogVi
             etPriorityAccost.text = priorityAccost + "";
         if (etPriorityBeater != null)
             etPriorityBeater.text = priorityBeater + "";
+
     }
 
     /// <summary>
