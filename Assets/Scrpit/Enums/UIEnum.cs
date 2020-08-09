@@ -34,6 +34,7 @@ public enum UIEnum
     TownArena = 2010,//竞技场UI
     TownArenaStore = 2011,//竞技场商店UI
     TownPharmacy=2012,//药房
+    TownGuildRank=2013,//公会排行
 
     MiniGameEnd = 3001,
     MiniGameCountDown = 3002,

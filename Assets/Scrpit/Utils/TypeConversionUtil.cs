@@ -289,4 +289,37 @@ public class TypeConversionUtil
         string[] chineseNumberList = new string[10] { "〇","一", "二", "三", "四", "五", "六", "七", "八", "九" };
         return chineseNumberList[number];
     }
+
+    /// <summary>
+    /// string 转 INT[]
+    /// </summary>
+    /// <param name="data"></param>
+    /// <returns></returns>
+    public static int[] StringToInt32(string data)
+    {
+        char[] charList = data.ToCharArray();
+        int[] intList =new int[charList.Length];
+        for(int i=0;i< charList.Length; i++)
+        {
+            char itemChar = charList[i];
+            intList[i] = Convert.ToInt32(itemChar);
+        }
+        return intList;
+    }
+
+    /// <summary>
+    /// INT[]  转 string
+    /// </summary>
+    /// <param name="listInt"></param>
+    /// <returns></returns>
+    public static string Int32ToString(int[] listInt)
+    {
+        char[] charList = new char[listInt.Length];
+        for (int i = 0; i < listInt.Length; i++)
+        {
+            int itemInt = listInt[i];
+            charList[i] = Convert.ToChar(itemInt);
+        }
+        return  new string(charList);
+    }
 }

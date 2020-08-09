@@ -55,11 +55,22 @@ public class NpcImportantBuilder : BaseMonoBehaviour
         if (gameDataManager.gameData.CheckHasWorker(characterData.baseInfo.characterId)) {
             return null;
         }
-        //检测是否满足出现条件
-        if (!CheckUtil.StringIsNull(characterData.npcInfoData.condition) && !ShowConditionTools.CheckIsMeetAllCondition(gameDataManager.gameData, characterData.npcInfoData.condition))
+
+        if(gameDataManager.gameData.gameTime.year == 0
+            && gameDataManager.gameData.gameTime.month == 0
+            && gameDataManager.gameData.gameTime.day == 0)
         {
-            return null;
+            //如果是测试 这默认生成所有NPC
         }
+        else
+        {
+            //检测是否满足出现条件
+            if (!CheckUtil.StringIsNull(characterData.npcInfoData.condition) && !ShowConditionTools.CheckIsMeetAllCondition(gameDataManager.gameData, characterData.npcInfoData.condition))
+            {
+                return null;
+            }
+        }
+
         GameObject npcObj = Instantiate(objNpcContainer, objNpcModel);
         npcObj.transform.position = new Vector3(characterData.npcInfoData.position_x, characterData.npcInfoData.position_y);
         npcObj.transform.localScale = new Vector3(1, 1);

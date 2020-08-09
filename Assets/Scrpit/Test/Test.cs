@@ -7,7 +7,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using DG.Tweening;
 
-public class Test : BaseMonoBehaviour
+public class Test : BaseMonoBehaviour, ISteamLeaderboardFindCallBack
 {
 
     private void Awake()
@@ -15,13 +15,20 @@ public class Test : BaseMonoBehaviour
 
     }
 
-    private void Update()
-    {
 
-    }
     public void Start()
     {
-        
+        SteamHandler steamHandler = Find<SteamHandler>(ImportantTypeEnum.Steam);
+        steamHandler.GetLeaderboardId("Get_Money_S", this);
     }
 
+    public void FindLeaderboardSuccess(ulong leaderboard)
+    {
+        LogUtil.Log("leaderboard:"+ leaderboard);
+    }
+
+    public void FindLeaderboardFail(SteamLeaderboardImpl.SteamLeaderboardFailEnum msg)
+    {
+
+    }
 }
