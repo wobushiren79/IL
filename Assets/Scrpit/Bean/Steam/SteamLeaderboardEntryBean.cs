@@ -10,7 +10,11 @@ public class SteamLeaderboardEntryBean
     public int score;
     //排行榜排名
     public int rank;
+    //排行榜详情
+    public int[] details;
     //steam用户ID
     public CSteamID steamID;
+    //成就头像
+    public string achievementIcon;
 
 }

@@ -63,4 +63,17 @@ public class TimeBean
 
         hour += addHour;
     }
+
+    /// <summary>
+    /// 获取时间-秒
+    /// </summary>
+    /// <returns></returns>
+    public int GetTimeForTotalS()
+    {
+        int totalS = 0;
+        totalS += second;
+        totalS += (minute * 60);
+        totalS += (hour * 60 * 60);
+        return totalS;
+    }
 }

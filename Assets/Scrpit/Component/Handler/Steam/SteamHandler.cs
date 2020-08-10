@@ -1,15 +1,30 @@
 ﻿using UnityEngine;
 using UnityEditor;
-
+using System.Collections;
 public class SteamHandler : BaseMonoBehaviour
 {
     public SteamUserStatsImpl steamUserStats;
     public SteamLeaderboardImpl steamLeaderboard;
+    public SteamWebImpl steamWeb;
 
     private void Start()
     {
         steamUserStats = new SteamUserStatsImpl();
         steamUserStats.InitUserStats();
+    }
+    
+
+    /// <summary>
+    /// 获取用户信息
+    /// </summary>
+    /// <param name="steamId"></param>
+    /// <param name="callBack"></param>
+    /// <returns></returns>
+    public IEnumerator GetUserInfo(string steamId,IWebRequestCallBack<SteamWebPlaySummariesBean> callBack)
+    {
+        if (steamWeb == null)
+            steamWeb = new SteamWebImpl();
+        yield return steamWeb.GetPlayerSummaries(steamId, callBack);
     }
 
     /// <summary>
@@ -26,11 +41,28 @@ public class SteamHandler : BaseMonoBehaviour
     }
 
     /// <summary>
+    /// 设置排行榜数据
+    /// </summary>
+    /// <param name="leaderboardId"></param>
+    /// <param name="score"></param>
+    /// <param name="details"></param>
+    /// <param name="callBack"></param>
+    public void SetGetLeaderboardData(ulong leaderboardId, int score, string details, ISteamLeaderboardUpdateCallBack callBack)
+    {
+        if (steamLeaderboard == null)
+        {
+            steamLeaderboard = new SteamLeaderboardImpl();
+        }
+        int[] intDetails = TypeConversionUtil.StringToInt32(details);
+        steamLeaderboard.UpdateLeaderboardScore(leaderboardId, score, intDetails, intDetails.Length, callBack);
+    }
+
+    /// <summary>
     /// 根据名字查询排行榜ID
     /// </summary>
     /// <param name="leaderboardName"></param>
     /// <param name="callBack"></param>
-    public void GetLeaderboardId(string leaderboardName,ISteamLeaderboardFindCallBack callBack)
+    public void GetLeaderboardId(string leaderboardName, ISteamLeaderboardFindCallBack callBack)
     {
         if (steamLeaderboard == null)
         {
@@ -45,7 +77,7 @@ public class SteamHandler : BaseMonoBehaviour
     /// <param name="leaderboardId"></param>
     /// <param name="startRank"></param>
     /// <param name="endRank"></param>
-    public void GetLeaderboardDataForGlobal(ulong leaderboardId,int startRank,int endRank,ISteamLeaderboardEntriesCallBack callBack)
+    public void GetLeaderboardDataForGlobal(ulong leaderboardId, int startRank, int endRank, ISteamLeaderboardEntriesCallBack callBack)
     {
         if (steamLeaderboard == null)
         {

@@ -318,7 +318,14 @@ public class TypeConversionUtil
         for (int i = 0; i < listInt.Length; i++)
         {
             int itemInt = listInt[i];
-            charList[i] = Convert.ToChar(itemInt);
+            try
+            {
+                charList[i] = Convert.ToChar(itemInt);
+            }
+            catch
+            {
+                charList[i] = ' ';
+            } 
         }
         return  new string(charList);
     }

@@ -68,7 +68,7 @@ public class SteamLeaderboardImpl : ISteamLeaderboard
         CallResult<LeaderboardScoresDownloaded_t> callResult = CallResult<LeaderboardScoresDownloaded_t>.Create(OnLeaderboardScoresDownloaded);
         SteamAPICall_t handle = SteamUserStats.DownloadLeaderboardEntries(tempBean, type, startRange, endRange);
         //TODO  必须要延迟才能设置回调
-        Thread.Sleep(1000);
+        //Thread.Sleep(1000);
         callResult.Set(handle);
     }
     
@@ -88,7 +88,7 @@ public class SteamLeaderboardImpl : ISteamLeaderboard
         CallResult<LeaderboardScoresDownloaded_t> callResult = CallResult<LeaderboardScoresDownloaded_t>.Create(OnLeaderboardScoresDownloaded);
         SteamAPICall_t handle = SteamUserStats.DownloadLeaderboardEntriesForUsers(tempBean, userList, userList.Length);
         //TODO  必须要延迟才能设置回调
-        Thread.Sleep(1000);
+        //Thread.Sleep(1000);
         callResult.Set(handle);
     }
 
@@ -99,13 +99,17 @@ public class SteamLeaderboardImpl : ISteamLeaderboard
     /// <param name="score"></param>
     public void UpdateLeaderboardScore(ulong leaderboardId, int score, ISteamLeaderboardUpdateCallBack callBack)
     {
+        UpdateLeaderboardScore(leaderboardId, score, null, 0, callBack);
+    }
+    public void UpdateLeaderboardScore(ulong leaderboardId, int score,int[] scoreDetails,int scoreDetailsMax, ISteamLeaderboardUpdateCallBack callBack)
+    {
         this.mUpdateCallBack = callBack;
         SteamLeaderboard_t m_SteamLeaderboard = new SteamLeaderboard_t
         {
             m_SteamLeaderboard = leaderboardId
         };
         CallResult<LeaderboardScoreUploaded_t> callResult = CallResult<LeaderboardScoreUploaded_t>.Create(OnLeaderboardScoreUploaded);
-        SteamAPICall_t handle = SteamUserStats.UploadLeaderboardScore(m_SteamLeaderboard, ELeaderboardUploadScoreMethod.k_ELeaderboardUploadScoreMethodForceUpdate, score, null, 0);
+        SteamAPICall_t handle = SteamUserStats.UploadLeaderboardScore(m_SteamLeaderboard, ELeaderboardUploadScoreMethod.k_ELeaderboardUploadScoreMethodForceUpdate, score, scoreDetails, scoreDetailsMax);
         callResult.Set(handle);
     }
     //-------------------------------------------------------------------------------------------------------
@@ -165,12 +169,14 @@ public class SteamLeaderboardImpl : ISteamLeaderboard
         for (int i = 0; i < itemResult.m_cEntryCount; i++)
         {
             LeaderboardEntry_t entry_T;
-            SteamUserStats.GetDownloadedLeaderboardEntry(entriesData, i, out entry_T, null, 0);
+            int[] detailsInt = new int[64];
+            SteamUserStats.GetDownloadedLeaderboardEntry(entriesData, i, out entry_T, detailsInt, 64);
             SteamLeaderboardEntryBean itemData = new SteamLeaderboardEntryBean
             {
                 score = entry_T.m_nScore,
                 rank = entry_T.m_nGlobalRank,
-                steamID = entry_T.m_steamIDUser
+                steamID = entry_T.m_steamIDUser,
+                details = detailsInt
             };
             listData.Add(itemData);
         }
