@@ -179,7 +179,7 @@ public class TypeConversionUtil
     public static List<IconBean> IconBeanDictionaryToList(IconBeanDictionary map)
     {
         List<IconBean> listData = new List<IconBean>();
-        foreach(string key in map.Keys)
+        foreach (string key in map.Keys)
         {
             IconBean iconBean = new IconBean
             {
@@ -203,7 +203,7 @@ public class TypeConversionUtil
         List<long> listData = new List<long>();
         foreach (string itemStr in listStr)
         {
-            if (long.TryParse(itemStr,out long itemLong))
+            if (long.TryParse(itemStr, out long itemLong))
             {
                 listData.Add(itemLong);
             }
@@ -221,7 +221,7 @@ public class TypeConversionUtil
         if (arrayStr == null)
             return null;
         long[] listData = new long[arrayStr.Length];
-        for(int i=0;i< arrayStr.Length; i++)
+        for (int i = 0; i < arrayStr.Length; i++)
         {
             string itemStr = arrayStr[i];
             if (long.TryParse(itemStr, out long itemLong))
@@ -286,7 +286,7 @@ public class TypeConversionUtil
             LogUtil.LogError("阿拉伯数字转中文数字失败");
             return "";
         }
-        string[] chineseNumberList = new string[10] { "〇","一", "二", "三", "四", "五", "六", "七", "八", "九" };
+        string[] chineseNumberList = new string[10] { "〇", "一", "二", "三", "四", "五", "六", "七", "八", "九" };
         return chineseNumberList[number];
     }
 
@@ -298,8 +298,8 @@ public class TypeConversionUtil
     public static int[] StringToInt32(string data)
     {
         char[] charList = data.ToCharArray();
-        int[] intList =new int[charList.Length];
-        for(int i=0;i< charList.Length; i++)
+        int[] intList = new int[charList.Length];
+        for (int i = 0; i < charList.Length; i++)
         {
             char itemChar = charList[i];
             intList[i] = Convert.ToInt32(itemChar);
@@ -324,9 +324,9 @@ public class TypeConversionUtil
             }
             catch
             {
-                charList[i] = ' ';
-            } 
+                
+            }
         }
-        return  new string(charList);
+        return new string(charList);
     }
 }

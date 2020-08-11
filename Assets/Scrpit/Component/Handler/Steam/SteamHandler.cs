@@ -1,6 +1,8 @@
 ﻿using UnityEngine;
 using UnityEditor;
 using System.Collections;
+using Steamworks;
+
 public class SteamHandler : BaseMonoBehaviour
 {
     public SteamUserStatsImpl steamUserStats;
@@ -12,7 +14,7 @@ public class SteamHandler : BaseMonoBehaviour
         steamUserStats = new SteamUserStatsImpl();
         steamUserStats.InitUserStats();
     }
-    
+
 
     /// <summary>
     /// 获取用户信息
@@ -20,7 +22,7 @@ public class SteamHandler : BaseMonoBehaviour
     /// <param name="steamId"></param>
     /// <param name="callBack"></param>
     /// <returns></returns>
-    public IEnumerator GetUserInfo(string steamId,IWebRequestCallBack<SteamWebPlaySummariesBean> callBack)
+    public IEnumerator GetUserInfo(string steamId, IWebRequestCallBack<SteamWebPlaySummariesBean> callBack)
     {
         if (steamWeb == null)
             steamWeb = new SteamWebImpl();
@@ -53,8 +55,14 @@ public class SteamHandler : BaseMonoBehaviour
         {
             steamLeaderboard = new SteamLeaderboardImpl();
         }
+        if (details.Length > 64)
+        {
+            details = details.Substring(0, 64);
+        }
         int[] intDetails = TypeConversionUtil.StringToInt32(details);
-        steamLeaderboard.UpdateLeaderboardScore(leaderboardId, score, intDetails, intDetails.Length, callBack);
+        int[] intDetailsData = new int[64];
+        intDetails.CopyTo(intDetailsData, 0);
+        steamLeaderboard.UpdateLeaderboardScore(leaderboardId, score, intDetailsData, 64, callBack);
     }
 
     /// <summary>
@@ -86,4 +94,36 @@ public class SteamHandler : BaseMonoBehaviour
         steamLeaderboard.FindLeaderboardEntries(leaderboardId, startRank, endRank, Steamworks.ELeaderboardDataRequest.k_ELeaderboardDataRequestGlobal, callBack);
     }
 
+    /// <summary>
+    /// 查询用户排行榜
+    /// </summary>
+    /// <param name="leaderboardId"></param>
+    /// <param name="userList"></param>
+    /// <param name="callBack"></param>
+    public void GetLeaderboardDataForUserList(ulong leaderboardId, CSteamID[] userList, ISteamLeaderboardEntriesCallBack callBack)
+    {
+        if (steamLeaderboard == null)
+        {
+            steamLeaderboard = new SteamLeaderboardImpl();
+        }
+        steamLeaderboard.FindLeaderboardEntriesForUserList(leaderboardId, userList, callBack);
+    }
+
+    public void GetLeaderboardDataForUser(ulong leaderboardId, ISteamLeaderboardEntriesCallBack callBack)
+    {
+        if (steamLeaderboard == null)
+        {
+            steamLeaderboard = new SteamLeaderboardImpl();
+        }
+        steamLeaderboard.FindLeaderboardEntriesForUserList(leaderboardId, new CSteamID[] { SteamUser.GetSteamID() }, callBack);
+    }
+
+    public void GetLeaderboardDataForUser(ulong leaderboardId, CSteamID userId, ISteamLeaderboardEntriesCallBack callBack)
+    {
+        if (steamLeaderboard == null)
+        {
+            steamLeaderboard = new SteamLeaderboardImpl();
+        }
+        steamLeaderboard.FindLeaderboardEntriesForUserList(leaderboardId, new CSteamID[] { userId }, callBack);
+    }
 }

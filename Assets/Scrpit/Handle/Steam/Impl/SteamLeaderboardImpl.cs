@@ -60,6 +60,7 @@ public class SteamLeaderboardImpl : ISteamLeaderboard
     /// <param name="callBack"></param>
     public void FindLeaderboardEntries(ulong leaderboardId, int startRange, int endRange, ELeaderboardDataRequest type,ISteamLeaderboardEntriesCallBack callBack)
     {
+
         this.mEntriesCallBack = callBack;
         SteamLeaderboard_t tempBean = new SteamLeaderboard_t
         {
@@ -85,7 +86,7 @@ public class SteamLeaderboardImpl : ISteamLeaderboard
         {
             m_SteamLeaderboard = leaderboardId
         };
-        CallResult<LeaderboardScoresDownloaded_t> callResult = CallResult<LeaderboardScoresDownloaded_t>.Create(OnLeaderboardScoresDownloaded);
+        CallResult<LeaderboardScoresDownloaded_t> callResult = CallResult<LeaderboardScoresDownloaded_t>.Create(OnLeaderboardScoresDownloadedForUserList);
         SteamAPICall_t handle = SteamUserStats.DownloadLeaderboardEntriesForUsers(tempBean, userList, userList.Length);
         //TODO  必须要延迟才能设置回调
         //Thread.Sleep(1000);
@@ -164,6 +165,34 @@ public class SteamLeaderboardImpl : ISteamLeaderboard
             return;
         }
         SteamLeaderboardEntries_t entriesData = itemResult.m_hSteamLeaderboardEntries;
+   
+        List<SteamLeaderboardEntryBean> listData = new List<SteamLeaderboardEntryBean>();
+        for (int i = 0; i < itemResult.m_cEntryCount; i++)
+        {
+            LeaderboardEntry_t entry_T;
+            int[] detailsInt = new int[64];
+            SteamUserStats.GetDownloadedLeaderboardEntry(entriesData, i, out entry_T, detailsInt, 64);
+            SteamLeaderboardEntryBean itemData = new SteamLeaderboardEntryBean
+            {
+                score = entry_T.m_nScore,
+                rank = entry_T.m_nGlobalRank,
+                steamID = entry_T.m_steamIDUser,
+                details = detailsInt
+            };
+            listData.Add(itemData);
+        }
+        if (mEntriesCallBack != null)
+            mEntriesCallBack.GetEntriesSuccess(itemResult.m_hSteamLeaderboard.m_SteamLeaderboard, listData);
+    }
+    private void OnLeaderboardScoresDownloadedForUserList(LeaderboardScoresDownloaded_t itemResult, bool bIOFailure)
+    {
+        if (bIOFailure)
+        {
+            if (mEntriesCallBack != null)
+                mEntriesCallBack.GetEntriesForUserListFail(SteamLeaderboardFailEnum.GETLIST_FAIL);
+            return;
+        }
+        SteamLeaderboardEntries_t entriesData = itemResult.m_hSteamLeaderboardEntries;
 
         List<SteamLeaderboardEntryBean> listData = new List<SteamLeaderboardEntryBean>();
         for (int i = 0; i < itemResult.m_cEntryCount; i++)
@@ -181,9 +210,8 @@ public class SteamLeaderboardImpl : ISteamLeaderboard
             listData.Add(itemData);
         }
         if (mEntriesCallBack != null)
-            mEntriesCallBack.GetEntriesSuccess(listData);
+            mEntriesCallBack.GetEntriesForUserListSuccess(itemResult.m_hSteamLeaderboard.m_SteamLeaderboard, listData);
     }
-
     /// <summary>
     /// 更新数据
     /// </summary>

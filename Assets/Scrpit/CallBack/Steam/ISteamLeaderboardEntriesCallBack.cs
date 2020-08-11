@@ -8,11 +8,13 @@ public interface ISteamLeaderboardEntriesCallBack
     /// 获取数据成功
     /// </summary>
     /// <param name="listData"></param>
-    void GetEntriesSuccess(List<SteamLeaderboardEntryBean> listData);
+    void GetEntriesSuccess(ulong leaderboardID, List<SteamLeaderboardEntryBean> listData);
+    void GetEntriesForUserListSuccess(ulong leaderboardID, List<SteamLeaderboardEntryBean> listData);
 
     /// <summary>
     /// 获取数据失败
     /// </summary>
     /// <param name="msg"></param>
-    void GetEntriesFail(SteamLeaderboardImpl.SteamLeaderboardFailEnum msg);
+    void GetEntriesFail( SteamLeaderboardImpl.SteamLeaderboardFailEnum msg);
+    void GetEntriesForUserListFail( SteamLeaderboardImpl.SteamLeaderboardFailEnum msg);
 }

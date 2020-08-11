@@ -14,7 +14,5 @@ public class SteamLeaderboardEntryBean
     public int[] details;
     //steam用户ID
     public CSteamID steamID;
-    //成就头像
-    public string achievementIcon;
 
 }
