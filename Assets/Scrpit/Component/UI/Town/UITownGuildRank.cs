@@ -48,32 +48,41 @@ public class UITownGuildRank : UIBaseOne, IRadioGroupCallBack
 
     public void SetLocalData()
     {
-        int score = 0;
+        long score = 0;
         GameDataBean gameData = uiGameManager.gameDataManager.gameData;
         UserAchievementBean userAchievement = gameData.GetAchievementData();
         switch (rankType)
         {
             case RankTypeEnum.GetMoneyS:
-                score = (int)userAchievement.ownMoneyS;
+                score = userAchievement.ownMoneyS;
                 break;
             case RankTypeEnum.NumberOrder:
-                score = (int)userAchievement.GetNumberForAllCustomer();
+                score = userAchievement.GetNumberForAllCustomer();
                 break;
             case RankTypeEnum.NumberPraiseAnger:
-                score = (int)userAchievement.GetPraiseNumber(PraiseTypeEnum.Anger);
+                score = userAchievement.GetPraiseNumber(PraiseTypeEnum.Anger);
                 break;
             case RankTypeEnum.NumberPraiseExcited:
-                score = (int)userAchievement.GetPraiseNumber(PraiseTypeEnum.Excited);
+                score = userAchievement.GetPraiseNumber(PraiseTypeEnum.Excited);
                 break;
             case RankTypeEnum.TimePlay:
                 score = gameData.playTime.GetTimeForTotalS();
                 break;
         }
+        int intScore = 0;
+        if (score > int.MaxValue)
+        {
+            intScore = int.MaxValue;
+        }
+        else
+        {
+            intScore = (int)score;
+        }
         string innName = gameData.GetInnAttributesData().innName;
         string playerName = gameData.userCharacter.baseInfo.name;
         SteamLeaderboardEntryBean steamLeaderboardEntry = new SteamLeaderboardEntryBean();
         steamLeaderboardEntry.rank = 0;
-        steamLeaderboardEntry.score = score;
+        steamLeaderboardEntry.score = intScore;
         steamLeaderboardEntry.steamID = SteamUser.GetSteamID();
         steamLeaderboardEntry.details = TypeConversionUtil.StringToInt32(innName + "-" + playerName);
         itemRankForLocal.SetData(rankType, steamLeaderboardEntry);
@@ -87,30 +96,39 @@ public class UITownGuildRank : UIBaseOne, IRadioGroupCallBack
         if (rankTypeId == 0)
             return;
         string rankName = RankTypeEnumTool.GetRankTypeName(rankType);
-        int score = 0;
+        long score = 0;
         GameDataBean gameData = uiGameManager.gameDataManager.gameData;
         UserAchievementBean userAchievement = gameData.GetAchievementData();
         switch (rankType)
         {
             case RankTypeEnum.GetMoneyS:
-                score = (int)userAchievement.ownMoneyS;
+                score = userAchievement.ownMoneyS;
                 break;
             case RankTypeEnum.NumberOrder:
-                score = (int)userAchievement.GetNumberForAllCustomer();
+                score = userAchievement.GetNumberForAllCustomer();
                 break;
             case RankTypeEnum.NumberPraiseAnger:
-                score = (int)userAchievement.GetPraiseNumber(PraiseTypeEnum.Anger);
+                score = userAchievement.GetPraiseNumber(PraiseTypeEnum.Anger);
                 break;
             case RankTypeEnum.NumberPraiseExcited:
-                score = (int)userAchievement.GetPraiseNumber(PraiseTypeEnum.Excited);
+                score = userAchievement.GetPraiseNumber(PraiseTypeEnum.Excited);
                 break;
             case RankTypeEnum.TimePlay:
                 score = gameData.playTime.GetTimeForTotalS();
                 break;
         }
+        int intScore = 0;
+        if (score > int.MaxValue)
+        {
+            intScore = int.MaxValue;
+        }
+        else
+        {
+            intScore = (int)score;
+        }
         string innName = gameData.GetInnAttributesData().innName;
         string playerName = gameData.userCharacter.baseInfo.name;
-        steamHandler.SetGetLeaderboardData(rankTypeId, score, innName + "-" + playerName , this);
+        steamHandler.SetGetLeaderboardData(rankTypeId, intScore, innName + "-" + playerName , this);
     }
 
     /// <summary>
@@ -149,6 +167,7 @@ public class UITownGuildRank : UIBaseOne, IRadioGroupCallBack
     #region 排行榜类型回调
     public void RadioButtonSelected(RadioGroupView rgView, int position, RadioButtonView rbview)
     {
+        uiGameManager.audioHandler.PlaySound(AudioSoundEnum.ButtonForNormal);
         ClearData();
         rankType = EnumUtil.GetEnum<RankTypeEnum>(rbview.name);
         string rankName = RankTypeEnumTool.GetRankTypeName(rankType);

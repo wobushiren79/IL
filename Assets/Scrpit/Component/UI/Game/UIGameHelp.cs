@@ -1,0 +1,72 @@
+﻿using UnityEngine;
+using UnityEditor;
+using UnityEngine.UI;
+public class UIGameHelp : UIGameComponent,IRadioGroupCallBack
+{
+    public RadioGroupView rgHelpType;
+    public Button btExit;
+
+    public GameObject objBaseHelp;
+    public GameObject objBuildHelp;
+    public GameObject objManageHelp;
+    public GameObject objLevelUpHelp;
+    public GameObject objFavorabilityHelp;
+
+
+    public override  void Awake()
+    {
+        base.Awake();
+        if (btExit != null) btExit.onClick.AddListener(OnClickExit);
+        if (rgHelpType != null) rgHelpType.SetCallBack(this);
+    }
+
+    public override void OpenUI()
+    {
+        base.OpenUI();
+        //记录数据
+        UserAchievementBean userAchievement =uiGameManager.gameDataManager.gameData.GetAchievementData();
+        userAchievement.isOpenedHelp = true;
+        rgHelpType.SetPosition(0,true);
+    }
+
+    public void OnClickExit()
+    {
+        uiGameManager.audioHandler.PlaySound(AudioSoundEnum.ButtonForBack);
+        uiGameManager.OpenUIAndCloseOther(UIEnum.GameMain);
+    }
+
+    #region 类型选择回调
+    public void RadioButtonSelected(RadioGroupView rgView, int position, RadioButtonView rbview)
+    {
+        uiGameManager.audioHandler.PlaySound(AudioSoundEnum.ButtonForNormal);
+        objBaseHelp.SetActive(false);
+        objBuildHelp.SetActive(false);
+        objManageHelp.SetActive(false);
+        objLevelUpHelp.SetActive(false);
+        objFavorabilityHelp.SetActive(false);
+        switch (rbview.name)
+        {
+            case "Base":
+                objBaseHelp.SetActive(true);
+                break;
+            case "Build":
+                objBuildHelp.SetActive(true);
+                break;
+            case "Manage":
+                objManageHelp.SetActive(true);
+                break;
+            case "LevelUp":
+                objLevelUpHelp.SetActive(true);
+                break;
+            case "Favorability":
+                objFavorabilityHelp.SetActive(true);
+                break;
+        }
+    }
+
+    public void RadioButtonUnSelected(RadioGroupView rgView, int position, RadioButtonView rbview)
+    {
+
+    }
+    #endregion
+}

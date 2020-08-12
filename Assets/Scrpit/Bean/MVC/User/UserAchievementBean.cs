@@ -46,6 +46,9 @@ public class UserAchievementBean
     public long praiseForDisappointed;
     public long praiseForAnger;
 
+    //是否打开过帮助
+    public bool isOpenedHelp = false;
+
     /// <summary>
     /// 获取团队顾客数据
     /// </summary>

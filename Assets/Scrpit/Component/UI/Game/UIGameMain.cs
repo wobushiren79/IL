@@ -22,6 +22,8 @@ public class UIGameMain : UIGameComponent, DialogView.IDialogCallBack, IRadioGro
     public Button btSave;
     public InfoPromptPopupButton popupInnData;
     public Button btInnData;
+    public InfoPromptPopupButton popupHelp;
+    public Button btHelp;
     public InfoPromptPopupButton popupSetting;
     public Button btSetting;
 
@@ -85,6 +87,9 @@ public class UIGameMain : UIGameComponent, DialogView.IDialogCallBack, IRadioGro
         if (btSetting != null)
             btSetting.onClick.AddListener(OpenSettingUI);
 
+        if(btHelp!=null)
+            btHelp.onClick.AddListener(OpenHelpUI);
+
         if (btSave != null)
             btSave.onClick.AddListener(SaveData);
 
@@ -96,6 +101,13 @@ public class UIGameMain : UIGameComponent, DialogView.IDialogCallBack, IRadioGro
             rgTimeScale.SetCallBack(this);
         InitInnData();
         RefreshUI();
+
+        //判断是否展示教程
+        UserAchievementBean userAchievement = uiGameManager.gameDataManager.gameData.GetAchievementData();
+        if (!userAchievement.isOpenedHelp)
+        {
+            uiGameManager.OpenUIAndCloseOther(UIEnum.GameHelp);
+        }
     }
 
     private void Update()
@@ -173,7 +185,8 @@ public class UIGameMain : UIGameComponent, DialogView.IDialogCallBack, IRadioGro
             popupInnData.SetContent(GameCommonInfo.GetUITextById(2037));
         if (popupSetting != null)
             popupSetting.SetContent(GameCommonInfo.GetUITextById(2038));
-
+        if (popupHelp != null)
+            popupHelp.SetContent(GameCommonInfo.GetUITextById(2039));
         SetInnPraise(innAttributes);
         SetInnAesthetics(innAttributes);
         SetInnRichNess(innAttributes);
@@ -335,37 +348,43 @@ public class UIGameMain : UIGameComponent, DialogView.IDialogCallBack, IRadioGro
     public void OpenWorkerUI()
     {
         uiGameManager.audioHandler.PlaySound(AudioSoundEnum.ButtonForNormal);
-        uiManager.OpenUIAndCloseOtherByName(EnumUtil.GetEnumName(UIEnum.GameWorker));
+        uiManager.OpenUIAndCloseOther(UIEnum.GameWorker);
     }
 
     public void OpenMenuUI()
     {
         uiGameManager.audioHandler.PlaySound(AudioSoundEnum.ButtonForNormal);
-        uiManager.OpenUIAndCloseOtherByName(EnumUtil.GetEnumName(UIEnum.GameMenu));
+        uiManager.OpenUIAndCloseOther(UIEnum.GameMenu);
     }
 
     public void OpenBackpackUI()
     {
         uiGameManager.audioHandler.PlaySound(AudioSoundEnum.ButtonForNormal);
-        uiManager.OpenUIAndCloseOtherByName(EnumUtil.GetEnumName(UIEnum.GameBackpack));
+        uiManager.OpenUIAndCloseOther(UIEnum.GameBackpack);
     }
 
     public void OpenFavorabilityUI()
     {
         uiGameManager.audioHandler.PlaySound(AudioSoundEnum.ButtonForNormal);
-        uiManager.OpenUIAndCloseOtherByName(EnumUtil.GetEnumName(UIEnum.GameFavorability));
+        uiManager.OpenUIAndCloseOther(UIEnum.GameFavorability);
     }
 
     public void OpenStatisticsUI()
     {
         uiGameManager.audioHandler.PlaySound(AudioSoundEnum.ButtonForNormal);
-        uiManager.OpenUIAndCloseOtherByName(EnumUtil.GetEnumName(UIEnum.GameStatistics));
+        uiManager.OpenUIAndCloseOther(UIEnum.GameStatistics);
     }
 
     public void OpenSettingUI()
     {
         uiGameManager.audioHandler.PlaySound(AudioSoundEnum.ButtonForNormal);
-        uiManager.OpenUIAndCloseOtherByName(EnumUtil.GetEnumName(UIEnum.GameSetting));
+        uiManager.OpenUIAndCloseOther(UIEnum.GameSetting);
+    }
+
+    public void OpenHelpUI()
+    {
+        uiGameManager.audioHandler.PlaySound(AudioSoundEnum.ButtonForNormal);
+        uiManager.OpenUIAndCloseOther(UIEnum.GameHelp);
     }
 
     public void EndDay()
