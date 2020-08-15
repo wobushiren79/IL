@@ -28,6 +28,18 @@ public class ItemTownStoreForGoodsCpt : ItemTownStoreCpt, DialogView.IDialogCall
             infoItemsPopup.SetPopupShowView(GetUIManager<UIGameManager>().infoItemsPopup);
     }
 
+    public override void RefreshUI()
+    {
+        if (itemsInfo.GetItemsType()== GeneralEnum.Menu)
+        {
+            //如果是菜单则不需要实时刷新
+        }
+        else
+        {
+            base.RefreshUI();
+        }
+
+    }
     /// <summary>
     /// 设置数据
     /// </summary>
@@ -160,6 +172,30 @@ public class ItemTownStoreForGoodsCpt : ItemTownStoreCpt, DialogView.IDialogCall
             tvLucky.text = GameCommonInfo.GetUITextById(6) + "+" + add_lucky;
         if (tvCookBook != null)
             tvCookBook.text = GameCommonInfo.GetUITextById(7) + "+" + add_book;
+    }
+
+    public override void SetOwn()
+    {
+        if(itemsInfo.GetItemsType()== GeneralEnum.Menu)
+        {
+            UIGameManager uiGameManager = GetUIManager<UIGameManager>();
+            GameDataManager gameDataManager = uiGameManager.gameDataManager;
+            bool isHas= gameDataManager.gameData.CheckHasMenu(itemsInfo.add_id);
+            if (tvOwn != null)
+                if (isHas)
+                {
+                    tvOwn.text = (GameCommonInfo.GetUITextById(195));
+                }
+                else
+                {
+                    tvOwn.text = (GameCommonInfo.GetUITextById(196));
+                    tvOwn.color = Color.gray;
+                }
+        }
+        else
+        {
+            base.SetOwn();
+        }
     }
 
     /// <summary>

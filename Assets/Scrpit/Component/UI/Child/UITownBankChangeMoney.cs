@@ -29,7 +29,7 @@ public class UITownBankChangeMoney : BaseUIChildComponent<UITownBank>
         int randomMLRate = 10;
         //有一定的几率不会有变化幅度
         Random.InitState(GameCommonInfo.RandomSeed);
-        if (Random.Range(0f, 1f) > 0.9f)
+        if (Random.Range(0f, 1f) > 0.1f)
         {
             randomSMRate = Random.Range(995, 1005);
             randomMLRate = Random.Range(9, 11);

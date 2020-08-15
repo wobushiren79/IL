@@ -34,13 +34,15 @@ public class ControlForWorkCpt : BaseControl, DialogView.IDialogCallBack
     private void Update()
     {
         HandleForSelect();
+
+        HandleForMouseMove();
+        HandleForControlMove();
+        HandleForFollowMove();
     }
 
     private void FixedUpdate()
     {
-        HandleForMouseMove();
-        HandleForControlMove();
-        HandleForFollowMove();
+
     }
 
     private void OnDisable()
@@ -55,15 +57,34 @@ public class ControlForWorkCpt : BaseControl, DialogView.IDialogCallBack
     {
         if (cameraMove == null)
             return;
-        float hMove = Input.GetAxis(InputInfo.Horizontal);
-        float vMove = Input.GetAxis(InputInfo.Vertical);
+        //float hMove = Input.GetAxis(InputInfo.Horizontal);
+        //float vMove = Input.GetAxis(InputInfo.Vertical);
+        float hMove = 0;
+        float vMove = 0;
+        if (Input.GetButton(InputInfo.Direction_Left))
+        {
+            hMove += -1;
+        }
+        if (Input.GetButton(InputInfo.Direction_Right))
+        {
+            hMove += 1;
+        }
+        if (Input.GetButton(InputInfo.Direction_Up))
+        {
+            vMove += 1;
+        }
+        if (Input.GetButton(InputInfo.Direction_Down))
+        {
+            vMove += -1;
+        }
         if (hMove == 0 && vMove == 0)
         {
-            // cameraMove.StopAnim();
+            //cameraMove.StopAnim();
+  
         }
         else
         {
-            cameraMove.Move(hMove, vMove);
+            cameraMove.MoveForUnscaled(hMove, vMove);
         }
     }
 
@@ -188,7 +209,7 @@ public class ControlForWorkCpt : BaseControl, DialogView.IDialogCallBack
         if (dialogSelectView)
             return;
         base.HandleForMouseMove(out float moveX, out float moveY);
-        cameraMove.Move(moveX, moveY);
+        cameraMove.MoveForUnscaled(moveX, moveY);
     }
 
     /// <summary>

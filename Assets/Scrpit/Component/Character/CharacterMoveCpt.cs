@@ -47,6 +47,8 @@ public class CharacterMoveCpt : BaseMonoBehaviour
     private Vector3 mLastPosition;
     //角色动画状态
     private int mAnimState = 0;
+   
+
 
     private void FixedUpdate()
     {
@@ -166,10 +168,49 @@ public class CharacterMoveCpt : BaseMonoBehaviour
 
         //Vector2 lerpPosition = Vector3.Lerp(Vector2.zero, new Vector2(x, y), lerpOffset);
         // transform.Translate(movePosition * moveSpeed * Time.deltaTime);
+        //LogUtil.Log(" Time.deltaTime:" + Time.deltaTime);
+        //LogUtil.Log(" Time.unscaledDeltaTime:" + Time.unscaledDeltaTime);
+        //LogUtil.Log(" Time.fixedDeltaTime:" + Time.fixedDeltaTime);
+        //LogUtil.Log(" Time.fixedUnscaledDeltaTime:" + Time.fixedUnscaledDeltaTime);
+        //LogUtil.Log(" Time.smoothDeltaTime:" + Time.smoothDeltaTime);
+        //LogUtil.Log(" Time.captureDeltaTime:" + Time.captureDeltaTime);
+        //LogUtil.Log(" Time.maximumDeltaTime:" + Time.maximumDeltaTime);
+        //LogUtil.Log(" Time.maximumParticleDeltaTime:" + Time.maximumParticleDeltaTime);
+   
         Vector3 movePosition = objMove.transform.position + new Vector3(x * moveSpeed * Time.deltaTime, y * moveSpeed * Time.deltaTime);
         characterRigidbody.MovePosition(movePosition);
-        BoundaryMove();
+       
+        //BoundaryMove();
+    }
 
+    /// <summary>
+    /// 不受时间缩放影响的移动
+    /// </summary>
+    /// <param name="x"></param>
+    /// <param name="y"></param>
+    public void MoveForUnscaled(float x, float y)
+    {
+        isManualMove = true;
+        //停止自动寻路
+        StopAutoMove();
+        SetAnimStatus(1);
+        //转向
+        if (objCharacterBody != null)
+        {
+            Vector3 theScale = objCharacterBody.transform.localScale;
+            if (x < 0)
+            {
+                theScale.x = -Mathf.Abs(theScale.x);
+            }
+            else if (x > 0)
+            {
+                theScale.x = Mathf.Abs(theScale.x);
+            }
+            objCharacterBody.transform.localScale = theScale;
+        }
+        Vector3 movePosition = objMove.transform.position + new Vector3(x * moveSpeed * Time.unscaledDeltaTime, y * moveSpeed * Time.unscaledDeltaTime);
+        transform.position = movePosition;
+        //characterRigidbody.MovePosition(movePosition);
     }
 
     /// <summary>

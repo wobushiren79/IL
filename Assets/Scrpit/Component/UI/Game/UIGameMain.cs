@@ -46,6 +46,7 @@ public class UIGameMain : UIGameComponent, DialogView.IDialogCallBack, IRadioGro
 
     public ClockView clockView;//时钟
     public RadioGroupView rgTimeScale;
+    public RadioButtonView rbTimeScaleStop;
     public RadioButtonView rbTimeScale2;
     public RadioButtonView rbTimeScale3;
     public RadioButtonView rbTimeScale5;
@@ -510,6 +511,10 @@ public class UIGameMain : UIGameComponent, DialogView.IDialogCallBack, IRadioGro
         else if (rbview == rbTimeScale5)
         {
             timeScale = 5;
+        }
+        else if (rbview == rbTimeScaleStop)
+        {
+            timeScale = 0;
         }
         if (rbview.status == RadioButtonView.RadioButtonStatus.Selected)
         {

@@ -36,12 +36,12 @@ public class DialogView : BaseMonoBehaviour
         InitData();
     }
 
-    public void OnEnable()
+    public virtual void OnEnable()
     {
         if (cgDialog != null)
-            cgDialog.DOFade(1, 0.5f);
+            cgDialog.DOFade(1, 0.5f).SetUpdate(true);
         if(objDialog!=null)
-            objDialog.transform.DOScale(new Vector3(0, 0, 0), 0.5f).SetEase(Ease.OutBack).From();
+            objDialog.transform.DOScale(new Vector3(0, 0, 0), 0.5f).SetEase(Ease.OutBack).From().SetUpdate(true);
     }
 
     public virtual void OnDestroy()

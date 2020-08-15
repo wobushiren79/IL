@@ -5,6 +5,8 @@ using System;
 [Serializable]
 public class GameConfigBean 
 {
+    //屏幕模式 0窗口  1全屏
+    public int window = 0;
     //语言
     public string language="cn";
     //音效大小

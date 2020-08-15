@@ -9,7 +9,7 @@ public class StrengthTestView : BaseMonoBehaviour
     //力度
     public Slider sliderStrength;
     //速度
-    public float strengthSpeed = 1;
+    public float strengthSpeed = 0.5f;
     //是否正在测试
     private bool mIsTest = false;
 

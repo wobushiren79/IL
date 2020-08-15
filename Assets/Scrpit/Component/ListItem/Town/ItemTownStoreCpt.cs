@@ -115,7 +115,7 @@ public class ItemTownStoreCpt : ItemGameBaseCpt
     /// <summary>
     /// 设置拥有数量
     /// </summary>
-    public void SetOwn()
+    public virtual void SetOwn()
     {
         if (tvOwn == null)
             return;

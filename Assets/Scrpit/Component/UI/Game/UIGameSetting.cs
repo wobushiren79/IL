@@ -10,6 +10,7 @@ public class UIGameSetting : UIGameComponent, DropdownView.ICallBack, ProgressVi
 
     public Button btBack;
     public DropdownView dvLanguage;
+    public DropdownView dvWindow;
     public ProgressView pvMusic;
     public ProgressView pvSound;
     public ProgressView pvEnvironment;
@@ -21,6 +22,27 @@ public class UIGameSetting : UIGameComponent, DropdownView.ICallBack, ProgressVi
         {
             btBack.onClick.AddListener(OnClickBack);
         }
+        if (dvWindow!=null)
+        {
+            dvWindow.SetCallBack(this);
+            List<Dropdown.OptionData> listWindow = new List<Dropdown.OptionData>
+            {
+                new Dropdown.OptionData("窗口"),
+                new Dropdown.OptionData("全屏")
+            };
+            dvWindow.SetData(listWindow);
+            switch (GameCommonInfo.GameConfig.window)
+            {
+                case 0:
+                    dvWindow.SetPosition("窗口");
+                    break;
+                case 1:
+                    dvWindow.SetPosition("全屏");
+                    break;
+            }
+
+        }
+
         //语言选择初始化
         if (dvLanguage != null)
         {
@@ -135,17 +157,34 @@ public class UIGameSetting : UIGameComponent, DropdownView.ICallBack, ProgressVi
     public void OnDropDownValueChange(DropdownView view, int position, Dropdown.OptionData optionData)
     {
         uiGameManager.audioHandler.PlaySound(AudioSoundEnum.ButtonForNormal);
-        string languageStr = "cn";
-        if (view == dvLanguage)
+        if (view== dvLanguage)
         {
+            string languageStr = "cn";
             switch (optionData.text)
             {
                 case "简体中文":
                     languageStr = "cn";
                     break;
             }
+            GameCommonInfo.GameConfig.language = languageStr;
         }
-        GameCommonInfo.GameConfig.language = languageStr;
+        else if (view == dvWindow)
+        {
+            int windowType = 0;
+            switch (optionData.text)
+            {
+                case "窗口":
+                    windowType = 0;
+                    Screen.fullScreen = false;
+                    break;
+                case "全屏":
+                    windowType = 1;
+                    Screen.fullScreen = true;
+                    break;
+            }
+            GameCommonInfo.GameConfig.window = windowType;
+        }
+
     }
     #endregion
 

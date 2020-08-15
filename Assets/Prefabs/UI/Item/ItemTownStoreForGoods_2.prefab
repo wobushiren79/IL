@@ -274,26 +274,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   uiComponent: {fileID: 0}
-  objCook: {fileID: 0}
-  tvCook: {fileID: 0}
-  objSpeed: {fileID: 0}
-  tvSpeed: {fileID: 0}
-  objAccount: {fileID: 0}
-  tvAccount: {fileID: 0}
-  objCharm: {fileID: 0}
-  tvCharm: {fileID: 0}
-  objForce: {fileID: 0}
-  tvForce: {fileID: 0}
-  objLucky: {fileID: 0}
-  tvLucky: {fileID: 0}
-  objCookBook: {fileID: 0}
-  tvCookBook: {fileID: 0}
-  rtIcon: {fileID: 1533213818978120864}
-  ivIcon: {fileID: 769209416904238342}
-  tvName: {fileID: 6480661889762001508}
-  tvContent: {fileID: 0}
-  tvOwn: {fileID: 7420416000393311643}
-  btSubmit: {fileID: 7859766883075148535}
   objPriceL: {fileID: 1883115740554285009}
   tvPriceL: {fileID: 5571325049659766767}
   objPriceM: {fileID: 6979355254323099071}
@@ -310,7 +290,12 @@ MonoBehaviour:
   tvTrophyAdvanced: {fileID: 78620165920570851}
   objTrophyLegendary: {fileID: 5358363621692396915}
   tvTrophyLegendary: {fileID: 651633959050824365}
-  infoItemsPopup: {fileID: 5391749610918497462}
+  rtIcon: {fileID: 1533213818978120864}
+  ivIcon: {fileID: 769209416904238342}
+  tvName: {fileID: 6480661889762001508}
+  tvContent: {fileID: 0}
+  tvOwn: {fileID: 7420416000393311643}
+  btSubmit: {fileID: 7859766883075148535}
   storeInfo:
     id: 0
     valid: 0
@@ -337,6 +322,21 @@ MonoBehaviour:
     icon_key: 
     name: 
     content: 
+  objCook: {fileID: 0}
+  tvCook: {fileID: 0}
+  objSpeed: {fileID: 0}
+  tvSpeed: {fileID: 0}
+  objAccount: {fileID: 0}
+  tvAccount: {fileID: 0}
+  objCharm: {fileID: 0}
+  tvCharm: {fileID: 0}
+  objForce: {fileID: 0}
+  tvForce: {fileID: 0}
+  objLucky: {fileID: 0}
+  tvLucky: {fileID: 0}
+  objCookBook: {fileID: 0}
+  tvCookBook: {fileID: 0}
+  infoItemsPopup: {fileID: 5391749610918497462}
   itemsInfo:
     id: 0
     valid: 0
@@ -344,6 +344,7 @@ MonoBehaviour:
     items_id: 0
     items_type: 0
     icon_key: 
+    anim_key: 
     add_life: 0
     add_cook: 0
     add_speed: 0
@@ -358,6 +359,7 @@ MonoBehaviour:
     effect_details: 
     name: 
     content: 
+    rarity: 0
 --- !u!114 &5391749610918497462
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -377,6 +379,7 @@ MonoBehaviour:
     items_id: 0
     items_type: 0
     icon_key: 
+    anim_key: 
     add_life: 0
     add_cook: 0
     add_speed: 0
@@ -391,6 +394,7 @@ MonoBehaviour:
     effect_details: 
     name: 
     content: 
+    rarity: 0
   spIcon: {fileID: 0}
 --- !u!1 &620230575620039578
 GameObject:
@@ -1613,7 +1617,7 @@ RectTransform:
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0.7}
-  m_AnchorMax: {x: 0.3, y: 1}
+  m_AnchorMax: {x: 0.4, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -1657,7 +1661,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "\u62E5\u6709\n"
+  m_Text: "\u672A\u638C\u63E1"
 --- !u!114 &7896434425531288635
 MonoBehaviour:
   m_ObjectHideFlags: 0
