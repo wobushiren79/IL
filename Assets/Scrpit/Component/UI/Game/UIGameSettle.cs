@@ -9,12 +9,22 @@ public class UIGameSettle : UIGameComponent
     public Button btSubmit;
 
     //收入支出
-    public Text tvIncomeS;
-    public Text tvIncomeM;
+    public GameObject objIncomeL;
     public Text tvIncomeL;
-    public Text tvExpensesS;
-    public Text tvExpensesM;
+    public GameObject objIncomeM;
+    public Text tvIncomeM;
+    public GameObject objIncomeS;
+    public Text tvIncomeS;
+
+
+    public GameObject objExpensesL;
     public Text tvExpensesL;
+    public GameObject objExpensesM;
+    public Text tvExpensesM;
+    public GameObject objExpensesS;
+    public Text tvExpensesS;
+
+
 
     public GameObject objListRecordContent;
 
@@ -91,22 +101,63 @@ public class UIGameSettle : UIGameComponent
         }
         //食材消耗
         string consumeIngStr = GameCommonInfo.GetUITextById(4002);
+        string ingName = "";
         if (innRecord.consumeIngOilsalt > 0)
-            CreateItemForOther("-"+innRecord.consumeIngOilsalt, spIconOilsalt, consumeIngStr + " " + GameCommonInfo.GetUITextById(21),Color.red);
+        {
+            ingName = IngredientsEnumTools.GetIngredientName( IngredientsEnum.Oilsalt);
+            CreateItemForOther("-" + innRecord.consumeIngOilsalt, spIconOilsalt, consumeIngStr + " " + ingName, Color.red);
+            CreateItemForMoney(spIconOilsalt, string.Format(GameCommonInfo.GetUITextById(339), ingName), 0, 0, 0, innRecord.consumeIngOilsalt * 5);
+            innRecord.AddPayIng(0,0, innRecord.consumeIngOilsalt * 5);
+        }
         if (innRecord.consumeIngMeat > 0)
-            CreateItemForOther("-" + innRecord.consumeIngMeat, spIconMeat, consumeIngStr + " " + GameCommonInfo.GetUITextById(22), Color.red);
+        {
+            ingName = IngredientsEnumTools.GetIngredientName(IngredientsEnum.Meat);
+            CreateItemForOther("-" + innRecord.consumeIngMeat, spIconMeat, consumeIngStr + " " + ingName, Color.red);
+            CreateItemForMoney(spIconMeat, string.Format(GameCommonInfo.GetUITextById(339), ingName), 0, 0, 0, innRecord.consumeIngMeat * 10);
+            innRecord.AddPayIng(0, 0, innRecord.consumeIngMeat * 10);
+        }
         if (innRecord.consumeIngRiverfresh > 0)
-            CreateItemForOther("-" + innRecord.consumeIngRiverfresh, spIconRiverfresh, consumeIngStr + " " + GameCommonInfo.GetUITextById(23), Color.red);
+        {
+            ingName = IngredientsEnumTools.GetIngredientName(IngredientsEnum.Riverfresh);
+            CreateItemForOther("-" + innRecord.consumeIngRiverfresh, spIconRiverfresh, consumeIngStr + " " + ingName, Color.red);
+            CreateItemForMoney(spIconRiverfresh, string.Format(GameCommonInfo.GetUITextById(339), ingName), 0, 0, 0, innRecord.consumeIngRiverfresh * 10);
+            innRecord.AddPayIng(0, 0, innRecord.consumeIngRiverfresh * 10);
+        }  
         if (innRecord.consumeIngSeafood > 0)
-            CreateItemForOther("-" + innRecord.consumeIngSeafood, spIconSeafood, consumeIngStr + " " + GameCommonInfo.GetUITextById(24), Color.red);
+        {
+            ingName = IngredientsEnumTools.GetIngredientName(IngredientsEnum.Seafood);
+            CreateItemForOther("-" + innRecord.consumeIngSeafood, spIconSeafood, consumeIngStr + " " + ingName, Color.red);
+            CreateItemForMoney(spIconSeafood, string.Format(GameCommonInfo.GetUITextById(339), ingName), 0, 0, 0, innRecord.consumeIngSeafood * 50);
+            innRecord.AddPayIng(0, 0, innRecord.consumeIngSeafood * 50);
+        }
         if (innRecord.consumeIngVegetables > 0)
-            CreateItemForOther("-" + innRecord.consumeIngVegetables, spIconVegetables, consumeIngStr + " " + GameCommonInfo.GetUITextById(25), Color.red);
+        {
+            ingName = IngredientsEnumTools.GetIngredientName(IngredientsEnum.Vegetables);
+            CreateItemForOther("-" + innRecord.consumeIngVegetables, spIconVegetables, consumeIngStr + " " + ingName, Color.red);
+            CreateItemForMoney(spIconVegetables, string.Format(GameCommonInfo.GetUITextById(339), ingName), 0, 0, 0, innRecord.consumeIngVegetables * 5);
+            innRecord.AddPayIng(0, 0, innRecord.consumeIngVegetables * 5);
+        }
         if (innRecord.consumeIngMelonfruit > 0)
-            CreateItemForOther("-" + innRecord.consumeIngMelonfruit, spIconMelonfruit, consumeIngStr + " " + GameCommonInfo.GetUITextById(26), Color.red);
+        {
+            ingName = IngredientsEnumTools.GetIngredientName(IngredientsEnum.Melonfruit);
+            CreateItemForOther("-" + innRecord.consumeIngMelonfruit, spIconMelonfruit, consumeIngStr + " " + ingName, Color.red);
+            CreateItemForMoney(spIconMelonfruit, string.Format(GameCommonInfo.GetUITextById(339), ingName), 0, 0, 0, innRecord.consumeIngMelonfruit * 5);
+            innRecord.AddPayIng(0, 0, innRecord.consumeIngMelonfruit * 5);
+        }
         if (innRecord.consumeIngWaterwine > 0)
-            CreateItemForOther("-" + innRecord.consumeIngWaterwine, spIconWaterwine, consumeIngStr + " " + GameCommonInfo.GetUITextById(27), Color.red);
+        {
+            ingName = IngredientsEnumTools.GetIngredientName(IngredientsEnum.Waterwine);
+            CreateItemForOther("-" + innRecord.consumeIngWaterwine, spIconWaterwine, consumeIngStr + " " + ingName, Color.red);
+            CreateItemForMoney(spIconWaterwine, string.Format(GameCommonInfo.GetUITextById(339), ingName), 0, 0, 0, innRecord.consumeIngWaterwine * 10);
+            innRecord.AddPayIng(0, 0, innRecord.consumeIngWaterwine * 10);
+        }
         if (innRecord.consumeIngFlour > 0)
-            CreateItemForOther("-" + innRecord.consumeIngFlour, spIconFlour, consumeIngStr + " " + GameCommonInfo.GetUITextById(28), Color.red);
+        {
+            ingName = IngredientsEnumTools.GetIngredientName(IngredientsEnum.Flour);
+            CreateItemForOther("-" + innRecord.consumeIngFlour, spIconFlour, consumeIngStr + " " + ingName, Color.red);
+            CreateItemForMoney(spIconFlour, string.Format(GameCommonInfo.GetUITextById(339), ingName), 0, 0, 0, innRecord.consumeIngFlour * 5);
+            innRecord.AddPayIng(0, 0, innRecord.consumeIngFlour * 5);
+        }
         //遍历食物
         foreach (GameItemsBean itemData in innRecord.listSellNumber)
         {
@@ -120,12 +171,21 @@ public class UIGameSettle : UIGameComponent
                 itemData.priceM,
                 itemData.priceS);
         }
+        if (innRecord.incomeL <= 0)
+            objIncomeL.SetActive(false);
+        if (innRecord.incomeM <= 0)
+            objIncomeM.SetActive(false);
+        tvIncomeL.text = innRecord.incomeL + "";
+        tvIncomeM.text = innRecord.incomeM + "";
         tvIncomeS.text =innRecord.incomeS + "";
-        tvIncomeM.text =innRecord.incomeM + "";
-        tvIncomeL.text =innRecord.incomeL + "";
+
+        if (innRecord.expensesL <= 0)
+            objExpensesL.SetActive(false);
+        if (innRecord.expensesM <= 0)
+            objExpensesM.SetActive(false);
+        tvExpensesL.text = innRecord.expensesL + "";
+        tvExpensesM.text = innRecord.expensesM + "";
         tvExpensesS.text =innRecord.expensesS + "";
-        tvExpensesM.text =innRecord.expensesM + "";
-        tvExpensesL.text =innRecord.expensesL + "";
     }
 
     public void CreateItemForMoney(Sprite spIcon, string name, int status, long moneyL, long moneyM, long moneyS)

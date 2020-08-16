@@ -103,8 +103,8 @@ public class CharacterBean
         characterData.baseInfo.name = RandomUtil.GetRandomGenerateChineseWord(UnityEngine.Random.Range(2, 4));
         //生成随机能力
         long totalPoint = (findPriceS + findPriceM * 1000 + findPriceL * 10000) / 100;
-        int maxLife = 10;
-        int minLife = 0;
+        int maxLife = 20;
+        int minLife = 10;
 
         int maxCook = 1;
         int minCook = 1;
@@ -130,8 +130,8 @@ public class CharacterBean
         {
             characterData.baseInfo.characterType = (int)NpcTypeEnum.RecruitRare;
 
-            maxLife = 100;
-            minLife = 200;
+            maxLife = 200;
+            minLife = 100;
 
             maxCook = 15;
             minCook = 10;

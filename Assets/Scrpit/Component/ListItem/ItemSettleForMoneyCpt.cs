@@ -7,9 +7,13 @@ public class ItemSettleForMoneyCpt : ItemGameBaseCpt
     public Image ivIcon;
     public Text tvContent;
     public Text tvStatus;
-    public Text tvPriceS;
-    public Text tvPriceM;
+
+    public GameObject objPriceL;
     public Text tvPriceL;
+    public GameObject objPriceM;
+    public Text tvPriceM;
+    public GameObject objPriceS;
+    public Text tvPriceS;
 
     public void SetData(Sprite spIcon, string name, int status, long moneyL, long moneyM, long moneyS)
     {
@@ -17,12 +21,7 @@ public class ItemSettleForMoneyCpt : ItemGameBaseCpt
             ivIcon.sprite = spIcon;
         if (tvContent != null)
             tvContent.text = name;
-        if (tvPriceL != null)
-            tvPriceL.text = moneyL + "";
-        if (tvPriceM != null)
-            tvPriceM.text = moneyM + "";
-        if (tvPriceS != null)
-            tvPriceS.text = moneyS + "";
+        SetPrice(moneyL, moneyM, moneyS);
         if (tvStatus != null)
         {
             //收入
@@ -38,5 +37,30 @@ public class ItemSettleForMoneyCpt : ItemGameBaseCpt
                 tvStatus.color = Color.red;
             }
         }
+    }
+
+    /// <summary>
+    /// 设置金钱
+    /// </summary>
+    /// <param name="moneyL"></param>
+    /// <param name="moneyM"></param>
+    /// <param name="moneyS"></param>
+    public void SetPrice(long moneyL, long moneyM, long moneyS)
+    {
+        if (moneyL <= 0)
+        {
+            objPriceL.SetActive(false);
+        }
+        if (moneyM <= 0)
+        {
+            objPriceM.SetActive(false);
+        }
+
+        if (tvPriceL != null)
+            tvPriceL.text = moneyL + "";
+        if (tvPriceM != null)
+            tvPriceM.text = moneyM + "";
+        if (tvPriceS != null)
+            tvPriceS.text = moneyS + "";
     }
 }

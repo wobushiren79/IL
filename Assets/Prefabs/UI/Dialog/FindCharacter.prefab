@@ -268,9 +268,9 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_FontData:
-    m_Font: {fileID: 12800000, guid: 5af80356261d6ff4f8aeec8a15c0cab5, type: 3}
+    m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
     m_FontSize: 25
-    m_FontStyle: 0
+    m_FontStyle: 1
     m_BestFit: 0
     m_MinSize: 2
     m_MaxSize: 40
@@ -550,9 +550,9 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_FontData:
-    m_Font: {fileID: 12800000, guid: 5af80356261d6ff4f8aeec8a15c0cab5, type: 3}
+    m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
     m_FontSize: 25
-    m_FontStyle: 0
+    m_FontStyle: 1
     m_BestFit: 0
     m_MinSize: 2
     m_MaxSize: 40
@@ -805,7 +805,6 @@ MonoBehaviour:
         priority: 0
         isWorking: 1
         cookNumber: 0
-        cookTime: 0
         listFoodCookNumer: []
       waiterInfo:
         workerType: 2
@@ -815,7 +814,6 @@ MonoBehaviour:
         isWorking: 1
         cleanTotalNumber: 0
         sendTotalNumber: 0
-        cleanTotalTime: 0
       accountantInfo:
         workerType: 3
         workerLevel: 0
@@ -834,7 +832,6 @@ MonoBehaviour:
         accountingMoneyL: 0
         accountingMoneyM: 0
         accountingMoneyS: 0
-        accountingTotalTime: 0
       accostInfo:
         workerType: 4
         workerLevel: 0
@@ -844,7 +841,6 @@ MonoBehaviour:
         accostTotalNumber: 0
         accostSuccessNumber: 0
         accostFailNumber: 0
-        accostTotalTime: 0
       beaterInfo:
         workerType: 5
         workerLevel: 0
@@ -854,8 +850,6 @@ MonoBehaviour:
         fightTotalNumber: 0
         fightWinNumber: 0
         fightLoseNumber: 0
-        fightTotalTime: 0
-        restTotalTime: 0
       workerStatus: 0
       listLoveItems: 
     attributes:
@@ -924,7 +918,7 @@ MonoBehaviour:
       name: 
       position_x: 0
       position_y: 0
-      talk_ids: 
+      talk_types: 
       skill_ids: 
       attributes_loyal: 0
       attributes_life: 0

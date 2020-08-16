@@ -126,6 +126,7 @@ public class UITownRecruitment : UIBaseOne, DialogView.IDialogCallBack
         dialogData.title = GameCommonInfo.GetUITextById(3062);
         PickForMoneyDialogView pickForMoneyDialog = (PickForMoneyDialogView)uiGameManager.dialogManager.CreateDialog(DialogEnum.PickForMoney, this, dialogData);
         pickForMoneyDialog.SetData(1, 1, 100);
+        pickForMoneyDialog.SetMaxMoney(100,100,10000);
     }
 
     #region 弹窗回调
@@ -151,6 +152,8 @@ public class UITownRecruitment : UIBaseOne, DialogView.IDialogCallBack
             CharacterBean characterData = CharacterBean.CreateRandomWorkerDataByPrice(characterBodyManager, moneyL, moneyM, moneyS);
             FindCharacterDialogView findCharacterDialog = (FindCharacterDialogView)dialogManager.CreateDialog(DialogEnum.FindCharacter, this, dialogData);
             findCharacterDialog.SetData(characterData);
+
+            uiGameManager.audioHandler.PlaySound(AudioSoundEnum.Reward);
         }
         else if (dialogView as FindCharacterDialogView)
         {
