@@ -13,13 +13,16 @@ public class ItemSettleForOtherCpt : BaseMonoBehaviour
     /// <param name="number"></param>
     /// <param name="icon"></param>
     /// <param name="name"></param>
-    public void SetData(int number, Sprite icon, string name)
+    public void SetData(string  number, Sprite icon, string name,Color numerColor)
     {
         if (ivIcon != null)
             ivIcon.sprite = icon;
         if (tvName != null)
             tvName.text = name;
         if (tvConsume != null)
-            tvConsume.text = ("-" + number);
+        {
+            tvConsume.text = number;
+            tvConsume.color = numerColor;
+        }
     }
 }

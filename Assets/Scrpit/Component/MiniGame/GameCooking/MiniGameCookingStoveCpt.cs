@@ -142,7 +142,7 @@ public class MiniGameCookingStoveCpt : BaseMonoBehaviour
     public FoodForCoverCpt CreateFood()
     {
         GameObject objFood = Instantiate(objFoodPosition, objFoodModel, objFoodPosition.transform.position);
-        FoodForCoverCpt foodForCover= objFood.GetComponent<FoodForCoverCpt>();
+        FoodForCoverCpt foodForCover = objFood.GetComponent<FoodForCoverCpt>();
         foodForCover.SetData(menuInfo);
         return foodForCover;
     }

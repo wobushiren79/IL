@@ -496,7 +496,7 @@ public class CharacterBean
         moreRate = 0;
         GetAttributes(gameItemsManager,
         out CharacterAttributesBean totalAttributes, out CharacterAttributesBean selfAttributes, out CharacterAttributesBean equipAttributes);
-        float successRate = 0.5f + (totalAttributes.account * 0.005f);
+        float successRate = 0.7f + (totalAttributes.account * 0.003f);
         float randomTemp = UnityEngine.Random.Range(0f, 1f);
         if (randomTemp <= successRate)
         {
@@ -520,10 +520,10 @@ public class CharacterBean
     /// <returns></returns>
     public float CalculationAccountingTime(GameItemsManager gameItemsManager)
     {
-        float time = 10;
+        float time = 6;
         GetAttributes(gameItemsManager,
         out CharacterAttributesBean totalAttributes, out CharacterAttributesBean selfAttributes, out CharacterAttributesBean equipAttributes);
-        time -= totalAttributes.account * 0.1f;
+        time -= totalAttributes.account * 0.06f;
         if (time < 0.1f)
             time = 0.1f;
         return time;

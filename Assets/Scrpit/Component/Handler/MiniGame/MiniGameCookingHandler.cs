@@ -67,9 +67,10 @@ public class MiniGameCookingHandler : BaseMiniGameHandler<MiniGameCookingBuilder
         {
             //如果没有给定敌方角色的菜品 那就随机给参赛的敌方角色设置菜品
             NpcAIMiniGameCookingCpt itemNpc = listPlayerNpcAI[i];
-            if (itemNpc.characterMiniGameData.cookingMenuInfo == null && itemNpc.characterMiniGameData.characterType == 0)
+            if (itemNpc.characterMiniGameData.GetCookingMenuInfo() == null && itemNpc.characterMiniGameData.characterType == 0)
             {
-                itemNpc.characterMiniGameData.cookingMenuInfo = uiGameManager.innFoodManager.GetRandomFoodDataByCookingTheme(miniGameData.GetCookingTheme());
+                MenuInfoBean menuInfo = uiGameManager.innFoodManager.GetRandomFoodDataByCookingTheme(miniGameData.GetCookingTheme());
+                itemNpc.characterMiniGameData.SetCookingMenuInfo(menuInfo);
             }
             //给参赛选手分配灶台
             MiniGameCookingStoveCpt itemTable = listStove[i];
@@ -149,7 +150,7 @@ public class MiniGameCookingHandler : BaseMiniGameHandler<MiniGameCookingBuilder
         uiMiniGameCooking.StartCookingPre();
         //角色就位
         NpcAIMiniGameCookingCpt npcAI = miniGameBuilder.GetUserCharacter();
-        npcAI.characterMiniGameData.cookingMenuInfo = menuInfo;
+        npcAI.characterMiniGameData.SetCookingMenuInfo(menuInfo);
         npcAI.SetIntent(NpcAIMiniGameCookingCpt.MiniGameCookingIntentEnum.CookingPre);
     }
 
@@ -362,7 +363,7 @@ public class MiniGameCookingHandler : BaseMiniGameHandler<MiniGameCookingBuilder
     public void UIMiniGameCookingSelect(MenuInfoBean menuInfo)
     {
         //设置操作角色的料理
-        miniGameBuilder.GetUserCharacter().characterMiniGameData.cookingMenuInfo = menuInfo;
+        miniGameBuilder.GetUserCharacter().characterMiniGameData.SetCookingMenuInfo(menuInfo);
         //开始准备烹饪的游戏
         StartPreCooking(menuInfo);
     }

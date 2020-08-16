@@ -145,6 +145,11 @@ public class SceneGameInnInit : BaseSceneInit, IBaseObserver, DialogView.IDialog
     {
         //停止时间
         gameTimeHandler.SetTimeStatus(true);
+
+        //如果有菜谱研究 增加研究点数
+        int addHour = 24 - gameDataManager.gameData.gameTime.hour;
+        gameDataHandler.AddMenuResearch(addHour * 60);
+
         //重置游戏时间
         GameCommonInfo.GameData.gameTime.hour = 0;
         GameCommonInfo.GameData.gameTime.minute = 0;

@@ -16,6 +16,7 @@ public class BaseSceneInit : BaseMonoBehaviour
     protected WeatherHandler weatherHandler;
     protected ControlHandler controlHandler;
     protected AudioHandler audioHandler;
+    protected GameDataHandler gameDataHandler;
 
 
     public virtual void Awake()
@@ -32,6 +33,7 @@ public class BaseSceneInit : BaseMonoBehaviour
         audioHandler = Find<AudioHandler>(ImportantTypeEnum.AudioHandler);
         gameTimeHandler = Find<GameTimeHandler>(ImportantTypeEnum.TimeHandler);
         innBuildManager = Find<InnBuildManager>(ImportantTypeEnum.BuildManager);
+        gameDataHandler = Find<GameDataHandler>(ImportantTypeEnum.GameDataHandler);
     }
 
     public virtual void Start()

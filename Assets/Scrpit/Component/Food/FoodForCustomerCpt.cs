@@ -48,11 +48,11 @@ public class FoodForCustomerCpt : BaseMonoBehaviour
                 }
             }
         }
-      
+
         objBadFood.SetActive(false);
         objGoodFood.SetActive(false);
         objPrefectFood.SetActive(false);
-        if(foodData.GetRarity()== RarityEnum.SuperRare)
+        if (foodData != null && foodData.GetRarity()== RarityEnum.SuperRare)
         {
             objPrefectFood.SetActive(true);
         }

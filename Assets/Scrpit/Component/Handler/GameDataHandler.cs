@@ -3,7 +3,7 @@ using UnityEditor;
 using System.Collections;
 using System.Collections.Generic;
 
-public class GameDataHandler : BaseHandler, DialogView.IDialogCallBack
+public class GameDataHandler : BaseHandler, DialogView.IDialogCallBack,IBaseObserver
 {
 
     public enum NotifyTypeEnum
@@ -30,7 +30,7 @@ public class GameDataHandler : BaseHandler, DialogView.IDialogCallBack
         audioHandler = Find<AudioHandler>(ImportantTypeEnum.AudioHandler);
         innFoodManager = Find<InnFoodManager>(ImportantTypeEnum.FoodManager);
         dialogManager = Find<DialogManager>(ImportantTypeEnum.DialogManager);
-
+        
     }
 
     private void Start()
@@ -61,14 +61,25 @@ public class GameDataHandler : BaseHandler, DialogView.IDialogCallBack
             gameDataManager.gameData.playTime.AddTimeForHMS(0, 0, 1);
     }
 
+   
+
     /// <summary>
     /// 菜单研究处理
     /// </summary>
     public void HandleForMenuResearch()
     {
-        if (gameTimeHandler == null || gameItemsManager == null || gameDataManager == null)
-            return;
         if (gameTimeHandler.isStopTime)
+            return;
+        AddMenuResearch(1);
+    }
+
+    /// <summary>
+    /// 增加菜品研究点数
+    /// </summary>
+    /// <param name="time"></param>
+    public void AddMenuResearch(int time)
+    {
+        if (gameTimeHandler == null || gameItemsManager == null || gameDataManager == null)
             return;
         List<MenuOwnBean> listMenu = gameDataManager.gameData.GetMenuListForResearching();
         if (listMenu == null)
@@ -87,7 +98,7 @@ public class GameDataHandler : BaseHandler, DialogView.IDialogCallBack
             if (menuInfo == null)
                 continue;
             long addExp = researcher.CalculationMenuResearchAddExp(gameItemsManager);
-            bool isCompleteResearch = itemMenu.AddResearchExp((int)addExp);
+            bool isCompleteResearch = itemMenu.AddResearchExp((int)addExp * time);
             //完成研究
             if (isCompleteResearch)
             {
@@ -101,7 +112,7 @@ public class GameDataHandler : BaseHandler, DialogView.IDialogCallBack
                     title = GameCommonInfo.GetUITextById(1048),
                     content = toastStr
                 };
-                AchievementDialogView achievementDialog=(AchievementDialogView) dialogManager.CreateDialog(DialogEnum.Achievement, this, dialogData);
+                AchievementDialogView achievementDialog = (AchievementDialogView)dialogManager.CreateDialog(DialogEnum.Achievement, this, dialogData);
                 achievementDialog.SetData(1, menuInfo.icon_key);
             }
         }
@@ -131,6 +142,25 @@ public class GameDataHandler : BaseHandler, DialogView.IDialogCallBack
 
     public void Cancel(DialogView dialogView, DialogBean dialogBean)
     {
+
+    }
+    #endregion
+
+
+    #region 通知回调
+    public void ObserbableUpdate<T>(T observable, int type, params object[] obj) where T : Object
+    {
+        if(observable == gameTimeHandler)
+        {
+            if (type == (int)GameTimeHandler.NotifyTypeEnum.NewDay)
+            {
+
+            }
+            else if (type == (int)GameTimeHandler.NotifyTypeEnum.EndDay)
+            {
+
+            }
+        }
     }
     #endregion
 }

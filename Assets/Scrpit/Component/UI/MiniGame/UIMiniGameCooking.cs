@@ -336,7 +336,7 @@ public class UIMiniGameCooking : UIGameComponent
         while (mIsPlay)
         {
             yield return new WaitForSeconds(0.1f);
-            sliderTime.value-=0.1f;
+            sliderTime.value -= 0.1f;
             if (sliderTime.value <= 0)
             {
                 StartCoroutine(SettleGame());

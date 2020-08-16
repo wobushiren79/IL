@@ -122,7 +122,7 @@ public class EditorUI
         npcInfo.npc_type = (int)GUIEnum<NpcTypeEnum>("Npc类型：", npcInfo.npc_type);
         NpcTypeEnum npcType = (NpcTypeEnum)npcInfo.npc_type;
         GUILayout.Label("对话选项：", GUILayout.Width(100), GUILayout.Height(20));
-        npcInfo.talk_types = EditorUI.GUIEditorText(npcInfo.talk_types,50);
+        npcInfo.talk_types = EditorUI.GUIEditorText(npcInfo.talk_types, 50);
         GUILayout.EndHorizontal();
         if (npcType != NpcTypeEnum.Passerby)
         {
@@ -860,25 +860,56 @@ public class EditorUI
         GUIText("ID:");
         menuInfo.id = GUIEditorText(menuInfo.id);
         menuInfo.menu_id = menuInfo.id;
-        GUIText("稀有度:");
-        menuInfo.rarity = GUIEditorText(menuInfo.rarity);
+      
         GUIText("名称:");
         menuInfo.name = GUIEditorText(menuInfo.name, 150);
         GUIText("内容:");
         menuInfo.content = GUIEditorText(menuInfo.content, 300);
+
+        GUIText("烹饪时间:");
+        menuInfo.cook_time = GUIEditorText(menuInfo.cook_time);
+
+        GUIText("当前利润:");
+        long getmoney = menuInfo.price_s -(
+             menuInfo.ing_oilsalt * 5 +
+             menuInfo.ing_meat * 10 +
+             menuInfo.ing_riverfresh * 10 +
+             menuInfo.ing_seafood * 50 +
+             menuInfo.ing_vegetables * 5 +
+             menuInfo.ing_melonfruit * 5 +
+             menuInfo.ing_waterwine * 10 +
+             menuInfo.ing_flour * 10);
+        GUIText(getmoney+"");
+        GUIText("输入利润:",50);
+        long setGetmoney = GUIEditorText(getmoney, 50);
+        if(getmoney != setGetmoney)
+        {
+            //自定义了利润
+            menuInfo.price_s = 
+                setGetmoney +
+             menuInfo.ing_oilsalt * 5 +
+             menuInfo.ing_meat * 10 +
+             menuInfo.ing_riverfresh * 10 +
+             menuInfo.ing_seafood * 50 +
+             menuInfo.ing_vegetables * 5 +
+             menuInfo.ing_melonfruit * 5 +
+             menuInfo.ing_waterwine * 10 +
+             menuInfo.ing_flour * 10;
+        }
+        GUIText("利润:");
+
+        GUIText("价格LMS:");
+        menuInfo.price_l = GUIEditorText(menuInfo.price_l, 50);
+        menuInfo.price_m = GUIEditorText(menuInfo.price_m, 50);
+        menuInfo.price_s = GUIEditorText(menuInfo.price_s, 50);
         GUIText("动画名称:");
         menuInfo.anim_key = GUIEditorText(menuInfo.anim_key, 150);
         GUIText("图片名称:");
         menuInfo.icon_key = GUIEditorText(menuInfo.icon_key, 150);
         string menuPicPath = "Assets/Texture/Food/";
         GUIPic(menuPicPath, menuInfo.icon_key);
-        GUIText("烹饪时间:");
-        menuInfo.cook_time = GUIEditorText(menuInfo.cook_time);
-        GUIText("价格LMS:");
-        menuInfo.price_l = GUIEditorText(menuInfo.price_l, 50);
-        menuInfo.price_m = GUIEditorText(menuInfo.price_m, 50);
-        menuInfo.price_s = GUIEditorText(menuInfo.price_s, 50);
-
+        GUIText("稀有度:");
+        menuInfo.rarity = GUIEditorText(menuInfo.rarity);
         GUIText("材料 油盐:");
         menuInfo.ing_oilsalt = GUIEditorText(menuInfo.ing_oilsalt, 50);
         GUIText("材料 鲜肉:");

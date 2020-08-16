@@ -427,8 +427,8 @@ public class EventHandler : BaseHandler,
             foreach (MiniGameCharacterBean itemCharacter in gameCookingData.listUserGameData)
             {
                 MiniGameCharacterForCookingBean cookingCharacterData = (MiniGameCharacterForCookingBean)itemCharacter;
-                if (cookingCharacterData.cookingMenuInfo != null)
-                    listData.Add(GameSubstitutionInfo.MiniGame_Cooking_UserFoodName, cookingCharacterData.cookingMenuInfo.name);
+                if (cookingCharacterData.GetCookingMenuInfo() != null)
+                    listData.Add(GameSubstitutionInfo.MiniGame_Cooking_UserFoodName, cookingCharacterData.GetCookingMenuInfo().name);
             }
         }
         return listData;

@@ -100,17 +100,7 @@ public class InnFoodManager : BaseManager, IMenuInfoView, ICookingThemeView
     public MenuInfoBean GetRandomFoodDataByCookingTheme(CookingThemeBean cookingTheme)
     {
         //TODO
-        int randomTemp = Random.Range(0, listMenuData.Count);
-        int i = 0;
-        foreach (var item in listMenuData)
-        {
-            if (i == randomTemp)
-            {
-                return item.Value;
-            }
-            i++;
-        }
-        return null;
+        return RandomUtil.GetRandomDataByDictionary(listMenuData);
     }
 
     /// <summary>

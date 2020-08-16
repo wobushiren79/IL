@@ -164,7 +164,7 @@ public class RewardTypeEnumTools : DataTools
                 break;
         }
         rewardTypeData.spRewardIcon = iconDataManager.GetIconSpriteByName(iconKey);
-        rewardTypeData.rewardDescribe = string.Format(GameCommonInfo.GetUITextById(6009), rewardTypeData.data);
+        rewardTypeData.rewardDescribe = rewardDescribe;
         rewardTypeData.rewardNumber = int.Parse(rewardTypeData.data);
         return rewardTypeData;
     }

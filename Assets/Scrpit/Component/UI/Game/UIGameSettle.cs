@@ -61,6 +61,10 @@ public class UIGameSettle : UIGameComponent
         CptUtil.RemoveChildsByActive(objListRecordContent.transform);
         animDelay = 0f;
         InnRecordBean innRecord = innHandler.GetInnRecord();
+        //客流量
+        CreateItemForOther(innRecord.GetTotalCustomer() + "", iconDataManager.GetIconSpriteByName("ach_ordernumber_1"), GameCommonInfo.GetUITextById(323), Color.green);
+        CreateItemForOther(innRecord.GetTotalPayCustomer() + "", iconDataManager.GetIconSpriteByName("ach_ordernumber_1"), GameCommonInfo.GetUITextById(338), Color.green);
+
         //员工支出
         CreateItemForMoney(
                 iconDataManager.GetIconSpriteByName("money_1"),
@@ -88,21 +92,21 @@ public class UIGameSettle : UIGameComponent
         //食材消耗
         string consumeIngStr = GameCommonInfo.GetUITextById(4002);
         if (innRecord.consumeIngOilsalt > 0)
-            CreateItemForOther(innRecord.consumeIngOilsalt, spIconOilsalt, consumeIngStr + " " + GameCommonInfo.GetUITextById(21));
+            CreateItemForOther("-"+innRecord.consumeIngOilsalt, spIconOilsalt, consumeIngStr + " " + GameCommonInfo.GetUITextById(21),Color.red);
         if (innRecord.consumeIngMeat > 0)
-            CreateItemForOther(innRecord.consumeIngMeat, spIconMeat, consumeIngStr + " " + GameCommonInfo.GetUITextById(22));
+            CreateItemForOther("-" + innRecord.consumeIngMeat, spIconMeat, consumeIngStr + " " + GameCommonInfo.GetUITextById(22), Color.red);
         if (innRecord.consumeIngRiverfresh > 0)
-            CreateItemForOther(innRecord.consumeIngRiverfresh, spIconRiverfresh, consumeIngStr + " " + GameCommonInfo.GetUITextById(23));
+            CreateItemForOther("-" + innRecord.consumeIngRiverfresh, spIconRiverfresh, consumeIngStr + " " + GameCommonInfo.GetUITextById(23), Color.red);
         if (innRecord.consumeIngSeafood > 0)
-            CreateItemForOther(innRecord.consumeIngSeafood, spIconSeafood, consumeIngStr + " " + GameCommonInfo.GetUITextById(24));
+            CreateItemForOther("-" + innRecord.consumeIngSeafood, spIconSeafood, consumeIngStr + " " + GameCommonInfo.GetUITextById(24), Color.red);
         if (innRecord.consumeIngVegetables > 0)
-            CreateItemForOther(innRecord.consumeIngVegetables, spIconVegetables, consumeIngStr + " " + GameCommonInfo.GetUITextById(25));
+            CreateItemForOther("-" + innRecord.consumeIngVegetables, spIconVegetables, consumeIngStr + " " + GameCommonInfo.GetUITextById(25), Color.red);
         if (innRecord.consumeIngMelonfruit > 0)
-            CreateItemForOther(innRecord.consumeIngMelonfruit, spIconMelonfruit, consumeIngStr + " " + GameCommonInfo.GetUITextById(26));
+            CreateItemForOther("-" + innRecord.consumeIngMelonfruit, spIconMelonfruit, consumeIngStr + " " + GameCommonInfo.GetUITextById(26), Color.red);
         if (innRecord.consumeIngWaterwine > 0)
-            CreateItemForOther(innRecord.consumeIngWaterwine, spIconWaterwine, consumeIngStr + " " + GameCommonInfo.GetUITextById(27));
+            CreateItemForOther("-" + innRecord.consumeIngWaterwine, spIconWaterwine, consumeIngStr + " " + GameCommonInfo.GetUITextById(27), Color.red);
         if (innRecord.consumeIngFlour > 0)
-            CreateItemForOther(innRecord.consumeIngFlour, spIconFlour, consumeIngStr + " " + GameCommonInfo.GetUITextById(28));
+            CreateItemForOther("-" + innRecord.consumeIngFlour, spIconFlour, consumeIngStr + " " + GameCommonInfo.GetUITextById(28), Color.red);
         //遍历食物
         foreach (GameItemsBean itemData in innRecord.listSellNumber)
         {
@@ -132,11 +136,11 @@ public class UIGameSettle : UIGameComponent
         AnimForItemShow(objMoneyItem);
     }
 
-    public void CreateItemForOther(int number, Sprite ingIcon, string name)
+    public void CreateItemForOther(string  number, Sprite ingIcon, string name,Color numberColor)
     {
         GameObject objOtherItem = Instantiate(objListRecordContent, objItemModelForOther);
         ItemSettleForOtherCpt itemCpt = objOtherItem.GetComponent<ItemSettleForOtherCpt>();
-        itemCpt.SetData(number, ingIcon, name);
+        itemCpt.SetData(number, ingIcon, name, numberColor);
         AnimForItemShow(objOtherItem);
     }
 

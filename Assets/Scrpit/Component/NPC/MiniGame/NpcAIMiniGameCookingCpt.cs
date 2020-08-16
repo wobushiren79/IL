@@ -125,7 +125,7 @@ public class NpcAIMiniGameCookingCpt : BaseNpcAI
     public void SetStove(MiniGameCookingStoveCpt stoveCpt)
     {
         this.stoveCpt = stoveCpt;
-        this.stoveCpt.SetMenuInfo(characterMiniGameData.cookingMenuInfo);
+        this.stoveCpt.SetMenuInfo(characterMiniGameData.GetCookingMenuInfo());
     }
 
     public void OpenAI()
@@ -216,7 +216,7 @@ public class NpcAIMiniGameCookingCpt : BaseNpcAI
     /// </summary>
     public void SetIntentForCookingPre()
     {
-        stoveCpt.SetMenuInfo(characterMiniGameData.cookingMenuInfo);
+        stoveCpt.SetMenuInfo(characterMiniGameData.GetCookingMenuInfo());
         characterMoveCpt.SetDestination(stoveCpt.GetCookingPrePosition());
         StartCoroutine(CoroutineForCookingPre());
     }
@@ -297,7 +297,7 @@ public class NpcAIMiniGameCookingCpt : BaseNpcAI
     private int AuditFoodForTheme()
     {
         CookingThemeBean cookingTheme = miniGameCookingHandler.miniGameData.GetCookingTheme();
-        MenuInfoBean menuInfo = auditTargetNpc.characterMiniGameData.cookingMenuInfo;
+        MenuInfoBean menuInfo = auditTargetNpc.characterMiniGameData.GetCookingMenuInfo();
         float similarity = cookingTheme.GetSimilarity(menuInfo);
         return ScoreDeal((int)(similarity * 100));
     }

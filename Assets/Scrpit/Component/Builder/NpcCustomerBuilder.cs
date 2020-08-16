@@ -62,12 +62,19 @@ public class NpcCustomerBuilder : NpcNormalBuilder, IBaseObserver
         while (isBuildNpc)
         {
             yield return new WaitForSeconds(buildInterval);
-            BuildCustomer();
-            //有一定概率创建团队
-            float buildTeamRate = Random.Range(0, 1f);
-            if (buildTeamRate <= buildTeamGustomerRate)
+            try
             {
-                BuildGuestTeam();
+                BuildCustomer();
+                //有一定概率创建团队
+                float buildTeamRate = Random.Range(0, 1f);
+                if (buildTeamRate <= buildTeamGustomerRate)
+                {
+                    BuildGuestTeam();
+                }
+            }
+            catch
+            {
+  
             }
         }
     }
@@ -141,6 +148,11 @@ public class NpcCustomerBuilder : NpcNormalBuilder, IBaseObserver
             else
             {
                 characterData = RandomUtil.GetRandomDataByList(listMembers);
+            }
+            //如果发现成员数据为空 默认取领导的
+            if (characterData == null)
+            {
+                characterData = listLeader[0];
             }
             //随机生成身体数据
             characterData.body.CreateRandomEye(characterBodyManager);

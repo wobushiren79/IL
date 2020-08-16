@@ -178,7 +178,7 @@ public class RandomUtil
     /// <returns></returns>
     public static T GetRandomDataByDictionary<T>(Dictionary<long, T> mapData)
     {
-        int position = Random.Range(0, mapData.Count);
+        int position = Random.Range(0, (int)mapData.Count);
         int tempPosition = 0;
         foreach (var itemData in mapData)
         {

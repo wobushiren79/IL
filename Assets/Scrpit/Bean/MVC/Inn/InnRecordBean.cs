@@ -179,4 +179,21 @@ public class InnRecordBean
                 break;
         }
     }
+
+    public long GetTotalCustomer()
+    {
+        return numberForNormalCustomer + numberForFriendsCustomer + numberForTeamCustomer;
+    }
+
+    public long GetTotalPayCustomer()
+    {
+        long number = 0;
+        if (listSellNumber == null)
+            return number;
+        foreach (GameItemsBean gameItems in listSellNumber)
+        {
+            number += gameItems.itemNumber;
+        }
+        return number;
+    }
 }

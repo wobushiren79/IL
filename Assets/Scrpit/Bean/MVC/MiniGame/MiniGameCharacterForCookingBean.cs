@@ -27,6 +27,14 @@ public class MiniGameCharacterForCookingBean : MiniGameCharacterBean
     //期望分数
     public int scoreForExpect = 0;
 
+    public void SetCookingMenuInfo(MenuInfoBean cookingMenuInfo)
+    {
+        this.cookingMenuInfo = cookingMenuInfo;
+    }
+    public MenuInfoBean GetCookingMenuInfo()
+    {
+        return cookingMenuInfo;
+    }
     public void InitScore()
     {
         scoreForTheme = GetScore(listScoreForTheme);
