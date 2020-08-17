@@ -22,7 +22,8 @@ public class ItemTownGuildRankCpt : ItemGameBaseCpt, IWebRequestCallBack<SteamWe
     public Sprite spNumberPraiseExcited;
     public Sprite spNumberPraiseAnger;
     public Sprite spTimePlay;
-
+    public Sprite spMaxDayGetMoneyS;
+    public Sprite spMaxDayCompleteOrder;
     public void Awake()
     {
         steamHandler = Find<SteamHandler>(ImportantTypeEnum.Steam);
@@ -69,6 +70,14 @@ public class ItemTownGuildRankCpt : ItemGameBaseCpt, IWebRequestCallBack<SteamWe
                 timeData.AddTimeForHMS(0, 0, score);
                 dataStr = timeData.hour + ":" + timeData.minute + ":" + timeData.second;
                 spData = spTimePlay;
+                break;
+            case RankTypeEnum.MaxDayGetMoneyS:
+                dataStr = score + GameCommonInfo.GetUITextById(18);
+                spData = spMaxDayGetMoneyS;
+                break;
+            case RankTypeEnum.MaxDayCompleteOrder:
+                dataStr = score + "";
+                spData = spMaxDayCompleteOrder;
                 break;
         }
         if (tvData != null)
@@ -145,7 +154,7 @@ public class ItemTownGuildRankCpt : ItemGameBaseCpt, IWebRequestCallBack<SteamWe
 
     public void WebRequestForSpriteFail(string url, string fail)
     {
-        LogUtil.Log("获取头像失败");
+
     }
     #endregion
 }

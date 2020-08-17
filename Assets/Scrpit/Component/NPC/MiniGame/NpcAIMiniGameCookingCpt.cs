@@ -243,14 +243,21 @@ public class NpcAIMiniGameCookingCpt : BaseNpcAI
     /// </summary>
     public void SetIntentForGoToAudit()
     {
-        //如果是对手。先创建一个食物
-        if (characterMiniGameData.characterType == 0)
+        try
         {
-            foodForCover = stoveCpt.CreateFood();
+            //如果是对手。先创建一个食物
+            if (characterMiniGameData.characterType == 0)
+            {
+                foodForCover = stoveCpt.CreateFood();
+            }
+            //将食物拿在手上
+            foodForCover.transform.SetParent(objFoodPosition.transform);
+            foodForCover.transform.position = objFoodPosition.transform.position;
         }
-        //将食物拿在手上
-        foodForCover.transform.SetParent(objFoodPosition.transform);
-        foodForCover.transform.position = objFoodPosition.transform.position;
+        catch
+        {
+
+        }
         characterMoveCpt.SetDestination(startPosition);
     }
 

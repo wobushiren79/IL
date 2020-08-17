@@ -18,7 +18,7 @@ public class UIMainCreateAttributesChange : BaseUIChildComponent<UIMainCreate>, 
 
     private void Start()
     {
-        pointsForResidue = 5;
+        pointsForResidue = 6;
         pointsForMax = pointsForResidue + 6;
 
 
@@ -40,13 +40,53 @@ public class UIMainCreateAttributesChange : BaseUIChildComponent<UIMainCreate>, 
     }
 
     /// <summary>
+    /// 随机速度
+    /// </summary>
+    public void RandomData()
+    {
+        ncCook.SetNumber(1);
+        ncSpeed.SetNumber(1);
+        ncAccount.SetNumber(1);
+        ncCharm.SetNumber(1);
+        ncForce.SetNumber(1);
+        ncLucky.SetNumber(1);
+
+        int randomPointS = pointsForResidue;
+        for (int i = 0; i < randomPointS; i++)
+        {
+            int randAttr=  Random.Range(0,6);
+            switch (randAttr)
+            {
+                case 0:
+                    ncCook.SetNumber(ncCook.GetNumber() + 1);
+                    break;
+                case 1:
+                    ncSpeed.SetNumber(ncSpeed.GetNumber() + 1);
+                    break;
+                case 2:
+                    ncAccount.SetNumber(ncAccount.GetNumber() + 1);
+                    break;
+                case 3:
+                    ncCharm.SetNumber(ncCharm.GetNumber() + 1);
+                    break;
+                case 4:
+                    ncForce.SetNumber(ncForce.GetNumber() + 1);
+                    break;
+                case 5:
+                    ncLucky.SetNumber(ncLucky.GetNumber() + 1);
+                    break;
+            }
+        }
+    }
+
+    /// <summary>
     /// 设置标题
     /// </summary>
     public void SetTitle()
     {
         if (tvTitle != null)
         {
-            tvTitle.text = string.Format(GameCommonInfo.GetUITextById(77), pointsForResidue + "");
+            tvTitle.text = string.Format(GameCommonInfo.GetUITextById(77), " "+ pointsForResidue );
         }
     }
 

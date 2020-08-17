@@ -73,6 +73,15 @@ public class SelectView : BaseMonoBehaviour
         SetPosition(itemPosition);
     }
 
+    /// <summary>
+    /// 随机数据
+    /// </summary>
+    public void RandomData()
+    {
+        int randomPosition = Random.Range(0, listDataNumber);
+        SetPosition(randomPosition);
+    }
+
     public void SetPosition(int position)
     {
         itemPosition = position;

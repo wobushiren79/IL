@@ -251,6 +251,19 @@ public class NpcCustomerBuilder : NpcNormalBuilder, IBaseObserver
         {
             buildInterval -= weatherHandler.weatherData.weatherAddition;
         }
+        gameDataManager.gameData.GetInnAttributesData().GetInnLevel(out int levelTitle,out int levelStar);
+        if (levelTitle == 1)
+        {
+            buildInterval = buildInterval * 1;
+        }
+        else if (levelTitle == 2)
+        {
+            buildInterval = buildInterval * 0.8f;
+        }
+        else if (levelTitle == 3)
+        {
+            buildInterval = buildInterval * 0.5f;
+        }
         return buildInterval;
     }
 

@@ -68,6 +68,12 @@ public class UITownGuildRank : UIBaseOne, IRadioGroupCallBack
             case RankTypeEnum.TimePlay:
                 score = gameData.playTime.GetTimeForTotalS();
                 break;
+            case RankTypeEnum.MaxDayGetMoneyS:
+                score = userAchievement.maxDayGetMoneyS;
+                break;
+            case RankTypeEnum.MaxDayCompleteOrder:
+                score = userAchievement.maxDayCompleteOrder;
+                break;
         }
         int intScore = 0;
         if (score > int.MaxValue)
@@ -115,6 +121,12 @@ public class UITownGuildRank : UIBaseOne, IRadioGroupCallBack
                 break;
             case RankTypeEnum.TimePlay:
                 score = gameData.playTime.GetTimeForTotalS();
+                break;
+            case RankTypeEnum.MaxDayGetMoneyS:
+                score = userAchievement.maxDayGetMoneyS;
+                break;
+            case RankTypeEnum.MaxDayCompleteOrder:
+                score = userAchievement.maxDayCompleteOrder;
                 break;
         }
         int intScore = 0;

@@ -7,6 +7,7 @@ public class UIGameSetting : UIGameComponent, DropdownView.ICallBack, ProgressVi
 {
     public Button btExitGame;
     public Button btGoMain;
+    public Button btRestartDay;
 
     public Button btBack;
     public DropdownView dvLanguage;
@@ -98,15 +99,17 @@ public class UIGameSetting : UIGameComponent, DropdownView.ICallBack, ProgressVi
         {
             btExitGame.gameObject.SetActive(false);
             btGoMain.gameObject.SetActive(false);
+            btRestartDay.gameObject.SetActive(false);
         }
         else
         {
             btExitGame.gameObject.SetActive(true);
             btGoMain.gameObject.SetActive(true);
+            btRestartDay.gameObject.SetActive(true);
         }
         btExitGame.onClick.AddListener(OnClickExitGame);
         btGoMain.onClick.AddListener(OnClickGoMain);
-
+        btRestartDay.onClick.AddListener(OnClickRestartDay);
     }
 
     public override void OpenUI()
@@ -131,6 +134,8 @@ public class UIGameSetting : UIGameComponent, DropdownView.ICallBack, ProgressVi
         GameCommonInfo.SaveGameConfig();
     }
 
+
+
     /// <summary>
     /// 点击离开游戏
     /// </summary>
@@ -150,6 +155,17 @@ public class UIGameSetting : UIGameComponent, DropdownView.ICallBack, ProgressVi
         DialogBean dialogBean = new DialogBean();
         dialogBean.dialogPosition = 2;
         dialogBean.content = GameCommonInfo.GetUITextById(3082);
+        uiGameManager.dialogManager.CreateDialog(DialogEnum.Normal, this, dialogBean);
+    }
+
+    /// <summary>
+    /// 读档重来
+    /// </summary>
+    public void OnClickRestartDay()
+    {
+        DialogBean dialogBean = new DialogBean();
+        dialogBean.dialogPosition = 3;
+        dialogBean.content = GameCommonInfo.GetUITextById(3083);
         uiGameManager.dialogManager.CreateDialog(DialogEnum.Normal, this, dialogBean);
     }
 
@@ -223,6 +239,13 @@ public class UIGameSetting : UIGameComponent, DropdownView.ICallBack, ProgressVi
             //回调主菜单
             SceneUtil.SceneChange(ScenesEnum.MainScene);
             GameCommonInfo.ClearData();
+        }
+        else if (dialogBean.dialogPosition == 3)
+        {
+            string userId = GameCommonInfo.GameUserId;
+            GameCommonInfo.ClearData();
+            GameCommonInfo.GameUserId = userId;
+            SceneUtil.SceneChange(ScenesEnum.GameInnScene);
         }
     }
 

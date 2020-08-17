@@ -146,9 +146,13 @@ public class SceneGameInnInit : BaseSceneInit, IBaseObserver, DialogView.IDialog
         //停止时间
         gameTimeHandler.SetTimeStatus(true);
 
-        //如果有菜谱研究 增加研究点数
-        int addHour = 24 - gameDataManager.gameData.gameTime.hour;
-        gameDataHandler.AddMenuResearch(addHour * 60);
+        if (GameCommonInfo.CurrentDayData.dayStatus != GameTimeHandler.DayEnum.None)
+        {
+            //重新进入游戏则不增加经验
+            //如果有菜谱研究 增加研究点数
+            int addHour = 24 - gameDataManager.gameData.gameTime.hour;
+            gameDataHandler.AddMenuResearch(addHour * 60);
+        }
 
         //重置游戏时间
         GameCommonInfo.GameData.gameTime.hour = 0;
@@ -162,17 +166,17 @@ public class SceneGameInnInit : BaseSceneInit, IBaseObserver, DialogView.IDialog
         }
         else if (GameCommonInfo.CurrentDayData.dayStatus == GameTimeHandler.DayEnum.Work)
         {
-            //保存数据
-            gameDataManager.SaveGameData(innHandler.GetInnRecord());
             //如果是工作状态结束一天 则进入结算画面
             uiGameManager.OpenUIAndCloseOtherByName(EnumUtil.GetEnumName(UIEnum.GameSettle));
+            //保存数据
+            gameDataManager.SaveGameData(innHandler.GetInnRecord());
         }
         else if (GameCommonInfo.CurrentDayData.dayStatus == GameTimeHandler.DayEnum.Rest)
         {
-            //保存数据
-            gameDataManager.SaveGameData(innHandler.GetInnRecord());
             //打开日历
             uiGameManager.OpenUIAndCloseOtherByName(EnumUtil.GetEnumName(UIEnum.GameDate));
+            //保存数据
+            gameDataManager.SaveGameData(innHandler.GetInnRecord());
         }
         //关闭店面
         if (innHandler != null)

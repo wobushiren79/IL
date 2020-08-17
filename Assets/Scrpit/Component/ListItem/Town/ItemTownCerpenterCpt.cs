@@ -157,31 +157,38 @@ public class ItemTownCerpenterCpt : ItemTownStoreCpt, DialogView.IDialogCallBack
         InnBuildBean innBuildData = gameDataManager.gameData.GetInnBuildData();
         if (gameDataManager == null || storeInfo == null)
             return;
-        //检测金钱
-        if (!gameDataManager.gameData.HasEnoughMoney(storeInfo.price_l, storeInfo.price_m, storeInfo.price_s))
-        {
-            toastManager.ToastHint(GameCommonInfo.GetUITextById(1005));
-            return;
-        }
+
         //检测是否正在修建客栈
         if (storeInfo.store_goods_type == (int)StoreForCarpenterTypeEnum.Expansion && innBuildData.listBuildDay.Count != 0)
         {
             toastManager.ToastHint(GameCommonInfo.GetUITextById(1019));
             return;
         }
-        DialogBean dialogBean = new DialogBean();
+        //检测金钱
+        if (storeInfo.store_goods_type == (int)StoreForCarpenterTypeEnum.Expansion && !gameDataManager.gameData.HasEnoughMoney(storeInfo.price_l, storeInfo.price_m, storeInfo.price_s))
+        {
+            toastManager.ToastHint(GameCommonInfo.GetUITextById(1005));
+            return;
+        }
         if (storeInfo.store_goods_type == (int)StoreForCarpenterTypeEnum.Expansion)
         {
-            dialogBean.content = string.Format(GameCommonInfo.GetUITextById(3010), 1 + "");
-        }
-        else if (storeInfo.store_goods_type == (int)StoreForCarpenterTypeEnum.Wall)
-        {
-            dialogBean.content = string.Format(GameCommonInfo.GetUITextById(3013), buildItemData.name + "");
+            //生成普通的对话框
+            DialogBean dialogBean = new DialogBean();
+            if (storeInfo.store_goods_type == (int)StoreForCarpenterTypeEnum.Expansion)
+            {
+                dialogBean.content = string.Format(GameCommonInfo.GetUITextById(3010), 1 + "");
+            }
+            else
+                dialogBean.content = string.Format(GameCommonInfo.GetUITextById(3002), buildItemData.name);
+            dialogManager.CreateDialog(DialogEnum.Normal, this, dialogBean);
         }
         else
-            dialogBean.content = string.Format(GameCommonInfo.GetUITextById(3002), buildItemData.name);
+        {
+            DialogBean dialogBean = new DialogBean();
+            PickForNumberDialogView dialogView = (PickForNumberDialogView)dialogManager.CreateDialog(DialogEnum.PickForNumber, this, dialogBean);
+            dialogView.SetData(ivIcon.sprite, 999);
+        }
 
-        dialogManager.CreateDialog(DialogEnum.Normal, this, dialogBean);
     }
 
     #region 确认回调
@@ -193,29 +200,48 @@ public class ItemTownCerpenterCpt : ItemTownStoreCpt, DialogView.IDialogCallBack
         GameTimeHandler gameTimeHandler = uiGameManager.gameTimeHandler;
         InnBuildManager innBuildManager = uiGameManager.innBuildManager;
 
-        gameDataManager.gameData.PayMoney(storeInfo.price_l, storeInfo.price_m, storeInfo.price_s);
-        string toastStr;
-        if (storeInfo.store_goods_type == (int)StoreForCarpenterTypeEnum.Expansion)
+        if (dialogView as PickForNumberDialogView)
         {
-            InnBuildBean innBuildData = gameDataManager.gameData.GetInnBuildData();
-            innBuildData.buildLevel = int.Parse(storeInfo.mark);
-            innBuildData.buildInnWidth = storeInfo.mark_x;
-            innBuildData.buildInnHeight = storeInfo.mark_y;
-            //设置修建天数
-            List<TimeBean> listBuildDay = new List<TimeBean>();
-            listBuildDay.Add(gameTimeHandler.GetAfterDay(1));
-            innBuildData.listBuildDay = listBuildDay;
-
-            GetUIComponent<UITownCarpenter>().RefreshUI();
-            toastStr = string.Format(GameCommonInfo.GetUITextById(1011), storeInfo.name);
-        }
-        else
-        {
-            gameDataManager.gameData.AddBuildNumber(buildItemData.id, 1);
+            PickForNumberDialogView pickForNumberDialog = dialogView as PickForNumberDialogView;
+            long number= pickForNumberDialog.GetPickNumber();
+            //检测金钱
+            if (!gameDataManager.gameData.HasEnoughMoney(storeInfo.price_l* number, storeInfo.price_m* number, storeInfo.price_s* number))
+            {
+                toastManager.ToastHint(GameCommonInfo.GetUITextById(1005));
+                return;
+            }
+            gameDataManager.gameData.PayMoney(storeInfo.price_l * number, storeInfo.price_m * number, storeInfo.price_s * number);
+            gameDataManager.gameData.AddBuildNumber(buildItemData.id, number);
             RefreshUI();
-            toastStr = string.Format(GameCommonInfo.GetUITextById(1010), buildItemData.name);
+            string  toastStr = string.Format(GameCommonInfo.GetUITextById(1010), buildItemData.name+"x"+ number);
+            toastManager.ToastHint(ivIcon.sprite, toastStr);
         }
-        toastManager.ToastHint(ivIcon.sprite, toastStr);
+        else 
+        {
+            gameDataManager.gameData.PayMoney(storeInfo.price_l, storeInfo.price_m, storeInfo.price_s);
+            string toastStr;
+            if (storeInfo.store_goods_type == (int)StoreForCarpenterTypeEnum.Expansion)
+            {
+                InnBuildBean innBuildData = gameDataManager.gameData.GetInnBuildData();
+                innBuildData.buildLevel = int.Parse(storeInfo.mark);
+                innBuildData.buildInnWidth = storeInfo.mark_x;
+                innBuildData.buildInnHeight = storeInfo.mark_y;
+                //设置修建天数
+                List<TimeBean> listBuildDay = new List<TimeBean>();
+                listBuildDay.Add(gameTimeHandler.GetAfterDay(1));
+                innBuildData.listBuildDay = listBuildDay;
+
+                GetUIComponent<UITownCarpenter>().RefreshUI();
+                toastStr = string.Format(GameCommonInfo.GetUITextById(1011), storeInfo.name);
+            }
+            else
+            {
+                gameDataManager.gameData.AddBuildNumber(buildItemData.id, 1);
+                RefreshUI();
+                toastStr = string.Format(GameCommonInfo.GetUITextById(1010), buildItemData.name);
+            }
+            toastManager.ToastHint(ivIcon.sprite, toastStr);
+        }
     }
 
     public void Cancel(DialogView dialogView, DialogBean dialogData)

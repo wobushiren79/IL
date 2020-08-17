@@ -213,24 +213,10 @@ public class ItemTownStoreForGoodsCpt : ItemTownStoreCpt, DialogView.IDialogCall
 
         if (gameDataManager == null || storeInfo == null)
             return;
-        if (!gameDataManager.gameData.HasEnoughMoney(storeInfo.price_l, storeInfo.price_m, storeInfo.price_s))
-        {
-            toastManager.ToastHint(GameCommonInfo.GetUITextById(1005));
-            return;
-        }
-        if (!gameDataManager.gameData.HasEnoughGuildCoin(storeInfo.guild_coin))
-        {
-            toastManager.ToastHint(GameCommonInfo.GetUITextById(1012));
-            return;
-        }
-        if (!gameDataManager.gameData.HasEnoughTrophy(storeInfo.trophy_elementary, storeInfo.trophy_intermediate, storeInfo.trophy_advanced, storeInfo.trophy_legendary))
-        {
-            toastManager.ToastHint(GameCommonInfo.GetUITextById(1021));
-            return;
-        }
+
         DialogBean dialogBean = new DialogBean();
-        dialogBean.content = string.Format(GameCommonInfo.GetUITextById(3002), itemsInfo.name);
-        dialogManager.CreateDialog(DialogEnum.Normal, this, dialogBean);
+        PickForNumberDialogView dialogView = (PickForNumberDialogView)dialogManager.CreateDialog(DialogEnum.PickForNumber, this, dialogBean);
+        dialogView.SetData(ivIcon.sprite, 999);
     }
 
     #region 提交回调
@@ -240,27 +226,33 @@ public class ItemTownStoreForGoodsCpt : ItemTownStoreCpt, DialogView.IDialogCall
         ToastManager toastManager = GetUIManager<UIGameManager>().toastManager;
         if (gameDataManager == null || storeInfo == null)
             return;
-        //if (!gameDataManager.gameData.HasEnoughMoney(storeInfo.price_l, storeInfo.price_m, storeInfo.price_s))
-        //{
-        //    toastManager.ToastHint(GameCommonInfo.GetUITextById(1005));
-        //    return;
-        //}
-        //if (!gameDataManager.gameData.HasEnoughGuildCoin(storeInfo.guild_coin))
-        //{
-        //    toastManager.ToastHint(GameCommonInfo.GetUITextById(1012));
-        //    return;
-        //}
-        //if (!gameDataManager.gameData.HasEnoughTrophy(storeInfo.trophy_elementary, storeInfo.trophy_intermediate, storeInfo.trophy_advanced, storeInfo.trophy_legendary))
-        //{
-        //    toastManager.ToastHint(GameCommonInfo.GetUITextById(1021));
-        //    return;
-        //}
-        gameDataManager.gameData.PayMoney(storeInfo.price_l, storeInfo.price_m, storeInfo.price_s);
-        gameDataManager.gameData.PayGuildCoin(storeInfo.guild_coin);
-        gameDataManager.gameData.PayTrophy(storeInfo.trophy_elementary, storeInfo.trophy_intermediate, storeInfo.trophy_advanced, storeInfo.trophy_legendary);
-        toastManager.ToastHint(ivIcon.sprite, string.Format(GameCommonInfo.GetUITextById(1010), itemsInfo.name));
-        gameDataManager.gameData.AddItemsNumber(storeInfo.mark_id, 1);
-        RefreshUI();
+        if (dialogView as PickForNumberDialogView)
+        {
+            PickForNumberDialogView pickForNumberDialog = dialogView as PickForNumberDialogView;
+            long number = pickForNumberDialog.GetPickNumber();
+            if (!gameDataManager.gameData.HasEnoughMoney(storeInfo.price_l* number, storeInfo.price_m* number, storeInfo.price_s* number))
+            {
+                toastManager.ToastHint(GameCommonInfo.GetUITextById(1005));
+                return;
+            }
+            if (!gameDataManager.gameData.HasEnoughGuildCoin(storeInfo.guild_coin * number))
+            {
+                toastManager.ToastHint(GameCommonInfo.GetUITextById(1012));
+                return;
+            }
+            if (!gameDataManager.gameData.HasEnoughTrophy(storeInfo.trophy_elementary * number, storeInfo.trophy_intermediate * number, storeInfo.trophy_advanced * number, storeInfo.trophy_legendary * number))
+            {
+                toastManager.ToastHint(GameCommonInfo.GetUITextById(1021));
+                return;
+            }
+
+            gameDataManager.gameData.PayMoney(storeInfo.price_l * number, storeInfo.price_m * number, storeInfo.price_s * number);
+            gameDataManager.gameData.PayGuildCoin(storeInfo.guild_coin * number);
+            gameDataManager.gameData.PayTrophy(storeInfo.trophy_elementary * number, storeInfo.trophy_intermediate * number, storeInfo.trophy_advanced * number, storeInfo.trophy_legendary * number);
+            toastManager.ToastHint(ivIcon.sprite, string.Format(GameCommonInfo.GetUITextById(1010), itemsInfo.name+"x"+ number));
+            gameDataManager.gameData.AddItemsNumber(storeInfo.mark_id, number);
+            RefreshUI();
+        }
     }
 
     public virtual void Cancel(DialogView dialogView, DialogBean dialogData)

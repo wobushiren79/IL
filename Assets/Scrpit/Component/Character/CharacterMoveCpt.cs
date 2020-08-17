@@ -180,7 +180,7 @@ public class CharacterMoveCpt : BaseMonoBehaviour
         Vector3 movePosition = objMove.transform.position + new Vector3(x * moveSpeed * Time.deltaTime, y * moveSpeed * Time.deltaTime);
         characterRigidbody.MovePosition(movePosition);
        
-        //BoundaryMove();
+        BoundaryMove();
     }
 
     /// <summary>
@@ -211,6 +211,7 @@ public class CharacterMoveCpt : BaseMonoBehaviour
         Vector3 movePosition = objMove.transform.position + new Vector3(x * moveSpeed * Time.unscaledDeltaTime, y * moveSpeed * Time.unscaledDeltaTime);
         transform.position = movePosition;
         //characterRigidbody.MovePosition(movePosition);
+        BoundaryMove();
     }
 
     /// <summary>

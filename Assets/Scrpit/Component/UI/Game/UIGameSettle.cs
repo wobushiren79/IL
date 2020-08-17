@@ -66,15 +66,18 @@ public class UIGameSettle : UIGameComponent
         IconDataManager iconDataManager = uiGameManager.iconDataManager;
         GameTimeHandler gameTimeHandler = uiGameManager.gameTimeHandler;
         GameDataManager gameDataManager = uiGameManager.gameDataManager;
+        UserAchievementBean userAchievement=  gameDataManager.gameData.GetAchievementData();
         //停止时间
         gameTimeHandler.SetTimeStatus(true);
         CptUtil.RemoveChildsByActive(objListRecordContent.transform);
         animDelay = 0f;
         InnRecordBean innRecord = innHandler.GetInnRecord();
         //客流量
+        long totalPayCustomer = innRecord.GetTotalPayCustomer();
         CreateItemForOther(innRecord.GetTotalCustomer() + "", iconDataManager.GetIconSpriteByName("ach_ordernumber_1"), GameCommonInfo.GetUITextById(323), Color.green);
-        CreateItemForOther(innRecord.GetTotalPayCustomer() + "", iconDataManager.GetIconSpriteByName("ach_ordernumber_1"), GameCommonInfo.GetUITextById(338), Color.green);
-
+        CreateItemForOther(totalPayCustomer + "", iconDataManager.GetIconSpriteByName("ach_ordernumber_1"), GameCommonInfo.GetUITextById(338), Color.green);
+        //记录单日最高成功接客
+        userAchievement.SetMaxDayCompleteOrder(totalPayCustomer);
         //员工支出
         CreateItemForMoney(
                 iconDataManager.GetIconSpriteByName("money_1"),
@@ -96,7 +99,7 @@ public class UIGameSettle : UIGameComponent
                     0,
                     0,
                     itemPayLoans.moneySForDay);
-                innRecord.AddPayLoans(0,0, itemPayLoans.moneySForDay);
+                innRecord.AddPayLoans(0, 0, itemPayLoans.moneySForDay);
             }
         }
         //食材消耗
@@ -104,57 +107,57 @@ public class UIGameSettle : UIGameComponent
         string ingName = "";
         if (innRecord.consumeIngOilsalt > 0)
         {
-            ingName = IngredientsEnumTools.GetIngredientName( IngredientsEnum.Oilsalt);
-            CreateItemForOther("-" + innRecord.consumeIngOilsalt, spIconOilsalt, consumeIngStr + " " + ingName, Color.red);
+            ingName = IngredientsEnumTools.GetIngredientName(IngredientsEnum.Oilsalt);
+            CreateItemForOther("-" + innRecord.consumeIngOilsalt + "(" + GameCommonInfo.GetUITextById(93) + gameDataManager.gameData.ingOilsalt + ")", spIconOilsalt, consumeIngStr + " " + ingName, Color.red);
             CreateItemForMoney(spIconOilsalt, string.Format(GameCommonInfo.GetUITextById(339), ingName), 0, 0, 0, innRecord.consumeIngOilsalt * 5);
-            innRecord.AddPayIng(0,0, innRecord.consumeIngOilsalt * 5);
+            innRecord.AddPayIng(0, 0, innRecord.consumeIngOilsalt * 5);
         }
         if (innRecord.consumeIngMeat > 0)
         {
             ingName = IngredientsEnumTools.GetIngredientName(IngredientsEnum.Meat);
-            CreateItemForOther("-" + innRecord.consumeIngMeat, spIconMeat, consumeIngStr + " " + ingName, Color.red);
+            CreateItemForOther("-" + innRecord.consumeIngMeat + "(" + GameCommonInfo.GetUITextById(93) + gameDataManager.gameData.ingMeat + ")", spIconMeat, consumeIngStr + " " + ingName, Color.red);
             CreateItemForMoney(spIconMeat, string.Format(GameCommonInfo.GetUITextById(339), ingName), 0, 0, 0, innRecord.consumeIngMeat * 10);
             innRecord.AddPayIng(0, 0, innRecord.consumeIngMeat * 10);
         }
         if (innRecord.consumeIngRiverfresh > 0)
         {
             ingName = IngredientsEnumTools.GetIngredientName(IngredientsEnum.Riverfresh);
-            CreateItemForOther("-" + innRecord.consumeIngRiverfresh, spIconRiverfresh, consumeIngStr + " " + ingName, Color.red);
+            CreateItemForOther("-" + innRecord.consumeIngRiverfresh + "(" + GameCommonInfo.GetUITextById(93) + gameDataManager.gameData.ingRiverfresh + ")", spIconRiverfresh, consumeIngStr + " " + ingName, Color.red);
             CreateItemForMoney(spIconRiverfresh, string.Format(GameCommonInfo.GetUITextById(339), ingName), 0, 0, 0, innRecord.consumeIngRiverfresh * 10);
             innRecord.AddPayIng(0, 0, innRecord.consumeIngRiverfresh * 10);
-        }  
+        }
         if (innRecord.consumeIngSeafood > 0)
         {
             ingName = IngredientsEnumTools.GetIngredientName(IngredientsEnum.Seafood);
-            CreateItemForOther("-" + innRecord.consumeIngSeafood, spIconSeafood, consumeIngStr + " " + ingName, Color.red);
+            CreateItemForOther("-" + innRecord.consumeIngSeafood + "(" + GameCommonInfo.GetUITextById(93) + gameDataManager.gameData.ingSeafood + ")", spIconSeafood, consumeIngStr + " " + ingName, Color.red);
             CreateItemForMoney(spIconSeafood, string.Format(GameCommonInfo.GetUITextById(339), ingName), 0, 0, 0, innRecord.consumeIngSeafood * 50);
             innRecord.AddPayIng(0, 0, innRecord.consumeIngSeafood * 50);
         }
         if (innRecord.consumeIngVegetables > 0)
         {
             ingName = IngredientsEnumTools.GetIngredientName(IngredientsEnum.Vegetables);
-            CreateItemForOther("-" + innRecord.consumeIngVegetables, spIconVegetables, consumeIngStr + " " + ingName, Color.red);
+            CreateItemForOther("-" + innRecord.consumeIngVegetables + "(" + GameCommonInfo.GetUITextById(93) + gameDataManager.gameData.ingVegetables + ")", spIconVegetables, consumeIngStr + " " + ingName, Color.red);
             CreateItemForMoney(spIconVegetables, string.Format(GameCommonInfo.GetUITextById(339), ingName), 0, 0, 0, innRecord.consumeIngVegetables * 5);
             innRecord.AddPayIng(0, 0, innRecord.consumeIngVegetables * 5);
         }
         if (innRecord.consumeIngMelonfruit > 0)
         {
             ingName = IngredientsEnumTools.GetIngredientName(IngredientsEnum.Melonfruit);
-            CreateItemForOther("-" + innRecord.consumeIngMelonfruit, spIconMelonfruit, consumeIngStr + " " + ingName, Color.red);
+            CreateItemForOther("-" + innRecord.consumeIngMelonfruit + "(" + GameCommonInfo.GetUITextById(93) + gameDataManager.gameData.ingMelonfruit + ")", spIconMelonfruit, consumeIngStr + " " + ingName, Color.red);
             CreateItemForMoney(spIconMelonfruit, string.Format(GameCommonInfo.GetUITextById(339), ingName), 0, 0, 0, innRecord.consumeIngMelonfruit * 5);
             innRecord.AddPayIng(0, 0, innRecord.consumeIngMelonfruit * 5);
         }
         if (innRecord.consumeIngWaterwine > 0)
         {
             ingName = IngredientsEnumTools.GetIngredientName(IngredientsEnum.Waterwine);
-            CreateItemForOther("-" + innRecord.consumeIngWaterwine, spIconWaterwine, consumeIngStr + " " + ingName, Color.red);
+            CreateItemForOther("-" + innRecord.consumeIngWaterwine + "(" + GameCommonInfo.GetUITextById(93) + gameDataManager.gameData.ingWaterwine + ")", spIconWaterwine, consumeIngStr + " " + ingName, Color.red);
             CreateItemForMoney(spIconWaterwine, string.Format(GameCommonInfo.GetUITextById(339), ingName), 0, 0, 0, innRecord.consumeIngWaterwine * 10);
             innRecord.AddPayIng(0, 0, innRecord.consumeIngWaterwine * 10);
         }
         if (innRecord.consumeIngFlour > 0)
         {
             ingName = IngredientsEnumTools.GetIngredientName(IngredientsEnum.Flour);
-            CreateItemForOther("-" + innRecord.consumeIngFlour, spIconFlour, consumeIngStr + " " + ingName, Color.red);
+            CreateItemForOther("-" + innRecord.consumeIngFlour + "(" + GameCommonInfo.GetUITextById(93) + gameDataManager.gameData.ingFlour + ")", spIconFlour, consumeIngStr + " " + ingName, Color.red);
             CreateItemForMoney(spIconFlour, string.Format(GameCommonInfo.GetUITextById(339), ingName), 0, 0, 0, innRecord.consumeIngFlour * 5);
             innRecord.AddPayIng(0, 0, innRecord.consumeIngFlour * 5);
         }
@@ -177,7 +180,9 @@ public class UIGameSettle : UIGameComponent
             objIncomeM.SetActive(false);
         tvIncomeL.text = innRecord.incomeL + "";
         tvIncomeM.text = innRecord.incomeM + "";
-        tvIncomeS.text =innRecord.incomeS + "";
+        tvIncomeS.text = innRecord.incomeS + "";
+        //记录单日最高收入
+        userAchievement.SetMaxDayGetMoney(innRecord.incomeL, innRecord.incomeM, innRecord.incomeS);
 
         if (innRecord.expensesL <= 0)
             objExpensesL.SetActive(false);
@@ -185,7 +190,7 @@ public class UIGameSettle : UIGameComponent
             objExpensesM.SetActive(false);
         tvExpensesL.text = innRecord.expensesL + "";
         tvExpensesM.text = innRecord.expensesM + "";
-        tvExpensesS.text =innRecord.expensesS + "";
+        tvExpensesS.text = innRecord.expensesS + "";
     }
 
     public void CreateItemForMoney(Sprite spIcon, string name, int status, long moneyL, long moneyM, long moneyS)
@@ -196,7 +201,7 @@ public class UIGameSettle : UIGameComponent
         AnimForItemShow(objMoneyItem);
     }
 
-    public void CreateItemForOther(string  number, Sprite ingIcon, string name,Color numberColor)
+    public void CreateItemForOther(string number, Sprite ingIcon, string name, Color numberColor)
     {
         GameObject objOtherItem = Instantiate(objListRecordContent, objItemModelForOther);
         ItemSettleForOtherCpt itemCpt = objOtherItem.GetComponent<ItemSettleForOtherCpt>();

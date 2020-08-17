@@ -49,6 +49,48 @@ public class UserAchievementBean
     //是否打开过帮助
     public bool isOpenedHelp = false;
 
+    //单日最高收入
+    public long maxDayGetMoneyL;
+    public long maxDayGetMoneyM;
+    public long maxDayGetMoneyS;
+
+    //单日最高完成定完
+    public long maxDayCompleteOrder;
+
+    /// <summary>
+    /// 设置每日最大赚取金钱
+    /// </summary>
+    /// <param name="maxDayGetMoneyL"></param>
+    /// <param name="maxDayGetMoneyM"></param>
+    /// <param name="maxDayGetMoneyS"></param>
+    public void SetMaxDayGetMoney(long maxDayGetMoneyL, long maxDayGetMoneyM, long maxDayGetMoneyS)
+    {
+        if (this.maxDayGetMoneyL == 0 || maxDayGetMoneyL > this.maxDayGetMoneyL)
+        {
+            this.maxDayGetMoneyL = maxDayGetMoneyL;
+        }
+        if (this.maxDayGetMoneyM == 0 || maxDayGetMoneyM > this.maxDayGetMoneyM)
+        {
+            this.maxDayGetMoneyM = maxDayGetMoneyM;
+        }
+        if (this.maxDayGetMoneyS == 0 || maxDayGetMoneyS > this.maxDayGetMoneyS)
+        {
+            this.maxDayGetMoneyS = maxDayGetMoneyS;
+        }
+    }
+
+    /// <summary>
+    /// 设置每日最大完成订单
+    /// </summary>
+    /// <param name="completeOrder"></param>
+    public void SetMaxDayCompleteOrder(long completeOrder)
+    {
+        if (maxDayCompleteOrder == 0 || completeOrder > maxDayCompleteOrder)
+        {
+            maxDayCompleteOrder = completeOrder;
+        }
+    }
+
     /// <summary>
     /// 获取团队顾客数据
     /// </summary>

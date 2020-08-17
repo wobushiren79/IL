@@ -31,7 +31,7 @@ public class MiniGameAccountHandler : BaseMiniGameHandler<MiniGameAccountBuilder
         MiniGameAccountEjectorCpt ejectorCpt = miniGameBuilder.GetEjector();
         MiniGameCharacterForAccountBean userCharacterData =(MiniGameCharacterForAccountBean) miniGameData.GetUserGameData();
         userCharacterData.characterData.GetAttributes(gameItemsManager, out CharacterAttributesBean characterAttributes);
-        ejectorCpt.SetData(1 + characterAttributes.account/20f);
+        ejectorCpt.SetData(1.5f + characterAttributes.account / 20f);
         ejectorCpt.SetCallBack(this);
         ejectorCpt.StartRotate();
         //打开游戏UI
@@ -110,6 +110,15 @@ public class MiniGameAccountHandler : BaseMiniGameHandler<MiniGameAccountBuilder
         MiniGameAccountEjectorCpt ejectorCpt = miniGameBuilder.GetEjector();
         UIMiniGameAccount uiMiniGameAccount = (UIMiniGameAccount)uiGameManager.GetOpenUI();
         uiMiniGameAccount.ShowMoneyGet(ejectorCpt.transform.position, moneyL, moneyM, moneyS);
+
+
+        //如果分满了直接结束游戏
+        bool isWin = CheckGameResults();
+        if (isWin)
+        {
+            StopAllCoroutines();
+            EndGame(isWin);
+        }  
     }
     #endregion
 }

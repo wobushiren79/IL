@@ -40,6 +40,32 @@ public class UIGameStatisticsForInn : UIGameStatisticsDetailsBase<UIGameStatisti
         AddItemForPraiseNumber(PraiseTypeEnum.Ordinary, userAchievement.praiseForOrdinary);
         AddItemForPraiseNumber(PraiseTypeEnum.Disappointed, userAchievement.praiseForDisappointed);
         AddItemForPraiseNumber(PraiseTypeEnum.Anger, userAchievement.praiseForAnger);
+        //单日最高赚取金钱
+        AddItemForMaxDayGetMoney(userAchievement.maxDayGetMoneyL, userAchievement.maxDayGetMoneyM, userAchievement.maxDayGetMoneyS);
+        //单日最高客流量
+        AddItemForMaxDayCompleteOrder(userAchievement.maxDayCompleteOrder);
+    }
+
+    /// <summary>
+    /// 单日最高获取金钱
+    /// </summary>
+    /// <param name="moneyL"></param>
+    /// <param name="moneyM"></param>
+    /// <param name="moneyS"></param>
+    public void AddItemForMaxDayGetMoney(long moneyL,long moneyM,long moneyS)
+    {
+        Sprite spIcon = iconDataManager.GetIconSpriteByName("money_1");
+        CreateTextItem(spIcon, Color.white, GameCommonInfo.GetUITextById(340), moneyS + GameCommonInfo.GetUITextById(18));
+    }
+
+    /// <summary>
+    /// 单日最高完成订单数量
+    /// </summary>
+    /// <param name="orderNumber"></param>
+    public void AddItemForMaxDayCompleteOrder(long orderNumber)
+    {
+        Sprite spIcon = iconDataManager.GetIconSpriteByName("ach_ordernumber_1");
+        CreateTextItem(spIcon, Color.white, GameCommonInfo.GetUITextById(341), orderNumber+"");
     }
 
     /// <summary>

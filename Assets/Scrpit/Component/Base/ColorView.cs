@@ -25,6 +25,19 @@ public class ColorView : BaseMonoBehaviour
             this.callBack.ColorChange(this,colorR.value, colorG.value, colorB.value);
     }
 
+    public void RandomData()
+    {
+        SetData(Random.Range(0f, 1f), Random.Range(0f, 1f), Random.Range(0f, 1f));
+    }
+
+    public void SetData(float colorValueR, float colorValueG, float colorValueB)
+    {
+        colorR.value = colorValueR;
+        colorG.value = colorValueG;
+        colorB.value = colorValueB;
+        colorB.value = colorValueB;
+    }
+
     /// <summary>
     /// 设置回调
     /// </summary>

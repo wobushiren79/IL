@@ -18,6 +18,7 @@ public class FoodForCoverCpt : BaseMonoBehaviour
 
     public void SetData(MenuInfoBean menuInfo)
     {
+        foodCustomerCpt.gameObject.SetActive(false);
         this.menuInfo = menuInfo;
         foodCustomerCpt.SetData(innFoodManager, menuInfo,0);
     }

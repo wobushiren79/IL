@@ -68,6 +68,8 @@ public class GameDataHandler : BaseHandler, DialogView.IDialogCallBack,IBaseObse
     /// </summary>
     public void HandleForMenuResearch()
     {
+        if (gameTimeHandler == null)
+            return;
         if (gameTimeHandler.isStopTime)
             return;
         AddMenuResearch(1);

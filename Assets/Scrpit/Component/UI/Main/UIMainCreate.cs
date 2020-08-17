@@ -19,6 +19,8 @@ public class UIMainCreate : UIGameComponent,
     //开始按钮
     public Button btCreate;
     public Text tvCreate;
+    //按钮-随机角色
+    public Button btRandomCharacter;
 
     public InputField etInnName;
     public InputField etUserName;
@@ -57,6 +59,8 @@ public class UIMainCreate : UIGameComponent,
     public List<ItemsInfoBean> listSelectHat;
     public List<ItemsInfoBean> listSelectClothes;
     public List<ItemsInfoBean> listSelectShoes;
+
+
 
     private void Start()
     {
@@ -106,6 +110,8 @@ public class UIMainCreate : UIGameComponent,
             selectShoes.SetSelectNumber(listSelectShoes.Count);
             selectShoes.SetCallBack(this);
         }
+        if (btRandomCharacter != null)
+            btRandomCharacter.onClick.AddListener(OnClickRandomCharacter);
     }
 
     public override void OpenUI()
@@ -187,6 +193,29 @@ public class UIMainCreate : UIGameComponent,
         uiGameManager.audioHandler.PlaySound(AudioSoundEnum.ButtonForBack);
         uiManager.OpenUIAndCloseOtherByName(EnumUtil.GetEnumName(UIEnum.MainStart));
     }
+
+    /// <summary>
+    /// 随机按钮
+    /// </summary>
+    public void OnClickRandomCharacter ()
+    {
+        colorSkin.RandomData();
+        colorHair.RandomData();
+        selectHair.RandomData();
+
+
+        colorEye.RandomData();
+        selectEye.RandomData();
+
+        colorMouth.RandomData();
+        selectMouth.RandomData();
+
+        selectClothes.RandomData();
+        selectShoes.RandomData();
+
+        attributesChange.RandomData();
+    }
+
 
     #region 性别回调
     public void RadioButtonSelected(RadioGroupView rgView, int position, RadioButtonView view)

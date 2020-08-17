@@ -203,13 +203,11 @@ public class NpcAIRascalCpt : BaseNpcAI, IBaseObserver,TextInfoHandler.ICallBack
         characterLifeCpt.gameObject.SetActive(true);
         characterLifeCpt.gameObject.transform.localScale = new Vector3(1, 1, 1);
         characterLifeCpt.gameObject.transform.DOScale(new Vector3(0.2f, 0.2f), 0.5f).From().SetEase(Ease.OutBack);
-        //展示范围
-        objRascalSpaceShow.SetActive(true);
-        objRascalSpaceShow.transform.localScale = new Vector3(2, 2, 2);
-        objRascalSpaceShow.transform.DOScale(new Vector3(0.2f, 0.2f), 0.5f).From().SetEase(Ease.OutBack);
         //闹事人员添加
         innHandler.rascalrQueue.Add(this);
-        StartCoroutine(StartMakeTrouble());
+        StartCoroutine(CoroutineForStartMakeTrouble());
+        //延迟显示范围
+        StartCoroutine(CoroutineForDelayMakeTrouble());
     }
 
     /// <summary>
@@ -229,7 +227,7 @@ public class NpcAIRascalCpt : BaseNpcAI, IBaseObserver,TextInfoHandler.ICallBack
     {
         npcFight = null;
         objFightShow.SetActive(false);
-        StartCoroutine(StartMakeTrouble());
+        StartCoroutine(CoroutineForStartMakeTrouble());
     }
 
     /// <summary>
@@ -286,7 +284,7 @@ public class NpcAIRascalCpt : BaseNpcAI, IBaseObserver,TextInfoHandler.ICallBack
                 characterShoutCpt.Shout(textInfo.content);
             }  
             //快速离开
-            characterMoveCpt.SetMoveSpeed(3);
+            characterMoveCpt.SetMoveSpeed(5);
         }
         else if (characterLife > characterMaxLife)
         {
@@ -322,7 +320,7 @@ public class NpcAIRascalCpt : BaseNpcAI, IBaseObserver,TextInfoHandler.ICallBack
     /// 开始制造麻烦
     /// </summary>
     /// <returns></returns>
-    public IEnumerator StartMakeTrouble()
+    public IEnumerator CoroutineForStartMakeTrouble()
     {
         while (rascalIntent == RascalIntentEnum.MakeTrouble || rascalIntent == RascalIntentEnum.ContinueMakeTrouble)
         {
@@ -344,6 +342,19 @@ public class NpcAIRascalCpt : BaseNpcAI, IBaseObserver,TextInfoHandler.ICallBack
                 SetIntent(RascalIntentEnum.Leave);
             }
         }
+    }
+
+    /// <summary>
+    /// 协程-延迟生成判定
+    /// </summary>
+    /// <returns></returns>
+    public IEnumerator CoroutineForDelayMakeTrouble()
+    {
+        yield return new WaitForSeconds(3);
+        //展示范围
+        objRascalSpaceShow.SetActive(true);
+        objRascalSpaceShow.transform.localScale = new Vector3(2, 2, 2);
+        objRascalSpaceShow.transform.DOScale(new Vector3(0.2f, 0.2f), 0.5f).From().SetEase(Ease.OutBack);
     }
 
     /// <summary>

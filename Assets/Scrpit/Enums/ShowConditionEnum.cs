@@ -92,7 +92,7 @@ public class ShowConditionTools : DataTools
     private static ShowConditionBean GetConditionDetailsForInnLevel(GameDataBean gameData, ShowConditionBean conditionData)
     {
         gameData.GetInnAttributesData().GetInnLevel(out int levelTitle, out int levelStar);
-        int innConditionLevel = int.Parse(conditionData.data);
+        int innConditionLevel  = int.Parse(conditionData.data); 
         int innLevel = levelTitle * 10 + levelStar;
         if (innLevel < innConditionLevel)
         {

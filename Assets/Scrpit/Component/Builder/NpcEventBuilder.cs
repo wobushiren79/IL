@@ -34,7 +34,7 @@ public class NpcEventBuilder : NpcNormalBuilder, IBaseObserver
     /// </summary>
     public void StartEvent()
     {
-        int eventType = UnityEngine.Random.Range(0, 7);
+        int eventType = UnityEngine.Random.Range(0, 10);
         if (eventType > 2)
         {
             return;
@@ -59,8 +59,10 @@ public class NpcEventBuilder : NpcNormalBuilder, IBaseObserver
                 //TODO 待定 需要处理单个朋友和团队朋友重复出现的问题
                 //BuildTownFriendsForTeam();
                 break;
+            default:
+                BuildTownFriendsForOne();
+                break;
         }
-        BuildTownFriendsForOne();
     }
 
     /// <summary>
