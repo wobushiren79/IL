@@ -9,7 +9,7 @@ public class PopupItemsSelection : BaseMonoBehaviour
         Discard,//只有丢弃
         Use,//使用
         UseAndDiscard,//使用和丢弃
-        EquipAndDiscard,//装备和丢弃
+        EquipAndDiscardAndTFEquip,//装备和幻化和丢弃
         Unload,//卸除 用于装备界面
         Gift,//赠送
         ReadAndDiscard,//阅读和丢弃
@@ -21,6 +21,7 @@ public class PopupItemsSelection : BaseMonoBehaviour
     public Button btUse;
     public Button btDiscard;
     public Button btEquip;
+    public Button btTFEquip;
     public Button btUnload;
     public Button btGift;
     public Button btRead;
@@ -49,6 +50,8 @@ public class PopupItemsSelection : BaseMonoBehaviour
             btDiscard.onClick.AddListener(DiscardItems);
         if (btEquip != null)
             btEquip.onClick.AddListener(EquipItems);
+        if (btTFEquip != null)
+            btTFEquip.onClick.AddListener(TFEquipItems);
         if (btUnload != null)
             btUnload.onClick.AddListener(UnloadItems);
         if (btGift != null)
@@ -80,7 +83,7 @@ public class PopupItemsSelection : BaseMonoBehaviour
         btUnload.gameObject.SetActive(false);
         btGift.gameObject.SetActive(false);
         btRead.gameObject.SetActive(false);
-
+        btTFEquip.gameObject.SetActive(false);
 
         switch (type)
         {
@@ -94,9 +97,10 @@ public class PopupItemsSelection : BaseMonoBehaviour
                 btUse.gameObject.SetActive(true);
                 btDiscard.gameObject.SetActive(true);
                 break;
-            case SelectionTypeEnum.EquipAndDiscard:
+            case SelectionTypeEnum.EquipAndDiscardAndTFEquip:
                 btEquip.gameObject.SetActive(true);
                 btDiscard.gameObject.SetActive(true);
+                btTFEquip.gameObject.SetActive(true);
                 break;
             case SelectionTypeEnum.Unload:
                 btUnload.gameObject.SetActive(true);
@@ -159,6 +163,16 @@ public class PopupItemsSelection : BaseMonoBehaviour
     }
 
     /// <summary>
+    /// 幻化
+    /// </summary>
+    public void TFEquipItems()
+    {
+        if (callBack != null)
+            callBack.SelectionTFEquip(this);
+        Close();
+    }
+
+    /// <summary>
     /// 卸下
     /// </summary>
     public void UnloadItems()
@@ -207,6 +221,12 @@ public class PopupItemsSelection : BaseMonoBehaviour
         /// </summary>
         /// <param name="view"></param>
         void SelectionEquip(PopupItemsSelection view);
+
+        /// <summary>
+        /// 选择幻化装备
+        /// </summary>
+        /// <param name="view"></param>
+        void SelectionTFEquip(PopupItemsSelection view);
 
         /// <summary>
         /// 选择卸下

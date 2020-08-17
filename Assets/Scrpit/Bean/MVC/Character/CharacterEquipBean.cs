@@ -12,6 +12,13 @@ public class CharacterEquipBean
     public long clothesId;
     public long shoesId;
 
+    //幻化数据
+    public long maskTFId;
+    public long handTFId;
+    public long hatTFId;
+    public long clothesTFId;
+    public long shoesTFId;
+
     /// <summary>
     /// 获取装备的属性加成
     /// </summary>

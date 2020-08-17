@@ -12,6 +12,12 @@ public class UIGameEquip : UIGameComponent
     public ItemGameBackpackEquipCpt equipClothes;
     public ItemGameBackpackEquipCpt equipShoes;
 
+    //幻化
+    public ItemGameBackpackEquipCpt equipTFHand;
+    public ItemGameBackpackEquipCpt equipTFHat;
+    public ItemGameBackpackEquipCpt equipTFClothes;
+    public ItemGameBackpackEquipCpt equipTFShoes;
+
     public CharacterAttributeView characterAttributeView;
 
     public Text tvLoyal;
@@ -87,6 +93,11 @@ public class UIGameEquip : UIGameComponent
         equipClothes.SetData(characterData, uiGameManager.gameItemsManager.GetItemsById(characterData.equips.clothesId), null);
         equipShoes.SetData(characterData, uiGameManager.gameItemsManager.GetItemsById(characterData.equips.shoesId), null);
 
+        equipTFHand.SetData(characterData, uiGameManager.gameItemsManager.GetItemsById(characterData.equips.handTFId), null);
+        equipTFHat.SetData(characterData, uiGameManager.gameItemsManager.GetItemsById(characterData.equips.hatTFId), null);
+        equipTFClothes.SetData(characterData, uiGameManager.gameItemsManager.GetItemsById(characterData.equips.clothesTFId), null);
+        equipTFShoes.SetData(characterData, uiGameManager.gameItemsManager.GetItemsById(characterData.equips.shoesTFId), null);
+
         //装备列表是否为null   
         if (CptUtil.GetChildCountByActive(objItemContent) != 0)
             tvNull.gameObject.SetActive(false);
@@ -155,19 +166,21 @@ public class UIGameEquip : UIGameComponent
     /// 设置装备
     /// </summary>
     /// <param name="itemId"></param>
-    public void SetEquip(long itemId)
+    public void SetEquip(long itemId, bool isTFequip)
     {
         if (uiGameManager.gameItemsManager == null)
             return;
         ItemsInfoBean itemInfo = uiGameManager.gameItemsManager.GetItemsById(itemId);
-        SetEquip(itemInfo);
+        SetEquip(itemInfo, isTFequip);
     }
 
+
     /// <summary>
-    /// 设置装备
+    /// 设置装备 
     /// </summary>
     /// <param name="itemInfo"></param>
-    public void SetEquip(ItemsInfoBean itemInfo)
+    /// <param name="isTFequip">是否是幻化</param>
+    public void SetEquip(ItemsInfoBean itemInfo,bool isTFequip)
     {
         if (itemInfo == null)
             return;
@@ -180,28 +193,66 @@ public class UIGameEquip : UIGameComponent
         switch (itemType)
         {
             case GeneralEnum.Hat:
-                itemCpt = equipHat;
-                unloadEquipId = characterData.equips.hatId;
-                characterData.equips.hatId = itemInfo.id;
+    
+                if (isTFequip)
+                {
+                    itemCpt = equipTFHat;
+                    unloadEquipId = characterData.equips.hatTFId;
+                    characterData.equips.hatTFId = itemInfo.id;
+                }
+                else
+                {
+                    itemCpt = equipHat;
+                    unloadEquipId = characterData.equips.hatId;
+                    characterData.equips.hatId = itemInfo.id;
+                }
+      
                 break;
             case GeneralEnum.Clothes:
-                itemCpt = equipClothes;
-                unloadEquipId = characterData.equips.clothesId;
-                characterData.equips.clothesId = itemInfo.id;
+                if (isTFequip)
+                {
+                    itemCpt = equipTFClothes;
+                    unloadEquipId = characterData.equips.clothesTFId;
+                    characterData.equips.clothesTFId = itemInfo.id;
+                }
+                else
+                {
+                    itemCpt = equipClothes;
+                    unloadEquipId = characterData.equips.clothesId;
+                    characterData.equips.clothesId = itemInfo.id;
+                }
                 break;
             case GeneralEnum.Shoes:
-                itemCpt = equipShoes;
-                unloadEquipId = characterData.equips.shoesId;
-                characterData.equips.shoesId = itemInfo.id;
+                if (isTFequip)
+                {
+                    itemCpt = equipTFShoes;
+                    unloadEquipId = characterData.equips.shoesTFId;
+                    characterData.equips.shoesTFId = itemInfo.id;
+                }
+                else
+                {
+                    itemCpt = equipShoes;
+                    unloadEquipId = characterData.equips.shoesId;
+                    characterData.equips.shoesId = itemInfo.id;
+                }
                 break;
             case GeneralEnum.Chef:
             case GeneralEnum.Waiter:
             case GeneralEnum.Accoutant:
             case GeneralEnum.Accost:
             case GeneralEnum.Beater:
-                itemCpt = equipHand;
-                unloadEquipId = characterData.equips.handId;
-                characterData.equips.handId = itemInfo.id;
+                if (isTFequip)
+                {
+                    itemCpt = equipTFHand;
+                    unloadEquipId = characterData.equips.handTFId;
+                    characterData.equips.handTFId = itemInfo.id;
+                }
+                else
+                {
+                    itemCpt = equipHand;
+                    unloadEquipId = characterData.equips.handId;
+                    characterData.equips.handId = itemInfo.id;
+                }
                 break;
         }
         itemCpt.SetData(characterData, itemInfo, null);

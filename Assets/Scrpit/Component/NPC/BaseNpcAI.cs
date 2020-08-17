@@ -59,19 +59,65 @@ public class BaseNpcAI : BaseObservable<IBaseObserver>
         //设置服装数据
         if (characterDress != null)
         {
-            ItemsInfoBean maskEquip = gameItemsManager.GetItemsById(characterBean.equips.maskId);
+            //设置面具
+            ItemsInfoBean maskEquip = null;
+            if (characterBean.equips.maskTFId != 0)
+            {
+                maskEquip = gameItemsManager.GetItemsById(characterBean.equips.maskTFId);
+            }
+            else
+            {
+                maskEquip = gameItemsManager.GetItemsById(characterBean.equips.maskId);
+            }
             characterDress.SetMask(maskEquip);
 
-            ItemsInfoBean handEquip = gameItemsManager.GetItemsById(characterBean.equips.handId);
+            //设置手持
+            ItemsInfoBean handEquip = null;
+            if (characterBean.equips.handTFId != 0)
+            {
+                handEquip = gameItemsManager.GetItemsById(characterBean.equips.handTFId);
+            }
+            else
+            {
+                handEquip = gameItemsManager.GetItemsById(characterBean.equips.handId);
+            }
             characterDress.SetHand(handEquip);
 
-            ItemsInfoBean hatEquip = gameItemsManager.GetItemsById(characterBean.equips.hatId);
+            //设置头部
+            ItemsInfoBean hatEquip = null;
+            if (characterBean.equips.hatTFId != 0)
+            {
+                hatEquip = gameItemsManager.GetItemsById(characterBean.equips.hatTFId);
+            }
+            else
+            {
+                hatEquip = gameItemsManager.GetItemsById(characterBean.equips.hatId);
+            }
             characterDress.SetHat(hatEquip);
 
-            ItemsInfoBean clothesEquip = gameItemsManager.GetItemsById(characterBean.equips.clothesId);
+
+            //设置衣服
+            ItemsInfoBean clothesEquip = null;
+            if (characterBean.equips.clothesTFId != 0)
+            {
+                clothesEquip = gameItemsManager.GetItemsById(characterBean.equips.clothesTFId);
+            }
+            else
+            {
+                clothesEquip = gameItemsManager.GetItemsById(characterBean.equips.clothesId);
+            }
             characterDress.SetClothes(clothesEquip);
 
-            ItemsInfoBean shoesEquip = gameItemsManager.GetItemsById(characterBean.equips.shoesId);
+            //设置鞋子
+            ItemsInfoBean shoesEquip = null;
+            if (characterBean.equips.shoesTFId != 0)
+            {
+                shoesEquip = gameItemsManager.GetItemsById(characterBean.equips.shoesTFId);
+            }
+            else
+            {
+                shoesEquip = gameItemsManager.GetItemsById(characterBean.equips.shoesId);
+            }
             characterDress.SetShoes(shoesEquip);
         }
         //设置属性数据

@@ -387,7 +387,7 @@ public class RewardTypeEnumTools : DataTools
                     break;
                 case RewardTypeEnum.AddItems:
                 case RewardTypeEnum.RandomAddItems:
-                    gameData.AddNewItems(itemData.rewardId, itemData.rewardNumber);
+                    gameData.AddItemsNumber(itemData.rewardId, itemData.rewardNumber);
                     toastManager.ToastHint(itemData.spRewardIcon, string.Format(GameCommonInfo.GetUITextById(6099), itemData.rewardDescribe));
                     break;
                 case RewardTypeEnum.AddBuildItems:

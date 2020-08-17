@@ -48,11 +48,55 @@ public class CharacterUICpt : BaseMonoBehaviour
         SetMouth(characterBodyData.mouth, characterBodyData.mouthColor.GetColor());
         SetBody(characterBodyData.sex, characterBodyData.skinColor.GetColor());
 
-        SetMask(characterEquipData.maskId);
-        SetHand(characterEquipData.handId);
-        SetClothes(characterEquipData.clothesId);
-        SetShoes(characterEquipData.shoesId);
-        SetHat(characterEquipData.hatId, characterBodyData.hairColor.GetColor());
+        if (characterEquipData.maskTFId != 0)
+        {
+            //幻化处理
+            SetMask(characterEquipData.maskTFId);
+        }
+        else
+        {
+            SetMask(characterEquipData.maskId);
+        }
+
+        if (characterEquipData.handTFId != 0)
+        {  
+            //幻化处理
+            SetHand(characterEquipData.handTFId);
+        }
+        else
+        {
+            SetHand(characterEquipData.handId);
+        }
+
+        if (characterEquipData.clothesTFId != 0)
+        {
+            //幻化处理
+            SetClothes(characterEquipData.clothesTFId);
+        }
+        else
+        {
+            SetClothes(characterEquipData.clothesId);
+        }
+
+        if (characterEquipData.shoesTFId != 0)
+        {
+            //幻化处理
+            SetShoes(characterEquipData.shoesTFId);
+        }
+        else
+        {
+            SetShoes(characterEquipData.shoesId);
+        }
+
+        if (characterEquipData.hatTFId != 0)
+        {
+            //幻化处理
+            SetHat(characterEquipData.hatTFId, characterBodyData.hairColor.GetColor());
+        }
+        else
+        {
+            SetHat(characterEquipData.hatId, characterBodyData.hairColor.GetColor());
+        } 
     }
 
     /// <summary>

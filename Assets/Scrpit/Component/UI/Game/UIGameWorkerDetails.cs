@@ -7,14 +7,16 @@ public class UIGameWorkerDetails : UIGameComponent, IRadioGroupCallBack
     [Header("控件")]
     public CharacterUICpt characterUICpt;
 
-    public InfoItemsPopupButton pbHand;
-    public Image ivHand;
-    public InfoItemsPopupButton pbHat;
-    public Image ivHat;
-    public InfoItemsPopupButton pbClothes;
-    public Image ivClothes;
-    public InfoItemsPopupButton pbShoes;
-    public Image ivShoes;
+    public ItemGameBackpackEquipCpt equipHand;
+    public ItemGameBackpackEquipCpt equipHat;
+    public ItemGameBackpackEquipCpt equipClothes;
+    public ItemGameBackpackEquipCpt equipShoes;
+
+    //幻化
+    public ItemGameBackpackEquipCpt equipTFHand;
+    public ItemGameBackpackEquipCpt equipTFHat;
+    public ItemGameBackpackEquipCpt equipTFClothes;
+    public ItemGameBackpackEquipCpt equipTFShoes;
 
     public Text tvLoyal;
     public CharacterAttributeView characterAttributeView;
@@ -59,14 +61,6 @@ public class UIGameWorkerDetails : UIGameComponent, IRadioGroupCallBack
         if (btBack != null)
             btBack.onClick.AddListener(OpenWorkUI);
 
-        if (pbHand != null)
-            pbHand.SetPopupShowView(uiGameManager.infoItemsPopup);
-        if (pbHat != null)
-            pbHat.SetPopupShowView(uiGameManager.infoItemsPopup);
-        if (pbClothes != null)
-            pbClothes.SetPopupShowView(uiGameManager.infoItemsPopup);
-        if (pbShoes != null)
-            pbShoes.SetPopupShowView(uiGameManager.infoItemsPopup);
         if (rgWorkerTitle != null)
         {
             rgWorkerTitle.SetCallBack(this);
@@ -188,60 +182,20 @@ public class UIGameWorkerDetails : UIGameComponent, IRadioGroupCallBack
     /// 设置装备
     /// </summary>
     /// <param name="characterEquip"></param>
-    public void SetEquip(CharacterEquipBean characterEquip)
+    public void SetEquip(CharacterEquipBean equips)
     {
-        Sprite spHand = null;
-        Sprite spHat = null;
-        Sprite spClothes = null;
-        Sprite spShoes = null;
-        if (characterData.equips.handId != 0)
-        {
-            //查询装备数据
-            ItemsInfoBean itemHand = uiGameManager.gameItemsManager.GetItemsById(characterData.equips.handId);
-            if (itemHand != null && !CheckUtil.StringIsNull(itemHand.icon_key))
-            {
-                //获取装备图标
-                spHand = uiGameManager.gameItemsManager.GetItemsSpriteByName(itemHand.icon_key);
-                pbHand.SetData(itemHand, spHand);
-            }
-        }
-        if (characterData.equips.hatId != 0)
-        {
-            //查询装备数据
-            ItemsInfoBean itemsHat = uiGameManager.gameItemsManager.GetItemsById(characterData.equips.hatId);
-            if (itemsHat != null && !CheckUtil.StringIsNull(itemsHat.icon_key))
-            {
-                //获取装备图标
-                spHat = uiGameManager.characterDressManager.GetHatSpriteByName(itemsHat.icon_key);
-                pbHat.SetData(itemsHat, spHat);
-            }
-        }
-        if (characterData.equips.clothesId != 0)
-        {
-            //查询装备数据
-            ItemsInfoBean itemsClothes = uiGameManager.gameItemsManager.GetItemsById(characterData.equips.clothesId);
-            if (itemsClothes != null && !CheckUtil.StringIsNull(itemsClothes.icon_key))
-            {
-                //获取装备图标
-                spClothes = uiGameManager.characterDressManager.GetClothesSpriteByName(itemsClothes.icon_key);
-                pbClothes.SetData(itemsClothes, spClothes);
-            }
-        }
-        if (characterData.equips.shoesId != 0)
-        {
-            //查询装备数据
-            ItemsInfoBean itemShoes = uiGameManager.gameItemsManager.GetItemsById(characterData.equips.shoesId);
-            if (itemShoes != null && !CheckUtil.StringIsNull(itemShoes.icon_key))
-            {
-                //获取装备图标
-                spShoes = uiGameManager.characterDressManager.GetShoesSpriteByName(itemShoes.icon_key);
-                pbShoes.SetData(itemShoes, spShoes);
-            }
-        }
-        SetEquipSprite(ivHand, spHand);
-        SetEquipSprite(ivHat, spHat);
-        SetEquipSprite(ivClothes, spClothes);
-        SetEquipSprite(ivShoes, spShoes);
+
+        //装备物品刷新
+        equipHand.SetData(characterData, uiGameManager.gameItemsManager.GetItemsById(equips.handId), null);
+        equipHat.SetData(characterData, uiGameManager.gameItemsManager.GetItemsById(equips.hatId), null);
+        equipClothes.SetData(characterData, uiGameManager.gameItemsManager.GetItemsById(equips.clothesId), null);
+        equipShoes.SetData(characterData, uiGameManager.gameItemsManager.GetItemsById(equips.shoesId), null);
+
+        equipTFHand.SetData(characterData, uiGameManager.gameItemsManager.GetItemsById(equips.handTFId), null);
+        equipTFHat.SetData(characterData, uiGameManager.gameItemsManager.GetItemsById(equips.hatTFId), null);
+        equipTFClothes.SetData(characterData, uiGameManager.gameItemsManager.GetItemsById(equips.clothesTFId), null);
+        equipTFShoes.SetData(characterData, uiGameManager.gameItemsManager.GetItemsById(equips.shoesTFId), null);
+
     }
 
     /// <summary>

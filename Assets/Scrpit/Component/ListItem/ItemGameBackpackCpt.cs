@@ -22,6 +22,8 @@ public class ItemGameBackpackCpt : ItemGameBaseCpt, IPointerClickHandler, PopupI
     protected UIGameManager uiGameManager;
     protected PopupItemsSelection popupItemsSelection;
 
+    public bool isOpenClick = true;
+
     public virtual void Awake()
     {
         uiGameManager = Find<UIGameManager>(ImportantTypeEnum.GameUI);
@@ -137,6 +139,10 @@ public class ItemGameBackpackCpt : ItemGameBaseCpt, IPointerClickHandler, PopupI
 
     public virtual void ButtonClick()
     {
+        if (!isOpenClick)
+        {
+            return;
+        }
         if (itemsInfoBean == null)
             return;
         if (popupItemsSelection != null)
@@ -226,6 +232,11 @@ public class ItemGameBackpackCpt : ItemGameBaseCpt, IPointerClickHandler, PopupI
     }
 
     public virtual void SelectionEquip(PopupItemsSelection view)
+    {
+
+    }
+
+    public virtual void SelectionTFEquip(PopupItemsSelection view)
     {
 
     }

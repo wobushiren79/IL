@@ -27,6 +27,10 @@ public class ItemGameBackpackEquipCpt : ItemGameBackpackCpt, SkillInfoManager.IC
 
     public override void ButtonClick()
     {
+        if (!isOpenClick)
+        {
+            return;
+        }
         if (itemsInfoBean == null || itemsInfoBean.id == 0)
             return;
 
@@ -34,6 +38,12 @@ public class ItemGameBackpackEquipCpt : ItemGameBackpackCpt, SkillInfoManager.IC
             popupItemsSelection.SetCallBack(this);
         if (type == 1)
         {
+            //普通装备卸载
+            popupItemsSelection.Open(PopupItemsSelection.SelectionTypeEnum.Unload);
+        }
+        else if (type == 2)
+        {
+            //幻化装备卸载
             popupItemsSelection.Open(PopupItemsSelection.SelectionTypeEnum.Unload);
         }
         else
@@ -49,7 +59,7 @@ public class ItemGameBackpackEquipCpt : ItemGameBackpackCpt, SkillInfoManager.IC
                 case GeneralEnum.Accoutant:
                 case GeneralEnum.Accost:
                 case GeneralEnum.Beater:
-                    popupItemsSelection.Open(PopupItemsSelection.SelectionTypeEnum.EquipAndDiscard);
+                    popupItemsSelection.Open(PopupItemsSelection.SelectionTypeEnum.EquipAndDiscardAndTFEquip);
                     break;
                 case GeneralEnum.Book:
                 case GeneralEnum.SkillBook:
@@ -111,7 +121,14 @@ public class ItemGameBackpackEquipCpt : ItemGameBackpackCpt, SkillInfoManager.IC
     public override void SelectionEquip(PopupItemsSelection view)
     {
         UIGameEquip uiGameEquip = GetUIComponent<UIGameEquip>();
-        uiGameEquip.SetEquip(itemsInfoBean);
+        uiGameEquip.SetEquip(itemsInfoBean,false);
+        RefreshItems(itemsInfoBean.id, -1);
+    }
+
+    public override void SelectionTFEquip(PopupItemsSelection view)
+    {
+        UIGameEquip uiGameEquip = GetUIComponent<UIGameEquip>();
+        uiGameEquip.SetEquip(itemsInfoBean,true);
         RefreshItems(itemsInfoBean.id, -1);
     }
 
@@ -121,8 +138,25 @@ public class ItemGameBackpackEquipCpt : ItemGameBackpackCpt, SkillInfoManager.IC
         ItemsInfoBean nullItems = new ItemsInfoBean();
         nullItems.id = 0;
         nullItems.items_type = itemsInfoBean.items_type;
-        uiGameEquip.SetEquip(nullItems);
+        if (type == 1)
+        {
+            //普通装备卸除
+            uiGameEquip.SetEquip(nullItems,false);
+        }
+        else if (type == 2)
+        {
+            //幻化装备卸除
+            uiGameEquip.SetEquip(nullItems, true);
+        }
+        else
+        {
+            //其他
+            uiGameEquip.SetEquip(nullItems, false);
+        }
+     
     }
+
+
     #endregion
 
 

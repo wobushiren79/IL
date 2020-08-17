@@ -350,7 +350,7 @@ public class NpcAIRascalCpt : BaseNpcAI, IBaseObserver,TextInfoHandler.ICallBack
     /// <returns></returns>
     public IEnumerator CoroutineForDelayMakeTrouble()
     {
-        yield return new WaitForSeconds(3);
+        yield return new WaitForSeconds(10);
         //展示范围
         objRascalSpaceShow.SetActive(true);
         objRascalSpaceShow.transform.localScale = new Vector3(2, 2, 2);

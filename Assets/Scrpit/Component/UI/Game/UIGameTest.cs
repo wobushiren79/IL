@@ -72,7 +72,7 @@ public class UIGameTest : UIGameComponent
         List<ItemsInfoBean> listItem = uiGameManager.gameItemsManager.GetAllItems();
         foreach (ItemsInfoBean itemsInfo in listItem)
         {
-            gameData.AddNewItems(itemsInfo.id, 1);
+            gameData.AddItemsNumber(itemsInfo.id, 1);
         }
         gameData.listBuild.Clear();
         Dictionary<long, BuildItemBean> mapbuild = uiGameManager.innBuildManager.listBuildData;
@@ -92,7 +92,7 @@ public class UIGameTest : UIGameComponent
 
             if (long.TryParse(etItemNumber.text, out long itemNumber))
             {
-                uiGameManager.gameDataManager.gameData.AddNewItems(itemId, itemNumber);
+                uiGameManager.gameDataManager.gameData.AddItemsNumber(itemId, itemNumber);
             }
             else
             {
