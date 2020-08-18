@@ -15,7 +15,7 @@ public class NpcCustomerBuilder : NpcNormalBuilder, IBaseObserver
     {
         InnAttributesBean innAttributes = gameDataManager.gameData.GetInnAttributesData();
         buildTeamGustomerRate =  innAttributes.CalculationTeamCustomerBuildRate();
-        buildMaxNumber = 500;
+        buildMaxNumber = 300;
         gameTimeHandler.AddObserver(this);
         StartBuildCustomer();
     }
@@ -98,7 +98,7 @@ public class NpcCustomerBuilder : NpcNormalBuilder, IBaseObserver
         //设置意图
         NpcAICustomerCpt customerAI = npcObj.GetComponent<NpcAICustomerCpt>();
         //想要吃饭概率
-        if (IsWantEat(CustomerTypeEnum.Normal))
+        if (gameTimeHandler.GetDayStatus() == GameTimeHandler.DayEnum.Work && IsWantEat(CustomerTypeEnum.Normal))
         {
             customerAI.SetIntent(NpcAICustomerCpt.CustomerIntentEnum.Want);
         }
@@ -113,6 +113,9 @@ public class NpcCustomerBuilder : NpcNormalBuilder, IBaseObserver
     /// </summary>
     public void BuildGuestTeam()
     {
+        //如果大于构建上线则不再创建新NPC
+        if (objContainer.transform.childCount > buildMaxNumber)
+            return;
         Vector3 npcPosition = GetRandomStartPosition();
         NpcTeamBean teamData = RandomUtil.GetRandomDataByList(listTeamCustomer);
         BuildGuestTeam(teamData, npcPosition);
@@ -120,6 +123,9 @@ public class NpcCustomerBuilder : NpcNormalBuilder, IBaseObserver
 
     public void BuildGuestTeam(long teamId)
     {
+        //如果大于构建上线则不再创建新NPC
+        if (objContainer.transform.childCount > buildMaxNumber)
+            return;
         Vector3 npcPosition = GetRandomStartPosition();
         NpcTeamBean teamData = npcTeamManager.GetCustomerTeam(teamId);
         BuildGuestTeam(teamData, npcPosition);
@@ -166,7 +172,7 @@ public class NpcCustomerBuilder : NpcNormalBuilder, IBaseObserver
             baseNpcAI.AddStatusIconForGuestTeam(teamColor);
             NpcAICustomerForGuestTeamCpt customerAI = baseNpcAI.GetComponent<NpcAICustomerForGuestTeamCpt>();
             customerAI.SetTeamData(teamCode, npcTeam, i, teamColor);
-            if (isWant)
+            if (gameTimeHandler.GetDayStatus() == GameTimeHandler.DayEnum.Work && isWant)
             {
                 customerAI.SetIntent(NpcAICustomerCpt.CustomerIntentEnum.Want);
             }
@@ -224,23 +230,23 @@ public class NpcCustomerBuilder : NpcNormalBuilder, IBaseObserver
     {
         if (hour > 6 && hour <= 9)
         {
-            buildInterval = 4;
+            buildInterval = 3;
         }
         else if (hour > 9 && hour <= 12)
         {
-            buildInterval = 3;
+            buildInterval = 2;
         }
         else if (hour > 12 && hour <= 18)
         {
-            buildInterval = 2;
+            buildInterval = 1;
         }
         else if (hour > 18 && hour <= 21)
         {
-            buildInterval = 3;
+            buildInterval = 2;
         }
         else if (hour > 21 && hour <= 24)
         {
-            buildInterval = 5;
+            buildInterval = 4;
         }
         else
         {
@@ -258,12 +264,14 @@ public class NpcCustomerBuilder : NpcNormalBuilder, IBaseObserver
         }
         else if (levelTitle == 2)
         {
-            buildInterval = buildInterval * 0.7f;
+            buildInterval = buildInterval * 0.6f;
         }
         else if (levelTitle == 3)
         {
-            buildInterval = buildInterval * 0.5f;
+            buildInterval = buildInterval * 0.3f;
         }
+        InnAttributesBean innAttributes = gameDataManager.gameData.GetInnAttributesData();
+        buildTeamGustomerRate = innAttributes.CalculationTeamCustomerBuildRate();
         return buildInterval;
     }
 

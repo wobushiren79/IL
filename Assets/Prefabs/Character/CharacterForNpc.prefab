@@ -102,20 +102,24 @@ MonoBehaviour:
         workerType: 1
         workerLevel: 0
         workerExp: 0
+        priority: 0
+        isWorking: 1
         cookNumber: 0
-        cookTime: 0
         listFoodCookNumer: []
       waiterInfo:
         workerType: 2
         workerLevel: 0
         workerExp: 0
+        priority: 0
+        isWorking: 1
         cleanTotalNumber: 0
         sendTotalNumber: 0
-        cleanTotalTime: 0
       accountantInfo:
         workerType: 3
         workerLevel: 0
         workerExp: 0
+        priority: 0
+        isWorking: 1
         accountingTotalNumber: 0
         accountingErrorNumber: 0
         accountingSuccessNumber: 0
@@ -128,34 +132,24 @@ MonoBehaviour:
         accountingMoneyL: 0
         accountingMoneyM: 0
         accountingMoneyS: 0
-        accountingTotalTime: 0
       accostInfo:
         workerType: 4
         workerLevel: 0
         workerExp: 0
+        priority: 0
+        isWorking: 1
         accostTotalNumber: 0
         accostSuccessNumber: 0
         accostFailNumber: 0
-        accostTotalTime: 0
       beaterInfo:
         workerType: 5
         workerLevel: 0
         workerExp: 0
+        priority: 0
+        isWorking: 1
         fightTotalNumber: 0
         fightWinNumber: 0
         fightLoseNumber: 0
-        fightTotalTime: 0
-        restTotalTime: 0
-      isChef: 0
-      isWaiter: 0
-      isAccountant: 0
-      isAccost: 0
-      isBeater: 0
-      priorityChef: 0
-      priorityWaiter: 0
-      priorityAccountant: 0
-      priorityAccost: 0
-      priorityBeater: 0
       workerStatus: 0
       listLoveItems: 
     attributes:
@@ -167,6 +161,8 @@ MonoBehaviour:
       charm: 0
       force: 0
       lucky: 0
+      listSkills: 
+      listLearnBook: 
     body:
       sex: 1
       skinColor:
@@ -199,7 +195,11 @@ MonoBehaviour:
       hatId: 0
       clothesId: 0
       shoesId: 0
-      listLearnBook: 
+      maskTFId: 0
+      handTFId: 0
+      hatTFId: 0
+      clothesTFId: 0
+      shoesTFId: 0
     npcInfoData:
       id: 0
       valid: 0
@@ -218,11 +218,13 @@ MonoBehaviour:
       eye_color: 
       mouth_id: 
       mouth_color: 
+      skin_color: 
       title_name: 
       name: 
       position_x: 0
       position_y: 0
-      talk_ids: 
+      talk_types: 
+      skill_ids: 
       attributes_loyal: 0
       attributes_life: 0
       attributes_cook: 0
@@ -231,6 +233,9 @@ MonoBehaviour:
       attributes_charm: 0
       attributes_force: 0
       attributes_lucky: 0
+      wage_l: 0
+      wage_m: 0
+      wage_s: 0
       love_items: 
       love_menus: 
       condition: 
@@ -239,13 +244,13 @@ MonoBehaviour:
     favorability: 0
     favorabilityLevel: 0
     firstMeet: 0
-    giftLoveNumber: 0
-    giftNormalNumber: 0
+    giftNumber: 0
     talkNumber: 0
   characterMoveCpt: {fileID: 4876987991408981619}
   characterShoutCpt: {fileID: 4717018018557957672}
   characterExpression: {fileID: 3936434963332890346}
   characterStatusIcon: {fileID: 1177567597470619980}
+  objTake: {fileID: 0}
 --- !u!195 &3067088595257032274
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -257,9 +262,9 @@ NavMeshAgent:
   m_AgentTypeID: 0
   m_Radius: 0.2
   m_Speed: 1
-  m_Acceleration: 10
+  m_Acceleration: 10000
   avoidancePriority: 50
-  m_AngularSpeed: 360
+  m_AngularSpeed: 10000
   m_StoppingDistance: 0
   m_AutoTraverseOffMeshLink: 1
   m_AutoBraking: 1

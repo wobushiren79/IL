@@ -97,6 +97,10 @@ public class CharacterMoveCpt : BaseMonoBehaviour
         bool canGo = true;
         if (navMeshAgent != null && navMeshAgent.isActiveAndEnabled)
         {
+            if (characterRigidbody != null)
+            {
+                characterRigidbody.inertia = 0;
+            }
             navMeshAgent.isStopped = false;
             navMeshAgent.updateRotation = false;
             navMeshAgent.updateUpAxis = false;
@@ -104,6 +108,7 @@ public class CharacterMoveCpt : BaseMonoBehaviour
             // NavMesh.avoidancePredictionTime = 5f;
             navMeshAgent.speed = moveSpeed;
             canGo = navMeshAgent.SetDestination(position);
+          
         }
         return canGo;
     }
@@ -168,14 +173,6 @@ public class CharacterMoveCpt : BaseMonoBehaviour
 
         //Vector2 lerpPosition = Vector3.Lerp(Vector2.zero, new Vector2(x, y), lerpOffset);
         // transform.Translate(movePosition * moveSpeed * Time.deltaTime);
-        //LogUtil.Log(" Time.deltaTime:" + Time.deltaTime);
-        //LogUtil.Log(" Time.unscaledDeltaTime:" + Time.unscaledDeltaTime);
-        //LogUtil.Log(" Time.fixedDeltaTime:" + Time.fixedDeltaTime);
-        //LogUtil.Log(" Time.fixedUnscaledDeltaTime:" + Time.fixedUnscaledDeltaTime);
-        //LogUtil.Log(" Time.smoothDeltaTime:" + Time.smoothDeltaTime);
-        //LogUtil.Log(" Time.captureDeltaTime:" + Time.captureDeltaTime);
-        //LogUtil.Log(" Time.maximumDeltaTime:" + Time.maximumDeltaTime);
-        //LogUtil.Log(" Time.maximumParticleDeltaTime:" + Time.maximumParticleDeltaTime);
    
         Vector3 movePosition = objMove.transform.position + new Vector3(x * moveSpeed * Time.deltaTime, y * moveSpeed * Time.deltaTime);
         characterRigidbody.MovePosition(movePosition);

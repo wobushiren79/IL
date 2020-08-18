@@ -294,11 +294,11 @@ public class InnAttributesBean
             ratePraise = 1;
         //菜品丰富度所占比重
         GetRichness(out int maxRichness, out int richness);
-        float rateRichness = richness / maxRichness;
+        float rateRichness = (float)richness / maxRichness;
         if (rateRichness > 1)
             rateRichness = 1;
         rate = 0.32f * rateRichness + 0.32f * ratePraise + 0.32f * rateAesthetics + 0.04f;
-        rate = rate / 8f;
-        return 0.1f;
+        rate = rate * 0.15f;
+        return rate;
     }
 }

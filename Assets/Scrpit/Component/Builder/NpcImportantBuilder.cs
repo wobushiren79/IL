@@ -49,43 +49,56 @@ public class NpcImportantBuilder : BaseMonoBehaviour
 
     private NpcAIImportantCpt BuildNpc(CharacterBean characterData)
     {
-        if (objNpcModel == null || objNpcContainer == null)
-            return null;
-        //检测是否已经招募
-        if (gameDataManager.gameData.CheckHasWorker(characterData.baseInfo.characterId)) {
-            return null;
-        }
-
-        if(gameDataManager.gameData.gameTime.year == 0
-            && gameDataManager.gameData.gameTime.month == 0
-            && gameDataManager.gameData.gameTime.day == 0)
+        GameObject npcObj = null;
+        try
         {
-            //如果是测试 这默认生成所有NPC
-        }
-        else
-        {
-            //检测是否满足出现条件
-            if (!CheckUtil.StringIsNull(characterData.npcInfoData.condition) && !ShowConditionTools.CheckIsMeetAllCondition(gameDataManager.gameData, characterData.npcInfoData.condition))
+            if (objNpcModel == null || objNpcContainer == null)
+                return null;
+            //检测是否已经招募
+            if (gameDataManager.gameData.CheckHasWorker(characterData.baseInfo.characterId))
             {
                 return null;
             }
-        }
 
-        GameObject npcObj = Instantiate(objNpcContainer, objNpcModel);
-        npcObj.transform.position = new Vector3(characterData.npcInfoData.position_x, characterData.npcInfoData.position_y);
-        npcObj.transform.localScale = new Vector3(1, 1);
-        NpcAIImportantCpt aiCpt = npcObj.GetComponent<NpcAIImportantCpt>();
-        aiCpt.SetCharacterData(characterData);
-        //如果没有对话选项则不能互动
-        BoxCollider2D talkBox = npcObj.GetComponent<BoxCollider2D>();
-        if (talkBox != null)
-        {
-            if (CheckUtil.StringIsNull(characterData.npcInfoData.talk_types) )
+            if (gameDataManager.gameData.gameTime.year == 0
+                && gameDataManager.gameData.gameTime.month == 0
+                && gameDataManager.gameData.gameTime.day == 0)
             {
-                talkBox.enabled = false;
+                //如果是测试 这默认生成所有NPC
             }
+            else
+            {
+                //检测是否满足出现条件
+                if (!CheckUtil.StringIsNull(characterData.npcInfoData.condition) && !ShowConditionTools.CheckIsMeetAllCondition(gameDataManager.gameData, characterData.npcInfoData.condition))
+                {
+                    return null;
+                }
+            }
+
+            npcObj = Instantiate(objNpcContainer, objNpcModel);
+            npcObj.transform.position = new Vector3(characterData.npcInfoData.position_x, characterData.npcInfoData.position_y);
+            npcObj.transform.localScale = new Vector3(1, 1);
+            NpcAIImportantCpt aiCpt = npcObj.GetComponent<NpcAIImportantCpt>();
+            aiCpt.SetCharacterData(characterData);
+            //如果没有对话选项则不能互动
+            BoxCollider2D talkBox = npcObj.GetComponent<BoxCollider2D>();
+            if (talkBox != null)
+            {
+                if (CheckUtil.StringIsNull(characterData.npcInfoData.talk_types))
+                {
+                    talkBox.enabled = false;
+                }
+            }
+            return aiCpt;
         }
-        return aiCpt;
+        catch
+        {
+            if (npcObj != null)
+            {
+                Destroy(npcObj);
+            }
+            return null;
+        }
     }
 
     public void HideNpc()

@@ -35,10 +35,6 @@ public class NpcEventBuilder : NpcNormalBuilder, IBaseObserver
     public void StartEvent()
     {
         int eventType = UnityEngine.Random.Range(0, 10);
-        if (eventType > 2)
-        {
-            return;
-        }
         //先检测是否超过当天生成事件上限
         if (!GameCommonInfo.DailyLimitData.CheckEventNumber(1))
         {
@@ -58,6 +54,10 @@ public class NpcEventBuilder : NpcNormalBuilder, IBaseObserver
             case 3:
                 //TODO 待定 需要处理单个朋友和团队朋友重复出现的问题
                 //BuildTownFriendsForTeam();
+                break;
+            case 4:
+                break;
+            case 5:
                 break;
             default:
                 BuildTownFriendsForOne();

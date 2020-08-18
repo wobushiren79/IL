@@ -99,8 +99,11 @@ public class CharacterBean
     public static CharacterBean CreateRandomWorkerDataByPrice(CharacterBodyManager characterBodyManager, long findPriceL, long findPriceM, long findPriceS)
     {
         CharacterBean characterData = new CharacterBean();
+        //设置ID
+        characterData.baseInfo.characterId = SystemUtil.GetUUID(SystemUtil.UUIDTypeEnum.N);
         //设置随机名字
         characterData.baseInfo.name = RandomUtil.GetRandomGenerateChineseWord(UnityEngine.Random.Range(2, 4));
+
         //生成随机能力
         long totalPoint = (findPriceS + findPriceM * 1000 + findPriceL * 10000) / 100;
         int maxLife = 20;

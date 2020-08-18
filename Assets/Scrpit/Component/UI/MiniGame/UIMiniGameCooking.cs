@@ -302,23 +302,23 @@ public class UIMiniGameCooking : UIGameComponent
         objCountDown.SetActive(true);
         tvCountDown.text = tvTitle.text;
         tvCountDown.transform.DOScale(new Vector3(3, 3, 3), 0.5f).From().SetEase(Ease.OutBack);
-        yield return new WaitForSeconds(5);
+        yield return new WaitForSeconds(2);
         uiGameManager.audioHandler.PlaySound(AudioSoundEnum.CountDownStart);
         tvCountDown.text = GameCommonInfo.GetUITextById(252);
         tvCountDown.transform.DOScale(new Vector3(3, 3, 3), 0.5f).From().SetEase(Ease.OutBack);
-        yield return new WaitForSeconds(1);
+        yield return new WaitForSeconds(0.6f);
         uiGameManager.audioHandler.PlaySound(AudioSoundEnum.CountDownStart);
         tvCountDown.text = GameCommonInfo.GetUITextById(253);
         tvCountDown.transform.DOScale(new Vector3(3, 3, 3), 0.5f).From().SetEase(Ease.OutBack);
-        yield return new WaitForSeconds(1);
+        yield return new WaitForSeconds(0.6f);
         uiGameManager.audioHandler.PlaySound(AudioSoundEnum.CountDownStart);
         tvCountDown.text = GameCommonInfo.GetUITextById(254);
         tvCountDown.transform.DOScale(new Vector3(3, 3, 3), 0.5f).From().SetEase(Ease.OutBack);
-        yield return new WaitForSeconds(1);
+        yield return new WaitForSeconds(0.6f);
         uiGameManager.audioHandler.PlaySound(AudioSoundEnum.CountDownEnd);
         tvCountDown.text = GameCommonInfo.GetUITextById(255);
         tvCountDown.transform.DOScale(new Vector3(3, 3, 3), 0.5f).From().SetEase(Ease.OutBack);
-        yield return new WaitForSeconds(1);
+        yield return new WaitForSeconds(0.6f);
         objCountDown.SetActive(false);
         mIsPlay = true;
     }

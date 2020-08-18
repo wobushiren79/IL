@@ -11,7 +11,7 @@ public class MiniGameAccountEjectorCpt : BaseMonoBehaviour
 
     private bool mIsRotating = false;
     private int mLaunchStatus = 0;//0等待发射，1发射中，2回收中
-    private float mRotateSpeed = 45f;//每秒
+    private float mRotateSpeed = 30f;//每秒
     private float mLaunchSpeed = 5f;//每秒
     private float mRecycleSpeed = 1f;//每秒
     private float mRotatingDirection = 1;
@@ -32,7 +32,7 @@ public class MiniGameAccountEjectorCpt : BaseMonoBehaviour
     /// <summary>
     /// 设置数据
     /// </summary>
-    public void SetData(float recycleSpeed)
+    public void SetData(float launchSpeed, float recycleSpeed)
     {
         mRecycleSpeed = recycleSpeed;
         if (mRecycleSpeed < 1)

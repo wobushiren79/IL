@@ -20,7 +20,26 @@ public class GameDataModel : BaseMVCModel
     /// <returns></returns>
     public GameDataBean GetGameDataByUserId(string userId)
     {
-        return mGameDataService.QueryDataByUserId(userId);
+        GameDataBean gameData = mGameDataService.QueryDataByUserId(userId);
+        //错误纠正
+        if (gameData != null)
+        {
+            if (CheckUtil.StringIsNull(gameData.userCharacter.baseInfo.characterId))
+            {
+                gameData.userCharacter.baseInfo.characterId = userId;
+            }
+            if (!CheckUtil.ListIsNull(gameData.listWorkerCharacter))
+            {
+                foreach (CharacterBean characterData in gameData.listWorkerCharacter)
+                {
+                    if (CheckUtil.StringIsNull(characterData.baseInfo.characterId))
+                    {
+                        characterData.baseInfo.characterId = SystemUtil.GetUUID(SystemUtil.UUIDTypeEnum.N);
+                    }
+                }
+            }
+        }
+        return gameData;
     }
 
     /// <summary>
@@ -41,6 +60,7 @@ public class GameDataModel : BaseMVCModel
     {
         string userId = "UserId_" + SystemUtil.GetUUID(SystemUtil.UUIDTypeEnum.N);
         GameCommonInfo.GameUserId = userId;
+        gameData.userCharacter.baseInfo.characterId = userId;
         gameData.userId = userId;
         gameData.moneyS = 500;
         gameData.moneyM = 0;

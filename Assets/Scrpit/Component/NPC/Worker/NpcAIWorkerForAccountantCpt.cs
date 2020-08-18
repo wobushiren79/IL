@@ -197,7 +197,19 @@ public class NpcAIWorkerForAccountantCpt : NpcAIWokerFoBaseCpt
 
         //通知离开
         orderForCustomer.customer.SetIntent(NpcAICustomerCpt.CustomerIntentEnum.Leave);
-        SetIntent(AccountantIntentEnum.Idle);
+
+        //检测该柜台是否还有订单并且依旧没有取消改职业。如果有的话继续结账
+        CharacterWorkerBaseBean characterWorkerData = npcAIWorker.characterData.baseInfo.GetWorkerInfoByType( WorkerEnum.Accountant);
+        if (characterWorkerData.isWorking && orderForCustomer.counter.payQueue.Count != 0)
+        {
+            OrderForCustomer newOrder = orderForCustomer.counter.payQueue[0];
+            orderForCustomer.counter.payQueue.Remove(newOrder);
+            StartAccounting(newOrder);
+        }
+        else
+        {
+            SetIntent(AccountantIntentEnum.Idle);
+        }
     }
 
 }

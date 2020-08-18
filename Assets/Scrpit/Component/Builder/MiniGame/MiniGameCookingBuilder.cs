@@ -76,6 +76,7 @@ public class MiniGameCookingBuilder : BaseMiniGameBuilder
     public void CreateUserCharacter(MiniGameCharacterBean userData, Vector3 startPosition)
     {
         userCharacter = CreateCharacter(userData, startPosition, NpcAIMiniGameCookingCpt.MiniGameCookingNpcTypeEnum.Player);
+        userCharacter.characterMoveCpt.SetMoveSpeed(5);
     }
 
     public void CreateCharacterList(List<MiniGameCharacterBean> listCharacterData, List<Vector3> listCharacterPosition, NpcAIMiniGameCookingCpt.MiniGameCookingNpcTypeEnum npcType)
@@ -91,6 +92,7 @@ public class MiniGameCookingBuilder : BaseMiniGameBuilder
             {
                 case NpcAIMiniGameCookingCpt.MiniGameCookingNpcTypeEnum.Player:
                     listEnemyCharacter.Add(npcCpt);
+                    npcCpt.characterMoveCpt.SetMoveSpeed(5);
                     break;
                 case NpcAIMiniGameCookingCpt.MiniGameCookingNpcTypeEnum.Auditer:
                     listAuditerCharacter.Add(npcCpt);

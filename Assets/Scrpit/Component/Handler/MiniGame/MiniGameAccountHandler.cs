@@ -31,7 +31,7 @@ public class MiniGameAccountHandler : BaseMiniGameHandler<MiniGameAccountBuilder
         MiniGameAccountEjectorCpt ejectorCpt = miniGameBuilder.GetEjector();
         MiniGameCharacterForAccountBean userCharacterData =(MiniGameCharacterForAccountBean) miniGameData.GetUserGameData();
         userCharacterData.characterData.GetAttributes(gameItemsManager, out CharacterAttributesBean characterAttributes);
-        ejectorCpt.SetData(1.5f + characterAttributes.account / 20f);
+        ejectorCpt.SetData(5 + characterAttributes.account / 20f,   1.8f + characterAttributes.account / 20f);
         ejectorCpt.SetCallBack(this);
         ejectorCpt.StartRotate();
         //打开游戏UI
