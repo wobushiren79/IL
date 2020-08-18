@@ -496,22 +496,22 @@ public class PreTypeEnumTools : DataTools
                 preTypeData.preFailStr = GameCommonInfo.GetUITextById(5012);
                 break;
             case PreTypeEnum.AttributeForCook:
-                targetAttributes = characterData.attributes.lucky;
+                targetAttributes = characterData.attributes.cook;
                 iconKey = "ui_ability_cook";
                 preTypeData.preFailStr = GameCommonInfo.GetUITextById(5013);
                 break;
             case PreTypeEnum.AttributeForAccount:
-                targetAttributes = characterData.attributes.lucky;
+                targetAttributes = characterData.attributes.account;
                 iconKey = "ui_ability_account";
                 preTypeData.preFailStr = GameCommonInfo.GetUITextById(5014);
                 break;
             case PreTypeEnum.AttributeForCharm:
-                targetAttributes = characterData.attributes.lucky;
+                targetAttributes = characterData.attributes.charm;
                 iconKey = "ui_ability_charm";
                 preTypeData.preFailStr = GameCommonInfo.GetUITextById(5015);
                 break;
             case PreTypeEnum.AttributeForLife:
-                targetAttributes = characterData.attributes.lucky;
+                targetAttributes = characterData.attributes.life;
                 iconKey = "ui_ability_life";
                 preTypeData.preFailStr = GameCommonInfo.GetUITextById(5016);
                 break;

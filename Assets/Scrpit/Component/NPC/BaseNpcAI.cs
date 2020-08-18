@@ -146,9 +146,9 @@ public class BaseNpcAI : BaseObservable<IBaseObserver>
     /// 设置角色移动
     /// </summary>
     /// <param name="movePosition"></param>
-    public void SetCharacterMove(Vector3 movePosition)
+    public bool SetCharacterMove(Vector3 movePosition)
     {
-        characterMoveCpt.SetDestination(movePosition);
+       return characterMoveCpt.SetDestination(movePosition);
     }
 
     /// <summary>

@@ -210,7 +210,20 @@ public class ItemTownCerpenterCpt : ItemTownStoreCpt, DialogView.IDialogCallBack
                 toastManager.ToastHint(GameCommonInfo.GetUITextById(1005));
                 return;
             }
+            if (!gameDataManager.gameData.HasEnoughGuildCoin(storeInfo.guild_coin * number))
+            {
+                toastManager.ToastHint(GameCommonInfo.GetUITextById(1012));
+                return;
+            }
+            if (!gameDataManager.gameData.HasEnoughTrophy(storeInfo.trophy_elementary * number, storeInfo.trophy_intermediate * number, storeInfo.trophy_advanced * number, storeInfo.trophy_legendary * number))
+            {
+                toastManager.ToastHint(GameCommonInfo.GetUITextById(1021));
+                return;
+            }
             gameDataManager.gameData.PayMoney(storeInfo.price_l * number, storeInfo.price_m * number, storeInfo.price_s * number);
+            gameDataManager.gameData.PayGuildCoin(storeInfo.guild_coin * number);
+            gameDataManager.gameData.PayTrophy(storeInfo.trophy_elementary * number, storeInfo.trophy_intermediate * number, storeInfo.trophy_advanced * number, storeInfo.trophy_legendary * number);
+
             gameDataManager.gameData.AddBuildNumber(buildItemData.id, number);
             RefreshUI();
             string  toastStr = string.Format(GameCommonInfo.GetUITextById(1010), buildItemData.name+"x"+ number);
@@ -218,7 +231,27 @@ public class ItemTownCerpenterCpt : ItemTownStoreCpt, DialogView.IDialogCallBack
         }
         else 
         {
+
+            //检测金钱
+            if (!gameDataManager.gameData.HasEnoughMoney(storeInfo.price_l , storeInfo.price_m , storeInfo.price_s ))
+            {
+                toastManager.ToastHint(GameCommonInfo.GetUITextById(1005));
+                return;
+            }
+            if (!gameDataManager.gameData.HasEnoughGuildCoin(storeInfo.guild_coin ))
+            {
+                toastManager.ToastHint(GameCommonInfo.GetUITextById(1012));
+                return;
+            }
+            if (!gameDataManager.gameData.HasEnoughTrophy(storeInfo.trophy_elementary , storeInfo.trophy_intermediate , storeInfo.trophy_advanced , storeInfo.trophy_legendary ))
+            {
+                toastManager.ToastHint(GameCommonInfo.GetUITextById(1021));
+                return;
+            }
             gameDataManager.gameData.PayMoney(storeInfo.price_l, storeInfo.price_m, storeInfo.price_s);
+            gameDataManager.gameData.PayGuildCoin(storeInfo.guild_coin );
+            gameDataManager.gameData.PayTrophy(storeInfo.trophy_elementary , storeInfo.trophy_intermediate , storeInfo.trophy_advanced , storeInfo.trophy_legendary );
+
             string toastStr;
             if (storeInfo.store_goods_type == (int)StoreForCarpenterTypeEnum.Expansion)
             {

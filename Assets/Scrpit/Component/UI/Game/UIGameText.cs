@@ -11,6 +11,7 @@ public class UIGameText : UIGameComponent, TextInfoManager.ICallBack, DialogView
     public UIGameTextForBehind uiForBehind;
     public UIGameTextForTalk uiForTalk;
 
+
     [Header("数据")]
     public int textOrder = 1;
 

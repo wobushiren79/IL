@@ -254,11 +254,11 @@ public class NpcCustomerBuilder : NpcNormalBuilder, IBaseObserver
         gameDataManager.gameData.GetInnAttributesData().GetInnLevel(out int levelTitle,out int levelStar);
         if (levelTitle == 1)
         {
-            buildInterval = buildInterval * 1;
+            buildInterval = buildInterval * 0.9f;
         }
         else if (levelTitle == 2)
         {
-            buildInterval = buildInterval * 0.8f;
+            buildInterval = buildInterval * 0.7f;
         }
         else if (levelTitle == 3)
         {

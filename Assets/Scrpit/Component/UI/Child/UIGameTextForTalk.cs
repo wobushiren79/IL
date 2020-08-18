@@ -22,6 +22,18 @@ public class UIGameTextForTalk : BaseUIChildComponent<UIGameText>
     public GameObject objSelectContent;
     public GameObject objSelectModel;
 
+    public Text tvMoneyL;
+    public Text tvMoneyM;
+    public Text tvMoneyS;
+
+    protected GameDataManager gameDataManager;
+
+    private void Start()
+    {
+        UIGameManager uiGameManager = uiComponent.GetUIManager<UIGameManager>();
+        gameDataManager = uiGameManager.gameDataManager;
+    }
+
     private void Update()
     {
         if (textData == null)
@@ -49,6 +61,18 @@ public class UIGameTextForTalk : BaseUIChildComponent<UIGameText>
                     uiComponent.NextText();
                 }
             }
+        }
+        if (tvMoneyL != null)
+        {
+            tvMoneyL.text = gameDataManager.gameData.moneyL + "";
+        }
+        if (tvMoneyM != null)
+        {
+            tvMoneyM.text = gameDataManager.gameData.moneyM + "";
+        }
+        if (tvMoneyS != null)
+        {
+            tvMoneyS.text = gameDataManager.gameData.moneyS + "";
         }
     }
 

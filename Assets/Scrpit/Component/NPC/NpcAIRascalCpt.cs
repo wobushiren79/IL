@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Collections;
 using DG.Tweening;
 
-public class NpcAIRascalCpt : BaseNpcAI, IBaseObserver,TextInfoHandler.ICallBack
+public class NpcAIRascalCpt : BaseNpcAI, IBaseObserver, TextInfoHandler.ICallBack
 {
     public enum RascalIntentEnum
     {
@@ -282,7 +282,7 @@ public class NpcAIRascalCpt : BaseNpcAI, IBaseObserver,TextInfoHandler.ICallBack
             {
                 TextInfoBean textInfo = RandomUtil.GetRandomDataByList(listShoutTextInfo);
                 characterShoutCpt.Shout(textInfo.content);
-            }  
+            }
             //快速离开
             characterMoveCpt.SetMoveSpeed(5);
         }
@@ -311,7 +311,7 @@ public class NpcAIRascalCpt : BaseNpcAI, IBaseObserver,TextInfoHandler.ICallBack
                     && customerCpt.customerIntent != NpcAICustomerCpt.CustomerIntentEnum.WaitAccost
                     && customerCpt.customerIntent != NpcAICustomerCpt.CustomerIntentEnum.TalkWithAccost)
                     audioHandler.PlaySound(AudioSoundEnum.Passive);
-                    customerCpt.ChangeMood(-99999);
+                customerCpt.ChangeMood(-99999);
             }
         }
     }
@@ -325,7 +325,9 @@ public class NpcAIRascalCpt : BaseNpcAI, IBaseObserver,TextInfoHandler.ICallBack
         while (rascalIntent == RascalIntentEnum.MakeTrouble || rascalIntent == RascalIntentEnum.ContinueMakeTrouble)
         {
             movePosition = innHandler.GetRandomInnPositon();
-            characterMoveCpt.SetDestination(movePosition);
+            bool canGo = CheckUtil.CheckPath(transform.position, movePosition);
+            if (canGo)
+                characterMoveCpt.SetDestination(movePosition);
             //随机获取一句喊话
             //int shoutId = Random.Range(13101, 13106);
             if (!CheckUtil.ListIsNull(listShoutTextInfo))

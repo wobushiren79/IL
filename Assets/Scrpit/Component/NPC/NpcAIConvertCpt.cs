@@ -55,7 +55,10 @@ public class NpcAIConvertCpt : NpcAISundryCpt,TextInfoHandler.ICallBack
             if (CheckCharacterIsArrive())
             {
                 movePosition = innHandler.GetRandomInnPositon();
-                SetCharacterMove(movePosition);
+                if (CheckUtil.CheckPath(transform.position, movePosition))
+                {
+                    SetCharacterMove(movePosition);
+                } 
             }
         }
     }
@@ -67,7 +70,10 @@ public class NpcAIConvertCpt : NpcAISundryCpt,TextInfoHandler.ICallBack
             if (CheckCharacterIsArrive())
             {
                 movePosition = innHandler.GetRandomInnPositon();
-                SetCharacterMove(movePosition);
+                if (CheckUtil.CheckPath(transform.position, movePosition))
+                {
+                    SetCharacterMove(movePosition);
+                }
             }
         }
     }

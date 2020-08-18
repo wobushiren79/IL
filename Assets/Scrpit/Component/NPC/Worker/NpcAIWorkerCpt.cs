@@ -241,7 +241,9 @@ public class NpcAIWorkerCpt : BaseNpcAI
             {
                 //闲逛
                 Vector3 movePosition = innHandler.GetRandomInnPositon();
-                SetCharacterMove(movePosition);
+                bool canGo = CheckUtil.CheckPath(transform.position, movePosition);
+                if(canGo)
+                  SetCharacterMove(movePosition);
             }
             StartCoroutine(CoroutineForIdle());
         }
