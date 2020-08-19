@@ -291,13 +291,17 @@ public class ControlForBuildCpt : BaseControl
             return;
         if (Input.GetButtonDown(InputInfo.Confirm))
         {
+            audioHandler.PlaySound(AudioSoundEnum.Set);
+        }
+        if (Input.GetButtonDown(InputInfo.Confirm)|| Input.GetButton(InputInfo.Confirm))
+        {
             //防止误触右边的UI
             if (UnityEngine.Screen.width - Input.mousePosition.x - 400 < 0)
                 return;
             //能建造
             if (isCanBuild)
             {
-                audioHandler.PlaySound(AudioSoundEnum.Set);
+                //audioHandler.PlaySound(AudioSoundEnum.Set);
                 //镜头正对建造点
                 //SetFollowPosition(buildPosition);
                 //建筑物位置设置
@@ -399,7 +403,11 @@ public class ControlForBuildCpt : BaseControl
             int innHeight = gameDataManager.gameData.GetInnBuildData().innHeight;
             if ((startPosition.x==0|| startPosition.x== (innWidth - 1))||  startPosition.y == (innHeight - 1))
             {
-                toastManager.ToastHint(GameCommonInfo.GetUITextById(1023));
+                //只有一次点击时才出提示
+                if(Input.GetButtonDown(InputInfo.Confirm))
+                {
+                    toastManager.ToastHint(GameCommonInfo.GetUITextById(1023));
+                }
             }
             else
             {

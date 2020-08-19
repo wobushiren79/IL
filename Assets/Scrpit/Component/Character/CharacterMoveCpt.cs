@@ -107,6 +107,8 @@ public class CharacterMoveCpt : BaseMonoBehaviour
             navMeshAgent.updatePosition = true;
             // NavMesh.avoidancePredictionTime = 5f;
             navMeshAgent.speed = moveSpeed;
+            navMeshAgent.angularSpeed = float.MaxValue;
+            navMeshAgent.acceleration = float.MaxValue;
             canGo = navMeshAgent.SetDestination(position);
           
         }

@@ -428,7 +428,7 @@ public class InnHandler : BaseMonoBehaviour, IBaseObserver
         //根据心情评价客栈 前提订单里有他
         InnPraise(order.innEvaluation.GetPraise());
         //记录+1
-        gameDataManager.gameData.AddMenuSellNumber(1, order.foodData.id, payMoneyL, payMoneyM, payMoneyS, out bool isMenuLevelUp);
+        gameDataManager.gameData.AddMenuSellNumber(innFoodManager, 1, order.foodData.id, payMoneyL, payMoneyM, payMoneyS, out bool isMenuLevelUp);
         if (isMenuLevelUp)
         {
             Sprite spFoodIcon = innFoodManager.GetFoodSpriteByName(order.foodData.icon_key);

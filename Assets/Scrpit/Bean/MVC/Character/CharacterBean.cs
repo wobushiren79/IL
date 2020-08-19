@@ -406,11 +406,11 @@ public class CharacterBean
     public float CalculationAccostTalkTime(GameItemsManager gameItemsManager)
     {
         //默认10秒
-        float talkTime = 10.1f;
+        float talkTime = 6.1f;
         //获取数据
         GetAttributes(gameItemsManager,
         out CharacterAttributesBean totalAttributes, out CharacterAttributesBean selfAttributes, out CharacterAttributesBean equipAttributes);
-        talkTime = 10.1f - totalAttributes.charm * 0.1f;
+        talkTime = 6.1f - totalAttributes.charm * 0.06f;
         //数据修正 
         if (talkTime <= 0.1f)
         {
@@ -478,11 +478,11 @@ public class CharacterBean
     /// <returns></returns>
     public float CalculationWaiterCleanTime(GameItemsManager gameItemsManager)
     {
-        float cleanTime = 10;
+        float cleanTime = 6;
         //获取数据
         GetAttributes(gameItemsManager,
         out CharacterAttributesBean totalAttributes, out CharacterAttributesBean selfAttributes, out CharacterAttributesBean equipAttributes);
-        cleanTime -= (totalAttributes.speed * 0.1f);
+        cleanTime -= (totalAttributes.speed * 0.06f);
         if (cleanTime <= 0.1f)
         {
             cleanTime = 0.1f;
@@ -541,8 +541,8 @@ public class CharacterBean
         GetAttributes(gameItemsManager,
         out CharacterAttributesBean totalAttributes, out CharacterAttributesBean selfAttributes, out CharacterAttributesBean equipAttributes);
 
-        float fightTime = 10;
-        fightTime -= (totalAttributes.force * 0.1f);
+        float fightTime = 6;
+        fightTime -= (totalAttributes.force * 0.01f);
         if (fightTime < 0.1f)
         {
             fightTime = 0.1f;

@@ -62,6 +62,7 @@ public class ItemTownStoreForGoodsCpt : ItemTownStoreCpt, DialogView.IDialogCall
         SetName(itemsInfo.name);
         SetContent(itemsInfo.content);
         SetOwn();
+        SetGetNumber(storeInfo.get_number);
         int cookBookNumber = itemsInfo.items_type == (int)GeneralEnum.Menu ? 1 : 0;
         SetAttribute(
             cookBookNumber,
@@ -249,8 +250,16 @@ public class ItemTownStoreForGoodsCpt : ItemTownStoreCpt, DialogView.IDialogCall
             gameDataManager.gameData.PayMoney(storeInfo.price_l * number, storeInfo.price_m * number, storeInfo.price_s * number);
             gameDataManager.gameData.PayGuildCoin(storeInfo.guild_coin * number);
             gameDataManager.gameData.PayTrophy(storeInfo.trophy_elementary * number, storeInfo.trophy_intermediate * number, storeInfo.trophy_advanced * number, storeInfo.trophy_legendary * number);
-            toastManager.ToastHint(ivIcon.sprite, string.Format(GameCommonInfo.GetUITextById(1010), itemsInfo.name+"x"+ number));
-            gameDataManager.gameData.AddItemsNumber(storeInfo.mark_id, number);
+
+            //加上获取数量
+            int getNumber = 1;
+            if (storeInfo.get_number != 0)
+            {
+                getNumber = storeInfo.get_number;
+            }
+            gameDataManager.gameData.AddItemsNumber(storeInfo.mark_id, number * getNumber);
+
+            toastManager.ToastHint(ivIcon.sprite, string.Format(GameCommonInfo.GetUITextById(1010), itemsInfo.name + "x" + (number * getNumber)));
             RefreshUI();
         }
     }

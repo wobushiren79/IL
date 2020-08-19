@@ -289,7 +289,7 @@ public class GameDataBean
     /// </summary>
     /// <param name="number"></param>
     /// <param name="menuId"></param>
-    public void AddMenuSellNumber(long number, long menuId, long priceL, long priceM, long priceS, out bool isMenuLevelUp)
+    public void AddMenuSellNumber(InnFoodManager innFoodManager, long number, long menuId, long priceL, long priceM, long priceS, out bool isMenuLevelUp)
     {
         isMenuLevelUp = false;
         for (int i = 0; i < listMenu.Count; i++)
@@ -297,7 +297,7 @@ public class GameDataBean
             MenuOwnBean itemData = listMenu[i];
             if (itemData.menuId == menuId)
             {
-                itemData.SellMenu(number, priceL, priceM, priceS, out bool isLevelUp);
+                itemData.SellMenu(innFoodManager,number, priceL, priceM, priceS, out bool isLevelUp);
                 return;
             }
         }

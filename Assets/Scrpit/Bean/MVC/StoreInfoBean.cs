@@ -14,6 +14,7 @@ public class StoreInfoBean : BaseBean
     public int mark_type;
     public int mark_x;
     public int mark_y;
+    public int get_number;//获的 购买一次获得的数量
     public long price_l;
     public long price_m;
     public long price_s;

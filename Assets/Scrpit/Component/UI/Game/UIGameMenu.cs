@@ -93,7 +93,7 @@ public class UIGameMenu : UIGameComponent
             if (menuInfo == null)
                 continue;
             GameObject objModel = null;
-            MenuLevelTypeEnum level = itemData.GetMenuLevel(out string levelStr, out int nextLevelExp);
+            MenuLevelTypeEnum level = itemData.GetMenuLevel(uiGameManager.innFoodManager, out string levelStr, out int nextLevelExp);
             if (level ==  MenuLevelTypeEnum.Star)
             {
                 objModel = objFoodItemModelFor1;

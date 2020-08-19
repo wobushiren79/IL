@@ -70,37 +70,25 @@ public class MenuOwnBean
     /// 卖出菜品
     /// </summary>
     /// <param name="number"></param>
-    public void SellMenu(long number, long priceL, long priceM, long priceS, out bool isLevelUp)
+    public void SellMenu(InnFoodManager innFoodManager, long number, long priceL, long priceM, long priceS, out bool isLevelUp)
     {
         sellNumber += number;
         sellMoneyL += priceL;
         sellMoneyM += priceM;
         sellMoneyS += priceS;
-        AddLevelExp((int)number, out isLevelUp);
+        AddLevelExp(innFoodManager,(int)number, out isLevelUp);
     }
 
     /// <summary>
     /// 增加经验
     /// </summary>
     /// <param name="exp"></param>
-    public void AddLevelExp(int exp, out bool isLevelUp)
+    public void AddLevelExp(InnFoodManager innFoodManager, int exp, out bool isLevelUp)
     {
         menuExp += exp;
         isLevelUp = false;
-        int levelExp = 0;
         MenuLevelTypeEnum menuLevel = GetMenuLevel();
-        if (menuLevel == MenuLevelTypeEnum.Init)
-        {
-            GameCommonInfo.baseDataController.GetBaseData(BaseDataTypeEnum.MenuForLevelUpExp1, out levelExp);
-        }
-        else if (menuLevel == MenuLevelTypeEnum.Star)
-        {
-            GameCommonInfo.baseDataController.GetBaseData(BaseDataTypeEnum.MenuForLevelUpExp2, out levelExp);
-        }
-        else if (menuLevel == MenuLevelTypeEnum.Moon)
-        {
-            GameCommonInfo.baseDataController.GetBaseData(BaseDataTypeEnum.MenuForLevelUpExp3, out levelExp);
-        }
+        int levelExp =  GetMenuLevelUpExp(innFoodManager, menuLevel);
 
         if (levelExp == 0)
         {
@@ -115,6 +103,38 @@ public class MenuOwnBean
                 isLevelUp = true;
             }
         }
+    }
+
+    public int GetMenuLevelUpExp(InnFoodManager innFoodManager, MenuLevelTypeEnum menuLevel)
+    {
+        int levelExp = 0;
+        if (menuLevel == MenuLevelTypeEnum.Init)
+        {
+            GameCommonInfo.baseDataController.GetBaseData(BaseDataTypeEnum.MenuForLevelUpExp1, out levelExp);
+        }
+        else if (menuLevel == MenuLevelTypeEnum.Star)
+        {
+            GameCommonInfo.baseDataController.GetBaseData(BaseDataTypeEnum.MenuForLevelUpExp2, out levelExp);
+        }
+        else if (menuLevel == MenuLevelTypeEnum.Moon)
+        {
+            GameCommonInfo.baseDataController.GetBaseData(BaseDataTypeEnum.MenuForLevelUpExp3, out levelExp);
+        }
+        MenuInfoBean menuInfo = innFoodManager.GetFoodDataById(menuId);
+        //不同稀有度经验不同
+        if (menuInfo.rarity == 0)
+        {
+            levelExp = levelExp * 1;
+        }
+        else if (menuInfo.rarity == 1)
+        {
+            levelExp = levelExp * 3;
+        }
+        else if (menuInfo.rarity == 2)
+        {
+            levelExp = levelExp * 5;
+        }
+        return levelExp;
     }
 
     /// <summary>
@@ -157,33 +177,15 @@ public class MenuOwnBean
     /// 获取菜品等级
     /// </summary>
     /// <returns></returns>
-    public MenuLevelTypeEnum GetMenuLevel(out string levelStr, out int nextLevelExp)
+    public MenuLevelTypeEnum GetMenuLevel(InnFoodManager innFoodManager, out string levelStr, out int nextLevelExp)
     {
         levelStr = "???";
-        nextLevelExp = 0;
         MenuLevelTypeEnum menuLevel = GetMenuLevel();
         levelStr = MenuLevelTypeEnumTools.GetMenuLevelStr(menuLevel);
-        if (menuLevel == MenuLevelTypeEnum.Init)
-        {
-            GameCommonInfo.baseDataController.GetBaseData(BaseDataTypeEnum.MenuForLevelUpExp1, out nextLevelExp);
-        }
-        else if (menuLevel == MenuLevelTypeEnum.Star)
-        {
-            GameCommonInfo.baseDataController.GetBaseData(BaseDataTypeEnum.MenuForLevelUpExp2, out nextLevelExp);
-        }
-        else if (menuLevel == MenuLevelTypeEnum.Moon)
-        {
-            GameCommonInfo.baseDataController.GetBaseData(BaseDataTypeEnum.MenuForLevelUpExp3, out nextLevelExp);
-        }
-        else if (menuLevel == MenuLevelTypeEnum.Sun)
-        {
-        }
-        else
-        {
-
-        }
+        nextLevelExp =  GetMenuLevelUpExp(innFoodManager, menuLevel);
         return menuLevel;
     }
+
     public MenuLevelTypeEnum GetMenuLevel()
     {
         return (MenuLevelTypeEnum)menuLevel;

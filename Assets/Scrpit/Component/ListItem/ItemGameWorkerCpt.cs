@@ -599,9 +599,37 @@ public class ItemGameWorkerCpt : ItemGameBaseCpt, IRadioButtonCallBack, DialogVi
         }
         else
         {
-            //如果是确认
+            //如果是确认 开除员工
+            //返还装备
+            if (characterData.equips.maskId != 0)
+                gameDataManager.gameData.AddItemsNumber(characterData.equips.maskId, 1);
+             if (characterData.equips.maskTFId != 0)
+                gameDataManager.gameData.AddItemsNumber(characterData.equips.maskTFId, 1);
+
+            if (characterData.equips.handId != 0)
+                gameDataManager.gameData.AddItemsNumber(characterData.equips.handId, 1);
+            if (characterData.equips.handTFId != 0)
+                gameDataManager.gameData.AddItemsNumber(characterData.equips.handTFId, 1);
+
+            if (characterData.equips.hatId != 0)
+                gameDataManager.gameData.AddItemsNumber(characterData.equips.hatId, 1);
+            if (characterData.equips.hatTFId != 0)
+                gameDataManager.gameData.AddItemsNumber(characterData.equips.hatTFId, 1);
+
+            if (characterData.equips.clothesId != 0)
+                gameDataManager.gameData.AddItemsNumber(characterData.equips.clothesId, 1);
+            if (characterData.equips.clothesTFId != 0)
+                gameDataManager.gameData.AddItemsNumber(characterData.equips.clothesTFId, 1);
+
+            if (characterData.equips.shoesId != 0)
+                gameDataManager.gameData.AddItemsNumber(characterData.equips.shoesId, 1);
+            if (characterData.equips.shoesTFId != 0)
+                gameDataManager.gameData.AddItemsNumber(characterData.equips.shoesTFId, 1);
+
             toastManager.ToastHint(string.Format(GameCommonInfo.GetUITextById(1081), characterData.baseInfo.name));
             gameDataManager.gameData.RemoveWorker(characterData);
+
+
             transform.DOScale(Vector3.zero, 0.5f).OnComplete(delegate
             {
                 Destroy(gameObject);

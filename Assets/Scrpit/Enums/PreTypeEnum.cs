@@ -108,13 +108,13 @@ public class PreTypeEnumTools : DataTools
     /// <param name="gameData"></param>
     /// <param name="data"></param>
     /// <returns></returns>
-    public static bool CheckIsAllPre(GameItemsManager gameItemsManager, IconDataManager iconDataManager, CharacterDressManager characterDressManager, InnFoodManager innFoodManager,NpcInfoManager npcInfoManager, GameDataBean gameData, CharacterBean characterData, string data, out string reason)
+    public static bool CheckIsAllPre(GameItemsManager gameItemsManager, IconDataManager iconDataManager, CharacterDressManager characterDressManager, InnFoodManager innFoodManager, NpcInfoManager npcInfoManager, GameDataBean gameData, CharacterBean characterData, string data, out string reason)
     {
         List<PreTypeBean> listPreData = GetListPreData(data);
         reason = "";
         foreach (var itemPreData in listPreData)
         {
-            GetPreDetails(itemPreData, gameData, characterData, iconDataManager, gameItemsManager, characterDressManager, innFoodManager,npcInfoManager, false);
+            GetPreDetails(itemPreData, gameData, characterData, iconDataManager, gameItemsManager, characterDressManager, innFoodManager, npcInfoManager, false);
             if (!itemPreData.isPre)
             {
                 reason = itemPreData.preFailStr;
@@ -138,7 +138,7 @@ public class PreTypeEnumTools : DataTools
     /// </summary>
     /// <param name="rewardType"></param>
     /// <returns></returns>
-    public static PreTypeBean GetPreDetails(PreTypeBean preTypeData, GameDataBean gameData, CharacterBean characterData, IconDataManager iconDataManager, GameItemsManager gameItemsManager, CharacterDressManager characterDressManager, InnFoodManager innFoodManager,NpcInfoManager npcInfoManager, bool isComplete)
+    public static PreTypeBean GetPreDetails(PreTypeBean preTypeData, GameDataBean gameData, CharacterBean characterData, IconDataManager iconDataManager, GameItemsManager gameItemsManager, CharacterDressManager characterDressManager, InnFoodManager innFoodManager, NpcInfoManager npcInfoManager, bool isComplete)
     {
         switch (preTypeData.dataType)
         {
@@ -237,9 +237,9 @@ public class PreTypeEnumTools : DataTools
         }
         return preTypeData;
     }
-    public static PreTypeBean GetPreDetails(PreTypeBean preTypeData, GameDataBean gameData, IconDataManager iconDataManager, GameItemsManager gameItemsManager, CharacterDressManager characterDressManager, InnFoodManager innFoodManager, NpcInfoManager npcInfoManager,bool isComplete)
+    public static PreTypeBean GetPreDetails(PreTypeBean preTypeData, GameDataBean gameData, IconDataManager iconDataManager, GameItemsManager gameItemsManager, CharacterDressManager characterDressManager, InnFoodManager innFoodManager, NpcInfoManager npcInfoManager, bool isComplete)
     {
-        return GetPreDetails(preTypeData, gameData, null, iconDataManager, gameItemsManager, characterDressManager, innFoodManager, npcInfoManager,isComplete);
+        return GetPreDetails(preTypeData, gameData, null, iconDataManager, gameItemsManager, characterDressManager, innFoodManager, npcInfoManager, isComplete);
     }
     public static PreTypeBean GetPreDetails(PreTypeBean preTypeData, GameDataBean gameData, IconDataManager iconDataManager, GameItemsManager gameItemsManager, CharacterDressManager characterDressManager, InnFoodManager innFoodManager, NpcInfoManager npcInfoManager)
     {
@@ -1103,6 +1103,27 @@ public class PreTypeEnumTools : DataTools
                     long moneyS = long.Parse(itemData.data);
                     gameData.PayMoney(0, 0, moneyS);
                     break;
+                case PreTypeEnum.PayGuildCoin:
+                    long guildCoin = long.Parse(itemData.data);
+                    gameData.PayGuildCoin(guildCoin);
+                    break;
+                case PreTypeEnum.PayTrophyElementary:
+                    long trophyElementary = long.Parse(itemData.data);
+                    gameData.PayTrophy(trophyElementary, 0, 0, 0);
+                    break;
+                case PreTypeEnum.PayTrophyIntermediate:
+                    long trophyIntermediate = long.Parse(itemData.data);
+                    gameData.PayTrophy(0, trophyIntermediate, 0, 0);
+                    break;
+                case PreTypeEnum.PayTrophyAdvanced:
+                    long trophyAdvanced = long.Parse(itemData.data);
+                    gameData.PayTrophy(0, 0, trophyAdvanced, 0);
+                    break;
+                case PreTypeEnum.PayTrophyLegendary:
+                    long trophyLegendary = long.Parse(itemData.data);
+                    gameData.PayTrophy(0, 0, 0, trophyLegendary);
+                    break;
+
                 case PreTypeEnum.PayItems:
                     long[] listItems = StringUtil.SplitBySubstringForArrayLong(itemData.data, ',');
                     long itemsId = listItems[0];

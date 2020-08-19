@@ -265,7 +265,7 @@ public class InnAttributesBean
         }
         else if (customerType == CustomerTypeEnum.Team)
         {
-            rate = 0.32f * rateRichness + 0.64f * ratePraise + 0.04f;
+            rate = 0.32f * rateRichness + 0.32f * ratePraise + 0.32f * rateAesthetics + 0.04f;
         }
         else
         {
@@ -298,7 +298,7 @@ public class InnAttributesBean
         if (rateRichness > 1)
             rateRichness = 1;
         rate = 0.32f * rateRichness + 0.32f * ratePraise + 0.32f * rateAesthetics + 0.04f;
-        rate = rate * 0.15f;
+        rate = rate * 0.1f;
         return rate;
     }
 }

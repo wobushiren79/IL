@@ -21,12 +21,15 @@ public class ItemTownStoreCpt : ItemGameBaseCpt
     public GameObject objTrophyLegendary;
     public Text tvTrophyLegendary;
 
+    public Text tvGetNumber;
+
     public RectTransform rtIcon;
     public Image ivIcon;
     public Text tvName;
     public Text tvContent;
     public Text tvOwn;
     public Button btSubmit;
+
 
     public StoreInfoBean storeInfo;
 
@@ -120,6 +123,23 @@ public class ItemTownStoreCpt : ItemGameBaseCpt
         if (tvOwn == null)
             return;
         tvOwn.text = (GameCommonInfo.GetUITextById(4001) + "\n" + GetUIManager<UIGameManager>().gameDataManager.gameData.GetItemsNumber(storeInfo.mark_id));
+    }
+
+    /// <summary>
+    /// 设置获取数量
+    /// </summary>
+    /// <param name="number"></param>
+    public virtual void SetGetNumber(int number)
+    {
+        if (tvGetNumber != null && number !=0 )
+        {
+            tvGetNumber.gameObject.SetActive(true);
+            tvGetNumber.text = "x" + number;
+        }
+        else
+        {
+            tvGetNumber.gameObject.SetActive(false);
+        }
     }
 
     /// <summary>

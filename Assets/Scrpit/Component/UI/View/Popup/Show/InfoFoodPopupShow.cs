@@ -23,6 +23,7 @@ public class InfoFoodPopupShow : PopupShowView
     protected GameDataManager gameDataManager;
     protected IconDataManager iconDataManager;
     protected GameItemsManager gameItemsManager;
+    protected InnFoodManager innFoodManager;
 
     public MenuOwnBean ownData;
     public MenuInfoBean foodData;
@@ -33,6 +34,7 @@ public class InfoFoodPopupShow : PopupShowView
         gameDataManager = Find<GameDataManager>(ImportantTypeEnum.GameDataManager);
         gameItemsManager = Find<GameItemsManager>(ImportantTypeEnum.GameItemsManager);
         iconDataManager = Find<IconDataManager>(ImportantTypeEnum.UIManager);
+        innFoodManager = Find<InnFoodManager>(ImportantTypeEnum.FoodManager);
     }
 
     public void SetData(MenuOwnBean ownData, MenuInfoBean foodData)
@@ -84,7 +86,7 @@ public class InfoFoodPopupShow : PopupShowView
     /// </summary>
     public void SetLevel(MenuOwnBean ownData)
     {
-        MenuLevelTypeEnum level = ownData.GetMenuLevel(out string levelStr, out int nextLevelExp);
+        MenuLevelTypeEnum level = ownData.GetMenuLevel(innFoodManager, out string levelStr, out int nextLevelExp);
         Sprite spIcon = ownData.GetMenuLevelIcon(iconDataManager);
         if (spIcon == null)
         {

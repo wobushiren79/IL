@@ -63,6 +63,7 @@ public class ItemTownCerpenterCpt : ItemTownStoreCpt, DialogView.IDialogCallBack
         SetAttribute(type, aesthetics);
         SetContent(content);
         SetOwn(type);
+        SetGetNumber(storeInfo.get_number);
         SetPopup(content);
     }
 
@@ -223,10 +224,16 @@ public class ItemTownCerpenterCpt : ItemTownStoreCpt, DialogView.IDialogCallBack
             gameDataManager.gameData.PayMoney(storeInfo.price_l * number, storeInfo.price_m * number, storeInfo.price_s * number);
             gameDataManager.gameData.PayGuildCoin(storeInfo.guild_coin * number);
             gameDataManager.gameData.PayTrophy(storeInfo.trophy_elementary * number, storeInfo.trophy_intermediate * number, storeInfo.trophy_advanced * number, storeInfo.trophy_legendary * number);
-
-            gameDataManager.gameData.AddBuildNumber(buildItemData.id, number);
+            
+            //加上获取数量
+            int getNumber = 1;
+            if (storeInfo.get_number != 0)
+            {
+                getNumber = storeInfo.get_number;
+            }
+            gameDataManager.gameData.AddBuildNumber(buildItemData.id, number * getNumber);
             RefreshUI();
-            string  toastStr = string.Format(GameCommonInfo.GetUITextById(1010), buildItemData.name+"x"+ number);
+            string  toastStr = string.Format(GameCommonInfo.GetUITextById(1010), buildItemData.name+"x"+ (number * getNumber));
             toastManager.ToastHint(ivIcon.sprite, toastStr);
         }
         else 
@@ -269,9 +276,16 @@ public class ItemTownCerpenterCpt : ItemTownStoreCpt, DialogView.IDialogCallBack
             }
             else
             {
-                gameDataManager.gameData.AddBuildNumber(buildItemData.id, 1);
+                //加上获取数量
+                int getNumber = 1;
+                if (storeInfo.get_number != 0)
+                {
+                    getNumber = storeInfo.get_number;
+                }
+                gameDataManager.gameData.AddBuildNumber(buildItemData.id, 1 * getNumber);
+
                 RefreshUI();
-                toastStr = string.Format(GameCommonInfo.GetUITextById(1010), buildItemData.name);
+                toastStr = string.Format(GameCommonInfo.GetUITextById(1010), buildItemData.name+"x"+ 1 * getNumber);
             }
             toastManager.ToastHint(ivIcon.sprite, toastStr);
         }

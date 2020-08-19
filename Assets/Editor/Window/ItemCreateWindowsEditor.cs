@@ -473,7 +473,8 @@ public class ItemCreateWindowsEditor : EditorWindow, StoreInfoManager.ICallBack
                 GUILayout.Label("名字：" + buildInfo.name, GUILayout.Width(250), GUILayout.Height(20));
             }
         }
-
+        EditorUI.GUIText("获得数量");
+        storeInfo.get_number = EditorUI.GUIEditorText(storeInfo.get_number,50);
         GUILayout.Label("价格--", GUILayout.Width(50), GUILayout.Height(20));
         GUILayout.Label("LMS：", GUILayout.Width(50), GUILayout.Height(20));
         storeInfo.price_l = long.Parse(EditorGUILayout.TextArea(storeInfo.price_l + "", GUILayout.Width(100), GUILayout.Height(20)));
