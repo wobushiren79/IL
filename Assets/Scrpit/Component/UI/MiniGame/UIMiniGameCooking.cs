@@ -31,8 +31,8 @@ public class UIMiniGameCooking : UIGameComponent
     private ICallBack mCallBack;
 
     private bool mIsPlay = false;
-    private int mButtonNumber = 60;
-    private int mButtonPosition = 0;
+    protected int buttonNumber = 45;
+    protected int buttonPosition = 0;
 
     private MiniGameCookingPhaseTypeEnum mPhaseType = MiniGameCookingPhaseTypeEnum.Null;
 
@@ -174,7 +174,7 @@ public class UIMiniGameCooking : UIGameComponent
                 listRandomType.Add(ItemMiniGameCookingButtonCpt.MiniGameCookingButtonTypeEnum.Four);
             }
         }
-        for (int i = 0; i < mButtonNumber; i++)
+        for (int i = 0; i < buttonNumber; i++)
         {
             ItemMiniGameCookingButtonCpt.MiniGameCookingButtonTypeEnum randomType = RandomUtil.GetRandomDataByList(listRandomType);
             CreateCookingButtonItem(i, randomType);
@@ -202,7 +202,7 @@ public class UIMiniGameCooking : UIGameComponent
     public IEnumerator SettleGame()
     {
         mIsPlay = false;
-        mButtonPosition = 0;
+        buttonPosition = 0;
         int correctNumber = 0;
         int errorNumber = 0;
         int unfinishNumber = 0;
@@ -262,12 +262,12 @@ public class UIMiniGameCooking : UIGameComponent
     private void ButtonClick(ItemMiniGameCookingButtonCpt.MiniGameCookingButtonTypeEnum type)
     {
         //当第一次点击后开始计时
-        if (mButtonPosition == 0)
+        if (buttonPosition == 0)
         {
             //倒计时开始计时
             StartCoroutine(CoroutineForTiming());
         }
-        ItemMiniGameCookingButtonCpt itemButton= mListButton[mButtonPosition];
+        ItemMiniGameCookingButtonCpt itemButton= mListButton[buttonPosition];
         if(itemButton.buttonType== type)
         {
             uiGameManager.audioHandler.PlaySound(AudioSoundEnum.Correct);
@@ -281,14 +281,14 @@ public class UIMiniGameCooking : UIGameComponent
         }
         //取消选中状态
         itemButton.SetSelectedStatus(false);
-        mButtonPosition++;
-        if (mButtonPosition >= mButtonNumber)
+        buttonPosition++;
+        if (buttonPosition >= buttonNumber)
         {
             StartCoroutine(SettleGame());
             return;
         }
         //设置选中状态
-        mListButton[mButtonPosition].SetSelectedStatus(true);
+        mListButton[buttonPosition].SetSelectedStatus(true);
     }
 
     /// <summary>
@@ -306,19 +306,19 @@ public class UIMiniGameCooking : UIGameComponent
         uiGameManager.audioHandler.PlaySound(AudioSoundEnum.CountDownStart);
         tvCountDown.text = GameCommonInfo.GetUITextById(252);
         tvCountDown.transform.DOScale(new Vector3(3, 3, 3), 0.5f).From().SetEase(Ease.OutBack);
-        yield return new WaitForSeconds(0.6f);
+        yield return new WaitForSeconds(0.7f);
         uiGameManager.audioHandler.PlaySound(AudioSoundEnum.CountDownStart);
         tvCountDown.text = GameCommonInfo.GetUITextById(253);
         tvCountDown.transform.DOScale(new Vector3(3, 3, 3), 0.5f).From().SetEase(Ease.OutBack);
-        yield return new WaitForSeconds(0.6f);
+        yield return new WaitForSeconds(0.7f);
         uiGameManager.audioHandler.PlaySound(AudioSoundEnum.CountDownStart);
         tvCountDown.text = GameCommonInfo.GetUITextById(254);
         tvCountDown.transform.DOScale(new Vector3(3, 3, 3), 0.5f).From().SetEase(Ease.OutBack);
-        yield return new WaitForSeconds(0.6f);
+        yield return new WaitForSeconds(0.7f);
         uiGameManager.audioHandler.PlaySound(AudioSoundEnum.CountDownEnd);
         tvCountDown.text = GameCommonInfo.GetUITextById(255);
         tvCountDown.transform.DOScale(new Vector3(3, 3, 3), 0.5f).From().SetEase(Ease.OutBack);
-        yield return new WaitForSeconds(0.6f);
+        yield return new WaitForSeconds(0.7f);
         objCountDown.SetActive(false);
         mIsPlay = true;
     }

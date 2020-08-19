@@ -25,7 +25,7 @@ public class ItemTownBankExchangeCpt : ItemGameBaseCpt, DialogView.IDialogCallBa
     public Sprite spRateUnbiased;
 
     //交换汇率
-    public float exchangeRate = 1;
+    public double exchangeRate = 1;
     public ExchangeMoneyEnum exchangeType = ExchangeMoneyEnum.SToM;
 
     private void Start()
@@ -75,8 +75,7 @@ public class ItemTownBankExchangeCpt : ItemGameBaseCpt, DialogView.IDialogCallBa
     /// <param name="exchangeRate"></param>
     public void SetRate(int exchangeOld, int exchangeNew)
     {
-        this.exchangeRate = (float)exchangeOld / (float)exchangeNew;
-
+        this.exchangeRate = decimal.ToDouble((decimal)exchangeOld / (decimal)exchangeNew);
         Sprite spRate;
         Color colorRate = Color.gray;
         tvRate.text = exchangeOld + ":" + exchangeNew;
@@ -182,7 +181,7 @@ public class ItemTownBankExchangeCpt : ItemGameBaseCpt, DialogView.IDialogCallBa
                 valueInt = outInt;
             }
         }
-        tvOldMoney.text = Mathf.CeilToInt(exchangeRate * valueInt) + "";
+        tvOldMoney.text = Mathf.CeilToInt((float)(exchangeRate * valueInt)) + "";
     }
 
     /// <summary>

@@ -235,6 +235,8 @@ public class NpcAICustomerForGuestTeamCpt : NpcAICustomerCpt
     {
         base.ChangeMood(mood);
         //通知其他团队成员
+        if (orderForCustomer == null|| orderForCustomer.innEvaluation == null)
+            return;
         if (orderForCustomer.innEvaluation.mood <= 0 && isNotice)
         {
             List<NpcAICustomerForGuestTeamCpt> listTeamMember = GetGuestTeam();

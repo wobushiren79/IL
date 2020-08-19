@@ -54,16 +54,16 @@ public class CharacterMoveCpt : BaseMonoBehaviour
     {
         if (!isManualMove && navMeshAgent != null)
         {
-            if (navMeshAgent.isActiveAndEnabled && Mathf.Abs(navMeshAgent.remainingDistance) > 0.1f)
+            if (navMeshAgent.isActiveAndEnabled && Mathf.Abs(navMeshAgent.remainingDistance) > 0.001f)
             {
                 SetAnimStatus(1);
-                //Move(navMeshAgent.nextPosition);
+                Move(navMeshAgent.nextPosition);
                 //转向
                 if (objCharacterBody != null)
                 {
                     Vector3 theScale = objCharacterBody.transform.localScale;
                     float offsetMove = objCharacterBody.transform.position.x - mLastPosition.x;
-                    if (Mathf.Abs(offsetMove)>=0.001f)
+                    if (Mathf.Abs(offsetMove) >= 0.001f)
                     {
                         if (offsetMove < 0)
                         {
@@ -104,13 +104,11 @@ public class CharacterMoveCpt : BaseMonoBehaviour
             navMeshAgent.isStopped = false;
             navMeshAgent.updateRotation = false;
             navMeshAgent.updateUpAxis = false;
-            navMeshAgent.updatePosition = true;
-            // NavMesh.avoidancePredictionTime = 5f;
+            navMeshAgent.updatePosition = false;
             navMeshAgent.speed = moveSpeed;
             navMeshAgent.angularSpeed = float.MaxValue;
             navMeshAgent.acceleration = float.MaxValue;
             canGo = navMeshAgent.SetDestination(position);
-          
         }
         return canGo;
     }
@@ -231,7 +229,7 @@ public class CharacterMoveCpt : BaseMonoBehaviour
             theScale.x = Mathf.Abs(theScale.x);
         }
         objCharacterBody.transform.localScale = theScale;
-        //transform.position = movePosition;
+        navMeshAgent.transform.position = movePosition;
         BoundaryMove();
     }
 
@@ -302,7 +300,7 @@ public class CharacterMoveCpt : BaseMonoBehaviour
         {
             return false;
         }
-        if (navMeshAgent != null && navMeshAgent.isActiveAndEnabled && Mathf.Abs(navMeshAgent.remainingDistance) > 0.1)
+        if (navMeshAgent != null && navMeshAgent.isActiveAndEnabled && Mathf.Abs(navMeshAgent.remainingDistance) > 0.001f)
         {
             return false;
         }
