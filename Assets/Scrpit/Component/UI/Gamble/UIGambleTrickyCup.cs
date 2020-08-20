@@ -10,6 +10,8 @@ public class UIGambleTrickyCup : UIBaseGamble<GambleTrickyCupBean, GambleTrickyC
 
     public override void OpenUI()
     {
+        if (gambleBuilder)
+            gambleBuilder.CleanAllCup();
         base.OpenUI();
         //根据等级设置杯子数量
         int level = int.Parse(remarkData);
@@ -17,8 +19,8 @@ public class UIGambleTrickyCup : UIBaseGamble<GambleTrickyCupBean, GambleTrickyC
         {
             cupNumber = 2 + level,
             changeNumber = level * 10,
-            winRewardRate = level*0.5f +1.5f,
-            betMaxForMoneyS = 100 * ((long)Math.Pow(10, level - 1)) 
+            winRewardRate = level * 0.5f + 1.5f,
+            betMaxForMoneyS = 100 * ((long)Math.Pow(10, level - 1))
         };
         SetData(gambleData);
         gambleHandler.InitGame(gambleData);

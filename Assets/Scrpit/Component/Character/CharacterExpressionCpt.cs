@@ -14,6 +14,7 @@ public class CharacterExpressionCpt : BaseMonoBehaviour
         Surprise=5,
         Fret=6,
         Dead=7,
+        Doubt=8
     }
 
     [Header("表情图标")]
@@ -24,6 +25,7 @@ public class CharacterExpressionCpt : BaseMonoBehaviour
     public Sprite spSurprise;
     public Sprite spFret;
     public Sprite spDead;
+    public Sprite spDoubt;
 
     [Header("控件")]
     public SpriteRenderer spExpression;
@@ -64,6 +66,9 @@ public class CharacterExpressionCpt : BaseMonoBehaviour
             case CharacterExpressionEnum.Dead:
                 spIcon = spDead;
                 break;
+            case CharacterExpressionEnum.Doubt:
+                spIcon = spDoubt;
+                break;
         }
         if (spIcon == null)
             return;
@@ -83,6 +88,14 @@ public class CharacterExpressionCpt : BaseMonoBehaviour
                 StartCoroutine(TimeDes(desTime));
             }
         });
+    }
+
+    public void CancelExpression()
+    {
+        if (spExpression != null)
+        {
+            spExpression.gameObject.SetActive(false);
+        }
     }
 
     public IEnumerator TimeDes(float desTime)

@@ -263,6 +263,11 @@ public class CharacterUICpt : BaseMonoBehaviour
     /// <param name="clothesId"></param>
     public void SetClothes(long clothesId)
     {
+        //皇帝的新衣
+        if (clothesId == 219999)
+        {
+            clothesId = 0;
+        }
         if (ivClothes == null)
             return;
         ItemsInfoBean itemsInfo = gameItemsManager.GetItemsById(clothesId);
@@ -289,6 +294,11 @@ public class CharacterUICpt : BaseMonoBehaviour
     /// <param name="shoesId"></param>
     public void SetShoes(long shoesId)
     {
+        //皇帝的新衣
+        if (shoesId == 319999)
+        {
+            shoesId = 0;
+        }
         if (ivShoes == null)
             return;
         ItemsInfoBean itemsInfo = gameItemsManager.GetItemsById(shoesId);
@@ -315,6 +325,11 @@ public class CharacterUICpt : BaseMonoBehaviour
     /// <param name="hatId"></param>
     public void SetHat(long hatId, Color hairColor)
     {
+        //皇帝的新衣
+        if (hatId == 119999)
+        {
+            hatId = 0;
+        }
         if (ivHat == null)
             return;
         ItemsInfoBean itemsInfo = gameItemsManager.GetItemsById(hatId);

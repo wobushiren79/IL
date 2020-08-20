@@ -3,6 +3,7 @@ using UnityEditor;
 using UnityEngine.UI;
 using UnityEngine.AI;
 using System.Collections.Generic;
+using UnityEngine.Tilemaps;
 
 public class UIGameBuild : UIGameComponent, IRadioGroupCallBack
 {
@@ -215,10 +216,42 @@ public class UIGameBuild : UIGameComponent, IRadioGroupCallBack
     /// <param name="furniture"></param>
     private void SetInnBuildActive(bool wall, bool furniture)
     {
+        //if (uiGameManager.innWallBuilder != null)
+        //    uiGameManager.innWallBuilder.GetTilemapContainer().SetActive(wall);
+        //if (uiGameManager.innFurnitureBuilder != null)
+        //    uiGameManager.innFurnitureBuilder.buildContainer.SetActive(furniture);
+
+        //设置半透明状态
         if (uiGameManager.innWallBuilder != null)
-            uiGameManager.innWallBuilder.GetTilemapContainer().SetActive(wall);
+        {
+            Tilemap tilemap= uiGameManager.innWallBuilder.GetTilemapContainer().GetComponent<Tilemap>();
+            if (wall)
+            {
+                tilemap.color = new Color(tilemap.color.r, tilemap.color.g, tilemap.color.b, 1f);
+            }
+            else
+            {
+                tilemap.color = new Color(tilemap.color.r, tilemap.color.g, tilemap.color.b, 0.3f);
+            }
+        }
         if (uiGameManager.innFurnitureBuilder != null)
-            uiGameManager.innFurnitureBuilder.buildContainer.SetActive(furniture);
+        {
+            SpriteRenderer[] listRenderer = uiGameManager.innFurnitureBuilder.buildContainer.GetComponentsInChildren<SpriteRenderer>();
+            if (listRenderer!=null)
+            {
+                foreach (SpriteRenderer itemRenderer in listRenderer)
+                {
+                    if (furniture)
+                    {
+                        itemRenderer.color = new Color(itemRenderer.color.r, itemRenderer.color.g, itemRenderer.color.b, 1f);
+                    }
+                    else
+                    {
+                        itemRenderer.color = new Color(itemRenderer.color.r, itemRenderer.color.g, itemRenderer.color.b, 0.3f);
+                    }
+                }
+            }
+        }
     }
 
     #region  类型选择回调

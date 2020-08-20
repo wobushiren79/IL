@@ -28,6 +28,8 @@ public class InteractiveTalkCpt : BaseInteractiveCpt
                 //获取人物信息
                 NpcInfoBean npcInfo = mNpcAI.characterData.npcInfoData;
                 mEventHandler.EventTriggerForTalk(npcInfo,true);
+                //如果角色有问题提示。则取消问号
+                mNpcAI.CancelExpression();
             }
         }
     }

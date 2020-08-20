@@ -18,11 +18,12 @@ public class InteractiveUICpt : BaseInteractiveCpt
 
     public override void InteractiveDetection(CharacterInteractiveCpt characterInt)
     {
-        if (Input.GetButtonDown(InputInfo.Interactive_E))
+        BaseUIComponent baseUIComponent = uiManager.GetUIByName(EnumUtil.GetEnumName(uiType));
+        if (Input.GetButtonDown(InputInfo.Interactive_E)&& baseUIComponent != uiManager.GetOpenUI())
         {
             if (!CheckUtil.StringIsNull(remarkData))
             {
-                BaseUIComponent baseUIComponent = uiManager.GetUIByName(EnumUtil.GetEnumName(uiType));
+             
                 baseUIComponent.SetRemarkData(remarkData);
             }
             uiManager.OpenUIAndCloseOtherByName(EnumUtil.GetEnumName(uiType));

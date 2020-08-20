@@ -77,6 +77,11 @@ public class CharacterDressCpt : BaseMonoBehaviour
     /// <param name="itemsInfo"></param>
     public void SetHat(ItemsInfoBean itemsInfo)
     {
+        //皇帝的新衣
+        if (itemsInfo != null && itemsInfo.id == 119999)
+        {
+            itemsInfo = null;
+        }
         if (sprHat == null)
             return;
         Sprite hatSP;
@@ -131,6 +136,11 @@ public class CharacterDressCpt : BaseMonoBehaviour
     /// <param name="itemsInfo"></param>
     public void SetClothes(ItemsInfoBean itemsInfo)
     {
+        //皇帝的新衣
+        if (itemsInfo != null && itemsInfo.id == 219999)
+        {
+            itemsInfo = null;
+        }
         if (sprClothes == null)
             return;
         Sprite clothesSP = null;
@@ -162,6 +172,11 @@ public class CharacterDressCpt : BaseMonoBehaviour
     /// <param name="itemsInfo"></param>
     public void SetShoes(ItemsInfoBean itemsInfo)
     {
+        //皇帝的新衣
+        if (itemsInfo != null && itemsInfo.id == 319999)
+        {
+            itemsInfo = null;
+        }
         if (sprShoesLeft == null || sprShoesRight == null)
             return;
         Sprite shoesSP;

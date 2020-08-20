@@ -187,6 +187,12 @@ public class BaseNpcAI : BaseObservable<IBaseObserver>
         if (characterExpression != null)
             characterExpression.SetExpression(expression);
     }
+    //取消表情
+    public void CancelExpression()
+    {
+        if (characterExpression != null)
+            characterExpression.CancelExpression();
+    }
 
     /// <summary>
     /// 增加团队图标

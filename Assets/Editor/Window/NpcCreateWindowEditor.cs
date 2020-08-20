@@ -23,7 +23,8 @@ public class NpcCreateWindowEditor : EditorWindow
     public string findNpcIdsStr = "0";
     //NPC查询数据
     public List<NpcInfoBean> listNpcDataForFind = new List<NpcInfoBean>();
-
+    public long copyNpcId = 0;
+    public long copyNpcNewId = 0;
     //NPC 谈话创建数据
     public TextTalkTypeEnum npcTalkInfoTypeForCreate;
     //NPC 谈话信息
@@ -106,7 +107,20 @@ public class NpcCreateWindowEditor : EditorWindow
             findNpcIdsStr, listNpcDataForFind,
             out findNpcIdsStr, out listNpcDataForFind
             );
-
+        GUILayout.BeginHorizontal();
+        EditorUI.GUIText("复制Npc");
+        EditorUI.GUIText(" NPC新ID");
+        copyNpcNewId = EditorUI.GUIEditorText(copyNpcNewId, 100);
+        EditorUI.GUIText(" NPC复制ID");
+        copyNpcId = EditorUI.GUIEditorText(copyNpcId, 100);
+        if (EditorUI.GUIButton("复制"))
+        {
+            CharacterBean characterData= npcInfoManager.GetCharacterDataById(copyNpcId);
+            characterData.npcInfoData.id = copyNpcNewId;
+            characterData.npcInfoData.npc_id = copyNpcNewId;
+            npcInfoService.InsertData(characterData.npcInfoData);
+        }
+        GUILayout.EndHorizontal();
         GUILayout.Label("-----------------------------------------------------------------------------------------------------------");
         //Npc 对话逻辑添加UI
         long[] findIDs = StringUtil.SplitBySubstringForArrayLong(findNpcIdsStr, ',');

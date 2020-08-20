@@ -80,6 +80,19 @@ public class NpcImportantBuilder : BaseMonoBehaviour
             npcObj.transform.localScale = new Vector3(1, 1);
             NpcAIImportantCpt aiCpt = npcObj.GetComponent<NpcAIImportantCpt>();
             aiCpt.SetCharacterData(characterData);
+
+            if( characterData.npcInfoData.GetNpcType() == NpcTypeEnum.Special || characterData.npcInfoData.GetNpcType() == NpcTypeEnum.RecruitTown)
+            {
+                if (!GameCommonInfo.DailyLimitData.CheckIsTalkNpc(characterData.npcInfoData.id))
+                {
+                    if (characterData.npcInfoData.GetTalkTypes().Contains(NpcTalkTypeEnum.OneTalk)
+                        || characterData.npcInfoData.GetTalkTypes().Contains(NpcTalkTypeEnum.Recruit))
+                    {
+                        aiCpt.SetExpression(CharacterExpressionCpt.CharacterExpressionEnum.Doubt, -1);
+                    }  
+                }
+            }
+
             //如果没有对话选项则不能互动
             BoxCollider2D talkBox = npcObj.GetComponent<BoxCollider2D>();
             if (talkBox != null)
