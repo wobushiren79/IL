@@ -81,6 +81,7 @@ public class ItemGameTextSelectCpt : ItemGameBaseCpt, DialogView.IDialogCallBack
                 uiGameManager.gameItemsManager,
                 uiGameManager.innBuildManager,
                 uiGameManager.gameDataManager,
+                null,
                 textData.reward_data);
             uiGameText.SelectText(textData);
         }

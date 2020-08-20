@@ -76,6 +76,44 @@ public class CharacterFavorabilityBean
         }
     }
 
+    public void GetFavorability(out int favorability,out int favorabilityMax)
+    {
+        favorability = this.favorability;
+        GameCommonInfo.baseDataController.GetBaseData(BaseDataTypeEnum.NpcFavorabilityFor1, out int love1);
+        GameCommonInfo.baseDataController.GetBaseData(BaseDataTypeEnum.NpcFavorabilityFor2, out int love2);
+        GameCommonInfo.baseDataController.GetBaseData(BaseDataTypeEnum.NpcFavorabilityFor3, out int love3);
+        GameCommonInfo.baseDataController.GetBaseData(BaseDataTypeEnum.NpcFavorabilityFor4, out int love4);
+        GameCommonInfo.baseDataController.GetBaseData(BaseDataTypeEnum.NpcFavorabilityFor5, out int love5);
+        if (favorability >= 0 && favorability <= love1)
+        {
+            favorabilityMax = love1;
+        }
+        else if (favorability > love1 && favorability <= love2)
+        {
+            favorabilityMax = love2;
+        }
+        else if (favorability > love2 && favorability <= love3)
+        {
+            favorabilityMax = love3;
+        }
+        else if (favorability > love3 && favorability <= love4)
+        {
+            favorabilityMax = love4;
+        }
+        else if (favorability > love4 && favorability <= love5)
+        {
+            favorabilityMax = love5;
+        }
+        else if (favorability > love5)
+        {
+            favorabilityMax = love5;
+        }
+        else
+        {
+            favorabilityMax = 0;
+        }
+    }
+
     /// <summary>
     /// 设置第一次见面
     /// </summary>

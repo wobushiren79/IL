@@ -268,6 +268,7 @@ public class UIGameTextForTalk : BaseUIChildComponent<UIGameText>
             uiGameManager.gameItemsManager,
             uiGameManager.innBuildManager,
             uiGameManager.gameDataManager,
+            null,
             reward
             );
     }

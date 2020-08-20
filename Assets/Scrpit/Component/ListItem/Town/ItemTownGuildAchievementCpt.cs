@@ -173,6 +173,7 @@ public class ItemTownGuildAchievementCpt : ItemGameBaseCpt
                 uiGameManager.gameItemsManager,
                 uiGameManager.innBuildManager,
                 uiGameManager.gameDataManager,
+                null,
                 achievementInfo.reward_data);
             //设置状态
             SetAchStatus(AchievementStatusEnum.Completed);

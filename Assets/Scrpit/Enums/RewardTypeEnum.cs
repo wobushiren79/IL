@@ -26,6 +26,11 @@ public enum RewardTypeEnum
     AddIngWaterwine,//酒水
     AddIngFlour,//面粉
     RandomAddItems,//随机增加道具
+    AddChefExp,//增加职业经验
+    AddWaiterExp,
+    AddAccountantExp,
+    AddAccostExp,
+    AddBeaterExp,
 }
 
 public class RewardTypeBean : DataBean<RewardTypeEnum>
@@ -129,10 +134,50 @@ public class RewardTypeEnumTools : DataTools
             case RewardTypeEnum.AddIngFlour:
                 GetRewardDetailsForIng(iconDataManager, data);
                 break;
+
+            case RewardTypeEnum.AddChefExp://增加职业经验
+            case RewardTypeEnum.AddWaiterExp:
+            case RewardTypeEnum.AddAccountantExp:
+            case RewardTypeEnum.AddAccostExp:
+            case RewardTypeEnum.AddBeaterExp:
+                GetRewardDetailsForWorkerExp(iconDataManager, data);
+                break;
         }
         return data;
     }
 
+    protected static RewardTypeBean GetRewardDetailsForWorkerExp(IconDataManager iconDataManager, RewardTypeBean rewardTypeData)
+    {
+        Sprite spriteIcon = null;
+        string rewardDescribe = "???";
+        switch (rewardTypeData.dataType)
+        {
+            case RewardTypeEnum.AddChefExp:
+                spriteIcon = WorkerEnumTools.GetWorkerSprite(iconDataManager, WorkerEnum.Chef);
+                rewardDescribe = WorkerEnumTools.GetWorkerName(WorkerEnum.Chef) + string.Format(GameCommonInfo.GetUITextById(6021), rewardTypeData.data);
+                break;
+            case RewardTypeEnum.AddWaiterExp:
+                spriteIcon = WorkerEnumTools.GetWorkerSprite(iconDataManager, WorkerEnum.Waiter);
+                rewardDescribe = WorkerEnumTools.GetWorkerName(WorkerEnum.Waiter) + string.Format(GameCommonInfo.GetUITextById(6021), rewardTypeData.data);
+                break;
+            case RewardTypeEnum.AddAccountantExp:
+                spriteIcon = WorkerEnumTools.GetWorkerSprite(iconDataManager, WorkerEnum.Accountant);
+                rewardDescribe = WorkerEnumTools.GetWorkerName(WorkerEnum.Accountant) + string.Format(GameCommonInfo.GetUITextById(6021), rewardTypeData.data);
+                break;
+            case RewardTypeEnum.AddAccostExp:
+                spriteIcon = WorkerEnumTools.GetWorkerSprite(iconDataManager, WorkerEnum.Accost);
+                rewardDescribe = WorkerEnumTools.GetWorkerName(WorkerEnum.Accost) + string.Format(GameCommonInfo.GetUITextById(6021), rewardTypeData.data);
+                break;
+            case RewardTypeEnum.AddBeaterExp:
+                spriteIcon = WorkerEnumTools.GetWorkerSprite(iconDataManager, WorkerEnum.Beater);
+                rewardDescribe = WorkerEnumTools.GetWorkerName(WorkerEnum.Beater) + string.Format(GameCommonInfo.GetUITextById(6021), rewardTypeData.data);
+                break;
+        }
+        rewardTypeData.spRewardIcon = spriteIcon;
+        rewardTypeData.rewardDescribe = rewardDescribe;
+        rewardTypeData.rewardNumber = int.Parse(rewardTypeData.data);
+        return rewardTypeData;
+    }
 
     /// <summary>
     /// 获取奖杯详情
@@ -322,13 +367,13 @@ public class RewardTypeEnumTools : DataTools
     /// </summary>
     /// <param name="reward_data"></param>
     /// <param name="gameData"></param>
-    public static void CompleteReward(ToastManager toastManager, NpcInfoManager npcInfoManager, IconDataManager iconDataManager, GameItemsManager gameItemsManager, InnBuildManager innBuildManager, GameDataManager gameDataManager, string data)
+    public static void CompleteReward(ToastManager toastManager, NpcInfoManager npcInfoManager, IconDataManager iconDataManager, GameItemsManager gameItemsManager, InnBuildManager innBuildManager, GameDataManager gameDataManager, List<CharacterBean> listCharacterData, string data)
     {
         List<RewardTypeBean> listRewardData = GetListRewardData(data);
-        CompleteReward(toastManager, npcInfoManager, iconDataManager, gameItemsManager, innBuildManager, gameDataManager, listRewardData);
+        CompleteReward(toastManager, npcInfoManager, iconDataManager, gameItemsManager, innBuildManager, gameDataManager, listCharacterData, listRewardData);
     }
 
-    public static void CompleteReward(ToastManager toastManager, NpcInfoManager npcInfoManager, IconDataManager iconDataManager, GameItemsManager gameItemsManager, InnBuildManager innBuildManager, GameDataManager gameDataManager, List<RewardTypeBean> listRewardData)
+    public static void CompleteReward(ToastManager toastManager, NpcInfoManager npcInfoManager, IconDataManager iconDataManager, GameItemsManager gameItemsManager, InnBuildManager innBuildManager, GameDataManager gameDataManager, List<CharacterBean> listCharacterData, List<RewardTypeBean> listRewardData)
     {
         GameDataBean gameData = gameDataManager.gameData;
         foreach (var itemData in listRewardData)
@@ -427,8 +472,34 @@ public class RewardTypeEnumTools : DataTools
                     gameData.AddIng(IngredientsEnum.Flour, itemData.rewardNumber);
                     toastManager.ToastHint(itemData.spRewardIcon, string.Format(GameCommonInfo.GetUITextById(6099), itemData.rewardDescribe));
                     break;
+                case RewardTypeEnum.AddChefExp:
+                    CompleteRewardForExp(listCharacterData, WorkerEnum.Chef, itemData.rewardNumber);
+                    break;
+                case RewardTypeEnum.AddWaiterExp:
+                    CompleteRewardForExp(listCharacterData, WorkerEnum.Waiter, itemData.rewardNumber);
+                    break;
+                case RewardTypeEnum.AddAccountantExp:
+                    CompleteRewardForExp(listCharacterData, WorkerEnum.Accountant, itemData.rewardNumber);
+                    break;
+                case RewardTypeEnum.AddAccostExp:
+                    CompleteRewardForExp(listCharacterData, WorkerEnum.Accost, itemData.rewardNumber);
+                    break;
+                case RewardTypeEnum.AddBeaterExp:
+                    CompleteRewardForExp(listCharacterData, WorkerEnum.Beater, itemData.rewardNumber);
+                    break;
             }
         }
     }
 
+    protected static void CompleteRewardForExp(List<CharacterBean> listCharacterData,WorkerEnum workerType,int exp)
+    {
+        if (CheckUtil.ListIsNull(listCharacterData))
+            return;
+
+        foreach (CharacterBean itemData in listCharacterData)
+        {
+            CharacterWorkerBaseBean characterWorker =  itemData.baseInfo.GetWorkerInfoByType(workerType);
+            characterWorker.AddExp(exp,out bool isLevelUp);
+        }
+    }
 }

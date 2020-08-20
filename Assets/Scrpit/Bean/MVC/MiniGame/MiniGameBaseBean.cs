@@ -49,6 +49,15 @@ public abstract class MiniGameBaseBean
     {
         return listUserGameData;
     }
+    public List<CharacterBean> GetListUserCharacterData()
+    {
+        List<CharacterBean> listCharacterData = new List<CharacterBean>();
+        foreach (MiniGameCharacterBean itemGameData in listUserGameData)
+        {
+            listCharacterData.Add(itemGameData.characterData);
+        }
+        return listCharacterData;
+    }
 
     public virtual MiniGameCharacterBean GetUserGameData()
     {

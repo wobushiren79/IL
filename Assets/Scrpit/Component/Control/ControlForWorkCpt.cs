@@ -38,6 +38,7 @@ public class ControlForWorkCpt : BaseControl, DialogView.IDialogCallBack
         HandleForMouseMove();
         HandleForControlMove();
         HandleForFollowMove();
+        HandleForZoom();
     }
 
     private void FixedUpdate()
@@ -48,6 +49,45 @@ public class ControlForWorkCpt : BaseControl, DialogView.IDialogCallBack
     private void OnDisable()
     {
         ClearSelect();
+        SetCameraOrthographicSize();
+    }
+
+    /// <summary>
+    /// 缩放
+    /// </summary>
+    public void HandleForZoom()
+    {
+        if (Input.GetButton(InputInfo.Zoom_In))
+        {
+            ZoomCamera( - 0.1f);
+        }
+        if (Input.GetButton(InputInfo.Zoom_Out))
+        {
+            ZoomCamera( + 0.1f);
+        }
+        if (Input.GetAxis(InputInfo.Zoom_Mouse) > 0)
+        {
+            ZoomCamera(- 0.2f);
+        }
+        if (Input.GetAxis(InputInfo.Zoom_Mouse) < 0)
+        {
+            ZoomCamera(+ 0.2f);
+        }
+    }
+
+    protected void ZoomCamera(float addZoom)
+    {
+        float size = GetCameraOrthographicSize();
+        size += addZoom;
+        if (size < 7)
+        {
+            size = 7;
+        }
+        else if (size > 12)
+        {
+            size = 12;
+        }
+        SetCameraOrthographicSize(size);
     }
 
     /// <summary>
@@ -77,6 +117,8 @@ public class ControlForWorkCpt : BaseControl, DialogView.IDialogCallBack
         {
             vMove += -1;
         }
+ 
+
         if (hMove == 0 && vMove == 0)
         {
             //cameraMove.StopAnim();

@@ -40,4 +40,8 @@ public class InputInfo : ScriptableObject
     public static string Number_3 = "Number_3";
     public static string Number_4 = "Number_4";
 
+    //缩放 zc
+    public static string Zoom_In = "ZoomIn"; 
+    public static string Zoom_Out = "ZoomOut";
+    public static string Zoom_Mouse= "Mouse ScrollWheel";
 }

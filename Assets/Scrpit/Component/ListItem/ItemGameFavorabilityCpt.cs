@@ -7,6 +7,7 @@ public class ItemGameFavorabilityCpt : ItemGameBaseCpt
     public Image ivSex;
     public Text tvName;
     public Text tvTitleName;
+    public Text tvFavorability;
 
     public GameObject objFavorabilityContainer;
     public Image ivFavorabilityModel;
@@ -29,8 +30,9 @@ public class ItemGameFavorabilityCpt : ItemGameBaseCpt
         SetCharacterUI(characterData);
         SetName(characterData.baseInfo.titleName, characterData.baseInfo.name);
         SetSex(characterData.body.sex);
-        SetFavorability(characterFavorability.favorabilityLevel);
-
+        SetFavorabilityLevel(characterFavorability.favorabilityLevel);
+        characterFavorability.GetFavorability(out int favorability, out int favorabilityMax);
+        SetFavorability(favorability, favorabilityMax);
         bool isTalk=  GameCommonInfo.DailyLimitData.CheckIsTalkNpc(characterFavorability.characterId);
         bool isGift = GameCommonInfo.DailyLimitData.CheckIsGiftNpc(characterFavorability.characterId);
         SetInteractive(isTalk, isGift);
@@ -95,7 +97,7 @@ public class ItemGameFavorabilityCpt : ItemGameBaseCpt
     /// 设置好感度
     /// </summary>
     /// <param name="favorabilityLevel"></param>
-    public void SetFavorability(int favorabilityLevel)
+    public void SetFavorabilityLevel(int favorabilityLevel)
     {
         for(int i = 0; i < 5; i++)
         {
@@ -109,6 +111,19 @@ public class ItemGameFavorabilityCpt : ItemGameBaseCpt
             {
                 ivItem.sprite = spUnLove;
             }
+        }
+    }
+
+    /// <summary>
+    /// 设置好感
+    /// </summary>
+    /// <param name="favorability"></param>
+    /// <param name="favorabilityMax"></param>
+    public void SetFavorability(int favorability,int favorabilityMax)
+    {
+        if (tvFavorability != null)
+        {
+            tvFavorability.text = "(" + favorability + "/" + favorabilityMax + ")";
         }
     }
 

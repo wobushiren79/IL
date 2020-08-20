@@ -115,6 +115,16 @@ public class BaseControl : BaseMonoBehaviour
         SetCameraOrthographicSize(7);
     }
 
+    public float GetCameraOrthographicSize()
+    {
+        float size = 0;
+        if (camera2D != null)
+        {
+            size = camera2D.m_Lens.OrthographicSize;
+        }
+        return size;
+    }
+
 
     /// <summary>
     /// 鼠标移动处理

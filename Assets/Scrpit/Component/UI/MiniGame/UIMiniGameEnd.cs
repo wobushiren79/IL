@@ -192,6 +192,7 @@ public class UIMiniGameEnd : UIGameComponent
             uiGameManager.gameItemsManager,
             uiGameManager.innBuildManager,
             uiGameManager.gameDataManager,
+            miniGameData.GetListUserCharacterData(),
             miniGameData.listReward);
         //遍历奖励列表
         foreach (var itemReward in miniGameData.listReward)

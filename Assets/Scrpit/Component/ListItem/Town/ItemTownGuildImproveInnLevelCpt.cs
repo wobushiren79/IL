@@ -181,6 +181,7 @@ public class ItemTownGuildImproveInnLevelCpt : BaseMonoBehaviour, DialogView.IDi
                 gameItemsManager,
                 innBuildManager,
                 gameDataManager,
+                null,
                 storeInfo.reward_data);
             //客栈升级
             gameDataManager.gameData.innAttributes.SetInnLevelUp();

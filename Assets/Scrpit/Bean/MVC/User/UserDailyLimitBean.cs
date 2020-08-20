@@ -6,6 +6,7 @@ public class UserDailyLimitBean
 {
     //银行换金上限
     public int exchangeMoneyL = 0;
+
     //当前对话过的NPC
     public List<long> listNpcTalk = new List<long>();
     //当前送过礼物的NPC
@@ -43,6 +44,8 @@ public class UserDailyLimitBean
         listArenaDataForAdvanced = null;
         listArenaDataForLegendary = null;
     }
+
+
 
     /// <summary>
     /// 增加参加过竞技场的名单
