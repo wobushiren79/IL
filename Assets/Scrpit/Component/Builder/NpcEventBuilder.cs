@@ -136,8 +136,10 @@ public class NpcEventBuilder : NpcNormalBuilder, IBaseObserver
     {
         if (npcTeam == null)
             return;
-        if (listExistTeamId.Contains(npcTeam.id))
-            return;
+        //if (listExistTeamId.Contains(npcTeam.id))
+        //改成了每日一次
+        if ( listExistTeamId.Count > 0 )
+             return;
         //获取小队成员数据
         npcTeam.GetTeamCharacterData(npcInfoManager, out List<CharacterBean> listLeader, out List<CharacterBean> listMembers);
         //设置小队相关
