@@ -4,6 +4,7 @@ using UnityEditor;
 public enum ImportantTypeEnum
 {
     Camera2D,
+    Camera,
     MainCamera,
     NavMesh,
     GameUI,

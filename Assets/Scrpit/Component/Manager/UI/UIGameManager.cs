@@ -42,6 +42,7 @@ public class UIGameManager : BaseUIManager
     public AudioHandler audioHandler;
     public GameDataHandler gameDataHandler;
     public SteamHandler steamHandler;
+    public FPSHandler fpsHandler;
     [Header("建造")]
     public NpcCustomerBuilder npcCustomerBuilder;
     public NpcEventBuilder npcEventBuilder;
@@ -79,7 +80,7 @@ public class UIGameManager : BaseUIManager
         audioHandler = Find<AudioHandler>(ImportantTypeEnum.AudioHandler);
         gameDataHandler = Find<GameDataHandler>(ImportantTypeEnum.GameDataHandler);
         steamHandler = Find<SteamHandler>(ImportantTypeEnum.Steam);
-
+        fpsHandler = Find<FPSHandler>( ImportantTypeEnum.Camera);
         infoPromptPopup = FindInChildren<InfoPromptPopupShow>(ImportantTypeEnum.Popup);
         infoItemsPopup = FindInChildren<InfoItemsPopupShow>(ImportantTypeEnum.Popup);
         infoFoodPopup = FindInChildren<InfoFoodPopupShow>(ImportantTypeEnum.Popup);

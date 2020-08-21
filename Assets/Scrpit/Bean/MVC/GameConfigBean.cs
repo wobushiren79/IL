@@ -20,5 +20,12 @@ public class GameConfigBean
 
     //按键提示状态 1显示 0隐藏
     public int statusForKeyTip = 1;
-   
+
+    //鼠标镜头移动 1开启 0关闭
+    public int statusForMouseMove = 1;
+
+    //帧数限制开启 1开启 0关闭
+    public int statusForFrames = 1;
+    public int frames = 120;
+
 }

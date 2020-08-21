@@ -16,6 +16,10 @@ public enum RankTypeEnum
     MaxDayGetMoneyM=42,
     MaxDayGetMoneyS=43,
     MaxDayCompleteOrder = 51,//单日最高完成订单
+    NumberForGetElementary = 61,//初级
+    NumberForGetIntermediate = 62,//中级
+    NumberForGetAdvanced = 63,//高级
+    NumberForGetLegendary = 64,//传奇
 }
 
 public class RankTypeEnumTool
@@ -42,6 +46,14 @@ public class RankTypeEnumTool
                 return "MaxDay_GetMoneyS";
             case RankTypeEnum.MaxDayCompleteOrder:
                 return "MaxDay_CompleteOrder";
+            case RankTypeEnum.NumberForGetElementary:
+                return "Number_GetElementary";
+            case RankTypeEnum.NumberForGetIntermediate:
+                return "Number_GetIntermediate";
+            case RankTypeEnum.NumberForGetAdvanced:
+                return "Number_GetAdvanced";
+            case RankTypeEnum.NumberForGetLegendary:
+                return "Number_GetLegendary";
         }
         return "";
     }

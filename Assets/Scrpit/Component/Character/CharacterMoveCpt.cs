@@ -27,13 +27,14 @@ public class CharacterMoveCpt : BaseMonoBehaviour
     public float maxMoveX = 0;
     public float minMoveY = 0;
     public float maxMoveY = 0;
-
+    
     private void Awake()
     {
         if (navMeshAgent != null)
         {
             navMeshAgent.updateRotation = false;
             navMeshAgent.updateUpAxis = false;
+            //navMeshAgent.updatePosition = false;
         }
     }
 
@@ -54,10 +55,10 @@ public class CharacterMoveCpt : BaseMonoBehaviour
     {
         if (!isManualMove && navMeshAgent != null)
         {
-            if (navMeshAgent.isActiveAndEnabled && Mathf.Abs(navMeshAgent.remainingDistance) > 0.001f)
+            if (navMeshAgent.isActiveAndEnabled && Mathf.Abs(navMeshAgent.remainingDistance) > 0.01f)
             {
                 SetAnimStatus(1);
-                Move(navMeshAgent.nextPosition);
+                //Move(navMeshAgent.nextPosition);
                 //转向
                 if (objCharacterBody != null)
                 {
@@ -104,7 +105,7 @@ public class CharacterMoveCpt : BaseMonoBehaviour
             navMeshAgent.isStopped = false;
             navMeshAgent.updateRotation = false;
             navMeshAgent.updateUpAxis = false;
-            navMeshAgent.updatePosition = false;
+            navMeshAgent.updatePosition = true;
             navMeshAgent.speed = moveSpeed;
             navMeshAgent.angularSpeed = float.MaxValue;
             navMeshAgent.acceleration = float.MaxValue;
@@ -218,19 +219,7 @@ public class CharacterMoveCpt : BaseMonoBehaviour
     public void Move(Vector3 movePosition)
     {
         SetAnimStatus(1);
-        //转向
-        Vector3 theScale = objCharacterBody.transform.localScale;
-        if (movePosition.x - objCharacterBody.transform.position.x < 0)
-        {
-            theScale.x = -Mathf.Abs(theScale.x);
-        }
-        else if (movePosition.x - objCharacterBody.transform.position.x > 0)
-        {
-            theScale.x = Mathf.Abs(theScale.x);
-        }
-        objCharacterBody.transform.localScale = theScale;
         navMeshAgent.transform.position = movePosition;
-        BoundaryMove();
     }
 
     /// <summary>
@@ -300,7 +289,7 @@ public class CharacterMoveCpt : BaseMonoBehaviour
         {
             return false;
         }
-        if (navMeshAgent != null && navMeshAgent.isActiveAndEnabled && Mathf.Abs(navMeshAgent.remainingDistance) > 0.001f)
+        if (navMeshAgent != null && navMeshAgent.isActiveAndEnabled && Mathf.Abs(navMeshAgent.remainingDistance) > 0.01f)
         {
             return false;
         }

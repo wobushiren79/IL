@@ -127,7 +127,7 @@ public class BaseNpcAI : BaseObservable<IBaseObserver>
         //设置速度
         if (characterMoveCpt != null)
         {
-            float speed = totalAttributes.speed * 0.05f + 1f;
+            float speed = totalAttributes.speed * 0.04f + 1f;
             //速度修正
             if (speed <= 0.1f)
             {

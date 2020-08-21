@@ -12,11 +12,16 @@ public class UIGameSetting : UIGameComponent, DropdownView.ICallBack, ProgressVi
     public Button btBack;
     public DropdownView dvLanguage;
     public DropdownView dvWindow;
+
     public ProgressView pvMusic;
     public ProgressView pvSound;
     public ProgressView pvEnvironment;
+
+    public RadioButtonView rbFrames;
+    public RadioButtonView rbMouseMove;
     public RadioButtonView rbKeyTip;
 
+    public InputField etFrames;
     public void Start()
     {
         if (btBack != null)
@@ -80,6 +85,40 @@ public class UIGameSetting : UIGameComponent, DropdownView.ICallBack, ProgressVi
             pvEnvironment.SetData(GameCommonInfo.GameConfig.environmentVolume);
             pvEnvironment.SetCallBack(this);
         }
+
+        //帧数设定初始化
+        if (rbFrames != null)
+        {
+            rbFrames.SetCallBack(this);
+            if (GameCommonInfo.GameConfig.statusForFrames == 0)
+            {
+                rbFrames.ChangeStates(RadioButtonView.RadioButtonStatus.Unselected);
+            }
+            else if (GameCommonInfo.GameConfig.statusForFrames == 1)
+            {
+                rbFrames.ChangeStates(RadioButtonView.RadioButtonStatus.Selected);
+            }
+        }
+        if (etFrames != null)
+        {
+            etFrames.text = GameCommonInfo.GameConfig.frames+"";
+            etFrames.onEndEdit.AddListener(OnValueChangeForFrame);
+        }
+
+        //鼠标移动初始化
+        if (rbMouseMove != null)
+        {
+            rbMouseMove.SetCallBack(this);
+            if (GameCommonInfo.GameConfig.statusForMouseMove == 0)
+            {
+                rbMouseMove.ChangeStates(RadioButtonView.RadioButtonStatus.Unselected);
+            }
+            else if (GameCommonInfo.GameConfig.statusForMouseMove == 1)
+            {
+                rbMouseMove.ChangeStates(RadioButtonView.RadioButtonStatus.Selected);
+            }
+        }
+
         //按键提示初始化
         if (rbKeyTip != null)
         {
@@ -168,6 +207,24 @@ public class UIGameSetting : UIGameComponent, DropdownView.ICallBack, ProgressVi
         dialogBean.content = GameCommonInfo.GetUITextById(3083);
         uiGameManager.dialogManager.CreateDialog(DialogEnum.Normal, this, dialogBean);
     }
+
+    /// <summary>
+    /// 帧数修改
+    /// </summary>
+    /// <param name="value"></param>
+    public void OnValueChangeForFrame(string value)
+    {
+        if (int.TryParse(value,out int result)) {
+            if (result < 30)
+            {
+                etFrames.text = "30";
+                return;
+            }
+            GameCommonInfo.GameConfig.frames = result;      
+            uiGameManager.fpsHandler.SetData(GameCommonInfo.GameConfig.statusForFrames, GameCommonInfo.GameConfig.frames);
+        }
+    }   
+
 
     #region 下拉回调
     public void OnDropDownValueChange(DropdownView view, int position, Dropdown.OptionData optionData)
@@ -269,6 +326,31 @@ public class UIGameSetting : UIGameComponent, DropdownView.ICallBack, ProgressVi
             else if (buttonStates == RadioButtonView.RadioButtonStatus.Unselected)
             {
                 GameCommonInfo.GameConfig.statusForKeyTip = 0;
+            }
+        }
+        else if (view == rbFrames)
+        {
+            //按键提示
+            if (buttonStates == RadioButtonView.RadioButtonStatus.Selected)
+            {
+                GameCommonInfo.GameConfig.statusForFrames = 1;
+            }
+            else if (buttonStates == RadioButtonView.RadioButtonStatus.Unselected)
+            {
+                GameCommonInfo.GameConfig.statusForFrames = 0;
+            }
+            uiGameManager.fpsHandler.SetData(GameCommonInfo.GameConfig.statusForFrames, GameCommonInfo.GameConfig.frames);
+        }
+        else if (view == rbMouseMove)
+        {
+            //按键提示
+            if (buttonStates == RadioButtonView.RadioButtonStatus.Selected)
+            {
+                GameCommonInfo.GameConfig.statusForMouseMove = 1;
+            }
+            else if (buttonStates == RadioButtonView.RadioButtonStatus.Unselected)
+            {
+                GameCommonInfo.GameConfig.statusForMouseMove = 0;
             }
         }
     }

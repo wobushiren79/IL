@@ -632,7 +632,6 @@ MonoBehaviour:
         priority: 0
         isWorking: 1
         cookNumber: 0
-        cookTime: 0
         listFoodCookNumer: []
       waiterInfo:
         workerType: 2
@@ -642,7 +641,6 @@ MonoBehaviour:
         isWorking: 1
         cleanTotalNumber: 0
         sendTotalNumber: 0
-        cleanTotalTime: 0
       accountantInfo:
         workerType: 3
         workerLevel: 0
@@ -661,7 +659,6 @@ MonoBehaviour:
         accountingMoneyL: 0
         accountingMoneyM: 0
         accountingMoneyS: 0
-        accountingTotalTime: 0
       accostInfo:
         workerType: 4
         workerLevel: 0
@@ -671,7 +668,6 @@ MonoBehaviour:
         accostTotalNumber: 0
         accostSuccessNumber: 0
         accostFailNumber: 0
-        accostTotalTime: 0
       beaterInfo:
         workerType: 5
         workerLevel: 0
@@ -681,8 +677,6 @@ MonoBehaviour:
         fightTotalNumber: 0
         fightWinNumber: 0
         fightLoseNumber: 0
-        fightTotalTime: 0
-        restTotalTime: 0
       workerStatus: 0
       listLoveItems: 
     attributes:
@@ -728,6 +722,11 @@ MonoBehaviour:
       hatId: 0
       clothesId: 0
       shoesId: 0
+      maskTFId: 0
+      handTFId: 0
+      hatTFId: 0
+      clothesTFId: 0
+      shoesTFId: 0
     npcInfoData:
       id: 0
       valid: 0
@@ -751,7 +750,7 @@ MonoBehaviour:
       name: 
       position_x: 0
       position_y: 0
-      talk_ids: 
+      talk_types: 
       skill_ids: 
       attributes_loyal: 0
       attributes_life: 0
@@ -864,6 +863,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6526023256182956299}
   - component: {fileID: 6526023256182956298}
+  - component: {fileID: 3605734561408811960}
   m_Layer: 5
   m_Name: Content
   m_TagString: Untagged
@@ -889,7 +889,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 300}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &6526023256182956298
 MonoBehaviour:
@@ -915,6 +915,20 @@ MonoBehaviour:
   m_Spacing: {x: 10, y: 10}
   m_Constraint: 0
   m_ConstraintCount: 2
+--- !u!114 &3605734561408811960
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6526023256182956300}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3245ec927659c4140ac4f8d17403cc18, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_HorizontalFit: 0
+  m_VerticalFit: 2
 --- !u!1 &6526023256504878619
 GameObject:
   m_ObjectHideFlags: 0

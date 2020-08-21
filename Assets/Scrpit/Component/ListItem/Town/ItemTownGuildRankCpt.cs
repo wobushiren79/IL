@@ -24,9 +24,12 @@ public class ItemTownGuildRankCpt : ItemGameBaseCpt, IWebRequestCallBack<SteamWe
     public Sprite spTimePlay;
     public Sprite spMaxDayGetMoneyS;
     public Sprite spMaxDayCompleteOrder;
+
+    protected IconDataManager iconDataManager;
     public void Awake()
     {
         steamHandler = Find<SteamHandler>(ImportantTypeEnum.Steam);
+        iconDataManager = Find<IconDataManager>(ImportantTypeEnum.UIManager);
     }
 
     public void SetData(RankTypeEnum rankType, SteamLeaderboardEntryBean rankData)
@@ -51,33 +54,49 @@ public class ItemTownGuildRankCpt : ItemGameBaseCpt, IWebRequestCallBack<SteamWe
         {
             case RankTypeEnum.GetMoneyS:
                 dataStr = score + GameCommonInfo.GetUITextById(18);
-                spData = spGetMoneyS;
+                spData = iconDataManager.GetIconSpriteByName("ach_money_s_2") ;
                 break;
             case RankTypeEnum.NumberOrder:
                 dataStr = score + GameCommonInfo.GetUITextById(82);
-                spData = spNumberOrder;
+                spData = iconDataManager.GetIconSpriteByName("ach_ordernumber_1");
                 break;
             case RankTypeEnum.NumberPraiseExcited:
                 dataStr = score + "";
-                spData = spNumberPraiseExcited;
+                spData = iconDataManager.GetIconSpriteByName("ach_accost_1");
                 break;
             case RankTypeEnum.NumberPraiseAnger:
                 dataStr = score + "";
-                spData = spNumberPraiseAnger;
+                spData = iconDataManager.GetIconSpriteByName("ach_accost_2");
                 break;
             case RankTypeEnum.TimePlay:
                 TimeBean timeData = new TimeBean();
                 timeData.AddTimeForHMS(0, 0, score);
                 dataStr = timeData.hour + ":" + timeData.minute + ":" + timeData.second;
-                spData = spTimePlay;
+                spData = iconDataManager.GetIconSpriteByName("time_wait_1_0");
                 break;
             case RankTypeEnum.MaxDayGetMoneyS:
                 dataStr = score + GameCommonInfo.GetUITextById(18);
-                spData = spMaxDayGetMoneyS;
+                spData = iconDataManager.GetIconSpriteByName("ach_money_s_2");
                 break;
             case RankTypeEnum.MaxDayCompleteOrder:
                 dataStr = score + "";
-                spData = spMaxDayCompleteOrder;
+                spData = iconDataManager.GetIconSpriteByName("ach_ordernumber_1");
+                break;
+            case RankTypeEnum.NumberForGetElementary:
+                dataStr = score + "";
+                spData = iconDataManager.GetIconSpriteByName("trophy_1_0");
+                break;
+            case RankTypeEnum.NumberForGetIntermediate:
+                dataStr = score + "";
+                spData = iconDataManager.GetIconSpriteByName("trophy_1_1");
+                break;
+            case RankTypeEnum.NumberForGetAdvanced:
+                dataStr = score + "";
+                spData = iconDataManager.GetIconSpriteByName("trophy_1_2");
+                break;
+            case RankTypeEnum.NumberForGetLegendary:
+                dataStr = score + "";
+                spData = iconDataManager.GetIconSpriteByName("trophy_1_3");
                 break;
         }
         if (tvData != null)

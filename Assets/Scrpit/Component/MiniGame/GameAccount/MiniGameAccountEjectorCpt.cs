@@ -54,9 +54,9 @@ public class MiniGameAccountEjectorCpt : BaseMonoBehaviour
         }
         if (mIsRotating)
         {
-            if (srHook.transform.eulerAngles.z > 60 && srHook.transform.eulerAngles.z <= 180)
+            if (srHook.transform.eulerAngles.z > 70 && srHook.transform.eulerAngles.z <= 180)
                 mRotatingDirection = -1;
-            else if (srHook.transform.eulerAngles.z < 300 && srHook.transform.eulerAngles.z > 180)
+            else if (srHook.transform.eulerAngles.z < 290 && srHook.transform.eulerAngles.z > 180)
                 mRotatingDirection = 1;
             srHook.transform.Rotate(new Vector3(0, 0, mRotatingDirection * mRotateSpeed * Time.deltaTime));
         }
