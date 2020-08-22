@@ -74,6 +74,12 @@ public class UITownGrocery : UIBaseOne, StoreInfoManager.ICallBack, IRadioGroupC
         }
     }
 
+    protected override void CreatePickForSellDialogView(out PickForSellDialogView pickForSellDialog)
+    {
+        base.CreatePickForSellDialogView(out pickForSellDialog);
+        pickForSellDialog.SetData(mGroceryListData);
+    }
+
     #region 商店数据回调
     public void GetStoreInfoSuccess(StoreTypeEnum type, List<StoreInfoBean> listData)
     {

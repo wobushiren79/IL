@@ -2,10 +2,11 @@
 using UnityEditor;
 using UnityEngine.UI;
 
-public class UIBaseOne : UIGameComponent
+public class UIBaseOne : UIGameComponent,DialogView.IDialogCallBack
 {
     //返回按钮
     public Button btBack;
+    public Button btSell;
     //金钱
     public Text tvMoneyL;
     public Text tvMoneyM;
@@ -22,6 +23,8 @@ public class UIBaseOne : UIGameComponent
     {
         if (btBack != null)
             btBack.onClick.AddListener(OpenMainUI);
+        if (btSell != null)
+            btSell.onClick.AddListener(OnClickForSell);
     }
 
     public virtual void Update()
@@ -93,7 +96,22 @@ public class UIBaseOne : UIGameComponent
         }
     }
 
+    /// <summary>
+    /// 售卖按钮
+    /// </summary>
+    public virtual void OnClickForSell()
+    {
+        if (uiGameManager.audioHandler != null)
+            uiGameManager.audioHandler.PlaySound(AudioSoundEnum.ButtonForNormal);
+        CreatePickForSellDialogView(out PickForSellDialogView pickForSellDialog);
+    }
 
+    protected virtual void CreatePickForSellDialogView(out PickForSellDialogView pickForSellDialog)
+    {
+        DialogBean dialogData = new DialogBean();
+        dialogData.title = GameCommonInfo.GetUITextById(3101);
+        pickForSellDialog = (PickForSellDialogView)uiGameManager.dialogManager.CreateDialog(DialogEnum.PickForSell, this, dialogData);
+    }
 
     /// <summary>
     /// 返回游戏主UI
@@ -102,4 +120,16 @@ public class UIBaseOne : UIGameComponent
     {
         uiManager.OpenUIAndCloseOtherByName(EnumUtil.GetEnumName(UIEnum.GameMain));
     }
+
+    #region 选择出售回调
+    public virtual void Submit(DialogView dialogView, DialogBean dialogBean)
+    {
+
+    }
+
+    public virtual void Cancel(DialogView dialogView, DialogBean dialogBean)
+    {
+
+    }
+    #endregion
 }

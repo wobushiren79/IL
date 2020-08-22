@@ -88,6 +88,16 @@ public class UITownCarpenter : UIBaseOne, IRadioGroupCallBack, StoreInfoManager.
         }
     }
 
+    /// <summary>
+    /// 创建出售数据
+    /// </summary>
+    /// <param name="pickForSellDialog"></param>
+    protected override void CreatePickForSellDialogView(out PickForSellDialogView pickForSellDialog)
+    {
+        base.CreatePickForSellDialogView(out pickForSellDialog);
+        pickForSellDialog.SetData(mCarpenterListData);
+    }
+
     #region 获取商店物品回调
     public void GetStoreInfoSuccess(StoreTypeEnum type, List<StoreInfoBean> listData)
     {

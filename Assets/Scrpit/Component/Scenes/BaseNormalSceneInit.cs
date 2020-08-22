@@ -110,7 +110,7 @@ public abstract class BaseNormalSceneInit : BaseSceneInit,IBaseObserver, DialogV
 
     public void Cancel(DialogView dialogView, DialogBean dialogData)
     {
-
+        SceneUtil.SceneChange(ScenesEnum.GameInnScene);
     }
     #endregion
 

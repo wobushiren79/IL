@@ -444,7 +444,7 @@ public class GameDataBean
         int number = 0;
         foreach (MenuOwnBean itemMenu in listMenu)
         {
-            if(itemMenu.GetMenuLevel() == menuLevel)
+            if(itemMenu.GetMenuLevel() >= menuLevel)
             {
                 number++;
             }

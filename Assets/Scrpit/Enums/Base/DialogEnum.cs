@@ -14,4 +14,5 @@ public enum DialogEnum
     PowerTest = 8,
     PickForSkill=9,
     PickForNumber=10,
+    PickForSell=11,
 }

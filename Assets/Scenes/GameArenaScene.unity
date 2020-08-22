@@ -98,7 +98,7 @@ LightmapSettings:
     m_TrainingDataDestination: TrainingData
     m_LightProbeSampleCountMultiplier: 4
   m_LightingDataAsset: {fileID: 0}
-  m_UseShadowmask: 0
+  m_UseShadowmask: 1
 --- !u!196 &4
 NavMeshSettings:
   serializedVersion: 2
@@ -4621,6 +4621,26 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 492211945605394673, guid: d3ad5ac1c68554b4eb1c7c38cf7f84ff,
+        type: 3}
+      propertyPath: listFoodIcon.isExpanded
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 492211945605394673, guid: d3ad5ac1c68554b4eb1c7c38cf7f84ff,
+        type: 3}
+      propertyPath: listFoodIcon.reorderableList.isExpanded
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 492211945605394673, guid: d3ad5ac1c68554b4eb1c7c38cf7f84ff,
+        type: 3}
+      propertyPath: listFoodAnim.isExpanded
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 492211945605394673, guid: d3ad5ac1c68554b4eb1c7c38cf7f84ff,
+        type: 3}
+      propertyPath: listFoodAnim.reorderableList.isExpanded
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 492211947110525414, guid: d3ad5ac1c68554b4eb1c7c38cf7f84ff,
         type: 3}
       propertyPath: m_Name
@@ -18887,6 +18907,8 @@ MonoBehaviour:
   eventHandler: {fileID: 0}
   audioHandler: {fileID: 0}
   gameDataHandler: {fileID: 0}
+  steamHandler: {fileID: 0}
+  fpsHandler: {fileID: 0}
   npcCustomerBuilder: {fileID: 0}
   npcEventBuilder: {fileID: 0}
   npcWorkerBuilder: {fileID: 0}

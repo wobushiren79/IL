@@ -95,7 +95,7 @@ public class UIGameMain : UIGameComponent, DialogView.IDialogCallBack, IRadioGro
             btSave.onClick.AddListener(SaveData);
 
         if (btSleep != null)
-            btSleep.onClick.AddListener(EndDay);
+            btSleep.onClick.AddListener(OnClickForEndDay);
 
 
         if (rgTimeScale != null)
@@ -388,7 +388,7 @@ public class UIGameMain : UIGameComponent, DialogView.IDialogCallBack, IRadioGro
         uiManager.OpenUIAndCloseOther(UIEnum.GameHelp);
     }
 
-    public void EndDay()
+    public void OnClickForEndDay()
     {
         uiGameManager.audioHandler.PlaySound(AudioSoundEnum.ButtonForNormal);
         DialogBean dialogBean = new DialogBean();
@@ -466,21 +466,26 @@ public class UIGameMain : UIGameComponent, DialogView.IDialogCallBack, IRadioGro
         rtItem.DOAnchorPosY(rtItem.anchoredPosition.y + 30, 2).OnComplete(delegate () { Destroy(itemMoney); });
     }
 
+    protected void EndDay()
+    {
+        //结束一天
+        Scene scene = SceneManager.GetActiveScene();
+        if (scene.name.Equals(EnumUtil.GetEnumName(ScenesEnum.GameInnScene)))
+        {
+            ((SceneGameInnInit)uiGameManager.sceneInit).EndDay();
+        }
+        else
+        {
+            ((BaseNormalSceneInit)uiGameManager.sceneInit).EndDay();
+        }
+    }
+
     #region dialog 回调
     public void Submit(DialogView dialogView, DialogBean dialogData)
     {
         if (dialogData.dialogPosition == 0)
         {
-            //结束一天
-            Scene scene = SceneManager.GetActiveScene();
-            if (scene.name.Equals(EnumUtil.GetEnumName(ScenesEnum.GameInnScene)))
-            {
-                ((SceneGameInnInit)uiGameManager.sceneInit).EndDay();
-            }
-            else
-            {
-                ((BaseNormalSceneInit)uiGameManager.sceneInit).EndDay();
-            }
+            EndDay();
         }
         else if (dialogData.dialogPosition == 1)
         {

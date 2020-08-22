@@ -57,11 +57,16 @@ public class ControlForBuildCpt : BaseControl
         audioHandler = Find<AudioHandler>(ImportantTypeEnum.AudioHandler);
     }
 
-    private void Update()
+    private void FixedUpdate()
     {
+        HandleForZoom();
         HandleForMouseMove();
         //检测是否控制镜头移动
         HandleForCameraMove();
+    }
+
+    private void Update()
+    {
         //如果没有选中则不进行以下检测
         if (buildItemCpt == null)
             return;
@@ -76,6 +81,10 @@ public class ControlForBuildCpt : BaseControl
         bool isCanBuild = CheckCanBuild();
         //检测是否控制建造
         HandleForBuildConfirm(isCanBuild, buildPosition);
+    }
+    private void OnDisable()
+    {
+        SetCameraOrthographicSize();
     }
 
     public override void StartControl()
@@ -196,6 +205,7 @@ public class ControlForBuildCpt : BaseControl
         CptUtil.RemoveChildsByActive(listBuildSpaceContent.transform);
         listBuildSpaceSR.Clear();
     }
+
 
     /// <summary>
     /// 处理-镜头移动

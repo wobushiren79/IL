@@ -235,7 +235,7 @@ public class SceneGameInnInit : BaseSceneInit, IBaseObserver, DialogView.IDialog
 
     public void Cancel(DialogView dialogView, DialogBean dialogData)
     {
-
+        EndDay();
     }
     #endregion
 }

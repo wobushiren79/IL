@@ -22,6 +22,7 @@ public class ControlForWorkCpt : BaseControl, DialogView.IDialogCallBack
     protected Ray selectRay;
     //选中生成的弹出框
     protected DialogView dialogSelectView;
+    
 
     private void Awake()
     {
@@ -38,57 +39,32 @@ public class ControlForWorkCpt : BaseControl, DialogView.IDialogCallBack
         HandleForMouseMove();
         HandleForControlMove();
         HandleForFollowMove();
-        HandleForZoom();
     }
 
     private void FixedUpdate()
     {
-
+        HandleForZoom();
     }
+
+    
+    
 
     private void OnDisable()
     {
         ClearSelect();
-        SetCameraOrthographicSize();
-    }
+        
+        if (gameObject.activeSelf)
+        {
+            //如果只是enable=false 
 
-    /// <summary>
-    /// 缩放
-    /// </summary>
-    public void HandleForZoom()
-    {
-        if (Input.GetButton(InputInfo.Zoom_In))
-        {
-            ZoomCamera( - 0.1f);
         }
-        if (Input.GetButton(InputInfo.Zoom_Out))
+        else
         {
-            ZoomCamera( + 0.1f);
-        }
-        if (Input.GetAxis(InputInfo.Zoom_Mouse) > 0)
-        {
-            ZoomCamera(- 0.2f);
-        }
-        if (Input.GetAxis(InputInfo.Zoom_Mouse) < 0)
-        {
-            ZoomCamera(+ 0.2f);
+            //如果自身都不用了 则同时也还原镜头
+            SetCameraOrthographicSize();
         }
     }
-
-    protected void ZoomCamera(float addZoom)
-    {
-        float size = GetCameraOrthographicSize();
-        size += addZoom;
-        if (size < 7)
-        {
-            size = 7;
-        }
-        else if (size > 12)
-        {
-            size = 12;
-        }
-        SetCameraOrthographicSize(size);
-    }
+    
 
     /// <summary>
     /// 移动处理

@@ -130,8 +130,9 @@ public class UITownRecruitment : UIBaseOne, DialogView.IDialogCallBack
     }
 
     #region 弹窗回调
-    public void Submit(DialogView dialogView, DialogBean dialogBean)
+    public override void Submit(DialogView dialogView, DialogBean dialogBean)
     {
+        base.Submit(dialogView, dialogBean);
         if (dialogView as PickForMoneyDialogView)
         {
             //如果是金钱选择回调
@@ -166,9 +167,9 @@ public class UITownRecruitment : UIBaseOne, DialogView.IDialogCallBack
         }
     }
 
-    public void Cancel(DialogView dialogView, DialogBean dialogBean)
+    public override void Cancel(DialogView dialogView, DialogBean dialogBean)
     {
-
+        base.Cancel(dialogView, dialogBean);
     }
     #endregion
 }

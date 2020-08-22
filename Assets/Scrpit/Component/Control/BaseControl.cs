@@ -66,6 +66,7 @@ public class BaseControl : BaseMonoBehaviour
             camera2D.Follow = cameraFollowObj.transform;
     }
 
+
     /// <summary>
     /// 结束控制
     /// </summary>
@@ -158,5 +159,43 @@ public class BaseControl : BaseMonoBehaviour
         {
             moveY = 1f;
         }
+    }
+
+    /// <summary>
+    /// 缩放
+    /// </summary>
+    public void HandleForZoom()
+    {
+        if (Input.GetButton(InputInfo.Zoom_In))
+        {
+            ZoomCamera(-0.1f);
+        }
+        if (Input.GetButton(InputInfo.Zoom_Out))
+        {
+            ZoomCamera(+0.1f);
+        }
+        if (Input.GetAxis(InputInfo.Zoom_Mouse) > 0)
+        {
+            ZoomCamera(-0.2f);
+        }
+        if (Input.GetAxis(InputInfo.Zoom_Mouse) < 0)
+        {
+            ZoomCamera(+0.2f);
+        }
+    }
+
+    public void ZoomCamera(float addZoom)
+    {
+        float size = GetCameraOrthographicSize();
+        size += addZoom;
+        if (size < 7)
+        {
+            size = 7;
+        }
+        else if (size > 12)
+        {
+            size = 12;
+        }
+        SetCameraOrthographicSize(size);
     }
 }

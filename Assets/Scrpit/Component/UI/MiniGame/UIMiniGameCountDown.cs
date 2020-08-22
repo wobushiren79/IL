@@ -124,7 +124,7 @@ public class UIMiniGameCountDown : UIGameComponent
             {
                 uiGameManager.audioHandler.PlaySound(AudioSoundEnum.CountDownStart);
             }
-            yield return new WaitForSeconds(1.3f);
+            yield return new WaitForSeconds(0.8f);
         }
         if (mCallBack != null)
             mCallBack.GamePreCountDownEnd();
