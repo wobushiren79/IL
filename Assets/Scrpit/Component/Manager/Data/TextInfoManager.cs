@@ -93,6 +93,9 @@ public class TextInfoManager : BaseManager, ITextInfoView
                 case NpcTalkTypeEnum.GuildCoinExchange:
                     listTextData.Add(new TextInfoBean(TextInfoTypeEnum.Talk, 1, GameCommonInfo.GetUITextById(99201)));
                     break;
+                case NpcTalkTypeEnum.TrophyExchange:
+                    listTextData.Add(new TextInfoBean(TextInfoTypeEnum.Talk, 1, GameCommonInfo.GetUITextById(99202)));
+                    break;
             }
         }
         listTextData.Add(new TextInfoBean(TextInfoTypeEnum.Talk, 1, GameCommonInfo.GetUITextById(99103)));

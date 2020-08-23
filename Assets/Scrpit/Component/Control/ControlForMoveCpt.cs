@@ -32,6 +32,11 @@ public class ControlForMoveCpt : BaseControl
         InitCharacter();
     }
 
+    private void OnEnable()
+    {
+        SetCameraOrthographicSize();
+    }
+
     private void OnDisable()
     {
         if (audioForWalk != null && audioForWalk.isPlaying)

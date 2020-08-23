@@ -4,6 +4,7 @@ using System.Collections.Generic;
 
 public enum WeatherTypeEnum 
 {
+    Null=0,
     Sunny = 1,//普通
     Cloudy = 2,//多云
 
@@ -16,7 +17,7 @@ public enum WeatherTypeEnum
     LightSnow = 41,//小雪
     Snow = 42,//下雪
 
-    Wind = 51,//大风
+    Wind = 51,//风
     Defoliation = 52,//落叶
 }
 
@@ -62,6 +63,44 @@ public class WeatherTypeEnumTools
                 break;
         }
         return addition;
+    }
+
+    public static string GetWeahterName(WeatherTypeEnum weatherType)
+    {
+        string name = "";
+        switch (weatherType)
+        {
+            case WeatherTypeEnum.Sunny:
+                break;
+            case WeatherTypeEnum.Cloudy:
+                name = GameCommonInfo.GetUITextById(701);
+                break;
+            case WeatherTypeEnum.LightRain:
+                name = GameCommonInfo.GetUITextById(702);
+                break;
+            case WeatherTypeEnum.Rain:
+                name = GameCommonInfo.GetUITextById(703);
+                break;
+            case WeatherTypeEnum.Thunderstorm:
+                name = GameCommonInfo.GetUITextById(704);
+                break;
+            case WeatherTypeEnum.Fog:
+                name = GameCommonInfo.GetUITextById(705);
+                break;
+            case WeatherTypeEnum.LightSnow:
+                name = GameCommonInfo.GetUITextById(706);
+                break;
+            case WeatherTypeEnum.Snow:
+                name = GameCommonInfo.GetUITextById(707);
+                break;
+            case WeatherTypeEnum.Wind:
+                name = GameCommonInfo.GetUITextById(708);
+                break;
+            case WeatherTypeEnum.Defoliation:
+                name = GameCommonInfo.GetUITextById(709);
+                break;
+        }
+        return name;
     }
 
     /// <summary>

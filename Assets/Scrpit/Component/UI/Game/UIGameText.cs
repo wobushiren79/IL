@@ -283,6 +283,13 @@ public class UIGameText : UIGameComponent, TextInfoManager.ICallBack, DialogView
                         //对话
                         uiGameManager.textInfoManager.listTextData = RandomUtil.GetRandomDataByDictionary(uiGameManager.textInfoManager.mapTalkExchangeData);
                         NextText(1);
+                    }    
+                    //换取奖杯
+                    else if (textData.content.Equals(GameCommonInfo.GetUITextById(99202)))
+                    {
+                        //对话
+                        uiGameManager.textInfoManager.listTextData = RandomUtil.GetRandomDataByDictionary(uiGameManager.textInfoManager.mapTalkExchangeData);
+                        NextText(1);
                     }
                 }
                 else

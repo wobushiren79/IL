@@ -2,6 +2,8 @@
 using UnityEngine.UI;
 using UnityEditor;
 using System.Collections.Generic;
+using System.Linq;
+using System.Collections;
 
 public class UIGameMenu : UIGameComponent
 {
@@ -23,17 +25,39 @@ public class UIGameMenu : UIGameComponent
     public GameObject objFoodItemModelFor1;
     public GameObject objFoodItemModelFor2;
     public GameObject objFoodItemModelFor3;
+    [Header("排序")]
+    public Button btSortDef;
+    public Button btSortName;
+    public Button btSortRarity;
+    public Button btSortSell;
+    public Button btSortLevel;
+    public Button btSortLevelUp;
+    public List<MenuOwnBean> listMenu = new List<MenuOwnBean>();
 
     private void Start()
     {
         if (btBack != null)
             btBack.onClick.AddListener(OpenMainUI);
-
+        if (btSortDef != null)
+            btSortDef.onClick.AddListener(OnClickForSortDef);
+        if (btSortName != null)
+            btSortName.onClick.AddListener(OnClickForSortName);
+        if (btSortRarity != null)
+            btSortRarity.onClick.AddListener(OnClickForSortRarity);
+        if (btSortSell != null)
+            btSortSell.onClick.AddListener(OnClickForSortSell);
+        if (btSortLevel != null)
+            btSortLevel.onClick.AddListener(OnClickForSortLevel);
+        if (btSortLevelUp != null)
+            btSortLevelUp.onClick.AddListener(OnClickForSortLevelUp);
     }
 
     public override void OpenUI()
     {
         base.OpenUI();
+        List<MenuOwnBean> listMenu = uiGameManager.gameDataManager.gameData.listMenu;
+        this.listMenu.Clear();
+        this.listMenu.AddRange(listMenu);
         CreateFoodList();
     }
 
@@ -83,9 +107,13 @@ public class UIGameMenu : UIGameComponent
 
     public void CreateFoodList()
     {
+        StopAllCoroutines();
         CptUtil.RemoveChildsByActive(objFoodListContent.transform);
-        List<MenuOwnBean> listMenu = uiGameManager.gameDataManager.gameData.listMenu;
+        StartCoroutine(CoroutineForCreateFoodList());
+    }
 
+    public IEnumerator CoroutineForCreateFoodList()
+    {
         for (int i = 0; i < listMenu.Count; i++)
         {
             MenuOwnBean itemData = listMenu[i];
@@ -94,7 +122,7 @@ public class UIGameMenu : UIGameComponent
                 continue;
             GameObject objModel = null;
             MenuLevelTypeEnum level = itemData.GetMenuLevel(uiGameManager.innFoodManager, out string levelStr, out int nextLevelExp);
-            if (level ==  MenuLevelTypeEnum.Star)
+            if (level == MenuLevelTypeEnum.Star)
             {
                 objModel = objFoodItemModelFor1;
             }
@@ -114,7 +142,93 @@ public class UIGameMenu : UIGameComponent
             GameObject foodObj = Instantiate(objFoodListContent, objModel);
             ItemGameMenuFoodCpt foodCpt = foodObj.GetComponent<ItemGameMenuFoodCpt>();
             foodCpt.SetData(itemData, menuInfo);
+            yield return new WaitForEndOfFrame();
         }
+    }
+
+    /// <summary>
+    /// 默认排序点击
+    /// </summary>
+    public void OnClickForSortDef()
+    {
+        uiGameManager.audioHandler.PlaySound(AudioSoundEnum.ButtonForNormal);
+        List<MenuOwnBean> listMenu = uiGameManager.gameDataManager.gameData.listMenu;
+        this.listMenu.Clear();
+        this.listMenu.AddRange(listMenu);
+        CreateFoodList();
+    }
+
+    /// <summary>
+    /// 名字排序点击
+    /// </summary>
+    public void OnClickForSortName()
+    {
+        uiGameManager.audioHandler.PlaySound(AudioSoundEnum.ButtonForNormal);
+        //TODO 名字排序有问题
+        this.listMenu =  this.listMenu.OrderByDescending(
+            (data)=> 
+            {
+                MenuInfoBean menuInfo = uiGameManager.innFoodManager.GetFoodDataById(data.menuId);
+                return menuInfo.name;
+            }).ToList();
+        CreateFoodList();
+    }
+
+    /// <summary>
+    /// 稀有度排序点击
+    /// </summary>
+    public void OnClickForSortRarity()
+    {
+        uiGameManager.audioHandler.PlaySound(AudioSoundEnum.ButtonForNormal);
+        this.listMenu = this.listMenu.OrderByDescending(
+            (data) =>
+            {
+                MenuInfoBean menuInfo = uiGameManager.innFoodManager.GetFoodDataById(data.menuId);
+                return menuInfo.rarity;
+             }).ToList();
+        CreateFoodList();
+    }
+
+    /// <summary>
+    /// 等级排序点击
+    /// </summary>
+    public void OnClickForSortLevel()
+    {
+        uiGameManager.audioHandler.PlaySound(AudioSoundEnum.ButtonForNormal);
+        this.listMenu = this.listMenu.OrderByDescending(
+            (data) =>
+            {
+                return data.menuLevel;
+            }).ToList();
+        CreateFoodList();
+    }
+
+    /// <summary>
+    /// 售卖排序点击
+    /// </summary>
+    public void OnClickForSortSell()
+    {
+        uiGameManager.audioHandler.PlaySound(AudioSoundEnum.ButtonForNormal);
+        this.listMenu = this.listMenu.OrderByDescending(
+            (data) =>
+            {
+                return data.isSell;
+            }).ToList();
+        CreateFoodList();
+    }
+
+    /// <summary>
+    /// 是否升级排序点击
+    /// </summary>
+    public void OnClickForSortLevelUp()
+    {
+        uiGameManager.audioHandler.PlaySound(AudioSoundEnum.ButtonForNormal);
+        this.listMenu = this.listMenu.OrderByDescending(
+            (data) =>
+            {
+                return data.menuStatus;
+            }).ToList();
+        CreateFoodList();
     }
 
     /// <summary>

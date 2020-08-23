@@ -324,7 +324,8 @@ public class UIGameEquip : UIGameComponent
             && itemType != GeneralEnum.Accost
             && itemType != GeneralEnum.Beater
             && itemType != GeneralEnum.Book
-            && itemType != GeneralEnum.SkillBook)
+            && itemType != GeneralEnum.SkillBook
+            && itemType != GeneralEnum.Other)
             return null;
         GameObject objItem = Instantiate(objItemContent, objItemModel);
         ItemGameBackpackEquipCpt backpackCpt = objItem.GetComponent<ItemGameBackpackEquipCpt>();

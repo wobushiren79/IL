@@ -93,7 +93,7 @@ public class ItemGameWorkerDetailsWorkerCpt : BaseMonoBehaviour
         if (sliderExperience != null)
             sliderExperience.value = exp;
         string levelStr = "";
-        if (exp == 1)
+        if (expCurrent >= expLevelUp)
         {
             ivSliderFill.sprite = spSliderMax;
             levelStr = GameCommonInfo.GetUITextById(75);

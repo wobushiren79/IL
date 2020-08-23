@@ -991,7 +991,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.427451, g: 0.6666667, b: 0.16862746, a: 1}
+  m_Color: {r: 0.735849, g: 0.34385347, b: 0, a: 1}
   m_RaycastTarget: 1
   m_Maskable: 1
   m_OnCullStateChanged:
@@ -1725,6 +1725,7 @@ MonoBehaviour:
     valid: 0
     menu_id: 0
     icon_key: 
+    anim_key: 
     cook_time: 0
     ing_oilsalt: 0
     ing_meat: 0
@@ -1739,6 +1740,7 @@ MonoBehaviour:
     price_s: 0
     price_m: 0
     price_l: 0
+    rarity: 0
   isShowTime: 1
 --- !u!1 &4471983511744080164
 GameObject:
@@ -1826,11 +1828,9 @@ MonoBehaviour:
   btResearchCancel: {fileID: 1703790570154784310}
   ivBackground: {fileID: 4471983511378259008}
   colorForSell: {r: 0.427451, g: 0.6666667, b: 0.16862746, a: 1}
-  colorForNoSell: {r: 0.5283019, g: 0.5283019, b: 0.5283019, a: 1}
+  colorForNoSell: {r: 0.7411765, g: 0.35686275, b: 0.015686275, a: 1}
   colorForNoIng: {r: 0.6792453, g: 0, b: 0, a: 1}
-  colorForRarity1: {r: 0.81568635, g: 0.27450982, b: 0.10980393, a: 0.29803923}
-  colorForRarity2: {r: 0, g: 0.35291883, b: 0.8301887, a: 0.29803923}
-  colorForRarity3: {r: 0.8018868, g: 0, b: 0.699055, a: 0.29803923}
+  stringForNoIng: 
   menuOwnData:
     menuId: 0
     isSell: 0
@@ -1848,6 +1848,7 @@ MonoBehaviour:
     valid: 0
     menu_id: 0
     icon_key: 
+    anim_key: 
     cook_time: 0
     ing_oilsalt: 0
     ing_meat: 0
@@ -1862,6 +1863,7 @@ MonoBehaviour:
     price_s: 0
     price_m: 0
     price_l: 0
+    rarity: 0
 --- !u!1 &4471983511752990389
 GameObject:
   m_ObjectHideFlags: 0

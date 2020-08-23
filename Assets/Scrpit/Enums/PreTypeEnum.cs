@@ -567,8 +567,7 @@ public class PreTypeEnumTools : DataTools
                 ingredients = IngredientsEnum.Waterwine;
                 break;
             case PreTypeEnum.PayIngForFlour:
-                ingredients = IngredientsEnum.Oilsalt;
-
+                ingredients = IngredientsEnum.Flour;
                 break;
         }
         string ingName = IngredientsEnumTools.GetIngredientName(ingredients);

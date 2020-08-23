@@ -40,10 +40,10 @@ public class JumpTextCpt : BaseMonoBehaviour
         transform.DOPunchScale(new Vector3(1.2f, 1.2f, 1.2f), 0.5f, 5, 1);
         transform.DOLocalMoveY(1.5f, 2.5f).OnComplete(delegate ()
         {
-            Destroy(this);
+            Destroy(gameObject);
         });
         if (tvContent != null)
-            DOTween.To(() => 1f, alpha => tvContent.color = new Color(tvContent.color.r, tvContent.color.g, tvContent.color.b, alpha), 0f, 1).SetDelay(2.5f);
+            DOTween.To(() => 1f, alpha => tvContent.color = new Color(tvContent.color.r, tvContent.color.g, tvContent.color.b, alpha), 0f, 0.9f).SetDelay(2.5f);
         if (tvContentShadow != null)
             DOTween.To(() => 1f, alpha => tvContentShadow.color = new Color(tvContentShadow.color.r, tvContentShadow.color.g, tvContentShadow.color.b, alpha), 0f, 1).SetDelay(2.5f);
     }

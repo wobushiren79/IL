@@ -35,19 +35,32 @@ public class GameDataHandler : BaseHandler, DialogView.IDialogCallBack,IBaseObse
 
     private void Start()
     {
-        StartCoroutine(CoroutineForPlayTime());
+        StartCoroutine(CoroutineForRealtime());
+        StartCoroutine(CoroutineForTime());
     }
 
     /// <summary>
-    /// 协程-游玩时间记录
+    /// 协程-真实时间处理
     /// </summary>
     /// <returns></returns>
-    public IEnumerator CoroutineForPlayTime()
+    public IEnumerator CoroutineForRealtime()
     {
         while (true)
         {
             yield return new WaitForSecondsRealtime(1);
             HandleForPlayTime();
+        }
+    }
+
+    /// <summary>
+    /// 协程-游戏时间处理-受到时间缩放影响
+    /// </summary>
+    /// <returns></returns>
+    public IEnumerator CoroutineForTime()
+    {
+        while (true)
+        {
+            yield return new WaitForSeconds(1);
             HandleForMenuResearch();
         }
     }
@@ -60,8 +73,6 @@ public class GameDataHandler : BaseHandler, DialogView.IDialogCallBack,IBaseObse
         if (gameDataManager != null)
             gameDataManager.gameData.playTime.AddTimeForHMS(0, 0, 1);
     }
-
-   
 
     /// <summary>
     /// 菜单研究处理

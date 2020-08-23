@@ -37,6 +37,11 @@ public class StrengthTestView : BaseMonoBehaviour
         }
     }
 
+    private void FixedUpdate()
+    {
+
+    }
+
     /// <summary>
     /// 开始测试
     /// </summary>
@@ -59,7 +64,7 @@ public class StrengthTestView : BaseMonoBehaviour
     /// </summary>
     /// <param name="name"></param>
     /// <param name="speed"></param>
-    public void SetData(string name,float speed)
+    public void SetData(string name, float speed)
     {
         mDirection = 1;
         sliderStrength.value = 0;

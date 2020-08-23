@@ -54,7 +54,14 @@ public class GameItemsManager : BaseManager, IItemsInfoView
     {
         return GetItemsListByType(GeneralEnum.Shoes);
     }
-
+    /// <summary>
+    /// 获取所有其他信息
+    /// </summary>
+    /// <returns></returns>
+    public List<ItemsInfoBean> GetOtherList()
+    {
+        return GetItemsListByType(GeneralEnum.Other);
+    }
     /// <summary>
     /// 获取所有物品
     /// </summary>

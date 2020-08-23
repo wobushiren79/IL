@@ -753,6 +753,10 @@ public class ItemCreateWindowsEditor : EditorWindow, StoreInfoManager.ICallBack
         {
             listFindItem = gameItemsManager.GetClothesList();
         }
+        if (GUILayout.Button("查询其他", GUILayout.Width(100), GUILayout.Height(20)))
+        {
+            listFindItem = gameItemsManager.GetOtherList();
+        }
         GUILayout.EndHorizontal();
 
         for (int i = 0; i < listFindItem.Count; i++)

@@ -9,5 +9,5 @@ public enum NpcTalkTypeEnum
     Recruit = 3, //招募
     Gift = 4, //送礼
     GuildCoinExchange = 101,//公会勋章交换
-
+    TrophyExchange = 102,//奖杯交换
 }

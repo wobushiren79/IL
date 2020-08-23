@@ -8,8 +8,11 @@ public class ItemGameCalendarCpt : BaseMonoBehaviour
     public Text tvDay;
     public Text tvRemark;
     public Text tvDetails;
+    public Text tvWeather;
 
     public DateInfoBean dateInfo;
+
+    public WeatherTypeEnum weather= WeatherTypeEnum.Null;
 
     /// <summary>
     /// 设置数据
@@ -22,6 +25,17 @@ public class ItemGameCalendarCpt : BaseMonoBehaviour
         this.dateInfo = dateInfo;
         SetDay(dateInfo.day);
         SetDetails(dateInfo.content);
+    }
+
+    /// <summary>
+    /// 设置天气
+    /// </summary>
+    /// <param name="weather"></param>
+    public void SetWeather(WeatherTypeEnum weather)
+    {
+        this.weather = weather;
+        if (tvWeather != null)
+            tvWeather.text = WeatherTypeEnumTools.GetWeahterName(weather);
     }
 
     /// <summary>

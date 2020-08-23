@@ -878,7 +878,7 @@ public class EditorUI
              menuInfo.ing_vegetables * 5 +
              menuInfo.ing_melonfruit * 5 +
              menuInfo.ing_waterwine * 10 +
-             menuInfo.ing_flour * 10);
+             menuInfo.ing_flour * 5);
         GUIText(getmoney+"");
         GUIText("输入利润:",50);
         long setGetmoney = GUIEditorText(getmoney, 50);
@@ -894,7 +894,7 @@ public class EditorUI
              menuInfo.ing_vegetables * 5 +
              menuInfo.ing_melonfruit * 5 +
              menuInfo.ing_waterwine * 10 +
-             menuInfo.ing_flour * 10;
+             menuInfo.ing_flour * 5;
         }
         GUIText("利润:");
 

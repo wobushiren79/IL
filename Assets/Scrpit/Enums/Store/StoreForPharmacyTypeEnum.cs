@@ -3,5 +3,5 @@ using UnityEditor;
 
 public enum StoreForPharmacyTypeEnum 
 {
-    Medicine=1,//药
+    Medicine = 1,//药
 }

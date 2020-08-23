@@ -63,6 +63,8 @@ public class ItemGameBackpackEquipCpt : ItemGameBackpackCpt, SkillInfoManager.IC
                     break;
                 case GeneralEnum.Book:
                 case GeneralEnum.SkillBook:
+                case GeneralEnum.Other:
+
                     popupItemsSelection.Open(PopupItemsSelection.SelectionTypeEnum.UseAndDiscard);
                     break;
                 default:
@@ -110,6 +112,19 @@ public class ItemGameBackpackEquipCpt : ItemGameBackpackCpt, SkillInfoManager.IC
                     //判断是否可学习
                     uiGameManager.skillInfoManager.SetCallBack(this);
                     uiGameManager.skillInfoManager.GetSkillById(itemsInfoBean.add_id);
+                }
+                break;
+            case GeneralEnum.Other:
+                if ( itemsInfoBean.id == 99900001)
+                {
+                    //忘记技能的孟婆汤
+                    if (!CheckUtil.ListIsNull( characterData.attributes.listSkills))
+                    {
+                        int removePosition = Random.Range(0, characterData.attributes.listSkills.Count);
+                        characterData.attributes.listSkills.RemoveAt(removePosition);
+                    }
+                    toastManager.ToastHint(characterData.baseInfo.name + GameCommonInfo.GetUITextById(1067));
+                    RefreshItems(itemsInfoBean.id, -1);
                 }
                 break;
             default:

@@ -21,25 +21,8 @@ public class UIGameWorkerDetailsAccostInfo : UIGameStatisticsDetailsBase<UIGameW
         //AddAccostTime(accostInfo.accostTotalTime);
     }
 
-    /// <summary>
-    /// 设置成功招揽次数
-    /// </summary>
-    /// <param name="number"></param>
-    public void AddAccostSuccessNumber(long number)
-    {
-        Sprite spIcon = GetSpriteByName("worker_accounting_pro_0");
-        CreateTextItem(spIcon, GameCommonInfo.GetUITextById(323), number + "");
-    }
 
-    /// <summary>
-    /// 设置失败招揽次数
-    /// </summary>
-    /// <param name="number"></param>
-    public void AddAccostFailNumber(long number)
-    {
-        Sprite spIcon = GetSpriteByName("worker_accounting_pro_0");
-        CreateTextItem(spIcon, GameCommonInfo.GetUITextById(324), number + "");
-    }
+
 
     /// <summary>
     /// 设置总共数量 
@@ -48,8 +31,31 @@ public class UIGameWorkerDetailsAccostInfo : UIGameStatisticsDetailsBase<UIGameW
     public void AddAccostTotalNumber(long number)
     {
         Sprite spIcon = GetSpriteByName("worker_accounting_pro_0");
+        CreateTextItem(spIcon, GameCommonInfo.GetUITextById(323), number + "");
+    }
+
+    /// <summary>
+    /// 设置成功招揽次数
+    /// </summary>
+    /// <param name="number"></param>
+    public void AddAccostSuccessNumber(long number)
+    {
+        Sprite spIcon = GetSpriteByName("worker_accounting_pro_0");
+        CreateTextItem(spIcon, GameCommonInfo.GetUITextById(324), number + "");
+    }
+
+
+    /// <summary>
+    /// 设置失败招揽次数
+    /// </summary>
+    /// <param name="number"></param>
+    public void AddAccostFailNumber(long number)
+    {
+        Sprite spIcon = GetSpriteByName("worker_accounting_pro_0");
         CreateTextItem(spIcon, GameCommonInfo.GetUITextById(325), number + "");
     }
+
+
 
     /// <summary>
     /// 设置总共数量 

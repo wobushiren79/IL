@@ -9,4 +9,5 @@ public class DateInfoBean : BaseBean
     public int month;
     public int day;
     public string content;
+
 }

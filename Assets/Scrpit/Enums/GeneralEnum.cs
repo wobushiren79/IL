@@ -23,6 +23,7 @@ public enum GeneralEnum
     Gift = 16,//礼物
     Mask = 21,//面具
 
+    Other = 999,//其他
 }
 
 public class GeneralEnumTools
@@ -68,6 +69,7 @@ public class GeneralEnumTools
             case GeneralEnum.SkillBook:
             case GeneralEnum.Read:
             case GeneralEnum.Gift:
+            case GeneralEnum.Other:
                 spIcon = iconDataManager.GetIconSpriteByName(itemsInfo.icon_key);
                 break;
             default:
@@ -122,6 +124,9 @@ public class GeneralEnumTools
                 break;
             case GeneralEnum.Gift:
                 itemsnTypeName = GameCommonInfo.GetUITextById(412);
+                break;
+            case GeneralEnum.Other:
+                itemsnTypeName = GameCommonInfo.GetUITextById(413);
                 break;
             default:
                 break;

@@ -227,7 +227,7 @@ public class ItemGameWorkerCpt : ItemGameBaseCpt, IRadioButtonCallBack, DialogVi
         foreach (CharacterWorkerBaseBean characterWorker in listWorker)
         {
             characterWorker.GetWorkerExp(out long nextLevelExp, out long currentExp, out float levelProportion);
-            if (levelProportion == 1)
+            if (currentExp >= nextLevelExp)
             {
                 isCanLevelUp = true;
                 break;

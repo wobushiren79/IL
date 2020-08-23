@@ -40,6 +40,7 @@ public class RewardTypeBean : DataBean<RewardTypeEnum>
     public long rewardId;
     public int rewardNumber = 1;
     public CharacterBean workerCharacterData;
+    public bool isRecord = true; //是否记录
 
     public RewardTypeBean() : base(RewardTypeEnum.AddMoneyS, "")
     {
@@ -189,28 +190,34 @@ public class RewardTypeEnumTools : DataTools
     {
         string iconKey = "";
         string rewardDescribe = "???";
+        int[] listData = StringUtil.SplitBySubstringForArrayInt(rewardTypeData.data,',');
         switch (rewardTypeData.dataType)
         {
             case RewardTypeEnum.AddArenaTrophyElementary:
                 iconKey = "trophy_1_0";
-                rewardDescribe = string.Format(GameCommonInfo.GetUITextById(6006), rewardTypeData.data);
+                rewardDescribe = string.Format(GameCommonInfo.GetUITextById(6006), listData[0]+"");
                 break;
             case RewardTypeEnum.AddArenaTrophyIntermediate:
                 iconKey = "trophy_1_1";
-                rewardDescribe = string.Format(GameCommonInfo.GetUITextById(6007), rewardTypeData.data);
+                rewardDescribe = string.Format(GameCommonInfo.GetUITextById(6007), listData[0] + "");
                 break;
             case RewardTypeEnum.AddArenaTrophyAdvanced:
                 iconKey = "trophy_1_2";
-                rewardDescribe = string.Format(GameCommonInfo.GetUITextById(6008), rewardTypeData.data);
+                rewardDescribe = string.Format(GameCommonInfo.GetUITextById(6008), listData[0] + "");
                 break;
             case RewardTypeEnum.AddArenaTrophyLegendary:
                 iconKey = "trophy_1_3";
-                rewardDescribe = string.Format(GameCommonInfo.GetUITextById(6009), rewardTypeData.data);
+                rewardDescribe = string.Format(GameCommonInfo.GetUITextById(6009), listData[0] + "");
                 break;
         }
         rewardTypeData.spRewardIcon = iconDataManager.GetIconSpriteByName(iconKey);
         rewardTypeData.rewardDescribe = rewardDescribe;
-        rewardTypeData.rewardNumber = int.Parse(rewardTypeData.data);
+        rewardTypeData.rewardNumber = listData[0];
+        if (listData.Length > 1)
+        {
+            int isRecord = listData[1];
+            rewardTypeData.isRecord = (isRecord == 0 ? false : true);
+        }
         return rewardTypeData;
     }
 
@@ -412,22 +419,22 @@ public class RewardTypeEnumTools : DataTools
                     break;
                 case RewardTypeEnum.AddArenaTrophyElementary:
                     long addTrophy1 = itemData.rewardNumber;
-                    gameData.AddArenaTrophy(addTrophy1, 0, 0, 0);
+                    gameData.AddArenaTrophy(addTrophy1, 0, 0, 0,itemData.isRecord);
                     toastManager.ToastHint(itemData.spRewardIcon, string.Format(GameCommonInfo.GetUITextById(6099), string.Format(GameCommonInfo.GetUITextById(6006), addTrophy1 + "")));
                     break;
                 case RewardTypeEnum.AddArenaTrophyIntermediate:
                     long addTrophy2 = itemData.rewardNumber;
-                    gameData.AddArenaTrophy(0, addTrophy2, 0, 0);
+                    gameData.AddArenaTrophy(0, addTrophy2, 0, 0, itemData.isRecord);
                     toastManager.ToastHint(itemData.spRewardIcon, string.Format(GameCommonInfo.GetUITextById(6099), string.Format(GameCommonInfo.GetUITextById(6007), addTrophy2 + "")));
                     break;
                 case RewardTypeEnum.AddArenaTrophyAdvanced:
                     long addTrophy3 = itemData.rewardNumber;
-                    gameData.AddArenaTrophy(0, 0, addTrophy3, 0);
+                    gameData.AddArenaTrophy(0, 0, addTrophy3, 0, itemData.isRecord);
                     toastManager.ToastHint(itemData.spRewardIcon, string.Format(GameCommonInfo.GetUITextById(6099), string.Format(GameCommonInfo.GetUITextById(6008), addTrophy3 + "")));
                     break;
                 case RewardTypeEnum.AddArenaTrophyLegendary:
                     long addTrophy4 = itemData.rewardNumber;
-                    gameData.AddArenaTrophy(0, 0, 0, addTrophy4);
+                    gameData.AddArenaTrophy(0, 0, 0, addTrophy4, itemData.isRecord);
                     toastManager.ToastHint(itemData.spRewardIcon, string.Format(GameCommonInfo.GetUITextById(6099), string.Format(GameCommonInfo.GetUITextById(6009), addTrophy4 + "")));
                     break;
                 case RewardTypeEnum.AddItems:

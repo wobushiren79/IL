@@ -73,19 +73,21 @@ public class GameDataBean
     /// <param name="arenaTrophy2"></param>
     /// <param name="arenaTrophy3"></param>
     /// <param name="arenaTrophy4"></param>
-    public void AddArenaTrophy(long trophyElementary, long trophyIntermediate, long trophyAdvanced, long trophyLegendary)
+    /// <param name="isRecord">是否记录</param>
+    public void AddArenaTrophy(long trophyElementary, long trophyIntermediate, long trophyAdvanced, long trophyLegendary,bool isRecord)
     {
         this.trophyElementary += trophyElementary;
-        userAchievement.ownTrophyElementary += trophyElementary;
-
         this.trophyIntermediate += trophyIntermediate;
-        userAchievement.ownTrophyIntermediate += trophyIntermediate;
-
         this.trophyAdvanced += trophyAdvanced;
-        userAchievement.ownTrophyAdvanced += trophyAdvanced;
-
         this.trophyLegendary += trophyLegendary;
-        userAchievement.ownTrophyLegendary += trophyLegendary;
+
+        if (isRecord)
+        {
+            userAchievement.ownTrophyElementary += trophyElementary;
+            userAchievement.ownTrophyIntermediate += trophyIntermediate;
+            userAchievement.ownTrophyAdvanced += trophyAdvanced;
+            userAchievement.ownTrophyLegendary += trophyLegendary;
+        }
 
         if (this.trophyElementary < 0)
             this.trophyElementary = 0;
@@ -95,6 +97,10 @@ public class GameDataBean
             this.trophyAdvanced = 0;
         if (this.trophyLegendary < 0)
             this.trophyLegendary = 0;
+    }
+    public void AddArenaTrophy(long trophyElementary, long trophyIntermediate, long trophyAdvanced, long trophyLegendary)
+    {
+        AddArenaTrophy(trophyElementary, trophyIntermediate, trophyAdvanced, trophyLegendary, true);
     }
 
     /// <summary>

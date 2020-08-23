@@ -178,6 +178,7 @@ public class CalendarView : BaseMonoBehaviour, IDateInfoView
         {
             if (itemDay.dateInfo != null && itemDay.dateInfo.day == day)
             {
+                itemDay.SetWeather(GameCommonInfo.CurrentDayData.weatherToday.weatherType);
                 itemDay.SetItemStatus(true);
             }
             else

@@ -82,6 +82,7 @@ public class ControlForBuildCpt : BaseControl
         //检测是否控制建造
         HandleForBuildConfirm(isCanBuild, buildPosition);
     }
+
     private void OnDisable()
     {
         SetCameraOrthographicSize();
