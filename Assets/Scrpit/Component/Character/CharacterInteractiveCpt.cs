@@ -6,6 +6,7 @@ using DG.Tweening;
 public class CharacterInteractiveCpt : BaseMonoBehaviour
 {
     public GameObject interactiveObj;
+    public GameObject objBackground;
     public TextMesh tvContent;
     public TextMesh tvContentShadow;
     public SpriteRenderer srIcon;
@@ -16,6 +17,19 @@ public class CharacterInteractiveCpt : BaseMonoBehaviour
     /// <param name="content"></param>
     public void ShowInteractive(string content)
     {
+
+        //调整大小
+        if (content.Length <= 4)
+        {
+            objBackground.transform.localScale = new Vector3(1, 1, 1) * 1.5f;
+        }
+        else
+        {
+            byte[] byte_len = System.Text.Encoding.Default.GetBytes(content);
+            objBackground.transform.localScale = new Vector3(1 + (0.04f * (byte_len.Length - 4)), 1, 1) * 1.5f;
+        }
+
+
         interactiveObj.SetActive(true);
         tvContent.text = content;
         tvContentShadow.text = content;

@@ -65,4 +65,9 @@ public class BaseSceneInit : BaseMonoBehaviour
         }  
     }
 
+    public virtual void RefreshScene()
+    {
+
+    }
+
 }

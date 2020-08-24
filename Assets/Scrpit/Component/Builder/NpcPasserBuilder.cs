@@ -27,6 +27,7 @@ public class NpcPasserBuilder : NpcNormalBuilder
     /// <param name="npcNumber"></param>
     public void BuilderPasserForInit(int npcNumber)
     {
+        CptUtil.RemoveChildsByActive(objContainer);
         listPasser.Clear();
         for (int i = 0; i < npcNumber; i++)
         {

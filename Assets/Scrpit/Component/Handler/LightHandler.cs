@@ -18,6 +18,11 @@ public class LightHandler : BaseHandler, IBaseObserver
 
     private void Start()
     {
+        CheckTime();
+    }
+
+    public void CheckTime()
+    {
         if (gameTimeHandler != null)
         {
             gameTimeHandler.AddObserver(this);

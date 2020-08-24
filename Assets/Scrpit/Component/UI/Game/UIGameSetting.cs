@@ -20,6 +20,7 @@ public class UIGameSetting : UIGameComponent, DropdownView.ICallBack, ProgressVi
     public RadioButtonView rbFrames;
     public RadioButtonView rbMouseMove;
     public RadioButtonView rbKeyTip;
+    public RadioButtonView rbEventCameraMove;
 
     public InputField etFrames;
     public void Start()
@@ -132,7 +133,20 @@ public class UIGameSetting : UIGameComponent, DropdownView.ICallBack, ProgressVi
                 rbKeyTip.ChangeStates(RadioButtonView.RadioButtonStatus.Selected);
             }   
         }
-
+        //事件镜头跟随初始化
+        if (rbEventCameraMove != null)
+        {
+            rbEventCameraMove.SetCallBack(this);
+            if (GameCommonInfo.GameConfig.statusForEventCameraMove == 0)
+            {
+                rbEventCameraMove.ChangeStates(RadioButtonView.RadioButtonStatus.Unselected);
+            }
+            else if (GameCommonInfo.GameConfig.statusForEventCameraMove == 1)
+            {
+                rbEventCameraMove.ChangeStates(RadioButtonView.RadioButtonStatus.Selected);
+            }
+        }
+        
         //离开游戏回到主菜单初始化
         if (SceneUtil.GetCurrentScene() == ScenesEnum.MainScene)
         {
@@ -304,6 +318,7 @@ public class UIGameSetting : UIGameComponent, DropdownView.ICallBack, ProgressVi
             GameCommonInfo.GameUserId = userId;
             SceneUtil.SceneChange(ScenesEnum.GameInnScene);
         }
+
     }
 
     public void Cancel(DialogView dialogView, DialogBean dialogBean)
@@ -351,6 +366,18 @@ public class UIGameSetting : UIGameComponent, DropdownView.ICallBack, ProgressVi
             else if (buttonStates == RadioButtonView.RadioButtonStatus.Unselected)
             {
                 GameCommonInfo.GameConfig.statusForMouseMove = 0;
+            }
+        }
+        else if (view == rbEventCameraMove)
+        {
+            //按键提示
+            if (buttonStates == RadioButtonView.RadioButtonStatus.Selected)
+            {
+                GameCommonInfo.GameConfig.statusForEventCameraMove = 1;
+            }
+            else if (buttonStates == RadioButtonView.RadioButtonStatus.Unselected)
+            {
+                GameCommonInfo.GameConfig.statusForEventCameraMove = 0;
             }
         }
     }

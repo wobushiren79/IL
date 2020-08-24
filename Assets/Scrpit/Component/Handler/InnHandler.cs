@@ -260,7 +260,7 @@ public class InnHandler : BaseMonoBehaviour, IBaseObserver
     {
         int height = gameDataManager.gameData.GetInnBuildData().innHeight;
         int width = gameDataManager.gameData.GetInnBuildData().innWidth;
-        Vector3 position = new Vector3(UnityEngine.Random.Range(1.5f, (float)width - 1f), UnityEngine.Random.Range(1.5f, (float)height - 1f));
+        Vector3 position = new Vector3(UnityEngine.Random.Range(1.5f, (float)width - 2f), UnityEngine.Random.Range(1.5f, (float)height - 2f));
         return position;
     }
 

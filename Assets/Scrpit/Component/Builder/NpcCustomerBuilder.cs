@@ -26,6 +26,7 @@ public class NpcCustomerBuilder : NpcNormalBuilder, IBaseObserver
     /// <param name="npcNumber"></param>
     public void BuilderCustomerForInit(int npcNumber)
     {
+        CptUtil.RemoveChildsByActive(objContainer);
         for (int i = 0; i < npcNumber; i++)
         {
             //获取随机坐标
@@ -230,23 +231,23 @@ public class NpcCustomerBuilder : NpcNormalBuilder, IBaseObserver
     {
         if (hour > 6 && hour <= 9)
         {
-            buildInterval = 4;
+            buildInterval = 3.5f;
         }
         else if (hour > 9 && hour <= 12)
         {
-            buildInterval = 3;
+            buildInterval = 2.5f;
         }
         else if (hour > 12 && hour <= 18)
         {
-            buildInterval = 2;
+            buildInterval = 1.5f;
         }
         else if (hour > 18 && hour <= 21)
         {
-            buildInterval = 3;
+            buildInterval = 2.5f;
         }
         else if (hour > 21 && hour <= 24)
         {
-            buildInterval = 4;
+            buildInterval = 3.5f;
         }
         else
         {
@@ -264,11 +265,11 @@ public class NpcCustomerBuilder : NpcNormalBuilder, IBaseObserver
         }
         else if (levelTitle == 2)
         {
-            buildInterval = buildInterval * 0.7f;
+            buildInterval = buildInterval * 0.65f;
         }
         else if (levelTitle == 3)
         {
-            buildInterval = buildInterval * 0.5f;
+            buildInterval = buildInterval * 0.4f;
         }
         InnAttributesBean innAttributes = gameDataManager.gameData.GetInnAttributesData();
         buildTeamGustomerRate = innAttributes.CalculationTeamCustomerBuildRate();
@@ -290,7 +291,8 @@ public class NpcCustomerBuilder : NpcNormalBuilder, IBaseObserver
             //重新获取顾客信息
             listTeamCustomer = npcTeamManager.GetRandomTeamMeetConditionByType(NpcTeamTypeEnum.Customer, gameDataManager.gameData);
             //开始建造顾客
-            StartBuildCustomer(); 
+            StartBuildCustomer();
+            HandleNpcBuildTime(6);
         }
         else if ((GameTimeHandler.NotifyTypeEnum)type == GameTimeHandler.NotifyTypeEnum.EndDay)
         {

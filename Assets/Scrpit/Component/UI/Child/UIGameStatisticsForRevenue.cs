@@ -10,6 +10,7 @@ public class UIGameStatisticsForRevenue : BaseUIChildComponent<UIGameStatistics>
     public CartogramBarView cartogramBar;
 
     protected GameDataManager gameDataManager;
+    protected GameTimeHandler gameTimeHandler;
 
     public List<int> listYear;
     public UserRevenueBean userRevenueData;
@@ -17,6 +18,7 @@ public class UIGameStatisticsForRevenue : BaseUIChildComponent<UIGameStatistics>
     private void Awake()
     {
         gameDataManager = uiComponent.uiGameManager.gameDataManager;
+        gameTimeHandler = uiComponent.uiGameManager.gameTimeHandler;
         if (rgMonth != null)
             rgMonth.SetCallBack(this);
         if (ddYear != null)
@@ -100,7 +102,12 @@ public class UIGameStatisticsForRevenue : BaseUIChildComponent<UIGameStatistics>
     public void GetUserRevenueSuccess(UserRevenueBean userRevenueData)
     {
         this.userRevenueData = userRevenueData;
-        rgMonth.SetPosition(0, true);
+        gameTimeHandler.GetTime(out int year,out int month,out int day);
+        if (month == 0)
+        {
+            month = 1;
+        }
+        rgMonth.SetPosition( month - 1 , true);
     }
 
     public void GetUserRevenueYearSuccess(List<int> listYear)
@@ -125,8 +132,20 @@ public class UIGameStatisticsForRevenue : BaseUIChildComponent<UIGameStatistics>
         }
         ddYear.AddOptions(listOptionData);
         //ddYear.value = 0;
-        ddYear.SetValueWithoutNotify(0);
-        OnValueChangedForYear(0);
+        gameTimeHandler.GetTime(out int year, out int month, out int day);
+
+        int yearPosition = year - 221;
+        if (yearPosition < 0)
+        {
+            yearPosition = 0;
+        }
+        else if (yearPosition >= listOptionData.Count)
+        {
+            yearPosition = 0;
+        }
+        ddYear.SetValueWithoutNotify(yearPosition);
+
+        OnValueChangedForYear(yearPosition);
     }
     #endregion
 }

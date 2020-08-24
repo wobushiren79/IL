@@ -183,7 +183,7 @@ public class EventHandler : BaseHandler,
     /// <returns></returns>
     public bool EventTriggerForTalkByRascal(NpcAIRascalCpt npcAIRascal, long markId)
     {
-        if (controlHandler != null)
+        if (controlHandler != null&&GameCommonInfo.GameConfig.statusForEventCameraMove==1)
         {
             controlHandler.GetControl().SetFollowPosition(npcAIRascal.transform.position);
         }
@@ -198,7 +198,7 @@ public class EventHandler : BaseHandler,
     /// <returns></returns>
     public bool EventTriggerForTalkBySundry(NpcAISundryCpt npcAISundry, long markId)
     {
-        if (controlHandler != null)
+        if (controlHandler != null && GameCommonInfo.GameConfig.statusForEventCameraMove == 1)
         {
             controlHandler.GetControl().SetFollowPosition(npcAISundry.transform.position);
         }

@@ -15,4 +15,5 @@ public enum DialogEnum
     PickForSkill=9,
     PickForNumber=10,
     PickForSell=11,
+    JumpTime=12,
 }

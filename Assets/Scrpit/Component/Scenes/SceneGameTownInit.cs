@@ -22,6 +22,12 @@ public class SceneGameTownInit : BaseNormalSceneInit
         //故事数据
         if (storyInfoManager != null)
             storyInfoManager.storyInfoController.GetStoryInfoByScene(ScenesEnum.GameTownScene);
+        RefreshScene();
+    }
+
+    public override void RefreshScene()
+    {
+        base.RefreshScene();
         //构建重要的NPC
         if (npcImportantBuilder != null)
             npcImportantBuilder.BuildImportant();

@@ -261,15 +261,15 @@ public class InnAttributesBean
 
         if (customerType == CustomerTypeEnum.Normal)
         {
-            rate = 0.42f * rateRichness + 0.27f * ratePraise + 0.27f * rateAesthetics + 0.04f;
+            rate = 0.36f * rateRichness + 0.3f * ratePraise + 0.3f * rateAesthetics + 0.04f;
         }
         else if (customerType == CustomerTypeEnum.Team)
         {
-            rate = 0.42f * rateRichness + 0.27f * ratePraise + 0.27f * rateAesthetics + 0.04f;
+            rate = 0.36f * rateRichness + 0.3f * ratePraise + 0.3f * rateAesthetics + 0.04f;
         }
         else
         {
-            rate = 0.42f * rateRichness + 0.27f * ratePraise + 0.27f * rateAesthetics + 0.04f;
+            rate = 0.36f * rateRichness + 0.3f * ratePraise + 0.3f * rateAesthetics + 0.04f;
         }
         rate = rate / 2f;
         return rate;
@@ -297,7 +297,7 @@ public class InnAttributesBean
         float rateRichness = (float)richness / maxRichness;
         if (rateRichness > 1)
             rateRichness = 1;
-        rate = 0.42f * rateRichness + 0.27f * ratePraise + 0.27f * rateAesthetics + 0.04f;
+        rate = 0.36f * rateRichness + 0.3f * ratePraise + 0.3f * rateAesthetics + 0.04f;
         rate = rate * 0.1f;
         return rate;
     }

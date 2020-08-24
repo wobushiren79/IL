@@ -31,7 +31,15 @@ public class ProgressView : BaseMonoBehaviour
 
     public void SetData(float maxData, float data)
     {
-        float pro = data / maxData;
+        float pro = 0;
+        if (maxData == 0)
+        {
+            pro = 0;
+        }
+        else
+        {
+            pro = data / maxData;
+        }
         switch (progressType)
         {
             case ProgressType.Percentage:

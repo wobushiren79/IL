@@ -3,6 +3,7 @@ using UnityEditor;
 
 public class InteractiveTalkCpt : BaseInteractiveCpt
 {
+    public TextMesh tvContent;
     private BaseNpcAI mNpcAI;
     public string interactiveContent;
 
@@ -41,6 +42,6 @@ public class InteractiveTalkCpt : BaseInteractiveCpt
 
     public override void InteractiveStart(CharacterInteractiveCpt characterInt)
     {
-        characterInt.ShowInteractive(interactiveContent);
+        characterInt.ShowInteractive(mNpcAI.characterData.baseInfo.name);
     }
 }

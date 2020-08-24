@@ -21,6 +21,7 @@ public class NpcImportantBuilder : BaseMonoBehaviour
 
     public void BuildImportant()
     {
+        CptUtil.RemoveChildsByActive(objNpcContainer);
         //创建小镇居民
         List<CharacterBean> listTownCharacter = npcInfoManager.GetCharacterDataByType((int)NpcTypeEnum.Town);
         foreach (CharacterBean itemData in listTownCharacter)

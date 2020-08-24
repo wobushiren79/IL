@@ -21,7 +21,7 @@ public class CharacterBean
     /// </summary>
     /// <param name="characterBodyManager"></param>
     /// <returns></returns>
-    public static CharacterBean CreateRandomEnemyData(CharacterBodyManager characterBodyManager, int baseAttributes,int equipLevel)
+    public static CharacterBean CreateRandomEnemyData(CharacterBodyManager characterBodyManager,int baseLife, int baseAttributes,int equipLevel)
     {
         CharacterBean characterData = new CharacterBean();
         characterData.baseInfo.characterId = SystemUtil.GetUUID(SystemUtil.UUIDTypeEnum.N);
@@ -38,7 +38,7 @@ public class CharacterBean
         characterData.equips.shoesId = randomShoes;
         //生成随机能力
         characterData.attributes.CreateRandomData(
-            baseAttributes * 10 - 50, baseAttributes * 10 + 50,
+            baseLife - 50, baseLife + 50,
             0, 1,
             baseAttributes - 3, baseAttributes + 3,
             baseAttributes - 3, baseAttributes + 3,

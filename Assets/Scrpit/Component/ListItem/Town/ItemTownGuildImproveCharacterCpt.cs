@@ -375,7 +375,7 @@ public class ItemTownGuildImproveCharacterCpt : ItemGameBaseCpt, DialogView.IDia
         int equipLevel = (characterWorkerData.GetLevel() + 1) / 2;
         for (int i = 0; i < UnityEngine.Random.Range(1, 16); i++)
         {
-            CharacterBean randomEnemy = CharacterBean.CreateRandomEnemyData(characterBodyManager, 10 , equipLevel);
+            CharacterBean randomEnemy = CharacterBean.CreateRandomEnemyData(characterBodyManager,100, 10 , equipLevel);
             listEnemyData.Add(randomEnemy);
         }
         miniGameData.InitData(gameItemsManager, characterData, listEnemyData);

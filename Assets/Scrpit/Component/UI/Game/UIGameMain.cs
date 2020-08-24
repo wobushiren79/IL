@@ -26,10 +26,11 @@ public class UIGameMain : UIGameComponent, DialogView.IDialogCallBack, IRadioGro
     public Button btHelp;
     public InfoPromptPopupButton popupSetting;
     public Button btSetting;
+    public InfoPromptPopupButton popupJumpTime;
+    public Button btJumpTime;
 
     public Button btSleep;
 
-    public Text tvInnStatus;
     public Text tvMoneyS;
     public Text tvMoneyM;
     public Text tvMoneyL;
@@ -97,6 +98,8 @@ public class UIGameMain : UIGameComponent, DialogView.IDialogCallBack, IRadioGro
         if (btSleep != null)
             btSleep.onClick.AddListener(OnClickForEndDay);
 
+        if (btJumpTime != null)
+            btJumpTime.onClick.AddListener(OnClickForJumpTime);
 
         if (rgTimeScale != null)
             rgTimeScale.SetCallBack(this);
@@ -114,15 +117,6 @@ public class UIGameMain : UIGameComponent, DialogView.IDialogCallBack, IRadioGro
     private void Update()
     {
         InnAttributesBean innAttributes = uiGameManager.gameDataManager.gameData.GetInnAttributesData();
-        if (tvInnStatus != null && uiGameManager.innHandler != null)
-            if (uiGameManager.innHandler.GetInnStatus() == InnHandler.InnStatusEnum.Close)
-            {
-                tvInnStatus.text = GameCommonInfo.GetUITextById(2002);
-            }
-            else
-            {
-                tvInnStatus.text = GameCommonInfo.GetUITextById(2001);
-            }
         if (clockView != null && uiGameManager.gameTimeHandler != null)
         {
             uiGameManager.gameTimeHandler.GetTime(out float hour, out float min);
@@ -188,6 +182,9 @@ public class UIGameMain : UIGameComponent, DialogView.IDialogCallBack, IRadioGro
             popupSetting.SetContent(GameCommonInfo.GetUITextById(2038));
         if (popupHelp != null)
             popupHelp.SetContent(GameCommonInfo.GetUITextById(2039));
+        if (popupJumpTime != null)
+            popupJumpTime.SetContent(GameCommonInfo.GetUITextById(2040));
+
         SetInnPraise(innAttributes);
         SetInnAesthetics(innAttributes);
         SetInnRichNess(innAttributes);
@@ -197,6 +194,7 @@ public class UIGameMain : UIGameComponent, DialogView.IDialogCallBack, IRadioGro
         if (uiGameManager.innHandler == null)
         {
             rgTimeScale.gameObject.SetActive(false);
+         
         }
         else
         {
@@ -207,6 +205,23 @@ public class UIGameMain : UIGameComponent, DialogView.IDialogCallBack, IRadioGro
             else
             {
                 rgTimeScale.gameObject.SetActive(true);
+            
+            }
+        }
+        //设置是否显示时间跳跃
+        if (uiGameManager.gameTimeHandler == null)
+        {
+            btJumpTime.gameObject.SetActive(false);
+        }
+        else
+        {
+            if(uiGameManager.gameTimeHandler.GetDayStatus()== GameTimeHandler.DayEnum.Rest)
+            {
+                btJumpTime.gameObject.SetActive(true);
+            }
+            else
+            {
+                btJumpTime.gameObject.SetActive(false);
             }
         }
     }
@@ -397,6 +412,14 @@ public class UIGameMain : UIGameComponent, DialogView.IDialogCallBack, IRadioGro
         uiGameManager.dialogManager.CreateDialog(DialogEnum.Normal, this, dialogBean);
     }
 
+    public void OnClickForJumpTime()
+    {
+        uiGameManager.audioHandler.PlaySound(AudioSoundEnum.ButtonForNormal);
+        DialogBean dialogBean = new DialogBean();
+        JumpTimeDialogView jumpTimeDialog= (JumpTimeDialogView)uiGameManager.dialogManager.CreateDialog(DialogEnum.JumpTime, this, dialogBean);
+        jumpTimeDialog.SetData();
+    }
+
     /// <summary>
     /// 增加金钱动画
     /// </summary>
@@ -483,14 +506,21 @@ public class UIGameMain : UIGameComponent, DialogView.IDialogCallBack, IRadioGro
     #region dialog 回调
     public void Submit(DialogView dialogView, DialogBean dialogData)
     {
-        if (dialogData.dialogPosition == 0)
+        if(dialogView as JumpTimeDialogView)
         {
-            EndDay();
+
         }
-        else if (dialogData.dialogPosition == 1)
+        else
         {
-            //打开建筑
-            uiManager.OpenUIAndCloseOtherByName(EnumUtil.GetEnumName(UIEnum.GameBuild));
+            if (dialogData.dialogPosition == 0)
+            {
+                EndDay();
+            }
+            else if (dialogData.dialogPosition == 1)
+            {
+                //打开建筑
+                uiManager.OpenUIAndCloseOtherByName(EnumUtil.GetEnumName(UIEnum.GameBuild));
+            }
         }
     }
 

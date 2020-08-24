@@ -68,11 +68,10 @@ public class CheckUtil {
     /// <param name="endPosition"></param>
     /// <returns></returns>
     public static bool CheckPath(Vector3 startPosition,Vector3 endPosition)
-    {
-        
+    { 
         NavMeshPath navpath = new NavMeshPath();
-        NavMesh.CalculatePath(startPosition, endPosition, -1, navpath);
-        if (navpath.status == NavMeshPathStatus.PathPartial || navpath.status == NavMeshPathStatus.PathInvalid)
+        bool canGo= NavMesh.CalculatePath(startPosition, endPosition, NavMesh.AllAreas , navpath);
+        if ( canGo == false || navpath.status == NavMeshPathStatus.PathPartial || navpath.status == NavMeshPathStatus.PathInvalid)
         {
             return false;
         }

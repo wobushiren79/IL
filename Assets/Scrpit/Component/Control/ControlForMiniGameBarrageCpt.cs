@@ -11,7 +11,6 @@ public class ControlForMiniGameBarrageCpt : ControlForMoveCpt
     {
         base.SetCameraFollowObj(npcCpt.gameObject);
         characterMoveCpt = npcCpt.characterMoveCpt;
-        characterMoveCpt.navMeshAgent = null;
         characterMoveCpt.isManualMove = true;
         npcAI = npcCpt;
     }

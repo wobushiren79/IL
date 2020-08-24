@@ -533,6 +533,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   interactiveObj: {fileID: 1991930030743993231}
+  objBackground: {fileID: 5298596669674200804}
   tvContent: {fileID: 8025829236911442805}
   tvContentShadow: {fileID: 3738280210958144362}
   srIcon: {fileID: 3851512198678228951}
@@ -565,7 +566,6 @@ MonoBehaviour:
         priority: 0
         isWorking: 1
         cookNumber: 0
-        cookTime: 0
         listFoodCookNumer: []
       waiterInfo:
         workerType: 2
@@ -575,7 +575,6 @@ MonoBehaviour:
         isWorking: 1
         cleanTotalNumber: 0
         sendTotalNumber: 0
-        cleanTotalTime: 0
       accountantInfo:
         workerType: 3
         workerLevel: 0
@@ -594,7 +593,6 @@ MonoBehaviour:
         accountingMoneyL: 0
         accountingMoneyM: 0
         accountingMoneyS: 0
-        accountingTotalTime: 0
       accostInfo:
         workerType: 4
         workerLevel: 0
@@ -604,7 +602,6 @@ MonoBehaviour:
         accostTotalNumber: 0
         accostSuccessNumber: 0
         accostFailNumber: 0
-        accostTotalTime: 0
       beaterInfo:
         workerType: 5
         workerLevel: 0
@@ -614,8 +611,6 @@ MonoBehaviour:
         fightTotalNumber: 0
         fightWinNumber: 0
         fightLoseNumber: 0
-        fightTotalTime: 0
-        restTotalTime: 0
       workerStatus: 0
       listLoveItems: 
     attributes:
@@ -661,6 +656,11 @@ MonoBehaviour:
       hatId: 0
       clothesId: 0
       shoesId: 0
+      maskTFId: 0
+      handTFId: 0
+      hatTFId: 0
+      clothesTFId: 0
+      shoesTFId: 0
     npcInfoData:
       id: 0
       valid: 0
@@ -684,7 +684,7 @@ MonoBehaviour:
       name: 
       position_x: 0
       position_y: 0
-      talk_ids: 
+      talk_types: 
       skill_ids: 
       attributes_loyal: 0
       attributes_life: 0
@@ -705,8 +705,7 @@ MonoBehaviour:
     favorability: 0
     favorabilityLevel: 0
     firstMeet: 0
-    giftLoveNumber: 0
-    giftNormalNumber: 0
+    giftNumber: 0
     talkNumber: 0
   characterMoveCpt: {fileID: 5707193527457681228}
   characterShoutCpt: {fileID: 0}

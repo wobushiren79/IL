@@ -85,8 +85,7 @@ public class SceneGameInnInit : BaseSceneInit, IBaseObserver, DialogView.IDialog
                 gameTimeHandler.SetTime(timeData.hour, timeData.minute);
                 gameTimeHandler.SetTimeStatus(false);
                 //建造NPC
-                npcCustomerBuilder.BuilderCustomerForInit(20);
-
+                RefreshScene();
                 //设置位置
                 Vector3 startPosition = sceneInnManager.GetTownEntranceLeft();
                 BaseControl baseControl = controlHandler.StartControl(ControlHandler.ControlEnum.Normal);
@@ -102,6 +101,16 @@ public class SceneGameInnInit : BaseSceneInit, IBaseObserver, DialogView.IDialog
 
 
         StartCoroutine(BuildNavMesh());
+    }
+
+    /// <summary>
+    /// 刷新场景
+    /// </summary>
+    public override void RefreshScene()
+    {
+        base.RefreshScene();
+        //建造NPC
+        npcCustomerBuilder.BuilderCustomerForInit(20);
     }
 
     /// <summary>

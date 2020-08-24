@@ -28,4 +28,9 @@ public class GameConfigBean
     public int statusForFrames = 1;
     public int frames = 120;
 
+    //事件镜头移动 1开启 0关闭
+    public int statusForEventCameraMove = 1;
+
+ 
+
 }
