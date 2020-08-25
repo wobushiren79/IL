@@ -14,8 +14,6 @@ public class CharacterMoveCpt : BaseMonoBehaviour
     //角色动画
     public Animator characterAnimtor;
     public NavMeshAgent navMeshAgent;
-    public NavMeshPath navMeshPath;
-    public int navMeshPosition;
 
     //移动对象
     public GameObject objMove;
@@ -50,17 +48,20 @@ public class CharacterMoveCpt : BaseMonoBehaviour
     private Vector3 mLastPosition;
     //角色动画状态
     private int mAnimState = 0;
-   
 
 
-    private void FixedUpdate()
+    public void Update()
     {
         if (!isManualMove && navMeshAgent != null)
         {
             if (navMeshAgent.isActiveAndEnabled && Mathf.Abs(navMeshAgent.remainingDistance) > 0.01f)
             {
                 SetAnimStatus(1);
-                Move(navMeshAgent.nextPosition);
+                if (Time.timeScale > 1.0f)
+                {
+                    CheckSteeringTargetPosition();
+                }
+                // Move(navMeshAgent.nextPosition);
                 //转向
                 if (objCharacterBody != null)
                 {
@@ -76,7 +77,7 @@ public class CharacterMoveCpt : BaseMonoBehaviour
                         {
                             theScale.x = Mathf.Abs(theScale.x);
                         }
-                    } 
+                    }
                     objCharacterBody.transform.localScale = theScale;
                 }
             }
@@ -88,6 +89,12 @@ public class CharacterMoveCpt : BaseMonoBehaviour
             }
             mLastPosition = objMove.transform.position;
         }
+    }
+
+
+    private void FixedUpdate()
+    {
+       
     }
 
     /// <summary>
@@ -107,7 +114,7 @@ public class CharacterMoveCpt : BaseMonoBehaviour
             navMeshAgent.isStopped = false;
             navMeshAgent.updateRotation = false;
             navMeshAgent.updateUpAxis = false;
-            navMeshAgent.updatePosition = false;
+            navMeshAgent.updatePosition = true;
             navMeshAgent.speed = moveSpeed;
             navMeshAgent.angularSpeed = float.MaxValue;
             navMeshAgent.acceleration = float.MaxValue;
@@ -218,10 +225,22 @@ public class CharacterMoveCpt : BaseMonoBehaviour
     /// 自动寻路
     /// </summary>
     /// <param name="movePosition"></param>
-    public void Move(Vector3 movePosition)
+    public bool Move(Vector3 movePosition)
     {
         SetAnimStatus(1);
-        objMove.transform.position = Vector3.MoveTowards(objMove.transform.position, movePosition, moveSpeed * Time.deltaTime);
+        objMove.transform.position = Vector3.Lerp(objMove.transform.position, movePosition, moveSpeed * Time.deltaTime);
+        // objMove.transform.position = Vector3.MoveTowards(objMove.transform.position , movePosition, moveSpeed * Time.deltaTime);
+        if (Vector3.Distance(objMove.transform.position, movePosition) < 0.001f)
+        {
+            //交换圆柱体的位置。
+            objMove.transform.position = movePosition;
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+
         //navMeshAgent.transform.position = movePosition;
     }
 
@@ -319,4 +338,23 @@ public class CharacterMoveCpt : BaseMonoBehaviour
         if (navMeshAgent != null)
             navMeshAgent.enabled = true;
     }
+
+    protected float distanceStearingTarget;
+
+    protected void CheckSteeringTargetPosition()
+    {
+        float distanceST = Vector3.Distance(navMeshAgent.transform.position, navMeshAgent.steeringTarget);
+        if (distanceST <= 0.6f ) //导航网格到下一个边缘的距离
+        {
+            if (distanceStearingTarget < distanceST)
+            {
+                navMeshAgent.transform.position = navMeshAgent.steeringTarget;
+            }
+            else
+            {
+                distanceStearingTarget = distanceST;
+            }
+        }
+    }
+
 }

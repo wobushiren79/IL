@@ -344,6 +344,7 @@ public class UIGameSetting : UIGameComponent, DropdownView.ICallBack, ProgressVi
     #region checkBox回调
     public void RadioButtonSelected(RadioButtonView view, RadioButtonView.RadioButtonStatus buttonStates)
     {
+        uiGameManager.audioHandler.PlaySound(AudioSoundEnum.ButtonForNormal);
         if (view == rbKeyTip)
         {
             //按键提示

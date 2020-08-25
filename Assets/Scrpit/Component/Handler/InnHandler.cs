@@ -3,7 +3,7 @@ using UnityEditor;
 using System.Collections.Generic;
 using System;
 using System.Diagnostics;
-
+using System.Linq;
 public class InnHandler : BaseMonoBehaviour, IBaseObserver
 {
     public enum InnStatusEnum
@@ -528,10 +528,24 @@ public class InnHandler : BaseMonoBehaviour, IBaseObserver
                 //排队清理处理
                 if (!CheckUtil.ListIsNull(clearQueue))
                 {
-                    bool isSuccess = innWaiterHandler.SetClearFood(clearQueue[0], workNpc);
+                    //搜寻最近的桌子
+                    OrderForCustomer clearItem = null;
+                    float distance = float.MaxValue;
+                    foreach (OrderForCustomer itemOrder in  clearQueue)
+                    {
+                        float tempDistance = Vector3.Distance(itemOrder.table.GetTablePosition(), workNpc.transform.position);
+                        if (tempDistance < distance)
+                        {
+                            distance = tempDistance;
+                            clearItem = itemOrder;
+                        }
+                    }
+                    if (clearItem == null)
+                         break;
+                    bool isSuccess = innWaiterHandler.SetClearFood(clearItem, workNpc);
                     if (isSuccess)
                     {
-                        clearQueue.RemoveAt(0);
+                        clearQueue.Remove(clearItem);
                         return true;
                     }
                 }

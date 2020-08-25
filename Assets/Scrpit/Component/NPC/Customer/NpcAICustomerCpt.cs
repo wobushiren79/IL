@@ -63,7 +63,7 @@ public class NpcAICustomerCpt : BaseNpcAI
         innHandler = Find<InnHandler>(ImportantTypeEnum.InnHandler);
     }
 
-    public virtual void FixedUpdate()
+    public void Update()
     {
         switch (customerIntent)
         {
