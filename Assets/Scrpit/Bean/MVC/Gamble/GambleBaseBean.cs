@@ -9,14 +9,14 @@ public class GambleBaseBean
     public GambleStatusType gambleStatus;
 
     //下注金额
-    public long betForMoneyL;
-    public long betForMoneyM;
-    public long betForMoneyS;
+    public int betForMoneyL;
+    public int betForMoneyM;
+    public int betForMoneyS;
 
     //下注上限
-    public long betMaxForMoneyL;
-    public long betMaxForMoneyM;
-    public long betMaxForMoneyS;
+    public int betMaxForMoneyL;
+    public int betMaxForMoneyM;
+    public int betMaxForMoneyS;
 
     public bool isWin = false;
 
@@ -76,7 +76,7 @@ public class GambleBaseBean
     /// <param name="betMaxForMoneyL"></param>
     /// <param name="betMaxForMoneyM"></param>
     /// <param name="betMaxForMoneyS"></param>
-    public void SetBetMax(long betMaxForMoneyL, long betMaxForMoneyM, long betMaxForMoneyS)
+    public void SetBetMax(int betMaxForMoneyL, int betMaxForMoneyM, int betMaxForMoneyS)
     {
         this.betMaxForMoneyL = betMaxForMoneyL;
         this.betMaxForMoneyM = betMaxForMoneyM;

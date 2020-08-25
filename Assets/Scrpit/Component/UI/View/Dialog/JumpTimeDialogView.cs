@@ -14,12 +14,15 @@ public class JumpTimeDialogView : DialogView
     public int jumpNumber = 1;
 
     protected GameTimeHandler gameTimeHandler;
+    protected GameDataHandler gameDataHandler;
     protected LightHandler lightHandler;
     protected BaseSceneInit baseSceneInit;
+
     public override void Awake()
     {
         base.Awake();
         gameTimeHandler = Find<GameTimeHandler>(ImportantTypeEnum.TimeHandler);
+        gameDataHandler = Find<GameDataHandler>(ImportantTypeEnum.GameDataHandler);
         lightHandler = Find<LightHandler>(ImportantTypeEnum.LightHandler);
         baseSceneInit = Find<BaseSceneInit>(ImportantTypeEnum.Init);
 
@@ -93,5 +96,6 @@ public class JumpTimeDialogView : DialogView
         gameTimeHandler.SetTime((jumpNumber + (int)hour), (int)min);
         lightHandler.CheckTime();
         baseSceneInit.RefreshScene();
+        gameDataHandler.AddMenuResearch(jumpNumber);
     }
 }

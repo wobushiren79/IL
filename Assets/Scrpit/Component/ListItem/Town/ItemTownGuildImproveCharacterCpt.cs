@@ -46,6 +46,7 @@ public class ItemTownGuildImproveCharacterCpt : ItemGameBaseCpt, DialogView.IDia
 
     protected UIGameManager uiGameManager;
     protected GameItemsManager gameItemsManager;
+    protected GameDataHandler gameDataHandler;
     protected NpcInfoManager npcInfoManager;
     protected GameDataManager gameDataManager;
     protected GameTimeHandler gameTimeHandler;
@@ -65,6 +66,7 @@ public class ItemTownGuildImproveCharacterCpt : ItemGameBaseCpt, DialogView.IDia
         toastManager = uiGameManager.toastManager;
         controlHandler = uiGameManager.controlHandler;
         characterBodyManager = uiGameManager.characterBodyManager;
+        gameDataHandler = uiGameManager.gameDataHandler;
     }
 
     private void Start()
@@ -286,6 +288,8 @@ public class ItemTownGuildImproveCharacterCpt : ItemGameBaseCpt, DialogView.IDia
         gameDataManager.gameData.PayMoney(levelData.price_l, levelData.price_m, levelData.price_s);
         //扣除时间
         gameDataManager.gameData.gameTime.hour += int.Parse(levelData.mark);
+        //如果有研究菜谱 菜谱增加经验
+        gameDataHandler.AddMenuResearch(int.Parse(levelData.mark));
         //判断玩哪个游戏
         MiniGameBaseBean miniGameData = null;
         switch (workerType)

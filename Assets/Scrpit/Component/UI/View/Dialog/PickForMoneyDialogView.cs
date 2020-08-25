@@ -6,29 +6,30 @@ public class PickForMoneyDialogView : DialogView
 {
     public Button btSubMoneyL;
     public Button btAddMoneyL;
-    public Text tvMoneyL;
+    public InputField etMoneyL;
 
     public Button btSubMoneyM;
     public Button btAddMoneyM;
-    public Text tvMoneyM;
+    public InputField etMoneyM;
 
     public Button btSubMoneyS;
     public Button btAddMoneyS;
-    public Text tvMoneyS;
+    public InputField etMoneyS;
 
+   
     //每次增量
     public int cvMoneyL = 1;
     public int cvMoneyM = 1;
     public int cvMoneyS = 1;
 
     //最大金钱数
-    public long maxMoneyL = 1;
-    public long maxMoneyM = 1;
-    public long maxMoneyS = 1;
+    public int maxMoneyL = 1;
+    public int maxMoneyM = 1;
+    public int maxMoneyS = 99999;
 
-    public long moneyL = 0;
-    public long moneyM = 0;
-    public long moneyS = 0;
+    public int moneyL = 0;
+    public int moneyM = 0;
+    public int moneyS = 0;
     
     protected ToastManager toastManager;
 
@@ -36,6 +37,12 @@ public class PickForMoneyDialogView : DialogView
     {
         base.Awake();
         toastManager = Find<ToastManager>(ImportantTypeEnum.ToastManager);
+        if(etMoneyL)
+            etMoneyL.onEndEdit.AddListener(OnEndEditForMoneyL);
+        if (etMoneyM)
+            etMoneyM.onEndEdit.AddListener(OnEndEditForMoneyM);
+        if (etMoneyS)
+            etMoneyS.onEndEdit.AddListener(OnEndEditForMoneyS);
     }
 
     public override void InitData()
@@ -60,27 +67,27 @@ public class PickForMoneyDialogView : DialogView
 
     public void SubMoneyForL()
     {
-        ChangeMoney(1, -cvMoneyL);
+        ChangeMoney(MoneyEnum.L, moneyL - cvMoneyL);
     }
     public void AddMoneyForL()
     {
-        ChangeMoney(1, cvMoneyL);
+        ChangeMoney(MoneyEnum.L, moneyL + cvMoneyL);
     }
     public void SubMoneyForM()
     {
-        ChangeMoney(2, -cvMoneyM);
+        ChangeMoney(MoneyEnum.M, moneyM - cvMoneyM);
     }
     public void AddMoneyForM()
     {
-        ChangeMoney(2, cvMoneyM);
+        ChangeMoney(MoneyEnum.M, moneyM + cvMoneyM);
     }
     public void SubMoneyForS()
     {
-        ChangeMoney(3, -cvMoneyS);
+        ChangeMoney(MoneyEnum.S, moneyS - cvMoneyS);
     }
     public void AddMoneyForS()
     {
-        ChangeMoney(3, cvMoneyS);
+        ChangeMoney(MoneyEnum.S, moneyS + cvMoneyS);
     }
 
     public void RefreshUI()
@@ -98,7 +105,7 @@ public class PickForMoneyDialogView : DialogView
         base.SubmitOnClick();
     }
 
-    public void GetPickMoney(out long moneyL, out long moneyM, out long moneyS)
+    public void GetPickMoney(out int moneyL, out int moneyM, out int moneyS)
     {
         moneyL = this.moneyL;
         moneyM = this.moneyM;
@@ -124,7 +131,7 @@ public class PickForMoneyDialogView : DialogView
     /// <param name="maxMoneyL"></param>
     /// <param name="maxMoneyM"></param>
     /// <param name="maxMoneyS"></param>
-    public void SetMaxMoney(long maxMoneyL, long maxMoneyM, long maxMoneyS)
+    public void SetMaxMoney(int maxMoneyL, int maxMoneyM, int maxMoneyS)
     {
         this.maxMoneyL = maxMoneyL;
         this.maxMoneyM = maxMoneyM;
@@ -136,37 +143,75 @@ public class PickForMoneyDialogView : DialogView
     /// </summary>
     /// <param name="type"></param>
     /// <param name="changeValue"></param>
-    public void ChangeMoney(int type, int changeValue)
+    public void ChangeMoney(MoneyEnum type, int value)
     {
         switch (type)
         {
-            case 1:
-                moneyL += changeValue;
+            case MoneyEnum.L:
+                moneyL = value;
                 if (moneyL < 0)
                     moneyL = 0;
                 //上限设置
-                if (maxMoneyL != 0 && moneyL > maxMoneyL)
+                if (moneyL > maxMoneyL)
                     moneyL = maxMoneyL;
                 break;
-            case 2:
-                moneyM += changeValue;
+            case MoneyEnum.M:
+                moneyM = value;
                 if (moneyM < 0)
                     moneyM = 0;
                 //上限设置
-                if (maxMoneyM != 0 && moneyM > maxMoneyM)
+                if (moneyM > maxMoneyM)
                     moneyM = maxMoneyM;
                 break;
-            case 3:
-                moneyS += changeValue;
+            case MoneyEnum.S:
+                moneyS = value;
                 if (moneyS < 0)
                     moneyS = 0;
                 //上限设置
-                if (maxMoneyS != 0 && moneyS > maxMoneyS)
+                if (moneyS > maxMoneyS)
                     moneyS= maxMoneyS;
                 break;
         }
         audioHandler.PlaySound(AudioSoundEnum.ButtonForNormal);
         RefreshUI();
+    }
+
+
+
+    public void OnEndEditForMoneyL(string value)
+    {
+        if (int.TryParse(value,out int result))
+        {
+            ChangeMoney(MoneyEnum.L, result);
+        }
+        else
+        {
+            ChangeMoney(MoneyEnum.L, (int)moneyL);
+        }
+
+    }
+    public void OnEndEditForMoneyM(string value)
+    {
+        if (int.TryParse(value, out int result))
+        {
+            ChangeMoney(MoneyEnum.M, result);
+        }
+        else
+        {
+            ChangeMoney(MoneyEnum.M, (int)moneyM);
+        }
+    }
+
+    public void OnEndEditForMoneyS(string value)
+    {
+        if (int.TryParse(value, out int result))
+        {
+            ChangeMoney(MoneyEnum.S, result);
+        }
+        else
+        {
+            ChangeMoney(MoneyEnum.S, (int)moneyS);
+        }
     }
 
     /// <summary>
@@ -177,17 +222,17 @@ public class PickForMoneyDialogView : DialogView
     /// <param name="moneyS"></param>
     public void SetMoney(long moneyL, long moneyM, long moneyS)
     {
-        if (tvMoneyL != null)
+        if (etMoneyL != null)
         {
-            tvMoneyL.text = moneyL + "";
+            etMoneyL.text = moneyL + "";
         }
-        if (tvMoneyM != null)
+        if (etMoneyM != null)
         {
-            tvMoneyM.text = moneyM + "";
+            etMoneyM.text = moneyM + "";
         }
-        if (tvMoneyS != null)
+        if (etMoneyS != null)
         {
-            tvMoneyS.text = moneyS + "";
+            etMoneyS.text = moneyS + "";
         }
     }
 }

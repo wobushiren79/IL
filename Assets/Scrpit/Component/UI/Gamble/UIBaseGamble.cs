@@ -205,7 +205,7 @@ public class UIBaseGamble<T, H, B> : UIGameComponent, DialogView.IDialogCallBack
         if (dialogView as PickForMoneyDialogView)
         {
             PickForMoneyDialogView pickForMoneyDialog = dialogView as PickForMoneyDialogView;
-            pickForMoneyDialog.GetPickMoney(out long moneyL, out long moneyM, out long moneyS);
+            pickForMoneyDialog.GetPickMoney(out int moneyL, out int moneyM, out int moneyS);
             gambleHandler.BetMoney(moneyL, moneyM, moneyS);
         }
     }

@@ -209,21 +209,21 @@ public class UIGameMain : UIGameComponent, DialogView.IDialogCallBack, IRadioGro
             }
         }
         //设置是否显示时间跳跃
-        if (uiGameManager.gameTimeHandler == null)
-        {
-            btJumpTime.gameObject.SetActive(false);
-        }
-        else
-        {
-            if(uiGameManager.gameTimeHandler.GetDayStatus()== GameTimeHandler.DayEnum.Rest)
-            {
-                btJumpTime.gameObject.SetActive(true);
-            }
-            else
-            {
-                btJumpTime.gameObject.SetActive(false);
-            }
-        }
+        //if (uiGameManager.gameTimeHandler == null)
+        //{
+        //    btJumpTime.gameObject.SetActive(false);
+        //}
+        //else
+        //{
+        //    if(uiGameManager.gameTimeHandler.GetDayStatus()== GameTimeHandler.DayEnum.Rest)
+        //    {
+        //        btJumpTime.gameObject.SetActive(true);
+        //    }
+        //    else
+        //    {
+        //        btJumpTime.gameObject.SetActive(false);
+        //    }
+        //}
     }
 
     /// <summary>
@@ -414,6 +414,10 @@ public class UIGameMain : UIGameComponent, DialogView.IDialogCallBack, IRadioGro
 
     public void OnClickForJumpTime()
     {
+        if (uiGameManager.gameTimeHandler == null ||uiGameManager.gameTimeHandler.GetDayStatus() != GameTimeHandler.DayEnum.Rest)
+        {
+            return;
+        }
         uiGameManager.audioHandler.PlaySound(AudioSoundEnum.ButtonForNormal);
         DialogBean dialogBean = new DialogBean();
         JumpTimeDialogView jumpTimeDialog= (JumpTimeDialogView)uiGameManager.dialogManager.CreateDialog(DialogEnum.JumpTime, this, dialogBean);

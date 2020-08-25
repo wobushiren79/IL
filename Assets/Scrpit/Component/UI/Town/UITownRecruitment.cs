@@ -126,7 +126,7 @@ public class UITownRecruitment : UIBaseOne, DialogView.IDialogCallBack
         dialogData.title = GameCommonInfo.GetUITextById(3062);
         PickForMoneyDialogView pickForMoneyDialog = (PickForMoneyDialogView)uiGameManager.dialogManager.CreateDialog(DialogEnum.PickForMoney, this, dialogData);
         pickForMoneyDialog.SetData(1, 1, 100);
-        pickForMoneyDialog.SetMaxMoney(100,100,10000);
+        pickForMoneyDialog.SetMaxMoney(100,100,99999);
     }
 
     #region 弹窗回调
@@ -137,7 +137,7 @@ public class UITownRecruitment : UIBaseOne, DialogView.IDialogCallBack
         {
             //如果是金钱选择回调
             PickForMoneyDialogView pickForMoneyDialog = dialogView as PickForMoneyDialogView;
-            pickForMoneyDialog.GetPickMoney(out long moneyL, out long moneyM, out long moneyS);
+            pickForMoneyDialog.GetPickMoney(out int moneyL, out int moneyM, out int moneyS);
             if (!uiGameManager.gameDataManager.gameData.HasEnoughMoney(moneyL, moneyM, moneyS))
             {
                 uiGameManager.toastManager.ToastHint(GameCommonInfo.GetUITextById(1005));

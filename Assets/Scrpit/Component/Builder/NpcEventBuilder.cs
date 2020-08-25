@@ -34,6 +34,10 @@ public class NpcEventBuilder : NpcNormalBuilder, IBaseObserver
     /// </summary>
     public void StartEvent()
     {
+        if (GameCommonInfo.GameConfig.statusForEvent == 0)
+        {
+            return;
+        }
         int eventType = UnityEngine.Random.Range(0, 10);
         //先检测是否超过当天生成事件上限
         if (!GameCommonInfo.DailyLimitData.CheckEventNumber(1))

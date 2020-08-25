@@ -2,12 +2,23 @@
 using DG.Tweening;
 using UnityEngine.UI;
 using System.Collections;
+using System.Linq;
 public class UIGameBackpack : UIBaseOne
 {
     public GameObject objItemContent;
     public GameObject objItemModel;
 
     public Text tvNull;
+    public Button btClearUp;
+
+    public override void Awake()
+    {
+        base.Awake();
+        if (btClearUp != null)
+        {
+            btClearUp.onClick.AddListener(OnClickForClearUp);
+        }
+    }
 
     public override void OpenUI()
     {
@@ -41,5 +52,14 @@ public class UIGameBackpack : UIBaseOne
             tvNull.gameObject.SetActive(false);
     }
 
+    public void OnClickForClearUp()
+    {
+        uiGameManager.gameDataManager.gameData.listItems = uiGameManager.gameDataManager.gameData.listItems.OrderBy(data=> {
+            ItemsInfoBean itemsInfoBean = uiGameManager.gameItemsManager.GetItemsById(data.itemId);
+            return itemsInfoBean.items_type;
+        }).ToList();
+        StopAllCoroutines();
+        StartCoroutine(CreateBackpackData());
+    }
 
 }

@@ -241,6 +241,7 @@ public class ItemTownArenaCpt : ItemGameBaseCpt, DialogView.IDialogCallBack
     {
         UIGameManager uiGameManager = GetUIManager<UIGameManager>();
         GameDataManager gameDataManager = uiGameManager.gameDataManager;
+        GameDataHandler gameDataHandler = uiGameManager.gameDataHandler;
         GameItemsManager gameItemsManager = uiGameManager.gameItemsManager;
         ControlHandler controlHandler = uiGameManager.controlHandler;
         DialogManager dialogManager = uiGameManager.dialogManager;
@@ -250,6 +251,9 @@ public class ItemTownArenaCpt : ItemGameBaseCpt, DialogView.IDialogCallBack
             gameDataManager.gameData.PayMoney(miniGameData.preMoneyL, miniGameData.preMoneyM, miniGameData.preMoneyS);
             //扣除时间
             gameDataManager.gameData.gameTime.hour += miniGameData.preGameTime;
+            //如果有研究菜谱 菜谱增加经验
+            gameDataHandler.AddMenuResearch(miniGameData.preGameTime);
+
             //设置参赛人员
             PickForCharacterDialogView pickForCharacterDialog = (PickForCharacterDialogView)dialogView;
             List<CharacterBean> listCharacter = pickForCharacterDialog.GetPickCharacter();

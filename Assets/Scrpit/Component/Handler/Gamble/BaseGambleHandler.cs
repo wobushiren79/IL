@@ -78,7 +78,7 @@ public class BaseGambleHandler<T,B> : BaseHandler
     /// <summary>
     /// 下注
     /// </summary>
-    public virtual void BetMoney(long moneyL,long moneyM,long moneyS)
+    public virtual void BetMoney(int moneyL, int moneyM, int moneyS)
     {
         //检测是否有足够金钱
         if (!gameDataManager.gameData.HasEnoughMoney(moneyL, moneyM, moneyS))

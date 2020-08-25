@@ -31,6 +31,7 @@ public class GameConfigBean
     //事件镜头移动 1开启 0关闭
     public int statusForEventCameraMove = 1;
 
- 
+    //随机事件开关
+    public int statusForEvent = 1;
 
 }

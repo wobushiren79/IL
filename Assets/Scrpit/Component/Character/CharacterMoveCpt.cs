@@ -14,6 +14,8 @@ public class CharacterMoveCpt : BaseMonoBehaviour
     //角色动画
     public Animator characterAnimtor;
     public NavMeshAgent navMeshAgent;
+    public NavMeshPath navMeshPath;
+    public int navMeshPosition;
 
     //移动对象
     public GameObject objMove;
@@ -58,7 +60,7 @@ public class CharacterMoveCpt : BaseMonoBehaviour
             if (navMeshAgent.isActiveAndEnabled && Mathf.Abs(navMeshAgent.remainingDistance) > 0.01f)
             {
                 SetAnimStatus(1);
-                //Move(navMeshAgent.nextPosition);
+                Move(navMeshAgent.nextPosition);
                 //转向
                 if (objCharacterBody != null)
                 {
@@ -105,7 +107,7 @@ public class CharacterMoveCpt : BaseMonoBehaviour
             navMeshAgent.isStopped = false;
             navMeshAgent.updateRotation = false;
             navMeshAgent.updateUpAxis = false;
-            navMeshAgent.updatePosition = true;
+            navMeshAgent.updatePosition = false;
             navMeshAgent.speed = moveSpeed;
             navMeshAgent.angularSpeed = float.MaxValue;
             navMeshAgent.acceleration = float.MaxValue;
@@ -219,7 +221,8 @@ public class CharacterMoveCpt : BaseMonoBehaviour
     public void Move(Vector3 movePosition)
     {
         SetAnimStatus(1);
-        navMeshAgent.transform.position = movePosition;
+        objMove.transform.position = Vector3.MoveTowards(objMove.transform.position, movePosition, moveSpeed * Time.deltaTime);
+        //navMeshAgent.transform.position = movePosition;
     }
 
     /// <summary>

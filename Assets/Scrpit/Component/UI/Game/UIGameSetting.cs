@@ -21,6 +21,7 @@ public class UIGameSetting : UIGameComponent, DropdownView.ICallBack, ProgressVi
     public RadioButtonView rbMouseMove;
     public RadioButtonView rbKeyTip;
     public RadioButtonView rbEventCameraMove;
+    public RadioButtonView rbEvent;
 
     public InputField etFrames;
     public void Start()
@@ -146,7 +147,19 @@ public class UIGameSetting : UIGameComponent, DropdownView.ICallBack, ProgressVi
                 rbEventCameraMove.ChangeStates(RadioButtonView.RadioButtonStatus.Selected);
             }
         }
-        
+        //事件镜头跟随初始化
+        if (rbEvent != null)
+        {
+            rbEvent.SetCallBack(this);
+            if (GameCommonInfo.GameConfig.statusForEvent == 0)
+            {
+                rbEvent.ChangeStates(RadioButtonView.RadioButtonStatus.Unselected);
+            }
+            else if (GameCommonInfo.GameConfig.statusForEvent == 1)
+            {
+                rbEvent.ChangeStates(RadioButtonView.RadioButtonStatus.Selected);
+            }
+        }
         //离开游戏回到主菜单初始化
         if (SceneUtil.GetCurrentScene() == ScenesEnum.MainScene)
         {
@@ -378,6 +391,18 @@ public class UIGameSetting : UIGameComponent, DropdownView.ICallBack, ProgressVi
             else if (buttonStates == RadioButtonView.RadioButtonStatus.Unselected)
             {
                 GameCommonInfo.GameConfig.statusForEventCameraMove = 0;
+            }
+        }
+        else if (view == rbEvent)
+        {
+            //按键提示
+            if (buttonStates == RadioButtonView.RadioButtonStatus.Selected)
+            {
+                GameCommonInfo.GameConfig.statusForEvent = 1;
+            }
+            else if (buttonStates == RadioButtonView.RadioButtonStatus.Unselected)
+            {
+                GameCommonInfo.GameConfig.statusForEvent = 0;
             }
         }
     }
