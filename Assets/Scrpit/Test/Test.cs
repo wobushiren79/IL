@@ -7,47 +7,29 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using DG.Tweening;
 
+using Pathfinding;
 public class Test : BaseMonoBehaviour
 {
+    public Transform target;
 
-    public Camera cameraTest1;
-    public Camera cameraTest2;
-    public Camera cameraTest3;
+    public Transform otherPostion;
+    public Transform otherTarget;
 
-    public SpriteRenderer spriteRenderer;
+    public AIPath aiPath;
+    public AIDestinationSetter destinationSetter;
 
     private void Awake()
     {
-        spriteRenderer.transform.DOLocalMoveY(5, 5).SetLoops(-1, LoopType.Yoyo);
+
     }
 
-    private void OnGUI()
+    private void Update()
     {
-
-        if (GUI.Button(new Rect(20, 40, 80, 20), "测试1"))
+        if (Vector3.Distance(transform.position, target.position)<=0.1f)
         {
-            cameraTest1.gameObject.SetActive(true);
-            cameraTest2.gameObject.SetActive(false);
-            cameraTest3.gameObject.SetActive(false);
-        }
-        if (GUI.Button(new Rect(40, 60, 80, 20), "测试2"))
-        {
-            cameraTest1.gameObject.SetActive(false);
-            cameraTest2.gameObject.SetActive(true);
-            cameraTest3.gameObject.SetActive(false);
-        }
-        if (GUI.Button(new Rect(60, 80, 80, 20), "测试2"))
-        {
-            cameraTest1.gameObject.SetActive(false);
-            cameraTest2.gameObject.SetActive(false);
-            cameraTest3.gameObject.SetActive(true);
+            destinationSetter.target = otherTarget;
+            transform.position = otherPostion.position;
         }
     }
-
-    public void Start()
-    {
-
-    }
-
 
 }

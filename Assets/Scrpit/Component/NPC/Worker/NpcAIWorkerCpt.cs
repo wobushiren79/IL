@@ -3,6 +3,7 @@ using UnityEditor;
 using System;
 using System.Collections.Generic;
 using System.Collections;
+using Pathfinding;
 
 public class NpcAIWorkerCpt : BaseNpcAI
 {
@@ -44,6 +45,13 @@ public class NpcAIWorkerCpt : BaseNpcAI
     public bool dazeEnabled = true;
     //偷懒缓冲时间
     public float dazeBufferTime = 0;
+
+
+    public override void Awake()
+    {
+        base.Awake();
+        innHandler = Find<InnHandler>(ImportantTypeEnum.InnHandler);
+    }
 
     private void FixedUpdate()
     {
@@ -239,11 +247,11 @@ public class NpcAIWorkerCpt : BaseNpcAI
             int action = UnityEngine.Random.Range(0, 2);
             if (action == 0)
             {
-                //闲逛
+                //闲逛 有问题
                 Vector3 movePosition = innHandler.GetRandomInnPositon();
-                bool canGo = CheckUtil.CheckPath(transform.position, movePosition);
+                bool canGo= CheckUtil.CheckPath(transform.position, movePosition);
                 if(canGo)
-                  SetCharacterMove(movePosition);
+                    SetCharacterMove(movePosition);
             }
             StartCoroutine(CoroutineForIdle());
         }

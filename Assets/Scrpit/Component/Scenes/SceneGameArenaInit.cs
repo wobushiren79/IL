@@ -22,9 +22,7 @@ public class SceneGameArenaInit : BaseSceneInit, IBaseObserver
     protected MiniGameAccountHandler accountHandler;
     //辩论游戏处理
     protected MiniGameDebateHandler debateHandler;
-
-    //地形控制
-    protected NavMeshSurface navMesh;
+   
 
     public override void Awake()
     {
@@ -36,7 +34,6 @@ public class SceneGameArenaInit : BaseSceneInit, IBaseObserver
         cookingHandler = Find<MiniGameCookingHandler>(ImportantTypeEnum.MiniGameHandler);
         accountHandler = Find<MiniGameAccountHandler>(ImportantTypeEnum.MiniGameHandler);
         debateHandler = Find<MiniGameDebateHandler>(ImportantTypeEnum.MiniGameHandler);
-        navMesh = Find<NavMeshSurface>(ImportantTypeEnum.NavMesh);
     }
 
     public override void Start()
@@ -297,13 +294,4 @@ public class SceneGameArenaInit : BaseSceneInit, IBaseObserver
     }
     #endregion
 
-    /// <summary>
-    /// 生成地形
-    /// </summary>
-    /// <returns></returns>
-    public IEnumerator BuildNavMesh()
-    {
-        yield return new WaitForEndOfFrame();
-        navMesh.BuildNavMesh();
-    }
 }

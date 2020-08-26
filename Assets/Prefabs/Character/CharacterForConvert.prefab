@@ -4763,7 +4763,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7324028258840545578}
-  - component: {fileID: 582104591787824883}
   - component: {fileID: 7045715506326117647}
   - component: {fileID: 5797480705104217649}
   - component: {fileID: 7724135999579084379}
@@ -4791,28 +4790,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!195 &582104591787824883
-NavMeshAgent:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2161570112207279468}
-  m_Enabled: 1
-  m_AgentTypeID: 0
-  m_Radius: 0.2
-  m_Speed: 1
-  m_Acceleration: 10000
-  avoidancePriority: 50
-  m_AngularSpeed: 10000
-  m_StoppingDistance: 0
-  m_AutoTraverseOffMeshLink: 1
-  m_AutoBraking: 1
-  m_AutoRepath: 1
-  m_Height: 1
-  m_BaseOffset: 0
-  m_WalkableMask: 4294967295
-  m_ObstacleAvoidanceType: 0
 --- !u!58 &7045715506326117647
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -5217,7 +5194,7 @@ PrefabInstance:
         type: 3}
       propertyPath: navMeshAgent
       value: 
-      objectReference: {fileID: 582104591787824883}
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2b0fba09934c2934eb7fd9b31e6030fb, type: 3}
 --- !u!4 &8184723822536903520 stripped

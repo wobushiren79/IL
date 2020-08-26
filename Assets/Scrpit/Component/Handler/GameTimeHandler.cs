@@ -23,7 +23,6 @@ public class GameTimeHandler : BaseObservable<IBaseObserver>
     protected GameDataManager gameDataManager;
     protected InnFloorBuilder innFloorBuilder;
     protected InnWallBuilder innWallBuilder;
-    protected NavMeshSurface navMesh;
     protected InnBuildManager innBuildManager;
 
     public float hour;
@@ -41,7 +40,6 @@ public class GameTimeHandler : BaseObservable<IBaseObserver>
         gameDataManager = Find<GameDataManager>(ImportantTypeEnum.GameDataManager);
         innFloorBuilder = Find<InnFloorBuilder>(ImportantTypeEnum.InnBuilder);
         innWallBuilder = Find<InnWallBuilder>(ImportantTypeEnum.InnBuilder);
-        navMesh = Find<NavMeshSurface>(ImportantTypeEnum.NavMesh);
         innBuildManager = Find<InnBuildManager>(ImportantTypeEnum.BuildManager);
     }
 
@@ -169,25 +167,10 @@ public class GameTimeHandler : BaseObservable<IBaseObserver>
                     innFloorBuilder.StartBuild();
                 if (innWallBuilder != null)
                     innWallBuilder.StartBuild();
-                if (navMesh != null)
-                {
-                    StartCoroutine(CoroutineForBuildNavMesh());
-                }
             }
         }
         //通知新的一天
         NotifyAllObserver((int)NotifyTypeEnum.NewDay, null);
-    }
-
-
-    /// <summary>
-    /// 生成地形
-    /// </summary>
-    /// <returns></returns>
-    public IEnumerator CoroutineForBuildNavMesh()
-    {
-        yield return new WaitForEndOfFrame();
-        navMesh.BuildNavMesh();
     }
 
     /// <summary>

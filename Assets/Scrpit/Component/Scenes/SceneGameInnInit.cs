@@ -3,7 +3,7 @@ using UnityEditor;
 using UnityEngine.AI;
 using System.Collections;
 using UnityEngine.SceneManagement;
-
+using Pathfinding;
 public class SceneGameInnInit : BaseSceneInit, IBaseObserver, DialogView.IDialogCallBack
 {
     protected SceneInnManager sceneInnManager;
@@ -13,8 +13,6 @@ public class SceneGameInnInit : BaseSceneInit, IBaseObserver, DialogView.IDialog
     protected InnFurnitureBuilder innFurnitureBuilder;
     protected InnHandler innHandler;
     protected NpcCustomerBuilder npcCustomerBuilder;
-
-    public NavMeshSurface navMesh;
 
 
     public override void Awake()
@@ -120,7 +118,7 @@ public class SceneGameInnInit : BaseSceneInit, IBaseObserver, DialogView.IDialog
     public IEnumerator BuildNavMesh()
     {
         yield return new WaitForEndOfFrame();
-        navMesh.BuildNavMesh();
+        AstarPath.active.Scan();
     }
 
     /// <summary>

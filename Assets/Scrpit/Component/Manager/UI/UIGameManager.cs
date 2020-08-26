@@ -51,9 +51,6 @@ public class UIGameManager : BaseUIManager
     public InnFloorBuilder innFloorBuilder;
     public InnWallBuilder innWallBuilder;
 
-    [Header("地形")]
-    public NavMeshSurface navMesh;
-
     private void Awake()
     {
         gameDataManager = Find<GameDataManager>(ImportantTypeEnum.GameDataManager);

@@ -53,6 +53,7 @@ public class UIGameBuild : UIGameComponent, IRadioGroupCallBack
         uiGameManager.controlHandler.StartControl(ControlHandler.ControlEnum.Build);
         uiGameManager.innHandler.CloseInn();
     }
+
     public override void CloseUI()
     {
         base.CloseUI();
@@ -61,6 +62,8 @@ public class UIGameBuild : UIGameComponent, IRadioGroupCallBack
         SetInnBuildActive(true, true);
         //时间添加1小时
         uiGameManager.gameTimeHandler.AddHour(1);
+        //添加研究经验
+        uiGameManager.gameDataHandler.AddMenuResearch(1);
         //继续时间
         uiGameManager.gameTimeHandler.SetTimeStatus(false);
         //设置角色到门口
@@ -190,7 +193,7 @@ public class UIGameBuild : UIGameComponent, IRadioGroupCallBack
         //删除当前选中
         ((ControlForBuildCpt)(uiGameManager.controlHandler.GetControl(ControlHandler.ControlEnum.Build))).ClearBuildItem();
         //重新构建地形
-        uiGameManager.navMesh.BuildNavMesh();
+        AstarPath.active.Scan();
         //重新构建客栈
         uiGameManager.innHandler.InitInn();
         if (uiGameManager.gameTimeHandler.dayStauts == GameTimeHandler.DayEnum.Work)

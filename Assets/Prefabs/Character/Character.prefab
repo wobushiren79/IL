@@ -1360,6 +1360,8 @@ GameObject:
   - component: {fileID: 5374315413826618855}
   - component: {fileID: 5210061400093648316}
   - component: {fileID: 4414186510013377829}
+  - component: {fileID: 1735659301203689343}
+  - component: {fileID: 5919173928968134594}
   m_Layer: 0
   m_Name: Character
   m_TagString: NPC
@@ -1447,10 +1449,11 @@ MonoBehaviour:
   lerpOffset: 0.9
   moveSpeed: 1
   characterAnimtor: {fileID: 2478063932746049267}
-  navMeshAgent: {fileID: 0}
   objMove: {fileID: 0}
   objCharacterBody: {fileID: 2478063931806359367}
   characterRigidbody: {fileID: 0}
+  aiPathPosition: 0
+  aiPathReached: 0
   isManualMove: 0
   minMoveX: 0
   maxMoveX: 0
@@ -1477,6 +1480,56 @@ MonoBehaviour:
   spDead: {fileID: 21300000, guid: 8e538ec8c6b9d1b449882f0c31892675, type: 3}
   spDoubt: {fileID: 21300000, guid: 583200c65b0788148b4274b7b12f3f85, type: 3}
   spExpression: {fileID: 5035379056513621660}
+--- !u!114 &1735659301203689343
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2478063932746049266}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 373b52eb9bf8c40f785bb6947a1aee66, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  version: 1
+  drawGizmos: 0
+  detailedGizmos: 0
+  startEndModifier:
+    addPoints: 0
+    exactStartPoint: 3
+    exactEndPoint: 3
+    useRaycasting: 0
+    mask:
+      serializedVersion: 2
+      m_Bits: 4294967295
+    useGraphRaycasting: 0
+  traversableTags: -1
+  tagPenalties: 0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+  graphMask:
+    value: -1
+--- !u!114 &5919173928968134594
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2478063932746049266}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cb6a34d769a1e4ac7b0b30e433aa443c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  version: 1
+  smoothType: 0
+  subdivisions: 2
+  iterations: 1
+  strength: 0.1
+  uniformLength: 1
+  maxSegmentLength: 1
+  bezierTangentLength: 0.4
+  offset: 0.2
+  factor: 0.1
 --- !u!1 &2478063932836047097
 GameObject:
   m_ObjectHideFlags: 0

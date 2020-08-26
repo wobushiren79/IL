@@ -9,13 +9,13 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7854356681963976416}
-  - component: {fileID: 7854356681963976419}
-  - component: {fileID: 7854356681963976417}
-  - component: {fileID: 7854356681963976418}
-  - component: {fileID: 7854356681963976413}
-  - component: {fileID: 7854356681963976412}
-  - component: {fileID: 7854356681963976415}
-  - component: {fileID: 7854356681963976414}
+  - component: {fileID: 4770817276421701351}
+  - component: {fileID: 4302509437015596643}
+  - component: {fileID: 7242179599410243528}
+  - component: {fileID: 100048212285194392}
+  - component: {fileID: 5106273835275361291}
+  - component: {fileID: 2812105501476124597}
+  - component: {fileID: 4689065653822730675}
   m_Layer: 0
   m_Name: InnHandler
   m_TagString: Untagged
@@ -37,7 +37,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &7854356681963976419
+--- !u!114 &4770817276421701351
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -46,57 +46,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 7854356681963976422}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5e0242186a70c9c45a3ef5a66f580057, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  gameDataManager: {fileID: 0}
-  innFoodManager: {fileID: 0}
-  toastManager: {fileID: 0}
-  workerBuilder: {fileID: 0}
-  gameDataHandler: {fileID: 0}
-  innTableHandler: {fileID: 7854356681963976417}
-  innCookHandler: {fileID: 7854356681963976418}
-  innWaiterHandler: {fileID: 7854356681963976413}
-  innPayHandler: {fileID: 7854356681963976412}
-  innFightHandler: {fileID: 7854356681963976414}
-  innEntranceHandler: {fileID: 7854356681963976415}
-  rascalrQueue: []
-  cusomerQueue: []
-  foodQueue: []
-  sendQueue: []
-  clearQueue: []
-  listOrder: []
---- !u!114 &7854356681963976417
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7854356681963976422}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8e544bdfc481f19478f9a583bc5ab9a5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  listTableCpt: []
-  tableContainer: {fileID: 0}
---- !u!114 &7854356681963976418
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7854356681963976422}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: de0d31411259560419dbdc40c6838bd3, type: 3}
+  m_Script: {fileID: 11500000, guid: 7c6961aba486f2a4fa0c8fc8e3476ea8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   listStoveCpt: []
   listChefCpt: []
   stoveContainer: {fileID: 0}
   ChefContainer: {fileID: 0}
---- !u!114 &7854356681963976413
+--- !u!114 &4302509437015596643
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -105,12 +62,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 7854356681963976422}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6d2a6359508f2894d8022f34916eb2b6, type: 3}
+  m_Script: {fileID: 11500000, guid: 61e637a0f9f1bf047bca85845694dc18, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  waiterContainer: {fileID: 0}
-  listWaiterCpt: []
---- !u!114 &7854356681963976412
+--- !u!114 &7242179599410243528
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -119,7 +74,21 @@ MonoBehaviour:
   m_GameObject: {fileID: 7854356681963976422}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 96c4ef28c94ba3d4f8708b9a86db6c19, type: 3}
+  m_Script: {fileID: 11500000, guid: 19326692fbe2c794d9a6d6a63104b1e9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  listDoorCpt: []
+  doorContainer: {fileID: 0}
+--- !u!114 &100048212285194392
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7854356681963976422}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 564a99ecf3609804d95290591cf4087f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   listCounterCpt: []
@@ -128,7 +97,7 @@ MonoBehaviour:
   accountingContainer: {fileID: 0}
   objPayEffects: {fileID: 8189525478468517173, guid: dff96189dff18824988b6de8925a8dd0,
     type: 3}
---- !u!114 &7854356681963976415
+--- !u!114 &5106273835275361291
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -137,12 +106,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 7854356681963976422}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8d0e4bff64dfdfe479f5bc9d7bd036b6, type: 3}
+  m_Script: {fileID: 11500000, guid: a4ac6f77795f1a4468a3ff9727ba472b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  listDoorCpt: []
-  doorContainer: {fileID: 0}
---- !u!114 &7854356681963976414
+  listTableCpt: []
+  tableContainer: {fileID: 0}
+--- !u!114 &2812105501476124597
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -151,6 +120,32 @@ MonoBehaviour:
   m_GameObject: {fileID: 7854356681963976422}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5dfbaa35ace846d4daa0f01552b4ee5a, type: 3}
+  m_Script: {fileID: 11500000, guid: eb9a47b371e0fbd41b47553c7e52886d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  waiterContainer: {fileID: 0}
+  listWaiterCpt: []
+--- !u!114 &4689065653822730675
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7854356681963976422}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4da5ae8ed2a1f742a0054ef74127bab, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  innTableHandler: {fileID: 5106273835275361291}
+  innCookHandler: {fileID: 4770817276421701351}
+  innWaiterHandler: {fileID: 2812105501476124597}
+  innPayHandler: {fileID: 100048212285194392}
+  innFightHandler: {fileID: 4302509437015596643}
+  innEntranceHandler: {fileID: 7242179599410243528}
+  rascalrQueue: []
+  cusomerQueue: []
+  foodQueue: []
+  sendQueue: []
+  clearQueue: []
+  listOrder: []

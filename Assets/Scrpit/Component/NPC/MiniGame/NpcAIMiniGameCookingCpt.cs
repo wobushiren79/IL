@@ -130,7 +130,7 @@ public class NpcAIMiniGameCookingCpt : BaseNpcAI
 
     public void OpenAI()
     {
-        characterMoveCpt.navMeshAgent.enabled = true;
+       
     }
 
     /// <summary>

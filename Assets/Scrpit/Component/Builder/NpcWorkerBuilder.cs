@@ -33,7 +33,7 @@ public class NpcWorkerBuilder : BaseMonoBehaviour
             //获取门的坐标 并在门周围生成NPC
             Vector3 doorPosition = innHandler.GetRandomEntrancePosition();
             //向下2个单位
-            doorPosition += new Vector3(0, -1.5f, 0);
+            doorPosition += new Vector3(0, -3f, 0);
             BuildWork(gameDataManager.gameData.userCharacter, doorPosition);
         }
         for (int i = 0; i < listAllWork.Count; i++)
@@ -52,6 +52,7 @@ public class NpcWorkerBuilder : BaseMonoBehaviour
 
     public void BuildWork(CharacterBean characterBean, Vector3 position)
     {
+        
         GameObject workerObj = Instantiate(objWorkModel, objWorkModel.transform);
         workerObj.transform.SetParent(objContainer.transform);
         workerObj.SetActive(true);

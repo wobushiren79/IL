@@ -1,4 +1,6 @@
 ﻿
+using Pathfinding;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
@@ -67,17 +69,19 @@ public class CheckUtil {
     /// <param name="startPosition"></param>
     /// <param name="endPosition"></param>
     /// <returns></returns>
-    public static bool CheckPath(Vector3 startPosition,Vector3 endPosition)
-    { 
-        NavMeshPath navpath = new NavMeshPath();
-        bool canGo= NavMesh.CalculatePath(startPosition, endPosition, NavMesh.AllAreas , navpath);
-        if ( canGo == false || navpath.status == NavMeshPathStatus.PathPartial || navpath.status == NavMeshPathStatus.PathInvalid)
+    public static bool CheckPath(Vector3 startPosition, Vector3 endPosition)
+    {
+        ABPath path = ABPath.Construct(startPosition, endPosition);
+        path.calculatePartial = true;
+        AstarPath.StartPath(path);
+        AstarPath.BlockUntilCalculated(path);
+        if (path.originalEndPoint == path.endPoint)
         {
-            return false;
+            return true;
         }
         else
         {
-            return true;
+            return false;
         }
     }
 

@@ -8,14 +8,12 @@ public class SceneForInnHandler : BaseHandler, IBaseObserver
     protected GameTimeHandler gameTimeHandler;
     protected SceneInnManager sceneInnManager;
     protected GameDataManager gameDataManager;
-    protected NavMeshSurface navMesh;
 
     private void Awake()
     {
         gameTimeHandler = Find<GameTimeHandler>( ImportantTypeEnum.TimeHandler);
         sceneInnManager = Find<SceneInnManager>(ImportantTypeEnum.SceneManager);
         gameDataManager = Find<GameDataManager>(ImportantTypeEnum.GameDataManager);
-        navMesh = Find<NavMeshSurface>(ImportantTypeEnum.NavMesh);
 
         gameTimeHandler.AddObserver(this);
     }
@@ -50,6 +48,6 @@ public class SceneForInnHandler : BaseHandler, IBaseObserver
     public IEnumerator CoroutineForBuildNavMesh()
     {
         yield return new WaitForEndOfFrame();
-        navMesh.BuildNavMesh();
+        AstarPath.active.Scan();
     }
 }

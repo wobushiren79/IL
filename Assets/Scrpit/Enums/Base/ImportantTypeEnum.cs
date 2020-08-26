@@ -6,7 +6,6 @@ public enum ImportantTypeEnum
     Camera2D,
     Camera,
     MainCamera,
-    NavMesh,
     GameUI,
     DialogManager,
     ToastManager,

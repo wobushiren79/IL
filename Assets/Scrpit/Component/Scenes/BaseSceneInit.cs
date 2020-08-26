@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using UnityEditor;
+using System.Collections;
 
 public class BaseSceneInit : BaseMonoBehaviour
 {
@@ -62,7 +63,18 @@ public class BaseSceneInit : BaseMonoBehaviour
         if (innBuildManager != null)
         {
             innBuildManager.buildDataController.GetAllBuildItemsData();
-        }  
+        }
+        StartCoroutine(BuildNavMesh());
+    }
+
+    /// <summary>
+    /// 生成地形
+    /// </summary>
+    /// <returns></returns>
+    public IEnumerator BuildNavMesh()
+    {
+        yield return new WaitForEndOfFrame();
+        AstarPath.active.Scan();
     }
 
     public virtual void RefreshScene()

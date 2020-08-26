@@ -19,7 +19,7 @@ public class NpcAIWorkerForBeaterCpt : NpcAIWokerFoBaseCpt
 
     public Vector3 movePosition;
     public NpcAIRascalCpt npcAIRascal;//闹事者
-
+  
     public override void Awake()
     {
         base.Awake();
@@ -42,11 +42,6 @@ public class NpcAIWorkerForBeaterCpt : NpcAIWokerFoBaseCpt
                     SetIntent(BeaterIntentEnum.Fighting);
                     npcAIRascal.SetIntent(NpcAIRascalCpt.RascalIntentEnum.Fighting);
                 }
-                else
-                {
-                    movePosition = npcAIRascal.transform.position;
-                    npcAIWorker.characterMoveCpt.SetDestination(movePosition);
-                }
                 break;
         }
     }
@@ -59,6 +54,7 @@ public class NpcAIWorkerForBeaterCpt : NpcAIWokerFoBaseCpt
 
     public void SetIntent(BeaterIntentEnum intent)
     {
+        StopAllCoroutines();
         this.beaterIntent = intent;
         switch (intent)
         {
@@ -93,8 +89,8 @@ public class NpcAIWorkerForBeaterCpt : NpcAIWokerFoBaseCpt
     public void SetIntentForGoToRascal()
     {
         beaterPro.SetActive(true);
-        movePosition = npcAIRascal.transform.position;
-        npcAIWorker.characterMoveCpt.SetDestination(movePosition);
+
+         StartCoroutine(StartGoToRascal());
     }
 
     /// <summary>
@@ -122,6 +118,20 @@ public class NpcAIWorkerForBeaterCpt : NpcAIWokerFoBaseCpt
         toastManager.ToastHint(toastStr, 5);
         //设置不工作
         StartCoroutine(StartRest(restTime));
+    }
+
+    /// <summary>
+    /// 协程-追击捣乱者
+    /// </summary>
+    /// <returns></returns>
+    private IEnumerator StartGoToRascal()
+    {
+        while (beaterIntent == BeaterIntentEnum.GoToRascal)
+        {
+            movePosition = npcAIRascal.transform.position;
+            npcAIWorker.characterMoveCpt.SetDestination(movePosition);
+            yield return new WaitForSeconds(0.5f);   
+        }
     }
 
     /// <summary>

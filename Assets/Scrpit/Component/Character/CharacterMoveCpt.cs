@@ -3,9 +3,10 @@ using UnityEditor;
 using UnityEngine.AI;
 using System.Collections.Generic;
 using System.Collections;
-
+using Pathfinding;
 public class CharacterMoveCpt : BaseMonoBehaviour
 {
+    protected Seeker aiSeeker;
     //移动差值
     public float lerpOffset = 0.9f;
     //移动速度
@@ -13,12 +14,16 @@ public class CharacterMoveCpt : BaseMonoBehaviour
 
     //角色动画
     public Animator characterAnimtor;
-    public NavMeshAgent navMeshAgent;
 
     //移动对象
     public GameObject objMove;
     public GameObject objCharacterBody;
     public Rigidbody2D characterRigidbody;
+
+    //找到的路径
+    public Path aiPath;
+    public int aiPathPosition;
+    public bool aiPathReached = false;
 
     //是否手动移动
     public bool isManualMove = false;
@@ -27,15 +32,10 @@ public class CharacterMoveCpt : BaseMonoBehaviour
     public float maxMoveX = 0;
     public float minMoveY = 0;
     public float maxMoveY = 0;
-    
+
     private void Awake()
     {
-        if (navMeshAgent != null)
-        {
-            navMeshAgent.updateRotation = false;
-            navMeshAgent.updateUpAxis = false;
-            //navMeshAgent.updatePosition = false;
-        }
+        aiSeeker = GetComponent<Seeker>();
     }
 
     private void Start()
@@ -52,17 +52,22 @@ public class CharacterMoveCpt : BaseMonoBehaviour
 
     public void Update()
     {
-        if (!isManualMove && navMeshAgent != null)
+        if (!isManualMove && aiPath != null )
         {
-            if (navMeshAgent.isActiveAndEnabled && Mathf.Abs(navMeshAgent.remainingDistance) > 0.01f)
+            if(aiPathPosition >= aiPath.vectorPath.Count)
             {
-                SetAnimStatus(1);
-                if (Time.timeScale > 1.0f)
+                InitAIPath();
+                SetAnimStatus(0);
+                return;
+            }
+            else
+            {
+                aiPathReached = true;
+                bool isArrive = Move(aiPath.vectorPath[aiPathPosition]);
+                if (isArrive)
                 {
-                    CheckSteeringTargetPosition();
+                    aiPathPosition ++ ;
                 }
-                // Move(navMeshAgent.nextPosition);
-                //转向
                 if (objCharacterBody != null)
                 {
                     Vector3 theScale = objCharacterBody.transform.localScale;
@@ -81,12 +86,6 @@ public class CharacterMoveCpt : BaseMonoBehaviour
                     objCharacterBody.transform.localScale = theScale;
                 }
             }
-            else
-            {
-                //是否在计算路径
-                if (!navMeshAgent.pathPending)
-                    SetAnimStatus(0);
-            }
             mLastPosition = objMove.transform.position;
         }
     }
@@ -101,26 +100,52 @@ public class CharacterMoveCpt : BaseMonoBehaviour
     /// 自动移动
     /// </summary>
     /// <param name="position">目的地</param>
-    public bool SetDestination(Vector2 position)
+    public void SetDestination(Vector2 position)
     {
         isManualMove = false;
-        bool canGo = true;
-        if (navMeshAgent != null && navMeshAgent.isActiveAndEnabled)
+        if (aiSeeker != null)
         {
             if (characterRigidbody != null)
             {
                 characterRigidbody.inertia = 0;
             }
-            navMeshAgent.isStopped = false;
-            navMeshAgent.updateRotation = false;
-            navMeshAgent.updateUpAxis = false;
-            navMeshAgent.updatePosition = true;
-            navMeshAgent.speed = moveSpeed;
-            navMeshAgent.angularSpeed = float.MaxValue;
-            navMeshAgent.acceleration = float.MaxValue;
-            canGo = navMeshAgent.SetDestination(position);
+            aiPath = null;
+            aiPathPosition = 0;
+            aiPathReached = true;
+            aiSeeker.StartPath(objMove.transform.position, position, OnPathComplete);
         }
-        return canGo;
+    }
+
+    public void SetFollower()
+    {
+
+    }
+
+    /// <summary>
+    /// 路径找寻完毕
+    /// </summary>
+    /// <param name="path"></param>
+    public void OnPathComplete(Path path)
+    {
+        if (!path.error)
+        {
+            aiPath = path;
+            aiPathPosition = 0;
+        }
+        else
+        {
+            InitAIPath();
+            LogUtil.LogWarning("路径查询失败");
+        }
+    
+
+    }
+
+    protected void InitAIPath()
+    {
+        aiPath = null;
+        aiPathPosition = 0;
+        aiPathReached = false;
     }
 
     /// <summary>
@@ -129,10 +154,10 @@ public class CharacterMoveCpt : BaseMonoBehaviour
     /// <param name="tfPar"></param>
     /// <param name="position"></param>
     /// <returns></returns>
-    public bool SetDestinationLocal(Transform tfPar, Vector3 position)
+    public void SetDestinationLocal(Transform tfPar, Vector3 position)
     {
         Vector3 worldPos = tfPar.TransformPoint(position);
-        return SetDestination(worldPos);
+        SetDestination(worldPos);
     }
 
     /// <summary>
@@ -142,18 +167,8 @@ public class CharacterMoveCpt : BaseMonoBehaviour
     public void SetMoveSpeed(float moveSpeed)
     {
         this.moveSpeed = moveSpeed;
-        if (navMeshAgent != null)
-            navMeshAgent.speed = moveSpeed;
     }
 
-    /// <summary>
-    /// 获取路径状态
-    /// </summary>
-    /// <returns></returns>
-    public NavMeshPathStatus GetAutoMovePathStatus()
-    {
-        return navMeshAgent.pathStatus;
-    }
 
     /// <summary>
     /// 控制移动
@@ -228,11 +243,10 @@ public class CharacterMoveCpt : BaseMonoBehaviour
     public bool Move(Vector3 movePosition)
     {
         SetAnimStatus(1);
-        objMove.transform.position = Vector3.Lerp(objMove.transform.position, movePosition, moveSpeed * Time.deltaTime);
-        // objMove.transform.position = Vector3.MoveTowards(objMove.transform.position , movePosition, moveSpeed * Time.deltaTime);
-        if (Vector3.Distance(objMove.transform.position, movePosition) < 0.001f)
+        //objMove.transform.position = Vector3.Lerp(objMove.transform.position, movePosition, moveSpeed * Time.deltaTime);
+        objMove.transform.position = Vector3.MoveTowards(objMove.transform.position , movePosition, moveSpeed * Time.deltaTime);
+        if (Vector3.Distance(objMove.transform.position, movePosition) < 0.01f)
         {
-            //交换圆柱体的位置。
             objMove.transform.position = movePosition;
             return true;
         }
@@ -294,11 +308,7 @@ public class CharacterMoveCpt : BaseMonoBehaviour
     /// </summary>
     public void StopAutoMove()
     {
-        if (navMeshAgent != null)
-        {
-            navMeshAgent.isStopped = true;
-            navMeshAgent.ResetPath();
-        }
+        InitAIPath();
     }
 
     /// <summary>
@@ -307,11 +317,7 @@ public class CharacterMoveCpt : BaseMonoBehaviour
     /// <returns></returns>
     public bool IsAutoMoveStop()
     {
-        if (navMeshAgent != null && navMeshAgent.pathPending)
-        {
-            return false;
-        }
-        if (navMeshAgent != null && navMeshAgent.isActiveAndEnabled && Mathf.Abs(navMeshAgent.remainingDistance) > 0.01f)
+        if (aiPath != null ||  aiPathReached)
         {
             return false;
         }
@@ -319,42 +325,8 @@ public class CharacterMoveCpt : BaseMonoBehaviour
         {
             return true;
         }
+
     }
 
-    /// <summary>
-    /// 关闭自动寻路
-    /// </summary>
-    public void CloseNavMeshAgent()
-    {
-        if (navMeshAgent != null)
-            navMeshAgent.enabled = false;
-    }
-
-    /// <summary>
-    /// 开启自动寻路
-    /// </summary>
-    public void OpenNavMeshAgent()
-    {
-        if (navMeshAgent != null)
-            navMeshAgent.enabled = true;
-    }
-
-    protected float distanceStearingTarget;
-
-    protected void CheckSteeringTargetPosition()
-    {
-        float distanceST = Vector3.Distance(navMeshAgent.transform.position, navMeshAgent.steeringTarget);
-        if (distanceST <= 0.6f ) //导航网格到下一个边缘的距离
-        {
-            if (distanceStearingTarget < distanceST)
-            {
-                navMeshAgent.transform.position = navMeshAgent.steeringTarget;
-            }
-            else
-            {
-                distanceStearingTarget = distanceST;
-            }
-        }
-    }
 
 }

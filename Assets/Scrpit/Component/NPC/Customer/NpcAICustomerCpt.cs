@@ -324,7 +324,8 @@ public class NpcAICustomerCpt : BaseNpcAI
         }
         else
         {
-            SetIntent(CustomerIntentEnum.Leave);
+            SetMood(30);
+            EndOrderAndLeave();
         }
     }
 

@@ -20,8 +20,6 @@ public class NpcAIPasserCpt : BaseNpcAI
     protected SceneTownManager sceneTownManager;
     //事件处理
     protected MiniGameCombatHandler miniGameCombatHandler;
-    //AI
-    public NavMeshAgent navMeshAgent;
 
     //移动目标点
     public Vector2 movePosition;
@@ -73,13 +71,13 @@ public class NpcAIPasserCpt : BaseNpcAI
                 if (characterMoveCpt.IsAutoMoveStop())
                 {
                     //暂时关闭自动寻路（不关闭的话 无法跨范围移动NPC）
-                    characterMoveCpt.CloseNavMeshAgent();
+                    //characterMoveCpt.CloseNavMeshAgent();
                     //离开建筑内部
                     transform.position = buildingOutDoorPosition;
                     //设置当前所在地
                     SetLocation(TownBuildingEnum.Town);
                     //离开建筑后开启自动寻路
-                    characterMoveCpt.OpenNavMeshAgent();
+                   // characterMoveCpt.OpenNavMeshAgent();
                     //有一定概率去下一个地点
                     int isLeave = UnityEngine.Random.Range(0, 2);
                     if (isLeave == 1)
@@ -281,13 +279,13 @@ public class NpcAIPasserCpt : BaseNpcAI
     public void IntentForStayInBuilding(TownBuildingEnum buildingEnum)
     {
         //暂时关闭自动寻路（不关闭的话 无法跨范围移动NPC）
-        characterMoveCpt.CloseNavMeshAgent();
+       // characterMoveCpt.CloseNavMeshAgent();
         //进入建筑内部
         transform.position = buildingInDoorPosition;
         //设置当前所在地
         SetLocation(buildingEnum);
         //进入建筑后开启自动寻路
-        characterMoveCpt.OpenNavMeshAgent();
+       // characterMoveCpt.OpenNavMeshAgent();
         //开始逛街
         movePosition = sceneTownManager.GetRandomBuildingInsidePosition(buildingEnum);
         characterMoveCpt.SetDestination(movePosition);
