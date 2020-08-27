@@ -34,4 +34,6 @@ public class GameConfigBean
     //随机事件开关
     public int statusForEvent = 1;
 
+    //顾客结账方式  0最近  1随机
+    public int statusForCheckOut = 0;
 }

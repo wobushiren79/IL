@@ -63,7 +63,7 @@ public class UIGameBuild : UIGameComponent, IRadioGroupCallBack
         //时间添加1小时
         uiGameManager.gameTimeHandler.AddHour(1);
         //添加研究经验
-        uiGameManager.gameDataHandler.AddMenuResearch(1);
+        uiGameManager.gameDataHandler.AddMenuResearch(60);
         //继续时间
         uiGameManager.gameTimeHandler.SetTimeStatus(false);
         //设置角色到门口

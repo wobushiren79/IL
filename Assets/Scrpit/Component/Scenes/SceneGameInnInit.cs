@@ -112,16 +112,6 @@ public class SceneGameInnInit : BaseSceneInit, IBaseObserver, DialogView.IDialog
     }
 
     /// <summary>
-    /// 生成地形
-    /// </summary>
-    /// <returns></returns>
-    public IEnumerator BuildNavMesh()
-    {
-        yield return new WaitForEndOfFrame();
-        AstarPath.active.Scan();
-    }
-
-    /// <summary>
     /// 初始化新的一天
     /// </summary>
     public void InitNewDay()

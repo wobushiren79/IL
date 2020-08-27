@@ -23,7 +23,7 @@ public class BaseSceneInit : BaseMonoBehaviour
     public virtual void Awake()
     {
         npcTeamManager = Find<NpcTeamManager>(ImportantTypeEnum.NpcManager);
-        weatherHandler = Find<WeatherHandler>( ImportantTypeEnum.WeatherHandler);
+        weatherHandler = Find<WeatherHandler>(ImportantTypeEnum.WeatherHandler);
         gameItemsManager = Find<GameItemsManager>(ImportantTypeEnum.GameItemsManager);
         uiGameManager = Find<UIGameManager>(ImportantTypeEnum.GameUI);
         gameDataManager = Find<GameDataManager>(ImportantTypeEnum.GameDataManager);
@@ -41,7 +41,7 @@ public class BaseSceneInit : BaseMonoBehaviour
     {
         if (gameDataManager != null)
         {
-            if (GameCommonInfo.GameData==null|| CheckUtil.StringIsNull(GameCommonInfo.GameData.userId))
+            if (GameCommonInfo.GameData == null || CheckUtil.StringIsNull(GameCommonInfo.GameData.userId))
             {
                 gameDataManager.GetGameDataByUserId(GameCommonInfo.GameUserId);
             }
@@ -54,12 +54,12 @@ public class BaseSceneInit : BaseMonoBehaviour
         if (gameItemsManager != null)
         {
             gameItemsManager.itemsInfoController.GetAllItemsInfo();
-        }  
+        }
         if (npcInfoManager != null)
         {
             npcInfoManager.npcInfoController.GetAllNpcInfo();
-        }  
-        
+        }
+
         if (innBuildManager != null)
         {
             innBuildManager.buildDataController.GetAllBuildItemsData();
@@ -74,7 +74,8 @@ public class BaseSceneInit : BaseMonoBehaviour
     public IEnumerator BuildNavMesh()
     {
         yield return new WaitForEndOfFrame();
-        AstarPath.active.Scan();
+        if (AstarPath.active != null)
+            AstarPath.active.Scan();
     }
 
     public virtual void RefreshScene()

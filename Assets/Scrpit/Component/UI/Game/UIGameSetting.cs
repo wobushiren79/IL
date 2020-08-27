@@ -12,6 +12,7 @@ public class UIGameSetting : UIGameComponent, DropdownView.ICallBack, ProgressVi
     public Button btBack;
     public DropdownView dvLanguage;
     public DropdownView dvWindow;
+    public DropdownView dvCheckOut;
 
     public ProgressView pvMusic;
     public ProgressView pvSound;
@@ -24,13 +25,14 @@ public class UIGameSetting : UIGameComponent, DropdownView.ICallBack, ProgressVi
     public RadioButtonView rbEvent;
 
     public InputField etFrames;
+
     public void Start()
     {
         if (btBack != null)
         {
             btBack.onClick.AddListener(OnClickBack);
         }
-        if (dvWindow!=null)
+        if (dvWindow != null)
         {
             dvWindow.SetCallBack(this);
             List<Dropdown.OptionData> listWindow = new List<Dropdown.OptionData>
@@ -51,6 +53,27 @@ public class UIGameSetting : UIGameComponent, DropdownView.ICallBack, ProgressVi
 
         }
 
+        //结账选择出世法U
+        if (dvCheckOut != null)
+        {
+            dvCheckOut.SetCallBack(this);
+            List<Dropdown.OptionData> listCheckOut = new List<Dropdown.OptionData>
+            {
+                new Dropdown.OptionData("选择最近的柜台结账"),
+                new Dropdown.OptionData("选择随机的柜台结账")
+            };
+            dvCheckOut.SetData(listCheckOut);
+            switch (GameCommonInfo.GameConfig.statusForCheckOut)
+            {
+                case 0:
+                    dvCheckOut.SetPosition(0);
+                    break;
+                case 1:
+                    dvCheckOut.SetPosition(1);
+                    break;
+            }
+        }
+
         //语言选择初始化
         if (dvLanguage != null)
         {
@@ -69,6 +92,10 @@ public class UIGameSetting : UIGameComponent, DropdownView.ICallBack, ProgressVi
             }
 
         }
+
+
+
+
         //音乐选择初始化
         if (pvMusic != null)
         {
@@ -103,7 +130,7 @@ public class UIGameSetting : UIGameComponent, DropdownView.ICallBack, ProgressVi
         }
         if (etFrames != null)
         {
-            etFrames.text = GameCommonInfo.GameConfig.frames+"";
+            etFrames.text = GameCommonInfo.GameConfig.frames + "";
             etFrames.onEndEdit.AddListener(OnValueChangeForFrame);
         }
 
@@ -125,14 +152,14 @@ public class UIGameSetting : UIGameComponent, DropdownView.ICallBack, ProgressVi
         if (rbKeyTip != null)
         {
             rbKeyTip.SetCallBack(this);
-            if (GameCommonInfo.GameConfig.statusForKeyTip==0)
+            if (GameCommonInfo.GameConfig.statusForKeyTip == 0)
             {
                 rbKeyTip.ChangeStates(RadioButtonView.RadioButtonStatus.Unselected);
             }
             else if (GameCommonInfo.GameConfig.statusForKeyTip == 1)
             {
                 rbKeyTip.ChangeStates(RadioButtonView.RadioButtonStatus.Selected);
-            }   
+            }
         }
         //事件镜头跟随初始化
         if (rbEventCameraMove != null)
@@ -181,6 +208,7 @@ public class UIGameSetting : UIGameComponent, DropdownView.ICallBack, ProgressVi
     public override void OpenUI()
     {
         base.OpenUI();
+
     }
 
     /// <summary>
@@ -284,7 +312,10 @@ public class UIGameSetting : UIGameComponent, DropdownView.ICallBack, ProgressVi
             }
             GameCommonInfo.GameConfig.window = windowType;
         }
-
+        else if (view == dvCheckOut)
+        {
+            GameCommonInfo.GameConfig.statusForCheckOut = position;
+        }
     }
     #endregion
 

@@ -220,8 +220,17 @@ public class InnHandler : BaseMonoBehaviour, IBaseObserver
     /// <returns></returns>
     public BuildCounterCpt GetCounter(NpcAICustomerCpt npcAICustomer)
     {
-        BuildCounterCpt counterCpt = innPayHandler.GetCloseCounter(npcAICustomer);
-       // BuildCounterCpt counterCpt = RandomUtil.GetRandomDataByList(innPayHandler.listCounterCpt);
+        BuildCounterCpt counterCpt = null;
+        if (GameCommonInfo.GameConfig.statusForCheckOut==0)
+        {
+            //选择最近的柜台
+             counterCpt = innPayHandler.GetCloseCounter(npcAICustomer);
+        }
+        else
+        {
+            //随机选择一个柜台
+             counterCpt = RandomUtil.GetRandomDataByList(innPayHandler.listCounterCpt);
+        }
         return counterCpt;
     }
 

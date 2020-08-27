@@ -289,7 +289,7 @@ public class ItemTownGuildImproveCharacterCpt : ItemGameBaseCpt, DialogView.IDia
         //扣除时间
         gameDataManager.gameData.gameTime.hour += int.Parse(levelData.mark);
         //如果有研究菜谱 菜谱增加经验
-        gameDataHandler.AddMenuResearch(int.Parse(levelData.mark));
+        gameDataHandler.AddMenuResearch(int.Parse(levelData.mark)*60);
         //判断玩哪个游戏
         MiniGameBaseBean miniGameData = null;
         switch (workerType)
