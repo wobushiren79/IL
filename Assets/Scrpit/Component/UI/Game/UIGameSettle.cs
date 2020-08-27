@@ -66,7 +66,7 @@ public class UIGameSettle : UIGameComponent
         IconDataManager iconDataManager = uiGameManager.iconDataManager;
         GameTimeHandler gameTimeHandler = uiGameManager.gameTimeHandler;
         GameDataManager gameDataManager = uiGameManager.gameDataManager;
-        UserAchievementBean userAchievement=  gameDataManager.gameData.GetAchievementData();
+        UserAchievementBean userAchievement = gameDataManager.gameData.GetAchievementData();
         //停止时间
         gameTimeHandler.SetTimeStatus(true);
         CptUtil.RemoveChildsByActive(objListRecordContent.transform);
@@ -218,7 +218,9 @@ public class UIGameSettle : UIGameComponent
         objItem.transform.DOScale(new Vector3(0, 0, 0), 0.5f).From().SetDelay(animDelay + 0.1f).OnComplete(delegate ()
         {
             AudioHandler audioHandler = uiGameManager.audioHandler;
-            audioHandler.PlaySound(AudioSoundEnum.PayMoney);
+            //最多只播放10个音效
+            if (animDelay <= 1.1f)
+                audioHandler.PlaySound(AudioSoundEnum.PayMoney);
         });
         animDelay += 0.1f;
     }
