@@ -47,6 +47,7 @@ public enum ImportantTypeEnum
     EffectHandler,
     GambleHandler,
     CursorHandler,
+    SkillHandler,
 
     Popup,
     Sun,

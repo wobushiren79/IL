@@ -43,6 +43,7 @@ public class UIGameManager : BaseUIManager
     public GameDataHandler gameDataHandler;
     public SteamHandler steamHandler;
     public FPSHandler fpsHandler;
+    public SkillInfoHandler skillInfoHandler;
     [Header("建造")]
     public NpcCustomerBuilder npcCustomerBuilder;
     public NpcEventBuilder npcEventBuilder;
@@ -70,6 +71,7 @@ public class UIGameManager : BaseUIManager
         dialogManager = Find<DialogManager>(ImportantTypeEnum.DialogManager);
         toastManager = Find<ToastManager>(ImportantTypeEnum.ToastManager);
 
+        skillInfoHandler = Find<SkillInfoHandler>(ImportantTypeEnum.SkillHandler);
         innHandler = Find<InnHandler>(ImportantTypeEnum.InnHandler);
         gameTimeHandler = Find<GameTimeHandler>(ImportantTypeEnum.TimeHandler);
         controlHandler = Find<ControlHandler>(ImportantTypeEnum.ControlHandler);

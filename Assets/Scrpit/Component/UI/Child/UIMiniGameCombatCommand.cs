@@ -4,7 +4,7 @@ using UnityEngine.UI;
 using DG.Tweening;
 using System.Collections.Generic;
 
-public class UIMiniGameCombatCommand : BaseUIChildComponent<UIMiniGameCombat>, DialogView.IDialogCallBack,SkillInfoManager.ICallBack
+public class UIMiniGameCombatCommand : BaseUIChildComponent<UIMiniGameCombat>, DialogView.IDialogCallBack
 {
     public Button btCommandFight;
     public Button btCommandSkill;
@@ -56,11 +56,16 @@ public class UIMiniGameCombatCommand : BaseUIChildComponent<UIMiniGameCombat>, D
         uiComponent.uiGameManager.audioHandler.PlaySound(AudioSoundEnum.ButtonForNormal);
         uiComponent.miniGameData.SetRoundActionCommand(MiniGameCombatCommand.Skill);
         NpcAIMiniGameCombatCpt npcCpt = uiComponent.miniGameData.GetRoundActionCharacter();
-        SkillInfoManager skillInfoManager = uiComponent.uiGameManager.skillInfoManager;
-        skillInfoManager.SetCallBack(this);
+        SkillInfoHandler skillInfoHandler = uiComponent.uiGameManager.skillInfoHandler;
         //获取角色拥有的技能
         List<long> listSkill = npcCpt.characterMiniGameData.characterData.attributes.listSkills;
-        skillInfoManager.GetSkillByIds(listSkill);
+        List<SkillInfoBean> listSkillInfo=  skillInfoHandler.GetSkillByIds(listSkill);
+
+        DialogManager dialogManager = uiComponent.uiGameManager.dialogManager;
+        DialogBean dialogData = new DialogBean();
+        PickForSkillDialogView pickForSkillDialog = (PickForSkillDialogView)dialogManager.CreateDialog(DialogEnum.PickForSkill, this, dialogData);
+        Dictionary<long, int> listUsedSkill = npcCpt.characterMiniGameData.listUsedSkill;
+        pickForSkillDialog.SetData(listSkillInfo, listUsedSkill);
     }
 
     /// <summary>
@@ -105,7 +110,7 @@ public class UIMiniGameCombatCommand : BaseUIChildComponent<UIMiniGameCombat>, D
         {
             PickForSkillDialogView pickForSkillDialog = (PickForSkillDialogView)dialogView;
             pickForSkillDialog.GetSelectedSkill(out SkillInfoBean skillInfo);
-            //设置使用的物品
+            //设置使用的技能
             uiComponent.miniGameData.SetRoundActionSkill(skillInfo);
 
             if (callBack != null)
@@ -117,19 +122,6 @@ public class UIMiniGameCombatCommand : BaseUIChildComponent<UIMiniGameCombat>, D
     public void Cancel(DialogView dialogView, DialogBean dialogBean)
     {
         //uiComponent.OpenCombatCommand();
-    }
-    #endregion
-
-    #region
-    public void GetSkillInfoSuccess(List<SkillInfoBean> listData)
-    {
-        NpcAIMiniGameCombatCpt npcCpt = uiComponent.miniGameData.GetRoundActionCharacter();
-
-        DialogManager dialogManager = uiComponent.uiGameManager.dialogManager;
-        DialogBean dialogData = new DialogBean();
-        PickForSkillDialogView pickForSkillDialog = (PickForSkillDialogView)dialogManager.CreateDialog(DialogEnum.PickForSkill, this, dialogData);
-        Dictionary<long, int> listUsedSkill = npcCpt.characterMiniGameData.listUsedSkill;
-        pickForSkillDialog.SetData(listData, listUsedSkill);
     }
     #endregion
 

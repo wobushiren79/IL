@@ -64,7 +64,6 @@ public class NpcAIWorkerForChefCpt : NpcAIWokerFoBaseCpt
     /// <param name="orderForCustomer"></param>
     public void SetIntent(ChefIntentEnum chefIntent, OrderForCustomer orderForCustomer)
     {
-        StopAllCoroutines();
         this.chefIntent = chefIntent;
         this.orderForCustomer = orderForCustomer;
         switch (chefIntent)

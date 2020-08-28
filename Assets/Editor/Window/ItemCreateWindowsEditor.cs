@@ -852,22 +852,31 @@ public class ItemCreateWindowsEditor : EditorWindow, StoreInfoManager.ICallBack
                  && itemType != GeneralEnum.Read)
             {
                 EditorUI.GUIText("增加属性：");
+                EditorUI.GUIText("|");
                 EditorUI.GUIText("命");
                 itemInfo.add_life = int.Parse(EditorGUILayout.TextArea(itemInfo.add_life + "", GUILayout.Width(150), GUILayout.Height(20)));
+                EditorUI.GUIText("|");
                 EditorUI.GUIText("厨");
                 itemInfo.add_cook = int.Parse(EditorGUILayout.TextArea(itemInfo.add_cook + "", GUILayout.Width(150), GUILayout.Height(20)));
+                EditorUI.GUIText("|");
                 EditorUI.GUIText("速");
                 itemInfo.add_speed = int.Parse(EditorGUILayout.TextArea(itemInfo.add_speed + "", GUILayout.Width(150), GUILayout.Height(20)));
+                EditorUI.GUIText("|");
                 EditorUI.GUIText("算");
                 itemInfo.add_account = int.Parse(EditorGUILayout.TextArea(itemInfo.add_account + "", GUILayout.Width(150), GUILayout.Height(20)));
+                EditorUI.GUIText("|");
                 EditorUI.GUIText("魅");
                 itemInfo.add_charm = int.Parse(EditorGUILayout.TextArea(itemInfo.add_charm + "", GUILayout.Width(150), GUILayout.Height(20)));
+                EditorUI.GUIText("|");
                 EditorUI.GUIText("武");
                 itemInfo.add_force = int.Parse(EditorGUILayout.TextArea(itemInfo.add_force + "", GUILayout.Width(150), GUILayout.Height(20)));
+                EditorUI.GUIText("|");
                 EditorUI.GUIText("运");
                 itemInfo.add_lucky = int.Parse(EditorGUILayout.TextArea(itemInfo.add_lucky + "", GUILayout.Width(150), GUILayout.Height(20)));
+                EditorUI.GUIText("|");
                 EditorUI.GUIText("忠");
                 itemInfo.add_loyal = int.Parse(EditorGUILayout.TextArea(itemInfo.add_loyal + "", GUILayout.Width(150), GUILayout.Height(20)));
+                EditorUI.GUIText("|");
 
                 EditorUI.GUIText("旋转角度");
                 itemInfo.rotation_angle = EditorUI.GUIEditorText(itemInfo.rotation_angle);
@@ -892,9 +901,6 @@ public class ItemCreateWindowsEditor : EditorWindow, StoreInfoManager.ICallBack
                 EditorUI.GUIText("绑定textlook markID：");
                 itemInfo.add_id = long.Parse(EditorGUILayout.TextArea(itemInfo.add_id + "", GUILayout.Width(150), GUILayout.Height(20)));
             }
-
-
-
             GUILayout.EndHorizontal();
         }
     }

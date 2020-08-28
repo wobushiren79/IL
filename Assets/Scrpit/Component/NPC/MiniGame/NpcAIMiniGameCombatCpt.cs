@@ -9,6 +9,8 @@ public class NpcAIMiniGameCombatCpt : BaseNpcAI
     protected MiniGameCombatHandler gameCombatHandler;
     //战斗游戏创建
     protected MiniGameCombatBuilder gameCombatBuilder;
+    //技能管理
+    protected SkillInfoHandler skillInfoHandler;
 
     //角色数据
     public MiniGameCharacterForCombatBean characterMiniGameData;
@@ -28,6 +30,7 @@ public class NpcAIMiniGameCombatCpt : BaseNpcAI
         base.Awake();
         gameCombatHandler = Find<MiniGameCombatHandler>(ImportantTypeEnum.MiniGameHandler);
         gameCombatBuilder = FindInChildren<MiniGameCombatBuilder>(ImportantTypeEnum.MiniGameBuilder);
+        skillInfoHandler = Find<SkillInfoHandler>(ImportantTypeEnum.SkillHandler);
     }
 
     public override void SetCharacterDead()
@@ -52,6 +55,8 @@ public class NpcAIMiniGameCombatCpt : BaseNpcAI
     {
         this.characterMiniGameData = characterMiniGameData;
         SetCharacterData(characterMiniGameData.characterData);
+        //更新血量显示
+        characterLifeCpt.SetData(characterMiniGameData.characterCurrentLife, characterMiniGameData.characterMaxLife);
     }
 
     /// <summary>
@@ -137,7 +142,7 @@ public class NpcAIMiniGameCombatCpt : BaseNpcAI
             }
             else
             {
-                StartCoroutine(CoroutineForIntentSkill(relativeOurList, relativeEnemyList));
+                StartCoroutine(CoroutineForIntentSkill(RandomUtil.GetRandomDataByList(skillIds),relativeOurList, relativeEnemyList));
             }
         }
     }
@@ -184,14 +189,52 @@ public class NpcAIMiniGameCombatCpt : BaseNpcAI
     /// <summary>
     ///协程意图-技能
     /// </summary>
-    public IEnumerator CoroutineForIntentSkill(List<NpcAIMiniGameCombatCpt> relativeOurList, List<NpcAIMiniGameCombatCpt> relativeEnemyList)
+    public IEnumerator CoroutineForIntentSkill(long skillId,List<NpcAIMiniGameCombatCpt> relativeOurList, List<NpcAIMiniGameCombatCpt> relativeEnemyList)
+    {    
+        SkillInfoBean skillInfo = skillInfoHandler.GetSkillById(skillId);
+        if (skillInfo==null)
+        {
+            //如果没有技能则战斗
+            StartCoroutine(CoroutineForIntentFight(relativeOurList, relativeEnemyList));     
+        }
+        else
+        {
+            gameCombatHandler.miniGameData.SetRoundActionCommand(MiniGameCombatCommand.Skill);
+            gameCombatHandler.miniGameData.SetRoundActionSkill(skillInfo);
+            EffectDetailsEnumTools.GetEffectRange(skillInfo.effect_details, out int impactNumber, out int impactType);
+
+            List<NpcAIMiniGameCombatCpt> listSelectTargetNpc = new List<NpcAIMiniGameCombatCpt>();
+            if (impactType == 0)
+            {
+                //如果选择是选择自己
+                listSelectTargetNpc.Add(this);
+            }
+            else if (impactType == 1)
+            {
+                //如果选择是选择友方
+                listSelectTargetNpc.AddRange(GetSelectTargetByNumber(impactNumber, relativeOurList));
+            }
+            else if (impactType == 2)
+            {
+                //如果选择是选择敌人
+                listSelectTargetNpc.AddRange(GetSelectTargetByNumber(impactNumber, relativeEnemyList));
+            }
+            gameCombatHandler.miniGameData.SetRoundTargetCharacter(listSelectTargetNpc);
+            yield return new WaitForSeconds(1f);
+            gameCombatHandler.RoundForAction();
+
+        }
+    }
+
+    protected List<NpcAIMiniGameCombatCpt> GetSelectTargetByNumber(int number,List<NpcAIMiniGameCombatCpt> listNpc)
     {
-        gameCombatHandler.miniGameData.SetRoundActionCommand(MiniGameCombatCommand.Skill);
-        //随机选一个
-        NpcAIMiniGameCombatCpt targetNpc = RandomUtil.GetRandomDataByList(relativeEnemyList);
-        gameCombatHandler.miniGameData.SetRoundTargetCharacter(targetNpc);
-        yield return new WaitForSeconds(2);
-        gameCombatHandler.RoundForAction();
+        if (number == 0)
+        {
+            return listNpc;
+        }else
+        {
+           return RandomUtil.GetRandomDataByListForNumberNR(listNpc, number);
+        }
     }
 
     /// <summary>

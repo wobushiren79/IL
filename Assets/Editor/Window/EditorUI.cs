@@ -208,6 +208,8 @@ public class EditorUI
             npcInfo.love_items = EditorGUILayout.TextArea(npcInfo.love_items + "", GUILayout.Width(100), GUILayout.Height(20));
             GUILayout.Label("喜欢的菜品：", GUILayout.Width(100), GUILayout.Height(20));
             npcInfo.love_menus = EditorGUILayout.TextArea(npcInfo.love_menus + "", GUILayout.Width(50), GUILayout.Height(20));
+            GUILayout.Label("技能：", GUILayout.Width(100), GUILayout.Height(20));
+            npcInfo.skill_ids = EditorUI.GUIEditorText(npcInfo.skill_ids, 100);
             GUILayout.EndHorizontal();
         }
         GUILayout.BeginHorizontal();

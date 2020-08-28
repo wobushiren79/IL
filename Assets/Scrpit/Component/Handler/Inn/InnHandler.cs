@@ -106,7 +106,7 @@ public class InnHandler : BaseMonoBehaviour, IBaseObserver
         workerBuilder.InitWorkerData();
     }
 
-    private void FixedUpdate()
+    private void Update()
     {
         if (innStatus == InnStatusEnum.Open)
         {
@@ -121,7 +121,7 @@ public class InnHandler : BaseMonoBehaviour, IBaseObserver
                     //移除排队列表
                     cusomerQueue.RemoveAt(0);
                     //设置座位
-                    orderForCustomer.table = tableCpt;  
+                    orderForCustomer.table = tableCpt;
                     //设置客户前往座位
                     orderForCustomer.customer.SetIntent(NpcAICustomerCpt.CustomerIntentEnum.GotoSeat, orderForCustomer);
                 }
@@ -527,10 +527,11 @@ public class InnHandler : BaseMonoBehaviour, IBaseObserver
                 //排队送菜处理
                 if (!CheckUtil.ListIsNull(sendQueue))
                 {
-                    bool isSuccess = innWaiterHandler.SetSendFood(sendQueue[0], workNpc);
+                    OrderForCustomer orderForSend = sendQueue[0];
+                    bool isSuccess = innWaiterHandler.SetSendFood(orderForSend, workNpc);
                     if (isSuccess)
                     {
-                        sendQueue.RemoveAt(0);
+                        sendQueue.Remove(orderForSend);
                         return true;
                     }
                 }

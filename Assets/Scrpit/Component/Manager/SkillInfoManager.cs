@@ -25,6 +25,12 @@ public class SkillInfoManager : BaseManager,ISkillInfoView
     {
         skillInfoController.GetSkillInfoByIds(new List<long>() { id });
     }
+
+    public void GetAllSkills()
+    {
+        skillInfoController.GetAllSkillInfo();
+    }
+
     #region 数据回调
     public void GetSkillInfoFail()
     {

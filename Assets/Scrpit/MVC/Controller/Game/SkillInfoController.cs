@@ -20,4 +20,11 @@ public class SkillInfoController : BaseMVCController<SkillInfoModel, ISkillInfoV
         GetView().GetSkillInfoSuccess(listData);
     }
 
+
+    public void GetAllSkillInfo()
+    {
+        List<SkillInfoBean> listData = GetModel().GetAllSkill();
+        GetView().GetSkillInfoSuccess(listData);
+    }
+
 }
