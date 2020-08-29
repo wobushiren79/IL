@@ -19,11 +19,13 @@ public class NpcAIWokerFoBaseCpt : BaseMonoBehaviour
         audioHandler = Find<AudioHandler>(ImportantTypeEnum.AudioHandler);
         toastManager = Find<ToastManager>(ImportantTypeEnum.ToastManager);
         iconDataManager = Find<IconDataManager>(ImportantTypeEnum.UIManager);
+
+        npcAIWorker = GetComponent<NpcAIWorkerCpt>();
     }
 
     public virtual void Start()
     {
-        npcAIWorker = GetComponent<NpcAIWorkerCpt>();
+   
     }
 
     /// <summary>

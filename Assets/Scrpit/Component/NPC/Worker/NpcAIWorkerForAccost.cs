@@ -26,6 +26,8 @@ public class NpcAIWorkerForAccost : NpcAIWokerFoBaseCpt
     public Vector3 movePosition;
     public AccostIntentEnum accostIntent = AccostIntentEnum.Idle;
     public NpcAICustomerCpt npcAICustomer;//交流的顾客
+
+
     public override void Start()
     {
         base.Start();

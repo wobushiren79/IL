@@ -32,7 +32,7 @@ public class NpcWorkerBuilder : BaseMonoBehaviour
         {
             //获取门的坐标 并在门周围生成NPC
             Vector3 doorPosition = innHandler.GetRandomEntrancePosition();
-            //向下2个单位
+            //向下5个单位
             doorPosition += new Vector3(0, -3f, 0);
             BuildWork(gameDataManager.gameData.userCharacter, doorPosition);
         }
@@ -41,7 +41,7 @@ public class NpcWorkerBuilder : BaseMonoBehaviour
             //获取门的坐标 并在门周围生成NPC
             Vector3 doorPosition = innHandler.GetRandomEntrancePosition();
             //向下2个单位
-            doorPosition += new Vector3(0, -1.5f, 0);
+            doorPosition += new Vector3(0, -3f, 0);
             CharacterBean itemData = listAllWork[i];
             if (itemData.baseInfo.GetWorkerStatus() == WorkerStatusEnum.Work)
             {

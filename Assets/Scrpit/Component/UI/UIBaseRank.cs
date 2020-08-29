@@ -121,10 +121,11 @@ public class UIBaseRank : UIBaseOne, IRadioGroupCallBack
         ClearData();
         rankType = EnumUtil.GetEnum<RankTypeEnum>(rbview.name);
         string rankName = RankTypeEnumTool.GetRankTypeName(rankType);
-        //获取排行榜ID
-        steamHandler.GetLeaderboardId(rankName, this);
         //设置本地数据
         SetLocalData();
+        //获取排行榜ID
+        if (steamHandler != null)
+            steamHandler.GetLeaderboardId(rankName, this);
     }
 
     public void RadioButtonUnSelected(RadioGroupView rgView, int position, RadioButtonView rbview)

@@ -51,6 +51,8 @@ public class UIGameManager : BaseUIManager
     public InnFurnitureBuilder innFurnitureBuilder;
     public InnFloorBuilder innFloorBuilder;
     public InnWallBuilder innWallBuilder;
+    [Header("小游戏")]
+    public MiniGameCombatHandler miniGameCombatHandler;
 
     private void Awake()
     {
@@ -97,6 +99,8 @@ public class UIGameManager : BaseUIManager
         innFurnitureBuilder = Find<InnFurnitureBuilder>(ImportantTypeEnum.InnBuilder);
         innFloorBuilder = Find<InnFloorBuilder>(ImportantTypeEnum.InnBuilder);
         innWallBuilder = Find<InnWallBuilder>(ImportantTypeEnum.InnBuilder);
+
+        miniGameCombatHandler = Find<MiniGameCombatHandler>(ImportantTypeEnum.MiniGameHandler);
     }
 
 }

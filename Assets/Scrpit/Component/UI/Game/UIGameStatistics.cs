@@ -7,13 +7,14 @@ public class UIGameStatistics : UIBaseOne,IRadioGroupCallBack
     public UIGameStatisticsForRevenue revenueUI;
     public UIGameStatisticsForAch achUI;
     public UIGameStatisticsForCustomer customerUI;
+    public UIGameStatisticsForMenu menuUI;
     public RadioGroupView rgType;
 
     public RadioButtonView rbTypeInn;
     public RadioButtonView rbTypeRevenue;
     public RadioButtonView rbTypeAch;
     public RadioButtonView rbTypeCustomer;
-
+    public RadioButtonView rbTypeMenu;
     public override void Start()
     {
         base.Start();
@@ -35,6 +36,7 @@ public class UIGameStatistics : UIBaseOne,IRadioGroupCallBack
         revenueUI.Close();
         achUI.Close();
         customerUI.Close();
+        menuUI.Close();
         if (rbview== rbTypeInn)
         {
             innUI.Open();
@@ -50,6 +52,10 @@ public class UIGameStatistics : UIBaseOne,IRadioGroupCallBack
         else if (rbview == rbTypeCustomer)
         {
             customerUI.Open();
+        }
+        else if (rbview == rbTypeMenu)
+        {
+            menuUI.Open();
         }
     }
 

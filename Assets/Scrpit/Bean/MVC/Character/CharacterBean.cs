@@ -414,7 +414,7 @@ public class CharacterBean
         //数据修正 
         if (talkTime <= 0.1f)
         {
-            //最低不能小于0.5秒
+            //最低不能小于0.1秒
             talkTime = 0.1f;
         }
         return talkTime;
@@ -431,9 +431,9 @@ public class CharacterBean
         out CharacterAttributesBean totalAttributes, out CharacterAttributesBean selfAttributes, out CharacterAttributesBean equipAttributes);
         foodTime -= (foodTime * totalAttributes.cook * 0.01f);
         //时间修正
-        if (foodTime <= 0.1f)
+        if (foodTime < 0.3f)
         {
-            foodTime = 0.1f;
+            foodTime = 0.3f;
         }
         return foodTime;
     }
@@ -483,9 +483,9 @@ public class CharacterBean
         GetAttributes(gameItemsManager,
         out CharacterAttributesBean totalAttributes, out CharacterAttributesBean selfAttributes, out CharacterAttributesBean equipAttributes);
         cleanTime -= (totalAttributes.speed * 0.06f);
-        if (cleanTime <= 0.1f)
+        if (cleanTime < 0.3f)
         {
-            cleanTime = 0.1f;
+            cleanTime = 0.3f;
         }
         return cleanTime;
     }
@@ -527,13 +527,13 @@ public class CharacterBean
         GetAttributes(gameItemsManager,
         out CharacterAttributesBean totalAttributes, out CharacterAttributesBean selfAttributes, out CharacterAttributesBean equipAttributes);
         time -= totalAttributes.account * 0.06f;
-        if (time < 0.1f)
-            time = 0.1f;
+        if (time < 0.3f)
+            time = 0.3f;
         return time;
     }
 
     /// <summary>
-    /// 计算打手打架事件
+    /// 计算打手打架时间
     /// </summary>
     /// <returns></returns>
     public float CalculationBeaterFightTime(GameItemsManager gameItemsManager)
@@ -542,10 +542,10 @@ public class CharacterBean
         out CharacterAttributesBean totalAttributes, out CharacterAttributesBean selfAttributes, out CharacterAttributesBean equipAttributes);
 
         float fightTime = 6;
-        fightTime -= (totalAttributes.force * 0.01f);
-        if (fightTime < 0.1f)
+        fightTime -= (totalAttributes.force * 0.05f);
+        if (fightTime < 0.3f)
         {
-            fightTime = 0.1f;
+            fightTime = 0.3f;
         }
         return fightTime;
     }

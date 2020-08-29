@@ -10,7 +10,7 @@ public class UIMiniGameCombatCommand : BaseUIChildComponent<UIMiniGameCombat>, D
     public Button btCommandSkill;
     public Button btCommandItems;
     public Button btCommandPass;
-
+    public Button btCommandEscape;
     protected ICallBack callBack;
 
     private void Start()
@@ -23,6 +23,8 @@ public class UIMiniGameCombatCommand : BaseUIChildComponent<UIMiniGameCombat>, D
             btCommandItems.onClick.AddListener(CommandItems);
         if (btCommandPass)
             btCommandPass.onClick.AddListener(CommandPass);
+        if (btCommandEscape)
+            btCommandEscape.onClick.AddListener(CommandEscape);
     }
 
     public override void Open()
@@ -91,6 +93,16 @@ public class UIMiniGameCombatCommand : BaseUIChildComponent<UIMiniGameCombat>, D
         uiComponent.miniGameData.SetRoundActionCommand(MiniGameCombatCommand.Pass);
         if (callBack != null)
             callBack.PassComplete();
+    }
+
+    /// <summary>
+    /// 指令逃跑
+    /// </summary>
+    public void CommandEscape()
+    {
+        MiniGameCombatHandler miniGameCombatHandler = uiComponent.uiGameManager.miniGameCombatHandler;
+        Close();
+        miniGameCombatHandler.EndGame(false);
     }
 
     #region 弹窗回调
