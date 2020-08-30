@@ -232,7 +232,16 @@ public class ItemTownGoodsMarketCpt : ItemGameBaseCpt, DialogView.IDialogCallBac
         //随机浮动
         //price_l += Random.Range(-1, 2);
         //price_m += Random.Range(-1, 2);
-        price_s += Random.Range(-2, 3);
+        if ((IngredientsEnum)goodsData.mark_type == IngredientsEnum.Seafood)
+        {
+            //海鲜涨幅比较高
+            price_s += Random.Range(-15, 16);
+        }
+        else
+        {
+            price_s += Random.Range(-2, 3);
+        }
+
 
         //好感加成
         //CharacterFavorabilityBean marketBossFavorability= gameDataManager.gameData.GetCharacterFavorability(10001);

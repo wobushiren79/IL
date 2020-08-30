@@ -36,4 +36,7 @@ public class GameConfigBean
 
     //顾客结账方式  0最近  1随机
     public int statusForCheckOut = 0;
+
+    //员工当前工作状态数量
+    public int statusForWorkerNumber = 0;
 }

@@ -357,12 +357,20 @@ public class ControlForBuildCpt : BaseControl
                 if (buildItemCpt.buildItemData.id == -1)
                 {
                     //如果是拆除模式提示
-                    // toastManager.ToastHint(GameCommonInfo.GetUITextById(1003));
+                    //只有一次点击时才出提示
+                    if (Input.GetButtonDown(InputInfo.Confirm))
+                    {
+                        //toastManager.ToastHint(GameCommonInfo.GetUITextById(1003));
+                    }
                 }
                 else
                 {
                     //如果是正常模式提示
-                   //  toastManager.ToastHint(GameCommonInfo.GetUITextById(1002));
+                    //只有一次点击时才出提示
+                    if (Input.GetButtonDown(InputInfo.Confirm))
+                    {
+                        toastManager.ToastHint(GameCommonInfo.GetUITextById(1002));
+                    }
                 }
             }
         }

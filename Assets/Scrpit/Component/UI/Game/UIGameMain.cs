@@ -51,12 +51,14 @@ public class UIGameMain : UIGameComponent, DialogView.IDialogCallBack, IRadioGro
     public RadioButtonView rbTimeScale2;
     public RadioButtonView rbTimeScale3;
     public RadioButtonView rbTimeScale5;
+    public WorkerNumberView workerNumber;
 
     protected Tween tweenForMoneyL;
     protected Tween tweenForMoneyM;
     protected Tween tweenForMoneyS;
 
     public Text tvMoneyForAnimModel;
+
 
     public UIGameMainForHint uiHint;
 
@@ -194,7 +196,6 @@ public class UIGameMain : UIGameComponent, DialogView.IDialogCallBack, IRadioGro
         if (uiGameManager.innHandler == null)
         {
             rgTimeScale.gameObject.SetActive(false);
-         
         }
         else
         {
@@ -205,9 +206,9 @@ public class UIGameMain : UIGameComponent, DialogView.IDialogCallBack, IRadioGro
             else
             {
                 rgTimeScale.gameObject.SetActive(true);
-            
             }
         }
+
         //设置是否显示时间跳跃
         //if (uiGameManager.gameTimeHandler == null)
         //{
@@ -224,6 +225,22 @@ public class UIGameMain : UIGameComponent, DialogView.IDialogCallBack, IRadioGro
         //        btJumpTime.gameObject.SetActive(false);
         //    }
         //}
+
+        if (GameCommonInfo.GameConfig.statusForWorkerNumber == 0)
+        {
+            workerNumber.Close();
+        }
+        else
+        {
+            if (uiGameManager.gameTimeHandler!=null && uiGameManager.gameTimeHandler.GetDayStatus() == GameTimeHandler.DayEnum.Work)
+            {
+                workerNumber.Open();
+            }
+            else
+            {
+                workerNumber.Close();
+            }
+        }
     }
 
     /// <summary>
@@ -364,7 +381,8 @@ public class UIGameMain : UIGameComponent, DialogView.IDialogCallBack, IRadioGro
     public void OpenWorkerUI()
     {
         uiGameManager.audioHandler.PlaySound(AudioSoundEnum.ButtonForNormal);
-        uiManager.OpenUIAndCloseOther(UIEnum.GameWorker);
+        UIGameWorker  uiGameWorker = (UIGameWorker)uiManager.OpenUIAndCloseOther(UIEnum.GameWorker);
+        uiGameWorker.InitUI();
     }
 
     public void OpenMenuUI()

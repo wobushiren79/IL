@@ -244,7 +244,7 @@ public class NpcAIWorkerCpt : BaseNpcAI
         else
         {
             //闲逛或者待在原地
-            int action = UnityEngine.Random.Range(0, 2);
+            int action = UnityEngine.Random.Range(0, 5);
             if (action == 0)
             {
                 //闲逛 有问题

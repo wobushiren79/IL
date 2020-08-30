@@ -1361,7 +1361,7 @@ GameObject:
   - component: {fileID: 5210061400093648316}
   - component: {fileID: 4414186510013377829}
   - component: {fileID: 1735659301203689343}
-  - component: {fileID: 5919173928968134594}
+  - component: {fileID: 1263306313884225075}
   m_Layer: 0
   m_Name: Character
   m_TagString: NPC
@@ -1508,7 +1508,7 @@ MonoBehaviour:
   tagPenalties: 0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
   graphMask:
     value: -1
---- !u!114 &5919173928968134594
+--- !u!114 &1263306313884225075
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1524,9 +1524,9 @@ MonoBehaviour:
   smoothType: 0
   subdivisions: 2
   iterations: 1
-  strength: 0.1
+  strength: 0.05
   uniformLength: 1
-  maxSegmentLength: 1
+  maxSegmentLength: 0.5
   bezierTangentLength: 0.4
   offset: 0.2
   factor: 0.1

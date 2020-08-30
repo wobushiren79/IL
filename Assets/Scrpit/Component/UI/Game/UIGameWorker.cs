@@ -43,12 +43,17 @@ public class UIGameWorker : UIGameComponent
     public override void OpenUI()
     {
         base.OpenUI();
+    }
+
+    public void InitUI()
+    {
         workerForSort = WorkerEnum.Chef;
         List<CharacterBean> listData = uiGameManager.gameDataManager.gameData.GetAllCharacterData();
         listCharacterData.Clear();
         listCharacterData.AddRange(listData);
         InitData();
     }
+
 
     public void OpenMainUI()
     {
