@@ -52,12 +52,11 @@ public class CharacterMoveCpt : BaseMonoBehaviour
 
     public void Update()
     {
-        if (!isManualMove && aiPath != null )
+        if (!isManualMove && aiPath != null)
         {
-            if(aiPathPosition >= aiPath.vectorPath.Count)
+            if (aiPathPosition >= aiPath.vectorPath.Count)
             {
                 InitAIPath();
-                SetAnimStatus(0);
                 return;
             }
             else
@@ -66,7 +65,7 @@ public class CharacterMoveCpt : BaseMonoBehaviour
                 bool isArrive = Move(aiPath.vectorPath[aiPathPosition]);
                 if (isArrive)
                 {
-                    aiPathPosition ++ ;
+                    aiPathPosition++;
                 }
                 if (objCharacterBody != null)
                 {
@@ -93,7 +92,7 @@ public class CharacterMoveCpt : BaseMonoBehaviour
 
     private void FixedUpdate()
     {
-       
+
     }
 
     /// <summary>
@@ -135,10 +134,8 @@ public class CharacterMoveCpt : BaseMonoBehaviour
         else
         {
             InitAIPath();
-            LogUtil.LogWarning("路径查询失败");
+            //LogUtil.LogWarning("路径查询失败");
         }
-    
-
     }
 
     protected void InitAIPath()
@@ -146,6 +143,7 @@ public class CharacterMoveCpt : BaseMonoBehaviour
         aiPath = null;
         aiPathPosition = 0;
         aiPathReached = false;
+        SetAnimStatus(0);
     }
 
     /// <summary>
@@ -244,7 +242,7 @@ public class CharacterMoveCpt : BaseMonoBehaviour
     {
         SetAnimStatus(1);
         //objMove.transform.position = Vector3.Lerp(objMove.transform.position, movePosition, moveSpeed * Time.deltaTime);
-        objMove.transform.position = Vector3.MoveTowards(objMove.transform.position , movePosition, moveSpeed * Time.deltaTime);
+        objMove.transform.position = Vector3.MoveTowards(objMove.transform.position, movePosition, moveSpeed * Time.deltaTime);
         if (Vector3.Distance(objMove.transform.position, movePosition) < 0.01f)
         {
             objMove.transform.position = movePosition;
@@ -308,6 +306,8 @@ public class CharacterMoveCpt : BaseMonoBehaviour
     /// </summary>
     public void StopAutoMove()
     {
+        if (aiSeeker != null)
+            aiSeeker.CancelCurrentPathRequest();
         InitAIPath();
     }
 
@@ -317,7 +317,7 @@ public class CharacterMoveCpt : BaseMonoBehaviour
     /// <returns></returns>
     public bool IsAutoMoveStop()
     {
-        if (aiPath != null ||  aiPathReached)
+        if (aiPath != null || aiPathReached)
         {
             return false;
         }

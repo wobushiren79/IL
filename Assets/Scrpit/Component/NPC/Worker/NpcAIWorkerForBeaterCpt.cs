@@ -48,6 +48,7 @@ public class NpcAIWorkerForBeaterCpt : NpcAIWokerFoBaseCpt
 
     public void StartFight(NpcAIRascalCpt npcAIRascal)
     {
+        //捣乱者不动
         this.npcAIRascal = npcAIRascal;
         SetIntent(BeaterIntentEnum.GoToRascal);
     }
@@ -89,8 +90,9 @@ public class NpcAIWorkerForBeaterCpt : NpcAIWokerFoBaseCpt
     public void SetIntentForGoToRascal()
     {
         beaterPro.SetActive(true);
-
-         StartCoroutine(StartGoToRascal());
+        npcAIRascal.SetMoveStatus(false);
+        movePosition = npcAIRascal.transform.position;
+        npcAIWorker.characterMoveCpt.SetDestination(movePosition);
     }
 
     /// <summary>
@@ -120,19 +122,6 @@ public class NpcAIWorkerForBeaterCpt : NpcAIWokerFoBaseCpt
         StartCoroutine(StartRest(restTime));
     }
 
-    /// <summary>
-    /// 协程-追击捣乱者
-    /// </summary>
-    /// <returns></returns>
-    private IEnumerator StartGoToRascal()
-    {
-        while (beaterIntent == BeaterIntentEnum.GoToRascal)
-        {
-            movePosition = npcAIRascal.transform.position;
-            npcAIWorker.characterMoveCpt.SetDestination(movePosition);
-            yield return new WaitForSeconds(0.5f);   
-        }
-    }
 
     /// <summary>
     /// 开始休息

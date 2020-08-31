@@ -61,6 +61,9 @@ public class NpcAIRascalCpt : BaseNpcAI, IBaseObserver, TextInfoHandler.ICallBac
     //文本
     protected TextInfoHandler textInfoHandler;
 
+    //是否移动  用于追击判定
+    protected bool isMove=false;
+
     public override void Awake()
     {
         base.Awake();
@@ -89,6 +92,20 @@ public class NpcAIRascalCpt : BaseNpcAI, IBaseObserver, TextInfoHandler.ICallBac
         eventHandler.RemoveObserver(this);
     }
 
+
+    /// <summary>
+    /// 设置移动状态
+    /// </summary>
+    /// <param name="isMove"></param>
+    public void SetMoveStatus(bool isMove)
+    {
+        this.isMove = isMove;
+        if (!isMove)
+        {
+            characterMoveCpt.StopAutoMove();
+        }
+    }
+
     /// <summary>
     /// 设置意图
     /// </summary>
@@ -98,6 +115,7 @@ public class NpcAIRascalCpt : BaseNpcAI, IBaseObserver, TextInfoHandler.ICallBac
         if (this)
             StopAllCoroutines();
         this.rascalIntent = intentEnum;
+        SetMoveStatus(true);
         switch (intentEnum)
         {
             case RascalIntentEnum.GoToInn:
@@ -205,6 +223,7 @@ public class NpcAIRascalCpt : BaseNpcAI, IBaseObserver, TextInfoHandler.ICallBac
         characterLifeCpt.gameObject.transform.DOScale(new Vector3(0.2f, 0.2f), 0.5f).From().SetEase(Ease.OutBack);
         //闹事人员添加
         innHandler.rascalrQueue.Add(this);
+
         StartCoroutine(CoroutineForStartMakeTrouble());
         //延迟显示范围
         StartCoroutine(CoroutineForDelayMakeTrouble());
@@ -323,11 +342,14 @@ public class NpcAIRascalCpt : BaseNpcAI, IBaseObserver, TextInfoHandler.ICallBac
     public IEnumerator CoroutineForStartMakeTrouble()
     {
         while (rascalIntent == RascalIntentEnum.MakeTrouble || rascalIntent == RascalIntentEnum.ContinueMakeTrouble)
-        {
-            movePosition = innHandler.GetRandomInnPositon();
-            bool canGo = CheckUtil.CheckPath(transform.position, movePosition);
-            if (canGo)
-                characterMoveCpt.SetDestination(movePosition);
+        {        
+            if (isMove)
+            {
+                movePosition = innHandler.GetRandomInnPositon();
+                bool canGo = CheckUtil.CheckPath(transform.position, movePosition);
+                if (canGo)
+                    characterMoveCpt.SetDestination(movePosition);
+            }
             //随机获取一句喊话
             //int shoutId = Random.Range(13101, 13106);
             if (!CheckUtil.ListIsNull(listShoutTextInfo))
@@ -335,7 +357,6 @@ public class NpcAIRascalCpt : BaseNpcAI, IBaseObserver, TextInfoHandler.ICallBac
                 TextInfoBean textInfo = RandomUtil.GetRandomDataByList(listShoutTextInfo);
                 characterShoutCpt.Shout(textInfo.content);
             }
-
             yield return new WaitForSeconds(5);
             //时间到了就离开
             timeMakeTrouble -= 5;
