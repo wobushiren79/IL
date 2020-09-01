@@ -19,7 +19,7 @@ public class UIGameWorker : UIGameComponent
     public Button btSortWorker;
 
     public List<CharacterBean> listCharacterData = new List<CharacterBean>();
-
+    protected List<ItemGameWorkerCpt> listWorkerItem = new List<ItemGameWorkerCpt>();
     private void Start()
     {
         if (btBack != null)
@@ -43,6 +43,11 @@ public class UIGameWorker : UIGameComponent
     public override void OpenUI()
     {
         base.OpenUI();
+        for (int i=0;i< listWorkerItem.Count;i++)
+        {
+            ItemGameWorkerCpt itemWorker= listWorkerItem[i];
+            itemWorker.SetData(itemWorker.characterData);
+        }
     }
 
     public void InitUI()
@@ -66,6 +71,7 @@ public class UIGameWorker : UIGameComponent
         if (uiGameManager.gameDataManager == null)
             return;
         StopAllCoroutines();
+        listWorkerItem.Clear();
         CptUtil.RemoveChildsByActive(objListContent.transform);
         StartCoroutine(CoroutineForCreateWorkerList());
 
@@ -89,7 +95,10 @@ public class UIGameWorker : UIGameComponent
         objWorkerItem.SetActive(true);
         ItemGameWorkerCpt workerItem = objWorkerItem.GetComponent<ItemGameWorkerCpt>();
         if (workerItem != null)
+        {
             workerItem.SetData(characterData);
+            listWorkerItem.Add(workerItem);
+        }  
     }
 
     /// <summary>
