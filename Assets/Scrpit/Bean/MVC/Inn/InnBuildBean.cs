@@ -8,57 +8,105 @@ public class InnBuildBean
 {
     //墙数据
     public List<InnResBean> listWall = new List<InnResBean>();
+    public List<InnResBean> listSecondWall = new List<InnResBean>();
     //地板数据
     public List<InnResBean> listFloor = new List<InnResBean>();
+    public List<InnResBean> listSecondFloor = new List<InnResBean>();
     //家具数据
     public List<InnResBean> listFurniture = new List<InnResBean>();
+    public List<InnResBean> listSecondFurniture = new List<InnResBean>();
 
     public int innWidth = 9;//客栈宽
     public int innHeight = 9;//客栈高
 
+    public int innSecondWidth = 0; //2楼宽
+    public int innSecondHeight = 0; //2楼高
+
     public int buildLevel = 0;
+    public int buildSecondLevel = 0;
 
     public List<TimeBean> listBuildDay = new List<TimeBean>();
+
     public int buildInnWidth = 0;
     public int buildInnHeight = 0;
+
+    public int buildInnSecondWidth = 0;
+    public int buildInnSecondHeight = 0;
 
     /// <summary>
     /// 改变客栈大小
     /// </summary>
     /// <param name="width"></param>
     /// <param name="height"></param>
-    public void ChangeInnSize(InnBuildManager innBuildManager, int width, int height)
+    public void ChangeInnSize(int layer, InnBuildManager innBuildManager, int width, int height)
     {
-        this.innWidth = width;
-        this.innHeight = height;
-        InitWall(GetDoorList(innBuildManager));
-        InitFloor();
+        if (layer == 1)
+        {
+            this.innWidth = width;
+            this.innHeight = height;
+            InitWall(listWall, layer, GetDoorList(innBuildManager));
+            InitFloor(listFloor, layer);
+        }
+        else if (layer == 2)
+        {
+            this.innSecondWidth = width;
+            this.innSecondHeight = height;
+            InitWall(listSecondWall, layer, null);
+            InitFloor(listSecondFloor, layer);
+        }
+
     }
-    public void ChangeInnSize(List<InnResBean> listDoor, int width, int height)
+
+    public void ChangeInnSize(int layer, List<InnResBean> listDoor, int width, int height)
     {
-        this.innWidth = width;
-        this.innHeight = height;
-        InitWall(listDoor);
-        InitFloor();
+        if (layer == 1)
+        {
+            this.innWidth = width;
+            this.innHeight = height;
+            InitWall(listWall, layer, listDoor);
+            InitFloor(listFloor, layer);
+        }
+        else if (layer == 2)
+        {
+            this.innSecondWidth = width;
+            this.innSecondHeight = height;
+            InitWall(listSecondWall, layer, null);
+            InitFloor(listSecondFloor, layer);
+        }
     }
+
     /// <summary>
     /// 初始化墙壁
     /// </summary>
-    public void InitWall(List<InnResBean> listDoor)
+    public void InitWall(List<InnResBean> listWall, int layer, List<InnResBean> listDoor)
     {
-        //建造墙壁
-        for (int i = 0; i < innWidth; i++)
+        int innInitWidth = 0;
+        int innInitHeight = 0;
+
+        if (layer == 1)
         {
-            for (int f = 0; f < innHeight; f++)
+            innInitWidth = innWidth;
+            innInitHeight = innWidth;
+        }
+        else if (layer == 2)
+        {
+            innInitWidth = innSecondWidth;
+            innInitHeight = innSecondHeight;
+        }
+
+        //建造墙壁
+        for (int i = 0; i < innInitWidth; i++)
+        {
+            for (int f = 0; f < innInitWidth; f++)
             {
                 bool isBuild = false;
-                if (i == 0 || i == innWidth - 1)
+                if (i == 0 || i == innInitWidth - 1)
                 {
                     isBuild = true;
                 }
                 else
                 {
-                    if (f == 0 || f == innHeight - 1)
+                    if (f == 0 || f == innInitHeight - 1)
                     {
                         isBuild = true;
                     }
@@ -78,43 +126,59 @@ public class InnBuildBean
                     if (!hasData)
                     {
                         InnResBean itemData = new InnResBean();
-                        itemData.startPosition = new Vector3Bean(i, f);
+                        itemData.startPosition = new Vector3Bean(i, f + (layer - 1) * 100);
                         itemData.id = 20001;
                         listWall.Add(itemData);
                     }
                 }
             }
         }
-        ///移除门所占墙壁
-        for (int i = 0; i < listDoor.Count; i++)
-        {
-            InnResBean itemData = listDoor[i];
-            for (int f = 0; f < itemData.listPosition.Count; f++)
+        if (listDoor != null)
+            ///移除门所占墙壁
+            for (int i = 0; i < listDoor.Count; i++)
             {
-                Vector3Bean doorPositon = itemData.listPosition[f];
-                for (int h = 0; h < listWall.Count; h++)
+                InnResBean itemData = listDoor[i];
+                for (int f = 0; f < itemData.listPosition.Count; f++)
                 {
-                    Vector3Bean wallPostion = listWall[h].startPosition;
-                    if (doorPositon.x == wallPostion.x + 1 && doorPositon.y == wallPostion.y)
+                    Vector3Bean doorPositon = itemData.listPosition[f];
+                    for (int h = 0; h < listWall.Count; h++)
                     {
-                        listWall.Remove(listWall[h]);
-                        h--;
+                        Vector3Bean wallPostion = listWall[h].startPosition;
+                        if (doorPositon.x == wallPostion.x + 1 && doorPositon.y == wallPostion.y)
+                        {
+                            listWall.Remove(listWall[h]);
+                            h--;
+                        }
                     }
                 }
             }
-        }
     }
+
 
     /// <summary>
     /// 初始化地板
     /// </summary>
-    public void InitFloor()
+    public void InitFloor(List<InnResBean> listFloor, int layer)
     {
         if (listFloor == null)
             listFloor = new List<InnResBean>();
-        for (int i = 0; i < innWidth; i++)
+        int innInitWidth = 0;
+        int innInitHeight = 0;
+
+        if (layer == 1)
         {
-            for (int f = 0; f < innHeight; f++)
+            innInitWidth = innWidth;
+            innInitHeight = innWidth;
+        }
+        else if (layer == 2)
+        {
+            innInitWidth = innSecondWidth;
+            innInitHeight = innSecondHeight;
+        }
+
+        for (int i = 0; i < innInitWidth; i++)
+        {
+            for (int f = 0; f < innInitHeight; f++)
             {
                 bool hasFloor = false;
                 foreach (InnResBean innItem in listFloor)
@@ -128,12 +192,13 @@ public class InnBuildBean
                 }
                 if (!hasFloor)
                 {
-                    InnResBean itemData = new InnResBean(10001, new Vector3(i, f), null, Direction2DEnum.Left);
+                    InnResBean itemData = new InnResBean(10001, new Vector3(i, f + (layer - 1) * 100), null, Direction2DEnum.Left);
                     listFloor.Add(itemData);
                 }
             }
         }
     }
+
 
     /// <summary>
     /// 增加家具

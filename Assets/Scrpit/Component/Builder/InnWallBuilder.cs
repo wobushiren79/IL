@@ -18,7 +18,9 @@ public class InnWallBuilder : BaseTilemapBuilder
     {
         if (gameDataManager != null && gameDataManager.gameData != null && gameDataManager.gameData.innBuildData != null)
         {
+            ClearAllTiles();
             BuildWall(gameDataManager.gameData.innBuildData.listWall);
+            BuildWall(gameDataManager.gameData.innBuildData.listSecondWall);
         }
     }
 
@@ -28,7 +30,6 @@ public class InnWallBuilder : BaseTilemapBuilder
     /// <param name="listData"></param>
     public void BuildWall(List<InnResBean> listData)
     {
-        ClearAllTiles();
         if (listData == null)
             return;
         for (int i = 0; i < listData.Count; i++)

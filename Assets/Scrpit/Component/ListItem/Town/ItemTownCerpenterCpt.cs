@@ -263,9 +263,21 @@ public class ItemTownCerpenterCpt : ItemTownStoreCpt, DialogView.IDialogCallBack
             if (storeInfo.store_goods_type == (int)StoreForCarpenterTypeEnum.Expansion)
             {
                 InnBuildBean innBuildData = gameDataManager.gameData.GetInnBuildData();
-                innBuildData.buildLevel = int.Parse(storeInfo.mark);
-                innBuildData.buildInnWidth = storeInfo.mark_x;
-                innBuildData.buildInnHeight = storeInfo.mark_y;
+                if (storeInfo.mark_type == 1)
+                {
+                    //1楼扩建
+                    innBuildData.buildLevel = int.Parse(storeInfo.mark);
+                    innBuildData.buildInnWidth = storeInfo.mark_x;
+                    innBuildData.buildInnHeight = storeInfo.mark_y;
+                }
+                else if (storeInfo.mark_type == 2)
+                {
+                    //2楼扩建
+                    innBuildData.buildSecondLevel = int.Parse(storeInfo.mark);
+                    innBuildData.buildInnSecondWidth = storeInfo.mark_x;
+                    innBuildData.buildInnSecondHeight = storeInfo.mark_y;
+                }
+
                 //设置修建天数
                 List<TimeBean> listBuildDay = new List<TimeBean>();
                 listBuildDay.Add(gameTimeHandler.GetAfterDay(1));

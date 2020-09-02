@@ -18,7 +18,9 @@ public class InnFloorBuilder : BaseTilemapBuilder
     {
         if (gameDataManager != null && gameDataManager.gameData != null && gameDataManager.gameData.innBuildData != null)
         {
+            ClearAllTiles();
             BuildFloor(gameDataManager.gameData.innBuildData.listFloor);
+            BuildFloor(gameDataManager.gameData.innBuildData.listSecondFloor);
         }
     }
 
@@ -28,7 +30,6 @@ public class InnFloorBuilder : BaseTilemapBuilder
     /// <param name="listData"></param>
     public void BuildFloor(List<InnResBean> listData)
     {
-        ClearAllTiles();
         if (listData == null)
             return;
         for (int i = 0; i < listData.Count; i++)

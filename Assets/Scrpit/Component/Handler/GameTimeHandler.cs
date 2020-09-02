@@ -8,9 +8,9 @@ public class GameTimeHandler : BaseObservable<IBaseObserver>
 {
     public enum DayEnum
     {
-        Rest=0,
-        Work=1,
-        None=99,
+        Rest = 0,
+        Work = 1,
+        None = 99,
     }
 
     public enum NotifyTypeEnum
@@ -144,7 +144,7 @@ public class GameTimeHandler : BaseObservable<IBaseObserver>
         hour = 6;
         min = 0;
         //如果有建筑日则建筑日减一天
-        InnBuildBean innBuildData= gameDataManager.gameData.GetInnBuildData();
+        InnBuildBean innBuildData = gameDataManager.gameData.GetInnBuildData();
         if (innBuildData.listBuildDay.Count > 0)
         {
             //检测当前日子是否包含在建筑日内
@@ -152,7 +152,7 @@ public class GameTimeHandler : BaseObservable<IBaseObserver>
             bool isBuildDay = false;
             foreach (TimeBean itemTime in innBuildData.listBuildDay)
             {
-                if(itemTime.year== timeData.year&& itemTime.month == timeData.month && itemTime.day == timeData.day)
+                if (itemTime.year == timeData.year && itemTime.month == timeData.month && itemTime.day == timeData.day)
                 {
                     isBuildDay = true;
                 }
@@ -160,9 +160,20 @@ public class GameTimeHandler : BaseObservable<IBaseObserver>
             if (!isBuildDay)
             {
                 innBuildData.listBuildDay.Clear();
-                innBuildData.ChangeInnSize(innBuildManager, innBuildData.buildInnWidth, innBuildData.buildInnHeight);
-                innBuildData.buildInnWidth = 0;
-                innBuildData.buildInnHeight = 0;
+                //检测是1楼还是2楼
+                if (innBuildData.buildInnWidth != 0 || innBuildData.buildInnHeight != 0)
+                {
+                    innBuildData.ChangeInnSize(1, innBuildManager, innBuildData.buildInnWidth, innBuildData.buildInnHeight);
+                    innBuildData.buildInnWidth = 0;
+                    innBuildData.buildInnHeight = 0;
+                }
+                else if (innBuildData.buildInnSecondWidth != 0 || innBuildData.buildInnSecondHeight != 0)
+                {
+                    innBuildData.ChangeInnSize(2, innBuildManager, innBuildData.buildInnSecondWidth, innBuildData.buildInnSecondHeight);
+                    innBuildData.buildInnSecondWidth = 0;
+                    innBuildData.buildInnSecondHeight = 0;
+                }
+
                 if (innFloorBuilder != null)
                     innFloorBuilder.StartBuild();
                 if (innWallBuilder != null)
@@ -269,6 +280,6 @@ public class GameTimeHandler : BaseObservable<IBaseObserver>
     public void SetDayStatus(DayEnum dayStauts)
     {
         this.dayStauts = dayStauts;
-        GameCommonInfo.CurrentDayData.dayStatus= this.dayStauts;
+        GameCommonInfo.CurrentDayData.dayStatus = this.dayStauts;
     }
 }

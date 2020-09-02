@@ -74,13 +74,25 @@ public class UITownCarpenter : UIBaseOne, IRadioGroupCallBack, StoreInfoManager.
         {
             StoreInfoBean itemData = listData[i];
             //如果扩建 
-            if (itemData.store_goods_type == (int)StoreForCarpenterTypeEnum.Expansion)
+            InnBuildBean innBuild = uiGameManager.gameDataManager.gameData.GetInnBuildData();
+            if(itemData.store_goods_type == (int)StoreForCarpenterTypeEnum.Expansion)
             {
-                if (uiGameManager.gameDataManager.gameData.GetInnBuildData().buildLevel + 1 != int.Parse(itemData.mark))
+                if (itemData.mark_type == 1)
                 {
-                    continue;
+                    if (innBuild.buildLevel + 1 != int.Parse(itemData.mark))
+                    {
+                        continue;
+                    }
+                }
+                else if (itemData.mark_type == 2)
+                {
+                    if (innBuild.buildSecondLevel + 1 != int.Parse(itemData.mark) || innBuild.buildSecondLevel > innBuild.buildLevel)
+                    {
+                        continue;
+                    }
                 }
             }
+
             GameObject itemObj = Instantiate(objCarpenterContent, objCarpenterModel);
             ItemTownCerpenterCpt cerpenterCpt = itemObj.GetComponent<ItemTownCerpenterCpt>();
             cerpenterCpt.SetData(itemData);

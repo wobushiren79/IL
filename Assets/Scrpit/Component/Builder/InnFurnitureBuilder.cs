@@ -25,6 +25,11 @@ public class InnFurnitureBuilder : BaseMonoBehaviour
     public void StartBuild()
     {
         List<InnResBean> listData = gameDataManager.gameData.GetInnBuildData().GetFurnitureList();
+        BuildListFurniture(listData);
+    }
+
+    protected void BuildListFurniture(List<InnResBean> listData)
+    {
         for (int i = 0; i < listData.Count; i++)
         {
             InnResBean itemData = listData[i];

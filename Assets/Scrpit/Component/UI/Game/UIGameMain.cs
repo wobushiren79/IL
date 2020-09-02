@@ -53,6 +53,11 @@ public class UIGameMain : UIGameComponent, DialogView.IDialogCallBack, IRadioGro
     public RadioButtonView rbTimeScale5;
     public WorkerNumberView workerNumber;
 
+    public Button btLayerFirstLayer;
+    public Button btLayerSecondLayer;
+    public GameObject objLayerSelect;
+
+
     protected Tween tweenForMoneyL;
     protected Tween tweenForMoneyM;
     protected Tween tweenForMoneyS;
@@ -105,6 +110,12 @@ public class UIGameMain : UIGameComponent, DialogView.IDialogCallBack, IRadioGro
 
         if (rgTimeScale != null)
             rgTimeScale.SetCallBack(this);
+
+        if (btLayerFirstLayer != null)
+            btLayerFirstLayer.onClick.AddListener(OnClickForFirstLayer);
+        if (btLayerSecondLayer != null)
+            btLayerSecondLayer.onClick.AddListener(OnClickForSecondLayer);
+
         InitInnData();
         RefreshUI();
 
@@ -163,6 +174,7 @@ public class UIGameMain : UIGameComponent, DialogView.IDialogCallBack, IRadioGro
     public void InitInnData()
     {
         InnAttributesBean innAttributes = uiGameManager.gameDataManager.gameData.GetInnAttributesData();
+
         if (innAttributes == null)
             return;
 
@@ -196,16 +208,27 @@ public class UIGameMain : UIGameComponent, DialogView.IDialogCallBack, IRadioGro
         if (uiGameManager.innHandler == null)
         {
             rgTimeScale.gameObject.SetActive(false);
+            objLayerSelect.SetActive(false);
         }
         else
         {
             if (uiGameManager.innHandler.GetInnStatus() == InnHandler.InnStatusEnum.Close)
             {
                 rgTimeScale.gameObject.SetActive(false);
+                objLayerSelect.SetActive(false);
             }
             else
             {
                 rgTimeScale.gameObject.SetActive(true);
+                InnBuildBean innBuild = uiGameManager.gameDataManager.gameData.GetInnBuildData();
+                if (innBuild.innSecondWidth!=0&& innBuild.innSecondHeight != 0)
+                {
+                    objLayerSelect.SetActive(true);
+                }
+                else
+                {
+                    objLayerSelect.SetActive(false);
+                }
             }
         }
 
@@ -440,6 +463,32 @@ public class UIGameMain : UIGameComponent, DialogView.IDialogCallBack, IRadioGro
         DialogBean dialogBean = new DialogBean();
         JumpTimeDialogView jumpTimeDialog= (JumpTimeDialogView)uiGameManager.dialogManager.CreateDialog(DialogEnum.JumpTime, this, dialogBean);
         jumpTimeDialog.SetData();
+    }
+
+    /// <summary>
+    /// 点击第一层
+    /// </summary>
+    public void OnClickForFirstLayer()
+    {
+        SetInnLayer(1);
+    }
+
+    /// <summary>
+    /// 点击第二层
+    /// </summary>
+    public void OnClickForSecondLayer()
+    {
+        SetInnLayer(2);
+    }
+
+    /// <summary>
+    /// 设置层数
+    /// </summary>
+    /// <param name="layer"></param>
+    public void SetInnLayer(int layer)
+    {
+        ControlForWorkCpt controlForWork=(ControlForWorkCpt)uiGameManager.controlHandler.GetControl();
+        controlForWork.SetLayer(layer);
     }
 
     /// <summary>

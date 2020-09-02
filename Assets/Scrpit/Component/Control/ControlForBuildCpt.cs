@@ -44,6 +44,9 @@ public class ControlForBuildCpt : BaseControl
 
     protected AudioHandler audioHandler;
 
+    //建筑层数
+    public int buildLayer = 1;
+
     private void Awake()
     {
         gameDataManager = Find<GameDataManager>(ImportantTypeEnum.GameDataManager);
@@ -91,15 +94,48 @@ public class ControlForBuildCpt : BaseControl
     public override void StartControl()
     {
         base.StartControl();
-        //定义镜头的初始位置
-        SetFollowPosition(new Vector3(5, 5));
-        //定义镜头的移动范围
-        cameraMove.minMoveX = -1;
-        cameraMove.maxMoveX = gameDataManager.gameData.GetInnBuildData().innWidth + 1;
-        cameraMove.minMoveY = -1;
-        cameraMove.maxMoveY = gameDataManager.gameData.GetInnBuildData().innHeight + 1;
+        SetLayer(1);
+
         //初始化建筑占地坐标
         InitBuildingExist();
+    }
+
+    /// <summary>
+    /// 设置层数
+    /// </summary>
+    /// <param name="layer"></param>
+    public void SetLayer(int layer)
+    {
+        InitCameraRange(layer);
+    }
+
+    /// <summary>
+    /// 设置摄像头范围
+    /// </summary>
+    /// <param name="layer"></param>
+    protected void InitCameraRange(int layer)
+    {
+        InnBuildBean innBuild = gameDataManager.gameData.GetInnBuildData();
+        if (layer == 1)
+        {
+            //定义镜头的移动范围
+            cameraMove.minMoveX = -0.1f;
+            cameraMove.maxMoveX = innBuild.innWidth + 1;
+            cameraMove.minMoveY = -0.1f;
+            cameraMove.maxMoveY = innBuild.innHeight + 1;
+            //定义镜头的初始位置
+            SetFollowPosition(new Vector3(innBuild.innWidth / 2f, innBuild.innHeight / 2f, 0));
+        }
+        else if (layer == 2)
+        {
+            //定义镜头的移动范围
+            cameraMove.minMoveX = -0.1f;
+            cameraMove.maxMoveX = innBuild.innSecondWidth + 1;
+            cameraMove.minMoveY = -0.1f + 100;
+            cameraMove.maxMoveY = innBuild.innSecondHeight + 1 + 100;
+            //定义镜头的初始位置
+            SetFollowPosition(new Vector3(innBuild.innSecondWidth / 2f, 100 + innBuild.innSecondHeight / 2f, 0));
+        }
     }
 
     /// <summary>

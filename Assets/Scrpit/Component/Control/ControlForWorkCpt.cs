@@ -208,12 +208,43 @@ public class ControlForWorkCpt : BaseControl, DialogView.IDialogCallBack
     public override void StartControl()
     {
         base.StartControl();
-        cameraFollowObj.transform.position = new Vector3(5, 5);
-        cameraMove.minMoveX = -5;
-        cameraMove.maxMoveX = gameDataManager.gameData.GetInnBuildData().innWidth + 5;
-        cameraMove.minMoveY = -5;
-        cameraMove.maxMoveY = gameDataManager.gameData.GetInnBuildData().innHeight + 5;
+        SetLayer(1);
     }
+
+    /// <summary>
+    /// 设置层数
+    /// </summary>
+    /// <param name="layer"></param>
+    public void SetLayer(int layer)
+    {
+        InitCameraRange(layer);
+    }
+
+    protected void InitCameraRange(int layer)
+    {
+        InnBuildBean innBuild = gameDataManager.gameData.GetInnBuildData();
+        if (layer == 1)
+        {
+            //定义镜头的移动范围
+            cameraMove.minMoveX = -0.1f;
+            cameraMove.maxMoveX = innBuild.innWidth + 1;
+            cameraMove.minMoveY = -0.1f;
+            cameraMove.maxMoveY = innBuild.innHeight + 1;
+            //定义镜头的初始位置
+            SetFollowPosition(new Vector3(innBuild.innWidth / 2f, innBuild.innHeight / 2f, 0));
+        }
+        else if (layer == 2)
+        {
+            //定义镜头的移动范围
+            cameraMove.minMoveX = -0.1f;
+            cameraMove.maxMoveX = innBuild.innSecondWidth + 1;
+            cameraMove.minMoveY = -0.1f;
+            cameraMove.maxMoveY = innBuild.innSecondHeight + 1 + 100;
+            //定义镜头的初始位置
+            SetFollowPosition(new Vector3(innBuild.innSecondWidth / 2f, 100 + innBuild.innSecondHeight / 2f, 0));
+        }
+    }
+
 
 
     /// <summary>

@@ -15,6 +15,7 @@ public class UIGameBuild : UIGameComponent, IRadioGroupCallBack
 
     public RadioGroupView rgType;
     //类型按钮
+    public RadioButtonView rbTypeBed;
     public RadioButtonView rbTypeTable;
     public RadioButtonView rbTypeStove;
     public RadioButtonView rbTypeCounter;
@@ -23,12 +24,20 @@ public class UIGameBuild : UIGameComponent, IRadioGroupCallBack
     public RadioButtonView rbTypeFloor;
     public RadioButtonView rbTypeWall;
 
+    public Button btLayerFirstLayer;
+    public Button btLayerSecondLayer;
+    public GameObject objLayerSelect;
+
     public GameObject listBuildContent;
     public GameObject itemBuildModel;
 
     public BuildItemTypeEnum buildType = BuildItemTypeEnum.Table;
 
     public List<ItemGameBuildCpt> listBuildItem = new List<ItemGameBuildCpt>();
+
+    //客栈楼层
+    public int innLayer = 1;
+
     public void Start()
     {
         if (rgType != null)
@@ -37,9 +46,11 @@ public class UIGameBuild : UIGameComponent, IRadioGroupCallBack
             btBack.onClick.AddListener(OpenMainUI);
         if (btDismantle != null)
             btDismantle.onClick.AddListener(DismantleMode);
-
+        if (btLayerFirstLayer != null)
+            btLayerFirstLayer.onClick.AddListener(OnClickForFirstLayer);
+        if (btLayerSecondLayer != null)
+            btLayerSecondLayer.onClick.AddListener(OnClickForSecondLayer);
         SetInnAesthetics();
-
     }
 
     public override void OpenUI()
@@ -52,6 +63,8 @@ public class UIGameBuild : UIGameComponent, IRadioGroupCallBack
         uiGameManager.gameTimeHandler.SetTimeStatus(true);
         uiGameManager.controlHandler.StartControl(ControlHandler.ControlEnum.Build);
         uiGameManager.innHandler.CloseInn();
+
+        SetInnLayer(1);
     }
 
     public override void CloseUI()
@@ -77,7 +90,7 @@ public class UIGameBuild : UIGameComponent, IRadioGroupCallBack
     public override void RefreshUI()
     {
         //刷新列表数据
-        List<ItemBean> listBuildData = uiGameManager.gameDataManager.gameData.GetBuildDataByType(uiGameManager.innBuildManager,buildType);
+        List<ItemBean> listBuildData = uiGameManager.gameDataManager.gameData.GetBuildDataByType(uiGameManager.innBuildManager, buildType);
         for (int i = 0; i < listBuildItem.Count; i++)
         {
             ItemGameBuildCpt itemBuild = listBuildItem[i];
@@ -113,6 +126,45 @@ public class UIGameBuild : UIGameComponent, IRadioGroupCallBack
         uiGameManager.gameDataManager.gameData.GetInnAttributesData().SetAesthetics
             (uiGameManager.innBuildManager, uiGameManager.gameDataManager.gameData.GetInnBuildData());
         SetInnAesthetics();
+    }
+
+    /// <summary>
+    /// 设置客栈楼层
+    /// </summary>
+    /// <param name="layer"></param>
+    public void SetInnLayer(int layer)
+    {
+        this.innLayer = layer;
+
+        InnBuildBean innBuild = uiGameManager.gameDataManager.gameData.GetInnBuildData();
+        if (innBuild.innSecondWidth == 0 || innBuild.innSecondHeight == 0)
+        {
+            objLayerSelect.SetActive(false);
+        }
+        else
+        {
+            objLayerSelect.SetActive(true);
+        }
+
+        //镜头初始化
+        ControlForBuildCpt controlForBuild = ((ControlForBuildCpt)(uiGameManager.controlHandler.GetControl(ControlHandler.ControlEnum.Build)));
+        controlForBuild.SetLayer(innLayer);
+
+        if (innLayer == 1)
+        {
+            rbTypeBed.gameObject.SetActive(false);
+            rbTypeTable.gameObject.SetActive(true);
+            rbTypeCounter.gameObject.SetActive(true);
+            rbTypeStove.gameObject.SetActive(true);
+        }
+        else if (innLayer == 2)
+        {
+            rbTypeBed.gameObject.SetActive(true);
+            rbTypeTable.gameObject.SetActive(false);
+            rbTypeCounter.gameObject.SetActive(false);
+            rbTypeStove.gameObject.SetActive(false);
+      
+        }
     }
 
     /// <summary>
@@ -213,6 +265,23 @@ public class UIGameBuild : UIGameComponent, IRadioGroupCallBack
     }
 
     /// <summary>
+    /// 点击第一层
+    /// </summary>
+    public void OnClickForFirstLayer()
+    {
+        SetInnLayer(1);
+    }
+
+
+    /// <summary>
+    /// 点击第二层
+    /// </summary>
+    public void OnClickForSecondLayer()
+    {
+        SetInnLayer(2);
+    }
+
+    /// <summary>
     /// 设置建造相关是否展示
     /// </summary>
     /// <param name="wall"></param>
@@ -227,7 +296,7 @@ public class UIGameBuild : UIGameComponent, IRadioGroupCallBack
         //设置半透明状态
         if (uiGameManager.innWallBuilder != null)
         {
-            Tilemap tilemap= uiGameManager.innWallBuilder.GetTilemapContainer().GetComponent<Tilemap>();
+            Tilemap tilemap = uiGameManager.innWallBuilder.GetTilemapContainer().GetComponent<Tilemap>();
             if (wall)
             {
                 tilemap.color = new Color(tilemap.color.r, tilemap.color.g, tilemap.color.b, 1f);
@@ -240,7 +309,7 @@ public class UIGameBuild : UIGameComponent, IRadioGroupCallBack
         if (uiGameManager.innFurnitureBuilder != null)
         {
             SpriteRenderer[] listRenderer = uiGameManager.innFurnitureBuilder.buildContainer.GetComponentsInChildren<SpriteRenderer>();
-            if (listRenderer!=null)
+            if (listRenderer != null)
             {
                 foreach (SpriteRenderer itemRenderer in listRenderer)
                 {
