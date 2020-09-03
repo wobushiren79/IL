@@ -103,10 +103,10 @@ public class GameDataModel : BaseMVCModel
         tablePositionList.Add(new Vector3(3, 2, 0));
         InnResBean innResTable = new InnResBean(30001, new Vector3(1.5f, 2.5f, 0), tablePositionList, Direction2DEnum.Left);
 
-        gameData.innBuildData.AddFurniture(innResDoor);
-        gameData.innBuildData.AddFurniture(innResCounter);
-        gameData.innBuildData.AddFurniture(innResStove);
-        gameData.innBuildData.AddFurniture(innResTable);
+        gameData.innBuildData.AddFurniture(1, innResDoor);
+        gameData.innBuildData.AddFurniture(1, innResCounter);
+        gameData.innBuildData.AddFurniture(1, innResStove);
+        gameData.innBuildData.AddFurniture(1, innResTable);
         //修改客栈大小
         gameData.innBuildData.ChangeInnSize(1 , new List<InnResBean>() { innResDoor }, 9, 9);
         //母亲的信

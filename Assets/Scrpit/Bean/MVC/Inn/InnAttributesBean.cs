@@ -135,14 +135,15 @@ public class InnAttributesBean
         this.aesthetics = aesthetics;
         LimitAestheticsMax();
     }
+
     public void SetAesthetics(InnBuildManager innBuildManager, InnBuildBean innBuildData)
     {
         if (innBuildManager == null || innBuildData == null)
             return;
         this.aesthetics = 0;
-        List<InnResBean> listFurnitureData = innBuildData.GetFurnitureList();
-        List<InnResBean> listFloorData = innBuildData.GetFloorList();
-        List<InnResBean> listWallData = innBuildData.GetWallList();
+        List<InnResBean> listFurnitureData = innBuildData.GetFurnitureList(1);
+        List<InnResBean> listFloorData = innBuildData.GetFloorList(1);
+        List<InnResBean> listWallData = innBuildData.GetWallList(1);
 
         List<InnResBean> listData = new List<InnResBean>();
         listData.AddRange(listFurnitureData);

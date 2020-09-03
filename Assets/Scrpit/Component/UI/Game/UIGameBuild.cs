@@ -20,6 +20,7 @@ public class UIGameBuild : UIGameComponent, IRadioGroupCallBack
     public RadioButtonView rbTypeStove;
     public RadioButtonView rbTypeCounter;
     public RadioButtonView rbTypeDoor;
+    public RadioButtonView rbTypeStairs;
     public RadioButtonView rbTypeDecoration;
     public RadioButtonView rbTypeFloor;
     public RadioButtonView rbTypeWall;
@@ -56,9 +57,7 @@ public class UIGameBuild : UIGameComponent, IRadioGroupCallBack
     public override void OpenUI()
     {
         base.OpenUI();
-        btDismantle.gameObject.SetActive(true);
-        rgType.SetPosition(0, false);
-        CreateBuildList(BuildItemTypeEnum.Table);
+ 
         //停止时间
         uiGameManager.gameTimeHandler.SetTimeStatus(true);
         uiGameManager.controlHandler.StartControl(ControlHandler.ControlEnum.Build);
@@ -135,6 +134,8 @@ public class UIGameBuild : UIGameComponent, IRadioGroupCallBack
     public void SetInnLayer(int layer)
     {
         this.innLayer = layer;
+        btDismantle.gameObject.SetActive(true);
+
 
         InnBuildBean innBuild = uiGameManager.gameDataManager.gameData.GetInnBuildData();
         if (innBuild.innSecondWidth == 0 || innBuild.innSecondHeight == 0)
@@ -149,21 +150,27 @@ public class UIGameBuild : UIGameComponent, IRadioGroupCallBack
         //镜头初始化
         ControlForBuildCpt controlForBuild = ((ControlForBuildCpt)(uiGameManager.controlHandler.GetControl(ControlHandler.ControlEnum.Build)));
         controlForBuild.SetLayer(innLayer);
-
         if (innLayer == 1)
         {
             rbTypeBed.gameObject.SetActive(false);
+            rbTypeStairs.gameObject.SetActive(false);
             rbTypeTable.gameObject.SetActive(true);
             rbTypeCounter.gameObject.SetActive(true);
             rbTypeStove.gameObject.SetActive(true);
+            rbTypeDoor.gameObject.SetActive(true);
+            rgType.SetPosition(1, false);
+            CreateBuildList(BuildItemTypeEnum.Table);
         }
         else if (innLayer == 2)
         {
             rbTypeBed.gameObject.SetActive(true);
+            rbTypeStairs.gameObject.SetActive(true);
             rbTypeTable.gameObject.SetActive(false);
             rbTypeCounter.gameObject.SetActive(false);
             rbTypeStove.gameObject.SetActive(false);
-      
+            rbTypeDoor.gameObject.SetActive(false);
+            rgType.SetPosition(0, false);
+            CreateBuildList(BuildItemTypeEnum.Bed);
         }
     }
 
@@ -370,7 +377,16 @@ public class UIGameBuild : UIGameComponent, IRadioGroupCallBack
             SetInnBuildActive(true, true);
             CreateBuildList(BuildItemTypeEnum.Wall);
         }
-
+        else if (rbview == rbTypeBed)
+        {
+            SetInnBuildActive(true, true);
+            CreateBuildList(BuildItemTypeEnum.Bed);
+        }
+        else if (rbview == rbTypeStairs)
+        {
+            SetInnBuildActive(true, true);
+            CreateBuildList(BuildItemTypeEnum.Stairs);
+        }
     }
 
     public void RadioButtonUnSelected(RadioGroupView rgView, int position, RadioButtonView rbview)

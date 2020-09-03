@@ -24,8 +24,11 @@ public class InnFurnitureBuilder : BaseMonoBehaviour
     /// </summary>
     public void StartBuild()
     {
-        List<InnResBean> listData = gameDataManager.gameData.GetInnBuildData().GetFurnitureList();
+        CptUtil.RemoveChildsByActive(buildContainer);
+        List<InnResBean> listData = gameDataManager.gameData.GetInnBuildData().GetFurnitureList(1);
         BuildListFurniture(listData);
+        List<InnResBean> listSecondData = gameDataManager.gameData.GetInnBuildData().GetFurnitureList(2);
+        BuildListFurniture(listSecondData);
     }
 
     protected void BuildListFurniture(List<InnResBean> listData)
@@ -92,7 +95,7 @@ public class InnFurnitureBuilder : BaseMonoBehaviour
             List<Vector3> listPosition = itemData.GetBuildWorldPosition();
             foreach (Vector3 itemPosition in listPosition)
             {
-                if (Mathf.RoundToInt((itemPosition.x + 0.5f))  == position.x && Mathf.RoundToInt((itemPosition.y - 0.5f)) == position.y)
+                if (Mathf.RoundToInt((itemPosition.x + 0.5f)) == position.x && Mathf.RoundToInt((itemPosition.y - 0.5f)) == position.y)
                 {
                     target = itemData;
                     break;

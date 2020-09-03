@@ -95,9 +95,6 @@ public class ControlForBuildCpt : BaseControl
     {
         base.StartControl();
         SetLayer(1);
-
-        //初始化建筑占地坐标
-        InitBuildingExist();
     }
 
     /// <summary>
@@ -106,7 +103,10 @@ public class ControlForBuildCpt : BaseControl
     /// <param name="layer"></param>
     public void SetLayer(int layer)
     {
+        this.buildLayer = layer;
+        ClearBuildItem();
         InitCameraRange(layer);
+        InitBuildingExist();
     }
 
     /// <summary>
@@ -144,7 +144,7 @@ public class ControlForBuildCpt : BaseControl
     public void InitBuildingExist()
     {
         listBuildingExist.Clear();
-        List<InnResBean> listFurniture = gameDataManager.gameData.GetInnBuildData().GetFurnitureList();
+        List<InnResBean> listFurniture = gameDataManager.gameData.GetInnBuildData().GetFurnitureList(buildLayer);
         if (listFurniture != null)
         {
             foreach (InnResBean itemBuilding in listFurniture)
@@ -156,7 +156,7 @@ public class ControlForBuildCpt : BaseControl
             }
         }
         listBuildingExistForWall.Clear();
-        List<InnResBean> listWall = gameDataManager.gameData.GetInnBuildData().GetWallList();
+        List<InnResBean> listWall = gameDataManager.gameData.GetInnBuildData().GetWallList(buildLayer);
         if (listWall != null)
         {
             foreach (InnResBean itemBuilding in listWall)
@@ -270,7 +270,7 @@ public class ControlForBuildCpt : BaseControl
     {
         if (cameraMove == null)
             return;
-        base.HandleForMouseMove(out float moveX,out float moveY);
+        base.HandleForMouseMove(out float moveX, out float moveY);
         cameraMove.Move(moveX, moveY);
     }
     /// <summary>
@@ -340,7 +340,7 @@ public class ControlForBuildCpt : BaseControl
         {
             audioHandler.PlaySound(AudioSoundEnum.Set);
         }
-        if (Input.GetButtonDown(InputInfo.Confirm)|| Input.GetButton(InputInfo.Confirm))
+        if (Input.GetButtonDown(InputInfo.Confirm) || Input.GetButton(InputInfo.Confirm))
         {
             //防止误触右边的UI
             if (UnityEngine.Screen.width - Input.mousePosition.x - 400 < 0)
@@ -421,9 +421,9 @@ public class ControlForBuildCpt : BaseControl
     {
         //获取拆除位置的家具数据
         InnBuildBean buildData = gameDataManager.gameData.GetInnBuildData();
-        InnResBean itemFurnitureData = buildData.GetFurnitureByPosition(buildPosition );
+        InnResBean itemFurnitureData = buildData.GetFurnitureByPosition(buildLayer, buildPosition);
         //因为在保存tile时坐标减过1 所以查询是也要-1
-        InnResBean itemWallData = buildData.GetWallByPosition(buildPosition - new Vector3(1, 0, 0));
+        InnResBean itemWallData = buildData.GetWallByPosition(buildLayer, buildPosition - new Vector3(1, 0, 0));
         //如果拆除的是家具
         if (itemFurnitureData != null)
         {
@@ -440,7 +440,7 @@ public class ControlForBuildCpt : BaseControl
             else
             {
                 //移除数据
-                buildData.GetFurnitureList().Remove(itemFurnitureData);
+                buildData.GetFurnitureList(buildLayer).Remove(itemFurnitureData);
                 //移除场景中的建筑物
                 innFurnitureBuilder.DestroyFurnitureByPosition(sceneFurniturePosition);
                 //如果是门。需要重置一下墙体
@@ -458,12 +458,20 @@ public class ControlForBuildCpt : BaseControl
         {
             //判断是否是最外的墙壁
             Vector3 startPosition = itemWallData.GetStartPosition();
-            int innWidth = gameDataManager.gameData.GetInnBuildData().innWidth;
-            int innHeight = gameDataManager.gameData.GetInnBuildData().innHeight;
-            if ((startPosition.x==0|| startPosition.x== (innWidth - 1))||  startPosition.y == (innHeight - 1))
+            gameDataManager.gameData.GetInnBuildData().GetInnSize(buildLayer, out int innWidth, out int innHeight, out int offsetHeight);        
+            bool isOutWall = false;
+            if (buildLayer==1)
+            {
+                isOutWall = (startPosition.x == 0 || startPosition.x == (innWidth - 1)) || startPosition.y == (innHeight - 1) + offsetHeight;
+            }
+            else if (buildLayer == 2)
+            {
+                isOutWall = (startPosition.x == 0 || startPosition.x == (innWidth - 1)) || startPosition.y == 0 + offsetHeight || startPosition.y == (innHeight - 1) + offsetHeight;
+            }
+            if (isOutWall)
             {
                 //只有一次点击时才出提示
-                if(Input.GetButtonDown(InputInfo.Confirm))
+                if (Input.GetButtonDown(InputInfo.Confirm))
                 {
                     toastManager.ToastHint(GameCommonInfo.GetUITextById(1023));
                 }
@@ -471,7 +479,7 @@ public class ControlForBuildCpt : BaseControl
             else
             {
                 //移除数据
-                buildData.GetWallList().Remove(itemWallData);
+                buildData.GetWallList(buildLayer).Remove(itemWallData);
                 //移除场景中的建筑物
                 innWallBuilder.ClearWall(Vector3Int.RoundToInt(startPosition));
                 //背包里添加一个
@@ -492,7 +500,7 @@ public class ControlForBuildCpt : BaseControl
         buildItemCpt.transform.parent = innFurnitureBuilder.buildContainer.transform;
         //增加一个家具
         InnResBean addData = new InnResBean(buildItemCpt.buildItemData.id, buildItemCpt.transform.position, listBuildPosition, buildItemCpt.direction);
-        gameDataManager.gameData.GetInnBuildData().AddFurniture(addData);
+        gameDataManager.gameData.GetInnBuildData().AddFurniture(buildLayer, addData);
         //如果是门。需要重置一下墙体
         if (buildItemCpt.buildItemData.build_type == (int)BuildItemTypeEnum.Door)
         {
@@ -520,14 +528,14 @@ public class ControlForBuildCpt : BaseControl
         //tile坐标需要从左下角计算 所以需要x-1
         buildPosition -= new Vector3(1, 0, 0);
         //获取该点地板数据
-        InnResBean floorData = gameDataManager.gameData.GetInnBuildData().GetFloorByPosition(buildPosition);
+        InnResBean floorData = gameDataManager.gameData.GetInnBuildData().GetFloorByPosition(buildLayer, buildPosition);
         Vector3Int changePosition = Vector3Int.zero;
         //如果没有地板则直接在建造点上建造
         if (floorData == null)
         {
             changePosition = Vector3Int.RoundToInt(buildPosition);
             floorData = new InnResBean(buildItemCpt.buildItemData.id, changePosition, null, Direction2DEnum.Left);
-            gameDataManager.gameData.GetInnBuildData().listFloor.Add(floorData);
+            gameDataManager.gameData.GetInnBuildData().GetFloorList(buildLayer).Add(floorData);
         }
         //如果有地板则替换地板
         else
@@ -558,14 +566,14 @@ public class ControlForBuildCpt : BaseControl
         //tile坐标需要从左下角计算 所以需要x-1
         buildPosition -= new Vector3(1, 0, 0);
         //获取该点地板数据
-        InnResBean wallData = gameDataManager.gameData.GetInnBuildData().GetWallByPosition(buildPosition);
+        InnResBean wallData = gameDataManager.gameData.GetInnBuildData().GetWallByPosition(buildLayer, buildPosition);
         Vector3Int changePosition = Vector3Int.zero;
         //如果没有墙壁则直接在建造点上建造
         if (wallData == null)
         {
             changePosition = Vector3Int.RoundToInt(buildPosition);
             wallData = new InnResBean(buildItemCpt.buildItemData.id, changePosition, null, Direction2DEnum.Left);
-            gameDataManager.gameData.GetInnBuildData().listWall.Add(wallData);
+            gameDataManager.gameData.GetInnBuildData().GetWallList(buildLayer).Add(wallData);
         }
         //如果有墙壁则替换墙壁
         else
@@ -681,8 +689,8 @@ public class ControlForBuildCpt : BaseControl
     protected bool CheckOutOfRange(Vector3 position)
     {
         BuildItemTypeEnum buildType = (BuildItemTypeEnum)buildItemCpt.buildItemData.build_type;
-        int innWidth = gameDataManager.gameData.GetInnBuildData().innWidth;
-        int innHeight = gameDataManager.gameData.GetInnBuildData().innHeight;
+        gameDataManager.gameData.GetInnBuildData().GetInnSize(buildLayer, out int innWidth, out int innHeight, out int offsetHeight);
+
         if (buildType == BuildItemTypeEnum.Door)
         {
             //门的范围为y=0 x :2- width-1
@@ -698,7 +706,7 @@ public class ControlForBuildCpt : BaseControl
         else if (buildType == BuildItemTypeEnum.Floor)
         {
             //地板
-            if (position.x >= 1 && position.x <= innWidth && position.y >= 0 && position.y <= innHeight - 1)
+            if (position.x >= 1 && position.x <= innWidth && position.y >= 0 + offsetHeight && position.y <= innHeight - 1 + offsetHeight)
             {
                 return false;
             }
@@ -710,7 +718,7 @@ public class ControlForBuildCpt : BaseControl
         else if (buildType == BuildItemTypeEnum.Wall)
         {
             //墙体
-            if (position.x >= 1 && position.x <= innWidth && position.y >= 0 && position.y <= innHeight - 1)
+            if (position.x >= 1 && position.x <= innWidth && position.y >= 0 + offsetHeight && position.y <= innHeight - 1 + offsetHeight)
             {
                 return false;
             }
@@ -727,7 +735,7 @@ public class ControlForBuildCpt : BaseControl
         else
         {
             //其他则在客栈范围内 判断是否超出可修建范围
-            if (position.x > 1 && position.x < innWidth && position.y > 0 && position.y < innHeight - 1)
+            if (position.x > 1 && position.x < innWidth && position.y > 0 + offsetHeight && position.y < innHeight - 1 + offsetHeight)
             {
                 return false;
             }

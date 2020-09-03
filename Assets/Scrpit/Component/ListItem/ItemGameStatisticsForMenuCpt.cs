@@ -39,7 +39,7 @@ public class ItemGameStatisticsForMenuCpt : ItemBaseTextCpt
             popupButton.SetData(menuOwn, menuInfo);
             SetName(menuInfo.name);
             SetIcon(innFoodManager.GetFoodSpriteByName(menuInfo.icon_key),Color.white);
-            SetNumber(menuOwn.sellMoneyL+"");
+            SetNumber(menuOwn.sellNumber + "");
         }
         else
         {

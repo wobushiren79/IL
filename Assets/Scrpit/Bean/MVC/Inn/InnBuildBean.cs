@@ -204,13 +204,14 @@ public class InnBuildBean
     /// 增加家具
     /// </summary>
     /// <param name="innRes"></param>
-    public void AddFurniture(InnResBean innRes)
+    public void AddFurniture(int layer, InnResBean innRes)
     {
         if (innRes == null)
             return;
-        if (listFurniture == null)
-            listFurniture = new List<InnResBean>();
-        listFurniture.Add(innRes);
+        List<InnResBean> listData = GetFurnitureList(layer);
+        if (listData == null)
+            listData = new List<InnResBean>();
+        listData.Add(innRes);
     }
 
     /// <summary>
@@ -218,11 +219,20 @@ public class InnBuildBean
     /// </summary>
     /// <param name="position"></param>
     /// <returns></returns>
-    public InnResBean GetFloorByPosition(Vector3 position)
+    public InnResBean GetFloorByPosition(int layer, Vector3 position)
     {
+        List<InnResBean> listData = null;
+        if (layer == 1)
+        {
+            listData = listFloor;
+        }
+        else if (layer == 2)
+        {
+            listData = listSecondFloor;
+        }
         if (listFloor == null)
             return null;
-        foreach (InnResBean itemData in listFloor)
+        foreach (InnResBean itemData in listData)
         {
             if (itemData.GetStartPosition() == position)
             {
@@ -236,11 +246,10 @@ public class InnBuildBean
     /// </summary>
     /// <param name="position"></param>
     /// <returns></returns>
-    public InnResBean GetWallByPosition(Vector3 position)
+    public InnResBean GetWallByPosition(int layer,Vector3 position)
     {
-        if (listWall == null)
-            return null;
-        foreach (InnResBean itemData in listWall)
+        List<InnResBean> listData = GetWallList(layer);
+        foreach (InnResBean itemData in listData)
         {
             if (itemData.GetStartPosition() == position)
             {
@@ -254,11 +263,21 @@ public class InnBuildBean
     /// 获取家具
     /// </summary>
     /// <param name="innRes"></param>
-    public List<InnResBean> GetFurnitureList()
+    public List<InnResBean> GetFurnitureList(int layer)
     {
-        if (listFurniture == null)
-            listFurniture = new List<InnResBean>();
-        return listFurniture;
+        if (layer == 1)
+        {
+            if (listFurniture == null)
+                listFurniture = new List<InnResBean>();
+            return listFurniture;
+        }
+        else if (layer == 2)
+        {
+            if (listSecondFurniture == null)
+                listSecondFurniture = new List<InnResBean>();
+            return listSecondFurniture;
+        }
+        return new List<InnResBean>();
     }
 
     /// <summary>
@@ -268,7 +287,7 @@ public class InnBuildBean
     public List<InnResBean> GetDoorList(InnBuildManager innBuildManager)
     {
         List<InnResBean> doorList = new List<InnResBean>();
-        List<InnResBean> allData = GetFurnitureList();
+        List<InnResBean> allData = GetFurnitureList(1);
         for (int i = 0; i < allData.Count; i++)
         {
             InnResBean itemData = allData[i];
@@ -285,32 +304,54 @@ public class InnBuildBean
     /// 获取所有的墙
     /// </summary>
     /// <returns></returns>
-    public List<InnResBean> GetWallList()
+    public List<InnResBean> GetWallList(int layer)
     {
-        if (listWall == null)
-            listWall = new List<InnResBean>();
-        return listWall;
+        if (layer == 1)
+        {
+            if (listWall == null)
+                listWall = new List<InnResBean>();
+            return listWall;
+        }
+        else if (layer == 2)
+        {
+            if (listSecondWall == null)
+                listSecondWall = new List<InnResBean>();
+            return listSecondWall;
+        }
+        return null;
     }
     /// <summary>
     /// 获取所有的地板
     /// </summary>
     /// <returns></returns>
-    public List<InnResBean> GetFloorList()
+    public List<InnResBean> GetFloorList(int layer)
     {
-        if (listFloor == null)
-            listFloor = new List<InnResBean>();
-        return listFloor;
+        if (layer == 1)
+        {
+            if (listFloor == null)
+                listFloor = new List<InnResBean>();
+            return listFloor;
+        }
+        else if (layer == 2)
+        {
+            if (listSecondFloor == null)
+                listSecondFloor = new List<InnResBean>();
+            return listSecondFloor;
+        }
+        return null;
     }
+
     /// <summary>
     /// 通过坐标获取家具
     /// </summary>
     /// <param name="position"></param>
     /// <returns></returns>
-    public InnResBean GetFurnitureByPosition(Vector3 position)
+    public InnResBean GetFurnitureByPosition(int layer, Vector3 position)
     {
-        if (listFurniture == null)
+        List<InnResBean> listData = GetFurnitureList(layer);
+        if (listData == null)
             return null;
-        foreach (InnResBean itemData in listFurniture)
+        foreach (InnResBean itemData in listData)
         {
             foreach (Vector3Bean itemPosition in itemData.listPosition)
             {
@@ -323,4 +364,28 @@ public class InnBuildBean
         return null;
     }
 
+
+    /// <summary>
+    /// 获取客栈大小
+    /// </summary>
+    /// <param name="layer"></param>
+    /// <param name="innWidth"></param>
+    /// <param name="innHeight"></param>
+    /// <param name="offsetHeight"></param>
+    public void GetInnSize(int layer, out int innWidth, out int innHeight, out int offsetHeight)
+    {
+        innWidth = 0;
+        innHeight = 0;
+        offsetHeight = (layer - 1) * 100;
+        if (layer == 1)
+        {
+            innWidth = this.innWidth;
+            innHeight = this.innHeight;
+        }
+        else if (layer == 2)
+        {
+            innWidth = innSecondWidth;
+            innHeight = innSecondHeight;
+        }
+    }
 }
