@@ -51,7 +51,13 @@ public class StoreInfoManager : BaseMonoBehaviour, IStoreInfoView
     {
         mStoreInfoController.GetCarpenterInfo();
     }
-
+    /// <summary>
+    /// 获取建筑坊床数据
+    /// </summary>
+    public void GetStoreInfoForCarpenterBed()
+    {
+        mStoreInfoController.GetCarpenterBedInfo();
+    }
     /// <summary>
     /// 获取建筑坊数据
     /// </summary>

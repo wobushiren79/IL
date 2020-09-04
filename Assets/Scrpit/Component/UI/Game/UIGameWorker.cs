@@ -43,12 +43,19 @@ public class UIGameWorker : UIGameComponent
     public override void OpenUI()
     {
         base.OpenUI();
-        for (int i=0;i< listWorkerItem.Count;i++)
+        for (int i = 0; i < listWorkerItem.Count; i++)
         {
-            ItemGameWorkerCpt itemWorker= listWorkerItem[i];
+            ItemGameWorkerCpt itemWorker = listWorkerItem[i];
+            if (itemWorker == null)
+            {
+                listWorkerItem.RemoveAt(i);
+                i--;
+                continue;
+            }
             itemWorker.SetData(itemWorker.characterData);
         }
     }
+
 
     public void InitUI()
     {
@@ -98,7 +105,7 @@ public class UIGameWorker : UIGameComponent
         {
             workerItem.SetData(characterData);
             listWorkerItem.Add(workerItem);
-        }  
+        }
     }
 
     /// <summary>
@@ -121,7 +128,7 @@ public class UIGameWorker : UIGameComponent
         uiGameManager.audioHandler.PlaySound(AudioSoundEnum.ButtonForNormal);
         this.listCharacterData = this.listCharacterData.OrderByDescending(
             (data) =>
-            { 
+            {
                 int levelupNumber = 0;
                 List<CharacterWorkerBaseBean> listWorker = data.baseInfo.GetAllWorkerInfo();
                 foreach (CharacterWorkerBaseBean itemData in listWorker)
@@ -148,7 +155,7 @@ public class UIGameWorker : UIGameComponent
             (data) =>
             {
                 int worker = 0;
-                CharacterWorkerBaseBean workerData =  data.baseInfo.GetWorkerInfoByType(workerForSort);
+                CharacterWorkerBaseBean workerData = data.baseInfo.GetWorkerInfoByType(workerForSort);
                 if (workerData.isWorking)
                 {
                     worker++;
@@ -156,7 +163,7 @@ public class UIGameWorker : UIGameComponent
                 return worker;
             }).ToList();
         InitData();
-        int intWorker= (int)workerForSort + 1;
+        int intWorker = (int)workerForSort + 1;
         if (intWorker > 5)
         {
             intWorker = 1;

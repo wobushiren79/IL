@@ -11,8 +11,13 @@ public enum BuildItemTypeEnum
     Counter = 5,
     Decoration = 6,
     Door = 9,
-    Bed=10,
+    Bed = 10,
     Stairs=11,
+
+    BedBase=101,
+    BedBar=102,
+    BedSheets=103,
+    BedPillow=104,
 }
 
 public class BuildItemTypeEnumTools

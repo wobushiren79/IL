@@ -22,7 +22,7 @@ public class UIBaseOne : UIGameComponent,DialogView.IDialogCallBack
     public virtual void Start()
     {
         if (btBack != null)
-            btBack.onClick.AddListener(OpenMainUI);
+            btBack.onClick.AddListener(OnClickForBack);
         if (btSell != null)
             btSell.onClick.AddListener(OnClickForSell);
     }
@@ -116,7 +116,7 @@ public class UIBaseOne : UIGameComponent,DialogView.IDialogCallBack
     /// <summary>
     /// 返回游戏主UI
     /// </summary>
-    public void OpenMainUI()
+    public virtual void OnClickForBack()
     {
         uiManager.OpenUIAndCloseOtherByName(EnumUtil.GetEnumName(UIEnum.GameMain));
     }

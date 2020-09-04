@@ -2,9 +2,10 @@
 using UnityEditor;
 using System.Collections.Generic;
 using DG.Tweening;
-
+using UnityEngine.UI;
 public class UITownCarpenter : UIBaseOne, IRadioGroupCallBack, StoreInfoManager.ICallBack
 {
+    public Button btCustomBed;
     public RadioGroupView rgCerpenterType;
 
     public GameObject objCarpenterContent;
@@ -17,6 +18,8 @@ public class UITownCarpenter : UIBaseOne, IRadioGroupCallBack, StoreInfoManager.
         base.Awake();
         if (rgCerpenterType != null)
             rgCerpenterType.SetCallBack(this);
+        if (btCustomBed != null)
+            btCustomBed.onClick.AddListener(OnClickForCustomBed);
     }
 
     public override void OpenUI()
@@ -26,19 +29,44 @@ public class UITownCarpenter : UIBaseOne, IRadioGroupCallBack, StoreInfoManager.
 
         uiGameManager.storeInfoManager.SetCallBack(this);
         uiGameManager.storeInfoManager.GetStoreInfoForCarpenter();
+
     }
+
 
     public override void RefreshUI()
     {
         base.RefreshUI();
         InitDataByType(selectType);
+
+        //设置是否展示定制床位功能
+        InnBuildBean innBuild = uiGameManager.gameDataManager.gameData.GetInnBuildData();
+        innBuild.GetInnSize(2, out int innWidth, out int innHeight, out int offsetHeight);
+        if (innWidth != 0 && innHeight != 0)
+        {
+            btCustomBed.gameObject.SetActive(true);
+        }
+        else
+        {
+            btCustomBed.gameObject.SetActive(false);
+        }
     }
+
 
     public void InitDataByType(StoreForCarpenterTypeEnum type)
     {
         List<StoreInfoBean> listData = GetCerpenterListDataByType(type);
         CreateCarpenterData(listData, type);
     }
+
+    /// <summary>
+    /// 打开自定义床单UI
+    /// </summary>
+    public void OnClickForCustomBed()
+    {
+        uiGameManager.audioHandler.PlaySound(AudioSoundEnum.ButtonForNormal);
+        uiGameManager.OpenUIAndCloseOther(UIEnum.GameCustomBed);
+    }
+
 
     /// <summary>
     ///  根据备注类型获取数据
@@ -75,7 +103,7 @@ public class UITownCarpenter : UIBaseOne, IRadioGroupCallBack, StoreInfoManager.
             StoreInfoBean itemData = listData[i];
             //如果扩建 
             InnBuildBean innBuild = uiGameManager.gameDataManager.gameData.GetInnBuildData();
-            if(itemData.store_goods_type == (int)StoreForCarpenterTypeEnum.Expansion)
+            if (itemData.store_goods_type == (int)StoreForCarpenterTypeEnum.Expansion)
             {
                 if (itemData.mark_type == 1)
                 {

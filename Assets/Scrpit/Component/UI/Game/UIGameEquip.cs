@@ -53,6 +53,8 @@ public class UIGameEquip : UIGameComponent
     public override void OpenUI()
     {
         base.OpenUI();
+        StopAllCoroutines();
+        CptUtil.RemoveChildsByActive(objItemContent.transform);
         StartCoroutine(CreateBackpackData());
         RefreshUI();
     }
@@ -286,7 +288,6 @@ public class UIGameEquip : UIGameComponent
     /// </summary>
     public IEnumerator CreateBackpackData()
     {
-        CptUtil.RemoveChildsByActive(objItemContent.transform);
         if (uiGameManager.gameItemsManager == null || uiGameManager.gameDataManager == null)
             yield return null;
         for (int i = 0; i < uiGameManager.gameDataManager.gameData.listItems.Count; i++)

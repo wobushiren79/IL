@@ -693,6 +693,22 @@ public class EditorUI
         {
             listBuildItem = buildItemService.QueryDataByType((int)BuildItemTypeEnum.Door);
         }
+        if (GUIButton("查询床-基础"))
+        {
+            listBuildItem = buildItemService.QueryDataByType((int)BuildItemTypeEnum.BedBase);
+        }
+        if (GUIButton("查询床-床栏"))
+        {
+            listBuildItem = buildItemService.QueryDataByType((int)BuildItemTypeEnum.BedBar);
+        }
+        if (GUIButton("查询床-床单"))
+        {
+            listBuildItem = buildItemService.QueryDataByType((int)BuildItemTypeEnum.BedSheets);
+        }
+        if (GUIButton("查询床-枕头"))
+        {
+            listBuildItem = buildItemService.QueryDataByType((int)BuildItemTypeEnum.BedPillow);
+        }
         GUILayout.EndHorizontal();
         if (listBuildItem != null)
         {
@@ -761,6 +777,12 @@ public class EditorUI
                 break;
             case BuildItemTypeEnum.Door:
                 picPath = "Assets/Texture/InnBuild/Door/";
+                break;
+            case BuildItemTypeEnum.BedBar:
+            case BuildItemTypeEnum.BedBase:
+            case BuildItemTypeEnum.BedPillow:
+            case BuildItemTypeEnum.BedSheets:
+                picPath = "Assets/Texture/InnBuild/Bed/";
                 break;
             default:
                 break;

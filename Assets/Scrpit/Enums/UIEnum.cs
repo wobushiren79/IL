@@ -22,6 +22,7 @@ public enum UIEnum
     GameStatistics=1013,//统计UI
     GameSetting = 1014,
     GameHelp=1015,
+
     TownMarket = 2001,//市场UI
     TownRecruitment = 2002,//招人UI
     TownGrocery = 2003,//杂货店UI
@@ -49,4 +50,6 @@ public enum UIEnum
 
     GambleTrickyCup = 4001,//赌博 猜蛊
     GambleTrickySize = 4002,//赌博 猜大小
+
+    GameCustomBed = 5001,//自定义床UI
 }

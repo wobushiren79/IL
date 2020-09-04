@@ -2,7 +2,7 @@
 using UnityEditor;
 using UnityEngine.UI;
 using System.Collections.Generic;
-
+using System.Collections;
 public class UIGameFavorability : UIGameComponent
 {
     public Button btBack;
@@ -33,7 +33,13 @@ public class UIGameFavorability : UIGameComponent
         List<CharacterFavorabilityBean> listData = uiGameManager.gameDataManager.gameData.listCharacterFavorability;
         if (listData == null)
             return;
+        StopAllCoroutines();
         CptUtil.RemoveChildsByActive(objFavorabilityContainer);
+        StartCoroutine(CoroutineForCreateList(listData));
+    }
+
+    public IEnumerator CoroutineForCreateList(List<CharacterFavorabilityBean> listData)
+    {
         foreach (CharacterFavorabilityBean itemData in listData)
         {
             CharacterBean characterData = uiGameManager.npcInfoManager.GetCharacterDataById(itemData.characterId);
@@ -46,6 +52,7 @@ public class UIGameFavorability : UIGameComponent
             GameObject objFavorability = Instantiate(objFavorabilityContainer, objFavorabilityModel);
             ItemGameFavorabilityCpt itemFavorability = objFavorability.GetComponent<ItemGameFavorabilityCpt>();
             itemFavorability.SetData(itemData, characterData);
+            yield return new WaitForEndOfFrame();
         }
     }
 

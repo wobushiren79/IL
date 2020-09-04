@@ -13,4 +13,5 @@ public enum StoreTypeEnum
     Guild = 10,//公会商品
     Improve = 11,//公会提升相关交易
     InnLevel = 12,//公会等级提升
+    CarpenterBed = 13,//建筑坊床相关
 }

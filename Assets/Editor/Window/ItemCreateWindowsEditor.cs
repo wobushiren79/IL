@@ -360,6 +360,10 @@ public class ItemCreateWindowsEditor : EditorWindow, StoreInfoManager.ICallBack
         {
             storeInfoManager.GetStoreInfoForArenaGoods();
         }
+        if (GUILayout.Button("查询床商品", GUILayout.Width(100), GUILayout.Height(20)))
+        {
+            storeInfoManager.GetStoreInfoForCarpenterBed();
+        }
         GUILayout.EndHorizontal();
         if (listFindStoreItem == null)
             return;
@@ -418,6 +422,7 @@ public class ItemCreateWindowsEditor : EditorWindow, StoreInfoManager.ICallBack
             case StoreTypeEnum.Grocery:
             case StoreTypeEnum.Dress:
             case StoreTypeEnum.Pharmacy:
+            case StoreTypeEnum.CarpenterBed:
                 GUIStoreItemForGoods(storeInfo);
                 break;
         }

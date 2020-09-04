@@ -53,7 +53,13 @@ public class StoreInfoController : BaseMVCController<StoreInfoModel, IStoreInfoV
     {
         GetStoreInfoByType(StoreTypeEnum.Carpenter);
     }
-
+    /// <summary>
+    /// 获取建筑坊床数据
+    /// </summary>
+    public void GetCarpenterBedInfo()
+    {
+        GetStoreInfoByType(StoreTypeEnum.CarpenterBed);
+    }
     /// <summary>
     /// 获取建筑坊数据
     /// </summary>

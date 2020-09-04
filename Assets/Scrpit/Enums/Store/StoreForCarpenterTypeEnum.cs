@@ -10,5 +10,6 @@ public enum StoreForCarpenterTypeEnum
     Door=5,
     Floor=6,
     Wall=7,
-    Decoration=8
+    Decoration=8,
+    Stairs=9
 }

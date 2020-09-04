@@ -23,12 +23,13 @@ public class UIGameBackpack : UIBaseOne
     public override void OpenUI()
     {
         base.OpenUI();
+        StopAllCoroutines();
+        CptUtil.RemoveChildsByActive(objItemContent.transform);
         StartCoroutine(CreateBackpackData());
     }
 
     public IEnumerator CreateBackpackData()
     {
-        CptUtil.RemoveChildsByActive(objItemContent.transform);
         if (uiGameManager.gameItemsManager == null || uiGameManager.gameDataManager == null)
             yield return null;
         bool hasData = false;
