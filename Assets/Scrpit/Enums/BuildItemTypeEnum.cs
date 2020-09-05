@@ -49,4 +49,27 @@ public class BuildItemTypeEnumTools
                 return innBuildManager.GetFurnitureSpriteByName(buildItem.icon_key);
         }
     }
+
+    public static string GetBuildItemName(BuildItemTypeEnum buildItemType)
+    {
+        string name = "???";
+        switch (buildItemType)
+        {
+            case BuildItemTypeEnum.BedBase:
+                name = GameCommonInfo.GetUITextById(801);
+                break;
+            case BuildItemTypeEnum.BedBar:
+                name = GameCommonInfo.GetUITextById(802);
+                break;
+            case BuildItemTypeEnum.BedSheets:
+                name = GameCommonInfo.GetUITextById(803);
+                break;
+            case BuildItemTypeEnum.BedPillow:
+                name = GameCommonInfo.GetUITextById(804);
+                break;
+            default:
+                break;
+        }
+        return name;
+    }
 }

@@ -23,7 +23,7 @@ public class UIGameMainForHint : BaseUIChildComponent<UIGameMain>
         bool isAllComplete = true;
         foreach (MenuOwnBean itemData in listMenu)
         {
-            if(itemData.GetMenuStatus() == MenuStatusEnum.Researching)
+            if(itemData.GetMenuStatus() == ResearchStatusEnum.Researching)
             {
                 isAllComplete = false;
             }
@@ -36,7 +36,7 @@ public class UIGameMainForHint : BaseUIChildComponent<UIGameMain>
                     hasData = true;
                     itemCpt.RefreshData();
                 }
-                if (itemCpt.menuOwn.GetMenuStatus() != MenuStatusEnum.Researching)
+                if (itemCpt.menuOwn.GetMenuStatus() != ResearchStatusEnum.Researching)
                 {
                     listMenuResearch.Remove(itemCpt);
                     Destroy(itemCpt.gameObject);

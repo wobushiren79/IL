@@ -49,4 +49,11 @@ public enum BaseDataTypeEnum
     NpcFavorabilityFor3 = 3003,
     NpcFavorabilityFor4 = 3004,
     NpcFavorabilityFor5 = 3005,
+
+    BedForLevelUpExp1=4001,
+    BedForLevelUpExp2 = 4002,
+    BedForLevelUpExp3 = 4003,
+    BedForLevelResearchExp1 = 4101,
+    BedForLevelResearchExp2 = 4102,
+    BedForLevelResearchExp3 = 4103,
 }

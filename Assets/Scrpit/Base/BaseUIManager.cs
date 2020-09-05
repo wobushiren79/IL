@@ -136,15 +136,18 @@ public class BaseUIManager : BaseMonoBehaviour
         BaseUIComponent uiComponent = null;
         foreach (BaseUIComponent itemUI in uiList)
         {
+            if (!itemUI.name.Equals(uiName))
+            {
+                if (itemUI.gameObject.activeSelf)
+                    itemUI.CloseUI();
+            }
+        }
+        foreach (BaseUIComponent itemUI in uiList)
+        {
             if (itemUI.name.Equals(uiName))
             {
                 itemUI.OpenUI();
                 uiComponent = itemUI;
-            }
-            else
-            {
-                if (itemUI.gameObject.activeSelf)
-                    itemUI.CloseUI();
             }
         }
         return uiComponent;
@@ -165,13 +168,16 @@ public class BaseUIManager : BaseMonoBehaviour
             return;
         foreach (BaseUIComponent itemUI in uiList)
         {
+            if (!itemUI == uiComponent)
+            {
+                itemUI.CloseUI();
+            }
+        }
+        foreach (BaseUIComponent itemUI in uiList)
+        {
             if (itemUI == uiComponent)
             {
                 itemUI.OpenUI();
-            }
-            else
-            {
-                itemUI.CloseUI();
             }
         }
     }

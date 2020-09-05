@@ -29,26 +29,17 @@ public class UITownCarpenter : UIBaseOne, IRadioGroupCallBack, StoreInfoManager.
 
         uiGameManager.storeInfoManager.SetCallBack(this);
         uiGameManager.storeInfoManager.GetStoreInfoForCarpenter();
-
+        SetCustomBed();
     }
+
+
 
 
     public override void RefreshUI()
     {
         base.RefreshUI();
         InitDataByType(selectType);
-
-        //设置是否展示定制床位功能
-        InnBuildBean innBuild = uiGameManager.gameDataManager.gameData.GetInnBuildData();
-        innBuild.GetInnSize(2, out int innWidth, out int innHeight, out int offsetHeight);
-        if (innWidth != 0 && innHeight != 0)
-        {
-            btCustomBed.gameObject.SetActive(true);
-        }
-        else
-        {
-            btCustomBed.gameObject.SetActive(false);
-        }
+        SetCustomBed();
     }
 
 
@@ -67,6 +58,20 @@ public class UITownCarpenter : UIBaseOne, IRadioGroupCallBack, StoreInfoManager.
         uiGameManager.OpenUIAndCloseOther(UIEnum.GameCustomBed);
     }
 
+    public void SetCustomBed()
+    {
+        //设置是否展示定制床位功能
+        InnBuildBean innBuild = uiGameManager.gameDataManager.gameData.GetInnBuildData();
+        innBuild.GetInnSize(2, out int innWidth, out int innHeight, out int offsetHeight);
+        if (innWidth != 0 && innHeight != 0)
+        {
+            btCustomBed.gameObject.SetActive(true);
+        }
+        else
+        {
+            btCustomBed.gameObject.SetActive(false);
+        }
+    }
 
     /// <summary>
     ///  根据备注类型获取数据

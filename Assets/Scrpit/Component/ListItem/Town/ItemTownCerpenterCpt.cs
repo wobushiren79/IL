@@ -84,6 +84,8 @@ public class ItemTownCerpenterCpt : ItemTownStoreCpt, DialogView.IDialogCallBack
     /// <param name="a"></param>
     public void SetAttribute(StoreForCarpenterTypeEnum type, float aesthetics)
     {
+        if (objAttribute == null)
+            return;
         if (type == StoreForCarpenterTypeEnum.Expansion)
         {
             objAttribute.gameObject.SetActive(false);
@@ -129,6 +131,8 @@ public class ItemTownCerpenterCpt : ItemTownStoreCpt, DialogView.IDialogCallBack
     /// </summary>
     public void SetOwn(StoreForCarpenterTypeEnum type)
     {
+        if (objOwn == null)
+            return;
         if (type == StoreForCarpenterTypeEnum.Expansion)
         {
             objOwn.gameObject.SetActive(false);

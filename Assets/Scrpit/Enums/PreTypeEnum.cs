@@ -763,22 +763,22 @@ public class PreTypeEnumTools : DataTools
                 contentFail = GameCommonInfo.GetUITextById(5062);
                 break;
             case PreTypeEnum.MenuLevelStarNumber:
-                menuNumber = gameData.GetMenuNumberByLevel(MenuLevelTypeEnum.Star);
+                menuNumber = gameData.GetMenuNumberByLevel(LevelTypeEnum.Star);
                 content = GameCommonInfo.GetUITextById(5063);
                 contentFail = GameCommonInfo.GetUITextById(5064);
-                levelStr = MenuLevelTypeEnumTools.GetMenuLevelStr(MenuLevelTypeEnum.Star);
+                levelStr = LevelTypeEnumTools.GetLevelStr(LevelTypeEnum.Star);
                 break;
             case PreTypeEnum.MenuLevelMoonNumber:
-                menuNumber = gameData.GetMenuNumberByLevel(MenuLevelTypeEnum.Moon);
+                menuNumber = gameData.GetMenuNumberByLevel(LevelTypeEnum.Moon);
                 content = GameCommonInfo.GetUITextById(5063);
                 contentFail = GameCommonInfo.GetUITextById(5064);
-                levelStr = MenuLevelTypeEnumTools.GetMenuLevelStr(MenuLevelTypeEnum.Moon);
+                levelStr = LevelTypeEnumTools.GetLevelStr(LevelTypeEnum.Moon);
                 break;
             case PreTypeEnum.MenuLevelSunNumber:
-                menuNumber = gameData.GetMenuNumberByLevel(MenuLevelTypeEnum.Sun);
+                menuNumber = gameData.GetMenuNumberByLevel(LevelTypeEnum.Sun);
                 content = GameCommonInfo.GetUITextById(5063);
                 contentFail = GameCommonInfo.GetUITextById(5064);
-                levelStr = MenuLevelTypeEnumTools.GetMenuLevelStr(MenuLevelTypeEnum.Sun);
+                levelStr = LevelTypeEnumTools.GetLevelStr(LevelTypeEnum.Sun);
                 break;
 
         }

@@ -16,4 +16,5 @@ public enum DialogEnum
     PickForNumber=10,
     PickForSell=11,
     JumpTime=12,
+    FindBed=13,
 }

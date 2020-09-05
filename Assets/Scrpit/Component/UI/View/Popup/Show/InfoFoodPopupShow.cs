@@ -86,7 +86,7 @@ public class InfoFoodPopupShow : PopupShowView
     /// </summary>
     public void SetLevel(MenuOwnBean ownData)
     {
-        MenuLevelTypeEnum level = ownData.GetMenuLevel(innFoodManager, out string levelStr, out int nextLevelExp);
+        LevelTypeEnum level = ownData.GetMenuLevel(innFoodManager, out string levelStr, out int nextLevelExp);
         if ((int)level >= 3)
         {
             objLevelProgress.SetActive(false);
@@ -107,7 +107,7 @@ public class InfoFoodPopupShow : PopupShowView
         ivLevel.sprite = spIcon;
         tvLevelName.text = levelStr;
         proLevel.SetData(nextLevelExp, ownData.menuExp);
-        if (ownData.GetMenuStatus() == MenuStatusEnum.WaitForResearch)
+        if (ownData.GetMenuStatus() == ResearchStatusEnum.WaitForResearch)
         {
             proLevel.SetContent(GameCommonInfo.GetUITextById(287));
         }
@@ -119,7 +119,7 @@ public class InfoFoodPopupShow : PopupShowView
     /// <param name="ownData"></param>
     public void SetResearch(MenuOwnBean ownData)
     {
-        if (ownData.GetMenuStatus() == MenuStatusEnum.Normal)
+        if (ownData.GetMenuStatus() == ResearchStatusEnum.Normal)
         {
             objResearch.SetActive(false);
             return;

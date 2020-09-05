@@ -121,16 +121,16 @@ public class UIGameMenu : UIGameComponent
             if (menuInfo == null)
                 continue;
             GameObject objModel = null;
-            MenuLevelTypeEnum level = itemData.GetMenuLevel(uiGameManager.innFoodManager, out string levelStr, out int nextLevelExp);
-            if (level == MenuLevelTypeEnum.Star)
+            LevelTypeEnum level = itemData.GetMenuLevel(uiGameManager.innFoodManager, out string levelStr, out int nextLevelExp);
+            if (level == LevelTypeEnum.Star)
             {
                 objModel = objFoodItemModelFor1;
             }
-            else if (level == MenuLevelTypeEnum.Moon)
+            else if (level == LevelTypeEnum.Moon)
             {
                 objModel = objFoodItemModelFor2;
             }
-            else if (level == MenuLevelTypeEnum.Sun)
+            else if (level == LevelTypeEnum.Sun)
             {
                 objModel = objFoodItemModelFor3;
             }

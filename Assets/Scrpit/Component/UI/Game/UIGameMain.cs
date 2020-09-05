@@ -27,6 +27,8 @@ public class UIGameMain : UIGameComponent, DialogView.IDialogCallBack, IRadioGro
     public Button btSetting;
     public InfoPromptPopupButton popupJumpTime;
     public Button btJumpTime;
+    public InfoPromptPopupButton popupHotel;
+    public Button btHotel;
 
     public Button btSleep;
 
@@ -106,6 +108,9 @@ public class UIGameMain : UIGameComponent, DialogView.IDialogCallBack, IRadioGro
 
         if (btJumpTime != null)
             btJumpTime.onClick.AddListener(OnClickForJumpTime);
+
+        if (btHotel != null)
+            btHotel.onClick.AddListener(OnClickForHotel);
 
         if (rgTimeScale != null)
             rgTimeScale.SetCallBack(this);
@@ -197,7 +202,8 @@ public class UIGameMain : UIGameComponent, DialogView.IDialogCallBack, IRadioGro
             popupHelp.SetContent(GameCommonInfo.GetUITextById(2039));
         if (popupJumpTime != null)
             popupJumpTime.SetContent(GameCommonInfo.GetUITextById(2040));
-
+        if (popupHotel != null)
+            popupHotel.SetContent(GameCommonInfo.GetUITextById(2041));
         SetInnPraise(innAttributes);
         SetInnAesthetics(innAttributes);
         SetInnRichNess(innAttributes);
@@ -262,6 +268,16 @@ public class UIGameMain : UIGameComponent, DialogView.IDialogCallBack, IRadioGro
             {
                 workerNumber.Close();
             }
+        }
+
+        //是否展示住店相关
+        if (uiGameManager.gameDataManager.gameData.listBed.Count!=0)
+        {
+            btHotel.gameObject.SetActive(true);
+        }
+        else
+        {
+            btHotel.gameObject.SetActive(false);
         }
     }
 
@@ -463,6 +479,13 @@ public class UIGameMain : UIGameComponent, DialogView.IDialogCallBack, IRadioGro
         JumpTimeDialogView jumpTimeDialog= (JumpTimeDialogView)uiGameManager.dialogManager.CreateDialog(DialogEnum.JumpTime, this, dialogBean);
         jumpTimeDialog.SetData();
     }
+
+    public void OnClickForHotel()
+    {
+        uiGameManager.audioHandler.PlaySound(AudioSoundEnum.ButtonForNormal);
+
+    }
+
 
     /// <summary>
     /// 点击第一层

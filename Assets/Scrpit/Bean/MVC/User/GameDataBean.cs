@@ -31,6 +31,7 @@ public class GameDataBean
     public List<ItemBean> listBuild = new List<ItemBean>();//所拥有的建筑材料
     public List<ItemBean> listItems = new List<ItemBean>();//所拥有的装备
     public List<MenuOwnBean> listMenu = new List<MenuOwnBean>();//所拥有的菜单
+    public List<BuildBedBean> listBed = new List<BuildBedBean>();//所拥有的菜单
 
     public List<CharacterFavorabilityBean> listCharacterFavorability = new List<CharacterFavorabilityBean>();//角色好感度
     public List<long> listTriggeredEvent = new List<long>();//触发过的事件
@@ -47,6 +48,15 @@ public class GameDataBean
 
     public int workerNumberLimit = 2;//员工人员招聘上限
     public int loansNumberLimit = 3;//贷款上限
+
+    /// <summary>
+    /// 增加一个床
+    /// </summary>
+    /// <param name="buildBedData"></param>
+    public void AddBed(BuildBedBean buildBedData)
+    {
+        listBed.Add(buildBedData);
+    }
 
     /// <summary>
     /// 增加贷款
@@ -405,7 +415,7 @@ public class GameDataBean
         for (int i = 0; i < listMenu.Count; i++)
         {
             MenuOwnBean itemData = listMenu[i];
-            if (itemData.GetMenuStatus() == MenuStatusEnum.Researching)
+            if (itemData.GetMenuStatus() == ResearchStatusEnum.Researching)
             {
                 listData.Add(itemData);
             }
@@ -445,7 +455,7 @@ public class GameDataBean
     /// </summary>
     /// <param name="level"></param>
     /// <returns></returns>
-    public int GetMenuNumberByLevel(MenuLevelTypeEnum menuLevel)
+    public int GetMenuNumberByLevel(LevelTypeEnum menuLevel)
     {
         int number = 0;
         foreach (MenuOwnBean itemMenu in listMenu)
@@ -954,5 +964,15 @@ public class GameDataBean
         if (listWorkerCharacter != null && characterData != null)
             return listWorkerCharacter.Remove(characterData);
         return false;
+    }
+
+    /// <summary>
+    /// 移除一张床
+    /// </summary>
+    /// <param name="buildBedData"></param>
+    /// <returns></returns>
+    public bool RemoveBed(BuildBedBean buildBedData)
+    {
+        return listBed.Remove(buildBedData);
     }
 }

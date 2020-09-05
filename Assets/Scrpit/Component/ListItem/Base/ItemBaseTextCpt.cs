@@ -32,8 +32,17 @@ public class ItemBaseTextCpt : ItemGameBaseCpt
     {
         if (ivIcon != null)
         {
-            ivIcon.sprite = spIcon;
-            ivIcon.color = spColor;
+            if (spIcon == null)
+            {
+                ivIcon.gameObject.SetActive(false);
+            }
+            else
+            {
+                ivIcon.gameObject.SetActive(true);
+                ivIcon.sprite = spIcon;
+                ivIcon.color = spColor;
+            }
+
         }
     }
 

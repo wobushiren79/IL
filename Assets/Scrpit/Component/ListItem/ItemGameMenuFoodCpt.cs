@@ -175,18 +175,18 @@ public class ItemGameMenuFoodCpt : ItemGameBaseCpt, IRadioButtonCallBack, Dialog
     /// 设置研究
     /// </summary>
     /// <param name="menuStatus"></param>
-    public void SetResearch(MenuStatusEnum menuStatus)
+    public void SetResearch(ResearchStatusEnum menuStatus)
     {
         objResearch.SetActive(false);
         objResearchCancel.SetActive(false);
         switch (menuStatus)
         {
-            case MenuStatusEnum.Normal:
+            case ResearchStatusEnum.Normal:
                 break;
-            case MenuStatusEnum.WaitForResearch:
+            case ResearchStatusEnum.WaitForResearch:
                 objResearch.SetActive(true);
                 break;
-            case MenuStatusEnum.Researching:
+            case ResearchStatusEnum.Researching:
                 objResearchCancel.SetActive(true);
                 break;
         }
