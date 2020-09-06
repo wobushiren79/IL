@@ -313,6 +313,35 @@ public class BuildBedBean : BaseBean
     }
 
     /// <summary>
+    /// 获取研究价格
+    /// </summary>
+    /// <param name="researchPriceL"></param>
+    /// <param name="researchPriceM"></param>
+    /// <param name="researchPriceS"></param>
+    public void GetResearchPrice(out long researchPriceL, out long researchPriceM, out long researchPriceS)
+    {
+        string researchPrice="0,0,0";
+        LevelTypeEnum bedLevel = GetBedLevel();
+        if (bedLevel == LevelTypeEnum.Init)
+        {
+            GameCommonInfo.baseDataController.GetBaseData(BaseDataTypeEnum.BedForResearchPrice1, out  researchPrice);
+
+        }
+        else if (bedLevel == LevelTypeEnum.Star)
+        {
+            GameCommonInfo.baseDataController.GetBaseData(BaseDataTypeEnum.BedForResearchPrice2, out  researchPrice);
+        }
+        else if (bedLevel == LevelTypeEnum.Moon)
+        {
+            GameCommonInfo.baseDataController.GetBaseData(BaseDataTypeEnum.BedForResearchPrice3, out  researchPrice);
+        }
+        long[] priceList= StringUtil.SplitBySubstringForArrayLong(researchPrice,',');
+        researchPriceL = priceList[0];
+        researchPriceM = priceList[1];
+        researchPriceS = priceList[2];
+    }
+
+    /// <summary>
     /// 设置研究人员ID
     /// </summary>
     /// <param name="listCharacterData"></param>
@@ -421,6 +450,15 @@ public class BuildBedBean : BaseBean
             failStr = GameCommonInfo.GetUITextById(1073);
             return false;
         }
+
+        //判断是否有足够的研究经费
+        GetResearchPrice(out long researchPriceL, out long researchPriceM, out long researchPriceS);
+        if (!gameData.HasEnoughMoney(researchPriceL, researchPriceM, researchPriceS))
+        {
+            failStr = GameCommonInfo.GetUITextById(1005);
+            return false;
+        }
+
         return true;
     }
 }

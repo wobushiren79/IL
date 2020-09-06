@@ -52,6 +52,10 @@ public class InfoBedPopupShow : PopupShowView
         SetLevel(buildBedData);
         //设置研究相关
         SetResearch(buildBedData);
+
+        GameUtil.RefreshRectViewHight((RectTransform)objItemBaseContainer.transform, false);
+        GameUtil.RefreshRectViewHight((RectTransform)objItemStatisticsContainer.transform, false);
+        GameUtil.RefreshRectViewHight((RectTransform)transform,false);
     }
 
     /// <summary>

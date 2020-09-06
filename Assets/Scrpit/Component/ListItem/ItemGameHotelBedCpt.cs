@@ -156,8 +156,21 @@ public class ItemGameHotelBedCpt : ItemGameBaseCpt, DialogView.IDialogCallBack
     {
         if (popupForResearch == null)
             return;
+        buildBedData.GetResearchPrice(out long researchPriceL, out long researchPriceM, out long researchPriceS);
         string content = GameCommonInfo.GetUITextById(285);
-
+        content += (" " + GameCommonInfo.GetUITextById(286) + "\n");
+        if (researchPriceL!=0)
+        {
+            content +=( researchPriceL+ GameCommonInfo.GetUITextById(16));
+        }
+        if (researchPriceM != 0)
+        {
+            content += (researchPriceM+ GameCommonInfo.GetUITextById(17));
+        }
+        if (researchPriceS != 0)
+        {
+            content += (researchPriceS + GameCommonInfo.GetUITextById(18));
+        }
         popupForResearch.SetContent(content);
     }
 
@@ -192,7 +205,6 @@ public class ItemGameHotelBedCpt : ItemGameBaseCpt, DialogView.IDialogCallBack
             uiGameManager.toastManager.ToastHint(failStr);
             return;
         }
-
         DialogBean dialogData = new DialogBean
         {
             title = GameCommonInfo.GetUITextById(3071)
@@ -247,6 +259,15 @@ public class ItemGameHotelBedCpt : ItemGameBaseCpt, DialogView.IDialogCallBack
         UIGameManager uiGameManager = GetUIManager<UIGameManager>();
         if (dialogView as PickForCharacterDialogView)
         {
+            buildBedData.GetResearchPrice(out long researchPriceL, out long researchPriceM, out long researchPriceS);
+            //先判断一下是否有钱支付
+            if (!uiGameManager.gameDataManager.gameData.HasEnoughMoney(researchPriceL, researchPriceM, researchPriceS))
+            {
+                uiGameManager.toastManager.ToastHint(GameCommonInfo.GetUITextById(1005));
+                return;
+            }
+            //扣除金钱
+            uiGameManager.gameDataManager.gameData.PayMoney(researchPriceL,researchPriceM,researchPriceS);
             //角色选择
             PickForCharacterDialogView pickForCharacterDialog = (PickForCharacterDialogView)dialogView;
             List<CharacterBean> listPickCharacter = pickForCharacterDialog.GetPickCharacter();

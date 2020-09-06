@@ -492,6 +492,7 @@ public class UIGameMain : UIGameComponent, DialogView.IDialogCallBack, IRadioGro
     /// </summary>
     public void OnClickForFirstLayer()
     {
+        uiGameManager.audioHandler.PlaySound(AudioSoundEnum.ButtonForNormal);
         SetInnLayer(1);
     }
 
@@ -500,6 +501,7 @@ public class UIGameMain : UIGameComponent, DialogView.IDialogCallBack, IRadioGro
     /// </summary>
     public void OnClickForSecondLayer()
     {
+        uiGameManager.audioHandler.PlaySound(AudioSoundEnum.ButtonForNormal);
         SetInnLayer(2);
     }
 

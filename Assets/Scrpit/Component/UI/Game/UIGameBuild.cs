@@ -29,13 +29,13 @@ public class UIGameBuild : UIGameComponent, IRadioGroupCallBack
     public Button btLayerSecondLayer;
     public GameObject objLayerSelect;
 
-    public GameObject listBuildContent;
+    public GameObject itemBuildContainer;
     public GameObject itemBuildModel;
-
+    public GameObject itemBuildForBedModel;
     public BuildItemTypeEnum buildType = BuildItemTypeEnum.Table;
 
     public List<ItemGameBuildCpt> listBuildItem = new List<ItemGameBuildCpt>();
-
+    public List<ItemGameBuildForBedCpt> listBuildForBedItem = new List<ItemGameBuildForBedCpt>();
     //客栈楼层
     public int innLayer = 1;
 
@@ -57,7 +57,7 @@ public class UIGameBuild : UIGameComponent, IRadioGroupCallBack
     public override void OpenUI()
     {
         base.OpenUI();
- 
+
         //停止时间
         uiGameManager.gameTimeHandler.SetTimeStatus(true);
         uiGameManager.controlHandler.StartControl(ControlHandler.ControlEnum.Build);
@@ -192,26 +192,49 @@ public class UIGameBuild : UIGameComponent, IRadioGroupCallBack
     /// <param name="type"></param>
     public void CreateBuildList(BuildItemTypeEnum type)
     {
-        buildType = type;
-        if (listBuildContent == null)
+        if (itemBuildContainer == null)
             return;
-        if (itemBuildModel == null)
-            return;
-        if (uiGameManager.gameDataManager.gameData.listBuild == null)
-            return;
-        CptUtil.RemoveChildsByActive(listBuildContent.transform);
-        listBuildItem.Clear();
         bool hasData = false;
-        for (int i = 0; i < uiGameManager.gameDataManager.gameData.listBuild.Count; i++)
+        buildType = type;
+
+        if (type == BuildItemTypeEnum.Bed)
         {
-            ItemBean itemData = uiGameManager.gameDataManager.gameData.listBuild[i];
-            BuildItemBean buildData = uiGameManager.innBuildManager.GetBuildDataById(itemData.itemId);
-            if (buildData == null)
-                continue;
-            if (type == buildData.GetBuildType())
+            if (itemBuildForBedModel == null)
+                return;
+            if (uiGameManager.gameDataManager.gameData.listBed == null)
+                return;
+            CptUtil.RemoveChildsByActive(itemBuildContainer);
+            listBuildItem.Clear();
+            listBuildForBedItem.Clear();
+            for (int i = 0; i < uiGameManager.gameDataManager.gameData.listBed.Count; i++)
             {
-                CreateBuildItem(itemData, buildData);
+                BuildBedBean itemData = uiGameManager.gameDataManager.gameData.listBed[i];
+                CreateBuildForBedItem(itemData);
                 hasData = true;
+            }
+        }
+        else
+        {
+            if (itemBuildModel == null)
+                return;
+            if (uiGameManager.gameDataManager.gameData.listBuild == null)
+                return;
+            CptUtil.RemoveChildsByActive(itemBuildContainer);
+            listBuildItem.Clear();
+            listBuildForBedItem.Clear();
+
+            for (int i = 0; i < uiGameManager.gameDataManager.gameData.listBuild.Count; i++)
+            {
+                ItemBean itemData = uiGameManager.gameDataManager.gameData.listBuild[i];
+                BuildItemBean buildData = uiGameManager.innBuildManager.GetBuildDataById(itemData.itemId);
+                if (buildData == null)
+                    continue;
+                if (type == buildData.GetBuildType())
+                {
+                    CreateBuildItem(itemData, buildData);
+                    hasData = true;
+                }
+
             }
         }
         if (hasData)
@@ -227,12 +250,22 @@ public class UIGameBuild : UIGameComponent, IRadioGroupCallBack
     /// <param name="buildData"></param>
     public void CreateBuildItem(ItemBean itemData, BuildItemBean buildData)
     {
-        GameObject itemBuildObj = Instantiate(itemBuildModel, itemBuildModel.transform);
-        itemBuildObj.SetActive(true);
-        itemBuildObj.transform.SetParent(listBuildContent.transform);
+        GameObject itemBuildObj = Instantiate(itemBuildContainer, itemBuildModel);
         ItemGameBuildCpt itemCpt = itemBuildObj.GetComponent<ItemGameBuildCpt>();
         itemCpt.SetData(itemData, buildData);
         listBuildItem.Add(itemCpt);
+    }
+
+    /// <summary>
+    /// 创建单个数据
+    /// </summary>
+    /// <param name="buildBedData"></param>
+    public void CreateBuildForBedItem(BuildBedBean buildBedData)
+    {
+        GameObject itemBuildObj = Instantiate(itemBuildContainer, itemBuildForBedModel);
+        ItemGameBuildForBedCpt itemCpt = itemBuildObj.GetComponent<ItemGameBuildForBedCpt>();
+        itemCpt.SetData(buildBedData);
+        listBuildForBedItem.Add(itemCpt);
     }
 
     /// <summary>
@@ -276,6 +309,7 @@ public class UIGameBuild : UIGameComponent, IRadioGroupCallBack
     /// </summary>
     public void OnClickForFirstLayer()
     {
+        uiGameManager.audioHandler.PlaySound(AudioSoundEnum.ButtonForNormal);
         SetInnLayer(1);
     }
 
@@ -285,6 +319,7 @@ public class UIGameBuild : UIGameComponent, IRadioGroupCallBack
     /// </summary>
     public void OnClickForSecondLayer()
     {
+        uiGameManager.audioHandler.PlaySound(AudioSoundEnum.ButtonForNormal);
         SetInnLayer(2);
     }
 

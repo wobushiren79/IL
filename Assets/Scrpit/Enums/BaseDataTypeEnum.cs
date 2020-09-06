@@ -62,4 +62,8 @@ public enum BaseDataTypeEnum
     BedForPriceAddRate1 = 4201,
     BedForPriceAddRate2 = 4202,
     BedForPriceAddRate3 = 4203,
+
+    BedForResearchPrice1 = 4301,
+    BedForResearchPrice2 = 4302,
+    BedForResearchPrice3 = 4303,
 }
