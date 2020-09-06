@@ -37,4 +37,25 @@ public class LevelTypeEnumTools
         }
         return levelStr;
     }
+
+    public static Sprite GetLevelIcon(IconDataManager iconDataManager, LevelTypeEnum level)
+    {
+        Sprite spIcon = null;
+        if (level == LevelTypeEnum.Init)
+        {
+        }
+        else if (level == LevelTypeEnum.Star)
+        {
+            spIcon = iconDataManager.GetIconSpriteByName("reputation_level_1_1");
+        }
+        else if (level == LevelTypeEnum.Moon)
+        {
+            spIcon = iconDataManager.GetIconSpriteByName("reputation_level_2_1");
+        }
+        else if (level == LevelTypeEnum.Sun)
+        {
+            spIcon = iconDataManager.GetIconSpriteByName("reputation_level_3_1");
+        }
+        return spIcon;
+    }
 }

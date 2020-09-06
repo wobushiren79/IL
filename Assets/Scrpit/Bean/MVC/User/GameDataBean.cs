@@ -424,6 +424,23 @@ public class GameDataBean
     }
 
     /// <summary>
+    /// 获取研究中的床
+    /// </summary>
+    /// <returns></returns>
+    public List<BuildBedBean> GetBedListForResearching()
+    {
+        List<BuildBedBean> listData = new List<BuildBedBean>();
+        for (int i = 0; i < listBed.Count; i++)
+        {
+            BuildBedBean itemData = listBed[i];
+            if (itemData.GetBedStatus() == ResearchStatusEnum.Researching)
+            {
+                listData.Add(itemData);
+            }
+        }
+        return listData;
+    }
+    /// <summary>
     /// 获取指定菜品
     /// </summary>
     /// <param name="id"></param>

@@ -266,23 +266,8 @@ public class MenuOwnBean
     /// <returns></returns>
     public Sprite GetMenuLevelIcon(IconDataManager iconDataManager)
     {
-        Sprite spIcon = null;
         LevelTypeEnum menuLevel = GetMenuLevel();
-        if (menuLevel == LevelTypeEnum.Init)
-        {
-        }
-        else if (menuLevel == LevelTypeEnum.Star)
-        {
-            spIcon = iconDataManager.GetIconSpriteByName("reputation_level_1_1");
-        }
-        else if (menuLevel == LevelTypeEnum.Moon)
-        {
-            spIcon = iconDataManager.GetIconSpriteByName("reputation_level_2_1");
-        }
-        else if (menuLevel == LevelTypeEnum.Sun)
-        {
-            spIcon = iconDataManager.GetIconSpriteByName("reputation_level_3_1");
-        }
+        Sprite spIcon =  LevelTypeEnumTools.GetLevelIcon(iconDataManager, menuLevel);
         return spIcon;
     }
 

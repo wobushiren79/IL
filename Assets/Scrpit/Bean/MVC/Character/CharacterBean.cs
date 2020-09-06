@@ -381,6 +381,18 @@ public class CharacterBean
         out CharacterAttributesBean totalAttributes, out CharacterAttributesBean selfAttributes, out CharacterAttributesBean equipAttributes);
         return totalAttributes.cook;
     }
+    /// <summary>
+    /// 计算床的研究经验加成
+    /// </summary>
+    /// <param name="gameItemsManager"></param>
+    /// <returns></returns>
+    public long CalculationBedResearchAddExp(GameItemsManager gameItemsManager)
+    {
+        //获取数据
+        GetAttributes(gameItemsManager,
+        out CharacterAttributesBean totalAttributes, out CharacterAttributesBean selfAttributes, out CharacterAttributesBean equipAttributes);
+        return totalAttributes.charm;
+    }
 
     /// <summary>
     ///  计算吆喝成功概率

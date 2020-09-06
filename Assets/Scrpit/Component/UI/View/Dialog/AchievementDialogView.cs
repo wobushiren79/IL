@@ -34,7 +34,7 @@ public class AchievementDialogView : DialogView
 
     public void SetData(int iconType,string iconKey)
     {
-        SetIcon(1, iconKey, null);
+        SetIcon(iconType, iconKey, null);
         SetDataForCommon();
     }
 

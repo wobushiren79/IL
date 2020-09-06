@@ -11,6 +11,7 @@ public class GameDataHandler : BaseHandler, DialogView.IDialogCallBack,IBaseObse
         AddMoney = 1,
         PayMoney = 2,
         MenuResearchChange = 3,
+        BedResearchChange = 4,
     }
 
     protected GameDataManager gameDataManager;
@@ -61,7 +62,7 @@ public class GameDataHandler : BaseHandler, DialogView.IDialogCallBack,IBaseObse
         while (true)
         {
             yield return new WaitForSeconds(1);
-            HandleForMenuResearch();
+            HandleForResearch();
         }
     }
 
@@ -77,15 +78,67 @@ public class GameDataHandler : BaseHandler, DialogView.IDialogCallBack,IBaseObse
     /// <summary>
     /// 菜单研究处理
     /// </summary>
-    public void HandleForMenuResearch()
+    public void HandleForResearch()
     {
         if (gameTimeHandler == null)
             return;
         if (gameTimeHandler.isStopTime)
             return;
-        AddMenuResearch(1);
+        AddResearch(1);
     }
 
+    /// <summary>
+    /// 增加所有研究点数
+    /// </summary>
+    /// <param name="time"></param>
+    public void AddResearch(int time)
+    {
+        AddMenuResearch(time);
+        AddBedResearch(time);
+    }
+
+    /// <summary>
+    /// 增加菜品研究点数
+    /// </summary>
+    /// <param name="time"></param>
+    public void AddBedResearch(int time)
+    {
+        if (gameTimeHandler == null || gameItemsManager == null || gameDataManager == null)
+            return;
+        List<BuildBedBean> listBed = gameDataManager.gameData.GetBedListForResearching();
+        if (listBed == null)
+            return;
+        foreach (BuildBedBean itemBed in listBed)
+        {
+            //获取研究人员
+            CharacterBean researcher = itemBed.GetResearchCharacter(gameDataManager.gameData);
+            //如果没有研究人员则停止研究
+            if (researcher == null)
+            {
+                itemBed.CancelResearch(gameDataManager.gameData);
+                continue;
+            }
+            long addExp = researcher.CalculationBedResearchAddExp(gameItemsManager);
+            bool isCompleteResearch = itemBed.AddResearchExp((int)addExp * time);
+            //完成研究
+            if (isCompleteResearch)
+            {
+                itemBed.CompleteResearch(gameDataManager.gameData);
+                string toastStr = string.Format(GameCommonInfo.GetUITextById(1071), itemBed.bedName);
+                audioHandler.PlaySound(AudioSoundEnum.Reward);
+                toastManager.ToastHint(innFoodManager.GetFoodSpriteByName("ui_features_bed"), toastStr, 5);
+
+                DialogBean dialogData = new DialogBean
+                {
+                    title = GameCommonInfo.GetUITextById(1048),
+                    content = toastStr
+                };
+                AchievementDialogView achievementDialog = (AchievementDialogView)dialogManager.CreateDialog(DialogEnum.Achievement, this, dialogData);
+                achievementDialog.SetData(2, "ui_features_bed");
+            }
+        }
+        NotifyAllObserver((int)NotifyTypeEnum.BedResearchChange, listBed);
+    }
     /// <summary>
     /// 增加菜品研究点数
     /// </summary>

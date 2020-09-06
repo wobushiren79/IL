@@ -96,6 +96,6 @@ public class JumpTimeDialogView : DialogView
         gameTimeHandler.SetTime((jumpNumber + (int)hour), (int)min);
         lightHandler.CheckTime();
         baseSceneInit.RefreshScene();
-        gameDataHandler.AddMenuResearch(jumpNumber*60);
+        gameDataHandler.AddResearch(jumpNumber*60);
     }
 }

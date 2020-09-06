@@ -179,7 +179,37 @@ public class BuildBedBean : BaseBean
         return false;
     }
 
-
+    /// <summary>
+    /// 获取价格
+    /// </summary>
+    /// <param name="menuInfo"></param>
+    /// <param name="priceL"></param>
+    /// <param name="priceM"></param>
+    /// <param name="priceS"></param>
+    public void GetPrice(out long outPriceL, out long outPriceM, out long outPriceS)
+    {
+        float addRate = 1;
+        LevelTypeEnum bedLevel = GetBedLevel();
+        if (bedLevel == LevelTypeEnum.Init)
+        {
+            addRate = 1;
+        }
+        else if (bedLevel == LevelTypeEnum.Star)
+        {
+            GameCommonInfo.baseDataController.GetBaseData(BaseDataTypeEnum.BedForPriceAddRate1, out addRate);
+        }
+        else if (bedLevel == LevelTypeEnum.Moon)
+        {
+            GameCommonInfo.baseDataController.GetBaseData(BaseDataTypeEnum.BedForPriceAddRate2, out addRate);
+        }
+        else if (bedLevel == LevelTypeEnum.Sun)
+        {
+            GameCommonInfo.baseDataController.GetBaseData(BaseDataTypeEnum.BedForPriceAddRate3, out addRate);
+        }
+        outPriceL = (long)(priceL * addRate);
+        outPriceM = (long)(priceM * addRate);
+        outPriceS = (long)(priceS * addRate);
+    }
 
     /// <summary>
     /// 获取菜品等级
@@ -234,23 +264,8 @@ public class BuildBedBean : BaseBean
     /// <returns></returns>
     public Sprite GetBedLevelIcon(IconDataManager iconDataManager)
     {
-        Sprite spIcon = null;
         LevelTypeEnum bedLevel = GetBedLevel();
-        if (bedLevel == LevelTypeEnum.Init)
-        {
-        }
-        else if (bedLevel == LevelTypeEnum.Star)
-        {
-            spIcon = iconDataManager.GetIconSpriteByName("reputation_level_1_1");
-        }
-        else if (bedLevel == LevelTypeEnum.Moon)
-        {
-            spIcon = iconDataManager.GetIconSpriteByName("reputation_level_2_1");
-        }
-        else if (bedLevel == LevelTypeEnum.Sun)
-        {
-            spIcon = iconDataManager.GetIconSpriteByName("reputation_level_3_1");
-        }
+        Sprite spIcon = LevelTypeEnumTools.GetLevelIcon(iconDataManager, bedLevel);
         return spIcon;
     }
 
@@ -258,7 +273,7 @@ public class BuildBedBean : BaseBean
     /// 获取菜单状态
     /// </summary>
     /// <returns></returns>
-    public ResearchStatusEnum GetMenuStatus()
+    public ResearchStatusEnum GetBedStatus()
     {
         return (ResearchStatusEnum)bedStatus;
     }

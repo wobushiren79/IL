@@ -97,7 +97,7 @@ public class UIGameMain : UIGameComponent, DialogView.IDialogCallBack, IRadioGro
         if (btSetting != null)
             btSetting.onClick.AddListener(OpenSettingUI);
 
-        if(btHelp!=null)
+        if (btHelp != null)
             btHelp.onClick.AddListener(OpenHelpUI);
 
         if (btSave != null)
@@ -226,7 +226,7 @@ public class UIGameMain : UIGameComponent, DialogView.IDialogCallBack, IRadioGro
             {
                 rgTimeScale.gameObject.SetActive(true);
                 InnBuildBean innBuild = uiGameManager.gameDataManager.gameData.GetInnBuildData();
-                if (innBuild.innSecondWidth!=0&& innBuild.innSecondHeight != 0)
+                if (innBuild.innSecondWidth != 0 && innBuild.innSecondHeight != 0)
                 {
                     objLayerSelect.SetActive(true);
                 }
@@ -260,7 +260,7 @@ public class UIGameMain : UIGameComponent, DialogView.IDialogCallBack, IRadioGro
         }
         else
         {
-            if (uiGameManager.gameTimeHandler!=null && uiGameManager.gameTimeHandler.GetDayStatus() == GameTimeHandler.DayEnum.Work)
+            if (uiGameManager.gameTimeHandler != null && uiGameManager.gameTimeHandler.GetDayStatus() == GameTimeHandler.DayEnum.Work)
             {
                 workerNumber.Open();
             }
@@ -271,7 +271,7 @@ public class UIGameMain : UIGameComponent, DialogView.IDialogCallBack, IRadioGro
         }
 
         //是否展示住店相关
-        if (uiGameManager.gameDataManager.gameData.listBed.Count!=0)
+        if (uiGameManager.gameDataManager.gameData.listBed.Count != 0)
         {
             btHotel.gameObject.SetActive(true);
         }
@@ -419,7 +419,7 @@ public class UIGameMain : UIGameComponent, DialogView.IDialogCallBack, IRadioGro
     public void OpenWorkerUI()
     {
         uiGameManager.audioHandler.PlaySound(AudioSoundEnum.ButtonForNormal);
-        UIGameWorker  uiGameWorker = (UIGameWorker)uiManager.OpenUIAndCloseOther(UIEnum.GameWorker);
+        UIGameWorker uiGameWorker = (UIGameWorker)uiManager.OpenUIAndCloseOther(UIEnum.GameWorker);
         uiGameWorker.InitUI();
     }
 
@@ -470,20 +470,20 @@ public class UIGameMain : UIGameComponent, DialogView.IDialogCallBack, IRadioGro
 
     public void OnClickForJumpTime()
     {
-        if (uiGameManager.gameTimeHandler == null ||uiGameManager.gameTimeHandler.GetDayStatus() != GameTimeHandler.DayEnum.Rest)
+        if (uiGameManager.gameTimeHandler == null || uiGameManager.gameTimeHandler.GetDayStatus() != GameTimeHandler.DayEnum.Rest)
         {
             return;
         }
         uiGameManager.audioHandler.PlaySound(AudioSoundEnum.ButtonForNormal);
         DialogBean dialogBean = new DialogBean();
-        JumpTimeDialogView jumpTimeDialog= (JumpTimeDialogView)uiGameManager.dialogManager.CreateDialog(DialogEnum.JumpTime, this, dialogBean);
+        JumpTimeDialogView jumpTimeDialog = (JumpTimeDialogView)uiGameManager.dialogManager.CreateDialog(DialogEnum.JumpTime, this, dialogBean);
         jumpTimeDialog.SetData();
     }
 
     public void OnClickForHotel()
     {
         uiGameManager.audioHandler.PlaySound(AudioSoundEnum.ButtonForNormal);
-
+        uiManager.OpenUIAndCloseOther(UIEnum.GameHotel);
     }
 
 
@@ -509,7 +509,7 @@ public class UIGameMain : UIGameComponent, DialogView.IDialogCallBack, IRadioGro
     /// <param name="layer"></param>
     public void SetInnLayer(int layer)
     {
-        ControlForWorkCpt controlForWork=(ControlForWorkCpt)uiGameManager.controlHandler.GetControl();
+        ControlForWorkCpt controlForWork = (ControlForWorkCpt)uiGameManager.controlHandler.GetControl();
         controlForWork.SetLayer(layer);
     }
 
@@ -599,7 +599,7 @@ public class UIGameMain : UIGameComponent, DialogView.IDialogCallBack, IRadioGro
     #region dialog 回调
     public void Submit(DialogView dialogView, DialogBean dialogData)
     {
-        if(dialogView as JumpTimeDialogView)
+        if (dialogView as JumpTimeDialogView)
         {
 
         }
@@ -679,6 +679,23 @@ public class UIGameMain : UIGameComponent, DialogView.IDialogCallBack, IRadioGro
                 {
                     uiHint.Open();
                     bool isAllComplete = uiHint.SetData(listMenu);
+                    if (isAllComplete)
+                    {
+                        uiHint.Close();
+                    }
+                }
+                else
+                {
+                    uiHint.Close();
+                }
+            }
+            else if (type == (int)GameDataHandler.NotifyTypeEnum.BedResearchChange)
+            {
+                List<BuildBedBean> listBed = (List<BuildBedBean>)obj[0];
+                if (listBed.Count > 0)
+                {
+                    uiHint.Open();
+                    bool isAllComplete = uiHint.SetData(listBed);
                     if (isAllComplete)
                     {
                         uiHint.Close();

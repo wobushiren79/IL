@@ -80,7 +80,7 @@ public class InfoBedPopupShow : PopupShowView
         ivLevel.sprite = spIcon;
         tvLevelName.text = levelStr;
         proLevel.SetData(nextLevelExp, buildBedData.bedExp);
-        if (buildBedData.GetMenuStatus() == ResearchStatusEnum.WaitForResearch)
+        if (buildBedData.GetBedStatus() == ResearchStatusEnum.WaitForResearch)
         {
             proLevel.SetContent(GameCommonInfo.GetUITextById(287));
         }
@@ -92,7 +92,7 @@ public class InfoBedPopupShow : PopupShowView
     /// <param name="ownData"></param>
     public void SetResearch(BuildBedBean buildBedData)
     {
-        if (buildBedData.GetMenuStatus() == ResearchStatusEnum.Normal)
+        if (buildBedData.GetBedStatus() == ResearchStatusEnum.Normal)
         {
             objResearch.SetActive(false);
             return;
@@ -103,7 +103,7 @@ public class InfoBedPopupShow : PopupShowView
         if (researcher != null)
         {
             tvResearcherName.text = researcher.baseInfo.name;
-            long addExp = researcher.CalculationMenuResearchAddExp(gameItemsManager);
+            long addExp = researcher.CalculationBedResearchAddExp(gameItemsManager);
             tvResearcherAbility.text = addExp + "/s";
         }
         else

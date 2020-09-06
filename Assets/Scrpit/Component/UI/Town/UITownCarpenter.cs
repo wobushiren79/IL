@@ -62,8 +62,8 @@ public class UITownCarpenter : UIBaseOne, IRadioGroupCallBack, StoreInfoManager.
     {
         //设置是否展示定制床位功能
         InnBuildBean innBuild = uiGameManager.gameDataManager.gameData.GetInnBuildData();
-        innBuild.GetInnSize(2, out int innWidth, out int innHeight, out int offsetHeight);
-        if (innWidth != 0 && innHeight != 0)
+        //innBuild.GetInnSize(2, out int innWidth, out int innHeight, out int offsetHeight);
+        if (innBuild.buildSecondLevel != 0)
         {
             btCustomBed.gameObject.SetActive(true);
         }

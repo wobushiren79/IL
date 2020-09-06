@@ -50,10 +50,16 @@ public enum BaseDataTypeEnum
     NpcFavorabilityFor4 = 3004,
     NpcFavorabilityFor5 = 3005,
 
-    BedForLevelUpExp1=4001,
+    BedForLevelUpExp1 = 4001,
     BedForLevelUpExp2 = 4002,
     BedForLevelUpExp3 = 4003,
+
     BedForLevelResearchExp1 = 4101,
     BedForLevelResearchExp2 = 4102,
     BedForLevelResearchExp3 = 4103,
+
+    //菜品增加汇率
+    BedForPriceAddRate1 = 4201,
+    BedForPriceAddRate2 = 4202,
+    BedForPriceAddRate3 = 4203,
 }

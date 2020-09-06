@@ -7,7 +7,7 @@ public class UIGameMainForHint : BaseUIChildComponent<UIGameMain>
     public GameObject objHintContainer;
     public GameObject objMenuResearchModel;
 
-    public List<ItemGameMainHintForMenuResearchCpt> listMenuResearch;
+    public List<ItemGameMainHintForResearchCpt> listResearch = new List<ItemGameMainHintForResearchCpt>();
 
     public override void Close()
     {
@@ -17,20 +17,14 @@ public class UIGameMainForHint : BaseUIChildComponent<UIGameMain>
 
     public bool SetData(List<MenuOwnBean> listMenu)
     {
-        if (listMenuResearch == null)
-            listMenuResearch = new List<ItemGameMainHintForMenuResearchCpt>();
-        //判断所有的数据都已经完成研究
-        bool isAllComplete = true;
+        if (listResearch == null)
+            listResearch = new List<ItemGameMainHintForResearchCpt>();
         foreach (MenuOwnBean itemData in listMenu)
         {
-            if(itemData.GetMenuStatus() == ResearchStatusEnum.Researching)
-            {
-                isAllComplete = false;
-            }
             bool hasData = false;
-            for (int i = 0; i < listMenuResearch.Count; i++)
+            for (int i = 0; i < listResearch.Count; i++)
             {
-                ItemGameMainHintForMenuResearchCpt itemCpt = listMenuResearch[i];
+                ItemGameMainHintForResearchCpt itemCpt = listResearch[i];
                 if (itemCpt.menuOwn == itemData)
                 {
                     hasData = true;
@@ -38,35 +32,82 @@ public class UIGameMainForHint : BaseUIChildComponent<UIGameMain>
                 }
                 if (itemCpt.menuOwn.GetMenuStatus() != ResearchStatusEnum.Researching)
                 {
-                    listMenuResearch.Remove(itemCpt);
+                    listResearch.Remove(itemCpt);
                     Destroy(itemCpt.gameObject);
                     i--;
                 }
             }
             if (!hasData)
             {
-                CreateItemForMenuResearch(itemData);
+                CreateItemForResearch(itemData,null);
             }
         }
-        return isAllComplete;
+        if (listResearch.Count <= 0)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
     }
+    public bool SetData(List<BuildBedBean> listBed)
+    {
+        if (listResearch == null)
+            listResearch = new List<ItemGameMainHintForResearchCpt>();
+        foreach (BuildBedBean itemData in listBed)
+        {
+            bool hasData = false;
+            for (int i = 0; i < listResearch.Count; i++)
+            {
+                ItemGameMainHintForResearchCpt itemCpt = listResearch[i];
+                if (itemCpt.bedData == itemData)
+                {
+                    hasData = true;
+                    itemCpt.RefreshData();
+                }
+                if (itemCpt.menuOwn.GetMenuStatus() != ResearchStatusEnum.Researching)
+                {
+                    listResearch.Remove(itemCpt);
+                    Destroy(itemCpt.gameObject);
+                    i--;
+                }
+            }
+            if (!hasData)
+            {
+                CreateItemForResearch(null,itemData);
+            }
+        }
+        if (listResearch.Count <= 0)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+
 
     /// <summary>
     /// 创建研究提示Item
     /// </summary>
     /// <param name="menuOwn"></param>
-    public void CreateItemForMenuResearch(MenuOwnBean menuOwn)
+    public void CreateItemForResearch(MenuOwnBean menuOwn,BuildBedBean buildBedData)
     {
         GameObject objItem = Instantiate(objHintContainer, objMenuResearchModel);
-        ItemGameMainHintForMenuResearchCpt itemCpt = objItem.GetComponent<ItemGameMainHintForMenuResearchCpt>();
-        itemCpt.SetData(menuOwn);
-        listMenuResearch.Add(itemCpt);
+        ItemGameMainHintForResearchCpt itemCpt = objItem.GetComponent<ItemGameMainHintForResearchCpt>();
+        if(menuOwn!=null)
+            itemCpt.SetData(menuOwn);
+        if (buildBedData != null)
+            itemCpt.SetData(buildBedData);
+        listResearch.Add(itemCpt);
     }
 
     public void ClearData()
     {
-        if (listMenuResearch != null)
-            listMenuResearch.Clear();
+        if (listResearch != null)
+            listResearch.Clear();
         CptUtil.RemoveChildsByActive(objHintContainer);
     }
 
