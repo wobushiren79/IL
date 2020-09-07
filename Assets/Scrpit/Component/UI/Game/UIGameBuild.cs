@@ -167,7 +167,7 @@ public class UIGameBuild : UIGameComponent, IRadioGroupCallBack
         if (innLayer == 1)
         {
             rbTypeBed.gameObject.SetActive(false);
-            rbTypeStairs.gameObject.SetActive(true);
+            rbTypeStairs.gameObject.SetActive(false);
             rbTypeTable.gameObject.SetActive(true);
             rbTypeCounter.gameObject.SetActive(true);
             rbTypeStove.gameObject.SetActive(true);
@@ -177,7 +177,7 @@ public class UIGameBuild : UIGameComponent, IRadioGroupCallBack
         else if (innLayer == 2)
         {
             rbTypeBed.gameObject.SetActive(true);
-            rbTypeStairs.gameObject.SetActive(false);
+            rbTypeStairs.gameObject.SetActive(true);
             rbTypeTable.gameObject.SetActive(false);
             rbTypeCounter.gameObject.SetActive(false);
             rbTypeStove.gameObject.SetActive(false);

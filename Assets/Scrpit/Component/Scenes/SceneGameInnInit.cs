@@ -49,7 +49,7 @@ public class SceneGameInnInit : BaseSceneInit, IBaseObserver, DialogView.IDialog
             InnBuildBean innBuildData = gameDataManager.gameData.GetInnBuildData();
             sceneInnManager.InitScene(innBuildData.innWidth, innBuildData.innHeight);
 
-            //innBuildData.ChangeInnSize(2, innBuildManager, 30, 30);
+            //innBuildData.ChangeInnSize(2, innBuildManager, 9, 9);
         }
 
         //构建地板

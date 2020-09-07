@@ -61,13 +61,13 @@ public class InnBuildManager : BaseManager, IBuildDataView
     /// </summary>
     /// <param name="id"></param>
     /// <returns></returns>
-    public GameObject GetFurnitureObjById(long id, Transform tfFather, BuildBedBean buildBedData)
+    public GameObject GetFurnitureObjById(InnResBean furnitureData, Transform tfFather, BuildBedBean buildBedData)
     {
         GameObject furnitureObj = null;
         if (listFurnitureCpt == null)
             return furnitureObj;
-        BuildItemBean buildItemData = GetBuildDataById(id);
-        if (listFurnitureCpt.TryGetValue(buildItemData.model_name , out GameObject objItem))
+        BuildItemBean buildItemData = GetBuildDataById(furnitureData.id);
+        if (listFurnitureCpt.TryGetValue(buildItemData.model_name, out GameObject objItem))
         {
             furnitureObj = Instantiate(tfFather.gameObject, objItem);
             BaseBuildItemCpt buildItemCpt = furnitureObj.GetComponent<BaseBuildItemCpt>();
@@ -92,7 +92,7 @@ public class InnBuildManager : BaseManager, IBuildDataView
                     break;
                 case BuildItemTypeEnum.Table:
                     BuildTableCpt buildTable = (BuildTableCpt)buildItemCpt;
-     
+
                     Sprite spLeftChair = GetFurnitureSpriteByName(listIcon[1] + "_0");
                     Sprite spRightChair = GetFurnitureSpriteByName(listIcon[1] + "_1");
                     Sprite spDownChair = GetFurnitureSpriteByName(listIcon[1] + "_2");
@@ -140,6 +140,14 @@ public class InnBuildManager : BaseManager, IBuildDataView
                 case BuildItemTypeEnum.Stairs:
                     BuildStairsCpt buildStairs = (BuildStairsCpt)buildItemCpt;
                     buildStairs.SetData(buildItemData);
+                    if (furnitureData.remark != null && furnitureData.remark.Equals("1"))
+                    {
+                        buildStairs.SetLayer(1);
+                    }
+                    else
+                    {
+                        buildStairs.SetLayer(2);
+                    }
                     break;
                 default:
                     buildItemCpt.SetData(buildItemData);

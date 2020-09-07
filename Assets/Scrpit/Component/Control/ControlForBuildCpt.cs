@@ -373,7 +373,7 @@ public class ControlForBuildCpt : BaseControl
                 //如果是拆除
                 if (buildItemCpt.buildItemData.build_type == (int)BuildItemTypeEnum.Other && buildItemCpt.buildItemData.id == -1)
                 {
-                    BuildItemForDismantle(buildPosition, listBuildPosition[0]);
+                    BuildItemForDismantle(buildLayer, buildPosition, listBuildPosition[0]);
                 }
                 //如果是地板
                 else if (buildItemCpt.buildItemData.build_type == (int)BuildItemTypeEnum.Floor)
@@ -427,13 +427,13 @@ public class ControlForBuildCpt : BaseControl
     /// </summary>
     /// <param name="buildPosition">家具的位置</param>
     /// <param name="sceneFurniturePosition">家具在场景中的位置</param>
-    protected void BuildItemForDismantle(Vector3 buildPosition, Vector3 sceneFurniturePosition)
+    protected void BuildItemForDismantle(int dismantleLayer, Vector3 buildPosition, Vector3 sceneFurniturePosition)
     {
         //获取拆除位置的家具数据
         InnBuildBean buildData = gameDataManager.gameData.GetInnBuildData();
-        InnResBean itemFurnitureData = buildData.GetFurnitureByPosition(buildLayer, buildPosition);
+        InnResBean itemFurnitureData = buildData.GetFurnitureByPosition(dismantleLayer, buildPosition);
         //因为在保存tile时坐标减过1 所以查询是也要-1
-        InnResBean itemWallData = buildData.GetWallByPosition(buildLayer, buildPosition - new Vector3(1, 0, 0));
+        InnResBean itemWallData = buildData.GetWallByPosition(dismantleLayer, buildPosition - new Vector3(1, 0, 0));
         //如果拆除的是家具
         if (itemFurnitureData != null)
         {
@@ -450,7 +450,7 @@ public class ControlForBuildCpt : BaseControl
             else
             {
                 //移除数据
-                buildData.GetFurnitureList(buildLayer).Remove(itemFurnitureData);
+                buildData.GetFurnitureList(dismantleLayer).Remove(itemFurnitureData);
                 //移除场景中的建筑物
                 innFurnitureBuilder.DestroyFurnitureByPosition(sceneFurniturePosition);
                 if (buildItemData.build_type == (int)BuildItemTypeEnum.Bed)
@@ -458,6 +458,26 @@ public class ControlForBuildCpt : BaseControl
                     //如果是床
                     BuildBedBean buildBedData= gameDataManager.gameData.GetBedByRemarkId(itemFurnitureData.remarkId);
                     buildBedData.isSet = false;
+                }
+                else if (buildItemData.build_type == (int)BuildItemTypeEnum.Stairs)
+                {
+                    //背包里添加一个
+                    gameDataManager.gameData.AddBuildNumber(itemFurnitureData.id, 1);
+                    InnResBean itemStarisData = null;
+                    if (dismantleLayer == 1)
+                    {
+                        itemStarisData = buildData.GetFurnitureByPosition(2, buildPosition + new Vector3(0,100));
+                        buildData.GetFurnitureList(2).Remove(itemStarisData);
+                        //移除场景中的建筑物
+                        innFurnitureBuilder.DestroyFurnitureByPosition(sceneFurniturePosition + new Vector3(0, 100));
+                    }
+                    else if (dismantleLayer == 2)
+                    {
+                        itemStarisData = buildData.GetFurnitureByPosition(1, buildPosition - new Vector3(0, 100));
+                        buildData.GetFurnitureList(1).Remove(itemStarisData);
+                        //移除场景中的建筑物
+                        innFurnitureBuilder.DestroyFurnitureByPosition(sceneFurniturePosition - new Vector3(0, 100));
+                    }
                 }
                 else
                 {
@@ -526,6 +546,33 @@ public class ControlForBuildCpt : BaseControl
             BuildBedCpt buildBedCpt = (BuildBedCpt)buildItemCpt;
             buildBedCpt.buildBedData.isSet = true;
             addData.remarkId = buildBedCpt.buildBedData.remarkId;
+        }
+        else if (buildItemCpt.buildItemData.build_type == (int)BuildItemTypeEnum.Stairs)
+        {
+            //所有坐标下移
+            List<Vector3> listFirstBuildPosition = new List<Vector3>();
+            foreach (Vector3 itemPosition in listBuildPosition)
+            {
+                Vector3 firstPostion = itemPosition + new Vector3(0, -100, 0);
+                listFirstBuildPosition.Add(firstPostion);
+                //删除当前坐标下的建筑
+                BuildItemForDismantle(buildLayer - 1, firstPostion, firstPostion);
+            }
+
+            //楼下也要添加同样的数据
+            GameObject objFirstStairs = Instantiate(innFurnitureBuilder.buildContainer, buildItemCpt.gameObject);
+            objFirstStairs.transform.position += new Vector3(0,-100,0);
+            BuildStairsCpt firstStairs= objFirstStairs.GetComponent<BuildStairsCpt>();
+            firstStairs.SetLayer(buildLayer - 1);
+
+            InnResBean addFirstData = new InnResBean(firstStairs.buildItemData.id, objFirstStairs.transform.position, listFirstBuildPosition, firstStairs.direction);
+            //设置相同的备注ID
+            addData.remarkId = SystemUtil.GetUUID(SystemUtil.UUIDTypeEnum.N);
+            addData.remark = "2";
+            addFirstData.remarkId = addData.remarkId;
+            addFirstData.remark = "1";
+            gameDataManager.gameData.GetInnBuildData().AddFurniture(buildLayer - 1, addFirstData);
+
         }
         gameDataManager.gameData.GetInnBuildData().AddFurniture(buildLayer, addData);
         //背包里删除一个
@@ -614,6 +661,7 @@ public class ControlForBuildCpt : BaseControl
         }
 
     }
+
 
     /// <summary>
     /// 检测是否能建造

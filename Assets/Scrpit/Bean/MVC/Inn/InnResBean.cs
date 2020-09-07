@@ -14,9 +14,10 @@ public class InnResBean
     public List<Vector3Bean> listPosition;
     //方向
     public int direction;
-
     //备注ID
     public string remarkId;
+    //备注
+    public string remark;
 
     public InnResBean()
     {

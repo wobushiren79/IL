@@ -43,25 +43,27 @@ public class InnFurnitureBuilder : BaseMonoBehaviour
             else
             {
                 //如果有备注ID说明是床或者其他建筑
-                bool hasData = false;
+                //是床
+                BuildBedBean tempBuildBedData = null;
+                //bool hasData = false;
                 for (int f = 0; f < gameDataManager.gameData.listBed.Count; f++)
                 {
                     BuildBedBean buildBedData = gameDataManager.gameData.listBed[f];
                     if (buildBedData != null && buildBedData.remarkId.Equals(itemData.remarkId))
                     {
-                        BuildFurniture(itemData, buildBedData);
-                        hasData = true;
+                        tempBuildBedData = buildBedData;
+                        //hasData = true;
                         break;
                     }
                 }
+                BuildFurniture(itemData, tempBuildBedData);
                 //如果没有找到数据则删除这个建筑
-                if (!hasData)
-                {
-                    listData.Remove(itemData);
-                    i--;
-                }              
+                //if (!hasData)
+                //{
+                //    listData.Remove(itemData);
+                //    i--;
+                //}
             }
-
         }
     }
 
@@ -85,7 +87,7 @@ public class InnFurnitureBuilder : BaseMonoBehaviour
     {
         if (furnitureData == null)
             return null;
-        GameObject buildItemObj = innBuildManager.GetFurnitureObjById(furnitureData.id, buildContainer.transform, buildBedData);
+        GameObject buildItemObj = innBuildManager.GetFurnitureObjById(furnitureData, buildContainer.transform, buildBedData);
         buildItemObj.transform.position = TypeConversionUtil.Vector3BeanToVector3(furnitureData.startPosition);
         BaseBuildItemCpt buildItemCpt = buildItemObj.GetComponent<BaseBuildItemCpt>();
         buildItemCpt.SetDirection(furnitureData.direction);
