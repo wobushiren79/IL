@@ -61,7 +61,7 @@ public class InnBuildManager : BaseManager, IBuildDataView
     /// </summary>
     /// <param name="id"></param>
     /// <returns></returns>
-    public GameObject GetFurnitureObjById(long id, Transform tfFather)
+    public GameObject GetFurnitureObjById(long id, Transform tfFather, BuildBedBean buildBedData)
     {
         GameObject furnitureObj = null;
         if (listFurnitureCpt == null)
@@ -132,6 +132,14 @@ public class InnBuildManager : BaseManager, IBuildDataView
                     BuildWallCpt buildWall = (BuildWallCpt)buildItemCpt;
                     Sprite spWall = GetWallSpriteByName(buildItemData.icon_key);
                     buildWall.SetData(buildItemData, spWall);
+                    break;
+                case BuildItemTypeEnum.Bed:
+                    BuildBedCpt buildBed = (BuildBedCpt)buildItemCpt;
+                    buildBed.SetData(buildItemData, buildBedData);
+                    break;
+                case BuildItemTypeEnum.Stairs:
+                    BuildStairsCpt buildStairs = (BuildStairsCpt)buildItemCpt;
+                    buildStairs.SetData(buildItemData);
                     break;
                 default:
                     buildItemCpt.SetData(buildItemData);

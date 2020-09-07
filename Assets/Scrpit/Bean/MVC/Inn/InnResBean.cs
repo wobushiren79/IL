@@ -15,6 +15,9 @@ public class InnResBean
     //方向
     public int direction;
 
+    //备注ID
+    public string remarkId;
+
     public InnResBean()
     {
 

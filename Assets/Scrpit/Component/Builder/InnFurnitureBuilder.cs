@@ -36,7 +36,32 @@ public class InnFurnitureBuilder : BaseMonoBehaviour
         for (int i = 0; i < listData.Count; i++)
         {
             InnResBean itemData = listData[i];
-            BuildFurniture(itemData);
+            if (CheckUtil.StringIsNull(itemData.remarkId))
+            {
+                BuildFurniture(itemData, null);
+            }
+            else
+            {
+                //如果有备注ID说明是床或者其他建筑
+                bool hasData = false;
+                for (int f = 0; f < gameDataManager.gameData.listBed.Count; f++)
+                {
+                    BuildBedBean buildBedData = gameDataManager.gameData.listBed[f];
+                    if (buildBedData != null && buildBedData.remarkId.Equals(itemData.remarkId))
+                    {
+                        BuildFurniture(itemData, buildBedData);
+                        hasData = true;
+                        break;
+                    }
+                }
+                //如果没有找到数据则删除这个建筑
+                if (!hasData)
+                {
+                    listData.Remove(itemData);
+                    i--;
+                }              
+            }
+
         }
     }
 
@@ -45,10 +70,10 @@ public class InnFurnitureBuilder : BaseMonoBehaviour
     /// </summary>
     /// <param name="id"></param>
     /// <returns></returns>
-    public GameObject BuildFurniture(long id)
+    public GameObject BuildFurniture(long id, BuildBedBean buildBedData)
     {
         InnResBean innResBean = new InnResBean(id, Vector3.zero, new List<Vector3>(), Direction2DEnum.Left);
-        return BuildFurniture(innResBean);
+        return BuildFurniture(innResBean, buildBedData);
     }
 
     /// <summary>
@@ -56,11 +81,11 @@ public class InnFurnitureBuilder : BaseMonoBehaviour
     /// </summary>
     /// <param name="furnitureData"></param>
     /// <returns></returns>
-    public GameObject BuildFurniture(InnResBean furnitureData)
+    public GameObject BuildFurniture(InnResBean furnitureData, BuildBedBean buildBedData)
     {
         if (furnitureData == null)
             return null;
-        GameObject buildItemObj = innBuildManager.GetFurnitureObjById(furnitureData.id, buildContainer.transform);
+        GameObject buildItemObj = innBuildManager.GetFurnitureObjById(furnitureData.id, buildContainer.transform, buildBedData);
         buildItemObj.transform.position = TypeConversionUtil.Vector3BeanToVector3(furnitureData.startPosition);
         BaseBuildItemCpt buildItemCpt = buildItemObj.GetComponent<BaseBuildItemCpt>();
         buildItemCpt.SetDirection(furnitureData.direction);

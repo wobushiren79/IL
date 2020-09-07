@@ -156,6 +156,7 @@ public class ListDataEditor : Editor
         AddIconBeanDictionaryByFolder("Assets/Texture/InnBuild/Door/", innBuildManager.listFurnitureIcon);
         AddIconBeanDictionaryByFolder("Assets/Texture/InnBuild/Decoration/", innBuildManager.listFurnitureIcon);
         AddIconBeanDictionaryByFolder("Assets/Texture/InnBuild/Bed/", innBuildManager.listFurnitureIcon);
+        AddIconBeanDictionaryByFolder("Assets/Texture/InnBuild/Stairs/", innBuildManager.listFurnitureIcon);
 
         innBuildManager.listFloorIcon.Clear();
         AddIconBeanDictionaryByFolder("Assets/Texture/Tile/Floor/", innBuildManager.listFloorIcon);
@@ -177,6 +178,7 @@ public class ListDataEditor : Editor
         AddGameObjectDictionaryByFolder("Assets/Prefabs/BuildItem/Table/", innBuildManager.listFurnitureCpt);
         AddGameObjectDictionaryByFolder("Assets/Prefabs/BuildItem/Wall/", innBuildManager.listFurnitureCpt);
         AddGameObjectDictionaryByFolder("Assets/Prefabs/BuildItem/Bed/", innBuildManager.listFurnitureCpt);
+        AddGameObjectDictionaryByFolder("Assets/Prefabs/BuildItem/Stairs/", innBuildManager.listFurnitureCpt);
     }
 
     //[MenuItem("Custom/List/AddFurnitureCpt")]

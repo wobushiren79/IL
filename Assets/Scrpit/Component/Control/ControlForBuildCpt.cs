@@ -179,13 +179,14 @@ public class ControlForBuildCpt : BaseControl
     /// 根据ID展示建筑
     /// </summary>
     /// <param name="id"></param>
-    public void ShowBuildItem(long id)
+    /// <param name="buildBedData"></param>
+    public void ShowBuildItem(long id,BuildBedBean buildBedData)
     {
         audioHandler.PlaySound(AudioSoundEnum.ButtonForNormal);
         //先删除原有可能已经展示的建筑
         ClearBuildItem();
         //建造建筑
-        GameObject buildItemObj = innFurnitureBuilder.BuildFurniture(id);
+        GameObject buildItemObj = innFurnitureBuilder.BuildFurniture(id, buildBedData);
         //物体先在建筑控件上显示
         buildItemObj.transform.parent = buildItemTempContainer.transform;
         if (buildItemObj == null)
@@ -199,6 +200,15 @@ public class ControlForBuildCpt : BaseControl
         //listBuildSpaceContent.transform.position = mousePosition;
         //创建展示位置提示
         ShowBuildSpace();
+    }
+
+    /// <summary>
+    /// 根据ID展示建筑
+    /// </summary>
+    /// <param name="id"></param>
+    public void ShowBuildItem(long id)
+    {
+        ShowBuildItem(id, null);
     }
 
     /// <summary>
@@ -360,7 +370,6 @@ public class ControlForBuildCpt : BaseControl
                     //精度修正
                     listBuildPosition.Add(Vector3Int.RoundToInt(listBuildSpaceSR[i].transform.position));
                 }
-
                 //如果是拆除
                 if (buildItemCpt.buildItemData.build_type == (int)BuildItemTypeEnum.Other && buildItemCpt.buildItemData.id == -1)
                 {
@@ -371,6 +380,7 @@ public class ControlForBuildCpt : BaseControl
                 {
                     BuildItemForFloor(buildPosition);
                 }
+                //如果是墙壁
                 else if (buildItemCpt.buildItemData.build_type == (int)BuildItemTypeEnum.Wall)
                 {
                     BuildItemForWall(buildPosition);
@@ -443,14 +453,18 @@ public class ControlForBuildCpt : BaseControl
                 buildData.GetFurnitureList(buildLayer).Remove(itemFurnitureData);
                 //移除场景中的建筑物
                 innFurnitureBuilder.DestroyFurnitureByPosition(sceneFurniturePosition);
-                //如果是门。需要重置一下墙体
-                if (buildItemData.build_type == (int)BuildItemTypeEnum.Door)
+                if (buildItemData.build_type == (int)BuildItemTypeEnum.Bed)
                 {
-                    //gameDataManager.gameData.GetInnBuildData().InitWall(innBuildManager);
-                    //innWallBuilder.StartBuild();
+                    //如果是床
+                    BuildBedBean buildBedData= gameDataManager.gameData.GetBedByRemarkId(itemFurnitureData.remarkId);
+                    buildBedData.isSet = false;
                 }
-                //背包里添加一个
-                gameDataManager.gameData.AddBuildNumber(itemFurnitureData.id, 1);
+                else
+                {
+                    //背包里添加一个
+                    gameDataManager.gameData.AddBuildNumber(itemFurnitureData.id, 1);
+                }
+        
             }
         }
         //如果拆除的是墙壁
@@ -500,13 +514,20 @@ public class ControlForBuildCpt : BaseControl
         buildItemCpt.transform.parent = innFurnitureBuilder.buildContainer.transform;
         //增加一个家具
         InnResBean addData = new InnResBean(buildItemCpt.buildItemData.id, buildItemCpt.transform.position, listBuildPosition, buildItemCpt.direction);
-        gameDataManager.gameData.GetInnBuildData().AddFurniture(buildLayer, addData);
         //如果是门。需要重置一下墙体
         if (buildItemCpt.buildItemData.build_type == (int)BuildItemTypeEnum.Door)
         {
             //gameDataManager.gameData.GetInnBuildData().InitWall(innBuildManager);
             //innWallBuilder.StartBuild();
         }
+        else if (buildItemCpt.buildItemData.build_type == (int)BuildItemTypeEnum.Bed)
+        {
+            //如果是床。需要加上备注ID
+            BuildBedCpt buildBedCpt = (BuildBedCpt)buildItemCpt;
+            buildBedCpt.buildBedData.isSet = true;
+            addData.remarkId = buildBedCpt.buildBedData.remarkId;
+        }
+        gameDataManager.gameData.GetInnBuildData().AddFurniture(buildLayer, addData);
         //背包里删除一个
         gameDataManager.gameData.AddBuildNumber(buildItemCpt.buildItemData.id, -1);
         //动画

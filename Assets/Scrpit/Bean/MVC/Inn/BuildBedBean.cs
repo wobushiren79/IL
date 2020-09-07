@@ -27,6 +27,9 @@ public class BuildBedBean : BaseBean
     //稀有度
     public int rarity = 0;
 
+    //是否已经设置
+    public bool isSet = false;
+
     public long sellNumber;//销售数量
 
     public long sellMoneyL;

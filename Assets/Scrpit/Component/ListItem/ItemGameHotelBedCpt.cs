@@ -49,6 +49,23 @@ public class ItemGameHotelBedCpt : ItemGameBaseCpt, DialogView.IDialogCallBack
         SetLevel(buildBedData);
         SetResearch(buildBedData.GetBedStatus());
         SetResearchPopup(buildBedData);
+        SetRemove( buildBedData);
+    }
+
+    /// <summary>
+    /// 设置移除按钮
+    /// </summary>
+    /// <param name="buildBedData"></param>
+    public void SetRemove(BuildBedBean buildBedData)
+    {
+        if (buildBedData.isSet)
+        {
+            btRemove.gameObject.SetActive(false);
+        }
+        else
+        {
+            btRemove.gameObject.SetActive(true);
+        }
     }
 
     /// <summary>
@@ -185,6 +202,11 @@ public class ItemGameHotelBedCpt : ItemGameBaseCpt, DialogView.IDialogCallBack
             uiGameManager.toastManager.ToastHint(GameCommonInfo.GetUITextById(1313));
             return;
         }
+        if (buildBedData.isSet)
+        {
+            uiGameManager.toastManager.ToastHint(GameCommonInfo.GetUITextById(1314));
+            return;
+        }
         DialogBean dialogData = new DialogBean();
         dialogData.dialogPosition = 1;
         dialogData.content = string.Format(GameCommonInfo.GetUITextById(3001), buildBedData.bedName);
@@ -286,6 +308,11 @@ public class ItemGameHotelBedCpt : ItemGameBaseCpt, DialogView.IDialogCallBack
                 if (buildBedData.GetBedStatus() == ResearchStatusEnum.Researching)
                 {
                     uiGameManager.toastManager.ToastHint(GameCommonInfo.GetUITextById(1313));
+                    return;
+                }
+                if (buildBedData.isSet)
+                {
+                    uiGameManager.toastManager.ToastHint(GameCommonInfo.GetUITextById(1314));
                     return;
                 }
                 //丢弃确认

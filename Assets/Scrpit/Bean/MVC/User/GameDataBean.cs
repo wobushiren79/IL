@@ -440,6 +440,25 @@ public class GameDataBean
         }
         return listData;
     }
+
+    /// <summary>
+    /// 通过备注ID获取床
+    /// </summary>
+    /// <param name="remarkId"></param>
+    /// <returns></returns>
+    public BuildBedBean GetBedByRemarkId(string remarkId)
+    {
+        for (int i = 0; i < listBed.Count; i++)
+        {
+            BuildBedBean itemData = listBed[i];
+            if (itemData.remarkId.Equals(remarkId))
+            {
+                return itemData;
+            }
+        }
+        return null;
+    }
+
     /// <summary>
     /// 获取指定菜品
     /// </summary>

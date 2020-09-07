@@ -58,6 +58,6 @@ public class ItemGameBuildForBedCpt : ItemGameBaseCpt
     public void StartBuild()
     {
         ControlForBuildCpt controlForBuild = (ControlForBuildCpt)GetUIManager<UIGameManager>().controlHandler.GetControl(ControlHandler.ControlEnum.Build);
-       // controlForBuild.ShowBuildItem(buildData.id);
+        controlForBuild.ShowBuildItem(100001, buildBedData);
     }
 }

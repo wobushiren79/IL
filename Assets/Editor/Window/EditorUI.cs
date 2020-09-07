@@ -693,6 +693,10 @@ public class EditorUI
         {
             listBuildItem = buildItemService.QueryDataByType((int)BuildItemTypeEnum.Door);
         }
+        if (GUIButton("查询楼梯"))
+        {
+            listBuildItem = buildItemService.QueryDataByType((int)BuildItemTypeEnum.Stairs);
+        }
         if (GUIButton("查询床-基础"))
         {
             listBuildItem = buildItemService.QueryDataByType((int)BuildItemTypeEnum.BedBase);

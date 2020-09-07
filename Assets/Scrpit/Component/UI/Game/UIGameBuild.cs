@@ -39,8 +39,9 @@ public class UIGameBuild : UIGameComponent, IRadioGroupCallBack
     //客栈楼层
     public int innLayer = 1;
 
-    public void Start()
+    public override void Awake()
     {
+        base.Awake();
         if (rgType != null)
             rgType.SetCallBack(this);
         if (btBack != null)
@@ -121,6 +122,19 @@ public class UIGameBuild : UIGameComponent, IRadioGroupCallBack
                 tvNull.gameObject.SetActive(false);
             }
         }
+        //刷新床列表
+        for (int i = 0; i < listBuildForBedItem.Count; i++)
+        {
+            ItemGameBuildForBedCpt itemGameBuildForBed= listBuildForBedItem[i];
+            if (itemGameBuildForBed.buildBedData.isSet)
+            {
+                itemGameBuildForBed.gameObject.SetActive(false);
+            }
+            else
+            {
+                itemGameBuildForBed.gameObject.SetActive(true);
+            }
+        }
         //刷新美观值
         uiGameManager.gameDataManager.gameData.GetInnAttributesData().SetAesthetics
             (uiGameManager.innBuildManager, uiGameManager.gameDataManager.gameData.GetInnBuildData());
@@ -153,24 +167,22 @@ public class UIGameBuild : UIGameComponent, IRadioGroupCallBack
         if (innLayer == 1)
         {
             rbTypeBed.gameObject.SetActive(false);
-            rbTypeStairs.gameObject.SetActive(false);
+            rbTypeStairs.gameObject.SetActive(true);
             rbTypeTable.gameObject.SetActive(true);
             rbTypeCounter.gameObject.SetActive(true);
             rbTypeStove.gameObject.SetActive(true);
             rbTypeDoor.gameObject.SetActive(true);
-            rgType.SetPosition(1, false);
-            CreateBuildList(BuildItemTypeEnum.Table);
+            rgType.SetPosition(1, true);
         }
         else if (innLayer == 2)
         {
             rbTypeBed.gameObject.SetActive(true);
-            rbTypeStairs.gameObject.SetActive(true);
+            rbTypeStairs.gameObject.SetActive(false);
             rbTypeTable.gameObject.SetActive(false);
             rbTypeCounter.gameObject.SetActive(false);
             rbTypeStove.gameObject.SetActive(false);
             rbTypeDoor.gameObject.SetActive(false);
-            rgType.SetPosition(0, false);
-            CreateBuildList(BuildItemTypeEnum.Bed);
+            rgType.SetPosition(0, true);
         }
     }
 
@@ -266,6 +278,14 @@ public class UIGameBuild : UIGameComponent, IRadioGroupCallBack
         ItemGameBuildForBedCpt itemCpt = itemBuildObj.GetComponent<ItemGameBuildForBedCpt>();
         itemCpt.SetData(buildBedData);
         listBuildForBedItem.Add(itemCpt);
+        if (buildBedData.isSet)
+        {
+            itemBuildObj.SetActive(false);
+        }
+        else
+        {
+            itemBuildObj.SetActive(true);
+        }
     }
 
     /// <summary>
