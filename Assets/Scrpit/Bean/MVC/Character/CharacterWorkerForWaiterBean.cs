@@ -10,9 +10,45 @@ public class CharacterWorkerForWaiterBean : CharacterWorkerBaseBean
     //送餐次数
     public long sendTotalNumber;
 
+    //是否开启
+    public bool isWorkingForSend = true;
+    public int priorityForSend = 0;
+    //是否开启
+    public bool isWorkingForCleanTable = true;
+    public int priorityForCleanTable = 0;
+    //是否开启
+    public bool isWorkingCleanBed = false;
+    public int priorityForCleanBed = 0;
+
     public CharacterWorkerForWaiterBean()
     {
         workerType = WorkerEnum.Waiter;
+    }
+
+    public void SetPriorityForSend(int priority)
+    {
+        this.priorityForSend = priority;
+    }
+    public void SetPriorityForCleanTable(int priority)
+    {
+        this.priorityForCleanTable = priority;
+    }
+    public void SetPriorityForCleanBed(int priority)
+    {
+        this.priorityForCleanBed = priority;
+    }
+
+    public void SetWorkStatusForSend(bool isWorking)
+    {
+        this.isWorkingForSend = isWorking;
+    }
+    public void SetWorkStatusForCleanTable(bool isWorking)
+    {
+        this.isWorkingForCleanTable = isWorking;
+    }
+    public void SetWorkStatusForCleanBed(bool isWorking)
+    {
+        this.isWorkingCleanBed = isWorking;
     }
 
     /// <summary>

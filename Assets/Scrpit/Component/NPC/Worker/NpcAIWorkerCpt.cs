@@ -41,6 +41,8 @@ public class NpcAIWorkerCpt : BaseNpcAI
     public WorkerIntentEnum workerIntent = WorkerIntentEnum.Idle;
     //工作信息
     public List<CharacterWorkerBaseBean> listWorkerInfo = new List<CharacterWorkerBaseBean>();
+    //所有的工作类型
+    public List<WorkerDetilsEnum> listWorkerDetailsType = new List<WorkerDetilsEnum>();
     //是否开启偷懒
     public bool dazeEnabled = true;
     //偷懒缓冲时间
@@ -51,6 +53,7 @@ public class NpcAIWorkerCpt : BaseNpcAI
     {
         base.Awake();
         innHandler = Find<InnHandler>(ImportantTypeEnum.InnHandler);
+        listWorkerDetailsType = EnumUtil.GetEnumValue<WorkerDetilsEnum>();
     }
 
     private void FixedUpdate()
@@ -143,19 +146,64 @@ public class NpcAIWorkerCpt : BaseNpcAI
     /// 通过优先级设置工作
     /// </summary>
     public bool SetWorkByPriority()
-    {   
+    {
         //如果该工作者此时空闲
         if (workerIntent != WorkerIntentEnum.Idle)
         {
             return false;
         }
-        foreach (CharacterWorkerBaseBean itemWorkerInfo in listWorkerInfo)
+
+        for (int i = 0; i < listWorkerDetailsType.Count; i++)
         {
-            if (!itemWorkerInfo.isWorking)
-                continue;
-            bool isDistributionSuccess = innHandler.DistributionWorkForType(itemWorkerInfo.workerType, this);
+            WorkerDetilsEnum workerDetils = listWorkerDetailsType[i];
+            CharacterWorkerBaseBean characterWorker;
+            switch (workerDetils)
+            {
+                case WorkerDetilsEnum.ChefForCook:
+                    characterWorker =  characterData.baseInfo.GetWorkerInfoByType( WorkerEnum.Chef);
+                    if (!characterWorker.isWorking)
+                        continue;
+                    break;
+                case WorkerDetilsEnum.WaiterForSend:
+                    characterWorker = characterData.baseInfo.GetWorkerInfoByType(WorkerEnum.Waiter);
+                    if (!((CharacterWorkerForWaiterBean)characterWorker).isWorkingForSend)
+                        continue;
+                    break;
+                case WorkerDetilsEnum.WaiterForCleanTable:
+                    characterWorker = characterData.baseInfo.GetWorkerInfoByType(WorkerEnum.Waiter);
+                    if (!((CharacterWorkerForWaiterBean)characterWorker).isWorkingForCleanTable)
+                        continue;
+                    break;
+                case WorkerDetilsEnum.WaiterForCleanBed:
+                    characterWorker = characterData.baseInfo.GetWorkerInfoByType(WorkerEnum.Waiter);
+                    if (!((CharacterWorkerForWaiterBean)characterWorker).isWorkingCleanBed)
+                        continue;
+                    break;
+                case WorkerDetilsEnum.AccountantForPay:
+                    characterWorker = characterData.baseInfo.GetWorkerInfoByType(WorkerEnum.Accountant);
+                    if (!characterWorker.isWorking)
+                        continue;
+                    break;
+                case WorkerDetilsEnum.AccostForSolicit:
+                    characterWorker = characterData.baseInfo.GetWorkerInfoByType(WorkerEnum.Accost);
+                    if (!((CharacterWorkerForAccostBean)characterWorker).isWorkingForSolicit)
+                        continue;
+                    break;
+                case WorkerDetilsEnum.AccostForGuide:
+                    characterWorker = characterData.baseInfo.GetWorkerInfoByType(WorkerEnum.Accost);
+                    if (!((CharacterWorkerForAccostBean)characterWorker).isWorkingForGuide)
+                        continue;
+                    break;
+                case WorkerDetilsEnum.BeaterForDrive:
+                    characterWorker = characterData.baseInfo.GetWorkerInfoByType(WorkerEnum.Beater);
+                    if (!characterWorker.isWorking)
+                        continue;
+                    break;
+            }
+
+            bool isDistributionSuccess = innHandler.DistributionWorkForType(workerDetils, this);
             if (isDistributionSuccess)
-                return true;
+                return innHandler.DistributionWorkForType(workerDetils, this);
         }
         return false;
     }
@@ -237,7 +285,7 @@ public class NpcAIWorkerCpt : BaseNpcAI
     public void SetIntentForIdle()
     {
         //有一定概率发呆
-        if (dazeEnabled &&  dazeBufferTime <= 0 && characterData.CalculationWorkerDaze(gameItemsManager, gameDataManager))
+        if (dazeEnabled && dazeBufferTime <= 0 && characterData.CalculationWorkerDaze(gameItemsManager, gameDataManager))
         {
             SetIntent(WorkerIntentEnum.Daze);
         }
@@ -249,8 +297,8 @@ public class NpcAIWorkerCpt : BaseNpcAI
             {
                 //闲逛 有问题
                 Vector3 movePosition = innHandler.GetRandomInnPositon();
-                bool canGo= CheckUtil.CheckPath(transform.position, movePosition);
-                if(canGo)
+                bool canGo = CheckUtil.CheckPath(transform.position, movePosition);
+                if (canGo)
                     SetCharacterMove(movePosition);
             }
             StartCoroutine(CoroutineForIdle());

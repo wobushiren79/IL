@@ -26,6 +26,15 @@ public class CharacterWorkerBaseBean
     }
 
     /// <summary>
+    /// 设置工作状态
+    /// </summary>
+    /// <param name="isWorking"></param>
+    public void SetWorkStatus(bool isWorking)
+    {
+        this.isWorking = isWorking;
+    }
+
+    /// <summary>
     /// 增加经验
     /// </summary>
     /// <param name="addExp"></param>

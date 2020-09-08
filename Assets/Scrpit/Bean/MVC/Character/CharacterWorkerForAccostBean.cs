@@ -12,9 +12,35 @@ public class CharacterWorkerForAccostBean : CharacterWorkerBaseBean
     //吆喝失败次数
     public long accostFailNumber;
 
+
+    //是否开启
+    public bool isWorkingForSolicit = true;
+    public int priorityForSolicit = 0;
+    //是否开启
+    public bool isWorkingForGuide = false;
+    public int priorityForGuide = 0;
+
     public CharacterWorkerForAccostBean()
     {
         workerType = WorkerEnum.Accost;
+    }
+    public void SetPriorityForSolicit(int priority)
+    {
+        this.priorityForSolicit = priority;
+    }
+    public void SetPriorityForGuide(int priority)
+    {
+        this.priorityForGuide = priority;
+    }
+
+
+    public void SetWorkStatusForSolicit(bool isWorking)
+    {
+        this.isWorkingForSolicit = isWorking;
+    }
+    public void SetWorkStatusForGuide(bool isWorking)
+    {
+        this.isWorkingForGuide = isWorking;
     }
 
     /// <summary>

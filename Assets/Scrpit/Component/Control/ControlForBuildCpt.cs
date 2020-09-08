@@ -549,6 +549,7 @@ public class ControlForBuildCpt : BaseControl
         }
         else if (buildItemCpt.buildItemData.build_type == (int)BuildItemTypeEnum.Stairs)
         {
+            BuildStairsCpt buildStairsCpt = (BuildStairsCpt)buildItemCpt;
             //所有坐标下移
             List<Vector3> listFirstBuildPosition = new List<Vector3>();
             foreach (Vector3 itemPosition in listBuildPosition)
@@ -564,7 +565,6 @@ public class ControlForBuildCpt : BaseControl
             objFirstStairs.transform.position += new Vector3(0,-100,0);
             BuildStairsCpt firstStairs= objFirstStairs.GetComponent<BuildStairsCpt>();
             firstStairs.SetLayer(buildLayer - 1);
-
             InnResBean addFirstData = new InnResBean(firstStairs.buildItemData.id, objFirstStairs.transform.position, listFirstBuildPosition, firstStairs.direction);
             //设置相同的备注ID
             addData.remarkId = SystemUtil.GetUUID(SystemUtil.UUIDTypeEnum.N);
@@ -572,7 +572,8 @@ public class ControlForBuildCpt : BaseControl
             addFirstData.remarkId = addData.remarkId;
             addFirstData.remark = "1";
             gameDataManager.gameData.GetInnBuildData().AddFurniture(buildLayer - 1, addFirstData);
-
+            firstStairs.SetRemarkId(addData.remarkId);
+            buildStairsCpt.SetRemarkId(addData.remarkId);
         }
         gameDataManager.gameData.GetInnBuildData().AddFurniture(buildLayer, addData);
         //背包里删除一个

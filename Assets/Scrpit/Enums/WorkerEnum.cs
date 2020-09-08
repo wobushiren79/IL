@@ -9,6 +9,22 @@ public enum WorkerEnum
     Beater = 5// 打手
 }
 
+public enum WorkerDetilsEnum
+{
+    ChefForCook = 11,
+
+    WaiterForSend = 21,
+    WaiterForCleanTable = 22,
+    WaiterForCleanBed = 23,
+    AccountantForPay=31,
+
+    AccostForSolicit = 41,
+    AccostForGuide = 42,
+
+    BeaterForDrive = 51,
+}
+
+
 public static class WorkerEnumTools
 {
     public static Sprite GetWorkerSprite(IconDataManager iconDataManager,WorkerEnum worker)

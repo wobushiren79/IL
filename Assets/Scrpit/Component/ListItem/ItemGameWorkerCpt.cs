@@ -5,7 +5,7 @@ using DG.Tweening;
 using System.Collections.Generic;
 using TMPro;
 
-public class ItemGameWorkerCpt : ItemGameBaseCpt, IRadioButtonCallBack, DialogView.IDialogCallBack
+public class ItemGameWorkerCpt : ItemGameBaseCpt, DialogView.IDialogCallBack, WorkerPriorityView.ICallBack
 {
     [Header("控件")]
     public Text tvName;
@@ -42,17 +42,14 @@ public class ItemGameWorkerCpt : ItemGameBaseCpt, IRadioButtonCallBack, DialogVi
     public Button btGift;
     public Button btFire;
 
-
-    public RadioButtonView rbChef;
-    public InputField etPriorityChef;
-    public RadioButtonView rbWaiter;
-    public InputField etPriorityWaiter;
-    public RadioButtonView rbAccounting;
-    public InputField etPriorityAccounting;
-    public RadioButtonView rbAccost;
-    public InputField etPriorityAccost;
-    public RadioButtonView rbBeater;
-    public InputField etPriorityBeater;
+    public WorkerPriorityView wvChef;
+    public WorkerPriorityView wvWaiterForSend;
+    public WorkerPriorityView wvWaiterForCleanTable;
+    public WorkerPriorityView wvWaiterForCleanBed;
+    public WorkerPriorityView wvAccounting;
+    public WorkerPriorityView wvAccostForSolicit;
+    public WorkerPriorityView wvAccostForGuide;
+    public WorkerPriorityView wvBeater;
 
     public InfoCharacterPopupButton infoCharacterPopup;
 
@@ -126,27 +123,22 @@ public class ItemGameWorkerCpt : ItemGameBaseCpt, IRadioButtonCallBack, DialogVi
             pbLucky.SetContent(GameCommonInfo.GetUITextById(6));
         }
 
-
-        if (rbAccounting != null)
-            rbAccounting.SetCallBack(this);
-        if (rbChef != null)
-            rbChef.SetCallBack(this);
-        if (rbWaiter != null)
-            rbWaiter.SetCallBack(this);
-        if (rbAccost != null)
-            rbAccost.SetCallBack(this);
-        if (rbBeater != null)
-            rbBeater.SetCallBack(this);
-        if (etPriorityChef != null)
-            etPriorityChef.onValueChanged.AddListener(PriorityChangeForChef);
-        if (etPriorityWaiter != null)
-            etPriorityWaiter.onValueChanged.AddListener(PriorityChangeForWaiter);
-        if (etPriorityAccounting != null)
-            etPriorityAccounting.onValueChanged.AddListener(PriorityChangeForAccounting);
-        if (etPriorityAccost != null)
-            etPriorityAccost.onValueChanged.AddListener(PriorityChangeForAccost);
-        if (etPriorityBeater != null)
-            etPriorityBeater.onValueChanged.AddListener(PriorityChangeForBeater);
+        if (wvChef != null)
+            wvChef.SetCallBack(this);
+        if (wvWaiterForSend != null)
+            wvWaiterForSend.SetCallBack(this);
+        if (wvWaiterForCleanTable != null)
+            wvWaiterForCleanTable.SetCallBack(this);
+        if (wvWaiterForCleanBed != null)
+            wvWaiterForCleanBed.SetCallBack(this);
+        if (wvAccounting != null)
+            wvAccounting.SetCallBack(this);
+        if (wvAccostForSolicit != null)
+            wvAccostForSolicit.SetCallBack(this);
+        if (wvAccostForGuide != null)
+            wvAccostForGuide.SetCallBack(this);
+        if (wvBeater != null)
+            wvBeater.SetCallBack(this);
 
         if (btEquip != null)
             btEquip.onClick.AddListener(OpenEquipUI);
@@ -180,15 +172,15 @@ public class ItemGameWorkerCpt : ItemGameBaseCpt, IRadioButtonCallBack, DialogVi
             SetPrice(characterBase.priceS, characterBase.priceM, characterBase.priceL);
             SetWork(
                 characterBase.chefInfo.isWorking,
-                characterBase.waiterInfo.isWorking,
+                characterBase.waiterInfo.isWorkingForSend,characterBase.waiterInfo.isWorkingForCleanTable,characterBase.waiterInfo.isWorkingCleanBed,
                 characterBase.accountantInfo.isWorking,
-                characterBase.accostInfo.isWorking,
+                characterBase.accostInfo.isWorkingForSolicit, characterBase.accostInfo.isWorkingForGuide,
                 characterBase.beaterInfo.isWorking);
             SetPriority(
                 characterBase.chefInfo.priority,
-                characterBase.waiterInfo.priority,
+                characterBase.waiterInfo.priorityForSend, characterBase.waiterInfo.priorityForCleanTable, characterBase.waiterInfo.priorityForCleanBed,
                 characterBase.accountantInfo.priority,
-                characterBase.accostInfo.priority,
+                characterBase.accostInfo.priorityForSolicit, characterBase.accostInfo.priorityForGuide,
                 characterBase.beaterInfo.priority);
 
             WorkerStatusEnum workerStatus = characterBase.GetWorkerStatus(out string workerStatusStr);
@@ -413,43 +405,30 @@ public class ItemGameWorkerCpt : ItemGameBaseCpt, IRadioButtonCallBack, DialogVi
     /// <param name="isAccountant"></param>
     /// <param name="isBeater"></param>
     /// <param name="isAccost"></param>
-    public void SetWork(bool isChef, bool isWaiter, bool isAccountant, bool isAccost, bool isBeater)
+    public void SetWork(
+        bool isChef, 
+        bool isWaiterForSend, bool isWaiterForCleanTable, bool isWaiterForCleanBed,
+        bool isAccountant, 
+        bool isAccostForSolicit, bool isAccostForGuide,
+        bool isBeater)
     {
-        if (rbAccounting != null)
-        {
-            if (isAccountant)
-                rbAccounting.ChangeStates(RadioButtonView.RadioButtonStatus.Selected);
-            else
-                rbAccounting.ChangeStates(RadioButtonView.RadioButtonStatus.Unselected);
-        }
-        if (rbChef != null)
-        {
-            if (isChef)
-                rbChef.ChangeStates(RadioButtonView.RadioButtonStatus.Selected);
-            else
-                rbChef.ChangeStates(RadioButtonView.RadioButtonStatus.Unselected);
-        }
-        if (rbWaiter != null)
-        {
-            if (isWaiter)
-                rbWaiter.ChangeStates(RadioButtonView.RadioButtonStatus.Selected);
-            else
-                rbWaiter.ChangeStates(RadioButtonView.RadioButtonStatus.Unselected);
-        }
-        if (rbAccost != null)
-        {
-            if (isAccost)
-                rbAccost.ChangeStates(RadioButtonView.RadioButtonStatus.Selected);
-            else
-                rbAccost.ChangeStates(RadioButtonView.RadioButtonStatus.Unselected);
-        }
-        if (rbBeater != null)
-        {
-            if (isBeater)
-                rbBeater.ChangeStates(RadioButtonView.RadioButtonStatus.Selected);
-            else
-                rbBeater.ChangeStates(RadioButtonView.RadioButtonStatus.Unselected);
-        }
+
+        if(wvChef!=null)
+            wvChef.SetWork(isChef);
+        if (wvWaiterForSend != null)
+            wvWaiterForSend.SetWork(isWaiterForSend);
+        if (wvWaiterForCleanTable != null)
+            wvWaiterForCleanTable.SetWork(isWaiterForCleanTable);
+        if (wvWaiterForCleanBed != null)
+            wvWaiterForCleanBed.SetWork(isWaiterForCleanBed);
+        if (wvAccounting != null)
+            wvAccounting.SetWork(isAccountant);
+        if (wvAccostForSolicit != null)
+            wvAccostForSolicit.SetWork(isAccostForSolicit);
+        if (wvAccostForGuide != null)
+            wvAccostForGuide.SetWork(isAccostForGuide);
+        if (wvBeater != null)
+            wvBeater.SetWork(isBeater);
     }
 
     /// <summary>
@@ -460,19 +439,29 @@ public class ItemGameWorkerCpt : ItemGameBaseCpt, IRadioButtonCallBack, DialogVi
     /// <param name="priorityAccountant"></param>
     /// <param name="priorityBeater"></param>
     /// <param name="priorityAccost"></param>
-    public void SetPriority(int priorityChef, int priorityWaiter, int priorityAccountant, int priorityAccost, int priorityBeater)
+    public void SetPriority(
+        int priorityChef, 
+        int priorityWaiterForSend, int priorityWaiterForCleanTable, int priorityWaiterForCleanBed,
+        int priorityAccountant, 
+        int priorityAccostForSolicit, int priorityAccostForGuide,
+        int priorityBeater)
     {
-        if (etPriorityChef != null)
-            etPriorityChef.text = priorityChef + "";
-        if (etPriorityWaiter != null)
-            etPriorityWaiter.text = priorityWaiter + "";
-        if (etPriorityAccounting != null)
-            etPriorityAccounting.text = priorityAccountant + "";
-        if (etPriorityAccost != null)
-            etPriorityAccost.text = priorityAccost + "";
-        if (etPriorityBeater != null)
-            etPriorityBeater.text = priorityBeater + "";
-
+        if (wvChef)
+            wvChef.SetPriority(priorityChef);
+        if (wvWaiterForSend)
+            wvWaiterForSend.SetPriority(priorityWaiterForSend);
+        if (wvWaiterForCleanTable)
+            wvWaiterForCleanTable.SetPriority(priorityWaiterForCleanTable);
+        if (wvWaiterForCleanBed)
+            wvWaiterForCleanBed.SetPriority(priorityWaiterForCleanBed);
+        if (wvAccounting)
+            wvAccounting.SetPriority(priorityAccountant);
+        if (wvAccostForSolicit)
+            wvAccostForSolicit.SetPriority(priorityAccostForSolicit);
+        if (wvAccostForGuide)
+            wvAccostForGuide.SetPriority(priorityAccostForGuide);
+        if (wvBeater)
+            wvBeater.SetPriority(priorityBeater);
     }
 
     /// <summary>
@@ -511,72 +500,6 @@ public class ItemGameWorkerCpt : ItemGameBaseCpt, IRadioButtonCallBack, DialogVi
             }
             tvStatus.text = workerStatusStr;
         }
-    }
-
-    /// <summary>
-    ///  更改优先级
-    /// </summary>
-    /// <param name="worker"></param>
-    /// <param name="content"></param>
-    public void PriorityChange(WorkerEnum worker, string content)
-    {
-        if (int.TryParse(content, out int priority))
-        {
-            CharacterWorkerBaseBean characterWorker = characterData.baseInfo.GetWorkerInfoByType(worker);
-            characterWorker.SetPriority(priority);
-            if (GetUIManager<UIGameManager>().innHandler != null)
-                GetUIManager<UIGameManager>().innHandler.InitWorker();
-        }
-    }
-    public void PriorityChangeForChef(string content)
-    {
-        PriorityChange(WorkerEnum.Chef, content);
-    }
-    public void PriorityChangeForWaiter(string content)
-    {
-        PriorityChange(WorkerEnum.Waiter, content);
-    }
-    public void PriorityChangeForAccounting(string content)
-    {
-        PriorityChange(WorkerEnum.Accountant, content);
-    }
-    public void PriorityChangeForAccost(string content)
-    {
-        PriorityChange(WorkerEnum.Accost, content);
-    }
-    public void PriorityChangeForBeater(string content)
-    {
-        PriorityChange(WorkerEnum.Beater, content);
-    }
-
-    public virtual void RadioButtonSelected(RadioButtonView view, RadioButtonView.RadioButtonStatus buttonStates)
-    {
-        if (characterData == null || characterData.baseInfo == null)
-            return;
-        audioHandler.PlaySound(AudioSoundEnum.ButtonForNormal);
-        CharacterBaseBean characterBase = characterData.baseInfo;
-        if (view == rbChef)
-        {
-            characterBase.chefInfo.isWorking = (buttonStates == RadioButtonView.RadioButtonStatus.Selected) ? true : false;
-        }
-        else if (view == rbWaiter)
-        {
-            characterBase.waiterInfo.isWorking = (buttonStates == RadioButtonView.RadioButtonStatus.Selected) ? true : false;
-        }
-        else if (view == rbAccounting)
-        {
-            characterBase.accountantInfo.isWorking = (buttonStates == RadioButtonView.RadioButtonStatus.Selected) ? true : false;
-        }
-        else if (view == rbAccost)
-        {
-            characterBase.accostInfo.isWorking = (buttonStates == RadioButtonView.RadioButtonStatus.Selected) ? true : false;
-        }
-        else if (view == rbBeater)
-        {
-            characterBase.beaterInfo.isWorking = (buttonStates == RadioButtonView.RadioButtonStatus.Selected) ? true : false;
-        }
-        if (GetUIManager<UIGameManager>().innHandler != null)
-            GetUIManager<UIGameManager>().innHandler.InitWorker();
     }
 
     #region 确认回调
@@ -640,6 +563,117 @@ public class ItemGameWorkerCpt : ItemGameBaseCpt, IRadioButtonCallBack, DialogVi
     public void Cancel(DialogView dialogView, DialogBean dialogBean)
     {
 
+    }
+
+
+    #endregion
+
+
+    #region 优先级和状态修改回调
+    public void ChangePriority(WorkerPriorityView view, int priority)
+    {
+        //厨师优先级
+        if (view == wvChef)
+        {
+            CharacterWorkerBaseBean characterWorker = characterData.baseInfo.GetWorkerInfoByType(WorkerEnum.Chef);
+            characterWorker.SetPriority(priority);
+        }
+        //伙计优先级
+        else if (view == wvWaiterForSend)
+        {
+            CharacterWorkerForWaiterBean characterWorker = (CharacterWorkerForWaiterBean)characterData.baseInfo.GetWorkerInfoByType(WorkerEnum.Waiter);
+            characterWorker.SetPriorityForSend(priority);
+        }
+        else if (view == wvWaiterForCleanTable)
+        {
+            CharacterWorkerForWaiterBean characterWorker = (CharacterWorkerForWaiterBean)characterData.baseInfo.GetWorkerInfoByType(WorkerEnum.Waiter);
+            characterWorker.SetPriorityForCleanTable(priority);
+        }
+        else if (view == wvWaiterForCleanBed)
+        {
+            CharacterWorkerForWaiterBean characterWorker = (CharacterWorkerForWaiterBean)characterData.baseInfo.GetWorkerInfoByType(WorkerEnum.Waiter);
+            characterWorker.SetPriorityForCleanBed(priority);
+        }
+        //账房优先级
+        else if (view == wvAccounting)
+        {
+            CharacterWorkerBaseBean characterWorker = characterData.baseInfo.GetWorkerInfoByType(WorkerEnum.Accountant);
+            characterWorker.SetPriority(priority);
+        }
+        //接待优先级
+        else if (view == wvAccostForSolicit)
+        {
+            CharacterWorkerForAccostBean characterWorker = (CharacterWorkerForAccostBean)characterData.baseInfo.GetWorkerInfoByType(WorkerEnum.Waiter);
+            characterWorker.SetPriorityForSolicit(priority);
+        }
+        else if (view == wvAccostForGuide)
+        {
+            CharacterWorkerForAccostBean characterWorker = (CharacterWorkerForAccostBean)characterData.baseInfo.GetWorkerInfoByType(WorkerEnum.Waiter);
+            characterWorker.SetPriorityForGuide(priority);
+        }
+        //打手优先级
+        else if (view == wvBeater)
+        {
+            CharacterWorkerBaseBean characterWorker = characterData.baseInfo.GetWorkerInfoByType(WorkerEnum.Beater);
+            characterWorker.SetPriority(priority);
+        }
+
+        if (GetUIManager<UIGameManager>().innHandler != null)
+            GetUIManager<UIGameManager>().innHandler.InitWorker();
+    }
+
+    public void ChangeStatus(WorkerPriorityView view, bool isWork)
+    {
+        if (characterData == null || characterData.baseInfo == null)
+            return;
+        //厨师状态
+        if (view == wvChef)
+        {
+            CharacterWorkerBaseBean characterWorker = characterData.baseInfo.GetWorkerInfoByType(WorkerEnum.Chef);
+            characterWorker.SetWorkStatus(isWork);
+        }
+        //伙计状态
+        else if (view == wvWaiterForSend)
+        {
+            CharacterWorkerForWaiterBean characterWorker = (CharacterWorkerForWaiterBean)characterData.baseInfo.GetWorkerInfoByType(WorkerEnum.Waiter);
+            characterWorker.SetWorkStatusForSend(isWork);
+        }
+        else if (view == wvWaiterForCleanTable)
+        {
+            CharacterWorkerForWaiterBean characterWorker = (CharacterWorkerForWaiterBean)characterData.baseInfo.GetWorkerInfoByType(WorkerEnum.Waiter);
+            characterWorker.SetWorkStatusForCleanTable(isWork);
+        }
+        else if (view == wvWaiterForCleanBed)
+        {
+            CharacterWorkerForWaiterBean characterWorker = (CharacterWorkerForWaiterBean)characterData.baseInfo.GetWorkerInfoByType(WorkerEnum.Waiter);
+            characterWorker.SetWorkStatusForCleanBed(isWork);
+        }
+        //账房状态
+        else if (view == wvAccounting)
+        {
+            CharacterWorkerBaseBean characterWorker = characterData.baseInfo.GetWorkerInfoByType(WorkerEnum.Accountant);
+            characterWorker.SetWorkStatus(isWork);
+        }
+        //接待状态
+        else if (view == wvAccostForSolicit)
+        {
+            CharacterWorkerForAccostBean characterWorker = (CharacterWorkerForAccostBean)characterData.baseInfo.GetWorkerInfoByType(WorkerEnum.Accost);
+            characterWorker.SetWorkStatusForSolicit(isWork);
+        }
+        else if (view == wvAccostForGuide)
+        {
+            CharacterWorkerForAccostBean characterWorker = (CharacterWorkerForAccostBean)characterData.baseInfo.GetWorkerInfoByType(WorkerEnum.Accost);
+            characterWorker.SetWorkStatusForGuide(isWork);
+        }
+        //打手状态
+        else if (view == wvBeater)
+        {
+            CharacterWorkerBaseBean characterWorker = characterData.baseInfo.GetWorkerInfoByType(WorkerEnum.Beater);
+            characterWorker.SetWorkStatus(isWork);
+        }
+        audioHandler.PlaySound(AudioSoundEnum.ButtonForNormal);
+        if (GetUIManager<UIGameManager>().innHandler != null)
+            GetUIManager<UIGameManager>().innHandler.InitWorker();
     }
     #endregion
 }

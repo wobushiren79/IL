@@ -140,6 +140,7 @@ public class InnBuildManager : BaseManager, IBuildDataView
                 case BuildItemTypeEnum.Stairs:
                     BuildStairsCpt buildStairs = (BuildStairsCpt)buildItemCpt;
                     buildStairs.SetData(buildItemData);
+                    buildStairs.SetRemarkId(furnitureData.remarkId);
                     if (furnitureData.remark != null && furnitureData.remark.Equals("1"))
                     {
                         buildStairs.SetLayer(1);

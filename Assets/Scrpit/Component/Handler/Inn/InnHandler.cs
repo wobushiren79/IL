@@ -4,6 +4,8 @@ using System.Collections.Generic;
 using System;
 using System.Diagnostics;
 using System.Linq;
+using System.Collections;
+
 public class InnHandler : BaseMonoBehaviour, IBaseObserver
 {
     public enum InnStatusEnum
@@ -26,8 +28,10 @@ public class InnHandler : BaseMonoBehaviour, IBaseObserver
     public InnPayHandler innPayHandler;
     //客栈战斗处理
     public InnFightHandler innFightHandler;
-    // 入口处理
+    //入口处理
     public InnEntranceHandler innEntranceHandler;
+    //住宿处理
+    public InnHotelHandler innHotelHandler;
 
     //音效处理
     protected AudioHandler audioHandler;
@@ -69,6 +73,8 @@ public class InnHandler : BaseMonoBehaviour, IBaseObserver
         gameDataHandler = Find<GameDataHandler>(ImportantTypeEnum.GameDataHandler);
         gameTimeHandler = Find<GameTimeHandler>(ImportantTypeEnum.TimeHandler);
         gameTimeHandler.AddObserver(this);
+
+        StartCoroutine(CoroutineForInnOpen());
     }
 
     /// <summary>
@@ -88,10 +94,11 @@ public class InnHandler : BaseMonoBehaviour, IBaseObserver
     /// </summary>
     public void InitInn()
     {
-        innEntranceHandler.InitDoorList();
+        innEntranceHandler.InitEntranceList();
         innTableHandler.InitTableList();
         innCookHandler.InitStoveList();
         innPayHandler.InitCounterList();
+        innHotelHandler.InitBedList();
         InitWorker();
     }
 
@@ -104,31 +111,6 @@ public class InnHandler : BaseMonoBehaviour, IBaseObserver
         innCookHandler.InitChefCpt();
         innWaiterHandler.InitWaiterCpt();
         workerBuilder.InitWorkerData();
-    }
-
-    private void Update()
-    {
-        if (innStatus == InnStatusEnum.Open)
-        {
-            //排队等待处理
-            if (!CheckUtil.ListIsNull(cusomerQueue))
-            {
-                BuildTableCpt tableCpt = innTableHandler.GetIdleTable();
-                if (tableCpt != null)
-                {
-                    //排队成功
-                    OrderForCustomer orderForCustomer = cusomerQueue[0];
-                    //移除排队列表
-                    cusomerQueue.RemoveAt(0);
-                    //设置座位
-                    orderForCustomer.table = tableCpt;
-                    //设置客户前往座位
-                    orderForCustomer.customer.SetIntent(NpcAICustomerCpt.CustomerIntentEnum.GotoSeat, orderForCustomer);
-                }
-            }
-            //给闲置的工作人员分配工作
-            DistributionWorkForIdleWorker();
-        }
     }
 
     /// <summary>
@@ -489,11 +471,11 @@ public class InnHandler : BaseMonoBehaviour, IBaseObserver
     /// <summary>
     /// 通过不同的工作类型分配不同的工作
     /// </summary>
-    public bool DistributionWorkForType(WorkerEnum workType,NpcAIWorkerCpt workNpc)
+    public bool DistributionWorkForType(WorkerDetilsEnum workDetailsType,NpcAIWorkerCpt workNpc)
     {
-        switch (workType)
+        switch (workDetailsType)
         {
-            case WorkerEnum.Accountant:
+            case WorkerDetilsEnum.AccountantForPay:
                 if (!CheckUtil.ListIsNull(innPayHandler.listCounterCpt))
                 {
                     for (int i = 0; i < innPayHandler.listCounterCpt.Count; i++)
@@ -511,7 +493,7 @@ public class InnHandler : BaseMonoBehaviour, IBaseObserver
                     }
                 }
                 break;
-            case WorkerEnum.Chef:
+            case WorkerDetilsEnum.ChefForCook:
                 //排队做菜处理
                 if (!CheckUtil.ListIsNull(foodQueue))
                 {
@@ -523,7 +505,7 @@ public class InnHandler : BaseMonoBehaviour, IBaseObserver
                     }
                 }
                 break;
-            case WorkerEnum.Waiter:
+            case WorkerDetilsEnum.WaiterForSend:
                 //排队送菜处理
                 if (!CheckUtil.ListIsNull(sendQueue))
                 {
@@ -535,6 +517,8 @@ public class InnHandler : BaseMonoBehaviour, IBaseObserver
                         return true;
                     }
                 }
+                break;
+            case WorkerDetilsEnum.WaiterForCleanTable:
                 //排队清理处理
                 if (!CheckUtil.ListIsNull(clearQueue))
                 {
@@ -560,10 +544,10 @@ public class InnHandler : BaseMonoBehaviour, IBaseObserver
                     }
                 }
                 break;
-            case WorkerEnum.Accost:
+            case WorkerDetilsEnum.AccostForSolicit:
                 workNpc.SetIntent(NpcAIWorkerCpt.WorkerIntentEnum.Accost);
                 return true;
-            case WorkerEnum.Beater:
+            case WorkerDetilsEnum.BeaterForDrive:
                 //分派打架人选
                 if (!CheckUtil.ListIsNull(rascalrQueue))
                 {
@@ -638,6 +622,40 @@ public class InnHandler : BaseMonoBehaviour, IBaseObserver
             userAchievement.AddMenuForCustomer(order.customerType, characterData.baseInfo.characterId, menuId);
         }
     }
+
+    /// <summary>
+    /// 协程 客栈营业
+    /// </summary>
+    /// <returns></returns>
+    public IEnumerator CoroutineForInnOpen()
+    {
+        while (true)
+        {
+            if (innStatus == InnStatusEnum.Open)
+            {
+                //排队等待处理
+                if (!CheckUtil.ListIsNull(cusomerQueue))
+                {
+                    BuildTableCpt tableCpt = innTableHandler.GetIdleTable();
+                    if (tableCpt != null)
+                    {
+                        //排队成功
+                        OrderForCustomer orderForCustomer = cusomerQueue[0];
+                        //移除排队列表
+                        cusomerQueue.RemoveAt(0);
+                        //设置座位
+                        orderForCustomer.table = tableCpt;
+                        //设置客户前往座位
+                        orderForCustomer.customer.SetIntent(NpcAICustomerCpt.CustomerIntentEnum.GotoSeat, orderForCustomer);
+                    }
+                }
+                //给闲置的工作人员分配工作
+                DistributionWorkForIdleWorker();
+            }
+            yield return new WaitForSeconds(0.1f);
+        }
+    }
+
 
     #region 时间回调
     public void ObserbableUpdate<T>(T observable, int type, params object[] obj) where T : UnityEngine.Object

@@ -9,7 +9,7 @@ public abstract class BaseInteractiveCpt : BaseMonoBehaviour
 
     public void Update()
     {
-        if (canInteractive)
+        if (canInteractive&& characterInt)
         {
             InteractiveDetection(characterInt);
         }

@@ -9,7 +9,10 @@ public class BuildStairsCpt : BaseBuildItemCpt
     public GameObject objUpBox;
     public GameObject objDownBox;
 
+    public GameObject objStairs;
+
     public int layer = 2;
+    public string remarkId = "";
 
     private void Awake()
     {
@@ -20,6 +23,11 @@ public class BuildStairsCpt : BaseBuildItemCpt
     {
         base.SetData(buildItemData);
         SetLayer(2);
+    }
+
+    public void SetRemarkId(string remarkId)
+    {
+        this.remarkId = remarkId;
     }
 
     public void SetLayer(int layer)
@@ -40,5 +48,10 @@ public class BuildStairsCpt : BaseBuildItemCpt
             SetSprite(spSecond, spSecond, spSecond, spSecond);
             objDownBox.SetActive(true);
         }
+    }
+
+    public Vector3 GetStairsPosition()
+    {
+        return objStairs.transform.position;
     }
 }

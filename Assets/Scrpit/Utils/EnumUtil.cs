@@ -48,7 +48,7 @@ public class EnumUtil
     public static List<E> GetEnumValue<E>()
     {
         List<E> listDat = new List<E>();
-       int i = 0;
+        int i = 0;
         foreach (E item in Enum.GetValues(typeof(E)))
         {
             listDat.Add(item);

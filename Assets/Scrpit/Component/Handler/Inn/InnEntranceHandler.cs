@@ -6,20 +6,22 @@ public class InnEntranceHandler : BaseMonoBehaviour
 {
     //门列表
     public List<BuildDoorCpt> listDoorCpt;
+    public List<BuildStairsCpt> listStairsCpt;
+
     //门容器
-    public GameObject doorContainer;
+    public GameObject container;
 
     /// <summary>
     /// 找到所有门
     /// </summary>
     /// <returns></returns>
-    public List<BuildDoorCpt> InitDoorList()
+    public void InitEntranceList()
     {
-        if (listDoorCpt == null)
-            return listDoorCpt;
-        BuildDoorCpt[] tableArray = doorContainer.GetComponentsInChildren<BuildDoorCpt>();
-        listDoorCpt = TypeConversionUtil.ArrayToList(tableArray);
-        return listDoorCpt;
+        BuildDoorCpt[] doorArray = container.GetComponentsInChildren<BuildDoorCpt>();
+        listDoorCpt = TypeConversionUtil.ArrayToList(doorArray);
+
+        BuildStairsCpt[] stairsArray = container.GetComponentsInChildren<BuildStairsCpt>();
+        listStairsCpt = TypeConversionUtil.ArrayToList(stairsArray);
     }
 
     /// <summary>
@@ -47,5 +49,35 @@ public class InnEntranceHandler : BaseMonoBehaviour
             return GameUtil.GetTransformInsidePosition2D(tfEntrance);
         else
             return Vector3.zero;
+    }
+
+    /// <summary>
+    /// 通过备注ID获取楼梯位置
+    /// </summary>
+    /// <param name="remarkId"></param>
+    /// <param name="layerFirstPosition"></param>
+    /// <param name="layerSecondPosition"></param>
+    public void GetStairsPosition(string remarkId,out Vector3 layerFirstPosition, out Vector3 layerSecondPosition)
+    {
+        layerFirstPosition = Vector3.zero;
+        layerSecondPosition= Vector3.zero;
+        if (CheckUtil.ListIsNull(listStairsCpt))
+            return;
+        for (int i=0;i< listStairsCpt.Count;i++)
+        {
+            BuildStairsCpt buildStairs = listStairsCpt[i];
+            if (buildStairs.remarkId.Equals(remarkId))
+            {
+                if (buildStairs.layer ==1 )
+                {
+                    layerFirstPosition = buildStairs.GetStairsPosition();
+                }
+                else if (buildStairs.layer == 2)
+                {
+                    layerSecondPosition = buildStairs.GetStairsPosition();
+                }
+            }
+        }
+  
     }
 }

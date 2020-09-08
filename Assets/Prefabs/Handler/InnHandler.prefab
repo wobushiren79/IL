@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 100048212285194392}
   - component: {fileID: 5106273835275361291}
   - component: {fileID: 2812105501476124597}
+  - component: {fileID: 9160842895924344682}
   - component: {fileID: 4689065653822730675}
   m_Layer: 0
   m_Name: InnHandler
@@ -125,6 +126,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   waiterContainer: {fileID: 0}
   listWaiterCpt: []
+--- !u!114 &9160842895924344682
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7854356681963976422}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c910afd0408976f45a293a0e8ece346e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &4689065653822730675
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -143,6 +156,7 @@ MonoBehaviour:
   innPayHandler: {fileID: 100048212285194392}
   innFightHandler: {fileID: 4302509437015596643}
   innEntranceHandler: {fileID: 7242179599410243528}
+  innHotelHandler: {fileID: 9160842895924344682}
   rascalrQueue: []
   cusomerQueue: []
   foodQueue: []
