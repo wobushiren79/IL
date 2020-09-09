@@ -70,6 +70,11 @@ public class NpcNormalBuilder : BaseMonoBehaviour
     /// <returns></returns>
     public GameObject BuildNpc(Vector3 startPosition)
     {
+        return BuildNpc(objNormalModel, startPosition);
+    }
+
+    public GameObject BuildNpc(GameObject objNpcModel, Vector3 startPosition)
+    {
         if (npcInfoManager == null)
             return null;
         CharacterBean characterData = npcInfoManager.GetRandomCharacterData();
@@ -77,12 +82,7 @@ public class NpcNormalBuilder : BaseMonoBehaviour
             return null;
         //随机生成身体数据
         characterData.body.CreateRandomBody(characterBodyManager);
-        return BuildNpc(characterData, startPosition);
-    }
-
-    public GameObject BuildNpc(CharacterBean characterData, Vector3 startPosition)
-    {
-        return BuildNpc(objNormalModel, characterData, startPosition);
+        return BuildNpc(objNpcModel,characterData, startPosition);
     }
 
     public GameObject BuildNpc(GameObject objModel, CharacterBean characterData, Vector3 startPosition)

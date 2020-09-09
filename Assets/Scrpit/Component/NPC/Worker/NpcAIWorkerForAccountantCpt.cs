@@ -179,7 +179,7 @@ public class NpcAIWorkerForAccountantCpt : NpcAIWokerFoBaseCpt
                 AddMoneyL, AddMoneyM, AddMoneyS
                 );
             //增加经验
-            npcAIWorker.characterData.baseInfo.accountantInfo.AddExp(2, out bool isLevelUp);
+            npcAIWorker.characterData.baseInfo.accountantInfo.AddExp(1, out bool isLevelUp);
             if (isLevelUp)
             {
                 ToastForLevelUp(WorkerEnum.Accountant);

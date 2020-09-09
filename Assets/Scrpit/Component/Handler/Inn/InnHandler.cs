@@ -48,7 +48,8 @@ public class InnHandler : BaseMonoBehaviour, IBaseObserver
     //闹事的人的列表
     public List<NpcAIRascalCpt> rascalrQueue = new List<NpcAIRascalCpt>();
 
-    //排队的人
+
+    //排队就餐的人
     public List<OrderForCustomer> cusomerQueue = new List<OrderForCustomer>();
     //排队等待烹饪的食物
     public List<OrderForCustomer> foodQueue = new List<OrderForCustomer>();
@@ -56,6 +57,9 @@ public class InnHandler : BaseMonoBehaviour, IBaseObserver
     public List<OrderForCustomer> sendQueue = new List<OrderForCustomer>();
     //排队清理的食物
     public List<OrderForCustomer> clearQueue = new List<OrderForCustomer>();
+
+    //排队等待接待的住宿
+    public List<OrderForHotel> hotelQueue = new List<OrderForHotel>();
 
     //订单列表
     public List<OrderForCustomer> listOrder = new List<OrderForCustomer>();
@@ -244,6 +248,26 @@ public class InnHandler : BaseMonoBehaviour, IBaseObserver
     }
 
     /// <summary>
+    /// 获取最近的楼梯
+    /// </summary>
+    /// <returns></returns>
+    public BuildStairsCpt GetCloseStairs(Vector3 position)
+    {
+        return  innEntranceHandler.GetCloseStairs(position);
+    }
+
+    /// <summary>
+    /// 获取楼梯的上下位置
+    /// </summary>
+    /// <returns></returns>
+    public void GetStairsByRemarkId(string markId, out Vector3 layerFirstPosition, out Vector3 layerSecondPosition)
+    {
+        layerFirstPosition = Vector3.zero;
+        layerSecondPosition = Vector3.zero;
+        innEntranceHandler.GetStairsPosition(markId, out layerFirstPosition, out layerSecondPosition);
+    }
+
+    /// <summary>
     /// 获取随机客栈内一点
     /// </summary>
     /// <returns></returns>
@@ -265,6 +289,19 @@ public class InnHandler : BaseMonoBehaviour, IBaseObserver
         OrderForCustomer order = new OrderForCustomer(npc.customerType, npc);
         npc.SetOrderForCustomer(order);
         listOrder.Add(order);
+        return order;
+    }
+
+    /// <summary>
+    /// 创建一个住宿订单
+    /// </summary>
+    /// <param name="npc"></param>
+    /// <param name="buildBedCpt"></param>
+    /// <returns></returns>
+    public OrderForHotel CreateOrderForHotel(NpcAICustomerForHotelCpt npc, BuildBedCpt buildBedCpt)
+    {
+        OrderForHotel order = new OrderForHotel(npc, buildBedCpt);
+        hotelQueue.Add(order);
         return order;
     }
 
@@ -359,6 +396,23 @@ public class InnHandler : BaseMonoBehaviour, IBaseObserver
         if (sendQueue.Contains(orderForCustomer))
             sendQueue.Remove(orderForCustomer);
         EndOrder(orderForCustomer);
+    }
+
+    public void EndOrderForForce(OrderForHotel orderForHotel)
+    {
+        if (orderForHotel == null)
+            return;
+        orderForHotel.SetOrderStatus(OrderHotelStatusEnum.End);
+        //顾客离开
+        if (orderForHotel.customer != null)
+        {
+            orderForHotel.customer.SetIntent(NpcAICustomerForHotelCpt.CustomerHotelIntentEnum.Leave);
+        }
+        //床还原
+        if (orderForHotel.bed != null)
+        {
+            orderForHotel.bed.CleanBed();
+        }
     }
 
     /// <summary>
@@ -545,8 +599,17 @@ public class InnHandler : BaseMonoBehaviour, IBaseObserver
                 }
                 break;
             case WorkerDetilsEnum.AccostForSolicit:
-                workNpc.SetIntent(NpcAIWorkerCpt.WorkerIntentEnum.Accost);
+                workNpc.SetIntent(NpcAIWorkerCpt.WorkerIntentEnum.AccostSolicit);
                 return true;
+            case WorkerDetilsEnum.AccostForGuide:
+                //等待接待
+                if (!CheckUtil.ListIsNull(hotelQueue))
+                {
+                    OrderForHotel orderForHotel= hotelQueue[0];
+                    workNpc.SetIntent(NpcAIWorkerCpt.WorkerIntentEnum.AccostGuide, orderForHotel);
+                    hotelQueue.Remove(orderForHotel);
+                }
+                break;
             case WorkerDetilsEnum.BeaterForDrive:
                 //分派打架人选
                 if (!CheckUtil.ListIsNull(rascalrQueue))
@@ -621,6 +684,16 @@ public class InnHandler : BaseMonoBehaviour, IBaseObserver
             CharacterBean characterData = ((NpcAICostomerForFriendCpt)order.customer).characterData;
             userAchievement.AddMenuForCustomer(order.customerType, characterData.baseInfo.characterId, menuId);
         }
+    }
+
+    /// <summary>
+    /// 判断是否还有床位
+    /// </summary>
+    /// <returns></returns>
+    public BuildBedCpt GetIdleBed()
+    {
+        BuildBedCpt buildBedCpt= innHotelHandler.GetIdleBed();
+        return buildBedCpt;
     }
 
     /// <summary>

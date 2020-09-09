@@ -53,7 +53,7 @@ public class WorkerNumberView : BaseMonoBehaviour
                 {
                     numberForAccount++;
                 }
-                else if (workerIntent == NpcAIWorkerCpt.WorkerIntentEnum.Accost)
+                else if (workerIntent == NpcAIWorkerCpt.WorkerIntentEnum.AccostSolicit|| workerIntent == NpcAIWorkerCpt.WorkerIntentEnum.AccostGuide)
                 {
                     numberForAccost++;
                 }

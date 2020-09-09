@@ -18,9 +18,11 @@ public class NpcAIWorkerCpt : BaseNpcAI
         Daze,//发呆
         WaiterSend,//跑堂
         WaiterClean,//清扫
+        WaiterBed,//理床
         Cook,//做菜
         Accounting,//结账
-        Accost,//招待
+        AccostSolicit,//招待
+        AccostGuide,//引导
         Beater//打手
     }
 
@@ -111,14 +113,20 @@ public class NpcAIWorkerCpt : BaseNpcAI
             case WorkerIntentEnum.WaiterClean:
                 statusStr = GameCommonInfo.GetUITextById(173);
                 break;
+            case WorkerIntentEnum.WaiterBed:
+                statusStr = GameCommonInfo.GetUITextById(180);
+                break;
             case WorkerIntentEnum.Cook:
                 statusStr = GameCommonInfo.GetUITextById(174);
                 break;
             case WorkerIntentEnum.Accounting:
                 statusStr = GameCommonInfo.GetUITextById(175);
                 break;
-            case WorkerIntentEnum.Accost:
+            case WorkerIntentEnum.AccostSolicit:
                 statusStr = GameCommonInfo.GetUITextById(176);
+                break;
+            case WorkerIntentEnum.AccostGuide:
+                statusStr = GameCommonInfo.GetUITextById(179);
                 break;
             case WorkerIntentEnum.Beater:
                 statusStr = GameCommonInfo.GetUITextById(177);
@@ -230,7 +238,7 @@ public class NpcAIWorkerCpt : BaseNpcAI
     /// <param name="workerIntent"></param>
     /// <param name="orderForCustomer"></param>
     /// <param name="npcAIRascal"></param>
-    public void SetIntent(WorkerIntentEnum workerIntent, OrderForCustomer orderForCustomer, NpcAIRascalCpt npcAIRascal)
+    public void SetIntent(WorkerIntentEnum workerIntent, OrderForCustomer orderForCustomer, NpcAIRascalCpt npcAIRascal, OrderForHotel orderForHotel)
     {
         StopAllCoroutines();
         RemoveStatusIconByType(CharacterStatusIconEnum.Pro);
@@ -252,11 +260,16 @@ public class NpcAIWorkerCpt : BaseNpcAI
             case WorkerIntentEnum.WaiterClean:
                 SetIntentForWaiterClear(orderForCustomer);
                 break;
+            case WorkerIntentEnum.WaiterBed:
+                break;
             case WorkerIntentEnum.Accounting:
                 SetIntentForAccounting(orderForCustomer);
                 break;
-            case WorkerIntentEnum.Accost:
-                SetIntentForAccost();
+            case WorkerIntentEnum.AccostSolicit:
+                SetIntentForAccostSolicit();
+                break;
+            case WorkerIntentEnum.AccostGuide:
+                SetIntentForAccostGuide(orderForHotel);
                 break;
             case WorkerIntentEnum.Beater:
                 SetIntentForBeater(npcAIRascal);
@@ -265,6 +278,10 @@ public class NpcAIWorkerCpt : BaseNpcAI
         NotifyAllObserver((int)WorkerNotifyEnum.StatusChange, (int)workerIntent);
     }
 
+    public void SetIntent(WorkerIntentEnum workerIntent, OrderForCustomer orderForCustomer, NpcAIRascalCpt npcAIRascal)
+    {
+        SetIntent(workerIntent, orderForCustomer, npcAIRascal,null);
+    }
 
     public void SetIntent(WorkerIntentEnum workerIntent)
     {
@@ -273,6 +290,10 @@ public class NpcAIWorkerCpt : BaseNpcAI
     public void SetIntent(WorkerIntentEnum workerIntent, OrderForCustomer orderForCustomer)
     {
         SetIntent(workerIntent, orderForCustomer, null);
+    }
+    public void SetIntent(WorkerIntentEnum workerIntent, OrderForHotel orderForHotel)
+    {
+        SetIntent(workerIntent, null, null, orderForHotel);
     }
     public void SetIntent(WorkerIntentEnum workerIntent, NpcAIRascalCpt npcAIRascal)
     {
@@ -353,9 +374,17 @@ public class NpcAIWorkerCpt : BaseNpcAI
     /// <summary>
     /// 设置招待
     /// </summary>
-    public void SetIntentForAccost()
+    public void SetIntentForAccostSolicit()
     {
-        aiForAccost.StartAccost();
+        aiForAccost.StartAccostSolicit();
+    }
+
+    /// <summary>
+    /// 设置引路
+    /// </summary>
+    public void SetIntentForAccostGuide(OrderForHotel orderForHotel)
+    {
+        aiForAccost.StartAccostGuide(orderForHotel);
     }
 
     /// <summary>

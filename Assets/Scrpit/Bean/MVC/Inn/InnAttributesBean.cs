@@ -302,4 +302,56 @@ public class InnAttributesBean
         rate = rate * 0.1f;
         return rate;
     }
+
+    /// <summary>
+    /// 计算生成团队顾客概率
+    /// </summary>
+    /// <returns></returns>
+    public float CalculationCustomerBuildRate()
+    {
+        float rate = 0;
+        //美观所占比重
+        GetAesthetics(out float maxAesthetics, out float aesthetics);
+        float rateAesthetics = aesthetics / maxAesthetics;
+        if (rateAesthetics > 1)
+            rateAesthetics = 1;
+        //点赞率所占比重
+        GetPraise(out int maxPraise, out int praise);
+        float ratePraise = (float)praise / maxPraise;
+        if (ratePraise > 1)
+            ratePraise = 1;
+        //菜品丰富度所占比重
+        GetRichness(out int maxRichness, out int richness);
+        float rateRichness = (float)richness / maxRichness;
+        if (rateRichness > 1)
+            rateRichness = 1;
+        rate = 0.15f * rateRichness + 0.15f * ratePraise + 0.15f * rateAesthetics + 0.55f;
+        return rate;
+    }
+
+    /// <summary>
+    /// 计算生成顾客住宿概率
+    /// </summary>
+    /// <returns></returns>
+    public float CalculationCustomerForHotelRate(InnBuildBean innBuild)
+    {
+        //如果没有2楼则不生成顾客
+        float rate = 0;
+        if (innBuild.buildSecondLevel == 0)
+        {
+            return rate;
+        }
+        //美观所占比重
+        GetAesthetics(out float maxAesthetics, out float aesthetics);
+        float rateAesthetics = aesthetics / maxAesthetics;
+        if (rateAesthetics > 1)
+            rateAesthetics = 1;
+        //点赞率所占比重
+        GetPraise(out int maxPraise, out int praise);
+        float ratePraise = (float)praise / maxPraise;
+        if (ratePraise > 1)
+            ratePraise = 1;
+        rate = 0.5f * ratePraise + 0.5f * rateAesthetics;
+        return rate;
+    }
 }

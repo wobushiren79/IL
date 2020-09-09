@@ -57,18 +57,18 @@ public class InnEntranceHandler : BaseMonoBehaviour
     /// <param name="remarkId"></param>
     /// <param name="layerFirstPosition"></param>
     /// <param name="layerSecondPosition"></param>
-    public void GetStairsPosition(string remarkId,out Vector3 layerFirstPosition, out Vector3 layerSecondPosition)
+    public void GetStairsPosition(string remarkId, out Vector3 layerFirstPosition, out Vector3 layerSecondPosition)
     {
         layerFirstPosition = Vector3.zero;
-        layerSecondPosition= Vector3.zero;
+        layerSecondPosition = Vector3.zero;
         if (CheckUtil.ListIsNull(listStairsCpt))
             return;
-        for (int i=0;i< listStairsCpt.Count;i++)
+        for (int i = 0; i < listStairsCpt.Count; i++)
         {
             BuildStairsCpt buildStairs = listStairsCpt[i];
             if (buildStairs.remarkId.Equals(remarkId))
             {
-                if (buildStairs.layer ==1 )
+                if (buildStairs.layer == 1)
                 {
                     layerFirstPosition = buildStairs.GetStairsPosition();
                 }
@@ -78,6 +78,29 @@ public class InnEntranceHandler : BaseMonoBehaviour
                 }
             }
         }
-  
+    }
+
+    /// <summary>
+    /// 获取最近的楼梯
+    /// </summary>
+    /// <param name="position"></param>
+    /// <returns></returns>
+    public BuildStairsCpt GetCloseStairs(Vector3 position )
+    {
+        if (CheckUtil.ListIsNull(listStairsCpt))
+            return null;
+        float tempDistance = float.MaxValue;
+        BuildStairsCpt closeStairs = null;
+        for (int i = 0; i < listStairsCpt.Count; i++)
+        {
+            BuildStairsCpt buildStairs = listStairsCpt[i];
+            float itemDistance=  Vector3.Distance(position, buildStairs.GetStairsPosition());
+            if( tempDistance > itemDistance)
+            {
+                closeStairs = buildStairs;
+                tempDistance = itemDistance;
+            }
+        }
+        return closeStairs;
     }
 }

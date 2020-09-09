@@ -3,6 +3,15 @@ using UnityEditor;
 
 public class BuildBedCpt : BaseBuildItemCpt
 {
+    public enum BedStatusEnum
+    {
+        Idle = 0,//空闲
+        Ready = 1,//有人,等待移动到座位
+        Use=2,//使用中
+        WaitClean = 3,//等待清理
+        Cleaning = 4,//清理
+    }
+
     public GameObject objBed;
     public SpriteRenderer srBase;
     public SpriteRenderer srBar;
@@ -16,6 +25,8 @@ public class BuildBedCpt : BaseBuildItemCpt
 
     public BuildBedBean buildBedData;
 
+    public BedStatusEnum bedStatus = BedStatusEnum.Idle;
+
     protected InnBuildManager innBuildManager;
 
     private void Awake()
@@ -28,6 +39,16 @@ public class BuildBedCpt : BaseBuildItemCpt
     {
         this.buildBedData = buildBedData;
         base.SetData(buildItemData);
+    }
+
+
+    public void SetBedStatus(BedStatusEnum bedStatus)
+    {
+        this.bedStatus = bedStatus;
+    }
+    public BedStatusEnum GetBedStatus()
+    {
+        return bedStatus;
     }
 
     public override void SetDirection(Direction2DEnum direction)
@@ -87,6 +108,14 @@ public class BuildBedCpt : BaseBuildItemCpt
         string iconKey = GetIconKey(buildItemData.GetIconList()[0]);
         srPillow.sprite = innBuildManager.GetFurnitureSpriteByName(iconKey);
     }
+    
+    /// <summary>
+    /// 清理床
+    /// </summary>
+    public void CleanBed()
+    {
+        SetBedStatus(BedStatusEnum.Idle);
+    }
 
     protected string GetIconKey(string iconKeyTitle)
     {
@@ -108,4 +137,6 @@ public class BuildBedCpt : BaseBuildItemCpt
         }
         return iconKey;
     }
+
+
 }

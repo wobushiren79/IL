@@ -21,4 +21,30 @@ public class InnHotelHandler : InnBaseHandler
         listBedCpt = TypeConversionUtil.ArrayToList(tableArray);
         return listBedCpt;
     }
+
+
+
+    /// <summary>
+    /// 获取随机空闲的座位
+    /// </summary>
+    /// <returns></returns>
+    public BuildBedCpt GetIdleBed()
+    {
+        if (listBedCpt == null)
+            return null;
+        List<BuildBedCpt> idleBedList = new List<BuildBedCpt>();
+        for (int i = 0; i < listBedCpt.Count; i++)
+        {
+            BuildBedCpt itemBed = listBedCpt[i];
+            if (itemBed.GetBedStatus() == BuildBedCpt.BedStatusEnum.Idle)
+            {
+                idleBedList.Add(itemBed);
+            }
+        }
+        if (idleBedList.Count == 0)
+            return null;
+        BuildBedCpt buildBed = RandomUtil.GetRandomDataByList(idleBedList);
+        buildBed.SetBedStatus(BuildBedCpt.BedStatusEnum.Ready);
+        return buildBed;
+    }
 }

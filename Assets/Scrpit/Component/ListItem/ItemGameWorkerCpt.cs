@@ -603,12 +603,12 @@ public class ItemGameWorkerCpt : ItemGameBaseCpt, DialogView.IDialogCallBack, Wo
         //接待优先级
         else if (view == wvAccostForSolicit)
         {
-            CharacterWorkerForAccostBean characterWorker = (CharacterWorkerForAccostBean)characterData.baseInfo.GetWorkerInfoByType(WorkerEnum.Waiter);
+            CharacterWorkerForAccostBean characterWorker = (CharacterWorkerForAccostBean)characterData.baseInfo.GetWorkerInfoByType(WorkerEnum.Accost);
             characterWorker.SetPriorityForSolicit(priority);
         }
         else if (view == wvAccostForGuide)
         {
-            CharacterWorkerForAccostBean characterWorker = (CharacterWorkerForAccostBean)characterData.baseInfo.GetWorkerInfoByType(WorkerEnum.Waiter);
+            CharacterWorkerForAccostBean characterWorker = (CharacterWorkerForAccostBean)characterData.baseInfo.GetWorkerInfoByType(WorkerEnum.Accost);
             characterWorker.SetPriorityForGuide(priority);
         }
         //打手优先级

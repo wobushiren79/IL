@@ -12,6 +12,11 @@ public class NpcAIWorkerForAccost : NpcAIWokerFoBaseCpt
         Finding,//寻找中
         GoToCustomer,//走向客户
         Talking,//交流中
+
+        GoToHotelCustomer,//走向住宿顾客
+
+        GoToStairsForFirst,//前往一楼楼梯
+
     }
 
 
@@ -27,7 +32,7 @@ public class NpcAIWorkerForAccost : NpcAIWokerFoBaseCpt
     public AccostIntentEnum accostIntent = AccostIntentEnum.Idle;
     public NpcAICustomerCpt npcAICustomer;//交流的顾客
 
-
+    public OrderForHotel orderForHotel;
     public override void Start()
     {
         base.Start();
@@ -51,16 +56,32 @@ public class NpcAIWorkerForAccost : NpcAIWokerFoBaseCpt
                     SetIntent(AccostIntentEnum.Talking);
                 }
                 break;
+            case AccostIntentEnum.GoToHotelCustomer:
+                HandleForGoToHotelCustomer();
+                break;
+            case AccostIntentEnum.GoToStairsForFirst:
+                HandleForGoToStairsForFirst();
+                break;
         }
     }
 
     /// <summary>
     /// 开始招待
     /// </summary>
-    public void StartAccost()
+    public void StartAccostSolicit()
     {
         //如果在客栈内 则先去门口
         SetIntent(AccostIntentEnum.GoToDoor);
+    }
+
+    /// <summary>
+    /// 开始引路
+    /// </summary>
+    /// <param name="orderForHotel"></param>
+    public void StartAccostGuide(OrderForHotel orderForHotel)
+    {
+        this.orderForHotel = orderForHotel;
+        SetIntent(AccostIntentEnum.GoToHotelCustomer);
     }
 
     /// <summary>
@@ -89,6 +110,12 @@ public class NpcAIWorkerForAccost : NpcAIWokerFoBaseCpt
             case AccostIntentEnum.Talking:
                 SetIntentForTalking();
                 break;
+            case AccostIntentEnum.GoToHotelCustomer:
+                SetIntentForGoToHotelCustomer();
+                break;
+            case AccostIntentEnum.GoToStairsForFirst:
+                SetIntentForGoToStairs();
+                break;
         }
     }
 
@@ -98,6 +125,7 @@ public class NpcAIWorkerForAccost : NpcAIWokerFoBaseCpt
     /// </summary>
     public void SetIntentForIdle()
     {
+        orderForHotel = null;
         if (accostPro != null)
             accostPro.SetActive(false);
         if (talkPro != null)
@@ -149,6 +177,8 @@ public class NpcAIWorkerForAccost : NpcAIWokerFoBaseCpt
         npcAIWorker.SetExpression(CharacterExpressionCpt.CharacterExpressionEnum.Surprise);
     }
 
+
+
     /// <summary>
     /// 意图-交流
     /// </summary>
@@ -162,6 +192,48 @@ public class NpcAIWorkerForAccost : NpcAIWokerFoBaseCpt
     }
 
     /// <summary>
+    /// 意图-走向
+    /// </summary>
+    private void SetIntentForGoToHotelCustomer()
+    {
+        if (orderForHotel == null)
+            SetIntent(AccostIntentEnum.Idle);
+        //走向客户
+        movePosition = orderForHotel.customer.transform.position + new Vector3(0, 0.2f, 0);
+        npcAIWorker.characterMoveCpt.SetDestination(movePosition);
+    }
+
+    /// <summary>
+    /// 意图-前往二楼
+    /// </summary>
+    public void SetIntentForGoToStairs()
+    {
+        BuildStairsCpt buildStairs = npcAIWorker.innHandler.GetCloseStairs(transform.position);
+        if (buildStairs == null)
+        {
+            npcAIWorker.SetShout(GameCommonInfo.GetUITextById(13402));
+            npcAIWorker.innHandler.EndOrderForForce(orderForHotel);
+            SetIntent(AccostIntentEnum.Idle);
+            return;
+        }
+        if (!CheckUtil.CheckPath(transform.position, buildStairs.GetStairsPosition()))
+        {
+            npcAIWorker.SetShout(GameCommonInfo.GetUITextById(13403));
+            npcAIWorker.innHandler.EndOrderForForce(orderForHotel);
+            SetIntent(AccostIntentEnum.Idle);
+            return;
+        }
+        npcAIWorker.innHandler.GetStairsByRemarkId(buildStairs.remarkId, out Vector3 layerFirstPosition, out Vector3 layerSecondPosition);
+        orderForHotel.layerFirstStairsPosition = layerFirstPosition;
+        orderForHotel.layerSecondStairsPosition = layerSecondPosition;
+        npcAIWorker.SetCharacterMove(layerFirstPosition);
+
+        //设置相同的移动速度
+        orderForHotel.customer.characterMoveCpt.SetMoveSpeed(npcAIWorker.characterMoveCpt.moveSpeed);
+        orderForHotel.customer.SetIntent( NpcAICustomerForHotelCpt.CustomerHotelIntentEnum.GoToStairsForFirst);
+    }
+
+    /// <summary>
     /// 范围检测
     /// </summary>
     /// <param name="collision"></param>
@@ -170,7 +242,7 @@ public class NpcAIWorkerForAccost : NpcAIWokerFoBaseCpt
         if (collision != null)
         {
             NpcAICustomerCpt npcAICustomer = collision.GetComponent<NpcAICustomerCpt>();
-            if ( accostIntent == AccostIntentEnum.Finding
+            if (accostIntent == AccostIntentEnum.Finding
                 && this.npcAICustomer == null
                 && npcAICustomer != null
                 && npcAICustomer.customerIntent == NpcAICustomerCpt.CustomerIntentEnum.Walk)
@@ -205,7 +277,7 @@ public class NpcAIWorkerForAccost : NpcAIWokerFoBaseCpt
             //记录
             npcAIWorker.characterData.baseInfo.accostInfo.AddAccostSuccessNumber(1);
             //添加经验
-            npcAIWorker.characterData.baseInfo.accostInfo.AddExp(1,out bool isLevelUp);
+            npcAIWorker.characterData.baseInfo.accostInfo.AddExp(1, out bool isLevelUp);
             if (isLevelUp)
             {
                 ToastForLevelUp(WorkerEnum.Accost);
@@ -223,6 +295,35 @@ public class NpcAIWorkerForAccost : NpcAIWokerFoBaseCpt
             //npcAIWorker.characterData.baseInfo.accostInfo.AddExp(1);
         }
         SetIntent(AccostIntentEnum.Idle);
+    }
+
+    /// <summary>
+    /// 处理 前往住宿顾客
+    /// </summary>
+    public void HandleForGoToHotelCustomer()
+    {
+        if (npcAIWorker.characterMoveCpt.IsAutoMoveStop())
+        {
+            if (orderForHotel.GetOrderStatus() != OrderHotelStatusEnum.End)
+            {
+                SetIntent(AccostIntentEnum.GoToStairsForFirst);
+            }
+            else
+            {
+                SetIntent(AccostIntentEnum.Idle);
+            }
+        }
+    }
+
+    /// <summary>
+    /// 处理-到达楼梯
+    /// </summary>
+    public void HandleForGoToStairsForFirst()
+    {
+        if (npcAIWorker.characterMoveCpt.IsAutoMoveStop())
+        {
+            transform.position = orderForHotel.layerSecondStairsPosition;
+        }
     }
 
     /// <summary>

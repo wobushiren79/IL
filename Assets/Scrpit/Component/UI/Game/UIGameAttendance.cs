@@ -13,7 +13,7 @@ public class UIGameAttendance : UIBaseOne, ItemGameAttendanceCpt.ICallBack
     public Button btSubmit;
 
     public GameObject objListContent;
-    public GameObject objItemWorkModle;
+    public GameObject objItemWorkModel;
 
     //出勤金钱
     public long attendancePriceL;
@@ -90,7 +90,7 @@ public class UIGameAttendance : UIBaseOne, ItemGameAttendanceCpt.ICallBack
 
     public void InitData()
     {
-        CptUtil.RemoveChildsByActive(objListContent.transform);
+        CptUtil.RemoveChildsByActive(objListContent);
         GameDataManager gameDataManager =uiGameManager.gameDataManager;
         if (gameDataManager == null)
             return;
@@ -105,10 +105,9 @@ public class UIGameAttendance : UIBaseOne, ItemGameAttendanceCpt.ICallBack
 
     public void CreateWorkerItem(CharacterBean characterData)
     {
-        if (objListContent == null || objItemWorkModle == null)
+        if (objListContent == null || objItemWorkModel == null)
             return;
-        GameObject objWorkerItem = Instantiate(objItemWorkModle, objListContent.transform);
-        objWorkerItem.SetActive(true);
+        GameObject objWorkerItem = Instantiate(objListContent, objItemWorkModel);
         ItemGameAttendanceCpt workerItem = objWorkerItem.GetComponent<ItemGameAttendanceCpt>();
         if (workerItem != null)
         {

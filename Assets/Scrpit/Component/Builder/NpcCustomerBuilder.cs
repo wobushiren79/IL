@@ -7,15 +7,27 @@ public class NpcCustomerBuilder : NpcNormalBuilder, IBaseObserver
 {
     //团队顾客
     public GameObject objGuestTeamModel;
+    //住宿顾客
+    public GameObject objCustomerForHotelModel;
 
+    protected InnHandler innHandler;
     protected List<NpcTeamBean> listTeamCustomer=new List<NpcTeamBean>();
     protected float buildTeamGustomerRate = 0;
+    protected float buildCustomerForHotelRate = 0;
+
+    protected override void Awake()
+    {
+        base.Awake();
+        innHandler = Find<InnHandler>(ImportantTypeEnum.InnHandler);
+    }
 
     private void Start()
     {
         InnAttributesBean innAttributes = gameDataManager.gameData.GetInnAttributesData();
+        InnBuildBean innBuild = gameDataManager.gameData.GetInnBuildData();
+        buildCustomerForHotelRate = innAttributes.CalculationCustomerForHotelRate(innBuild);
         buildTeamGustomerRate =  innAttributes.CalculationTeamCustomerBuildRate();
-        buildMaxNumber = 300;
+        buildMaxNumber = 500;
         gameTimeHandler.AddObserver(this);
         StartBuildCustomer();
     }
@@ -65,13 +77,20 @@ public class NpcCustomerBuilder : NpcNormalBuilder, IBaseObserver
             yield return new WaitForSeconds(buildInterval);
             try
             {
-                BuildCustomer();
-                //有一定概率创建团队
-                float buildTeamRate = Random.Range(0, 1f);
-                if (buildTeamRate <= buildTeamGustomerRate)
-                {
-                    BuildGuestTeam();
-                }
+                BuildCustomerForHotel();
+                //BuildCustomer();
+                ////有一定概率创建团队
+                //float buildTeamRate = Random.Range(0, 1f);
+                //if (buildTeamRate < buildTeamGustomerRate)
+                //{
+                //    BuildGuestTeam();
+                //}
+                ////有一定概率创建住宿
+                //float buildCustomerHotelRateRandom = Random.Range(0, 1f);
+                //if (buildCustomerHotelRateRandom < buildCustomerForHotelRate)
+                //{
+                //    BuildCustomerForHotel();
+                //}
             }
             catch
             {
@@ -185,6 +204,34 @@ public class NpcCustomerBuilder : NpcNormalBuilder, IBaseObserver
     }
 
     /// <summary>
+    /// 创建普通住宿顾客
+    /// </summary>
+    public void BuildCustomerForHotel()
+    {
+        Vector3 npcPosition = GetRandomStartPosition();
+        BuildCustomerForHotel(npcPosition);
+    }
+    public void BuildCustomerForHotel(Vector3 npcPosition)
+    {        
+        //如果大于构建上线则不再创建新NPC
+        if (objContainer.transform.childCount > buildMaxNumber)
+            return;
+        //生成NPC
+        GameObject npcObj = BuildNpc(objCustomerForHotelModel, npcPosition);
+        //设置意图
+        NpcAICustomerForHotelCpt customerAI = npcObj.GetComponent<NpcAICustomerForHotelCpt>();
+        //想要吃饭概率
+        if (gameTimeHandler.GetDayStatus() == GameTimeHandler.DayEnum.Work && innHandler.GetInnStatus() == InnHandler.InnStatusEnum.Open)
+        {
+            customerAI.SetIntent(NpcAICustomerForHotelCpt.CustomerHotelIntentEnum.GoToInn);
+        }
+        else
+        {
+            customerAI.SetIntent(NpcAICustomerForHotelCpt.CustomerHotelIntentEnum.Walk);
+        }
+    }
+
+    /// <summary>
     /// 通过团队Code获取团队成员
     /// </summary>
     /// <param name="teamId"></param>
@@ -272,8 +319,12 @@ public class NpcCustomerBuilder : NpcNormalBuilder, IBaseObserver
             buildInterval = buildInterval * 0.4f;
         }
         InnAttributesBean innAttributes = gameDataManager.gameData.GetInnAttributesData();
+        InnBuildBean innBuild = gameDataManager.gameData.GetInnBuildData();
+
+        buildCustomerForHotelRate = innAttributes.CalculationCustomerForHotelRate(innBuild);
         buildTeamGustomerRate = innAttributes.CalculationTeamCustomerBuildRate();
-        return buildInterval;
+        float buildGustomerRate = innAttributes.CalculationCustomerBuildRate();
+        return buildInterval / buildGustomerRate;
     }
 
     /// <summary>
