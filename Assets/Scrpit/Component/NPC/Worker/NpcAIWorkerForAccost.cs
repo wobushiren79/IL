@@ -24,8 +24,10 @@ public class NpcAIWorkerForAccost : NpcAIWokerFoBaseCpt
     public GameObject accostPro;
     //谈话进度
     public GameObject talkPro;
+    //引路进度
+    public GameObject guidePro;
     //拉人的检测范围
-    public BoxCollider2D mAccostBox;
+    protected BoxCollider2D mAccostBox;
 
     //前往的目的地
     public Vector3 movePosition;
@@ -130,6 +132,8 @@ public class NpcAIWorkerForAccost : NpcAIWokerFoBaseCpt
             accostPro.SetActive(false);
         if (talkPro != null)
             talkPro.SetActive(false);
+        if (accostPro != null)
+            accostPro.SetActive(false);
         if (mAccostBox != null)
             mAccostBox.enabled = false;
         npcAICustomer = null;
@@ -196,6 +200,8 @@ public class NpcAIWorkerForAccost : NpcAIWokerFoBaseCpt
     /// </summary>
     private void SetIntentForGoToHotelCustomer()
     {
+        if (accostPro != null)
+            accostPro.SetActive(true);
         if (orderForHotel == null)
             SetIntent(AccostIntentEnum.Idle);
         //走向客户
@@ -223,6 +229,7 @@ public class NpcAIWorkerForAccost : NpcAIWokerFoBaseCpt
             SetIntent(AccostIntentEnum.Idle);
             return;
         }
+        npcAIWorker.SetShout(GameCommonInfo.GetUITextById(13404));
         npcAIWorker.innHandler.GetStairsByRemarkId(buildStairs.remarkId, out Vector3 layerFirstPosition, out Vector3 layerSecondPosition);
         orderForHotel.layerFirstStairsPosition = layerFirstPosition;
         orderForHotel.layerSecondStairsPosition = layerSecondPosition;
