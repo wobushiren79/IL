@@ -10,6 +10,8 @@ public class OrderForHotel
     public NpcAICustomerForHotelCpt customer;
     //分配的床位
     public BuildBedCpt bed;
+    //睡觉时间
+    public int sleepTime;
 
     //上下楼梯的位置
     public Vector3 layerFirstStairsPosition;
@@ -20,6 +22,7 @@ public class OrderForHotel
         this.customer = customer;
         this.bed = bed;
         orderHotelStatus= OrderHotelStatusEnum.Start;
+        sleepTime = UnityEngine.Random.Range(1, 3);
     }
 
     public void SetOrderStatus(OrderHotelStatusEnum orderHotelStatus)

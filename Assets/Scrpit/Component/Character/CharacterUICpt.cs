@@ -239,7 +239,7 @@ public class CharacterUICpt : BaseMonoBehaviour
         }
         else
         {
-            int scaleY = spHand.texture.height / 32;
+            int scaleY = (int)spHand.rect.height / 32;
             float scale = (0.5f * scaleY);
             ivHand.transform.localScale = new Vector3(scale , scale, scale);
             ivHand.color = new Color(1, 1, 1, 1);

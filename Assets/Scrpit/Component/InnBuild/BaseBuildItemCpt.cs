@@ -188,6 +188,11 @@ public class BaseBuildItemCpt : BaseMonoBehaviour
         SetDirection((Direction2DEnum)direction);
     }
 
+    public Direction2DEnum GetDirection()
+    {
+        return direction;
+    } 
+
     public virtual void SetDirection(Direction2DEnum direction)
     {
         if (!canRotated)

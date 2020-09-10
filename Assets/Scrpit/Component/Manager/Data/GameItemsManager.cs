@@ -1,11 +1,12 @@
 ﻿using UnityEngine;
 using UnityEditor;
 using System.Collections.Generic;
-
+using UnityEngine.U2D;
 public class GameItemsManager : BaseManager, IItemsInfoView
 {
     //装备图标
-    public IconBeanDictionary listItemsIcon;
+    public SpriteAtlas itemsAtlas;
+    //public IconBeanDictionary listItemsIcon;
     //装备控制
     public ItemsInfoController itemsInfoController;
     //装备数据
@@ -195,7 +196,7 @@ public class GameItemsManager : BaseManager, IItemsInfoView
     /// <returns></returns>
     public Sprite GetItemsSpriteByName(string name)
     {
-        return GetSpriteByName(name, listItemsIcon);
+        return GetSpriteByName(name, itemsAtlas);
     }
 
     /// <summary>

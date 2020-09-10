@@ -2,7 +2,7 @@
 using UnityEditor;
 using System.Collections.Generic;
 using UnityEngine.Tilemaps;
-
+using UnityEngine.U2D;
 public class BaseManager : BaseMonoBehaviour
 {
     /// <summary>
@@ -110,6 +110,11 @@ public class BaseManager : BaseMonoBehaviour
             return spIcon;
         else
             return null;  
+    }
+
+    public virtual Sprite GetSpriteByName(string name, SpriteAtlas spriteAtlas)
+    {
+       return spriteAtlas.GetSprite(name);
     }
 
     /// <summary>

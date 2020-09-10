@@ -79,7 +79,7 @@ public class NpcCustomerBuilder : NpcNormalBuilder, IBaseObserver
             {
                 BuildCustomerForHotel();
                 //BuildCustomer();
-                ////有一定概率创建团队
+                //有一定概率创建团队
                 //float buildTeamRate = Random.Range(0, 1f);
                 //if (buildTeamRate < buildTeamGustomerRate)
                 //{
@@ -89,7 +89,7 @@ public class NpcCustomerBuilder : NpcNormalBuilder, IBaseObserver
                 //float buildCustomerHotelRateRandom = Random.Range(0, 1f);
                 //if (buildCustomerHotelRateRandom < buildCustomerForHotelRate)
                 //{
-                //    BuildCustomerForHotel();
+                //   BuildCustomerForHotel();
                 //}
             }
             catch

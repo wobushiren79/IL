@@ -333,6 +333,32 @@ public class BaseNpcAI : BaseObservable<IBaseObserver>
     }
 
     /// <summary>
+    /// 设置角色睡觉
+    /// </summary>
+    /// <param name="direction"></param>
+    public virtual void SetCharacterSleep(Direction2DEnum direction)
+    {
+        switch (direction)
+        {
+            case Direction2DEnum.Left:
+                SetCharacterFace(1);
+                characterBody.transform.DOLocalRotate(new Vector3(0, 0, -90), 0.1f).SetEase(Ease.OutBack);
+                characterBody.transform.localPosition = new Vector3(0, 0.3f, 0);
+                break;
+            case Direction2DEnum.UP:
+                characterBody.transform.DOLocalRotate(new Vector3(0, 0, 180), 0.1f).SetEase(Ease.OutBack);
+                break;
+            case Direction2DEnum.Right:
+                SetCharacterFace(2);
+                characterBody.transform.DOLocalRotate(new Vector3(0, 0, 90), 0.1f).SetEase(Ease.OutBack);
+                characterBody.transform.localPosition = new Vector3(0, 0.3f, 0);
+                break;
+            case Direction2DEnum.Down:
+                break;
+        }
+    }
+
+    /// <summary>
     /// 设置角色复活
     /// </summary>
     public virtual void SetCharacterLive()

@@ -38,9 +38,8 @@ public class ListDataEditor : Editor
     {
         GameObject Target = Selection.gameObjects[0];
         CharacterDressManager dressManager = Target.GetComponent<CharacterDressManager>();
-        dressManager.listIconMask.Clear();
-        AddIconBeanDictionaryByFolder("Assets/Texture/Character/Dress/Mask/", dressManager.listIconMask);
-
+        //dressManager.listIconMask.Clear();
+        //AddIconBeanDictionaryByFolder("Assets/Texture/Character/Dress/Mask/", dressManager.listIconMask);
 
         dressManager.listMaskAnim.Clear();
         AddAnimBeanDictionaryByFolder("Assets/Anim/Animation/Equip/Mask/", dressManager.listMaskAnim);
@@ -51,8 +50,8 @@ public class ListDataEditor : Editor
     {
         GameObject Target = Selection.gameObjects[0];
         CharacterDressManager dressManager = Target.GetComponent<CharacterDressManager>();
-        dressManager.listIconHat.Clear();
-        AddIconBeanDictionaryByFolder("Assets/Texture/Character/Dress/Hat/", dressManager.listIconHat);
+        //dressManager.listIconHat.Clear();
+       // AddIconBeanDictionaryByFolder("Assets/Texture/Character/Dress/Hat/", dressManager.listIconHat);
 
         dressManager.listHatAnim.Clear();
         AddAnimBeanDictionaryByFolder("Assets/Anim/Animation/Equip/Hat/", dressManager.listHatAnim);
@@ -63,8 +62,8 @@ public class ListDataEditor : Editor
     {
         GameObject Target = Selection.gameObjects[0];
         CharacterDressManager dressManager = Target.GetComponent<CharacterDressManager>();
-        dressManager.listIconClothes.Clear();
-        AddIconBeanDictionaryByFolder("Assets/Texture/Character/Dress/Clothes/", dressManager.listIconClothes);
+       // dressManager.listIconClothes.Clear();
+       // AddIconBeanDictionaryByFolder("Assets/Texture/Character/Dress/Clothes/", dressManager.listIconClothes);
 
         dressManager.listClothesAnim.Clear();
         AddAnimBeanDictionaryByFolder("Assets/Anim/Animation/Equip/Clothes/", dressManager.listClothesAnim);
@@ -75,8 +74,8 @@ public class ListDataEditor : Editor
     {
         GameObject Target = Selection.gameObjects[0];
         CharacterDressManager dressManager = Target.GetComponent<CharacterDressManager>();
-        dressManager.listIconShoes.Clear();
-        AddIconBeanDictionaryByFolder("Assets/Texture/Character/Dress/Shoes/", dressManager.listIconShoes);
+       // dressManager.listIconShoes.Clear();
+       // AddIconBeanDictionaryByFolder("Assets/Texture/Character/Dress/Shoes/", dressManager.listIconShoes);
 
         dressManager.listShoesAnim.Clear();
         AddAnimBeanDictionaryByFolder("Assets/Anim/Animation/Equip/Shoes/", dressManager.listShoesAnim);
@@ -87,9 +86,8 @@ public class ListDataEditor : Editor
     {
         GameObject Target = Selection.gameObjects[0];
         CharacterBodyManager bodyManager = Target.GetComponent<CharacterBodyManager>();
-        bodyManager.listIconBodyHair.Clear();
-        AddIconBeanDictionaryByFolder("Assets/Texture/Character/Hair/", bodyManager.listIconBodyHair);
-        //AddIconBeanDictionaryByFile("Assets/Texture/Character/character_hair.png", bodyManager.listIconBodyHair);
+        //bodyManager.listIconBodyHair.Clear();
+        //AddIconBeanDictionaryByFolder("Assets/Texture/Character/Hair/", bodyManager.listIconBodyHair);
     }
 
     [MenuItem("Custom/List/AddBodyEye")]
@@ -97,9 +95,8 @@ public class ListDataEditor : Editor
     {
         GameObject Target = Selection.gameObjects[0];
         CharacterBodyManager bodyManager = Target.GetComponent<CharacterBodyManager>();
-        bodyManager.listIconBodyEye.Clear();
-        AddIconBeanDictionaryByFolder("Assets/Texture/Character/Eye/", bodyManager.listIconBodyEye);
-        //AddIconBeanDictionaryByFile("Assets/Texture/Character/character_eye.png", bodyManager.listIconBodyEye);
+       // bodyManager.listIconBodyEye.Clear();
+        //AddIconBeanDictionaryByFolder("Assets/Texture/Character/Eye/", bodyManager.listIconBodyEye);
     }
 
     [MenuItem("Custom/List/AddBodyMouth")]
@@ -107,9 +104,8 @@ public class ListDataEditor : Editor
     {
         GameObject Target = Selection.gameObjects[0];
         CharacterBodyManager bodyManager = Target.GetComponent<CharacterBodyManager>();
-        bodyManager.listIconBodyMouth.Clear();
-        AddIconBeanDictionaryByFolder("Assets/Texture/Character/Mouth/", bodyManager.listIconBodyMouth);
-        //AddIconBeanDictionaryByFile("Assets/Texture/Character/character_mouth.png", bodyManager.listIconBodyMouth);
+       // bodyManager.listIconBodyMouth.Clear();
+       // AddIconBeanDictionaryByFolder("Assets/Texture/Character/Mouth/", bodyManager.listIconBodyMouth);
     }
 
 
@@ -118,9 +114,9 @@ public class ListDataEditor : Editor
     {
         GameObject Target = Selection.gameObjects[0];
         InnFoodManager foodManager = Target.GetComponent<InnFoodManager>();
-        foodManager.listFoodIcon.Clear();
+        //foodManager.listFoodIcon.Clear();
         foodManager.listFoodAnim.Clear();
-        AddIconBeanDictionaryByFolder("Assets/Texture/Food/", foodManager.listFoodIcon);
+        //AddIconBeanDictionaryByFolder("Assets/Texture/Food/", foodManager.listFoodIcon);
         AddAnimBeanDictionaryByFolder("Assets/Anim/Animation/Food/", foodManager.listFoodAnim);
     }
 
@@ -129,15 +125,15 @@ public class ListDataEditor : Editor
     {
         GameObject Target = Selection.gameObjects[0];
         GameItemsManager itemsManager = Target.GetComponent<GameItemsManager>();
-        itemsManager.listItemsIcon.Clear();
-        AddIconBeanDictionaryByFolder("Assets/Texture/Items/", itemsManager.listItemsIcon);
-        AddIconBeanDictionaryByFolder("Assets/Texture/Items/Chef/", itemsManager.listItemsIcon);
-        AddIconBeanDictionaryByFolder("Assets/Texture/Items/Waiter/", itemsManager.listItemsIcon);
-        AddIconBeanDictionaryByFolder("Assets/Texture/Items/Accountant/", itemsManager.listItemsIcon);
-        AddIconBeanDictionaryByFolder("Assets/Texture/Items/Accost/", itemsManager.listItemsIcon);
-        AddIconBeanDictionaryByFolder("Assets/Texture/Items/Beater/", itemsManager.listItemsIcon);
-        AddIconBeanDictionaryByFolder("Assets/Texture/Items/Medicine/", itemsManager.listItemsIcon);
-        AddIconBeanDictionaryByFolder("Assets/Texture/Element/Ingredients/", itemsManager.listItemsIcon);
+        //itemsManager.listItemsIcon.Clear();
+        //AddIconBeanDictionaryByFolder("Assets/Texture/Items/", itemsManager.listItemsIcon);
+        //AddIconBeanDictionaryByFolder("Assets/Texture/Items/Chef/", itemsManager.listItemsIcon);
+        //AddIconBeanDictionaryByFolder("Assets/Texture/Items/Waiter/", itemsManager.listItemsIcon);
+        //AddIconBeanDictionaryByFolder("Assets/Texture/Items/Accountant/", itemsManager.listItemsIcon);
+        //AddIconBeanDictionaryByFolder("Assets/Texture/Items/Accost/", itemsManager.listItemsIcon);
+        //AddIconBeanDictionaryByFolder("Assets/Texture/Items/Beater/", itemsManager.listItemsIcon);
+        //AddIconBeanDictionaryByFolder("Assets/Texture/Items/Medicine/", itemsManager.listItemsIcon);
+        //AddIconBeanDictionaryByFolder("Assets/Texture/Element/Ingredients/", itemsManager.listItemsIcon);
 
         itemsManager.listItemsAnim.Clear();
         AddAnimBeanDictionaryByFolder("Assets/Anim/Animation/Equip/Items/", itemsManager.listItemsAnim);
@@ -199,10 +195,10 @@ public class ListDataEditor : Editor
     {
         GameObject Target = Selection.gameObjects[0];
         IconDataManager iconDataManager = Target.GetComponent<IconDataManager>();
-        iconDataManager.listIcon.Clear();
+        //iconDataManager.listIcon.Clear();
         //AddIconBeanDictionaryByFolder("Assets/Texture/Background/", iconDataManager.listIcon);
         //AddIconBeanDictionaryByFolder("Assets/Texture/Common/", iconDataManager.listIcon);
-        AddIconBeanDictionaryByFolder("Assets/Texture/Common/UI/", iconDataManager.listIcon);
+        //AddIconBeanDictionaryByFolder("Assets/Texture/Common/UI/", iconDataManager.listIcon);
     }
 
     [MenuItem("Custom/List/AddEffect")]

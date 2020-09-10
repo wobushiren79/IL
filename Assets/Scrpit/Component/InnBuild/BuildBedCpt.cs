@@ -13,6 +13,7 @@ public class BuildBedCpt : BaseBuildItemCpt
     }
 
     public GameObject objBed;
+    public GameObject objSleep;
     public SpriteRenderer srBase;
     public SpriteRenderer srBar;
     public SpriteRenderer srSheets;
@@ -109,6 +110,15 @@ public class BuildBedCpt : BaseBuildItemCpt
         srPillow.sprite = innBuildManager.GetFurnitureSpriteByName(iconKey);
     }
     
+    /// <summary>
+    /// 获取睡觉的位置
+    /// </summary>
+    /// <returns></returns>
+    public Vector3 GetSleepPosition()
+    {
+        return objSleep.transform.position;
+    }
+
     /// <summary>
     /// 清理床
     /// </summary>

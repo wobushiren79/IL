@@ -403,6 +403,11 @@ public class InnHandler : BaseMonoBehaviour, IBaseObserver
         if (orderForHotel == null)
             return;
         orderForHotel.SetOrderStatus(OrderHotelStatusEnum.End);
+        //先移除排队列表
+        if (hotelQueue.Contains(orderForHotel))
+        {
+            hotelQueue.Remove(orderForHotel);
+        }
         //顾客离开
         if (orderForHotel.customer != null)
         {

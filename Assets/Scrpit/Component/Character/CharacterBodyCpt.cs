@@ -117,6 +117,12 @@ public class CharacterBodyCpt : BaseMonoBehaviour
         }
         if (sprTrunk != null && spTrunk != null)
             sprTrunk.sprite = spTrunk;
+        if(sprHead!=null)
+            sprHead.sprite = characterBodyManager.GetTrunkSpriteByName("character_head");
+        if (sprFootLeft != null)
+            sprFootLeft.sprite = characterBodyManager.GetTrunkSpriteByName("character_body_left_foot");
+        if (sprFootRight != null)
+            sprFootRight.sprite = characterBodyManager.GetTrunkSpriteByName("character_body_right_foot");
         //数据保存
         if (characterBodyData == null)
             characterBodyData = new CharacterBodyBean();

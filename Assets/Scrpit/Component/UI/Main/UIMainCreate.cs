@@ -123,13 +123,43 @@ public class UIMainCreate : UIGameComponent,
     public void InitData()
     {
         //初始化可选择头型数据
-        listSelectHair = TypeConversionUtil.IconBeanDictionaryToList(uiGameManager.characterBodyManager.listIconBodyHair);
+        Sprite[] listHair = new Sprite[uiGameManager.characterBodyManager.hairAtlas.spriteCount];
+        uiGameManager.characterBodyManager.hairAtlas.GetSprites(listHair);
+        listSelectHair = new List<IconBean>();
+        foreach (Sprite itemSprite in listHair)
+        {
+            IconBean iconBean = new IconBean();
+            iconBean.key = itemSprite.name;
+            iconBean.key = iconBean.key.Replace("(Clone)", "");
+            iconBean.value = itemSprite;
+            listSelectHair.Add(iconBean);
+        }
         ChangeSelectPosition(selectHair, 0);
         //初始化可选择眼睛
-        listSelectEye = TypeConversionUtil.IconBeanDictionaryToList(uiGameManager.characterBodyManager.listIconBodyEye);
+        Sprite[] listEye = new Sprite[uiGameManager.characterBodyManager.eyeAtlas.spriteCount];
+        uiGameManager.characterBodyManager.eyeAtlas.GetSprites(listEye);
+        listSelectEye = new List<IconBean>();
+        foreach (Sprite itemSprite in listEye)
+        {
+            IconBean iconBean = new IconBean();
+            iconBean.key = itemSprite.name;
+            iconBean.key = iconBean.key.Replace("(Clone)", "");
+            iconBean.value = itemSprite;
+            listSelectEye.Add(iconBean);
+        }
         ChangeSelectPosition(selectEye, 0);
         //初始化可选择嘴巴
-        listSelectMouth = TypeConversionUtil.IconBeanDictionaryToList(uiGameManager.characterBodyManager.listIconBodyMouth);
+        Sprite[] listMouth = new Sprite[uiGameManager.characterBodyManager.mouthAtlas.spriteCount];
+        uiGameManager.characterBodyManager.mouthAtlas.GetSprites(listMouth);
+        listSelectMouth = new List<IconBean>();
+        foreach (Sprite itemSprite in listMouth)
+        {
+            IconBean iconBean = new IconBean();
+            iconBean.key = itemSprite.name;
+            iconBean.key = iconBean.key.Replace("(Clone)", "");
+            iconBean.value = itemSprite;
+            listSelectMouth.Add(iconBean);
+        }
         ChangeSelectPosition(selectMouth, 0);
         //初始化帽子
         GameCommonInfo.baseDataController.GetBaseData(BaseDataTypeEnum.HatForLevel0, out string hatListStr);

@@ -1,11 +1,11 @@
 ﻿using UnityEngine;
 using UnityEditor;
 using System.Collections.Generic;
-
+using UnityEngine.U2D;
 public class InnFoodManager : BaseManager, IMenuInfoView, ICookingThemeView
 {
     //食物图标
-    public IconBeanDictionary listFoodIcon;
+    public SpriteAtlas foodAtlas;
     //食物动画
     public AnimBeanDictionary listFoodAnim;
     
@@ -43,7 +43,7 @@ public class InnFoodManager : BaseManager, IMenuInfoView, ICookingThemeView
     /// <returns></returns>
     public Sprite GetFoodSpriteByName(string name)
     {
-        return GetSpriteByName(name + "_0", listFoodIcon);
+        return GetSpriteByName(name + "_0", foodAtlas);
     }
     /// <summary>
     /// 通过名字获取食物图标
@@ -52,7 +52,7 @@ public class InnFoodManager : BaseManager, IMenuInfoView, ICookingThemeView
     /// <returns></returns>
     public Sprite GetFoodLastSpriteByName(string name)
     {
-        return GetSpriteByName(name + "_1", listFoodIcon);
+        return GetSpriteByName(name + "_1", foodAtlas);
     }
 
     /// <summary>

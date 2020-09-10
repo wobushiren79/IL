@@ -1,26 +1,32 @@
 ﻿using UnityEngine;
 using UnityEditor;
 using System.Collections.Generic;
+using UnityEngine.U2D;
 
 public class CharacterDressManager : BaseManager
 {
+    public SpriteAtlas maskAtlas;
     //面具列表
-    public IconBeanDictionary listIconMask;
+    //public IconBeanDictionary listIconMask;
     //面具动画列表
     public AnimBeanDictionary listMaskAnim;
 
+    public SpriteAtlas shoesAtlas;
     //鞋子列表
-    public IconBeanDictionary listIconShoes;
+    //public IconBeanDictionary listIconShoes;
     //鞋子动画列表
     public AnimBeanDictionary listShoesAnim;
 
+
+    public SpriteAtlas clothesAtlas;
     //衣服列表
-    public IconBeanDictionary listIconClothes;
+    //public IconBeanDictionary listIconClothes;
     //衣服动画列表
     public AnimBeanDictionary listClothesAnim;
 
+    public SpriteAtlas hatAtlas;
     //帽子列表
-    public IconBeanDictionary listIconHat;
+    //public IconBeanDictionary listIconHat;
     //帽子动画列表
     public AnimBeanDictionary listHatAnim;
 
@@ -63,7 +69,7 @@ public class CharacterDressManager : BaseManager
     /// <returns></returns>
     public Sprite GetMaskSpriteByName(string name)
     {
-        return GetSpriteByName(name, listIconMask);
+        return GetSpriteByName(name, maskAtlas);
     }
 
     /// <summary>
@@ -83,7 +89,7 @@ public class CharacterDressManager : BaseManager
     /// <returns></returns>
     public Sprite GetShoesSpriteByName(string name)
     {
-        return GetSpriteByName(name, listIconShoes);
+        return GetSpriteByName(name, shoesAtlas);
     }
 
     /// <summary>
@@ -103,7 +109,7 @@ public class CharacterDressManager : BaseManager
     /// <returns></returns>
     public Sprite GetClothesSpriteByName(string name)
     {
-        return GetSpriteByName(name, listIconClothes);
+        return GetSpriteByName(name, clothesAtlas);
     }
 
     /// <summary>
@@ -123,7 +129,7 @@ public class CharacterDressManager : BaseManager
     /// <returns></returns>
     public Sprite GetHatSpriteByName(string name)
     {
-        return GetSpriteByName(name, listIconHat);
+        return GetSpriteByName(name, hatAtlas);
     }
 
     /// <summary>

@@ -1,10 +1,11 @@
 ﻿using UnityEngine;
 using UnityEditor;
-
+using UnityEngine.U2D;
 public class IconDataManager : BaseManager
 {
     //UI图标
-    public IconBeanDictionary listIcon;
+    //public IconBeanDictionary listIcon;
+    public SpriteAtlas iconAtlas;
     
     /// <summary>
     /// 根据名字获取UI图标
@@ -13,6 +14,6 @@ public class IconDataManager : BaseManager
     /// <returns></returns>
     public Sprite GetIconSpriteByName(string name)
     {
-        return GetSpriteByName(name, listIcon);
+        return GetSpriteByName(name, iconAtlas);
     }
 }

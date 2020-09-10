@@ -10,9 +10,10 @@ public class NpcAICustomerForHotelCpt : BaseNpcAI
         WaitAccost=2,
         GoToStairsForFirst=3, // 前往一楼楼梯
         GoToBed=4,
-        Sleep=5,
-        GoToPay=6,
-        WaitPay =7,
+        GoToStairsForSecond=5,
+        Sleep =6,
+        GoToPay=7,
+        WaitPay =8,
         Leave = 99,//离开
     }
 
@@ -51,6 +52,12 @@ public class NpcAICustomerForHotelCpt : BaseNpcAI
             case CustomerHotelIntentEnum.GoToStairsForFirst:
                 HandleForGoToStairsForFirst();
                 break;
+            case CustomerHotelIntentEnum.GoToStairsForSecond:
+                HandleForGoToStairsForSecond();
+                break;
+            case CustomerHotelIntentEnum.GoToBed:
+                HandleForGoToBed();
+                break;
         }
     }
 
@@ -76,7 +83,16 @@ public class NpcAICustomerForHotelCpt : BaseNpcAI
                 IntentForWaitAccost();
                 break;
             case CustomerHotelIntentEnum.GoToStairsForFirst:
-                IntentForGoToStairsForFirst();
+                IntentForGoToStairsFirst();
+                break;
+            case CustomerHotelIntentEnum.GoToBed:
+                IntentForGoToBed();
+                break;
+            case CustomerHotelIntentEnum.GoToStairsForSecond:
+                IntentForGoToStairsSecond();
+                break;
+            case CustomerHotelIntentEnum.Sleep:
+                IntentForSleep();
                 break;
         }
 
@@ -136,10 +152,46 @@ public class NpcAICustomerForHotelCpt : BaseNpcAI
     /// <summary>
     /// 意图-等待接待
     /// </summary>
-    public void IntentForGoToStairsForFirst()
+    public void IntentForGoToStairsFirst()
     {
         SetCharacterMove(orderForHotel.layerFirstStairsPosition);
     }
+
+    /// <summary>
+    /// 前往二楼楼梯
+    /// </summary>
+    public void IntentForGoToStairsSecond()
+    {
+        SetCharacterMove(orderForHotel.layerSecondStairsPosition);
+    }
+
+    /// <summary>
+    /// 前往床
+    /// </summary>
+    public void IntentForGoToBed()
+    {
+        Vector3 sleepPosition = orderForHotel.bed.GetSleepPosition();
+        if (!CheckUtil.CheckPath(sleepPosition, transform.position))
+        {
+            innHandler.EndOrderForForce(orderForHotel);
+            SetIntent(CustomerHotelIntentEnum.GoToStairsForSecond);
+            return;
+        }
+        SetCharacterMove(sleepPosition);
+    }
+
+    /// <summary>
+    /// 睡觉
+    /// </summary>
+    public void IntentForSleep()
+    {
+        //设置睡觉的朝向
+        Direction2DEnum directionBed= orderForHotel.bed.GetDirection();
+        SetCharacterSleep(directionBed);
+        //开始睡觉
+        StartCoroutine(CoroutineForStartSleep(orderForHotel.sleepTime));
+    }
+
 
     /// <summary>
     /// 离开处理
@@ -190,9 +242,32 @@ public class NpcAICustomerForHotelCpt : BaseNpcAI
         if (characterMoveCpt.IsAutoMoveStop())
         {
             transform.position = orderForHotel.layerSecondStairsPosition;
+            SetIntent(CustomerHotelIntentEnum.GoToBed);
         }
     }
 
+    /// <summary>
+    /// 处理-到达楼梯
+    /// </summary>
+    public void HandleForGoToStairsForSecond()
+    {
+        if (characterMoveCpt.IsAutoMoveStop())
+        {
+            transform.position = orderForHotel.layerFirstStairsPosition;
+            SetIntent(CustomerHotelIntentEnum.Leave);
+        }
+    }
+
+    /// <summary>
+    /// 处理-到达床
+    /// </summary>
+    public void HandleForGoToBed()
+    {
+        if (characterMoveCpt.IsAutoMoveStop())
+        {
+            SetIntent(CustomerHotelIntentEnum.Sleep);
+        }
+    }
 
     /// <summary>
     /// 协程-开始等待接待
@@ -203,6 +278,22 @@ public class NpcAICustomerForHotelCpt : BaseNpcAI
         AddWaitIcon();
         yield return new WaitForSeconds(30);
         innHandler.EndOrderForForce(orderForHotel);
+    }
+
+    /// <summary>
+    /// 协程-开始睡觉
+    /// </summary>
+    /// <param name="sleepTime"></param>
+    /// <returns></returns>
+    public IEnumerator CoroutineForStartSleep(int sleepTime)
+    {
+        Sprite spDaze = iconDataManager.GetIconSpriteByName("daze_1");
+        string markId = SystemUtil.GetUUID(SystemUtil.UUIDTypeEnum.N);
+        AddStatusIconForPro(spDaze, null, markId);
+        yield return new WaitForSeconds(sleepTime * 60);
+        RemoveStatusIconByType(CharacterStatusIconEnum.Pro);
+        SetCharacterLive();
+        SetIntent(CustomerHotelIntentEnum.GoToStairsForSecond);
     }
 
     /// <summary>
