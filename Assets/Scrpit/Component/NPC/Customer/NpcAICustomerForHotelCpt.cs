@@ -7,19 +7,21 @@ public class NpcAICustomerForHotelCpt : BaseNpcAI
     {
         Walk = 0,//路过
         GoToInn = 1,//前往客栈
-        WaitAccost=2,
-        GoToStairsForFirst=3, // 前往一楼楼梯
-        GoToBed=4,
-        GoToStairsForSecond=5,
-        Sleep =6,
-        GoToPay=7,
-        WaitPay =8,
+        WaitAccost = 2,
+        GoToStairsForFirst = 3, // 前往一楼楼梯
+        GoToBed = 4,
+        GoToStairsForSecond = 5,
+        Sleep = 6,
+        GoToPay = 7,
+        WaitPay = 8,
         Leave = 99,//离开
     }
 
     public CustomerHotelIntentEnum customerHotelIntent;
     //移动目标点
     public Vector3 movePosition;
+    //表情控制
+    public CharacterMoodCpt characterMoodCpt;
 
     //客栈处理
     protected InnHandler innHandler;
@@ -31,7 +33,7 @@ public class NpcAICustomerForHotelCpt : BaseNpcAI
     //等待动画
     public RuntimeAnimatorController waitIconAnim;
 
-    public override  void Awake()
+    public override void Awake()
     {
         base.Awake();
         sceneInnManager = Find<SceneInnManager>(ImportantTypeEnum.SceneManager);
@@ -46,6 +48,9 @@ public class NpcAICustomerForHotelCpt : BaseNpcAI
             case CustomerHotelIntentEnum.Leave:
                 HandleForLeave();
                 break;
+            case CustomerHotelIntentEnum.WaitAccost:
+                ChangeMood(-Time.deltaTime);
+                break;
             case CustomerHotelIntentEnum.GoToInn:
                 HandleForGoToInn();
                 break;
@@ -58,14 +63,20 @@ public class NpcAICustomerForHotelCpt : BaseNpcAI
             case CustomerHotelIntentEnum.GoToBed:
                 HandleForGoToBed();
                 break;
+            case CustomerHotelIntentEnum.GoToPay:
+                HandleForGoToPay();
+                break;
+            case CustomerHotelIntentEnum.WaitPay:
+                ChangeMood(-Time.deltaTime);
+                break;
         }
     }
 
     public void SetIntent(CustomerHotelIntentEnum intent)
-    {        
+    {
         //删除进度图标
         RemoveStatusIconByType(CharacterStatusIconEnum.Pro);
-        if(this)
+        if (this)
             StopAllCoroutines();
         this.customerHotelIntent = intent;
         switch (intent)
@@ -93,6 +104,12 @@ public class NpcAICustomerForHotelCpt : BaseNpcAI
                 break;
             case CustomerHotelIntentEnum.Sleep:
                 IntentForSleep();
+                break;
+            case CustomerHotelIntentEnum.GoToPay:
+                IntentForGoToPay();
+                break;
+            case CustomerHotelIntentEnum.WaitPay:
+                IntentForWaitPay();
                 break;
         }
 
@@ -146,7 +163,9 @@ public class NpcAICustomerForHotelCpt : BaseNpcAI
     /// </summary>
     public void IntentForWaitAccost()
     {
-        StartCoroutine(CoroutineForStartWaitAccost());
+        //开启满意度
+        characterMoodCpt.SetMood(orderForHotel.innEvaluation.GetPraise());
+        AddWaitIcon();
     }
 
     /// <summary>
@@ -173,7 +192,7 @@ public class NpcAICustomerForHotelCpt : BaseNpcAI
         Vector3 sleepPosition = orderForHotel.bed.GetSleepPosition();
         if (!CheckUtil.CheckPath(sleepPosition, transform.position))
         {
-            innHandler.EndOrderForForce(orderForHotel);
+            innHandler.EndOrderForForce(orderForHotel, true);
             SetIntent(CustomerHotelIntentEnum.GoToStairsForSecond);
             return;
         }
@@ -186,10 +205,64 @@ public class NpcAICustomerForHotelCpt : BaseNpcAI
     public void IntentForSleep()
     {
         //设置睡觉的朝向
-        Direction2DEnum directionBed= orderForHotel.bed.GetDirection();
+        Direction2DEnum directionBed = orderForHotel.bed.GetDirection();
         SetCharacterSleep(directionBed);
         //开始睡觉
+        orderForHotel.bed.SetBedStatus(BuildBedCpt.BedStatusEnum.Use);
         StartCoroutine(CoroutineForStartSleep(orderForHotel.sleepTime));
+    }
+
+    /// <summary>
+    /// 前往支付
+    /// </summary>
+    public void IntentForGoToPay()
+    {
+        orderForHotel.counter = innHandler.GetCounter(transform.position);
+        //如果判断有无结算台
+        if (orderForHotel.counter == null)
+        {
+            innHandler.EndOrderForForce(orderForHotel, true);
+        }
+        else
+        {
+            movePosition = orderForHotel.counter.GetPayPosition();
+            //if (!CheckUtil.CheckPath(transform.position, movePosition))
+            //{
+            //    innHandler.EndOrderForForce(orderForHotel, true);
+            //}
+            //else
+            //{
+            //    characterMoveCpt.SetDestination(movePosition);
+            //}
+            characterMoveCpt.SetDestination(movePosition);
+        }
+    }
+
+
+    /// <summary>
+    /// 改变心情
+    /// </summary>
+    /// <param name="mood"></param>
+    public virtual void ChangeMood(float mood)
+    {
+        if (orderForHotel == null)
+            return;
+        orderForHotel.innEvaluation.AddMood(mood);
+        characterMoodCpt.SetMood(orderForHotel.innEvaluation.GetPraise());
+        if (orderForHotel.innEvaluation.mood <= 0)
+        {
+            StopAllCoroutines();
+            innHandler.EndOrderForForce(orderForHotel, true);
+        }
+    }
+
+    /// <summary>
+    /// 等待支付
+    /// </summary>
+    public void IntentForWaitPay()
+    {
+        AddPayIcon();
+        orderForHotel.counter.payQueue.Add(orderForHotel);
     }
 
 
@@ -215,14 +288,14 @@ public class NpcAICustomerForHotelCpt : BaseNpcAI
             if (innHandler.GetInnStatus() == InnHandler.InnStatusEnum.Open)
             {
                 //首先判断还有没有床位
-                BuildBedCpt buildBedCpt= innHandler.GetIdleBed();
+                BuildBedCpt buildBedCpt = innHandler.GetIdleBed();
                 if (buildBedCpt != null)
                 {
                     //如果没有关门分派一个接待
                     SetIntent(CustomerHotelIntentEnum.WaitAccost);
                     //创建订单
-                    orderForHotel = innHandler.CreateOrderForHotel(this,buildBedCpt);
-                    characterShoutCpt.Shout(GameCommonInfo.GetUITextById(13401));      
+                    orderForHotel = innHandler.CreateOrderForHotel(this, buildBedCpt);
+                    characterShoutCpt.Shout(GameCommonInfo.GetUITextById(13401));
                 }
                 else
                 {
@@ -254,7 +327,14 @@ public class NpcAICustomerForHotelCpt : BaseNpcAI
         if (characterMoveCpt.IsAutoMoveStop())
         {
             transform.position = orderForHotel.layerFirstStairsPosition;
-            SetIntent(CustomerHotelIntentEnum.Leave);
+            if (orderForHotel.GetOrderStatus() == OrderHotelStatusEnum.Pay)
+            {
+                SetIntent(CustomerHotelIntentEnum.GoToPay);
+            }
+            else
+            {
+                ChangeMood(-99999);
+            }
         }
     }
 
@@ -270,15 +350,16 @@ public class NpcAICustomerForHotelCpt : BaseNpcAI
     }
 
     /// <summary>
-    /// 协程-开始等待接待
+    /// 前往支付
     /// </summary>
-    /// <returns></returns>
-    public IEnumerator CoroutineForStartWaitAccost()
+    public void HandleForGoToPay()
     {
-        AddWaitIcon();
-        yield return new WaitForSeconds(30);
-        innHandler.EndOrderForForce(orderForHotel);
+        if (characterMoveCpt.IsAutoMoveStop())
+        {
+            SetIntent(CustomerHotelIntentEnum.WaitPay);
+        }
     }
+
 
     /// <summary>
     /// 协程-开始睡觉
@@ -291,9 +372,15 @@ public class NpcAICustomerForHotelCpt : BaseNpcAI
         string markId = SystemUtil.GetUUID(SystemUtil.UUIDTypeEnum.N);
         AddStatusIconForPro(spDaze, null, markId);
         yield return new WaitForSeconds(sleepTime * 60);
+        orderForHotel.SetOrderStatus(OrderHotelStatusEnum.Pay);
+        orderForHotel.bed.SetBedStatus(BuildBedCpt.BedStatusEnum.WaitClean);
         RemoveStatusIconByType(CharacterStatusIconEnum.Pro);
+
+        SetCharacterData(characterData);
         SetCharacterLive();
+
         SetIntent(CustomerHotelIntentEnum.GoToStairsForSecond);
+        innHandler.bedCleanQueue.Add(orderForHotel);
     }
 
     /// <summary>
@@ -305,5 +392,16 @@ public class NpcAICustomerForHotelCpt : BaseNpcAI
         string waitIconMarkId = SystemUtil.GetUUID(SystemUtil.UUIDTypeEnum.N);
         Sprite spWaitIcon = iconDataManager.GetIconSpriteByName("time_wait_1_0");
         AddStatusIconForPro(spWaitIcon, waitIconAnim, waitIconMarkId);
+    }
+
+    /// <summary>
+    /// 添加支付图标
+    /// </summary>
+    public void AddPayIcon()
+    {
+        //添加等待图标
+        string payIconMarkId = SystemUtil.GetUUID(SystemUtil.UUIDTypeEnum.N);
+        Sprite spPayIcon = iconDataManager.GetIconSpriteByName("money_1");
+        AddStatusIconForPro(spPayIcon, null, payIconMarkId);
     }
 }

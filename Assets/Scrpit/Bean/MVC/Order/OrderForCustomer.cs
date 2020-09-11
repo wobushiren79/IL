@@ -3,7 +3,7 @@ using UnityEditor;
 using System;
 
 [Serializable]
-public class OrderForCustomer 
+public class OrderForCustomer : OrderForBase
 {
     //订单支付状态
     public OrderStautsForPayEnum orderStauts;
@@ -17,8 +17,6 @@ public class OrderForCustomer
     public BuildTableCpt table;
     //烹饪的灶台  
     public BuildStoveCpt stove;
-    //支付的地方
-    public BuildCounterCpt counter;
     //做好的食物 
     public FoodForCustomerCpt foodCpt;
     //做食物的厨师
@@ -27,8 +25,7 @@ public class OrderForCustomer
     public NpcAIWorkerCpt waiterForSend;
     //做出的食物等级 -1 0 1 2
     public int foodLevel;
-    //评价数据
-    public InnEvaluationBean innEvaluation = new InnEvaluationBean();
+
 
     public OrderForCustomer(CustomerTypeEnum customerType, NpcAICustomerCpt customer)
     {
@@ -40,7 +37,7 @@ public class OrderForCustomer
     /// 检测订单是否有效
     /// </summary>
     /// <returns></returns>
-    public bool CheckOrder()
+    public new bool CheckOrder()
     {
         if (foodData == null || customer == null || customer.customerIntent == NpcAICustomerCpt.CustomerIntentEnum.Leave)
         {

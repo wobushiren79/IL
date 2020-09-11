@@ -211,7 +211,7 @@ public class NpcAIWorkerCpt : BaseNpcAI
 
             bool isDistributionSuccess = innHandler.DistributionWorkForType(workerDetils, this);
             if (isDistributionSuccess)
-                return innHandler.DistributionWorkForType(workerDetils, this);
+                return true;
         }
         return false;
     }
@@ -258,12 +258,16 @@ public class NpcAIWorkerCpt : BaseNpcAI
                 SetIntentForWaiterSend(orderForCustomer);
                 break;
             case WorkerIntentEnum.WaiterClean:
-                SetIntentForWaiterClear(orderForCustomer);
+                SetIntentForWaiterCleanTable(orderForCustomer);
                 break;
             case WorkerIntentEnum.WaiterBed:
+                SetIntentForWaiterCleanBed(orderForHotel);
                 break;
             case WorkerIntentEnum.Accounting:
-                SetIntentForAccounting(orderForCustomer);
+                if (orderForCustomer!=null)
+                    SetIntentForAccounting(orderForCustomer);
+                else if (orderForHotel!=null)
+                    SetIntentForAccounting(orderForHotel);     
                 break;
             case WorkerIntentEnum.AccostSolicit:
                 SetIntentForAccostSolicit();
@@ -357,18 +361,27 @@ public class NpcAIWorkerCpt : BaseNpcAI
     /// 设置清理
     /// </summary>
     /// <param name="stoveCpt"></param>
-    public void SetIntentForWaiterClear(OrderForCustomer orderForCustomer)
+    public void SetIntentForWaiterCleanTable(OrderForCustomer orderForCustomer)
     {
         aiForWaiter.StartFoodClean(orderForCustomer);
+    }
+
+    /// <summary>
+    /// 设置理床
+    /// </summary>
+    /// <param name="orderForHotel"></param>
+    public void SetIntentForWaiterCleanBed(OrderForHotel orderForHotel)
+    {
+        aiForWaiter.StartBedClean(orderForHotel);
     }
 
     /// <summary>
     /// 设置结账
     /// </summary>
     /// <param name="customerCpt"></param>
-    public void SetIntentForAccounting(OrderForCustomer orderForCustomer)
+    public void SetIntentForAccounting(OrderForBase order)
     {
-        aiForAccountant.StartAccounting(orderForCustomer);
+        aiForAccountant.StartAccounting(order);
     }
 
     /// <summary>

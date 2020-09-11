@@ -128,4 +128,18 @@ public class InnCookHandler : InnBaseHandler
             return false;
         }
     }
+
+    /// <summary>
+    /// 清理所有灶台
+    /// </summary>
+    public void CleanAllStove()
+    {
+        if (listStoveCpt==null)
+            return;
+        for (int i = 0; i < listStoveCpt.Count; i++)
+        {
+            BuildStoveCpt buildStoveCpt = listStoveCpt[i];
+            buildStoveCpt.ClearStove();
+        };
+    }
 }

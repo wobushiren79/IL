@@ -230,14 +230,7 @@ public class NpcAIWorkerForAccost : NpcAIWokerFoBaseCpt
         if (buildStairs == null)
         {
             npcAIWorker.SetShout(GameCommonInfo.GetUITextById(13402));
-            npcAIWorker.innHandler.EndOrderForForce(orderForHotel);
-            SetIntent(AccostIntentEnum.Idle);
-            return;
-        }
-        if (!CheckUtil.CheckPath(transform.position, buildStairs.GetStairsPosition()))
-        {
-            npcAIWorker.SetShout(GameCommonInfo.GetUITextById(13403));
-            npcAIWorker.innHandler.EndOrderForForce(orderForHotel);
+            orderForHotel.customer.ChangeMood(-99999);
             SetIntent(AccostIntentEnum.Idle);
             return;
         }
@@ -257,6 +250,8 @@ public class NpcAIWorkerForAccost : NpcAIWokerFoBaseCpt
     /// </summary>
     public void SetIntentForGoToStairsForSecond()
     {
+        if (guidePro != null)
+            guidePro.SetActive(false);
         npcAIWorker.SetCharacterMove(orderForHotel.layerSecondStairsPosition);
     }
 
@@ -389,6 +384,14 @@ public class NpcAIWorkerForAccost : NpcAIWokerFoBaseCpt
     {
         if (npcAIWorker.characterMoveCpt.IsAutoMoveStop())
         {
+            //记录数据
+            npcAIWorker.characterData.baseInfo.accostInfo.AddGuideNumber(1);
+            //增加经验
+            npcAIWorker.characterData.baseInfo.accostInfo.AddExp(5, out bool isLevelUp);
+            if (isLevelUp)
+            {
+                ToastForLevelUp(WorkerEnum.Accost);
+            }
             SetIntent(AccostIntentEnum.GoToStairsForSecond);
         }
     }

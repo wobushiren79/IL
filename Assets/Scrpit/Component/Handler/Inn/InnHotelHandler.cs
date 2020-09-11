@@ -22,8 +22,6 @@ public class InnHotelHandler : InnBaseHandler
         return listBedCpt;
     }
 
-
-
     /// <summary>
     /// 获取随机空闲的座位
     /// </summary>
@@ -46,5 +44,20 @@ public class InnHotelHandler : InnBaseHandler
         BuildBedCpt buildBed = RandomUtil.GetRandomDataByList(idleBedList);
         buildBed.SetBedStatus(BuildBedCpt.BedStatusEnum.Ready);
         return buildBed;
+    }
+
+
+    /// <summary>
+    /// 清理所有床
+    /// </summary>
+    public void CleanAllBed()
+    {
+        if (listBedCpt == null)
+            return;
+        for (int i=0;i< listBedCpt.Count;i++)
+        {
+            BuildBedCpt buildBed = listBedCpt[i];
+            buildBed.CleanBed();
+        }
     }
 }

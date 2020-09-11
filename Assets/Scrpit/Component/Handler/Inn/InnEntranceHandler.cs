@@ -85,7 +85,7 @@ public class InnEntranceHandler : BaseMonoBehaviour
     /// </summary>
     /// <param name="position"></param>
     /// <returns></returns>
-    public BuildStairsCpt GetCloseStairs(Vector3 position )
+    public BuildStairsCpt GetCloseStairs(Vector3 position)
     {
         if (CheckUtil.ListIsNull(listStairsCpt))
             return null;
@@ -94,6 +94,11 @@ public class InnEntranceHandler : BaseMonoBehaviour
         for (int i = 0; i < listStairsCpt.Count; i++)
         {
             BuildStairsCpt buildStairs = listStairsCpt[i];
+            //如果不能到达则不用
+            if (!CheckUtil.CheckPath(position, buildStairs.GetStairsPosition()))
+            {
+                continue;
+            }
             float itemDistance=  Vector3.Distance(position, buildStairs.GetStairsPosition());
             if( tempDistance > itemDistance)
             {

@@ -11,7 +11,8 @@ public class CharacterWorkerForAccostBean : CharacterWorkerBaseBean
     public long accostSuccessNumber;
     //吆喝失败次数
     public long accostFailNumber;
-
+    //引路次数
+    public long guideNumber;
 
     //是否开启
     public bool isWorkingForSolicit = true;
@@ -61,5 +62,14 @@ public class CharacterWorkerForAccostBean : CharacterWorkerBaseBean
     {
         accostFailNumber += number;
         accostTotalNumber += number;
+    }
+
+    /// <summary>
+    /// 引路次数添加
+    /// </summary>
+    /// <param name="number"></param>
+    public void AddGuideNumber(int number)
+    {
+        guideNumber += number;
     }
 }

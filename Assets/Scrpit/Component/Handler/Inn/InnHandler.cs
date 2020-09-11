@@ -42,6 +42,7 @@ public class InnHandler : BaseMonoBehaviour, IBaseObserver
     protected ToastManager toastManager;
     //NPC创建
     protected NpcWorkerBuilder workerBuilder;
+    protected NpcCustomerBuilder customerBuilder;
     //游戏数据处理
     protected GameDataHandler gameDataHandler;
 
@@ -56,10 +57,11 @@ public class InnHandler : BaseMonoBehaviour, IBaseObserver
     //排队送餐的食物
     public List<OrderForCustomer> sendQueue = new List<OrderForCustomer>();
     //排队清理的食物
-    public List<OrderForCustomer> clearQueue = new List<OrderForCustomer>();
+    public List<OrderForCustomer> cleanQueue = new List<OrderForCustomer>();
 
     //排队等待接待的住宿
     public List<OrderForHotel> hotelQueue = new List<OrderForHotel>();
+    public List<OrderForHotel> bedCleanQueue = new List<OrderForHotel>();
 
     //订单列表
     public List<OrderForCustomer> listOrder = new List<OrderForCustomer>();
@@ -72,6 +74,7 @@ public class InnHandler : BaseMonoBehaviour, IBaseObserver
         innFoodManager = Find<InnFoodManager>(ImportantTypeEnum.FoodManager);
         toastManager = Find<ToastManager>(ImportantTypeEnum.ToastManager);
         workerBuilder = Find<NpcWorkerBuilder>(ImportantTypeEnum.NpcBuilder);
+        customerBuilder = Find<NpcCustomerBuilder>(ImportantTypeEnum.NpcBuilder);
 
         audioHandler = Find<AudioHandler>(ImportantTypeEnum.AudioHandler);
         gameDataHandler = Find<GameDataHandler>(ImportantTypeEnum.GameDataHandler);
@@ -124,34 +127,29 @@ public class InnHandler : BaseMonoBehaviour, IBaseObserver
     {
         audioHandler.StopMusic();
         innStatus = InnStatusEnum.Close;
+        //删除所有顾客
+        customerBuilder.ClearNpc();
         //驱除所有顾客
         for (int i = 0; i < listOrder.Count; i++)
         {
             OrderForCustomer orderCusomer = listOrder[i];
             if (orderCusomer.customer != null && orderCusomer.customer.gameObject != null)
                 Destroy(orderCusomer.customer.gameObject);
+            //清理所有食物
             if (orderCusomer.foodCpt != null && orderCusomer.foodCpt.gameObject != null)
                 Destroy(orderCusomer.foodCpt.gameObject);
         }
         //清理所有桌子
-        for (int i = 0; i < innTableHandler.listTableCpt.Count; i++)
-        {
-            BuildTableCpt buildTableCpt = innTableHandler.listTableCpt[i];
-            buildTableCpt.CleanTable();
-        };
+        innTableHandler.CleanAllTable();
         //清理所有柜台
-        for (int i = 0; i < innPayHandler.listCounterCpt.Count; i++)
-        {
-            BuildCounterCpt buildCounterCpt = innPayHandler.listCounterCpt[i];
-            buildCounterCpt.ClearCounter();
-        };
+        innPayHandler.CleanAllCounter();
         //清理所有灶台
-        for (int i = 0; i < innCookHandler.listStoveCpt.Count; i++)
-        {
-            BuildStoveCpt buildStoveCpt = innCookHandler.listStoveCpt[i];
-            buildStoveCpt.ClearStove();
-        };
-        //结束所有拉人活动
+        innCookHandler.CleanAllStove();
+        //清理所有的床
+        innHotelHandler.CleanAllBed();
+
+        //结束所有拉人活动 
+        //结束所有引路活动
         foreach (NpcAIWorkerCpt itemWorker in workerBuilder.listNpcWorker)
         {
             if (itemWorker != null && itemWorker.aiForAccost.npcAICustomer != null)
@@ -159,6 +157,8 @@ public class InnHandler : BaseMonoBehaviour, IBaseObserver
                 itemWorker.aiForAccost.npcAICustomer.SetIntent(NpcAICustomerCpt.CustomerIntentEnum.Leave);
             }
         }
+
+
         //清理所有捣乱的人
         foreach (NpcAIRascalCpt itemRascal in rascalrQueue)
         {
@@ -169,8 +169,12 @@ public class InnHandler : BaseMonoBehaviour, IBaseObserver
         cusomerQueue.Clear();
         foodQueue.Clear();
         sendQueue.Clear();
-        clearQueue.Clear();
+        cleanQueue.Clear();
         listOrder.Clear();
+
+        hotelQueue.Clear();
+        bedCleanQueue.Clear();
+
         workerBuilder.ClearAllWork();
     }
 
@@ -204,13 +208,13 @@ public class InnHandler : BaseMonoBehaviour, IBaseObserver
     /// 获取柜台
     /// </summary>
     /// <returns></returns>
-    public BuildCounterCpt GetCounter(NpcAICustomerCpt npcAICustomer)
+    public BuildCounterCpt GetCounter(Vector3 position)
     {
         BuildCounterCpt counterCpt = null;
         if (GameCommonInfo.GameConfig.statusForCheckOut==0)
         {
             //选择最近的柜台
-             counterCpt = innPayHandler.GetCloseCounter(npcAICustomer);
+             counterCpt = innPayHandler.GetCloseCounter(position);
         }
         else
         {
@@ -253,7 +257,7 @@ public class InnHandler : BaseMonoBehaviour, IBaseObserver
     /// <returns></returns>
     public BuildStairsCpt GetCloseStairs(Vector3 position)
     {
-        return  innEntranceHandler.GetCloseStairs(position);
+        return innEntranceHandler.GetCloseStairs(position);
     }
 
     /// <summary>
@@ -398,11 +402,15 @@ public class InnHandler : BaseMonoBehaviour, IBaseObserver
         EndOrder(orderForCustomer);
     }
 
-    public void EndOrderForForce(OrderForHotel orderForHotel)
+    public void EndOrderForForce(OrderForHotel orderForHotel, bool isPraise)
     {
         if (orderForHotel == null)
             return;
-        orderForHotel.SetOrderStatus(OrderHotelStatusEnum.End);
+        //根据心情评价客栈
+        if (isPraise)
+        {
+            InnPraise(orderForHotel.innEvaluation.GetPraise());
+        }
         //先移除排队列表
         if (hotelQueue.Contains(orderForHotel))
         {
@@ -413,12 +421,34 @@ public class InnHandler : BaseMonoBehaviour, IBaseObserver
         {
             orderForHotel.customer.SetIntent(NpcAICustomerForHotelCpt.CustomerHotelIntentEnum.Leave);
         }
-        //床还原
-        if (orderForHotel.bed != null)
+        //床还原  如果是排队时候因为心情降低这里不还原
+        if (orderForHotel.bed != null&& orderForHotel.GetOrderStatus()!= OrderHotelStatusEnum.Pay)
         {
             orderForHotel.bed.CleanBed();
         }
+        orderForHotel.SetOrderStatus(OrderHotelStatusEnum.End);
     }
+
+    /// <summary>
+    /// 尝试结束订单
+    /// </summary>
+    /// <param name="orderForCustomer"></param>
+    public void EndOrder(OrderForCustomer orderForCustomer)
+    {
+        //食物已被清理
+        if (orderForCustomer.foodCpt == null
+            //顾客已经离开
+            && listOrder.Contains(orderForCustomer))
+        {
+            listOrder.Remove(orderForCustomer);
+        }
+    }
+
+    public void EndOrder(OrderForHotel orderForHotel)
+    {
+        orderForHotel.SetOrderStatus(OrderHotelStatusEnum.End);
+    }
+
 
     /// <summary>
     /// 结算所有客户
@@ -446,44 +476,45 @@ public class InnHandler : BaseMonoBehaviour, IBaseObserver
 
     }
 
-    /// <summary>
-    /// 尝试结束订单
-    /// </summary>
-    /// <param name="orderForCustomer"></param>
-    public void EndOrder(OrderForCustomer orderForCustomer)
-    {
-        //食物已被清理
-        if (orderForCustomer.foodCpt == null
-            //顾客已经离开
-            && listOrder.Contains(orderForCustomer))
-        {
-            listOrder.Remove(orderForCustomer);
-        }
-    }
 
     /// <summary>
     /// 付钱
     /// </summary>
     /// <param name="food"></param>
-    public void PayMoney(OrderForCustomer order, long payMoneyL, long payMoneyM, long payMoneyS, bool isPlaySound)
+    public void PayMoney(OrderForBase order, long payMoneyL, long payMoneyM, long payMoneyS, bool isPlaySound)
     {
         //最小
         if (payMoneyL == 0 && payMoneyM == 0 && payMoneyS == 0)
         {
             payMoneyS = 1;
         }
-
-        //账本记录
-        innRecord.AddSellNumber(order.foodData.id, 1, payMoneyL, payMoneyM, payMoneyS);
-        //根据心情评价客栈 前提订单里有他
-        InnPraise(order.innEvaluation.GetPraise());
-        //记录+1
-        gameDataManager.gameData.AddMenuSellNumber(innFoodManager, 1, order.foodData.id, payMoneyL, payMoneyM, payMoneyS, out bool isMenuLevelUp);
-        if (isMenuLevelUp)
+        Vector3 payEffectsPosition = Vector3.zero;
+        if (order as OrderForCustomer!=null)
         {
-            Sprite spFoodIcon = innFoodManager.GetFoodSpriteByName(order.foodData.icon_key);
-            toastManager.ToastHint(spFoodIcon, string.Format(GameCommonInfo.GetUITextById(1131), order.foodData.name));
+            OrderForCustomer orderForCustomer = order as OrderForCustomer;
+            //账本记录
+            innRecord.AddSellNumber(orderForCustomer.foodData.id, 1, payMoneyL, payMoneyM, payMoneyS);
+            //根据心情评价客栈 前提订单里有他
+            InnPraise(orderForCustomer.innEvaluation.GetPraise());
+            //记录+1
+            gameDataManager.gameData.AddMenuSellNumber(innFoodManager, 1, orderForCustomer.foodData.id, payMoneyL, payMoneyM, payMoneyS, out bool isMenuLevelUp);
+            if (isMenuLevelUp)
+            {
+                Sprite spFoodIcon = innFoodManager.GetFoodSpriteByName(orderForCustomer.foodData.icon_key);
+                toastManager.ToastHint(spFoodIcon, string.Format(GameCommonInfo.GetUITextById(1131), orderForCustomer.foodData.name));
+            }
+            payEffectsPosition = orderForCustomer.customer.transform.position;
         }
+        else if (order as OrderForHotel != null)
+        {
+            OrderForHotel orderForHotel = order as OrderForHotel;
+
+            //根据心情评价客栈 前提订单里有他
+            InnPraise(orderForHotel.innEvaluation.GetPraise());
+
+            payEffectsPosition = orderForHotel.customer.transform.position;
+        }
+    
         //金钱增加
         gameDataHandler.AddMoney(payMoneyL, payMoneyM, payMoneyS);
         //播放音效
@@ -491,9 +522,11 @@ public class InnHandler : BaseMonoBehaviour, IBaseObserver
         {
             audioHandler.PlaySound(AudioSoundEnum.PayMoney);
             //展示特效
-            innPayHandler.ShowPayEffects(order.customer.transform.position, payMoneyL, payMoneyM, payMoneyS);
+            innPayHandler.ShowPayEffects(payEffectsPosition, payMoneyL, payMoneyM, payMoneyS);
         }
     }
+
+
 
     /// <summary>
     /// 材料消耗记录
@@ -579,12 +612,12 @@ public class InnHandler : BaseMonoBehaviour, IBaseObserver
                 break;
             case WorkerDetilsEnum.WaiterForCleanTable:
                 //排队清理处理
-                if (!CheckUtil.ListIsNull(clearQueue))
+                if (!CheckUtil.ListIsNull(cleanQueue))
                 {
                     //搜寻最近的桌子
                     OrderForCustomer clearItem = null;
                     float distance = float.MaxValue;
-                    foreach (OrderForCustomer itemOrder in  clearQueue)
+                    foreach (OrderForCustomer itemOrder in cleanQueue)
                     {
                         float tempDistance = Vector3.Distance(itemOrder.table.GetTablePosition(), workNpc.transform.position);
                         if (tempDistance < distance)
@@ -594,11 +627,24 @@ public class InnHandler : BaseMonoBehaviour, IBaseObserver
                         }
                     }
                     if (clearItem == null)
-                         break;
-                    bool isSuccess = innWaiterHandler.SetClearFood(clearItem, workNpc);
+                        return false;
+                    bool isSuccess = innWaiterHandler.SetCleanFood(clearItem, workNpc);
                     if (isSuccess)
                     {
-                        clearQueue.Remove(clearItem);
+                        cleanQueue.Remove(clearItem);
+                        return true;
+                    }
+                }
+                break;
+            case WorkerDetilsEnum.WaiterForCleanBed:
+                //排队床单清理处理
+                if (!CheckUtil.ListIsNull(bedCleanQueue))
+                {
+                    OrderForHotel orderForHotel = bedCleanQueue[0];
+                    bool isSuccess = innWaiterHandler.SetCleanBed(orderForHotel, workNpc);
+                    if (isSuccess)
+                    {
+                        bedCleanQueue.Remove(orderForHotel);
                         return true;
                     }
                 }
@@ -613,6 +659,7 @@ public class InnHandler : BaseMonoBehaviour, IBaseObserver
                     OrderForHotel orderForHotel= hotelQueue[0];
                     workNpc.SetIntent(NpcAIWorkerCpt.WorkerIntentEnum.AccostGuide, orderForHotel);
                     hotelQueue.Remove(orderForHotel);
+                    return true;
                 }
                 break;
             case WorkerDetilsEnum.BeaterForDrive:

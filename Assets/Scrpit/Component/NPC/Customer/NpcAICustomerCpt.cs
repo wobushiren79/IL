@@ -85,7 +85,7 @@ public class NpcAICustomerCpt : BaseNpcAI
                 HandleForOrderFood();
                 break;
             case CustomerIntentEnum.WaitFood:
-                ChangeMood(-Time.deltaTime);
+                ChangeMood( - Time.deltaTime);
                 break;
             case CustomerIntentEnum.GotoPay:
                 if (characterMoveCpt.IsAutoMoveStop())
@@ -370,15 +370,25 @@ public class NpcAICustomerCpt : BaseNpcAI
     /// </summary>
     public void IntentForGotoPay()
     {
-        orderForCustomer.counter = innHandler.GetCounter(this);
+        orderForCustomer.counter = innHandler.GetCounter(transform.position);
         //如果判断有无结算台
         if (orderForCustomer.counter == null)
         {
+            innHandler.EndOrderForForce(orderForCustomer, true);
             SetIntent(CustomerIntentEnum.Leave);
         }
         else
         {
             movePosition = orderForCustomer.counter.GetPayPosition();
+            //if (!CheckUtil.CheckPath(transform.position,movePosition))
+            //{
+            //    innHandler.EndOrderForForce(orderForCustomer,true);
+            //    SetIntent(CustomerIntentEnum.Leave);
+            //}
+            //else
+            //{
+            //    characterMoveCpt.SetDestination(movePosition);
+            //}
             characterMoveCpt.SetDestination(movePosition);
         }
     }
@@ -489,7 +499,7 @@ public class NpcAICustomerCpt : BaseNpcAI
         if (orderForCustomer.table != null)
             orderForCustomer.table.SetTableStatus(BuildTableCpt.TableStatusEnum.WaitClean);
         //清理列队增加
-        innHandler.clearQueue.Add(orderForCustomer);
+        innHandler.cleanQueue.Add(orderForCustomer);
         //去结账
         SetIntent(CustomerIntentEnum.GotoPay);
     }

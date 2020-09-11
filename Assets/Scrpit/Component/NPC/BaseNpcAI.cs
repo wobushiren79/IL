@@ -356,6 +356,14 @@ public class BaseNpcAI : BaseObservable<IBaseObserver>
             case Direction2DEnum.Down:
                 break;
         }
+        if (characterDress != null)
+        {
+            characterDress.SetClothes(null);
+            characterDress.SetHat(null);
+            characterDress.SetShoes(null);
+            characterDress.SetMask(null);
+            characterDress.SetHand(null);
+        }
     }
 
     /// <summary>

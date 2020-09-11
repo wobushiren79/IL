@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 using UnityEditor;
-using DG.Tweening;
+using System.Collections;
 using System.Collections.Generic;
 
 public class InnPayHandler : BaseMonoBehaviour
@@ -35,13 +35,13 @@ public class InnPayHandler : BaseMonoBehaviour
     /// </summary>
     /// <param name="npcAICustomer"></param>
     /// <returns></returns>
-    public BuildCounterCpt GetCloseCounter(NpcAICustomerCpt npcAICustomer)
+    public BuildCounterCpt GetCloseCounter(Vector3 position)
     {
         BuildCounterCpt closeCounter = null;
         float minDistance = 0;
         foreach (BuildCounterCpt itemCounter in listCounterCpt)
-        { 
-            float distance = Vector3.Distance(npcAICustomer.transform.position, itemCounter.transform.position);
+        {
+            float distance = Vector3.Distance(position, itemCounter.transform.position);
             if (minDistance == 0)
             {
                 minDistance = distance;
@@ -82,13 +82,27 @@ public class InnPayHandler : BaseMonoBehaviour
     /// <summary>
     /// 设置算账数据
     /// </summary>
-    public bool SetPay(OrderForCustomer orderForCustomer, NpcAIWorkerCpt workNpc)
+    public bool SetPay(OrderForBase order, NpcAIWorkerCpt workNpc)
     {
-        if (workNpc != null && orderForCustomer.counter.counterStatus == BuildCounterCpt.CounterStatusEnum.Idle)
+        if (workNpc != null)
         {
-            orderForCustomer.counter.SetCounterStatus(BuildCounterCpt.CounterStatusEnum.Ready);
-            workNpc.SetIntent(NpcAIWorkerCpt.WorkerIntentEnum.Accounting, orderForCustomer);
-            return true;
+            if (order.counter.counterStatus == BuildCounterCpt.CounterStatusEnum.Idle)
+            {
+                order.counter.SetCounterStatus(BuildCounterCpt.CounterStatusEnum.Ready);
+                if (order as OrderForCustomer != null)
+                {
+                    workNpc.SetIntent(NpcAIWorkerCpt.WorkerIntentEnum.Accounting, (OrderForCustomer)order);
+                }
+                else if (order as OrderForHotel != null)
+                {
+                    workNpc.SetIntent(NpcAIWorkerCpt.WorkerIntentEnum.Accounting, (OrderForHotel)order);
+                }
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
         else
         {
@@ -137,5 +151,19 @@ public class InnPayHandler : BaseMonoBehaviour
         GameObject payEffects = Instantiate(objPayEffects, position, new Quaternion());
         PayMoneyCpt payMoneyCpt = payEffects.GetComponent<PayMoneyCpt>();
         payMoneyCpt.SetData(position, priceL, priceM, priceS);
+    }
+
+    /// <summary>
+    /// 清理所有柜台
+    /// </summary>
+    public void CleanAllCounter()
+    {
+        if (listCounterCpt==null)
+            return;
+        for (int i = 0; i < listCounterCpt.Count; i++)
+        {
+            BuildCounterCpt buildCounterCpt = listCounterCpt[i];
+            buildCounterCpt.ClearCounter();
+        };
     }
 }

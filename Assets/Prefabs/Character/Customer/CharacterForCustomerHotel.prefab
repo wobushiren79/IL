@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 6355272750433371025}
   - component: {fileID: 8299112105059165523}
   - component: {fileID: 4590124400159442442}
+  - component: {fileID: 7797544839205036901}
   m_Layer: 0
   m_Name: CharacterForCustomerHotel
   m_TagString: NPC
@@ -74,12 +75,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   characterStatusIcon: {fileID: 881094660212489284}
-  spAnger: {fileID: 21300010, guid: 809c705990bfd2542bc997497a8ddb73, type: 3}
-  spDisappointed: {fileID: 21300008, guid: 809c705990bfd2542bc997497a8ddb73, type: 3}
-  spOrdinary: {fileID: 21300006, guid: 809c705990bfd2542bc997497a8ddb73, type: 3}
-  spOkay: {fileID: 21300004, guid: 809c705990bfd2542bc997497a8ddb73, type: 3}
-  spHappy: {fileID: 21300002, guid: 809c705990bfd2542bc997497a8ddb73, type: 3}
-  spExcited: {fileID: 21300000, guid: 809c705990bfd2542bc997497a8ddb73, type: 3}
 --- !u!210 &8299112105059165523
 SortingGroup:
   m_ObjectHideFlags: 0
@@ -278,11 +273,31 @@ MonoBehaviour:
   objTake: {fileID: 8724529191250077010}
   customerHotelIntent: 0
   movePosition: {x: 0, y: 0, z: 0}
+  characterMoodCpt: {fileID: 6355272750433371025}
   orderForHotel:
+    counter: {fileID: 0}
+    innEvaluation:
+      mood: 100
     orderHotelStatus: 0
     customer: {fileID: 0}
     bed: {fileID: 0}
+    sleepTime: 0
+    layerFirstStairsPosition: {x: 0, y: 0, z: 0}
+    layerSecondStairsPosition: {x: 0, y: 0, z: 0}
   waitIconAnim: {fileID: 9100000, guid: 0b33ffe32efeca5408710576cf88e85c, type: 2}
+--- !u!114 &7797544839205036901
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 377874546984278071}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bd166d494229b8f4daa2bf331ce39120, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  characterStatusIcon: {fileID: 881094660212489284}
 --- !u!1001 &1697461308649322183
 PrefabInstance:
   m_ObjectHideFlags: 0

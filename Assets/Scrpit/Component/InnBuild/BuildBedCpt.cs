@@ -46,6 +46,22 @@ public class BuildBedCpt : BaseBuildItemCpt
     public void SetBedStatus(BedStatusEnum bedStatus)
     {
         this.bedStatus = bedStatus;
+
+        //设置床单的样式
+        BuildItemBean buildItemData = innBuildManager.GetBuildDataById(buildBedData.bedSheets);
+        if (bedStatus== BedStatusEnum.Idle)
+        {
+            string cleanStr = buildItemData.GetIconList()[0] + "_clean";
+            string iconKey = GetIconKey(cleanStr);
+            srSheets.sprite = innBuildManager.GetFurnitureSpriteByName(iconKey);
+        }
+        else if (bedStatus == BedStatusEnum.WaitClean)
+        {
+            string noCleanStr = buildItemData.GetIconList()[0] + "_noclean";
+            string iconKey = GetIconKey(noCleanStr);
+            srSheets.sprite = innBuildManager.GetFurnitureSpriteByName(iconKey);
+        }
+
     }
     public BedStatusEnum GetBedStatus()
     {

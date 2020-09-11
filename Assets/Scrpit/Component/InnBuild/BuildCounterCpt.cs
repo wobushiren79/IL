@@ -15,7 +15,7 @@ public class BuildCounterCpt : BaseBuildItemCpt
     public GameObject objPaccountingPosition;
 
     //排队算账的订单
-    public List<OrderForCustomer> payQueue = new List<OrderForCustomer>();
+    public List<OrderForBase> payQueue = new List<OrderForBase>();
 
     public CounterStatusEnum counterStatus = CounterStatusEnum.Idle;
 

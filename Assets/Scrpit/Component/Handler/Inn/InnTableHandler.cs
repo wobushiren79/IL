@@ -46,4 +46,17 @@ public class InnTableHandler : BaseMonoBehaviour
         return buildTable;
     }
 
+    /// <summary>
+    /// 清理所有桌子
+    /// </summary>
+    public void CleanAllTable()
+    {
+        if (listTableCpt == null)
+            return;
+        for (int i = 0; i < listTableCpt.Count; i++)
+        {
+            BuildTableCpt buildTableCpt = listTableCpt[i];
+            buildTableCpt.CleanTable();
+        };
+    }
 }

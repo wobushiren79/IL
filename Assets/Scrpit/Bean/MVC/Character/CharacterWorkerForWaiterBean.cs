@@ -9,6 +9,8 @@ public class CharacterWorkerForWaiterBean : CharacterWorkerBaseBean
     public long cleanTotalNumber;
     //送餐次数
     public long sendTotalNumber;
+    //清理床单总次数
+    public long cleanBedTotalNumber;
 
     //是否开启
     public bool isWorkingForSend = true;
@@ -55,9 +57,18 @@ public class CharacterWorkerForWaiterBean : CharacterWorkerBaseBean
     /// 增加清理次数
     /// </summary>
     /// <param name="number"></param>
-    public void AddCleanNumber(int number)
+    public void AddCleanTableNumber(int number)
     {
         cleanTotalNumber += number;
+    }
+
+    /// <summary>
+    /// 增加理床次数
+    /// </summary>
+    /// <param name="number"></param>
+    public void AddCleanBedNumber(int number)
+    {
+        cleanBedTotalNumber += number;
     }
 
     /// <summary>

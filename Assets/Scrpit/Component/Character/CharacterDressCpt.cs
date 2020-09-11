@@ -166,6 +166,7 @@ public class CharacterDressCpt : BaseMonoBehaviour
         SetAnimForEquip(aocForClothes, itemsInfo);
     }
 
+
     /// <summary>
     /// 设置鞋子
     /// </summary>
@@ -236,7 +237,7 @@ public class CharacterDressCpt : BaseMonoBehaviour
     /// <param name="itemsInfo"></param>
     public void SetAnimForEquip(AnimatorOverrideController animatorForTarget,ItemsInfoBean itemsInfo)
     {
-        if(animatorForTarget==null||itemsInfo == null)
+        if(animatorForTarget==null || itemsInfo == null || itemsInfo.id == 0)
         {
             animatorForTarget["Original"] = animForOriginalClip;
             return;

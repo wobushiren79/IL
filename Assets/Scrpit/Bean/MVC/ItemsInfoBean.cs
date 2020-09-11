@@ -33,6 +33,16 @@ public class ItemsInfoBean : BaseBean
     public string content;//内容
     public int rarity;//稀有度
 
+    public ItemsInfoBean()
+    {
+
+    }
+
+    public ItemsInfoBean(long id)
+    {
+        this.id = id;
+        this.items_id = id;
+    }
 
     /// <summary>
     /// 获取类型

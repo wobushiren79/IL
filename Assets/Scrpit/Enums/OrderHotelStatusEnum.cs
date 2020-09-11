@@ -4,5 +4,6 @@ using UnityEditor;
 public enum OrderHotelStatusEnum 
 {
     Start,
+    Pay,
     End,
 }
