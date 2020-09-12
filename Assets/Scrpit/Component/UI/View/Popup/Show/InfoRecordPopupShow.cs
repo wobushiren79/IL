@@ -34,15 +34,17 @@ public class InfoRecordPopupShow : PopupShowView
     public Text tvConsumeIngWaterwine;
     public Text tvConsumeIngFlour;
 
-    public GameObject objFoodContainer;
-    public GameObject objFoodItem;
+    public GameObject objShowContainer;
+    public GameObject objShowItem;
 
     protected InnFoodManager innFoodManager;
+    protected IconDataManager iconDataManager;
 
     public override void Awake()
     {
         base.Awake();
         innFoodManager = Find<InnFoodManager>(ImportantTypeEnum.FoodManager);
+        iconDataManager = Find<IconDataManager>(ImportantTypeEnum.UIManager);
     }
 
     /// <summary>
@@ -53,8 +55,13 @@ public class InfoRecordPopupShow : PopupShowView
     {
         SetDate(innRecordData.year, innRecordData.month, innRecordData.day);
         SetStatus((DayEnum)innRecordData.status);
-        SetTotalIncome(innRecordData.incomeL, innRecordData.incomeM, innRecordData.incomeS);
-        SetTotalExpenses(innRecordData.expensesL, innRecordData.expensesM, innRecordData.expensesS);
+
+        innRecordData.GetTotalIncome(out long incomeL, out long incomeM, out long incomeS);
+        SetTotalIncome(incomeL, incomeM, incomeS);
+
+        innRecordData.GetTotalExpenses(out long expensesL, out long expensesM, out long expensesS);
+        SetTotalExpenses(expensesL, expensesM, expensesS);
+
         SetPraise(
             innRecordData.praiseExcitedNumber,
             innRecordData.praiseHappyNumber,
@@ -71,6 +78,8 @@ public class InfoRecordPopupShow : PopupShowView
             innRecordData.consumeIngMelonfruit,
             innRecordData.consumeIngWaterwine,
             innRecordData.consumeIngFlour);
+        CptUtil.RemoveChildsByActive(objShowContainer);
+        SetHotel(innRecordData.incomeForHotelL, innRecordData.incomeForHotelM, innRecordData.incomeForHotelS);
         SetFoodSellList(innRecordData.listSellNumber);
     }
 
@@ -137,12 +146,9 @@ public class InfoRecordPopupShow : PopupShowView
     /// <param name="incomeS"></param>
     public void SetTotalIncome(long incomeL, long incomeM, long incomeS)
     {
-        if (tvIncomeL != null)
-            tvIncomeL.text = "" + incomeL;
-        if (tvIncomeM != null)
-            tvIncomeM.text = "" + incomeM;
-        if (tvIncomeS != null)
-            tvIncomeS.text = "" + incomeS;
+        SetMoney(tvIncomeL, incomeL);
+        SetMoney(tvIncomeM, incomeM);
+        SetMoney(tvIncomeS, incomeS);
     }
 
     /// <summary>
@@ -153,14 +159,27 @@ public class InfoRecordPopupShow : PopupShowView
     /// <param name="expensesS"></param>
     public void SetTotalExpenses(long expensesL, long expensesM, long expensesS)
     {
-        if (tvExpensesL != null)
-            tvExpensesL.text = "" + expensesL;
-        if (tvExpensesM != null)
-            tvExpensesM.text = "" + expensesM;
-        if (tvExpensesS != null)
-            tvExpensesS.text = "" + expensesS;
+        SetMoney(tvExpensesL, expensesL);
+        SetMoney(tvExpensesM, expensesM);
+        SetMoney(tvExpensesS, expensesS);
     }
 
+
+    protected void SetMoney(Text tvMoney, long money)
+    {
+        if (tvMoney != null)
+        {
+            if (money == 0)
+            {
+                //tvMoney.gameObject.SetActive(false);
+            }
+            else
+            {
+                // tvMoney.gameObject.SetActive(true);
+            }
+            tvMoney.text = "" + money;
+        }
+    }
     /// <summary>
     /// 设置好感
     /// </summary>
@@ -265,16 +284,32 @@ public class InfoRecordPopupShow : PopupShowView
     /// <param name="listData"></param>
     public void SetFoodSellList(List<GameItemsBean> listData)
     {
-        CptUtil.RemoveChildsByActive(objFoodContainer);
         if (listData == null)
             return;
         foreach (GameItemsBean itemData in listData)
         {
-            GameObject objItem = Instantiate(objFoodContainer, objFoodItem);
-            ItemPopupRecordFoodCpt itemCpt = objItem.GetComponent<ItemPopupRecordFoodCpt>();
+            GameObject objItem = Instantiate(objShowContainer,objShowItem);
+            ItemPopupRecordCpt itemCpt = objItem.GetComponent<ItemPopupRecordCpt>();
             MenuInfoBean menuInfo=  innFoodManager.GetFoodDataById(itemData.itemId);
             Sprite spIcon = innFoodManager.GetFoodSpriteByName(menuInfo.icon_key);
             itemCpt.SetData(spIcon, menuInfo.name, itemData.itemNumber, itemData.priceL, itemData.priceM, itemData.priceS);
+        }
+    }
+
+    /// <summary>
+    /// 设置入住
+    /// </summary>
+    /// <param name="priceL"></param>
+    /// <param name="priceM"></param>
+    /// <param name="priceS"></param>
+    public void SetHotel(long priceL, long priceM, long priceS)
+    {
+        if (priceS != 0)
+        {
+            GameObject objItem = Instantiate(objShowContainer, objShowItem);
+            ItemPopupRecordCpt itemCpt = objItem.GetComponent<ItemPopupRecordCpt>();
+            Sprite spIcon = iconDataManager.GetIconSpriteByName("worker_waiter_bed_pro_2");
+            itemCpt.SetData(spIcon, GameCommonInfo.GetUITextById(351), 0, priceL, priceM, priceS);
         }
     }
 }

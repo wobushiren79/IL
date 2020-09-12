@@ -300,11 +300,17 @@ public class GameDataBean
         return targetItem;
     }
 
+
     /// <summary>
     /// 修改食物销售数量
     /// </summary>
+    /// <param name="innFoodManager"></param>
     /// <param name="number"></param>
     /// <param name="menuId"></param>
+    /// <param name="priceL"></param>
+    /// <param name="priceM"></param>
+    /// <param name="priceS"></param>
+    /// <param name="isMenuLevelUp"></param>
     public void AddMenuSellNumber(InnFoodManager innFoodManager, long number, long menuId, long priceL, long priceM, long priceS, out bool isMenuLevelUp)
     {
         isMenuLevelUp = false;
@@ -313,9 +319,28 @@ public class GameDataBean
             MenuOwnBean itemData = listMenu[i];
             if (itemData.menuId == menuId)
             {
-                itemData.SellMenu(innFoodManager,number, priceL, priceM, priceS, out bool isLevelUp);
+                itemData.SellMenu(innFoodManager,number, priceL, priceM, priceS, out isMenuLevelUp);
                 return;
             }
+        }
+    }
+
+    /// <summary>
+    /// 修改床单的销售数量
+    /// </summary>
+    /// <param name="remarkId"></param>
+    /// <param name="number"></param>
+    /// <param name="priceL"></param>
+    /// <param name="priceM"></param>
+    /// <param name="priceS"></param>
+    /// <param name="isBedLevelUp"></param>
+    public void AddBedSellNumber(string remarkId, long number,long sleeptime, long priceL, long priceM, long priceS, out bool isBedLevelUp)
+    {
+        isBedLevelUp = false;
+        BuildBedBean buildBedData=  GetBedByRemarkId(remarkId);
+        if (buildBedData!=null)
+        {
+            buildBedData.SellBed(number, sleeptime, priceL, priceM, priceS, out isBedLevelUp);
         }
     }
 

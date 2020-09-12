@@ -35,6 +35,10 @@ public class BuildBedBean : BaseBean
     public long sellMoneyL;
     public long sellMoneyM;
     public long sellMoneyS;
+
+    //睡觉时间
+    public long sellTime;
+
     //床状态（ResearchStatusEnum）
     public int bedStatus = 0;
     //床等级
@@ -77,7 +81,7 @@ public class BuildBedBean : BaseBean
         {
             buildBed.rarity = 1;
         }
-        buildBed.priceS = 100;
+        buildBed.priceS = 50;
         if (buildBed.rarity == 0)
         {
             buildBed.priceS += UnityEngine.Random.Range(0, 50);
@@ -95,12 +99,13 @@ public class BuildBedBean : BaseBean
     /// 卖出菜品
     /// </summary>
     /// <param name="number"></param>
-    public void SellBed(long number, long priceL, long priceM, long priceS, out bool isLevelUp)
+    public void SellBed(long number,long sleepTime, long priceL, long priceM, long priceS, out bool isLevelUp)
     {
         sellNumber += number;
         sellMoneyL += priceL;
         sellMoneyM += priceM;
         sellMoneyS += priceS;
+        sellTime += sleepTime;
         AddLevelExp((int)number, out isLevelUp);
     }
 

@@ -31,7 +31,7 @@ public class UIGameStatisticsForCustomer : BaseUIChildComponent<UIGameStatistics
     {
         UserAchievementBean userAchievement = uiComponent.uiGameManager.gameDataManager.gameData.GetAchievementData();
         if (tvNormalCustomerNumber != null)
-            tvNormalCustomerNumber.text = GameCommonInfo.GetUITextById(323) + " " + userAchievement.GetNumberForCustomerByType(CustomerTypeEnum.Normal) + GameCommonInfo.GetUITextById(82);
+            tvNormalCustomerNumber.text = GameCommonInfo.GetUITextById(323) + " " + userAchievement.GetNumberForCustomerFoodByType(CustomerTypeEnum.Normal) + GameCommonInfo.GetUITextById(82);
     }
 
     /// <summary>
@@ -45,7 +45,7 @@ public class UIGameStatisticsForCustomer : BaseUIChildComponent<UIGameStatistics
 
         UserAchievementBean userAchievement = uiComponent.uiGameManager.gameDataManager.gameData.GetAchievementData();
         if (tvTeamCustomerNumber != null)
-            tvTeamCustomerNumber.text = GameCommonInfo.GetUITextById(323) + " " + userAchievement.GetNumberForCustomerByType(CustomerTypeEnum.Team) + GameCommonInfo.GetUITextById(82);
+            tvTeamCustomerNumber.text = GameCommonInfo.GetUITextById(323) + " " + userAchievement.GetNumberForCustomerFoodByType(CustomerTypeEnum.Team) + GameCommonInfo.GetUITextById(82);
         //查询所有团队
         List<NpcTeamBean> listNpcTeamData = npcTeamManager.GetCustomerTeam();
         for (int i = 0; i < listNpcTeamData.Count; i++)
@@ -90,7 +90,7 @@ public class UIGameStatisticsForCustomer : BaseUIChildComponent<UIGameStatistics
 
         //设置数量
         if (tvFriendCustomerNumber != null)
-            tvFriendCustomerNumber.text = GameCommonInfo.GetUITextById(323) + " " + userAchievement.GetNumberForCustomerByType(CustomerTypeEnum.Friend) + GameCommonInfo.GetUITextById(82);
+            tvFriendCustomerNumber.text = GameCommonInfo.GetUITextById(323) + " " + userAchievement.GetNumberForCustomerFoodByType(CustomerTypeEnum.Friend) + GameCommonInfo.GetUITextById(82);
         List<CharacterFavorabilityBean> listData = gameDataManager.gameData.listCharacterFavorability;
 
         foreach (CharacterFavorabilityBean itemData in listData)

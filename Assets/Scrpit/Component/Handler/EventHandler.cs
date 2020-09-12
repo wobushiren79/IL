@@ -183,8 +183,13 @@ public class EventHandler : BaseHandler,
     /// <returns></returns>
     public bool EventTriggerForTalkByRascal(NpcAIRascalCpt npcAIRascal, long markId)
     {
-        if (controlHandler != null&&GameCommonInfo.GameConfig.statusForEventCameraMove==1)
+        if (controlHandler != null&&GameCommonInfo.GameConfig.statusForEventCameraMove == 1)
         {
+            //先还原层数
+            ControlForWorkCpt controlForWork =(ControlForWorkCpt) controlHandler.GetControl(ControlHandler.ControlEnum.Work);
+            if (controlForWork != null)
+                controlForWork.SetLayer(1);
+            //镜头跟随
             controlHandler.GetControl().SetFollowPosition(npcAIRascal.transform.position);
         }
         return EventTriggerForTalk(markId, false);
@@ -200,6 +205,11 @@ public class EventHandler : BaseHandler,
     {
         if (controlHandler != null && GameCommonInfo.GameConfig.statusForEventCameraMove == 1)
         {
+            //先还原层数
+            ControlForWorkCpt controlForWork = (ControlForWorkCpt)controlHandler.GetControl(ControlHandler.ControlEnum.Work);
+            if (controlForWork != null)
+                controlForWork.SetLayer(1);
+            //镜头跟随
             controlHandler.GetControl().SetFollowPosition(npcAISundry.transform.position);
         }
         return EventTriggerForTalk(markId, false);

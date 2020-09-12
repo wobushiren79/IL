@@ -22,7 +22,8 @@ public class ControlForWorkCpt : BaseControl, DialogView.IDialogCallBack
     protected Ray selectRay;
     //选中生成的弹出框
     protected DialogView dialogSelectView;
-    
+
+    public int layer = 0;
 
     private void Awake()
     {
@@ -46,13 +47,13 @@ public class ControlForWorkCpt : BaseControl, DialogView.IDialogCallBack
         HandleForZoom();
     }
 
-    
-    
+
+
 
     private void OnDisable()
     {
         ClearSelect();
-        
+
         if (gameObject.activeSelf)
         {
             //如果只是enable=false 
@@ -64,7 +65,7 @@ public class ControlForWorkCpt : BaseControl, DialogView.IDialogCallBack
             SetCameraOrthographicSize();
         }
     }
-    
+
 
     /// <summary>
     /// 移动处理
@@ -93,12 +94,12 @@ public class ControlForWorkCpt : BaseControl, DialogView.IDialogCallBack
         {
             vMove += -1;
         }
- 
+
 
         if (hMove == 0 && vMove == 0)
         {
             //cameraMove.StopAnim();
-  
+
         }
         else
         {
@@ -113,12 +114,23 @@ public class ControlForWorkCpt : BaseControl, DialogView.IDialogCallBack
     {
         if (dialogSelectView)
         {
-            SetFollowPosition(selectNpc.transform.position);
-            //如果超出边界则取消选择
-            if (!CheckIsInBorder(selectNpc.transform.position))
+            if (selectNpc == null)
             {
                 ClearSelect();
             }
+            else
+            {
+                if (selectNpc.transform.position.y >= 90)
+                {
+                    SetLayer(2);
+                }
+                else
+                {
+                    SetLayer(1);
+                }
+                SetFollowPosition(selectNpc.transform.position);
+            }
+
         }
     }
 
@@ -140,7 +152,7 @@ public class ControlForWorkCpt : BaseControl, DialogView.IDialogCallBack
                     //如果在偷懒 则惊醒
                     if (npcAIWorker.GetWorkerStatus() == NpcAIWorkerCpt.WorkerIntentEnum.Daze)
                     {
-                        cursorHandler.SetCursor( CursorHandler.CursorType.Knock);
+                        cursorHandler.SetCursor(CursorHandler.CursorType.Knock);
                         return npcAIWorker;
                     }
                 }
@@ -163,11 +175,6 @@ public class ControlForWorkCpt : BaseControl, DialogView.IDialogCallBack
             if (dialogSelectView != null)
                 return;
             Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            //如果超出边界则不选择
-            if (!CheckIsInBorder(mousePos))
-            {
-                return;
-            }
             //如有已经提前选中了偷懒的员工
             if (workerDaze != null)
             {
@@ -217,6 +224,9 @@ public class ControlForWorkCpt : BaseControl, DialogView.IDialogCallBack
     /// <param name="layer"></param>
     public void SetLayer(int layer)
     {
+        if (this.layer == layer)
+            return;
+        this.layer = layer;
         InitCameraRange(layer);
     }
 
@@ -238,7 +248,7 @@ public class ControlForWorkCpt : BaseControl, DialogView.IDialogCallBack
             //定义镜头的移动范围
             cameraMove.minMoveX = -0.1f;
             cameraMove.maxMoveX = innBuild.innSecondWidth + 1;
-            cameraMove.minMoveY = -0.1f;
+            cameraMove.minMoveY = -0.1f + 100;
             cameraMove.maxMoveY = innBuild.innSecondHeight + 1 + 100;
             //定义镜头的初始位置
             SetFollowPosition(new Vector3(innBuild.innSecondWidth / 2f, 100 + innBuild.innSecondHeight / 2f, 0));
@@ -281,22 +291,6 @@ public class ControlForWorkCpt : BaseControl, DialogView.IDialogCallBack
         }
     }
 
-    /// <summary>
-    /// 检测是否在边界内
-    /// </summary>
-    /// <param name="position"></param>
-    /// <returns></returns>
-    private bool CheckIsInBorder(Vector3 position)
-    {
-        if (position.x >= cameraMove.minMoveX
-            && position.x <= cameraMove.maxMoveX
-            && position.y >= cameraMove.minMoveY
-            && position.y <= cameraMove.maxMoveY)
-        {
-            return true;
-        }
-        return false;
-    }
 
     #region 选中弹窗回调
     public void Submit(DialogView dialogView, DialogBean dialogBean)

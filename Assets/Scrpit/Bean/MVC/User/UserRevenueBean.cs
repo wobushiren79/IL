@@ -30,10 +30,11 @@ public class UserRevenueMonthBean
         foreach (InnRecordBean itemDay in listDayData)
         {
             CartogramDataBean cartogramData = new CartogramDataBean();
+            itemDay.GetTotalIncome(out long incomeL, out long incomeM, out long incomeS);
             cartogramData.key = itemDay.day;
-            cartogramData.value_3 = itemDay.incomeL;
-            cartogramData.value_2 = itemDay.incomeM;
-            cartogramData.value_1 = itemDay.incomeS;
+            cartogramData.value_3 = incomeL;
+            cartogramData.value_2 = incomeM;
+            cartogramData.value_1 = incomeS;
             cartogramData.value_4 = itemDay.status;
             listCartogramData.Add(cartogramData);
         }

@@ -295,6 +295,8 @@ public class NpcAICustomerForHotelCpt : BaseNpcAI
                     SetIntent(CustomerHotelIntentEnum.WaitAccost);
                     //创建订单
                     orderForHotel = innHandler.CreateOrderForHotel(this, buildBedCpt);
+                    //记录
+                    innHandler.RecordCustomer(orderForHotel);
                     characterShoutCpt.Shout(GameCommonInfo.GetUITextById(13401));
                 }
                 else

@@ -354,6 +354,7 @@ public class BaseNpcAI : BaseObservable<IBaseObserver>
                 characterBody.transform.localPosition = new Vector3(0, 0.3f, 0);
                 break;
             case Direction2DEnum.Down:
+                characterBody.transform.localPosition = new Vector3(0, 0f, 0);
                 break;
         }
         if (characterDress != null)

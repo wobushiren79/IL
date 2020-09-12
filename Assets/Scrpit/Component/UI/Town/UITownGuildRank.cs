@@ -18,7 +18,7 @@ public class UITownGuildRank : UIBaseRank
                 score = userAchievement.ownMoneyS;
                 break;
             case RankTypeEnum.NumberOrder:
-                score = userAchievement.GetNumberForAllCustomer();
+                score = userAchievement.GetNumberForAllCustomerFood();
                 break;
             case RankTypeEnum.NumberPraiseAnger:
                 score = userAchievement.GetPraiseNumber(PraiseTypeEnum.Anger);
@@ -55,7 +55,7 @@ public class UITownGuildRank : UIBaseRank
                 score = userAchievement.ownMoneyS;
                 break;
             case RankTypeEnum.NumberOrder:
-                score = userAchievement.GetNumberForAllCustomer();
+                score = userAchievement.GetNumberForAllCustomerFood();
                 break;
             case RankTypeEnum.NumberPraiseAnger:
                 score = userAchievement.GetPraiseNumber(PraiseTypeEnum.Anger);

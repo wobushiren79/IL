@@ -605,7 +605,7 @@ public class PreTypeEnumTools : DataTools
                 break;
         }
         UserAchievementBean userAchievement = gameData.GetAchievementData();
-        long numberTotal = userAchievement.GetNumberForAllCustomer();
+        long numberTotal = userAchievement.GetNumberForAllCustomerFood();
         if (numberTotal >= dataNumber || isComplete)
         {
             preTypeData.isPre = true;

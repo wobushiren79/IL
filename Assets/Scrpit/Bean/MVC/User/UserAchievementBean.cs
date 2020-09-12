@@ -34,6 +34,13 @@ public class UserAchievementBean
     public long numberForTeamCustomer;
     public long numberForFriendsCustomer;
 
+    public long numberForNormalCustomerComplete;
+    public long numberForTeamCustomerComplete;
+    public long numberForFriendsCustomerComplete;
+    //住宿
+    public long numberForHotelCustomer;
+    public long numberForHotelCustomerComplete;
+
     //团队顾客数据
     public List<UserCustomerBean> listForTeamCustomerData = new List<UserCustomerBean>();
     public List<UserCustomerBean> listForFriendCustomerData = new List<UserCustomerBean>();
@@ -53,10 +60,15 @@ public class UserAchievementBean
     public long maxDayGetMoneyL;
     public long maxDayGetMoneyM;
     public long maxDayGetMoneyS;
+    //单日最高收入
+    public long maxDayGetMoneyForHotelL;
+    public long maxDayGetMoneyForHotelM;
+    public long maxDayGetMoneyForHotelS;
 
-    //单日最高完成定完
+    //单日最高完成订单
     public long maxDayCompleteOrder;
-
+    //单日住宿最高完成订单
+    public long maxDayCompleteOrderForHotel;
     /// <summary>
     /// 设置每日最大赚取金钱
     /// </summary>
@@ -78,16 +90,36 @@ public class UserAchievementBean
             this.maxDayGetMoneyS = maxDayGetMoneyS;
         }
     }
+    public void SetMaxDayGetMoneyForHotel(long maxDayGetMoneyForHotelL, long maxDayGetMoneyForHotelM, long maxDayGetMoneyForHotelS)
+    {
+        if (this.maxDayGetMoneyForHotelL == 0 || maxDayGetMoneyForHotelL > this.maxDayGetMoneyForHotelL)
+        {
+            this.maxDayGetMoneyForHotelL = maxDayGetMoneyForHotelL;
+        }
+        if (this.maxDayGetMoneyForHotelM == 0 || maxDayGetMoneyForHotelM > this.maxDayGetMoneyForHotelM)
+        {
+            this.maxDayGetMoneyForHotelM = maxDayGetMoneyForHotelM;
+        }
+        if (this.maxDayGetMoneyForHotelS == 0 || maxDayGetMoneyForHotelS > this.maxDayGetMoneyForHotelS)
+        {
+            this.maxDayGetMoneyForHotelS = maxDayGetMoneyForHotelS;
+        }
+    }
+
 
     /// <summary>
     /// 设置每日最大完成订单
     /// </summary>
     /// <param name="completeOrder"></param>
-    public void SetMaxDayCompleteOrder(long completeOrder)
+    public void SetMaxDayCompleteOrder(long completeForFood,long completeForHotel)
     {
-        if (maxDayCompleteOrder == 0 || completeOrder > maxDayCompleteOrder)
+        if (maxDayCompleteOrder == 0 || completeForFood > maxDayCompleteOrder)
         {
-            maxDayCompleteOrder = completeOrder;
+            maxDayCompleteOrder = completeForFood;
+        }
+        if (maxDayCompleteOrderForHotel == 0 || completeForHotel > maxDayCompleteOrderForHotel)
+        {
+            maxDayCompleteOrderForHotel = completeForHotel;
         }
     }
 
@@ -233,10 +265,36 @@ public class UserAchievementBean
         return 0;
     }
 
+    public void AddNumberForCustomerHotel(int number)
+    {
+        numberForHotelCustomer += number;
+    }
+
+    public void AddNumberForCustomerHotelComplete(int number)
+    {
+        numberForHotelCustomerComplete += number;
+    }
+
+    public void AddNumberForCustomerFoodComplete(CustomerTypeEnum customerType, int number)
+    {
+        switch (customerType)
+        {
+            case CustomerTypeEnum.Normal:
+                numberForNormalCustomer += number;
+                break;
+            case CustomerTypeEnum.Team:
+                numberForTeamCustomer += number;
+                break;
+            case CustomerTypeEnum.Friend:
+                numberForFriendsCustomer += number;
+                break;
+        }
+    }
+
     /// <summary>
     /// 记录顾客
     /// </summary>
-    public void AddNumberForCustomer(CustomerTypeEnum customerType, string id, int number)
+    public void AddNumberForCustomerFood(CustomerTypeEnum customerType, string id, int number)
     {
         List<UserCustomerBean> listData = null;
         switch (customerType)
@@ -299,9 +357,21 @@ public class UserAchievementBean
     /// 返回所有顾客数量
     /// </summary>
     /// <returns></returns>
-    public long GetNumberForAllCustomer()
+    public long GetNumberForAllCustomerFood()
     {
         return numberForNormalCustomer + numberForTeamCustomer + numberForFriendsCustomer;
+    }
+    public long GetNumberForAllCustomerFoodComplete()
+    {
+        return numberForNormalCustomerComplete + numberForTeamCustomerComplete + numberForFriendsCustomerComplete;
+    }
+    public long GetNumberForAllCustomerHotel()
+    {
+        return numberForHotelCustomer;
+    }
+    public long GetNumberForAllCustomerHotelComplete()
+    {
+        return numberForHotelCustomerComplete;
     }
 
     /// <summary>
@@ -309,10 +379,8 @@ public class UserAchievementBean
     /// </summary>
     /// <param name="customerType"></param>
     /// <returns></returns>
-    public long GetNumberForCustomerByType(CustomerTypeEnum customerType)
+    public long GetNumberForCustomerFoodByType(CustomerTypeEnum customerType)
     {
-
-
         switch (customerType)
         {
             case CustomerTypeEnum.Normal:
@@ -321,6 +389,25 @@ public class UserAchievementBean
                 return numberForTeamCustomer;
             case CustomerTypeEnum.Friend:
                 return numberForFriendsCustomer;
+        }
+        return 0;
+    }
+
+    /// <summary>
+    /// 根据类型返回顾客数量
+    /// </summary>
+    /// <param name="customerType"></param>
+    /// <returns></returns>
+    public long GetNumberForCustomerFoodCompleteByType(CustomerTypeEnum customerType)
+    {
+        switch (customerType)
+        {
+            case CustomerTypeEnum.Normal:
+                return numberForNormalCustomerComplete;
+            case CustomerTypeEnum.Team:
+                return numberForTeamCustomerComplete;
+            case CustomerTypeEnum.Friend:
+                return numberForFriendsCustomerComplete;
         }
         return 0;
     }

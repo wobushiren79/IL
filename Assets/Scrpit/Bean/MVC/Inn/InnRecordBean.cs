@@ -10,6 +10,7 @@ public class InnRecordBean
     public int month;
     public int day;
 
+    //枚举DayEnum
     public int status;
 
     //消耗材料
@@ -38,7 +39,12 @@ public class InnRecordBean
     //售卖数量
     public List<GameItemsBean> listSellNumber = new List<GameItemsBean>();
 
-    //进账
+    //住宿进账
+    public long incomeForHotelS;
+    public long incomeForHotelM;
+    public long incomeForHotelL;
+
+    //食物进账
     public long incomeS;
     public long incomeM;
     public long incomeL;
@@ -60,12 +66,16 @@ public class InnRecordBean
     public long numberForTeamCustomer;
     public long numberForFriendsCustomer;
 
+    //住宿
+    public long numberForHotelCustomer;
+    public long numberForHotelCustomerComplete;
+
     /// <summary>
     /// 增加顾客数量
     /// </summary>
     /// <param name="customerType"></param>
     /// <param name="number"></param>
-    public void AddCutomerNumber(CustomerTypeEnum customerType,int number)
+    public void AddCutomerForFoodNumber(CustomerTypeEnum customerType,int number)
     {
         switch (customerType)
         {
@@ -79,6 +89,11 @@ public class InnRecordBean
                 numberForFriendsCustomer += number;
                 break;
         }
+    }
+
+    public void AddCutomerForHotelNumber(int number)
+    {
+        numberForHotelCustomer += number;
     }
 
     /// <summary>
@@ -152,7 +167,13 @@ public class InnRecordBean
         sellItem.priceL += moneyL;
         sellItem.priceM += moneyM;
         sellItem.priceS += moneyS;
-        AddIncome(moneyL, moneyM, moneyS);
+        AddIncomeForFood(moneyL, moneyM, moneyS);
+    }
+
+    public void AddHotelNumber(int number, long moneyL, long moneyM, long moneyS)
+    {
+        numberForHotelCustomerComplete += number;
+        AddIncomeForHotel(moneyL, moneyM, moneyS);
     }
 
     /// <summary>
@@ -161,12 +182,21 @@ public class InnRecordBean
     /// <param name="incomeL"></param>
     /// <param name="incomeM"></param>
     /// <param name="incomeS"></param>
-    public void AddIncome(long incomeL, long incomeM, long incomeS)
+    public void AddIncomeForFood(long incomeL, long incomeM, long incomeS)
     {
         this.incomeL += incomeL;
         this.incomeM += incomeM;
         this.incomeS += incomeS;
     }
+
+    public void AddIncomeForHotel(long incomeL, long incomeM, long incomeS)
+    {
+        this.incomeForHotelL += incomeL;
+        this.incomeForHotelM += incomeM;
+        this.incomeForHotelS += incomeS;
+    }
+
+
 
     /// <summary>
     /// 增加评价
@@ -198,12 +228,11 @@ public class InnRecordBean
         }
     }
 
-    public long GetTotalCustomer()
-    {
-        return numberForNormalCustomer + numberForFriendsCustomer + numberForTeamCustomer;
-    }
-
-    public long GetTotalPayCustomer()
+    /// <summary>
+    /// 获取总计食物订单
+    /// </summary>
+    /// <returns></returns>
+    public long GetTotalCompleteCustomerForFood()
     {
         long number = 0;
         if (listSellNumber == null)
@@ -214,4 +243,59 @@ public class InnRecordBean
         }
         return number;
     }
+
+    /// <summary>
+    /// 获取总计完成食物订单
+    /// </summary>
+    /// <returns></returns>
+    public long GetTotalCustomerForFood()
+    {
+        return numberForNormalCustomer + numberForFriendsCustomer + numberForTeamCustomer;
+    }
+
+    /// <summary>
+    /// 获取总计住宿订单
+    /// </summary>
+    /// <returns></returns>
+    public long GetTotalCustomerForHotel()
+    {
+        return numberForHotelCustomer;
+    }
+
+    /// <summary>
+    /// 获取总计完成住宿订单
+    /// </summary>
+    /// <returns></returns>
+    public long GetTotalCompleteCustomerForHotel()
+    {
+        return numberForHotelCustomerComplete;
+    }
+
+    /// <summary>
+    /// 获取所有收入
+    /// </summary>
+    /// <param name="incomeL"></param>
+    /// <param name="incomeM"></param>
+    /// <param name="incomeS"></param>
+    public void GetTotalIncome(out long incomeL, out long incomeM, out long incomeS)
+    {
+        incomeL = this.incomeForHotelL + this.incomeL;
+        incomeM = this.incomeForHotelM + this.incomeM;
+        incomeS = this.incomeForHotelS + this.incomeS;
+    }
+
+    /// <summary>
+    /// 获取所有支出
+    /// </summary>
+    /// <param name="incomeL"></param>
+    /// <param name="incomeM"></param>
+    /// <param name="incomeS"></param>
+    public void GetTotalExpenses(out long expensesL, out long expensesM, out long expensesS)
+    {
+        expensesL = this.expensesL;
+        expensesM = this.expensesM;
+        expensesS = this.expensesS;
+    }
+
+
 }

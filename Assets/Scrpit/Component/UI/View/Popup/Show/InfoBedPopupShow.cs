@@ -46,6 +46,7 @@ public class InfoBedPopupShow : PopupShowView
         CreateStructure(BuildItemTypeEnum.BedBar, buildBedData.bedBar);
         CreateStructure(BuildItemTypeEnum.BedSheets, buildBedData.bedSheets);
         CreateStructure(BuildItemTypeEnum.BedPillow, buildBedData.bedPillow);
+        AddItemForSellTime(buildBedData.sellTime);
         AddItemForSellNumber(buildBedData.sellNumber);
         AddItemForSellMoney(MoneyEnum.S, buildBedData.sellMoneyS);
         //设置等级相关
@@ -117,6 +118,16 @@ public class InfoBedPopupShow : PopupShowView
         }
         //设置进度
         proResearch.SetData(completeExp, researchExp);
+    }
+
+    /// <summary>
+    /// 增加使用时间
+    /// </summary>
+    /// <param name="number"></param>
+    public void AddItemForSellTime(long time)
+    {
+        Sprite spIcon = iconDataManager.GetIconSpriteByName("time_wait_1_0");
+        CreateItem(objItemStatisticsContainer, spIcon, Color.white, GameCommonInfo.GetUITextById(352), time + "/h");
     }
 
     /// <summary>

@@ -36,6 +36,7 @@ public class InnHandler : BaseMonoBehaviour, IBaseObserver
     //音效处理
     protected AudioHandler audioHandler;
     protected GameTimeHandler gameTimeHandler;
+    protected IconDataManager iconDataManager;
     //数据管理
     protected GameDataManager gameDataManager;
     protected InnFoodManager innFoodManager;
@@ -64,7 +65,7 @@ public class InnHandler : BaseMonoBehaviour, IBaseObserver
     public List<OrderForHotel> bedCleanQueue = new List<OrderForHotel>();
 
     //订单列表
-    public List<OrderForCustomer> listOrder = new List<OrderForCustomer>();
+    public List<OrderForBase> listOrder = new List<OrderForBase>();
     //当天记录流水
     protected InnRecordBean innRecord = new InnRecordBean();
 
@@ -75,6 +76,7 @@ public class InnHandler : BaseMonoBehaviour, IBaseObserver
         toastManager = Find<ToastManager>(ImportantTypeEnum.ToastManager);
         workerBuilder = Find<NpcWorkerBuilder>(ImportantTypeEnum.NpcBuilder);
         customerBuilder = Find<NpcCustomerBuilder>(ImportantTypeEnum.NpcBuilder);
+        iconDataManager = Find<IconDataManager>(ImportantTypeEnum.UIManager);
 
         audioHandler = Find<AudioHandler>(ImportantTypeEnum.AudioHandler);
         gameDataHandler = Find<GameDataHandler>(ImportantTypeEnum.GameDataHandler);
@@ -128,16 +130,18 @@ public class InnHandler : BaseMonoBehaviour, IBaseObserver
         audioHandler.StopMusic();
         innStatus = InnStatusEnum.Close;
         //删除所有顾客
-        customerBuilder.ClearNpc();
         //驱除所有顾客
+        customerBuilder.ClearNpc();
         for (int i = 0; i < listOrder.Count; i++)
         {
-            OrderForCustomer orderCusomer = listOrder[i];
-            if (orderCusomer.customer != null && orderCusomer.customer.gameObject != null)
-                Destroy(orderCusomer.customer.gameObject);
-            //清理所有食物
-            if (orderCusomer.foodCpt != null && orderCusomer.foodCpt.gameObject != null)
-                Destroy(orderCusomer.foodCpt.gameObject);
+            OrderForBase orderForBase= listOrder[i];
+            if (orderForBase as OrderForCustomer !=null)
+            {
+                OrderForCustomer orderCusomer = orderForBase as OrderForCustomer;
+                //清理所有食物
+                if (orderCusomer.foodCpt != null && orderCusomer.foodCpt.gameObject != null)
+                    Destroy(orderCusomer.foodCpt.gameObject);
+            }
         }
         //清理所有桌子
         innTableHandler.CleanAllTable();
@@ -306,6 +310,7 @@ public class InnHandler : BaseMonoBehaviour, IBaseObserver
     {
         OrderForHotel order = new OrderForHotel(npc, buildBedCpt);
         hotelQueue.Add(order);
+        listOrder.Add(order);
         return order;
     }
 
@@ -422,11 +427,11 @@ public class InnHandler : BaseMonoBehaviour, IBaseObserver
             orderForHotel.customer.SetIntent(NpcAICustomerForHotelCpt.CustomerHotelIntentEnum.Leave);
         }
         //床还原  如果是排队时候因为心情降低这里不还原
-        if (orderForHotel.bed != null&& orderForHotel.GetOrderStatus()!= OrderHotelStatusEnum.Pay)
+        if (orderForHotel.bed != null && orderForHotel.GetOrderStatus()!= OrderHotelStatusEnum.Pay)
         {
             orderForHotel.bed.CleanBed();
         }
-        orderForHotel.SetOrderStatus(OrderHotelStatusEnum.End);
+        EndOrder(orderForHotel);
     }
 
     /// <summary>
@@ -447,6 +452,10 @@ public class InnHandler : BaseMonoBehaviour, IBaseObserver
     public void EndOrder(OrderForHotel orderForHotel)
     {
         orderForHotel.SetOrderStatus(OrderHotelStatusEnum.End);
+        if (listOrder.Contains(orderForHotel))
+        {
+            listOrder.Remove(orderForHotel);
+        }
     }
 
 
@@ -459,21 +468,34 @@ public class InnHandler : BaseMonoBehaviour, IBaseObserver
             return;
         for (int i = 0; i < listOrder.Count; i++)
         {
-            OrderForCustomer itemOrder = listOrder[i];
-            if (itemOrder.customer != null &&
-                      (itemOrder.customer.customerIntent == NpcAICustomerCpt.CustomerIntentEnum.Eatting
-                      || itemOrder.customer.customerIntent == NpcAICustomerCpt.CustomerIntentEnum.GotoPay
-                      || itemOrder.customer.customerIntent == NpcAICustomerCpt.CustomerIntentEnum.WaitPay
-                       || itemOrder.customer.customerIntent == NpcAICustomerCpt.CustomerIntentEnum.Pay))
+            OrderForBase itemOrder = listOrder[i];
+            if (itemOrder as OrderForCustomer!=null)
             {
-                if (itemOrder.foodData == null)
-                    continue;
-                MenuOwnBean menuOwn = gameDataManager.gameData.GetMenuById(itemOrder.foodData.id);
-                menuOwn.GetPrice(itemOrder.foodData, out long payMoneyL, out long payMoneyM, out long payMoneyS);
-                PayMoney(itemOrder, payMoneyL, payMoneyM, payMoneyS, false);
+                OrderForCustomer orderForCustomer = itemOrder as OrderForCustomer;
+                if (orderForCustomer.customer != null &&
+                              (orderForCustomer.customer.customerIntent == NpcAICustomerCpt.CustomerIntentEnum.Eatting
+                              || orderForCustomer.customer.customerIntent == NpcAICustomerCpt.CustomerIntentEnum.GotoPay
+                              || orderForCustomer.customer.customerIntent == NpcAICustomerCpt.CustomerIntentEnum.WaitPay
+                               || orderForCustomer.customer.customerIntent == NpcAICustomerCpt.CustomerIntentEnum.Pay))
+                {
+                    if (orderForCustomer.foodData == null)
+                        continue;
+                    MenuOwnBean menuOwn = gameDataManager.gameData.GetMenuById(orderForCustomer.foodData.id);
+                    menuOwn.GetPrice(orderForCustomer.foodData, out long payMoneyL, out long payMoneyM, out long payMoneyS);
+                    PayMoney(itemOrder, payMoneyL, payMoneyM, payMoneyS, false);
+                }
+            }
+            else if (itemOrder as OrderForHotel != null)
+            {
+                OrderForHotel orderForHotel = itemOrder as OrderForHotel;
+                BuildBedBean buildBedData = orderForHotel.bed.buildBedData;
+                PayMoney(itemOrder, 
+                    buildBedData.priceL* orderForHotel.sleepTime,
+                    buildBedData.priceM * orderForHotel.sleepTime,
+                    buildBedData.priceS * orderForHotel.sleepTime, 
+                    false);
             }
         }
-
     }
 
 
@@ -488,6 +510,7 @@ public class InnHandler : BaseMonoBehaviour, IBaseObserver
         {
             payMoneyS = 1;
         }
+        UserAchievementBean userAchievement = gameDataManager.gameData.GetAchievementData();
         Vector3 payEffectsPosition = Vector3.zero;
         if (order as OrderForCustomer!=null)
         {
@@ -498,6 +521,8 @@ public class InnHandler : BaseMonoBehaviour, IBaseObserver
             InnPraise(orderForCustomer.innEvaluation.GetPraise());
             //记录+1
             gameDataManager.gameData.AddMenuSellNumber(innFoodManager, 1, orderForCustomer.foodData.id, payMoneyL, payMoneyM, payMoneyS, out bool isMenuLevelUp);
+            //成就+1
+            userAchievement.AddNumberForCustomerFoodComplete(orderForCustomer.customer.customerType,1);
             if (isMenuLevelUp)
             {
                 Sprite spFoodIcon = innFoodManager.GetFoodSpriteByName(orderForCustomer.foodData.icon_key);
@@ -508,10 +533,24 @@ public class InnHandler : BaseMonoBehaviour, IBaseObserver
         else if (order as OrderForHotel != null)
         {
             OrderForHotel orderForHotel = order as OrderForHotel;
-
+            //账本记录
+            innRecord.AddHotelNumber(1, payMoneyL, payMoneyM, payMoneyS);
             //根据心情评价客栈 前提订单里有他
             InnPraise(orderForHotel.innEvaluation.GetPraise());
-
+            //记录+1
+            gameDataManager.gameData.AddBedSellNumber(
+                orderForHotel.bed.buildBedData.remarkId,
+                1, 
+                orderForHotel.sleepTime,
+                payMoneyL, payMoneyM, payMoneyS, 
+                out bool isBedLevelUp);
+            //成就+1
+            userAchievement.AddNumberForCustomerHotelComplete(1);
+            if (isBedLevelUp)
+            {
+                Sprite spBedIcon = iconDataManager.GetIconSpriteByName("worker_waiter_bed_pro_2");
+                toastManager.ToastHint(spBedIcon, string.Format(GameCommonInfo.GetUITextById(1131), orderForHotel.bed.buildBedData.bedName));
+            }
             payEffectsPosition = orderForHotel.customer.transform.position;
         }
     
@@ -694,28 +733,40 @@ public class InnHandler : BaseMonoBehaviour, IBaseObserver
     /// <summary>
     /// 记录顾客 用于顾客正式进店
     /// </summary>
-    public void RecordCustomer(OrderForCustomer order)
+    public void RecordCustomer(OrderForBase order)
     {
         //成就记录
         UserAchievementBean userAchievement = gameDataManager.gameData.GetAchievementData();
-        //如果是团队需要记录团队ID
-        if (order.customerType == CustomerTypeEnum.Team)
+        if (order as OrderForCustomer != null)
         {
-            NpcTeamBean teamData = ((NpcAICustomerForGuestTeamCpt)order.customer).teamData;
-            userAchievement.AddNumberForCustomer(order.customerType, teamData.id + "", 1);
+            OrderForCustomer orderForCustomer = order as OrderForCustomer;
+            //如果是团队需要记录团队ID
+            if (orderForCustomer.customerType == CustomerTypeEnum.Team)
+            {
+                NpcTeamBean teamData = ((NpcAICustomerForGuestTeamCpt)orderForCustomer.customer).teamData;
+                userAchievement.AddNumberForCustomerFood(orderForCustomer.customerType, teamData.id + "", 1);
+            }
+            else if (orderForCustomer.customerType == CustomerTypeEnum.Friend)
+            {
+                CharacterBean characterData = ((NpcAICostomerForFriendCpt)orderForCustomer.customer).characterData;
+                userAchievement.AddNumberForCustomerFood(orderForCustomer.customerType, characterData.baseInfo.characterId, 1);
+            }
+            else
+            {
+                CharacterBean characterData = orderForCustomer.customer.characterData;
+                userAchievement.AddNumberForCustomerFood(orderForCustomer.customerType, characterData.baseInfo.characterId, 1);
+            }
+            //流水记录
+            innRecord.AddCutomerForFoodNumber(orderForCustomer.customerType, 1);
         }
-        else if (order.customerType == CustomerTypeEnum.Friend)
+        else if (order as OrderForHotel != null)
         {
-            CharacterBean characterData = ((NpcAICostomerForFriendCpt)order.customer).characterData;
-            userAchievement.AddNumberForCustomer(order.customerType, characterData.baseInfo.characterId, 1);
+            OrderForHotel orderForHotel = order as OrderForHotel;
+            userAchievement.AddNumberForCustomerHotel(1);
+            //流水记录
+            innRecord.AddCutomerForHotelNumber(1);
         }
-        else
-        {
-            CharacterBean characterData = order.customer.characterData;
-            userAchievement.AddNumberForCustomer(order.customerType, characterData.baseInfo.characterId, 1);
-        }
-        //流水记录
-        innRecord.AddCutomerNumber(order.customerType, 1);
+       
     }
 
     /// <summary>

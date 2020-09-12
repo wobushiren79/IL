@@ -1378,7 +1378,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 5}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &5108699114272571298
 MonoBehaviour:
@@ -3237,6 +3237,9 @@ MonoBehaviour:
     payIngM: 0
     payIngL: 0
     listSellNumber: []
+    incomeForHotelS: 0
+    incomeForHotelM: 0
+    incomeForHotelL: 0
     incomeS: 0
     incomeM: 0
     incomeL: 0
@@ -3252,6 +3255,8 @@ MonoBehaviour:
     numberForNormalCustomer: 0
     numberForTeamCustomer: 0
     numberForFriendsCustomer: 0
+    numberForHotelCustomer: 0
+    numberForHotelCustomerComplete: 0
 --- !u!114 &2974014991205484880
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3287,6 +3292,9 @@ MonoBehaviour:
     payIngM: 0
     payIngL: 0
     listSellNumber: []
+    incomeForHotelS: 0
+    incomeForHotelM: 0
+    incomeForHotelL: 0
     incomeS: 0
     incomeM: 0
     incomeL: 0
@@ -3302,6 +3310,8 @@ MonoBehaviour:
     numberForNormalCustomer: 0
     numberForTeamCustomer: 0
     numberForFriendsCustomer: 0
+    numberForHotelCustomer: 0
+    numberForHotelCustomerComplete: 0
 --- !u!114 &6172311918900895103
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4200,8 +4210,8 @@ MonoBehaviour:
   ivLevel: {fileID: 6624820312293502951}
   tvRate: {fileID: 7056601616250774179}
   ivIconBackground: {fileID: 4662496607844569100}
-  ivNumberBackground: {fileID: 7803693667558607531}
   ivNameBackground: {fileID: 3208986792835686843}
+  ivNumberBackground: {fileID: 7803693667558607531}
   popupButton: {fileID: 3832733109211567487}
   menuOwn:
     menuId: 0
@@ -5439,7 +5449,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1974271977989106945
 RectTransform:
   m_ObjectHideFlags: 0
@@ -7119,7 +7129,7 @@ RectTransform:
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 20, y: 20}
   m_Pivot: {x: 0.5, y: 0.5}

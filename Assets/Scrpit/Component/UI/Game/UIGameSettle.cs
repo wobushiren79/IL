@@ -72,12 +72,19 @@ public class UIGameSettle : UIGameComponent
         CptUtil.RemoveChildsByActive(objListRecordContent.transform);
         animDelay = 0f;
         InnRecordBean innRecord = innHandler.GetInnRecord();
-        //客流量
-        long totalPayCustomer = innRecord.GetTotalPayCustomer();
-        CreateItemForOther(innRecord.GetTotalCustomer() + "", iconDataManager.GetIconSpriteByName("ach_ordernumber_1"), GameCommonInfo.GetUITextById(323), Color.green);
-        CreateItemForOther(totalPayCustomer + "", iconDataManager.GetIconSpriteByName("ach_ordernumber_1"), GameCommonInfo.GetUITextById(338), Color.green);
+        long totalCustomerForFood = innRecord.GetTotalCompleteCustomerForFood();
+        long totalCustomerForHotel = innRecord.GetTotalCompleteCustomerForHotel();
+        //住客流量
+        if (innRecord.GetTotalCustomerForHotel() > 0)
+            CreateItemForOther(innRecord.GetTotalCustomerForHotel() + "", iconDataManager.GetIconSpriteByName("worker_waiter_bed_pro_2"), GameCommonInfo.GetUITextById(342), Color.green);
+        if (totalCustomerForHotel > 0)
+            CreateItemForOther(totalCustomerForHotel + "", iconDataManager.GetIconSpriteByName("worker_waiter_bed_pro_2"), GameCommonInfo.GetUITextById(343), Color.green);
+        //食客流量
+        CreateItemForOther(innRecord.GetTotalCustomerForFood() + "", iconDataManager.GetIconSpriteByName("ach_ordernumber_1"), GameCommonInfo.GetUITextById(323), Color.green);
+        CreateItemForOther(totalCustomerForFood + "", iconDataManager.GetIconSpriteByName("ach_ordernumber_1"), GameCommonInfo.GetUITextById(338), Color.green);
+
         //记录单日最高成功接客
-        userAchievement.SetMaxDayCompleteOrder(totalPayCustomer);
+        userAchievement.SetMaxDayCompleteOrder(totalCustomerForFood, totalCustomerForHotel);
         //员工支出
         CreateItemForMoney(
                 iconDataManager.GetIconSpriteByName("money_1"),
@@ -161,6 +168,18 @@ public class UIGameSettle : UIGameComponent
             CreateItemForMoney(spIconFlour, string.Format(GameCommonInfo.GetUITextById(339), ingName), 0, 0, 0, innRecord.consumeIngFlour * 5);
             innRecord.AddPayIng(0, 0, innRecord.consumeIngFlour * 5);
         }
+
+        //住宿金额
+        if (innRecord.incomeForHotelS != 0)
+        {
+            CreateItemForMoney(
+                iconDataManager.GetIconSpriteByName("money_1"),
+                GameCommonInfo.GetUITextById(344),
+                1,
+                innRecord.incomeForHotelL,
+                innRecord.incomeForHotelM,
+                innRecord.incomeForHotelS);
+        }
         //遍历食物
         foreach (GameItemsBean itemData in innRecord.listSellNumber)
         {
@@ -174,23 +193,26 @@ public class UIGameSettle : UIGameComponent
                 itemData.priceM,
                 itemData.priceS);
         }
-        if (innRecord.incomeL <= 0)
+        innRecord.GetTotalIncome(out long incomeL, out long incomeM, out long incomeS);
+        innRecord.GetTotalExpenses(out long expensesL, out long expensesM, out long expensesS);
+        if (incomeL <= 0)
             objIncomeL.SetActive(false);
-        if (innRecord.incomeM <= 0)
+        if (incomeM <= 0)
             objIncomeM.SetActive(false);
-        tvIncomeL.text = innRecord.incomeL + "";
-        tvIncomeM.text = innRecord.incomeM + "";
-        tvIncomeS.text = innRecord.incomeS + "";
+        tvIncomeL.text = incomeL + "";
+        tvIncomeM.text = incomeM + "";
+        tvIncomeS.text = incomeS + "";
         //记录单日最高收入
         userAchievement.SetMaxDayGetMoney(innRecord.incomeL, innRecord.incomeM, innRecord.incomeS);
+        userAchievement.SetMaxDayGetMoneyForHotel(innRecord.incomeForHotelL, innRecord.incomeForHotelM, innRecord.incomeForHotelS);
 
         if (innRecord.expensesL <= 0)
             objExpensesL.SetActive(false);
         if (innRecord.expensesM <= 0)
             objExpensesM.SetActive(false);
-        tvExpensesL.text = innRecord.expensesL + "";
-        tvExpensesM.text = innRecord.expensesM + "";
-        tvExpensesS.text = innRecord.expensesS + "";
+        tvExpensesL.text = expensesL + "";
+        tvExpensesM.text = expensesM + "";
+        tvExpensesS.text = expensesS + "";
     }
 
     public void CreateItemForMoney(Sprite spIcon, string name, int status, long moneyL, long moneyM, long moneyS)

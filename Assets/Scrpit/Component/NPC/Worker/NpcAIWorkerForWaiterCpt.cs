@@ -410,7 +410,7 @@ public class NpcAIWorkerForWaiterCpt : NpcAIWokerFoBaseCpt
         //记录数据
         npcAIWorker.characterData.baseInfo.waiterInfo.AddCleanBedNumber(1);
         //增加经验
-        npcAIWorker.characterData.baseInfo.waiterInfo.AddExp(5, out bool isLevelUp);
+        npcAIWorker.characterData.baseInfo.waiterInfo.AddExp(4, out bool isLevelUp);
         if (isLevelUp)
         {
             ToastForLevelUp(WorkerEnum.Waiter);

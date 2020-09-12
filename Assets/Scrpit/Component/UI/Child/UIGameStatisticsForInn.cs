@@ -21,7 +21,12 @@ public class UIGameStatisticsForInn : UIGameStatisticsDetailsBase<UIGameStatisti
     public void CreateDataList(UserAchievementBean userAchievement)
     {
         CptUtil.RemoveChildsByActive(objItemContent);
-        AddItemForCustomerNumber(userAchievement.GetNumberForAllCustomer());
+        AddItemForCustomerNumber(
+            userAchievement.GetNumberForAllCustomerFood(),
+            userAchievement.GetNumberForAllCustomerFoodComplete(),
+            userAchievement.GetNumberForAllCustomerHotel(),
+            userAchievement.GetNumberForAllCustomerHotelComplete());
+
         //金钱
         AddItemForOwnMoney(MoneyEnum.L, userAchievement.ownMoneyL);
         AddItemForOwnMoney(MoneyEnum.M, userAchievement.ownMoneyM);
@@ -41,9 +46,11 @@ public class UIGameStatisticsForInn : UIGameStatisticsDetailsBase<UIGameStatisti
         AddItemForPraiseNumber(PraiseTypeEnum.Disappointed, userAchievement.praiseForDisappointed);
         AddItemForPraiseNumber(PraiseTypeEnum.Anger, userAchievement.praiseForAnger);
         //单日最高赚取金钱
-        AddItemForMaxDayGetMoney(userAchievement.maxDayGetMoneyL, userAchievement.maxDayGetMoneyM, userAchievement.maxDayGetMoneyS);
+        AddItemForMaxDayGetMoney(
+            userAchievement.maxDayGetMoneyL, userAchievement.maxDayGetMoneyM, userAchievement.maxDayGetMoneyS,
+            userAchievement.maxDayGetMoneyForHotelL, userAchievement.maxDayGetMoneyForHotelM, userAchievement.maxDayGetMoneyForHotelS);
         //单日最高客流量
-        AddItemForMaxDayCompleteOrder(userAchievement.maxDayCompleteOrder);
+        AddItemForMaxDayCompleteOrder(userAchievement.maxDayCompleteOrder, userAchievement.maxDayCompleteOrderForHotel);
     }
 
     /// <summary>
@@ -52,30 +59,44 @@ public class UIGameStatisticsForInn : UIGameStatisticsDetailsBase<UIGameStatisti
     /// <param name="moneyL"></param>
     /// <param name="moneyM"></param>
     /// <param name="moneyS"></param>
-    public void AddItemForMaxDayGetMoney(long moneyL,long moneyM,long moneyS)
+    public void AddItemForMaxDayGetMoney(long moneyFoodL, long moneyFoodM, long moneyFoodS, long moneyHotelL, long moneyHotelM, long moneyHotelS)
     {
-        Sprite spIcon = iconDataManager.GetIconSpriteByName("money_1");
-        CreateTextItem(spIcon, Color.white, GameCommonInfo.GetUITextById(340), moneyS + GameCommonInfo.GetUITextById(18));
+        Sprite spIcon_1 = iconDataManager.GetIconSpriteByName("money_1");
+        CreateTextItem(spIcon_1, Color.white, GameCommonInfo.GetUITextById(340), moneyFoodS + GameCommonInfo.GetUITextById(18));
+        Sprite spIcon_2 = iconDataManager.GetIconSpriteByName("money_1");
+        CreateTextItem(spIcon_2, Color.white, GameCommonInfo.GetUITextById(345), moneyHotelS + GameCommonInfo.GetUITextById(18));
     }
 
     /// <summary>
     /// 单日最高完成订单数量
     /// </summary>
     /// <param name="orderNumber"></param>
-    public void AddItemForMaxDayCompleteOrder(long orderNumber)
+    public void AddItemForMaxDayCompleteOrder(long orderFoodNumber,long orderHotelNumber)
     {
-        Sprite spIcon = iconDataManager.GetIconSpriteByName("ach_ordernumber_1");
-        CreateTextItem(spIcon, Color.white, GameCommonInfo.GetUITextById(341), orderNumber+"");
+        Sprite spIcon_1 = iconDataManager.GetIconSpriteByName("ach_ordernumber_1");
+        CreateTextItem(spIcon_1, Color.white, GameCommonInfo.GetUITextById(341), orderFoodNumber + "");
+        Sprite spIcon_2 = iconDataManager.GetIconSpriteByName("worker_waiter_bed_pro_2");
+        CreateTextItem(spIcon_2, Color.white, GameCommonInfo.GetUITextById(346), orderHotelNumber + "");
     }
 
     /// <summary>
     /// 顾客数量
     /// </summary>
     /// <param name="number"></param>
-    public void AddItemForCustomerNumber(long number)
+    public void AddItemForCustomerNumber(
+        long numberForCustomerFood, 
+        long numberForCustomerFoodComplete,
+        long numberForCustomerHotel,
+        long numberForCustomerHotelComplete)
     {
-        Sprite spIcon = iconDataManager.GetIconSpriteByName("team_2");
-        CreateTextItem(spIcon, Color.red, GameCommonInfo.GetUITextById(301), number + GameCommonInfo.GetUITextById(82));
+        Sprite spIcon_1 = iconDataManager.GetIconSpriteByName("team_2");
+        CreateTextItem(spIcon_1, Color.red, GameCommonInfo.GetUITextById(301), numberForCustomerFood + GameCommonInfo.GetUITextById(82));
+        Sprite spIcon_2 = iconDataManager.GetIconSpriteByName("team_2");
+        CreateTextItem(spIcon_2, Color.red, GameCommonInfo.GetUITextById(338), numberForCustomerFoodComplete + GameCommonInfo.GetUITextById(82));
+        Sprite spIcon_3 = iconDataManager.GetIconSpriteByName("worker_waiter_bed_pro_2");
+        CreateTextItem(spIcon_3, Color.white, GameCommonInfo.GetUITextById(342), numberForCustomerHotel + GameCommonInfo.GetUITextById(82));
+        Sprite spIcon_4 = iconDataManager.GetIconSpriteByName("worker_waiter_bed_pro_2");
+        CreateTextItem(spIcon_4, Color.white, GameCommonInfo.GetUITextById(343), numberForCustomerHotelComplete + GameCommonInfo.GetUITextById(82));
     }
 
     /// <summary>

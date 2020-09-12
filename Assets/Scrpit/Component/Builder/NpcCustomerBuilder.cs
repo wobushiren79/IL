@@ -77,20 +77,19 @@ public class NpcCustomerBuilder : NpcNormalBuilder, IBaseObserver
             yield return new WaitForSeconds(buildInterval);
             try
             {
-                BuildCustomerForHotel();
-                //BuildCustomer();
+                BuildCustomer();
                 //有一定概率创建团队
-                //float buildTeamRate = Random.Range(0, 1f);
-                //if (buildTeamRate < buildTeamGustomerRate)
-                //{
-                //    BuildGuestTeam();
-                //}
-                ////有一定概率创建住宿
-                //float buildCustomerHotelRateRandom = Random.Range(0, 1f);
-                //if (buildCustomerHotelRateRandom < buildCustomerForHotelRate)
-                //{
-                //   BuildCustomerForHotel();
-                //}
+                float buildTeamRate = Random.Range(0, 1f);
+                if (buildTeamRate < buildTeamGustomerRate)
+                {
+                    BuildGuestTeam();
+                }
+                //有一定概率创建住宿
+                float buildCustomerHotelRateRandom = Random.Range(0, 1f);
+                if (buildCustomerHotelRateRandom < buildCustomerForHotelRate)
+                {
+                    BuildCustomerForHotel();
+                }
             }
             catch
             {

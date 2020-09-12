@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using UnityEditor;
 using UnityEngine.UI;
-public class ItemPopupRecordFoodCpt : BaseMonoBehaviour
+public class ItemPopupRecordCpt : BaseMonoBehaviour
 {
     public Image ivIcon;
     public Text tvName;
@@ -55,7 +55,15 @@ public class ItemPopupRecordFoodCpt : BaseMonoBehaviour
     public void SetNumber(long number)
     {
         if (tvNumber != null)
-            tvNumber.text = number + GameCommonInfo.GetUITextById(81);
+            if (number == 0)
+            {
+                tvNumber.text ="";
+            }
+            else
+            {
+                tvNumber.text = number + GameCommonInfo.GetUITextById(81);
+            }
+
     }
 
     /// <summary>
