@@ -90,6 +90,7 @@ public class NpcCustomerBuilder : NpcNormalBuilder, IBaseObserver
                 {
                     BuildCustomerForHotel();
                 }
+                //BuildCustomerForHotel();
             }
             catch
             {

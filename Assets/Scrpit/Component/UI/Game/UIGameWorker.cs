@@ -16,7 +16,12 @@ public class UIGameWorker : UIGameComponent
 
     public Button btSortDef;
     public Button btSortLevelUp;
-    public Button btSortWorker;
+
+    public Button btFilterChef;
+    public Button btFilterWaiter;
+    public Button btFilterAccountant;
+    public Button btFilterAccost;
+    public Button btFilterBeater;
 
     public List<CharacterBean> listCharacterData = new List<CharacterBean>();
     protected List<ItemGameWorkerCpt> listWorkerItem = new List<ItemGameWorkerCpt>();
@@ -28,8 +33,17 @@ public class UIGameWorker : UIGameComponent
             btSortDef.onClick.AddListener(OnClickForSortDef);
         if (btSortLevelUp != null)
             btSortLevelUp.onClick.AddListener(OnClickForSortLevelUp);
-        if (btSortWorker != null)
-            btSortWorker.onClick.AddListener(OnClickForSortWorker);
+
+        if (btFilterChef != null)
+            btFilterChef.onClick.AddListener(OnClickForChef);
+        if (btFilterWaiter != null)
+            btFilterWaiter.onClick.AddListener(OnClickForWaiter);
+        if (btFilterAccountant != null)
+            btFilterAccountant.onClick.AddListener(OnClickForAccountant);
+        if (btFilterAccost != null)
+            btFilterAccost.onClick.AddListener(OnClickForAccost);
+        if (btFilterBeater != null)
+            btFilterBeater.onClick.AddListener(OnClickForBeater);
     }
 
     private void Update()
@@ -59,7 +73,6 @@ public class UIGameWorker : UIGameComponent
 
     public void InitUI()
     {
-        workerForSort = WorkerEnum.Chef;
         List<CharacterBean> listData = uiGameManager.gameDataManager.gameData.GetAllCharacterData();
         listCharacterData.Clear();
         listCharacterData.AddRange(listData);
@@ -144,30 +157,75 @@ public class UIGameWorker : UIGameComponent
         InitData();
     }
 
-    public WorkerEnum workerForSort = WorkerEnum.Chef;
+    public void OnClickForChef()
+    {
+        OnClickForWorker(WorkerEnum.Chef);
+
+    }
+    public void OnClickForWaiter()
+    {
+        OnClickForWorker(WorkerEnum.Waiter);
+    }
+    public void OnClickForAccountant()
+    {
+        OnClickForWorker(WorkerEnum.Accountant);
+    }
+    public void OnClickForAccost()
+    {
+        OnClickForWorker(WorkerEnum.Accost);
+    }
+    public void OnClickForBeater()
+    {
+        OnClickForWorker(WorkerEnum.Beater);
+    }
     /// <summary>
     /// 是否升级排序点击
     /// </summary>
-    public void OnClickForSortWorker()
+    public void OnClickForWorker(WorkerEnum worker)
     {
         uiGameManager.audioHandler.PlaySound(AudioSoundEnum.ButtonForNormal);
         this.listCharacterData = this.listCharacterData.OrderByDescending(
             (data) =>
             {
-                int worker = 0;
-                CharacterWorkerBaseBean workerData = data.baseInfo.GetWorkerInfoByType(workerForSort);
-                if (workerData.isWorking)
+                int workNumber = 0;
+                CharacterWorkerBaseBean workerData = data.baseInfo.GetWorkerInfoByType(worker);
+                if (worker== WorkerEnum.Chef|| worker == WorkerEnum.Beater|| worker == WorkerEnum.Accountant)
                 {
-                    worker++;
+                    if (workerData.isWorking)
+                    {
+                        workNumber++;
+                    }
                 }
-                return worker;
+                else if (worker == WorkerEnum.Waiter)
+                {
+                    CharacterWorkerForWaiterBean waiterData= workerData as CharacterWorkerForWaiterBean;
+                    if (waiterData.isWorkingCleanBed)
+                    {
+                        workNumber++;
+                    }
+                    if (waiterData.isWorkingForCleanTable)
+                    {
+                        workNumber++;
+                    }
+                    if (waiterData.isWorkingForSend)
+                    {
+                        workNumber++;
+                    }
+                }
+                else if (worker == WorkerEnum.Accost)
+                {
+                    CharacterWorkerForAccostBean accostData = workerData as CharacterWorkerForAccostBean;
+                    if (accostData.isWorkingForSolicit)
+                    {
+                        workNumber++;
+                    }
+                    if (accostData.isWorkingForGuide)
+                    {
+                        workNumber++;
+                    }
+                }
+                return workNumber;
             }).ToList();
         InitData();
-        int intWorker = (int)workerForSort + 1;
-        if (intWorker > 5)
-        {
-            intWorker = 1;
-        }
-        workerForSort = (WorkerEnum)intWorker;
     }
 }

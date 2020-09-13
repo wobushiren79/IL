@@ -2,17 +2,32 @@
 using UnityEditor;
 using UnityEngine.UI;
 using System.Collections.Generic;
+using System.Linq;
 
 public class PickForCharacterDialogView : DialogView, ItemGameDialogPickCharacterCpt.ICallBack
 {
     public Text tvNull;
+
+    public Button btSortDef;
+    public Button btSortLife;
+    public Button btSortCook;
+    public Button btSortSpeed;
+    public Button btSortAccontant;
+    public Button btSortCharm;
+    public Button btSortForce;
+    public Button btSortLucky;
+
+
     public GameObject objPickCharacterContainer;
     public GameObject objPickCharacterModel;
 
     protected GameDataManager gameDataManager;
     protected ToastManager toastManager;
+    protected GameItemsManager gameItemsManager;
 
     public int pickCharacterMax = 0;
+    public List<CharacterBean> listCharacterData = new List<CharacterBean>();
+
     public List<CharacterBean> listPickCharacter = new List<CharacterBean>();
     public List<string> listExpelCharacterId = new List<string>();
 
@@ -21,6 +36,24 @@ public class PickForCharacterDialogView : DialogView, ItemGameDialogPickCharacte
         base.Awake();
         gameDataManager = Find< GameDataManager >( ImportantTypeEnum.GameDataManager);
         toastManager = Find<ToastManager>(ImportantTypeEnum.ToastManager);
+        gameItemsManager = Find<GameItemsManager>(ImportantTypeEnum.GameItemsManager);
+
+        if (btSortDef)
+            btSortDef.onClick.AddListener(OnClickForDef);
+        if (btSortLife)
+            btSortLife.onClick.AddListener(OnClickForSortLife);
+        if (btSortCook)
+            btSortCook.onClick.AddListener(OnClickForSortCook);
+        if (btSortSpeed)
+            btSortSpeed.onClick.AddListener(OnClickForSortSpeed);
+        if (btSortAccontant)
+            btSortAccontant.onClick.AddListener(OnClickForSortAccontant);
+        if (btSortCharm)
+            btSortCharm.onClick.AddListener(OnClickForSortCharm);
+        if (btSortForce)
+            btSortForce.onClick.AddListener(OnClickForSortForce);
+        if (btSortLucky)
+            btSortLucky.onClick.AddListener(OnClickForSortLucky);
     }
 
     /// <summary>
@@ -49,11 +82,15 @@ public class PickForCharacterDialogView : DialogView, ItemGameDialogPickCharacte
     public override void InitData()
     {
         base.InitData();
+        OnClickForDef();
+    }
+
+    public void CreateListData()
+    {
         listPickCharacter.Clear();
         CptUtil.RemoveChildsByActive(objPickCharacterContainer);
-        List<CharacterBean> listCharacter = gameDataManager.gameData.GetAllCharacterData();
         bool isNull = true;
-        foreach (CharacterBean characterData in listCharacter)
+        foreach (CharacterBean characterData in listCharacterData)
         {
             //筛选不能选择的角色
             bool isExpel = false;
@@ -140,6 +177,122 @@ public class PickForCharacterDialogView : DialogView, ItemGameDialogPickCharacte
                 tvTitle.text = dialogData.title + "(" + listPickCharacter.Count + "/" + pickCharacterMax + ")";
             }
         }
+    }
+
+
+
+    public void OnClickForDef()
+    {
+        listCharacterData.Clear();
+        listCharacterData.AddRange(gameDataManager.gameData.GetAllCharacterData());
+        CreateListData();
+    }
+
+
+    /// <summary>
+    /// 是否升级排序点击
+    /// </summary>
+    public void OnClickForSortLife()
+    {
+        audioHandler.PlaySound(AudioSoundEnum.ButtonForNormal);
+        this.listCharacterData = this.listCharacterData.OrderByDescending(
+            (data) =>
+            {
+                data.GetAttributes(gameItemsManager,out CharacterAttributesBean characterAttributesData);
+                return characterAttributesData.life;
+            }).ToList();
+        CreateListData();
+    }
+
+    /// <summary>
+    /// 是否升级排序点击
+    /// </summary>
+    public void OnClickForSortCook()
+    {
+        audioHandler.PlaySound(AudioSoundEnum.ButtonForNormal);
+        this.listCharacterData = this.listCharacterData.OrderByDescending(
+            (data) =>
+            {
+                data.GetAttributes(gameItemsManager, out CharacterAttributesBean characterAttributesData);
+                return characterAttributesData.cook;
+            }).ToList();
+        CreateListData();
+    }
+
+    /// <summary>
+    /// 是否升级排序点击
+    /// </summary>
+    public void OnClickForSortSpeed()
+    {
+        audioHandler.PlaySound(AudioSoundEnum.ButtonForNormal);
+        this.listCharacterData = this.listCharacterData.OrderByDescending(
+            (data) =>
+            {
+                data.GetAttributes(gameItemsManager, out CharacterAttributesBean characterAttributesData);
+                return characterAttributesData.speed;
+            }).ToList();
+        CreateListData();
+    }
+
+
+    /// <summary>
+    /// 是否升级排序点击
+    /// </summary>
+    public void OnClickForSortAccontant()
+    {
+        audioHandler.PlaySound(AudioSoundEnum.ButtonForNormal);
+        this.listCharacterData = this.listCharacterData.OrderByDescending(
+            (data) =>
+            {
+                data.GetAttributes(gameItemsManager, out CharacterAttributesBean characterAttributesData);
+                return characterAttributesData.account;
+            }).ToList();
+        CreateListData();
+    }
+
+    /// <summary>
+    /// 是否升级排序点击
+    /// </summary>
+    public void OnClickForSortCharm()
+    {
+        audioHandler.PlaySound(AudioSoundEnum.ButtonForNormal);
+        this.listCharacterData = this.listCharacterData.OrderByDescending(
+            (data) =>
+            {
+                data.GetAttributes(gameItemsManager, out CharacterAttributesBean characterAttributesData);
+                return characterAttributesData.charm;
+            }).ToList();
+        CreateListData();
+    }
+
+    /// <summary>
+    /// 是否升级排序点击
+    /// </summary>
+    public void OnClickForSortForce()
+    {
+        audioHandler.PlaySound(AudioSoundEnum.ButtonForNormal);
+        this.listCharacterData = this.listCharacterData.OrderByDescending(
+            (data) =>
+            {
+                data.GetAttributes(gameItemsManager, out CharacterAttributesBean characterAttributesData);
+                return characterAttributesData.force;
+            }).ToList();
+        CreateListData();
+    }
+
+    /// <summary>
+    /// 是否升级排序点击
+    /// </summary>
+    public void OnClickForSortLucky()
+    {
+        audioHandler.PlaySound(AudioSoundEnum.ButtonForNormal);
+        this.listCharacterData = this.listCharacterData.OrderByDescending(
+            (data) =>
+            {
+                data.GetAttributes(gameItemsManager, out CharacterAttributesBean characterAttributesData);
+                return characterAttributesData.lucky;
+            }).ToList();
+        CreateListData();
     }
 
     #region 选择回调

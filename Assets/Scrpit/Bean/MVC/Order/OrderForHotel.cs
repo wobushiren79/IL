@@ -40,7 +40,7 @@ public class OrderForHotel : OrderForBase
     /// 检测订单是否有效
     /// </summary>
     /// <returns></returns>
-    public new bool CheckOrder()
+    public override bool CheckOrder()
     {
         if (customer == null || orderHotelStatus== OrderHotelStatusEnum.End || customer.customerHotelIntent == NpcAICustomerForHotelCpt.CustomerHotelIntentEnum.Leave)
         {

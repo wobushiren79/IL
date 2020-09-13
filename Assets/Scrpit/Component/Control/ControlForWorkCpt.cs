@@ -18,6 +18,7 @@ public class ControlForWorkCpt : BaseControl, DialogView.IDialogCallBack
 
     //选中的NPC
     public BaseNpcAI selectNpc;
+    public BuildBedCpt selectBed;
     //选中射线
     protected Ray selectRay;
     //选中生成的弹出框
@@ -114,23 +115,29 @@ public class ControlForWorkCpt : BaseControl, DialogView.IDialogCallBack
     {
         if (dialogSelectView)
         {
-            if (selectNpc == null)
+            if (selectNpc == null && selectBed == null)
             {
                 ClearSelect();
             }
             else
             {
-                if (selectNpc.transform.position.y >= 90)
+                if (selectNpc != null)
                 {
-                    SetLayer(2);
+                    if (selectNpc.transform.position.y >= 90)
+                    {
+                        SetLayer(2);
+                    }
+                    else
+                    {
+                        SetLayer(1);
+                    }
+                    SetFollowPosition(selectNpc.transform.position);
                 }
-                else
+                if (selectBed != null)
                 {
-                    SetLayer(1);
+                    SetFollowPosition(selectBed.transform.position);
                 }
-                SetFollowPosition(selectNpc.transform.position);
             }
-
         }
     }
 
@@ -206,8 +213,22 @@ public class ControlForWorkCpt : BaseControl, DialogView.IDialogCallBack
                         return;
                     }
                 }
+                else if (itemHit.collider.transform.tag.Equals(TagInfo.Tag_Bed))
+                {
+                    GameObject objSelect = itemHit.collider.gameObject;
+                    selectBed = objSelect.GetComponentInParent<BuildBedCpt>();
+                    if (selectBed)
+                    {
+                        audioHandler.PlaySound(AudioSoundEnum.ButtonForShow);
+                        DialogBean dialogData = new DialogBean();
+                        dialogSelectView = dialogManager.CreateDialog(DialogEnum.SelectForBed, this, dialogData);
+                        ((SelectForBedDialogView)dialogSelectView).SetData(selectBed);
+                        return;
+                    }
+                }
             }
             selectNpc = null;
+            selectBed = null;
         }
     }
 
@@ -284,6 +305,7 @@ public class ControlForWorkCpt : BaseControl, DialogView.IDialogCallBack
             npcAIWorker.SetDazeEnabled(true);
         }
         selectNpc = null;
+        selectBed = null;
         if (dialogSelectView != null)
         {
             Destroy(dialogSelectView.gameObject);

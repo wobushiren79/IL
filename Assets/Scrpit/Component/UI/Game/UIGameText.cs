@@ -390,7 +390,8 @@ public class UIGameText : UIGameComponent, TextInfoManager.ICallBack, DialogView
                 favorabilityForTalk = 1;
                 break;
         }
-        characterFavorability.AddGiftNumber(addFavorability);
+        //增加送礼次数
+        characterFavorability.AddGiftNumber(1);
         //删减物品
         gameDataManager.gameData.AddItemsNumber(itemData.itemId,-1);
         //增加每日限制
@@ -398,6 +399,11 @@ public class UIGameText : UIGameComponent, TextInfoManager.ICallBack, DialogView
         //通过增加好感查询对话
         uiGameManager.textInfoManager.listTextData = uiGameManager.textInfoManager.GetGiftTalkByFavorability(favorabilityForTalk);
         ShowText(uiGameManager.textInfoManager.listTextData);
+
+        //文本里面会默认加好感
+        //先减去文本加的好感 再添加实际的好感加成
+        characterFavorability.AddFavorability( -favorabilityForTalk );
+        characterFavorability.AddFavorability(addFavorability);
     }
 
     public void Cancel(DialogView dialogView, DialogBean dialogBean)

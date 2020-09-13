@@ -80,20 +80,7 @@ public class InnBuildBean
     /// </summary>
     public void InitWall(List<InnResBean> listWall, int layer, List<InnResBean> listDoor)
     {
-        int innInitWidth = 0;
-        int innInitHeight = 0;
-
-        if (layer == 1)
-        {
-            innInitWidth = innWidth;
-            innInitHeight = innWidth;
-        }
-        else if (layer == 2)
-        {
-            innInitWidth = innSecondWidth;
-            innInitHeight = innSecondHeight;
-        }
-
+        GetInnSize(layer,out int innInitWidth, out int innInitHeight,out int offsetH);
         //建造墙壁
         for (int i = 0; i < innInitWidth; i++)
         {
@@ -117,7 +104,7 @@ public class InnBuildBean
                     foreach (InnResBean itemWall in listWall)
                     {
                         Vector3 startPosition = itemWall.GetStartPosition();
-                        if (startPosition.x == i && startPosition.y == f)
+                        if (startPosition.x == i && startPosition.y == f + offsetH)
                         {
                             hasData = true;
                             break;
@@ -126,7 +113,7 @@ public class InnBuildBean
                     if (!hasData)
                     {
                         InnResBean itemData = new InnResBean();
-                        itemData.startPosition = new Vector3Bean(i, f + (layer - 1) * 100);
+                        itemData.startPosition = new Vector3Bean(i, f + offsetH);
                         itemData.id = 20001;
                         listWall.Add(itemData);
                     }
@@ -162,19 +149,7 @@ public class InnBuildBean
     {
         if (listFloor == null)
             listFloor = new List<InnResBean>();
-        int innInitWidth = 0;
-        int innInitHeight = 0;
-
-        if (layer == 1)
-        {
-            innInitWidth = innWidth;
-            innInitHeight = innWidth;
-        }
-        else if (layer == 2)
-        {
-            innInitWidth = innSecondWidth;
-            innInitHeight = innSecondHeight;
-        }
+        GetInnSize(layer, out int innInitWidth, out int innInitHeight, out int offsetH);
 
         for (int i = 0; i < innInitWidth; i++)
         {
@@ -184,7 +159,7 @@ public class InnBuildBean
                 foreach (InnResBean innItem in listFloor)
                 {
                     //如果已经有这个点的地板
-                    if (innItem.startPosition.x == i && innItem.startPosition.y == f)
+                    if (innItem.startPosition.x == i && innItem.startPosition.y == f + offsetH)
                     {
                         hasFloor = true;
                         break;
@@ -192,7 +167,7 @@ public class InnBuildBean
                 }
                 if (!hasFloor)
                 {
-                    InnResBean itemData = new InnResBean(10001, new Vector3(i, f + (layer - 1) * 100), null, Direction2DEnum.Left);
+                    InnResBean itemData = new InnResBean(10001, new Vector3(i, f + offsetH), null, Direction2DEnum.Left);
                     listFloor.Add(itemData);
                 }
             }
@@ -246,7 +221,7 @@ public class InnBuildBean
     /// </summary>
     /// <param name="position"></param>
     /// <returns></returns>
-    public InnResBean GetWallByPosition(int layer,Vector3 position)
+    public InnResBean GetWallByPosition(int layer, Vector3 position)
     {
         List<InnResBean> listData = GetWallList(layer);
         foreach (InnResBean itemData in listData)
@@ -384,8 +359,8 @@ public class InnBuildBean
         }
         else if (layer == 2)
         {
-            innWidth = innSecondWidth;
-            innHeight = innSecondHeight;
+            innWidth = this.innSecondWidth;
+            innHeight = this.innSecondHeight;
         }
     }
 }

@@ -14,6 +14,8 @@ public class UIGameWorkerDetailsGeneralInfo : UIGameStatisticsDetailsBase<UIGame
         this.characterData = characterData;
         CptUtil.RemoveChildsByActive(objItemContent);
         AddWorkDays(characterData.baseInfo.workDay);
+
+        AddDazeNumber(characterData.baseInfo.dazeNumber);
     }
 
     /// <summary>
@@ -24,5 +26,15 @@ public class UIGameWorkerDetailsGeneralInfo : UIGameStatisticsDetailsBase<UIGame
     {
         Sprite spIcon = GetSpriteByName("time_wait_1_0");
         CreateTextItem(spIcon, GameCommonInfo.GetUITextById(337), days + "");
+    }
+
+    /// <summary>
+    /// 设置送餐数量
+    /// </summary>
+    /// <param name="numebr"></param>
+    public void AddDazeNumber(long number)
+    {
+        Sprite spIcon = GetSpriteByName("daze_1");
+        CreateTextItem(spIcon, GameCommonInfo.GetUITextById(349), number + "");
     }
 }

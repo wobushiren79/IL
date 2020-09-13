@@ -336,6 +336,7 @@ public class NpcAIWorkerCpt : BaseNpcAI
     /// </summary>
     public void SetIntentForDaze()
     {
+        characterData.baseInfo.AddDazeNumber(1);
         float dazeTime = UnityEngine.Random.Range(10f, 30f);
         StartCoroutine(CoroutineForDaze(dazeTime));
     }

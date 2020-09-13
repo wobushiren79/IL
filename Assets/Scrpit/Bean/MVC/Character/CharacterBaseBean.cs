@@ -23,6 +23,8 @@ public class CharacterBaseBean
     public long priceM;
     public long priceL;
 
+    public long dazeNumber = 0;
+
     public CharacterWorkerForChefBean chefInfo = new CharacterWorkerForChefBean();
     public CharacterWorkerForWaiterBean waiterInfo = new CharacterWorkerForWaiterBean();
     public CharacterWorkerForAccountantBean accountantInfo = new CharacterWorkerForAccountantBean();
@@ -33,6 +35,7 @@ public class CharacterBaseBean
     public int workerStatus = 0;
 
     public List<long> listLoveItems = new List<long>();//喜欢的物品
+
 
     /// <summary>
     /// 获取所有职业的工作数据
@@ -150,5 +153,10 @@ public class CharacterBaseBean
         {
             workDay = 0;
         }
+    }
+
+    public void AddDazeNumber(int number)
+    {
+        dazeNumber += number;
     }
 }

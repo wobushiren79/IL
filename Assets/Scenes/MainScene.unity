@@ -131,7 +131,6 @@ GameObject:
   m_Component:
   - component: {fileID: 91125146}
   - component: {fileID: 91125145}
-  - component: {fileID: 91125144}
   - component: {fileID: 91125143}
   m_Layer: 0
   m_Name: WaterCamera
@@ -171,14 +170,6 @@ MonoBehaviour:
   m_RequiresDepthTexture: 0
   m_RequiresColorTexture: 0
   m_Version: 2
---- !u!81 &91125144
-AudioListener:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 91125142}
-  m_Enabled: 1
 --- !u!20 &91125145
 Camera:
   m_ObjectHideFlags: 0
@@ -313,7 +304,7 @@ ParticleSystemRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -1395321523
   m_SortingLayer: 11
-  m_SortingOrder: -1
+  m_SortingOrder: -2
   m_RenderMode: 0
   m_SortMode: 0
   m_MinParticleSize: 0
@@ -14990,11 +14981,41 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 666943453185235205, guid: 89ff5bb18d62ed7429f7e2d0cb2a7ea2,
+        type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 666943453185235205, guid: 89ff5bb18d62ed7429f7e2d0cb2a7ea2,
+        type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 666943453185235205, guid: 89ff5bb18d62ed7429f7e2d0cb2a7ea2,
+        type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 666943453185235205, guid: 89ff5bb18d62ed7429f7e2d0cb2a7ea2,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 666943453185235205, guid: 89ff5bb18d62ed7429f7e2d0cb2a7ea2,
+        type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1933910444495742161, guid: 89ff5bb18d62ed7429f7e2d0cb2a7ea2,
         type: 3}
       propertyPath: m_Camera
       value: 
       objectReference: {fileID: 999028671}
+    - target: {fileID: 2741835775601801929, guid: 89ff5bb18d62ed7429f7e2d0cb2a7ea2,
+        type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3053209678722414393, guid: 89ff5bb18d62ed7429f7e2d0cb2a7ea2,
         type: 3}
       propertyPath: m_RootOrder
@@ -15236,12 +15257,12 @@ PrefabInstance:
     - target: {fileID: 8943621853117188307, guid: 9ead96eac66fa8f4393bfb4ff1fe75a4,
         type: 3}
       propertyPath: near clip plane
-      value: 0.3
+      value: 0.1
       objectReference: {fileID: 0}
     - target: {fileID: 8943621853117188307, guid: 9ead96eac66fa8f4393bfb4ff1fe75a4,
         type: 3}
       propertyPath: orthographic size
-      value: 5
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 8943621853117188307, guid: 9ead96eac66fa8f4393bfb4ff1fe75a4,
         type: 3}

@@ -19,7 +19,9 @@ public class InteractiveUICpt : BaseInteractiveCpt
     public override void InteractiveDetection(CharacterInteractiveCpt characterInt)
     {
         BaseUIComponent baseUIComponent = uiManager.GetUIByName(EnumUtil.GetEnumName(uiType));
-        if (Input.GetButtonDown(InputInfo.Interactive_E)&& baseUIComponent != uiManager.GetOpenUI())
+        BaseUIComponent currentUIComponent = uiManager.GetOpenUI();
+        //如果当前页面不是即将要打开的页面 并且当前页面是主界面
+        if (Input.GetButtonDown(InputInfo.Interactive_E)&& baseUIComponent != currentUIComponent && currentUIComponent as UIGameMain)
         {
             if (!CheckUtil.StringIsNull(remarkData))
             {

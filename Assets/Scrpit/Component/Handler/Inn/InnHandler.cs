@@ -41,6 +41,8 @@ public class InnHandler : BaseMonoBehaviour, IBaseObserver
     protected GameDataManager gameDataManager;
     protected InnFoodManager innFoodManager;
     protected ToastManager toastManager;
+    protected InnBuildManager innBuildManager;
+
     //NPC创建
     protected NpcWorkerBuilder workerBuilder;
     protected NpcCustomerBuilder customerBuilder;
@@ -74,6 +76,8 @@ public class InnHandler : BaseMonoBehaviour, IBaseObserver
         gameDataManager = Find<GameDataManager>(ImportantTypeEnum.GameDataManager);
         innFoodManager = Find<InnFoodManager>(ImportantTypeEnum.FoodManager);
         toastManager = Find<ToastManager>(ImportantTypeEnum.ToastManager);
+        innBuildManager = Find<InnBuildManager>(ImportantTypeEnum.BuildManager);
+
         workerBuilder = Find<NpcWorkerBuilder>(ImportantTypeEnum.NpcBuilder);
         customerBuilder = Find<NpcCustomerBuilder>(ImportantTypeEnum.NpcBuilder);
         iconDataManager = Find<IconDataManager>(ImportantTypeEnum.UIManager);
@@ -107,7 +111,7 @@ public class InnHandler : BaseMonoBehaviour, IBaseObserver
         innTableHandler.InitTableList();
         innCookHandler.InitStoveList();
         innPayHandler.InitCounterList();
-        innHotelHandler.InitBedList();
+        innHotelHandler.InitBedList(innBuildManager,gameDataManager.gameData.GetInnBuildData());
         InitWorker();
     }
 
@@ -411,6 +415,7 @@ public class InnHandler : BaseMonoBehaviour, IBaseObserver
     {
         if (orderForHotel == null)
             return;
+        EndOrder(orderForHotel);
         //根据心情评价客栈
         if (isPraise)
         {
@@ -424,14 +429,25 @@ public class InnHandler : BaseMonoBehaviour, IBaseObserver
         //顾客离开
         if (orderForHotel.customer != null)
         {
-            orderForHotel.customer.SetIntent(NpcAICustomerForHotelCpt.CustomerHotelIntentEnum.Leave);
+            //如果顾客在2楼 先下楼
+           if (orderForHotel.customer.customerHotelIntent == NpcAICustomerForHotelCpt.CustomerHotelIntentEnum.Sleep
+            || orderForHotel.customer.customerHotelIntent == NpcAICustomerForHotelCpt.CustomerHotelIntentEnum.GoToBed
+            || orderForHotel.customer.customerHotelIntent == NpcAICustomerForHotelCpt.CustomerHotelIntentEnum.GoToPay
+            || orderForHotel.customer.customerHotelIntent == NpcAICustomerForHotelCpt.CustomerHotelIntentEnum.GoToStairsForSecond
+            )
+            {
+                orderForHotel.customer.SetIntent(NpcAICustomerForHotelCpt.CustomerHotelIntentEnum.GoToStairsForSecond);
+            }
+            else
+            {
+                orderForHotel.customer.SetIntent(NpcAICustomerForHotelCpt.CustomerHotelIntentEnum.Leave);
+            }
         }
         //床还原  如果是排队时候因为心情降低这里不还原
         if (orderForHotel.bed != null && orderForHotel.GetOrderStatus()!= OrderHotelStatusEnum.Pay)
         {
             orderForHotel.bed.CleanBed();
         }
-        EndOrder(orderForHotel);
     }
 
     /// <summary>

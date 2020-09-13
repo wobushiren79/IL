@@ -59,7 +59,6 @@ public class BaseSceneInit : BaseMonoBehaviour
         {
             npcInfoManager.npcInfoController.GetAllNpcInfo();
         }
-
         if (innBuildManager != null)
         {
             innBuildManager.buildDataController.GetAllBuildItemsData();

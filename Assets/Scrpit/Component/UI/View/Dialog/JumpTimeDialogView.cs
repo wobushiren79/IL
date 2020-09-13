@@ -15,6 +15,7 @@ public class JumpTimeDialogView : DialogView
 
     protected GameTimeHandler gameTimeHandler;
     protected GameDataHandler gameDataHandler;
+    protected ControlHandler controlHandler;
     protected LightHandler lightHandler;
     protected BaseSceneInit baseSceneInit;
 
@@ -24,6 +25,7 @@ public class JumpTimeDialogView : DialogView
         gameTimeHandler = Find<GameTimeHandler>(ImportantTypeEnum.TimeHandler);
         gameDataHandler = Find<GameDataHandler>(ImportantTypeEnum.GameDataHandler);
         lightHandler = Find<LightHandler>(ImportantTypeEnum.LightHandler);
+        controlHandler = Find<ControlHandler>(ImportantTypeEnum.ControlHandler);
         baseSceneInit = Find<BaseSceneInit>(ImportantTypeEnum.Init);
 
         if (btSubNumber)
@@ -35,12 +37,19 @@ public class JumpTimeDialogView : DialogView
     public override void Start()
     {
         base.Start();
+
+        if (controlHandler != null)
+            controlHandler.StopControl();
+
         gameTimeHandler.SetTimeStatus(true);
         gameTimeHandler.SetTimeStop();
     }
 
     private void OnDisable()
     {
+        if (controlHandler != null)
+            controlHandler.RestoreControl();
+
         gameTimeHandler.SetTimeStatus(false);
     }
 

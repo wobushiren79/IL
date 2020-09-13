@@ -15,22 +15,21 @@ public class UIGameWorkerDetailsAccostInfo : UIGameStatisticsDetailsBase<UIGameW
     {
         this.accostInfo = accostInfo;
         CptUtil.RemoveChildsByActive(objItemContent);
-        AddAccostTotalNumber(accostInfo.accostTotalNumber);
-        AddAccostSuccessNumber(accostInfo.accostSuccessNumber);
-        AddAccostFailNumber(accostInfo.accostFailNumber);
-        //AddAccostTime(accostInfo.accostTotalTime);
+        AddAccostSolicitTotalNumber(accostInfo.accostTotalNumber);
+        AddAccostSolicitSuccessNumber(accostInfo.accostSuccessNumber);
+        AddAccostSolicitFailNumber(accostInfo.accostFailNumber);
+
+        AddAccostGuideNumber(accostInfo.guideNumber);
+        
     }
-
-
-
 
     /// <summary>
     /// 设置总共数量 
     /// </summary>
     /// <param name="nunber"></param>
-    public void AddAccostTotalNumber(long number)
+    public void AddAccostSolicitTotalNumber(long number)
     {
-        Sprite spIcon = GetSpriteByName("worker_accounting_pro_0");
+        Sprite spIcon = GetSpriteByName("worker_accost_pro_0");
         CreateTextItem(spIcon, GameCommonInfo.GetUITextById(323), number + "");
     }
 
@@ -38,9 +37,9 @@ public class UIGameWorkerDetailsAccostInfo : UIGameStatisticsDetailsBase<UIGameW
     /// 设置成功招揽次数
     /// </summary>
     /// <param name="number"></param>
-    public void AddAccostSuccessNumber(long number)
+    public void AddAccostSolicitSuccessNumber(long number)
     {
-        Sprite spIcon = GetSpriteByName("worker_accounting_pro_0");
+        Sprite spIcon = GetSpriteByName("worker_accost_pro_0");
         CreateTextItem(spIcon, GameCommonInfo.GetUITextById(324), number + "");
     }
 
@@ -49,22 +48,18 @@ public class UIGameWorkerDetailsAccostInfo : UIGameStatisticsDetailsBase<UIGameW
     /// 设置失败招揽次数
     /// </summary>
     /// <param name="number"></param>
-    public void AddAccostFailNumber(long number)
+    public void AddAccostSolicitFailNumber(long number)
     {
-        Sprite spIcon = GetSpriteByName("worker_accounting_pro_0");
+        Sprite spIcon = GetSpriteByName("worker_accost_pro_0");
         CreateTextItem(spIcon, GameCommonInfo.GetUITextById(325), number + "");
     }
 
-
-
     /// <summary>
-    /// 设置总共数量 
+    /// 设置引路次数
     /// </summary>
-    /// <param name="nunber"></param>
-    public void AddAccostTime(float time)
+    public void AddAccostGuideNumber(long number)
     {
-        Sprite spIcon = GetSpriteByName("hourglass_1");
-        CreateTextItem(spIcon, GameCommonInfo.GetUITextById(326), time + GameCommonInfo.GetUITextById(38));
-
+        Sprite spIcon = GetSpriteByName("worker_accost_guide_pro_0");
+        CreateTextItem(spIcon, GameCommonInfo.GetUITextById(347), number + "");
     }
 }

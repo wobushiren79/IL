@@ -17,6 +17,53 @@ public class NpcAICustomerForHotelCpt : BaseNpcAI
         Leave = 99,//离开
     }
 
+    public enum CustomerHotelNotifyEnum
+    {
+        StatusChange = 1,//状态改变
+    }
+
+    /// <summary>
+    /// 获取顾客状态
+    /// </summary>
+    /// <param name="intentStr"></param>
+    /// <returns></returns>
+    public virtual CustomerHotelIntentEnum GetCustomerHotelStatus(out string intentStr)
+    {
+        intentStr = "???";
+        switch (customerHotelIntent)
+        {
+            case CustomerHotelIntentEnum.Walk:
+                intentStr = GameCommonInfo.GetUITextById(151);
+                break;
+            case CustomerHotelIntentEnum.GoToInn:
+                intentStr = GameCommonInfo.GetUITextById(152);
+                break;
+            case CustomerHotelIntentEnum.WaitAccost:
+                intentStr = GameCommonInfo.GetUITextById(161);
+                break;
+            case CustomerHotelIntentEnum.GoToStairsForFirst:
+            case CustomerHotelIntentEnum.GoToBed:
+                intentStr = GameCommonInfo.GetUITextById(162);
+                break;
+            case CustomerHotelIntentEnum.Sleep:
+                intentStr = GameCommonInfo.GetUITextById(164);
+                break;
+            case CustomerHotelIntentEnum.GoToStairsForSecond:
+                intentStr = GameCommonInfo.GetUITextById(163);
+                break;
+            case CustomerHotelIntentEnum.GoToPay:
+                intentStr = GameCommonInfo.GetUITextById(157);
+                break;
+            case CustomerHotelIntentEnum.WaitPay:
+                intentStr = GameCommonInfo.GetUITextById(158);
+                break;
+            case CustomerHotelIntentEnum.Leave:
+                intentStr = GameCommonInfo.GetUITextById(160);
+                break;
+        }
+        return customerHotelIntent;
+    }
+
     public CustomerHotelIntentEnum customerHotelIntent;
     //移动目标点
     public Vector3 movePosition;
@@ -112,7 +159,7 @@ public class NpcAICustomerForHotelCpt : BaseNpcAI
                 IntentForWaitPay();
                 break;
         }
-
+        NotifyAllObserver((int)CustomerHotelNotifyEnum.StatusChange, (int)intent);
     }
 
     /// <summary>
@@ -335,7 +382,7 @@ public class NpcAICustomerForHotelCpt : BaseNpcAI
             }
             else
             {
-                ChangeMood(-99999);
+                SetIntent(CustomerHotelIntentEnum.Leave);
             }
         }
     }

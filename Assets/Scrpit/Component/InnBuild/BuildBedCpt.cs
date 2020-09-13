@@ -19,6 +19,9 @@ public class BuildBedCpt : BaseBuildItemCpt
     public SpriteRenderer srSheets;
     public SpriteRenderer srPillow;
 
+    //作用范围
+    public SpriteRenderer addRange;
+
     public GameObject objLeftPosition;
     public GameObject objUpPosition;
     public GameObject objRightPosition;
@@ -28,6 +31,8 @@ public class BuildBedCpt : BaseBuildItemCpt
 
     public BedStatusEnum bedStatus = BedStatusEnum.Idle;
 
+    public float addAesthetics = 0;
+
     protected InnBuildManager innBuildManager;
 
     private void Awake()
@@ -35,6 +40,15 @@ public class BuildBedCpt : BaseBuildItemCpt
         innBuildManager = Find<InnBuildManager>(ImportantTypeEnum.BuildManager);
     }
 
+    public void SetAddAesthetics(float addAesthetics)
+    {
+        this.addAesthetics = addAesthetics;
+    }
+
+    public float GetAddAesthetics()
+    {
+        return addAesthetics;
+    }
 
     public void SetData(BuildItemBean buildItemData, BuildBedBean buildBedData)
     {
@@ -136,6 +150,19 @@ public class BuildBedCpt : BaseBuildItemCpt
     }
 
     /// <summary>
+    /// 获取价格
+    /// </summary>
+    /// <param name="basePriceS"></param>
+    /// <param name="addPriceS"></param>
+    public void GetPrice(out long basePriceS,out long addPriceS)
+    {
+        basePriceS = 0;
+        addPriceS = 0;
+        basePriceS = buildBedData.priceS;
+        addPriceS = (int)(addAesthetics * 6);
+    }
+
+    /// <summary>
     /// 清理床
     /// </summary>
     public void CleanBed()
@@ -164,5 +191,16 @@ public class BuildBedCpt : BaseBuildItemCpt
         return iconKey;
     }
 
+    public void ShowRange(bool isShow)
+    {
+        if (isShow)
+        {
+            addRange.gameObject.SetActive(true);
+        }
+        else
+        {
+            addRange.gameObject.SetActive(false);
+        }    
+    }
 
 }

@@ -14,7 +14,8 @@ public class UIGameWorkerDetailsWaiterInfo : UIGameStatisticsDetailsBase<UIGameW
         this.waiterData = waiterData;
         CptUtil.RemoveChildsByActive(objItemContent);
         AddSendNumber(waiterData.sendTotalNumber);
-        AddCleanNumber(waiterData.cleanTotalNumber);
+        AddCleanTableNumber(waiterData.cleanTotalNumber);
+        AddCleanBedNumber(waiterData.cleanBedTotalNumber);
        //AddCleanTime(waiterData.cleanTotalTime);
     }
 
@@ -32,7 +33,7 @@ public class UIGameWorkerDetailsWaiterInfo : UIGameStatisticsDetailsBase<UIGameW
     /// 设置清理数量
     /// </summary>
     /// <param name="number"></param>
-    public void AddCleanNumber(long number)
+    public void AddCleanTableNumber(long number)
     {
         Sprite spIcon = GetSpriteByName("worker_clear_pro_0");
         CreateTextItem(spIcon, GameCommonInfo.GetUITextById(314), number + "");
@@ -47,4 +48,17 @@ public class UIGameWorkerDetailsWaiterInfo : UIGameStatisticsDetailsBase<UIGameW
         Sprite spIcon = GetSpriteByName("hourglass_1");
         CreateTextItem(spIcon, GameCommonInfo.GetUITextById(315), time + GameCommonInfo.GetUITextById(38));
     }
+
+
+    /// <summary>
+    /// 设置清理时间
+    /// </summary>
+    /// <param name="time"></param>
+    public void AddCleanBedNumber(float number)
+    {
+        Sprite spIcon = GetSpriteByName("worker_waiter_bed_pro_0");
+        CreateTextItem(spIcon, GameCommonInfo.GetUITextById(348), number + "");
+    }
+
+
 }

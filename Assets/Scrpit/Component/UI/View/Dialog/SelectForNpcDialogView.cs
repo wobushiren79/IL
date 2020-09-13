@@ -32,7 +32,8 @@ public class SelectForNpcDialogView : DialogView, IBaseObserver
     public Button btExpel;
 
     protected BaseNpcAI targetNpcAI;
-    protected NpcAICustomerCpt targetNpcAIForCustomer;
+    protected NpcAICustomerCpt targetNpcAIForCustomerFood;
+    protected NpcAICustomerForHotelCpt targetNpcAIForCustomerHotel;
     protected NpcAIWorkerCpt targetNpcAIForWorker;
 
     public override void Start()
@@ -71,12 +72,16 @@ public class SelectForNpcDialogView : DialogView, IBaseObserver
         SetCharacterUI(characterData);
         if (baseNpc as NpcAICustomerCpt)
         {
-            SetDataForCustomer((NpcAICustomerCpt)baseNpc);
+            SetDataForCustomerFood((NpcAICustomerCpt)baseNpc);
             //如果时好友顾客也显示名字
             if (baseNpc as NpcAICostomerForFriendCpt)
             {
                 SetName(characterData.baseInfo.name);
             }
+        }
+        else if (baseNpc as NpcAICustomerForHotelCpt)
+        {
+            SetDataForCustomerHotel(baseNpc as NpcAICustomerForHotelCpt);
         }
         else if (baseNpc as NpcAIWorkerCpt)
         {
@@ -88,6 +93,7 @@ public class SelectForNpcDialogView : DialogView, IBaseObserver
             SetName(characterData.baseInfo.name);
             SetDataForRascal((NpcAIRascalCpt)baseNpc);
         }
+     
     }
 
     /// <summary>
@@ -153,9 +159,9 @@ public class SelectForNpcDialogView : DialogView, IBaseObserver
     /// 设置顾客数据
     /// </summary>
     /// <param name="npcAICustomer"></param>
-    public void SetDataForCustomer(NpcAICustomerCpt npcAICustomer)
+    public void SetDataForCustomerFood(NpcAICustomerCpt npcAICustomer)
     {
-        this.targetNpcAIForCustomer = npcAICustomer;
+        this.targetNpcAIForCustomerFood = npcAICustomer;
         //设置类型
         if (npcAICustomer.GetOrderForCustomer() == null)
         {
@@ -185,7 +191,26 @@ public class SelectForNpcDialogView : DialogView, IBaseObserver
                 tvTeamName.text = GameCommonInfo.GetUITextById(49) + ":" + npcTeam.teamData.name;
             }
         }
-        ShowCustomerData();
+        ShowCustomerFoodData();
+    }
+
+    public void SetDataForCustomerHotel(NpcAICustomerForHotelCpt npcAICustomer)
+    {
+        this.targetNpcAIForCustomerHotel = npcAICustomer;
+        //设置类型
+        if (npcAICustomer.orderForHotel == null)
+        {
+            SetType(GameCommonInfo.GetUITextById(70));
+        }
+        else
+        {
+            SetType(GameCommonInfo.GetUITextById(60));
+            //设置状态
+            objNpcStatus.SetActive(true);
+            npcAICustomer.GetCustomerHotelStatus(out string customerStatus);
+            SetStatus(customerStatus);
+        }
+        ShowCustomerHotelData();
     }
 
     /// <summary>
@@ -216,14 +241,24 @@ public class SelectForNpcDialogView : DialogView, IBaseObserver
     /// </summary>
     public void HandleForMood()
     {
-        if (targetNpcAIForCustomer != null)
+        if (targetNpcAIForCustomerFood != null)
         {
-            OrderForCustomer order = targetNpcAIForCustomer.GetOrderForCustomer();
+            OrderForCustomer order = targetNpcAIForCustomerFood.GetOrderForCustomer();
             if (order != null && order.table != null)
             {
                 PraiseTypeEnum praiseType = order.innEvaluation.GetPraise();
                 string praiseTypeStr = order.innEvaluation.GetPraiseDetails();
-                SetMood(praiseTypeStr, targetNpcAIForCustomer.characterMoodCpt.GetCurrentMoodSprite());
+                SetMood(praiseTypeStr, targetNpcAIForCustomerFood.characterMoodCpt.GetCurrentMoodSprite());
+            }
+        }
+        if (targetNpcAIForCustomerHotel != null)
+        {
+            OrderForHotel order = targetNpcAIForCustomerHotel.orderForHotel;
+            if (order != null && order.GetOrderStatus()!= OrderHotelStatusEnum.End)
+            {
+                PraiseTypeEnum praiseType = order.innEvaluation.GetPraise();
+                string praiseTypeStr = order.innEvaluation.GetPraiseDetails();
+                SetMood(praiseTypeStr, targetNpcAIForCustomerHotel.characterMoodCpt.GetCurrentMoodSprite());
             }
         }
     }
@@ -233,25 +268,31 @@ public class SelectForNpcDialogView : DialogView, IBaseObserver
     /// </summary>
     public void OnClickExpel()
     {
-        if (targetNpcAIForCustomer != null)
+        if (targetNpcAIForCustomerFood != null)
         {
-            targetNpcAIForCustomer.ChangeMood(-99999);
+            targetNpcAIForCustomerFood.ChangeMood(-99999);
+        }
+        if (targetNpcAIForCustomerHotel != null)
+        {
+            targetNpcAIForCustomerHotel.ChangeMood(-99999);
         }
     }
 
     /// <summary>
     /// 展示客户数据
     /// </summary>
-    public void ShowCustomerData()
+    public void ShowCustomerFoodData()
     {
-        OrderForCustomer orderForCustomer = targetNpcAIForCustomer.GetOrderForCustomer();
-        if (targetNpcAIForCustomer != null && orderForCustomer != null)
+        if (targetNpcAIForCustomerFood == null)
+            return;
+        OrderForCustomer orderForCustomer = targetNpcAIForCustomerFood.GetOrderForCustomer();
+        if (orderForCustomer != null)
         {
             if (orderForCustomer.table)
             {
                 objMood.SetActive(true);
             }
-            if (targetNpcAIForCustomer.customerIntent == NpcAICustomerCpt.CustomerIntentEnum.Leave)
+            if (targetNpcAIForCustomerFood.customerIntent == NpcAICustomerCpt.CustomerIntentEnum.Leave)
             {
                 objFunction.SetActive(false);
                 btExpel.gameObject.SetActive(false);
@@ -265,6 +306,27 @@ public class SelectForNpcDialogView : DialogView, IBaseObserver
 
     }
 
+    public void ShowCustomerHotelData()
+    {
+        if (targetNpcAIForCustomerHotel == null)
+            return;
+        OrderForHotel orderForHotel = targetNpcAIForCustomerHotel.orderForHotel;
+        if (orderForHotel != null)
+        {
+            if (orderForHotel.GetOrderStatus()  == OrderHotelStatusEnum.End
+                || orderForHotel.customer.GetCustomerHotelStatus(out string statusStr) == NpcAICustomerForHotelCpt.CustomerHotelIntentEnum.Sleep)
+            {
+                objFunction.SetActive(false);
+                btExpel.gameObject.SetActive(false);
+            }
+            else
+            {
+                objFunction.SetActive(true);
+                btExpel.gameObject.SetActive(true);
+            }
+        }
+    }
+
     #region 通知回调
     public void ObserbableUpdate<T>(T observable, int type, params object[] obj) where T : Object
     {
@@ -274,7 +336,14 @@ public class SelectForNpcDialogView : DialogView, IBaseObserver
             {
                 if (type == (int)NpcAICustomerCpt.CustomerNotifyEnum.StatusChange)
                 {
-                    SetDataForCustomer((NpcAICustomerCpt)targetNpcAI);
+                    SetDataForCustomerFood((NpcAICustomerCpt)targetNpcAI);
+                }
+            }
+            else if (targetNpcAI as NpcAICustomerForHotelCpt)
+            {
+                if (type == (int)NpcAICustomerForHotelCpt.CustomerHotelNotifyEnum.StatusChange)
+                {
+                    SetDataForCustomerHotel((NpcAICustomerForHotelCpt)targetNpcAI);
                 }
             }
             else if (targetNpcAI as NpcAIWorkerCpt)

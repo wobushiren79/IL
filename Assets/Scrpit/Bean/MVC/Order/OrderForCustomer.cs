@@ -37,7 +37,7 @@ public class OrderForCustomer : OrderForBase
     /// 检测订单是否有效
     /// </summary>
     /// <returns></returns>
-    public new bool CheckOrder()
+    public override bool CheckOrder()
     {
         if (foodData == null || customer == null || customer.customerIntent == NpcAICustomerCpt.CustomerIntentEnum.Leave)
         {

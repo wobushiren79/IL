@@ -227,8 +227,10 @@ public class NpcAIWorkerForAccountantCpt : NpcAIWokerFoBaseCpt
     {
         float time = npcAIWorker.characterData.CalculationAccountingTime(gameItemsManager);
         yield return new WaitForSeconds(time);
-        BuildBedBean bedData = orderForHotel.bed.buildBedData;
-        bedData.GetPrice(out long payMoneyL, out long payMoneyM, out long payMoneyS);
+        orderForHotel.bed.GetPrice(out long basePriceS, out long addPriceS);
+        long payMoneyL = 0;
+        long payMoneyM = 0;
+        long payMoneyS = basePriceS + addPriceS;
         //是否出错
         bool isError = npcAIWorker.characterData.CalculationAccountingCheck(gameItemsManager, out float moreRate);
 
