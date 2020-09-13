@@ -9,33 +9,7 @@ public class UITownGuildRank : UIBaseRank
     public override void SetLocalData()
     {
         base.SetLocalData();
-        long score = 0;
-        GameDataBean gameData = uiGameManager.gameDataManager.gameData;
-        UserAchievementBean userAchievement = gameData.GetAchievementData();
-        switch (rankType)
-        {
-            case RankTypeEnum.GetMoneyS:
-                score = userAchievement.ownMoneyS;
-                break;
-            case RankTypeEnum.NumberOrder:
-                score = userAchievement.GetNumberForAllCustomerFood();
-                break;
-            case RankTypeEnum.NumberPraiseAnger:
-                score = userAchievement.GetPraiseNumber(PraiseTypeEnum.Anger);
-                break;
-            case RankTypeEnum.NumberPraiseExcited:
-                score = userAchievement.GetPraiseNumber(PraiseTypeEnum.Excited);
-                break;
-            case RankTypeEnum.TimePlay:
-                score = gameData.playTime.GetTimeForTotalS();
-                break;
-            case RankTypeEnum.MaxDayGetMoneyS:
-                score = userAchievement.maxDayGetMoneyS;
-                break;
-            case RankTypeEnum.MaxDayCompleteOrder:
-                score = userAchievement.maxDayCompleteOrder;
-                break;
-        }
+        long score = GetScoreByType(rankType);
         CreateLocalItem(score);
     }
 
@@ -45,34 +19,9 @@ public class UITownGuildRank : UIBaseRank
     public override void OnClickForUpdate()
     {
         base.OnClickForUpdate();
-        string rankName = RankTypeEnumTool.GetRankTypeName(rankType);
-        long score = 0;
         GameDataBean gameData = uiGameManager.gameDataManager.gameData;
-        UserAchievementBean userAchievement = gameData.GetAchievementData();
-        switch (rankType)
-        {
-            case RankTypeEnum.GetMoneyS:
-                score = userAchievement.ownMoneyS;
-                break;
-            case RankTypeEnum.NumberOrder:
-                score = userAchievement.GetNumberForAllCustomerFood();
-                break;
-            case RankTypeEnum.NumberPraiseAnger:
-                score = userAchievement.GetPraiseNumber(PraiseTypeEnum.Anger);
-                break;
-            case RankTypeEnum.NumberPraiseExcited:
-                score = userAchievement.GetPraiseNumber(PraiseTypeEnum.Excited);
-                break;
-            case RankTypeEnum.TimePlay:
-                score = gameData.playTime.GetTimeForTotalS();
-                break;
-            case RankTypeEnum.MaxDayGetMoneyS:
-                score = userAchievement.maxDayGetMoneyS;
-                break;
-            case RankTypeEnum.MaxDayCompleteOrder:
-                score = userAchievement.maxDayCompleteOrder;
-                break;
-        }
+        string rankName = RankTypeEnumTool.GetRankTypeName(rankType);
+        long score = GetScoreByType( rankType);
         int intScore = 0;
         if (score > int.MaxValue)
         {
@@ -85,6 +34,47 @@ public class UITownGuildRank : UIBaseRank
         string innName = gameData.GetInnAttributesData().innName;
         string playerName = gameData.userCharacter.baseInfo.name;
         steamHandler.SetGetLeaderboardData(rankTypeId, intScore, innName + "-" + playerName , this);
+    }
+
+    public long GetScoreByType(RankTypeEnum rankType)
+    {
+        GameDataBean gameData = uiGameManager.gameDataManager.gameData;
+        UserAchievementBean userAchievement = gameData.GetAchievementData();
+        long score = 0;
+        switch (rankType)
+        {
+            case RankTypeEnum.GetMoneyS:
+                score = userAchievement.ownMoneyS;
+                break;
+            case RankTypeEnum.NumberOrderForFood:
+                score = userAchievement.GetNumberForAllCustomerFood();
+                break;
+            case RankTypeEnum.NumberOrderForHotel:
+                score = userAchievement.GetNumberForAllCustomerHotel();
+                break;
+            case RankTypeEnum.NumberPraiseAnger:
+                score = userAchievement.GetPraiseNumber(PraiseTypeEnum.Anger);
+                break;
+            case RankTypeEnum.NumberPraiseExcited:
+                score = userAchievement.GetPraiseNumber(PraiseTypeEnum.Excited);
+                break;
+            case RankTypeEnum.TimePlay:
+                score = gameData.playTime.GetTimeForTotalS();
+                break;
+            case RankTypeEnum.MaxDayGetMoneyForFoodS:
+                score = userAchievement.maxDayGetMoneyS;
+                break;
+            case RankTypeEnum.MaxDayGetMoneyForHotelS:
+                score = userAchievement.maxDayGetMoneyForHotelS;
+                break;
+            case RankTypeEnum.MaxDayCompleteOrderForFood:
+                score = userAchievement.maxDayCompleteOrder;
+                break;
+            case RankTypeEnum.MaxDayCompleteOrderForHotel:
+                score = userAchievement.maxDayCompleteOrderForHotel;
+                break;
+        }
+        return score;
     }
 
     /// <summary>

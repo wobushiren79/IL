@@ -15,6 +15,7 @@ public class UIGameHotel : UIGameComponent
     public Button btSortDef;
     public Button btSortLevel;
     public Button btSortLevelUp;
+    public Button btSortPrice;
 
     public List<BuildBedBean> listBedData = new List<BuildBedBean>();
 
@@ -28,6 +29,8 @@ public class UIGameHotel : UIGameComponent
             btSortLevel.onClick.AddListener(OnClickForSortLevel);
         if (btSortLevelUp != null)
             btSortLevelUp.onClick.AddListener(OnClickForSortLevelUp);
+        if (btSortPrice != null)
+            btSortPrice.onClick.AddListener(OnClickForSortPrice);
     }
 
     public override void OpenUI()
@@ -87,6 +90,20 @@ public class UIGameHotel : UIGameComponent
             (data) =>
             {
                 return data.bedStatus;
+            }).ToList();
+        CreateBedList();
+    }
+
+    /// <summary>
+    /// 是否升级排序点击
+    /// </summary>
+    public void OnClickForSortPrice()
+    {
+        uiGameManager.audioHandler.PlaySound(AudioSoundEnum.ButtonForNormal);
+        this.listBedData = this.listBedData.OrderByDescending(
+            (data) =>
+            {
+                return data.priceS;
             }).ToList();
         CreateBedList();
     }

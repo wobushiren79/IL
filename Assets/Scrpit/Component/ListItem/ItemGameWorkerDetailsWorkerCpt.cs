@@ -7,9 +7,8 @@ public class ItemGameWorkerDetailsWorkerCpt : BaseMonoBehaviour
 {
     public Text tvLevelName;
     public Image ivLevel;
-    public Text tvLevel;
-    public Slider sliderExperience;
-    public Image ivSliderFill;
+
+    public ProgressView pvLevel;
 
     public Sprite spSliderMax;
     public Sprite spSliderNormal;
@@ -34,7 +33,7 @@ public class ItemGameWorkerDetailsWorkerCpt : BaseMonoBehaviour
         SetLevelName(workerLevelName);
         //设置经验条
         workInfo.GetWorkerExp(out long nextLevelExp, out long currentExp, out float levelProportion);
-        SetExp(currentExp, nextLevelExp, levelProportion);
+        SetExp(workInfo.workerLevel,currentExp, nextLevelExp, levelProportion);
         // 设置等级图标
         SetLevelIcon(workInfo.workerLevel);
     }
@@ -88,26 +87,24 @@ public class ItemGameWorkerDetailsWorkerCpt : BaseMonoBehaviour
     /// 设置经验条
     /// </summary>
     /// <param name="exp"></param>
-    public void SetExp(long expCurrent, long expLevelUp, float exp)
+    public void SetExp( int level,long expCurrent, long expLevelUp, float exp)
     {
-        if (sliderExperience != null)
-            sliderExperience.value = exp;
+        if (level == 6)
+        {
+            pvLevel.SetData(1, 1);
+            pvLevel.SetContent("Max", colorLevel_2);
+            return;
+        }
+        pvLevel.SetData(expLevelUp,expCurrent);
         string levelStr = "";
         if (expCurrent >= expLevelUp)
         {
-            ivSliderFill.sprite = spSliderMax;
             levelStr = GameCommonInfo.GetUITextById(75);
-            tvLevel.color = colorLevel_1;
+            pvLevel.SetContent(levelStr, colorLevel_1);
         }
         else
         {
-            ivSliderFill.sprite = spSliderNormal;
-            levelStr = expCurrent + "/" + expLevelUp;
-            tvLevel.color = colorLevel_2;
-        }
-        if (tvLevel != null)
-        {
-            tvLevel.text = levelStr;
+            pvLevel.SetContentColor(colorLevel_2);
         }
     }
 

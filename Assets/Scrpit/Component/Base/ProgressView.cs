@@ -66,6 +66,19 @@ public class ProgressView : BaseMonoBehaviour
         if (tvContent != null)
             tvContent.text = content;
     }
+    public void SetContentColor(Color color)
+    {
+        if (tvContent != null)
+        {
+            tvContent.color = color;
+        }
+    }
+    public void SetContent(string content,Color color)
+    {
+        SetContent(content);
+        SetContentColor(color);
+    }
+
 
     /// <summary>
     /// 设置进度条
