@@ -69,6 +69,12 @@ public class SceneGameInnInit : BaseSceneInit, IBaseObserver, DialogView.IDialog
             innHandler.InitRecord();
         }
 
+        //设置天气
+        if (weatherHandler != null)
+        {
+            weatherHandler.SetWeahter(GameCommonInfo.CurrentDayData.weatherToday);
+        }
+
         if (gameDataManager != null && gameTimeHandler != null)
         {
             //增加回调
@@ -93,11 +99,7 @@ public class SceneGameInnInit : BaseSceneInit, IBaseObserver, DialogView.IDialog
             }
         }
 
-        //设置天气
-        if (weatherHandler != null)
-        {
-            weatherHandler.SetWeahter(GameCommonInfo.CurrentDayData.weatherToday);
-        }
+
 
 
         StartCoroutine(BuildNavMesh());

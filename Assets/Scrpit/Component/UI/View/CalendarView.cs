@@ -178,7 +178,8 @@ public class CalendarView : BaseMonoBehaviour, IDateInfoView
         {
             if (itemDay.dateInfo != null && itemDay.dateInfo.day == day)
             {
-                itemDay.SetWeather(GameCommonInfo.CurrentDayData.weatherToday.weatherType);
+                if (GameCommonInfo.CurrentDayData.weatherToday != null)
+                    itemDay.SetWeather(GameCommonInfo.CurrentDayData.weatherToday.weatherType);
                 itemDay.SetItemStatus(true);
             }
             else
@@ -202,10 +203,9 @@ public class CalendarView : BaseMonoBehaviour, IDateInfoView
             {
                 calendarCpt.SetData(itemData);
                 mListItemDay.Add(calendarCpt);
-                if (day == itemData.day)
-                    calendarCpt.SetItemStatus(true);
             }
         }
+        SetCurrentDay(day);
         //如果当天是修建日，则需在日历上显示
         SetBuildDay();
 

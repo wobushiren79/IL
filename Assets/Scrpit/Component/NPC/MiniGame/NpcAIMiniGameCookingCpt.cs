@@ -362,6 +362,7 @@ public class NpcAIMiniGameCookingCpt : BaseNpcAI
     {
         srScore.gameObject.SetActive(true);
         tvScore.text = score + "";
+        srScore.transform.DOKill();
         srScore.transform.localScale = new Vector3(1,1,1);
         srScore.transform.DOScale(Vector3.zero, 0.5f).From().SetEase(Ease.OutBack);
     }
@@ -371,9 +372,12 @@ public class NpcAIMiniGameCookingCpt : BaseNpcAI
     /// </summary>
     public void CloseScore()
     {
-        srScore.transform.DOScale(Vector3.zero, 0.5f).OnComplete(delegate() {
-            srScore.gameObject.SetActive(false);
-        });
+        srScore.transform.DOKill();
+        srScore.transform.localScale = new Vector3(1, 1, 1);
+        srScore.gameObject.SetActive(false);
+        //srScore.transform.DOScale(Vector3.zero, 0.5f).OnComplete(delegate() {
+        //    srScore.gameObject.SetActive(false);
+        //});
     }
 
     /// <summary>

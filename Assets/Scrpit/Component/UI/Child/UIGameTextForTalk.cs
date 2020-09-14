@@ -51,7 +51,7 @@ public class UIGameTextForTalk : BaseUIChildComponent<UIGameText>
             }
             else
             {
-                //当时选择对话 不能跳过
+                //当是选择对话 不能跳过
                 if (textData.GetTextType() ==  TextInfoTypeEnum.Select|| textData.GetTextType() == TextInfoTypeEnum.Talk )
                 {
 
