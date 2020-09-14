@@ -325,7 +325,7 @@ public class InnAttributesBean
         float rateRichness = (float)richness / maxRichness;
         if (rateRichness > 1)
             rateRichness = 1;
-        rate = 0.15f * rateRichness + 0.15f * ratePraise + 0.15f * rateAesthetics + 0.55f;
+        rate = 0.25f * rateRichness + 0.25f * ratePraise + 0.25f * rateAesthetics + 0.25f;
         return rate;
     }
 

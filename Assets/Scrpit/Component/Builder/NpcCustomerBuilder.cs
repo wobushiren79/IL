@@ -274,7 +274,7 @@ public class NpcCustomerBuilder : NpcNormalBuilder, IBaseObserver
     /// </summary>
     /// <param name="hour"></param>
     /// <returns></returns>
-    private float HandleNpcBuildTime(int hour)
+    private void HandleNpcBuildTime(int hour)
     {
         if (hour > 6 && hour <= 9)
         {
@@ -324,7 +324,7 @@ public class NpcCustomerBuilder : NpcNormalBuilder, IBaseObserver
         buildCustomerForHotelRate = innAttributes.CalculationCustomerForHotelRate(innBuild);
         buildTeamGustomerRate = innAttributes.CalculationTeamCustomerBuildRate();
         float buildGustomerRate = innAttributes.CalculationCustomerBuildRate();
-        return buildInterval / buildGustomerRate;
+        buildInterval = buildInterval / buildGustomerRate;
     }
 
     /// <summary>
