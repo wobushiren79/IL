@@ -12,8 +12,7 @@ public class CharacterDressCpt : BaseMonoBehaviour
     //衣服
     public SpriteRenderer sprClothes;
     //鞋子
-    public SpriteRenderer sprShoesLeft;
-    public SpriteRenderer sprShoesRight;
+    public SpriteRenderer sprShoes;
     //手持
     public SpriteRenderer sprHand;
 
@@ -52,8 +51,8 @@ public class CharacterDressCpt : BaseMonoBehaviour
         aocForClothes = new AnimatorOverrideController(animForClothes.runtimeAnimatorController);
         animForClothes.runtimeAnimatorController = aocForClothes;
 
-        //aocForShoes = new AnimatorOverrideController(animForShoes.runtimeAnimatorController);
-        //animForShoes.runtimeAnimatorController = aocForShoes;
+        aocForShoes = new AnimatorOverrideController(animForShoes.runtimeAnimatorController);
+        animForShoes.runtimeAnimatorController = aocForShoes;
 
         aocForHand = new AnimatorOverrideController(animForHand.runtimeAnimatorController);
         animForHand.runtimeAnimatorController = aocForHand;
@@ -178,7 +177,7 @@ public class CharacterDressCpt : BaseMonoBehaviour
         {
             itemsInfo = null;
         }
-        if (sprShoesLeft == null || sprShoesRight == null)
+        if (sprShoes == null)
             return;
         Sprite shoesSP;
         if (itemsInfo == null)
@@ -191,11 +190,10 @@ public class CharacterDressCpt : BaseMonoBehaviour
                 characterEquipData = new CharacterEquipBean();
             characterEquipData.shoesId = itemsInfo.id;
         }
-        sprShoesLeft.sprite = shoesSP;
-        sprShoesRight.sprite = shoesSP;
+        sprShoes.sprite = shoesSP;
         //设置动画
         //需要考虑左右脚
-        //SetAnimForEquip(aocForShoes, itemsInfo);
+        SetAnimForEquip(aocForShoes, itemsInfo);
     }
 
     /// <summary>
