@@ -485,6 +485,24 @@ public class GameDataBean
     }
 
     /// <summary>
+    /// 通过等级获取床单数量
+    /// </summary>
+    /// <param name="levelType"></param>
+    /// <returns></returns>
+    public int GetBedNumberByLevel(LevelTypeEnum levelType)
+    {
+        int number = 0;
+        foreach (BuildBedBean itemBed in listBed)
+        {
+            if (itemBed.GetBedLevel() >= levelType)
+            {
+                number++;
+            }
+        }
+        return number;
+    }
+
+    /// <summary>
     /// 获取指定菜品
     /// </summary>
     /// <param name="id"></param>

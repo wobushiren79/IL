@@ -44,7 +44,8 @@ public enum PreTypeEnum
     PayIngForWaterwine,//酒水
     PayIngForFlour,//面粉
 
-    OrderNumberForTotal,//总共接客数量
+    OrderNumberForTotal,//总共接待食客客数量
+    OrderNumberForHotelTotal,//总计接待住客数量
 
     GetMoneyL,//赚取金钱
     GetMoneyM,
@@ -57,6 +58,11 @@ public enum PreTypeEnum
     InnPraiseNumberForDisappointed,
     InnPraiseNumberForAnger,
 
+    BedNumber,//拥有床位数量
+    BedLevelStarNumber,
+    BedLevelMoonNumber,
+    BedLevelSunNumber,
+
     MenuNumber,//拥有菜品数量
     MenuLevelStarNumber,
     MenuLevelMoonNumber,
@@ -68,10 +74,12 @@ public enum PreTypeEnum
     WorkerForCookFoodNumber,//工作相关统计
     WorkerForCleanFoodNumber,
     WorkerForSendFoodNumber,
+    WorkerForCleanBedNumber,
     WorkerForAccountantSuccessNumber,
     WorkerForAccountantFailNumber,
     WorkerForAccostSuccessNumber,
     WorkerForAccostFailNumber,
+    WorkerForAccostGuideNumber,
     WorkerForFightSuccessNumber,
     WorkerForFightFailNumber,
 
@@ -187,6 +195,7 @@ public class PreTypeEnumTools : DataTools
                 GetPreDetailsForPayIng(preTypeData, gameData, iconDataManager);
                 break;
             case PreTypeEnum.OrderNumberForTotal:
+            case PreTypeEnum.OrderNumberForHotelTotal:
                 GetPreDetailsForOrderNumber(preTypeData, gameData, iconDataManager, isComplete);
                 break;
             case PreTypeEnum.GetMoneyL:
@@ -208,6 +217,12 @@ public class PreTypeEnumTools : DataTools
             case PreTypeEnum.MenuLevelSunNumber:
                 GetPreDetailsForMenuNumber(preTypeData, gameData, iconDataManager, isComplete);
                 break;
+            case PreTypeEnum.BedNumber:
+            case PreTypeEnum.BedLevelStarNumber:
+            case PreTypeEnum.BedLevelMoonNumber:
+            case PreTypeEnum.BedLevelSunNumber:
+                GetPreDetailsForBedNumber(preTypeData, gameData, iconDataManager, isComplete);
+                break;
             case PreTypeEnum.SellMenuNumber:
                 GetPreDetailsForSellMenuNumber(preTypeData, gameData, iconDataManager, isComplete);
                 break;
@@ -215,12 +230,16 @@ public class PreTypeEnumTools : DataTools
                 GetPreDetailsForHaveMenu(preTypeData, gameData, innFoodManager);
                 break;
             case PreTypeEnum.WorkerForCookFoodNumber:
+
             case PreTypeEnum.WorkerForCleanFoodNumber:
             case PreTypeEnum.WorkerForSendFoodNumber:
+            case PreTypeEnum.WorkerForCleanBedNumber:
+
             case PreTypeEnum.WorkerForAccountantSuccessNumber:
             case PreTypeEnum.WorkerForAccountantFailNumber:
             case PreTypeEnum.WorkerForAccostSuccessNumber:
             case PreTypeEnum.WorkerForAccostFailNumber:
+            case PreTypeEnum.WorkerForAccostGuideNumber:
             case PreTypeEnum.WorkerForFightSuccessNumber:
             case PreTypeEnum.WorkerForFightFailNumber:
                 GetPreDetailsForWorker(preTypeData, gameData, iconDataManager, isComplete);
@@ -598,14 +617,26 @@ public class PreTypeEnumTools : DataTools
         Sprite spIcon = null;
         long dataNumber = long.Parse(preTypeData.data);
         string preProStr = "";
+        string preDescribeTitle = "";
+        string preFailTitle = "";
+        UserAchievementBean userAchievement = gameData.GetAchievementData();
+        long numberTotal = 0;
         switch (preTypeData.dataType)
         {
             case PreTypeEnum.OrderNumberForTotal:
                 spIcon = iconDataManager.GetIconSpriteByName("team_2");
+                preDescribeTitle = GameCommonInfo.GetUITextById(5041);
+                preFailTitle = GameCommonInfo.GetUITextById(5042);
+                numberTotal = userAchievement.GetNumberForAllCustomerFood();
+                break;
+            case PreTypeEnum.OrderNumberForHotelTotal:
+                spIcon = iconDataManager.GetIconSpriteByName("worker_waiter_bed_pro_2");
+                preDescribeTitle = GameCommonInfo.GetUITextById(5043);
+                preFailTitle = GameCommonInfo.GetUITextById(5044);
+                numberTotal = userAchievement.GetNumberForAllCustomerHotel();
                 break;
         }
-        UserAchievementBean userAchievement = gameData.GetAchievementData();
-        long numberTotal = userAchievement.GetNumberForAllCustomerFood();
+
         if (numberTotal >= dataNumber || isComplete)
         {
             preTypeData.isPre = true;
@@ -619,8 +650,8 @@ public class PreTypeEnumTools : DataTools
             preTypeData.progress = numberTotal / (float)dataNumber;
         }
         preTypeData.spPreIcon = spIcon;
-        preTypeData.preDescribe = string.Format(GameCommonInfo.GetUITextById(5041), preProStr + "");
-        preTypeData.preFailStr = string.Format(GameCommonInfo.GetUITextById(5042), dataNumber + "");
+        preTypeData.preDescribe = string.Format(preDescribeTitle, preProStr + "");
+        preTypeData.preFailStr = string.Format(preFailTitle, dataNumber + "");
         return preTypeData;
     }
 
@@ -801,6 +832,72 @@ public class PreTypeEnumTools : DataTools
         return preTypeData;
     }
 
+    /// <summary>
+    /// 获取菜单数量相关详情
+    /// </summary>
+    /// <param name="preTypeData"></param>
+    /// <param name="gameData"></param>
+    /// <param name="iconDataManager"></param>
+    /// <param name="isComplete"></param>
+    /// <returns></returns>
+    private static PreTypeBean GetPreDetailsForBedNumber(PreTypeBean preTypeData, GameDataBean gameData, IconDataManager iconDataManager, bool isComplete)
+    {
+        Sprite spIcon = null;
+        long dataNumber = long.Parse(preTypeData.data);
+        string preProStr = "";
+        spIcon = iconDataManager.GetIconSpriteByName("worker_waiter_bed_pro_2");
+        int bedNumber = 0;
+        string content = "";
+        string contentFail = "";
+        string levelStr = "";
+        switch (preTypeData.dataType)
+        {
+            case PreTypeEnum.BedNumber:
+                List<BuildBedBean> listBed = gameData.listBed;
+                bedNumber = listBed.Count;
+                content = GameCommonInfo.GetUITextById(5065);
+                contentFail = GameCommonInfo.GetUITextById(5066);
+                break;
+            case PreTypeEnum.BedLevelStarNumber:
+                bedNumber = gameData.GetBedNumberByLevel(LevelTypeEnum.Star);
+                content = GameCommonInfo.GetUITextById(5067);
+                contentFail = GameCommonInfo.GetUITextById(5068);
+                levelStr = LevelTypeEnumTools.GetLevelStr(LevelTypeEnum.Star);
+                break;
+            case PreTypeEnum.BedLevelMoonNumber:
+                bedNumber = gameData.GetBedNumberByLevel(LevelTypeEnum.Moon);
+                content = GameCommonInfo.GetUITextById(5067);
+                contentFail = GameCommonInfo.GetUITextById(5068);
+                levelStr = LevelTypeEnumTools.GetLevelStr(LevelTypeEnum.Moon);
+                break;
+            case PreTypeEnum.BedLevelSunNumber:
+                bedNumber = gameData.GetBedNumberByLevel(LevelTypeEnum.Sun);
+                content = GameCommonInfo.GetUITextById(5067);
+                contentFail = GameCommonInfo.GetUITextById(5068);
+                levelStr = LevelTypeEnumTools.GetLevelStr(LevelTypeEnum.Sun);
+                break;
+
+        }
+
+        if (bedNumber >= dataNumber || isComplete)
+        {
+            preTypeData.isPre = true;
+            preProStr = "(" + dataNumber + "/" + dataNumber + ")";
+            preTypeData.progress = 1;
+        }
+        else
+        {
+            preTypeData.isPre = false;
+            preProStr = "(" + bedNumber + "/" + dataNumber + ")";
+            preTypeData.progress = bedNumber / (float)dataNumber;
+        }
+        preTypeData.spPreIcon = spIcon;
+        preTypeData.preDescribe = string.Format(content, preProStr + "", levelStr);
+        preTypeData.preFailStr = string.Format(contentFail, dataNumber + "", levelStr);
+        return preTypeData;
+    }
+
+
     private static PreTypeBean GetPreDetailsForSellMenuNumber(PreTypeBean preTypeData, GameDataBean gameData, IconDataManager iconDataManager, bool isComplete)
     {
         Sprite spIcon = null;
@@ -884,6 +981,7 @@ public class PreTypeEnumTools : DataTools
                     break;
                 case PreTypeEnum.WorkerForCleanFoodNumber:
                 case PreTypeEnum.WorkerForSendFoodNumber:
+                case PreTypeEnum.WorkerForCleanBedNumber:
                     CharacterWorkerForWaiterBean characterWorkerForWaiter = (CharacterWorkerForWaiterBean)itemWorkerData.baseInfo.GetWorkerInfoByType(WorkerEnum.Waiter);
                     if (preTypeData.dataType == PreTypeEnum.WorkerForCleanFoodNumber)
                     {
@@ -894,6 +992,11 @@ public class PreTypeEnumTools : DataTools
                     {
                         preDesStr = GameCommonInfo.GetUITextById(313);
                         workerNumber += characterWorkerForWaiter.sendTotalNumber;
+                    }
+                    else if (preTypeData.dataType == PreTypeEnum.WorkerForCleanBedNumber)
+                    {
+                        preDesStr = GameCommonInfo.GetUITextById(348);
+                        workerNumber += characterWorkerForWaiter.cleanBedTotalNumber;
                     }
                     break;
                 case PreTypeEnum.WorkerForAccountantSuccessNumber:
@@ -909,9 +1012,12 @@ public class PreTypeEnumTools : DataTools
                         preDesStr = GameCommonInfo.GetUITextById(320);
                         workerNumber += characterWorkerForAccountant.accountingErrorNumber;
                     }
+          
+
                     break;
                 case PreTypeEnum.WorkerForAccostSuccessNumber:
                 case PreTypeEnum.WorkerForAccostFailNumber:
+                case PreTypeEnum.WorkerForAccostGuideNumber:
                     CharacterWorkerForAccostBean characterWorkerForAccost = (CharacterWorkerForAccostBean)itemWorkerData.baseInfo.GetWorkerInfoByType(WorkerEnum.Accost);
                     if (preTypeData.dataType == PreTypeEnum.WorkerForAccostSuccessNumber)
                     {
@@ -922,6 +1028,11 @@ public class PreTypeEnumTools : DataTools
                     {
                         preDesStr = GameCommonInfo.GetUITextById(325);
                         workerNumber += characterWorkerForAccost.accostFailNumber;
+                    }
+                    else if (preTypeData.dataType == PreTypeEnum.WorkerForAccostGuideNumber)
+                    {
+                        preDesStr = GameCommonInfo.GetUITextById(347);
+                        workerNumber += characterWorkerForAccost.guideNumber;
                     }
                     break;
                 case PreTypeEnum.WorkerForFightSuccessNumber:

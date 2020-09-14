@@ -109,7 +109,16 @@ public class UIBaseRank : UIBaseOne, IRadioGroupCallBack
         SteamLeaderboardEntryBean steamLeaderboardEntry = new SteamLeaderboardEntryBean();
         steamLeaderboardEntry.rank = 0;
         steamLeaderboardEntry.score = intScore;
-        steamLeaderboardEntry.steamID = SteamUser.GetSteamID();
+        try
+        {
+            //如果steam没有初始化
+            steamLeaderboardEntry.steamID = SteamUser.GetSteamID();
+        }
+        catch
+        {
+
+        }
+
         steamLeaderboardEntry.details = TypeConversionUtil.StringToInt32(innName + "-" + playerName);
         itemRankForLocal.SetData(rankType, steamLeaderboardEntry);
     }

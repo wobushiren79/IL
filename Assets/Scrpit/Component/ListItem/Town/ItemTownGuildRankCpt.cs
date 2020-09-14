@@ -43,7 +43,10 @@ public class ItemTownGuildRankCpt : ItemGameBaseCpt, IWebRequestCallBack<SteamWe
         SetName(name);
 
         //开始获取头像和名字
-        StartCoroutine(steamHandler.GetUserInfo(rankData.steamID.m_SteamID + "", this));
+        if (rankData.steamID.m_SteamID != 0)
+        {
+            StartCoroutine(steamHandler.GetUserInfo(rankData.steamID.m_SteamID + "", this));
+        }
     }
 
     public void SetScore(RankTypeEnum rankType, int score)
@@ -54,7 +57,7 @@ public class ItemTownGuildRankCpt : ItemGameBaseCpt, IWebRequestCallBack<SteamWe
         {
             case RankTypeEnum.GetMoneyS:
                 dataStr = score + GameCommonInfo.GetUITextById(18);
-                spData = iconDataManager.GetIconSpriteByName("ach_money_s_2") ;
+                spData = iconDataManager.GetIconSpriteByName("ach_money_s_2");
                 break;
             case RankTypeEnum.NumberOrderForFood:
                 dataStr = score + GameCommonInfo.GetUITextById(82);
