@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections;
 using Pathfinding;
+using System.Linq;
 
 public class NpcAIWorkerCpt : BaseNpcAI
 {
@@ -41,8 +42,6 @@ public class NpcAIWorkerCpt : BaseNpcAI
     public InnHandler innHandler;
     //工作者的想法
     public WorkerIntentEnum workerIntent = WorkerIntentEnum.Idle;
-    //工作信息
-    public List<CharacterWorkerBaseBean> listWorkerInfo = new List<CharacterWorkerBaseBean>();
     //所有的工作类型
     public List<WorkerDetilsEnum> listWorkerDetailsType = new List<WorkerDetilsEnum>();
     //是否开启偷懒
@@ -55,7 +54,6 @@ public class NpcAIWorkerCpt : BaseNpcAI
     {
         base.Awake();
         innHandler = Find<InnHandler>(ImportantTypeEnum.InnHandler);
-        listWorkerDetailsType = EnumUtil.GetEnumValue<WorkerDetilsEnum>();
     }
 
     private void FixedUpdate()
@@ -221,7 +219,49 @@ public class NpcAIWorkerCpt : BaseNpcAI
     /// </summary>
     public void InitWorkerInfo()
     {
-        listWorkerInfo = characterData.baseInfo.GetAllWorkerInfo();
+        //给工作排序
+        listWorkerDetailsType = EnumUtil.GetEnumValue<WorkerDetilsEnum>();
+        listWorkerDetailsType = listWorkerDetailsType.OrderByDescending(i => 
+        {
+            int priority = 0;
+            CharacterWorkerBaseBean characterWorkerBase = null;
+            switch (i)
+            {
+                case WorkerDetilsEnum.ChefForCook:
+                    characterWorkerBase =  characterData.baseInfo.GetWorkerInfoByType(WorkerEnum.Chef);
+                    priority = characterWorkerBase.priority;
+                    break;
+                case WorkerDetilsEnum.WaiterForSend:
+                    characterWorkerBase = characterData.baseInfo.GetWorkerInfoByType(WorkerEnum.Waiter);
+                    priority = (characterWorkerBase as CharacterWorkerForWaiterBean).priorityForSend;
+                    break;
+                case WorkerDetilsEnum.WaiterForCleanTable:
+                    characterWorkerBase = characterData.baseInfo.GetWorkerInfoByType(WorkerEnum.Waiter);
+                    priority = (characterWorkerBase as CharacterWorkerForWaiterBean).priorityForCleanTable;
+                    break;
+                case WorkerDetilsEnum.WaiterForCleanBed:
+                    characterWorkerBase = characterData.baseInfo.GetWorkerInfoByType(WorkerEnum.Waiter);
+                    priority = (characterWorkerBase as CharacterWorkerForWaiterBean).priorityForCleanBed;
+                    break;
+                case WorkerDetilsEnum.AccountantForPay:
+                    characterWorkerBase = characterData.baseInfo.GetWorkerInfoByType(WorkerEnum.Accountant);
+                    priority = characterWorkerBase.priority;
+                    break;
+                case WorkerDetilsEnum.AccostForSolicit:
+                    characterWorkerBase = characterData.baseInfo.GetWorkerInfoByType(WorkerEnum.Accost);
+                    priority = (characterWorkerBase as CharacterWorkerForAccostBean).priorityForSolicit;
+                    break;
+                case WorkerDetilsEnum.AccostForGuide:
+                    characterWorkerBase = characterData.baseInfo.GetWorkerInfoByType(WorkerEnum.Accost);
+                    priority = (characterWorkerBase as CharacterWorkerForAccostBean).priorityForGuide;
+                    break;
+                case WorkerDetilsEnum.BeaterForDrive:
+                    characterWorkerBase = characterData.baseInfo.GetWorkerInfoByType(WorkerEnum.Beater);
+                    priority = characterWorkerBase.priority;
+                    break;
+            }
+            return priority;
+        }).ToList();
     }
 
     /// <summary>

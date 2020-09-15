@@ -81,7 +81,7 @@ public class BuildBedBean : BaseBean
         {
             buildBed.rarity = 1;
         }
-        buildBed.priceS = 50;
+        buildBed.priceS = 100;
         if (buildBed.rarity == 0)
         {
             buildBed.priceS += UnityEngine.Random.Range(0, 50);

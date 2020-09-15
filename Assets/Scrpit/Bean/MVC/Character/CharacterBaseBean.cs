@@ -50,9 +50,10 @@ public class CharacterBaseBean
         workerInfos.Add(GetWorkerInfoByType(WorkerEnum.Accost));
         workerInfos.Add(GetWorkerInfoByType(WorkerEnum.Beater));
         //按照优先度排序，数值越高越靠前
-        workerInfos = workerInfos.OrderByDescending(i => i.priority).ToList();
+        //workerInfos = workerInfos.OrderByDescending(i => i.priority).ToList();
         return workerInfos;
     }
+
 
     /// <summary>
     /// 根据类型获取工作数据
