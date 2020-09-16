@@ -2,6 +2,8 @@
 using UnityEditor;
 using UnityEngine.AI;
 using DG.Tweening;
+using UnityEngine.Rendering;
+
 public class BaseNpcAI : BaseObservable<IBaseObserver>
 {
     //角色数据
@@ -17,6 +19,9 @@ public class BaseNpcAI : BaseObservable<IBaseObserver>
     public CharacterExpressionCpt characterExpression;
     //角色图标控制
     public CharacterStatusIconCpt characterStatusIcon;
+
+    //角色层级
+    public SortingGroup characterForRenderer;
 
     //装备控制管理
     protected GameItemsManager gameItemsManager;
@@ -38,6 +43,8 @@ public class BaseNpcAI : BaseObservable<IBaseObserver>
         gameItemsManager = Find<GameItemsManager>(ImportantTypeEnum.GameItemsManager);
         iconDataManager = Find<IconDataManager>(ImportantTypeEnum.UIManager);
         audioHandler = Find<AudioHandler>(ImportantTypeEnum.AudioHandler);
+
+        characterForRenderer = GetComponent<SortingGroup>();
 
         characterBody = CptUtil.GetCptInChildrenByName<CharacterBodyCpt>(gameObject, "Body");
         characterDress = CptUtil.GetCptInChildrenByName<CharacterDressCpt>(gameObject, "Body");
@@ -343,7 +350,7 @@ public class BaseNpcAI : BaseObservable<IBaseObserver>
             case Direction2DEnum.Left:
                 SetCharacterFace(1);
                 characterBody.transform.DOLocalRotate(new Vector3(0, 0, -90), 0.1f).SetEase(Ease.OutBack);
-                characterBody.transform.localPosition = new Vector3(0, 0.3f, 0);
+                characterBody.transform.localPosition = new Vector3(0, 0.2f, 0);
                 break;
             case Direction2DEnum.UP:
                 characterBody.transform.DOLocalRotate(new Vector3(0, 0, 180), 0.1f).SetEase(Ease.OutBack);
@@ -351,7 +358,7 @@ public class BaseNpcAI : BaseObservable<IBaseObserver>
             case Direction2DEnum.Right:
                 SetCharacterFace(2);
                 characterBody.transform.DOLocalRotate(new Vector3(0, 0, 90), 0.1f).SetEase(Ease.OutBack);
-                characterBody.transform.localPosition = new Vector3(0, 0.3f, 0);
+                characterBody.transform.localPosition = new Vector3(0, 0.2f, 0);
                 break;
             case Direction2DEnum.Down:
                 characterBody.transform.localPosition = new Vector3(0, 0f, 0);
@@ -365,6 +372,8 @@ public class BaseNpcAI : BaseObservable<IBaseObserver>
             characterDress.SetMask(null);
             characterDress.SetHand(null);
         }
+        if (characterForRenderer != null)
+            characterForRenderer.sortingOrder = -2;
     }
 
     /// <summary>
@@ -374,6 +383,8 @@ public class BaseNpcAI : BaseObservable<IBaseObserver>
     {
         characterBody.transform.DOLocalRotate(new Vector3(0, 0, 0), 0.1f).SetEase(Ease.OutBack);
         characterBody.transform.localPosition = new Vector3(0, 0.5f, 0);
+        if(characterForRenderer!=null)
+            characterForRenderer.sortingOrder = 0;
     }
 
     /// <summary>

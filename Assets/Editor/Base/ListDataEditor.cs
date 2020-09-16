@@ -145,14 +145,14 @@ public class ListDataEditor : Editor
     {
         GameObject Target = Selection.gameObjects[0];
         InnBuildManager innBuildManager = Target.GetComponent<InnBuildManager>();
-        innBuildManager.listFurnitureIcon.Clear();
-        AddIconBeanDictionaryByFolder("Assets/Texture/InnBuild/TableAndChair/", innBuildManager.listFurnitureIcon);
-        AddIconBeanDictionaryByFolder("Assets/Texture/InnBuild/Stove/", innBuildManager.listFurnitureIcon);
-        AddIconBeanDictionaryByFolder("Assets/Texture/InnBuild/Counter/", innBuildManager.listFurnitureIcon);
-        AddIconBeanDictionaryByFolder("Assets/Texture/InnBuild/Door/", innBuildManager.listFurnitureIcon);
-        AddIconBeanDictionaryByFolder("Assets/Texture/InnBuild/Decoration/", innBuildManager.listFurnitureIcon);
-        AddIconBeanDictionaryByFolder("Assets/Texture/InnBuild/Bed/", innBuildManager.listFurnitureIcon);
-        AddIconBeanDictionaryByFolder("Assets/Texture/InnBuild/Stairs/", innBuildManager.listFurnitureIcon);
+        //innBuildManager.listFurnitureIcon.Clear();
+        //AddIconBeanDictionaryByFolder("Assets/Texture/InnBuild/TableAndChair/", innBuildManager.listFurnitureIcon);
+        //AddIconBeanDictionaryByFolder("Assets/Texture/InnBuild/Stove/", innBuildManager.listFurnitureIcon);
+        //AddIconBeanDictionaryByFolder("Assets/Texture/InnBuild/Counter/", innBuildManager.listFurnitureIcon);
+        //AddIconBeanDictionaryByFolder("Assets/Texture/InnBuild/Door/", innBuildManager.listFurnitureIcon);
+        //AddIconBeanDictionaryByFolder("Assets/Texture/InnBuild/Decoration/", innBuildManager.listFurnitureIcon);
+        //AddIconBeanDictionaryByFolder("Assets/Texture/InnBuild/Bed/", innBuildManager.listFurnitureIcon);
+        //AddIconBeanDictionaryByFolder("Assets/Texture/InnBuild/Stairs/", innBuildManager.listFurnitureIcon);
 
         innBuildManager.listFloorIcon.Clear();
         AddIconBeanDictionaryByFolder("Assets/Texture/Tile/Floor/", innBuildManager.listFloorIcon);

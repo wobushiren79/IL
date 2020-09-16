@@ -2,6 +2,7 @@
 using UnityEditor;
 using System.Collections.Generic;
 using UnityEngine.Tilemaps;
+using UnityEngine.U2D;
 
 public class InnBuildManager : BaseManager, IBuildDataView
 {
@@ -17,7 +18,7 @@ public class InnBuildManager : BaseManager, IBuildDataView
     //家具模型列表
     public GameObjectDictionary listFurnitureCpt = new GameObjectDictionary();
     //家具图标
-    public IconBeanDictionary listFurnitureIcon = new IconBeanDictionary();
+    public SpriteAtlas  atlasForFunrniture;
     //地板图标
     public IconBeanDictionary listFloorIcon = new IconBeanDictionary();
     //墙体图标
@@ -34,7 +35,7 @@ public class InnBuildManager : BaseManager, IBuildDataView
     /// <returns></returns>
     public Sprite GetFurnitureSpriteByName(string name)
     {
-        return GetSpriteByName(name, listFurnitureIcon);
+        return GetSpriteByName(name, atlasForFunrniture);
     }
 
     /// <summary>
