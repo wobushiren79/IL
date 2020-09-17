@@ -168,22 +168,25 @@ public class NpcAIWorkerForChefCpt : NpcAIWokerFoBaseCpt
         yield return new WaitForSeconds(foodTime);
         //如果顾客已经没人
         //记录数据
-        npcAIWorker.characterData.baseInfo.chefInfo.AddCookNumber(1, orderForCustomer.foodData.id);
-        //添加经验
-        npcAIWorker.characterData.baseInfo.chefInfo.AddExp(1 , out bool isLevelUp);
-        if (isLevelUp)
+        if (gameObject != null)
         {
-            ToastForLevelUp(WorkerEnum.Chef);
+            npcAIWorker.characterData.baseInfo.chefInfo.AddCookNumber(1, orderForCustomer.foodData.id);
+            //添加经验
+            npcAIWorker.characterData.baseInfo.chefInfo.AddExp(1, out bool isLevelUp);
+            if (isLevelUp)
+            {
+                ToastForLevelUp(WorkerEnum.Chef);
+            }
+            //计算食物生成等级
+            // orderForCustomer.foodLevel = npcAIWorker.characterData.CalculationChefFoodLevel(gameItemsManager);
+            orderForCustomer.foodLevel = 0;
+            //在灶台创建一个食物
+            orderForCustomer.stove.CreateFood(innFoodManager, orderForCustomer);
+            //通知送餐
+            npcAIWorker.innHandler.sendQueue.Add(orderForCustomer);
+            //设置状态为闲置
+            SetIntent(ChefIntentEnum.Idle);
         }
-        //计算食物生成等级
-        // orderForCustomer.foodLevel = npcAIWorker.characterData.CalculationChefFoodLevel(gameItemsManager);
-        orderForCustomer.foodLevel = 0;
-         //在灶台创建一个食物
-        orderForCustomer.stove.CreateFood(innFoodManager, orderForCustomer);
-        //通知送餐
-        npcAIWorker.innHandler.sendQueue.Add(orderForCustomer);
-        //设置状态为闲置
-        SetIntent(ChefIntentEnum.Idle);
     }
 
 

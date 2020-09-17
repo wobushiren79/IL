@@ -22,6 +22,7 @@ public class UIGameSetting : UIGameComponent, DropdownView.ICallBack, ProgressVi
     public RadioButtonView rbMouseMove;
     public RadioButtonView rbKeyTip;
     public RadioButtonView rbEventCameraMove;
+    public RadioButtonView rbEventStopTimeScale;
     public RadioButtonView rbEvent;
     public RadioButtonView rbWorkerNumber;
     public InputField etFrames;
@@ -174,6 +175,20 @@ public class UIGameSetting : UIGameComponent, DropdownView.ICallBack, ProgressVi
                 rbEventCameraMove.ChangeStates(RadioButtonView.RadioButtonStatus.Selected);
             }
         }
+        //事件倍速停止初始化
+        if (rbEventStopTimeScale != null)
+        {
+            rbEventStopTimeScale.SetCallBack(this);
+            if (GameCommonInfo.GameConfig.statusForEventStopTimeScale == 0)
+            {
+                rbEventStopTimeScale.ChangeStates(RadioButtonView.RadioButtonStatus.Unselected);
+            }
+            else if (GameCommonInfo.GameConfig.statusForEventStopTimeScale == 1)
+            {
+                rbEventStopTimeScale.ChangeStates(RadioButtonView.RadioButtonStatus.Selected);
+            }
+        }
+
         //事件镜头跟随初始化
         if (rbEvent != null)
         {
@@ -437,6 +452,18 @@ public class UIGameSetting : UIGameComponent, DropdownView.ICallBack, ProgressVi
             else if (buttonStates == RadioButtonView.RadioButtonStatus.Unselected)
             {
                 GameCommonInfo.GameConfig.statusForEventCameraMove = 0;
+            }
+        }
+        else if (view == rbEventStopTimeScale)
+        {
+            //按键提示
+            if (buttonStates == RadioButtonView.RadioButtonStatus.Selected)
+            {
+                GameCommonInfo.GameConfig.statusForEventStopTimeScale = 1;
+            }
+            else if (buttonStates == RadioButtonView.RadioButtonStatus.Unselected)
+            {
+                GameCommonInfo.GameConfig.statusForEventStopTimeScale = 0;
             }
         }
         else if (view == rbEvent)

@@ -122,6 +122,7 @@ public class GameTimeHandler : BaseObservable<IBaseObserver>
         if (hour >= 24)
         {
             SetTimeStatus(true);
+            SetTimeScale(1);
             //TODO 一天时间结束处理
             NotifyAllObserver((int)NotifyTypeEnum.EndDay, null);
         }
@@ -200,6 +201,11 @@ public class GameTimeHandler : BaseObservable<IBaseObserver>
     public void SetTimeScale(float scale)
     {
         Time.timeScale = scale;
+    }
+
+    public float GetTimeScale()
+    {
+        return Time.timeScale;
     }
 
     /// <summary>

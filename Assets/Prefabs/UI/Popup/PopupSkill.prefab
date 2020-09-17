@@ -175,9 +175,9 @@ RectTransform:
   m_Father: {fileID: 3099589670011634863}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 15, y: -95}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 15, y: 0}
   m_SizeDelta: {x: 280, y: 0}
   m_Pivot: {x: 0, y: 1}
 --- !u!222 &3099589669488851463
@@ -290,9 +290,9 @@ RectTransform:
   m_Father: {fileID: 3099589670011634863}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 155, y: -95}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 155, y: 0}
   m_SizeDelta: {x: 280, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &3099589669578655003
@@ -334,7 +334,7 @@ MonoBehaviour:
     m_Right: 0
     m_Top: 0
     m_Bottom: 0
-  m_ChildAlignment: 0
+  m_ChildAlignment: 1
   m_StartCorner: 0
   m_StartAxis: 0
   m_CellSize: {x: 140, y: 40}
@@ -843,7 +843,7 @@ PrefabInstance:
     - target: {fileID: 732365276233668258, guid: 9ee482420050b674b8b66697af13c7c5,
         type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 70
+      value: 140
       objectReference: {fileID: 0}
     - target: {fileID: 732365276233668258, guid: 9ee482420050b674b8b66697af13c7c5,
         type: 3}
@@ -853,7 +853,7 @@ PrefabInstance:
     - target: {fileID: 732365276233668258, guid: 9ee482420050b674b8b66697af13c7c5,
         type: 3}
       propertyPath: m_SizeDelta.x
-      value: 140
+      value: 135
       objectReference: {fileID: 0}
     - target: {fileID: 732365276233668258, guid: 9ee482420050b674b8b66697af13c7c5,
         type: 3}
@@ -895,7 +895,23 @@ PrefabInstance:
       propertyPath: m_FontData.m_FontStyle
       value: 1
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    - target: {fileID: 732365276506697699, guid: 9ee482420050b674b8b66697af13c7c5,
+        type: 3}
+      propertyPath: m_Color.r
+      value: 0.2264151
+      objectReference: {fileID: 0}
+    - target: {fileID: 732365276506697699, guid: 9ee482420050b674b8b66697af13c7c5,
+        type: 3}
+      propertyPath: m_Color.g
+      value: 0.2264151
+      objectReference: {fileID: 0}
+    - target: {fileID: 732365276506697699, guid: 9ee482420050b674b8b66697af13c7c5,
+        type: 3}
+      propertyPath: m_Color.b
+      value: 0.2264151
+      objectReference: {fileID: 0}
+    m_RemovedComponents:
+    - {fileID: 732365276506697698, guid: 9ee482420050b674b8b66697af13c7c5, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 9ee482420050b674b8b66697af13c7c5, type: 3}
 --- !u!1 &3099589668574827535 stripped
 GameObject:

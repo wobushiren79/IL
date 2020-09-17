@@ -192,7 +192,13 @@ public class EventHandler : BaseHandler,
             //镜头跟随
             controlHandler.GetControl().SetFollowPosition(npcAIRascal.transform.position);
         }
-        return EventTriggerForTalk(markId, false);
+        float lastTimeScale = gameTimeHandler.GetTimeScale();
+        bool isTrigger = EventTriggerForTalk(markId, false);
+        if (GameCommonInfo.GameConfig.statusForEventStopTimeScale == 0)
+        {
+            gameTimeHandler.SetTimeScale(lastTimeScale);
+        }
+        return isTrigger;
     }
 
     /// <summary>
@@ -212,7 +218,13 @@ public class EventHandler : BaseHandler,
             //镜头跟随
             controlHandler.GetControl().SetFollowPosition(npcAISundry.transform.position);
         }
-        return EventTriggerForTalk(markId, false);
+        float lastTimeScale = gameTimeHandler.GetTimeScale();
+        bool isTrigger = EventTriggerForTalk(markId, false);
+        if (GameCommonInfo.GameConfig.statusForEventStopTimeScale == 0)
+        {
+            gameTimeHandler.SetTimeScale(lastTimeScale);
+        }
+        return isTrigger;
     }
 
     /// <summary>

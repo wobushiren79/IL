@@ -13,11 +13,13 @@ public class BaseGambleHandler<T,B> : BaseHandler
     protected GameDataManager gameDataManager;
     protected ToastManager toastManager;
     protected AudioHandler audioHandler;
+    protected GameItemsManager gameItemsManager;
     private void Awake()
     {
         gambleBuilder = Find<B>(ImportantTypeEnum.GambleBuilder);
         uiGameManager = Find<UIGameManager>(ImportantTypeEnum.GameUI);
         gameDataManager = Find<GameDataManager>(ImportantTypeEnum.GameDataManager);
+        gameItemsManager = Find<GameItemsManager>(ImportantTypeEnum.GameItemsManager);
         toastManager = Find<ToastManager>(ImportantTypeEnum.ToastManager);
         audioHandler = Find<AudioHandler>(ImportantTypeEnum.AudioHandler);
     }

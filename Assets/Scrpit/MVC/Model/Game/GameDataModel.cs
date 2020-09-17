@@ -62,7 +62,7 @@ public class GameDataModel : BaseMVCModel
         GameCommonInfo.GameUserId = userId;
         gameData.userCharacter.baseInfo.characterId = userId;
         gameData.userId = userId;
-        gameData.moneyS = 500;
+        gameData.moneyS = 1000;
         gameData.moneyM = 0;
         gameData.moneyL = 0;
         gameData.innBuildData = new InnBuildBean();

@@ -42,7 +42,6 @@ public class ItemBaseTextCpt : ItemGameBaseCpt
                 ivIcon.sprite = spIcon;
                 ivIcon.color = spColor;
             }
-
         }
     }
 

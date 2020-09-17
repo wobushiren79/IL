@@ -85,7 +85,11 @@ public class GambleTrickySizeHandler : BaseGambleHandler<GambleTrickySizeBean, G
         audioHandler.PlaySound(AudioSoundEnum.ButtonForNormal);
         GambleTrickySizeItem cup = gambleBuilder.GetCup();
         float winRate =  Random.Range(0f, 1f);
-        if (winRate <= gambleData.winRate)
+        //幸运加成
+        gameDataManager.gameData.userCharacter.GetAttributes(gameItemsManager, out CharacterAttributesBean characterAttributes);
+        float addWinRate = 0.0025f * characterAttributes.lucky;
+
+        if (winRate <= (gambleData.winRate + addWinRate))
         {
             gambleData.SetIsWin(true);
             if (size == 0)

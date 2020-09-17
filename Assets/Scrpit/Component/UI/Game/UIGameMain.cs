@@ -50,8 +50,8 @@ public class UIGameMain : UIGameComponent, DialogView.IDialogCallBack, IRadioGro
     public RadioGroupView rgTimeScale;
     public RadioButtonView rbTimeScaleStop;
     public RadioButtonView rbTimeScale2;
-    public RadioButtonView rbTimeScale3;
     public RadioButtonView rbTimeScale5;
+    public RadioButtonView rbTimeScale8;
     public WorkerNumberView workerNumber;
 
     public Button btLayerFirstLayer;
@@ -634,13 +634,13 @@ public class UIGameMain : UIGameComponent, DialogView.IDialogCallBack, IRadioGro
         {
             timeScale = 2;
         }
-        else if (rbview == rbTimeScale3)
-        {
-            timeScale = 3;
-        }
         else if (rbview == rbTimeScale5)
         {
             timeScale = 5;
+        }
+        else if (rbview == rbTimeScale8)
+        {
+            timeScale = 8;
         }
         else if (rbview == rbTimeScaleStop)
         {

@@ -87,8 +87,9 @@ public class NpcAIRascalCpt : BaseNpcAI, IBaseObserver, TextInfoHandler.ICallBac
         }
     }
 
-    private void OnDestroy()
+    public override void OnDestroy()
     {
+        base.OnDestroy();
         eventHandler.RemoveObserver(this);
     }
 

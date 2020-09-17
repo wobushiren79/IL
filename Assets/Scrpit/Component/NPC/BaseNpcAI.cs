@@ -50,6 +50,12 @@ public class BaseNpcAI : BaseObservable<IBaseObserver>
         characterDress = CptUtil.GetCptInChildrenByName<CharacterDressCpt>(gameObject, "Body");
     }
 
+    public virtual void OnDestroy()
+    {
+        StopAllCoroutines();
+    }
+
+
     /// <summary>
     ///  设置角色数据
     /// </summary>

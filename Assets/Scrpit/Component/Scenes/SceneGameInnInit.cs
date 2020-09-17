@@ -13,7 +13,7 @@ public class SceneGameInnInit : BaseSceneInit, IBaseObserver, DialogView.IDialog
     protected InnFurnitureBuilder innFurnitureBuilder;
     protected InnHandler innHandler;
     protected NpcCustomerBuilder npcCustomerBuilder;
-
+    protected NpcWorkerBuilder npcWorkerBuilder;
 
     public override void Awake()
     {
@@ -25,6 +25,7 @@ public class SceneGameInnInit : BaseSceneInit, IBaseObserver, DialogView.IDialog
         innWallBuilder = Find<InnWallBuilder>(ImportantTypeEnum.InnBuilder);
         innFurnitureBuilder = Find<InnFurnitureBuilder>(ImportantTypeEnum.InnBuilder);
         npcCustomerBuilder = Find<NpcCustomerBuilder>(ImportantTypeEnum.NpcBuilder);
+        npcWorkerBuilder = Find<NpcWorkerBuilder>(ImportantTypeEnum.NpcBuilder);
     }
 
     public override void Start()
@@ -201,6 +202,9 @@ public class SceneGameInnInit : BaseSceneInit, IBaseObserver, DialogView.IDialog
                 //清楚所有NPC
                 if (npcCustomerBuilder != null)
                     npcCustomerBuilder.ClearNpc();
+                //清楚所有NPC
+                if (npcWorkerBuilder != null)
+                    npcWorkerBuilder.ClearAllWork();
                 //停止控制
                 if (controlHandler != null)
                     controlHandler.StopControl();

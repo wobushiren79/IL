@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class BaseMonoBehaviour : MonoBehaviour
 {
-
     /// <summary>
     /// 实例化一个物体
     /// </summary>
@@ -44,6 +43,7 @@ public class BaseMonoBehaviour : MonoBehaviour
     //    GameObject objsFind=  GameObject.FindGameObjectWithTag(EnumUtil.GetEnumName(tagType));
     //    return objsFind.GetComponent<T>();
     //}
+
 
     /// <summary>
     /// 查找数据

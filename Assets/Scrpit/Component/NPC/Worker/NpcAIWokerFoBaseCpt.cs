@@ -28,6 +28,11 @@ public class NpcAIWokerFoBaseCpt : BaseMonoBehaviour
    
     }
 
+    public virtual void OnDestroy()
+    {
+        StopAllCoroutines();
+    }
+
     /// <summary>
     /// 升级提示
     /// </summary>

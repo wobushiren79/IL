@@ -17,7 +17,6 @@ public class InnHandler : BaseMonoBehaviour, IBaseObserver
     //客栈状态
     private InnStatusEnum innStatus = InnStatusEnum.Close;
 
-
     //客栈桌子处理
     public InnTableHandler innTableHandler;
     //烹饪处理
@@ -136,6 +135,7 @@ public class InnHandler : BaseMonoBehaviour, IBaseObserver
         //删除所有顾客
         //驱除所有顾客
         customerBuilder.ClearNpc();
+
         for (int i = 0; i < listOrder.Count; i++)
         {
             OrderForBase orderForBase= listOrder[i];

@@ -187,6 +187,9 @@ public class EffectTypeEnumTools : DataTools
                 case EffectTypeEnum.Damage:
                     damageAdd +=  float.Parse(itemData.data);
                     break;
+                case EffectTypeEnum.DamageRate:
+                    //TODO 百分比掉血
+                    break;
                 case EffectTypeEnum.DamageRateForForce:
                     damageAdd += characterAttributes.force * float.Parse(itemData.data);
                     break;

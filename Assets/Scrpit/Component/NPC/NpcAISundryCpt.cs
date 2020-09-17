@@ -51,8 +51,9 @@ public class NpcAISundryCpt : BaseNpcAI, IBaseObserver
         }
     }
 
-    private void OnDestroy()
+    public override void OnDestroy()
     {
+        base.OnDestroy();
         eventHandler.RemoveObserver(this);
     }
 
