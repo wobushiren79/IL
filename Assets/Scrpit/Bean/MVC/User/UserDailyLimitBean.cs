@@ -31,7 +31,7 @@ public class UserDailyLimitBean
         if (levelTitle == 0)
             exchangeMoneyL = 0;
         else
-            exchangeMoneyL = (levelStar + (levelTitle - 1) * 5 ) * 5;
+            exchangeMoneyL = (levelStar + (levelTitle - 1) * 5 ) * 8;
         //每日事件数量
         numberForEvent = (levelTitle==0 ? 3 :  (levelTitle - 1) * 5 + levelStar + 3);
 

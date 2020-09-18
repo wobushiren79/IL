@@ -71,7 +71,7 @@ public class BuildBedBean : BaseBean
         buildBed.bedSheets = bedSheets;
         buildBed.bedPillow = bedPillow;
         buildBed.bedName = bedName;
-        float luckRate = (lucky / 100f) * 0.5f;
+        float luckRate = (lucky / 100f) * 0.3f + 0.05f;
         float randomRate = UnityEngine.Random.Range(0f, 1f);
         if (randomRate>= luckRate)
         {
@@ -217,6 +217,29 @@ public class BuildBedBean : BaseBean
         outPriceL = (long)(priceL * addRate);
         outPriceM = (long)(priceM * addRate);
         outPriceS = (long)(priceS * addRate);
+    }
+
+    public float GetPriceAddRate()
+    {
+        float addRate = 1;
+        LevelTypeEnum bedLevel = GetBedLevel();
+        if (bedLevel == LevelTypeEnum.Init)
+        {
+            addRate = 1;
+        }
+        else if (bedLevel == LevelTypeEnum.Star)
+        {
+            GameCommonInfo.baseDataController.GetBaseData(BaseDataTypeEnum.BedForPriceAddRate1, out addRate);
+        }
+        else if (bedLevel == LevelTypeEnum.Moon)
+        {
+            GameCommonInfo.baseDataController.GetBaseData(BaseDataTypeEnum.BedForPriceAddRate2, out addRate);
+        }
+        else if (bedLevel == LevelTypeEnum.Sun)
+        {
+            GameCommonInfo.baseDataController.GetBaseData(BaseDataTypeEnum.BedForPriceAddRate3, out addRate);
+        }
+        return addRate;
     }
 
     /// <summary>

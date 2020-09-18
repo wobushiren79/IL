@@ -325,13 +325,21 @@ public class InnAttributesBean
         float rateRichness = (float)richness / maxRichness;
         if (rateRichness > 1)
             rateRichness = 1;
-        rate = 0.40f * rateRichness + 0.2f * ratePraise + 0.2f * rateAesthetics + 0.2f;
+        rate = 0.25f * rateRichness + 0.25f * ratePraise + 0.25f * rateAesthetics + 0.25f;
+
+        //菜谱额外的加成
         float extraRate = 0;
-        if (rateRichness > 0.5f)
+        //客栈等级大于11菜有额外的加成
+        if (innLevel > 0)
         {
-            extraRate += (rateRichness - 0.5f);
-        }   
+            extraRate = (rateRichness - 0.5f) * 0.6f;
+        }
         rate += extraRate;
+        //最低控制
+        if (rate < 0.25f)
+        {
+            rate = 0.25f;
+        }
         return rate;
     }
 

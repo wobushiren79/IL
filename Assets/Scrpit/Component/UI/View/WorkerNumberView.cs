@@ -45,7 +45,9 @@ public class WorkerNumberView : BaseMonoBehaviour
                 {
                     numberForChef++;
                 }
-                else if (workerIntent == NpcAIWorkerCpt.WorkerIntentEnum.WaiterClean || workerIntent == NpcAIWorkerCpt.WorkerIntentEnum.WaiterSend)
+                else if (workerIntent == NpcAIWorkerCpt.WorkerIntentEnum.WaiterSend 
+                    || workerIntent == NpcAIWorkerCpt.WorkerIntentEnum.WaiterClean 
+                    || workerIntent == NpcAIWorkerCpt.WorkerIntentEnum.WaiterSend)
                 {
                     numberForWaiter++;
                 }
@@ -53,7 +55,8 @@ public class WorkerNumberView : BaseMonoBehaviour
                 {
                     numberForAccount++;
                 }
-                else if (workerIntent == NpcAIWorkerCpt.WorkerIntentEnum.AccostSolicit|| workerIntent == NpcAIWorkerCpt.WorkerIntentEnum.AccostGuide)
+                else if (workerIntent == NpcAIWorkerCpt.WorkerIntentEnum.AccostSolicit
+                    || workerIntent == NpcAIWorkerCpt.WorkerIntentEnum.AccostGuide)
                 {
                     numberForAccost++;
                 }

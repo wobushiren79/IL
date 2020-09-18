@@ -577,13 +577,26 @@ public class ControlForBuildCpt : BaseControl
         }
         gameDataManager.gameData.GetInnBuildData().AddFurniture(buildLayer, addData);
         //背包里删除一个
-        gameDataManager.gameData.AddBuildNumber(buildItemCpt.buildItemData.id, -1);
+        ItemBean itemData = gameDataManager.gameData.AddBuildNumber(buildItemCpt.buildItemData.id, -1);
         //动画
         buildItemCpt.transform
             .DOScale(new Vector3(0.2f, 0.2f, 0.2f), 0.5f)
             .From()
             .SetEase(Ease.OutBack);
-        ClearSelectBuildItem();
+           
+        if ( buildItemCpt.buildItemData.build_type == (int)BuildItemTypeEnum.Bed|| itemData.itemNumber <= 0 )
+        {
+            //如果没有了，则不能继续建造
+            ClearSelectBuildItem();
+        }
+        else
+        {
+            //如果还有则实例化一个新的
+            //物体先在建筑控件上显示   
+            GameObject objCopy = Instantiate(buildItemTempContainer, buildItemCpt.gameObject);
+            objCopy.transform.localScale = new Vector3(1, 1, 1);
+            buildItemCpt = objCopy.GetComponent<BaseBuildItemCpt>();
+        }
     }
 
     /// <summary>

@@ -158,8 +158,9 @@ public class BuildBedCpt : BaseBuildItemCpt
     {
         basePriceS = 0;
         addPriceS = 0;
-        basePriceS = buildBedData.priceS;
-        addPriceS = (int)(addAesthetics * 6);
+        buildBedData.GetPrice(out long priceL, out long priceM, out long priceS);
+        basePriceS = priceS;
+        addPriceS = (long)(addAesthetics * 4 * buildBedData.GetPriceAddRate());
     }
 
     /// <summary>

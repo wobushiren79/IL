@@ -66,7 +66,7 @@ public class UIGameMainForHint : BaseUIChildComponent<UIGameMain>
                     hasData = true;
                     itemCpt.RefreshData();
                 }
-                if (itemCpt.menuOwn.GetMenuStatus() != ResearchStatusEnum.Researching)
+                if (itemCpt.bedData.GetBedStatus() != ResearchStatusEnum.Researching)
                 {
                     listResearch.Remove(itemCpt);
                     Destroy(itemCpt.gameObject);

@@ -280,13 +280,13 @@ public class UserAchievementBean
         switch (customerType)
         {
             case CustomerTypeEnum.Normal:
-                numberForNormalCustomer += number;
+                numberForNormalCustomerComplete += number;
                 break;
             case CustomerTypeEnum.Team:
-                numberForTeamCustomer += number;
+                numberForTeamCustomerComplete += number;
                 break;
             case CustomerTypeEnum.Friend:
-                numberForFriendsCustomer += number;
+                numberForFriendsCustomerComplete += number;
                 break;
         }
     }

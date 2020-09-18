@@ -439,8 +439,10 @@ public class NpcAICustomerForHotelCpt : BaseNpcAI
     {
         //添加等待图标
         string waitIconMarkId = SystemUtil.GetUUID(SystemUtil.UUIDTypeEnum.N);
-        Sprite spWaitIcon = iconDataManager.GetIconSpriteByName("time_wait_1_0");
-        AddStatusIconForPro(spWaitIcon, waitIconAnim, waitIconMarkId);
+        Sprite spWaitIcon = iconDataManager.GetIconSpriteByName("worker_waiter_bed_pro_2");
+        //Sprite spWaitIcon = iconDataManager.GetIconSpriteByName("time_wait_1_0");
+        //AddStatusIconForPro(spWaitIcon, waitIconAnim, waitIconMarkId);
+        AddStatusIconForPro(spWaitIcon, null, waitIconMarkId);
     }
 
     /// <summary>

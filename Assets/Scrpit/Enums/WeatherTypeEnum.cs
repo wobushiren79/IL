@@ -2,9 +2,9 @@
 using UnityEditor;
 using System.Collections.Generic;
 
-public enum WeatherTypeEnum 
+public enum WeatherTypeEnum
 {
-    Null=0,
+    Null = 0,
     Sunny = 1,//普通
     Cloudy = 2,//多云
 
@@ -36,27 +36,28 @@ public class WeatherTypeEnumTools
                 addition = 0;
                 break;
             case WeatherTypeEnum.Cloudy:
-                addition = 1;
+                addition = 0.1f;
                 break;
             case WeatherTypeEnum.LightRain:
-                addition = -1;
+                addition = -0.1f;
                 break;
             case WeatherTypeEnum.Rain:
-                addition = -1.5f;
+                addition = -0.15f;
                 break;
             case WeatherTypeEnum.Thunderstorm:
+                addition = -0.2f;
                 break;
             case WeatherTypeEnum.Fog:
-                addition = -2;
+                addition = -0.1f;
                 break;
             case WeatherTypeEnum.LightSnow:
-                addition = -1;
+                addition = -0.1f;
                 break;
             case WeatherTypeEnum.Snow:
-                addition = -1.5f;
+                addition = -0.15f;
                 break;
             case WeatherTypeEnum.Wind:
-                addition = -0.5f;
+                addition = -0.1f;
                 break;
             case WeatherTypeEnum.Defoliation:
                 addition = 0f;
