@@ -366,6 +366,6 @@ public class InnAttributesBean
         if (ratePraise > 1)
             ratePraise = 1;
         rate = 0.5f * ratePraise + 0.5f * rateAesthetics;
-        return rate * 0.1f;
+        return rate * 0.2f;
     }
 }

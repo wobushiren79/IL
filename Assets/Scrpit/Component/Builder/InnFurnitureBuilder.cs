@@ -131,4 +131,14 @@ public class InnFurnitureBuilder : BaseMonoBehaviour
         }
         return target;
     }
+
+    /// <summary>
+    /// 获取所有的床
+    /// </summary>
+    /// <returns></returns>
+    public BuildBedCpt[] GetAllBed()
+    {
+        BuildBedCpt[] buildList = buildContainer.GetComponentsInChildren<BuildBedCpt>();
+        return buildList;
+    }
 }

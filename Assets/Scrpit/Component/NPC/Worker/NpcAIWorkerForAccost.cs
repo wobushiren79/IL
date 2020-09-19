@@ -29,7 +29,7 @@ public class NpcAIWorkerForAccost : NpcAIWokerFoBaseCpt
     //引路进度
     public GameObject guidePro;
     //拉人的检测范围
-    protected BoxCollider2D mAccostBox;
+    protected CircleCollider2D mAccostBox;
 
     //前往的目的地
     public Vector3 movePosition;
@@ -40,7 +40,7 @@ public class NpcAIWorkerForAccost : NpcAIWokerFoBaseCpt
     public override void Start()
     {
         base.Start();
-        mAccostBox = GetComponent<BoxCollider2D>();
+        mAccostBox = GetComponent<CircleCollider2D>();
     }
 
     private void Update()
@@ -163,7 +163,7 @@ public class NpcAIWorkerForAccost : NpcAIWokerFoBaseCpt
             accostPro.SetActive(false);
         //回去最靠近的门的嘴表
         movePosition = npcAIWorker.innHandler.GetCloseRandomEntrancePosition(transform.position);
-        npcAIWorker.characterMoveCpt.SetDestination(movePosition + new Vector3(0, -1, 0));
+        npcAIWorker.characterMoveCpt.SetDestination(movePosition + new Vector3(0, -2.5f, 0));
     }
 
     /// <summary>

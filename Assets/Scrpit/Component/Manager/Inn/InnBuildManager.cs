@@ -116,7 +116,7 @@ public class InnBuildManager : BaseManager, IBuildDataView
                     break;
                 case BuildItemTypeEnum.Decoration:
                     BuildDecorationCpt buildDecoration = (BuildDecorationCpt)buildItemCpt;
-                    Sprite spDecoration = GetFurnitureSpriteByName(listIcon[0]);
+                    Sprite spDecoration = GetFurnitureSpriteByName(buildItemData.icon_key);
                     buildDecoration.SetData(buildItemData, spDecoration);
                     break;
                 case BuildItemTypeEnum.Door:

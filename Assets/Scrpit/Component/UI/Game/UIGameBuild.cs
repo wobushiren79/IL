@@ -65,6 +65,27 @@ public class UIGameBuild : UIGameComponent, IRadioGroupCallBack
         uiGameManager.innHandler.CloseInn();
 
         SetInnLayer(1);
+
+        SetBedRangeStatus(true);
+    }
+
+
+    /// <summary>
+    /// 设置床的范围
+    /// </summary>
+    /// <param name="isShow"></param>
+    protected void SetBedRangeStatus( bool isShow)
+    {
+        //打开所有床位的范围显示
+        BuildBedCpt[] listBed = uiGameManager.innFurnitureBuilder.GetAllBed();
+        if (!CheckUtil.ArrayIsNull(listBed) )
+        {
+            for (int i=0;i< listBed.Length;i++)
+            {
+                BuildBedCpt buildBed= listBed[i];
+                buildBed.ShowRange(isShow);
+            }
+        }
     }
 
     public override void CloseUI()
@@ -82,6 +103,8 @@ public class UIGameBuild : UIGameComponent, IRadioGroupCallBack
         //设置角色到门口
         Vector3 startPosition = uiGameManager.innHandler.GetRandomEntrancePosition();
         uiGameManager.controlHandler.GetControl(ControlHandler.ControlEnum.Normal).SetFollowPosition(startPosition + new Vector3(0, -2, 0));
+        //隐藏床的范围显示
+        SetBedRangeStatus(false);
     }
 
     /// <summary>
@@ -139,6 +162,8 @@ public class UIGameBuild : UIGameComponent, IRadioGroupCallBack
         uiGameManager.gameDataManager.gameData.GetInnAttributesData().SetAesthetics
             (uiGameManager.innBuildManager, uiGameManager.gameDataManager.gameData.GetInnBuildData());
         SetInnAesthetics();
+
+        SetBedRangeStatus(true);
     }
 
     /// <summary>
@@ -375,6 +400,11 @@ public class UIGameBuild : UIGameComponent, IRadioGroupCallBack
             {
                 foreach (SpriteRenderer itemRenderer in listRenderer)
                 {
+                    //排出半透明的范围显示
+                    if (itemRenderer.name.Contains("AddRange"))
+                    {
+                        continue;
+                    }
                     if (furniture)
                     {
                         itemRenderer.color = new Color(itemRenderer.color.r, itemRenderer.color.g, itemRenderer.color.b, 1f);

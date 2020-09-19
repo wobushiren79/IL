@@ -36,7 +36,7 @@ public class WeatherTypeEnumTools
                 addition = 0;
                 break;
             case WeatherTypeEnum.Cloudy:
-                addition = 0.1f;
+                addition = 0.5f;
                 break;
             case WeatherTypeEnum.LightRain:
                 addition = -0.1f;

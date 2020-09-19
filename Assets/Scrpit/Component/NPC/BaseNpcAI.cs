@@ -339,7 +339,7 @@ public class BaseNpcAI : BaseObservable<IBaseObserver>
         {
             characterBody.SetEye("character_eye_special_dead", new Color(0, 0, 0), false);
             characterBody.transform.DOLocalRotate(new Vector3(0, 0, -90), 0.1f).SetEase(Ease.OutBack);
-            characterBody.transform.localPosition = new Vector3(0, -0.2f, 0);
+            characterBody.transform.localPosition = new Vector3(0, 0.3f, 0);
         }
     }
 
@@ -354,7 +354,7 @@ public class BaseNpcAI : BaseObservable<IBaseObserver>
             case Direction2DEnum.Left:
                 SetCharacterFace(1);
                 characterBody.transform.DOLocalRotate(new Vector3(0, 0, -90), 0.1f).SetEase(Ease.OutBack);
-                characterBody.transform.localPosition = new Vector3(0, -0.3f, 0);
+                characterBody.transform.localPosition = new Vector3(0, 0.2f, 0);
                 break;
             case Direction2DEnum.UP:
                 characterBody.transform.DOLocalRotate(new Vector3(0, 0, 180), 0.1f).SetEase(Ease.OutBack);
@@ -362,10 +362,10 @@ public class BaseNpcAI : BaseObservable<IBaseObserver>
             case Direction2DEnum.Right:
                 SetCharacterFace(2);
                 characterBody.transform.DOLocalRotate(new Vector3(0, 0, 90), 0.1f).SetEase(Ease.OutBack);
-                characterBody.transform.localPosition = new Vector3(0, -0.3f, 0);
+                characterBody.transform.localPosition = new Vector3(0, 0.2f, 0);
                 break;
             case Direction2DEnum.Down:
-                characterBody.transform.localPosition = new Vector3(0, -0.5f, 0);
+                characterBody.transform.localPosition = new Vector3(0, 0f, 0);
                 break;
         }
         if (characterDress != null)
@@ -386,7 +386,7 @@ public class BaseNpcAI : BaseObservable<IBaseObserver>
     public virtual void SetCharacterLive()
     {
         characterBody.transform.DOLocalRotate(new Vector3(0, 0, 0), 0.1f).SetEase(Ease.OutBack);
-        characterBody.transform.localPosition = new Vector3(0, 0f, 0);
+        characterBody.transform.localPosition = new Vector3(0, 0.5f, 0);
         if(characterForRenderer!=null)
             characterForRenderer.sortingOrder = 0;
     }

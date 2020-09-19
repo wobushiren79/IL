@@ -51,7 +51,11 @@ public class InnHotelHandler : InnBaseHandler
                     addAesthetics += GetAroundAesthetics(innBuildManager, mapFurnitureData, buildBedCpt.transform.position, 3);
                     addAesthetics += GetAroundAesthetics(innBuildManager, mapFloorData, buildBedCpt.transform.position - new Vector3(0.5f, 0.5f), 3);
                     addAesthetics += GetAroundAesthetics(innBuildManager, mapWallData, buildBedCpt.transform.position - new Vector3(0.5f, 0.5f), 3);
-                    buildBedCpt.SetAddAesthetics(addAesthetics);
+                    if (addAesthetics > 50)
+                    {
+                        addAesthetics = 50;
+                    }
+                    buildBedCpt.SetAddAesthetics((float)decimal.Round(decimal.Parse(addAesthetics + ""), 1));
                 }
         }
         catch
@@ -76,7 +80,7 @@ public class InnHotelHandler : InnBaseHandler
         {
             for (int f = 0; f <= aroundRange * 2; f++)
             {
-                mapBuildData.TryGetValue(position + new Vector3(i,f),out InnResBean buildData);
+                mapBuildData.TryGetValue(position + new Vector3(i, f), out InnResBean buildData);
                 if (buildData != null)
                 {
                     BuildItemBean buildItem = innBuildManager.GetBuildDataById(buildData.id);

@@ -49,7 +49,7 @@ public class BaseBuildItemCpt : BaseMonoBehaviour
     /// </summary>
     /// <param name="buildItemData"></param>
     /// <param name="spIcon"></param>
-    public void SetData(BuildItemBean buildItemData, Sprite spIcon)
+    public virtual void SetData(BuildItemBean buildItemData, Sprite spIcon)
     {
         SetData(buildItemData);
         SetSprite(spIcon, spIcon, spIcon, spIcon);
@@ -86,6 +86,30 @@ public class BaseBuildItemCpt : BaseMonoBehaviour
         this.spRight = spRight;
         this.spDown = spDown;
         this.spUp = spUp;
+    }
+
+    public void SetSprite()
+    {
+        Sprite spDirection = null;
+        switch (direction)
+        {
+            case Direction2DEnum.Left:
+                spDirection = spLeft;
+                break;
+            case Direction2DEnum.Right:
+                spDirection = spRight;
+                break;
+            case Direction2DEnum.UP:
+                spDirection = spUp;
+                break;
+            case Direction2DEnum.Down:
+                spDirection = spDown;
+                break;
+        }
+        if (srMainBuild != null)
+            srMainBuild.sprite = spDirection;
+        if (srShadow != null && spLeft != null)
+            srShadow.sprite = spDirection;
     }
 
     /// <summary>
