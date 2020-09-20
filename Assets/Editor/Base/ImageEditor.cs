@@ -35,6 +35,11 @@ public class ImageEditor : Editor
     {
         BaseSpriteEditor(SpriteImportMode.Multiple, 4, 1);
     }
+    [MenuItem("Custom/Image/Multiple_4x1 Down")]
+    public static void Multiple4x1Down()
+    {
+        BaseSpriteEditor(SpriteImportMode.Multiple, 4, 1, 0.5f, 0f);
+    }
 
     [MenuItem("Custom/Image/Multiple_5x1")]
     public static void Multiple5x1()

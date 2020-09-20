@@ -51,9 +51,9 @@ public class InnHotelHandler : InnBaseHandler
                     addAesthetics += GetAroundAesthetics(innBuildManager, mapFurnitureData, buildBedCpt.transform.position, 3);
                     addAesthetics += GetAroundAesthetics(innBuildManager, mapFloorData, buildBedCpt.transform.position - new Vector3(0.5f, 0.5f), 3);
                     addAesthetics += GetAroundAesthetics(innBuildManager, mapWallData, buildBedCpt.transform.position - new Vector3(0.5f, 0.5f), 3);
-                    if (addAesthetics > 50)
+                    if (addAesthetics > 60)
                     {
-                        addAesthetics = 50;
+                        addAesthetics = 60;
                     }
                     buildBedCpt.SetAddAesthetics((float)decimal.Round(decimal.Parse(addAesthetics + ""), 1));
                 }

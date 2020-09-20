@@ -28,11 +28,16 @@ public class UIGameMenu : UIGameComponent
 
     [Header("排序")]
     public Button btSortDef;
+    public Button btSortPrice;
     public Button btSortName;
     public Button btSortRarity;
     public Button btSortSell;
     public Button btSortLevel;
     public Button btSortLevelUp;
+
+    public Button btSellAll;
+    public Button btStopAll;
+
     public List<MenuOwnBean> listMenu = new List<MenuOwnBean>();
 
     private void Start()
@@ -51,6 +56,13 @@ public class UIGameMenu : UIGameComponent
             btSortLevel.onClick.AddListener(OnClickForSortLevel);
         if (btSortLevelUp != null)
             btSortLevelUp.onClick.AddListener(OnClickForSortLevelUp);
+        if (btSortPrice != null)
+            btSortPrice.onClick.AddListener(OnClickForSortPrice);
+
+        if (btSellAll != null)
+            btSellAll.onClick.AddListener(OnClickForSellAll);
+        if (btStopAll != null)
+            btStopAll.onClick.AddListener(OnClickForStopAll);
     }
 
     public override void OpenUI()
@@ -229,6 +241,48 @@ public class UIGameMenu : UIGameComponent
             {
                 return data.menuStatus;
             }).ToList();
+        CreateFoodList();
+    }
+    /// <summary>
+    /// 是否升级排序点击
+    /// </summary>
+    public void OnClickForSortPrice()
+    {
+        uiGameManager.audioHandler.PlaySound(AudioSoundEnum.ButtonForNormal);
+        this.listMenu = this.listMenu.OrderByDescending(
+            (data) =>
+            {
+                MenuInfoBean menuInfo = uiGameManager.innFoodManager.GetFoodDataById(data.menuId);
+                data.GetPrice(menuInfo,out long priceL, out long priceM, out long priceS);
+                return priceS;
+            }).ToList();
+        CreateFoodList();
+    }
+
+
+    public void OnClickForSellAll()
+    {
+        SelectAllChange(true);
+    }
+
+    public void OnClickForStopAll()
+    {
+        SelectAllChange(false);
+    }
+
+    /// <summary>
+    /// 售卖状态设置
+    /// </summary>
+    /// <param name="isSell"></param>
+    protected void SelectAllChange( bool isSell)
+    {
+        if (CheckUtil.ListIsNull(listMenu))
+            return;
+        for (int i=0;i< listMenu.Count;i++)
+        {
+            MenuOwnBean itemMenu =  listMenu[i];
+            itemMenu.isSell= isSell;
+        }
         CreateFoodList();
     }
 

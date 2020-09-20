@@ -401,7 +401,7 @@ public class UIGameBuild : UIGameComponent, IRadioGroupCallBack
                 foreach (SpriteRenderer itemRenderer in listRenderer)
                 {
                     //排出半透明的范围显示
-                    if (itemRenderer.name.Contains("AddRange"))
+                    if (itemRenderer.name.Contains("AddRange")|| itemRenderer.name.Contains("Shadow"))
                     {
                         continue;
                     }

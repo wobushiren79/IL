@@ -82,6 +82,36 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!1 &1604076836514053199
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3686715035622601372}
+  m_Layer: 11
+  m_Name: DoorPostion
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3686715035622601372
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1604076836514053199}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: -0.5, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 3685623996779098289}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &4467736664632498907
 GameObject:
   m_ObjectHideFlags: 0
@@ -343,6 +373,7 @@ Transform:
   - {fileID: 4737816713984269275}
   - {fileID: 3991384645480180812}
   - {fileID: 4518674668714947284}
+  - {fileID: 3686715035622601372}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -386,6 +417,10 @@ MonoBehaviour:
   canRotated: 1
   spLeftAndRightOpen: {fileID: 0}
   spUpAndDownOpen: {fileID: 0}
+  objTableLeftPosition: {fileID: 1604076836514053199}
+  objTableRightPosition: {fileID: 1604076836514053199}
+  objTableDownPosition: {fileID: 1604076836514053199}
+  objTableUpPosition: {fileID: 1604076836514053199}
 --- !u!50 &7235169944948091645
 Rigidbody2D:
   serializedVersion: 4
