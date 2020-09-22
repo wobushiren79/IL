@@ -62,6 +62,8 @@ public class RadioButtonView : BaseMonoBehaviour
     /// <param name="status"></param>
     public void ChangeStates(RadioButtonStatus status)
     {
+        if (rbButton.enabled == false)
+            return;
         this.status = status;
         switch (status)
         {
@@ -87,6 +89,8 @@ public class RadioButtonView : BaseMonoBehaviour
 
     public void ChangeStates()
     {
+        if (rbButton.enabled == false)
+            return;
         if (status == RadioButtonStatus.Selected)
         {
             status = RadioButtonStatus.Unselected;
@@ -105,5 +109,10 @@ public class RadioButtonView : BaseMonoBehaviour
     public void SetEnabled(bool enabled)
     {
         rbButton.enabled = enabled;
+    }
+
+    public bool GetEnabled()
+    {
+        return rbButton.enabled;
     }
 }

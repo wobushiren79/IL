@@ -11,8 +11,7 @@ public class UIGameWorker : UIGameComponent
     public Text tvNumber;
     public Button btBack;
 
-    public GameObject objListContent;
-    public GameObject objItemWorkModle;
+    public ScrollGridVertical gridVertical;
 
     public Button btSortDef;
     public Button btSortLevelUp;
@@ -24,7 +23,14 @@ public class UIGameWorker : UIGameComponent
     public Button btFilterBeater;
 
     public List<CharacterBean> listCharacterData = new List<CharacterBean>();
-    protected List<ItemGameWorkerCpt> listWorkerItem = new List<ItemGameWorkerCpt>();
+
+    public override void Awake()
+    {
+        base.Awake();
+        if (gridVertical != null)
+            gridVertical.AddCellListener(OnCellForItem);
+    }
+
     private void Start()
     {
         if (btBack != null)
@@ -44,6 +50,7 @@ public class UIGameWorker : UIGameComponent
             btFilterAccost.onClick.AddListener(OnClickForAccost);
         if (btFilterBeater != null)
             btFilterBeater.onClick.AddListener(OnClickForBeater);
+
     }
 
     private void Update()
@@ -57,17 +64,22 @@ public class UIGameWorker : UIGameComponent
     public override void OpenUI()
     {
         base.OpenUI();
-        for (int i = 0; i < listWorkerItem.Count; i++)
+        gridVertical.RefreshAllCells();
+    }
+
+    public override void RefreshUI()
+    {
+        base.RefreshUI();
+        for (int  i = 0 ; i< listCharacterData.Count;i++)
         {
-            ItemGameWorkerCpt itemWorker = listWorkerItem[i];
-            if (itemWorker == null)
+            CharacterBean characterItem=  listCharacterData[i];
+            if (characterItem == null|| characterItem.baseInfo.characterId == null)
             {
-                listWorkerItem.RemoveAt(i);
+                listCharacterData.RemoveAt(i);
                 i--;
-                continue;
             }
-            itemWorker.SetData(itemWorker.characterData);
         }
+        InitData();
     }
 
 
@@ -91,33 +103,21 @@ public class UIGameWorker : UIGameComponent
         if (uiGameManager.gameDataManager == null)
             return;
         StopAllCoroutines();
-        listWorkerItem.Clear();
-        CptUtil.RemoveChildsByActive(objListContent.transform);
-        StartCoroutine(CoroutineForCreateWorkerList());
+        gridVertical.SetCellCount(listCharacterData.Count);
 
     }
 
-    public IEnumerator CoroutineForCreateWorkerList()
+    /// <summary>
+    /// 列表Item回调
+    /// </summary>
+    /// <param name="itemCell"></param>
+    public void OnCellForItem(ScrollGridCell itemCell)
     {
-        for (int i = 0; i < listCharacterData.Count; i++)
-        {
-            CharacterBean itemData = listCharacterData[i];
-            CreateWorkerItem(itemData);
-            yield return new WaitForEndOfFrame();
-        }
-    }
-
-    public void CreateWorkerItem(CharacterBean characterData)
-    {
-        if (objListContent == null || objItemWorkModle == null)
-            return;
-        GameObject objWorkerItem = Instantiate(objItemWorkModle, objListContent.transform);
-        objWorkerItem.SetActive(true);
-        ItemGameWorkerCpt workerItem = objWorkerItem.GetComponent<ItemGameWorkerCpt>();
+        CharacterBean characterData = listCharacterData[itemCell.index];
+        ItemGameWorkerCpt workerItem = itemCell.GetComponent<ItemGameWorkerCpt>();
         if (workerItem != null)
         {
             workerItem.SetData(characterData);
-            listWorkerItem.Add(workerItem);
         }
     }
 

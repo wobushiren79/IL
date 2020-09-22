@@ -2,6 +2,8 @@
 using UnityEditor;
 using System;
 using UnityEngine.UI;
+using System.Collections.Generic;
+
 public class UIGameWorkerDetails : UIGameComponent, IRadioGroupCallBack
 {
     [Header("控件")]
@@ -45,14 +47,19 @@ public class UIGameWorkerDetails : UIGameComponent, IRadioGroupCallBack
     public UIGameWorkerDetailsBookInfo workerBookInfo;
 
     public Button btBack;
+    public Button btLast;
+    public Button btNext;
 
     [Header("数据")]
     public CharacterBean characterData;
     public Sprite spSexMan;
     public Sprite spSexWoman;
 
-    public void SetCharacterData(CharacterBean characterData)
+    public List<CharacterBean> listCharacter = new List<CharacterBean>();
+
+    public void SetCharacterData(List<CharacterBean> listCharacter, CharacterBean characterData)
     {
+        this.listCharacter = listCharacter;
         this.characterData = characterData;
     }
 
@@ -64,6 +71,14 @@ public class UIGameWorkerDetails : UIGameComponent, IRadioGroupCallBack
         if (rgWorkerTitle != null)
         {
             rgWorkerTitle.SetCallBack(this);
+        }
+        if (btLast != null)
+        {
+            btLast.onClick.AddListener(OnClickForLastCharacter);
+        }
+        if (btNext != null)
+        {
+            btNext.onClick.AddListener(OnClickForNextCharacter);
         }
     }
 
@@ -89,7 +104,7 @@ public class UIGameWorkerDetails : UIGameComponent, IRadioGroupCallBack
             generalInfo.Open();
             generalInfo.SetData(characterData);
         }
-       else if (name.Contains("Skill"))
+        else if (name.Contains("Skill"))
         {
             workerSkillInfo.Open();
             workerSkillInfo.SetData(characterData.attributes.listSkills);
@@ -130,6 +145,12 @@ public class UIGameWorkerDetails : UIGameComponent, IRadioGroupCallBack
     public override void OpenUI()
     {
         base.OpenUI();
+        RefreshUI();
+    }
+
+    public override void RefreshUI()
+    {
+        base.RefreshUI();
         if (characterData == null)
             return;
         SetLoyal(characterData.attributes.loyal);
@@ -258,6 +279,42 @@ public class UIGameWorkerDetails : UIGameComponent, IRadioGroupCallBack
             iv.color = new Color(1, 1, 1, 0);
     }
 
+
+    protected void OnClickForLastCharacter()
+    {
+        ChangeCharacter(-1);
+    }
+    protected void OnClickForNextCharacter()
+    {
+        ChangeCharacter(1);
+    }
+    protected void ChangeCharacter(int number)
+    {
+        if (CheckUtil.ListIsNull(listCharacter))
+        {
+            return;
+        }
+        int nextPosition = 0;
+        for (int i = 0; i < listCharacter.Count; i++)
+        {
+            CharacterBean itemCharater = listCharacter[i];
+            if (itemCharater == characterData)
+            {
+                nextPosition = i + number;
+                if(nextPosition >= listCharacter.Count)
+                {
+                    nextPosition = nextPosition - listCharacter.Count;
+                }
+                else if (nextPosition < 0)
+                {
+                    nextPosition = listCharacter.Count + nextPosition;
+                }
+                break;
+            }
+        }
+        SetCharacterData(listCharacter, listCharacter[nextPosition]);
+        RefreshUI();
+    }
 
     #region 数据类型选择回调
     public void RadioButtonSelected(RadioGroupView rgView, int position, RadioButtonView rbview)

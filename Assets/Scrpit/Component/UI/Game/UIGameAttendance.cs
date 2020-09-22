@@ -11,6 +11,8 @@ public class UIGameAttendance : UIBaseOne, ItemGameAttendanceCpt.ICallBack
     public Text tvNumber;
 
     public Button btSubmit;
+    public Button btSelectAll;
+    public Button btUnSelectAll;
 
     public GameObject objListContent;
     public GameObject objItemWorkModel;
@@ -27,6 +29,10 @@ public class UIGameAttendance : UIBaseOne, ItemGameAttendanceCpt.ICallBack
         base.Start();
         if (btSubmit != null)
             btSubmit.onClick.AddListener(StartWork);
+        if (btSelectAll != null)
+            btSelectAll.onClick.AddListener(OnClickForSelectAll);
+        if (btUnSelectAll != null)
+            btUnSelectAll.onClick.AddListener(OnClickForUnSelectAll);
     }
 
     public override void OpenUI()
@@ -57,14 +63,14 @@ public class UIGameAttendance : UIBaseOne, ItemGameAttendanceCpt.ICallBack
             return;
         }
 
-        List<CharacterBean> listCharacter =  uiGameManager.gameDataManager.gameData.GetAllCharacterData();
-        foreach (CharacterBean itemCharacter in  listCharacter)
+        List<CharacterBean> listCharacter = uiGameManager.gameDataManager.gameData.GetAllCharacterData();
+        foreach (CharacterBean itemCharacter in listCharacter)
         {
             //没有出勤的人员减少忠诚
-            if (itemCharacter.baseInfo.GetWorkerStatus()== WorkerStatusEnum.Rest
+            if (itemCharacter.baseInfo.GetWorkerStatus() == WorkerStatusEnum.Rest
                 || itemCharacter.baseInfo.GetWorkerStatus() == WorkerStatusEnum.Research)
             {
-                itemCharacter.attributes.AddLoyal( -2 );
+                itemCharacter.attributes.AddLoyal(-2);
             }
             //增加出勤天数
             else if (itemCharacter.baseInfo.GetWorkerStatus() == WorkerStatusEnum.Work)
@@ -91,7 +97,7 @@ public class UIGameAttendance : UIBaseOne, ItemGameAttendanceCpt.ICallBack
     public void InitData()
     {
         CptUtil.RemoveChildsByActive(objListContent);
-        GameDataManager gameDataManager =uiGameManager.gameDataManager;
+        GameDataManager gameDataManager = uiGameManager.gameDataManager;
         if (gameDataManager == null)
             return;
         List<CharacterBean> listData = gameDataManager.gameData.GetAllCharacterData();
@@ -131,6 +137,31 @@ public class UIGameAttendance : UIBaseOne, ItemGameAttendanceCpt.ICallBack
         tvPriceM.text = attendancePriceM + "";
         tvPirceS.text = attendancePriceS + "";
         tvNumber.text = GameCommonInfo.GetUITextById(4003) + attendanceNumber;
+    }
+
+
+    public void OnClickForSelectAll()
+    {
+        ChangeAllSelectStatus(true);
+    }
+
+    public void OnClickForUnSelectAll()
+    {
+        ChangeAllSelectStatus(false);
+    }
+
+    protected void ChangeAllSelectStatus(bool isSelect)
+    {
+        uiGameManager.audioHandler.PlaySound(AudioSoundEnum.ButtonForNormal);
+        ItemGameAttendanceCpt[] listAttendance = objListContent.GetComponentsInChildren<ItemGameAttendanceCpt>();
+        for (int i = 0; i < listAttendance.Length; i++)
+        {
+            ItemGameAttendanceCpt itemAttendance= listAttendance[i];
+            if (itemAttendance.gameObject.activeSelf)
+            {
+                itemAttendance.ChangeSelectStauts(isSelect);
+            }
+        }
     }
 
     #region  出勤回调

@@ -32,6 +32,7 @@ public class BuildBedCpt : BaseBuildItemCpt
     public BedStatusEnum bedStatus = BedStatusEnum.Idle;
 
     public float addAesthetics = 0;
+    public float subAesthetics = 0;
 
     protected InnBuildManager innBuildManager;
 
@@ -40,14 +41,29 @@ public class BuildBedCpt : BaseBuildItemCpt
         innBuildManager = Find<InnBuildManager>(ImportantTypeEnum.BuildManager);
     }
 
-    public void SetAddAesthetics(float addAesthetics)
+    public void SetAddAesthetics(float addAesthetics, float subAesthetics)
     {
         this.addAesthetics = addAesthetics;
+        this.subAesthetics = subAesthetics;
     }
 
-    public float GetAddAesthetics()
+    public void GetAesthetics(out float addAesthetics, out float subAesthetics,out float totalAesthetics)
     {
-        return addAesthetics;
+        addAesthetics = this.addAesthetics;
+        subAesthetics = this.subAesthetics;
+   
+        if (addAesthetics > 60)
+        {
+            addAesthetics = 60;
+        }
+
+        totalAesthetics = addAesthetics + subAesthetics;
+
+        if (totalAesthetics < 0)
+        {
+            totalAesthetics = 0;
+        }
+
     }
 
     public void SetData(BuildItemBean buildItemData, BuildBedBean buildBedData)
@@ -160,7 +176,9 @@ public class BuildBedCpt : BaseBuildItemCpt
         addPriceS = 0;
         buildBedData.GetPrice(out long priceL, out long priceM, out long priceS);
         basePriceS = priceS;
-        addPriceS = (long)(addAesthetics * 20 * buildBedData.GetPriceAddRate());
+
+        GetAesthetics(out float addAesthetics, out float subAesthetics, out float totalAesthetics);
+        addPriceS = (long)(totalAesthetics * 20 * buildBedData.GetPriceAddRate());
     }
 
     /// <summary>

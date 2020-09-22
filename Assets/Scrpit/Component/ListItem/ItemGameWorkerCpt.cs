@@ -149,10 +149,6 @@ public class ItemGameWorkerCpt : ItemGameBaseCpt, DialogView.IDialogCallBack, Wo
         if (btGift != null)
             btGift.onClick.AddListener(SendGift);
 
-        if (infoCharacterPopup != null)
-        {
-            infoCharacterPopup.SetData(characterData);
-        }
     }
 
     /// <summary>
@@ -163,7 +159,9 @@ public class ItemGameWorkerCpt : ItemGameBaseCpt, DialogView.IDialogCallBack, Wo
     {
         if (data == null)
             return;
+
         characterData = data;
+
         if (characterData.baseInfo != null)
         {
             CharacterBaseBean characterBase = characterData.baseInfo;
@@ -205,7 +203,20 @@ public class ItemGameWorkerCpt : ItemGameBaseCpt, DialogView.IDialogCallBack, Wo
             if (btGift != null)
                 btGift.gameObject.SetActive(false);
         }
+        else
+        {
+            if (btFire != null)
+                btFire.gameObject.SetActive(true);
+            if (btGift != null)
+                btGift.gameObject.SetActive(true);
+        }
         SetLevelUp(characterData);
+
+
+        if (infoCharacterPopup != null)
+        {
+            infoCharacterPopup.SetData(characterData);
+        }
     }
 
     /// <summary>
@@ -246,7 +257,7 @@ public class ItemGameWorkerCpt : ItemGameBaseCpt, DialogView.IDialogCallBack, Wo
         if (uiComponent != null)
         {
             UIGameEquip uiequip = (UIGameEquip)GetUIManager().GetUIByName(EnumUtil.GetEnumName(UIEnum.GameEquip));
-            uiequip.SetCharacterData(characterData);
+            uiequip.SetCharacterData(((UIGameWorker)uiComponent).listCharacterData, characterData);
             uiComponent.uiManager.OpenUIAndCloseOtherByName(EnumUtil.GetEnumName(UIEnum.GameEquip));
         }
     }
@@ -261,7 +272,8 @@ public class ItemGameWorkerCpt : ItemGameBaseCpt, DialogView.IDialogCallBack, Wo
         if (uiComponent != null)
         {
             UIGameWorkerDetails uiWorkerDetails = (UIGameWorkerDetails)GetUIManager().GetUIByName(EnumUtil.GetEnumName(UIEnum.GameWorkerDetails));
-            uiWorkerDetails.SetCharacterData(characterData);
+            UIGameWorker uiWorker = (UIGameWorker)uiComponent;
+            uiWorkerDetails.SetCharacterData(uiWorker.listCharacterData, characterData);
             uiComponent.uiManager.OpenUIAndCloseOtherByName(EnumUtil.GetEnumName(UIEnum.GameWorkerDetails));
         }
     }
@@ -552,10 +564,11 @@ public class ItemGameWorkerCpt : ItemGameBaseCpt, DialogView.IDialogCallBack, Wo
             toastManager.ToastHint(string.Format(GameCommonInfo.GetUITextById(1081), characterData.baseInfo.name));
             gameDataManager.gameData.RemoveWorker(characterData);
 
-
-            transform.DOScale(Vector3.zero, 0.5f).OnComplete(delegate
+            transform.DOScale(Vector3.zero, 0.3f).OnComplete(delegate
             {
-                Destroy(gameObject);
+                transform.localScale = new Vector3(1, 1, 1);
+                characterData.baseInfo.characterId = null;
+                uiComponent.RefreshUI();
             });
         }
     }

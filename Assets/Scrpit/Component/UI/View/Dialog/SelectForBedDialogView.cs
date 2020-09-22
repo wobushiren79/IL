@@ -21,7 +21,8 @@ public class SelectForBedDialogView : DialogView
         SetPrice(basePriceS, addPriceS);
 
         SetBed(buildBedData);
-        SetAesthetics(buildBedCpt.addAesthetics);
+        buildBedCpt.GetAesthetics(out float addAesthetics, out float subAesthetics, out float totalthetics);
+        SetAesthetics(addAesthetics, subAesthetics);
         buildBedCpt.ShowRange(true);
     }
 
@@ -54,11 +55,19 @@ public class SelectForBedDialogView : DialogView
         }
     }
 
-    public void SetAesthetics(float aesthetics)
+    public void SetAesthetics(float addAesthetics,float subAesthetics)
     {
         if (tvAesthetics != null)
         {
-            tvAesthetics.text = GameCommonInfo.GetUITextById(10) + ":" + aesthetics;
+            if (subAesthetics!=0)
+            {
+                tvAesthetics.text = GameCommonInfo.GetUITextById(10) + ":" + addAesthetics + "" + subAesthetics;
+            }
+            else
+            {
+                tvAesthetics.text = GameCommonInfo.GetUITextById(10) + ":" + addAesthetics;
+            }
+      
         }
     }
 }

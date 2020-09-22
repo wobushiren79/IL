@@ -47,15 +47,18 @@ public class InnHotelHandler : InnBaseHandler
                 for (int i = 0; i < listBedCpt.Count; i++)
                 {
                     BuildBedCpt buildBedCpt = listBedCpt[i];
-                    float addAesthetics = 0;
-                    addAesthetics += GetAroundAesthetics(innBuildManager, mapFurnitureData, buildBedCpt.transform.position, 3);
-                    addAesthetics += GetAroundAesthetics(innBuildManager, mapFloorData, buildBedCpt.transform.position - new Vector3(0.5f, 0.5f), 3);
-                    addAesthetics += GetAroundAesthetics(innBuildManager, mapWallData, buildBedCpt.transform.position - new Vector3(0.5f, 0.5f), 3);
-                    if (addAesthetics > 60)
-                    {
-                        addAesthetics = 60;
-                    }
-                    buildBedCpt.SetAddAesthetics((float)decimal.Round(decimal.Parse(addAesthetics + ""), 1));
+                    float totalAddAesthetics = 0;
+                    float totalSubAesthetics = 0;
+                    GetAroundAesthetics(innBuildManager, mapFurnitureData, buildBedCpt.transform.position, 3,out float addFurnitureAesthetics,out float subFurnitureAesthetics);
+                    totalAddAesthetics += addFurnitureAesthetics;
+                    totalSubAesthetics += subFurnitureAesthetics;
+                    GetAroundAesthetics(innBuildManager, mapFloorData, buildBedCpt.transform.position - new Vector3(0.5f, 0.5f), 3, out float addFloorAesthetics, out float subFloorAesthetics);
+                    totalAddAesthetics += addFloorAesthetics ;
+                    totalSubAesthetics += subFloorAesthetics;
+                    GetAroundAesthetics(innBuildManager, mapWallData, buildBedCpt.transform.position - new Vector3(0.5f, 0.5f), 3, out float addWallAesthetics, out float subWallAesthetics);
+                    totalAddAesthetics += addWallAesthetics ;
+                    totalSubAesthetics += subWallAesthetics;
+                    buildBedCpt.SetAddAesthetics((float)decimal.Round(decimal.Parse(totalAddAesthetics + ""), 1), (float)decimal.Round(decimal.Parse(totalSubAesthetics + ""), 1));
                 }
         }
         catch
@@ -72,23 +75,29 @@ public class InnHotelHandler : InnBaseHandler
     /// <param name="position"></param>
     /// <param name="aroundRange"></param>
     /// <returns></returns>
-    public float GetAroundAesthetics(InnBuildManager innBuildManager, Dictionary<Vector3, InnResBean> mapBuildData, Vector3 position, int aroundRange)
+    public void GetAroundAesthetics(InnBuildManager innBuildManager, Dictionary<Vector3, InnResBean> mapBuildData, Vector3 position, int aroundRange,out float addAesthetics,out float subAesthetics)
     {
-        float addAesthetics = 0;
+        addAesthetics = 0;
+        subAesthetics = 0;
+        Vector3 selfPosition = new Vector3(position.x, position.y, position.z);
         position -= new Vector3(aroundRange, aroundRange);
         for (int i = 0; i <= aroundRange * 2; i++)
         {
             for (int f = 0; f <= aroundRange * 2; f++)
             {
-                mapBuildData.TryGetValue(position + new Vector3(i, f), out InnResBean buildData);
+                Vector3 currentPosition = position + new Vector3(i, f);
+                mapBuildData.TryGetValue(currentPosition, out InnResBean buildData);
                 if (buildData != null)
                 {
                     BuildItemBean buildItem = innBuildManager.GetBuildDataById(buildData.id);
                     addAesthetics += buildItem.aesthetics;
+                    if(selfPosition!= currentPosition && buildItem.GetBuildType()== BuildItemTypeEnum.Bed)
+                    {
+                        subAesthetics -= 10;
+                    }
                 }
             }
         }
-        return addAesthetics;
     }
 
     /// <summary>

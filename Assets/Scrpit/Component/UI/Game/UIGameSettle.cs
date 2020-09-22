@@ -17,6 +17,7 @@ public class UIGameSettle : UIGameComponent
     public Text tvIncomeS;
 
 
+
     public GameObject objExpensesL;
     public Text tvExpensesL;
     public GameObject objExpensesM;

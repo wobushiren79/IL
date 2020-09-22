@@ -1,11 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
-using UnityEngine.AI;
-using System.Collections;
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using DG.Tweening;
+
+
 
 using Pathfinding;
 public class Test : BaseMonoBehaviour
@@ -15,8 +11,12 @@ public class Test : BaseMonoBehaviour
 
     private void Awake()
     {
-        scrollGridVertical.SetCellCount(100);
-        scrollGridVertical.AddCellListener(CallBack);
+        for (int i=0;i<50;i++)
+        {
+            int number = Random.Range(5, 1);
+            LogUtil.Log("number:" + number);
+        }
+  
     }
 
     private void Update()

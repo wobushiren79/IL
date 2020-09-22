@@ -423,10 +423,28 @@ public class NpcAIWorkerForWaiterCpt : NpcAIWokerFoBaseCpt
         CharacterWorkerForWaiterBean characterWorkerData = (CharacterWorkerForWaiterBean)npcAIWorker.characterData.baseInfo.GetWorkerInfoByType(WorkerEnum.Waiter);
         if (characterWorkerData.isWorkingCleanBed && npcAIWorker.innHandler.bedCleanQueue.Count != 0)
         {
-            OrderForBase newOrder = npcAIWorker.innHandler.bedCleanQueue[0];
-            npcAIWorker.innHandler.bedCleanQueue.Remove(newOrder as OrderForHotel);
-            SetIntent(WaiterIntentEnum.GoToBed, newOrder);
-        }
+            //搜寻最近的床位
+            OrderForHotel clearItem = null;
+            float distance = float.MaxValue;
+            foreach (OrderForHotel itemOrder in npcAIWorker.innHandler.bedCleanQueue)
+            {
+                float tempDistance = Vector3.Distance(itemOrder.bed.GetSleepPosition(), transform.position);
+                if (tempDistance < distance)
+                {
+                    distance = tempDistance;
+                    clearItem = itemOrder;
+                }
+            }
+            if (clearItem!=null)
+            {
+                npcAIWorker.innHandler.bedCleanQueue.Remove(clearItem);
+                SetIntent(WaiterIntentEnum.GoToBed, clearItem);
+            }
+            else
+            {
+                SetIntent(WaiterIntentEnum.GoToStairsForSecond);
+            }
+          }
         else
         {
             SetIntent(WaiterIntentEnum.GoToStairsForSecond);

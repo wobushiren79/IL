@@ -9,7 +9,7 @@ public class ItemGameAttendanceCpt : ItemGameWorkerCpt,IRadioButtonCallBack
 
     private ICallBack mCallBack;
 
-
+    protected WorkerStatusEnum workerStatus = WorkerStatusEnum.Other;
     public override void SetData(CharacterBean data)
     {
         base.SetData(data);
@@ -34,6 +34,11 @@ public class ItemGameAttendanceCpt : ItemGameWorkerCpt,IRadioButtonCallBack
     /// <param name="isAttendance"></param>
     public void SetAttendance(WorkerStatusEnum workerStatus)
     {
+        if (rbAttendance.GetEnabled() == false)
+            return;
+        if(this.workerStatus == workerStatus)
+            return;
+        this.workerStatus = workerStatus;
         characterData.baseInfo.SetWorkerStatus(workerStatus);
         characterData.baseInfo.GetWorkerStatus(out string workerStatusStr);
         if (workerStatus == WorkerStatusEnum.Work)
@@ -53,6 +58,21 @@ public class ItemGameAttendanceCpt : ItemGameWorkerCpt,IRadioButtonCallBack
         rbAttendance.rbText.text = workerStatusStr;
         if (mCallBack != null)
             mCallBack.AttendanceChange(this, workerStatus, characterData);
+    }
+
+    public void ChangeSelectStauts(bool isSelect)
+    {
+        if (rbAttendance.GetEnabled() == false)
+            return;
+        if(isSelect)
+        {
+            SetAttendance(WorkerStatusEnum.Work);
+        }
+        else
+        {
+            SetAttendance(WorkerStatusEnum.Rest);
+        }
+   
     }
 
     #region RB回调

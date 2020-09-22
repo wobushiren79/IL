@@ -3,6 +3,8 @@ using UnityEditor;
 using UnityEngine.UI;
 using DG.Tweening;
 using System.Collections;
+using System.Collections.Generic;
+
 public class UIGameEquip : UIGameComponent
 {
     [Header("控件")]
@@ -34,6 +36,8 @@ public class UIGameEquip : UIGameComponent
     public Text tvNull;
 
     public CharacterUICpt characterUICpt;
+    public Button btLast;
+    public Button btNext;
 
     [Header("模型")]
     public GameObject objItemContent;
@@ -44,10 +48,20 @@ public class UIGameEquip : UIGameComponent
     public Sprite spSexMan;
     public Sprite spSexWoman;
 
+    public List<CharacterBean> listCharacter = new List<CharacterBean>();
+
     private void Start()
     {
         if (btBack != null)
             btBack.onClick.AddListener(OpenWorkUI);
+        if (btLast != null)
+        {
+            btLast.onClick.AddListener(OnClickForLastCharacter);
+        }
+        if (btNext != null)
+        {
+            btNext.onClick.AddListener(OnClickForNextCharacter);
+        }
     }
 
     public override void OpenUI()
@@ -70,8 +84,9 @@ public class UIGameEquip : UIGameComponent
         uiManager.OpenUIAndCloseOtherByName(EnumUtil.GetEnumName(UIEnum.GameWorker));
     }
 
-    public void SetCharacterData(CharacterBean characterData)
+    public void SetCharacterData(List<CharacterBean> listCharacter, CharacterBean characterData)
     {
+        this.listCharacter = listCharacter;
         this.characterData = characterData;
     }
 
@@ -345,5 +360,42 @@ public class UIGameEquip : UIGameComponent
             itemData.SetData(characterData, itemData.itemsInfoData, itemData.itemData);
         }
     }
+
+    protected void OnClickForLastCharacter()
+    {
+        ChangeCharacter(-1);
+    }
+    protected void OnClickForNextCharacter()
+    {
+        ChangeCharacter(1);
+    }
+    protected void ChangeCharacter(int number)
+    {
+        if (CheckUtil.ListIsNull(listCharacter))
+        {
+            return;
+        }
+        int nextPosition = 0;
+        for (int i = 0; i < listCharacter.Count; i++)
+        {
+            CharacterBean itemCharater = listCharacter[i];
+            if (itemCharater == characterData)
+            {
+                nextPosition = i + number;
+                if (nextPosition >= listCharacter.Count)
+                {
+                    nextPosition = nextPosition - listCharacter.Count;
+                }
+                else if (nextPosition < 0)
+                {
+                    nextPosition = listCharacter.Count + nextPosition;
+                }
+                break;
+            }
+        }
+        SetCharacterData(listCharacter, listCharacter[nextPosition]);
+        RefreshUI();
+    }
+
 
 }

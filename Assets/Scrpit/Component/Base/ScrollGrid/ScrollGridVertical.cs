@@ -44,7 +44,7 @@ public class ScrollGridVertical : MonoBehaviour
         {
             this.Init();
         }
-        //重新调整content的高度，保证能够包含范围内的cell的anchoredPosition，这样才有机会显示。
+        //重新调整content的高度，保证能够包含范围内的cell的anchoredPosition3D，这样才有机会显示。
         float newContentHeight = this.cellHeight * Mathf.CeilToInt((float)cellCount / this.col);
         float newMinY = -newContentHeight + this.scrollRect.viewport.rect.height;
         float maxY = this.scrollRect.content.offsetMax.y;
@@ -69,11 +69,12 @@ public class ScrollGridVertical : MonoBehaviour
         this.scrollRect.vertical = true;
         this.scrollRect.horizontal = false;
         this.scrollRect.verticalScrollbar = verticalScrollbar;
+        this.scrollRect.scrollSensitivity = 30;
         GameObject viewport = new GameObject("viewport", typeof(RectTransform));
-        viewport.transform.parent = transform;
+        viewport.transform.SetParent(transform);
         this.scrollRect.viewport = viewport.GetComponent<RectTransform>();
         GameObject content = new GameObject("content", typeof(RectTransform));
-        content.transform.parent = viewport.transform;
+        content.transform.SetParent(viewport.transform);
         this.scrollRect.content = content.GetComponent<RectTransform>();
 
         //设置视野viewport的宽高和根节点一致。
@@ -84,7 +85,7 @@ public class ScrollGridVertical : MonoBehaviour
         this.scrollRect.viewport.SetInsetAndSizeFromParentEdge(RectTransform.Edge.Bottom, 0, 0);
         this.scrollRect.viewport.anchorMin = Vector2.zero;
         this.scrollRect.viewport.anchorMax = Vector2.one;
-
+        this.scrollRect.viewport.anchoredPosition3D = Vector3.zero;
         //设置viewpoint的mask。
         this.scrollRect.viewport.gameObject.AddComponent<Mask>().showMaskGraphic = false;
         Image image = this.scrollRect.viewport.gameObject.AddComponent<Image>();
@@ -147,7 +148,7 @@ public class ScrollGridVertical : MonoBehaviour
                         float y = -r * this.cellHeight - this.cellHeight / 2;
                         cellRect.SetParent(this.scrollRect.content);
                         cellRect.localScale = Vector3.one;
-                        cellRect.anchoredPosition = new Vector3(x, y);
+                        cellRect.anchoredPosition3D = new Vector3(x, y, 0);
                         newcell.AddComponent<ScrollGridCell>().SetObjIndex(index);
                         this.cellList.Add(newcell);
                     }
@@ -166,27 +167,27 @@ public class ScrollGridVertical : MonoBehaviour
         foreach (GameObject cell in this.cellList)
         {
             RectTransform cellRect = cell.GetComponent<RectTransform>();
-            float dist = this.scrollRect.content.offsetMax.y + cellRect.anchoredPosition.y;
+            float dist = this.scrollRect.content.offsetMax.y + cellRect.anchoredPosition3D.y;
             float maxTop = this.cellHeight / 2;
             float minBottom = -((this.row + 1) * this.cellHeight) + this.cellHeight / 2;
             if (dist > maxTop)
             {
-                float newY = cellRect.anchoredPosition.y - (this.row + 1) * this.cellHeight;
-                //保证cell的anchoredPosition只在content的高的范围内活动，下同理
+                float newY = cellRect.anchoredPosition3D.y - (this.row + 1) * this.cellHeight;
+                //保证cell的anchoredPosition3D只在content的高的范围内活动，下同理
                 if (newY > -this.scrollRect.content.rect.height)
                 {
                     //重复利用cell，重置位置到视野范围内。
-                    cellRect.anchoredPosition = new Vector3(cellRect.anchoredPosition.x, newY);
+                    cellRect.anchoredPosition3D = new Vector3(cellRect.anchoredPosition3D.x, newY,0);
                     this.cellUpdate(cell);
                 }
 
             }
             else if (dist < minBottom)
             {
-                float newY = cellRect.anchoredPosition.y + (this.row + 1) * this.cellHeight;
+                float newY = cellRect.anchoredPosition3D.y + (this.row + 1) * this.cellHeight;
                 if (newY < 0)
                 {
-                    cellRect.anchoredPosition = new Vector3(cellRect.anchoredPosition.x, newY);
+                    cellRect.anchoredPosition3D = new Vector3(cellRect.anchoredPosition3D.x, newY,0);
                     this.cellUpdate(cell);
                 }
             }
@@ -203,8 +204,8 @@ public class ScrollGridVertical : MonoBehaviour
     private void cellUpdate(GameObject cell)
     {
         RectTransform cellRect = cell.GetComponent<RectTransform>();
-        int x = Mathf.CeilToInt((cellRect.anchoredPosition.x - this.cellWidth / 2) / this.cellWidth);
-        int y = Mathf.Abs(Mathf.CeilToInt((cellRect.anchoredPosition.y + this.cellHeight / 2) / this.cellHeight));
+        int x = Mathf.CeilToInt((cellRect.anchoredPosition3D.x - this.cellWidth / 2) / this.cellWidth);
+        int y = Mathf.Abs(Mathf.CeilToInt((cellRect.anchoredPosition3D.y + this.cellHeight / 2) / this.cellHeight));
         int index = y * this.col + x;
         ScrollGridCell scrollGridCell = cell.GetComponent<ScrollGridCell>();
         scrollGridCell.UpdatePos(x, y, index);

@@ -42,21 +42,21 @@ public class MiniGameAccountBuilder : BaseMiniGameBuilder
         while (moneyL > 0)
         {
             int moneyMax = (moneyL > 10 ? 10 : moneyL);
-            int money = UnityEngine.Random.Range(1, moneyMax);
+            int money = UnityEngine.Random.Range(3, moneyMax);
             CreateMoneyItem(MoneyEnum.L, money, tfMoneyPosition);
             moneyL -= money;
         }
         while (moneyM > 0)
         {
             int moneyMax = (moneyM > 10 ? 10 : moneyM);
-            int money = UnityEngine.Random.Range(1, moneyMax);
+            int money = UnityEngine.Random.Range(3, moneyMax);
             CreateMoneyItem(MoneyEnum.M, money, tfMoneyPosition);
             moneyM -= money;
         }
         while (moneyS > 0)
         {
             int moneyMax = (moneyS > 10 ? 10 : moneyS);
-            int money = UnityEngine.Random.Range(1, moneyMax);
+            int money = UnityEngine.Random.Range(3, moneyMax);
             CreateMoneyItem(MoneyEnum.S, money, tfMoneyPosition);
             moneyS -= money;
         }
