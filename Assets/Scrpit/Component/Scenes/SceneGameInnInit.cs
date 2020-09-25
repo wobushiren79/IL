@@ -180,9 +180,7 @@ public class SceneGameInnInit : BaseSceneInit, IBaseObserver, DialogView.IDialog
             //保存数据
             gameDataManager.SaveGameData(innHandler.GetInnRecord());
         }
-        //关闭店面
-        if (innHandler != null)
-            innHandler.CloseInn();
+
     }
 
     #region 通知回调
@@ -198,7 +196,11 @@ public class SceneGameInnInit : BaseSceneInit, IBaseObserver, DialogView.IDialog
             {
                 //结算所有客户
                 if (innHandler != null)
+                {
                     innHandler.SettlementAllCustomer();
+                    innHandler.CloseInn();
+                }
+           
                 //清楚所有NPC
                 if (npcCustomerBuilder != null)
                     npcCustomerBuilder.ClearNpc();
@@ -225,7 +227,7 @@ public class SceneGameInnInit : BaseSceneInit, IBaseObserver, DialogView.IDialog
                 else
                 {
                     EndDay();
-                }
+                }    
             }
         }
     }

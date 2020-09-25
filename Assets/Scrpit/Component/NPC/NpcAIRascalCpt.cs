@@ -227,7 +227,7 @@ public class NpcAIRascalCpt : BaseNpcAI, IBaseObserver, TextInfoHandler.ICallBac
 
         StartCoroutine(CoroutineForStartMakeTrouble());
         //延迟显示范围
-        StartCoroutine(CoroutineForDelayMakeTrouble());
+        OpenMakeTroubleRange();
     }
 
     /// <summary>
@@ -372,9 +372,8 @@ public class NpcAIRascalCpt : BaseNpcAI, IBaseObserver, TextInfoHandler.ICallBac
     /// 协程-延迟生成判定
     /// </summary>
     /// <returns></returns>
-    public IEnumerator CoroutineForDelayMakeTrouble()
+    public void OpenMakeTroubleRange()
     {
-        yield return new WaitForSeconds(10);
         //展示范围
         objRascalSpaceShow.SetActive(true);
         objRascalSpaceShow.transform.localScale = new Vector3(2, 2, 2);

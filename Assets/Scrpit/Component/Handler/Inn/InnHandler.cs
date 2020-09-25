@@ -486,6 +486,10 @@ public class InnHandler : BaseMonoBehaviour, IBaseObserver
         for (int i = 0; i < listOrder.Count; i++)
         {
             OrderForBase itemOrder = listOrder[i];
+            if (itemOrder == null)
+            {
+                continue;
+            }
             if (itemOrder as OrderForCustomer != null)
             {
                 OrderForCustomer orderForCustomer = itemOrder as OrderForCustomer;

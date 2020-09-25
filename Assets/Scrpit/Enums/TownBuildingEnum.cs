@@ -15,4 +15,5 @@ public enum TownBuildingEnum
     Pharmacy = 9,//药房
     Casino=10,//赌场
     Brothels=11,//飘香楼
+    BeautySalon=12,//美颜堂
 }

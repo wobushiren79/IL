@@ -91,7 +91,13 @@ public class BaseObservable<T> : BaseMonoBehaviour
             return;
         foreach (T item in mObserverList)
         {
-            item.ObserbableUpdate(this, type, objs);
+            try
+            {
+                item.ObserbableUpdate(this, type, objs);
+            } catch
+            {
+
+            }
         }
     }
 
