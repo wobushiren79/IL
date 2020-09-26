@@ -54,7 +54,10 @@ public class SceneTownManager : BaseManager
     public Transform brothelsOutDoor;
     public Transform brothelsInDoor;
     public Transform brothelsInside;
-    
+    //飘香楼
+    public Transform beautySalonOutDoor;
+    public Transform beautySalonInDoor;
+    public Transform beautySalonInside;
     /// <summary>
     /// 获取随机城镇门坐标
     /// </summary>
@@ -148,6 +151,10 @@ public class SceneTownManager : BaseManager
                 outDoorPosition = brothelsOutDoor.transform.position;
                 inDoorPosition = brothelsInDoor.transform.position;
                 break;
+            case TownBuildingEnum.BeautySalon:
+                outDoorPosition = beautySalonOutDoor.transform.position;
+                inDoorPosition = beautySalonInDoor.transform.position;
+                break;
         }
     }
 
@@ -197,6 +204,9 @@ public class SceneTownManager : BaseManager
                 break;
             case TownBuildingEnum.Brothels:
                 tfBuilding = brothelsInside;
+                break;
+            case TownBuildingEnum.BeautySalon:
+                tfBuilding = beautySalonInside;
                 break;
         }
         if (tfBuilding == null)

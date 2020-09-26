@@ -183,6 +183,44 @@ public class SceneGameInnInit : BaseSceneInit, IBaseObserver, DialogView.IDialog
 
     }
 
+    public void CleanInnData()
+    {
+        //结算所有客户
+        if (innHandler != null)
+        {
+            innHandler.SettlementAllCustomer();
+            innHandler.CloseInn();
+        }
+
+        //清楚所有NPC
+        if (npcCustomerBuilder != null)
+            npcCustomerBuilder.ClearNpc();
+        //清楚所有NPC
+        if (npcWorkerBuilder != null)
+            npcWorkerBuilder.ClearAllWork();
+        //停止控制
+        if (controlHandler != null)
+            controlHandler.StopControl();
+        if (dialogManager != null)
+        {   //停止时间
+            gameTimeHandler.SetTimeStatus(true);
+            DialogBean dialogBean = new DialogBean();
+            if (gameTimeHandler.GetDayStatus() == GameTimeHandler.DayEnum.Work)
+            {
+                dialogBean.content = GameCommonInfo.GetUITextById(3006);
+            }
+            else if (gameTimeHandler.GetDayStatus() == GameTimeHandler.DayEnum.Rest)
+            {
+                dialogBean.content = GameCommonInfo.GetUITextById(3014);
+            }
+            dialogManager.CreateDialog(DialogEnum.Text, this, dialogBean);
+        }
+        else
+        {
+            EndDay();
+        }
+    }
+
     #region 通知回调
     public void ObserbableUpdate<T>(T observable, int type, params System.Object[] obj) where T : Object
     {
@@ -194,40 +232,7 @@ public class SceneGameInnInit : BaseSceneInit, IBaseObserver, DialogView.IDialog
             }
             else if (type == (int)GameTimeHandler.NotifyTypeEnum.EndDay)
             {
-                //结算所有客户
-                if (innHandler != null)
-                {
-                    innHandler.SettlementAllCustomer();
-                    innHandler.CloseInn();
-                }
-           
-                //清楚所有NPC
-                if (npcCustomerBuilder != null)
-                    npcCustomerBuilder.ClearNpc();
-                //清楚所有NPC
-                if (npcWorkerBuilder != null)
-                    npcWorkerBuilder.ClearAllWork();
-                //停止控制
-                if (controlHandler != null)
-                    controlHandler.StopControl();
-                if (dialogManager != null)
-                {   //停止时间
-                    gameTimeHandler.SetTimeStatus(true);
-                    DialogBean dialogBean = new DialogBean();
-                    if (gameTimeHandler.GetDayStatus() == GameTimeHandler.DayEnum.Work)
-                    {
-                        dialogBean.content = GameCommonInfo.GetUITextById(3006);
-                    }
-                    else if (gameTimeHandler.GetDayStatus() == GameTimeHandler.DayEnum.Rest)
-                    {
-                        dialogBean.content = GameCommonInfo.GetUITextById(3014);
-                    }
-                    dialogManager.CreateDialog(DialogEnum.Text, this, dialogBean);
-                }
-                else
-                {
-                    EndDay();
-                }    
+                CleanInnData();
             }
         }
     }

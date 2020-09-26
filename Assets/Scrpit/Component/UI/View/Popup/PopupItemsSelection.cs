@@ -114,6 +114,7 @@ public class PopupItemsSelection : BaseMonoBehaviour
                 break;
         }
         gameObject.SetActive(true);
+        objContent.transform.localScale = Vector3.one;
         objContent.transform.DOScale(new Vector3(0, 0, 0), 0.2f).SetEase(Ease.OutBack).From();
         SetLocation();
     }

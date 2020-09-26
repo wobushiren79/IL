@@ -26,13 +26,15 @@ public class NpcWorkerBuilder : BaseMonoBehaviour
         {
             return;
         }
+        ClearAllWork();
+
         List<CharacterBean> listAllWork = gameDataManager.gameData.listWorkerCharacter;
 
         if (gameDataManager.gameData.userCharacter.baseInfo.GetWorkerStatus() == WorkerStatusEnum.Work)
         {
             //获取门的坐标 并在门周围生成NPC
             Vector3 doorPosition = innHandler.GetRandomEntrancePosition();
-            //向下5个单位
+            //向下3个单位
             doorPosition += new Vector3(0, -3f, 0);
             BuildWork(gameDataManager.gameData.userCharacter, doorPosition);
         }
@@ -40,7 +42,7 @@ public class NpcWorkerBuilder : BaseMonoBehaviour
         {
             //获取门的坐标 并在门周围生成NPC
             Vector3 doorPosition = innHandler.GetRandomEntrancePosition();
-            //向下2个单位
+            //向下3个单位
             doorPosition += new Vector3(0, -3f, 0);
             CharacterBean itemData = listAllWork[i];
             if (itemData.baseInfo.GetWorkerStatus() == WorkerStatusEnum.Work)
@@ -52,7 +54,6 @@ public class NpcWorkerBuilder : BaseMonoBehaviour
 
     public void BuildWork(CharacterBean characterBean, Vector3 position)
     {
-        
         GameObject workerObj = Instantiate(objWorkModel, objWorkModel.transform);
         workerObj.transform.SetParent(objContainer.transform);
         workerObj.SetActive(true);
@@ -71,7 +72,7 @@ public class NpcWorkerBuilder : BaseMonoBehaviour
     public void ClearAllWork()
     {
         listNpcWorker.Clear();
-        CptUtil.RemoveChild(objContainer.transform);
+        CptUtil.RemoveChild(objContainer);
     }
 
     /// <summary>

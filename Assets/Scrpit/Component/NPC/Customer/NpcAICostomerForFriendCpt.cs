@@ -20,11 +20,11 @@ public class NpcAICostomerForFriendCpt : NpcAICustomerForGuestTeamCpt
                 int AddFavorability = 0;
                 if (praiseType == PraiseTypeEnum.Excited)
                 {
-                    AddFavorability = 2;
+                    AddFavorability = 1;
                 }
                 else if (praiseType == PraiseTypeEnum.Happy)
                 {
-                    AddFavorability = 1;
+                  
                 }
                 characterFavorabilityData.AddFavorability(AddFavorability);
                 //弹出喜爱图标

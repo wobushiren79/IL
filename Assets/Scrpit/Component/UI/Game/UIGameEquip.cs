@@ -120,6 +120,8 @@ public class UIGameEquip : UIGameComponent
             tvNull.gameObject.SetActive(false);
         else
             tvNull.gameObject.SetActive(true);
+
+        RefreshBackpackData();
     }
 
     /// <summary>
@@ -289,7 +291,6 @@ public class UIGameEquip : UIGameComponent
 
         //刷新显示
         RefreshUI();
-        RefreshBackpackData();
         //刷新场景中的人物
         if (uiGameManager.npcWorkerBuilder != null)
         {

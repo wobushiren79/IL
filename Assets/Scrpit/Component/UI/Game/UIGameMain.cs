@@ -590,7 +590,7 @@ public class UIGameMain : UIGameComponent, DialogView.IDialogCallBack, IRadioGro
         Scene scene = SceneManager.GetActiveScene();
         if (scene.name.Equals(EnumUtil.GetEnumName(ScenesEnum.GameInnScene)))
         {
-            ((SceneGameInnInit)uiGameManager.sceneInit).EndDay();
+            ((SceneGameInnInit)uiGameManager.sceneInit).CleanInnData();
         }
         else
         {
