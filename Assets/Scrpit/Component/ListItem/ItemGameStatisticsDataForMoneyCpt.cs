@@ -6,8 +6,11 @@ public class ItemGameStatisticsDataForMoneyCpt : BaseMonoBehaviour
 {
     public Image ivIcon;
     public Text tvName;
+    public GameObject objMoneyL;
     public Text tvMoneyL;
+    public GameObject objMoneyM;
     public Text tvMoneyM;
+    public GameObject objMoneyS;
     public Text tvMoneyS;
 
     public void SetData(Sprite spIcon, Color colorIcon, string name, Color colorName, long moneyL, long moneyM, long moneyS)
@@ -44,10 +47,26 @@ public class ItemGameStatisticsDataForMoneyCpt : BaseMonoBehaviour
     {
         if (tvMoneyL)
         {
+            if (moneyL == 0)
+            {
+                objMoneyL.gameObject.SetActive(false);
+            }
+            else
+            {
+                objMoneyL.gameObject.SetActive(true);
+            }
             tvMoneyL.text = moneyL + "";
         }
         if (tvMoneyM)
         {
+            if (moneyM == 0)
+            {
+                objMoneyM.gameObject.SetActive(false);
+            }
+            else
+            {
+                objMoneyM.gameObject.SetActive(true);
+            }
             tvMoneyM.text = moneyM + "";
         }
         if (tvMoneyS)

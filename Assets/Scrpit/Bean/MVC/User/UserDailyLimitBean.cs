@@ -32,6 +32,15 @@ public class UserDailyLimitBean
             exchangeMoneyL = 0;
         else
             exchangeMoneyL = (levelStar + (levelTitle - 1) * 5 ) * 8;
+
+        //莫友乾好感 加成
+        CharacterFavorabilityBean characterFavorability =  gameData.GetCharacterFavorabilityNoAdd(50001);
+        if (characterFavorability != null)
+        {
+            int favlevel = characterFavorability.GetFavorabilityLevel();
+            exchangeMoneyL = ( favlevel == 0 ? exchangeMoneyL : exchangeMoneyL * favlevel );
+        }
+
         //每日事件数量
         numberForEvent = (levelTitle==0 ? 3 :  (levelTitle - 1) * 5 + levelStar + 3);
 

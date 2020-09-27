@@ -602,6 +602,17 @@ public class GameDataBean
         listCharacterFavorability.Add(characterFavorability);
         return characterFavorability;
     }
+    public CharacterFavorabilityBean GetCharacterFavorabilityNoAdd(long characterId)
+    {
+        foreach (CharacterFavorabilityBean itemData in listCharacterFavorability)
+        {
+            if (itemData.characterId == characterId)
+            {
+                return itemData;
+            }
+        }
+        return null;
+    }
 
     /// <summary>
     /// 检测是否拥有该ID的角色

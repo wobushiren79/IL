@@ -135,12 +135,20 @@ public class StoryBuilder : BaseMonoBehaviour, StoryInfoManager.CallBack
                     SetCharacterExpression(itemData.npc_num, itemData.expression);
                     break;
                 case StoryInfoDetailsBean.StoryInfoDetailsTypeEnum.SceneInt:
-                    //场景物体互动
-                    GameObject objFind = GameObject.Find(itemData.scene_intobj_name);
-                    //参数
-                    List<string> listparameter = StringUtil.SplitBySubstringForListStr(itemData.scene_intcomponent_parameters, ',');
-                    //通过反射调取方法
-                    ReflexUtil.GetInvokeMethod(objFind, itemData.scene_intcomponent_name, itemData.scene_intcomponent_method, listparameter);
+                    try
+                    {
+                        //场景物体互动
+                        GameObject objFind = GameObject.Find(itemData.scene_intobj_name);
+                        //参数
+                        List<string> listparameter = StringUtil.SplitBySubstringForListStr(itemData.scene_intcomponent_parameters, ',');
+                        //通过反射调取方法
+                        ReflexUtil.GetInvokeMethod(objFind, itemData.scene_intcomponent_name, itemData.scene_intcomponent_method, listparameter);
+                    }
+                    catch
+                    {
+
+                    }
+
                     break;
                 case StoryInfoDetailsBean.StoryInfoDetailsTypeEnum.Talk:
                     //进入对话

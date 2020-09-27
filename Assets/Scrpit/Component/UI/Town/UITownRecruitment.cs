@@ -126,7 +126,7 @@ public class UITownRecruitment : UIBaseOne, DialogView.IDialogCallBack
         dialogData.title = GameCommonInfo.GetUITextById(3062);
         PickForMoneyDialogView pickForMoneyDialog = (PickForMoneyDialogView)uiGameManager.dialogManager.CreateDialog(DialogEnum.PickForMoney, this, dialogData);
         pickForMoneyDialog.SetData(1, 1, 100);
-        pickForMoneyDialog.SetMaxMoney(100,100,99999);
+        pickForMoneyDialog.SetMaxMoney(99999,99999,99999);
     }
 
     #region 弹窗回调

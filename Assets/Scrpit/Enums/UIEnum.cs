@@ -38,6 +38,8 @@ public enum UIEnum
     TownPharmacy=2012,//药房
     TownGuildRank=2013,//公会排行
     TownArenaRank=2014,//竞技场排行
+    TownBeautySalon=2015,//美颜庄
+
 
     MiniGameEnd = 3001,
     MiniGameCountDown = 3002,
