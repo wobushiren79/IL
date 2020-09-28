@@ -106,7 +106,7 @@ public class GameDataHandler : BaseHandler, DialogView.IDialogCallBack,IBaseObse
         if (gameTimeHandler == null || gameItemsManager == null || gameDataManager == null)
             return;
         List<BuildBedBean> listBed = gameDataManager.gameData.GetBedListForResearching();
-        if (listBed == null)
+        if (CheckUtil.ListIsNull(listBed))
             return;
         foreach (BuildBedBean itemBed in listBed)
         {
@@ -148,7 +148,7 @@ public class GameDataHandler : BaseHandler, DialogView.IDialogCallBack,IBaseObse
         if (gameTimeHandler == null || gameItemsManager == null || gameDataManager == null)
             return;
         List<MenuOwnBean> listMenu = gameDataManager.gameData.GetMenuListForResearching();
-        if (listMenu == null)
+        if (CheckUtil.ListIsNull(listMenu))
             return;
         foreach (MenuOwnBean itemMenu in listMenu)
         {

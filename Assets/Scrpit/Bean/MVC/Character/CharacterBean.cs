@@ -189,29 +189,29 @@ public class CharacterBean
                 totalPoint--;
             }
         }
-        if (findPriceL >= 10000)
-        {
-            maxLife = 200;
-            minLife = 200;
+        //if (findPriceL >= 10000)
+        //{
+        //    maxLife = 200;
+        //    minLife = 200;
 
-            maxCook = 15;
-            minCook = 15;
+        //    maxCook = 15;
+        //    minCook = 15;
 
-            maxSpeed = 15;
-            minSpeed = 15;
+        //    maxSpeed = 15;
+        //    minSpeed = 15;
 
-            maxAccount = 15;
-            minAccount = 15;
+        //    maxAccount = 15;
+        //    minAccount = 15;
 
-            maxCharm = 15;
-            minCharm = 15;
+        //    maxCharm = 15;
+        //    minCharm = 15;
 
-            maxForce = 15;
-            minForce = 15;
+        //    maxForce = 15;
+        //    minForce = 15;
 
-            maxLucky = 15;
-            minLucky = 15;
-        }
+        //    maxLucky = 15;
+        //    minLucky = 15;
+        //}
 
         //生成随机能力
         characterData.attributes.CreateRandomData(

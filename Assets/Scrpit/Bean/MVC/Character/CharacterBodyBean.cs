@@ -6,6 +6,7 @@ using System;
 public class CharacterBodyBean
 {
     public int sex;//性别 0未知，1男，2女，3中性
+    public string skin;
     public ColorBean skinColor;//皮肤颜色
 
     public string hair;//发型

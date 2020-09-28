@@ -43,8 +43,22 @@ public class CharacterBodyManager : BaseManager
     /// <returns></returns>
     public string GetRandomHairStr()
     {
-        int hairNumber= Random.Range(1, 80);
+        int hairNumber = Random.Range(1, 80);
         return "character_hair_" + hairNumber;
+    }
+
+    /// <summary>
+    /// 获取所有头发
+    /// </summary>
+    /// <returns></returns>
+    public List<string> GetAllHair()
+    {
+        List<string> listData = new List<string>();
+        for (int i = 1; i < 80; i++)
+        {
+            listData.Add("character_hair_" + i);
+        }
+        return listData;
     }
 
     /// <summary>
@@ -57,7 +71,7 @@ public class CharacterBodyManager : BaseManager
         return GetSpriteByName(name, eyeAtlas);
     }
     /// <summary>
-    /// 获取随机头发
+    /// 获取随机眼睛
     /// </summary>
     /// <returns></returns>
     public string GetRandomEyeStr()
@@ -66,6 +80,19 @@ public class CharacterBodyManager : BaseManager
         return "character_eye_" + hairNumber;
     }
 
+    /// <summary>
+    /// 获取所有眼睛
+    /// </summary>
+    /// <returns></returns>
+    public List<string> GetAllEye()
+    {
+        List<string> listData = new List<string>();
+        for (int i = 1; i < 57; i++)
+        {
+            listData.Add("character_eye_" + i);
+        }
+        return listData;
+    }
 
     /// <summary>
     /// 根据名字获取嘴巴
@@ -77,12 +104,50 @@ public class CharacterBodyManager : BaseManager
         return GetSpriteByName(name, mouthAtlas);
     }
     /// <summary>
-    /// 获取随机头发
+    /// 获取随机嘴巴
     /// </summary>
     /// <returns></returns>
     public string GetRandomMouthStr()
     {
         int hairNumber = Random.Range(1, 38);
         return "character_mouth_" + hairNumber;
+    }
+
+    /// <summary>
+    /// 获取所有嘴巴
+    /// </summary>
+    /// <returns></returns>
+    public List<string> GetAllMouth()
+    {
+        List<string> listData = new List<string>();
+        for (int i = 1; i < 38; i++)
+        {
+            listData.Add("character_mouth_" + i);
+        }
+        return listData;
+    }
+
+    /// <summary>
+    /// 根据名字获取皮肤
+    /// </summary>
+    /// <param name="name"></param>
+    /// <returns></returns>
+    public Sprite GetSkinSpriteByName(string name)
+    {
+        return GetSpriteByName(name, trunkAtlas);
+    }
+
+    /// <summary>
+    /// 获取所有嘴巴
+    /// </summary>
+    /// <returns></returns>
+    public List<string> GetAllSkin()
+    {
+        List<string> listData = new List<string>();
+        for (int i = 1; i < 7; i++)
+        {
+            listData.Add("character_body_" + i);
+        }
+        return listData;
     }
 }

@@ -4,7 +4,7 @@ using UnityEngine.UI;
 
 public class ColorView : BaseMonoBehaviour
 {
-    private CallBack callBack;
+    private ICallBack callBack;
     public Slider colorR;
     public Slider colorG;
     public Slider colorB;
@@ -42,7 +42,7 @@ public class ColorView : BaseMonoBehaviour
     /// 设置回调
     /// </summary>
     /// <param name="callBack"></param>
-    public void SetCallBack(CallBack callBack)
+    public void SetCallBack(ICallBack callBack)
     {
         this.callBack = callBack;
     }
@@ -73,7 +73,7 @@ public class ColorView : BaseMonoBehaviour
     /// <summary>
     /// 回调
     /// </summary>
-    public interface CallBack
+    public interface ICallBack
     {
         void ColorChange(ColorView colorView,float r, float g, float b);
     }

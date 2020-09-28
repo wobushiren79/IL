@@ -11,6 +11,8 @@ public class CharacterUICpt : BaseMonoBehaviour
     public Image ivEye;
     public Image ivMouth;
     public Image ivBody;
+    public Image ivFootLeft;
+    public Image ivFootRight;
 
     public Image ivMask;
     public Image ivHand;
@@ -18,9 +20,6 @@ public class CharacterUICpt : BaseMonoBehaviour
     public Image ivClothes;
     public Image ivShoes;
 
-
-    public Sprite spMan;
-    public Sprite spWoman;
     //角色身体数据
     public CharacterBodyBean characterBodyData;
     public CharacterEquipBean characterEquipData;
@@ -36,17 +35,42 @@ public class CharacterUICpt : BaseMonoBehaviour
         gameItemsManager = FindObjectOfType<GameItemsManager>();
     }
 
+    public void SetCharacterData(BodyTypeEnum bodyType, string bodyData, Color color)
+    {
+        switch (bodyType)
+        {
+            case BodyTypeEnum.Hair:
+                SetHair(bodyData, color);
+                break;
+            case BodyTypeEnum.Eye:
+                SetEye(bodyData, color);
+                break;
+            case BodyTypeEnum.Mouth:
+                SetMouth(bodyData, color);
+                break;
+            case BodyTypeEnum.Skin:
+                SetSkin(color);
+                int sex = 1;
+                if (characterBodyData != null)
+                    sex = characterBodyData.sex;
+                SetSex(sex, bodyData);
+                break;
+        }
+    }
+
     public void SetCharacterData(CharacterBodyBean characterBodyData, CharacterEquipBean characterEquipData)
     {
         if (characterBodyData != null)
             this.characterBodyData = characterBodyData;
         if (characterEquipData != null)
             this.characterEquipData = characterEquipData;
-        SetSkin(characterBodyData.skinColor.GetColor());
+
         SetHair(characterBodyData.hair, characterBodyData.hairColor.GetColor());
         SetEye(characterBodyData.eye, characterBodyData.eyeColor.GetColor());
         SetMouth(characterBodyData.mouth, characterBodyData.mouthColor.GetColor());
-        SetBody(characterBodyData.sex, characterBodyData.skinColor.GetColor());
+
+        SetSkin(characterBodyData.skinColor.GetColor());
+        SetSex(characterBodyData.sex, characterBodyData.skin);
 
         if (characterEquipData.maskTFId != 0)
         {
@@ -59,7 +83,7 @@ public class CharacterUICpt : BaseMonoBehaviour
         }
 
         if (characterEquipData.handTFId != 0)
-        {  
+        {
             //幻化处理
             SetHand(characterEquipData.handTFId);
         }
@@ -96,19 +120,9 @@ public class CharacterUICpt : BaseMonoBehaviour
         else
         {
             SetHat(characterEquipData.hatId, characterBodyData.hairColor.GetColor());
-        } 
+        }
     }
 
-    /// <summary>
-    /// 设置皮肤颜色
-    /// </summary>
-    /// <param name="skinColor"></param>
-    public void SetSkin(Color skinColor)
-    {
-        if (ivHead == null)
-            return;
-        ivHead.color = skinColor;
-    }
 
     /// <summary>
     /// 设置头发
@@ -174,26 +188,70 @@ public class CharacterUICpt : BaseMonoBehaviour
     }
 
     /// <summary>
-    /// 设置身体
+    /// 设置性别
     /// </summary>
-    /// <param name="sex"></param>
-    /// <param name="skinColor"></param>
-    public void SetBody(int sex, Color skinColor)
+    /// <param name="sex">0未知 1男 2女 3中性</param>
+    public void SetSex(int sex, string otherSkin)
     {
-        if (ivBody == null)
+        if (characterBodyManager == null)
             return;
-        Sprite spSex;
-        if (sex == 2)
+        Sprite spTrunk = null;
+        if (CheckUtil.StringIsNull(otherSkin)|| otherSkin.Equals("Def"))
         {
-            spSex = spWoman;
+            switch (sex)
+            {
+                case 0:
+                    spTrunk = characterBodyManager.GetTrunkSpriteByName("character_body_man");
+                    break;
+                case 1:
+                    spTrunk = characterBodyManager.GetTrunkSpriteByName("character_body_man");
+                    break;
+                case 2:
+                    spTrunk = characterBodyManager.GetTrunkSpriteByName("character_body_woman");
+                    break;
+                case 3:
+                    spTrunk = characterBodyManager.GetTrunkSpriteByName("character_body_man");
+                    break;
+            }
+            if (ivBody != null && spTrunk != null)
+                ivBody.sprite = spTrunk;
+            if (ivHead != null)
+                ivHead.sprite = characterBodyManager.GetTrunkSpriteByName("character_head");
+            if (ivFootLeft != null)
+                ivFootLeft.sprite = characterBodyManager.GetTrunkSpriteByName("character_body_left_foot");
+            if (ivFootRight != null)
+                ivFootRight.sprite = characterBodyManager.GetTrunkSpriteByName("character_body_right_foot");
         }
         else
         {
-            spSex = spMan;
+
+            if (ivHead != null)
+                ivHead.sprite = characterBodyManager.GetTrunkSpriteByName(otherSkin + "_0");
+            if (ivBody != null)
+                ivBody.sprite = characterBodyManager.GetTrunkSpriteByName(otherSkin + "_1");
+            if (ivFootLeft != null)
+                ivFootLeft.sprite = characterBodyManager.GetTrunkSpriteByName(otherSkin + "_2");
+            if (ivFootRight != null)
+                ivFootRight.sprite = characterBodyManager.GetTrunkSpriteByName(otherSkin + "_3");
         }
-        ivBody.sprite = spSex;
-        ivBody.color = skinColor;
     }
+
+    /// <summary>
+    /// 设置皮肤颜色
+    /// </summary>
+    /// <param name="skinColor"></param>
+    public void SetSkin(Color skinColor)
+    {
+        if (ivHead)
+            ivHead.color = skinColor;
+        if (ivBody)
+            ivBody.color = skinColor;
+        if (ivFootLeft)
+            ivFootLeft.color = skinColor;
+        if (ivFootRight)
+            ivFootRight.color = skinColor;
+    }
+
 
     /// <summary>
     /// 设置服装
@@ -241,7 +299,7 @@ public class CharacterUICpt : BaseMonoBehaviour
         {
             int scaleY = (int)spHand.rect.height / 32;
             float scale = (0.5f * scaleY);
-            ivHand.transform.localScale = new Vector3(scale , scale, scale);
+            ivHand.transform.localScale = new Vector3(scale, scale, scale);
             ivHand.color = new Color(1, 1, 1, 1);
         }
         ivHand.sprite = spHand;
@@ -275,7 +333,7 @@ public class CharacterUICpt : BaseMonoBehaviour
         {
             ivClothes.color = new Color(1, 1, 1, 0);
             return;
-        }       
+        }
         Sprite spClothes = characterDressManager.GetClothesSpriteByName(itemsInfo.icon_key);
         if (spClothes == null)
         {
@@ -306,7 +364,7 @@ public class CharacterUICpt : BaseMonoBehaviour
         {
             ivShoes.color = new Color(1, 1, 1, 0);
             return;
-        } 
+        }
         Sprite spShoes = characterDressManager.GetShoesSpriteByName(itemsInfo.icon_key);
         if (spShoes == null)
         {
@@ -338,7 +396,7 @@ public class CharacterUICpt : BaseMonoBehaviour
             ivHat.color = new Color(1, 1, 1, 0);
             return;
         }
-          
+
         Sprite spHat = characterDressManager.GetHatSpriteByName(itemsInfo.icon_key);
         if (spHat == null)
         {

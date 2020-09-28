@@ -51,7 +51,7 @@ public class CharacterBodyCpt : BaseMonoBehaviour
         if (characterBodyData == null)
             return;
         this.characterBodyData = characterBodyData;
-        SetSex(this.characterBodyData.sex);
+        SetSex(this.characterBodyData.sex, this.characterBodyData.skin);
         SetSkin(this.characterBodyData.skinColor.GetColor());
         SetHair(this.characterBodyData.hair, this.characterBodyData.hairColor.GetColor());
         SetEye(this.characterBodyData.eye, this.characterBodyData.eyeColor.GetColor());
@@ -71,7 +71,7 @@ public class CharacterBodyCpt : BaseMonoBehaviour
             case 1:
                 bodyScale.x = -1;
                 break;
-           
+
             case 2:
                 bodyScale.x = 1;
                 break;
@@ -91,43 +91,7 @@ public class CharacterBodyCpt : BaseMonoBehaviour
         }
     }
 
-    /// <summary>
-    /// 设置性别
-    /// </summary>
-    /// <param name="sex">0未知 1男 2女 3中性</param>
-    public void SetSex(int sex)
-    {
-        if (characterBodyManager == null)
-            return;
-        Sprite spTrunk = null;
-        switch (sex)
-        {
-            case 0:
-                spTrunk = characterBodyManager.GetTrunkSpriteByName("character_body_man");
-                break;
-            case 1:
-                spTrunk = characterBodyManager.GetTrunkSpriteByName("character_body_man");
-                break;
-            case 2:
-                spTrunk = characterBodyManager.GetTrunkSpriteByName("character_body_woman");
-                break;
-            case 3:
-                spTrunk = characterBodyManager.GetTrunkSpriteByName("character_body_man");
-                break;
-        }
-        if (sprTrunk != null && spTrunk != null)
-            sprTrunk.sprite = spTrunk;
-        if(sprHead!=null)
-            sprHead.sprite = characterBodyManager.GetTrunkSpriteByName("character_head");
-        if (sprFootLeft != null)
-            sprFootLeft.sprite = characterBodyManager.GetTrunkSpriteByName("character_body_left_foot");
-        if (sprFootRight != null)
-            sprFootRight.sprite = characterBodyManager.GetTrunkSpriteByName("character_body_right_foot");
-        //数据保存
-        if (characterBodyData == null)
-            characterBodyData = new CharacterBodyBean();
-        characterBodyData.sex = sex;
-    }
+
 
     /// <summary>
     /// 设置头发
@@ -167,7 +131,7 @@ public class CharacterBodyCpt : BaseMonoBehaviour
     /// </summary>
     /// <param name="mouth"></param>
     /// <param name="mouthColor"></param>
-    public void SetEye(string eye, Color eyeColor,bool isSave)
+    public void SetEye(string eye, Color eyeColor, bool isSave)
     {
         if (characterBodyManager == null || sprEye == null)
             return;
@@ -188,15 +152,15 @@ public class CharacterBodyCpt : BaseMonoBehaviour
     {
         if (characterBodyManager == null || sprEye == null)
             return;
-        SetEye(eye, sprEye.color,true);
+        SetEye(eye, sprEye.color, true);
     }
     public void SetEye(Color eyeColor)
     {
         if (sprEye == null)
             return;
-        SetEye(null, eyeColor,true);
+        SetEye(null, eyeColor, true);
     }
-    public void SetEye(string eye,Color eyeColor)
+    public void SetEye(string eye, Color eyeColor)
     {
         SetEye(eye, eyeColor, true);
     }
@@ -233,6 +197,60 @@ public class CharacterBodyCpt : BaseMonoBehaviour
         if (sprMouth == null)
             return;
         SetMouth(null, mouthColor);
+    }
+
+    /// <summary>
+    /// 设置性别
+    /// </summary>
+    /// <param name="sex">0未知 1男 2女 3中性</param>
+    public void SetSex(int sex, string otherSkin)
+    {
+        if (characterBodyManager == null)
+            return;
+        Sprite spTrunk = null;
+        if (CheckUtil.StringIsNull(otherSkin)||otherSkin.Equals("Def"))
+        {
+            switch (sex)
+            {
+                case 0:
+                    spTrunk = characterBodyManager.GetTrunkSpriteByName("character_body_man");
+                    break;
+                case 1:
+                    spTrunk = characterBodyManager.GetTrunkSpriteByName("character_body_man");
+                    break;
+                case 2:
+                    spTrunk = characterBodyManager.GetTrunkSpriteByName("character_body_woman");
+                    break;
+                case 3:
+                    spTrunk = characterBodyManager.GetTrunkSpriteByName("character_body_man");
+                    break;
+            }
+            if (sprTrunk != null && spTrunk != null)
+                sprTrunk.sprite = spTrunk;
+            if (sprHead != null)
+                sprHead.sprite = characterBodyManager.GetTrunkSpriteByName("character_head");
+            if (sprFootLeft != null)
+                sprFootLeft.sprite = characterBodyManager.GetTrunkSpriteByName("character_body_left_foot");
+            if (sprFootRight != null)
+                sprFootRight.sprite = characterBodyManager.GetTrunkSpriteByName("character_body_right_foot");
+        }
+        else
+        {
+            if (sprHead != null)
+                sprHead.sprite = characterBodyManager.GetTrunkSpriteByName(otherSkin + "_0");
+            if (sprTrunk != null)
+                sprTrunk.sprite = characterBodyManager.GetTrunkSpriteByName(otherSkin + "_1");
+            if (sprFootLeft != null)
+                sprFootLeft.sprite = characterBodyManager.GetTrunkSpriteByName(otherSkin + "_2");
+            if (sprFootRight != null)
+                sprFootRight.sprite = characterBodyManager.GetTrunkSpriteByName(otherSkin + "_3");
+        }
+
+        //数据保存
+        if (characterBodyData == null)
+            characterBodyData = new CharacterBodyBean();
+        characterBodyData.sex = sex;
+        characterBodyData.skin = otherSkin;
     }
 
     /// <summary>

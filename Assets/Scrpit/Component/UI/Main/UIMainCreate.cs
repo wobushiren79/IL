@@ -6,7 +6,7 @@ using DG.Tweening;
 
 public class UIMainCreate : UIGameComponent,
     IRadioGroupCallBack,
-    ColorView.CallBack,
+    ColorView.ICallBack,
     SelectView.ICallBack,
     DialogView.IDialogCallBack
 
@@ -254,11 +254,11 @@ public class UIMainCreate : UIGameComponent,
 
         if (position == 0)
         {
-            characterBodyCpt.SetSex(1);
+            characterBodyCpt.SetSex(1,null);
         }
         else
         {
-            characterBodyCpt.SetSex(2);
+            characterBodyCpt.SetSex(2, null);
         }
     }
 

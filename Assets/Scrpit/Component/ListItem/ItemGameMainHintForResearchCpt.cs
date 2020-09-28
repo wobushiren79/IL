@@ -4,8 +4,8 @@ using UnityEngine.UI;
 
 public class ItemGameMainHintForResearchCpt : ItemGameBaseCpt
 {
-    public MenuOwnBean menuOwn;
-    public BuildBedBean bedData;
+    protected MenuOwnBean menuOwn;
+    protected BuildBedBean bedData;
 
     public Image ivIcon;
     public Text tvName;
@@ -14,6 +14,16 @@ public class ItemGameMainHintForResearchCpt : ItemGameBaseCpt
     protected InnFoodManager foodManager;
     protected IconDataManager iconDataManager;
 
+
+    public MenuOwnBean GetMenuData()
+    {
+        return menuOwn;
+    }
+
+    public BuildBedBean GetBedData()
+    {
+        return bedData;
+    }
 
     public void SetData(BuildBedBean bedData)
     {

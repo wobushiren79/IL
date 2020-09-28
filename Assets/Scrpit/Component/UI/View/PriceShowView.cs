@@ -20,13 +20,18 @@ public class PriceShowView : BaseMonoBehaviour
     public GameObject objTrophyLegendary;
     public Text tvTrophyLegendary;
 
+
+    public void SetPrice(long number, long priceL, long priceM, long priceS)
+    {
+        SetPrice(number, priceL, priceM, priceS, 0, 0, 0, 0, 0);
+    }
     /// <summary>
     /// 设置价格
     /// </summary>
     public void SetPrice(long number,
-        long priceL, long priceM, long priceS,
-        long coin,
-        long trophyElementary, long trophyIntermediate, long trophyAdvanced, long trophyLegendary)
+    long priceL, long priceM, long priceS,
+    long coin,
+    long trophyElementary, long trophyIntermediate, long trophyAdvanced, long trophyLegendary)
     {
         if (priceL == 0 && objPriceL != null)
             objPriceL.SetActive(false);
