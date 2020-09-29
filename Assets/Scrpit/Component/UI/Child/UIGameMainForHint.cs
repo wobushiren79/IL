@@ -25,12 +25,15 @@ public class UIGameMainForHint : BaseUIChildComponent<UIGameMain>
             for (int i = 0; i < listResearch.Count; i++)
             {
                 ItemGameMainHintForResearchCpt itemCpt = listResearch[i];
-                if (itemCpt.GetMenuData() == itemData)
+                MenuOwnBean menuOwn = itemCpt.GetMenuData();
+                if (menuOwn == null)
+                    continue;
+                if (menuOwn == itemData)
                 {
                     hasData = true;
                     itemCpt.RefreshData();
                 }
-                if (itemCpt.GetMenuData().GetMenuStatus() != ResearchStatusEnum.Researching)
+                if (menuOwn.GetMenuStatus() != ResearchStatusEnum.Researching)
                 {
                     listResearch.Remove(itemCpt);
                     Destroy(itemCpt.gameObject);
@@ -61,12 +64,15 @@ public class UIGameMainForHint : BaseUIChildComponent<UIGameMain>
             for (int i = 0; i < listResearch.Count; i++)
             {
                 ItemGameMainHintForResearchCpt itemCpt = listResearch[i];
-                if (itemCpt.GetBedData() == itemData)
+                BuildBedBean buildBed = itemCpt.GetBedData();
+                if (buildBed == null)
+                    continue;
+                if (buildBed == itemData)
                 {
                     hasData = true;
                     itemCpt.RefreshData();
                 }
-                if (itemCpt.GetBedData().GetBedStatus() != ResearchStatusEnum.Researching)
+                if (buildBed.GetBedStatus() != ResearchStatusEnum.Researching)
                 {
                     listResearch.Remove(itemCpt);
                     Destroy(itemCpt.gameObject);
