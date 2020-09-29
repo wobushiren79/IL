@@ -4,19 +4,23 @@ using UnityEngine.UI;
 
 public class PickForMoneyDialogView : DialogView
 {
+    public GameObject objMoneyL;
     public Button btSubMoneyL;
     public Button btAddMoneyL;
     public InputField etMoneyL;
 
+    public GameObject objMoneyM;
     public Button btSubMoneyM;
     public Button btAddMoneyM;
     public InputField etMoneyM;
 
+    public GameObject objMoneyS;
     public Button btSubMoneyS;
     public Button btAddMoneyS;
     public InputField etMoneyS;
 
    
+
     //每次增量
     public int cvMoneyL = 1;
     public int cvMoneyM = 1;
@@ -30,14 +34,14 @@ public class PickForMoneyDialogView : DialogView
     public int moneyL = 0;
     public int moneyM = 0;
     public int moneyS = 0;
-    
+
     protected ToastManager toastManager;
 
     public override void Awake()
     {
         base.Awake();
         toastManager = Find<ToastManager>(ImportantTypeEnum.ToastManager);
-        if(etMoneyL)
+        if (etMoneyL)
             etMoneyL.onEndEdit.AddListener(OnEndEditForMoneyL);
         if (etMoneyM)
             etMoneyM.onEndEdit.AddListener(OnEndEditForMoneyM);
@@ -136,6 +140,20 @@ public class PickForMoneyDialogView : DialogView
         this.maxMoneyL = maxMoneyL;
         this.maxMoneyM = maxMoneyM;
         this.maxMoneyS = maxMoneyS;
+        if (maxMoneyL == 0)
+            objMoneyL.SetActive(false);
+        else
+            objMoneyL.SetActive(true);
+
+        if (maxMoneyM == 0)
+            objMoneyM.SetActive(false);
+        else
+            objMoneyM.SetActive(true);
+
+        if (maxMoneyS == 0)
+            objMoneyS.SetActive(false);
+        else
+            objMoneyS.SetActive(true);
     }
 
     /// <summary>
@@ -169,7 +187,7 @@ public class PickForMoneyDialogView : DialogView
                     moneyS = 0;
                 //上限设置
                 if (moneyS > maxMoneyS)
-                    moneyS= maxMoneyS;
+                    moneyS = maxMoneyS;
                 break;
         }
         audioHandler.PlaySound(AudioSoundEnum.ButtonForNormal);
@@ -180,7 +198,7 @@ public class PickForMoneyDialogView : DialogView
 
     public void OnEndEditForMoneyL(string value)
     {
-        if (int.TryParse(value,out int result))
+        if (int.TryParse(value, out int result))
         {
             ChangeMoney(MoneyEnum.L, result);
         }

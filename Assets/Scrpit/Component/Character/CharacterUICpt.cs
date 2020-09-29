@@ -30,9 +30,9 @@ public class CharacterUICpt : BaseMonoBehaviour
 
     public void Awake()
     {
-        characterBodyManager = FindObjectOfType<CharacterBodyManager>();
-        characterDressManager = FindObjectOfType<CharacterDressManager>();
-        gameItemsManager = FindObjectOfType<GameItemsManager>();
+        characterBodyManager = Find< CharacterBodyManager>( ImportantTypeEnum.CharacterManager);
+        characterDressManager = Find<CharacterDressManager>(ImportantTypeEnum.CharacterManager);
+        gameItemsManager = Find<GameItemsManager>(ImportantTypeEnum.GameItemsManager);
     }
 
     public void SetCharacterData(BodyTypeEnum bodyType, string bodyData, Color color)

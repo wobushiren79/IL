@@ -17,7 +17,7 @@ public class InfoAbilityPopupShow : PopupShowView
     public override void Awake()
     {
         base.Awake();
-        mGameItemsManager = FindObjectOfType<GameItemsManager>();
+        mGameItemsManager = Find<GameItemsManager>(ImportantTypeEnum.GameItemsManager);
     }
 
     public void SetData(CharacterBean characterData)

@@ -43,7 +43,7 @@ public class CharacterBodyManager : BaseManager
     /// <returns></returns>
     public string GetRandomHairStr()
     {
-        int hairNumber = Random.Range(1, 80);
+        int hairNumber = Random.Range(1, 82);
         return "character_hair_" + hairNumber;
     }
 
@@ -54,7 +54,7 @@ public class CharacterBodyManager : BaseManager
     public List<string> GetAllHair()
     {
         List<string> listData = new List<string>();
-        for (int i = 1; i < 80; i++)
+        for (int i = 1; i < 82; i++)
         {
             listData.Add("character_hair_" + i);
         }
@@ -76,7 +76,7 @@ public class CharacterBodyManager : BaseManager
     /// <returns></returns>
     public string GetRandomEyeStr()
     {
-        int hairNumber = Random.Range(1, 57);
+        int hairNumber = Random.Range(1, 60);
         return "character_eye_" + hairNumber;
     }
 
@@ -87,7 +87,7 @@ public class CharacterBodyManager : BaseManager
     public List<string> GetAllEye()
     {
         List<string> listData = new List<string>();
-        for (int i = 1; i < 57; i++)
+        for (int i = 1; i < 60; i++)
         {
             listData.Add("character_eye_" + i);
         }
@@ -109,7 +109,7 @@ public class CharacterBodyManager : BaseManager
     /// <returns></returns>
     public string GetRandomMouthStr()
     {
-        int hairNumber = Random.Range(1, 38);
+        int hairNumber = Random.Range(1, 39);
         return "character_mouth_" + hairNumber;
     }
 
@@ -120,7 +120,7 @@ public class CharacterBodyManager : BaseManager
     public List<string> GetAllMouth()
     {
         List<string> listData = new List<string>();
-        for (int i = 1; i < 38; i++)
+        for (int i = 1; i < 39; i++)
         {
             listData.Add("character_mouth_" + i);
         }

@@ -13,7 +13,7 @@ public class FoodForCoverCpt : BaseMonoBehaviour
 
     private void Awake()
     {
-        innFoodManager = FindObjectOfType<InnFoodManager>();
+        innFoodManager = Find<InnFoodManager>(ImportantTypeEnum.FoodManager);
     }
 
     public void SetData(MenuInfoBean menuInfo)

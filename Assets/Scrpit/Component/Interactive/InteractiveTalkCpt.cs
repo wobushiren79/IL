@@ -12,7 +12,7 @@ public class InteractiveTalkCpt : BaseInteractiveCpt
     private void Start()
     {
         mNpcAI = GetComponent<BaseNpcAI>();
-        mEventHandler = FindObjectOfType<EventHandler>();
+        mEventHandler = Find<EventHandler>( ImportantTypeEnum.EventHandler);
     }
 
     public override void InteractiveDetection(CharacterInteractiveCpt characterInt)

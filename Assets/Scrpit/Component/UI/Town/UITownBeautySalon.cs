@@ -216,6 +216,14 @@ public class UITownBeautySalon : UIBaseOne, IRadioGroupCallBack, ItemTownBeautyS
 
     public void OnClickForSubmit()
     {
+        if (CheckUtil.StringIsNull(selectHair)
+            && CheckUtil.StringIsNull(selectEye)
+            && CheckUtil.StringIsNull(selectMouth)
+            && CheckUtil.StringIsNull(selectSkin))
+        {
+            uiGameManager.toastManager.ToastHint(GameCommonInfo.GetUITextById(7005));
+            return;
+        }
         DialogBean dialogData = new DialogBean();
         string price = "";
         if (priceL != 0)

@@ -8,7 +8,7 @@ public class NpcPasserHandler : BaseHandler
 
     private void Awake()
     {
-        npcPasserBuilder = FindObjectOfType<NpcPasserBuilder>();
+        npcPasserBuilder = Find<NpcPasserBuilder>(ImportantTypeEnum.NpcBuilder);
     }
 
 }
