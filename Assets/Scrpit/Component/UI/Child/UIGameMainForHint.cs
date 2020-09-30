@@ -32,12 +32,12 @@ public class UIGameMainForHint : BaseUIChildComponent<UIGameMain>
                 {
                     hasData = true;
                     itemCpt.RefreshData();
-                }
-                if (menuOwn.GetMenuStatus() != ResearchStatusEnum.Researching)
-                {
-                    listResearch.Remove(itemCpt);
-                    Destroy(itemCpt.gameObject);
-                    i--;
+                    if (menuOwn.GetMenuStatus() != ResearchStatusEnum.Researching)
+                    {
+                        listResearch.Remove(itemCpt);
+                        Destroy(itemCpt.gameObject);
+                        i--;
+                    }
                 }
             }
             if (!hasData)
@@ -71,12 +71,12 @@ public class UIGameMainForHint : BaseUIChildComponent<UIGameMain>
                 {
                     hasData = true;
                     itemCpt.RefreshData();
-                }
-                if (buildBed.GetBedStatus() != ResearchStatusEnum.Researching)
-                {
-                    listResearch.Remove(itemCpt);
-                    Destroy(itemCpt.gameObject);
-                    i--;
+                    if (buildBed.GetBedStatus() != ResearchStatusEnum.Researching)
+                    {
+                        listResearch.Remove(itemCpt);
+                        Destroy(itemCpt.gameObject);
+                        i--;
+                    }
                 }
             }
             if (!hasData)
