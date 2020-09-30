@@ -34,6 +34,12 @@ public class UIGameTextForTalk : BaseUIChildComponent<UIGameText>
         gameDataManager = uiGameManager.gameDataManager;
     }
 
+    public override void Close()
+    {
+        base.Close();
+        tweenerText = null;
+    }
+
     private void Update()
     {
         if (textData == null)

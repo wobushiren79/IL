@@ -52,7 +52,7 @@ public class UIGameText : UIGameComponent, TextInfoManager.ICallBack, DialogView
             order = currentTextData.next_order;
         }
         this.textOrder = order;
-        List<TextInfoBean> textListData =uiGameManager.textInfoManager.GetTextDataByOrder(textOrder);
+        List<TextInfoBean> textListData = uiGameManager.textInfoManager.GetTextDataByOrder(textOrder);
         if (!CheckUtil.ListIsNull(textListData))
             ShowText(textListData);
         else

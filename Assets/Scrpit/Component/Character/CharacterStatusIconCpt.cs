@@ -54,11 +54,12 @@ public class CharacterStatusIconCpt : BaseMonoBehaviour
             {
                 if (itemCpt && itemCpt.gameObject)
                 {
-                    itemCpt.transform.DOScale(new Vector3(0, 0, 0), 0.5f).OnComplete(delegate
-                    {
-                        if (itemCpt && itemCpt.gameObject)
-                            Destroy(itemCpt.gameObject);
-                    });
+                    //itemCpt.transform.DOScale(new Vector3(0, 0, 0), 0.5f).OnComplete(delegate
+                    //{
+                    //    if (itemCpt && itemCpt.gameObject)
+                    //        Destroy(itemCpt.gameObject);
+                    //});
+                    Destroy(itemCpt.gameObject);
                     listStatusIcon.Remove(itemCpt);
                     i--;
                 }  

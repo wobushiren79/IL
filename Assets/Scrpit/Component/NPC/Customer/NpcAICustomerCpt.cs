@@ -380,9 +380,9 @@ public class NpcAICustomerCpt : BaseNpcAI
         else
         {
             movePosition = orderForCustomer.counter.GetPayPosition();
-            //if (!CheckUtil.CheckPath(transform.position,movePosition))
+            //if (!CheckUtil.CheckPath(transform.position, movePosition))
             //{
-            //    innHandler.EndOrderForForce(orderForCustomer,true);
+            //    innHandler.EndOrderForForce(orderForCustomer, true);
             //    SetIntent(CustomerIntentEnum.Leave);
             //}
             //else
@@ -497,9 +497,11 @@ public class NpcAICustomerCpt : BaseNpcAI
         orderForCustomer.foodCpt.FinishFood(orderForCustomer.foodData);
         //设置桌子为待清理
         if (orderForCustomer.table != null)
+        {
             orderForCustomer.table.SetTableStatus(BuildTableCpt.TableStatusEnum.WaitClean);
-        //清理列队增加
-        innHandler.cleanQueue.Add(orderForCustomer);
+            //清理列队增加
+            innHandler.cleanQueue.Add(orderForCustomer);
+        }
         //去结账
         SetIntent(CustomerIntentEnum.GotoPay);
     }

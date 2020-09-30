@@ -295,7 +295,14 @@ public class BaseNpcAI : BaseObservable<IBaseObserver>
     /// <param name="type"></param>
     public void RemoveStatusIconByType(CharacterStatusIconEnum type)
     {
-        characterStatusIcon.RemoveStatusIconByType(type);
+        try
+        {
+            characterStatusIcon.RemoveStatusIconByType(type);
+        }
+        catch
+        {
+  
+        }        
     }
 
     /// <summary>
