@@ -49,7 +49,7 @@ public class ToastManager : BaseMonoBehaviour
     /// <param name="destoryTime"></param>
     public void CreateToast(ToastEnum toastType, Sprite toastIconSp, string toastContentStr, float destoryTime)
     {
-        audioHandler.PlaySound(AudioSoundEnum.ButtonForShow);
+        //audioHandler.PlaySound(AudioSoundEnum.ButtonForShow);
         if (objToastContainer == null || listObjToastModel == null)
             return;
 

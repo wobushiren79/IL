@@ -67,6 +67,7 @@ public class UIGameSettle : UIGameComponent
         IconDataManager iconDataManager = uiGameManager.iconDataManager;
         GameTimeHandler gameTimeHandler = uiGameManager.gameTimeHandler;
         GameDataManager gameDataManager = uiGameManager.gameDataManager;
+        AudioHandler audioHandler = uiGameManager.audioHandler;
         UserAchievementBean userAchievement = gameDataManager.gameData.GetAchievementData();
         //停止时间
         gameTimeHandler.SetTimeStatus(true);
@@ -169,6 +170,19 @@ public class UIGameSettle : UIGameComponent
             // CreateItemForMoney(spIconFlour, string.Format(GameCommonInfo.GetUITextById(339), ingName), 0, 0, 0, innRecord.consumeIngFlour * 5);
             // innRecord.AddPayIng(0, 0, innRecord.consumeIngFlour * 5);
         }
+        //评价
+        if(innRecord.praiseExcitedNumber!=0)
+             CreateItemForOther(innRecord.praiseExcitedNumber + "", iconDataManager.GetIconSpriteByName("customer_mood_0"), "", Color.green);
+        if (innRecord.praiseHappyNumber != 0)
+            CreateItemForOther(innRecord.praiseHappyNumber + "", iconDataManager.GetIconSpriteByName("customer_mood_1"), "", Color.green);
+        if (innRecord.praiseOkayNumber != 0)
+            CreateItemForOther(innRecord.praiseOkayNumber + "", iconDataManager.GetIconSpriteByName("customer_mood_2"), "", Color.green);
+        if (innRecord.praiseOrdinaryNumber != 0)
+            CreateItemForOther(innRecord.praiseOrdinaryNumber + "", iconDataManager.GetIconSpriteByName("customer_mood_3"), "", Color.red);
+        if (innRecord.praiseDisappointedNumber != 0)
+            CreateItemForOther(innRecord.praiseDisappointedNumber + "", iconDataManager.GetIconSpriteByName("customer_mood_4"), "", Color.red);
+        if (innRecord.praiseAngerNumber != 0)
+            CreateItemForOther(innRecord.praiseAngerNumber + "", iconDataManager.GetIconSpriteByName("customer_mood_5"), "", Color.red);
 
         //住宿金额
         if (innRecord.incomeForHotelS != 0)
@@ -194,6 +208,9 @@ public class UIGameSettle : UIGameComponent
                 itemData.priceM,
                 itemData.priceS);
         }
+        audioHandler.PlaySound(AudioSoundEnum.PayMoney);
+
+
         innRecord.GetTotalIncome(out long incomeL, out long incomeM, out long incomeS);
         innRecord.GetTotalExpenses(out long expensesL, out long expensesM, out long expensesS);
         if (incomeL <= 0)
@@ -238,13 +255,7 @@ public class UIGameSettle : UIGameComponent
     /// <param name="objItem"></param>
     public void AnimForItemShow(GameObject objItem)
     {
-        objItem.transform.DOScale(new Vector3(0, 0, 0), 0.5f).From().SetDelay(animDelay + 0.1f).OnComplete(delegate ()
-        {
-            AudioHandler audioHandler = uiGameManager.audioHandler;
-            //最多只播放10个音效
-            if (animDelay <= 1.1f)
-                audioHandler.PlaySound(AudioSoundEnum.PayMoney);
-        });
+        objItem.transform.DOScale(new Vector3(0, 0, 0), 0.5f).From();
         animDelay += 0.1f;
     }
 

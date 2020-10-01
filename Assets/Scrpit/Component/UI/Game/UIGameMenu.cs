@@ -34,6 +34,7 @@ public class UIGameMenu : UIGameComponent
     public Button btSortSell;
     public Button btSortLevel;
     public Button btSortLevelUp;
+    public Button btSortTime;
 
     public Button btSellAll;
     public Button btStopAll;
@@ -58,6 +59,8 @@ public class UIGameMenu : UIGameComponent
             btSortLevelUp.onClick.AddListener(OnClickForSortLevelUp);
         if (btSortPrice != null)
             btSortPrice.onClick.AddListener(OnClickForSortPrice);
+        if (btSortTime != null)
+            btSortTime.onClick.AddListener(OnClickForSortTime);
 
         if (btSellAll != null)
             btSellAll.onClick.AddListener(OnClickForSellAll);
@@ -259,6 +262,20 @@ public class UIGameMenu : UIGameComponent
         CreateFoodList();
     }
 
+    /// <summary>
+    /// 制作时间排序点击
+    /// </summary>
+    public void OnClickForSortTime()
+    {
+        uiGameManager.audioHandler.PlaySound(AudioSoundEnum.ButtonForNormal);
+        this.listMenu = this.listMenu.OrderByDescending(
+            (data) =>
+            {
+                MenuInfoBean menuInfo = uiGameManager.innFoodManager.GetFoodDataById(data.menuId);
+                return menuInfo.cook_time;
+            }).ToList();
+        CreateFoodList();
+    }
 
     public void OnClickForSellAll()
     {

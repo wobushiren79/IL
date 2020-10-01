@@ -13,6 +13,8 @@ public class UITownArena : UIBaseOne, IRadioGroupCallBack, StoreInfoManager.ICal
     public RadioGroupView rgType;
     private List<StoreInfoBean> listArenaInfo;
     public Text tvNull;
+
+    protected TrophyTypeEnum arenaType = TrophyTypeEnum.Elementary;
     public override void Start()
     {
         base.Start();
@@ -31,12 +33,19 @@ public class UITownArena : UIBaseOne, IRadioGroupCallBack, StoreInfoManager.ICal
         uiGameManager.storeInfoManager.GetStoreInfoForArenaInfo();
     }
 
+    public override void RefreshUI()
+    {
+        base.RefreshUI();
+        InitData(arenaType);
+    }
+
     /// <summary>
     /// 初始化游戏数据
     /// </summary>
     /// <param name="type"></param>
     public void InitData(TrophyTypeEnum type)
     {
+        this.arenaType = type;
         CptUtil.RemoveChildsByActive(objArenaContainer);
         List<MiniGameBaseBean> listMiniGameData = GameCommonInfo.DailyLimitData.GetArenaDataByType(type);
         if (listMiniGameData == null)

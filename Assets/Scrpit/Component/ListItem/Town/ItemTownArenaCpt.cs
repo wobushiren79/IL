@@ -16,6 +16,7 @@ public class ItemTownArenaCpt : ItemGameBaseCpt, DialogView.IDialogCallBack
 
     public Text tvRule;
     public Button btJoin;
+    public Button btSend;
 
     public GameObject objRewardContainer;
     public GameObject objRewardModel;
@@ -27,7 +28,9 @@ public class ItemTownArenaCpt : ItemGameBaseCpt, DialogView.IDialogCallBack
     private void Start()
     {
         if (btJoin != null)
-            btJoin.onClick.AddListener(OnClickJoin);
+            btJoin.onClick.AddListener(OnClickForJoin);
+        if (btSend != null)
+            btSend.onClick.AddListener(OnClickForSend);
     }
 
     public void SetData(TrophyTypeEnum trophyType, MiniGameBaseBean miniGameData)
@@ -213,10 +216,12 @@ public class ItemTownArenaCpt : ItemGameBaseCpt, DialogView.IDialogCallBack
         tvPriceS.text = "" + priceS;
     }
 
+    protected int arenaJoinType = 1;
+
     /// <summary>
     /// 点击加入
     /// </summary>
-    public void OnClickJoin()
+    public void OnClickForJoin()
     {
         UIGameManager uiGameManager = GetUIManager<UIGameManager>();
         GameDataManager gameDataManager = uiGameManager.gameDataManager;
@@ -234,6 +239,32 @@ public class ItemTownArenaCpt : ItemGameBaseCpt, DialogView.IDialogCallBack
         string gameTime = miniGameData.preGameTime + GameCommonInfo.GetUITextById(37);
         dialogData.content = string.Format(GameCommonInfo.GetUITextById(3021), gameName, gameTime);
         dialogManager.CreateDialog(DialogEnum.Normal, this, dialogData);
+        arenaJoinType = 1;
+    }
+
+    /// <summary>
+    /// 点击派遣
+    /// </summary>
+    public void OnClickForSend()
+    {
+        UIGameManager uiGameManager = GetUIManager<UIGameManager>();
+        GameDataManager gameDataManager = uiGameManager.gameDataManager;
+        ToastManager toastManager = uiGameManager.toastManager;
+        DialogManager dialogManager = uiGameManager.dialogManager;
+        AudioHandler audioHandler = uiGameManager.audioHandler;
+
+        audioHandler.PlaySound(AudioSoundEnum.ButtonForNormal);
+        if (!gameDataManager.gameData.HasEnoughMoney(miniGameData.preMoneyL, miniGameData.preMoneyM, miniGameData.preMoneyS))
+        {
+            toastManager.ToastHint(GameCommonInfo.GetUITextById(1020));
+            return;
+        }
+        DialogBean dialogData = new DialogBean();
+        string gameName = tvTitle.text;
+        string gameTime = miniGameData.preGameTime + GameCommonInfo.GetUITextById(37);
+        dialogData.content = string.Format(GameCommonInfo.GetUITextById(3022), gameName, gameTime);
+        dialogManager.CreateDialog(DialogEnum.Normal, this, dialogData);
+        arenaJoinType = 2;
     }
 
     #region 确认回调
@@ -245,15 +276,29 @@ public class ItemTownArenaCpt : ItemGameBaseCpt, DialogView.IDialogCallBack
         GameItemsManager gameItemsManager = uiGameManager.gameItemsManager;
         ControlHandler controlHandler = uiGameManager.controlHandler;
         DialogManager dialogManager = uiGameManager.dialogManager;
+        ToastManager toastManager = uiGameManager.toastManager;
+        IconDataManager iconDataManager = uiGameManager.iconDataManager;
+        NpcInfoManager npcInfoManager = uiGameManager.npcInfoManager;
+        InnBuildManager innBuildManager = uiGameManager.innBuildManager;
+        AudioHandler audioHandler = uiGameManager.audioHandler;
+        GameTimeHandler gameTimeHandler = uiGameManager.gameTimeHandler;
+  
         if (dialogView as PickForCharacterDialogView)
         {
+            //判断时间是否过晚
+            gameTimeHandler.GetTime(out float hour, out float min);
+            if (hour >= 21 && hour < 6)
+            {
+                toastManager.ToastHint(GameCommonInfo.GetUITextById(1031));
+                return;
+            }
+
             //支付金钱
             gameDataManager.gameData.PayMoney(miniGameData.preMoneyL, miniGameData.preMoneyM, miniGameData.preMoneyS);
             //扣除时间
             gameDataManager.gameData.gameTime.hour += miniGameData.preGameTime;
             //如果有研究菜谱 菜谱增加经验
             gameDataHandler.AddResearch(miniGameData.preGameTime*60);
-
             //设置参赛人员
             PickForCharacterDialogView pickForCharacterDialog = (PickForCharacterDialogView)dialogView;
             List<CharacterBean> listCharacter = pickForCharacterDialog.GetPickCharacter();
@@ -262,12 +307,49 @@ public class ItemTownArenaCpt : ItemGameBaseCpt, DialogView.IDialogCallBack
             GameCommonInfo.DailyLimitData.AddArenaAttendedCharacter(listCharacter);
             //删除该条数据
             GameCommonInfo.DailyLimitData.RemoveArenaDataByType(trophyType, miniGameData);
-            //设置竞技场数据
-            GameCommonInfo.SetAreanPrepareData(miniGameData);
-            //保存之前的位置
-            GameCommonInfo.ScenesChangeData.beforeUserPosition = controlHandler.GetControl(ControlHandler.ControlEnum.Normal).transform.position;
-            //跳转到竞技场
-            SceneUtil.SceneChange(ScenesEnum.GameArenaScene);
+
+            if (arenaJoinType==1)
+            {
+                //设置竞技场数据
+                GameCommonInfo.SetAreanPrepareData(miniGameData);
+                //保存之前的位置
+                GameCommonInfo.ScenesChangeData.beforeUserPosition = controlHandler.GetControl(ControlHandler.ControlEnum.Normal).transform.position;
+                //跳转到竞技场
+                SceneUtil.SceneChange(ScenesEnum.GameArenaScene);
+            }
+            else if (arenaJoinType == 2)
+            {
+                //扣除时间
+                gameTimeHandler.AddHour(miniGameData.preGameTime);
+                //刷新UI
+                ((UITownArena)uiComponent).RefreshUI();
+                CharacterBean character = listCharacter[0];
+                bool isWin= character.CalculationArenaSendWin(gameItemsManager);
+                if (isWin)
+                {
+                    toastManager.ToastHint(GameCommonInfo.GetUITextById(7011));
+                    audioHandler.PlaySound(AudioSoundEnum.Reward);
+                    //设置不记录
+                    foreach (RewardTypeBean rewardData in miniGameData.listReward)
+                    {
+                        if (rewardData.GetRewardType() == RewardTypeEnum.AddArenaTrophyAdvanced 
+                            || rewardData.GetRewardType() == RewardTypeEnum.AddArenaTrophyElementary
+                             || rewardData.GetRewardType() == RewardTypeEnum.AddArenaTrophyIntermediate
+                              || rewardData.GetRewardType() == RewardTypeEnum.AddArenaTrophyLegendary)
+                        {
+                            rewardData.isRecord = false;
+                        }
+                    }
+                    //完成奖励
+                    RewardTypeEnumTools.CompleteReward
+                        (toastManager, npcInfoManager, iconDataManager, gameItemsManager, innBuildManager, gameDataManager, listCharacter, miniGameData.listReward);     
+                }
+                else
+                {
+                    toastManager.ToastHint(GameCommonInfo.GetUITextById(7012));
+                    audioHandler.PlaySound(AudioSoundEnum.Passive);
+                }
+            }
         }
         else
         {
