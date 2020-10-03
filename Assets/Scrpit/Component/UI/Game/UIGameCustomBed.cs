@@ -31,6 +31,7 @@ public class UIGameCustomBed : UIBaseOne, StoreInfoManager.ICallBack, IRadioGrou
     public override void Awake()
     {
         base.Awake();
+
         if (rgBedType != null)
             rgBedType.SetCallBack(this);
         if (btSubmit != null)
@@ -42,6 +43,8 @@ public class UIGameCustomBed : UIBaseOne, StoreInfoManager.ICallBack, IRadioGrou
     public override void OpenUI()
     {
         base.OpenUI();
+        if (uiGameManager.gameTimeHandler != null)
+            uiGameManager.gameTimeHandler.SetTimeStatus(false);
 
         CptUtil.RemoveChildsByActive(objItemContainer);
 

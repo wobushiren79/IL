@@ -25,6 +25,8 @@ public class UIGameBackpack : UIBaseOne
         base.OpenUI();
         StopAllCoroutines();
         StartCoroutine(CreateBackpackData());
+        if (uiGameManager.gameTimeHandler != null)
+            uiGameManager.gameTimeHandler.SetTimeStatus(false);
     }
 
     public IEnumerator CreateBackpackData()
