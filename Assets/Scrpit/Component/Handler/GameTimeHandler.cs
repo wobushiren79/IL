@@ -183,6 +183,8 @@ public class GameTimeHandler : BaseObservable<IBaseObserver>
         }
         //通知新的一天
         NotifyAllObserver((int)NotifyTypeEnum.NewDay, null);
+        //垃圾回收
+        System.GC.Collect();
     }
 
     /// <summary>

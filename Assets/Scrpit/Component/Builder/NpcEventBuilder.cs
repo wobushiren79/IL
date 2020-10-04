@@ -390,6 +390,11 @@ public class NpcEventBuilder : NpcNormalBuilder, IBaseObserver
         return listTeamMember;
     }
 
+    public override void ClearNpc()
+    {
+        base.ClearNpc();
+    }
+
     #region 时间回调通知
     public void ObserbableUpdate<T>(T observable, int type, params System.Object[] obj) where T : UnityEngine.Object
     {

@@ -14,6 +14,7 @@ public class SceneGameInnInit : BaseSceneInit, IBaseObserver, DialogView.IDialog
     protected InnHandler innHandler;
     protected NpcCustomerBuilder npcCustomerBuilder;
     protected NpcWorkerBuilder npcWorkerBuilder;
+    protected NpcEventBuilder npcEventBuilder;
 
     public override void Awake()
     {
@@ -26,6 +27,7 @@ public class SceneGameInnInit : BaseSceneInit, IBaseObserver, DialogView.IDialog
         innFurnitureBuilder = Find<InnFurnitureBuilder>(ImportantTypeEnum.InnBuilder);
         npcCustomerBuilder = Find<NpcCustomerBuilder>(ImportantTypeEnum.NpcBuilder);
         npcWorkerBuilder = Find<NpcWorkerBuilder>(ImportantTypeEnum.NpcBuilder);
+        npcEventBuilder= Find<NpcEventBuilder>(ImportantTypeEnum.NpcBuilder);
     }
 
     public override void Start()
@@ -198,6 +200,9 @@ public class SceneGameInnInit : BaseSceneInit, IBaseObserver, DialogView.IDialog
         //清楚所有NPC
         if (npcWorkerBuilder != null)
             npcWorkerBuilder.ClearAllWork();
+        //清楚所有NPC
+        if (npcEventBuilder != null)
+            npcEventBuilder.ClearNpc();
         //停止控制
         if (controlHandler != null)
             controlHandler.StopControl();

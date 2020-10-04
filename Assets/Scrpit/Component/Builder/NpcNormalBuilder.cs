@@ -109,7 +109,7 @@ public class NpcNormalBuilder : BaseMonoBehaviour
     /// <summary>
     /// 删除所有NPC
     /// </summary>
-    public void ClearNpc()
+    public virtual void ClearNpc()
     {
         CptUtil.RemoveChildsByActive(objContainer.transform);
     }

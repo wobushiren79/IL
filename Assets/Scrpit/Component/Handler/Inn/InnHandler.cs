@@ -45,6 +45,7 @@ public class InnHandler : BaseMonoBehaviour, IBaseObserver
     //NPC创建
     protected NpcWorkerBuilder workerBuilder;
     protected NpcCustomerBuilder customerBuilder;
+    protected NpcEventBuilder eventBuilder;
     //游戏数据处理
     protected GameDataHandler gameDataHandler;
 
@@ -79,6 +80,7 @@ public class InnHandler : BaseMonoBehaviour, IBaseObserver
 
         workerBuilder = Find<NpcWorkerBuilder>(ImportantTypeEnum.NpcBuilder);
         customerBuilder = Find<NpcCustomerBuilder>(ImportantTypeEnum.NpcBuilder);
+        eventBuilder = Find<NpcEventBuilder>(ImportantTypeEnum.NpcBuilder);
         iconDataManager = Find<IconDataManager>(ImportantTypeEnum.UIManager);
 
         audioHandler = Find<AudioHandler>(ImportantTypeEnum.AudioHandler);
@@ -133,9 +135,14 @@ public class InnHandler : BaseMonoBehaviour, IBaseObserver
     {
         audioHandler.StopMusic();
         innStatus = InnStatusEnum.Close;
+
         //删除所有顾客
         //驱除所有顾客
-        customerBuilder.ClearNpc();
+        if (customerBuilder != null)
+            customerBuilder.ClearNpc();
+        //清理事件NPC
+        if (eventBuilder != null)
+            eventBuilder.ClearNpc();
 
         for (int i = 0; i < listOrder.Count; i++)
         {
@@ -165,13 +172,6 @@ public class InnHandler : BaseMonoBehaviour, IBaseObserver
             {
                 itemWorker.aiForAccost.npcAICustomer.SetIntent(NpcAICustomerCpt.CustomerIntentEnum.Leave);
             }
-        }
-
-
-        //清理所有捣乱的人
-        foreach (NpcAIRascalCpt itemRascal in rascalrQueue)
-        {
-            Destroy(itemRascal.gameObject);
         }
 
         rascalrQueue.Clear();

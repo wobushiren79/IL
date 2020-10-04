@@ -27,7 +27,7 @@ public class UITownBankLoans : BaseUIChildComponent<UITownBank>
             GameObject objLoans = Instantiate(objLoansContainer, objLoansModel);
             ItemTownBankLoansCpt itemLoans = objLoans.GetComponent<ItemTownBankLoansCpt>();
 
-            UserLoansBean userLoans = new UserLoansBean(3000 * (i + 1) * 2, 0.15f + i * 0.02f, 10);
+            UserLoansBean userLoans = new UserLoansBean(2000 * (i + 1) * 2, 0.15f + i * 0.02f, 10);
             itemLoans.SetData(userLoans);
 
             objLoans.transform.DOScale(new Vector3(0, 0, 0), 0.5f).SetDelay(i * 0.1f).SetEase(Ease.OutBack).From();
