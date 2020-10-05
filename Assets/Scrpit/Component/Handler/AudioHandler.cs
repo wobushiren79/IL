@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using UnityEditor;
 using System.Collections.Generic;
+using System.Collections;
 
 public class AudioHandler : BaseHandler
 {
@@ -10,6 +11,8 @@ public class AudioHandler : BaseHandler
     protected AudioSource audioSourceForEnvironment;
     protected AudioManager audioManager;
 
+    protected int sourceNumber  = 0;
+    protected int sourceMaxNumber = 5;
     public virtual void Awake()
     {
         audioListener = Find<AudioListener>(ImportantTypeEnum.MainCamera);
@@ -93,6 +96,8 @@ public class AudioHandler : BaseHandler
     /// <param name="volumeScale">音量大小</param>
     public void PlaySound(AudioSoundEnum sound, Vector3 soundPosition, float volumeScale)
     {
+        if (sourceNumber > sourceMaxNumber)
+            return;
         AudioClip audioClip = null;
         AudioSource audioSource = audioSourceForSound;
         switch (sound)
@@ -205,9 +210,29 @@ public class AudioHandler : BaseHandler
                 break;
         }
         if (audioClip != null)
-            audioSource.PlayOneShot(audioClip, volumeScale);
+        {
+
+            StartCoroutine(CoroutineForPlayOneShot(audioSource, audioClip, volumeScale));
+            //audioSource.PlayOneShot(audioClip, volumeScale);
+        }
         // AudioSource.PlayClipAtPoint(soundClip, soundPosition,volumeScale);
     }
+
+    /// <summary>
+    /// 协程播放音效
+    /// </summary>
+    /// <param name="audioSource"></param>
+    /// <param name="audioClip"></param>
+    /// <param name="volumeScale"></param>
+    /// <returns></returns>
+    IEnumerator CoroutineForPlayOneShot(AudioSource audioSource, AudioClip audioClip, float volumeScale)
+    {
+        sourceNumber++;
+        audioSource.PlayOneShot(audioClip, volumeScale);
+        yield return new WaitForSeconds(audioClip.length);
+        sourceNumber--;
+    }
+
     public void PlaySound(AudioSoundEnum sound)
     {
         PlaySound(sound, Camera.main.transform.position, GameCommonInfo.GameConfig.soundVolume);
@@ -225,7 +250,7 @@ public class AudioHandler : BaseHandler
     /// 播放环境音乐
     /// </summary>
     /// <param name="audioEnvironment"></param>
-    public void PlayEnvironment(AudioEnvironmentEnum audioEnvironment,float volumeScale)
+    public void PlayEnvironment(AudioEnvironmentEnum audioEnvironment, float volumeScale)
     {
         AudioClip audioClip = null;
         switch (audioEnvironment)

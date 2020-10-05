@@ -98,7 +98,7 @@ LightmapSettings:
     m_TrainingDataDestination: TrainingData
     m_LightProbeSampleCountMultiplier: 4
   m_LightingDataAsset: {fileID: 0}
-  m_UseShadowmask: 1
+  m_UseShadowmask: 0
 --- !u!196 &4
 NavMeshSettings:
   serializedVersion: 2
@@ -3184,13 +3184,13 @@ Transform:
   - {fileID: 784810709}
   - {fileID: 601353565}
   - {fileID: 2078868415}
-  - {fileID: 575531870}
-  - {fileID: 2014849791}
-  - {fileID: 1563731789}
   - {fileID: 191545572}
-  - {fileID: 972924556}
-  - {fileID: 390056978}
+  - {fileID: 575531870}
+  - {fileID: 1563731789}
   - {fileID: 645598974}
+  - {fileID: 972924556}
+  - {fileID: 2014849791}
+  - {fileID: 390056978}
   - {fileID: 430304739}
   - {fileID: 217671036}
   - {fileID: 504610193}
@@ -26313,7 +26313,7 @@ PrefabInstance:
     - target: {fileID: 8676944541544902618, guid: e8a1639c982ae4c47b8706a0f3779efc,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: 8.49
       objectReference: {fileID: 0}
     - target: {fileID: 8676944541544902618, guid: e8a1639c982ae4c47b8706a0f3779efc,
         type: 3}
@@ -26360,6 +26360,16 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8676944541544902618, guid: e8a1639c982ae4c47b8706a0f3779efc,
+        type: 3}
+      propertyPath: m_LocalScale.x
+      value: 60
+      objectReference: {fileID: 0}
+    - target: {fileID: 8676944541544902618, guid: e8a1639c982ae4c47b8706a0f3779efc,
+        type: 3}
+      propertyPath: m_LocalScale.y
+      value: 50
+      objectReference: {fileID: 0}
     - target: {fileID: 8676944541544902619, guid: e8a1639c982ae4c47b8706a0f3779efc,
         type: 3}
       propertyPath: m_Color.r
@@ -26374,6 +26384,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Color.b
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8676944541544902619, guid: e8a1639c982ae4c47b8706a0f3779efc,
+        type: 3}
+      propertyPath: m_LightType
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8676944541544902619, guid: e8a1639c982ae4c47b8706a0f3779efc,
+        type: 3}
+      propertyPath: m_ShapeLightFalloffSize
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e8a1639c982ae4c47b8706a0f3779efc, type: 3}

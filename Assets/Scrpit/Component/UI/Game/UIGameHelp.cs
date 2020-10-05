@@ -11,7 +11,7 @@ public class UIGameHelp : UIGameComponent,IRadioGroupCallBack
     public GameObject objManageHelp;
     public GameObject objLevelUpHelp;
     public GameObject objFavorabilityHelp;
-
+    public GameObject objHotel;
 
     public override  void Awake()
     {
@@ -44,6 +44,7 @@ public class UIGameHelp : UIGameComponent,IRadioGroupCallBack
         objManageHelp.SetActive(false);
         objLevelUpHelp.SetActive(false);
         objFavorabilityHelp.SetActive(false);
+        objHotel.SetActive(false);
         switch (rbview.name)
         {
             case "Base":
@@ -60,6 +61,9 @@ public class UIGameHelp : UIGameComponent,IRadioGroupCallBack
                 break;
             case "Favorability":
                 objFavorabilityHelp.SetActive(true);
+                break;
+            case "Hotel":
+                objHotel.SetActive(true);
                 break;
         }
     }
