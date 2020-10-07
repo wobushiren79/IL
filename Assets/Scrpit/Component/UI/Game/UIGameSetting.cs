@@ -61,7 +61,8 @@ public class UIGameSetting : UIGameComponent, DropdownView.ICallBack, ProgressVi
             List<Dropdown.OptionData> listCheckOut = new List<Dropdown.OptionData>
             {
                 new Dropdown.OptionData("选择最近的柜台结账"),
-                new Dropdown.OptionData("选择随机的柜台结账")
+                new Dropdown.OptionData("选择随机的柜台结账"),
+                new Dropdown.OptionData("选择人少的柜台结账")
             };
             dvCheckOut.SetData(listCheckOut);
             switch (GameCommonInfo.GameConfig.statusForCheckOut)
@@ -71,6 +72,9 @@ public class UIGameSetting : UIGameComponent, DropdownView.ICallBack, ProgressVi
                     break;
                 case 1:
                     dvCheckOut.SetPosition(1);
+                    break;
+                case 2:
+                    dvCheckOut.SetPosition(2);
                     break;
             }
         }

@@ -37,8 +37,9 @@ public class InnPayHandler : BaseMonoBehaviour
     {
         BuildCounterCpt closeCounter = null;
         float minDistance = 0;
-        foreach (BuildCounterCpt itemCounter in listCounterCpt)
+        for (int i = 0; i < listCounterCpt.Count; i++)
         {
+            BuildCounterCpt itemCounter = listCounterCpt[i];
             float distance = Vector3.Distance(position, itemCounter.transform.position);
             if (minDistance == 0)
             {
@@ -52,6 +53,27 @@ public class InnPayHandler : BaseMonoBehaviour
             }
         }
         return closeCounter;
+    }
+
+    /// <summary>
+    /// 获取人少的柜台
+    /// </summary>
+    /// <param name="position"></param>
+    /// <returns></returns>
+    public BuildCounterCpt GetLessCounter()
+    {
+        BuildCounterCpt lessCounter = null;
+        int number = int.MaxValue;
+        for (int i = 0; i < listCounterCpt.Count; i++)
+        {
+            BuildCounterCpt itemCounter = listCounterCpt[i];
+            if (number > itemCounter.payQueue.Count)
+            {
+                lessCounter = itemCounter;
+                number = itemCounter.payQueue.Count;
+            }
+        }
+        return lessCounter;
     }
 
 
@@ -101,7 +123,7 @@ public class InnPayHandler : BaseMonoBehaviour
     /// </summary>
     public void CleanAllCounter()
     {
-        if (listCounterCpt==null)
+        if (listCounterCpt == null)
             return;
         for (int i = 0; i < listCounterCpt.Count; i++)
         {

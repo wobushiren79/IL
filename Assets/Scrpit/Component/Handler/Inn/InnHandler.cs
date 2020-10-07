@@ -166,13 +166,15 @@ public class InnHandler : BaseMonoBehaviour, IBaseObserver
 
         //结束所有拉人活动 
         //结束所有引路活动
-        foreach (NpcAIWorkerCpt itemWorker in workerBuilder.listNpcWorker)
+        for (int i = 0; i < workerBuilder.listNpcWorker.Count; i++)
         {
+            NpcAIWorkerCpt itemWorker = workerBuilder.listNpcWorker[i];
             if (itemWorker != null && itemWorker.aiForAccost.npcAICustomer != null)
             {
                 itemWorker.aiForAccost.npcAICustomer.SetIntent(NpcAICustomerCpt.CustomerIntentEnum.Leave);
             }
         }
+
 
         rascalrQueue.Clear();
         cusomerQueue.Clear();
@@ -225,10 +227,15 @@ public class InnHandler : BaseMonoBehaviour, IBaseObserver
             //选择最近的柜台
             counterCpt = innPayHandler.GetCloseCounter(position);
         }
-        else
+        else if (GameCommonInfo.GameConfig.statusForCheckOut == 1)
         {
             //随机选择一个柜台
             counterCpt = RandomUtil.GetRandomDataByList(innPayHandler.listCounterCpt);
+        }
+        else
+        {
+            //选择人少柜台
+            counterCpt = innPayHandler.GetLessCounter();
         }
         return counterCpt;
     }
@@ -246,8 +253,9 @@ public class InnHandler : BaseMonoBehaviour, IBaseObserver
         List<BuildDoorCpt> listDoor = innEntranceHandler.GetEntranceList();
         float dis = 0;
         BuildDoorCpt targetDoor = null;
-        foreach (BuildDoorCpt buildDoor in listDoor)
+        for (int i = 0; i < listDoor.Count; i++)
         {
+            BuildDoorCpt buildDoor = listDoor[i];
             float disTemp = Vector3.Distance(position, buildDoor.transform.position);
             if (dis == 0 || disTemp < dis)
             {
@@ -677,8 +685,9 @@ public class InnHandler : BaseMonoBehaviour, IBaseObserver
                     //搜寻最近的桌子
                     OrderForCustomer clearItem = null;
                     float distance = float.MaxValue;
-                    foreach (OrderForCustomer itemOrder in cleanQueue)
+                    for (int i = 0; i < cleanQueue.Count; i++)
                     {
+                        OrderForCustomer itemOrder = cleanQueue[i];
                         float tempDistance = Vector3.Distance(itemOrder.table.GetTablePosition(), workNpc.transform.position);
                         if (tempDistance < distance)
                         {
@@ -820,7 +829,7 @@ public class InnHandler : BaseMonoBehaviour, IBaseObserver
         return buildBedCpt;
     }
 
-   protected float timerForInnHandle = 0;
+    protected float timerForInnHandle = 0;
     /// <summary>
     /// 处理客栈营业
     /// </summary>
