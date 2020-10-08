@@ -299,6 +299,8 @@ public class EventHandler : BaseHandler,
         else
             return false;
     }
+
+
     public bool EventTriggerForStory()
     {
         if (!CheckEventTrigger())
