@@ -8,6 +8,7 @@ public class InfoFoodPopupShow : PopupShowView
     public GameObject objLevelProgress;
     public Image ivLevel;
     public Text tvLevelName;
+    public Text tvDetails;
     public ProgressView proLevel;
 
 
@@ -79,6 +80,16 @@ public class InfoFoodPopupShow : PopupShowView
         SetLevel(ownData);
         //设置研究相关
         SetResearch(ownData);
+        //设置详情
+        SetDetails(foodData.content);
+
+        GameUtil.RefreshRectViewHight((RectTransform)tvDetails.transform.parent.transform,false);
+    }
+
+    public void SetDetails(string details)
+    {
+        if (tvDetails != null)
+            tvDetails.text = details;
     }
 
     /// <summary>
