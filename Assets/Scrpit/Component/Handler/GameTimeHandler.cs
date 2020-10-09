@@ -185,6 +185,8 @@ public class GameTimeHandler : BaseObservable<IBaseObserver>
         NotifyAllObserver((int)NotifyTypeEnum.NewDay, null);
         //垃圾回收
         System.GC.Collect();
+        //资源卸载
+        Resources.UnloadUnusedAssets();
     }
 
     /// <summary>

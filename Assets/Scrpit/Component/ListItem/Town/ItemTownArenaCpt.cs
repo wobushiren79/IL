@@ -287,12 +287,11 @@ public class ItemTownArenaCpt : ItemGameBaseCpt, DialogView.IDialogCallBack
         {
             //判断时间是否过晚
             gameTimeHandler.GetTime(out float hour, out float min);
-            if (hour >= 21 && hour < 6)
+            if (hour >= 21 || hour < 6)
             {
                 toastManager.ToastHint(GameCommonInfo.GetUITextById(1031));
                 return;
             }
-
             //支付金钱
             gameDataManager.gameData.PayMoney(miniGameData.preMoneyL, miniGameData.preMoneyM, miniGameData.preMoneyS);
             //扣除时间

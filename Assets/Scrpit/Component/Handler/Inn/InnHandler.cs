@@ -175,6 +175,7 @@ public class InnHandler : BaseMonoBehaviour, IBaseObserver
             }
         }
 
+        workerBuilder.ClearAllWork();
 
         rascalrQueue.Clear();
         cusomerQueue.Clear();
@@ -185,8 +186,6 @@ public class InnHandler : BaseMonoBehaviour, IBaseObserver
 
         hotelQueue.Clear();
         bedCleanQueue.Clear();
-
-        workerBuilder.ClearAllWork();
     }
 
     /// <summary>

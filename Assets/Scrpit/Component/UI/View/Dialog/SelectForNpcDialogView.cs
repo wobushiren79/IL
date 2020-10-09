@@ -311,7 +311,7 @@ public class SelectForNpcDialogView : DialogView, IBaseObserver
         if (targetNpcAIForCustomerHotel == null)
             return;
         OrderForHotel orderForHotel = targetNpcAIForCustomerHotel.orderForHotel;
-        if (orderForHotel != null)
+        if (orderForHotel != null&& orderForHotel.customer != null)
         {
             if (orderForHotel.GetOrderStatus()  == OrderHotelStatusEnum.End
                 || orderForHotel.customer.GetCustomerHotelStatus(out string statusStr) == NpcAICustomerForHotelCpt.CustomerHotelIntentEnum.Sleep)

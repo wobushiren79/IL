@@ -85,7 +85,7 @@ public class NpcAICustomerCpt : BaseNpcAI
                 HandleForOrderFood();
                 break;
             case CustomerIntentEnum.WaitFood:
-                ChangeMood( - Time.deltaTime);
+                ChangeMood(-Time.deltaTime);
                 break;
             case CustomerIntentEnum.GotoPay:
                 if (characterMoveCpt.IsAutoMoveStop())
@@ -214,7 +214,7 @@ public class NpcAICustomerCpt : BaseNpcAI
         //删除进度图标
         RemoveStatusIconByType(CharacterStatusIconEnum.Pro);
         //停止所有进程
-        if(this)
+        if (this)
             StopAllCoroutines();
         this.customerIntent = intent;
         switch (customerIntent)
@@ -463,7 +463,7 @@ public class NpcAICustomerCpt : BaseNpcAI
             EndOrderAndLeave();
         }
     }
-    
+
     /// <summary>
     /// 结束订单并且离开
     /// </summary>
@@ -484,8 +484,8 @@ public class NpcAICustomerCpt : BaseNpcAI
     public IEnumerator CoroutineForStartEat()
     {
         //添加吃饭图标
-        string eatIconMarkId= SystemUtil.GetUUID( SystemUtil.UUIDTypeEnum.N);
-        Sprite spEatIcon= iconDataManager.GetIconSpriteByName("customer_eat_pro_0");
+        string eatIconMarkId = SystemUtil.GetUUID(SystemUtil.UUIDTypeEnum.N);
+        Sprite spEatIcon = iconDataManager.GetIconSpriteByName("customer_eat_pro_0");
         AddStatusIconForPro(spEatIcon, eatIconAnim, eatIconMarkId);
         //播放吃饭动画
         characterMoveCpt.characterAnimtor.SetTrigger("Eat");
@@ -493,17 +493,20 @@ public class NpcAICustomerCpt : BaseNpcAI
         audioHandler.PlaySound(AudioSoundEnum.Eat);
         float eatTime = Random.Range(3f, 7f);
         yield return new WaitForSeconds(eatTime);
-        //吃完食物
-        orderForCustomer.foodCpt.FinishFood(orderForCustomer.foodData);
-        //设置桌子为待清理
-        if (orderForCustomer.table != null)
+        if (isActiveAndEnabled)
         {
-            orderForCustomer.table.SetTableStatus(BuildTableCpt.TableStatusEnum.WaitClean);
-            //清理列队增加
-            innHandler.cleanQueue.Add(orderForCustomer);
+            //吃完食物
+            orderForCustomer.foodCpt.FinishFood(orderForCustomer.foodData);
+            //设置桌子为待清理
+            if (orderForCustomer.table != null)
+            {
+                orderForCustomer.table.SetTableStatus(BuildTableCpt.TableStatusEnum.WaitClean);
+                //清理列队增加
+                innHandler.cleanQueue.Add(orderForCustomer);
+            }
+            //去结账
+            SetIntent(CustomerIntentEnum.GotoPay);
         }
-        //去结账
-        SetIntent(CustomerIntentEnum.GotoPay);
     }
 
     /// <summary>
@@ -514,7 +517,7 @@ public class NpcAICustomerCpt : BaseNpcAI
     {
         AddWaitIcon();
         yield return new WaitForSeconds(timeWaitSeat);
-        innHandler.EndOrderForForce(orderForCustomer,false);
+        innHandler.EndOrderForForce(orderForCustomer, false);
         SetIntent(CustomerIntentEnum.Leave);
     }
 
