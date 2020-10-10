@@ -72,6 +72,15 @@ public class InnPayHandler : BaseMonoBehaviour
                 lessCounter = itemCounter;
                 number = itemCounter.payQueue.Count;
             }
+            else if (number == itemCounter.payQueue.Count)
+            {
+                int randomTemp= Random.Range(0, 2);
+                if (randomTemp == 0)
+                {
+                    lessCounter = itemCounter;
+                    number = itemCounter.payQueue.Count;
+                }
+            }
         }
         return lessCounter;
     }
