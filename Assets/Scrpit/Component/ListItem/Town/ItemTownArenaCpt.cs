@@ -289,7 +289,7 @@ public class ItemTownArenaCpt : ItemGameBaseCpt, DialogView.IDialogCallBack
             gameTimeHandler.GetTime(out float hour, out float min);
             if (hour >= 21 || hour < 6)
             {
-                toastManager.ToastHint(GameCommonInfo.GetUITextById(1031));
+                toastManager.ToastHint(GameCommonInfo.GetUITextById(1034));
                 return;
             }
             //支付金钱

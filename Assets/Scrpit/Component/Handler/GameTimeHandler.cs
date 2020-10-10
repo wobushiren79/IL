@@ -123,6 +123,10 @@ public class GameTimeHandler : BaseObservable<IBaseObserver>
         {
             SetTimeStatus(true);
             SetTimeScale(1);
+            //垃圾回收
+            System.GC.Collect();
+            //资源卸载
+            Resources.UnloadUnusedAssets();
             //TODO 一天时间结束处理
             NotifyAllObserver((int)NotifyTypeEnum.EndDay, null);
         }

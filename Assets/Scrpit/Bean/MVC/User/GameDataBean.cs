@@ -976,6 +976,9 @@ public class GameDataBean
             moneyM = 0;
         if (moneyS < 0)
             moneyS = 0;
+        userAchievement.payMoneyL += moneyL;
+        userAchievement.payMoneyM += moneyM;
+        userAchievement.payMoneyS += moneyS;
     }
 
     /// <summary>

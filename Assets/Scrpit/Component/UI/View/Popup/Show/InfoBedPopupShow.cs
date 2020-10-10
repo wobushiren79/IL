@@ -127,7 +127,7 @@ public class InfoBedPopupShow : PopupShowView
     public void AddItemForSellTime(long time)
     {
         Sprite spIcon = iconDataManager.GetIconSpriteByName("time_wait_1_0");
-        CreateItem(objItemStatisticsContainer, spIcon, Color.white, GameCommonInfo.GetUITextById(352), time + "/h");
+        CreateItem(objItemStatisticsContainer, spIcon, Color.white, GameCommonInfo.GetUITextById(352), time + " h");
     }
 
     /// <summary>

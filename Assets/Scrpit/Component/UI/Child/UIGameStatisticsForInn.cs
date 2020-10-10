@@ -31,6 +31,12 @@ public class UIGameStatisticsForInn : UIGameStatisticsDetailsBase<UIGameStatisti
         AddItemForOwnMoney(MoneyEnum.L, userAchievement.ownMoneyL);
         AddItemForOwnMoney(MoneyEnum.M, userAchievement.ownMoneyM);
         AddItemForOwnMoney(MoneyEnum.S, userAchievement.ownMoneyS);
+
+        //金钱
+        AddItemForPayMoney(MoneyEnum.L, userAchievement.payMoneyL);
+        AddItemForPayMoney(MoneyEnum.M, userAchievement.payMoneyM);
+        AddItemForPayMoney(MoneyEnum.S, userAchievement.payMoneyS);
+
         //公会勋章
         AddItemForGuildCoin(userAchievement.ownGuildCoin);
         //奖杯
@@ -127,6 +133,35 @@ public class UIGameStatisticsForInn : UIGameStatisticsDetailsBase<UIGameStatisti
         Sprite spIcon = iconDataManager.GetIconSpriteByName(iconKey);
         CreateTextItem(spIcon, contentStr, money + "");
         //CreateMoneyItem(spIconL, GameCommonInfo.GetUITextById(305), moneyL, moneyM, moneyS);
+    }
+
+    /// <summary>
+    /// 总记支出
+    /// </summary>
+    /// <param name="moneyL"></param>
+    /// <param name="moneyM"></param>
+    /// <param name="moneyS"></param>
+    public void AddItemForPayMoney(MoneyEnum moneyType, long money)
+    {
+        string iconKey = "";
+        string contentStr = "";
+        switch (moneyType)
+        {
+            case MoneyEnum.L:
+                iconKey = "money_3";
+                contentStr = GameCommonInfo.GetUITextById(363);
+                break;
+            case MoneyEnum.M:
+                iconKey = "money_2";
+                contentStr = GameCommonInfo.GetUITextById(362);
+                break;
+            case MoneyEnum.S:
+                iconKey = "money_1";
+                contentStr = GameCommonInfo.GetUITextById(361);
+                break;
+        }
+        Sprite spIcon = iconDataManager.GetIconSpriteByName(iconKey);
+        CreateTextItem(spIcon, contentStr,Color.red, money + "");
     }
 
     /// <summary>
