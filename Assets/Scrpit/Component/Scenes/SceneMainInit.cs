@@ -11,4 +11,5 @@ public class SceneMainInit : BaseSceneInit
             gameItemsManager.itemsInfoController.GetAllItemsInfo();
         audioHandler.PlayMusicForLoop( AudioMusicEnum.Main);
     }
+
 }
