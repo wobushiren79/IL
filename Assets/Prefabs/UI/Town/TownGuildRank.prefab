@@ -2217,6 +2217,7 @@ MonoBehaviour:
         listLearnBook: 
       body:
         sex: 1
+        skin: 
         skinColor:
           r: 1
           g: 1
@@ -2329,6 +2330,9 @@ MonoBehaviour:
       ownMoneyL: 0
       ownMoneyM: 0
       ownMoneyS: 0
+      payMoneyL: 0
+      payMoneyM: 0
+      payMoneyS: 0
       ownTrophyElementary: 0
       ownTrophyIntermediate: 0
       ownTrophyAdvanced: 0
@@ -4683,12 +4687,12 @@ PrefabInstance:
     - target: {fileID: 916820978565189646, guid: 1ef4f485c0e01a14d95abf683ec5b6eb,
         type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 0
+      value: 540
       objectReference: {fileID: 0}
     - target: {fileID: 916820978565189646, guid: 1ef4f485c0e01a14d95abf683ec5b6eb,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 0
+      value: -34
       objectReference: {fileID: 0}
     - target: {fileID: 916820978565189646, guid: 1ef4f485c0e01a14d95abf683ec5b6eb,
         type: 3}
@@ -4698,7 +4702,7 @@ PrefabInstance:
     - target: {fileID: 916820978565189646, guid: 1ef4f485c0e01a14d95abf683ec5b6eb,
         type: 3}
       propertyPath: m_SizeDelta.y
-      value: 0
+      value: 66
       objectReference: {fileID: 0}
     - target: {fileID: 916820978565189646, guid: 1ef4f485c0e01a14d95abf683ec5b6eb,
         type: 3}
@@ -4708,7 +4712,7 @@ PrefabInstance:
     - target: {fileID: 916820978565189646, guid: 1ef4f485c0e01a14d95abf683ec5b6eb,
         type: 3}
       propertyPath: m_AnchorMin.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 916820978565189646, guid: 1ef4f485c0e01a14d95abf683ec5b6eb,
         type: 3}
@@ -4718,7 +4722,7 @@ PrefabInstance:
     - target: {fileID: 916820978565189646, guid: 1ef4f485c0e01a14d95abf683ec5b6eb,
         type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 916820978565189646, guid: 1ef4f485c0e01a14d95abf683ec5b6eb,
         type: 3}
@@ -4734,6 +4738,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: GetMoneyS
+      objectReference: {fileID: 0}
+    - target: {fileID: 3513790878412767274, guid: 1ef4f485c0e01a14d95abf683ec5b6eb,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8645811489115309220, guid: 1ef4f485c0e01a14d95abf683ec5b6eb,
         type: 3}

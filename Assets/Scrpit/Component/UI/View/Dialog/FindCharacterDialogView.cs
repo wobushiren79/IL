@@ -15,6 +15,8 @@ public class FindCharacterDialogView : DialogView
     public Sprite spSexMan;
     public Sprite spSexWoman;
     public InfoAbilityPopupButton infoAbilityPopupButton;
+    public Button btContinue;
+
 
     public CharacterBean characterData;
 
@@ -28,6 +30,7 @@ public class FindCharacterDialogView : DialogView
     {
         base.Start();
         StartAnim();
+        btContinue.onClick.AddListener(OnClickForContinue);
     }
 
     /// <summary>
@@ -37,14 +40,17 @@ public class FindCharacterDialogView : DialogView
     {
         btSubmit.gameObject.SetActive(false);
         btCancel.gameObject.SetActive(false);
+        btContinue.gameObject.SetActive(false);
         if (objContent != null)
         {
-            objContent.transform.DOScale(new Vector3(0, 0, 0), 1).From().SetEase(Ease.OutBack).OnComplete(delegate ()
+            objContent.transform.DOScale(new Vector3(0, 0, 0), 0.5f).From().SetEase(Ease.OutBack).OnComplete(delegate ()
             {
                 btSubmit.gameObject.SetActive(true);
                 btCancel.gameObject.SetActive(true);
+                btContinue.gameObject.SetActive(true);
                 btSubmit.transform.DOScale(new Vector3(0, 0, 0), 0.2f).From().SetEase(Ease.OutBack);
                 btCancel.transform.DOScale(new Vector3(0, 0, 0), 0.2f).From().SetEase(Ease.OutBack);
+                btContinue.transform.DOScale(new Vector3(0, 0, 0), 0.2f).From().SetEase(Ease.OutBack);
                 objContent.transform.DOScale(new Vector3(0.9f, 0.9f, 0.9f), 5).SetLoops(-1, LoopType.Yoyo);
             });
         }
@@ -161,5 +167,14 @@ public class FindCharacterDialogView : DialogView
                 priceStr += price_s + GameCommonInfo.GetUITextById(18);
             tvPrice.text = priceStr;
         }
+    }
+
+    /// <summary>
+    /// 继续点击
+    /// </summary>
+    public void OnClickForContinue()
+    {
+        dialogData.remark = "Continue";
+        base.SubmitOnClick();
     }
 }

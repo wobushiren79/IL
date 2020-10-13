@@ -122,6 +122,9 @@ public class UITownRecruitment : UIBaseOne, DialogView.IDialogCallBack
             uiGameManager.toastManager.ToastHint(GameCommonInfo.GetUITextById(1051));
             return;
         }
+        pickMoneyL = 0;
+        pickMoneyM = 0;
+        pickMoneyS = 0;
         DialogBean dialogData = new DialogBean();
         dialogData.title = GameCommonInfo.GetUITextById(3062);
         PickForMoneyDialogView pickForMoneyDialog = (PickForMoneyDialogView)uiGameManager.dialogManager.CreateDialog(DialogEnum.PickForMoney, this, dialogData);
@@ -129,6 +132,9 @@ public class UITownRecruitment : UIBaseOne, DialogView.IDialogCallBack
         pickForMoneyDialog.SetMaxMoney(99999,99999,99999);
     }
 
+    protected int pickMoneyL = 0;
+    protected int pickMoneyM = 0;
+    protected int pickMoneyS = 0;
     #region 弹窗回调
     public override void Submit(DialogView dialogView, DialogBean dialogBean)
     {
@@ -137,39 +143,51 @@ public class UITownRecruitment : UIBaseOne, DialogView.IDialogCallBack
         {
             //如果是金钱选择回调
             PickForMoneyDialogView pickForMoneyDialog = dialogView as PickForMoneyDialogView;
-            pickForMoneyDialog.GetPickMoney(out int moneyL, out int moneyM, out int moneyS);
-            if (!uiGameManager.gameDataManager.gameData.HasEnoughMoney(moneyL, moneyM, moneyS))
-            {
-                uiGameManager.toastManager.ToastHint(GameCommonInfo.GetUITextById(1005));
-                return;
-            }
-            uiGameManager.gameDataManager.gameData.PayMoney(moneyL, moneyM, moneyS);
-  
-            DialogManager dialogManager = uiGameManager.dialogManager;
-            CharacterBodyManager characterBodyManager = uiGameManager.characterBodyManager;
-    
-            DialogBean dialogData = new DialogBean();
-            //根据金额获取角色
-            CharacterBean characterData = CharacterBean.CreateRandomWorkerDataByPrice(characterBodyManager, moneyL, moneyM, moneyS);
-            FindCharacterDialogView findCharacterDialog = (FindCharacterDialogView)dialogManager.CreateDialog(DialogEnum.FindCharacter, this, dialogData);
-            findCharacterDialog.SetData(characterData);
-
-            uiGameManager.audioHandler.PlaySound(AudioSoundEnum.Reward);
+            pickForMoneyDialog.GetPickMoney(out pickMoneyL, out pickMoneyM, out pickMoneyS);
+            ShowPickCharacter();
         }
         else if (dialogView as FindCharacterDialogView)
         {
-            //如果是招募回调
-            GameDataManager gameDataManager = GetUIManager<UIGameManager>().gameDataManager;
-            ToastManager toastManager = GetUIManager<UIGameManager>().toastManager;
-            FindCharacterDialogView findCharacterDialog = (FindCharacterDialogView)dialogView;
-            gameDataManager.gameData.listWorkerCharacter.Add(findCharacterDialog.characterData);
-            toastManager.ToastHint(string.Format(GameCommonInfo.GetUITextById(1053), findCharacterDialog.characterData.baseInfo.name));
+            if (!CheckUtil.StringIsNull(dialogBean.remark)&& dialogBean.remark.Equals("Continue"))
+            {
+                ShowPickCharacter();
+            }
+            else
+            {
+                //如果是招募回调
+                GameDataManager gameDataManager = GetUIManager<UIGameManager>().gameDataManager;
+                ToastManager toastManager = GetUIManager<UIGameManager>().toastManager;
+                FindCharacterDialogView findCharacterDialog = (FindCharacterDialogView)dialogView;
+                gameDataManager.gameData.listWorkerCharacter.Add(findCharacterDialog.characterData);
+                toastManager.ToastHint(string.Format(GameCommonInfo.GetUITextById(1053), findCharacterDialog.characterData.baseInfo.name));
+            }
         }
     }
+
 
     public override void Cancel(DialogView dialogView, DialogBean dialogBean)
     {
         base.Cancel(dialogView, dialogBean);
     }
     #endregion
+
+    protected void ShowPickCharacter()
+    {
+        if (!uiGameManager.gameDataManager.gameData.HasEnoughMoney(pickMoneyL, pickMoneyM, pickMoneyS))
+        {
+            uiGameManager.toastManager.ToastHint(GameCommonInfo.GetUITextById(1005));
+            return;
+        }
+        uiGameManager.gameDataManager.gameData.PayMoney(pickMoneyL, pickMoneyM, pickMoneyS);
+
+        DialogManager dialogManager = uiGameManager.dialogManager;
+        CharacterBodyManager characterBodyManager = uiGameManager.characterBodyManager;
+
+        DialogBean dialogData = new DialogBean();
+        //根据金额获取角色
+        CharacterBean characterData = CharacterBean.CreateRandomWorkerDataByPrice(characterBodyManager, pickMoneyL, pickMoneyM, pickMoneyS);
+        FindCharacterDialogView findCharacterDialog = (FindCharacterDialogView)dialogManager.CreateDialog(DialogEnum.FindCharacter, this, dialogData);
+        findCharacterDialog.SetData(characterData);
+        uiGameManager.audioHandler.PlaySound(AudioSoundEnum.Reward);
+    }
 }

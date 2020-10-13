@@ -308,6 +308,7 @@ public class ItemGameWorkerCpt : ItemGameBaseCpt, DialogView.IDialogCallBack, Wo
         // dialogData.content = string.Format(GameCommonInfo.GetUITextById(3063), characterData.baseInfo.name);
         PickForItemsDialogView dialogView = (PickForItemsDialogView)dialogManager.CreateDialog(DialogEnum.PickForItems, this, dialogData);
         dialogView.SetData(null, PopupItemsSelection.SelectionTypeEnum.Gift);
+        dialogView.SetSubmitDestroy(false);
     }
 
     /// <summary>
@@ -531,6 +532,7 @@ public class ItemGameWorkerCpt : ItemGameBaseCpt, DialogView.IDialogCallBack, Wo
             SetData(characterData);
             //提示
             toastManager.ToastHint(ivLoyal.sprite, string.Format(GameCommonInfo.GetUITextById(1132), characterData.baseInfo.name, addLoyal + ""));
+            pickForItems.RefreshUI();
         }
         else
         {

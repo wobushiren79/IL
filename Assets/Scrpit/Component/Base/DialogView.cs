@@ -25,6 +25,8 @@ public class DialogView : BaseMonoBehaviour
     protected AudioHandler audioHandler;
     protected DialogManager dialogManager;
 
+    protected bool isSubmitDestroy = true;
+
     public virtual void Awake()
     {
         audioHandler = Find<AudioHandler>(ImportantTypeEnum.AudioHandler);
@@ -68,6 +70,12 @@ public class DialogView : BaseMonoBehaviour
         }
     }
 
+
+    public void SetSubmitDestroy(bool isSubmitDestroy)
+    {
+        this.isSubmitDestroy = isSubmitDestroy;
+    }
+
     public virtual void SubmitOnClick()
     {
         if (audioHandler != null)
@@ -76,7 +84,10 @@ public class DialogView : BaseMonoBehaviour
         {
             mCallBack.Submit(this, dialogData);
         }
-        DestroyDialog();
+        if (isSubmitDestroy)
+        {
+            DestroyDialog();
+        }
     }
     public virtual void CancelOnClick()
     {

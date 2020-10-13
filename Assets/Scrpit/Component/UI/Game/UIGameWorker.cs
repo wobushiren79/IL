@@ -15,6 +15,7 @@ public class UIGameWorker : UIGameComponent
 
     public Button btSortDef;
     public Button btSortLevelUp;
+    public Button btSortLoyalty;
 
     public Button btFilterChef;
     public Button btFilterWaiter;
@@ -39,6 +40,8 @@ public class UIGameWorker : UIGameComponent
             btSortDef.onClick.AddListener(OnClickForSortDef);
         if (btSortLevelUp != null)
             btSortLevelUp.onClick.AddListener(OnClickForSortLevelUp);
+        if (btSortLoyalty != null)
+            btSortLoyalty.onClick.AddListener(OnClickForSortLoyalty);
 
         if (btFilterChef != null)
             btFilterChef.onClick.AddListener(OnClickForChef);
@@ -153,6 +156,20 @@ public class UIGameWorker : UIGameComponent
                     }
                 }
                 return levelupNumber;
+            }).ToList();
+        InitData();
+    }
+
+    /// <summary>
+    /// 忠诚排序点击
+    /// </summary>
+    public void OnClickForSortLoyalty()
+    {
+        uiGameManager.audioHandler.PlaySound(AudioSoundEnum.ButtonForNormal);
+        this.listCharacterData = this.listCharacterData.OrderBy(
+            (data) =>
+            {
+                return data.attributes.loyal;
             }).ToList();
         InitData();
     }

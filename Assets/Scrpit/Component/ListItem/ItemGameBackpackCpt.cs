@@ -58,6 +58,10 @@ public class ItemGameBackpackCpt : ItemGameBaseCpt, IPointerClickHandler, PopupI
         {
             SetNumber(itemBean.itemNumber);
         }
+        else
+        {
+            SetNumber(0);
+        }
         infoItemsPopup.SetData(itemsInfoBean, ivIcon.sprite);
     }
 
