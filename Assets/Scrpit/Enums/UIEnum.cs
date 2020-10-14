@@ -19,9 +19,9 @@ public enum UIEnum
     GameAttendance = 1010,
     GameText = 1011,
     GameFavorability = 1012,//人物好感UI
-    GameStatistics=1013,//统计UI
+    GameStatistics = 1013,//统计UI
     GameSetting = 1014,
-    GameHelp=1015,
+    GameHelp = 1015,
     GameHotel = 1016,
 
     TownMarket = 2001,//市场UI
@@ -35,10 +35,10 @@ public enum UIEnum
     TownBank = 2009,//银行UI
     TownArena = 2010,//竞技场UI
     TownArenaStore = 2011,//竞技场商店UI
-    TownPharmacy=2012,//药房
-    TownGuildRank=2013,//公会排行
-    TownArenaRank=2014,//竞技场排行
-    TownBeautySalon=2015,//美颜庄
+    TownPharmacy = 2012,//药房
+    TownGuildRank = 2013,//公会排行
+    TownArenaRank = 2014,//竞技场排行
+    TownBeautySalon = 2015,//美颜庄
 
 
     MiniGameEnd = 3001,
@@ -55,4 +55,7 @@ public enum UIEnum
     GambleTrickySize = 4002,//赌博 猜大小
 
     GameCustomBed = 5001,//自定义床UI
+
+
+    MountainInfiniteTowersRank = 6001,//无尽之塔排名
 }

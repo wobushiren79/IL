@@ -117,6 +117,10 @@ public class ItemTownGuildRankCpt : ItemGameBaseCpt, IWebRequestCallBack<SteamWe
                 dataStr = score + "";
                 spData = iconDataManager.GetIconSpriteByName("trophy_1_3");
                 break;
+            case RankTypeEnum.MaxLayer:
+                dataStr = score + "";
+                spData = iconDataManager.GetIconSpriteByName("infinitetowers_1");
+                break;
         }
         if (tvData != null)
         {

@@ -25,6 +25,8 @@ public enum RankTypeEnum
     NumberForGetIntermediate = 62,//中级
     NumberForGetAdvanced = 63,//高级
     NumberForGetLegendary = 64,//传奇
+
+    MaxLayer = 101,//最高层数
 }
 
 public class RankTypeEnumTool
@@ -72,6 +74,9 @@ public class RankTypeEnumTool
                 return "Number_GetAdvanced";
             case RankTypeEnum.NumberForGetLegendary:
                 return "Number_GetLegendary";
+
+            case RankTypeEnum.MaxLayer:
+                return "Max_Layer";
         }
         return "";
     }

@@ -73,6 +73,9 @@ public class UserAchievementBean
     public long maxDayCompleteOrder;
     //单日住宿最高完成订单
     public long maxDayCompleteOrderForHotel;
+
+    //最高到达攀龙塔层数
+    public long maxInfiniteTowersLayer;
     /// <summary>
     /// 设置每日最大赚取金钱
     /// </summary>
