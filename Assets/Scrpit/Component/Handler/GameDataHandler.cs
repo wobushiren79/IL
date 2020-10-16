@@ -3,7 +3,7 @@ using UnityEditor;
 using System.Collections;
 using System.Collections.Generic;
 
-public class GameDataHandler : BaseHandler, DialogView.IDialogCallBack,IBaseObserver
+public class GameDataHandler : BaseHandler, DialogView.IDialogCallBack, IBaseObserver
 {
 
     public enum NotifyTypeEnum
@@ -31,7 +31,7 @@ public class GameDataHandler : BaseHandler, DialogView.IDialogCallBack,IBaseObse
         audioHandler = Find<AudioHandler>(ImportantTypeEnum.AudioHandler);
         innFoodManager = Find<InnFoodManager>(ImportantTypeEnum.FoodManager);
         dialogManager = Find<DialogManager>(ImportantTypeEnum.DialogManager);
-        
+
     }
 
     private void Start()
@@ -62,7 +62,10 @@ public class GameDataHandler : BaseHandler, DialogView.IDialogCallBack,IBaseObse
         while (true)
         {
             yield return new WaitForSeconds(1);
-            HandleForResearch();
+            if (!gameTimeHandler.isStopTime)
+            {
+                HandleForResearch();
+            }
         }
     }
 
@@ -216,7 +219,7 @@ public class GameDataHandler : BaseHandler, DialogView.IDialogCallBack,IBaseObse
     #region 通知回调
     public void ObserbableUpdate<T>(T observable, int type, params object[] obj) where T : Object
     {
-        if(observable == gameTimeHandler)
+        if (observable == gameTimeHandler)
         {
             if (type == (int)GameTimeHandler.NotifyTypeEnum.NewDay)
             {

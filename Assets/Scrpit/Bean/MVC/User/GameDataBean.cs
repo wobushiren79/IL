@@ -36,6 +36,8 @@ public class GameDataBean
     public List<CharacterFavorabilityBean> listCharacterFavorability = new List<CharacterFavorabilityBean>();//角色好感度
     public List<long> listTriggeredEvent = new List<long>();//触发过的事件
     public List<UserLoansBean> listLoans = new List<UserLoansBean>();//贷款
+    public List<UserInfiniteTowersBean> listInfinteTowers = new List<UserInfiniteTowersBean>();
+
 
     public long ingOilsalt;//油盐
     public long ingMeat;//肉类
@@ -48,6 +50,17 @@ public class GameDataBean
 
     public int workerNumberLimit = 2;//员工人员招聘上限
     public int loansNumberLimit = 3;//贷款上限
+
+    /// <summary>
+    /// 增加无尽之塔数据
+    /// </summary>
+    /// <param name="infiniteTowersData"></param>
+    public void AddInfinteTowersData(UserInfiniteTowersBean infiniteTowersData)
+    {
+        listInfinteTowers.Add(infiniteTowersData);
+    }
+
+
 
     /// <summary>
     /// 增加一个床
@@ -356,6 +369,24 @@ public class GameDataBean
         if (listWorkerCharacter != null)
             listData.AddRange(listWorkerCharacter);
         return listData;
+    }
+
+    /// <summary>
+    /// 通过ID获取员工信息
+    /// </summary>
+    /// <returns></returns>
+    public  CharacterBean GetCharacterDataById(string characterId) 
+    {
+        List<CharacterBean> listData = GetAllCharacterData();
+        for (int i=0;i< listData.Count;i++)
+        {
+            CharacterBean itemCharacter= listData[i];
+            if (itemCharacter.baseInfo.characterId.Equals(characterId))
+            {
+                return itemCharacter;
+            }
+        }
+        return null;
     }
 
     /// <summary>
@@ -1067,5 +1098,15 @@ public class GameDataBean
     public bool RemoveBed(BuildBedBean buildBedData)
     {
         return listBed.Remove(buildBedData);
+    }
+
+    /// <summary>
+    /// 移除无尽之塔数据
+    /// </summary>
+    /// <param name="infiniteTowersData"></param>
+    /// <returns></returns>
+    public bool RemoveInfiniteTowersData(UserInfiniteTowersBean infiniteTowersData)
+    {
+        return listInfinteTowers.Remove(infiniteTowersData);
     }
 }

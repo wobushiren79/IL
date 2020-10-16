@@ -6,7 +6,7 @@ public enum WorkerStatusEnum
     Rest = 0,//休息
     Work = 1,//工作
     Vacation = 2,//休假
-    Research =3,//研究中
-
-    Other=99,
+    Research = 3,//研究中
+    InfiniteTowers = 4,//爬塔中
+    Other = 99,
 }

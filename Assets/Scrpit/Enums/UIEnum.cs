@@ -58,4 +58,5 @@ public enum UIEnum
 
 
     MountainInfiniteTowersRank = 6001,//无尽之塔排名
+    MountainInfiniteTowers= 6002,
 }

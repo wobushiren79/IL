@@ -22,11 +22,19 @@ public class SceneGameMountainInit : BaseNormalSceneInit
 
     public override ControlForMoveCpt InitUserPosition()
     {
-        ControlForMoveCpt controlForMove = base.InitUserPosition();
-        //位置控制
-        Vector3 exitPosition = sceneMountainManager.GetExitDoor();
-        controlForMove.SetPosition(exitPosition);
-        return controlForMove;
-    }
+        ControlForMoveCpt moveControl = base.InitUserPosition();
 
+        //位置控制
+        switch (GameCommonInfo.ScenesChangeData.beforeScene)
+        {
+            case ScenesEnum.GameTownScene:
+                moveControl.SetPosition(sceneMountainManager.GetExitDoor());
+                break;
+            case ScenesEnum.GameInfiniteTowers:
+                Vector3 doorPosition = sceneMountainManager.GetInfiniteTowersStairs();
+                moveControl.SetPosition(doorPosition);
+                break;
+        }
+        return moveControl;
+    }
 }

@@ -22,8 +22,7 @@ public class InteractiveSceneChangeCpt : BaseInteractiveCpt
         if (Input.GetButtonDown(InputInfo.Interactive_E))
         {
             if(changeScene== ScenesEnum.GameSquareScene
-                || changeScene == ScenesEnum.GameForestScene
-                || changeScene == ScenesEnum.GameMountainScene)
+                || changeScene == ScenesEnum.GameForestScene)
             {
                 toastManager.ToastHint("您被不可思议的力量阻挡了去路（暂未开放）");
             }

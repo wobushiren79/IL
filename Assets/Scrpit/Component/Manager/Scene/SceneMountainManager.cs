@@ -10,6 +10,8 @@ public class SceneMountainManager : BaseMonoBehaviour
     public Transform infiniteTowersOutDoor;
     public Transform infiniteTowersInDoor;
     public Transform infiniteTowersInside;
+    public Transform infiniteTowersStairs;
+
 
     /// <summary>
     /// 获取出口位置
@@ -37,5 +39,14 @@ public class SceneMountainManager : BaseMonoBehaviour
                 inDoorPosition = infiniteTowersInDoor.transform.position;
                 break;
         }
+    }
+
+    /// <summary>
+    /// 获取无尽之塔楼梯
+    /// </summary>
+    /// <returns></returns>
+    public Vector3 GetInfiniteTowersStairs()
+    {
+        return infiniteTowersStairs.position;
     }
 }
