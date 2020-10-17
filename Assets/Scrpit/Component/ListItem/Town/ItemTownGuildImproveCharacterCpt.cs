@@ -21,6 +21,7 @@ public class ItemTownGuildImproveCharacterCpt : ItemGameBaseCpt, DialogView.IDia
     public Text tvTime;
 
     public Button btSubmit;
+    public Button btSend;
 
     [Header("数据")]
     public Sprite spWorkerChef;
@@ -52,7 +53,10 @@ public class ItemTownGuildImproveCharacterCpt : ItemGameBaseCpt, DialogView.IDia
     protected GameTimeHandler gameTimeHandler;
     protected DialogManager dialogManager;
     protected ToastManager toastManager;
+    protected IconDataManager iconDataManager;
+    protected InnBuildManager innBuildManager;
     protected ControlHandler controlHandler;
+    protected AudioHandler audioHandler;
     protected CharacterBodyManager characterBodyManager;
 
     private void Awake()
@@ -67,12 +71,18 @@ public class ItemTownGuildImproveCharacterCpt : ItemGameBaseCpt, DialogView.IDia
         controlHandler = uiGameManager.controlHandler;
         characterBodyManager = uiGameManager.characterBodyManager;
         gameDataHandler = uiGameManager.gameDataHandler;
+        iconDataManager = uiGameManager.iconDataManager;
+        innBuildManager = uiGameManager.innBuildManager;
+        audioHandler = uiGameManager.audioHandler;
+
     }
 
     private void Start()
     {
         if (btSubmit != null)
-            btSubmit.onClick.AddListener(ImproveCheck);
+            btSubmit.onClick.AddListener(OnClickForImprove);
+        if (btSend != null)
+            btSend.onClick.AddListener(OnClickForSend);
     }
 
     /// <summary>
@@ -258,7 +268,23 @@ public class ItemTownGuildImproveCharacterCpt : ItemGameBaseCpt, DialogView.IDia
     /// <summary>
     /// 晋升确认
     /// </summary>
-    public void ImproveCheck()
+    public void  OnClickForImprove()
+    {
+        ImproveCheck(0);
+    }
+
+    /// <summary>
+    /// 派遣晋升
+    /// </summary>
+    public void OnClickForSend()
+    {
+        ImproveCheck(1);
+    }
+
+    /// <summary>
+    /// 晋升确认
+    /// </summary>
+    protected void ImproveCheck(int type)
     {
         uiGameManager.audioHandler.PlaySound(AudioSoundEnum.ButtonForNormal);
         //判断是否有足够的金钱
@@ -269,15 +295,24 @@ public class ItemTownGuildImproveCharacterCpt : ItemGameBaseCpt, DialogView.IDia
         }
         //判断时间是否过晚
         gameTimeHandler.GetTime(out float hour, out float min);
-        if (hour >= 18 && hour < 6)
+        if (hour >= 18 || hour < 6)
         {
             toastManager.ToastHint(GameCommonInfo.GetUITextById(1031));
             return;
         }
 
         DialogBean dialogData = new DialogBean();
-        string contentStr = string.Format(GameCommonInfo.GetUITextById(3008), tvTime.text, tvName.text, tvLowLevelName.text, tvHighLevelName.text);
+        string contentStr = "???";
+        if (type == 0)
+        {
+             contentStr = string.Format(GameCommonInfo.GetUITextById(3008), tvTime.text, tvName.text, tvLowLevelName.text, tvHighLevelName.text);
+        }
+        else if (type == 1)
+        {
+             contentStr = string.Format(GameCommonInfo.GetUITextById(3015), tvTime.text, tvName.text, tvLowLevelName.text, tvHighLevelName.text);
+        }
         dialogData.content = contentStr;
+        dialogData.dialogPosition = type;
         dialogManager.CreateDialog(DialogEnum.Normal, this, dialogData);
     }
 
@@ -287,9 +322,10 @@ public class ItemTownGuildImproveCharacterCpt : ItemGameBaseCpt, DialogView.IDia
         //支付金钱
         gameDataManager.gameData.PayMoney(levelData.price_l, levelData.price_m, levelData.price_s);
         //扣除时间
-        gameDataManager.gameData.gameTime.hour += int.Parse(levelData.mark);
+        int preGameTime = int.Parse(levelData.mark);
+        gameDataManager.gameData.gameTime.hour += preGameTime;
         //如果有研究菜谱 菜谱增加经验
-        gameDataHandler.AddResearch(int.Parse(levelData.mark)*60);
+        gameDataHandler.AddResearch(preGameTime * 60);
         //判断玩哪个游戏
         MiniGameBaseBean miniGameData = null;
         switch (workerType)
@@ -315,13 +351,69 @@ public class ItemTownGuildImproveCharacterCpt : ItemGameBaseCpt, DialogView.IDia
             default:
                 break;
         }
+        miniGameData.preGameTime = preGameTime;
         miniGameData.gameReason = MiniGameReasonEnum.Improve;
-        //设置竞技场数据
-        GameCommonInfo.SetAreanPrepareData(miniGameData);
-        //保存之前的位置
-        GameCommonInfo.ScenesChangeData.beforeUserPosition = controlHandler.GetControl(ControlHandler.ControlEnum.Normal).transform.position;
-        //跳转到竞技场
-        SceneUtil.SceneChange(ScenesEnum.GameArenaScene);
+        if (dialogBean.dialogPosition == 0)
+        {
+            //设置竞技场数据
+            GameCommonInfo.SetArenaPrepareData(miniGameData);
+            //保存之前的位置
+            GameCommonInfo.ScenesChangeData.beforeUserPosition = controlHandler.GetControl(ControlHandler.ControlEnum.Normal).transform.position;
+            //跳转到竞技场
+            SceneUtil.SceneChange(ScenesEnum.GameArenaScene);
+        }
+        else
+        {
+            //扣除时间
+            gameTimeHandler.AddHour(miniGameData.preGameTime);
+
+            bool isWin = characterData.CalculationGuildSendWin(gameItemsManager);
+            if (isWin)
+            {
+                toastManager.ToastHint(GameCommonInfo.GetUITextById(7021));
+                audioHandler.PlaySound(AudioSoundEnum.Reward);
+                //完成奖励
+                RewardTypeEnumTools.CompleteReward(toastManager, npcInfoManager, iconDataManager, gameItemsManager, innBuildManager, gameDataManager, miniGameData.GetListUserCharacterData(), miniGameData.listReward);
+
+                //数据添加
+                Sprite attributeIcon = iconDataManager.GetIconSpriteByName("keyboard_button_up_1");
+                string attributeRewardContent = "";
+                foreach (MiniGameCharacterBean miniGameCharacterData in miniGameData.listUserGameData)
+                {
+                    switch (miniGameData.gameType)
+                    {
+                        case MiniGameEnum.Cooking:
+                            attributeRewardContent = GameCommonInfo.GetUITextById(1) + " +5";
+                            miniGameCharacterData.characterData.baseInfo.chefInfo.LevelUp(miniGameCharacterData.characterData.attributes);
+                            break;
+                        case MiniGameEnum.Barrage:
+                            attributeRewardContent = GameCommonInfo.GetUITextById(2) + " +5";
+                            miniGameCharacterData.characterData.baseInfo.waiterInfo.LevelUp(miniGameCharacterData.characterData.attributes);
+                            break;
+                        case MiniGameEnum.Account:
+                            attributeRewardContent = GameCommonInfo.GetUITextById(3) + " +5";
+                            miniGameCharacterData.characterData.baseInfo.accountantInfo.LevelUp(miniGameCharacterData.characterData.attributes);
+                            break;
+                        case MiniGameEnum.Debate:
+                            attributeRewardContent = GameCommonInfo.GetUITextById(4) + " +5";
+                            miniGameCharacterData.characterData.baseInfo.accostInfo.LevelUp(miniGameCharacterData.characterData.attributes);
+                            break;
+                        case MiniGameEnum.Combat:
+                            attributeRewardContent = GameCommonInfo.GetUITextById(5) + " +5";
+                            miniGameCharacterData.characterData.baseInfo.beaterInfo.LevelUp(miniGameCharacterData.characterData.attributes);
+                            break;
+                    }
+                }
+                toastManager.ToastHint(attributeIcon, attributeRewardContent);
+                //刷新UI
+                ((UITownGuildImprove)uiComponent).RefreshUI();
+            }
+            else
+            {
+                toastManager.ToastHint(GameCommonInfo.GetUITextById(7022));
+                audioHandler.PlaySound(AudioSoundEnum.Passive);
+            }
+        }
     }
 
     /// <summary>

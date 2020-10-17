@@ -632,4 +632,26 @@ public class CharacterBean
             return true;
         }
     }
+
+    /// <summary>
+    /// 计算派遣斗技场是否胜利
+    /// </summary>
+    /// <param name="gameItemsManager"></param>
+    /// <returns></returns>
+    public bool CalculationGuildSendWin(GameItemsManager gameItemsManager)
+    {
+        GetAttributes(gameItemsManager,
+        out CharacterAttributesBean totalAttributes, out CharacterAttributesBean selfAttributes, out CharacterAttributesBean equipAttributes);
+
+        float winRate = 0.25f + totalAttributes.lucky * 0.0025f;
+
+        if (UnityEngine.Random.Range(0f, 1f) > winRate)
+        {
+            return false;
+        }
+        else
+        {
+            return true;
+        }
+    }
 }

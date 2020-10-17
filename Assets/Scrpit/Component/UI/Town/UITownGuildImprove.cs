@@ -7,6 +7,7 @@ public class UITownGuildImprove : UIBaseOne, IRadioGroupCallBack
     public UITownGuildImproveInnInfo uiInnInfo;
     public UITownGuildImproveCharacterInfo uiCharacterInfo;
 
+    protected int typePosition=0;
     public override void Awake()
     {
         base.Awake();
@@ -16,7 +17,14 @@ public class UITownGuildImprove : UIBaseOne, IRadioGroupCallBack
     public override void OpenUI()
     {
         base.OpenUI();
-        rgType.SetPosition(0, true);
+        typePosition = 0;
+        rgType.SetPosition(typePosition, true);
+    }
+
+    public override void RefreshUI()
+    {
+        base.RefreshUI();
+        ChangeUIType(typePosition);
     }
 
     /// <summary>
@@ -45,7 +53,8 @@ public class UITownGuildImprove : UIBaseOne, IRadioGroupCallBack
     public void RadioButtonSelected(RadioGroupView rgView, int position, RadioButtonView rbview)
     {
         uiGameManager.audioHandler.PlaySound(AudioSoundEnum.ButtonForNormal);
-        ChangeUIType(position);
+        this.typePosition = position;
+        ChangeUIType(typePosition);
     }
 
     public void RadioButtonUnSelected(RadioGroupView rgView, int position, RadioButtonView rbview)

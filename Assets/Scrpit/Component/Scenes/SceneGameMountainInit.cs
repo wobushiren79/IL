@@ -30,7 +30,7 @@ public class SceneGameMountainInit : BaseNormalSceneInit
             case ScenesEnum.GameTownScene:
                 moveControl.SetPosition(sceneMountainManager.GetExitDoor());
                 break;
-            case ScenesEnum.GameInfiniteTowers:
+            case ScenesEnum.GameInfiniteTowersScene:
                 Vector3 doorPosition = sceneMountainManager.GetInfiniteTowersStairs();
                 moveControl.SetPosition(doorPosition);
                 break;

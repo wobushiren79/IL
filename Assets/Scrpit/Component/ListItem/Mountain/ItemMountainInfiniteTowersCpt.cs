@@ -76,21 +76,44 @@ public class ItemMountainInfiniteTowersCpt : ItemGameBaseCpt
         }
     }
 
+    /// <summary>
+    /// 点击 取消
+    /// </summary>
     public void OnClickForCancel()
     {
         UIGameManager uiGameManager = GetUIManager<UIGameManager>();
-        foreach(string memberId in infiniteTowersData.listMembers)
+        if (infiniteTowersData.isSend)
         {
-            CharacterBean characterData= uiGameManager.gameDataManager.gameData.GetCharacterDataById(memberId);
-            characterData.baseInfo.SetWorkerStatus(WorkerStatusEnum.Rest);
+            foreach (string memberId in infiniteTowersData.listMembers)
+            {
+                CharacterBean characterData = uiGameManager.gameDataManager.gameData.GetCharacterDataById(memberId);
+                characterData.baseInfo.SetWorkerStatus(WorkerStatusEnum.Rest);
+            }
         }
         uiGameManager.gameDataManager.gameData.RemoveInfiniteTowersData(infiniteTowersData);
         uiComponent.RefreshUI();
     }
 
+    /// <summary>
+    /// 点击继续
+    /// </summary>
     public void OnClickForContinue()
     {
+        UIGameManager uiGameManager = GetUIManager<UIGameManager>();
 
+        foreach (string memberId in infiniteTowersData.listMembers)
+        {
+            CharacterBean characterData = uiGameManager.gameDataManager.gameData.GetCharacterDataById(memberId);
+            if (characterData.baseInfo.GetWorkerStatus() != WorkerStatusEnum.Rest
+                && characterData.baseInfo.GetWorkerStatus() != WorkerStatusEnum.Work)
+            {
+                uiGameManager.toastManager.ToastHint(GameCommonInfo.GetUITextById(1141));
+                return;
+            }
+        }
 
+        //跳转场景
+        GameCommonInfo.SetInfiniteTowersPrepareData(infiniteTowersData);
+        SceneUtil.SceneChange(ScenesEnum.GameInfiniteTowersScene);
     }
 }

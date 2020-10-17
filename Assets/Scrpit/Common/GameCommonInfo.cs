@@ -11,6 +11,8 @@ public class GameCommonInfo
     public static GameDataBean GameData;
     //进入竞技场准备数据
     public static ArenaPrepareBean ArenaPrepareData;
+    //进入无尽之塔准备数据
+    public static UserInfiniteTowersBean InfiniteTowersData;
     //随机种子
     public static int RandomSeed = 1564;
     //每日限制数据
@@ -30,6 +32,7 @@ public class GameCommonInfo
         GameUserId = null;
         GameData = null;
         ArenaPrepareData = null;
+        InfiniteTowersData = null;
         DailyLimitData = new UserDailyLimitBean();
         CurrentDayData = new CurrentDayBean();
         ScenesChangeData = new ScenesChangeBean();
@@ -62,9 +65,18 @@ public class GameCommonInfo
     /// 设置竞技场数据
     /// </summary>
     /// <param name="miniGameData"></param>
-    public static void SetAreanPrepareData(MiniGameBaseBean miniGameData)
+    public static void SetArenaPrepareData(MiniGameBaseBean miniGameData)
     {
         ArenaPrepareData = new ArenaPrepareBean(miniGameData);
+    }
+
+    /// <summary>
+    /// 设置无尽之塔数据
+    /// </summary>
+    /// <param name="data"></param>
+    public static void SetInfiniteTowersPrepareData(UserInfiniteTowersBean data)
+    {
+        InfiniteTowersData = data;
     }
 
     public static void SaveGameConfig()

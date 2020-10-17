@@ -9,6 +9,8 @@ public class UIMountainInfiniteTowers : UIGameComponent, DialogView.IDialogCallB
     public Button btBack;
     public Button btStart;
     public Button btSend;
+
+    public Text tvMaxLayer;
     public ScrollGridVertical gridVertical;
     public GameObject objNull;
 
@@ -55,6 +57,18 @@ public class UIMountainInfiniteTowers : UIGameComponent, DialogView.IDialogCallB
         {
             objNull.SetActive(false);
         }
+        UserAchievementBean userAchievement = uiGameManager.gameDataManager.gameData.GetAchievementData();
+        SetMaxLayer(userAchievement.maxInfiniteTowersLayer);
+    }
+
+    /// <summary>
+    /// 设置最大层数
+    /// </summary>
+    /// <param name="maxLayer"></param>
+    public void SetMaxLayer(long maxLayer)
+    {
+        if (tvMaxLayer)
+            tvMaxLayer.text = maxLayer+"";
     }
 
     /// <summary>
@@ -122,7 +136,6 @@ public class UIMountainInfiniteTowers : UIGameComponent, DialogView.IDialogCallB
                 listExpel.Add(itemCharacter.baseInfo.characterId);
             }
         }
-
         pickForCharacterDialog.SetExpelCharacter(listExpel);
         pickForCharacterDialog.SetPickCharacterMax(3);
     }
@@ -144,7 +157,9 @@ public class UIMountainInfiniteTowers : UIGameComponent, DialogView.IDialogCallB
                     infiniteTowersData.listMembers.Add(itemCharacter.baseInfo.characterId);
                 }
                 uiGameManager.gameDataManager.gameData.AddInfinteTowersData(infiniteTowersData);
-                SceneUtil.SceneChange(ScenesEnum.GameInfiniteTowers);
+                //跳转场景
+                GameCommonInfo.SetInfiniteTowersPrepareData(infiniteTowersData);
+                SceneUtil.SceneChange(ScenesEnum.GameInfiniteTowersScene);
             }
             else if (dialogBean.dialogPosition == 1)
             {
