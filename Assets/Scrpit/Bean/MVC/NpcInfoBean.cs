@@ -54,7 +54,8 @@ public class NpcInfoBean : BaseBean
     public string love_menus;
     //出现条件
     public string condition;
-
+    //备注
+    public string remark;
     /// <summary>
     /// 获取NPC类型
     /// </summary>

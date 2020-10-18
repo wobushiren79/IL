@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using UnityEditor;
 using System;
-using Boo.Lang;
+using System.Collections.Generic;
 
 [Serializable]
 public class UserInfiniteTowersBean

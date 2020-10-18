@@ -1,8 +1,7 @@
 ﻿using UnityEngine;
 using UnityEditor;
 using UnityEngine.UI;
-using JetBrains.Annotations;
-using Boo.Lang;
+using System.Collections.Generic;
 
 public class ItemMountainInfiniteTowersCpt : ItemGameBaseCpt
 {

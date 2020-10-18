@@ -93,16 +93,53 @@ public class NpcInfoManager : BaseManager, INpcInfoView
             return listData;
         foreach (int type in types)
         {
-                foreach (long key in listNpcInfo.Keys)
+            foreach (long key in listNpcInfo.Keys)
+            {
+                NpcInfoBean itemData = listNpcInfo[key];
+                if (itemData.npc_type == type)
                 {
-                    NpcInfoBean itemData = listNpcInfo[key];
-                    if (itemData.npc_type == type)
-                    {
-                        CharacterBean characterData = NpcInfoBean.NpcInfoToCharacterData(itemData);
-                        listData.Add(characterData);
-                    }
+                    CharacterBean characterData = NpcInfoBean.NpcInfoToCharacterData(itemData);
+                    listData.Add(characterData);
                 }
+            }
         }
+        return listData;
+    }
+
+    public List<CharacterBean> GetCharacterDataByInfiniteTowersLayer(long layer)
+    {
+        List<CharacterBean> listData = new List<CharacterBean>();
+
+        if (layer % 10 == 0)
+        {
+
+        }
+        else
+        {
+            List<CharacterBean> listCharacter = GetCharacterDataByType(NpcTypeEnum.GuestTeam);
+            for (int i = 0; i < listCharacter.Count; i++)
+            {
+                CharacterBean itemCharacter = listCharacter[i];
+                int level = int.Parse(itemCharacter.npcInfoData.remark);
+                int layerLevel = Mathf.FloorToInt(layer / 10f);
+                if (layerLevel <= 15 && level == layerLevel)
+                {
+                    listData.Add(itemCharacter);
+                    listData.Add(itemCharacter);
+                    listData.Add(itemCharacter);
+                    break;
+                }
+            }
+            if (listData.Count == 0)
+            {
+                CharacterBean itemCharacter =  RandomUtil.GetRandomDataByList(listCharacter);
+                listData.Add(itemCharacter);
+                listData.Add(itemCharacter);
+                listData.Add(itemCharacter);
+            }
+
+        }
+
         return listData;
     }
 

@@ -378,9 +378,13 @@ public class GameDataBean
     public  CharacterBean GetCharacterDataById(string characterId) 
     {
         List<CharacterBean> listData = GetAllCharacterData();
-        for (int i=0;i< listData.Count;i++)
+        for (int i = 0;i< listData.Count;i++)
         {
-            CharacterBean itemCharacter= listData[i];
+            CharacterBean itemCharacter = listData[i];
+            if (itemCharacter.baseInfo.characterId == null)
+            {
+                continue;
+            }
             if (itemCharacter.baseInfo.characterId.Equals(characterId))
             {
                 return itemCharacter;

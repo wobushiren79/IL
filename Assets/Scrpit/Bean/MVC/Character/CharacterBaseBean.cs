@@ -106,6 +106,9 @@ public class CharacterBaseBean
             case WorkerStatusEnum.Research:
                 workerStatusStr = GameCommonInfo.GetUITextById(284);
                 break;
+            case WorkerStatusEnum.InfiniteTowers:
+                workerStatusStr = GameCommonInfo.GetUITextById(288);
+                break;
         }
         return workerStatus;
     }
