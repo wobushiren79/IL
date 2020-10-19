@@ -280,13 +280,13 @@ public class SceneGameArenaInit : BaseSceneInit, IBaseObserver
     #region 通知回调
     public void ObserbableUpdate<T>(T observable, int type, params object[] obj) where T : UnityEngine.Object
     {
-        switch (type)
+        switch ((MiniGameStatusEnum)type)
         {
-            case (int)BaseMiniGameHandler<BaseMiniGameBuilder, MiniGameBaseBean>.MiniGameStatusEnum.Gameing:
+            case MiniGameStatusEnum.Gameing:
                 break;
-            case (int)BaseMiniGameHandler<BaseMiniGameBuilder, MiniGameBaseBean>.MiniGameStatusEnum.GameEnd:
+            case MiniGameStatusEnum.GameEnd:
                 break;
-            case (int)BaseMiniGameHandler<BaseMiniGameBuilder, MiniGameBaseBean>.MiniGameStatusEnum.GameClose:
+            case MiniGameStatusEnum.GameClose:
                 SceneUtil.SceneChange(GameCommonInfo.ScenesChangeData.beforeScene);
                 //SceneUtil.SceneChange(ScenesEnum.GameArenaScene);
                 break;

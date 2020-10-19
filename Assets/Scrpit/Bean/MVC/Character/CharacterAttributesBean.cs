@@ -21,6 +21,38 @@ public class CharacterAttributesBean
     //学会的书籍
     public List<long> listLearnBook = new List<long>();
 
+    /// <summary>
+    /// 初始化属性
+    /// </summary>
+    /// <param name="life">体力</param>
+    /// <param name="cook">厨</param>
+    /// <param name="speed">速</param>
+    /// <param name="account">算</param>
+    /// <param name="charm">魅</param>
+    /// <param name="force">武</param>
+    /// <param name="lucky">运</param>
+    public void InitAttributes(int life,int cook,int speed,int account,int charm,int force,int lucky)
+    {
+        this.life = life;
+        this.cook = cook;
+        this.speed = speed;
+        this.account = account;
+        this.charm = charm;
+        this.force = force;
+        this.lucky = lucky;
+    }
+
+    public void InitAttributes(CharacterAttributesBean characterAttributes)
+    {
+        InitAttributes(
+            characterAttributes.life,
+            characterAttributes.cook,
+            characterAttributes.speed,
+            characterAttributes.account,
+            characterAttributes.charm,
+            characterAttributes.force,
+            characterAttributes.lucky);
+    }
 
     /// <summary>
     /// 学习书籍

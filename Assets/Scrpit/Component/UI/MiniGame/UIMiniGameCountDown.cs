@@ -43,7 +43,8 @@ public class UIMiniGameCountDown : UIGameComponent
 
         objTarget.SetActive(true);
         objCountDown.SetActive(false);
-        SetTargetContent(titleStr, listWinConditions);
+        SetTitle(titleStr);
+        SetTargetContent(listWinConditions);
 
         //UI动画
         objTarget.transform.localScale = new Vector3(1, 1, 1);
@@ -51,13 +52,21 @@ public class UIMiniGameCountDown : UIGameComponent
     }
 
     /// <summary>
-    /// 设置目标内容
+    /// 设置标题内容
     /// </summary>
     /// <param name="titleStr"></param>
-    public void SetTargetContent(string titleStr, List<string> listWinRequired)
+    public void SetTitle(string titleStr)
     {
         if (tvTargetTitle != null)
             tvTargetTitle.text = titleStr;
+    }
+
+    /// <summary>
+    /// 设置目标内容
+    /// </summary>
+    /// <param name="titleStr"></param>
+    public void SetTargetContent(List<string> listWinRequired)
+    {
         if (tvTargetWinConditions != null && listWinRequired != null)
         {
             tvTargetWinConditions.text = "";
@@ -67,6 +76,7 @@ public class UIMiniGameCountDown : UIGameComponent
             }
         }
     }
+
 
     /// <summary>
     /// 开始倒计时

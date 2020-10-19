@@ -54,7 +54,7 @@ public class UIMiniGameEnd : UIGameComponent
     public void SetData(MiniGameBaseBean miniGameData)
     {
         this.miniGameData = miniGameData;
-        if (miniGameData.gameResult == 1)
+        if (miniGameData.GetGameResult() ==  MiniGameResultEnum.Win)
         {
             SetWin();
         }

@@ -45,16 +45,15 @@ public class MiniGameAccountHandler : BaseMiniGameHandler<MiniGameAccountBuilder
     /// 检测游戏结果
     /// </summary>
     /// <returns></returns>
-    public bool CheckGameResults()
+    public MiniGameResultEnum CheckGameResults()
     {
-        bool isWin = false;
         if (miniGameData.currentMoneyL >= miniGameData.winMoneyL
             && miniGameData.currentMoneyM >= miniGameData.winMoneyM
              && miniGameData.currentMoneyS >= miniGameData.winMoneyS)
         {
-            isWin = true;
+            return MiniGameResultEnum.Win;
         }
-        return isWin;
+        return MiniGameResultEnum.Lose;
     }
 
     /// <summary>
@@ -113,11 +112,11 @@ public class MiniGameAccountHandler : BaseMiniGameHandler<MiniGameAccountBuilder
 
 
         //如果分满了直接结束游戏
-        bool isWin = CheckGameResults();
-        if (isWin)
+        MiniGameResultEnum gameResultEnum = CheckGameResults();
+        if (gameResultEnum == MiniGameResultEnum.Win)
         {
             StopAllCoroutines();
-            EndGame(isWin);
+            EndGame(MiniGameResultEnum.Win);
         }  
     }
     #endregion

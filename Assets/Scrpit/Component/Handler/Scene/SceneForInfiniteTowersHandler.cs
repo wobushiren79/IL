@@ -2,7 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 
-public class SceneForInfiniteTowersHandler : BaseHandler
+public class SceneForInfiniteTowersHandler : BaseHandler,IBaseObserver
 {
     protected MiniGameCombatHandler combatHandler;
     protected SceneInfiniteTowersManager infiniteTowersManager;
@@ -10,7 +10,10 @@ public class SceneForInfiniteTowersHandler : BaseHandler
     protected GameDataManager gameDataManager;
     protected GameItemsManager gameItemsManager;
     protected NpcInfoManager npcInfoManager;
+    protected UIGameManager uiGameManager;
+    protected CharacterBodyManager characterBodyManager;
 
+    protected UserInfiniteTowersBean infiniteTowersData;
     public void Awake()
     {
         combatHandler = Find<MiniGameCombatHandler>(ImportantTypeEnum.MiniGameHandler);
@@ -18,8 +21,11 @@ public class SceneForInfiniteTowersHandler : BaseHandler
         gameItemsManager = Find<GameItemsManager>(ImportantTypeEnum.GameItemsManager);
         npcInfoManager = Find<NpcInfoManager>(ImportantTypeEnum.NpcManager);
         gameDataManager = Find<GameDataManager>(ImportantTypeEnum.GameDataManager);
-    }
+        uiGameManager= Find<UIGameManager>(ImportantTypeEnum.GameUI);
+        characterBodyManager = Find<CharacterBodyManager>(ImportantTypeEnum.CharacterManager);
 
+        combatHandler.AddObserver(this);
+    }
 
     public MiniGameCombatBean InitCombat(UserInfiniteTowersBean infiniteTowersData)
     {
@@ -28,7 +34,7 @@ public class SceneForInfiniteTowersHandler : BaseHandler
         //设置战斗数据
         MiniGameCombatBean miniGameCombat = (MiniGameCombatBean)MiniGameEnumTools.GetMiniGameData( MiniGameEnum.Combat);
         //设置战斗地点
-        miniGameCombat.miniGamePosition = GetCombatPostionByLayer(infiniteTowersData.layer);
+        miniGameCombat.miniGamePosition = infiniteTowersManager.GetCombatPostionByLayer(infiniteTowersData.layer);
         //获取战斗成员数据
         //获取友方数据
         List<CharacterBean> listUserData = new List<CharacterBean>();
@@ -48,9 +54,15 @@ public class SceneForInfiniteTowersHandler : BaseHandler
             listUserData.Add(itemCharacterData);
             listUserData.Add(itemCharacterData);
         }
-
         //获取敌方数据
-        List<CharacterBean> listEnemyData = npcInfoManager.GetCharacterDataByInfiniteTowersLayer(infiniteTowersData.layer);
+        List<CharacterBean> listEnemyData = npcInfoManager.GetCharacterDataByInfiniteTowersLayer(characterBodyManager,infiniteTowersData.layer);
+        //设置敌方能力
+        foreach (CharacterBean itemEnemyData in listEnemyData)
+        {
+            CharacterAttributesBean enemyAttributes = infiniteTowersManager.GetEnemyAttributesByLayer(infiniteTowersData.layer);
+            itemEnemyData.attributes.InitAttributes(enemyAttributes);
+        }
+        
         //初始化战斗数据
         miniGameCombat.gameReason = MiniGameReasonEnum.Fight;
         miniGameCombat.winSurvivalNumber = 1;
@@ -59,25 +71,72 @@ public class SceneForInfiniteTowersHandler : BaseHandler
         return miniGameCombat;
     }
 
-    /// <summary>
-    /// 根据层数获取战斗地点
-    /// </summary>
-    /// <param name="layer"></param>
-    /// <returns></returns>
-    public Vector3 GetCombatPostionByLayer(long layer)
+
+    public void StartCombat(MiniGameCombatBean combatData, UserInfiniteTowersBean infiniteTowersData)
     {
-        if (layer % 10 == 0)
+        combatHandler.InitGame(combatData);
+
+        UIMiniGameCountDown uiCountDown = (UIMiniGameCountDown)uiGameManager.GetUIByName(EnumUtil.GetEnumName(UIEnum.MiniGameCountDown));
+        //设置标题
+        uiCountDown.SetTitle(infiniteTowersData.layer + GameCommonInfo.GetUITextById(83));
+    }
+
+    public void NextLayer(UserInfiniteTowersBean infiniteTowersData)
+    {
+        this.infiniteTowersData = infiniteTowersData;
+        //获取战斗数据
+        MiniGameCombatBean gameCombatData = InitCombat(infiniteTowersData);
+        //开始战斗
+        StartCombat(gameCombatData, infiniteTowersData);
+    }
+
+    protected void GameEndHandle()
+    {
+        MiniGameCombatBean miniGameCombatData = combatHandler.miniGameData;
+        if (miniGameCombatData.GetGameResult() ==  MiniGameResultEnum.Win)
         {
-            return infiniteTowersManager.GetBossCombatPosition();
+            //战斗胜利
+            //层数+1
+            infiniteTowersData.layer += 1;
+            //记录
+            UserAchievementBean userAchievement=  gameDataManager.gameData.userAchievement;
+            userAchievement.SetMaxInfiniteTowersLayer(infiniteTowersData.layer);
+            //开始下一层
+            NextLayer(infiniteTowersData);
         }
-        else
+        else if (miniGameCombatData.GetGameResult() ==  MiniGameResultEnum.Lose)
         {
-           return  infiniteTowersManager.GetNormalCombatPosition();
+            //战斗失败
+            //删除记录
+            gameDataManager.gameData.RemoveInfiniteTowersData(infiniteTowersData);
+            //跳转场景
+            SceneUtil.SceneChange(ScenesEnum.GameMountainScene);
+        }
+        else if (miniGameCombatData.GetGameResult() == MiniGameResultEnum.Escape)
+        {
+            //战斗逃跑
+            //跳转场景
+            SceneUtil.SceneChange(ScenesEnum.GameMountainScene);
         }
     }
 
-    public void StartCombat(MiniGameCombatBean combatData)
+    #region 结果回调
+    public void ObserbableUpdate<T>(T observable, int type, params object[] obj) where T : Object
     {
-        combatHandler.InitGame(combatData);
+      
+        if (observable as MiniGameCombatHandler)
+        {
+            switch ((MiniGameStatusEnum)type)
+            {
+                case MiniGameStatusEnum.Gameing:
+                    break;
+                case MiniGameStatusEnum.GameEnd:
+                    break;
+                case MiniGameStatusEnum.GameClose:
+                    GameEndHandle();
+                    break;
+            }
+        }
     }
+    #endregion
 }

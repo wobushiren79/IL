@@ -405,11 +405,11 @@ public class MiniGameCookingHandler : BaseMiniGameHandler<MiniGameCookingBuilder
             MiniGameCharacterForCookingBean characterMiniGameData = (MiniGameCharacterForCookingBean)miniGameData.GetUserGameData();
             if (characterMiniGameData.scoreForTotal >= miniGameData.winScore)
             {
-                EndGame(true, false);
+                EndGame(MiniGameResultEnum.Win, false);
             }
             else
             {
-                EndGame(false, false);
+                EndGame(MiniGameResultEnum.Lose, false);
             }
         }
         //如果是其他 则按名次
@@ -423,11 +423,11 @@ public class MiniGameCookingHandler : BaseMiniGameHandler<MiniGameCookingBuilder
                 MiniGameCharacterForCookingBean characterData = (MiniGameCharacterForCookingBean)listCharacterGameData[i];
                 if (characterData.characterType == 1)
                 {
-                    EndGame(true, false);
+                    EndGame(MiniGameResultEnum.Win, false);
                     return;
                 }
             }
-            EndGame(false, false);
+            EndGame(MiniGameResultEnum.Lose, false);
         }
     }
     #endregion

@@ -38,9 +38,9 @@ public class MiniGameDebateHandler : BaseMiniGameHandler<MiniGameDebateBuilder, 
         DrawCard();
     }
 
-    public override void EndGame(bool isWinGame)
+    public override void EndGame(MiniGameResultEnum gameResult)
     {
-        base.EndGame(isWinGame);
+        base.EndGame(gameResult);
     }
 
     /// <summary>
@@ -178,20 +178,20 @@ public class MiniGameDebateHandler : BaseMiniGameHandler<MiniGameDebateBuilder, 
     /// </summary>
     /// <param name="isWinGame"></param>
     /// <returns></returns>
-    public bool CheckIsGameOver(out bool isWinGame)
+    public bool CheckIsGameOver(out MiniGameResultEnum gameResult)
     {
-        isWinGame = false;
+        gameResult = MiniGameResultEnum.Lose;
         NpcAIMiniGameDebateCpt userCharacter = miniGameBuilder.GetUserCharacter();
         NpcAIMiniGameDebateCpt enemyCharacter = miniGameBuilder.GetEnemyCharacter();
         if (userCharacter.characterMiniGameData.characterCurrentLife <= 0 || enemyCharacter.characterMiniGameData.characterCurrentLife <= 0)
         {
             if (userCharacter.characterMiniGameData.characterCurrentLife <= 0)
             {
-                isWinGame = false;
+                gameResult = MiniGameResultEnum.Lose;
             }
             else if (enemyCharacter.characterMiniGameData.characterCurrentLife <= 0)
             {
-                isWinGame = true;
+                gameResult = MiniGameResultEnum.Win;
             }
             return true;
         }
@@ -216,9 +216,9 @@ public class MiniGameDebateHandler : BaseMiniGameHandler<MiniGameDebateBuilder, 
         }
         uiMiniGameDebate.RefreshUI();
         //检测是否结束游戏
-        if (CheckIsGameOver(out bool isWinGame))
+        if (CheckIsGameOver(out MiniGameResultEnum gameResult))
         {
-            EndGame(isWinGame);
+            EndGame(gameResult);
         }
         else
         {

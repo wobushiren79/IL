@@ -7,13 +7,6 @@ public class BaseMiniGameHandler<B, D> : BaseHandler, UIMiniGameCountDown.ICallB
     where D : MiniGameBaseBean
     where B : BaseMiniGameBuilder
 {
-    public enum MiniGameStatusEnum
-    {
-        GamePre = 0,//游戏准备中
-        Gameing = 1,//游戏进行中
-        GameEnd = 2,//游戏结束
-        GameClose = 3,//游戏关闭
-    }
 
     //UI管理
     protected UIGameManager uiGameManager;
@@ -110,7 +103,7 @@ public class BaseMiniGameHandler<B, D> : BaseHandler, UIMiniGameCountDown.ICallB
     /// </summary>
     /// <param name="isWinGame"></param>
     /// <param name="isSlow">是否开启慢镜头</param>
-    public virtual void EndGame(bool isWinGame, bool isSlow)
+    public virtual void EndGame(MiniGameResultEnum gameResulte, bool isSlow)
     {
         if (GetMiniGameStatus() == MiniGameStatusEnum.Gameing)
         {
@@ -131,15 +124,7 @@ public class BaseMiniGameHandler<B, D> : BaseHandler, UIMiniGameCountDown.ICallB
 
                 miniGameBuilder.DestroyAll();
                 //设置游戏数据
-
-                if (isWinGame)
-                {
-                    miniGameData.gameResult = 1;
-                }
-                else
-                {
-                    miniGameData.gameResult = 0;
-                }
+                miniGameData.SetGameResult(gameResulte);
                 //经验加成
                 List<MiniGameCharacterBean> listUserData = miniGameData.GetListUserGameData();
                 List<CharacterBean> listWorkerData = gameDataManager.gameData.GetAllCharacterData();
@@ -155,7 +140,7 @@ public class BaseMiniGameHandler<B, D> : BaseHandler, UIMiniGameCountDown.ICallB
                         {
                             WorkerEnum workerType = MiniGameEnumTools.GetWorkerTypeByMiniGameType(miniGameData.gameType);
                             CharacterWorkerBaseBean characterWorker = itemWorkerData.baseInfo.GetWorkerInfoByType(workerType);
-                            if (isWinGame)
+                            if (miniGameData.GetGameResult()== MiniGameResultEnum.Win)
                             {
                                 characterWorker.AddExp(10, out bool isLevelUp);
                             }
@@ -176,9 +161,9 @@ public class BaseMiniGameHandler<B, D> : BaseHandler, UIMiniGameCountDown.ICallB
             NotifyAllObserver((int)MiniGameStatusEnum.GameEnd, miniGameData);
         }
     }
-    public virtual void EndGame(bool isWinGame)
+    public virtual void EndGame(MiniGameResultEnum gameResult)
     {
-        EndGame(isWinGame, true);
+        EndGame(gameResult, true);
         audioHandler.StopMusic();
     }
 

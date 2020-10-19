@@ -2,6 +2,7 @@
 using UnityEditor;
 using System;
 
+
 [Serializable]
 public class CharacterBean
 {
@@ -654,4 +655,5 @@ public class CharacterBean
             return true;
         }
     }
+
 }

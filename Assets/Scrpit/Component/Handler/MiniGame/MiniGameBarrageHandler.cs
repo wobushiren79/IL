@@ -59,9 +59,9 @@ public class MiniGameBarrageHandler : BaseMiniGameHandler<MiniGameBarrageBuilder
     /// 结束游戏
     /// </summary>
     /// <param name="isWinGame">是否赢得游戏</param>
-    public override void EndGame(bool isWinGame)
+    public override void EndGame(MiniGameResultEnum miniGameResult)
     {
-        base.EndGame(isWinGame);
+        base.EndGame(miniGameResult);
     }
 
     /// <summary>
@@ -123,7 +123,7 @@ public class MiniGameBarrageHandler : BaseMiniGameHandler<MiniGameBarrageBuilder
             if (miniGameData.currentTime <= 0)
                 break;
         }
-        EndGame(true);
+        EndGame(MiniGameResultEnum.Win);
     }
 
     #region 倒计时回调

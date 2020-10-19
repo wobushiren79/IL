@@ -53,17 +53,17 @@ public class NpcAIMiniGameBarrageCpt : BaseNpcAI, SightForMiniGameBarrageCpt.ICa
     {
         if (characterMiniGameData == null
             || gameBarrageHandler == null
-            || gameBarrageHandler.GetMiniGameStatus() != BaseMiniGameHandler<MiniGameBarrageBuilder,MiniGameBarrageBean>.MiniGameStatusEnum.Gameing)
+            || gameBarrageHandler.GetMiniGameStatus() != MiniGameStatusEnum.Gameing)
             return;
         audioHandler.PlaySound(AudioSoundEnum.Damage);
         characterMiniGameData.ChangeLife(-damage);
         psBlood.Play();
-        //如果是控制的角色并且生命值
+        //如果是控制的角色并且生命值低于胜利生命值
         if (characterMiniGameData.characterCurrentLife < gameBarrageHandler.miniGameData.winLife)
         {
             if (characterMiniGameData.characterType == 1)
             {
-                gameBarrageHandler.EndGame(false);
+                gameBarrageHandler.EndGame(MiniGameResultEnum.Lose);
             }
         }
     }

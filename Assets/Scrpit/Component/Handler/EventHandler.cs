@@ -531,25 +531,25 @@ public class EventHandler : BaseHandler,
         if (observable as MiniGameCombatHandler
             || observable as MiniGameDebateHandler)
         {
-            switch (type)
+            switch ((MiniGameStatusEnum)type)
             {
-                case (int)BaseMiniGameHandler<BaseMiniGameBuilder, MiniGameBaseBean>.MiniGameStatusEnum.Gameing:
+                case MiniGameStatusEnum.Gameing:
                     break;
-                case (int)BaseMiniGameHandler<BaseMiniGameBuilder, MiniGameBaseBean>.MiniGameStatusEnum.GameEnd:
+                case MiniGameStatusEnum.GameEnd:
                     break;
-                case (int)BaseMiniGameHandler<BaseMiniGameBuilder, MiniGameBaseBean>.MiniGameStatusEnum.GameClose:
+                case MiniGameStatusEnum.GameClose:
                     MiniGameBaseBean miniGameData = (MiniGameBaseBean)obj[0];
                     controlHandler.StartControl(ControlHandler.ControlEnum.Normal);
                     SetEventStatus(EventStatusEnum.EventEnd);
-                    if (miniGameData.gameResult == 0)
-                    {
-                        if (miniGameData.gameResultLoseTalkMarkId != 0)
-                            EventTriggerForTalk(miniGameData.gameResultLoseTalkMarkId, true);
-                    }
-                    else
+                    if (miniGameData.GetGameResult() == MiniGameResultEnum.Win)
                     {
                         if (miniGameData.gameResultWinTalkMarkId != 0)
                             EventTriggerForTalk(miniGameData.gameResultWinTalkMarkId, true);
+                    }
+                    else
+                    {
+                        if (miniGameData.gameResultLoseTalkMarkId != 0)
+                            EventTriggerForTalk(miniGameData.gameResultLoseTalkMarkId, true);
                     }
                     break;
             }

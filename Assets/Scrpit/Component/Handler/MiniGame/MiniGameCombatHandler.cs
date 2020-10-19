@@ -57,9 +57,9 @@ public class MiniGameCombatHandler : BaseMiniGameHandler<MiniGameCombatBuilder, 
     /// 结束战斗
     /// </summary>
     /// <param name="isWinGame"></param>
-    public override void EndGame(bool isWinGame)
+    public override void EndGame(MiniGameResultEnum gameResulte)
     {
-        base.EndGame(isWinGame);
+        base.EndGame(gameResulte);
     }
 
     /// <summary>
@@ -120,9 +120,9 @@ public class MiniGameCombatHandler : BaseMiniGameHandler<MiniGameCombatBuilder, 
     /// 检测是否游戏结束
     /// </summary>
     /// <returns></returns>
-    public bool CheckIsGameOver(out bool isWinGame)
+    public bool CheckIsGameOver(out MiniGameResultEnum gameResult)
     {
-        isWinGame = false;
+        gameResult =  MiniGameResultEnum.Lose;
         List<NpcAIMiniGameCombatCpt> listUserNpc = miniGameBuilder.GetUserCharacter();
         List<NpcAIMiniGameCombatCpt> listEnemyNpc = miniGameBuilder.GetEnemyCharacter();
         bool isOurNpcAllDead = true;
@@ -143,11 +143,11 @@ public class MiniGameCombatHandler : BaseMiniGameHandler<MiniGameCombatBuilder, 
         }
         if (isOurNpcAllDead)
         {
-            isWinGame = false;
+            gameResult = MiniGameResultEnum.Lose;
         }
         if (isEnemyNpcAllDead)
         {
-            isWinGame = true;
+            gameResult = MiniGameResultEnum.Win;
         }
 
         //如果双方都没有全部死亡则游戏没有结束
@@ -389,10 +389,10 @@ public class MiniGameCombatHandler : BaseMiniGameHandler<MiniGameCombatBuilder, 
             }
         }
         //检测是否游戏结束
-        bool isGameOver = CheckIsGameOver(out bool isWinGame);
+        bool isGameOver = CheckIsGameOver(out MiniGameResultEnum gameResult);
         if (isGameOver)
             //结束游戏
-            EndGame(isWinGame);
+            EndGame(gameResult);
     }
 
 }

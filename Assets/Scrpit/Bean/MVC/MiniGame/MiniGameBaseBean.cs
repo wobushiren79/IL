@@ -6,6 +6,8 @@ public abstract class MiniGameBaseBean
 {
     public MiniGameEnum gameType;//游戏类型
     public MiniGameReasonEnum gameReason;//玩游戏的原因
+    public MiniGameResultEnum gameResult;//游戏结果
+
     //胜利条件
     public float winSurvivalTime;//生存时间(秒)
     public long winLife;//生命值多少以上
@@ -22,8 +24,7 @@ public abstract class MiniGameBaseBean
     public long preMoneyS;
     public int preGameTime;//游戏进行时间
 
-    //游戏结果 0输 1赢
-    public int gameResult;
+
     //结果之后的ID
     public long gameResultWinStoryId;
     public long gameResultLoseStoryId;
@@ -40,6 +41,24 @@ public abstract class MiniGameBaseBean
     public List<MiniGameCharacterBean> listUserGameData = new List<MiniGameCharacterBean>();
     //对手数据
     public List<MiniGameCharacterBean> listEnemyGameData = new List<MiniGameCharacterBean>();
+
+    /// <summary>
+    /// 设置游戏结果
+    /// </summary>
+    /// <param name="miniGameResult"></param>
+    public void SetGameResult(MiniGameResultEnum miniGameResult)
+    {
+        this.gameResult = miniGameResult;
+    }
+
+    /// <summary>
+    /// 获取游戏结果
+    /// </summary>
+    /// <returns></returns>
+    public MiniGameResultEnum GetGameResult()
+    {
+        return gameResult;
+    }
 
     /// <summary>
     /// 获取友方数据

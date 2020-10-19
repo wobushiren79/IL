@@ -102,7 +102,7 @@ public class UIMiniGameCombatCommand : BaseUIChildComponent<UIMiniGameCombat>, D
     {
         MiniGameCombatHandler miniGameCombatHandler = uiComponent.uiGameManager.miniGameCombatHandler;
         Close();
-        miniGameCombatHandler.EndGame(false);
+        miniGameCombatHandler.EndGame(MiniGameResultEnum.Escape);
     }
 
     #region 弹窗回调

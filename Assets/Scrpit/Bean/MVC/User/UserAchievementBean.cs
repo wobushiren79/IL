@@ -75,7 +75,21 @@ public class UserAchievementBean
     public long maxDayCompleteOrderForHotel;
 
     //最高到达攀龙塔层数
-    public long maxInfiniteTowersLayer;
+    public int maxInfiniteTowersLayer;
+
+    /// <summary>
+    /// 设置最高到达攀龙塔层数
+    /// </summary>
+    /// <param name="layer"></param>
+    public void SetMaxInfiniteTowersLayer(int layer)
+    {
+        if(layer >  maxInfiniteTowersLayer)
+        {
+            maxInfiniteTowersLayer = layer;
+        }
+    }
+
+
     /// <summary>
     /// 设置每日最大赚取金钱
     /// </summary>

@@ -124,7 +124,7 @@ public class NpcAIPasserCpt : BaseNpcAI
     {
         if (passerIntent != PasserIntentEnum.GoToEvent
             && passerIntent != PasserIntentEnum.LookOnEvent
-            && miniGameCombatHandler.GetMiniGameStatus() == BaseMiniGameHandler<MiniGameCombatBuilder, MiniGameCombatBean>.MiniGameStatusEnum.Gameing
+            && miniGameCombatHandler.GetMiniGameStatus() == MiniGameStatusEnum.Gameing
             && Vector2.Distance(transform.position, miniGameCombatHandler.GetMiniGamePosition()) <= 10)
         {
             SetIntent(PasserIntentEnum.GoToEvent, miniGameCombatHandler.GetMiniGamePosition());
@@ -141,7 +141,7 @@ public class NpcAIPasserCpt : BaseNpcAI
     /// </summary>
     public bool CheckEventEnd()
     {
-        if (miniGameCombatHandler.GetMiniGameStatus() != BaseMiniGameHandler<MiniGameCombatBuilder, MiniGameCombatBean>.MiniGameStatusEnum.Gameing)
+        if (miniGameCombatHandler.GetMiniGameStatus() != MiniGameStatusEnum.Gameing)
         {
             if (npcLocation == TownBuildingEnum.Town)
             {

@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using UnityEditor;
 using System.Collections.Generic;
+using JetBrains.Annotations;
 
 public class NpcInfoManager : BaseManager, INpcInfoView
 {
@@ -106,37 +107,53 @@ public class NpcInfoManager : BaseManager, INpcInfoView
         return listData;
     }
 
-    public List<CharacterBean> GetCharacterDataByInfiniteTowersLayer(long layer)
+    public List<CharacterBean> GetCharacterDataByInfiniteTowersLayer(CharacterBodyManager characterBodyManager, long layer)
     {
         List<CharacterBean> listData = new List<CharacterBean>();
 
         if (layer % 10 == 0)
         {
+            //Boss层数
 
         }
         else
         {
+            //普通层数
             List<CharacterBean> listCharacter = GetCharacterDataByType(NpcTypeEnum.GuestTeam);
+            List<CharacterBean> listTempCharacter = new List<CharacterBean>();
+            if(!CheckUtil.ListIsNull(listCharacter))
             for (int i = 0; i < listCharacter.Count; i++)
             {
                 CharacterBean itemCharacter = listCharacter[i];
+     
+                //判断层数
                 int level = int.Parse(itemCharacter.npcInfoData.remark);
                 int layerLevel = Mathf.FloorToInt(layer / 10f);
                 if (layerLevel <= 15 && level == layerLevel)
                 {
-                    listData.Add(itemCharacter);
-                    listData.Add(itemCharacter);
-                    listData.Add(itemCharacter);
-                    break;
+                    listTempCharacter.Add(itemCharacter);
                 }
             }
-            if (listData.Count == 0)
+            CharacterBean baseCharacterData = null;
+            if (listTempCharacter.Count == 0)
             {
-                CharacterBean itemCharacter =  RandomUtil.GetRandomDataByList(listCharacter);
-                listData.Add(itemCharacter);
-                listData.Add(itemCharacter);
-                listData.Add(itemCharacter);
+                baseCharacterData =  RandomUtil.GetRandomDataByList(listCharacter);
             }
+            else
+            {
+                baseCharacterData = RandomUtil.GetRandomDataByList(listTempCharacter);
+            }
+
+            //随机生成身体数据
+            CharacterBean characterOne = ClassUtil.DeepCopyByReflect(baseCharacterData);
+            characterOne.body.CreateRandomBody(characterBodyManager);
+            listData.Add(characterOne);
+            CharacterBean characterTwo = ClassUtil.DeepCopyByReflect(baseCharacterData);
+            characterTwo.body.CreateRandomBody(characterBodyManager);
+            listData.Add(characterTwo);
+            CharacterBean characterThree = ClassUtil.DeepCopyByReflect(baseCharacterData);
+            characterThree.body.CreateRandomBody(characterBodyManager);
+            listData.Add(characterThree);
 
         }
 
