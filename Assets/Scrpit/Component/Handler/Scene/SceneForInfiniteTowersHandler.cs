@@ -83,6 +83,9 @@ public class SceneForInfiniteTowersHandler : BaseHandler,IBaseObserver
 
     public void NextLayer(UserInfiniteTowersBean infiniteTowersData)
     {
+        //清理一下系统
+        SystemUtil.GCCollect();
+
         this.infiniteTowersData = infiniteTowersData;
         //获取战斗数据
         MiniGameCombatBean gameCombatData = InitCombat(infiniteTowersData);

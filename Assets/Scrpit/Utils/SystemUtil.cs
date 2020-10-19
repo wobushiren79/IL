@@ -38,4 +38,15 @@ public class SystemUtil
         }
         return System.Guid.NewGuid().ToString(uuidMark);
     }
+
+    /// <summary>
+    /// 垃圾回收
+    /// </summary>
+    public static void GCCollect()
+    {
+        //资源卸载
+        Resources.UnloadUnusedAssets();
+        //垃圾回收
+        System.GC.Collect();
+    }
 }

@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class SceneUtil {
+public class SceneUtil
+{
 
     public static void SceneChange(ScenesEnum scenenName)
     {
@@ -11,7 +12,8 @@ public class SceneUtil {
         string beforeSceneName = SceneManager.GetActiveScene().name;
         GameCommonInfo.ScenesChangeData.beforeScene = EnumUtil.GetEnum<ScenesEnum>(beforeSceneName);
         GameCommonInfo.ScenesChangeData.loadingScene = scenenName;
-        SceneManager.LoadSceneAsync(EnumUtil.GetEnumName(ScenesEnum.LoadingScene));
+        //SceneManager.LoadSceneAsync(EnumUtil.GetEnumName(ScenesEnum.LoadingScene));
+        SceneManager.LoadScene(EnumUtil.GetEnumName(ScenesEnum.LoadingScene));
     }
 
     /// <summary>
@@ -22,7 +24,7 @@ public class SceneUtil {
     {
         //获取当前场景名字
         string sceneName = SceneManager.GetActiveScene().name;
-       return EnumUtil.GetEnum<ScenesEnum>(sceneName);
+        return EnumUtil.GetEnum<ScenesEnum>(sceneName);
     }
 
 }
