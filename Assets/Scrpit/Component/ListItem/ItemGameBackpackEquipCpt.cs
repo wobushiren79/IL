@@ -75,6 +75,8 @@ public class ItemGameBackpackEquipCpt : ItemGameBackpackCpt, SkillInfoManager.IC
 
     }
 
+
+
     #region  装备回调
     public override void SelectionUse(PopupItemsSelection view)
     {
@@ -92,12 +94,25 @@ public class ItemGameBackpackEquipCpt : ItemGameBackpackCpt, SkillInfoManager.IC
                 }
                 else
                 {
-                    //学习该图书
-                    characterData.attributes.LearnBook(itemsInfoBean.id);
-                    characterData.attributes.AddAttributes(itemsInfoBean);
-                    string toastStr = string.Format(GameCommonInfo.GetUITextById(1008), characterData.baseInfo.name, itemsInfoBean.name);
-                    toastManager.ToastHint(ivIcon.sprite, toastStr);
-                    RefreshItems(itemsInfoBean.id, -1);
+                    if (!CheckUtil.StringIsNull(itemsInfoBean.remark) && itemsInfoBean.remark.Equals("Recruit"))
+                    {
+                        //如果是只有招募NPC才能使用的书
+                        //判断是否是招募NPC
+                        if (characterData.baseInfo.characterType == (int)NpcTypeEnum.RecruitTown
+                            ||(characterData.npcInfoData!=null && characterData.npcInfoData.GetNpcType() == NpcTypeEnum.RecruitTown))
+                        {
+                            //学习该图书
+                            LearnBook();
+                        }
+                        else
+                        {
+                            toastManager.ToastHint(GameCommonInfo.GetUITextById(1035));
+                        }
+                    }
+                    else
+                    {
+                        LearnBook();
+                    }
                 }
                 break;
             case GeneralEnum.SkillBook:
@@ -170,8 +185,6 @@ public class ItemGameBackpackEquipCpt : ItemGameBackpackCpt, SkillInfoManager.IC
         }
      
     }
-
-
     #endregion
 
 
@@ -206,4 +219,18 @@ public class ItemGameBackpackEquipCpt : ItemGameBackpackCpt, SkillInfoManager.IC
         }
     }
     #endregion
+
+    /// <summary>
+    /// 学习书籍
+    /// </summary>
+    protected void LearnBook()
+    {
+        //学习该图书
+        ToastManager toastManager = uiGameManager.toastManager;
+        characterData.attributes.LearnBook(itemsInfoBean.id);
+        characterData.attributes.AddAttributes(itemsInfoBean);
+        string toastStr = string.Format(GameCommonInfo.GetUITextById(1008), characterData.baseInfo.name, itemsInfoBean.name);
+        toastManager.ToastHint(ivIcon.sprite, toastStr);
+        RefreshItems(itemsInfoBean.id, -1);
+    }
 }

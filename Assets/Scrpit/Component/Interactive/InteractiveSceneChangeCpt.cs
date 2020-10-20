@@ -21,14 +21,32 @@ public class InteractiveSceneChangeCpt : BaseInteractiveCpt
     {
         if (Input.GetButtonDown(InputInfo.Interactive_E))
         {
-            if(changeScene== ScenesEnum.GameSquareScene
-                || changeScene == ScenesEnum.GameForestScene)
+            if(changeScene== ScenesEnum.GameSquareScene || changeScene == ScenesEnum.GameForestScene)
             {
                 toastManager.ToastHint("您被不可思议的力量阻挡了去路（暂未开放）");
             }
             else
             {
-                SceneUtil.SceneChange(changeScene);
+                if (changeScene == ScenesEnum.GameMountainScene)
+                {
+                    //如果山顶 特殊天气不能前往
+                    WeatherBean weatherData = GameCommonInfo.CurrentDayData.weatherToday;
+                    if (weatherData!= null && 
+                        (weatherData.weatherType == WeatherTypeEnum.Cloudy
+                        || weatherData.weatherType == WeatherTypeEnum.Sunny))
+                    {
+                        SceneUtil.SceneChange(changeScene);
+                    }
+                    else
+                    {
+                        toastManager.ToastHint(GameCommonInfo.GetUITextById(1321));
+                    }
+                }
+                else
+                {
+
+                    SceneUtil.SceneChange(changeScene);
+                }
             }     
         }
     }

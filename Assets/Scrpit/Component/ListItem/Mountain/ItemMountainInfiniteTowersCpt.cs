@@ -3,7 +3,7 @@ using UnityEditor;
 using UnityEngine.UI;
 using System.Collections.Generic;
 
-public class ItemMountainInfiniteTowersCpt : ItemGameBaseCpt
+public class ItemMountainInfiniteTowersCpt : ItemGameBaseCpt,DialogView.IDialogCallBack
 {
     public Text tvLayer;
     public Text tvIsSend;
@@ -81,16 +81,10 @@ public class ItemMountainInfiniteTowersCpt : ItemGameBaseCpt
     public void OnClickForCancel()
     {
         UIGameManager uiGameManager = GetUIManager<UIGameManager>();
-        if (infiniteTowersData.isSend)
-        {
-            foreach (string memberId in infiniteTowersData.listMembers)
-            {
-                CharacterBean characterData = uiGameManager.gameDataManager.gameData.GetCharacterDataById(memberId);
-                characterData.baseInfo.SetWorkerStatus(WorkerStatusEnum.Rest);
-            }
-        }
-        uiGameManager.gameDataManager.gameData.RemoveInfiniteTowersData(infiniteTowersData);
-        uiComponent.RefreshUI();
+        DialogBean dialogData = new DialogBean();
+        dialogData.content = GameCommonInfo.GetUITextById(3111);
+        dialogData.dialogPosition = 0;
+        uiGameManager.dialogManager.CreateDialog(DialogEnum.Normal, this, dialogData);
     }
 
     /// <summary>
@@ -115,4 +109,30 @@ public class ItemMountainInfiniteTowersCpt : ItemGameBaseCpt
         GameCommonInfo.SetInfiniteTowersPrepareData(infiniteTowersData);
         SceneUtil.SceneChange(ScenesEnum.GameInfiniteTowersScene);
     }
+
+    #region 确认回调
+    public void Submit(DialogView dialogView, DialogBean dialogBean)
+    {
+        if (dialogBean.dialogPosition == 0)
+        {
+            //删除确认
+            UIGameManager uiGameManager = GetUIManager<UIGameManager>();
+            if (infiniteTowersData.isSend)
+            {
+                foreach (string memberId in infiniteTowersData.listMembers)
+                {
+                    CharacterBean characterData = uiGameManager.gameDataManager.gameData.GetCharacterDataById(memberId);
+                    characterData.baseInfo.SetWorkerStatus(WorkerStatusEnum.Rest);
+                }
+            }
+            uiGameManager.gameDataManager.gameData.RemoveInfiniteTowersData(infiniteTowersData);
+            uiComponent.RefreshUI();
+        }
+    }
+
+    public void Cancel(DialogView dialogView, DialogBean dialogBean)
+    {
+
+    }
+    #endregion
 }

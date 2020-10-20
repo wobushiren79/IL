@@ -33,6 +33,7 @@ public class ItemsInfoBean : BaseBean
     public string content;//内容
     public int rarity;//稀有度
 
+    public string remark;//备注
     public ItemsInfoBean()
     {
 
