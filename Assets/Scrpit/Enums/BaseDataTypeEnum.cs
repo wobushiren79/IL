@@ -66,4 +66,27 @@ public enum BaseDataTypeEnum
     BedForResearchPrice1 = 4301,
     BedForResearchPrice2 = 4302,
     BedForResearchPrice3 = 4303,
+
+    InfiniteTowersBossForLevel1 = 5001,
+    InfiniteTowersBossForLevel2 = 5002,
+    InfiniteTowersBossForLevel3 = 5003,
+    InfiniteTowersBossForLevel4 = 5004,
+
+    InfiniteTowersNormalRewardForLevel1 = 5101,
+    InfiniteTowersNormalRewardForLevel2 = 5102,
+    InfiniteTowersNormalRewardForLevel3 = 5103,
+    InfiniteTowersNormalRewardForLevel4 = 5104,
+    InfiniteTowersNormalBuildRewardForLevel1 = 5111,
+    InfiniteTowersNormalBuildRewardForLevel2 = 5112,
+    InfiniteTowersNormalBuildRewardForLevel3 = 5113,
+    InfiniteTowersNormalBuildRewardForLevel4 = 5114,
+
+    InfiniteTowersRareRewardForLevel1 = 5201,
+    InfiniteTowersRareRewardForLevel2 = 5202,
+    InfiniteTowersRareRewardForLevel3 = 5203,
+    InfiniteTowersRareRewardForLevel4 = 5204,
+    InfiniteTowersRareBuildRewardForLevel1 = 5211,
+    InfiniteTowersRareBuildRewardForLevel2 = 5212,
+    InfiniteTowersRareBuildRewardForLevel3 = 5213,
+    InfiniteTowersRareBuildRewardForLevel4 = 5214,
 }

@@ -107,58 +107,7 @@ public class NpcInfoManager : BaseManager, INpcInfoView
         return listData;
     }
 
-    public List<CharacterBean> GetCharacterDataByInfiniteTowersLayer(CharacterBodyManager characterBodyManager, long layer)
-    {
-        List<CharacterBean> listData = new List<CharacterBean>();
 
-        if (layer % 10 == 0)
-        {
-            //Boss层数
-
-        }
-        else
-        {
-            //普通层数
-            List<CharacterBean> listCharacter = GetCharacterDataByType(NpcTypeEnum.GuestTeam);
-            List<CharacterBean> listTempCharacter = new List<CharacterBean>();
-            if(!CheckUtil.ListIsNull(listCharacter))
-            for (int i = 0; i < listCharacter.Count; i++)
-            {
-                CharacterBean itemCharacter = listCharacter[i];
-     
-                //判断层数
-                int level = int.Parse(itemCharacter.npcInfoData.remark);
-                int layerLevel = Mathf.FloorToInt(layer / 10f);
-                if (layerLevel <= 15 && level == layerLevel)
-                {
-                    listTempCharacter.Add(itemCharacter);
-                }
-            }
-            CharacterBean baseCharacterData = null;
-            if (listTempCharacter.Count == 0)
-            {
-                baseCharacterData =  RandomUtil.GetRandomDataByList(listCharacter);
-            }
-            else
-            {
-                baseCharacterData = RandomUtil.GetRandomDataByList(listTempCharacter);
-            }
-
-            //随机生成身体数据
-            CharacterBean characterOne = ClassUtil.DeepCopyByReflect(baseCharacterData);
-            characterOne.body.CreateRandomBody(characterBodyManager);
-            listData.Add(characterOne);
-            CharacterBean characterTwo = ClassUtil.DeepCopyByReflect(baseCharacterData);
-            characterTwo.body.CreateRandomBody(characterBodyManager);
-            listData.Add(characterTwo);
-            CharacterBean characterThree = ClassUtil.DeepCopyByReflect(baseCharacterData);
-            characterThree.body.CreateRandomBody(characterBodyManager);
-            listData.Add(characterThree);
-
-        }
-
-        return listData;
-    }
 
     /// <summary>
     /// 获取所有角色数据
