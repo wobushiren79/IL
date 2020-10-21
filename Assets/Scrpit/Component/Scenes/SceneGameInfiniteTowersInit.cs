@@ -10,18 +10,22 @@ public class SceneGameInfiniteTowersInit : BaseNormalSceneInit
     {
         base.Awake();
         infiniteTowersHandler = Find<SceneForInfiniteTowersHandler>(ImportantTypeEnum.SceneHandler);
+
     }
 
     public override void Start()
     {
         base.Start();
+        //获取NPC
+        npcTeamManager.npcTeamController.GetNpcTeamByType(NpcTeamTypeEnum.InfiniteTowersBoss);
+
         infiniteTowersData = GameCommonInfo.InfiniteTowersData;
 
         //测试
         if (infiniteTowersData == null)
         {
             infiniteTowersData = new UserInfiniteTowersBean();
-            infiniteTowersData.layer = 1;
+            infiniteTowersData.layer = 10;
             infiniteTowersData.listMembers.Add("");
         }
         

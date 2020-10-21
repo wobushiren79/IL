@@ -12,7 +12,7 @@ public class NpcTeamManager : BaseManager, INpcTeamView
     public List<NpcTeamBean> listSundryTeam;
     public List<NpcTeamBean> listEntertainTeam;
     public List<NpcTeamBean> listDisappointedTeam;
-
+    public List<NpcTeamBean> listInfiniteTowersBossTeam;
     private void Awake()
     {
         npcTeamController = new NpcTeamController(this, this);
@@ -45,6 +45,9 @@ public class NpcTeamManager : BaseManager, INpcTeamView
                 break;
             case NpcTeamTypeEnum.Disappointed:
                 listData = listDisappointedTeam;
+                break;
+            case NpcTeamTypeEnum.InfiniteTowersBoss:
+                listData = listInfiniteTowersBossTeam;
                 break;
         }
         if (listData == null)
@@ -98,6 +101,16 @@ public class NpcTeamManager : BaseManager, INpcTeamView
     }
 
     /// <summary>
+    /// 获取无尽之塔BOSS队伍
+    /// </summary>
+    /// <param name="teamId"></param>
+    /// <returns></returns>
+    public NpcTeamBean GetInfiniteTowerBossTeam(long teamId)
+    {
+        return GetTeam(teamId, listInfiniteTowersBossTeam);
+    }
+
+    /// <summary>
     /// 获取转换者队伍
     /// </summary>
     /// <param name="teamId"></param>
@@ -120,7 +133,7 @@ public class NpcTeamManager : BaseManager, INpcTeamView
     {
         foreach (NpcTeamBean itemTeam in listData)
         {
-            if (itemTeam.id==teamId)
+            if (itemTeam.id == teamId)
             {
                 return itemTeam;
             }
@@ -169,6 +182,9 @@ public class NpcTeamManager : BaseManager, INpcTeamView
                 break;
             case NpcTeamTypeEnum.Disappointed:
                 listDisappointedTeam = listData;
+                break;
+            case NpcTeamTypeEnum.InfiniteTowersBoss:
+                listInfiniteTowersBossTeam = listData;
                 break;
         }
     }

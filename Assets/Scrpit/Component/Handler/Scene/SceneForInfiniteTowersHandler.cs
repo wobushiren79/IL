@@ -10,6 +10,7 @@ public class SceneForInfiniteTowersHandler : BaseHandler, IBaseObserver
     protected GameDataManager gameDataManager;
     protected GameItemsManager gameItemsManager;
     protected NpcInfoManager npcInfoManager;
+    protected NpcTeamManager npcTeamManager;
     protected UIGameManager uiGameManager;
     protected CharacterBodyManager characterBodyManager;
 
@@ -20,10 +21,13 @@ public class SceneForInfiniteTowersHandler : BaseHandler, IBaseObserver
         infiniteTowersManager = Find<SceneInfiniteTowersManager>(ImportantTypeEnum.SceneManager);
         gameItemsManager = Find<GameItemsManager>(ImportantTypeEnum.GameItemsManager);
         npcInfoManager = Find<NpcInfoManager>(ImportantTypeEnum.NpcManager);
+        npcTeamManager = Find<NpcTeamManager>(ImportantTypeEnum.NpcManager);
         gameDataManager = Find<GameDataManager>(ImportantTypeEnum.GameDataManager);
         uiGameManager = Find<UIGameManager>(ImportantTypeEnum.GameUI);
         characterBodyManager = Find<CharacterBodyManager>(ImportantTypeEnum.CharacterManager);
-
+    }
+    public void Start()
+    {
         combatHandler.AddObserver(this);
     }
 
@@ -60,12 +64,13 @@ public class SceneForInfiniteTowersHandler : BaseHandler, IBaseObserver
         }
 
         //获取敌方数据
-        List<CharacterBean> listEnemyData = infiniteTowersManager.GetCharacterDataByInfiniteTowersLayer(npcInfoManager, characterBodyManager, infiniteTowersData.layer);
+        List<CharacterBean> listEnemyData = infiniteTowersManager.GetCharacterDataByInfiniteTowersLayer(npcTeamManager,npcInfoManager, characterBodyManager, infiniteTowersData.layer);
         //设置敌方能力
         foreach (CharacterBean itemEnemyData in listEnemyData)
         {
             CharacterAttributesBean enemyAttributes = infiniteTowersManager.GetEnemyAttributesByLayer(infiniteTowersData.layer);
-            itemEnemyData.attributes.InitAttributes(enemyAttributes);
+            if (enemyAttributes != null)
+                itemEnemyData.attributes.InitAttributes(enemyAttributes);
         }
 
         //初始化战斗数据
@@ -75,10 +80,10 @@ public class SceneForInfiniteTowersHandler : BaseHandler, IBaseObserver
         miniGameCombat.InitData(gameItemsManager, listUserData, listEnemyData);
 
         //添加奖励装备
-        List<RewardTypeBean> listRewardEquip = infiniteTowersManager.GetEnemyEquip(listEnemyData, infiniteTowersData.layer, totalLucky);
+        List<RewardTypeBean> listRewardEquip = RewardTypeEnumTools.GetRewardEnemyEquipForInfiniteTowers(listEnemyData, infiniteTowersData.layer, totalLucky);
         miniGameCombat.listReward.AddRange(listRewardEquip);
         //添加奖励物品
-        List<RewardTypeBean> listRewardItems = infiniteTowersManager.GetRewardByLayer(infiniteTowersData.layer, totalLucky);
+        List<RewardTypeBean> listRewardItems = RewardTypeEnumTools.GetRewardItemsForInfiniteTowers(infiniteTowersData.layer, totalLucky);
         miniGameCombat.listReward.AddRange(listRewardItems);
         return miniGameCombat;
     }

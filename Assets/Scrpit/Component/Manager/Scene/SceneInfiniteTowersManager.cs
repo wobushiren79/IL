@@ -63,159 +63,74 @@ public class SceneInfiniteTowersManager : BaseMonoBehaviour
     /// <returns></returns>
     public CharacterAttributesBean GetEnemyAttributesByLayer(int layer)
     {
-        CharacterAttributesBean characterAttributes = new CharacterAttributesBean();
-        int baseAttributes = layer + 4;
-        characterAttributes.InitAttributes(
-            baseAttributes * 10,
-            baseAttributes,
-            baseAttributes + Random.Range(-1, 2),
-            baseAttributes,
-            baseAttributes,
-            baseAttributes,
-            baseAttributes);
-        return characterAttributes;
-    }
-
-    /// <summary>
-    /// 根据层数获取奖励
-    /// </summary>
-    /// <param name="layer"></param>
-    /// <param name="normalBuildRate"></param>
-    /// <returns></returns>
-    public List<RewardTypeBean> GetRewardByLayer(int layer,int totalLucky)
-    {
-        List<RewardTypeBean> listReward = new List<RewardTypeBean>();
-        long addExp = 0;
-        long addMoneyS = 0;
-
-        //获取稀有物品概率
-        float normalBuildRate = 0.25f + 0.0025f * (totalLucky / 3f);
-        float rateRate = 0.05f + 0.0005f * totalLucky;
-
         if (layer % 10 == 0)
         {
-            //添加经验奖励
-            addExp = layer * 10;
-            //添加金钱奖励
-            addMoneyS = layer * 100;
-            //BOSS奖励
-            string rewardForNormalStr = "";
-            string rewardForRareStr = "";
-            string rewardForNormalBuildStr = "";
-            string rewardForRareBuildStr = "";
-            switch (layer)
-            {
-                case 10:
-                case 20:
-                case 30:
-                    GameCommonInfo.baseDataController.GetBaseData(BaseDataTypeEnum.InfiniteTowersNormalRewardForLevel1, out rewardForNormalStr);
-                    GameCommonInfo.baseDataController.GetBaseData(BaseDataTypeEnum.InfiniteTowersRareRewardForLevel1, out rewardForRareStr);
-                    GameCommonInfo.baseDataController.GetBaseData(BaseDataTypeEnum.InfiniteTowersNormalBuildRewardForLevel1, out rewardForNormalBuildStr);
-                    GameCommonInfo.baseDataController.GetBaseData(BaseDataTypeEnum.InfiniteTowersRareBuildRewardForLevel1, out rewardForRareBuildStr);
-                    break;
-                case 40:
-                case 50:
-                case 60:
-                    GameCommonInfo.baseDataController.GetBaseData(BaseDataTypeEnum.InfiniteTowersNormalRewardForLevel2, out rewardForNormalStr);
-                    GameCommonInfo.baseDataController.GetBaseData(BaseDataTypeEnum.InfiniteTowersRareRewardForLevel2, out rewardForRareStr);
-                    GameCommonInfo.baseDataController.GetBaseData(BaseDataTypeEnum.InfiniteTowersNormalBuildRewardForLevel2, out rewardForNormalBuildStr);
-                    GameCommonInfo.baseDataController.GetBaseData(BaseDataTypeEnum.InfiniteTowersRareBuildRewardForLevel2, out rewardForRareBuildStr);
-                    break;
-                case 70:
-                case 80:
-                case 90:
-                    GameCommonInfo.baseDataController.GetBaseData(BaseDataTypeEnum.InfiniteTowersNormalRewardForLevel3, out rewardForNormalStr);
-                    GameCommonInfo.baseDataController.GetBaseData(BaseDataTypeEnum.InfiniteTowersRareRewardForLevel3, out rewardForRareStr);
-                    GameCommonInfo.baseDataController.GetBaseData(BaseDataTypeEnum.InfiniteTowersNormalBuildRewardForLevel3, out rewardForNormalBuildStr);
-                    GameCommonInfo.baseDataController.GetBaseData(BaseDataTypeEnum.InfiniteTowersRareBuildRewardForLevel3, out rewardForRareBuildStr);
-                    break;
-                case 100:
-                default:
-                    GameCommonInfo.baseDataController.GetBaseData(BaseDataTypeEnum.InfiniteTowersNormalRewardForLevel4, out rewardForNormalStr);
-                    GameCommonInfo.baseDataController.GetBaseData(BaseDataTypeEnum.InfiniteTowersRareRewardForLevel4, out rewardForRareStr);
-                    GameCommonInfo.baseDataController.GetBaseData(BaseDataTypeEnum.InfiniteTowersNormalBuildRewardForLevel4, out rewardForNormalBuildStr);
-                    GameCommonInfo.baseDataController.GetBaseData(BaseDataTypeEnum.InfiniteTowersRareBuildRewardForLevel4, out rewardForRareBuildStr);
-                    break;
-            }
-            if (CheckUtil.StringIsNull(rewardForNormalStr))
-            {
-                //必定随机获得一个物品
-                RewardTypeBean rewardForItems = GetRandomRewardForData(RewardTypeEnum.AddItems, rewardForNormalStr);
-                listReward.Add(rewardForItems);
-                //有一定概率获得建筑物
-                float randomTemp = Random.Range(0f, 1f);
-                if (!CheckUtil.StringIsNull(rewardForNormalBuildStr) && randomTemp <= normalBuildRate)
-                {
-                    RewardTypeBean rewardForBuild = GetRandomRewardForData(RewardTypeEnum.AddBuildItems, rewardForNormalBuildStr);
-                    listReward.Add(rewardForBuild);
-                }
-            }
-            if (CheckUtil.StringIsNull(rewardForRareStr))
-            {
-                //有一定概率获得稀有物品
-                float randomTemp = Random.Range(0f, 1f);
-                if (randomTemp <= rateRate)
-                {
-                    RewardTypeBean rewardForItems = GetRandomRewardForData(RewardTypeEnum.AddItems, rewardForRareStr);
-                    listReward.Add(rewardForItems);
-                }
-            }
+            return null;
         }
         else
         {
-            //添加经验奖励
-            addExp = layer;
-            //添加金钱奖励
-            addMoneyS = layer * 10;
+            CharacterAttributesBean characterAttributes = new CharacterAttributesBean();
+            int baseAttributes = layer + 4;
+            characterAttributes.InitAttributes(
+                baseAttributes * 10,
+                baseAttributes,
+                baseAttributes + Random.Range(-1, 2),
+                baseAttributes,
+                baseAttributes,
+                baseAttributes,
+                baseAttributes);
+            return characterAttributes;
         }
-
-        RewardTypeBean rewardForExp = new RewardTypeBean(RewardTypeEnum.AddBeaterExp, addExp + "");
-        listReward.Add(rewardForExp);
-        RewardTypeBean rewardForMoneyS = new RewardTypeBean(RewardTypeEnum.AddMoneyS, addMoneyS + "");
-        listReward.Add(rewardForMoneyS);
-
-        return listReward;
     }
 
-    /// <summary>
-    /// 获取运气获取敌人装备
-    /// </summary>
-    /// <returns></returns>
-    public List<RewardTypeBean> GetEnemyEquip(List<CharacterBean> listEnemyData,int layer, int totalLucky)
-    {
-        List<RewardTypeBean> listReward = new List<RewardTypeBean>();
-        if (layer % 10 == 0)
-        {
-            float getRate = 0.1f + 0.001f * totalLucky;
-            float randomRate = Random.Range(0f, 1f);
-            if(randomRate <= getRate)
-            {
-                CharacterBean randomEnemy = RandomUtil.GetRandomDataByList(listEnemyData);
-                if (randomEnemy.equips.hatId != 0)
-                {
-                    listReward.Add(new RewardTypeBean(RewardTypeEnum.AddItems, randomEnemy.equips.hatId + ""));
-                }
-                if (randomEnemy.equips.clothesId != 0)
-                {
-                    listReward.Add(new RewardTypeBean(RewardTypeEnum.AddItems, randomEnemy.equips.clothesId + ""));
-                }
-                if (randomEnemy.equips.shoesId != 0)
-                {
-                    listReward.Add(new RewardTypeBean(RewardTypeEnum.AddItems, randomEnemy.equips.shoesId + ""));
-                }
-            }
-        }
-        return listReward;
-    }
 
-    public List<CharacterBean> GetCharacterDataByInfiniteTowersLayer(NpcInfoManager npcInfoManager, CharacterBodyManager characterBodyManager, long layer)
+
+    public List<CharacterBean> GetCharacterDataByInfiniteTowersLayer(NpcTeamManager npcTeamManager, NpcInfoManager npcInfoManager, CharacterBodyManager characterBodyManager, long layer)
     {
         List<CharacterBean> listData = new List<CharacterBean>();
 
         if (layer % 10 == 0)
         {
             //Boss层数
-
+            string bossTeamMembers = "";
+            switch (layer)
+            {
+                case 10:
+                case 20:
+                case 30:
+                    GameCommonInfo.baseDataController.GetBaseData(BaseDataTypeEnum.InfiniteTowersBossForLevel1, out bossTeamMembers);
+                    break;
+                case 40:
+                case 50:
+                case 60:
+                    GameCommonInfo.baseDataController.GetBaseData(BaseDataTypeEnum.InfiniteTowersBossForLevel2, out bossTeamMembers);
+                    break;
+                case 70:
+                case 80:
+                case 90:
+                    GameCommonInfo.baseDataController.GetBaseData(BaseDataTypeEnum.InfiniteTowersBossForLevel3, out bossTeamMembers);
+                    break;
+                default:
+                    GameCommonInfo.baseDataController.GetBaseData(BaseDataTypeEnum.InfiniteTowersBossForLevel4, out bossTeamMembers);
+                    break;
+            }
+            long randomBossTeam = StringUtil.SplitAndRandomForLong(bossTeamMembers, '|');
+            NpcTeamBean bossTeamData = npcTeamManager.GetInfiniteTowerBossTeam(randomBossTeam);
+            long[] membersIds = bossTeamData.GetTeamMembersId();
+            long[] bossId = bossTeamData.GetTeamLeaderId();
+            foreach (long itemMemberId in membersIds)
+            {
+                CharacterBean memberData = npcInfoManager.GetCharacterDataById(itemMemberId);
+                memberData.body.CreateRandomBody(characterBodyManager);
+                if (memberData != null)
+                    listData.Add(memberData);
+            }
+            foreach (long itemBossId in bossId)
+            {
+                CharacterBean bossData = npcInfoManager.GetCharacterDataById(itemBossId);
+                if (bossData != null)
+                    listData.Insert((membersIds.Length / 2), bossData);
+            }
         }
         else
         {
@@ -262,15 +177,5 @@ public class SceneInfiniteTowersManager : BaseMonoBehaviour
     }
 
 
-    protected RewardTypeBean GetRandomRewardForData(RewardTypeEnum rewardType, string rewardListStr)
-    {
-        if (CheckUtil.StringIsNull(rewardListStr))
-        {
-            return null;
-        }
-        List<string> listReward = StringUtil.SplitBySubstringForListStr(rewardListStr, '|');
-        string randomReward = RandomUtil.GetRandomDataByList(listReward);
-        RewardTypeBean rewardData = new RewardTypeBean(rewardType, randomReward + "");
-        return rewardData;
-    }
+
 }
