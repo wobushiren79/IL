@@ -61,15 +61,23 @@ public class SceneInfiniteTowersManager : BaseMonoBehaviour
     /// </summary>
     /// <param name="layer"></param>
     /// <returns></returns>
-    public CharacterAttributesBean GetEnemyAttributesByLayer(int layer)
+    public CharacterAttributesBean GetEnemyAttributesByLayer(CharacterBean characterData,int layer)
     {
+        CharacterAttributesBean characterAttributes = new CharacterAttributesBean();
         if (layer % 10 == 0)
         {
-            return null;
+            int addRate = layer / 10;
+            characterAttributes.InitAttributes(
+                characterData.attributes.life * 10 * addRate,
+                characterData.attributes.cook * addRate,
+                characterData.attributes.speed * addRate,
+                characterData.attributes.account * addRate,
+                characterData.attributes.charm * addRate,
+                characterData.attributes.force * addRate,
+                characterData.attributes.lucky * addRate);
         }
         else
         {
-            CharacterAttributesBean characterAttributes = new CharacterAttributesBean();
             int baseAttributes = layer + 4;
             characterAttributes.InitAttributes(
                 baseAttributes * 10,
@@ -79,8 +87,8 @@ public class SceneInfiniteTowersManager : BaseMonoBehaviour
                 baseAttributes,
                 baseAttributes,
                 baseAttributes);
-            return characterAttributes;
         }
+        return characterAttributes;
     }
 
 
@@ -121,15 +129,20 @@ public class SceneInfiniteTowersManager : BaseMonoBehaviour
             foreach (long itemMemberId in membersIds)
             {
                 CharacterBean memberData = npcInfoManager.GetCharacterDataById(itemMemberId);
-                memberData.body.CreateRandomBody(characterBodyManager);
                 if (memberData != null)
+                {
+                    memberData.body.CreateRandomBody(characterBodyManager);
                     listData.Add(memberData);
+                }
             }
             foreach (long itemBossId in bossId)
             {
                 CharacterBean bossData = npcInfoManager.GetCharacterDataById(itemBossId);
                 if (bossData != null)
+                {
+                    bossData.body.CreateRandomBody(characterBodyManager);
                     listData.Insert((membersIds.Length / 2), bossData);
+                }   
             }
         }
         else

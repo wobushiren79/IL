@@ -68,7 +68,7 @@ public class SceneForInfiniteTowersHandler : BaseHandler, IBaseObserver
         //设置敌方能力
         foreach (CharacterBean itemEnemyData in listEnemyData)
         {
-            CharacterAttributesBean enemyAttributes = infiniteTowersManager.GetEnemyAttributesByLayer(infiniteTowersData.layer);
+            CharacterAttributesBean enemyAttributes = infiniteTowersManager.GetEnemyAttributesByLayer(itemEnemyData,infiniteTowersData.layer);
             if (enemyAttributes != null)
                 itemEnemyData.attributes.InitAttributes(enemyAttributes);
         }
