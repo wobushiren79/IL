@@ -13,6 +13,10 @@ public class GameDataHandler : BaseHandler, DialogView.IDialogCallBack, IBaseObs
         MenuResearchChange = 3,
         BedResearchChange = 4,
     }
+    //系统清理倒计时
+    protected int timeForSystemClear = 0;
+    //10分钟自动清理一次
+    protected int maxTimeForSystemClear = 600;
 
     protected GameDataManager gameDataManager;
     protected GameTimeHandler gameTimeHandler;
@@ -50,6 +54,7 @@ public class GameDataHandler : BaseHandler, DialogView.IDialogCallBack, IBaseObs
         {
             yield return new WaitForSecondsRealtime(1);
             HandleForPlayTime();
+            HandleForSystemClear();
         }
     }
 
@@ -76,6 +81,20 @@ public class GameDataHandler : BaseHandler, DialogView.IDialogCallBack, IBaseObs
     {
         if (gameDataManager != null)
             gameDataManager.gameData.playTime.AddTimeForHMS(0, 0, 1);
+    }
+
+
+    /// <summary>
+    /// 系统清理
+    /// </summary>
+    public void HandleForSystemClear()
+    {
+        timeForSystemClear++;
+        if (timeForSystemClear >= maxTimeForSystemClear)
+        {
+            SystemUtil.GCCollect();
+            timeForSystemClear = 0;
+        }
     }
 
     /// <summary>

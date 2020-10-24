@@ -597,7 +597,7 @@ public class RewardTypeEnumTools : DataTools
         else
         {
             //添加经验奖励
-            addExp = layer;
+            addExp = layer * 2;
             //添加金钱奖励
             addMoneyS = layer * 10;
         }

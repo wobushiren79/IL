@@ -588,16 +588,37 @@ public class ItemCreateWindowsEditor : EditorWindow, StoreInfoManager.ICallBack
         GUILayout.Label("创建物品");
         GUILayout.BeginHorizontal();
 
-        createItemType = (GeneralEnum)EditorGUILayout.EnumPopup("物品类型", createItemType);
+        createItemType = EditorUI.GUIEnum<GeneralEnum>("物品类型", (int)createItemType, 200);
         createItemsInfo.items_type = (int)createItemType;
 
-        GUILayout.Label("名字：");
-        createItemsInfo.name = EditorGUILayout.TextArea(createItemsInfo.name + "", GUILayout.Width(150), GUILayout.Height(20));
-
-        spriteCreateIcon = EditorGUILayout.ObjectField(new GUIContent("选择图片", ""), spriteCreateIcon, typeof(Sprite), true) as Sprite;
+        EditorUI.GUIText("名字：",50);
+        createItemsInfo.name = EditorUI.GUIEditorText(createItemsInfo.name + "",150);
+        
+        if (createItemType == GeneralEnum.Hat)
+        {
+            if (!createItemsInfo.name.Contains("-头"))
+            {
+                createItemsInfo.name += "-头";
+            }
+        }
+        else if (createItemType == GeneralEnum.Clothes)
+        {
+            if (!createItemsInfo.name.Contains("-衣"))
+            {
+                createItemsInfo.name += "-衣";
+            }
+        }
+        else if (createItemType == GeneralEnum.Shoes)
+        {
+            if (!createItemsInfo.name.Contains("-鞋"))
+            {
+                createItemsInfo.name += "-鞋";
+            }
+        }
+        spriteCreateIcon = EditorGUILayout.ObjectField(new GUIContent("选择图片", ""), spriteCreateIcon, typeof(Sprite), true, GUILayout.Width(250)) as Sprite;
         if (spriteCreateIcon)
         {
-            GUILayout.Label("icon_key：");
+            EditorUI.GUIText("icon_key：", 60);
             createItemsInfo.icon_key = EditorGUILayout.TextArea(spriteCreateIcon.name + "", GUILayout.Width(150), GUILayout.Height(20));
         }
 
@@ -652,7 +673,7 @@ public class ItemCreateWindowsEditor : EditorWindow, StoreInfoManager.ICallBack
         }
         else
         {
-            GUILayout.Label("输入ID");
+            EditorUI.GUIText("输入ID：", 50);
             inputId = long.Parse(EditorGUILayout.TextArea(inputId + "", GUILayout.Width(100), GUILayout.Height(20)));
         }
 
