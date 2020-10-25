@@ -68,7 +68,7 @@ public class SceneInfiniteTowersManager : BaseMonoBehaviour
         {
             int addRate = layer / 10;
             characterAttributes.InitAttributes(
-                characterData.attributes.life * 10 * addRate,
+                characterData.attributes.life * addRate,
                 characterData.attributes.cook * addRate,
                 characterData.attributes.speed * addRate,
                 characterData.attributes.account * addRate,
@@ -118,8 +118,18 @@ public class SceneInfiniteTowersManager : BaseMonoBehaviour
                 case 90:
                     GameCommonInfo.baseDataController.GetBaseData(BaseDataTypeEnum.InfiniteTowersBossForLevel3, out bossTeamMembers);
                     break;
-                default:
+                case 100:
+                case 110:
+                case 120:
                     GameCommonInfo.baseDataController.GetBaseData(BaseDataTypeEnum.InfiniteTowersBossForLevel4, out bossTeamMembers);
+                    break;
+                default:
+         
+                    GameCommonInfo.baseDataController.GetBaseData(BaseDataTypeEnum.InfiniteTowersBossForLevel1, out string level1);
+                    GameCommonInfo.baseDataController.GetBaseData(BaseDataTypeEnum.InfiniteTowersBossForLevel2, out string level2);
+                    GameCommonInfo.baseDataController.GetBaseData(BaseDataTypeEnum.InfiniteTowersBossForLevel2, out string level3);
+                    GameCommonInfo.baseDataController.GetBaseData(BaseDataTypeEnum.InfiniteTowersBossForLevel2, out string level4);
+                    bossTeamMembers = level1 + "|" + level2 + "|" + level3 + "|" + level4; 
                     break;
             }
             long randomBossTeam = StringUtil.SplitAndRandomForLong(bossTeamMembers, '|');
@@ -140,7 +150,7 @@ public class SceneInfiniteTowersManager : BaseMonoBehaviour
                 CharacterBean bossData = npcInfoManager.GetCharacterDataById(itemBossId);
                 if (bossData != null)
                 {
-                    bossData.body.CreateRandomBody(characterBodyManager);
+                    //bossData.body.CreateRandomBody(characterBodyManager);
                     listData.Insert((membersIds.Length / 2), bossData);
                 }   
             }

@@ -367,7 +367,7 @@ public class ItemTownGuildImproveCharacterCpt : ItemGameBaseCpt, DialogView.IDia
             //扣除时间
             gameTimeHandler.AddHour(miniGameData.preGameTime);
 
-            bool isWin = characterData.CalculationGuildSendWin(gameItemsManager);
+            bool isWin = characterData.CalculationGuildSendWin(gameItemsManager, miniGameData.gameType);
             if (isWin)
             {
                 toastManager.ToastHint(GameCommonInfo.GetUITextById(7021));

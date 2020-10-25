@@ -31,17 +31,16 @@ public class MiniGameCharacterForCombatBean : MiniGameCharacterBean
     }
 
     /// <summary>
-    /// 获取所有效果的伤害加成
+    /// 获取所有伤害减免
     /// </summary>
     /// <returns></returns>
-    public int GetEffectDamageRate(GameItemsManager gameItemsManager, int damage)
+    public int GetTotalDef(GameItemsManager gameItemsManager, int damage)
     {
-        List<EffectTypeBean> listEffect = new List<EffectTypeBean>();
         foreach (MiniGameCombatEffectBean itemData in listCombatEffect)
         {
-            listEffect.Add(itemData.effectTypeData);
+            damage = EffectTypeEnumTools.GetTotalDef(gameItemsManager, characterData, itemData.listEffectTypeData, damage);
         }
-        return EffectTypeEnumTools.GetEffectDamageRate(gameItemsManager, characterData, listEffect, damage);
+        return damage;
     }
 
     /// <summary>
@@ -49,14 +48,13 @@ public class MiniGameCharacterForCombatBean : MiniGameCharacterBean
     /// </summary>
     /// <param name="force"></param>
     /// <returns></returns>
-    public int GetEffectForceRate(int force)
+    public int GetTotalForce(int force)
     {
-        List<EffectTypeBean> listEffect = new List<EffectTypeBean>();
         foreach (MiniGameCombatEffectBean itemData in listCombatEffect)
         {
-            listEffect.Add(itemData.effectTypeData);
+            force = EffectTypeEnumTools.GetTotalForce(itemData.listEffectTypeData, force);
         }
-        return EffectTypeEnumTools.GetEffectForceRate(listEffect, force);
+        return force;
     }
 
     /// <summary>
@@ -66,11 +64,10 @@ public class MiniGameCharacterForCombatBean : MiniGameCharacterBean
     /// <returns></returns>
     public int GetEffectSpeedRate(int speed)
     {
-        List<EffectTypeBean> listEffect = new List<EffectTypeBean>();
         foreach (MiniGameCombatEffectBean itemData in listCombatEffect)
         {
-            listEffect.Add(itemData.effectTypeData);
+            speed = EffectTypeEnumTools.GetTotalSpeed(itemData.listEffectTypeData, speed);
         }
-        return EffectTypeEnumTools.GetEffectSpeedRate(listEffect, speed);
+        return speed;
     }
 }

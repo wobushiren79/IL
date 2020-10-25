@@ -246,19 +246,16 @@ public class NpcAIMiniGameCombatCpt : BaseNpcAI
         for (int i = 0; i < characterMiniGameData.listCombatEffect.Count; i++)
         {
             MiniGameCombatEffectBean itemCombatEffect = characterMiniGameData.listCombatEffect[i];
-            if (itemCombatEffect.effectTypeData.dataType== EffectTypeEnum.AddLife
-                || itemCombatEffect.effectTypeData.dataType == EffectTypeEnum.Damage
-                || itemCombatEffect.effectTypeData.dataType == EffectTypeEnum.DamageRate
-                || itemCombatEffect.effectTypeData.dataType == EffectTypeEnum.DamageRateForForce
-                || itemCombatEffect.effectTypeData.dataType == EffectTypeEnum.DamageRateForSpeed
-                  )
+            CombatEffectExecute(itemCombatEffect, out bool isCharacterDead);
+            //如果角色已经死了 则不进行一下操作
+            if (isCharacterDead)
+                break;
+            //检测是否需要延迟播放
+            if (itemCombatEffect.CheckIsDelay())
             {
-                CombatEffectExecute(itemCombatEffect, out bool isCharacterDead);
-                //如果角色已经死了 则不进行一下操作
-                if (isCharacterDead)
-                    break;
                 yield return new WaitForSeconds(0.5f);
             }
+    
             itemCombatEffect.durationForRound--;
             if (itemCombatEffect.durationForRound <= 0)
             {
@@ -280,7 +277,7 @@ public class NpcAIMiniGameCombatCpt : BaseNpcAI
         //播放粒子特效
         gameCombatBuilder.CreateCombatEffect(itemCombatEffect.effectPSName,transform.position + new Vector3(0,0.5f));
         //完成数据
-        itemCombatEffect.CompleteEffect(gameItemsManager,audioHandler, characterMiniGameData,this);
+        itemCombatEffect.CompleteEffect(gameItemsManager,audioHandler, characterMiniGameData);
         //检测角色血量
         gameCombatHandler.CheckCharacterLife();
 
@@ -299,26 +296,20 @@ public class NpcAIMiniGameCombatCpt : BaseNpcAI
     /// </summary>
     /// <param name="effectTypeData"></param>
     /// <param name="effectDetailsData"></param>
-    public void AddCombatEffect(string effectTypeData, string effectDetailsData)
+    public void AddCombatEffect(NpcAIMiniGameCombatCpt actionCharacter,string effectTypeData, string effectDetailsData)
     {
         List<EffectTypeBean> listTypeData = EffectTypeEnumTools.GetListEffectData(effectTypeData);
         EffectDetailsEnumTools.GetEffectDetailsForCombat(effectDetailsData, out string effectPSName, out int durationForRound);
+        MiniGameCombatEffectBean gameCombatEffectData = new MiniGameCombatEffectBean();
+        gameCombatEffectData.listEffectTypeData = listTypeData;
+        gameCombatEffectData.durationForRound = durationForRound;
+        gameCombatEffectData.effectPSName = effectPSName;
+        gameCombatEffectData.iconMarkId = SystemUtil.GetUUID(SystemUtil.UUIDTypeEnum.N);
+        gameCombatEffectData.actionCharacter = actionCharacter;
+        gameCombatEffectData.targetCharacter = this;
         foreach (EffectTypeBean itemType in listTypeData)
         {
             EffectTypeEnumTools.GetEffectDetails(iconDataManager ,itemType);
-            MiniGameCombatEffectBean gameCombatEffectData = new MiniGameCombatEffectBean();
-            gameCombatEffectData.effectTypeData = itemType;
-            gameCombatEffectData.durationForRound = durationForRound;
-            gameCombatEffectData.effectPSName = effectPSName;
-            gameCombatEffectData.iconMarkId = SystemUtil.GetUUID( SystemUtil.UUIDTypeEnum.N);
-
-            if (gameCombatEffectData.effectTypeData.dataType == EffectTypeEnum.Damage)
-            {
-                //所有伤害一定要加damage
-                //如果是伤害计算，则一开始就要保存对手伤害值加成
-                NpcAIMiniGameCombatCpt actionNpc = gameCombatHandler.miniGameData.GetRoundActionCharacter();
-                gameCombatEffectData.effectTypeData.effectData = EffectTypeEnumTools.GetTotalDamage(gameItemsManager, actionNpc.characterData, listTypeData );
-            }
             //如果是持续 则需要加上BUFF图标
             if (durationForRound > 0)
             {

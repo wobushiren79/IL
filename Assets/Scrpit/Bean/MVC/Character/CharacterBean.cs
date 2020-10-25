@@ -617,12 +617,30 @@ public class CharacterBean
     /// </summary>
     /// <param name="gameItemsManager"></param>
     /// <returns></returns>
-    public bool CalculationArenaSendWin(GameItemsManager gameItemsManager)
+    public bool CalculationArenaSendWin(GameItemsManager gameItemsManager,MiniGameEnum miniGameType)
     {
         GetAttributes(gameItemsManager,
         out CharacterAttributesBean totalAttributes, out CharacterAttributesBean selfAttributes, out CharacterAttributesBean equipAttributes);
-
-        float winRate = 0.25f + totalAttributes.lucky * 0.0025f;
+        int addAttributes = 0;
+        switch (miniGameType)
+        {
+            case MiniGameEnum.Cooking:
+                addAttributes = totalAttributes.cook;
+                break;
+            case MiniGameEnum.Barrage:
+                addAttributes = totalAttributes.speed;
+                break;
+            case MiniGameEnum.Account:
+                addAttributes = totalAttributes.account;
+                break;
+            case MiniGameEnum.Debate:
+                addAttributes = totalAttributes.charm;
+                break;
+            case MiniGameEnum.Combat:
+                addAttributes = totalAttributes.force;
+                break;
+        }
+        float winRate = 0.25f + totalAttributes.lucky * 0.0025f + addAttributes * 0.0025f;
 
         if(UnityEngine.Random.Range(0f, 1f)> winRate)
         {
@@ -639,12 +657,30 @@ public class CharacterBean
     /// </summary>
     /// <param name="gameItemsManager"></param>
     /// <returns></returns>
-    public bool CalculationGuildSendWin(GameItemsManager gameItemsManager)
+    public bool CalculationGuildSendWin(GameItemsManager gameItemsManager, MiniGameEnum miniGameType)
     {
         GetAttributes(gameItemsManager,
         out CharacterAttributesBean totalAttributes, out CharacterAttributesBean selfAttributes, out CharacterAttributesBean equipAttributes);
-
-        float winRate = 0.25f + totalAttributes.lucky * 0.0025f;
+        int addAttributes = 0;
+        switch (miniGameType)
+        {
+            case MiniGameEnum.Cooking:
+                addAttributes = totalAttributes.cook;
+                break;
+            case MiniGameEnum.Barrage:
+                addAttributes = totalAttributes.speed;
+                break;
+            case MiniGameEnum.Account:
+                addAttributes = totalAttributes.account;
+                break;
+            case MiniGameEnum.Debate:
+                addAttributes = totalAttributes.charm;
+                break;
+            case MiniGameEnum.Combat:
+                addAttributes = totalAttributes.force;
+                break;
+        }
+        float winRate = 0.25f + totalAttributes.lucky * 0.0025f + addAttributes * 0.0025f;
 
         if (UnityEngine.Random.Range(0f, 1f) > winRate)
         {

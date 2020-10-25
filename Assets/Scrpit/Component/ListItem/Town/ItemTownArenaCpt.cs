@@ -323,7 +323,7 @@ public class ItemTownArenaCpt : ItemGameBaseCpt, DialogView.IDialogCallBack
                 //刷新UI
                 ((UITownArena)uiComponent).RefreshUI();
                 CharacterBean character = listCharacter[0];
-                bool isWin= character.CalculationArenaSendWin(gameItemsManager);
+                bool isWin= character.CalculationArenaSendWin(gameItemsManager, miniGameData.gameType);
                 if (isWin)
                 {
                     toastManager.ToastHint(GameCommonInfo.GetUITextById(7011));

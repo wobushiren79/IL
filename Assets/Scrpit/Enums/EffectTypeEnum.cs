@@ -14,10 +14,10 @@ public enum EffectTypeEnum
     Def,//增加防御力
     DefRate,//增加防御百分比
 
-    Damage,//直接伤害
-    DamageRate,//直接伤害百分比
-    DamageRateForForce,//武力值加成
-    DamageRateForSpeed,//武力值加成
+    Damage= 10001,//直接伤害
+    DamageRate = 10002,//直接伤害百分比
+    DamageRateForForce = 10003,//武力百分比加成
+    DamageRateForSpeed = 10004,//速度百分比加成
 }
 
 public class EffectTypeBean : DataBean<EffectTypeEnum>
@@ -179,6 +179,7 @@ public class EffectTypeEnumTools : DataTools
     public static int GetTotalDamage(GameItemsManager gameItemsManager, CharacterBean actionCharacterData, List<EffectTypeBean> listData)
     {
         float damageAdd = 0;
+        float damageAddRate = 1;
         actionCharacterData.GetAttributes(gameItemsManager, out CharacterAttributesBean characterAttributes);
         foreach (EffectTypeBean itemData in listData)
         {
@@ -188,7 +189,7 @@ public class EffectTypeEnumTools : DataTools
                     damageAdd +=  float.Parse(itemData.data);
                     break;
                 case EffectTypeEnum.DamageRate:
-                    //TODO 百分比掉血
+                    damageAddRate += float.Parse(itemData.data);
                     break;
                 case EffectTypeEnum.DamageRateForForce:
                     damageAdd += characterAttributes.force * float.Parse(itemData.data);
@@ -198,14 +199,39 @@ public class EffectTypeEnumTools : DataTools
                     break;
             }
         }
-        return (int)Mathf.Round(damageAdd);
+        return (int)Mathf.Round(damageAdd * damageAddRate);
     }
 
+    /// <summary>
+    /// 获取增加的总生命值
+    /// </summary>
+    /// <param name="gameItemsManager"></param>
+    /// <param name="actionCharacterData"></param>
+    /// <param name="listData"></param>
+    /// <returns></returns>
+    public static int GetTotalLife(GameItemsManager gameItemsManager, CharacterBean actionCharacterData, List<EffectTypeBean> listData)
+    {
+        float lifeAdd = 0;
+        float lifeAddRate = 1;
+        actionCharacterData.GetAttributes(gameItemsManager, out CharacterAttributesBean characterAttributes);
+        foreach (EffectTypeBean itemData in listData)
+        {
+            switch (itemData.dataType)
+            {
+                case EffectTypeEnum.AddLife:
+                    lifeAdd += float.Parse(itemData.data);
+                    break;
+            }
+        }
+        return (int)Mathf.Round(lifeAdd * lifeAddRate);
+    }
+
+    
     /// <summary>
     /// 获取所有效果的伤害加成
     /// </summary>
     /// <param name="listData"></param>
-    public static int GetEffectDamageRate(GameItemsManager gameItemsManager, CharacterBean characterData,  List<EffectTypeBean> listData,int damage)
+    public static int GetTotalDef(GameItemsManager gameItemsManager, CharacterBean characterData,  List<EffectTypeBean> listData,int damage)
     {
         float damageRate = 1;
         float damageAdd = 0;
@@ -234,7 +260,7 @@ public class EffectTypeEnumTools : DataTools
     /// <param name="listData"></param>
     /// <param name="force"></param>
     /// <returns></returns>
-    public static int GetEffectForceRate(List<EffectTypeBean> listData,int force)
+    public static int GetTotalForce(List<EffectTypeBean> listData,int force)
     {
         float forceRate = 1;
         float forceAdd = 0;
@@ -262,7 +288,7 @@ public class EffectTypeEnumTools : DataTools
     /// <param name="listData"></param>
     /// <param name="force"></param>
     /// <returns></returns>
-    public static int GetEffectSpeedRate(List<EffectTypeBean> listData, int speed)
+    public static int GetTotalSpeed(List<EffectTypeBean> listData, int speed)
     {
         float speedRate = 1;
         float speedAdd = 0;
@@ -284,4 +310,26 @@ public class EffectTypeEnumTools : DataTools
         return speed;
     }
 
+    /// <summary>
+    /// 检测是否是延迟执行的效果（用于延迟播放粒子特效）
+    /// </summary>
+    /// <param name="effectTypeData"></param>
+    /// <returns></returns>
+    public static bool CheckIsDelay(EffectTypeBean effectTypeData)
+    {
+        switch (effectTypeData.dataType)
+        {
+            case EffectTypeEnum.AddLife:
+                return true;
+            case EffectTypeEnum.Damage:
+                return true;
+            case EffectTypeEnum.DamageRate:
+                return true;
+            case EffectTypeEnum.DamageRateForForce:
+                return true;
+            case EffectTypeEnum.DamageRateForSpeed:
+                return true;
+        }
+        return false;
+    }
 }

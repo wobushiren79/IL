@@ -68,21 +68,22 @@ public class InfoCharacterPopupShow : PopupShowView
     public void SetEffect(List<MiniGameCombatEffectBean> listEffect)
     {
         CptUtil.RemoveChildsByActive(objEffectContainer);
+        objEffectContainer.SetActive(false);
         //如果没有战斗信息 则隐藏展示栏
-        if (CheckUtil.ListIsNull(listEffect))
-        {
-            objEffectContainer.SetActive(false);
-        }
-        else
-        {
-            objEffectContainer.SetActive(true);
-            for (int i = 0; i < listEffect.Count; i++)
-            {
-                MiniGameCombatEffectBean itemEffectData = listEffect[i];
-                GameObject objEffectItem = Instantiate(objEffectContainer, objEffectModel);
-                ItemBaseTextCpt itemEffect = objEffectItem.GetComponent<ItemBaseTextCpt>();
-                itemEffect.SetData(itemEffectData.effectTypeData.spIcon, "", itemEffectData.effectTypeData.effectDescribe);
-            }
-        }
+        //if (CheckUtil.ListIsNull(listEffect))
+        //{
+        //    objEffectContainer.SetActive(false);
+        //}
+        //else
+        //{
+        //    objEffectContainer.SetActive(true);
+        //    for (int i = 0; i < listEffect.Count; i++)
+        //    {
+        //        MiniGameCombatEffectBean itemEffectData = listEffect[i];
+        //        GameObject objEffectItem = Instantiate(objEffectContainer, objEffectModel);
+        //        ItemBaseTextCpt itemEffect = objEffectItem.GetComponent<ItemBaseTextCpt>();
+        //        //itemEffect.SetData(itemEffectData.effectTypeData.spIcon, "", itemEffectData.effectTypeData.effectDescribe);
+        //    }
+        //}
     }
 }

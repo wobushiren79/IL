@@ -27,7 +27,7 @@ public class ItemMiniGameCombatCharacterInfoCpt : ItemGameBaseCpt
                 SetLife(gameCharacterData.characterCurrentLife, gameCharacterData.characterMaxLife);
             else
                 SetDead();
-            int totalForce = this.gameCharacterData.GetEffectForceRate(oriForce);
+            int totalForce = this.gameCharacterData.GetTotalForce(oriForce);
             SetForce(totalForce);
         }
     }
@@ -47,7 +47,7 @@ public class ItemMiniGameCombatCharacterInfoCpt : ItemGameBaseCpt
         GameItemsManager gameItemsManager = GetUIManager<UIGameManager>().gameItemsManager;
         this.gameCharacterData.characterData.GetAttributes(gameItemsManager, out CharacterAttributesBean characterAttributes);
         oriForce = characterAttributes.force;
-        int totalForce= this.gameCharacterData.GetEffectForceRate(oriForce);
+        int totalForce= this.gameCharacterData.GetTotalForce(oriForce);
         SetForce(totalForce);
     }
 

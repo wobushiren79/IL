@@ -315,7 +315,7 @@ public class NpcAIMiniGameCookingCpt : BaseNpcAI
     /// <returns></returns>
     private int AuditFoodForColor()
     {
-        int score = auditTargetNpc.characterMiniGameData.settleDataForPre.GetScore();
+        int score = auditTargetNpc.characterMiniGameData.settleDataForEnd.GetScore();
         return ScoreDeal(score);
     }
 

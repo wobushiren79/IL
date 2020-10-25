@@ -303,11 +303,11 @@ public class MiniGameCombatHandler : BaseMiniGameHandler<MiniGameCombatBuilder, 
             //力量测试加成
             float damagePowerRate = (miniGameData.GetRoundActionPowerTest() + 0.2f);
             //计算所有武力加成
-            int force = actionNpc.characterMiniGameData.GetEffectForceRate(actionCharacterAttributes.force);
+            int force = actionNpc.characterMiniGameData.GetTotalForce(actionCharacterAttributes.force);
             //计算伤害
             int damage = (int)(damagePowerRate  * force);
-            //效果伤害加成
-            damage = targetNpc.characterMiniGameData.GetEffectDamageRate(gameItemsManager, damage);
+            //伤害减免
+            damage = targetNpc.characterMiniGameData.GetTotalDef(gameItemsManager, damage);
             //角色伤害
             targetNpc.UnderAttack(damagePowerRate, damage);
             audioHandler.PlaySound(AudioSoundEnum.Fight);
@@ -338,7 +338,7 @@ public class MiniGameCombatHandler : BaseMiniGameHandler<MiniGameCombatBuilder, 
         //增加技能效果
         foreach (NpcAIMiniGameCombatCpt itemNpc in listTargetNpc)
         {
-            itemNpc.AddCombatEffect(skillData.effect, skillData.effect_details);
+            itemNpc.AddCombatEffect(actionNpc, skillData.effect, skillData.effect_details);
         }
         yield return new WaitForSeconds(1f);
     }
@@ -359,7 +359,7 @@ public class MiniGameCombatHandler : BaseMiniGameHandler<MiniGameCombatBuilder, 
         //增加物品效果
         foreach (NpcAIMiniGameCombatCpt itemNpc in listTargetNpc)
         {
-            itemNpc.AddCombatEffect(itemsInfo.effect, itemsInfo.effect_details);
+            itemNpc.AddCombatEffect(actionNpc,itemsInfo.effect, itemsInfo.effect_details);
         }
         yield return new WaitForSeconds(1f);
     }
