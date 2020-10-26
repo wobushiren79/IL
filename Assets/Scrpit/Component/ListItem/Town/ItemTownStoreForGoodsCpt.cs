@@ -162,15 +162,15 @@ public class ItemTownStoreForGoodsCpt : ItemTownStoreCpt, DialogView.IDialogCall
         if (tvCook != null)
             tvCook.text = GameCommonInfo.GetUITextById(1) + "+" + add_cook;
         if (tvSpeed != null)
-            tvSpeed.text = GameCommonInfo.GetUITextById(2) + "+" + add_speed;
+            tvSpeed.text = AttributesTypeEnumTools.GetAttributesName(AttributesTypeEnum.Speed) + "+" + add_speed;
         if (tvAccount != null)
-            tvAccount.text = GameCommonInfo.GetUITextById(3) + "+" + add_account;
+            tvAccount.text = AttributesTypeEnumTools.GetAttributesName(AttributesTypeEnum.Account) + "+" + add_account;
         if (tvCharm != null)
-            tvCharm.text = GameCommonInfo.GetUITextById(4) + "+" + add_charm;
+            tvCharm.text = AttributesTypeEnumTools.GetAttributesName(AttributesTypeEnum.Charm) + "+" + add_charm;
         if (tvForce != null)
-            tvForce.text = GameCommonInfo.GetUITextById(5) + "+" + add_force;
+            tvForce.text = AttributesTypeEnumTools.GetAttributesName(AttributesTypeEnum.Force) + "+" + add_force;
         if (tvLucky != null)
-            tvLucky.text = GameCommonInfo.GetUITextById(6) + "+" + add_lucky;
+            tvLucky.text = AttributesTypeEnumTools.GetAttributesName(AttributesTypeEnum.Lucky) + "+" + add_lucky;
         if (tvCookBook != null)
             tvCookBook.text = GameCommonInfo.GetUITextById(7) + "+" + add_book;
     }

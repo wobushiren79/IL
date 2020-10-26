@@ -94,13 +94,13 @@ public class InfoItemsPopupShow : PopupShowView
     public void SetAttributes(ItemsInfoBean data)
     {
         CptUtil.RemoveChildsByActive(objAttributeContainer);
-        CreateItemAttributes("ui_ability_life", data.add_life, GameCommonInfo.GetUITextById(9), colorForAttribute);
+        CreateItemAttributes("ui_ability_life", data.add_life, AttributesTypeEnumTools.GetAttributesName(AttributesTypeEnum.Life), colorForAttribute);
         CreateItemAttributes("ui_ability_cook", data.add_cook, GameCommonInfo.GetUITextById(1),colorForAttribute);
-        CreateItemAttributes("ui_ability_speed", data.add_speed, GameCommonInfo.GetUITextById(2), colorForAttribute);
-        CreateItemAttributes("ui_ability_account", data.add_account, GameCommonInfo.GetUITextById(3), colorForAttribute);
-        CreateItemAttributes("ui_ability_charm", data.add_charm, GameCommonInfo.GetUITextById(4), colorForAttribute);
-        CreateItemAttributes("ui_ability_force", data.add_force, GameCommonInfo.GetUITextById(5), colorForAttribute);
-        CreateItemAttributes("ui_ability_lucky", data.add_lucky, GameCommonInfo.GetUITextById(6), colorForAttribute);
+        CreateItemAttributes("ui_ability_speed", data.add_speed, AttributesTypeEnumTools.GetAttributesName(AttributesTypeEnum.Speed), colorForAttribute);
+        CreateItemAttributes("ui_ability_account", data.add_account, AttributesTypeEnumTools.GetAttributesName(AttributesTypeEnum.Account), colorForAttribute);
+        CreateItemAttributes("ui_ability_charm", data.add_charm, AttributesTypeEnumTools.GetAttributesName(AttributesTypeEnum.Charm), colorForAttribute);
+        CreateItemAttributes("ui_ability_force", data.add_force, AttributesTypeEnumTools.GetAttributesName(AttributesTypeEnum.Force), colorForAttribute);
+        CreateItemAttributes("ui_ability_lucky", data.add_lucky, AttributesTypeEnumTools.GetAttributesName(AttributesTypeEnum.Lucky), colorForAttribute);
   
         if (CheckUtil.StringIsNull(data.effect))
             return;

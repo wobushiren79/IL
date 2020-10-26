@@ -383,23 +383,23 @@ public class ItemTownGuildImproveCharacterCpt : ItemGameBaseCpt, DialogView.IDia
                     switch (miniGameData.gameType)
                     {
                         case MiniGameEnum.Cooking:
-                            attributeRewardContent = GameCommonInfo.GetUITextById(1) + " +5";
+                            attributeRewardContent = AttributesTypeEnumTools.GetAttributesName(AttributesTypeEnum.Cook) + " +5";
                             miniGameCharacterData.characterData.baseInfo.chefInfo.LevelUp(miniGameCharacterData.characterData.attributes);
                             break;
                         case MiniGameEnum.Barrage:
-                            attributeRewardContent = GameCommonInfo.GetUITextById(2) + " +5";
+                            attributeRewardContent = AttributesTypeEnumTools.GetAttributesName(AttributesTypeEnum.Speed) + " +5";
                             miniGameCharacterData.characterData.baseInfo.waiterInfo.LevelUp(miniGameCharacterData.characterData.attributes);
                             break;
                         case MiniGameEnum.Account:
-                            attributeRewardContent = GameCommonInfo.GetUITextById(3) + " +5";
+                            attributeRewardContent = AttributesTypeEnumTools.GetAttributesName(AttributesTypeEnum.Account) + " +5";
                             miniGameCharacterData.characterData.baseInfo.accountantInfo.LevelUp(miniGameCharacterData.characterData.attributes);
                             break;
                         case MiniGameEnum.Debate:
-                            attributeRewardContent = GameCommonInfo.GetUITextById(4) + " +5";
+                            attributeRewardContent = AttributesTypeEnumTools.GetAttributesName(AttributesTypeEnum.Charm) + " +5";
                             miniGameCharacterData.characterData.baseInfo.accostInfo.LevelUp(miniGameCharacterData.characterData.attributes);
                             break;
                         case MiniGameEnum.Combat:
-                            attributeRewardContent = GameCommonInfo.GetUITextById(5) + " +5";
+                            attributeRewardContent = AttributesTypeEnumTools.GetAttributesName(AttributesTypeEnum.Force) + " +5";
                             miniGameCharacterData.characterData.baseInfo.beaterInfo.LevelUp(miniGameCharacterData.characterData.attributes);
                             break;
                     }

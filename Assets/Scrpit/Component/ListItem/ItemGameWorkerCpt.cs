@@ -95,32 +95,32 @@ public class ItemGameWorkerCpt : ItemGameBaseCpt, DialogView.IDialogCallBack, Wo
         if (pbCook != null)
         {
             pbCook.SetPopupShowView(infoPromptPopup);
-            pbCook.SetContent(GameCommonInfo.GetUITextById(1));
+            pbCook.SetContent(AttributesTypeEnumTools.GetAttributesName(AttributesTypeEnum.Cook));
         }
         if (pbSpeed != null)
         {
             pbSpeed.SetPopupShowView(infoPromptPopup);
-            pbSpeed.SetContent(GameCommonInfo.GetUITextById(2));
+            pbSpeed.SetContent(AttributesTypeEnumTools.GetAttributesName(AttributesTypeEnum.Speed));
         }
         if (pbAccount != null)
         {
             pbAccount.SetPopupShowView(infoPromptPopup);
-            pbAccount.SetContent(GameCommonInfo.GetUITextById(3));
+            pbAccount.SetContent(AttributesTypeEnumTools.GetAttributesName(AttributesTypeEnum.Account));
         }
         if (pbCharm != null)
         {
             pbCharm.SetPopupShowView(infoPromptPopup);
-            pbCharm.SetContent(GameCommonInfo.GetUITextById(4));
+            pbCharm.SetContent(AttributesTypeEnumTools.GetAttributesName(AttributesTypeEnum.Charm));
         }
         if (pbForce != null)
         {
             pbForce.SetPopupShowView(infoPromptPopup);
-            pbForce.SetContent(GameCommonInfo.GetUITextById(5));
+            pbForce.SetContent(AttributesTypeEnumTools.GetAttributesName(AttributesTypeEnum.Force));
         }
         if (pbLucky != null)
         {
             pbLucky.SetPopupShowView(infoPromptPopup);
-            pbLucky.SetContent(GameCommonInfo.GetUITextById(6));
+            pbLucky.SetContent(AttributesTypeEnumTools.GetAttributesName(AttributesTypeEnum.Lucky));
         }
 
         if (wvChef != null)

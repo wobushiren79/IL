@@ -42,7 +42,7 @@ public class InfoAbilityPopupShow : PopupShowView
     public void SetLife(int life)
     {
         if (tvLife != null)
-            tvLife.text = GameCommonInfo.GetUITextById(9) + " " + life;
+            tvLife.text = AttributesTypeEnumTools.GetAttributesName(AttributesTypeEnum.Life) + " " + life;
     }
 
     /// <summary>
@@ -52,7 +52,7 @@ public class InfoAbilityPopupShow : PopupShowView
     public void SetLoyal(int loyal)
     {
         if (tvLoyal != null)
-            tvLoyal.text = GameCommonInfo.GetUITextById(8)+" " + loyal;
+            tvLoyal.text = AttributesTypeEnumTools.GetAttributesName(AttributesTypeEnum.Loyal)+" " + loyal;
     }
 
     /// <summary>
@@ -72,7 +72,7 @@ public class InfoAbilityPopupShow : PopupShowView
     public void SetSpeed(int speed)
     {
         if (tvSpeed != null)
-            tvSpeed.text = GameCommonInfo.GetUITextById(2) + " " + speed;
+            tvSpeed.text = AttributesTypeEnumTools.GetAttributesName(AttributesTypeEnum.Speed) + " " + speed;
     }
 
     /// <summary>
@@ -82,7 +82,7 @@ public class InfoAbilityPopupShow : PopupShowView
     public void SetAccount(int account)
     {
         if (tvAccount != null)
-            tvAccount.text = GameCommonInfo.GetUITextById(3) + " " + account;
+            tvAccount.text = AttributesTypeEnumTools.GetAttributesName(AttributesTypeEnum.Account) + " " + account;
     }
 
     /// <summary>
@@ -92,7 +92,7 @@ public class InfoAbilityPopupShow : PopupShowView
     public void SetCharm(int charm)
     {
         if (tvCharm != null)
-            tvCharm.text = GameCommonInfo.GetUITextById(4) + " " + charm;
+            tvCharm.text = AttributesTypeEnumTools.GetAttributesName(AttributesTypeEnum.Charm) + " " + charm;
     }
 
     /// <summary>
@@ -102,7 +102,7 @@ public class InfoAbilityPopupShow : PopupShowView
     public void SetForce(int force)
     {
         if (tvForce != null)
-            tvForce.text = GameCommonInfo.GetUITextById(5) + " " + force;
+            tvForce.text = AttributesTypeEnumTools.GetAttributesName(AttributesTypeEnum.Force) + " " + force;
     }
 
     /// <summary>
@@ -112,6 +112,6 @@ public class InfoAbilityPopupShow : PopupShowView
     public void SetLucky(int lucky)
     {
         if (tvLucky != null)
-            tvLucky.text = GameCommonInfo.GetUITextById(6) + " " + lucky;
+            tvLucky.text = AttributesTypeEnumTools.GetAttributesName(AttributesTypeEnum.Lucky) + " " + lucky;
     }
 }

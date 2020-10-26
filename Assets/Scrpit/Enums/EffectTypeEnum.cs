@@ -5,19 +5,47 @@ using System.Collections.Generic;
 public enum EffectTypeEnum 
 {
     AddLife,//增加生命值
+    AddLifeRate,//增加生命百分比
+
+    AddLucky,
+    AddCook,//增加厨
     AddSpeed,//增加速度
+    AddAccount,//增加算
+    AddCharm,//增加魅力
     AddForce,//增加武力
 
-    SubSpeed,//减少速度
-    SubForce,//减少速度
+    AddLuckyRate,
+    AddCookRate,
+    AddSpeedRate,
+    AddAccountRate,
+    AddCharmRate,
+    AddForceRate,
+
+    SubLucky,
+    SubCook,
+    SubSpeed,
+    SubAccount,
+    SubCharm,
+    SubForce,
+
+    SubLuckyRate,
+    SubCookRate,
+    SubSpeedRate,
+    SubAccountRate,
+    SubCharmRate,
+    SubForceRate,
 
     Def,//增加防御力
     DefRate,//增加防御百分比
 
-    Damage= 10001,//直接伤害
-    DamageRate = 10002,//直接伤害百分比
-    DamageRateForForce = 10003,//武力百分比加成
-    DamageRateForSpeed = 10004,//速度百分比加成
+    Damage ,//直接伤害
+    DamageRate ,//直接伤害百分比
+    DamageRateForLucky,
+    DamageRateForCook,
+    DamageRateForSpeed ,//速度百分比加成
+    DamageRateForAccount,
+    DamageRateForCharm,
+    DamageRateForForce,//武力百分比加成
 }
 
 public class EffectTypeBean : DataBean<EffectTypeEnum>
@@ -60,29 +88,58 @@ public class EffectTypeEnumTools : DataTools
             case EffectTypeEnum.AddLife:
                 effectTypeData = GetEffectDetailsForAddLife(iconDataManager,effectTypeData);
                 break;
-            case EffectTypeEnum.AddForce:
-                effectTypeData = GetEffectDetailsForAddForce(iconDataManager, effectTypeData);
+            case EffectTypeEnum.AddLifeRate:
+                effectTypeData = GetEffectDetailsForAddLifeRate(iconDataManager, effectTypeData);
                 break;
+
+            case EffectTypeEnum.AddLucky:
+            case EffectTypeEnum.AddCook:
             case EffectTypeEnum.AddSpeed:
-                effectTypeData = GetEffectDetailsForAddSpeed(iconDataManager, effectTypeData);
+            case EffectTypeEnum.AddAccount:
+            case EffectTypeEnum.AddCharm:
+            case EffectTypeEnum.AddForce:
+                effectTypeData = GetEffectDetailsForAddAttributes(iconDataManager, effectTypeData);
                 break;
+            case EffectTypeEnum.AddLuckyRate:
+            case EffectTypeEnum.AddCookRate:
+            case EffectTypeEnum.AddSpeedRate:
+            case EffectTypeEnum.AddAccountRate:
+            case EffectTypeEnum.AddCharmRate:
+            case EffectTypeEnum.AddForceRate:
+                effectTypeData = GetEffectDetailsForAddAttributesRate(iconDataManager, effectTypeData);
+                break;
+
+            case EffectTypeEnum.SubLucky:
+            case EffectTypeEnum.SubCook:
             case EffectTypeEnum.SubSpeed:
-                effectTypeData = GetEffectDetailsForSubSpeed(iconDataManager, effectTypeData);
-                break;
+            case EffectTypeEnum.SubAccount:
+            case EffectTypeEnum.SubCharm:
             case EffectTypeEnum.SubForce:
-                effectTypeData = GetEffectDetailsForSubForce(iconDataManager, effectTypeData);
+                effectTypeData = GetEffectDetailsForSubAttributes(iconDataManager, effectTypeData);
                 break;
+
+            case EffectTypeEnum.SubLuckyRate:
+            case EffectTypeEnum.SubCookRate:
+            case EffectTypeEnum.SubSpeedRate:
+            case EffectTypeEnum.SubAccountRate:
+            case EffectTypeEnum.SubCharmRate:
+            case EffectTypeEnum.SubForceRate:
+                effectTypeData = GetEffectDetailsForSubAttributesRate(iconDataManager, effectTypeData);
+                break;
+
             case EffectTypeEnum.DefRate:
                 effectTypeData = GetEffectDetailsForAddDef(iconDataManager, effectTypeData);
                 break;
             case EffectTypeEnum.Damage:
                 effectTypeData = GetEffectDetailsForDamage(iconDataManager, effectTypeData);
                 break;
-            case EffectTypeEnum.DamageRateForForce:
-                effectTypeData = GetEffectDetailsForDamageRateForForce(iconDataManager, effectTypeData);
-                break;
+            case EffectTypeEnum.DamageRateForLucky:
+            case EffectTypeEnum.DamageRateForCook:
             case EffectTypeEnum.DamageRateForSpeed:
-                effectTypeData = GetEffectDetailsForDamageRateForSpeed(iconDataManager, effectTypeData);
+            case EffectTypeEnum.DamageRateForAccount:
+            case EffectTypeEnum.DamageRateForCharm:
+            case EffectTypeEnum.DamageRateForForce:
+                effectTypeData = GetEffectDetailsForDamageRateForAttributes(iconDataManager, effectTypeData);
                 break;
         }
         return effectTypeData;
@@ -100,6 +157,21 @@ public class EffectTypeEnumTools : DataTools
         effectTypeData.spIcon = iconDataManager.GetIconSpriteByName("ui_effect_addlife_1");
         return effectTypeData;
     }
+
+    /// <summary>
+    /// 获取增加生命的相关数据
+    /// </summary>
+    /// <param name="effectTypeData"></param>
+    /// <returns></returns>
+    private static EffectTypeBean GetEffectDetailsForAddLifeRate(IconDataManager iconDataManager, EffectTypeBean effectTypeData)
+    {
+        float addLifeRate = float.Parse(effectTypeData.data);
+        effectTypeData.effectData = addLifeRate;
+        effectTypeData.effectDescribe = string.Format(GameCommonInfo.GetUITextById(507), (addLifeRate * 100) + "%");
+        effectTypeData.spIcon = iconDataManager.GetIconSpriteByName("ui_effect_addlife_1");
+        return effectTypeData;
+    }
+
     /// <summary>
     /// 获取增加防御力的相关数据
     /// </summary>
@@ -108,41 +180,188 @@ public class EffectTypeEnumTools : DataTools
     private static EffectTypeBean GetEffectDetailsForAddDef(IconDataManager iconDataManager, EffectTypeBean effectTypeData)
     {
         float defRate = float.Parse(effectTypeData.data);
-        effectTypeData.effectData = float.Parse(effectTypeData.data);
+        effectTypeData.effectData = defRate;
         effectTypeData.effectDescribe = string.Format(GameCommonInfo.GetUITextById(503), (defRate*100)+"%");
         effectTypeData.spIcon = iconDataManager.GetIconSpriteByName("ui_effect_defend_1");
         return effectTypeData;
     }
-    private static EffectTypeBean GetEffectDetailsForAddSpeed(IconDataManager iconDataManager, EffectTypeBean effectTypeData)
+
+    /// <summary>
+    /// 获取增加属性相关数据
+    /// </summary>
+    /// <param name="iconDataManager"></param>
+    /// <param name="effectTypeData"></param>
+    /// <returns></returns>
+    private static EffectTypeBean GetEffectDetailsForAddAttributes(IconDataManager iconDataManager, EffectTypeBean effectTypeData)
     {
+        AttributesTypeEnum attributesType = AttributesTypeEnum.Null;
+        string iconStr = "";
+        switch (effectTypeData.dataType)
+        {
+            case EffectTypeEnum.AddLucky:
+                attributesType = AttributesTypeEnum.Lucky;
+                iconStr = "ui_effect_lucky_1";
+                break;
+            case EffectTypeEnum.AddCook:
+                attributesType = AttributesTypeEnum.Cook;
+                iconStr = "ui_effect_cook_1";
+                break;
+            case EffectTypeEnum.AddSpeed:
+                attributesType = AttributesTypeEnum.Speed;
+                iconStr = "ui_effect_speed_1";
+                break;
+            case EffectTypeEnum.AddAccount:
+                attributesType = AttributesTypeEnum.Account;
+                iconStr = "ui_effect_account_1";
+                break;
+            case EffectTypeEnum.AddCharm:
+                attributesType = AttributesTypeEnum.Charm;
+                iconStr = "ui_effect_charm_1";
+                break;
+            case EffectTypeEnum.AddForce:
+                attributesType = AttributesTypeEnum.Force;
+                iconStr = "ui_effect_force_1";
+                break;
+        }
         effectTypeData.effectData = float.Parse(effectTypeData.data);
-        effectTypeData.effectDescribe = string.Format(GameCommonInfo.GetUITextById(505), effectTypeData.data);
-        effectTypeData.spIcon = iconDataManager.GetIconSpriteByName("ui_effect_speed_1");
+        string attributesName = AttributesTypeEnumTools.GetAttributesName(attributesType);
+        effectTypeData.effectDescribe = string.Format(GameCommonInfo.GetUITextById(505), effectTypeData.data, attributesName);
+        effectTypeData.spIcon = iconDataManager.GetIconSpriteByName(iconStr);
         return effectTypeData;
     }
-    private static EffectTypeBean GetEffectDetailsForAddForce(IconDataManager iconDataManager, EffectTypeBean effectTypeData)
+    /// <summary>
+    /// 获取增加属性百分比相关数据
+    /// </summary>
+    /// <param name="iconDataManager"></param>
+    /// <param name="effectTypeData"></param>
+    /// <returns></returns>
+    private static EffectTypeBean GetEffectDetailsForAddAttributesRate(IconDataManager iconDataManager, EffectTypeBean effectTypeData)
     {
+        AttributesTypeEnum attributesType = AttributesTypeEnum.Null;
+        string iconStr = "";
+        switch (effectTypeData.dataType)
+        {
+            case EffectTypeEnum.AddLucky:
+                attributesType = AttributesTypeEnum.Lucky;
+                iconStr = "ui_effect_lucky_2";
+                break;
+            case EffectTypeEnum.AddCook:
+                attributesType = AttributesTypeEnum.Cook;
+                iconStr = "ui_effect_cook_2";
+                break;
+            case EffectTypeEnum.AddSpeed:
+                attributesType = AttributesTypeEnum.Speed;
+                iconStr = "ui_effect_speed_2";
+                break;
+            case EffectTypeEnum.AddAccount:
+                attributesType = AttributesTypeEnum.Account;
+                iconStr = "ui_effect_account_2";
+                break;
+            case EffectTypeEnum.AddCharm:
+                attributesType = AttributesTypeEnum.Charm;
+                iconStr = "ui_effect_charm_2";
+                break;
+            case EffectTypeEnum.AddForce:
+                attributesType = AttributesTypeEnum.Force;
+                iconStr = "ui_effect_force_2";
+                break;
+        }
         effectTypeData.effectData = float.Parse(effectTypeData.data);
-        effectTypeData.effectDescribe = string.Format(GameCommonInfo.GetUITextById(506), effectTypeData.data);
-        effectTypeData.spIcon = iconDataManager.GetIconSpriteByName("ui_effect_force_1");
+        string attributesName = AttributesTypeEnumTools.GetAttributesName(attributesType);
+        effectTypeData.effectDescribe = string.Format(GameCommonInfo.GetUITextById(506), effectTypeData.data, attributesName);
+        effectTypeData.spIcon = iconDataManager.GetIconSpriteByName(iconStr);
         return effectTypeData;
     }
 
-    private static EffectTypeBean GetEffectDetailsForSubSpeed(IconDataManager iconDataManager, EffectTypeBean effectTypeData)
+
+    /// <summary>
+    /// 获取减少属性相关数据
+    /// </summary>
+    /// <param name="iconDataManager"></param>
+    /// <param name="effectTypeData"></param>
+    /// <returns></returns>
+    private static EffectTypeBean GetEffectDetailsForSubAttributes(IconDataManager iconDataManager, EffectTypeBean effectTypeData)
     {
+        AttributesTypeEnum attributesType = AttributesTypeEnum.Null;
+        string iconStr = "";
+        switch (effectTypeData.dataType)
+        {
+            case EffectTypeEnum.SubLucky:
+                attributesType = AttributesTypeEnum.Lucky;
+                iconStr = "ui_effect_sub_lucky_1";
+                break;
+            case EffectTypeEnum.SubCook:
+                attributesType = AttributesTypeEnum.Cook;
+                iconStr = "ui_effect_sub_cook_1";
+                break;
+            case EffectTypeEnum.SubSpeed:
+                attributesType = AttributesTypeEnum.Speed;
+                iconStr = "ui_effect_sub_speed_1";
+                break;
+            case EffectTypeEnum.SubAccount:
+                attributesType = AttributesTypeEnum.Account;
+                iconStr = "ui_effect_sub_account_1";
+                break;
+            case EffectTypeEnum.SubCharm:
+                attributesType = AttributesTypeEnum.Charm;
+                iconStr = "ui_effect_sub_charm_1";
+                break;
+            case EffectTypeEnum.SubForce:
+                attributesType = AttributesTypeEnum.Force;
+                iconStr = "ui_effect_sub_force_1";
+                break;
+        }
         effectTypeData.effectData = float.Parse(effectTypeData.data);
-        effectTypeData.effectDescribe = string.Format(GameCommonInfo.GetUITextById(531), effectTypeData.data);
-        effectTypeData.spIcon = iconDataManager.GetIconSpriteByName("ui_effect_sub_speed_1");
+        string attributesName = AttributesTypeEnumTools.GetAttributesName(attributesType);
+        effectTypeData.effectDescribe = string.Format(GameCommonInfo.GetUITextById(531), effectTypeData.data, attributesName);
+        effectTypeData.spIcon = iconDataManager.GetIconSpriteByName(iconStr);
         return effectTypeData;
     }
-    private static EffectTypeBean GetEffectDetailsForSubForce(IconDataManager iconDataManager, EffectTypeBean effectTypeData)
+
+    /// <summary>
+    /// 获取减少属性相关数据
+    /// </summary>
+    /// <param name="iconDataManager"></param>
+    /// <param name="effectTypeData"></param>
+    /// <returns></returns>
+    private static EffectTypeBean GetEffectDetailsForSubAttributesRate(IconDataManager iconDataManager, EffectTypeBean effectTypeData)
     {
+        AttributesTypeEnum attributesType = AttributesTypeEnum.Null;
+        string iconStr = "";
+        switch (effectTypeData.dataType)
+        {
+            case EffectTypeEnum.SubLucky:
+                attributesType = AttributesTypeEnum.Lucky;
+                iconStr = "ui_effect_sub_lucky_2";
+                break;
+            case EffectTypeEnum.SubCook:
+                attributesType = AttributesTypeEnum.Cook;
+                iconStr = "ui_effect_sub_cook_2";
+                break;
+            case EffectTypeEnum.SubSpeed:
+                attributesType = AttributesTypeEnum.Speed;
+                iconStr = "ui_effect_sub_speed_2";
+                break;
+            case EffectTypeEnum.SubAccount:
+                attributesType = AttributesTypeEnum.Account;
+                iconStr = "ui_effect_sub_account_2";
+                break;
+            case EffectTypeEnum.SubCharm:
+                attributesType = AttributesTypeEnum.Charm;
+                iconStr = "ui_effect_sub_charm_2";
+                break;
+            case EffectTypeEnum.SubForce:
+                attributesType = AttributesTypeEnum.Force;
+                iconStr = "ui_effect_sub_force_2";
+                break;
+        }
         effectTypeData.effectData = float.Parse(effectTypeData.data);
-        effectTypeData.effectDescribe = string.Format(GameCommonInfo.GetUITextById(532), effectTypeData.data);
-        effectTypeData.spIcon = iconDataManager.GetIconSpriteByName("ui_effect_sub_force_1");
+        string attributesName = AttributesTypeEnumTools.GetAttributesName(attributesType);
+        effectTypeData.effectDescribe = string.Format(GameCommonInfo.GetUITextById(532), effectTypeData.data, attributesName);
+        effectTypeData.spIcon = iconDataManager.GetIconSpriteByName(iconStr);
         return effectTypeData;
     }
-    
+
     private static EffectTypeBean GetEffectDetailsForDamage(IconDataManager iconDataManager, EffectTypeBean effectTypeData)
     {
         effectTypeData.effectData = int.Parse(effectTypeData.data);
@@ -152,20 +371,35 @@ public class EffectTypeEnumTools : DataTools
         return effectTypeData;
     }
 
-    private static EffectTypeBean GetEffectDetailsForDamageRateForForce(IconDataManager iconDataManager, EffectTypeBean effectTypeData)
+    private static EffectTypeBean GetEffectDetailsForDamageRateForAttributes(IconDataManager iconDataManager, EffectTypeBean effectTypeData)
     {
+        AttributesTypeEnum attributesType = AttributesTypeEnum.Null;
+        switch (effectTypeData.dataType)
+        {
+            case EffectTypeEnum.DamageRateForLucky:
+                attributesType = AttributesTypeEnum.Lucky;
+                break;
+            case EffectTypeEnum.DamageRateForCook:
+                attributesType = AttributesTypeEnum.Cook;
+                break;
+            case EffectTypeEnum.DamageRateForSpeed:
+                attributesType = AttributesTypeEnum.Speed;
+                break;
+            case EffectTypeEnum.DamageRateForAccount:
+                attributesType = AttributesTypeEnum.Account;
+                break;
+            case EffectTypeEnum.DamageRateForCharm:
+                attributesType = AttributesTypeEnum.Charm;
+                break;
+            case EffectTypeEnum.DamageRateForForce:
+                attributesType = AttributesTypeEnum.Force;
+                break;
+        }
         effectTypeData.effectData = float.Parse(effectTypeData.data);
-        effectTypeData.effectDescribe = string.Format(GameCommonInfo.GetUITextById(521), effectTypeData.data);
+        string attibutesName = AttributesTypeEnumTools.GetAttributesName(attributesType);
+        effectTypeData.effectDescribe = string.Format(GameCommonInfo.GetUITextById(521), attibutesName, effectTypeData.data);
         effectTypeData.colorIcon = Color.red;
-        effectTypeData.spIcon = iconDataManager.GetIconSpriteByName("ui_ability_force");
-        return effectTypeData;
-    }
-    private static EffectTypeBean GetEffectDetailsForDamageRateForSpeed(IconDataManager iconDataManager, EffectTypeBean effectTypeData)
-    {
-        effectTypeData.effectData = float.Parse(effectTypeData.data);
-        effectTypeData.effectDescribe = string.Format(GameCommonInfo.GetUITextById(522), effectTypeData.data);
-        effectTypeData.colorIcon = Color.red;
-        effectTypeData.spIcon = iconDataManager.GetIconSpriteByName("ui_ability_speed");
+        effectTypeData.spIcon = AttributesTypeEnumTools.GetAttributesIcon(iconDataManager, attributesType);
         return effectTypeData;
     }
 
@@ -191,11 +425,23 @@ public class EffectTypeEnumTools : DataTools
                 case EffectTypeEnum.DamageRate:
                     damageAddRate += float.Parse(itemData.data);
                     break;
-                case EffectTypeEnum.DamageRateForForce:
-                    damageAdd += characterAttributes.force * float.Parse(itemData.data);
+                case EffectTypeEnum.DamageRateForLucky:
+                    damageAdd += characterAttributes.lucky * float.Parse(itemData.data);
+                    break;
+                case EffectTypeEnum.DamageRateForCook:
+                    damageAdd += characterAttributes.cook * float.Parse(itemData.data);
                     break;
                 case EffectTypeEnum.DamageRateForSpeed:
                     damageAdd += characterAttributes.speed * float.Parse(itemData.data);
+                    break;
+                case EffectTypeEnum.DamageRateForAccount:
+                    damageAdd += characterAttributes.account * float.Parse(itemData.data);
+                    break;
+                case EffectTypeEnum.DamageRateForCharm:
+                    damageAdd += characterAttributes.charm * float.Parse(itemData.data);
+                    break;
+                case EffectTypeEnum.DamageRateForForce:
+                    damageAdd += characterAttributes.force * float.Parse(itemData.data);
                     break;
             }
         }
@@ -221,12 +467,14 @@ public class EffectTypeEnumTools : DataTools
                 case EffectTypeEnum.AddLife:
                     lifeAdd += float.Parse(itemData.data);
                     break;
+                case EffectTypeEnum.AddLifeRate:
+                    lifeAddRate += float.Parse(itemData.data);
+                    break;
             }
         }
         return (int)Mathf.Round(lifeAdd * lifeAddRate);
     }
-
-    
+  
     /// <summary>
     /// 获取所有效果的伤害加成
     /// </summary>
@@ -271,8 +519,14 @@ public class EffectTypeEnumTools : DataTools
                 case EffectTypeEnum.AddForce:
                     forceAdd += int.Parse(itemData.data);
                     break;
+                case EffectTypeEnum.AddForceRate:
+                    forceRate+= float.Parse(itemData.data);
+                    break;
                 case EffectTypeEnum.SubForce:
                     forceAdd -= int.Parse(itemData.data);
+                    break;
+                case EffectTypeEnum.SubForceRate:
+                   forceRate -= float.Parse(itemData.data);
                     break;
             }
         }
@@ -299,8 +553,14 @@ public class EffectTypeEnumTools : DataTools
                 case EffectTypeEnum.AddSpeed:
                     speedAdd += int.Parse(itemData.data);
                     break;
+                case EffectTypeEnum.AddSpeedRate:
+                    speedRate += float.Parse(itemData.data);
+                    break;
                 case EffectTypeEnum.SubSpeed:
                     speedAdd -= int.Parse(itemData.data);
+                    break;
+                case EffectTypeEnum.SubSpeedRate:
+                    speedRate -= float.Parse(itemData.data);
                     break;
             }
         }
@@ -320,13 +580,10 @@ public class EffectTypeEnumTools : DataTools
         switch (effectTypeData.dataType)
         {
             case EffectTypeEnum.AddLife:
-                return true;
+            case EffectTypeEnum.AddLifeRate:
             case EffectTypeEnum.Damage:
-                return true;
             case EffectTypeEnum.DamageRate:
-                return true;
             case EffectTypeEnum.DamageRateForForce:
-                return true;
             case EffectTypeEnum.DamageRateForSpeed:
                 return true;
         }

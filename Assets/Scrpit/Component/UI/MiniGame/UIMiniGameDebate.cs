@@ -107,11 +107,11 @@ public class UIMiniGameDebate : UIBaseMiniGame<MiniGameDebateBean>
     {
         if (tvUserCharm != null)
         {
-            tvUserCharm.text = GameCommonInfo.GetUITextById(4) + ":" + userCharam;
+            tvUserCharm.text = AttributesTypeEnumTools.GetAttributesName(AttributesTypeEnum.Charm) + ":" + userCharam;
         }
         if (tvEnemyCharm != null)
         {
-            tvEnemyCharm.text = GameCommonInfo.GetUITextById(4) + ":" + enemyCharm;
+            tvEnemyCharm.text = AttributesTypeEnumTools.GetAttributesName(AttributesTypeEnum.Charm) + ":" + enemyCharm;
         }
     }
     /// <summary>

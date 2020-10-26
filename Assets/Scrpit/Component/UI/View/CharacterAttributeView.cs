@@ -60,15 +60,15 @@ public class CharacterAttributeView : Graphic
         if (tvCook != null)
             tvCook.text =  cook + " " + GameCommonInfo.GetUITextById(1);
         if (tvSpeed != null)
-            tvSpeed.text = speed + " " + GameCommonInfo.GetUITextById(2);
+            tvSpeed.text = speed + " " + AttributesTypeEnumTools.GetAttributesName(AttributesTypeEnum.Speed);
         if (tvAccount != null)
-            tvAccount.text = GameCommonInfo.GetUITextById(3) + " " + account;
+            tvAccount.text = AttributesTypeEnumTools.GetAttributesName(AttributesTypeEnum.Account) + " " + account;
         if (tvCharm != null)
-            tvCharm.text = GameCommonInfo.GetUITextById(4) + " " + charm;
+            tvCharm.text = AttributesTypeEnumTools.GetAttributesName(AttributesTypeEnum.Charm) + " " + charm;
         if (tvForce != null)
-            tvForce.text = GameCommonInfo.GetUITextById(5) + " " + force;
+            tvForce.text = AttributesTypeEnumTools.GetAttributesName(AttributesTypeEnum.Force) + " " + force;
         if (tvLucky != null)
-            tvLucky.text = GameCommonInfo.GetUITextById(6) + " " + lucky;
+            tvLucky.text = AttributesTypeEnumTools.GetAttributesName(AttributesTypeEnum.Lucky) + " " + lucky;
         StartCoroutine(CoroutineForInit());
     }
 
