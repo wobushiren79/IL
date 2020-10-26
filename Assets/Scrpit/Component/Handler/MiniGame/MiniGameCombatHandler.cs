@@ -233,6 +233,7 @@ public class MiniGameCombatHandler : BaseMiniGameHandler<MiniGameCombatBuilder, 
     public void CharacterRound(MiniGameCharacterForCombatBean gameCharacterData)
     {
         StartCoroutine(RoundForPre(gameCharacterData));
+        uiMiniGameCombat.RefreshUI();
     }
 
     /// <summary>
@@ -242,6 +243,7 @@ public class MiniGameCombatHandler : BaseMiniGameHandler<MiniGameCombatBuilder, 
     public void CommandEnd()
     {
         RoundForAction();
+        uiMiniGameCombat.RefreshUI();
     }
     #endregion
 
@@ -268,6 +270,8 @@ public class MiniGameCombatHandler : BaseMiniGameHandler<MiniGameCombatBuilder, 
             case MiniGameCombatCommand.Pass:
                 break;
         }
+        //刷新UI（用于数值变化）
+        uiMiniGameCombat.RefreshUI();
         CheckCharacterLife();
         yield return new WaitForSeconds(0.5f);
         StartNextRound();
@@ -282,7 +286,7 @@ public class MiniGameCombatHandler : BaseMiniGameHandler<MiniGameCombatBuilder, 
         NpcAIMiniGameCombatCpt actionNpc = miniGameData.GetRoundActionCharacter();
         NpcAIMiniGameCombatCpt targetNpc = miniGameData.GetRoundTargetCharacter();
         //获取属性
-        actionNpc.characterData.GetAttributes(gameItemsManager, out CharacterAttributesBean actionCharacterAttributes);
+        actionNpc.characterData.GetAttributes(gameItemsManager, actionNpc.characterMiniGameData, out CharacterAttributesBean actionCharacterAttributes);
 
         //让行动角色移动到被攻击对象面前
         Vector3 offsetPosition;
@@ -302,10 +306,8 @@ public class MiniGameCombatHandler : BaseMiniGameHandler<MiniGameCombatBuilder, 
         {
             //力量测试加成
             float damagePowerRate = (miniGameData.GetRoundActionPowerTest() + 0.2f);
-            //计算所有武力加成
-            int force = actionNpc.characterMiniGameData.GetTotalForce(actionCharacterAttributes.force);
             //计算伤害
-            int damage = (int)(damagePowerRate  * force);
+            int damage = (int)(damagePowerRate  * actionCharacterAttributes.force);
             //伤害减免
             damage = targetNpc.characterMiniGameData.GetTotalDef(gameItemsManager, damage);
             //角色伤害

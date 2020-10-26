@@ -327,7 +327,17 @@ public class CharacterBean
     {
         GetAttributes(gameItemsManager, out totalAttributes, out CharacterAttributesBean selfAttributes, out CharacterAttributesBean equipAttributes);
     }
-
+    public void GetAttributes(GameItemsManager gameItemsManager, MiniGameCharacterForCombatBean miniGameCharacterData, out CharacterAttributesBean totalAttributes)
+    {
+        GetAttributes(gameItemsManager, out totalAttributes, out CharacterAttributesBean selfAttributes, out CharacterAttributesBean equipAttributes);
+        miniGameCharacterData.GetTotalAttributes(out CharacterAttributesBean totalAddAttributes);
+        totalAttributes.lucky += totalAddAttributes.lucky;
+        totalAttributes.cook += totalAddAttributes.cook;
+        totalAttributes.speed += totalAddAttributes.speed;
+        totalAttributes.account += totalAddAttributes.account;
+        totalAttributes.charm += totalAddAttributes.charm;
+        totalAttributes.force += totalAddAttributes.force;
+    }
     /// <summary>
     /// 计算员工请假概率
     /// </summary>

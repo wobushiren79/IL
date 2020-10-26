@@ -33,7 +33,7 @@ public class UIMiniGameCombat : UIBaseMiniGame<MiniGameCombatBean>
     //会和条结束位置
     public GameObject objRoundEnd;
 
-    public List<ItemMiniGameCombatCharacterInfoCpt> mListCharacterInfo = new List<ItemMiniGameCombatCharacterInfoCpt>();
+    public List<ItemMiniGameCombatCharacterInfoCpt> listCharacterInfo = new List<ItemMiniGameCombatCharacterInfoCpt>();
     public List<ItemMiniGameCombatCharacterRoundCpt> listCharacterRound = new List<ItemMiniGameCombatCharacterRoundCpt>();
 
     protected ICallBack callBack;
@@ -72,6 +72,16 @@ public class UIMiniGameCombat : UIBaseMiniGame<MiniGameCombatBean>
     public override void RefreshUI()
     {
         base.RefreshUI();
+        for (int i = 0; i < listCharacterInfo.Count; i++)
+        {
+            ItemMiniGameCombatCharacterInfoCpt itemInfo= listCharacterInfo[i];
+            itemInfo.RefreshUI();
+        }
+        for (int i = 0; i < listCharacterRound.Count; i++)
+        {
+            ItemMiniGameCombatCharacterRoundCpt itemInfo = listCharacterRound[i];
+            itemInfo.RefreshUI();
+        }
     }
 
     /// <summary>
@@ -103,7 +113,7 @@ public class UIMiniGameCombat : UIBaseMiniGame<MiniGameCombatBean>
     public void ClearAllData()
     {
         //清空数据
-        mListCharacterInfo.Clear();
+        listCharacterInfo.Clear();
         listCharacterRound.Clear();
         CptUtil.RemoveChildsByActive(objRoundCharacterContainer.transform);
         CptUtil.RemoveChildsByActive(objOurCharacterContainer.transform);
@@ -153,7 +163,7 @@ public class UIMiniGameCombat : UIBaseMiniGame<MiniGameCombatBean>
         GameObject objItem = Instantiate(objContainer, objModel);
         ItemMiniGameCombatCharacterInfoCpt characterInfoCpt = objItem.GetComponent<ItemMiniGameCombatCharacterInfoCpt>();
         characterInfoCpt.SetData(gameCharacterData);
-        mListCharacterInfo.Add(characterInfoCpt);
+        listCharacterInfo.Add(characterInfoCpt);
         //创建回合条信息
         GameObject objRoundItem = Instantiate(objRoundCharacterContainer, objRoundCharacterModel);
         RectTransform rtfItemRound = objRoundItem.GetComponent<RectTransform>();
@@ -183,10 +193,7 @@ public class UIMiniGameCombat : UIBaseMiniGame<MiniGameCombatBean>
         for (int i = 0; i < listCharacterRound.Count; i++)
         {
             ItemMiniGameCombatCharacterRoundCpt itemCpt = listCharacterRound[i];
-            //获取角色属性
-            itemCpt.gameCharacterData.characterData.GetAttributes(uiGameManager.gameItemsManager, out CharacterAttributesBean characterAttributes);
-            int speed = itemCpt.gameCharacterData.GetEffectSpeedRate(characterAttributes.speed);
-            float roundSpeed = (0.5f + speed / 10f);
+            float roundSpeed = (0.5f + itemCpt.speedForMove / 10f);
             //回合条向右移动
             itemCpt.transform.Translate(new Vector3(1, 0) * Time.deltaTime * roundSpeed);
             //检测是否到达目标点

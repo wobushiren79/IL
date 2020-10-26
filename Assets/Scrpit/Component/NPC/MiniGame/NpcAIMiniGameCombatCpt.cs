@@ -274,8 +274,6 @@ public class NpcAIMiniGameCombatCpt : BaseNpcAI
     /// <param name="itemCombatEffect"></param>
     public void CombatEffectExecute(MiniGameCombatEffectBean itemCombatEffect,out bool isDead)
     {
-        //播放粒子特效
-        gameCombatBuilder.CreateCombatEffect(itemCombatEffect.effectPSName,transform.position + new Vector3(0,0.5f));
         //完成数据
         itemCombatEffect.CompleteEffect(gameItemsManager,audioHandler, characterMiniGameData);
         //检测角色血量
@@ -307,23 +305,26 @@ public class NpcAIMiniGameCombatCpt : BaseNpcAI
         gameCombatEffectData.iconMarkId = SystemUtil.GetUUID(SystemUtil.UUIDTypeEnum.N);
         gameCombatEffectData.actionCharacter = actionCharacter;
         gameCombatEffectData.targetCharacter = this;
+
         foreach (EffectTypeBean itemType in listTypeData)
         {
             EffectTypeEnumTools.GetEffectDetails(iconDataManager ,itemType);
             //如果是持续 则需要加上BUFF图标
             if (durationForRound > 0)
             {
-                characterMiniGameData.listCombatEffect.Add(gameCombatEffectData);
                 AddStatusIconForEffect(itemType.spIcon, Color.white, gameCombatEffectData.iconMarkId);
-                //播放粒子特效
-                gameCombatBuilder.CreateCombatEffect(effectPSName, transform.position + new Vector3(0, 0.5f));
-            }
-            else
-            {
-                //回合数小于0的立即执行
-                CombatEffectExecute(gameCombatEffectData, out bool isDead);
             }
         }
-
+        //播放粒子特效
+        gameCombatBuilder.CreateCombatEffect(effectPSName, transform.position + new Vector3(0, 0.5f));
+        if (durationForRound > 0)
+        {
+            characterMiniGameData.listCombatEffect.Add(gameCombatEffectData);
+        }
+        else
+        {
+            //回合数小于0的立即执行
+            CombatEffectExecute(gameCombatEffectData, out bool isDead);
+        }
     }
 }

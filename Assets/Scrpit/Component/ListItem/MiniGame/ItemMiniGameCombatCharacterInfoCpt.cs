@@ -17,7 +17,6 @@ public class ItemMiniGameCombatCharacterInfoCpt : ItemGameBaseCpt
     public InfoCharacterPopupButton characterPopupButton;
 
     public MiniGameCharacterForCombatBean gameCharacterData;
-    public int oriForce;
 
     private void Update()
     {
@@ -27,9 +26,15 @@ public class ItemMiniGameCombatCharacterInfoCpt : ItemGameBaseCpt
                 SetLife(gameCharacterData.characterCurrentLife, gameCharacterData.characterMaxLife);
             else
                 SetDead();
-            int totalForce = this.gameCharacterData.GetTotalForce(oriForce);
-            SetForce(totalForce);
         }
+    }
+
+    public void RefreshUI()
+    {
+        GameItemsManager gameItemsManager = GetUIManager<UIGameManager>().gameItemsManager;
+        gameCharacterData.characterData.GetAttributes(gameItemsManager, gameCharacterData,out CharacterAttributesBean characterAttributes);
+        SetForce(characterAttributes.force);
+       
     }
 
     /// <summary>
@@ -40,15 +45,12 @@ public class ItemMiniGameCombatCharacterInfoCpt : ItemGameBaseCpt
     {
         this.gameCharacterData = (MiniGameCharacterForCombatBean)gameCharacterData;
         characterPopupButton.SetData(gameCharacterData.characterData, this.gameCharacterData.listCombatEffect);
+
         SetCharacterUI(this.gameCharacterData.characterData);
         SetName(this.gameCharacterData.characterData.baseInfo.name);
         SetLife(this.gameCharacterData.characterCurrentLife, gameCharacterData.characterMaxLife);
 
-        GameItemsManager gameItemsManager = GetUIManager<UIGameManager>().gameItemsManager;
-        this.gameCharacterData.characterData.GetAttributes(gameItemsManager, out CharacterAttributesBean characterAttributes);
-        oriForce = characterAttributes.force;
-        int totalForce= this.gameCharacterData.GetTotalForce(oriForce);
-        SetForce(totalForce);
+        RefreshUI();
     }
 
     public void SetDead()

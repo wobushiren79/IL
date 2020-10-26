@@ -8,6 +8,15 @@ public class ItemMiniGameCombatCharacterRoundCpt : ItemGameBaseCpt
     public MiniGameCharacterForCombatBean gameCharacterData;
 
     public ParticleSystem psSelected;
+    public int speedForMove = 0;
+
+    public void RefreshUI()
+    {
+        UIGameManager uiGameManager = GetUIManager<UIGameManager>();
+        //获取角色属性
+        gameCharacterData.characterData.GetAttributes(uiGameManager.gameItemsManager, gameCharacterData, out CharacterAttributesBean characterAttributes);
+        speedForMove = characterAttributes.speed;
+    }
 
     /// <summary>
     /// 设置数据
@@ -17,7 +26,10 @@ public class ItemMiniGameCombatCharacterRoundCpt : ItemGameBaseCpt
     {
         this.gameCharacterData = gameCharacterData;
         SetCharacterUI(gameCharacterData.characterData);
+        RefreshUI();
     }
+
+
 
     /// <summary>
     /// 设置角色图标

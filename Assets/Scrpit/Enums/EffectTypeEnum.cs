@@ -410,11 +410,11 @@ public class EffectTypeEnumTools : DataTools
     /// <param name="actionCharacterData"></param>
     /// <param name="listData"></param>
     /// <returns></returns>
-    public static int GetTotalDamage(GameItemsManager gameItemsManager, CharacterBean actionCharacterData, List<EffectTypeBean> listData)
+    public static int GetTotalDamage(GameItemsManager gameItemsManager, NpcAIMiniGameCombatCpt actionNpc, List<EffectTypeBean> listData)
     {
         float damageAdd = 0;
         float damageAddRate = 1;
-        actionCharacterData.GetAttributes(gameItemsManager, out CharacterAttributesBean characterAttributes);
+        actionNpc.characterData.GetAttributes(gameItemsManager, actionNpc.characterMiniGameData, out CharacterAttributesBean characterAttributes);
         foreach (EffectTypeBean itemData in listData)
         {
             switch (itemData.dataType)
@@ -458,7 +458,7 @@ public class EffectTypeEnumTools : DataTools
     public static int GetTotalLife(GameItemsManager gameItemsManager, CharacterBean actionCharacterData, List<EffectTypeBean> listData)
     {
         float lifeAdd = 0;
-        float lifeAddRate = 1;
+        float lifeAddRate = 0;
         actionCharacterData.GetAttributes(gameItemsManager, out CharacterAttributesBean characterAttributes);
         foreach (EffectTypeBean itemData in listData)
         {
@@ -472,7 +472,7 @@ public class EffectTypeEnumTools : DataTools
                     break;
             }
         }
-        return (int)Mathf.Round(lifeAdd * lifeAddRate);
+        return (int)Mathf.Round(lifeAdd + characterAttributes.life * lifeAddRate);
     }
   
     /// <summary>
@@ -508,66 +508,125 @@ public class EffectTypeEnumTools : DataTools
     /// <param name="listData"></param>
     /// <param name="force"></param>
     /// <returns></returns>
-    public static int GetTotalForce(List<EffectTypeBean> listData,int force)
+    public static CharacterAttributesBean GetTotalAttributes(List<EffectTypeBean> listData, CharacterAttributesBean addAttributes)
     {
-        float forceRate = 1;
-        float forceAdd = 0;
-        foreach (EffectTypeBean itemData in listData)
-        {
-            switch (itemData.dataType)
-            {
-                case EffectTypeEnum.AddForce:
-                    forceAdd += int.Parse(itemData.data);
-                    break;
-                case EffectTypeEnum.AddForceRate:
-                    forceRate+= float.Parse(itemData.data);
-                    break;
-                case EffectTypeEnum.SubForce:
-                    forceAdd -= int.Parse(itemData.data);
-                    break;
-                case EffectTypeEnum.SubForceRate:
-                   forceRate -= float.Parse(itemData.data);
-                    break;
-            }
-        }
-        force = (int)((force + forceAdd) * forceRate);
-        if (force < 0)
-            force = 0;
-        return force;
-    }
+        float attibutesAddRateForLucky = 1;
+        float attibutesAddForLucky = 0;
 
-    /// <summary>
-    /// 获取所有武力加成效果
-    /// </summary>
-    /// <param name="listData"></param>
-    /// <param name="force"></param>
-    /// <returns></returns>
-    public static int GetTotalSpeed(List<EffectTypeBean> listData, int speed)
-    {
-        float speedRate = 1;
-        float speedAdd = 0;
+        float attibutesAddRateForCook = 1;
+        float attibutesAddForCook = 0;
+
+        float attibutesAddRateForSpeed = 1;
+        float attibutesAddForSpeed = 0;
+
+        float attibutesAddRateForAccount = 1;
+        float attibutesAddForAccount = 0;
+
+        float attibutesAddRateForCharm = 1;
+        float attibutesAddForCharm = 0;
+
+        float attibutesAddRateForForce = 1;
+        float attibutesAddForForce = 0;
         foreach (EffectTypeBean itemData in listData)
         {
             switch (itemData.dataType)
             {
+                case EffectTypeEnum.AddLucky:
+                    attibutesAddForForce += int.Parse(itemData.data);
+                    break;
+                case EffectTypeEnum.AddCook:
+                    attibutesAddForCook += int.Parse(itemData.data);
+                    break;
                 case EffectTypeEnum.AddSpeed:
-                    speedAdd += int.Parse(itemData.data);
+                    attibutesAddForSpeed += int.Parse(itemData.data);
+                    break;
+                case EffectTypeEnum.AddAccount:
+                    attibutesAddForAccount += int.Parse(itemData.data);
+                    break;
+                case EffectTypeEnum.AddCharm:
+                    attibutesAddForCharm += int.Parse(itemData.data);
+                    break;
+                case EffectTypeEnum.AddForce:
+                    attibutesAddForForce += int.Parse(itemData.data);
+                    break;
+                //------------------------------------------------------------------------------
+                case EffectTypeEnum.AddLuckyRate:
+                    attibutesAddRateForLucky += float.Parse(itemData.data);
+                    break;
+                case EffectTypeEnum.AddCookRate:
+                    attibutesAddRateForCook += float.Parse(itemData.data);
                     break;
                 case EffectTypeEnum.AddSpeedRate:
-                    speedRate += float.Parse(itemData.data);
+                    attibutesAddRateForSpeed += float.Parse(itemData.data);
+                    break;
+                case EffectTypeEnum.AddAccountRate:
+                    attibutesAddRateForAccount += float.Parse(itemData.data);
+                    break;
+                case EffectTypeEnum.AddCharmRate:
+                    attibutesAddRateForCharm += float.Parse(itemData.data);
+                    break;
+                case EffectTypeEnum.AddForceRate:
+                    attibutesAddRateForForce += float.Parse(itemData.data);
+                    break;
+                //------------------------------------------------------------------------------
+                case EffectTypeEnum.SubLucky:
+                    attibutesAddForForce -= int.Parse(itemData.data);
+                    break;
+                case EffectTypeEnum.SubCook:
+                    attibutesAddForCook -= int.Parse(itemData.data);
                     break;
                 case EffectTypeEnum.SubSpeed:
-                    speedAdd -= int.Parse(itemData.data);
+                    attibutesAddForSpeed -= int.Parse(itemData.data);
+                    break;
+                case EffectTypeEnum.SubAccount:
+                    attibutesAddForAccount -= int.Parse(itemData.data);
+                    break;
+                case EffectTypeEnum.SubCharm:
+                    attibutesAddForCharm -= int.Parse(itemData.data);
+                    break;
+                case EffectTypeEnum.SubForce:
+                    attibutesAddForForce -= int.Parse(itemData.data);
+                    break;
+                //------------------------------------------------------------------------------
+                case EffectTypeEnum.SubLuckyRate:
+                    attibutesAddRateForLucky -= float.Parse(itemData.data);
+                    break;
+                case EffectTypeEnum.SubCookRate:
+                    attibutesAddRateForCook -= float.Parse(itemData.data);
                     break;
                 case EffectTypeEnum.SubSpeedRate:
-                    speedRate -= float.Parse(itemData.data);
+                    attibutesAddRateForSpeed -= float.Parse(itemData.data);
+                    break;
+                case EffectTypeEnum.SubAccountRate:
+                    attibutesAddRateForAccount -= float.Parse(itemData.data);
+                    break;
+                case EffectTypeEnum.SubCharmRate:
+                    attibutesAddRateForCharm -= float.Parse(itemData.data);
+                    break;
+                case EffectTypeEnum.SubForceRate:
+                    attibutesAddRateForForce -= float.Parse(itemData.data);
                     break;
             }
         }
-        speed = (int)((speed + speedAdd) * speedRate);
-        if (speed < 0)
-            speed = 0;
-        return speed;
+        addAttributes.lucky = (int)((addAttributes.lucky + attibutesAddForLucky) * attibutesAddRateForLucky);
+        if (addAttributes.lucky < 0)
+            addAttributes.lucky = 0;
+        addAttributes.cook = (int)((addAttributes.cook + attibutesAddForCook) * attibutesAddRateForCook);
+        if (addAttributes.cook < 0)
+            addAttributes.cook = 0;
+        addAttributes.speed = (int)((addAttributes.speed + attibutesAddForSpeed) * attibutesAddRateForSpeed);
+        if (addAttributes.speed < 0)
+            addAttributes.speed = 0;
+        addAttributes.account = (int)((addAttributes.account + attibutesAddForAccount) * attibutesAddRateForAccount);
+        if (addAttributes.account < 0)
+            addAttributes.account = 0;
+        addAttributes.charm = (int)((addAttributes.charm + attibutesAddForCharm) * attibutesAddRateForCharm);
+        if (addAttributes.charm < 0)
+            addAttributes.charm = 0;
+        addAttributes.force = (int)((addAttributes.force + attibutesAddForForce) * attibutesAddRateForForce);
+        if (addAttributes.force < 0)
+            addAttributes.force = 0;
+        return addAttributes;
     }
 
     /// <summary>
@@ -583,8 +642,12 @@ public class EffectTypeEnumTools : DataTools
             case EffectTypeEnum.AddLifeRate:
             case EffectTypeEnum.Damage:
             case EffectTypeEnum.DamageRate:
-            case EffectTypeEnum.DamageRateForForce:
+            case EffectTypeEnum.DamageRateForLucky:
+            case EffectTypeEnum.DamageRateForCook:
             case EffectTypeEnum.DamageRateForSpeed:
+            case EffectTypeEnum.DamageRateForAccount:
+            case EffectTypeEnum.DamageRateForCharm:
+            case EffectTypeEnum.DamageRateForForce:
                 return true;
         }
         return false;

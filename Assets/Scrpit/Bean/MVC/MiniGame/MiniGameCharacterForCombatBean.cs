@@ -44,30 +44,17 @@ public class MiniGameCharacterForCombatBean : MiniGameCharacterBean
     }
 
     /// <summary>
-    /// 获取所有武力加成
+    /// 获取所有属性加成
     /// </summary>
     /// <param name="force"></param>
     /// <returns></returns>
-    public int GetTotalForce(int force)
+    public void GetTotalAttributes(out CharacterAttributesBean  addAttributesData)
     {
+        addAttributesData = new CharacterAttributesBean();
         foreach (MiniGameCombatEffectBean itemData in listCombatEffect)
         {
-            force = EffectTypeEnumTools.GetTotalForce(itemData.listEffectTypeData, force);
+            EffectTypeEnumTools.GetTotalAttributes(itemData.listEffectTypeData, addAttributesData);
         }
-        return force;
     }
 
-    /// <summary>
-    /// 获取所有速度加成
-    /// </summary>
-    /// <param name="speed"></param>
-    /// <returns></returns>
-    public int GetEffectSpeedRate(int speed)
-    {
-        foreach (MiniGameCombatEffectBean itemData in listCombatEffect)
-        {
-            speed = EffectTypeEnumTools.GetTotalSpeed(itemData.listEffectTypeData, speed);
-        }
-        return speed;
-    }
 }

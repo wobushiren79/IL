@@ -28,7 +28,7 @@ public class MiniGameCombatEffectBean
             targetCharacter.characterLifeCpt.SetData(miniGameCharacter.characterCurrentLife, miniGameCharacter.characterMaxLife);
         }
         //伤害处理
-        int addDamage = EffectTypeEnumTools.GetTotalDamage(gameItemsManager, actionCharacter.characterData, listEffectTypeData);
+        int addDamage = EffectTypeEnumTools.GetTotalDamage(gameItemsManager, actionCharacter, listEffectTypeData);
         if (addDamage > 0)
         {
             targetCharacter.UnderAttack(1, addDamage);
