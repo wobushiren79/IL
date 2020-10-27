@@ -112,7 +112,7 @@ public class InfoItemsPopupShow : PopupShowView
             return;
         foreach (EffectTypeBean itemData in listEffectData)
         {
-            EffectTypeEnumTools.GetEffectDetails(iconDataManager, itemData);
+            EffectTypeEnumTools.GetEffectDetails(iconDataManager, itemData,null);
             string describe = itemData.effectDescribe;
             if (durationForRound != 0)
             {

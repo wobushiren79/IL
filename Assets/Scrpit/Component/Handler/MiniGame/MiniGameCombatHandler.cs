@@ -11,10 +11,12 @@ public class MiniGameCombatHandler : BaseMiniGameHandler<MiniGameCombatBuilder, 
     protected SkillInfoHandler skillInfoHandler;
     //游戏UI
     protected UIMiniGameCombat uiMiniGameCombat;
+    protected CharacterDressManager characterDressManager;
     protected override void Awake()
     {
         base.Awake();
         skillInfoHandler = Find<SkillInfoHandler>(ImportantTypeEnum.SkillHandler);
+        characterDressManager = Find<CharacterDressManager>(ImportantTypeEnum.CharacterManager);
     }
 
     /// <summary>
@@ -333,6 +335,7 @@ public class MiniGameCombatHandler : BaseMiniGameHandler<MiniGameCombatBuilder, 
         NpcAIMiniGameCombatCpt actionNpc = miniGameData.GetRoundActionCharacter();
         List<NpcAIMiniGameCombatCpt> listTargetNpc = miniGameData.GetRoundTargetListCharacter();
         SkillInfoBean skillData = miniGameData.GetRoundActionSkill();
+        Sprite spSkill= iconDataManager.GetIconSpriteByName(skillData.icon_key);
         //喊出技能名字
         actionNpc.SetShout(skillData.name);
         yield return new WaitForSeconds(1f);
@@ -340,7 +343,7 @@ public class MiniGameCombatHandler : BaseMiniGameHandler<MiniGameCombatBuilder, 
         //增加技能效果
         foreach (NpcAIMiniGameCombatCpt itemNpc in listTargetNpc)
         {
-            itemNpc.AddCombatEffect(actionNpc, skillData.effect, skillData.effect_details);
+            itemNpc.AddCombatEffect(actionNpc, skillData.effect, skillData.effect_details, spSkill);
         }
         yield return new WaitForSeconds(1f);
     }
@@ -358,10 +361,11 @@ public class MiniGameCombatHandler : BaseMiniGameHandler<MiniGameCombatBuilder, 
         ItemsInfoBean itemsInfo = gameItemsManager.GetItemsById(itemsId);
         //从物品栏移除物品
         gameDataManager.gameData.AddItemsNumber(itemsInfo.id, -1);
+        Sprite spItems = GeneralEnumTools.GetGeneralSprite(itemsInfo,iconDataManager,gameItemsManager,characterDressManager);
         //增加物品效果
         foreach (NpcAIMiniGameCombatCpt itemNpc in listTargetNpc)
         {
-            itemNpc.AddCombatEffect(actionNpc,itemsInfo.effect, itemsInfo.effect_details);
+            itemNpc.AddCombatEffect(actionNpc,itemsInfo.effect, itemsInfo.effect_details, spItems);
         }
         yield return new WaitForSeconds(1f);
     }

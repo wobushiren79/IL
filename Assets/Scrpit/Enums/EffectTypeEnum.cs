@@ -54,6 +54,7 @@ public class EffectTypeBean : DataBean<EffectTypeEnum>
     public string effectDescribe;
     //图标
     public Sprite spIcon;
+    public Sprite spIconRemark;
     //图标颜色
     public Color colorIcon;
     //具体数值
@@ -81,7 +82,7 @@ public class EffectTypeEnumTools : DataTools
     /// </summary>
     /// <param name="rewardType"></param>
     /// <returns></returns>
-    public static EffectTypeBean GetEffectDetails(IconDataManager iconDataManager, EffectTypeBean effectTypeData)
+    public static EffectTypeBean GetEffectDetails(IconDataManager iconDataManager, EffectTypeBean effectTypeData,Sprite spRemark)
     {
         switch (effectTypeData.dataType)
         {
@@ -131,7 +132,7 @@ public class EffectTypeEnumTools : DataTools
                 effectTypeData = GetEffectDetailsForAddDef(iconDataManager, effectTypeData);
                 break;
             case EffectTypeEnum.Damage:
-                effectTypeData = GetEffectDetailsForDamage(iconDataManager, effectTypeData);
+                effectTypeData = GetEffectDetailsForDamage(iconDataManager, effectTypeData,spRemark);
                 break;
             case EffectTypeEnum.DamageRateForLucky:
             case EffectTypeEnum.DamageRateForCook:
@@ -139,7 +140,7 @@ public class EffectTypeEnumTools : DataTools
             case EffectTypeEnum.DamageRateForAccount:
             case EffectTypeEnum.DamageRateForCharm:
             case EffectTypeEnum.DamageRateForForce:
-                effectTypeData = GetEffectDetailsForDamageRateForAttributes(iconDataManager, effectTypeData);
+                effectTypeData = GetEffectDetailsForDamageRateForAttributes(iconDataManager, effectTypeData, spRemark);
                 break;
         }
         return effectTypeData;
@@ -362,16 +363,17 @@ public class EffectTypeEnumTools : DataTools
         return effectTypeData;
     }
 
-    private static EffectTypeBean GetEffectDetailsForDamage(IconDataManager iconDataManager, EffectTypeBean effectTypeData)
+    private static EffectTypeBean GetEffectDetailsForDamage(IconDataManager iconDataManager, EffectTypeBean effectTypeData,Sprite spRemark)
     {
         effectTypeData.effectData = int.Parse(effectTypeData.data);
         effectTypeData.effectDescribe = string.Format(GameCommonInfo.GetUITextById(504), effectTypeData.data);
         effectTypeData.spIcon = iconDataManager.GetIconSpriteByName("ui_features_favorability");
+        effectTypeData.spIconRemark = spRemark;
         effectTypeData.colorIcon = Color.red;
         return effectTypeData;
     }
 
-    private static EffectTypeBean GetEffectDetailsForDamageRateForAttributes(IconDataManager iconDataManager, EffectTypeBean effectTypeData)
+    private static EffectTypeBean GetEffectDetailsForDamageRateForAttributes(IconDataManager iconDataManager, EffectTypeBean effectTypeData, Sprite spRemark)
     {
         AttributesTypeEnum attributesType = AttributesTypeEnum.Null;
         switch (effectTypeData.dataType)
@@ -399,6 +401,7 @@ public class EffectTypeEnumTools : DataTools
         string attibutesName = AttributesTypeEnumTools.GetAttributesName(attributesType);
         effectTypeData.effectDescribe = string.Format(GameCommonInfo.GetUITextById(521), attibutesName, effectTypeData.data);
         effectTypeData.colorIcon = Color.red;
+        effectTypeData.spIconRemark = spRemark;
         effectTypeData.spIcon = AttributesTypeEnumTools.GetAttributesIcon(iconDataManager, attributesType);
         return effectTypeData;
     }

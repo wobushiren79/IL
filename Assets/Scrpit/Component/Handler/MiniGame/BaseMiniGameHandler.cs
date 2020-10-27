@@ -13,12 +13,14 @@ public class BaseMiniGameHandler<B, D> : BaseHandler, UIMiniGameCountDown.ICallB
     //控制器
     protected ControlHandler controlHandler;
     protected GameTimeHandler gameTimeHandler;
-    // 音效
+    //音效
     protected AudioHandler audioHandler;
     //数据
     protected GameDataManager gameDataManager;
     protected GameItemsManager gameItemsManager;
 
+
+    protected IconDataManager iconDataManager;
     //游戏构建器
     public B miniGameBuilder;
     //游戏数据
@@ -36,6 +38,7 @@ public class BaseMiniGameHandler<B, D> : BaseHandler, UIMiniGameCountDown.ICallB
         gameTimeHandler = Find<GameTimeHandler>(ImportantTypeEnum.TimeHandler);
         audioHandler = Find<AudioHandler>(ImportantTypeEnum.AudioHandler);
         miniGameBuilder = FindInChildren<B>(ImportantTypeEnum.MiniGameBuilder);
+        iconDataManager = Find<IconDataManager>(ImportantTypeEnum.UIManager);
     }
 
     /// <summary>

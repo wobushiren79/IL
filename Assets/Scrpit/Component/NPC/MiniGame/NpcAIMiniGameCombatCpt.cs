@@ -294,7 +294,7 @@ public class NpcAIMiniGameCombatCpt : BaseNpcAI
     /// </summary>
     /// <param name="effectTypeData"></param>
     /// <param name="effectDetailsData"></param>
-    public void AddCombatEffect(NpcAIMiniGameCombatCpt actionCharacter,string effectTypeData, string effectDetailsData)
+    public void AddCombatEffect(NpcAIMiniGameCombatCpt actionCharacter,string effectTypeData, string effectDetailsData,Sprite spIcon)
     {
         List<EffectTypeBean> listTypeData = EffectTypeEnumTools.GetListEffectData(effectTypeData);
         EffectDetailsEnumTools.GetEffectDetailsForCombat(effectDetailsData, out string effectPSName, out int durationForRound);
@@ -308,11 +308,21 @@ public class NpcAIMiniGameCombatCpt : BaseNpcAI
 
         foreach (EffectTypeBean itemType in listTypeData)
         {
-            EffectTypeEnumTools.GetEffectDetails(iconDataManager ,itemType);
+            //设置技能的备用图标
+            EffectTypeEnumTools.GetEffectDetails(iconDataManager ,itemType, spIcon);
             //如果是持续 则需要加上BUFF图标
             if (durationForRound > 0)
             {
-                AddStatusIconForEffect(itemType.spIcon, Color.white, gameCombatEffectData.iconMarkId);
+                Sprite spEffect;
+                if (itemType.spIconRemark!=null)
+                {
+                    spEffect = itemType.spIconRemark;
+                }
+                else
+                {
+                    spEffect = itemType.spIcon;
+                }
+                AddStatusIconForEffect(spEffect, Color.white, gameCombatEffectData.iconMarkId);
             }
         }
         //播放粒子特效

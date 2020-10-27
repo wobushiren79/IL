@@ -80,14 +80,24 @@ public class InfoCharacterPopupShow : PopupShowView
             for (int i = 0; i < listEffect.Count; i++)
             {
                 MiniGameCombatEffectBean itemEffectData = listEffect[i];
-                if (itemEffectData.listEffectTypeData!=null)
+                if (itemEffectData.listEffectTypeData != null)
                 {
-                    for(int f = 0; f < itemEffectData.listEffectTypeData.Count; f++)
+                    for (int f = 0; f < itemEffectData.listEffectTypeData.Count; f++)
                     {
                         EffectTypeBean effectTypeData = itemEffectData.listEffectTypeData[f];
                         GameObject objEffectItem = Instantiate(objEffectContainer, objEffectModel);
                         ItemBaseTextCpt itemEffect = objEffectItem.GetComponent<ItemBaseTextCpt>();
-                        itemEffect.SetData(effectTypeData.spIcon, "", effectTypeData.effectDescribe);
+
+                        Sprite spEffect;
+                        if (effectTypeData.spIconRemark != null)
+                        {
+                            spEffect = effectTypeData.spIconRemark;
+                        }
+                        else
+                        {
+                            spEffect = effectTypeData.spIcon;
+                        }
+                        itemEffect.SetData(spEffect, effectTypeData.colorIcon, "", effectTypeData.effectDescribe);
                     }
                 }
             }
