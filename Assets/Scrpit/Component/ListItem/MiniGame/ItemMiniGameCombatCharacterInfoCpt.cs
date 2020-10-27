@@ -8,6 +8,7 @@ public class ItemMiniGameCombatCharacterInfoCpt : ItemGameBaseCpt
     public Text tvName;
     public Text tvLife;
     public Text tvForce;
+    public Text tvSpeed;
     public Slider sliderLife;
 
     public GameObject objDead;
@@ -34,7 +35,7 @@ public class ItemMiniGameCombatCharacterInfoCpt : ItemGameBaseCpt
         GameItemsManager gameItemsManager = GetUIManager<UIGameManager>().gameItemsManager;
         gameCharacterData.characterData.GetAttributes(gameItemsManager, gameCharacterData,out CharacterAttributesBean characterAttributes);
         SetForce(characterAttributes.force);
-       
+        SetSpeed(characterAttributes.speed);
     }
 
     /// <summary>
@@ -109,5 +110,15 @@ public class ItemMiniGameCombatCharacterInfoCpt : ItemGameBaseCpt
     {
         if (tvForce != null)
             tvForce.text = "" + force;
+    }
+
+    /// <summary>
+    /// 设置速度
+    /// </summary>
+    /// <param name="speed"></param>
+    public void SetSpeed(int speed)
+    {
+        if (tvSpeed != null)
+            tvSpeed.text = "" + speed;
     }
 }

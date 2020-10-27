@@ -337,6 +337,18 @@ public class CharacterBean
         totalAttributes.account += totalAddAttributes.account;
         totalAttributes.charm += totalAddAttributes.charm;
         totalAttributes.force += totalAddAttributes.force;
+        if (totalAttributes.lucky < 0)
+            totalAttributes.lucky = 0;
+        if (totalAttributes.cook < 0)
+            totalAttributes.cook = 0;
+        if (totalAttributes.speed < 0)
+            totalAttributes.speed = 0;
+        if (totalAttributes.account < 0)
+            totalAttributes.account = 0;
+        if (totalAttributes.charm < 0)
+            totalAttributes.charm = 0;
+        if (totalAttributes.force < 0)
+            totalAttributes.force = 0;
     }
     /// <summary>
     /// 计算员工请假概率

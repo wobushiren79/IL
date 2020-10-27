@@ -609,23 +609,11 @@ public class EffectTypeEnumTools : DataTools
             }
         }
         addAttributes.lucky = (int)((addAttributes.lucky + attibutesAddForLucky) * attibutesAddRateForLucky);
-        if (addAttributes.lucky < 0)
-            addAttributes.lucky = 0;
         addAttributes.cook = (int)((addAttributes.cook + attibutesAddForCook) * attibutesAddRateForCook);
-        if (addAttributes.cook < 0)
-            addAttributes.cook = 0;
         addAttributes.speed = (int)((addAttributes.speed + attibutesAddForSpeed) * attibutesAddRateForSpeed);
-        if (addAttributes.speed < 0)
-            addAttributes.speed = 0;
         addAttributes.account = (int)((addAttributes.account + attibutesAddForAccount) * attibutesAddRateForAccount);
-        if (addAttributes.account < 0)
-            addAttributes.account = 0;
         addAttributes.charm = (int)((addAttributes.charm + attibutesAddForCharm) * attibutesAddRateForCharm);
-        if (addAttributes.charm < 0)
-            addAttributes.charm = 0;
         addAttributes.force = (int)((addAttributes.force + attibutesAddForForce) * attibutesAddRateForForce);
-        if (addAttributes.force < 0)
-            addAttributes.force = 0;
         return addAttributes;
     }
 
