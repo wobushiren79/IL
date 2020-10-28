@@ -66,7 +66,7 @@ public class SceneInfiniteTowersManager : BaseMonoBehaviour
         CharacterAttributesBean characterAttributes = new CharacterAttributesBean();
         if (layer % 10 == 0)
         {
-            int addRate = layer / 10;
+            int addRate = 1 + ((layer - 10) / 20);
             characterAttributes.InitAttributes(
                 characterData.attributes.life * addRate,
                 characterData.attributes.cook * addRate,
@@ -106,8 +106,8 @@ public class SceneInfiniteTowersManager : BaseMonoBehaviour
                 case 10:
                 case 20:
                 case 30:
-                    //GameCommonInfo.baseDataController.GetBaseData(BaseDataTypeEnum.InfiniteTowersBossForLevel1, out bossTeamMembers);
-                    bossTeamMembers = "7200001";
+                    GameCommonInfo.baseDataController.GetBaseData(BaseDataTypeEnum.InfiniteTowersBossForLevel1, out bossTeamMembers);
+                    //bossTeamMembers = "7200021,";
                     break;
                 case 40:
                 case 50:
@@ -133,8 +133,10 @@ public class SceneInfiniteTowersManager : BaseMonoBehaviour
                     bossTeamMembers = level1 + "|" + level2 + "|" + level3 + "|" + level4; 
                     break;
             }
-            long randomBossTeam = StringUtil.SplitAndRandomForLong(bossTeamMembers, '|');
-            NpcTeamBean bossTeamData = npcTeamManager.GetInfiniteTowerBossTeam(randomBossTeam);
+            string[] randomBossTeam = StringUtil.SplitBySubstringForArrayStr(bossTeamMembers, '|');
+            string bossTeamStr = RandomUtil.GetRandomDataByArray(randomBossTeam);
+            long bossTeamId =  StringUtil.SplitAndRandomForLong(bossTeamStr, ',');
+            NpcTeamBean bossTeamData = npcTeamManager.GetInfiniteTowerBossTeam(bossTeamId);
             long[] membersIds = bossTeamData.GetTeamMembersId();
             long[] bossId = bossTeamData.GetTeamLeaderId();
             foreach (long itemMemberId in membersIds)

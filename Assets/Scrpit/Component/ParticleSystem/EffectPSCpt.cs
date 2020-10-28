@@ -4,7 +4,7 @@ using System;
 
 public class EffectPSCpt : BaseMonoBehaviour
 {
-    public ParticleSystem effectPS;
+    protected ParticleSystem effectPS;
     public AudioSoundEnum soundType;
     protected AudioHandler audioHandler;
 
