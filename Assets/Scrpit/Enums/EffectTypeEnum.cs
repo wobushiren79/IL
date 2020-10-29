@@ -56,7 +56,7 @@ public class EffectTypeBean : DataBean<EffectTypeEnum>
     public Sprite spIcon;
     public Sprite spIconRemark;
     //图标颜色
-    public Color colorIcon;
+    public Color colorIcon = Color.white;
     //具体数值
     public float effectData;
 
