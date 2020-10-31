@@ -168,7 +168,7 @@ public class EffectTypeEnumTools : DataTools
     {
         float addLifeRate = float.Parse(effectTypeData.data);
         effectTypeData.effectData = addLifeRate;
-        effectTypeData.effectDescribe = string.Format(GameCommonInfo.GetUITextById(507), (addLifeRate * 100) + "%");
+        effectTypeData.effectDescribe = string.Format(GameCommonInfo.GetUITextById(507), (addLifeRate * 100) + "");
         effectTypeData.spIcon = iconDataManager.GetIconSpriteByName("ui_effect_addlife_1");
         return effectTypeData;
     }

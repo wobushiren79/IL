@@ -106,8 +106,8 @@ public class SceneInfiniteTowersManager : BaseMonoBehaviour
                 case 10:
                 case 20:
                 case 30:
-                    GameCommonInfo.baseDataController.GetBaseData(BaseDataTypeEnum.InfiniteTowersBossForLevel1, out bossTeamMembers);
-                    //bossTeamMembers = "7200021,";
+                    //GameCommonInfo.baseDataController.GetBaseData(BaseDataTypeEnum.InfiniteTowersBossForLevel1, out bossTeamMembers);
+                    bossTeamMembers = "7300051";
                     break;
                 case 40:
                 case 50:
