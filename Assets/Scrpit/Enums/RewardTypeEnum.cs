@@ -286,15 +286,16 @@ public class RewardTypeEnumTools : DataTools
     {
         string[] listItemsData = StringUtil.SplitBySubstringForArrayStr(data.data, ',');
         long itemId = long.Parse(listItemsData[0]);
-        ItemsInfoBean itemsInfo = gameItemsManager.GetItemsById(itemId);
-        data.rewardDescribe = itemsInfo.name;
-        if (listItemsData.Length == 2)
-        {
-            data.rewardNumber = int.Parse(listItemsData[1]);
-        }
-        data.rewardId = itemId;
-        data.rewardDescribe += (" x" + data.rewardNumber);
-        data.spRewardIcon = GeneralEnumTools.GetGeneralSprite(itemsInfo, iconDataManager, gameItemsManager, null, true);
+
+            ItemsInfoBean itemsInfo = gameItemsManager.GetItemsById(itemId);
+            data.rewardDescribe = itemsInfo.name;
+            if (listItemsData.Length == 2)
+            {
+                data.rewardNumber = int.Parse(listItemsData[1]);
+            }
+            data.rewardId = itemId;
+            data.rewardDescribe += (" x" + data.rewardNumber);
+            data.spRewardIcon = GeneralEnumTools.GetGeneralSprite(itemsInfo, iconDataManager, gameItemsManager, null, true);
         return data;
     }
 
@@ -516,7 +517,7 @@ public class RewardTypeEnumTools : DataTools
     /// <param name="layer"></param>
     /// <param name="normalBuildRate"></param>
     /// <returns></returns>
-    public static List<RewardTypeBean> GetRewardItemsForInfiniteTowers(int layer, int totalLucky)
+    public static List<RewardTypeBean> GetRewardItemsForInfiniteTowers(List<CharacterBean> listEnemyData, int layer, int totalLucky)
     {
         List<RewardTypeBean> listReward = new List<RewardTypeBean>();
         long addExp = 0;
@@ -570,26 +571,26 @@ public class RewardTypeEnumTools : DataTools
                     GameCommonInfo.baseDataController.GetBaseData(BaseDataTypeEnum.InfiniteTowersRareBuildRewardForLevel4, out rewardForRareBuildStr);
                     break;
             }
-            if (CheckUtil.StringIsNull(rewardForNormalStr))
+            if (!CheckUtil.StringIsNull(rewardForNormalStr))
             {
                 //必定随机获得一个物品
-                RewardTypeBean rewardForItems = GetRandomRewardForData(RewardTypeEnum.AddItems, rewardForNormalStr);
+                RewardTypeBean rewardForItems = GetRandomRewardForData(listEnemyData,RewardTypeEnum.AddItems, rewardForNormalStr);
                 listReward.Add(rewardForItems);
                 //有一定概率获得建筑物
                 float randomTemp = UnityEngine.Random.Range(0f, 1f);
                 if (!CheckUtil.StringIsNull(rewardForNormalBuildStr) && randomTemp <= normalBuildRate)
                 {
-                    RewardTypeBean rewardForBuild = GetRandomRewardForData(RewardTypeEnum.AddBuildItems, rewardForNormalBuildStr);
+                    RewardTypeBean rewardForBuild = GetRandomRewardForData(listEnemyData, RewardTypeEnum.AddBuildItems, rewardForNormalBuildStr);
                     listReward.Add(rewardForBuild);
                 }
             }
-            if (CheckUtil.StringIsNull(rewardForRareStr))
+            if (!CheckUtil.StringIsNull(rewardForRareStr))
             {
                 //有一定概率获得稀有物品
                 float randomTemp = UnityEngine.Random.Range(0f, 1f);
                 if (randomTemp <= rateRate)
                 {
-                    RewardTypeBean rewardForItems = GetRandomRewardForData(RewardTypeEnum.AddItems, rewardForRareStr);
+                    RewardTypeBean rewardForItems = GetRandomRewardForData(listEnemyData, RewardTypeEnum.AddItems, rewardForRareStr);
                     listReward.Add(rewardForItems);
                 }
             }
@@ -641,7 +642,7 @@ public class RewardTypeEnumTools : DataTools
         return listReward;
     }
 
-    protected static RewardTypeBean GetRandomRewardForData(RewardTypeEnum rewardType, string rewardListStr)
+    protected static RewardTypeBean GetRandomRewardForData(List<CharacterBean> listEnemyData, RewardTypeEnum rewardType, string rewardListStr)
     {
         if (CheckUtil.StringIsNull(rewardListStr))
         {
@@ -649,7 +650,23 @@ public class RewardTypeEnumTools : DataTools
         }
         List<string> listReward = StringUtil.SplitBySubstringForListStr(rewardListStr, '|');
         string randomReward = RandomUtil.GetRandomDataByList(listReward);
-        RewardTypeBean rewardData = new RewardTypeBean(rewardType, randomReward + "");
+        string rewardDataStr;
+        if (randomReward.Equals("Skills"))
+        {
+            List<long> listSkills = new List<long>();
+            for (int i=0;i< listEnemyData.Count;i++)
+            {
+                CharacterBean characterData= listEnemyData[i];
+                listSkills.AddRange(characterData.attributes.listSkills);
+            }
+            long randomSkill= RandomUtil.GetRandomDataByList(listSkills);
+            rewardDataStr = (1400000 + randomSkill) + "";
+        }
+        else
+        {
+            rewardDataStr = randomReward;
+        }
+        RewardTypeBean rewardData = new RewardTypeBean(rewardType, rewardDataStr);
         return rewardData;
     }
 }

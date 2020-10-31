@@ -208,6 +208,9 @@ public class AudioHandler : BaseHandler
             case AudioSoundEnum.Dice:
                 audioClip = audioManager.GetSoundClip("sound_dice_1");
                 break;
+            case AudioSoundEnum.Thunder:
+                audioClip = audioManager.GetSoundClip("sound_thunder_1");
+                break;
         }
         if (audioClip != null)
         {

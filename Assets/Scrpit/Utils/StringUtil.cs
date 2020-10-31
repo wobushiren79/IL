@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using UnityEditor;
 using System.Collections.Generic;
+using System;
 
 public class StringUtil
 {
@@ -31,7 +32,7 @@ public class StringUtil
     {
         if (CheckUtil.StringIsNull(data))
             return new T[0];
-        string[] splitData = data.Split(substring);
+        string[] splitData = data.Split(new char[] { substring }, StringSplitOptions.RemoveEmptyEntries);
         if (CheckUtil.ArrayIsNull(splitData))
         {
             return new T[0];
@@ -61,7 +62,7 @@ public class StringUtil
     {
         if (data == null)
             return new List<string>();
-        string[] splitData = data.Split(substring);
+        string[] splitData = data.Split(new char[] { substring }, StringSplitOptions.RemoveEmptyEntries);
         List<string> listData = TypeConversionUtil.ArrayToList(splitData);
         return listData;
     }
@@ -76,7 +77,7 @@ public class StringUtil
     {
         if (data == null)
             return new string[0];
-        string[] splitData = data.Split(substring);
+        string[] splitData = data.Split(new char[] { substring }, StringSplitOptions.RemoveEmptyEntries);
         return splitData;
     }
 
@@ -90,7 +91,7 @@ public class StringUtil
     {
         if (CheckUtil.StringIsNull(data))
             return new long[0];
-        string[] splitData = data.Split(substring);
+        string[] splitData = data.Split(new char[] { substring }, StringSplitOptions.RemoveEmptyEntries);
         long[] listData = TypeConversionUtil.ArrayStrToArrayLong(splitData);
         return listData;
     }
@@ -121,7 +122,7 @@ public class StringUtil
     {
         if (data == null)
             return new int[0];
-        string[] splitData = data.Split(substring);
+        string[] splitData = data.Split(new char[] { substring }, StringSplitOptions.RemoveEmptyEntries);
         int[] listData = TypeConversionUtil.ArrayStrToArrayInt(splitData);
         return listData;
     }
@@ -136,7 +137,7 @@ public class StringUtil
     {
         if (data == null)
             return new float[0];
-        string[] splitData = data.Split(substring);
+        string[] splitData = data.Split(new char[] { substring }, StringSplitOptions.RemoveEmptyEntries);
         float[] listData = TypeConversionUtil.ArrayStrToArrayFloat(splitData);
         return listData;
     }

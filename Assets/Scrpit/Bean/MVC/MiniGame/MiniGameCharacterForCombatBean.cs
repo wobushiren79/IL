@@ -48,9 +48,8 @@ public class MiniGameCharacterForCombatBean : MiniGameCharacterBean
     /// </summary>
     /// <param name="force"></param>
     /// <returns></returns>
-    public void GetTotalAttributes(out CharacterAttributesBean  addAttributesData)
+    public void GetTotalAttributes(CharacterAttributesBean  addAttributesData)
     {
-        addAttributesData = new CharacterAttributesBean();
         foreach (MiniGameCombatEffectBean itemData in listCombatEffect)
         {
             EffectTypeEnumTools.GetTotalAttributes(itemData.listEffectTypeData, addAttributesData);

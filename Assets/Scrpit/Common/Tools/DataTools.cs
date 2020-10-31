@@ -19,9 +19,11 @@ public class DataTools
             List<string> itemListData = StringUtil.SplitBySubstringForListStr(itemData, ':');
             E dataType = EnumUtil.GetEnum<E>(itemListData[0]);
             string dataValue = itemListData[1];
+
             T dataBean = new T();
             dataBean.dataType = dataType;
             dataBean.data = dataValue;
+
             listData.Add(dataBean);
         }
         return listData;

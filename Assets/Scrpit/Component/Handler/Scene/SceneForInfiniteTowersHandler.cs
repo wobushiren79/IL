@@ -81,10 +81,12 @@ public class SceneForInfiniteTowersHandler : BaseHandler, IBaseObserver
 
         //添加奖励装备
         List<RewardTypeBean> listRewardEquip = RewardTypeEnumTools.GetRewardEnemyEquipForInfiniteTowers(listEnemyData, infiniteTowersData.layer, totalLucky);
-        miniGameCombat.listReward.AddRange(listRewardEquip);
+        if(!CheckUtil.ListIsNull(listRewardEquip))
+            miniGameCombat.listReward.AddRange(listRewardEquip);
         //添加奖励物品
-        List<RewardTypeBean> listRewardItems = RewardTypeEnumTools.GetRewardItemsForInfiniteTowers(infiniteTowersData.layer, totalLucky);
-        miniGameCombat.listReward.AddRange(listRewardItems);
+        List<RewardTypeBean> listRewardItems = RewardTypeEnumTools.GetRewardItemsForInfiniteTowers(listEnemyData, infiniteTowersData.layer, totalLucky);
+        if (!CheckUtil.ListIsNull(listRewardItems))
+            miniGameCombat.listReward.AddRange(listRewardItems);
         return miniGameCombat;
     }
 

@@ -242,34 +242,34 @@ public class EffectTypeEnumTools : DataTools
         string iconStr = "";
         switch (effectTypeData.dataType)
         {
-            case EffectTypeEnum.AddLucky:
+            case EffectTypeEnum.AddLuckyRate:
                 attributesType = AttributesTypeEnum.Lucky;
                 iconStr = "ui_effect_lucky_2";
                 break;
-            case EffectTypeEnum.AddCook:
+            case EffectTypeEnum.AddCookRate:
                 attributesType = AttributesTypeEnum.Cook;
                 iconStr = "ui_effect_cook_2";
                 break;
-            case EffectTypeEnum.AddSpeed:
+            case EffectTypeEnum.AddSpeedRate:
                 attributesType = AttributesTypeEnum.Speed;
                 iconStr = "ui_effect_speed_2";
                 break;
-            case EffectTypeEnum.AddAccount:
+            case EffectTypeEnum.AddAccountRate:
                 attributesType = AttributesTypeEnum.Account;
                 iconStr = "ui_effect_account_2";
                 break;
-            case EffectTypeEnum.AddCharm:
+            case EffectTypeEnum.AddCharmRate:
                 attributesType = AttributesTypeEnum.Charm;
                 iconStr = "ui_effect_charm_2";
                 break;
-            case EffectTypeEnum.AddForce:
+            case EffectTypeEnum.AddForceRate:
                 attributesType = AttributesTypeEnum.Force;
                 iconStr = "ui_effect_force_2";
                 break;
         }
         effectTypeData.effectData = float.Parse(effectTypeData.data);
         string attributesName = AttributesTypeEnumTools.GetAttributesName(attributesType);
-        effectTypeData.effectDescribe = string.Format(GameCommonInfo.GetUITextById(506), effectTypeData.data, attributesName);
+        effectTypeData.effectDescribe = string.Format(GameCommonInfo.GetUITextById(506), effectTypeData.effectData * 100 + "", attributesName);
         effectTypeData.spIcon = iconDataManager.GetIconSpriteByName(iconStr);
         return effectTypeData;
     }
@@ -331,34 +331,34 @@ public class EffectTypeEnumTools : DataTools
         string iconStr = "";
         switch (effectTypeData.dataType)
         {
-            case EffectTypeEnum.SubLucky:
+            case EffectTypeEnum.SubLuckyRate:
                 attributesType = AttributesTypeEnum.Lucky;
                 iconStr = "ui_effect_sub_lucky_2";
                 break;
-            case EffectTypeEnum.SubCook:
+            case EffectTypeEnum.SubCookRate:
                 attributesType = AttributesTypeEnum.Cook;
                 iconStr = "ui_effect_sub_cook_2";
                 break;
-            case EffectTypeEnum.SubSpeed:
+            case EffectTypeEnum.SubSpeedRate:
                 attributesType = AttributesTypeEnum.Speed;
                 iconStr = "ui_effect_sub_speed_2";
                 break;
-            case EffectTypeEnum.SubAccount:
+            case EffectTypeEnum.SubAccountRate:
                 attributesType = AttributesTypeEnum.Account;
                 iconStr = "ui_effect_sub_account_2";
                 break;
-            case EffectTypeEnum.SubCharm:
+            case EffectTypeEnum.SubCharmRate:
                 attributesType = AttributesTypeEnum.Charm;
                 iconStr = "ui_effect_sub_charm_2";
                 break;
-            case EffectTypeEnum.SubForce:
+            case EffectTypeEnum.SubForceRate:
                 attributesType = AttributesTypeEnum.Force;
                 iconStr = "ui_effect_sub_force_2";
                 break;
         }
         effectTypeData.effectData = float.Parse(effectTypeData.data);
         string attributesName = AttributesTypeEnumTools.GetAttributesName(attributesType);
-        effectTypeData.effectDescribe = string.Format(GameCommonInfo.GetUITextById(532), effectTypeData.data, attributesName);
+        effectTypeData.effectDescribe = string.Format(GameCommonInfo.GetUITextById(532), effectTypeData.effectData * 100 +"", attributesName);
         effectTypeData.spIcon = iconDataManager.GetIconSpriteByName(iconStr);
         return effectTypeData;
     }
@@ -593,21 +593,33 @@ public class EffectTypeEnumTools : DataTools
                 //------------------------------------------------------------------------------
                 case EffectTypeEnum.SubLuckyRate:
                     attibutesAddRateForLucky -= float.Parse(itemData.data);
+                    if (attibutesAddRateForLucky < 0)
+                        attibutesAddRateForLucky = 0;
                     break;
                 case EffectTypeEnum.SubCookRate:
                     attibutesAddRateForCook -= float.Parse(itemData.data);
+                    if (attibutesAddRateForCook < 0)
+                        attibutesAddRateForCook = 0;
                     break;
                 case EffectTypeEnum.SubSpeedRate:
                     attibutesAddRateForSpeed -= float.Parse(itemData.data);
+                    if (attibutesAddRateForSpeed < 0)
+                        attibutesAddRateForSpeed = 0;
                     break;
                 case EffectTypeEnum.SubAccountRate:
                     attibutesAddRateForAccount -= float.Parse(itemData.data);
+                    if (attibutesAddRateForAccount < 0)
+                        attibutesAddRateForAccount = 0;
                     break;
                 case EffectTypeEnum.SubCharmRate:
                     attibutesAddRateForCharm -= float.Parse(itemData.data);
+                    if (attibutesAddRateForCharm < 0)
+                        attibutesAddRateForCharm = 0;
                     break;
                 case EffectTypeEnum.SubForceRate:
                     attibutesAddRateForForce -= float.Parse(itemData.data);
+                    if (attibutesAddRateForForce < 0)
+                        attibutesAddRateForForce = 0;
                     break;
             }
         }
