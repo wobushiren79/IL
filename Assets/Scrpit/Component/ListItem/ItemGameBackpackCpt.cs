@@ -301,16 +301,8 @@ public class ItemGameBackpackCpt : ItemGameBaseCpt, IPointerClickHandler, PopupI
     public void RefreshItems(long id, long changeNumber)
     {
         GameDataManager gameDataManager = uiGameManager.gameDataManager;
-        ItemBean itemData = gameDataManager.gameData.AddItemsNumber(id, changeNumber);
-        SetNumber(itemData.itemNumber);
-        if (itemData.itemNumber <= 0)
-        {
-            //gameObject.transform.DOLocalMove(new Vector3(0, 0), 0.1f).SetEase(Ease.InCirc).OnComplete(delegate
-            //{
-            //    Destroy(gameObject);
-            //});
-            Destroy(gameObject);
-        }
+        gameDataManager.gameData.AddItemsNumber(id, changeNumber);
+        uiComponent.RefreshUI();
     }
 
 

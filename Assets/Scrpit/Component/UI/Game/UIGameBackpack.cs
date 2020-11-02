@@ -5,8 +5,7 @@ using System.Collections;
 using System.Linq;
 public class UIGameBackpack : UIBaseOne
 {
-    public GameObject objItemContent;
-    public GameObject objItemModel;
+    public ScrollGridVertical gridVertical;
 
     public Text tvNull;
     public Button btClearUp;
@@ -14,45 +13,49 @@ public class UIGameBackpack : UIBaseOne
     public override void Awake()
     {
         base.Awake();
-        if (btClearUp != null)
+        if (btClearUp)
         {
             btClearUp.onClick.AddListener(OnClickForClearUp);
+        }
+        if (gridVertical)
+        {
+            gridVertical.AddCellListener(OnCellForItems);
         }
     }
 
     public override void OpenUI()
     {
         base.OpenUI();
-        StopAllCoroutines();
-        StartCoroutine(CreateBackpackData());
         if (uiGameManager.gameTimeHandler != null)
             uiGameManager.gameTimeHandler.SetTimeStatus(false);
+        RefreshUI();
     }
 
-    public IEnumerator CreateBackpackData()
+    public override void RefreshUI()
     {
-        CptUtil.RemoveChildsByActive(objItemContent.transform);
-        if (uiGameManager.gameItemsManager == null || uiGameManager.gameDataManager == null)
-            yield return null;
-        bool hasData = false;
-        for (int i = 0; i < uiGameManager.gameDataManager.gameData.listItems.Count; i++)
+        base.RefreshUI();
+        int itemNumber = uiGameManager.gameDataManager.gameData.listItems.Count;
+        if (gridVertical)
         {
-            ItemBean itemBean = uiGameManager.gameDataManager.gameData.listItems[i];
-            ItemsInfoBean itemsInfoBean = uiGameManager.gameItemsManager.GetItemsById(itemBean.itemId);
-            if (itemsInfoBean == null)
-                continue;
-            GameObject objItem = Instantiate(objItemModel, objItemContent.transform);
-            objItem.SetActive(true);
-            ItemGameBackpackCpt backpackCpt = objItem.GetComponent<ItemGameBackpackCpt>();
-            backpackCpt.SetData(itemsInfoBean, itemBean);
-            if (i % ProjectConfigInfo.ITEM_REFRESH_NUMBER == 0)
-                yield return new WaitForEndOfFrame();
-            hasData = true;
+            gridVertical.SetCellCount(itemNumber);
         }
-        if (!hasData)
+        if (itemNumber <= 0)
             tvNull.gameObject.SetActive(true);
         else
             tvNull.gameObject.SetActive(false);
+    }
+
+    /// <summary>
+    /// 数据回掉
+    /// </summary>
+    /// <param name="itemCell"></param>
+    public void OnCellForItems(ScrollGridCell itemCell)
+    {
+        int index = itemCell.index;
+        ItemBean itemBean = uiGameManager.gameDataManager.gameData.listItems[index];
+        ItemsInfoBean itemsInfoBean = uiGameManager.gameItemsManager.GetItemsById(itemBean.itemId);
+        ItemGameBackpackCpt backpackCpt = itemCell.GetComponent<ItemGameBackpackCpt>();
+        backpackCpt.SetData(itemsInfoBean, itemBean);
     }
 
     public void OnClickForClearUp()
@@ -61,8 +64,7 @@ public class UIGameBackpack : UIBaseOne
             ItemsInfoBean itemsInfoBean = uiGameManager.gameItemsManager.GetItemsById(data.itemId);
             return itemsInfoBean.items_type;
         }).ToList();
-        StopAllCoroutines();
-        StartCoroutine(CreateBackpackData());
+        RefreshUI();
     }
 
 }

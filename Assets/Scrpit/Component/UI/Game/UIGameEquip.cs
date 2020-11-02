@@ -39,9 +39,7 @@ public class UIGameEquip : UIGameComponent
     public Button btLast;
     public Button btNext;
 
-    [Header("模型")]
-    public GameObject objItemContent;
-    public GameObject objItemModel;
+    public ScrollGridVertical gridVertical;
 
     [Header("数据")]
     public CharacterBean characterData;
@@ -49,27 +47,22 @@ public class UIGameEquip : UIGameComponent
     public Sprite spSexWoman;
 
     public List<CharacterBean> listCharacter = new List<CharacterBean>();
-
-    private void Start()
+    protected List<ItemBean> listItemData = new List<ItemBean>();
+    private void Start() 
     {
         if (btBack != null)
             btBack.onClick.AddListener(OpenWorkUI);
         if (btLast != null)
-        {
             btLast.onClick.AddListener(OnClickForLastCharacter);
-        }
         if (btNext != null)
-        {
             btNext.onClick.AddListener(OnClickForNextCharacter);
-        }
+        if (gridVertical)
+            gridVertical.AddCellListener(OnCellForItems);
     }
 
     public override void OpenUI()
     {
         base.OpenUI();
-        StopAllCoroutines();
-        CptUtil.RemoveChildsByActive(objItemContent.transform);
-        StartCoroutine(CreateBackpackData());
         RefreshUI();
     }
 
@@ -82,6 +75,15 @@ public class UIGameEquip : UIGameComponent
     {
         uiGameManager.audioHandler.PlaySound(AudioSoundEnum.ButtonForBack);
         uiManager.OpenUIAndCloseOtherByName(EnumUtil.GetEnumName(UIEnum.GameWorker));
+    }
+
+    public void OnCellForItems(ScrollGridCell itemCell)
+    {
+        int index = itemCell.index;
+        ItemBean itemBean = listItemData[index];
+        ItemsInfoBean itemInfo = uiGameManager.gameItemsManager.GetItemsById(itemBean.itemId);
+        ItemGameBackpackEquipCpt backpackCpt = itemCell.GetComponent<ItemGameBackpackEquipCpt>();
+        backpackCpt.SetData(characterData, itemInfo, itemBean);
     }
 
     public void SetCharacterData(List<CharacterBean> listCharacter, CharacterBean characterData)
@@ -114,12 +116,6 @@ public class UIGameEquip : UIGameComponent
         equipTFHat.SetData(characterData, uiGameManager.gameItemsManager.GetItemsById(characterData.equips.hatTFId), null);
         equipTFClothes.SetData(characterData, uiGameManager.gameItemsManager.GetItemsById(characterData.equips.clothesTFId), null);
         equipTFShoes.SetData(characterData, uiGameManager.gameItemsManager.GetItemsById(characterData.equips.shoesTFId), null);
-
-        //装备列表是否为null   
-        if (CptUtil.GetChildCountByActive(objItemContent) != 0)
-            tvNull.gameObject.SetActive(false);
-        else
-            tvNull.gameObject.SetActive(true);
 
         RefreshBackpackData();
     }
@@ -279,14 +275,7 @@ public class UIGameEquip : UIGameComponent
         //如果有卸载的装备 则添加到背包
         if (unloadEquipId != 0)
         {
-            ItemBean unloadItemData =  uiGameManager.gameDataManager.gameData.AddItemsNumber(unloadEquipId, 1);
-            ItemsInfoBean unloadItemInfo = uiGameManager.gameItemsManager.GetItemsById(unloadEquipId);
-            //如果是背包里没有
-            if (unloadItemData.itemNumber == 1)
-            {
-                GameObject objItem = CreateItemBackpackData(unloadItemData, unloadItemInfo);
-                objItem.transform.DOScale(new Vector3(0, 0, 0), 0.2f).SetEase(Ease.OutBack).From();
-            }
+            uiGameManager.gameDataManager.gameData.AddItemsNumber(unloadEquipId, 1);
         }
 
         //刷新显示
@@ -300,65 +289,39 @@ public class UIGameEquip : UIGameComponent
     }
 
     /// <summary>
-    /// 创建背包里的装备
-    /// </summary>
-    public IEnumerator CreateBackpackData()
-    {
-        if (uiGameManager.gameItemsManager == null || uiGameManager.gameDataManager == null)
-            yield return null;
-        for (int i = 0; i < uiGameManager.gameDataManager.gameData.listItems.Count; i++)
-        {
-            ItemBean itemBean = uiGameManager.gameDataManager.gameData.listItems[i];
-            ItemsInfoBean itemInfo = uiGameManager.gameItemsManager.GetItemsById(itemBean.itemId);
-            if (itemInfo == null)
-                continue;
-            GameObject objItem = CreateItemBackpackData(itemBean, itemInfo);
-            if (i % ProjectConfigInfo.ITEM_REFRESH_NUMBER == 0)
-                yield return new WaitForEndOfFrame();
-        }
-        //装备列表是否为null   
-        if (CptUtil.GetChildCountByActive(objItemContent) != 0)
-            tvNull.gameObject.SetActive(false);
-        else
-            tvNull.gameObject.SetActive(true);
-    }
-
-    /// <summary>
-    /// 单个创建
-    /// </summary>
-    /// <param name="itemBean"></param>
-    /// <param name="itemsInfoBean"></param>
-    /// <returns></returns>
-    public GameObject CreateItemBackpackData(ItemBean itemBean, ItemsInfoBean itemInfo)
-    {
-        GeneralEnum itemType = itemInfo.GetItemsType();
-        if (itemType != GeneralEnum.Hat
-            && itemType != GeneralEnum.Clothes
-            && itemType != GeneralEnum.Shoes
-            && itemType != GeneralEnum.Chef
-            && itemType != GeneralEnum.Waiter
-            && itemType != GeneralEnum.Accoutant
-            && itemType != GeneralEnum.Accost
-            && itemType != GeneralEnum.Beater
-            && itemType != GeneralEnum.Book
-            && itemType != GeneralEnum.SkillBook
-            && itemType != GeneralEnum.Other)
-            return null;
-        GameObject objItem = Instantiate(objItemContent, objItemModel);
-        ItemGameBackpackEquipCpt backpackCpt = objItem.GetComponent<ItemGameBackpackEquipCpt>();
-        backpackCpt.SetData(characterData, itemInfo, itemBean);
-        return objItem;
-    }
-
-    /// <summary>
     /// 刷新背包数据
     /// </summary>
     public void RefreshBackpackData()
     {
-        ItemGameBackpackEquipCpt[] allItems= objItemContent.GetComponentsInChildren<ItemGameBackpackEquipCpt>();
-        foreach (ItemGameBackpackEquipCpt itemData in allItems)
-        { 
-            itemData.SetData(characterData, itemData.itemsInfoData, itemData.itemData);
+        listItemData.Clear();
+        for (int i = 0; i < uiGameManager.gameDataManager.gameData.listItems.Count; i++)
+        {
+            ItemBean itemBean = uiGameManager.gameDataManager.gameData.listItems[i];
+            ItemsInfoBean itemInfo = uiGameManager.gameItemsManager.GetItemsById(itemBean.itemId);
+            GeneralEnum itemType = itemInfo.GetItemsType();
+            if (itemType != GeneralEnum.Hat
+                && itemType != GeneralEnum.Clothes
+                && itemType != GeneralEnum.Shoes
+                && itemType != GeneralEnum.Chef
+                && itemType != GeneralEnum.Waiter
+                && itemType != GeneralEnum.Accoutant
+                && itemType != GeneralEnum.Accost
+                && itemType != GeneralEnum.Beater
+                && itemType != GeneralEnum.Book
+                && itemType != GeneralEnum.SkillBook
+                && itemType != GeneralEnum.Other)
+                continue;
+            listItemData.Add(itemBean);
+        }
+        gridVertical.SetCellCount(listItemData.Count);
+        gridVertical.RefreshAllCells();
+        if (listItemData.Count <= 0)
+        {
+            tvNull.gameObject.SetActive(true);
+        }
+        else
+        {
+            tvNull.gameObject.SetActive(false);
         }
     }
 
