@@ -87,6 +87,8 @@ public enum PreTypeEnum
     InnAesthetics,//客栈美观值
 
     NpcFavorabilityLevel,//NPC好感度
+
+    InfiniteTowersMaxLayer//无尽之塔最高层数
 }
 
 public class PreTypeBean : DataBean<PreTypeEnum>
@@ -252,6 +254,9 @@ public class PreTypeEnumTools : DataTools
                 break;
             case PreTypeEnum.NpcFavorabilityLevel:
                 GetPreDetailsForNpcFavorabilityLevel(gameData, preTypeData, npcInfoManager);
+                break;
+            case PreTypeEnum.InfiniteTowersMaxLayer:
+                GetPreDetailsForInfiniteTowersMaxLayer(preTypeData, gameData, iconDataManager, isComplete);
                 break;
         }
         return preTypeData;
@@ -1176,6 +1181,37 @@ public class PreTypeEnumTools : DataTools
         preData.preDescribe = string.Format(GameCommonInfo.GetUITextById(5221), characterData.baseInfo.name, npcFavorabilityLevel + "");
         preData.preFailStr = string.Format(GameCommonInfo.GetUITextById(5222), characterData.baseInfo.name, npcFavorabilityLevel + "");
         return preData;
+    }
+    /// <summary>
+    /// 获取出现详情  NPC好感
+    /// </summary>
+    /// <param name="gameData"></param>
+    /// <param name="conditionData"></param>
+    /// <returns></returns>
+    protected static PreTypeBean GetPreDetailsForInfiniteTowersMaxLayer(PreTypeBean preTypeData, GameDataBean gameData, IconDataManager iconDataManager, bool isComplete)
+    {
+        Sprite spIcon = iconDataManager.GetIconSpriteByName("ui_praise");
+        int maxLayer = int.Parse(preTypeData.data);
+        string preProStr = string.Format(GameCommonInfo.GetUITextById(5111), maxLayer+"");
+        string preDesStr = "";
+        UserAchievementBean userAchievement = gameData.GetAchievementData();
+        int currrentLayer = userAchievement.maxInfiniteTowersLayer;
+        if (currrentLayer >= maxLayer || isComplete)
+        {
+            preTypeData.isPre = true;
+            preProStr += "(" + maxLayer + "/" + maxLayer + ")";
+            preTypeData.progress = 1;
+        }
+        else
+        {
+            preTypeData.isPre = false;
+            preProStr += "(" + currrentLayer + "/" + maxLayer + ")";
+            preTypeData.progress = (float)currrentLayer / maxLayer;
+        }
+        preTypeData.spPreIcon = spIcon;
+        preTypeData.preDescribe = preDesStr + preProStr;
+        preTypeData.preFailStr = GameCommonInfo.GetUITextById(5112);
+        return preTypeData;
     }
 
     /// <summary>
