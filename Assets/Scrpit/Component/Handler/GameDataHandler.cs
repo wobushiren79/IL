@@ -12,6 +12,7 @@ public class GameDataHandler : BaseHandler, DialogView.IDialogCallBack, IBaseObs
         PayMoney = 2,
         MenuResearchChange = 3,
         BedResearchChange = 4,
+        InfiniteTowerProChange = 5,
     }
     //系统清理倒计时
     protected int timeForSystemClear = 0;
@@ -35,7 +36,6 @@ public class GameDataHandler : BaseHandler, DialogView.IDialogCallBack, IBaseObs
         audioHandler = Find<AudioHandler>(ImportantTypeEnum.AudioHandler);
         innFoodManager = Find<InnFoodManager>(ImportantTypeEnum.FoodManager);
         dialogManager = Find<DialogManager>(ImportantTypeEnum.DialogManager);
-
     }
 
     private void Start()
@@ -67,9 +67,9 @@ public class GameDataHandler : BaseHandler, DialogView.IDialogCallBack, IBaseObs
         while (true)
         {
             yield return new WaitForSeconds(1);
-            if (!gameTimeHandler.isStopTime)
+            if (gameTimeHandler != null && !gameTimeHandler.isStopTime)
             {
-                HandleForResearch();
+                HandleForTimeProcess();
             }
         }
     }
@@ -100,24 +100,84 @@ public class GameDataHandler : BaseHandler, DialogView.IDialogCallBack, IBaseObs
     /// <summary>
     /// 菜单研究处理
     /// </summary>
-    public void HandleForResearch()
+    public void HandleForTimeProcess()
     {
         if (gameTimeHandler == null)
             return;
         if (gameTimeHandler.isStopTime)
             return;
-        AddResearch(1);
+        AddTimeProcess(1);
     }
 
     /// <summary>
     /// 增加所有研究点数
     /// </summary>
     /// <param name="time"></param>
-    public void AddResearch(int time)
+    public void AddTimeProcess(int time)
     {
         AddMenuResearch(time);
         AddBedResearch(time);
+        AddInfiniteTowers(time);
     }
+
+    /// <summary>
+    /// 增加爬塔进度
+    /// </summary>
+    /// <param name="time"></param>
+    public void AddInfiniteTowers(int time)
+    {
+        if (gameTimeHandler == null || gameItemsManager == null || gameDataManager == null)
+            return;
+        List<UserInfiniteTowersBean> listInfiniteTowersData = gameDataManager.gameData.listInfinteTowers;
+        if (CheckUtil.ListIsNull(listInfiniteTowersData))
+            return;
+        float addTime = 0.01f * time;
+        for (int i = 0; i < listInfiniteTowersData.Count; i++)
+        {
+            UserInfiniteTowersBean itemInfiniteTowerData = listInfiniteTowersData[i];
+            if (itemInfiniteTowerData.isSend == false)
+            {
+                //如果不是派遣数据则不处理
+                continue;
+            }
+            itemInfiniteTowerData.proForSend += addTime;
+            if (itemInfiniteTowerData.proForSend >= 1)
+            {
+                //计算总计攀登层数
+                int addLayer = (int)Mathf.Floor(itemInfiniteTowerData.proForSend);
+                for (int f = 0; f < addLayer; f++)
+                {
+                    itemInfiniteTowerData.proForSend = 0;
+                    bool isSuccessNextLayer = itemInfiniteTowerData.CheckIsSccessNextLayer();
+                    if (isSuccessNextLayer)
+                    {
+                        //如果是成功攻略
+                        //弹出提示
+                        audioHandler.PlaySound(AudioSoundEnum.Reward);
+                        toastManager.ToastHint("成功突破" + itemInfiniteTowerData.layer + "层");
+                        //增加层数
+                        itemInfiniteTowerData.layer++;
+
+                        //获取奖励
+
+                    }
+                    else
+                    {
+                        //弹出提示
+                        audioHandler.PlaySound(AudioSoundEnum.Error);
+                        toastManager.ToastHint("止步于" + itemInfiniteTowerData.layer + "层");
+                        //如果是失败攻略
+                        listInfiniteTowersData.Remove(itemInfiniteTowerData);
+                        i--;
+
+                        break;
+                    }
+                }
+            }
+        }
+        NotifyAllObserver((int)NotifyTypeEnum.InfiniteTowerProChange, listInfiniteTowersData);
+    }
+
 
     /// <summary>
     /// 增加菜品研究点数
@@ -130,8 +190,9 @@ public class GameDataHandler : BaseHandler, DialogView.IDialogCallBack, IBaseObs
         List<BuildBedBean> listBed = gameDataManager.gameData.GetBedListForResearching();
         if (CheckUtil.ListIsNull(listBed))
             return;
-        foreach (BuildBedBean itemBed in listBed)
+        for (int i=0;i< listBed.Count;i++)
         {
+            BuildBedBean itemBed = listBed[i];
             //获取研究人员
             CharacterBean researcher = itemBed.GetResearchCharacter(gameDataManager.gameData);
             //如果没有研究人员则停止研究
@@ -161,6 +222,7 @@ public class GameDataHandler : BaseHandler, DialogView.IDialogCallBack, IBaseObs
         }
         NotifyAllObserver((int)NotifyTypeEnum.BedResearchChange, listBed);
     }
+
     /// <summary>
     /// 增加菜品研究点数
     /// </summary>
@@ -172,8 +234,9 @@ public class GameDataHandler : BaseHandler, DialogView.IDialogCallBack, IBaseObs
         List<MenuOwnBean> listMenu = gameDataManager.gameData.GetMenuListForResearching();
         if (CheckUtil.ListIsNull(listMenu))
             return;
-        foreach (MenuOwnBean itemMenu in listMenu)
+        for (int i = 0; i < listMenu.Count; i++)
         {
+            MenuOwnBean itemMenu = listMenu[i];
             //获取研究人员
             CharacterBean researcher = itemMenu.GetResearchCharacter(gameDataManager.gameData);
             //如果没有研究人员则停止研究
@@ -204,6 +267,7 @@ public class GameDataHandler : BaseHandler, DialogView.IDialogCallBack, IBaseObs
                 achievementDialog.SetData(1, menuInfo.icon_key);
             }
         }
+
         NotifyAllObserver((int)NotifyTypeEnum.MenuResearchChange, listMenu);
     }
 

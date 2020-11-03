@@ -155,7 +155,7 @@ public class SceneGameInnInit : BaseSceneInit, IBaseObserver, DialogView.IDialog
             //重新进入游戏则不增加经验
             //如果有菜谱研究 增加研究点数
             int addHour = 24 - gameDataManager.gameData.gameTime.hour;
-            gameDataHandler.AddResearch(addHour * 60);
+            gameDataHandler.AddTimeProcess(addHour * 60);
         }
 
         //重置游戏时间

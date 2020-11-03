@@ -36,7 +36,7 @@ public class GameDataBean
     public List<CharacterFavorabilityBean> listCharacterFavorability = new List<CharacterFavorabilityBean>();//角色好感度
     public List<long> listTriggeredEvent = new List<long>();//触发过的事件
     public List<UserLoansBean> listLoans = new List<UserLoansBean>();//贷款
-    public List<UserInfiniteTowersBean> listInfinteTowers = new List<UserInfiniteTowersBean>();
+    public List<UserInfiniteTowersBean> listInfinteTowers = new List<UserInfiniteTowersBean>();//爬塔数据
 
 
     public long ingOilsalt;//油盐
@@ -59,8 +59,6 @@ public class GameDataBean
     {
         listInfinteTowers.Add(infiniteTowersData);
     }
-
-
 
     /// <summary>
     /// 增加一个床

@@ -7,8 +7,8 @@ public class UIGameMainForHint : BaseUIChildComponent<UIGameMain>
     public GameObject objHintContainer;
     public GameObject objMenuResearchModel;
 
-    public List<ItemGameMainHintForResearchCpt> listResearch = new List<ItemGameMainHintForResearchCpt>();
-
+    protected List<ItemGameMainHintForResearchCpt> listResearch = new List<ItemGameMainHintForResearchCpt>();
+    protected List<ItemGameMainHintForInfiniteTowersCpt> listInfiniteTowers = new List<ItemGameMainHintForInfiniteTowersCpt>();
     public override void Close()
     {
         ClearData();
@@ -17,7 +17,7 @@ public class UIGameMainForHint : BaseUIChildComponent<UIGameMain>
 
     private void Update()
     {
-        if (!CheckUtil.ListIsNull(listResearch))
+        if (!CheckUtil.ListIsNull(listResearch)|| !CheckUtil.ListIsNull(listInfiniteTowers))
         {
             for (int i = 0; i < listResearch.Count; i++)
             {
@@ -45,19 +45,21 @@ public class UIGameMainForHint : BaseUIChildComponent<UIGameMain>
                     }
                 }
             }
-            if (listResearch.Count == 0)
-            {
-                Close();
+            for (int i = 0; i < listInfiniteTowers.Count; i++)
+            { 
+
             }
+            CheckHasData();
         }
     }
 
-    public bool SetData(List<MenuOwnBean> listMenu)
+    public void SetData(List<MenuOwnBean> listMenu)
     {
         if (listResearch == null)
             listResearch = new List<ItemGameMainHintForResearchCpt>();
-        foreach (MenuOwnBean itemData in listMenu)
+        for (int f = 0; f < listMenu.Count; f++)
         {
+            MenuOwnBean itemData = listMenu[f];
             bool hasData = false;
             for (int i = 0; i < listResearch.Count; i++)
             {
@@ -79,24 +81,18 @@ public class UIGameMainForHint : BaseUIChildComponent<UIGameMain>
             }
             if (!hasData)
             {
-                CreateItemForResearch(itemData,null);
+                CreateItemForResearch(itemData, null);
             }
         }
-        if (listResearch.Count <= 0)
-        {
-            return true;
-        }
-        else
-        {
-            return false;
-        }
+        CheckHasData();
     }
-    public bool SetData(List<BuildBedBean> listBed)
+    public void SetData(List<BuildBedBean> listBed)
     {
         if (listResearch == null)
             listResearch = new List<ItemGameMainHintForResearchCpt>();
-        foreach (BuildBedBean itemData in listBed)
+        for (int f = 0; f < listBed.Count; f++)
         {
+            BuildBedBean itemData = listBed[f];
             bool hasData = false;
             for (int i = 0; i < listResearch.Count; i++)
             {
@@ -118,33 +114,56 @@ public class UIGameMainForHint : BaseUIChildComponent<UIGameMain>
             }
             if (!hasData)
             {
-                CreateItemForResearch(null,itemData);
+                CreateItemForResearch(null, itemData);
             }
         }
-        if (listResearch.Count <= 0)
+
+        CheckHasData();
+    }
+
+    public void SetData(List<UserInfiniteTowersBean> listData)
+    {
+        CheckHasData();
+    }
+
+    /// <summary>
+    /// 检测是否还有数据
+    /// </summary>
+    public void CheckHasData()
+    {
+        if (listResearch.Count > 0 || listInfiniteTowers.Count > 0)
         {
-            return true;
+            Open();
         }
         else
         {
-            return false;
+            Close();
         }
-    }
 
+    }
 
     /// <summary>
     /// 创建研究提示Item
     /// </summary>
     /// <param name="menuOwn"></param>
-    public void CreateItemForResearch(MenuOwnBean menuOwn,BuildBedBean buildBedData)
+    public void CreateItemForResearch(MenuOwnBean menuOwn, BuildBedBean buildBedData)
     {
         GameObject objItem = Instantiate(objHintContainer, objMenuResearchModel);
         ItemGameMainHintForResearchCpt itemCpt = objItem.GetComponent<ItemGameMainHintForResearchCpt>();
-        if(menuOwn!=null)
+        if (menuOwn != null)
             itemCpt.SetData(menuOwn);
         if (buildBedData != null)
             itemCpt.SetData(buildBedData);
         listResearch.Add(itemCpt);
+    }
+
+    /// <summary>
+    /// 创建爬塔数据
+    /// </summary>
+    /// <param name="infiniteTowersData"></param>
+    public void CreateItemForInfiniteTowers(UserInfiniteTowersBean infiniteTowersData)
+    {
+
     }
 
     public void ClearData()

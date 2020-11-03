@@ -677,36 +677,17 @@ public class UIGameMain : UIGameComponent, DialogView.IDialogCallBack, IRadioGro
             else if (type == (int)GameDataHandler.NotifyTypeEnum.MenuResearchChange)
             {
                 List<MenuOwnBean> listMenu = (List<MenuOwnBean>)obj[0];
-                if (listMenu.Count > 0)
-                {
-                    uiHint.Open();
-                    bool isAllComplete = uiHint.SetData(listMenu);
-                    if (isAllComplete)
-                    {
-                        uiHint.Close();
-                    }
-                }
-                else
-                {
-                    uiHint.Close();
-                }
+                uiHint.SetData(listMenu);
             }
             else if (type == (int)GameDataHandler.NotifyTypeEnum.BedResearchChange)
             {
                 List<BuildBedBean> listBed = (List<BuildBedBean>)obj[0];
-                if (listBed.Count > 0)
-                {
-                    uiHint.Open();
-                    bool isAllComplete = uiHint.SetData(listBed);
-                    if (isAllComplete)
-                    {
-                        uiHint.Close();
-                    }
-                }
-                else
-                {
-                    uiHint.Close();
-                }
+                uiHint.SetData(listBed);
+            }
+            else if (type == (int)GameDataHandler.NotifyTypeEnum.InfiniteTowerProChange)
+            {
+                List<UserInfiniteTowersBean> listData = (List<UserInfiniteTowersBean>)obj[0];
+                uiHint.SetData(listData);
             }
         }
     }
