@@ -58,13 +58,11 @@ public class UIGameMain : UIGameComponent, DialogView.IDialogCallBack, IRadioGro
     public Button btLayerSecondLayer;
     public GameObject objLayerSelect;
 
-
     protected Tween tweenForMoneyL;
     protected Tween tweenForMoneyM;
     protected Tween tweenForMoneyS;
 
     public Text tvMoneyForAnimModel;
-
 
     public UIGameMainForHint uiHint;
 

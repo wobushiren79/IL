@@ -83,7 +83,9 @@ public class SceneGameInnInit : BaseSceneInit, IBaseObserver, DialogView.IDialog
             //增加回调
             gameTimeHandler.AddObserver(this);
             TimeBean timeData = gameDataManager.gameData.gameTime;
-            if (timeData.hour >= 24 || timeData.hour < 6)
+            if (timeData.hour >= 24 
+                || timeData.hour < 6
+                || GameCommonInfo.CurrentDayData.dayStatus == GameTimeHandler.DayEnum.End)
             {
                 //如果是需要切换第二天
                 EndDay();
@@ -175,14 +177,14 @@ public class SceneGameInnInit : BaseSceneInit, IBaseObserver, DialogView.IDialog
             //保存数据
             gameDataManager.SaveGameData(innHandler.GetInnRecord());
         }
-        else if (GameCommonInfo.CurrentDayData.dayStatus == GameTimeHandler.DayEnum.Rest)
+        else if (GameCommonInfo.CurrentDayData.dayStatus == GameTimeHandler.DayEnum.Rest
+            || GameCommonInfo.CurrentDayData.dayStatus == GameTimeHandler.DayEnum.End)
         {
             //打开日历
             uiGameManager.OpenUIAndCloseOtherByName(EnumUtil.GetEnumName(UIEnum.GameDate));
             //保存数据
             gameDataManager.SaveGameData(innHandler.GetInnRecord());
         }
-
     }
 
     public void CleanInnData()

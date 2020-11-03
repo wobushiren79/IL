@@ -391,6 +391,35 @@ public class GameDataBean
         return null;
     }
 
+
+    /// <summary>
+    /// 通过IDs获取员工信息
+    /// </summary>
+    /// <returns></returns>
+    public List<CharacterBean> GetCharacterDataByIds(List<string> listCharacterId)
+    {
+        List<CharacterBean> listData = GetAllCharacterData();
+        List<CharacterBean> listTempData = new List<CharacterBean>();
+        for (int i = 0; i < listData.Count; i++)
+        {
+            CharacterBean itemCharacter = listData[i];
+            for (int f = 0; f < listCharacterId.Count; f++)
+            {
+                string itemCharacterId = listCharacterId[f];
+                if (itemCharacter.baseInfo.characterId == null)
+                {
+                    continue;
+                }
+                if (itemCharacter.baseInfo.characterId.Equals(itemCharacterId))
+                {
+                    listTempData.Add(itemCharacter);
+                    break;
+                }
+            }
+        }
+        return listTempData;
+    }
+
     /// <summary>
     /// 获取成就数据
     /// </summary>

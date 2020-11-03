@@ -125,6 +125,7 @@ public class ItemMountainInfiniteTowersCpt : ItemGameBaseCpt,DialogView.IDialogC
                     characterData.baseInfo.SetWorkerStatus(WorkerStatusEnum.Rest);
                 }
             }
+            infiniteTowersData.proForSend = -1;
             uiGameManager.gameDataManager.gameData.RemoveInfiniteTowersData(infiniteTowersData);
             uiComponent.RefreshUI();
         }

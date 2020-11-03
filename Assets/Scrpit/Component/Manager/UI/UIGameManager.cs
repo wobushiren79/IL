@@ -56,6 +56,7 @@ public class UIGameManager : BaseUIManager
 
     private void Awake()
     {
+        sceneInit= Find<BaseSceneInit>(ImportantTypeEnum.Init);
         gameDataManager = Find<GameDataManager>(ImportantTypeEnum.GameDataManager);
         achievementInfoManager = Find<AchievementInfoManager>(ImportantTypeEnum.GameDataManager);
 

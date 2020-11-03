@@ -40,7 +40,24 @@ public class UIMountainInfiniteTowers : UIGameComponent, DialogView.IDialogCallB
         if (uiGameManager.gameTimeHandler != null)
             uiGameManager.gameTimeHandler.SetTimeStatus(true);
 
+        //大于10层才显示派遣
+        UserAchievementBean userAchievement = uiGameManager.gameDataManager.gameData.GetAchievementData();
+        if (userAchievement.maxInfiniteTowersLayer > 10)
+        {
+            btSend.gameObject.SetActive(true);
+        }
+        else
+        {
+            btSend.gameObject.SetActive(false);
+        }
         RefreshUI();
+    }
+
+    public override void CloseUI()
+    {
+        base.CloseUI();
+        if (uiGameManager.gameTimeHandler != null)
+            uiGameManager.gameTimeHandler.SetTimeRestore();
     }
 
     public override void RefreshUI()

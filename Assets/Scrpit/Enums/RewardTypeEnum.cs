@@ -653,6 +653,11 @@ public class RewardTypeEnumTools : DataTools
         string rewardDataStr;
         if (randomReward.Equals("Skills"))
         {
+            //如果没有传入敌人则不获取技能
+            if (CheckUtil.ListIsNull(listEnemyData))
+            {
+                return GetRandomRewardForData(listEnemyData, rewardType, rewardListStr);
+            }
             List<long> listSkills = new List<long>();
             for (int i=0;i< listEnemyData.Count;i++)
             {

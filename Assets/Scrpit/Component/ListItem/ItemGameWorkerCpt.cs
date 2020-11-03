@@ -488,12 +488,12 @@ public class ItemGameWorkerCpt : ItemGameBaseCpt, DialogView.IDialogCallBack, Wo
             switch (workerStatus)
             {
                 case WorkerStatusEnum.Work:
-                    if (gameTimeHandler.dayStauts == GameTimeHandler.DayEnum.Rest)
+                    if (gameTimeHandler.GetDayStatus() == GameTimeHandler.DayEnum.Rest)
                     {
                         tvStatus.color = Color.green;
                         workerStatusStr = GameCommonInfo.GetUITextById(282);
                     }
-                    else if (gameTimeHandler.dayStauts == GameTimeHandler.DayEnum.Work)
+                    else if (gameTimeHandler.GetDayStatus() == GameTimeHandler.DayEnum.Work)
                     {
                         tvStatus.color = Color.red;
                     }

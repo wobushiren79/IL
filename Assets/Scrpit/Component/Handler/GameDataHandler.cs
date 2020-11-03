@@ -26,6 +26,9 @@ public class GameDataHandler : BaseHandler, DialogView.IDialogCallBack, IBaseObs
     protected InnFoodManager innFoodManager;
     protected AudioHandler audioHandler;
     protected DialogManager dialogManager;
+    protected NpcInfoManager npcInfoManager;
+    protected IconDataManager iconDataManager;
+    protected InnBuildManager innBuildManager;
 
     private void Awake()
     {
@@ -36,6 +39,9 @@ public class GameDataHandler : BaseHandler, DialogView.IDialogCallBack, IBaseObs
         audioHandler = Find<AudioHandler>(ImportantTypeEnum.AudioHandler);
         innFoodManager = Find<InnFoodManager>(ImportantTypeEnum.FoodManager);
         dialogManager = Find<DialogManager>(ImportantTypeEnum.DialogManager);
+        npcInfoManager = Find<NpcInfoManager>(ImportantTypeEnum.NpcManager);
+        iconDataManager = Find<IconDataManager>(ImportantTypeEnum.UIManager);
+        innBuildManager = Find<InnBuildManager>(ImportantTypeEnum.BuildManager);
     }
 
     private void Start()
@@ -145,6 +151,7 @@ public class GameDataHandler : BaseHandler, DialogView.IDialogCallBack, IBaseObs
             {
                 //计算总计攀登层数
                 int addLayer = (int)Mathf.Floor(itemInfiniteTowerData.proForSend);
+                List<CharacterBean> listCharacterData = gameDataManager.gameData.GetCharacterDataByIds(itemInfiniteTowerData.listMembers);
                 for (int f = 0; f < addLayer; f++)
                 {
                     itemInfiniteTowerData.proForSend = 0;
@@ -157,19 +164,53 @@ public class GameDataHandler : BaseHandler, DialogView.IDialogCallBack, IBaseObs
                         toastManager.ToastHint("成功突破" + itemInfiniteTowerData.layer + "层");
                         //增加层数
                         itemInfiniteTowerData.layer++;
-
-                        //获取奖励
-
+                        //添加奖励物品
+                        int totalLucky = 0;
+                        for (int c = 0; c < listCharacterData.Count; c++)
+                        {
+                            CharacterBean itemCharacterData = listCharacterData[c];
+                            itemCharacterData.GetAttributes(gameItemsManager, out CharacterAttributesBean characterAttributes);
+                            totalLucky += characterAttributes.lucky;
+                        }
+                        List<RewardTypeBean> listRewardItems = RewardTypeEnumTools.GetRewardItemsForInfiniteTowers(null, itemInfiniteTowerData.layer, totalLucky);
+                        if (!CheckUtil.ListIsNull(listRewardItems))
+                            RewardTypeEnumTools.CompleteReward(toastManager, npcInfoManager, iconDataManager, gameItemsManager, innBuildManager, gameDataManager, listCharacterData, listRewardItems);
+                        //达到最大层数
+                        UserAchievementBean userAchievement = gameDataManager.gameData.GetAchievementData();
+                        if (itemInfiniteTowerData.layer >= userAchievement.maxInfiniteTowersLayer - 1)
+                        {
+                            //弹出提示
+                            audioHandler.PlaySound(AudioSoundEnum.Reward);
+                            toastManager.ToastHint("到达可派遣最高层数：" + itemInfiniteTowerData.layer + "层");
+                            itemInfiniteTowerData.proForSend = -1;
+                            //还原员工状态
+                            for (int c = 0; c < listCharacterData.Count; c++)
+                            {
+                                CharacterBean itemCharacterData = listCharacterData[c];
+                                itemCharacterData.baseInfo.SetWorkerStatus(WorkerStatusEnum.Rest);
+                            }
+                            //移除数据
+                            listInfiniteTowersData.Remove(itemInfiniteTowerData);
+                            i--;
+                            break;
+                        }
                     }
                     else
                     {
                         //弹出提示
-                        audioHandler.PlaySound(AudioSoundEnum.Error);
+                        audioHandler.PlaySound(AudioSoundEnum.Passive);
                         toastManager.ToastHint("止步于" + itemInfiniteTowerData.layer + "层");
                         //如果是失败攻略
+                        itemInfiniteTowerData.proForSend = -1;
+                        //还原员工状态
+                        for (int c = 0; c < listCharacterData.Count; c++)
+                        {
+                            CharacterBean itemCharacterData = listCharacterData[c];
+                            itemCharacterData.baseInfo.SetWorkerStatus(WorkerStatusEnum.Rest);
+                        }
+                        //移除数据
                         listInfiniteTowersData.Remove(itemInfiniteTowerData);
                         i--;
-
                         break;
                     }
                 }

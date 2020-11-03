@@ -6,6 +6,7 @@ public class UIGameMainForHint : BaseUIChildComponent<UIGameMain>
 {
     public GameObject objHintContainer;
     public GameObject objMenuResearchModel;
+    public GameObject objInfiniteTowersModel;
 
     protected List<ItemGameMainHintForResearchCpt> listResearch = new List<ItemGameMainHintForResearchCpt>();
     protected List<ItemGameMainHintForInfiniteTowersCpt> listInfiniteTowers = new List<ItemGameMainHintForInfiniteTowersCpt>();
@@ -46,8 +47,15 @@ public class UIGameMainForHint : BaseUIChildComponent<UIGameMain>
                 }
             }
             for (int i = 0; i < listInfiniteTowers.Count; i++)
-            { 
-
+            {
+                ItemGameMainHintForInfiniteTowersCpt itemCpt = listInfiniteTowers[i];
+                if (itemCpt.infiniteTowersData.proForSend==-1)
+                {
+                    listInfiniteTowers.Remove(itemCpt);
+                    Destroy(itemCpt.gameObject);
+                    i--;
+                    continue;
+                }
             }
             CheckHasData();
         }
@@ -123,6 +131,32 @@ public class UIGameMainForHint : BaseUIChildComponent<UIGameMain>
 
     public void SetData(List<UserInfiniteTowersBean> listData)
     {
+        if (listInfiniteTowers == null)
+            listInfiniteTowers = new List<ItemGameMainHintForInfiniteTowersCpt>();
+        for (int f = 0; f < listData.Count; f++)
+        {
+            UserInfiniteTowersBean itemData = listData[f];
+            bool hasData = false;
+            for (int i = 0; i < listInfiniteTowers.Count; i++)
+            {
+                ItemGameMainHintForInfiniteTowersCpt itemCpt = listInfiniteTowers[i];
+                if (itemCpt.infiniteTowersData == itemData)
+                {
+                    hasData = true;
+                    itemCpt.RefreshData();
+                    if (itemCpt.infiniteTowersData .proForSend==-1)
+                    {
+                        listInfiniteTowers.Remove(itemCpt);
+                        Destroy(itemCpt.gameObject);
+                        i--;
+                    }
+                }
+            }
+            if (!hasData)
+            {
+                CreateItemForInfiniteTowers(itemData);
+            }
+        }
         CheckHasData();
     }
 
@@ -163,7 +197,10 @@ public class UIGameMainForHint : BaseUIChildComponent<UIGameMain>
     /// <param name="infiniteTowersData"></param>
     public void CreateItemForInfiniteTowers(UserInfiniteTowersBean infiniteTowersData)
     {
-
+        GameObject objItem = Instantiate(objHintContainer, objInfiniteTowersModel);
+        ItemGameMainHintForInfiniteTowersCpt itemCpt = objItem.GetComponent<ItemGameMainHintForInfiniteTowersCpt>();
+        itemCpt.SetData(infiniteTowersData);
+        listInfiniteTowers.Add(itemCpt);
     }
 
     public void ClearData()

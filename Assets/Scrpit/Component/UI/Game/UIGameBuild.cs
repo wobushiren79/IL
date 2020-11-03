@@ -333,7 +333,7 @@ public class UIGameBuild : UIGameComponent, IRadioGroupCallBack
         AstarPath.active.Scan();
         //重新构建客栈
         uiGameManager.innHandler.InitInn();
-        if (uiGameManager.gameTimeHandler.dayStauts == GameTimeHandler.DayEnum.Work)
+        if (uiGameManager.gameTimeHandler.GetDayStatus() == GameTimeHandler.DayEnum.Work)
         {
             //如果是工作日 开店继续营业
             uiGameManager.innHandler.OpenInn();

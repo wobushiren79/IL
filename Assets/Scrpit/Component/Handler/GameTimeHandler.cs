@@ -10,6 +10,7 @@ public class GameTimeHandler : BaseObservable<IBaseObserver>
     {
         Rest = 0,
         Work = 1,
+        End = 9,//结束 晚上12点后
         None = 99,
     }
 

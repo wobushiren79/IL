@@ -67,9 +67,10 @@ public abstract class BaseNormalSceneInit : BaseSceneInit,IBaseObserver, DialogV
         //停止控制
         if (controlHandler != null)
             controlHandler.StopControl();
+
         //重置游戏时间
-        GameCommonInfo.GameData.gameTime.hour = 0;
-        GameCommonInfo.GameData.gameTime.minute = 0;
+        if (gameTimeHandler != null)
+            gameTimeHandler.SetDayStatus(GameTimeHandler.DayEnum.End);
 
         if (dialogManager != null)
         {
