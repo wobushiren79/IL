@@ -272,7 +272,6 @@ public class UIGameText : UIGameComponent, TextInfoManager.ICallBack, DialogView
                     //送礼
                     else if (textData.content.Equals(GameCommonInfo.GetUITextById(99105)))
                     {
-
                         DialogBean dialogData = new DialogBean();
                         PickForItemsDialogView pickForItemsDialog = (PickForItemsDialogView)uiGameManager.dialogManager.CreateDialog(DialogEnum.PickForItems, this, dialogData);
                         pickForItemsDialog.SetData(null, PopupItemsSelection.SelectionTypeEnum.Gift);
@@ -286,6 +285,20 @@ public class UIGameText : UIGameComponent, TextInfoManager.ICallBack, DialogView
                     }    
                     //换取奖杯
                     else if (textData.content.Equals(GameCommonInfo.GetUITextById(99202)))
+                    {
+                        //对话
+                        uiGameManager.textInfoManager.listTextData = RandomUtil.GetRandomDataByDictionary(uiGameManager.textInfoManager.mapTalkExchangeData);
+                        NextText(1);
+                    }
+                    //换取无尽之塔装备
+                    else if (textData.content.Equals(GameCommonInfo.GetUITextById(99203)))
+                    {
+                        //对话
+                        uiGameManager.textInfoManager.listTextData = RandomUtil.GetRandomDataByDictionary(uiGameManager.textInfoManager.mapTalkExchangeData);
+                        NextText(1);
+                    }
+                    //换取无尽之塔道具
+                    else if (textData.content.Equals(GameCommonInfo.GetUITextById(99204)))
                     {
                         //对话
                         uiGameManager.textInfoManager.listTextData = RandomUtil.GetRandomDataByDictionary(uiGameManager.textInfoManager.mapTalkExchangeData);

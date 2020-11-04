@@ -30,7 +30,7 @@ public class SceneGameTownInit : BaseNormalSceneInit
         base.RefreshScene();
         //构建重要的NPC
         if (npcImportantBuilder != null)
-            npcImportantBuilder.BuildImportant();
+            npcImportantBuilder.BuildImportantForTown();
         //构建普通路人NPC
         if (npcPasserBuilder != null)
             npcPasserBuilder.BuilderPasserForInit(20);

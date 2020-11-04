@@ -65,7 +65,7 @@ public class NpcInfoService: BaseMVCService
     {
         if (npcInfo == null)
             return;
-        BaseDeleteDataById(npcInfo.id);
+        BaseDeleteDataWithLeft("id","npc_id",npcInfo.id+"");
     }
 
     /// <summary>

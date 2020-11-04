@@ -13,13 +13,14 @@ public class NpcImportantBuilder : BaseMonoBehaviour
     public List<NpcAIImportantCpt> listTownNpc = new List<NpcAIImportantCpt>();
     public List<NpcAIImportantCpt> listRecruitTownNpc = new List<NpcAIImportantCpt>();
     public List<NpcAIImportantCpt> listSpecialTownNpc = new List<NpcAIImportantCpt>();
+    public List<NpcAIImportantCpt> listMountainNpc = new List<NpcAIImportantCpt>();
     public void Awake()
     {
         npcInfoManager = Find<NpcInfoManager>(ImportantTypeEnum.NpcManager);
         gameDataManager = Find<GameDataManager>(ImportantTypeEnum.GameDataManager);
     }
 
-    public void BuildImportant()
+    public void BuildImportantForTown()
     {
         CptUtil.RemoveChildsByActive(objNpcContainer);
         //创建小镇居民
@@ -45,6 +46,20 @@ public class NpcImportantBuilder : BaseMonoBehaviour
             NpcAIImportantCpt itemNpc = BuildNpc(itemData);
             if (itemNpc != null)
                 listRecruitTownNpc.Add(itemNpc);
+        }
+    }
+
+    public void BuildImportantForMountain()
+    {
+        CptUtil.RemoveChildsByActive(objNpcContainer);
+        //创建山顶NPC
+        List<CharacterBean> listMountainCharacter = npcInfoManager.GetCharacterDataByType((int)NpcTypeEnum.Mountain);
+        for (int i = 0; i < listMountainCharacter.Count; i++)
+        {
+            CharacterBean itemCharacterData = listMountainCharacter[i];
+            NpcAIImportantCpt itemNpc = BuildNpc(itemCharacterData);
+            if (itemNpc != null)
+                listMountainNpc.Add(itemNpc);
         }
     }
 
@@ -82,7 +97,7 @@ public class NpcImportantBuilder : BaseMonoBehaviour
             NpcAIImportantCpt aiCpt = npcObj.GetComponent<NpcAIImportantCpt>();
             aiCpt.SetCharacterData(characterData);
 
-            if( characterData.npcInfoData.GetNpcType() == NpcTypeEnum.Special || characterData.npcInfoData.GetNpcType() == NpcTypeEnum.RecruitTown)
+            if (characterData.npcInfoData.GetNpcType() == NpcTypeEnum.Special || characterData.npcInfoData.GetNpcType() == NpcTypeEnum.RecruitTown)
             {
                 if (!GameCommonInfo.DailyLimitData.CheckIsTalkNpc(characterData.npcInfoData.id))
                 {
@@ -90,7 +105,7 @@ public class NpcImportantBuilder : BaseMonoBehaviour
                         || characterData.npcInfoData.GetTalkTypes().Contains(NpcTalkTypeEnum.Recruit))
                     {
                         aiCpt.SetExpression(CharacterExpressionCpt.CharacterExpressionEnum.Doubt, -1);
-                    }  
+                    }
                 }
             }
 
@@ -129,6 +144,10 @@ public class NpcImportantBuilder : BaseMonoBehaviour
         {
             itemNpc.gameObject.SetActive(false);
         }
+        foreach (NpcAIImportantCpt itemNpc in listMountainNpc)
+        {
+            itemNpc.gameObject.SetActive(false);
+        }
     }
 
     public void ShowNpc()
@@ -142,6 +161,10 @@ public class NpcImportantBuilder : BaseMonoBehaviour
             itemNpc.gameObject.SetActive(true);
         }
         foreach (NpcAIImportantCpt itemNpc in listSpecialTownNpc)
+        {
+            itemNpc.gameObject.SetActive(true);
+        }
+        foreach (NpcAIImportantCpt itemNpc in listMountainNpc)
         {
             itemNpc.gameObject.SetActive(true);
         }

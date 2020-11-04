@@ -96,6 +96,12 @@ public class TextInfoManager : BaseManager, ITextInfoView
                 case NpcTalkTypeEnum.TrophyExchange:
                     listTextData.Add(new TextInfoBean(TextInfoTypeEnum.Talk, 1, GameCommonInfo.GetUITextById(99202)));
                     break;
+                case NpcTalkTypeEnum.InfiniteTowerEquipExchange:
+                    listTextData.Add(new TextInfoBean(TextInfoTypeEnum.Talk, 1, GameCommonInfo.GetUITextById(99203)));
+                    break;
+                case NpcTalkTypeEnum.InfiniteTowerItemsExchange:
+                    listTextData.Add(new TextInfoBean(TextInfoTypeEnum.Talk, 1, GameCommonInfo.GetUITextById(99204)));
+                    break;
             }
         }
         listTextData.Add(new TextInfoBean(TextInfoTypeEnum.Talk, 1, GameCommonInfo.GetUITextById(99103)));
