@@ -134,6 +134,14 @@ public class MenuOwnBean
         {
             levelExp = levelExp * 5;
         }
+        else if (menuInfo.rarity == 3)
+        {
+            levelExp = levelExp * 10;
+        }
+        else if (menuInfo.rarity == 4)
+        {
+            levelExp = levelExp * 20;
+        }
         return levelExp;
     }
 

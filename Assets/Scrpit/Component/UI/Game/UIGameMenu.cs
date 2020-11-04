@@ -19,12 +19,7 @@ public class UIGameMenu : UIGameComponent
     public Text tvWaterwine;
     public Text tvflour;
 
-    [Header("模型")]
-    public GameObject objFoodListContent;
-    public GameObject objFoodItemModelFor0;
-    public GameObject objFoodItemModelFor1;
-    public GameObject objFoodItemModelFor2;
-    public GameObject objFoodItemModelFor3;
+    public ScrollGridVertical gridVertical;
 
     [Header("排序")]
     public Button btSortDef;
@@ -66,6 +61,11 @@ public class UIGameMenu : UIGameComponent
             btSellAll.onClick.AddListener(OnClickForSellAll);
         if (btStopAll != null)
             btStopAll.onClick.AddListener(OnClickForStopAll);
+
+        if (gridVertical)
+        {
+            gridVertical.AddCellListener(OnCellForFoodItems);
+        }
     }
 
     public override void OpenUI()
@@ -74,7 +74,8 @@ public class UIGameMenu : UIGameComponent
         List<MenuOwnBean> listMenu = uiGameManager.gameDataManager.gameData.listMenu;
         this.listMenu.Clear();
         this.listMenu.AddRange(listMenu);
-        CreateFoodList();
+        gridVertical.SetCellCount(listMenu.Count);
+        gridVertical.RefreshAllCells();
     }
 
     private void Update()
@@ -121,45 +122,14 @@ public class UIGameMenu : UIGameComponent
         }
     }
 
-    public void CreateFoodList()
+    public void OnCellForFoodItems(ScrollGridCell itemCell)
     {
-        StopAllCoroutines();
-        CptUtil.RemoveChildsByActive(objFoodListContent.transform);
-        StartCoroutine(CoroutineForCreateFoodList());
-    }
+        int index = itemCell.index;
+        MenuOwnBean itemData = listMenu[index];
+        MenuInfoBean menuInfo = uiGameManager.innFoodManager.GetFoodDataById(itemData.menuId);
 
-    public IEnumerator CoroutineForCreateFoodList()
-    {
-        for (int i = 0; i < listMenu.Count; i++)
-        {
-            MenuOwnBean itemData = listMenu[i];
-            MenuInfoBean menuInfo = uiGameManager.innFoodManager.GetFoodDataById(itemData.menuId);
-            if (menuInfo == null)
-                continue;
-            GameObject objModel = null;
-            LevelTypeEnum level = itemData.GetMenuLevel(uiGameManager.innFoodManager, out string levelStr, out int nextLevelExp);
-            if (level == LevelTypeEnum.Star)
-            {
-                objModel = objFoodItemModelFor1;
-            }
-            else if (level == LevelTypeEnum.Moon)
-            {
-                objModel = objFoodItemModelFor2;
-            }
-            else if (level == LevelTypeEnum.Sun)
-            {
-                objModel = objFoodItemModelFor3;
-            }
-            else
-            {
-                objModel = objFoodItemModelFor0;
-            }
-
-            GameObject foodObj = Instantiate(objFoodListContent, objModel);
-            ItemGameMenuFoodCpt foodCpt = foodObj.GetComponent<ItemGameMenuFoodCpt>();
-            foodCpt.SetData(itemData, menuInfo);
-            yield return new WaitForEndOfFrame();
-        }
+        ItemGameMenuFoodCpt foodCpt = itemCell.GetComponent<ItemGameMenuFoodCpt>();
+        foodCpt.SetData(itemData, menuInfo);
     }
 
     /// <summary>
@@ -171,7 +141,8 @@ public class UIGameMenu : UIGameComponent
         List<MenuOwnBean> listMenu = uiGameManager.gameDataManager.gameData.listMenu;
         this.listMenu.Clear();
         this.listMenu.AddRange(listMenu);
-        CreateFoodList();
+        gridVertical.SetCellCount(listMenu.Count);
+        gridVertical.RefreshAllCells();
     }
 
     /// <summary>
@@ -187,7 +158,8 @@ public class UIGameMenu : UIGameComponent
                 MenuInfoBean menuInfo = uiGameManager.innFoodManager.GetFoodDataById(data.menuId);
                 return menuInfo.name;
             }).ToList();
-        CreateFoodList();
+        gridVertical.SetCellCount(listMenu.Count);
+        gridVertical.RefreshAllCells();
     }
 
     /// <summary>
@@ -202,7 +174,8 @@ public class UIGameMenu : UIGameComponent
                 MenuInfoBean menuInfo = uiGameManager.innFoodManager.GetFoodDataById(data.menuId);
                 return menuInfo.rarity;
              }).ToList();
-        CreateFoodList();
+        gridVertical.SetCellCount(listMenu.Count);
+        gridVertical.RefreshAllCells();
     }
 
     /// <summary>
@@ -216,7 +189,8 @@ public class UIGameMenu : UIGameComponent
             {
                 return data.menuLevel;
             }).ToList();
-        CreateFoodList();
+        gridVertical.SetCellCount(listMenu.Count);
+        gridVertical.RefreshAllCells();
     }
 
     /// <summary>
@@ -230,7 +204,8 @@ public class UIGameMenu : UIGameComponent
             {
                 return data.isSell;
             }).ToList();
-        CreateFoodList();
+        gridVertical.SetCellCount(listMenu.Count);
+        gridVertical.RefreshAllCells();
     }
 
     /// <summary>
@@ -244,7 +219,8 @@ public class UIGameMenu : UIGameComponent
             {
                 return data.menuStatus;
             }).ToList();
-        CreateFoodList();
+        gridVertical.SetCellCount(listMenu.Count);
+        gridVertical.RefreshAllCells();
     }
     /// <summary>
     /// 是否升级排序点击
@@ -259,7 +235,8 @@ public class UIGameMenu : UIGameComponent
                 data.GetPrice(menuInfo,out long priceL, out long priceM, out long priceS);
                 return priceS;
             }).ToList();
-        CreateFoodList();
+        gridVertical.SetCellCount(listMenu.Count);
+        gridVertical.RefreshAllCells();
     }
 
     /// <summary>
@@ -274,7 +251,8 @@ public class UIGameMenu : UIGameComponent
                 MenuInfoBean menuInfo = uiGameManager.innFoodManager.GetFoodDataById(data.menuId);
                 return menuInfo.cook_time;
             }).ToList();
-        CreateFoodList();
+        gridVertical.SetCellCount(listMenu.Count);
+        gridVertical.RefreshAllCells();
     }
 
     public void OnClickForSellAll()
@@ -300,7 +278,8 @@ public class UIGameMenu : UIGameComponent
             MenuOwnBean itemMenu =  listMenu[i];
             itemMenu.isSell= isSell;
         }
-        CreateFoodList();
+        gridVertical.SetCellCount(listMenu.Count);
+        gridVertical.RefreshAllCells();
     }
 
     /// <summary>

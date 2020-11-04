@@ -32,6 +32,7 @@ public class RarityEnumTools
                 break;
             case RarityEnum.SuperiorSuperRare:
                 rarityName = GameCommonInfo.GetUITextById(108);
+                rarityColor = new Color(0f, 1f, 0f, 0.3f);
                 break;
             case RarityEnum.UltraRare:
                 rarityName = GameCommonInfo.GetUITextById(109);

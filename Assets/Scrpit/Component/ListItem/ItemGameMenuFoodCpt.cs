@@ -34,6 +34,12 @@ public class ItemGameMenuFoodCpt : ItemGameBaseCpt, IRadioButtonCallBack, Dialog
     public Color colorForSell;
     public Color colorForNoSell;
     public Color colorForNoIng;
+
+    public Sprite spBackgroundInit;
+    public Sprite spBackgroundStar;
+    public Sprite spBackgroundMoon;
+    public Sprite spBackgroundSun;
+
     public string stringForNoIng;
 
     [Header("数据")]
@@ -108,7 +114,8 @@ public class ItemGameMenuFoodCpt : ItemGameBaseCpt, IRadioButtonCallBack, Dialog
         if (pbFood != null)
             pbFood.SetData(menuOwnData, foodData);
         UIGameManager uiGameManager = GetUIManager<UIGameManager>();
-        SetLevel(menuOwn.menuLevel, menuOwn.GetMenuLevelIcon(uiGameManager.iconDataManager));
+
+        SetLevel(menuOwn.GetMenuLevel(), menuOwn.GetMenuLevelIcon(uiGameManager.iconDataManager));
         SetFoodIcon(foodData.icon_key);
         SetName(data.name);
         SetSellStatus(menuOwnData);
@@ -158,16 +165,35 @@ public class ItemGameMenuFoodCpt : ItemGameBaseCpt, IRadioButtonCallBack, Dialog
     /// </summary>
     /// <param name="level"></param>
     /// <param name="spIcon"></param>
-    public void SetLevel(int level, Sprite spIcon)
+    public void SetLevel(LevelTypeEnum level, Sprite spIcon)
     {
-        if (level == 0)
+        pbReputation.gameObject.SetActive(true);
+        ivReputation.sprite = spIcon;
+        if (level ==  LevelTypeEnum.Init)
         {
+            tvName.color = new Color(0, 0, 0, 1f);
+            ivBackground.sprite = spBackgroundInit;
             pbReputation.gameObject.SetActive(false);
+        }
+        else if (level == LevelTypeEnum.Star)
+        {
+            tvName.color = new Color(0,0.75f,0,1f);
+            ivBackground.sprite = spBackgroundStar;
+        }
+        else if (level == LevelTypeEnum.Moon)
+        {
+            tvName.color = new Color(0.1f, 0.75f, 0.95f, 1f);
+            ivBackground.sprite = spBackgroundMoon;
+        }
+        else if (level == LevelTypeEnum.Sun)
+        {
+            tvName.color = new Color(1, 0.85f, 0.2f, 1f);
+            ivBackground.sprite = spBackgroundSun;
         }
         else
         {
-            pbReputation.gameObject.SetActive(true);
-            ivReputation.sprite = spIcon;
+            tvName.color = new Color(0, 0, 0, 1f);
+            ivBackground.sprite = spBackgroundInit;
         }
     }
 
