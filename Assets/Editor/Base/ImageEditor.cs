@@ -52,7 +52,11 @@ public class ImageEditor : Editor
     {
         BaseSpriteEditorForExtrude(SpriteImportMode.Multiple, 5, 1);
     }
-
+    [MenuItem("Custom/Image/Multiple_6x1")]
+    public static void Multiple6x1()
+    {
+        BaseSpriteEditor(SpriteImportMode.Multiple, 6, 1);
+    }
     [MenuItem("Custom/Image/Multiple_7x1")]
     public static void Multiple7x1()
     {
