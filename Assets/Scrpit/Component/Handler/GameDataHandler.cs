@@ -138,6 +138,7 @@ public class GameDataHandler : BaseHandler, DialogView.IDialogCallBack, IBaseObs
         if (CheckUtil.ListIsNull(listInfiniteTowersData))
             return;
         float addTime = 0.01f * time;
+        List<UserInfiniteTowersBean> listSendData = new List<UserInfiniteTowersBean>();
         for (int i = 0; i < listInfiniteTowersData.Count; i++)
         {
             UserInfiniteTowersBean itemInfiniteTowerData = listInfiniteTowersData[i];
@@ -146,6 +147,7 @@ public class GameDataHandler : BaseHandler, DialogView.IDialogCallBack, IBaseObs
                 //如果不是派遣数据则不处理
                 continue;
             }
+            listSendData.Add(itemInfiniteTowerData);
             itemInfiniteTowerData.proForSend += addTime;
             if (itemInfiniteTowerData.proForSend >= 1)
             {
@@ -216,7 +218,7 @@ public class GameDataHandler : BaseHandler, DialogView.IDialogCallBack, IBaseObs
                 }
             }
         }
-        NotifyAllObserver((int)NotifyTypeEnum.InfiniteTowerProChange, listInfiniteTowersData);
+        NotifyAllObserver((int)NotifyTypeEnum.InfiniteTowerProChange, listSendData);
     }
 
 

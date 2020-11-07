@@ -62,9 +62,19 @@ public class ItemTownGoodsMarketCpt : ItemGameBaseCpt, DialogView.IDialogCallBac
         SetNumber(1);
 
         List<string> listRiseAndFall = StringUtil.SplitBySubstringForListStr(goodsData.mark, '|');
-        SeasonsEnum[] listRise = StringUtil.SplitBySubstringForArrayEnum<SeasonsEnum>(listRiseAndFall[0], ',');
-        SeasonsEnum[] listFall = StringUtil.SplitBySubstringForArrayEnum<SeasonsEnum>(listRiseAndFall[1], ',');
+        SeasonsEnum[] listRise = new SeasonsEnum[0];
+        SeasonsEnum[] listFall = new SeasonsEnum[0];
+        if (listRiseAndFall.Count>=1)
+        {
+            listRise = StringUtil.SplitBySubstringForArrayEnum<SeasonsEnum>(listRiseAndFall[0], ',');
+        }
+        if (listRiseAndFall.Count >= 2)
+        {
+            listFall = StringUtil.SplitBySubstringForArrayEnum<SeasonsEnum>(listRiseAndFall[1], ',');
+        }
         SetRiseAndFall(listRise.ToList(), listFall.ToList());
+
+    
         SetPrice(price_l, price_m, price_s, 1);
         RreshData();
     }

@@ -190,12 +190,12 @@ public class RewardTypeEnumTools : DataTools
     {
         string iconKey = "";
         string rewardDescribe = "???";
-        int[] listData = StringUtil.SplitBySubstringForArrayInt(rewardTypeData.data,',');
+        int[] listData = StringUtil.SplitBySubstringForArrayInt(rewardTypeData.data, ',');
         switch (rewardTypeData.dataType)
         {
             case RewardTypeEnum.AddArenaTrophyElementary:
                 iconKey = "trophy_1_0";
-                rewardDescribe = string.Format(GameCommonInfo.GetUITextById(6006), listData[0]+"");
+                rewardDescribe = string.Format(GameCommonInfo.GetUITextById(6006), listData[0] + "");
                 break;
             case RewardTypeEnum.AddArenaTrophyIntermediate:
                 iconKey = "trophy_1_1";
@@ -271,7 +271,7 @@ public class RewardTypeEnumTools : DataTools
         }
         data.rewardId = buildItemId;
         data.rewardDescribe += (" x" + data.rewardNumber);
-        data.spRewardIcon = innBuildManager.GetFurnitureSpriteByName(buildItemInfo.icon_key);
+        data.spRewardIcon = BuildItemTypeEnumTools.GetBuildItemSprite(innBuildManager, buildItemInfo);
         return data;
     }
 
@@ -287,15 +287,15 @@ public class RewardTypeEnumTools : DataTools
         string[] listItemsData = StringUtil.SplitBySubstringForArrayStr(data.data, ',');
         long itemId = long.Parse(listItemsData[0]);
 
-            ItemsInfoBean itemsInfo = gameItemsManager.GetItemsById(itemId);
-            data.rewardDescribe = itemsInfo.name;
-            if (listItemsData.Length == 2)
-            {
-                data.rewardNumber = int.Parse(listItemsData[1]);
-            }
-            data.rewardId = itemId;
-            data.rewardDescribe += (" x" + data.rewardNumber);
-            data.spRewardIcon = GeneralEnumTools.GetGeneralSprite(itemsInfo, iconDataManager, gameItemsManager, null, true);
+        ItemsInfoBean itemsInfo = gameItemsManager.GetItemsById(itemId);
+        data.rewardDescribe = itemsInfo.name;
+        if (listItemsData.Length == 2)
+        {
+            data.rewardNumber = int.Parse(listItemsData[1]);
+        }
+        data.rewardId = itemId;
+        data.rewardDescribe += (" x" + data.rewardNumber);
+        data.spRewardIcon = GeneralEnumTools.GetGeneralSprite(itemsInfo, iconDataManager, gameItemsManager, null, true);
         return data;
     }
 
@@ -420,7 +420,7 @@ public class RewardTypeEnumTools : DataTools
                     break;
                 case RewardTypeEnum.AddArenaTrophyElementary:
                     long addTrophy1 = itemData.rewardNumber;
-                    gameData.AddArenaTrophy(addTrophy1, 0, 0, 0,itemData.isRecord);
+                    gameData.AddArenaTrophy(addTrophy1, 0, 0, 0, itemData.isRecord);
                     toastManager.ToastHint(itemData.spRewardIcon, string.Format(GameCommonInfo.GetUITextById(6099), string.Format(GameCommonInfo.GetUITextById(6006), addTrophy1 + "")));
                     break;
                 case RewardTypeEnum.AddArenaTrophyIntermediate:
@@ -499,15 +499,15 @@ public class RewardTypeEnumTools : DataTools
         }
     }
 
-    protected static void CompleteRewardForExp(List<CharacterBean> listCharacterData,WorkerEnum workerType,int exp)
+    protected static void CompleteRewardForExp(List<CharacterBean> listCharacterData, WorkerEnum workerType, int exp)
     {
         if (CheckUtil.ListIsNull(listCharacterData))
             return;
 
         foreach (CharacterBean itemData in listCharacterData)
         {
-            CharacterWorkerBaseBean characterWorker =  itemData.baseInfo.GetWorkerInfoByType(workerType);
-            characterWorker.AddExp(exp,out bool isLevelUp);
+            CharacterWorkerBaseBean characterWorker = itemData.baseInfo.GetWorkerInfoByType(workerType);
+            characterWorker.AddExp(exp, out bool isLevelUp);
         }
     }
 
@@ -530,7 +530,7 @@ public class RewardTypeEnumTools : DataTools
         if (layer % 10 == 0)
         {
             //添加经验奖励
-            addExp = layer * 10;
+            addExp = layer * 5;
             //添加金钱奖励
             addMoneyS = layer * 100;
             //BOSS奖励
@@ -574,7 +574,7 @@ public class RewardTypeEnumTools : DataTools
             if (!CheckUtil.StringIsNull(rewardForNormalStr))
             {
                 //必定随机获得一个物品
-                RewardTypeBean rewardForItems = GetRandomRewardForData(listEnemyData,RewardTypeEnum.AddItems, rewardForNormalStr);
+                RewardTypeBean rewardForItems = GetRandomRewardForData(listEnemyData, RewardTypeEnum.AddItems, rewardForNormalStr);
                 listReward.Add(rewardForItems);
                 //有一定概率获得建筑物
                 float randomTemp = UnityEngine.Random.Range(0f, 1f);
@@ -598,7 +598,7 @@ public class RewardTypeEnumTools : DataTools
         else
         {
             //添加经验奖励
-            addExp = layer * 2;
+            addExp = layer;
             //添加金钱奖励
             addMoneyS = layer * 10;
         }
@@ -659,12 +659,12 @@ public class RewardTypeEnumTools : DataTools
                 return GetRandomRewardForData(listEnemyData, rewardType, rewardListStr);
             }
             List<long> listSkills = new List<long>();
-            for (int i=0;i< listEnemyData.Count;i++)
+            for (int i = 0; i < listEnemyData.Count; i++)
             {
-                CharacterBean characterData= listEnemyData[i];
+                CharacterBean characterData = listEnemyData[i];
                 listSkills.AddRange(characterData.attributes.listSkills);
             }
-            long randomSkill= RandomUtil.GetRandomDataByList(listSkills);
+            long randomSkill = RandomUtil.GetRandomDataByList(listSkills);
             rewardDataStr = (1400000 + randomSkill) + "";
         }
         else

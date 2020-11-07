@@ -91,7 +91,10 @@ public class CharacterStatusIconCpt : BaseMonoBehaviour
             CharacterStatusIconItemCpt itemData = listStatusIcon[i];
             if (itemData.statusIconData.markId.Equals(markId))
             {
-                itemData.transform.DOScale(new Vector3(0, 0, 0), 0.5f).OnComplete(delegate { Destroy(itemData.gameObject); });
+                itemData.transform.DOScale(new Vector3(0, 0, 0), 0.5f).OnComplete(delegate { 
+                    if(itemData.gameObject)
+                        Destroy(itemData.gameObject);
+                });
                 listStatusIcon.Remove(itemData);
                 i--;
             }

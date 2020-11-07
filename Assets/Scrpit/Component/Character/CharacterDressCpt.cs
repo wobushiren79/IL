@@ -58,11 +58,6 @@ public class CharacterDressCpt : BaseMonoBehaviour
         animForHand.runtimeAnimatorController = aocForHand;
     }
 
-    private void Start()
-    {
- 
-    }
-
     public CharacterEquipBean GetCharacterEquipData()
     {
         if (characterEquipData == null)
@@ -101,7 +96,7 @@ public class CharacterDressCpt : BaseMonoBehaviour
         }
         sprHat.sprite = hatSP;
         //设置动画
-        SetAnimForEquip(aocForHat, itemsInfo);
+        SetAnimForEquip(animForHat, aocForHat, itemsInfo);
     }
 
     /// <summary>
@@ -126,7 +121,7 @@ public class CharacterDressCpt : BaseMonoBehaviour
         }
         sprMask.sprite = maskSP;
         //设置动画
-        SetAnimForEquip(aocForMask, itemsInfo);
+        SetAnimForEquip(animForMask, aocForMask, itemsInfo);
     }
 
     /// <summary>
@@ -162,7 +157,7 @@ public class CharacterDressCpt : BaseMonoBehaviour
         }
         sprClothes.sprite = clothesSP;
         //设置动画
-        SetAnimForEquip(aocForClothes, itemsInfo);
+        SetAnimForEquip(animForClothes, aocForClothes, itemsInfo);
     }
 
 
@@ -193,7 +188,7 @@ public class CharacterDressCpt : BaseMonoBehaviour
         sprShoes.sprite = shoesSP;
         //设置动画
         //需要考虑左右脚
-        SetAnimForEquip(aocForShoes, itemsInfo);
+        SetAnimForEquip(animForShoes, aocForShoes, itemsInfo);
     }
 
     /// <summary>
@@ -226,18 +221,19 @@ public class CharacterDressCpt : BaseMonoBehaviour
             sprHand.transform.localEulerAngles = new Vector3(0, 0, 45);
         }
         //设置动画
-        SetAnimForEquip(aocForHand, itemsInfo);
+        SetAnimForEquip(animForHand, aocForHand, itemsInfo);
     }
 
     /// <summary>
     /// 设置动画
     /// </summary>
     /// <param name="itemsInfo"></param>
-    public void SetAnimForEquip(AnimatorOverrideController animatorForTarget,ItemsInfoBean itemsInfo)
+    public void SetAnimForEquip(Animator animator, AnimatorOverrideController animatorForTarget,ItemsInfoBean itemsInfo)
     {
-        if(animatorForTarget==null || itemsInfo == null || itemsInfo.id == 0)
+        if(animatorForTarget == null || itemsInfo == null || itemsInfo.id == 0)
         {
             animatorForTarget["Original"] = animForOriginalClip;
+            animator.enabled = false;
             return;
         }       
         //设置动画
@@ -264,16 +260,19 @@ public class CharacterDressCpt : BaseMonoBehaviour
    
             if (animationClip != null)
             {
+                animator.enabled = true;
                 animatorForTarget["Original"] = animationClip;
             }
             else
             {
                 animatorForTarget["Original"] = animForOriginalClip;
+                animator.enabled = false;
             }
         }
         else
         {
             animatorForTarget["Original"] = animForOriginalClip;
+            animator.enabled = false;
         }
     }
 }

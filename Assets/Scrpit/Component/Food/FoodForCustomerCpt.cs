@@ -7,7 +7,6 @@ public class FoodForCustomerCpt : BaseMonoBehaviour
     //食物样式
     public SpriteRenderer srFood;
 
-    public GameObject objBadFood;
     public GameObject objGoodFood;
     public GameObject objPrefectFood;
 
@@ -44,17 +43,35 @@ public class FoodForCustomerCpt : BaseMonoBehaviour
                 AnimationClip animationClip = innFoodManager.GetFoodAnimByName(foodData.anim_key);
                 if (animationClip != null)
                 {
-                    aocForFood["Original"] = animationClip;
+                    animForFood.enabled = true;
+                    aocForFood["Original"] = animationClip;   
                 }
+                else
+                {
+                    animForFood.enabled = false;
+                }
+            }
+            else
+            {
+                animForFood.enabled = false;
             }
         }
 
-        objBadFood.SetActive(false);
         objGoodFood.SetActive(false);
         objPrefectFood.SetActive(false);
-        if (foodData != null && foodData.GetRarity()== RarityEnum.SuperRare)
+        if (foodData != null)
         {
-            objPrefectFood.SetActive(true);
+            RarityEnum rarity = foodData.GetRarity();
+            switch (rarity)
+            {
+                case RarityEnum.SuperRare:
+                    objPrefectFood.SetActive(true);
+                    break;
+                case RarityEnum.SuperiorSuperRare:
+                    objGoodFood.SetActive(true);
+                    objPrefectFood.SetActive(true);
+                    break;
+            }
         }
         //switch (foodLevel)
         //{
@@ -87,7 +104,6 @@ public class FoodForCustomerCpt : BaseMonoBehaviour
             srFood.sprite = innFoodManager.GetFoodLastSpriteByName(foodData.icon_key);
         }
    
-        objBadFood.SetActive(false);
         objGoodFood.SetActive(false);
         objPrefectFood.SetActive(false);
 

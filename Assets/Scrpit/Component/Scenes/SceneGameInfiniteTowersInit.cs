@@ -25,7 +25,7 @@ public class SceneGameInfiniteTowersInit : BaseNormalSceneInit
         if (infiniteTowersData == null)
         {
             infiniteTowersData = new UserInfiniteTowersBean();
-            infiniteTowersData.layer = 1;
+            infiniteTowersData.layer = 10;
             infiniteTowersData.listMembers.Add("");
         }
         
