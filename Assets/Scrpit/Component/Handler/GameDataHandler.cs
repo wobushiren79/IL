@@ -163,7 +163,7 @@ public class GameDataHandler : BaseHandler, DialogView.IDialogCallBack, IBaseObs
                         //如果是成功攻略
                         //弹出提示
                         audioHandler.PlaySound(AudioSoundEnum.Reward);
-                        toastManager.ToastHint("成功突破" + itemInfiniteTowerData.layer + "层");
+                        toastManager.ToastHint(string.Format(GameCommonInfo.GetUITextById(1331), itemInfiniteTowerData.layer+""));
                         //增加层数
                         itemInfiniteTowerData.layer++;
                         //添加奖励物品
@@ -183,7 +183,7 @@ public class GameDataHandler : BaseHandler, DialogView.IDialogCallBack, IBaseObs
                         {
                             //弹出提示
                             audioHandler.PlaySound(AudioSoundEnum.Reward);
-                            toastManager.ToastHint("到达可派遣最高层数：" + itemInfiniteTowerData.layer + "层");
+                            toastManager.ToastHint(string.Format(GameCommonInfo.GetUITextById(1332), itemInfiniteTowerData.layer + ""));
                             itemInfiniteTowerData.proForSend = -1;
                             //还原员工状态
                             for (int c = 0; c < listCharacterData.Count; c++)
@@ -201,7 +201,7 @@ public class GameDataHandler : BaseHandler, DialogView.IDialogCallBack, IBaseObs
                     {
                         //弹出提示
                         audioHandler.PlaySound(AudioSoundEnum.Passive);
-                        toastManager.ToastHint("止步于" + itemInfiniteTowerData.layer + "层");
+                        toastManager.ToastHint(string.Format(GameCommonInfo.GetUITextById(1333), itemInfiniteTowerData.layer + ""));
                         //如果是失败攻略
                         itemInfiniteTowerData.proForSend = -1;
                         //还原员工状态

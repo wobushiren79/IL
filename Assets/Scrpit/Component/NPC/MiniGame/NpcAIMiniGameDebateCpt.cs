@@ -25,7 +25,7 @@ public class NpcAIMiniGameDebateCpt : BaseNpcAI
     /// <param name="damage"></param>
     public void UnderAttack(int damage)
     {
-        characterMiniGameData.ChangeLife(-damage);
+        characterMiniGameData.AddLife(-damage);
 
         ShowTextInfo("-" + damage);
         //流血特效

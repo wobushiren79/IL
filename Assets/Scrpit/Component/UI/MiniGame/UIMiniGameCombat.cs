@@ -211,7 +211,6 @@ public class UIMiniGameCombat : UIBaseMiniGame<MiniGameCombatBean>
         }
     }
 
-
     /// <summary>
     /// 移除角色回合行动
     /// </summary>
@@ -265,15 +264,22 @@ public class UIMiniGameCombat : UIBaseMiniGame<MiniGameCombatBean>
     {
         uiForCombatCommand.Close();
         uiForSelectCharacter.Close();
-        //获取属性
-        GameItemsManager gameItemsManager = GetUIManager<UIGameManager>().gameItemsManager;
-        DialogManager dialogManager = GetUIManager<UIGameManager>().dialogManager;
-        gameCharacterData.characterData.GetAttributes(gameItemsManager, out CharacterAttributesBean characterAttributes);
+        if (GameCommonInfo.GameConfig.statusForCombatForPowerTest == 1 )
+        {
+            //获取属性
+            GameItemsManager gameItemsManager = GetUIManager<UIGameManager>().gameItemsManager;
+            DialogManager dialogManager = GetUIManager<UIGameManager>().dialogManager;
+            gameCharacterData.characterData.GetAttributes(gameItemsManager, out CharacterAttributesBean characterAttributes);
 
-        DialogBean dialogData = new DialogBean();
-        PowerTestDialogView powerTestDialog = (PowerTestDialogView)dialogManager.CreateDialog(DialogEnum.PowerTest, this, dialogData);
-        powerTestDialog.SetCallBack(this);
-        powerTestDialog.SetData(1.5f, 1);
+            DialogBean dialogData = new DialogBean();
+            PowerTestDialogView powerTestDialog = (PowerTestDialogView)dialogManager.CreateDialog(DialogEnum.PowerTest, this, dialogData);
+            powerTestDialog.SetCallBack(this);
+            powerTestDialog.SetData(1.5f, 1);
+        }
+        else
+        {
+            PowerTestEnd(0.8f);
+        }
     }
 
     /// <summary>

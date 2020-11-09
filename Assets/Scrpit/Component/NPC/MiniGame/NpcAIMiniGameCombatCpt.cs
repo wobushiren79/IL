@@ -66,7 +66,7 @@ public class NpcAIMiniGameCombatCpt : BaseNpcAI
     /// <param name="damage"></param>
     public void UnderAttack(float powerLevel, int damage)
     {
-        characterMiniGameData.ChangeLife(-damage);
+        characterMiniGameData.AddLife(-damage);
         Color colorDamage;
         if (powerLevel >= 1f)
         {

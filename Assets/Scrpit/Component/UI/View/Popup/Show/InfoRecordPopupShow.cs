@@ -80,7 +80,7 @@ public class InfoRecordPopupShow : PopupShowView
             innRecordData.consumeIngFlour);
         CptUtil.RemoveChildsByActive(objShowContainer);
         SetHotel(innRecordData.incomeForHotelL, innRecordData.incomeForHotelM, innRecordData.incomeForHotelS);
-        SetFoodSellList(innRecordData.listSellNumber);
+        SetFoodSellList(innRecordData.listSellNumber, innRecordData.incomeL, innRecordData.incomeM, innRecordData.incomeS);
     }
 
     /// <summary>
@@ -282,17 +282,28 @@ public class InfoRecordPopupShow : PopupShowView
     /// 设置销售食物
     /// </summary>
     /// <param name="listData"></param>
-    public void SetFoodSellList(List<GameItemsBean> listData)
+    public void SetFoodSellList(List<GameItemsBean> listData, long priceL, long priceM, long priceS)
     {
         if (listData == null)
             return;
-        foreach (GameItemsBean itemData in listData)
+        if (listData.Count >= 20)
         {
-            GameObject objItem = Instantiate(objShowContainer,objShowItem);
+            GameObject objItem = Instantiate(objShowContainer, objShowItem);
             ItemPopupRecordCpt itemCpt = objItem.GetComponent<ItemPopupRecordCpt>();
-            MenuInfoBean menuInfo=  innFoodManager.GetFoodDataById(itemData.itemId);
-            Sprite spIcon = innFoodManager.GetFoodSpriteByName(menuInfo.icon_key);
-            itemCpt.SetData(spIcon, menuInfo.name, itemData.itemNumber, itemData.priceL, itemData.priceM, itemData.priceS);
+            Sprite spIcon = iconDataManager.GetIconSpriteByName("ach_sellmenunumber_2");
+            itemCpt.SetData(spIcon, GameCommonInfo.GetUITextById(332), 0, priceL, priceM, priceS);
+        }
+        else
+        {
+            for (int i = 0; i < listData.Count; i++)
+            {
+                GameItemsBean itemData = listData[i];
+                GameObject objItem = Instantiate(objShowContainer, objShowItem);
+                ItemPopupRecordCpt itemCpt = objItem.GetComponent<ItemPopupRecordCpt>();
+                MenuInfoBean menuInfo = innFoodManager.GetFoodDataById(itemData.itemId);
+                Sprite spIcon = innFoodManager.GetFoodSpriteByName(menuInfo.icon_key);
+                itemCpt.SetData(spIcon, menuInfo.name, itemData.itemNumber, itemData.priceL, itemData.priceM, itemData.priceS);
+            }
         }
     }
 

@@ -291,9 +291,16 @@ public class ItemGameWorkerCpt : ItemGameBaseCpt, DialogView.IDialogCallBack, Wo
         }
         else
         {
-            DialogBean dialogData = new DialogBean();
-            dialogData.content = string.Format(GameCommonInfo.GetUITextById(3063), characterData.baseInfo.name);
-            dialogManager.CreateDialog(DialogEnum.Normal, this, dialogData);
+            if (characterData.baseInfo.GetWorkerStatus() == WorkerStatusEnum.Work || characterData.baseInfo.GetWorkerStatus() == WorkerStatusEnum.Rest)
+            {
+                DialogBean dialogData = new DialogBean();
+                dialogData.content = string.Format(GameCommonInfo.GetUITextById(3063), characterData.baseInfo.name);
+                dialogManager.CreateDialog(DialogEnum.Normal, this, dialogData);
+            }
+            else
+            {
+                toastManager.ToastHint(GameCommonInfo.GetUITextById(1083));
+            }
         }
     }
 

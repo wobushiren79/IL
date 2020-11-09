@@ -41,4 +41,7 @@ public class GameConfigBean
 
     //员工当前工作状态数量
     public int statusForWorkerNumber = 0;
+
+    //是否开启力度测试
+    public int statusForCombatForPowerTest = 1;
 }

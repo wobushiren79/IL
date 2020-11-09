@@ -19,7 +19,7 @@ public class UserInfiniteTowersBean
     {
         //成功因子 超过则必定成功 低于则按比例降低成功率
         //该因子为 层数+10  * 7大属性影响 * 3人团队
-        int successFactor = (layer + 10) * 7 * 3;
+        int successFactor = (int)(((layer + 10) * 7 * 3) * 0.8f);
         //如果超过则必然成功
         if (teamFactor >= successFactor)
         {
@@ -35,8 +35,8 @@ public class UserInfiniteTowersBean
             }
             else
             {
-                float randomRate=  UnityEngine.Random.Range(0f,1f);
-                if(randomRate<= successRate)
+                float randomRate = UnityEngine.Random.Range(0f, 1f);
+                if (randomRate <= successRate)
                 {
                     return true;
                 }

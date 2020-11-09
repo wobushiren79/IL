@@ -24,8 +24,10 @@ public class MiniGameCombatEffectBean
         {
             //显示增加的血量
             targetCharacter.ShowTextInfo("+" + addLife, Color.green);
+            targetCharacter.characterMiniGameData.AddLife(addLife);
             //更新血量显示
             targetCharacter.characterLifeCpt.SetData(miniGameCharacter.characterCurrentLife, miniGameCharacter.characterMaxLife);
+
         }
         //伤害处理
         int addDamage = EffectTypeEnumTools.GetTotalDamage(gameItemsManager, actionCharacter, listEffectTypeData);

@@ -25,6 +25,7 @@ public class UIGameSetting : UIGameComponent, DropdownView.ICallBack, ProgressVi
     public RadioButtonView rbEventStopTimeScale;
     public RadioButtonView rbEvent;
     public RadioButtonView rbWorkerNumber;
+    public RadioButtonView rbPowerTest;
     public InputField etFrames;
 
     public void Start()
@@ -207,7 +208,7 @@ public class UIGameSetting : UIGameComponent, DropdownView.ICallBack, ProgressVi
             }
         }
 
-        //事件镜头跟随初始化
+        //员工工作状态
         if (rbWorkerNumber != null)
         {
             rbWorkerNumber.SetCallBack(this);
@@ -220,6 +221,21 @@ public class UIGameSetting : UIGameComponent, DropdownView.ICallBack, ProgressVi
                 rbWorkerNumber.ChangeStates(RadioButtonView.RadioButtonStatus.Selected);
             }
         }
+
+        //战斗的力道设定
+        if (rbPowerTest != null)
+        {
+            rbPowerTest.SetCallBack(this);
+            if (GameCommonInfo.GameConfig.statusForCombatForPowerTest == 0)
+            {
+                rbPowerTest.ChangeStates(RadioButtonView.RadioButtonStatus.Unselected);
+            }
+            else if (GameCommonInfo.GameConfig.statusForCombatForPowerTest == 1)
+            {
+                rbPowerTest.ChangeStates(RadioButtonView.RadioButtonStatus.Selected);
+            }
+        }
+
         //离开游戏回到主菜单初始化
         if (SceneUtil.GetCurrentScene() == ScenesEnum.MainScene)
         {
@@ -496,6 +512,18 @@ public class UIGameSetting : UIGameComponent, DropdownView.ICallBack, ProgressVi
             else if (buttonStates == RadioButtonView.RadioButtonStatus.Unselected)
             {
                 GameCommonInfo.GameConfig.statusForWorkerNumber = 0;
+            }
+        }
+        else if (view == rbPowerTest)
+        {
+            //按键提示
+            if (buttonStates == RadioButtonView.RadioButtonStatus.Selected)
+            {
+                GameCommonInfo.GameConfig.statusForCombatForPowerTest = 1;
+            }
+            else if (buttonStates == RadioButtonView.RadioButtonStatus.Unselected)
+            {
+                GameCommonInfo.GameConfig.statusForCombatForPowerTest = 0;
             }
         }
     }

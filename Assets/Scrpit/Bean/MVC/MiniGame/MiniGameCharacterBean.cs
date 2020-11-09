@@ -17,12 +17,16 @@ public class MiniGameCharacterBean
     /// 修改生命
     /// </summary>
     /// <param name="life"></param>
-    public void ChangeLife(int life)
+    public void AddLife(int life)
     {
         characterCurrentLife += life;
         if (characterCurrentLife < 0)
         {
             characterCurrentLife = 0;
+        }
+        if (characterCurrentLife> characterMaxLife)
+        {
+            characterCurrentLife = characterMaxLife;
         }
     }
   
