@@ -182,6 +182,17 @@ public class UIMountainInfiniteTowers : UIGameComponent, DialogView.IDialogCallB
             {
                 //派遣
                 infiniteTowersData.isSend = true;
+                //检测
+                foreach (CharacterBean itemCharacter in listMembers)
+                {
+                    WorkerStatusEnum workerStatusEnum = itemCharacter.baseInfo.GetWorkerStatus();
+                    if (workerStatusEnum != WorkerStatusEnum.Rest && workerStatusEnum != WorkerStatusEnum.Work)
+                    {
+                        uiGameManager.toastManager.ToastHint(GameCommonInfo.GetUITextById(1142));
+                        return;
+                    }
+                }
+                //派遣
                 foreach (CharacterBean itemCharacter in listMembers)
                 {
                     infiniteTowersData.listMembers.Add(itemCharacter.baseInfo.characterId);
