@@ -38,7 +38,7 @@ public class MiniGameCombatHandler : BaseMiniGameHandler<MiniGameCombatBuilder, 
         //设置摄像机位置
         InitCameraPosition();
         //打开倒计时UI
-        OpenCountDownUI(gameCombatData);
+        OpenCountDownUI(gameCombatData,false);
     }
 
     /// <summary>

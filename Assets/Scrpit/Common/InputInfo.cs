@@ -12,7 +12,8 @@ public class InputInfo : ScriptableObject
 
     //鼠标左键 鼠标左键 
     public static string Confirm = "Confirm";
-
+    //上档键
+    public static string Shift = "Shift";
     //选择按钮E
     public static string Rotate_Right = "Rotate_Right";
 

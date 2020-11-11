@@ -532,7 +532,7 @@ public class RewardTypeEnumTools : DataTools
             //添加经验奖励
             addExp = layer * 5;
             //添加金钱奖励
-            addMoneyS = layer * 100;
+            addMoneyS = layer * 50;
             //BOSS奖励
             string rewardForNormalStr = "";
             string rewardForRareStr = "";
@@ -600,7 +600,7 @@ public class RewardTypeEnumTools : DataTools
             //添加经验奖励
             addExp = layer;
             //添加金钱奖励
-            addMoneyS = layer * 10;
+            addMoneyS = layer * 5;
         }
 
         RewardTypeBean rewardForExp = new RewardTypeBean(RewardTypeEnum.AddBeaterExp, addExp + "");
