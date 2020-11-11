@@ -164,8 +164,6 @@ public class GameDataHandler : BaseHandler, DialogView.IDialogCallBack, IBaseObs
                         //弹出提示
                         audioHandler.PlaySound(AudioSoundEnum.Reward);
                         toastManager.ToastHint(string.Format(GameCommonInfo.GetUITextById(1331), itemInfiniteTowerData.layer+""));
-                        //增加层数
-                        itemInfiniteTowerData.layer++;
                         //添加奖励物品
                         int totalLucky = 0;
                         for (int c = 0; c < listCharacterData.Count; c++)
@@ -177,13 +175,15 @@ public class GameDataHandler : BaseHandler, DialogView.IDialogCallBack, IBaseObs
                         List<RewardTypeBean> listRewardItems = RewardTypeEnumTools.GetRewardItemsForInfiniteTowers(null, itemInfiniteTowerData.layer, totalLucky);
                         if (!CheckUtil.ListIsNull(listRewardItems))
                             RewardTypeEnumTools.CompleteReward(toastManager, npcInfoManager, iconDataManager, gameItemsManager, innBuildManager, gameDataManager, listCharacterData, listRewardItems);
+                        //增加层数
+                        itemInfiniteTowerData.layer++;
                         //达到最大层数
                         UserAchievementBean userAchievement = gameDataManager.gameData.GetAchievementData();
-                        if (itemInfiniteTowerData.layer >= userAchievement.maxInfiniteTowersLayer - 1)
+                        if (itemInfiniteTowerData.layer > userAchievement.maxInfiniteTowersLayer - 1)
                         {
                             //弹出提示
                             audioHandler.PlaySound(AudioSoundEnum.Reward);
-                            toastManager.ToastHint(string.Format(GameCommonInfo.GetUITextById(1332), itemInfiniteTowerData.layer + ""));
+                            toastManager.ToastHint(string.Format(GameCommonInfo.GetUITextById(1332), (itemInfiniteTowerData.layer-1) + ""));
                             itemInfiniteTowerData.proForSend = -1;
                             //还原员工状态
                             for (int c = 0; c < listCharacterData.Count; c++)
