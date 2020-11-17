@@ -48,9 +48,6 @@ public class ControlForWorkCpt : BaseControl, DialogView.IDialogCallBack
         HandleForZoom();
     }
 
-
-
-
     private void OnDisable()
     {
         ClearSelect();
@@ -107,6 +104,7 @@ public class ControlForWorkCpt : BaseControl, DialogView.IDialogCallBack
             cameraMove.MoveForUnscaled(hMove, vMove);
         }
     }
+
 
     /// <summary>
     /// 跟随移动处理
@@ -289,7 +287,8 @@ public class ControlForWorkCpt : BaseControl, DialogView.IDialogCallBack
         if (dialogSelectView)
             return;
         base.HandleForMouseMove(out float moveX, out float moveY);
-        cameraMove.MoveForUnscaled(moveX, moveY);
+        base.HandleForMouseButtonMove(out float moveButtonX, out float moveButtonY);
+        cameraMove.MoveForUnscaled(moveX + moveButtonX, moveY + moveButtonY);
     }
 
     /// <summary>

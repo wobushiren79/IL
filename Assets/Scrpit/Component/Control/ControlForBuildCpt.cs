@@ -281,7 +281,8 @@ public class ControlForBuildCpt : BaseControl
         if (cameraMove == null)
             return;
         base.HandleForMouseMove(out float moveX, out float moveY);
-        cameraMove.Move(moveX, moveY);
+        base.HandleForMouseButtonMove(out float moveButtonX, out float moveButtonY);
+        cameraMove.Move(moveX + moveButtonX, moveY+ moveButtonY);
     }
     /// <summary>
     ///  处理-建筑旋转

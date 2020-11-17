@@ -161,6 +161,30 @@ public class BaseControl : BaseMonoBehaviour
         }
     }
 
+    protected Vector3 oldMouseButtonMove = Vector3.zero;
+
+
+    public virtual void HandleForMouseButtonMove(out float moveX, out float moveY)
+    {
+        moveX = 0;
+        moveY = 0;
+        if (Input.GetMouseButton(1))
+        {
+            Vector3 mousePosition = Input.mousePosition;
+            if (oldMouseButtonMove!=Vector3.zero)
+            {
+                Vector3 moveNormalized =  (oldMouseButtonMove - mousePosition).normalized * 100 * Time.deltaTime;
+                moveX = moveNormalized.x;
+                moveY = moveNormalized.y;
+            }
+            oldMouseButtonMove = mousePosition; 
+        }
+        if (Input.GetMouseButtonUp(1))
+        {
+            oldMouseButtonMove = Vector3.zero;
+        }
+    }
+
     /// <summary>
     /// 缩放
     /// </summary>

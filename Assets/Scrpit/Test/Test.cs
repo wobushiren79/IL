@@ -4,30 +4,34 @@ using UnityEngine.UI;
 
 
 using Pathfinding;
+using System;
+using System.Threading.Tasks;
+
 public class Test : BaseMonoBehaviour
 {
 
-    public ScrollGridVertical scrollGridVertical;
+
 
     private void Awake()
     {
-        for (int i=0;i<50;i++)
-        {
-            int number = Random.Range(5, 1);
-            LogUtil.Log("number:" + number);
-        }
-  
+        TestAsync();
+        LogUtil.Log("Awake");
     }
 
-    private void Update()
+    public async void TestAsync()
     {
-
+        LogUtil.Log("TestAsync");
+        string logReurn = await TestAsync2();
+        LogUtil.Log("logReurn");
+        await Task.Delay(TimeSpan.FromSeconds(5));
+        LogUtil.Log("Complete");
     }
 
-    public void CallBack(ScrollGridCell scrollGrid)
+    public async Task<string> TestAsync2()
     {
-
+        LogUtil.Log("TestAsync2");
+        await Task.Delay(TimeSpan.FromSeconds(2));
+        LogUtil.Log("Complete2");
+        return "return";
     }
-
-
 }

@@ -12,9 +12,12 @@ public class UserAchievementBean
     public long ownMoneyM;
     public long ownMoneyS;
 
-    public long payMoneyL;
-    public long payMoneyM;
-    public long payMoneyS;
+    //public long payMoneyL;
+    //public long payMoneyM;
+    //public long payMoneyS;
+    public long expendMoneyL;
+    public long expendMoneyM;
+    public long expendMoneyS;
 
     public long ownTrophyElementary; //竞技场初级奖杯
     public long ownTrophyIntermediate;//竞技场中级奖杯

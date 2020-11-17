@@ -33,9 +33,9 @@ public class UIGameStatisticsForInn : UIGameStatisticsDetailsBase<UIGameStatisti
         AddItemForOwnMoney(MoneyEnum.S, userAchievement.ownMoneyS);
 
         //金钱
-        AddItemForPayMoney(MoneyEnum.L, userAchievement.payMoneyL);
-        AddItemForPayMoney(MoneyEnum.M, userAchievement.payMoneyM);
-        AddItemForPayMoney(MoneyEnum.S, userAchievement.payMoneyS);
+        AddItemForPayMoney(MoneyEnum.L, userAchievement.expendMoneyL);
+        AddItemForPayMoney(MoneyEnum.M, userAchievement.expendMoneyM);
+        AddItemForPayMoney(MoneyEnum.S, userAchievement.expendMoneyS);
 
         //公会勋章
         AddItemForGuildCoin(userAchievement.ownGuildCoin);

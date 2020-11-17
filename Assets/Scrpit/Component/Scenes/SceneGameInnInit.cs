@@ -195,7 +195,9 @@ public class SceneGameInnInit : BaseSceneInit, IBaseObserver, DialogView.IDialog
             innHandler.SettlementAllCustomer();
             innHandler.CloseInn();
         }
-
+        //停止控制
+        if (controlHandler != null)
+            controlHandler.StopControl();
         //清楚所有NPC
         if (npcCustomerBuilder != null)
             npcCustomerBuilder.ClearNpc();
@@ -207,7 +209,7 @@ public class SceneGameInnInit : BaseSceneInit, IBaseObserver, DialogView.IDialog
             npcEventBuilder.ClearNpc();
         //停止控制
         if (controlHandler != null)
-            controlHandler.StopControl();
+            controlHandler.EndControl();
         if (dialogManager != null)
         {   //停止时间
             gameTimeHandler.SetTimeStatus(true);

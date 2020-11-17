@@ -42,6 +42,16 @@ public class ControlHandler : BaseMonoBehaviour
     }
 
     /// <summary>
+    /// 结束控制
+    /// </summary>
+    public void EndControl()
+    {
+        BaseControl control = GetControl();
+        if (control != null)
+            control.EndControl();
+    }
+
+    /// <summary>
     /// 恢复控制
     /// </summary>
     public void RestoreControl()
