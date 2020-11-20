@@ -295,7 +295,7 @@ public class ItemTownArenaCpt : ItemGameBaseCpt, DialogView.IDialogCallBack
             //支付金钱
             gameDataManager.gameData.PayMoney(miniGameData.preMoneyL, miniGameData.preMoneyM, miniGameData.preMoneyS);
             //扣除时间
-            gameDataManager.gameData.gameTime.hour += miniGameData.preGameTime;
+            gameTimeHandler.AddHour(miniGameData.preGameTime);
             //如果有研究菜谱 菜谱增加经验
             gameDataHandler.AddTimeProcess(miniGameData.preGameTime*60);
             //设置参赛人员
@@ -318,8 +318,7 @@ public class ItemTownArenaCpt : ItemGameBaseCpt, DialogView.IDialogCallBack
             }
             else if (arenaJoinType == 2)
             {
-                //扣除时间
-                gameTimeHandler.AddHour(miniGameData.preGameTime);
+    
                 //刷新UI
                 ((UITownArena)uiComponent).RefreshUI();
                 CharacterBean character = listCharacter[0];

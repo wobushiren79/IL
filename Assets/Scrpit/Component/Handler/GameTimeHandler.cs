@@ -261,6 +261,7 @@ public class GameTimeHandler : BaseObservable<IBaseObserver>
     {
         this.hour = (float)hour;
         this.min = (float)min;
+        gameDataManager.gameData.gameTime.SetTimeForHM((int)this.hour, (int)this.min);
     }
 
     /// <summary>
@@ -271,6 +272,7 @@ public class GameTimeHandler : BaseObservable<IBaseObserver>
     public void AddHour(int addHour)
     {
         hour += addHour;
+        gameDataManager.gameData.gameTime.hour = (int)hour;
     }
 
     /// <summary>

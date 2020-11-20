@@ -323,7 +323,8 @@ public class ItemTownGuildImproveCharacterCpt : ItemGameBaseCpt, DialogView.IDia
         gameDataManager.gameData.PayMoney(levelData.price_l, levelData.price_m, levelData.price_s);
         //扣除时间
         int preGameTime = int.Parse(levelData.mark);
-        gameDataManager.gameData.gameTime.hour += preGameTime;
+        //扣除时间
+        gameTimeHandler.AddHour(preGameTime);
         //如果有研究菜谱 菜谱增加经验
         gameDataHandler.AddTimeProcess(preGameTime * 60);
         //判断玩哪个游戏
@@ -364,8 +365,7 @@ public class ItemTownGuildImproveCharacterCpt : ItemGameBaseCpt, DialogView.IDia
         }
         else
         {
-            //扣除时间
-            gameTimeHandler.AddHour(miniGameData.preGameTime);
+
 
             bool isWin = characterData.CalculationGuildSendWin(gameItemsManager, miniGameData.gameType);
             if (isWin)
