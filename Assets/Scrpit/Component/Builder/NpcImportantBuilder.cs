@@ -23,6 +23,9 @@ public class NpcImportantBuilder : BaseMonoBehaviour
     public void BuildImportantForTown()
     {
         CptUtil.RemoveChildsByActive(objNpcContainer);
+        listTownNpc.Clear();
+        listRecruitTownNpc.Clear();
+        listSpecialTownNpc.Clear();
         //创建小镇居民
         List<CharacterBean> listTownCharacter = npcInfoManager.GetCharacterDataByType((int)NpcTypeEnum.Town);
         foreach (CharacterBean itemData in listTownCharacter)
@@ -52,6 +55,7 @@ public class NpcImportantBuilder : BaseMonoBehaviour
     public void BuildImportantForMountain()
     {
         CptUtil.RemoveChildsByActive(objNpcContainer);
+        listMountainNpc.Clear();
         //创建山顶NPC
         List<CharacterBean> listMountainCharacter = npcInfoManager.GetCharacterDataByType((int)NpcTypeEnum.Mountain);
         for (int i = 0; i < listMountainCharacter.Count; i++)
