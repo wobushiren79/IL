@@ -31,7 +31,7 @@ public class BaseBuildItemCpt : BaseMonoBehaviour
     //阴影
     public SpriteRenderer srShadow;
     //是否能旋转
-    public bool canRotated = true;
+    public int rotatedFace = 1;
 
 
 
@@ -219,7 +219,7 @@ public class BaseBuildItemCpt : BaseMonoBehaviour
 
     public virtual void SetDirection(Direction2DEnum direction)
     {
-        if (!canRotated)
+        if (rotatedFace != 4)
         {
             return;
         }

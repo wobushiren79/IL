@@ -61,7 +61,7 @@ public class MiniGameCombatHandler : BaseMiniGameHandler<MiniGameCombatBuilder, 
     /// <param name="isWinGame"></param>
     public override void EndGame(MiniGameResultEnum gameResulte)
     {
-        base.EndGame(gameResulte);
+        base.EndGame(gameResulte,false);
     }
 
     /// <summary>

@@ -517,7 +517,7 @@ public class RewardTypeEnumTools : DataTools
     /// <param name="layer"></param>
     /// <param name="normalBuildRate"></param>
     /// <returns></returns>
-    public static List<RewardTypeBean> GetRewardItemsForInfiniteTowers(List<CharacterBean> listEnemyData, int layer, int totalLucky)
+    public static List<RewardTypeBean> GetRewardItemsForInfiniteTowers(List<CharacterBean> listEnemyData, int layer, int totalLucky,bool isSend)
     {
         List<RewardTypeBean> listReward = new List<RewardTypeBean>();
         long addExp = 0;
@@ -525,8 +525,15 @@ public class RewardTypeEnumTools : DataTools
 
         //获取稀有物品概率
         float normalBuildRate = 0.25f + 0.0025f * (totalLucky / 3f);
-        float rateRate = 0.05f + 0.0005f * totalLucky;
-
+        float rateRate = 0;
+        if (isSend)
+        {
+            rateRate = 0.05f + 0.0005f * totalLucky;
+        }
+        else
+        {
+            rateRate = 0.1f + 0.0005f * totalLucky;
+        }
         if (layer % 10 == 0)
         {
             //添加经验奖励
@@ -620,7 +627,7 @@ public class RewardTypeEnumTools : DataTools
         List<RewardTypeBean> listReward = new List<RewardTypeBean>();
         if (layer % 10 == 0)
         {
-            float getRate = 0.1f + 0.001f * totalLucky;
+            float getRate = 0.2f + 0.001f * totalLucky;
             float randomRate = UnityEngine.Random.Range(0f, 1f);
             if (randomRate <= getRate)
             {

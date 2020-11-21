@@ -12,6 +12,10 @@ public class UIMiniGameCombat : UIBaseMiniGame<MiniGameCombatBean>
     , DialogView.IDialogCallBack
     , PowerTestDialogView.ICallBack
 {
+    //战斗速度控制
+    public Button btSpeed1x;
+    public Button btSpeed2x;
+    public Button btSpeed5x;
 
     //角色选择UI
     public UIMiniGameCombatSelectCharacter uiForSelectCharacter;
@@ -48,7 +52,15 @@ public class UIMiniGameCombat : UIBaseMiniGame<MiniGameCombatBean>
             uiForSelectCharacter.SetCallBack(this);
         if (uiForCombatCommand != null)
             uiForCombatCommand.SetCallBack(this);
+        if (btSpeed1x)
+            btSpeed1x.onClick.AddListener(OnClickForSpeed1x);
+        if (btSpeed2x)
+            btSpeed2x.onClick.AddListener(OnClickForSpeed2x);
+        if (btSpeed5x)
+            btSpeed5x.onClick.AddListener(OnClickForSpeed5x);
     }
+
+    
 
     private void Update()
     {
@@ -173,6 +185,28 @@ public class UIMiniGameCombat : UIBaseMiniGame<MiniGameCombatBean>
         //添加动画
         objItem.transform.DOScale(new Vector3(0.2f, 0.2f, 0.2f), 0.5f).From().SetDelay(0.1f * position).SetEase(Ease.OutBack);
         objRoundItem.transform.DOScale(new Vector3(0.2f, 0.2f, 0.2f), 0.5f).From().SetDelay(0.1f * position).SetEase(Ease.OutBack);
+    }
+
+    public void OnClickForSpeed1x()
+    {
+        CombatSpeedChange(1);
+    }
+    public void OnClickForSpeed2x()
+    {
+        CombatSpeedChange(2);
+    }
+    public void OnClickForSpeed5x()
+    {
+        CombatSpeedChange(5);
+    }
+
+    /// <summary>
+    /// 战斗速度改变
+    /// </summary>
+    /// <param name="timeSpeed"></param>
+    public void CombatSpeedChange(float timeSpeed)
+    {
+        Time.timeScale = timeSpeed;
     }
 
     /// <summary>

@@ -4,8 +4,9 @@ using UnityEngine.UI;
 using DG.Tweening;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 
-public class UIGameEquip : UIGameComponent
+public class UIGameEquip : UIGameComponent, TextSearchView.ICallBack
 {
     [Header("控件")]
     public Button btBack;
@@ -40,6 +41,7 @@ public class UIGameEquip : UIGameComponent
     public Button btNext;
 
     public ScrollGridVertical gridVertical;
+    public TextSearchView textSearchView;
 
     [Header("数据")]
     public CharacterBean characterData;
@@ -58,6 +60,8 @@ public class UIGameEquip : UIGameComponent
             btNext.onClick.AddListener(OnClickForNextCharacter);
         if (gridVertical)
             gridVertical.AddCellListener(OnCellForItems);
+        if (textSearchView)
+            textSearchView.SetCallBack(this);
     }
 
     public override void OpenUI()
@@ -361,5 +365,21 @@ public class UIGameEquip : UIGameComponent
         RefreshUI();
     }
 
-
+    #region  搜索文本回调
+    public void SearchTextStart(string text)
+    {
+        listItemData = listItemData.OrderByDescending(data => {
+            ItemsInfoBean itemsInfoBean = uiGameManager.gameItemsManager.GetItemsById(data.itemId);
+            if (itemsInfoBean.name.Contains(text))
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }).ToList();
+        gridVertical.RefreshAllCells();
+    }
+    #endregion
 }

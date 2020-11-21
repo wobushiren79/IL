@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Collections;
 
-public class UIGameMenu : UIGameComponent
+public class UIGameMenu : UIGameComponent, TextSearchView.ICallBack
 {
     //返回按钮
     [Header("控件")]
@@ -33,6 +33,7 @@ public class UIGameMenu : UIGameComponent
 
     public Button btSellAll;
     public Button btStopAll;
+    public TextSearchView textSearchView;
 
     public List<MenuOwnBean> listMenu = new List<MenuOwnBean>();
 
@@ -63,9 +64,9 @@ public class UIGameMenu : UIGameComponent
             btStopAll.onClick.AddListener(OnClickForStopAll);
 
         if (gridVertical)
-        {
             gridVertical.AddCellListener(OnCellForFoodItems);
-        }
+        if (textSearchView)
+            textSearchView.SetCallBack(this);
     }
 
     public override void OpenUI()
@@ -291,4 +292,22 @@ public class UIGameMenu : UIGameComponent
         uiManager.OpenUIAndCloseOtherByName(EnumUtil.GetEnumName(UIEnum.GameMain));
     }
 
+
+    #region  搜索文本回调
+    public void SearchTextStart(string text)
+    {
+        this.listMenu = this.listMenu.OrderByDescending(data => {
+            MenuInfoBean menuInfo = uiGameManager.innFoodManager.GetFoodDataById(data.menuId);
+            if (menuInfo.name.Contains(text))
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }).ToList();
+        gridVertical.RefreshAllCells();
+    }
+    #endregion
 }

@@ -3,13 +3,17 @@ using DG.Tweening;
 using UnityEngine.UI;
 using System.Collections;
 using System.Linq;
-public class UIGameBackpack : UIBaseOne
+using System.Collections.Generic;
+
+public class UIGameBackpack : UIBaseOne, TextSearchView.ICallBack
 {
     public ScrollGridVertical gridVertical;
 
+    public TextSearchView textSearchView;
     public Text tvNull;
     public Button btClearUp;
 
+    protected List<ItemBean> listItemData = new List<ItemBean>();
     public override void Awake()
     {
         base.Awake();
@@ -21,6 +25,8 @@ public class UIGameBackpack : UIBaseOne
         {
             gridVertical.AddCellListener(OnCellForItems);
         }
+        if (textSearchView)
+            textSearchView.SetCallBack(this);
     }
 
     public override void OpenUI()
@@ -34,12 +40,13 @@ public class UIGameBackpack : UIBaseOne
     public override void RefreshUI()
     {
         base.RefreshUI();
-        int itemNumber = uiGameManager.gameDataManager.gameData.listItems.Count;
+        listItemData.Clear();
+        listItemData.AddRange(uiGameManager.gameDataManager.gameData.listItems);
         if (gridVertical)
         {
-            gridVertical.SetCellCount(itemNumber);
+            gridVertical.SetCellCount(listItemData.Count);
         }
-        if (itemNumber <= 0)
+        if (listItemData.Count <= 0)
             tvNull.gameObject.SetActive(true);
         else
             tvNull.gameObject.SetActive(false);
@@ -52,7 +59,7 @@ public class UIGameBackpack : UIBaseOne
     public void OnCellForItems(ScrollGridCell itemCell)
     {
         int index = itemCell.index;
-        ItemBean itemBean = uiGameManager.gameDataManager.gameData.listItems[index];
+        ItemBean itemBean = listItemData[index];
         ItemsInfoBean itemsInfoBean = uiGameManager.gameItemsManager.GetItemsById(itemBean.itemId);
         ItemGameBackpackCpt backpackCpt = itemCell.GetComponent<ItemGameBackpackCpt>();
         backpackCpt.SetData(itemsInfoBean, itemBean);
@@ -67,4 +74,21 @@ public class UIGameBackpack : UIBaseOne
         RefreshUI();
     }
 
+    #region  搜索文本回调
+    public void SearchTextStart(string text)
+    {
+        listItemData = listItemData.OrderByDescending(data => {
+            ItemsInfoBean itemsInfoBean = uiGameManager.gameItemsManager.GetItemsById(data.itemId);
+            if (itemsInfoBean.name.Contains(text))
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }).ToList();
+        gridVertical.RefreshAllCells();
+    }
+    #endregion
 }
