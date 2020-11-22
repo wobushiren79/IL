@@ -13,7 +13,7 @@ public class ItemGameBackpackCpt : ItemGameBaseCpt, IPointerClickHandler, PopupI
     public Image ivIcon;
     public InfoItemsPopupButton infoItemsPopup;
 
-    public ItemsInfoBean itemsInfoBean;
+    public ItemsInfoBean itemsInfoData;
     public ItemBean itemBean;
 
     public UnityEvent leftClick;
@@ -43,7 +43,7 @@ public class ItemGameBackpackCpt : ItemGameBaseCpt, IPointerClickHandler, PopupI
     /// <param name="itemBean"></param>
     public void SetData(ItemsInfoBean infoBean, ItemBean itemBean)
     {
-        this.itemsInfoBean = infoBean;
+        this.itemsInfoData = infoBean;
         this.itemBean = itemBean;
         if (infoBean != null)
         {
@@ -62,7 +62,7 @@ public class ItemGameBackpackCpt : ItemGameBaseCpt, IPointerClickHandler, PopupI
         {
             SetNumber(0);
         }
-        infoItemsPopup.SetData(itemsInfoBean, ivIcon.sprite);
+        infoItemsPopup.SetData(itemsInfoData, ivIcon.sprite);
     }
 
     /// <summary>
@@ -147,11 +147,11 @@ public class ItemGameBackpackCpt : ItemGameBaseCpt, IPointerClickHandler, PopupI
         {
             return;
         }
-        if (itemsInfoBean == null)
+        if (itemsInfoData == null)
             return;
         if (popupItemsSelection != null)
             popupItemsSelection.SetCallBack(this);
-        switch (itemsInfoBean.GetItemsType())
+        switch (itemsInfoData.GetItemsType())
         {
             case GeneralEnum.Menu:
                 popupItemsSelection.Open(PopupItemsSelection.SelectionTypeEnum.UseAndDiscard);
@@ -176,16 +176,16 @@ public class ItemGameBackpackCpt : ItemGameBaseCpt, IPointerClickHandler, PopupI
         ToastManager toastManager = uiGameManager.toastManager;
         DialogManager dialogManager = uiGameManager.dialogManager;
         InnFoodManager foodManager = uiGameManager.innFoodManager;
-        if (itemsInfoBean == null || itemBean == null || gameDataManager == null)
+        if (itemsInfoData == null || itemBean == null || gameDataManager == null)
             return;
-        switch (itemsInfoBean.GetItemsType())
+        switch (itemsInfoData.GetItemsType())
         {
             case GeneralEnum.Menu:
                 //添加菜谱
-                if (gameDataManager.gameData.AddFoodMenu(itemsInfoBean.add_id))
+                if (gameDataManager.gameData.AddFoodMenu(itemsInfoData.add_id))
                 { 
-                    MenuInfoBean menuInfo= foodManager.GetFoodDataById(itemsInfoBean.add_id);
-                    RefreshItems(itemsInfoBean.id, -1);
+                    MenuInfoBean menuInfo= foodManager.GetFoodDataById(itemsInfoData.add_id);
+                    RefreshItems(itemsInfoData.id, -1);
                     DialogBean dialogData = new DialogBean
                     {
                         title = GameCommonInfo.GetUITextById(1047),
@@ -212,13 +212,13 @@ public class ItemGameBackpackCpt : ItemGameBaseCpt, IPointerClickHandler, PopupI
     public virtual void SelectionDiscard(PopupItemsSelection view)
     {
         DialogManager dialogManager = uiGameManager.dialogManager;
-        if (dialogManager == null || itemsInfoBean == null)
+        if (dialogManager == null || itemsInfoData == null)
             return;
         if (itemBean.itemNumber == 1)
         {
             DialogBean dialogBean = new DialogBean
             {
-                content = string.Format(GameCommonInfo.GetUITextById(3001), itemsInfoBean.name),
+                content = string.Format(GameCommonInfo.GetUITextById(3001), itemsInfoData.name),
                 remark = "1"
             };
             dialogManager.CreateDialog(DialogEnum.Normal, this, dialogBean);
@@ -227,7 +227,7 @@ public class ItemGameBackpackCpt : ItemGameBaseCpt, IPointerClickHandler, PopupI
         {
             DialogBean dialogBean = new DialogBean
             {
-                content = string.Format(GameCommonInfo.GetUITextById(3001), itemsInfoBean.name)
+                content = string.Format(GameCommonInfo.GetUITextById(3001), itemsInfoData.name)
             };
             PickForNumberDialogView pickForNumberDialog = (PickForNumberDialogView)dialogManager.CreateDialog(DialogEnum.PickForNumber, this, dialogBean);
             pickForNumberDialog.SetData(ivIcon.sprite, itemBean.itemNumber);
@@ -257,7 +257,7 @@ public class ItemGameBackpackCpt : ItemGameBaseCpt, IPointerClickHandler, PopupI
 
     public virtual void SelectionRead(PopupItemsSelection view)
     {
-        uiGameManager.eventHandler.EventTriggerForLook(itemsInfoBean.add_id);
+        uiGameManager.eventHandler.EventTriggerForLook(itemsInfoData.add_id);
     }
 
     #endregion
@@ -273,7 +273,7 @@ public class ItemGameBackpackCpt : ItemGameBaseCpt, IPointerClickHandler, PopupI
             //创建确认弹窗
             DialogBean dialogBean = new DialogBean
             {
-                content = string.Format(GameCommonInfo.GetUITextById(3001), itemsInfoBean.name + "x" + pickNumber),
+                content = string.Format(GameCommonInfo.GetUITextById(3001), itemsInfoData.name + "x" + pickNumber),
                 remark = "" + pickNumber
             };
             DialogManager dialogManager = uiGameManager.dialogManager;
@@ -285,7 +285,7 @@ public class ItemGameBackpackCpt : ItemGameBaseCpt, IPointerClickHandler, PopupI
         }
         else
         {
-            RefreshItems(itemsInfoBean.id, -long.Parse(dialogData.remark));
+            RefreshItems(itemsInfoData.id, -long.Parse(dialogData.remark));
         }
     }
 

@@ -281,15 +281,11 @@ public class UIGameEquip : UIGameComponent, TextSearchView.ICallBack
         {
             uiGameManager.gameDataManager.gameData.AddItemsNumber(unloadEquipId, 1);
         }
-
-        //刷新显示
-        RefreshUI();
         //刷新场景中的人物
         if (uiGameManager.npcWorkerBuilder != null)
         {
             uiGameManager.npcWorkerBuilder.RefreshWorkerData();
         }
-
     }
 
     /// <summary>

@@ -17,7 +17,7 @@ public class ItemGameBackpackPickCpt : ItemGameBackpackCpt
 
     public override void ButtonClick()
     {
-        if (itemsInfoBean == null)
+        if (itemsInfoData == null)
             return;
         PopupItemsSelection popupItemsSelection = uiGameManager.popupItemsSelection;
         if (popupItemsSelection != null)
@@ -29,14 +29,14 @@ public class ItemGameBackpackPickCpt : ItemGameBackpackCpt
     {
         if (mCallBack!=null)
         {
-            mCallBack.ItemsSelection(itemsInfoBean,itemBean);
+            mCallBack.ItemsSelection(itemsInfoData, itemBean);
         }
     }
     public override void SelectionUse(PopupItemsSelection view)
     {
         if (mCallBack != null)
         {
-            mCallBack.ItemsSelection(itemsInfoBean, itemBean);
+            mCallBack.ItemsSelection(itemsInfoData, itemBean);
         }
     }
     public interface ICallBack
