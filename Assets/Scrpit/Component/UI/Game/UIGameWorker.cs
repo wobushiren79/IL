@@ -18,9 +18,12 @@ public class UIGameWorker : UIGameComponent
     public Button btSortLoyalty;
 
     public Button btFilterChef;
-    public Button btFilterWaiter;
+    public Button btFilterWaiterCleanBed;
+    public Button btFilterWaiterCleanTable;
+    public Button btFilterWaiterSend;
     public Button btFilterAccountant;
-    public Button btFilterAccost;
+    public Button btFilterAccostSolicit;
+    public Button btFilterAccostGuide;
     public Button btFilterBeater;
 
     public List<CharacterBean> listCharacterData = new List<CharacterBean>();
@@ -45,12 +48,21 @@ public class UIGameWorker : UIGameComponent
 
         if (btFilterChef != null)
             btFilterChef.onClick.AddListener(OnClickForChef);
-        if (btFilterWaiter != null)
-            btFilterWaiter.onClick.AddListener(OnClickForWaiter);
+        if (btFilterWaiterCleanBed != null)
+            btFilterWaiterCleanBed.onClick.AddListener(OnClickForWaiterCleanBed);
+        if (btFilterWaiterCleanTable != null)
+            btFilterWaiterCleanTable.onClick.AddListener(OnClickForWaiterCleanTable);
+        if (btFilterWaiterSend != null)
+            btFilterWaiterSend.onClick.AddListener(OnClickForWaiterSend);
+
         if (btFilterAccountant != null)
             btFilterAccountant.onClick.AddListener(OnClickForAccountant);
-        if (btFilterAccost != null)
-            btFilterAccost.onClick.AddListener(OnClickForAccost);
+
+        if (btFilterAccostSolicit != null)
+            btFilterAccostSolicit.onClick.AddListener(OnClickForAccostSolicit);
+        if (btFilterAccostGuide != null)
+            btFilterAccostGuide.onClick.AddListener(OnClickForAccostGuide);
+
         if (btFilterBeater != null)
             btFilterBeater.onClick.AddListener(OnClickForBeater);
 
@@ -176,29 +188,42 @@ public class UIGameWorker : UIGameComponent
 
     public void OnClickForChef()
     {
-        OnClickForWorker(WorkerEnum.Chef);
+        OnClickForWorker(WorkerEnum.Chef, WorkerDetilsEnum.ChefForCook);
 
     }
-    public void OnClickForWaiter()
+    public void OnClickForWaiterCleanBed()
     {
-        OnClickForWorker(WorkerEnum.Waiter);
+        OnClickForWorker(WorkerEnum.Waiter, WorkerDetilsEnum.WaiterForCleanBed);
+    }
+    public void OnClickForWaiterCleanTable()
+    {
+        OnClickForWorker(WorkerEnum.Waiter, WorkerDetilsEnum.WaiterForCleanTable);
+    }
+    public void OnClickForWaiterSend()
+    {
+        OnClickForWorker(WorkerEnum.Waiter, WorkerDetilsEnum.WaiterForSend);
     }
     public void OnClickForAccountant()
     {
-        OnClickForWorker(WorkerEnum.Accountant);
+        OnClickForWorker(WorkerEnum.Accountant, WorkerDetilsEnum.AccountantForPay);
     }
-    public void OnClickForAccost()
+    public void OnClickForAccostSolicit()
     {
-        OnClickForWorker(WorkerEnum.Accost);
+        OnClickForWorker(WorkerEnum.Accost, WorkerDetilsEnum.AccostForSolicit);
     }
+    public void OnClickForAccostGuide()
+    {
+        OnClickForWorker(WorkerEnum.Accost, WorkerDetilsEnum.AccostForGuide);
+    }
+
     public void OnClickForBeater()
     {
-        OnClickForWorker(WorkerEnum.Beater);
+        OnClickForWorker(WorkerEnum.Beater, WorkerDetilsEnum.BeaterForDrive);
     }
     /// <summary>
     /// 是否升级排序点击
     /// </summary>
-    public void OnClickForWorker(WorkerEnum worker)
+    public void OnClickForWorker(WorkerEnum worker,WorkerDetilsEnum workerDetils)
     {
         uiGameManager.audioHandler.PlaySound(AudioSoundEnum.ButtonForNormal);
         this.listCharacterData = this.listCharacterData.OrderByDescending(
@@ -216,15 +241,15 @@ public class UIGameWorker : UIGameComponent
                 else if (worker == WorkerEnum.Waiter)
                 {
                     CharacterWorkerForWaiterBean waiterData= workerData as CharacterWorkerForWaiterBean;
-                    if (waiterData.isWorkingCleanBed)
+                    if (workerDetils == WorkerDetilsEnum.WaiterForCleanBed && waiterData.isWorkingCleanBed)
                     {
                         workNumber++;
                     }
-                    if (waiterData.isWorkingForCleanTable)
+                    if (workerDetils == WorkerDetilsEnum.WaiterForCleanTable && waiterData.isWorkingForCleanTable)
                     {
                         workNumber++;
                     }
-                    if (waiterData.isWorkingForSend)
+                    if (workerDetils == WorkerDetilsEnum.WaiterForSend && waiterData.isWorkingForSend)
                     {
                         workNumber++;
                     }
@@ -232,11 +257,11 @@ public class UIGameWorker : UIGameComponent
                 else if (worker == WorkerEnum.Accost)
                 {
                     CharacterWorkerForAccostBean accostData = workerData as CharacterWorkerForAccostBean;
-                    if (accostData.isWorkingForSolicit)
+                    if (workerDetils == WorkerDetilsEnum.AccostForSolicit && accostData.isWorkingForSolicit)
                     {
                         workNumber++;
                     }
-                    if (accostData.isWorkingForGuide)
+                    if (workerDetils == WorkerDetilsEnum.AccostForGuide && accostData.isWorkingForGuide)
                     {
                         workNumber++;
                     }

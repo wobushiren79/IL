@@ -16,6 +16,7 @@ public enum WorkerDetilsEnum
     WaiterForSend = 21,
     WaiterForCleanTable = 22,
     WaiterForCleanBed = 23,
+
     AccountantForPay=31,
 
     AccostForSolicit = 41,
