@@ -25,6 +25,7 @@ public class GameTimeHandler : BaseObservable<IBaseObserver>
     protected InnFloorBuilder innFloorBuilder;
     protected InnWallBuilder innWallBuilder;
     protected InnBuildManager innBuildManager;
+    protected LightHandler lightHandler;
 
     public float hour;
     public float min;
@@ -42,6 +43,7 @@ public class GameTimeHandler : BaseObservable<IBaseObserver>
         innFloorBuilder = Find<InnFloorBuilder>(ImportantTypeEnum.InnBuilder);
         innWallBuilder = Find<InnWallBuilder>(ImportantTypeEnum.InnBuilder);
         innBuildManager = Find<InnBuildManager>(ImportantTypeEnum.BuildManager);
+        lightHandler = Find<LightHandler>(ImportantTypeEnum.LightHandler);
     }
 
     private void Update()
@@ -262,6 +264,8 @@ public class GameTimeHandler : BaseObservable<IBaseObserver>
         this.hour = (float)hour;
         this.min = (float)min;
         gameDataManager.gameData.gameTime.SetTimeForHM((int)this.hour, (int)this.min);
+        if (lightHandler != null)
+            lightHandler.CheckTime();
     }
 
     /// <summary>
@@ -273,6 +277,8 @@ public class GameTimeHandler : BaseObservable<IBaseObserver>
     {
         hour += addHour;
         gameDataManager.gameData.gameTime.hour = (int)hour;
+        if (lightHandler != null)
+            lightHandler.CheckTime();
     }
 
     /// <summary>

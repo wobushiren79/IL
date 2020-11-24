@@ -18,6 +18,10 @@ public class LightHandler : BaseHandler, IBaseObserver
 
     private void Start()
     {
+        if (gameTimeHandler != null)
+        {
+            gameTimeHandler.AddObserver(this);
+        }      
         CheckTime();
     }
 
@@ -25,7 +29,6 @@ public class LightHandler : BaseHandler, IBaseObserver
     {
         if (gameTimeHandler != null)
         {
-            gameTimeHandler.AddObserver(this);
             //转换场景检测时间
             gameTimeHandler.GetTime(out float hour, out float min);
             if (hour >= openLightTime)

@@ -80,7 +80,7 @@ public class ItemGameMenuFoodCpt : ItemGameBaseCpt, IRadioButtonCallBack, Dialog
     {
         if (menuOwnData == null || foodData == null)
             return;
- 
+
         //设置材料是否足够
         GameDataManager gameDataManager = GetUIManager<UIGameManager>().gameDataManager;
         if (gameDataManager.gameData.CheckCookFood(foodData))
@@ -132,7 +132,7 @@ public class ItemGameMenuFoodCpt : ItemGameBaseCpt, IRadioButtonCallBack, Dialog
     /// <param name="menuClass"></param>
     public void SetMenuClass(RarityEnum menuRarity)
     {
-        RarityEnumTools.GetRarityDetails(menuRarity, out string rarityName,out Color rarityColor);
+        RarityEnumTools.GetRarityDetails(menuRarity, out string rarityName, out Color rarityColor);
         tvMenuRarity.text = rarityName;
         tvMenuRarity.color = rarityColor;
     }
@@ -169,7 +169,7 @@ public class ItemGameMenuFoodCpt : ItemGameBaseCpt, IRadioButtonCallBack, Dialog
     {
         pbReputation.gameObject.SetActive(true);
         ivReputation.sprite = spIcon;
-        if (level ==  LevelTypeEnum.Init)
+        if (level == LevelTypeEnum.Init)
         {
             tvName.color = new Color(0, 0, 0, 1f);
             ivBackground.sprite = spBackgroundInit;
@@ -177,7 +177,7 @@ public class ItemGameMenuFoodCpt : ItemGameBaseCpt, IRadioButtonCallBack, Dialog
         }
         else if (level == LevelTypeEnum.Star)
         {
-            tvName.color = new Color(0,0.75f,0,1f);
+            tvName.color = new Color(0, 0.75f, 0, 1f);
             ivBackground.sprite = spBackgroundStar;
         }
         else if (level == LevelTypeEnum.Moon)
@@ -343,7 +343,7 @@ public class ItemGameMenuFoodCpt : ItemGameBaseCpt, IRadioButtonCallBack, Dialog
             //休息日 排出不是工作或者休息的
             if (uiGameManager.gameTimeHandler.GetDayStatus() == GameTimeHandler.DayEnum.Rest)
             {
-                if(itemData.baseInfo.GetWorkerStatus()!= WorkerStatusEnum.Rest && itemData.baseInfo.GetWorkerStatus() != WorkerStatusEnum.Work)
+                if (itemData.baseInfo.GetWorkerStatus() != WorkerStatusEnum.Rest && itemData.baseInfo.GetWorkerStatus() != WorkerStatusEnum.Work)
                 {
                     listExpelIds.Add(itemData.baseInfo.characterId);
                 }
@@ -435,8 +435,16 @@ public class ItemGameMenuFoodCpt : ItemGameBaseCpt, IRadioButtonCallBack, Dialog
         }
         else
         {
-            //普通弹窗（取消研究）
-            menuOwnData.CancelResearch(uiGameManager.gameDataManager.gameData);
+            //如果是研究中则询问
+            if (menuOwnData.GetMenuStatus() == ResearchStatusEnum.Researching)
+            {
+                //普通弹窗（取消研究）
+                menuOwnData.CancelResearch(uiGameManager.gameDataManager.gameData);
+            }
+            else
+            {
+
+            }
         }
         //重新设置数据
         SetData(menuOwnData, foodData);
