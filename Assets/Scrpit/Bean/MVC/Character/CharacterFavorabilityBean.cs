@@ -46,6 +46,7 @@ public class CharacterFavorabilityBean
         GameCommonInfo.baseDataController.GetBaseData(BaseDataTypeEnum.NpcFavorabilityFor3, out int love3);
         GameCommonInfo.baseDataController.GetBaseData(BaseDataTypeEnum.NpcFavorabilityFor4, out int love4);
         GameCommonInfo.baseDataController.GetBaseData(BaseDataTypeEnum.NpcFavorabilityFor5, out int love5);
+        GameCommonInfo.baseDataController.GetBaseData(BaseDataTypeEnum.NpcFavorabilityForMarry, out int love6);
         if (favorability >= 0 && favorability <= love1)
         {
             favorabilityLevel = 0;
@@ -66,9 +67,13 @@ public class CharacterFavorabilityBean
         {
             favorabilityLevel = 4;
         }
-        else if (favorability > love5)
+        else if (favorability > love5 && favorability <= love6)
         {
             favorabilityLevel = 5;
+        }
+        else if (favorability > love6)
+        {
+            favorabilityLevel = 6;
         }
         if (favorability < 0)
         {
