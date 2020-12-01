@@ -162,12 +162,12 @@ public class BaseMiniGameHandler<B, D> : BaseHandler, UIMiniGameCountDown.ICallB
             });
             //通知 游戏结束
             NotifyAllObserver((int)MiniGameStatusEnum.GameEnd, miniGameData);
+            audioHandler.StopMusic();
         }
     }
     public virtual void EndGame(MiniGameResultEnum gameResult)
     {
         EndGame(gameResult, true);
-        audioHandler.StopMusic();
     }
 
     /// <summary>
