@@ -473,6 +473,19 @@ public class CharacterBean
     }
 
     /// <summary>
+    /// 计算魅力加的好感
+    /// </summary>
+    /// <param name="gameItemsManager"></param>
+    /// <returns></returns>
+    public int  CalculationAccostAddMood(GameItemsManager gameItemsManager)
+    {
+        //获取数据
+        GetAttributes(gameItemsManager,
+        out CharacterAttributesBean totalAttributes, out CharacterAttributesBean selfAttributes, out CharacterAttributesBean equipAttributes);
+        return totalAttributes.charm / 2;
+    }
+
+    /// <summary>
     /// 计算制作食物时间
     /// </summary>
     /// <returns></returns>
