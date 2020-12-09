@@ -29,6 +29,9 @@ public class UIGameMain : UIGameComponent, DialogView.IDialogCallBack, IRadioGro
     public Button btJumpTime;
     public InfoPromptPopupButton popupHotel;
     public Button btHotel;
+    public InfoPromptPopupButton popupFamily;
+    public Button btFamily;
+
 
     public Button btSleep;
 
@@ -109,6 +112,9 @@ public class UIGameMain : UIGameComponent, DialogView.IDialogCallBack, IRadioGro
 
         if (btHotel != null)
             btHotel.onClick.AddListener(OnClickForHotel);
+
+        if (btFamily != null)
+            btFamily.onClick.AddListener(OnClickForFamily);
 
         if (rgTimeScale != null)
             rgTimeScale.SetCallBack(this);
@@ -202,6 +208,8 @@ public class UIGameMain : UIGameComponent, DialogView.IDialogCallBack, IRadioGro
             popupJumpTime.SetContent(GameCommonInfo.GetUITextById(2040));
         if (popupHotel != null)
             popupHotel.SetContent(GameCommonInfo.GetUITextById(2041));
+        if (popupFamily != null)
+            popupFamily.SetContent(GameCommonInfo.GetUITextById(2042));
         SetInnPraise(innAttributes);
         SetInnAesthetics(innAttributes);
         SetInnRichNess(innAttributes);
@@ -346,7 +354,6 @@ public class UIGameMain : UIGameComponent, DialogView.IDialogCallBack, IRadioGro
         }
     }
 
-
     /// <summary>
     /// 设置客栈点赞
     /// </summary>
@@ -389,8 +396,6 @@ public class UIGameMain : UIGameComponent, DialogView.IDialogCallBack, IRadioGro
                 ivInnLevel.gameObject.SetActive(false);
         }
     }
-
-
 
     public void SaveData()
     {
@@ -484,6 +489,11 @@ public class UIGameMain : UIGameComponent, DialogView.IDialogCallBack, IRadioGro
         uiManager.OpenUIAndCloseOther(UIEnum.GameHotel);
     }
 
+    public void OnClickForFamily()
+    {
+        uiGameManager.audioHandler.PlaySound(AudioSoundEnum.ButtonForNormal);
+        uiManager.OpenUIAndCloseOther(UIEnum.GameFamily);
+    }
 
     /// <summary>
     /// 点击第一层

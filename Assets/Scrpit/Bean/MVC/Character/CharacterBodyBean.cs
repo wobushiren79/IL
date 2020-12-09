@@ -20,6 +20,8 @@ public class CharacterBodyBean
 
     public int face;//面向 
 
+    //生日
+    public TimeBean timeForBirthday = new TimeBean();
     public CharacterBodyBean()
     {
         sex = 1;

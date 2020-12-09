@@ -23,6 +23,7 @@ public enum UIEnum
     GameSetting = 1014,
     GameHelp = 1015,
     GameHotel = 1016,
+    GameFamily=1017,
 
     TownMarket = 2001,//市场UI
     TownRecruitment = 2002,//招人UI
