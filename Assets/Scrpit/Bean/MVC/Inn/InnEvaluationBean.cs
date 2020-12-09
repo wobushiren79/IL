@@ -12,8 +12,6 @@ public class InnEvaluationBean
         if (mood <= 0)
             return;
         mood += addMood;
-        if (mood > 100)
-            mood = 100;
     }
 
     public void SetMood(float mood)

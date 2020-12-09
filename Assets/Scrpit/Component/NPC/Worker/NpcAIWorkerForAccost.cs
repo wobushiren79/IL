@@ -240,6 +240,9 @@ public class NpcAIWorkerForAccost : NpcAIWokerFoBaseCpt
         orderForHotel.layerSecondStairsPosition = layerSecondPosition;
         npcAIWorker.SetCharacterMove(layerFirstPosition);
 
+        //根据魅力增加好感
+        int addMood= npcAIWorker.characterData.CalculationAccostAddMood(gameItemsManager);
+        orderForHotel.customer.ChangeMood(addMood);
         //设置相同的移动速度
         orderForHotel.customer.characterMoveCpt.SetMoveSpeed(npcAIWorker.characterMoveCpt.moveSpeed);
         orderForHotel.customer.SetIntent( NpcAICustomerForHotelCpt.CustomerHotelIntentEnum.GoToStairsForFirst);
@@ -309,6 +312,10 @@ public class NpcAIWorkerForAccost : NpcAIWokerFoBaseCpt
         //是否成功
         if (npcAIWorker.characterData.CalculationAccostRate(gameItemsManager))
         {
+            //根据魅力增加好感
+            int addMood = npcAIWorker.characterData.CalculationAccostAddMood(gameItemsManager);
+            npcAICustomer.ChangeMood(addMood);
+
             npcAIWorker.SetExpression(CharacterExpressionCpt.CharacterExpressionEnum.Love);
             npcAICustomer.SetExpression(CharacterExpressionCpt.CharacterExpressionEnum.Love);
             npcAICustomer.SetIntent(NpcAICustomerCpt.CustomerIntentEnum.Want);
