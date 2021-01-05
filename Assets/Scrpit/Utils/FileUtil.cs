@@ -2,8 +2,9 @@
 using System;
 using System.IO;
 using System.Windows.Forms;
+using System.Text;
 
-public class FileUtil 
+public class FileUtil
 {
 
     /// <summary>
@@ -18,7 +19,7 @@ public class FileUtil
         {
             String filePathName = filePath + "/" + fileName;
             DeleteFile(filePathName);
-            writer = File.CreateText(filePathName);
+            writer = new StreamWriter(filePathName, false, Encoding.Default);
             writer.Write(strData);
         }
         catch (Exception e)

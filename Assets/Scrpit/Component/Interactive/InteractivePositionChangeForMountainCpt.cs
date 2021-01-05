@@ -32,10 +32,10 @@ public class InteractivePositionChangeForMountainCpt : BaseInteractiveCpt
                 audioHandler.PlaySound(AudioSoundEnum.ButtonForNormal);
                 sceneTownManager.GetBuildingDoorPosition(positionChange, out Vector2 outDoorPosition, out Vector2 inDoorPosition);
                 //本身是在外 要转换到里
-                int checkOutOrIn = 0;
+                //int checkOutOrIn = 0;
                 if (OutOrIn == 0)
                 {
-                    checkOutOrIn = 1;
+                    //checkOutOrIn = 1;
                     //关闭环境音效
                     audioHandler.PauseEnvironment();
                     mInteractiveObj.transform.position = inDoorPosition;
@@ -43,7 +43,7 @@ public class InteractivePositionChangeForMountainCpt : BaseInteractiveCpt
                 //本身是在里 要转换到外
                 else
                 {
-                    checkOutOrIn = 0;
+                    //checkOutOrIn = 0;
                     //开启环境音效
                     audioHandler.RestoreEnvironment();
                     mInteractiveObj.transform.position = outDoorPosition;

@@ -1,5 +1,7 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.Reflection;
 using UnityEngine;
 
 public class BaseUIComponent : BaseMonoBehaviour 
@@ -11,16 +13,17 @@ public class BaseUIComponent : BaseMonoBehaviour
     //备注数据
     public string remarkData;
 
-    protected DialogManager dialogManager;
     public virtual void Awake()
     {
-        dialogManager = Find<DialogManager>(ImportantTypeEnum.DialogManager);
         if (uiManager == null)
             uiManager = GetComponentInParent<BaseUIManager>();
         if (uiAnimator == null)
             uiAnimator = GetComponent<Animator>();
+        AutoLinkUI();
+        AutoLinkHandler();
+        AutoLinkManager();
     }
-
+    
     /// <summary>
     /// 开启UI
     /// </summary>
@@ -31,7 +34,6 @@ public class BaseUIComponent : BaseMonoBehaviour
         this.gameObject.SetActive(true);
         if (uiAnimator != null)
             uiAnimator.SetInteger("UIStates", 1);
-        dialogManager.CloseAllDialog();
     }
 
     /// <summary>
@@ -68,4 +70,5 @@ public class BaseUIComponent : BaseMonoBehaviour
     {
         return uiManager as T;
     }
+
 }

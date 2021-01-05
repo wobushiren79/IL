@@ -181,7 +181,7 @@ public class TextInfoService : BaseMVCService
         string[] colName = new string[] { tableNameForMain + ".user_id", tableNameForMain + ".text_order", tableNameForMain + ".condition_min_favorability", tableNameForMain + ".condition_max_favorability" };
         string[] operations = new string[] { "=", "=", "<=", ">" };
         string[] colValue = new string[] { characterId + "", "1", favorability + "", favorability + "" };
-        return SQliteHandle.LoadTableData<TextInfoBean>(ProjectConfigInfo.DATA_BASE_INFO_NAME, tableNameForMain, leftTable, mainKey, leftKey, colName, operations, colValue);
+        return SQLiteHandle.LoadTableData<TextInfoBean>(ProjectConfigInfo.DATA_BASE_INFO_NAME, tableNameForMain, leftTable, mainKey, leftKey, colName, operations, colValue);
     }
 
 
@@ -196,6 +196,6 @@ public class TextInfoService : BaseMVCService
         string[] colName = new string[] { tableNameForMain + ".user_id", tableNameForMain + ".text_order", tableNameForMain + ".condition_first_meet" };
         string[] operations = new string[] { "=", "=", "=" };
         string[] colValue = new string[] { characterId + "", "1", "1" };
-        return SQliteHandle.LoadTableData<TextInfoBean>(ProjectConfigInfo.DATA_BASE_INFO_NAME, tableNameForMain, leftTable, mainKey, leftKey, colName, operations, colValue);
+        return SQLiteHandle.LoadTableData<TextInfoBean>(ProjectConfigInfo.DATA_BASE_INFO_NAME, tableNameForMain, leftTable, mainKey, leftKey, colName, operations, colValue);
     }
 }

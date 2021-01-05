@@ -95,8 +95,8 @@ public class ItemCreateWindowsEditor : EditorWindow, StoreInfoManager.ICallBack
         GUICreateItem();
         GUIFindItem();
         GUILayout.Label("------------------------------------------------------------------------------------------------");
-        EditorUI.GUIBuildItemCreate(buildItemService, createBuildItem);
-        EditorUI.GUIBuildItemFind(buildItemService, listFindBuildItem, out listFindBuildItem);
+        GUIBuildItemCreate(buildItemService, createBuildItem);
+        GUIBuildItemFind(buildItemService, listFindBuildItem, out listFindBuildItem);
         GUILayout.Label("------------------------------------------------------------------------------------------------");
 
         GUICreateStoreItem();
@@ -105,11 +105,11 @@ public class ItemCreateWindowsEditor : EditorWindow, StoreInfoManager.ICallBack
         GUICreateAchItem();
         GUIFindAchItem();
         GUILayout.Label("------------------------------------------------------------------------------------------------");
-        EditorUI.GUIMenuCreate(menuInfoService, createMenuInfo);
-        EditorUI.GUIMenuFind(menuInfoService, menuFindIds, listFindMenuItem, out menuFindIds, out listFindMenuItem);
+        GUIMenuCreate(menuInfoService, createMenuInfo);
+        GUIMenuFind(menuInfoService, menuFindIds, listFindMenuItem, out menuFindIds, out listFindMenuItem);
         GUILayout.Label("------------------------------------------------------------------------------------------------");
-        EditorUI.GUISkillCreate(skillInfoService, createSkillInfo);
-        EditorUI.GUISkillFind(skillInfoService, skillFindIds, listFindSkillItem, out skillFindIds, out listFindSkillItem);
+        GUISkillCreate(skillInfoService, createSkillInfo);
+        GUISkillFind(skillInfoService, skillFindIds, listFindSkillItem, out skillFindIds, out listFindSkillItem);
 
         GUILayout.EndVertical();
         GUILayout.EndScrollView();
@@ -1044,6 +1044,424 @@ public class ItemCreateWindowsEditor : EditorWindow, StoreInfoManager.ICallBack
         }
         EditorGUILayout.EndVertical();
     }
+
+
+    /// <summary>
+    /// 建造物品创建
+    /// </summary>
+    /// <param name="buildItemService"></param>
+    /// <param name="buildItem"></param>
+    public static void GUIBuildItemCreate(BuildItemService buildItemService, BuildItemBean buildItem)
+    {
+        GUILayout.BeginVertical();
+        GUILayout.Label("建造物品创建：", GUILayout.Width(100), GUILayout.Height(20));
+        if (GUILayout.Button("创建", GUILayout.Width(120), GUILayout.Height(20)))
+        {
+            buildItem.valid = 1;
+            buildItemService.InsertData(buildItem);
+        }
+        GUIBuildItem(buildItem);
+        GUILayout.EndVertical();
+    }
+
+    /// <summary>
+    /// 建造物品查询
+    /// </summary>
+    /// <param name="buildItemService"></param>
+    /// <param name="listBuildItem"></param>
+    /// <param name="outListBuildItem"></param>
+    public static void GUIBuildItemFind(BuildItemService buildItemService,
+        List<BuildItemBean> listBuildItem,
+        out List<BuildItemBean> outListBuildItem)
+    {
+        GUILayout.Label("建造物品查询：", GUILayout.Width(100), GUILayout.Height(20));
+        GUILayout.BeginHorizontal();
+        if (EditorUI.GUIButton("查询所有"))
+        {
+            listBuildItem = buildItemService.QueryAllData();
+        }
+        if (EditorUI.GUIButton("查询地板"))
+        {
+            listBuildItem = buildItemService.QueryDataByType((int)BuildItemTypeEnum.Floor);
+        }
+        if (EditorUI.GUIButton("查询墙壁"))
+        {
+            listBuildItem = buildItemService.QueryDataByType((int)BuildItemTypeEnum.Wall);
+        }
+        if (EditorUI.GUIButton("查询桌椅"))
+        {
+            listBuildItem = buildItemService.QueryDataByType((int)BuildItemTypeEnum.Table);
+        }
+        if (EditorUI.GUIButton("查询灶台"))
+        {
+            listBuildItem = buildItemService.QueryDataByType((int)BuildItemTypeEnum.Stove);
+        }
+        if (EditorUI.GUIButton("查询柜台"))
+        {
+            listBuildItem = buildItemService.QueryDataByType((int)BuildItemTypeEnum.Counter);
+        }
+        if (EditorUI.GUIButton("查询装饰"))
+        {
+            listBuildItem = buildItemService.QueryDataByType((int)BuildItemTypeEnum.Decoration);
+        }
+        if (EditorUI.GUIButton("查询正门"))
+        {
+            listBuildItem = buildItemService.QueryDataByType((int)BuildItemTypeEnum.Door);
+        }
+        if (EditorUI.GUIButton("查询楼梯"))
+        {
+            listBuildItem = buildItemService.QueryDataByType((int)BuildItemTypeEnum.Stairs);
+        }
+        if (EditorUI.GUIButton("查询床-基础"))
+        {
+            listBuildItem = buildItemService.QueryDataByType((int)BuildItemTypeEnum.BedBase);
+        }
+        if (EditorUI.GUIButton("查询床-床栏"))
+        {
+            listBuildItem = buildItemService.QueryDataByType((int)BuildItemTypeEnum.BedBar);
+        }
+        if (EditorUI.GUIButton("查询床-床单"))
+        {
+            listBuildItem = buildItemService.QueryDataByType((int)BuildItemTypeEnum.BedSheets);
+        }
+        if (EditorUI.GUIButton("查询床-枕头"))
+        {
+            listBuildItem = buildItemService.QueryDataByType((int)BuildItemTypeEnum.BedPillow);
+        }
+        GUILayout.EndHorizontal();
+        if (listBuildItem != null)
+        {
+            BuildItemBean removeData = null;
+            foreach (BuildItemBean itemData in listBuildItem)
+            {
+                GUILayout.Space(20);
+                GUILayout.BeginHorizontal();
+                if (EditorUI.GUIButton("更新"))
+                {
+                    buildItemService.Update(itemData);
+                }
+                if (EditorUI.GUIButton("删除"))
+                {
+                    if (buildItemService.DeleteData(itemData.id))
+                    {
+                        removeData = itemData;
+                    };
+                }
+                GUILayout.EndHorizontal();
+                GUIBuildItem(itemData);
+            }
+            if (removeData != null)
+            {
+                listBuildItem.Remove(removeData);
+            }
+        }
+        outListBuildItem = listBuildItem;
+    }
+
+    /// <summary>
+    /// 建造物品展示
+    /// </summary>
+    /// <param name="buildItem"></param>
+    public static void GUIBuildItem(BuildItemBean buildItem)
+    {
+        GUILayout.BeginHorizontal();
+        EditorUI.GUIText("id：");
+        buildItem.id = EditorUI.GUIEditorText(buildItem.id);
+        buildItem.build_id = buildItem.id;
+        buildItem.build_type = (int)EditorUI.GUIEnum<BuildItemTypeEnum>("类型：", buildItem.build_type);
+        EditorUI.GUIText("模型ID：");
+        buildItem.model_name = EditorUI.GUIEditorText(buildItem.model_name);
+        EditorUI.GUIText(" 图标：", 200);
+        buildItem.icon_key = EditorUI.GUIEditorText(buildItem.icon_key);
+        string picPath = "";
+        switch ((BuildItemTypeEnum)buildItem.build_type)
+        {
+            case BuildItemTypeEnum.Floor:
+                picPath = "Assets/Texture/Tile/Floor/";
+                break;
+            case BuildItemTypeEnum.Wall:
+                picPath = "Assets/Texture/Tile/Wall/";
+                break;
+            case BuildItemTypeEnum.Table:
+                picPath = "Assets/Texture/InnBuild/TableAndChair/";
+                break;
+            case BuildItemTypeEnum.Stove:
+                picPath = "Assets/Texture/InnBuild/Stove/";
+                break;
+            case BuildItemTypeEnum.Counter:
+                picPath = "Assets/Texture/InnBuild/Counter/";
+                break;
+            case BuildItemTypeEnum.Decoration:
+                picPath = "Assets/Texture/InnBuild/Decoration/";
+                break;
+            case BuildItemTypeEnum.Door:
+                picPath = "Assets/Texture/InnBuild/Door/";
+                break;
+            case BuildItemTypeEnum.BedBar:
+            case BuildItemTypeEnum.BedBase:
+            case BuildItemTypeEnum.BedPillow:
+            case BuildItemTypeEnum.BedSheets:
+                picPath = "Assets/Texture/InnBuild/Bed/";
+                break;
+            default:
+                break;
+        }
+        EditorUI.GUIPic(picPath, buildItem.icon_key);
+
+        switch ((BuildItemTypeEnum)buildItem.build_type)
+        {
+            case BuildItemTypeEnum.Table:
+            case BuildItemTypeEnum.Counter:
+            case BuildItemTypeEnum.Stove:
+            case BuildItemTypeEnum.Door:
+            case BuildItemTypeEnum.Decoration:
+                EditorUI.GUIText("icon_list");
+                buildItem.icon_list = EditorUI.GUIEditorText(buildItem.icon_list, 300);
+                break;
+            case BuildItemTypeEnum.Floor:
+            case BuildItemTypeEnum.Wall:
+                EditorUI.GUIText("tile名字：");
+                buildItem.tile_name = EditorUI.GUIEditorText(buildItem.tile_name);
+                break;
+            default:
+                break;
+        }
+        EditorUI.GUIText("美观：", 50);
+        buildItem.aesthetics = EditorUI.GUIEditorText(buildItem.aesthetics);
+        EditorUI.GUIText("名称：", 50);
+        buildItem.name = EditorUI.GUIEditorText(buildItem.name, 200);
+        EditorUI.GUIText("形容：", 50);
+        buildItem.content = EditorUI.GUIEditorText(buildItem.content, 300);
+        GUILayout.EndHorizontal();
+    }
+
+    /// <summary>
+    /// 创建菜单
+    /// </summary>
+    public static void GUIMenuCreate(MenuInfoService menuInfoService, MenuInfoBean menuInfo)
+    {
+        EditorUI.GUIText("菜谱创建");
+        if (EditorUI.GUIButton("创建"))
+        {
+            menuInfo.valid = 1;
+            menuInfoService.InsertData(menuInfo);
+        }
+        GUIMenuItem(menuInfo);
+        GUILayout.Space(20);
+    }
+
+    /// <summary>
+    /// 菜单查询
+    /// </summary>
+    /// <param name="menuInfoService"></param>
+    /// <param name="listData"></param>
+    public static void GUIMenuFind(MenuInfoService menuInfoService, string findIds, List<MenuInfoBean> listData, out string outFindIds, out List<MenuInfoBean> outListData)
+    {
+        GUILayout.BeginHorizontal();
+        EditorUI.GUIText("查询IDs");
+        findIds = EditorUI.GUIEditorText(findIds);
+        if (EditorUI.GUIButton("查询指定ID"))
+        {
+            long[] ids = StringUtil.SplitBySubstringForArrayLong(findIds, ',');
+            listData = menuInfoService.QueryDataByIds(ids);
+        }
+        if (EditorUI.GUIButton("查询所有菜单"))
+        {
+            listData = menuInfoService.QueryAllData();
+        }
+        GUILayout.EndHorizontal();
+        if (!CheckUtil.ListIsNull(listData))
+        {
+
+            for (int i = 0; i < listData.Count; i++)
+            {
+                MenuInfoBean itemData = listData[i];
+                GUILayout.BeginHorizontal();
+                GUILayout.Space(20);
+                if (EditorUI.GUIButton("更新"))
+                {
+                    menuInfoService.Update(itemData);
+                }
+                if (EditorUI.GUIButton("删除"))
+                {
+                    menuInfoService.DeleteData(itemData.id);
+                }
+                GUILayout.EndHorizontal();
+                GUIMenuItem(itemData);
+            }
+        }
+        outListData = listData;
+        outFindIds = findIds;
+    }
+
+    /// <summary>
+    /// 菜单展示
+    /// </summary>
+    public static void GUIMenuItem(MenuInfoBean menuInfo)
+    {
+        GUILayout.BeginHorizontal();
+        EditorUI.GUIText("ID:");
+        menuInfo.id = EditorUI.GUIEditorText(menuInfo.id);
+        menuInfo.menu_id = menuInfo.id;
+
+        EditorUI.GUIText("名称:");
+        menuInfo.name = EditorUI.GUIEditorText(menuInfo.name, 150);
+        EditorUI.GUIText("内容:");
+        menuInfo.content = EditorUI.GUIEditorText(menuInfo.content, 300);
+
+        EditorUI.GUIText("烹饪时间:");
+        menuInfo.cook_time = EditorUI.GUIEditorText(menuInfo.cook_time);
+
+        EditorUI.GUIText("当前利润:");
+        long getmoney = menuInfo.price_s - (
+             menuInfo.ing_oilsalt * 5 +
+             menuInfo.ing_meat * 10 +
+             menuInfo.ing_riverfresh * 10 +
+             menuInfo.ing_seafood * 50 +
+             menuInfo.ing_vegetables * 5 +
+             menuInfo.ing_melonfruit * 5 +
+             menuInfo.ing_waterwine * 10 +
+             menuInfo.ing_flour * 5);
+        EditorUI.GUIText(getmoney + "");
+        EditorUI.GUIText("输入利润:", 50);
+        long setGetmoney = EditorUI.GUIEditorText(getmoney, 50);
+        if (getmoney != setGetmoney)
+        {
+            //自定义了利润
+            menuInfo.price_s =
+                setGetmoney +
+             menuInfo.ing_oilsalt * 5 +
+             menuInfo.ing_meat * 10 +
+             menuInfo.ing_riverfresh * 10 +
+             menuInfo.ing_seafood * 50 +
+             menuInfo.ing_vegetables * 5 +
+             menuInfo.ing_melonfruit * 5 +
+             menuInfo.ing_waterwine * 10 +
+             menuInfo.ing_flour * 5;
+        }
+        EditorUI.GUIText("利润:");
+
+        EditorUI.GUIText("价格LMS:");
+        menuInfo.price_l = EditorUI.GUIEditorText(menuInfo.price_l, 50);
+        menuInfo.price_m = EditorUI.GUIEditorText(menuInfo.price_m, 50);
+        menuInfo.price_s = EditorUI.GUIEditorText(menuInfo.price_s, 50);
+        EditorUI.GUIText("动画名称:");
+        menuInfo.anim_key = EditorUI.GUIEditorText(menuInfo.anim_key, 150);
+        EditorUI.GUIText("图片名称:");
+        menuInfo.icon_key = EditorUI.GUIEditorText(menuInfo.icon_key, 150);
+        string menuPicPath = "Assets/Texture/Food/";
+        EditorUI.GUIPic(menuPicPath, menuInfo.icon_key);
+        EditorUI.GUIText("稀有度:");
+        menuInfo.rarity = EditorUI.GUIEditorText(menuInfo.rarity);
+        EditorUI.GUIText("材料 油盐:");
+        menuInfo.ing_oilsalt = EditorUI.GUIEditorText(menuInfo.ing_oilsalt, 50);
+        EditorUI.GUIText("材料 鲜肉:");
+        menuInfo.ing_meat = EditorUI.GUIEditorText(menuInfo.ing_meat, 50);
+        EditorUI.GUIText("材料 河鲜:");
+        menuInfo.ing_riverfresh = EditorUI.GUIEditorText(menuInfo.ing_riverfresh, 50);
+        EditorUI.GUIText("材料 海鲜:");
+        menuInfo.ing_seafood = EditorUI.GUIEditorText(menuInfo.ing_seafood, 50);
+        EditorUI.GUIText("材料 蔬菜:");
+        menuInfo.ing_vegetables = EditorUI.GUIEditorText(menuInfo.ing_vegetables, 50);
+        EditorUI.GUIText("材料 瓜果:");
+        menuInfo.ing_melonfruit = EditorUI.GUIEditorText(menuInfo.ing_melonfruit, 50);
+        EditorUI.GUIText("材料 酒水:");
+        menuInfo.ing_waterwine = EditorUI.GUIEditorText(menuInfo.ing_waterwine, 50);
+        EditorUI.GUIText("材料 面粉:");
+        menuInfo.ing_flour = EditorUI.GUIEditorText(menuInfo.ing_flour, 50);
+
+        GUILayout.EndHorizontal();
+    }
+
+    /// <summary>
+    /// 技能创建
+    /// </summary>
+    /// <param name="skillInfoService"></param>
+    /// <param name="skillInfo"></param>
+    public static void GUISkillCreate(SkillInfoService skillInfoService, SkillInfoBean skillInfo)
+    {
+        if (EditorUI.GUIButton("创建"))
+        {
+            skillInfo.valid = 1;
+            skillInfoService.InsertData(skillInfo);
+        }
+        GUISkillItem(skillInfo);
+        GUILayout.Space(20);
+    }
+
+    /// <summary>
+    /// 技能查询
+    /// </summary>
+    /// <param name="skillInfoService"></param>
+    /// <param name="findIds"></param>
+    /// <param name="listData"></param>
+    /// <param name="outFindIds"></param>
+    /// <param name="outListData"></param>
+    public static void GUISkillFind(SkillInfoService skillInfoService, string findIds, List<SkillInfoBean> listData, out string outFindIds, out List<SkillInfoBean> outListData)
+    {
+        GUILayout.BeginHorizontal();
+        EditorUI.GUIText("查询IDs");
+        findIds = EditorUI.GUIEditorText(findIds);
+        if (EditorUI.GUIButton("查询指定ID"))
+        {
+            long[] ids = StringUtil.SplitBySubstringForArrayLong(findIds, ',');
+            listData = skillInfoService.QueryDataByIds(ids);
+        }
+        if (EditorUI.GUIButton("查询所有技能"))
+        {
+            listData = skillInfoService.QueryAllData();
+        }
+        GUILayout.EndHorizontal();
+        if (!CheckUtil.ListIsNull(listData))
+        {
+
+            for (int i = 0; i < listData.Count; i++)
+            {
+                SkillInfoBean itemData = listData[i];
+                GUILayout.BeginHorizontal();
+                GUILayout.Space(20);
+                if (EditorUI.GUIButton("更新"))
+                {
+                    skillInfoService.Update(itemData);
+                }
+                if (EditorUI.GUIButton("删除"))
+                {
+                    skillInfoService.DeleteData(itemData.id);
+                }
+                GUISkillItem(itemData);
+                GUILayout.EndHorizontal();
+            }
+        }
+        outListData = listData;
+        outFindIds = findIds;
+    }
+
+    /// <summary>
+    /// 技能展示
+    /// </summary>
+    /// <param name="skillInfo"></param>
+    public static void GUISkillItem(SkillInfoBean skillInfo)
+    {
+        GUILayout.BeginHorizontal();
+        EditorUI.GUIText("ID:");
+        skillInfo.id = EditorUI.GUIEditorText(skillInfo.id);
+        skillInfo.skill_id = skillInfo.id;
+        EditorUI.GUIText("名称");
+        skillInfo.name = EditorUI.GUIEditorText(skillInfo.name);
+        EditorUI.GUIText("介绍");
+        skillInfo.content = EditorUI.GUIEditorText(skillInfo.content, 200);
+        EditorUI.GUIText("图片名称:");
+        skillInfo.icon_key = EditorUI.GUIEditorText(skillInfo.icon_key, 150);
+        string menuPicPath = "Assets/Texture/Common/UI/";
+        EditorUI.GUIPic(menuPicPath, skillInfo.icon_key);
+        EditorUI.GUIText("使用数量");
+        skillInfo.use_number = EditorUI.GUIEditorText(skillInfo.use_number);
+        skillInfo.effect = EditorUI.GUIListData<EffectTypeEnum>("效果", skillInfo.effect);
+        skillInfo.effect_details = EditorUI.GUIListData<EffectDetailsEnum>("效果详情", skillInfo.effect_details);
+        skillInfo.pre_data = EditorUI.GUIListData<PreTypeEnum>("解锁条件", skillInfo.pre_data);
+        GUILayout.EndHorizontal();
+    }
+
     #region 商店数据回调
     public void GetStoreInfoSuccess(StoreTypeEnum type, List<StoreInfoBean> listData)
     {

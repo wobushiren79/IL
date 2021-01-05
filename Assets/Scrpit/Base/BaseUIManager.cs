@@ -5,6 +5,8 @@ using UnityEngine;
 
 public class BaseUIManager : BaseMonoBehaviour
 {
+    public GameObject objUIContainer;
+
     //所有的UI控件
     public List<BaseUIComponent> uiList;
 
@@ -14,8 +16,9 @@ public class BaseUIManager : BaseMonoBehaviour
     /// <returns></returns>
     public BaseUIComponent GetOpenUI()
     {
-        foreach (BaseUIComponent itemUI in uiList)
+        for (int i=0;i< uiList.Count;i++)
         {
+            BaseUIComponent itemUI = uiList[i];
             if (itemUI.gameObject.activeSelf)
             {
                 return itemUI;
@@ -30,8 +33,9 @@ public class BaseUIManager : BaseMonoBehaviour
     /// <returns></returns>
     public string GetOpenUIName()
     {
-        foreach (BaseUIComponent itemUI in uiList)
+        for (int i = 0; i < uiList.Count; i++)
         {
+            BaseUIComponent itemUI = uiList[i];
             if (itemUI.gameObject.activeSelf)
             {
                 return itemUI.name;
@@ -49,14 +53,25 @@ public class BaseUIManager : BaseMonoBehaviour
     {
         if (uiList == null || CheckUtil.StringIsNull(uiName))
             return null;
-        foreach (BaseUIComponent itemUI in uiList)
+        for (int i = 0; i < uiList.Count; i++)
         {
-            if (itemUI.name.Equals(uiName))
+            BaseUIComponent itemUI = uiList[i];
+            if (itemUI.name.Contains(uiName))
             {
                 return itemUI;
             }
         }
         return null;
+    }
+
+    /// <summary>
+    /// 获取UI
+    /// </summary>
+    /// <param name="uiEnum"></param>
+    /// <returns></returns>
+    public BaseUIComponent GetUI(UIEnum uiEnum)
+    {
+        return GetUIByName(EnumUtil.GetEnumName(uiEnum));
     }
 
     /// <summary>
@@ -69,9 +84,10 @@ public class BaseUIManager : BaseMonoBehaviour
         if (uiList == null || CheckUtil.StringIsNull(uiName))
             return null;
         List<BaseUIComponent> tempUIList = new List<BaseUIComponent>();
-        foreach (BaseUIComponent itemUI in uiList)
+        for (int i = 0; i < uiList.Count; i++)
         {
-            if (itemUI.name.Equals(uiName))
+            BaseUIComponent itemUI = uiList[i];
+            if (itemUI.name.Contains(uiName))
             {
                 tempUIList.Add(itemUI);
             }
@@ -83,18 +99,48 @@ public class BaseUIManager : BaseMonoBehaviour
     /// 通过UI的名字开启UI
     /// </summary>
     /// <param name="uiName"></param>
-    public void OpenUIByName(string uiName)
+    public BaseUIComponent OpenUIByName(string uiName)
     {
+        BaseUIComponent uiComponent = null;
         if (uiList == null || CheckUtil.StringIsNull(uiName))
-            return;
-        foreach (BaseUIComponent itemUI in uiList)
+            return uiComponent;
+        bool hasData = false;
+        for (int i = 0; i < uiList.Count; i++)
         {
-            if (itemUI.name.Equals(uiName))
+            BaseUIComponent itemUI = uiList[i];
+            if (itemUI.name.Contains(uiName))
             {
                 itemUI.OpenUI();
+                hasData = true;
             }
         }
+        if (!hasData)
+        {
+            BaseUIComponent uiModel = LoadResourcesUtil.SyncLoadData<BaseUIComponent>("UI/"+ uiName);
+            if (uiModel)
+            {
+                GameObject objUIComponent = Instantiate(objUIContainer, uiModel.gameObject);
+                uiComponent = objUIComponent.GetComponent<BaseUIComponent>();
+                uiList.Add(uiComponent);
+            }
+            else
+            {
+                LogUtil.LogError("没有找到指定UI："+ "Resources/UI/" + uiName);
+            }
+        }
+        return uiComponent;
     }
+
+    /// <summary>
+    /// 开启UI
+    /// </summary>
+    /// <param name="uiEnum"></param>
+    public void OpenUI(UIEnum uiEnum)
+    {
+        string uiName = EnumUtil.GetEnumName(uiEnum);
+        OpenUIByName(uiName);
+    }
+
 
     /// <summary>
     /// 通过UI的名字关闭UI
@@ -104,9 +150,10 @@ public class BaseUIManager : BaseMonoBehaviour
     {
         if (uiList == null || CheckUtil.StringIsNull(uiName))
             return;
-        foreach (BaseUIComponent itemUI in uiList)
+        for (int i = 0; i < uiList.Count; i++)
         {
-            if (itemUI.name.Equals(uiName))
+            BaseUIComponent itemUI = uiList[i];
+            if (itemUI.name.Contains(uiName))
             {
                 itemUI.CloseUI();
             }
@@ -118,8 +165,9 @@ public class BaseUIManager : BaseMonoBehaviour
     /// </summary>
     public void CloseAllUI()
     {
-        foreach (BaseUIComponent itemUI in uiList)
+        for (int i = 0; i < uiList.Count; i++)
         {
+            BaseUIComponent itemUI = uiList[i];
             if (itemUI.gameObject.activeSelf)
                 itemUI.CloseUI();
         }
@@ -133,24 +181,17 @@ public class BaseUIManager : BaseMonoBehaviour
     {
         if (uiList == null || CheckUtil.StringIsNull(uiName))
             return null;
-        BaseUIComponent uiComponent = null;
-        foreach (BaseUIComponent itemUI in uiList)
+        //首先关闭其他UI
+        for (int i = 0; i < uiList.Count; i++)
         {
-            if (!itemUI.name.Equals(uiName))
+            BaseUIComponent itemUI = uiList[i];
+            if (!itemUI.name.Contains(uiName))
             {
                 if (itemUI.gameObject.activeSelf)
                     itemUI.CloseUI();
             }
         }
-        foreach (BaseUIComponent itemUI in uiList)
-        {
-            if (itemUI.name.Equals(uiName))
-            {
-                itemUI.OpenUI();
-                uiComponent = itemUI;
-            }
-        }
-        return uiComponent;
+        return OpenUIByName(uiName);
     }
 
     public BaseUIComponent OpenUIAndCloseOther(UIEnum ui)
@@ -166,15 +207,17 @@ public class BaseUIManager : BaseMonoBehaviour
     {
         if (uiList == null || uiComponent == null)
             return;
-        foreach (BaseUIComponent itemUI in uiList)
+        for (int i = 0; i < uiList.Count; i++)
         {
+            BaseUIComponent itemUI = uiList[i];
             if (!itemUI == uiComponent)
             {
                 itemUI.CloseUI();
             }
         }
-        foreach (BaseUIComponent itemUI in uiList)
+        for (int i = 0; i < uiList.Count; i++)
         {
+            BaseUIComponent itemUI = uiList[i];
             if (itemUI == uiComponent)
             {
                 itemUI.OpenUI();
@@ -189,8 +232,9 @@ public class BaseUIManager : BaseMonoBehaviour
     {
         if (uiList == null)
             return;
-        foreach (BaseUIComponent itemUI in uiList)
+        for (int i = 0; i < uiList.Count; i++)
         {
+            BaseUIComponent itemUI = uiList[i];
             itemUI.RefreshUI();
         }
     }
@@ -203,9 +247,10 @@ public class BaseUIManager : BaseMonoBehaviour
     {
         if (uiList == null || CheckUtil.StringIsNull(uiName))
             return;
-        foreach (BaseUIComponent itemUI in uiList)
+        for (int i = 0; i < uiList.Count; i++)
         {
-            if (itemUI.name.Equals(uiName))
+            BaseUIComponent itemUI = uiList[i];
+            if (itemUI.name.Contains(uiName))
             {
                 itemUI.RefreshUI();
             }
@@ -230,4 +275,8 @@ public class BaseUIManager : BaseMonoBehaviour
         }
     }
 
+    public RectTransform GetContainer()
+    {
+        return (RectTransform)objUIContainer.transform;
+    }
 }

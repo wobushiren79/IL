@@ -19,6 +19,6 @@ public class UITextService
     /// <returns></returns>
     public List<TextInfoBean> QueryAllData()
     {
-        return SQliteHandle.LoadTableData<TextInfoBean>(ProjectConfigInfo.DATA_BASE_INFO_NAME, tableNameForMain, new string[] { mLeftTableName }, "id", new string[] { "text_id" });
+        return SQLiteHandle.LoadTableData<TextInfoBean>(ProjectConfigInfo.DATA_BASE_INFO_NAME, tableNameForMain, new string[] { mLeftTableName }, "id", new string[] { "text_id" });
     }
 }
