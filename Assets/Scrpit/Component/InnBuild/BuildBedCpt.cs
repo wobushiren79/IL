@@ -35,10 +35,11 @@ public class BuildBedCpt : BaseBuildItemCpt
     public float subAesthetics = 0;
 
     protected InnBuildManager innBuildManager;
-
+    protected GameDataManager gameDataManager;
     private void Awake()
     {
         innBuildManager = Find<InnBuildManager>(ImportantTypeEnum.BuildManager);
+        gameDataManager = Find<GameDataManager>(ImportantTypeEnum.GameDataManager);
     }
 
     public void SetAddAesthetics(float addAesthetics, float subAesthetics)
@@ -51,10 +52,12 @@ public class BuildBedCpt : BaseBuildItemCpt
     {
         addAesthetics = this.addAesthetics;
         subAesthetics = this.subAesthetics;
-   
-        if (addAesthetics > 60)
+
+        InnAttributesBean innAttributes= gameDataManager.gameData.GetInnAttributesData();
+        int maxAesthetics = innAttributes.CalculationBedMaxAesthetics();
+        if (addAesthetics > maxAesthetics)
         {
-            addAesthetics = 60;
+            addAesthetics = maxAesthetics;
         }
 
         totalAesthetics = addAesthetics + subAesthetics;

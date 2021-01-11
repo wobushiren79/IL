@@ -368,4 +368,14 @@ public class InnAttributesBean
         rate = 0.5f * ratePraise + 0.5f * rateAesthetics;
         return rate * 0.2f;
     }
+
+    /// <summary>
+    /// 计算床的最大美观加成
+    /// </summary>
+    public int CalculationBedMaxAesthetics()
+    {
+        GetInnLevel(out int levelTitle, out int levelStar);
+        int maxAesthetics = levelTitle * 20 + levelStar * 2;
+        return maxAesthetics;
+    }
 }
