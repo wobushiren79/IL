@@ -27,6 +27,7 @@ public class GameDataBean
     public TimeBean gameTime = new TimeBean();//游戏时间
     public TimeBean playTime = new TimeBean();//游玩时间
     public UserAchievementBean userAchievement = new UserAchievementBean();//成就相关
+    public FamilyDataBean familyData = new FamilyDataBean();//家族数据
 
     public List<ItemBean> listBuild = new List<ItemBean>();//所拥有的建筑材料
     public List<ItemBean> listItems = new List<ItemBean>();//所拥有的装备
@@ -609,6 +610,14 @@ public class GameDataBean
         return number;
     }
 
+    /// <summary>
+    /// 获取家族数据
+    /// </summary>
+    /// <returns></returns>
+    public FamilyDataBean GetFamilyData()
+    {
+        return familyData; 
+    }
 
 
     /// <summary>

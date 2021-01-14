@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -67,6 +68,20 @@ public class BaseMonoBehaviour : MonoBehaviour
             return objFind.GetComponent<T>();
         }
     }
+
+    public Component Find(string name, Type type)
+    {
+        GameObject objFind = GameObject.Find(name);
+        if (objFind == null)
+        {
+            return default;
+        }
+        else
+        {
+            return objFind.GetComponent(type);
+        }
+    }
+
     public T FindInChildren<T>(ImportantTypeEnum importantType)
     {
         return FindInChildren<T>(EnumUtil.GetEnumName(importantType));
@@ -88,5 +103,29 @@ public class BaseMonoBehaviour : MonoBehaviour
             }
             return default;
         }
+    }
+
+    /// <summary>
+    /// 通过反射获取处理类
+    /// </summary>
+    public void AutoLinkHandler()
+    {
+        ReflexUtil.AutoLinkData(this, "handler_");
+    }
+
+    /// <summary>
+    /// 通过反射获取管理类
+    /// </summary>
+    public void AutoLinkManager()
+    {
+        ReflexUtil.AutoLinkData(this, "manager_");
+    }
+
+    /// <summary>
+    /// 通过反射链接UI控件
+    /// </summary>
+    public void AutoLinkUI()
+    {
+        ReflexUtil.AutoLinkDataForChild(this, "ui_");
     }
 }

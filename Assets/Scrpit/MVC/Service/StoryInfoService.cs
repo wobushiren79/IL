@@ -68,7 +68,7 @@ public class StoryInfoService : BaseMVCService
         string[] colName = new string[] { "story_scene" };
         string[] operations = new string[] { "=" };
         string[] colValue = new string[] { scene + "" };
-        return SQliteHandle.LoadTableDataByCol<StoryInfoBean>(ProjectConfigInfo.DATA_BASE_INFO_NAME, tableNameForMain, colName, operations, colValue);
+        return SQLiteHandle.LoadTableDataByCol<StoryInfoBean>(ProjectConfigInfo.DATA_BASE_INFO_NAME, tableNameForMain, colName, operations, colValue);
 
     }
 
@@ -91,7 +91,7 @@ public class StoryInfoService : BaseMVCService
         string[] colName = new string[] { "story_id" };
         string[] operations = new string[] { "=" };
         string[] colValue = new string[] { id + "" };
-        return SQliteHandle.LoadTableDataByCol<StoryInfoDetailsBean>(ProjectConfigInfo.DATA_BASE_INFO_NAME, tableNameForLeft, colName, operations, colValue);
+        return SQLiteHandle.LoadTableDataByCol<StoryInfoDetailsBean>(ProjectConfigInfo.DATA_BASE_INFO_NAME, tableNameForLeft, colName, operations, colValue);
     }
 
     /// <summary>

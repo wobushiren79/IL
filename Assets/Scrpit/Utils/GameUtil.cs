@@ -115,6 +115,20 @@ public class GameUtil
         uiTarget.anchoredPosition = WorldPointToUILocalPoint(uiParent, worldPositon);
     }
 
+
+
+    /// <summary>
+    /// 鼠标位置转为屏幕UGUI位置
+    /// </summary>
+    /// <param name="camera">如果画布是screenspace-overlay 则直接设置相机为NULL</param>
+    /// <param name="uiParent"></param>
+    /// <returns></returns>
+    public static Vector2 MousePointToUGUIPoint(Camera camera, RectTransform uiParent)
+    {
+        RectTransformUtility.ScreenPointToLocalPointInRectangle(uiParent, Input.mousePosition, camera, out Vector2 vecMouse);
+        return vecMouse;
+    }
+
     /// <summary>
     /// 离开游戏
     /// </summary>

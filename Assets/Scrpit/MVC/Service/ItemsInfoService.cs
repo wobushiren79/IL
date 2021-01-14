@@ -18,7 +18,7 @@ public class ItemsInfoService : BaseMVCService
     /// <returns></returns>
     public List<ItemsInfoBean> QueryAllData()
     {
-        return SQliteHandle.LoadTableData<ItemsInfoBean>
+        return SQLiteHandle.LoadTableData<ItemsInfoBean>
             (ProjectConfigInfo.DATA_BASE_INFO_NAME, tableNameForMain,
             new string[] { tableNameForLeft, mLeftIntactTableName },
             new string[] { "id", "intact_id" },
@@ -39,7 +39,7 @@ public class ItemsInfoService : BaseMVCService
         string[] operations = new string[] { "IN" };
         string values = TypeConversionUtil.ArrayToStringBySplit(ids, ",");
         string[] colValue = new string[] { "(" + values + ")" };
-        return SQliteHandle.LoadTableData<ItemsInfoBean>(ProjectConfigInfo.DATA_BASE_INFO_NAME, tableNameForMain, leftTable, mainKey, leftKey, colName, operations, colValue);
+        return SQLiteHandle.LoadTableData<ItemsInfoBean>(ProjectConfigInfo.DATA_BASE_INFO_NAME, tableNameForMain, leftTable, mainKey, leftKey, colName, operations, colValue);
     }
 
     /// <summary>

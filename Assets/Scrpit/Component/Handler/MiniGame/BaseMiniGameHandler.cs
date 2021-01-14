@@ -19,7 +19,6 @@ public class BaseMiniGameHandler<B, D> : BaseHandler, UIMiniGameCountDown.ICallB
     protected GameDataManager gameDataManager;
     protected GameItemsManager gameItemsManager;
 
-
     protected IconDataManager iconDataManager;
     //游戏构建器
     public B miniGameBuilder;

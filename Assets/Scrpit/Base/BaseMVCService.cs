@@ -40,7 +40,7 @@ public class BaseMVCService
             LogUtil.LogError("查询数据失败，没有表名");
             return null;
         }
-        return SQliteHandle.LoadTableData<T>(ProjectConfigInfo.DATA_BASE_INFO_NAME, tableNameForMain);
+        return SQLiteHandle.LoadTableData<T>(ProjectConfigInfo.DATA_BASE_INFO_NAME, tableNameForMain);
     }
 
     /// <summary>
@@ -55,7 +55,7 @@ public class BaseMVCService
             LogUtil.LogError("查询数据失败，没有关联的副表");
             return null;
         }
-        return SQliteHandle.LoadTableData<T>
+        return SQLiteHandle.LoadTableData<T>
             (ProjectConfigInfo.DATA_BASE_INFO_NAME, tableNameForMain,
             new string[] { tableNameForLeft },
             new string[] { "id" },
@@ -75,7 +75,7 @@ public class BaseMVCService
         string[] colName = new string[] { key };
         string[] operations = new string[] { "=" };
         string[] colValue = new string[] { value };
-        return SQliteHandle.LoadTableDataByCol<T>(ProjectConfigInfo.DATA_BASE_INFO_NAME, tableNameForMain, colName, operations, colValue);
+        return SQLiteHandle.LoadTableDataByCol<T>(ProjectConfigInfo.DATA_BASE_INFO_NAME, tableNameForMain, colName, operations, colValue);
     }
 
     /// <summary>
@@ -87,7 +87,14 @@ public class BaseMVCService
     /// <returns></returns>
     public List<T> BaseQueryData<T>(string leftId, string key, string value)
     {
-        return BaseQueryData<T>(leftId, key, "=", value);
+        if (CheckUtil.StringIsNull(leftId) || CheckUtil.StringIsNull(tableNameForLeft))
+        {
+            return BaseQueryData<T>(key, value);
+        }
+        else
+        {
+            return BaseQueryData<T>(leftId, key, "=", value);
+        }
     }
 
     public List<T> BaseQueryData<T>(string leftId, string key, string operation, string value)
@@ -108,7 +115,7 @@ public class BaseMVCService
         string[] colName = new string[] { key };
         string[] operations = new string[] { operation };
         string[] colValue = new string[] { value };
-        return SQliteHandle.LoadTableData<T>(ProjectConfigInfo.DATA_BASE_INFO_NAME, tableNameForMain, leftTable, mainKey, leftKey, colName, operations, colValue);
+        return SQLiteHandle.LoadTableData<T>(ProjectConfigInfo.DATA_BASE_INFO_NAME, tableNameForMain, leftTable, mainKey, leftKey, colName, operations, colValue);
     }
 
     public List<T> BaseQueryData<T>(string leftId, string key1, string value1, string key2, string value2)
@@ -134,7 +141,7 @@ public class BaseMVCService
         string[] colName = new string[] { key1, key2 };
         string[] operations = new string[] { operation1, operation2 };
         string[] colValue = new string[] { value1, value2 };
-        return SQliteHandle.LoadTableData<T>(ProjectConfigInfo.DATA_BASE_INFO_NAME, tableNameForMain, leftTable, mainKey, leftKey, colName, operations, colValue);
+        return SQLiteHandle.LoadTableData<T>(ProjectConfigInfo.DATA_BASE_INFO_NAME, tableNameForMain, leftTable, mainKey, leftKey, colName, operations, colValue);
     }
 
     public List<T> BaseQueryData<T>(string leftId, string key1, string operation1, string value1, string key2, string operation2, string value2, string key3, string operation3, string value3)
@@ -155,7 +162,7 @@ public class BaseMVCService
         string[] colName = new string[] { key1, key2, key3 };
         string[] operations = new string[] { operation1, operation2, operation3 };
         string[] colValue = new string[] { value1, value2, value3 };
-        return SQliteHandle.LoadTableData<T>(ProjectConfigInfo.DATA_BASE_INFO_NAME, tableNameForMain, leftTable, mainKey, leftKey, colName, operations, colValue);
+        return SQLiteHandle.LoadTableData<T>(ProjectConfigInfo.DATA_BASE_INFO_NAME, tableNameForMain, leftTable, mainKey, leftKey, colName, operations, colValue);
     }
    
     /// <summary>
@@ -169,7 +176,7 @@ public class BaseMVCService
         string[] colKeys = new string[] { "id" };
         string[] operations = new string[] { "=" };
         string[] colValues = new string[] { id + "" };
-        return SQliteHandle.DeleteTableDataAndLeft(ProjectConfigInfo.DATA_BASE_INFO_NAME, tableNameForMain, colKeys, operations, colValues);
+        return SQLiteHandle.DeleteTableDataAndLeft(ProjectConfigInfo.DATA_BASE_INFO_NAME, tableNameForMain, colKeys, operations, colValues);
     }
 
     /// <summary>
@@ -184,7 +191,14 @@ public class BaseMVCService
         bool isDeleteAll = true;
         if (BaseDeleteData(tableNameForMain, mainName, value))
         {
-            isDeleteAll = BaseDeleteData(tableNameForLeft, leftName, value);
+            if (CheckUtil.StringIsNull(tableNameForLeft))
+            {
+                isDeleteAll = true;
+            }
+            else
+            {
+                isDeleteAll = BaseDeleteData(tableNameForLeft, leftName, value);
+            }
         }
         else
             isDeleteAll = false;
@@ -196,7 +210,7 @@ public class BaseMVCService
         string[] colKeys = new string[] { key };
         string[] operations = new string[] { "=" };
         string[] colValues = new string[] { value };
-        return SQliteHandle.DeleteTableDataAndLeft(ProjectConfigInfo.DATA_BASE_INFO_NAME, tableNameForMain, colKeys, operations, colValues);
+        return SQLiteHandle.DeleteTableDataAndLeft(ProjectConfigInfo.DATA_BASE_INFO_NAME, tableNameForMain, colKeys, operations, colValues);
     }
 
     public bool BaseDeleteData(string tableName, string key, string value)
@@ -204,7 +218,7 @@ public class BaseMVCService
         string[] colKeys = new string[] { key };
         string[] operations = new string[] { "=" };
         string[] colValues = new string[] { value };
-        return SQliteHandle.DeleteTableDataAndLeft(ProjectConfigInfo.DATA_BASE_INFO_NAME, tableName, colKeys, operations, colValues);
+        return SQLiteHandle.DeleteTableDataAndLeft(ProjectConfigInfo.DATA_BASE_INFO_NAME, tableName, colKeys, operations, colValues);
     }
 
     public bool BaseDeleteData(string tableName, string key1, string value1, string key2, string value2)
@@ -212,7 +226,7 @@ public class BaseMVCService
         string[] colKeys = new string[] { key1, key2 };
         string[] operations = new string[] { "=", "=" };
         string[] colValues = new string[] { value1, value2 };
-        return SQliteHandle.DeleteTableDataAndLeft(ProjectConfigInfo.DATA_BASE_INFO_NAME, tableName, colKeys, operations, colValues);
+        return SQLiteHandle.DeleteTableDataAndLeft(ProjectConfigInfo.DATA_BASE_INFO_NAME, tableName, colKeys, operations, colValues);
     }
 
     public bool BaseDeleteData(string tableName, string key1, string value1, string key2, string value2, string key3, string value3)
@@ -220,7 +234,7 @@ public class BaseMVCService
         string[] colKeys = new string[] { key1, key2,key3 };
         string[] operations = new string[] { "=", "=", "=" };
         string[] colValues = new string[] { value1, value2, value3 };
-        return SQliteHandle.DeleteTableDataAndLeft(ProjectConfigInfo.DATA_BASE_INFO_NAME, tableName, colKeys, operations, colValues);
+        return SQLiteHandle.DeleteTableDataAndLeft(ProjectConfigInfo.DATA_BASE_INFO_NAME, tableName, colKeys, operations, colValues);
     }
     /// <summary>
     /// 插入数据
@@ -254,7 +268,7 @@ public class BaseMVCService
                 listValues.Add(valueStr);
             }
         }
-        return SQliteHandle.InsertValues(ProjectConfigInfo.DATA_BASE_INFO_NAME, tableName, TypeConversionUtil.ListToArray(listKeys), TypeConversionUtil.ListToArray(listValues));
+        return SQLiteHandle.InsertValues(ProjectConfigInfo.DATA_BASE_INFO_NAME, tableName, TypeConversionUtil.ListToArray(listKeys), TypeConversionUtil.ListToArray(listValues));
     }
 
     /// <summary>
@@ -323,10 +337,10 @@ public class BaseMVCService
             }
         }
         bool isInsert = true;
-        isInsert = SQliteHandle.InsertValues(ProjectConfigInfo.DATA_BASE_INFO_NAME, tableNameForMain, TypeConversionUtil.ListToArray(listMainKeys), TypeConversionUtil.ListToArray(listMainValues));
+        isInsert = SQLiteHandle.InsertValues(ProjectConfigInfo.DATA_BASE_INFO_NAME, tableNameForMain, TypeConversionUtil.ListToArray(listMainKeys), TypeConversionUtil.ListToArray(listMainValues));
         if (isInsert)
         {
-            SQliteHandle.InsertValues(ProjectConfigInfo.DATA_BASE_INFO_NAME, tableNameForLeft, TypeConversionUtil.ListToArray(listLeftKeys), TypeConversionUtil.ListToArray(listLeftValues));
+            SQLiteHandle.InsertValues(ProjectConfigInfo.DATA_BASE_INFO_NAME, tableNameForLeft, TypeConversionUtil.ListToArray(listLeftKeys), TypeConversionUtil.ListToArray(listLeftValues));
         }
         return isInsert;
     }
