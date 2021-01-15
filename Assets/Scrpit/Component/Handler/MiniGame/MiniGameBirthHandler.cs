@@ -6,7 +6,8 @@ public class MiniGameBirthHandler : BaseMiniGameHandler<MiniGameBirthBuilder, Mi
     public override void InitGame(MiniGameBirthBean miniGameData)
     {
         base.InitGame(miniGameData);
-        
+        //打开倒计时UI
+        OpenCountDownUI(miniGameData);
     }
 
     public override void StartGame()

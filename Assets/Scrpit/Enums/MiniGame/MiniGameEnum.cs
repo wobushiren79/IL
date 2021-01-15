@@ -1,13 +1,15 @@
 ﻿using UnityEngine;
 using UnityEditor;
 
-public enum MiniGameEnum 
+public enum MiniGameEnum
 {
-    Cooking=1,//烹饪游戏
-    Barrage=2,//弹幕游戏
+    Cooking = 1,//烹饪游戏
+    Barrage = 2,//弹幕游戏
     Account = 3,//算账游戏
     Debate = 4,//辩论游戏 （斗魅）
-    Combat =5,//战斗游戏
+    Combat = 5,//战斗游戏
+
+    Birth = 101,//生孩子啪啪啪小游戏
 }
 
 public class MiniGameEnumTools
@@ -36,6 +38,9 @@ public class MiniGameEnumTools
                 break;
             case MiniGameEnum.Combat:
                 miniGameData = new MiniGameCombatBean();
+                break;
+            case MiniGameEnum.Birth:
+                miniGameData = new MiniGameBirthBean();
                 break;
         }
         return miniGameData;
