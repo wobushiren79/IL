@@ -3,7 +3,7 @@ using UnityEditor;
 using UnityEngine.UI;
 using System.Collections.Generic;
 
-public class UIGameTest : UIGameComponent
+public class UIGameTest : BaseUIComponent
 {
     public InputField etStoryId;
     public Button btStoryCreate;

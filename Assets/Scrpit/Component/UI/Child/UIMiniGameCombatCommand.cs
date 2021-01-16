@@ -45,7 +45,7 @@ public class UIMiniGameCombatCommand : BaseUIChildComponent<UIMiniGameCombat>, D
     /// </summary>
     public void CommandFight()
     {
-        uiComponent.uiGameManager.audioHandler.PlaySound(AudioSoundEnum.ButtonForNormal);
+        ((UIGameManager)uiComponent.uiManager).audioHandler.PlaySound(AudioSoundEnum.ButtonForNormal);
         uiComponent.miniGameData.SetRoundActionCommand(MiniGameCombatCommand.Fight);
         uiComponent.OpenSelectCharacter(1, 2);
     }
@@ -55,15 +55,15 @@ public class UIMiniGameCombatCommand : BaseUIChildComponent<UIMiniGameCombat>, D
     /// </summary>
     public void CommandSkill()
     {
-        uiComponent.uiGameManager.audioHandler.PlaySound(AudioSoundEnum.ButtonForNormal);
+        ((UIGameManager)uiComponent.uiManager).audioHandler.PlaySound(AudioSoundEnum.ButtonForNormal);
         uiComponent.miniGameData.SetRoundActionCommand(MiniGameCombatCommand.Skill);
         NpcAIMiniGameCombatCpt npcCpt = uiComponent.miniGameData.GetRoundActionCharacter();
-        SkillInfoHandler skillInfoHandler = uiComponent.uiGameManager.skillInfoHandler;
+        SkillInfoHandler skillInfoHandler = ((UIGameManager)uiComponent.uiManager).skillInfoHandler;
         //获取角色拥有的技能
         List<long> listSkill = npcCpt.characterMiniGameData.characterData.attributes.listSkills;
         List<SkillInfoBean> listSkillInfo=  skillInfoHandler.GetSkillByIds(listSkill);
 
-        DialogManager dialogManager = uiComponent.uiGameManager.dialogManager;
+        DialogManager dialogManager = ((UIGameManager)uiComponent.uiManager).dialogManager;
         DialogBean dialogData = new DialogBean();
         PickForSkillDialogView pickForSkillDialog = dialogManager.CreateDialog<PickForSkillDialogView>(DialogEnum.PickForSkill, this, dialogData);
         Dictionary<long, int> listUsedSkill = npcCpt.characterMiniGameData.listUsedSkill;
@@ -75,10 +75,10 @@ public class UIMiniGameCombatCommand : BaseUIChildComponent<UIMiniGameCombat>, D
     /// </summary>
     public void CommandItems()
     {
-        uiComponent.uiGameManager.audioHandler.PlaySound(AudioSoundEnum.ButtonForNormal);
+        ((UIGameManager)uiComponent.uiManager).audioHandler.PlaySound(AudioSoundEnum.ButtonForNormal);
         uiComponent.miniGameData.SetRoundActionCommand(MiniGameCombatCommand.Items);
 
-        DialogManager dialogManager = uiComponent.uiGameManager.dialogManager;
+        DialogManager dialogManager = ((UIGameManager)uiComponent.uiManager).dialogManager;
         DialogBean dialogData = new DialogBean();
         PickForItemsDialogView pickForItemsDialog = dialogManager.CreateDialog<PickForItemsDialogView>(DialogEnum.PickForItems, this, dialogData);
         pickForItemsDialog.SetData(new List<GeneralEnum>() { GeneralEnum.Medicine }, PopupItemsSelection.SelectionTypeEnum.Use);
@@ -89,7 +89,7 @@ public class UIMiniGameCombatCommand : BaseUIChildComponent<UIMiniGameCombat>, D
     /// </summary>
     public void CommandPass()
     {
-        uiComponent.uiGameManager.audioHandler.PlaySound(AudioSoundEnum.ButtonForNormal);
+        ((UIGameManager)uiComponent.uiManager).audioHandler.PlaySound(AudioSoundEnum.ButtonForNormal);
         uiComponent.miniGameData.SetRoundActionCommand(MiniGameCombatCommand.Pass);
         if (callBack != null)
             callBack.PassComplete();
@@ -100,7 +100,7 @@ public class UIMiniGameCombatCommand : BaseUIChildComponent<UIMiniGameCombat>, D
     /// </summary>
     public void CommandEscape()
     {
-        MiniGameCombatHandler miniGameCombatHandler = uiComponent.uiGameManager.miniGameCombatHandler;
+        MiniGameCombatHandler miniGameCombatHandler = ((UIGameManager)uiComponent.uiManager).miniGameCombatHandler;
         Close();
         miniGameCombatHandler.EndGame(MiniGameResultEnum.Escape);
     }

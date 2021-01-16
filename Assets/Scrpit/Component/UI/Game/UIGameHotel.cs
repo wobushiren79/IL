@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using System.Collections;
 using System.Linq;
 
-public class UIGameHotel : UIGameComponent
+public class UIGameHotel : BaseUIComponent
 {
     public Button btBack;
     public GameObject objBedContainer;

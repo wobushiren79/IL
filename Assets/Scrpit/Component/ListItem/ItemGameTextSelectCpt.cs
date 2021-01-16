@@ -67,7 +67,7 @@ public class ItemGameTextSelectCpt : ItemGameBaseCpt, DialogView.IDialogCallBack
                     uiGameManager.npcInfoManager);
                 if (!itemPreData.isPre)
                 {
-                    uiGameText.uiGameManager.toastManager.ToastHint(itemPreData.spPreIcon, itemPreData.preFailStr);
+                    uiGameManager.toastManager.ToastHint(itemPreData.spPreIcon, itemPreData.preFailStr);
                     return;
                 }
             }

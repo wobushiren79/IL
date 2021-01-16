@@ -3,7 +3,7 @@ using UnityEditor;
 using UnityEngine.UI;
 using DG.Tweening;
 
-public class UIBaseGamble<T, H, B> : UIGameComponent, DialogView.IDialogCallBack
+public class UIBaseGamble<T, H, B> : BaseUIComponent, DialogView.IDialogCallBack
 
     where T : GambleBaseBean
     where H : BaseGambleHandler<T, B>

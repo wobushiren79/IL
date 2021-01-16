@@ -29,7 +29,7 @@ public class UIGameStatisticsForCustomer : BaseUIChildComponent<UIGameStatistics
     /// </summary>
     public void InitNormalCustomer()
     {
-        UserAchievementBean userAchievement = uiComponent.uiGameManager.gameDataManager.gameData.GetAchievementData();
+        UserAchievementBean userAchievement = ((UIGameManager)uiComponent.uiManager).gameDataManager.gameData.GetAchievementData();
         if (tvNormalCustomerNumber != null)
             tvNormalCustomerNumber.text = GameCommonInfo.GetUITextById(323) + " " + userAchievement.GetNumberForCustomerFoodByType(CustomerTypeEnum.Normal) + GameCommonInfo.GetUITextById(82);
     }
@@ -40,10 +40,10 @@ public class UIGameStatisticsForCustomer : BaseUIChildComponent<UIGameStatistics
     public IEnumerator InitTeamCustomer()
     {
         CptUtil.RemoveChildsByActive(objTeamCustomerContainer);
-        NpcInfoManager npcInfoManager = uiComponent.uiGameManager.npcInfoManager;
-        NpcTeamManager npcTeamManager = uiComponent.uiGameManager.npcTeamManager;
+        NpcInfoManager npcInfoManager = ((UIGameManager)uiComponent.uiManager).npcInfoManager;
+        NpcTeamManager npcTeamManager = ((UIGameManager)uiComponent.uiManager).npcTeamManager;
 
-        UserAchievementBean userAchievement = uiComponent.uiGameManager.gameDataManager.gameData.GetAchievementData();
+        UserAchievementBean userAchievement = ((UIGameManager)uiComponent.uiManager).gameDataManager.gameData.GetAchievementData();
         if (tvTeamCustomerNumber != null)
             tvTeamCustomerNumber.text = GameCommonInfo.GetUITextById(323) + " " + userAchievement.GetNumberForCustomerFoodByType(CustomerTypeEnum.Team) + GameCommonInfo.GetUITextById(82);
         //查询所有团队
@@ -84,8 +84,8 @@ public class UIGameStatisticsForCustomer : BaseUIChildComponent<UIGameStatistics
     {
         CptUtil.RemoveChildsByActive(objFriendCustomerContainer);
 
-        NpcInfoManager npcInfoManager = uiComponent.uiGameManager.npcInfoManager;
-        GameDataManager gameDataManager = uiComponent.uiGameManager.gameDataManager;
+        NpcInfoManager npcInfoManager = ((UIGameManager)uiComponent.uiManager).npcInfoManager;
+        GameDataManager gameDataManager = ((UIGameManager)uiComponent.uiManager).gameDataManager;
         UserAchievementBean userAchievement = gameDataManager.gameData.GetAchievementData();
 
         //设置数量

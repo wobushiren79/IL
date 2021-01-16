@@ -4,7 +4,7 @@ using UnityEngine.UI;
 using DG.Tweening;
 using System.Collections.Generic;
 
-public class UIGameText : UIGameComponent, TextInfoManager.ICallBack, DialogView.IDialogCallBack
+public class UIGameText : BaseUIComponent, TextInfoManager.ICallBack, DialogView.IDialogCallBack
 {
     [Header("控件")]
     public UIGameTextForBook uiForBook;

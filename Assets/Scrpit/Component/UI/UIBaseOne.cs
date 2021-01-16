@@ -2,7 +2,7 @@
 using UnityEditor;
 using UnityEngine.UI;
 
-public class UIBaseOne : UIGameComponent,DialogView.IDialogCallBack
+public class UIBaseOne : BaseUIComponent ,DialogView.IDialogCallBack
 {
     //返回按钮
     public Button btBack;

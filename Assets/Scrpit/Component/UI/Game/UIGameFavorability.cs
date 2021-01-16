@@ -3,7 +3,7 @@ using UnityEditor;
 using UnityEngine.UI;
 using System.Collections.Generic;
 using System.Collections;
-public class UIGameFavorability : UIGameComponent
+public class UIGameFavorability : BaseUIComponent
 {
     public Button btBack;
 

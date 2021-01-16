@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using UnityEditor;
 using UnityEngine.UI;
-public class UIMainMaker : UIGameComponent
+public class UIMainMaker : BaseUIComponent
 {
     public Button btBack;
 

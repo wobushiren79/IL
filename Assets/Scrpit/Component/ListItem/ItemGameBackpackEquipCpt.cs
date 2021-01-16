@@ -196,11 +196,11 @@ public class ItemGameBackpackEquipCpt : ItemGameBackpackCpt, SkillInfoManager.IC
         }
         SkillInfoBean skillInfo = listData[0];
         bool isPre = PreTypeEnumTools.CheckIsAllPre(
-            uiGameManager.gameItemsManager,
+           uiGameManager.gameItemsManager,
             uiGameManager.iconDataManager,
             uiGameManager.characterDressManager,
             uiGameManager.innFoodManager,
-            uiGameManager.npcInfoManager,
+           uiGameManager.npcInfoManager,
             uiGameManager.gameDataManager.gameData, characterData, skillInfo.pre_data, out string reason);
         if (!isPre)
         {

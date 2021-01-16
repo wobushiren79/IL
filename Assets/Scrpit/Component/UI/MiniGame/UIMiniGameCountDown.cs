@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using System.Collections;
 using DG.Tweening;
 
-public class UIMiniGameCountDown : UIGameComponent
+public class UIMiniGameCountDown : BaseUIComponent
 {
     public GameObject objTarget;
     public GameObject objCountDown;

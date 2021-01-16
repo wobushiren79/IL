@@ -4,7 +4,7 @@ using System;
 using UnityEngine.UI;
 using System.Collections.Generic;
 
-public class UIGameWorkerDetails : UIGameComponent, IRadioGroupCallBack
+public class UIGameWorkerDetails : BaseUIComponent, IRadioGroupCallBack
 {
     [Header("控件")]
     public CharacterUICpt characterUICpt;

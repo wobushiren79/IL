@@ -4,7 +4,7 @@ using UnityEngine.UI;
 using System.Collections.Generic;
 using DG.Tweening;
 
-public class UIMainCreate : UIGameComponent,
+public class UIMainCreate : BaseUIComponent,
     IRadioGroupCallBack,
     ColorView.ICallBack,
     SelectView.ICallBack,

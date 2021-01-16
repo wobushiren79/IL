@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using UnityEditor;
 
-public class UIBaseMiniGame<T> : UIGameComponent where T: MiniGameBaseBean
+public class UIBaseMiniGame<T> : BaseUIComponent where T: MiniGameBaseBean
 {
     //游戏数据
     public T miniGameData;

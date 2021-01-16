@@ -3,7 +3,7 @@ using UnityEditor;
 using UnityEngine.UI;
 using System;
 using DG.Tweening;
-public class UIMiniGameEnd : UIGameComponent
+public class UIMiniGameEnd : BaseUIComponent
 {
     //游戏结果
     public GameObject objHalo;

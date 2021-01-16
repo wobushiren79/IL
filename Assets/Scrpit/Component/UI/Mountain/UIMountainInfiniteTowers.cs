@@ -3,7 +3,7 @@ using UnityEngine.UI;
 using System.Collections;
 using System.Collections.Generic;
 
-public class UIMountainInfiniteTowers : UIGameComponent, DialogView.IDialogCallBack
+public class UIMountainInfiniteTowers : BaseUIComponent, DialogView.IDialogCallBack
 {
     //返回按钮
     public Button btBack;

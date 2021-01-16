@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Collections;
 
-public class UIGameMenu : UIGameComponent, TextSearchView.ICallBack
+public class UIGameMenu : BaseUIComponent, TextSearchView.ICallBack
 {
     //返回按钮
     [Header("控件")]

@@ -24,13 +24,13 @@ public class UIGameStatisticsForMenu : BaseUIChildComponent<UIGameStatistics>
     {
         StopAllCoroutines();
         CptUtil.RemoveChildsByActive(objMenuContainer);
-        Dictionary<long, MenuInfoBean> listMenu= uiComponent.uiGameManager.innFoodManager.listMenuData;
+        Dictionary<long, MenuInfoBean> listMenu= ((UIGameManager)uiComponent.uiManager).innFoodManager.listMenuData;
         StartCoroutine(CoroutineForCreateMenuList(listMenu));
     }
 
     public IEnumerator CoroutineForCreateMenuList(Dictionary<long, MenuInfoBean> listData)
     {
-        GameDataManager gameDataManager = uiComponent.uiGameManager.gameDataManager;
+        GameDataManager gameDataManager = ((UIGameManager)uiComponent.uiManager).gameDataManager;
         foreach (var itemData in listData)
         {
             MenuOwnBean menuOwn= gameDataManager.gameData.GetMenuById(itemData.Key);

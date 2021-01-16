@@ -4,7 +4,7 @@ using DG.Tweening;
 using UnityEngine.UI;
 using System;
 
-public class UIMiniGameAccount : UIGameComponent
+public class UIMiniGameAccount : BaseUIComponent
 {
     public GameObject objMoneyL;
     public Text tvMoneyL;

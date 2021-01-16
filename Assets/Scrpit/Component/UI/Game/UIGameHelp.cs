@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using UnityEditor;
 using UnityEngine.UI;
-public class UIGameHelp : UIGameComponent,IRadioGroupCallBack
+public class UIGameHelp : BaseUIComponent,IRadioGroupCallBack
 {
     public RadioGroupView rgHelpType;
     public Button btExit;

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using DG.Tweening;
-public class UIMainStart : UIGameComponent
+public class UIMainStart : BaseUIComponent
 {
     public Button btMaker;
     public Text tvTitle;

@@ -6,7 +6,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 
-public class UIGameEquip : UIGameComponent, TextSearchView.ICallBack
+public class UIGameEquip : BaseUIComponent, TextSearchView.ICallBack
 {
     [Header("控件")]
     public Button btBack;

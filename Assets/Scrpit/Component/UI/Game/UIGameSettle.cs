@@ -4,7 +4,7 @@ using UnityEngine.UI;
 using DG.Tweening;
 using System.Collections.Generic;
 
-public class UIGameSettle : UIGameComponent
+public class UIGameSettle : BaseUIComponent
 {
     public Button btSubmit;
 

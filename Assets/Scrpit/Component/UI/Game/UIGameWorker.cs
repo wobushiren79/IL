@@ -6,7 +6,7 @@ using DG.Tweening;
 using System.Linq;
 using System.Collections;
 
-public class UIGameWorker : UIGameComponent
+public class UIGameWorker : BaseUIComponent
 {
     public Text tvNumber;
     public Button btBack;

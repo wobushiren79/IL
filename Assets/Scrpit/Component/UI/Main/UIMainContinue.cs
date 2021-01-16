@@ -4,7 +4,7 @@ using UnityEngine.UI;
 using System.Collections.Generic;
 using DG.Tweening;
 
-public class UIMainContinue : UIGameComponent, GameDataManager.IGameDataSimpleCallBack
+public class UIMainContinue : BaseUIComponent, GameDataManager.IGameDataSimpleCallBack
 {
     //返回按钮
     public Button btBack;

@@ -9,9 +9,11 @@ public class SceneMainInit : BaseSceneInit
         base.Start();
         if (gameItemsManager != null)
             gameItemsManager.itemsInfoController.GetAllItemsInfo();
-        audioHandler.PlayMusicForLoop( AudioMusicEnum.Main);
-
-        
+  
+        //打开UI
+        UIHandler.Instance.manager.OpenUI(UIEnum.MainStart);
+        //播放主界面音乐
+        AudioHandler.Instance.PlayMusicForLoop(AudioMusicEnum.Main);
     }
 
 }

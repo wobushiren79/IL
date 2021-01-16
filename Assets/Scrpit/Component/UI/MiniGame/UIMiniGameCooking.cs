@@ -5,7 +5,7 @@ using DG.Tweening;
 using System.Collections.Generic;
 using System.Collections;
 
-public class UIMiniGameCooking : UIGameComponent
+public class UIMiniGameCooking : BaseUIComponent
 {
     public enum MiniGameCookingPhaseTypeEnum
     {

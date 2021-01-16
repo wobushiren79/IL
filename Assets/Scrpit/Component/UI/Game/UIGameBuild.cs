@@ -5,7 +5,7 @@ using UnityEngine.AI;
 using System.Collections.Generic;
 using UnityEngine.Tilemaps;
 
-public class UIGameBuild : UIGameComponent, IRadioGroupCallBack
+public class UIGameBuild : BaseUIComponent, IRadioGroupCallBack
 {
     public Text tvAesthetics;
     public Text tvNull;

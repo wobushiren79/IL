@@ -18,8 +18,8 @@ public class UIGameStatisticsForRevenue : BaseUIChildComponent<UIGameStatistics>
     public override void Awake()
     {
         base.Awake();
-        gameDataManager = uiComponent.uiGameManager.gameDataManager;
-        gameTimeHandler = uiComponent.uiGameManager.gameTimeHandler;
+        gameDataManager = ((UIGameManager)uiComponent.uiManager).gameDataManager;
+        gameTimeHandler = ((UIGameManager)uiComponent.uiManager).gameTimeHandler;
         if (rgMonth != null)
             rgMonth.SetCallBack(this);
         if (ddYear != null)
@@ -65,7 +65,7 @@ public class UIGameStatisticsForRevenue : BaseUIChildComponent<UIGameStatistics>
     #region 季节选择回调
     public void RadioButtonSelected(RadioGroupView rgView, int position, RadioButtonView rbview)
     {
-        uiComponent.uiGameManager.audioHandler.PlaySound(AudioSoundEnum.ButtonForNormal);
+        ((UIGameManager)uiComponent.uiManager).audioHandler.PlaySound(AudioSoundEnum.ButtonForNormal);
         int month = 1;
         switch (rbview.name)
         {

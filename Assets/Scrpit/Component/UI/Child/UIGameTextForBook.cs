@@ -20,14 +20,14 @@ public class UIGameTextForBook : BaseUIChildComponent<UIGameText>
         transform.DOKill();
         transform.localScale = new Vector3(1, 1, 1);
         transform.DOScaleX(0, 0.2f).From();
-        if (uiComponent.uiGameManager.gameTimeHandler != null)
-            uiComponent.uiGameManager.gameTimeHandler.SetTimeStop();
+        if (((UIGameManager)uiComponent.uiManager).gameTimeHandler != null)
+            ((UIGameManager)uiComponent.uiManager).gameTimeHandler.SetTimeStop();
     }
 
     private void OnDisable()
     {
-        if (uiComponent.uiGameManager.gameTimeHandler != null)
-            uiComponent.uiGameManager.gameTimeHandler.SetTimeRestore();
+        if (((UIGameManager)uiComponent.uiManager).gameTimeHandler != null)
+            ((UIGameManager)uiComponent.uiManager).gameTimeHandler.SetTimeRestore();
     }
 
     /// <summary>

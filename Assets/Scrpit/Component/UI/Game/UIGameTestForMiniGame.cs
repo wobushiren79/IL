@@ -4,7 +4,7 @@ using UnityEngine.UI;
 using System.Collections.Generic;
 using System.Linq;
 
-public class UIGameTestForMiniGame : UIGameComponent
+public class UIGameTestForMiniGame : BaseUIComponent
 {
     public GameObject objMiniGameCombat;
     public Button btCombat;

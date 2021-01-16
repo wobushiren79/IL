@@ -4,7 +4,7 @@ using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using DG.Tweening;
 using System.Collections.Generic;
-public class UIGameMain : UIGameComponent, DialogView.IDialogCallBack, IRadioGroupCallBack, IBaseObserver
+public class UIGameMain : BaseUIComponent, DialogView.IDialogCallBack, IRadioGroupCallBack, IBaseObserver
 {
     [Header("控件")]
     public InfoPromptPopupButton popupWorker;
