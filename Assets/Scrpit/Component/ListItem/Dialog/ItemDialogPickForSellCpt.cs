@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using UnityEditor;
 using UnityEngine.UI;
-public class ItemDialogPickForSellCpt : BaseMonoBehaviour,DialogView.IDialogCallBack
+public class ItemDialogPickForSellCpt : BaseMonoBehaviour, DialogView.IDialogCallBack
 {
     public Image ivIcon;
     public Text tvName;
@@ -27,13 +27,13 @@ public class ItemDialogPickForSellCpt : BaseMonoBehaviour,DialogView.IDialogCall
     public void Awake()
     {
         gameDataManager = Find<GameDataManager>(ImportantTypeEnum.GameDataManager);
-        gameItemsManager = Find<GameItemsManager>( ImportantTypeEnum.GameItemsManager);
+        gameItemsManager = Find<GameItemsManager>(ImportantTypeEnum.GameItemsManager);
         innBuildManager = Find<InnBuildManager>(ImportantTypeEnum.BuildManager);
         iconDataManager = Find<IconDataManager>(ImportantTypeEnum.UIManager);
         characterDressManager = Find<CharacterDressManager>(ImportantTypeEnum.CharacterManager);
         dialogManager = Find<DialogManager>(ImportantTypeEnum.DialogManager);
         if (etSellNumber)
-           etSellNumber.onEndEdit.AddListener(OnEndEditForNumber);
+            etSellNumber.onEndEdit.AddListener(OnEndEditForNumber);
         if (btSub)
             btSub.onClick.AddListener(OnClickForSub);
         if (btAdd)
@@ -53,11 +53,11 @@ public class ItemDialogPickForSellCpt : BaseMonoBehaviour,DialogView.IDialogCall
         this.storeInfo = storeInfo;
         Sprite spIcon = null;
         string name = "???";
-        if (storeInfo.mark_type==1)
+        if (storeInfo.mark_type == 1)
         {
-            ItemsInfoBean itemsInfo= gameItemsManager.GetItemsById(itemData.itemId);
-         
-            spIcon= GeneralEnumTools.GetGeneralSprite(itemsInfo, iconDataManager, gameItemsManager, characterDressManager);
+            ItemsInfoBean itemsInfo = gameItemsManager.GetItemsById(itemData.itemId);
+
+            spIcon = GeneralEnumTools.GetGeneralSprite(itemsInfo, iconDataManager, gameItemsManager, characterDressManager);
             if (itemsInfo != null)
             {
                 name = itemsInfo.name;
@@ -65,7 +65,7 @@ public class ItemDialogPickForSellCpt : BaseMonoBehaviour,DialogView.IDialogCall
         }
         else if (storeInfo.mark_type == 2)
         {
-            BuildItemBean buildItem=  innBuildManager.GetBuildDataById(itemData.itemId);
+            BuildItemBean buildItem = innBuildManager.GetBuildDataById(itemData.itemId);
             spIcon = BuildItemTypeEnumTools.GetBuildItemSprite(innBuildManager, buildItem);
             if (buildItem != null)
             {
@@ -116,8 +116,8 @@ public class ItemDialogPickForSellCpt : BaseMonoBehaviour,DialogView.IDialogCall
     {
 
         if (priceShowView != null)
-            priceShowView.SetPrice(number, 
-                   storeInfo.price_l/ sellRate, storeInfo.price_m / sellRate, storeInfo.price_s / sellRate,
+            priceShowView.SetPrice(number,
+                   storeInfo.price_l / sellRate, storeInfo.price_m / sellRate, storeInfo.price_s / sellRate,
                    storeInfo.guild_coin / sellRate,
                    storeInfo.trophy_elementary / sellRate, storeInfo.trophy_intermediate / sellRate, storeInfo.trophy_advanced / sellRate, storeInfo.trophy_legendary / sellRate);
     }
@@ -179,8 +179,8 @@ public class ItemDialogPickForSellCpt : BaseMonoBehaviour,DialogView.IDialogCall
     public void OnClickForSell()
     {
         DialogBean dialogData = new DialogBean();
-        dialogData.content = string.Format("确认出售{0} x {1}?",tvName.text,sellNumber+"");
-        dialogManager.CreateDialog( DialogEnum.Normal,this, dialogData);
+        dialogData.content = string.Format(GameCommonInfo.GetUITextById(3102), tvName.text, sellNumber + "");
+        dialogManager.CreateDialog<DialogView>(DialogEnum.Normal, this, dialogData);
     }
 
     /// <summary>

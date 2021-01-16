@@ -15,8 +15,9 @@ public class UIGameStatisticsForRevenue : BaseUIChildComponent<UIGameStatistics>
     public List<int> listYear;
     public UserRevenueBean userRevenueData;
 
-    private void Awake()
+    public override void Awake()
     {
+        base.Awake();
         gameDataManager = uiComponent.uiGameManager.gameDataManager;
         gameTimeHandler = uiComponent.uiGameManager.gameTimeHandler;
         if (rgMonth != null)

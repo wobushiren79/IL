@@ -88,7 +88,7 @@ public class ItemGameTextSelectCpt : ItemGameBaseCpt, DialogView.IDialogCallBack
         else
         {
             DialogBean dialogBean = new DialogBean();
-            PickForCharacterDialogView dialogView = (PickForCharacterDialogView)uiGameManager.dialogManager.CreateDialog(DialogEnum.PickForCharacter, this, dialogBean);
+            PickForCharacterDialogView dialogView = uiGameManager.dialogManager.CreateDialog<PickForCharacterDialogView>(DialogEnum.PickForCharacter, this, dialogBean);
             PreTypeForMiniGameEnumTools.GetPlayerNumber(textData.pre_data_minigame, out int playerNumber);
             dialogView.SetPickCharacterMax(playerNumber);
         }
@@ -100,7 +100,7 @@ public class ItemGameTextSelectCpt : ItemGameBaseCpt, DialogView.IDialogCallBack
         if (CheckUtil.StringIsNull(textData.pre_data_minigame))
             return;
         UIGameText uiGameText = (UIGameText)uiComponent;
-        PickForCharacterDialogView pickDialog = (PickForCharacterDialogView)dialogView;
+        PickForCharacterDialogView pickDialog = dialogView as PickForCharacterDialogView;
         if (uiGameText.callBack != null)
             uiGameText.callBack.UITextSelectResult(textData, pickDialog.GetPickCharacter());
     }

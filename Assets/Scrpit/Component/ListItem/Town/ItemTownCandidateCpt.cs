@@ -46,7 +46,7 @@ public class ItemTownCandidateCpt : ItemGameBaseCpt, DialogView.IDialogCallBack
         //确认
         DialogBean dialogBean = new DialogBean();
         dialogBean.content = string.Format(GameCommonInfo.GetUITextById(3061), characterData.baseInfo.priceS + "", characterData.baseInfo.name + "");
-        dialogManager.CreateDialog(DialogEnum.Normal, this, dialogBean);
+        dialogManager.CreateDialog<DialogView>(DialogEnum.Normal, this, dialogBean);
     }
 
     public void SetData(CharacterBean characterData)

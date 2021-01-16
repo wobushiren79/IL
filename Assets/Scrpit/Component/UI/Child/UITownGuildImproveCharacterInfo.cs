@@ -16,8 +16,9 @@ public class UITownGuildImproveCharacterInfo : BaseUIChildComponent<UITownGuildI
 
     protected StoreInfoManager storeInfoManager;
 
-    private void Awake()
+    public override void Awake()
     {
+        base.Awake();
         storeInfoManager = Find<StoreInfoManager>(ImportantTypeEnum.StoreInfoManager);
     }
 

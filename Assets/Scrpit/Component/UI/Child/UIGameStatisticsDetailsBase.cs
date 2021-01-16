@@ -10,8 +10,9 @@ public class UIGameStatisticsDetailsBase<T> : BaseUIChildComponent<T>
 
     protected IconDataManager iconDataManager;
 
-    public virtual void Awake()
+    public override void Awake()
     {
+        base.Awake();
         iconDataManager = Find<IconDataManager>(ImportantTypeEnum.UIManager);
     }
 

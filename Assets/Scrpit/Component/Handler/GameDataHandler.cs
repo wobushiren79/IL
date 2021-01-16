@@ -259,7 +259,7 @@ public class GameDataHandler : BaseHandler, DialogView.IDialogCallBack, IBaseObs
                     title = GameCommonInfo.GetUITextById(1048),
                     content = toastStr
                 };
-                AchievementDialogView achievementDialog = (AchievementDialogView)dialogManager.CreateDialog(DialogEnum.Achievement, this, dialogData);
+                AchievementDialogView achievementDialog = dialogManager.CreateDialog<AchievementDialogView>(DialogEnum.Achievement, this, dialogData);
                 achievementDialog.SetData(2, "ui_features_bed");
             }
         }
@@ -306,7 +306,7 @@ public class GameDataHandler : BaseHandler, DialogView.IDialogCallBack, IBaseObs
                     title = GameCommonInfo.GetUITextById(1048),
                     content = toastStr
                 };
-                AchievementDialogView achievementDialog = (AchievementDialogView)dialogManager.CreateDialog(DialogEnum.Achievement, this, dialogData);
+                AchievementDialogView achievementDialog = dialogManager.CreateDialog<AchievementDialogView>(DialogEnum.Achievement, this, dialogData);
                 achievementDialog.SetData(1, menuInfo.icon_key);
             }
         }

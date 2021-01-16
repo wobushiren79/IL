@@ -411,7 +411,7 @@ public class UIGameMain : UIGameComponent, DialogView.IDialogCallBack, IRadioGro
             DialogBean dialogBean = new DialogBean();
             dialogBean.content = GameCommonInfo.GetUITextById(3007);
             dialogBean.dialogPosition = 1;
-            uiGameManager.dialogManager.CreateDialog(DialogEnum.Normal, this, dialogBean);
+            uiGameManager.dialogManager.CreateDialog<DialogView>(DialogEnum.Normal, this, dialogBean);
         }
         else
         {
@@ -468,7 +468,7 @@ public class UIGameMain : UIGameComponent, DialogView.IDialogCallBack, IRadioGro
         DialogBean dialogBean = new DialogBean();
         dialogBean.content = GameCommonInfo.GetUITextById(3004);
         dialogBean.dialogPosition = 0;
-        uiGameManager.dialogManager.CreateDialog(DialogEnum.Normal, this, dialogBean);
+        uiGameManager.dialogManager.CreateDialog<DialogView>(DialogEnum.Normal, this, dialogBean);
     }
 
     public void OnClickForJumpTime()
@@ -479,7 +479,7 @@ public class UIGameMain : UIGameComponent, DialogView.IDialogCallBack, IRadioGro
         }
         uiGameManager.audioHandler.PlaySound(AudioSoundEnum.ButtonForNormal);
         DialogBean dialogBean = new DialogBean();
-        JumpTimeDialogView jumpTimeDialog = (JumpTimeDialogView)uiGameManager.dialogManager.CreateDialog(DialogEnum.JumpTime, this, dialogBean);
+        JumpTimeDialogView jumpTimeDialog = uiGameManager.dialogManager.CreateDialog<JumpTimeDialogView>(DialogEnum.JumpTime, this, dialogBean);
         jumpTimeDialog.SetData();
     }
 

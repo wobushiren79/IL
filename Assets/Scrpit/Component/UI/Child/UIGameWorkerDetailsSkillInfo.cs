@@ -11,8 +11,9 @@ public class UIGameWorkerDetailsSkillInfo : BaseUIChildComponent<UIGameWorkerDet
 
     protected SkillInfoManager skillInfoManager;
     protected IconDataManager iconDataManager;
-    private void Awake()
+    public override void Awake()
     {
+        base.Awake();
         skillInfoManager = Find<SkillInfoManager>(ImportantTypeEnum.SkillManager);
         iconDataManager = Find<IconDataManager>(ImportantTypeEnum.UIManager);
     }

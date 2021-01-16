@@ -8,8 +8,9 @@ public class UIGameTextForBook : BaseUIChildComponent<UIGameText>
     public Text tvBookContent;
     public Button btBookBack;
 
-    private void Awake()
+    public override void Awake()
     {
+        base.Awake();
         if (btBookBack != null)
             btBookBack.onClick.AddListener(OnClickBack);
     }

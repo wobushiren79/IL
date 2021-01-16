@@ -67,7 +67,7 @@ public class ItemTownBankLoansCpt : ItemGameBaseCpt, DialogView.IDialogCallBack
         {
             content = string.Format(GameCommonInfo.GetUITextById(3091), tvMoneyS.text, tvDays.text)
         };
-        uiGameManager.dialogManager.CreateDialog(DialogEnum.Normal, this, dialogData);
+        uiGameManager.dialogManager.CreateDialog<DialogView>(DialogEnum.Normal, this, dialogData);
 
     }
 

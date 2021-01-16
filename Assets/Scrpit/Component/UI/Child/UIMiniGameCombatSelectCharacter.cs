@@ -22,8 +22,9 @@ public class UIMiniGameCombatSelectCharacter : BaseUIChildComponent<UIMiniGameCo
     protected int selectNumber;
     protected ICallBack callBack;
 
-    private void Awake()
+    public override void Awake()
     {
+        base.Awake();
         miniGameCombatBuilder = FindInChildren<MiniGameCombatBuilder>(ImportantTypeEnum.MiniGameBuilder);
         miniGameCombatHandler = Find<MiniGameCombatHandler>(ImportantTypeEnum.MiniGameHandler);
         uiGameManager = Find<UIGameManager>(ImportantTypeEnum.GameUI);

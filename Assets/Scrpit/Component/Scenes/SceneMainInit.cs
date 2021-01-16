@@ -10,6 +10,8 @@ public class SceneMainInit : BaseSceneInit
         if (gameItemsManager != null)
             gameItemsManager.itemsInfoController.GetAllItemsInfo();
         audioHandler.PlayMusicForLoop( AudioMusicEnum.Main);
+
+        
     }
 
 }

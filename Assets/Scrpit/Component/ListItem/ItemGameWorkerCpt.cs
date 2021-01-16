@@ -295,7 +295,7 @@ public class ItemGameWorkerCpt : ItemGameBaseCpt, DialogView.IDialogCallBack, Wo
             {
                 DialogBean dialogData = new DialogBean();
                 dialogData.content = string.Format(GameCommonInfo.GetUITextById(3063), characterData.baseInfo.name);
-                dialogManager.CreateDialog(DialogEnum.Normal, this, dialogData);
+                dialogManager.CreateDialog<DialogView>(DialogEnum.Normal, this, dialogData);
             }
             else
             {
@@ -313,7 +313,7 @@ public class ItemGameWorkerCpt : ItemGameBaseCpt, DialogView.IDialogCallBack, Wo
             audioHandler.PlaySound(AudioSoundEnum.ButtonForNormal);
         DialogBean dialogData = new DialogBean();
         // dialogData.content = string.Format(GameCommonInfo.GetUITextById(3063), characterData.baseInfo.name);
-        PickForItemsDialogView dialogView = (PickForItemsDialogView)dialogManager.CreateDialog(DialogEnum.PickForItems, this, dialogData);
+        PickForItemsDialogView dialogView = dialogManager.CreateDialog<PickForItemsDialogView>(DialogEnum.PickForItems, this, dialogData);
         dialogView.SetData(null, PopupItemsSelection.SelectionTypeEnum.Gift);
         dialogView.SetSubmitDestroy(false);
     }
@@ -528,7 +528,7 @@ public class ItemGameWorkerCpt : ItemGameBaseCpt, DialogView.IDialogCallBack, Wo
         if (dialogView as PickForItemsDialogView)
         {
             // 如果送礼
-            PickForItemsDialogView pickForItems = (PickForItemsDialogView)dialogView;
+            PickForItemsDialogView pickForItems = dialogView as PickForItemsDialogView;
             pickForItems.GetSelectedItems(out ItemsInfoBean itemsInfo, out ItemBean itemData);
             //减去礼物
             gameDataManager.gameData.AddItemsNumber(itemsInfo.id, -1);

@@ -4,6 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.EventSystems;
 
 public class CheckUtil {
 
@@ -83,6 +84,30 @@ public class CheckUtil {
         {
             return false;
         }
+    }
+
+    /// <summary>
+    /// 是否点击到了UI
+    /// </summary>
+    /// <returns></returns>
+    public static bool IsPointerUI()
+    {
+        //点击到了UI
+        if (Application.platform == RuntimePlatform.Android || Application.platform == RuntimePlatform.IPhonePlayer)
+        {
+            if (Input.touchCount > 0)
+            {
+                int fingerId = Input.GetTouch(0).fingerId;
+                if (EventSystem.current.IsPointerOverGameObject(fingerId))
+                    return true;
+            }
+        }
+        else
+        {
+            if (EventSystem.current.IsPointerOverGameObject())
+                return true;
+        }
+        return false;
     }
 
 }

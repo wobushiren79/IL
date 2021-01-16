@@ -182,7 +182,7 @@ public class ItemTownGuildAchievementCpt : ItemGameBaseCpt
                 GetUIComponent<UITownGuildAchievement>().InitDataByType(achievementInfo.type);
             //弹出特效提示
             DialogManager dialogManager = GetUIManager<UIGameManager>().dialogManager;
-            AchievementDialogView achDialog = (AchievementDialogView)dialogManager.CreateDialog(DialogEnum.Achievement, null, null);
+            AchievementDialogView achDialog = dialogManager.CreateDialog<AchievementDialogView>(DialogEnum.Achievement, null, null);
             achDialog.SetData(achievementInfo);
             //播放音效
             uiGameManager.audioHandler.PlaySound(AudioSoundEnum.ButtonForNormal);

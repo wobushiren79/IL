@@ -313,7 +313,7 @@ public class ItemTownGuildImproveCharacterCpt : ItemGameBaseCpt, DialogView.IDia
         }
         dialogData.content = contentStr;
         dialogData.dialogPosition = type;
-        dialogManager.CreateDialog(DialogEnum.Normal, this, dialogData);
+        dialogManager.CreateDialog<DialogView>(DialogEnum.Normal, this, dialogData);
     }
 
     #region 弹窗回调

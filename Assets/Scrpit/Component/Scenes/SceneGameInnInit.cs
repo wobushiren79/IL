@@ -222,7 +222,7 @@ public class SceneGameInnInit : BaseSceneInit, IBaseObserver, DialogView.IDialog
             {
                 dialogBean.content = GameCommonInfo.GetUITextById(3014);
             }
-            dialogManager.CreateDialog(DialogEnum.Text, this, dialogBean);
+            dialogManager.CreateDialog<DialogView>(DialogEnum.Text, this, dialogBean);
         }
         else
         {

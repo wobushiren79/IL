@@ -12,8 +12,9 @@ public class UIGameWorkerDetailsBookInfo : BaseUIChildComponent<UIGameWorkerDeta
     protected GameItemsManager gameItemsManager;
     protected IconDataManager iconDataManager;
 
-    private void Awake()
+    public override void Awake()
     {
+        base.Awake();
         gameItemsManager = Find<GameItemsManager>(ImportantTypeEnum.GameItemsManager);
         iconDataManager = Find<IconDataManager>(ImportantTypeEnum.UIManager);
     }

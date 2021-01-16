@@ -273,7 +273,7 @@ public class UIGameText : UIGameComponent, TextInfoManager.ICallBack, DialogView
                     else if (textData.content.Equals(GameCommonInfo.GetUITextById(99105)))
                     {
                         DialogBean dialogData = new DialogBean();
-                        PickForItemsDialogView pickForItemsDialog = (PickForItemsDialogView)uiGameManager.dialogManager.CreateDialog(DialogEnum.PickForItems, this, dialogData);
+                        PickForItemsDialogView pickForItemsDialog = uiGameManager.dialogManager.CreateDialog<PickForItemsDialogView>(DialogEnum.PickForItems, this, dialogData);
                         pickForItemsDialog.SetData(null, PopupItemsSelection.SelectionTypeEnum.Gift);
                     }
                     //换取公会勋章
@@ -368,7 +368,7 @@ public class UIGameText : UIGameComponent, TextInfoManager.ICallBack, DialogView
         NpcInfoManager npcInfoManager= GetUIManager<UIGameManager>().npcInfoManager;
         GameDataManager gameDataManager = GetUIManager<UIGameManager>().gameDataManager;
         //获取选择物品
-        PickForItemsDialogView pickForItemsDialog = (PickForItemsDialogView)dialogView;
+        PickForItemsDialogView pickForItemsDialog = dialogView as PickForItemsDialogView;
         pickForItemsDialog.GetSelectedItems(out ItemsInfoBean itemsInfo,out ItemBean itemData);
         //获取赠送人
         CharacterBean characterData = npcInfoManager.GetCharacterDataById(mTalkNpcInfo.id);

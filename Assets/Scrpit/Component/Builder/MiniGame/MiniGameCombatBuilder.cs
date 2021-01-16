@@ -121,7 +121,7 @@ public class MiniGameCombatBuilder : BaseMiniGameBuilder
     /// </summary>
     public GameObject CreateSelectEffect(Vector3 position)
     {
-        return effectHandler.PlayEffectPS(objSelectEffectContainer, "Effect_Select_1", position);
+        return effectHandler.PlayEffect(objSelectEffectContainer, "Effect_Select_1", position,0);
     }
 
     /// <summary>
@@ -132,7 +132,7 @@ public class MiniGameCombatBuilder : BaseMiniGameBuilder
     /// <returns></returns>
     public GameObject CreateCombatEffect(string combatEffectName, Vector3 position)
     {
-       return effectHandler.PlayEffectPS(objSelectEffectContainer,combatEffectName, position);
+       return effectHandler.PlayEffect(objSelectEffectContainer,combatEffectName, position,0);
     }
 
     /// <summary>

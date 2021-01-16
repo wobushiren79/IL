@@ -204,7 +204,7 @@ public class UITownBeautySalon : UIBaseOne, IRadioGroupCallBack, ItemTownBeautyS
     public void OnClickForSelectCharacter()
     {
         DialogBean dialogData = new DialogBean();
-        PickForCharacterDialogView pickForCharacterDialog = (PickForCharacterDialogView)uiGameManager.dialogManager.CreateDialog(DialogEnum.PickForCharacter, this, dialogData);
+        PickForCharacterDialogView pickForCharacterDialog = uiGameManager.dialogManager.CreateDialog<PickForCharacterDialogView>(DialogEnum.PickForCharacter, this, dialogData);
         pickForCharacterDialog.SetPickCharacterMax(1);
 
     }
@@ -239,7 +239,7 @@ public class UITownBeautySalon : UIBaseOne, IRadioGroupCallBack, ItemTownBeautyS
             price += priceS + GameCommonInfo.GetUITextById(18);
         }
         dialogData.content = string.Format(GameCommonInfo.GetUITextById(3104), price, characterData.baseInfo.name);
-        uiGameManager.dialogManager.CreateDialog(DialogEnum.Normal, this, dialogData);
+        uiGameManager.dialogManager.CreateDialog<DialogView>(DialogEnum.Normal, this, dialogData);
     }
 
     /// <summary>

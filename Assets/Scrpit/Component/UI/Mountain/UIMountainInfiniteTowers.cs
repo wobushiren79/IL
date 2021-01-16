@@ -115,7 +115,7 @@ public class UIMountainInfiniteTowers : UIGameComponent, DialogView.IDialogCallB
         uiGameManager.audioHandler.PlaySound(AudioSoundEnum.ButtonForNormal);
         DialogBean dialogData = new DialogBean();
         dialogData.dialogPosition = 0;
-        PickForCharacterDialogView pickForCharacterDialog = (PickForCharacterDialogView)uiGameManager.dialogManager.CreateDialog(DialogEnum.PickForCharacter, this, dialogData);
+        PickForCharacterDialogView pickForCharacterDialog = uiGameManager.dialogManager.CreateDialog<PickForCharacterDialogView>(DialogEnum.PickForCharacter, this, dialogData);
         //排除不能参加的人
         List<string> listExpel = new List<string>();
         List<CharacterBean> listCharacter = uiGameManager.gameDataManager.gameData.GetAllCharacterData();
@@ -140,7 +140,7 @@ public class UIMountainInfiniteTowers : UIGameComponent, DialogView.IDialogCallB
         uiGameManager.audioHandler.PlaySound(AudioSoundEnum.ButtonForNormal);
         DialogBean dialogData = new DialogBean();
         dialogData.dialogPosition = 1;
-        PickForCharacterDialogView pickForCharacterDialog = (PickForCharacterDialogView)uiGameManager.dialogManager.CreateDialog(DialogEnum.PickForCharacter, this, dialogData);
+        PickForCharacterDialogView pickForCharacterDialog = uiGameManager.dialogManager.CreateDialog<PickForCharacterDialogView>(DialogEnum.PickForCharacter, this, dialogData);
         //排除主角和不能参加的人
         List<string> listExpel = new List<string>();
         List<CharacterBean> listCharacter = uiGameManager.gameDataManager.gameData.GetAllCharacterData();

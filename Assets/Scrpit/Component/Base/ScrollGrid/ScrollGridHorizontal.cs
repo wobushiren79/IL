@@ -116,9 +116,12 @@ public class ScrollGridHorizontal : MonoBehaviour
                         GameObject newcell = GameObject.Instantiate<GameObject>(this.tempCell);
                         newcell.SetActive(true);
                         RectTransform cellRect = newcell.GetComponent<RectTransform>();
+                        RectTransform rfTempCell = ((RectTransform)tempCell.transform);
                         cellRect.anchorMin = new Vector2(0, 1);
                         cellRect.anchorMax = new Vector2(0, 1);
-
+                        //cellRect.anchorMin = rfTempCel).anchorMin;
+                        //cellRect.anchorMax = rfTempCell.anchorMax;
+                        cellRect.sizeDelta = new Vector2(rfTempCell.rect.width, rfTempCell.rect.height);
                         float x = this.cellWidth / 2 + l * this.cellWidth;
                         float y = -r * this.cellHeight - this.cellHeight / 2;
                         cellRect.SetParent(this.scrollRect.content);

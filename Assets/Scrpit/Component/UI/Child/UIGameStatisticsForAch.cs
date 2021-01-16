@@ -13,8 +13,9 @@ public class UIGameStatisticsForAch : BaseUIChildComponent<UIGameStatistics>, Ac
     protected GameDataManager gameDataManager;
     protected AchievementInfoManager achievementInfoManager;
 
-    private void Awake()
+    public override void Awake()
     {
+        base.Awake();
         gameDataManager = Find<GameDataManager>(ImportantTypeEnum.GameDataManager);
         achievementInfoManager = Find<AchievementInfoManager>(ImportantTypeEnum.GameDataManager);
     }

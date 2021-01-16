@@ -20,8 +20,6 @@ public class BaseUIComponent : BaseMonoBehaviour
         if (uiAnimator == null)
             uiAnimator = GetComponent<Animator>();
         AutoLinkUI();
-        AutoLinkHandler();
-        AutoLinkManager();
     }
     
     /// <summary>

@@ -83,7 +83,7 @@ public abstract class BaseNormalSceneInit : BaseSceneInit,IBaseObserver, DialogV
             {
                 dialogBean.content = GameCommonInfo.GetUITextById(3014);
             }
-            dialogManager.CreateDialog(DialogEnum.Text, this, dialogBean, 5);
+            dialogManager.CreateDialog<DialogView>(DialogEnum.Text, this, dialogBean, 5);
         }
         else
         {

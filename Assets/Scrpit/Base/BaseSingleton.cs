@@ -1,33 +1,25 @@
 ﻿using UnityEngine;
 using UnityEditor;
 
-public abstract class BaseSingleton<T> : BaseMonoBehaviour  where T : BaseMonoBehaviour
+public abstract class BaseSingleton<T> where T : new()
 {
-    protected static T _instance = null;
-
-    protected BaseSingleton()
-    {
-        if (null != _instance)
-        {
-            LogUtil.LogError((typeof(T)).ToString()+"初始化不是NULL");
-        }
-        InitData();
-    }
-
+    protected static  T instance;
+    protected static object syncRoot = new Object();
     public static T Instance
     {
         get
         {
-            if (null == _instance)
+            if (instance == null)
             {
-                _instance = FindObjectOfType(typeof(T)) as T;
+                lock (syncRoot)
+                {
+                    if (instance == null)
+                    {
+                        instance = new T();
+                    }
+                }
             }
-            return _instance;
+            return instance;
         }
-    }
-
-    public virtual void InitData()
-    {
-
     }
 }

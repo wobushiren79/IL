@@ -3,12 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-public class BaseUIManager : BaseMonoBehaviour
+public class BaseUIManager : BaseManager
 {
-    public GameObject objUIContainer;
 
     //所有的UI控件
-    public List<BaseUIComponent> uiList;
+    public List<BaseUIComponent> uiList = new List<BaseUIComponent>();
 
     /// <summary>
     /// 获取打开的UI
@@ -102,7 +101,7 @@ public class BaseUIManager : BaseMonoBehaviour
     public BaseUIComponent OpenUIByName(string uiName)
     {
         BaseUIComponent uiComponent = null;
-        if (uiList == null || CheckUtil.StringIsNull(uiName))
+        if (CheckUtil.StringIsNull(uiName))
             return uiComponent;
         bool hasData = false;
         for (int i = 0; i < uiList.Count; i++)
@@ -110,22 +109,24 @@ public class BaseUIManager : BaseMonoBehaviour
             BaseUIComponent itemUI = uiList[i];
             if (itemUI.name.Contains(uiName))
             {
+                uiComponent = itemUI;
                 itemUI.OpenUI();
                 hasData = true;
             }
         }
         if (!hasData)
         {
-            BaseUIComponent uiModel = LoadResourcesUtil.SyncLoadData<BaseUIComponent>("UI/"+ uiName);
+            GameObject uiModel = LoadAssetUtil.SyncLoadAsset<GameObject>("ui/ui", uiName);
+            //BaseUIComponent uiModel = LoadResourcesUtil.SyncLoadData<BaseUIComponent>("UI/"+ uiName);
             if (uiModel)
             {
-                GameObject objUIComponent = Instantiate(objUIContainer, uiModel.gameObject);
+                GameObject objUIComponent = Instantiate(gameObject, uiModel.gameObject);
                 uiComponent = objUIComponent.GetComponent<BaseUIComponent>();
                 uiList.Add(uiComponent);
             }
             else
             {
-                LogUtil.LogError("没有找到指定UI："+ "Resources/UI/" + uiName);
+                LogUtil.LogError("没有找到指定UI："+ "ui/ui " + uiName);
             }
         }
         return uiComponent;
@@ -277,6 +278,6 @@ public class BaseUIManager : BaseMonoBehaviour
 
     public RectTransform GetContainer()
     {
-        return (RectTransform)objUIContainer.transform;
+        return (RectTransform)gameObject.transform;
     }
 }

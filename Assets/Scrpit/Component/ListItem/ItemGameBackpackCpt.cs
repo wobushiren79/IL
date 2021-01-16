@@ -191,7 +191,7 @@ public class ItemGameBackpackCpt : ItemGameBaseCpt, IPointerClickHandler, PopupI
                         title = GameCommonInfo.GetUITextById(1047),
                         content = menuInfo.name
                     };
-                    AchievementDialogView achievementDialog=(AchievementDialogView)dialogManager.CreateDialog(DialogEnum.Achievement, this, dialogData);
+                    AchievementDialogView achievementDialog=dialogManager.CreateDialog<AchievementDialogView>(DialogEnum.Achievement, this, dialogData);
                     achievementDialog.SetData(1, menuInfo.icon_key);
                     toastManager.ToastHint(ivIcon.sprite,GameCommonInfo.GetUITextById(1006));
                 }
@@ -221,7 +221,7 @@ public class ItemGameBackpackCpt : ItemGameBaseCpt, IPointerClickHandler, PopupI
                 content = string.Format(GameCommonInfo.GetUITextById(3001), itemsInfoData.name),
                 remark = "1"
             };
-            dialogManager.CreateDialog(DialogEnum.Normal, this, dialogBean);
+            dialogManager.CreateDialog<DialogView>(DialogEnum.Normal, this, dialogBean);
         }
         else
         {
@@ -229,7 +229,7 @@ public class ItemGameBackpackCpt : ItemGameBaseCpt, IPointerClickHandler, PopupI
             {
                 content = string.Format(GameCommonInfo.GetUITextById(3001), itemsInfoData.name)
             };
-            PickForNumberDialogView pickForNumberDialog = (PickForNumberDialogView)dialogManager.CreateDialog(DialogEnum.PickForNumber, this, dialogBean);
+            PickForNumberDialogView pickForNumberDialog = dialogManager.CreateDialog<PickForNumberDialogView>(DialogEnum.PickForNumber, this, dialogBean);
             pickForNumberDialog.SetData(ivIcon.sprite, itemBean.itemNumber);
         }
 
@@ -267,7 +267,7 @@ public class ItemGameBackpackCpt : ItemGameBaseCpt, IPointerClickHandler, PopupI
     {
         if (dialogView as PickForNumberDialogView)
         {
-            PickForNumberDialogView pickForNumberDialog = (PickForNumberDialogView)dialogView;
+            PickForNumberDialogView pickForNumberDialog = dialogView as PickForNumberDialogView;
             long pickNumber = pickForNumberDialog.GetPickNumber();
 
             //创建确认弹窗
@@ -277,7 +277,7 @@ public class ItemGameBackpackCpt : ItemGameBaseCpt, IPointerClickHandler, PopupI
                 remark = "" + pickNumber
             };
             DialogManager dialogManager = uiGameManager.dialogManager;
-            dialogManager.CreateDialog(DialogEnum.Normal, this, dialogBean);
+            dialogManager.CreateDialog<DialogView>(DialogEnum.Normal, this, dialogBean);
         }
         else if (dialogView as AchievementDialogView)
         {

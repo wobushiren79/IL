@@ -15,8 +15,9 @@ public class UITownGuildImproveInnInfo : BaseUIChildComponent<UITownGuildImprove
 
     public GameDataBean gameData;
 
-    private void Awake()
+    public override void Awake()
     {
+        base.Awake();
         storeInfoManager = Find<StoreInfoManager>(ImportantTypeEnum.StoreInfoManager);
         iconDataManager = Find<IconDataManager>(ImportantTypeEnum.UIManager);
     }

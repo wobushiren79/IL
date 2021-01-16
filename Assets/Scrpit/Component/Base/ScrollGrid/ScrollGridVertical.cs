@@ -140,9 +140,12 @@ public class ScrollGridVertical : MonoBehaviour
                         newcell.SetActive(true);
                         //cell节点锚点强制设为左上角，以此方便算出位置。
                         RectTransform cellRect = newcell.GetComponent<RectTransform>();
+                        RectTransform rfTempCell = ((RectTransform)tempCell.transform);
                         cellRect.anchorMin = new Vector2(0, 1);
                         cellRect.anchorMax = new Vector2(0, 1);
-
+                        //cellRect.anchorMin = rfTempCel).anchorMin;
+                        //cellRect.anchorMax = rfTempCell.anchorMax;
+                        cellRect.sizeDelta = new Vector2(rfTempCell.rect.width, rfTempCell.rect.height);
                         //分别算出每个cell的位置。
                         float x = this.cellWidth / 2 + l * this.cellWidth;
                         float y = -r * this.cellHeight - this.cellHeight / 2;

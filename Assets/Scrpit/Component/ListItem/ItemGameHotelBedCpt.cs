@@ -211,7 +211,7 @@ public class ItemGameHotelBedCpt : ItemGameBaseCpt, DialogView.IDialogCallBack
         dialogData.dialogPosition = 1;
         dialogData.content = string.Format(GameCommonInfo.GetUITextById(3001), buildBedData.bedName);
 
-        uiGameManager.dialogManager.CreateDialog(DialogEnum.Normal, this, dialogData);
+        uiGameManager.dialogManager.CreateDialog<DialogView>(DialogEnum.Normal, this, dialogData);
     }
 
     /// <summary>
@@ -231,7 +231,7 @@ public class ItemGameHotelBedCpt : ItemGameBaseCpt, DialogView.IDialogCallBack
         {
             title = GameCommonInfo.GetUITextById(3071)
         };
-        PickForCharacterDialogView pickForCharacterDialog = (PickForCharacterDialogView)uiGameManager.dialogManager.CreateDialog(DialogEnum.PickForCharacter, this, dialogData);
+        PickForCharacterDialogView pickForCharacterDialog = uiGameManager.dialogManager.CreateDialog<PickForCharacterDialogView>(DialogEnum.PickForCharacter, this, dialogData);
         pickForCharacterDialog.SetPickCharacterMax(1);
         //设置排出人员 （老板和没有在休息的员工）
         List<CharacterBean> listCharacter = uiGameManager.gameDataManager.gameData.listWorkerCharacter;
@@ -271,7 +271,7 @@ public class ItemGameHotelBedCpt : ItemGameBaseCpt, DialogView.IDialogCallBack
             dialogPosition = 2,
             content = GameCommonInfo.GetUITextById(3072)
         };
-        uiGameManager.dialogManager.CreateDialog(DialogEnum.Normal, this, dialogData);
+        uiGameManager.dialogManager.CreateDialog<DialogView>(DialogEnum.Normal, this, dialogData);
     }
 
 
@@ -291,7 +291,7 @@ public class ItemGameHotelBedCpt : ItemGameBaseCpt, DialogView.IDialogCallBack
             //扣除金钱
             uiGameManager.gameDataManager.gameData.PayMoney(researchPriceL,researchPriceM,researchPriceS);
             //角色选择
-            PickForCharacterDialogView pickForCharacterDialog = (PickForCharacterDialogView)dialogView;
+            PickForCharacterDialogView pickForCharacterDialog = dialogView as PickForCharacterDialogView;
             List<CharacterBean> listPickCharacter = pickForCharacterDialog.GetPickCharacter();
             if (!CheckUtil.ListIsNull(listPickCharacter))
             {

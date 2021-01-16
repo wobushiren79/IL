@@ -222,12 +222,12 @@ public class NpcAIConvertCpt : NpcAISundryCpt,TextInfoHandler.ICallBack
                 {
                     if (teamData.GetTeamType() == NpcTeamTypeEnum.Entertain)
                     {
-                        effectHandler.PlayEffectPS(customerCpt.objEffectContainer, "Effect_Happy_1", customerCpt.transform.position + new Vector3(0, 0.5f));
+                        effectHandler.PlayEffect(customerCpt.objEffectContainer, "Effect_Happy_1", customerCpt.transform.position + new Vector3(0, 0.5f),0);
                         customerCpt.ChangeMood(20f);
                     }
                     else if (teamData.GetTeamType() == NpcTeamTypeEnum.Disappointed)
                     {
-                        effectHandler.PlayEffectPS(customerCpt.objEffectContainer, "Effect_Sulkiness_1", customerCpt.transform.position + new Vector3(0, 0.5f));
+                        effectHandler.PlayEffect(customerCpt.objEffectContainer, "Effect_Sulkiness_1", customerCpt.transform.position + new Vector3(0, 0.5f),0);
                         customerCpt.ChangeMood(-20f);
                     }
                     else

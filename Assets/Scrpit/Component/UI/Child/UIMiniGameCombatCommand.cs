@@ -65,7 +65,7 @@ public class UIMiniGameCombatCommand : BaseUIChildComponent<UIMiniGameCombat>, D
 
         DialogManager dialogManager = uiComponent.uiGameManager.dialogManager;
         DialogBean dialogData = new DialogBean();
-        PickForSkillDialogView pickForSkillDialog = (PickForSkillDialogView)dialogManager.CreateDialog(DialogEnum.PickForSkill, this, dialogData);
+        PickForSkillDialogView pickForSkillDialog = dialogManager.CreateDialog<PickForSkillDialogView>(DialogEnum.PickForSkill, this, dialogData);
         Dictionary<long, int> listUsedSkill = npcCpt.characterMiniGameData.listUsedSkill;
         pickForSkillDialog.SetData(listSkillInfo, listUsedSkill);
     }
@@ -80,7 +80,7 @@ public class UIMiniGameCombatCommand : BaseUIChildComponent<UIMiniGameCombat>, D
 
         DialogManager dialogManager = uiComponent.uiGameManager.dialogManager;
         DialogBean dialogData = new DialogBean();
-        PickForItemsDialogView pickForItemsDialog = (PickForItemsDialogView)dialogManager.CreateDialog(DialogEnum.PickForItems, this, dialogData);
+        PickForItemsDialogView pickForItemsDialog = dialogManager.CreateDialog<PickForItemsDialogView>(DialogEnum.PickForItems, this, dialogData);
         pickForItemsDialog.SetData(new List<GeneralEnum>() { GeneralEnum.Medicine }, PopupItemsSelection.SelectionTypeEnum.Use);
     }
 
@@ -110,7 +110,7 @@ public class UIMiniGameCombatCommand : BaseUIChildComponent<UIMiniGameCombat>, D
     {
         if (dialogView as PickForItemsDialogView)
         {
-            PickForItemsDialogView pickForItemsDialog = (PickForItemsDialogView)dialogView;
+            PickForItemsDialogView pickForItemsDialog = dialogView as PickForItemsDialogView;
             pickForItemsDialog.GetSelectedItems(out ItemsInfoBean itemsInfo, out ItemBean itemData);
             //设置使用的物品
             uiComponent.miniGameData.SetRoundActionItemsId(itemsInfo.id);
@@ -120,7 +120,7 @@ public class UIMiniGameCombatCommand : BaseUIChildComponent<UIMiniGameCombat>, D
         }
         else if (dialogView as PickForSkillDialogView)
         {
-            PickForSkillDialogView pickForSkillDialog = (PickForSkillDialogView)dialogView;
+            PickForSkillDialogView pickForSkillDialog = dialogView as PickForSkillDialogView;
             pickForSkillDialog.GetSelectedSkill(out SkillInfoBean skillInfo);
             //设置使用的技能
             uiComponent.miniGameData.SetRoundActionSkill(skillInfo);

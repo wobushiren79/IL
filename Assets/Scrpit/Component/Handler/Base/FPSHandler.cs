@@ -2,15 +2,17 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class FPSHandler : BaseHandler {
+public class FPSHandler : BaseHandler<FPSHandler, BaseManager>
+{
 
-    private void Awake()
+    protected override void Awake()
     {
+        base.Awake();
         //Screen.SetResolution(1280, 800, false);	
         SetData(GameCommonInfo.GameConfig.statusForFrames, GameCommonInfo.GameConfig.frames);
     }
 
-    public void SetData(bool isLock,int fps)
+    public void SetData(bool isLock, int fps)
     {
         if (isLock)
         {

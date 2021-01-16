@@ -123,7 +123,7 @@ public class UIBaseGamble<T, H, B> : UIGameComponent, DialogView.IDialogCallBack
         {
             DialogBean dialogData = new DialogBean();
             dialogData.title = GameCommonInfo.GetUITextById(611);
-            PickForMoneyDialogView PickForMoneyDialog = (PickForMoneyDialogView)uiGameManager.dialogManager.CreateDialog(DialogEnum.PickForMoney, this, dialogData);
+            PickForMoneyDialogView PickForMoneyDialog = uiGameManager.dialogManager.CreateDialog<PickForMoneyDialogView>(DialogEnum.PickForMoney, this, dialogData);
             PickForMoneyDialog.SetData((int)gambleData.betMaxForMoneyL / 10, (int)gambleData.betMaxForMoneyM / 10, (int)gambleData.betMaxForMoneyS / 10);
             PickForMoneyDialog.SetMaxMoney(gambleData.betMaxForMoneyL, gambleData.betMaxForMoneyM, gambleData.betMaxForMoneyS);
         }

@@ -238,7 +238,7 @@ public class ItemTownArenaCpt : ItemGameBaseCpt, DialogView.IDialogCallBack
         string gameName = tvTitle.text;
         string gameTime = miniGameData.preGameTime + GameCommonInfo.GetUITextById(37);
         dialogData.content = string.Format(GameCommonInfo.GetUITextById(3021), gameName, gameTime);
-        dialogManager.CreateDialog(DialogEnum.Normal, this, dialogData);
+        dialogManager.CreateDialog<DialogView>(DialogEnum.Normal, this, dialogData);
         arenaJoinType = 1;
     }
 
@@ -263,7 +263,7 @@ public class ItemTownArenaCpt : ItemGameBaseCpt, DialogView.IDialogCallBack
         string gameName = tvTitle.text;
         string gameTime = miniGameData.preGameTime + GameCommonInfo.GetUITextById(37);
         dialogData.content = string.Format(GameCommonInfo.GetUITextById(3022), gameName, gameTime);
-        dialogManager.CreateDialog(DialogEnum.Normal, this, dialogData);
+        dialogManager.CreateDialog<DialogView>(DialogEnum.Normal, this, dialogData);
         arenaJoinType = 2;
     }
 
@@ -299,7 +299,7 @@ public class ItemTownArenaCpt : ItemGameBaseCpt, DialogView.IDialogCallBack
             //如果有研究菜谱 菜谱增加经验
             gameDataHandler.AddTimeProcess(miniGameData.preGameTime*60);
             //设置参赛人员
-            PickForCharacterDialogView pickForCharacterDialog = (PickForCharacterDialogView)dialogView;
+            PickForCharacterDialogView pickForCharacterDialog = dialogView as PickForCharacterDialogView;
             List<CharacterBean> listCharacter = pickForCharacterDialog.GetPickCharacter();
             miniGameData.InitData(gameItemsManager, listCharacter);
             //今日不能再参加
@@ -353,7 +353,7 @@ public class ItemTownArenaCpt : ItemGameBaseCpt, DialogView.IDialogCallBack
         {
             //弹出选人界面
             DialogBean dialogData = new DialogBean();
-            PickForCharacterDialogView pickForCharacterDialog = (PickForCharacterDialogView)dialogManager.CreateDialog(DialogEnum.PickForCharacter, this, dialogData);
+            PickForCharacterDialogView pickForCharacterDialog = dialogManager.CreateDialog<PickForCharacterDialogView>(DialogEnum.PickForCharacter, this, dialogData);
             pickForCharacterDialog.SetPickCharacterMax(1);
             List<string> listExpelCharacterId = new List<string>();
             //排出今日已经参加过的人

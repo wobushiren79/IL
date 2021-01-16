@@ -167,7 +167,7 @@ public class ItemGameDataCpt : ItemGameBaseCpt, DialogView.IDialogCallBack
 
         DialogBean dialogData = new DialogBean();
         dialogData.content = GameCommonInfo.GetUITextById(3011);
-        dialogManager.CreateDialog(DialogEnum.Normal, this, dialogData);
+        dialogManager.CreateDialog<DialogView>(DialogEnum.Normal, this, dialogData);
     }
 
     #region 弹窗确认回调

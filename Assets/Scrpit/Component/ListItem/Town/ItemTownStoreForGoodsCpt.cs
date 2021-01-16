@@ -216,7 +216,7 @@ public class ItemTownStoreForGoodsCpt : ItemTownStoreCpt, DialogView.IDialogCall
             return;
 
         DialogBean dialogBean = new DialogBean();
-        PickForNumberDialogView dialogView = (PickForNumberDialogView)dialogManager.CreateDialog(DialogEnum.PickForNumber, this, dialogBean);
+        PickForNumberDialogView dialogView = dialogManager.CreateDialog<PickForNumberDialogView>(DialogEnum.PickForNumber, this, dialogBean);
         dialogView.SetData(ivIcon.sprite, 999);
     }
 

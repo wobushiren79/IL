@@ -6,12 +6,10 @@ public class BaseUIChildComponent<T> : BaseMonoBehaviour
 {
     public T uiComponent;
 
-    //public virtual void Awake()
-    //{
-    //    AutoLinkUI();
-    //    AutoLinkHandler();
-    //    AutoLinkManager();
-    //}
+    public virtual void Awake()
+    {
+        AutoLinkUI();
+    }
 
     public virtual void Close()
     {
