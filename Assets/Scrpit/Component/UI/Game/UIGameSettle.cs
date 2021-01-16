@@ -67,7 +67,7 @@ public class UIGameSettle : BaseUIComponent
         IconDataManager iconDataManager = uiGameManager.iconDataManager;
         GameTimeHandler gameTimeHandler = uiGameManager.gameTimeHandler;
         GameDataManager gameDataManager = uiGameManager.gameDataManager;
-        AudioHandler audioHandler = uiGameManager.audioHandler;
+        AudioHandler audioHandler = AudioHandler.Instance;
         UserAchievementBean userAchievement = gameDataManager.gameData.GetAchievementData();
         //停止时间
         gameTimeHandler.SetTimeStatus(true);
@@ -261,7 +261,7 @@ public class UIGameSettle : BaseUIComponent
 
     public void OpenDateUI()
     {
-        uiGameManager.audioHandler.PlaySound(AudioSoundEnum.ButtonForNormal);
+        AudioHandler.Instance.PlaySound(AudioSoundEnum.ButtonForNormal);
         uiManager.OpenUIAndCloseOtherByName(EnumUtil.GetEnumName(UIEnum.GameDate));
     }
 

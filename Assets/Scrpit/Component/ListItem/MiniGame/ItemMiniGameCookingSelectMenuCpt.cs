@@ -51,8 +51,7 @@ public class ItemMiniGameCookingSelectMenuCpt : ItemGameBaseCpt, DialogView.IDia
     private void SelectMenu()
     {
         DialogManager dialogManager = GetUIManager<UIGameManager>().dialogManager;
-        AudioHandler audioHandler = GetUIManager<UIGameManager>().audioHandler;
-        audioHandler.PlaySound(AudioSoundEnum.ButtonForNormal);
+        AudioHandler.Instance.PlaySound(AudioSoundEnum.ButtonForNormal);
         DialogBean dialogData = new DialogBean();
         dialogData.content = string.Format(GameCommonInfo.GetUITextById(3051), menuInfo.name);
         dialogManager.CreateDialog<DialogView>(DialogEnum.Normal,this, dialogData);

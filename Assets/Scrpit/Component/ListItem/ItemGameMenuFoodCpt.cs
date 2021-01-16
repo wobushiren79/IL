@@ -320,7 +320,7 @@ public class ItemGameMenuFoodCpt : ItemGameBaseCpt, IRadioButtonCallBack, Dialog
     public void OnClickResearch()
     {
         UIGameManager uiGameManager = GetUIManager<UIGameManager>();
-        uiGameManager.audioHandler.PlaySound(AudioSoundEnum.ButtonForNormal);
+        AudioHandler.Instance.PlaySound(AudioSoundEnum.ButtonForNormal);
         //首先判断客栈等级是否足够
         if (!menuOwnData.CheckCanResearch(uiGameManager.gameDataManager.gameData, out string failStr))
         {
@@ -366,7 +366,7 @@ public class ItemGameMenuFoodCpt : ItemGameBaseCpt, IRadioButtonCallBack, Dialog
     public void OnClickResearchCancel()
     {
         UIGameManager uiGameManager = GetUIManager<UIGameManager>();
-        uiGameManager.audioHandler.PlaySound(AudioSoundEnum.ButtonForNormal);
+        AudioHandler.Instance.PlaySound(AudioSoundEnum.ButtonForNormal);
         DialogBean dialogData = new DialogBean
         {
             content = GameCommonInfo.GetUITextById(3072)
@@ -380,7 +380,7 @@ public class ItemGameMenuFoodCpt : ItemGameBaseCpt, IRadioButtonCallBack, Dialog
         if (view == rbShow && tvShow != null)
         {
             UIGameManager uiGameManager = GetUIManager<UIGameManager>();
-            uiGameManager.audioHandler.PlaySound(AudioSoundEnum.ButtonForNormal);
+            AudioHandler.Instance.PlaySound(AudioSoundEnum.ButtonForNormal);
             switch (buttonStatus)
             {
                 case RadioButtonView.RadioButtonStatus.Selected:

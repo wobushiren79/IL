@@ -270,13 +270,13 @@ public class UIMiniGameCooking : BaseUIComponent
         ItemMiniGameCookingButtonCpt itemButton= mListButton[buttonPosition];
         if(itemButton.buttonType== type)
         {
-            uiGameManager.audioHandler.PlaySound(AudioSoundEnum.Correct);
+            AudioHandler.Instance.PlaySound(AudioSoundEnum.Correct);
             itemButton.SetButtonClickCorrect();
         }
         else
         {
             sliderTime.value -= 1;
-            uiGameManager.audioHandler.PlaySound(AudioSoundEnum.Error);
+            AudioHandler.Instance.PlaySound(AudioSoundEnum.Error);
             itemButton.SetButtonClickError();
         }
         //取消选中状态
@@ -303,19 +303,19 @@ public class UIMiniGameCooking : BaseUIComponent
         tvCountDown.text = tvTitle.text;
         tvCountDown.transform.DOScale(new Vector3(3, 3, 3), 0.5f).From().SetEase(Ease.OutBack);
         yield return new WaitForSeconds(2);
-        uiGameManager.audioHandler.PlaySound(AudioSoundEnum.CountDownStart);
+        AudioHandler.Instance.PlaySound(AudioSoundEnum.CountDownStart);
         tvCountDown.text = GameCommonInfo.GetUITextById(252);
         tvCountDown.transform.DOScale(new Vector3(3, 3, 3), 0.5f).From().SetEase(Ease.OutBack);
         yield return new WaitForSeconds(0.7f);
-        uiGameManager.audioHandler.PlaySound(AudioSoundEnum.CountDownStart);
+        AudioHandler.Instance.PlaySound(AudioSoundEnum.CountDownStart);
         tvCountDown.text = GameCommonInfo.GetUITextById(253);
         tvCountDown.transform.DOScale(new Vector3(3, 3, 3), 0.5f).From().SetEase(Ease.OutBack);
         yield return new WaitForSeconds(0.7f);
-        uiGameManager.audioHandler.PlaySound(AudioSoundEnum.CountDownStart);
+        AudioHandler.Instance.PlaySound(AudioSoundEnum.CountDownStart);
         tvCountDown.text = GameCommonInfo.GetUITextById(254);
         tvCountDown.transform.DOScale(new Vector3(3, 3, 3), 0.5f).From().SetEase(Ease.OutBack);
         yield return new WaitForSeconds(0.7f);
-        uiGameManager.audioHandler.PlaySound(AudioSoundEnum.CountDownEnd);
+        AudioHandler.Instance.PlaySound(AudioSoundEnum.CountDownEnd);
         tvCountDown.text = GameCommonInfo.GetUITextById(255);
         tvCountDown.transform.DOScale(new Vector3(3, 3, 3), 0.5f).From().SetEase(Ease.OutBack);
         yield return new WaitForSeconds(0.7f);

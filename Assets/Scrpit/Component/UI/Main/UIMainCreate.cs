@@ -197,7 +197,7 @@ public class UIMainCreate : BaseUIComponent,
     public void CreateNewGame()
     {
         //按键音效
-        uiGameManager.audioHandler.PlaySound(AudioSoundEnum.ButtonForNormal);
+        AudioHandler.Instance.PlaySound(AudioSoundEnum.ButtonForNormal);
 
         if (CheckUtil.StringIsNull(etInnName.text))
         {
@@ -220,7 +220,7 @@ public class UIMainCreate : BaseUIComponent,
     public void OpenStartUI()
     {
         //按键音效
-        uiGameManager.audioHandler.PlaySound(AudioSoundEnum.ButtonForBack);
+        AudioHandler.Instance.PlaySound(AudioSoundEnum.ButtonForBack);
         uiManager.OpenUIAndCloseOtherByName(EnumUtil.GetEnumName(UIEnum.MainStart));
     }
 
@@ -250,7 +250,7 @@ public class UIMainCreate : BaseUIComponent,
     #region 性别回调
     public void RadioButtonSelected(RadioGroupView rgView, int position, RadioButtonView view)
     {
-        uiGameManager.audioHandler.PlaySound(AudioSoundEnum.ButtonForNormal);
+        AudioHandler.Instance.PlaySound(AudioSoundEnum.ButtonForNormal);
 
         if (position == 0)
         {

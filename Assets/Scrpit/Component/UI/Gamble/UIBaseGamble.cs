@@ -52,14 +52,14 @@ public class UIBaseGamble<T, H, B> : BaseUIComponent, DialogView.IDialogCallBack
     public override void OpenUI()
     {
         base.OpenUI();
-        uiGameManager.audioHandler.PlaySound(AudioSoundEnum.ButtonForNormal);
+        AudioHandler.Instance.PlaySound(AudioSoundEnum.ButtonForNormal);
         uiGameManager.gameTimeHandler.SetTimeStatus(true);
     }
 
     public override void CloseUI()
     {
         base.CloseUI();
-        uiGameManager.audioHandler.PlaySound(AudioSoundEnum.ButtonForBack);
+        AudioHandler.Instance.PlaySound(AudioSoundEnum.ButtonForBack);
         uiGameManager.gameTimeHandler.SetTimeStatus(false);
     }
 
@@ -118,7 +118,7 @@ public class UIBaseGamble<T, H, B> : BaseUIComponent, DialogView.IDialogCallBack
     /// </summary>
     public void OnClickBet()
     {
-        uiGameManager.audioHandler.PlaySound(AudioSoundEnum.ButtonForNormal);
+        AudioHandler.Instance.PlaySound(AudioSoundEnum.ButtonForNormal);
         if (gambleData.GetGambleStatus() == GambleStatusType.Prepare)
         {
             DialogBean dialogData = new DialogBean();
@@ -148,7 +148,7 @@ public class UIBaseGamble<T, H, B> : BaseUIComponent, DialogView.IDialogCallBack
     /// </summary>
     public void OnClickStart()
     {
-        uiGameManager.audioHandler.PlaySound(AudioSoundEnum.ButtonForNormal);
+        AudioHandler.Instance.PlaySound(AudioSoundEnum.ButtonForNormal);
         if (gambleData.GetGambleStatus() == GambleStatusType.Prepare)
         {
             //如果没有下注
@@ -183,7 +183,7 @@ public class UIBaseGamble<T, H, B> : BaseUIComponent, DialogView.IDialogCallBack
                 .SetDelay(i * 0.1f)
                 .OnStart(delegate ()
                 {
-                    uiGameManager.audioHandler.PlaySound(AudioSoundEnum.PayMoney);
+                    AudioHandler.Instance.PlaySound(AudioSoundEnum.PayMoney);
                 })
                 .OnComplete(delegate ()
                 {

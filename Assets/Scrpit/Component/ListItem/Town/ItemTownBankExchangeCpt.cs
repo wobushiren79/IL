@@ -192,8 +192,7 @@ public class ItemTownBankExchangeCpt : ItemGameBaseCpt, DialogView.IDialogCallBa
         ToastManager toastManager = GetUIManager<UIGameManager>().toastManager;
         GameDataManager gameDataManager = GetUIManager<UIGameManager>().gameDataManager;
         DialogManager dialogManager = GetUIManager<UIGameManager>().dialogManager;
-        AudioHandler audioHandler = GetUIManager<UIGameManager>().audioHandler;
-        audioHandler.PlaySound(AudioSoundEnum.ButtonForNormal);
+        AudioHandler.Instance.PlaySound(AudioSoundEnum.ButtonForNormal);
 
         mPayMoneyL = 0;
         mPayMoneyM = 0;

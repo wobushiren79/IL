@@ -32,7 +32,7 @@ public class UIGameText : BaseUIComponent, TextInfoManager.ICallBack, DialogView
     public override void OpenUI()
     {
         base.OpenUI();
-        //uiGameManager.audioHandler.PlaySound(AudioSoundEnum.ButtonForNormal);
+        //AudioHandler.Instance.PlaySound(AudioSoundEnum.ButtonForNormal);
         uiGameManager.textInfoManager.SetCallBack(this);
     }
 
@@ -77,7 +77,7 @@ public class UIGameText : BaseUIComponent, TextInfoManager.ICallBack, DialogView
             if (callBack != null)
                 callBack.UITextEnd();
         }
-        uiGameManager.audioHandler.PlaySound(AudioSoundEnum.Correct);
+        AudioHandler.Instance.PlaySound(AudioSoundEnum.Correct);
     }
 
     /// <summary>

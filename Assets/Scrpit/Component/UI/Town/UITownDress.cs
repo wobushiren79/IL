@@ -145,7 +145,7 @@ public class UITownDress : UIBaseOne, IRadioGroupCallBack, StoreInfoManager.ICal
     #region 类型选择回调
     public void RadioButtonSelected(RadioGroupView rgView, int position, RadioButtonView rbview)
     {
-        uiGameManager.audioHandler.PlaySound(AudioSoundEnum.ButtonForNormal);
+        AudioHandler.Instance.PlaySound(AudioSoundEnum.ButtonForNormal);
         if (rgView == rgStyleType)
         {
             mStyleType = EnumUtil.GetEnum<StoreForDressTypeEnum>(rbview.name);

@@ -38,7 +38,7 @@ public class UIGameDate : BaseUIComponent
         controlHandler = uiGameManager.controlHandler;
         npcCustomerBuilder = uiGameManager.npcCustomerBuilder;
         eventHandler = uiGameManager.eventHandler;
-        audioHandler = uiGameManager.audioHandler;
+        audioHandler = AudioHandler.Instance;
         innHandler = uiGameManager.innHandler;
     }
 

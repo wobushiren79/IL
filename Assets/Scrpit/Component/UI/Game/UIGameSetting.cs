@@ -265,7 +265,7 @@ public class UIGameSetting : BaseUIComponent, DropdownView.ICallBack, ProgressVi
     /// </summary>
     public void OnClickBack()
     {
-        uiGameManager.audioHandler.PlaySound(AudioSoundEnum.ButtonForBack);
+        AudioHandler.Instance.PlaySound(AudioSoundEnum.ButtonForBack);
         if (SceneUtil.GetCurrentScene() == ScenesEnum.MainScene)
         {
             uiManager.OpenUIAndCloseOther(UIEnum.MainStart);
@@ -333,7 +333,7 @@ public class UIGameSetting : BaseUIComponent, DropdownView.ICallBack, ProgressVi
     #region 下拉回调
     public void OnDropDownValueChange(DropdownView view, int position, Dropdown.OptionData optionData)
     {
-        uiGameManager.audioHandler.PlaySound(AudioSoundEnum.ButtonForNormal);
+        AudioHandler.Instance.PlaySound(AudioSoundEnum.ButtonForNormal);
         if (view== dvLanguage)
         {
             string languageStr = "cn";
@@ -388,7 +388,7 @@ public class UIGameSetting : BaseUIComponent, DropdownView.ICallBack, ProgressVi
         {
             GameCommonInfo.GameConfig.environmentVolume = value;
         }
-        uiGameManager.audioHandler.InitAudio();
+        AudioHandler.Instance.InitAudio();
     }
 
 
@@ -428,7 +428,7 @@ public class UIGameSetting : BaseUIComponent, DropdownView.ICallBack, ProgressVi
     #region checkBox回调
     public void RadioButtonSelected(RadioButtonView view, RadioButtonView.RadioButtonStatus buttonStates)
     {
-        uiGameManager.audioHandler.PlaySound(AudioSoundEnum.ButtonForNormal);
+        AudioHandler.Instance.PlaySound(AudioSoundEnum.ButtonForNormal);
         if (view == rbKeyTip)
         {
             //按键提示

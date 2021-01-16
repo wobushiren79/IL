@@ -19,12 +19,10 @@ public class ItemGameDataCpt : ItemGameBaseCpt, DialogView.IDialogCallBack
     public CharacterUICpt characterUI;
     public GameDataSimpleBean gameData;
 
-    protected AudioHandler audioHandler;
     protected DialogManager dialogManager;
 
     private void Awake()
     {
-        audioHandler = GetUIManager<UIGameManager>().audioHandler;
         dialogManager = GetUIManager<UIGameManager>().dialogManager;
     }
 
@@ -150,8 +148,7 @@ public class ItemGameDataCpt : ItemGameBaseCpt, DialogView.IDialogCallBack
     /// </summary>
     public void GameContinue()
     {
-        if (audioHandler != null)
-            audioHandler.PlaySound(AudioSoundEnum.ButtonForNormal);
+        AudioHandler.Instance.PlaySound(AudioSoundEnum.ButtonForNormal);
 
         GameCommonInfo.GameUserId = gameData.userId;
         SceneUtil.SceneChange(ScenesEnum.GameInnScene);
@@ -162,8 +159,7 @@ public class ItemGameDataCpt : ItemGameBaseCpt, DialogView.IDialogCallBack
     /// </summary>
     public void GameDataDelete()
     {
-        if (audioHandler != null)
-            audioHandler.PlaySound(AudioSoundEnum.ButtonForBack);
+        AudioHandler.Instance.PlaySound(AudioSoundEnum.ButtonForBack);
 
         DialogBean dialogData = new DialogBean();
         dialogData.content = GameCommonInfo.GetUITextById(3011);

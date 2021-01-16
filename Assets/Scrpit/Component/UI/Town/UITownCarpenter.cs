@@ -54,7 +54,7 @@ public class UITownCarpenter : UIBaseOne, IRadioGroupCallBack, StoreInfoManager.
     /// </summary>
     public void OnClickForCustomBed()
     {
-        uiGameManager.audioHandler.PlaySound(AudioSoundEnum.ButtonForNormal);
+        AudioHandler.Instance.PlaySound(AudioSoundEnum.ButtonForNormal);
         uiGameManager.OpenUIAndCloseOther(UIEnum.GameCustomBed);
     }
 
@@ -155,7 +155,7 @@ public class UITownCarpenter : UIBaseOne, IRadioGroupCallBack, StoreInfoManager.
     #region 类型选择回调
     public void RadioButtonSelected(RadioGroupView rgView, int position, RadioButtonView rbview)
     {
-        uiGameManager.audioHandler.PlaySound(AudioSoundEnum.ButtonForNormal);
+        AudioHandler.Instance.PlaySound(AudioSoundEnum.ButtonForNormal);
 
         selectType = EnumUtil.GetEnum<StoreForCarpenterTypeEnum>(rbview.name);
         InitDataByType(selectType);

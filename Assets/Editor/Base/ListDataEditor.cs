@@ -10,21 +10,6 @@ public class ListDataEditor : Editor
 {
 
 
-    [MenuItem("Custom/List/AddAudio")]
-    public static void AddAudio()
-    {
-        GameObject Target = Selection.gameObjects[0];
-        AudioManager audioManager = Target.GetComponent<AudioManager>();
-        audioManager.listMusicData.Clear();
-        audioManager.listSoundData.Clear();
-        audioManager.listEnvironmentData.Clear();
-        AddAudioBeanDictionaryByFolder("Assets/Audio/Music/", audioManager.listMusicData);
-        AddAudioBeanDictionaryByFolder("Assets/Audio/Sound/", audioManager.listSoundData);
-        AddAudioBeanDictionaryByFolder("Assets/Audio/Environment/", audioManager.listEnvironmentData);
-    }
-
-
-
     /// <summary>
     /// 根据指定文件添加字典
     /// </summary>

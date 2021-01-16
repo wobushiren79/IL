@@ -50,7 +50,7 @@ public class UIGameAttendance : UIBaseOne, ItemGameAttendanceCpt.ICallBack
     /// </summary>
     public void StartWork()
     {
-        uiGameManager.audioHandler.PlaySound(AudioSoundEnum.ButtonForNormal);
+        AudioHandler.Instance.PlaySound(AudioSoundEnum.ButtonForNormal);
         //如果出勤人数太少
         if (attendanceNumber <= 0)
         {
@@ -152,7 +152,7 @@ public class UIGameAttendance : UIBaseOne, ItemGameAttendanceCpt.ICallBack
 
     protected void ChangeAllSelectStatus(bool isSelect)
     {
-        uiGameManager.audioHandler.PlaySound(AudioSoundEnum.ButtonForNormal);
+        AudioHandler.Instance.PlaySound(AudioSoundEnum.ButtonForNormal);
         ItemGameAttendanceCpt[] listAttendance = objListContent.GetComponentsInChildren<ItemGameAttendanceCpt>();
         for (int i = 0; i < listAttendance.Length; i++)
         {

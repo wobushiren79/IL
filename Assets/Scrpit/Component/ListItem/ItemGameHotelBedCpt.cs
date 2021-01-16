@@ -220,7 +220,7 @@ public class ItemGameHotelBedCpt : ItemGameBaseCpt, DialogView.IDialogCallBack
     public void OnClickResearch()
     {
         UIGameManager uiGameManager = GetUIManager<UIGameManager>();
-        uiGameManager.audioHandler.PlaySound(AudioSoundEnum.ButtonForNormal);
+        AudioHandler.Instance.PlaySound(AudioSoundEnum.ButtonForNormal);
         //首先判断客栈等级是否足够
         if (!buildBedData.CheckCanResearch(uiGameManager.gameDataManager.gameData, out string failStr))
         {
@@ -265,7 +265,7 @@ public class ItemGameHotelBedCpt : ItemGameBaseCpt, DialogView.IDialogCallBack
     public void OnClickResearchCancel()
     {
         UIGameManager uiGameManager = GetUIManager<UIGameManager>();
-        uiGameManager.audioHandler.PlaySound(AudioSoundEnum.ButtonForNormal);
+        AudioHandler.Instance.PlaySound(AudioSoundEnum.ButtonForNormal);
         DialogBean dialogData = new DialogBean
         {
             dialogPosition = 2,

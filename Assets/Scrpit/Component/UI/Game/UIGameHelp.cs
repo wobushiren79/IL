@@ -31,14 +31,14 @@ public class UIGameHelp : BaseUIComponent,IRadioGroupCallBack
 
     public void OnClickExit()
     {
-        uiGameManager.audioHandler.PlaySound(AudioSoundEnum.ButtonForBack);
+        AudioHandler.Instance.PlaySound(AudioSoundEnum.ButtonForBack);
         uiGameManager.OpenUIAndCloseOther(UIEnum.GameMain);
     }
 
     #region 类型选择回调
     public void RadioButtonSelected(RadioGroupView rgView, int position, RadioButtonView rbview)
     {
-        uiGameManager.audioHandler.PlaySound(AudioSoundEnum.ButtonForNormal);
+        AudioHandler.Instance.PlaySound(AudioSoundEnum.ButtonForNormal);
         objBaseHelp.SetActive(false);
         objBuildHelp.SetActive(false);
         objManageHelp.SetActive(false);

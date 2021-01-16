@@ -89,7 +89,7 @@ public class UIMiniGameCombatSelectCharacter : BaseUIChildComponent<UIMiniGameCo
     /// <param name="isAddCurrent">是否增加上一个角色</param>
     public void ChangeCharacter(int next)
     {
-        ((UIGameManager)uiComponent.uiManager).audioHandler.PlaySound(AudioSoundEnum.ChangeSelect);
+        AudioHandler.Instance.PlaySound(AudioSoundEnum.ChangeSelect);
         List<NpcAIMiniGameCombatCpt> listData = new List<NpcAIMiniGameCombatCpt>();
         //友方
         if (selectType == 1)
@@ -175,7 +175,7 @@ public class UIMiniGameCombatSelectCharacter : BaseUIChildComponent<UIMiniGameCo
     {
         if (callBack == null)
             return;
-        ((UIGameManager)uiComponent.uiManager).audioHandler.PlaySound(AudioSoundEnum.ButtonForNormal);
+        AudioHandler.Instance.PlaySound(AudioSoundEnum.ButtonForNormal);
         List<NpcAIMiniGameCombatCpt> listData = new List<NpcAIMiniGameCombatCpt>();
         foreach (var itemData in listSelectNpc)
         {

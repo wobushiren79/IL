@@ -71,7 +71,7 @@ public class UIMiniGameEnd : BaseUIComponent
     /// </summary>
     public void SetWin()
     {
-        uiGameManager.audioHandler.PlaySound(AudioSoundEnum.Reward);
+        AudioHandler.Instance.PlaySound(AudioSoundEnum.Reward);
         if (tvGameResult != null)
         {
             tvGameResult.text = GameCommonInfo.GetUITextById(41);

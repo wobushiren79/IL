@@ -74,7 +74,7 @@ public class GambleTrickySizeHandler : BaseGambleHandler<GambleTrickySizeBean, G
         }
         else
         {
-            uiGameManager.audioHandler.PlaySound(AudioSoundEnum.Passive);
+            AudioHandler.Instance.PlaySound(AudioSoundEnum.Passive);
             EndGame();
         }
     }

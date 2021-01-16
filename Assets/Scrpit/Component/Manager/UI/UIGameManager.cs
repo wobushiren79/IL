@@ -39,7 +39,6 @@ public class UIGameManager : BaseUIManager
     public GameTimeHandler gameTimeHandler;
     public ControlHandler controlHandler;
     public EventHandler eventHandler;
-    public AudioHandler audioHandler;
     public GameDataHandler gameDataHandler;
     public SteamHandler steamHandler;
     public FPSHandler fpsHandler;
@@ -79,7 +78,6 @@ public class UIGameManager : BaseUIManager
         gameTimeHandler = Find<GameTimeHandler>(ImportantTypeEnum.TimeHandler);
         controlHandler = Find<ControlHandler>(ImportantTypeEnum.ControlHandler);
         eventHandler = Find<EventHandler>(ImportantTypeEnum.EventHandler);
-        audioHandler = Find<AudioHandler>(ImportantTypeEnum.AudioHandler);
         gameDataHandler = Find<GameDataHandler>(ImportantTypeEnum.GameDataHandler);
         steamHandler = Find<SteamHandler>(ImportantTypeEnum.Steam);
         fpsHandler = Find<FPSHandler>( ImportantTypeEnum.Camera);

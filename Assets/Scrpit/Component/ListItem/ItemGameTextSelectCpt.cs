@@ -50,7 +50,7 @@ public class ItemGameTextSelectCpt : ItemGameBaseCpt, DialogView.IDialogCallBack
     {
         UIGameText uiGameText = (UIGameText)uiComponent;
         UIGameManager uiGameManager = uiGameText.uiGameManager;
-        uiGameManager.audioHandler.PlaySound(AudioSoundEnum.ButtonForNormal);
+        AudioHandler.Instance.PlaySound(AudioSoundEnum.ButtonForNormal);
         //检测是否启用小游戏
         if (CheckUtil.StringIsNull(textData.pre_data_minigame))
         {

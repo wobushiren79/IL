@@ -15,7 +15,7 @@ public class UIMainMaker : BaseUIComponent
     public void OnClickBack()
     {        
         //按键音效
-        uiGameManager.audioHandler.PlaySound(AudioSoundEnum.ButtonForBack);
+        AudioHandler.Instance.PlaySound(AudioSoundEnum.ButtonForBack);
 
         uiManager.OpenUIAndCloseOtherByName(EnumUtil.GetEnumName(UIEnum.MainStart));
     }

@@ -165,7 +165,7 @@ public class UIGameWorkerDetails : BaseUIComponent, IRadioGroupCallBack
 
     public void OpenWorkUI()
     {
-        uiGameManager.audioHandler.PlaySound(AudioSoundEnum.ButtonForBack);
+        AudioHandler.Instance.PlaySound(AudioSoundEnum.ButtonForBack);
         uiManager.OpenUIAndCloseOtherByName(EnumUtil.GetEnumName(UIEnum.GameWorker));
     }
 
@@ -319,7 +319,7 @@ public class UIGameWorkerDetails : BaseUIComponent, IRadioGroupCallBack
     #region 数据类型选择回调
     public void RadioButtonSelected(RadioGroupView rgView, int position, RadioButtonView rbview)
     {
-        uiGameManager.audioHandler.PlaySound(AudioSoundEnum.ButtonForNormal);
+        AudioHandler.Instance.PlaySound(AudioSoundEnum.ButtonForNormal);
         InitDataByWorker(rbview.name);
     }
 

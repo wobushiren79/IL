@@ -349,7 +349,7 @@ public class UIMiniGameCombat : UIBaseMiniGame<MiniGameCombatBean>
     #region 力度测试回调
     public void PowerTestEnd(float resultsPower)
     {
-        uiGameManager.audioHandler.PlaySound(AudioSoundEnum.ButtonForNormal);
+        AudioHandler.Instance.PlaySound(AudioSoundEnum.ButtonForNormal);
         miniGameData.SetRoundActionPowerTest(resultsPower);
         if (callBack != null)
             callBack.CommandEnd();

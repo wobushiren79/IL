@@ -83,7 +83,7 @@ public class UIMiniGameCountDown : BaseUIComponent
     /// </summary>
     public void StartCountDown()
     {
-        uiGameManager.audioHandler.PlaySound(AudioSoundEnum.ButtonForNormal);
+        AudioHandler.Instance.PlaySound(AudioSoundEnum.ButtonForNormal);
         objTarget.SetActive(false);
         objCountDown.SetActive(true);
         //恢复控制
@@ -128,11 +128,11 @@ public class UIMiniGameCountDown : BaseUIComponent
             tvCountDown.transform.DOScale(new Vector3(0.2f, 0.2f, 0.2f), 0.5f).From().SetEase(Ease.OutBack);
             if (i == 3)
             {
-                uiGameManager.audioHandler.PlaySound(AudioSoundEnum.CountDownEnd);
+                AudioHandler.Instance.PlaySound(AudioSoundEnum.CountDownEnd);
             }
             else
             {
-                uiGameManager.audioHandler.PlaySound(AudioSoundEnum.CountDownStart);
+                AudioHandler.Instance.PlaySound(AudioSoundEnum.CountDownStart);
             }
             yield return new WaitForSeconds(0.8f);
         }

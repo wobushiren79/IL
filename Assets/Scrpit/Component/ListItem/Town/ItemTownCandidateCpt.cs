@@ -32,7 +32,7 @@ public class ItemTownCandidateCpt : ItemGameBaseCpt, DialogView.IDialogCallBack
         GameDataManager gameDataManager = uiGameManager.gameDataManager;
         ToastManager toastManager = uiGameManager.toastManager;
         DialogManager dialogManager = uiGameManager.dialogManager;
-        AudioHandler audioHandler = uiGameManager.audioHandler;
+        AudioHandler audioHandler = AudioHandler.Instance;
 
         audioHandler.PlaySound(AudioSoundEnum.ButtonForNormal);
         //检测是否超过人员上限

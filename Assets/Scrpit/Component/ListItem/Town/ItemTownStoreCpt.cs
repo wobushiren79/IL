@@ -98,7 +98,7 @@ public class ItemTownStoreCpt : ItemGameBaseCpt
     public virtual void OnClickSubmitBuy()
     {
         UIGameManager uiGameManager = GetUIManager<UIGameManager>();
-        AudioHandler audioHandler = uiGameManager.audioHandler;
+        AudioHandler audioHandler = AudioHandler.Instance;
         audioHandler.PlaySound(AudioSoundEnum.ButtonForNormal);
     }
 }

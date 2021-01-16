@@ -73,7 +73,7 @@ public class UIGameHotel : BaseUIComponent
     /// </summary>
     public void OnClickForSortDef()
     {
-        uiGameManager.audioHandler.PlaySound(AudioSoundEnum.ButtonForNormal);
+        AudioHandler.Instance.PlaySound(AudioSoundEnum.ButtonForNormal);
         List<BuildBedBean> listBed = uiGameManager.gameDataManager.gameData.listBed;
         this.listBedData.Clear();
         this.listBedData.AddRange(listBed);
@@ -85,7 +85,7 @@ public class UIGameHotel : BaseUIComponent
     /// </summary>
     public void OnClickForSortLevelUp()
     {
-        uiGameManager.audioHandler.PlaySound(AudioSoundEnum.ButtonForNormal);
+        AudioHandler.Instance.PlaySound(AudioSoundEnum.ButtonForNormal);
         this.listBedData = this.listBedData.OrderByDescending(
             (data) =>
             {
@@ -99,7 +99,7 @@ public class UIGameHotel : BaseUIComponent
     /// </summary>
     public void OnClickForSortPrice()
     {
-        uiGameManager.audioHandler.PlaySound(AudioSoundEnum.ButtonForNormal);
+        AudioHandler.Instance.PlaySound(AudioSoundEnum.ButtonForNormal);
         this.listBedData = this.listBedData.OrderByDescending(
             (data) =>
             {
@@ -113,7 +113,7 @@ public class UIGameHotel : BaseUIComponent
     /// </summary>
     public void OnClickForSortLevel()
     {
-        uiGameManager.audioHandler.PlaySound(AudioSoundEnum.ButtonForNormal);
+        AudioHandler.Instance.PlaySound(AudioSoundEnum.ButtonForNormal);
         this.listBedData = this.listBedData.OrderByDescending(
             (data) =>
             {
@@ -127,7 +127,7 @@ public class UIGameHotel : BaseUIComponent
     /// </summary>
     public void OnClickForBack()
     {
-        uiGameManager.audioHandler.PlaySound(AudioSoundEnum.ButtonForBack);
+        AudioHandler.Instance.PlaySound(AudioSoundEnum.ButtonForBack);
         uiManager.OpenUIAndCloseOtherByName(EnumUtil.GetEnumName(UIEnum.GameMain));
     }
 }

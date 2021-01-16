@@ -109,7 +109,7 @@ public class UIGameWorker : BaseUIComponent
 
     public void OpenMainUI()
     {
-        uiGameManager.audioHandler.PlaySound(AudioSoundEnum.ButtonForBack);
+        AudioHandler.Instance.PlaySound(AudioSoundEnum.ButtonForBack);
         uiManager.OpenUIAndCloseOtherByName(EnumUtil.GetEnumName(UIEnum.GameMain));
     }
 
@@ -141,7 +141,7 @@ public class UIGameWorker : BaseUIComponent
     /// </summary>
     public void OnClickForSortDef()
     {
-        uiGameManager.audioHandler.PlaySound(AudioSoundEnum.ButtonForNormal);
+        AudioHandler.Instance.PlaySound(AudioSoundEnum.ButtonForNormal);
         List<CharacterBean> listData = uiGameManager.gameDataManager.gameData.GetAllCharacterData();
         listCharacterData.Clear();
         listCharacterData.AddRange(listData);
@@ -153,7 +153,7 @@ public class UIGameWorker : BaseUIComponent
     /// </summary>
     public void OnClickForSortLevelUp()
     {
-        uiGameManager.audioHandler.PlaySound(AudioSoundEnum.ButtonForNormal);
+        AudioHandler.Instance.PlaySound(AudioSoundEnum.ButtonForNormal);
         this.listCharacterData = this.listCharacterData.OrderByDescending(
             (data) =>
             {
@@ -177,7 +177,7 @@ public class UIGameWorker : BaseUIComponent
     /// </summary>
     public void OnClickForSortLoyalty()
     {
-        uiGameManager.audioHandler.PlaySound(AudioSoundEnum.ButtonForNormal);
+        AudioHandler.Instance.PlaySound(AudioSoundEnum.ButtonForNormal);
         this.listCharacterData = this.listCharacterData.OrderBy(
             (data) =>
             {
@@ -225,7 +225,7 @@ public class UIGameWorker : BaseUIComponent
     /// </summary>
     public void OnClickForWorker(WorkerEnum worker,WorkerDetilsEnum workerDetils)
     {
-        uiGameManager.audioHandler.PlaySound(AudioSoundEnum.ButtonForNormal);
+        AudioHandler.Instance.PlaySound(AudioSoundEnum.ButtonForNormal);
         this.listCharacterData = this.listCharacterData.OrderByDescending(
             (data) =>
             {

@@ -115,7 +115,7 @@ public class UITownRecruitment : UIBaseOne, DialogView.IDialogCallBack
     /// </summary>
     public void FindWorkerByMoney()
     {
-        uiGameManager.audioHandler.PlaySound(AudioSoundEnum.ButtonForNormal);
+        AudioHandler.Instance.PlaySound(AudioSoundEnum.ButtonForNormal);
         //检测是否超过人员上限
         if (uiGameManager.gameDataManager.gameData.listWorkerCharacter.Count >= uiGameManager.gameDataManager.gameData.workerNumberLimit)
         {
@@ -188,6 +188,6 @@ public class UITownRecruitment : UIBaseOne, DialogView.IDialogCallBack
         CharacterBean characterData = CharacterBean.CreateRandomWorkerDataByPrice(characterBodyManager, pickMoneyL, pickMoneyM, pickMoneyS);
         FindCharacterDialogView findCharacterDialog = dialogManager.CreateDialog<FindCharacterDialogView>(DialogEnum.FindCharacter, this, dialogData);
         findCharacterDialog.SetData(characterData);
-        uiGameManager.audioHandler.PlaySound(AudioSoundEnum.Reward);
+        AudioHandler.Instance.PlaySound(AudioSoundEnum.Reward);
     }
 }

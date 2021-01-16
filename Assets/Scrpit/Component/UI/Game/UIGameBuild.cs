@@ -326,7 +326,7 @@ public class UIGameBuild : BaseUIComponent, IRadioGroupCallBack
     /// </summary>
     public void OpenMainUI()
     {
-        uiGameManager.audioHandler.PlaySound(AudioSoundEnum.ButtonForBack);
+        AudioHandler.Instance.PlaySound(AudioSoundEnum.ButtonForBack);
         //删除当前选中
         ((ControlForBuildCpt)(uiGameManager.controlHandler.GetControl(ControlHandler.ControlEnum.Build))).ClearBuildItem();
         //重新构建地形
@@ -354,7 +354,7 @@ public class UIGameBuild : BaseUIComponent, IRadioGroupCallBack
     /// </summary>
     public void OnClickForFirstLayer()
     {
-        uiGameManager.audioHandler.PlaySound(AudioSoundEnum.ButtonForNormal);
+        AudioHandler.Instance.PlaySound(AudioSoundEnum.ButtonForNormal);
         SetInnLayer(1);
     }
 
@@ -364,7 +364,7 @@ public class UIGameBuild : BaseUIComponent, IRadioGroupCallBack
     /// </summary>
     public void OnClickForSecondLayer()
     {
-        uiGameManager.audioHandler.PlaySound(AudioSoundEnum.ButtonForNormal);
+        AudioHandler.Instance.PlaySound(AudioSoundEnum.ButtonForNormal);
         SetInnLayer(2);
     }
 
@@ -421,7 +421,7 @@ public class UIGameBuild : BaseUIComponent, IRadioGroupCallBack
     #region  类型选择回调
     public void RadioButtonSelected(RadioGroupView rgView, int position, RadioButtonView rbview)
     {
-        uiGameManager.audioHandler.PlaySound(AudioSoundEnum.ButtonForNormal);
+        AudioHandler.Instance.PlaySound(AudioSoundEnum.ButtonForNormal);
         //删除当前选中
         ((ControlForBuildCpt)(uiGameManager.controlHandler.GetControl(ControlHandler.ControlEnum.Build))).ClearBuildItem();
         btDismantle.gameObject.SetActive(true);

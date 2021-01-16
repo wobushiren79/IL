@@ -63,7 +63,7 @@ public class GambleTrickyCupHandler : BaseGambleHandler<GambleTrickyCupBean , Ga
         yield return new WaitForSeconds(0.6f);
         for (int i = 0; i < gambleData.changeNumber; i++)
         {
-            uiGameManager.audioHandler.PlaySound(AudioSoundEnum.GetCard);
+            AudioHandler.Instance.PlaySound(AudioSoundEnum.GetCard);
             List<GambleTrickyCupItem> listChangeCup = RandomUtil.GetRandomDataByListForNumberNR(listCup, 2);
             RectTransform trf1 = ((RectTransform)listChangeCup[0].transform);
             RectTransform trf2 = ((RectTransform)listChangeCup[1].transform);
@@ -92,7 +92,7 @@ public class GambleTrickyCupHandler : BaseGambleHandler<GambleTrickyCupBean , Ga
         }
         else
         {
-            uiGameManager.audioHandler.PlaySound(AudioSoundEnum.Passive);
+            AudioHandler.Instance.PlaySound(AudioSoundEnum.Passive);
             EndGame();
         }
     }

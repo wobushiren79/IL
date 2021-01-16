@@ -52,7 +52,7 @@ public class UITownGuildImprove : UIBaseOne, IRadioGroupCallBack
     #region 类型选择回调
     public void RadioButtonSelected(RadioGroupView rgView, int position, RadioButtonView rbview)
     {
-        uiGameManager.audioHandler.PlaySound(AudioSoundEnum.ButtonForNormal);
+        AudioHandler.Instance.PlaySound(AudioSoundEnum.ButtonForNormal);
         this.typePosition = position;
         ChangeUIType(typePosition);
     }

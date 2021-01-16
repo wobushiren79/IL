@@ -91,7 +91,7 @@ public class UITownArenaStore : UIBaseOne, StoreInfoManager.ICallBack, IRadioGro
     #region 类型选择回调
     public void RadioButtonSelected(RadioGroupView rgView, int position, RadioButtonView rbview)
     {
-        uiGameManager.audioHandler.PlaySound(AudioSoundEnum.ButtonForNormal);
+        AudioHandler.Instance.PlaySound(AudioSoundEnum.ButtonForNormal);
         StoreForArenaGoodsTypeEnum goodsType = EnumUtil.GetEnum<StoreForArenaGoodsTypeEnum>(rbview.name);
         InitDataByType(goodsType);
     }

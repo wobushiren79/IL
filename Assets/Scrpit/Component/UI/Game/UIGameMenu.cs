@@ -138,7 +138,7 @@ public class UIGameMenu : BaseUIComponent, TextSearchView.ICallBack
     /// </summary>
     public void OnClickForSortDef()
     {
-        uiGameManager.audioHandler.PlaySound(AudioSoundEnum.ButtonForNormal);
+        AudioHandler.Instance.PlaySound(AudioSoundEnum.ButtonForNormal);
         List<MenuOwnBean> listMenu = uiGameManager.gameDataManager.gameData.listMenu;
         this.listMenu.Clear();
         this.listMenu.AddRange(listMenu);
@@ -151,7 +151,7 @@ public class UIGameMenu : BaseUIComponent, TextSearchView.ICallBack
     /// </summary>
     public void OnClickForSortName()
     {
-        uiGameManager.audioHandler.PlaySound(AudioSoundEnum.ButtonForNormal);
+        AudioHandler.Instance.PlaySound(AudioSoundEnum.ButtonForNormal);
         //TODO 名字排序有问题
         this.listMenu =  this.listMenu.OrderByDescending(
             (data)=> 
@@ -168,7 +168,7 @@ public class UIGameMenu : BaseUIComponent, TextSearchView.ICallBack
     /// </summary>
     public void OnClickForSortRarity()
     {
-        uiGameManager.audioHandler.PlaySound(AudioSoundEnum.ButtonForNormal);
+        AudioHandler.Instance.PlaySound(AudioSoundEnum.ButtonForNormal);
         this.listMenu = this.listMenu.OrderByDescending(
             (data) =>
             {
@@ -184,7 +184,7 @@ public class UIGameMenu : BaseUIComponent, TextSearchView.ICallBack
     /// </summary>
     public void OnClickForSortLevel()
     {
-        uiGameManager.audioHandler.PlaySound(AudioSoundEnum.ButtonForNormal);
+        AudioHandler.Instance.PlaySound(AudioSoundEnum.ButtonForNormal);
         this.listMenu = this.listMenu.OrderByDescending(
             (data) =>
             {
@@ -199,7 +199,7 @@ public class UIGameMenu : BaseUIComponent, TextSearchView.ICallBack
     /// </summary>
     public void OnClickForSortSell()
     {
-        uiGameManager.audioHandler.PlaySound(AudioSoundEnum.ButtonForNormal);
+        AudioHandler.Instance.PlaySound(AudioSoundEnum.ButtonForNormal);
         this.listMenu = this.listMenu.OrderByDescending(
             (data) =>
             {
@@ -214,7 +214,7 @@ public class UIGameMenu : BaseUIComponent, TextSearchView.ICallBack
     /// </summary>
     public void OnClickForSortLevelUp()
     {
-        uiGameManager.audioHandler.PlaySound(AudioSoundEnum.ButtonForNormal);
+        AudioHandler.Instance.PlaySound(AudioSoundEnum.ButtonForNormal);
         this.listMenu = this.listMenu.OrderByDescending(
             (data) =>
             {
@@ -228,7 +228,7 @@ public class UIGameMenu : BaseUIComponent, TextSearchView.ICallBack
     /// </summary>
     public void OnClickForSortPrice()
     {
-        uiGameManager.audioHandler.PlaySound(AudioSoundEnum.ButtonForNormal);
+        AudioHandler.Instance.PlaySound(AudioSoundEnum.ButtonForNormal);
         this.listMenu = this.listMenu.OrderByDescending(
             (data) =>
             {
@@ -245,7 +245,7 @@ public class UIGameMenu : BaseUIComponent, TextSearchView.ICallBack
     /// </summary>
     public void OnClickForSortTime()
     {
-        uiGameManager.audioHandler.PlaySound(AudioSoundEnum.ButtonForNormal);
+        AudioHandler.Instance.PlaySound(AudioSoundEnum.ButtonForNormal);
         this.listMenu = this.listMenu.OrderByDescending(
             (data) =>
             {
@@ -288,7 +288,7 @@ public class UIGameMenu : BaseUIComponent, TextSearchView.ICallBack
     /// </summary>
     public void OpenMainUI()
     {
-        uiGameManager.audioHandler.PlaySound(AudioSoundEnum.ButtonForBack);
+        AudioHandler.Instance.PlaySound(AudioSoundEnum.ButtonForBack);
         uiManager.OpenUIAndCloseOtherByName(EnumUtil.GetEnumName(UIEnum.GameMain));
     }
 

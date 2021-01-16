@@ -117,7 +117,7 @@ public class ItemMiniGameDebateCardCpt : ItemGameBaseCpt, IPointerEnterHandler, 
             return;
         if (ownType == 1)
         {
-            uiComponent.GetUIManager<UIGameManager>().audioHandler.PlaySound(AudioSoundEnum.SetCard);
+            AudioHandler.Instance.PlaySound(AudioSoundEnum.SetCard);
             transform.DOKill();
             transform.localScale = new Vector3(1, 1, 1);
             debateHandler.StartCombat(this);

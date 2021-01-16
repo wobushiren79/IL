@@ -399,13 +399,13 @@ public class UIGameMain : BaseUIComponent, DialogView.IDialogCallBack, IRadioGro
 
     public void SaveData()
     {
-        uiGameManager.audioHandler.PlaySound(AudioSoundEnum.ButtonForNormal);
+        AudioHandler.Instance.PlaySound(AudioSoundEnum.ButtonForNormal);
         uiGameManager.gameDataManager.SaveGameData(uiGameManager.innHandler.GetInnRecord());
     }
 
     public void OpenBuildUI()
     {
-        uiGameManager.audioHandler.PlaySound(AudioSoundEnum.ButtonForNormal);
+        AudioHandler.Instance.PlaySound(AudioSoundEnum.ButtonForNormal);
         if (CheckUtil.ListIsNull(uiGameManager.innHandler.rascalrQueue))
         {
             DialogBean dialogBean = new DialogBean();
@@ -421,50 +421,51 @@ public class UIGameMain : BaseUIComponent, DialogView.IDialogCallBack, IRadioGro
 
     public void OpenWorkerUI()
     {
-        uiGameManager.audioHandler.PlaySound(AudioSoundEnum.ButtonForNormal);
+        AudioHandler.Instance.PlaySound(AudioSoundEnum.ButtonForNormal);
         UIGameWorker uiGameWorker = (UIGameWorker)uiManager.OpenUIAndCloseOther(UIEnum.GameWorker);
         uiGameWorker.InitUI();
     }
 
     public void OpenMenuUI()
     {
-        uiGameManager.audioHandler.PlaySound(AudioSoundEnum.ButtonForNormal);
+        AudioHandler.Instance.PlaySound(AudioSoundEnum.ButtonForNormal);
         uiManager.OpenUIAndCloseOther(UIEnum.GameMenu);
     }
 
     public void OpenBackpackUI()
     {
-        uiGameManager.audioHandler.PlaySound(AudioSoundEnum.ButtonForNormal);
+        AudioHandler.Instance.PlaySound(AudioSoundEnum.ButtonForNormal);
         uiManager.OpenUIAndCloseOther(UIEnum.GameBackpack);
     }
 
     public void OpenFavorabilityUI()
     {
-        uiGameManager.audioHandler.PlaySound(AudioSoundEnum.ButtonForNormal);
+        AudioHandler.Instance.PlaySound(AudioSoundEnum.ButtonForNormal);
         uiManager.OpenUIAndCloseOther(UIEnum.GameFavorability);
     }
 
     public void OpenStatisticsUI()
     {
-        uiGameManager.audioHandler.PlaySound(AudioSoundEnum.ButtonForNormal);
+        AudioHandler.Instance.PlaySound(AudioSoundEnum.ButtonForNormal);
         uiManager.OpenUIAndCloseOther(UIEnum.GameStatistics);
     }
 
     public void OpenSettingUI()
     {
-        uiGameManager.audioHandler.PlaySound(AudioSoundEnum.ButtonForNormal);
+        AudioHandler.Instance.PlaySound(AudioSoundEnum.ButtonForNormal);
         uiManager.OpenUIAndCloseOther(UIEnum.GameSetting);
     }
 
     public void OpenHelpUI()
     {
-        uiGameManager.audioHandler.PlaySound(AudioSoundEnum.ButtonForNormal);
+        AudioHandler.Instance.PlaySound(AudioSoundEnum.ButtonForNormal);
         uiManager.OpenUIAndCloseOther(UIEnum.GameHelp);
     }
 
     public void OnClickForEndDay()
     {
-        uiGameManager.audioHandler.PlaySound(AudioSoundEnum.ButtonForNormal);
+        AudioHandler.Instance.PlaySound(AudioSoundEnum.ButtonForNormal);
+        AudioHandler.Instance.PlaySound(AudioSoundEnum.ButtonForNormal);
         DialogBean dialogBean = new DialogBean();
         dialogBean.content = GameCommonInfo.GetUITextById(3004);
         dialogBean.dialogPosition = 0;
@@ -477,7 +478,7 @@ public class UIGameMain : BaseUIComponent, DialogView.IDialogCallBack, IRadioGro
         {
             return;
         }
-        uiGameManager.audioHandler.PlaySound(AudioSoundEnum.ButtonForNormal);
+        AudioHandler.Instance.PlaySound(AudioSoundEnum.ButtonForNormal);
         DialogBean dialogBean = new DialogBean();
         JumpTimeDialogView jumpTimeDialog = uiGameManager.dialogManager.CreateDialog<JumpTimeDialogView>(DialogEnum.JumpTime, this, dialogBean);
         jumpTimeDialog.SetData();
@@ -485,13 +486,13 @@ public class UIGameMain : BaseUIComponent, DialogView.IDialogCallBack, IRadioGro
 
     public void OnClickForHotel()
     {
-        uiGameManager.audioHandler.PlaySound(AudioSoundEnum.ButtonForNormal);
+        AudioHandler.Instance.PlaySound(AudioSoundEnum.ButtonForNormal);
         uiManager.OpenUIAndCloseOther(UIEnum.GameHotel);
     }
 
     public void OnClickForFamily()
     {
-        uiGameManager.audioHandler.PlaySound(AudioSoundEnum.ButtonForNormal);
+        AudioHandler.Instance.PlaySound(AudioSoundEnum.ButtonForNormal);
         uiManager.OpenUIAndCloseOther(UIEnum.GameFamily);
     }
 
@@ -500,7 +501,7 @@ public class UIGameMain : BaseUIComponent, DialogView.IDialogCallBack, IRadioGro
     /// </summary>
     public void OnClickForFirstLayer()
     {
-        uiGameManager.audioHandler.PlaySound(AudioSoundEnum.ButtonForNormal);
+        AudioHandler.Instance.PlaySound(AudioSoundEnum.ButtonForNormal);
         SetInnLayer(1);
     }
 
@@ -509,7 +510,7 @@ public class UIGameMain : BaseUIComponent, DialogView.IDialogCallBack, IRadioGro
     /// </summary>
     public void OnClickForSecondLayer()
     {
-        uiGameManager.audioHandler.PlaySound(AudioSoundEnum.ButtonForNormal);
+        AudioHandler.Instance.PlaySound(AudioSoundEnum.ButtonForNormal);
         SetInnLayer(2);
     }
 
@@ -636,7 +637,7 @@ public class UIGameMain : BaseUIComponent, DialogView.IDialogCallBack, IRadioGro
     #region 单选回调
     public void RadioButtonSelected(RadioGroupView rgView, int position, RadioButtonView rbview)
     {
-        uiGameManager.audioHandler.PlaySound(AudioSoundEnum.ButtonForNormal);
+        AudioHandler.Instance.PlaySound(AudioSoundEnum.ButtonForNormal);
         int timeScale = 1;
         if (rbview == rbTimeScale2)
         {

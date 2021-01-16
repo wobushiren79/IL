@@ -126,7 +126,7 @@ public class UIBaseRank : UIBaseOne, IRadioGroupCallBack
     #region 排行榜类型回调
     public void RadioButtonSelected(RadioGroupView rgView, int position, RadioButtonView rbview)
     {
-        uiGameManager.audioHandler.PlaySound(AudioSoundEnum.ButtonForNormal);
+        AudioHandler.Instance.PlaySound(AudioSoundEnum.ButtonForNormal);
         ClearData();
         rankType = EnumUtil.GetEnum<RankTypeEnum>(rbview.name);
         string rankName = RankTypeEnumTool.GetRankTypeName(rankType);

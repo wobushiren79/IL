@@ -164,7 +164,7 @@ public class UIMiniGameDebate : UIBaseMiniGame<MiniGameDebateBean>
                     delegate () 
                         {
                             cgItem.alpha = 1;
-                            uiGameManager.audioHandler.PlaySound(AudioSoundEnum.GetCard);
+                            AudioHandler.Instance.PlaySound(AudioSoundEnum.GetCard);
                         })
                 .OnComplete(
                     delegate () 
@@ -233,7 +233,7 @@ public class UIMiniGameDebate : UIBaseMiniGame<MiniGameDebateBean>
             {
                 if (winnerCard == null || loserCard == null)
                 {
-                    uiGameManager.audioHandler.PlaySound(AudioSoundEnum.CardDraw);
+                    AudioHandler.Instance.PlaySound(AudioSoundEnum.CardDraw);
                     //平手 都删除
                     CardDestroyAnim(userCard);
                     CardDestroyAnim(enemyCard);
@@ -248,11 +248,11 @@ public class UIMiniGameDebate : UIBaseMiniGame<MiniGameDebateBean>
                     //输赢
                     if (userCard== winnerCard)
                     {
-                        uiGameManager.audioHandler.PlaySound(AudioSoundEnum.CardWin);
+                        AudioHandler.Instance.PlaySound(AudioSoundEnum.CardWin);
                     }
                     else
                     {
-                        uiGameManager.audioHandler.PlaySound(AudioSoundEnum.CardLose);
+                        AudioHandler.Instance.PlaySound(AudioSoundEnum.CardLose);
                     }
                 }
                 //通知动画结束

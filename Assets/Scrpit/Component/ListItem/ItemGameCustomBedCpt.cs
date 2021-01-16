@@ -6,7 +6,7 @@ public class ItemGameCustomBedCpt : ItemTownCerpenterCpt
     public override void OnClickSubmitBuy()
     {
         UIGameManager uiGameManager = GetUIManager<UIGameManager>();
-        AudioHandler audioHandler = uiGameManager.audioHandler;
+        AudioHandler audioHandler = AudioHandler.Instance;
         audioHandler.PlaySound(AudioSoundEnum.ButtonForNormal);
         
         UIGameCustomBed uiGameCustom = (UIGameCustomBed)uiComponent;

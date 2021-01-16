@@ -78,7 +78,7 @@ public class ItemGameAttendanceCpt : ItemGameWorkerCpt,IRadioButtonCallBack
     #region RB回调
     public void RadioButtonSelected(RadioButtonView view, RadioButtonView.RadioButtonStatus buttonStatus)
     {
-        GetUIManager<UIGameManager>().audioHandler.PlaySound(AudioSoundEnum.ButtonForNormal);
+        AudioHandler.Instance.PlaySound(AudioSoundEnum.ButtonForNormal);
         if (buttonStatus == RadioButtonView.RadioButtonStatus.Selected)
         {
             SetAttendance(WorkerStatusEnum.Work);

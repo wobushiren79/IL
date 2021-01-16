@@ -185,7 +185,7 @@ public class ItemTownGuildAchievementCpt : ItemGameBaseCpt
             AchievementDialogView achDialog = dialogManager.CreateDialog<AchievementDialogView>(DialogEnum.Achievement, null, null);
             achDialog.SetData(achievementInfo);
             //播放音效
-            uiGameManager.audioHandler.PlaySound(AudioSoundEnum.ButtonForNormal);
+            AudioHandler.Instance.PlaySound(AudioSoundEnum.ButtonForNormal);
             //解锁steam成就
             if (uiGameManager.steamHandler!=null)
             {

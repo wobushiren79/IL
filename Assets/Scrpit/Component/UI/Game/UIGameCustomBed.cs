@@ -303,7 +303,7 @@ public class UIGameCustomBed : UIBaseOne, StoreInfoManager.ICallBack, IRadioGrou
             //支付金钱
             gameData.PayMoney(customPriceL, customPriceM, customPriceS);
             //播放音效
-            uiGameManager.audioHandler.PlaySound(AudioSoundEnum.Reward);
+            AudioHandler.Instance.PlaySound(AudioSoundEnum.Reward);
 
             DialogBean dialogData = new DialogBean();
             FindBedDialogView findBedDialog = uiGameManager.dialogManager.CreateDialog<FindBedDialogView>(DialogEnum.FindBed, this, dialogData);

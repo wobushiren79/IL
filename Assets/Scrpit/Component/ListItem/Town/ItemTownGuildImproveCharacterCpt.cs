@@ -73,7 +73,7 @@ public class ItemTownGuildImproveCharacterCpt : ItemGameBaseCpt, DialogView.IDia
         gameDataHandler = uiGameManager.gameDataHandler;
         iconDataManager = uiGameManager.iconDataManager;
         innBuildManager = uiGameManager.innBuildManager;
-        audioHandler = uiGameManager.audioHandler;
+        audioHandler = AudioHandler.Instance;
 
     }
 
@@ -286,7 +286,7 @@ public class ItemTownGuildImproveCharacterCpt : ItemGameBaseCpt, DialogView.IDia
     /// </summary>
     protected void ImproveCheck(int type)
     {
-        uiGameManager.audioHandler.PlaySound(AudioSoundEnum.ButtonForNormal);
+        AudioHandler.Instance.PlaySound(AudioSoundEnum.ButtonForNormal);
         //判断是否有足够的金钱
         if (!gameDataManager.gameData.HasEnoughMoney(levelData.price_l, levelData.price_m, levelData.price_s))
         {

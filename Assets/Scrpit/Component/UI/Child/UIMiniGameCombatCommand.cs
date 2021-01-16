@@ -45,7 +45,7 @@ public class UIMiniGameCombatCommand : BaseUIChildComponent<UIMiniGameCombat>, D
     /// </summary>
     public void CommandFight()
     {
-        ((UIGameManager)uiComponent.uiManager).audioHandler.PlaySound(AudioSoundEnum.ButtonForNormal);
+        AudioHandler.Instance.PlaySound(AudioSoundEnum.ButtonForNormal);
         uiComponent.miniGameData.SetRoundActionCommand(MiniGameCombatCommand.Fight);
         uiComponent.OpenSelectCharacter(1, 2);
     }
@@ -55,7 +55,7 @@ public class UIMiniGameCombatCommand : BaseUIChildComponent<UIMiniGameCombat>, D
     /// </summary>
     public void CommandSkill()
     {
-        ((UIGameManager)uiComponent.uiManager).audioHandler.PlaySound(AudioSoundEnum.ButtonForNormal);
+        AudioHandler.Instance.PlaySound(AudioSoundEnum.ButtonForNormal);
         uiComponent.miniGameData.SetRoundActionCommand(MiniGameCombatCommand.Skill);
         NpcAIMiniGameCombatCpt npcCpt = uiComponent.miniGameData.GetRoundActionCharacter();
         SkillInfoHandler skillInfoHandler = ((UIGameManager)uiComponent.uiManager).skillInfoHandler;
@@ -75,7 +75,7 @@ public class UIMiniGameCombatCommand : BaseUIChildComponent<UIMiniGameCombat>, D
     /// </summary>
     public void CommandItems()
     {
-        ((UIGameManager)uiComponent.uiManager).audioHandler.PlaySound(AudioSoundEnum.ButtonForNormal);
+        AudioHandler.Instance.PlaySound(AudioSoundEnum.ButtonForNormal);
         uiComponent.miniGameData.SetRoundActionCommand(MiniGameCombatCommand.Items);
 
         DialogManager dialogManager = ((UIGameManager)uiComponent.uiManager).dialogManager;
@@ -89,7 +89,7 @@ public class UIMiniGameCombatCommand : BaseUIChildComponent<UIMiniGameCombat>, D
     /// </summary>
     public void CommandPass()
     {
-        ((UIGameManager)uiComponent.uiManager).audioHandler.PlaySound(AudioSoundEnum.ButtonForNormal);
+        AudioHandler.Instance.PlaySound(AudioSoundEnum.ButtonForNormal);
         uiComponent.miniGameData.SetRoundActionCommand(MiniGameCombatCommand.Pass);
         if (callBack != null)
             callBack.PassComplete();

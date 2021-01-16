@@ -77,7 +77,7 @@ public class UIGameEquip : BaseUIComponent, TextSearchView.ICallBack
 
     public void OpenWorkUI()
     {
-        uiGameManager.audioHandler.PlaySound(AudioSoundEnum.ButtonForBack);
+        AudioHandler.Instance.PlaySound(AudioSoundEnum.ButtonForBack);
         uiManager.OpenUIAndCloseOtherByName(EnumUtil.GetEnumName(UIEnum.GameWorker));
     }
 

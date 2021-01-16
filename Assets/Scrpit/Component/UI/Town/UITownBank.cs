@@ -54,7 +54,7 @@ public class UITownBank : UIBaseOne, IRadioGroupCallBack
     #region 回调
     public void RadioButtonSelected(RadioGroupView rgView, int position, RadioButtonView rbview)
     {
-        uiGameManager.audioHandler.PlaySound(AudioSoundEnum.ButtonForNormal);
+        AudioHandler.Instance.PlaySound(AudioSoundEnum.ButtonForNormal);
         StoreForBankTypeEnum type = EnumUtil.GetEnum<StoreForBankTypeEnum>(rbview.name);
         InitDataByType(type);
     }

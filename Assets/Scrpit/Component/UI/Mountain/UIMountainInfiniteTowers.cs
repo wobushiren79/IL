@@ -33,8 +33,8 @@ public class UIMountainInfiniteTowers : BaseUIComponent, DialogView.IDialogCallB
     {
         base.OpenUI();
 
-        if (uiGameManager.audioHandler != null)
-            uiGameManager.audioHandler.PlaySound(AudioSoundEnum.ButtonForNormal);
+        if (AudioHandler.Instance != null)
+            AudioHandler.Instance.PlaySound(AudioSoundEnum.ButtonForNormal);
         if (uiGameManager.controlHandler != null)
             uiGameManager.controlHandler.StopControl();
         if (uiGameManager.gameTimeHandler != null)
@@ -103,7 +103,7 @@ public class UIMountainInfiniteTowers : BaseUIComponent, DialogView.IDialogCallB
     /// </summary>
     public virtual void OnClickForBack()
     {
-        uiGameManager.audioHandler.PlaySound(AudioSoundEnum.ButtonForNormal);
+        AudioHandler.Instance.PlaySound(AudioSoundEnum.ButtonForNormal);
         uiManager.OpenUIAndCloseOtherByName(EnumUtil.GetEnumName(UIEnum.GameMain));
     }
 
@@ -112,7 +112,7 @@ public class UIMountainInfiniteTowers : BaseUIComponent, DialogView.IDialogCallB
     /// </summary>
     public void OnClickForStart()
     {
-        uiGameManager.audioHandler.PlaySound(AudioSoundEnum.ButtonForNormal);
+        AudioHandler.Instance.PlaySound(AudioSoundEnum.ButtonForNormal);
         DialogBean dialogData = new DialogBean();
         dialogData.dialogPosition = 0;
         PickForCharacterDialogView pickForCharacterDialog = uiGameManager.dialogManager.CreateDialog<PickForCharacterDialogView>(DialogEnum.PickForCharacter, this, dialogData);
@@ -137,7 +137,7 @@ public class UIMountainInfiniteTowers : BaseUIComponent, DialogView.IDialogCallB
     /// </summary>
     public void OnClickForSend()
     {
-        uiGameManager.audioHandler.PlaySound(AudioSoundEnum.ButtonForNormal);
+        AudioHandler.Instance.PlaySound(AudioSoundEnum.ButtonForNormal);
         DialogBean dialogData = new DialogBean();
         dialogData.dialogPosition = 1;
         PickForCharacterDialogView pickForCharacterDialog = uiGameManager.dialogManager.CreateDialog<PickForCharacterDialogView>(DialogEnum.PickForCharacter, this, dialogData);

@@ -58,7 +58,6 @@ public class ItemGameWorkerCpt : ItemGameBaseCpt, DialogView.IDialogCallBack, Wo
     public CharacterBean characterData;
 
     protected InfoPromptPopupShow infoPromptPopup;
-    protected AudioHandler audioHandler;
     protected DialogManager dialogManager;
     protected GameDataManager gameDataManager;
     protected GameItemsManager gameItemsManager;
@@ -68,7 +67,6 @@ public class ItemGameWorkerCpt : ItemGameBaseCpt, DialogView.IDialogCallBack, Wo
     {
         gameItemsManager = GetUIManager<UIGameManager>().gameItemsManager;
         infoPromptPopup = GetUIManager<UIGameManager>().infoPromptPopup;
-        audioHandler = GetUIManager<UIGameManager>().audioHandler;
         dialogManager = GetUIManager<UIGameManager>().dialogManager;
         gameDataManager = GetUIManager<UIGameManager>().gameDataManager;
         gameTimeHandler = GetUIManager<UIGameManager>().gameTimeHandler;
@@ -252,8 +250,7 @@ public class ItemGameWorkerCpt : ItemGameBaseCpt, DialogView.IDialogCallBack, Wo
     /// </summary>
     public void OpenEquipUI()
     {
-        if (audioHandler != null)
-            audioHandler.PlaySound(AudioSoundEnum.ButtonForNormal);
+        AudioHandler.Instance.PlaySound(AudioSoundEnum.ButtonForNormal);
         if (uiComponent != null)
         {
             UIGameEquip uiequip = (UIGameEquip)GetUIManager().GetUIByName(EnumUtil.GetEnumName(UIEnum.GameEquip));
@@ -267,8 +264,7 @@ public class ItemGameWorkerCpt : ItemGameBaseCpt, DialogView.IDialogCallBack, Wo
     /// </summary>
     public void OpenDeitalsUI()
     {
-        if (audioHandler != null)
-            audioHandler.PlaySound(AudioSoundEnum.ButtonForNormal);
+        AudioHandler.Instance.PlaySound(AudioSoundEnum.ButtonForNormal);
         if (uiComponent != null)
         {
             UIGameWorkerDetails uiWorkerDetails = (UIGameWorkerDetails)GetUIManager().GetUIByName(EnumUtil.GetEnumName(UIEnum.GameWorkerDetails));
@@ -283,8 +279,7 @@ public class ItemGameWorkerCpt : ItemGameBaseCpt, DialogView.IDialogCallBack, Wo
     /// </summary>
     public void FireWorker()
     {
-        if (audioHandler != null)
-            audioHandler.PlaySound(AudioSoundEnum.ButtonForNormal);
+        AudioHandler.Instance.PlaySound(AudioSoundEnum.ButtonForNormal);
         if (gameTimeHandler.GetDayStatus() == GameTimeHandler.DayEnum.Work)
         {
             toastManager.ToastHint(GameCommonInfo.GetUITextById(1082));
@@ -309,8 +304,7 @@ public class ItemGameWorkerCpt : ItemGameBaseCpt, DialogView.IDialogCallBack, Wo
     /// </summary>
     public void SendGift()
     {
-        if (audioHandler != null)
-            audioHandler.PlaySound(AudioSoundEnum.ButtonForNormal);
+        AudioHandler.Instance.PlaySound(AudioSoundEnum.ButtonForNormal);
         DialogBean dialogData = new DialogBean();
         // dialogData.content = string.Format(GameCommonInfo.GetUITextById(3063), characterData.baseInfo.name);
         PickForItemsDialogView dialogView = dialogManager.CreateDialog<PickForItemsDialogView>(DialogEnum.PickForItems, this, dialogData);
@@ -693,7 +687,7 @@ public class ItemGameWorkerCpt : ItemGameBaseCpt, DialogView.IDialogCallBack, Wo
             CharacterWorkerBaseBean characterWorker = characterData.baseInfo.GetWorkerInfoByType(WorkerEnum.Beater);
             characterWorker.SetWorkStatus(isWork);
         }
-        audioHandler.PlaySound(AudioSoundEnum.ButtonForNormal);
+        AudioHandler.Instance.PlaySound(AudioSoundEnum.ButtonForNormal);
         if (GetUIManager<UIGameManager>().innHandler != null)
             GetUIManager<UIGameManager>().innHandler.InitWorker();
     }

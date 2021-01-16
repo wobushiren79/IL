@@ -92,7 +92,7 @@ public class ItemTownBeautySalonCpt : ItemGameBaseCpt
 
     public void OnClickForSubmit()
     {
-        uiGameManager.audioHandler.PlaySound(AudioSoundEnum.ButtonForNormal);
+        AudioHandler.Instance.PlaySound(AudioSoundEnum.ButtonForNormal);
         if (callBack != null)
             callBack.SelectItem(type,data,priceL,priceM,priceS);
     }

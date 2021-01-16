@@ -227,7 +227,7 @@ public class ItemTownArenaCpt : ItemGameBaseCpt, DialogView.IDialogCallBack
         GameDataManager gameDataManager = uiGameManager.gameDataManager;
         ToastManager toastManager = uiGameManager.toastManager;
         DialogManager dialogManager = uiGameManager.dialogManager;
-        AudioHandler audioHandler = uiGameManager.audioHandler;
+        AudioHandler audioHandler = AudioHandler.Instance;
         audioHandler.PlaySound(AudioSoundEnum.ButtonForNormal);
         if (!gameDataManager.gameData.HasEnoughMoney(miniGameData.preMoneyL, miniGameData.preMoneyM, miniGameData.preMoneyS))
         {
@@ -251,7 +251,7 @@ public class ItemTownArenaCpt : ItemGameBaseCpt, DialogView.IDialogCallBack
         GameDataManager gameDataManager = uiGameManager.gameDataManager;
         ToastManager toastManager = uiGameManager.toastManager;
         DialogManager dialogManager = uiGameManager.dialogManager;
-        AudioHandler audioHandler = uiGameManager.audioHandler;
+        AudioHandler audioHandler = AudioHandler.Instance;
 
         audioHandler.PlaySound(AudioSoundEnum.ButtonForNormal);
         if (!gameDataManager.gameData.HasEnoughMoney(miniGameData.preMoneyL, miniGameData.preMoneyM, miniGameData.preMoneyS))
@@ -280,7 +280,7 @@ public class ItemTownArenaCpt : ItemGameBaseCpt, DialogView.IDialogCallBack
         IconDataManager iconDataManager = uiGameManager.iconDataManager;
         NpcInfoManager npcInfoManager = uiGameManager.npcInfoManager;
         InnBuildManager innBuildManager = uiGameManager.innBuildManager;
-        AudioHandler audioHandler = uiGameManager.audioHandler;
+        AudioHandler audioHandler = AudioHandler.Instance;
         GameTimeHandler gameTimeHandler = uiGameManager.gameTimeHandler;
   
         if (dialogView as PickForCharacterDialogView)
