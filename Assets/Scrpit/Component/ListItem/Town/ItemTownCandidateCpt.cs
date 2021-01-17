@@ -40,7 +40,7 @@ public class ItemTownCandidateCpt : ItemGameBaseCpt, DialogView.IDialogCallBack
             return;
         if (gameDataManager.gameData.listWorkerCharacter.Count >= gameDataManager.gameData.workerNumberLimit)
         {
-            toastManager.ToastHint(GameCommonInfo.GetUITextById(1051));
+            ToastHandler.Instance.ToastHint(GameCommonInfo.GetUITextById(1051));
             return;
         };
         //确认
@@ -138,14 +138,14 @@ public class ItemTownCandidateCpt : ItemGameBaseCpt, DialogView.IDialogCallBack
 
         if (!gameDataManager.gameData.HasEnoughMoney(characterData.baseInfo.priceL, characterData.baseInfo.priceM, characterData.baseInfo.priceS))
         {
-            toastManager.ToastHint(GameCommonInfo.GetUITextById(1005));
+            ToastHandler.Instance.ToastHint(GameCommonInfo.GetUITextById(1005));
             return;
         }
         gameDataManager.gameData.PayMoney(characterData.baseInfo.priceL, characterData.baseInfo.priceM, characterData.baseInfo.priceS);
         gameDataManager.gameData.listWorkerCharacter.Add(characterData);
         GetUIComponent<UITownRecruitment>().RemoveCandidate(characterData);
 
-        toastManager.ToastHint(string.Format(GameCommonInfo.GetUITextById(1053), characterData.baseInfo.name));
+        ToastHandler.Instance.ToastHint(string.Format(GameCommonInfo.GetUITextById(1053), characterData.baseInfo.name));
     }
 
     public void Cancel(DialogView dialogView, DialogBean dialogData)

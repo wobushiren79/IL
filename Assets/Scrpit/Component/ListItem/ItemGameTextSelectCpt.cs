@@ -65,7 +65,7 @@ public class ItemGameTextSelectCpt : ItemGameBaseCpt, DialogView.IDialogCallBack
                     uiGameManager.npcInfoManager);
                 if (!itemPreData.isPre)
                 {
-                    uiGameManager.toastManager.ToastHint(itemPreData.spPreIcon, itemPreData.preFailStr);
+                    ToastHandler.Instance.ToastHint(itemPreData.spPreIcon, itemPreData.preFailStr);
                     return;
                 }
             }
@@ -73,7 +73,6 @@ public class ItemGameTextSelectCpt : ItemGameBaseCpt, DialogView.IDialogCallBack
             PreTypeEnumTools.CompletePre(listPre, uiGameManager.gameDataManager.gameData);
             //完成所有奖励
             RewardTypeEnumTools.CompleteReward(
-                uiGameManager.toastManager,
                 uiGameManager.npcInfoManager,
                 uiGameManager.iconDataManager,
                 uiGameManager.innBuildManager,

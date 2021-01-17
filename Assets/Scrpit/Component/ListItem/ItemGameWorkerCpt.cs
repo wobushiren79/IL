@@ -280,7 +280,7 @@ public class ItemGameWorkerCpt : ItemGameBaseCpt, DialogView.IDialogCallBack, Wo
         AudioHandler.Instance.PlaySound(AudioSoundEnum.ButtonForNormal);
         if (gameTimeHandler.GetDayStatus() == GameTimeHandler.DayEnum.Work)
         {
-            toastManager.ToastHint(GameCommonInfo.GetUITextById(1082));
+            ToastHandler.Instance.ToastHint(GameCommonInfo.GetUITextById(1082));
         }
         else
         {
@@ -292,7 +292,7 @@ public class ItemGameWorkerCpt : ItemGameBaseCpt, DialogView.IDialogCallBack, Wo
             }
             else
             {
-                toastManager.ToastHint(GameCommonInfo.GetUITextById(1083));
+                ToastHandler.Instance.ToastHint(GameCommonInfo.GetUITextById(1083));
             }
         }
     }
@@ -530,7 +530,7 @@ public class ItemGameWorkerCpt : ItemGameBaseCpt, DialogView.IDialogCallBack, Wo
             //刷新UI
             SetData(characterData);
             //提示
-            toastManager.ToastHint(ivLoyal.sprite, string.Format(GameCommonInfo.GetUITextById(1132), characterData.baseInfo.name, addLoyal + ""));
+            ToastHandler.Instance.ToastHint(ivLoyal.sprite, string.Format(GameCommonInfo.GetUITextById(1132), characterData.baseInfo.name, addLoyal + ""));
             pickForItems.RefreshUI();
         }
         else
@@ -562,7 +562,7 @@ public class ItemGameWorkerCpt : ItemGameBaseCpt, DialogView.IDialogCallBack, Wo
             if (characterData.equips.shoesTFId != 0)
                 gameDataManager.gameData.AddItemsNumber(characterData.equips.shoesTFId, 1);
 
-            toastManager.ToastHint(string.Format(GameCommonInfo.GetUITextById(1081), characterData.baseInfo.name));
+            ToastHandler.Instance.ToastHint(string.Format(GameCommonInfo.GetUITextById(1081), characterData.baseInfo.name));
             gameDataManager.gameData.RemoveWorker(characterData);
 
             transform.DOScale(Vector3.zero, 0.3f).OnComplete(delegate

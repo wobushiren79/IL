@@ -54,12 +54,12 @@ public class UIGameAttendance : UIBaseOne, ItemGameAttendanceCpt.ICallBack
         //如果出勤人数太少
         if (attendanceNumber <= 0)
         {
-            uiGameManager.toastManager.ToastHint(GameCommonInfo.GetUITextById(1013));
+            ToastHandler.Instance.ToastHint(GameCommonInfo.GetUITextById(1013));
             return;
         }
         if (!uiGameManager.gameDataManager.gameData.HasEnoughMoney(attendancePriceL, attendancePriceM, attendancePriceS))
         {
-            uiGameManager.toastManager.ToastHint(GameCommonInfo.GetUITextById(1014));
+            ToastHandler.Instance.ToastHint(GameCommonInfo.GetUITextById(1014));
             return;
         }
 

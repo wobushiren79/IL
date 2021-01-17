@@ -33,8 +33,6 @@ public class ControlForBuildCpt : BaseControl
     public HashSet<Vector3> listBuildingExistForWall = new HashSet<Vector3>();
     //数据管理
     protected GameDataManager gameDataManager;
-    //提示框
-    protected ToastManager toastManager;
     //建筑
     protected InnBuildManager innBuildManager;
     //建造者
@@ -50,7 +48,6 @@ public class ControlForBuildCpt : BaseControl
     private void Awake()
     {
         gameDataManager = Find<GameDataManager>(ImportantTypeEnum.GameDataManager);
-        toastManager = Find<ToastManager>(ImportantTypeEnum.ToastManager);
         innBuildManager = Find<InnBuildManager>(ImportantTypeEnum.BuildManager);
 
         innFurnitureBuilder = Find<InnFurnitureBuilder>(ImportantTypeEnum.InnBuilder);
@@ -407,7 +404,7 @@ public class ControlForBuildCpt : BaseControl
                     //只有一次点击时才出提示
                     if (Input.GetButtonDown(InputInfo.Confirm))
                     {
-                        //toastManager.ToastHint(GameCommonInfo.GetUITextById(1003));
+                        //ToastHandler.Instance.ToastHint(GameCommonInfo.GetUITextById(1003));
                     }
                 }
                 else
@@ -416,7 +413,7 @@ public class ControlForBuildCpt : BaseControl
                     //只有一次点击时才出提示
                     if (Input.GetButtonDown(InputInfo.Confirm))
                     {
-                        toastManager.ToastHint(GameCommonInfo.GetUITextById(1002));
+                        ToastHandler.Instance.ToastHint(GameCommonInfo.GetUITextById(1002));
                     }
                 }
             }
@@ -445,7 +442,7 @@ public class ControlForBuildCpt : BaseControl
                 //只有一次点击时才出提示
                 if (Input.GetButtonDown(InputInfo.Confirm))
                 {
-                    toastManager.ToastHint(GameCommonInfo.GetUITextById(1004));
+                    ToastHandler.Instance.ToastHint(GameCommonInfo.GetUITextById(1004));
                 }
             }
             else
@@ -508,7 +505,7 @@ public class ControlForBuildCpt : BaseControl
                 //只有一次点击时才出提示
                 if (Input.GetButtonDown(InputInfo.Confirm))
                 {
-                    toastManager.ToastHint(GameCommonInfo.GetUITextById(1023));
+                    ToastHandler.Instance.ToastHint(GameCommonInfo.GetUITextById(1023));
                 }
             }
             else

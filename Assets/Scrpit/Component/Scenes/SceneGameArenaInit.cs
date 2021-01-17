@@ -49,9 +49,6 @@ public class SceneGameArenaInit : BaseSceneInit, IBaseObserver
 
     public void InitSceneData()
     {
-        //获取相关数据
-        if (gameItemsManager != null)
-            gameItemsManager.itemsInfoController.GetAllItemsInfo();
         //获取所有NPC
         if (npcInfoManager != null)
             npcInfoManager.npcInfoController.GetAllNpcInfo();

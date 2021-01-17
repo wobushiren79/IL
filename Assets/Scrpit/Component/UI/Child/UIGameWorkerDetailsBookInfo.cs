@@ -25,7 +25,7 @@ public class UIGameWorkerDetailsBookInfo : BaseUIChildComponent<UIGameWorkerDeta
     /// <param name="listSkill"></param>
     public void SetData(List<long> listBook)
     {
-        List<ItemsInfoBean> listData = gameItemsManager.GetItemsByIds(listBook);
+        List<ItemsInfoBean> listData = GameItemsHandler.Instance.manager.GetItemsByIds(listBook);
         CreateBookList(listData);
     }
 

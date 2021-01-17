@@ -268,7 +268,6 @@ public class UIGameTextForTalk : BaseUIChildComponent<UIGameText>
             return;
         UIGameManager uiGameManager = uiComponent.GetUIManager<UIGameManager>();
         RewardTypeEnumTools.CompleteReward(
-            uiGameManager.toastManager,
             uiGameManager.npcInfoManager,
             uiGameManager.iconDataManager,
             uiGameManager.innBuildManager,

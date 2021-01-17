@@ -191,11 +191,11 @@ public class ItemGameBackpackCpt : ItemGameBaseCpt, IPointerClickHandler, PopupI
                     };
                     AchievementDialogView achievementDialog=DialogHandler.Instance.CreateDialog<AchievementDialogView>(DialogEnum.Achievement, this, dialogData);
                     achievementDialog.SetData(1, menuInfo.icon_key);
-                    toastManager.ToastHint(ivIcon.sprite,GameCommonInfo.GetUITextById(1006));
+                    ToastHandler.Instance.ToastHint(ivIcon.sprite,GameCommonInfo.GetUITextById(1006));
                 }
                 else
                 {
-                    toastManager.ToastHint(GameCommonInfo.GetUITextById(1007));
+                    ToastHandler.Instance.ToastHint(GameCommonInfo.GetUITextById(1007));
                 };
                 break;
             default:

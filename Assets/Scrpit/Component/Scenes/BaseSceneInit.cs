@@ -7,7 +7,6 @@ public class BaseSceneInit : BaseMonoBehaviour
     protected InnBuildManager innBuildManager;
     protected UIGameManager uiGameManager;
     protected GameDataManager gameDataManager;
-    protected GameItemsManager gameItemsManager;
     protected NpcInfoManager npcInfoManager;
     protected NpcTeamManager npcTeamManager;
     protected DialogManager dialogManager;
@@ -24,7 +23,6 @@ public class BaseSceneInit : BaseMonoBehaviour
     {
         npcTeamManager = Find<NpcTeamManager>(ImportantTypeEnum.NpcManager);
         weatherHandler = Find<WeatherHandler>(ImportantTypeEnum.WeatherHandler);
-        gameItemsManager = Find<GameItemsManager>(ImportantTypeEnum.GameItemsManager);
         uiGameManager = Find<UIGameManager>(ImportantTypeEnum.GameUI);
         gameDataManager = Find<GameDataManager>(ImportantTypeEnum.GameDataManager);
         npcInfoManager = Find<NpcInfoManager>(ImportantTypeEnum.NpcManager);
@@ -49,11 +47,6 @@ public class BaseSceneInit : BaseMonoBehaviour
             {
                 gameDataManager.gameData = GameCommonInfo.GameData;
             }
-        }
-        //获取相关数据
-        if (gameItemsManager != null)
-        {
-            gameItemsManager.itemsInfoController.GetAllItemsInfo();
         }
         if (npcInfoManager != null)
         {

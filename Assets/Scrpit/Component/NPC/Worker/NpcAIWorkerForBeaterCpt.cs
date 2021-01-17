@@ -117,7 +117,7 @@ public class NpcAIWorkerForBeaterCpt : NpcAIWokerFoBaseCpt
         npcAIWorker.SetCharacterDead();
         //弹窗提示
         string toastStr = string.Format(GameCommonInfo.GetUITextById(1015), npcAIWorker.characterData.baseInfo.name, restTime + "");
-        toastManager.ToastHint(toastStr, 5);
+        ToastHandler.Instance.ToastHint(toastStr, 5);
         //设置不工作
         StartCoroutine(StartRest(restTime));
     }

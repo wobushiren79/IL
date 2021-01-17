@@ -415,7 +415,7 @@ public class UIGameMain : BaseUIComponent, DialogView.IDialogCallBack, IRadioGro
         }
         else
         {
-            uiGameManager.toastManager.ToastHint(GameCommonInfo.GetUITextById(1016));
+            ToastHandler.Instance.ToastHint(GameCommonInfo.GetUITextById(1016));
         }
     }
 

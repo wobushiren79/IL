@@ -186,7 +186,6 @@ public class UIMiniGameEnd : BaseUIComponent
         itemReasonWin.SetIcon(uiGameManager.iconDataManager.GetIconSpriteByName("text_win_1"));
         //添加奖励
         RewardTypeEnumTools.CompleteReward(
-            uiGameManager.toastManager,
             uiGameManager.npcInfoManager,
             uiGameManager.iconDataManager,
             uiGameManager.innBuildManager,

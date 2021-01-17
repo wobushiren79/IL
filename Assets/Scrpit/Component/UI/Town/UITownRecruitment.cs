@@ -119,7 +119,7 @@ public class UITownRecruitment : UIBaseOne, DialogView.IDialogCallBack
         //检测是否超过人员上限
         if (uiGameManager.gameDataManager.gameData.listWorkerCharacter.Count >= uiGameManager.gameDataManager.gameData.workerNumberLimit)
         {
-            uiGameManager.toastManager.ToastHint(GameCommonInfo.GetUITextById(1051));
+            ToastHandler.Instance.ToastHint(GameCommonInfo.GetUITextById(1051));
             return;
         }
         pickMoneyL = 0;
@@ -159,7 +159,7 @@ public class UITownRecruitment : UIBaseOne, DialogView.IDialogCallBack
                 ToastManager toastManager = GetUIManager<UIGameManager>().toastManager;
                 FindCharacterDialogView findCharacterDialog = (FindCharacterDialogView)dialogView;
                 gameDataManager.gameData.listWorkerCharacter.Add(findCharacterDialog.characterData);
-                toastManager.ToastHint(string.Format(GameCommonInfo.GetUITextById(1053), findCharacterDialog.characterData.baseInfo.name));
+                ToastHandler.Instance.ToastHint(string.Format(GameCommonInfo.GetUITextById(1053), findCharacterDialog.characterData.baseInfo.name));
             }
         }
     }
@@ -175,7 +175,7 @@ public class UITownRecruitment : UIBaseOne, DialogView.IDialogCallBack
     {
         if (!uiGameManager.gameDataManager.gameData.HasEnoughMoney(pickMoneyL, pickMoneyM, pickMoneyS))
         {
-            uiGameManager.toastManager.ToastHint(GameCommonInfo.GetUITextById(1005));
+            ToastHandler.Instance.ToastHint(GameCommonInfo.GetUITextById(1005));
             return;
         }
         uiGameManager.gameDataManager.gameData.PayMoney(pickMoneyL, pickMoneyM, pickMoneyS);

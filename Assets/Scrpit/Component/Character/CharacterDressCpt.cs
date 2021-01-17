@@ -201,7 +201,7 @@ public class CharacterDressCpt : BaseMonoBehaviour
             handSP = null;
         else
         {
-            handSP = gameItemsManager.GetItemsSpriteByName(itemsInfo.icon_key);
+            handSP = GameItemsHandler.Instance.manager.GetItemsSpriteByName(itemsInfo.icon_key);
             //设置装备数据
             if (characterEquipData == null)
                 characterEquipData = new CharacterEquipBean();
@@ -251,7 +251,7 @@ public class CharacterDressCpt : BaseMonoBehaviour
                 case GeneralEnum.Accoutant:
                 case GeneralEnum.Accost:
                 case GeneralEnum.Beater:
-                    animationClip = gameItemsManager.GetItemsAnimClipByName(itemsInfo.anim_key);
+                    animationClip = GameItemsHandler.Instance.manager.GetItemsAnimClipByName(itemsInfo.anim_key);
                     break;
             }
    

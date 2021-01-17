@@ -375,13 +375,13 @@ public class RewardTypeEnumTools : DataTools
     /// </summary>
     /// <param name="reward_data"></param>
     /// <param name="gameData"></param>
-    public static void CompleteReward(ToastManager toastManager, NpcInfoManager npcInfoManager, IconDataManager iconDataManager, InnBuildManager innBuildManager, GameDataManager gameDataManager, List<CharacterBean> listCharacterData, string data)
+    public static void CompleteReward( NpcInfoManager npcInfoManager, IconDataManager iconDataManager, InnBuildManager innBuildManager, GameDataManager gameDataManager, List<CharacterBean> listCharacterData, string data)
     {
         List<RewardTypeBean> listRewardData = GetListRewardData(data);
-        CompleteReward(toastManager, npcInfoManager, iconDataManager, innBuildManager, gameDataManager, listCharacterData, listRewardData);
+        CompleteReward(npcInfoManager, iconDataManager, innBuildManager, gameDataManager, listCharacterData, listRewardData);
     }
 
-    public static void CompleteReward(ToastManager toastManager, NpcInfoManager npcInfoManager, IconDataManager iconDataManager,InnBuildManager innBuildManager, GameDataManager gameDataManager, List<CharacterBean> listCharacterData, List<RewardTypeBean> listRewardData)
+    public static void CompleteReward(NpcInfoManager npcInfoManager, IconDataManager iconDataManager,InnBuildManager innBuildManager, GameDataManager gameDataManager, List<CharacterBean> listCharacterData, List<RewardTypeBean> listRewardData)
     {
         GameDataBean gameData = gameDataManager.gameData;
         foreach (var itemData in listRewardData)
@@ -396,89 +396,89 @@ public class RewardTypeEnumTools : DataTools
                     break;
                 case RewardTypeEnum.AddWorker:
                     gameData.AddWorkCharacter(itemData.workerCharacterData);
-                    toastManager.ToastHint(string.Format(GameCommonInfo.GetUITextById(6011), itemData.workerCharacterData.baseInfo.name));
+                    ToastHandler.Instance.ToastHint(string.Format(GameCommonInfo.GetUITextById(6011), itemData.workerCharacterData.baseInfo.name));
                     break;
                 case RewardTypeEnum.AddGuildCoin:
                     long addGuildCoin = itemData.rewardNumber;
                     gameData.AddGuildCoin(addGuildCoin);
-                    toastManager.ToastHint(itemData.spRewardIcon, string.Format(GameCommonInfo.GetUITextById(6099), itemData.rewardDescribe));
+                    ToastHandler.Instance.ToastHint(itemData.spRewardIcon, string.Format(GameCommonInfo.GetUITextById(6099), itemData.rewardDescribe));
                     break;
                 case RewardTypeEnum.AddMoneyL:
                     long addMoneyL = itemData.rewardNumber;
                     gameData.AddMoney(addMoneyL, 0, 0);
-                    toastManager.ToastHint(itemData.spRewardIcon, string.Format(GameCommonInfo.GetUITextById(6014), addMoneyL + ""));
+                    ToastHandler.Instance.ToastHint(itemData.spRewardIcon, string.Format(GameCommonInfo.GetUITextById(6014), addMoneyL + ""));
                     break;
                 case RewardTypeEnum.AddMoneyM:
                     long addMoneyM = itemData.rewardNumber;
                     gameData.AddMoney(0, addMoneyM, 0);
-                    toastManager.ToastHint(itemData.spRewardIcon, string.Format(GameCommonInfo.GetUITextById(6013), addMoneyM + ""));
+                    ToastHandler.Instance.ToastHint(itemData.spRewardIcon, string.Format(GameCommonInfo.GetUITextById(6013), addMoneyM + ""));
                     break;
                 case RewardTypeEnum.AddMoneyS:
                     long addMoneyS = itemData.rewardNumber;
                     gameData.AddMoney(0, 0, addMoneyS);
-                    toastManager.ToastHint(itemData.spRewardIcon, string.Format(GameCommonInfo.GetUITextById(6012), addMoneyS + ""));
+                    ToastHandler.Instance.ToastHint(itemData.spRewardIcon, string.Format(GameCommonInfo.GetUITextById(6012), addMoneyS + ""));
                     break;
                 case RewardTypeEnum.AddArenaTrophyElementary:
                     long addTrophy1 = itemData.rewardNumber;
                     gameData.AddArenaTrophy(addTrophy1, 0, 0, 0, itemData.isRecord);
-                    toastManager.ToastHint(itemData.spRewardIcon, string.Format(GameCommonInfo.GetUITextById(6099), string.Format(GameCommonInfo.GetUITextById(6006), addTrophy1 + "")));
+                    ToastHandler.Instance.ToastHint(itemData.spRewardIcon, string.Format(GameCommonInfo.GetUITextById(6099), string.Format(GameCommonInfo.GetUITextById(6006), addTrophy1 + "")));
                     break;
                 case RewardTypeEnum.AddArenaTrophyIntermediate:
                     long addTrophy2 = itemData.rewardNumber;
                     gameData.AddArenaTrophy(0, addTrophy2, 0, 0, itemData.isRecord);
-                    toastManager.ToastHint(itemData.spRewardIcon, string.Format(GameCommonInfo.GetUITextById(6099), string.Format(GameCommonInfo.GetUITextById(6007), addTrophy2 + "")));
+                    ToastHandler.Instance.ToastHint(itemData.spRewardIcon, string.Format(GameCommonInfo.GetUITextById(6099), string.Format(GameCommonInfo.GetUITextById(6007), addTrophy2 + "")));
                     break;
                 case RewardTypeEnum.AddArenaTrophyAdvanced:
                     long addTrophy3 = itemData.rewardNumber;
                     gameData.AddArenaTrophy(0, 0, addTrophy3, 0, itemData.isRecord);
-                    toastManager.ToastHint(itemData.spRewardIcon, string.Format(GameCommonInfo.GetUITextById(6099), string.Format(GameCommonInfo.GetUITextById(6008), addTrophy3 + "")));
+                    ToastHandler.Instance.ToastHint(itemData.spRewardIcon, string.Format(GameCommonInfo.GetUITextById(6099), string.Format(GameCommonInfo.GetUITextById(6008), addTrophy3 + "")));
                     break;
                 case RewardTypeEnum.AddArenaTrophyLegendary:
                     long addTrophy4 = itemData.rewardNumber;
                     gameData.AddArenaTrophy(0, 0, 0, addTrophy4, itemData.isRecord);
-                    toastManager.ToastHint(itemData.spRewardIcon, string.Format(GameCommonInfo.GetUITextById(6099), string.Format(GameCommonInfo.GetUITextById(6009), addTrophy4 + "")));
+                    ToastHandler.Instance.ToastHint(itemData.spRewardIcon, string.Format(GameCommonInfo.GetUITextById(6099), string.Format(GameCommonInfo.GetUITextById(6009), addTrophy4 + "")));
                     break;
                 case RewardTypeEnum.AddItems:
                 case RewardTypeEnum.RandomAddItems:
                     gameData.AddItemsNumber(itemData.rewardId, itemData.rewardNumber);
-                    toastManager.ToastHint(itemData.spRewardIcon, string.Format(GameCommonInfo.GetUITextById(6099), itemData.rewardDescribe));
+                    ToastHandler.Instance.ToastHint(itemData.spRewardIcon, string.Format(GameCommonInfo.GetUITextById(6099), itemData.rewardDescribe));
                     break;
                 case RewardTypeEnum.AddBuildItems:
                     gameData.AddBuildNumber(itemData.rewardId, itemData.rewardNumber);
-                    toastManager.ToastHint(itemData.spRewardIcon, string.Format(GameCommonInfo.GetUITextById(6099), itemData.rewardDescribe));
+                    ToastHandler.Instance.ToastHint(itemData.spRewardIcon, string.Format(GameCommonInfo.GetUITextById(6099), itemData.rewardDescribe));
                     break;
 
                 case RewardTypeEnum.AddIngOilsalt:
                     gameData.AddIng(IngredientsEnum.Oilsalt, itemData.rewardNumber);
-                    toastManager.ToastHint(itemData.spRewardIcon, string.Format(GameCommonInfo.GetUITextById(6099), itemData.rewardDescribe));
+                    ToastHandler.Instance.ToastHint(itemData.spRewardIcon, string.Format(GameCommonInfo.GetUITextById(6099), itemData.rewardDescribe));
                     break;
                 case RewardTypeEnum.AddIngMeat:
                     gameData.AddIng(IngredientsEnum.Meat, itemData.rewardNumber);
-                    toastManager.ToastHint(itemData.spRewardIcon, string.Format(GameCommonInfo.GetUITextById(6099), itemData.rewardDescribe));
+                    ToastHandler.Instance.ToastHint(itemData.spRewardIcon, string.Format(GameCommonInfo.GetUITextById(6099), itemData.rewardDescribe));
                     break;
                 case RewardTypeEnum.AddIngRiverfresh:
                     gameData.AddIng(IngredientsEnum.Riverfresh, itemData.rewardNumber);
-                    toastManager.ToastHint(itemData.spRewardIcon, string.Format(GameCommonInfo.GetUITextById(6099), itemData.rewardDescribe));
+                    ToastHandler.Instance.ToastHint(itemData.spRewardIcon, string.Format(GameCommonInfo.GetUITextById(6099), itemData.rewardDescribe));
                     break;
                 case RewardTypeEnum.AddIngSeafood:
                     gameData.AddIng(IngredientsEnum.Seafood, itemData.rewardNumber);
-                    toastManager.ToastHint(itemData.spRewardIcon, string.Format(GameCommonInfo.GetUITextById(6099), itemData.rewardDescribe));
+                    ToastHandler.Instance.ToastHint(itemData.spRewardIcon, string.Format(GameCommonInfo.GetUITextById(6099), itemData.rewardDescribe));
                     break;
                 case RewardTypeEnum.AddIngVegetables:
                     gameData.AddIng(IngredientsEnum.Vegetables, itemData.rewardNumber);
-                    toastManager.ToastHint(itemData.spRewardIcon, string.Format(GameCommonInfo.GetUITextById(6099), itemData.rewardDescribe));
+                    ToastHandler.Instance.ToastHint(itemData.spRewardIcon, string.Format(GameCommonInfo.GetUITextById(6099), itemData.rewardDescribe));
                     break;
                 case RewardTypeEnum.AddIngMelonfruit:
                     gameData.AddIng(IngredientsEnum.Melonfruit, itemData.rewardNumber);
-                    toastManager.ToastHint(itemData.spRewardIcon, string.Format(GameCommonInfo.GetUITextById(6099), itemData.rewardDescribe));
+                    ToastHandler.Instance.ToastHint(itemData.spRewardIcon, string.Format(GameCommonInfo.GetUITextById(6099), itemData.rewardDescribe));
                     break;
                 case RewardTypeEnum.AddIngWaterwine:
                     gameData.AddIng(IngredientsEnum.Waterwine, itemData.rewardNumber);
-                    toastManager.ToastHint(itemData.spRewardIcon, string.Format(GameCommonInfo.GetUITextById(6099), itemData.rewardDescribe));
+                    ToastHandler.Instance.ToastHint(itemData.spRewardIcon, string.Format(GameCommonInfo.GetUITextById(6099), itemData.rewardDescribe));
                     break;
                 case RewardTypeEnum.AddIngFlour:
                     gameData.AddIng(IngredientsEnum.Flour, itemData.rewardNumber);
-                    toastManager.ToastHint(itemData.spRewardIcon, string.Format(GameCommonInfo.GetUITextById(6099), itemData.rewardDescribe));
+                    ToastHandler.Instance.ToastHint(itemData.spRewardIcon, string.Format(GameCommonInfo.GetUITextById(6099), itemData.rewardDescribe));
                     break;
                 case RewardTypeEnum.AddChefExp:
                     CompleteRewardForExp(listCharacterData, WorkerEnum.Chef, itemData.rewardNumber);

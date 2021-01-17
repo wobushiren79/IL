@@ -554,7 +554,7 @@ public class InnHandler : BaseMonoBehaviour, IBaseObserver
             if (isMenuLevelUp)
             {
                 Sprite spFoodIcon = innFoodManager.GetFoodSpriteByName(orderForCustomer.foodData.icon_key);
-                toastManager.ToastHint(spFoodIcon, string.Format(GameCommonInfo.GetUITextById(1131), orderForCustomer.foodData.name));
+                ToastHandler.Instance.ToastHint(spFoodIcon, string.Format(GameCommonInfo.GetUITextById(1131), orderForCustomer.foodData.name));
             }
             payEffectsPosition = orderForCustomer.customer.transform.position;
         }
@@ -577,7 +577,7 @@ public class InnHandler : BaseMonoBehaviour, IBaseObserver
             if (isBedLevelUp)
             {
                 Sprite spBedIcon = iconDataManager.GetIconSpriteByName("worker_waiter_bed_pro_2");
-                toastManager.ToastHint(spBedIcon, string.Format(GameCommonInfo.GetUITextById(1131), orderForHotel.bed.buildBedData.bedName));
+                ToastHandler.Instance.ToastHint(spBedIcon, string.Format(GameCommonInfo.GetUITextById(1131), orderForHotel.bed.buildBedData.bedName));
             }
             payEffectsPosition = orderForHotel.customer.transform.position;
         }

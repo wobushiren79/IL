@@ -227,12 +227,12 @@ public class UIGameCustomBed : UIBaseOne, StoreInfoManager.ICallBack, IRadioGrou
         GameDataBean gameData = uiGameManager.gameDataManager.gameData;
         if (!gameData.HasEnoughMoney(customPriceL, customPriceM, customPriceS))
         {
-            uiGameManager.toastManager.ToastHint(GameCommonInfo.GetUITextById(1005));
+            ToastHandler.Instance.ToastHint(GameCommonInfo.GetUITextById(1005));
             return;
         }
         if (etBedName.text.Length <= 0)
         {
-            uiGameManager.toastManager.ToastHint(GameCommonInfo.GetUITextById(1312));
+            ToastHandler.Instance.ToastHint(GameCommonInfo.GetUITextById(1312));
             return;
         }
 
@@ -286,18 +286,18 @@ public class UIGameCustomBed : UIBaseOne, StoreInfoManager.ICallBack, IRadioGrou
         {
             FindBedDialogView findBedDialog = dialogView as FindBedDialogView;
             gameData.AddBed(findBedDialog.buildBedData);
-            uiGameManager.toastManager.ToastHint(GameCommonInfo.GetUITextById(1311));
+            ToastHandler.Instance.ToastHint(GameCommonInfo.GetUITextById(1311));
         }
         else
         {
             if (!gameData.HasEnoughMoney(customPriceL, customPriceM, customPriceS))
             {
-                uiGameManager.toastManager.ToastHint(GameCommonInfo.GetUITextById(1005));
+                ToastHandler.Instance.ToastHint(GameCommonInfo.GetUITextById(1005));
                 return;
             }
             if (etBedName.text.Length <= 0)
             {
-                uiGameManager.toastManager.ToastHint(GameCommonInfo.GetUITextById(1312));
+                ToastHandler.Instance.ToastHint(GameCommonInfo.GetUITextById(1312));
                 return;
             }
             //支付金钱

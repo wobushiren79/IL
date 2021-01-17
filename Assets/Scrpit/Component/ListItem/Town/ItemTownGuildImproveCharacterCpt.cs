@@ -286,14 +286,14 @@ public class ItemTownGuildImproveCharacterCpt : ItemGameBaseCpt, DialogView.IDia
         //判断是否有足够的金钱
         if (!gameDataManager.gameData.HasEnoughMoney(levelData.price_l, levelData.price_m, levelData.price_s))
         {
-            toastManager.ToastHint(GameCommonInfo.GetUITextById(1005));
+            ToastHandler.Instance.ToastHint(GameCommonInfo.GetUITextById(1005));
             return;
         }
         //判断时间是否过晚
         gameTimeHandler.GetTime(out float hour, out float min);
         if (hour >= 18 || hour < 6)
         {
-            toastManager.ToastHint(GameCommonInfo.GetUITextById(1031));
+            ToastHandler.Instance.ToastHint(GameCommonInfo.GetUITextById(1031));
             return;
         }
 
@@ -366,10 +366,10 @@ public class ItemTownGuildImproveCharacterCpt : ItemGameBaseCpt, DialogView.IDia
             bool isWin = characterData.CalculationGuildSendWin(miniGameData.gameType);
             if (isWin)
             {
-                toastManager.ToastHint(GameCommonInfo.GetUITextById(7021));
+                ToastHandler.Instance.ToastHint(GameCommonInfo.GetUITextById(7021));
                 AudioHandler.Instance.PlaySound(AudioSoundEnum.Reward);
                 //完成奖励
-                RewardTypeEnumTools.CompleteReward(toastManager, npcInfoManager, iconDataManager, innBuildManager, gameDataManager, miniGameData.GetListUserCharacterData(), miniGameData.listReward);
+                RewardTypeEnumTools.CompleteReward(npcInfoManager, iconDataManager, innBuildManager, gameDataManager, miniGameData.GetListUserCharacterData(), miniGameData.listReward);
 
                 //数据添加
                 Sprite attributeIcon = iconDataManager.GetIconSpriteByName("keyboard_button_up_1");
@@ -400,13 +400,13 @@ public class ItemTownGuildImproveCharacterCpt : ItemGameBaseCpt, DialogView.IDia
                             break;
                     }
                 }
-                toastManager.ToastHint(attributeIcon, attributeRewardContent);
+                ToastHandler.Instance.ToastHint(attributeIcon, attributeRewardContent);
                 //刷新UI
                 ((UITownGuildImprove)uiComponent).RefreshUI();
             }
             else
             {
-                toastManager.ToastHint(GameCommonInfo.GetUITextById(7022));
+                ToastHandler.Instance.ToastHint(GameCommonInfo.GetUITextById(7022));
                 AudioHandler.Instance.PlaySound(AudioSoundEnum.Passive);
             }
         }

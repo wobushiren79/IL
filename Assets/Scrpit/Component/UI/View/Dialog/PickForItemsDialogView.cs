@@ -55,7 +55,7 @@ public class PickForItemsDialogView : DialogView, ItemGameBackpackPickCpt.ICallB
     public void OnCellForItems(ScrollGridCell itemCell)
     {
         ItemBean itemData= listItems[itemCell.index];
-        ItemsInfoBean itemsInfo = gameItemsManager.GetItemsById(itemData.itemId);
+        ItemsInfoBean itemsInfo = GameItemsHandler.Instance.manager.GetItemsById(itemData.itemId);
         ItemGameBackpackPickCpt itemBackpack = itemCell.GetComponent<ItemGameBackpackPickCpt>();
         itemBackpack.SetCallBack(this);
         itemBackpack.SetData(itemsInfo, itemData);
@@ -79,7 +79,7 @@ public class PickForItemsDialogView : DialogView, ItemGameBackpackPickCpt.ICallB
         for(int i=0;i< listAllItems.Count; i++)
         {
             ItemBean itemData = listAllItems[i];
-            ItemsInfoBean itemsInfo = gameItemsManager.GetItemsById(itemData.itemId);
+            ItemsInfoBean itemsInfo = GameItemsHandler.Instance.manager.GetItemsById(itemData.itemId);
             if (!CheckUtil.ListIsNull(listPickType))
             {
                 //如果没有该类型

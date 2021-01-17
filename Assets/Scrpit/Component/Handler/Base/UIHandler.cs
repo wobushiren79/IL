@@ -3,36 +3,20 @@ using UnityEditor;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class UIHandler : BaseHandler<UIHandler, UIManager>
+public class UIHandler : BaseUIHandler<UIHandler, UIManager>
 {
-    public Canvas canvas;
-    public CanvasScaler canvasScaler;
-    public GraphicRaycaster graphicRaycaster;
-
+    
     protected override void Awake()
     {
-        canvas = CptUtil.AddCpt<Canvas>(gameObject);
-        canvasScaler = CptUtil.AddCpt<CanvasScaler>(gameObject);
-        graphicRaycaster = CptUtil.AddCpt<GraphicRaycaster>(gameObject);
+        sortingOrder = 1;
+        base.Awake();
         ChangeUIRenderMode(RenderMode.ScreenSpaceCamera);
     }
 
-
-    public void ChangeUIRenderMode(RenderMode renderMode)
+    protected void Update()
     {
-        canvas.renderMode = renderMode;
-        switch (renderMode)
-        {
-            case RenderMode.ScreenSpaceOverlay:
-                break;
-            case RenderMode.ScreenSpaceCamera:
-                canvas.planeDistance = 1;
-                canvas.worldCamera = Camera.main;
-                break;
-            case RenderMode.WorldSpace:
-                break;
-        }
-        canvas.sortingLayerName = "UI";
-        canvas.sortingOrder = 1;
+        if (canvas.worldCamera == null)
+            canvas.worldCamera = Camera.main;
     }
+
 }

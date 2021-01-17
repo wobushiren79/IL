@@ -198,12 +198,12 @@ public class UIMainCreate : BaseUIComponent,
 
         if (CheckUtil.StringIsNull(etInnName.text))
         {
-            uiGameManager.toastManager.ToastHint(GameCommonInfo.GetUITextById(1000));
+            ToastHandler.Instance.ToastHint(GameCommonInfo.GetUITextById(1000));
             return;
         }
         if (CheckUtil.StringIsNull(etUserName.text))
         {
-            uiGameManager.toastManager.ToastHint(GameCommonInfo.GetUITextById(1001));
+            ToastHandler.Instance.ToastHint(GameCommonInfo.GetUITextById(1001));
             return;
         }
         DialogBean dialogData = new DialogBean();
@@ -338,6 +338,7 @@ public class UIMainCreate : BaseUIComponent,
         gameData.userCharacter.attributes.life = 50;
         uiGameManager.gameDataManager.CreateGameData(gameData);
 
+        UIHandler.Instance.manager.CloseAllUI();
         SceneUtil.SceneChange(ScenesEnum.GameInnScene);
     }
 

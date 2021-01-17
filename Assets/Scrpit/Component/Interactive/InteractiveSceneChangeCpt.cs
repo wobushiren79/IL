@@ -23,7 +23,7 @@ public class InteractiveSceneChangeCpt : BaseInteractiveCpt
         {
             if(changeScene== ScenesEnum.GameSquareScene || changeScene == ScenesEnum.GameForestScene)
             {
-                toastManager.ToastHint("您被不可思议的力量阻挡了去路（暂未开放）");
+                ToastHandler.Instance.ToastHint("您被不可思议的力量阻挡了去路（暂未开放）");
             }
             else
             {
@@ -39,7 +39,7 @@ public class InteractiveSceneChangeCpt : BaseInteractiveCpt
                     }
                     else
                     {
-                        toastManager.ToastHint(GameCommonInfo.GetUITextById(1321));
+                        ToastHandler.Instance.ToastHint(GameCommonInfo.GetUITextById(1321));
                     }
                 }
                 else

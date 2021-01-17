@@ -155,7 +155,7 @@ public class UIBaseGamble<T, H, B> : BaseUIComponent, DialogView.IDialogCallBack
             if (gambleData.betForMoneyS == 0)
             {
                 Sprite iconSp = uiGameManager.iconDataManager.GetIconSpriteByName("money_1");
-                uiGameManager.toastManager.ToastHint(iconSp, GameCommonInfo.GetUITextById(1301));
+                ToastHandler.Instance.ToastHint(iconSp, GameCommonInfo.GetUITextById(1301));
                 return;
             }
             gambleHandler.StartChange();

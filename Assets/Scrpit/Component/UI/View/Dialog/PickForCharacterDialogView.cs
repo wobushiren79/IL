@@ -135,7 +135,7 @@ public class PickForCharacterDialogView : DialogView, ItemGameDialogPickCharacte
         if (CheckUtil.ListIsNull(listPickCharacter))
         {
             AudioHandler.Instance.PlaySound(AudioSoundEnum.ButtonForNormal);
-            toastManager.ToastHint(GameCommonInfo.GetUITextById(1032));
+            ToastHandler.Instance.ToastHint(GameCommonInfo.GetUITextById(1032));
         }
         else
         {
@@ -302,7 +302,7 @@ public class PickForCharacterDialogView : DialogView, ItemGameDialogPickCharacte
         {
             if (listPickCharacter.Count >= pickCharacterMax)
             {
-                toastManager.ToastHint(GameCommonInfo.GetUITextById(1052));
+                ToastHandler.Instance.ToastHint(GameCommonInfo.GetUITextById(1052));
                 itemView.ChangeStatus();
             }
             else

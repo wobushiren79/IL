@@ -20,6 +20,7 @@ public class GameItemsManager : BaseManager, IItemsInfoView
     public void Awake()
     {
         itemsInfoController = new ItemsInfoController(this, this);
+        itemsInfoController.GetAllItemsInfo();
     }
 
     /// <summary>

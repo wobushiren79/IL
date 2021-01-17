@@ -14,21 +14,11 @@ public class DialogManager : BaseManager
     /// <summary>
     /// 获取弹窗模型
     /// </summary>
-    /// <param name="name"></param>
+    /// <param name="dialogName"></param>
     /// <returns></returns>
-    public GameObject GetDialogModel(string name)
+    public GameObject GetDialogModel(string dialogName)
     {
-        if (listObjModel.TryGetValue(name, out GameObject valueObj))
-        {
-            return valueObj;
-        }
-        GameObject objModel = LoadAssetUtil.SyncLoadAsset<GameObject>("ui/dialog", name);
-        if (objModel != null)
-        {
-            listObjModel.Add(name, objModel);
-            return objModel;
-        }
-        return null;
+        return GetGameObjectModel(listObjModel, "ui/dialog", dialogName);
     }
 
     /// <summary>

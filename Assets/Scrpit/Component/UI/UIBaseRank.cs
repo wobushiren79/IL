@@ -154,7 +154,7 @@ public class UIBaseRank : UIBaseOne, IRadioGroupCallBack
 
     public void FindLeaderboardFail(SteamLeaderboardImpl.SteamLeaderboardFailEnum msg)
     {
-        toastManager.ToastHint(GameCommonInfo.GetUITextById(7004));
+        ToastHandler.Instance.ToastHint(GameCommonInfo.GetUITextById(7004));
     }
     #endregion
 
@@ -162,13 +162,13 @@ public class UIBaseRank : UIBaseOne, IRadioGroupCallBack
     #region 排行榜更新回调
     public void UpdateLeaderboardSucess()
     {
-        toastManager.ToastHint(GameCommonInfo.GetUITextById(7001));
+        ToastHandler.Instance.ToastHint(GameCommonInfo.GetUITextById(7001));
         OnClickForRefresh();
     }
 
     public void UpdateLeaderboardFail(SteamLeaderboardImpl.SteamLeaderboardFailEnum msg)
     {
-        toastManager.ToastHint(GameCommonInfo.GetUITextById(7002));
+        ToastHandler.Instance.ToastHint(GameCommonInfo.GetUITextById(7002));
     }
     #endregion
 
@@ -202,12 +202,12 @@ public class UIBaseRank : UIBaseOne, IRadioGroupCallBack
 
     public void GetEntriesFail(SteamLeaderboardImpl.SteamLeaderboardFailEnum msg)
     {
-        toastManager.ToastHint(GameCommonInfo.GetUITextById(7004));
+        ToastHandler.Instance.ToastHint(GameCommonInfo.GetUITextById(7004));
     }
 
     public void GetEntriesForUserListFail(SteamLeaderboardImpl.SteamLeaderboardFailEnum msg)
     {
-        toastManager.ToastHint(GameCommonInfo.GetUITextById(7004));
+        ToastHandler.Instance.ToastHint(GameCommonInfo.GetUITextById(7004));
     }
     #endregion
 }

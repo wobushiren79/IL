@@ -208,7 +208,7 @@ public class ItemTownBankExchangeCpt : ItemGameBaseCpt, DialogView.IDialogCallBa
         //兑换金额不对
         if (payMoney == 0 || exchangeMoney == 0)
         {
-            toastManager.ToastHint(ivOldMoney.sprite, GameCommonInfo.GetUITextById(1041));
+            ToastHandler.Instance.ToastHint(ivOldMoney.sprite, GameCommonInfo.GetUITextById(1041));
             return;
         }
         //是否有足够的金额兑换
@@ -244,13 +244,13 @@ public class ItemTownBankExchangeCpt : ItemGameBaseCpt, DialogView.IDialogCallBa
         //判断是否有足够的金钱兑换
         if (!gameDataManager.gameData.HasEnoughMoney(mPayMoneyL, mPayMoneyM, mPayMoneyS))
         {
-            toastManager.ToastHint(ivOldMoney.sprite, GameCommonInfo.GetUITextById(1042));
+            ToastHandler.Instance.ToastHint(ivOldMoney.sprite, GameCommonInfo.GetUITextById(1042));
             return;
         }
         //判断是否超过限额
         if (mExchangeMoneyL > GameCommonInfo.DailyLimitData.exchangeMoneyL)
         {
-            toastManager.ToastHint(GameCommonInfo.GetUITextById(1044));
+            ToastHandler.Instance.ToastHint(GameCommonInfo.GetUITextById(1044));
             return;
         }
 
@@ -278,7 +278,7 @@ public class ItemTownBankExchangeCpt : ItemGameBaseCpt, DialogView.IDialogCallBa
         gameDataManager.gameData.AddMoney(mExchangeMoneyL, mExchangeMoneyM, mExchangeMoneyS);
         GameCommonInfo.DailyLimitData.exchangeMoneyL -= (int)mExchangeMoneyL;
         //成功提示
-        toastManager.ToastHint(ivNewMoney.sprite, string.Format(GameCommonInfo.GetUITextById(1043), mExchangeMoneyStr));
+        ToastHandler.Instance.ToastHint(ivNewMoney.sprite, string.Format(GameCommonInfo.GetUITextById(1043), mExchangeMoneyStr));
         //刷新UI
         RefreshUI();
     }

@@ -229,17 +229,17 @@ public class ItemTownStoreForGoodsCpt : ItemTownStoreCpt, DialogView.IDialogCall
             long number = pickForNumberDialog.GetPickNumber();
             if (!gameDataManager.gameData.HasEnoughMoney(storeInfo.price_l* number, storeInfo.price_m* number, storeInfo.price_s* number))
             {
-                toastManager.ToastHint(GameCommonInfo.GetUITextById(1005));
+                ToastHandler.Instance.ToastHint(GameCommonInfo.GetUITextById(1005));
                 return;
             }
             if (!gameDataManager.gameData.HasEnoughGuildCoin(storeInfo.guild_coin * number))
             {
-                toastManager.ToastHint(GameCommonInfo.GetUITextById(1012));
+                ToastHandler.Instance.ToastHint(GameCommonInfo.GetUITextById(1012));
                 return;
             }
             if (!gameDataManager.gameData.HasEnoughTrophy(storeInfo.trophy_elementary * number, storeInfo.trophy_intermediate * number, storeInfo.trophy_advanced * number, storeInfo.trophy_legendary * number))
             {
-                toastManager.ToastHint(GameCommonInfo.GetUITextById(1021));
+                ToastHandler.Instance.ToastHint(GameCommonInfo.GetUITextById(1021));
                 return;
             }
 
@@ -255,7 +255,7 @@ public class ItemTownStoreForGoodsCpt : ItemTownStoreCpt, DialogView.IDialogCall
             }
             gameDataManager.gameData.AddItemsNumber(storeInfo.mark_id, number * getNumber);
 
-            toastManager.ToastHint(ivIcon.sprite, string.Format(GameCommonInfo.GetUITextById(1010), itemsInfo.name + "x" + (number * getNumber)));
+            ToastHandler.Instance.ToastHint(ivIcon.sprite, string.Format(GameCommonInfo.GetUITextById(1010), itemsInfo.name + "x" + (number * getNumber)));
             RefreshUI();
         }
     }

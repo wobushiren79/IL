@@ -221,7 +221,7 @@ public class UITownBeautySalon : UIBaseOne, IRadioGroupCallBack, ItemTownBeautyS
             && CheckUtil.StringIsNull(selectMouth)
             && CheckUtil.StringIsNull(selectSkin))
         {
-            uiGameManager.toastManager.ToastHint(GameCommonInfo.GetUITextById(7005));
+            ToastHandler.Instance.ToastHint(GameCommonInfo.GetUITextById(7005));
             return;
         }
         DialogBean dialogData = new DialogBean();
@@ -348,7 +348,7 @@ public class UITownBeautySalon : UIBaseOne, IRadioGroupCallBack, ItemTownBeautyS
             }
             else
             {
-                uiGameManager.toastManager.ToastHint(GameCommonInfo.GetUITextById(1005));
+                ToastHandler.Instance.ToastHint(GameCommonInfo.GetUITextById(1005));
             }
 
         }

@@ -100,7 +100,7 @@ public class ItemMountainInfiniteTowersCpt : ItemGameBaseCpt,DialogView.IDialogC
             if (characterData.baseInfo.GetWorkerStatus() != WorkerStatusEnum.Rest
                 && characterData.baseInfo.GetWorkerStatus() != WorkerStatusEnum.Work)
             {
-                uiGameManager.toastManager.ToastHint(GameCommonInfo.GetUITextById(1141));
+                ToastHandler.Instance.ToastHint(GameCommonInfo.GetUITextById(1141));
                 return;
             }
         }

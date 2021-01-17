@@ -261,7 +261,7 @@ public class UIGameText : BaseUIComponent, TextInfoManager.ICallBack, DialogView
 
                         if (uiGameManager.gameDataManager.gameData.CheckIsMaxWorker())
                         {
-                            uiGameManager.toastManager.ToastHint(GameCommonInfo.GetUITextById(1051));
+                            ToastHandler.Instance.ToastHint(GameCommonInfo.GetUITextById(1051));
                         }
                         else
                         {

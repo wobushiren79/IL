@@ -169,7 +169,7 @@ public class UIGameDate : BaseUIComponent
                 {
                     long vacationId = Random.Range(1101, 1111);
                     string vacationStr = string.Format(GameCommonInfo.GetUITextById(vacationId), itemWork.baseInfo.name);
-                    uiGameManager.toastManager.ToastHint(vacationStr);
+                    ToastHandler.Instance.ToastHint(vacationStr);
                     itemWork.baseInfo.SetWorkerStatus(WorkerStatusEnum.Vacation);
                 }
             }

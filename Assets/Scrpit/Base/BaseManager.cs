@@ -5,6 +5,29 @@ using UnityEngine.Tilemaps;
 using UnityEngine.U2D;
 public class BaseManager : BaseMonoBehaviour
 {
+        
+    /// <summary>
+    /// 获取OBJ模型
+    /// </summary>
+    /// <param name="listObjModel"></param>
+    /// <param name="assetBundlePath"></param>
+    /// <param name="objName"></param>
+    /// <returns></returns>
+    public GameObject GetGameObjectModel(Dictionary<string,GameObject> listObjModel,string assetBundlePath,string objName)
+    {
+        if (listObjModel.TryGetValue(objName, out GameObject valueObj))
+        {
+            return valueObj;
+        }
+        GameObject objModel = LoadAssetUtil.SyncLoadAsset<GameObject>(assetBundlePath, objName);
+        if (objModel != null)
+        {
+            listObjModel.Add(objName, objModel);
+            return objModel;
+        }
+        return null;
+    }
+
     /// <summary>
     /// 根据名字获取音频
     /// </summary>

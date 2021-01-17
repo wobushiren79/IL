@@ -11,7 +11,6 @@ public class BaseGambleHandler<T,B> : BaseHandler
     protected B gambleBuilder;
     protected UIGameManager uiGameManager;
     protected GameDataManager gameDataManager;
-    protected ToastManager toastManager;
     protected AudioHandler audioHandler;
     protected GameItemsManager gameItemsManager;
     private void Awake()
@@ -20,7 +19,6 @@ public class BaseGambleHandler<T,B> : BaseHandler
         uiGameManager = Find<UIGameManager>(ImportantTypeEnum.GameUI);
         gameDataManager = Find<GameDataManager>(ImportantTypeEnum.GameDataManager);
         gameItemsManager = Find<GameItemsManager>(ImportantTypeEnum.GameItemsManager);
-        toastManager = Find<ToastManager>(ImportantTypeEnum.ToastManager);
         audioHandler = Find<AudioHandler>(ImportantTypeEnum.AudioHandler);
     }
 
@@ -85,13 +83,13 @@ public class BaseGambleHandler<T,B> : BaseHandler
         //检测是否有足够金钱
         if (!gameDataManager.gameData.HasEnoughMoney(moneyL, moneyM, moneyS))
         {
-            toastManager.ToastHint(GameCommonInfo.GetUITextById(1005));
+            ToastHandler.Instance.ToastHint(GameCommonInfo.GetUITextById(1005));
             return;
         }
         //检测是否超过最大下注金额
         if (gambleData.betForMoneyS + moneyS > gambleData.betMaxForMoneyS)
         {
-            toastManager.ToastHint(GameCommonInfo.GetUITextById(1302));
+            ToastHandler.Instance.ToastHint(GameCommonInfo.GetUITextById(1302));
             return;
         }
         gameDataManager.gameData.PayMoney(moneyL, moneyM, moneyS);

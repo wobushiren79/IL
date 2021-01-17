@@ -24,17 +24,6 @@ public class CharacterUICpt : BaseMonoBehaviour
     public CharacterBodyBean characterBodyData;
     public CharacterEquipBean characterEquipData;
 
-    public CharacterBodyManager characterBodyManager;
-    public CharacterDressManager characterDressManager;
-    public GameItemsManager gameItemsManager;
-
-    public void Awake()
-    {
-        characterBodyManager = Find< CharacterBodyManager>( ImportantTypeEnum.CharacterManager);
-        characterDressManager = Find<CharacterDressManager>(ImportantTypeEnum.CharacterManager);
-        gameItemsManager = Find<GameItemsManager>(ImportantTypeEnum.GameItemsManager);
-    }
-
     public void SetCharacterData(BodyTypeEnum bodyType, string bodyData, Color color)
     {
         switch (bodyType)
@@ -133,7 +122,7 @@ public class CharacterUICpt : BaseMonoBehaviour
     {
         if (ivHair == null)
             return;
-        Sprite spHair = characterBodyManager.GetHairSpriteByName(hairName);
+        Sprite spHair = CharacterBodyHandler.Instance.manager.GetHairSpriteByName(hairName);
         ivHair.sprite = spHair;
         if (spHair == null)
         {
@@ -154,7 +143,7 @@ public class CharacterUICpt : BaseMonoBehaviour
     {
         if (ivEye == null)
             return;
-        Sprite spEye = characterBodyManager.GetEyeSpriteByName(eyeName);
+        Sprite spEye = CharacterBodyHandler.Instance.manager.GetEyeSpriteByName(eyeName);
         ivEye.sprite = spEye;
         if (spEye == null)
         {
@@ -175,7 +164,7 @@ public class CharacterUICpt : BaseMonoBehaviour
     {
         if (ivMouth == null)
             return;
-        Sprite spMouth = characterBodyManager.GetMouthSpriteByName(mouthName);
+        Sprite spMouth = CharacterBodyHandler.Instance.manager.GetMouthSpriteByName(mouthName);
         ivMouth.sprite = spMouth;
         if (spMouth == null)
         {
@@ -193,46 +182,44 @@ public class CharacterUICpt : BaseMonoBehaviour
     /// <param name="sex">0未知 1男 2女 3中性</param>
     public void SetSex(int sex, string otherSkin)
     {
-        if (characterBodyManager == null)
-            return;
         Sprite spTrunk = null;
         if (CheckUtil.StringIsNull(otherSkin)|| otherSkin.Equals("Def"))
         {
             switch (sex)
             {
                 case 0:
-                    spTrunk = characterBodyManager.GetTrunkSpriteByName("character_body_man");
+                    spTrunk = CharacterBodyHandler.Instance.manager.GetTrunkSpriteByName("character_body_man");
                     break;
                 case 1:
-                    spTrunk = characterBodyManager.GetTrunkSpriteByName("character_body_man");
+                    spTrunk = CharacterBodyHandler.Instance.manager.GetTrunkSpriteByName("character_body_man");
                     break;
                 case 2:
-                    spTrunk = characterBodyManager.GetTrunkSpriteByName("character_body_woman");
+                    spTrunk = CharacterBodyHandler.Instance.manager.GetTrunkSpriteByName("character_body_woman");
                     break;
                 case 3:
-                    spTrunk = characterBodyManager.GetTrunkSpriteByName("character_body_man");
+                    spTrunk = CharacterBodyHandler.Instance.manager.GetTrunkSpriteByName("character_body_man");
                     break;
             }
             if (ivBody != null && spTrunk != null)
                 ivBody.sprite = spTrunk;
             if (ivHead != null)
-                ivHead.sprite = characterBodyManager.GetTrunkSpriteByName("character_head");
+                ivHead.sprite = CharacterBodyHandler.Instance.manager.GetTrunkSpriteByName("character_head");
             if (ivFootLeft != null)
-                ivFootLeft.sprite = characterBodyManager.GetTrunkSpriteByName("character_body_left_foot");
+                ivFootLeft.sprite = CharacterBodyHandler.Instance.manager.GetTrunkSpriteByName("character_body_left_foot");
             if (ivFootRight != null)
-                ivFootRight.sprite = characterBodyManager.GetTrunkSpriteByName("character_body_right_foot");
+                ivFootRight.sprite = CharacterBodyHandler.Instance.manager.GetTrunkSpriteByName("character_body_right_foot");
         }
         else
         {
 
             if (ivHead != null)
-                ivHead.sprite = characterBodyManager.GetTrunkSpriteByName(otherSkin + "_0");
+                ivHead.sprite = CharacterBodyHandler.Instance.manager.GetTrunkSpriteByName(otherSkin + "_0");
             if (ivBody != null)
-                ivBody.sprite = characterBodyManager.GetTrunkSpriteByName(otherSkin + "_1");
+                ivBody.sprite = CharacterBodyHandler.Instance.manager.GetTrunkSpriteByName(otherSkin + "_1");
             if (ivFootLeft != null)
-                ivFootLeft.sprite = characterBodyManager.GetTrunkSpriteByName(otherSkin + "_2");
+                ivFootLeft.sprite = CharacterBodyHandler.Instance.manager.GetTrunkSpriteByName(otherSkin + "_2");
             if (ivFootRight != null)
-                ivFootRight.sprite = characterBodyManager.GetTrunkSpriteByName(otherSkin + "_3");
+                ivFootRight.sprite = CharacterBodyHandler.Instance.manager.GetTrunkSpriteByName(otherSkin + "_3");
         }
     }
 
@@ -261,13 +248,13 @@ public class CharacterUICpt : BaseMonoBehaviour
     {
         if (ivMask == null)
             return;
-        ItemsInfoBean itemsInfo = gameItemsManager.GetItemsById(maskId);
+        ItemsInfoBean itemsInfo = GameItemsHandler.Instance.manager.GetItemsById(maskId);
         if (itemsInfo == null)
         {
             ivMask.color = new Color(1, 1, 1, 0);
             return;
         }
-        Sprite spMask = characterDressManager.GetMaskSpriteByName(itemsInfo.icon_key);
+        Sprite spMask = CharacterDressHandler.Instance.manager.GetMaskSpriteByName(itemsInfo.icon_key);
         if (spMask == null)
         {
             ivMask.color = new Color(1, 1, 1, 0);
@@ -285,11 +272,11 @@ public class CharacterUICpt : BaseMonoBehaviour
     /// <param name="handId"></param>
     public void SetHand(long handId)
     {
-        ItemsInfoBean itemsInfo = gameItemsManager.GetItemsById(handId);
+        ItemsInfoBean itemsInfo = GameItemsHandler.Instance.manager.GetItemsById(handId);
         Sprite spHand = null;
         if (itemsInfo != null)
         {
-            spHand = gameItemsManager.GetItemsSpriteByName(itemsInfo.icon_key);
+            spHand = GameItemsHandler.Instance.manager.GetItemsSpriteByName(itemsInfo.icon_key);
         }
         if (spHand == null)
         {
@@ -328,13 +315,13 @@ public class CharacterUICpt : BaseMonoBehaviour
         }
         if (ivClothes == null)
             return;
-        ItemsInfoBean itemsInfo = gameItemsManager.GetItemsById(clothesId);
+        ItemsInfoBean itemsInfo = GameItemsHandler.Instance.manager.GetItemsById(clothesId);
         if (itemsInfo == null)
         {
             ivClothes.color = new Color(1, 1, 1, 0);
             return;
         }
-        Sprite spClothes = characterDressManager.GetClothesSpriteByName(itemsInfo.icon_key);
+        Sprite spClothes = CharacterDressHandler.Instance.manager.GetClothesSpriteByName(itemsInfo.icon_key);
         if (spClothes == null)
         {
             ivClothes.color = new Color(1, 1, 1, 0);
@@ -359,13 +346,13 @@ public class CharacterUICpt : BaseMonoBehaviour
         }
         if (ivShoes == null)
             return;
-        ItemsInfoBean itemsInfo = gameItemsManager.GetItemsById(shoesId);
+        ItemsInfoBean itemsInfo = GameItemsHandler.Instance.manager.GetItemsById(shoesId);
         if (itemsInfo == null)
         {
             ivShoes.color = new Color(1, 1, 1, 0);
             return;
         }
-        Sprite spShoes = characterDressManager.GetShoesSpriteByName(itemsInfo.icon_key);
+        Sprite spShoes = CharacterDressHandler.Instance.manager.GetShoesSpriteByName(itemsInfo.icon_key);
         if (spShoes == null)
         {
             ivShoes.color = new Color(1, 1, 1, 0);
@@ -390,14 +377,14 @@ public class CharacterUICpt : BaseMonoBehaviour
         }
         if (ivHat == null)
             return;
-        ItemsInfoBean itemsInfo = gameItemsManager.GetItemsById(hatId);
+        ItemsInfoBean itemsInfo = GameItemsHandler.Instance.manager.GetItemsById(hatId);
         if (itemsInfo == null)
         {
             ivHat.color = new Color(1, 1, 1, 0);
             return;
         }
 
-        Sprite spHat = characterDressManager.GetHatSpriteByName(itemsInfo.icon_key);
+        Sprite spHat = CharacterDressHandler.Instance.manager.GetHatSpriteByName(itemsInfo.icon_key);
         if (spHat == null)
         {
             ivHat.color = new Color(1, 1, 1, 0);

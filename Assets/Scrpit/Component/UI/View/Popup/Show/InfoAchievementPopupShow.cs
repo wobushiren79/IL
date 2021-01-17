@@ -195,25 +195,25 @@ public class InfoAchievementPopupShow : PopupShowView
         //    List<long> listItems = data.GetRewardItems();
         //    foreach (long itemId in listItems)
         //    {
-        //        ItemsInfoBean itemsInfo = gameItemsManager.GetItemsById(itemId);
+        //        ItemsInfoBean itemsInfo = GameItemsHandler.Instance.manager.GetItemsById(itemId);
         //        if (itemsInfo == null)
         //            continue;
         //        Sprite spIcon;
         //        if (itemsInfo.items_type == (int)GeneralEnum.Hat)
         //        {
-        //            spIcon = gameItemsManager.GetItemsSpriteByName("unknown_hat_1");
+        //            spIcon = GameItemsHandler.Instance.manager.GetItemsSpriteByName("unknown_hat_1");
         //        }
         //        else if (itemsInfo.items_type == (int)GeneralEnum.Clothes)
         //        {
-        //            spIcon = gameItemsManager.GetItemsSpriteByName("unknown_clothes_1");
+        //            spIcon = GameItemsHandler.Instance.manager.GetItemsSpriteByName("unknown_clothes_1");
         //        }
         //        else if (itemsInfo.items_type == (int)GeneralEnum.Shoes)
         //        {
-        //            spIcon = gameItemsManager.GetItemsSpriteByName("unknown_shoes_1");
+        //            spIcon = GameItemsHandler.Instance.manager.GetItemsSpriteByName("unknown_shoes_1");
         //        }
         //        else
         //        {
-        //            spIcon = gameItemsManager.GetItemsSpriteByName(itemsInfo.icon_key);
+        //            spIcon = GameItemsHandler.Instance.manager.GetItemsSpriteByName(itemsInfo.icon_key);
         //        }
         //        CreateRewardItem(itemsInfo.name, 0, spIcon);
         //    }

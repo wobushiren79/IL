@@ -324,7 +324,7 @@ public class ItemGameMenuFoodCpt : ItemGameBaseCpt, IRadioButtonCallBack, Dialog
         //首先判断客栈等级是否足够
         if (!menuOwnData.CheckCanResearch(uiGameManager.gameDataManager.gameData, out string failStr))
         {
-            uiGameManager.toastManager.ToastHint(failStr);
+            ToastHandler.Instance.ToastHint(failStr);
             return;
         }
 
@@ -420,7 +420,7 @@ public class ItemGameMenuFoodCpt : ItemGameBaseCpt, IRadioButtonCallBack, Dialog
                 }
                 if (!hasEnoughIng)
                 {
-                    uiGameManager.toastManager.ToastHint(GameCommonInfo.GetUITextById(1045));
+                    ToastHandler.Instance.ToastHint(GameCommonInfo.GetUITextById(1045));
                     return;
                 }
                 foreach (var itemIng in listIng)
@@ -430,7 +430,7 @@ public class ItemGameMenuFoodCpt : ItemGameBaseCpt, IRadioButtonCallBack, Dialog
                 //开始研究
                 menuOwnData.StartResearch(listPickCharacter);
                 string toastStr = string.Format(GameCommonInfo.GetUITextById(1201), listPickCharacter[0].baseInfo.name, foodData.name);
-                uiGameManager.toastManager.ToastHint(ivFood.sprite, toastStr);
+                ToastHandler.Instance.ToastHint(ivFood.sprite, toastStr);
             }
         }
         else

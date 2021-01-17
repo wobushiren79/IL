@@ -166,13 +166,13 @@ public class ItemTownCerpenterCpt : ItemTownStoreCpt, DialogView.IDialogCallBack
         //检测是否正在修建客栈
         if (storeInfo.store_goods_type == (int)StoreForCarpenterTypeEnum.Expansion && innBuildData.listBuildDay.Count != 0)
         {
-            toastManager.ToastHint(GameCommonInfo.GetUITextById(1019));
+            ToastHandler.Instance.ToastHint(GameCommonInfo.GetUITextById(1019));
             return;
         }
         //检测金钱
         if (storeInfo.store_goods_type == (int)StoreForCarpenterTypeEnum.Expansion && !gameDataManager.gameData.HasEnoughMoney(storeInfo.price_l, storeInfo.price_m, storeInfo.price_s))
         {
-            toastManager.ToastHint(GameCommonInfo.GetUITextById(1005));
+            ToastHandler.Instance.ToastHint(GameCommonInfo.GetUITextById(1005));
             return;
         }
         if (storeInfo.store_goods_type == (int)StoreForCarpenterTypeEnum.Expansion)
@@ -212,17 +212,17 @@ public class ItemTownCerpenterCpt : ItemTownStoreCpt, DialogView.IDialogCallBack
             //检测金钱
             if (!gameDataManager.gameData.HasEnoughMoney(storeInfo.price_l* number, storeInfo.price_m* number, storeInfo.price_s* number))
             {
-                toastManager.ToastHint(GameCommonInfo.GetUITextById(1005));
+                ToastHandler.Instance.ToastHint(GameCommonInfo.GetUITextById(1005));
                 return;
             }
             if (!gameDataManager.gameData.HasEnoughGuildCoin(storeInfo.guild_coin * number))
             {
-                toastManager.ToastHint(GameCommonInfo.GetUITextById(1012));
+                ToastHandler.Instance.ToastHint(GameCommonInfo.GetUITextById(1012));
                 return;
             }
             if (!gameDataManager.gameData.HasEnoughTrophy(storeInfo.trophy_elementary * number, storeInfo.trophy_intermediate * number, storeInfo.trophy_advanced * number, storeInfo.trophy_legendary * number))
             {
-                toastManager.ToastHint(GameCommonInfo.GetUITextById(1021));
+                ToastHandler.Instance.ToastHint(GameCommonInfo.GetUITextById(1021));
                 return;
             }
             gameDataManager.gameData.PayMoney(storeInfo.price_l * number, storeInfo.price_m * number, storeInfo.price_s * number);
@@ -238,7 +238,7 @@ public class ItemTownCerpenterCpt : ItemTownStoreCpt, DialogView.IDialogCallBack
             gameDataManager.gameData.AddBuildNumber(buildItemData.id, number * getNumber);
             RefreshUI();
             string  toastStr = string.Format(GameCommonInfo.GetUITextById(1010), buildItemData.name+"x"+ (number * getNumber));
-            toastManager.ToastHint(ivIcon.sprite, toastStr);
+            ToastHandler.Instance.ToastHint(ivIcon.sprite, toastStr);
         }
         else 
         {
@@ -246,17 +246,17 @@ public class ItemTownCerpenterCpt : ItemTownStoreCpt, DialogView.IDialogCallBack
             //检测金钱
             if (!gameDataManager.gameData.HasEnoughMoney(storeInfo.price_l , storeInfo.price_m , storeInfo.price_s ))
             {
-                toastManager.ToastHint(GameCommonInfo.GetUITextById(1005));
+                ToastHandler.Instance.ToastHint(GameCommonInfo.GetUITextById(1005));
                 return;
             }
             if (!gameDataManager.gameData.HasEnoughGuildCoin(storeInfo.guild_coin ))
             {
-                toastManager.ToastHint(GameCommonInfo.GetUITextById(1012));
+                ToastHandler.Instance.ToastHint(GameCommonInfo.GetUITextById(1012));
                 return;
             }
             if (!gameDataManager.gameData.HasEnoughTrophy(storeInfo.trophy_elementary , storeInfo.trophy_intermediate , storeInfo.trophy_advanced , storeInfo.trophy_legendary ))
             {
-                toastManager.ToastHint(GameCommonInfo.GetUITextById(1021));
+                ToastHandler.Instance.ToastHint(GameCommonInfo.GetUITextById(1021));
                 return;
             }
             gameDataManager.gameData.PayMoney(storeInfo.price_l, storeInfo.price_m, storeInfo.price_s);
@@ -303,7 +303,7 @@ public class ItemTownCerpenterCpt : ItemTownStoreCpt, DialogView.IDialogCallBack
                 RefreshUI();
                 toastStr = string.Format(GameCommonInfo.GetUITextById(1010), buildItemData.name+"x"+ 1 * getNumber);
             }
-            toastManager.ToastHint(ivIcon.sprite, toastStr);
+            ToastHandler.Instance.ToastHint(ivIcon.sprite, toastStr);
         }
     }
 

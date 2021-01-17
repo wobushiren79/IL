@@ -74,11 +74,11 @@ public class BaseNpcAI : BaseObservable<IBaseObserver>
             ItemsInfoBean maskEquip = null;
             if (characterBean.equips.maskTFId != 0)
             {
-                maskEquip = gameItemsManager.GetItemsById(characterBean.equips.maskTFId);
+                maskEquip = GameItemsHandler.Instance.manager.GetItemsById(characterBean.equips.maskTFId);
             }
             else
             {
-                maskEquip = gameItemsManager.GetItemsById(characterBean.equips.maskId);
+                maskEquip = GameItemsHandler.Instance.manager.GetItemsById(characterBean.equips.maskId);
             }
             characterDress.SetMask(maskEquip);
 
@@ -86,11 +86,11 @@ public class BaseNpcAI : BaseObservable<IBaseObserver>
             ItemsInfoBean handEquip = null;
             if (characterBean.equips.handTFId != 0)
             {
-                handEquip = gameItemsManager.GetItemsById(characterBean.equips.handTFId);
+                handEquip = GameItemsHandler.Instance.manager.GetItemsById(characterBean.equips.handTFId);
             }
             else
             {
-                handEquip = gameItemsManager.GetItemsById(characterBean.equips.handId);
+                handEquip = GameItemsHandler.Instance.manager.GetItemsById(characterBean.equips.handId);
             }
             characterDress.SetHand(handEquip);
 
@@ -98,11 +98,11 @@ public class BaseNpcAI : BaseObservable<IBaseObserver>
             ItemsInfoBean hatEquip = null;
             if (characterBean.equips.hatTFId != 0)
             {
-                hatEquip = gameItemsManager.GetItemsById(characterBean.equips.hatTFId);
+                hatEquip = GameItemsHandler.Instance.manager.GetItemsById(characterBean.equips.hatTFId);
             }
             else
             {
-                hatEquip = gameItemsManager.GetItemsById(characterBean.equips.hatId);
+                hatEquip = GameItemsHandler.Instance.manager.GetItemsById(characterBean.equips.hatId);
             }
             characterDress.SetHat(hatEquip);
 
@@ -111,11 +111,11 @@ public class BaseNpcAI : BaseObservable<IBaseObserver>
             ItemsInfoBean clothesEquip = null;
             if (characterBean.equips.clothesTFId != 0)
             {
-                clothesEquip = gameItemsManager.GetItemsById(characterBean.equips.clothesTFId);
+                clothesEquip = GameItemsHandler.Instance.manager.GetItemsById(characterBean.equips.clothesTFId);
             }
             else
             {
-                clothesEquip = gameItemsManager.GetItemsById(characterBean.equips.clothesId);
+                clothesEquip = GameItemsHandler.Instance.manager.GetItemsById(characterBean.equips.clothesId);
             }
             characterDress.SetClothes(clothesEquip);
 
@@ -123,11 +123,11 @@ public class BaseNpcAI : BaseObservable<IBaseObserver>
             ItemsInfoBean shoesEquip = null;
             if (characterBean.equips.shoesTFId != 0)
             {
-                shoesEquip = gameItemsManager.GetItemsById(characterBean.equips.shoesTFId);
+                shoesEquip = GameItemsHandler.Instance.manager.GetItemsById(characterBean.equips.shoesTFId);
             }
             else
             {
-                shoesEquip = gameItemsManager.GetItemsById(characterBean.equips.shoesId);
+                shoesEquip = GameItemsHandler.Instance.manager.GetItemsById(characterBean.equips.shoesId);
             }
             characterDress.SetShoes(shoesEquip);
         }

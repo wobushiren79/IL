@@ -358,7 +358,7 @@ public class MiniGameCombatHandler : BaseMiniGameHandler<MiniGameCombatBuilder, 
         List<NpcAIMiniGameCombatCpt> listTargetNpc = miniGameData.GetRoundTargetListCharacter();
 
         long itemsId = miniGameData.GetRoundActionItemsId();
-        ItemsInfoBean itemsInfo = gameItemsManager.GetItemsById(itemsId);
+        ItemsInfoBean itemsInfo = GameItemsHandler.Instance.manager.GetItemsById(itemsId);
         //从物品栏移除物品
         gameDataManager.gameData.AddItemsNumber(itemsInfo.id, -1);
         Sprite spItems = GeneralEnumTools.GetGeneralSprite(itemsInfo,iconDataManager);

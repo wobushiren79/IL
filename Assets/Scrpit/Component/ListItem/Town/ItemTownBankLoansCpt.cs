@@ -59,7 +59,7 @@ public class ItemTownBankLoansCpt : ItemGameBaseCpt, DialogView.IDialogCallBack
         GameDataBean gameData = uiGameManager.gameDataManager.gameData;
         if (gameData.listLoans.Count >= gameData.loansNumberLimit)
         {
-            uiGameManager.toastManager.ToastHint(GameCommonInfo.GetUITextById(1091));
+            ToastHandler.Instance.ToastHint(GameCommonInfo.GetUITextById(1091));
             return;
         }
 
@@ -79,11 +79,11 @@ public class ItemTownBankLoansCpt : ItemGameBaseCpt, DialogView.IDialogCallBack
         if (gameData.AddLoans(loansData))
         {
             gameData.AddMoney(0, 0, loansData.moneyS);
-            uiGameManager.toastManager.ToastHint(string.Format(GameCommonInfo.GetUITextById(1092), tvMoneyS.text));
+            ToastHandler.Instance.ToastHint(string.Format(GameCommonInfo.GetUITextById(1092), tvMoneyS.text));
         }
         else
         {
-            uiGameManager.toastManager.ToastHint(GameCommonInfo.GetUITextById(1091));
+            ToastHandler.Instance.ToastHint(GameCommonInfo.GetUITextById(1091));
         }
     }
 

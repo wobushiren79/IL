@@ -285,18 +285,18 @@ public class ItemTownGoodsMarketCpt : ItemGameBaseCpt, DialogView.IDialogCallBac
         ToastManager toastManager = GetUIManager<UIGameManager>().toastManager;
         if (buyNumber <= 0)
         {
-            toastManager.ToastHint(GameCommonInfo.GetUITextById(1017));
+            ToastHandler.Instance.ToastHint(GameCommonInfo.GetUITextById(1017));
             return;
         }
         if (!gameDataManager.gameData.HasEnoughMoney(price_l * buyNumber, price_m * buyNumber, price_s * buyNumber))
         {
-            toastManager.ToastHint(GameCommonInfo.GetUITextById(1005));
+            ToastHandler.Instance.ToastHint(GameCommonInfo.GetUITextById(1005));
             return;
         }
         gameDataManager.gameData.PayMoney(price_l * buyNumber, price_m * buyNumber, price_s * buyNumber);
         gameDataManager.gameData.AddIng(ingType, buyNumber);
         RreshData();
-        toastManager.ToastHint(ivIcon.sprite, string.Format(GameCommonInfo.GetUITextById(1018), buyNumber, goodsData.name, tvPirce.text));
+        ToastHandler.Instance.ToastHint(ivIcon.sprite, string.Format(GameCommonInfo.GetUITextById(1018), buyNumber, goodsData.name, tvPirce.text));
     }
 
     public void Cancel(DialogView dialogView, DialogBean dialogBean)

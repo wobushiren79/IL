@@ -19,7 +19,6 @@ public class BaseUIHandler<T, M> : BaseHandler<T,M>
         ChangeUIRenderMode(RenderMode.ScreenSpaceOverlay);
     }
 
-
     public void ChangeUIRenderMode(RenderMode renderMode)
     {
         canvas.renderMode = renderMode;

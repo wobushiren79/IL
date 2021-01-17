@@ -173,7 +173,6 @@ public class ItemTownGuildImproveInnLevelCpt : BaseMonoBehaviour, DialogView.IDi
             PreTypeEnumTools.CompletePre(storeInfo.pre_data, gameDataManager.gameData);
             //获取所有奖励
             RewardTypeEnumTools.CompleteReward(
-                toastManager,
                 npcInfoManager,
                 iconDataManager,
                 innBuildManager,
@@ -183,7 +182,7 @@ public class ItemTownGuildImproveInnLevelCpt : BaseMonoBehaviour, DialogView.IDi
             //客栈升级
             gameDataManager.gameData.innAttributes.SetInnLevelUp();
 
-            toastManager.ToastHint(ivTitleIcon.sprite, GameCommonInfo.GetUITextById(1062));
+            ToastHandler.Instance.ToastHint(ivTitleIcon.sprite, GameCommonInfo.GetUITextById(1062));
             uiGameManager.OpenUIAndCloseOtherByName(EnumUtil.GetEnumName(UIEnum.GameMain));
 
             DialogBean dialogData = new DialogBean();
@@ -192,7 +191,7 @@ public class ItemTownGuildImproveInnLevelCpt : BaseMonoBehaviour, DialogView.IDi
         }
         else
         {
-            toastManager.ToastHint(GameCommonInfo.GetUITextById(1061));
+            ToastHandler.Instance.ToastHint(GameCommonInfo.GetUITextById(1061));
         }
     }
 

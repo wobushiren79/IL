@@ -121,7 +121,7 @@ public class ItemTownArenaCpt : ItemGameBaseCpt, DialogView.IDialogCallBack
             {
                 InfoItemsPopupButton infoItemsPopup = objReward.GetComponent<InfoItemsPopupButton>();
                 infoItemsPopup.SetPopupShowView(infoItemsPopupShow);
-                ItemsInfoBean itemsInfo = gameItemsManager.GetItemsById(itemReward.rewardId);
+                ItemsInfoBean itemsInfo = GameItemsHandler.Instance.manager.GetItemsById(itemReward.rewardId);
                 infoItemsPopup.SetData(itemsInfo, itemReward.spRewardIcon);
             }
         }
@@ -231,7 +231,7 @@ public class ItemTownArenaCpt : ItemGameBaseCpt, DialogView.IDialogCallBack
         AudioHandler.Instance.PlaySound(AudioSoundEnum.ButtonForNormal);
         if (!gameDataManager.gameData.HasEnoughMoney(miniGameData.preMoneyL, miniGameData.preMoneyM, miniGameData.preMoneyS))
         {
-            toastManager.ToastHint(GameCommonInfo.GetUITextById(1020));
+            ToastHandler.Instance.ToastHint(GameCommonInfo.GetUITextById(1020));
             return;
         }
         DialogBean dialogData = new DialogBean();
@@ -256,7 +256,7 @@ public class ItemTownArenaCpt : ItemGameBaseCpt, DialogView.IDialogCallBack
         AudioHandler.Instance.PlaySound(AudioSoundEnum.ButtonForNormal);
         if (!gameDataManager.gameData.HasEnoughMoney(miniGameData.preMoneyL, miniGameData.preMoneyM, miniGameData.preMoneyS))
         {
-            toastManager.ToastHint(GameCommonInfo.GetUITextById(1020));
+            ToastHandler.Instance.ToastHint(GameCommonInfo.GetUITextById(1020));
             return;
         }
         DialogBean dialogData = new DialogBean();
@@ -289,7 +289,7 @@ public class ItemTownArenaCpt : ItemGameBaseCpt, DialogView.IDialogCallBack
             gameTimeHandler.GetTime(out float hour, out float min);
             if (hour >= 21 || hour < 6)
             {
-                toastManager.ToastHint(GameCommonInfo.GetUITextById(1034));
+                ToastHandler.Instance.ToastHint(GameCommonInfo.GetUITextById(1034));
                 return;
             }
             //支付金钱
@@ -325,7 +325,7 @@ public class ItemTownArenaCpt : ItemGameBaseCpt, DialogView.IDialogCallBack
                 bool isWin= character.CalculationArenaSendWin(gameItemsManager, miniGameData.gameType);
                 if (isWin)
                 {
-                    toastManager.ToastHint(GameCommonInfo.GetUITextById(7011));
+                    ToastHandler.Instance.ToastHint(GameCommonInfo.GetUITextById(7011));
                     AudioHandler.Instance.PlaySound(AudioSoundEnum.Reward);
                     //设置不记录
                     foreach (RewardTypeBean rewardData in miniGameData.listReward)
@@ -340,11 +340,11 @@ public class ItemTownArenaCpt : ItemGameBaseCpt, DialogView.IDialogCallBack
                     }
                     //完成奖励
                     RewardTypeEnumTools.CompleteReward
-                        (toastManager, npcInfoManager, iconDataManager, innBuildManager, gameDataManager, listCharacter, miniGameData.listReward);     
+                        (npcInfoManager, iconDataManager, innBuildManager, gameDataManager, listCharacter, miniGameData.listReward);     
                 }
                 else
                 {
-                    toastManager.ToastHint(GameCommonInfo.GetUITextById(7012));
+                    ToastHandler.Instance.ToastHint(GameCommonInfo.GetUITextById(7012));
                     AudioHandler.Instance.PlaySound(AudioSoundEnum.Passive);
                 }
             }
