@@ -210,7 +210,7 @@ public class MiniGameDebateHandler : BaseMiniGameHandler<MiniGameDebateBuilder, 
         yield return new WaitForSeconds(time);
         if (winner != null && loser != null)
         {
-            winner.characterData.GetAttributes(gameItemsManager, out CharacterAttributesBean characterAttributes);
+            winner.characterData.GetAttributes( out CharacterAttributesBean characterAttributes);
             int damageNumber = characterAttributes.charm * 2;
             loser.UnderAttack(damageNumber);
         }

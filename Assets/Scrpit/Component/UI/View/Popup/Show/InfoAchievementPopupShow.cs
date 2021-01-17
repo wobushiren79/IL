@@ -150,8 +150,6 @@ public class InfoAchievementPopupShow : PopupShowView
             {
                 PreTypeEnumTools.GetPreDetails(itemPreData, gameDataManager.gameData, 
                     iconDataManager,
-                    gameItemsManager,
-                    characterDressManager,
                     innFoodManager,
                     npcInfoManager,
                     true);
@@ -160,8 +158,6 @@ public class InfoAchievementPopupShow : PopupShowView
             {
                 PreTypeEnumTools.GetPreDetails(itemPreData, gameDataManager.gameData, 
                     iconDataManager,
-                    gameItemsManager,
-                    characterDressManager,
                     innFoodManager,
                     npcInfoManager,
                     false);
@@ -186,7 +182,7 @@ public class InfoAchievementPopupShow : PopupShowView
         GameObject objTitle = Instantiate(objRewardContent, objRewardTitle);
         foreach (var itemRewardData in listRewardData)
         {
-            RewardTypeEnumTools.GetRewardDetails(itemRewardData, iconDataManager, gameItemsManager, innBuildManager,npcInfoManager);
+            RewardTypeEnumTools.GetRewardDetails(itemRewardData, iconDataManager, innBuildManager,npcInfoManager);
             string rewardDes = itemRewardData.rewardDescribe;
             Sprite spReward = itemRewardData.spRewardIcon;
             CreateRewardItem(rewardDes, spReward);

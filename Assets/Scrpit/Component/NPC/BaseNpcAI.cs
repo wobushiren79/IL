@@ -133,7 +133,7 @@ public class BaseNpcAI : BaseObservable<IBaseObserver>
         }
         //设置属性数据
         //获取属性数据
-        characterData.GetAttributes(gameItemsManager,
+        characterData.GetAttributes(
              out CharacterAttributesBean totalAttributes, out CharacterAttributesBean selfAttributes, out CharacterAttributesBean equipAttributes);
         //设置速度
         if (characterMoveCpt != null)

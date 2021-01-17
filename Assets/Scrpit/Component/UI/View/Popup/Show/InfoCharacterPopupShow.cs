@@ -45,7 +45,7 @@ public class InfoCharacterPopupShow : PopupShowView
     /// <param name="characterData"></param>
     public void SetAttributeView(CharacterBean characterData)
     {
-        characterData.GetAttributes(gameItemsManager, out CharacterAttributesBean characterAttributes);
+        characterData.GetAttributes( out CharacterAttributesBean characterAttributes);
         if (attributeView != null)
         {
             attributeView.SetData(characterAttributes);

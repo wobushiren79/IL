@@ -161,17 +161,17 @@ public class UIMainCreate : BaseUIComponent,
         //初始化帽子
         GameCommonInfo.baseDataController.GetBaseData(BaseDataTypeEnum.HatForLevel0, out string hatListStr);
         long[] listHat = StringUtil.SplitBySubstringForArrayLong(hatListStr, ',');
-        listSelectHat = uiGameManager.gameItemsManager.GetItemsById(listHat);
+        listSelectHat = GameItemsHandler.Instance.manager.GetItemsById(listHat);
         listSelectHat.Insert(0, new ItemsInfoBean());
         //初始化衣服
         GameCommonInfo.baseDataController.GetBaseData(BaseDataTypeEnum.ClothesForLevel0, out string clothesListStr);
         long[] listClothes= StringUtil.SplitBySubstringForArrayLong(clothesListStr, ',');
-        listSelectClothes = uiGameManager.gameItemsManager.GetItemsById(listClothes);
+        listSelectClothes = GameItemsHandler.Instance.manager.GetItemsById(listClothes);
         listSelectClothes.Insert(0, new ItemsInfoBean());
         //初始化鞋子
         GameCommonInfo.baseDataController.GetBaseData(BaseDataTypeEnum.ShoesForLevel0, out string shoesListStr);
         long[] listShoes = StringUtil.SplitBySubstringForArrayLong(shoesListStr, ',');
-        listSelectShoes = uiGameManager.gameItemsManager.GetItemsById(listShoes);
+        listSelectShoes = GameItemsHandler.Instance.manager.GetItemsById(listShoes);
         listSelectShoes.Insert(0, new ItemsInfoBean());
     }
 

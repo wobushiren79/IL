@@ -110,7 +110,7 @@ public class UITownArena : UIBaseOne, IRadioGroupCallBack, StoreInfoManager.ICal
                     miniGameData = CreateCombatGameData((MiniGameCombatBean)miniGameData, storeInfo, type);
                     break;
             }
-            PreTypeForMiniGameEnumTools.GetMiniGameData(miniGameData, storeInfo.pre_data_minigame, uiGameManager.gameItemsManager, uiGameManager.npcInfoManager);
+            PreTypeForMiniGameEnumTools.GetMiniGameData(miniGameData, storeInfo.pre_data_minigame, uiGameManager.npcInfoManager);
             //奖励添加
             miniGameData.listReward = new List<RewardTypeBean>();
             List<RewardTypeBean> listReward = RewardTypeEnumTools.GetListRewardData(storeInfo.reward_data);
@@ -230,7 +230,7 @@ public class UITownArena : UIBaseOne, IRadioGroupCallBack, StoreInfoManager.ICal
             }
         }
         List<CharacterBean> listAuditerData = RandomUtil.GetRandomDataByListForNumberNR(listTownNpc, 5);
-        miniGameData.InitData(uiGameManager.gameItemsManager, null, listEnemyData, listAuditerData, null);
+        miniGameData.InitData(null, listEnemyData, listAuditerData, null);
         return miniGameData;
     }
 
@@ -302,7 +302,7 @@ public class UITownArena : UIBaseOne, IRadioGroupCallBack, StoreInfoManager.ICal
                 randomEnemy = CharacterBean.CreateRandomEnemyData(500, 80, 3);
                 break;
         }
-        miniGameData.InitData(uiGameManager.gameItemsManager, null, randomEnemy);
+        miniGameData.InitData(null, randomEnemy);
         return miniGameData;
     }
 
@@ -348,7 +348,7 @@ public class UITownArena : UIBaseOne, IRadioGroupCallBack, StoreInfoManager.ICal
             CharacterBean enemyData = CharacterBean.CreateRandomEnemyData(enemyBaseLife, enemyBaseAttribute, equipLevel);
             listEnemyData.Add(enemyData);
         }
-        miniGameData.InitData(uiGameManager.gameItemsManager, new List<CharacterBean>(), listEnemyData);
+        miniGameData.InitData(new List<CharacterBean>(), listEnemyData);
         return miniGameData;
     }
 

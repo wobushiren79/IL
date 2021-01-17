@@ -191,7 +191,7 @@ public abstract class MiniGameBaseBean
     /// <param name="gameItemsManager"></param>
     /// <param name="userData"></param>
     /// <param name="listEnemyData"></param>
-    public virtual void InitData(GameItemsManager gameItemsManager, List<CharacterBean> listUserData, List<CharacterBean> listEnemyData)
+    public virtual void InitData(List<CharacterBean> listUserData, List<CharacterBean> listEnemyData)
     {
         //创建操作角色数据
         if (!CheckUtil.ListIsNull(listUserData))
@@ -199,7 +199,7 @@ public abstract class MiniGameBaseBean
             foreach (CharacterBean itemData in listUserData)
             {
                 //获取角色属性
-                itemData.GetAttributes(gameItemsManager,
+                itemData.GetAttributes(
                 out CharacterAttributesBean totalAttributes, out CharacterAttributesBean selfAttributes, out CharacterAttributesBean equipAttributes);
                 MiniGameCharacterBean itemUserGameData = CreateMiniGameCharacterBeanByType();
                 itemUserGameData.characterType = 1;
@@ -215,7 +215,7 @@ public abstract class MiniGameBaseBean
             foreach (CharacterBean itemData in listEnemyData)
             {
                 //获取角色属性
-                itemData.GetAttributes(gameItemsManager,
+                itemData.GetAttributes(
                 out CharacterAttributesBean totalAttributes, out CharacterAttributesBean selfAttributes, out CharacterAttributesBean equipAttributes);
                 MiniGameCharacterBean itemEnemyGameData = CreateMiniGameCharacterBeanByType();
                 itemEnemyGameData.characterType = 0;
@@ -225,13 +225,13 @@ public abstract class MiniGameBaseBean
                 listEnemyGameData.Add(itemEnemyGameData);
             }
         }
-        InitForMiniGame(gameItemsManager);
+        InitForMiniGame();
     }
 
     /// <summary>
     /// 初始化对应的游戏数据 
     /// </summary>
-    public abstract void InitForMiniGame(GameItemsManager gameItemsManager);
+    public abstract void InitForMiniGame();
 
     /// <summary>
     /// 通过游戏类型获取角色数据类型
@@ -261,25 +261,25 @@ public abstract class MiniGameBaseBean
         return itemUserGameData;
     }
 
-    public virtual void InitData(GameItemsManager gameItemsManager, List<CharacterBean> listUserData)
+    public virtual void InitData(List<CharacterBean> listUserData)
     {
-        InitData(gameItemsManager, listUserData, null);
+        InitData(listUserData, null);
     }
-    public virtual void InitData(GameItemsManager gameItemsManager, CharacterBean userData)
-    {
-        List<CharacterBean> listCharacterData = new List<CharacterBean>();
-        if (userData != null)
-            listCharacterData.Add(userData);
-        InitData(gameItemsManager, listCharacterData, null);
-    }
-    public virtual void InitData(GameItemsManager gameItemsManager, CharacterBean userData, List<CharacterBean> listEnemyData)
+    public virtual void InitData(CharacterBean userData)
     {
         List<CharacterBean> listCharacterData = new List<CharacterBean>();
         if (userData != null)
             listCharacterData.Add(userData);
-        InitData(gameItemsManager, listCharacterData, listEnemyData);
+        InitData(listCharacterData, null);
     }
-    public virtual void InitData(GameItemsManager gameItemsManager, CharacterBean userData, CharacterBean enemyData)
+    public virtual void InitData(CharacterBean userData, List<CharacterBean> listEnemyData)
+    {
+        List<CharacterBean> listCharacterData = new List<CharacterBean>();
+        if (userData != null)
+            listCharacterData.Add(userData);
+        InitData(listCharacterData, listEnemyData);
+    }
+    public virtual void InitData(CharacterBean userData, CharacterBean enemyData)
     {
         List<CharacterBean> listCharacterData = new List<CharacterBean>();
         if (userData != null)
@@ -287,7 +287,7 @@ public abstract class MiniGameBaseBean
         List<CharacterBean> listEnemyData = new List<CharacterBean>();
         if (enemyData != null)
             listEnemyData.Add(enemyData);
-        InitData(gameItemsManager, listCharacterData, listEnemyData);
+        InitData(listCharacterData, listEnemyData);
     }
 
 

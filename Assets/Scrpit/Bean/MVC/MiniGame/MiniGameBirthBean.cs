@@ -8,7 +8,7 @@ public class MiniGameBirthBean : MiniGameBaseBean
 
     public int life;
 
-    public override void InitForMiniGame(GameItemsManager gameItemsManager)
+    public override void InitForMiniGame()
     {
 
     }

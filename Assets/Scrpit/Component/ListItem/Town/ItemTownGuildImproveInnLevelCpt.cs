@@ -107,8 +107,6 @@ public class ItemTownGuildImproveInnLevelCpt : BaseMonoBehaviour, DialogView.IDi
                 itemData,
                 gameDataManager.gameData,
                 iconDataManager,
-                gameItemsManager,
-                characterDressManager,
                 innFoodManager,
                 npcInfoManager);
             //设置图标
@@ -148,7 +146,7 @@ public class ItemTownGuildImproveInnLevelCpt : BaseMonoBehaviour, DialogView.IDi
         foreach (var itemData in listRewardData)
         {
             GameObject objReward = Instantiate(objRewardContainer, objRewardModel);
-            RewardTypeEnumTools.GetRewardDetails(itemData, iconDataManager, gameItemsManager, innBuildManager, npcInfoManager);
+            RewardTypeEnumTools.GetRewardDetails(itemData, iconDataManager, innBuildManager, npcInfoManager);
             //设置图标
             Sprite spIcon = itemData.spRewardIcon;
             Image ivIcon = CptUtil.GetCptInChildrenByName<Image>(objReward, "Icon");
@@ -178,7 +176,6 @@ public class ItemTownGuildImproveInnLevelCpt : BaseMonoBehaviour, DialogView.IDi
                 toastManager,
                 npcInfoManager,
                 iconDataManager,
-                gameItemsManager,
                 innBuildManager,
                 gameDataManager,
                 null,

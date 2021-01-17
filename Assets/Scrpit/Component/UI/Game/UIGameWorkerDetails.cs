@@ -207,15 +207,15 @@ public class UIGameWorkerDetails : BaseUIComponent, IRadioGroupCallBack
     {
 
         //装备物品刷新
-        equipHand.SetData(characterData, uiGameManager.gameItemsManager.GetItemsById(equips.handId), null);
-        equipHat.SetData(characterData, uiGameManager.gameItemsManager.GetItemsById(equips.hatId), null);
-        equipClothes.SetData(characterData, uiGameManager.gameItemsManager.GetItemsById(equips.clothesId), null);
-        equipShoes.SetData(characterData, uiGameManager.gameItemsManager.GetItemsById(equips.shoesId), null);
+        equipHand.SetData(characterData,GameItemsHandler.Instance.manager.GetItemsById(equips.handId), null);
+        equipHat.SetData(characterData, GameItemsHandler.Instance.manager.GetItemsById(equips.hatId), null);
+        equipClothes.SetData(characterData, GameItemsHandler.Instance.manager.GetItemsById(equips.clothesId), null);
+        equipShoes.SetData(characterData, GameItemsHandler.Instance.manager.GetItemsById(equips.shoesId), null);
 
-        equipTFHand.SetData(characterData, uiGameManager.gameItemsManager.GetItemsById(equips.handTFId), null);
-        equipTFHat.SetData(characterData, uiGameManager.gameItemsManager.GetItemsById(equips.hatTFId), null);
-        equipTFClothes.SetData(characterData, uiGameManager.gameItemsManager.GetItemsById(equips.clothesTFId), null);
-        equipTFShoes.SetData(characterData, uiGameManager.gameItemsManager.GetItemsById(equips.shoesTFId), null);
+        equipTFHand.SetData(characterData, GameItemsHandler.Instance.manager.GetItemsById(equips.handTFId), null);
+        equipTFHat.SetData(characterData, GameItemsHandler.Instance.manager.GetItemsById(equips.hatTFId), null);
+        equipTFClothes.SetData(characterData, GameItemsHandler.Instance.manager.GetItemsById(equips.clothesTFId), null);
+        equipTFShoes.SetData(characterData, GameItemsHandler.Instance.manager.GetItemsById(equips.shoesTFId), null);
 
     }
 
@@ -226,8 +226,7 @@ public class UIGameWorkerDetails : BaseUIComponent, IRadioGroupCallBack
     /// <param name="characterEquip"></param>
     public void SetAttributes(CharacterBean characterData)
     {
-        characterData.GetAttributes(GetUIManager<UIGameManager>().gameItemsManager,
-            out CharacterAttributesBean totalAttributes, out CharacterAttributesBean selfAttributes, out CharacterAttributesBean equipAttributes);
+        characterData.GetAttributes(out CharacterAttributesBean totalAttributes, out CharacterAttributesBean selfAttributes, out CharacterAttributesBean equipAttributes);
         if (tvCook != null)
             tvCook.text = GameCommonInfo.GetUITextById(1) + "：" + selfAttributes.cook + (equipAttributes.cook == 0 ? "" : "+" + equipAttributes.cook);
         if (tvSpeed != null)

@@ -61,8 +61,6 @@ public class ItemGameTextSelectCpt : ItemGameBaseCpt, DialogView.IDialogCallBack
                     itemPreData, 
                     uiGameManager.gameDataManager.gameData,
                     uiGameManager.iconDataManager,
-                    uiGameManager.gameItemsManager,
-                    uiGameManager.characterDressManager,
                     uiGameManager.innFoodManager,
                     uiGameManager.npcInfoManager);
                 if (!itemPreData.isPre)
@@ -78,7 +76,6 @@ public class ItemGameTextSelectCpt : ItemGameBaseCpt, DialogView.IDialogCallBack
                 uiGameManager.toastManager,
                 uiGameManager.npcInfoManager,
                 uiGameManager.iconDataManager,
-                uiGameManager.gameItemsManager,
                 uiGameManager.innBuildManager,
                 uiGameManager.gameDataManager,
                 null,

@@ -32,8 +32,7 @@ public class ItemMiniGameCombatCharacterInfoCpt : ItemGameBaseCpt
 
     public void RefreshUI()
     {
-        GameItemsManager gameItemsManager = GetUIManager<UIGameManager>().gameItemsManager;
-        gameCharacterData.characterData.GetAttributes(gameItemsManager, gameCharacterData,out CharacterAttributesBean characterAttributes);
+        gameCharacterData.characterData.GetAttributes(gameCharacterData,out CharacterAttributesBean characterAttributes);
         SetForce(characterAttributes.force);
         SetSpeed(characterAttributes.speed);
     }

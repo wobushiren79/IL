@@ -43,8 +43,8 @@ public class UIMiniGameDebate : UIBaseMiniGame<MiniGameDebateBean>
         SetCharacterName(userGameData.characterData.baseInfo.name, enemyGameData.characterData.baseInfo.name);
         SetLife(userGameData.characterCurrentLife, userGameData.characterMaxLife, enemyGameData.characterCurrentLife, enemyGameData.characterMaxLife);
 
-        userGameData.characterData.GetAttributes(uiGameManager.gameItemsManager, out CharacterAttributesBean userAttributes);
-        enemyGameData.characterData.GetAttributes(uiGameManager.gameItemsManager, out CharacterAttributesBean enemyAttributes);
+        userGameData.characterData.GetAttributes(out CharacterAttributesBean userAttributes);
+        enemyGameData.characterData.GetAttributes(out CharacterAttributesBean enemyAttributes);
         SetCharm(userAttributes.charm, enemyAttributes.charm);
     }
 

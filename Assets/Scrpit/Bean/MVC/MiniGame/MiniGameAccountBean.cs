@@ -22,7 +22,7 @@ public class MiniGameAccountBean : MiniGameBaseBean
         gameType = MiniGameEnum.Account;
     }
 
-    public override void InitForMiniGame(GameItemsManager gameItemsManager)
+    public override void InitForMiniGame()
     {
         if (winSurvivalTime < 30)
         {

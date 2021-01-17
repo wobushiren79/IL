@@ -24,7 +24,7 @@ public class NpcAIUserCpt : BaseNpcAI
 
     public void InitCharacterSpeed(float addRate)
     {
-        characterData.GetAttributes(gameItemsManager,out CharacterAttributesBean totalAttributes, out CharacterAttributesBean selfAttributes, out CharacterAttributesBean equipAttributes);
+        characterData.GetAttributes(out CharacterAttributesBean totalAttributes, out CharacterAttributesBean selfAttributes, out CharacterAttributesBean equipAttributes);
         float speed = 3.25f + (totalAttributes.speed / 50f);
         characterMoveCpt.SetMoveSpeed(speed * addRate);
     }

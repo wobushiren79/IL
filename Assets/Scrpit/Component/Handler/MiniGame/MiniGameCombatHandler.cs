@@ -288,7 +288,7 @@ public class MiniGameCombatHandler : BaseMiniGameHandler<MiniGameCombatBuilder, 
         NpcAIMiniGameCombatCpt actionNpc = miniGameData.GetRoundActionCharacter();
         NpcAIMiniGameCombatCpt targetNpc = miniGameData.GetRoundTargetCharacter();
         //获取属性
-        actionNpc.characterData.GetAttributes(gameItemsManager, actionNpc.characterMiniGameData, out CharacterAttributesBean actionCharacterAttributes);
+        actionNpc.characterData.GetAttributes( actionNpc.characterMiniGameData, out CharacterAttributesBean actionCharacterAttributes);
 
         //让行动角色移动到被攻击对象面前
         Vector3 offsetPosition;
@@ -361,7 +361,7 @@ public class MiniGameCombatHandler : BaseMiniGameHandler<MiniGameCombatBuilder, 
         ItemsInfoBean itemsInfo = gameItemsManager.GetItemsById(itemsId);
         //从物品栏移除物品
         gameDataManager.gameData.AddItemsNumber(itemsInfo.id, -1);
-        Sprite spItems = GeneralEnumTools.GetGeneralSprite(itemsInfo,iconDataManager,gameItemsManager,characterDressManager);
+        Sprite spItems = GeneralEnumTools.GetGeneralSprite(itemsInfo,iconDataManager);
         //增加物品效果
         foreach (NpcAIMiniGameCombatCpt itemNpc in listTargetNpc)
         {

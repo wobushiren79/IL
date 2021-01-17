@@ -60,7 +60,7 @@ public class UIGameBackpack : UIBaseOne, TextSearchView.ICallBack
     {
         int index = itemCell.index;
         ItemBean itemBean = listItemData[index];
-        ItemsInfoBean itemsInfoBean = uiGameManager.gameItemsManager.GetItemsById(itemBean.itemId);
+        ItemsInfoBean itemsInfoBean = GameItemsHandler.Instance.manager.GetItemsById(itemBean.itemId);
         ItemGameBackpackCpt backpackCpt = itemCell.GetComponent<ItemGameBackpackCpt>();
         backpackCpt.SetData(itemsInfoBean, itemBean);
     }
@@ -68,7 +68,7 @@ public class UIGameBackpack : UIBaseOne, TextSearchView.ICallBack
     public void OnClickForClearUp()
     {
         uiGameManager.gameDataManager.gameData.listItems = uiGameManager.gameDataManager.gameData.listItems.OrderBy(data=> {
-            ItemsInfoBean itemsInfoBean = uiGameManager.gameItemsManager.GetItemsById(data.itemId);
+            ItemsInfoBean itemsInfoBean = GameItemsHandler.Instance.manager.GetItemsById(data.itemId);
             return itemsInfoBean.items_type;
         }).ToList();
         RefreshUI();
@@ -78,7 +78,7 @@ public class UIGameBackpack : UIBaseOne, TextSearchView.ICallBack
     public void SearchTextStart(string text)
     {
         listItemData = listItemData.OrderByDescending(data => {
-            ItemsInfoBean itemsInfoBean = uiGameManager.gameItemsManager.GetItemsById(data.itemId);
+            ItemsInfoBean itemsInfoBean = GameItemsHandler.Instance.manager.GetItemsById(data.itemId);
             if (itemsInfoBean.name.Contains(text))
             {
                 return true;

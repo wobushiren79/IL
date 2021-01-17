@@ -504,7 +504,7 @@ public class EventHandler : BaseHandler,
             //小游戏初始化
             List<PreTypeForMiniGameBean> listPre = PreTypeForMiniGameEnumTools.GetListPreData(textData.pre_data_minigame);
             List<RewardTypeBean> listReward = RewardTypeEnumTools.GetListRewardData(textData.reward_data);
-            MiniGameBaseBean miniGameData = PreTypeForMiniGameEnumTools.GetMiniGameData(null, textData.pre_data_minigame, listPickCharacterData, gameItemsManager, npcInfoManager);
+            MiniGameBaseBean miniGameData = PreTypeForMiniGameEnumTools.GetMiniGameData(null, textData.pre_data_minigame, listPickCharacterData, npcInfoManager);
             miniGameData.listReward = listReward;
             switch (miniGameData.gameType)
             {

@@ -72,8 +72,6 @@ public class ItemGameBackpackCpt : ItemGameBaseCpt, IPointerClickHandler, PopupI
     /// <param name="itemType"></param>
     public void SetIcon(ItemsInfoBean itemsInfo)
     {
-        CharacterDressManager characterDressManager = uiGameManager.characterDressManager;
-        GameItemsManager gameItemsManager = uiGameManager.gameItemsManager;
         IconDataManager iconDataManager = uiGameManager.iconDataManager;
 
         Vector2 offsetMin = new Vector2(0, 0);
@@ -98,7 +96,7 @@ public class ItemGameBackpackCpt : ItemGameBaseCpt, IPointerClickHandler, PopupI
                 default:
                     break;
             }
-            spIcon = GeneralEnumTools.GetGeneralSprite(itemsInfo, iconDataManager, gameItemsManager, characterDressManager, false);
+            spIcon = GeneralEnumTools.GetGeneralSprite(itemsInfo, iconDataManager,  false);
         }
         if (spIcon != null)
             ivIcon.color = new Color(1, 1, 1, 1);

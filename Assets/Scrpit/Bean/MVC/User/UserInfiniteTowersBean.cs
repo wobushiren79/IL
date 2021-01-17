@@ -65,7 +65,7 @@ public class UserInfiniteTowersBean
         for (int i = 0; i < listMemberData.Count; i++)
         {
             CharacterBean itemCharacterData = listMemberData[i];
-            itemCharacterData.GetAttributes(gameItemsManager, out CharacterAttributesBean characterAttributes);
+            itemCharacterData.GetAttributes( out CharacterAttributesBean characterAttributes);
 
             totalLife += characterAttributes.life;
             totalCook += characterAttributes.cook;

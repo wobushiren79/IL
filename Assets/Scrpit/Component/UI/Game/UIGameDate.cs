@@ -34,7 +34,7 @@ public class UIGameDate : BaseUIComponent
         base.Awake();
         gameTimeHandler = uiGameManager.gameTimeHandler;
         gameDataManager = uiGameManager.gameDataManager;
-        gameItemsManager = uiGameManager.gameItemsManager;
+        gameItemsManager = GameItemsHandler.Instance.manager;
         controlHandler = uiGameManager.controlHandler;
         npcCustomerBuilder = uiGameManager.npcCustomerBuilder;
         eventHandler = uiGameManager.eventHandler;

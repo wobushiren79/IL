@@ -24,14 +24,14 @@ public class CharacterEquipBean
     /// </summary>
     /// <param name="gameItemsManager"></param>
     /// <returns></returns>
-    public CharacterAttributesBean GetEquipAttributes(GameItemsManager gameItemsManager)
+    public CharacterAttributesBean GetEquipAttributes()
     {
         CharacterAttributesBean attributesBean = new CharacterAttributesBean();
-        ItemsInfoBean maskItem = gameItemsManager.GetItemsById(maskId);
-        ItemsInfoBean handItem = gameItemsManager.GetItemsById(handId);
-        ItemsInfoBean hatItem = gameItemsManager.GetItemsById(hatId);
-        ItemsInfoBean clothesItem = gameItemsManager.GetItemsById(clothesId);
-        ItemsInfoBean shoesItem = gameItemsManager.GetItemsById(shoesId);
+        ItemsInfoBean maskItem = GameItemsHandler.Instance.manager.GetItemsById(maskId);
+        ItemsInfoBean handItem = GameItemsHandler.Instance.manager.GetItemsById(handId);
+        ItemsInfoBean hatItem = GameItemsHandler.Instance.manager.GetItemsById(hatId);
+        ItemsInfoBean clothesItem = GameItemsHandler.Instance.manager.GetItemsById(clothesId);
+        ItemsInfoBean shoesItem = GameItemsHandler.Instance.manager.GetItemsById(shoesId);
         if(maskItem!=null)
             AddAttributes(attributesBean, maskItem);
         if (handItem != null)

@@ -69,7 +69,7 @@ public class UIGameTest : BaseUIComponent
     {
         GameDataBean gameData = uiGameManager.gameDataManager.gameData;
         gameData.listItems.Clear();
-        List<ItemsInfoBean> listItem = uiGameManager.gameItemsManager.GetAllItems();
+        List<ItemsInfoBean> listItem = GameItemsHandler.Instance.manager.GetAllItems();
         foreach (ItemsInfoBean itemsInfo in listItem)
         {
             gameData.AddItemsNumber(itemsInfo.id, 1);

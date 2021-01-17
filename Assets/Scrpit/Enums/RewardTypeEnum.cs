@@ -86,7 +86,7 @@ public class RewardTypeEnumTools : DataTools
         return listReward;
     }
 
-    public static RewardTypeBean GetRewardDetails(RewardTypeBean data, IconDataManager iconDataManager, GameItemsManager gameItemsManager, InnBuildManager innBuildManager, NpcInfoManager npcInfoManager)
+    public static RewardTypeBean GetRewardDetails(RewardTypeBean data, IconDataManager iconDataManager, InnBuildManager innBuildManager, NpcInfoManager npcInfoManager)
     {
         switch (data.dataType)
         {
@@ -111,10 +111,10 @@ public class RewardTypeEnumTools : DataTools
                 data.rewardNumber = int.Parse(data.data);
                 break;
             case RewardTypeEnum.AddItems:
-                data = GetRewardDetailsForItems(data, iconDataManager, gameItemsManager);
+                data = GetRewardDetailsForItems(data, iconDataManager);
                 break;
             case RewardTypeEnum.RandomAddItems:
-                data = GetRewardDetailsForRandomItems(data, iconDataManager, gameItemsManager);
+                data = GetRewardDetailsForRandomItems(data, iconDataManager);
                 break;
             case RewardTypeEnum.AddBuildItems:
                 data = GetRewardDetailsForBuildItems(data, iconDataManager, innBuildManager);
@@ -282,12 +282,12 @@ public class RewardTypeEnumTools : DataTools
     /// <param name="iconDataManager"></param>
     /// <param name="gameItemsManager"></param>
     /// <returns></returns>
-    private static RewardTypeBean GetRewardDetailsForItems(RewardTypeBean data, IconDataManager iconDataManager, GameItemsManager gameItemsManager)
+    private static RewardTypeBean GetRewardDetailsForItems(RewardTypeBean data, IconDataManager iconDataManager)
     {
         string[] listItemsData = StringUtil.SplitBySubstringForArrayStr(data.data, ',');
         long itemId = long.Parse(listItemsData[0]);
 
-        ItemsInfoBean itemsInfo = gameItemsManager.GetItemsById(itemId);
+        ItemsInfoBean itemsInfo = GameItemsHandler.Instance.manager.GetItemsById(itemId);
         data.rewardDescribe = itemsInfo.name;
         if (listItemsData.Length == 2)
         {
@@ -295,7 +295,7 @@ public class RewardTypeEnumTools : DataTools
         }
         data.rewardId = itemId;
         data.rewardDescribe += (" x" + data.rewardNumber);
-        data.spRewardIcon = GeneralEnumTools.GetGeneralSprite(itemsInfo, iconDataManager, gameItemsManager, null, true);
+        data.spRewardIcon = GeneralEnumTools.GetGeneralSprite(itemsInfo, iconDataManager, true);
         return data;
     }
 
@@ -306,16 +306,16 @@ public class RewardTypeEnumTools : DataTools
     /// <param name="iconDataManager"></param>
     /// <param name="gameItemsManager"></param>
     /// <returns></returns>
-    private static RewardTypeBean GetRewardDetailsForRandomItems(RewardTypeBean data, IconDataManager iconDataManager, GameItemsManager gameItemsManager)
+    private static RewardTypeBean GetRewardDetailsForRandomItems(RewardTypeBean data, IconDataManager iconDataManager)
     {
         long[] listItemsData = StringUtil.SplitBySubstringForArrayLong(data.data, ',');
         long randomItemsId = RandomUtil.GetRandomDataByArray(listItemsData);
-        ItemsInfoBean itemsInfo = gameItemsManager.GetItemsById(randomItemsId);
+        ItemsInfoBean itemsInfo = GameItemsHandler.Instance.manager.GetItemsById(randomItemsId);
         data.rewardDescribe = itemsInfo.name;
         data.rewardNumber = 1;
         data.rewardId = randomItemsId;
         data.rewardDescribe += (" x" + data.rewardNumber);
-        data.spRewardIcon = GeneralEnumTools.GetGeneralSprite(itemsInfo, iconDataManager, gameItemsManager, null, true);
+        data.spRewardIcon = GeneralEnumTools.GetGeneralSprite(itemsInfo, iconDataManager, true);
         return data;
     }
 
@@ -375,18 +375,18 @@ public class RewardTypeEnumTools : DataTools
     /// </summary>
     /// <param name="reward_data"></param>
     /// <param name="gameData"></param>
-    public static void CompleteReward(ToastManager toastManager, NpcInfoManager npcInfoManager, IconDataManager iconDataManager, GameItemsManager gameItemsManager, InnBuildManager innBuildManager, GameDataManager gameDataManager, List<CharacterBean> listCharacterData, string data)
+    public static void CompleteReward(ToastManager toastManager, NpcInfoManager npcInfoManager, IconDataManager iconDataManager, InnBuildManager innBuildManager, GameDataManager gameDataManager, List<CharacterBean> listCharacterData, string data)
     {
         List<RewardTypeBean> listRewardData = GetListRewardData(data);
-        CompleteReward(toastManager, npcInfoManager, iconDataManager, gameItemsManager, innBuildManager, gameDataManager, listCharacterData, listRewardData);
+        CompleteReward(toastManager, npcInfoManager, iconDataManager, innBuildManager, gameDataManager, listCharacterData, listRewardData);
     }
 
-    public static void CompleteReward(ToastManager toastManager, NpcInfoManager npcInfoManager, IconDataManager iconDataManager, GameItemsManager gameItemsManager, InnBuildManager innBuildManager, GameDataManager gameDataManager, List<CharacterBean> listCharacterData, List<RewardTypeBean> listRewardData)
+    public static void CompleteReward(ToastManager toastManager, NpcInfoManager npcInfoManager, IconDataManager iconDataManager,InnBuildManager innBuildManager, GameDataManager gameDataManager, List<CharacterBean> listCharacterData, List<RewardTypeBean> listRewardData)
     {
         GameDataBean gameData = gameDataManager.gameData;
         foreach (var itemData in listRewardData)
         {
-            GetRewardDetails(itemData, iconDataManager, gameItemsManager, innBuildManager, npcInfoManager);
+            GetRewardDetails(itemData, iconDataManager, innBuildManager, npcInfoManager);
             RewardTypeEnum dataType = itemData.dataType;
             switch (dataType)
             {

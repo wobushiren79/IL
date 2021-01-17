@@ -31,7 +31,7 @@ public class MiniGameCombatBean : MiniGameBaseBean
         gameType = MiniGameEnum.Combat;
     }
 
-    public override void InitForMiniGame(GameItemsManager gameItemsManager)
+    public override void InitForMiniGame()
     {
 
     }

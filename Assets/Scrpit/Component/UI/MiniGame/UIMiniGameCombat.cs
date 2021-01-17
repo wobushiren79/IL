@@ -301,9 +301,8 @@ public class UIMiniGameCombat : UIBaseMiniGame<MiniGameCombatBean>
         if (GameCommonInfo.GameConfig.statusForCombatForPowerTest == 1 )
         {
             //获取属性
-            GameItemsManager gameItemsManager = GetUIManager<UIGameManager>().gameItemsManager;
             DialogManager dialogManager = GetUIManager<UIGameManager>().dialogManager;
-            gameCharacterData.characterData.GetAttributes(gameItemsManager, out CharacterAttributesBean characterAttributes);
+            gameCharacterData.characterData.GetAttributes( out CharacterAttributesBean characterAttributes);
 
             DialogBean dialogData = new DialogBean();
             PowerTestDialogView powerTestDialog = dialogManager.CreateDialog<PowerTestDialogView>(DialogEnum.PowerTest, this, dialogData);

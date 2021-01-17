@@ -37,7 +37,7 @@ public class MiniGameCookingBean : MiniGameBaseBean
         gameType = MiniGameEnum.Cooking;
     }
 
-    public void InitData(GameItemsManager gameItemsManager, 
+    public void InitData(
         CharacterBean userData, 
         List<CharacterBean> listEnemyData,
         List<CharacterBean> listAuditerData,
@@ -46,7 +46,7 @@ public class MiniGameCookingBean : MiniGameBaseBean
         List<CharacterBean> listUserData = new List<CharacterBean>();
         if (userData != null)
             listUserData.Add(userData);
-        base.InitData(gameItemsManager, listUserData, listEnemyData);
+        base.InitData(listUserData, listEnemyData);
 
         //创建评审角色数据
         if (!CheckUtil.ListIsNull(listAuditerData))
@@ -54,7 +54,7 @@ public class MiniGameCookingBean : MiniGameBaseBean
             foreach (CharacterBean itemData in listAuditerData)
             {
                 //获取角色属性
-                itemData.GetAttributes(gameItemsManager,
+                itemData.GetAttributes(
                 out CharacterAttributesBean totalAttributes, out CharacterAttributesBean selfAttributes, out CharacterAttributesBean equipAttributes);
                 MiniGameCharacterBean itemUserGameData = CreateMiniGameCharacterBeanByType();
                 itemUserGameData.characterMaxLife = totalAttributes.life;
@@ -70,7 +70,7 @@ public class MiniGameCookingBean : MiniGameBaseBean
             foreach (CharacterBean itemData in listCompereData)
             {
                 //获取角色属性
-                itemData.GetAttributes(gameItemsManager,
+                itemData.GetAttributes(
                 out CharacterAttributesBean totalAttributes, out CharacterAttributesBean selfAttributes, out CharacterAttributesBean equipAttributes);
                 MiniGameCharacterBean itemUserGameData = CreateMiniGameCharacterBeanByType();
                 itemUserGameData.characterMaxLife = totalAttributes.life;
@@ -82,7 +82,7 @@ public class MiniGameCookingBean : MiniGameBaseBean
     }
 
 
-    public override void InitForMiniGame(GameItemsManager gameItemsManager)
+    public override void InitForMiniGame()
     {
 
     }

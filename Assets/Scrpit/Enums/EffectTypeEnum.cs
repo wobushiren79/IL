@@ -417,7 +417,7 @@ public class EffectTypeEnumTools : DataTools
     {
         float damageAdd = 0;
         float damageAddRate = 1;
-        actionNpc.characterData.GetAttributes(gameItemsManager, actionNpc.characterMiniGameData, out CharacterAttributesBean characterAttributes);
+        actionNpc.characterData.GetAttributes( actionNpc.characterMiniGameData, out CharacterAttributesBean characterAttributes);
         foreach (EffectTypeBean itemData in listData)
         {
             switch (itemData.dataType)
@@ -462,7 +462,7 @@ public class EffectTypeEnumTools : DataTools
     {
         float lifeAdd = 0;
         float lifeAddRate = 0;
-        actionCharacterData.GetAttributes(gameItemsManager, out CharacterAttributesBean characterAttributes);
+        actionCharacterData.GetAttributes( out CharacterAttributesBean characterAttributes);
         foreach (EffectTypeBean itemData in listData)
         {
             switch (itemData.dataType)
@@ -486,7 +486,7 @@ public class EffectTypeEnumTools : DataTools
     {
         float damageRate = 1;
         float damageAdd = 0;
-        characterData.GetAttributes(gameItemsManager,out CharacterAttributesBean characterAttributes);
+        characterData.GetAttributes(out CharacterAttributesBean characterAttributes);
         foreach (EffectTypeBean itemData in listData)
         {
             switch (itemData.dataType)

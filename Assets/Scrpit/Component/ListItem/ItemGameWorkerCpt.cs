@@ -60,12 +60,10 @@ public class ItemGameWorkerCpt : ItemGameBaseCpt, DialogView.IDialogCallBack, Wo
     protected InfoPromptPopupShow infoPromptPopup;
     protected DialogManager dialogManager;
     protected GameDataManager gameDataManager;
-    protected GameItemsManager gameItemsManager;
     protected GameTimeHandler gameTimeHandler;
     protected ToastManager toastManager;
     private void Awake()
     {
-        gameItemsManager = GetUIManager<UIGameManager>().gameItemsManager;
         infoPromptPopup = GetUIManager<UIGameManager>().infoPromptPopup;
         dialogManager = GetUIManager<UIGameManager>().dialogManager;
         gameDataManager = GetUIManager<UIGameManager>().gameDataManager;
@@ -319,7 +317,7 @@ public class ItemGameWorkerCpt : ItemGameBaseCpt, DialogView.IDialogCallBack, Wo
     public void SetAttributes(CharacterAttributesBean characterAttributes, CharacterEquipBean characterEquip)
     {
 
-        characterData.GetAttributes(gameItemsManager,
+        characterData.GetAttributes(
         out CharacterAttributesBean totalAttributes, out CharacterAttributesBean selfAttributes, out CharacterAttributesBean equipAttributes);
         SetAttributesItem(tvCook, totalAttributes.cook);
         SetAttributesItem(tvSpeed, totalAttributes.speed);

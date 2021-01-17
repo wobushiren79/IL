@@ -271,7 +271,6 @@ public class UIGameTextForTalk : BaseUIChildComponent<UIGameText>
             uiGameManager.toastManager,
             uiGameManager.npcInfoManager,
             uiGameManager.iconDataManager,
-            uiGameManager.gameItemsManager,
             uiGameManager.innBuildManager,
             uiGameManager.gameDataManager,
             null,

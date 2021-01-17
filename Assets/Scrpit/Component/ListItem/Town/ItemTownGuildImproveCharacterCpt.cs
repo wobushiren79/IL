@@ -46,7 +46,6 @@ public class ItemTownGuildImproveCharacterCpt : ItemGameBaseCpt, DialogView.IDia
     public WorkerEnum workerType;
 
     protected UIGameManager uiGameManager;
-    protected GameItemsManager gameItemsManager;
     protected GameDataHandler gameDataHandler;
     protected NpcInfoManager npcInfoManager;
     protected GameDataManager gameDataManager;
@@ -61,7 +60,6 @@ public class ItemTownGuildImproveCharacterCpt : ItemGameBaseCpt, DialogView.IDia
     private void Awake()
     {
         uiGameManager = GetUIManager<UIGameManager>();
-        gameItemsManager = uiGameManager.gameItemsManager;
         npcInfoManager = uiGameManager.npcInfoManager;
         gameDataManager = uiGameManager.gameDataManager;
         gameTimeHandler = uiGameManager.gameTimeHandler;
@@ -365,13 +363,13 @@ public class ItemTownGuildImproveCharacterCpt : ItemGameBaseCpt, DialogView.IDia
         {
 
 
-            bool isWin = characterData.CalculationGuildSendWin(gameItemsManager, miniGameData.gameType);
+            bool isWin = characterData.CalculationGuildSendWin(miniGameData.gameType);
             if (isWin)
             {
                 toastManager.ToastHint(GameCommonInfo.GetUITextById(7021));
                 audioHandler.PlaySound(AudioSoundEnum.Reward);
                 //完成奖励
-                RewardTypeEnumTools.CompleteReward(toastManager, npcInfoManager, iconDataManager, gameItemsManager, innBuildManager, gameDataManager, miniGameData.GetListUserCharacterData(), miniGameData.listReward);
+                RewardTypeEnumTools.CompleteReward(toastManager, npcInfoManager, iconDataManager, innBuildManager, gameDataManager, miniGameData.GetListUserCharacterData(), miniGameData.listReward);
 
                 //数据添加
                 Sprite attributeIcon = iconDataManager.GetIconSpriteByName("keyboard_button_up_1");
@@ -420,7 +418,7 @@ public class ItemTownGuildImproveCharacterCpt : ItemGameBaseCpt, DialogView.IDia
     private MiniGameBaseBean InitWaiterGame()
     {
         MiniGameBaseBean miniGameData = MiniGameEnumTools.GetMiniGameData(MiniGameEnum.Barrage);
-        miniGameData = PreTypeForMiniGameEnumTools.GetMiniGameData(miniGameData, levelData.pre_data_minigame, characterData, gameItemsManager, npcInfoManager);
+        miniGameData = PreTypeForMiniGameEnumTools.GetMiniGameData(miniGameData, levelData.pre_data_minigame, characterData, npcInfoManager);
         return miniGameData;
     }
 
@@ -430,7 +428,7 @@ public class ItemTownGuildImproveCharacterCpt : ItemGameBaseCpt, DialogView.IDia
     private MiniGameBaseBean InitAccountantGame()
     {
         MiniGameBaseBean miniGameData = MiniGameEnumTools.GetMiniGameData(MiniGameEnum.Account);
-        miniGameData = PreTypeForMiniGameEnumTools.GetMiniGameData(miniGameData, levelData.pre_data_minigame, characterData, gameItemsManager, npcInfoManager);
+        miniGameData = PreTypeForMiniGameEnumTools.GetMiniGameData(miniGameData, levelData.pre_data_minigame, characterData, npcInfoManager);
         return miniGameData;
     }
 
@@ -440,7 +438,7 @@ public class ItemTownGuildImproveCharacterCpt : ItemGameBaseCpt, DialogView.IDia
     private MiniGameBaseBean InitAccostGame()
     {
         MiniGameBaseBean miniGameData = MiniGameEnumTools.GetMiniGameData(MiniGameEnum.Debate);
-        miniGameData = PreTypeForMiniGameEnumTools.GetMiniGameData(miniGameData, levelData.pre_data_minigame, characterData, gameItemsManager, npcInfoManager);
+        miniGameData = PreTypeForMiniGameEnumTools.GetMiniGameData(miniGameData, levelData.pre_data_minigame, characterData, npcInfoManager);
         return miniGameData;
     }
 
@@ -450,7 +448,7 @@ public class ItemTownGuildImproveCharacterCpt : ItemGameBaseCpt, DialogView.IDia
     private MiniGameBaseBean InitBeaterGame()
     {
         MiniGameBaseBean miniGameData = MiniGameEnumTools.GetMiniGameData(MiniGameEnum.Combat);
-        miniGameData = PreTypeForMiniGameEnumTools.GetMiniGameData(miniGameData, levelData.pre_data_minigame, characterData, gameItemsManager, npcInfoManager);
+        miniGameData = PreTypeForMiniGameEnumTools.GetMiniGameData(miniGameData, levelData.pre_data_minigame, characterData, npcInfoManager);
         return miniGameData;
     }
 
@@ -460,7 +458,7 @@ public class ItemTownGuildImproveCharacterCpt : ItemGameBaseCpt, DialogView.IDia
     private MiniGameBaseBean InitChefGame()
     {
         MiniGameBaseBean miniGameData = MiniGameEnumTools.GetMiniGameData(MiniGameEnum.Cooking);
-        miniGameData = PreTypeForMiniGameEnumTools.GetMiniGameData(miniGameData, levelData.pre_data_minigame, gameItemsManager, npcInfoManager);
+        miniGameData = PreTypeForMiniGameEnumTools.GetMiniGameData(miniGameData, levelData.pre_data_minigame, npcInfoManager);
         //先清除数据中的指定敌人
         miniGameData.listEnemyGameData.Clear();
         //随机生成敌人
@@ -472,7 +470,7 @@ public class ItemTownGuildImproveCharacterCpt : ItemGameBaseCpt, DialogView.IDia
             CharacterBean randomEnemy = CharacterBean.CreateRandomEnemyData(100, 10 , equipLevel);
             listEnemyData.Add(randomEnemy);
         }
-        miniGameData.InitData(gameItemsManager, characterData, listEnemyData);
+        miniGameData.InitData(characterData, listEnemyData);
         return miniGameData;
     }
 

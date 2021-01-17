@@ -47,7 +47,7 @@ public class ItemTownStoreForGoodsCpt : ItemTownStoreCpt, DialogView.IDialogCall
     public void SetData(StoreInfoBean storeInfo)
     {
         this.storeInfo = storeInfo;
-        this.itemsInfo = GetUIManager<UIGameManager>().gameItemsManager.GetItemsById(storeInfo.mark_id);
+        this.itemsInfo = GameItemsHandler.Instance.manager.GetItemsById(storeInfo.mark_id);
         if (itemsInfo == null || storeInfo == null)
             return;
         //如果图标key没有则替换成itemInfo的图标
@@ -94,11 +94,7 @@ public class ItemTownStoreForGoodsCpt : ItemTownStoreCpt, DialogView.IDialogCall
     /// <param name="markId"></param>
     public void SetIcon(ItemsInfoBean itemsInfo, string mark, long markId)
     {
-        GameItemsManager gameItemsManager = GetUIManager<UIGameManager>().gameItemsManager;
         IconDataManager iconDataManager = GetUIManager<UIGameManager>().iconDataManager;
-        CharacterDressManager characterDressManager = GetUIManager<UIGameManager>().characterDressManager;
-        if (gameItemsManager == null)
-            return;
         Sprite spIcon = null;
         Vector2 offsetMin = new Vector2(0, 0);
         Vector2 offsetMax = new Vector2(0, 0);
@@ -124,7 +120,7 @@ public class ItemTownStoreForGoodsCpt : ItemTownStoreCpt, DialogView.IDialogCall
             }
         }
 
-        spIcon = GeneralEnumTools.GetGeneralSprite(itemsInfo, iconDataManager, gameItemsManager, characterDressManager,false);
+        spIcon = GeneralEnumTools.GetGeneralSprite(itemsInfo, iconDataManager,false);
         if (ivIcon != null && spIcon != null)
             ivIcon.sprite = spIcon;
         if (rtIcon != null)

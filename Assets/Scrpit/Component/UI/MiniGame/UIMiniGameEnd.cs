@@ -189,7 +189,6 @@ public class UIMiniGameEnd : BaseUIComponent
             uiGameManager.toastManager,
             uiGameManager.npcInfoManager,
             uiGameManager.iconDataManager,
-            uiGameManager.gameItemsManager,
             uiGameManager.innBuildManager,
             uiGameManager.gameDataManager,
             miniGameData.GetListUserCharacterData(),

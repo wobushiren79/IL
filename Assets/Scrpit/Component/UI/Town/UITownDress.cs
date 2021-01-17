@@ -101,7 +101,7 @@ public class UITownDress : UIBaseOne, IRadioGroupCallBack, StoreInfoManager.ICal
         for (int i = 0; i < mClothesListData.Count; i++)
         {
             StoreInfoBean itemData = mClothesListData[i];
-            ItemsInfoBean itemsInfo = uiGameManager.gameItemsManager.GetItemsById(itemData.mark_id);
+            ItemsInfoBean itemsInfo = GameItemsHandler.Instance.manager.GetItemsById(itemData.mark_id);
             if (itemsInfo.items_type == (int)partType)
             {
                 listData.Add(itemData);

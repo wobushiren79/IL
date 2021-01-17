@@ -120,15 +120,15 @@ public class PreTypeForMiniGameEnumTools : DataTools
     /// <summary>
     /// 获取游戏数据
     /// </summary>
-    public static MiniGameBaseBean GetMiniGameData(MiniGameBaseBean miniGameData, string data, GameItemsManager gameItemsManager, NpcInfoManager npcInfoManager)
+    public static MiniGameBaseBean GetMiniGameData(MiniGameBaseBean miniGameData, string data, NpcInfoManager npcInfoManager)
     {
-        return GetMiniGameData(miniGameData, data, new List<CharacterBean> { }, gameItemsManager, npcInfoManager);
+        return GetMiniGameData(miniGameData, data, new List<CharacterBean> { }, npcInfoManager);
     }
-    public static MiniGameBaseBean GetMiniGameData(MiniGameBaseBean miniGameData, string data, CharacterBean userCharacter, GameItemsManager gameItemsManager, NpcInfoManager npcInfoManager)
+    public static MiniGameBaseBean GetMiniGameData(MiniGameBaseBean miniGameData, string data, CharacterBean userCharacter , NpcInfoManager npcInfoManager)
     {
-        return GetMiniGameData(miniGameData, data, new List<CharacterBean> { userCharacter }, gameItemsManager, npcInfoManager);
+        return GetMiniGameData(miniGameData, data, new List<CharacterBean> { userCharacter }, npcInfoManager);
     }
-    public static MiniGameBaseBean GetMiniGameData(MiniGameBaseBean miniGameData, string data, List<CharacterBean> listPickCharacter, GameItemsManager gameItemsManager, NpcInfoManager npcInfoManager)
+    public static MiniGameBaseBean GetMiniGameData(MiniGameBaseBean miniGameData, string data, List<CharacterBean> listPickCharacter , NpcInfoManager npcInfoManager)
     {
         List<PreTypeForMiniGameBean> listPreData = GetListPreData(data);
         List<CharacterBean> listUserData = new List<CharacterBean>();
@@ -203,7 +203,7 @@ public class PreTypeForMiniGameEnumTools : DataTools
                 case PreTypeForMiniGameEnum.CookingForButtonNumber:
                 case PreTypeForMiniGameEnum.CookingForWinRank:
 
-                    GetMiniGameDataForCook(gameItemsManager, npcInfoManager,itemPreData, miniGameData);
+                    GetMiniGameDataForCook(npcInfoManager,itemPreData, miniGameData);
                     break;
             }
         }
@@ -215,7 +215,7 @@ public class PreTypeForMiniGameEnumTools : DataTools
             listUserData.AddRange(listPickCharacter);
         }
         miniGameData.miniGamePosition = minigamePosition;
-        miniGameData.InitData(gameItemsManager, listUserData, listEnemyData);
+        miniGameData.InitData(listUserData, listEnemyData);
         return miniGameData;
     }
 
@@ -300,7 +300,7 @@ public class PreTypeForMiniGameEnumTools : DataTools
     /// </summary>
     /// <param name="itemPreData"></param>
     /// <param name="miniGameData"></param>
-    private static void GetMiniGameDataForCook(GameItemsManager gameItemsManager, NpcInfoManager npcInfoManager, PreTypeForMiniGameBean itemPreData, MiniGameBaseBean miniGameData)
+    private static void GetMiniGameDataForCook(NpcInfoManager npcInfoManager, PreTypeForMiniGameBean itemPreData, MiniGameBaseBean miniGameData)
     {
         if (miniGameData.gameType != MiniGameEnum.Cooking)
             return;
@@ -353,7 +353,7 @@ public class PreTypeForMiniGameEnumTools : DataTools
                 break;
         }
 
-        miniGameCooking.InitData(gameItemsManager, null, null, listAuditData, listCompereData);
+        miniGameCooking.InitData(null, null, listAuditData, listCompereData);
     }
 }
 

@@ -118,13 +118,13 @@ public class PreTypeEnumTools : DataTools
     /// <param name="gameData"></param>
     /// <param name="data"></param>
     /// <returns></returns>
-    public static bool CheckIsAllPre(GameItemsManager gameItemsManager, IconDataManager iconDataManager, CharacterDressManager characterDressManager, InnFoodManager innFoodManager, NpcInfoManager npcInfoManager, GameDataBean gameData, CharacterBean characterData, string data, out string reason)
+    public static bool CheckIsAllPre(IconDataManager iconDataManager,InnFoodManager innFoodManager, NpcInfoManager npcInfoManager, GameDataBean gameData, CharacterBean characterData, string data, out string reason)
     {
         List<PreTypeBean> listPreData = GetListPreData(data);
         reason = "";
         foreach (var itemPreData in listPreData)
         {
-            GetPreDetails(itemPreData, gameData, characterData, iconDataManager, gameItemsManager, characterDressManager, innFoodManager, npcInfoManager, false);
+            GetPreDetails(itemPreData, gameData, characterData, iconDataManager,innFoodManager, npcInfoManager, false);
             if (!itemPreData.isPre)
             {
                 reason = itemPreData.preFailStr;
@@ -148,7 +148,7 @@ public class PreTypeEnumTools : DataTools
     /// </summary>
     /// <param name="rewardType"></param>
     /// <returns></returns>
-    public static PreTypeBean GetPreDetails(PreTypeBean preTypeData, GameDataBean gameData, CharacterBean characterData, IconDataManager iconDataManager, GameItemsManager gameItemsManager, CharacterDressManager characterDressManager, InnFoodManager innFoodManager, NpcInfoManager npcInfoManager, bool isComplete)
+    public static PreTypeBean GetPreDetails(PreTypeBean preTypeData, GameDataBean gameData, CharacterBean characterData, IconDataManager iconDataManager, InnFoodManager innFoodManager, NpcInfoManager npcInfoManager, bool isComplete)
     {
         switch (preTypeData.dataType)
         {
@@ -183,7 +183,7 @@ public class PreTypeEnumTools : DataTools
                 break;
             case PreTypeEnum.PayItems:
             case PreTypeEnum.HaveItems:
-                GetPreDetailsForItems(gameItemsManager, iconDataManager, characterDressManager, preTypeData, gameData, isComplete);
+                GetPreDetailsForItems(iconDataManager, preTypeData, gameData, isComplete);
                 break;
 
             case PreTypeEnum.PayIngForOilsalt:
@@ -261,13 +261,13 @@ public class PreTypeEnumTools : DataTools
         }
         return preTypeData;
     }
-    public static PreTypeBean GetPreDetails(PreTypeBean preTypeData, GameDataBean gameData, IconDataManager iconDataManager, GameItemsManager gameItemsManager, CharacterDressManager characterDressManager, InnFoodManager innFoodManager, NpcInfoManager npcInfoManager, bool isComplete)
+    public static PreTypeBean GetPreDetails(PreTypeBean preTypeData, GameDataBean gameData, IconDataManager iconDataManager, InnFoodManager innFoodManager, NpcInfoManager npcInfoManager, bool isComplete)
     {
-        return GetPreDetails(preTypeData, gameData, null, iconDataManager, gameItemsManager, characterDressManager, innFoodManager, npcInfoManager, isComplete);
+        return GetPreDetails(preTypeData, gameData, null, iconDataManager, innFoodManager, npcInfoManager, isComplete);
     }
-    public static PreTypeBean GetPreDetails(PreTypeBean preTypeData, GameDataBean gameData, IconDataManager iconDataManager, GameItemsManager gameItemsManager, CharacterDressManager characterDressManager, InnFoodManager innFoodManager, NpcInfoManager npcInfoManager)
+    public static PreTypeBean GetPreDetails(PreTypeBean preTypeData, GameDataBean gameData, IconDataManager iconDataManager,InnFoodManager innFoodManager, NpcInfoManager npcInfoManager)
     {
-        return GetPreDetails(preTypeData, gameData, null, iconDataManager, gameItemsManager, characterDressManager, innFoodManager, npcInfoManager, false);
+        return GetPreDetails(preTypeData, gameData, null, iconDataManager, innFoodManager, npcInfoManager, false);
     }
 
     /// <summary>
@@ -281,9 +281,7 @@ public class PreTypeEnumTools : DataTools
     /// <param name="isComplete"></param>
     /// <returns></returns>
     private static PreTypeBean GetPreDetailsForItems(
-        GameItemsManager gameItemsManager,
         IconDataManager iconDataManager,
-        CharacterDressManager characterDressManager,
         PreTypeBean preTypeData, GameDataBean gameData, bool isComplete)
     {
         long[] listItems = StringUtil.SplitBySubstringForArrayLong(preTypeData.data, ',');
@@ -305,8 +303,8 @@ public class PreTypeEnumTools : DataTools
             preTypeData.progress = number / (float)itemsNumber;
             preTypeData.isPre = false;
         }
-        ItemsInfoBean itemsInfo = gameItemsManager.GetItemsById(itemsId);
-        preTypeData.spPreIcon = GeneralEnumTools.GetGeneralSprite(itemsInfo, iconDataManager, gameItemsManager, characterDressManager);
+        ItemsInfoBean itemsInfo = GameItemsHandler.Instance.manager.GetItemsById(itemsId);
+        preTypeData.spPreIcon = GeneralEnumTools.GetGeneralSprite(itemsInfo, iconDataManager);
         switch (preTypeData.dataType)
         {
             case PreTypeEnum.HaveItems:

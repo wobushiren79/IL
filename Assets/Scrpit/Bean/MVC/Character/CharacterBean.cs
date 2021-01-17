@@ -22,7 +22,7 @@ public class CharacterBean
     /// </summary>
     /// <param name="characterBodyManager"></param>
     /// <returns></returns>
-    public static CharacterBean CreateRandomEnemyData(int baseLife, int baseAttributes,int equipLevel)
+    public static CharacterBean CreateRandomEnemyData(int baseLife, int baseAttributes, int equipLevel)
     {
         CharacterBean characterData = new CharacterBean();
         characterData.baseInfo.characterId = SystemUtil.GetUUID(SystemUtil.UUIDTypeEnum.N);
@@ -268,11 +268,10 @@ public class CharacterBean
     /// <param name="totalAttributes"></param>
     /// <param name="selfAttributes"></param>
     /// <param name="equipAttributes"></param>
-    public void GetAttributes(GameItemsManager gameItemsManager,
-        out CharacterAttributesBean totalAttributes, out CharacterAttributesBean selfAttributes, out CharacterAttributesBean equipAttributes)
+    public void GetAttributes(out CharacterAttributesBean totalAttributes, out CharacterAttributesBean selfAttributes, out CharacterAttributesBean equipAttributes)
     {
         selfAttributes = attributes;
-        equipAttributes = equips.GetEquipAttributes(gameItemsManager);
+        equipAttributes = equips.GetEquipAttributes();
         totalAttributes = new CharacterAttributesBean
         {
             life = selfAttributes.life + equipAttributes.life,
@@ -323,13 +322,13 @@ public class CharacterBean
         randomShoes = StringUtil.SplitAndRandomForLong(randomShoesListStr, ',');
     }
 
-    public void GetAttributes(GameItemsManager gameItemsManager, out CharacterAttributesBean totalAttributes)
+    public void GetAttributes(out CharacterAttributesBean totalAttributes)
     {
-        GetAttributes(gameItemsManager, out totalAttributes, out CharacterAttributesBean selfAttributes, out CharacterAttributesBean equipAttributes);
+        GetAttributes(out totalAttributes, out CharacterAttributesBean selfAttributes, out CharacterAttributesBean equipAttributes);
     }
-    public void GetAttributes(GameItemsManager gameItemsManager, MiniGameCharacterForCombatBean miniGameCharacterData, out CharacterAttributesBean totalAttributes)
+    public void GetAttributes(MiniGameCharacterForCombatBean miniGameCharacterData, out CharacterAttributesBean totalAttributes)
     {
-        GetAttributes(gameItemsManager, out totalAttributes, out CharacterAttributesBean selfAttributes, out CharacterAttributesBean equipAttributes);
+        GetAttributes(out totalAttributes, out CharacterAttributesBean selfAttributes, out CharacterAttributesBean equipAttributes);
         miniGameCharacterData.GetTotalAttributes(totalAttributes);
         if (totalAttributes.lucky < 0)
             totalAttributes.lucky = 0;
@@ -353,7 +352,7 @@ public class CharacterBean
     public bool CalculationWorkerVacation(GameItemsManager gameItemsManager, GameDataManager gameDataManager)
     {
         //获取数据
-        GetAttributes(gameItemsManager,
+        GetAttributes(
         out CharacterAttributesBean totalAttributes, out CharacterAttributesBean selfAttributes, out CharacterAttributesBean equipAttributes);
         float randomRate = UnityEngine.Random.Range(0f, 1f);
         float successRate = 0;
@@ -386,8 +385,7 @@ public class CharacterBean
     public bool CalculationWorkerDaze(GameItemsManager gameItemsManager, GameDataManager gameDataManager)
     {
         //获取数据
-        GetAttributes(gameItemsManager,
-        out CharacterAttributesBean totalAttributes, out CharacterAttributesBean selfAttributes, out CharacterAttributesBean equipAttributes);
+        GetAttributes(out CharacterAttributesBean totalAttributes, out CharacterAttributesBean selfAttributes, out CharacterAttributesBean equipAttributes);
         float randomRate = UnityEngine.Random.Range(0f, 1f);
         float successRate = 0;
         //如果是掌柜
@@ -417,8 +415,7 @@ public class CharacterBean
     public long CalculationMenuResearchAddExp(GameItemsManager gameItemsManager)
     {
         //获取数据
-        GetAttributes(gameItemsManager,
-        out CharacterAttributesBean totalAttributes, out CharacterAttributesBean selfAttributes, out CharacterAttributesBean equipAttributes);
+        GetAttributes(out CharacterAttributesBean totalAttributes, out CharacterAttributesBean selfAttributes, out CharacterAttributesBean equipAttributes);
         return totalAttributes.cook;
     }
     /// <summary>
@@ -429,8 +426,7 @@ public class CharacterBean
     public long CalculationBedResearchAddExp(GameItemsManager gameItemsManager)
     {
         //获取数据
-        GetAttributes(gameItemsManager,
-        out CharacterAttributesBean totalAttributes, out CharacterAttributesBean selfAttributes, out CharacterAttributesBean equipAttributes);
+        GetAttributes(out CharacterAttributesBean totalAttributes, out CharacterAttributesBean selfAttributes, out CharacterAttributesBean equipAttributes);
         return totalAttributes.charm;
     }
 
@@ -441,8 +437,7 @@ public class CharacterBean
     public bool CalculationAccostRate(GameItemsManager gameItemsManager)
     {
         //获取数据
-        GetAttributes(gameItemsManager,
-        out CharacterAttributesBean totalAttributes, out CharacterAttributesBean selfAttributes, out CharacterAttributesBean equipAttributes);
+        GetAttributes(out CharacterAttributesBean totalAttributes, out CharacterAttributesBean selfAttributes, out CharacterAttributesBean equipAttributes);
         float randomRate = UnityEngine.Random.Range(0f, 1f);
         float successRate = 0.5f + totalAttributes.charm * 0.004f + totalAttributes.lucky * 0.001f;
         if (successRate >= randomRate)
@@ -460,8 +455,7 @@ public class CharacterBean
         //默认10秒
         float talkTime = 6.1f;
         //获取数据
-        GetAttributes(gameItemsManager,
-        out CharacterAttributesBean totalAttributes, out CharacterAttributesBean selfAttributes, out CharacterAttributesBean equipAttributes);
+        GetAttributes(out CharacterAttributesBean totalAttributes, out CharacterAttributesBean selfAttributes, out CharacterAttributesBean equipAttributes);
         talkTime = 6.1f - totalAttributes.charm * 0.06f;
         //数据修正 
         if (talkTime <= 0.1f)
@@ -477,11 +471,10 @@ public class CharacterBean
     /// </summary>
     /// <param name="gameItemsManager"></param>
     /// <returns></returns>
-    public int  CalculationAccostAddMood(GameItemsManager gameItemsManager)
+    public int CalculationAccostAddMood(GameItemsManager gameItemsManager)
     {
         //获取数据
-        GetAttributes(gameItemsManager,
-        out CharacterAttributesBean totalAttributes, out CharacterAttributesBean selfAttributes, out CharacterAttributesBean equipAttributes);
+        GetAttributes(out CharacterAttributesBean totalAttributes, out CharacterAttributesBean selfAttributes, out CharacterAttributesBean equipAttributes);
         return totalAttributes.charm / 2;
     }
 
@@ -492,8 +485,7 @@ public class CharacterBean
     public float CalculationChefMakeFoodTime(GameItemsManager gameItemsManager, float foodTime)
     {
         //获取数据
-        GetAttributes(gameItemsManager,
-        out CharacterAttributesBean totalAttributes, out CharacterAttributesBean selfAttributes, out CharacterAttributesBean equipAttributes);
+        GetAttributes(out CharacterAttributesBean totalAttributes, out CharacterAttributesBean selfAttributes, out CharacterAttributesBean equipAttributes);
         foodTime -= (foodTime * totalAttributes.cook * 0.01f);
         //时间修正
         if (foodTime < 0.3f)
@@ -510,8 +502,7 @@ public class CharacterBean
     public int CalculationChefFoodLevel(GameItemsManager gameItemsManager)
     {
         //获取数据
-        GetAttributes(gameItemsManager,
-        out CharacterAttributesBean totalAttributes, out CharacterAttributesBean selfAttributes, out CharacterAttributesBean equipAttributes);
+        GetAttributes(out CharacterAttributesBean totalAttributes, out CharacterAttributesBean selfAttributes, out CharacterAttributesBean equipAttributes);
         //完美食物
         float randomTemp = UnityEngine.Random.Range(0f, 1f);
         float foodRate = totalAttributes.cook * 0.0015f + totalAttributes.lucky * 0.0005f;
@@ -545,8 +536,7 @@ public class CharacterBean
     {
         float cleanTime = 6;
         //获取数据
-        GetAttributes(gameItemsManager,
-        out CharacterAttributesBean totalAttributes, out CharacterAttributesBean selfAttributes, out CharacterAttributesBean equipAttributes);
+        GetAttributes(out CharacterAttributesBean totalAttributes, out CharacterAttributesBean selfAttributes, out CharacterAttributesBean equipAttributes);
         cleanTime -= (totalAttributes.speed * 0.06f);
         if (cleanTime < 0.3f)
         {
@@ -562,8 +552,7 @@ public class CharacterBean
     {
         //获取数据
         moreRate = 0;
-        GetAttributes(gameItemsManager,
-        out CharacterAttributesBean totalAttributes, out CharacterAttributesBean selfAttributes, out CharacterAttributesBean equipAttributes);
+        GetAttributes(out CharacterAttributesBean totalAttributes, out CharacterAttributesBean selfAttributes, out CharacterAttributesBean equipAttributes);
         float successRate = 0.7f + (totalAttributes.account * 0.003f);
         float randomTemp = UnityEngine.Random.Range(0f, 1f);
         if (randomTemp <= successRate)
@@ -589,8 +578,7 @@ public class CharacterBean
     public float CalculationAccountingTime(GameItemsManager gameItemsManager)
     {
         float time = 6;
-        GetAttributes(gameItemsManager,
-        out CharacterAttributesBean totalAttributes, out CharacterAttributesBean selfAttributes, out CharacterAttributesBean equipAttributes);
+        GetAttributes(out CharacterAttributesBean totalAttributes, out CharacterAttributesBean selfAttributes, out CharacterAttributesBean equipAttributes);
         time -= totalAttributes.account * 0.06f;
         if (time < 0.3f)
             time = 0.3f;
@@ -603,8 +591,7 @@ public class CharacterBean
     /// <returns></returns>
     public float CalculationBeaterFightTime(GameItemsManager gameItemsManager)
     {
-        GetAttributes(gameItemsManager,
-        out CharacterAttributesBean totalAttributes, out CharacterAttributesBean selfAttributes, out CharacterAttributesBean equipAttributes);
+        GetAttributes(out CharacterAttributesBean totalAttributes, out CharacterAttributesBean selfAttributes, out CharacterAttributesBean equipAttributes);
 
         float fightTime = 6;
         fightTime -= (totalAttributes.force * 0.05f);
@@ -622,8 +609,7 @@ public class CharacterBean
     /// <returns></returns>
     public int CalculationBeaterDamage(GameItemsManager gameItemsManager)
     {
-        GetAttributes(gameItemsManager,
-        out CharacterAttributesBean totalAttributes, out CharacterAttributesBean selfAttributes, out CharacterAttributesBean equipAttributes);
+        GetAttributes(out CharacterAttributesBean totalAttributes, out CharacterAttributesBean selfAttributes, out CharacterAttributesBean equipAttributes);
         return totalAttributes.force * 10;
     }
 
@@ -634,8 +620,7 @@ public class CharacterBean
     /// <returns></returns>
     public float CalculationBeaterRestTime(GameItemsManager gameItemsManager)
     {
-        GetAttributes(gameItemsManager,
-        out CharacterAttributesBean totalAttributes, out CharacterAttributesBean selfAttributes, out CharacterAttributesBean equipAttributes);
+        GetAttributes(out CharacterAttributesBean totalAttributes, out CharacterAttributesBean selfAttributes, out CharacterAttributesBean equipAttributes);
         float restTime = 3 + (57 - 0.57f * totalAttributes.force);
         return restTime;
     }
@@ -646,10 +631,9 @@ public class CharacterBean
     /// </summary>
     /// <param name="gameItemsManager"></param>
     /// <returns></returns>
-    public bool CalculationArenaSendWin(GameItemsManager gameItemsManager,MiniGameEnum miniGameType)
+    public bool CalculationArenaSendWin(GameItemsManager gameItemsManager, MiniGameEnum miniGameType)
     {
-        GetAttributes(gameItemsManager,
-        out CharacterAttributesBean totalAttributes, out CharacterAttributesBean selfAttributes, out CharacterAttributesBean equipAttributes);
+        GetAttributes(out CharacterAttributesBean totalAttributes, out CharacterAttributesBean selfAttributes, out CharacterAttributesBean equipAttributes);
         int addAttributes = 0;
         switch (miniGameType)
         {
@@ -671,7 +655,7 @@ public class CharacterBean
         }
         float winRate = 0.25f + totalAttributes.lucky * 0.0025f + addAttributes * 0.0025f;
 
-        if(UnityEngine.Random.Range(0f, 1f)> winRate)
+        if (UnityEngine.Random.Range(0f, 1f) > winRate)
         {
             return false;
         }
@@ -686,10 +670,9 @@ public class CharacterBean
     /// </summary>
     /// <param name="gameItemsManager"></param>
     /// <returns></returns>
-    public bool CalculationGuildSendWin(GameItemsManager gameItemsManager, MiniGameEnum miniGameType)
+    public bool CalculationGuildSendWin(MiniGameEnum miniGameType)
     {
-        GetAttributes(gameItemsManager,
-        out CharacterAttributesBean totalAttributes, out CharacterAttributesBean selfAttributes, out CharacterAttributesBean equipAttributes);
+        GetAttributes(out CharacterAttributesBean totalAttributes, out CharacterAttributesBean selfAttributes, out CharacterAttributesBean equipAttributes);
         int addAttributes = 0;
         switch (miniGameType)
         {

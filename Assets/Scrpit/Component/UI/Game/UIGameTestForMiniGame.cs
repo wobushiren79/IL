@@ -68,7 +68,7 @@ public class UIGameTestForMiniGame : BaseUIComponent
         {
             listEnemyData.Add(uiGameManager.npcInfoManager.GetCharacterDataById(id));
         }
-        miniGameCombat.InitData(uiGameManager.gameItemsManager, listOurData, listEnemyData);
+        miniGameCombat.InitData(listOurData, listEnemyData);
         //找到竞技场战斗的地点
         miniGameCombat.miniGamePosition = new Vector3(0, 10, 0);
         //初始化游戏

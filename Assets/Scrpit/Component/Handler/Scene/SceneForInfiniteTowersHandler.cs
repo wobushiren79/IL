@@ -49,7 +49,7 @@ public class SceneForInfiniteTowersHandler : BaseHandler, IBaseObserver
             if (itemCharacterData != null)
             {
                 listUserData.Add(itemCharacterData);
-                itemCharacterData.GetAttributes(gameItemsManager, out CharacterAttributesBean characterAttributes);
+                itemCharacterData.GetAttributes( out CharacterAttributesBean characterAttributes);
                 totalLucky += characterAttributes.lucky;
             }
         }
@@ -77,7 +77,7 @@ public class SceneForInfiniteTowersHandler : BaseHandler, IBaseObserver
         miniGameCombat.gameReason = MiniGameReasonEnum.Fight;
         miniGameCombat.winSurvivalNumber = 1;
         miniGameCombat.winBringDownNumber = listEnemyData.Count;
-        miniGameCombat.InitData(gameItemsManager, listUserData, listEnemyData);
+        miniGameCombat.InitData(listUserData, listEnemyData);
 
         //添加奖励装备
         List<RewardTypeBean> listRewardEquip = RewardTypeEnumTools.GetRewardEnemyEquipForInfiniteTowers(listEnemyData, infiniteTowersData.layer, totalLucky);

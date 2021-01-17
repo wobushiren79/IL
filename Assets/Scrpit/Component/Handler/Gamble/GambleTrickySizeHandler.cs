@@ -86,7 +86,7 @@ public class GambleTrickySizeHandler : BaseGambleHandler<GambleTrickySizeBean, G
         GambleTrickySizeItem cup = gambleBuilder.GetCup();
         float winRate =  Random.Range(0f, 1f);
         //幸运加成
-        gameDataManager.gameData.userCharacter.GetAttributes(gameItemsManager, out CharacterAttributesBean characterAttributes);
+        gameDataManager.gameData.userCharacter.GetAttributes( out CharacterAttributesBean characterAttributes);
         float addWinRate = 0.0025f * characterAttributes.lucky;
 
         if (winRate <= (gambleData.winRate + addWinRate))

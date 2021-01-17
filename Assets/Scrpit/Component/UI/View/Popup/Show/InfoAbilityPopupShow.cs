@@ -12,19 +12,12 @@ public class InfoAbilityPopupShow : PopupShowView
     public Text tvForce;
     public Text tvLucky;
 
-    private GameItemsManager mGameItemsManager;
-
-    public override void Awake()
-    {
-        base.Awake();
-        mGameItemsManager = Find<GameItemsManager>(ImportantTypeEnum.GameItemsManager);
-    }
 
     public void SetData(CharacterBean characterData)
     {
         if (characterData == null)
             return;
-        characterData.GetAttributes(mGameItemsManager, out CharacterAttributesBean totalAttributes);
+        characterData.GetAttributes( out CharacterAttributesBean totalAttributes);
         SetLoyal(totalAttributes.loyal);
         SetCook(totalAttributes.cook);
         SetSpeed(totalAttributes.speed);

@@ -20,7 +20,7 @@ public class MiniGameDebateBean : MiniGameBaseBean
         gameType = MiniGameEnum.Debate;
     }
 
-    public override void InitForMiniGame(GameItemsManager gameItemsManager)
+    public override void InitForMiniGame()
     {
 
     }

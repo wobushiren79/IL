@@ -85,7 +85,7 @@ public class UIGameEquip : BaseUIComponent, TextSearchView.ICallBack
     {
         int index = itemCell.index;
         ItemBean itemBean = listItemData[index];
-        ItemsInfoBean itemInfo = uiGameManager.gameItemsManager.GetItemsById(itemBean.itemId);
+        ItemsInfoBean itemInfo = GameItemsHandler.Instance.manager.GetItemsById(itemBean.itemId);
         ItemGameBackpackEquipCpt backpackCpt = itemCell.GetComponent<ItemGameBackpackEquipCpt>();
         backpackCpt.SetData(characterData, itemInfo, itemBean);
     }
@@ -111,15 +111,15 @@ public class UIGameEquip : BaseUIComponent, TextSearchView.ICallBack
             characterUICpt.SetCharacterData(characterData.body, characterData.equips);
 
         //装备物品刷新
-        equipHand.SetData(characterData, uiGameManager.gameItemsManager.GetItemsById(characterData.equips.handId), null);
-        equipHat.SetData(characterData, uiGameManager.gameItemsManager.GetItemsById(characterData.equips.hatId), null);
-        equipClothes.SetData(characterData, uiGameManager.gameItemsManager.GetItemsById(characterData.equips.clothesId), null);
-        equipShoes.SetData(characterData, uiGameManager.gameItemsManager.GetItemsById(characterData.equips.shoesId), null);
+        equipHand.SetData(characterData, GameItemsHandler.Instance.manager.GetItemsById(characterData.equips.handId), null);
+        equipHat.SetData(characterData, GameItemsHandler.Instance.manager.GetItemsById(characterData.equips.hatId), null);
+        equipClothes.SetData(characterData, GameItemsHandler.Instance.manager.GetItemsById(characterData.equips.clothesId), null);
+        equipShoes.SetData(characterData, GameItemsHandler.Instance.manager.GetItemsById(characterData.equips.shoesId), null);
 
-        equipTFHand.SetData(characterData, uiGameManager.gameItemsManager.GetItemsById(characterData.equips.handTFId), null);
-        equipTFHat.SetData(characterData, uiGameManager.gameItemsManager.GetItemsById(characterData.equips.hatTFId), null);
-        equipTFClothes.SetData(characterData, uiGameManager.gameItemsManager.GetItemsById(characterData.equips.clothesTFId), null);
-        equipTFShoes.SetData(characterData, uiGameManager.gameItemsManager.GetItemsById(characterData.equips.shoesTFId), null);
+        equipTFHand.SetData(characterData, GameItemsHandler.Instance.manager.GetItemsById(characterData.equips.handTFId), null);
+        equipTFHat.SetData(characterData, GameItemsHandler.Instance.manager.GetItemsById(characterData.equips.hatTFId), null);
+        equipTFClothes.SetData(characterData, GameItemsHandler.Instance.manager.GetItemsById(characterData.equips.clothesTFId), null);
+        equipTFShoes.SetData(characterData, GameItemsHandler.Instance.manager.GetItemsById(characterData.equips.shoesTFId), null);
 
         RefreshBackpackData();
     }
@@ -161,8 +161,7 @@ public class UIGameEquip : BaseUIComponent, TextSearchView.ICallBack
     /// <param name="characterEquip"></param>
     public void SetAttributes(CharacterAttributesBean characterAttributes, CharacterEquipBean characterEquip)
     {
-        characterData.GetAttributes(uiGameManager.gameItemsManager,
-            out CharacterAttributesBean totalAttributes, out CharacterAttributesBean selfAttributes, out CharacterAttributesBean equipAttributes);
+        characterData.GetAttributes( out CharacterAttributesBean totalAttributes, out CharacterAttributesBean selfAttributes, out CharacterAttributesBean equipAttributes);
         if (tvCook != null)
             tvCook.text = GameCommonInfo.GetUITextById(1) + "：" + selfAttributes.cook + (equipAttributes.cook == 0 ? "" : "+" + equipAttributes.cook);
         if (tvSpeed != null)
@@ -187,9 +186,7 @@ public class UIGameEquip : BaseUIComponent, TextSearchView.ICallBack
     /// <param name="itemId"></param>
     public void SetEquip(long itemId, bool isTFequip)
     {
-        if (uiGameManager.gameItemsManager == null)
-            return;
-        ItemsInfoBean itemInfo = uiGameManager.gameItemsManager.GetItemsById(itemId);
+        ItemsInfoBean itemInfo = GameItemsHandler.Instance.manager.GetItemsById(itemId);
         SetEquip(itemInfo, isTFequip);
     }
 
@@ -203,9 +200,6 @@ public class UIGameEquip : BaseUIComponent, TextSearchView.ICallBack
     {
         if (itemInfo == null)
             return;
-        if (uiGameManager.characterDressManager == null || uiGameManager.gameItemsManager == null)
-            return;
-
         ItemGameBackpackEquipCpt itemCpt = null;
         long unloadEquipId = 0;
         GeneralEnum itemType = itemInfo.GetItemsType();
@@ -297,7 +291,7 @@ public class UIGameEquip : BaseUIComponent, TextSearchView.ICallBack
         for (int i = 0; i < uiGameManager.gameDataManager.gameData.listItems.Count; i++)
         {
             ItemBean itemBean = uiGameManager.gameDataManager.gameData.listItems[i];
-            ItemsInfoBean itemInfo = uiGameManager.gameItemsManager.GetItemsById(itemBean.itemId);
+            ItemsInfoBean itemInfo = GameItemsHandler.Instance.manager.GetItemsById(itemBean.itemId);
             GeneralEnum itemType = itemInfo.GetItemsType();
             if (itemType != GeneralEnum.Hat
                 && itemType != GeneralEnum.Clothes
@@ -365,7 +359,7 @@ public class UIGameEquip : BaseUIComponent, TextSearchView.ICallBack
     public void SearchTextStart(string text)
     {
         listItemData = listItemData.OrderByDescending(data => {
-            ItemsInfoBean itemsInfoBean = uiGameManager.gameItemsManager.GetItemsById(data.itemId);
+            ItemsInfoBean itemsInfoBean = GameItemsHandler.Instance.manager.GetItemsById(data.itemId);
             if (itemsInfoBean.name.Contains(text))
             {
                 return true;

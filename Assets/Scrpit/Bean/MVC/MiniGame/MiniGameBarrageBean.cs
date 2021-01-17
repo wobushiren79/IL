@@ -30,7 +30,7 @@ public class MiniGameBarrageBean : MiniGameBaseBean
         gameType = MiniGameEnum.Barrage;
     }
 
-    public override void InitForMiniGame(GameItemsManager gameItemsManager)
+    public override void InitForMiniGame()
     {
         //初始化时间
         if (winSurvivalTime != 0)

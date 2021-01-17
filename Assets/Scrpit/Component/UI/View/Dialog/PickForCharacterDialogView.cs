@@ -198,7 +198,7 @@ public class PickForCharacterDialogView : DialogView, ItemGameDialogPickCharacte
         this.listCharacterData = this.listCharacterData.OrderByDescending(
             (data) =>
             {
-                data.GetAttributes(gameItemsManager,out CharacterAttributesBean characterAttributesData);
+                data.GetAttributes(out CharacterAttributesBean characterAttributesData);
                 return characterAttributesData.life;
             }).ToList();
         CreateListData();
@@ -213,7 +213,7 @@ public class PickForCharacterDialogView : DialogView, ItemGameDialogPickCharacte
         this.listCharacterData = this.listCharacterData.OrderByDescending(
             (data) =>
             {
-                data.GetAttributes(gameItemsManager, out CharacterAttributesBean characterAttributesData);
+                data.GetAttributes( out CharacterAttributesBean characterAttributesData);
                 return characterAttributesData.cook;
             }).ToList();
         CreateListData();
@@ -228,7 +228,7 @@ public class PickForCharacterDialogView : DialogView, ItemGameDialogPickCharacte
         this.listCharacterData = this.listCharacterData.OrderByDescending(
             (data) =>
             {
-                data.GetAttributes(gameItemsManager, out CharacterAttributesBean characterAttributesData);
+                data.GetAttributes( out CharacterAttributesBean characterAttributesData);
                 return characterAttributesData.speed;
             }).ToList();
         CreateListData();
@@ -244,7 +244,7 @@ public class PickForCharacterDialogView : DialogView, ItemGameDialogPickCharacte
         this.listCharacterData = this.listCharacterData.OrderByDescending(
             (data) =>
             {
-                data.GetAttributes(gameItemsManager, out CharacterAttributesBean characterAttributesData);
+                data.GetAttributes( out CharacterAttributesBean characterAttributesData);
                 return characterAttributesData.account;
             }).ToList();
         CreateListData();
@@ -259,7 +259,7 @@ public class PickForCharacterDialogView : DialogView, ItemGameDialogPickCharacte
         this.listCharacterData = this.listCharacterData.OrderByDescending(
             (data) =>
             {
-                data.GetAttributes(gameItemsManager, out CharacterAttributesBean characterAttributesData);
+                data.GetAttributes( out CharacterAttributesBean characterAttributesData);
                 return characterAttributesData.charm;
             }).ToList();
         CreateListData();
@@ -274,7 +274,7 @@ public class PickForCharacterDialogView : DialogView, ItemGameDialogPickCharacte
         this.listCharacterData = this.listCharacterData.OrderByDescending(
             (data) =>
             {
-                data.GetAttributes(gameItemsManager, out CharacterAttributesBean characterAttributesData);
+                data.GetAttributes( out CharacterAttributesBean characterAttributesData);
                 return characterAttributesData.force;
             }).ToList();
         CreateListData();
@@ -289,7 +289,7 @@ public class PickForCharacterDialogView : DialogView, ItemGameDialogPickCharacte
         this.listCharacterData = this.listCharacterData.OrderByDescending(
             (data) =>
             {
-                data.GetAttributes(gameItemsManager, out CharacterAttributesBean characterAttributesData);
+                data.GetAttributes( out CharacterAttributesBean characterAttributesData);
                 return characterAttributesData.lucky;
             }).ToList();
         CreateListData();

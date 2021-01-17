@@ -104,7 +104,7 @@ public class ItemTownArenaCpt : ItemGameBaseCpt, DialogView.IDialogCallBack
     public void SetReward(List<RewardTypeBean> listReward)
     {
         UIGameManager uiGameManager = GetUIManager<UIGameManager>();
-        GameItemsManager gameItemsManager = uiGameManager.gameItemsManager;
+        GameItemsManager gameItemsManager = GameItemsHandler.Instance.manager;
         IconDataManager iconDataManager = uiGameManager.iconDataManager;
         InnBuildManager innBuildManager = uiGameManager.innBuildManager;
         NpcInfoManager npcInfoManager = uiGameManager.npcInfoManager;
@@ -114,7 +114,7 @@ public class ItemTownArenaCpt : ItemGameBaseCpt, DialogView.IDialogCallBack
             GameObject objReward = Instantiate(objRewardContainer, objRewardModel);
             Image ivIcon = CptUtil.GetCptInChildrenByName<Image>(objReward, "Icon");
             Text tvNumber = CptUtil.GetCptInChildrenByName<Text>(objReward, "Text");
-            RewardTypeEnumTools.GetRewardDetails(itemReward, iconDataManager, gameItemsManager, innBuildManager, npcInfoManager);
+            RewardTypeEnumTools.GetRewardDetails(itemReward, iconDataManager, innBuildManager, npcInfoManager);
             ivIcon.sprite = itemReward.spRewardIcon;
             tvNumber.text = "x" + itemReward.rewardNumber;
             if (itemReward.dataType == RewardTypeEnum.AddItems)
@@ -273,7 +273,7 @@ public class ItemTownArenaCpt : ItemGameBaseCpt, DialogView.IDialogCallBack
         UIGameManager uiGameManager = GetUIManager<UIGameManager>();
         GameDataManager gameDataManager = uiGameManager.gameDataManager;
         GameDataHandler gameDataHandler = uiGameManager.gameDataHandler;
-        GameItemsManager gameItemsManager = uiGameManager.gameItemsManager;
+        GameItemsManager gameItemsManager = GameItemsHandler.Instance.manager;
         ControlHandler controlHandler = uiGameManager.controlHandler;
         DialogManager dialogManager = uiGameManager.dialogManager;
         ToastManager toastManager = uiGameManager.toastManager;
@@ -301,7 +301,7 @@ public class ItemTownArenaCpt : ItemGameBaseCpt, DialogView.IDialogCallBack
             //设置参赛人员
             PickForCharacterDialogView pickForCharacterDialog = dialogView as PickForCharacterDialogView;
             List<CharacterBean> listCharacter = pickForCharacterDialog.GetPickCharacter();
-            miniGameData.InitData(gameItemsManager, listCharacter);
+            miniGameData.InitData(listCharacter);
             //今日不能再参加
             GameCommonInfo.DailyLimitData.AddArenaAttendedCharacter(listCharacter);
             //删除该条数据
@@ -340,7 +340,7 @@ public class ItemTownArenaCpt : ItemGameBaseCpt, DialogView.IDialogCallBack
                     }
                     //完成奖励
                     RewardTypeEnumTools.CompleteReward
-                        (toastManager, npcInfoManager, iconDataManager, gameItemsManager, innBuildManager, gameDataManager, listCharacter, miniGameData.listReward);     
+                        (toastManager, npcInfoManager, iconDataManager, innBuildManager, gameDataManager, listCharacter, miniGameData.listReward);     
                 }
                 else
                 {

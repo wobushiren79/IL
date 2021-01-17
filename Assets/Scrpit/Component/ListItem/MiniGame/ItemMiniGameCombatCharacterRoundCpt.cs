@@ -14,7 +14,7 @@ public class ItemMiniGameCombatCharacterRoundCpt : ItemGameBaseCpt
     {
         UIGameManager uiGameManager = GetUIManager<UIGameManager>();
         //获取角色属性
-        gameCharacterData.characterData.GetAttributes(uiGameManager.gameItemsManager, gameCharacterData, out CharacterAttributesBean characterAttributes);
+        gameCharacterData.characterData.GetAttributes(gameCharacterData, out CharacterAttributesBean characterAttributes);
         speedForMove = characterAttributes.speed;
     }
 

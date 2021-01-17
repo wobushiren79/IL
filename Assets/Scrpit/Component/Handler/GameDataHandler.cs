@@ -169,12 +169,12 @@ public class GameDataHandler : BaseHandler, DialogView.IDialogCallBack, IBaseObs
                         for (int c = 0; c < listCharacterData.Count; c++)
                         {
                             CharacterBean itemCharacterData = listCharacterData[c];
-                            itemCharacterData.GetAttributes(gameItemsManager, out CharacterAttributesBean characterAttributes);
+                            itemCharacterData.GetAttributes(out CharacterAttributesBean characterAttributes);
                             totalLucky += characterAttributes.lucky;
                         }
                         List<RewardTypeBean> listRewardItems = RewardTypeEnumTools.GetRewardItemsForInfiniteTowers(null, itemInfiniteTowerData.layer, totalLucky,true);
                         if (!CheckUtil.ListIsNull(listRewardItems))
-                            RewardTypeEnumTools.CompleteReward(toastManager, npcInfoManager, iconDataManager, gameItemsManager, innBuildManager, gameDataManager, listCharacterData, listRewardItems);
+                            RewardTypeEnumTools.CompleteReward(toastManager, npcInfoManager, iconDataManager, innBuildManager, gameDataManager, listCharacterData, listRewardItems);
                         //增加层数
                         itemInfiniteTowerData.layer++;
                         //达到最大层数

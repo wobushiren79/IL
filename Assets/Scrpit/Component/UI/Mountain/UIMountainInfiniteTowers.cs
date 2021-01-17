@@ -199,7 +199,7 @@ public class UIMountainInfiniteTowers : BaseUIComponent, DialogView.IDialogCallB
                     itemCharacter.baseInfo.SetWorkerStatus(WorkerStatusEnum.InfiniteTowers);
                 }
                 //计算每层攀登几率
-                infiniteTowersData.InitSuccessRate(uiGameManager.gameItemsManager, listMembers);
+                infiniteTowersData.InitSuccessRate(GameItemsHandler.Instance.manager, listMembers);
                 uiGameManager.gameDataManager.gameData.AddInfinteTowersData(infiniteTowersData);
                 RefreshUI();
             }

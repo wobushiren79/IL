@@ -308,7 +308,7 @@ public class UIGameCustomBed : UIBaseOne, StoreInfoManager.ICallBack, IRadioGrou
             DialogBean dialogData = new DialogBean();
             FindBedDialogView findBedDialog = uiGameManager.dialogManager.CreateDialog<FindBedDialogView>(DialogEnum.FindBed, this, dialogData);
             //如果幸运值生成数据
-            gameData.userCharacter.GetAttributes(uiGameManager.gameItemsManager, out CharacterAttributesBean characterAttributes);
+            gameData.userCharacter.GetAttributes(out CharacterAttributesBean characterAttributes);
             BuildBedBean buildBedData = customBedData.RandomDataByLucky(characterAttributes.lucky);
             findBedDialog.SetData(buildBedData);
 

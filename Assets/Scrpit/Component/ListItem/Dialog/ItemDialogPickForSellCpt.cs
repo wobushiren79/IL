@@ -57,7 +57,7 @@ public class ItemDialogPickForSellCpt : BaseMonoBehaviour, DialogView.IDialogCal
         {
             ItemsInfoBean itemsInfo = gameItemsManager.GetItemsById(itemData.itemId);
 
-            spIcon = GeneralEnumTools.GetGeneralSprite(itemsInfo, iconDataManager, gameItemsManager, characterDressManager);
+            spIcon = GeneralEnumTools.GetGeneralSprite(itemsInfo, iconDataManager);
             if (itemsInfo != null)
             {
                 name = itemsInfo.name;

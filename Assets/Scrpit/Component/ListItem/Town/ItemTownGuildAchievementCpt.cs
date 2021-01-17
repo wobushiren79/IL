@@ -37,9 +37,7 @@ public class ItemTownGuildAchievementCpt : ItemGameBaseCpt
         UIGameManager uiGameManager = GetUIManager<UIGameManager>();
 
         bool isAllPre = PreTypeEnumTools.CheckIsAllPre(
-            uiGameManager.gameItemsManager,
             uiGameManager.iconDataManager,
-            uiGameManager.characterDressManager,
             uiGameManager.innFoodManager,
             uiGameManager.npcInfoManager,
             uiGameManager.gameDataManager.gameData, 
@@ -170,7 +168,6 @@ public class ItemTownGuildAchievementCpt : ItemGameBaseCpt
                 uiGameManager.toastManager,
                 uiGameManager.npcInfoManager,
                 uiGameManager.iconDataManager,
-                uiGameManager.gameItemsManager,
                 uiGameManager.innBuildManager,
                 uiGameManager.gameDataManager,
                 null,

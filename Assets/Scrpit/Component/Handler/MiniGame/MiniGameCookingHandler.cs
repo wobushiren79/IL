@@ -142,7 +142,7 @@ public class MiniGameCookingHandler : BaseMiniGameHandler<MiniGameCookingBuilder
     {
         //计算游戏时间
         float gameTiming = 10;
-        miniGameBuilder.GetUserCharacter().characterData.GetAttributes(gameItemsManager, out CharacterAttributesBean attributes);
+        miniGameBuilder.GetUserCharacter().characterData.GetAttributes( out CharacterAttributesBean attributes);
         gameTiming += (attributes.cook * 0.3f);
         //打开UI
         uiMiniGameCooking = (UIMiniGameCooking)uiGameManager.OpenUIAndCloseOtherByName(EnumUtil.GetEnumName(UIEnum.MiniGameCooking));
