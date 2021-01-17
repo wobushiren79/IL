@@ -55,7 +55,7 @@ public class NpcAIMiniGameBarrageCpt : BaseNpcAI, SightForMiniGameBarrageCpt.ICa
             || gameBarrageHandler == null
             || gameBarrageHandler.GetMiniGameStatus() != MiniGameStatusEnum.Gameing)
             return;
-        audioHandler.PlaySound(AudioSoundEnum.Damage);
+        AudioHandler.Instance.PlaySound(AudioSoundEnum.Damage);
         characterMiniGameData.AddLife(-damage);
         psBlood.Play();
         //如果是控制的角色并且生命值低于胜利生命值

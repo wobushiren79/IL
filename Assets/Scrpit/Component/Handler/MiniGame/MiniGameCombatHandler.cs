@@ -314,7 +314,7 @@ public class MiniGameCombatHandler : BaseMiniGameHandler<MiniGameCombatBuilder, 
             damage = targetNpc.characterMiniGameData.GetTotalDef(gameItemsManager, damage);
             //角色伤害
             targetNpc.UnderAttack(damagePowerRate, damage);
-            audioHandler.PlaySound(AudioSoundEnum.Fight);
+            AudioHandler.Instance.PlaySound(AudioSoundEnum.Fight);
         }
         else
         {

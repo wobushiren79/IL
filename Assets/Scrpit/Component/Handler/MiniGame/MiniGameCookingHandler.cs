@@ -254,7 +254,7 @@ public class MiniGameCookingHandler : BaseMiniGameHandler<MiniGameCookingBuilder
     /// </summary>
     public void ShowFoodForAudit()
     {
-        audioHandler.PlaySound(AudioSoundEnum.Correct);
+        AudioHandler.Instance.PlaySound(AudioSoundEnum.Correct);
         List<MiniGameCookingAuditTableCpt> listTable = miniGameBuilder.GetListAuditTable();
         foreach (MiniGameCookingAuditTableCpt itemTable in listTable)
         {

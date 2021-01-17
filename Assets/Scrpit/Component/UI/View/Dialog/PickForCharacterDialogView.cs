@@ -134,8 +134,7 @@ public class PickForCharacterDialogView : DialogView, ItemGameDialogPickCharacte
     {
         if (CheckUtil.ListIsNull(listPickCharacter))
         {
-            if (audioHandler != null)
-                audioHandler.PlaySound(AudioSoundEnum.ButtonForNormal);
+            AudioHandler.Instance.PlaySound(AudioSoundEnum.ButtonForNormal);
             toastManager.ToastHint(GameCommonInfo.GetUITextById(1032));
         }
         else
@@ -194,7 +193,7 @@ public class PickForCharacterDialogView : DialogView, ItemGameDialogPickCharacte
     /// </summary>
     public void OnClickForSortLife()
     {
-        audioHandler.PlaySound(AudioSoundEnum.ButtonForNormal);
+        AudioHandler.Instance.PlaySound(AudioSoundEnum.ButtonForNormal);
         this.listCharacterData = this.listCharacterData.OrderByDescending(
             (data) =>
             {
@@ -209,7 +208,7 @@ public class PickForCharacterDialogView : DialogView, ItemGameDialogPickCharacte
     /// </summary>
     public void OnClickForSortCook()
     {
-        audioHandler.PlaySound(AudioSoundEnum.ButtonForNormal);
+        AudioHandler.Instance.PlaySound(AudioSoundEnum.ButtonForNormal);
         this.listCharacterData = this.listCharacterData.OrderByDescending(
             (data) =>
             {
@@ -224,7 +223,7 @@ public class PickForCharacterDialogView : DialogView, ItemGameDialogPickCharacte
     /// </summary>
     public void OnClickForSortSpeed()
     {
-        audioHandler.PlaySound(AudioSoundEnum.ButtonForNormal);
+        AudioHandler.Instance.PlaySound(AudioSoundEnum.ButtonForNormal);
         this.listCharacterData = this.listCharacterData.OrderByDescending(
             (data) =>
             {
@@ -240,7 +239,7 @@ public class PickForCharacterDialogView : DialogView, ItemGameDialogPickCharacte
     /// </summary>
     public void OnClickForSortAccontant()
     {
-        audioHandler.PlaySound(AudioSoundEnum.ButtonForNormal);
+        AudioHandler.Instance.PlaySound(AudioSoundEnum.ButtonForNormal);
         this.listCharacterData = this.listCharacterData.OrderByDescending(
             (data) =>
             {
@@ -255,7 +254,7 @@ public class PickForCharacterDialogView : DialogView, ItemGameDialogPickCharacte
     /// </summary>
     public void OnClickForSortCharm()
     {
-        audioHandler.PlaySound(AudioSoundEnum.ButtonForNormal);
+        AudioHandler.Instance.PlaySound(AudioSoundEnum.ButtonForNormal);
         this.listCharacterData = this.listCharacterData.OrderByDescending(
             (data) =>
             {
@@ -270,7 +269,7 @@ public class PickForCharacterDialogView : DialogView, ItemGameDialogPickCharacte
     /// </summary>
     public void OnClickForSortForce()
     {
-        audioHandler.PlaySound(AudioSoundEnum.ButtonForNormal);
+        AudioHandler.Instance.PlaySound(AudioSoundEnum.ButtonForNormal);
         this.listCharacterData = this.listCharacterData.OrderByDescending(
             (data) =>
             {
@@ -285,7 +284,7 @@ public class PickForCharacterDialogView : DialogView, ItemGameDialogPickCharacte
     /// </summary>
     public void OnClickForSortLucky()
     {
-        audioHandler.PlaySound(AudioSoundEnum.ButtonForNormal);
+        AudioHandler.Instance.PlaySound(AudioSoundEnum.ButtonForNormal);
         this.listCharacterData = this.listCharacterData.OrderByDescending(
             (data) =>
             {
@@ -298,8 +297,7 @@ public class PickForCharacterDialogView : DialogView, ItemGameDialogPickCharacte
     #region 选择回调
     public void PickCharacter(ItemGameDialogPickCharacterCpt itemView, bool isPick, CharacterBean characterData)
     {
-        if (audioHandler != null)
-            audioHandler.PlaySound(AudioSoundEnum.ButtonForNormal);
+        AudioHandler.Instance.PlaySound(AudioSoundEnum.ButtonForNormal);
         if (isPick)
         {
             if (listPickCharacter.Count >= pickCharacterMax)

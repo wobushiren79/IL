@@ -273,7 +273,7 @@ public class UIGameText : BaseUIComponent, TextInfoManager.ICallBack, DialogView
                     else if (textData.content.Equals(GameCommonInfo.GetUITextById(99105)))
                     {
                         DialogBean dialogData = new DialogBean();
-                        PickForItemsDialogView pickForItemsDialog = uiGameManager.dialogManager.CreateDialog<PickForItemsDialogView>(DialogEnum.PickForItems, this, dialogData);
+                        PickForItemsDialogView pickForItemsDialog = DialogHandler.Instance.CreateDialog<PickForItemsDialogView>(DialogEnum.PickForItems, this, dialogData);
                         pickForItemsDialog.SetData(null, PopupItemsSelection.SelectionTypeEnum.Gift);
                     }
                     //换取公会勋章

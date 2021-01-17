@@ -287,7 +287,7 @@ public class UIGameSetting : BaseUIComponent, DropdownView.ICallBack, ProgressVi
         DialogBean dialogBean = new DialogBean();
         dialogBean.dialogPosition = 1;
         dialogBean.content = GameCommonInfo.GetUITextById(3081);
-        uiGameManager.dialogManager.CreateDialog<DialogView>(DialogEnum.Normal, this, dialogBean);
+        DialogHandler.Instance.CreateDialog<DialogView>(DialogEnum.Normal, this, dialogBean);
     }
 
     /// <summary>
@@ -298,7 +298,7 @@ public class UIGameSetting : BaseUIComponent, DropdownView.ICallBack, ProgressVi
         DialogBean dialogBean = new DialogBean();
         dialogBean.dialogPosition = 2;
         dialogBean.content = GameCommonInfo.GetUITextById(3082);
-        uiGameManager.dialogManager.CreateDialog<DialogView>(DialogEnum.Normal, this, dialogBean);
+        DialogHandler.Instance.CreateDialog<DialogView>(DialogEnum.Normal, this, dialogBean);
     }
 
     /// <summary>
@@ -309,7 +309,7 @@ public class UIGameSetting : BaseUIComponent, DropdownView.ICallBack, ProgressVi
         DialogBean dialogBean = new DialogBean();
         dialogBean.dialogPosition = 3;
         dialogBean.content = GameCommonInfo.GetUITextById(3083);
-        uiGameManager.dialogManager.CreateDialog<DialogView>(DialogEnum.Normal, this, dialogBean);
+        DialogHandler.Instance.CreateDialog<DialogView>(DialogEnum.Normal, this, dialogBean);
     }
 
     /// <summary>

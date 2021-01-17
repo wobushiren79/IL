@@ -183,7 +183,7 @@ public class ControlForWorkCpt : BaseControl, DialogView.IDialogCallBack
             //如有已经提前选中了偷懒的员工
             if (workerDaze != null)
             {
-                audioHandler.PlaySound(AudioSoundEnum.Fight);
+                AudioHandler.Instance.PlaySound(AudioSoundEnum.Fight);
                 workerDaze.SetExpression(CharacterExpressionCpt.CharacterExpressionEnum.Surprise, 3);
                 workerDaze.SetDazeBufferTime(10);
                 workerDaze.SetIntent(NpcAIWorkerCpt.WorkerIntentEnum.Idle);
@@ -198,9 +198,9 @@ public class ControlForWorkCpt : BaseControl, DialogView.IDialogCallBack
                     selectNpc = objSelect.GetComponentInParent<BaseNpcAI>();
                     if (selectNpc)
                     {
-                        audioHandler.PlaySound(AudioSoundEnum.ButtonForShow);
+                        AudioHandler.Instance.PlaySound(AudioSoundEnum.ButtonForShow);
                         DialogBean dialogData = new DialogBean();
-                        dialogSelectView = dialogManager.CreateDialog<SelectForNpcDialogView>(DialogEnum.SelectForNpc, this, dialogData);
+                        dialogSelectView = DialogHandler.Instance.CreateDialog<SelectForNpcDialogView>(DialogEnum.SelectForNpc, this, dialogData);
                         ((SelectForNpcDialogView)dialogSelectView).SetData(selectNpc);
                         //如果是员工
                         if (selectNpc as NpcAIWorkerCpt)
@@ -217,9 +217,9 @@ public class ControlForWorkCpt : BaseControl, DialogView.IDialogCallBack
                     selectBed = objSelect.GetComponentInParent<BuildBedCpt>();
                     if (selectBed)
                     {
-                        audioHandler.PlaySound(AudioSoundEnum.ButtonForShow);
+                        AudioHandler.Instance.PlaySound(AudioSoundEnum.ButtonForShow);
                         DialogBean dialogData = new DialogBean();
-                        dialogSelectView = dialogManager.CreateDialog<SelectForBedDialogView>(DialogEnum.SelectForBed, this, dialogData);
+                        dialogSelectView = DialogHandler.Instance.CreateDialog<SelectForBedDialogView>(DialogEnum.SelectForBed, this, dialogData);
                         ((SelectForBedDialogView)dialogSelectView).SetData(selectBed);
                         return;
                     }

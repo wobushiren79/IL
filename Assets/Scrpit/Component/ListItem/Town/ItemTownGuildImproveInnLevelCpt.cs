@@ -187,7 +187,7 @@ public class ItemTownGuildImproveInnLevelCpt : BaseMonoBehaviour, DialogView.IDi
             uiGameManager.OpenUIAndCloseOtherByName(EnumUtil.GetEnumName(UIEnum.GameMain));
 
             DialogBean dialogData = new DialogBean();
-            AchievementDialogView achievementDialog = dialogManager.CreateDialog<AchievementDialogView>(DialogEnum.Achievement, this, dialogData);
+            AchievementDialogView achievementDialog = DialogHandler.Instance.CreateDialog<AchievementDialogView>(DialogEnum.Achievement, this, dialogData);
             achievementDialog.SetData(storeInfo);
         }
         else

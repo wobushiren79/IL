@@ -180,7 +180,7 @@ public class ItemDialogPickForSellCpt : BaseMonoBehaviour, DialogView.IDialogCal
     {
         DialogBean dialogData = new DialogBean();
         dialogData.content = string.Format(GameCommonInfo.GetUITextById(3102), tvName.text, sellNumber + "");
-        dialogManager.CreateDialog<DialogView>(DialogEnum.Normal, this, dialogData);
+        DialogHandler.Instance.CreateDialog<DialogView>(DialogEnum.Normal, this, dialogData);
     }
 
     /// <summary>

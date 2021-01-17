@@ -332,7 +332,7 @@ public class ItemGameMenuFoodCpt : ItemGameBaseCpt, IRadioButtonCallBack, Dialog
         {
             title = GameCommonInfo.GetUITextById(3071)
         };
-        PickForCharacterDialogView pickForCharacterDialog = uiGameManager.dialogManager.CreateDialog<PickForCharacterDialogView>(DialogEnum.PickForCharacter, this, dialogData);
+        PickForCharacterDialogView pickForCharacterDialog = DialogHandler.Instance.CreateDialog<PickForCharacterDialogView>(DialogEnum.PickForCharacter, this, dialogData);
         pickForCharacterDialog.SetPickCharacterMax(1);
         //设置排出人员 （老板和没有在休息的员工）
         List<CharacterBean> listCharacter = uiGameManager.gameDataManager.gameData.listWorkerCharacter;
@@ -371,7 +371,7 @@ public class ItemGameMenuFoodCpt : ItemGameBaseCpt, IRadioButtonCallBack, Dialog
         {
             content = GameCommonInfo.GetUITextById(3072)
         };
-        uiGameManager.dialogManager.CreateDialog<DialogView>(DialogEnum.Normal, this, dialogData);
+        DialogHandler.Instance.CreateDialog<DialogView>(DialogEnum.Normal, this, dialogData);
     }
 
     #region 售卖状态回调

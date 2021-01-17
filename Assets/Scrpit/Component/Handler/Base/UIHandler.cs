@@ -26,13 +26,13 @@ public class UIHandler : BaseHandler<UIHandler, UIManager>
             case RenderMode.ScreenSpaceOverlay:
                 break;
             case RenderMode.ScreenSpaceCamera:
-                canvas.worldCamera = Camera.main;
                 canvas.planeDistance = 1;
-                canvas.sortingLayerName = "UI";
-                canvas.sortingOrder = 1;
+                canvas.worldCamera = Camera.main;
                 break;
             case RenderMode.WorldSpace:
                 break;
         }
+        canvas.sortingLayerName = "UI";
+        canvas.sortingOrder = 1;
     }
 }

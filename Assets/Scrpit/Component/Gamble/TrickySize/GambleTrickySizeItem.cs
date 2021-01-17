@@ -120,7 +120,7 @@ public class GambleTrickySizeItem : BaseMonoBehaviour
                .SetDelay(0.6f)
                .OnStart(() =>
                {
-                   audioHandler.PlaySound(AudioSoundEnum.Dice);
+                   AudioHandler.Instance.PlaySound(AudioSoundEnum.Dice);
                });
     }
 

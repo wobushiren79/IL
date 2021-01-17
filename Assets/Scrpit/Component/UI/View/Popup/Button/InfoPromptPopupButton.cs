@@ -31,7 +31,7 @@ public class InfoPromptPopupButton : PopupButtonView<InfoPromptPopupShow>
             popupShow.SetContent(content);
             //设置音效
             if (audioHandler != null && isAudio)
-                audioHandler.PlaySound(AudioSoundEnum.ButtonForHighLight);
+                AudioHandler.Instance.PlaySound(AudioSoundEnum.ButtonForHighLight);
             popupShow.gameObject.SetActive(false);
             StartCoroutine(CoroutineForShow());
         }

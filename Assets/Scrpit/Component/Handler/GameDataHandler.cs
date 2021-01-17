@@ -162,7 +162,7 @@ public class GameDataHandler : BaseHandler, DialogView.IDialogCallBack, IBaseObs
                     {
                         //如果是成功攻略
                         //弹出提示
-                        audioHandler.PlaySound(AudioSoundEnum.Reward);
+                        AudioHandler.Instance.PlaySound(AudioSoundEnum.Reward);
                         toastManager.ToastHint(string.Format(GameCommonInfo.GetUITextById(1331), itemInfiniteTowerData.layer+""));
                         //添加奖励物品
                         int totalLucky = 0;
@@ -182,7 +182,7 @@ public class GameDataHandler : BaseHandler, DialogView.IDialogCallBack, IBaseObs
                         if (itemInfiniteTowerData.layer > userAchievement.maxInfiniteTowersLayer - 1)
                         {
                             //弹出提示
-                            audioHandler.PlaySound(AudioSoundEnum.Reward);
+                            AudioHandler.Instance.PlaySound(AudioSoundEnum.Reward);
                             toastManager.ToastHint(string.Format(GameCommonInfo.GetUITextById(1332), (itemInfiniteTowerData.layer-1) + ""));
                             itemInfiniteTowerData.proForSend = -1;
                             //还原员工状态
@@ -200,7 +200,7 @@ public class GameDataHandler : BaseHandler, DialogView.IDialogCallBack, IBaseObs
                     else
                     {
                         //弹出提示
-                        audioHandler.PlaySound(AudioSoundEnum.Passive);
+                        AudioHandler.Instance.PlaySound(AudioSoundEnum.Passive);
                         toastManager.ToastHint(string.Format(GameCommonInfo.GetUITextById(1333), itemInfiniteTowerData.layer + ""));
                         //如果是失败攻略
                         itemInfiniteTowerData.proForSend = -1;
@@ -251,7 +251,7 @@ public class GameDataHandler : BaseHandler, DialogView.IDialogCallBack, IBaseObs
             {
                 itemBed.CompleteResearch(gameDataManager.gameData);
                 string toastStr = string.Format(GameCommonInfo.GetUITextById(1071), itemBed.bedName);
-                audioHandler.PlaySound(AudioSoundEnum.Reward);
+                AudioHandler.Instance.PlaySound(AudioSoundEnum.Reward);
                 toastManager.ToastHint(innFoodManager.GetFoodSpriteByName("ui_features_bed"), toastStr, 5);
 
                 DialogBean dialogData = new DialogBean
@@ -259,7 +259,7 @@ public class GameDataHandler : BaseHandler, DialogView.IDialogCallBack, IBaseObs
                     title = GameCommonInfo.GetUITextById(1048),
                     content = toastStr
                 };
-                AchievementDialogView achievementDialog = dialogManager.CreateDialog<AchievementDialogView>(DialogEnum.Achievement, this, dialogData);
+                AchievementDialogView achievementDialog = DialogHandler.Instance.CreateDialog<AchievementDialogView>(DialogEnum.Achievement, this, dialogData);
                 achievementDialog.SetData(2, "ui_features_bed");
             }
         }
@@ -298,7 +298,7 @@ public class GameDataHandler : BaseHandler, DialogView.IDialogCallBack, IBaseObs
             {
                 itemMenu.CompleteResearch(gameDataManager.gameData);
                 string toastStr = string.Format(GameCommonInfo.GetUITextById(1071), menuInfo.name);
-                audioHandler.PlaySound(AudioSoundEnum.Reward);
+                AudioHandler.Instance.PlaySound(AudioSoundEnum.Reward);
                 toastManager.ToastHint(innFoodManager.GetFoodSpriteByName(menuInfo.icon_key), toastStr, 5);
 
                 DialogBean dialogData = new DialogBean
@@ -306,7 +306,7 @@ public class GameDataHandler : BaseHandler, DialogView.IDialogCallBack, IBaseObs
                     title = GameCommonInfo.GetUITextById(1048),
                     content = toastStr
                 };
-                AchievementDialogView achievementDialog = dialogManager.CreateDialog<AchievementDialogView>(DialogEnum.Achievement, this, dialogData);
+                AchievementDialogView achievementDialog = DialogHandler.Instance.CreateDialog<AchievementDialogView>(DialogEnum.Achievement, this, dialogData);
                 achievementDialog.SetData(1, menuInfo.icon_key);
             }
         }

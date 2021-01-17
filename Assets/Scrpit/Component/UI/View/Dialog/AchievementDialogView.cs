@@ -69,7 +69,7 @@ public class AchievementDialogView : DialogView
     {
         objAchContainer.transform.DOKill();
         objAchContainer.transform.DOScale(new Vector3(0, 0, 0), 1.5f).From().SetEase(Ease.OutElastic);
-        audioHandler.PlaySound(AudioSoundEnum.Reward);
+        AudioHandler.Instance.PlaySound(AudioSoundEnum.Reward);
     }
 
     /// <summary>

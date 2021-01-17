@@ -228,7 +228,7 @@ public class ItemTownArenaCpt : ItemGameBaseCpt, DialogView.IDialogCallBack
         ToastManager toastManager = uiGameManager.toastManager;
         DialogManager dialogManager = uiGameManager.dialogManager;
         AudioHandler audioHandler = AudioHandler.Instance;
-        audioHandler.PlaySound(AudioSoundEnum.ButtonForNormal);
+        AudioHandler.Instance.PlaySound(AudioSoundEnum.ButtonForNormal);
         if (!gameDataManager.gameData.HasEnoughMoney(miniGameData.preMoneyL, miniGameData.preMoneyM, miniGameData.preMoneyS))
         {
             toastManager.ToastHint(GameCommonInfo.GetUITextById(1020));
@@ -238,7 +238,7 @@ public class ItemTownArenaCpt : ItemGameBaseCpt, DialogView.IDialogCallBack
         string gameName = tvTitle.text;
         string gameTime = miniGameData.preGameTime + GameCommonInfo.GetUITextById(37);
         dialogData.content = string.Format(GameCommonInfo.GetUITextById(3021), gameName, gameTime);
-        dialogManager.CreateDialog<DialogView>(DialogEnum.Normal, this, dialogData);
+        DialogHandler.Instance.CreateDialog<DialogView>(DialogEnum.Normal, this, dialogData);
         arenaJoinType = 1;
     }
 
@@ -253,7 +253,7 @@ public class ItemTownArenaCpt : ItemGameBaseCpt, DialogView.IDialogCallBack
         DialogManager dialogManager = uiGameManager.dialogManager;
         AudioHandler audioHandler = AudioHandler.Instance;
 
-        audioHandler.PlaySound(AudioSoundEnum.ButtonForNormal);
+        AudioHandler.Instance.PlaySound(AudioSoundEnum.ButtonForNormal);
         if (!gameDataManager.gameData.HasEnoughMoney(miniGameData.preMoneyL, miniGameData.preMoneyM, miniGameData.preMoneyS))
         {
             toastManager.ToastHint(GameCommonInfo.GetUITextById(1020));
@@ -263,7 +263,7 @@ public class ItemTownArenaCpt : ItemGameBaseCpt, DialogView.IDialogCallBack
         string gameName = tvTitle.text;
         string gameTime = miniGameData.preGameTime + GameCommonInfo.GetUITextById(37);
         dialogData.content = string.Format(GameCommonInfo.GetUITextById(3022), gameName, gameTime);
-        dialogManager.CreateDialog<DialogView>(DialogEnum.Normal, this, dialogData);
+        DialogHandler.Instance.CreateDialog<DialogView>(DialogEnum.Normal, this, dialogData);
         arenaJoinType = 2;
     }
 
@@ -326,7 +326,7 @@ public class ItemTownArenaCpt : ItemGameBaseCpt, DialogView.IDialogCallBack
                 if (isWin)
                 {
                     toastManager.ToastHint(GameCommonInfo.GetUITextById(7011));
-                    audioHandler.PlaySound(AudioSoundEnum.Reward);
+                    AudioHandler.Instance.PlaySound(AudioSoundEnum.Reward);
                     //设置不记录
                     foreach (RewardTypeBean rewardData in miniGameData.listReward)
                     {
@@ -345,7 +345,7 @@ public class ItemTownArenaCpt : ItemGameBaseCpt, DialogView.IDialogCallBack
                 else
                 {
                     toastManager.ToastHint(GameCommonInfo.GetUITextById(7012));
-                    audioHandler.PlaySound(AudioSoundEnum.Passive);
+                    AudioHandler.Instance.PlaySound(AudioSoundEnum.Passive);
                 }
             }
         }
@@ -353,7 +353,7 @@ public class ItemTownArenaCpt : ItemGameBaseCpt, DialogView.IDialogCallBack
         {
             //弹出选人界面
             DialogBean dialogData = new DialogBean();
-            PickForCharacterDialogView pickForCharacterDialog = dialogManager.CreateDialog<PickForCharacterDialogView>(DialogEnum.PickForCharacter, this, dialogData);
+            PickForCharacterDialogView pickForCharacterDialog = DialogHandler.Instance.CreateDialog<PickForCharacterDialogView>(DialogEnum.PickForCharacter, this, dialogData);
             pickForCharacterDialog.SetPickCharacterMax(1);
             List<string> listExpelCharacterId = new List<string>();
             //排出今日已经参加过的人

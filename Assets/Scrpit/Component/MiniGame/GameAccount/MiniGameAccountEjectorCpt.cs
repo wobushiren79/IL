@@ -101,7 +101,7 @@ public class MiniGameAccountEjectorCpt : BaseMonoBehaviour
         //停止旋转
         StopRotate();
         mLaunchStatus = 1;
-        audioHandler.PlaySound( AudioSoundEnum.Shot);
+        AudioHandler.Instance.PlaySound( AudioSoundEnum.Shot);
     }
 
     /// <summary>

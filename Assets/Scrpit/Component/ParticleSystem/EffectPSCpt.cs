@@ -25,7 +25,7 @@ public class EffectPSCpt : BaseMonoBehaviour
     public void Play()
     {
         effectPS.Play();
-        audioHandler.PlaySound(soundType);
+        AudioHandler.Instance.PlaySound(soundType);
     }
 
     /// <summary>

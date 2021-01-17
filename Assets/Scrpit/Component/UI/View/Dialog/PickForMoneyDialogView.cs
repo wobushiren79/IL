@@ -190,7 +190,7 @@ public class PickForMoneyDialogView : DialogView
                     moneyS = maxMoneyS;
                 break;
         }
-        audioHandler.PlaySound(AudioSoundEnum.ButtonForNormal);
+        AudioHandler.Instance.PlaySound(AudioSoundEnum.ButtonForNormal);
         RefreshUI();
     }
 

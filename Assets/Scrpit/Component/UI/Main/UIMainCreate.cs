@@ -208,7 +208,7 @@ public class UIMainCreate : BaseUIComponent,
         }
         DialogBean dialogData = new DialogBean();
         dialogData.content = GameCommonInfo.GetUITextById(3012);
-        uiGameManager.dialogManager.CreateDialog<DialogView>(DialogEnum.Normal, this, dialogData);
+        DialogHandler.Instance.CreateDialog<DialogView>(DialogEnum.Normal, this, dialogData);
     }
 
     /// <summary>

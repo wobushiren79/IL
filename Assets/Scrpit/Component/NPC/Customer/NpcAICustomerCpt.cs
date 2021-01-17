@@ -490,7 +490,7 @@ public class NpcAICustomerCpt : BaseNpcAI
         //播放吃饭动画
         characterMoveCpt.characterAnimtor.SetTrigger("Eat");
         // 播放音效
-        audioHandler.PlaySound(AudioSoundEnum.Eat);
+        AudioHandler.Instance.PlaySound(AudioSoundEnum.Eat);
         float eatTime = Random.Range(3f, 7f);
         yield return new WaitForSeconds(eatTime);
         if (isActiveAndEnabled)

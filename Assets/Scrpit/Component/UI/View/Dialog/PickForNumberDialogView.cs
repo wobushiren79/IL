@@ -99,13 +99,13 @@ public class PickForNumberDialogView : DialogView
 
     public void OnClickAddNumber()
     {
-        audioHandler.PlaySound(AudioSoundEnum.ButtonForNormal);
+        AudioHandler.Instance.PlaySound(AudioSoundEnum.ButtonForNormal);
         SetNumber(pickNumber + 1);
     }
 
     public void OnClickSubNumber()
     {
-        audioHandler.PlaySound(AudioSoundEnum.ButtonForNormal);
+        AudioHandler.Instance.PlaySound(AudioSoundEnum.ButtonForNormal);
         SetNumber(pickNumber - 1);
     }
 }

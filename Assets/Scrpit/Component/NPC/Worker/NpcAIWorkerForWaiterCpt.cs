@@ -381,7 +381,7 @@ public class NpcAIWorkerForWaiterCpt : NpcAIWokerFoBaseCpt
     /// <returns></returns>
     public IEnumerator CoroutineForCleanTable()
     {
-        //audioHandler.PlaySound(AudioSoundEnum.Clean);
+        //AudioHandler.Instance.PlaySound(AudioSoundEnum.Clean);
         //计算清理时间
         float cleanTime = npcAIWorker.characterData.CalculationWaiterCleanTime(gameItemsManager);
         yield return new WaitForSeconds(cleanTime);

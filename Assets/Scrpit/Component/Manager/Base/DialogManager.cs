@@ -5,67 +5,54 @@ using UnityEngine.EventSystems;
 
 public class DialogManager : BaseManager
 {
+    //打开的dialog列表
     public List<DialogView> listDialog = new List<DialogView>();
-    public GameObject objContainer;
+
+    //所有的dialog模型
     public Dictionary<string, GameObject> listObjModel = new Dictionary<string, GameObject>();
-    protected string resUrl = "UI/Dialog/";
 
-    public T CreateDialog<T>(DialogEnum dialogType, DialogView.IDialogCallBack callBack, DialogBean dialogBean) where T : DialogView
+    /// <summary>
+    /// 获取弹窗模型
+    /// </summary>
+    /// <param name="name"></param>
+    /// <returns></returns>
+    public GameObject GetDialogModel(string name)
     {
-        return CreateDialog<T>(dialogType, callBack, dialogBean, 0);
+        if (listObjModel.TryGetValue(name, out GameObject valueObj))
+        {
+            return valueObj;
+        }
+        GameObject objModel = LoadAssetUtil.SyncLoadAsset<GameObject>("ui/dialog", name);
+        if (objModel != null)
+        {
+            listObjModel.Add(name, objModel);
+            return objModel;
+        }
+        return null;
     }
 
-    public T CreateDialog<T>(DialogEnum dialogType, DialogView.IDialogCallBack callBack, DialogBean dialogBean, float delayDelete) where T : DialogView
+    /// <summary>
+    /// 增加弹窗
+    /// </summary>
+    /// <param name="dialogView"></param>
+    public void AddDialog(DialogView dialogView)
     {
-        string dialogName = EnumUtil.GetEnumName(dialogType);
-        GameObject objDialog = CreateDialog(dialogName);
-        if (objDialog)
-        {
-            DialogView dialogView = objDialog.GetComponent<DialogView>();
-            if (dialogView == null)
-                Destroy(objDialog);
-            dialogView.SetCallBack(callBack);
-            dialogView.SetData(dialogBean);
-            if (delayDelete != 0)
-                dialogView.SetDelayDelete(delayDelete);
-
-            //改变焦点
-            EventSystem.current.SetSelectedGameObject(objDialog);
-
-            listDialog.Add(dialogView);
-            return dialogView as T;
-        }
-        else
-        {
-            LogUtil.LogError("没有找到指定Toast：" + "Resources/UI/Toast/" + dialogName);
-            return null;
-        }
-    }
-    public GameObject CreateDialog(string name)
-    {
-        GameObject objModel = null;
-        if (listObjModel.TryGetValue(name, out objModel))
-        {
-
-        }
-        else
-        {
-            objModel = CreatDialogModel(name);
-        }
-        if (objModel == null)
-            return null;
-        GameObject obj = Instantiate(objContainer, objModel);
-        return obj;
+        listDialog.Add(dialogView);
     }
 
-    private GameObject CreatDialogModel(string name)
+    /// <summary>
+    /// 移除弹窗
+    /// </summary>
+    /// <param name="dialogView"></param>
+    public void RemoveDialog(DialogView dialogView)
     {
-        GameObject objModel = Resources.Load<GameObject>(resUrl + name);
-        objModel.name = name;
-        listObjModel.Add(name, objModel);
-        return objModel;
+        if (dialogView != null && listDialog.Contains(dialogView))
+            listDialog.Remove(dialogView);
     }
 
+    /// <summary>
+    /// 关闭所有弹窗
+    /// </summary>
     public void CloseAllDialog()
     {
         for (int i = 0; i < listDialog.Count; i++)
@@ -77,14 +64,10 @@ public class DialogManager : BaseManager
         listDialog.Clear();
     }
 
-    public void RemoveDialog(DialogView dialogView)
-    {
-        if (dialogView != null && listDialog.Contains(dialogView))
-            listDialog.Remove(dialogView);
-    }
-
     public RectTransform GetContainer()
     {
-        return (RectTransform)objContainer.transform;
+        return (RectTransform)gameObject.transform;
     }
+
+
 }

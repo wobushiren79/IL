@@ -189,7 +189,7 @@ public class ItemGameBackpackCpt : ItemGameBaseCpt, IPointerClickHandler, PopupI
                         title = GameCommonInfo.GetUITextById(1047),
                         content = menuInfo.name
                     };
-                    AchievementDialogView achievementDialog=dialogManager.CreateDialog<AchievementDialogView>(DialogEnum.Achievement, this, dialogData);
+                    AchievementDialogView achievementDialog=DialogHandler.Instance.CreateDialog<AchievementDialogView>(DialogEnum.Achievement, this, dialogData);
                     achievementDialog.SetData(1, menuInfo.icon_key);
                     toastManager.ToastHint(ivIcon.sprite,GameCommonInfo.GetUITextById(1006));
                 }
@@ -219,7 +219,7 @@ public class ItemGameBackpackCpt : ItemGameBaseCpt, IPointerClickHandler, PopupI
                 content = string.Format(GameCommonInfo.GetUITextById(3001), itemsInfoData.name),
                 remark = "1"
             };
-            dialogManager.CreateDialog<DialogView>(DialogEnum.Normal, this, dialogBean);
+            DialogHandler.Instance.CreateDialog<DialogView>(DialogEnum.Normal, this, dialogBean);
         }
         else
         {
@@ -227,7 +227,7 @@ public class ItemGameBackpackCpt : ItemGameBaseCpt, IPointerClickHandler, PopupI
             {
                 content = string.Format(GameCommonInfo.GetUITextById(3001), itemsInfoData.name)
             };
-            PickForNumberDialogView pickForNumberDialog = dialogManager.CreateDialog<PickForNumberDialogView>(DialogEnum.PickForNumber, this, dialogBean);
+            PickForNumberDialogView pickForNumberDialog = DialogHandler.Instance.CreateDialog<PickForNumberDialogView>(DialogEnum.PickForNumber, this, dialogBean);
             pickForNumberDialog.SetData(ivIcon.sprite, itemBean.itemNumber);
         }
 
@@ -275,7 +275,7 @@ public class ItemGameBackpackCpt : ItemGameBaseCpt, IPointerClickHandler, PopupI
                 remark = "" + pickNumber
             };
             DialogManager dialogManager = uiGameManager.dialogManager;
-            dialogManager.CreateDialog<DialogView>(DialogEnum.Normal, this, dialogBean);
+            DialogHandler.Instance.CreateDialog<DialogView>(DialogEnum.Normal, this, dialogBean);
         }
         else if (dialogView as AchievementDialogView)
         {

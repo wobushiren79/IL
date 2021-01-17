@@ -110,7 +110,7 @@ public class UIBaseOne : BaseUIComponent ,DialogView.IDialogCallBack
     {
         DialogBean dialogData = new DialogBean();
         dialogData.title = GameCommonInfo.GetUITextById(3101);
-        pickForSellDialog = uiGameManager.dialogManager.CreateDialog<PickForSellDialogView>(DialogEnum.PickForSell, this, dialogData);
+        pickForSellDialog = DialogHandler.Instance.CreateDialog<PickForSellDialogView>(DialogEnum.PickForSell, this, dialogData);
     }
 
     /// <summary>

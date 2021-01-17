@@ -330,7 +330,7 @@ public class NpcAIRascalCpt : BaseNpcAI, IBaseObserver, TextInfoHandler.ICallBac
                     && customerCpt.customerIntent != NpcAICustomerCpt.CustomerIntentEnum.Want
                     && customerCpt.customerIntent != NpcAICustomerCpt.CustomerIntentEnum.WaitAccost
                     && customerCpt.customerIntent != NpcAICustomerCpt.CustomerIntentEnum.TalkWithAccost)
-                    audioHandler.PlaySound(AudioSoundEnum.Passive);
+                    AudioHandler.Instance.PlaySound(AudioSoundEnum.Passive);
                 customerCpt.ChangeMood(-99999);
             }
         }

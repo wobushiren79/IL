@@ -100,7 +100,7 @@ public class GambleTrickyCupHandler : BaseGambleHandler<GambleTrickyCupBean , Ga
     #region 杯子选择回调
     public void CupChoose(GambleTrickyCupItem chooseCup)
     {
-        audioHandler.PlaySound(AudioSoundEnum.ButtonForNormal);
+        AudioHandler.Instance.PlaySound(AudioSoundEnum.ButtonForNormal);
         //设置输赢
         if (chooseCup.CheckHasDice())
         {

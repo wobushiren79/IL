@@ -288,7 +288,7 @@ public class ItemGameWorkerCpt : ItemGameBaseCpt, DialogView.IDialogCallBack, Wo
             {
                 DialogBean dialogData = new DialogBean();
                 dialogData.content = string.Format(GameCommonInfo.GetUITextById(3063), characterData.baseInfo.name);
-                dialogManager.CreateDialog<DialogView>(DialogEnum.Normal, this, dialogData);
+                DialogHandler.Instance.CreateDialog<DialogView>(DialogEnum.Normal, this, dialogData);
             }
             else
             {
@@ -305,7 +305,7 @@ public class ItemGameWorkerCpt : ItemGameBaseCpt, DialogView.IDialogCallBack, Wo
         AudioHandler.Instance.PlaySound(AudioSoundEnum.ButtonForNormal);
         DialogBean dialogData = new DialogBean();
         // dialogData.content = string.Format(GameCommonInfo.GetUITextById(3063), characterData.baseInfo.name);
-        PickForItemsDialogView dialogView = dialogManager.CreateDialog<PickForItemsDialogView>(DialogEnum.PickForItems, this, dialogData);
+        PickForItemsDialogView dialogView = DialogHandler.Instance.CreateDialog<PickForItemsDialogView>(DialogEnum.PickForItems, this, dialogData);
         dialogView.SetData(null, PopupItemsSelection.SelectionTypeEnum.Gift);
         dialogView.SetSubmitDestroy(false);
     }

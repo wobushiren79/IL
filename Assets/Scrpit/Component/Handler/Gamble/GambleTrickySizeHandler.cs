@@ -82,7 +82,7 @@ public class GambleTrickySizeHandler : BaseGambleHandler<GambleTrickySizeBean, G
     #region 竞猜回调
     public void SizeChoose(int size)
     {
-        audioHandler.PlaySound(AudioSoundEnum.ButtonForNormal);
+        AudioHandler.Instance.PlaySound(AudioSoundEnum.ButtonForNormal);
         GambleTrickySizeItem cup = gambleBuilder.GetCup();
         float winRate =  Random.Range(0f, 1f);
         //幸运加成

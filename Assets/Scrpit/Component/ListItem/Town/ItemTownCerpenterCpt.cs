@@ -185,12 +185,12 @@ public class ItemTownCerpenterCpt : ItemTownStoreCpt, DialogView.IDialogCallBack
             }
             else
                 dialogBean.content = string.Format(GameCommonInfo.GetUITextById(3002), buildItemData.name);
-            dialogManager.CreateDialog<DialogView>(DialogEnum.Normal, this, dialogBean);
+            DialogHandler.Instance.CreateDialog<DialogView>(DialogEnum.Normal, this, dialogBean);
         }
         else
         {
             DialogBean dialogBean = new DialogBean();
-            PickForNumberDialogView dialogView = dialogManager.CreateDialog<PickForNumberDialogView>(DialogEnum.PickForNumber, this, dialogBean);
+            PickForNumberDialogView dialogView = DialogHandler.Instance.CreateDialog<PickForNumberDialogView>(DialogEnum.PickForNumber, this, dialogBean);
             dialogView.SetData(ivIcon.sprite, 999);
         }
 

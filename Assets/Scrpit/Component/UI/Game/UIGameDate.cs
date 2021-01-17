@@ -95,7 +95,7 @@ public class UIGameDate : BaseUIComponent
     public void OnClickInnWork()
     {
         if (audioHandler != null)
-            audioHandler.PlaySound(AudioSoundEnum.ButtonForNormal);
+            AudioHandler.Instance.PlaySound(AudioSoundEnum.ButtonForNormal);
         InnWork();
     }
 
@@ -105,7 +105,7 @@ public class UIGameDate : BaseUIComponent
     public void OnClickInnRest()
     {
         if (audioHandler != null)
-            audioHandler.PlaySound(AudioSoundEnum.ButtonForNormal);
+            AudioHandler.Instance.PlaySound(AudioSoundEnum.ButtonForNormal);
         InnRest();
     }
 
@@ -120,7 +120,7 @@ public class UIGameDate : BaseUIComponent
         gameTimeHandler.GoToNextDay(1);
         gameTimeHandler.GetTime(out int newYear, out int newMonth, out int newDay);
         calendarView.ChangeData(newYear, newMonth, newDay);
-        audioHandler.PlaySound( AudioSoundEnum.ButtonForShow);
+        AudioHandler.Instance.PlaySound( AudioSoundEnum.ButtonForShow);
         //展示是否营业框
         yield return new WaitForSeconds(animTimeForShowDialog);
  

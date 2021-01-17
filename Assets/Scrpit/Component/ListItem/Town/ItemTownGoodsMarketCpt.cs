@@ -86,7 +86,7 @@ public class ItemTownGoodsMarketCpt : ItemGameBaseCpt, DialogView.IDialogCallBac
         DialogManager dialogManager = GetUIManager<UIGameManager>().dialogManager;
         DialogBean dialogData = new DialogBean();
         dialogData.content = string.Format(GameCommonInfo.GetUITextById(3009), tvPirce.text, buyNumber, goodsData.name);
-        dialogManager.CreateDialog<DialogView>(DialogEnum.Normal, this, dialogData);
+        DialogHandler.Instance.CreateDialog<DialogView>(DialogEnum.Normal, this, dialogData);
     }
 
     /// <summary>

@@ -18,7 +18,7 @@ public class MiniGameAccountHookCpt : BaseMonoBehaviour
         //如果撞到钱了
         if (money)
         {
-            audioHandler.PlaySound(AudioSoundEnum.HitCoin);
+            AudioHandler.Instance.PlaySound(AudioSoundEnum.HitCoin);
             money.transform.SetParent(transform);
             ejectorCpt.Recycle();
             return;
@@ -28,7 +28,7 @@ public class MiniGameAccountHookCpt : BaseMonoBehaviour
         //如果撞到墙了
         if (wall)
         {
-            audioHandler.PlaySound(AudioSoundEnum.HitWall);
+            AudioHandler.Instance.PlaySound(AudioSoundEnum.HitWall);
             ejectorCpt.Recycle();
         }
     }

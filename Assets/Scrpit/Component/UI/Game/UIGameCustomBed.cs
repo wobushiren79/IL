@@ -251,7 +251,7 @@ public class UIGameCustomBed : UIBaseOne, StoreInfoManager.ICallBack, IRadioGrou
             moneyStr += customPriceS + GameCommonInfo.GetUITextById(18);
         }
         dialogData.content = string.Format(GameCommonInfo.GetUITextById(3103), moneyStr);
-        uiGameManager.dialogManager.CreateDialog<DialogView>(DialogEnum.Normal, this, dialogData);
+        DialogHandler.Instance.CreateDialog<DialogView>(DialogEnum.Normal, this, dialogData);
     }
 
 
@@ -306,7 +306,7 @@ public class UIGameCustomBed : UIBaseOne, StoreInfoManager.ICallBack, IRadioGrou
             AudioHandler.Instance.PlaySound(AudioSoundEnum.Reward);
 
             DialogBean dialogData = new DialogBean();
-            FindBedDialogView findBedDialog = uiGameManager.dialogManager.CreateDialog<FindBedDialogView>(DialogEnum.FindBed, this, dialogData);
+            FindBedDialogView findBedDialog = DialogHandler.Instance.CreateDialog<FindBedDialogView>(DialogEnum.FindBed, this, dialogData);
             //如果幸运值生成数据
             gameData.userCharacter.GetAttributes(out CharacterAttributesBean characterAttributes);
             BuildBedBean buildBedData = customBedData.RandomDataByLucky(characterAttributes.lucky);

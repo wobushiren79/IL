@@ -257,7 +257,7 @@ public class ItemTownBankExchangeCpt : ItemGameBaseCpt, DialogView.IDialogCallBa
         DialogBean dialogBean = new DialogBean();
         mExchangeMoneyStr = exchangeMoney + moneyNewUnit + "";
         dialogBean.content = string.Format(GameCommonInfo.GetUITextById(3041), payMoney + moneyOldUnit + "", mExchangeMoneyStr);
-        dialogManager.CreateDialog<DialogView>(DialogEnum.Normal, this, dialogBean);
+        DialogHandler.Instance.CreateDialog<DialogView>(DialogEnum.Normal, this, dialogBean);
     }
 
     private long mPayMoneyL = 0;

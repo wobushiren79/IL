@@ -99,6 +99,6 @@ public class ItemTownStoreCpt : ItemGameBaseCpt
     {
         UIGameManager uiGameManager = GetUIManager<UIGameManager>();
         AudioHandler audioHandler = AudioHandler.Instance;
-        audioHandler.PlaySound(AudioSoundEnum.ButtonForNormal);
+        AudioHandler.Instance.PlaySound(AudioSoundEnum.ButtonForNormal);
     }
 }

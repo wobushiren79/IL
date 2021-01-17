@@ -182,7 +182,7 @@ public class ControlForBuildCpt : BaseControl
     /// <param name="buildBedData"></param>
     public void ShowBuildItem(long id,BuildBedBean buildBedData)
     {
-        audioHandler.PlaySound(AudioSoundEnum.ButtonForNormal);
+        AudioHandler.Instance.PlaySound(AudioSoundEnum.ButtonForNormal);
         //先删除原有可能已经展示的建筑
         ClearBuildItem();
         //建造建筑
@@ -349,7 +349,7 @@ public class ControlForBuildCpt : BaseControl
             return;
         if (Input.GetButtonDown(InputInfo.Confirm))
         {
-            audioHandler.PlaySound(AudioSoundEnum.Set);
+            AudioHandler.Instance.PlaySound(AudioSoundEnum.Set);
         }
         if (Input.GetButtonDown(InputInfo.Confirm) || Input.GetButton(InputInfo.Confirm))
         {
@@ -359,7 +359,7 @@ public class ControlForBuildCpt : BaseControl
             //能建造
             if (isCanBuild)
             {
-                //audioHandler.PlaySound(AudioSoundEnum.Set);
+                //AudioHandler.Instance.PlaySound(AudioSoundEnum.Set);
                 //镜头正对建造点
                 //SetFollowPosition(buildPosition);
                 //建筑物位置设置

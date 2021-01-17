@@ -50,7 +50,7 @@ public class MiniGameBarrageEjectorCpt : BaseMonoBehaviour
     /// <param name="launchType"></param>
     public void StartLaunch(LaunchTypeEnum launchType, MiniGameBarrageBulletTypeEnum bulletType, Vector3 targetPositon, float launchSpeed)
     {
-        audioHandler.PlaySound(AudioSoundEnum.Shot);
+        AudioHandler.Instance.PlaySound(AudioSoundEnum.Shot);
         animEjector.SetTrigger("Launch");
         switch (launchType)
         {

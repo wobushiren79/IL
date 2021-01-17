@@ -34,7 +34,7 @@ public class ItemTownCandidateCpt : ItemGameBaseCpt, DialogView.IDialogCallBack
         DialogManager dialogManager = uiGameManager.dialogManager;
         AudioHandler audioHandler = AudioHandler.Instance;
 
-        audioHandler.PlaySound(AudioSoundEnum.ButtonForNormal);
+        AudioHandler.Instance.PlaySound(AudioSoundEnum.ButtonForNormal);
         //检测是否超过人员上限
         if (gameDataManager == null)
             return;
@@ -46,7 +46,7 @@ public class ItemTownCandidateCpt : ItemGameBaseCpt, DialogView.IDialogCallBack
         //确认
         DialogBean dialogBean = new DialogBean();
         dialogBean.content = string.Format(GameCommonInfo.GetUITextById(3061), characterData.baseInfo.priceS + "", characterData.baseInfo.name + "");
-        dialogManager.CreateDialog<DialogView>(DialogEnum.Normal, this, dialogBean);
+        DialogHandler.Instance.CreateDialog<DialogView>(DialogEnum.Normal, this, dialogBean);
     }
 
     public void SetData(CharacterBean characterData)

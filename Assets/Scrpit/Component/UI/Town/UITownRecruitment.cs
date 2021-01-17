@@ -127,7 +127,7 @@ public class UITownRecruitment : UIBaseOne, DialogView.IDialogCallBack
         pickMoneyS = 0;
         DialogBean dialogData = new DialogBean();
         dialogData.title = GameCommonInfo.GetUITextById(3062);
-        PickForMoneyDialogView pickForMoneyDialog = uiGameManager.dialogManager.CreateDialog<PickForMoneyDialogView>(DialogEnum.PickForMoney, this, dialogData);
+        PickForMoneyDialogView pickForMoneyDialog = DialogHandler.Instance.CreateDialog<PickForMoneyDialogView>(DialogEnum.PickForMoney, this, dialogData);
         pickForMoneyDialog.SetData(1, 1, 100);
         pickForMoneyDialog.SetMaxMoney(99999,99999,99999);
     }
@@ -185,7 +185,7 @@ public class UITownRecruitment : UIBaseOne, DialogView.IDialogCallBack
         DialogBean dialogData = new DialogBean();
         //根据金额获取角色
         CharacterBean characterData = CharacterBean.CreateRandomWorkerDataByPrice(pickMoneyL, pickMoneyM, pickMoneyS);
-        FindCharacterDialogView findCharacterDialog = dialogManager.CreateDialog<FindCharacterDialogView>(DialogEnum.FindCharacter, this, dialogData);
+        FindCharacterDialogView findCharacterDialog = DialogHandler.Instance.CreateDialog<FindCharacterDialogView>(DialogEnum.FindCharacter, this, dialogData);
         findCharacterDialog.SetData(characterData);
         AudioHandler.Instance.PlaySound(AudioSoundEnum.Reward);
     }

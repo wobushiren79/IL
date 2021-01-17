@@ -54,7 +54,7 @@ public class ItemMiniGameCookingSelectMenuCpt : ItemGameBaseCpt, DialogView.IDia
         AudioHandler.Instance.PlaySound(AudioSoundEnum.ButtonForNormal);
         DialogBean dialogData = new DialogBean();
         dialogData.content = string.Format(GameCommonInfo.GetUITextById(3051), menuInfo.name);
-        dialogManager.CreateDialog<DialogView>(DialogEnum.Normal,this, dialogData);
+        DialogHandler.Instance.CreateDialog<DialogView>(DialogEnum.Normal,this, dialogData);
     }
 
     #region 确认选择回调

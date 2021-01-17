@@ -19,12 +19,6 @@ public class ItemGameDataCpt : ItemGameBaseCpt, DialogView.IDialogCallBack
     public CharacterUICpt characterUI;
     public GameDataSimpleBean gameData;
 
-    protected DialogManager dialogManager;
-
-    private void Awake()
-    {
-        dialogManager = GetUIManager<UIGameManager>().dialogManager;
-    }
 
     private void Start()
     {
@@ -163,7 +157,7 @@ public class ItemGameDataCpt : ItemGameBaseCpt, DialogView.IDialogCallBack
 
         DialogBean dialogData = new DialogBean();
         dialogData.content = GameCommonInfo.GetUITextById(3011);
-        dialogManager.CreateDialog<DialogView>(DialogEnum.Normal, this, dialogData);
+        DialogHandler.Instance.CreateDialog<DialogView>(DialogEnum.Normal, this, dialogData);
     }
 
     #region 弹窗确认回调

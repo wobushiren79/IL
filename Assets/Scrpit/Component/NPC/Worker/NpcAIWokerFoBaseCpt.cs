@@ -64,7 +64,7 @@ public class NpcAIWokerFoBaseCpt : BaseMonoBehaviour
                 toastId = 1125;
                 break;
         }
-        audioHandler.PlaySound(AudioSoundEnum.Reward);
+        AudioHandler.Instance.PlaySound(AudioSoundEnum.Reward);
         string levelupStr = string.Format(GameCommonInfo.GetUITextById(toastId), npcAIWorker.characterData.baseInfo.name);
         toastManager.ToastHint(iconDataManager.GetIconSpriteByName(iconStr), levelupStr);
     }

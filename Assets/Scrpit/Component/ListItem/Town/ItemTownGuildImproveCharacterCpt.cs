@@ -309,7 +309,7 @@ public class ItemTownGuildImproveCharacterCpt : ItemGameBaseCpt, DialogView.IDia
         }
         dialogData.content = contentStr;
         dialogData.dialogPosition = type;
-        dialogManager.CreateDialog<DialogView>(DialogEnum.Normal, this, dialogData);
+        DialogHandler.Instance.CreateDialog<DialogView>(DialogEnum.Normal, this, dialogData);
     }
 
     #region 弹窗回调
@@ -367,7 +367,7 @@ public class ItemTownGuildImproveCharacterCpt : ItemGameBaseCpt, DialogView.IDia
             if (isWin)
             {
                 toastManager.ToastHint(GameCommonInfo.GetUITextById(7021));
-                audioHandler.PlaySound(AudioSoundEnum.Reward);
+                AudioHandler.Instance.PlaySound(AudioSoundEnum.Reward);
                 //完成奖励
                 RewardTypeEnumTools.CompleteReward(toastManager, npcInfoManager, iconDataManager, innBuildManager, gameDataManager, miniGameData.GetListUserCharacterData(), miniGameData.listReward);
 
@@ -407,7 +407,7 @@ public class ItemTownGuildImproveCharacterCpt : ItemGameBaseCpt, DialogView.IDia
             else
             {
                 toastManager.ToastHint(GameCommonInfo.GetUITextById(7022));
-                audioHandler.PlaySound(AudioSoundEnum.Passive);
+                AudioHandler.Instance.PlaySound(AudioSoundEnum.Passive);
             }
         }
     }

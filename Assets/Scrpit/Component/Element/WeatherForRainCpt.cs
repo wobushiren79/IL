@@ -88,7 +88,7 @@ public class WeatherForRainCpt : WeatherCpt
             yield return new WaitForSeconds(Random.Range(10, 30));
             //打雷特效
             if (audioHandler != null)
-                audioHandler.PlaySound(AudioSoundEnum.Thunderstorm);
+                AudioHandler.Instance.PlaySound(AudioSoundEnum.Thunderstorm);
             float intensity = 0;
             DOTween
                 .To(() => intensity, x => { intensity = x; lightThunder.intensity = intensity; }, 0.5f, 1f)

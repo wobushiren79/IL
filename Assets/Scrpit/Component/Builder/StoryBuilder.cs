@@ -176,7 +176,7 @@ public class StoryBuilder : BaseMonoBehaviour, StoryInfoManager.CallBack
                     break;
                 case StoryInfoDetailsBean.StoryInfoDetailsTypeEnum.AudioSound:
                     //播放音效
-                    audioHandler.PlaySound(itemData.GetAudioSound());
+                    AudioHandler.Instance.PlaySound(itemData.GetAudioSound());
                     break;
             }
         }

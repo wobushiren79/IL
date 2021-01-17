@@ -587,7 +587,7 @@ public class InnHandler : BaseMonoBehaviour, IBaseObserver
         //播放音效
         if (isPlaySound)
         {
-            audioHandler.PlaySound(AudioSoundEnum.PayMoney);
+            AudioHandler.Instance.PlaySound(AudioSoundEnum.PayMoney);
             //展示特效
             innPayHandler.ShowPayEffects(payEffectsPosition, payMoneyL, payMoneyM, payMoneyS);
         }

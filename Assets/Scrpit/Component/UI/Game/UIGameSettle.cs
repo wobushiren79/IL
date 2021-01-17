@@ -208,7 +208,7 @@ public class UIGameSettle : BaseUIComponent
                 itemData.priceM,
                 itemData.priceS);
         }
-        audioHandler.PlaySound(AudioSoundEnum.PayMoney);
+        AudioHandler.Instance.PlaySound(AudioSoundEnum.PayMoney);
 
 
         innRecord.GetTotalIncome(out long incomeL, out long incomeM, out long incomeS);
