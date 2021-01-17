@@ -181,7 +181,7 @@ public class NpcCustomerBuilder : NpcNormalBuilder, IBaseObserver
                 characterData = listLeader[0];
             }
             //随机生成身体数据
-            characterData.body.CreateRandomEye(characterBodyManager);
+            characterData.body.CreateRandomEye();
 
             GameObject npcObj = Instantiate(objContainer, objGuestTeamModel);
 

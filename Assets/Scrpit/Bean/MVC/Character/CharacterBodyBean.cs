@@ -33,27 +33,33 @@ public class CharacterBodyBean
         mouthColor = ColorBean.White();
     }
 
-    public void CreateRandomBody(CharacterBodyManager characterBodyManager)
+    public void CreateRandomBody()
     {
         //随机生成性别
         sex = UnityEngine.Random.Range(1, 3);
         //随机生成头型
-
-        hair = characterBodyManager.GetRandomHairStr();
-        hairColor = ColorBean.Random();
-
+        CreateRandomHair();
         //随机生成眼睛
-        CreateRandomEye(characterBodyManager);
-
+        CreateRandomEye();
         //随机生成嘴巴
-        mouth = characterBodyManager.GetRandomMouthStr();
-        mouthColor = ColorBean.Random();
+        CreateRandomMouth();
     }
 
-    public void CreateRandomEye(CharacterBodyManager characterBodyManager)
+    public void CreateRandomEye()
     {
-        //随机生成眼睛
-        eye = characterBodyManager.GetRandomEyeStr();
+        eye = CharacterBodyHandler.Instance.manager.GetRandomEyeStr();
         eyeColor = ColorBean.Random();
+    }
+
+    public void CreateRandomHair()
+    {
+        hair = CharacterBodyHandler.Instance.manager.GetRandomHairStr();
+        hairColor = ColorBean.Random();
+    }
+
+    public void CreateRandomMouth()
+    {
+        mouth = CharacterBodyHandler.Instance.manager.GetRandomMouthStr();
+        mouthColor = ColorBean.Random();
     }
 }

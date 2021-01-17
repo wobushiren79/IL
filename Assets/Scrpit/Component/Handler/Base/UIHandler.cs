@@ -14,7 +14,7 @@ public class UIHandler : BaseHandler<UIHandler, UIManager>
         canvas = CptUtil.AddCpt<Canvas>(gameObject);
         canvasScaler = CptUtil.AddCpt<CanvasScaler>(gameObject);
         graphicRaycaster = CptUtil.AddCpt<GraphicRaycaster>(gameObject);
-        ChangeUIRenderMode(RenderMode.ScreenSpaceOverlay);
+        ChangeUIRenderMode(RenderMode.ScreenSpaceCamera);
     }
 
 
@@ -27,6 +27,9 @@ public class UIHandler : BaseHandler<UIHandler, UIManager>
                 break;
             case RenderMode.ScreenSpaceCamera:
                 canvas.worldCamera = Camera.main;
+                canvas.planeDistance = 1;
+                canvas.sortingLayerName = "UI";
+                canvas.sortingOrder = 1;
                 break;
             case RenderMode.WorldSpace:
                 break;

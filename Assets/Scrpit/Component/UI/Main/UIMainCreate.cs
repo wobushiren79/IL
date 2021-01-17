@@ -123,8 +123,7 @@ public class UIMainCreate : BaseUIComponent,
     public void InitData()
     {
         //初始化可选择头型数据
-        Sprite[] listHair = new Sprite[uiGameManager.characterBodyManager.hairAtlas.spriteCount];
-        uiGameManager.characterBodyManager.hairAtlas.GetSprites(listHair);
+        List<Sprite> listHair = CharacterBodyHandler.Instance.manager.GetCreateCharacterHair();
         listSelectHair = new List<IconBean>();
         foreach (Sprite itemSprite in listHair)
         {
@@ -136,8 +135,7 @@ public class UIMainCreate : BaseUIComponent,
         }
         ChangeSelectPosition(selectHair, 0);
         //初始化可选择眼睛
-        Sprite[] listEye = new Sprite[uiGameManager.characterBodyManager.eyeAtlas.spriteCount];
-        uiGameManager.characterBodyManager.eyeAtlas.GetSprites(listEye);
+        List<Sprite> listEye = CharacterBodyHandler.Instance.manager.GetCreateCharacterEye();
         listSelectEye = new List<IconBean>();
         foreach (Sprite itemSprite in listEye)
         {
@@ -149,8 +147,7 @@ public class UIMainCreate : BaseUIComponent,
         }
         ChangeSelectPosition(selectEye, 0);
         //初始化可选择嘴巴
-        Sprite[] listMouth = new Sprite[uiGameManager.characterBodyManager.mouthAtlas.spriteCount];
-        uiGameManager.characterBodyManager.mouthAtlas.GetSprites(listMouth);
+        List<Sprite> listMouth = CharacterBodyHandler.Instance.manager.GetCreateCharacterMouth();
         listSelectMouth = new List<IconBean>();
         foreach (Sprite itemSprite in listMouth)
         {

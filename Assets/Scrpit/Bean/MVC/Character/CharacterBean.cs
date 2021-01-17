@@ -22,7 +22,7 @@ public class CharacterBean
     /// </summary>
     /// <param name="characterBodyManager"></param>
     /// <returns></returns>
-    public static CharacterBean CreateRandomEnemyData(CharacterBodyManager characterBodyManager,int baseLife, int baseAttributes,int equipLevel)
+    public static CharacterBean CreateRandomEnemyData(int baseLife, int baseAttributes,int equipLevel)
     {
         CharacterBean characterData = new CharacterBean();
         characterData.baseInfo.characterId = SystemUtil.GetUUID(SystemUtil.UUIDTypeEnum.N);
@@ -31,7 +31,7 @@ public class CharacterBean
         characterData.baseInfo.name = RandomUtil.GetRandomGenerateChineseWord(UnityEngine.Random.Range(2, 4));
 
         //随机身体数据
-        characterData.body.CreateRandomBody(characterBodyManager);
+        characterData.body.CreateRandomBody();
 
         //根据性别装备服装
         GetRandomDressByLevel(equipLevel, out long randomHat, out long randomClothes, out long randomShoes);
@@ -55,7 +55,7 @@ public class CharacterBean
     /// </summary>
     /// <param name="type"></param>
     /// <returns></returns>
-    public static CharacterBean CreateRandomWorkerData(CharacterBodyManager characterBodyManager)
+    public static CharacterBean CreateRandomWorkerData()
     {
         CharacterBean characterData = new CharacterBean();
         characterData.baseInfo.characterId = SystemUtil.GetUUID(SystemUtil.UUIDTypeEnum.N);
@@ -73,7 +73,7 @@ public class CharacterBean
             1, 5,
             1, 5);
         //随机身体数据
-        characterData.body.CreateRandomBody(characterBodyManager);
+        characterData.body.CreateRandomBody();
         //根据性别装备服装
         GetRandomDressByLevel(0, out long randomHat, out long randomClothes, out long randomShoes);
         characterData.equips.clothesId = randomClothes;
@@ -97,7 +97,7 @@ public class CharacterBean
     /// <param name="findPriceM"></param>
     /// <param name="findPriceS"></param>
     /// <returns></returns>
-    public static CharacterBean CreateRandomWorkerDataByPrice(CharacterBodyManager characterBodyManager, long findPriceL, long findPriceM, long findPriceS)
+    public static CharacterBean CreateRandomWorkerDataByPrice(long findPriceL, long findPriceM, long findPriceS)
     {
         CharacterBean characterData = new CharacterBean();
         //设置ID
@@ -225,7 +225,7 @@ public class CharacterBean
             minForce, maxForce,
             minLucky, maxLucky);
         //随机身体数据
-        characterData.body.CreateRandomBody(characterBodyManager);
+        characterData.body.CreateRandomBody();
         //根据性别装备服装
         if (characterData.body.sex == 1)
         {

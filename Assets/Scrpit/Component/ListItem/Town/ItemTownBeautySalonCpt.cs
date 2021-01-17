@@ -53,25 +53,25 @@ public class ItemTownBeautySalonCpt : ItemGameBaseCpt
         {
             case BodyTypeEnum.Hair:
                 priceM = 1;
-                spIcon = uiGameManager.characterBodyManager.GetHairSpriteByName(data);
+                spIcon = CharacterBodyHandler.Instance.manager.GetHairSpriteByName(data);
                 break;
             case BodyTypeEnum.Eye:
                 priceL = 10;
-                spIcon = uiGameManager.characterBodyManager.GetEyeSpriteByName(data);
+                spIcon = CharacterBodyHandler.Instance.manager.GetEyeSpriteByName(data);
                 break;
             case BodyTypeEnum.Mouth:
                 priceM = 10;
-                spIcon = uiGameManager.characterBodyManager.GetMouthSpriteByName(data);
+                spIcon = CharacterBodyHandler.Instance.manager.GetMouthSpriteByName(data);
                 break;
             case BodyTypeEnum.Skin:
                 priceL = 100;
                 if (data.Equals("Def"))
                 {
-                    spIcon = uiGameManager.characterBodyManager.GetSkinSpriteByName("character_body_man");
+                    spIcon = CharacterBodyHandler.Instance.manager.GetTrunkSpriteByName("character_body_man");
                 }
                 else
                 {
-                    spIcon = uiGameManager.characterBodyManager.GetSkinSpriteByName(data+"_1");
+                    spIcon = CharacterBodyHandler.Instance.manager.GetTrunkSpriteByName(data+"_1");
                 }
                 break;
         }

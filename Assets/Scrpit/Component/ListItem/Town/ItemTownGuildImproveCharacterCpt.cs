@@ -57,7 +57,6 @@ public class ItemTownGuildImproveCharacterCpt : ItemGameBaseCpt, DialogView.IDia
     protected InnBuildManager innBuildManager;
     protected ControlHandler controlHandler;
     protected AudioHandler audioHandler;
-    protected CharacterBodyManager characterBodyManager;
 
     private void Awake()
     {
@@ -69,7 +68,6 @@ public class ItemTownGuildImproveCharacterCpt : ItemGameBaseCpt, DialogView.IDia
         dialogManager = uiGameManager.dialogManager;
         toastManager = uiGameManager.toastManager;
         controlHandler = uiGameManager.controlHandler;
-        characterBodyManager = uiGameManager.characterBodyManager;
         gameDataHandler = uiGameManager.gameDataHandler;
         iconDataManager = uiGameManager.iconDataManager;
         innBuildManager = uiGameManager.innBuildManager;
@@ -471,7 +469,7 @@ public class ItemTownGuildImproveCharacterCpt : ItemGameBaseCpt, DialogView.IDia
         int equipLevel = (characterWorkerData.GetLevel() + 1) / 2;
         for (int i = 0; i < UnityEngine.Random.Range(1, 16); i++)
         {
-            CharacterBean randomEnemy = CharacterBean.CreateRandomEnemyData(characterBodyManager,100, 10 , equipLevel);
+            CharacterBean randomEnemy = CharacterBean.CreateRandomEnemyData(100, 10 , equipLevel);
             listEnemyData.Add(randomEnemy);
         }
         miniGameData.InitData(gameItemsManager, characterData, listEnemyData);

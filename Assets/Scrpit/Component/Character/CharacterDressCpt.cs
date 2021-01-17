@@ -18,8 +18,6 @@ public class CharacterDressCpt : BaseMonoBehaviour
 
     //角色属性
     public CharacterEquipBean characterEquipData;
-    //服装管理
-    protected CharacterDressManager characterDressManager;
     //道具管理
     protected GameItemsManager gameItemsManager;
 
@@ -39,7 +37,6 @@ public class CharacterDressCpt : BaseMonoBehaviour
 
     public void Awake()
     {
-        characterDressManager = Find<CharacterDressManager>(ImportantTypeEnum.CharacterManager);
         gameItemsManager = Find<GameItemsManager>(ImportantTypeEnum.GameItemsManager);
 
         aocForMask = new AnimatorOverrideController(animForMask.runtimeAnimatorController);
@@ -88,7 +85,7 @@ public class CharacterDressCpt : BaseMonoBehaviour
         else
         {
             sprHair.color = new Color(sprHair.color.r, sprHair.color.g, sprHair.color.b, 0);
-            hatSP = characterDressManager.GetHatSpriteByName(itemsInfo.icon_key);
+            hatSP = CharacterDressHandler.Instance.manager.GetHatSpriteByName(itemsInfo.icon_key);
             //设置装备数据
             if (characterEquipData == null)
                 characterEquipData = new CharacterEquipBean();
@@ -113,7 +110,7 @@ public class CharacterDressCpt : BaseMonoBehaviour
         else
         {
             if (itemsInfo.id != 0)
-                maskSP = characterDressManager.GetMaskSpriteByName(itemsInfo.icon_key);
+                maskSP = CharacterDressHandler.Instance.manager.GetMaskSpriteByName(itemsInfo.icon_key);
             //设置装备数据
             if (characterEquipData == null)
                 characterEquipData = new CharacterEquipBean();
@@ -146,7 +143,7 @@ public class CharacterDressCpt : BaseMonoBehaviour
         {
             if (itemsInfo.id != 0)
             {
-                clothesSP = characterDressManager.GetClothesSpriteByName(itemsInfo.icon_key);
+                clothesSP = CharacterDressHandler.Instance.manager.GetClothesSpriteByName(itemsInfo.icon_key);
             }
                
             //设置装备数据
@@ -179,7 +176,7 @@ public class CharacterDressCpt : BaseMonoBehaviour
             shoesSP = null;
         else
         {
-            shoesSP = characterDressManager.GetShoesSpriteByName(itemsInfo.icon_key);
+            shoesSP = CharacterDressHandler.Instance.manager.GetShoesSpriteByName(itemsInfo.icon_key);
             //设置装备数据
             if (characterEquipData == null)
                 characterEquipData = new CharacterEquipBean();
@@ -247,7 +244,7 @@ public class CharacterDressCpt : BaseMonoBehaviour
                 case GeneralEnum.Hat:
                 case GeneralEnum.Clothes:
                 case GeneralEnum.Shoes:
-                    animationClip = characterDressManager.GetAnimByName(itemType, itemsInfo.anim_key);
+                    animationClip = CharacterDressHandler.Instance.manager.GetAnimByName(itemType, itemsInfo.anim_key);
                     break;
                 case GeneralEnum.Chef:
                 case GeneralEnum.Waiter:

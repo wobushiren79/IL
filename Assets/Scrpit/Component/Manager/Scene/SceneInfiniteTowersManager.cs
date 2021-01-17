@@ -144,7 +144,7 @@ public class SceneInfiniteTowersManager : BaseMonoBehaviour
                 CharacterBean memberData = npcInfoManager.GetCharacterDataById(itemMemberId);
                 if (memberData != null)
                 {
-                    memberData.body.CreateRandomBody(characterBodyManager);
+                    memberData.body.CreateRandomBody();
                     listData.Add(memberData);
                 }
             }
@@ -188,13 +188,13 @@ public class SceneInfiniteTowersManager : BaseMonoBehaviour
 
             //随机生成身体数据
             CharacterBean characterOne = ClassUtil.DeepCopyByReflect(baseCharacterData);
-            characterOne.body.CreateRandomBody(characterBodyManager);
+            characterOne.body.CreateRandomBody();
             listData.Add(characterOne);
             CharacterBean characterTwo = ClassUtil.DeepCopyByReflect(baseCharacterData);
-            characterTwo.body.CreateRandomBody(characterBodyManager);
+            characterTwo.body.CreateRandomBody();
             listData.Add(characterTwo);
             CharacterBean characterThree = ClassUtil.DeepCopyByReflect(baseCharacterData);
-            characterThree.body.CreateRandomBody(characterBodyManager);
+            characterThree.body.CreateRandomBody();
             listData.Add(characterThree);
 
         }

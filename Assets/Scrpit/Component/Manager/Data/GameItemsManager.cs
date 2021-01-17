@@ -4,16 +4,17 @@ using System.Collections.Generic;
 using UnityEngine.U2D;
 public class GameItemsManager : BaseManager, IItemsInfoView
 {
-    //装备图标
+    //物品图标
     public SpriteAtlas itemsAtlas;
-    //public IconBeanDictionary listItemsIcon;
-    //装备控制
-    public ItemsInfoController itemsInfoController;
-    //装备数据
-    public Dictionary<long, ItemsInfoBean> listDataItems;
-    //动画列表
-    public AnimBeanDictionary listItemsAnim;
+    //物品图标
+    public IconBeanDictionary listItemsIcon = new IconBeanDictionary();
+    //物品动画列表
+    public AnimBeanDictionary listItemsAnim = new AnimBeanDictionary();
 
+    //物品控制
+    public ItemsInfoController itemsInfoController;
+    //物品数据
+    public Dictionary<long, ItemsInfoBean> listDataItems;
 
 
     public void Awake()
@@ -196,7 +197,7 @@ public class GameItemsManager : BaseManager, IItemsInfoView
     /// <returns></returns>
     public Sprite GetItemsSpriteByName(string name)
     {
-        return GetSpriteByName(name, itemsAtlas);
+        return GetSpriteDataByName(name);
     }
 
     /// <summary>
@@ -206,7 +207,49 @@ public class GameItemsManager : BaseManager, IItemsInfoView
     /// <returns></returns>
     public AnimationClip GetItemsAnimClipByName(string name)
     {
-        return GetAnimClipByName(name, listItemsAnim);
+        return GetAnimClipByName(name);
+    }
+
+    protected Sprite GetSpriteDataByName(string name)
+    {
+        if (name == null)
+            return null;
+
+        if (listItemsIcon.TryGetValue(name, out Sprite value))
+        {
+            return value;
+        }
+        if (itemsAtlas != null)
+        {
+            Sprite itemSprite = GetSpriteByName(name, itemsAtlas);
+            if (itemSprite != null)
+                listItemsIcon.Add(name, itemSprite);
+            return itemSprite;
+        }
+        string atlasName = "AtlasForItems";
+
+        itemsAtlas = LoadAssetUtil.SyncLoadAsset<SpriteAtlas>("sprite/items", atlasName);
+
+        if (itemsAtlas != null)
+            return GetSpriteDataByName(name);
+        return null;
+    }
+
+    protected AnimationClip GetAnimClipByName(string name)
+    {
+        if (name == null)
+            return null;
+        if (listItemsAnim.TryGetValue(name, out AnimationClip value))
+        {
+            return value;
+        }
+
+        AnimationClip anim = LoadAssetUtil.SyncLoadAsset<AnimationClip>("anim/items", name);
+        if (anim != null)
+        {
+            listItemsAnim.Add(name, anim);
+        }
+        return anim;
     }
 
     #region   装备获取回调

@@ -21,13 +21,7 @@ public class CharacterBodyCpt : BaseMonoBehaviour
 
     //角色属性
     public CharacterBodyBean characterBodyData;
-    //角色身体资源管理
-    protected CharacterBodyManager characterBodyManager;
 
-    public void Awake()
-    {
-        characterBodyManager = Find<CharacterBodyManager>(ImportantTypeEnum.CharacterManager);
-    }
 
     /// <summary>
     /// 获取身体属性
@@ -100,9 +94,9 @@ public class CharacterBodyCpt : BaseMonoBehaviour
     /// <param name="hairColor"></param>
     public void SetHair(string hair, Color hairColor)
     {
-        if (characterBodyManager == null || sprHair == null)
+        if (sprHair == null)
             return;
-        Sprite spHair = characterBodyManager.GetHairSpriteByName(hair);
+        Sprite spHair = CharacterBodyHandler.Instance.manager.GetHairSpriteByName(hair);
         if (hair != null)
             sprHair.sprite = spHair;
         sprHair.color = hairColor;
@@ -133,9 +127,9 @@ public class CharacterBodyCpt : BaseMonoBehaviour
     /// <param name="mouthColor"></param>
     public void SetEye(string eye, Color eyeColor, bool isSave)
     {
-        if (characterBodyManager == null || sprEye == null)
+        if (sprEye == null)
             return;
-        Sprite spEye = characterBodyManager.GetEyeSpriteByName(eye);
+        Sprite spEye = CharacterBodyHandler.Instance.manager.GetEyeSpriteByName(eye);
         if (eye != null)
             sprEye.sprite = spEye;
         sprEye.color = eyeColor;
@@ -150,7 +144,7 @@ public class CharacterBodyCpt : BaseMonoBehaviour
     }
     public void SetEye(string eye)
     {
-        if (characterBodyManager == null || sprEye == null)
+        if (sprEye == null)
             return;
         SetEye(eye, sprEye.color, true);
     }
@@ -173,9 +167,9 @@ public class CharacterBodyCpt : BaseMonoBehaviour
     /// <param name="mouthColor"></param>
     public void SetMouth(string mouth, Color mouthColor)
     {
-        if (characterBodyManager == null || sprMouth == null)
+        if (sprMouth == null)
             return;
-        Sprite spMouth = characterBodyManager.GetMouthSpriteByName(mouth);
+        Sprite spMouth = CharacterBodyHandler.Instance.manager.GetMouthSpriteByName(mouth);
         if (mouth != null)
             sprMouth.sprite = spMouth;
         sprMouth.color = mouthColor;
@@ -188,7 +182,7 @@ public class CharacterBodyCpt : BaseMonoBehaviour
     }
     public void SetMouth(string mouth)
     {
-        if (characterBodyManager == null || sprMouth == null)
+        if (sprMouth == null)
             return;
         SetMouth(mouth, sprMouth.color);
     }
@@ -205,45 +199,43 @@ public class CharacterBodyCpt : BaseMonoBehaviour
     /// <param name="sex">0未知 1男 2女 3中性</param>
     public void SetSex(int sex, string otherSkin)
     {
-        if (characterBodyManager == null)
-            return;
         Sprite spTrunk = null;
         if (CheckUtil.StringIsNull(otherSkin)||otherSkin.Equals("Def"))
         {
             switch (sex)
             {
                 case 0:
-                    spTrunk = characterBodyManager.GetTrunkSpriteByName("character_body_man");
+                    spTrunk = CharacterBodyHandler.Instance.manager.GetTrunkSpriteByName("character_body_man");
                     break;
                 case 1:
-                    spTrunk = characterBodyManager.GetTrunkSpriteByName("character_body_man");
+                    spTrunk = CharacterBodyHandler.Instance.manager.GetTrunkSpriteByName("character_body_man");
                     break;
                 case 2:
-                    spTrunk = characterBodyManager.GetTrunkSpriteByName("character_body_woman");
+                    spTrunk = CharacterBodyHandler.Instance.manager.GetTrunkSpriteByName("character_body_woman");
                     break;
                 case 3:
-                    spTrunk = characterBodyManager.GetTrunkSpriteByName("character_body_man");
+                    spTrunk = CharacterBodyHandler.Instance.manager.GetTrunkSpriteByName("character_body_man");
                     break;
             }
             if (sprTrunk != null && spTrunk != null)
                 sprTrunk.sprite = spTrunk;
             if (sprHead != null)
-                sprHead.sprite = characterBodyManager.GetTrunkSpriteByName("character_head");
+                sprHead.sprite = CharacterBodyHandler.Instance.manager.GetTrunkSpriteByName("character_head");
             if (sprFootLeft != null)
-                sprFootLeft.sprite = characterBodyManager.GetTrunkSpriteByName("character_body_left_foot");
+                sprFootLeft.sprite = CharacterBodyHandler.Instance.manager.GetTrunkSpriteByName("character_body_left_foot");
             if (sprFootRight != null)
-                sprFootRight.sprite = characterBodyManager.GetTrunkSpriteByName("character_body_right_foot");
+                sprFootRight.sprite = CharacterBodyHandler.Instance.manager.GetTrunkSpriteByName("character_body_right_foot");
         }
         else
         {
             if (sprHead != null)
-                sprHead.sprite = characterBodyManager.GetTrunkSpriteByName(otherSkin + "_0");
+                sprHead.sprite = CharacterBodyHandler.Instance.manager.GetTrunkSpriteByName(otherSkin + "_0");
             if (sprTrunk != null)
-                sprTrunk.sprite = characterBodyManager.GetTrunkSpriteByName(otherSkin + "_1");
+                sprTrunk.sprite = CharacterBodyHandler.Instance.manager.GetTrunkSpriteByName(otherSkin + "_1");
             if (sprFootLeft != null)
-                sprFootLeft.sprite = characterBodyManager.GetTrunkSpriteByName(otherSkin + "_2");
+                sprFootLeft.sprite = CharacterBodyHandler.Instance.manager.GetTrunkSpriteByName(otherSkin + "_2");
             if (sprFootRight != null)
-                sprFootRight.sprite = characterBodyManager.GetTrunkSpriteByName(otherSkin + "_3");
+                sprFootRight.sprite = CharacterBodyHandler.Instance.manager.GetTrunkSpriteByName(otherSkin + "_3");
         }
 
         //数据保存

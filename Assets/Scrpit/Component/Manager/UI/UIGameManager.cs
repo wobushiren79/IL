@@ -20,7 +20,6 @@ public class UIGameManager : BaseUIManager
     public GameDataManager gameDataManager;
     public GameItemsManager gameItemsManager;
     public CharacterDressManager characterDressManager;
-    public CharacterBodyManager characterBodyManager;
     public InnBuildManager innBuildManager;
     public InnFoodManager innFoodManager;
     public NpcInfoManager npcInfoManager;
@@ -61,7 +60,6 @@ public class UIGameManager : BaseUIManager
 
         gameItemsManager = Find<GameItemsManager>(ImportantTypeEnum.GameItemsManager);
         characterDressManager = Find<CharacterDressManager>(ImportantTypeEnum.CharacterManager);
-        characterBodyManager = Find<CharacterBodyManager>(ImportantTypeEnum.CharacterManager);
         innBuildManager = Find<InnBuildManager>(ImportantTypeEnum.BuildManager);
         innFoodManager = Find<InnFoodManager>(ImportantTypeEnum.FoodManager);
         npcInfoManager = Find<NpcInfoManager>(ImportantTypeEnum.NpcManager);

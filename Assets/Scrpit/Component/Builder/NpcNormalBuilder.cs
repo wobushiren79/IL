@@ -81,7 +81,7 @@ public class NpcNormalBuilder : BaseMonoBehaviour
         if (characterData == null)
             return null;
         //随机生成身体数据
-        characterData.body.CreateRandomBody(characterBodyManager);
+        characterData.body.CreateRandomBody();
         return BuildNpc(objNpcModel,characterData, startPosition);
     }
 
@@ -100,7 +100,7 @@ public class NpcNormalBuilder : BaseMonoBehaviour
         if (CheckUtil.StringIsNull(characterData.body.eye))
         {
             //随机生成身体数据
-            characterData.body.CreateRandomEye(characterBodyManager);
+            characterData.body.CreateRandomEye();
         }
         baseNpcAI.SetCharacterData(characterData);
         return npcObj;

@@ -276,21 +276,21 @@ public class UITownBeautySalon : UIBaseOne, IRadioGroupCallBack, ItemTownBeautyS
         {
             case "Hair":
                 this.bodyType = BodyTypeEnum.Hair;
-                listSelectData = uiGameManager.characterBodyManager.GetAllHair();
+                listSelectData = CharacterBodyHandler.Instance.manager.GetAllHair();
                 break;
             case "Eye":
                 this.bodyType = BodyTypeEnum.Eye;
-                listSelectData = uiGameManager.characterBodyManager.GetAllEye();
+                listSelectData = CharacterBodyHandler.Instance.manager.GetAllEye();
                 break;
             case "Mouth":
                 this.bodyType = BodyTypeEnum.Mouth;
-                listSelectData = uiGameManager.characterBodyManager.GetAllMouth();
+                listSelectData = CharacterBodyHandler.Instance.manager.GetAllMouth();
                 break;
             case "Skin":
                 this.bodyType = BodyTypeEnum.Skin;
                 listSelectData.Clear();
                 listSelectData.Add("Def");
-                listSelectData.AddRange(uiGameManager.characterBodyManager.GetAllSkin());
+                listSelectData.AddRange(CharacterBodyHandler.Instance.manager.GetAllTrunk());
                 break;
         }
         gridVertical.SetCellCount(listSelectData.Count);

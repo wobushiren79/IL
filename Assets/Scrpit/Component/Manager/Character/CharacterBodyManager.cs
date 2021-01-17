@@ -6,16 +6,17 @@ public class CharacterBodyManager : BaseManager
 {
     //身体列表
     public SpriteAtlas trunkAtlas;
-    //public IconBeanDictionary listIconBodyTrunk;
+    public IconBeanDictionary listIconBodyTrunk = new IconBeanDictionary();
     //头发列表
     public SpriteAtlas hairAtlas;
-    //public IconBeanDictionary listIconBodyHair;
+    public IconBeanDictionary listIconBodyHair = new IconBeanDictionary();
     //眼睛列表
     public SpriteAtlas eyeAtlas;
-    //public IconBeanDictionary listIconBodyEye;
+    public IconBeanDictionary listIconBodyEye = new IconBeanDictionary();
     //嘴巴列表
     public SpriteAtlas mouthAtlas;
-    //public IconBeanDictionary listIconBodyMouth;
+    public IconBeanDictionary listIconBodyMouth = new IconBeanDictionary();
+
 
     /// <summary>
     /// 获取躯干
@@ -24,7 +25,21 @@ public class CharacterBodyManager : BaseManager
     /// <returns></returns>
     public Sprite GetTrunkSpriteByName(string name)
     {
-        return GetSpriteByName(name, trunkAtlas);
+        return GetSpriteDataByName(1, name);
+    }
+
+    /// <summary>
+    /// 获取所有皮肤
+    /// </summary>
+    /// <returns></returns>
+    public List<string> GetAllTrunk()
+    {
+        List<string> listData = new List<string>();
+        for (int i = 1; i < 7; i++)
+        {
+            listData.Add("character_body_" + i);
+        }
+        return listData;
     }
 
     /// <summary>
@@ -34,7 +49,7 @@ public class CharacterBodyManager : BaseManager
     /// <returns></returns>
     public Sprite GetHairSpriteByName(string name)
     {
-        return GetSpriteByName(name, hairAtlas);
+        return GetSpriteDataByName(2, name);
     }
 
     /// <summary>
@@ -45,6 +60,21 @@ public class CharacterBodyManager : BaseManager
     {
         int hairNumber = Random.Range(1, 82);
         return "character_hair_" + hairNumber;
+    }
+
+    /// <summary>
+    /// 获取创建角色头发
+    /// </summary>
+    /// <returns></returns>
+    public List<Sprite> GetCreateCharacterHair()
+    {
+        List<Sprite> listData = new List<Sprite>();
+        for (int i = 1; i < 20; i++)
+        {
+            Sprite sprite = GetHairSpriteByName("character_hair_" + i);
+            listData.Add(sprite);
+        }
+        return listData;
     }
 
     /// <summary>
@@ -60,7 +90,6 @@ public class CharacterBodyManager : BaseManager
         }
         return listData;
     }
-
     /// <summary>
     /// 获取眼睛
     /// </summary>
@@ -68,7 +97,7 @@ public class CharacterBodyManager : BaseManager
     /// <returns></returns>
     public Sprite GetEyeSpriteByName(string name)
     {
-        return GetSpriteByName(name, eyeAtlas);
+        return GetSpriteDataByName(3, name); ;
     }
     /// <summary>
     /// 获取随机眼睛
@@ -79,7 +108,6 @@ public class CharacterBodyManager : BaseManager
         int hairNumber = Random.Range(1, 60);
         return "character_eye_" + hairNumber;
     }
-
     /// <summary>
     /// 获取所有眼睛
     /// </summary>
@@ -95,13 +123,28 @@ public class CharacterBodyManager : BaseManager
     }
 
     /// <summary>
+    /// 获取创建角色眼睛
+    /// </summary>
+    /// <returns></returns>
+    public List<Sprite> GetCreateCharacterEye()
+    {
+        List<Sprite> listData = new List<Sprite>();
+        for (int i = 1; i < 20; i++)
+        {
+            Sprite sprite = GetEyeSpriteByName("character_eye_" + i);
+            listData.Add(sprite);
+        }
+        return listData;
+    }
+
+    /// <summary>
     /// 根据名字获取嘴巴
     /// </summary>
     /// <param name="name"></param>
     /// <returns></returns>
     public Sprite GetMouthSpriteByName(string name)
     {
-        return GetSpriteByName(name, mouthAtlas);
+        return GetSpriteDataByName(4, name); ;
     }
     /// <summary>
     /// 获取随机嘴巴
@@ -117,6 +160,20 @@ public class CharacterBodyManager : BaseManager
     /// 获取所有嘴巴
     /// </summary>
     /// <returns></returns>
+    public List<Sprite> GetCreateCharacterMouth()
+    {
+        List<Sprite> listData = new List<Sprite>();
+        for (int i = 1; i < 20; i++)
+        {
+            Sprite sprite = GetMouthSpriteByName("character_mouth_" + i);
+            listData.Add(sprite);
+        }
+        return listData;
+    }
+    /// <summary>
+    /// 获取所有嘴巴
+    /// </summary>
+    /// <returns></returns>
     public List<string> GetAllMouth()
     {
         List<string> listData = new List<string>();
@@ -126,28 +183,80 @@ public class CharacterBodyManager : BaseManager
         }
         return listData;
     }
-
-    /// <summary>
-    /// 根据名字获取皮肤
-    /// </summary>
-    /// <param name="name"></param>
-    /// <returns></returns>
-    public Sprite GetSkinSpriteByName(string name)
+    protected Sprite GetSpriteDataByName(int type, string name)
     {
-        return GetSpriteByName(name, trunkAtlas);
-    }
+        if (name == null)
+            return null;
 
-    /// <summary>
-    /// 获取所有嘴巴
-    /// </summary>
-    /// <returns></returns>
-    public List<string> GetAllSkin()
-    {
-        List<string> listData = new List<string>();
-        for (int i = 1; i < 7; i++)
+        IconBeanDictionary dicData = null;
+        SpriteAtlas spriteData = null;
+
+        switch (type)
         {
-            listData.Add("character_body_" + i);
+            case 1:
+                dicData = listIconBodyTrunk;
+                spriteData = trunkAtlas;
+                break;
+            case 2:
+                dicData = listIconBodyHair;
+                spriteData = hairAtlas;
+                break;
+            case 3:
+                dicData = listIconBodyEye;
+                spriteData = eyeAtlas;
+                break;
+            case 4:
+                dicData = listIconBodyMouth;
+                spriteData = mouthAtlas;
+                break;
         }
-        return listData;
+        if (dicData.TryGetValue(name, out Sprite value))
+        {
+            return value;
+        }
+        if (spriteData != null)
+        {
+            Sprite itemSprite = GetSpriteByName(name, spriteData);
+            if (itemSprite != null)
+                dicData.Add(name, itemSprite);
+            return itemSprite;
+        }
+        string atlasName = "";
+        switch (type)
+        {
+            case 1:
+                atlasName = "AtlasForTrunk";
+                break;
+            case 2:
+                atlasName = "AtlasForHair";
+                break;
+            case 3:
+                atlasName = "AtlasForEye";
+                break;
+            case 4:
+                atlasName = "AtlasForMouth";
+                break;
+        }
+
+        spriteData = LoadAssetUtil.SyncLoadAsset<SpriteAtlas>("sprite/body", atlasName);
+        switch (type)
+        {
+            case 1:
+                trunkAtlas = spriteData;
+                break;
+            case 2:
+                hairAtlas = spriteData;
+                break;
+            case 3:
+                eyeAtlas = spriteData;
+                break;
+            case 4:
+                mouthAtlas = spriteData;
+                break;
+        }
+        if (spriteData != null)
+            return GetSpriteDataByName(type, name);
+        return null;
     }
+
 }

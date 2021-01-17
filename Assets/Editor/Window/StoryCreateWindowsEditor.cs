@@ -611,9 +611,6 @@ public class StoryCreateWindowsEditor : EditorWindow
         CharacterDressCpt characterDress = CptUtil.GetCptInChildrenByName<CharacterDressCpt>(baseNpcAI.gameObject, "Body");
         characterDress.Awake();
 
-        CharacterBodyCpt characterBody = CptUtil.GetCptInChildrenByName<CharacterBodyCpt>(baseNpcAI.gameObject, "Body");
-        characterBody.Awake();
-
         baseNpcAI.transform.localPosition = position;
         baseNpcAI.SetCharacterData(gameItemsManager, characterData);
         baseNpcAI.name = "" + number;

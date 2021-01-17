@@ -214,7 +214,7 @@ public class UITownArena : UIBaseOne, IRadioGroupCallBack, StoreInfoManager.ICal
         List<CharacterBean> listEnemyData = new List<CharacterBean>();
         for (int i = 0; i < 15; i++)
         {
-            CharacterBean randomEnemy = CharacterBean.CreateRandomWorkerData(uiGameManager.characterBodyManager);
+            CharacterBean randomEnemy = CharacterBean.CreateRandomWorkerData();
             listEnemyData.Add(randomEnemy);
         }
         //评审人员
@@ -290,16 +290,16 @@ public class UITownArena : UIBaseOne, IRadioGroupCallBack, StoreInfoManager.ICal
         switch (type)
         {
             case TrophyTypeEnum.Elementary:
-                randomEnemy = CharacterBean.CreateRandomEnemyData(uiGameManager.characterBodyManager,100, 10, 0);
+                randomEnemy = CharacterBean.CreateRandomEnemyData(100, 10, 0);
                 break;
             case TrophyTypeEnum.Intermediate:
-                randomEnemy = CharacterBean.CreateRandomEnemyData(uiGameManager.characterBodyManager,200, 30, 1);
+                randomEnemy = CharacterBean.CreateRandomEnemyData(200, 30, 1);
                 break;
             case TrophyTypeEnum.Advanced:
-                randomEnemy = CharacterBean.CreateRandomEnemyData(uiGameManager.characterBodyManager,300, 50, 2);
+                randomEnemy = CharacterBean.CreateRandomEnemyData(300, 50, 2);
                 break;
             case TrophyTypeEnum.Legendary:
-                randomEnemy = CharacterBean.CreateRandomEnemyData(uiGameManager.characterBodyManager,500, 80, 3);
+                randomEnemy = CharacterBean.CreateRandomEnemyData(500, 80, 3);
                 break;
         }
         miniGameData.InitData(uiGameManager.gameItemsManager, null, randomEnemy);
@@ -345,7 +345,7 @@ public class UITownArena : UIBaseOne, IRadioGroupCallBack, StoreInfoManager.ICal
         List<CharacterBean> listEnemyData = new List<CharacterBean>();
         for (int i = 0; i < miniGameData.winBringDownNumber; i++)
         {
-            CharacterBean enemyData = CharacterBean.CreateRandomEnemyData(uiGameManager.characterBodyManager, enemyBaseLife, enemyBaseAttribute, equipLevel);
+            CharacterBean enemyData = CharacterBean.CreateRandomEnemyData(enemyBaseLife, enemyBaseAttribute, equipLevel);
             listEnemyData.Add(enemyData);
         }
         miniGameData.InitData(uiGameManager.gameItemsManager, new List<CharacterBean>(), listEnemyData);

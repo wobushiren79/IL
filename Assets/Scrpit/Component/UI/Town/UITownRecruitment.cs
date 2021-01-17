@@ -70,7 +70,7 @@ public class UITownRecruitment : UIBaseOne, DialogView.IDialogCallBack
         GameCommonInfo.InitRandomSeed();
         for (int i = 0; i < Random.Range(1, 15); i++)
         {
-            CharacterBean characterData = CharacterBean.CreateRandomWorkerData(uiGameManager.characterBodyManager);
+            CharacterBean characterData = CharacterBean.CreateRandomWorkerData();
             GameCommonInfo.DailyLimitData.AddRecruitmentCharacter(characterData);
         }
     }
@@ -181,11 +181,10 @@ public class UITownRecruitment : UIBaseOne, DialogView.IDialogCallBack
         uiGameManager.gameDataManager.gameData.PayMoney(pickMoneyL, pickMoneyM, pickMoneyS);
 
         DialogManager dialogManager = uiGameManager.dialogManager;
-        CharacterBodyManager characterBodyManager = uiGameManager.characterBodyManager;
 
         DialogBean dialogData = new DialogBean();
         //根据金额获取角色
-        CharacterBean characterData = CharacterBean.CreateRandomWorkerDataByPrice(characterBodyManager, pickMoneyL, pickMoneyM, pickMoneyS);
+        CharacterBean characterData = CharacterBean.CreateRandomWorkerDataByPrice(pickMoneyL, pickMoneyM, pickMoneyS);
         FindCharacterDialogView findCharacterDialog = dialogManager.CreateDialog<FindCharacterDialogView>(DialogEnum.FindCharacter, this, dialogData);
         findCharacterDialog.SetData(characterData);
         AudioHandler.Instance.PlaySound(AudioSoundEnum.Reward);
