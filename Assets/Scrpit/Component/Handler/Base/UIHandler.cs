@@ -13,10 +13,4 @@ public class UIHandler : BaseUIHandler<UIHandler, UIManager>
         ChangeUIRenderMode(RenderMode.ScreenSpaceCamera);
     }
 
-    protected void Update()
-    {
-        if (canvas.worldCamera == null)
-            canvas.worldCamera = Camera.main;
-    }
-
 }

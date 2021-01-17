@@ -11,12 +11,19 @@ public class BaseUIHandler<T, M> : BaseHandler<T,M>
     public GraphicRaycaster graphicRaycaster;
 
     public int sortingOrder = 0;
+
     protected override void Awake()
     {
         canvas = CptUtil.AddCpt<Canvas>(gameObject);
         canvasScaler = CptUtil.AddCpt<CanvasScaler>(gameObject);
         graphicRaycaster = CptUtil.AddCpt<GraphicRaycaster>(gameObject);
         ChangeUIRenderMode(RenderMode.ScreenSpaceOverlay);
+    }
+
+    protected void Update()
+    {
+        if (canvas.worldCamera == null)
+            canvas.worldCamera = Camera.main;
     }
 
     public void ChangeUIRenderMode(RenderMode renderMode)

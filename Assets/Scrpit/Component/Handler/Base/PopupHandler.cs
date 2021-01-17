@@ -7,5 +7,6 @@ public class PopupHandler : BaseUIHandler<PopupHandler, PopupManger>
     {
         sortingOrder = 4;
         base.Awake();
+        ChangeUIRenderMode(RenderMode.ScreenSpaceCamera);
     }
 }

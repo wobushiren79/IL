@@ -13,14 +13,6 @@ public class InfoCharacterPopupShow : PopupShowView
     public GameObject objEffectModel;
 
 
-    protected GameItemsManager gameItemsManager;
-
-    public override void Awake()
-    {
-        base.Awake();
-        gameItemsManager = Find<GameItemsManager>(ImportantTypeEnum.GameItemsManager);
-    }
-
     public void SetData(CharacterBean characterData, List<MiniGameCombatEffectBean> listCombatData)
     {
         SetEffect(listCombatData);
