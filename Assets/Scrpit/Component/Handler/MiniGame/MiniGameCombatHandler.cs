@@ -11,12 +11,10 @@ public class MiniGameCombatHandler : BaseMiniGameHandler<MiniGameCombatBuilder, 
     protected SkillInfoHandler skillInfoHandler;
     //游戏UI
     protected UIMiniGameCombat uiMiniGameCombat;
-    protected CharacterDressManager characterDressManager;
     protected override void Awake()
     {
         base.Awake();
         skillInfoHandler = Find<SkillInfoHandler>(ImportantTypeEnum.SkillHandler);
-        characterDressManager = Find<CharacterDressManager>(ImportantTypeEnum.CharacterManager);
     }
 
     /// <summary>
@@ -311,7 +309,7 @@ public class MiniGameCombatHandler : BaseMiniGameHandler<MiniGameCombatBuilder, 
             //计算伤害
             int damage = (int)(damagePowerRate  * actionCharacterAttributes.force);
             //伤害减免
-            damage = targetNpc.characterMiniGameData.GetTotalDef(gameItemsManager, damage);
+            damage = targetNpc.characterMiniGameData.GetTotalDef(damage);
             //角色伤害
             targetNpc.UnderAttack(damagePowerRate, damage);
             AudioHandler.Instance.PlaySound(AudioSoundEnum.Fight);

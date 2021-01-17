@@ -15,12 +15,7 @@ public class MiniGameCookingStoveCpt : BaseMonoBehaviour
     public GameObject objEffects;
 
     public MenuInfoBean menuInfo;
-    protected GameItemsManager gameItemsManager;
 
-    private void Awake()
-    {
-        gameItemsManager = Find<GameItemsManager>(ImportantTypeEnum.GameItemsManager);
-    }
 
     /// <summary>
     /// 设置菜品信息
@@ -79,7 +74,7 @@ public class MiniGameCookingStoveCpt : BaseMonoBehaviour
     /// </summary>
     public void ChangeIngredientPre()
     {
-        if (menuInfo == null || gameItemsManager == null)
+        if (menuInfo == null)
             return;
         List<IngredientsEnum> listIng = new List<IngredientsEnum>();
         if (menuInfo.ing_oilsalt != 0)

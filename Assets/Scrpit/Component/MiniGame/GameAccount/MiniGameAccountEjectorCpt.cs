@@ -17,13 +17,6 @@ public class MiniGameAccountEjectorCpt : BaseMonoBehaviour
     private float mRotatingDirection = 1;
     public ICallBack mCallBack;
 
-    protected AudioHandler audioHandler;
-
-    protected void Awake()
-    {
-        audioHandler = Find<AudioHandler>( ImportantTypeEnum.AudioHandler);
-    }
-
     public void SetCallBack(ICallBack mCallBack)
     {
         this.mCallBack = mCallBack;

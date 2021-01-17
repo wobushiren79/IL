@@ -40,7 +40,6 @@ public class StoryBuilder : BaseMonoBehaviour, StoryInfoManager.CallBack
 
         eventHandler = Find<EventHandler>(ImportantTypeEnum.EventHandler);
         controlHandler = Find<ControlHandler>(ImportantTypeEnum.ControlHandler);
-        audioHandler = Find<AudioHandler>(ImportantTypeEnum.AudioHandler);
 
         listStoryDetails = new List<StoryInfoDetailsBean>();
         listNpcObj = new List<GameObject>();

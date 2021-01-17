@@ -22,11 +22,9 @@ public class UIGameDate : BaseUIComponent
 
     protected GameTimeHandler gameTimeHandler;
     protected GameDataManager gameDataManager;
-    protected GameItemsManager gameItemsManager;
     protected ControlHandler controlHandler;
     protected NpcCustomerBuilder npcCustomerBuilder;
     protected EventHandler eventHandler;
-    protected AudioHandler audioHandler;
     protected InnHandler innHandler;
 
     public override void Awake()
@@ -34,11 +32,9 @@ public class UIGameDate : BaseUIComponent
         base.Awake();
         gameTimeHandler = uiGameManager.gameTimeHandler;
         gameDataManager = uiGameManager.gameDataManager;
-        gameItemsManager = GameItemsHandler.Instance.manager;
         controlHandler = uiGameManager.controlHandler;
         npcCustomerBuilder = uiGameManager.npcCustomerBuilder;
         eventHandler = uiGameManager.eventHandler;
-        audioHandler = AudioHandler.Instance;
         innHandler = uiGameManager.innHandler;
     }
 
@@ -94,7 +90,7 @@ public class UIGameDate : BaseUIComponent
     /// </summary>
     public void OnClickInnWork()
     {
-        if (audioHandler != null)
+        
             AudioHandler.Instance.PlaySound(AudioSoundEnum.ButtonForNormal);
         InnWork();
     }
@@ -104,7 +100,7 @@ public class UIGameDate : BaseUIComponent
     /// </summary>
     public void OnClickInnRest()
     {
-        if (audioHandler != null)
+        
             AudioHandler.Instance.PlaySound(AudioSoundEnum.ButtonForNormal);
         InnRest();
     }
@@ -165,7 +161,7 @@ public class UIGameDate : BaseUIComponent
             if (itemWork.baseInfo.GetWorkerStatus() == WorkerStatusEnum.Rest
                 || itemWork.baseInfo.GetWorkerStatus() == WorkerStatusEnum.Work)
             {
-                if (itemWork.CalculationWorkerVacation(gameItemsManager, gameDataManager))
+                if (itemWork.CalculationWorkerVacation(gameDataManager))
                 {
                     long vacationId = Random.Range(1101, 1111);
                     string vacationStr = string.Format(GameCommonInfo.GetUITextById(vacationId), itemWork.baseInfo.name);

@@ -12,11 +12,9 @@ public class NpcNormalBuilder : BaseMonoBehaviour
     //NPC数据管理
     protected NpcInfoManager npcInfoManager;
     protected NpcTeamManager npcTeamManager;
-    protected CharacterBodyManager characterBodyManager;
     protected GameTimeHandler gameTimeHandler;
     protected GameDataManager gameDataManager;
     protected WeatherHandler weatherHandler;
-    protected GameItemsManager gameItemsManager;
 
     //初始化大量随机NPC位置
     public List<Transform> listInitStartPosition;
@@ -32,11 +30,9 @@ public class NpcNormalBuilder : BaseMonoBehaviour
     {
         npcInfoManager = Find<NpcInfoManager>(ImportantTypeEnum.NpcManager);
         npcTeamManager = Find<NpcTeamManager>(ImportantTypeEnum.NpcManager);
-        characterBodyManager = Find<CharacterBodyManager>(ImportantTypeEnum.CharacterManager);
         gameTimeHandler = Find<GameTimeHandler>(ImportantTypeEnum.TimeHandler);
         gameDataManager = Find<GameDataManager>(ImportantTypeEnum.GameDataManager);
         weatherHandler = Find<WeatherHandler>(ImportantTypeEnum.WeatherHandler);
-        gameItemsManager = Find<GameItemsManager>(ImportantTypeEnum.GameItemsManager);
     }
 
     /// <summary>

@@ -383,7 +383,7 @@ public class NpcAIWorkerForWaiterCpt : NpcAIWokerFoBaseCpt
     {
         //AudioHandler.Instance.PlaySound(AudioSoundEnum.Clean);
         //计算清理时间
-        float cleanTime = npcAIWorker.characterData.CalculationWaiterCleanTime(gameItemsManager);
+        float cleanTime = npcAIWorker.characterData.CalculationWaiterCleanTime();
         yield return new WaitForSeconds(cleanTime);
         OrderForCustomer orderForCustomer = order as OrderForCustomer;
         //记录数据
@@ -404,7 +404,7 @@ public class NpcAIWorkerForWaiterCpt : NpcAIWokerFoBaseCpt
     public IEnumerator CoroutineForCleanBed()
     {
         //计算清理时间
-        float cleanTime = npcAIWorker.characterData.CalculationWaiterCleanTime(gameItemsManager);
+        float cleanTime = npcAIWorker.characterData.CalculationWaiterCleanTime();
         yield return new WaitForSeconds(cleanTime);
         OrderForHotel orderForHotel = order as OrderForHotel;
         //记录数据

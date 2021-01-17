@@ -33,14 +33,14 @@ public class WeatherForRainCpt : WeatherCpt
                 SetThunderstorm();
                 break;
         }
-        if (audioHandler != null)
-            audioHandler.PlayEnvironment(AudioEnvironmentEnum.Rain,GameCommonInfo.GameConfig.environmentVolume);
+        
+        AudioHandler.Instance.PlayEnvironment(AudioEnvironmentEnum.Rain,GameCommonInfo.GameConfig.environmentVolume);
     }
 
     public override void CloseWeather()
     {
-        if (audioHandler != null)
-            audioHandler.StopEnvironment();
+        
+        AudioHandler.Instance.StopEnvironment();
         StopAllCoroutines();
         objRain.SetActive(false);
         objThunder.SetActive(false);
@@ -87,8 +87,8 @@ public class WeatherForRainCpt : WeatherCpt
         {
             yield return new WaitForSeconds(Random.Range(10, 30));
             //打雷特效
-            if (audioHandler != null)
-                AudioHandler.Instance.PlaySound(AudioSoundEnum.Thunderstorm);
+            
+            AudioHandler.Instance.PlaySound(AudioSoundEnum.Thunderstorm);
             float intensity = 0;
             DOTween
                 .To(() => intensity, x => { intensity = x; lightThunder.intensity = intensity; }, 0.5f, 1f)

@@ -93,7 +93,7 @@ public class SceneInfiniteTowersManager : BaseMonoBehaviour
 
 
 
-    public List<CharacterBean> GetCharacterDataByInfiniteTowersLayer(NpcTeamManager npcTeamManager, NpcInfoManager npcInfoManager, CharacterBodyManager characterBodyManager, long layer)
+    public List<CharacterBean> GetCharacterDataByInfiniteTowersLayer(NpcTeamManager npcTeamManager, NpcInfoManager npcInfoManager , long layer)
     {
         List<CharacterBean> listData = new List<CharacterBean>();
 

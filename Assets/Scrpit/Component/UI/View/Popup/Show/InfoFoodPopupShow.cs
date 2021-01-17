@@ -23,7 +23,6 @@ public class InfoFoodPopupShow : PopupShowView
 
     protected GameDataManager gameDataManager;
     protected IconDataManager iconDataManager;
-    protected GameItemsManager gameItemsManager;
     protected InnFoodManager innFoodManager;
 
     public MenuOwnBean ownData;
@@ -33,7 +32,6 @@ public class InfoFoodPopupShow : PopupShowView
     {
         base.Awake();
         gameDataManager = Find<GameDataManager>(ImportantTypeEnum.GameDataManager);
-        gameItemsManager = Find<GameItemsManager>(ImportantTypeEnum.GameItemsManager);
         iconDataManager = Find<IconDataManager>(ImportantTypeEnum.UIManager);
         innFoodManager = Find<InnFoodManager>(ImportantTypeEnum.FoodManager);
     }
@@ -141,7 +139,7 @@ public class InfoFoodPopupShow : PopupShowView
         if (researcher != null)
         {
             tvResearcherName.text = researcher.baseInfo.name;
-            long addExp = researcher.CalculationMenuResearchAddExp(gameItemsManager);
+            long addExp = researcher.CalculationMenuResearchAddExp();
             tvResearcherAbility.text = addExp + "/s";
         }
         else

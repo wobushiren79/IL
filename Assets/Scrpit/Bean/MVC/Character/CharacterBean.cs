@@ -349,7 +349,7 @@ public class CharacterBean
     /// <param name="gameItemsManager"></param>
     /// <param name="gameDataManager"></param>
     /// <returns></returns>
-    public bool CalculationWorkerVacation(GameItemsManager gameItemsManager, GameDataManager gameDataManager)
+    public bool CalculationWorkerVacation(GameDataManager gameDataManager)
     {
         //获取数据
         GetAttributes(
@@ -382,7 +382,7 @@ public class CharacterBean
     /// </summary>
     /// <param name="rate"></param>
     /// <param name="dazeTime"></param>
-    public bool CalculationWorkerDaze(GameItemsManager gameItemsManager, GameDataManager gameDataManager)
+    public bool CalculationWorkerDaze(GameDataManager gameDataManager)
     {
         //获取数据
         GetAttributes(out CharacterAttributesBean totalAttributes, out CharacterAttributesBean selfAttributes, out CharacterAttributesBean equipAttributes);
@@ -412,7 +412,7 @@ public class CharacterBean
     /// 计算菜单研究经验加成
     /// </summary>
     /// <returns></returns>
-    public long CalculationMenuResearchAddExp(GameItemsManager gameItemsManager)
+    public long CalculationMenuResearchAddExp()
     {
         //获取数据
         GetAttributes(out CharacterAttributesBean totalAttributes, out CharacterAttributesBean selfAttributes, out CharacterAttributesBean equipAttributes);
@@ -423,7 +423,7 @@ public class CharacterBean
     /// </summary>
     /// <param name="gameItemsManager"></param>
     /// <returns></returns>
-    public long CalculationBedResearchAddExp(GameItemsManager gameItemsManager)
+    public long CalculationBedResearchAddExp()
     {
         //获取数据
         GetAttributes(out CharacterAttributesBean totalAttributes, out CharacterAttributesBean selfAttributes, out CharacterAttributesBean equipAttributes);
@@ -434,7 +434,7 @@ public class CharacterBean
     ///  计算吆喝成功概率
     /// </summary>
     /// <returns></returns>
-    public bool CalculationAccostRate(GameItemsManager gameItemsManager)
+    public bool CalculationAccostRate()
     {
         //获取数据
         GetAttributes(out CharacterAttributesBean totalAttributes, out CharacterAttributesBean selfAttributes, out CharacterAttributesBean equipAttributes);
@@ -450,7 +450,7 @@ public class CharacterBean
     /// 计算吆喝聊天时间
     /// </summary>
     /// <returns></returns>
-    public float CalculationAccostTalkTime(GameItemsManager gameItemsManager)
+    public float CalculationAccostTalkTime()
     {
         //默认10秒
         float talkTime = 6.1f;
@@ -471,7 +471,7 @@ public class CharacterBean
     /// </summary>
     /// <param name="gameItemsManager"></param>
     /// <returns></returns>
-    public int CalculationAccostAddMood(GameItemsManager gameItemsManager)
+    public int CalculationAccostAddMood()
     {
         //获取数据
         GetAttributes(out CharacterAttributesBean totalAttributes, out CharacterAttributesBean selfAttributes, out CharacterAttributesBean equipAttributes);
@@ -482,7 +482,7 @@ public class CharacterBean
     /// 计算制作食物时间
     /// </summary>
     /// <returns></returns>
-    public float CalculationChefMakeFoodTime(GameItemsManager gameItemsManager, float foodTime)
+    public float CalculationChefMakeFoodTime(float foodTime)
     {
         //获取数据
         GetAttributes(out CharacterAttributesBean totalAttributes, out CharacterAttributesBean selfAttributes, out CharacterAttributesBean equipAttributes);
@@ -499,7 +499,7 @@ public class CharacterBean
     /// 计算食物等级
     /// </summary>
     /// <returns></returns>
-    public int CalculationChefFoodLevel(GameItemsManager gameItemsManager)
+    public int CalculationChefFoodLevel()
     {
         //获取数据
         GetAttributes(out CharacterAttributesBean totalAttributes, out CharacterAttributesBean selfAttributes, out CharacterAttributesBean equipAttributes);
@@ -532,7 +532,7 @@ public class CharacterBean
     /// 计算清理时间
     /// </summary>
     /// <returns></returns>
-    public float CalculationWaiterCleanTime(GameItemsManager gameItemsManager)
+    public float CalculationWaiterCleanTime()
     {
         float cleanTime = 6;
         //获取数据
@@ -548,7 +548,7 @@ public class CharacterBean
     /// <summary>
     /// 计算账房结算
     /// </summary>
-    public bool CalculationAccountingCheck(GameItemsManager gameItemsManager, out float moreRate)
+    public bool CalculationAccountingCheck(out float moreRate)
     {
         //获取数据
         moreRate = 0;
@@ -575,7 +575,7 @@ public class CharacterBean
     /// </summary>
     /// <param name="gameItemsManager"></param>
     /// <returns></returns>
-    public float CalculationAccountingTime(GameItemsManager gameItemsManager)
+    public float CalculationAccountingTime()
     {
         float time = 6;
         GetAttributes(out CharacterAttributesBean totalAttributes, out CharacterAttributesBean selfAttributes, out CharacterAttributesBean equipAttributes);
@@ -589,7 +589,7 @@ public class CharacterBean
     /// 计算打手打架时间
     /// </summary>
     /// <returns></returns>
-    public float CalculationBeaterFightTime(GameItemsManager gameItemsManager)
+    public float CalculationBeaterFightTime()
     {
         GetAttributes(out CharacterAttributesBean totalAttributes, out CharacterAttributesBean selfAttributes, out CharacterAttributesBean equipAttributes);
 
@@ -607,7 +607,7 @@ public class CharacterBean
     /// </summary>
     /// <param name="gameItemsManager"></param>
     /// <returns></returns>
-    public int CalculationBeaterDamage(GameItemsManager gameItemsManager)
+    public int CalculationBeaterDamage()
     {
         GetAttributes(out CharacterAttributesBean totalAttributes, out CharacterAttributesBean selfAttributes, out CharacterAttributesBean equipAttributes);
         return totalAttributes.force * 10;
@@ -618,7 +618,7 @@ public class CharacterBean
     /// </summary>
     /// <param name="gameItemsManager"></param>
     /// <returns></returns>
-    public float CalculationBeaterRestTime(GameItemsManager gameItemsManager)
+    public float CalculationBeaterRestTime()
     {
         GetAttributes(out CharacterAttributesBean totalAttributes, out CharacterAttributesBean selfAttributes, out CharacterAttributesBean equipAttributes);
         float restTime = 3 + (57 - 0.57f * totalAttributes.force);
@@ -631,7 +631,7 @@ public class CharacterBean
     /// </summary>
     /// <param name="gameItemsManager"></param>
     /// <returns></returns>
-    public bool CalculationArenaSendWin(GameItemsManager gameItemsManager, MiniGameEnum miniGameType)
+    public bool CalculationArenaSendWin(MiniGameEnum miniGameType)
     {
         GetAttributes(out CharacterAttributesBean totalAttributes, out CharacterAttributesBean selfAttributes, out CharacterAttributesBean equipAttributes);
         int addAttributes = 0;

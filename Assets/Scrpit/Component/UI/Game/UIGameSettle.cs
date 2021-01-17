@@ -67,7 +67,6 @@ public class UIGameSettle : BaseUIComponent
         IconDataManager iconDataManager = uiGameManager.iconDataManager;
         GameTimeHandler gameTimeHandler = uiGameManager.gameTimeHandler;
         GameDataManager gameDataManager = uiGameManager.gameDataManager;
-        AudioHandler audioHandler = AudioHandler.Instance;
         UserAchievementBean userAchievement = gameDataManager.gameData.GetAchievementData();
         //停止时间
         gameTimeHandler.SetTimeStatus(true);

@@ -21,10 +21,7 @@ public class GameDataHandler : BaseHandler, DialogView.IDialogCallBack, IBaseObs
 
     protected GameDataManager gameDataManager;
     protected GameTimeHandler gameTimeHandler;
-    protected GameItemsManager gameItemsManager;
     protected InnFoodManager innFoodManager;
-    protected AudioHandler audioHandler;
-    protected DialogManager dialogManager;
     protected NpcInfoManager npcInfoManager;
     protected IconDataManager iconDataManager;
     protected InnBuildManager innBuildManager;
@@ -33,10 +30,7 @@ public class GameDataHandler : BaseHandler, DialogView.IDialogCallBack, IBaseObs
     {
         gameTimeHandler = Find<GameTimeHandler>(ImportantTypeEnum.TimeHandler);
         gameDataManager = Find<GameDataManager>(ImportantTypeEnum.GameDataManager);
-        gameItemsManager = Find<GameItemsManager>(ImportantTypeEnum.GameItemsManager);
-        audioHandler = Find<AudioHandler>(ImportantTypeEnum.AudioHandler);
         innFoodManager = Find<InnFoodManager>(ImportantTypeEnum.FoodManager);
-        dialogManager = Find<DialogManager>(ImportantTypeEnum.DialogManager);
         npcInfoManager = Find<NpcInfoManager>(ImportantTypeEnum.NpcManager);
         iconDataManager = Find<IconDataManager>(ImportantTypeEnum.UIManager);
         innBuildManager = Find<InnBuildManager>(ImportantTypeEnum.BuildManager);
@@ -130,7 +124,7 @@ public class GameDataHandler : BaseHandler, DialogView.IDialogCallBack, IBaseObs
     /// <param name="time"></param>
     public void AddInfiniteTowers(int time)
     {
-        if (gameTimeHandler == null || gameItemsManager == null || gameDataManager == null)
+        if (gameTimeHandler == null ||gameDataManager == null)
             return;
         List<UserInfiniteTowersBean> listInfiniteTowersData = gameDataManager.gameData.listInfinteTowers;
         if (CheckUtil.ListIsNull(listInfiniteTowersData))
@@ -226,7 +220,7 @@ public class GameDataHandler : BaseHandler, DialogView.IDialogCallBack, IBaseObs
     /// <param name="time"></param>
     public void AddBedResearch(int time)
     {
-        if (gameTimeHandler == null || gameItemsManager == null || gameDataManager == null)
+        if (gameTimeHandler == null ||  gameDataManager == null)
             return;
         List<BuildBedBean> listBed = gameDataManager.gameData.GetBedListForResearching();
         if (CheckUtil.ListIsNull(listBed))
@@ -242,7 +236,7 @@ public class GameDataHandler : BaseHandler, DialogView.IDialogCallBack, IBaseObs
                 itemBed.CancelResearch(gameDataManager.gameData);
                 continue;
             }
-            long addExp = researcher.CalculationBedResearchAddExp(gameItemsManager);
+            long addExp = researcher.CalculationBedResearchAddExp();
             bool isCompleteResearch = itemBed.AddResearchExp((int)addExp * time);
             //完成研究
             if (isCompleteResearch)
@@ -270,7 +264,7 @@ public class GameDataHandler : BaseHandler, DialogView.IDialogCallBack, IBaseObs
     /// <param name="time"></param>
     public void AddMenuResearch(int time)
     {
-        if (gameTimeHandler == null || gameItemsManager == null || gameDataManager == null)
+        if (gameTimeHandler == null ||  gameDataManager == null)
             return;
         List<MenuOwnBean> listMenu = gameDataManager.gameData.GetMenuListForResearching();
         if (CheckUtil.ListIsNull(listMenu))
@@ -289,7 +283,7 @@ public class GameDataHandler : BaseHandler, DialogView.IDialogCallBack, IBaseObs
             MenuInfoBean menuInfo = innFoodManager.GetFoodDataById(itemMenu.menuId);
             if (menuInfo == null)
                 continue;
-            long addExp = researcher.CalculationMenuResearchAddExp(gameItemsManager);
+            long addExp = researcher.CalculationMenuResearchAddExp();
             bool isCompleteResearch = itemMenu.AddResearchExp((int)addExp * time);
             //完成研究
             if (isCompleteResearch)

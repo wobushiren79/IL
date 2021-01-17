@@ -18,8 +18,6 @@ public class CharacterDressCpt : BaseMonoBehaviour
 
     //角色属性
     public CharacterEquipBean characterEquipData;
-    //道具管理
-    protected GameItemsManager gameItemsManager;
 
     //动画
     public Animator animForClothes;
@@ -37,7 +35,6 @@ public class CharacterDressCpt : BaseMonoBehaviour
 
     public void Awake()
     {
-        gameItemsManager = Find<GameItemsManager>(ImportantTypeEnum.GameItemsManager);
 
         aocForMask = new AnimatorOverrideController(animForMask.runtimeAnimatorController);
         animForMask.runtimeAnimatorController = aocForMask;

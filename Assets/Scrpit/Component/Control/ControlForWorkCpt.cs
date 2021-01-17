@@ -9,8 +9,6 @@ public class ControlForWorkCpt : BaseControl, DialogView.IDialogCallBack
     public CharacterMoveCpt cameraMove;
 
     protected GameDataManager gameDataManager;
-    protected DialogManager dialogManager;
-    protected AudioHandler audioHandler;
 
     //指针控制
     public CursorHandler cursorHandler;
@@ -29,8 +27,6 @@ public class ControlForWorkCpt : BaseControl, DialogView.IDialogCallBack
     private void Awake()
     {
         gameDataManager = Find<GameDataManager>(ImportantTypeEnum.GameDataManager);
-        dialogManager = Find<DialogManager>(ImportantTypeEnum.DialogManager);
-        audioHandler = Find<AudioHandler>(ImportantTypeEnum.AudioHandler);
         cursorHandler = Find<CursorHandler>(ImportantTypeEnum.CursorHandler);
     }
 

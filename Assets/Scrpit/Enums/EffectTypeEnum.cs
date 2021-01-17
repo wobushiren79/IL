@@ -413,7 +413,7 @@ public class EffectTypeEnumTools : DataTools
     /// <param name="actionCharacterData"></param>
     /// <param name="listData"></param>
     /// <returns></returns>
-    public static int GetTotalDamage(GameItemsManager gameItemsManager, NpcAIMiniGameCombatCpt actionNpc, List<EffectTypeBean> listData)
+    public static int GetTotalDamage( NpcAIMiniGameCombatCpt actionNpc, List<EffectTypeBean> listData)
     {
         float damageAdd = 0;
         float damageAddRate = 1;
@@ -458,7 +458,7 @@ public class EffectTypeEnumTools : DataTools
     /// <param name="actionCharacterData"></param>
     /// <param name="listData"></param>
     /// <returns></returns>
-    public static int GetTotalLife(GameItemsManager gameItemsManager, CharacterBean actionCharacterData, List<EffectTypeBean> listData)
+    public static int GetTotalLife(CharacterBean actionCharacterData, List<EffectTypeBean> listData)
     {
         float lifeAdd = 0;
         float lifeAddRate = 0;
@@ -482,7 +482,7 @@ public class EffectTypeEnumTools : DataTools
     /// 获取所有效果的伤害加成
     /// </summary>
     /// <param name="listData"></param>
-    public static int GetTotalDef(GameItemsManager gameItemsManager, CharacterBean characterData,  List<EffectTypeBean> listData,int damage)
+    public static int GetTotalDef(CharacterBean characterData,  List<EffectTypeBean> listData,int damage)
     {
         float damageRate = 1;
         float damageAdd = 0;

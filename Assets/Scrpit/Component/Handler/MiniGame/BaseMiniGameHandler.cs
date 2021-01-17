@@ -13,11 +13,8 @@ public class BaseMiniGameHandler<B, D> : BaseHandler, UIMiniGameCountDown.ICallB
     //控制器
     protected ControlHandler controlHandler;
     protected GameTimeHandler gameTimeHandler;
-    //音效
-    protected AudioHandler audioHandler;
     //数据
     protected GameDataManager gameDataManager;
-    protected GameItemsManager gameItemsManager;
 
     protected IconDataManager iconDataManager;
     //游戏构建器
@@ -31,11 +28,9 @@ public class BaseMiniGameHandler<B, D> : BaseHandler, UIMiniGameCountDown.ICallB
     protected virtual void Awake()
     {
         gameDataManager = Find<GameDataManager>(ImportantTypeEnum.GameDataManager);
-        gameItemsManager = Find<GameItemsManager>(ImportantTypeEnum.GameItemsManager);
         uiGameManager = Find<UIGameManager>(ImportantTypeEnum.GameUI);
         controlHandler = Find<ControlHandler>(ImportantTypeEnum.ControlHandler);
         gameTimeHandler = Find<GameTimeHandler>(ImportantTypeEnum.TimeHandler);
-        audioHandler = Find<AudioHandler>(ImportantTypeEnum.AudioHandler);
         miniGameBuilder = FindInChildren<B>(ImportantTypeEnum.MiniGameBuilder);
         iconDataManager = Find<IconDataManager>(ImportantTypeEnum.UIManager);
     }
@@ -93,7 +88,7 @@ public class BaseMiniGameHandler<B, D> : BaseHandler, UIMiniGameCountDown.ICallB
     /// </summary>
     public virtual void StartGame()
     {
-        audioHandler.PlayMusicForLoop(AudioMusicEnum.Battle);
+        AudioHandler.Instance.PlayMusicForLoop(AudioMusicEnum.Battle);
 
         SetMiniGameStatus(MiniGameStatusEnum.Gameing);
         //通知 游戏开始
@@ -161,7 +156,7 @@ public class BaseMiniGameHandler<B, D> : BaseHandler, UIMiniGameCountDown.ICallB
             });
             //通知 游戏结束
             NotifyAllObserver((int)MiniGameStatusEnum.GameEnd, miniGameData);
-            audioHandler.StopMusic();
+            AudioHandler.Instance.StopMusic();
         }
     }
     public virtual void EndGame(MiniGameResultEnum gameResult)

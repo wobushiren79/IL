@@ -29,12 +29,7 @@ public class GambleTrickySizeItem : BaseMonoBehaviour
     public CupStatusEnum cupStatus = CupStatusEnum.Idle;
 
     protected ICallBack callBack;
-    protected AudioHandler audioHandler;
 
-    private void Awake()
-    {
-        audioHandler = Find<AudioHandler>(ImportantTypeEnum.AudioHandler);
-    }
 
     public void SetCallBack(ICallBack callBack)
     {

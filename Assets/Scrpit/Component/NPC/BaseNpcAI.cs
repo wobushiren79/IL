@@ -23,8 +23,6 @@ public class BaseNpcAI : BaseObservable<IBaseObserver>
     //角色层级
     public SortingGroup characterForRenderer;
 
-    //装备控制管理
-    protected GameItemsManager gameItemsManager;
     //图标管理
     protected IconDataManager iconDataManager;
     //游戏数据管理
@@ -32,7 +30,6 @@ public class BaseNpcAI : BaseObservable<IBaseObserver>
 
     protected CharacterBodyCpt characterBody;
     protected CharacterDressCpt characterDress;
-    protected AudioHandler audioHandler;
 
     //拿取
     public GameObject objTake;
@@ -40,9 +37,7 @@ public class BaseNpcAI : BaseObservable<IBaseObserver>
     public virtual void Awake()
     {
         gameDataManager = Find<GameDataManager>(ImportantTypeEnum.GameDataManager);
-        gameItemsManager = Find<GameItemsManager>(ImportantTypeEnum.GameItemsManager);
         iconDataManager = Find<IconDataManager>(ImportantTypeEnum.UIManager);
-        audioHandler = Find<AudioHandler>(ImportantTypeEnum.AudioHandler);
 
         characterBody = CptUtil.GetCptInChildrenByName<CharacterBodyCpt>(gameObject, "Body");
         characterDress = CptUtil.GetCptInChildrenByName<CharacterDressCpt>(gameObject, "Body");
@@ -150,7 +145,7 @@ public class BaseNpcAI : BaseObservable<IBaseObserver>
     }
     public virtual void SetCharacterData(CharacterBean characterBean)
     {
-        SetCharacterData(gameItemsManager, characterBean);
+        SetCharacterData(characterBean);
     }
 
     /// <summary>

@@ -225,9 +225,6 @@ public class ItemTownArenaCpt : ItemGameBaseCpt, DialogView.IDialogCallBack
     {
         UIGameManager uiGameManager = GetUIManager<UIGameManager>();
         GameDataManager gameDataManager = uiGameManager.gameDataManager;
-        ToastManager toastManager = uiGameManager.toastManager;
-        DialogManager dialogManager = uiGameManager.dialogManager;
-        AudioHandler audioHandler = AudioHandler.Instance;
         AudioHandler.Instance.PlaySound(AudioSoundEnum.ButtonForNormal);
         if (!gameDataManager.gameData.HasEnoughMoney(miniGameData.preMoneyL, miniGameData.preMoneyM, miniGameData.preMoneyS))
         {
@@ -249,9 +246,6 @@ public class ItemTownArenaCpt : ItemGameBaseCpt, DialogView.IDialogCallBack
     {
         UIGameManager uiGameManager = GetUIManager<UIGameManager>();
         GameDataManager gameDataManager = uiGameManager.gameDataManager;
-        ToastManager toastManager = uiGameManager.toastManager;
-        DialogManager dialogManager = uiGameManager.dialogManager;
-        AudioHandler audioHandler = AudioHandler.Instance;
 
         AudioHandler.Instance.PlaySound(AudioSoundEnum.ButtonForNormal);
         if (!gameDataManager.gameData.HasEnoughMoney(miniGameData.preMoneyL, miniGameData.preMoneyM, miniGameData.preMoneyS))
@@ -273,14 +267,10 @@ public class ItemTownArenaCpt : ItemGameBaseCpt, DialogView.IDialogCallBack
         UIGameManager uiGameManager = GetUIManager<UIGameManager>();
         GameDataManager gameDataManager = uiGameManager.gameDataManager;
         GameDataHandler gameDataHandler = uiGameManager.gameDataHandler;
-        GameItemsManager gameItemsManager = GameItemsHandler.Instance.manager;
         ControlHandler controlHandler = uiGameManager.controlHandler;
-        DialogManager dialogManager = uiGameManager.dialogManager;
-        ToastManager toastManager = uiGameManager.toastManager;
         IconDataManager iconDataManager = uiGameManager.iconDataManager;
         NpcInfoManager npcInfoManager = uiGameManager.npcInfoManager;
         InnBuildManager innBuildManager = uiGameManager.innBuildManager;
-        AudioHandler audioHandler = AudioHandler.Instance;
         GameTimeHandler gameTimeHandler = uiGameManager.gameTimeHandler;
   
         if (dialogView as PickForCharacterDialogView)
@@ -322,7 +312,7 @@ public class ItemTownArenaCpt : ItemGameBaseCpt, DialogView.IDialogCallBack
                 //刷新UI
                 ((UITownArena)uiComponent).RefreshUI();
                 CharacterBean character = listCharacter[0];
-                bool isWin= character.CalculationArenaSendWin(gameItemsManager, miniGameData.gameType);
+                bool isWin= character.CalculationArenaSendWin(miniGameData.gameType);
                 if (isWin)
                 {
                     ToastHandler.Instance.ToastHint(GameCommonInfo.GetUITextById(7011));

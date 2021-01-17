@@ -210,24 +210,19 @@ public class SceneGameInnInit : BaseSceneInit, IBaseObserver, DialogView.IDialog
         //停止控制
         if (controlHandler != null)
             controlHandler.EndControl();
-        if (dialogManager != null)
-        {   //停止时间
-            gameTimeHandler.SetTimeStatus(true);
-            DialogBean dialogBean = new DialogBean();
-            if (gameTimeHandler.GetDayStatus() == GameTimeHandler.DayEnum.Work)
-            {
-                dialogBean.content = GameCommonInfo.GetUITextById(3006);
-            }
-            else if (gameTimeHandler.GetDayStatus() == GameTimeHandler.DayEnum.Rest)
-            {
-                dialogBean.content = GameCommonInfo.GetUITextById(3014);
-            }
-            DialogHandler.Instance.CreateDialog<DialogView>(DialogEnum.Text, this, dialogBean);
-        }
-        else
+        //停止时间
+        gameTimeHandler.SetTimeStatus(true);
+
+        DialogBean dialogBean = new DialogBean();
+        if (gameTimeHandler.GetDayStatus() == GameTimeHandler.DayEnum.Work)
         {
-            EndDay();
+            dialogBean.content = GameCommonInfo.GetUITextById(3006);
         }
+        else if (gameTimeHandler.GetDayStatus() == GameTimeHandler.DayEnum.Rest)
+        {
+            dialogBean.content = GameCommonInfo.GetUITextById(3014);
+        }
+        DialogHandler.Instance.CreateDialog<DialogView>(DialogEnum.Text, this, dialogBean);
     }
 
     #region 通知回调

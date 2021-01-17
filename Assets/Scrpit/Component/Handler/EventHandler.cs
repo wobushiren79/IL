@@ -30,7 +30,6 @@ public class EventHandler : BaseHandler,
     }
 
     protected GameDataManager gameDataManager;
-    protected GameItemsManager gameItemsManager;
     protected BaseUIManager uiManager;
     protected StoryInfoManager storyInfoManager;
     protected NpcInfoManager npcInfoManager;
@@ -51,7 +50,6 @@ public class EventHandler : BaseHandler,
     private void Awake()
     {
         gameDataManager = Find<GameDataManager>(ImportantTypeEnum.GameDataManager);
-        gameItemsManager = Find<GameItemsManager>(ImportantTypeEnum.GameItemsManager);
         uiManager = Find<BaseUIManager>(ImportantTypeEnum.GameUI);
         storyInfoManager = Find<StoryInfoManager>(ImportantTypeEnum.StoryManager);
         npcInfoManager = Find<NpcInfoManager>(ImportantTypeEnum.NpcManager);

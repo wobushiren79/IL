@@ -34,11 +34,6 @@ public class PopupItemsSelection : BaseMonoBehaviour
     public float offsetX = 0;
     public float offsetY = 0;
 
-    protected  AudioHandler audioHandler;
-    private void Awake()
-    {
-        audioHandler = Find<AudioHandler>(ImportantTypeEnum.AudioHandler);
-    }
 
     private void Start()
     {
@@ -68,14 +63,14 @@ public class PopupItemsSelection : BaseMonoBehaviour
 
     public void Close()
     {
-        if (audioHandler != null)
+        
             AudioHandler.Instance.PlaySound(AudioSoundEnum.ButtonForNormal);
         gameObject.SetActive(false);
     }
 
     public void Open(SelectionTypeEnum type)
     {
-        if (audioHandler != null)
+        
             AudioHandler.Instance.PlaySound(AudioSoundEnum.ButtonForHighLight);
         btUse.gameObject.SetActive(false);
         btDiscard.gameObject.SetActive(false);

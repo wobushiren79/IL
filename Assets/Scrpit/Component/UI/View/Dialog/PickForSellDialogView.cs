@@ -6,7 +6,6 @@ using System.Collections.Generic;
 public class PickForSellDialogView : DialogView
 {
     protected GameDataManager gameDataManager;
-    protected GameItemsManager gameItemsManager;
 
     public GameObject objItemsContainer;
     public GameObject objItemsModel;
@@ -19,7 +18,6 @@ public class PickForSellDialogView : DialogView
     {
         base.Awake();
         gameDataManager = Find<GameDataManager>(ImportantTypeEnum.GameDataManager);
-        gameItemsManager = Find<GameItemsManager>(ImportantTypeEnum.GameItemsManager);
     }
 
     public override void InitData()

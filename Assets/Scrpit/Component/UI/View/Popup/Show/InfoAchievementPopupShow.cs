@@ -21,9 +21,7 @@ public class InfoAchievementPopupShow : PopupShowView
     public Material materialGray;
 
     protected GameDataManager gameDataManager;
-    protected GameItemsManager gameItemsManager;
     protected IconDataManager iconDataManager;
-    protected CharacterDressManager characterDressManager;
     protected InnBuildManager innBuildManager;
     protected InnFoodManager innFoodManager;
     protected NpcInfoManager npcInfoManager;
@@ -37,9 +35,7 @@ public class InfoAchievementPopupShow : PopupShowView
     {
         base.Awake();
         gameDataManager = Find<GameDataManager>(ImportantTypeEnum.GameDataManager);
-        gameItemsManager = Find<GameItemsManager>(ImportantTypeEnum.GameItemsManager);
         iconDataManager = Find<IconDataManager>(ImportantTypeEnum.UIManager);
-        characterDressManager = Find<CharacterDressManager>(ImportantTypeEnum.CharacterManager);
         innBuildManager = Find<InnBuildManager>(ImportantTypeEnum.BuildManager);
         innFoodManager = Find<InnFoodManager>(ImportantTypeEnum.FoodManager);
         npcInfoManager = Find<NpcInfoManager>(ImportantTypeEnum.NpcManager);
@@ -175,7 +171,7 @@ public class InfoAchievementPopupShow : PopupShowView
     public void SetReward(AchievementInfoBean data)
     {
         CptUtil.RemoveChildsByActive(objRewardContent.transform);
-        if (data == null || gameItemsManager == null)
+        if (data == null)
             return;
 
         List<RewardTypeBean> listRewardData = RewardTypeEnumTools.GetListRewardData(data.reward_data);

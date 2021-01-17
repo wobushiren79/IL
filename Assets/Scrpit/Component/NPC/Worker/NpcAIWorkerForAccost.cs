@@ -241,7 +241,7 @@ public class NpcAIWorkerForAccost : NpcAIWokerFoBaseCpt
         npcAIWorker.SetCharacterMove(layerFirstPosition);
 
         //根据魅力增加好感
-        int addMood= npcAIWorker.characterData.CalculationAccostAddMood(gameItemsManager);
+        int addMood= npcAIWorker.characterData.CalculationAccostAddMood();
         orderForHotel.customer.ChangeMood(addMood);
         //设置相同的移动速度
         orderForHotel.customer.characterMoveCpt.SetMoveSpeed(npcAIWorker.characterMoveCpt.moveSpeed);
@@ -305,15 +305,15 @@ public class NpcAIWorkerForAccost : NpcAIWokerFoBaseCpt
     public IEnumerator CoroutineForStartTalking()
     {
         //计算聊天时间
-        float talkTime = npcAIWorker.characterData.CalculationAccostTalkTime(gameItemsManager);
+        float talkTime = npcAIWorker.characterData.CalculationAccostTalkTime();
         //设置状态
         npcAICustomer.SetIntent(NpcAICustomerCpt.CustomerIntentEnum.TalkWithAccost);
         yield return new WaitForSeconds(talkTime);
         //是否成功
-        if (npcAIWorker.characterData.CalculationAccostRate(gameItemsManager))
+        if (npcAIWorker.characterData.CalculationAccostRate())
         {
             //根据魅力增加好感
-            int addMood = npcAIWorker.characterData.CalculationAccostAddMood(gameItemsManager);
+            int addMood = npcAIWorker.characterData.CalculationAccostAddMood();
             npcAICustomer.ChangeMood(addMood);
 
             npcAIWorker.SetExpression(CharacterExpressionCpt.CharacterExpressionEnum.Love);

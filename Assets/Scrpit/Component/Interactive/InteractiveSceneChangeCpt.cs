@@ -3,19 +3,10 @@ using UnityEditor;
 
 public class InteractiveSceneChangeCpt : BaseInteractiveCpt
 {
-    
-    
+     
     public string interactiveContent;
     //需要跳转的场景
     public ScenesEnum changeScene;
-
-    protected ToastManager toastManager;
-
-
-    private void Awake()
-    {
-        toastManager = Find<ToastManager>(ImportantTypeEnum.ToastManager);
-    }
 
     public override void InteractiveDetection(CharacterInteractiveCpt characterInt)
     {

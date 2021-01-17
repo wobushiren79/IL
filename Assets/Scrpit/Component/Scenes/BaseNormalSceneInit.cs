@@ -41,7 +41,7 @@ public abstract class BaseNormalSceneInit : BaseSceneInit,IBaseObserver, DialogV
         //如果是在室内
         if (controlHandler.GetControl().transform.position.y < -50)
         {
-            audioHandler.PauseEnvironment();
+            AudioHandler.Instance.PauseEnvironment();
         }
     }
 
@@ -72,23 +72,17 @@ public abstract class BaseNormalSceneInit : BaseSceneInit,IBaseObserver, DialogV
         if (gameTimeHandler != null)
             gameTimeHandler.SetDayStatus(GameTimeHandler.DayEnum.End);
 
-        if (dialogManager != null)
+
+        DialogBean dialogBean = new DialogBean();
+        if (gameTimeHandler.GetDayStatus() == GameTimeHandler.DayEnum.Work)
         {
-            DialogBean dialogBean = new DialogBean();
-            if (gameTimeHandler.GetDayStatus()== GameTimeHandler.DayEnum.Work)
-            {
-                dialogBean.content = GameCommonInfo.GetUITextById(3006);
-            }
-            else if (gameTimeHandler.GetDayStatus() == GameTimeHandler.DayEnum.Rest)
-            {
-                dialogBean.content = GameCommonInfo.GetUITextById(3014);
-            }
-            DialogHandler.Instance.CreateDialog<DialogView>(DialogEnum.Text, this, dialogBean, 5);
+            dialogBean.content = GameCommonInfo.GetUITextById(3006);
         }
-        else
+        else if (gameTimeHandler.GetDayStatus() == GameTimeHandler.DayEnum.Rest)
         {
-            SceneUtil.SceneChange(ScenesEnum.GameInnScene);
+            dialogBean.content = GameCommonInfo.GetUITextById(3014);
         }
+        DialogHandler.Instance.CreateDialog<DialogView>(DialogEnum.Text, this, dialogBean, 5);
     }
     #region  时间通知回调
     public void ObserbableUpdate<T>(T observable, int type, params System.Object[] obj) where T : UnityEngine.Object

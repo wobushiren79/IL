@@ -55,7 +55,6 @@ public class ItemTownGuildImproveCharacterCpt : ItemGameBaseCpt, DialogView.IDia
     protected IconDataManager iconDataManager;
     protected InnBuildManager innBuildManager;
     protected ControlHandler controlHandler;
-    protected AudioHandler audioHandler;
 
     private void Awake()
     {
@@ -69,7 +68,6 @@ public class ItemTownGuildImproveCharacterCpt : ItemGameBaseCpt, DialogView.IDia
         gameDataHandler = uiGameManager.gameDataHandler;
         iconDataManager = uiGameManager.iconDataManager;
         innBuildManager = uiGameManager.innBuildManager;
-        audioHandler = AudioHandler.Instance;
 
     }
 

@@ -15,13 +15,6 @@ public class SelectView : BaseMonoBehaviour
     private ICallBack callBack;
 
 
-    protected AudioHandler audioHandler;
-
-    private void Awake()
-    {
-        audioHandler = Find<AudioHandler>(ImportantTypeEnum.AudioHandler);
-    }
-
     private void Start()
     {
         if (leftSelect != null)
@@ -37,8 +30,8 @@ public class SelectView : BaseMonoBehaviour
 
     public void LeftSelect()
     {
-        if (audioHandler != null)
-            AudioHandler.Instance.PlaySound(AudioSoundEnum.ButtonForNormal);
+        AudioHandler.Instance.PlaySound(AudioSoundEnum.ButtonForNormal);
+
         if (listDataNumber == 0)
         {
             return;
@@ -55,9 +48,9 @@ public class SelectView : BaseMonoBehaviour
     }
 
     public void RightSelect()
-    {
-        if (audioHandler != null)
-            AudioHandler.Instance.PlaySound(AudioSoundEnum.ButtonForNormal);
+    { 
+        AudioHandler.Instance.PlaySound(AudioSoundEnum.ButtonForNormal);
+
         if (listDataNumber==0)
         {
             return;

@@ -64,8 +64,6 @@ public class UIGameManager : BaseUIManager
         iconDataManager = Find<IconDataManager>(ImportantTypeEnum.UIManager);
         textInfoManager= Find<TextInfoManager>(ImportantTypeEnum.TextManager);
         skillInfoManager = Find<SkillInfoManager>(ImportantTypeEnum.SkillManager);
-        dialogManager = Find<DialogManager>(ImportantTypeEnum.DialogManager);
-        toastManager = Find<ToastManager>(ImportantTypeEnum.ToastManager);
 
         skillInfoHandler = Find<SkillInfoHandler>(ImportantTypeEnum.SkillHandler);
         innHandler = Find<InnHandler>(ImportantTypeEnum.InnHandler);

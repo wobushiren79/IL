@@ -6,13 +6,9 @@ public class EffectPSCpt : BaseMonoBehaviour
 {
     protected ParticleSystem effectPS;
     public AudioSoundEnum soundType;
-    protected AudioHandler audioHandler;
 
     private void Awake()
     {
-        //音效
-        audioHandler = Find<AudioHandler>( ImportantTypeEnum.AudioHandler);
-
         effectPS = GetComponent<ParticleSystem>();
         ParticleSystem.MainModule mainModule = effectPS.main;
         mainModule.loop = false;

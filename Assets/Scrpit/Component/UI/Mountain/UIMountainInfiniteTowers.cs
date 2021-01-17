@@ -33,8 +33,7 @@ public class UIMountainInfiniteTowers : BaseUIComponent, DialogView.IDialogCallB
     {
         base.OpenUI();
 
-        if (AudioHandler.Instance != null)
-            AudioHandler.Instance.PlaySound(AudioSoundEnum.ButtonForNormal);
+        AudioHandler.Instance.PlaySound(AudioSoundEnum.ButtonForNormal);
         if (uiGameManager.controlHandler != null)
             uiGameManager.controlHandler.StopControl();
         if (uiGameManager.gameTimeHandler != null)

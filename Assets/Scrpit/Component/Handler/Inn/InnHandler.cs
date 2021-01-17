@@ -32,14 +32,11 @@ public class InnHandler : BaseMonoBehaviour, IBaseObserver
     //住宿处理
     public InnHotelHandler innHotelHandler;
 
-    //音效处理
-    protected AudioHandler audioHandler;
     protected GameTimeHandler gameTimeHandler;
     protected IconDataManager iconDataManager;
     //数据管理
     protected GameDataManager gameDataManager;
     protected InnFoodManager innFoodManager;
-    protected ToastManager toastManager;
     protected InnBuildManager innBuildManager;
 
     //NPC创建
@@ -75,7 +72,6 @@ public class InnHandler : BaseMonoBehaviour, IBaseObserver
     {
         gameDataManager = Find<GameDataManager>(ImportantTypeEnum.GameDataManager);
         innFoodManager = Find<InnFoodManager>(ImportantTypeEnum.FoodManager);
-        toastManager = Find<ToastManager>(ImportantTypeEnum.ToastManager);
         innBuildManager = Find<InnBuildManager>(ImportantTypeEnum.BuildManager);
 
         workerBuilder = Find<NpcWorkerBuilder>(ImportantTypeEnum.NpcBuilder);
@@ -83,7 +79,6 @@ public class InnHandler : BaseMonoBehaviour, IBaseObserver
         eventBuilder = Find<NpcEventBuilder>(ImportantTypeEnum.NpcBuilder);
         iconDataManager = Find<IconDataManager>(ImportantTypeEnum.UIManager);
 
-        audioHandler = Find<AudioHandler>(ImportantTypeEnum.AudioHandler);
         gameDataHandler = Find<GameDataHandler>(ImportantTypeEnum.GameDataHandler);
         gameTimeHandler = Find<GameTimeHandler>(ImportantTypeEnum.TimeHandler);
         gameTimeHandler.AddObserver(this);
@@ -133,7 +128,7 @@ public class InnHandler : BaseMonoBehaviour, IBaseObserver
     /// </summary>
     public void CloseInn()
     {
-        audioHandler.StopMusic();
+        AudioHandler.Instance.StopMusic();
         innStatus = InnStatusEnum.Close;
 
         //删除所有顾客
@@ -193,7 +188,7 @@ public class InnHandler : BaseMonoBehaviour, IBaseObserver
     /// </summary>
     public void OpenInn()
     {
-        audioHandler.PlayMusicForLoop(AudioMusicEnum.Game);
+        AudioHandler.Instance.PlayMusicForLoop(AudioMusicEnum.Game);
         workerBuilder.BuildAllWorker();
         InitInn();
         innStatus = InnStatusEnum.Open;

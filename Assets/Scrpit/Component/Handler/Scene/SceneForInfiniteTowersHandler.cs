@@ -8,23 +8,19 @@ public class SceneForInfiniteTowersHandler : BaseHandler, IBaseObserver
     protected SceneInfiniteTowersManager infiniteTowersManager;
 
     protected GameDataManager gameDataManager;
-    protected GameItemsManager gameItemsManager;
     protected NpcInfoManager npcInfoManager;
     protected NpcTeamManager npcTeamManager;
     protected UIGameManager uiGameManager;
-    protected CharacterBodyManager characterBodyManager;
 
     protected UserInfiniteTowersBean infiniteTowersData;
     public void Awake()
     {
         combatHandler = Find<MiniGameCombatHandler>(ImportantTypeEnum.MiniGameHandler);
         infiniteTowersManager = Find<SceneInfiniteTowersManager>(ImportantTypeEnum.SceneManager);
-        gameItemsManager = Find<GameItemsManager>(ImportantTypeEnum.GameItemsManager);
         npcInfoManager = Find<NpcInfoManager>(ImportantTypeEnum.NpcManager);
         npcTeamManager = Find<NpcTeamManager>(ImportantTypeEnum.NpcManager);
         gameDataManager = Find<GameDataManager>(ImportantTypeEnum.GameDataManager);
         uiGameManager = Find<UIGameManager>(ImportantTypeEnum.GameUI);
-        characterBodyManager = Find<CharacterBodyManager>(ImportantTypeEnum.CharacterManager);
     }
     public void Start()
     {
@@ -64,7 +60,7 @@ public class SceneForInfiniteTowersHandler : BaseHandler, IBaseObserver
         }
 
         //获取敌方数据
-        List<CharacterBean> listEnemyData = infiniteTowersManager.GetCharacterDataByInfiniteTowersLayer(npcTeamManager,npcInfoManager, characterBodyManager, infiniteTowersData.layer);
+        List<CharacterBean> listEnemyData = infiniteTowersManager.GetCharacterDataByInfiniteTowersLayer(npcTeamManager,npcInfoManager, infiniteTowersData.layer);
         //设置敌方能力
         foreach (CharacterBean itemEnemyData in listEnemyData)
         {

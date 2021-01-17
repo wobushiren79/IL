@@ -35,8 +35,7 @@ public class UIBaseOne : BaseUIComponent ,DialogView.IDialogCallBack
     public override void OpenUI()
     {
         base.OpenUI();
-        if (AudioHandler.Instance != null)
-            AudioHandler.Instance.PlaySound(AudioSoundEnum.ButtonForNormal);
+        AudioHandler.Instance.PlaySound(AudioSoundEnum.ButtonForNormal);
         if (uiGameManager.controlHandler != null)
             uiGameManager.controlHandler.StopControl();
         if (uiGameManager.gameTimeHandler != null)
@@ -45,8 +44,7 @@ public class UIBaseOne : BaseUIComponent ,DialogView.IDialogCallBack
 
     public override void CloseUI()
     {
-        if (AudioHandler.Instance != null)
-            AudioHandler.Instance.PlaySound(AudioSoundEnum.ButtonForBack);
+        AudioHandler.Instance.PlaySound(AudioSoundEnum.ButtonForBack);
         if (gameObject.activeSelf)
         {
             if (uiGameManager.controlHandler != null)
@@ -101,8 +99,7 @@ public class UIBaseOne : BaseUIComponent ,DialogView.IDialogCallBack
     /// </summary>
     public virtual void OnClickForSell()
     {
-        if (AudioHandler.Instance != null)
-            AudioHandler.Instance.PlaySound(AudioSoundEnum.ButtonForNormal);
+        AudioHandler.Instance.PlaySound(AudioSoundEnum.ButtonForNormal);
         CreatePickForSellDialogView(out PickForSellDialogView pickForSellDialog);
     }
 

@@ -35,12 +35,10 @@ public class PickForMoneyDialogView : DialogView
     public int moneyM = 0;
     public int moneyS = 0;
 
-    protected ToastManager toastManager;
 
     public override void Awake()
     {
         base.Awake();
-        toastManager = Find<ToastManager>(ImportantTypeEnum.ToastManager);
         if (etMoneyL)
             etMoneyL.onEndEdit.AddListener(OnEndEditForMoneyL);
         if (etMoneyM)

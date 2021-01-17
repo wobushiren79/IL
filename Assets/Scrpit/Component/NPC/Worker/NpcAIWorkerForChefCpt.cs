@@ -163,7 +163,7 @@ public class NpcAIWorkerForChefCpt : NpcAIWokerFoBaseCpt
     /// <returns></returns>
     public IEnumerator StartCook()
     {
-        float foodTime = npcAIWorker.characterData.CalculationChefMakeFoodTime(gameItemsManager, orderForCustomer.foodData.cook_time);
+        float foodTime = npcAIWorker.characterData.CalculationChefMakeFoodTime(orderForCustomer.foodData.cook_time);
         AudioHandler.Instance.PlaySound(AudioSoundEnum.Cook);
         yield return new WaitForSeconds(foodTime);
         //如果顾客已经没人

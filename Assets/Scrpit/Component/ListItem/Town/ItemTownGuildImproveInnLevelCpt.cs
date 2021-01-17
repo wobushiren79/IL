@@ -24,27 +24,19 @@ public class ItemTownGuildImproveInnLevelCpt : BaseMonoBehaviour, DialogView.IDi
     public StoreInfoBean storeInfo;
     public bool isAllPre = true;
 
-    protected GameItemsManager gameItemsManager;
     protected IconDataManager iconDataManager;
     protected GameDataManager gameDataManager;
-    protected ToastManager toastManager;
     protected UIGameManager uiGameManager;
     protected InnBuildManager innBuildManager;
-    protected DialogManager dialogManager;
     protected NpcInfoManager npcInfoManager;
-    protected CharacterDressManager characterDressManager;
     protected InnFoodManager innFoodManager;
     private void Awake()
     {
-        gameItemsManager = Find<GameItemsManager>(ImportantTypeEnum.GameItemsManager);
         iconDataManager = Find<IconDataManager>(ImportantTypeEnum.UIManager);
         gameDataManager = Find<GameDataManager>(ImportantTypeEnum.GameDataManager);
-        toastManager = Find<ToastManager>(ImportantTypeEnum.ToastManager);
         uiGameManager = Find<UIGameManager>(ImportantTypeEnum.GameUI);
         innBuildManager = Find<InnBuildManager>(ImportantTypeEnum.BuildManager);
-        dialogManager = Find<DialogManager>(ImportantTypeEnum.DialogManager);
         npcInfoManager = Find<NpcInfoManager>(ImportantTypeEnum.NpcManager);
-        characterDressManager = Find<CharacterDressManager>(ImportantTypeEnum.CharacterManager);
         innFoodManager = Find<InnFoodManager>(ImportantTypeEnum.FoodManager);
     }
 

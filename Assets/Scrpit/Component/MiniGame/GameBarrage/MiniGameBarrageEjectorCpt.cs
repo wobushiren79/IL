@@ -3,12 +3,10 @@ using UnityEditor;
 
 public class MiniGameBarrageEjectorCpt : BaseMonoBehaviour
 {
-    protected AudioHandler audioHandler;
     protected MiniGameBarrageBuilder miniGameBarrageBuilder;
 
     private void Awake()
     {
-        audioHandler = Find<AudioHandler>(ImportantTypeEnum.AudioHandler);
         miniGameBarrageBuilder = FindInChildren < MiniGameBarrageBuilder > (ImportantTypeEnum.MiniGameBuilder);
     }
 

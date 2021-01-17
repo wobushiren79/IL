@@ -350,7 +350,7 @@ public class NpcAIWorkerCpt : BaseNpcAI
     public void SetIntentForIdle()
     {
         //有一定概率发呆
-        if (dazeEnabled && dazeBufferTime <= 0 && characterData.CalculationWorkerDaze(gameItemsManager, gameDataManager))
+        if (dazeEnabled && dazeBufferTime <= 0 && characterData.CalculationWorkerDaze(gameDataManager))
         {
             SetIntent(WorkerIntentEnum.Daze);
         }

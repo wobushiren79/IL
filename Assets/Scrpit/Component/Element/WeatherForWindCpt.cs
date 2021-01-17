@@ -25,14 +25,14 @@ public class WeatherForWindCpt : WeatherCpt
                 SetDefoliation();
                 break;
         }
-        if (audioHandler != null)
-            audioHandler.PlayEnvironment(AudioEnvironmentEnum.Wind,GameCommonInfo.GameConfig.environmentVolume);
+        
+            AudioHandler.Instance.PlayEnvironment(AudioEnvironmentEnum.Wind,GameCommonInfo.GameConfig.environmentVolume);
     }
 
     public override void CloseWeather()
     {
-        if (audioHandler != null)
-            audioHandler.StopEnvironment();
+        
+            AudioHandler.Instance.StopEnvironment();
         objWind_1.SetActive(false);
         objWind_2.SetActive(false);
         objDefoliation_1.SetActive(false);

@@ -22,7 +22,6 @@ public class InfoBedPopupShow : PopupShowView
 
     protected GameDataManager gameDataManager;
     protected IconDataManager iconDataManager;
-    protected GameItemsManager gameItemsManager;
     protected InnBuildManager innBuildManager;
 
     public BuildBedBean buildBedData;
@@ -31,7 +30,6 @@ public class InfoBedPopupShow : PopupShowView
     {
         base.Awake();
         gameDataManager = Find<GameDataManager>(ImportantTypeEnum.GameDataManager);
-        gameItemsManager = Find<GameItemsManager>(ImportantTypeEnum.GameItemsManager);
         iconDataManager = Find<IconDataManager>(ImportantTypeEnum.UIManager);
         innBuildManager = Find<InnBuildManager>(ImportantTypeEnum.BuildManager);
     }
@@ -108,7 +106,7 @@ public class InfoBedPopupShow : PopupShowView
         if (researcher != null)
         {
             tvResearcherName.text = researcher.baseInfo.name;
-            long addExp = researcher.CalculationBedResearchAddExp(gameItemsManager);
+            long addExp = researcher.CalculationBedResearchAddExp();
             tvResearcherAbility.text = addExp + "/s";
         }
         else

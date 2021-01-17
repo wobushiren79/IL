@@ -34,11 +34,11 @@ public class MiniGameCharacterForCombatBean : MiniGameCharacterBean
     /// 获取所有伤害减免
     /// </summary>
     /// <returns></returns>
-    public int GetTotalDef(GameItemsManager gameItemsManager, int damage)
+    public int GetTotalDef(int damage)
     {
         foreach (MiniGameCombatEffectBean itemData in listCombatEffect)
         {
-            damage = EffectTypeEnumTools.GetTotalDef(gameItemsManager, characterData, itemData.listEffectTypeData, damage);
+            damage = EffectTypeEnumTools.GetTotalDef(characterData, itemData.listEffectTypeData, damage);
         }
         return damage;
     }

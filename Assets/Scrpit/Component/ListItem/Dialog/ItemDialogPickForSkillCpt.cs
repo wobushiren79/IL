@@ -11,7 +11,6 @@ public class ItemDialogPickForSkillCpt : BaseMonoBehaviour
     public InfoSkillPopupButton infoSkillPopup;
 
     protected IconDataManager iconDataManager;
-    protected ToastManager toastManager;
     protected ICallBack callBack;
 
     public SkillInfoBean skillInfoData;
@@ -19,7 +18,6 @@ public class ItemDialogPickForSkillCpt : BaseMonoBehaviour
 
     private void Awake()
     {
-        toastManager = Find<ToastManager>(ImportantTypeEnum.ToastManager);
         iconDataManager = Find<IconDataManager>(ImportantTypeEnum.UIManager);
     }
 

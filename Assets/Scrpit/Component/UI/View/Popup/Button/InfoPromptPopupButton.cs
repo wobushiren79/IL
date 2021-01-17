@@ -10,12 +10,10 @@ public class InfoPromptPopupButton : PopupButtonView<InfoPromptPopupShow>
     public bool isAudio = false;
     //延迟时间
     public float delayTime = 1;
-    protected AudioHandler audioHandler;
 
     public override void Awake()
     {
         base.Awake();
-        audioHandler = Find<AudioHandler>(ImportantTypeEnum.AudioHandler);
     }
 
     public void SetContent(string content)
@@ -30,8 +28,8 @@ public class InfoPromptPopupButton : PopupButtonView<InfoPromptPopupShow>
             //设置内容
             popupShow.SetContent(content);
             //设置音效
-            if (audioHandler != null && isAudio)
-                AudioHandler.Instance.PlaySound(AudioSoundEnum.ButtonForHighLight);
+            AudioHandler.Instance.PlaySound(AudioSoundEnum.ButtonForHighLight);
+
             popupShow.gameObject.SetActive(false);
             StartCoroutine(CoroutineForShow());
         }

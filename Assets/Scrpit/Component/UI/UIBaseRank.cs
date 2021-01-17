@@ -26,13 +26,11 @@ public class UIBaseRank : UIBaseOne, IRadioGroupCallBack
     public RankTypeEnum rankType = RankTypeEnum.GetMoneyS;
 
     protected SteamHandler steamHandler;
-    protected ToastManager toastManager;
 
     public override void Awake()
     {
         base.Awake();
         steamHandler = Find<SteamHandler>(ImportantTypeEnum.Steam);
-        toastManager = Find<ToastManager>(ImportantTypeEnum.ToastManager);
         if (rgRankType != null) rgRankType.SetCallBack(this);
     }
 

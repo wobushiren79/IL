@@ -275,7 +275,7 @@ public class NpcAIMiniGameCombatCpt : BaseNpcAI
     public void CombatEffectExecute(MiniGameCombatEffectBean itemCombatEffect,out bool isDead)
     {
         //完成数据
-        itemCombatEffect.CompleteEffect(gameItemsManager,audioHandler, characterMiniGameData);
+        itemCombatEffect.CompleteEffect(characterMiniGameData);
         //检测角色血量
         gameCombatHandler.CheckCharacterLife();
 

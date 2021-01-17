@@ -5,13 +5,6 @@ public class MiniGameAccountHookCpt : BaseMonoBehaviour
 {
     public MiniGameAccountEjectorCpt ejectorCpt;
 
-    protected AudioHandler audioHandler;
-
-    private void Awake()
-    {
-        audioHandler = Find<AudioHandler>( ImportantTypeEnum.AudioHandler);
-    }
-
     private void OnTriggerEnter2D(Collider2D collision)
     {
         MiniGameAccountMoneyCpt money = collision.GetComponent<MiniGameAccountMoneyCpt>();

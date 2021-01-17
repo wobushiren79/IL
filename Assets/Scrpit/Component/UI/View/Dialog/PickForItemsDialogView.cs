@@ -5,7 +5,6 @@ using UnityEngine.UI;
 public class PickForItemsDialogView : DialogView, ItemGameBackpackPickCpt.ICallBack
 {
     protected GameDataManager gameDataManager;
-    protected GameItemsManager gameItemsManager;
 
     public ScrollGridVertical gridVertical;
 
@@ -22,7 +21,6 @@ public class PickForItemsDialogView : DialogView, ItemGameBackpackPickCpt.ICallB
     {
         base.Awake();
         gameDataManager = Find<GameDataManager>(ImportantTypeEnum.GameDataManager);
-        gameItemsManager = Find<GameItemsManager>(ImportantTypeEnum.GameItemsManager);
 
         if (gridVertical != null)
             gridVertical.AddCellListener(OnCellForItems);

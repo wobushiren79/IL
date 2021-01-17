@@ -16,7 +16,6 @@ public class AchievementDialogView : DialogView
 
     public AchievementInfoBean achievementInfo;
 
-    protected GameItemsManager gameItemsManager;
     protected IconDataManager iconDataManager;
     protected InnBuildManager innBuildManager;
     protected InnFoodManager innFoodManager;
@@ -25,7 +24,6 @@ public class AchievementDialogView : DialogView
     public override void Awake()
     {
         base.Awake();
-        gameItemsManager = Find<GameItemsManager>(ImportantTypeEnum.GameItemsManager);
         iconDataManager = Find<IconDataManager>(ImportantTypeEnum.UIManager);
         innBuildManager = Find<InnBuildManager>(ImportantTypeEnum.BuildManager);
         innFoodManager = Find<InnFoodManager>(ImportantTypeEnum.FoodManager);
@@ -78,7 +76,7 @@ public class AchievementDialogView : DialogView
     /// <param name="iconKey"></param>
     public void SetIcon(int type, string iconKey,string remarkIconKey)
     {
-        if (ivIcon != null && gameItemsManager != null)
+        if (ivIcon != null)
         {
             Sprite spIcon;
             if (type == 1)

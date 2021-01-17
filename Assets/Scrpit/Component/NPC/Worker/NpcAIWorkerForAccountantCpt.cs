@@ -139,12 +139,12 @@ public class NpcAIWorkerForAccountantCpt : NpcAIWokerFoBaseCpt
     /// <returns></returns>
     public IEnumerator CoroutineForAccountingForFood(OrderForCustomer orderForCustomer)
     {
-        float time = npcAIWorker.characterData.CalculationAccountingTime(gameItemsManager);
+        float time = npcAIWorker.characterData.CalculationAccountingTime();
         yield return new WaitForSeconds(time);
         MenuOwnBean menuOwn = gameDataManager.gameData.GetMenuById(orderForCustomer.foodData.id);
         menuOwn.GetPrice(orderForCustomer.foodData, out long payMoneyL, out long payMoneyM, out long payMoneyS);
         //是否出错
-        bool isError = npcAIWorker.characterData.CalculationAccountingCheck(gameItemsManager, out float moreRate);
+        bool isError = npcAIWorker.characterData.CalculationAccountingCheck( out float moreRate);
 
         long AddMoneyL = (long)(moreRate * payMoneyL);
         long AddMoneyM = (long)(moreRate * payMoneyM);
@@ -225,14 +225,14 @@ public class NpcAIWorkerForAccountantCpt : NpcAIWokerFoBaseCpt
 
     public IEnumerator CoroutineForAccountingForBed(OrderForHotel orderForHotel)
     {
-        float time = npcAIWorker.characterData.CalculationAccountingTime(gameItemsManager);
+        float time = npcAIWorker.characterData.CalculationAccountingTime();
         yield return new WaitForSeconds(time);
         orderForHotel.bed.GetPrice(out long basePriceS, out long addPriceS);
         long payMoneyL = 0;
         long payMoneyM = 0;
         long payMoneyS = basePriceS + addPriceS;
         //是否出错
-        bool isError = npcAIWorker.characterData.CalculationAccountingCheck(gameItemsManager, out float moreRate);
+        bool isError = npcAIWorker.characterData.CalculationAccountingCheck(out float moreRate);
 
         long AddMoneyL = (long)(moreRate * payMoneyL);
         long AddMoneyM = (long)(moreRate * payMoneyM);

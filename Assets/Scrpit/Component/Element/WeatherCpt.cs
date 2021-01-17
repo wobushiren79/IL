@@ -5,13 +5,6 @@ public class WeatherCpt : BaseMonoBehaviour
 {
     public WeatherBean weatherData;
 
-    protected AudioHandler audioHandler;
-
-    private void Awake()
-    {
-        audioHandler = Find<AudioHandler>(ImportantTypeEnum.AudioHandler);
-    }
-
     public virtual void OpenWeather(WeatherBean weatherData)
     {
         this.weatherData = weatherData;

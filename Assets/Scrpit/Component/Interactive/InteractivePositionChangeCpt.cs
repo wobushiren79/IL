@@ -14,12 +14,10 @@ public class InteractivePositionChangeCpt : BaseInteractiveCpt
 
     protected EventHandler eventHandler;
     protected SceneTownManager sceneTownManager;
-    protected AudioHandler audioHandler;
     private void Awake()
     {
         eventHandler = Find<EventHandler>(ImportantTypeEnum.EventHandler);
         sceneTownManager = Find<SceneTownManager>(ImportantTypeEnum.SceneManager);
-        audioHandler = Find<AudioHandler>(ImportantTypeEnum.AudioHandler);
     }
 
     public override void InteractiveDetection(CharacterInteractiveCpt characterInt)
@@ -36,7 +34,7 @@ public class InteractivePositionChangeCpt : BaseInteractiveCpt
                 {
                     checkOutOrIn = 1;
                     //关闭环境音效
-                    audioHandler.PauseEnvironment();
+                    AudioHandler.Instance.PauseEnvironment();
                     mInteractiveObj.transform.position = inDoorPosition;
                 }
                 //本身是在里 要转换到外
@@ -44,7 +42,7 @@ public class InteractivePositionChangeCpt : BaseInteractiveCpt
                 {
                     checkOutOrIn = 0;
                     //开启环境音效
-                    audioHandler.RestoreEnvironment();
+                    AudioHandler.Instance.RestoreEnvironment();
                     mInteractiveObj.transform.position = outDoorPosition;
                 }
                 //检测故事

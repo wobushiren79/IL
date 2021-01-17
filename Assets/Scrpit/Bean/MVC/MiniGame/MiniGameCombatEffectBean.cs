@@ -16,10 +16,10 @@ public class MiniGameCombatEffectBean
     //技能受益人
     public NpcAIMiniGameCombatCpt targetCharacter;
 
-    public void CompleteEffect(GameItemsManager gameItemsManager, AudioHandler audioHandler, MiniGameCharacterForCombatBean miniGameCharacter)
+    public void CompleteEffect(MiniGameCharacterForCombatBean miniGameCharacter)
     {
         //回复生命处理
-        int addLife = EffectTypeEnumTools.GetTotalLife(gameItemsManager, targetCharacter.characterData, listEffectTypeData);
+        int addLife = EffectTypeEnumTools.GetTotalLife(targetCharacter.characterData, listEffectTypeData);
         if (addLife > 0)
         {
             //显示增加的血量
@@ -30,7 +30,7 @@ public class MiniGameCombatEffectBean
 
         }
         //伤害处理
-        int addDamage = EffectTypeEnumTools.GetTotalDamage(gameItemsManager, actionCharacter, listEffectTypeData);
+        int addDamage = EffectTypeEnumTools.GetTotalDamage( actionCharacter, listEffectTypeData);
         if (addDamage > 0)
         {
             targetCharacter.UnderAttack(1, addDamage);

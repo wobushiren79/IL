@@ -40,8 +40,6 @@ public class ControlForBuildCpt : BaseControl
     protected InnWallBuilder innWallBuilder;
     protected InnFloorBuilder innFloorBuilder;
 
-    protected AudioHandler audioHandler;
-
     //建筑层数
     public int buildLayer = 1;
 
@@ -53,8 +51,6 @@ public class ControlForBuildCpt : BaseControl
         innFurnitureBuilder = Find<InnFurnitureBuilder>(ImportantTypeEnum.InnBuilder);
         innWallBuilder = Find<InnWallBuilder>(ImportantTypeEnum.InnBuilder);
         innFloorBuilder = Find<InnFloorBuilder>(ImportantTypeEnum.InnBuilder);
-
-        audioHandler = Find<AudioHandler>(ImportantTypeEnum.AudioHandler);
     }
 
     private void FixedUpdate()
