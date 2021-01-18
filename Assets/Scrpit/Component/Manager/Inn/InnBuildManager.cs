@@ -20,9 +20,11 @@ public class InnBuildManager : BaseManager, IBuildDataView
     //家具图标
     public SpriteAtlas  atlasForFunrniture;
     //地板图标
-    public IconBeanDictionary listFloorIcon = new IconBeanDictionary();
+    public IconBeanDictionary dicFunrnitureIcon = new IconBeanDictionary();
+    //地板图标
+    public IconBeanDictionary dicFloorIcon = new IconBeanDictionary();
     //墙体图标
-    public IconBeanDictionary listWallIcon = new IconBeanDictionary();
+    public IconBeanDictionary dicWallIcon = new IconBeanDictionary();
 
     public void Awake()
     {
@@ -35,7 +37,7 @@ public class InnBuildManager : BaseManager, IBuildDataView
     /// <returns></returns>
     public Sprite GetFurnitureSpriteByName(string name)
     {
-        return GetSpriteByName(name, atlasForFunrniture);
+        return GetSpriteByName(dicFunrnitureIcon, ref atlasForFunrniture, "AtlasForFurniture", "sprite/furniture", name);
     }
 
     /// <summary>
@@ -45,8 +47,9 @@ public class InnBuildManager : BaseManager, IBuildDataView
     /// <returns></returns>
     public Sprite GetFloorSpriteByName(string name)
     {
-        return GetSpriteByName(name, listFloorIcon);
+        return GetSpriteByName(name, dicFloorIcon);
     }
+
     /// <summary>
     /// 通过名字获取墙体图标
     /// </summary>
@@ -54,7 +57,7 @@ public class InnBuildManager : BaseManager, IBuildDataView
     /// <returns></returns>
     public Sprite GetWallSpriteByName(string name)
     {
-        return GetSpriteByName(name, listWallIcon);
+        return GetSpriteByName(name, dicWallIcon);
     }
 
     /// <summary>
@@ -159,7 +162,6 @@ public class InnBuildManager : BaseManager, IBuildDataView
         }
         return furnitureObj;
     }
-
 
     /// <summary>
     /// 根据建筑ID获取建筑
