@@ -7,7 +7,7 @@ using RotaryHeart.Lib.SerializableDictionary;
 
 public class BaseManager : BaseMonoBehaviour
 {
-    protected T GetModel<T>(Dictionary<string, T> listModel, string assetBundlePath, string objName) where T : Object
+    protected T GetModel<T>(Dictionary<string, T> listModel, string assetBundlePath, string name) where T : Object
     {
         if (name == null)
             return null;
@@ -16,14 +16,14 @@ public class BaseManager : BaseMonoBehaviour
             return value;
         }
 
-        T anim = LoadAssetUtil.SyncLoadAsset<T>(assetBundlePath, objName);
+        T anim = LoadAssetUtil.SyncLoadAsset<T>(assetBundlePath, name);
         if (anim != null)
         {
             listModel.Add(name, anim);
         }
         return anim;
     }
-    protected T GetModel<T>(SerializableDictionaryBase<string, T> listModel, string assetBundlePath, string objName) where T : Object
+    protected T GetModel<T>(SerializableDictionaryBase<string, T> listModel, string assetBundlePath, string name) where T : Object
     {
         if (name == null)
             return null;
@@ -32,7 +32,7 @@ public class BaseManager : BaseMonoBehaviour
             return value;
         }
 
-        T anim = LoadAssetUtil.SyncLoadAsset<T>(assetBundlePath, objName);
+        T anim = LoadAssetUtil.SyncLoadAsset<T>(assetBundlePath, name);
         if (anim != null)
         {
             listModel.Add(name, anim);
@@ -40,7 +40,7 @@ public class BaseManager : BaseMonoBehaviour
         return anim;
     }
 
-    protected Sprite GetSpriteByName(IconBeanDictionary dicIcon,ref SpriteAtlas spriteAtlas, string atlasName, string assetBundlePath, string objName)
+    protected Sprite GetSpriteByName(IconBeanDictionary dicIcon,ref SpriteAtlas spriteAtlas, string atlasName, string assetBundlePath, string name)
     {
         if (name == null)
             return null;
@@ -61,7 +61,7 @@ public class BaseManager : BaseMonoBehaviour
         spriteAtlas = LoadAssetUtil.SyncLoadAsset<SpriteAtlas>(assetBundlePath, atlasName);
         //加载成功后在读取一次
         if (spriteAtlas != null)
-            return GetSpriteByName(dicIcon,ref spriteAtlas, atlasName, assetBundlePath, objName);
+            return GetSpriteByName(dicIcon,ref spriteAtlas, atlasName, assetBundlePath, name);
         return null;
     }
     protected Sprite GetSpriteByName(Dictionary<string, Sprite> dicIcon, ref SpriteAtlas spriteAtlas, string atlasName, string assetBundlePath, string objName)
