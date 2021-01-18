@@ -63,15 +63,15 @@ public class PopupItemsSelection : BaseMonoBehaviour
 
     public void Close()
     {
-        
-            AudioHandler.Instance.PlaySound(AudioSoundEnum.ButtonForNormal);
+
+        AudioHandler.Instance.PlaySound(AudioSoundEnum.ButtonForNormal);
         gameObject.SetActive(false);
     }
 
     public void Open(SelectionTypeEnum type)
     {
-        
-            AudioHandler.Instance.PlaySound(AudioSoundEnum.ButtonForHighLight);
+
+        AudioHandler.Instance.PlaySound(AudioSoundEnum.ButtonForHighLight);
         btUse.gameObject.SetActive(false);
         btDiscard.gameObject.SetActive(false);
         btEquip.gameObject.SetActive(false);

@@ -10,7 +10,7 @@ public class ItemGameStatisticsForMenuCpt : ItemBaseTextCpt
     public Image ivIconBackground;
     public Image ivNameBackground;
     public Image ivNumberBackground;
-    public InfoFoodPopupButton popupButton;
+    public PopupFoodButton popupButton;
 
     protected InnFoodManager innFoodManager;
     protected IconDataManager iconDataManager;

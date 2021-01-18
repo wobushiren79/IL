@@ -2,7 +2,7 @@
 using UnityEditor;
 using UnityEngine.UI;
 
-public class InfoPromptPopupShow : PopupShowView
+public class PopupPromptShow : PopupShowView
 {
     public Text tvContent;
 

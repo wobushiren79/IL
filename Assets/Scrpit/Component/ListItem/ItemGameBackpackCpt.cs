@@ -11,7 +11,7 @@ public class ItemGameBackpackCpt : ItemGameBaseCpt, IPointerClickHandler, PopupI
     public Text tvNumber;
     public RectTransform rtIcon;
     public Image ivIcon;
-    public InfoItemsPopupButton infoItemsPopup;
+    public PopupItemsButton infoItemsPopup;
 
     public ItemsInfoBean itemsInfoData;
     public ItemBean itemBean;
@@ -171,8 +171,6 @@ public class ItemGameBackpackCpt : ItemGameBaseCpt, IPointerClickHandler, PopupI
     public virtual void SelectionUse(PopupItemsSelection view)
     {
         GameDataManager gameDataManager = uiGameManager.gameDataManager;
-        ToastManager toastManager = uiGameManager.toastManager;
-        DialogManager dialogManager = uiGameManager.dialogManager;
         InnFoodManager foodManager = uiGameManager.innFoodManager;
         if (itemsInfoData == null || itemBean == null || gameDataManager == null)
             return;
@@ -209,8 +207,7 @@ public class ItemGameBackpackCpt : ItemGameBaseCpt, IPointerClickHandler, PopupI
     /// <param name="view"></param>
     public virtual void SelectionDiscard(PopupItemsSelection view)
     {
-        DialogManager dialogManager = uiGameManager.dialogManager;
-        if (dialogManager == null || itemsInfoData == null)
+        if (itemsInfoData == null)
             return;
         if (itemBean.itemNumber == 1)
         {
@@ -274,7 +271,6 @@ public class ItemGameBackpackCpt : ItemGameBaseCpt, IPointerClickHandler, PopupI
                 content = string.Format(GameCommonInfo.GetUITextById(3001), itemsInfoData.name + "x" + pickNumber),
                 remark = "" + pickNumber
             };
-            DialogManager dialogManager = uiGameManager.dialogManager;
             DialogHandler.Instance.CreateDialog<DialogView>(DialogEnum.Normal, this, dialogBean);
         }
         else if (dialogView as AchievementDialogView)

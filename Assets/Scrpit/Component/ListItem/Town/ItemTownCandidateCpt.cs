@@ -7,7 +7,7 @@ public class ItemTownCandidateCpt : ItemGameBaseCpt, DialogView.IDialogCallBack
     public Text tvPrice;
     public Button btSubmit;
     public Image ivSex;
-    public InfoAbilityPopupButton infoAbilityPopupButton;
+    public PopupAbilityButton popupAbilityButton;
     public CharacterUICpt characterUICpt;
 
     public Sprite spMan;
@@ -19,8 +19,6 @@ public class ItemTownCandidateCpt : ItemGameBaseCpt, DialogView.IDialogCallBack
     {
         if (btSubmit != null)
             btSubmit.onClick.AddListener(EmploymentCandidate);
-        if (infoAbilityPopupButton != null)
-            infoAbilityPopupButton.SetPopupShowView(GetUIManager<UIGameManager>().infoAbilityPopup);
     }
 
     /// <summary>
@@ -30,8 +28,6 @@ public class ItemTownCandidateCpt : ItemGameBaseCpt, DialogView.IDialogCallBack
     {
         UIGameManager uiGameManager= GetUIManager<UIGameManager>();
         GameDataManager gameDataManager = uiGameManager.gameDataManager;
-        ToastManager toastManager = uiGameManager.toastManager;
-        DialogManager dialogManager = uiGameManager.dialogManager;
 
         AudioHandler.Instance.PlaySound(AudioSoundEnum.ButtonForNormal);
         //检测是否超过人员上限
@@ -126,14 +122,13 @@ public class ItemTownCandidateCpt : ItemGameBaseCpt, DialogView.IDialogCallBack
     /// <param name="characterData"></param>
     public void SetAbility(CharacterBean characterData)
     {
-        infoAbilityPopupButton.SetData(characterData);
+        popupAbilityButton.SetData(characterData);
     }
 
     #region  dialog 回调
     public void Submit(DialogView dialogView, DialogBean dialogData)
     {
         GameDataManager gameDataManager = GetUIManager<UIGameManager>().gameDataManager;
-        ToastManager toastManager = GetUIManager<UIGameManager>().toastManager;
 
         if (!gameDataManager.gameData.HasEnoughMoney(characterData.baseInfo.priceL, characterData.baseInfo.priceM, characterData.baseInfo.priceS))
         {

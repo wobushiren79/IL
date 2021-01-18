@@ -5,7 +5,7 @@ using UnityEngine.UI;
 using static GameTimeHandler;
 using System.Collections.Generic;
 
-public class InfoRecordPopupShow : PopupShowView
+public class PopupRecordShow : PopupShowView
 {
     public Text tvDate;
     public Text tvStatus;

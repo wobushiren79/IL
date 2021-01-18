@@ -7,29 +7,29 @@ using System.Collections.Generic;
 public class UIGameMain : BaseUIComponent, DialogView.IDialogCallBack, IRadioGroupCallBack, IBaseObserver
 {
     [Header("控件")]
-    public InfoPromptPopupButton popupWorker;
+    public PopupPromptButton popupWorker;
     public Button btWorker;
-    public InfoPromptPopupButton popupBuild;
+    public PopupPromptButton popupBuild;
     public Button btBuild;
-    public InfoPromptPopupButton popupMenu;
+    public PopupPromptButton popupMenu;
     public Button btMenu;
-    public InfoPromptPopupButton popupBackpack;
+    public PopupPromptButton popupBackpack;
     public Button btBackpack;
-    public InfoPromptPopupButton popupFavorability;
+    public PopupPromptButton popupFavorability;
     public Button btFavorability;
-    public InfoPromptPopupButton popupSave;
+    public PopupPromptButton popupSave;
     public Button btSave;
-    public InfoPromptPopupButton popupInnData;
+    public PopupPromptButton popupInnData;
     public Button btInnData;
-    public InfoPromptPopupButton popupHelp;
+    public PopupPromptButton popupHelp;
     public Button btHelp;
-    public InfoPromptPopupButton popupSetting;
+    public PopupPromptButton popupSetting;
     public Button btSetting;
-    public InfoPromptPopupButton popupJumpTime;
+    public PopupPromptButton popupJumpTime;
     public Button btJumpTime;
-    public InfoPromptPopupButton popupHotel;
+    public PopupPromptButton popupHotel;
     public Button btHotel;
-    public InfoPromptPopupButton popupFamily;
+    public PopupPromptButton popupFamily;
     public Button btFamily;
 
 
@@ -39,14 +39,14 @@ public class UIGameMain : BaseUIComponent, DialogView.IDialogCallBack, IRadioGro
     public Text tvMoneyM;
     public Text tvMoneyL;
 
-    public InfoPromptPopupButton popupAesthetics;
-    public InfoPromptPopupButton popupPraise;
-    public InfoPromptPopupButton popupRichness;
+    public PopupPromptButton popupAesthetics;
+    public PopupPromptButton popupPraise;
+    public PopupPromptButton popupRichness;
     public ProgressView proAesthetics;
     public ProgressView proPraise;
     public ProgressView proRichness;
 
-    public InfoPromptPopupButton popupInnLevel;
+    public PopupPromptButton popupInnLevel;
     public Image ivInnLevel;
 
     public ClockView clockView;//时钟

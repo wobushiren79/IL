@@ -77,7 +77,6 @@ public class ItemGameBackpackEquipCpt : ItemGameBackpackCpt, SkillInfoManager.IC
     #region  装备回调
     public override void SelectionUse(PopupItemsSelection view)
     {
-        ToastManager toastManager = uiGameManager.toastManager;
         GeneralEnum itemsType = itemsInfoData.GetItemsType();
         switch (itemsType)
         {
@@ -188,7 +187,6 @@ public class ItemGameBackpackEquipCpt : ItemGameBackpackCpt, SkillInfoManager.IC
     #region  技能回调
     public void GetSkillInfoSuccess(List<SkillInfoBean> listData)
     {
-        ToastManager toastManager = uiGameManager.toastManager;
         if (listData == null || listData.Count == 0)
         {
             ToastHandler.Instance.ToastHint(ivIcon.sprite, GameCommonInfo.GetUITextById(1065));
@@ -221,7 +219,6 @@ public class ItemGameBackpackEquipCpt : ItemGameBackpackCpt, SkillInfoManager.IC
     protected void LearnBook()
     {
         //学习该图书
-        ToastManager toastManager = uiGameManager.toastManager;
         characterData.attributes.LearnBook(itemsInfoData.id);
         characterData.attributes.AddAttributes(itemsInfoData);
         string toastStr = string.Format(GameCommonInfo.GetUITextById(1008), characterData.baseInfo.name, itemsInfoData.name);

@@ -6,7 +6,7 @@ public class ItemGameBuildForBedCpt : ItemGameBaseCpt
     public BedShowView bedShow;
     public Text tvBedName;
     public Text tvBedPrice;
-    public InfoBedPopupButton infoBedPopup;
+    public PopupBedButton infoBedPopup;
     public Button btBuild;
 
     public BuildBedBean buildBedData;

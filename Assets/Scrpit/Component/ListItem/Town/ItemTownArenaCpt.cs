@@ -104,11 +104,9 @@ public class ItemTownArenaCpt : ItemGameBaseCpt, DialogView.IDialogCallBack
     public void SetReward(List<RewardTypeBean> listReward)
     {
         UIGameManager uiGameManager = GetUIManager<UIGameManager>();
-        GameItemsManager gameItemsManager = GameItemsHandler.Instance.manager;
         IconDataManager iconDataManager = uiGameManager.iconDataManager;
         InnBuildManager innBuildManager = uiGameManager.innBuildManager;
         NpcInfoManager npcInfoManager = uiGameManager.npcInfoManager;
-        InfoItemsPopupShow infoItemsPopupShow = uiGameManager.infoItemsPopup;
         foreach (RewardTypeBean itemReward in listReward)
         {
             GameObject objReward = Instantiate(objRewardContainer, objRewardModel);
@@ -119,8 +117,7 @@ public class ItemTownArenaCpt : ItemGameBaseCpt, DialogView.IDialogCallBack
             tvNumber.text = "x" + itemReward.rewardNumber;
             if (itemReward.dataType == RewardTypeEnum.AddItems)
             {
-                InfoItemsPopupButton infoItemsPopup = objReward.GetComponent<InfoItemsPopupButton>();
-                infoItemsPopup.SetPopupShowView(infoItemsPopupShow);
+                PopupItemsButton infoItemsPopup = objReward.GetComponent<PopupItemsButton>();
                 ItemsInfoBean itemsInfo = GameItemsHandler.Instance.manager.GetItemsById(itemReward.rewardId);
                 infoItemsPopup.SetData(itemsInfo, itemReward.spRewardIcon);
             }

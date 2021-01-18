@@ -10,7 +10,7 @@ public class UITownRecruitment : UIBaseOne, DialogView.IDialogCallBack
     public Text tvNumber;
     //重金寻聘
     public Button btFindWorker;
-    public InfoPromptPopupButton infoPromptPopupButton;
+    public PopupPromptButton popupPromptButton;
     public Text tvNull;
 
     public GameObject objCandidateContent;
@@ -34,10 +34,9 @@ public class UITownRecruitment : UIBaseOne, DialogView.IDialogCallBack
         base.Start();
         if (btFindWorker != null)
             btFindWorker.onClick.AddListener(FindWorkerByMoney);
-        if (infoPromptPopupButton != null)
+        if (popupPromptButton != null)
         {
-            infoPromptPopupButton.SetPopupShowView(uiGameManager.infoPromptPopup);
-            infoPromptPopupButton.SetContent(GameCommonInfo.GetUITextById(271));
+            popupPromptButton.SetContent(GameCommonInfo.GetUITextById(271));
         }
     }
 
@@ -156,7 +155,7 @@ public class UITownRecruitment : UIBaseOne, DialogView.IDialogCallBack
             {
                 //如果是招募回调
                 GameDataManager gameDataManager = GetUIManager<UIGameManager>().gameDataManager;
-                ToastManager toastManager = GetUIManager<UIGameManager>().toastManager;
+                
                 FindCharacterDialogView findCharacterDialog = (FindCharacterDialogView)dialogView;
                 gameDataManager.gameData.listWorkerCharacter.Add(findCharacterDialog.characterData);
                 ToastHandler.Instance.ToastHint(string.Format(GameCommonInfo.GetUITextById(1053), findCharacterDialog.characterData.baseInfo.name));
@@ -180,7 +179,7 @@ public class UITownRecruitment : UIBaseOne, DialogView.IDialogCallBack
         }
         uiGameManager.gameDataManager.gameData.PayMoney(pickMoneyL, pickMoneyM, pickMoneyS);
 
-        DialogManager dialogManager = uiGameManager.dialogManager;
+        
 
         DialogBean dialogData = new DialogBean();
         //根据金额获取角色

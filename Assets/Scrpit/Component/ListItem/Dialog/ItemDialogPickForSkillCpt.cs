@@ -8,7 +8,7 @@ public class ItemDialogPickForSkillCpt : BaseMonoBehaviour
     public Text tvName;
     public Text tvNumber;
     public Button btSubmit;
-    public InfoSkillPopupButton infoSkillPopup;
+    public PopupSkillButton infoSkillPopup;
 
     protected IconDataManager iconDataManager;
     protected ICallBack callBack;

@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using UnityEditor;
 
-public class InfoAchievementPopupButton : PopupButtonView<InfoAchievementPopupShow>
+public class PopupAchievementButton : PopupButtonView<PopupAchievementShow>
 {
     public AchievementInfoBean achievementInfo;
     public AchievementStatusEnum status;

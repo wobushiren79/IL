@@ -5,7 +5,7 @@ using System;
 
 public class ItemMiniGameCookingSelectMenuCpt : ItemGameBaseCpt, DialogView.IDialogCallBack
 {
-    public InfoFoodPopupButton infoFoodPopup;
+    public PopupFoodButton infoFoodPopup;
 
     public Text tvName;
     public Image ivIcon;
@@ -17,9 +17,6 @@ public class ItemMiniGameCookingSelectMenuCpt : ItemGameBaseCpt, DialogView.IDia
     {
         if (btSubmit != null)
             btSubmit.onClick.AddListener(SelectMenu);
-
-        InfoFoodPopupShow infoFoodPopupShow = GetUIManager<UIGameManager>().infoFoodPopup;
-        infoFoodPopup.SetPopupShowView(infoFoodPopupShow);
     }
 
     public void SetData(MenuOwnBean menuOwn, MenuInfoBean menuInfo)
@@ -50,7 +47,6 @@ public class ItemMiniGameCookingSelectMenuCpt : ItemGameBaseCpt, DialogView.IDia
 
     private void SelectMenu()
     {
-        DialogManager dialogManager = GetUIManager<UIGameManager>().dialogManager;
         AudioHandler.Instance.PlaySound(AudioSoundEnum.ButtonForNormal);
         DialogBean dialogData = new DialogBean();
         dialogData.content = string.Format(GameCommonInfo.GetUITextById(3051), menuInfo.name);

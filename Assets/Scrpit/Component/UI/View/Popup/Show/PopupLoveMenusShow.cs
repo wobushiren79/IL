@@ -2,7 +2,7 @@
 using UnityEditor;
 using System.Collections.Generic;
 
-public class InfoLoveMenusPopupShow : PopupShowView
+public class PopupLoveMenusShow : PopupShowView
 {
     protected GameDataManager gameDataManager;
     protected NpcTeamManager npcTeamManager;

@@ -8,7 +8,7 @@ public class ItemGameMenuFoodCpt : ItemGameBaseCpt, IRadioButtonCallBack, Dialog
 {
     [Header("控件")]
     public Text tvName;
-    public InfoFoodPopupButton pbFood;
+    public PopupFoodButton pbFood;
     public Image ivFood;
     public GameObject objPriceS;
     public Text tvPriceS;
@@ -18,13 +18,13 @@ public class ItemGameMenuFoodCpt : ItemGameBaseCpt, IRadioButtonCallBack, Dialog
     public Text tvPriceL;
     public RadioButtonView rbShow;
     public Text tvShow;
-    public InfoPromptPopupButton pbReputation;
+    public PopupPromptButton pbReputation;
     public Image ivReputation;
     public Text tvMenuRarity;
 
     public GameObject objResearch;
     public Button btResearch;
-    public InfoPromptPopupButton popupForResearch;
+    public PopupPromptButton popupForResearch;
 
     public GameObject objResearchCancel;
     public Button btResearchCancel;
@@ -46,26 +46,13 @@ public class ItemGameMenuFoodCpt : ItemGameBaseCpt, IRadioButtonCallBack, Dialog
     public MenuOwnBean menuOwnData;
     public MenuInfoBean foodData;
 
-    private void Awake()
-    {
-        UIGameManager uiGameManager = GetUIManager<UIGameManager>();
-        if (popupForResearch != null)
-            popupForResearch.SetPopupShowView(uiGameManager.infoPromptPopup);
-
-    }
-
     private void Start()
     {
         if (rbShow != null)
             rbShow.SetCallBack(this);
         UIGameManager uiGameManager = GetUIManager<UIGameManager>();
-        if (pbFood != null)
-        {
-            pbFood.SetPopupShowView(uiGameManager.infoFoodPopup);
-        }
         if (pbReputation != null)
         {
-            pbReputation.SetPopupShowView(uiGameManager.infoPromptPopup);
             pbReputation.SetContent(GameCommonInfo.GetUITextById(100));
         }
         if (btResearch != null)

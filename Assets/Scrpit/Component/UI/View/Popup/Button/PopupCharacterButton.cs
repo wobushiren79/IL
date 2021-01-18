@@ -2,7 +2,7 @@
 using UnityEditor;
 using System.Collections.Generic;
 
-public class InfoCharacterPopupButton : PopupButtonView<InfoCharacterPopupShow>
+public class PopupCharacterButton : PopupButtonView<PopupCharacterShow>
 {
     protected CharacterBean characterData;
     protected List<MiniGameCombatEffectBean> listCombatData;

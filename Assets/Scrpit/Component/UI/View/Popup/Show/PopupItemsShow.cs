@@ -3,7 +3,7 @@ using UnityEditor;
 using UnityEngine.UI;
 using System.Collections.Generic;
 
-public class InfoItemsPopupShow : PopupShowView
+public class PopupItemsShow : PopupShowView
 {
     public Image ivIcon;
     public Text tvName;

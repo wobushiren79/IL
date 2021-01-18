@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using UnityEditor;
 using UnityEngine.UI;
-public class InfoAbilityPopupShow : PopupShowView
+public class PopupAbilityShow : PopupShowView
 {
     public Text tvLoyal;
     public Text tvLife;

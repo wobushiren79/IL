@@ -3,7 +3,7 @@ using UnityEditor;
 using UnityEngine.UI;
 using System.Collections.Generic;
 
-public class InfoCharacterPopupShow : PopupShowView
+public class PopupCharacterShow : PopupShowView
 {
     public CharacterUICpt characterUI;
     public CharacterAttributeView attributeView;

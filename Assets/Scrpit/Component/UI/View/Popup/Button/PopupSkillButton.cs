@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using UnityEditor;
 
-public class InfoSkillPopupButton : PopupButtonView<InfoSkillPopupShow>
+public class PopupSkillButton : PopupButtonView<PopupSkillShow>
 {
     public SkillInfoBean skillInfo;
 

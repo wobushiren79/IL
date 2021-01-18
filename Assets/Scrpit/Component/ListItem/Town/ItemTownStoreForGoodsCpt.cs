@@ -17,16 +17,9 @@ public class ItemTownStoreForGoodsCpt : ItemTownStoreCpt, DialogView.IDialogCall
     public Text tvLucky;
     public GameObject objCookBook;
     public Text tvCookBook;
-    public InfoItemsPopupButton infoItemsPopup;
+    public PopupItemsButton infoItemsPopup;
 
     public ItemsInfoBean itemsInfo;
-
-    public override void Start()
-    {
-        base.Start();
-        if (infoItemsPopup != null)
-            infoItemsPopup.SetPopupShowView(GetUIManager<UIGameManager>().infoItemsPopup);
-    }
 
     public override void RefreshUI()
     {
@@ -203,11 +196,8 @@ public class ItemTownStoreForGoodsCpt : ItemTownStoreCpt, DialogView.IDialogCall
         base.OnClickSubmitBuy();
 
         UIGameManager uiGameManager = GetUIManager<UIGameManager>();
-
         GameDataManager gameDataManager = uiGameManager.gameDataManager;
-        ToastManager toastManager = uiGameManager.toastManager;
-        DialogManager dialogManager = uiGameManager.dialogManager;
-
+        
         if (gameDataManager == null || storeInfo == null)
             return;
 
@@ -220,7 +210,7 @@ public class ItemTownStoreForGoodsCpt : ItemTownStoreCpt, DialogView.IDialogCall
     public virtual void Submit(DialogView dialogView, DialogBean dialogData)
     {
         GameDataManager gameDataManager = GetUIManager<UIGameManager>().gameDataManager;
-        ToastManager toastManager = GetUIManager<UIGameManager>().toastManager;
+        
         if (gameDataManager == null || storeInfo == null)
             return;
         if (dialogView as PickForNumberDialogView)

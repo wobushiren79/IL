@@ -2,7 +2,7 @@
 using UnityEngine.UI;
 using UnityEditor;
 
-public class InfoFoodPopupShow : PopupShowView
+public class PopupFoodShow : PopupShowView
 {
     public GameObject objLevel;
     public GameObject objLevelProgress;

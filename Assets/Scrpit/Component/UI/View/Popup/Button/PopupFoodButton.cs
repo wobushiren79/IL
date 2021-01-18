@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using UnityEditor;
 
-public class InfoFoodPopupButton : PopupButtonView<InfoFoodPopupShow>
+public class PopupFoodButton : PopupButtonView<PopupFoodShow>
 {
     public MenuOwnBean ownData;
     public MenuInfoBean foodData;

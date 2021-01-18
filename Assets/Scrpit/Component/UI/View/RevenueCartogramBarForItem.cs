@@ -3,14 +3,8 @@ using UnityEditor;
 
 public class RevenueCartogramBarForItem : CartogramBarForItem
 {
-    public InfoRecordPopupButton popupButton;
+    public PopupRecordButton popupButton;
     public InnRecordBean innRecordData;
-
-    private void Awake()
-    {
-        InfoRecordPopupShow infoRecordPopup = FindInChildren<InfoRecordPopupShow>(ImportantTypeEnum.Popup);
-        popupButton.SetPopupShowView(infoRecordPopup);
-    }
 
     public void SetRecordData(InnRecordBean innRecordData)
     {

@@ -13,7 +13,7 @@ public class FindBedDialogView : DialogView
     public Image ivCardBG;
     public Image ivHaloBG;
 
-    public InfoBedPopupButton infoBedPopupButton;
+    public PopupBedButton popupBedButton;
 
     public BuildBedBean buildBedData;
 
@@ -91,9 +91,9 @@ public class FindBedDialogView : DialogView
     /// <param name="characterData"></param>
     public void SetPopupInfo(BuildBedBean buildBedData)
     {
-        if (infoBedPopupButton != null)
+        if (popupBedButton != null)
         {
-            infoBedPopupButton.SetData(buildBedData);
+            popupBedButton.SetData(buildBedData);
         }
     }
 

@@ -62,8 +62,6 @@ public class ItemTownGuildImproveCharacterCpt : ItemGameBaseCpt, DialogView.IDia
         npcInfoManager = uiGameManager.npcInfoManager;
         gameDataManager = uiGameManager.gameDataManager;
         gameTimeHandler = uiGameManager.gameTimeHandler;
-        dialogManager = uiGameManager.dialogManager;
-        toastManager = uiGameManager.toastManager;
         controlHandler = uiGameManager.controlHandler;
         gameDataHandler = uiGameManager.gameDataHandler;
         iconDataManager = uiGameManager.iconDataManager;

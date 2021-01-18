@@ -2,27 +2,19 @@
 using UnityEditor;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
+using System;
 
-public abstract class PopupButtonView<T>  : BaseMonoBehaviour, IPointerEnterHandler, IPointerExitHandler  where T : PopupShowView
+public abstract class PopupButtonView<T> : BaseMonoBehaviour, IPointerEnterHandler, IPointerExitHandler where T : PopupShowView
 {
     protected T popupShow;
-    private Button mThisButton;
+    protected Button thisButton;
     protected bool isActive = true;
-    public virtual void Awake()
-    {
-        popupShow = FindInChildren<T>(ImportantTypeEnum.Popup);
-    }
 
     private void Start()
     {
-        mThisButton = GetComponent<Button>();
-        if (mThisButton != null)
-            mThisButton.onClick.AddListener(ButtonClick);
-    }
-
-    public void SetPopupShowView(T popupShow)
-    {
-        this.popupShow = popupShow;
+        thisButton = GetComponent<Button>();
+        if (thisButton != null)
+            thisButton.onClick.AddListener(ButtonClick);
     }
 
     public void SetActive(bool isActive)
@@ -37,9 +29,12 @@ public abstract class PopupButtonView<T>  : BaseMonoBehaviour, IPointerEnterHand
 
     public virtual void OnPointerEnter(PointerEventData eventData)
     {
-        if (popupShow == null || !isActive)
+        if (!isActive)
             return;
-        popupShow.gameObject.SetActive(true);
+        if (popupShow != null)
+            return;
+        string popupName = this.GetType().Name.Replace("Button", "");
+        popupShow = PopupHandler.Instance.CreatePopup<T>(popupName);
         OpenPopup();
         popupShow.RefreshViewSize();
     }
@@ -49,17 +44,14 @@ public abstract class PopupButtonView<T>  : BaseMonoBehaviour, IPointerEnterHand
         if (popupShow == null)
             return;
         StopAllCoroutines();
-        popupShow.gameObject.SetActive(false);
+        Destroy(popupShow.gameObject);
+        popupShow = null;
         ClosePopup();
     }
 
     public void OnDisable()
     {
-        if (popupShow == null)
-            return;
-        StopAllCoroutines();
-        popupShow.gameObject.SetActive(false);
-        ClosePopup();
+        OnPointerExit(null);
     }
 
     public abstract void OpenPopup();

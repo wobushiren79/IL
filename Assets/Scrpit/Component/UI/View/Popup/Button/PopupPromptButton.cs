@@ -2,7 +2,7 @@
 using UnityEditor;
 using UnityEngine.EventSystems;
 using System.Collections;
-public class InfoPromptPopupButton : PopupButtonView<InfoPromptPopupShow>
+public class PopupPromptButton : PopupButtonView<PopupPromptShow>
 {
     // 内容
     public string content;
@@ -10,11 +10,6 @@ public class InfoPromptPopupButton : PopupButtonView<InfoPromptPopupShow>
     public bool isAudio = false;
     //延迟时间
     public float delayTime = 1;
-
-    public override void Awake()
-    {
-        base.Awake();
-    }
 
     public void SetContent(string content)
     {

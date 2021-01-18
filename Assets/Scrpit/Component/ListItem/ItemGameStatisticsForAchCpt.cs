@@ -3,17 +3,12 @@ using UnityEditor;
 using UnityEngine.UI;
 public class ItemGameStatisticsForAchCpt : ItemGameBaseCpt
 {
-    public InfoAchievementPopupButton popupButton;
+    public PopupAchievementButton popupButton;
     public Image ivIcon;
     public Image ivBackground;
 
     public Sprite spUnLockBackground;
     public Sprite spLockBackground;
-    private void Start()
-    {
-        InfoAchievementPopupShow popupShow = FindInChildren<InfoAchievementPopupShow>(ImportantTypeEnum.Popup);
-        popupButton.SetPopupShowView(popupShow);
-    }
 
     /// <summary>
     /// 设置数据

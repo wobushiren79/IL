@@ -12,14 +12,12 @@ public class ItemTownCerpenterCpt : ItemTownStoreCpt, DialogView.IDialogCallBack
     public GameObject objOwn;
     public BuildItemBean buildItemData;
 
-    public InfoPromptPopupButton infoPromptPopup;
+    public PopupPromptButton infoPromptPopup;
 
     public override void Start()
     {
         base.Start();
         UIGameManager uiGameManager = GetUIManager<UIGameManager>();
-        if (infoPromptPopup != null)
-            infoPromptPopup.SetPopupShowView(uiGameManager.infoPromptPopup);
     }
 
     public override void RefreshUI()
@@ -156,8 +154,6 @@ public class ItemTownCerpenterCpt : ItemTownStoreCpt, DialogView.IDialogCallBack
 
         UIGameManager uiGameManager = GetUIManager<UIGameManager>();
         GameDataManager gameDataManager = uiGameManager.gameDataManager;
-        ToastManager toastManager = uiGameManager.toastManager;
-        DialogManager dialogManager = uiGameManager.dialogManager;
 
         InnBuildBean innBuildData = gameDataManager.gameData.GetInnBuildData();
         if (gameDataManager == null || storeInfo == null)
@@ -201,9 +197,7 @@ public class ItemTownCerpenterCpt : ItemTownStoreCpt, DialogView.IDialogCallBack
     {
         UIGameManager uiGameManager = GetUIManager<UIGameManager>();
         GameDataManager gameDataManager = uiGameManager.gameDataManager;
-        ToastManager toastManager = uiGameManager.toastManager;
         GameTimeHandler gameTimeHandler = uiGameManager.gameTimeHandler;
-        InnBuildManager innBuildManager = uiGameManager.innBuildManager;
 
         if (dialogView as PickForNumberDialogView)
         {

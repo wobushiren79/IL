@@ -14,7 +14,7 @@ public class FindCharacterDialogView : DialogView
     public Image ivHaloBG;
     public Sprite spSexMan;
     public Sprite spSexWoman;
-    public InfoAbilityPopupButton infoAbilityPopupButton;
+    public PopupAbilityButton popupAbilityButton;
     public Button btContinue;
 
 
@@ -99,9 +99,9 @@ public class FindCharacterDialogView : DialogView
     /// <param name="characterData"></param>
     public void SetPopupInfo(CharacterBean characterData)
     {
-        if (infoAbilityPopupButton != null)
+        if (popupAbilityButton != null)
         {
-            infoAbilityPopupButton.SetData(characterData);
+            popupAbilityButton.SetData(characterData);
         }
     }
 

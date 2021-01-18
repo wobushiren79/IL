@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using UnityEditor;
 
-public class InfoBedPopupButton : PopupButtonView<InfoBedPopupShow>
+public class PopupBedButton : PopupButtonView<PopupBedShow>
 {
     public BuildBedBean buildBedData;
 

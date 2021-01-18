@@ -83,7 +83,6 @@ public class ItemTownGoodsMarketCpt : ItemGameBaseCpt, DialogView.IDialogCallBac
     {
         AudioHandler.Instance.PlaySound(AudioSoundEnum.ButtonForNormal);
         int buyNumber = int.Parse(etNumber.text);
-        DialogManager dialogManager = GetUIManager<UIGameManager>().dialogManager;
         DialogBean dialogData = new DialogBean();
         dialogData.content = string.Format(GameCommonInfo.GetUITextById(3009), tvPirce.text, buyNumber, goodsData.name);
         DialogHandler.Instance.CreateDialog<DialogView>(DialogEnum.Normal, this, dialogData);
@@ -282,7 +281,6 @@ public class ItemTownGoodsMarketCpt : ItemGameBaseCpt, DialogView.IDialogCallBac
         int buyNumber = int.Parse(etNumber.text);
         IngredientsEnum ingType = (IngredientsEnum)goodsData.mark_type;
         GameDataManager gameDataManager = GetUIManager<UIGameManager>().gameDataManager;
-        ToastManager toastManager = GetUIManager<UIGameManager>().toastManager;
         if (buyNumber <= 0)
         {
             ToastHandler.Instance.ToastHint(GameCommonInfo.GetUITextById(1017));

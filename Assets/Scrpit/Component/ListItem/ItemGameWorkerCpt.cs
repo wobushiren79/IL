@@ -9,14 +9,14 @@ public class ItemGameWorkerCpt : ItemGameBaseCpt, DialogView.IDialogCallBack, Wo
 {
     [Header("控件")]
     public Text tvName;
-    public InfoPromptPopupButton pbName;
+    public PopupPromptButton pbName;
 
     public Text tvPrice;
-    public InfoPromptPopupButton pbPrice;
+    public PopupPromptButton pbPrice;
 
     public Image ivLoyal;
     public Text tvLoyal;
-    public InfoPromptPopupButton pbLoyal;
+    public PopupPromptButton pbLoyal;
 
     public Text tvLevelUp;
 
@@ -25,17 +25,17 @@ public class ItemGameWorkerCpt : ItemGameBaseCpt, DialogView.IDialogCallBack, Wo
     public Text tvStatus;
 
     public TextMeshProUGUI tvCook;
-    public InfoPromptPopupButton pbCook;
+    public PopupPromptButton pbCook;
     public TextMeshProUGUI tvSpeed;
-    public InfoPromptPopupButton pbSpeed;
+    public PopupPromptButton pbSpeed;
     public TextMeshProUGUI tvAccount;
-    public InfoPromptPopupButton pbAccount;
+    public PopupPromptButton pbAccount;
     public TextMeshProUGUI tvCharm;
-    public InfoPromptPopupButton pbCharm;
+    public PopupPromptButton pbCharm;
     public TextMeshProUGUI tvForce;
-    public InfoPromptPopupButton pbForce;
+    public PopupPromptButton pbForce;
     public TextMeshProUGUI tvLucky;
-    public InfoPromptPopupButton pbLucky;
+    public PopupPromptButton pbLucky;
 
     public Button btEquip;
     public Button btDetails;
@@ -51,71 +51,60 @@ public class ItemGameWorkerCpt : ItemGameBaseCpt, DialogView.IDialogCallBack, Wo
     public WorkerPriorityView wvAccostForGuide;
     public WorkerPriorityView wvBeater;
 
-    public InfoCharacterPopupButton infoCharacterPopup;
+    public PopupCharacterButton infoCharacterPopup;
 
     [Header("数据")]
     public CharacterUICpt characterUICpt;
     public CharacterBean characterData;
 
-    protected InfoPromptPopupShow infoPromptPopup;
+    protected PopupPromptShow infoPromptPopup;
     protected DialogManager dialogManager;
     protected GameDataManager gameDataManager;
     protected GameTimeHandler gameTimeHandler;
     protected ToastManager toastManager;
+
     private void Awake()
     {
-        infoPromptPopup = GetUIManager<UIGameManager>().infoPromptPopup;
-        dialogManager = GetUIManager<UIGameManager>().dialogManager;
         gameDataManager = GetUIManager<UIGameManager>().gameDataManager;
         gameTimeHandler = GetUIManager<UIGameManager>().gameTimeHandler;
-        toastManager = GetUIManager<UIGameManager>().toastManager;
     }
 
     private void Start()
     {
         if (pbName != null)
         {
-            pbName.SetPopupShowView(infoPromptPopup);
             pbName.SetContent(GameCommonInfo.GetUITextById(61));
         }
         if (pbPrice != null)
         {
-            pbPrice.SetPopupShowView(infoPromptPopup);
             pbPrice.SetContent(GameCommonInfo.GetUITextById(11002));
         }
         if (pbLoyal != null)
         {
-            pbLoyal.SetPopupShowView(infoPromptPopup);
             pbLoyal.SetContent(GameCommonInfo.GetUITextById(11003));
         }
         if (pbCook != null)
         {
-            pbCook.SetPopupShowView(infoPromptPopup);
             pbCook.SetContent(AttributesTypeEnumTools.GetAttributesName(AttributesTypeEnum.Cook));
         }
         if (pbSpeed != null)
         {
-            pbSpeed.SetPopupShowView(infoPromptPopup);
             pbSpeed.SetContent(AttributesTypeEnumTools.GetAttributesName(AttributesTypeEnum.Speed));
         }
         if (pbAccount != null)
         {
-            pbAccount.SetPopupShowView(infoPromptPopup);
             pbAccount.SetContent(AttributesTypeEnumTools.GetAttributesName(AttributesTypeEnum.Account));
         }
         if (pbCharm != null)
         {
-            pbCharm.SetPopupShowView(infoPromptPopup);
             pbCharm.SetContent(AttributesTypeEnumTools.GetAttributesName(AttributesTypeEnum.Charm));
         }
         if (pbForce != null)
         {
-            pbForce.SetPopupShowView(infoPromptPopup);
             pbForce.SetContent(AttributesTypeEnumTools.GetAttributesName(AttributesTypeEnum.Force));
         }
         if (pbLucky != null)
         {
-            pbLucky.SetPopupShowView(infoPromptPopup);
             pbLucky.SetContent(AttributesTypeEnumTools.GetAttributesName(AttributesTypeEnum.Lucky));
         }
 

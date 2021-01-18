@@ -7,7 +7,7 @@ public class ItemTownGuildAchievementCpt : ItemGameBaseCpt
     public Image ivIconRemark;
     public Image ivBackground;
     public Button btSubmit;
-    public InfoAchievementPopupButton popupButton;
+    public PopupAchievementButton popupButton;
 
     public Sprite spIconUnknow;
     public Sprite spBackPass;
@@ -22,8 +22,6 @@ public class ItemTownGuildAchievementCpt : ItemGameBaseCpt
     {
         if (btSubmit != null)
             btSubmit.onClick.AddListener(SubmitAchievement);
-        if (popupButton != null)
-            popupButton.SetPopupShowView(GetUIManager<UIGameManager>().infoAchievementPopup);
     }
 
     public void SetData(AchievementInfoBean data)
@@ -177,7 +175,6 @@ public class ItemTownGuildAchievementCpt : ItemGameBaseCpt
             if (GetUIComponent<UITownGuildAchievement>() != null)
                 GetUIComponent<UITownGuildAchievement>().InitDataByType(achievementInfo.type);
             //弹出特效提示
-            DialogManager dialogManager = GetUIManager<UIGameManager>().dialogManager;
             AchievementDialogView achDialog = DialogHandler.Instance.CreateDialog<AchievementDialogView>(DialogEnum.Achievement, null, null);
             achDialog.SetData(achievementInfo);
             //播放音效

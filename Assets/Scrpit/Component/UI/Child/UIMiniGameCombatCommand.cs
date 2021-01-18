@@ -63,7 +63,7 @@ public class UIMiniGameCombatCommand : BaseUIChildComponent<UIMiniGameCombat>, D
         List<long> listSkill = npcCpt.characterMiniGameData.characterData.attributes.listSkills;
         List<SkillInfoBean> listSkillInfo=  skillInfoHandler.GetSkillByIds(listSkill);
 
-        DialogManager dialogManager = ((UIGameManager)uiComponent.uiManager).dialogManager;
+        
         DialogBean dialogData = new DialogBean();
         PickForSkillDialogView pickForSkillDialog = DialogHandler.Instance.CreateDialog<PickForSkillDialogView>(DialogEnum.PickForSkill, this, dialogData);
         Dictionary<long, int> listUsedSkill = npcCpt.characterMiniGameData.listUsedSkill;
@@ -78,7 +78,7 @@ public class UIMiniGameCombatCommand : BaseUIChildComponent<UIMiniGameCombat>, D
         AudioHandler.Instance.PlaySound(AudioSoundEnum.ButtonForNormal);
         uiComponent.miniGameData.SetRoundActionCommand(MiniGameCombatCommand.Items);
 
-        DialogManager dialogManager = ((UIGameManager)uiComponent.uiManager).dialogManager;
+        
         DialogBean dialogData = new DialogBean();
         PickForItemsDialogView pickForItemsDialog = DialogHandler.Instance.CreateDialog<PickForItemsDialogView>(DialogEnum.PickForItems, this, dialogData);
         pickForItemsDialog.SetData(new List<GeneralEnum>() { GeneralEnum.Medicine }, PopupItemsSelection.SelectionTypeEnum.Use);

@@ -189,9 +189,7 @@ public class ItemTownBankExchangeCpt : ItemGameBaseCpt, DialogView.IDialogCallBa
     /// </summary>
     public void ExchangeSubmit()
     {
-        ToastManager toastManager = GetUIManager<UIGameManager>().toastManager;
         GameDataManager gameDataManager = GetUIManager<UIGameManager>().gameDataManager;
-        DialogManager dialogManager = GetUIManager<UIGameManager>().dialogManager;
         AudioHandler.Instance.PlaySound(AudioSoundEnum.ButtonForNormal);
 
         mPayMoneyL = 0;
@@ -271,7 +269,6 @@ public class ItemTownBankExchangeCpt : ItemGameBaseCpt, DialogView.IDialogCallBa
     #region 确认对话框回调
     public void Submit(DialogView dialogView, DialogBean dialogBean)
     {
-        ToastManager toastManager = GetUIManager<UIGameManager>().toastManager;
         GameDataManager gameDataManager = GetUIManager<UIGameManager>().gameDataManager;
 
         gameDataManager.gameData.PayMoney(mPayMoneyL, mPayMoneyM, mPayMoneyS);

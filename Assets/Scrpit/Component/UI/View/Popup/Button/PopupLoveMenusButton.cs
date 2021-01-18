@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using UnityEditor;
 
-public class InfoLoveMenusPopupButton : PopupButtonView<InfoLoveMenusPopupShow>
+public class PopupLoveMenusButton : PopupButtonView<PopupLoveMenusShow>
 {
     public string idForTeamCustomer;
 

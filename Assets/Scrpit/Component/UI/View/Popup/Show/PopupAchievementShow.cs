@@ -3,7 +3,7 @@ using UnityEditor;
 using UnityEngine.UI;
 using System.Collections.Generic;
 
-public class InfoAchievementPopupShow : PopupShowView
+public class PopupAchievementShow : PopupShowView
 {
     public Image ivIcon;
     public Image ivRemark;

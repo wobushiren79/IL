@@ -3,7 +3,7 @@ using UnityEditor;
 public class ItemGameStatisticsForCustomerCpt : ItemBaseTextCpt
 {
     public CharacterUICpt characterUI;
-    public InfoLoveMenusPopupButton infoLoveMenusPopup;
+    public PopupLoveMenusButton infoLoveMenusPopup;
     //是否解锁
     protected bool isUnLock;
 

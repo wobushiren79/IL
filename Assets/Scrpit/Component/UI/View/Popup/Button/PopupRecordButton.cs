@@ -2,7 +2,7 @@
 using UnityEditor;
 using System;
 
-public class InfoRecordPopupButton : PopupButtonView<InfoRecordPopupShow>
+public class PopupRecordButton : PopupButtonView<PopupRecordShow>
 {
     public InnRecordBean innRecordData;
 

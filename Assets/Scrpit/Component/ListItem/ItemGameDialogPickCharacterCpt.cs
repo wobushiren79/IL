@@ -6,7 +6,7 @@ using System;
 public class ItemGameDialogPickCharacterCpt : BaseMonoBehaviour
 {
     public CharacterUICpt characterUI;
-    public InfoAbilityPopupButton popupAbility;
+    public PopupAbilityButton popupAbility;
     public Text tvName;
     public Image ivBack;
     public Button btPick;

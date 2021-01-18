@@ -15,7 +15,7 @@ public class ItemMiniGameCombatCharacterInfoCpt : ItemGameBaseCpt
     public Image ivDead;
     public Text tvDead;
 
-    public InfoCharacterPopupButton characterPopupButton;
+    public PopupCharacterButton characterPopupButton;
 
     public MiniGameCharacterForCombatBean gameCharacterData;
 

@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using UnityEditor;
 
-public class InfoAbilityPopupButton : PopupButtonView<InfoAbilityPopupShow>
+public class PopupAbilityButton : PopupButtonView<PopupAbilityShow>
 {
     private CharacterBean mCharacterData;
 

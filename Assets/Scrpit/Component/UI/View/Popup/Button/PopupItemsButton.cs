@@ -1,15 +1,11 @@
 ﻿using UnityEngine;
 using UnityEditor;
 
-public class InfoItemsPopupButton : PopupButtonView<InfoItemsPopupShow>
+public class PopupItemsButton : PopupButtonView<PopupItemsShow>
 {
     public ItemsInfoBean itemsInfo;
     public Sprite spIcon;
 
-    public override void Awake()
-    {
-        base.Awake();
-    }
 
     public void SetData(ItemsInfoBean itemsInfo,Sprite spIcon)
     {

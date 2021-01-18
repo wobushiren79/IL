@@ -8,13 +8,7 @@ public class UIGameManager : BaseUIManager
     public BaseSceneInit sceneInit;
     //UI控件
     [Header("控件")]
-    public InfoPromptPopupShow infoPromptPopup;
-    public InfoItemsPopupShow infoItemsPopup;
-    public InfoFoodPopupShow infoFoodPopup;
-    public InfoAchievementPopupShow infoAchievementPopup;
-    public InfoAbilityPopupShow infoAbilityPopup;
     public PopupItemsSelection popupItemsSelection;
-    public InfoSkillPopupShow infoSkillPopup;
     //数据
     [Header("数据")]
     public GameDataManager gameDataManager;
@@ -27,9 +21,6 @@ public class UIGameManager : BaseUIManager
     public TextInfoManager textInfoManager;
     public SkillInfoManager skillInfoManager;
     public NpcTeamManager npcTeamManager;
-    //UI相关
-    public DialogManager dialogManager;
-    public ToastManager toastManager;
     //相关处理
     [Header("处理")]
     public InnHandler innHandler;
@@ -73,12 +64,7 @@ public class UIGameManager : BaseUIManager
         gameDataHandler = Find<GameDataHandler>(ImportantTypeEnum.GameDataHandler);
         steamHandler = Find<SteamHandler>(ImportantTypeEnum.Steam);
         fpsHandler = Find<FPSHandler>( ImportantTypeEnum.Camera);
-        infoPromptPopup = FindInChildren<InfoPromptPopupShow>(ImportantTypeEnum.Popup);
-        infoItemsPopup = FindInChildren<InfoItemsPopupShow>(ImportantTypeEnum.Popup);
-        infoFoodPopup = FindInChildren<InfoFoodPopupShow>(ImportantTypeEnum.Popup);
-        infoAchievementPopup = FindInChildren<InfoAchievementPopupShow>(ImportantTypeEnum.Popup);
-        infoAbilityPopup = FindInChildren<InfoAbilityPopupShow>(ImportantTypeEnum.Popup);
-        infoSkillPopup = FindInChildren<InfoSkillPopupShow>(ImportantTypeEnum.Popup);
+
         popupItemsSelection = FindInChildren<PopupItemsSelection>(ImportantTypeEnum.Popup);
 
 
