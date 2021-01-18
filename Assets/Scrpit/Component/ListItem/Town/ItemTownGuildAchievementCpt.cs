@@ -35,8 +35,6 @@ public class ItemTownGuildAchievementCpt : ItemGameBaseCpt
         UIGameManager uiGameManager = GetUIManager<UIGameManager>();
 
         bool isAllPre = PreTypeEnumTools.CheckIsAllPre(
-            uiGameManager.iconDataManager,
-            uiGameManager.innFoodManager,
             uiGameManager.npcInfoManager,
             uiGameManager.gameDataManager.gameData, 
             uiGameManager.gameDataManager.gameData.userCharacter,
@@ -121,12 +119,9 @@ public class ItemTownGuildAchievementCpt : ItemGameBaseCpt
 
     public void SetIcon(AchievementTypeEnum type, string iconKey, string iconKeyRemark, Material material)
     {
-        IconDataManager iconDataManager = GetUIManager<UIGameManager>().iconDataManager;
-        InnFoodManager innFoodManager = GetUIManager<UIGameManager>().innFoodManager;
-
-        if (iconDataManager == null || ivIcon == null)
+        if (ivIcon == null)
             return;
-        Sprite spIcon = iconDataManager.GetIconSpriteByName(iconKey);
+        Sprite spIcon = IconDataHandler.Instance.manager.GetIconSpriteByName(iconKey);
         if (spIcon != null)
             ivIcon.sprite = spIcon;
         else
@@ -135,7 +130,7 @@ public class ItemTownGuildAchievementCpt : ItemGameBaseCpt
         //设置备用图标
         if (!CheckUtil.StringIsNull(iconKeyRemark))
         {
-            Sprite spIconRemark = iconDataManager.GetIconSpriteByName(iconKeyRemark);
+            Sprite spIconRemark = IconDataHandler.Instance.manager.GetIconSpriteByName(iconKeyRemark);
             if (spIconRemark != null)
             {
                 ivIconRemark.sprite = spIconRemark;
@@ -164,7 +159,6 @@ public class ItemTownGuildAchievementCpt : ItemGameBaseCpt
             uiGameManager.gameDataManager.gameData.GetAchievementData().AddAchievement(achievementInfo.id);
             RewardTypeEnumTools.CompleteReward(
                 uiGameManager.npcInfoManager,
-                uiGameManager.iconDataManager,
                 uiGameManager.innBuildManager,
                 uiGameManager.gameDataManager,
                 null,

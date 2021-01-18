@@ -13,10 +13,8 @@ public class UIGameManager : BaseUIManager
     [Header("数据")]
     public GameDataManager gameDataManager;
     public InnBuildManager innBuildManager;
-    public InnFoodManager innFoodManager;
     public NpcInfoManager npcInfoManager;
     public StoreInfoManager storeInfoManager;
-    public IconDataManager iconDataManager;
     public AchievementInfoManager achievementInfoManager;
     public TextInfoManager textInfoManager;
     public SkillInfoManager skillInfoManager;
@@ -48,11 +46,9 @@ public class UIGameManager : BaseUIManager
         achievementInfoManager = Find<AchievementInfoManager>(ImportantTypeEnum.GameDataManager);
 
         innBuildManager = Find<InnBuildManager>(ImportantTypeEnum.BuildManager);
-        innFoodManager = Find<InnFoodManager>(ImportantTypeEnum.FoodManager);
         npcInfoManager = Find<NpcInfoManager>(ImportantTypeEnum.NpcManager);
         npcTeamManager = Find<NpcTeamManager>(ImportantTypeEnum.NpcManager); 
         storeInfoManager = Find<StoreInfoManager>(ImportantTypeEnum.StoreInfoManager);
-        iconDataManager = Find<IconDataManager>(ImportantTypeEnum.UIManager);
         textInfoManager= Find<TextInfoManager>(ImportantTypeEnum.TextManager);
         skillInfoManager = Find<SkillInfoManager>(ImportantTypeEnum.SkillManager);
 

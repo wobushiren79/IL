@@ -4,9 +4,10 @@ using UnityEngine.U2D;
 public class IconDataManager : BaseManager
 {
     //UI图标
-    //public IconBeanDictionary listIcon;
     public SpriteAtlas iconAtlas;
-    
+
+    public IconBeanDictionary dicIcon = new IconBeanDictionary();
+
     /// <summary>
     /// 根据名字获取UI图标
     /// </summary>
@@ -14,6 +15,6 @@ public class IconDataManager : BaseManager
     /// <returns></returns>
     public Sprite GetIconSpriteByName(string name)
     {
-        return GetSpriteByName(name, iconAtlas);
+        return GetSpriteByName(dicIcon, ref iconAtlas, "AtlasForIcon", "sprite/icon", name);
     }
 }

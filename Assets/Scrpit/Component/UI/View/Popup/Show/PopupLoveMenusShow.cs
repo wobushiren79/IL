@@ -32,8 +32,8 @@ public class PopupLoveMenusShow : PopupShowView
         UserAchievementBean userAchievement = gameDataManager.gameData.GetAchievementData();
         foreach (long menuId in listLoveMenu)
         {
-            MenuInfoBean menuInfo = innFoodManager.GetFoodDataById(menuId);
-            Sprite spFood = innFoodManager.GetFoodSpriteByName(menuInfo.icon_key);
+            MenuInfoBean menuInfo = InnFoodHandler.Instance.manager.GetFoodDataById(menuId);
+            Sprite spFood = InnFoodHandler.Instance.manager.GetFoodSpriteByName(menuInfo.icon_key);
             GameObject objLoveMenu = Instantiate(objLoveMenuContainer, objLoveMenuModel);
             ItemBaseTextCpt itemLoveMenu = objLoveMenu.GetComponent<ItemBaseTextCpt>();
 

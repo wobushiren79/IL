@@ -49,7 +49,7 @@ public class UIGameWorkerDetailsBookInfo : BaseUIChildComponent<UIGameWorkerDeta
             GameObject objItem = Instantiate(objBookItemContainer, objBookItemModel);
             ItemBaseTextCpt itemBaseText = objItem.GetComponent<ItemBaseTextCpt>();
             PopupItemsButton infoItemsPopup = objItem.GetComponent<PopupItemsButton>();
-            Sprite spIcon = iconDataManager.GetIconSpriteByName(itemData.icon_key);
+            Sprite spIcon = IconDataHandler.Instance.manager.GetIconSpriteByName(itemData.icon_key);
             itemBaseText.SetData(spIcon, itemData.name, "");
             infoItemsPopup.SetData(itemData, spIcon);
         }

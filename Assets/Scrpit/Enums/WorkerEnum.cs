@@ -28,7 +28,7 @@ public enum WorkerDetilsEnum
 
 public static class WorkerEnumTools
 {
-    public static Sprite GetWorkerSprite(IconDataManager iconDataManager,WorkerEnum worker)
+    public static Sprite GetWorkerSprite(WorkerEnum worker)
     {
         string spriteKey = "";
         switch (worker)
@@ -49,7 +49,7 @@ public static class WorkerEnumTools
                 spriteKey = "worker_beater_1";
                 break;
         }
-        return iconDataManager.GetIconSpriteByName(spriteKey);
+        return IconDataHandler.Instance.manager.GetIconSpriteByName(spriteKey);
     }
 
     public static string GetWorkerName(WorkerEnum worker)

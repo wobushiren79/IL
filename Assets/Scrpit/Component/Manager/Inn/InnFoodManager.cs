@@ -6,8 +6,10 @@ public class InnFoodManager : BaseManager, IMenuInfoView, ICookingThemeView
 {
     //食物图标
     public SpriteAtlas foodAtlas;
+    //食物图标
+    public IconBeanDictionary dicFoodIcon = new IconBeanDictionary();
     //食物动画
-    public AnimBeanDictionary listFoodAnim;
+    public AnimBeanDictionary dicFoodAnim = new AnimBeanDictionary();
     
     //菜单数据
     public Dictionary<long, MenuInfoBean> listMenuData;
@@ -33,8 +35,9 @@ public class InnFoodManager : BaseManager, IMenuInfoView, ICookingThemeView
     /// <returns></returns>
     public AnimationClip GetFoodAnimByName(string name)
     {
-       return GetAnimClipByName(name, listFoodAnim);
+       return GetModel(dicFoodAnim,"anim/food", name);
     }
+
 
     /// <summary>
     /// 通过名字获取食物图标
@@ -43,7 +46,7 @@ public class InnFoodManager : BaseManager, IMenuInfoView, ICookingThemeView
     /// <returns></returns>
     public Sprite GetFoodSpriteByName(string name)
     {
-        return GetSpriteByName(name + "_0", foodAtlas);
+        return  GetSpriteByName(dicFoodIcon,ref foodAtlas, "AtlasForFood","sprite/food", name + "_0");
     }
     /// <summary>
     /// 通过名字获取食物图标
@@ -52,7 +55,7 @@ public class InnFoodManager : BaseManager, IMenuInfoView, ICookingThemeView
     /// <returns></returns>
     public Sprite GetFoodLastSpriteByName(string name)
     {
-        return GetSpriteByName(name + "_1", foodAtlas);
+        return GetSpriteByName(dicFoodIcon, ref foodAtlas, "AtlasForFood", "sprite/food", name + "_1");
     }
 
     /// <summary>

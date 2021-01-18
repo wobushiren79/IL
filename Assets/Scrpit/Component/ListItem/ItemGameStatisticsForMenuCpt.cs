@@ -38,7 +38,7 @@ public class ItemGameStatisticsForMenuCpt : ItemBaseTextCpt
         {
             popupButton.SetData(menuOwn, menuInfo);
             SetName(menuInfo.name);
-            SetIcon(innFoodManager.GetFoodSpriteByName(menuInfo.icon_key),Color.white);
+            SetIcon(InnFoodHandler.Instance.manager.GetFoodSpriteByName(menuInfo.icon_key),Color.white);
             SetNumber(menuOwn.sellNumber + "");
         }
         else
@@ -48,7 +48,7 @@ public class ItemGameStatisticsForMenuCpt : ItemBaseTextCpt
             ivNameBackground.gameObject.SetActive(false);
             SetName("???");
             SetNumber("???");
-            SetIcon(iconDataManager.GetIconSpriteByName("questionmark_1"), Color.white);
+            SetIcon(IconDataHandler.Instance.manager.GetIconSpriteByName("questionmark_1"), Color.white);
         }
     }
 
@@ -75,7 +75,7 @@ public class ItemGameStatisticsForMenuCpt : ItemBaseTextCpt
         else
         {
             ivLevel.gameObject.SetActive(true);
-            Sprite spLevel= menuOwn.GetMenuLevelIcon(iconDataManager);
+            Sprite spLevel= menuOwn.GetMenuLevelIcon();
             if (spLevel != null)
             {
                 ivLevel.gameObject.SetActive(true);

@@ -290,7 +290,7 @@ public class PopupRecordShow : PopupShowView
         {
             GameObject objItem = Instantiate(objShowContainer, objShowItem);
             ItemPopupRecordCpt itemCpt = objItem.GetComponent<ItemPopupRecordCpt>();
-            Sprite spIcon = iconDataManager.GetIconSpriteByName("ach_sellmenunumber_2");
+            Sprite spIcon = IconDataHandler.Instance.manager.GetIconSpriteByName("ach_sellmenunumber_2");
             itemCpt.SetData(spIcon, GameCommonInfo.GetUITextById(332), 0, priceL, priceM, priceS);
         }
         else
@@ -300,8 +300,8 @@ public class PopupRecordShow : PopupShowView
                 GameItemsBean itemData = listData[i];
                 GameObject objItem = Instantiate(objShowContainer, objShowItem);
                 ItemPopupRecordCpt itemCpt = objItem.GetComponent<ItemPopupRecordCpt>();
-                MenuInfoBean menuInfo = innFoodManager.GetFoodDataById(itemData.itemId);
-                Sprite spIcon = innFoodManager.GetFoodSpriteByName(menuInfo.icon_key);
+                MenuInfoBean menuInfo = InnFoodHandler.Instance.manager.GetFoodDataById(itemData.itemId);
+                Sprite spIcon = InnFoodHandler.Instance.manager.GetFoodSpriteByName(menuInfo.icon_key);
                 itemCpt.SetData(spIcon, menuInfo.name, itemData.itemNumber, itemData.priceL, itemData.priceM, itemData.priceS);
             }
         }
@@ -319,7 +319,7 @@ public class PopupRecordShow : PopupShowView
         {
             GameObject objItem = Instantiate(objShowContainer, objShowItem);
             ItemPopupRecordCpt itemCpt = objItem.GetComponent<ItemPopupRecordCpt>();
-            Sprite spIcon = iconDataManager.GetIconSpriteByName("worker_waiter_bed_pro_2");
+            Sprite spIcon = IconDataHandler.Instance.manager.GetIconSpriteByName("worker_waiter_bed_pro_2");
             itemCpt.SetData(spIcon, GameCommonInfo.GetUITextById(351), 0, priceL, priceM, priceS);
         }
     }

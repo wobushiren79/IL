@@ -49,7 +49,7 @@ public static class AttributesTypeEnumTools
         return name;
     }
 
-    public static Sprite GetAttributesIcon(IconDataManager iconDataManager, AttributesTypeEnum attributesType)
+    public static Sprite GetAttributesIcon( AttributesTypeEnum attributesType)
     {
         string name = "";
         switch (attributesType)
@@ -79,7 +79,7 @@ public static class AttributesTypeEnumTools
                 name = "love_1";
                 break;
         }
-        return iconDataManager.GetIconSpriteByName(name);
+        return IconDataHandler.Instance.manager.GetIconSpriteByName(name);
     }
 
 }

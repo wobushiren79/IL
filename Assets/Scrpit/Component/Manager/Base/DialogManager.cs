@@ -18,7 +18,7 @@ public class DialogManager : BaseManager
     /// <returns></returns>
     public GameObject GetDialogModel(string dialogName)
     {
-        return GetGameObjectModel(listObjModel, "ui/dialog", dialogName);
+        return GetModel(listObjModel, "ui/dialog", dialogName);
     }
 
     /// <summary>

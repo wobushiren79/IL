@@ -52,7 +52,6 @@ public class ItemTownGuildImproveCharacterCpt : ItemGameBaseCpt, DialogView.IDia
     protected GameTimeHandler gameTimeHandler;
     protected DialogManager dialogManager;
     protected ToastManager toastManager;
-    protected IconDataManager iconDataManager;
     protected InnBuildManager innBuildManager;
     protected ControlHandler controlHandler;
 
@@ -64,7 +63,6 @@ public class ItemTownGuildImproveCharacterCpt : ItemGameBaseCpt, DialogView.IDia
         gameTimeHandler = uiGameManager.gameTimeHandler;
         controlHandler = uiGameManager.controlHandler;
         gameDataHandler = uiGameManager.gameDataHandler;
-        iconDataManager = uiGameManager.iconDataManager;
         innBuildManager = uiGameManager.innBuildManager;
 
     }
@@ -365,10 +363,10 @@ public class ItemTownGuildImproveCharacterCpt : ItemGameBaseCpt, DialogView.IDia
                 ToastHandler.Instance.ToastHint(GameCommonInfo.GetUITextById(7021));
                 AudioHandler.Instance.PlaySound(AudioSoundEnum.Reward);
                 //完成奖励
-                RewardTypeEnumTools.CompleteReward(npcInfoManager, iconDataManager, innBuildManager, gameDataManager, miniGameData.GetListUserCharacterData(), miniGameData.listReward);
+                RewardTypeEnumTools.CompleteReward(npcInfoManager,  innBuildManager, gameDataManager, miniGameData.GetListUserCharacterData(), miniGameData.listReward);
 
                 //数据添加
-                Sprite attributeIcon = iconDataManager.GetIconSpriteByName("keyboard_button_up_1");
+                Sprite attributeIcon = IconDataHandler.Instance.manager.GetIconSpriteByName("keyboard_button_up_1");
                 string attributeRewardContent = "";
                 foreach (MiniGameCharacterBean miniGameCharacterData in miniGameData.listUserGameData)
                 {

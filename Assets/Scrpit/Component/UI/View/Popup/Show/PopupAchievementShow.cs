@@ -56,7 +56,7 @@ public class PopupAchievementShow : PopupShowView
     public void SetIcon(AchievementTypeEnum type, string iconKey, string iconKeyRemark)
     {
         Sprite spIcon;
-        spIcon = iconDataManager.GetIconSpriteByName(iconKey);
+        spIcon = IconDataHandler.Instance.manager.GetIconSpriteByName(iconKey);
 
         if (spIcon != null && ivIcon != null && ivRemark != null)
         {
@@ -79,7 +79,7 @@ public class PopupAchievementShow : PopupShowView
         if (ivRemark != null && !CheckUtil.StringIsNull(iconKeyRemark))
         {
             ivRemark.gameObject.SetActive(true);
-            Sprite spIconRemark = iconDataManager.GetIconSpriteByName(iconKey);
+            Sprite spIconRemark = IconDataHandler.Instance.manager.GetIconSpriteByName(iconKey);
             if (spIconRemark != null)
                 ivRemark.sprite = spIconRemark;
         }
@@ -144,17 +144,12 @@ public class PopupAchievementShow : PopupShowView
         {
             if (status == AchievementStatusEnum.Completed)
             {
-                PreTypeEnumTools.GetPreDetails(itemPreData, gameDataManager.gameData, 
-                    iconDataManager,
-                    innFoodManager,
-                    npcInfoManager,
-                    true);
+                PreTypeEnumTools.GetPreDetails(itemPreData, gameDataManager.gameData, npcInfoManager, true);
             }
             else
             {
-                PreTypeEnumTools.GetPreDetails(itemPreData, gameDataManager.gameData, 
-                    iconDataManager,
-                    innFoodManager,
+                PreTypeEnumTools.GetPreDetails(itemPreData, gameDataManager.gameData,
+
                     npcInfoManager,
                     false);
             }
@@ -178,7 +173,7 @@ public class PopupAchievementShow : PopupShowView
         GameObject objTitle = Instantiate(objRewardContent, objRewardTitle);
         foreach (var itemRewardData in listRewardData)
         {
-            RewardTypeEnumTools.GetRewardDetails(itemRewardData, iconDataManager, innBuildManager,npcInfoManager);
+            RewardTypeEnumTools.GetRewardDetails(itemRewardData, innBuildManager, npcInfoManager);
             string rewardDes = itemRewardData.rewardDescribe;
             Sprite spReward = itemRewardData.spRewardIcon;
             CreateRewardItem(rewardDes, spReward);

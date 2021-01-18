@@ -39,7 +39,7 @@ public class BuildStoveCpt : BaseBuildItemCpt
         foodObj.SetActive(true);
         foodObj.transform.position = GameUtil.GetTransformInsidePosition2D(foodObj.transform, 0.5f);
         FoodForCustomerCpt foodCpt = foodObj.GetComponent<FoodForCustomerCpt>();
-        foodCpt.SetData(innFoodManager, orderForCustomer.foodData, orderForCustomer.foodLevel);
+        foodCpt.SetData(orderForCustomer.foodData, orderForCustomer.foodLevel);
         orderForCustomer.foodCpt = foodCpt;
         //食物创建动画
         foodCpt.CreateAnim();

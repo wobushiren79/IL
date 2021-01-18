@@ -150,56 +150,31 @@ public class CharacterDressManager : BaseManager
 
         IconBeanDictionary dicData = null;
         SpriteAtlas spriteData = null;
-
-        switch (type)
-        {
-            case 1:
-                dicData = listIconMask;
-                spriteData = maskAtlas;
-                break;
-            case 2:
-                dicData = listIconHat;
-                spriteData = hatAtlas;
-                break;
-            case 3:
-                dicData = listIconClothes;
-                spriteData = clothesAtlas;
-                break;
-            case 4:
-                dicData = listIconShoes;
-                spriteData = shoesAtlas;
-                break;
-        }
-        if (dicData.TryGetValue(name, out Sprite value))
-        {
-            return value;
-        }
-        if (spriteData != null)
-        {
-            Sprite itemSprite = GetSpriteByName(name, spriteData);
-            if (itemSprite != null)
-                dicData.Add(name, itemSprite);
-            return itemSprite;
-        }
         string atlasName = "";
-
         switch (type)
         {
             case 1:
                 atlasName = "AtlasForMask";
+                dicData = listIconMask;
+                spriteData = maskAtlas;
                 break;
             case 2:
                 atlasName = "AtlasForHat";
+                dicData = listIconHat;
+                spriteData = hatAtlas;
                 break;
             case 3:
                 atlasName = "AtlasForClothes";
+                dicData = listIconClothes;
+                spriteData = clothesAtlas;
                 break;
             case 4:
                 atlasName = "AtlasForShoes";
+                dicData = listIconShoes;
+                spriteData = shoesAtlas;
                 break;
         }
-
-        spriteData = LoadAssetUtil.SyncLoadAsset<SpriteAtlas>("sprite/dress", atlasName);
+        Sprite itemSprite = GetSpriteByName(dicData,ref spriteData, atlasName, "sprite/dress", name);
         switch (type)
         {
             case 1:
@@ -215,9 +190,7 @@ public class CharacterDressManager : BaseManager
                 shoesAtlas = spriteData;
                 break;
         }
-        if (spriteData != null)
-            return GetSpriteDataByName(type, name);
-        return null;
+        return itemSprite;
     }
 
     protected AnimationClip GetAnimClipByName(int type, string name)
@@ -240,16 +213,6 @@ public class CharacterDressManager : BaseManager
                 dicData = listShoesAnim;
                 break;
         }
-        if (dicData.TryGetValue(name, out AnimationClip value))
-        {
-            return value;
-        }
-
-        AnimationClip anim = LoadAssetUtil.SyncLoadAsset<AnimationClip>("anim/dress", name);
-        if (anim != null)
-        {
-            dicData.Add(name, anim);
-        }
-        return anim;
+        return  GetModel(dicData, "anim/dress", name);
     }
 }

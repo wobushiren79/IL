@@ -12,6 +12,6 @@ public class PopupManger : BaseManager
     /// <returns></returns>
     public GameObject GetPopupModel(string popupName)
     {
-        return GetGameObjectModel(dicPopupModel, "ui/popup", popupName);
+        return GetModel(dicPopupModel, "ui/popup", popupName);
     }
 }

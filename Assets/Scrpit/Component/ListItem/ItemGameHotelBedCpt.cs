@@ -86,10 +86,8 @@ public class ItemGameHotelBedCpt : ItemGameBaseCpt, DialogView.IDialogCallBack
     /// <param name="buildBedData"></param>
     public void SetLevel(BuildBedBean buildBedData)
     {
-        UIGameManager uiGameManager = GetUIManager<UIGameManager>();
-
         //设置等级图标
-        Sprite spLevel = buildBedData.GetBedLevelIcon(uiGameManager.iconDataManager);
+        Sprite spLevel = buildBedData.GetBedLevelIcon();
         if (spLevel == null)
         {
             ivLevel.gameObject.SetActive(false);

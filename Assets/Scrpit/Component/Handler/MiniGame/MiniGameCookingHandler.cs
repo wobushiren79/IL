@@ -12,8 +12,6 @@ public class MiniGameCookingHandler : BaseMiniGameHandler<MiniGameCookingBuilder
 {
     //事件处理
     protected EventHandler eventHandler;
-    protected InnFoodManager innFoodManager;
-
     protected UIMiniGameCooking uiMiniGameCooking;
     protected UIMiniGameCookingSelect uiMiniGameCookingSelect;
     protected UIMiniGameCookingSettlement uiMiniGameCookingSettlement;
@@ -22,7 +20,6 @@ public class MiniGameCookingHandler : BaseMiniGameHandler<MiniGameCookingBuilder
     {
         base.Awake();
         eventHandler = Find<EventHandler>(ImportantTypeEnum.EventHandler);
-        innFoodManager = Find<InnFoodManager>(ImportantTypeEnum.FoodManager);
     }
 
     /// <summary>
@@ -40,11 +37,11 @@ public class MiniGameCookingHandler : BaseMiniGameHandler<MiniGameCookingBuilder
         //设置主题
         if (miniGameData.cookingThemeLevel != 0)
         {
-            miniGameData.SetCookingThemeByLevel(innFoodManager, miniGameData.cookingThemeLevel);
+            miniGameData.SetCookingThemeByLevel(miniGameData.cookingThemeLevel);
         }
         if (miniGameData.cookingThemeId != 0)
         {
-            miniGameData.SetCookingThemeById(innFoodManager, miniGameData.cookingThemeId);
+            miniGameData.SetCookingThemeById(miniGameData.cookingThemeId);
         }
         //初始化摄像头位置
         InitCameraPosition();
@@ -70,7 +67,7 @@ public class MiniGameCookingHandler : BaseMiniGameHandler<MiniGameCookingBuilder
             NpcAIMiniGameCookingCpt itemNpc = listPlayerNpcAI[i];
             if (itemNpc.characterMiniGameData.GetCookingMenuInfo() == null && itemNpc.characterMiniGameData.characterType == 0)
             {
-                MenuInfoBean menuInfo = uiGameManager.innFoodManager.GetRandomFoodDataByCookingTheme(miniGameData.GetCookingTheme());
+                MenuInfoBean menuInfo = InnFoodHandler.Instance.manager.GetRandomFoodDataByCookingTheme(miniGameData.GetCookingTheme());
                 itemNpc.characterMiniGameData.SetCookingMenuInfo(menuInfo);
             }
             //给参赛选手分配灶台

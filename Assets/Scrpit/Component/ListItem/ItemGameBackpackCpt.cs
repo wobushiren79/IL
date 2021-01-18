@@ -71,9 +71,7 @@ public class ItemGameBackpackCpt : ItemGameBaseCpt, IPointerClickHandler, PopupI
     /// <param name="iconKey"></param>
     /// <param name="itemType"></param>
     public void SetIcon(ItemsInfoBean itemsInfo)
-    {
-        IconDataManager iconDataManager = uiGameManager.iconDataManager;
-
+    {    
         Vector2 offsetMin = new Vector2(0, 0);
         Vector2 offsetMax = new Vector2(0, 0);
         Sprite spIcon = null;
@@ -96,7 +94,7 @@ public class ItemGameBackpackCpt : ItemGameBaseCpt, IPointerClickHandler, PopupI
                 default:
                     break;
             }
-            spIcon = GeneralEnumTools.GetGeneralSprite(itemsInfo, iconDataManager,  false);
+            spIcon = GeneralEnumTools.GetGeneralSprite(itemsInfo,  false);
         }
         if (spIcon != null)
             ivIcon.color = new Color(1, 1, 1, 1);
@@ -171,7 +169,6 @@ public class ItemGameBackpackCpt : ItemGameBaseCpt, IPointerClickHandler, PopupI
     public virtual void SelectionUse(PopupItemsSelection view)
     {
         GameDataManager gameDataManager = uiGameManager.gameDataManager;
-        InnFoodManager foodManager = uiGameManager.innFoodManager;
         if (itemsInfoData == null || itemBean == null || gameDataManager == null)
             return;
         switch (itemsInfoData.GetItemsType())
@@ -180,7 +177,7 @@ public class ItemGameBackpackCpt : ItemGameBaseCpt, IPointerClickHandler, PopupI
                 //添加菜谱
                 if (gameDataManager.gameData.AddFoodMenu(itemsInfoData.add_id))
                 { 
-                    MenuInfoBean menuInfo= foodManager.GetFoodDataById(itemsInfoData.add_id);
+                    MenuInfoBean menuInfo= InnFoodHandler.Instance.manager.GetFoodDataById(itemsInfoData.add_id);
                     RefreshItems(itemsInfoData.id, -1);
                     DialogBean dialogData = new DialogBean
                     {

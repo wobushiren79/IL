@@ -309,7 +309,7 @@ public class NpcAIMiniGameCombatCpt : BaseNpcAI
         foreach (EffectTypeBean itemType in listTypeData)
         {
             //设置技能的备用图标
-            EffectTypeEnumTools.GetEffectDetails(iconDataManager ,itemType, spIcon);
+            EffectTypeEnumTools.GetEffectDetails(itemType, spIcon);
             //如果是持续 则需要加上BUFF图标
             if (durationForRound > 0)
             {

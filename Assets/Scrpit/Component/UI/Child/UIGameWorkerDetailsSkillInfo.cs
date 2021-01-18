@@ -52,7 +52,7 @@ public class UIGameWorkerDetailsSkillInfo : BaseUIChildComponent<UIGameWorkerDet
             ItemBaseTextCpt itemBaseText= objItem.GetComponent<ItemBaseTextCpt>();
             PopupSkillButton infoSkillPopup = objItem.GetComponent<PopupSkillButton>();
 
-            Sprite spIcon= iconDataManager.GetIconSpriteByName(itemSkill.icon_key);
+            Sprite spIcon= IconDataHandler.Instance.manager.GetIconSpriteByName(itemSkill.icon_key);
             itemBaseText.SetData(spIcon,itemSkill.name,"");
             infoSkillPopup.SetData(itemSkill);
         }

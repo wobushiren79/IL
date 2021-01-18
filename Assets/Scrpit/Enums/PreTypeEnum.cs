@@ -118,13 +118,13 @@ public class PreTypeEnumTools : DataTools
     /// <param name="gameData"></param>
     /// <param name="data"></param>
     /// <returns></returns>
-    public static bool CheckIsAllPre(IconDataManager iconDataManager,InnFoodManager innFoodManager, NpcInfoManager npcInfoManager, GameDataBean gameData, CharacterBean characterData, string data, out string reason)
+    public static bool CheckIsAllPre(NpcInfoManager npcInfoManager, GameDataBean gameData, CharacterBean characterData, string data, out string reason)
     {
         List<PreTypeBean> listPreData = GetListPreData(data);
         reason = "";
         foreach (var itemPreData in listPreData)
         {
-            GetPreDetails(itemPreData, gameData, characterData, iconDataManager,innFoodManager, npcInfoManager, false);
+            GetPreDetails(itemPreData, gameData, characterData, npcInfoManager, false);
             if (!itemPreData.isPre)
             {
                 reason = itemPreData.preFailStr;
@@ -148,7 +148,7 @@ public class PreTypeEnumTools : DataTools
     /// </summary>
     /// <param name="rewardType"></param>
     /// <returns></returns>
-    public static PreTypeBean GetPreDetails(PreTypeBean preTypeData, GameDataBean gameData, CharacterBean characterData, IconDataManager iconDataManager, InnFoodManager innFoodManager, NpcInfoManager npcInfoManager, bool isComplete)
+    public static PreTypeBean GetPreDetails(PreTypeBean preTypeData, GameDataBean gameData, CharacterBean characterData, NpcInfoManager npcInfoManager, bool isComplete)
     {
         switch (preTypeData.dataType)
         {
@@ -160,7 +160,7 @@ public class PreTypeEnumTools : DataTools
             case PreTypeEnum.PayTrophyIntermediate:
             case PreTypeEnum.PayTrophyAdvanced:
             case PreTypeEnum.PayTrophyLegendary:
-                GetPreDetailsForPay(preTypeData, gameData, iconDataManager, isComplete);
+                GetPreDetailsForPay(preTypeData, gameData, isComplete);
                 break;
             case PreTypeEnum.HaveMoneyL:
             case PreTypeEnum.HaveMoneyM:
@@ -170,7 +170,7 @@ public class PreTypeEnumTools : DataTools
             case PreTypeEnum.HaveTrophyIntermediate:
             case PreTypeEnum.HaveTrophyAdvanced:
             case PreTypeEnum.HaveTrophyLegendary:
-                GetPreDetailsForHave(preTypeData, gameData, iconDataManager, isComplete);
+                GetPreDetailsForHave(preTypeData, gameData, isComplete);
                 break;
             case PreTypeEnum.AttributeForForce:
             case PreTypeEnum.AttributeForSpeed:
@@ -179,11 +179,11 @@ public class PreTypeEnumTools : DataTools
             case PreTypeEnum.AttributeForCharm:
             case PreTypeEnum.AttributeForAccount:
             case PreTypeEnum.AttributeForLife:
-                GetPreDetailsForAttributes(preTypeData, characterData, iconDataManager);
+                GetPreDetailsForAttributes(preTypeData, characterData);
                 break;
             case PreTypeEnum.PayItems:
             case PreTypeEnum.HaveItems:
-                GetPreDetailsForItems(iconDataManager, preTypeData, gameData, isComplete);
+                GetPreDetailsForItems(preTypeData, gameData, isComplete);
                 break;
 
             case PreTypeEnum.PayIngForOilsalt:
@@ -194,16 +194,16 @@ public class PreTypeEnumTools : DataTools
             case PreTypeEnum.PayIngForMelonfruit:
             case PreTypeEnum.PayIngForWaterwine:
             case PreTypeEnum.PayIngForFlour:
-                GetPreDetailsForPayIng(preTypeData, gameData, iconDataManager);
+                GetPreDetailsForPayIng(preTypeData, gameData);
                 break;
             case PreTypeEnum.OrderNumberForTotal:
             case PreTypeEnum.OrderNumberForHotelTotal:
-                GetPreDetailsForOrderNumber(preTypeData, gameData, iconDataManager, isComplete);
+                GetPreDetailsForOrderNumber(preTypeData, gameData, isComplete);
                 break;
             case PreTypeEnum.GetMoneyL:
             case PreTypeEnum.GetMoneyM:
             case PreTypeEnum.GetMoneyS:
-                GetPreDetailsForGetMoney(preTypeData, gameData, iconDataManager, isComplete);
+                GetPreDetailsForGetMoney(preTypeData, gameData, isComplete);
                 break;
             case PreTypeEnum.InnPraiseNumberForExcited:
             case PreTypeEnum.InnPraiseNumberForHappy:
@@ -211,25 +211,25 @@ public class PreTypeEnumTools : DataTools
             case PreTypeEnum.InnPraiseNumberForOrdinary:
             case PreTypeEnum.InnPraiseNumberForDisappointed:
             case PreTypeEnum.InnPraiseNumberForAnger:
-                GetPreDetailsForInnPraiseNumber(preTypeData, gameData, iconDataManager, isComplete);
+                GetPreDetailsForInnPraiseNumber(preTypeData, gameData, isComplete);
                 break;
             case PreTypeEnum.MenuNumber:
             case PreTypeEnum.MenuLevelStarNumber:
             case PreTypeEnum.MenuLevelMoonNumber:
             case PreTypeEnum.MenuLevelSunNumber:
-                GetPreDetailsForMenuNumber(preTypeData, gameData, iconDataManager, isComplete);
+                GetPreDetailsForMenuNumber(preTypeData, gameData, isComplete);
                 break;
             case PreTypeEnum.BedNumber:
             case PreTypeEnum.BedLevelStarNumber:
             case PreTypeEnum.BedLevelMoonNumber:
             case PreTypeEnum.BedLevelSunNumber:
-                GetPreDetailsForBedNumber(preTypeData, gameData, iconDataManager, isComplete);
+                GetPreDetailsForBedNumber(preTypeData, gameData, isComplete);
                 break;
             case PreTypeEnum.SellMenuNumber:
-                GetPreDetailsForSellMenuNumber(preTypeData, gameData, iconDataManager, isComplete);
+                GetPreDetailsForSellMenuNumber(preTypeData, gameData, isComplete);
                 break;
             case PreTypeEnum.HaveMenu:
-                GetPreDetailsForHaveMenu(preTypeData, gameData, innFoodManager);
+                GetPreDetailsForHaveMenu(preTypeData, gameData);
                 break;
             case PreTypeEnum.WorkerForCookFoodNumber:
 
@@ -244,30 +244,30 @@ public class PreTypeEnumTools : DataTools
             case PreTypeEnum.WorkerForAccostGuideNumber:
             case PreTypeEnum.WorkerForFightSuccessNumber:
             case PreTypeEnum.WorkerForFightFailNumber:
-                GetPreDetailsForWorker(preTypeData, gameData, iconDataManager, isComplete);
+                GetPreDetailsForWorker(preTypeData, gameData, isComplete);
                 break;
             case PreTypeEnum.InnPraise:
-                GetPreDetailsForInnPraise(preTypeData, gameData, iconDataManager, isComplete);
+                GetPreDetailsForInnPraise(preTypeData, gameData, isComplete);
                 break;
             case PreTypeEnum.InnAesthetics:
-                GetPreDetailsForInnAesthetics(preTypeData, gameData, iconDataManager, isComplete);
+                GetPreDetailsForInnAesthetics(preTypeData, gameData, isComplete);
                 break;
             case PreTypeEnum.NpcFavorabilityLevel:
                 GetPreDetailsForNpcFavorabilityLevel(gameData, preTypeData, npcInfoManager);
                 break;
             case PreTypeEnum.InfiniteTowersMaxLayer:
-                GetPreDetailsForInfiniteTowersMaxLayer(preTypeData, gameData, iconDataManager, isComplete);
+                GetPreDetailsForInfiniteTowersMaxLayer(preTypeData, gameData, isComplete);
                 break;
         }
         return preTypeData;
     }
-    public static PreTypeBean GetPreDetails(PreTypeBean preTypeData, GameDataBean gameData, IconDataManager iconDataManager, InnFoodManager innFoodManager, NpcInfoManager npcInfoManager, bool isComplete)
+    public static PreTypeBean GetPreDetails(PreTypeBean preTypeData, GameDataBean gameData, NpcInfoManager npcInfoManager, bool isComplete)
     {
-        return GetPreDetails(preTypeData, gameData, null, iconDataManager, innFoodManager, npcInfoManager, isComplete);
+        return GetPreDetails(preTypeData, gameData, null, npcInfoManager, isComplete);
     }
-    public static PreTypeBean GetPreDetails(PreTypeBean preTypeData, GameDataBean gameData, IconDataManager iconDataManager,InnFoodManager innFoodManager, NpcInfoManager npcInfoManager)
+    public static PreTypeBean GetPreDetails(PreTypeBean preTypeData, GameDataBean gameData, NpcInfoManager npcInfoManager)
     {
-        return GetPreDetails(preTypeData, gameData, null, iconDataManager, innFoodManager, npcInfoManager, false);
+        return GetPreDetails(preTypeData, gameData, null, npcInfoManager, false);
     }
 
     /// <summary>
@@ -281,7 +281,7 @@ public class PreTypeEnumTools : DataTools
     /// <param name="isComplete"></param>
     /// <returns></returns>
     private static PreTypeBean GetPreDetailsForItems(
-        IconDataManager iconDataManager,
+
         PreTypeBean preTypeData, GameDataBean gameData, bool isComplete)
     {
         long[] listItems = StringUtil.SplitBySubstringForArrayLong(preTypeData.data, ',');
@@ -304,7 +304,7 @@ public class PreTypeEnumTools : DataTools
             preTypeData.isPre = false;
         }
         ItemsInfoBean itemsInfo = GameItemsHandler.Instance.manager.GetItemsById(itemsId);
-        preTypeData.spPreIcon = GeneralEnumTools.GetGeneralSprite(itemsInfo, iconDataManager);
+        preTypeData.spPreIcon = GeneralEnumTools.GetGeneralSprite(itemsInfo);
         switch (preTypeData.dataType)
         {
             case PreTypeEnum.HaveItems:
@@ -326,7 +326,7 @@ public class PreTypeEnumTools : DataTools
     /// <param name="iconDataManager"></param>
     /// <param name="isComplete"></param>
     /// <returns></returns>
-    private static PreTypeBean GetPreDetailsForPay(PreTypeBean preTypeData, GameDataBean gameData, IconDataManager iconDataManager, bool isComplete)
+    private static PreTypeBean GetPreDetailsForPay(PreTypeBean preTypeData, GameDataBean gameData, bool isComplete)
     {
         string preStr = "";
         long pay = long.Parse(preTypeData.data);
@@ -395,8 +395,7 @@ public class PreTypeEnumTools : DataTools
             preStr = "(" + have + "/" + pay + ")";
             preTypeData.progress = have / (float)pay;
         }
-        if (iconDataManager != null)
-            preTypeData.spPreIcon = iconDataManager.GetIconSpriteByName(iconKey);
+        preTypeData.spPreIcon = IconDataHandler.Instance.manager.GetIconSpriteByName(iconKey);
         preTypeData.preDescribe = string.Format(preTypeData.preDescribe, preStr);
         return preTypeData;
     }
@@ -410,7 +409,7 @@ public class PreTypeEnumTools : DataTools
     /// <param name="iconDataManager"></param>
     /// <param name="isComplete"></param>
     /// <returns></returns>
-    private static PreTypeBean GetPreDetailsForHave(PreTypeBean preTypeData, GameDataBean gameData, IconDataManager iconDataManager, bool isComplete)
+    private static PreTypeBean GetPreDetailsForHave(PreTypeBean preTypeData, GameDataBean gameData, bool isComplete)
     {
         long have = long.Parse(preTypeData.data);
         long own = 0;
@@ -480,8 +479,7 @@ public class PreTypeEnumTools : DataTools
             haveStr = "(" + own + "/" + have + ")";
             preTypeData.progress = own / (float)have;
         }
-        if (iconDataManager != null)
-            preTypeData.spPreIcon = iconDataManager.GetIconSpriteByName(iconKey);
+        preTypeData.spPreIcon = IconDataHandler.Instance.manager.GetIconSpriteByName(iconKey);
         preTypeData.preDescribe = string.Format(preTypeData.preDescribe, haveStr);
         return preTypeData;
     }
@@ -493,7 +491,7 @@ public class PreTypeEnumTools : DataTools
     /// <param name="characterData"></param>
     /// <param name="iconDataManager"></param>
     /// <returns></returns>
-    private static PreTypeBean GetPreDetailsForAttributes(PreTypeBean preTypeData, CharacterBean characterData, IconDataManager iconDataManager)
+    private static PreTypeBean GetPreDetailsForAttributes(PreTypeBean preTypeData, CharacterBean characterData)
     {
         if (characterData == null)
             return preTypeData;
@@ -538,8 +536,7 @@ public class PreTypeEnumTools : DataTools
                 preTypeData.preFailStr = GameCommonInfo.GetUITextById(5016);
                 break;
         }
-        if (iconDataManager != null)
-            preTypeData.spPreIcon = iconDataManager.GetIconSpriteByName(iconKey);
+        preTypeData.spPreIcon = IconDataHandler.Instance.manager.GetIconSpriteByName(iconKey);
         preTypeData.preFailStr = string.Format(preTypeData.preFailStr, dataAttributes + "");
         if (targetAttributes < dataAttributes)
         {
@@ -560,7 +557,7 @@ public class PreTypeEnumTools : DataTools
     /// <param name="gameData"></param>
     /// <param name="iconDataManager"></param>
     /// <returns></returns>
-    private static PreTypeBean GetPreDetailsForPayIng(PreTypeBean preTypeData, GameDataBean gameData, IconDataManager iconDataManager)
+    private static PreTypeBean GetPreDetailsForPayIng(PreTypeBean preTypeData, GameDataBean gameData)
     {
         Sprite spIcon = null;
         int dataIng = int.Parse(preTypeData.data);
@@ -593,7 +590,7 @@ public class PreTypeEnumTools : DataTools
                 break;
         }
         string ingName = IngredientsEnumTools.GetIngredientName(ingredients);
-        spIcon = IngredientsEnumTools.GetIngredientIcon(iconDataManager, ingredients);
+        spIcon = IngredientsEnumTools.GetIngredientIcon(ingredients);
         if (gameData.HasEnoughIng(ingredients, dataIng))
         {
             preTypeData.isPre = true;
@@ -615,7 +612,7 @@ public class PreTypeEnumTools : DataTools
     /// <param name="gameData"></param>
     /// <param name="iconDataManager"></param>
     /// <returns></returns>
-    private static PreTypeBean GetPreDetailsForOrderNumber(PreTypeBean preTypeData, GameDataBean gameData, IconDataManager iconDataManager, bool isComplete)
+    private static PreTypeBean GetPreDetailsForOrderNumber(PreTypeBean preTypeData, GameDataBean gameData, bool isComplete)
     {
         Sprite spIcon = null;
         long dataNumber = long.Parse(preTypeData.data);
@@ -627,13 +624,13 @@ public class PreTypeEnumTools : DataTools
         switch (preTypeData.dataType)
         {
             case PreTypeEnum.OrderNumberForTotal:
-                spIcon = iconDataManager.GetIconSpriteByName("team_2");
+                spIcon = IconDataHandler.Instance.manager.GetIconSpriteByName("team_2");
                 preDescribeTitle = GameCommonInfo.GetUITextById(5041);
                 preFailTitle = GameCommonInfo.GetUITextById(5042);
                 numberTotal = userAchievement.GetNumberForAllCustomerFood();
                 break;
             case PreTypeEnum.OrderNumberForHotelTotal:
-                spIcon = iconDataManager.GetIconSpriteByName("worker_waiter_bed_pro_2");
+                spIcon = IconDataHandler.Instance.manager.GetIconSpriteByName("worker_waiter_bed_pro_2");
                 preDescribeTitle = GameCommonInfo.GetUITextById(5043);
                 preFailTitle = GameCommonInfo.GetUITextById(5044);
                 numberTotal = userAchievement.GetNumberForAllCustomerHotel();
@@ -666,7 +663,7 @@ public class PreTypeEnumTools : DataTools
     /// <param name="iconDataManager"></param>
     /// <param name="isComplete"></param>
     /// <returns></returns>
-    private static PreTypeBean GetPreDetailsForGetMoney(PreTypeBean preTypeData, GameDataBean gameData, IconDataManager iconDataManager, bool isComplete)
+    private static PreTypeBean GetPreDetailsForGetMoney(PreTypeBean preTypeData, GameDataBean gameData, bool isComplete)
     {
         string preMoneyStr = "";
         long getMoney = long.Parse(preTypeData.data);
@@ -703,14 +700,13 @@ public class PreTypeEnumTools : DataTools
             preMoneyStr = "(" + haveMoney + "/" + getMoney + ")";
             preTypeData.progress = haveMoney / (float)getMoney;
         }
-        if (iconDataManager != null)
-            preTypeData.spPreIcon = iconDataManager.GetIconSpriteByName(iconKey);
+        preTypeData.spPreIcon = IconDataHandler.Instance.manager.GetIconSpriteByName(iconKey);
         preTypeData.preDescribe = string.Format(preTypeData.preDescribe, preMoneyStr);
         preTypeData.preFailStr = GameCommonInfo.GetUITextById(1024);
         return preTypeData;
     }
 
-    private static PreTypeBean GetPreDetailsForInnPraiseNumber(PreTypeBean preTypeData, GameDataBean gameData, IconDataManager iconDataManager, bool isComplete)
+    private static PreTypeBean GetPreDetailsForInnPraiseNumber(PreTypeBean preTypeData, GameDataBean gameData, bool isComplete)
     {
         Sprite spIcon = null;
         long dataNumber = long.Parse(preTypeData.data);
@@ -722,32 +718,32 @@ public class PreTypeEnumTools : DataTools
             case PreTypeEnum.InnPraiseNumberForExcited:
                 praiseType = PraiseTypeEnum.Excited;
                 preDesStr = GameCommonInfo.GetUITextById(5051);
-                spIcon = iconDataManager.GetIconSpriteByName("customer_mood_0");
+                spIcon = IconDataHandler.Instance.manager.GetIconSpriteByName("customer_mood_0");
                 break;
             case PreTypeEnum.InnPraiseNumberForHappy:
                 praiseType = PraiseTypeEnum.Happy;
                 preDesStr = GameCommonInfo.GetUITextById(5052);
-                spIcon = iconDataManager.GetIconSpriteByName("customer_mood_1");
+                spIcon = IconDataHandler.Instance.manager.GetIconSpriteByName("customer_mood_1");
                 break;
             case PreTypeEnum.InnPraiseNumberForOkay:
                 praiseType = PraiseTypeEnum.Okay;
                 preDesStr = GameCommonInfo.GetUITextById(5053);
-                spIcon = iconDataManager.GetIconSpriteByName("customer_mood_2");
+                spIcon = IconDataHandler.Instance.manager.GetIconSpriteByName("customer_mood_2");
                 break;
             case PreTypeEnum.InnPraiseNumberForOrdinary:
                 praiseType = PraiseTypeEnum.Ordinary;
                 preDesStr = GameCommonInfo.GetUITextById(5054);
-                spIcon = iconDataManager.GetIconSpriteByName("customer_mood_3");
+                spIcon = IconDataHandler.Instance.manager.GetIconSpriteByName("customer_mood_3");
                 break;
             case PreTypeEnum.InnPraiseNumberForDisappointed:
                 praiseType = PraiseTypeEnum.Disappointed;
                 preDesStr = GameCommonInfo.GetUITextById(5055);
-                spIcon = iconDataManager.GetIconSpriteByName("customer_mood_4");
+                spIcon = IconDataHandler.Instance.manager.GetIconSpriteByName("customer_mood_4");
                 break;
             case PreTypeEnum.InnPraiseNumberForAnger:
                 praiseType = PraiseTypeEnum.Anger;
                 preDesStr = GameCommonInfo.GetUITextById(5056);
-                spIcon = iconDataManager.GetIconSpriteByName("customer_mood_5");
+                spIcon = IconDataHandler.Instance.manager.GetIconSpriteByName("customer_mood_5");
                 break;
         }
         UserAchievementBean userAchievement = gameData.GetAchievementData();
@@ -778,12 +774,12 @@ public class PreTypeEnumTools : DataTools
     /// <param name="iconDataManager"></param>
     /// <param name="isComplete"></param>
     /// <returns></returns>
-    private static PreTypeBean GetPreDetailsForMenuNumber(PreTypeBean preTypeData, GameDataBean gameData, IconDataManager iconDataManager, bool isComplete)
+    private static PreTypeBean GetPreDetailsForMenuNumber(PreTypeBean preTypeData, GameDataBean gameData, bool isComplete)
     {
         Sprite spIcon = null;
         long dataNumber = long.Parse(preTypeData.data);
         string preProStr = "";
-        spIcon = iconDataManager.GetIconSpriteByName("ui_features_menu");
+        spIcon = IconDataHandler.Instance.manager.GetIconSpriteByName("ui_features_menu");
         int menuNumber = 0;
         string content = "";
         string contentFail = "";
@@ -843,12 +839,12 @@ public class PreTypeEnumTools : DataTools
     /// <param name="iconDataManager"></param>
     /// <param name="isComplete"></param>
     /// <returns></returns>
-    private static PreTypeBean GetPreDetailsForBedNumber(PreTypeBean preTypeData, GameDataBean gameData, IconDataManager iconDataManager, bool isComplete)
+    private static PreTypeBean GetPreDetailsForBedNumber(PreTypeBean preTypeData, GameDataBean gameData, bool isComplete)
     {
         Sprite spIcon = null;
         long dataNumber = long.Parse(preTypeData.data);
         string preProStr = "";
-        spIcon = iconDataManager.GetIconSpriteByName("worker_waiter_bed_pro_2");
+        spIcon = IconDataHandler.Instance.manager.GetIconSpriteByName("worker_waiter_bed_pro_2");
         int bedNumber = 0;
         string content = "";
         string contentFail = "";
@@ -901,7 +897,7 @@ public class PreTypeEnumTools : DataTools
     }
 
 
-    private static PreTypeBean GetPreDetailsForSellMenuNumber(PreTypeBean preTypeData, GameDataBean gameData, IconDataManager iconDataManager, bool isComplete)
+    private static PreTypeBean GetPreDetailsForSellMenuNumber(PreTypeBean preTypeData, GameDataBean gameData, bool isComplete)
     {
         Sprite spIcon = null;
         long dataNumber = long.Parse(preTypeData.data);
@@ -909,7 +905,7 @@ public class PreTypeEnumTools : DataTools
         switch (preTypeData.dataType)
         {
             case PreTypeEnum.SellMenuNumber:
-                spIcon = iconDataManager.GetIconSpriteByName("ui_features_menu");
+                spIcon = IconDataHandler.Instance.manager.GetIconSpriteByName("ui_features_menu");
                 break;
         }
         List<MenuOwnBean> listMenu = gameData.GetMenuList();
@@ -936,7 +932,7 @@ public class PreTypeEnumTools : DataTools
         return preTypeData;
     }
 
-    private static PreTypeBean GetPreDetailsForHaveMenu(PreTypeBean preTypeData, GameDataBean gameData, InnFoodManager innFoodManager)
+    private static PreTypeBean GetPreDetailsForHaveMenu(PreTypeBean preTypeData, GameDataBean gameData)
     {
         Sprite spIcon = null;
         long[] menuIds = StringUtil.SplitBySubstringForArrayLong(preTypeData.data, ',');
@@ -947,8 +943,8 @@ public class PreTypeEnumTools : DataTools
         string noFoodStr = "";
         foreach (long menuId in menuIds)
         {
-            MenuInfoBean menuInfo = innFoodManager.GetFoodDataById(menuId);
-            spIcon = innFoodManager.GetFoodSpriteByName(menuInfo.icon_key);
+            MenuInfoBean menuInfo = InnFoodHandler.Instance.manager.GetFoodDataById(menuId);
+            spIcon = InnFoodHandler.Instance.manager.GetFoodSpriteByName(menuInfo.icon_key);
             foodListStr += ("《" + menuInfo.name + "》");
             bool hasMenu = gameData.CheckHasMenu(menuId);
             if (!hasMenu)
@@ -965,7 +961,7 @@ public class PreTypeEnumTools : DataTools
         return preTypeData;
 
     }
-    private static PreTypeBean GetPreDetailsForWorker(PreTypeBean preTypeData, GameDataBean gameData, IconDataManager iconDataManager, bool isComplete)
+    private static PreTypeBean GetPreDetailsForWorker(PreTypeBean preTypeData, GameDataBean gameData, bool isComplete)
     {
         Sprite spIcon = null;
         long dataNumber = long.Parse(preTypeData.data);
@@ -1015,7 +1011,7 @@ public class PreTypeEnumTools : DataTools
                         preDesStr = GameCommonInfo.GetUITextById(320);
                         workerNumber += characterWorkerForAccountant.accountingErrorNumber;
                     }
-          
+
 
                     break;
                 case PreTypeEnum.WorkerForAccostSuccessNumber:
@@ -1080,7 +1076,7 @@ public class PreTypeEnumTools : DataTools
     /// <param name="iconDataManager"></param>
     /// <param name="isComplete"></param>
     /// <returns></returns>
-    private static PreTypeBean GetPreDetailsForInnPraise(PreTypeBean preTypeData, GameDataBean gameData, IconDataManager iconDataManager, bool isComplete)
+    private static PreTypeBean GetPreDetailsForInnPraise(PreTypeBean preTypeData, GameDataBean gameData, bool isComplete)
     {
         Sprite spIcon = null;
         float dataNumber = float.Parse(preTypeData.data);
@@ -1090,7 +1086,7 @@ public class PreTypeEnumTools : DataTools
         {
             case PreTypeEnum.InnPraise:
                 preDesStr = GameCommonInfo.GetUITextById(5091);
-                spIcon = iconDataManager.GetIconSpriteByName("ui_praise");
+                spIcon = IconDataHandler.Instance.manager.GetIconSpriteByName("ui_praise");
                 break;
         }
         InnAttributesBean innAttributes = gameData.GetInnAttributesData();
@@ -1122,7 +1118,7 @@ public class PreTypeEnumTools : DataTools
     /// <param name="iconDataManager"></param>
     /// <param name="isComplete"></param>
     /// <returns></returns>
-    private static PreTypeBean GetPreDetailsForInnAesthetics(PreTypeBean preTypeData, GameDataBean gameData, IconDataManager iconDataManager, bool isComplete)
+    private static PreTypeBean GetPreDetailsForInnAesthetics(PreTypeBean preTypeData, GameDataBean gameData, bool isComplete)
     {
         Sprite spIcon = null;
         float dataNumber = float.Parse(preTypeData.data);
@@ -1132,7 +1128,7 @@ public class PreTypeEnumTools : DataTools
         {
             case PreTypeEnum.InnAesthetics:
                 preDesStr = GameCommonInfo.GetUITextById(5101);
-                spIcon = iconDataManager.GetIconSpriteByName("ui_aesthetics");
+                spIcon = IconDataHandler.Instance.manager.GetIconSpriteByName("ui_aesthetics");
                 break;
         }
         InnAttributesBean innAttributes = gameData.GetInnAttributesData();
@@ -1186,11 +1182,11 @@ public class PreTypeEnumTools : DataTools
     /// <param name="gameData"></param>
     /// <param name="conditionData"></param>
     /// <returns></returns>
-    protected static PreTypeBean GetPreDetailsForInfiniteTowersMaxLayer(PreTypeBean preTypeData, GameDataBean gameData, IconDataManager iconDataManager, bool isComplete)
+    protected static PreTypeBean GetPreDetailsForInfiniteTowersMaxLayer(PreTypeBean preTypeData, GameDataBean gameData, bool isComplete)
     {
-        Sprite spIcon = iconDataManager.GetIconSpriteByName("ui_praise");
+        Sprite spIcon = IconDataHandler.Instance.manager.GetIconSpriteByName("ui_praise");
         int maxLayer = int.Parse(preTypeData.data);
-        string preProStr = string.Format(GameCommonInfo.GetUITextById(5111), maxLayer+"");
+        string preProStr = string.Format(GameCommonInfo.GetUITextById(5111), maxLayer + "");
         string preDesStr = "";
         UserAchievementBean userAchievement = gameData.GetAchievementData();
         int currrentLayer = userAchievement.maxInfiniteTowersLayer;

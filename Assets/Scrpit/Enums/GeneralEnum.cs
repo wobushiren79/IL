@@ -34,33 +34,33 @@ public class GeneralEnumTools
     /// <param name="itemsInfo"></param>
     /// <param name="iconDataManager"></param>
     /// <param name="gameDataManager"></param>
-    public static Sprite GetGeneralSprite(ItemsInfoBean itemsInfo, IconDataManager iconDataManager)
+    public static Sprite GetGeneralSprite(ItemsInfoBean itemsInfo)
     {
-        return GetGeneralSprite(itemsInfo, iconDataManager, false);
+        return GetGeneralSprite(itemsInfo, false);
     }
-    public static Sprite GetGeneralSprite(ItemsInfoBean itemsInfo, IconDataManager iconDataManager, bool isHideDres)
+    public static Sprite GetGeneralSprite(ItemsInfoBean itemsInfo, bool isHideDres)
     {
         Sprite spIcon = null;
         switch ((GeneralEnum)itemsInfo.items_type)
         {
             case GeneralEnum.Mask:
-                    spIcon = CharacterDressHandler.Instance.manager.GetMaskSpriteByName(itemsInfo.icon_key);
+                spIcon = CharacterDressHandler.Instance.manager.GetMaskSpriteByName(itemsInfo.icon_key);
                 break;
             case GeneralEnum.Hat:
                 if (isHideDres)
-                    spIcon = iconDataManager.GetIconSpriteByName("unknown_hat_1");
+                    spIcon = IconDataHandler.Instance.manager.GetIconSpriteByName("unknown_hat_1");
                 else
                     spIcon = CharacterDressHandler.Instance.manager.GetHatSpriteByName(itemsInfo.icon_key);
                 break;
             case GeneralEnum.Clothes:
                 if (isHideDres)
-                    spIcon = iconDataManager.GetIconSpriteByName("unknown_clothes_1");
+                    spIcon = IconDataHandler.Instance.manager.GetIconSpriteByName("unknown_clothes_1");
                 else
                     spIcon = CharacterDressHandler.Instance.manager.GetClothesSpriteByName(itemsInfo.icon_key);
                 break;
             case GeneralEnum.Shoes:
                 if (isHideDres)
-                    spIcon = iconDataManager.GetIconSpriteByName("unknown_shoes_1");
+                    spIcon = IconDataHandler.Instance.manager.GetIconSpriteByName("unknown_shoes_1");
                 else
                     spIcon = CharacterDressHandler.Instance.manager.GetShoesSpriteByName(itemsInfo.icon_key);
                 break;
@@ -70,7 +70,7 @@ public class GeneralEnumTools
             case GeneralEnum.Read:
             case GeneralEnum.Gift:
             case GeneralEnum.Other:
-                spIcon = iconDataManager.GetIconSpriteByName(itemsInfo.icon_key);
+                spIcon = IconDataHandler.Instance.manager.GetIconSpriteByName(itemsInfo.icon_key);
                 break;
             default:
                 spIcon = GameItemsHandler.Instance.manager.GetItemsSpriteByName(itemsInfo.icon_key);

@@ -63,8 +63,6 @@ public class UIGameSettle : BaseUIComponent
     public void InitData()
     {
         InnHandler innHandler = uiGameManager.innHandler;
-        InnFoodManager innFoodManager = uiGameManager.innFoodManager;
-        IconDataManager iconDataManager = uiGameManager.iconDataManager;
         GameTimeHandler gameTimeHandler = uiGameManager.gameTimeHandler;
         GameDataManager gameDataManager = uiGameManager.gameDataManager;
         UserAchievementBean userAchievement = gameDataManager.gameData.GetAchievementData();
@@ -77,18 +75,18 @@ public class UIGameSettle : BaseUIComponent
         long totalCustomerForHotel = innRecord.GetTotalCompleteCustomerForHotel();
         //住客流量
         if (innRecord.GetTotalCustomerForHotel() > 0)
-            CreateItemForOther(innRecord.GetTotalCustomerForHotel() + "", iconDataManager.GetIconSpriteByName("worker_waiter_bed_pro_2"), GameCommonInfo.GetUITextById(342), Color.green);
+            CreateItemForOther(innRecord.GetTotalCustomerForHotel() + "", IconDataHandler.Instance.manager.GetIconSpriteByName("worker_waiter_bed_pro_2"), GameCommonInfo.GetUITextById(342), Color.green);
         if (totalCustomerForHotel > 0)
-            CreateItemForOther(totalCustomerForHotel + "", iconDataManager.GetIconSpriteByName("worker_waiter_bed_pro_2"), GameCommonInfo.GetUITextById(343), Color.green);
+            CreateItemForOther(totalCustomerForHotel + "", IconDataHandler.Instance.manager.GetIconSpriteByName("worker_waiter_bed_pro_2"), GameCommonInfo.GetUITextById(343), Color.green);
         //食客流量
-        CreateItemForOther(innRecord.GetTotalCustomerForFood() + "", iconDataManager.GetIconSpriteByName("ach_ordernumber_1"), GameCommonInfo.GetUITextById(323), Color.green);
-        CreateItemForOther(totalCustomerForFood + "", iconDataManager.GetIconSpriteByName("ach_ordernumber_1"), GameCommonInfo.GetUITextById(338), Color.green);
+        CreateItemForOther(innRecord.GetTotalCustomerForFood() + "", IconDataHandler.Instance.manager.GetIconSpriteByName("ach_ordernumber_1"), GameCommonInfo.GetUITextById(323), Color.green);
+        CreateItemForOther(totalCustomerForFood + "", IconDataHandler.Instance.manager.GetIconSpriteByName("ach_ordernumber_1"), GameCommonInfo.GetUITextById(338), Color.green);
 
         //记录单日最高成功接客
         userAchievement.SetMaxDayCompleteOrder(totalCustomerForFood, totalCustomerForHotel);
         //员工支出
         CreateItemForMoney(
-                iconDataManager.GetIconSpriteByName("money_1"),
+                IconDataHandler.Instance.manager.GetIconSpriteByName("money_1"),
                 GameCommonInfo.GetUITextById(183),
                 0,
                 innRecord.payWageL,
@@ -101,7 +99,7 @@ public class UIGameSettle : BaseUIComponent
             foreach (UserLoansBean itemPayLoans in listPayLoans)
             {
                 CreateItemForMoney(
-                    iconDataManager.GetIconSpriteByName("money_1"),
+                    IconDataHandler.Instance.manager.GetIconSpriteByName("money_1"),
                     GameCommonInfo.GetUITextById(184),
                     0,
                     0,
@@ -171,23 +169,23 @@ public class UIGameSettle : BaseUIComponent
         }
         //评价
         if(innRecord.praiseExcitedNumber!=0)
-             CreateItemForOther(innRecord.praiseExcitedNumber + "", iconDataManager.GetIconSpriteByName("customer_mood_0"), "", Color.green);
+             CreateItemForOther(innRecord.praiseExcitedNumber + "", IconDataHandler.Instance.manager.GetIconSpriteByName("customer_mood_0"), "", Color.green);
         if (innRecord.praiseHappyNumber != 0)
-            CreateItemForOther(innRecord.praiseHappyNumber + "", iconDataManager.GetIconSpriteByName("customer_mood_1"), "", Color.green);
+            CreateItemForOther(innRecord.praiseHappyNumber + "", IconDataHandler.Instance.manager.GetIconSpriteByName("customer_mood_1"), "", Color.green);
         if (innRecord.praiseOkayNumber != 0)
-            CreateItemForOther(innRecord.praiseOkayNumber + "", iconDataManager.GetIconSpriteByName("customer_mood_2"), "", Color.green);
+            CreateItemForOther(innRecord.praiseOkayNumber + "", IconDataHandler.Instance.manager.GetIconSpriteByName("customer_mood_2"), "", Color.green);
         if (innRecord.praiseOrdinaryNumber != 0)
-            CreateItemForOther(innRecord.praiseOrdinaryNumber + "", iconDataManager.GetIconSpriteByName("customer_mood_3"), "", Color.red);
+            CreateItemForOther(innRecord.praiseOrdinaryNumber + "", IconDataHandler.Instance.manager.GetIconSpriteByName("customer_mood_3"), "", Color.red);
         if (innRecord.praiseDisappointedNumber != 0)
-            CreateItemForOther(innRecord.praiseDisappointedNumber + "", iconDataManager.GetIconSpriteByName("customer_mood_4"), "", Color.red);
+            CreateItemForOther(innRecord.praiseDisappointedNumber + "", IconDataHandler.Instance.manager.GetIconSpriteByName("customer_mood_4"), "", Color.red);
         if (innRecord.praiseAngerNumber != 0)
-            CreateItemForOther(innRecord.praiseAngerNumber + "", iconDataManager.GetIconSpriteByName("customer_mood_5"), "", Color.red);
+            CreateItemForOther(innRecord.praiseAngerNumber + "", IconDataHandler.Instance.manager.GetIconSpriteByName("customer_mood_5"), "", Color.red);
 
         //住宿金额
         if (innRecord.incomeForHotelS != 0)
         {
             CreateItemForMoney(
-                iconDataManager.GetIconSpriteByName("money_1"),
+                IconDataHandler.Instance.manager.GetIconSpriteByName("money_1"),
                 GameCommonInfo.GetUITextById(344),
                 1,
                 innRecord.incomeForHotelL,
@@ -197,8 +195,8 @@ public class UIGameSettle : BaseUIComponent
         //遍历食物
         foreach (GameItemsBean itemData in innRecord.listSellNumber)
         {
-            MenuInfoBean foodData = innFoodManager.GetFoodDataById(itemData.itemId);
-            Sprite foodIcon = innFoodManager.GetFoodSpriteByName(foodData.icon_key);
+            MenuInfoBean foodData = InnFoodHandler.Instance.manager.GetFoodDataById(itemData.itemId);
+            Sprite foodIcon = InnFoodHandler.Instance.manager.GetFoodSpriteByName(foodData.icon_key);
             CreateItemForMoney(
                 foodIcon,
                 foodData.name + " x" + itemData.itemNumber,

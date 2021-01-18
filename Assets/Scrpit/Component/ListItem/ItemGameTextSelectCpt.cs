@@ -60,8 +60,6 @@ public class ItemGameTextSelectCpt : ItemGameBaseCpt, DialogView.IDialogCallBack
                 PreTypeEnumTools.GetPreDetails(
                     itemPreData, 
                     uiGameManager.gameDataManager.gameData,
-                    uiGameManager.iconDataManager,
-                    uiGameManager.innFoodManager,
                     uiGameManager.npcInfoManager);
                 if (!itemPreData.isPre)
                 {
@@ -74,7 +72,6 @@ public class ItemGameTextSelectCpt : ItemGameBaseCpt, DialogView.IDialogCallBack
             //完成所有奖励
             RewardTypeEnumTools.CompleteReward(
                 uiGameManager.npcInfoManager,
-                uiGameManager.iconDataManager,
                 uiGameManager.innBuildManager,
                 uiGameManager.gameDataManager,
                 null,

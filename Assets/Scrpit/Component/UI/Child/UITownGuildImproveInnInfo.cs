@@ -72,7 +72,7 @@ public class UITownGuildImproveInnInfo : BaseUIChildComponent<UITownGuildImprove
             tvNull.gameObject.SetActive(true);
             return;
         }
-        Sprite spInnLevel = iconDataManager.GetIconSpriteByName("inn_level_" + levelTitle + "_" + (levelStar - 1));
+        Sprite spInnLevel = IconDataHandler.Instance.manager.GetIconSpriteByName("inn_level_" + levelTitle + "_" + (levelStar - 1));
         StoreInfoBean storeInfoData = GetStoreInfoByLevel(listData, levelTitle, levelStar);
         if (storeInfoData != null)
         {

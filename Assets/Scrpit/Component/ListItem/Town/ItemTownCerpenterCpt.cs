@@ -14,11 +14,6 @@ public class ItemTownCerpenterCpt : ItemTownStoreCpt, DialogView.IDialogCallBack
 
     public PopupPromptButton infoPromptPopup;
 
-    public override void Start()
-    {
-        base.Start();
-        UIGameManager uiGameManager = GetUIManager<UIGameManager>();
-    }
 
     public override void RefreshUI()
     {
@@ -104,14 +99,11 @@ public class ItemTownCerpenterCpt : ItemTownStoreCpt, DialogView.IDialogCallBack
     /// <param name="markId"></param>
     public void SetIcon(StoreForCarpenterTypeEnum type, BuildItemBean buildItem, StoreInfoBean storeInfo)
     {
-        IconDataManager iconDataManager = GetUIManager<UIGameManager>().iconDataManager;
         InnBuildManager innBuildManager = GetUIManager<UIGameManager>().innBuildManager;
-        if (iconDataManager == null)
-            return;
         Sprite spIcon = null;
         if (type == StoreForCarpenterTypeEnum.Expansion)
         {
-            spIcon = iconDataManager.GetIconSpriteByName(storeInfo.icon_key);
+            spIcon = IconDataHandler.Instance.manager.GetIconSpriteByName(storeInfo.icon_key);
         }
         else
         {

@@ -20,7 +20,7 @@ public class FoodForCoverCpt : BaseMonoBehaviour
     {
         foodCustomerCpt.gameObject.SetActive(false);
         this.menuInfo = menuInfo;
-        foodCustomerCpt.SetData(innFoodManager, menuInfo,0);
+        foodCustomerCpt.SetData(menuInfo,0);
     }
 
     /// <summary>

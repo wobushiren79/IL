@@ -52,9 +52,9 @@ public class PopupItemsShow : PopupShowView
     public void SetContent(ItemsInfoBean data)
     {
         string content = "???";
-        if(data.GetItemsType() == GeneralEnum.Menu && CheckUtil.StringIsNull(data.content))
+        if (data.GetItemsType() == GeneralEnum.Menu && CheckUtil.StringIsNull(data.content))
         {
-           MenuInfoBean menuInfo= innFoodManager.GetFoodDataById(data.add_id);
+            MenuInfoBean menuInfo = InnFoodHandler.Instance.manager.GetFoodDataById(data.add_id);
             if (menuInfo != null)
                 content = menuInfo.content;
         }
@@ -95,16 +95,16 @@ public class PopupItemsShow : PopupShowView
     {
         CptUtil.RemoveChildsByActive(objAttributeContainer);
         CreateItemAttributes("ui_ability_life", data.add_life, AttributesTypeEnumTools.GetAttributesName(AttributesTypeEnum.Life), colorForAttribute);
-        CreateItemAttributes("ui_ability_cook", data.add_cook, GameCommonInfo.GetUITextById(1),colorForAttribute);
+        CreateItemAttributes("ui_ability_cook", data.add_cook, GameCommonInfo.GetUITextById(1), colorForAttribute);
         CreateItemAttributes("ui_ability_speed", data.add_speed, AttributesTypeEnumTools.GetAttributesName(AttributesTypeEnum.Speed), colorForAttribute);
         CreateItemAttributes("ui_ability_account", data.add_account, AttributesTypeEnumTools.GetAttributesName(AttributesTypeEnum.Account), colorForAttribute);
         CreateItemAttributes("ui_ability_charm", data.add_charm, AttributesTypeEnumTools.GetAttributesName(AttributesTypeEnum.Charm), colorForAttribute);
         CreateItemAttributes("ui_ability_force", data.add_force, AttributesTypeEnumTools.GetAttributesName(AttributesTypeEnum.Force), colorForAttribute);
         CreateItemAttributes("ui_ability_lucky", data.add_lucky, AttributesTypeEnumTools.GetAttributesName(AttributesTypeEnum.Lucky), colorForAttribute);
-  
+
         if (CheckUtil.StringIsNull(data.effect))
             return;
-        List<EffectTypeBean> listEffectData= EffectTypeEnumTools.GetListEffectData(data.effect);
+        List<EffectTypeBean> listEffectData = EffectTypeEnumTools.GetListEffectData(data.effect);
         //获取详情
         EffectDetailsEnumTools.GetEffectDetailsForCombat(data.effect_details, out string effectPSName, out int durationForRound);
 
@@ -112,11 +112,11 @@ public class PopupItemsShow : PopupShowView
             return;
         foreach (EffectTypeBean itemData in listEffectData)
         {
-            EffectTypeEnumTools.GetEffectDetails(iconDataManager, itemData,null);
+            EffectTypeEnumTools.GetEffectDetails(itemData, null);
             string describe = itemData.effectDescribe;
             if (durationForRound != 0)
             {
-                describe +=("\n"+ string.Format(GameCommonInfo.GetUITextById(502),""+ durationForRound));
+                describe += ("\n" + string.Format(GameCommonInfo.GetUITextById(502), "" + durationForRound));
             }
             CreateItemAttributes(itemData.spIcon, describe);
         }
@@ -139,13 +139,13 @@ public class PopupItemsShow : PopupShowView
     /// </summary>
     /// <param name="attributes"></param>
     /// <param name="attributesStr"></param>
-    private void CreateItemAttributes(string iconKey, int attributes, string attributesStr,Color colorIcon)
+    private void CreateItemAttributes(string iconKey, int attributes, string attributesStr, Color colorIcon)
     {
         if (attributes == 0)
             return;
         GameObject objItem = Instantiate(objAttributeContainer, objAttributeModel);
         ItemBaseTextCpt itemAttributes = objItem.GetComponent<ItemBaseTextCpt>();
-        Sprite spIcon = iconDataManager.GetIconSpriteByName(iconKey);
+        Sprite spIcon = IconDataHandler.Instance.manager.GetIconSpriteByName(iconKey);
         itemAttributes.SetData(spIcon, colorForAttribute, attributesStr + "+" + attributes, colorIcon, "");
     }
 }

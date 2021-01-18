@@ -81,11 +81,11 @@ public class AchievementDialogView : DialogView
             Sprite spIcon;
             if (type == 1)
             {
-                spIcon = innFoodManager.GetFoodSpriteByName(iconKey);
+                spIcon = InnFoodHandler.Instance.manager.GetFoodSpriteByName(iconKey);
             }
             else
             {
-                spIcon = iconDataManager.GetIconSpriteByName(iconKey);
+                spIcon = IconDataHandler.Instance.manager.GetIconSpriteByName(iconKey);
             }
 
             if (spIcon != null)
@@ -127,7 +127,7 @@ public class AchievementDialogView : DialogView
         List<RewardTypeBean> listRewardData = RewardTypeEnumTools.GetListRewardData(rewardData);
         foreach (var itemRewardData in listRewardData)
         {
-            RewardTypeEnumTools.GetRewardDetails(itemRewardData, iconDataManager,innBuildManager,npcInfoManager);
+            RewardTypeEnumTools.GetRewardDetails(itemRewardData, innBuildManager,npcInfoManager);
             Sprite spReward = itemRewardData.spRewardIcon;
             CreateRewardItem(spReward, animTimeDelay);
             animTimeDelay += 0.1f;

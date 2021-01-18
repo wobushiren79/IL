@@ -116,9 +116,9 @@ public class UIGameWorkerDetails : BaseUIComponent, IRadioGroupCallBack
         }
         else if (name.Contains("Chef"))
         {
-            InnFoodManager innFoodManager = GetUIManager<UIGameManager>().innFoodManager;
+            
             workerChefInfo.Open();
-            workerChefInfo.SetData(innFoodManager, characterData.baseInfo.chefInfo);
+            workerChefInfo.SetData(characterData.baseInfo.chefInfo);
         }
         else if (name.Contains("Waiter"))
         {

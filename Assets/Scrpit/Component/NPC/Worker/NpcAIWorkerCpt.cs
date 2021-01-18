@@ -456,7 +456,7 @@ public class NpcAIWorkerCpt : BaseNpcAI
     /// <returns></returns>
     public IEnumerator CoroutineForDaze(float dazeTime)
     {
-        Sprite spDaze = iconDataManager.GetIconSpriteByName("daze_1");
+        Sprite spDaze = IconDataHandler.Instance.manager.GetIconSpriteByName("daze_1");
         string markId = SystemUtil.GetUUID(SystemUtil.UUIDTypeEnum.N);
         AddStatusIconForPro(spDaze, null, markId);
         yield return new WaitForSeconds(dazeTime);

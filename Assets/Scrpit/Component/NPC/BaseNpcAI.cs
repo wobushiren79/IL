@@ -208,7 +208,7 @@ public class BaseNpcAI : BaseObservable<IBaseObserver>
     public void AddStatusIconForGuestTeam(Color iconColor)
     {
         CharacterStatusIconBean statusIconData = new CharacterStatusIconBean();
-        Sprite iconGuestTeam = iconDataManager.GetIconSpriteByName("team_2");
+        Sprite iconGuestTeam = IconDataHandler.Instance.manager.GetIconSpriteByName("team_2");
         statusIconData.iconStatus = CharacterStatusIconEnum.NpcType;
         statusIconData.spColor = iconColor;
         statusIconData.spIcon = iconGuestTeam;
@@ -221,7 +221,7 @@ public class BaseNpcAI : BaseObservable<IBaseObserver>
     public void AddStatusIconForRascal()
     {
         CharacterStatusIconBean statusIconData = new CharacterStatusIconBean();
-        Sprite iconGuestTeam = iconDataManager.GetIconSpriteByName("devil_1");
+        Sprite iconGuestTeam = IconDataHandler.Instance.manager.GetIconSpriteByName("devil_1");
         statusIconData.iconStatus = CharacterStatusIconEnum.NpcType;
         statusIconData.spIcon = iconGuestTeam;
         characterStatusIcon.AddStatusIcon(statusIconData);
@@ -233,7 +233,7 @@ public class BaseNpcAI : BaseObservable<IBaseObserver>
     public void AddStatusIconForFriend()
     {
         CharacterStatusIconBean statusIconData = new CharacterStatusIconBean();
-        Sprite iconGuestTeam = iconDataManager.GetIconSpriteByName("ui_features_favorability");
+        Sprite iconGuestTeam = IconDataHandler.Instance.manager.GetIconSpriteByName("ui_features_favorability");
         statusIconData.iconStatus = CharacterStatusIconEnum.NpcType;
         statusIconData.spColor = Color.red;
         statusIconData.spIcon = iconGuestTeam;

@@ -127,7 +127,7 @@ public class UIGameMenu : BaseUIComponent, TextSearchView.ICallBack
     {
         int index = itemCell.index;
         MenuOwnBean itemData = listMenu[index];
-        MenuInfoBean menuInfo = uiGameManager.innFoodManager.GetFoodDataById(itemData.menuId);
+        MenuInfoBean menuInfo = InnFoodHandler.Instance.manager.GetFoodDataById(itemData.menuId);
 
         ItemGameMenuFoodCpt foodCpt = itemCell.GetComponent<ItemGameMenuFoodCpt>();
         foodCpt.SetData(itemData, menuInfo);
@@ -156,7 +156,7 @@ public class UIGameMenu : BaseUIComponent, TextSearchView.ICallBack
         this.listMenu =  this.listMenu.OrderByDescending(
             (data)=> 
             {
-                MenuInfoBean menuInfo = uiGameManager.innFoodManager.GetFoodDataById(data.menuId);
+                MenuInfoBean menuInfo = InnFoodHandler.Instance.manager.GetFoodDataById(data.menuId);
                 return menuInfo.name;
             }).ToList();
         gridVertical.SetCellCount(listMenu.Count);
@@ -172,7 +172,7 @@ public class UIGameMenu : BaseUIComponent, TextSearchView.ICallBack
         this.listMenu = this.listMenu.OrderByDescending(
             (data) =>
             {
-                MenuInfoBean menuInfo = uiGameManager.innFoodManager.GetFoodDataById(data.menuId);
+                MenuInfoBean menuInfo = InnFoodHandler.Instance.manager.GetFoodDataById(data.menuId);
                 return menuInfo.rarity;
              }).ToList();
         gridVertical.SetCellCount(listMenu.Count);
@@ -232,7 +232,7 @@ public class UIGameMenu : BaseUIComponent, TextSearchView.ICallBack
         this.listMenu = this.listMenu.OrderByDescending(
             (data) =>
             {
-                MenuInfoBean menuInfo = uiGameManager.innFoodManager.GetFoodDataById(data.menuId);
+                MenuInfoBean menuInfo = InnFoodHandler.Instance.manager.GetFoodDataById(data.menuId);
                 data.GetPrice(menuInfo,out long priceL, out long priceM, out long priceS);
                 return priceS;
             }).ToList();
@@ -249,7 +249,7 @@ public class UIGameMenu : BaseUIComponent, TextSearchView.ICallBack
         this.listMenu = this.listMenu.OrderByDescending(
             (data) =>
             {
-                MenuInfoBean menuInfo = uiGameManager.innFoodManager.GetFoodDataById(data.menuId);
+                MenuInfoBean menuInfo = InnFoodHandler.Instance.manager.GetFoodDataById(data.menuId);
                 return menuInfo.cook_time;
             }).ToList();
         gridVertical.SetCellCount(listMenu.Count);
@@ -297,7 +297,7 @@ public class UIGameMenu : BaseUIComponent, TextSearchView.ICallBack
     public void SearchTextStart(string text)
     {
         this.listMenu = this.listMenu.OrderByDescending(data => {
-            MenuInfoBean menuInfo = uiGameManager.innFoodManager.GetFoodDataById(data.menuId);
+            MenuInfoBean menuInfo = InnFoodHandler.Instance.manager.GetFoodDataById(data.menuId);
             if (menuInfo.name.Contains(text))
             {
                 return true;

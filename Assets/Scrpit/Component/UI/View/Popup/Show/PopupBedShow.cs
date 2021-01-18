@@ -71,7 +71,7 @@ public class PopupBedShow : PopupShowView
         {
             objLevelProgress.SetActive(true);
         }
-        Sprite spIcon = buildBedData.GetBedLevelIcon(iconDataManager);
+        Sprite spIcon = buildBedData.GetBedLevelIcon();
         if (spIcon == null)
         {
             ivLevel.gameObject.SetActive(false);
@@ -124,7 +124,7 @@ public class PopupBedShow : PopupShowView
     /// <param name="number"></param>
     public void AddItemForSellTime(long time)
     {
-        Sprite spIcon = iconDataManager.GetIconSpriteByName("time_wait_1_0");
+        Sprite spIcon = IconDataHandler.Instance.manager.GetIconSpriteByName("time_wait_1_0");
         CreateItem(objItemStatisticsContainer, spIcon, Color.white, GameCommonInfo.GetUITextById(352), time + " h");
     }
 
@@ -134,7 +134,7 @@ public class PopupBedShow : PopupShowView
     /// <param name="number"></param>
     public void AddItemForSellNumber(long number)
     {
-        Sprite spIcon = iconDataManager.GetIconSpriteByName("ui_features_bed");
+        Sprite spIcon = IconDataHandler.Instance.manager.GetIconSpriteByName("ui_features_bed");
         CreateItem(objItemStatisticsContainer, spIcon, Color.red, GameCommonInfo.GetUITextById(351), number + "");
     }
 
@@ -162,7 +162,7 @@ public class PopupBedShow : PopupShowView
                 contentStr = GameCommonInfo.GetUITextById(335);
                 break;
         }
-        Sprite spIcon = iconDataManager.GetIconSpriteByName(iconKey);
+        Sprite spIcon = IconDataHandler.Instance.manager.GetIconSpriteByName(iconKey);
         CreateItem(objItemStatisticsContainer, spIcon,Color.white, contentStr, money + "");
     }
 

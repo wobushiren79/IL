@@ -166,7 +166,7 @@ public class GameDataHandler : BaseHandler, DialogView.IDialogCallBack, IBaseObs
                         }
                         List<RewardTypeBean> listRewardItems = RewardTypeEnumTools.GetRewardItemsForInfiniteTowers(null, itemInfiniteTowerData.layer, totalLucky,true);
                         if (!CheckUtil.ListIsNull(listRewardItems))
-                            RewardTypeEnumTools.CompleteReward( npcInfoManager, iconDataManager, innBuildManager, gameDataManager, listCharacterData, listRewardItems);
+                            RewardTypeEnumTools.CompleteReward( npcInfoManager,  innBuildManager, gameDataManager, listCharacterData, listRewardItems);
                         //增加层数
                         itemInfiniteTowerData.layer++;
                         //达到最大层数
@@ -244,7 +244,7 @@ public class GameDataHandler : BaseHandler, DialogView.IDialogCallBack, IBaseObs
                 itemBed.CompleteResearch(gameDataManager.gameData);
                 string toastStr = string.Format(GameCommonInfo.GetUITextById(1071), itemBed.bedName);
                 AudioHandler.Instance.PlaySound(AudioSoundEnum.Reward);
-                ToastHandler.Instance.ToastHint(innFoodManager.GetFoodSpriteByName("ui_features_bed"), toastStr, 5);
+                ToastHandler.Instance.ToastHint(InnFoodHandler.Instance.manager.GetFoodSpriteByName("ui_features_bed"), toastStr, 5);
 
                 DialogBean dialogData = new DialogBean
                 {
@@ -280,7 +280,7 @@ public class GameDataHandler : BaseHandler, DialogView.IDialogCallBack, IBaseObs
                 itemMenu.CancelResearch(gameDataManager.gameData);
                 continue;
             }
-            MenuInfoBean menuInfo = innFoodManager.GetFoodDataById(itemMenu.menuId);
+            MenuInfoBean menuInfo = InnFoodHandler.Instance.manager.GetFoodDataById(itemMenu.menuId);
             if (menuInfo == null)
                 continue;
             long addExp = researcher.CalculationMenuResearchAddExp();
@@ -291,7 +291,7 @@ public class GameDataHandler : BaseHandler, DialogView.IDialogCallBack, IBaseObs
                 itemMenu.CompleteResearch(gameDataManager.gameData);
                 string toastStr = string.Format(GameCommonInfo.GetUITextById(1071), menuInfo.name);
                 AudioHandler.Instance.PlaySound(AudioSoundEnum.Reward);
-                ToastHandler.Instance.ToastHint(innFoodManager.GetFoodSpriteByName(menuInfo.icon_key), toastStr, 5);
+                ToastHandler.Instance.ToastHint(InnFoodHandler.Instance.manager.GetFoodSpriteByName(menuInfo.icon_key), toastStr, 5);
 
                 DialogBean dialogData = new DialogBean
                 {

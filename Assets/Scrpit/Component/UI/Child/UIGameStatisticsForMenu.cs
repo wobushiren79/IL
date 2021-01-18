@@ -24,7 +24,7 @@ public class UIGameStatisticsForMenu : BaseUIChildComponent<UIGameStatistics>
     {
         StopAllCoroutines();
         CptUtil.RemoveChildsByActive(objMenuContainer);
-        Dictionary<long, MenuInfoBean> listMenu= ((UIGameManager)uiComponent.uiManager).innFoodManager.listMenuData;
+        Dictionary<long, MenuInfoBean> listMenu = InnFoodHandler.Instance.manager.listMenuData;
         StartCoroutine(CoroutineForCreateMenuList(listMenu));
     }
 

@@ -37,8 +37,7 @@ public class ItemMiniGameCookingSelectMenuCpt : ItemGameBaseCpt, DialogView.IDia
 
     public void SetIcon(string iconKey)
     {
-        InnFoodManager innFoodManager = GetUIManager<UIGameManager>().innFoodManager;
-        Sprite spFood = innFoodManager.GetFoodSpriteByName(iconKey);
+        Sprite spFood = InnFoodHandler.Instance.manager.GetFoodSpriteByName(iconKey);
         if (ivIcon != null)
         {
             ivIcon.sprite = spFood;

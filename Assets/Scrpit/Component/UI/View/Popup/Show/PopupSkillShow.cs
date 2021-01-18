@@ -53,7 +53,7 @@ public class PopupSkillShow : PopupShowView
 
     public void SetIcon(string iconKey)
     {
-        Sprite spIcon = iconDataManager.GetIconSpriteByName(iconKey);
+        Sprite spIcon = IconDataHandler.Instance.manager.GetIconSpriteByName(iconKey);
         if (ivIcon != null)
             ivIcon.sprite = spIcon;
     }
@@ -78,7 +78,7 @@ public class PopupSkillShow : PopupShowView
             return;
         foreach (EffectTypeBean itemData in listEffectData)
         {
-            EffectTypeEnumTools.GetEffectDetails(iconDataManager, itemData,null);
+            EffectTypeEnumTools.GetEffectDetails( itemData,null);
             string describe = itemData.effectDescribe;
             if (durationForRound != 0)
             {
@@ -105,7 +105,7 @@ public class PopupSkillShow : PopupShowView
 
     private void CreateItemAttributes(string iconKey, string details)
     {
-        Sprite spIcon = iconDataManager.GetIconSpriteByName(iconKey);
+        Sprite spIcon = IconDataHandler.Instance.manager.GetIconSpriteByName(iconKey);
         CreateItemAttributes(spIcon, Color.white, details);
     }
 }

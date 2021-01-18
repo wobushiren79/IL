@@ -100,9 +100,8 @@ public class ItemGameMenuFoodCpt : ItemGameBaseCpt, IRadioButtonCallBack, Dialog
         //设置详细信息弹窗
         if (pbFood != null)
             pbFood.SetData(menuOwnData, foodData);
-        UIGameManager uiGameManager = GetUIManager<UIGameManager>();
 
-        SetLevel(menuOwn.GetMenuLevel(), menuOwn.GetMenuLevelIcon(uiGameManager.iconDataManager));
+        SetLevel(menuOwn.GetMenuLevel(), menuOwn.GetMenuLevelIcon());
         SetFoodIcon(foodData.icon_key);
         SetName(data.name);
         SetSellStatus(menuOwnData);
@@ -211,8 +210,8 @@ public class ItemGameMenuFoodCpt : ItemGameBaseCpt, IRadioButtonCallBack, Dialog
     /// <param name="iconKey"></param>
     public void SetFoodIcon(string iconKey)
     {
-        InnFoodManager innFoodManager = GetUIManager<UIGameManager>().innFoodManager;
-        Sprite spFood = innFoodManager.GetFoodSpriteByName(iconKey);
+        
+        Sprite spFood = InnFoodHandler.Instance.manager.GetFoodSpriteByName(iconKey);
         //食物图标设置
         if (ivFood != null)
         {

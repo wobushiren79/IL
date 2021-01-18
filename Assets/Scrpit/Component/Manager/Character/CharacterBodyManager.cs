@@ -183,62 +183,38 @@ public class CharacterBodyManager : BaseManager
         }
         return listData;
     }
+
     protected Sprite GetSpriteDataByName(int type, string name)
     {
         if (name == null)
             return null;
-
         IconBeanDictionary dicData = null;
         SpriteAtlas spriteData = null;
-
-        switch (type)
-        {
-            case 1:
-                dicData = listIconBodyTrunk;
-                spriteData = trunkAtlas;
-                break;
-            case 2:
-                dicData = listIconBodyHair;
-                spriteData = hairAtlas;
-                break;
-            case 3:
-                dicData = listIconBodyEye;
-                spriteData = eyeAtlas;
-                break;
-            case 4:
-                dicData = listIconBodyMouth;
-                spriteData = mouthAtlas;
-                break;
-        }
-        if (dicData.TryGetValue(name, out Sprite value))
-        {
-            return value;
-        }
-        if (spriteData != null)
-        {
-            Sprite itemSprite = GetSpriteByName(name, spriteData);
-            if (itemSprite != null)
-                dicData.Add(name, itemSprite);
-            return itemSprite;
-        }
         string atlasName = "";
         switch (type)
         {
             case 1:
                 atlasName = "AtlasForTrunk";
+                dicData = listIconBodyTrunk;
+                spriteData = trunkAtlas;
                 break;
             case 2:
                 atlasName = "AtlasForHair";
+                dicData = listIconBodyHair;
+                spriteData = hairAtlas;
                 break;
             case 3:
                 atlasName = "AtlasForEye";
+                dicData = listIconBodyEye;
+                spriteData = eyeAtlas;
                 break;
             case 4:
                 atlasName = "AtlasForMouth";
+                dicData = listIconBodyMouth;
+                spriteData = mouthAtlas;
                 break;
         }
-
-        spriteData = LoadAssetUtil.SyncLoadAsset<SpriteAtlas>("sprite/body", atlasName);
+        Sprite spData = GetSpriteByName(dicData,ref spriteData, atlasName, "sprite/body", name);
         switch (type)
         {
             case 1:
@@ -254,9 +230,7 @@ public class CharacterBodyManager : BaseManager
                 mouthAtlas = spriteData;
                 break;
         }
-        if (spriteData != null)
-            return GetSpriteDataByName(type, name);
-        return null;
+        return spData;
     }
 
 }

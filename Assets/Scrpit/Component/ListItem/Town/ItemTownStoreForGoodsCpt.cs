@@ -87,7 +87,6 @@ public class ItemTownStoreForGoodsCpt : ItemTownStoreCpt, DialogView.IDialogCall
     /// <param name="markId"></param>
     public void SetIcon(ItemsInfoBean itemsInfo, string mark, long markId)
     {
-        IconDataManager iconDataManager = GetUIManager<UIGameManager>().iconDataManager;
         Sprite spIcon = null;
         Vector2 offsetMin = new Vector2(0, 0);
         Vector2 offsetMax = new Vector2(0, 0);
@@ -113,7 +112,7 @@ public class ItemTownStoreForGoodsCpt : ItemTownStoreCpt, DialogView.IDialogCall
             }
         }
 
-        spIcon = GeneralEnumTools.GetGeneralSprite(itemsInfo, iconDataManager,false);
+        spIcon = GeneralEnumTools.GetGeneralSprite(itemsInfo, false);
         if (ivIcon != null && spIcon != null)
             ivIcon.sprite = spIcon;
         if (rtIcon != null)

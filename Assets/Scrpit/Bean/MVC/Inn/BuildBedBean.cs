@@ -293,10 +293,10 @@ public class BuildBedBean : BaseBean
     /// </summary>
     /// <param name="iconDataManager"></param>
     /// <returns></returns>
-    public Sprite GetBedLevelIcon(IconDataManager iconDataManager)
+    public Sprite GetBedLevelIcon()
     {
         LevelTypeEnum bedLevel = GetBedLevel();
-        Sprite spIcon = LevelTypeEnumTools.GetLevelIcon(iconDataManager, bedLevel);
+        Sprite spIcon = LevelTypeEnumTools.GetLevelIcon(bedLevel);
         return spIcon;
     }
 

@@ -120,7 +120,7 @@ public class MenuOwnBean
         {
             GameCommonInfo.baseDataController.GetBaseData(BaseDataTypeEnum.MenuForLevelUpExp3, out levelExp);
         }
-        MenuInfoBean menuInfo = innFoodManager.GetFoodDataById(menuId);
+        MenuInfoBean menuInfo = InnFoodHandler.Instance.manager.GetFoodDataById(menuId);
         //不同稀有度经验不同
         if (menuInfo.rarity == 0)
         {
@@ -272,10 +272,10 @@ public class MenuOwnBean
     /// </summary>
     /// <param name="iconDataManager"></param>
     /// <returns></returns>
-    public Sprite GetMenuLevelIcon(IconDataManager iconDataManager)
+    public Sprite GetMenuLevelIcon()
     {
         LevelTypeEnum menuLevel = GetMenuLevel();
-        Sprite spIcon =  LevelTypeEnumTools.GetLevelIcon(iconDataManager, menuLevel);
+        Sprite spIcon =  LevelTypeEnumTools.GetLevelIcon(menuLevel);
         return spIcon;
     }
 

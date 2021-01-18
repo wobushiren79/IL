@@ -12,13 +12,13 @@ public class UIGameWorkerDetailsChefInfo : UIGameStatisticsDetailsBase<UIGameWor
     [Header("数据")]
     public CharacterWorkerForChefBean chefData;
 
-    public void SetData(InnFoodManager innFoodManager, CharacterWorkerForChefBean chefData)
+    public void SetData(CharacterWorkerForChefBean chefData)
     {
         this.chefData = chefData;
         CptUtil.RemoveChildsByName(objItemContent.transform, "Item", true);
         AddCookNumber(chefData.cookNumber);
         //AddCookTime(chefData.cookTime);
-        AddFoodData(innFoodManager, chefData.listFoodCookNumer);
+        AddFoodData(chefData.listFoodCookNumer);
     }
 
 
@@ -47,10 +47,10 @@ public class UIGameWorkerDetailsChefInfo : UIGameStatisticsDetailsBase<UIGameWor
     /// </summary>
     /// <param name="innFoodManager"></param>
     /// <param name="listFood"></param>
-    public void AddFoodData(InnFoodManager innFoodManager, List<ItemBean> listFood)
+    public void AddFoodData(List<ItemBean> listFood)
     {
         CptUtil.RemoveChildsByActive(objItemMenuContent.transform);
-        if (innFoodManager == null || listFood == null || listFood.Count == 0)
+        if (listFood == null || listFood.Count == 0)
         {
             objItemMenuContent.SetActive(false);
             return;
@@ -59,11 +59,11 @@ public class UIGameWorkerDetailsChefInfo : UIGameStatisticsDetailsBase<UIGameWor
         foreach (ItemBean itemData in listFood)
         {
             //获取食物数据
-            MenuInfoBean menuInfo = innFoodManager.GetFoodDataById(itemData.itemId);
+            MenuInfoBean menuInfo = InnFoodHandler.Instance.manager.GetFoodDataById(itemData.itemId);
             if (menuInfo == null)
                 continue;
             //获取食物图标
-            Sprite spFoodIcon = innFoodManager.GetFoodSpriteByName(menuInfo.icon_key);
+            Sprite spFoodIcon = InnFoodHandler.Instance.manager.GetFoodSpriteByName(menuInfo.icon_key);
             //生成Item
             GameObject foodInfoCpt = Instantiate(objItemMenuContent, objItemMenuModel);
             //设置数据

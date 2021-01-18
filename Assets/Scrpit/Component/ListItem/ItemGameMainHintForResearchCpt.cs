@@ -29,7 +29,7 @@ public class ItemGameMainHintForResearchCpt : ItemGameBaseCpt
     {
         this.bedData = bedData;
         iconDataManager = Find<IconDataManager>(ImportantTypeEnum.UIManager);
-        Sprite spBedIcon = iconDataManager.GetIconSpriteByName("ui_features_bed");
+        Sprite spBedIcon = IconDataHandler.Instance.manager.GetIconSpriteByName("ui_features_bed");
         SetIcon(spBedIcon);
         SetName(bedData.bedName);
         RefreshData();
@@ -39,7 +39,7 @@ public class ItemGameMainHintForResearchCpt : ItemGameBaseCpt
     {
         this.menuOwn = menuOwn;
         foodManager = Find<InnFoodManager>(ImportantTypeEnum.FoodManager);
-        MenuInfoBean menuInfo =  foodManager.GetFoodDataById(menuOwn.menuId);
+        MenuInfoBean menuInfo =  InnFoodHandler.Instance.manager.GetFoodDataById(menuOwn.menuId);
         Sprite spFoodIcon= foodManager.GetFoodSpriteByName(menuInfo.icon_key);
         SetIcon(spFoodIcon);
         SetName(menuInfo.name);

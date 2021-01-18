@@ -100,9 +100,9 @@ public class MiniGameCookingBean : MiniGameBaseBean
     /// </summary>
     /// <param name="innFoodManager"></param>
     /// <param name="themeId"></param>
-    public void SetCookingThemeById(InnFoodManager innFoodManager,long themeId)
+    public void SetCookingThemeById(long themeId)
     {
-        cookingTheme =  innFoodManager.GetCookingThemeById(themeId);
+        cookingTheme = InnFoodHandler.Instance.manager.GetCookingThemeById(themeId);
     }
 
     /// <summary>
@@ -110,9 +110,9 @@ public class MiniGameCookingBean : MiniGameBaseBean
     /// </summary>
     /// <param name="innFoodManager"></param>
     /// <param name="themeLevel"></param>
-    public void SetCookingThemeByLevel(InnFoodManager innFoodManager, int themeLevel)
+    public void SetCookingThemeByLevel(int themeLevel)
     {
-        List<CookingThemeBean> listData= innFoodManager.GetCookingThemeByLevel(themeLevel);
+        List<CookingThemeBean> listData= InnFoodHandler.Instance.manager.GetCookingThemeByLevel(themeLevel);
         cookingTheme = RandomUtil.GetRandomDataByList(listData);
     }
 

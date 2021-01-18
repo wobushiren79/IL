@@ -360,16 +360,15 @@ public class ItemGameWorkerCpt : ItemGameBaseCpt, DialogView.IDialogCallBack, Wo
     /// <param name="sex"></param>
     public void SetSex(int sex)
     {
-        IconDataManager iconDataManager = ((UIGameManager)uiComponent.uiManager).iconDataManager;
         if (ivSex != null)
         {
             if (sex == 1)
             {
-                ivSex.sprite = iconDataManager.GetIconSpriteByName("sex_man");
+                ivSex.sprite = IconDataHandler.Instance.manager.GetIconSpriteByName("sex_man");
             }
             else if (sex == 2)
             {
-                ivSex.sprite = iconDataManager.GetIconSpriteByName("sex_woman");
+                ivSex.sprite = IconDataHandler.Instance.manager.GetIconSpriteByName("sex_woman");
             }
         }
     }

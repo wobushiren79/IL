@@ -72,6 +72,6 @@ public class UIGameStatisticsDetailsBase<T> : BaseUIChildComponent<T>
     /// <returns></returns>
     protected Sprite GetSpriteByName(string name)
     {
-        return iconDataManager.GetIconSpriteByName(name);
+        return IconDataHandler.Instance.manager.GetIconSpriteByName(name);
     }
 }

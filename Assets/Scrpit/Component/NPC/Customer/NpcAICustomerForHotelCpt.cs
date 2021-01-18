@@ -417,7 +417,7 @@ public class NpcAICustomerForHotelCpt : BaseNpcAI
     /// <returns></returns>
     public IEnumerator CoroutineForStartSleep(int sleepTime)
     {
-        Sprite spDaze = iconDataManager.GetIconSpriteByName("daze_1");
+        Sprite spDaze = IconDataHandler.Instance.manager.GetIconSpriteByName("daze_1");
         string markId = SystemUtil.GetUUID(SystemUtil.UUIDTypeEnum.N);
         AddStatusIconForPro(spDaze, null, markId);
         yield return new WaitForSeconds(sleepTime * 60);
@@ -439,8 +439,8 @@ public class NpcAICustomerForHotelCpt : BaseNpcAI
     {
         //添加等待图标
         string waitIconMarkId = SystemUtil.GetUUID(SystemUtil.UUIDTypeEnum.N);
-        Sprite spWaitIcon = iconDataManager.GetIconSpriteByName("worker_waiter_bed_pro_2");
-        //Sprite spWaitIcon = iconDataManager.GetIconSpriteByName("time_wait_1_0");
+        Sprite spWaitIcon = IconDataHandler.Instance.manager.GetIconSpriteByName("worker_waiter_bed_pro_2");
+        //Sprite spWaitIcon = IconDataHandler.Instance.manager.GetIconSpriteByName("time_wait_1_0");
         //AddStatusIconForPro(spWaitIcon, waitIconAnim, waitIconMarkId);
         AddStatusIconForPro(spWaitIcon, null, waitIconMarkId);
     }
@@ -452,7 +452,7 @@ public class NpcAICustomerForHotelCpt : BaseNpcAI
     {
         //添加等待图标
         string payIconMarkId = SystemUtil.GetUUID(SystemUtil.UUIDTypeEnum.N);
-        Sprite spPayIcon = iconDataManager.GetIconSpriteByName("money_1");
+        Sprite spPayIcon = IconDataHandler.Instance.manager.GetIconSpriteByName("money_1");
         AddStatusIconForPro(spPayIcon, null, payIconMarkId);
     }
 }

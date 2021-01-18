@@ -104,7 +104,7 @@ public class PopupFoodShow : PopupShowView
         {
             objLevelProgress.SetActive(true);
         }
-        Sprite spIcon = ownData.GetMenuLevelIcon(iconDataManager);
+        Sprite spIcon = ownData.GetMenuLevelIcon();
         if (spIcon == null)
         {
             ivLevel.gameObject.SetActive(false);
@@ -157,7 +157,7 @@ public class PopupFoodShow : PopupShowView
     /// <param name="makeTime"></param>
     public void AddItemForMakeTime(float makeTime)
     {
-        Sprite spIcon = iconDataManager.GetIconSpriteByName("hourglass_1");
+        Sprite spIcon = IconDataHandler.Instance.manager.GetIconSpriteByName("hourglass_1");
         CreateItem(objItemBaseContainer, spIcon, GameCommonInfo.GetUITextById(40), makeTime + GameCommonInfo.GetUITextById(38));
     }
 
@@ -207,7 +207,7 @@ public class PopupFoodShow : PopupShowView
                 iconKey = "ui_ing_flour";
                 break;
         }
-        Sprite spIcon = iconDataManager.GetIconSpriteByName(iconKey);
+        Sprite spIcon = IconDataHandler.Instance.manager.GetIconSpriteByName(iconKey);
         CreateItem(objItemBaseContainer, spIcon, ingNameStr, number + "");
     }
 
@@ -217,7 +217,7 @@ public class PopupFoodShow : PopupShowView
     /// <param name="number"></param>
     public void AddItemForSellNumber(long number)
     {
-        Sprite spIcon = iconDataManager.GetIconSpriteByName("ui_features_menu");
+        Sprite spIcon = IconDataHandler.Instance.manager.GetIconSpriteByName("ui_features_menu");
         CreateItem(objItemStatisticsContainer, spIcon, Color.red, GameCommonInfo.GetUITextById(332), number + "");
     }
 
@@ -247,7 +247,7 @@ public class PopupFoodShow : PopupShowView
                 contentStr = GameCommonInfo.GetUITextById(335);
                 break;
         }
-        Sprite spIcon = iconDataManager.GetIconSpriteByName(iconKey);
+        Sprite spIcon = IconDataHandler.Instance.manager.GetIconSpriteByName(iconKey);
         CreateItem(objItemStatisticsContainer, spIcon, contentStr, money + "");
     }
 

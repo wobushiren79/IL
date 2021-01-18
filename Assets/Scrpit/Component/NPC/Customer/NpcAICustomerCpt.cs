@@ -485,7 +485,7 @@ public class NpcAICustomerCpt : BaseNpcAI
     {
         //添加吃饭图标
         string eatIconMarkId = SystemUtil.GetUUID(SystemUtil.UUIDTypeEnum.N);
-        Sprite spEatIcon = iconDataManager.GetIconSpriteByName("customer_eat_pro_0");
+        Sprite spEatIcon = IconDataHandler.Instance.manager.GetIconSpriteByName("customer_eat_pro_0");
         AddStatusIconForPro(spEatIcon, eatIconAnim, eatIconMarkId);
         //播放吃饭动画
         characterMoveCpt.characterAnimtor.SetTrigger("Eat");
@@ -528,7 +528,7 @@ public class NpcAICustomerCpt : BaseNpcAI
     {
         //添加等待图标
         string waitIconMarkId = SystemUtil.GetUUID(SystemUtil.UUIDTypeEnum.N);
-        Sprite spWaitIcon = iconDataManager.GetIconSpriteByName("time_wait_1_0");
+        Sprite spWaitIcon = IconDataHandler.Instance.manager.GetIconSpriteByName("time_wait_1_0");
         AddStatusIconForPro(spWaitIcon, waitIconAnim, waitIconMarkId);
     }
 
@@ -539,7 +539,7 @@ public class NpcAICustomerCpt : BaseNpcAI
     {
         //添加等待图标
         string payIconMarkId = SystemUtil.GetUUID(SystemUtil.UUIDTypeEnum.N);
-        Sprite spPayIcon = iconDataManager.GetIconSpriteByName("money_1");
+        Sprite spPayIcon = IconDataHandler.Instance.manager.GetIconSpriteByName("money_1");
         AddStatusIconForPro(spPayIcon, null, payIconMarkId);
     }
 }

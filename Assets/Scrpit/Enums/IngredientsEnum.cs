@@ -47,7 +47,7 @@ public class IngredientsEnumTools
         return name;
     }
 
-    public static Sprite GetIngredientIcon(IconDataManager iconDataManager, IngredientsEnum ingredients)
+    public static Sprite GetIngredientIcon( IngredientsEnum ingredients)
     {
         string iconKey = "";
         switch (ingredients)
@@ -77,6 +77,6 @@ public class IngredientsEnumTools
                 iconKey = "ui_ing_flour";
                 break;
         }
-       return iconDataManager.GetIconSpriteByName(iconKey);
+       return IconDataHandler.Instance.manager.GetIconSpriteByName(iconKey);
     }
 }

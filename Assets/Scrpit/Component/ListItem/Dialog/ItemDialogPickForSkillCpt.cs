@@ -72,7 +72,7 @@ public class ItemDialogPickForSkillCpt : BaseMonoBehaviour
     /// <param name="iconKey"></param>
     public void SetIcon(string iconKey)
     {
-        Sprite spIcon = iconDataManager.GetIconSpriteByName(iconKey);
+        Sprite spIcon = IconDataHandler.Instance.manager.GetIconSpriteByName(iconKey);
         if (ivIcon != null)
             ivIcon.sprite = spIcon;
     }

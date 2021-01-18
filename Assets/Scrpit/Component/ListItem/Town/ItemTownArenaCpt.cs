@@ -104,7 +104,6 @@ public class ItemTownArenaCpt : ItemGameBaseCpt, DialogView.IDialogCallBack
     public void SetReward(List<RewardTypeBean> listReward)
     {
         UIGameManager uiGameManager = GetUIManager<UIGameManager>();
-        IconDataManager iconDataManager = uiGameManager.iconDataManager;
         InnBuildManager innBuildManager = uiGameManager.innBuildManager;
         NpcInfoManager npcInfoManager = uiGameManager.npcInfoManager;
         foreach (RewardTypeBean itemReward in listReward)
@@ -112,7 +111,7 @@ public class ItemTownArenaCpt : ItemGameBaseCpt, DialogView.IDialogCallBack
             GameObject objReward = Instantiate(objRewardContainer, objRewardModel);
             Image ivIcon = CptUtil.GetCptInChildrenByName<Image>(objReward, "Icon");
             Text tvNumber = CptUtil.GetCptInChildrenByName<Text>(objReward, "Text");
-            RewardTypeEnumTools.GetRewardDetails(itemReward, iconDataManager, innBuildManager, npcInfoManager);
+            RewardTypeEnumTools.GetRewardDetails(itemReward,  innBuildManager, npcInfoManager);
             ivIcon.sprite = itemReward.spRewardIcon;
             tvNumber.text = "x" + itemReward.rewardNumber;
             if (itemReward.dataType == RewardTypeEnum.AddItems)
@@ -265,7 +264,6 @@ public class ItemTownArenaCpt : ItemGameBaseCpt, DialogView.IDialogCallBack
         GameDataManager gameDataManager = uiGameManager.gameDataManager;
         GameDataHandler gameDataHandler = uiGameManager.gameDataHandler;
         ControlHandler controlHandler = uiGameManager.controlHandler;
-        IconDataManager iconDataManager = uiGameManager.iconDataManager;
         NpcInfoManager npcInfoManager = uiGameManager.npcInfoManager;
         InnBuildManager innBuildManager = uiGameManager.innBuildManager;
         GameTimeHandler gameTimeHandler = uiGameManager.gameTimeHandler;
@@ -327,7 +325,7 @@ public class ItemTownArenaCpt : ItemGameBaseCpt, DialogView.IDialogCallBack
                     }
                     //完成奖励
                     RewardTypeEnumTools.CompleteReward
-                        (npcInfoManager, iconDataManager, innBuildManager, gameDataManager, listCharacter, miniGameData.listReward);     
+                        (npcInfoManager,  innBuildManager, gameDataManager, listCharacter, miniGameData.listReward);     
                 }
                 else
                 {

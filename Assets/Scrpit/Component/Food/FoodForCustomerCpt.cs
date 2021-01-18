@@ -15,13 +15,9 @@ public class FoodForCustomerCpt : BaseMonoBehaviour
     protected AnimatorOverrideController aocForFood;
     public AnimationClip animForOriginalClip;
 
-    //食物数据管理
-    protected InnFoodManager innFoodManager;
 
     public void Awake()
     {
-        innFoodManager = Find<InnFoodManager>( ImportantTypeEnum.FoodManager);
-
         aocForFood = new AnimatorOverrideController(animForFood.runtimeAnimatorController);
         animForFood.runtimeAnimatorController = aocForFood;
     }
@@ -30,17 +26,16 @@ public class FoodForCustomerCpt : BaseMonoBehaviour
     /// 设置数据
     /// </summary>
     /// <param name="foodData"></param>
-    public void SetData(InnFoodManager innFoodManager,MenuInfoBean foodData,int foodLevel)
+    public void SetData(MenuInfoBean foodData,int foodLevel)
     {
-        this.innFoodManager = innFoodManager;
-        if (foodData != null && innFoodManager != null)
+        if (foodData != null )
         {
             //设置图标
-            srFood.sprite = innFoodManager.GetFoodSpriteByName(foodData.icon_key);
+            srFood.sprite = InnFoodHandler.Instance.manager.GetFoodSpriteByName(foodData.icon_key);
             //设置动画
             if (!CheckUtil.StringIsNull(foodData.anim_key))
             {
-                AnimationClip animationClip = innFoodManager.GetFoodAnimByName(foodData.anim_key);
+                AnimationClip animationClip = InnFoodHandler.Instance.manager.GetFoodAnimByName(foodData.anim_key);
                 if (animationClip != null)
                 {
                     animForFood.enabled = true;
@@ -99,9 +94,9 @@ public class FoodForCustomerCpt : BaseMonoBehaviour
         //还原动画
         aocForFood["Original"] = animForOriginalClip;
 
-        if (foodData != null && innFoodManager != null)
+        if (foodData != null)
         {
-            srFood.sprite = innFoodManager.GetFoodLastSpriteByName(foodData.icon_key);
+            srFood.sprite = InnFoodHandler.Instance.manager.GetFoodLastSpriteByName(foodData.icon_key);
         }
    
         objGoodFood.SetActive(false);

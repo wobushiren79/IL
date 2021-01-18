@@ -361,7 +361,7 @@ public class InnHandler : BaseMonoBehaviour, IBaseObserver
     public MenuInfoBean OrderForFood(OrderForCustomer orderForCustomer, long menuId)
     {
         //食物数据库里有这个数据
-        MenuInfoBean menuInfo = innFoodManager.GetFoodDataById(menuId);
+        MenuInfoBean menuInfo = InnFoodHandler.Instance.manager.GetFoodDataById(menuId);
         if (menuInfo != null && gameDataManager.gameData.CheckIsSellMenu(menuId))
         {
             orderForCustomer.foodData = menuInfo;
@@ -548,7 +548,7 @@ public class InnHandler : BaseMonoBehaviour, IBaseObserver
             userAchievement.AddNumberForCustomerFoodComplete(orderForCustomer.customer.customerType, 1);
             if (isMenuLevelUp)
             {
-                Sprite spFoodIcon = innFoodManager.GetFoodSpriteByName(orderForCustomer.foodData.icon_key);
+                Sprite spFoodIcon = InnFoodHandler.Instance.manager.GetFoodSpriteByName(orderForCustomer.foodData.icon_key);
                 ToastHandler.Instance.ToastHint(spFoodIcon, string.Format(GameCommonInfo.GetUITextById(1131), orderForCustomer.foodData.name));
             }
             payEffectsPosition = orderForCustomer.customer.transform.position;
@@ -571,7 +571,7 @@ public class InnHandler : BaseMonoBehaviour, IBaseObserver
             userAchievement.AddNumberForCustomerHotelComplete(1);
             if (isBedLevelUp)
             {
-                Sprite spBedIcon = iconDataManager.GetIconSpriteByName("worker_waiter_bed_pro_2");
+                Sprite spBedIcon = IconDataHandler.Instance.manager.GetIconSpriteByName("worker_waiter_bed_pro_2");
                 ToastHandler.Instance.ToastHint(spBedIcon, string.Format(GameCommonInfo.GetUITextById(1131), orderForHotel.bed.buildBedData.bedName));
             }
             payEffectsPosition = orderForHotel.customer.transform.position;

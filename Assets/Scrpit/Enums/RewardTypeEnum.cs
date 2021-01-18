@@ -86,12 +86,12 @@ public class RewardTypeEnumTools : DataTools
         return listReward;
     }
 
-    public static RewardTypeBean GetRewardDetails(RewardTypeBean data, IconDataManager iconDataManager, InnBuildManager innBuildManager, NpcInfoManager npcInfoManager)
+    public static RewardTypeBean GetRewardDetails(RewardTypeBean data, InnBuildManager innBuildManager, NpcInfoManager npcInfoManager)
     {
         switch (data.dataType)
         {
             case RewardTypeEnum.AddWorkerNumber:
-                data.spRewardIcon = iconDataManager.GetIconSpriteByName("ui_features_worker");
+                data.spRewardIcon = IconDataHandler.Instance.manager.GetIconSpriteByName("ui_features_worker");
                 data.rewardDescribe = string.Format(GameCommonInfo.GetUITextById(6001), data.data);
                 data.rewardNumber = int.Parse(data.data);
                 break;
@@ -103,27 +103,27 @@ public class RewardTypeEnumTools : DataTools
             case RewardTypeEnum.AddMoneyL:
             case RewardTypeEnum.AddMoneyM:
             case RewardTypeEnum.AddMoneyS:
-                GetRewardDetailsForAddMoney(data, iconDataManager);
+                GetRewardDetailsForAddMoney(data);
                 break;
             case RewardTypeEnum.AddGuildCoin:
-                data.spRewardIcon = iconDataManager.GetIconSpriteByName("guild_coin_2");
+                data.spRewardIcon = IconDataHandler.Instance.manager.GetIconSpriteByName("guild_coin_2");
                 data.rewardDescribe = string.Format(GameCommonInfo.GetUITextById(6005), data.data);
                 data.rewardNumber = int.Parse(data.data);
                 break;
             case RewardTypeEnum.AddItems:
-                data = GetRewardDetailsForItems(data, iconDataManager);
+                data = GetRewardDetailsForItems(data);
                 break;
             case RewardTypeEnum.RandomAddItems:
-                data = GetRewardDetailsForRandomItems(data, iconDataManager);
+                data = GetRewardDetailsForRandomItems(data);
                 break;
             case RewardTypeEnum.AddBuildItems:
-                data = GetRewardDetailsForBuildItems(data, iconDataManager, innBuildManager);
+                data = GetRewardDetailsForBuildItems(data, innBuildManager);
                 break;
             case RewardTypeEnum.AddArenaTrophyElementary:
             case RewardTypeEnum.AddArenaTrophyIntermediate:
             case RewardTypeEnum.AddArenaTrophyAdvanced:
             case RewardTypeEnum.AddArenaTrophyLegendary:
-                GetRewardDetailsForAddTrophy(data, iconDataManager);
+                GetRewardDetailsForAddTrophy(data);
                 break;
             case RewardTypeEnum.AddIngOilsalt:
             case RewardTypeEnum.AddIngMeat:
@@ -133,7 +133,7 @@ public class RewardTypeEnumTools : DataTools
             case RewardTypeEnum.AddIngMelonfruit:
             case RewardTypeEnum.AddIngWaterwine:
             case RewardTypeEnum.AddIngFlour:
-                GetRewardDetailsForIng(iconDataManager, data);
+                GetRewardDetailsForIng(data);
                 break;
 
             case RewardTypeEnum.AddChefExp://增加职业经验
@@ -141,36 +141,36 @@ public class RewardTypeEnumTools : DataTools
             case RewardTypeEnum.AddAccountantExp:
             case RewardTypeEnum.AddAccostExp:
             case RewardTypeEnum.AddBeaterExp:
-                GetRewardDetailsForWorkerExp(iconDataManager, data);
+                GetRewardDetailsForWorkerExp(data);
                 break;
         }
         return data;
     }
 
-    protected static RewardTypeBean GetRewardDetailsForWorkerExp(IconDataManager iconDataManager, RewardTypeBean rewardTypeData)
+    protected static RewardTypeBean GetRewardDetailsForWorkerExp(RewardTypeBean rewardTypeData)
     {
         Sprite spriteIcon = null;
         string rewardDescribe = "???";
         switch (rewardTypeData.dataType)
         {
             case RewardTypeEnum.AddChefExp:
-                spriteIcon = WorkerEnumTools.GetWorkerSprite(iconDataManager, WorkerEnum.Chef);
+                spriteIcon = WorkerEnumTools.GetWorkerSprite(WorkerEnum.Chef);
                 rewardDescribe = WorkerEnumTools.GetWorkerName(WorkerEnum.Chef) + string.Format(GameCommonInfo.GetUITextById(6021), rewardTypeData.data);
                 break;
             case RewardTypeEnum.AddWaiterExp:
-                spriteIcon = WorkerEnumTools.GetWorkerSprite(iconDataManager, WorkerEnum.Waiter);
+                spriteIcon = WorkerEnumTools.GetWorkerSprite(WorkerEnum.Waiter);
                 rewardDescribe = WorkerEnumTools.GetWorkerName(WorkerEnum.Waiter) + string.Format(GameCommonInfo.GetUITextById(6021), rewardTypeData.data);
                 break;
             case RewardTypeEnum.AddAccountantExp:
-                spriteIcon = WorkerEnumTools.GetWorkerSprite(iconDataManager, WorkerEnum.Accountant);
+                spriteIcon = WorkerEnumTools.GetWorkerSprite(WorkerEnum.Accountant);
                 rewardDescribe = WorkerEnumTools.GetWorkerName(WorkerEnum.Accountant) + string.Format(GameCommonInfo.GetUITextById(6021), rewardTypeData.data);
                 break;
             case RewardTypeEnum.AddAccostExp:
-                spriteIcon = WorkerEnumTools.GetWorkerSprite(iconDataManager, WorkerEnum.Accost);
+                spriteIcon = WorkerEnumTools.GetWorkerSprite(WorkerEnum.Accost);
                 rewardDescribe = WorkerEnumTools.GetWorkerName(WorkerEnum.Accost) + string.Format(GameCommonInfo.GetUITextById(6021), rewardTypeData.data);
                 break;
             case RewardTypeEnum.AddBeaterExp:
-                spriteIcon = WorkerEnumTools.GetWorkerSprite(iconDataManager, WorkerEnum.Beater);
+                spriteIcon = WorkerEnumTools.GetWorkerSprite(WorkerEnum.Beater);
                 rewardDescribe = WorkerEnumTools.GetWorkerName(WorkerEnum.Beater) + string.Format(GameCommonInfo.GetUITextById(6021), rewardTypeData.data);
                 break;
         }
@@ -186,7 +186,7 @@ public class RewardTypeEnumTools : DataTools
     /// <param name="rewardTypeData"></param>
     /// <param name="iconDataManager"></param>
     /// <returns></returns>
-    private static RewardTypeBean GetRewardDetailsForAddTrophy(RewardTypeBean rewardTypeData, IconDataManager iconDataManager)
+    private static RewardTypeBean GetRewardDetailsForAddTrophy(RewardTypeBean rewardTypeData)
     {
         string iconKey = "";
         string rewardDescribe = "???";
@@ -210,7 +210,7 @@ public class RewardTypeEnumTools : DataTools
                 rewardDescribe = string.Format(GameCommonInfo.GetUITextById(6009), listData[0] + "");
                 break;
         }
-        rewardTypeData.spRewardIcon = iconDataManager.GetIconSpriteByName(iconKey);
+        rewardTypeData.spRewardIcon = IconDataHandler.Instance.manager.GetIconSpriteByName(iconKey);
         rewardTypeData.rewardDescribe = rewardDescribe;
         rewardTypeData.rewardNumber = listData[0];
         if (listData.Length > 1)
@@ -227,7 +227,7 @@ public class RewardTypeEnumTools : DataTools
     /// <param name="rewardTypeData"></param>
     /// <param name="iconDataManager"></param>
     /// <returns></returns>
-    private static RewardTypeBean GetRewardDetailsForAddMoney(RewardTypeBean rewardTypeData, IconDataManager iconDataManager)
+    private static RewardTypeBean GetRewardDetailsForAddMoney(RewardTypeBean rewardTypeData)
     {
         string iconKey = "";
         string rewardDescribe = "???";
@@ -246,7 +246,7 @@ public class RewardTypeEnumTools : DataTools
                 rewardDescribe = string.Format(GameCommonInfo.GetUITextById(6004), rewardTypeData.data);
                 break;
         }
-        rewardTypeData.spRewardIcon = iconDataManager.GetIconSpriteByName(iconKey);
+        rewardTypeData.spRewardIcon = IconDataHandler.Instance.manager.GetIconSpriteByName(iconKey);
         rewardTypeData.rewardDescribe = rewardDescribe;
         rewardTypeData.rewardNumber = int.Parse(rewardTypeData.data);
         return rewardTypeData;
@@ -259,7 +259,7 @@ public class RewardTypeEnumTools : DataTools
     /// <param name="iconDataManager"></param>
     /// <param name="innBuildManager"></param>
     /// <returns></returns>
-    private static RewardTypeBean GetRewardDetailsForBuildItems(RewardTypeBean data, IconDataManager iconDataManager, InnBuildManager innBuildManager)
+    private static RewardTypeBean GetRewardDetailsForBuildItems(RewardTypeBean data, InnBuildManager innBuildManager)
     {
         string[] listBuildItemsData = StringUtil.SplitBySubstringForArrayStr(data.data, ',');
         long buildItemId = long.Parse(listBuildItemsData[0]);
@@ -282,7 +282,7 @@ public class RewardTypeEnumTools : DataTools
     /// <param name="iconDataManager"></param>
     /// <param name="gameItemsManager"></param>
     /// <returns></returns>
-    private static RewardTypeBean GetRewardDetailsForItems(RewardTypeBean data, IconDataManager iconDataManager)
+    private static RewardTypeBean GetRewardDetailsForItems(RewardTypeBean data)
     {
         string[] listItemsData = StringUtil.SplitBySubstringForArrayStr(data.data, ',');
         long itemId = long.Parse(listItemsData[0]);
@@ -295,7 +295,7 @@ public class RewardTypeEnumTools : DataTools
         }
         data.rewardId = itemId;
         data.rewardDescribe += (" x" + data.rewardNumber);
-        data.spRewardIcon = GeneralEnumTools.GetGeneralSprite(itemsInfo, iconDataManager, true);
+        data.spRewardIcon = GeneralEnumTools.GetGeneralSprite(itemsInfo, true);
         return data;
     }
 
@@ -306,7 +306,7 @@ public class RewardTypeEnumTools : DataTools
     /// <param name="iconDataManager"></param>
     /// <param name="gameItemsManager"></param>
     /// <returns></returns>
-    private static RewardTypeBean GetRewardDetailsForRandomItems(RewardTypeBean data, IconDataManager iconDataManager)
+    private static RewardTypeBean GetRewardDetailsForRandomItems(RewardTypeBean data)
     {
         long[] listItemsData = StringUtil.SplitBySubstringForArrayLong(data.data, ',');
         long randomItemsId = RandomUtil.GetRandomDataByArray(listItemsData);
@@ -315,7 +315,7 @@ public class RewardTypeEnumTools : DataTools
         data.rewardNumber = 1;
         data.rewardId = randomItemsId;
         data.rewardDescribe += (" x" + data.rewardNumber);
-        data.spRewardIcon = GeneralEnumTools.GetGeneralSprite(itemsInfo, iconDataManager, true);
+        data.spRewardIcon = GeneralEnumTools.GetGeneralSprite(itemsInfo, true);
         return data;
     }
 
@@ -325,7 +325,7 @@ public class RewardTypeEnumTools : DataTools
     /// <param name="rewardTypeData"></param>
     /// <param name="ingName"></param>
     /// <returns></returns>
-    private static RewardTypeBean GetRewardDetailsForIng(IconDataManager iconDataManager, RewardTypeBean rewardTypeData)
+    private static RewardTypeBean GetRewardDetailsForIng(RewardTypeBean rewardTypeData)
     {
         string ingName = "???";
         Sprite spIcon = null;
@@ -333,35 +333,35 @@ public class RewardTypeEnumTools : DataTools
         {
             case RewardTypeEnum.AddIngOilsalt:
                 ingName = GameCommonInfo.GetUITextById(21);
-                spIcon = IngredientsEnumTools.GetIngredientIcon(iconDataManager, IngredientsEnum.Oilsalt);
+                spIcon = IngredientsEnumTools.GetIngredientIcon(IngredientsEnum.Oilsalt);
                 break;
             case RewardTypeEnum.AddIngMeat:
                 ingName = GameCommonInfo.GetUITextById(22);
-                spIcon = IngredientsEnumTools.GetIngredientIcon(iconDataManager, IngredientsEnum.Meat);
+                spIcon = IngredientsEnumTools.GetIngredientIcon(IngredientsEnum.Meat);
                 break;
             case RewardTypeEnum.AddIngRiverfresh:
                 ingName = GameCommonInfo.GetUITextById(23);
-                spIcon = IngredientsEnumTools.GetIngredientIcon(iconDataManager, IngredientsEnum.Riverfresh);
+                spIcon = IngredientsEnumTools.GetIngredientIcon(IngredientsEnum.Riverfresh);
                 break;
             case RewardTypeEnum.AddIngSeafood:
                 ingName = GameCommonInfo.GetUITextById(24);
-                spIcon = IngredientsEnumTools.GetIngredientIcon(iconDataManager, IngredientsEnum.Seafood);
+                spIcon = IngredientsEnumTools.GetIngredientIcon(IngredientsEnum.Seafood);
                 break;
             case RewardTypeEnum.AddIngVegetables:
                 ingName = GameCommonInfo.GetUITextById(25);
-                spIcon = IngredientsEnumTools.GetIngredientIcon(iconDataManager, IngredientsEnum.Vegetables);
+                spIcon = IngredientsEnumTools.GetIngredientIcon(IngredientsEnum.Vegetables);
                 break;
             case RewardTypeEnum.AddIngMelonfruit:
                 ingName = GameCommonInfo.GetUITextById(26);
-                spIcon = IngredientsEnumTools.GetIngredientIcon(iconDataManager, IngredientsEnum.Melonfruit);
+                spIcon = IngredientsEnumTools.GetIngredientIcon(IngredientsEnum.Melonfruit);
                 break;
             case RewardTypeEnum.AddIngWaterwine:
                 ingName = GameCommonInfo.GetUITextById(27);
-                spIcon = IngredientsEnumTools.GetIngredientIcon(iconDataManager, IngredientsEnum.Waterwine);
+                spIcon = IngredientsEnumTools.GetIngredientIcon(IngredientsEnum.Waterwine);
                 break;
             case RewardTypeEnum.AddIngFlour:
                 ingName = GameCommonInfo.GetUITextById(28);
-                spIcon = IngredientsEnumTools.GetIngredientIcon(iconDataManager, IngredientsEnum.Flour);
+                spIcon = IngredientsEnumTools.GetIngredientIcon(IngredientsEnum.Flour);
                 break;
         }
         rewardTypeData.rewardDescribe = string.Format(GameCommonInfo.GetUITextById(6010), ingName, rewardTypeData.data);
@@ -375,18 +375,18 @@ public class RewardTypeEnumTools : DataTools
     /// </summary>
     /// <param name="reward_data"></param>
     /// <param name="gameData"></param>
-    public static void CompleteReward( NpcInfoManager npcInfoManager, IconDataManager iconDataManager, InnBuildManager innBuildManager, GameDataManager gameDataManager, List<CharacterBean> listCharacterData, string data)
+    public static void CompleteReward(NpcInfoManager npcInfoManager, InnBuildManager innBuildManager, GameDataManager gameDataManager, List<CharacterBean> listCharacterData, string data)
     {
         List<RewardTypeBean> listRewardData = GetListRewardData(data);
-        CompleteReward(npcInfoManager, iconDataManager, innBuildManager, gameDataManager, listCharacterData, listRewardData);
+        CompleteReward(npcInfoManager, innBuildManager, gameDataManager, listCharacterData, listRewardData);
     }
 
-    public static void CompleteReward(NpcInfoManager npcInfoManager, IconDataManager iconDataManager,InnBuildManager innBuildManager, GameDataManager gameDataManager, List<CharacterBean> listCharacterData, List<RewardTypeBean> listRewardData)
+    public static void CompleteReward(NpcInfoManager npcInfoManager, InnBuildManager innBuildManager, GameDataManager gameDataManager, List<CharacterBean> listCharacterData, List<RewardTypeBean> listRewardData)
     {
         GameDataBean gameData = gameDataManager.gameData;
         foreach (var itemData in listRewardData)
         {
-            GetRewardDetails(itemData, iconDataManager, innBuildManager, npcInfoManager);
+            GetRewardDetails(itemData, innBuildManager, npcInfoManager);
             RewardTypeEnum dataType = itemData.dataType;
             switch (dataType)
             {
@@ -517,7 +517,7 @@ public class RewardTypeEnumTools : DataTools
     /// <param name="layer"></param>
     /// <param name="normalBuildRate"></param>
     /// <returns></returns>
-    public static List<RewardTypeBean> GetRewardItemsForInfiniteTowers(List<CharacterBean> listEnemyData, int layer, int totalLucky,bool isSend)
+    public static List<RewardTypeBean> GetRewardItemsForInfiniteTowers(List<CharacterBean> listEnemyData, int layer, int totalLucky, bool isSend)
     {
         List<RewardTypeBean> listReward = new List<RewardTypeBean>();
         long addExp = 0;
