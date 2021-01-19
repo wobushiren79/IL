@@ -133,7 +133,7 @@ public class UIGameTextForTalk : BaseUIChildComponent<UIGameText>
         if (textData.user_id == 0)
             characterData = uiGameManager.gameDataManager.gameData.userCharacter;
         else
-            characterData = uiGameManager.npcInfoManager.GetCharacterDataById(textData.user_id);
+            characterData = NpcInfoHandler.Instance.manager.GetCharacterDataById(textData.user_id);
         if (characterData == null)
         {
             LogUtil.LogError("文本展示没有找到该文本发起者");
@@ -268,7 +268,6 @@ public class UIGameTextForTalk : BaseUIChildComponent<UIGameText>
             return;
         UIGameManager uiGameManager = uiComponent.GetUIManager<UIGameManager>();
         RewardTypeEnumTools.CompleteReward(
-            uiGameManager.npcInfoManager,
             uiGameManager.gameDataManager,
             null,
             reward

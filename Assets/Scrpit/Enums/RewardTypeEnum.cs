@@ -86,7 +86,7 @@ public class RewardTypeEnumTools : DataTools
         return listReward;
     }
 
-    public static RewardTypeBean GetRewardDetails(RewardTypeBean data,  NpcInfoManager npcInfoManager)
+    public static RewardTypeBean GetRewardDetails(RewardTypeBean data)
     {
         switch (data.dataType)
         {
@@ -97,7 +97,7 @@ public class RewardTypeEnumTools : DataTools
                 break;
             case RewardTypeEnum.AddWorker:
                 long workerId = long.Parse(data.data);
-                data.workerCharacterData = npcInfoManager.GetCharacterDataById(workerId);
+                data.workerCharacterData = NpcInfoHandler.Instance.manager.GetCharacterDataById(workerId);
                 data.rewardDescribe = string.Format(GameCommonInfo.GetUITextById(6011), data.workerCharacterData.baseInfo.name);
                 break;
             case RewardTypeEnum.AddMoneyL:
@@ -375,18 +375,18 @@ public class RewardTypeEnumTools : DataTools
     /// </summary>
     /// <param name="reward_data"></param>
     /// <param name="gameData"></param>
-    public static void CompleteReward(NpcInfoManager npcInfoManager, GameDataManager gameDataManager, List<CharacterBean> listCharacterData, string data)
+    public static void CompleteReward(GameDataManager gameDataManager, List<CharacterBean> listCharacterData, string data)
     {
         List<RewardTypeBean> listRewardData = GetListRewardData(data);
-        CompleteReward(npcInfoManager, gameDataManager, listCharacterData, listRewardData);
+        CompleteReward(gameDataManager, listCharacterData, listRewardData);
     }
 
-    public static void CompleteReward(NpcInfoManager npcInfoManager, GameDataManager gameDataManager, List<CharacterBean> listCharacterData, List<RewardTypeBean> listRewardData)
+    public static void CompleteReward(GameDataManager gameDataManager, List<CharacterBean> listCharacterData, List<RewardTypeBean> listRewardData)
     {
         GameDataBean gameData = gameDataManager.gameData;
         foreach (var itemData in listRewardData)
         {
-            GetRewardDetails(itemData, npcInfoManager);
+            GetRewardDetails(itemData);
             RewardTypeEnum dataType = itemData.dataType;
             switch (dataType)
             {

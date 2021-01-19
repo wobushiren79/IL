@@ -110,7 +110,7 @@ public class UITownArena : UIBaseOne, IRadioGroupCallBack, StoreInfoManager.ICal
                     miniGameData = CreateCombatGameData((MiniGameCombatBean)miniGameData, storeInfo, type);
                     break;
             }
-            PreTypeForMiniGameEnumTools.GetMiniGameData(miniGameData, storeInfo.pre_data_minigame, uiGameManager.npcInfoManager);
+            PreTypeForMiniGameEnumTools.GetMiniGameData(miniGameData, storeInfo.pre_data_minigame);
             //奖励添加
             miniGameData.listReward = new List<RewardTypeBean>();
             List<RewardTypeBean> listReward = RewardTypeEnumTools.GetListRewardData(storeInfo.reward_data);
@@ -218,7 +218,7 @@ public class UITownArena : UIBaseOne, IRadioGroupCallBack, StoreInfoManager.ICal
             listEnemyData.Add(randomEnemy);
         }
         //评审人员
-        List<CharacterBean> listTownNpc = uiGameManager.npcInfoManager.GetCharacterDataByType(NpcTypeEnum.Town);
+        List<CharacterBean> listTownNpc = NpcInfoHandler.Instance.manager.GetCharacterDataByType(NpcTypeEnum.Town);
         PreTypeForMiniGameEnumTools.GetAllCharacter(storeInfo.pre_data_minigame, out string allCharacterIds);
         for (int i = 0; i < listTownNpc.Count; i++)
         {

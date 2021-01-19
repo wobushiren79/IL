@@ -127,7 +127,7 @@ public class AchievementDialogView : DialogView
         List<RewardTypeBean> listRewardData = RewardTypeEnumTools.GetListRewardData(rewardData);
         foreach (var itemRewardData in listRewardData)
         {
-            RewardTypeEnumTools.GetRewardDetails(itemRewardData, npcInfoManager);
+            RewardTypeEnumTools.GetRewardDetails(itemRewardData);
             Sprite spReward = itemRewardData.spRewardIcon;
             CreateRewardItem(spReward, animTimeDelay);
             animTimeDelay += 0.1f;

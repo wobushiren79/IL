@@ -30,13 +30,13 @@ public class NpcTeamBean : BaseBean
         listMembers = new List<CharacterBean>();
         foreach (long itemId in GetTeamLeaderId())
         {
-            CharacterBean characterData = npcInfoManager.GetCharacterDataById(itemId);
+            CharacterBean characterData = NpcInfoHandler.Instance.manager.GetCharacterDataById(itemId);
             if (characterData != null)
                 listLeader.Add(characterData);
         }
         foreach (long itemId in GetTeamMembersId())
         {
-            CharacterBean characterData = npcInfoManager.GetCharacterDataById(itemId);
+            CharacterBean characterData = NpcInfoHandler.Instance.manager.GetCharacterDataById(itemId);
             if (characterData != null)
                 listMembers.Add(characterData);
         }

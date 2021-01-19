@@ -27,7 +27,7 @@ public class NpcImportantBuilder : BaseMonoBehaviour
         listRecruitTownNpc.Clear();
         listSpecialTownNpc.Clear();
         //创建小镇居民
-        List<CharacterBean> listTownCharacter = npcInfoManager.GetCharacterDataByType((int)NpcTypeEnum.Town);
+        List<CharacterBean> listTownCharacter = NpcInfoHandler.Instance.manager.GetCharacterDataByType((int)NpcTypeEnum.Town);
         foreach (CharacterBean itemData in listTownCharacter)
         {
             NpcAIImportantCpt itemNpc = BuildNpc(itemData);
@@ -35,7 +35,7 @@ public class NpcImportantBuilder : BaseMonoBehaviour
                 listTownNpc.Add(itemNpc);
         }
         //创建特殊NPC
-        List<CharacterBean> listSpecialCharacter = npcInfoManager.GetCharacterDataByType((int)NpcTypeEnum.Special);
+        List<CharacterBean> listSpecialCharacter = NpcInfoHandler.Instance.manager.GetCharacterDataByType((int)NpcTypeEnum.Special);
         foreach (CharacterBean itemData in listSpecialCharacter)
         {
             NpcAIImportantCpt itemNpc = BuildNpc(itemData);
@@ -43,7 +43,7 @@ public class NpcImportantBuilder : BaseMonoBehaviour
                 listSpecialTownNpc.Add(itemNpc);
         }
         //创建小镇招募居民
-        List<CharacterBean> listRecruitTownCharacter = npcInfoManager.GetCharacterDataByType((int)NpcTypeEnum.RecruitTown);
+        List<CharacterBean> listRecruitTownCharacter =NpcInfoHandler.Instance.manager.GetCharacterDataByType((int)NpcTypeEnum.RecruitTown);
         foreach (CharacterBean itemData in listRecruitTownCharacter)
         {
             NpcAIImportantCpt itemNpc = BuildNpc(itemData);
@@ -57,7 +57,7 @@ public class NpcImportantBuilder : BaseMonoBehaviour
         CptUtil.RemoveChildsByActive(objNpcContainer);
         listMountainNpc.Clear();
         //创建山顶NPC
-        List<CharacterBean> listMountainCharacter = npcInfoManager.GetCharacterDataByType((int)NpcTypeEnum.Mountain);
+        List<CharacterBean> listMountainCharacter =NpcInfoHandler.Instance.manager.GetCharacterDataByType((int)NpcTypeEnum.Mountain);
         for (int i = 0; i < listMountainCharacter.Count; i++)
         {
             CharacterBean itemCharacterData = listMountainCharacter[i];

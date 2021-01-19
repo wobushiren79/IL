@@ -104,13 +104,12 @@ public class ItemTownArenaCpt : ItemGameBaseCpt, DialogView.IDialogCallBack
     public void SetReward(List<RewardTypeBean> listReward)
     {
         UIGameManager uiGameManager = GetUIManager<UIGameManager>();
-        NpcInfoManager npcInfoManager = uiGameManager.npcInfoManager;
         foreach (RewardTypeBean itemReward in listReward)
         {
             GameObject objReward = Instantiate(objRewardContainer, objRewardModel);
             Image ivIcon = CptUtil.GetCptInChildrenByName<Image>(objReward, "Icon");
             Text tvNumber = CptUtil.GetCptInChildrenByName<Text>(objReward, "Text");
-            RewardTypeEnumTools.GetRewardDetails(itemReward, npcInfoManager);
+            RewardTypeEnumTools.GetRewardDetails(itemReward);
             ivIcon.sprite = itemReward.spRewardIcon;
             tvNumber.text = "x" + itemReward.rewardNumber;
             if (itemReward.dataType == RewardTypeEnum.AddItems)
@@ -263,7 +262,6 @@ public class ItemTownArenaCpt : ItemGameBaseCpt, DialogView.IDialogCallBack
         GameDataManager gameDataManager = uiGameManager.gameDataManager;
         GameDataHandler gameDataHandler = uiGameManager.gameDataHandler;
         ControlHandler controlHandler = uiGameManager.controlHandler;
-        NpcInfoManager npcInfoManager = uiGameManager.npcInfoManager;
         GameTimeHandler gameTimeHandler = uiGameManager.gameTimeHandler;
   
         if (dialogView as PickForCharacterDialogView)
@@ -322,7 +320,7 @@ public class ItemTownArenaCpt : ItemGameBaseCpt, DialogView.IDialogCallBack
                         }
                     }
                     //完成奖励
-                    RewardTypeEnumTools.CompleteReward(npcInfoManager, gameDataManager, listCharacter, miniGameData.listReward);     
+                    RewardTypeEnumTools.CompleteReward(gameDataManager, listCharacter, miniGameData.listReward);     
                 }
                 else
                 {

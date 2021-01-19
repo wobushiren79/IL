@@ -31,7 +31,7 @@ public class UIGameFavorability : BaseUIComponent
     public void OnCellForItem(ScrollGridCell itemCell)
     {
         CharacterFavorabilityBean characterFavorability = listFavorabilityData[itemCell.index];
-        CharacterBean characterData = uiGameManager.npcInfoManager.GetCharacterDataById(characterFavorability.characterId);
+        CharacterBean characterData = NpcInfoHandler.Instance.manager.GetCharacterDataById(characterFavorability.characterId);
         ItemGameFavorabilityCpt itemFavorability = itemCell.GetComponent<ItemGameFavorabilityCpt>();
         itemFavorability.SetData(characterFavorability, characterData);
     }
@@ -47,7 +47,7 @@ public class UIGameFavorability : BaseUIComponent
         for (int i = 0; i < listData.Count; i++)
         {
             CharacterFavorabilityBean characterFavorability = listData[i];
-            CharacterBean characterData = uiGameManager.npcInfoManager.GetCharacterDataById(characterFavorability.characterId);
+            CharacterBean characterData = NpcInfoHandler.Instance.manager.GetCharacterDataById(characterFavorability.characterId);
      
             //只显示小镇居民数据
             if (characterData.npcInfoData.npc_type != (int)NpcTypeEnum.Town)

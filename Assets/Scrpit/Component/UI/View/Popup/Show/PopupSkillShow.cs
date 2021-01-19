@@ -16,12 +16,9 @@ public class PopupSkillShow : PopupShowView
 
     public SkillInfoBean skillInfoData;
 
-    protected IconDataManager iconDataManager;
-
     public override void Awake()
     {
         base.Awake();
-        iconDataManager = Find<IconDataManager>(ImportantTypeEnum.UIManager);
     }
 
     /// <summary>

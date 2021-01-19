@@ -118,13 +118,13 @@ public class PreTypeEnumTools : DataTools
     /// <param name="gameData"></param>
     /// <param name="data"></param>
     /// <returns></returns>
-    public static bool CheckIsAllPre(NpcInfoManager npcInfoManager, GameDataBean gameData, CharacterBean characterData, string data, out string reason)
+    public static bool CheckIsAllPre(GameDataBean gameData, CharacterBean characterData, string data, out string reason)
     {
         List<PreTypeBean> listPreData = GetListPreData(data);
         reason = "";
         foreach (var itemPreData in listPreData)
         {
-            GetPreDetails(itemPreData, gameData, characterData, npcInfoManager, false);
+            GetPreDetails(itemPreData, gameData, characterData, false);
             if (!itemPreData.isPre)
             {
                 reason = itemPreData.preFailStr;
@@ -148,7 +148,7 @@ public class PreTypeEnumTools : DataTools
     /// </summary>
     /// <param name="rewardType"></param>
     /// <returns></returns>
-    public static PreTypeBean GetPreDetails(PreTypeBean preTypeData, GameDataBean gameData, CharacterBean characterData, NpcInfoManager npcInfoManager, bool isComplete)
+    public static PreTypeBean GetPreDetails(PreTypeBean preTypeData, GameDataBean gameData, CharacterBean characterData, bool isComplete)
     {
         switch (preTypeData.dataType)
         {
@@ -253,7 +253,7 @@ public class PreTypeEnumTools : DataTools
                 GetPreDetailsForInnAesthetics(preTypeData, gameData, isComplete);
                 break;
             case PreTypeEnum.NpcFavorabilityLevel:
-                GetPreDetailsForNpcFavorabilityLevel(gameData, preTypeData, npcInfoManager);
+                GetPreDetailsForNpcFavorabilityLevel(gameData, preTypeData);
                 break;
             case PreTypeEnum.InfiniteTowersMaxLayer:
                 GetPreDetailsForInfiniteTowersMaxLayer(preTypeData, gameData, isComplete);
@@ -261,13 +261,13 @@ public class PreTypeEnumTools : DataTools
         }
         return preTypeData;
     }
-    public static PreTypeBean GetPreDetails(PreTypeBean preTypeData, GameDataBean gameData, NpcInfoManager npcInfoManager, bool isComplete)
+    public static PreTypeBean GetPreDetails(PreTypeBean preTypeData, GameDataBean gameData, bool isComplete)
     {
-        return GetPreDetails(preTypeData, gameData, null, npcInfoManager, isComplete);
+        return GetPreDetails(preTypeData, gameData, null, isComplete);
     }
-    public static PreTypeBean GetPreDetails(PreTypeBean preTypeData, GameDataBean gameData, NpcInfoManager npcInfoManager)
+    public static PreTypeBean GetPreDetails(PreTypeBean preTypeData, GameDataBean gameData)
     {
-        return GetPreDetails(preTypeData, gameData, null, npcInfoManager, false);
+        return GetPreDetails(preTypeData, gameData, null, false);
     }
 
     /// <summary>
@@ -1157,7 +1157,7 @@ public class PreTypeEnumTools : DataTools
     /// <param name="gameData"></param>
     /// <param name="conditionData"></param>
     /// <returns></returns>
-    protected static PreTypeBean GetPreDetailsForNpcFavorabilityLevel(GameDataBean gameData, PreTypeBean preData, NpcInfoManager npcInfoManager)
+    protected static PreTypeBean GetPreDetailsForNpcFavorabilityLevel(GameDataBean gameData, PreTypeBean preData)
     {
         long[] listData = StringUtil.SplitBySubstringForArrayLong(preData.data, ',');
         long npcId = listData[0];
@@ -1171,7 +1171,7 @@ public class PreTypeEnumTools : DataTools
         {
             preData.isPre = false;
         }
-        CharacterBean characterData = npcInfoManager.GetCharacterDataById(npcId);
+        CharacterBean characterData = NpcInfoHandler.Instance.manager.GetCharacterDataById(npcId);
         preData.preDescribe = string.Format(GameCommonInfo.GetUITextById(5221), characterData.baseInfo.name, npcFavorabilityLevel + "");
         preData.preFailStr = string.Format(GameCommonInfo.GetUITextById(5222), characterData.baseInfo.name, npcFavorabilityLevel + "");
         return preData;

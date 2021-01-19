@@ -61,12 +61,12 @@ public class UIGameTestForMiniGame : BaseUIComponent
         List<CharacterBean> listOurData = new List<CharacterBean>();
         foreach (long id in playerIds)
         {
-            listOurData.Add(uiGameManager.npcInfoManager.GetCharacterDataById(id));
+            listOurData.Add(NpcInfoHandler.Instance.manager.GetCharacterDataById(id));
         }
         List<CharacterBean> listEnemyData = new List<CharacterBean>();
         foreach (long id in EnemyIds)
         {
-            listEnemyData.Add(uiGameManager.npcInfoManager.GetCharacterDataById(id));
+            listEnemyData.Add(NpcInfoHandler.Instance.manager.GetCharacterDataById(id));
         }
         miniGameCombat.InitData(listOurData, listEnemyData);
         //找到竞技场战斗的地点

@@ -365,13 +365,12 @@ public class UIGameText : BaseUIComponent, TextInfoManager.ICallBack, DialogView
     #region 弹窗回调
     public void Submit(DialogView dialogView, DialogBean dialogBean)
     {
-        NpcInfoManager npcInfoManager= GetUIManager<UIGameManager>().npcInfoManager;
         GameDataManager gameDataManager = GetUIManager<UIGameManager>().gameDataManager;
         //获取选择物品
         PickForItemsDialogView pickForItemsDialog = dialogView as PickForItemsDialogView;
         pickForItemsDialog.GetSelectedItems(out ItemsInfoBean itemsInfo,out ItemBean itemData);
         //获取赠送人
-        CharacterBean characterData = npcInfoManager.GetCharacterDataById(mTalkNpcInfo.id);
+        CharacterBean characterData = NpcInfoHandler.Instance.manager.GetCharacterDataById(mTalkNpcInfo.id);
         CharacterFavorabilityBean characterFavorability = gameDataManager.gameData.GetCharacterFavorability(mTalkNpcInfo.id);
         int addFavorability;
         int favorabilityForTalk;

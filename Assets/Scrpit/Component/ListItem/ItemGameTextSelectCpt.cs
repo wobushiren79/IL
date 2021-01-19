@@ -59,8 +59,7 @@ public class ItemGameTextSelectCpt : ItemGameBaseCpt, DialogView.IDialogCallBack
             {
                 PreTypeEnumTools.GetPreDetails(
                     itemPreData, 
-                    uiGameManager.gameDataManager.gameData,
-                    uiGameManager.npcInfoManager);
+                    uiGameManager.gameDataManager.gameData);
                 if (!itemPreData.isPre)
                 {
                     ToastHandler.Instance.ToastHint(itemPreData.spPreIcon, itemPreData.preFailStr);
@@ -71,7 +70,6 @@ public class ItemGameTextSelectCpt : ItemGameBaseCpt, DialogView.IDialogCallBack
             PreTypeEnumTools.CompletePre(listPre, uiGameManager.gameDataManager.gameData);
             //完成所有奖励
             RewardTypeEnumTools.CompleteReward(
-                uiGameManager.npcInfoManager,
                 uiGameManager.gameDataManager,
                 null,
                 textData.reward_data);

@@ -238,7 +238,7 @@ public class NpcEventBuilder : NpcNormalBuilder, IBaseObserver
         List<CharacterFavorabilityBean> listTownFavorabilityData = new List<CharacterFavorabilityBean>();
         foreach (CharacterFavorabilityBean itemFavorability in listFavorabilityData)
         {
-            CharacterBean characterData = npcInfoManager.GetCharacterDataById(itemFavorability.characterId);
+            CharacterBean characterData = NpcInfoHandler.Instance.manager.GetCharacterDataById(itemFavorability.characterId);
             if (characterData == null)
                 continue;
 
@@ -255,7 +255,7 @@ public class NpcEventBuilder : NpcNormalBuilder, IBaseObserver
         CharacterFavorabilityBean randomFavorabilityData = RandomUtil.GetRandomDataByList(listTownFavorabilityData);
         if (randomFavorabilityData == null)
             return;
-        CharacterBean randomCharacterData = npcInfoManager.GetCharacterDataById(randomFavorabilityData.characterId);
+        CharacterBean randomCharacterData = NpcInfoHandler.Instance.manager.GetCharacterDataById(randomFavorabilityData.characterId);
         Vector3 npcPosition = GetRandomStartPosition();
         BuildTownFriendsForOne(randomCharacterData, randomFavorabilityData, npcPosition);
     }
@@ -277,7 +277,7 @@ public class NpcEventBuilder : NpcNormalBuilder, IBaseObserver
     public void BuildTownFriendsForOne(long npcId)
     {
         Vector3 npcPosition = GetRandomStartPosition();
-        CharacterBean characterData = npcInfoManager.GetCharacterDataById(npcId);
+        CharacterBean characterData = NpcInfoHandler.Instance.manager.GetCharacterDataById(npcId);
         CharacterFavorabilityBean characterFavorability = gameDataManager.gameData.GetCharacterFavorability(characterData.npcInfoData.id);
         BuildTownFriendsForOne(characterData, characterFavorability, npcPosition);
     }

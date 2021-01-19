@@ -193,9 +193,7 @@ public class ItemGameBackpackEquipCpt : ItemGameBackpackCpt, SkillInfoManager.IC
             return;
         }
         SkillInfoBean skillInfo = listData[0];
-        bool isPre = PreTypeEnumTools.CheckIsAllPre(
-            uiGameManager.npcInfoManager,
-            uiGameManager.gameDataManager.gameData, characterData, skillInfo.pre_data, out string reason);
+        bool isPre = PreTypeEnumTools.CheckIsAllPre(uiGameManager.gameDataManager.gameData, characterData, skillInfo.pre_data, out string reason);
         if (!isPre)
         {
             ToastHandler.Instance.ToastHint(ivIcon.sprite, reason);

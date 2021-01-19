@@ -59,12 +59,12 @@ public class SceneGameArenaInit : BaseSceneInit, IBaseObserver
         //测试数据 
         //arenaPrepareData = new ArenaPrepareBean(new MiniGameDebateBean());
         //arenaPrepareData.miniGameData.gameType = MiniGameEnum.Debate;
-        //arenaPrepareData.miniGameData.InitData(gameItemsManager, npcInfoManager.GetCharacterDataById(100011), npcInfoManager.GetCharacterDataById(100021));
+        //arenaPrepareData.miniGameData.InitData(gameItemsManager, NpcInfoHandler.Instance.manager.GetCharacterDataById(100011), NpcInfoHandler.Instance.manager.GetCharacterDataById(100021));
         //arenaPrepareData.miniGameData.winLife = 1;
 
         //arenaPrepareData.gameType = MiniGameEnum.Account;
         //arenaPrepareData.gameAccountData = new MiniGameAccountBean();
-        //arenaPrepareData.gameAccountData.InitData(gameItemsManager, npcInfoManager.GetCharacterDataById(100001));
+        //arenaPrepareData.gameAccountData.InitData(gameItemsManager, NpcInfoHandler.Instance.manager.GetCharacterDataById(100001));
         //arenaPrepareData.gameAccountData.winMoneyS=10;
         //arenaPrepareData.gameAccountData.winMoneyM=1;
         //arenaPrepareData.gameAccountData.winMoneyL=0;
@@ -73,24 +73,24 @@ public class SceneGameArenaInit : BaseSceneInit, IBaseObserver
         //arenaPrepareData.miniGameData.gameType = MiniGameEnum.Cooking;
         //arenaPrepareData.miniGameData.gameReason = MiniGameReasonEnum.Improve;
         //arenaPrepareData.miniGameData.winScore = 60;
-        //CharacterBean ourData = npcInfoManager.GetCharacterDataById(100011);
+        //CharacterBean ourData = NpcInfoHandler.Instance.manager.GetCharacterDataById(100011);
         //List<CharacterBean> listEnemyData = new List<CharacterBean>();
-        //listEnemyData.Add(npcInfoManager.GetCharacterDataById(100021));
-        //listEnemyData.Add(npcInfoManager.GetCharacterDataById(100031));
-        //listEnemyData.Add(npcInfoManager.GetCharacterDataById(100041));
-        //listEnemyData.Add(npcInfoManager.GetCharacterDataById(100051));
-        //listEnemyData.Add(npcInfoManager.GetCharacterDataById(100061));
-        //listEnemyData.Add(npcInfoManager.GetCharacterDataById(100071));
-        //listEnemyData.Add(npcInfoManager.GetCharacterDataById(100081));
-        //listEnemyData.Add(npcInfoManager.GetCharacterDataById(100091));
+        //listEnemyData.Add(NpcInfoHandler.Instance.manager.GetCharacterDataById(100021));
+        //listEnemyData.Add(NpcInfoHandler.Instance.manager.GetCharacterDataById(100031));
+        //listEnemyData.Add(NpcInfoHandler.Instance.manager.GetCharacterDataById(100041));
+        //listEnemyData.Add(NpcInfoHandler.Instance.manager.GetCharacterDataById(100051));
+        //listEnemyData.Add(NpcInfoHandler.Instance.manager.GetCharacterDataById(100061));
+        //listEnemyData.Add(NpcInfoHandler.Instance.manager.GetCharacterDataById(100071));
+        //listEnemyData.Add(NpcInfoHandler.Instance.manager.GetCharacterDataById(100081));
+        //listEnemyData.Add(NpcInfoHandler.Instance.manager.GetCharacterDataById(100091));
         //List<CharacterBean> listAuditerData = new List<CharacterBean>();
-        //listAuditerData.Add(npcInfoManager.GetCharacterDataById(100021));
-        //listAuditerData.Add(npcInfoManager.GetCharacterDataById(100031));
-        //listAuditerData.Add(npcInfoManager.GetCharacterDataById(100041));
-        //listAuditerData.Add(npcInfoManager.GetCharacterDataById(100051));
-        //listAuditerData.Add(npcInfoManager.GetCharacterDataById(100061));
+        //listAuditerData.Add(NpcInfoHandler.Instance.manager.GetCharacterDataById(100021));
+        //listAuditerData.Add(NpcInfoHandler.Instance.manager.GetCharacterDataById(100031));
+        //listAuditerData.Add(NpcInfoHandler.Instance.manager.GetCharacterDataById(100041));
+        //listAuditerData.Add(NpcInfoHandler.Instance.manager.GetCharacterDataById(100051));
+        //listAuditerData.Add(NpcInfoHandler.Instance.manager.GetCharacterDataById(100061));
         //List<CharacterBean> listCompereData = new List<CharacterBean>();
-        //listCompereData.Add(npcInfoManager.GetCharacterDataById(110051));
+        //listCompereData.Add(NpcInfoHandler.Instance.manager.GetCharacterDataById(110051));
         //((MiniGameCookingBean)(arenaPrepareData.miniGameData)).storyGameStartId = 30000001;
         //((MiniGameCookingBean)(arenaPrepareData.miniGameData)).storyGameAuditId = 30000002;
         //((MiniGameCookingBean)(arenaPrepareData.miniGameData)).cookingThemeLevel = 1;
@@ -106,20 +106,20 @@ public class SceneGameArenaInit : BaseSceneInit, IBaseObserver
         //miniGameBarrage.launchSpeed = 1;
         //miniGameBarrage.winSurvivalTime = 60;
         //miniGameBarrage.winLife = 1;
-        //miniGameBarrage.InitData(gameItemsManager, npcInfoManager.GetCharacterDataById(100061));
+        //miniGameBarrage.InitData(gameItemsManager, NpcInfoHandler.Instance.manager.GetCharacterDataById(100061));
         //arenaPrepareData = new ArenaPrepareBean(miniGameBarrage);
 
         //arenaPrepareData = new ArenaPrepareBean(new MiniGameCombatBean());
         //arenaPrepareData.miniGameData.winBringDownNumber = 3;
         //arenaPrepareData.miniGameData.winSurvivalNumber = 1;
         //List<CharacterBean> listOurData = new List<CharacterBean>();
-        //listOurData.Add(npcInfoManager.GetCharacterDataById(100011));
-        //listOurData.Add(npcInfoManager.GetCharacterDataById(100021));
-        //listOurData.Add(npcInfoManager.GetCharacterDataById(100031));
+        //listOurData.Add(NpcInfoHandler.Instance.manager.GetCharacterDataById(100011));
+        //listOurData.Add(NpcInfoHandler.Instance.manager.GetCharacterDataById(100021));
+        //listOurData.Add(NpcInfoHandler.Instance.manager.GetCharacterDataById(100031));
         //List<CharacterBean> listEnemyData = new List<CharacterBean>();
-        //listEnemyData.Add(npcInfoManager.GetCharacterDataById(100041));
-        //listEnemyData.Add(npcInfoManager.GetCharacterDataById(100051));
-        //listEnemyData.Add(npcInfoManager.GetCharacterDataById(100061));
+        //listEnemyData.Add(NpcInfoHandler.Instance.manager.GetCharacterDataById(100041));
+        //listEnemyData.Add(NpcInfoHandler.Instance.manager.GetCharacterDataById(100051));
+        //listEnemyData.Add(NpcInfoHandler.Instance.manager.GetCharacterDataById(100061));
         //arenaPrepareData.miniGameData.InitData(gameItemsManager, listOurData, listEnemyData);
 
         if (arenaPrepareData == null || arenaPrepareData.miniGameData == null)

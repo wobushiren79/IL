@@ -260,7 +260,7 @@ public class StoryBuilder : BaseMonoBehaviour, StoryInfoManager.CallBack
             characterData = gameDataManager.gameData.userCharacter;
         }
         else
-            characterData = npcInfoManager.GetCharacterDataById(itemData.npc_id);
+            characterData = NpcInfoHandler.Instance.manager.GetCharacterDataById(itemData.npc_id);
         //设置编号
         objNpc.name = itemData.npc_num + "";
         aiNpc.SetCharacterData(characterData);

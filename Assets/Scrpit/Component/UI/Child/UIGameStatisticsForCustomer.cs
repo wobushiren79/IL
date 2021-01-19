@@ -40,21 +40,19 @@ public class UIGameStatisticsForCustomer : BaseUIChildComponent<UIGameStatistics
     public IEnumerator InitTeamCustomer()
     {
         CptUtil.RemoveChildsByActive(objTeamCustomerContainer);
-        NpcInfoManager npcInfoManager = ((UIGameManager)uiComponent.uiManager).npcInfoManager;
-        NpcTeamManager npcTeamManager = ((UIGameManager)uiComponent.uiManager).npcTeamManager;
 
         UserAchievementBean userAchievement = ((UIGameManager)uiComponent.uiManager).gameDataManager.gameData.GetAchievementData();
         if (tvTeamCustomerNumber != null)
             tvTeamCustomerNumber.text = GameCommonInfo.GetUITextById(323) + " " + userAchievement.GetNumberForCustomerFoodByType(CustomerTypeEnum.Team) + GameCommonInfo.GetUITextById(82);
         //查询所有团队
-        List<NpcTeamBean> listNpcTeamData = npcTeamManager.GetCustomerTeam();
+        List<NpcTeamBean> listNpcTeamData = NpcTeamHandler.Instance.manager.GetCustomerTeam();
         for (int i = 0; i < listNpcTeamData.Count; i++)
         {
             NpcTeamBean itemNpcTeamData = listNpcTeamData[i];
             GameObject objItem = Instantiate(objTeamCustomerContainer, objItemCustomerModel);
             ItemGameStatisticsForCustomerCpt itemCustomer = objItem.GetComponent<ItemGameStatisticsForCustomerCpt>();
             long[] teamLeaderIds = itemNpcTeamData.GetTeamLeaderId();
-            CharacterBean teamLeaderData = npcInfoManager.GetCharacterDataById(teamLeaderIds[0]);
+            CharacterBean teamLeaderData = NpcInfoHandler.Instance.manager.GetCharacterDataById(teamLeaderIds[0]);
             UserCustomerBean userCustomerData = userAchievement.GetCustomerData(CustomerTypeEnum.Team, itemNpcTeamData.id + "");
             //检测是否解锁该顾客团队
             if (userAchievement.CheckHasTeamCustomer(itemNpcTeamData.id + ""))
@@ -84,7 +82,6 @@ public class UIGameStatisticsForCustomer : BaseUIChildComponent<UIGameStatistics
     {
         CptUtil.RemoveChildsByActive(objFriendCustomerContainer);
 
-        NpcInfoManager npcInfoManager = ((UIGameManager)uiComponent.uiManager).npcInfoManager;
         GameDataManager gameDataManager = ((UIGameManager)uiComponent.uiManager).gameDataManager;
         UserAchievementBean userAchievement = gameDataManager.gameData.GetAchievementData();
 
@@ -95,7 +92,7 @@ public class UIGameStatisticsForCustomer : BaseUIChildComponent<UIGameStatistics
 
         foreach (CharacterFavorabilityBean itemData in listData)
         {
-            CharacterBean itemCharacterData = npcInfoManager.GetCharacterDataById(itemData.characterId);
+            CharacterBean itemCharacterData = NpcInfoHandler.Instance.manager.GetCharacterDataById(itemData.characterId);
             //如果是小镇居民
             if (itemCharacterData.baseInfo.characterType == (int)NpcTypeEnum.Town)
             {

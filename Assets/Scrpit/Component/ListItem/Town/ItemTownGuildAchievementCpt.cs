@@ -35,7 +35,6 @@ public class ItemTownGuildAchievementCpt : ItemGameBaseCpt
         UIGameManager uiGameManager = GetUIManager<UIGameManager>();
 
         bool isAllPre = PreTypeEnumTools.CheckIsAllPre(
-            uiGameManager.npcInfoManager,
             uiGameManager.gameDataManager.gameData, 
             uiGameManager.gameDataManager.gameData.userCharacter,
             preData, out string reason);
@@ -158,7 +157,6 @@ public class ItemTownGuildAchievementCpt : ItemGameBaseCpt
             //添加该成就和奖励
             uiGameManager.gameDataManager.gameData.GetAchievementData().AddAchievement(achievementInfo.id);
             RewardTypeEnumTools.CompleteReward(
-                uiGameManager.npcInfoManager,
                 uiGameManager.gameDataManager,
                 null,
                 achievementInfo.reward_data);

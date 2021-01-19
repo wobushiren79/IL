@@ -120,15 +120,15 @@ public class PreTypeForMiniGameEnumTools : DataTools
     /// <summary>
     /// 获取游戏数据
     /// </summary>
-    public static MiniGameBaseBean GetMiniGameData(MiniGameBaseBean miniGameData, string data, NpcInfoManager npcInfoManager)
+    public static MiniGameBaseBean GetMiniGameData(MiniGameBaseBean miniGameData, string data )
     {
-        return GetMiniGameData(miniGameData, data, new List<CharacterBean> { }, npcInfoManager);
+        return GetMiniGameData(miniGameData, data, new List<CharacterBean> { });
     }
-    public static MiniGameBaseBean GetMiniGameData(MiniGameBaseBean miniGameData, string data, CharacterBean userCharacter , NpcInfoManager npcInfoManager)
+    public static MiniGameBaseBean GetMiniGameData(MiniGameBaseBean miniGameData, string data, CharacterBean userCharacter  )
     {
-        return GetMiniGameData(miniGameData, data, new List<CharacterBean> { userCharacter }, npcInfoManager);
+        return GetMiniGameData(miniGameData, data, new List<CharacterBean> { userCharacter });
     }
-    public static MiniGameBaseBean GetMiniGameData(MiniGameBaseBean miniGameData, string data, List<CharacterBean> listPickCharacter , NpcInfoManager npcInfoManager)
+    public static MiniGameBaseBean GetMiniGameData(MiniGameBaseBean miniGameData, string data, List<CharacterBean> listPickCharacter  )
     {
         List<PreTypeForMiniGameBean> listPreData = GetListPreData(data);
         List<CharacterBean> listUserData = new List<CharacterBean>();
@@ -155,11 +155,11 @@ public class PreTypeForMiniGameEnumTools : DataTools
                     break;
                 case PreTypeForMiniGameEnum.UserIds:
                     long[] userIds = StringUtil.SplitBySubstringForArrayLong(itemPreData.data, ',');
-                    listUserData = npcInfoManager.GetCharacterDataByIds(userIds);
+                    listUserData = NpcInfoHandler.Instance.manager.GetCharacterDataByIds(userIds);
                     break;
                 case PreTypeForMiniGameEnum.EnemyIds:
                     long[] enemyIds = StringUtil.SplitBySubstringForArrayLong(itemPreData.data, ',');
-                    listEnemyData = npcInfoManager.GetCharacterDataByIds(enemyIds);
+                    listEnemyData = NpcInfoHandler.Instance.manager.GetCharacterDataByIds(enemyIds);
                     break;
                 case PreTypeForMiniGameEnum.MiniGamePosition:
                     float[] arrayPosition = StringUtil.SplitBySubstringForArrayFloat(itemPreData.data, ',');
@@ -203,7 +203,7 @@ public class PreTypeForMiniGameEnumTools : DataTools
                 case PreTypeForMiniGameEnum.CookingForButtonNumber:
                 case PreTypeForMiniGameEnum.CookingForWinRank:
 
-                    GetMiniGameDataForCook(npcInfoManager,itemPreData, miniGameData);
+                    GetMiniGameDataForCook(itemPreData, miniGameData);
                     break;
             }
         }
@@ -300,7 +300,7 @@ public class PreTypeForMiniGameEnumTools : DataTools
     /// </summary>
     /// <param name="itemPreData"></param>
     /// <param name="miniGameData"></param>
-    private static void GetMiniGameDataForCook(NpcInfoManager npcInfoManager, PreTypeForMiniGameBean itemPreData, MiniGameBaseBean miniGameData)
+    private static void GetMiniGameDataForCook(PreTypeForMiniGameBean itemPreData, MiniGameBaseBean miniGameData)
     {
         if (miniGameData.gameType != MiniGameEnum.Cooking)
             return;
@@ -323,20 +323,20 @@ public class PreTypeForMiniGameEnumTools : DataTools
                 break;
             case PreTypeForMiniGameEnum.CookingForAuditCharacter:
                 long[] auditIds=   StringUtil.SplitBySubstringForArrayLong(itemPreData.data,',');
-                listAuditData = npcInfoManager.GetCharacterDataByIds(auditIds);
+                listAuditData = NpcInfoHandler.Instance.manager.GetCharacterDataByIds(auditIds);
                 //评审人员只有5位
                 listAuditData = RandomUtil.GetRandomDataByListForNumberNR(listAuditData, 5);
                 //如果评审人员不够 就随机增加小镇人员
                 if (listAuditData.Count < 5)
                 {
                     int tempNumber = 5 - listAuditData.Count;
-                    List<CharacterBean> listTempCharacterData = npcInfoManager.GetCharacterDataByType(NpcTypeEnum.Town);
+                    List<CharacterBean> listTempCharacterData = NpcInfoHandler.Instance.manager.GetCharacterDataByType(NpcTypeEnum.Town);
                     listAuditData.AddRange(RandomUtil.GetRandomDataByListForNumberNR(listTempCharacterData, tempNumber));
                 }
                 break;
             case PreTypeForMiniGameEnum.CookingForCompereCharacter:
                 long[] compereIds = StringUtil.SplitBySubstringForArrayLong(itemPreData.data, ',');
-                listCompereData = npcInfoManager.GetCharacterDataByIds(compereIds);
+                listCompereData = NpcInfoHandler.Instance.manager.GetCharacterDataByIds(compereIds);
                 break;
             case PreTypeForMiniGameEnum.CookingForThemeLevel:
                 int[] themeLevels = StringUtil.SplitBySubstringForArrayInt(itemPreData.data, ',');

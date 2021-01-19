@@ -144,14 +144,11 @@ public class PopupAchievementShow : PopupShowView
         {
             if (status == AchievementStatusEnum.Completed)
             {
-                PreTypeEnumTools.GetPreDetails(itemPreData, gameDataManager.gameData, npcInfoManager, true);
+                PreTypeEnumTools.GetPreDetails(itemPreData, gameDataManager.gameData, true);
             }
             else
             {
-                PreTypeEnumTools.GetPreDetails(itemPreData, gameDataManager.gameData,
-
-                    npcInfoManager,
-                    false);
+                PreTypeEnumTools.GetPreDetails(itemPreData, gameDataManager.gameData,false);
             }
             string preDes = itemPreData.preDescribe;
             float progress = itemPreData.progress;
@@ -173,7 +170,7 @@ public class PopupAchievementShow : PopupShowView
         GameObject objTitle = Instantiate(objRewardContent, objRewardTitle);
         foreach (var itemRewardData in listRewardData)
         {
-            RewardTypeEnumTools.GetRewardDetails(itemRewardData, npcInfoManager);
+            RewardTypeEnumTools.GetRewardDetails(itemRewardData);
             string rewardDes = itemRewardData.rewardDescribe;
             Sprite spReward = itemRewardData.spRewardIcon;
             CreateRewardItem(rewardDes, spReward);

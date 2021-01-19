@@ -53,7 +53,7 @@ public class SceneForInfiniteTowersHandler : BaseHandler, IBaseObserver
         //如果没有就启动测试数据
         if (listUserData.Count == 0)
         {
-            CharacterBean itemCharacterData = npcInfoManager.GetCharacterDataById(10001);
+            CharacterBean itemCharacterData = NpcInfoHandler.Instance.manager.GetCharacterDataById(10001);
             listUserData.Add(itemCharacterData);
             listUserData.Add(itemCharacterData);
             listUserData.Add(itemCharacterData);

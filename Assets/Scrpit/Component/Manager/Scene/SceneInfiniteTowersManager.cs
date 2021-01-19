@@ -141,7 +141,7 @@ public class SceneInfiniteTowersManager : BaseMonoBehaviour
             long[] bossId = bossTeamData.GetTeamLeaderId();
             foreach (long itemMemberId in membersIds)
             {
-                CharacterBean memberData = npcInfoManager.GetCharacterDataById(itemMemberId);
+                CharacterBean memberData = NpcInfoHandler.Instance.manager.GetCharacterDataById(itemMemberId);
                 if (memberData != null)
                 {
                     memberData.body.CreateRandomBody();
@@ -150,7 +150,7 @@ public class SceneInfiniteTowersManager : BaseMonoBehaviour
             }
             foreach (long itemBossId in bossId)
             {
-                CharacterBean bossData = npcInfoManager.GetCharacterDataById(itemBossId);
+                CharacterBean bossData = NpcInfoHandler.Instance.manager.GetCharacterDataById(itemBossId);
                 if (bossData != null)
                 {
                     //bossData.body.CreateRandomBody(characterBodyManager);
@@ -161,7 +161,7 @@ public class SceneInfiniteTowersManager : BaseMonoBehaviour
         else
         {
             //普通层数
-            List<CharacterBean> listCharacter = npcInfoManager.GetCharacterDataByType(NpcTypeEnum.GuestTeam);
+            List<CharacterBean> listCharacter =NpcInfoHandler.Instance.manager.GetCharacterDataByType(NpcTypeEnum.GuestTeam);
             List<CharacterBean> listTempCharacter = new List<CharacterBean>();
             if (!CheckUtil.ListIsNull(listCharacter))
                 for (int i = 0; i < listCharacter.Count; i++)
