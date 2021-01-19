@@ -81,7 +81,7 @@ public class BuildBedCpt : BaseBuildItemCpt
         this.bedStatus = bedStatus;
 
         //设置床单的样式
-        BuildItemBean buildItemData = innBuildManager.GetBuildDataById(buildBedData.bedSheets);
+        BuildItemBean buildItemData = InnBuildHandler.Instance.manager.GetBuildDataById(buildBedData.bedSheets);
         if (bedStatus== BedStatusEnum.Idle)
         {
             string cleanStr = buildItemData.GetIconList()[0] + "_clean";
@@ -131,21 +131,21 @@ public class BuildBedCpt : BaseBuildItemCpt
 
     public void SetBase(long baseId)
     {
-        BuildItemBean buildItemData = innBuildManager.GetBuildDataById(baseId);
+        BuildItemBean buildItemData = InnBuildHandler.Instance.manager.GetBuildDataById(baseId);
         string iconKey = GetIconKey(buildItemData.GetIconList()[0]);
         srBase.sprite = innBuildManager.GetFurnitureSpriteByName(iconKey);
     }
 
     public void SetBar(long barId)
     {
-        BuildItemBean buildItemData = innBuildManager.GetBuildDataById(barId);
+        BuildItemBean buildItemData = InnBuildHandler.Instance.manager.GetBuildDataById(barId);
         string iconKey = GetIconKey(buildItemData.GetIconList()[0]);
         srBar.sprite = innBuildManager.GetFurnitureSpriteByName(iconKey);
     }
 
     public void SetSheets(long sheetsId)
     {
-        BuildItemBean buildItemData = innBuildManager.GetBuildDataById(sheetsId);
+        BuildItemBean buildItemData = InnBuildHandler.Instance.manager.GetBuildDataById(sheetsId);
         string cleanStr = buildItemData.GetIconList()[0] + "_clean";
         string noCleanStr = buildItemData.GetIconList()[0] + "_noclean";
         string iconKey = GetIconKey(cleanStr);
@@ -154,7 +154,7 @@ public class BuildBedCpt : BaseBuildItemCpt
 
     public void SetPillow(long pillowId)
     {
-        BuildItemBean buildItemData = innBuildManager.GetBuildDataById(pillowId);
+        BuildItemBean buildItemData = InnBuildHandler.Instance.manager.GetBuildDataById(pillowId);
         string iconKey = GetIconKey(buildItemData.GetIconList()[0]);
         srPillow.sprite = innBuildManager.GetFurnitureSpriteByName(iconKey);
     }

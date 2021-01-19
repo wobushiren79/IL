@@ -104,14 +104,13 @@ public class ItemTownArenaCpt : ItemGameBaseCpt, DialogView.IDialogCallBack
     public void SetReward(List<RewardTypeBean> listReward)
     {
         UIGameManager uiGameManager = GetUIManager<UIGameManager>();
-        InnBuildManager innBuildManager = uiGameManager.innBuildManager;
         NpcInfoManager npcInfoManager = uiGameManager.npcInfoManager;
         foreach (RewardTypeBean itemReward in listReward)
         {
             GameObject objReward = Instantiate(objRewardContainer, objRewardModel);
             Image ivIcon = CptUtil.GetCptInChildrenByName<Image>(objReward, "Icon");
             Text tvNumber = CptUtil.GetCptInChildrenByName<Text>(objReward, "Text");
-            RewardTypeEnumTools.GetRewardDetails(itemReward,  innBuildManager, npcInfoManager);
+            RewardTypeEnumTools.GetRewardDetails(itemReward, npcInfoManager);
             ivIcon.sprite = itemReward.spRewardIcon;
             tvNumber.text = "x" + itemReward.rewardNumber;
             if (itemReward.dataType == RewardTypeEnum.AddItems)
@@ -265,7 +264,6 @@ public class ItemTownArenaCpt : ItemGameBaseCpt, DialogView.IDialogCallBack
         GameDataHandler gameDataHandler = uiGameManager.gameDataHandler;
         ControlHandler controlHandler = uiGameManager.controlHandler;
         NpcInfoManager npcInfoManager = uiGameManager.npcInfoManager;
-        InnBuildManager innBuildManager = uiGameManager.innBuildManager;
         GameTimeHandler gameTimeHandler = uiGameManager.gameTimeHandler;
   
         if (dialogView as PickForCharacterDialogView)
@@ -324,8 +322,7 @@ public class ItemTownArenaCpt : ItemGameBaseCpt, DialogView.IDialogCallBack
                         }
                     }
                     //完成奖励
-                    RewardTypeEnumTools.CompleteReward
-                        (npcInfoManager,  innBuildManager, gameDataManager, listCharacter, miniGameData.listReward);     
+                    RewardTypeEnumTools.CompleteReward(npcInfoManager, gameDataManager, listCharacter, miniGameData.listReward);     
                 }
                 else
                 {

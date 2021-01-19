@@ -46,7 +46,7 @@ public class InnFloorBuilder : BaseTilemapBuilder
     {
         if (itemData == null)
             return;
-        BuildItemBean buildItemData = innBuildManager.GetBuildDataById(itemData.id);
+        BuildItemBean buildItemData = InnBuildHandler.Instance.manager.GetBuildDataById(itemData.id);
         TileBase floorTile = innBuildManager.GetFloorTileByName(buildItemData.tile_name);
         Build(floorTile, new Vector3Int((int)itemData.startPosition.x, (int)itemData.startPosition.y, 0));
     }

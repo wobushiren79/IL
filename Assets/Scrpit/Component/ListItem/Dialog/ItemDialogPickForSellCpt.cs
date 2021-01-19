@@ -59,8 +59,8 @@ public class ItemDialogPickForSellCpt : BaseMonoBehaviour, DialogView.IDialogCal
         }
         else if (storeInfo.mark_type == 2)
         {
-            BuildItemBean buildItem = innBuildManager.GetBuildDataById(itemData.itemId);
-            spIcon = BuildItemTypeEnumTools.GetBuildItemSprite(innBuildManager, buildItem);
+            BuildItemBean buildItem = InnBuildHandler.Instance.manager.GetBuildDataById(itemData.itemId);
+            spIcon = BuildItemTypeEnumTools.GetBuildItemSprite(buildItem);
             if (buildItem != null)
             {
                 name = buildItem.name;

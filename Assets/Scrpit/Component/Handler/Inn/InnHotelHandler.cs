@@ -89,7 +89,7 @@ public class InnHotelHandler : InnBaseHandler
                 mapBuildData.TryGetValue(currentPosition, out InnResBean buildData);
                 if (buildData != null)
                 {
-                    BuildItemBean buildItem = innBuildManager.GetBuildDataById(buildData.id);
+                    BuildItemBean buildItem = InnBuildHandler.Instance.manager.GetBuildDataById(buildData.id);
                     addAesthetics += buildItem.aesthetics;
                     if(selfPosition!= currentPosition && buildItem.GetBuildType()== BuildItemTypeEnum.Bed)
                     {

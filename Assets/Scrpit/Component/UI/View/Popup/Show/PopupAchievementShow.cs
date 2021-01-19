@@ -173,7 +173,7 @@ public class PopupAchievementShow : PopupShowView
         GameObject objTitle = Instantiate(objRewardContent, objRewardTitle);
         foreach (var itemRewardData in listRewardData)
         {
-            RewardTypeEnumTools.GetRewardDetails(itemRewardData, innBuildManager, npcInfoManager);
+            RewardTypeEnumTools.GetRewardDetails(itemRewardData, npcInfoManager);
             string rewardDes = itemRewardData.rewardDescribe;
             Sprite spReward = itemRewardData.spRewardIcon;
             CreateRewardItem(rewardDes, spReward);
@@ -215,7 +215,7 @@ public class PopupAchievementShow : PopupShowView
         //    List<long> listBuild = data.GetRewardBuild();
         //    foreach (long buildId in listBuild)
         //    {
-        //        BuildItemBean buildItem = innBuildManager.GetBuildDataById(buildId);
+        //        BuildItemBean buildItem = InnBuildHandler.Instance.manager.GetBuildDataById(buildId);
         //        if (buildItem == null)
         //            continue;
         //        Sprite spIcon = innBuildManager.GetFurnitureSpriteByName(buildItem.icon_key);

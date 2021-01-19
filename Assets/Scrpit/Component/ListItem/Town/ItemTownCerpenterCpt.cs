@@ -22,8 +22,6 @@ public class ItemTownCerpenterCpt : ItemTownStoreCpt, DialogView.IDialogCallBack
 
     public void SetData(StoreInfoBean itemData)
     {
-        InnBuildManager innBuildManager = GetUIManager<UIGameManager>().innBuildManager;
-
         storeInfo = itemData;
         float aesthetics = 0;
         string iconKey = "";
@@ -38,7 +36,7 @@ public class ItemTownCerpenterCpt : ItemTownStoreCpt, DialogView.IDialogCallBack
         }
         else
         {
-            buildItemData = innBuildManager.GetBuildDataById(itemData.mark_id);
+            buildItemData = InnBuildHandler.Instance.manager.GetBuildDataById(itemData.mark_id);
             if (buildItemData != null)
             {
                 aesthetics = buildItemData.aesthetics;
@@ -99,7 +97,6 @@ public class ItemTownCerpenterCpt : ItemTownStoreCpt, DialogView.IDialogCallBack
     /// <param name="markId"></param>
     public void SetIcon(StoreForCarpenterTypeEnum type, BuildItemBean buildItem, StoreInfoBean storeInfo)
     {
-        InnBuildManager innBuildManager = GetUIManager<UIGameManager>().innBuildManager;
         Sprite spIcon = null;
         if (type == StoreForCarpenterTypeEnum.Expansion)
         {
@@ -107,7 +104,7 @@ public class ItemTownCerpenterCpt : ItemTownStoreCpt, DialogView.IDialogCallBack
         }
         else
         {
-            spIcon = BuildItemTypeEnumTools.GetBuildItemSprite(innBuildManager, buildItem);
+            spIcon = BuildItemTypeEnumTools.GetBuildItemSprite(buildItem);
         }
 
         if (ivIcon != null && spIcon != null)

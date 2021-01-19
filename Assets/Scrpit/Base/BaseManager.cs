@@ -64,7 +64,7 @@ public class BaseManager : BaseMonoBehaviour
             return GetSpriteByName(dicIcon,ref spriteAtlas, atlasName, assetBundlePath, name);
         return null;
     }
-    protected Sprite GetSpriteByName(Dictionary<string, Sprite> dicIcon, ref SpriteAtlas spriteAtlas, string atlasName, string assetBundlePath, string objName)
+    protected Sprite GetSpriteByName(Dictionary<string, Sprite> dicIcon, ref SpriteAtlas spriteAtlas, string atlasName, string assetBundlePath, string name)
     {
         if (name == null)
             return null;
@@ -85,12 +85,12 @@ public class BaseManager : BaseMonoBehaviour
         spriteAtlas = LoadAssetUtil.SyncLoadAsset<SpriteAtlas>(assetBundlePath, atlasName);
         //加载成功后在读取一次
         if (spriteAtlas != null)
-            return GetSpriteByName(dicIcon, ref spriteAtlas, atlasName, assetBundlePath, objName);
+            return GetSpriteByName(dicIcon, ref spriteAtlas, atlasName, assetBundlePath, name);
         return null;
     }
 
     /// <summary>
-    /// 根据名字获取音频
+    /// 根据名字获取
     /// </summary>
     /// <param name="name"></param>
     /// <param name="map"></param>

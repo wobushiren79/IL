@@ -136,9 +136,9 @@ public class InnAttributesBean
         LimitAestheticsMax();
     }
 
-    public void SetAesthetics(InnBuildManager innBuildManager, InnBuildBean innBuildData)
+    public void SetAesthetics(InnBuildBean innBuildData)
     {
-        if (innBuildManager == null || innBuildData == null)
+        if (innBuildData == null)
             return;
         this.aesthetics = 0;
         List<InnResBean> listFurnitureData = innBuildData.GetFurnitureList(1);
@@ -152,7 +152,7 @@ public class InnAttributesBean
 
         foreach (InnResBean itemData in listData)
         {
-            BuildItemBean buildItem = innBuildManager.GetBuildDataById(itemData.id);
+            BuildItemBean buildItem = InnBuildHandler.Instance.manager.GetBuildDataById(itemData.id);
             aesthetics += buildItem.aesthetics;
         }
         aesthetics = (float)Math.Round(aesthetics, 2);

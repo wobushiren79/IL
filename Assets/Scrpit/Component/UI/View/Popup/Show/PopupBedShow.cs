@@ -174,7 +174,7 @@ public class PopupBedShow : PopupShowView
     protected void CreateStructure(BuildItemTypeEnum buildItemType,long buildId)
     {
         string name =  BuildItemTypeEnumTools.GetBuildItemName(buildItemType);
-        BuildItemBean buildItemdData = innBuildManager.GetBuildDataById(buildId);
+        BuildItemBean buildItemdData = InnBuildHandler.Instance.manager.GetBuildDataById(buildId);
         CreateItem(objItemBaseContainer, null, Color.white, name, buildItemdData.name);
     }
 

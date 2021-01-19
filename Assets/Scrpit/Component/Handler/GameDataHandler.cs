@@ -166,7 +166,7 @@ public class GameDataHandler : BaseHandler, DialogView.IDialogCallBack, IBaseObs
                         }
                         List<RewardTypeBean> listRewardItems = RewardTypeEnumTools.GetRewardItemsForInfiniteTowers(null, itemInfiniteTowerData.layer, totalLucky,true);
                         if (!CheckUtil.ListIsNull(listRewardItems))
-                            RewardTypeEnumTools.CompleteReward( npcInfoManager,  innBuildManager, gameDataManager, listCharacterData, listRewardItems);
+                            RewardTypeEnumTools.CompleteReward(npcInfoManager, gameDataManager, listCharacterData, listRewardItems);
                         //增加层数
                         itemInfiniteTowerData.layer++;
                         //达到最大层数

@@ -72,7 +72,6 @@ public class ItemGameTextSelectCpt : ItemGameBaseCpt, DialogView.IDialogCallBack
             //完成所有奖励
             RewardTypeEnumTools.CompleteReward(
                 uiGameManager.npcInfoManager,
-                uiGameManager.innBuildManager,
                 uiGameManager.gameDataManager,
                 null,
                 textData.reward_data);

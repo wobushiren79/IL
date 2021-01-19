@@ -266,7 +266,7 @@ public class InnBuildBean
         for (int i = 0; i < allData.Count; i++)
         {
             InnResBean itemData = allData[i];
-            BuildItemBean buildItemData = innBuildManager.GetBuildDataById(itemData.id);
+            BuildItemBean buildItemData = InnBuildHandler.Instance.manager.GetBuildDataById(itemData.id);
             if (buildItemData.build_type == (int)BuildItemTypeEnum.Door)
             {
                 doorList.Add(itemData);

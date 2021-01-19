@@ -159,7 +159,6 @@ public class ItemTownGuildAchievementCpt : ItemGameBaseCpt
             uiGameManager.gameDataManager.gameData.GetAchievementData().AddAchievement(achievementInfo.id);
             RewardTypeEnumTools.CompleteReward(
                 uiGameManager.npcInfoManager,
-                uiGameManager.innBuildManager,
                 uiGameManager.gameDataManager,
                 null,
                 achievementInfo.reward_data);

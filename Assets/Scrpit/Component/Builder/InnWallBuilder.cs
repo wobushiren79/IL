@@ -35,7 +35,7 @@ public class InnWallBuilder : BaseTilemapBuilder
         for (int i = 0; i < listData.Count; i++)
         {
             InnResBean itemData = listData[i];
-            BuildItemBean buildItemData = innBuildManager.GetBuildDataById(itemData.id);
+            BuildItemBean buildItemData = InnBuildHandler.Instance.manager.GetBuildDataById(itemData.id);
             TileBase wallTile = innBuildManager.GetWallTileByName(buildItemData.tile_name);
             Build(wallTile, new Vector3Int((int)itemData.startPosition.x, (int)itemData.startPosition.y, 0));
         }
@@ -50,7 +50,7 @@ public class InnWallBuilder : BaseTilemapBuilder
     {
         if (itemData == null)
             return;
-        BuildItemBean buildItemData = innBuildManager.GetBuildDataById(itemData.id);
+        BuildItemBean buildItemData = InnBuildHandler.Instance.manager.GetBuildDataById(itemData.id);
         TileBase wallTile = innBuildManager.GetWallTileByName(buildItemData.tile_name);
         Build(wallTile, new Vector3Int((int)itemData.startPosition.x, (int)itemData.startPosition.y, 0));
     }

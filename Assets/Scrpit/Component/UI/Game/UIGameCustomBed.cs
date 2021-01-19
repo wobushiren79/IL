@@ -96,11 +96,10 @@ public class UIGameCustomBed : UIBaseOne, StoreInfoManager.ICallBack, IRadioGrou
     /// <param name="customBedData"></param>
     public void SetBedText(BuildBedBean buildBedData)
     {
-        InnBuildManager innBuildManager = uiGameManager.innBuildManager;
-        BuildItemBean bedBaseData = innBuildManager.GetBuildDataById(buildBedData.bedBase);
-        BuildItemBean bedBarData = innBuildManager.GetBuildDataById(buildBedData.bedBar);
-        BuildItemBean bedSheetsData = innBuildManager.GetBuildDataById(buildBedData.bedSheets);
-        BuildItemBean bedPillowData = innBuildManager.GetBuildDataById(buildBedData.bedPillow);
+        BuildItemBean bedBaseData = InnBuildHandler.Instance.manager.GetBuildDataById(buildBedData.bedBase);
+        BuildItemBean bedBarData = InnBuildHandler.Instance.manager.GetBuildDataById(buildBedData.bedBar);
+        BuildItemBean bedSheetsData = InnBuildHandler.Instance.manager.GetBuildDataById(buildBedData.bedSheets);
+        BuildItemBean bedPillowData = InnBuildHandler.Instance.manager.GetBuildDataById(buildBedData.bedPillow);
 
         if (tvBedBase != null && bedBaseData != null)
             tvBedBase.text = bedBaseData.name;
@@ -187,11 +186,10 @@ public class UIGameCustomBed : UIBaseOne, StoreInfoManager.ICallBack, IRadioGrou
         List<StoreInfoBean> listData = new List<StoreInfoBean>();
         if (listBedData == null)
             return listData;
-        InnBuildManager innBuildManager = uiGameManager.innBuildManager;
         for (int i = 0; i < listBedData.Count; i++)
         {
             StoreInfoBean storeInfo = listBedData[i];
-            BuildItemBean buildItem = innBuildManager.GetBuildDataById(storeInfo.mark_id);
+            BuildItemBean buildItem = InnBuildHandler.Instance.manager.GetBuildDataById(storeInfo.mark_id);
             if (buildItem.GetBuildType() == buildItemType)
             {
                 listData.Add(storeInfo);

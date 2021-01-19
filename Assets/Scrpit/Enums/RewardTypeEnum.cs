@@ -86,7 +86,7 @@ public class RewardTypeEnumTools : DataTools
         return listReward;
     }
 
-    public static RewardTypeBean GetRewardDetails(RewardTypeBean data, InnBuildManager innBuildManager, NpcInfoManager npcInfoManager)
+    public static RewardTypeBean GetRewardDetails(RewardTypeBean data,  NpcInfoManager npcInfoManager)
     {
         switch (data.dataType)
         {
@@ -117,7 +117,7 @@ public class RewardTypeEnumTools : DataTools
                 data = GetRewardDetailsForRandomItems(data);
                 break;
             case RewardTypeEnum.AddBuildItems:
-                data = GetRewardDetailsForBuildItems(data, innBuildManager);
+                data = GetRewardDetailsForBuildItems(data);
                 break;
             case RewardTypeEnum.AddArenaTrophyElementary:
             case RewardTypeEnum.AddArenaTrophyIntermediate:
@@ -259,11 +259,11 @@ public class RewardTypeEnumTools : DataTools
     /// <param name="iconDataManager"></param>
     /// <param name="innBuildManager"></param>
     /// <returns></returns>
-    private static RewardTypeBean GetRewardDetailsForBuildItems(RewardTypeBean data, InnBuildManager innBuildManager)
+    private static RewardTypeBean GetRewardDetailsForBuildItems(RewardTypeBean data)
     {
         string[] listBuildItemsData = StringUtil.SplitBySubstringForArrayStr(data.data, ',');
         long buildItemId = long.Parse(listBuildItemsData[0]);
-        BuildItemBean buildItemInfo = innBuildManager.GetBuildDataById(buildItemId);
+        BuildItemBean buildItemInfo = InnBuildHandler.Instance.manager.GetBuildDataById(buildItemId);
         data.rewardDescribe = buildItemInfo.name;
         if (listBuildItemsData.Length == 2)
         {
@@ -271,7 +271,7 @@ public class RewardTypeEnumTools : DataTools
         }
         data.rewardId = buildItemId;
         data.rewardDescribe += (" x" + data.rewardNumber);
-        data.spRewardIcon = BuildItemTypeEnumTools.GetBuildItemSprite(innBuildManager, buildItemInfo);
+        data.spRewardIcon = BuildItemTypeEnumTools.GetBuildItemSprite(buildItemInfo);
         return data;
     }
 
@@ -375,18 +375,18 @@ public class RewardTypeEnumTools : DataTools
     /// </summary>
     /// <param name="reward_data"></param>
     /// <param name="gameData"></param>
-    public static void CompleteReward(NpcInfoManager npcInfoManager, InnBuildManager innBuildManager, GameDataManager gameDataManager, List<CharacterBean> listCharacterData, string data)
+    public static void CompleteReward(NpcInfoManager npcInfoManager, GameDataManager gameDataManager, List<CharacterBean> listCharacterData, string data)
     {
         List<RewardTypeBean> listRewardData = GetListRewardData(data);
-        CompleteReward(npcInfoManager, innBuildManager, gameDataManager, listCharacterData, listRewardData);
+        CompleteReward(npcInfoManager, gameDataManager, listCharacterData, listRewardData);
     }
 
-    public static void CompleteReward(NpcInfoManager npcInfoManager, InnBuildManager innBuildManager, GameDataManager gameDataManager, List<CharacterBean> listCharacterData, List<RewardTypeBean> listRewardData)
+    public static void CompleteReward(NpcInfoManager npcInfoManager, GameDataManager gameDataManager, List<CharacterBean> listCharacterData, List<RewardTypeBean> listRewardData)
     {
         GameDataBean gameData = gameDataManager.gameData;
         foreach (var itemData in listRewardData)
         {
-            GetRewardDetails(itemData, innBuildManager, npcInfoManager);
+            GetRewardDetails(itemData, npcInfoManager);
             RewardTypeEnum dataType = itemData.dataType;
             switch (dataType)
             {

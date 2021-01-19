@@ -52,7 +52,6 @@ public class ItemTownGuildImproveCharacterCpt : ItemGameBaseCpt, DialogView.IDia
     protected GameTimeHandler gameTimeHandler;
     protected DialogManager dialogManager;
     protected ToastManager toastManager;
-    protected InnBuildManager innBuildManager;
     protected ControlHandler controlHandler;
 
     private void Awake()
@@ -63,7 +62,6 @@ public class ItemTownGuildImproveCharacterCpt : ItemGameBaseCpt, DialogView.IDia
         gameTimeHandler = uiGameManager.gameTimeHandler;
         controlHandler = uiGameManager.controlHandler;
         gameDataHandler = uiGameManager.gameDataHandler;
-        innBuildManager = uiGameManager.innBuildManager;
 
     }
 
@@ -363,7 +361,7 @@ public class ItemTownGuildImproveCharacterCpt : ItemGameBaseCpt, DialogView.IDia
                 ToastHandler.Instance.ToastHint(GameCommonInfo.GetUITextById(7021));
                 AudioHandler.Instance.PlaySound(AudioSoundEnum.Reward);
                 //完成奖励
-                RewardTypeEnumTools.CompleteReward(npcInfoManager,  innBuildManager, gameDataManager, miniGameData.GetListUserCharacterData(), miniGameData.listReward);
+                RewardTypeEnumTools.CompleteReward(npcInfoManager, gameDataManager, miniGameData.GetListUserCharacterData(), miniGameData.listReward);
 
                 //数据添加
                 Sprite attributeIcon = IconDataHandler.Instance.manager.GetIconSpriteByName("keyboard_button_up_1");

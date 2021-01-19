@@ -30,7 +30,7 @@ public class AchievementDialogView : DialogView
         npcInfoManager = Find<NpcInfoManager>(ImportantTypeEnum.NpcManager);
     }
 
-    public void SetData(int iconType,string iconKey)
+    public void SetData(int iconType, string iconKey)
     {
         SetIcon(iconType, iconKey, null);
         SetDataForCommon();
@@ -74,7 +74,7 @@ public class AchievementDialogView : DialogView
     /// 设置图标
     /// </summary>
     /// <param name="iconKey"></param>
-    public void SetIcon(int type, string iconKey,string remarkIconKey)
+    public void SetIcon(int type, string iconKey, string remarkIconKey)
     {
         if (ivIcon != null)
         {
@@ -120,14 +120,14 @@ public class AchievementDialogView : DialogView
     /// <summary>
     /// 设置奖励
     /// </summary>
-    public void SetReward(string rewardData )
+    public void SetReward(string rewardData)
     {
         float animTimeDelay = 1f;
         CptUtil.RemoveChildsByActive(objRewardContent.transform);
         List<RewardTypeBean> listRewardData = RewardTypeEnumTools.GetListRewardData(rewardData);
         foreach (var itemRewardData in listRewardData)
         {
-            RewardTypeEnumTools.GetRewardDetails(itemRewardData, innBuildManager,npcInfoManager);
+            RewardTypeEnumTools.GetRewardDetails(itemRewardData, npcInfoManager);
             Sprite spReward = itemRewardData.spRewardIcon;
             CreateRewardItem(spReward, animTimeDelay);
             animTimeDelay += 0.1f;

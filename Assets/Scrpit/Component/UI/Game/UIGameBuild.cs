@@ -113,7 +113,7 @@ public class UIGameBuild : BaseUIComponent, IRadioGroupCallBack
     public override void RefreshUI()
     {
         //刷新列表数据
-        List<ItemBean> listBuildData = uiGameManager.gameDataManager.gameData.GetBuildDataByType(uiGameManager.innBuildManager, buildType);
+        List<ItemBean> listBuildData = uiGameManager.gameDataManager.gameData.GetBuildDataByType(buildType);
         for (int i = 0; i < listBuildItem.Count; i++)
         {
             ItemGameBuildCpt itemBuild = listBuildItem[i];
@@ -140,7 +140,7 @@ public class UIGameBuild : BaseUIComponent, IRadioGroupCallBack
             }
             if (!hasData)
             {
-                BuildItemBean buildData = uiGameManager.innBuildManager.GetBuildDataById(itemData.itemId);
+                BuildItemBean buildData = InnBuildHandler.Instance.manager.GetBuildDataById(itemData.itemId);
                 CreateBuildItem(itemData, buildData);
                 tvNull.gameObject.SetActive(false);
             }
@@ -159,8 +159,7 @@ public class UIGameBuild : BaseUIComponent, IRadioGroupCallBack
             }
         }
         //刷新美观值
-        uiGameManager.gameDataManager.gameData.GetInnAttributesData().SetAesthetics
-            (uiGameManager.innBuildManager, uiGameManager.gameDataManager.gameData.GetInnBuildData());
+        uiGameManager.gameDataManager.gameData.GetInnAttributesData().SetAesthetics(uiGameManager.gameDataManager.gameData.GetInnBuildData());
         SetInnAesthetics();
 
         SetBedRangeStatus(true);
@@ -263,7 +262,7 @@ public class UIGameBuild : BaseUIComponent, IRadioGroupCallBack
             for (int i = 0; i < uiGameManager.gameDataManager.gameData.listBuild.Count; i++)
             {
                 ItemBean itemData = uiGameManager.gameDataManager.gameData.listBuild[i];
-                BuildItemBean buildData = uiGameManager.innBuildManager.GetBuildDataById(itemData.itemId);
+                BuildItemBean buildData = InnBuildHandler.Instance.manager.GetBuildDataById(itemData.itemId);
                 if (buildData == null)
                     continue;
                 if (type == buildData.GetBuildType())

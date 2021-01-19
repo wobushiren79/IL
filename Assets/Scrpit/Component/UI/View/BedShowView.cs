@@ -17,13 +17,13 @@ public class BedShowView : BaseMonoBehaviour
 
     public  void SetData(BuildBedBean buildBedData)
     {
-        BuildItemBean bedBaseData =  innBuildManager.GetBuildDataById(buildBedData.bedBase);
+        BuildItemBean bedBaseData =  InnBuildHandler.Instance.manager.GetBuildDataById(buildBedData.bedBase);
         SetBaseData(bedBaseData);
-        BuildItemBean bedBarData = innBuildManager.GetBuildDataById(buildBedData.bedBar);
+        BuildItemBean bedBarData = InnBuildHandler.Instance.manager.GetBuildDataById(buildBedData.bedBar);
         SetBarData(bedBarData);
-        BuildItemBean bedSheetsData = innBuildManager.GetBuildDataById(buildBedData.bedSheets);
+        BuildItemBean bedSheetsData = InnBuildHandler.Instance.manager.GetBuildDataById(buildBedData.bedSheets);
         SetSheetsData(bedSheetsData);
-        BuildItemBean bedPillowData = innBuildManager.GetBuildDataById(buildBedData.bedPillow);
+        BuildItemBean bedPillowData = InnBuildHandler.Instance.manager.GetBuildDataById(buildBedData.bedPillow);
         SetPillowData(bedPillowData);
     }
 

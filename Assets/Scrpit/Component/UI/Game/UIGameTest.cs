@@ -75,7 +75,7 @@ public class UIGameTest : BaseUIComponent
             gameData.AddItemsNumber(itemsInfo.id, 1);
         }
         gameData.listBuild.Clear();
-        Dictionary<long, BuildItemBean> mapbuild = uiGameManager.innBuildManager.listBuildData;
+        Dictionary<long, BuildItemBean> mapbuild = InnBuildHandler.Instance.manager.listBuildData;
         foreach (var itemBuild in mapbuild)
         {
             gameData.AddBuildNumber(itemBuild.Key, 99);

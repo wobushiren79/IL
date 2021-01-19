@@ -461,12 +461,12 @@ public class GameDataBean
     /// <param name="innBuildManager"></param>
     /// <param name="type"></param>
     /// <returns></returns>
-    public List<ItemBean> GetBuildDataByType(InnBuildManager innBuildManager, BuildItemTypeEnum type)
+    public List<ItemBean> GetBuildDataByType(BuildItemTypeEnum type)
     {
         List<ItemBean> listData = new List<ItemBean>();
         foreach (ItemBean itemData in listBuild)
         {
-            BuildItemBean buildItemData= innBuildManager.GetBuildDataById(itemData.itemId);
+            BuildItemBean buildItemData= InnBuildHandler.Instance.manager.GetBuildDataById(itemData.itemId);
             if (buildItemData.GetBuildType() == type)
             {
                 listData.Add(itemData);

@@ -49,9 +49,7 @@ public class ItemGameBuildCpt : ItemGameBaseCpt
     /// <param name="iconKey"></param>
     public void SetIcon(BuildItemBean buildData)
     {
-        Sprite spIcon = null;
-        InnBuildManager innBuildManager = GetUIManager<UIGameManager>().innBuildManager;
-        spIcon = BuildItemTypeEnumTools.GetBuildItemSprite(innBuildManager, buildData); 
+        Sprite spIcon = BuildItemTypeEnumTools.GetBuildItemSprite(buildData); 
         if (ivIcon != null)
             ivIcon.sprite = spIcon;
     }

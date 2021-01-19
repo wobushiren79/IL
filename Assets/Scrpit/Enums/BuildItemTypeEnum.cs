@@ -22,31 +22,31 @@ public enum BuildItemTypeEnum
 
 public class BuildItemTypeEnumTools
 {
-    public static Sprite GetBuildItemSprite(InnBuildManager innBuildManager, BuildItemBean buildItem)
+    public static Sprite GetBuildItemSprite(BuildItemBean buildItem)
     {
         if (buildItem == null)
             return null;
         switch ((BuildItemTypeEnum)buildItem.build_type)
         {
             case BuildItemTypeEnum.Floor:
-                return innBuildManager.GetFloorSpriteByName(buildItem.icon_key);
+                return InnBuildHandler.Instance.manager.GetFloorSpriteByName(buildItem.icon_key);
             case BuildItemTypeEnum.Wall:
-                return innBuildManager.GetWallSpriteByName(buildItem.icon_key);
+                return InnBuildHandler.Instance.manager.GetWallSpriteByName(buildItem.icon_key);
             case BuildItemTypeEnum.Table:
                 if (buildItem.model_name.Equals(EnumUtil.GetEnumName(BuildItemModelTypeEnum.Table_1)))
                 {
-                    return innBuildManager.GetFurnitureSpriteByName(buildItem.icon_key);
+                    return InnBuildHandler.Instance.manager.GetFurnitureSpriteByName(buildItem.icon_key);
                 }
                 else if (buildItem.model_name.Equals(EnumUtil.GetEnumName(BuildItemModelTypeEnum.Table_2)))
                 {
-                    return innBuildManager.GetFurnitureSpriteByName(buildItem.icon_key + "_2");
+                    return InnBuildHandler.Instance.manager.GetFurnitureSpriteByName(buildItem.icon_key + "_2");
                 }
                 else
                 {
-                    return innBuildManager.GetFurnitureSpriteByName(buildItem.icon_key);
+                    return InnBuildHandler.Instance.manager.GetFurnitureSpriteByName(buildItem.icon_key);
                 }
             default:
-                return innBuildManager.GetFurnitureSpriteByName(buildItem.icon_key);
+                return InnBuildHandler.Instance.manager.GetFurnitureSpriteByName(buildItem.icon_key);
         }
     }
 

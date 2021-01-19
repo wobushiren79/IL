@@ -187,7 +187,6 @@ public class UIMiniGameEnd : BaseUIComponent
         //添加奖励
         RewardTypeEnumTools.CompleteReward(
             uiGameManager.npcInfoManager,
-            uiGameManager.innBuildManager,
             uiGameManager.gameDataManager,
             miniGameData.GetListUserCharacterData(),
             miniGameData.listReward);

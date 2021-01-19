@@ -431,7 +431,7 @@ public class ControlForBuildCpt : BaseControl
         //如果拆除的是家具
         if (itemFurnitureData != null)
         {
-            BuildItemBean buildItemData = innBuildManager.GetBuildDataById(itemFurnitureData.id);
+            BuildItemBean buildItemData = InnBuildHandler.Instance.manager.GetBuildDataById(itemFurnitureData.id);
             //如果是最后一扇门则不能删除
             if (buildItemData.build_type == (int)BuildItemTypeEnum.Door && buildData.GetDoorList(innBuildManager).Count <= 1)
             {
