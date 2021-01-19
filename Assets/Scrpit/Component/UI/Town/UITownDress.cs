@@ -3,8 +3,9 @@ using UnityEditor;
 using System.Collections.Generic;
 using DG.Tweening;
 using System.Collections;
+using System;
 
-public class UITownDress : UIBaseOne, IRadioGroupCallBack, StoreInfoManager.ICallBack
+public class UITownDress : UIBaseOne, IRadioGroupCallBack
 {
     public GameObject objGroceryContent;
     public GameObject objGroceryModel;
@@ -31,8 +32,8 @@ public class UITownDress : UIBaseOne, IRadioGroupCallBack, StoreInfoManager.ICal
     {
         base.OpenUI();
 
-        uiGameManager.storeInfoManager.SetCallBack(this);
-        uiGameManager.storeInfoManager.GetStoreInfoForDress();
+        Action<List<StoreInfoBean>> callBack = SetStoreData;
+        StoreInfoHandler.Instance.manager.GetStoreInfoForDress(callBack);
 
         rgStyleType.SetPosition(0, false);
         rgPartType.SetPosition(0, false);
@@ -134,13 +135,16 @@ public class UITownDress : UIBaseOne, IRadioGroupCallBack, StoreInfoManager.ICal
         pickForSellDialog.SetData(mClothesListData);
     }
 
-    #region 商店数据回调
-    public void GetStoreInfoSuccess(StoreTypeEnum type, List<StoreInfoBean> listData)
+
+    /// <summary>
+    /// 设置商店数据
+    /// </summary>
+    /// <param name="listData"></param>
+    public void SetStoreData(List<StoreInfoBean> listData)
     {
         mClothesListData = listData;
         InitDataByType(StoreForDressTypeEnum.Fashion, GeneralEnum.Null);
     }
-    #endregion
 
     #region 类型选择回调
     public void RadioButtonSelected(RadioGroupView rgView, int position, RadioButtonView rbview)

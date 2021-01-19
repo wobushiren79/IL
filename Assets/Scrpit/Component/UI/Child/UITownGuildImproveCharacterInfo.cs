@@ -1,8 +1,9 @@
 ﻿using UnityEngine;
 using UnityEditor;
 using System.Collections.Generic;
+using System;
 
-public class UITownGuildImproveCharacterInfo : BaseUIChildComponent<UITownGuildImprove>, StoreInfoManager.ICallBack
+public class UITownGuildImproveCharacterInfo : BaseUIChildComponent<UITownGuildImprove>
 {
     //游戏数据
     public GameDataBean gameData;
@@ -14,21 +15,62 @@ public class UITownGuildImproveCharacterInfo : BaseUIChildComponent<UITownGuildI
     
     private List<StoreInfoBean> mListLevelInfo;
 
-    protected StoreInfoManager storeInfoManager;
-
-    public override void Awake()
-    {
-        base.Awake();
-        storeInfoManager = Find<StoreInfoManager>(ImportantTypeEnum.StoreInfoManager);
-    }
-
-
     public void InitData(GameDataBean gameData)
     {
         this.gameData = gameData;
-        storeInfoManager.SetCallBack(this);
-        storeInfoManager.GetStoreInfoForGuildImprove();
+
+        Action<List<StoreInfoBean>> callBack = SetStoreData;
+        StoreInfoHandler.Instance.manager.GetStoreInfoForGuildImprove(callBack);
     }
+
+    /// <summary>
+    /// 设置商店数据
+    /// </summary>
+    /// <param name="listData"></param>
+    public void SetStoreData(List<StoreInfoBean> listData)
+    {
+        mListLevelInfo = listData;
+        objImproveEmpty.SetActive(false);
+        List<CharacterBean> listCharacterData = gameData.GetAllCharacterData();
+        CptUtil.RemoveChildsByActive(objImproveContent.transform);
+
+        int itemNumer = 0;
+
+        foreach (CharacterBean itemData in listCharacterData)
+        {
+            if (CheckCanImprove(itemData.baseInfo.chefInfo, out StoreInfoBean chefLevelInfo))
+            {
+                CreateCharacterImproveItem(WorkerEnum.Chef, itemData, itemData.baseInfo.chefInfo, chefLevelInfo);
+                itemNumer++;
+            }
+            if (CheckCanImprove(itemData.baseInfo.waiterInfo, out StoreInfoBean waiterLevelInfo))
+            {
+                CreateCharacterImproveItem(WorkerEnum.Waiter, itemData, itemData.baseInfo.waiterInfo, waiterLevelInfo);
+                itemNumer++;
+            }
+            if (CheckCanImprove(itemData.baseInfo.accountantInfo, out StoreInfoBean accountingLevelInfo))
+            {
+                CreateCharacterImproveItem(WorkerEnum.Accountant, itemData, itemData.baseInfo.accountantInfo, accountingLevelInfo);
+                itemNumer++;
+            }
+            if (CheckCanImprove(itemData.baseInfo.accostInfo, out StoreInfoBean accostLevelInfo))
+            {
+                CreateCharacterImproveItem(WorkerEnum.Accost, itemData, itemData.baseInfo.accostInfo, accostLevelInfo);
+                itemNumer++;
+            }
+            if (CheckCanImprove(itemData.baseInfo.beaterInfo, out StoreInfoBean beaterLevelInfo))
+            {
+                CreateCharacterImproveItem(WorkerEnum.Beater, itemData, itemData.baseInfo.beaterInfo, beaterLevelInfo);
+                itemNumer++;
+            }
+        }
+        if (itemNumer <= 0)
+        {
+            objImproveEmpty.SetActive(true);
+            return;
+        }
+    }
+   
 
     /// <summary>
     /// 创建角色提升item
@@ -74,51 +116,4 @@ public class UITownGuildImproveCharacterInfo : BaseUIChildComponent<UITownGuildI
             return false;
         }
     }
-
-
-    #region 商店数据回调
-    public void GetStoreInfoSuccess(StoreTypeEnum type, List<StoreInfoBean> listData)
-    {
-        mListLevelInfo = listData;
-        objImproveEmpty.SetActive(false);
-        List<CharacterBean> listCharacterData = gameData.GetAllCharacterData();
-        CptUtil.RemoveChildsByActive(objImproveContent.transform);
-
-        int itemNumer = 0;
-
-        foreach (CharacterBean itemData in listCharacterData)
-        {
-            if (CheckCanImprove(itemData.baseInfo.chefInfo, out StoreInfoBean chefLevelInfo))
-            {
-                CreateCharacterImproveItem(WorkerEnum.Chef, itemData, itemData.baseInfo.chefInfo, chefLevelInfo);
-                itemNumer++;
-            }
-            if (CheckCanImprove(itemData.baseInfo.waiterInfo, out StoreInfoBean waiterLevelInfo))
-            {
-                CreateCharacterImproveItem(WorkerEnum.Waiter, itemData, itemData.baseInfo.waiterInfo, waiterLevelInfo);
-                itemNumer++;
-            }
-            if (CheckCanImprove(itemData.baseInfo.accountantInfo, out StoreInfoBean accountingLevelInfo))
-            {
-                CreateCharacterImproveItem(WorkerEnum.Accountant, itemData, itemData.baseInfo.accountantInfo, accountingLevelInfo);
-                itemNumer++;
-            }
-            if (CheckCanImprove(itemData.baseInfo.accostInfo, out StoreInfoBean accostLevelInfo))
-            {
-                CreateCharacterImproveItem(WorkerEnum.Accost, itemData, itemData.baseInfo.accostInfo, accostLevelInfo);
-                itemNumer++;
-            }
-            if (CheckCanImprove(itemData.baseInfo.beaterInfo, out StoreInfoBean beaterLevelInfo))
-            {
-                CreateCharacterImproveItem(WorkerEnum.Beater, itemData, itemData.baseInfo.beaterInfo, beaterLevelInfo);
-                itemNumer++;
-            }
-        }
-        if (itemNumer <= 0)
-        {
-            objImproveEmpty.SetActive(true);
-            return;
-        }
-    }
-    #endregion
 }

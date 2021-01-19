@@ -1,141 +1,125 @@
 ﻿using UnityEngine;
 using UnityEditor;
 using System.Collections.Generic;
+using System;
 
-public class StoreInfoManager : BaseMonoBehaviour, IStoreInfoView
+public class StoreInfoManager : BaseManager, IStoreInfoView
 {  
-    private StoreInfoController mStoreInfoController;
+    protected StoreInfoController storeInfoController;
     //商店数据
     public List<StoreInfoBean> listStoreData;
 
-    private ICallBack mCallBack;
-
     public void Awake()
     {
-        mStoreInfoController = new StoreInfoController(this, this);
+        storeInfoController = new StoreInfoController(this, this);
     }
 
-    public void SetCallBack(ICallBack mCallBack)
-    {
-        this.mCallBack = mCallBack;
-    }
 
     /// <summary>
     /// 获取市场数据
     /// </summary>
-    public void GetStoreInfoForMarket()
+    public void GetStoreInfoForMarket(Action<List<StoreInfoBean>> action)
     {
-        mStoreInfoController.GetMarketStoreInfo();
+        storeInfoController.GetMarketStoreInfo(action);
     }
 
     /// <summary>
     /// 获取绸缎庄数据
     /// </summary>
-    public void GetStoreInfoForDress()
+    public void GetStoreInfoForDress(Action<List<StoreInfoBean>> action)
     {
-        mStoreInfoController.GetDressStoreInfo();
+        storeInfoController.GetDressStoreInfo(action);
     }
 
     /// <summary>
     /// 获取百宝阁数据
     /// </summary>
-    public void GetStoreInfoForGrocery()
+    public void GetStoreInfoForGrocery(Action<List<StoreInfoBean>> action)
     {
-        mStoreInfoController.GetGroceryInfo();
+        storeInfoController.GetGroceryInfo(action);
     }
 
     /// <summary>
     /// 获取建筑坊数据
     /// </summary>
-    public void GetStoreInfoForCarpenter()
+    public void GetStoreInfoForCarpenter(Action<List<StoreInfoBean>> action)
     {
-        mStoreInfoController.GetCarpenterInfo();
+        storeInfoController.GetCarpenterInfo(action);
     }
     /// <summary>
     /// 获取建筑坊床数据
     /// </summary>
-    public void GetStoreInfoForCarpenterBed()
+    public void GetStoreInfoForCarpenterBed(Action<List<StoreInfoBean>> action)
     {
-        mStoreInfoController.GetCarpenterBedInfo();
+        storeInfoController.GetCarpenterBedInfo(action);
     }
     /// <summary>
     /// 获取建筑坊数据
     /// </summary>
-    public void GetStoreInfoForPharmacy()
+    public void GetStoreInfoForPharmacy(Action<List<StoreInfoBean>> action)
     {
-        mStoreInfoController.GetPharmacyInfo();
+        storeInfoController.GetPharmacyInfo(action);
     }
     /// <summary>
     /// 获取公会角色提升数据
     /// </summary>
-    public void GetStoreInfoForGuildImprove()
+    public void GetStoreInfoForGuildImprove(Action<List<StoreInfoBean>> action)
     {
-        mStoreInfoController.GetGuildImproveForCharacter();
+        storeInfoController.GetGuildImproveForCharacter(action);
     }
 
     /// <summary>
     /// 获取公会商品
     /// </summary>
-    public void GetStoreInfoForGuildGoods()
+    public void GetStoreInfoForGuildGoods(Action<List<StoreInfoBean>> action)
     {
-        mStoreInfoController.GetGuildStoreInfo();
+        storeInfoController.GetGuildStoreInfo(action);
     }
 
     /// <summary>
     /// 获取公会客栈升级相关数据
     /// </summary>
-    public void GetStoreInfoForGuildInnLevel()
+    public void GetStoreInfoForGuildInnLevel(Action<List<StoreInfoBean>> action)
     {
-        mStoreInfoController.GetGuildInnLevel();
+        storeInfoController.GetGuildInnLevel(action);
     }
 
     /// <summary>
     /// 获取竞技场信息
     /// </summary>
-    public void GetStoreInfoForArenaInfo()
+    public void GetStoreInfoForArenaInfo(Action<List<StoreInfoBean>> action)
     {
-        mStoreInfoController.GetArenaInfo();
+        storeInfoController.GetArenaInfo(action);
     }
 
     /// <summary>
     /// 获取竞技场商品
     /// </summary>
-    public void GetStoreInfoForArenaGoods()
+    public void GetStoreInfoForArenaGoods(Action<List<StoreInfoBean>> action)
     {
-        mStoreInfoController.GetArenaGoods();
+        storeInfoController.GetArenaGoods(action);
     }
 
     #region 数据回调
-    public void GetAllStoreInfoFail()
+    public void GetAllStoreInfoSuccess(List<StoreInfoBean> listData, Action<List<StoreInfoBean>> action)
     {
+        action?.Invoke(listData);
     }
 
-    public void GetAllStoreInfoSuccess(List<StoreInfoBean> listData)
+    public void GetAllStoreInfoFail()
     {
+
+    }
+
+    public void GetStoreInfoByTypeSuccess(StoreTypeEnum type, List<StoreInfoBean> listData, Action<List<StoreInfoBean>> action)
+    {
+        action?.Invoke(listData);
     }
 
     public void GetStoreInfoByTypeFail(StoreTypeEnum type)
     {
-    }
 
-    public void GetStoreInfoByTypeSuccess(StoreTypeEnum type, List<StoreInfoBean> listData)
-    {
-        listStoreData = listData;
-        switch (type)
-        {
-            case StoreTypeEnum.Market:
-                break;
-        }
-        if (mCallBack != null)
-        {
-            mCallBack.GetStoreInfoSuccess(type,listStoreData);
-        }
     }
     #endregion
-
-    public interface ICallBack
-    {
-       void GetStoreInfoSuccess(StoreTypeEnum type, List<StoreInfoBean> listData);
-    }
 
 }

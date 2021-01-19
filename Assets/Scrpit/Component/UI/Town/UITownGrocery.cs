@@ -3,8 +3,9 @@ using DG.Tweening;
 using UnityEditor;
 using UnityEngine.UI;
 using System.Collections.Generic;
+using System;
 
-public class UITownGrocery : UIBaseOne, StoreInfoManager.ICallBack, IRadioGroupCallBack
+public class UITownGrocery : UIBaseOne, IRadioGroupCallBack
 {
     public GameObject objGroceryContent;
     public GameObject objGroceryModel;
@@ -24,8 +25,9 @@ public class UITownGrocery : UIBaseOne, StoreInfoManager.ICallBack, IRadioGroupC
     {
         base.OpenUI();
         rgGroceryType.SetPosition(0, false);
-        uiGameManager.storeInfoManager.SetCallBack(this);
-        uiGameManager.storeInfoManager.GetStoreInfoForGrocery();
+
+        Action<List<StoreInfoBean>> callBack = SetStoreData;
+        StoreInfoHandler.Instance.manager.GetStoreInfoForGrocery(callBack);
     }
 
     public void InitDataByType(StoreForGroceryTypeEnum type)
@@ -80,13 +82,17 @@ public class UITownGrocery : UIBaseOne, StoreInfoManager.ICallBack, IRadioGroupC
         pickForSellDialog.SetData(mGroceryListData);
     }
 
-    #region 商店数据回调
-    public void GetStoreInfoSuccess(StoreTypeEnum type, List<StoreInfoBean> listData)
+
+    /// <summary>
+    /// 设置商店数据
+    /// </summary>
+    /// <param name="type"></param>
+    /// <param name="listData"></param>
+    public void SetStoreData(List<StoreInfoBean> listData)
     {
         mGroceryListData = listData;
         InitDataByType(StoreForGroceryTypeEnum.Menu);
     }
-    #endregion
 
     #region 类型选择回调
     public void RadioButtonSelected(RadioGroupView rgView, int position, RadioButtonView view)

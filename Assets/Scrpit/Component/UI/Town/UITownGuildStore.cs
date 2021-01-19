@@ -2,8 +2,9 @@
 using UnityEditor;
 using System.Collections.Generic;
 using DG.Tweening;
+using System;
 
-public class UITownGuildStore : UIBaseOne, StoreInfoManager.ICallBack, IRadioGroupCallBack
+public class UITownGuildStore : UIBaseOne, IRadioGroupCallBack
 {
     public GameObject objGuidStoreContent;
     public GameObject objGuidStoreForItemsModel;
@@ -25,8 +26,8 @@ public class UITownGuildStore : UIBaseOne, StoreInfoManager.ICallBack, IRadioGro
         base.OpenUI();
         rgGuildStoreType.SetPosition(0, false);
 
-        uiGameManager.storeInfoManager.SetCallBack(this);
-        uiGameManager.storeInfoManager.GetStoreInfoForGuildGoods();
+        Action<List<StoreInfoBean>> callBack = SetStoreData;
+        StoreInfoHandler.Instance.manager.GetStoreInfoForGuildGoods(callBack);
     }
 
     /// <summary>
@@ -95,14 +96,16 @@ public class UITownGuildStore : UIBaseOne, StoreInfoManager.ICallBack, IRadioGro
         }
     }
 
-
-    #region 商店数据回调
-    public void GetStoreInfoSuccess(StoreTypeEnum type, List<StoreInfoBean> listData)
+    /// <summary>
+    /// 设置商店数据
+    /// </summary>
+    /// <param name="listData"></param>
+    public void SetStoreData(List<StoreInfoBean> listData)
     {
         mGuidStoreListData = listData;
         InitDataByType(StoreForGuildGoodsTypeEnum.Menu);
     }
-    #endregion
+
 
     #region 类型选择回调
     public void RadioButtonSelected(RadioGroupView rgView, int position, RadioButtonView view)

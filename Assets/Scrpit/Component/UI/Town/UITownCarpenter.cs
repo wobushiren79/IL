@@ -3,7 +3,9 @@ using UnityEditor;
 using System.Collections.Generic;
 using DG.Tweening;
 using UnityEngine.UI;
-public class UITownCarpenter : UIBaseOne, IRadioGroupCallBack, StoreInfoManager.ICallBack
+using System;
+
+public class UITownCarpenter : UIBaseOne, IRadioGroupCallBack
 {
     public Button btCustomBed;
     public RadioGroupView rgCerpenterType;
@@ -27,8 +29,8 @@ public class UITownCarpenter : UIBaseOne, IRadioGroupCallBack, StoreInfoManager.
         base.OpenUI();
         rgCerpenterType.SetPosition(0, false);
 
-        uiGameManager.storeInfoManager.SetCallBack(this);
-        uiGameManager.storeInfoManager.GetStoreInfoForCarpenter();
+        Action<List<StoreInfoBean>> callBack = SetStoreData;
+        StoreInfoHandler.Instance.manager.GetStoreInfoForCarpenter(callBack);
         SetCustomBed();
     }
 
@@ -144,7 +146,7 @@ public class UITownCarpenter : UIBaseOne, IRadioGroupCallBack, StoreInfoManager.
     }
 
     #region 获取商店物品回调
-    public void GetStoreInfoSuccess(StoreTypeEnum type, List<StoreInfoBean> listData)
+    public void SetStoreData(List<StoreInfoBean> listData)
     {
         mCarpenterListData = listData;
         selectType = StoreForCarpenterTypeEnum.Expansion;

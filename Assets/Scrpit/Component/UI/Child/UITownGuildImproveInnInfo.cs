@@ -2,32 +2,23 @@
 using UnityEditor;
 using System.Collections.Generic;
 using UnityEngine.UI;
+using System;
 
-public class UITownGuildImproveInnInfo : BaseUIChildComponent<UITownGuildImprove>, StoreInfoManager.ICallBack
+public class UITownGuildImproveInnInfo : BaseUIChildComponent<UITownGuildImprove>
 {
     public Text tvNull;
 
     public GameObject objInnLevelContainer;
     public GameObject objInnLevelModel;
 
-    protected StoreInfoManager storeInfoManager;
-    protected IconDataManager  iconDataManager;
-
     public GameDataBean gameData;
-
-    public override void Awake()
-    {
-        base.Awake();
-        storeInfoManager = Find<StoreInfoManager>(ImportantTypeEnum.StoreInfoManager);
-        iconDataManager = Find<IconDataManager>(ImportantTypeEnum.UIManager);
-    }
 
     public void InitData(GameDataBean gameData)
     {
         CptUtil.RemoveChildsByActive(objInnLevelContainer);
         this.gameData = gameData;
-        storeInfoManager.SetCallBack(this);
-        storeInfoManager.GetStoreInfoForGuildInnLevel();
+        Action<List<StoreInfoBean>> callBack = SetStoreData;
+        StoreInfoHandler.Instance.manager.GetStoreInfoForGuildInnLevel(callBack);
     }
 
     /// <summary>
@@ -62,8 +53,11 @@ public class UITownGuildImproveInnInfo : BaseUIChildComponent<UITownGuildImprove
         return null;
     }
 
-    #region 数据回调
-    public void GetStoreInfoSuccess(StoreTypeEnum type, List<StoreInfoBean> listData)
+   /// <summary>
+   /// 设置商店数据
+   /// </summary>
+   /// <param name="listData"></param>
+    public void SetStoreData(List<StoreInfoBean> listData)
     {
         tvNull.gameObject.SetActive(false);
         string innLevelStr = gameData.innAttributes.GetNextInnLevel(out int levelTitle, out int levelStar);
@@ -79,5 +73,5 @@ public class UITownGuildImproveInnInfo : BaseUIChildComponent<UITownGuildImprove
             CreateInnLevelItem(innLevelStr, spInnLevel, storeInfoData);
         }
     }
-    #endregion
+
 }

@@ -2,7 +2,9 @@
 using UnityEditor;
 using System.Collections.Generic;
 using UnityEngine.UI;
-public class UIGameCustomBed : UIBaseOne, StoreInfoManager.ICallBack, IRadioGroupCallBack
+using System;
+
+public class UIGameCustomBed : UIBaseOne, IRadioGroupCallBack
 {
     public BedShowView bedShow;
     public PriceShowView priceShow;
@@ -48,8 +50,8 @@ public class UIGameCustomBed : UIBaseOne, StoreInfoManager.ICallBack, IRadioGrou
 
         CptUtil.RemoveChildsByActive(objItemContainer);
 
-        uiGameManager.storeInfoManager.SetCallBack(this);
-        uiGameManager.storeInfoManager.GetStoreInfoForCarpenterBed();
+        Action<List<StoreInfoBean>> callBack = SetStoreData;
+        StoreInfoHandler.Instance.manager.GetStoreInfoForCarpenterBed(callBack);
 
         if (customBedData == null)
             customBedData = new BuildBedBean();
@@ -253,13 +255,17 @@ public class UIGameCustomBed : UIBaseOne, StoreInfoManager.ICallBack, IRadioGrou
     }
 
 
-    #region 获取数据回调
-    public void GetStoreInfoSuccess(StoreTypeEnum type, List<StoreInfoBean> listData)
+    /// <summary>
+    /// 设置商店数据
+    /// </summary>
+    /// <param name="type"></param>
+    /// <param name="listData"></param>
+    public void SetStoreData(List<StoreInfoBean> listData)
     {
         listBedData = listData;
         rgBedType.SetPosition(0, true);
     }
-    #endregion
+
 
     #region 类型选择回调
     public void RadioButtonSelected(RadioGroupView rgView, int position, RadioButtonView rbview)

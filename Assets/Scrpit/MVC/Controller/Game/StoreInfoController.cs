@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using UnityEditor;
 using System.Collections.Generic;
+using System;
 
 public class StoreInfoController : BaseMVCController<StoreInfoModel, IStoreInfoView>
 {
@@ -17,12 +18,12 @@ public class StoreInfoController : BaseMVCController<StoreInfoModel, IStoreInfoV
     /// <summary>
     /// 查询所有商店信息
     /// </summary>
-    public void GetAllStoreInfo()
+    public void GetAllStoreInfo(Action<List<StoreInfoBean>> action)
     {
         List<StoreInfoBean> listData = GetModel().GetAllStoreInfo();
         if (!CheckUtil.ListIsNull(listData))
         {
-            GetView().GetAllStoreInfoSuccess(listData);
+            GetView().GetAllStoreInfoSuccess(listData, action);
         }
         else
         {
@@ -33,98 +34,98 @@ public class StoreInfoController : BaseMVCController<StoreInfoModel, IStoreInfoV
     /// <summary>
     /// 获取杂货店数据
     /// </summary>
-    public void GetGroceryInfo()
+    public void GetGroceryInfo(Action<List<StoreInfoBean>> action)
     {
-        GetStoreInfoByType(StoreTypeEnum.Grocery);
+        GetStoreInfoByType(StoreTypeEnum.Grocery, action);
     }
 
     /// <summary>
     /// 获取服装店数据
     /// </summary>
-    public void GetDressStoreInfo()
+    public void GetDressStoreInfo(Action<List<StoreInfoBean>> action)
     {
-        GetStoreInfoByType(StoreTypeEnum.Dress);
+        GetStoreInfoByType(StoreTypeEnum.Dress, action);
     }
 
     /// <summary>
     /// 获取建筑坊数据
     /// </summary>
-    public void GetCarpenterInfo()
+    public void GetCarpenterInfo(Action<List<StoreInfoBean>> action)
     {
-        GetStoreInfoByType(StoreTypeEnum.Carpenter);
+        GetStoreInfoByType(StoreTypeEnum.Carpenter, action);
     }
     /// <summary>
     /// 获取建筑坊床数据
     /// </summary>
-    public void GetCarpenterBedInfo()
+    public void GetCarpenterBedInfo(Action<List<StoreInfoBean>> action)
     {
-        GetStoreInfoByType(StoreTypeEnum.CarpenterBed);
+        GetStoreInfoByType(StoreTypeEnum.CarpenterBed, action);
     }
     /// <summary>
     /// 获取建筑坊数据
     /// </summary>
-    public void GetPharmacyInfo()
+    public void GetPharmacyInfo(Action<List<StoreInfoBean>> action)
     {
-        GetStoreInfoByType(StoreTypeEnum.Pharmacy);
+        GetStoreInfoByType(StoreTypeEnum.Pharmacy, action);
     }
 
     /// <summary>
     /// 获取市场数据
     /// </summary>
-    public void GetMarketStoreInfo()
+    public void GetMarketStoreInfo(Action<List<StoreInfoBean>> action)
     {
-        GetStoreInfoByType(StoreTypeEnum.Market);
+        GetStoreInfoByType(StoreTypeEnum.Market, action);
     }
 
     /// <summary>
     /// 获取公会商店数据
     /// </summary>
-    public void GetGuildStoreInfo()
+    public void GetGuildStoreInfo(Action<List<StoreInfoBean>> action)
     {
-        GetStoreInfoByType(StoreTypeEnum.Guild);
+        GetStoreInfoByType(StoreTypeEnum.Guild, action);
     }
 
     /// <summary>
     /// 获取角色提升数据
     /// </summary>
-    public void GetGuildImproveForCharacter()
+    public void GetGuildImproveForCharacter(Action<List<StoreInfoBean>> action)
     {
-        GetStoreInfoByType(StoreTypeEnum.Improve);
+        GetStoreInfoByType(StoreTypeEnum.Improve, action);
     }
 
     /// <summary>
     /// 获取公会客栈升级数据
     /// </summary>
-    public void GetGuildInnLevel()
+    public void GetGuildInnLevel(Action<List<StoreInfoBean>> action)
     {
-        GetStoreInfoByType(StoreTypeEnum.InnLevel);
+        GetStoreInfoByType(StoreTypeEnum.InnLevel, action);
     }
 
     /// <summary>
     /// 获取竞技场信息
     /// </summary>
-    public void GetArenaInfo()
+    public void GetArenaInfo(Action<List<StoreInfoBean>> action)
     {
-        GetStoreInfoByType(StoreTypeEnum.ArenaInfo);
+        GetStoreInfoByType(StoreTypeEnum.ArenaInfo, action);
     }
 
     /// <summary>
     /// 获取竞技场商品
     /// </summary>
-    public void GetArenaGoods()
+    public void GetArenaGoods(Action<List<StoreInfoBean>> action)
     {
-        GetStoreInfoByType(StoreTypeEnum.ArenaGoods);
+        GetStoreInfoByType(StoreTypeEnum.ArenaGoods, action);
     }
 
     /// <summary>
     /// 查询所有商店信息
     /// </summary>
-    public void GetStoreInfoByType(StoreTypeEnum type)
+    public void GetStoreInfoByType(StoreTypeEnum type, Action<List<StoreInfoBean>> action)
     {
         List<StoreInfoBean> listData = GetModel().GetStoreInfoByType(type);
         if (!CheckUtil.ListIsNull(listData))
         {
-            GetView().GetStoreInfoByTypeSuccess(type, listData);
+            GetView().GetStoreInfoByTypeSuccess(type, listData, action);
         }
         else
         {

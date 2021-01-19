@@ -3,8 +3,9 @@ using UnityEditor;
 using UnityEngine.UI;
 using DG.Tweening;
 using System.Collections.Generic;
+using System;
 
-public class UITownMarket : UIBaseOne, StoreInfoManager.ICallBack
+public class UITownMarket : UIBaseOne
 {
     public GameObject objGoodsContent;
     public GameObject objGoodsModel;
@@ -14,8 +15,9 @@ public class UITownMarket : UIBaseOne, StoreInfoManager.ICallBack
     public override void OpenUI()
     {
         base.OpenUI();
-        uiGameManager.storeInfoManager.SetCallBack(this);
-        uiGameManager.storeInfoManager.GetStoreInfoForMarket();
+
+        Action<List<StoreInfoBean>> callBack = SetStoreData;
+        StoreInfoHandler.Instance.manager.GetStoreInfoForMarket(callBack);
     }
 
     public void CreateGoods(List<StoreInfoBean> listData)
@@ -40,12 +42,9 @@ public class UITownMarket : UIBaseOne, StoreInfoManager.ICallBack
 
 
     #region 数据回调
-    public void GetStoreInfoSuccess(StoreTypeEnum type, List<StoreInfoBean> listData)
+    public void SetStoreData( List<StoreInfoBean> listData)
     {
-        if (type==StoreTypeEnum.Market)
-        {
-            CreateGoods(listData);
-        }
+        CreateGoods(listData);
     }
     #endregion
 }

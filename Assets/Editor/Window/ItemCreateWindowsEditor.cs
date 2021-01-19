@@ -2,7 +2,7 @@
 using UnityEditor;
 using System.Collections.Generic;
 
-public class ItemCreateWindowsEditor : EditorWindow, StoreInfoManager.ICallBack
+public class ItemCreateWindowsEditor : EditorWindow
 {
     GameItemsManager gameItemsManager;
     StoreInfoManager storeInfoManager;
@@ -32,7 +32,6 @@ public class ItemCreateWindowsEditor : EditorWindow, StoreInfoManager.ICallBack
         storeInfoManager.Awake();
         innBuildManager = new InnBuildManager();
         innBuildManager.Awake();
-        storeInfoManager.SetCallBack(this);
         gameItemsManager.itemsInfoController.GetAllItemsInfo();
         innBuildManager.buildDataController.GetAllBuildItemsData();
         itemsInfoService = new ItemsInfoService();
@@ -326,43 +325,43 @@ public class ItemCreateWindowsEditor : EditorWindow, StoreInfoManager.ICallBack
         }
         if (GUILayout.Button("查询百宝斋商品", GUILayout.Width(100), GUILayout.Height(20)))
         {
-            storeInfoManager.GetStoreInfoForGrocery();
+            storeInfoManager.GetStoreInfoForGrocery(null);
         }
         if (GUILayout.Button("查询绸缎庄商品", GUILayout.Width(100), GUILayout.Height(20)))
         {
-            storeInfoManager.GetStoreInfoForDress();
+            storeInfoManager.GetStoreInfoForDress(null);
         }
         if (GUILayout.Button("查询建造商品", GUILayout.Width(100), GUILayout.Height(20)))
         {
-            storeInfoManager.GetStoreInfoForCarpenter();
+            storeInfoManager.GetStoreInfoForCarpenter(null);
         }
         if (GUILayout.Button("查询药店商品", GUILayout.Width(100), GUILayout.Height(20)))
         {
-            storeInfoManager.GetStoreInfoForPharmacy();
+            storeInfoManager.GetStoreInfoForPharmacy(null);
         }
         if (GUILayout.Button("查询公会商品", GUILayout.Width(100), GUILayout.Height(20)))
         {
-            storeInfoManager.GetStoreInfoForGuildGoods();
+            storeInfoManager.GetStoreInfoForGuildGoods(null);
         }
         if (GUILayout.Button("查询职业升级", GUILayout.Width(100), GUILayout.Height(20)))
         {
-            storeInfoManager.GetStoreInfoForGuildImprove();
+            storeInfoManager.GetStoreInfoForGuildImprove(null);
         }
         if (GUILayout.Button("查询客栈升级", GUILayout.Width(100), GUILayout.Height(20)))
         {
-            storeInfoManager.GetStoreInfoForGuildInnLevel();
+            storeInfoManager.GetStoreInfoForGuildInnLevel(null);
         }
         if (GUILayout.Button("查询斗技场", GUILayout.Width(100), GUILayout.Height(20)))
         {
-            storeInfoManager.GetStoreInfoForArenaInfo();
+            storeInfoManager.GetStoreInfoForArenaInfo(null);
         }
         if (GUILayout.Button("查询斗技场商品", GUILayout.Width(100), GUILayout.Height(20)))
         {
-            storeInfoManager.GetStoreInfoForArenaGoods();
+            storeInfoManager.GetStoreInfoForArenaGoods(null);
         }
         if (GUILayout.Button("查询床商品", GUILayout.Width(100), GUILayout.Height(20)))
         {
-            storeInfoManager.GetStoreInfoForCarpenterBed();
+            storeInfoManager.GetStoreInfoForCarpenterBed(null);
         }
         GUILayout.EndHorizontal();
         if (listFindStoreItem == null)

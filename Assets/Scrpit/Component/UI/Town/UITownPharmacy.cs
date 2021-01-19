@@ -1,8 +1,9 @@
 ﻿using UnityEngine;
 using UnityEditor;
 using System.Collections.Generic;
+using System;
 
-public class UITownPharmacy : UIBaseOne, IRadioGroupCallBack, StoreInfoManager.ICallBack
+public class UITownPharmacy : UIBaseOne, IRadioGroupCallBack
 {
     public GameObject objItemsContainer;
     public GameObject objItemsModel;
@@ -20,8 +21,9 @@ public class UITownPharmacy : UIBaseOne, IRadioGroupCallBack, StoreInfoManager.I
     {
         base.OpenUI();
         rgType.SetPosition(0, false);
-        uiGameManager.storeInfoManager.SetCallBack(this);
-        uiGameManager.storeInfoManager.GetStoreInfoForPharmacy();
+
+        Action<List<StoreInfoBean>> callBack = SetStoreData;
+        StoreInfoHandler.Instance.manager.GetStoreInfoForPharmacy(callBack);
     }
 
     /// <summary>
@@ -40,7 +42,16 @@ public class UITownPharmacy : UIBaseOne, IRadioGroupCallBack, StoreInfoManager.I
             itemCpt.SetData(storeInfo);
         }
     }
-
+    
+    /// <summary>
+    /// 设置商店数据
+    /// </summary>
+    /// <param name="listData"></param>
+    public void SetStoreData(List<StoreInfoBean> listData)
+    {
+        this.listData = listData;
+        CreateItemsList(listData);
+    }
     #region 类型选择回调
     public void RadioButtonSelected(RadioGroupView rgView, int position, RadioButtonView rbview)
     {
@@ -58,11 +69,4 @@ public class UITownPharmacy : UIBaseOne, IRadioGroupCallBack, StoreInfoManager.I
     }
     #endregion
 
-    #region 数据回调
-    public void GetStoreInfoSuccess(StoreTypeEnum type, List<StoreInfoBean> listData)
-    {
-        this.listData = listData;
-        CreateItemsList(listData);
-    }
-    #endregion
 }

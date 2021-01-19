@@ -12,7 +12,6 @@ public class UIGameManager : BaseUIManager
     //数据
     [Header("数据")]
     public GameDataManager gameDataManager;
-    public StoreInfoManager storeInfoManager;
     public AchievementInfoManager achievementInfoManager;
     public TextInfoManager textInfoManager;
     public SkillInfoManager skillInfoManager;
@@ -42,7 +41,6 @@ public class UIGameManager : BaseUIManager
         gameDataManager = Find<GameDataManager>(ImportantTypeEnum.GameDataManager);
         achievementInfoManager = Find<AchievementInfoManager>(ImportantTypeEnum.GameDataManager);
 
-        storeInfoManager = Find<StoreInfoManager>(ImportantTypeEnum.StoreInfoManager);
         textInfoManager= Find<TextInfoManager>(ImportantTypeEnum.TextManager);
         skillInfoManager = Find<SkillInfoManager>(ImportantTypeEnum.SkillManager);
 

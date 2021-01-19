@@ -2,8 +2,9 @@
 using UnityEditor;
 using System.Collections.Generic;
 using DG.Tweening;
+using System;
 
-public class UITownArenaStore : UIBaseOne, StoreInfoManager.ICallBack, IRadioGroupCallBack
+public class UITownArenaStore : UIBaseOne, IRadioGroupCallBack
 {
     public RadioGroupView rgType;
     public GameObject objGoodsContainer;
@@ -23,8 +24,8 @@ public class UITownArenaStore : UIBaseOne, StoreInfoManager.ICallBack, IRadioGro
         base.OpenUI();
         rgType.SetPosition(0, false);
 
-        uiGameManager.storeInfoManager.SetCallBack(this);
-        uiGameManager.storeInfoManager.GetStoreInfoForArenaGoods();
+        Action<List<StoreInfoBean>> callBack = SetStoreData;
+        StoreInfoHandler.Instance.manager.GetStoreInfoForArenaGoods(callBack);
     }
 
     public void InitDataByType(StoreForArenaGoodsTypeEnum type)
@@ -80,13 +81,16 @@ public class UITownArenaStore : UIBaseOne, StoreInfoManager.ICallBack, IRadioGro
         objItem.transform.DOScale(new Vector3(0, 0, 0), 0.5f).SetEase(Ease.OutBack).From();
     }
 
-    #region 数据回调
-    public void GetStoreInfoSuccess(StoreTypeEnum type, List<StoreInfoBean> listData)
+
+    /// <summary>
+    /// 设置商店数据
+    /// </summary>
+    /// <param name="listData"></param>
+    public void SetStoreData(List<StoreInfoBean> listData)
     {
         arenaStoreListData = listData;
         InitDataByType(StoreForArenaGoodsTypeEnum.Dress);
     }
-    #endregion
 
     #region 类型选择回调
     public void RadioButtonSelected(RadioGroupView rgView, int position, RadioButtonView rbview)

@@ -3,8 +3,9 @@ using UnityEditor;
 using DG.Tweening;
 using UnityEngine.UI;
 using System.Collections.Generic;
+using System;
 
-public class UITownArena : UIBaseOne, IRadioGroupCallBack, StoreInfoManager.ICallBack
+public class UITownArena : UIBaseOne, IRadioGroupCallBack
 {
     public ScrollRect scrollRectContainer;
     public GameObject objArenaContainer;
@@ -29,8 +30,8 @@ public class UITownArena : UIBaseOne, IRadioGroupCallBack, StoreInfoManager.ICal
         base.OpenUI();
         rgType.SetPosition(0, false);
 
-        uiGameManager.storeInfoManager.SetCallBack(this);
-        uiGameManager.storeInfoManager.GetStoreInfoForArenaInfo();
+        Action<List<StoreInfoBean>> callBack = SetStoreData;
+        StoreInfoHandler.Instance.manager.GetStoreInfoForArenaInfo(callBack);
     }
 
     public override void RefreshUI()
@@ -79,7 +80,7 @@ public class UITownArena : UIBaseOne, IRadioGroupCallBack, StoreInfoManager.ICal
     private List<MiniGameBaseBean> CreateMiniGameData(TrophyTypeEnum type)
     {
         List<MiniGameBaseBean> listMiniGameData = new List<MiniGameBaseBean>();
-        int arenaNumber = Random.Range(1, 10);
+        int arenaNumber = UnityEngine.Random.Range(1, 10);
         for (int i = 0; i < arenaNumber; i++)
         {
             MiniGameEnum gameType = RandomUtil.GetRandomEnum<MiniGameEnum>();
@@ -340,7 +341,7 @@ public class UITownArena : UIBaseOne, IRadioGroupCallBack, StoreInfoManager.ICal
                 equipLevel = 3;
                 break;
         }
-        miniGameData.winBringDownNumber = Random.Range(1, 6);
+        miniGameData.winBringDownNumber = UnityEngine.Random.Range(1, 6);
         //生成敌人
         List<CharacterBean> listEnemyData = new List<CharacterBean>();
         for (int i = 0; i < miniGameData.winBringDownNumber; i++)
@@ -352,6 +353,16 @@ public class UITownArena : UIBaseOne, IRadioGroupCallBack, StoreInfoManager.ICal
         return miniGameData;
     }
 
+    /// <summary>
+    /// 设置数据
+    /// </summary>
+    /// <param name="type"></param>
+    /// <param name="listData"></param>
+    public void SetStoreData(List<StoreInfoBean> listData)
+    {
+        listArenaInfo = listData;
+        InitData(TrophyTypeEnum.Elementary);
+    }
 
     #region 等级选择回调
     public void RadioButtonSelected(RadioGroupView rgView, int position, RadioButtonView rbview)
@@ -366,11 +377,7 @@ public class UITownArena : UIBaseOne, IRadioGroupCallBack, StoreInfoManager.ICal
     }
     #endregion
 
-    #region 数据回调
-    public void GetStoreInfoSuccess(StoreTypeEnum type, List<StoreInfoBean> listData)
-    {
-        listArenaInfo = listData;
-        InitData(TrophyTypeEnum.Elementary);
-    }
-    #endregion
+
+
+
 }
