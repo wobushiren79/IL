@@ -3,7 +3,7 @@ using UnityEditor;
 using System.Collections;
 using Steamworks;
 
-public class SteamHandler : BaseMonoBehaviour
+public class SteamHandler : BaseHandler<SteamHandler,BaseManager>
 {
     public SteamUserStatsImpl steamUserStats;
     public SteamLeaderboardImpl steamLeaderboard;

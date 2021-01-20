@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using UnityEditor;
 using System.Collections.Generic;
+using System;
 
 public class TextInfoManager : BaseManager, ITextInfoView
 {
@@ -14,16 +15,10 @@ public class TextInfoManager : BaseManager, ITextInfoView
     public Dictionary<long, List<TextInfoBean>> mapTalkExchangeData;
 
     protected TextInfoController textInfoController;
-    protected ICallBack callBack;
 
     private void Awake()
     {
         textInfoController = new TextInfoController(this, this);
-    }
-
-    public void SetCallBack(ICallBack callBack)
-    {
-        this.callBack = callBack;
     }
 
     /// <summary>
@@ -31,18 +26,18 @@ public class TextInfoManager : BaseManager, ITextInfoView
     /// </summary>
     /// <param name="textEnum"></param>
     /// <param name="id">当 textEnum为Look 或 Story时 为markId</param>
-    public void GetTextById(TextEnum textEnum, long id)
+    public void GetTextById(TextEnum textEnum, long id, Action<List<TextInfoBean>> action)
     {
         switch (textEnum)
         {
             case TextEnum.Look:
-                textInfoController.GetTextForLook(id);
+                textInfoController.GetTextForLook(id, action);
                 break;
             case TextEnum.Talk:
-                textInfoController.GetTextForTalkByMarkId(id);
+                textInfoController.GetTextForTalkByMarkId(id, action);
                 break;
             case TextEnum.Story:
-                textInfoController.GetTextForStory(id);
+                textInfoController.GetTextForStory(id, action);
                 break;
         }
     }
@@ -50,15 +45,15 @@ public class TextInfoManager : BaseManager, ITextInfoView
     /// <summary>
     /// 获取小镇居民第一次见面时的对话
     /// </summary>
-    public void GetTextForTownFirstMeet(long userId)
+    public void GetTextForTownFirstMeet(long userId, Action<List<TextInfoBean>> action)
     {
-        textInfoController.GetTextForTalkByFirstMeet(userId);
+        textInfoController.GetTextForTalkByFirstMeet(userId, action);
     }
 
     /// <summary>
     /// 获取交流对话选项
     /// </summary>
-    public void GetTextForTalkOptions(GameDataBean gameData, NpcInfoBean npcInfo)
+    public void GetTextForTalkOptions(GameDataBean gameData, NpcInfoBean npcInfo, Action<List<TextInfoBean>> action)
     {
         //如果不是第一次对话则有以下选项
         listTextData = new List<TextInfoBean>();
@@ -105,11 +100,9 @@ public class TextInfoManager : BaseManager, ITextInfoView
             }
         }
         listTextData.Add(new TextInfoBean(TextInfoTypeEnum.Talk, 1, GameCommonInfo.GetUITextById(99103)));
-        if (callBack != null)
-            callBack.SetTextInfoForTalkOptions(listTextData);
         //继续查询该人物的所有对话
         CharacterFavorabilityBean characterFavorability = gameData.GetCharacterFavorability(npcInfo.id);
-        GetTextForTalkByMinFavorability(npcInfo.id, characterFavorability.favorabilityLevel);
+        GetTextForTalkByMinFavorability(npcInfo.id, characterFavorability.favorabilityLevel, action);
     }
 
     /// <summary>
@@ -117,9 +110,9 @@ public class TextInfoManager : BaseManager, ITextInfoView
     /// </summary>
     /// <param name="userId"></param>
     /// <param name="favorabilityLevel"></param>
-    public void GetTextForTalkByMarkId(long markId)
+    public void GetTextForTalkByMarkId(long markId,Action<List<TextInfoBean>> action)
     {
-        textInfoController.GetTextForTalkByMarkId(markId);
+        textInfoController.GetTextForTalkByMarkId(markId, action);
     }
 
     /// <summary>
@@ -127,18 +120,18 @@ public class TextInfoManager : BaseManager, ITextInfoView
     /// </summary>
     /// <param name="userId"></param>
     /// <param name="favorabilityLevel"></param>
-    public void GetTextForTalkByMinFavorability(long userId, int favorabilityLevel)
+    public void GetTextForTalkByMinFavorability(long userId, int favorabilityLevel, Action<List<TextInfoBean>> action)
     {
-        textInfoController.GetTextForTalkByMinFavorability(userId, favorabilityLevel);
+        textInfoController.GetTextForTalkByMinFavorability(userId, favorabilityLevel, action);
     }
 
     /// <summary>
     /// 获取捣乱对话
     /// </summary>
     /// <param name="userId"></param>
-    public void GetTextForTalkType(long userId, TextTalkTypeEnum textTalkType)
+    public void GetTextForTalkType(long userId, TextTalkTypeEnum textTalkType, Action<List<TextInfoBean>> action)
     {
-        textInfoController.GetTextForTalkByType(userId, textTalkType);
+        textInfoController.GetTextForTalkByType(userId, textTalkType, action);
     }
 
     /// <summary>
@@ -191,35 +184,31 @@ public class TextInfoManager : BaseManager, ITextInfoView
     {
     }
 
-    public void GetTextInfoForLookSuccess(List<TextInfoBean> listData)
+    public void GetTextInfoForLookSuccess(List<TextInfoBean> listData, Action<List<TextInfoBean>> action)
     {
         listTextData = listData;
-        if (callBack != null)
-            callBack.SetTextInfoForLook(listData);
+        action?.Invoke(listData);
     }
 
-    public void GetTextInfoForStorySuccess(List<TextInfoBean> listData)
+    public void GetTextInfoForStorySuccess(List<TextInfoBean> listData, Action<List<TextInfoBean>> action)
     {
         listTextData = listData;
-        if (callBack != null)
-            callBack.SetTextInfoForStory(listData);
+        action?.Invoke(listData);
     }
 
-    public void GetTextInfoForTalkByFirstMeetSuccess(List<TextInfoBean> listData)
+    public void GetTextInfoForTalkByFirstMeetSuccess(List<TextInfoBean> listData, Action<List<TextInfoBean>> action)
     {
         listTextData = listData;
-        if (callBack != null)
-            callBack.SetTextInfoForTalkByFirstMeet(listData);
+        action?.Invoke(listData);
     }
 
-    public void GetTextInfoForTalkByMarkIdSuccess(List<TextInfoBean> listData)
+    public void GetTextInfoForTalkByMarkIdSuccess(List<TextInfoBean> listData, Action<List<TextInfoBean>> action)
     {
         listTextData = listData;
-        if (callBack != null)
-            callBack.SetTextInfoForTalkByMarkId(listData);
+        action?.Invoke(listData);
     }
 
-    public void GetTextInfoForTalkByUserIdSuccess(List<TextInfoBean> listData)
+    public void GetTextInfoForTalkByUserIdSuccess(List<TextInfoBean> listData, Action<List<TextInfoBean>> action)
     {
         mapTalkNormalData = new Dictionary<long, List<TextInfoBean>>();
         mapTalkGiftData = new Dictionary<long, List<TextInfoBean>>();
@@ -259,29 +248,12 @@ public class TextInfoManager : BaseManager, ITextInfoView
                 addMap.Add(markId, listTemp);
             }
         }
-        if (callBack != null)
-            callBack.SetTextInfoForTalkByUserId(listData);
     }
 
-    public void GetTextInfoForTalkByTypeSuccess(TextTalkTypeEnum textTalkType, List<TextInfoBean> listData)
+    public void GetTextInfoForTalkByTypeSuccess(TextTalkTypeEnum textTalkType, List<TextInfoBean> listData, Action<List<TextInfoBean>> action)
     {
         listTextData = listData;
-        if (callBack != null)
-            callBack.SetTextInfoForTalkByType(textTalkType, listData);
-    }
-
-    public interface ICallBack
-    {
-        void SetTextInfoForLook(List<TextInfoBean> listData);
-
-        void SetTextInfoForStory(List<TextInfoBean> listData);
-
-        void SetTextInfoForTalkByFirstMeet(List<TextInfoBean> listData);
-        void SetTextInfoForTalkByMarkId(List<TextInfoBean> listData);
-        void SetTextInfoForTalkByUserId(List<TextInfoBean> listData);
-        void SetTextInfoForTalkByType(TextTalkTypeEnum textTalkType, List<TextInfoBean> listData);
-        void SetTextInfoForTalkOptions(List<TextInfoBean> listData);
-
+        action?.Invoke(listData);
     }
     #endregion
 }

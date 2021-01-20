@@ -12,8 +12,6 @@ public class UIGameManager : BaseUIManager
     //数据
     [Header("数据")]
     public GameDataManager gameDataManager;
-    public TextInfoManager textInfoManager;
-    public SkillInfoManager skillInfoManager;
     //相关处理
     [Header("处理")]
     public InnHandler innHandler;
@@ -21,9 +19,7 @@ public class UIGameManager : BaseUIManager
     public ControlHandler controlHandler;
     public EventHandler eventHandler;
     public GameDataHandler gameDataHandler;
-    public SteamHandler steamHandler;
     public FPSHandler fpsHandler;
-    public SkillInfoHandler skillInfoHandler;
     [Header("建造")]
     public NpcCustomerBuilder npcCustomerBuilder;
     public NpcEventBuilder npcEventBuilder;
@@ -39,21 +35,15 @@ public class UIGameManager : BaseUIManager
         sceneInit= Find<BaseSceneInit>(ImportantTypeEnum.Init);
 
         gameDataManager = Find<GameDataManager>(ImportantTypeEnum.GameDataManager);
-        textInfoManager= Find<TextInfoManager>(ImportantTypeEnum.TextManager);
-        skillInfoManager = Find<SkillInfoManager>(ImportantTypeEnum.SkillManager);
 
-        skillInfoHandler = Find<SkillInfoHandler>(ImportantTypeEnum.SkillHandler);
         innHandler = Find<InnHandler>(ImportantTypeEnum.InnHandler);
         gameTimeHandler = Find<GameTimeHandler>(ImportantTypeEnum.TimeHandler);
         controlHandler = Find<ControlHandler>(ImportantTypeEnum.ControlHandler);
         eventHandler = Find<EventHandler>(ImportantTypeEnum.EventHandler);
         gameDataHandler = Find<GameDataHandler>(ImportantTypeEnum.GameDataHandler);
-        steamHandler = Find<SteamHandler>(ImportantTypeEnum.Steam);
         fpsHandler = Find<FPSHandler>( ImportantTypeEnum.Camera);
 
         popupItemsSelection = FindInChildren<PopupItemsSelection>(ImportantTypeEnum.Popup);
-
-
 
         npcCustomerBuilder = Find<NpcCustomerBuilder>(ImportantTypeEnum.NpcBuilder);
         npcEventBuilder = Find<NpcEventBuilder>(ImportantTypeEnum.NpcBuilder);

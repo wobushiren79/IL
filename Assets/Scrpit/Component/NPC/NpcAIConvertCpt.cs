@@ -3,7 +3,7 @@ using UnityEditor;
 using System.Collections;
 using System.Collections.Generic;
 
-public class NpcAIConvertCpt : NpcAISundryCpt,TextInfoHandler.ICallBack
+public class NpcAIConvertCpt : NpcAISundryCpt
 {
     //检测范围展示
     public GameObject objConvertSpaceShow;
@@ -19,16 +19,12 @@ public class NpcAIConvertCpt : NpcAISundryCpt,TextInfoHandler.ICallBack
     protected EffectHandler effectHandler;
     //想要说的对话
     public List<TextInfoBean> listShoutTextInfo = new List<TextInfoBean>();
-    //文本
-    protected TextInfoHandler textInfoHandler;
 
     public float timeForConvert = 60;
 
     public override void Awake()
     {
         base.Awake();
-        effectHandler = Find<EffectHandler>(ImportantTypeEnum.EffectHandler);
-        textInfoHandler = Find<TextInfoHandler>(ImportantTypeEnum.TextManager);
     }
 
     public enum ConvertIntentEnum
@@ -118,8 +114,7 @@ public class NpcAIConvertCpt : NpcAISundryCpt,TextInfoHandler.ICallBack
     protected void SetIntentForEntertain()
     {
         long[] shoutIds = teamData.GetShoutIds();
-        textInfoHandler.SetCallBack(this);
-        textInfoHandler.GetTextInfoFotTalkByMarkId(shoutIds[0]);
+        TextInfoHandler.Instance.manager.GetTextForTalkByMarkId(shoutIds[0], SetTextInfoData);
 
         objEntertainPS.SetActive(true);
         objConvertSpaceShow.SetActive(true);
@@ -144,8 +139,7 @@ public class NpcAIConvertCpt : NpcAISundryCpt,TextInfoHandler.ICallBack
     protected void SetIntentForDisappointed()
     {
         long[] shoutIds = teamData.GetShoutIds();
-        textInfoHandler.SetCallBack(this);
-        textInfoHandler.GetTextInfoFotTalkByMarkId(shoutIds[0]);
+        TextInfoHandler.Instance.manager.GetTextForTalkByMarkId(shoutIds[0], SetTextInfoData);
 
         objEntertainPS.SetActive(false);
         objConvertSpaceShow.SetActive(true);
@@ -290,15 +284,12 @@ public class NpcAIConvertCpt : NpcAISundryCpt,TextInfoHandler.ICallBack
 
     }
 
-    #region 文本回调
-    public void GetTextInfoSuccess(List<TextInfoBean> listData)
+    /// <summary>
+    /// 设置文本数据
+    /// </summary>
+    /// <param name="listData"></param>
+    public void SetTextInfoData(List<TextInfoBean> listData)
     {
         listShoutTextInfo = listData;
     }
-
-    public void GetTextInfoFail()
-    {
-
-    }
-    #endregion
 }

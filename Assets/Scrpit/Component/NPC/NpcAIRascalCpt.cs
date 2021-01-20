@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Collections;
 using DG.Tweening;
 
-public class NpcAIRascalCpt : BaseNpcAI, IBaseObserver, TextInfoHandler.ICallBack
+public class NpcAIRascalCpt : BaseNpcAI, IBaseObserver
 {
     public enum RascalIntentEnum
     {
@@ -62,7 +62,7 @@ public class NpcAIRascalCpt : BaseNpcAI, IBaseObserver, TextInfoHandler.ICallBac
     protected TextInfoHandler textInfoHandler;
 
     //是否移动  用于追击判定
-    protected bool isMove=false;
+    protected bool isMove = false;
 
     public override void Awake()
     {
@@ -216,8 +216,7 @@ public class NpcAIRascalCpt : BaseNpcAI, IBaseObserver, TextInfoHandler.ICallBac
     protected void SetIntentForMakeTrouble()
     {
         long[] shoutIds = teamData.GetShoutIds();
-        textInfoHandler.SetCallBack(this);
-        textInfoHandler.GetTextInfoFotTalkByMarkId(shoutIds[0]);
+        TextInfoHandler.Instance.manager.GetTextForTalkByMarkId(shoutIds[0], SetTextInfoData);
         //展示生命条
         characterLifeCpt.gameObject.SetActive(true);
         characterLifeCpt.gameObject.transform.localScale = new Vector3(1, 1, 1);
@@ -294,8 +293,7 @@ public class NpcAIRascalCpt : BaseNpcAI, IBaseObserver, TextInfoHandler.ICallBac
             SetIntent(RascalIntentEnum.Leave);
 
             long[] shoutIds = teamData.GetShoutIds();
-            textInfoHandler.SetCallBack(this);
-            textInfoHandler.GetTextInfoFotTalkByMarkId(shoutIds[1]);
+            TextInfoHandler.Instance.manager.GetTextForTalkByMarkId(shoutIds[1], SetTextInfoData);
 
             //随机获取一句喊话
             if (!CheckUtil.ListIsNull(listShoutTextInfo))
@@ -343,7 +341,7 @@ public class NpcAIRascalCpt : BaseNpcAI, IBaseObserver, TextInfoHandler.ICallBac
     public IEnumerator CoroutineForStartMakeTrouble()
     {
         while (rascalIntent == RascalIntentEnum.MakeTrouble || rascalIntent == RascalIntentEnum.ContinueMakeTrouble)
-        {        
+        {
             if (isMove)
             {
                 movePosition = innHandler.GetRandomInnPositon();
@@ -397,6 +395,15 @@ public class NpcAIRascalCpt : BaseNpcAI, IBaseObserver, TextInfoHandler.ICallBac
         }
     }
 
+    /// <summary>
+    /// 设置文本数据
+    /// </summary>
+    /// <param name="listData"></param>
+    public void SetTextInfoData(List<TextInfoBean> listData)
+    {
+        listShoutTextInfo = listData;
+    }
+
     #region 事件通知
     public void ObserbableUpdate<T>(T observable, int type, params object[] obj) where T : Object
     {
@@ -422,15 +429,6 @@ public class NpcAIRascalCpt : BaseNpcAI, IBaseObserver, TextInfoHandler.ICallBac
     }
     #endregion
 
-    #region  文本数据回调
-    public void GetTextInfoSuccess(List<TextInfoBean> listData)
-    {
-        listShoutTextInfo = listData;
-    }
 
-    public void GetTextInfoFail()
-    {
 
-    }
-    #endregion
 }

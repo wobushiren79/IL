@@ -2,7 +2,7 @@
 using UnityEditor;
 using System.Collections.Generic;
 
-public class InteractiveLookCpt : BaseInteractiveCpt, TextInfoManager.ICallBack
+public class InteractiveLookCpt : BaseInteractiveCpt
 {
     public long markId;//交互ID
 
@@ -30,39 +30,18 @@ public class InteractiveLookCpt : BaseInteractiveCpt, TextInfoManager.ICallBack
 
     public override void InteractiveStart(CharacterInteractiveCpt characterInt)
     {
-        textInfoManager.SetCallBack(this);
-        textInfoManager.GetTextById(TextEnum.Look, markId);
+        TextInfoHandler.Instance.manager.GetTextById(TextEnum.Look, markId, SetTextInfoData);
     }
 
-    #region 数据回调
-    public void SetTextInfoForLook(List<TextInfoBean> listData)
+  
+    /// <summary>
+    /// 设置文本数据
+    /// </summary>
+    /// <param name="listData"></param>
+    public void SetTextInfoData(List<TextInfoBean> listData)
     {
         if (!CheckUtil.ListIsNull(listData))
             characterInt.ShowInteractive(listData[0].name);
     }
 
-    public void SetTextInfoForStory(List<TextInfoBean> listData)
-    {
-    }
-
-    public void SetTextInfoForTalkByFirstMeet(List<TextInfoBean> listData)
-    {
-    }
-
-    public void SetTextInfoForTalkByMarkId(List<TextInfoBean> listData)
-    {
-    }
-
-    public void SetTextInfoForTalkByUserId(List<TextInfoBean> listData)
-    {
-    }
-
-    public void SetTextInfoForTalkByType(TextTalkTypeEnum textTalkType, List<TextInfoBean> listData)
-    {
-    }
-
-    public void SetTextInfoForTalkOptions(List<TextInfoBean> listData)
-    {
-    }
-    #endregion
 }
