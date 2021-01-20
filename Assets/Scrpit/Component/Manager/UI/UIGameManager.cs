@@ -12,7 +12,6 @@ public class UIGameManager : BaseUIManager
     //数据
     [Header("数据")]
     public GameDataManager gameDataManager;
-    public AchievementInfoManager achievementInfoManager;
     public TextInfoManager textInfoManager;
     public SkillInfoManager skillInfoManager;
     //相关处理
@@ -38,9 +37,8 @@ public class UIGameManager : BaseUIManager
     private void Awake()
     {
         sceneInit= Find<BaseSceneInit>(ImportantTypeEnum.Init);
-        gameDataManager = Find<GameDataManager>(ImportantTypeEnum.GameDataManager);
-        achievementInfoManager = Find<AchievementInfoManager>(ImportantTypeEnum.GameDataManager);
 
+        gameDataManager = Find<GameDataManager>(ImportantTypeEnum.GameDataManager);
         textInfoManager= Find<TextInfoManager>(ImportantTypeEnum.TextManager);
         skillInfoManager = Find<SkillInfoManager>(ImportantTypeEnum.SkillManager);
 

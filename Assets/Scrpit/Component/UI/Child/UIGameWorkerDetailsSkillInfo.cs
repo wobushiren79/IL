@@ -2,8 +2,9 @@
 using UnityEditor;
 using System.Collections.Generic;
 using UnityEngine.UI;
+using System;
 
-public class UIGameWorkerDetailsSkillInfo : BaseUIChildComponent<UIGameWorkerDetails> , SkillInfoManager.ICallBack
+public class UIGameWorkerDetailsSkillInfo : BaseUIChildComponent<UIGameWorkerDetails>
 {
     public Text tvNull;
     public GameObject objSkillItemContainer;
@@ -29,14 +30,14 @@ public class UIGameWorkerDetailsSkillInfo : BaseUIChildComponent<UIGameWorkerDet
     /// <param name="listSkill"></param>
     public void SetData(List<long> listSkill)
     {
-        skillInfoManager.SetCallBack(this);
-        skillInfoManager.GetSkillByIds(listSkill);    
+        Action<List<SkillInfoBean>> callBack = SetSkillInfoData;
+        SkillInfoHandler.Instance.manager.GetSkillByIds(listSkill, callBack);
     }
 
     public void CreateSkillList(List<SkillInfoBean> listData)
     {
         CptUtil.RemoveChildsByActive(objSkillItemContainer);
-        if(CheckUtil.ListIsNull(listData))
+        if (CheckUtil.ListIsNull(listData))
         {
             tvNull.gameObject.SetActive(true);
             return;
@@ -48,18 +49,18 @@ public class UIGameWorkerDetailsSkillInfo : BaseUIChildComponent<UIGameWorkerDet
 
         foreach (SkillInfoBean itemSkill in listData)
         {
-            GameObject objItem= Instantiate(objSkillItemContainer, objSkillItemModel);
-            ItemBaseTextCpt itemBaseText= objItem.GetComponent<ItemBaseTextCpt>();
+            GameObject objItem = Instantiate(objSkillItemContainer, objSkillItemModel);
+            ItemBaseTextCpt itemBaseText = objItem.GetComponent<ItemBaseTextCpt>();
             PopupSkillButton infoSkillPopup = objItem.GetComponent<PopupSkillButton>();
 
-            Sprite spIcon= IconDataHandler.Instance.manager.GetIconSpriteByName(itemSkill.icon_key);
-            itemBaseText.SetData(spIcon,itemSkill.name,"");
+            Sprite spIcon = IconDataHandler.Instance.manager.GetIconSpriteByName(itemSkill.icon_key);
+            itemBaseText.SetData(spIcon, itemSkill.name, "");
             infoSkillPopup.SetData(itemSkill);
         }
     }
 
     #region 数据回调
-    public void GetSkillInfoSuccess(List<SkillInfoBean> listData)
+    public void SetSkillInfoData(List<SkillInfoBean> listData)
     {
         CreateSkillList(listData);
     }

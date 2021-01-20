@@ -2,8 +2,9 @@
 using UnityEditor;
 using System.Collections.Generic;
 using DG.Tweening;
+using System;
 
-public class UITownGuildAchievement : UIBaseOne, IRadioGroupCallBack, AchievementInfoManager.ICallBack
+public class UITownGuildAchievement : UIBaseOne, IRadioGroupCallBack
 {
     public GameObject objGroceryContent;
     public GameObject objGroceryModel;
@@ -22,8 +23,8 @@ public class UITownGuildAchievement : UIBaseOne, IRadioGroupCallBack, Achievemen
     public override void OpenUI()
     {
         base.OpenUI();
-        uiGameManager.achievementInfoManager.SetCallBack(this);
-        uiGameManager.achievementInfoManager.GetAllAchievement();
+        Action<List<AchievementInfoBean>> callBack = SetAchievementInfoData;
+        AchievementInfoHandler.Instance.manager.GetAllAchievement(callBack);
         rgGroceryType.SetPosition(0, false);
     }
 
@@ -72,11 +73,14 @@ public class UITownGuildAchievement : UIBaseOne, IRadioGroupCallBack, Achievemen
     }
     #endregion
 
-    #region 数据回调
-    public void GetAchievementInfoSuccess(List<AchievementInfoBean> listData)
+
+    /// <summary>
+    /// 设置成就数据
+    /// </summary>
+    /// <param name="listData"></param>
+    public void SetAchievementInfoData(List<AchievementInfoBean> listData)
     {
         listAchData = listData;
         InitDataByType(0);
     }
-    #endregion 数据回调
 }

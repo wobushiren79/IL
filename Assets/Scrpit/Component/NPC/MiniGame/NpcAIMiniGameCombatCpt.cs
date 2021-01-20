@@ -3,14 +3,14 @@ using UnityEditor;
 using DG.Tweening;
 using System.Collections.Generic;
 using System.Collections;
+using System;
+
 public class NpcAIMiniGameCombatCpt : BaseNpcAI
 {
     //战斗游戏处理
     protected MiniGameCombatHandler gameCombatHandler;
     //战斗游戏创建
     protected MiniGameCombatBuilder gameCombatBuilder;
-    //技能管理
-    protected SkillInfoHandler skillInfoHandler;
 
     //角色数据
     public MiniGameCharacterForCombatBean characterMiniGameData;
@@ -30,7 +30,6 @@ public class NpcAIMiniGameCombatCpt : BaseNpcAI
         base.Awake();
         gameCombatHandler = Find<MiniGameCombatHandler>(ImportantTypeEnum.MiniGameHandler);
         gameCombatBuilder = FindInChildren<MiniGameCombatBuilder>(ImportantTypeEnum.MiniGameBuilder);
-        skillInfoHandler = Find<SkillInfoHandler>(ImportantTypeEnum.SkillHandler);
     }
 
     public override void SetCharacterDead()
@@ -125,7 +124,7 @@ public class NpcAIMiniGameCombatCpt : BaseNpcAI
             relativeOurList = gameCombatHandler.miniGameBuilder.GetCharacter(0);
             relativeEnemyList = gameCombatHandler.miniGameBuilder.GetCharacter(1);
         }
-        float intentRate = Random.Range(0f, 1f);
+        float intentRate = UnityEngine.Random.Range(0f, 1f);
         if (intentRate <= 0.5f)
         {
             //一定概率攻击
@@ -142,7 +141,12 @@ public class NpcAIMiniGameCombatCpt : BaseNpcAI
             }
             else
             {
-                StartCoroutine(CoroutineForIntentSkill(RandomUtil.GetRandomDataByList(skillIds),relativeOurList, relativeEnemyList));
+                Action<List<SkillInfoBean>> callBack = (listData) =>
+                {
+                    if (!CheckUtil.ListIsNull(listData))
+                        StartCoroutine(CoroutineForIntentSkill(listData[0], relativeOurList, relativeEnemyList));
+                };
+                SkillInfoHandler.Instance.manager.GetSkillById(RandomUtil.GetRandomDataByList(skillIds), callBack);
             }
         }
     }
@@ -189,9 +193,8 @@ public class NpcAIMiniGameCombatCpt : BaseNpcAI
     /// <summary>
     ///协程意图-技能
     /// </summary>
-    public IEnumerator CoroutineForIntentSkill(long skillId,List<NpcAIMiniGameCombatCpt> relativeOurList, List<NpcAIMiniGameCombatCpt> relativeEnemyList)
-    {    
-        SkillInfoBean skillInfo = skillInfoHandler.GetSkillById(skillId);
+    public IEnumerator CoroutineForIntentSkill(SkillInfoBean skillInfo, List<NpcAIMiniGameCombatCpt> relativeOurList, List<NpcAIMiniGameCombatCpt> relativeEnemyList)
+    {
         if (skillInfo==null)
         {
             //如果没有技能则战斗

@@ -1,39 +1,32 @@
 ﻿using UnityEngine;
 using UnityEditor;
 using System.Collections.Generic;
+using System;
 
 public class AchievementInfoManager : BaseManager, IAchievementInfoView
 {
     protected AchievementInfoController achievementInfoController;
-    protected ICallBack callBack;
-
-    protected List<AchievementInfoBean> listAchData = new List<AchievementInfoBean>();
 
     private void Awake()
     {
         achievementInfoController = new AchievementInfoController(this,this);
     }
 
-    public void SetCallBack(ICallBack callBack)
-    {
-        this.callBack = callBack;
-    }
-
     /// <summary>
     /// 获取所有成就
     /// </summary>
-    public void GetAllAchievement()
+    public void GetAllAchievement(Action<List<AchievementInfoBean>> action)
     {
-        achievementInfoController.GetAllAchievementInfo();
+        achievementInfoController.GetAllAchievementInfo(action);
     }
 
     /// <summary>
     /// 通过ID获取所有成就
     /// </summary>
     /// <param name="ids"></param>
-    public void GetAchievementByIds(List<long> ids)
+    public void GetAchievementByIds(List<long> ids, Action<List<AchievementInfoBean>> action)
     {
-        achievementInfoController.GetAchievementInfoByIds(ids);
+        achievementInfoController.GetAchievementInfoByIds(ids, action);
     }
 
     public void GetAchievementInfoFail()
@@ -41,15 +34,9 @@ public class AchievementInfoManager : BaseManager, IAchievementInfoView
 
     }
 
-    public void GetAchievementInfoSuccess(List<AchievementInfoBean> listData)
+    public void GetAchievementInfoSuccess(List<AchievementInfoBean> listData,Action<List<AchievementInfoBean>> action)
     {
-        this.listAchData = listData;
-        if (callBack != null)
-            callBack.GetAchievementInfoSuccess(listData);
+        action?.Invoke(listData);
     }
 
-    public interface ICallBack
-    {
-        void GetAchievementInfoSuccess(List<AchievementInfoBean> listData);
-    }
 }

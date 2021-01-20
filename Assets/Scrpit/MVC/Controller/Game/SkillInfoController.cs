@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using UnityEditor;
 using System.Collections.Generic;
+using System;
 
 public class SkillInfoController : BaseMVCController<SkillInfoModel, ISkillInfoView>
 {
@@ -14,17 +15,17 @@ public class SkillInfoController : BaseMVCController<SkillInfoModel, ISkillInfoV
 
     }
 
-    public void GetSkillInfoByIds(List<long> ids)
+    public void GetSkillInfoByIds(List<long> ids, Action<List<SkillInfoBean>> aciton)
     {
-        List<SkillInfoBean> listData=  GetModel().GetSkillByIds(ids);
-        GetView().GetSkillInfoSuccess(listData);
+        List<SkillInfoBean> listData =  GetModel().GetSkillByIds(ids);
+        GetView().GetSkillInfoSuccess(listData, aciton);
     }
 
 
-    public void GetAllSkillInfo()
+    public void GetAllSkillInfo(Action<List<SkillInfoBean>> aciton)
     {
         List<SkillInfoBean> listData = GetModel().GetAllSkill();
-        GetView().GetSkillInfoSuccess(listData);
+        GetView().GetSkillInfoSuccess(listData, aciton);
     }
 
 }

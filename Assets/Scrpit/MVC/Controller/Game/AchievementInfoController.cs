@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using UnityEditor;
 using System.Collections.Generic;
+using System;
 
 public class AchievementInfoController : BaseMVCController<AchievementInfoModel, IAchievementInfoView>
 {
@@ -14,12 +15,12 @@ public class AchievementInfoController : BaseMVCController<AchievementInfoModel,
     /// <summary>
     /// 查询所有成就信息
     /// </summary>
-    public void GetAllAchievementInfo()
+    public void GetAllAchievementInfo(Action<List<AchievementInfoBean>> action)
     {
         List<AchievementInfoBean> listData = GetModel().GetAllAchievementInfo();
         if (!CheckUtil.ListIsNull(listData))
         {
-            GetView().GetAchievementInfoSuccess(listData);
+            GetView().GetAchievementInfoSuccess(listData, action);
         }
         else
         {
@@ -31,12 +32,12 @@ public class AchievementInfoController : BaseMVCController<AchievementInfoModel,
     /// 通过ID查询成就
     /// </summary>
     /// <param name="ids"></param>
-    public void GetAchievementInfoByIds(List<long> ids)
+    public void GetAchievementInfoByIds(List<long> ids,Action<List<AchievementInfoBean>> action)
     {
         List<AchievementInfoBean> listData = GetModel().GeAchievementInfoByIds(ids);
         if (!CheckUtil.ListIsNull(listData))
         {
-            GetView().GetAchievementInfoSuccess(listData);
+            GetView().GetAchievementInfoSuccess(listData, action);
         }
         else
         {

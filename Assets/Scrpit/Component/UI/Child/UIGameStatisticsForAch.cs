@@ -3,28 +3,27 @@ using UnityEditor;
 using UnityEngine.UI;
 using System.Collections.Generic;
 using System.Collections;
+using System;
 
-public class UIGameStatisticsForAch : BaseUIChildComponent<UIGameStatistics>, AchievementInfoManager.ICallBack
+public class UIGameStatisticsForAch : BaseUIChildComponent<UIGameStatistics>
 {
     public Text tvNull;
     public GameObject objAchContainer;
     public GameObject objAchItem;
 
     protected GameDataManager gameDataManager;
-    protected AchievementInfoManager achievementInfoManager;
 
     public override void Awake()
     {
         base.Awake();
         gameDataManager = Find<GameDataManager>(ImportantTypeEnum.GameDataManager);
-        achievementInfoManager = Find<AchievementInfoManager>(ImportantTypeEnum.GameDataManager);
     }
 
     public override void Open()
     {
         base.Open();
-        achievementInfoManager.SetCallBack(this);
-        achievementInfoManager.GetAllAchievement();
+        Action<List<AchievementInfoBean>> callBack = SetAchievementInfoData;
+        AchievementInfoHandler.Instance.manager.GetAllAchievement(callBack);
     }
 
     public override void Close()
@@ -65,10 +64,12 @@ public class UIGameStatisticsForAch : BaseUIChildComponent<UIGameStatistics>, Ac
         }
     }
 
-    #region 成就数据回调
-    public void GetAchievementInfoSuccess(List<AchievementInfoBean> listData)
+    /// <summary>
+    /// 设置成就数据 
+    /// </summary>
+    /// <param name="listData"></param>
+    public void SetAchievementInfoData(List<AchievementInfoBean> listData)
     {
         StartCoroutine(CreateAchList(listData));
     }
-    #endregion
 }

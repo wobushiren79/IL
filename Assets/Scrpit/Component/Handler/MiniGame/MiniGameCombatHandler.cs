@@ -8,14 +8,8 @@ using static MiniGameCombatBean;
 
 public class MiniGameCombatHandler : BaseMiniGameHandler<MiniGameCombatBuilder, MiniGameCombatBean>, UIMiniGameCountDown.ICallBack, UIMiniGameCombat.ICallBack
 {
-    protected SkillInfoHandler skillInfoHandler;
     //游戏UI
     protected UIMiniGameCombat uiMiniGameCombat;
-    protected override void Awake()
-    {
-        base.Awake();
-        skillInfoHandler = Find<SkillInfoHandler>(ImportantTypeEnum.SkillHandler);
-    }
 
     /// <summary>
     /// 初始化数据
@@ -29,8 +23,6 @@ public class MiniGameCombatHandler : BaseMiniGameHandler<MiniGameCombatBuilder, 
             LogUtil.Log("战斗游戏数据为NULL，无法初始化战斗游戏");
             return;
         }
-        //初始化技能
-        skillInfoHandler.InitData();
         //创建NPC
         miniGameBuilder.CreateAllCharacter(gameCombatData.miniGamePosition, gameCombatData.listUserGameData, gameCombatData.listEnemyGameData);
         //设置摄像机位置
