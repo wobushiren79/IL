@@ -216,14 +216,14 @@ public class UIGameMain : BaseUIComponent, DialogView.IDialogCallBack, IRadioGro
         SetInnLevel(innAttributes);
 
         //设置是否显示时间缩放
-        if (uiGameManager.innHandler == null)
+        if (SceneUtil.GetCurrentScene() != ScenesEnum.GameInnScene)
         {
             rgTimeScale.gameObject.SetActive(false);
             objLayerSelect.SetActive(false);
         }
         else
         {
-            if (uiGameManager.innHandler.GetInnStatus() == InnHandler.InnStatusEnum.Close)
+            if (InnHandler.Instance.GetInnStatus() == InnHandler.InnStatusEnum.Close)
             {
                 rgTimeScale.gameObject.SetActive(false);
                 objLayerSelect.SetActive(false);
@@ -400,13 +400,13 @@ public class UIGameMain : BaseUIComponent, DialogView.IDialogCallBack, IRadioGro
     public void SaveData()
     {
         AudioHandler.Instance.PlaySound(AudioSoundEnum.ButtonForNormal);
-        uiGameManager.gameDataManager.SaveGameData(uiGameManager.innHandler.GetInnRecord());
+        uiGameManager.gameDataManager.SaveGameData(InnHandler.Instance.GetInnRecord());
     }
 
     public void OpenBuildUI()
     {
         AudioHandler.Instance.PlaySound(AudioSoundEnum.ButtonForNormal);
-        if (CheckUtil.ListIsNull(uiGameManager.innHandler.rascalrQueue))
+        if (CheckUtil.ListIsNull(InnHandler.Instance.rascalrQueue))
         {
             DialogBean dialogBean = new DialogBean();
             dialogBean.content = GameCommonInfo.GetUITextById(3007);

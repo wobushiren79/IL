@@ -12,20 +12,11 @@ public class ItemGameStatisticsForMenuCpt : ItemBaseTextCpt
     public Image ivNumberBackground;
     public PopupFoodButton popupButton;
 
-    protected InnFoodManager innFoodManager;
-    protected IconDataManager iconDataManager;
-
     public MenuOwnBean menuOwn;
     public MenuInfoBean menuInfo;
 
     public Sprite spBackLock;
     public Sprite spBackUnlock;
-
-    private void Awake()
-    {
-        innFoodManager = Find<InnFoodManager>(ImportantTypeEnum.FoodManager);
-        iconDataManager = Find<IconDataManager>(ImportantTypeEnum.UIManager);
-    }
 
     public void SetData(MenuOwnBean menuOwn,MenuInfoBean menuInfo)
     {

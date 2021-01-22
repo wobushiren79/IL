@@ -11,12 +11,10 @@ public class NpcWorkerBuilder : BaseMonoBehaviour
 
     public List<NpcAIWorkerCpt> listNpcWorker = new List<NpcAIWorkerCpt>();
 
-    protected InnHandler innHandler;
     protected GameDataManager gameDataManager;
 
     private void Awake()
     {
-        innHandler = Find<InnHandler>(ImportantTypeEnum.InnHandler);
         gameDataManager = Find<GameDataManager>(ImportantTypeEnum.GameDataManager);
     }
 
@@ -33,7 +31,7 @@ public class NpcWorkerBuilder : BaseMonoBehaviour
         if (gameDataManager.gameData.userCharacter.baseInfo.GetWorkerStatus() == WorkerStatusEnum.Work)
         {
             //获取门的坐标 并在门周围生成NPC
-            Vector3 doorPosition = innHandler.GetRandomEntrancePosition();
+            Vector3 doorPosition = InnHandler.Instance.GetRandomEntrancePosition();
             //向下3个单位
             doorPosition += new Vector3(0, -3f, 0);
             BuildWork(gameDataManager.gameData.userCharacter, doorPosition);
@@ -41,7 +39,7 @@ public class NpcWorkerBuilder : BaseMonoBehaviour
         for (int i = 0; i < listAllWork.Count; i++)
         {
             //获取门的坐标 并在门周围生成NPC
-            Vector3 doorPosition = innHandler.GetRandomEntrancePosition();
+            Vector3 doorPosition = InnHandler.Instance.GetRandomEntrancePosition();
             //向下3个单位
             doorPosition += new Vector3(0, -3f, 0);
             CharacterBean itemData = listAllWork[i];

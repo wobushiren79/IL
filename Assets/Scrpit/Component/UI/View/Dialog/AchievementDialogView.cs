@@ -16,19 +16,6 @@ public class AchievementDialogView : DialogView
 
     public AchievementInfoBean achievementInfo;
 
-    protected IconDataManager iconDataManager;
-    protected InnBuildManager innBuildManager;
-    protected InnFoodManager innFoodManager;
-    protected NpcInfoManager npcInfoManager;
-
-    public override void Awake()
-    {
-        base.Awake();
-        iconDataManager = Find<IconDataManager>(ImportantTypeEnum.UIManager);
-        innBuildManager = Find<InnBuildManager>(ImportantTypeEnum.BuildManager);
-        innFoodManager = Find<InnFoodManager>(ImportantTypeEnum.FoodManager);
-        npcInfoManager = Find<NpcInfoManager>(ImportantTypeEnum.NpcManager);
-    }
 
     public void SetData(int iconType, string iconKey)
     {

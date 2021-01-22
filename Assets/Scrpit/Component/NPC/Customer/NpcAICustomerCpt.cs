@@ -36,8 +36,6 @@ public class NpcAICustomerCpt : BaseNpcAI
     //表情控制
     public CharacterMoodCpt characterMoodCpt;
 
-    //客栈处理
-    protected InnHandler innHandler;
     //客栈区域数据管理
     protected SceneInnManager sceneInnManager;
 
@@ -60,7 +58,6 @@ public class NpcAICustomerCpt : BaseNpcAI
         base.Awake();
         customerType = CustomerTypeEnum.Normal;
         sceneInnManager = Find<SceneInnManager>(ImportantTypeEnum.SceneManager);
-        innHandler = Find<InnHandler>(ImportantTypeEnum.InnHandler);
     }
 
     public void Update()
@@ -75,7 +72,7 @@ public class NpcAICustomerCpt : BaseNpcAI
                 if (characterMoveCpt.IsAutoMoveStop())
                 {
                     //判断点是否关门
-                    if (innHandler.GetInnStatus() == InnHandler.InnStatusEnum.Open)
+                    if (InnHandler.Instance.GetInnStatus() == InnHandler.InnStatusEnum.Open)
                         SetIntent(CustomerIntentEnum.WaitSeat);
                     else
                         SetIntent(CustomerIntentEnum.Leave);
@@ -185,7 +182,7 @@ public class NpcAICustomerCpt : BaseNpcAI
         //首先调整修改朝向
         SetCharacterFace(orderForCustomer.table.GetUserFace());
         //点餐
-        innHandler.OrderForFood(orderForCustomer);
+        InnHandler.Instance.OrderForFood(orderForCustomer);
         if (orderForCustomer.foodData == null)
         {
             //如果没有菜品出售 心情直接降100 
@@ -274,7 +271,7 @@ public class NpcAICustomerCpt : BaseNpcAI
     /// </summary>
     public virtual void IntentForWant()
     {
-        movePosition = innHandler.GetRandomEntrancePosition();
+        movePosition = InnHandler.Instance.GetRandomEntrancePosition();
         //移动到门口附近
         if (movePosition == null || movePosition == Vector3.zero)
         {
@@ -293,8 +290,8 @@ public class NpcAICustomerCpt : BaseNpcAI
     {
         //加入排队队伍
         //添加一个订单
-        OrderForCustomer orderForCustomer = innHandler.CreateOrder(this);
-        innHandler.cusomerQueue.Add(orderForCustomer);
+        OrderForCustomer orderForCustomer = InnHandler.Instance.CreateOrder(this);
+        InnHandler.Instance.cusomerQueue.Add(orderForCustomer);
         StartCoroutine(CoroutineForStartWaitSeat());
     }
 
@@ -320,7 +317,7 @@ public class NpcAICustomerCpt : BaseNpcAI
             movePosition = orderForCustomer.table.GetSeatPosition();
             characterMoveCpt.SetDestination(movePosition);
             //记录该顾客
-            innHandler.RecordCustomer(orderForCustomer);
+            InnHandler.Instance.RecordCustomer(orderForCustomer);
         }
         else
         {
@@ -370,11 +367,11 @@ public class NpcAICustomerCpt : BaseNpcAI
     /// </summary>
     public void IntentForGotoPay()
     {
-        orderForCustomer.counter = innHandler.GetCounter(transform.position);
+        orderForCustomer.counter = InnHandler.Instance.GetCounter(transform.position);
         //如果判断有无结算台
         if (orderForCustomer.counter == null)
         {
-            innHandler.EndOrderForForce(orderForCustomer, true);
+            InnHandler.Instance.EndOrderForForce(orderForCustomer, true);
             SetIntent(CustomerIntentEnum.Leave);
         }
         else
@@ -382,7 +379,7 @@ public class NpcAICustomerCpt : BaseNpcAI
             movePosition = orderForCustomer.counter.GetPayPosition();
             //if (!CheckUtil.CheckPath(transform.position, movePosition))
             //{
-            //    innHandler.EndOrderForForce(orderForCustomer, true);
+            //    InnHandler.Instance.EndOrderForForce(orderForCustomer, true);
             //    SetIntent(CustomerIntentEnum.Leave);
             //}
             //else
@@ -472,7 +469,7 @@ public class NpcAICustomerCpt : BaseNpcAI
         if (orderForCustomer != null)
         {
             StopAllCoroutines();
-            innHandler.EndOrderForForce(orderForCustomer, true);
+            InnHandler.Instance.EndOrderForForce(orderForCustomer, true);
             SetIntent(CustomerIntentEnum.Leave);
         }
     }
@@ -502,7 +499,7 @@ public class NpcAICustomerCpt : BaseNpcAI
             {
                 orderForCustomer.table.SetTableStatus(BuildTableCpt.TableStatusEnum.WaitClean);
                 //清理列队增加
-                innHandler.cleanQueue.Add(orderForCustomer);
+                InnHandler.Instance.cleanQueue.Add(orderForCustomer);
             }
             //去结账
             SetIntent(CustomerIntentEnum.GotoPay);
@@ -517,7 +514,7 @@ public class NpcAICustomerCpt : BaseNpcAI
     {
         AddWaitIcon();
         yield return new WaitForSeconds(timeWaitSeat);
-        innHandler.EndOrderForForce(orderForCustomer, false);
+        InnHandler.Instance.EndOrderForForce(orderForCustomer, false);
         SetIntent(CustomerIntentEnum.Leave);
     }
 

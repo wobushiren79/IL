@@ -3,7 +3,7 @@ using UnityEditor;
 using System;
 using System.Collections.Generic;
 
-public class NpcEventBuilder : NpcNormalBuilder, IBaseObserver
+public class NpcEventBuilder : NpcNormalBuilder
 {
     //捣乱者模型
     public GameObject objRascalModel;
@@ -26,7 +26,7 @@ public class NpcEventBuilder : NpcNormalBuilder, IBaseObserver
 
     private void Start()
     {
-        gameTimeHandler.AddObserver(this);
+        gameTimeHandler.RegisterNotifyForTime(NotifyForTime);
     }
 
     /// <summary>
@@ -396,9 +396,9 @@ public class NpcEventBuilder : NpcNormalBuilder, IBaseObserver
     }
 
     #region 时间回调通知
-    public void ObserbableUpdate<T>(T observable, int type, params System.Object[] obj) where T : UnityEngine.Object
+    public void NotifyForTime(GameTimeHandler.NotifyTypeEnum notifyType, float timeHour)
     {
-        if ((GameTimeHandler.NotifyTypeEnum)type == GameTimeHandler.NotifyTypeEnum.NewDay)
+        if (notifyType == GameTimeHandler.NotifyTypeEnum.NewDay)
         {
             ClearNpc();
             listExistNpcId.Clear();
@@ -411,14 +411,13 @@ public class NpcEventBuilder : NpcNormalBuilder, IBaseObserver
             listConvert.AddRange(npcTeamManager.GetRandomTeamMeetConditionByType(NpcTeamTypeEnum.Entertain, gameDataManager.gameData));
             listConvert.AddRange(npcTeamManager.GetRandomTeamMeetConditionByType(NpcTeamTypeEnum.Disappointed, gameDataManager.gameData));
         }
-        else if ((GameTimeHandler.NotifyTypeEnum)type == GameTimeHandler.NotifyTypeEnum.EndDay)
+        else if (notifyType == GameTimeHandler.NotifyTypeEnum.EndDay)
         {
             ClearNpc();
         }
-        else if ((GameTimeHandler.NotifyTypeEnum)type == GameTimeHandler.NotifyTypeEnum.TimePoint)
+        else if (notifyType == GameTimeHandler.NotifyTypeEnum.TimePoint)
         {
-            int hour = Convert.ToInt32(obj[0]);
-            if (hour >= 9 && hour <= 20)
+            if (timeHour >= 9 && timeHour <= 20)
             {
                 StartEvent();
             }

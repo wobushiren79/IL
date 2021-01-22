@@ -12,7 +12,6 @@ public class ItemDialogPickForSellCpt : BaseMonoBehaviour, DialogView.IDialogCal
     public InputField etSellNumber;
     public PriceShowView priceShowView;
 
-    protected InnBuildManager innBuildManager;
     protected IconDataManager iconDataManager;
     protected GameDataManager gameDataManager;
     public ItemBean itemData;
@@ -24,7 +23,6 @@ public class ItemDialogPickForSellCpt : BaseMonoBehaviour, DialogView.IDialogCal
     public void Awake()
     {
         gameDataManager = Find<GameDataManager>(ImportantTypeEnum.GameDataManager);
-        innBuildManager = Find<InnBuildManager>(ImportantTypeEnum.BuildManager);
         iconDataManager = Find<IconDataManager>(ImportantTypeEnum.UIManager);
         if (etSellNumber)
             etSellNumber.onEndEdit.AddListener(OnEndEditForNumber);

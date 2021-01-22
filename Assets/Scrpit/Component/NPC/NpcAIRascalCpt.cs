@@ -52,14 +52,10 @@ public class NpcAIRascalCpt : BaseNpcAI, IBaseObserver
     public int teamRank;
 
     protected EventHandler eventHandler;
-    //客栈处理
-    protected InnHandler innHandler;
     //客栈区域数据管理
     protected SceneInnManager sceneInnManager;
     //Npc生成器
     protected NpcEventBuilder npcEventBuilder;
-    //文本
-    protected TextInfoHandler textInfoHandler;
 
     //是否移动  用于追击判定
     protected bool isMove = false;
@@ -68,10 +64,8 @@ public class NpcAIRascalCpt : BaseNpcAI, IBaseObserver
     {
         base.Awake();
         eventHandler = Find<EventHandler>(ImportantTypeEnum.EventHandler);
-        innHandler = Find<InnHandler>(ImportantTypeEnum.InnHandler);
         sceneInnManager = Find<SceneInnManager>(ImportantTypeEnum.SceneManager);
         npcEventBuilder = Find<NpcEventBuilder>(ImportantTypeEnum.NpcBuilder);
-        textInfoHandler = Find<TextInfoHandler>(ImportantTypeEnum.TextManager);
     }
 
     private void Update()
@@ -149,7 +143,7 @@ public class NpcAIRascalCpt : BaseNpcAI, IBaseObserver
         if (CheckCharacterIsArrive())
         {
             //判断是否关门
-            if (innHandler.GetInnStatus() == InnHandler.InnStatusEnum.Close)
+            if (InnHandler.Instance.GetInnStatus() == InnHandler.InnStatusEnum.Close)
             {
                 SetIntent(RascalIntentEnum.Leave);
             }
@@ -176,7 +170,7 @@ public class NpcAIRascalCpt : BaseNpcAI, IBaseObserver
     protected void SetIntentForGoToInn()
     {
         //移动到门口附近
-        movePosition = innHandler.GetRandomEntrancePosition();
+        movePosition = InnHandler.Instance.GetRandomEntrancePosition();
         if (movePosition == null)
             movePosition = Vector3.zero;
         //前往门
@@ -222,7 +216,7 @@ public class NpcAIRascalCpt : BaseNpcAI, IBaseObserver
         characterLifeCpt.gameObject.transform.localScale = new Vector3(1, 1, 1);
         characterLifeCpt.gameObject.transform.DOScale(new Vector3(0.2f, 0.2f), 0.5f).From().SetEase(Ease.OutBack);
         //闹事人员添加
-        innHandler.rascalrQueue.Add(this);
+        InnHandler.Instance.rascalrQueue.Add(this);
 
         StartCoroutine(CoroutineForStartMakeTrouble());
         //延迟显示范围
@@ -254,7 +248,7 @@ public class NpcAIRascalCpt : BaseNpcAI, IBaseObserver
     /// </summary>
     protected void SetIntentForLeave()
     {
-        innHandler.rascalrQueue.Remove(this);
+        InnHandler.Instance.rascalrQueue.Remove(this);
         npcFight = null;
         characterLifeCpt.gameObject.SetActive(false);
         objFightShow.SetActive(false);
@@ -344,7 +338,7 @@ public class NpcAIRascalCpt : BaseNpcAI, IBaseObserver
         {
             if (isMove)
             {
-                movePosition = innHandler.GetRandomInnPositon();
+                movePosition = InnHandler.Instance.GetRandomInnPositon();
                 bool canGo = CheckUtil.CheckPath(transform.position, movePosition);
                 if (canGo)
                     characterMoveCpt.SetDestination(movePosition);

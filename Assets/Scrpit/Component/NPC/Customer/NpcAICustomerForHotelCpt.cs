@@ -70,8 +70,6 @@ public class NpcAICustomerForHotelCpt : BaseNpcAI
     //表情控制
     public CharacterMoodCpt characterMoodCpt;
 
-    //客栈处理
-    protected InnHandler innHandler;
     //客栈区域数据管理
     protected SceneInnManager sceneInnManager;
 
@@ -84,7 +82,6 @@ public class NpcAICustomerForHotelCpt : BaseNpcAI
     {
         base.Awake();
         sceneInnManager = Find<SceneInnManager>(ImportantTypeEnum.SceneManager);
-        innHandler = Find<InnHandler>(ImportantTypeEnum.InnHandler);
     }
 
     public void Update()
@@ -193,7 +190,7 @@ public class NpcAICustomerForHotelCpt : BaseNpcAI
     /// </summary>
     public void IntentForGoToInn()
     {
-        movePosition = innHandler.GetRandomEntrancePosition();
+        movePosition = InnHandler.Instance.GetRandomEntrancePosition();
         //移动到门口附近
         if (movePosition == null || movePosition == Vector3.zero)
         {
@@ -239,7 +236,7 @@ public class NpcAICustomerForHotelCpt : BaseNpcAI
         Vector3 sleepPosition = orderForHotel.bed.GetSleepPosition();
         if (!CheckUtil.CheckPath(sleepPosition, transform.position))
         {
-            innHandler.EndOrderForForce(orderForHotel, true);
+            InnHandler.Instance.EndOrderForForce(orderForHotel, true);
             SetIntent(CustomerHotelIntentEnum.GoToStairsForSecond);
             return;
         }
@@ -264,18 +261,18 @@ public class NpcAICustomerForHotelCpt : BaseNpcAI
     /// </summary>
     public void IntentForGoToPay()
     {
-        orderForHotel.counter = innHandler.GetCounter(transform.position);
+        orderForHotel.counter = InnHandler.Instance.GetCounter(transform.position);
         //如果判断有无结算台
         if (orderForHotel.counter == null)
         {
-            innHandler.EndOrderForForce(orderForHotel, true);
+            InnHandler.Instance.EndOrderForForce(orderForHotel, true);
         }
         else
         {
             movePosition = orderForHotel.counter.GetPayPosition();
             //if (!CheckUtil.CheckPath(transform.position, movePosition))
             //{
-            //    innHandler.EndOrderForForce(orderForHotel, true);
+            //    InnHandler.Instance.EndOrderForForce(orderForHotel, true);
             //}
             //else
             //{
@@ -299,7 +296,7 @@ public class NpcAICustomerForHotelCpt : BaseNpcAI
         if (orderForHotel.innEvaluation.mood <= 0)
         {
             StopAllCoroutines();
-            innHandler.EndOrderForForce(orderForHotel, true);
+            InnHandler.Instance.EndOrderForForce(orderForHotel, true);
         }
     }
 
@@ -332,18 +329,18 @@ public class NpcAICustomerForHotelCpt : BaseNpcAI
         if (characterMoveCpt.IsAutoMoveStop())
         {
             //判断点是否关门
-            if (innHandler.GetInnStatus() == InnHandler.InnStatusEnum.Open)
+            if (InnHandler.Instance.GetInnStatus() == InnHandler.InnStatusEnum.Open)
             {
                 //首先判断还有没有床位
-                BuildBedCpt buildBedCpt = innHandler.GetIdleBed();
+                BuildBedCpt buildBedCpt = InnHandler.Instance.GetIdleBed();
                 if (buildBedCpt != null)
                 {
                     //如果没有关门分派一个接待
                     SetIntent(CustomerHotelIntentEnum.WaitAccost);
                     //创建订单
-                    orderForHotel = innHandler.CreateOrderForHotel(this, buildBedCpt);
+                    orderForHotel = InnHandler.Instance.CreateOrderForHotel(this, buildBedCpt);
                     //记录
-                    innHandler.RecordCustomer(orderForHotel);
+                    InnHandler.Instance.RecordCustomer(orderForHotel);
                     characterShoutCpt.Shout(GameCommonInfo.GetUITextById(13401));
                 }
                 else
@@ -429,7 +426,7 @@ public class NpcAICustomerForHotelCpt : BaseNpcAI
         SetCharacterLive();
 
         SetIntent(CustomerHotelIntentEnum.GoToStairsForSecond);
-        innHandler.bedCleanQueue.Add(orderForHotel);
+        InnHandler.Instance.bedCleanQueue.Add(orderForHotel);
     }
 
     /// <summary>

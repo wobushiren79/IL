@@ -14,7 +14,8 @@ public class InnFurnitureBuilder : BaseMonoBehaviour
     private void Awake()
     {
         gameDataManager = Find<GameDataManager>(ImportantTypeEnum.GameDataManager);
-        innHandler = Find<InnHandler>(ImportantTypeEnum.InnHandler);
+
+        buildContainer = GameObject.Find("FurnitureContainer");
     }
 
     /// <summary>

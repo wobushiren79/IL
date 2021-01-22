@@ -10,15 +10,6 @@ public class UIGameWorkerDetailsSkillInfo : BaseUIChildComponent<UIGameWorkerDet
     public GameObject objSkillItemContainer;
     public GameObject objSkillItemModel;
 
-    protected SkillInfoManager skillInfoManager;
-    protected IconDataManager iconDataManager;
-    public override void Awake()
-    {
-        base.Awake();
-        skillInfoManager = Find<SkillInfoManager>(ImportantTypeEnum.SkillManager);
-        iconDataManager = Find<IconDataManager>(ImportantTypeEnum.UIManager);
-    }
-
     public override void Open()
     {
         base.Open();

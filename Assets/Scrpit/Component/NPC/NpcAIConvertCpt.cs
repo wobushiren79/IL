@@ -50,7 +50,7 @@ public class NpcAIConvertCpt : NpcAISundryCpt
         {
             if (CheckCharacterIsArrive())
             {
-                movePosition = innHandler.GetRandomInnPositon();
+                movePosition = InnHandler.Instance.GetRandomInnPositon();
                 if (CheckUtil.CheckPath(transform.position, movePosition))
                 {
                     SetCharacterMove(movePosition);
@@ -65,7 +65,7 @@ public class NpcAIConvertCpt : NpcAISundryCpt
         {
             if (CheckCharacterIsArrive())
             {
-                movePosition = innHandler.GetRandomInnPositon();
+                movePosition = InnHandler.Instance.GetRandomInnPositon();
                 if (CheckUtil.CheckPath(transform.position, movePosition))
                 {
                     SetCharacterMove(movePosition);

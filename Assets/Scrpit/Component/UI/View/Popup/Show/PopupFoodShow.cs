@@ -22,8 +22,6 @@ public class PopupFoodShow : PopupShowView
     public GameObject objItemTextModel;
 
     protected GameDataManager gameDataManager;
-    protected IconDataManager iconDataManager;
-    protected InnFoodManager innFoodManager;
 
     public MenuOwnBean ownData;
     public MenuInfoBean foodData;
@@ -32,8 +30,6 @@ public class PopupFoodShow : PopupShowView
     {
         base.Awake();
         gameDataManager = Find<GameDataManager>(ImportantTypeEnum.GameDataManager);
-        iconDataManager = Find<IconDataManager>(ImportantTypeEnum.UIManager);
-        innFoodManager = Find<InnFoodManager>(ImportantTypeEnum.FoodManager);
     }
 
     public void SetData(MenuOwnBean ownData, MenuInfoBean foodData)
@@ -95,7 +91,7 @@ public class PopupFoodShow : PopupShowView
     /// </summary>
     public void SetLevel(MenuOwnBean ownData)
     {
-        LevelTypeEnum level = ownData.GetMenuLevel(innFoodManager, out string levelStr, out int nextLevelExp);
+        LevelTypeEnum level = ownData.GetMenuLevel(out string levelStr, out int nextLevelExp);
         if ((int)level >= 3)
         {
             objLevelProgress.SetActive(false);

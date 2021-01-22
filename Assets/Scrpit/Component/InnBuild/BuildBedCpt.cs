@@ -34,11 +34,9 @@ public class BuildBedCpt : BaseBuildItemCpt
     public float addAesthetics = 0;
     public float subAesthetics = 0;
 
-    protected InnBuildManager innBuildManager;
     protected GameDataManager gameDataManager;
     private void Awake()
     {
-        innBuildManager = Find<InnBuildManager>(ImportantTypeEnum.BuildManager);
         gameDataManager = Find<GameDataManager>(ImportantTypeEnum.GameDataManager);
     }
 
@@ -86,13 +84,13 @@ public class BuildBedCpt : BaseBuildItemCpt
         {
             string cleanStr = buildItemData.GetIconList()[0] + "_clean";
             string iconKey = GetIconKey(cleanStr);
-            srSheets.sprite = innBuildManager.GetFurnitureSpriteByName(iconKey);
+            srSheets.sprite = InnBuildHandler.Instance.manager.GetFurnitureSpriteByName(iconKey);
         }
         else if (bedStatus == BedStatusEnum.WaitClean)
         {
             string noCleanStr = buildItemData.GetIconList()[0] + "_noclean";
             string iconKey = GetIconKey(noCleanStr);
-            srSheets.sprite = innBuildManager.GetFurnitureSpriteByName(iconKey);
+            srSheets.sprite = InnBuildHandler.Instance.manager.GetFurnitureSpriteByName(iconKey);
         }
 
     }
@@ -133,14 +131,14 @@ public class BuildBedCpt : BaseBuildItemCpt
     {
         BuildItemBean buildItemData = InnBuildHandler.Instance.manager.GetBuildDataById(baseId);
         string iconKey = GetIconKey(buildItemData.GetIconList()[0]);
-        srBase.sprite = innBuildManager.GetFurnitureSpriteByName(iconKey);
+        srBase.sprite = InnBuildHandler.Instance.manager.GetFurnitureSpriteByName(iconKey);
     }
 
     public void SetBar(long barId)
     {
         BuildItemBean buildItemData = InnBuildHandler.Instance.manager.GetBuildDataById(barId);
         string iconKey = GetIconKey(buildItemData.GetIconList()[0]);
-        srBar.sprite = innBuildManager.GetFurnitureSpriteByName(iconKey);
+        srBar.sprite = InnBuildHandler.Instance.manager.GetFurnitureSpriteByName(iconKey);
     }
 
     public void SetSheets(long sheetsId)
@@ -149,14 +147,14 @@ public class BuildBedCpt : BaseBuildItemCpt
         string cleanStr = buildItemData.GetIconList()[0] + "_clean";
         string noCleanStr = buildItemData.GetIconList()[0] + "_noclean";
         string iconKey = GetIconKey(cleanStr);
-        srSheets.sprite = innBuildManager.GetFurnitureSpriteByName(iconKey);
+        srSheets.sprite = InnBuildHandler.Instance.manager.GetFurnitureSpriteByName(iconKey);
     }
 
     public void SetPillow(long pillowId)
     {
         BuildItemBean buildItemData = InnBuildHandler.Instance.manager.GetBuildDataById(pillowId);
         string iconKey = GetIconKey(buildItemData.GetIconList()[0]);
-        srPillow.sprite = innBuildManager.GetFurnitureSpriteByName(iconKey);
+        srPillow.sprite = InnBuildHandler.Instance.manager.GetFurnitureSpriteByName(iconKey);
     }
     
     /// <summary>

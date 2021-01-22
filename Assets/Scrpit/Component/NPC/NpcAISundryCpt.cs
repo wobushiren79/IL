@@ -24,7 +24,6 @@ public class NpcAISundryCpt : BaseNpcAI, IBaseObserver
     //增加的好感
     public int addFavorability = 0;
 
-    protected InnHandler innHandler;
     protected EventHandler eventHandler;
     protected SceneInnManager sceneInnManager;
     protected NpcEventBuilder npcEventBuilder;
@@ -32,7 +31,6 @@ public class NpcAISundryCpt : BaseNpcAI, IBaseObserver
     public override void Awake()
     {
         base.Awake();
-        innHandler = Find<InnHandler>(ImportantTypeEnum.InnHandler);
         eventHandler = Find<EventHandler>(ImportantTypeEnum.EventHandler);
         sceneInnManager = Find<SceneInnManager>(ImportantTypeEnum.SceneManager);
         npcEventBuilder = Find<NpcEventBuilder>(ImportantTypeEnum.NpcBuilder);
@@ -98,7 +96,7 @@ public class NpcAISundryCpt : BaseNpcAI, IBaseObserver
     {
         if (CheckCharacterIsArrive())
         {
-            if (innHandler.GetInnStatus() == InnHandler.InnStatusEnum.Close)
+            if (InnHandler.Instance.GetInnStatus() == InnHandler.InnStatusEnum.Close)
             {
                 SetIntent(SundryIntentEnum.Leave);
             }
@@ -151,7 +149,7 @@ public class NpcAISundryCpt : BaseNpcAI, IBaseObserver
     /// </summary>
     private void SetIntentForGoToInn()
     {
-        movePosition = innHandler.GetRandomEntrancePosition();
+        movePosition = InnHandler.Instance.GetRandomEntrancePosition();
         SetCharacterMove(movePosition);
     }
 

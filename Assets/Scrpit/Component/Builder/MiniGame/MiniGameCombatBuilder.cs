@@ -5,8 +5,6 @@ using System.Collections.Generic;
 
 public class MiniGameCombatBuilder : BaseMiniGameBuilder
 {
-    protected EffectHandler effectHandler;
-
     public GameObject objPlayerContainer;
     public GameObject objPlayerModel;
     //选择特效容器
@@ -17,10 +15,6 @@ public class MiniGameCombatBuilder : BaseMiniGameBuilder
     //地方角色
     public List<NpcAIMiniGameCombatCpt> listEnemyCharacter = new List<NpcAIMiniGameCombatCpt>();
 
-    private void Awake()
-    {
-        effectHandler = Find<EffectHandler>(ImportantTypeEnum.EffectHandler);
-    }
 
     /// <summary>
     /// 获取所有角色
@@ -121,7 +115,7 @@ public class MiniGameCombatBuilder : BaseMiniGameBuilder
     /// </summary>
     public GameObject CreateSelectEffect(Vector3 position)
     {
-        return effectHandler.PlayEffect(objSelectEffectContainer, "Effect_Select_1", position,0);
+        return EffectHandler.Instance.PlayEffect(objSelectEffectContainer, "Effect_Select_1", position,0);
     }
 
     /// <summary>
@@ -132,7 +126,7 @@ public class MiniGameCombatBuilder : BaseMiniGameBuilder
     /// <returns></returns>
     public GameObject CreateCombatEffect(string combatEffectName, Vector3 position)
     {
-       return effectHandler.PlayEffect(objSelectEffectContainer,combatEffectName, position,0);
+       return EffectHandler.Instance.PlayEffect(objSelectEffectContainer,combatEffectName, position,0);
     }
 
     /// <summary>

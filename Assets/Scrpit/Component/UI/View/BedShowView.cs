@@ -8,13 +8,6 @@ public class BedShowView : BaseMonoBehaviour
     public Image ivBedSheets;
     public Image ivBedPillow;
 
-    protected InnBuildManager innBuildManager;
-
-    public void Awake()
-    {
-        innBuildManager = Find<InnBuildManager>(ImportantTypeEnum.BuildManager);
-    }
-
     public  void SetData(BuildBedBean buildBedData)
     {
         BuildItemBean bedBaseData =  InnBuildHandler.Instance.manager.GetBuildDataById(buildBedData.bedBase);
@@ -31,27 +24,27 @@ public class BedShowView : BaseMonoBehaviour
     {
         if (ivBedBase == null)
             return;
-        ivBedBase.sprite = innBuildManager.GetFurnitureSpriteByName(bedBaseData.icon_key);
+        ivBedBase.sprite = InnBuildHandler.Instance.manager.GetFurnitureSpriteByName(bedBaseData.icon_key);
     }
 
     public void SetBarData(BuildItemBean bedBarData)
     {
         if (ivBedBar == null)
             return;
-        ivBedBar.sprite = innBuildManager.GetFurnitureSpriteByName(bedBarData.icon_key);
+        ivBedBar.sprite = InnBuildHandler.Instance.manager.GetFurnitureSpriteByName(bedBarData.icon_key);
     }
 
     public void SetSheetsData(BuildItemBean bedSheetsData)
     {
         if (ivBedSheets == null)
             return;
-        ivBedSheets.sprite = innBuildManager.GetFurnitureSpriteByName(bedSheetsData.icon_key);
+        ivBedSheets.sprite = InnBuildHandler.Instance.manager.GetFurnitureSpriteByName(bedSheetsData.icon_key);
     }
 
     public void SetPillowData(BuildItemBean bedPillowData)
     {
         if (ivBedPillow == null)
             return;
-        ivBedPillow.sprite = innBuildManager.GetFurnitureSpriteByName(bedPillowData.icon_key);
+        ivBedPillow.sprite = InnBuildHandler.Instance.manager.GetFurnitureSpriteByName(bedPillowData.icon_key);
     }
 }

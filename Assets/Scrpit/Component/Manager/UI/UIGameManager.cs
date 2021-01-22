@@ -14,7 +14,6 @@ public class UIGameManager : BaseUIManager
     public GameDataManager gameDataManager;
     //相关处理
     [Header("处理")]
-    public InnHandler innHandler;
     public GameTimeHandler gameTimeHandler;
     public ControlHandler controlHandler;
     public EventHandler eventHandler;
@@ -23,9 +22,6 @@ public class UIGameManager : BaseUIManager
     public NpcCustomerBuilder npcCustomerBuilder;
     public NpcEventBuilder npcEventBuilder;
     public NpcWorkerBuilder npcWorkerBuilder;
-    public InnFurnitureBuilder innFurnitureBuilder;
-    public InnFloorBuilder innFloorBuilder;
-    public InnWallBuilder innWallBuilder;
     [Header("小游戏")]
     public MiniGameCombatHandler miniGameCombatHandler;
 
@@ -35,7 +31,6 @@ public class UIGameManager : BaseUIManager
 
         gameDataManager = Find<GameDataManager>(ImportantTypeEnum.GameDataManager);
 
-        innHandler = Find<InnHandler>(ImportantTypeEnum.InnHandler);
         gameTimeHandler = Find<GameTimeHandler>(ImportantTypeEnum.TimeHandler);
         controlHandler = Find<ControlHandler>(ImportantTypeEnum.ControlHandler);
         eventHandler = Find<EventHandler>(ImportantTypeEnum.EventHandler);
@@ -46,10 +41,6 @@ public class UIGameManager : BaseUIManager
         npcCustomerBuilder = Find<NpcCustomerBuilder>(ImportantTypeEnum.NpcBuilder);
         npcEventBuilder = Find<NpcEventBuilder>(ImportantTypeEnum.NpcBuilder);
         npcWorkerBuilder = Find<NpcWorkerBuilder>(ImportantTypeEnum.NpcBuilder);
-
-        innFurnitureBuilder = Find<InnFurnitureBuilder>(ImportantTypeEnum.InnBuilder);
-        innFloorBuilder = Find<InnFloorBuilder>(ImportantTypeEnum.InnBuilder);
-        innWallBuilder = Find<InnWallBuilder>(ImportantTypeEnum.InnBuilder);
 
         miniGameCombatHandler = Find<MiniGameCombatHandler>(ImportantTypeEnum.MiniGameHandler);
     }

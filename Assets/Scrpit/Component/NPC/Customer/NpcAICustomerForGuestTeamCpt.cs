@@ -115,7 +115,7 @@ public class NpcAICustomerForGuestTeamCpt : NpcAICustomerCpt
         //如果没有团队专有喜欢的菜，没有则随机点
         if (loveMenus.Count == 0)
         {
-            innHandler.OrderForFood(orderForCustomer);
+            InnHandler.Instance.OrderForFood(orderForCustomer);
         }
         else
         {
@@ -124,12 +124,12 @@ public class NpcAICustomerForGuestTeamCpt : NpcAICustomerCpt
             {
                 //随机获取一个喜欢的菜
                 MenuOwnBean loveMenu = RandomUtil.GetRandomDataByList(ownLoveMenus);
-                innHandler.OrderForFood(orderForCustomer, loveMenu);
+                InnHandler.Instance.OrderForFood(orderForCustomer, loveMenu);
             }
             else
             {
                 //如果没有自己喜欢的菜品则点一杯茶
-                //innHandler.OrderForFood(orderForCustomer, 1);
+                //InnHandler.Instance.OrderForFood(orderForCustomer, 1);
             }
         }
         //如果有这菜
@@ -156,7 +156,7 @@ public class NpcAICustomerForGuestTeamCpt : NpcAICustomerCpt
     /// </summary>
     public override void IntentForWant()
     {
-        Vector3 doorPosition = innHandler.GetRandomEntrancePosition();
+        Vector3 doorPosition = InnHandler.Instance.GetRandomEntrancePosition();
         //移动到门口附近
         if (doorPosition == null || doorPosition == Vector3.zero)
         {
@@ -203,7 +203,7 @@ public class NpcAICustomerForGuestTeamCpt : NpcAICustomerCpt
             return;
         }
         //随机获取一个退出点
-        togetherPosition = innHandler.GetRandomEntrancePosition();
+        togetherPosition = InnHandler.Instance.GetRandomEntrancePosition();
         guestTeamIntent = CustomerIntentForGuestTeamEnum.GoToTeam;
         togetherPosition += new Vector3(Random.Range(-1f, 1f), Random.Range(-1f, 1f));
         characterMoveCpt.SetDestination(togetherPosition);
@@ -294,8 +294,8 @@ public class NpcAICustomerForGuestTeamCpt : NpcAICustomerCpt
     {
         //加入排队队伍
         //添加一个订单
-        OrderForCustomer orderForCustomer = innHandler.CreateOrder(this);
-        innHandler.cusomerQueue.Add(orderForCustomer);
+        OrderForCustomer orderForCustomer = InnHandler.Instance.CreateOrder(this);
+        InnHandler.Instance.cusomerQueue.Add(orderForCustomer);
         if (teamRank == 0)
         {
             StartCoroutine(CoroutineForStartWaitSeat());
@@ -323,7 +323,7 @@ public class NpcAICustomerForGuestTeamCpt : NpcAICustomerCpt
         {
             foreach (NpcAICustomerForGuestTeamCpt teamMember in listTeamMember)
             {
-                innHandler.EndOrderForForce(teamMember.orderForCustomer, false);
+                InnHandler.Instance.EndOrderForForce(teamMember.orderForCustomer, false);
                 teamMember.SetIntent(CustomerIntentEnum.Leave);
             }
         }

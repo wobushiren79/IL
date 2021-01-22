@@ -4,8 +4,6 @@ using System.Collections.Generic;
 
 public class BuildStairsCpt : BaseBuildItemCpt
 {
-    protected InnBuildManager innBuildManager;
-
     public GameObject objUpBox;
     public GameObject objDownBox;
 
@@ -14,10 +12,6 @@ public class BuildStairsCpt : BaseBuildItemCpt
     public int layer = 2;
     public string remarkId = "";
 
-    private void Awake()
-    {
-        innBuildManager = Find<InnBuildManager>(ImportantTypeEnum.BuildManager);
-    }
 
     public override void SetData(BuildItemBean buildItemData)
     {
@@ -38,13 +32,13 @@ public class BuildStairsCpt : BaseBuildItemCpt
         objDownBox.SetActive(false);
         if (layer == 1)
         {
-            Sprite spFirst = innBuildManager.GetFurnitureSpriteByName(listIcon[0] + "_0");
+            Sprite spFirst = InnBuildHandler.Instance.manager.GetFurnitureSpriteByName(listIcon[0] + "_0");
             SetSprite(spFirst, spFirst, spFirst, spFirst);
             objUpBox.SetActive(true);
         }
         else if (layer == 2)
         {
-            Sprite spSecond= innBuildManager.GetFurnitureSpriteByName(listIcon[0] + "_1");
+            Sprite spSecond= InnBuildHandler.Instance.manager.GetFurnitureSpriteByName(listIcon[0] + "_1");
             SetSprite(spSecond, spSecond, spSecond, spSecond);
             objDownBox.SetActive(true);
         }

@@ -212,14 +212,14 @@ public class NpcAIWorkerForWaiterCpt : NpcAIWokerFoBaseCpt
     {
         bedPro.SetActive(true);
         OrderForHotel orderForHotel = order as OrderForHotel;
-        BuildStairsCpt buildStairs = npcAIWorker.innHandler.GetCloseStairs(transform.position);
+        BuildStairsCpt buildStairs = InnHandler.Instance.GetCloseStairs(transform.position);
         if (buildStairs == null)
         {
             npcAIWorker.SetShout(GameCommonInfo.GetUITextById(13402));
             SetIntent(WaiterIntentEnum.Idle);
             return;
         }
-        npcAIWorker.innHandler.GetStairsByRemarkId(buildStairs.remarkId, out Vector3 layerFirstPosition, out Vector3 layerSecondPosition);
+        InnHandler.Instance.GetStairsByRemarkId(buildStairs.remarkId, out Vector3 layerFirstPosition, out Vector3 layerSecondPosition);
         orderForHotel.layerFirstStairsPositionForClean = layerFirstPosition;
         orderForHotel.layerSecondStairsPositionForClean = layerSecondPosition;
         npcAIWorker.SetCharacterMove(layerFirstPosition);
@@ -230,11 +230,11 @@ public class NpcAIWorkerForWaiterCpt : NpcAIWokerFoBaseCpt
     /// </summary>
     public void SetIntentForGoToStairsForSecond()
     {
-        BuildStairsCpt buildStairs = npcAIWorker.innHandler.GetCloseStairs(transform.position);
+        BuildStairsCpt buildStairs = InnHandler.Instance.GetCloseStairs(transform.position);
         bedPro.SetActive(false);
         OrderForHotel orderForHotel = order as OrderForHotel;
 
-        npcAIWorker.innHandler.GetStairsByRemarkId(buildStairs.remarkId, out Vector3 layerFirstPosition, out Vector3 layerSecondPosition);
+        InnHandler.Instance.GetStairsByRemarkId(buildStairs.remarkId, out Vector3 layerFirstPosition, out Vector3 layerSecondPosition);
         orderForHotel.layerFirstStairsPositionForClean = layerFirstPosition;
         orderForHotel.layerSecondStairsPositionForClean = layerSecondPosition;
         npcAIWorker.SetCharacterMove(layerSecondPosition);
@@ -397,7 +397,7 @@ public class NpcAIWorkerForWaiterCpt : NpcAIWokerFoBaseCpt
         // 清理桌子
         orderForCustomer.table.CleanTable();
         //结束订单
-        npcAIWorker.innHandler.EndOrder(orderForCustomer);
+        InnHandler.Instance.EndOrder(orderForCustomer);
         SetIntent(WaiterIntentEnum.Idle);
     }
 
@@ -421,12 +421,12 @@ public class NpcAIWorkerForWaiterCpt : NpcAIWokerFoBaseCpt
         //检测是否还有订单并且依旧没有取消改职业。如果有的话继续清理
         //用于中断连续清理
         CharacterWorkerForWaiterBean characterWorkerData = (CharacterWorkerForWaiterBean)npcAIWorker.characterData.baseInfo.GetWorkerInfoByType(WorkerEnum.Waiter);
-        if (characterWorkerData.isWorkingCleanBed && npcAIWorker.innHandler.bedCleanQueue.Count != 0)
+        if (characterWorkerData.isWorkingCleanBed && InnHandler.Instance.bedCleanQueue.Count != 0)
         {
             //搜寻最近的床位
             OrderForHotel clearItem = null;
             float distance = float.MaxValue;
-            foreach (OrderForHotel itemOrder in npcAIWorker.innHandler.bedCleanQueue)
+            foreach (OrderForHotel itemOrder in InnHandler.Instance.bedCleanQueue)
             {
                 float tempDistance = Vector3.Distance(itemOrder.bed.GetSleepPosition(), transform.position);
                 if (tempDistance < distance)
@@ -437,7 +437,7 @@ public class NpcAIWorkerForWaiterCpt : NpcAIWokerFoBaseCpt
             }
             if (clearItem!=null)
             {
-                npcAIWorker.innHandler.bedCleanQueue.Remove(clearItem);
+                InnHandler.Instance.bedCleanQueue.Remove(clearItem);
                 SetIntent(WaiterIntentEnum.GoToBed, clearItem);
             }
             else

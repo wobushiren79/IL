@@ -18,14 +18,6 @@ public class PopupItemsShow : PopupShowView
 
     public ItemsInfoBean itemsInfoData;
 
-    protected IconDataManager iconDataManager;
-    protected InnFoodManager innFoodManager;
-    public override void Awake()
-    {
-        base.Awake();
-        iconDataManager = Find<IconDataManager>(ImportantTypeEnum.UIManager);
-        innFoodManager = Find<InnFoodManager>(ImportantTypeEnum.FoodManager);
-    }
 
     /// <summary>
     /// 设置文本内容

@@ -3,36 +3,31 @@ using UnityEditor;
 using System.Collections;
 using UnityEngine.AI;
 
-public class SceneForInnHandler : BaseHandler, IBaseObserver
+public class SceneForInnHandler : BaseHandler
 {
-    protected GameTimeHandler gameTimeHandler;
     protected SceneInnManager sceneInnManager;
     protected GameDataManager gameDataManager;
 
     private void Awake()
     {
-        gameTimeHandler = Find<GameTimeHandler>( ImportantTypeEnum.TimeHandler);
         sceneInnManager = Find<SceneInnManager>(ImportantTypeEnum.SceneManager);
         gameDataManager = Find<GameDataManager>(ImportantTypeEnum.GameDataManager);
 
-        gameTimeHandler.AddObserver(this);
+        GameTimeHandler.Instance.RegisterNotifyForTime(NotifyForTime);
     }
 
 
-    public void ObserbableUpdate<T>(T observable, int type, params object[] obj) where T : Object
+    public void NotifyForTime(GameTimeHandler.NotifyTypeEnum notifyType, float timeHour)
     {
-        if(observable == gameTimeHandler)
+        if (notifyType ==  GameTimeHandler.NotifyTypeEnum.NewDay)
         {
-            if (type == (int)GameTimeHandler.NotifyTypeEnum.NewDay)
+            //初始化场景
+            if (sceneInnManager != null)
             {
-                //初始化场景
-                if (sceneInnManager != null)
-                {
-                    InnBuildBean innBuildData = gameDataManager.gameData.GetInnBuildData();
-                    sceneInnManager.InitScene(innBuildData.innWidth, innBuildData.innHeight);
-                }
-                //StartCoroutine(CoroutineForBuildNavMesh());
+                InnBuildBean innBuildData = gameDataManager.gameData.GetInnBuildData();
+                sceneInnManager.InitScene(innBuildData.innWidth, innBuildData.innHeight);
             }
+            //StartCoroutine(CoroutineForBuildNavMesh());
         }
     }
 

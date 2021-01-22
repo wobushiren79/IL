@@ -14,6 +14,7 @@ public class GameDataHandler : BaseHandler, DialogView.IDialogCallBack, IBaseObs
         BedResearchChange = 4,
         InfiniteTowerProChange = 5,
     }
+
     //系统清理倒计时
     protected int timeForSystemClear = 0;
     //10分钟自动清理一次
@@ -21,19 +22,11 @@ public class GameDataHandler : BaseHandler, DialogView.IDialogCallBack, IBaseObs
 
     protected GameDataManager gameDataManager;
     protected GameTimeHandler gameTimeHandler;
-    protected InnFoodManager innFoodManager;
-    protected NpcInfoManager npcInfoManager;
-    protected IconDataManager iconDataManager;
-    protected InnBuildManager innBuildManager;
 
     private void Awake()
     {
         gameTimeHandler = Find<GameTimeHandler>(ImportantTypeEnum.TimeHandler);
         gameDataManager = Find<GameDataManager>(ImportantTypeEnum.GameDataManager);
-        innFoodManager = Find<InnFoodManager>(ImportantTypeEnum.FoodManager);
-        npcInfoManager = Find<NpcInfoManager>(ImportantTypeEnum.NpcManager);
-        iconDataManager = Find<IconDataManager>(ImportantTypeEnum.UIManager);
-        innBuildManager = Find<InnBuildManager>(ImportantTypeEnum.BuildManager);
     }
 
     private void Start()

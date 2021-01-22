@@ -33,12 +33,6 @@ public class ControlForBuildCpt : BaseControl
     public HashSet<Vector3> listBuildingExistForWall = new HashSet<Vector3>();
     //数据管理
     protected GameDataManager gameDataManager;
-    //建筑
-    protected InnBuildManager innBuildManager;
-    //建造者
-    protected InnFurnitureBuilder innFurnitureBuilder;
-    protected InnWallBuilder innWallBuilder;
-    protected InnFloorBuilder innFloorBuilder;
 
     //建筑层数
     public int buildLayer = 1;
@@ -46,11 +40,6 @@ public class ControlForBuildCpt : BaseControl
     private void Awake()
     {
         gameDataManager = Find<GameDataManager>(ImportantTypeEnum.GameDataManager);
-        innBuildManager = Find<InnBuildManager>(ImportantTypeEnum.BuildManager);
-
-        innFurnitureBuilder = Find<InnFurnitureBuilder>(ImportantTypeEnum.InnBuilder);
-        innWallBuilder = Find<InnWallBuilder>(ImportantTypeEnum.InnBuilder);
-        innFloorBuilder = Find<InnFloorBuilder>(ImportantTypeEnum.InnBuilder);
     }
 
     private void FixedUpdate()
@@ -179,7 +168,7 @@ public class ControlForBuildCpt : BaseControl
         //先删除原有可能已经展示的建筑
         ClearBuildItem();
         //建造建筑
-        GameObject buildItemObj = innFurnitureBuilder.BuildFurniture(id, buildBedData);
+        GameObject buildItemObj = InnBuildHandler.Instance.builderForFurniture.BuildFurniture(id, buildBedData);
         //物体先在建筑控件上显示
         buildItemObj.transform.parent = buildItemTempContainer.transform;
         if (buildItemObj == null)
@@ -433,7 +422,7 @@ public class ControlForBuildCpt : BaseControl
         {
             BuildItemBean buildItemData = InnBuildHandler.Instance.manager.GetBuildDataById(itemFurnitureData.id);
             //如果是最后一扇门则不能删除
-            if (buildItemData.build_type == (int)BuildItemTypeEnum.Door && buildData.GetDoorList(innBuildManager).Count <= 1)
+            if (buildItemData.build_type == (int)BuildItemTypeEnum.Door && buildData.GetDoorList().Count <= 1)
             {
                 //只有一次点击时才出提示
                 if (Input.GetButtonDown(InputInfo.Confirm))
@@ -446,7 +435,7 @@ public class ControlForBuildCpt : BaseControl
                 //移除数据
                 buildData.GetFurnitureList(dismantleLayer).Remove(itemFurnitureData);
                 //移除场景中的建筑物
-                innFurnitureBuilder.DestroyFurnitureByPosition(sceneFurniturePosition);
+                InnBuildHandler.Instance.builderForFurniture.DestroyFurnitureByPosition(sceneFurniturePosition);
                 if (buildItemData.build_type == (int)BuildItemTypeEnum.Bed)
                 {
                     //如果是床
@@ -463,14 +452,14 @@ public class ControlForBuildCpt : BaseControl
                         itemStarisData = buildData.GetFurnitureByPosition(2, buildPosition + new Vector3(0,100));
                         buildData.GetFurnitureList(2).Remove(itemStarisData);
                         //移除场景中的建筑物
-                        innFurnitureBuilder.DestroyFurnitureByPosition(sceneFurniturePosition + new Vector3(0, 100));
+                        InnBuildHandler.Instance.builderForFurniture.DestroyFurnitureByPosition(sceneFurniturePosition + new Vector3(0, 100));
                     }
                     else if (dismantleLayer == 2)
                     {
                         itemStarisData = buildData.GetFurnitureByPosition(1, buildPosition - new Vector3(0, 100));
                         buildData.GetFurnitureList(1).Remove(itemStarisData);
                         //移除场景中的建筑物
-                        innFurnitureBuilder.DestroyFurnitureByPosition(sceneFurniturePosition - new Vector3(0, 100));
+                        InnBuildHandler.Instance.builderForFurniture.DestroyFurnitureByPosition(sceneFurniturePosition - new Vector3(0, 100));
                     }
                 }
                 else
@@ -509,7 +498,7 @@ public class ControlForBuildCpt : BaseControl
                 //移除数据
                 buildData.GetWallList(buildLayer).Remove(itemWallData);
                 //移除场景中的建筑物
-                innWallBuilder.ClearWall(Vector3Int.RoundToInt(startPosition));
+                InnBuildHandler.Instance.builderForWall.ClearWall(Vector3Int.RoundToInt(startPosition));
                 //背包里添加一个
                 gameDataManager.gameData.AddBuildNumber(itemWallData.id, 1);
             }
@@ -525,7 +514,7 @@ public class ControlForBuildCpt : BaseControl
     protected void BuildItemForFurniture(List<Vector3> listBuildPosition)
     {
         //将家具添加到家具容器中
-        buildItemCpt.transform.parent = innFurnitureBuilder.buildContainer.transform;
+        buildItemCpt.transform.parent = InnBuildHandler.Instance.builderForFurniture.buildContainer.transform;
         //增加一个家具
         InnResBean addData = new InnResBean(buildItemCpt.buildItemData.id, buildItemCpt.transform.position, listBuildPosition, buildItemCpt.direction);
         //如果是门。需要重置一下墙体
@@ -555,7 +544,7 @@ public class ControlForBuildCpt : BaseControl
             }
 
             //楼下也要添加同样的数据
-            GameObject objFirstStairs = Instantiate(innFurnitureBuilder.buildContainer, buildItemCpt.gameObject);
+            GameObject objFirstStairs = Instantiate(InnBuildHandler.Instance.builderForFurniture.buildContainer, buildItemCpt.gameObject);
             objFirstStairs.transform.position += new Vector3(0,-100,0);
             BuildStairsCpt firstStairs= objFirstStairs.GetComponent<BuildStairsCpt>();
             firstStairs.SetLayer(buildLayer - 1);
@@ -621,7 +610,7 @@ public class ControlForBuildCpt : BaseControl
             changePosition = Vector3Int.RoundToInt(floorData.GetStartPosition());
             floorData.id = buildItemCpt.buildItemData.id;
         }
-        innFloorBuilder.ChangeFloor(changePosition, buildItemCpt.buildItemData.tile_name);
+        InnBuildHandler.Instance.builderForFloor.ChangeFloor(changePosition, buildItemCpt.buildItemData.tile_name);
         //背包里删除一个
         ItemBean itemData = gameDataManager.gameData.AddBuildNumber(buildItemCpt.buildItemData.id, -1);
         //如果没有了，则不能继续建造
@@ -659,7 +648,7 @@ public class ControlForBuildCpt : BaseControl
             changePosition = Vector3Int.RoundToInt(wallData.GetStartPosition());
             wallData.id = buildItemCpt.buildItemData.id;
         }
-        innWallBuilder.ChangeWall(changePosition, buildItemCpt.buildItemData.tile_name);
+        InnBuildHandler.Instance.builderForWall.ChangeWall(changePosition, buildItemCpt.buildItemData.tile_name);
         //背包里删除一个
         ItemBean itemData = gameDataManager.gameData.AddBuildNumber(buildItemCpt.buildItemData.id, -1);
         //如果没有了，则不能继续建造

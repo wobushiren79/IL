@@ -38,13 +38,13 @@ public class InnBuildBean
     /// </summary>
     /// <param name="width"></param>
     /// <param name="height"></param>
-    public void ChangeInnSize(int layer, InnBuildManager innBuildManager, int width, int height)
+    public void ChangeInnSize(int layer,int width, int height)
     {
         if (layer == 1)
         {
             this.innWidth = width;
             this.innHeight = height;
-            InitWall(listWall, layer, GetDoorList(innBuildManager));
+            InitWall(listWall, layer, GetDoorList());
             InitFloor(listFloor, layer);
         }
         else if (layer == 2)
@@ -259,7 +259,7 @@ public class InnBuildBean
     /// 获取门
     /// </summary>
     /// <returns></returns>
-    public List<InnResBean> GetDoorList(InnBuildManager innBuildManager)
+    public List<InnResBean> GetDoorList()
     {
         List<InnResBean> doorList = new List<InnResBean>();
         List<InnResBean> allData = GetFurnitureList(1);

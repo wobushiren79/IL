@@ -9,8 +9,6 @@ public class SceneGameArenaInit : BaseSceneInit, IBaseObserver
 {
     //场景数据管理
     protected SceneArenaManager sceneArenaManager;
-    //食物管理
-    protected InnFoodManager innFoodManager;
 
     //弹幕游戏控制
     protected MiniGameBarrageHandler barrageHandler;
@@ -28,7 +26,6 @@ public class SceneGameArenaInit : BaseSceneInit, IBaseObserver
     {
         base.Awake();
         sceneArenaManager = Find<SceneArenaManager>(ImportantTypeEnum.SceneManager);
-        innFoodManager = Find<InnFoodManager>(ImportantTypeEnum.FoodManager);
         barrageHandler = Find<MiniGameBarrageHandler>(ImportantTypeEnum.MiniGameHandler);
         combatHandler = Find<MiniGameCombatHandler>(ImportantTypeEnum.MiniGameHandler);
         cookingHandler = Find<MiniGameCookingHandler>(ImportantTypeEnum.MiniGameHandler);
@@ -49,12 +46,6 @@ public class SceneGameArenaInit : BaseSceneInit, IBaseObserver
 
     public void InitSceneData()
     {
-        //获取所有NPC
-        if (npcInfoManager != null)
-            npcInfoManager.npcInfoController.GetAllNpcInfo();
-        if (storyInfoManager != null)
-            storyInfoManager.storyInfoController.GetStoryInfoByScene(ScenesEnum.GameArenaScene);
-
         ArenaPrepareBean arenaPrepareData = GameCommonInfo.ArenaPrepareData;
         //测试数据 
         //arenaPrepareData = new ArenaPrepareBean(new MiniGameDebateBean());

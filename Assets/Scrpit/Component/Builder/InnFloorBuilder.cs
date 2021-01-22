@@ -5,13 +5,11 @@ using UnityEngine.Tilemaps;
 
 public class InnFloorBuilder : BaseTilemapBuilder
 {
-    protected InnBuildManager innBuildManager;
     protected GameDataManager gameDataManager;
 
     private void Awake()
     {
         gameDataManager = Find<GameDataManager>(ImportantTypeEnum.GameDataManager);
-        innBuildManager = Find<InnBuildManager>(ImportantTypeEnum.BuildManager);
     }
 
     public void StartBuild()
@@ -47,7 +45,7 @@ public class InnFloorBuilder : BaseTilemapBuilder
         if (itemData == null)
             return;
         BuildItemBean buildItemData = InnBuildHandler.Instance.manager.GetBuildDataById(itemData.id);
-        TileBase floorTile = innBuildManager.GetFloorTileByName(buildItemData.tile_name);
+        TileBase floorTile = InnBuildHandler.Instance.manager.GetFloorTileByName(buildItemData.tile_name);
         Build(floorTile, new Vector3Int((int)itemData.startPosition.x, (int)itemData.startPosition.y, 0));
     }
 
@@ -56,9 +54,9 @@ public class InnFloorBuilder : BaseTilemapBuilder
     /// </summary>
     /// <param name="itemData"></param>
     /// <param name="changeTileName"></param>
-    public void ChangeFloor(Vector3Int changePosition,string changeTileName)
+    public void ChangeFloor(Vector3Int changePosition, string changeTileName)
     {
-        TileBase floorTile = innBuildManager.GetFloorTileByName(changeTileName);
+        TileBase floorTile = InnBuildHandler.Instance.manager.GetFloorTileByName(changeTileName);
         Build(floorTile, changePosition);
     }
 }

@@ -11,9 +11,6 @@ public class ItemGameMainHintForResearchCpt : ItemGameBaseCpt
     public Text tvName;
     public ProgressView progressView;
 
-    protected InnFoodManager foodManager;
-    protected IconDataManager iconDataManager;
-
 
     public MenuOwnBean GetMenuData()
     {
@@ -28,7 +25,6 @@ public class ItemGameMainHintForResearchCpt : ItemGameBaseCpt
     public void SetData(BuildBedBean bedData)
     {
         this.bedData = bedData;
-        iconDataManager = Find<IconDataManager>(ImportantTypeEnum.UIManager);
         Sprite spBedIcon = IconDataHandler.Instance.manager.GetIconSpriteByName("ui_features_bed");
         SetIcon(spBedIcon);
         SetName(bedData.bedName);
@@ -38,9 +34,8 @@ public class ItemGameMainHintForResearchCpt : ItemGameBaseCpt
     public void SetData(MenuOwnBean menuOwn)
     {
         this.menuOwn = menuOwn;
-        foodManager = Find<InnFoodManager>(ImportantTypeEnum.FoodManager);
         MenuInfoBean menuInfo =  InnFoodHandler.Instance.manager.GetFoodDataById(menuOwn.menuId);
-        Sprite spFoodIcon= foodManager.GetFoodSpriteByName(menuInfo.icon_key);
+        Sprite spFoodIcon= InnFoodHandler.Instance.manager.GetFoodSpriteByName(menuInfo.icon_key);
         SetIcon(spFoodIcon);
         SetName(menuInfo.name);
         RefreshData();

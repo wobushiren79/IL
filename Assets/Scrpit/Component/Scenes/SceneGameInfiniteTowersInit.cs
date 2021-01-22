@@ -16,8 +16,6 @@ public class SceneGameInfiniteTowersInit : BaseNormalSceneInit
     public override void Start()
     {
         base.Start();
-        //获取NPC
-        npcTeamManager.npcTeamController.GetNpcTeamByType(NpcTeamTypeEnum.InfiniteTowersBoss);
 
         infiniteTowersData = GameCommonInfo.InfiniteTowersData;
 

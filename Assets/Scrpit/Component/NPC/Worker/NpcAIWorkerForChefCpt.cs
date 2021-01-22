@@ -144,7 +144,7 @@ public class NpcAIWorkerForChefCpt : NpcAIWokerFoBaseCpt
             //扣除食材
             gameDataManager.gameData.DeductIng(orderForCustomer.foodData);
             //记录食材消耗
-            npcAIWorker.innHandler.ConsumeIngRecord(orderForCustomer.foodData);
+            InnHandler.Instance.ConsumeIngRecord(orderForCustomer.foodData);
             //设置灶台状态
             orderForCustomer.stove.SetStoveStatus(BuildStoveCpt.StoveStatusEnum.Cooking);
             StartCoroutine(StartCook());
@@ -183,7 +183,7 @@ public class NpcAIWorkerForChefCpt : NpcAIWokerFoBaseCpt
             //在灶台创建一个食物
             orderForCustomer.stove.CreateFood(innFoodManager, orderForCustomer);
             //通知送餐
-            npcAIWorker.innHandler.sendQueue.Add(orderForCustomer);
+            InnHandler.Instance.sendQueue.Add(orderForCustomer);
             //设置状态为闲置
             SetIntent(ChefIntentEnum.Idle);
         }

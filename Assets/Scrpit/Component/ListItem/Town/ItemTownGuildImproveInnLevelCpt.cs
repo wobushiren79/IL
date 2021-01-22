@@ -24,20 +24,12 @@ public class ItemTownGuildImproveInnLevelCpt : BaseMonoBehaviour, DialogView.IDi
     public StoreInfoBean storeInfo;
     public bool isAllPre = true;
 
-    protected IconDataManager iconDataManager;
     protected GameDataManager gameDataManager;
     protected UIGameManager uiGameManager;
-    protected InnBuildManager innBuildManager;
-    protected NpcInfoManager npcInfoManager;
-    protected InnFoodManager innFoodManager;
     private void Awake()
     {
-        iconDataManager = Find<IconDataManager>(ImportantTypeEnum.UIManager);
         gameDataManager = Find<GameDataManager>(ImportantTypeEnum.GameDataManager);
         uiGameManager = Find<UIGameManager>(ImportantTypeEnum.GameUI);
-        innBuildManager = Find<InnBuildManager>(ImportantTypeEnum.BuildManager);
-        npcInfoManager = Find<NpcInfoManager>(ImportantTypeEnum.NpcManager);
-        innFoodManager = Find<InnFoodManager>(ImportantTypeEnum.FoodManager);
     }
 
     private void Start()
@@ -95,10 +87,7 @@ public class ItemTownGuildImproveInnLevelCpt : BaseMonoBehaviour, DialogView.IDi
         foreach (var itemData in listPreData)
         {
             GameObject objPre = Instantiate(objPreContainer, objPreModel);
-            PreTypeEnumTools.GetPreDetails(
-                itemData,
-                gameDataManager.gameData,
-                npcInfoManager);
+            PreTypeEnumTools.GetPreDetails(itemData,gameDataManager.gameData);
             //设置图标
             Sprite spIcon = itemData.spPreIcon;
             Image ivIcon = CptUtil.GetCptInChildrenByName<Image>(objPre, "Icon");

@@ -25,7 +25,6 @@ public class UIGameDate : BaseUIComponent
     protected ControlHandler controlHandler;
     protected NpcCustomerBuilder npcCustomerBuilder;
     protected EventHandler eventHandler;
-    protected InnHandler innHandler;
 
     public override void Awake()
     {
@@ -35,7 +34,6 @@ public class UIGameDate : BaseUIComponent
         controlHandler = uiGameManager.controlHandler;
         npcCustomerBuilder = uiGameManager.npcCustomerBuilder;
         eventHandler = uiGameManager.eventHandler;
-        innHandler = uiGameManager.innHandler;
     }
 
     private void Start()
@@ -182,7 +180,7 @@ public class UIGameDate : BaseUIComponent
         gameTimeHandler.SetTimeStatus(false);
 
         //设置位置
-        Vector3 startPosition = innHandler.GetRandomEntrancePosition();
+        Vector3 startPosition = InnHandler.Instance.GetRandomEntrancePosition();
         BaseControl baseControl = controlHandler.StartControl(ControlHandler.ControlEnum.Normal);
         baseControl.SetFollowPosition(startPosition + new Vector3(0, -2, 0));
 

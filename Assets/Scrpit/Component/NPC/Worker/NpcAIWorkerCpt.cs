@@ -38,8 +38,6 @@ public class NpcAIWorkerCpt : BaseNpcAI
     //打手AI控制
     public NpcAIWorkerForBeaterCpt aiForBeater;
 
-    //客栈数据
-    public InnHandler innHandler;
     //工作者的想法
     public WorkerIntentEnum workerIntent = WorkerIntentEnum.Idle;
     //所有的工作类型
@@ -53,7 +51,6 @@ public class NpcAIWorkerCpt : BaseNpcAI
     public override void Awake()
     {
         base.Awake();
-        innHandler = Find<InnHandler>(ImportantTypeEnum.InnHandler);
     }
 
     private void FixedUpdate()
@@ -207,7 +204,7 @@ public class NpcAIWorkerCpt : BaseNpcAI
                     break;
             }
 
-            bool isDistributionSuccess = innHandler.DistributionWorkForType(workerDetils, this);
+            bool isDistributionSuccess = InnHandler.Instance.DistributionWorkForType(workerDetils, this);
             if (isDistributionSuccess)
                 return true;
         }
@@ -361,7 +358,7 @@ public class NpcAIWorkerCpt : BaseNpcAI
             if (action == 0)
             {
                 //闲逛 有问题
-                Vector3 movePosition = innHandler.GetRandomInnPositon();
+                Vector3 movePosition = InnHandler.Instance.GetRandomInnPositon();
                 bool canGo = CheckUtil.CheckPath(transform.position, movePosition);
                 if (canGo)
                     SetCharacterMove(movePosition);

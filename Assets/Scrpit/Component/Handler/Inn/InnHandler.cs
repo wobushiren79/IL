@@ -6,7 +6,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Collections;
 
-public class InnHandler : BaseMonoBehaviour, IBaseObserver
+public class InnHandler : BaseHandler<InnHandler, InnManager>
 {
     public enum InnStatusEnum
     {
@@ -33,11 +33,8 @@ public class InnHandler : BaseMonoBehaviour, IBaseObserver
     public InnHotelHandler innHotelHandler;
 
     protected GameTimeHandler gameTimeHandler;
-    protected IconDataManager iconDataManager;
     //数据管理
     protected GameDataManager gameDataManager;
-    protected InnFoodManager innFoodManager;
-    protected InnBuildManager innBuildManager;
 
     //NPC创建
     protected NpcWorkerBuilder workerBuilder;
@@ -68,21 +65,18 @@ public class InnHandler : BaseMonoBehaviour, IBaseObserver
     //当天记录流水
     protected InnRecordBean innRecord = new InnRecordBean();
 
-    private void Awake()
+    protected override void Awake()
     {
+        base.Awake();
         gameDataManager = Find<GameDataManager>(ImportantTypeEnum.GameDataManager);
-        innFoodManager = Find<InnFoodManager>(ImportantTypeEnum.FoodManager);
-        innBuildManager = Find<InnBuildManager>(ImportantTypeEnum.BuildManager);
 
         workerBuilder = Find<NpcWorkerBuilder>(ImportantTypeEnum.NpcBuilder);
         customerBuilder = Find<NpcCustomerBuilder>(ImportantTypeEnum.NpcBuilder);
         eventBuilder = Find<NpcEventBuilder>(ImportantTypeEnum.NpcBuilder);
-        iconDataManager = Find<IconDataManager>(ImportantTypeEnum.UIManager);
 
         gameDataHandler = Find<GameDataHandler>(ImportantTypeEnum.GameDataHandler);
-        gameTimeHandler = Find<GameTimeHandler>(ImportantTypeEnum.TimeHandler);
-        gameTimeHandler.AddObserver(this);
 
+        GameTimeHandler.instance.RegisterNotifyForTime(NotifyForTime);
     }
 
     public void Update()
@@ -111,7 +105,7 @@ public class InnHandler : BaseMonoBehaviour, IBaseObserver
         innTableHandler.InitTableList();
         innCookHandler.InitStoveList();
         innPayHandler.InitCounterList();
-        innHotelHandler.InitBedList(innBuildManager, gameDataManager.gameData.GetInnBuildData());
+        innHotelHandler.InitBedList(gameDataManager.gameData.GetInnBuildData());
         InitWorker();
     }
 
@@ -543,7 +537,7 @@ public class InnHandler : BaseMonoBehaviour, IBaseObserver
             //根据心情评价客栈 前提订单里有他
             InnPraise(orderForCustomer.innEvaluation.GetPraise());
             //记录+1
-            gameDataManager.gameData.AddMenuSellNumber(innFoodManager, 1, orderForCustomer.foodData.id, payMoneyL, payMoneyM, payMoneyS, out bool isMenuLevelUp);
+            gameDataManager.gameData.AddMenuSellNumber(1, orderForCustomer.foodData.id, payMoneyL, payMoneyM, payMoneyS, out bool isMenuLevelUp);
             //成就+1
             userAchievement.AddNumberForCustomerFoodComplete(orderForCustomer.customer.customerType, 1);
             if (isMenuLevelUp)
@@ -872,18 +866,15 @@ public class InnHandler : BaseMonoBehaviour, IBaseObserver
 
 
     #region 时间回调
-    public void ObserbableUpdate<T>(T observable, int type, params object[] obj) where T : UnityEngine.Object
+    public void NotifyForTime(GameTimeHandler.NotifyTypeEnum notifyType, float timeHour)
     {
-        if (observable == gameTimeHandler)
+        if (notifyType == GameTimeHandler.NotifyTypeEnum.NewDay)
         {
-            if (type == (int)GameTimeHandler.NotifyTypeEnum.NewDay)
-            {
-                InitRecord();
-            }
-            else if (type == (int)GameTimeHandler.NotifyTypeEnum.EndDay)
-            {
+            InitRecord();
+        }
+        else if (notifyType == GameTimeHandler.NotifyTypeEnum.EndDay)
+        {
 
-            }
         }
     }
     #endregion

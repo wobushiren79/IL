@@ -4,12 +4,8 @@ using System.Collections;
 
 public class BaseSceneInit : BaseMonoBehaviour
 {
-    protected InnBuildManager innBuildManager;
     protected UIGameManager uiGameManager;
     protected GameDataManager gameDataManager;
-    protected NpcInfoManager npcInfoManager;
-    protected NpcTeamManager npcTeamManager;
-    protected StoryInfoManager storyInfoManager;
     protected GameTimeHandler gameTimeHandler;
 
     protected WeatherHandler weatherHandler;
@@ -19,15 +15,11 @@ public class BaseSceneInit : BaseMonoBehaviour
 
     public virtual void Awake()
     {
-        npcTeamManager = Find<NpcTeamManager>(ImportantTypeEnum.NpcManager);
         weatherHandler = Find<WeatherHandler>(ImportantTypeEnum.WeatherHandler);
         uiGameManager = Find<UIGameManager>(ImportantTypeEnum.GameUI);
         gameDataManager = Find<GameDataManager>(ImportantTypeEnum.GameDataManager);
-        npcInfoManager = Find<NpcInfoManager>(ImportantTypeEnum.NpcManager);
-        storyInfoManager = Find<StoryInfoManager>(ImportantTypeEnum.StoryManager);
         controlHandler = Find<ControlHandler>(ImportantTypeEnum.ControlHandler);
         gameTimeHandler = Find<GameTimeHandler>(ImportantTypeEnum.TimeHandler);
-        innBuildManager = Find<InnBuildManager>(ImportantTypeEnum.BuildManager);
         gameDataHandler = Find<GameDataHandler>(ImportantTypeEnum.GameDataHandler);
     }
 
@@ -43,14 +35,6 @@ public class BaseSceneInit : BaseMonoBehaviour
             {
                 gameDataManager.gameData = GameCommonInfo.GameData;
             }
-        }
-        if (npcInfoManager != null)
-        {
-            npcInfoManager.npcInfoController.GetAllNpcInfo();
-        }
-        if (innBuildManager != null)
-        {
-            innBuildManager.buildDataController.GetAllBuildItemsData();
         }
         StartCoroutine(BuildNavMesh());
     }

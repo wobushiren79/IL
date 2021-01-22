@@ -4,8 +4,6 @@ using System.Collections.Generic;
 
 public class BuildDecorationForDoorCpt : BuildDecorationCpt
 {
-    protected InnBuildManager innBuildManager;
-
     public Sprite spLeftAndRightOpen;
     public Sprite spUpAndDownOpen;
 
@@ -14,21 +12,16 @@ public class BuildDecorationForDoorCpt : BuildDecorationCpt
     public GameObject objTableDownPosition;
     public GameObject objTableUpPosition;
 
-    private void Awake()
-    {
-        innBuildManager = Find<InnBuildManager>(ImportantTypeEnum.BuildManager);
-    }
-
     public override void SetData(BuildItemBean buildItemData, Sprite spIcon)
     {
         base.SetData(buildItemData);
 
         List<string> listIconStr = buildItemData.GetIconList();
-        Sprite spLeftAndRight = innBuildManager.GetFurnitureSpriteByName(listIconStr[0] + "_0");
-        Sprite spUpAndDown = innBuildManager.GetFurnitureSpriteByName(listIconStr[0] + "_2");
+        Sprite spLeftAndRight = InnBuildHandler.Instance.manager.GetFurnitureSpriteByName(listIconStr[0] + "_0");
+        Sprite spUpAndDown = InnBuildHandler.Instance.manager.GetFurnitureSpriteByName(listIconStr[0] + "_2");
 
-        spLeftAndRightOpen = innBuildManager.GetFurnitureSpriteByName(listIconStr[0] + "_1");
-        spUpAndDownOpen = innBuildManager.GetFurnitureSpriteByName(listIconStr[0] + "_3");
+        spLeftAndRightOpen = InnBuildHandler.Instance.manager.GetFurnitureSpriteByName(listIconStr[0] + "_1");
+        spUpAndDownOpen = InnBuildHandler.Instance.manager.GetFurnitureSpriteByName(listIconStr[0] + "_3");
         SetSprite(spLeftAndRight, spLeftAndRight, spUpAndDown, spUpAndDown);
     }
 

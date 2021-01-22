@@ -70,25 +70,25 @@ public class MenuOwnBean
     /// 卖出菜品
     /// </summary>
     /// <param name="number"></param>
-    public void SellMenu(InnFoodManager innFoodManager, long number, long priceL, long priceM, long priceS, out bool isLevelUp)
+    public void SellMenu(long number, long priceL, long priceM, long priceS, out bool isLevelUp)
     {
         sellNumber += number;
         sellMoneyL += priceL;
         sellMoneyM += priceM;
         sellMoneyS += priceS;
-        AddLevelExp(innFoodManager,(int)number, out isLevelUp);
+        AddLevelExp((int)number, out isLevelUp);
     }
 
     /// <summary>
     /// 增加经验
     /// </summary>
     /// <param name="exp"></param>
-    public void AddLevelExp(InnFoodManager innFoodManager, int exp, out bool isLevelUp)
+    public void AddLevelExp(int exp, out bool isLevelUp)
     {
         menuExp += exp;
         isLevelUp = false;
         LevelTypeEnum menuLevel = GetMenuLevel();
-        int levelExp =  GetMenuLevelUpExp(innFoodManager, menuLevel);
+        int levelExp =  GetMenuLevelUpExp(menuLevel);
 
         if (levelExp == 0)
         {
@@ -105,7 +105,7 @@ public class MenuOwnBean
         }
     }
 
-    public int GetMenuLevelUpExp(InnFoodManager innFoodManager, LevelTypeEnum menuLevel)
+    public int GetMenuLevelUpExp(LevelTypeEnum menuLevel)
     {
         int levelExp = 0;
         if (menuLevel == LevelTypeEnum.Init)
@@ -185,12 +185,12 @@ public class MenuOwnBean
     /// 获取菜品等级
     /// </summary>
     /// <returns></returns>
-    public LevelTypeEnum GetMenuLevel(InnFoodManager innFoodManager, out string levelStr, out int nextLevelExp)
+    public LevelTypeEnum GetMenuLevel(out string levelStr, out int nextLevelExp)
     {
         levelStr = "???";
         LevelTypeEnum menuLevel = GetMenuLevel();
         levelStr = LevelTypeEnumTools.GetLevelStr(menuLevel);
-        nextLevelExp =  GetMenuLevelUpExp(innFoodManager, menuLevel);
+        nextLevelExp =  GetMenuLevelUpExp(menuLevel);
         return menuLevel;
     }
 

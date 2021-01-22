@@ -1,25 +1,20 @@
 ﻿using UnityEngine;
 using UnityEditor;
 
-public abstract class BaseNormalSceneInit : BaseSceneInit,IBaseObserver, DialogView.IDialogCallBack
+public abstract class BaseNormalSceneInit : BaseSceneInit, DialogView.IDialogCallBack
 {
 
     public override void Start()
     {
         base.Start();
         //设置时间
-        if (gameTimeHandler != null && gameDataManager != null)
+        if (gameDataManager != null)
         {
             TimeBean timeData = gameDataManager.gameData.gameTime;
-            gameTimeHandler.SetTime(timeData.hour, timeData.minute);
-            gameTimeHandler.SetTimeStatus(false);
+            GameTimeHandler.Instance.SetTime(timeData.hour, timeData.minute);
+            GameTimeHandler.Instance.SetTimeStatus(false);
             //增加回调
-            gameTimeHandler.AddObserver(this);
-        }
-        //获取团队NPC信息
-        if (npcTeamManager != null)
-        {
-            npcTeamManager.npcTeamController.GetNpcTeamByType(NpcTeamTypeEnum.Customer);
+            GameTimeHandler.Instance.RegisterNotifyForTime(NotifyForTime);
         }
 
         //设置角色位置
@@ -85,14 +80,11 @@ public abstract class BaseNormalSceneInit : BaseSceneInit,IBaseObserver, DialogV
         DialogHandler.Instance.CreateDialog<DialogView>(DialogEnum.Text, this, dialogBean, 5);
     }
     #region  时间通知回调
-    public void ObserbableUpdate<T>(T observable, int type, params System.Object[] obj) where T : UnityEngine.Object
+    public void NotifyForTime(GameTimeHandler.NotifyTypeEnum notifyType, float timeHour)
     {
-        if (observable == gameTimeHandler)
+        if (notifyType == GameTimeHandler.NotifyTypeEnum.EndDay)
         {
-            if (type == (int)GameTimeHandler.NotifyTypeEnum.EndDay)
-            {
-                EndDay();
-            }
+            EndDay();
         }
     }
     #endregion

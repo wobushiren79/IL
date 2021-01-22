@@ -62,7 +62,8 @@ public class UIGameBuild : BaseUIComponent, IRadioGroupCallBack
         //停止时间
         uiGameManager.gameTimeHandler.SetTimeStatus(true);
         uiGameManager.controlHandler.StartControl(ControlHandler.ControlEnum.Build);
-        uiGameManager.innHandler.CloseInn();
+
+        InnHandler.Instance.CloseInn();
 
         SetInnLayer(1);
 
@@ -74,15 +75,15 @@ public class UIGameBuild : BaseUIComponent, IRadioGroupCallBack
     /// 设置床的范围
     /// </summary>
     /// <param name="isShow"></param>
-    protected void SetBedRangeStatus( bool isShow)
+    protected void SetBedRangeStatus(bool isShow)
     {
         //打开所有床位的范围显示
-        BuildBedCpt[] listBed = uiGameManager.innFurnitureBuilder.GetAllBed();
-        if (!CheckUtil.ArrayIsNull(listBed) )
+        BuildBedCpt[] listBed = InnBuildHandler.Instance.builderForFurniture.GetAllBed();
+        if (!CheckUtil.ArrayIsNull(listBed))
         {
-            for (int i=0;i< listBed.Length;i++)
+            for (int i = 0; i < listBed.Length; i++)
             {
-                BuildBedCpt buildBed= listBed[i];
+                BuildBedCpt buildBed = listBed[i];
                 buildBed.ShowRange(isShow);
             }
         }
@@ -101,7 +102,7 @@ public class UIGameBuild : BaseUIComponent, IRadioGroupCallBack
         //继续时间
         uiGameManager.gameTimeHandler.SetTimeStatus(false);
         //设置角色到门口
-        Vector3 startPosition = uiGameManager.innHandler.GetRandomEntrancePosition();
+        Vector3 startPosition = InnHandler.Instance.GetRandomEntrancePosition();
         uiGameManager.controlHandler.GetControl(ControlHandler.ControlEnum.Normal).SetFollowPosition(startPosition + new Vector3(0, -2, 0));
         //隐藏床的范围显示
         SetBedRangeStatus(false);
@@ -148,7 +149,7 @@ public class UIGameBuild : BaseUIComponent, IRadioGroupCallBack
         //刷新床列表
         for (int i = 0; i < listBuildForBedItem.Count; i++)
         {
-            ItemGameBuildForBedCpt itemGameBuildForBed= listBuildForBedItem[i];
+            ItemGameBuildForBedCpt itemGameBuildForBed = listBuildForBedItem[i];
             if (itemGameBuildForBed.buildBedData.isSet)
             {
                 itemGameBuildForBed.gameObject.SetActive(false);
@@ -331,11 +332,11 @@ public class UIGameBuild : BaseUIComponent, IRadioGroupCallBack
         //重新构建地形
         AstarPath.active.Scan();
         //重新构建客栈
-        uiGameManager.innHandler.InitInn();
+        InnHandler.Instance.InitInn();
         if (uiGameManager.gameTimeHandler.GetDayStatus() == GameTimeHandler.DayEnum.Work)
         {
             //如果是工作日 开店继续营业
-            uiGameManager.innHandler.OpenInn();
+            InnHandler.Instance.OpenInn();
             //恢复工作日控制器
             uiGameManager.controlHandler.StartControl(ControlHandler.ControlEnum.Work);
         }
@@ -380,38 +381,32 @@ public class UIGameBuild : BaseUIComponent, IRadioGroupCallBack
         //    uiGameManager.innFurnitureBuilder.buildContainer.SetActive(furniture);
 
         //设置半透明状态
-        if (uiGameManager.innWallBuilder != null)
+        Tilemap tilemap = InnBuildHandler.Instance.builderForWall.GetTilemapContainer().GetComponent<Tilemap>();
+        if (wall)
         {
-            Tilemap tilemap = uiGameManager.innWallBuilder.GetTilemapContainer().GetComponent<Tilemap>();
-            if (wall)
-            {
-                tilemap.color = new Color(tilemap.color.r, tilemap.color.g, tilemap.color.b, 1f);
-            }
-            else
-            {
-                tilemap.color = new Color(tilemap.color.r, tilemap.color.g, tilemap.color.b, 0.3f);
-            }
+            tilemap.color = new Color(tilemap.color.r, tilemap.color.g, tilemap.color.b, 1f);
         }
-        if (uiGameManager.innFurnitureBuilder != null)
+        else
         {
-            SpriteRenderer[] listRenderer = uiGameManager.innFurnitureBuilder.buildContainer.GetComponentsInChildren<SpriteRenderer>();
-            if (listRenderer != null)
+            tilemap.color = new Color(tilemap.color.r, tilemap.color.g, tilemap.color.b, 0.3f);
+        }
+        SpriteRenderer[] listRenderer = InnBuildHandler.Instance.builderForFurniture.buildContainer.GetComponentsInChildren<SpriteRenderer>();
+        if (listRenderer != null)
+        {
+            foreach (SpriteRenderer itemRenderer in listRenderer)
             {
-                foreach (SpriteRenderer itemRenderer in listRenderer)
+                //排出半透明的范围显示
+                if (itemRenderer.name.Contains("AddRange") || itemRenderer.name.Contains("Shadow"))
                 {
-                    //排出半透明的范围显示
-                    if (itemRenderer.name.Contains("AddRange")|| itemRenderer.name.Contains("Shadow"))
-                    {
-                        continue;
-                    }
-                    if (furniture)
-                    {
-                        itemRenderer.color = new Color(itemRenderer.color.r, itemRenderer.color.g, itemRenderer.color.b, 1f);
-                    }
-                    else
-                    {
-                        itemRenderer.color = new Color(itemRenderer.color.r, itemRenderer.color.g, itemRenderer.color.b, 0.3f);
-                    }
+                    continue;
+                }
+                if (furniture)
+                {
+                    itemRenderer.color = new Color(itemRenderer.color.r, itemRenderer.color.g, itemRenderer.color.b, 1f);
+                }
+                else
+                {
+                    itemRenderer.color = new Color(itemRenderer.color.r, itemRenderer.color.g, itemRenderer.color.b, 0.3f);
                 }
             }
         }

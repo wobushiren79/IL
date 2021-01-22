@@ -37,15 +37,6 @@ public class PopupRecordShow : PopupShowView
     public GameObject objShowContainer;
     public GameObject objShowItem;
 
-    protected InnFoodManager innFoodManager;
-    protected IconDataManager iconDataManager;
-
-    public override void Awake()
-    {
-        base.Awake();
-        innFoodManager = Find<InnFoodManager>(ImportantTypeEnum.FoodManager);
-        iconDataManager = Find<IconDataManager>(ImportantTypeEnum.UIManager);
-    }
 
     /// <summary>
     /// 设置数据

@@ -22,7 +22,6 @@ public class PopupBedShow : PopupShowView
 
     protected GameDataManager gameDataManager;
     protected IconDataManager iconDataManager;
-    protected InnBuildManager innBuildManager;
 
     public BuildBedBean buildBedData;
 
@@ -31,7 +30,6 @@ public class PopupBedShow : PopupShowView
         base.Awake();
         gameDataManager = Find<GameDataManager>(ImportantTypeEnum.GameDataManager);
         iconDataManager = Find<IconDataManager>(ImportantTypeEnum.UIManager);
-        innBuildManager = Find<InnBuildManager>(ImportantTypeEnum.BuildManager);
     }
 
     public void SetData(BuildBedBean buildBedData)

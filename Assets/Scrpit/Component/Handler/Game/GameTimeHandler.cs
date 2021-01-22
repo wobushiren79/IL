@@ -3,8 +3,9 @@ using UnityEditor;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.AI;
+using System;
 
-public class GameTimeHandler : BaseObservable<IBaseObserver>
+public class GameTimeHandler : BaseHandler<GameTimeHandler, GameTimeManager>
 {
     public enum DayEnum
     {
@@ -21,10 +22,8 @@ public class GameTimeHandler : BaseObservable<IBaseObserver>
         TimePoint,//整点报时
     }
 
+    protected Action<NotifyTypeEnum,float>  notifyForTime;
     protected GameDataManager gameDataManager;
-    protected InnFloorBuilder innFloorBuilder;
-    protected InnWallBuilder innWallBuilder;
-    protected InnBuildManager innBuildManager;
     protected LightHandler lightHandler;
 
     public float hour;
@@ -37,12 +36,10 @@ public class GameTimeHandler : BaseObservable<IBaseObserver>
     //时间流逝速度
     public float timeSclae = 1;
 
-    private void Awake()
+    protected override void Awake()
     {
+        base.Awake();
         gameDataManager = Find<GameDataManager>(ImportantTypeEnum.GameDataManager);
-        innFloorBuilder = Find<InnFloorBuilder>(ImportantTypeEnum.InnBuilder);
-        innWallBuilder = Find<InnWallBuilder>(ImportantTypeEnum.InnBuilder);
-        innBuildManager = Find<InnBuildManager>(ImportantTypeEnum.BuildManager);
         lightHandler = Find<LightHandler>(ImportantTypeEnum.LightHandler);
     }
 
@@ -52,6 +49,15 @@ public class GameTimeHandler : BaseObservable<IBaseObserver>
         {
             TimeLapse();
         }
+    }
+
+    /// <summary>
+    /// 注册时间通知
+    /// </summary>
+    /// <param name="notifyForTime"></param>
+    public void RegisterNotifyForTime(Action<NotifyTypeEnum,float> notifyForTime)
+    {
+        this.notifyForTime += notifyForTime;
     }
 
     /// <summary>
@@ -120,7 +126,7 @@ public class GameTimeHandler : BaseObservable<IBaseObserver>
             hour += 1;
 
             //整点通知
-            NotifyAllObserver((int)NotifyTypeEnum.TimePoint, hour);
+            notifyForTime?.Invoke(NotifyTypeEnum.TimePoint, hour);
         }
         if (hour >= 24)
         {
@@ -128,7 +134,7 @@ public class GameTimeHandler : BaseObservable<IBaseObserver>
             SetTimeScale(1);
             SystemUtil.GCCollect();
             //TODO 一天时间结束处理
-            NotifyAllObserver((int)NotifyTypeEnum.EndDay, null);
+            notifyForTime?.Invoke(NotifyTypeEnum.EndDay,-1);
         }
         TimeBean timeData = gameDataManager.gameData.gameTime;
         timeData.SetTimeForHM((int)hour, (int)min);
@@ -140,7 +146,7 @@ public class GameTimeHandler : BaseObservable<IBaseObserver>
     public void SetNewDay()
     {
         //初始化世界种子
-        GameCommonInfo.RandomSeed = Random.Range(int.MinValue, int.MaxValue);
+        GameCommonInfo.RandomSeed = UnityEngine.Random.Range(int.MinValue, int.MaxValue);
         GameCommonInfo.InitRandomSeed();
         //解除每日
         GameCommonInfo.DailyLimitData.InitData(gameDataManager.gameData);
@@ -168,25 +174,24 @@ public class GameTimeHandler : BaseObservable<IBaseObserver>
                 //检测是1楼还是2楼
                 if (innBuildData.buildInnWidth != 0 || innBuildData.buildInnHeight != 0)
                 {
-                    innBuildData.ChangeInnSize(1, innBuildManager, innBuildData.buildInnWidth, innBuildData.buildInnHeight);
+                    innBuildData.ChangeInnSize(1, innBuildData.buildInnWidth, innBuildData.buildInnHeight);
                     innBuildData.buildInnWidth = 0;
                     innBuildData.buildInnHeight = 0;
                 }
                 else if (innBuildData.buildInnSecondWidth != 0 || innBuildData.buildInnSecondHeight != 0)
                 {
-                    innBuildData.ChangeInnSize(2, innBuildManager, innBuildData.buildInnSecondWidth, innBuildData.buildInnSecondHeight);
+                    innBuildData.ChangeInnSize(2, innBuildData.buildInnSecondWidth, innBuildData.buildInnSecondHeight);
                     innBuildData.buildInnSecondWidth = 0;
                     innBuildData.buildInnSecondHeight = 0;
                 }
 
-                if (innFloorBuilder != null)
-                    innFloorBuilder.StartBuild();
-                if (innWallBuilder != null)
-                    innWallBuilder.StartBuild();
+
+                InnBuildHandler.Instance.builderForFloor.StartBuild();
+                InnBuildHandler.Instance.builderForWall.StartBuild();
             }
         }
         //通知新的一天
-        NotifyAllObserver((int)NotifyTypeEnum.NewDay, null);
+        notifyForTime?.Invoke(NotifyTypeEnum.NewDay, -1);
         SystemUtil.GCCollect();
     }
 

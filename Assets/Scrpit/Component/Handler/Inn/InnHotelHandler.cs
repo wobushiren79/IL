@@ -13,7 +13,7 @@ public class InnHotelHandler : InnBaseHandler
     /// 找到所有桌子
     /// </summary>
     /// <returns></returns>
-    public List<BuildBedCpt> InitBedList(InnBuildManager innBuildManager, InnBuildBean innBuildData)
+    public List<BuildBedCpt> InitBedList(InnBuildBean innBuildData)
     {
         if (bedContainer == null)
             return listBedCpt;
@@ -49,13 +49,13 @@ public class InnHotelHandler : InnBaseHandler
                     BuildBedCpt buildBedCpt = listBedCpt[i];
                     float totalAddAesthetics = 0;
                     float totalSubAesthetics = 0;
-                    GetAroundAesthetics(innBuildManager, mapFurnitureData, buildBedCpt.transform.position, 3,out float addFurnitureAesthetics,out float subFurnitureAesthetics);
+                    GetAroundAesthetics(mapFurnitureData, buildBedCpt.transform.position, 3,out float addFurnitureAesthetics,out float subFurnitureAesthetics);
                     totalAddAesthetics += addFurnitureAesthetics;
                     totalSubAesthetics += subFurnitureAesthetics;
-                    GetAroundAesthetics(innBuildManager, mapFloorData, buildBedCpt.transform.position - new Vector3(0.5f, 0.5f), 3, out float addFloorAesthetics, out float subFloorAesthetics);
+                    GetAroundAesthetics(mapFloorData, buildBedCpt.transform.position - new Vector3(0.5f, 0.5f), 3, out float addFloorAesthetics, out float subFloorAesthetics);
                     totalAddAesthetics += addFloorAesthetics ;
                     totalSubAesthetics += subFloorAesthetics;
-                    GetAroundAesthetics(innBuildManager, mapWallData, buildBedCpt.transform.position - new Vector3(0.5f, 0.5f), 3, out float addWallAesthetics, out float subWallAesthetics);
+                    GetAroundAesthetics(mapWallData, buildBedCpt.transform.position - new Vector3(0.5f, 0.5f), 3, out float addWallAesthetics, out float subWallAesthetics);
                     totalAddAesthetics += addWallAesthetics ;
                     totalSubAesthetics += subWallAesthetics;
                     buildBedCpt.SetAddAesthetics((float)decimal.Round(decimal.Parse(totalAddAesthetics + ""), 1), (float)decimal.Round(decimal.Parse(totalSubAesthetics + ""), 1));
@@ -75,7 +75,7 @@ public class InnHotelHandler : InnBaseHandler
     /// <param name="position"></param>
     /// <param name="aroundRange"></param>
     /// <returns></returns>
-    public void GetAroundAesthetics(InnBuildManager innBuildManager, Dictionary<Vector3, InnResBean> mapBuildData, Vector3 position, int aroundRange,out float addAesthetics,out float subAesthetics)
+    public void GetAroundAesthetics(Dictionary<Vector3, InnResBean> mapBuildData, Vector3 position, int aroundRange,out float addAesthetics,out float subAesthetics)
     {
         addAesthetics = 0;
         subAesthetics = 0;

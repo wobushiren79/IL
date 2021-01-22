@@ -21,10 +21,6 @@ public class PopupAchievementShow : PopupShowView
     public Material materialGray;
 
     protected GameDataManager gameDataManager;
-    protected IconDataManager iconDataManager;
-    protected InnBuildManager innBuildManager;
-    protected InnFoodManager innFoodManager;
-    protected NpcInfoManager npcInfoManager;
 
     public AchievementInfoBean achievementInfo;
     public AchievementStatusEnum status;
@@ -35,10 +31,6 @@ public class PopupAchievementShow : PopupShowView
     {
         base.Awake();
         gameDataManager = Find<GameDataManager>(ImportantTypeEnum.GameDataManager);
-        iconDataManager = Find<IconDataManager>(ImportantTypeEnum.UIManager);
-        innBuildManager = Find<InnBuildManager>(ImportantTypeEnum.BuildManager);
-        innFoodManager = Find<InnFoodManager>(ImportantTypeEnum.FoodManager);
-        npcInfoManager = Find<NpcInfoManager>(ImportantTypeEnum.NpcManager);
     }
 
     public void SetData(AchievementStatusEnum status, AchievementInfoBean achievementInfo)

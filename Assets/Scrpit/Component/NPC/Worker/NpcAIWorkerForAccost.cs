@@ -162,7 +162,7 @@ public class NpcAIWorkerForAccost : NpcAIWokerFoBaseCpt
         if (accostPro != null)
             accostPro.SetActive(false);
         //回去最靠近的门的嘴表
-        movePosition = npcAIWorker.innHandler.GetCloseRandomEntrancePosition(transform.position);
+        movePosition = InnHandler.Instance.GetCloseRandomEntrancePosition(transform.position);
         npcAIWorker.characterMoveCpt.SetDestination(movePosition + new Vector3(0, -2.5f, 0));
     }
 
@@ -226,7 +226,7 @@ public class NpcAIWorkerForAccost : NpcAIWokerFoBaseCpt
     /// </summary>
     public void SetIntentForGoToStairsForFirst()
     {
-        BuildStairsCpt buildStairs = npcAIWorker.innHandler.GetCloseStairs(transform.position);
+        BuildStairsCpt buildStairs = InnHandler.Instance.GetCloseStairs(transform.position);
         if (buildStairs == null)
         {
             npcAIWorker.SetShout(GameCommonInfo.GetUITextById(13402));
@@ -235,7 +235,7 @@ public class NpcAIWorkerForAccost : NpcAIWokerFoBaseCpt
             return;
         }
         npcAIWorker.SetShout(GameCommonInfo.GetUITextById(13404));
-        npcAIWorker.innHandler.GetStairsByRemarkId(buildStairs.remarkId, out Vector3 layerFirstPosition, out Vector3 layerSecondPosition);
+        InnHandler.Instance.GetStairsByRemarkId(buildStairs.remarkId, out Vector3 layerFirstPosition, out Vector3 layerSecondPosition);
         orderForHotel.layerFirstStairsPosition = layerFirstPosition;
         orderForHotel.layerSecondStairsPosition = layerSecondPosition;
         npcAIWorker.SetCharacterMove(layerFirstPosition);

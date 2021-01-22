@@ -7,12 +7,10 @@ public class InteractiveLookCpt : BaseInteractiveCpt
     public long markId;//交互ID
 
     protected EventHandler eventHandler;
-    protected TextInfoManager textInfoManager;
 
     private void Awake()
     {
         eventHandler = Find<EventHandler>(ImportantTypeEnum.EventHandler);
-        textInfoManager = Find<TextInfoManager>(ImportantTypeEnum.TextManager);
     }
 
     public override void InteractiveDetection(CharacterInteractiveCpt characterInt)

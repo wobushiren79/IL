@@ -122,7 +122,7 @@ public class NpcAIWorkerForAccountantCpt : NpcAIWokerFoBaseCpt
         //设置柜台的状态
         order.counter.SetCounterStatus(BuildCounterCpt.CounterStatusEnum.Accounting);
         if (order as OrderForCustomer != null)
-        {      
+        {
             //开始结算
             StartCoroutine(CoroutineForAccountingForFood(order as OrderForCustomer));
         }
@@ -144,7 +144,7 @@ public class NpcAIWorkerForAccountantCpt : NpcAIWokerFoBaseCpt
         MenuOwnBean menuOwn = gameDataManager.gameData.GetMenuById(orderForCustomer.foodData.id);
         menuOwn.GetPrice(orderForCustomer.foodData, out long payMoneyL, out long payMoneyM, out long payMoneyS);
         //是否出错
-        bool isError = npcAIWorker.characterData.CalculationAccountingCheck( out float moreRate);
+        bool isError = npcAIWorker.characterData.CalculationAccountingCheck(out float moreRate);
 
         long AddMoneyL = (long)(moreRate * payMoneyL);
         long AddMoneyM = (long)(moreRate * payMoneyM);
@@ -164,7 +164,7 @@ public class NpcAIWorkerForAccountantCpt : NpcAIWokerFoBaseCpt
                 AddMoneyL, AddMoneyM, AddMoneyS
                 );
             //增加经验
-            npcAIWorker.characterData.baseInfo.accountantInfo.AddExp(1,out bool isLevelUp);
+            npcAIWorker.characterData.baseInfo.accountantInfo.AddExp(1, out bool isLevelUp);
             if (isLevelUp)
             {
                 ToastForLevelUp(WorkerEnum.Accountant);
@@ -197,22 +197,19 @@ public class NpcAIWorkerForAccountantCpt : NpcAIWokerFoBaseCpt
             //orderForCustomer.customer.SetExpression(CharacterExpressionCpt.CharacterExpressionEnum.Love);
         }
 
-        if (npcAIWorker.innHandler != null)
-        {
-            npcAIWorker.innHandler.PayMoney(orderForCustomer, payMoneyL, payMoneyM, payMoneyS,true);
-            //结束订单
-            npcAIWorker.innHandler.EndOrder(orderForCustomer);
-        }
+        InnHandler.Instance.PayMoney(orderForCustomer, payMoneyL, payMoneyM, payMoneyS, true);
+        //结束订单
+        InnHandler.Instance.EndOrder(orderForCustomer);
 
         //通知离开
         orderForCustomer.customer.SetIntent(NpcAICustomerCpt.CustomerIntentEnum.Leave);
 
         //检测该柜台是否还有订单并且依旧没有取消改职业。
         //用于中断连续结账
-        CharacterWorkerBaseBean characterWorkerData = npcAIWorker.characterData.baseInfo.GetWorkerInfoByType( WorkerEnum.Accountant);
+        CharacterWorkerBaseBean characterWorkerData = npcAIWorker.characterData.baseInfo.GetWorkerInfoByType(WorkerEnum.Accountant);
         if (characterWorkerData.isWorking && orderForCustomer.counter.payQueue.Count != 0)
         {
-            OrderForBase newOrder =orderForCustomer.counter.payQueue[0];
+            OrderForBase newOrder = orderForCustomer.counter.payQueue[0];
             orderForCustomer.counter.payQueue.Remove(newOrder);
             StartAccounting(newOrder);
         }
@@ -285,16 +282,13 @@ public class NpcAIWorkerForAccountantCpt : NpcAIWokerFoBaseCpt
             //orderForCustomer.customer.SetExpression(CharacterExpressionCpt.CharacterExpressionEnum.Love);
         }
         //加上小时数
-        payMoneyL = payMoneyL * orderForHotel.sleepTime;
-        payMoneyM = payMoneyM * orderForHotel.sleepTime;
-        payMoneyS = payMoneyS * orderForHotel.sleepTime;
+        payMoneyL *= orderForHotel.sleepTime;
+        payMoneyM *= orderForHotel.sleepTime;
+        payMoneyS *= orderForHotel.sleepTime;
 
-        if (npcAIWorker.innHandler != null)
-        {
-            npcAIWorker.innHandler.PayMoney(orderForHotel, payMoneyL, payMoneyM, payMoneyS, true);
-            //结束订单
-            npcAIWorker.innHandler.EndOrder(orderForHotel);
-        }
+        InnHandler.Instance.PayMoney(orderForHotel, payMoneyL, payMoneyM, payMoneyS, true);
+        //结束订单
+        InnHandler.Instance.EndOrder(orderForHotel);
 
         //检测该柜台是否还有订单并且依旧没有取消改职业。如果有的话继续结账  
         //用于中断连续结账

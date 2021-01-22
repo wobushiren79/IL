@@ -62,7 +62,6 @@ public class UIGameSettle : BaseUIComponent
 
     public void InitData()
     {
-        InnHandler innHandler = uiGameManager.innHandler;
         GameTimeHandler gameTimeHandler = uiGameManager.gameTimeHandler;
         GameDataManager gameDataManager = uiGameManager.gameDataManager;
         UserAchievementBean userAchievement = gameDataManager.gameData.GetAchievementData();
@@ -70,7 +69,7 @@ public class UIGameSettle : BaseUIComponent
         gameTimeHandler.SetTimeStatus(true);
         CptUtil.RemoveChildsByActive(objListRecordContent.transform);
         animDelay = 0f;
-        InnRecordBean innRecord = innHandler.GetInnRecord();
+        InnRecordBean innRecord = InnHandler.Instance.GetInnRecord();
         long totalCustomerForFood = innRecord.GetTotalCompleteCustomerForFood();
         long totalCustomerForHotel = innRecord.GetTotalCompleteCustomerForHotel();
         //住客流量

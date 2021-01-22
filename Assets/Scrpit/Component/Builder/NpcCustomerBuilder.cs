@@ -3,22 +3,20 @@ using UnityEditor;
 using System.Collections.Generic;
 using System.Collections;
 
-public class NpcCustomerBuilder : NpcNormalBuilder, IBaseObserver
+public class NpcCustomerBuilder : NpcNormalBuilder
 {
     //团队顾客
     public GameObject objGuestTeamModel;
     //住宿顾客
     public GameObject objCustomerForHotelModel;
 
-    protected InnHandler innHandler;
-    protected List<NpcTeamBean> listTeamCustomer=new List<NpcTeamBean>();
+    protected List<NpcTeamBean> listTeamCustomer = new List<NpcTeamBean>();
     protected float buildTeamGustomerRate = 0;
     protected float buildCustomerForHotelRate = 0;
 
     protected override void Awake()
     {
         base.Awake();
-        innHandler = Find<InnHandler>(ImportantTypeEnum.InnHandler);
     }
 
     private void Start()
@@ -26,9 +24,9 @@ public class NpcCustomerBuilder : NpcNormalBuilder, IBaseObserver
         InnAttributesBean innAttributes = gameDataManager.gameData.GetInnAttributesData();
         InnBuildBean innBuild = gameDataManager.gameData.GetInnBuildData();
         buildCustomerForHotelRate = innAttributes.CalculationCustomerForHotelRate(innBuild);
-        buildTeamGustomerRate =  innAttributes.CalculationTeamCustomerBuildRate();
+        buildTeamGustomerRate = innAttributes.CalculationTeamCustomerBuildRate();
         buildMaxNumber = 500;
-        gameTimeHandler.AddObserver(this);
+        gameTimeHandler.RegisterNotifyForTime(NotifyForTime);
         StartBuildCustomer();
     }
 
@@ -94,7 +92,7 @@ public class NpcCustomerBuilder : NpcNormalBuilder, IBaseObserver
             }
             catch
             {
-  
+
             }
         }
     }
@@ -159,7 +157,7 @@ public class NpcCustomerBuilder : NpcNormalBuilder, IBaseObserver
         string teamCode = SystemUtil.GetUUID(SystemUtil.UUIDTypeEnum.N);
         Color teamColor = new Color(Random.Range(0f, 1f), Random.Range(0f, 1f), Random.Range(0f, 1f));
         //设置是否想吃
-        bool isWant = IsWantEat( CustomerTypeEnum.Team);
+        bool isWant = IsWantEat(CustomerTypeEnum.Team);
         //获取小队成员数据
         npcTeam.GetTeamCharacterData(npcInfoManager, out List<CharacterBean> listLeader, out List<CharacterBean> listMembers);
         //设置小队人数(团队领袖全生成，小队成员随机生成)
@@ -212,7 +210,7 @@ public class NpcCustomerBuilder : NpcNormalBuilder, IBaseObserver
         BuildCustomerForHotel(npcPosition);
     }
     public void BuildCustomerForHotel(Vector3 npcPosition)
-    {        
+    {
         //如果大于构建上线则不再创建新NPC
         if (objContainer.transform.childCount > buildMaxNumber)
             return;
@@ -221,7 +219,7 @@ public class NpcCustomerBuilder : NpcNormalBuilder, IBaseObserver
         //设置意图
         NpcAICustomerForHotelCpt customerAI = npcObj.GetComponent<NpcAICustomerForHotelCpt>();
         //想要吃饭概率
-        if (gameTimeHandler.GetDayStatus() == GameTimeHandler.DayEnum.Work && innHandler.GetInnStatus() == InnHandler.InnStatusEnum.Open)
+        if (gameTimeHandler.GetDayStatus() == GameTimeHandler.DayEnum.Work && InnHandler.Instance.GetInnStatus() == InnHandler.InnStatusEnum.Open)
         {
             customerAI.SetIntent(NpcAICustomerForHotelCpt.CustomerHotelIntentEnum.GoToInn);
         }
@@ -305,7 +303,7 @@ public class NpcCustomerBuilder : NpcNormalBuilder, IBaseObserver
         {
             buildInterval -= weatherHandler.weatherData.weatherAddition;
         }
-        gameDataManager.gameData.GetInnAttributesData().GetInnLevel(out int levelTitle,out int levelStar);
+        gameDataManager.gameData.GetInnAttributesData().GetInnLevel(out int levelTitle, out int levelStar);
         if (levelTitle == 1)
         {
             buildInterval = buildInterval * 0.9f;
@@ -334,9 +332,9 @@ public class NpcCustomerBuilder : NpcNormalBuilder, IBaseObserver
     /// <param name="observable"></param>
     /// <param name="type"></param>
     /// <param name="obj"></param>
-    public void ObserbableUpdate<T>(T observable, int type, params System.Object[] obj) where T : Object
+    public void NotifyForTime(GameTimeHandler.NotifyTypeEnum notifyType, float timeHour)
     {
-        if ((GameTimeHandler.NotifyTypeEnum)type == GameTimeHandler.NotifyTypeEnum.NewDay)
+        if (notifyType == GameTimeHandler.NotifyTypeEnum.NewDay)
         {
             ClearNpc();
             //重新获取顾客信息
@@ -345,15 +343,14 @@ public class NpcCustomerBuilder : NpcNormalBuilder, IBaseObserver
             StartBuildCustomer();
             HandleNpcBuildTime(6);
         }
-        else if ((GameTimeHandler.NotifyTypeEnum)type == GameTimeHandler.NotifyTypeEnum.EndDay)
+        else if (notifyType == GameTimeHandler.NotifyTypeEnum.EndDay)
         {
             StopBuildCustomer();
             //ClearNpc();
         }
-        else if ((GameTimeHandler.NotifyTypeEnum)type == GameTimeHandler.NotifyTypeEnum.TimePoint)
+        else if (notifyType == GameTimeHandler.NotifyTypeEnum.TimePoint)
         {
-            int hour = System.Convert.ToInt32(obj[0]);
-            HandleNpcBuildTime(hour);
+            HandleNpcBuildTime((int)timeHour);
         }
     }
 }

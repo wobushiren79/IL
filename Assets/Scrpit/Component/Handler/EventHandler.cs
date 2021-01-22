@@ -60,13 +60,12 @@ public class EventHandler : BaseHandler,
         miniGameDebateHandler = Find<MiniGameDebateHandler>(ImportantTypeEnum.MiniGameHandler);
 
         npcImportantBuilder = Find<NpcImportantBuilder>(ImportantTypeEnum.NpcBuilder);
-        gameTimeHandler = Find<GameTimeHandler>(ImportantTypeEnum.TimeHandler);
         if (miniGameCombatHandler != null)
             miniGameCombatHandler.AddObserver(this);
         if (miniGameDebateHandler != null)
             miniGameDebateHandler.AddObserver(this);
-        if (gameTimeHandler != null)
-            gameTimeHandler.AddObserver(this);
+
+        GameTimeHandler.Instance.RegisterNotifyForTime(NotifyForTime);
     }
 
     public void InitData()
@@ -181,10 +180,10 @@ public class EventHandler : BaseHandler,
     /// <returns></returns>
     public bool EventTriggerForTalkByRascal(NpcAIRascalCpt npcAIRascal, long markId)
     {
-        if (controlHandler != null&&GameCommonInfo.GameConfig.statusForEventCameraMove == 1)
+        if (controlHandler != null && GameCommonInfo.GameConfig.statusForEventCameraMove == 1)
         {
             //先还原层数
-            ControlForWorkCpt controlForWork =(ControlForWorkCpt) controlHandler.GetControl(ControlHandler.ControlEnum.Work);
+            ControlForWorkCpt controlForWork = (ControlForWorkCpt)controlHandler.GetControl(ControlHandler.ControlEnum.Work);
             if (controlForWork != null)
                 controlForWork.SetLayer(1);
             //镜头跟随
@@ -374,7 +373,7 @@ public class EventHandler : BaseHandler,
             if (gameDataManager != null && mStoryInfo != null)
                 gameDataManager.gameData.AddTraggeredEvent(mStoryInfo.id);
             //打开主界面UI
-            uiManager.OpenUIAndCloseOtherByName(EnumUtil.GetEnumName(UIEnum.GameMain));    
+            uiManager.OpenUIAndCloseOtherByName(EnumUtil.GetEnumName(UIEnum.GameMain));
             //恢复时间
             if (gameTimeHandler != null)
                 gameTimeHandler.SetTimeRestore();
@@ -552,18 +551,17 @@ public class EventHandler : BaseHandler,
                     break;
             }
         }
-        else if (observable == gameTimeHandler)
+    }
+    public void NotifyForTime(GameTimeHandler.NotifyTypeEnum notifyType, float timeHour)
+    {
+        if (notifyType == GameTimeHandler.NotifyTypeEnum.NewDay)
         {
-            if (type == (int)GameTimeHandler.NotifyTypeEnum.NewDay)
-            {
-                InitData();
-            }
-            else if (type == (int)GameTimeHandler.NotifyTypeEnum.EndDay)
-            {
+            InitData();
+        }
+        else if (notifyType == GameTimeHandler.NotifyTypeEnum.EndDay)
+        {
 
-            }
         }
     }
-
     #endregion
 }

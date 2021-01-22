@@ -2,26 +2,21 @@
 using UnityEditor;
 using System.Collections.Generic;
 
-public class SeasonsHandler : BaseHandler, IBaseObserver
+public class SeasonsHandler : BaseHandler
 {
     public List<GameObject> listTreeContainer;
 
-    protected GameTimeHandler gameTimeHandler;
     protected SceneBuilder sceneBuilder;
 
     private void Awake()
     {
-        gameTimeHandler = Find<GameTimeHandler>(ImportantTypeEnum.TimeHandler);
         sceneBuilder = Find<SceneBuilder>(ImportantTypeEnum.SceneBuilder);
     }
 
     private void Start()
     {
-        if (gameTimeHandler != null)
-        {
-            gameTimeHandler.AddObserver(this);
-            ChangeSeasons();
-        }
+        GameTimeHandler.Instance.RegisterNotifyForTime(NotifyForTime);
+        ChangeSeasons();
     }
 
     /// <summary>
@@ -44,7 +39,7 @@ public class SeasonsHandler : BaseHandler, IBaseObserver
         //所有植被修改
         foreach (GameObject itemTreeContainer in listTreeContainer)
         {
-            TreeCpt[] listTree= itemTreeContainer.GetComponentsInChildren<TreeCpt>();
+            TreeCpt[] listTree = itemTreeContainer.GetComponentsInChildren<TreeCpt>();
             foreach (TreeCpt itemTree in listTree)
             {
                 itemTree.SetData(seasons);
@@ -56,7 +51,7 @@ public class SeasonsHandler : BaseHandler, IBaseObserver
 
     public void ChangeSeasons()
     {
-        gameTimeHandler.GetTime(out int year, out int month, out int day);
+        GameTimeHandler.Instance.GetTime(out int year, out int month, out int day);
         if (month >= 1 && month <= 4)
         {
             ChangeSeasons((SeasonsEnum)month);
@@ -68,14 +63,11 @@ public class SeasonsHandler : BaseHandler, IBaseObserver
     }
 
     #region 时间回调
-    public void ObserbableUpdate<T>(T observable, int type, params object[] obj) where T : Object
+    public void NotifyForTime(GameTimeHandler.NotifyTypeEnum notifyType, float timeHour)
     {
-        if (observable == gameTimeHandler)
+        if (notifyType == GameTimeHandler.NotifyTypeEnum.NewDay)
         {
-            if (type == (int)GameTimeHandler.NotifyTypeEnum.NewDay)
-            {
-                ChangeSeasons();
-            }
+            ChangeSeasons();
         }
     }
     #endregion

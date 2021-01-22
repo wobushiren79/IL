@@ -5,8 +5,6 @@ using System.Collections.Generic;
 public class PopupLoveMenusShow : PopupShowView
 {
     protected GameDataManager gameDataManager;
-    protected NpcTeamManager npcTeamManager;
-    protected InnFoodManager innFoodManager;
 
     public GameObject objLoveMenuContainer;
     public GameObject objLoveMenuModel;
@@ -16,15 +14,13 @@ public class PopupLoveMenusShow : PopupShowView
     {
         base.Awake();
         gameDataManager = Find<GameDataManager>(ImportantTypeEnum.GameDataManager);
-        npcTeamManager = Find<NpcTeamManager>(ImportantTypeEnum.NpcManager);
-        innFoodManager = Find<InnFoodManager>(ImportantTypeEnum.FoodManager);
     }
 
     public void SetDataForTeamCustomer(long teamId)
     {
         CptUtil.RemoveChildsByActive(objLoveMenuContainer);
         //获取团队数据
-        NpcTeamBean npcTeamData = npcTeamManager.GetCustomerTeam(teamId);
+        NpcTeamBean npcTeamData = NpcTeamHandler.Instance.manager.GetCustomerTeam(teamId);
         if (npcTeamData == null)
             return;
         //获取喜爱的菜单

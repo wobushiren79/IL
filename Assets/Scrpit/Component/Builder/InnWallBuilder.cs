@@ -5,13 +5,11 @@ using UnityEngine.Tilemaps;
 
 public class InnWallBuilder : BaseTilemapBuilder
 {
-    protected InnBuildManager innBuildManager;
     protected GameDataManager gameDataManager;
 
     private void Awake()
     {
         gameDataManager = Find<GameDataManager>(ImportantTypeEnum.GameDataManager);
-        innBuildManager = Find<InnBuildManager>(ImportantTypeEnum.BuildManager);
     }
 
     public void StartBuild()
@@ -36,7 +34,7 @@ public class InnWallBuilder : BaseTilemapBuilder
         {
             InnResBean itemData = listData[i];
             BuildItemBean buildItemData = InnBuildHandler.Instance.manager.GetBuildDataById(itemData.id);
-            TileBase wallTile = innBuildManager.GetWallTileByName(buildItemData.tile_name);
+            TileBase wallTile = InnBuildHandler.Instance.manager.GetWallTileByName(buildItemData.tile_name);
             Build(wallTile, new Vector3Int((int)itemData.startPosition.x, (int)itemData.startPosition.y, 0));
         }
     }
@@ -51,7 +49,7 @@ public class InnWallBuilder : BaseTilemapBuilder
         if (itemData == null)
             return;
         BuildItemBean buildItemData = InnBuildHandler.Instance.manager.GetBuildDataById(itemData.id);
-        TileBase wallTile = innBuildManager.GetWallTileByName(buildItemData.tile_name);
+        TileBase wallTile = InnBuildHandler.Instance.manager.GetWallTileByName(buildItemData.tile_name);
         Build(wallTile, new Vector3Int((int)itemData.startPosition.x, (int)itemData.startPosition.y, 0));
     }
 
@@ -62,7 +60,7 @@ public class InnWallBuilder : BaseTilemapBuilder
     /// <param name="changeTileName"></param>
     public void ChangeWall(Vector3Int changePosition, string changeTileName)
     {
-        TileBase floorTile = innBuildManager.GetWallTileByName(changeTileName);
+        TileBase floorTile = InnBuildHandler.Instance.manager.GetWallTileByName(changeTileName);
         Build(floorTile, changePosition);
     }
 

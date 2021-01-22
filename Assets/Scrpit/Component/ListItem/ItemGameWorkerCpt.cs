@@ -620,8 +620,7 @@ public class ItemGameWorkerCpt : ItemGameBaseCpt, DialogView.IDialogCallBack, Wo
             characterWorker.SetPriority(priority);
         }
 
-        if (GetUIManager<UIGameManager>().innHandler != null)
-            GetUIManager<UIGameManager>().innHandler.InitWorker();
+        InnHandler.Instance.InitWorker();
     }
 
     public void ChangeStatus(WorkerPriorityView view, bool isWork)
@@ -673,9 +672,10 @@ public class ItemGameWorkerCpt : ItemGameBaseCpt, DialogView.IDialogCallBack, Wo
             CharacterWorkerBaseBean characterWorker = characterData.baseInfo.GetWorkerInfoByType(WorkerEnum.Beater);
             characterWorker.SetWorkStatus(isWork);
         }
+
         AudioHandler.Instance.PlaySound(AudioSoundEnum.ButtonForNormal);
-        if (GetUIManager<UIGameManager>().innHandler != null)
-            GetUIManager<UIGameManager>().innHandler.InitWorker();
+
+        InnHandler.Instance.InitWorker();
     }
     #endregion
 }

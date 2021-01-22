@@ -7,14 +7,8 @@ public class FoodForCoverCpt : BaseMonoBehaviour
 
 
     public FoodForCustomerCpt foodCustomerCpt;
-    public InnFoodManager innFoodManager;
     public MenuInfoBean menuInfo;
-    
 
-    private void Awake()
-    {
-        innFoodManager = Find<InnFoodManager>(ImportantTypeEnum.FoodManager);
-    }
 
     public void SetData(MenuInfoBean menuInfo)
     {
