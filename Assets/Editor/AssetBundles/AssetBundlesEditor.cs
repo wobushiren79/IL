@@ -5,11 +5,10 @@ using UnityEngine;
 public class AssetBundlesEditor : Editor
 {
 
-    [MenuItem("Custom/AssetBundles/创建设置平台资源")]
+    [MenuItem("Custom/AssetBundles/创建PC 64位平台资源")]
     public static void BuildAssetBundleForBuildSetting()
     {
-        BuildAssetBundle(BuildAssetBundleOptions.UncompressedAssetBundle, EditorUserBuildSettings.activeBuildTarget);
-
+        BuildAssetBundle(BuildAssetBundleOptions.UncompressedAssetBundle, BuildTarget.StandaloneWindows64);
     }
 
     [MenuItem("Custom/AssetBundles/创建安卓平台资源")]

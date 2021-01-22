@@ -19,7 +19,6 @@ public class UIGameManager : BaseUIManager
     public ControlHandler controlHandler;
     public EventHandler eventHandler;
     public GameDataHandler gameDataHandler;
-    public FPSHandler fpsHandler;
     [Header("建造")]
     public NpcCustomerBuilder npcCustomerBuilder;
     public NpcEventBuilder npcEventBuilder;
@@ -41,7 +40,6 @@ public class UIGameManager : BaseUIManager
         controlHandler = Find<ControlHandler>(ImportantTypeEnum.ControlHandler);
         eventHandler = Find<EventHandler>(ImportantTypeEnum.EventHandler);
         gameDataHandler = Find<GameDataHandler>(ImportantTypeEnum.GameDataHandler);
-        fpsHandler = Find<FPSHandler>( ImportantTypeEnum.Camera);
 
         popupItemsSelection = FindInChildren<PopupItemsSelection>(ImportantTypeEnum.Popup);
 

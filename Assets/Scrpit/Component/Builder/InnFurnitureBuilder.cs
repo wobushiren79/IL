@@ -9,12 +9,10 @@ public class InnFurnitureBuilder : BaseMonoBehaviour
 
     //客栈处理
     protected InnHandler innHandler;
-    protected InnBuildManager innBuildManager;
     protected GameDataManager gameDataManager;
 
     private void Awake()
     {
-        innBuildManager = Find<InnBuildManager>(ImportantTypeEnum.BuildManager);
         gameDataManager = Find<GameDataManager>(ImportantTypeEnum.GameDataManager);
         innHandler = Find<InnHandler>(ImportantTypeEnum.InnHandler);
     }
@@ -87,7 +85,7 @@ public class InnFurnitureBuilder : BaseMonoBehaviour
     {
         if (furnitureData == null)
             return null;
-        GameObject buildItemObj = innBuildManager.GetFurnitureObjById(furnitureData, buildContainer.transform, buildBedData);
+        GameObject buildItemObj = InnBuildHandler.Instance.manager.GetFurnitureObjById(furnitureData, buildContainer.transform, buildBedData);
         buildItemObj.transform.position = TypeConversionUtil.Vector3BeanToVector3(furnitureData.startPosition);
         BaseBuildItemCpt buildItemCpt = buildItemObj.GetComponent<BaseBuildItemCpt>();
         buildItemCpt.SetDirection(furnitureData.direction);

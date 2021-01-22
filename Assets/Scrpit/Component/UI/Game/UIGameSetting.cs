@@ -325,7 +325,7 @@ public class UIGameSetting : BaseUIComponent, DropdownView.ICallBack, ProgressVi
                 return;
             }
             GameCommonInfo.GameConfig.frames = result;      
-            uiGameManager.fpsHandler.SetData(GameCommonInfo.GameConfig.statusForFrames, GameCommonInfo.GameConfig.frames);
+            FPSHandler.Instance.SetData(GameCommonInfo.GameConfig.statusForFrames, GameCommonInfo.GameConfig.frames);
         }
     }   
 
@@ -452,7 +452,7 @@ public class UIGameSetting : BaseUIComponent, DropdownView.ICallBack, ProgressVi
             {
                 GameCommonInfo.GameConfig.statusForFrames = 0;
             }
-            uiGameManager.fpsHandler.SetData(GameCommonInfo.GameConfig.statusForFrames, GameCommonInfo.GameConfig.frames);
+            FPSHandler.Instance.SetData(GameCommonInfo.GameConfig.statusForFrames, GameCommonInfo.GameConfig.frames);
         }
         else if (view == rbMouseMove)
         {
