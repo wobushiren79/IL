@@ -91,7 +91,7 @@ public class SceneForInfiniteTowersHandler : BaseHandler, IBaseObserver
     {
         combatHandler.InitGame(combatData);
 
-        UIMiniGameCountDown uiCountDown = (UIMiniGameCountDown)uiGameManager.GetUIByName(EnumUtil.GetEnumName(UIEnum.MiniGameCountDown));
+        UIMiniGameCountDown uiCountDown = UIHandler.Instance.manager.GetUI<UIMiniGameCountDown>(UIEnum.MiniGameCountDown);
         //设置标题
         uiCountDown.SetTitle(infiniteTowersData.layer + GameCommonInfo.GetUITextById(83));
     }

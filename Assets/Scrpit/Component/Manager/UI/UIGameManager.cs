@@ -14,8 +14,6 @@ public class UIGameManager : BaseUIManager
     public GameDataManager gameDataManager;
     //相关处理
     [Header("处理")]
-    public GameTimeHandler gameTimeHandler;
-    public ControlHandler controlHandler;
     public EventHandler eventHandler;
     public GameDataHandler gameDataHandler;
     [Header("建造")]
@@ -31,8 +29,6 @@ public class UIGameManager : BaseUIManager
 
         gameDataManager = Find<GameDataManager>(ImportantTypeEnum.GameDataManager);
 
-        gameTimeHandler = Find<GameTimeHandler>(ImportantTypeEnum.TimeHandler);
-        controlHandler = Find<ControlHandler>(ImportantTypeEnum.ControlHandler);
         eventHandler = Find<EventHandler>(ImportantTypeEnum.EventHandler);
         gameDataHandler = Find<GameDataHandler>(ImportantTypeEnum.GameDataHandler);
 

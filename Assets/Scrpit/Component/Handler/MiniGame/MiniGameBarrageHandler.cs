@@ -113,7 +113,7 @@ public class MiniGameBarrageHandler : BaseMiniGameHandler<MiniGameBarrageBuilder
     /// <returns></returns>
     public IEnumerator StartCountDown(float totalTime)
     {
-        UIMiniGameBarrage uiMiniGame = (UIMiniGameBarrage)uiGameManager.GetUIByName(EnumUtil.GetEnumName(UIEnum.MiniGameBarrage));
+        UIMiniGameBarrage uiMiniGame = UIHandler.Instance.manager.GetUI<UIMiniGameBarrage>(UIEnum.MiniGameBarrage);
         while (true)
         {
             //设置游戏UI时间
@@ -130,14 +130,14 @@ public class MiniGameBarrageHandler : BaseMiniGameHandler<MiniGameBarrageBuilder
     public override void GamePreCountDownStart()
     {
         base.GamePreCountDownStart();
-        controlHandler.StartControl(ControlHandler.ControlEnum.MiniGameBarrage);
+        GameControlHandler.Instance.StartControl<ControlForMiniGameBarrageCpt>(GameControlHandler.ControlEnum.MiniGameBarrage);
     }
 
     public override void GamePreCountDownEnd()
     {
         base.GamePreCountDownEnd();
         //打开弹幕游戏UI
-        UIMiniGameBarrage uiMiniGameBarrage = (UIMiniGameBarrage)uiGameManager.OpenUIAndCloseOtherByName(EnumUtil.GetEnumName(UIEnum.MiniGameBarrage));
+        UIMiniGameBarrage uiMiniGameBarrage = UIHandler.Instance.manager.OpenUIAndCloseOther<UIMiniGameBarrage>(UIEnum.MiniGameBarrage);
         uiMiniGameBarrage.SetData(miniGameData);
         //开始游戏
         StartGame();

@@ -18,7 +18,7 @@ public class MoveByGameTimeCpt : BaseMonoBehaviour
     {
         if (gameTimeHandler == null)
             return;
-        gameTimeHandler.GetTime(out float hour, out float min);
+        GameTimeHandler.Instance.GetTime(out float hour, out float min);
         if (hour >= startTimeHour && hour < endTimeHour)
         {
             float lerp = ((hour - startTimeHour) * 60 + min) / ((endTimeHour - startTimeHour) * 60);

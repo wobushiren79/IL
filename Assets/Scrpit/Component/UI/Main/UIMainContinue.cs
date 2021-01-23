@@ -67,7 +67,7 @@ public class UIMainContinue : BaseUIComponent, GameDataManager.IGameDataSimpleCa
     {
         //按键音效
         AudioHandler.Instance.PlaySound(AudioSoundEnum.ButtonForBack);
-        UIHandler.Instance.manager.OpenUIAndCloseOtherByName(EnumUtil.GetEnumName(UIEnum.MainStart));
+        UIHandler.Instance.manager.OpenUIAndCloseOther<UIMainStart>(UIEnum.MainStart);
     }
 
     #region  数据列表回调

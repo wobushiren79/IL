@@ -10,7 +10,7 @@ public class GambleTrickySizeHandler : BaseGambleHandler<GambleTrickySizeBean, G
     public override void InitGame(GambleTrickySizeBean gambleData)
     {
         base.InitGame(gambleData);
-        gambleUI = (UIGambleTrickySize)uiGameManager.GetUIByName(EnumUtil.GetEnumName(UIEnum.GambleTrickySize));
+        gambleUI = UIHandler.Instance.manager.GetUI<UIGambleTrickySize>((UIEnum.GambleTrickySize));
         //初始化
         gambleBuilder.InitCup();
     }

@@ -2,6 +2,7 @@
 using UnityEditor;
 using System.Collections.Generic;
 using System.Linq;
+using static GameControlHandler;
 
 public class EventHandler : BaseHandler,
     UIGameText.ICallBack,
@@ -30,12 +31,6 @@ public class EventHandler : BaseHandler,
     }
 
     protected GameDataManager gameDataManager;
-    protected BaseUIManager uiManager;
-    protected StoryInfoManager storyInfoManager;
-    protected NpcInfoManager npcInfoManager;
-    protected StoryBuilder storyBuilder;
-    protected ControlHandler controlHandler;
-    protected GameTimeHandler gameTimeHandler;
     protected NpcImportantBuilder npcImportantBuilder;
 
     protected MiniGameCombatHandler miniGameCombatHandler;
@@ -50,11 +45,6 @@ public class EventHandler : BaseHandler,
     private void Awake()
     {
         gameDataManager = Find<GameDataManager>(ImportantTypeEnum.GameDataManager);
-        uiManager = Find<BaseUIManager>(ImportantTypeEnum.GameUI);
-        storyInfoManager = Find<StoryInfoManager>(ImportantTypeEnum.StoryManager);
-        npcInfoManager = Find<NpcInfoManager>(ImportantTypeEnum.NpcManager);
-        storyBuilder = Find<StoryBuilder>(ImportantTypeEnum.StoryBuilder);
-        controlHandler = Find<ControlHandler>(ImportantTypeEnum.ControlHandler);
 
         miniGameCombatHandler = Find<MiniGameCombatHandler>(ImportantTypeEnum.MiniGameHandler);
         miniGameDebateHandler = Find<MiniGameDebateHandler>(ImportantTypeEnum.MiniGameHandler);
@@ -113,12 +103,11 @@ public class EventHandler : BaseHandler,
         SetEventStatus(EventStatusEnum.EventIng);
         SetEventType(EventTypeEnum.Look);
         //暂停时间
-        if (gameTimeHandler != null)
-            gameTimeHandler.SetTimeStop();
+        GameTimeHandler.Instance.SetTimeStop();
         //控制模式修改
-        if (controlHandler != null)
-            controlHandler.StopControl();
-        UIGameText uiGameText = (UIGameText)uiManager.OpenUIAndCloseOtherByName(EnumUtil.GetEnumName(UIEnum.GameText));
+        GameControlHandler.Instance.StopControl();
+
+        UIGameText uiGameText = UIHandler.Instance.manager.OpenUIAndCloseOther<UIGameText>(UIEnum.GameText);
         uiGameText.SetCallBack(this);
         uiGameText.SetData(TextEnum.Look, markId);
         return true;
@@ -137,12 +126,12 @@ public class EventHandler : BaseHandler,
         SetEventStatus(EventStatusEnum.EventIng);
         SetEventType(EventTypeEnum.Talk);
         //暂停时间
-        if (gameTimeHandler != null && isStopTime)
-            gameTimeHandler.SetTimeStop();
+        if (isStopTime)
+            GameTimeHandler.Instance.SetTimeStop();
         //控制模式修改
-        if (controlHandler != null)
-            controlHandler.StopControl();
-        UIGameText uiGameText = (UIGameText)uiManager.OpenUIAndCloseOtherByName(EnumUtil.GetEnumName(UIEnum.GameText));
+        GameControlHandler.Instance.StopControl();
+
+        UIGameText uiGameText = UIHandler.Instance.manager.OpenUIAndCloseOther<UIGameText>(UIEnum.GameText);
         uiGameText.SetDataForTalk(npcInfo);
         uiGameText.SetCallBack(this);
         return true;
@@ -161,12 +150,12 @@ public class EventHandler : BaseHandler,
         SetEventStatus(EventStatusEnum.EventIng);
         SetEventType(EventTypeEnum.Talk);
         //暂停时间
-        if (gameTimeHandler != null && isStopTime)
-            gameTimeHandler.SetTimeStop();
+        if (isStopTime)
+            GameTimeHandler.Instance.SetTimeStop();
         //控制模式修改
-        if (controlHandler != null)
-            controlHandler.StopControl();
-        UIGameText uiGameText = (UIGameText)uiManager.OpenUIAndCloseOtherByName(EnumUtil.GetEnumName(UIEnum.GameText));
+        GameControlHandler.Instance.StopControl();
+
+        UIGameText uiGameText = UIHandler.Instance.manager.OpenUIAndCloseOther<UIGameText>(UIEnum.GameText);
         uiGameText.SetData(TextEnum.Talk, markId);
         uiGameText.SetCallBack(this);
         return true;
@@ -180,20 +169,20 @@ public class EventHandler : BaseHandler,
     /// <returns></returns>
     public bool EventTriggerForTalkByRascal(NpcAIRascalCpt npcAIRascal, long markId)
     {
-        if (controlHandler != null && GameCommonInfo.GameConfig.statusForEventCameraMove == 1)
+        if (GameCommonInfo.GameConfig.statusForEventCameraMove == 1)
         {
             //先还原层数
-            ControlForWorkCpt controlForWork = (ControlForWorkCpt)controlHandler.GetControl(ControlHandler.ControlEnum.Work);
+            ControlForWorkCpt controlForWork = GameControlHandler.Instance.GetControl<ControlForWorkCpt>(ControlEnum.Work);
             if (controlForWork != null)
                 controlForWork.SetLayer(1);
             //镜头跟随
-            controlHandler.GetControl().SetFollowPosition(npcAIRascal.transform.position);
+            GameControlHandler.Instance.GetControl().SetFollowPosition(npcAIRascal.transform.position);
         }
-        float lastTimeScale = gameTimeHandler.GetTimeScale();
+        float lastTimeScale = GameTimeHandler.Instance.GetTimeScale();
         bool isTrigger = EventTriggerForTalk(markId, false);
         if (GameCommonInfo.GameConfig.statusForEventStopTimeScale == 0)
         {
-            gameTimeHandler.SetTimeScale(lastTimeScale);
+            GameTimeHandler.Instance.SetTimeScale(lastTimeScale);
         }
         return isTrigger;
     }
@@ -206,20 +195,20 @@ public class EventHandler : BaseHandler,
     /// <returns></returns>
     public bool EventTriggerForTalkBySundry(NpcAISundryCpt npcAISundry, long markId)
     {
-        if (controlHandler != null && GameCommonInfo.GameConfig.statusForEventCameraMove == 1)
+        if (GameCommonInfo.GameConfig.statusForEventCameraMove == 1)
         {
             //先还原层数
-            ControlForWorkCpt controlForWork = (ControlForWorkCpt)controlHandler.GetControl(ControlHandler.ControlEnum.Work);
+            ControlForWorkCpt controlForWork = GameControlHandler.Instance.GetControl<ControlForWorkCpt>(GameControlHandler.ControlEnum.Work);
             if (controlForWork != null)
                 controlForWork.SetLayer(1);
             //镜头跟随
-            controlHandler.GetControl().SetFollowPosition(npcAISundry.transform.position);
+            GameControlHandler.Instance.GetControl().SetFollowPosition(npcAISundry.transform.position);
         }
-        float lastTimeScale = gameTimeHandler.GetTimeScale();
+        float lastTimeScale = GameTimeHandler.Instance.GetTimeScale();
         bool isTrigger = EventTriggerForTalk(markId, false);
         if (GameCommonInfo.GameConfig.statusForEventStopTimeScale == 0)
         {
-            gameTimeHandler.SetTimeScale(lastTimeScale);
+            GameTimeHandler.Instance.SetTimeScale(lastTimeScale);
         }
         return isTrigger;
     }
@@ -239,22 +228,18 @@ public class EventHandler : BaseHandler,
         SetEventStatus(EventStatusEnum.EventIng);
         SetEventType(EventTypeEnum.Story);
         //暂停时间
-        if (gameTimeHandler != null)
-            gameTimeHandler.SetTimeStop();
+        GameTimeHandler.Instance.SetTimeStop();
         //控制模式修改
-        if (controlHandler != null)
-        {
-            BaseControl baseControl = controlHandler.StartControl(ControlHandler.ControlEnum.Story);
-            baseControl.transform.position = new Vector3(storyInfo.position_x, storyInfo.position_y);
-        }
+        BaseControl baseControl = GameControlHandler.Instance.StartControl<ControlForStoryCpt>(GameControlHandler.ControlEnum.Story);
+        baseControl.transform.position = new Vector3(storyInfo.position_x, storyInfo.position_y);
         //隐藏重要NPC
         if (npcImportantBuilder != null)
             npcImportantBuilder.HideNpc();
-        uiManager.CloseAllUI();
+        UIHandler.Instance.manager.CloseAllUI();
         //设置文本的回调
-        UIGameText uiGameText = (UIGameText)uiManager.GetUIByName(EnumUtil.GetEnumName(UIEnum.GameText));
+        UIGameText uiGameText = UIHandler.Instance.manager.GetUI<UIGameText>(UIEnum.GameText);
         uiGameText.SetCallBack(this);
-        storyBuilder.BuildStory(storyInfo);
+        StoryInfoHandler.Instance.builderForStory.BuildStory(storyInfo);
         return true;
     }
 
@@ -268,9 +253,8 @@ public class EventHandler : BaseHandler,
         {
             return false;
         }
-        if (storyInfoManager == null)
-            return false;
-        StoryInfoBean storyInfo = storyInfoManager.GetStoryInfoDataById(id);
+
+        StoryInfoBean storyInfo = StoryInfoHandler.Instance.manager.GetStoryInfoDataById(id);
         if (storyInfo != null)
             EventTriggerForStory(storyInfo);
         return true;
@@ -285,9 +269,7 @@ public class EventHandler : BaseHandler,
         {
             return false;
         }
-        if (storyInfoManager == null)
-            return false;
-        StoryInfoBean storyInfo = storyInfoManager.CheckStory(gameDataManager.gameData, positionType, OutOrIn);
+        StoryInfoBean storyInfo = StoryInfoHandler.Instance.manager.CheckStory(gameDataManager.gameData, positionType, OutOrIn);
         if (storyInfo != null)
         {
             EventTriggerForStory(storyInfo);
@@ -304,9 +286,7 @@ public class EventHandler : BaseHandler,
         {
             return false;
         }
-        if (storyInfoManager == null)
-            return false;
-        StoryInfoBean storyInfo = storyInfoManager.CheckStory(gameDataManager.gameData);
+        StoryInfoBean storyInfo = StoryInfoHandler.Instance.manager.CheckStory(gameDataManager.gameData);
         if (storyInfo != null)
         {
             EventTriggerForStory(storyInfo);
@@ -323,29 +303,24 @@ public class EventHandler : BaseHandler,
     /// <param name="id"></param>
     public bool EventTriggerForStoryCooking(MiniGameCookingBean gameCookingData, long id)
     {
-        if (storyInfoManager == null)
-            return false;
-        StoryInfoBean storyInfo = storyInfoManager.GetStoryInfoDataById(id);
+        StoryInfoBean storyInfo = StoryInfoHandler.Instance.manager.GetStoryInfoDataById(id);
         if (storyInfo == null)
             return false;
         this.mStoryInfo = storyInfo;
         SetEventStatus(EventStatusEnum.EventIng);
         SetEventType(EventTypeEnum.StoryForMiniGameCooking);
         //控制模式修改
-        if (controlHandler != null)
-        {
-            BaseControl baseControl = controlHandler.StartControl(ControlHandler.ControlEnum.Story);
-            baseControl.transform.position = new Vector3(storyInfo.position_x, storyInfo.position_y);
-        }
+        BaseControl baseControl = GameControlHandler.Instance.StartControl<ControlForStoryCpt>(GameControlHandler.ControlEnum.Story);
+        baseControl.transform.position = new Vector3(storyInfo.position_x, storyInfo.position_y);
 
-        uiManager.CloseAllUI();
+        UIHandler.Instance.manager.CloseAllUI();
         //设置文本的回调
-        UIGameText uiGameText = (UIGameText)uiManager.GetUIByName(EnumUtil.GetEnumName(UIEnum.GameText));
+        UIGameText uiGameText = UIHandler.Instance.manager.GetUI<UIGameText>(UIEnum.GameText);
         uiGameText.SetCallBack(this);
         //设置文本的备用数据
         SortedList<string, string> listMarkData = GetMiniGameMarkStrData(gameCookingData);
         uiGameText.SetListMark(listMarkData);
-        storyBuilder.BuildStory(storyInfo);
+        StoryInfoHandler.Instance.builderForStory.BuildStory(storyInfo);
         return true;
     }
 
@@ -358,25 +333,25 @@ public class EventHandler : BaseHandler,
         mEventStatus = eventStatus;
         if (eventStatus == EventStatusEnum.EventEnd)
         {
-            if (controlHandler != null)
-                //事件结束 操作回复
-                //如果是故事模式 则恢复普通控制状态
-                if (controlHandler.GetControl() == controlHandler.GetControl(ControlHandler.ControlEnum.Story))
-                {
-                    controlHandler.StartControl(ControlHandler.ControlEnum.Normal);
-                }
-                else
-                {
-                    controlHandler.RestoreControl();
-                }
+
+            //事件结束 操作回复
+            //如果是故事模式 则恢复普通控制状态
+            if (GameControlHandler.Instance.GetControl() == GameControlHandler.Instance.GetControl<ControlForStoryCpt>(ControlEnum.Story))
+            {
+                GameControlHandler.Instance.StartControl<BaseControl>(ControlEnum.Normal);
+            }
+            else
+            {
+                GameControlHandler.Instance.RestoreControl();
+            }
             //保存数据
             if (gameDataManager != null && mStoryInfo != null)
                 gameDataManager.gameData.AddTraggeredEvent(mStoryInfo.id);
             //打开主界面UI
-            uiManager.OpenUIAndCloseOtherByName(EnumUtil.GetEnumName(UIEnum.GameMain));
+            UIHandler.Instance.manager.OpenUIAndCloseOther<UIGameMain>(UIEnum.GameMain);
             //恢复时间
-            if (gameTimeHandler != null)
-                gameTimeHandler.SetTimeRestore();
+            GameTimeHandler.Instance.SetTimeRestore();
+
             //初始化数据
             InitData();
 
@@ -472,7 +447,7 @@ public class EventHandler : BaseHandler,
                 break;
             case EventTypeEnum.Story:
             case EventTypeEnum.StoryForMiniGameCooking:
-                storyBuilder.NextStoryOrder();
+                StoryInfoHandler.Instance.builderForStory.NextStoryOrder();
                 break;
         }
     }
@@ -488,7 +463,7 @@ public class EventHandler : BaseHandler,
         {
             int npcNum = item.Key;
             CharacterExpressionCpt.CharacterExpressionEnum expression = item.Value;
-            GameObject objNpc = storyBuilder.GetNpcByNpcNum(npcNum);
+            GameObject objNpc = StoryInfoHandler.Instance.builderForStory.GetNpcByNpcNum(npcNum);
             NpcAIStoryCpt npcAI = objNpc.GetComponent<NpcAIStoryCpt>();
             npcAI.SetExpression(expression);
         }
@@ -536,7 +511,7 @@ public class EventHandler : BaseHandler,
                     break;
                 case MiniGameStatusEnum.GameClose:
                     MiniGameBaseBean miniGameData = (MiniGameBaseBean)obj[0];
-                    controlHandler.StartControl(ControlHandler.ControlEnum.Normal);
+                    GameControlHandler.Instance.StartControl<BaseControl>(ControlEnum.Normal);
                     SetEventStatus(EventStatusEnum.EventEnd);
                     if (miniGameData.GetGameResult() == MiniGameResultEnum.Win)
                     {

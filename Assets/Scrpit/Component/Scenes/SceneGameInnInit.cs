@@ -66,13 +66,13 @@ public class SceneGameInnInit : BaseSceneInit, DialogView.IDialogCallBack
             else
             {
                 //如果是其他场景切换过来
-                gameTimeHandler.SetTime(timeData.hour, timeData.minute);
-                gameTimeHandler.SetTimeStatus(false);
+                GameTimeHandler.Instance.SetTime(timeData.hour, timeData.minute);
+                GameTimeHandler.Instance.SetTimeStatus(false);
                 //建造NPC
                 RefreshScene();
                 //设置位置
                 Vector3 startPosition = sceneInnManager.GetTownEntranceLeft();
-                BaseControl baseControl = controlHandler.StartControl(ControlHandler.ControlEnum.Normal);
+                BaseControl baseControl = GameControlHandler.Instance.StartControl<BaseControl>(GameControlHandler.ControlEnum.Normal);
                 baseControl.SetFollowPosition(startPosition);
             }
         }
@@ -123,7 +123,7 @@ public class SceneGameInnInit : BaseSceneInit, DialogView.IDialogCallBack
     public void EndDay()
     {
         //停止时间
-        gameTimeHandler.SetTimeStatus(true);
+        GameTimeHandler.Instance.SetTimeStatus(true);
 
         if (GameCommonInfo.CurrentDayData.dayStatus != GameTimeHandler.DayEnum.None)
         {
@@ -141,12 +141,12 @@ public class SceneGameInnInit : BaseSceneInit, DialogView.IDialogCallBack
         {
             //重新进入游戏
             //打开日历
-            uiGameManager.OpenUIAndCloseOtherByName(EnumUtil.GetEnumName(UIEnum.GameDate));
+            UIHandler.Instance.manager.OpenUIAndCloseOther<UIGameDate>(UIEnum.GameDate);
         }
         else if (GameCommonInfo.CurrentDayData.dayStatus == GameTimeHandler.DayEnum.Work)
         {
             //如果是工作状态结束一天 则进入结算画面
-            uiGameManager.OpenUIAndCloseOtherByName(EnumUtil.GetEnumName(UIEnum.GameSettle));
+            UIHandler.Instance.manager.OpenUIAndCloseOther<UIGameSettle>(UIEnum.GameSettle);
             //保存数据
             gameDataManager.SaveGameData(InnHandler.Instance.GetInnRecord());
         }
@@ -154,7 +154,7 @@ public class SceneGameInnInit : BaseSceneInit, DialogView.IDialogCallBack
             || GameCommonInfo.CurrentDayData.dayStatus == GameTimeHandler.DayEnum.End)
         {
             //打开日历
-            uiGameManager.OpenUIAndCloseOtherByName(EnumUtil.GetEnumName(UIEnum.GameDate));
+            UIHandler.Instance.manager.OpenUIAndCloseOther<UIGameDate>(UIEnum.GameDate);
             //保存数据
             gameDataManager.SaveGameData(InnHandler.Instance.GetInnRecord());
         }
@@ -166,8 +166,7 @@ public class SceneGameInnInit : BaseSceneInit, DialogView.IDialogCallBack
         InnHandler.Instance.SettlementAllCustomer();
         InnHandler.Instance.CloseInn();
         //停止控制
-        if (controlHandler != null)
-            controlHandler.StopControl();
+        GameControlHandler.Instance.StopControl();
         //清楚所有NPC
         if (npcCustomerBuilder != null)
             npcCustomerBuilder.ClearNpc();
@@ -178,17 +177,17 @@ public class SceneGameInnInit : BaseSceneInit, DialogView.IDialogCallBack
         if (npcEventBuilder != null)
             npcEventBuilder.ClearNpc();
         //停止控制
-        if (controlHandler != null)
-            controlHandler.EndControl();
+        GameControlHandler.Instance.EndControl();
+
         //停止时间
-        gameTimeHandler.SetTimeStatus(true);
+        GameTimeHandler.Instance.SetTimeStatus(true);
 
         DialogBean dialogBean = new DialogBean();
-        if (gameTimeHandler.GetDayStatus() == GameTimeHandler.DayEnum.Work)
+        if (GameTimeHandler.Instance.GetDayStatus() == GameTimeHandler.DayEnum.Work)
         {
             dialogBean.content = GameCommonInfo.GetUITextById(3006);
         }
-        else if (gameTimeHandler.GetDayStatus() == GameTimeHandler.DayEnum.Rest)
+        else if (GameTimeHandler.Instance.GetDayStatus() == GameTimeHandler.DayEnum.Rest)
         {
             dialogBean.content = GameCommonInfo.GetUITextById(3014);
         }

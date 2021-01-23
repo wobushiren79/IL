@@ -83,15 +83,15 @@ public class UIGameAttendance : UIBaseOne, ItemGameAttendanceCpt.ICallBack
         //记录出勤费用
         InnHandler.Instance.GetInnRecord().AddPayWage(attendancePriceL, attendancePriceM, attendancePriceS);
         //设置当天状态
-        uiGameManager.gameTimeHandler.SetDayStatus(GameTimeHandler.DayEnum.Work);
+        GameTimeHandler.Instance.SetDayStatus(GameTimeHandler.DayEnum.Work);
         //设置是否停止时间
-        uiGameManager.gameTimeHandler.SetTimeStatus(false);
+        GameTimeHandler.Instance.SetTimeStatus(false);
         //打开客栈
         InnHandler.Instance.OpenInn();
         //放开控制
-        uiGameManager.controlHandler.StartControl(ControlHandler.ControlEnum.Work);
+        GameControlHandler.Instance.StartControl<ControlForWorkCpt>(GameControlHandler.ControlEnum.Work);
         //开启主UI
-        uiManager.OpenUIAndCloseOtherByName(EnumUtil.GetEnumName(UIEnum.GameMain));
+        UIHandler.Instance.manager.OpenUIAndCloseOther<UIGameMain>(UIEnum.GameMain);
     }
 
     public void InitData()

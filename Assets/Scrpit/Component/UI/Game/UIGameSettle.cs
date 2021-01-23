@@ -62,11 +62,10 @@ public class UIGameSettle : BaseUIComponent
 
     public void InitData()
     {
-        GameTimeHandler gameTimeHandler = uiGameManager.gameTimeHandler;
         GameDataManager gameDataManager = uiGameManager.gameDataManager;
         UserAchievementBean userAchievement = gameDataManager.gameData.GetAchievementData();
         //停止时间
-        gameTimeHandler.SetTimeStatus(true);
+        GameTimeHandler.Instance.SetTimeStatus(true);
         CptUtil.RemoveChildsByActive(objListRecordContent.transform);
         animDelay = 0f;
         InnRecordBean innRecord = InnHandler.Instance.GetInnRecord();
@@ -258,7 +257,7 @@ public class UIGameSettle : BaseUIComponent
     public void OpenDateUI()
     {
         AudioHandler.Instance.PlaySound(AudioSoundEnum.ButtonForNormal);
-        uiManager.OpenUIAndCloseOtherByName(EnumUtil.GetEnumName(UIEnum.GameDate));
+        UIHandler.Instance.manager.OpenUIAndCloseOther<UIGameDate>(UIEnum.GameDate);
     }
 
 }

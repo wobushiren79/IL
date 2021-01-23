@@ -18,8 +18,8 @@ public class InteractiveUICpt : BaseInteractiveCpt
 
     public override void InteractiveDetection(CharacterInteractiveCpt characterInt)
     {
-        BaseUIComponent baseUIComponent = uiManager.GetUIByName(EnumUtil.GetEnumName(uiType));
-        BaseUIComponent currentUIComponent = uiManager.GetOpenUI();
+        BaseUIComponent baseUIComponent = UIHandler.Instance.manager.GetUI<BaseUIComponent>(uiType);
+        BaseUIComponent currentUIComponent = UIHandler.Instance.manager.GetOpenUI();
         //如果当前页面不是即将要打开的页面 并且当前页面是主界面
         if (Input.GetButtonDown(InputInfo.Interactive_E)&& baseUIComponent != currentUIComponent && currentUIComponent as UIGameMain)
         {
@@ -28,7 +28,7 @@ public class InteractiveUICpt : BaseInteractiveCpt
              
                 baseUIComponent.SetRemarkData(remarkData);
             }
-            uiManager.OpenUIAndCloseOtherByName(EnumUtil.GetEnumName(uiType));
+            UIHandler.Instance.manager.OpenUIAndCloseOther<BaseUIComponent>(uiType);
         }
     }
 

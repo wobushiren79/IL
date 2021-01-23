@@ -289,7 +289,7 @@ public class UIGameMenu : BaseUIComponent, TextSearchView.ICallBack
     public void OpenMainUI()
     {
         AudioHandler.Instance.PlaySound(AudioSoundEnum.ButtonForBack);
-        uiManager.OpenUIAndCloseOtherByName(EnumUtil.GetEnumName(UIEnum.GameMain));
+        UIHandler.Instance.manager.OpenUIAndCloseOther<UIGameMain>(UIEnum.GameMain);
     }
 
 

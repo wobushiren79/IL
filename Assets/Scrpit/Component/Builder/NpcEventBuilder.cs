@@ -26,7 +26,7 @@ public class NpcEventBuilder : NpcNormalBuilder
 
     private void Start()
     {
-        gameTimeHandler.RegisterNotifyForTime(NotifyForTime);
+        GameTimeHandler.Instance.RegisterNotifyForTime(NotifyForTime);
     }
 
     /// <summary>

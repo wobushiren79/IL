@@ -38,7 +38,7 @@ public class MiniGameCombatHandler : BaseMiniGameHandler<MiniGameCombatBuilder, 
     {
         base.StartGame();
         //打开游戏UI
-        uiMiniGameCombat = (UIMiniGameCombat)uiGameManager.OpenUIAndCloseOtherByName(EnumUtil.GetEnumName(UIEnum.MiniGameCombat));
+        uiMiniGameCombat = UIHandler.Instance.manager.OpenUIAndCloseOther<UIMiniGameCombat>(UIEnum.MiniGameCombat);
         uiMiniGameCombat.SetCallBack(this);
         uiMiniGameCombat.SetData(miniGameData);
         miniGameData.SetCombatStatus(MiniGameCombatStatusEnum.Rounding);
@@ -59,7 +59,7 @@ public class MiniGameCombatHandler : BaseMiniGameHandler<MiniGameCombatBuilder, 
     /// </summary>
     public void InitCameraPosition()
     {
-        controlHandler.StartControl(ControlHandler.ControlEnum.MiniGameCombat);
+        GameControlHandler.Instance.StartControl<ControlForMiniGameCombatCpt>(GameControlHandler.ControlEnum.MiniGameCombat);
         SetCameraPosition(miniGameData.miniGamePosition);
     }
 

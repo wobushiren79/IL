@@ -186,7 +186,6 @@ public class ItemTownCerpenterCpt : ItemTownStoreCpt, DialogView.IDialogCallBack
     {
         UIGameManager uiGameManager = GetUIManager<UIGameManager>();
         GameDataManager gameDataManager = uiGameManager.gameDataManager;
-        GameTimeHandler gameTimeHandler = uiGameManager.gameTimeHandler;
 
         if (dialogView as PickForNumberDialogView)
         {
@@ -267,7 +266,7 @@ public class ItemTownCerpenterCpt : ItemTownStoreCpt, DialogView.IDialogCallBack
 
                 //设置修建天数
                 List<TimeBean> listBuildDay = new List<TimeBean>();
-                listBuildDay.Add(gameTimeHandler.GetAfterDay(1));
+                listBuildDay.Add(GameTimeHandler.Instance.GetAfterDay(1));
                 innBuildData.listBuildDay = listBuildDay;
 
                 GetUIComponent<UITownCarpenter>().RefreshUI();

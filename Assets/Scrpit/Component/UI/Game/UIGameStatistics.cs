@@ -23,8 +23,7 @@ public class UIGameStatistics : UIBaseOne,IRadioGroupCallBack
     public override void OpenUI()
     {
         base.OpenUI();
-        if (uiGameManager.gameTimeHandler != null)
-            uiGameManager.gameTimeHandler.SetTimeStatus(false);
+        GameTimeHandler.Instance.SetTimeStatus(false);
 
         rgType.SetCallBack(this);
         rgType.SetPosition(0, true);

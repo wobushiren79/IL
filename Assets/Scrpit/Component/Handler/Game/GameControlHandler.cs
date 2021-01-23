@@ -3,7 +3,7 @@ using UnityEditor;
 using System.Collections.Generic;
 using Cinemachine;
 
-public class ControlHandler : BaseMonoBehaviour
+public class GameControlHandler : BaseHandler<GameControlHandler,GameControlManager>
 {
     public enum ControlEnum
     {
@@ -22,8 +22,9 @@ public class ControlHandler : BaseMonoBehaviour
     /// <summary>
     /// 初始化
     /// </summary>
-    private void Awake()
+    protected override void Awake()
     {
+        base.Awake();
         CinemachineVirtualCamera camera2D = Find<CinemachineVirtualCamera>(ImportantTypeEnum.Camera2D);
         foreach (BaseControl itemControl in listControl)
         {
@@ -65,7 +66,7 @@ public class ControlHandler : BaseMonoBehaviour
     /// 开始控制
     /// </summary>
     /// <param name="controlEnum"></param>
-    public BaseControl StartControl(ControlEnum controlEnum)
+    public T StartControl<T>(ControlEnum controlEnum) where T: BaseControl
     {
         string controlName = EnumUtil.GetEnumName(controlEnum);
         BaseControl baseControl = null;
@@ -82,7 +83,7 @@ public class ControlHandler : BaseMonoBehaviour
                 itemControl.EndControl();
             }
         }
-        return baseControl;
+        return baseControl as T;
     }
 
     /// <summary>
@@ -107,7 +108,7 @@ public class ControlHandler : BaseMonoBehaviour
     /// </summary>
     /// <param name="controlEnum"></param>
     /// <returns></returns>
-    public BaseControl GetControl(ControlEnum controlEnum)
+    public T GetControl<T>(ControlEnum controlEnum) where T: BaseControl
     {
         string controlName = EnumUtil.GetEnumName(controlEnum);
         for (int i = 0; i < listControl.Count; i++)
@@ -115,7 +116,7 @@ public class ControlHandler : BaseMonoBehaviour
             BaseControl itemControl = listControl[i];
             if (itemControl.name.Equals(controlName))
             {
-                return itemControl;
+                return itemControl as T;
             }
         }
         return null;

@@ -36,10 +36,8 @@ public class UIBaseOne : BaseUIComponent ,DialogView.IDialogCallBack
     {
         base.OpenUI();
         AudioHandler.Instance.PlaySound(AudioSoundEnum.ButtonForNormal);
-        if (uiGameManager.controlHandler != null)
-            uiGameManager.controlHandler.StopControl();
-        if (uiGameManager.gameTimeHandler != null)
-            uiGameManager.gameTimeHandler.SetTimeStatus(true);
+        GameControlHandler.Instance.StopControl();
+        GameTimeHandler.Instance.SetTimeStatus(true);
     }
 
     public override void CloseUI()
@@ -47,11 +45,9 @@ public class UIBaseOne : BaseUIComponent ,DialogView.IDialogCallBack
         AudioHandler.Instance.PlaySound(AudioSoundEnum.ButtonForBack);
         if (gameObject.activeSelf)
         {
-            if (uiGameManager.controlHandler != null)
-                uiGameManager.controlHandler.RestoreControl();
+            GameControlHandler.Instance.RestoreControl();
         }
-        if (uiGameManager.gameTimeHandler != null)
-            uiGameManager.gameTimeHandler.SetTimeRestore();
+        GameTimeHandler.Instance.SetTimeRestore();
         base.CloseUI();
     }
 
@@ -115,7 +111,7 @@ public class UIBaseOne : BaseUIComponent ,DialogView.IDialogCallBack
     /// </summary>
     public virtual void OnClickForBack()
     {
-        uiManager.OpenUIAndCloseOtherByName(EnumUtil.GetEnumName(UIEnum.GameMain));
+        UIHandler.Instance.manager.OpenUIAndCloseOther<UIGameMain>(UIEnum.GameMain);
     }
 
     #region 选择出售回调

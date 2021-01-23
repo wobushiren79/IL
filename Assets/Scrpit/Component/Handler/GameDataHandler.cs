@@ -58,7 +58,7 @@ public class GameDataHandler : BaseHandler, DialogView.IDialogCallBack, IBaseObs
         while (true)
         {
             yield return new WaitForSeconds(1);
-            if (gameTimeHandler != null && !gameTimeHandler.isStopTime)
+            if (gameTimeHandler != null && !GameTimeHandler.Instance.isStopTime)
             {
                 HandleForTimeProcess();
             }
@@ -95,7 +95,7 @@ public class GameDataHandler : BaseHandler, DialogView.IDialogCallBack, IBaseObs
     {
         if (gameTimeHandler == null)
             return;
-        if (gameTimeHandler.isStopTime)
+        if (GameTimeHandler.Instance.isStopTime)
             return;
         AddTimeProcess(1);
     }

@@ -34,10 +34,9 @@ public class UIMountainInfiniteTowers : BaseUIComponent, DialogView.IDialogCallB
         base.OpenUI();
 
         AudioHandler.Instance.PlaySound(AudioSoundEnum.ButtonForNormal);
-        if (uiGameManager.controlHandler != null)
-            uiGameManager.controlHandler.StopControl();
-        if (uiGameManager.gameTimeHandler != null)
-            uiGameManager.gameTimeHandler.SetTimeStatus(true);
+        GameControlHandler.Instance.StopControl();
+
+        GameTimeHandler.Instance.SetTimeStatus(true);
 
         //大于10层才显示派遣
         UserAchievementBean userAchievement = uiGameManager.gameDataManager.gameData.GetAchievementData();
@@ -55,8 +54,7 @@ public class UIMountainInfiniteTowers : BaseUIComponent, DialogView.IDialogCallB
     public override void CloseUI()
     {
         base.CloseUI();
-        if (uiGameManager.gameTimeHandler != null)
-            uiGameManager.gameTimeHandler.SetTimeRestore();
+        GameTimeHandler.Instance.SetTimeRestore();
     }
 
     public override void RefreshUI()
@@ -103,7 +101,7 @@ public class UIMountainInfiniteTowers : BaseUIComponent, DialogView.IDialogCallB
     public virtual void OnClickForBack()
     {
         AudioHandler.Instance.PlaySound(AudioSoundEnum.ButtonForNormal);
-        uiManager.OpenUIAndCloseOtherByName(EnumUtil.GetEnumName(UIEnum.GameMain));
+        UIHandler.Instance.manager.OpenUIAndCloseOther<UIGameMain>(UIEnum.GameMain);
     }
 
     /// <summary>

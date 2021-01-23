@@ -32,7 +32,7 @@ public class UIGameHelp : BaseUIComponent,IRadioGroupCallBack
     public void OnClickExit()
     {
         AudioHandler.Instance.PlaySound(AudioSoundEnum.ButtonForBack);
-        uiGameManager.OpenUIAndCloseOther(UIEnum.GameMain);
+        UIHandler.Instance.manager.OpenUIAndCloseOther<UIGameMain>(UIEnum.GameMain);
     }
 
     #region 类型选择回调

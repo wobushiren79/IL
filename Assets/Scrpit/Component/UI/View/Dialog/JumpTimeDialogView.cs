@@ -15,7 +15,6 @@ public class JumpTimeDialogView : DialogView
 
     protected GameTimeHandler gameTimeHandler;
     protected GameDataHandler gameDataHandler;
-    protected ControlHandler controlHandler;
     protected LightHandler lightHandler;
     protected BaseSceneInit baseSceneInit;
 
@@ -25,7 +24,6 @@ public class JumpTimeDialogView : DialogView
         gameTimeHandler = Find<GameTimeHandler>(ImportantTypeEnum.TimeHandler);
         gameDataHandler = Find<GameDataHandler>(ImportantTypeEnum.GameDataHandler);
         lightHandler = Find<LightHandler>(ImportantTypeEnum.LightHandler);
-        controlHandler = Find<ControlHandler>(ImportantTypeEnum.ControlHandler);
         baseSceneInit = Find<BaseSceneInit>(ImportantTypeEnum.Init);
 
         if (btSubNumber)
@@ -38,19 +36,17 @@ public class JumpTimeDialogView : DialogView
     {
         base.Start();
 
-        if (controlHandler != null)
-            controlHandler.StopControl();
+        GameControlHandler.Instance.StopControl();
 
-        gameTimeHandler.SetTimeStatus(true);
-        gameTimeHandler.SetTimeStop();
+        GameTimeHandler.Instance.SetTimeStatus(true);
+        GameTimeHandler.Instance.SetTimeStop();
     }
 
     private void OnDisable()
     {
-        if (controlHandler != null)
-            controlHandler.RestoreControl();
+        GameControlHandler.Instance.RestoreControl();
 
-        gameTimeHandler.SetTimeStatus(false);
+        GameTimeHandler.Instance.SetTimeStatus(false);
     }
 
     public void SetData()
@@ -61,7 +57,7 @@ public class JumpTimeDialogView : DialogView
 
     public void SetJumpNumber(int number)
     {
-        gameTimeHandler.GetTime(out float hour, out float min);
+        GameTimeHandler.Instance.GetTime(out float hour, out float min);
         jumpNumber = number;
         if (jumpNumber < 1)
         {
@@ -77,7 +73,7 @@ public class JumpTimeDialogView : DialogView
 
     public void SetTime()
     {
-        gameTimeHandler.GetTime(out float hour, out float min);
+        GameTimeHandler.Instance.GetTime(out float hour, out float min);
         if (tvCurrentTime)
         {
             tvCurrentTime.text = GameCommonInfo.GetUITextById(721) + "\n" + hour + ":" + (int)min;
@@ -101,8 +97,8 @@ public class JumpTimeDialogView : DialogView
     public override void SubmitOnClick()
     {
         base.SubmitOnClick();
-        gameTimeHandler.GetTime(out float hour, out float min);
-        gameTimeHandler.SetTime((jumpNumber + (int)hour), (int)min);
+        GameTimeHandler.Instance.GetTime(out float hour, out float min);
+        GameTimeHandler.Instance.SetTime((jumpNumber + (int)hour), (int)min);
         baseSceneInit.RefreshScene();
         gameDataHandler.AddTimeProcess(jumpNumber*60);
     }

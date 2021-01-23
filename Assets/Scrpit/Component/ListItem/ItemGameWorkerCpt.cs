@@ -60,13 +60,11 @@ public class ItemGameWorkerCpt : ItemGameBaseCpt, DialogView.IDialogCallBack, Wo
     protected PopupPromptShow infoPromptPopup;
     protected DialogManager dialogManager;
     protected GameDataManager gameDataManager;
-    protected GameTimeHandler gameTimeHandler;
     protected ToastManager toastManager;
 
     private void Awake()
     {
         gameDataManager = GetUIManager<UIGameManager>().gameDataManager;
-        gameTimeHandler = GetUIManager<UIGameManager>().gameTimeHandler;
     }
 
     private void Start()
@@ -240,9 +238,9 @@ public class ItemGameWorkerCpt : ItemGameBaseCpt, DialogView.IDialogCallBack, Wo
         AudioHandler.Instance.PlaySound(AudioSoundEnum.ButtonForNormal);
         if (uiComponent != null)
         {
-            UIGameEquip uiequip = (UIGameEquip)GetUIManager().GetUIByName(EnumUtil.GetEnumName(UIEnum.GameEquip));
+            UIGameEquip uiequip = UIHandler.Instance.manager.GetUI<UIGameEquip>(UIEnum.GameEquip);
             uiequip.SetCharacterData(((UIGameWorker)uiComponent).listCharacterData, characterData);
-            uiComponent.uiManager.OpenUIAndCloseOtherByName(EnumUtil.GetEnumName(UIEnum.GameEquip));
+            UIHandler.Instance.manager.OpenUIAndCloseOther<UIGameEquip>(UIEnum.GameEquip);
         }
     }
 
@@ -254,10 +252,10 @@ public class ItemGameWorkerCpt : ItemGameBaseCpt, DialogView.IDialogCallBack, Wo
         AudioHandler.Instance.PlaySound(AudioSoundEnum.ButtonForNormal);
         if (uiComponent != null)
         {
-            UIGameWorkerDetails uiWorkerDetails = (UIGameWorkerDetails)GetUIManager().GetUIByName(EnumUtil.GetEnumName(UIEnum.GameWorkerDetails));
+            UIGameWorkerDetails uiWorkerDetails = UIHandler.Instance.manager.GetUI<UIGameWorkerDetails>(UIEnum.GameWorkerDetails);
             UIGameWorker uiWorker = (UIGameWorker)uiComponent;
             uiWorkerDetails.SetCharacterData(uiWorker.listCharacterData, characterData);
-            uiComponent.uiManager.OpenUIAndCloseOtherByName(EnumUtil.GetEnumName(UIEnum.GameWorkerDetails));
+            UIHandler.Instance.manager.OpenUIAndCloseOther<UIGameWorkerDetails>(UIEnum.GameWorkerDetails);
         }
     }
 
@@ -267,7 +265,7 @@ public class ItemGameWorkerCpt : ItemGameBaseCpt, DialogView.IDialogCallBack, Wo
     public void FireWorker()
     {
         AudioHandler.Instance.PlaySound(AudioSoundEnum.ButtonForNormal);
-        if (gameTimeHandler.GetDayStatus() == GameTimeHandler.DayEnum.Work)
+        if (GameTimeHandler.Instance.GetDayStatus() == GameTimeHandler.DayEnum.Work)
         {
             ToastHandler.Instance.ToastHint(GameCommonInfo.GetUITextById(1082));
         }
@@ -475,12 +473,12 @@ public class ItemGameWorkerCpt : ItemGameBaseCpt, DialogView.IDialogCallBack, Wo
             switch (workerStatus)
             {
                 case WorkerStatusEnum.Work:
-                    if (gameTimeHandler.GetDayStatus() == GameTimeHandler.DayEnum.Rest)
+                    if (GameTimeHandler.Instance.GetDayStatus() == GameTimeHandler.DayEnum.Rest)
                     {
                         tvStatus.color = Color.green;
                         workerStatusStr = GameCommonInfo.GetUITextById(282);
                     }
-                    else if (gameTimeHandler.GetDayStatus() == GameTimeHandler.DayEnum.Work)
+                    else if (GameTimeHandler.Instance.GetDayStatus() == GameTimeHandler.DayEnum.Work)
                     {
                         tvStatus.color = Color.red;
                     }

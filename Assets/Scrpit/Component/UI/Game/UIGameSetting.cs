@@ -268,11 +268,11 @@ public class UIGameSetting : BaseUIComponent, DropdownView.ICallBack, ProgressVi
         AudioHandler.Instance.PlaySound(AudioSoundEnum.ButtonForBack);
         if (SceneUtil.GetCurrentScene() == ScenesEnum.MainScene)
         {
-            uiManager.OpenUIAndCloseOther(UIEnum.MainStart);
+            UIHandler.Instance.manager.OpenUIAndCloseOther<UIMainStart>(UIEnum.MainStart);
         }
         else
         {
-            uiManager.OpenUIAndCloseOther(UIEnum.GameMain);
+            UIHandler.Instance.manager.OpenUIAndCloseOther<UIGameMain>(UIEnum.GameMain);
         }
         GameCommonInfo.SaveGameConfig();
     }

@@ -20,14 +20,12 @@ public class UIGameTextForBook : BaseUIChildComponent<UIGameText>
         transform.DOKill();
         transform.localScale = new Vector3(1, 1, 1);
         transform.DOScaleX(0, 0.2f).From();
-        if (((UIGameManager)uiComponent.uiManager).gameTimeHandler != null)
-            ((UIGameManager)uiComponent.uiManager).gameTimeHandler.SetTimeStop();
+        GameTimeHandler.Instance.SetTimeStop();
     }
 
     private void OnDisable()
     {
-        if (((UIGameManager)uiComponent.uiManager).gameTimeHandler != null)
-            ((UIGameManager)uiComponent.uiManager).gameTimeHandler.SetTimeRestore();
+        GameTimeHandler.Instance.SetTimeRestore();
     }
 
     /// <summary>
@@ -65,6 +63,6 @@ public class UIGameTextForBook : BaseUIChildComponent<UIGameText>
     public void OnClickBack()
     {
         uiComponent.NextText();
-        // uiComponent.uiManager.OpenUIAndCloseOtherByName(EnumUtil.GetEnumName(UIEnum.GameMain));
+        // uiComponent.UIHandler.Instance.manager.OpenUIAndCloseOther<UIGameMain>(UIEnum.GameMain);
     }
 }

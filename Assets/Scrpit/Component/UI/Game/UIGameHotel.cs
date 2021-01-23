@@ -128,6 +128,6 @@ public class UIGameHotel : BaseUIComponent
     public void OnClickForBack()
     {
         AudioHandler.Instance.PlaySound(AudioSoundEnum.ButtonForBack);
-        uiManager.OpenUIAndCloseOtherByName(EnumUtil.GetEnumName(UIEnum.GameMain));
+        UIHandler.Instance.manager.OpenUIAndCloseOther<UIGameMain>(UIEnum.GameMain);
     }
 }

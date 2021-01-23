@@ -20,18 +20,14 @@ public class UIGameDate : BaseUIComponent
     protected float animTimeForWaitNext = 1f;//动画时间
     protected float animTimeForShowDialog = 2f;//动画延迟
 
-    protected GameTimeHandler gameTimeHandler;
     protected GameDataManager gameDataManager;
-    protected ControlHandler controlHandler;
     protected NpcCustomerBuilder npcCustomerBuilder;
     protected EventHandler eventHandler;
 
     public override void Awake()
     {
         base.Awake();
-        gameTimeHandler = uiGameManager.gameTimeHandler;
         gameDataManager = uiGameManager.gameDataManager;
-        controlHandler = uiGameManager.controlHandler;
         npcCustomerBuilder = uiGameManager.npcCustomerBuilder;
         eventHandler = uiGameManager.eventHandler;
     }
@@ -51,27 +47,24 @@ public class UIGameDate : BaseUIComponent
         base.OpenUI();
         AnimForInit();
 
-        if (gameTimeHandler != null)
-        {
-            gameTimeHandler.SetTimeStop();
-            gameTimeHandler.GetTime(out int year, out int month, out int day);
-            //设置日历
-            calendarView.InitData(year, month, day);
-            //保存数据
 
-            //下一天
-            StartCoroutine(CoroutineForNextDay());
-        }
-        if (controlHandler != null)
-            controlHandler.StopControl();
+        GameTimeHandler.Instance.SetTimeStop();
+        GameTimeHandler.Instance.GetTime(out int year, out int month, out int day);
+        //设置日历
+        calendarView.InitData(year, month, day);
+        //保存数据
+
+        //下一天
+        StartCoroutine(CoroutineForNextDay());
+
+        GameControlHandler.Instance.StopControl();
     }
 
     public override void CloseUI()
     {
         base.CloseUI();
         objDialog.SetActive(false);
-        if (controlHandler != null)
-            controlHandler.RestoreControl();
+       GameControlHandler.Instance.RestoreControl();
     }
 
     /// <summary>
@@ -88,8 +81,8 @@ public class UIGameDate : BaseUIComponent
     /// </summary>
     public void OnClickInnWork()
     {
-        
-            AudioHandler.Instance.PlaySound(AudioSoundEnum.ButtonForNormal);
+
+        AudioHandler.Instance.PlaySound(AudioSoundEnum.ButtonForNormal);
         InnWork();
     }
 
@@ -98,8 +91,8 @@ public class UIGameDate : BaseUIComponent
     /// </summary>
     public void OnClickInnRest()
     {
-        
-            AudioHandler.Instance.PlaySound(AudioSoundEnum.ButtonForNormal);
+
+        AudioHandler.Instance.PlaySound(AudioSoundEnum.ButtonForNormal);
         InnRest();
     }
 
@@ -111,26 +104,26 @@ public class UIGameDate : BaseUIComponent
     {
         yield return new WaitForSeconds(animTimeForWaitNext);
         //进入下一天
-        gameTimeHandler.GoToNextDay(1);
-        gameTimeHandler.GetTime(out int newYear, out int newMonth, out int newDay);
+        GameTimeHandler.Instance.GoToNextDay(1);
+        GameTimeHandler.Instance.GetTime(out int newYear, out int newMonth, out int newDay);
         calendarView.ChangeData(newYear, newMonth, newDay);
-        AudioHandler.Instance.PlaySound( AudioSoundEnum.ButtonForShow);
+        AudioHandler.Instance.PlaySound(AudioSoundEnum.ButtonForShow);
         //展示是否营业框
         yield return new WaitForSeconds(animTimeForShowDialog);
- 
-        gameTimeHandler.GetTime(out int year, out int month, out int day);
 
-        List<CharacterBean> listWorker= gameDataManager.gameData.GetAllCharacterData();
+        GameTimeHandler.Instance.GetTime(out int year, out int month, out int day);
+
+        List<CharacterBean> listWorker = gameDataManager.gameData.GetAllCharacterData();
         //如果有请假的员工 新的一天结束请假
         foreach (CharacterBean itemWork in listWorker)
         {
-            if(itemWork.baseInfo.GetWorkerStatus()== WorkerStatusEnum.Vacation)
+            if (itemWork.baseInfo.GetWorkerStatus() == WorkerStatusEnum.Vacation)
             {
                 itemWork.baseInfo.SetWorkerStatus(WorkerStatusEnum.Rest);
             }
         }
         // 第一年和第二年 第一天默认不营业
-        if ((year == 221|| year == 222) && month == 1 && day == 1)
+        if ((year == 221 || year == 222) && month == 1 && day == 1)
         {
             InnRest();
         }
@@ -168,7 +161,7 @@ public class UIGameDate : BaseUIComponent
                 }
             }
         }
-        uiManager.OpenUIAndCloseOtherByName(EnumUtil.GetEnumName(UIEnum.GameAttendance));
+        UIHandler.Instance.manager.OpenUIAndCloseOther<UIGameAttendance>(UIEnum.GameAttendance);
     }
 
     /// <summary>
@@ -176,19 +169,19 @@ public class UIGameDate : BaseUIComponent
     /// </summary>
     public void InnRest()
     {
-        gameTimeHandler.SetDayStatus(GameTimeHandler.DayEnum.Rest);
-        gameTimeHandler.SetTimeStatus(false);
+        GameTimeHandler.Instance.SetDayStatus(GameTimeHandler.DayEnum.Rest);
+        GameTimeHandler.Instance.SetTimeStatus(false);
 
         //设置位置
         Vector3 startPosition = InnHandler.Instance.GetRandomEntrancePosition();
-        BaseControl baseControl = controlHandler.StartControl(ControlHandler.ControlEnum.Normal);
+        BaseControl baseControl = GameControlHandler.Instance.StartControl<BaseControl>(GameControlHandler.ControlEnum.Normal);
         baseControl.SetFollowPosition(startPosition + new Vector3(0, -2, 0));
 
         //触发事件检测 
         if (!eventHandler.EventTriggerForStory())
         {
             //没有触发事件 直接打开UI
-            uiManager.OpenUIAndCloseOtherByName(EnumUtil.GetEnumName(UIEnum.GameMain));
+            UIHandler.Instance.manager.OpenUIAndCloseOther<UIGameMain>(UIEnum.GameMain);
         }
         else
         {

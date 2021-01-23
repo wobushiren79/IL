@@ -9,7 +9,6 @@ public class BaseSceneInit : BaseMonoBehaviour
     protected GameTimeHandler gameTimeHandler;
 
     protected WeatherHandler weatherHandler;
-    protected ControlHandler controlHandler;
     protected GameDataHandler gameDataHandler;
 
 
@@ -18,7 +17,6 @@ public class BaseSceneInit : BaseMonoBehaviour
         weatherHandler = Find<WeatherHandler>(ImportantTypeEnum.WeatherHandler);
         uiGameManager = Find<UIGameManager>(ImportantTypeEnum.GameUI);
         gameDataManager = Find<GameDataManager>(ImportantTypeEnum.GameDataManager);
-        controlHandler = Find<ControlHandler>(ImportantTypeEnum.ControlHandler);
         gameTimeHandler = Find<GameTimeHandler>(ImportantTypeEnum.TimeHandler);
         gameDataHandler = Find<GameDataHandler>(ImportantTypeEnum.GameDataHandler);
     }

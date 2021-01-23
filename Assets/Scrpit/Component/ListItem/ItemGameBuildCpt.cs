@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using UnityEditor;
 using UnityEngine.UI;
-using static ControlHandler;
+using static GameControlHandler;
 
 public class ItemGameBuildCpt : ItemGameBaseCpt
 {
@@ -49,7 +49,7 @@ public class ItemGameBuildCpt : ItemGameBaseCpt
     /// <param name="iconKey"></param>
     public void SetIcon(BuildItemBean buildData)
     {
-        Sprite spIcon = BuildItemTypeEnumTools.GetBuildItemSprite(buildData); 
+        Sprite spIcon = BuildItemTypeEnumTools.GetBuildItemSprite(buildData);
         if (ivIcon != null)
             ivIcon.sprite = spIcon;
     }
@@ -89,7 +89,7 @@ public class ItemGameBuildCpt : ItemGameBaseCpt
     /// </summary>
     public void StartBuild()
     {
-        ControlForBuildCpt controlForBuild = (ControlForBuildCpt)GetUIManager<UIGameManager>().controlHandler.GetControl(ControlEnum.Build);
+        ControlForBuildCpt controlForBuild = GameControlHandler.Instance.GetControl<ControlForBuildCpt>(ControlEnum.Build);
         controlForBuild.ShowBuildItem(buildData.id);
     }
 

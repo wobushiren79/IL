@@ -32,8 +32,7 @@ public class UIGameBackpack : UIBaseOne, TextSearchView.ICallBack
     public override void OpenUI()
     {
         base.OpenUI();
-        if (uiGameManager.gameTimeHandler != null)
-            uiGameManager.gameTimeHandler.SetTimeStatus(false);
+        GameTimeHandler.Instance.SetTimeStatus(false);
         RefreshUI();
     }
 

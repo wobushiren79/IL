@@ -31,7 +31,7 @@ public class WeatherHandler : BaseMonoBehaviour
     public WeatherBean RandomWeather()
     {
         WeatherTypeEnum weatherStatusRandom = WeatherTypeEnum.Sunny;
-        gameTimeHandler.GetTime(out int year, out int month, out int day);
+        GameTimeHandler.Instance.GetTime(out int year, out int month, out int day);
 
         float weatherRate = UnityEngine.Random.Range(0f, 1f);
         if (weatherRate <= 0.5f)

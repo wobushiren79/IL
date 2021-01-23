@@ -60,8 +60,8 @@ public class UIGameBuild : BaseUIComponent, IRadioGroupCallBack
         base.OpenUI();
 
         //停止时间
-        uiGameManager.gameTimeHandler.SetTimeStatus(true);
-        uiGameManager.controlHandler.StartControl(ControlHandler.ControlEnum.Build);
+        GameTimeHandler.Instance.SetTimeStatus(true);
+        GameControlHandler.Instance.StartControl<ControlForBuildCpt>(GameControlHandler.ControlEnum.Build);
 
         InnHandler.Instance.CloseInn();
 
@@ -93,17 +93,17 @@ public class UIGameBuild : BaseUIComponent, IRadioGroupCallBack
     {
         base.CloseUI();
         //删除当前选中
-        ((ControlForBuildCpt)(uiGameManager.controlHandler.GetControl(ControlHandler.ControlEnum.Build))).ClearBuildItem();
+        GameControlHandler.Instance.GetControl<ControlForBuildCpt>(GameControlHandler.ControlEnum.Build).ClearBuildItem();
         SetInnBuildActive(true, true);
         //时间添加1小时
-        uiGameManager.gameTimeHandler.AddHour(1);
+        GameTimeHandler.Instance.AddHour(1);
         //添加研究经验
         uiGameManager.gameDataHandler.AddTimeProcess(60);
         //继续时间
-        uiGameManager.gameTimeHandler.SetTimeStatus(false);
+        GameTimeHandler.Instance.SetTimeStatus(false);
         //设置角色到门口
         Vector3 startPosition = InnHandler.Instance.GetRandomEntrancePosition();
-        uiGameManager.controlHandler.GetControl(ControlHandler.ControlEnum.Normal).SetFollowPosition(startPosition + new Vector3(0, -2, 0));
+        GameControlHandler.Instance.GetControl<BaseControl>(GameControlHandler.ControlEnum.Normal).SetFollowPosition(startPosition + new Vector3(0, -2, 0));
         //隐藏床的范围显示
         SetBedRangeStatus(false);
     }
@@ -187,7 +187,7 @@ public class UIGameBuild : BaseUIComponent, IRadioGroupCallBack
         }
 
         //镜头初始化
-        ControlForBuildCpt controlForBuild = ((ControlForBuildCpt)(uiGameManager.controlHandler.GetControl(ControlHandler.ControlEnum.Build)));
+        ControlForBuildCpt controlForBuild = (GameControlHandler.Instance.GetControl<ControlForBuildCpt>(GameControlHandler.ControlEnum.Build));
         controlForBuild.SetLayer(innLayer);
         if (innLayer == 1)
         {
@@ -318,7 +318,7 @@ public class UIGameBuild : BaseUIComponent, IRadioGroupCallBack
     /// </summary>
     public void DismantleMode()
     {
-        ((ControlForBuildCpt)(uiGameManager.controlHandler.GetControl(ControlHandler.ControlEnum.Build))).SetDismantleMode();
+        GameControlHandler.Instance.GetControl<ControlForBuildCpt>(GameControlHandler.ControlEnum.Build).SetDismantleMode();
     }
 
     /// <summary>
@@ -328,25 +328,25 @@ public class UIGameBuild : BaseUIComponent, IRadioGroupCallBack
     {
         AudioHandler.Instance.PlaySound(AudioSoundEnum.ButtonForBack);
         //删除当前选中
-        ((ControlForBuildCpt)(uiGameManager.controlHandler.GetControl(ControlHandler.ControlEnum.Build))).ClearBuildItem();
+        GameControlHandler.Instance.GetControl<ControlForBuildCpt>(GameControlHandler.ControlEnum.Build).ClearBuildItem();
         //重新构建地形
         AstarPath.active.Scan();
         //重新构建客栈
         InnHandler.Instance.InitInn();
-        if (uiGameManager.gameTimeHandler.GetDayStatus() == GameTimeHandler.DayEnum.Work)
+        if (GameTimeHandler.Instance.GetDayStatus() == GameTimeHandler.DayEnum.Work)
         {
             //如果是工作日 开店继续营业
             InnHandler.Instance.OpenInn();
             //恢复工作日控制器
-            uiGameManager.controlHandler.StartControl(ControlHandler.ControlEnum.Work);
+            GameControlHandler.Instance.StartControl<ControlForWorkCpt>(GameControlHandler.ControlEnum.Work);
         }
         else
         {
             //恢复休息日控制器
-            uiGameManager.controlHandler.StartControl(ControlHandler.ControlEnum.Normal);
+            GameControlHandler.Instance.StartControl<BaseControl>(GameControlHandler.ControlEnum.Normal);
         }
         //打开主UI
-        uiManager.OpenUIAndCloseOtherByName(EnumUtil.GetEnumName(UIEnum.GameMain));
+        UIHandler.Instance.manager.OpenUIAndCloseOther<UIGameMain>(UIEnum.GameMain);
     }
 
     /// <summary>
@@ -417,7 +417,7 @@ public class UIGameBuild : BaseUIComponent, IRadioGroupCallBack
     {
         AudioHandler.Instance.PlaySound(AudioSoundEnum.ButtonForNormal);
         //删除当前选中
-        ((ControlForBuildCpt)(uiGameManager.controlHandler.GetControl(ControlHandler.ControlEnum.Build))).ClearBuildItem();
+        GameControlHandler.Instance.GetControl<ControlForBuildCpt>(GameControlHandler.ControlEnum.Build).ClearBuildItem();
         btDismantle.gameObject.SetActive(true);
         if (rbview == rbTypeTable)
         {

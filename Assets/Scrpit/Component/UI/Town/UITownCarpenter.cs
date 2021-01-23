@@ -57,7 +57,7 @@ public class UITownCarpenter : UIBaseOne, IRadioGroupCallBack
     public void OnClickForCustomBed()
     {
         AudioHandler.Instance.PlaySound(AudioSoundEnum.ButtonForNormal);
-        uiGameManager.OpenUIAndCloseOther(UIEnum.GameCustomBed);
+        uiGameManager.OpenUIAndCloseOther<UIGameCustomBed>(UIEnum.GameCustomBed);
     }
 
     public void SetCustomBed()

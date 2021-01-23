@@ -17,7 +17,7 @@ public class SceneForMountainHandler : BaseHandler
     {
         if (gameTimeHandler == null)
             return;
-        gameTimeHandler.GetTime(out float hour, out float min);
+        GameTimeHandler.Instance.GetTime(out float hour, out float min);
         if (hour >= 6 && hour < 21)
         {
             sun.gameObject.SetActive(true);

@@ -45,8 +45,7 @@ public class UIGameCustomBed : UIBaseOne, IRadioGroupCallBack
     public override void OpenUI()
     {
         base.OpenUI();
-        if (uiGameManager.gameTimeHandler != null)
-            uiGameManager.gameTimeHandler.SetTimeStatus(false);
+        GameTimeHandler.Instance.SetTimeStatus(false);
 
         CptUtil.RemoveChildsByActive(objItemContainer);
 
@@ -216,7 +215,7 @@ public class UIGameCustomBed : UIBaseOne, IRadioGroupCallBack
     /// </summary>
     public override void OnClickForBack()
     {
-        uiManager.OpenUIAndCloseOtherByName(EnumUtil.GetEnumName(UIEnum.TownCarpenter));
+        UIHandler.Instance.manager.OpenUIAndCloseOther<UITownCarpenter>(UIEnum.TownCarpenter);
     }
 
     /// <summary>

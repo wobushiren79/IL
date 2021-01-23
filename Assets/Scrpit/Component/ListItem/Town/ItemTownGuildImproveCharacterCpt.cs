@@ -3,6 +3,7 @@ using UnityEditor;
 using UnityEngine.UI;
 using System;
 using System.Collections.Generic;
+using static GameControlHandler;
 
 public class ItemTownGuildImproveCharacterCpt : ItemGameBaseCpt, DialogView.IDialogCallBack
 {
@@ -48,17 +49,11 @@ public class ItemTownGuildImproveCharacterCpt : ItemGameBaseCpt, DialogView.IDia
     protected UIGameManager uiGameManager;
     protected GameDataHandler gameDataHandler;
     protected GameDataManager gameDataManager;
-    protected GameTimeHandler gameTimeHandler;
-    protected DialogManager dialogManager;
-    protected ToastManager toastManager;
-    protected ControlHandler controlHandler;
 
     private void Awake()
     {
         uiGameManager = GetUIManager<UIGameManager>();
         gameDataManager = uiGameManager.gameDataManager;
-        gameTimeHandler = uiGameManager.gameTimeHandler;
-        controlHandler = uiGameManager.controlHandler;
         gameDataHandler = uiGameManager.gameDataHandler;
 
     }
@@ -280,7 +275,7 @@ public class ItemTownGuildImproveCharacterCpt : ItemGameBaseCpt, DialogView.IDia
             return;
         }
         //判断时间是否过晚
-        gameTimeHandler.GetTime(out float hour, out float min);
+        GameTimeHandler.Instance.GetTime(out float hour, out float min);
         if (hour >= 18 || hour < 6)
         {
             ToastHandler.Instance.ToastHint(GameCommonInfo.GetUITextById(1031));
@@ -310,7 +305,7 @@ public class ItemTownGuildImproveCharacterCpt : ItemGameBaseCpt, DialogView.IDia
         //扣除时间
         int preGameTime = int.Parse(levelData.mark);
         //扣除时间
-        gameTimeHandler.AddHour(preGameTime);
+        GameTimeHandler.Instance.AddHour(preGameTime);
         //如果有研究菜谱 菜谱增加经验
         gameDataHandler.AddTimeProcess(preGameTime * 60);
         //判断玩哪个游戏
@@ -345,7 +340,7 @@ public class ItemTownGuildImproveCharacterCpt : ItemGameBaseCpt, DialogView.IDia
             //设置竞技场数据
             GameCommonInfo.SetArenaPrepareData(miniGameData);
             //保存之前的位置
-            GameCommonInfo.ScenesChangeData.beforeUserPosition = controlHandler.GetControl(ControlHandler.ControlEnum.Normal).transform.position;
+            GameCommonInfo.ScenesChangeData.beforeUserPosition = GameControlHandler.Instance.GetControl<BaseControl>(ControlEnum.Normal).transform.position;
             //跳转到竞技场
             SceneUtil.SceneChange(ScenesEnum.GameArenaScene);
         }

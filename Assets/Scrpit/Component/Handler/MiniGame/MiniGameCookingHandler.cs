@@ -83,7 +83,7 @@ public class MiniGameCookingHandler : BaseMiniGameHandler<MiniGameCookingBuilder
     /// </summary>
     public void InitCameraPosition()
     {
-        BaseControl baseControl = controlHandler.StartControl(ControlHandler.ControlEnum.MiniGameCooking);
+        BaseControl baseControl = GameControlHandler.Instance.StartControl<ControlForMiniGameCookingCpt>(GameControlHandler.ControlEnum.MiniGameCooking);
         baseControl.SetCameraFollowObj(baseControl.gameObject);
         SetCameraPosition(miniGameData.userStartPosition);
     }
@@ -114,11 +114,8 @@ public class MiniGameCookingHandler : BaseMiniGameHandler<MiniGameCookingBuilder
             itemNpc.SetIntent(NpcAIMiniGameCookingCpt.MiniGameCookingIntentEnum.GoToStove);
         }
         //打开游戏控制器
-        if (controlHandler != null)
-        {
-            BaseControl baseControl = controlHandler.StartControl(ControlHandler.ControlEnum.MiniGameCooking);
-            baseControl.SetCameraFollowObj(miniGameBuilder.GetUserCharacter().gameObject);
-        }
+        BaseControl baseControl = GameControlHandler.Instance.StartControl<ControlForMiniGameCookingCpt>(GameControlHandler.ControlEnum.MiniGameCooking);
+        baseControl.SetCameraFollowObj(miniGameBuilder.GetUserCharacter().gameObject);
     }
 
     /// <summary>
@@ -127,7 +124,7 @@ public class MiniGameCookingHandler : BaseMiniGameHandler<MiniGameCookingBuilder
     public void StartSelectMenu()
     {
         //打开游戏UI
-        uiMiniGameCookingSelect = (UIMiniGameCookingSelect)uiGameManager.OpenUIAndCloseOtherByName(EnumUtil.GetEnumName(UIEnum.MiniGameCookingSelect));
+        uiMiniGameCookingSelect = UIHandler.Instance.manager.OpenUIAndCloseOther<UIMiniGameCookingSelect>(UIEnum.MiniGameCookingSelect);
         uiMiniGameCookingSelect.SetCallBack(this);
         uiMiniGameCookingSelect.SetData(miniGameData);
     }
@@ -142,7 +139,7 @@ public class MiniGameCookingHandler : BaseMiniGameHandler<MiniGameCookingBuilder
         miniGameBuilder.GetUserCharacter().characterData.GetAttributes( out CharacterAttributesBean attributes);
         gameTiming += (attributes.cook * 0.3f);
         //打开UI
-        uiMiniGameCooking = (UIMiniGameCooking)uiGameManager.OpenUIAndCloseOtherByName(EnumUtil.GetEnumName(UIEnum.MiniGameCooking));
+        uiMiniGameCooking = UIHandler.Instance.manager.OpenUIAndCloseOther<UIMiniGameCooking>(UIEnum.MiniGameCooking);
         uiMiniGameCooking.SetData(miniGameData, gameTiming);
         uiMiniGameCooking.SetCallBack(this);
         uiMiniGameCooking.StartCookingPre();
@@ -339,7 +336,7 @@ public class MiniGameCookingHandler : BaseMiniGameHandler<MiniGameCookingBuilder
                     //按分数排名
                     listPlayer = listPlayer.OrderByDescending(item => item.characterMiniGameData.scoreForTotal).ToList();
                     //打开结算UI
-                    uiMiniGameCookingSettlement = (UIMiniGameCookingSettlement)uiGameManager.OpenUIAndCloseOtherByName(EnumUtil.GetEnumName(UIEnum.MiniGameCookingSettlement));
+                    uiMiniGameCookingSettlement = UIHandler.Instance.manager.OpenUIAndCloseOther<UIMiniGameCookingSettlement>(UIEnum.MiniGameCookingSettlement);
                     uiMiniGameCookingSettlement.SetCallBack(this);
                     uiMiniGameCookingSettlement.SetData(listPlayer);
                 }
@@ -391,11 +388,8 @@ public class MiniGameCookingHandler : BaseMiniGameHandler<MiniGameCookingBuilder
     #region UI结算回调
     public void UIMiniGameCookingSettlementClose()
     {   //打开游戏控制器
-        if (controlHandler != null)
-        {
-            BaseControl baseControl = controlHandler.StartControl(ControlHandler.ControlEnum.MiniGameCooking);
-            baseControl.SetCameraFollowObj(miniGameBuilder.GetUserCharacter().gameObject);
-        }
+        BaseControl baseControl = GameControlHandler.Instance.StartControl<ControlForMiniGameCookingCpt>(GameControlHandler.ControlEnum.MiniGameCooking);
+        baseControl.SetCameraFollowObj(miniGameBuilder.GetUserCharacter().gameObject);
         //如果是晋升则按照分数计算是否胜利
         if (miniGameData.gameReason == MiniGameReasonEnum.Improve)
         {

@@ -261,13 +261,11 @@ public class ItemTownArenaCpt : ItemGameBaseCpt, DialogView.IDialogCallBack
         UIGameManager uiGameManager = GetUIManager<UIGameManager>();
         GameDataManager gameDataManager = uiGameManager.gameDataManager;
         GameDataHandler gameDataHandler = uiGameManager.gameDataHandler;
-        ControlHandler controlHandler = uiGameManager.controlHandler;
-        GameTimeHandler gameTimeHandler = uiGameManager.gameTimeHandler;
   
         if (dialogView as PickForCharacterDialogView)
         {
             //判断时间是否过晚
-            gameTimeHandler.GetTime(out float hour, out float min);
+            GameTimeHandler.Instance.GetTime(out float hour, out float min);
             if (hour >= 21 || hour < 6)
             {
                 ToastHandler.Instance.ToastHint(GameCommonInfo.GetUITextById(1034));
@@ -276,7 +274,7 @@ public class ItemTownArenaCpt : ItemGameBaseCpt, DialogView.IDialogCallBack
             //支付金钱
             gameDataManager.gameData.PayMoney(miniGameData.preMoneyL, miniGameData.preMoneyM, miniGameData.preMoneyS);
             //扣除时间
-            gameTimeHandler.AddHour(miniGameData.preGameTime);
+            GameTimeHandler.Instance.AddHour(miniGameData.preGameTime);
             //如果有研究菜谱 菜谱增加经验
             gameDataHandler.AddTimeProcess(miniGameData.preGameTime*60);
             //设置参赛人员
@@ -293,7 +291,7 @@ public class ItemTownArenaCpt : ItemGameBaseCpt, DialogView.IDialogCallBack
                 //设置竞技场数据
                 GameCommonInfo.SetArenaPrepareData(miniGameData);
                 //保存之前的位置
-                GameCommonInfo.ScenesChangeData.beforeUserPosition = controlHandler.GetControl(ControlHandler.ControlEnum.Normal).transform.position;
+                GameCommonInfo.ScenesChangeData.beforeUserPosition = GameControlHandler.Instance.GetControl<BaseControl>(GameControlHandler.ControlEnum.Normal).transform.position;
                 //跳转到竞技场
                 SceneUtil.SceneChange(ScenesEnum.GameArenaScene);
             }

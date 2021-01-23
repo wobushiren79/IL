@@ -10,7 +10,7 @@ public class ControlForMiniGameCombatCpt : BaseControl
     {
         gameCombatHandler = Find<MiniGameCombatHandler>(ImportantTypeEnum.MiniGameHandler);
         uiGameManager = Find<UIGameManager>(ImportantTypeEnum.GameUI);
-        uiMiniGameCombat = (UIMiniGameCombat)uiGameManager.GetUIByName(EnumUtil.GetEnumName(UIEnum.MiniGameCombat));
+        uiMiniGameCombat = UIHandler.Instance.manager.GetUI<UIMiniGameCombat>(UIEnum.MiniGameCombat);
     }
 
     /// <summary>

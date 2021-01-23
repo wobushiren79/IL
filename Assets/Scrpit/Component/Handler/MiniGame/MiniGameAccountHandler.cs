@@ -14,7 +14,7 @@ public class MiniGameAccountHandler : BaseMiniGameHandler<MiniGameAccountBuilder
         //创建玩家
         miniGameBuilder.CreateUserCharacter(miniGameData.listUserGameData, miniGameData.playerPosition);
         //摄像头初始化
-        ControlForMiniGameAccountCpt gameControl = (ControlForMiniGameAccountCpt)controlHandler.StartControl(ControlHandler.ControlEnum.MiniGameAccount);
+        ControlForMiniGameAccountCpt gameControl = GameControlHandler.Instance.StartControl<ControlForMiniGameAccountCpt>(GameControlHandler.ControlEnum.MiniGameAccount);
         gameControl.SetCameraOrthographicSize(8);
         gameControl.SetCameraPosition(miniGameData.cameraPosition);
         gameControl.SetCallBack(this);
@@ -35,7 +35,7 @@ public class MiniGameAccountHandler : BaseMiniGameHandler<MiniGameAccountBuilder
         ejectorCpt.SetCallBack(this);
         ejectorCpt.StartRotate();
         //打开游戏UI
-        UIMiniGameAccount uiMiniGameAccount = (UIMiniGameAccount)uiGameManager.OpenUIAndCloseOtherByName(EnumUtil.GetEnumName(UIEnum.MiniGameAccount));
+        UIMiniGameAccount uiMiniGameAccount = UIHandler.Instance.manager.OpenUIAndCloseOther<UIMiniGameAccount>(UIEnum.MiniGameAccount);
         uiMiniGameAccount.SetData(miniGameData.winSurvivalTime, miniGameData.winMoneyL, miniGameData.winMoneyM, miniGameData.winMoneyS);
         //开始倒计时
         StartCoroutine(StartCountDown());

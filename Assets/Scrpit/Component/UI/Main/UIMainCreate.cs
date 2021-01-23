@@ -218,7 +218,7 @@ public class UIMainCreate : BaseUIComponent,
     {
         //按键音效
         AudioHandler.Instance.PlaySound(AudioSoundEnum.ButtonForBack);
-        uiManager.OpenUIAndCloseOtherByName(EnumUtil.GetEnumName(UIEnum.MainStart));
+        UIHandler.Instance.manager.OpenUIAndCloseOther<UIMainStart>(UIEnum.MainStart);
     }
 
     /// <summary>

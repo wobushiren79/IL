@@ -238,7 +238,7 @@ public class ItemGameHotelBedCpt : ItemGameBaseCpt, DialogView.IDialogCallBack
         foreach (CharacterBean itemData in listCharacter)
         {
             //休息日 排出不是工作或者休息的
-            if (uiGameManager.gameTimeHandler.GetDayStatus() == GameTimeHandler.DayEnum.Rest)
+            if (GameTimeHandler.Instance.GetDayStatus() == GameTimeHandler.DayEnum.Rest)
             {
                 if (itemData.baseInfo.GetWorkerStatus() != WorkerStatusEnum.Rest && itemData.baseInfo.GetWorkerStatus() != WorkerStatusEnum.Work)
                 {
@@ -246,7 +246,7 @@ public class ItemGameHotelBedCpt : ItemGameBaseCpt, DialogView.IDialogCallBack
                 }
             }
             //工作日 排出除休息中的所有员工
-            else if (uiGameManager.gameTimeHandler.GetDayStatus() == GameTimeHandler.DayEnum.Work)
+            else if (GameTimeHandler.Instance.GetDayStatus() == GameTimeHandler.DayEnum.Work)
             {
                 if (itemData.baseInfo.GetWorkerStatus() != WorkerStatusEnum.Rest)
                 {

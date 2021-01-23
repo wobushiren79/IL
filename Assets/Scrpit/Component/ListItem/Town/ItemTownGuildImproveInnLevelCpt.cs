@@ -159,7 +159,7 @@ public class ItemTownGuildImproveInnLevelCpt : BaseMonoBehaviour, DialogView.IDi
             gameDataManager.gameData.innAttributes.SetInnLevelUp();
 
             ToastHandler.Instance.ToastHint(ivTitleIcon.sprite, GameCommonInfo.GetUITextById(1062));
-            uiGameManager.OpenUIAndCloseOtherByName(EnumUtil.GetEnumName(UIEnum.GameMain));
+            UIHandler.Instance.manager.OpenUIAndCloseOther<UIGameMain>(UIEnum.GameMain);
 
             DialogBean dialogData = new DialogBean();
             AchievementDialogView achievementDialog = DialogHandler.Instance.CreateDialog<AchievementDialogView>(DialogEnum.Achievement, this, dialogData);

@@ -60,17 +60,17 @@ public class UIGameText : BaseUIComponent, DialogView.IDialogCallBack
             {
                 case TextEnum.Look:
                 case TextEnum.Talk:
-                    uiManager.OpenUIAndCloseOtherByName(EnumUtil.GetEnumName(UIEnum.GameMain));
+                    UIHandler.Instance.manager.OpenUIAndCloseOther<UIGameMain>(UIEnum.GameMain);
                     break;
                 case TextEnum.Story:
-                    uiManager.CloseAllUI();
+                    UIHandler.Instance.manager.CloseAllUI();
                     break;
             }
             //如果是时停 需要回复时停
             if (currentTextData.is_stoptime == 1)
             {
-                if (uiGameManager.gameTimeHandler != null)
-                    uiGameManager.gameTimeHandler.SetTimeRestore();
+
+                GameTimeHandler.Instance.SetTimeRestore();
             }
             //回调
             if (callBack != null)
@@ -150,7 +150,7 @@ public class UIGameText : BaseUIComponent, DialogView.IDialogCallBack
         //时停选择 特殊处理
         if (currentTextData.is_stoptime == 1)
             //设置时间彻底停止计时
-            uiGameManager.gameTimeHandler.SetTimeStop();
+            GameTimeHandler.Instance.SetTimeStop();
         switch (currentTextData.GetTextType())
         {
             //对话和选择对话
@@ -312,7 +312,7 @@ public class UIGameText : BaseUIComponent, DialogView.IDialogCallBack
         }
     }
 
-    
+
     /// <summary>
     /// 设置文本数据
     /// </summary>

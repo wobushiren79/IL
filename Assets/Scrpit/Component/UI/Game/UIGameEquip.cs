@@ -78,7 +78,7 @@ public class UIGameEquip : BaseUIComponent, TextSearchView.ICallBack
     public void OpenWorkUI()
     {
         AudioHandler.Instance.PlaySound(AudioSoundEnum.ButtonForBack);
-        uiManager.OpenUIAndCloseOtherByName(EnumUtil.GetEnumName(UIEnum.GameWorker));
+        UIHandler.Instance.manager.OpenUIAndCloseOther<UIGameWorker>(UIEnum.GameWorker);
     }
 
     public void OnCellForItems(ScrollGridCell itemCell)

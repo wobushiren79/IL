@@ -20,7 +20,7 @@ public class BaseUIComponent : BaseMonoBehaviour
         if (uiManager == null)
         {
             uiManager = GetComponentInParent<BaseUIManager>();
-            uiGameManager = CptUtil.AddCpt<UIGameManager>(uiManager.gameObject);
+            uiGameManager = CptUtil.AddCpt<UIGameManager>(UIHandler.Instance.manager.gameObject);
         }
         if (uiAnimator == null)
             uiAnimator = GetComponent<Animator>();

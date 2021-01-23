@@ -166,7 +166,7 @@ public class UIGameWorkerDetails : BaseUIComponent, IRadioGroupCallBack
     public void OpenWorkUI()
     {
         AudioHandler.Instance.PlaySound(AudioSoundEnum.ButtonForBack);
-        uiManager.OpenUIAndCloseOtherByName(EnumUtil.GetEnumName(UIEnum.GameWorker));
+        UIHandler.Instance.manager.OpenUIAndCloseOther<UIGameWorker>(UIEnum.GameWorker);
     }
 
     /// <summary>

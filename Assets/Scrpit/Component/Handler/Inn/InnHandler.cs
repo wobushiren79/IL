@@ -90,7 +90,7 @@ public class InnHandler : BaseHandler<InnHandler, InnManager>
     public void InitRecord()
     {
         innRecord = new InnRecordBean();
-        gameTimeHandler.GetTime(out int year, out int month, out int day);
+        GameTimeHandler.Instance.GetTime(out int year, out int month, out int day);
         innRecord.year = year;
         innRecord.month = month;
         innRecord.day = day;

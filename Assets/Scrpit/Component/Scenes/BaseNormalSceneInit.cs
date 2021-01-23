@@ -34,7 +34,7 @@ public abstract class BaseNormalSceneInit : BaseSceneInit, DialogView.IDialogCal
             weatherHandler.SetWeahter(GameCommonInfo.CurrentDayData.weatherToday);
         }
         //如果是在室内
-        if (controlHandler.GetControl().transform.position.y < -50)
+        if (GameControlHandler.Instance.GetControl().transform.position.y < -50)
         {
             AudioHandler.Instance.PauseEnvironment();
         }
@@ -46,7 +46,7 @@ public abstract class BaseNormalSceneInit : BaseSceneInit, DialogView.IDialogCal
     /// </summary>
     public virtual ControlForMoveCpt InitUserPosition() {
         //开始角色控制
-        ControlForMoveCpt moveControl = (ControlForMoveCpt)controlHandler.StartControl(ControlHandler.ControlEnum.Normal);
+        ControlForMoveCpt moveControl = GameControlHandler.Instance.StartControl<ControlForMoveCpt>(GameControlHandler.ControlEnum.Normal);
         return moveControl;
     }
 
@@ -58,22 +58,21 @@ public abstract class BaseNormalSceneInit : BaseSceneInit, DialogView.IDialogCal
     {
         //停止时间
         if (gameTimeHandler != null)
-            gameTimeHandler.SetTimeStatus(true);
+            GameTimeHandler.Instance.SetTimeStatus(true);
         //停止控制
-        if (controlHandler != null)
-            controlHandler.EndControl();
+        GameControlHandler.Instance.EndControl();
 
         //重置游戏时间
         if (gameTimeHandler != null)
-            gameTimeHandler.SetDayStatus(GameTimeHandler.DayEnum.End);
+            GameTimeHandler.Instance.SetDayStatus(GameTimeHandler.DayEnum.End);
 
 
         DialogBean dialogBean = new DialogBean();
-        if (gameTimeHandler.GetDayStatus() == GameTimeHandler.DayEnum.Work)
+        if (GameTimeHandler.Instance.GetDayStatus() == GameTimeHandler.DayEnum.Work)
         {
             dialogBean.content = GameCommonInfo.GetUITextById(3006);
         }
-        else if (gameTimeHandler.GetDayStatus() == GameTimeHandler.DayEnum.Rest)
+        else if (GameTimeHandler.Instance.GetDayStatus() == GameTimeHandler.DayEnum.Rest)
         {
             dialogBean.content = GameCommonInfo.GetUITextById(3014);
         }

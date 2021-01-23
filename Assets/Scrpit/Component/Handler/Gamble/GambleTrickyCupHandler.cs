@@ -10,7 +10,7 @@ public class GambleTrickyCupHandler : BaseGambleHandler<GambleTrickyCupBean , Ga
     public override void InitGame(GambleTrickyCupBean gambleData)
     {
         base.InitGame(gambleData);
-        gambleUI  =  (UIGambleTrickyCup)uiGameManager.GetUIByName(EnumUtil.GetEnumName(UIEnum.GambleTrickyCup));
+        gambleUI  =  UIHandler.Instance.manager.GetUI<UIGambleTrickyCup>(UIEnum.GambleTrickyCup);
         //初始化所有杯子
         gambleBuilder.InitAllCup();
     }

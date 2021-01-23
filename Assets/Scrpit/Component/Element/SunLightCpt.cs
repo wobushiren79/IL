@@ -32,7 +32,7 @@ public class SunLightCpt : LightCpt
     {
         if (gameTimeHandler == null)
             return;
-        gameTimeHandler.GetTime(out float hour, out float min);
+        GameTimeHandler.Instance.GetTime(out float hour, out float min);
 
         float leap = 0;
         if (hour >= 0 && hour <= 12)

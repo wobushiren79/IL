@@ -53,14 +53,14 @@ public class UIBaseGamble<T, H, B> : BaseUIComponent, DialogView.IDialogCallBack
     {
         base.OpenUI();
         AudioHandler.Instance.PlaySound(AudioSoundEnum.ButtonForNormal);
-        uiGameManager.gameTimeHandler.SetTimeStatus(true);
+        GameTimeHandler.Instance.SetTimeStatus(true);
     }
 
     public override void CloseUI()
     {
         base.CloseUI();
         AudioHandler.Instance.PlaySound(AudioSoundEnum.ButtonForBack);
-        uiGameManager.gameTimeHandler.SetTimeStatus(false);
+        GameTimeHandler.Instance.SetTimeStatus(false);
     }
 
     public virtual void Update()
@@ -138,7 +138,7 @@ public class UIBaseGamble<T, H, B> : BaseUIComponent, DialogView.IDialogCallBack
         {
             //退还下注金额
             uiGameManager.gameDataManager.gameData.AddMoney(gambleData.betForMoneyL, gambleData.betForMoneyM, gambleData.betForMoneyS);
-            uiManager.OpenUIAndCloseOther(UIEnum.GameMain);
+            UIHandler.Instance.manager.OpenUIAndCloseOther<UIGameMain>(UIEnum.GameMain);
         }
 
     }

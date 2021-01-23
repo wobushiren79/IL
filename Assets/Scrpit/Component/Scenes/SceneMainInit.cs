@@ -8,7 +8,7 @@ public class SceneMainInit : BaseSceneInit
     {
         base.Start();
         //打开UI
-        UIHandler.Instance.manager.OpenUI(UIEnum.MainStart);
+        UIHandler.Instance.manager.OpenUI<UIMainStart>(UIEnum.MainStart);
         //播放主界面音乐
         AudioHandler.Instance.PlayMusicForLoop(AudioMusicEnum.Main);
     }

@@ -16,7 +16,6 @@ public class StoryBuilder : BaseMonoBehaviour, StoryInfoManager.CallBack
     protected BaseUIManager uiManager;
 
     protected EventHandler eventHandler;
-    protected ControlHandler controlHandler;
     protected AudioHandler audioHandler;
 
     //剧情
@@ -39,7 +38,6 @@ public class StoryBuilder : BaseMonoBehaviour, StoryInfoManager.CallBack
         uiManager = Find<BaseUIManager>(ImportantTypeEnum.GameUI);
 
         eventHandler = Find<EventHandler>(ImportantTypeEnum.EventHandler);
-        controlHandler = Find<ControlHandler>(ImportantTypeEnum.ControlHandler);
 
         listStoryDetails = new List<StoryInfoDetailsBean>();
         listNpcObj = new List<GameObject>();
@@ -152,7 +150,7 @@ public class StoryBuilder : BaseMonoBehaviour, StoryInfoManager.CallBack
                 case StoryInfoDetailsBean.StoryInfoDetailsTypeEnum.Talk:
                     //进入对话
                     isNext = false;
-                    UIGameText uiComponent = (UIGameText)uiManager.OpenUIAndCloseOtherByName(EnumUtil.GetEnumName(UIEnum.GameText));
+                    UIGameText uiComponent = (UIGameText)UIHandler.Instance.manager.OpenUIAndCloseOther<UIGameText>(UIEnum.GameText);
                     uiComponent.SetData(TextEnum.Story, itemData.text_mark_id);
                     break;
                 case StoryInfoDetailsBean.StoryInfoDetailsTypeEnum.AutoNext:
@@ -162,7 +160,7 @@ public class StoryBuilder : BaseMonoBehaviour, StoryInfoManager.CallBack
                     break;
                 case StoryInfoDetailsBean.StoryInfoDetailsTypeEnum.CameraPosition:
                     //设置摄像头位置
-                    baseControl = controlHandler.GetControl();
+                    baseControl = GameControlHandler.Instance.GetControl();
                     Vector3 cameraWorldPosition = transform.TransformPoint(new Vector3(itemData.camera_position_x, itemData.camera_position_y));
                     baseControl.SetCameraFollowObj(null);
                     baseControl.SetFollowPosition(cameraWorldPosition);
@@ -170,7 +168,7 @@ public class StoryBuilder : BaseMonoBehaviour, StoryInfoManager.CallBack
                 case StoryInfoDetailsBean.StoryInfoDetailsTypeEnum.CameraFollowCharacter:
                     //设置摄像头位置
                     objNpc = GetNpcByNpcNum(itemData.camera_follow_character);
-                    baseControl = controlHandler.GetControl();
+                    baseControl = GameControlHandler.Instance.GetControl();
                     baseControl.SetCameraFollowObj(objNpc);
                     break;
                 case StoryInfoDetailsBean.StoryInfoDetailsTypeEnum.AudioSound:
@@ -256,7 +254,7 @@ public class StoryBuilder : BaseMonoBehaviour, StoryInfoManager.CallBack
         CharacterBean characterData;
         if (itemData.npc_id == 0)
         {
-            ((ControlForStoryCpt)controlHandler.GetControl()).SetCameraFollowObj(objNpc);
+            ((ControlForStoryCpt)GameControlHandler.Instance.GetControl()).SetCameraFollowObj(objNpc);
             characterData = gameDataManager.gameData.userCharacter;
         }
         else

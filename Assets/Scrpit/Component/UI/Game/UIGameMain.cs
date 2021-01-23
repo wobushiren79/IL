@@ -131,17 +131,17 @@ public class UIGameMain : BaseUIComponent, DialogView.IDialogCallBack, IRadioGro
         UserAchievementBean userAchievement = uiGameManager.gameDataManager.gameData.GetAchievementData();
         if (!userAchievement.isOpenedHelp)
         {
-            uiGameManager.OpenUIAndCloseOther(UIEnum.GameHelp);
+            UIHandler.Instance.manager.OpenUIAndCloseOther<UIGameHelp>(UIEnum.GameHelp);
         }
     }
 
     private void Update()
     {
         InnAttributesBean innAttributes = uiGameManager.gameDataManager.gameData.GetInnAttributesData();
-        if (clockView != null && uiGameManager.gameTimeHandler != null)
+        if (clockView != null)
         {
-            uiGameManager.gameTimeHandler.GetTime(out float hour, out float min);
-            uiGameManager.gameTimeHandler.GetTime(out int year, out int month, out int day);
+            GameTimeHandler.Instance.GetTime(out float hour, out float min);
+            GameTimeHandler.Instance.GetTime(out int year, out int month, out int day);
             clockView.SetTime(month, day, (int)hour, (int)min);
         }
         SetInnPraise(innAttributes);
@@ -160,19 +160,17 @@ public class UIGameMain : BaseUIComponent, DialogView.IDialogCallBack, IRadioGro
     {
         base.CloseUI();
         //时间加速回归正常
-        if (uiGameManager.gameTimeHandler != null)
-        {
-            uiGameManager.gameTimeHandler.SetTimeScale(1);
-            rgTimeScale.SetPosition(-1, false);
-        }
-        uiGameManager.controlHandler.StopControl();
+
+        GameTimeHandler.Instance.SetTimeScale(1);
+        rgTimeScale.SetPosition(-1, false);
+        GameControlHandler.Instance.StopControl();
     }
 
     public override void OpenUI()
     {
         base.OpenUI();
         InitInnData();
-        uiGameManager.controlHandler.RestoreControl();
+        GameControlHandler.Instance.RestoreControl();
         RefreshUI();
     }
 
@@ -250,7 +248,7 @@ public class UIGameMain : BaseUIComponent, DialogView.IDialogCallBack, IRadioGro
         //}
         //else
         //{
-        //    if(uiGameManager.gameTimeHandler.GetDayStatus()== GameTimeHandler.DayEnum.Rest)
+        //    if(GameTimeHandler.Instance.GetDayStatus()== GameTimeHandler.DayEnum.Rest)
         //    {
         //        btJumpTime.gameObject.SetActive(true);
         //    }
@@ -266,7 +264,7 @@ public class UIGameMain : BaseUIComponent, DialogView.IDialogCallBack, IRadioGro
         }
         else
         {
-            if (uiGameManager.gameTimeHandler != null && uiGameManager.gameTimeHandler.GetDayStatus() == GameTimeHandler.DayEnum.Work)
+            if (GameTimeHandler.Instance.GetDayStatus() == GameTimeHandler.DayEnum.Work)
             {
                 workerNumber.Open();
             }
@@ -422,44 +420,44 @@ public class UIGameMain : BaseUIComponent, DialogView.IDialogCallBack, IRadioGro
     public void OpenWorkerUI()
     {
         AudioHandler.Instance.PlaySound(AudioSoundEnum.ButtonForNormal);
-        UIGameWorker uiGameWorker = (UIGameWorker)uiManager.OpenUIAndCloseOther(UIEnum.GameWorker);
+        UIGameWorker uiGameWorker = UIHandler.Instance.manager.OpenUIAndCloseOther<UIGameWorker>(UIEnum.GameWorker);
         uiGameWorker.InitUI();
     }
 
     public void OpenMenuUI()
     {
         AudioHandler.Instance.PlaySound(AudioSoundEnum.ButtonForNormal);
-        uiManager.OpenUIAndCloseOther(UIEnum.GameMenu);
+        UIHandler.Instance.manager.OpenUIAndCloseOther<UIGameMain>(UIEnum.GameMenu);
     }
 
     public void OpenBackpackUI()
     {
         AudioHandler.Instance.PlaySound(AudioSoundEnum.ButtonForNormal);
-        uiManager.OpenUIAndCloseOther(UIEnum.GameBackpack);
+        UIHandler.Instance.manager.OpenUIAndCloseOther<UIGameBackpack>(UIEnum.GameBackpack);
     }
 
     public void OpenFavorabilityUI()
     {
         AudioHandler.Instance.PlaySound(AudioSoundEnum.ButtonForNormal);
-        uiManager.OpenUIAndCloseOther(UIEnum.GameFavorability);
+        UIHandler.Instance.manager.OpenUIAndCloseOther<UIGameFavorability>(UIEnum.GameFavorability);
     }
 
     public void OpenStatisticsUI()
     {
         AudioHandler.Instance.PlaySound(AudioSoundEnum.ButtonForNormal);
-        uiManager.OpenUIAndCloseOther(UIEnum.GameStatistics);
+        UIHandler.Instance.manager.OpenUIAndCloseOther<UIGameStatistics>(UIEnum.GameStatistics);
     }
 
     public void OpenSettingUI()
     {
         AudioHandler.Instance.PlaySound(AudioSoundEnum.ButtonForNormal);
-        uiManager.OpenUIAndCloseOther(UIEnum.GameSetting);
+        UIHandler.Instance.manager.OpenUIAndCloseOther<UIGameSetting>(UIEnum.GameSetting);
     }
 
     public void OpenHelpUI()
     {
         AudioHandler.Instance.PlaySound(AudioSoundEnum.ButtonForNormal);
-        uiManager.OpenUIAndCloseOther(UIEnum.GameHelp);
+        UIHandler.Instance.manager.OpenUIAndCloseOther<UIGameHelp>(UIEnum.GameHelp);
     }
 
     public void OnClickForEndDay()
@@ -474,7 +472,7 @@ public class UIGameMain : BaseUIComponent, DialogView.IDialogCallBack, IRadioGro
 
     public void OnClickForJumpTime()
     {
-        if (uiGameManager.gameTimeHandler == null || uiGameManager.gameTimeHandler.GetDayStatus() != GameTimeHandler.DayEnum.Rest)
+        if (GameTimeHandler.Instance.GetDayStatus() != GameTimeHandler.DayEnum.Rest)
         {
             return;
         }
@@ -487,13 +485,13 @@ public class UIGameMain : BaseUIComponent, DialogView.IDialogCallBack, IRadioGro
     public void OnClickForHotel()
     {
         AudioHandler.Instance.PlaySound(AudioSoundEnum.ButtonForNormal);
-        uiManager.OpenUIAndCloseOther(UIEnum.GameHotel);
+        UIHandler.Instance.manager.OpenUIAndCloseOther<UIGameHotel>(UIEnum.GameHotel);
     }
 
     public void OnClickForFamily()
     {
         AudioHandler.Instance.PlaySound(AudioSoundEnum.ButtonForNormal);
-        uiManager.OpenUIAndCloseOther(UIEnum.GameFamily);
+        UIHandler.Instance.manager.OpenUIAndCloseOther<UIGameFamily>(UIEnum.GameFamily);
     }
 
     /// <summary>
@@ -520,7 +518,7 @@ public class UIGameMain : BaseUIComponent, DialogView.IDialogCallBack, IRadioGro
     /// <param name="layer"></param>
     public void SetInnLayer(int layer)
     {
-        ControlForWorkCpt controlForWork = (ControlForWorkCpt)uiGameManager.controlHandler.GetControl();
+        ControlForWorkCpt controlForWork = (ControlForWorkCpt)GameControlHandler.Instance.GetControl();
         controlForWork.SetLayer(layer);
     }
 
@@ -623,7 +621,7 @@ public class UIGameMain : BaseUIComponent, DialogView.IDialogCallBack, IRadioGro
             else if (dialogData.dialogPosition == 1)
             {
                 //打开建筑
-                uiManager.OpenUIAndCloseOtherByName(EnumUtil.GetEnumName(UIEnum.GameBuild));
+                UIHandler.Instance.manager.OpenUIAndCloseOther<UIGameBuild>(UIEnum.GameBuild);
             }
         }
     }
@@ -657,11 +655,11 @@ public class UIGameMain : BaseUIComponent, DialogView.IDialogCallBack, IRadioGro
         }
         if (rbview.status == RadioButtonView.RadioButtonStatus.Selected)
         {
-            uiGameManager.gameTimeHandler.SetTimeScale(timeScale);
+            GameTimeHandler.Instance.SetTimeScale(timeScale);
         }
         else
         {
-            uiGameManager.gameTimeHandler.SetTimeScale(1);
+            GameTimeHandler.Instance.SetTimeScale(1);
         }
     }
 

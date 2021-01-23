@@ -20,8 +20,8 @@ public class MiniGameDebateHandler : BaseMiniGameHandler<MiniGameDebateBuilder, 
         //创建角色
         miniGameBuilder.CreateAllCharacter(miniGameData.listUserGameData, miniGameData.listEnemyGameData, miniGameData.miniGamePosition);
         //设置摄像机位置
-        controlHandler.StartControl(ControlHandler.ControlEnum.MiniGameDebate);
-        controlHandler.GetControl().SetFollowPosition(miniGameData.miniGamePosition);
+        GameControlHandler.Instance.StartControl<ControlForMiniGameDebateCpt>(GameControlHandler.ControlEnum.MiniGameDebate);
+        GameControlHandler.Instance.GetControl().SetFollowPosition(miniGameData.miniGamePosition);
 
         //打开倒计时UI
         OpenCountDownUI(miniGameData);
@@ -31,7 +31,7 @@ public class MiniGameDebateHandler : BaseMiniGameHandler<MiniGameDebateBuilder, 
     {
         base.StartGame();
         //打开UI
-        uiMiniGameDebate = (UIMiniGameDebate)uiGameManager.OpenUIAndCloseOtherByName(EnumUtil.GetEnumName(UIEnum.MiniGameDebate));
+        uiMiniGameDebate = UIHandler.Instance.manager.OpenUIAndCloseOther<UIMiniGameDebate>(UIEnum.MiniGameDebate);
         ClearAllCard();
         uiMiniGameDebate.SetCallBack(this);
         uiMiniGameDebate.SetData(miniGameData);

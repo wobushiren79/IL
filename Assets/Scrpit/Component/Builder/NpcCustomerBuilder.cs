@@ -26,7 +26,7 @@ public class NpcCustomerBuilder : NpcNormalBuilder
         buildCustomerForHotelRate = innAttributes.CalculationCustomerForHotelRate(innBuild);
         buildTeamGustomerRate = innAttributes.CalculationTeamCustomerBuildRate();
         buildMaxNumber = 500;
-        gameTimeHandler.RegisterNotifyForTime(NotifyForTime);
+        GameTimeHandler.Instance.RegisterNotifyForTime(NotifyForTime);
         StartBuildCustomer();
     }
 
@@ -116,7 +116,7 @@ public class NpcCustomerBuilder : NpcNormalBuilder
         //设置意图
         NpcAICustomerCpt customerAI = npcObj.GetComponent<NpcAICustomerCpt>();
         //想要吃饭概率
-        if (gameTimeHandler.GetDayStatus() == GameTimeHandler.DayEnum.Work && IsWantEat(CustomerTypeEnum.Normal))
+        if (GameTimeHandler.Instance.GetDayStatus() == GameTimeHandler.DayEnum.Work && IsWantEat(CustomerTypeEnum.Normal))
         {
             customerAI.SetIntent(NpcAICustomerCpt.CustomerIntentEnum.Want);
         }
@@ -190,7 +190,7 @@ public class NpcCustomerBuilder : NpcNormalBuilder
             baseNpcAI.AddStatusIconForGuestTeam(teamColor);
             NpcAICustomerForGuestTeamCpt customerAI = baseNpcAI.GetComponent<NpcAICustomerForGuestTeamCpt>();
             customerAI.SetTeamData(teamCode, npcTeam, i, teamColor);
-            if (gameTimeHandler.GetDayStatus() == GameTimeHandler.DayEnum.Work && isWant)
+            if (GameTimeHandler.Instance.GetDayStatus() == GameTimeHandler.DayEnum.Work && isWant)
             {
                 customerAI.SetIntent(NpcAICustomerCpt.CustomerIntentEnum.Want);
             }
@@ -219,7 +219,7 @@ public class NpcCustomerBuilder : NpcNormalBuilder
         //设置意图
         NpcAICustomerForHotelCpt customerAI = npcObj.GetComponent<NpcAICustomerForHotelCpt>();
         //想要吃饭概率
-        if (gameTimeHandler.GetDayStatus() == GameTimeHandler.DayEnum.Work && InnHandler.Instance.GetInnStatus() == InnHandler.InnStatusEnum.Open)
+        if (GameTimeHandler.Instance.GetDayStatus() == GameTimeHandler.DayEnum.Work && InnHandler.Instance.GetInnStatus() == InnHandler.InnStatusEnum.Open)
         {
             customerAI.SetIntent(NpcAICustomerForHotelCpt.CustomerHotelIntentEnum.GoToInn);
         }
