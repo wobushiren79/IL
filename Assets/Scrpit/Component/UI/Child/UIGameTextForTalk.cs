@@ -26,14 +26,6 @@ public class UIGameTextForTalk : BaseUIChildComponent<UIGameText>
     public Text tvMoneyM;
     public Text tvMoneyS;
 
-    protected GameDataManager gameDataManager;
-
-    private void Start()
-    {
-        UIGameManager uiGameManager = uiComponent.GetUIManager<UIGameManager>();
-        gameDataManager = uiGameManager.gameDataManager;
-    }
-
     public override void Close()
     {
         base.Close();
@@ -68,17 +60,18 @@ public class UIGameTextForTalk : BaseUIChildComponent<UIGameText>
                 }
             }
         }
+        GameDataBean gameData = GameDataHandler.Instance.manager.GetGameData();
         if (tvMoneyL != null)
         {
-            tvMoneyL.text = gameDataManager.gameData.moneyL + "";
+            tvMoneyL.text = gameData.moneyL + "";
         }
         if (tvMoneyM != null)
         {
-            tvMoneyM.text = gameDataManager.gameData.moneyM + "";
+            tvMoneyM.text = gameData.moneyM + "";
         }
         if (tvMoneyS != null)
         {
-            tvMoneyS.text = gameDataManager.gameData.moneyS + "";
+            tvMoneyS.text = gameData.moneyS + "";
         }
     }
 
@@ -89,7 +82,7 @@ public class UIGameTextForTalk : BaseUIChildComponent<UIGameText>
     /// <param name="listTextInfo"></param>
     public void SetData(TextInfoBean textData, List<TextInfoBean> listTextInfo)
     {
-        UIGameManager uiGameManager = uiComponent.GetUIManager<UIGameManager>();
+        GameDataBean gameData = GameDataHandler.Instance.manager.GetGameData();
         //清空选项
         CptUtil.RemoveChildsByName(objSelectContent.transform, "SelectButton", true);
         //清空文本
@@ -131,7 +124,7 @@ public class UIGameTextForTalk : BaseUIChildComponent<UIGameText>
         //查询角色数据
         CharacterBean characterData;
         if (textData.user_id == 0)
-            characterData = uiGameManager.gameDataManager.gameData.userCharacter;
+            characterData = gameData.userCharacter;
         else
             characterData = NpcInfoHandler.Instance.manager.GetCharacterDataById(textData.user_id);
         if (characterData == null)
@@ -237,8 +230,8 @@ public class UIGameTextForTalk : BaseUIChildComponent<UIGameText>
     {
         if (favorablility != 0)
         {
-            UIGameManager uiGameManager = uiComponent.GetUIManager<UIGameManager>();
-            CharacterFavorabilityBean favorabilityData = uiGameManager.gameDataManager.gameData.GetCharacterFavorability(characterId);
+            GameDataBean gameData = GameDataHandler.Instance.manager.GetGameData();
+            CharacterFavorabilityBean favorabilityData = gameData.GetCharacterFavorability(characterId);
             favorabilityData.AddFavorability(favorablility);
             //好感动画
             if (ivFavorability != null&& favorablility>0)
@@ -266,12 +259,7 @@ public class UIGameTextForTalk : BaseUIChildComponent<UIGameText>
     {
         if (CheckUtil.StringIsNull(reward))
             return;
-        UIGameManager uiGameManager = uiComponent.GetUIManager<UIGameManager>();
-        RewardTypeEnumTools.CompleteReward(
-            uiGameManager.gameDataManager,
-            null,
-            reward
-            );
+        RewardTypeEnumTools.CompleteReward(null,reward);
     }
 
     /// <summary>

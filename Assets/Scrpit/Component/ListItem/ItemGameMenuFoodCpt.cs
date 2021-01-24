@@ -69,8 +69,8 @@ public class ItemGameMenuFoodCpt : ItemGameBaseCpt, IRadioButtonCallBack, Dialog
             return;
 
         //设置材料是否足够
-        GameDataManager gameDataManager = GetUIManager<UIGameManager>().gameDataManager;
-        if (gameDataManager.gameData.CheckCookFood(foodData))
+        GameDataBean gameData = GameDataHandler.Instance.manager.GetGameData();
+        if (gameData.CheckCookFood(foodData))
         {
             if (menuOwnData.isSell)
             {
@@ -305,10 +305,10 @@ public class ItemGameMenuFoodCpt : ItemGameBaseCpt, IRadioButtonCallBack, Dialog
     /// </summary>
     public void OnClickResearch()
     {
-        UIGameManager uiGameManager = GetUIManager<UIGameManager>();
+        GameDataBean gameData = GameDataHandler.Instance.manager.GetGameData();
         AudioHandler.Instance.PlaySound(AudioSoundEnum.ButtonForNormal);
         //首先判断客栈等级是否足够
-        if (!menuOwnData.CheckCanResearch(uiGameManager.gameDataManager.gameData, out string failStr))
+        if (!menuOwnData.CheckCanResearch(gameData, out string failStr))
         {
             ToastHandler.Instance.ToastHint(failStr);
             return;
@@ -321,9 +321,9 @@ public class ItemGameMenuFoodCpt : ItemGameBaseCpt, IRadioButtonCallBack, Dialog
         PickForCharacterDialogView pickForCharacterDialog = DialogHandler.Instance.CreateDialog<PickForCharacterDialogView>(DialogEnum.PickForCharacter, this, dialogData);
         pickForCharacterDialog.SetPickCharacterMax(1);
         //设置排出人员 （老板和没有在休息的员工）
-        List<CharacterBean> listCharacter = uiGameManager.gameDataManager.gameData.listWorkerCharacter;
+        List<CharacterBean> listCharacter = gameData.listWorkerCharacter;
         List<string> listExpelIds = new List<string>();
-        listExpelIds.Add(uiGameManager.gameDataManager.gameData.userCharacter.baseInfo.characterId);
+        listExpelIds.Add(gameData.userCharacter.baseInfo.characterId);
         foreach (CharacterBean itemData in listCharacter)
         {
             //休息日 排出不是工作或者休息的
@@ -351,7 +351,6 @@ public class ItemGameMenuFoodCpt : ItemGameBaseCpt, IRadioButtonCallBack, Dialog
     /// </summary>
     public void OnClickResearchCancel()
     {
-        UIGameManager uiGameManager = GetUIManager<UIGameManager>();
         AudioHandler.Instance.PlaySound(AudioSoundEnum.ButtonForNormal);
         DialogBean dialogData = new DialogBean
         {
@@ -365,7 +364,6 @@ public class ItemGameMenuFoodCpt : ItemGameBaseCpt, IRadioButtonCallBack, Dialog
     {
         if (view == rbShow && tvShow != null)
         {
-            UIGameManager uiGameManager = GetUIManager<UIGameManager>();
             AudioHandler.Instance.PlaySound(AudioSoundEnum.ButtonForNormal);
             switch (buttonStatus)
             {
@@ -385,7 +383,8 @@ public class ItemGameMenuFoodCpt : ItemGameBaseCpt, IRadioButtonCallBack, Dialog
     #region 弹出框回调
     public void Submit(DialogView dialogView, DialogBean dialogBean)
     {
-        UIGameManager uiGameManager = GetUIManager<UIGameManager>();
+        
+        GameDataBean gameData = GameDataHandler.Instance.manager.GetGameData();
         if (dialogView as PickForCharacterDialogView)
         {
             //角色选择
@@ -398,7 +397,7 @@ public class ItemGameMenuFoodCpt : ItemGameBaseCpt, IRadioButtonCallBack, Dialog
                 bool hasEnoughIng = true;
                 foreach (var itemIng in listIng)
                 {
-                    if (!uiGameManager.gameDataManager.gameData.HasEnoughIng(itemIng.Key, itemIng.Value))
+                    if (!gameData.HasEnoughIng(itemIng.Key, itemIng.Value))
                     {
                         hasEnoughIng = false;
                         break;
@@ -411,7 +410,7 @@ public class ItemGameMenuFoodCpt : ItemGameBaseCpt, IRadioButtonCallBack, Dialog
                 }
                 foreach (var itemIng in listIng)
                 {
-                    uiGameManager.gameDataManager.gameData.DeductIng(itemIng.Key, itemIng.Value);
+                    gameData.DeductIng(itemIng.Key, itemIng.Value);
                 }
                 //开始研究
                 menuOwnData.StartResearch(listPickCharacter);
@@ -425,7 +424,7 @@ public class ItemGameMenuFoodCpt : ItemGameBaseCpt, IRadioButtonCallBack, Dialog
             if (menuOwnData.GetMenuStatus() == ResearchStatusEnum.Researching)
             {
                 //普通弹窗（取消研究）
-                menuOwnData.CancelResearch(uiGameManager.gameDataManager.gameData);
+                menuOwnData.CancelResearch(gameData);
             }
             else
             {

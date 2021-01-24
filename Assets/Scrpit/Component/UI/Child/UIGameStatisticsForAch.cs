@@ -11,14 +11,6 @@ public class UIGameStatisticsForAch : BaseUIChildComponent<UIGameStatistics>
     public GameObject objAchContainer;
     public GameObject objAchItem;
 
-    protected GameDataManager gameDataManager;
-
-    public override void Awake()
-    {
-        base.Awake();
-        gameDataManager = Find<GameDataManager>(ImportantTypeEnum.GameDataManager);
-    }
-
     public override void Open()
     {
         base.Open();
@@ -38,7 +30,8 @@ public class UIGameStatisticsForAch : BaseUIChildComponent<UIGameStatistics>
     /// <param name="listData"></param>
     public IEnumerator CreateAchList(List<AchievementInfoBean> listData)
     {
-        UserAchievementBean userAchievement = gameDataManager.gameData.GetAchievementData();
+        GameDataBean gameData = GameDataHandler.Instance.manager.GetGameData();
+        UserAchievementBean userAchievement = gameData.GetAchievementData();
         List<long> achievementList = userAchievement.listAchievement;
         //if (achievementList == null || achievementList.Count == 0)
         //{

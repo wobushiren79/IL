@@ -128,7 +128,7 @@ public class UIGameMain : BaseUIComponent, DialogView.IDialogCallBack, IRadioGro
         RefreshUI();
 
         //判断是否展示教程
-        UserAchievementBean userAchievement = uiGameManager.gameDataManager.gameData.GetAchievementData();
+        UserAchievementBean userAchievement = uiGameManager.gameData.GetAchievementData();
         if (!userAchievement.isOpenedHelp)
         {
             UIHandler.Instance.manager.OpenUIAndCloseOther<UIGameHelp>(UIEnum.GameHelp);
@@ -137,7 +137,7 @@ public class UIGameMain : BaseUIComponent, DialogView.IDialogCallBack, IRadioGro
 
     private void Update()
     {
-        InnAttributesBean innAttributes = uiGameManager.gameDataManager.gameData.GetInnAttributesData();
+        InnAttributesBean innAttributes = uiGameManager.gameData.GetInnAttributesData();
         if (clockView != null)
         {
             GameTimeHandler.Instance.GetTime(out float hour, out float min);
@@ -151,9 +151,9 @@ public class UIGameMain : BaseUIComponent, DialogView.IDialogCallBack, IRadioGro
     {
         base.RefreshUI();
 
-        SetMoney(MoneyEnum.L, uiGameManager.gameDataManager.gameData.moneyL);
-        SetMoney(MoneyEnum.M, uiGameManager.gameDataManager.gameData.moneyM);
-        SetMoney(MoneyEnum.S, uiGameManager.gameDataManager.gameData.moneyS);
+        SetMoney(MoneyEnum.L, uiGameManager.gameData.moneyL);
+        SetMoney(MoneyEnum.M, uiGameManager.gameData.moneyM);
+        SetMoney(MoneyEnum.S, uiGameManager.gameData.moneyS);
     }
 
     public override void CloseUI()
@@ -179,7 +179,7 @@ public class UIGameMain : BaseUIComponent, DialogView.IDialogCallBack, IRadioGro
     /// </summary>
     public void InitInnData()
     {
-        InnAttributesBean innAttributes = uiGameManager.gameDataManager.gameData.GetInnAttributesData();
+        InnAttributesBean innAttributes = uiGameManager.gameData.GetInnAttributesData();
 
         if (innAttributes == null)
             return;
@@ -229,7 +229,7 @@ public class UIGameMain : BaseUIComponent, DialogView.IDialogCallBack, IRadioGro
             else
             {
                 rgTimeScale.gameObject.SetActive(true);
-                InnBuildBean innBuild = uiGameManager.gameDataManager.gameData.GetInnBuildData();
+                InnBuildBean innBuild = uiGameManager.gameData.GetInnBuildData();
                 if (innBuild.innSecondWidth != 0 && innBuild.innSecondHeight != 0)
                 {
                     objLayerSelect.SetActive(true);
@@ -275,7 +275,7 @@ public class UIGameMain : BaseUIComponent, DialogView.IDialogCallBack, IRadioGro
         }
 
         //是否展示住店相关
-        if (uiGameManager.gameDataManager.gameData.listBed.Count != 0)
+        if (uiGameManager.gameData.listBed.Count != 0)
         {
             btHotel.gameObject.SetActive(true);
         }
@@ -530,7 +530,7 @@ public class UIGameMain : BaseUIComponent, DialogView.IDialogCallBack, IRadioGro
     /// <param name="priceS"></param>
     private void AnimForAddMoney(long priceL, long priceM, long priceS)
     {
-        GameDataBean gameData = uiGameManager.gameDataManager.gameData;
+        GameDataBean gameData = uiGameManager.gameData;
         if (priceL != 0)
         {
             if (tweenForMoneyL != null)

@@ -114,7 +114,7 @@ public class UIGameBuild : BaseUIComponent, IRadioGroupCallBack
     public override void RefreshUI()
     {
         //刷新列表数据
-        List<ItemBean> listBuildData = uiGameManager.gameDataManager.gameData.GetBuildDataByType(buildType);
+        List<ItemBean> listBuildData = uiGameManager.gameData.GetBuildDataByType(buildType);
         for (int i = 0; i < listBuildItem.Count; i++)
         {
             ItemGameBuildCpt itemBuild = listBuildItem[i];
@@ -160,7 +160,7 @@ public class UIGameBuild : BaseUIComponent, IRadioGroupCallBack
             }
         }
         //刷新美观值
-        uiGameManager.gameDataManager.gameData.GetInnAttributesData().SetAesthetics(uiGameManager.gameDataManager.gameData.GetInnBuildData());
+        uiGameManager.gameData.GetInnAttributesData().SetAesthetics(uiGameManager.gameData.GetInnBuildData());
         SetInnAesthetics();
 
         SetBedRangeStatus(true);
@@ -176,7 +176,7 @@ public class UIGameBuild : BaseUIComponent, IRadioGroupCallBack
         btDismantle.gameObject.SetActive(true);
 
 
-        InnBuildBean innBuild = uiGameManager.gameDataManager.gameData.GetInnBuildData();
+        InnBuildBean innBuild = uiGameManager.gameData.GetInnBuildData();
         if (innBuild.innSecondWidth == 0 || innBuild.innSecondHeight == 0)
         {
             objLayerSelect.SetActive(false);
@@ -218,7 +218,7 @@ public class UIGameBuild : BaseUIComponent, IRadioGroupCallBack
     {
         if (tvAesthetics != null)
         {
-            uiGameManager.gameDataManager.gameData.GetInnAttributesData().GetAesthetics(out float maxAesthetics, out float aesthetics);
+            uiGameManager.gameData.GetInnAttributesData().GetAesthetics(out float maxAesthetics, out float aesthetics);
             tvAesthetics.text = aesthetics + "/" + maxAesthetics;
         }
     }
@@ -238,14 +238,14 @@ public class UIGameBuild : BaseUIComponent, IRadioGroupCallBack
         {
             if (itemBuildForBedModel == null)
                 return;
-            if (uiGameManager.gameDataManager.gameData.listBed == null)
+            if (uiGameManager.gameData.listBed == null)
                 return;
             CptUtil.RemoveChildsByActive(itemBuildContainer);
             listBuildItem.Clear();
             listBuildForBedItem.Clear();
-            for (int i = 0; i < uiGameManager.gameDataManager.gameData.listBed.Count; i++)
+            for (int i = 0; i < uiGameManager.gameData.listBed.Count; i++)
             {
-                BuildBedBean itemData = uiGameManager.gameDataManager.gameData.listBed[i];
+                BuildBedBean itemData = uiGameManager.gameData.listBed[i];
                 CreateBuildForBedItem(itemData);
                 hasData = true;
             }
@@ -254,15 +254,15 @@ public class UIGameBuild : BaseUIComponent, IRadioGroupCallBack
         {
             if (itemBuildModel == null)
                 return;
-            if (uiGameManager.gameDataManager.gameData.listBuild == null)
+            if (uiGameManager.gameData.listBuild == null)
                 return;
             CptUtil.RemoveChildsByActive(itemBuildContainer);
             listBuildItem.Clear();
             listBuildForBedItem.Clear();
 
-            for (int i = 0; i < uiGameManager.gameDataManager.gameData.listBuild.Count; i++)
+            for (int i = 0; i < uiGameManager.gameData.listBuild.Count; i++)
             {
-                ItemBean itemData = uiGameManager.gameDataManager.gameData.listBuild[i];
+                ItemBean itemData = uiGameManager.gameData.listBuild[i];
                 BuildItemBean buildData = InnBuildHandler.Instance.manager.GetBuildDataById(itemData.itemId);
                 if (buildData == null)
                     continue;

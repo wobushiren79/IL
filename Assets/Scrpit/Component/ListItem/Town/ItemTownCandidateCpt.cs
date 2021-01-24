@@ -33,7 +33,7 @@ public class ItemTownCandidateCpt : ItemGameBaseCpt, DialogView.IDialogCallBack
         //检测是否超过人员上限
         if (gameDataManager == null)
             return;
-        if (gameDataManager.gameData.listWorkerCharacter.Count >= gameDataManager.gameData.workerNumberLimit)
+        if (gameData.listWorkerCharacter.Count >= gameData.workerNumberLimit)
         {
             ToastHandler.Instance.ToastHint(GameCommonInfo.GetUITextById(1051));
             return;
@@ -130,13 +130,13 @@ public class ItemTownCandidateCpt : ItemGameBaseCpt, DialogView.IDialogCallBack
     {
         GameDataManager gameDataManager = GetUIManager<UIGameManager>().gameDataManager;
 
-        if (!gameDataManager.gameData.HasEnoughMoney(characterData.baseInfo.priceL, characterData.baseInfo.priceM, characterData.baseInfo.priceS))
+        if (!gameData.HasEnoughMoney(characterData.baseInfo.priceL, characterData.baseInfo.priceM, characterData.baseInfo.priceS))
         {
             ToastHandler.Instance.ToastHint(GameCommonInfo.GetUITextById(1005));
             return;
         }
-        gameDataManager.gameData.PayMoney(characterData.baseInfo.priceL, characterData.baseInfo.priceM, characterData.baseInfo.priceS);
-        gameDataManager.gameData.listWorkerCharacter.Add(characterData);
+        gameData.PayMoney(characterData.baseInfo.priceL, characterData.baseInfo.priceM, characterData.baseInfo.priceS);
+        gameData.listWorkerCharacter.Add(characterData);
         GetUIComponent<UITownRecruitment>().RemoveCandidate(characterData);
 
         ToastHandler.Instance.ToastHint(string.Format(GameCommonInfo.GetUITextById(1053), characterData.baseInfo.name));

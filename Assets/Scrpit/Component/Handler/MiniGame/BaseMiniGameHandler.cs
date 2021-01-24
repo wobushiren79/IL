@@ -7,14 +7,7 @@ public class BaseMiniGameHandler<B, D> : BaseHandler, UIMiniGameCountDown.ICallB
     where D : MiniGameBaseBean
     where B : BaseMiniGameBuilder
 {
-
-    //UI管理
-    protected UIGameManager uiGameManager;
-    protected GameTimeHandler gameTimeHandler;
     //数据
-    protected GameDataManager gameDataManager;
-
-    protected IconDataManager iconDataManager;
     //游戏构建器
     public B miniGameBuilder;
     //游戏数据
@@ -25,11 +18,7 @@ public class BaseMiniGameHandler<B, D> : BaseHandler, UIMiniGameCountDown.ICallB
 
     protected virtual void Awake()
     {
-        gameDataManager = Find<GameDataManager>(ImportantTypeEnum.GameDataManager);
-        uiGameManager = Find<UIGameManager>(ImportantTypeEnum.GameUI);
-        gameTimeHandler = Find<GameTimeHandler>(ImportantTypeEnum.TimeHandler);
         miniGameBuilder = FindInChildren<B>(ImportantTypeEnum.MiniGameBuilder);
-        iconDataManager = Find<IconDataManager>(ImportantTypeEnum.UIManager);
     }
 
     /// <summary>
@@ -75,8 +64,7 @@ public class BaseMiniGameHandler<B, D> : BaseHandler, UIMiniGameCountDown.ICallB
     public virtual void InitGame(D miniGameData)
     {
         this.miniGameData = miniGameData;
-        if (gameTimeHandler != null)
-            GameTimeHandler.Instance.SetTimeStop();
+        GameTimeHandler.Instance.SetTimeStop();
         SetMiniGameStatus(MiniGameStatusEnum.GamePre);
     }
 
@@ -118,10 +106,11 @@ public class BaseMiniGameHandler<B, D> : BaseHandler, UIMiniGameCountDown.ICallB
 
                 miniGameBuilder.DestroyAll();
                 //设置游戏数据
-                miniGameData.SetGameResult(gameResulte);
+                miniGameData.SetGameResult(gameResulte); 
+                GameDataBean gameData = GameDataHandler.Instance.manager.GetGameData();
                 //经验加成
                 List<MiniGameCharacterBean> listUserData = miniGameData.GetListUserGameData();
-                List<CharacterBean> listWorkerData = gameDataManager.gameData.GetAllCharacterData();
+                List<CharacterBean> listWorkerData = gameData.GetAllCharacterData();
                 foreach (MiniGameCharacterBean itemCharacterData in listUserData)
                 {
                     foreach (CharacterBean itemWorkerData in listWorkerData)
@@ -196,8 +185,7 @@ public class BaseMiniGameHandler<B, D> : BaseHandler, UIMiniGameCountDown.ICallB
     #region 游戏结束按钮回调
     public void OnClickClose()
     {
-        if (gameTimeHandler != null)
-            GameTimeHandler.Instance.SetTimeRestore();
+        GameTimeHandler.Instance.SetTimeRestore();
         //通知 关闭游戏
         NotifyAllObserver((int)MiniGameStatusEnum.GameClose, miniGameData);
     }

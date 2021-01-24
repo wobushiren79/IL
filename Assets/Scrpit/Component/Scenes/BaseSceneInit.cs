@@ -5,7 +5,7 @@ using System.Collections;
 public class BaseSceneInit : BaseMonoBehaviour
 {
     protected UIGameManager uiGameManager;
-    protected GameDataManager gameDataManager;
+    ;
     protected GameTimeHandler gameTimeHandler;
 
     protected WeatherHandler weatherHandler;
@@ -31,7 +31,7 @@ public class BaseSceneInit : BaseMonoBehaviour
             }
             else
             {
-                gameDataManager.gameData = GameCommonInfo.GameData;
+                gameData = GameCommonInfo.GameData;
             }
         }
         StartCoroutine(BuildNavMesh());

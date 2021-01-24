@@ -21,8 +21,6 @@ public class PickForCharacterDialogView : DialogView, ItemGameDialogPickCharacte
     public GameObject objPickCharacterContainer;
     public GameObject objPickCharacterModel;
 
-    protected GameDataManager gameDataManager;
-
     public int pickCharacterMax = 0;
     public List<CharacterBean> listCharacterData = new List<CharacterBean>();
 
@@ -32,7 +30,6 @@ public class PickForCharacterDialogView : DialogView, ItemGameDialogPickCharacte
     public override void Awake()
     {
         base.Awake();
-        gameDataManager = Find< GameDataManager >( ImportantTypeEnum.GameDataManager);
 
         if (btSortDef)
             btSortDef.onClick.AddListener(OnClickForDef);
@@ -178,8 +175,9 @@ public class PickForCharacterDialogView : DialogView, ItemGameDialogPickCharacte
 
     public void OnClickForDef()
     {
+        GameDataBean gameData = GameDataHandler.Instance.manager.GetGameData();
         listCharacterData.Clear();
-        listCharacterData.AddRange(gameDataManager.gameData.GetAllCharacterData());
+        listCharacterData.AddRange(gameData.GetAllCharacterData());
         CreateListData();
     }
 

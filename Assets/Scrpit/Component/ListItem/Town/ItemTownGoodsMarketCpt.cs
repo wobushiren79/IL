@@ -136,28 +136,28 @@ public class ItemTownGoodsMarketCpt : ItemGameBaseCpt, DialogView.IDialogCallBac
         switch (ingType)
         {
             case IngredientsEnum.Oilsalt:
-                ownNumber = gameDataManager.gameData.ingOilsalt;
+                ownNumber = gameData.ingOilsalt;
                 break;
             case IngredientsEnum.Meat:
-                ownNumber = gameDataManager.gameData.ingMeat;
+                ownNumber = gameData.ingMeat;
                 break;
             case IngredientsEnum.Riverfresh:
-                ownNumber = gameDataManager.gameData.ingRiverfresh;
+                ownNumber = gameData.ingRiverfresh;
                 break;
             case IngredientsEnum.Seafood:
-                ownNumber = gameDataManager.gameData.ingSeafood;
+                ownNumber = gameData.ingSeafood;
                 break;
             case IngredientsEnum.Vegetables:
-                ownNumber = gameDataManager.gameData.ingVegetables;
+                ownNumber = gameData.ingVegetables;
                 break;
             case IngredientsEnum.Melonfruit:
-                ownNumber = gameDataManager.gameData.ingMelonfruit;
+                ownNumber = gameData.ingMelonfruit;
                 break;
             case IngredientsEnum.Waterwine:
-                ownNumber = gameDataManager.gameData.ingWaterwine;
+                ownNumber = gameData.ingWaterwine;
                 break;
             case IngredientsEnum.Flour:
-                ownNumber = gameDataManager.gameData.ingFlour;
+                ownNumber = gameData.ingFlour;
                 break;
         }
         tvOwn.text = ownNumber + "";
@@ -216,7 +216,7 @@ public class ItemTownGoodsMarketCpt : ItemGameBaseCpt, DialogView.IDialogCallBac
     public void SetRiseAndFall(List<SeasonsEnum> listSeasonsRise, List<SeasonsEnum> listSeasonsFall)
     {
         GameDataManager gameDataManager = GetUIManager<UIGameManager>().gameDataManager;
-        SeasonsEnum currentSeasons = (SeasonsEnum)gameDataManager.gameData.gameTime.month;
+        SeasonsEnum currentSeasons = (SeasonsEnum)gameData.gameTime.month;
         //季节变化价格浮动
         if (listSeasonsRise.Contains(currentSeasons))
         {
@@ -253,7 +253,7 @@ public class ItemTownGoodsMarketCpt : ItemGameBaseCpt, DialogView.IDialogCallBac
 
 
         //好感加成
-        //CharacterFavorabilityBean marketBossFavorability= gameDataManager.gameData.GetCharacterFavorability(10001);
+        //CharacterFavorabilityBean marketBossFavorability= gameData.GetCharacterFavorability(10001);
         //int addPriceForFavorability = (int)System.Math.Round(price_s * (marketBossFavorability.favorabilityLevel * 0.04f), 0);
         //price_s = price_s - addPriceForFavorability;
 
@@ -286,13 +286,13 @@ public class ItemTownGoodsMarketCpt : ItemGameBaseCpt, DialogView.IDialogCallBac
             ToastHandler.Instance.ToastHint(GameCommonInfo.GetUITextById(1017));
             return;
         }
-        if (!gameDataManager.gameData.HasEnoughMoney(price_l * buyNumber, price_m * buyNumber, price_s * buyNumber))
+        if (!gameData.HasEnoughMoney(price_l * buyNumber, price_m * buyNumber, price_s * buyNumber))
         {
             ToastHandler.Instance.ToastHint(GameCommonInfo.GetUITextById(1005));
             return;
         }
-        gameDataManager.gameData.PayMoney(price_l * buyNumber, price_m * buyNumber, price_s * buyNumber);
-        gameDataManager.gameData.AddIng(ingType, buyNumber);
+        gameData.PayMoney(price_l * buyNumber, price_m * buyNumber, price_s * buyNumber);
+        gameData.AddIng(ingType, buyNumber);
         RreshData();
         ToastHandler.Instance.ToastHint(ivIcon.sprite, string.Format(GameCommonInfo.GetUITextById(1018), buyNumber, goodsData.name, tvPirce.text));
     }

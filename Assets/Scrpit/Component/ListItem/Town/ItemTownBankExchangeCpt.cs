@@ -240,7 +240,7 @@ public class ItemTownBankExchangeCpt : ItemGameBaseCpt, DialogView.IDialogCallBa
                 break;
         }
         //判断是否有足够的金钱兑换
-        if (!gameDataManager.gameData.HasEnoughMoney(mPayMoneyL, mPayMoneyM, mPayMoneyS))
+        if (!gameData.HasEnoughMoney(mPayMoneyL, mPayMoneyM, mPayMoneyS))
         {
             ToastHandler.Instance.ToastHint(ivOldMoney.sprite, GameCommonInfo.GetUITextById(1042));
             return;
@@ -271,8 +271,8 @@ public class ItemTownBankExchangeCpt : ItemGameBaseCpt, DialogView.IDialogCallBa
     {
         GameDataManager gameDataManager = GetUIManager<UIGameManager>().gameDataManager;
 
-        gameDataManager.gameData.PayMoney(mPayMoneyL, mPayMoneyM, mPayMoneyS);
-        gameDataManager.gameData.AddMoney(mExchangeMoneyL, mExchangeMoneyM, mExchangeMoneyS);
+        gameData.PayMoney(mPayMoneyL, mPayMoneyM, mPayMoneyS);
+        gameData.AddMoney(mExchangeMoneyL, mExchangeMoneyM, mExchangeMoneyS);
         GameCommonInfo.DailyLimitData.exchangeMoneyL -= (int)mExchangeMoneyL;
         //成功提示
         ToastHandler.Instance.ToastHint(ivNewMoney.sprite, string.Format(GameCommonInfo.GetUITextById(1043), mExchangeMoneyStr));

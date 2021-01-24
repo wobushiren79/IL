@@ -7,9 +7,6 @@ public class ControlForWorkCpt : BaseControl, DialogView.IDialogCallBack
 {
     //角色移动组建
     public CharacterMoveCpt cameraMove;
-
-    protected GameDataManager gameDataManager;
-
     //指针控制
     public CursorHandler cursorHandler;
     public List<Texture2D> listTexCursorDaze;
@@ -26,7 +23,6 @@ public class ControlForWorkCpt : BaseControl, DialogView.IDialogCallBack
 
     private void Awake()
     {
-        gameDataManager = Find<GameDataManager>(ImportantTypeEnum.GameDataManager);
         cursorHandler = Find<CursorHandler>(ImportantTypeEnum.CursorHandler);
     }
 
@@ -247,7 +243,8 @@ public class ControlForWorkCpt : BaseControl, DialogView.IDialogCallBack
 
     protected void InitCameraRange(int layer)
     {
-        InnBuildBean innBuild = gameDataManager.gameData.GetInnBuildData();
+        GameDataBean gameData = GameDataHandler.Instance.manager.GetGameData();
+        InnBuildBean innBuild = gameData.GetInnBuildData();
         if (layer == 1)
         {
             //定义镜头的移动范围

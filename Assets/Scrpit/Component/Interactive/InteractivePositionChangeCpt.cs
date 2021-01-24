@@ -12,11 +12,9 @@ public class InteractivePositionChangeCpt : BaseInteractiveCpt
 
     private GameObject mInteractiveObj;
 
-    protected EventHandler eventHandler;
     protected SceneTownManager sceneTownManager;
     private void Awake()
     {
-        eventHandler = Find<EventHandler>(ImportantTypeEnum.EventHandler);
         sceneTownManager = Find<SceneTownManager>(ImportantTypeEnum.SceneManager);
     }
 
@@ -46,7 +44,7 @@ public class InteractivePositionChangeCpt : BaseInteractiveCpt
                     mInteractiveObj.transform.position = outDoorPosition;
                 }
                 //检测故事
-                eventHandler.EventTriggerForStory(positionChange, checkOutOrIn);
+                GameEventHandler.Instance.EventTriggerForStory(positionChange, checkOutOrIn);
             }        
         }
     }

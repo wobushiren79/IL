@@ -138,11 +138,11 @@ public class NpcAIWorkerForChefCpt : NpcAIWokerFoBaseCpt
     public void SetIntentForCooking(OrderForCustomer orderForCustomer)
     {
         //检测是否能烹饪
-        bool canCook = gameDataManager.gameData.CheckCookFood(orderForCustomer.foodData);
+        bool canCook = gameData.CheckCookFood(orderForCustomer.foodData);
         if (canCook)
         {
             //扣除食材
-            gameDataManager.gameData.DeductIng(orderForCustomer.foodData);
+            gameData.DeductIng(orderForCustomer.foodData);
             //记录食材消耗
             InnHandler.Instance.ConsumeIngRecord(orderForCustomer.foodData);
             //设置灶台状态

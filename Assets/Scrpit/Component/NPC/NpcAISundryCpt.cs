@@ -2,7 +2,7 @@
 using UnityEditor;
 using System.Collections.Generic;
 
-public class NpcAISundryCpt : BaseNpcAI, IBaseObserver
+public class NpcAISundryCpt : BaseNpcAI
 {
     public enum SundryIntentEnum
     {
@@ -24,14 +24,12 @@ public class NpcAISundryCpt : BaseNpcAI, IBaseObserver
     //增加的好感
     public int addFavorability = 0;
 
-    protected EventHandler eventHandler;
     protected SceneInnManager sceneInnManager;
     protected NpcEventBuilder npcEventBuilder;
 
     public override void Awake()
     {
         base.Awake();
-        eventHandler = Find<EventHandler>(ImportantTypeEnum.EventHandler);
         sceneInnManager = Find<SceneInnManager>(ImportantTypeEnum.SceneManager);
         npcEventBuilder = Find<NpcEventBuilder>(ImportantTypeEnum.NpcBuilder);
     }
@@ -52,7 +50,7 @@ public class NpcAISundryCpt : BaseNpcAI, IBaseObserver
     public override void OnDestroy()
     {
         base.OnDestroy();
-        eventHandler.RemoveObserver(this);
+        GameEventHandler.Instance.UnRegisterNotifyForEvent(NotifyForEvent);
     }
 
     /// <summary>
@@ -131,10 +129,11 @@ public class NpcAISundryCpt : BaseNpcAI, IBaseObserver
                 SetIntent(SundryIntentEnum.Leave);
                 return;
             }
-            bool isTrigger = eventHandler.EventTriggerForTalkBySundry(this, talk_ids);
+            bool isTrigger = GameEventHandler.Instance.EventTriggerForTalkBySundry(this, talk_ids);
+
             if (isTrigger)
             {
-                eventHandler.AddObserver(this);
+                GameEventHandler.Instance.RegisterNotifyForEvent(NotifyForEvent);
             }
             else
             {
@@ -200,21 +199,15 @@ public class NpcAISundryCpt : BaseNpcAI, IBaseObserver
         SetTeamIntent(SundryIntentEnum.Leave);
     }
 
-    #region 通知
-    public void ObserbableUpdate<T>(T observable, int type, params object[] obj) where T : UnityEngine.Object
+    public void NotifyForEvent(GameEventHandler.NotifyEventTypeEnum notifyEventType,params object[] data)
     {
-        if (observable == eventHandler)
+        if (notifyEventType == GameEventHandler.NotifyEventTypeEnum.TalkForAddFavorability)
         {
-            if (type == (int)EventHandler.NotifyEventTypeEnum.TalkForAddFavorability)
-            {
-                addFavorability += (int)obj[1];
-            }
-            else if (type == (int)EventHandler.NotifyEventTypeEnum.EventEnd)
-            {
-                EventEnd();
-            }
+            addFavorability += (int)data[1];
+        }
+        else if (notifyEventType == GameEventHandler.NotifyEventTypeEnum.EventEnd)
+        {
+            EventEnd();
         }
     }
-    #endregion
-
 }

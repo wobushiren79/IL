@@ -32,10 +32,6 @@ public class InnHandler : BaseHandler<InnHandler, InnManager>
     //住宿处理
     public InnHotelHandler innHotelHandler;
 
-    protected GameTimeHandler gameTimeHandler;
-    //数据管理
-    protected GameDataManager gameDataManager;
-
     //NPC创建
     protected NpcWorkerBuilder workerBuilder;
     protected NpcCustomerBuilder customerBuilder;
@@ -68,13 +64,10 @@ public class InnHandler : BaseHandler<InnHandler, InnManager>
     protected override void Awake()
     {
         base.Awake();
-        gameDataManager = Find<GameDataManager>(ImportantTypeEnum.GameDataManager);
 
         workerBuilder = Find<NpcWorkerBuilder>(ImportantTypeEnum.NpcBuilder);
         customerBuilder = Find<NpcCustomerBuilder>(ImportantTypeEnum.NpcBuilder);
         eventBuilder = Find<NpcEventBuilder>(ImportantTypeEnum.NpcBuilder);
-
-        gameDataHandler = Find<GameDataHandler>(ImportantTypeEnum.GameDataHandler);
 
         GameTimeHandler.instance.RegisterNotifyForTime(NotifyForTime);
     }
@@ -101,11 +94,12 @@ public class InnHandler : BaseHandler<InnHandler, InnManager>
     /// </summary>
     public void InitInn()
     {
+        GameDataBean gameData = GameDataHandler.Instance.manager.GetGameData();
         innEntranceHandler.InitEntranceList();
         innTableHandler.InitTableList();
         innCookHandler.InitStoveList();
         innPayHandler.InitCounterList();
-        innHotelHandler.InitBedList(gameDataManager.gameData.GetInnBuildData());
+        innHotelHandler.InitBedList(gameData.GetInnBuildData());
         InitWorker();
     }
 
@@ -282,8 +276,9 @@ public class InnHandler : BaseHandler<InnHandler, InnManager>
     /// <returns></returns>
     public Vector3 GetRandomInnPositon()
     {
-        int height = gameDataManager.gameData.GetInnBuildData().innHeight;
-        int width = gameDataManager.gameData.GetInnBuildData().innWidth;
+        GameDataBean gameData = GameDataHandler.Instance.manager.GetGameData();
+        int height = gameData.GetInnBuildData().innHeight;
+        int width = gameData.GetInnBuildData().innWidth;
         Vector3 position = new Vector3(UnityEngine.Random.Range(2f, (float)width - 2f), UnityEngine.Random.Range(2f, (float)height - 2f));
         return position;
     }
@@ -321,8 +316,9 @@ public class InnHandler : BaseHandler<InnHandler, InnManager>
     /// <returns></returns>
     public MenuInfoBean OrderForFood(OrderForCustomer orderForCustomer)
     {
+        GameDataBean gameData = GameDataHandler.Instance.manager.GetGameData();
         //获取正在出售的菜品
-        List<MenuOwnBean> listOwnMenu = gameDataManager.gameData.GetMenuListForSell();
+        List<MenuOwnBean> listOwnMenu = gameData.GetMenuListForSell();
         if (listOwnMenu.Count == 0)
             return null;
         //随机获取一个菜品
@@ -354,9 +350,10 @@ public class InnHandler : BaseHandler<InnHandler, InnManager>
     /// <returns></returns>
     public MenuInfoBean OrderForFood(OrderForCustomer orderForCustomer, long menuId)
     {
+        GameDataBean gameData = GameDataHandler.Instance.manager.GetGameData();
         //食物数据库里有这个数据
         MenuInfoBean menuInfo = InnFoodHandler.Instance.manager.GetFoodDataById(menuId);
-        if (menuInfo != null && gameDataManager.gameData.CheckIsSellMenu(menuId))
+        if (menuInfo != null && gameData.CheckIsSellMenu(menuId))
         {
             orderForCustomer.foodData = menuInfo;
             foodQueue.Add(orderForCustomer);
@@ -478,7 +475,8 @@ public class InnHandler : BaseHandler<InnHandler, InnManager>
     public void SettlementAllCustomer()
     {
         if (CheckUtil.ListIsNull(listOrder))
-            return;
+            return; 
+        GameDataBean gameData = GameDataHandler.Instance.manager.GetGameData();
         for (int i = 0; i < listOrder.Count; i++)
         {
             OrderForBase itemOrder = listOrder[i];
@@ -497,7 +495,7 @@ public class InnHandler : BaseHandler<InnHandler, InnManager>
                 {
                     if (orderForCustomer.foodData == null)
                         continue;
-                    MenuOwnBean menuOwn = gameDataManager.gameData.GetMenuById(orderForCustomer.foodData.id);
+                    MenuOwnBean menuOwn = gameData.GetMenuById(orderForCustomer.foodData.id);
                     menuOwn.GetPrice(orderForCustomer.foodData, out long payMoneyL, out long payMoneyM, out long payMoneyS);
                     PayMoney(itemOrder, payMoneyL, payMoneyM, payMoneyS, false);
                 }
@@ -527,7 +525,8 @@ public class InnHandler : BaseHandler<InnHandler, InnManager>
         {
             payMoneyS = 1;
         }
-        UserAchievementBean userAchievement = gameDataManager.gameData.GetAchievementData();
+        GameDataBean gameData = GameDataHandler.Instance.manager.GetGameData();
+        UserAchievementBean userAchievement = gameData.GetAchievementData();
         Vector3 payEffectsPosition = Vector3.zero;
         if (order as OrderForCustomer != null)
         {
@@ -537,7 +536,7 @@ public class InnHandler : BaseHandler<InnHandler, InnManager>
             //根据心情评价客栈 前提订单里有他
             InnPraise(orderForCustomer.innEvaluation.GetPraise());
             //记录+1
-            gameDataManager.gameData.AddMenuSellNumber(1, orderForCustomer.foodData.id, payMoneyL, payMoneyM, payMoneyS, out bool isMenuLevelUp);
+            gameData.AddMenuSellNumber(1, orderForCustomer.foodData.id, payMoneyL, payMoneyM, payMoneyS, out bool isMenuLevelUp);
             //成就+1
             userAchievement.AddNumberForCustomerFoodComplete(orderForCustomer.customer.customerType, 1);
             if (isMenuLevelUp)
@@ -555,7 +554,7 @@ public class InnHandler : BaseHandler<InnHandler, InnManager>
             //根据心情评价客栈 前提订单里有他
             InnPraise(orderForHotel.innEvaluation.GetPraise());
             //记录+1
-            gameDataManager.gameData.AddBedSellNumber(
+            gameData.AddBedSellNumber(
                 orderForHotel.bed.buildBedData.remarkId,
                 1,
                 orderForHotel.sleepTime,
@@ -740,12 +739,13 @@ public class InnHandler : BaseHandler<InnHandler, InnManager>
     /// </summary>
     public void InnPraise(PraiseTypeEnum praiseType)
     {
+        GameDataBean gameData = GameDataHandler.Instance.manager.GetGameData();
         //记录好评数量
         innRecord.AddPraise(praiseType, 1);
         //总记录
-        gameDataManager.gameData.GetAchievementData().AddPraise(praiseType, 1);
+        gameData.GetAchievementData().AddPraise(praiseType, 1);
         //增加评价
-        gameDataManager.gameData.GetInnAttributesData().AddPraise((int)praiseType);
+        gameData.GetInnAttributesData().AddPraise((int)praiseType);
     }
 
     /// <summary>
@@ -753,8 +753,9 @@ public class InnHandler : BaseHandler<InnHandler, InnManager>
     /// </summary>
     public void RecordCustomer(OrderForBase order)
     {
+        GameDataBean gameData = GameDataHandler.Instance.manager.GetGameData();
         //成就记录
-        UserAchievementBean userAchievement = gameDataManager.gameData.GetAchievementData();
+        UserAchievementBean userAchievement = gameData.GetAchievementData();
         if (order as OrderForCustomer != null)
         {
             OrderForCustomer orderForCustomer = order as OrderForCustomer;
@@ -792,8 +793,9 @@ public class InnHandler : BaseHandler<InnHandler, InnManager>
     /// </summary>
     public void RecordCustomerForMenu(OrderForCustomer order, long menuId)
     {
+        GameDataBean gameData = GameDataHandler.Instance.manager.GetGameData();
         //成就记录
-        UserAchievementBean userAchievement = gameDataManager.gameData.GetAchievementData();
+        UserAchievementBean userAchievement = gameData.GetAchievementData();
         //如果是团队
         if (order.customerType == CustomerTypeEnum.Team)
         {

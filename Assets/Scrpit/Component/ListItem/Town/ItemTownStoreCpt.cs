@@ -72,7 +72,7 @@ public class ItemTownStoreCpt : ItemGameBaseCpt
     {
         if (tvOwn == null)
             return;
-        tvOwn.text = (GameCommonInfo.GetUITextById(4001) + "\n" + GetUIManager<UIGameManager>().gameDataManager.gameData.GetItemsNumber(storeInfo.mark_id));
+        tvOwn.text = (GameCommonInfo.GetUITextById(4001) + "\n" + GetUIManager<UIGameManager>().gameData.GetItemsNumber(storeInfo.mark_id));
     }
 
     /// <summary>

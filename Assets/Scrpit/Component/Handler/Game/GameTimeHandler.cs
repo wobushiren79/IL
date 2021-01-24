@@ -23,7 +23,6 @@ public class GameTimeHandler : BaseHandler<GameTimeHandler, GameTimeManager>
     }
 
     protected Action<NotifyTypeEnum,float>  notifyForTime;
-    protected GameDataManager gameDataManager;
     protected LightHandler lightHandler;
 
     public float hour;
@@ -39,7 +38,6 @@ public class GameTimeHandler : BaseHandler<GameTimeHandler, GameTimeManager>
     protected override void Awake()
     {
         base.Awake();
-        gameDataManager = Find<GameDataManager>(ImportantTypeEnum.GameDataManager);
         lightHandler = Find<LightHandler>(ImportantTypeEnum.LightHandler);
     }
 
@@ -65,7 +63,8 @@ public class GameTimeHandler : BaseHandler<GameTimeHandler, GameTimeManager>
     /// </summary>
     public void GoToNextDay(int nextDay)
     {
-        TimeBean timeData = gameDataManager.gameData.gameTime;
+        GameDataBean gameData = GameDataHandler.Instance.manager.GetGameData();
+        TimeBean timeData = gameData.gameTime;
 
         for (int i = 0; i < nextDay; i++)
         {
@@ -91,7 +90,8 @@ public class GameTimeHandler : BaseHandler<GameTimeHandler, GameTimeManager>
     /// <returns></returns>
     public TimeBean GetAfterDay(int afterDay)
     {
-        TimeBean timeData = gameDataManager.gameData.gameTime;
+        GameDataBean gameData = GameDataHandler.Instance.manager.GetGameData();
+        TimeBean timeData = gameData.gameTime;
         int tempYear = timeData.year;
         int tempMonth = timeData.month;
         int tempDay = timeData.day;
@@ -136,7 +136,8 @@ public class GameTimeHandler : BaseHandler<GameTimeHandler, GameTimeManager>
             //TODO 一天时间结束处理
             notifyForTime?.Invoke(NotifyTypeEnum.EndDay,-1);
         }
-        TimeBean timeData = gameDataManager.gameData.gameTime;
+        GameDataBean gameData = GameDataHandler.Instance.manager.GetGameData();
+        TimeBean timeData = gameData.gameTime;
         timeData.SetTimeForHM((int)hour, (int)min);
     }
 
@@ -145,21 +146,22 @@ public class GameTimeHandler : BaseHandler<GameTimeHandler, GameTimeManager>
     /// </summary>
     public void SetNewDay()
     {
+        GameDataBean gameData = GameDataHandler.Instance.manager.GetGameData();
         //初始化世界种子
         GameCommonInfo.RandomSeed = UnityEngine.Random.Range(int.MinValue, int.MaxValue);
         GameCommonInfo.InitRandomSeed();
         //解除每日
-        GameCommonInfo.DailyLimitData.InitData(gameDataManager.gameData);
+        GameCommonInfo.DailyLimitData.InitData(gameData);
         //初始化时间
         SetTimeStatus(true);
         hour = 6;
         min = 0;
         //如果有建筑日则建筑日减一天
-        InnBuildBean innBuildData = gameDataManager.gameData.GetInnBuildData();
+        InnBuildBean innBuildData = gameData.GetInnBuildData();
         if (innBuildData.listBuildDay.Count > 0)
         {
             //检测当前日子是否包含在建筑日内
-            TimeBean timeData = gameDataManager.gameData.gameTime;
+            TimeBean timeData = gameData.gameTime;
             bool isBuildDay = false;
             foreach (TimeBean itemTime in innBuildData.listBuildDay)
             {
@@ -253,7 +255,8 @@ public class GameTimeHandler : BaseHandler<GameTimeHandler, GameTimeManager>
     /// <param name="day"></param>
     public void GetTime(out int year, out int month, out int day)
     {
-        TimeBean timeData = gameDataManager.gameData.gameTime;
+        GameDataBean gameData = GameDataHandler.Instance.manager.GetGameData();
+        TimeBean timeData = gameData.gameTime;
         year = timeData.year;
         month = timeData.month;
         day = timeData.day;
@@ -266,9 +269,10 @@ public class GameTimeHandler : BaseHandler<GameTimeHandler, GameTimeManager>
     /// <param name="min"></param>
     public void SetTime(int hour, int min)
     {
+        GameDataBean gameData = GameDataHandler.Instance.manager.GetGameData();
         this.hour = (float)hour;
         this.min = (float)min;
-        gameDataManager.gameData.gameTime.SetTimeForHM((int)this.hour, (int)this.min);
+        gameData.gameTime.SetTimeForHM((int)this.hour, (int)this.min);
         if (lightHandler != null)
             lightHandler.CheckTime();
     }
@@ -280,8 +284,9 @@ public class GameTimeHandler : BaseHandler<GameTimeHandler, GameTimeManager>
     /// <param name="min"></param>
     public void AddHour(int addHour)
     {
+        GameDataBean gameData = GameDataHandler.Instance.manager.GetGameData();
         hour += addHour;
-        gameDataManager.gameData.gameTime.hour = (int)hour;
+        gameData.gameTime.hour = (int)hour;
         if (lightHandler != null)
             lightHandler.CheckTime();
     }

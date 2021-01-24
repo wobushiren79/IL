@@ -5,8 +5,6 @@ using System.Collections.Generic;
 
 public class PickForSellDialogView : DialogView
 {
-    protected GameDataManager gameDataManager;
-
     public GameObject objItemsContainer;
     public GameObject objItemsModel;
 
@@ -14,17 +12,13 @@ public class PickForSellDialogView : DialogView
 
     public List<StoreInfoBean> listStoreData = new List<StoreInfoBean>();
 
-    public override void Awake()
-    {
-        base.Awake();
-        gameDataManager = Find<GameDataManager>(ImportantTypeEnum.GameDataManager);
-    }
 
     public override void InitData()
     {
         base.InitData();
-        int number = 0;
-        List<ItemBean> listBuildData=  gameDataManager.gameData.listBuild;
+        int number = 0; 
+        GameDataBean gameData = GameDataHandler.Instance.manager.GetGameData();
+        List<ItemBean> listBuildData=  gameData.listBuild;
         foreach (ItemBean itemData in  listBuildData)
         {
             foreach (StoreInfoBean itemStore in listStoreData)
@@ -36,7 +30,7 @@ public class PickForSellDialogView : DialogView
                 }
             }
         }
-        List<ItemBean> listItemData = gameDataManager.gameData.listItems;
+        List<ItemBean> listItemData = gameData.listItems;
         foreach (ItemBean itemData in listItemData)
         {
             foreach (StoreInfoBean itemStore in listStoreData)

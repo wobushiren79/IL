@@ -4,8 +4,6 @@ using System.Collections.Generic;
 using UnityEngine.UI;
 public class PickForItemsDialogView : DialogView, ItemGameBackpackPickCpt.ICallBack
 {
-    protected GameDataManager gameDataManager;
-
     public ScrollGridVertical gridVertical;
 
     public Text tvNull;
@@ -20,7 +18,6 @@ public class PickForItemsDialogView : DialogView, ItemGameBackpackPickCpt.ICallB
     public override void Awake()
     {
         base.Awake();
-        gameDataManager = Find<GameDataManager>(ImportantTypeEnum.GameDataManager);
 
         if (gridVertical != null)
             gridVertical.AddCellListener(OnCellForItems);
@@ -69,7 +66,8 @@ public class PickForItemsDialogView : DialogView, ItemGameBackpackPickCpt.ICallB
 
     public void CreateItems()
     {
-        List<ItemBean> listAllItems = gameDataManager.gameData.listItems;
+        GameDataBean gameData = GameDataHandler.Instance.manager.GetGameData();
+        List<ItemBean> listAllItems = gameData.listItems;
         listItems.Clear();
         if (listAllItems == null)
             return;

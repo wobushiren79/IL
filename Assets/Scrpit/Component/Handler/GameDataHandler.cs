@@ -2,10 +2,10 @@
 using UnityEditor;
 using System.Collections;
 using System.Collections.Generic;
+using System;
 
-public class GameDataHandler : BaseHandler, DialogView.IDialogCallBack, IBaseObserver
+public class GameDataHandler : BaseHandler<GameDataHandler,GameDataManager>, DialogView.IDialogCallBack
 {
-
     public enum NotifyTypeEnum
     {
         AddMoney = 1,
@@ -20,19 +20,23 @@ public class GameDataHandler : BaseHandler, DialogView.IDialogCallBack, IBaseObs
     //10分钟自动清理一次
     protected int maxTimeForSystemClear = 600;
 
-    protected GameDataManager gameDataManager;
-    protected GameTimeHandler gameTimeHandler;
+    protected Action<NotifyTypeEnum, object[]> notifyForData;
 
-    private void Awake()
-    {
-        gameTimeHandler = Find<GameTimeHandler>(ImportantTypeEnum.TimeHandler);
-        gameDataManager = Find<GameDataManager>(ImportantTypeEnum.GameDataManager);
-    }
 
     private void Start()
     {
         StartCoroutine(CoroutineForRealtime());
         StartCoroutine(CoroutineForTime());
+    }
+
+    public void RegisterNotifyForData(Action<NotifyTypeEnum, object[]> notifyForData)
+    {
+        this.notifyForData += notifyForData;
+    }
+
+    public void UnRegisterNotifyForData(Action<NotifyTypeEnum, object[]> notifyForData)
+    {
+        this.notifyForData -= notifyForData;
     }
 
     /// <summary>
@@ -58,7 +62,7 @@ public class GameDataHandler : BaseHandler, DialogView.IDialogCallBack, IBaseObs
         while (true)
         {
             yield return new WaitForSeconds(1);
-            if (gameTimeHandler != null && !GameTimeHandler.Instance.isStopTime)
+            if (!GameTimeHandler.Instance.isStopTime)
             {
                 HandleForTimeProcess();
             }
@@ -70,8 +74,8 @@ public class GameDataHandler : BaseHandler, DialogView.IDialogCallBack, IBaseObs
     /// </summary>
     public void HandleForPlayTime()
     {
-        if (gameDataManager != null)
-            gameDataManager.gameData.playTime.AddTimeForHMS(0, 0, 1);
+        GameDataBean gameData = manager.GetGameData();
+        gameData.playTime.AddTimeForHMS(0, 0, 1);
     }
 
 
@@ -93,8 +97,6 @@ public class GameDataHandler : BaseHandler, DialogView.IDialogCallBack, IBaseObs
     /// </summary>
     public void HandleForTimeProcess()
     {
-        if (gameTimeHandler == null)
-            return;
         if (GameTimeHandler.Instance.isStopTime)
             return;
         AddTimeProcess(1);
@@ -117,9 +119,10 @@ public class GameDataHandler : BaseHandler, DialogView.IDialogCallBack, IBaseObs
     /// <param name="time"></param>
     public void AddInfiniteTowers(int time)
     {
-        if (gameTimeHandler == null ||gameDataManager == null)
-            return;
-        List<UserInfiniteTowersBean> listInfiniteTowersData = gameDataManager.gameData.listInfinteTowers;
+        if (GameTimeHandler.Instance.isStopTime)
+            return; 
+        GameDataBean gameData = manager.GetGameData();
+        List<UserInfiniteTowersBean> listInfiniteTowersData = gameData.listInfinteTowers;
         if (CheckUtil.ListIsNull(listInfiniteTowersData))
             return;
         float addTime = 0.01f * time;
@@ -138,7 +141,7 @@ public class GameDataHandler : BaseHandler, DialogView.IDialogCallBack, IBaseObs
             {
                 //计算总计攀登层数
                 int addLayer = (int)Mathf.Floor(itemInfiniteTowerData.proForSend);
-                List<CharacterBean> listCharacterData = gameDataManager.gameData.GetCharacterDataByIds(itemInfiniteTowerData.listMembers);
+                List<CharacterBean> listCharacterData = gameData.GetCharacterDataByIds(itemInfiniteTowerData.listMembers);
                 for (int f = 0; f < addLayer; f++)
                 {
                     itemInfiniteTowerData.proForSend = 0;
@@ -159,11 +162,11 @@ public class GameDataHandler : BaseHandler, DialogView.IDialogCallBack, IBaseObs
                         }
                         List<RewardTypeBean> listRewardItems = RewardTypeEnumTools.GetRewardItemsForInfiniteTowers(null, itemInfiniteTowerData.layer, totalLucky,true);
                         if (!CheckUtil.ListIsNull(listRewardItems))
-                            RewardTypeEnumTools.CompleteReward(gameDataManager, listCharacterData, listRewardItems);
+                            RewardTypeEnumTools.CompleteReward(listCharacterData, listRewardItems);
                         //增加层数
                         itemInfiniteTowerData.layer++;
                         //达到最大层数
-                        UserAchievementBean userAchievement = gameDataManager.gameData.GetAchievementData();
+                        UserAchievementBean userAchievement = gameData.GetAchievementData();
                         if (itemInfiniteTowerData.layer > userAchievement.maxInfiniteTowersLayer - 1)
                         {
                             //弹出提示
@@ -203,7 +206,7 @@ public class GameDataHandler : BaseHandler, DialogView.IDialogCallBack, IBaseObs
                 }
             }
         }
-        NotifyAllObserver((int)NotifyTypeEnum.InfiniteTowerProChange, listSendData);
+        notifyForData?.Invoke(NotifyTypeEnum.InfiniteTowerProChange,new object[] { listSendData });
     }
 
 
@@ -213,20 +216,21 @@ public class GameDataHandler : BaseHandler, DialogView.IDialogCallBack, IBaseObs
     /// <param name="time"></param>
     public void AddBedResearch(int time)
     {
-        if (gameTimeHandler == null ||  gameDataManager == null)
+        if (GameTimeHandler.Instance.isStopTime)
             return;
-        List<BuildBedBean> listBed = gameDataManager.gameData.GetBedListForResearching();
+        GameDataBean gameData = manager.GetGameData();
+        List<BuildBedBean> listBed = gameData.GetBedListForResearching();
         if (CheckUtil.ListIsNull(listBed))
             return;
         for (int i=0;i< listBed.Count;i++)
         {
             BuildBedBean itemBed = listBed[i];
             //获取研究人员
-            CharacterBean researcher = itemBed.GetResearchCharacter(gameDataManager.gameData);
+            CharacterBean researcher = itemBed.GetResearchCharacter(gameData);
             //如果没有研究人员则停止研究
             if (researcher == null)
             {
-                itemBed.CancelResearch(gameDataManager.gameData);
+                itemBed.CancelResearch(gameData);
                 continue;
             }
             long addExp = researcher.CalculationBedResearchAddExp();
@@ -234,7 +238,7 @@ public class GameDataHandler : BaseHandler, DialogView.IDialogCallBack, IBaseObs
             //完成研究
             if (isCompleteResearch)
             {
-                itemBed.CompleteResearch(gameDataManager.gameData);
+                itemBed.CompleteResearch(gameData);
                 string toastStr = string.Format(GameCommonInfo.GetUITextById(1071), itemBed.bedName);
                 AudioHandler.Instance.PlaySound(AudioSoundEnum.Reward);
                 ToastHandler.Instance.ToastHint(InnFoodHandler.Instance.manager.GetFoodSpriteByName("ui_features_bed"), toastStr, 5);
@@ -248,7 +252,7 @@ public class GameDataHandler : BaseHandler, DialogView.IDialogCallBack, IBaseObs
                 achievementDialog.SetData(2, "ui_features_bed");
             }
         }
-        NotifyAllObserver((int)NotifyTypeEnum.BedResearchChange, listBed);
+        notifyForData?.Invoke(NotifyTypeEnum.BedResearchChange, new object[] { listBed });
     }
 
     /// <summary>
@@ -257,20 +261,21 @@ public class GameDataHandler : BaseHandler, DialogView.IDialogCallBack, IBaseObs
     /// <param name="time"></param>
     public void AddMenuResearch(int time)
     {
-        if (gameTimeHandler == null ||  gameDataManager == null)
-            return;
-        List<MenuOwnBean> listMenu = gameDataManager.gameData.GetMenuListForResearching();
+        if (GameTimeHandler.Instance.isStopTime)
+            return; 
+        GameDataBean gameData = manager.GetGameData();
+        List<MenuOwnBean> listMenu = gameData.GetMenuListForResearching();
         if (CheckUtil.ListIsNull(listMenu))
             return;
         for (int i = 0; i < listMenu.Count; i++)
         {
             MenuOwnBean itemMenu = listMenu[i];
             //获取研究人员
-            CharacterBean researcher = itemMenu.GetResearchCharacter(gameDataManager.gameData);
+            CharacterBean researcher = itemMenu.GetResearchCharacter(gameData);
             //如果没有研究人员则停止研究
             if (researcher == null)
             {
-                itemMenu.CancelResearch(gameDataManager.gameData);
+                itemMenu.CancelResearch(gameData);
                 continue;
             }
             MenuInfoBean menuInfo = InnFoodHandler.Instance.manager.GetFoodDataById(itemMenu.menuId);
@@ -281,7 +286,7 @@ public class GameDataHandler : BaseHandler, DialogView.IDialogCallBack, IBaseObs
             //完成研究
             if (isCompleteResearch)
             {
-                itemMenu.CompleteResearch(gameDataManager.gameData);
+                itemMenu.CompleteResearch(gameData);
                 string toastStr = string.Format(GameCommonInfo.GetUITextById(1071), menuInfo.name);
                 AudioHandler.Instance.PlaySound(AudioSoundEnum.Reward);
                 ToastHandler.Instance.ToastHint(InnFoodHandler.Instance.manager.GetFoodSpriteByName(menuInfo.icon_key), toastStr, 5);
@@ -295,8 +300,7 @@ public class GameDataHandler : BaseHandler, DialogView.IDialogCallBack, IBaseObs
                 achievementDialog.SetData(1, menuInfo.icon_key);
             }
         }
-
-        NotifyAllObserver((int)NotifyTypeEnum.MenuResearchChange, listMenu);
+        notifyForData?.Invoke(NotifyTypeEnum.MenuResearchChange, new object[] { listMenu });
     }
 
     /// <summary>
@@ -307,8 +311,9 @@ public class GameDataHandler : BaseHandler, DialogView.IDialogCallBack, IBaseObs
     /// <param name="priceS"></param>
     public void AddMoney(long priceL, long priceM, long priceS)
     {
-        gameDataManager.gameData.AddMoney(priceL, priceM, priceS);
-        NotifyAllObserver((int)NotifyTypeEnum.AddMoney, priceL, priceM, priceS);
+        GameDataBean gameData = manager.GetGameData();
+        gameData.AddMoney(priceL, priceM, priceS); 
+        notifyForData?.Invoke(NotifyTypeEnum.AddMoney, new object[] { priceL, priceM, priceS });
     }
 
     #region 弹窗回调
@@ -326,21 +331,4 @@ public class GameDataHandler : BaseHandler, DialogView.IDialogCallBack, IBaseObs
     }
     #endregion
 
-
-    #region 通知回调
-    public void ObserbableUpdate<T>(T observable, int type, params object[] obj) where T : Object
-    {
-        if (observable == gameTimeHandler)
-        {
-            if (type == (int)GameTimeHandler.NotifyTypeEnum.NewDay)
-            {
-
-            }
-            else if (type == (int)GameTimeHandler.NotifyTypeEnum.EndDay)
-            {
-
-            }
-        }
-    }
-    #endregion
 }

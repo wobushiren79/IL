@@ -10,7 +10,7 @@ public abstract class BaseNormalSceneInit : BaseSceneInit, DialogView.IDialogCal
         //设置时间
         if (gameDataManager != null)
         {
-            TimeBean timeData = gameDataManager.gameData.gameTime;
+            TimeBean timeData = gameData.gameTime;
             GameTimeHandler.Instance.SetTime(timeData.hour, timeData.minute);
             GameTimeHandler.Instance.SetTimeStatus(false);
             //增加回调

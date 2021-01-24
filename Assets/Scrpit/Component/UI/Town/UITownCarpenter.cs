@@ -34,9 +34,6 @@ public class UITownCarpenter : UIBaseOne, IRadioGroupCallBack
         SetCustomBed();
     }
 
-
-
-
     public override void RefreshUI()
     {
         base.RefreshUI();
@@ -63,7 +60,7 @@ public class UITownCarpenter : UIBaseOne, IRadioGroupCallBack
     public void SetCustomBed()
     {
         //设置是否展示定制床位功能
-        InnBuildBean innBuild = uiGameManager.gameDataManager.gameData.GetInnBuildData();
+        InnBuildBean innBuild = uiGameManager.gameData.GetInnBuildData();
         //innBuild.GetInnSize(2, out int innWidth, out int innHeight, out int offsetHeight);
         if (innBuild.buildSecondLevel != 0)
         {
@@ -109,7 +106,7 @@ public class UITownCarpenter : UIBaseOne, IRadioGroupCallBack
         {
             StoreInfoBean itemData = listData[i];
             //如果扩建 
-            InnBuildBean innBuild = uiGameManager.gameDataManager.gameData.GetInnBuildData();
+            InnBuildBean innBuild = uiGameManager.gameData.GetInnBuildData();
             if (itemData.store_goods_type == (int)StoreForCarpenterTypeEnum.Expansion)
             {
                 if (itemData.mark_type == 1)

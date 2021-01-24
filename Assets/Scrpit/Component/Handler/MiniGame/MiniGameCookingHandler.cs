@@ -7,8 +7,7 @@ using System.Linq;
 public class MiniGameCookingHandler : BaseMiniGameHandler<MiniGameCookingBuilder, MiniGameCookingBean>,
     UIMiniGameCookingSelect.ICallBack,
     UIMiniGameCooking.ICallBack,
-    UIMiniGameCookingSettlement.ICallBack,
-    IBaseObserver
+    UIMiniGameCookingSettlement.ICallBack
 {
     //事件处理
     protected EventHandler eventHandler;
@@ -177,7 +176,7 @@ public class MiniGameCookingHandler : BaseMiniGameHandler<MiniGameCookingBuilder
     /// </summary>
     public void StartAudit()
     {
-        uiGameManager.CloseAllUI();
+        UIHandler.Instance.manager.CloseAllUI();
         List<NpcAIMiniGameCookingCpt> listPlayer = miniGameBuilder.GetCharacterByType(NpcAIMiniGameCookingCpt.MiniGameCookingNpcTypeEnum.Player);
         foreach (NpcAIMiniGameCookingCpt itemNpc in listPlayer)
         {
@@ -192,11 +191,8 @@ public class MiniGameCookingHandler : BaseMiniGameHandler<MiniGameCookingBuilder
     {
         //因为剧情需要，先隐藏主持人
         miniGameBuilder.SetCompereCharacterActive(false);
-        if (eventHandler != null)
-        {
-            eventHandler.AddObserver(this);
-            eventHandler.EventTriggerForStoryCooking(miniGameData, miniGameData.storyGameStartId);
-        }
+        GameEventHandler.Instance.RegisterNotifyForEvent(NotifyForEvent);
+        GameEventHandler.Instance.EventTriggerForStoryCooking(miniGameData, miniGameData.storyGameStartId);
     }
 
     /// <summary>
@@ -206,11 +202,8 @@ public class MiniGameCookingHandler : BaseMiniGameHandler<MiniGameCookingBuilder
     {
         //因为剧情需要，先隐藏主持人
         miniGameBuilder.SetCompereCharacterActive(false);
-        if (eventHandler != null)
-        {
-            eventHandler.AddObserver(this);
-            eventHandler.EventTriggerForStoryCooking(miniGameData, miniGameData.storyGameAuditId);
-        }
+        GameEventHandler.Instance.RegisterNotifyForEvent(NotifyForEvent);
+        GameEventHandler.Instance.EventTriggerForStoryCooking(miniGameData, miniGameData.storyGameAuditId);
     }
 
     /// <summary>
@@ -311,38 +304,38 @@ public class MiniGameCookingHandler : BaseMiniGameHandler<MiniGameCookingBuilder
     }
 
     #region 通知回调
-    public void ObserbableUpdate<T>(T observable, int type, params object[] obj) where T : UnityEngine.Object
+
+    public void NotifyForEvent(GameEventHandler.NotifyEventTypeEnum notifyEventType,params object[] obj)
     {
-        if (observable == eventHandler)
+        if (notifyEventType == GameEventHandler.NotifyEventTypeEnum.EventEnd)
         {
-            if (type == (int)EventHandler.NotifyEventTypeEnum.EventEnd)
+            if (Convert.ToInt64(obj[0]) == miniGameData.storyGameStartId)
             {
-                if (Convert.ToInt64(obj[0]) == miniGameData.storyGameStartId)
+                StartGame();
+            }
+            else if (Convert.ToInt64(obj[0]) == miniGameData.storyGameAuditId)
+            {
+                //显示主持人
+                miniGameBuilder.SetCompereCharacterActive(true);
+                //关闭评审员的分数
+                CloseScoreForAudit();
+                //结算分数
+                List<NpcAIMiniGameCookingCpt> listPlayer = miniGameBuilder.GetCharacterByType(NpcAIMiniGameCookingCpt.MiniGameCookingNpcTypeEnum.Player);
+                foreach (NpcAIMiniGameCookingCpt itemNpc in listPlayer)
                 {
-                    StartGame();
+                    itemNpc.characterMiniGameData.InitScore();
                 }
-                else if (Convert.ToInt64(obj[0]) == miniGameData.storyGameAuditId)
-                {
-                    //显示主持人
-                    miniGameBuilder.SetCompereCharacterActive(true);
-                    //关闭评审员的分数
-                    CloseScoreForAudit();
-                    //结算分数
-                    List<NpcAIMiniGameCookingCpt> listPlayer = miniGameBuilder.GetCharacterByType(NpcAIMiniGameCookingCpt.MiniGameCookingNpcTypeEnum.Player);
-                    foreach (NpcAIMiniGameCookingCpt itemNpc in listPlayer)
-                    {
-                        itemNpc.characterMiniGameData.InitScore();
-                    }
-                    //按分数排名
-                    listPlayer = listPlayer.OrderByDescending(item => item.characterMiniGameData.scoreForTotal).ToList();
-                    //打开结算UI
-                    uiMiniGameCookingSettlement = UIHandler.Instance.manager.OpenUIAndCloseOther<UIMiniGameCookingSettlement>(UIEnum.MiniGameCookingSettlement);
-                    uiMiniGameCookingSettlement.SetCallBack(this);
-                    uiMiniGameCookingSettlement.SetData(listPlayer);
-                }
+                //按分数排名
+                listPlayer = listPlayer.OrderByDescending(item => item.characterMiniGameData.scoreForTotal).ToList();
+                //打开结算UI
+                uiMiniGameCookingSettlement = UIHandler.Instance.manager.OpenUIAndCloseOther<UIMiniGameCookingSettlement>(UIEnum.MiniGameCookingSettlement);
+                uiMiniGameCookingSettlement.SetCallBack(this);
+                uiMiniGameCookingSettlement.SetData(listPlayer);
             }
         }
     }
+
+
     #endregion
 
     #region 倒计时UI

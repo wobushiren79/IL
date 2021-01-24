@@ -93,7 +93,7 @@ public class SceneInfiniteTowersManager : BaseMonoBehaviour
 
 
 
-    public List<CharacterBean> GetCharacterDataByInfiniteTowersLayer(NpcTeamManager npcTeamManager, NpcInfoManager npcInfoManager , long layer)
+    public List<CharacterBean> GetCharacterDataByInfiniteTowersLayer(long layer)
     {
         List<CharacterBean> listData = new List<CharacterBean>();
 
@@ -136,7 +136,7 @@ public class SceneInfiniteTowersManager : BaseMonoBehaviour
             string[] randomBossTeam = StringUtil.SplitBySubstringForArrayStr(bossTeamMembers, '|');
             string bossTeamStr = RandomUtil.GetRandomDataByArray(randomBossTeam);
             long bossTeamId =  StringUtil.SplitAndRandomForLong(bossTeamStr, ',');
-            NpcTeamBean bossTeamData = npcTeamManager.GetInfiniteTowerBossTeam(bossTeamId);
+            NpcTeamBean bossTeamData = NpcTeamHandler.Instance.manager.GetInfiniteTowerBossTeam(bossTeamId);
             long[] membersIds = bossTeamData.GetTeamMembersId();
             long[] bossId = bossTeamData.GetTeamLeaderId();
             foreach (long itemMemberId in membersIds)

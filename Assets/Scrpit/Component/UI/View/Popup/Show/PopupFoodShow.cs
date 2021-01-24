@@ -21,17 +21,8 @@ public class PopupFoodShow : PopupShowView
     public GameObject objItemStatisticsContainer;
     public GameObject objItemTextModel;
 
-    protected GameDataManager gameDataManager;
-
     public MenuOwnBean ownData;
     public MenuInfoBean foodData;
-
-    public override void Awake()
-    {
-        base.Awake();
-        gameDataManager = Find<GameDataManager>(ImportantTypeEnum.GameDataManager);
-    }
-
     public void SetData(MenuOwnBean ownData, MenuInfoBean foodData)
     {
         SetData(ownData, foodData, true);
@@ -130,7 +121,8 @@ public class PopupFoodShow : PopupShowView
             return;
         }
         objResearch.SetActive(true);
-        CharacterBean researcher = ownData.GetResearchCharacter(gameDataManager.gameData);
+        GameDataBean gameData = GameDataHandler.Instance.manager.GetGameData();
+        CharacterBean researcher = ownData.GetResearchCharacter(gameData);
         float progress = ownData.GetResearchProgress(out long completeExp, out long researchExp);
         if (researcher != null)
         {

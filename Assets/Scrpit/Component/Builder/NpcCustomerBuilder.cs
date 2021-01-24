@@ -21,8 +21,9 @@ public class NpcCustomerBuilder : NpcNormalBuilder
 
     private void Start()
     {
-        InnAttributesBean innAttributes = gameDataManager.gameData.GetInnAttributesData();
-        InnBuildBean innBuild = gameDataManager.gameData.GetInnBuildData();
+        GameDataBean gameData = GameDataHandler.Instance.manager.GetGameData();
+        InnAttributesBean innAttributes = gameData.GetInnAttributesData();
+        InnBuildBean innBuild = gameData.GetInnBuildData();
         buildCustomerForHotelRate = innAttributes.CalculationCustomerForHotelRate(innBuild);
         buildTeamGustomerRate = innAttributes.CalculationTeamCustomerBuildRate();
         buildMaxNumber = 500;
@@ -145,7 +146,7 @@ public class NpcCustomerBuilder : NpcNormalBuilder
         if (objContainer.transform.childCount > buildMaxNumber)
             return;
         Vector3 npcPosition = GetRandomStartPosition();
-        NpcTeamBean teamData = npcTeamManager.GetCustomerTeam(teamId);
+        NpcTeamBean teamData = NpcTeamHandler.Instance.manager.GetCustomerTeam(teamId);
         BuildGuestTeam(teamData, npcPosition);
     }
 
@@ -159,7 +160,7 @@ public class NpcCustomerBuilder : NpcNormalBuilder
         //设置是否想吃
         bool isWant = IsWantEat(CustomerTypeEnum.Team);
         //获取小队成员数据
-        npcTeam.GetTeamCharacterData(npcInfoManager, out List<CharacterBean> listLeader, out List<CharacterBean> listMembers);
+        npcTeam.GetTeamCharacterData(out List<CharacterBean> listLeader, out List<CharacterBean> listMembers);
         //设置小队人数(团队领袖全生成，小队成员随机生成)
         int npcNumber = Random.Range(listLeader.Count + 1, listLeader.Count + 1 + npcTeam.team_number);
         for (int i = 0; i < npcNumber; i++)
@@ -256,9 +257,10 @@ public class NpcCustomerBuilder : NpcNormalBuilder
     /// <returns></returns>
     private bool IsWantEat(CustomerTypeEnum customerType)
     {
+        GameDataBean gameData = GameDataHandler.Instance.manager.GetGameData();
         //想要吃饭概率
         float eatProbability = UnityEngine.Random.Range(0f, 1f);
-        float rateWant = rateWant = gameDataManager.gameData.GetInnAttributesData().CalculationCustomerWantRate(customerType);
+        float rateWant  = gameData.GetInnAttributesData().CalculationCustomerWantRate(customerType);
         //设定是否吃饭
         if (eatProbability <= rateWant)
         {
@@ -303,7 +305,8 @@ public class NpcCustomerBuilder : NpcNormalBuilder
         {
             buildInterval -= weatherHandler.weatherData.weatherAddition;
         }
-        gameDataManager.gameData.GetInnAttributesData().GetInnLevel(out int levelTitle, out int levelStar);
+        GameDataBean gameData = GameDataHandler.Instance.manager.GetGameData();
+        gameData.GetInnAttributesData().GetInnLevel(out int levelTitle, out int levelStar);
         if (levelTitle == 1)
         {
             buildInterval = buildInterval * 0.9f;
@@ -316,8 +319,8 @@ public class NpcCustomerBuilder : NpcNormalBuilder
         {
             buildInterval = buildInterval * 0.4f;
         }
-        InnAttributesBean innAttributes = gameDataManager.gameData.GetInnAttributesData();
-        InnBuildBean innBuild = gameDataManager.gameData.GetInnBuildData();
+        InnAttributesBean innAttributes = gameData.GetInnAttributesData();
+        InnBuildBean innBuild = gameData.GetInnBuildData();
 
         buildCustomerForHotelRate = innAttributes.CalculationCustomerForHotelRate(innBuild);
         buildTeamGustomerRate = innAttributes.CalculationTeamCustomerBuildRate();
@@ -338,7 +341,8 @@ public class NpcCustomerBuilder : NpcNormalBuilder
         {
             ClearNpc();
             //重新获取顾客信息
-            listTeamCustomer = npcTeamManager.GetRandomTeamMeetConditionByType(NpcTeamTypeEnum.Customer, gameDataManager.gameData);
+            GameDataBean gameData = GameDataHandler.Instance.manager.GetGameData();
+            listTeamCustomer = NpcTeamHandler.Instance.manager.GetRandomTeamMeetConditionByType(NpcTeamTypeEnum.Customer, gameData);
             //开始建造顾客
             StartBuildCustomer();
             HandleNpcBuildTime(6);

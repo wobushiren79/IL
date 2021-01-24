@@ -273,7 +273,7 @@ public class UIGameEquip : BaseUIComponent, TextSearchView.ICallBack
         //如果有卸载的装备 则添加到背包
         if (unloadEquipId != 0)
         {
-            uiGameManager.gameDataManager.gameData.AddItemsNumber(unloadEquipId, 1);
+            uiGameManager.gameData.AddItemsNumber(unloadEquipId, 1);
         }
         //刷新场景中的人物
         if (uiGameManager.npcWorkerBuilder != null)
@@ -288,9 +288,9 @@ public class UIGameEquip : BaseUIComponent, TextSearchView.ICallBack
     public void RefreshBackpackData()
     {
         listItemData.Clear();
-        for (int i = 0; i < uiGameManager.gameDataManager.gameData.listItems.Count; i++)
+        for (int i = 0; i < uiGameManager.gameData.listItems.Count; i++)
         {
-            ItemBean itemBean = uiGameManager.gameDataManager.gameData.listItems[i];
+            ItemBean itemBean = uiGameManager.gameData.listItems[i];
             ItemsInfoBean itemInfo = GameItemsHandler.Instance.manager.GetItemsById(itemBean.itemId);
             GeneralEnum itemType = itemInfo.GetItemsType();
             if (itemType != GeneralEnum.Hat

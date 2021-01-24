@@ -3,21 +3,13 @@ using UnityEditor;
 
 public class InnLightCpt : LightCpt
 {
-    protected GameDataManager gameDataManager;
-
-    private void Awake()
-    {
-        gameDataManager = Find<GameDataManager>(ImportantTypeEnum.GameDataManager);
-    }
 
     public override void OpenLight()
     {
-        if (gameDataManager != null)
-        {
-            int with = gameDataManager.gameData.innBuildData.innWidth;
-            int high = gameDataManager.gameData.innBuildData.innHeight;
-            SetInnLightSize(with, high);
-        }
+        GameDataBean gameData = GameDataHandler.Instance.manager.GetGameData();
+        int with = gameData.innBuildData.innWidth;
+        int high = gameData.innBuildData.innHeight;
+        SetInnLightSize(with, high);
         base.OpenLight();
     }
 
@@ -34,7 +26,7 @@ public class InnLightCpt : LightCpt
             light2D.transform.localScale = new Vector3(with, high);
             //light2D.pointLightOuterRadius = with;
         }
-            
+
     }
 
 }

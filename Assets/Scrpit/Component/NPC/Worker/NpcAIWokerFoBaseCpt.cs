@@ -6,13 +6,8 @@ public class NpcAIWokerFoBaseCpt : BaseMonoBehaviour
     //主控AI
     public NpcAIWorkerCpt npcAIWorker;
 
-    protected GameDataManager gameDataManager;
-    protected IconDataManager iconDataManager;
-
     public virtual void Awake()
     {
-        gameDataManager = Find<GameDataManager>(ImportantTypeEnum.GameDataManager);
-        iconDataManager = Find<IconDataManager>(ImportantTypeEnum.UIManager);
 
         npcAIWorker = GetComponent<NpcAIWorkerCpt>();
     }

@@ -42,7 +42,7 @@ public class UIGameHotel : BaseUIComponent
     public override void RefreshUI()
     {
         base.RefreshUI();
-        List<BuildBedBean> listBed = uiGameManager.gameDataManager.gameData.listBed;
+        List<BuildBedBean> listBed = uiGameManager.gameData.listBed;
         this.listBedData.Clear();
         this.listBedData.AddRange(listBed);
         CreateBedList();
@@ -74,7 +74,7 @@ public class UIGameHotel : BaseUIComponent
     public void OnClickForSortDef()
     {
         AudioHandler.Instance.PlaySound(AudioSoundEnum.ButtonForNormal);
-        List<BuildBedBean> listBed = uiGameManager.gameDataManager.gameData.listBed;
+        List<BuildBedBean> listBed = uiGameManager.gameData.listBed;
         this.listBedData.Clear();
         this.listBedData.AddRange(listBed);
         CreateBedList();

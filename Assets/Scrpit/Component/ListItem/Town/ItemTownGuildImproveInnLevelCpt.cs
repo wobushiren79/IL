@@ -24,7 +24,7 @@ public class ItemTownGuildImproveInnLevelCpt : BaseMonoBehaviour, DialogView.IDi
     public StoreInfoBean storeInfo;
     public bool isAllPre = true;
 
-    protected GameDataManager gameDataManager;
+    ;
     protected UIGameManager uiGameManager;
     private void Awake()
     {
@@ -87,7 +87,7 @@ public class ItemTownGuildImproveInnLevelCpt : BaseMonoBehaviour, DialogView.IDi
         foreach (var itemData in listPreData)
         {
             GameObject objPre = Instantiate(objPreContainer, objPreModel);
-            PreTypeEnumTools.GetPreDetails(itemData,gameDataManager.gameData);
+            PreTypeEnumTools.GetPreDetails(itemData,gameData);
             //设置图标
             Sprite spIcon = itemData.spPreIcon;
             Image ivIcon = CptUtil.GetCptInChildrenByName<Image>(objPre, "Icon");
@@ -149,14 +149,14 @@ public class ItemTownGuildImproveInnLevelCpt : BaseMonoBehaviour, DialogView.IDi
         if (isAllPre)
         {
             //前置如果有需要临时支付的条件
-            PreTypeEnumTools.CompletePre(storeInfo.pre_data, gameDataManager.gameData);
+            PreTypeEnumTools.CompletePre(storeInfo.pre_data, gameData);
             //获取所有奖励
             RewardTypeEnumTools.CompleteReward(
                 gameDataManager,
                 null,
                 storeInfo.reward_data);
             //客栈升级
-            gameDataManager.gameData.innAttributes.SetInnLevelUp();
+            gameData.innAttributes.SetInnLevelUp();
 
             ToastHandler.Instance.ToastHint(ivTitleIcon.sprite, GameCommonInfo.GetUITextById(1062));
             UIHandler.Instance.manager.OpenUIAndCloseOther<UIGameMain>(UIEnum.GameMain);

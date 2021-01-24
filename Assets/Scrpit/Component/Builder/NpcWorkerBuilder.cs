@@ -11,7 +11,7 @@ public class NpcWorkerBuilder : BaseMonoBehaviour
 
     public List<NpcAIWorkerCpt> listNpcWorker = new List<NpcAIWorkerCpt>();
 
-    protected GameDataManager gameDataManager;
+    ;
 
     private void Awake()
     {
@@ -25,16 +25,16 @@ public class NpcWorkerBuilder : BaseMonoBehaviour
             return;
         }
         ClearAllWork();
+        GameDataBean gameData = GameDataHandler.Instance.manager.GetGameData();
+        List<CharacterBean> listAllWork = gameData.listWorkerCharacter;
 
-        List<CharacterBean> listAllWork = gameDataManager.gameData.listWorkerCharacter;
-
-        if (gameDataManager.gameData.userCharacter.baseInfo.GetWorkerStatus() == WorkerStatusEnum.Work)
+        if (gameData.userCharacter.baseInfo.GetWorkerStatus() == WorkerStatusEnum.Work)
         {
             //获取门的坐标 并在门周围生成NPC
             Vector3 doorPosition = InnHandler.Instance.GetRandomEntrancePosition();
             //向下3个单位
             doorPosition += new Vector3(0, -3f, 0);
-            BuildWork(gameDataManager.gameData.userCharacter, doorPosition);
+            BuildWork(gameData.userCharacter, doorPosition);
         }
         for (int i = 0; i < listAllWork.Count; i++)
         {

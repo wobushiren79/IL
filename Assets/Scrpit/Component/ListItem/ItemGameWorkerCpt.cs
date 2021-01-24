@@ -58,14 +58,6 @@ public class ItemGameWorkerCpt : ItemGameBaseCpt, DialogView.IDialogCallBack, Wo
     public CharacterBean characterData;
 
     protected PopupPromptShow infoPromptPopup;
-    protected DialogManager dialogManager;
-    protected GameDataManager gameDataManager;
-    protected ToastManager toastManager;
-
-    private void Awake()
-    {
-        gameDataManager = GetUIManager<UIGameManager>().gameDataManager;
-    }
 
     private void Start()
     {
@@ -179,7 +171,8 @@ public class ItemGameWorkerCpt : ItemGameBaseCpt, DialogView.IDialogCallBack, Wo
             SetSex(data.body.sex);
         }
         //如果是用户，则不能解雇 也不能送礼
-        if (data == gameDataManager.gameData.userCharacter)
+        GameDataBean gameData = GameDataHandler.Instance.manager.GetGameData();
+        if (data == gameData.userCharacter)
         {
             if (btFire != null)
                 btFire.gameObject.SetActive(false);
@@ -503,13 +496,14 @@ public class ItemGameWorkerCpt : ItemGameBaseCpt, DialogView.IDialogCallBack, Wo
     #region 确认回调
     public void Submit(DialogView dialogView, DialogBean dialogBean)
     {
+        GameDataBean gameData = GameDataHandler.Instance.manager.GetGameData();
         if (dialogView as PickForItemsDialogView)
         {
             // 如果送礼
             PickForItemsDialogView pickForItems = dialogView as PickForItemsDialogView;
             pickForItems.GetSelectedItems(out ItemsInfoBean itemsInfo, out ItemBean itemData);
             //减去礼物
-            gameDataManager.gameData.AddItemsNumber(itemsInfo.id, -1);
+            gameData.AddItemsNumber(itemsInfo.id, -1);
             //添加忠诚
             int addLoyal = ((int)itemsInfo.GetItemRarity() + 1) * 5;
             characterData.attributes.AddLoyal(addLoyal);
@@ -524,32 +518,32 @@ public class ItemGameWorkerCpt : ItemGameBaseCpt, DialogView.IDialogCallBack, Wo
             //如果是确认 开除员工
             //返还装备
             if (characterData.equips.maskId != 0)
-                gameDataManager.gameData.AddItemsNumber(characterData.equips.maskId, 1);
+                gameData.AddItemsNumber(characterData.equips.maskId, 1);
              if (characterData.equips.maskTFId != 0)
-                gameDataManager.gameData.AddItemsNumber(characterData.equips.maskTFId, 1);
+                gameData.AddItemsNumber(characterData.equips.maskTFId, 1);
 
             if (characterData.equips.handId != 0)
-                gameDataManager.gameData.AddItemsNumber(characterData.equips.handId, 1);
+                gameData.AddItemsNumber(characterData.equips.handId, 1);
             if (characterData.equips.handTFId != 0)
-                gameDataManager.gameData.AddItemsNumber(characterData.equips.handTFId, 1);
+                gameData.AddItemsNumber(characterData.equips.handTFId, 1);
 
             if (characterData.equips.hatId != 0)
-                gameDataManager.gameData.AddItemsNumber(characterData.equips.hatId, 1);
+                gameData.AddItemsNumber(characterData.equips.hatId, 1);
             if (characterData.equips.hatTFId != 0)
-                gameDataManager.gameData.AddItemsNumber(characterData.equips.hatTFId, 1);
+                gameData.AddItemsNumber(characterData.equips.hatTFId, 1);
 
             if (characterData.equips.clothesId != 0)
-                gameDataManager.gameData.AddItemsNumber(characterData.equips.clothesId, 1);
+                gameData.AddItemsNumber(characterData.equips.clothesId, 1);
             if (characterData.equips.clothesTFId != 0)
-                gameDataManager.gameData.AddItemsNumber(characterData.equips.clothesTFId, 1);
+                gameData.AddItemsNumber(characterData.equips.clothesTFId, 1);
 
             if (characterData.equips.shoesId != 0)
-                gameDataManager.gameData.AddItemsNumber(characterData.equips.shoesId, 1);
+                gameData.AddItemsNumber(characterData.equips.shoesId, 1);
             if (characterData.equips.shoesTFId != 0)
-                gameDataManager.gameData.AddItemsNumber(characterData.equips.shoesTFId, 1);
+                gameData.AddItemsNumber(characterData.equips.shoesTFId, 1);
 
             ToastHandler.Instance.ToastHint(string.Format(GameCommonInfo.GetUITextById(1081), characterData.baseInfo.name));
-            gameDataManager.gameData.RemoveWorker(characterData);
+            gameData.RemoveWorker(characterData);
 
             transform.DOScale(Vector3.zero, 0.3f).OnComplete(delegate
             {

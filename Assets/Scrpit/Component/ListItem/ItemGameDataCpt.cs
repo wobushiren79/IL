@@ -163,8 +163,8 @@ public class ItemGameDataCpt : ItemGameBaseCpt, DialogView.IDialogCallBack
     #region 弹窗确认回调
     public void Submit(DialogView dialogView, DialogBean dialogBean)
     {
-        GameDataManager gameDataManager = GetUIManager<UIGameManager>().gameDataManager;
-        gameDataManager.DeleteGameDataByUserId(gameData.userId);
+        GameDataBean gameData = GameDataHandler.Instance.manager.GetGameData();
+        GameDataHandler.Instance.manager.DeleteGameDataByUserId(gameData.userId);
         Destroy(gameObject);
     }
 

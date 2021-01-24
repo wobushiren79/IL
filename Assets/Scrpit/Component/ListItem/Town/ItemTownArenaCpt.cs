@@ -220,7 +220,7 @@ public class ItemTownArenaCpt : ItemGameBaseCpt, DialogView.IDialogCallBack
         UIGameManager uiGameManager = GetUIManager<UIGameManager>();
         GameDataManager gameDataManager = uiGameManager.gameDataManager;
         AudioHandler.Instance.PlaySound(AudioSoundEnum.ButtonForNormal);
-        if (!gameDataManager.gameData.HasEnoughMoney(miniGameData.preMoneyL, miniGameData.preMoneyM, miniGameData.preMoneyS))
+        if (!gameData.HasEnoughMoney(miniGameData.preMoneyL, miniGameData.preMoneyM, miniGameData.preMoneyS))
         {
             ToastHandler.Instance.ToastHint(GameCommonInfo.GetUITextById(1020));
             return;
@@ -242,7 +242,7 @@ public class ItemTownArenaCpt : ItemGameBaseCpt, DialogView.IDialogCallBack
         GameDataManager gameDataManager = uiGameManager.gameDataManager;
 
         AudioHandler.Instance.PlaySound(AudioSoundEnum.ButtonForNormal);
-        if (!gameDataManager.gameData.HasEnoughMoney(miniGameData.preMoneyL, miniGameData.preMoneyM, miniGameData.preMoneyS))
+        if (!gameData.HasEnoughMoney(miniGameData.preMoneyL, miniGameData.preMoneyM, miniGameData.preMoneyS))
         {
             ToastHandler.Instance.ToastHint(GameCommonInfo.GetUITextById(1020));
             return;
@@ -272,7 +272,7 @@ public class ItemTownArenaCpt : ItemGameBaseCpt, DialogView.IDialogCallBack
                 return;
             }
             //支付金钱
-            gameDataManager.gameData.PayMoney(miniGameData.preMoneyL, miniGameData.preMoneyM, miniGameData.preMoneyS);
+            gameData.PayMoney(miniGameData.preMoneyL, miniGameData.preMoneyM, miniGameData.preMoneyS);
             //扣除时间
             GameTimeHandler.Instance.AddHour(miniGameData.preGameTime);
             //如果有研究菜谱 菜谱增加经验
@@ -337,7 +337,7 @@ public class ItemTownArenaCpt : ItemGameBaseCpt, DialogView.IDialogCallBack
             //排出今日已经参加过的人
             List<string> listAttendedCharacterId = GameCommonInfo.DailyLimitData.GetArenaAttendedCharacter();
             //排出等级不符合的人
-            List<CharacterBean> listWorker= gameDataManager.gameData.GetAllCharacterData();
+            List<CharacterBean> listWorker= gameData.GetAllCharacterData();
             foreach (CharacterBean itemWorker in listWorker)
             {
                 bool isExpel = false;

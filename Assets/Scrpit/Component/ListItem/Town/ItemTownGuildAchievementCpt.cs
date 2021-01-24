@@ -35,14 +35,14 @@ public class ItemTownGuildAchievementCpt : ItemGameBaseCpt
         UIGameManager uiGameManager = GetUIManager<UIGameManager>();
 
         bool isAllPre = PreTypeEnumTools.CheckIsAllPre(
-            uiGameManager.gameDataManager.gameData, 
-            uiGameManager.gameDataManager.gameData.userCharacter,
+            uiGameManager.gameData, 
+            uiGameManager.gameData.userCharacter,
             preData, out string reason);
 
         if (ivIcon == null || uiGameManager.gameDataManager == null || ivBackground == null)
             return;
         //检测是否拥有该成就
-        bool hasAch = uiGameManager.gameDataManager.gameData.GetAchievementData().CheckHasAchievement(achId);
+        bool hasAch = uiGameManager.gameData.GetAchievementData().CheckHasAchievement(achId);
         if (hasAch)
         {
             SetAchStatus(AchievementStatusEnum.Completed);
@@ -63,7 +63,7 @@ public class ItemTownGuildAchievementCpt : ItemGameBaseCpt
         }
         else
         {
-            bool hasPre = uiGameManager.gameDataManager.gameData.GetAchievementData().CheckHasAchievement(preIds);
+            bool hasPre = uiGameManager.gameData.GetAchievementData().CheckHasAchievement(preIds);
             if (hasPre)
             {
                 //检测是否符合条件
@@ -155,7 +155,7 @@ public class ItemTownGuildAchievementCpt : ItemGameBaseCpt
         if (status == AchievementStatusEnum.ToBeConfirmed)
         {
             //添加该成就和奖励
-            uiGameManager.gameDataManager.gameData.GetAchievementData().AddAchievement(achievementInfo.id);
+            uiGameManager.gameData.GetAchievementData().AddAchievement(achievementInfo.id);
             RewardTypeEnumTools.CompleteReward(
                 uiGameManager.gameDataManager,
                 null,

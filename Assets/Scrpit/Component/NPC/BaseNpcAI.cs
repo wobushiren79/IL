@@ -23,10 +23,7 @@ public class BaseNpcAI : BaseObservable<IBaseObserver>
     //角色层级
     public SortingGroup characterForRenderer;
 
-    //图标管理
-    protected IconDataManager iconDataManager;
     //游戏数据管理
-    protected GameDataManager gameDataManager;
 
     protected CharacterBodyCpt characterBody;
     protected CharacterDressCpt characterDress;
@@ -36,9 +33,6 @@ public class BaseNpcAI : BaseObservable<IBaseObserver>
 
     public virtual void Awake()
     {
-        gameDataManager = Find<GameDataManager>(ImportantTypeEnum.GameDataManager);
-        iconDataManager = Find<IconDataManager>(ImportantTypeEnum.UIManager);
-
         characterBody = CptUtil.GetCptInChildrenByName<CharacterBodyCpt>(gameObject, "Body");
         characterDress = CptUtil.GetCptInChildrenByName<CharacterDressCpt>(gameObject, "Body");
     }

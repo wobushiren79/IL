@@ -3,18 +3,11 @@ using UnityEditor;
 using UnityEngine.UI;
 public class UIGameStatisticsForInn : UIGameStatisticsDetailsBase<UIGameStatistics>
 {
-    protected GameDataManager gameDataManager;
-
-    public override void Awake()
-    {
-        base.Awake();
-        gameDataManager = Find<GameDataManager>(ImportantTypeEnum.GameDataManager);
-    }
-
     public override void Open()
     {
         base.Open();
-        UserAchievementBean userAchievement = gameDataManager.gameData.GetAchievementData();
+        GameDataBean gameData = GameDataHandler.Instance.manager.GetGameData();
+        UserAchievementBean userAchievement = gameData.GetAchievementData();
         CreateDataList(userAchievement);
     }
 

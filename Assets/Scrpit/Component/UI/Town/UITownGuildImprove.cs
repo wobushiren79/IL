@@ -40,11 +40,11 @@ public class UITownGuildImprove : UIBaseOne, IRadioGroupCallBack
         {
             case 0:
                 uiInnInfo.Open();
-                uiInnInfo.InitData(uiGameManager.gameDataManager.gameData);
+                uiInnInfo.InitData(uiGameManager.gameData);
                 break;
             case 1:
                 uiCharacterInfo.Open();
-                uiCharacterInfo.InitData(uiGameManager.gameDataManager.gameData);
+                uiCharacterInfo.InitData(uiGameManager.gameData);
                 break;
         }
     }

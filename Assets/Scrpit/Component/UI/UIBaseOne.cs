@@ -57,35 +57,35 @@ public class UIBaseOne : BaseUIComponent ,DialogView.IDialogCallBack
         {
             if (tvMoneyL != null)
             {
-                tvMoneyL.text = uiGameManager.gameDataManager.gameData.moneyL + "";
+                tvMoneyL.text = uiGameManager.gameData.moneyL + "";
             }
             if (tvMoneyM != null)
             {
-                tvMoneyM.text = uiGameManager.gameDataManager.gameData.moneyM + "";
+                tvMoneyM.text = uiGameManager.gameData.moneyM + "";
             }
             if (tvMoneyS != null)
             {
-                tvMoneyS.text = uiGameManager.gameDataManager.gameData.moneyS + "";
+                tvMoneyS.text = uiGameManager.gameData.moneyS + "";
             }
             if (tvGuildCoin != null)
             {
-                tvGuildCoin.text = uiGameManager.gameDataManager.gameData.guildCoin + "";
+                tvGuildCoin.text = uiGameManager.gameData.guildCoin + "";
             }
             if (tvTrophy1 != null)
             {
-                tvTrophy1.text = uiGameManager.gameDataManager.gameData.trophyElementary+"";
+                tvTrophy1.text = uiGameManager.gameData.trophyElementary+"";
             }
             if (tvTrophy2 != null)
             {
-                tvTrophy2.text = uiGameManager.gameDataManager.gameData.trophyIntermediate + "";
+                tvTrophy2.text = uiGameManager.gameData.trophyIntermediate + "";
             }
             if (tvTrophy3 != null)
             {
-                tvTrophy3.text = uiGameManager.gameDataManager.gameData.trophyAdvanced + "";
+                tvTrophy3.text = uiGameManager.gameData.trophyAdvanced + "";
             }
             if (tvTrophy4 != null)
             {
-                tvTrophy4.text = uiGameManager.gameDataManager.gameData.trophyLegendary + "";
+                tvTrophy4.text = uiGameManager.gameData.trophyLegendary + "";
             }
         }
     }

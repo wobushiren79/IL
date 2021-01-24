@@ -18,7 +18,6 @@ public class CalendarView : BaseMonoBehaviour, IDateInfoView
     public int day;
 
     public DateInfoController dateInfoController;
-    protected GameDataManager gameDataManager;
 
     private List<ItemGameCalendarCpt> mListItemDay = new List<ItemGameCalendarCpt>();
 
@@ -35,7 +34,6 @@ public class CalendarView : BaseMonoBehaviour, IDateInfoView
     private void Awake()
     {
         dateInfoController = new DateInfoController(this, this);
-        gameDataManager = Find<GameDataManager>(ImportantTypeEnum.GameDataManager);
     }
 
     /// <summary>
@@ -99,7 +97,8 @@ public class CalendarView : BaseMonoBehaviour, IDateInfoView
     /// <param name="buildDay"></param>
     public void SetBuildDay()
     {
-        InnBuildBean innBuildData = gameDataManager.gameData.GetInnBuildData();
+        GameDataBean gameData = GameDataHandler.Instance.manager.GetGameData();
+        InnBuildBean innBuildData = gameData.GetInnBuildData();
         if (innBuildData.listBuildDay.Count > 0)
         {
             foreach (TimeBean itemBuildDay in innBuildData.listBuildDay)

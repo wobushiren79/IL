@@ -83,7 +83,7 @@ public class UIBaseGamble<T, H, B> : BaseUIComponent, DialogView.IDialogCallBack
     /// </summary>
     public void SetMoney()
     {
-        GameDataBean gameData = uiGameManager.gameDataManager.gameData;
+        GameDataBean gameData = uiGameManager.gameData;
         if (tvMoneyL != null)
             tvMoneyL.text = gameData.moneyL + "";
         if (tvMoneyM != null)
@@ -137,7 +137,7 @@ public class UIBaseGamble<T, H, B> : BaseUIComponent, DialogView.IDialogCallBack
         if (gambleData.GetGambleStatus() == GambleStatusType.Prepare)
         {
             //退还下注金额
-            uiGameManager.gameDataManager.gameData.AddMoney(gambleData.betForMoneyL, gambleData.betForMoneyM, gambleData.betForMoneyS);
+            uiGameManager.gameData.AddMoney(gambleData.betForMoneyL, gambleData.betForMoneyM, gambleData.betForMoneyS);
             UIHandler.Instance.manager.OpenUIAndCloseOther<UIGameMain>(UIEnum.GameMain);
         }
 
@@ -168,7 +168,7 @@ public class UIBaseGamble<T, H, B> : BaseUIComponent, DialogView.IDialogCallBack
     public void AnimForWinMoney()
     {
         float screenWith = GameUtil.GetScreenWith();
-        GameDataBean gameData = uiGameManager.gameDataManager.gameData;
+        GameDataBean gameData = uiGameManager.gameData;
         int moneyNumber = 10;
         for (int i = 0; i < moneyNumber; i++)
         {

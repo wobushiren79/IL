@@ -6,19 +6,12 @@ public class NpcImportantBuilder : BaseMonoBehaviour
 {
     public GameObject objNpcModel;
     public GameObject objNpcContainer;
-    //NPC数据管理
-    protected NpcInfoManager npcInfoManager;
-    protected GameDataManager gameDataManager;
 
     public List<NpcAIImportantCpt> listTownNpc = new List<NpcAIImportantCpt>();
     public List<NpcAIImportantCpt> listRecruitTownNpc = new List<NpcAIImportantCpt>();
     public List<NpcAIImportantCpt> listSpecialTownNpc = new List<NpcAIImportantCpt>();
     public List<NpcAIImportantCpt> listMountainNpc = new List<NpcAIImportantCpt>();
-    public void Awake()
-    {
-        npcInfoManager = Find<NpcInfoManager>(ImportantTypeEnum.NpcManager);
-        gameDataManager = Find<GameDataManager>(ImportantTypeEnum.GameDataManager);
-    }
+
 
     public void BuildImportantForTown()
     {
@@ -75,21 +68,22 @@ public class NpcImportantBuilder : BaseMonoBehaviour
             if (objNpcModel == null || objNpcContainer == null)
                 return null;
             //检测是否已经招募
-            if (gameDataManager.gameData.CheckHasWorker(characterData.baseInfo.characterId))
+            GameDataBean gameData = GameDataHandler.Instance.manager.GetGameData();
+            if (gameData.CheckHasWorker(characterData.baseInfo.characterId))
             {
                 return null;
             }
 
-            if (gameDataManager.gameData.gameTime.year == 0
-                && gameDataManager.gameData.gameTime.month == 0
-                && gameDataManager.gameData.gameTime.day == 0)
+            if (gameData.gameTime.year == 0
+                && gameData.gameTime.month == 0
+                && gameData.gameTime.day == 0)
             {
                 //如果是测试 这默认生成所有NPC
             }
             else
             {
                 //检测是否满足出现条件
-                if (!CheckUtil.StringIsNull(characterData.npcInfoData.condition) && !ShowConditionTools.CheckIsMeetAllCondition(gameDataManager.gameData, characterData.npcInfoData.condition))
+                if (!CheckUtil.StringIsNull(characterData.npcInfoData.condition) && !ShowConditionTools.CheckIsMeetAllCondition(gameData, characterData.npcInfoData.condition))
                 {
                     return null;
                 }

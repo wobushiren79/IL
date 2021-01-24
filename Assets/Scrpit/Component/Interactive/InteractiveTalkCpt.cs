@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using UnityEditor;
+using static GameEventHandler;
 
 public class InteractiveTalkCpt : BaseInteractiveCpt
 {
@@ -7,19 +8,17 @@ public class InteractiveTalkCpt : BaseInteractiveCpt
     private BaseNpcAI mNpcAI;
     public string interactiveContent;
 
-    private EventHandler mEventHandler;
 
     private void Start()
     {
         mNpcAI = GetComponent<BaseNpcAI>();
-        mEventHandler = Find<EventHandler>( ImportantTypeEnum.EventHandler);
     }
 
     public override void InteractiveDetection(CharacterInteractiveCpt characterInt)
     {
-        if (Input.GetButtonDown(InputInfo.Interactive_E) && mEventHandler != null)
+        if (Input.GetButtonDown(InputInfo.Interactive_E))
         {
-            if (mEventHandler.GetEventStatus() == EventHandler.EventStatusEnum.EventEnd)
+            if (GameEventHandler.Instance.GetEventStatus() == EventStatusEnum.EventEnd)
             {
                 //先改变人物面向
                 if (characterInt.transform.position.x>transform.position.x)
@@ -28,7 +27,7 @@ public class InteractiveTalkCpt : BaseInteractiveCpt
                     mNpcAI.SetCharacterFace(1);
                 //获取人物信息
                 NpcInfoBean npcInfo = mNpcAI.characterData.npcInfoData;
-                mEventHandler.EventTriggerForTalk(npcInfo,true);
+                GameEventHandler.Instance.EventTriggerForTalk(npcInfo,true);
                 //如果角色有问题提示。则取消问号
                 mNpcAI.CancelExpression();
             }

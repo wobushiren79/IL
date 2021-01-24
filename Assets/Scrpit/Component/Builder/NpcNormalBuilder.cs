@@ -10,10 +10,6 @@ public class NpcNormalBuilder : BaseMonoBehaviour
     public GameObject objNormalModel;
 
     //NPC数据管理
-    protected NpcInfoManager npcInfoManager;
-    protected NpcTeamManager npcTeamManager;
-    protected GameTimeHandler gameTimeHandler;
-    protected GameDataManager gameDataManager;
     protected WeatherHandler weatherHandler;
 
     //初始化大量随机NPC位置
@@ -28,10 +24,6 @@ public class NpcNormalBuilder : BaseMonoBehaviour
 
     protected virtual void Awake()
     {
-        npcInfoManager = Find<NpcInfoManager>(ImportantTypeEnum.NpcManager);
-        npcTeamManager = Find<NpcTeamManager>(ImportantTypeEnum.NpcManager);
-        gameTimeHandler = Find<GameTimeHandler>(ImportantTypeEnum.TimeHandler);
-        gameDataManager = Find<GameDataManager>(ImportantTypeEnum.GameDataManager);
         weatherHandler = Find<WeatherHandler>(ImportantTypeEnum.WeatherHandler);
     }
 
@@ -71,9 +63,7 @@ public class NpcNormalBuilder : BaseMonoBehaviour
 
     public GameObject BuildNpc(GameObject objNpcModel, Vector3 startPosition)
     {
-        if (npcInfoManager == null)
-            return null;
-        CharacterBean characterData = npcInfoManager.GetRandomCharacterData();
+        CharacterBean characterData = NpcInfoHandler.Instance.manager.GetRandomCharacterData();
         if (characterData == null)
             return null;
         //随机生成身体数据
@@ -83,8 +73,6 @@ public class NpcNormalBuilder : BaseMonoBehaviour
 
     public GameObject BuildNpc(GameObject objModel, CharacterBean characterData, Vector3 startPosition)
     {
-        if (npcInfoManager == null)
-            return null;
         if (characterData == null)
             return null;
         GameObject npcObj = Instantiate(objContainer, objModel);

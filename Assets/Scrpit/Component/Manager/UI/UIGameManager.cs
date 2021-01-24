@@ -9,13 +9,6 @@ public class UIGameManager : BaseUIManager
     //UI控件
     [Header("控件")]
     public PopupItemsSelection popupItemsSelection;
-    //数据
-    [Header("数据")]
-    public GameDataManager gameDataManager;
-    //相关处理
-    [Header("处理")]
-    public EventHandler eventHandler;
-    public GameDataHandler gameDataHandler;
     [Header("建造")]
     public NpcCustomerBuilder npcCustomerBuilder;
     public NpcEventBuilder npcEventBuilder;
@@ -26,11 +19,6 @@ public class UIGameManager : BaseUIManager
     private void Awake()
     {
         sceneInit= Find<BaseSceneInit>(ImportantTypeEnum.Init);
-
-        gameDataManager = Find<GameDataManager>(ImportantTypeEnum.GameDataManager);
-
-        eventHandler = Find<EventHandler>(ImportantTypeEnum.EventHandler);
-        gameDataHandler = Find<GameDataHandler>(ImportantTypeEnum.GameDataHandler);
 
         popupItemsSelection = FindInChildren<PopupItemsSelection>(ImportantTypeEnum.Popup);
 

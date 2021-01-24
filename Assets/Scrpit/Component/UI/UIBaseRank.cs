@@ -101,7 +101,7 @@ public class UIBaseRank : UIBaseOne, IRadioGroupCallBack
         {
             intScore = (int)score;
         }
-        GameDataBean gameData = uiGameManager.gameDataManager.gameData;
+        GameDataBean gameData = uiGameManager.gameData;
         string innName = gameData.GetInnAttributesData().innName;
         string playerName = gameData.userCharacter.baseInfo.name;
         SteamLeaderboardEntryBean steamLeaderboardEntry = new SteamLeaderboardEntryBean();

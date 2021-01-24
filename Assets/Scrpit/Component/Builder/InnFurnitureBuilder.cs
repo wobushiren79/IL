@@ -9,7 +9,7 @@ public class InnFurnitureBuilder : BaseMonoBehaviour
 
     //客栈处理
     protected InnHandler innHandler;
-    protected GameDataManager gameDataManager;
+    ;
 
     private void Awake()
     {
@@ -24,9 +24,10 @@ public class InnFurnitureBuilder : BaseMonoBehaviour
     public void StartBuild()
     {
         CptUtil.RemoveChildsByActive(buildContainer);
-        List<InnResBean> listData = gameDataManager.gameData.GetInnBuildData().GetFurnitureList(1);
+        GameDataBean gameData = GameDataHandler.Instance.manager.GetGameData();
+        List<InnResBean> listData = gameData.GetInnBuildData().GetFurnitureList(1);
         BuildListFurniture(listData);
-        List<InnResBean> listSecondData = gameDataManager.gameData.GetInnBuildData().GetFurnitureList(2);
+        List<InnResBean> listSecondData = gameData.GetInnBuildData().GetFurnitureList(2);
         BuildListFurniture(listSecondData);
     }
 
@@ -45,9 +46,10 @@ public class InnFurnitureBuilder : BaseMonoBehaviour
                 //是床
                 BuildBedBean tempBuildBedData = null;
                 //bool hasData = false;
-                for (int f = 0; f < gameDataManager.gameData.listBed.Count; f++)
+                GameDataBean gameData = GameDataHandler.Instance.manager.GetGameData();
+                for (int f = 0; f < gameData.listBed.Count; f++)
                 {
-                    BuildBedBean buildBedData = gameDataManager.gameData.listBed[f];
+                    BuildBedBean buildBedData = gameData.listBed[f];
                     if (buildBedData != null && buildBedData.remarkId.Equals(itemData.remarkId))
                     {
                         tempBuildBedData = buildBedData;

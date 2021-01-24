@@ -110,7 +110,7 @@ public class UIGameText : BaseUIComponent, DialogView.IDialogCallBack
         this.mTalkNpcInfo = npcInfo;
         mTextEnum = TextEnum.Talk;
         textOrder = 1;
-        CharacterFavorabilityBean characterFavorability = uiGameManager.gameDataManager.gameData.GetCharacterFavorability(mTalkNpcInfo.id);
+        CharacterFavorabilityBean characterFavorability = uiGameManager.gameData.GetCharacterFavorability(mTalkNpcInfo.id);
         //如果是小镇居民的第一次对话
         if (mTalkNpcInfo.GetNpcType() == NpcTypeEnum.Town && characterFavorability.firstMeet)
         {
@@ -119,7 +119,7 @@ public class UIGameText : BaseUIComponent, DialogView.IDialogCallBack
             return;
         }
         //获取对话选项
-        TextInfoHandler.Instance.manager.GetTextForTalkOptions(uiGameManager.gameDataManager.gameData, mTalkNpcInfo, SetTextInfoData);
+        TextInfoHandler.Instance.manager.GetTextForTalkOptions(uiGameManager.gameData, mTalkNpcInfo, SetTextInfoData);
     }
 
     /// <summary>
@@ -183,15 +183,15 @@ public class UIGameText : BaseUIComponent, DialogView.IDialogCallBack
     {
         string userName = "";
         int sex = 1;
-        if (uiGameManager.gameDataManager.gameData.userCharacter != null
-            && uiGameManager.gameDataManager.gameData.userCharacter.baseInfo.name != null)
-            userName = uiGameManager.gameDataManager.gameData.userCharacter.baseInfo.name;
-        if (uiGameManager.gameDataManager.gameData.userCharacter != null)
-            sex = uiGameManager.gameDataManager.gameData.userCharacter.body.sex;
+        if (uiGameManager.gameData.userCharacter != null
+            && uiGameManager.gameData.userCharacter.baseInfo.name != null)
+            userName = uiGameManager.gameData.userCharacter.baseInfo.name;
+        if (uiGameManager.gameData.userCharacter != null)
+            sex = uiGameManager.gameData.userCharacter.body.sex;
         //去除空格 防止自动换行
         content = content.Replace(" ", "");
         //替换客栈名字
-        content = content.Replace(GameSubstitutionInfo.Inn_Name, uiGameManager.gameDataManager.gameData.GetInnAttributesData().innName);
+        content = content.Replace(GameSubstitutionInfo.Inn_Name, uiGameManager.gameData.GetInnAttributesData().innName);
         //替换名字
         content = content.Replace(GameSubstitutionInfo.User_Name, userName);
         //替换小名
@@ -243,10 +243,10 @@ public class UIGameText : BaseUIComponent, DialogView.IDialogCallBack
                         //增加好感
                         if (GameCommonInfo.DailyLimitData.AddTalkNpc(mTalkNpcInfo.id))
                         {
-                            uiGameManager.gameDataManager.gameData.GetCharacterFavorability(mTalkNpcInfo.id).AddFavorability(1);
+                            uiGameManager.gameData.GetCharacterFavorability(mTalkNpcInfo.id).AddFavorability(1);
                         }
                         //增加数据记录
-                        CharacterFavorabilityBean characterFavorability = uiGameManager.gameDataManager.gameData.GetCharacterFavorability(mTalkNpcInfo.id);
+                        CharacterFavorabilityBean characterFavorability = uiGameManager.gameData.GetCharacterFavorability(mTalkNpcInfo.id);
                         characterFavorability.AddTalkNumber(1);
                     }
                     //退出
@@ -258,7 +258,7 @@ public class UIGameText : BaseUIComponent, DialogView.IDialogCallBack
                     else if (textData.content.Equals(GameCommonInfo.GetUITextById(99104)))
                     {
 
-                        if (uiGameManager.gameDataManager.gameData.CheckIsMaxWorker())
+                        if (uiGameManager.gameData.CheckIsMaxWorker())
                         {
                             ToastHandler.Instance.ToastHint(GameCommonInfo.GetUITextById(1051));
                         }
@@ -333,7 +333,7 @@ public class UIGameText : BaseUIComponent, DialogView.IDialogCallBack
         pickForItemsDialog.GetSelectedItems(out ItemsInfoBean itemsInfo, out ItemBean itemData);
         //获取赠送人
         CharacterBean characterData = NpcInfoHandler.Instance.manager.GetCharacterDataById(mTalkNpcInfo.id);
-        CharacterFavorabilityBean characterFavorability = gameDataManager.gameData.GetCharacterFavorability(mTalkNpcInfo.id);
+        CharacterFavorabilityBean characterFavorability = gameData.GetCharacterFavorability(mTalkNpcInfo.id);
         int addFavorability;
         int favorabilityForTalk;
         //根据物品稀有度增加好感
@@ -367,7 +367,7 @@ public class UIGameText : BaseUIComponent, DialogView.IDialogCallBack
         //增加送礼次数
         characterFavorability.AddGiftNumber(1);
         //删减物品
-        gameDataManager.gameData.AddItemsNumber(itemData.itemId, -1);
+        gameData.AddItemsNumber(itemData.itemId, -1);
         //增加每日限制
         GameCommonInfo.DailyLimitData.AddGiftNpc(mTalkNpcInfo.id);
         //通过增加好感查询对话

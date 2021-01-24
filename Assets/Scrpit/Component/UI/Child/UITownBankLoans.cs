@@ -17,7 +17,7 @@ public class UITownBankLoans : BaseUIChildComponent<UITownBank>
     {
         CptUtil.RemoveChildsByActive(objLoansContainer);
         GameDataManager gameDataManager = ((UIGameManager)uiComponent.uiManager).gameDataManager;
-        InnAttributesBean innAttributes = gameDataManager.gameData.GetInnAttributesData();
+        InnAttributesBean innAttributes = gameData.GetInnAttributesData();
         //获取客栈等级
         innAttributes.GetInnLevel(out int levelTitle, out int levelStar);
         //根据等级生成不同数量的贷款项目

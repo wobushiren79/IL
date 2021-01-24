@@ -41,7 +41,7 @@ public class UIGameFavorability : BaseUIComponent
     /// </summary>
     public void InitData()
     {
-        List<CharacterFavorabilityBean> listData = uiGameManager.gameDataManager.gameData.listCharacterFavorability;
+        List<CharacterFavorabilityBean> listData = uiGameManager.gameData.listCharacterFavorability;
         if (listData == null)
             return;
         for (int i = 0; i < listData.Count; i++)

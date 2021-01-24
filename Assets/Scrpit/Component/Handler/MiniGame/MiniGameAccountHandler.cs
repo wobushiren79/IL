@@ -63,7 +63,7 @@ public class MiniGameAccountHandler : BaseMiniGameHandler<MiniGameAccountBuilder
     /// <returns></returns>
     public IEnumerator StartCountDown()
     {
-        UIMiniGameAccount uiMiniGameAccount = (UIMiniGameAccount)uiGameManager.GetOpenUI();
+        UIMiniGameAccount uiMiniGameAccount = (UIMiniGameAccount)UIHandler.Instance.manager.GetOpenUI();
         while (true)
         {
             //设置游戏UI时间
@@ -107,7 +107,7 @@ public class MiniGameAccountHandler : BaseMiniGameHandler<MiniGameAccountBuilder
 
         //展示特效
         MiniGameAccountEjectorCpt ejectorCpt = miniGameBuilder.GetEjector();
-        UIMiniGameAccount uiMiniGameAccount = (UIMiniGameAccount)uiGameManager.GetOpenUI();
+        UIMiniGameAccount uiMiniGameAccount = (UIMiniGameAccount)UIHandler.Instance.manager.GetOpenUI();
         uiMiniGameAccount.ShowMoneyGet(ejectorCpt.transform.position, moneyL, moneyM, moneyS);
 
 

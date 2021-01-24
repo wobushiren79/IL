@@ -9,11 +9,11 @@ public class GameDataManager : BaseManager, IGameDataView, IUserRevenueView
     public GameDataController gameDataController;
     public UserRevenueController userRevenueController;
 
-    //游戏数据
-    public GameDataBean gameData;
     //简略游戏数据
     public List<GameDataSimpleBean> listGameDataSimple;
 
+    //游戏数据
+    protected GameDataBean gameData;
     protected IUserRevenueCallBack userRevenueCallBack;
     protected IGameDataSimpleCallBack simpleGameDataCallBack;
 
@@ -32,6 +32,15 @@ public class GameDataManager : BaseManager, IGameDataView, IUserRevenueView
     public void SetUserRevenueCallBack(IUserRevenueCallBack callBack)
     {
         userRevenueCallBack = callBack;
+    }
+
+    /// <summary>
+    /// 获取游戏数据
+    /// </summary>
+    /// <returns></returns>
+    public GameDataBean GetGameData()
+    {
+        return gameData;
     }
 
     /// <summary>

@@ -29,7 +29,7 @@ public class UIGameStatisticsForCustomer : BaseUIChildComponent<UIGameStatistics
     /// </summary>
     public void InitNormalCustomer()
     {
-        UserAchievementBean userAchievement = ((UIGameManager)uiComponent.uiManager).gameDataManager.gameData.GetAchievementData();
+        UserAchievementBean userAchievement = ((UIGameManager)uiComponent.uiManager).gameData.GetAchievementData();
         if (tvNormalCustomerNumber != null)
             tvNormalCustomerNumber.text = GameCommonInfo.GetUITextById(323) + " " + userAchievement.GetNumberForCustomerFoodByType(CustomerTypeEnum.Normal) + GameCommonInfo.GetUITextById(82);
     }
@@ -41,7 +41,7 @@ public class UIGameStatisticsForCustomer : BaseUIChildComponent<UIGameStatistics
     {
         CptUtil.RemoveChildsByActive(objTeamCustomerContainer);
 
-        UserAchievementBean userAchievement = ((UIGameManager)uiComponent.uiManager).gameDataManager.gameData.GetAchievementData();
+        UserAchievementBean userAchievement = ((UIGameManager)uiComponent.uiManager).gameData.GetAchievementData();
         if (tvTeamCustomerNumber != null)
             tvTeamCustomerNumber.text = GameCommonInfo.GetUITextById(323) + " " + userAchievement.GetNumberForCustomerFoodByType(CustomerTypeEnum.Team) + GameCommonInfo.GetUITextById(82);
         //查询所有团队
@@ -83,12 +83,12 @@ public class UIGameStatisticsForCustomer : BaseUIChildComponent<UIGameStatistics
         CptUtil.RemoveChildsByActive(objFriendCustomerContainer);
 
         GameDataManager gameDataManager = ((UIGameManager)uiComponent.uiManager).gameDataManager;
-        UserAchievementBean userAchievement = gameDataManager.gameData.GetAchievementData();
+        UserAchievementBean userAchievement = gameData.GetAchievementData();
 
         //设置数量
         if (tvFriendCustomerNumber != null)
             tvFriendCustomerNumber.text = GameCommonInfo.GetUITextById(323) + " " + userAchievement.GetNumberForCustomerFoodByType(CustomerTypeEnum.Friend) + GameCommonInfo.GetUITextById(82);
-        List<CharacterFavorabilityBean> listData = gameDataManager.gameData.listCharacterFavorability;
+        List<CharacterFavorabilityBean> listData = gameData.listCharacterFavorability;
 
         foreach (CharacterFavorabilityBean itemData in listData)
         {

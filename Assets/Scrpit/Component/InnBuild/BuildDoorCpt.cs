@@ -8,13 +8,6 @@ public class BuildDoorCpt : BaseBuildItemCpt
     public TextMesh tvInnName;
     public TextMesh tvInnNameShadow;
 
-    protected GameDataManager gameDataManager;
-    private void Awake()
-    {
-        gameDataManager = Find<GameDataManager>(ImportantTypeEnum.GameDataManager);
-
-
-    }
 
     /// <summary>
     /// 获取入口位置
@@ -28,7 +21,8 @@ public class BuildDoorCpt : BaseBuildItemCpt
     public override void SetData(BuildItemBean buildItemData)
     {
         base.SetData(buildItemData);
-        SetInnName(gameDataManager.gameData.GetInnAttributesData().innName);
+        GameDataBean gameData = GameDataHandler.Instance.manager.GetGameData();
+        SetInnName(gameData.GetInnAttributesData().innName);
     }
 
     public void SetInnName(string name)

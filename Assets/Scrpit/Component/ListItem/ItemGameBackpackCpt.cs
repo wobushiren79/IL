@@ -175,7 +175,7 @@ public class ItemGameBackpackCpt : ItemGameBaseCpt, IPointerClickHandler, PopupI
         {
             case GeneralEnum.Menu:
                 //添加菜谱
-                if (gameDataManager.gameData.AddFoodMenu(itemsInfoData.add_id))
+                if (gameData.AddFoodMenu(itemsInfoData.add_id))
                 { 
                     MenuInfoBean menuInfo= InnFoodHandler.Instance.manager.GetFoodDataById(itemsInfoData.add_id);
                     RefreshItems(itemsInfoData.id, -1);
@@ -249,7 +249,7 @@ public class ItemGameBackpackCpt : ItemGameBaseCpt, IPointerClickHandler, PopupI
 
     public virtual void SelectionRead(PopupItemsSelection view)
     {
-        uiGameManager.eventHandler.EventTriggerForLook(itemsInfoData.add_id);
+        GameEventHandler.Instance.EventTriggerForLook(itemsInfoData.add_id);
     }
 
     #endregion
@@ -292,7 +292,7 @@ public class ItemGameBackpackCpt : ItemGameBaseCpt, IPointerClickHandler, PopupI
     public void RefreshItems(long id, long changeNumber)
     {
         GameDataManager gameDataManager = uiGameManager.gameDataManager;
-        gameDataManager.gameData.AddItemsNumber(id, changeNumber);
+        gameData.AddItemsNumber(id, changeNumber);
         uiComponent.RefreshUI();
     }
 

@@ -75,7 +75,7 @@ public class UITownGuildStore : UIBaseOne, IRadioGroupCallBack
         {
             StoreInfoBean itemData = listData[i];
             //检测是否满足前置成就
-            if (!itemData.CheckPreAchIds(uiGameManager.gameDataManager.gameData))
+            if (!itemData.CheckPreAchIds(uiGameManager.gameData))
             {
                 continue;
             }

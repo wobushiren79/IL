@@ -3,10 +3,9 @@ using UnityEditor;
 using System.Collections.Generic;
 using System.Linq;
 using static GameControlHandler;
+using System;
 
-public class EventHandler : BaseHandler,
-    UIGameText.ICallBack,
-    IBaseObserver
+public class GameEventHandler : BaseHandler<GameEventHandler, GameEventManager>, UIGameText.ICallBack, IBaseObserver
 {
     public enum EventTypeEnum
     {
@@ -30,7 +29,7 @@ public class EventHandler : BaseHandler,
         TextSelectResult,//文本选择
     }
 
-    protected GameDataManager gameDataManager;
+    ;
     protected NpcImportantBuilder npcImportantBuilder;
 
     protected MiniGameCombatHandler miniGameCombatHandler;
@@ -40,20 +39,18 @@ public class EventHandler : BaseHandler,
     private EventTypeEnum mEventType;
     private Vector3 mEventPosition = Vector3.zero;
 
-    private StoryInfoBean mStoryInfo;
+    protected StoryInfoBean storyInfo;
 
-    private void Awake()
+    protected Action<NotifyEventTypeEnum, object[]> notifyForEvent;
+    protected override void Awake()
     {
-        gameDataManager = Find<GameDataManager>(ImportantTypeEnum.GameDataManager);
+        base.Awake();
 
         miniGameCombatHandler = Find<MiniGameCombatHandler>(ImportantTypeEnum.MiniGameHandler);
         miniGameDebateHandler = Find<MiniGameDebateHandler>(ImportantTypeEnum.MiniGameHandler);
-
+        miniGameDebateHandler.AddObserver(this);
+        miniGameDebateHandler.AddObserver(this);
         npcImportantBuilder = Find<NpcImportantBuilder>(ImportantTypeEnum.NpcBuilder);
-        if (miniGameCombatHandler != null)
-            miniGameCombatHandler.AddObserver(this);
-        if (miniGameDebateHandler != null)
-            miniGameDebateHandler.AddObserver(this);
 
         GameTimeHandler.Instance.RegisterNotifyForTime(NotifyForTime);
     }
@@ -63,15 +60,31 @@ public class EventHandler : BaseHandler,
         mEventStatus = EventStatusEnum.EventEnd;
         mEventPosition = Vector3.zero;
         //通知事件结束
-        if (mStoryInfo == null)
-            NotifyAllObserver((int)NotifyEventTypeEnum.EventEnd);
+        if (storyInfo == null)
+            notifyForEvent?.Invoke(NotifyEventTypeEnum.EventEnd, new object[] { -1 });
         else
-            NotifyAllObserver((int)NotifyEventTypeEnum.EventEnd, mStoryInfo.id);
+            notifyForEvent?.Invoke(NotifyEventTypeEnum.EventEnd, new object[] { storyInfo.id });
         //移除所有观察者
-        RemoveAllObserver();
+        notifyForEvent = null;
         //显示重要NPC
         if (npcImportantBuilder != null)
             npcImportantBuilder.ShowNpc();
+    }
+
+    public void RegisterNotifyForEvent(Action<NotifyEventTypeEnum, object[]> notifyForEvent)
+    {
+        this.notifyForEvent += notifyForEvent;
+    }
+
+    public void UnRegisterNotifyForEvent(Action<NotifyEventTypeEnum, object[]> notifyForEvent)
+    {
+        this.notifyForEvent -= notifyForEvent;
+    }
+
+    public void UnRegisterAllNotifyForEvent()
+    {
+        this.notifyForEvent = null;
+
     }
 
     /// <summary>
@@ -223,7 +236,7 @@ public class EventHandler : BaseHandler,
         {
             return false;
         }
-        this.mStoryInfo = storyInfo;
+        this.storyInfo = storyInfo;
         mEventPosition = new Vector3(storyInfo.position_x, storyInfo.position_y);
         SetEventStatus(EventStatusEnum.EventIng);
         SetEventType(EventTypeEnum.Story);
@@ -269,7 +282,8 @@ public class EventHandler : BaseHandler,
         {
             return false;
         }
-        StoryInfoBean storyInfo = StoryInfoHandler.Instance.manager.CheckStory(gameDataManager.gameData, positionType, OutOrIn);
+        GameDataBean gameData = GameDataHandler.Instance.manager.GetGameData();
+        StoryInfoBean storyInfo = StoryInfoHandler.Instance.manager.CheckStory(gameData, positionType, OutOrIn);
         if (storyInfo != null)
         {
             EventTriggerForStory(storyInfo);
@@ -286,7 +300,8 @@ public class EventHandler : BaseHandler,
         {
             return false;
         }
-        StoryInfoBean storyInfo = StoryInfoHandler.Instance.manager.CheckStory(gameDataManager.gameData);
+        GameDataBean gameData = GameDataHandler.Instance.manager.GetGameData();
+        StoryInfoBean storyInfo = StoryInfoHandler.Instance.manager.CheckStory(gameData);
         if (storyInfo != null)
         {
             EventTriggerForStory(storyInfo);
@@ -306,7 +321,7 @@ public class EventHandler : BaseHandler,
         StoryInfoBean storyInfo = StoryInfoHandler.Instance.manager.GetStoryInfoDataById(id);
         if (storyInfo == null)
             return false;
-        this.mStoryInfo = storyInfo;
+        this.storyInfo = storyInfo;
         SetEventStatus(EventStatusEnum.EventIng);
         SetEventType(EventTypeEnum.StoryForMiniGameCooking);
         //控制模式修改
@@ -345,8 +360,11 @@ public class EventHandler : BaseHandler,
                 GameControlHandler.Instance.RestoreControl();
             }
             //保存数据
-            if (gameDataManager != null && mStoryInfo != null)
-                gameDataManager.gameData.AddTraggeredEvent(mStoryInfo.id);
+            if (storyInfo != null)
+            {
+                GameDataBean gameData = GameDataHandler.Instance.manager.GetGameData();
+                gameData.AddTraggeredEvent(storyInfo.id);
+            }      
             //打开主界面UI
             UIHandler.Instance.manager.OpenUIAndCloseOther<UIGameMain>(UIEnum.GameMain);
             //恢复时间
@@ -454,7 +472,7 @@ public class EventHandler : BaseHandler,
 
     public void UITextAddFavorability(long characterId, int favorability)
     {
-        NotifyAllObserver((int)NotifyEventTypeEnum.TalkForAddFavorability, characterId, favorability);
+        notifyForEvent?.Invoke(NotifyEventTypeEnum.TalkForAddFavorability, new object[] { characterId, favorability });
     }
 
     public void UITextSceneExpression(Dictionary<int, CharacterExpressionCpt.CharacterExpressionEnum> mapData)
@@ -492,13 +510,13 @@ public class EventHandler : BaseHandler,
             if (npcImportantBuilder != null)
                 npcImportantBuilder.HideNpc();
         }
-        NotifyAllObserver((int)NotifyEventTypeEnum.TextSelectResult, textData);
+        notifyForEvent?.Invoke(NotifyEventTypeEnum.TextSelectResult, new object[] { textData });
     }
     #endregion
 
 
     #region 回调处理
-    public void ObserbableUpdate<T>(T observable, int type, params object[] obj) where T : Object
+    public void ObserbableUpdate<T>(T observable, int type, params object[] obj) where T : UnityEngine.Object
     {
         if (observable as MiniGameCombatHandler
             || observable as MiniGameDebateHandler)
@@ -538,5 +556,6 @@ public class EventHandler : BaseHandler,
 
         }
     }
+
     #endregion
 }

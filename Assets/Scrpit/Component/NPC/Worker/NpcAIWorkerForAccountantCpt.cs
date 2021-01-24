@@ -141,7 +141,7 @@ public class NpcAIWorkerForAccountantCpt : NpcAIWokerFoBaseCpt
     {
         float time = npcAIWorker.characterData.CalculationAccountingTime();
         yield return new WaitForSeconds(time);
-        MenuOwnBean menuOwn = gameDataManager.gameData.GetMenuById(orderForCustomer.foodData.id);
+        MenuOwnBean menuOwn = gameData.GetMenuById(orderForCustomer.foodData.id);
         menuOwn.GetPrice(orderForCustomer.foodData, out long payMoneyL, out long payMoneyM, out long payMoneyS);
         //是否出错
         bool isError = npcAIWorker.characterData.CalculationAccountingCheck(out float moreRate);

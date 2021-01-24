@@ -20,17 +20,8 @@ public class PopupBedShow : PopupShowView
     public GameObject objItemStatisticsContainer;
     public GameObject objItemTextModel;
 
-    protected GameDataManager gameDataManager;
-    protected IconDataManager iconDataManager;
-
     public BuildBedBean buildBedData;
 
-    public override void Awake()
-    {
-        base.Awake();
-        gameDataManager = Find<GameDataManager>(ImportantTypeEnum.GameDataManager);
-        iconDataManager = Find<IconDataManager>(ImportantTypeEnum.UIManager);
-    }
 
     public void SetData(BuildBedBean buildBedData)
     {
@@ -98,8 +89,9 @@ public class PopupBedShow : PopupShowView
             objResearch.SetActive(false);
             return;
         }
-        objResearch.SetActive(true);
-        CharacterBean researcher = buildBedData.GetResearchCharacter(gameDataManager.gameData);
+        objResearch.SetActive(true); 
+        GameDataBean gameData = GameDataHandler.Instance.manager.GetGameData();
+        CharacterBean researcher = buildBedData.GetResearchCharacter(gameData);
         float progress = buildBedData.GetResearchProgress(out long completeExp, out long researchExp);
         if (researcher != null)
         {

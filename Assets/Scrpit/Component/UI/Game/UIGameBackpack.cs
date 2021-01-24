@@ -40,7 +40,7 @@ public class UIGameBackpack : UIBaseOne, TextSearchView.ICallBack
     {
         base.RefreshUI();
         listItemData.Clear();
-        listItemData.AddRange(uiGameManager.gameDataManager.gameData.listItems);
+        listItemData.AddRange(uiGameManager.gameData.listItems);
         if (gridVertical)
         {
             gridVertical.SetCellCount(listItemData.Count);
@@ -66,7 +66,7 @@ public class UIGameBackpack : UIBaseOne, TextSearchView.ICallBack
 
     public void OnClickForClearUp()
     {
-        uiGameManager.gameDataManager.gameData.listItems = uiGameManager.gameDataManager.gameData.listItems.OrderBy(data=> {
+        uiGameManager.gameData.listItems = uiGameManager.gameData.listItems.OrderBy(data=> {
             ItemsInfoBean itemsInfoBean = GameItemsHandler.Instance.manager.GetItemsById(data.itemId);
             return itemsInfoBean.items_type;
         }).ToList();

@@ -20,16 +20,14 @@ public class UIGameDate : BaseUIComponent
     protected float animTimeForWaitNext = 1f;//动画时间
     protected float animTimeForShowDialog = 2f;//动画延迟
 
-    protected GameDataManager gameDataManager;
+    ;
     protected NpcCustomerBuilder npcCustomerBuilder;
-    protected EventHandler eventHandler;
 
     public override void Awake()
     {
         base.Awake();
         gameDataManager = uiGameManager.gameDataManager;
         npcCustomerBuilder = uiGameManager.npcCustomerBuilder;
-        eventHandler = uiGameManager.eventHandler;
     }
 
     private void Start()
@@ -113,7 +111,7 @@ public class UIGameDate : BaseUIComponent
 
         GameTimeHandler.Instance.GetTime(out int year, out int month, out int day);
 
-        List<CharacterBean> listWorker = gameDataManager.gameData.GetAllCharacterData();
+        List<CharacterBean> listWorker = gameData.GetAllCharacterData();
         //如果有请假的员工 新的一天结束请假
         foreach (CharacterBean itemWork in listWorker)
         {
@@ -128,7 +126,7 @@ public class UIGameDate : BaseUIComponent
             InnRest();
         }
         //如果时建设中则不营业
-        else if (gameDataManager.gameData.GetInnBuildData().listBuildDay.Count > 0)
+        else if (gameData.GetInnBuildData().listBuildDay.Count > 0)
         {
             InnRest();
         }
@@ -145,7 +143,7 @@ public class UIGameDate : BaseUIComponent
     /// </summary>
     public void InnWork()
     {
-        List<CharacterBean> listWorker = gameDataManager.gameData.GetAllCharacterData();
+        List<CharacterBean> listWorker = gameData.GetAllCharacterData();
         //计算员工请假概率
         foreach (CharacterBean itemWork in listWorker)
         {
@@ -178,7 +176,7 @@ public class UIGameDate : BaseUIComponent
         baseControl.SetFollowPosition(startPosition + new Vector3(0, -2, 0));
 
         //触发事件检测 
-        if (!eventHandler.EventTriggerForStory())
+        if (!GameEventHandler.Instance.EventTriggerForStory())
         {
             //没有触发事件 直接打开UI
             UIHandler.Instance.manager.OpenUIAndCloseOther<UIGameMain>(UIEnum.GameMain);

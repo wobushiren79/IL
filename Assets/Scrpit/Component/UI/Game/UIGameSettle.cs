@@ -63,7 +63,7 @@ public class UIGameSettle : BaseUIComponent
     public void InitData()
     {
         GameDataManager gameDataManager = uiGameManager.gameDataManager;
-        UserAchievementBean userAchievement = gameDataManager.gameData.GetAchievementData();
+        UserAchievementBean userAchievement = gameData.GetAchievementData();
         //停止时间
         GameTimeHandler.Instance.SetTimeStatus(true);
         CptUtil.RemoveChildsByActive(objListRecordContent.transform);
@@ -91,9 +91,9 @@ public class UIGameSettle : BaseUIComponent
                 innRecord.payWageM,
                 innRecord.payWageS);
         //借贷还款
-        if (gameDataManager.gameData.listLoans.Count > 0)
+        if (gameData.listLoans.Count > 0)
         {
-            gameDataManager.gameData.PayLoans(out List<UserLoansBean> listPayLoans);
+            gameData.PayLoans(out List<UserLoansBean> listPayLoans);
             foreach (UserLoansBean itemPayLoans in listPayLoans)
             {
                 CreateItemForMoney(
@@ -112,56 +112,56 @@ public class UIGameSettle : BaseUIComponent
         if (innRecord.consumeIngOilsalt > 0)
         {
             ingName = IngredientsEnumTools.GetIngredientName(IngredientsEnum.Oilsalt);
-            CreateItemForOther("-" + innRecord.consumeIngOilsalt + "(" + GameCommonInfo.GetUITextById(93) + gameDataManager.gameData.ingOilsalt + ")", spIconOilsalt, consumeIngStr + " " + ingName, Color.red);
+            CreateItemForOther("-" + innRecord.consumeIngOilsalt + "(" + GameCommonInfo.GetUITextById(93) + gameData.ingOilsalt + ")", spIconOilsalt, consumeIngStr + " " + ingName, Color.red);
             //CreateItemForMoney(spIconOilsalt, string.Format(GameCommonInfo.GetUITextById(339), ingName), 0, 0, 0, innRecord.consumeIngOilsalt * 5);
             //innRecord.AddPayIng(0, 0, innRecord.consumeIngOilsalt * 5);
         }
         if (innRecord.consumeIngMeat > 0)
         {
             ingName = IngredientsEnumTools.GetIngredientName(IngredientsEnum.Meat);
-            CreateItemForOther("-" + innRecord.consumeIngMeat + "(" + GameCommonInfo.GetUITextById(93) + gameDataManager.gameData.ingMeat + ")", spIconMeat, consumeIngStr + " " + ingName, Color.red);
+            CreateItemForOther("-" + innRecord.consumeIngMeat + "(" + GameCommonInfo.GetUITextById(93) + gameData.ingMeat + ")", spIconMeat, consumeIngStr + " " + ingName, Color.red);
             //CreateItemForMoney(spIconMeat, string.Format(GameCommonInfo.GetUITextById(339), ingName), 0, 0, 0, innRecord.consumeIngMeat * 10);
             //innRecord.AddPayIng(0, 0, innRecord.consumeIngMeat * 10);
         }
         if (innRecord.consumeIngRiverfresh > 0)
         {
             ingName = IngredientsEnumTools.GetIngredientName(IngredientsEnum.Riverfresh);
-            CreateItemForOther("-" + innRecord.consumeIngRiverfresh + "(" + GameCommonInfo.GetUITextById(93) + gameDataManager.gameData.ingRiverfresh + ")", spIconRiverfresh, consumeIngStr + " " + ingName, Color.red);
+            CreateItemForOther("-" + innRecord.consumeIngRiverfresh + "(" + GameCommonInfo.GetUITextById(93) + gameData.ingRiverfresh + ")", spIconRiverfresh, consumeIngStr + " " + ingName, Color.red);
             //CreateItemForMoney(spIconRiverfresh, string.Format(GameCommonInfo.GetUITextById(339), ingName), 0, 0, 0, innRecord.consumeIngRiverfresh * 10);
             //innRecord.AddPayIng(0, 0, innRecord.consumeIngRiverfresh * 10);
         }
         if (innRecord.consumeIngSeafood > 0)
         {
             ingName = IngredientsEnumTools.GetIngredientName(IngredientsEnum.Seafood);
-            CreateItemForOther("-" + innRecord.consumeIngSeafood + "(" + GameCommonInfo.GetUITextById(93) + gameDataManager.gameData.ingSeafood + ")", spIconSeafood, consumeIngStr + " " + ingName, Color.red);
+            CreateItemForOther("-" + innRecord.consumeIngSeafood + "(" + GameCommonInfo.GetUITextById(93) + gameData.ingSeafood + ")", spIconSeafood, consumeIngStr + " " + ingName, Color.red);
             //CreateItemForMoney(spIconSeafood, string.Format(GameCommonInfo.GetUITextById(339), ingName), 0, 0, 0, innRecord.consumeIngSeafood * 50);
             //innRecord.AddPayIng(0, 0, innRecord.consumeIngSeafood * 50);
         }
         if (innRecord.consumeIngVegetables > 0)
         {
             ingName = IngredientsEnumTools.GetIngredientName(IngredientsEnum.Vegetables);
-            CreateItemForOther("-" + innRecord.consumeIngVegetables + "(" + GameCommonInfo.GetUITextById(93) + gameDataManager.gameData.ingVegetables + ")", spIconVegetables, consumeIngStr + " " + ingName, Color.red);
+            CreateItemForOther("-" + innRecord.consumeIngVegetables + "(" + GameCommonInfo.GetUITextById(93) + gameData.ingVegetables + ")", spIconVegetables, consumeIngStr + " " + ingName, Color.red);
             //CreateItemForMoney(spIconVegetables, string.Format(GameCommonInfo.GetUITextById(339), ingName), 0, 0, 0, innRecord.consumeIngVegetables * 5);
             //innRecord.AddPayIng(0, 0, innRecord.consumeIngVegetables * 5);
         }
         if (innRecord.consumeIngMelonfruit > 0)
         {
             ingName = IngredientsEnumTools.GetIngredientName(IngredientsEnum.Melonfruit);
-            CreateItemForOther("-" + innRecord.consumeIngMelonfruit + "(" + GameCommonInfo.GetUITextById(93) + gameDataManager.gameData.ingMelonfruit + ")", spIconMelonfruit, consumeIngStr + " " + ingName, Color.red);
+            CreateItemForOther("-" + innRecord.consumeIngMelonfruit + "(" + GameCommonInfo.GetUITextById(93) + gameData.ingMelonfruit + ")", spIconMelonfruit, consumeIngStr + " " + ingName, Color.red);
             //CreateItemForMoney(spIconMelonfruit, string.Format(GameCommonInfo.GetUITextById(339), ingName), 0, 0, 0, innRecord.consumeIngMelonfruit * 5);
             // innRecord.AddPayIng(0, 0, innRecord.consumeIngMelonfruit * 5);
         }
         if (innRecord.consumeIngWaterwine > 0)
         {
             ingName = IngredientsEnumTools.GetIngredientName(IngredientsEnum.Waterwine);
-            CreateItemForOther("-" + innRecord.consumeIngWaterwine + "(" + GameCommonInfo.GetUITextById(93) + gameDataManager.gameData.ingWaterwine + ")", spIconWaterwine, consumeIngStr + " " + ingName, Color.red);
+            CreateItemForOther("-" + innRecord.consumeIngWaterwine + "(" + GameCommonInfo.GetUITextById(93) + gameData.ingWaterwine + ")", spIconWaterwine, consumeIngStr + " " + ingName, Color.red);
             // CreateItemForMoney(spIconWaterwine, string.Format(GameCommonInfo.GetUITextById(339), ingName), 0, 0, 0, innRecord.consumeIngWaterwine * 10);
             // innRecord.AddPayIng(0, 0, innRecord.consumeIngWaterwine * 10);
         }
         if (innRecord.consumeIngFlour > 0)
         {
             ingName = IngredientsEnumTools.GetIngredientName(IngredientsEnum.Flour);
-            CreateItemForOther("-" + innRecord.consumeIngFlour + "(" + GameCommonInfo.GetUITextById(93) + gameDataManager.gameData.ingFlour + ")", spIconFlour, consumeIngStr + " " + ingName, Color.red);
+            CreateItemForOther("-" + innRecord.consumeIngFlour + "(" + GameCommonInfo.GetUITextById(93) + gameData.ingFlour + ")", spIconFlour, consumeIngStr + " " + ingName, Color.red);
             // CreateItemForMoney(spIconFlour, string.Format(GameCommonInfo.GetUITextById(339), ingName), 0, 0, 0, innRecord.consumeIngFlour * 5);
             // innRecord.AddPayIng(0, 0, innRecord.consumeIngFlour * 5);
         }

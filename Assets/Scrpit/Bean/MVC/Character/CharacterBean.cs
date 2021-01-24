@@ -349,7 +349,7 @@ public class CharacterBean
     /// <param name="gameItemsManager"></param>
     /// <param name="gameDataManager"></param>
     /// <returns></returns>
-    public bool CalculationWorkerVacation(GameDataManager gameDataManager)
+    public bool CalculationWorkerVacation()
     {
         //获取数据
         GetAttributes(
@@ -357,7 +357,8 @@ public class CharacterBean
         float randomRate = UnityEngine.Random.Range(0f, 1f);
         float successRate = 0;
         //如果是掌柜
-        if (this == gameDataManager.gameData.userCharacter)
+        GameDataBean gameData = GameDataHandler.Instance.manager.GetGameData();
+        if (this == gameData.userCharacter)
         {
             successRate = 1;
         }
@@ -382,14 +383,15 @@ public class CharacterBean
     /// </summary>
     /// <param name="rate"></param>
     /// <param name="dazeTime"></param>
-    public bool CalculationWorkerDaze(GameDataManager gameDataManager)
+    public bool CalculationWorkerDaze()
     {
         //获取数据
         GetAttributes(out CharacterAttributesBean totalAttributes, out CharacterAttributesBean selfAttributes, out CharacterAttributesBean equipAttributes);
         float randomRate = UnityEngine.Random.Range(0f, 1f);
         float successRate = 0;
-        //如果是掌柜
-        if (this == gameDataManager.gameData.userCharacter)
+        //如果是掌柜    
+        GameDataBean gameData = GameDataHandler.Instance.manager.GetGameData();
+        if (this == gameData.userCharacter)
         {
             successRate = 1;
         }

@@ -51,7 +51,7 @@ public class UITownRecruitment : UIBaseOne, DialogView.IDialogCallBack
         base.Update();
         if (uiGameManager.gameDataManager != null && tvNumber != null)
         {
-            tvNumber.text = uiGameManager.gameDataManager.gameData.listWorkerCharacter.Count + "/" + uiGameManager.gameDataManager.gameData.workerNumberLimit;
+            tvNumber.text = uiGameManager.gameData.listWorkerCharacter.Count + "/" + uiGameManager.gameData.workerNumberLimit;
         }
     }
 
@@ -116,7 +116,7 @@ public class UITownRecruitment : UIBaseOne, DialogView.IDialogCallBack
     {
         AudioHandler.Instance.PlaySound(AudioSoundEnum.ButtonForNormal);
         //检测是否超过人员上限
-        if (uiGameManager.gameDataManager.gameData.listWorkerCharacter.Count >= uiGameManager.gameDataManager.gameData.workerNumberLimit)
+        if (uiGameManager.gameData.listWorkerCharacter.Count >= uiGameManager.gameData.workerNumberLimit)
         {
             ToastHandler.Instance.ToastHint(GameCommonInfo.GetUITextById(1051));
             return;
@@ -157,7 +157,7 @@ public class UITownRecruitment : UIBaseOne, DialogView.IDialogCallBack
                 GameDataManager gameDataManager = GetUIManager<UIGameManager>().gameDataManager;
                 
                 FindCharacterDialogView findCharacterDialog = (FindCharacterDialogView)dialogView;
-                gameDataManager.gameData.listWorkerCharacter.Add(findCharacterDialog.characterData);
+                gameData.listWorkerCharacter.Add(findCharacterDialog.characterData);
                 ToastHandler.Instance.ToastHint(string.Format(GameCommonInfo.GetUITextById(1053), findCharacterDialog.characterData.baseInfo.name));
             }
         }
@@ -172,12 +172,12 @@ public class UITownRecruitment : UIBaseOne, DialogView.IDialogCallBack
 
     protected void ShowPickCharacter()
     {
-        if (!uiGameManager.gameDataManager.gameData.HasEnoughMoney(pickMoneyL, pickMoneyM, pickMoneyS))
+        if (!uiGameManager.gameData.HasEnoughMoney(pickMoneyL, pickMoneyM, pickMoneyS))
         {
             ToastHandler.Instance.ToastHint(GameCommonInfo.GetUITextById(1005));
             return;
         }
-        uiGameManager.gameDataManager.gameData.PayMoney(pickMoneyL, pickMoneyM, pickMoneyS);
+        uiGameManager.gameData.PayMoney(pickMoneyL, pickMoneyM, pickMoneyS);
 
         
 

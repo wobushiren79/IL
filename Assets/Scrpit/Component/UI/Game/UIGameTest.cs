@@ -55,10 +55,9 @@ public class UIGameTest : BaseUIComponent
     /// </summary>
     public void CreateStory()
     {
-        if (long.TryParse(etStoryId.text, out long storyId))
-        {
-            EventHandler eventHandler = GetUIManager<UIGameManager>().eventHandler;
-            eventHandler.EventTriggerForStory(storyId);
+        if (long.TryParse(etStoryId.text, out long storyId)) 
+        { 
+            GameEventHandler.Instance.EventTriggerForStory(storyId);
         }
     }
 
@@ -67,7 +66,7 @@ public class UIGameTest : BaseUIComponent
     /// </summary>
     public void AddAll()
     {
-        GameDataBean gameData = uiGameManager.gameDataManager.gameData;
+        GameDataBean gameData = uiGameManager.gameData;
         gameData.listItems.Clear();
         List<ItemsInfoBean> listItem = GameItemsHandler.Instance.manager.GetAllItems();
         foreach (ItemsInfoBean itemsInfo in listItem)
@@ -92,7 +91,7 @@ public class UIGameTest : BaseUIComponent
 
             if (long.TryParse(etItemNumber.text, out long itemNumber))
             {
-                uiGameManager.gameDataManager.gameData.AddItemsNumber(itemId, itemNumber);
+                uiGameManager.gameData.AddItemsNumber(itemId, itemNumber);
             }
             else
             {
@@ -115,7 +114,7 @@ public class UIGameTest : BaseUIComponent
 
             if (long.TryParse(etBuildItemNumber.text, out long itemNumber))
             {
-                uiGameManager.gameDataManager.gameData.AddBuildNumber(itemId, itemNumber);
+                uiGameManager.gameData.AddBuildNumber(itemId, itemNumber);
             }
             else
             {

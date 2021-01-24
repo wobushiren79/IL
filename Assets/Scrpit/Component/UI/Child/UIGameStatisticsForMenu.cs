@@ -33,7 +33,7 @@ public class UIGameStatisticsForMenu : BaseUIChildComponent<UIGameStatistics>
         GameDataManager gameDataManager = ((UIGameManager)uiComponent.uiManager).gameDataManager;
         foreach (var itemData in listData)
         {
-            MenuOwnBean menuOwn= gameDataManager.gameData.GetMenuById(itemData.Key);
+            MenuOwnBean menuOwn= gameData.GetMenuById(itemData.Key);
             CreateMenuItem(menuOwn,itemData.Value);
             yield return new WaitForEndOfFrame();
         }

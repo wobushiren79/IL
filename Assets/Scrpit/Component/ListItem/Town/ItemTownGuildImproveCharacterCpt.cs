@@ -48,7 +48,7 @@ public class ItemTownGuildImproveCharacterCpt : ItemGameBaseCpt, DialogView.IDia
 
     protected UIGameManager uiGameManager;
     protected GameDataHandler gameDataHandler;
-    protected GameDataManager gameDataManager;
+    ;
 
     private void Awake()
     {
@@ -269,7 +269,7 @@ public class ItemTownGuildImproveCharacterCpt : ItemGameBaseCpt, DialogView.IDia
     {
         AudioHandler.Instance.PlaySound(AudioSoundEnum.ButtonForNormal);
         //判断是否有足够的金钱
-        if (!gameDataManager.gameData.HasEnoughMoney(levelData.price_l, levelData.price_m, levelData.price_s))
+        if (!gameData.HasEnoughMoney(levelData.price_l, levelData.price_m, levelData.price_s))
         {
             ToastHandler.Instance.ToastHint(GameCommonInfo.GetUITextById(1005));
             return;
@@ -301,7 +301,7 @@ public class ItemTownGuildImproveCharacterCpt : ItemGameBaseCpt, DialogView.IDia
     public void Submit(DialogView dialogView, DialogBean dialogBean)
     {
         //支付金钱
-        gameDataManager.gameData.PayMoney(levelData.price_l, levelData.price_m, levelData.price_s);
+        gameData.PayMoney(levelData.price_l, levelData.price_m, levelData.price_s);
         //扣除时间
         int preGameTime = int.Parse(levelData.mark);
         //扣除时间

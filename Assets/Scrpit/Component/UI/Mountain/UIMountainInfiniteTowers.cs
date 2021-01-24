@@ -39,7 +39,7 @@ public class UIMountainInfiniteTowers : BaseUIComponent, DialogView.IDialogCallB
         GameTimeHandler.Instance.SetTimeStatus(true);
 
         //大于10层才显示派遣
-        UserAchievementBean userAchievement = uiGameManager.gameDataManager.gameData.GetAchievementData();
+        UserAchievementBean userAchievement = uiGameManager.gameData.GetAchievementData();
         if (userAchievement.maxInfiniteTowersLayer > 10)
         {
             btSend.gameObject.SetActive(true);
@@ -60,7 +60,7 @@ public class UIMountainInfiniteTowers : BaseUIComponent, DialogView.IDialogCallB
     public override void RefreshUI()
     {
         base.RefreshUI();
-        listData = uiGameManager.gameDataManager.gameData.listInfinteTowers;
+        listData = uiGameManager.gameData.listInfinteTowers;
         gridVertical.SetCellCount(listData.Count);
         gridVertical.RefreshAllCells();
         if (listData.Count <= 0)
@@ -71,7 +71,7 @@ public class UIMountainInfiniteTowers : BaseUIComponent, DialogView.IDialogCallB
         {
             objNull.SetActive(false);
         }
-        UserAchievementBean userAchievement = uiGameManager.gameDataManager.gameData.GetAchievementData();
+        UserAchievementBean userAchievement = uiGameManager.gameData.GetAchievementData();
         SetMaxLayer(userAchievement.maxInfiniteTowersLayer);
     }
 
@@ -115,7 +115,7 @@ public class UIMountainInfiniteTowers : BaseUIComponent, DialogView.IDialogCallB
         PickForCharacterDialogView pickForCharacterDialog = DialogHandler.Instance.CreateDialog<PickForCharacterDialogView>(DialogEnum.PickForCharacter, this, dialogData);
         //排除不能参加的人
         List<string> listExpel = new List<string>();
-        List<CharacterBean> listCharacter = uiGameManager.gameDataManager.gameData.GetAllCharacterData();
+        List<CharacterBean> listCharacter = uiGameManager.gameData.GetAllCharacterData();
         for (int i = 0; i < listCharacter.Count; i++)
         {
             CharacterBean itemCharacter = listCharacter[i];
@@ -140,11 +140,11 @@ public class UIMountainInfiniteTowers : BaseUIComponent, DialogView.IDialogCallB
         PickForCharacterDialogView pickForCharacterDialog = DialogHandler.Instance.CreateDialog<PickForCharacterDialogView>(DialogEnum.PickForCharacter, this, dialogData);
         //排除主角和不能参加的人
         List<string> listExpel = new List<string>();
-        List<CharacterBean> listCharacter = uiGameManager.gameDataManager.gameData.GetAllCharacterData();
+        List<CharacterBean> listCharacter = uiGameManager.gameData.GetAllCharacterData();
         for (int i = 0; i < listCharacter.Count; i++)
         {
             CharacterBean itemCharacter = listCharacter[i];
-            if (itemCharacter == uiGameManager.gameDataManager.gameData.userCharacter
+            if (itemCharacter == uiGameManager.gameData.userCharacter
                 || (itemCharacter.baseInfo.GetWorkerStatus() != WorkerStatusEnum.Rest && itemCharacter.baseInfo.GetWorkerStatus() != WorkerStatusEnum.Work))
             {
                 listExpel.Add(itemCharacter.baseInfo.characterId);
@@ -170,7 +170,7 @@ public class UIMountainInfiniteTowers : BaseUIComponent, DialogView.IDialogCallB
                 {
                     infiniteTowersData.listMembers.Add(itemCharacter.baseInfo.characterId);
                 }
-                uiGameManager.gameDataManager.gameData.AddInfinteTowersData(infiniteTowersData);
+                uiGameManager.gameData.AddInfinteTowersData(infiniteTowersData);
                 //跳转场景
                 GameCommonInfo.SetInfiniteTowersPrepareData(infiniteTowersData);
                 SceneUtil.SceneChange(ScenesEnum.GameInfiniteTowersScene);
@@ -197,7 +197,7 @@ public class UIMountainInfiniteTowers : BaseUIComponent, DialogView.IDialogCallB
                 }
                 //计算每层攀登几率
                 infiniteTowersData.InitSuccessRate(GameItemsHandler.Instance.manager, listMembers);
-                uiGameManager.gameDataManager.gameData.AddInfinteTowersData(infiniteTowersData);
+                uiGameManager.gameData.AddInfinteTowersData(infiniteTowersData);
                 RefreshUI();
             }
         }

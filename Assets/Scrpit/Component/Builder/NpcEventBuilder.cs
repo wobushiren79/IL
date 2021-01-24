@@ -82,7 +82,7 @@ public class NpcEventBuilder : NpcNormalBuilder
     public void BuildConvert(long teamId)
     {
         Vector3 npcPosition = GetRandomStartPosition();
-        NpcTeamBean teamData = npcTeamManager.GetConvertTeam(teamId);
+        NpcTeamBean teamData = NpcTeamHandler.Instance.manager.GetConvertTeam(teamId);
         BuildConvert(teamData, npcPosition);
     }
 
@@ -91,7 +91,7 @@ public class NpcEventBuilder : NpcNormalBuilder
         if (npcTeam == null || listExistTeamId.Contains(npcTeam.id))
             return;
         //获取小队成员数据
-        npcTeam.GetTeamCharacterData(npcInfoManager, out List<CharacterBean> listLeader, out List<CharacterBean> listMembers);
+        npcTeam.GetTeamCharacterData(out List<CharacterBean> listLeader, out List<CharacterBean> listMembers);
         //设置小队相关
         string teamCode = SystemUtil.GetUUID(SystemUtil.UUIDTypeEnum.N);
         int npcNumber = listLeader.Count + listMembers.Count;
@@ -109,8 +109,9 @@ public class NpcEventBuilder : NpcNormalBuilder
             //生成NPC
             GameObject npcObj = BuildNpc(objConvertModel, characterData, npcPosition + new Vector3(UnityEngine.Random.Range(-0.5f, 0.5f), UnityEngine.Random.Range(-0.5f, 0.5f)));
             //设置意图
-            NpcAIConvertCpt convertCpt = npcObj.GetComponent<NpcAIConvertCpt>();
-            CharacterFavorabilityBean characterFavorability = gameDataManager.gameData.GetCharacterFavorability(long.Parse(characterData.baseInfo.characterId));
+            NpcAIConvertCpt convertCpt = npcObj.GetComponent<NpcAIConvertCpt>(); 
+            GameDataBean gameData = GameDataHandler.Instance.manager.GetGameData();
+            CharacterFavorabilityBean characterFavorability = gameData.GetCharacterFavorability(long.Parse(characterData.baseInfo.characterId));
             convertCpt.SetTeamData(teamCode, npcTeam, i);
             convertCpt.SetIntent(NpcAISundryCpt.SundryIntentEnum.GoToInn);
         }
@@ -132,7 +133,7 @@ public class NpcEventBuilder : NpcNormalBuilder
     public void BuildRascal(long teamId)
     {
         Vector3 npcPosition = GetRandomStartPosition();
-        NpcTeamBean teamData = npcTeamManager.GetRascalTeam(teamId);
+        NpcTeamBean teamData = NpcTeamHandler.Instance.manager.GetRascalTeam(teamId);
         BuildRascal(teamData, npcPosition);
     }
 
@@ -145,7 +146,7 @@ public class NpcEventBuilder : NpcNormalBuilder
         if ( listExistTeamId.Count > 0 )
              return;
         //获取小队成员数据
-        npcTeam.GetTeamCharacterData(npcInfoManager, out List<CharacterBean> listLeader, out List<CharacterBean> listMembers);
+        npcTeam.GetTeamCharacterData(out List<CharacterBean> listLeader, out List<CharacterBean> listMembers);
         //设置小队相关
         string teamCode = SystemUtil.GetUUID(SystemUtil.UUIDTypeEnum.N);
         int npcNumber = listLeader.Count + listMembers.Count;
@@ -163,8 +164,9 @@ public class NpcEventBuilder : NpcNormalBuilder
             //生成NPC
             GameObject npcObj = BuildNpc(objRascalModel, characterData, npcPosition + new Vector3(UnityEngine.Random.Range(-0.5f, 0.5f), UnityEngine.Random.Range(-0.5f, 0.5f)));
             //设置意图
-            NpcAIRascalCpt rascalCpt = npcObj.GetComponent<NpcAIRascalCpt>();
-            CharacterFavorabilityBean characterFavorability = gameDataManager.gameData.GetCharacterFavorability(long.Parse(characterData.baseInfo.characterId));
+            NpcAIRascalCpt rascalCpt = npcObj.GetComponent<NpcAIRascalCpt>(); 
+            GameDataBean gameData = GameDataHandler.Instance.manager.GetGameData();
+            CharacterFavorabilityBean characterFavorability = gameData.GetCharacterFavorability(long.Parse(characterData.baseInfo.characterId));
             rascalCpt.SetTeamData(teamCode, npcTeam, i);
             rascalCpt.SetFavorabilityData(characterFavorability);
             rascalCpt.AddStatusIconForRascal();
@@ -192,7 +194,7 @@ public class NpcEventBuilder : NpcNormalBuilder
     public void BuildSundry(long teamId)
     {
         Vector3 npcPosition = GetRandomStartPosition();
-        NpcTeamBean teamData = npcTeamManager.GetSundryTeam(teamId);
+        NpcTeamBean teamData = NpcTeamHandler.Instance.manager.GetSundryTeam(teamId);
         BuildSundry(teamData, npcPosition);
     }
 
@@ -201,7 +203,7 @@ public class NpcEventBuilder : NpcNormalBuilder
         if (listExistTeamId.Contains(npcTeam.id))
             return;
         //获取小队成员数据
-        npcTeam.GetTeamCharacterData(npcInfoManager, out List<CharacterBean> listLeader, out List<CharacterBean> listMembers);
+        npcTeam.GetTeamCharacterData(out List<CharacterBean> listLeader, out List<CharacterBean> listMembers);
         //设置小队相关
         string teamCode = SystemUtil.GetUUID(SystemUtil.UUIDTypeEnum.N);
         int npcNumber = listLeader.Count + listMembers.Count;
@@ -220,7 +222,8 @@ public class NpcEventBuilder : NpcNormalBuilder
             GameObject npcObj = BuildNpc(objSundryModel, characterData, npcPosition + new Vector3(UnityEngine.Random.Range(-0.5f, 0.5f), UnityEngine.Random.Range(-0.5f, 0.5f)));
             //设置意图
             NpcAISundryCpt sundryCpt = npcObj.GetComponent<NpcAISundryCpt>();
-            CharacterFavorabilityBean characterFavorability = gameDataManager.gameData.GetCharacterFavorability(long.Parse(characterData.baseInfo.characterId));
+            GameDataBean gameData = GameDataHandler.Instance.manager.GetGameData();
+            CharacterFavorabilityBean characterFavorability = gameData.GetCharacterFavorability(long.Parse(characterData.baseInfo.characterId));
             sundryCpt.SetTeamData(teamCode, npcTeam, i);
             sundryCpt.SetIntent(NpcAISundryCpt.SundryIntentEnum.GoToInn);
         }
@@ -233,7 +236,8 @@ public class NpcEventBuilder : NpcNormalBuilder
     /// </summary>
     public void BuildTownFriendsForOne()
     {
-        List<CharacterFavorabilityBean> listFavorabilityData = gameDataManager.gameData.listCharacterFavorability;
+        GameDataBean gameData = GameDataHandler.Instance.manager.GetGameData();
+        List<CharacterFavorabilityBean> listFavorabilityData = gameData.listCharacterFavorability;
         //获取小镇角色
         List<CharacterFavorabilityBean> listTownFavorabilityData = new List<CharacterFavorabilityBean>();
         foreach (CharacterFavorabilityBean itemFavorability in listFavorabilityData)
@@ -270,7 +274,7 @@ public class NpcEventBuilder : NpcNormalBuilder
     public void BuildTownFriendsForTeam(long teamId)
     {
         Vector3 npcPosition = GetRandomStartPosition();
-        NpcTeamBean teamData = npcTeamManager.GetFriendTeam(teamId);
+        NpcTeamBean teamData = NpcTeamHandler.Instance.manager.GetFriendTeam(teamId);
         BuildTownFriendsForTeam(teamData, npcPosition);
     }
 
@@ -278,7 +282,8 @@ public class NpcEventBuilder : NpcNormalBuilder
     {
         Vector3 npcPosition = GetRandomStartPosition();
         CharacterBean characterData = NpcInfoHandler.Instance.manager.GetCharacterDataById(npcId);
-        CharacterFavorabilityBean characterFavorability = gameDataManager.gameData.GetCharacterFavorability(characterData.npcInfoData.id);
+        GameDataBean gameData = GameDataHandler.Instance.manager.GetGameData();
+        CharacterFavorabilityBean characterFavorability = gameData.GetCharacterFavorability(characterData.npcInfoData.id);
         BuildTownFriendsForOne(characterData, characterFavorability, npcPosition);
     }
 
@@ -311,7 +316,8 @@ public class NpcEventBuilder : NpcNormalBuilder
         string teamCode = SystemUtil.GetUUID(SystemUtil.UUIDTypeEnum.N);
         Color teamColor = new Color(UnityEngine.Random.Range(0f, 1f), UnityEngine.Random.Range(0f, 1f), UnityEngine.Random.Range(0f, 1f));
         //获取小队成员数据
-        teamData.GetTeamCharacterData(npcInfoManager, out List<CharacterBean> listLeader, out List<CharacterBean> listMembers);
+        teamData.GetTeamCharacterData( out List<CharacterBean> listLeader, out List<CharacterBean> listMembers);
+        GameDataBean gameData = GameDataHandler.Instance.manager.GetGameData();
         //设置小队人数(团队领袖全生成，小队成员随机生成)
         int npcNumber = listLeader.Count + listMembers.Count;
         for (int i = 0; i < npcNumber; i++)
@@ -327,7 +333,7 @@ public class NpcEventBuilder : NpcNormalBuilder
             }
 
             //获取好感
-            CharacterFavorabilityBean characterFavorability = gameDataManager.gameData.GetCharacterFavorability(characterData.npcInfoData.id);
+            CharacterFavorabilityBean characterFavorability = gameData.GetCharacterFavorability(characterData.npcInfoData.id);
 
             GameObject npcObj = Instantiate(objContainer, objFriendModel);
 
@@ -400,16 +406,17 @@ public class NpcEventBuilder : NpcNormalBuilder
     {
         if (notifyType == GameTimeHandler.NotifyTypeEnum.NewDay)
         {
+            GameDataBean gameData = GameDataHandler.Instance.manager.GetGameData();
             ClearNpc();
             listExistNpcId.Clear();
             listExistTeamId.Clear();
             //更新数据
-            listRascal = npcTeamManager.GetRandomTeamMeetConditionByType(NpcTeamTypeEnum.Rascal, gameDataManager.gameData);
-            listSundry = npcTeamManager.GetRandomTeamMeetConditionByType(NpcTeamTypeEnum.Sundry, gameDataManager.gameData);
-            listFriend = npcTeamManager.GetRandomTeamMeetConditionByType(NpcTeamTypeEnum.Friend, gameDataManager.gameData);
+            listRascal = NpcTeamHandler.Instance.manager.GetRandomTeamMeetConditionByType(NpcTeamTypeEnum.Rascal, gameData);
+            listSundry = NpcTeamHandler.Instance.manager.GetRandomTeamMeetConditionByType(NpcTeamTypeEnum.Sundry, gameData);
+            listFriend = NpcTeamHandler.Instance.manager.GetRandomTeamMeetConditionByType(NpcTeamTypeEnum.Friend, gameData);
             listConvert.Clear();
-            listConvert.AddRange(npcTeamManager.GetRandomTeamMeetConditionByType(NpcTeamTypeEnum.Entertain, gameDataManager.gameData));
-            listConvert.AddRange(npcTeamManager.GetRandomTeamMeetConditionByType(NpcTeamTypeEnum.Disappointed, gameDataManager.gameData));
+            listConvert.AddRange(NpcTeamHandler.Instance.manager.GetRandomTeamMeetConditionByType(NpcTeamTypeEnum.Entertain, gameData));
+            listConvert.AddRange(NpcTeamHandler.Instance.manager.GetRandomTeamMeetConditionByType(NpcTeamTypeEnum.Disappointed, gameData));
         }
         else if (notifyType == GameTimeHandler.NotifyTypeEnum.EndDay)
         {

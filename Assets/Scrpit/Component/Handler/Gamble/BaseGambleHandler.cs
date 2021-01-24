@@ -10,12 +10,10 @@ public class BaseGambleHandler<T,B> : BaseHandler
 
     protected B gambleBuilder;
     protected UIGameManager uiGameManager;
-    protected GameDataManager gameDataManager;
     private void Awake()
     {
         gambleBuilder = Find<B>(ImportantTypeEnum.GambleBuilder);
         uiGameManager = Find<UIGameManager>(ImportantTypeEnum.GameUI);
-        gameDataManager = Find<GameDataManager>(ImportantTypeEnum.GameDataManager);
     }
 
     /// <summary>
@@ -77,7 +75,8 @@ public class BaseGambleHandler<T,B> : BaseHandler
     public virtual void BetMoney(int moneyL, int moneyM, int moneyS)
     {
         //检测是否有足够金钱
-        if (!gameDataManager.gameData.HasEnoughMoney(moneyL, moneyM, moneyS))
+        GameDataBean gameData = GameDataHandler.Instance.manager.GetGameData();
+        if (!gameData.HasEnoughMoney(moneyL, moneyM, moneyS))
         {
             ToastHandler.Instance.ToastHint(GameCommonInfo.GetUITextById(1005));
             return;
@@ -88,7 +87,7 @@ public class BaseGambleHandler<T,B> : BaseHandler
             ToastHandler.Instance.ToastHint(GameCommonInfo.GetUITextById(1302));
             return;
         }
-        gameDataManager.gameData.PayMoney(moneyL, moneyM, moneyS);
+        gameData.PayMoney(moneyL, moneyM, moneyS);
 
         gambleData.betForMoneyL += moneyL;
         gambleData.betForMoneyM += moneyM;

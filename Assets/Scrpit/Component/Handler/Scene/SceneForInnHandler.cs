@@ -6,12 +6,10 @@ using UnityEngine.AI;
 public class SceneForInnHandler : BaseHandler
 {
     protected SceneInnManager sceneInnManager;
-    protected GameDataManager gameDataManager;
 
     private void Awake()
     {
         sceneInnManager = Find<SceneInnManager>(ImportantTypeEnum.SceneManager);
-        gameDataManager = Find<GameDataManager>(ImportantTypeEnum.GameDataManager);
 
         GameTimeHandler.Instance.RegisterNotifyForTime(NotifyForTime);
     }
@@ -24,7 +22,8 @@ public class SceneForInnHandler : BaseHandler
             //初始化场景
             if (sceneInnManager != null)
             {
-                InnBuildBean innBuildData = gameDataManager.gameData.GetInnBuildData();
+                GameDataBean gameData = GameDataHandler.Instance.manager.GetGameData();
+                InnBuildBean innBuildData = gameData.GetInnBuildData();
                 sceneInnManager.InitScene(innBuildData.innWidth, innBuildData.innHeight);
             }
             //StartCoroutine(CoroutineForBuildNavMesh());

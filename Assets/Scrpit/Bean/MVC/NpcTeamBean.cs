@@ -24,7 +24,7 @@ public class NpcTeamBean : BaseBean
     /// </summary>
     /// <param name="npcInfoManager"></param>
     /// <returns></returns>
-    public void GetTeamCharacterData(NpcInfoManager npcInfoManager, out List<CharacterBean> listLeader, out List<CharacterBean> listMembers)
+    public void GetTeamCharacterData(out List<CharacterBean> listLeader, out List<CharacterBean> listMembers)
     {
         listLeader = new List<CharacterBean>();
         listMembers = new List<CharacterBean>();

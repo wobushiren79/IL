@@ -9,15 +9,6 @@ public class StoryBuilder : BaseMonoBehaviour, StoryInfoManager.CallBack
     [Header("控件")]
     public GameObject objNpcModel;
 
-    [Header("数据")]
-    protected GameDataManager gameDataManager;
-    protected StoryInfoManager storyInfoManager;
-    protected NpcInfoManager npcInfoManager;
-    protected BaseUIManager uiManager;
-
-    protected EventHandler eventHandler;
-    protected AudioHandler audioHandler;
-
     //剧情
     public StoryInfoBean storyInfo;
     //剧情详情
@@ -32,13 +23,6 @@ public class StoryBuilder : BaseMonoBehaviour, StoryInfoManager.CallBack
 
     public virtual void Awake()
     {
-        gameDataManager = Find<GameDataManager>(ImportantTypeEnum.GameDataManager);
-        storyInfoManager = Find<StoryInfoManager>(ImportantTypeEnum.StoryManager);
-        npcInfoManager = Find<NpcInfoManager>(ImportantTypeEnum.NpcManager);
-        uiManager = Find<BaseUIManager>(ImportantTypeEnum.GameUI);
-
-        eventHandler = Find<EventHandler>(ImportantTypeEnum.EventHandler);
-
         listStoryDetails = new List<StoryInfoDetailsBean>();
         listNpcObj = new List<GameObject>();
     }
@@ -50,7 +34,7 @@ public class StoryBuilder : BaseMonoBehaviour, StoryInfoManager.CallBack
     public void BuildStory(StoryInfoBean storyInfo)
     {
         this.storyInfo = storyInfo;
-        storyInfoManager.GetStoryDetailsById(storyInfo.id, this);
+        StoryInfoHandler.Instance.manager.GetStoryDetailsById(storyInfo.id, this);
     }
 
     /// <summary>
@@ -193,7 +177,7 @@ public class StoryBuilder : BaseMonoBehaviour, StoryInfoManager.CallBack
             //清理故事场景
             ClearStoryScene();
             //没有剧情。完结
-            eventHandler.SetEventStatus(EventHandler.EventStatusEnum.EventEnd);
+            GameEventHandler.Instance.SetEventStatus(GameEventHandler.EventStatusEnum.EventEnd);
         }
         else
             CreateStoryScene(listOrderData);
@@ -255,7 +239,8 @@ public class StoryBuilder : BaseMonoBehaviour, StoryInfoManager.CallBack
         if (itemData.npc_id == 0)
         {
             ((ControlForStoryCpt)GameControlHandler.Instance.GetControl()).SetCameraFollowObj(objNpc);
-            characterData = gameDataManager.gameData.userCharacter;
+            GameDataBean gameData = GameDataHandler.Instance.manager.GetGameData();
+            characterData = gameData.userCharacter;
         }
         else
             characterData = NpcInfoHandler.Instance.manager.GetCharacterDataById(itemData.npc_id);

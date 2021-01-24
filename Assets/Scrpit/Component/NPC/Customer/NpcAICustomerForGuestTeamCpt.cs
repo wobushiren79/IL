@@ -120,7 +120,7 @@ public class NpcAICustomerForGuestTeamCpt : NpcAICustomerCpt
         else
         {
             //检测是否拥有自己喜欢的菜品
-            if (gameDataManager.gameData.CheckHasLoveMenus(loveMenus, out List<MenuOwnBean> ownLoveMenus))
+            if (gameData.CheckHasLoveMenus(loveMenus, out List<MenuOwnBean> ownLoveMenus))
             {
                 //随机获取一个喜欢的菜
                 MenuOwnBean loveMenu = RandomUtil.GetRandomDataByList(ownLoveMenus);

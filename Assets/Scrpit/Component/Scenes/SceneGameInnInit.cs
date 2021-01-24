@@ -28,7 +28,7 @@ public class SceneGameInnInit : BaseSceneInit, DialogView.IDialogCallBack
         //初始化场景
         if (sceneInnManager != null)
         {
-            InnBuildBean innBuildData = gameDataManager.gameData.GetInnBuildData();
+            InnBuildBean innBuildData = gameData.GetInnBuildData();
             sceneInnManager.InitScene(innBuildData.innWidth, innBuildData.innHeight);
 
             //innBuildData.ChangeInnSize(2, innBuildManager, 9, 9);
@@ -55,7 +55,7 @@ public class SceneGameInnInit : BaseSceneInit, DialogView.IDialogCallBack
         {
             //增加回调
             GameTimeHandler.Instance.RegisterNotifyForTime(NotifyForTime);
-            TimeBean timeData = gameDataManager.gameData.gameTime;
+            TimeBean timeData = gameData.gameTime;
             if (timeData.hour >= 24
                 || timeData.hour < 6
                 || GameCommonInfo.CurrentDayData.dayStatus == GameTimeHandler.DayEnum.End)
@@ -102,7 +102,7 @@ public class SceneGameInnInit : BaseSceneInit, DialogView.IDialogCallBack
         if (weatherHandler != null)
         {
             WeatherBean weatherData = null;
-            if (gameDataManager.gameData.gameTime.month == 4 && gameDataManager.gameData.gameTime.day == 1)
+            if (gameData.gameTime.month == 4 && gameData.gameTime.day == 1)
             {
                 //冬月的第一天必定下大雪
                 weatherData = new WeatherBean(WeatherTypeEnum.Snow);
@@ -129,7 +129,7 @@ public class SceneGameInnInit : BaseSceneInit, DialogView.IDialogCallBack
         {
             //重新进入游戏则不增加经验
             //如果有菜谱研究 增加研究点数
-            int addHour = 24 - gameDataManager.gameData.gameTime.hour;
+            int addHour = 24 - gameData.gameTime.hour;
             gameDataHandler.AddTimeProcess(addHour * 60);
         }
 

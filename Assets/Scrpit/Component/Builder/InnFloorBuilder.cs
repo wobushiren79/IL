@@ -5,7 +5,7 @@ using UnityEngine.Tilemaps;
 
 public class InnFloorBuilder : BaseTilemapBuilder
 {
-    protected GameDataManager gameDataManager;
+    ;
 
     private void Awake()
     {
@@ -14,11 +14,12 @@ public class InnFloorBuilder : BaseTilemapBuilder
 
     public void StartBuild()
     {
-        if (gameDataManager != null && gameDataManager.gameData != null && gameDataManager.gameData.innBuildData != null)
+        GameDataBean gameData = GameDataHandler.Instance.manager.GetGameData();
+        if (gameData != null && gameData.innBuildData != null)
         {
             ClearAllTiles();
-            BuildFloor(gameDataManager.gameData.innBuildData.listFloor);
-            BuildFloor(gameDataManager.gameData.innBuildData.listSecondFloor);
+            BuildFloor(gameData.innBuildData.listFloor);
+            BuildFloor(gameData.innBuildData.listSecondFloor);
         }
     }
 

@@ -375,15 +375,15 @@ public class RewardTypeEnumTools : DataTools
     /// </summary>
     /// <param name="reward_data"></param>
     /// <param name="gameData"></param>
-    public static void CompleteReward(GameDataManager gameDataManager, List<CharacterBean> listCharacterData, string data)
+    public static void CompleteReward(List<CharacterBean> listCharacterData, string data)
     {
         List<RewardTypeBean> listRewardData = GetListRewardData(data);
-        CompleteReward(gameDataManager, listCharacterData, listRewardData);
+        CompleteReward(listCharacterData, listRewardData);
     }
 
-    public static void CompleteReward(GameDataManager gameDataManager, List<CharacterBean> listCharacterData, List<RewardTypeBean> listRewardData)
+    public static void CompleteReward(List<CharacterBean> listCharacterData, List<RewardTypeBean> listRewardData)
     {
-        GameDataBean gameData = gameDataManager.gameData;
+        GameDataBean gameData = GameDataHandler.Instance.manager.GetGameData();
         foreach (var itemData in listRewardData)
         {
             GetRewardDetails(itemData);

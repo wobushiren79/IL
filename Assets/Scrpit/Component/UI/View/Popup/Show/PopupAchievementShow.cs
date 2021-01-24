@@ -20,18 +20,11 @@ public class PopupAchievementShow : PopupShowView
 
     public Material materialGray;
 
-    protected GameDataManager gameDataManager;
-
     public AchievementInfoBean achievementInfo;
     public AchievementStatusEnum status;
 
     public Color colorStatusCompleted;
     public Color colorStatusProcessing;
-    public override void Awake()
-    {
-        base.Awake();
-        gameDataManager = Find<GameDataManager>(ImportantTypeEnum.GameDataManager);
-    }
 
     public void SetData(AchievementStatusEnum status, AchievementInfoBean achievementInfo)
     {
@@ -131,16 +124,17 @@ public class PopupAchievementShow : PopupShowView
         CptUtil.RemoveChildsByActive(objAchieveContent.transform);
         if (data == null)
             return;
-        List<PreTypeBean> listPreData = PreTypeEnumTools.GetListPreData(data.pre_data);
+        List<PreTypeBean> listPreData = PreTypeEnumTools.GetListPreData(data.pre_data); 
+        GameDataBean gameData = GameDataHandler.Instance.manager.GetGameData();
         foreach (var itemPreData in listPreData)
         {
             if (status == AchievementStatusEnum.Completed)
             {
-                PreTypeEnumTools.GetPreDetails(itemPreData, gameDataManager.gameData, true);
+                PreTypeEnumTools.GetPreDetails(itemPreData, gameData, true);
             }
             else
             {
-                PreTypeEnumTools.GetPreDetails(itemPreData, gameDataManager.gameData,false);
+                PreTypeEnumTools.GetPreDetails(itemPreData, gameData,false);
             }
             string preDes = itemPreData.preDescribe;
             float progress = itemPreData.progress;

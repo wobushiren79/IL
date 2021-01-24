@@ -19,7 +19,7 @@ public class UITownGuildRank : UIBaseRank
     public override void OnClickForUpdate()
     {
         base.OnClickForUpdate();
-        GameDataBean gameData = uiGameManager.gameDataManager.gameData;
+        GameDataBean gameData = uiGameManager.gameData;
         string rankName = RankTypeEnumTool.GetRankTypeName(rankType);
         long score = GetScoreByType( rankType);
         int intScore = 0;
@@ -38,7 +38,7 @@ public class UITownGuildRank : UIBaseRank
 
     public long GetScoreByType(RankTypeEnum rankType)
     {
-        GameDataBean gameData = uiGameManager.gameDataManager.gameData;
+        GameDataBean gameData = uiGameManager.gameData;
         UserAchievementBean userAchievement = gameData.GetAchievementData();
         long score = 0;
         switch (rankType)

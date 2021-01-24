@@ -69,7 +69,7 @@ public class ItemMountainInfiniteTowersCpt : ItemGameBaseCpt,DialogView.IDialogC
             Text tvName = objItem.GetComponentInChildren<Text>();
 
             //设置数据
-            CharacterBean characterData = uiGameManager.gameDataManager.gameData.GetCharacterDataById(memberId);
+            CharacterBean characterData = uiGameManager.gameData.GetCharacterDataById(memberId);
             characterUI.SetCharacterData(characterData.body, characterData.equips);
             tvName.text = characterData.baseInfo.name;
         }
@@ -96,7 +96,7 @@ public class ItemMountainInfiniteTowersCpt : ItemGameBaseCpt,DialogView.IDialogC
 
         foreach (string memberId in infiniteTowersData.listMembers)
         {
-            CharacterBean characterData = uiGameManager.gameDataManager.gameData.GetCharacterDataById(memberId);
+            CharacterBean characterData = uiGameManager.gameData.GetCharacterDataById(memberId);
             if (characterData.baseInfo.GetWorkerStatus() != WorkerStatusEnum.Rest
                 && characterData.baseInfo.GetWorkerStatus() != WorkerStatusEnum.Work)
             {
@@ -121,12 +121,12 @@ public class ItemMountainInfiniteTowersCpt : ItemGameBaseCpt,DialogView.IDialogC
             {
                 foreach (string memberId in infiniteTowersData.listMembers)
                 {
-                    CharacterBean characterData = uiGameManager.gameDataManager.gameData.GetCharacterDataById(memberId);
+                    CharacterBean characterData = uiGameManager.gameData.GetCharacterDataById(memberId);
                     characterData.baseInfo.SetWorkerStatus(WorkerStatusEnum.Rest);
                 }
             }
             infiniteTowersData.proForSend = -1;
-            uiGameManager.gameDataManager.gameData.RemoveInfiniteTowersData(infiniteTowersData);
+            uiGameManager.gameData.RemoveInfiniteTowersData(infiniteTowersData);
             uiComponent.RefreshUI();
         }
     }

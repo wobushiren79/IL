@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Collections;
 using DG.Tweening;
 
-public class NpcAIRascalCpt : BaseNpcAI, IBaseObserver
+public class NpcAIRascalCpt : BaseNpcAI
 {
     public enum RascalIntentEnum
     {
@@ -51,7 +51,6 @@ public class NpcAIRascalCpt : BaseNpcAI, IBaseObserver
     //小队中的位置
     public int teamRank;
 
-    protected EventHandler eventHandler;
     //客栈区域数据管理
     protected SceneInnManager sceneInnManager;
     //Npc生成器
@@ -63,7 +62,6 @@ public class NpcAIRascalCpt : BaseNpcAI, IBaseObserver
     public override void Awake()
     {
         base.Awake();
-        eventHandler = Find<EventHandler>(ImportantTypeEnum.EventHandler);
         sceneInnManager = Find<SceneInnManager>(ImportantTypeEnum.SceneManager);
         npcEventBuilder = Find<NpcEventBuilder>(ImportantTypeEnum.NpcBuilder);
     }
@@ -84,7 +82,7 @@ public class NpcAIRascalCpt : BaseNpcAI, IBaseObserver
     public override void OnDestroy()
     {
         base.OnDestroy();
-        eventHandler.RemoveObserver(this);
+        GameEventHandler.Instance.UnRegisterNotifyForEvent(NotifyForEvent);
     }
 
 
@@ -190,10 +188,10 @@ public class NpcAIRascalCpt : BaseNpcAI, IBaseObserver
                 SetTeamIntent(RascalIntentEnum.Leave);
                 return;
             }
-            bool isTrigger = eventHandler.EventTriggerForTalkByRascal(this, talk_ids);
+            bool isTrigger = GameEventHandler.Instance.EventTriggerForTalkByRascal(this, talk_ids);
             if (isTrigger)
             {
-                eventHandler.AddObserver(this);
+                GameEventHandler.Instance.RegisterNotifyForEvent(NotifyForEvent);
 
             }
             else
@@ -399,25 +397,23 @@ public class NpcAIRascalCpt : BaseNpcAI, IBaseObserver
     }
 
     #region 事件通知
-    public void ObserbableUpdate<T>(T observable, int type, params object[] obj) where T : Object
+
+    public void NotifyForEvent(GameEventHandler.NotifyEventTypeEnum notifyEventType,params object[] obj)
     {
-        if (observable == eventHandler)
+        if (notifyEventType == GameEventHandler.NotifyEventTypeEnum.TalkForAddFavorability)
         {
-            if (type == (int)EventHandler.NotifyEventTypeEnum.TalkForAddFavorability)
+            addFavorability += (int)obj[1];
+        }
+        else if (notifyEventType == GameEventHandler.NotifyEventTypeEnum.EventEnd)
+        {
+            //根据对话的好感加成 不同的反应
+            if (addFavorability > 0)
             {
-                addFavorability += (int)obj[1];
+                SetTeamIntent(RascalIntentEnum.Leave);
             }
-            else if (type == (int)EventHandler.NotifyEventTypeEnum.EventEnd)
+            else if (addFavorability < 0)
             {
-                //根据对话的好感加成 不同的反应
-                if (addFavorability > 0)
-                {
-                    SetTeamIntent(RascalIntentEnum.Leave);
-                }
-                else if (addFavorability < 0)
-                {
-                    SetTeamIntent(RascalIntentEnum.MakeTrouble);
-                }
+                SetTeamIntent(RascalIntentEnum.MakeTrouble);
             }
         }
     }

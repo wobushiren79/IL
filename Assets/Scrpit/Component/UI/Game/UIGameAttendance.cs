@@ -57,13 +57,13 @@ public class UIGameAttendance : UIBaseOne, ItemGameAttendanceCpt.ICallBack
             ToastHandler.Instance.ToastHint(GameCommonInfo.GetUITextById(1013));
             return;
         }
-        if (!uiGameManager.gameDataManager.gameData.HasEnoughMoney(attendancePriceL, attendancePriceM, attendancePriceS))
+        if (!uiGameManager.gameData.HasEnoughMoney(attendancePriceL, attendancePriceM, attendancePriceS))
         {
             ToastHandler.Instance.ToastHint(GameCommonInfo.GetUITextById(1014));
             return;
         }
 
-        List<CharacterBean> listCharacter = uiGameManager.gameDataManager.gameData.GetAllCharacterData();
+        List<CharacterBean> listCharacter = uiGameManager.gameData.GetAllCharacterData();
         foreach (CharacterBean itemCharacter in listCharacter)
         {
             //没有出勤的人员减少忠诚
@@ -79,7 +79,7 @@ public class UIGameAttendance : UIBaseOne, ItemGameAttendanceCpt.ICallBack
             }
         }
         //支付出勤费用
-        uiGameManager.gameDataManager.gameData.PayMoney(attendancePriceL, attendancePriceM, attendancePriceS);
+        uiGameManager.gameData.PayMoney(attendancePriceL, attendancePriceM, attendancePriceS);
         //记录出勤费用
         InnHandler.Instance.GetInnRecord().AddPayWage(attendancePriceL, attendancePriceM, attendancePriceS);
         //设置当天状态
@@ -100,7 +100,7 @@ public class UIGameAttendance : UIBaseOne, ItemGameAttendanceCpt.ICallBack
         GameDataManager gameDataManager = uiGameManager.gameDataManager;
         if (gameDataManager == null)
             return;
-        List<CharacterBean> listData = gameDataManager.gameData.GetAllCharacterData();
+        List<CharacterBean> listData = gameData.GetAllCharacterData();
         for (int i = 0; i < listData.Count; i++)
         {
             CharacterBean itemData = listData[i];

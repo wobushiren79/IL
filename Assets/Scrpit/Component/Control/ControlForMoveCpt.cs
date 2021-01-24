@@ -13,11 +13,7 @@ public class ControlForMoveCpt : BaseControl
 
     //是否控制移动
     protected bool isControlForMove = false;
-    protected GameDataManager gameDataManager;
-    private void Awake()
-    {
-        gameDataManager = Find<GameDataManager>(ImportantTypeEnum.GameDataManager);
-    }
+
 
     private void Start()
     {
@@ -25,9 +21,9 @@ public class ControlForMoveCpt : BaseControl
         if (scene.name.Equals(EnumUtil.GetEnumName(ScenesEnum.GameInnScene)))
         {
             //characterMoveCpt.minMoveX = -5;
-            //characterMoveCpt.maxMoveX = gameDataManager.gameData.GetInnBuildData().innWidth + 5;
+            //characterMoveCpt.maxMoveX = gameData.GetInnBuildData().innWidth + 5;
             //characterMoveCpt.minMoveY = -5;
-            //characterMoveCpt.maxMoveY = gameDataManager.gameData.GetInnBuildData().innHeight + 5;
+            //characterMoveCpt.maxMoveY = gameData.GetInnBuildData().innHeight + 5;
         }
         InitCharacter();
     }
@@ -112,15 +108,12 @@ public class ControlForMoveCpt : BaseControl
     /// </summary>
     public void InitCharacter()
     {
-        if (gameDataManager != null 
-            && gameDataManager.gameData.userCharacter != null 
-            && npcAI != null
-            && npcAI as NpcAIUserCpt)
+        GameDataBean gameData = GameDataHandler.Instance.manager.GetGameData();
+        if (gameData.userCharacter != null && npcAI != null && npcAI as NpcAIUserCpt)
         {
-            npcAI.SetCharacterData(gameDataManager.gameData.userCharacter);
+            npcAI.SetCharacterData(gameData.userCharacter);
             audioForWalk.volume = GameCommonInfo.GameConfig.soundVolume * 0.5f;
         }
-          
     }
 
 }

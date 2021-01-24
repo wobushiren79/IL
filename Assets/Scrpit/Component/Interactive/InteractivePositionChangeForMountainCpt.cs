@@ -12,12 +12,10 @@ public class InteractivePositionChangeForMountainCpt : BaseInteractiveCpt
 
     private GameObject mInteractiveObj;
 
-    protected EventHandler eventHandler;
     protected SceneMountainManager sceneTownManager;
 
     private void Awake()
     {
-        eventHandler = Find<EventHandler>(ImportantTypeEnum.EventHandler);
         sceneTownManager = Find<SceneMountainManager>(ImportantTypeEnum.SceneManager);
     }
 

@@ -12,8 +12,6 @@ public class ItemDialogPickForSellCpt : BaseMonoBehaviour, DialogView.IDialogCal
     public InputField etSellNumber;
     public PriceShowView priceShowView;
 
-    protected IconDataManager iconDataManager;
-    protected GameDataManager gameDataManager;
     public ItemBean itemData;
     public StoreInfoBean storeInfo;
 
@@ -22,8 +20,6 @@ public class ItemDialogPickForSellCpt : BaseMonoBehaviour, DialogView.IDialogCal
 
     public void Awake()
     {
-        gameDataManager = Find<GameDataManager>(ImportantTypeEnum.GameDataManager);
-        iconDataManager = Find<IconDataManager>(ImportantTypeEnum.UIManager);
         if (etSellNumber)
             etSellNumber.onEndEdit.AddListener(OnEndEditForNumber);
         if (btSub)
@@ -49,7 +45,7 @@ public class ItemDialogPickForSellCpt : BaseMonoBehaviour, DialogView.IDialogCal
         {
             ItemsInfoBean itemsInfo = GameItemsHandler.Instance.manager.GetItemsById(itemData.itemId);
 
-            spIcon = GeneralEnumTools.GetGeneralSprite(itemsInfo, iconDataManager);
+            spIcon = GeneralEnumTools.GetGeneralSprite(itemsInfo);
             if (itemsInfo != null)
             {
                 name = itemsInfo.name;
@@ -194,24 +190,25 @@ public class ItemDialogPickForSellCpt : BaseMonoBehaviour, DialogView.IDialogCal
     #region 确认回调
     public void Submit(DialogView dialogView, DialogBean dialogBean)
     {
-        gameDataManager.gameData.AddArenaTrophy
+        GameDataBean gameData = GameDataHandler.Instance.manager.GetGameData();
+        gameData.AddArenaTrophy
             (sellNumber * (storeInfo.trophy_elementary / sellRate),
             sellNumber * (storeInfo.trophy_intermediate / sellRate),
             sellNumber * (storeInfo.trophy_advanced / sellRate),
             sellNumber * (storeInfo.trophy_legendary / sellRate));
-        gameDataManager.gameData.AddGuildCoin(sellNumber * (storeInfo.guild_coin / sellRate));
-        gameDataManager.gameData.AddMoney
+        gameData.AddGuildCoin(sellNumber * (storeInfo.guild_coin / sellRate));
+        gameData.AddMoney
             (sellNumber * (storeInfo.price_l / sellRate),
             sellNumber * (storeInfo.price_m / sellRate),
             sellNumber * (storeInfo.price_s / sellRate));
 
         if (storeInfo.mark_type == 1)
         {
-            gameDataManager.gameData.AddItemsNumber(itemData.itemId, -sellNumber);
+            gameData.AddItemsNumber(itemData.itemId, -sellNumber);
         }
         else if (storeInfo.mark_type == 2)
         {
-            gameDataManager.gameData.AddBuildNumber(itemData.itemId, -sellNumber);
+            gameData.AddBuildNumber(itemData.itemId, -sellNumber);
         }
 
         RefreshItem();

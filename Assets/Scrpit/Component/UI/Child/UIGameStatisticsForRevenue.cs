@@ -9,7 +9,7 @@ public class UIGameStatisticsForRevenue : BaseUIChildComponent<UIGameStatistics>
     //柱状图
     public CartogramBarView cartogramBar;
 
-    protected GameDataManager gameDataManager;
+    ;
 
     public List<int> listYear;
     public UserRevenueBean userRevenueData;
@@ -117,7 +117,7 @@ public class UIGameStatisticsForRevenue : BaseUIChildComponent<UIGameStatistics>
         {
             this.listYear = new List<int>
             {
-                 gameDataManager.gameData.gameTime.year
+                 gameData.gameTime.year
             };
         }
         List<Dropdown.OptionData> listOptionData = new List<Dropdown.OptionData>();
