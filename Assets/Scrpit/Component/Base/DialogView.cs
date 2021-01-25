@@ -27,7 +27,7 @@ public class DialogView : BaseMonoBehaviour
 
     public virtual void Awake()
     {
-        
+        AutoLinkUI();
     }
 
     public virtual void Start()

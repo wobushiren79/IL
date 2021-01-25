@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using DG.Tweening;
 
-public class ToastView : MonoBehaviour
+public class ToastView : BaseMonoBehaviour
 {
     public Image ivIcon;
     public Text tvContent;
@@ -12,6 +12,7 @@ public class ToastView : MonoBehaviour
 
     private void Awake()
     {
+        AutoLinkUI();
         cgToast = GetComponent<CanvasGroup>();
     }
 

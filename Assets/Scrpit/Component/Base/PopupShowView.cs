@@ -17,6 +17,7 @@ public class PopupShowView : BaseMonoBehaviour
 
     public virtual void Awake()
     {
+        AutoLinkUI();
         screenRTF = (RectTransform)transform.parent.transform;
         popuplayoutGroup = GetComponent<LayoutGroup>();
     }
