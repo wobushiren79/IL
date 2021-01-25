@@ -25,6 +25,7 @@ public class SceneGameInnInit : BaseSceneInit, DialogView.IDialogCallBack
     public override void Start()
     {
         base.Start();
+        GameDataBean gameData = GameDataHandler.Instance.manager.GetGameData();
         //初始化场景
         if (sceneInnManager != null)
         {
@@ -51,32 +52,28 @@ public class SceneGameInnInit : BaseSceneInit, DialogView.IDialogCallBack
             weatherHandler.SetWeahter(GameCommonInfo.CurrentDayData.weatherToday);
         }
 
-        if (gameDataManager != null)
+        //增加回调
+        GameTimeHandler.Instance.RegisterNotifyForTime(NotifyForTime);
+        TimeBean timeData = gameData.gameTime;
+        if (timeData.hour >= 24
+            || timeData.hour < 6
+            || GameCommonInfo.CurrentDayData.dayStatus == GameTimeHandler.DayEnum.End)
         {
-            //增加回调
-            GameTimeHandler.Instance.RegisterNotifyForTime(NotifyForTime);
-            TimeBean timeData = gameData.gameTime;
-            if (timeData.hour >= 24
-                || timeData.hour < 6
-                || GameCommonInfo.CurrentDayData.dayStatus == GameTimeHandler.DayEnum.End)
-            {
-                //如果是需要切换第二天
-                EndDay();
-            }
-            else
-            {
-                //如果是其他场景切换过来
-                GameTimeHandler.Instance.SetTime(timeData.hour, timeData.minute);
-                GameTimeHandler.Instance.SetTimeStatus(false);
-                //建造NPC
-                RefreshScene();
-                //设置位置
-                Vector3 startPosition = sceneInnManager.GetTownEntranceLeft();
-                BaseControl baseControl = GameControlHandler.Instance.StartControl<BaseControl>(GameControlHandler.ControlEnum.Normal);
-                baseControl.SetFollowPosition(startPosition);
-            }
+            //如果是需要切换第二天
+            EndDay();
         }
-
+        else
+        {
+            //如果是其他场景切换过来
+            GameTimeHandler.Instance.SetTime(timeData.hour, timeData.minute);
+            GameTimeHandler.Instance.SetTimeStatus(false);
+            //建造NPC
+            RefreshScene();
+            //设置位置
+            Vector3 startPosition = sceneInnManager.GetTownEntranceLeft();
+            BaseControl baseControl = GameControlHandler.Instance.StartControl<BaseControl>(GameControlHandler.ControlEnum.Normal);
+            baseControl.SetFollowPosition(startPosition);
+        }
 
 
 
@@ -102,6 +99,7 @@ public class SceneGameInnInit : BaseSceneInit, DialogView.IDialogCallBack
         if (weatherHandler != null)
         {
             WeatherBean weatherData = null;
+            GameDataBean gameData = GameDataHandler.Instance.manager.GetGameData();
             if (gameData.gameTime.month == 4 && gameData.gameTime.day == 1)
             {
                 //冬月的第一天必定下大雪
@@ -124,13 +122,13 @@ public class SceneGameInnInit : BaseSceneInit, DialogView.IDialogCallBack
     {
         //停止时间
         GameTimeHandler.Instance.SetTimeStatus(true);
-
+        GameDataBean gameData = GameDataHandler.Instance.manager.GetGameData();
         if (GameCommonInfo.CurrentDayData.dayStatus != GameTimeHandler.DayEnum.None)
         {
             //重新进入游戏则不增加经验
             //如果有菜谱研究 增加研究点数
             int addHour = 24 - gameData.gameTime.hour;
-            gameDataHandler.AddTimeProcess(addHour * 60);
+            GameDataHandler.Instance.AddTimeProcess(addHour * 60);
         }
 
         //重置游戏时间
@@ -148,7 +146,7 @@ public class SceneGameInnInit : BaseSceneInit, DialogView.IDialogCallBack
             //如果是工作状态结束一天 则进入结算画面
             UIHandler.Instance.manager.OpenUIAndCloseOther<UIGameSettle>(UIEnum.GameSettle);
             //保存数据
-            gameDataManager.SaveGameData(InnHandler.Instance.GetInnRecord());
+            GameDataHandler.Instance.manager.SaveGameData(InnHandler.Instance.GetInnRecord());
         }
         else if (GameCommonInfo.CurrentDayData.dayStatus == GameTimeHandler.DayEnum.Rest
             || GameCommonInfo.CurrentDayData.dayStatus == GameTimeHandler.DayEnum.End)
@@ -156,7 +154,7 @@ public class SceneGameInnInit : BaseSceneInit, DialogView.IDialogCallBack
             //打开日历
             UIHandler.Instance.manager.OpenUIAndCloseOther<UIGameDate>(UIEnum.GameDate);
             //保存数据
-            gameDataManager.SaveGameData(InnHandler.Instance.GetInnRecord());
+            GameDataHandler.Instance.manager.SaveGameData(InnHandler.Instance.GetInnRecord());
         }
     }
 

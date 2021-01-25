@@ -4,7 +4,7 @@ using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using DG.Tweening;
 using System.Collections.Generic;
-public class UIGameMain : BaseUIComponent, DialogView.IDialogCallBack, IRadioGroupCallBack, IBaseObserver
+public class UIGameMain : BaseUIComponent, DialogView.IDialogCallBack, IRadioGroupCallBack
 {
     [Header("控件")]
     public PopupPromptButton popupWorker;
@@ -72,7 +72,7 @@ public class UIGameMain : BaseUIComponent, DialogView.IDialogCallBack, IRadioGro
     public override void Awake()
     {
         base.Awake();
-        uiGameManager.gameDataHandler.AddObserver(this);
+        GameDataHandler.Instance.RegisterNotifyForData(NotifyForData);
     }
 
     public void Start()
@@ -127,8 +127,9 @@ public class UIGameMain : BaseUIComponent, DialogView.IDialogCallBack, IRadioGro
         InitInnData();
         RefreshUI();
 
+        GameDataBean gameData = GameDataHandler.Instance.manager.GetGameData();
         //判断是否展示教程
-        UserAchievementBean userAchievement = uiGameManager.gameData.GetAchievementData();
+        UserAchievementBean userAchievement = gameData.GetAchievementData();
         if (!userAchievement.isOpenedHelp)
         {
             UIHandler.Instance.manager.OpenUIAndCloseOther<UIGameHelp>(UIEnum.GameHelp);
@@ -137,7 +138,8 @@ public class UIGameMain : BaseUIComponent, DialogView.IDialogCallBack, IRadioGro
 
     private void Update()
     {
-        InnAttributesBean innAttributes = uiGameManager.gameData.GetInnAttributesData();
+        GameDataBean gameData = GameDataHandler.Instance.manager.GetGameData();
+        InnAttributesBean innAttributes = gameData.GetInnAttributesData();
         if (clockView != null)
         {
             GameTimeHandler.Instance.GetTime(out float hour, out float min);
@@ -150,10 +152,10 @@ public class UIGameMain : BaseUIComponent, DialogView.IDialogCallBack, IRadioGro
     public override void RefreshUI()
     {
         base.RefreshUI();
-
-        SetMoney(MoneyEnum.L, uiGameManager.gameData.moneyL);
-        SetMoney(MoneyEnum.M, uiGameManager.gameData.moneyM);
-        SetMoney(MoneyEnum.S, uiGameManager.gameData.moneyS);
+        GameDataBean gameData = GameDataHandler.Instance.manager.GetGameData();
+        SetMoney(MoneyEnum.L, gameData.moneyL);
+        SetMoney(MoneyEnum.M, gameData.moneyM);
+        SetMoney(MoneyEnum.S, gameData.moneyS);
     }
 
     public override void CloseUI()
@@ -179,7 +181,8 @@ public class UIGameMain : BaseUIComponent, DialogView.IDialogCallBack, IRadioGro
     /// </summary>
     public void InitInnData()
     {
-        InnAttributesBean innAttributes = uiGameManager.gameData.GetInnAttributesData();
+        GameDataBean gameData = GameDataHandler.Instance.manager.GetGameData();
+        InnAttributesBean innAttributes = gameData.GetInnAttributesData();
 
         if (innAttributes == null)
             return;
@@ -229,7 +232,7 @@ public class UIGameMain : BaseUIComponent, DialogView.IDialogCallBack, IRadioGro
             else
             {
                 rgTimeScale.gameObject.SetActive(true);
-                InnBuildBean innBuild = uiGameManager.gameData.GetInnBuildData();
+                InnBuildBean innBuild = gameData.GetInnBuildData();
                 if (innBuild.innSecondWidth != 0 && innBuild.innSecondHeight != 0)
                 {
                     objLayerSelect.SetActive(true);
@@ -275,7 +278,7 @@ public class UIGameMain : BaseUIComponent, DialogView.IDialogCallBack, IRadioGro
         }
 
         //是否展示住店相关
-        if (uiGameManager.gameData.listBed.Count != 0)
+        if (gameData.listBed.Count != 0)
         {
             btHotel.gameObject.SetActive(true);
         }
@@ -398,7 +401,7 @@ public class UIGameMain : BaseUIComponent, DialogView.IDialogCallBack, IRadioGro
     public void SaveData()
     {
         AudioHandler.Instance.PlaySound(AudioSoundEnum.ButtonForNormal);
-        uiGameManager.gameDataManager.SaveGameData(InnHandler.Instance.GetInnRecord());
+        GameDataHandler.Instance.manager.SaveGameData(InnHandler.Instance.GetInnRecord());
     }
 
     public void OpenBuildUI()
@@ -530,7 +533,7 @@ public class UIGameMain : BaseUIComponent, DialogView.IDialogCallBack, IRadioGro
     /// <param name="priceS"></param>
     private void AnimForAddMoney(long priceL, long priceM, long priceS)
     {
-        GameDataBean gameData = uiGameManager.gameData;
+        GameDataBean gameData = GameDataHandler.Instance.manager.GetGameData();
         if (priceL != 0)
         {
             if (tweenForMoneyL != null)
@@ -670,32 +673,30 @@ public class UIGameMain : BaseUIComponent, DialogView.IDialogCallBack, IRadioGro
     #endregion
 
     #region 通知回调
-    public void ObserbableUpdate<T>(T observable, int type, params object[] obj) where T : Object
+
+    public void NotifyForData(GameDataHandler.NotifyTypeEnum notifyType,params object[] obj)
     {
-        if (observable as GameDataHandler)
+        if (notifyType == GameDataHandler.NotifyTypeEnum.AddMoney)
         {
-            if (type == (int)GameDataHandler.NotifyTypeEnum.AddMoney)
-            {
-                long priceL = System.Convert.ToInt64(obj[0]);
-                long priceM = System.Convert.ToInt64(obj[1]);
-                long priceS = System.Convert.ToInt64(obj[2]);
-                AnimForAddMoney(priceL, priceM, priceS);
-            }
-            else if (type == (int)GameDataHandler.NotifyTypeEnum.MenuResearchChange)
-            {
-                List<MenuOwnBean> listMenu = (List<MenuOwnBean>)obj[0];
-                uiHint.SetData(listMenu);
-            }
-            else if (type == (int)GameDataHandler.NotifyTypeEnum.BedResearchChange)
-            {
-                List<BuildBedBean> listBed = (List<BuildBedBean>)obj[0];
-                uiHint.SetData(listBed);
-            }
-            else if (type == (int)GameDataHandler.NotifyTypeEnum.InfiniteTowerProChange)
-            {
-                List<UserInfiniteTowersBean> listData = (List<UserInfiniteTowersBean>)obj[0];
-                uiHint.SetData(listData);
-            }
+            long priceL = System.Convert.ToInt64(obj[0]);
+            long priceM = System.Convert.ToInt64(obj[1]);
+            long priceS = System.Convert.ToInt64(obj[2]);
+            AnimForAddMoney(priceL, priceM, priceS);
+        }
+        else if (notifyType == GameDataHandler.NotifyTypeEnum.MenuResearchChange)
+        {
+            List<MenuOwnBean> listMenu = (List<MenuOwnBean>)obj[0];
+            uiHint.SetData(listMenu);
+        }
+        else if (notifyType == GameDataHandler.NotifyTypeEnum.BedResearchChange)
+        {
+            List<BuildBedBean> listBed = (List<BuildBedBean>)obj[0];
+            uiHint.SetData(listBed);
+        }
+        else if (notifyType == GameDataHandler.NotifyTypeEnum.InfiniteTowerProChange)
+        {
+            List<UserInfiniteTowersBean> listData = (List<UserInfiniteTowersBean>)obj[0];
+            uiHint.SetData(listData);
         }
     }
     #endregion

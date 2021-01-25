@@ -29,7 +29,8 @@ public class UIGameStatisticsForCustomer : BaseUIChildComponent<UIGameStatistics
     /// </summary>
     public void InitNormalCustomer()
     {
-        UserAchievementBean userAchievement = ((UIGameManager)uiComponent.uiManager).gameData.GetAchievementData();
+        GameDataBean gameData = GameDataHandler.Instance.manager.GetGameData();
+        UserAchievementBean userAchievement = gameData.GetAchievementData();
         if (tvNormalCustomerNumber != null)
             tvNormalCustomerNumber.text = GameCommonInfo.GetUITextById(323) + " " + userAchievement.GetNumberForCustomerFoodByType(CustomerTypeEnum.Normal) + GameCommonInfo.GetUITextById(82);
     }
@@ -40,8 +41,8 @@ public class UIGameStatisticsForCustomer : BaseUIChildComponent<UIGameStatistics
     public IEnumerator InitTeamCustomer()
     {
         CptUtil.RemoveChildsByActive(objTeamCustomerContainer);
-
-        UserAchievementBean userAchievement = ((UIGameManager)uiComponent.uiManager).gameData.GetAchievementData();
+        GameDataBean gameData = GameDataHandler.Instance.manager.GetGameData();
+        UserAchievementBean userAchievement = gameData.GetAchievementData();
         if (tvTeamCustomerNumber != null)
             tvTeamCustomerNumber.text = GameCommonInfo.GetUITextById(323) + " " + userAchievement.GetNumberForCustomerFoodByType(CustomerTypeEnum.Team) + GameCommonInfo.GetUITextById(82);
         //查询所有团队
@@ -82,7 +83,7 @@ public class UIGameStatisticsForCustomer : BaseUIChildComponent<UIGameStatistics
     {
         CptUtil.RemoveChildsByActive(objFriendCustomerContainer);
 
-        GameDataManager gameDataManager = ((UIGameManager)uiComponent.uiManager).gameDataManager;
+        GameDataBean gameData = GameDataHandler.Instance.manager.GetGameData();
         UserAchievementBean userAchievement = gameData.GetAchievementData();
 
         //设置数量

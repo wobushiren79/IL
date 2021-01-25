@@ -46,18 +46,6 @@ public class ItemTownGuildImproveCharacterCpt : ItemGameBaseCpt, DialogView.IDia
     public CharacterBean characterData;
     public WorkerEnum workerType;
 
-    protected UIGameManager uiGameManager;
-    protected GameDataHandler gameDataHandler;
-    ;
-
-    private void Awake()
-    {
-        uiGameManager = GetUIManager<UIGameManager>();
-        gameDataManager = uiGameManager.gameDataManager;
-        gameDataHandler = uiGameManager.gameDataHandler;
-
-    }
-
     private void Start()
     {
         if (btSubmit != null)
@@ -268,7 +256,8 @@ public class ItemTownGuildImproveCharacterCpt : ItemGameBaseCpt, DialogView.IDia
     protected void ImproveCheck(int type)
     {
         AudioHandler.Instance.PlaySound(AudioSoundEnum.ButtonForNormal);
-        //判断是否有足够的金钱
+        //判断是否有足够的金钱       
+        GameDataBean gameData= GameDataHandler.Instance.manager.GetGameData();
         if (!gameData.HasEnoughMoney(levelData.price_l, levelData.price_m, levelData.price_s))
         {
             ToastHandler.Instance.ToastHint(GameCommonInfo.GetUITextById(1005));
@@ -300,6 +289,7 @@ public class ItemTownGuildImproveCharacterCpt : ItemGameBaseCpt, DialogView.IDia
     #region 弹窗回调
     public void Submit(DialogView dialogView, DialogBean dialogBean)
     {
+        GameDataBean gameData = GameDataHandler.Instance.manager.GetGameData();
         //支付金钱
         gameData.PayMoney(levelData.price_l, levelData.price_m, levelData.price_s);
         //扣除时间
@@ -307,7 +297,7 @@ public class ItemTownGuildImproveCharacterCpt : ItemGameBaseCpt, DialogView.IDia
         //扣除时间
         GameTimeHandler.Instance.AddHour(preGameTime);
         //如果有研究菜谱 菜谱增加经验
-        gameDataHandler.AddTimeProcess(preGameTime * 60);
+        GameDataHandler.Instance.AddTimeProcess(preGameTime * 60);
         //判断玩哪个游戏
         MiniGameBaseBean miniGameData = null;
         switch (workerType)
@@ -354,7 +344,7 @@ public class ItemTownGuildImproveCharacterCpt : ItemGameBaseCpt, DialogView.IDia
                 ToastHandler.Instance.ToastHint(GameCommonInfo.GetUITextById(7021));
                 AudioHandler.Instance.PlaySound(AudioSoundEnum.Reward);
                 //完成奖励
-                RewardTypeEnumTools.CompleteReward(gameDataManager, miniGameData.GetListUserCharacterData(), miniGameData.listReward);
+                RewardTypeEnumTools.CompleteReward(miniGameData.GetListUserCharacterData(), miniGameData.listReward);
 
                 //数据添加
                 Sprite attributeIcon = IconDataHandler.Instance.manager.GetIconSpriteByName("keyboard_button_up_1");

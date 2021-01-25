@@ -7,14 +7,8 @@ public class InnFurnitureBuilder : BaseMonoBehaviour
     //装饰容器
     public GameObject buildContainer;
 
-    //客栈处理
-    protected InnHandler innHandler;
-    ;
-
     private void Awake()
     {
-        gameDataManager = Find<GameDataManager>(ImportantTypeEnum.GameDataManager);
-
         buildContainer = GameObject.Find("FurnitureContainer");
     }
 

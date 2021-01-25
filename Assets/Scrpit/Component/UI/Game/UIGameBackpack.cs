@@ -40,7 +40,8 @@ public class UIGameBackpack : UIBaseOne, TextSearchView.ICallBack
     {
         base.RefreshUI();
         listItemData.Clear();
-        listItemData.AddRange(uiGameManager.gameData.listItems);
+        GameDataBean gameData = GameDataHandler.Instance.manager.GetGameData();
+        listItemData.AddRange(gameData.listItems);
         if (gridVertical)
         {
             gridVertical.SetCellCount(listItemData.Count);
@@ -66,17 +67,22 @@ public class UIGameBackpack : UIBaseOne, TextSearchView.ICallBack
 
     public void OnClickForClearUp()
     {
-        uiGameManager.gameData.listItems = uiGameManager.gameData.listItems.OrderBy(data=> {
+        GameDataBean gameData = GameDataHandler.Instance.manager.GetGameData();
+        gameData.listItems = gameData.listItems
+            .OrderBy(data =>
+        {
             ItemsInfoBean itemsInfoBean = GameItemsHandler.Instance.manager.GetItemsById(data.itemId);
             return itemsInfoBean.items_type;
-        }).ToList();
+        })
+            .ToList();
         RefreshUI();
     }
 
     #region  搜索文本回调
     public void SearchTextStart(string text)
     {
-        listItemData = listItemData.OrderByDescending(data => {
+        listItemData = listItemData.OrderByDescending(data =>
+        {
             ItemsInfoBean itemsInfoBean = GameItemsHandler.Instance.manager.GetItemsById(data.itemId);
             if (itemsInfoBean.name.Contains(text))
             {

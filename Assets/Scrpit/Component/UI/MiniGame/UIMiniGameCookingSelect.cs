@@ -39,8 +39,8 @@ public class UIMiniGameCookingSelect : BaseUIComponent
     /// </summary>
     public void InitData()
     {
-        GameDataManager gameDataManager = GetUIManager<UIGameManager>().gameDataManager;
-        
+        GameDataBean gameData = GameDataHandler.Instance.manager.GetGameData();
+
         List<MenuOwnBean> listOwnMenu = gameData.GetMenuList();
         for (int i = 0; i < listOwnMenu.Count; i++)
         {

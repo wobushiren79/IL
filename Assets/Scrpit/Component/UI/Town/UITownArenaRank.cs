@@ -7,7 +7,7 @@ public class UITownArenaRank : UIBaseRank
     {
         base.SetLocalData();
         long score = 0;
-        GameDataBean gameData = uiGameManager.gameData;
+        GameDataBean gameData = GameDataHandler.Instance.manager.GetGameData();
         UserAchievementBean userAchievement = gameData.GetAchievementData();
         switch (rankType)
         {
@@ -36,7 +36,7 @@ public class UITownArenaRank : UIBaseRank
         base.OnClickForUpdate();
         string rankName = RankTypeEnumTool.GetRankTypeName(rankType);
         long score = 0;
-        GameDataBean gameData = uiGameManager.gameData;
+        GameDataBean gameData = GameDataHandler.Instance.manager.GetGameData();
         UserAchievementBean userAchievement = gameData.GetAchievementData();
         switch (rankType)
         {

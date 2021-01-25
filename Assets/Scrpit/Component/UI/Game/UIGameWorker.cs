@@ -70,9 +70,10 @@ public class UIGameWorker : BaseUIComponent
 
     private void Update()
     {
-        if (uiGameManager.gameDataManager != null && tvNumber != null)
+        if ( tvNumber != null)
         {
-            tvNumber.text = uiGameManager.gameData.listWorkerCharacter.Count + "/" + uiGameManager.gameData.workerNumberLimit;
+            GameDataBean gameData = GameDataHandler.Instance.manager.GetGameData();
+            tvNumber.text = gameData.listWorkerCharacter.Count + "/" + gameData.workerNumberLimit;
         }
     }
 
@@ -100,7 +101,8 @@ public class UIGameWorker : BaseUIComponent
 
     public void InitUI()
     {
-        List<CharacterBean> listData = uiGameManager.gameData.GetAllCharacterData();
+        GameDataBean gameData = GameDataHandler.Instance.manager.GetGameData();
+        List<CharacterBean> listData = gameData.GetAllCharacterData();
         listCharacterData.Clear();
         listCharacterData.AddRange(listData);
         InitData();
@@ -115,8 +117,6 @@ public class UIGameWorker : BaseUIComponent
 
     public void InitData()
     {
-        if (uiGameManager.gameDataManager == null)
-            return;
         StopAllCoroutines();
         gridVertical.SetCellCount(listCharacterData.Count);
 
@@ -141,8 +141,9 @@ public class UIGameWorker : BaseUIComponent
     /// </summary>
     public void OnClickForSortDef()
     {
+        GameDataBean gameData = GameDataHandler.Instance.manager.GetGameData();
         AudioHandler.Instance.PlaySound(AudioSoundEnum.ButtonForNormal);
-        List<CharacterBean> listData = uiGameManager.gameData.GetAllCharacterData();
+        List<CharacterBean> listData = gameData.GetAllCharacterData();
         listCharacterData.Clear();
         listCharacterData.AddRange(listData);
         InitData();

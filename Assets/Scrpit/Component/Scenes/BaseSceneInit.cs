@@ -4,35 +4,24 @@ using System.Collections;
 
 public class BaseSceneInit : BaseMonoBehaviour
 {
-    protected UIGameManager uiGameManager;
-    ;
-    protected GameTimeHandler gameTimeHandler;
-
     protected WeatherHandler weatherHandler;
-    protected GameDataHandler gameDataHandler;
 
 
     public virtual void Awake()
     {
         weatherHandler = Find<WeatherHandler>(ImportantTypeEnum.WeatherHandler);
-        uiGameManager = Find<UIGameManager>(ImportantTypeEnum.GameUI);
-        gameDataManager = Find<GameDataManager>(ImportantTypeEnum.GameDataManager);
-        gameTimeHandler = Find<GameTimeHandler>(ImportantTypeEnum.TimeHandler);
-        gameDataHandler = Find<GameDataHandler>(ImportantTypeEnum.GameDataHandler);
     }
 
     public virtual void Start()
     {
-        if (gameDataManager != null)
+        GameDataBean gameData =  GameDataHandler.Instance.manager.GetGameData();
+        if (GameCommonInfo.GameData == null || CheckUtil.StringIsNull(GameCommonInfo.GameData.userId))
         {
-            if (GameCommonInfo.GameData == null || CheckUtil.StringIsNull(GameCommonInfo.GameData.userId))
-            {
-                gameDataManager.GetGameDataByUserId(GameCommonInfo.GameUserId);
-            }
-            else
-            {
-                gameData = GameCommonInfo.GameData;
-            }
+            GameDataHandler.Instance.manager.GetGameDataByUserId(GameCommonInfo.GameUserId);
+        }
+        else
+        {
+            gameData = GameCommonInfo.GameData;
         }
         StartCoroutine(BuildNavMesh());
     }

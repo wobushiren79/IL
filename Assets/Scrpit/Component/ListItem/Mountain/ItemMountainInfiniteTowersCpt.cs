@@ -59,7 +59,7 @@ public class ItemMountainInfiniteTowersCpt : ItemGameBaseCpt,DialogView.IDialogC
     public void SetMembers(List<string> listMembers)
     {
         CptUtil.RemoveChildsByActive(objMembersContianer);
-        UIGameManager uiGameManager = GetUIManager<UIGameManager>();
+        GameDataBean gameData = GameDataHandler.Instance.manager.GetGameData();
         for (int i = 0; i < listMembers.Count; i++)
         {
             string memberId = listMembers[i];
@@ -69,7 +69,7 @@ public class ItemMountainInfiniteTowersCpt : ItemGameBaseCpt,DialogView.IDialogC
             Text tvName = objItem.GetComponentInChildren<Text>();
 
             //设置数据
-            CharacterBean characterData = uiGameManager.gameData.GetCharacterDataById(memberId);
+            CharacterBean characterData = gameData.GetCharacterDataById(memberId);
             characterUI.SetCharacterData(characterData.body, characterData.equips);
             tvName.text = characterData.baseInfo.name;
         }
@@ -92,11 +92,10 @@ public class ItemMountainInfiniteTowersCpt : ItemGameBaseCpt,DialogView.IDialogC
     /// </summary>
     public void OnClickForContinue()
     {
-        UIGameManager uiGameManager = GetUIManager<UIGameManager>();
-
+        GameDataBean gameData = GameDataHandler.Instance.manager.GetGameData();
         foreach (string memberId in infiniteTowersData.listMembers)
         {
-            CharacterBean characterData = uiGameManager.gameData.GetCharacterDataById(memberId);
+            CharacterBean characterData = gameData.GetCharacterDataById(memberId);
             if (characterData.baseInfo.GetWorkerStatus() != WorkerStatusEnum.Rest
                 && characterData.baseInfo.GetWorkerStatus() != WorkerStatusEnum.Work)
             {
@@ -116,17 +115,17 @@ public class ItemMountainInfiniteTowersCpt : ItemGameBaseCpt,DialogView.IDialogC
         if (dialogBean.dialogPosition == 0)
         {
             //删除确认
-            UIGameManager uiGameManager = GetUIManager<UIGameManager>();
+            GameDataBean gameData = GameDataHandler.Instance.manager.GetGameData(); 
             if (infiniteTowersData.isSend)
             {
                 foreach (string memberId in infiniteTowersData.listMembers)
                 {
-                    CharacterBean characterData = uiGameManager.gameData.GetCharacterDataById(memberId);
+                    CharacterBean characterData = gameData.GetCharacterDataById(memberId);
                     characterData.baseInfo.SetWorkerStatus(WorkerStatusEnum.Rest);
                 }
             }
             infiniteTowersData.proForSend = -1;
-            uiGameManager.gameData.RemoveInfiniteTowersData(infiniteTowersData);
+            gameData.RemoveInfiniteTowersData(infiniteTowersData);
             uiComponent.RefreshUI();
         }
     }

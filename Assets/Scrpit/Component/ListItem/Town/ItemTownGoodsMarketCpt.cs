@@ -129,7 +129,7 @@ public class ItemTownGoodsMarketCpt : ItemGameBaseCpt, DialogView.IDialogCallBac
     {
         if (goodsData == null || tvOwn == null)
             return;
-        GameDataManager gameDataManager = GetUIManager<UIGameManager>().gameDataManager;
+        GameDataBean gameData = GameDataHandler.Instance.manager.GetGameData();
 
         long ownNumber = 0;
 
@@ -215,7 +215,7 @@ public class ItemTownGoodsMarketCpt : ItemGameBaseCpt, DialogView.IDialogCallBac
     /// </summary>
     public void SetRiseAndFall(List<SeasonsEnum> listSeasonsRise, List<SeasonsEnum> listSeasonsFall)
     {
-        GameDataManager gameDataManager = GetUIManager<UIGameManager>().gameDataManager;
+        GameDataBean gameData = GameDataHandler.Instance.manager.GetGameData();
         SeasonsEnum currentSeasons = (SeasonsEnum)gameData.gameTime.month;
         //季节变化价格浮动
         if (listSeasonsRise.Contains(currentSeasons))
@@ -280,7 +280,7 @@ public class ItemTownGoodsMarketCpt : ItemGameBaseCpt, DialogView.IDialogCallBac
     {
         int buyNumber = int.Parse(etNumber.text);
         IngredientsEnum ingType = (IngredientsEnum)goodsData.mark_type;
-        GameDataManager gameDataManager = GetUIManager<UIGameManager>().gameDataManager;
+        GameDataBean gameData = GameDataHandler.Instance.manager.GetGameData();
         if (buyNumber <= 0)
         {
             ToastHandler.Instance.ToastHint(GameCommonInfo.GetUITextById(1017));

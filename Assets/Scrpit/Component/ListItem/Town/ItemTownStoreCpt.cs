@@ -71,8 +71,9 @@ public class ItemTownStoreCpt : ItemGameBaseCpt
     public virtual void SetOwn()
     {
         if (tvOwn == null)
-            return;
-        tvOwn.text = (GameCommonInfo.GetUITextById(4001) + "\n" + GetUIManager<UIGameManager>().gameData.GetItemsNumber(storeInfo.mark_id));
+            return; 
+        GameDataBean gameData = GameDataHandler.Instance.manager.GetGameData();
+        tvOwn.text = (GameCommonInfo.GetUITextById(4001) + "\n" + gameData.GetItemsNumber(storeInfo.mark_id));
     }
 
     /// <summary>

@@ -120,6 +120,7 @@ public class NpcAICustomerForGuestTeamCpt : NpcAICustomerCpt
         else
         {
             //检测是否拥有自己喜欢的菜品
+            GameDataBean gameData = GameDataHandler.Instance.manager.GetGameData();
             if (gameData.CheckHasLoveMenus(loveMenus, out List<MenuOwnBean> ownLoveMenus))
             {
                 //随机获取一个喜欢的菜

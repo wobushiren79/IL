@@ -72,7 +72,8 @@ public class UIGameMenu : BaseUIComponent, TextSearchView.ICallBack
     public override void OpenUI()
     {
         base.OpenUI();
-        List<MenuOwnBean> listMenu = uiGameManager.gameData.listMenu;
+        GameDataBean gameData = GameDataHandler.Instance.manager.GetGameData();
+        List<MenuOwnBean> listMenu = gameData.listMenu;
         this.listMenu.Clear();
         this.listMenu.AddRange(listMenu);
         gridVertical.SetCellCount(listMenu.Count);
@@ -89,37 +90,38 @@ public class UIGameMenu : BaseUIComponent, TextSearchView.ICallBack
     /// </summary>
     public void SetIngredients()
     {
+        GameDataBean gameData = GameDataHandler.Instance.manager.GetGameData();
         if (tvOilsalt != null)
         {
-            tvOilsalt.text = IngredientsEnumTools.GetIngredientName(IngredientsEnum.Oilsalt) + " " + uiGameManager.gameData.ingOilsalt;
+            tvOilsalt.text = IngredientsEnumTools.GetIngredientName(IngredientsEnum.Oilsalt) + " " + gameData.ingOilsalt;
         }
         if (tvMeat != null)
         {
-            tvMeat.text = IngredientsEnumTools.GetIngredientName(IngredientsEnum.Meat) + " " + uiGameManager.gameData.ingMeat;
+            tvMeat.text = IngredientsEnumTools.GetIngredientName(IngredientsEnum.Meat) + " " + gameData.ingMeat;
         }
         if (tvRiverfresh != null)
         {
-            tvRiverfresh.text = IngredientsEnumTools.GetIngredientName(IngredientsEnum.Riverfresh) + " " + uiGameManager.gameData.ingRiverfresh;
+            tvRiverfresh.text = IngredientsEnumTools.GetIngredientName(IngredientsEnum.Riverfresh) + " " + gameData.ingRiverfresh;
         }
         if (tvSeafood != null)
         {
-            tvSeafood.text = IngredientsEnumTools.GetIngredientName(IngredientsEnum.Seafood) + " " + uiGameManager.gameData.ingSeafood;
+            tvSeafood.text = IngredientsEnumTools.GetIngredientName(IngredientsEnum.Seafood) + " " + gameData.ingSeafood;
         }
         if (tvVegetables != null)
         {
-            tvVegetables.text = IngredientsEnumTools.GetIngredientName(IngredientsEnum.Vegetables) + " " + uiGameManager.gameData.ingVegetables;
+            tvVegetables.text = IngredientsEnumTools.GetIngredientName(IngredientsEnum.Vegetables) + " " + gameData.ingVegetables;
         }
         if (tvMelonfruit != null)
         {
-            tvMelonfruit.text = IngredientsEnumTools.GetIngredientName(IngredientsEnum.Melonfruit) + " " + uiGameManager.gameData.ingMelonfruit;
+            tvMelonfruit.text = IngredientsEnumTools.GetIngredientName(IngredientsEnum.Melonfruit) + " " + gameData.ingMelonfruit;
         }
         if (tvWaterwine != null)
         {
-            tvWaterwine.text = IngredientsEnumTools.GetIngredientName(IngredientsEnum.Waterwine) + " " + uiGameManager.gameData.ingWaterwine;
+            tvWaterwine.text = IngredientsEnumTools.GetIngredientName(IngredientsEnum.Waterwine) + " " + gameData.ingWaterwine;
         }
         if (tvflour != null)
         {
-            tvflour.text = IngredientsEnumTools.GetIngredientName(IngredientsEnum.Flour) + " " + uiGameManager.gameData.ingFlour;
+            tvflour.text = IngredientsEnumTools.GetIngredientName(IngredientsEnum.Flour) + " " + gameData.ingFlour;
         }
     }
 
@@ -139,7 +141,8 @@ public class UIGameMenu : BaseUIComponent, TextSearchView.ICallBack
     public void OnClickForSortDef()
     {
         AudioHandler.Instance.PlaySound(AudioSoundEnum.ButtonForNormal);
-        List<MenuOwnBean> listMenu = uiGameManager.gameData.listMenu;
+        GameDataBean gameData = GameDataHandler.Instance.manager.GetGameData();
+        List<MenuOwnBean> listMenu = gameData.listMenu;
         this.listMenu.Clear();
         this.listMenu.AddRange(listMenu);
         gridVertical.SetCellCount(listMenu.Count);

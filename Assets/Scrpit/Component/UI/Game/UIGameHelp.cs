@@ -24,7 +24,8 @@ public class UIGameHelp : BaseUIComponent,IRadioGroupCallBack
     {
         base.OpenUI();
         //记录数据
-        UserAchievementBean userAchievement =uiGameManager.gameData.GetAchievementData();
+        GameDataBean gameData = GameDataHandler.Instance.manager.GetGameData();
+        UserAchievementBean userAchievement = gameData.GetAchievementData();
         userAchievement.isOpenedHelp = true;
         rgHelpType.SetPosition(0,true);
     }

@@ -50,6 +50,7 @@ public class UIGameAttendance : UIBaseOne, ItemGameAttendanceCpt.ICallBack
     /// </summary>
     public void StartWork()
     {
+        GameDataBean gameData = GameDataHandler.Instance.manager.GetGameData();
         AudioHandler.Instance.PlaySound(AudioSoundEnum.ButtonForNormal);
         //如果出勤人数太少
         if (attendanceNumber <= 0)
@@ -57,13 +58,13 @@ public class UIGameAttendance : UIBaseOne, ItemGameAttendanceCpt.ICallBack
             ToastHandler.Instance.ToastHint(GameCommonInfo.GetUITextById(1013));
             return;
         }
-        if (!uiGameManager.gameData.HasEnoughMoney(attendancePriceL, attendancePriceM, attendancePriceS))
+        if (!gameData.HasEnoughMoney(attendancePriceL, attendancePriceM, attendancePriceS))
         {
             ToastHandler.Instance.ToastHint(GameCommonInfo.GetUITextById(1014));
             return;
         }
 
-        List<CharacterBean> listCharacter = uiGameManager.gameData.GetAllCharacterData();
+        List<CharacterBean> listCharacter = gameData.GetAllCharacterData();
         foreach (CharacterBean itemCharacter in listCharacter)
         {
             //没有出勤的人员减少忠诚
@@ -79,7 +80,7 @@ public class UIGameAttendance : UIBaseOne, ItemGameAttendanceCpt.ICallBack
             }
         }
         //支付出勤费用
-        uiGameManager.gameData.PayMoney(attendancePriceL, attendancePriceM, attendancePriceS);
+        gameData.PayMoney(attendancePriceL, attendancePriceM, attendancePriceS);
         //记录出勤费用
         InnHandler.Instance.GetInnRecord().AddPayWage(attendancePriceL, attendancePriceM, attendancePriceS);
         //设置当天状态
@@ -97,9 +98,7 @@ public class UIGameAttendance : UIBaseOne, ItemGameAttendanceCpt.ICallBack
     public void InitData()
     {
         CptUtil.RemoveChildsByActive(objListContent);
-        GameDataManager gameDataManager = uiGameManager.gameDataManager;
-        if (gameDataManager == null)
-            return;
+        GameDataBean gameData = GameDataHandler.Instance.manager.GetGameData();
         List<CharacterBean> listData = gameData.GetAllCharacterData();
         for (int i = 0; i < listData.Count; i++)
         {

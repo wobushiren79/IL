@@ -127,7 +127,7 @@ public class ItemTownCerpenterCpt : ItemTownStoreCpt, DialogView.IDialogCallBack
         else
         {
             objOwn.gameObject.SetActive(true);
-            GameDataManager gameDataManager = GetUIManager<UIGameManager>().gameDataManager;
+            GameDataBean gameData = GameDataHandler.Instance.manager.GetGameData();
             if (tvOwn == null)
                 return;
             tvOwn.text = (GameCommonInfo.GetUITextById(4001) + "\n" + gameData.GetBuildNumber(storeInfo.mark_id));
@@ -141,11 +141,10 @@ public class ItemTownCerpenterCpt : ItemTownStoreCpt, DialogView.IDialogCallBack
     {
         base.OnClickSubmitBuy();
 
-        UIGameManager uiGameManager = GetUIManager<UIGameManager>();
-        GameDataManager gameDataManager = uiGameManager.gameDataManager;
+        GameDataBean gameData = GameDataHandler.Instance.manager.GetGameData();
 
         InnBuildBean innBuildData = gameData.GetInnBuildData();
-        if (gameDataManager == null || storeInfo == null)
+        if (storeInfo == null)
             return;
 
         //检测是否正在修建客栈
@@ -184,9 +183,7 @@ public class ItemTownCerpenterCpt : ItemTownStoreCpt, DialogView.IDialogCallBack
     #region 确认回调
     public void Submit(DialogView dialogView, DialogBean dialogData)
     {
-        UIGameManager uiGameManager = GetUIManager<UIGameManager>();
-        GameDataManager gameDataManager = uiGameManager.gameDataManager;
-
+        GameDataBean gameData = GameDataHandler.Instance.manager.GetGameData();
         if (dialogView as PickForNumberDialogView)
         {
             PickForNumberDialogView pickForNumberDialog = dialogView as PickForNumberDialogView;

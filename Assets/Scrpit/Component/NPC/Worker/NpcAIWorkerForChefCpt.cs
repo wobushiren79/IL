@@ -138,6 +138,7 @@ public class NpcAIWorkerForChefCpt : NpcAIWokerFoBaseCpt
     public void SetIntentForCooking(OrderForCustomer orderForCustomer)
     {
         //检测是否能烹饪
+        GameDataBean gameData = GameDataHandler.Instance.manager.GetGameData();
         bool canCook = gameData.CheckCookFood(orderForCustomer.foodData);
         if (canCook)
         {

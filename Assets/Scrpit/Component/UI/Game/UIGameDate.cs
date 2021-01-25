@@ -20,13 +20,11 @@ public class UIGameDate : BaseUIComponent
     protected float animTimeForWaitNext = 1f;//动画时间
     protected float animTimeForShowDialog = 2f;//动画延迟
 
-    ;
     protected NpcCustomerBuilder npcCustomerBuilder;
 
     public override void Awake()
     {
         base.Awake();
-        gameDataManager = uiGameManager.gameDataManager;
         npcCustomerBuilder = uiGameManager.npcCustomerBuilder;
     }
 
@@ -110,7 +108,7 @@ public class UIGameDate : BaseUIComponent
         yield return new WaitForSeconds(animTimeForShowDialog);
 
         GameTimeHandler.Instance.GetTime(out int year, out int month, out int day);
-
+        GameDataBean gameData = GameDataHandler.Instance.manager.GetGameData();
         List<CharacterBean> listWorker = gameData.GetAllCharacterData();
         //如果有请假的员工 新的一天结束请假
         foreach (CharacterBean itemWork in listWorker)
@@ -143,6 +141,7 @@ public class UIGameDate : BaseUIComponent
     /// </summary>
     public void InnWork()
     {
+        GameDataBean gameData = GameDataHandler.Instance.manager.GetGameData();
         List<CharacterBean> listWorker = gameData.GetAllCharacterData();
         //计算员工请假概率
         foreach (CharacterBean itemWork in listWorker)
@@ -150,7 +149,7 @@ public class UIGameDate : BaseUIComponent
             if (itemWork.baseInfo.GetWorkerStatus() == WorkerStatusEnum.Rest
                 || itemWork.baseInfo.GetWorkerStatus() == WorkerStatusEnum.Work)
             {
-                if (itemWork.CalculationWorkerVacation(gameDataManager))
+                if (itemWork.CalculationWorkerVacation())
                 {
                     long vacationId = Random.Range(1101, 1111);
                     string vacationStr = string.Format(GameCommonInfo.GetUITextById(vacationId), itemWork.baseInfo.name);

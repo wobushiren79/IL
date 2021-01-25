@@ -49,7 +49,7 @@ public class ItemGameTextSelectCpt : ItemGameBaseCpt, DialogView.IDialogCallBack
     public void OnClickSubmit()
     {
         UIGameText uiGameText = (UIGameText)uiComponent;
-        UIGameManager uiGameManager = uiGameText.uiGameManager;
+        GameDataBean gameData = GameDataHandler.Instance.manager.GetGameData();
         AudioHandler.Instance.PlaySound(AudioSoundEnum.ButtonForNormal);
         //检测是否启用小游戏
         if (CheckUtil.StringIsNull(textData.pre_data_minigame))
@@ -57,9 +57,7 @@ public class ItemGameTextSelectCpt : ItemGameBaseCpt, DialogView.IDialogCallBack
             List<PreTypeBean> listPre = PreTypeEnumTools.GetListPreData(textData.pre_data);
             foreach (PreTypeBean itemPreData in listPre)
             {
-                PreTypeEnumTools.GetPreDetails(
-                    itemPreData, 
-                    uiGameManager.gameData);
+                PreTypeEnumTools.GetPreDetails(itemPreData, gameData);
                 if (!itemPreData.isPre)
                 {
                     ToastHandler.Instance.ToastHint(itemPreData.spPreIcon, itemPreData.preFailStr);
@@ -67,12 +65,9 @@ public class ItemGameTextSelectCpt : ItemGameBaseCpt, DialogView.IDialogCallBack
                 }
             }
             //完成前置条件
-            PreTypeEnumTools.CompletePre(listPre, uiGameManager.gameData);
+            PreTypeEnumTools.CompletePre(listPre, gameData);
             //完成所有奖励
-            RewardTypeEnumTools.CompleteReward(
-                uiGameManager.gameDataManager,
-                null,
-                textData.reward_data);
+            RewardTypeEnumTools.CompleteReward(null, textData.reward_data);
             uiGameText.SelectText(textData);
         }
         else

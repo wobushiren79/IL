@@ -54,9 +54,8 @@ public class ItemTownBankLoansCpt : ItemGameBaseCpt, DialogView.IDialogCallBack
 
     public void OnClickForSubmit()
     {
-        UIGameManager uiGameManager = uiComponent.GetUIManager<UIGameManager>();
+        GameDataBean gameData = GameDataHandler.Instance.manager.GetGameData();
         AudioHandler.Instance.PlaySound(AudioSoundEnum.ButtonForNormal);
-        GameDataBean gameData = uiGameManager.gameData;
         if (gameData.listLoans.Count >= gameData.loansNumberLimit)
         {
             ToastHandler.Instance.ToastHint(GameCommonInfo.GetUITextById(1091));
@@ -74,8 +73,7 @@ public class ItemTownBankLoansCpt : ItemGameBaseCpt, DialogView.IDialogCallBack
     #region 确认回调
     public void Submit(DialogView dialogView, DialogBean dialogBean)
     {
-        UIGameManager uiGameManager = uiComponent.GetUIManager<UIGameManager>();
-        GameDataBean gameData = uiGameManager.gameData;
+        GameDataBean gameData = GameDataHandler.Instance.manager.GetGameData();
         if (gameData.AddLoans(loansData))
         {
             gameData.AddMoney(0, 0, loansData.moneyS);

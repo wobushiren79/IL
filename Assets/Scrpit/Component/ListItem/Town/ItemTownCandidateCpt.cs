@@ -26,13 +26,10 @@ public class ItemTownCandidateCpt : ItemGameBaseCpt, DialogView.IDialogCallBack
     /// </summary>
     public void EmploymentCandidate()
     {
-        UIGameManager uiGameManager= GetUIManager<UIGameManager>();
-        GameDataManager gameDataManager = uiGameManager.gameDataManager;
+        GameDataBean gameData = GameDataHandler.Instance.manager.GetGameData();
 
         AudioHandler.Instance.PlaySound(AudioSoundEnum.ButtonForNormal);
         //检测是否超过人员上限
-        if (gameDataManager == null)
-            return;
         if (gameData.listWorkerCharacter.Count >= gameData.workerNumberLimit)
         {
             ToastHandler.Instance.ToastHint(GameCommonInfo.GetUITextById(1051));
@@ -128,7 +125,7 @@ public class ItemTownCandidateCpt : ItemGameBaseCpt, DialogView.IDialogCallBack
     #region  dialog 回调
     public void Submit(DialogView dialogView, DialogBean dialogData)
     {
-        GameDataManager gameDataManager = GetUIManager<UIGameManager>().gameDataManager;
+        GameDataBean gameData = GameDataHandler.Instance.manager.GetGameData();
 
         if (!gameData.HasEnoughMoney(characterData.baseInfo.priceL, characterData.baseInfo.priceM, characterData.baseInfo.priceS))
         {

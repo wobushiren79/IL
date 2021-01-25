@@ -17,7 +17,7 @@ public class UIMountainInfiniteTowersRank : UIBaseRank
     public override void OnClickForUpdate()
     {
         base.OnClickForUpdate();
-        GameDataBean gameData = uiGameManager.gameData;
+        GameDataBean gameData = GameDataHandler.Instance.manager.GetGameData();
         string rankName = RankTypeEnumTool.GetRankTypeName(rankType);
         long score = GetScoreByType(rankType);
         int intScore = 0;
@@ -36,7 +36,7 @@ public class UIMountainInfiniteTowersRank : UIBaseRank
 
     public long GetScoreByType(RankTypeEnum rankType)
     {
-        GameDataBean gameData = uiGameManager.gameData;
+        GameDataBean gameData = GameDataHandler.Instance.manager.GetGameData();
         UserAchievementBean userAchievement = gameData.GetAchievementData();
         long score = 0;
         switch (rankType)

@@ -168,9 +168,9 @@ public class ItemGameBackpackCpt : ItemGameBaseCpt, IPointerClickHandler, PopupI
     /// <param name="view"></param>
     public virtual void SelectionUse(PopupItemsSelection view)
     {
-        GameDataManager gameDataManager = uiGameManager.gameDataManager;
-        if (itemsInfoData == null || itemBean == null || gameDataManager == null)
+        if (itemsInfoData == null || itemBean == null)
             return;
+        GameDataBean gameData =  GameDataHandler.Instance.manager.GetGameData();
         switch (itemsInfoData.GetItemsType())
         {
             case GeneralEnum.Menu:
@@ -291,7 +291,7 @@ public class ItemGameBackpackCpt : ItemGameBaseCpt, IPointerClickHandler, PopupI
     /// </summary>
     public void RefreshItems(long id, long changeNumber)
     {
-        GameDataManager gameDataManager = uiGameManager.gameDataManager;
+        GameDataBean gameData = GameDataHandler.Instance.manager.GetGameData();
         gameData.AddItemsNumber(id, changeNumber);
         uiComponent.RefreshUI();
     }

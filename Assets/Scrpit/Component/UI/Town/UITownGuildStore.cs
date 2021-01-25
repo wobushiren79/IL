@@ -71,11 +71,12 @@ public class UITownGuildStore : UIBaseOne, IRadioGroupCallBack
         CptUtil.RemoveChildsByActive(objGuidStoreContent.transform);
         if (listData == null || objGuidStoreContent == null)
             return;
+        GameDataBean gameData = GameDataHandler.Instance.manager.GetGameData();
         for (int i = 0; i < listData.Count; i++)
         {
             StoreInfoBean itemData = listData[i];
             //检测是否满足前置成就
-            if (!itemData.CheckPreAchIds(uiGameManager.gameData))
+            if (!itemData.CheckPreAchIds(gameData))
             {
                 continue;
             }

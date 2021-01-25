@@ -32,17 +32,13 @@ public class ItemTownGuildAchievementCpt : ItemGameBaseCpt
 
     public void SetIcon(long achId, long[] preIds, string iconKey, string preData)
     {
-        UIGameManager uiGameManager = GetUIManager<UIGameManager>();
+        GameDataBean gameData = GameDataHandler.Instance.manager.GetGameData();
+        bool isAllPre = PreTypeEnumTools.CheckIsAllPre(gameData, gameData.userCharacter, preData, out string reason);
 
-        bool isAllPre = PreTypeEnumTools.CheckIsAllPre(
-            uiGameManager.gameData, 
-            uiGameManager.gameData.userCharacter,
-            preData, out string reason);
-
-        if (ivIcon == null || uiGameManager.gameDataManager == null || ivBackground == null)
+        if (ivIcon == null || ivBackground == null)
             return;
         //检测是否拥有该成就
-        bool hasAch = uiGameManager.gameData.GetAchievementData().CheckHasAchievement(achId);
+        bool hasAch = gameData.GetAchievementData().CheckHasAchievement(achId);
         if (hasAch)
         {
             SetAchStatus(AchievementStatusEnum.Completed);
@@ -63,7 +59,7 @@ public class ItemTownGuildAchievementCpt : ItemGameBaseCpt
         }
         else
         {
-            bool hasPre = uiGameManager.gameData.GetAchievementData().CheckHasAchievement(preIds);
+            bool hasPre = gameData.GetAchievementData().CheckHasAchievement(preIds);
             if (hasPre)
             {
                 //检测是否符合条件
@@ -148,18 +144,14 @@ public class ItemTownGuildAchievementCpt : ItemGameBaseCpt
     /// </summary>
     public void SubmitAchievement()
     {
-        UIGameManager uiGameManager = GetUIManager<UIGameManager>();
-
-        if (uiGameManager.gameDataManager == null || achievementInfo == null)
+        GameDataBean gameData = GameDataHandler.Instance.manager.GetGameData();
+        if (achievementInfo == null)
             return;
         if (status == AchievementStatusEnum.ToBeConfirmed)
         {
             //添加该成就和奖励
-            uiGameManager.gameData.GetAchievementData().AddAchievement(achievementInfo.id);
-            RewardTypeEnumTools.CompleteReward(
-                uiGameManager.gameDataManager,
-                null,
-                achievementInfo.reward_data);
+            gameData.GetAchievementData().AddAchievement(achievementInfo.id);
+            RewardTypeEnumTools.CompleteReward(null, achievementInfo.reward_data);
             //设置状态
             SetAchStatus(AchievementStatusEnum.Completed);
             //刷新UI

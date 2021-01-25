@@ -66,7 +66,8 @@ public class UITownBeautySalon : UIBaseOne, IRadioGroupCallBack, ItemTownBeautyS
     public override void OpenUI()
     {
         base.OpenUI();
-        characterData = uiGameManager.gameData.userCharacter;
+        GameDataBean gameData = GameDataHandler.Instance.manager.GetGameData();
+        characterData = gameData.userCharacter;
         ClearData();
         rgType.SetPosition(0, true);
     }
@@ -249,9 +250,10 @@ public class UITownBeautySalon : UIBaseOne, IRadioGroupCallBack, ItemTownBeautyS
     public void OnCellForItem(ScrollGridCell cell)
     {
         ItemTownBeautySalonCpt itemTownBeautySalon = cell.GetComponent<ItemTownBeautySalonCpt>();
+        GameDataBean gameData = GameDataHandler.Instance.manager.GetGameData();
         bool isLock = false;
         //获取美颜庄老板的好感
-        CharacterFavorabilityBean characterFavorability = uiGameManager.gameData.GetCharacterFavorability(130011);
+        CharacterFavorabilityBean characterFavorability = gameData.GetCharacterFavorability(130011);
         int level = characterFavorability.GetFavorabilityLevel();
         float unlockNumber = (listSelectData.Count / 6f) * (level + 1);
         if (cell.index < unlockNumber)
@@ -320,7 +322,7 @@ public class UITownBeautySalon : UIBaseOne, IRadioGroupCallBack, ItemTownBeautyS
         }
         else
         {
-            GameDataBean gameData = uiGameManager.gameData;
+            GameDataBean gameData = GameDataHandler.Instance.manager.GetGameData();
             if (gameData.HasEnoughMoney(priceL, priceM, priceS))
             {
                 gameData.PayMoney(priceL, priceM, priceS);

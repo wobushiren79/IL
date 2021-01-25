@@ -5,13 +5,6 @@ using UnityEngine.Tilemaps;
 
 public class InnFloorBuilder : BaseTilemapBuilder
 {
-    ;
-
-    private void Awake()
-    {
-        gameDataManager = Find<GameDataManager>(ImportantTypeEnum.GameDataManager);
-    }
-
     public void StartBuild()
     {
         GameDataBean gameData = GameDataHandler.Instance.manager.GetGameData();

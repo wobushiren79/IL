@@ -39,7 +39,8 @@ public class UIMountainInfiniteTowers : BaseUIComponent, DialogView.IDialogCallB
         GameTimeHandler.Instance.SetTimeStatus(true);
 
         //大于10层才显示派遣
-        UserAchievementBean userAchievement = uiGameManager.gameData.GetAchievementData();
+        GameDataBean gameData = GameDataHandler.Instance.manager.GetGameData();
+        UserAchievementBean userAchievement = gameData.GetAchievementData();
         if (userAchievement.maxInfiniteTowersLayer > 10)
         {
             btSend.gameObject.SetActive(true);
@@ -60,7 +61,8 @@ public class UIMountainInfiniteTowers : BaseUIComponent, DialogView.IDialogCallB
     public override void RefreshUI()
     {
         base.RefreshUI();
-        listData = uiGameManager.gameData.listInfinteTowers;
+        GameDataBean gameData = GameDataHandler.Instance.manager.GetGameData();
+        listData = gameData.listInfinteTowers;
         gridVertical.SetCellCount(listData.Count);
         gridVertical.RefreshAllCells();
         if (listData.Count <= 0)
@@ -71,7 +73,7 @@ public class UIMountainInfiniteTowers : BaseUIComponent, DialogView.IDialogCallB
         {
             objNull.SetActive(false);
         }
-        UserAchievementBean userAchievement = uiGameManager.gameData.GetAchievementData();
+        UserAchievementBean userAchievement = gameData.GetAchievementData();
         SetMaxLayer(userAchievement.maxInfiniteTowersLayer);
     }
 
@@ -109,13 +111,14 @@ public class UIMountainInfiniteTowers : BaseUIComponent, DialogView.IDialogCallB
     /// </summary>
     public void OnClickForStart()
     {
+        GameDataBean gameData = GameDataHandler.Instance.manager.GetGameData();
         AudioHandler.Instance.PlaySound(AudioSoundEnum.ButtonForNormal);
         DialogBean dialogData = new DialogBean();
         dialogData.dialogPosition = 0;
         PickForCharacterDialogView pickForCharacterDialog = DialogHandler.Instance.CreateDialog<PickForCharacterDialogView>(DialogEnum.PickForCharacter, this, dialogData);
         //排除不能参加的人
         List<string> listExpel = new List<string>();
-        List<CharacterBean> listCharacter = uiGameManager.gameData.GetAllCharacterData();
+        List<CharacterBean> listCharacter = gameData.GetAllCharacterData();
         for (int i = 0; i < listCharacter.Count; i++)
         {
             CharacterBean itemCharacter = listCharacter[i];
@@ -134,17 +137,18 @@ public class UIMountainInfiniteTowers : BaseUIComponent, DialogView.IDialogCallB
     /// </summary>
     public void OnClickForSend()
     {
+        GameDataBean gameData = GameDataHandler.Instance.manager.GetGameData();
         AudioHandler.Instance.PlaySound(AudioSoundEnum.ButtonForNormal);
         DialogBean dialogData = new DialogBean();
         dialogData.dialogPosition = 1;
         PickForCharacterDialogView pickForCharacterDialog = DialogHandler.Instance.CreateDialog<PickForCharacterDialogView>(DialogEnum.PickForCharacter, this, dialogData);
         //排除主角和不能参加的人
         List<string> listExpel = new List<string>();
-        List<CharacterBean> listCharacter = uiGameManager.gameData.GetAllCharacterData();
+        List<CharacterBean> listCharacter = gameData.GetAllCharacterData();
         for (int i = 0; i < listCharacter.Count; i++)
         {
             CharacterBean itemCharacter = listCharacter[i];
-            if (itemCharacter == uiGameManager.gameData.userCharacter
+            if (itemCharacter == gameData.userCharacter
                 || (itemCharacter.baseInfo.GetWorkerStatus() != WorkerStatusEnum.Rest && itemCharacter.baseInfo.GetWorkerStatus() != WorkerStatusEnum.Work))
             {
                 listExpel.Add(itemCharacter.baseInfo.characterId);
@@ -162,6 +166,7 @@ public class UIMountainInfiniteTowers : BaseUIComponent, DialogView.IDialogCallB
             PickForCharacterDialogView pickForCharacterDialog = dialogView as PickForCharacterDialogView;
             UserInfiniteTowersBean infiniteTowersData = new UserInfiniteTowersBean();
             List<CharacterBean> listMembers = pickForCharacterDialog.GetPickCharacter();
+            GameDataBean gameData = GameDataHandler.Instance.manager.GetGameData();
             if (dialogBean.dialogPosition == 0)
             {
                 //亲自
@@ -170,7 +175,7 @@ public class UIMountainInfiniteTowers : BaseUIComponent, DialogView.IDialogCallB
                 {
                     infiniteTowersData.listMembers.Add(itemCharacter.baseInfo.characterId);
                 }
-                uiGameManager.gameData.AddInfinteTowersData(infiniteTowersData);
+                gameData.AddInfinteTowersData(infiniteTowersData);
                 //跳转场景
                 GameCommonInfo.SetInfiniteTowersPrepareData(infiniteTowersData);
                 SceneUtil.SceneChange(ScenesEnum.GameInfiniteTowersScene);
@@ -197,7 +202,7 @@ public class UIMountainInfiniteTowers : BaseUIComponent, DialogView.IDialogCallB
                 }
                 //计算每层攀登几率
                 infiniteTowersData.InitSuccessRate(GameItemsHandler.Instance.manager, listMembers);
-                uiGameManager.gameData.AddInfinteTowersData(infiniteTowersData);
+                gameData.AddInfinteTowersData(infiniteTowersData);
                 RefreshUI();
             }
         }

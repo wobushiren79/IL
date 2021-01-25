@@ -217,8 +217,7 @@ public class ItemTownArenaCpt : ItemGameBaseCpt, DialogView.IDialogCallBack
     /// </summary>
     public void OnClickForJoin()
     {
-        UIGameManager uiGameManager = GetUIManager<UIGameManager>();
-        GameDataManager gameDataManager = uiGameManager.gameDataManager;
+        GameDataBean gameData = GameDataHandler.Instance.manager.GetGameData();
         AudioHandler.Instance.PlaySound(AudioSoundEnum.ButtonForNormal);
         if (!gameData.HasEnoughMoney(miniGameData.preMoneyL, miniGameData.preMoneyM, miniGameData.preMoneyS))
         {
@@ -238,8 +237,7 @@ public class ItemTownArenaCpt : ItemGameBaseCpt, DialogView.IDialogCallBack
     /// </summary>
     public void OnClickForSend()
     {
-        UIGameManager uiGameManager = GetUIManager<UIGameManager>();
-        GameDataManager gameDataManager = uiGameManager.gameDataManager;
+        GameDataBean gameData = GameDataHandler.Instance.manager.GetGameData();
 
         AudioHandler.Instance.PlaySound(AudioSoundEnum.ButtonForNormal);
         if (!gameData.HasEnoughMoney(miniGameData.preMoneyL, miniGameData.preMoneyM, miniGameData.preMoneyS))
@@ -258,10 +256,8 @@ public class ItemTownArenaCpt : ItemGameBaseCpt, DialogView.IDialogCallBack
     #region 确认回调
     public void Submit(DialogView dialogView, DialogBean dialogBean)
     {
-        UIGameManager uiGameManager = GetUIManager<UIGameManager>();
-        GameDataManager gameDataManager = uiGameManager.gameDataManager;
-        GameDataHandler gameDataHandler = uiGameManager.gameDataHandler;
-  
+        GameDataBean gameData = GameDataHandler.Instance.manager.GetGameData();
+
         if (dialogView as PickForCharacterDialogView)
         {
             //判断时间是否过晚
@@ -276,7 +272,7 @@ public class ItemTownArenaCpt : ItemGameBaseCpt, DialogView.IDialogCallBack
             //扣除时间
             GameTimeHandler.Instance.AddHour(miniGameData.preGameTime);
             //如果有研究菜谱 菜谱增加经验
-            gameDataHandler.AddTimeProcess(miniGameData.preGameTime*60);
+            GameDataHandler.Instance.AddTimeProcess(miniGameData.preGameTime*60);
             //设置参赛人员
             PickForCharacterDialogView pickForCharacterDialog = dialogView as PickForCharacterDialogView;
             List<CharacterBean> listCharacter = pickForCharacterDialog.GetPickCharacter();
@@ -318,7 +314,7 @@ public class ItemTownArenaCpt : ItemGameBaseCpt, DialogView.IDialogCallBack
                         }
                     }
                     //完成奖励
-                    RewardTypeEnumTools.CompleteReward(gameDataManager, listCharacter, miniGameData.listReward);     
+                    RewardTypeEnumTools.CompleteReward(listCharacter, miniGameData.listReward);     
                 }
                 else
                 {

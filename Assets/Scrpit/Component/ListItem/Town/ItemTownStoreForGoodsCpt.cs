@@ -167,8 +167,7 @@ public class ItemTownStoreForGoodsCpt : ItemTownStoreCpt, DialogView.IDialogCall
     {
         if(itemsInfo.GetItemsType()== GeneralEnum.Menu)
         {
-            UIGameManager uiGameManager = GetUIManager<UIGameManager>();
-            GameDataManager gameDataManager = uiGameManager.gameDataManager;
+            GameDataBean gameData = GameDataHandler.Instance.manager.GetGameData();
             bool isHas= gameData.CheckHasMenu(itemsInfo.add_id);
             if (tvOwn != null)
                 if (isHas)
@@ -194,10 +193,9 @@ public class ItemTownStoreForGoodsCpt : ItemTownStoreCpt, DialogView.IDialogCall
     {
         base.OnClickSubmitBuy();
 
-        UIGameManager uiGameManager = GetUIManager<UIGameManager>();
-        GameDataManager gameDataManager = uiGameManager.gameDataManager;
-        
-        if (gameDataManager == null || storeInfo == null)
+        GameDataBean gameData = GameDataHandler.Instance.manager.GetGameData();
+
+        if (storeInfo == null)
             return;
 
         DialogBean dialogBean = new DialogBean();
@@ -208,9 +206,9 @@ public class ItemTownStoreForGoodsCpt : ItemTownStoreCpt, DialogView.IDialogCall
     #region 提交回调
     public virtual void Submit(DialogView dialogView, DialogBean dialogData)
     {
-        GameDataManager gameDataManager = GetUIManager<UIGameManager>().gameDataManager;
-        
-        if (gameDataManager == null || storeInfo == null)
+        GameDataBean gameData = GameDataHandler.Instance.manager.GetGameData();
+
+        if (storeInfo == null)
             return;
         if (dialogView as PickForNumberDialogView)
         {

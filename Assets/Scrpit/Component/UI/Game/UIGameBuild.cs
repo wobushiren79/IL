@@ -98,7 +98,7 @@ public class UIGameBuild : BaseUIComponent, IRadioGroupCallBack
         //时间添加1小时
         GameTimeHandler.Instance.AddHour(1);
         //添加研究经验
-        uiGameManager.gameDataHandler.AddTimeProcess(60);
+        GameDataHandler.Instance.AddTimeProcess(60);
         //继续时间
         GameTimeHandler.Instance.SetTimeStatus(false);
         //设置角色到门口
@@ -113,8 +113,9 @@ public class UIGameBuild : BaseUIComponent, IRadioGroupCallBack
     /// </summary>
     public override void RefreshUI()
     {
+        GameDataBean gameData = GameDataHandler.Instance.manager.GetGameData();
         //刷新列表数据
-        List<ItemBean> listBuildData = uiGameManager.gameData.GetBuildDataByType(buildType);
+        List<ItemBean> listBuildData = gameData.GetBuildDataByType(buildType);
         for (int i = 0; i < listBuildItem.Count; i++)
         {
             ItemGameBuildCpt itemBuild = listBuildItem[i];
@@ -160,7 +161,7 @@ public class UIGameBuild : BaseUIComponent, IRadioGroupCallBack
             }
         }
         //刷新美观值
-        uiGameManager.gameData.GetInnAttributesData().SetAesthetics(uiGameManager.gameData.GetInnBuildData());
+        gameData.GetInnAttributesData().SetAesthetics(gameData.GetInnBuildData());
         SetInnAesthetics();
 
         SetBedRangeStatus(true);
@@ -175,8 +176,8 @@ public class UIGameBuild : BaseUIComponent, IRadioGroupCallBack
         this.innLayer = layer;
         btDismantle.gameObject.SetActive(true);
 
-
-        InnBuildBean innBuild = uiGameManager.gameData.GetInnBuildData();
+        GameDataBean gameData = GameDataHandler.Instance.manager.GetGameData();
+        InnBuildBean innBuild = gameData.GetInnBuildData();
         if (innBuild.innSecondWidth == 0 || innBuild.innSecondHeight == 0)
         {
             objLayerSelect.SetActive(false);
@@ -218,7 +219,8 @@ public class UIGameBuild : BaseUIComponent, IRadioGroupCallBack
     {
         if (tvAesthetics != null)
         {
-            uiGameManager.gameData.GetInnAttributesData().GetAesthetics(out float maxAesthetics, out float aesthetics);
+            GameDataBean gameData = GameDataHandler.Instance.manager.GetGameData();
+            gameData.GetInnAttributesData().GetAesthetics(out float maxAesthetics, out float aesthetics);
             tvAesthetics.text = aesthetics + "/" + maxAesthetics;
         }
     }
@@ -233,19 +235,19 @@ public class UIGameBuild : BaseUIComponent, IRadioGroupCallBack
             return;
         bool hasData = false;
         buildType = type;
-
+        GameDataBean gameData = GameDataHandler.Instance.manager.GetGameData();
         if (type == BuildItemTypeEnum.Bed)
         {
             if (itemBuildForBedModel == null)
                 return;
-            if (uiGameManager.gameData.listBed == null)
+            if (gameData.listBed == null)
                 return;
             CptUtil.RemoveChildsByActive(itemBuildContainer);
             listBuildItem.Clear();
             listBuildForBedItem.Clear();
-            for (int i = 0; i < uiGameManager.gameData.listBed.Count; i++)
+            for (int i = 0; i < gameData.listBed.Count; i++)
             {
-                BuildBedBean itemData = uiGameManager.gameData.listBed[i];
+                BuildBedBean itemData = gameData.listBed[i];
                 CreateBuildForBedItem(itemData);
                 hasData = true;
             }
@@ -254,15 +256,15 @@ public class UIGameBuild : BaseUIComponent, IRadioGroupCallBack
         {
             if (itemBuildModel == null)
                 return;
-            if (uiGameManager.gameData.listBuild == null)
+            if (gameData.listBuild == null)
                 return;
             CptUtil.RemoveChildsByActive(itemBuildContainer);
             listBuildItem.Clear();
             listBuildForBedItem.Clear();
 
-            for (int i = 0; i < uiGameManager.gameData.listBuild.Count; i++)
+            for (int i = 0; i < gameData.listBuild.Count; i++)
             {
-                ItemBean itemData = uiGameManager.gameData.listBuild[i];
+                ItemBean itemData = gameData.listBuild[i];
                 BuildItemBean buildData = InnBuildHandler.Instance.manager.GetBuildDataById(itemData.itemId);
                 if (buildData == null)
                     continue;

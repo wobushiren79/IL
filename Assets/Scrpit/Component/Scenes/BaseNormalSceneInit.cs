@@ -8,14 +8,12 @@ public abstract class BaseNormalSceneInit : BaseSceneInit, DialogView.IDialogCal
     {
         base.Start();
         //设置时间
-        if (gameDataManager != null)
-        {
-            TimeBean timeData = gameData.gameTime;
-            GameTimeHandler.Instance.SetTime(timeData.hour, timeData.minute);
-            GameTimeHandler.Instance.SetTimeStatus(false);
-            //增加回调
-            GameTimeHandler.Instance.RegisterNotifyForTime(NotifyForTime);
-        }
+        GameDataBean gameData = GameDataHandler.Instance.manager.GetGameData();
+        TimeBean timeData = gameData.gameTime;
+        GameTimeHandler.Instance.SetTime(timeData.hour, timeData.minute);
+        GameTimeHandler.Instance.SetTimeStatus(false);
+        //增加回调
+        GameTimeHandler.Instance.RegisterNotifyForTime(NotifyForTime);
 
         //设置角色位置
         InitUserPosition();
@@ -56,15 +54,14 @@ public abstract class BaseNormalSceneInit : BaseSceneInit, DialogView.IDialogCal
     /// </summary>
     public virtual void EndDay()
     {
+        GameDataBean gameData = GameDataHandler.Instance.manager.GetGameData();
         //停止时间
-        if (gameTimeHandler != null)
-            GameTimeHandler.Instance.SetTimeStatus(true);
+        GameTimeHandler.Instance.SetTimeStatus(true);
         //停止控制
         GameControlHandler.Instance.EndControl();
 
         //重置游戏时间
-        if (gameTimeHandler != null)
-            GameTimeHandler.Instance.SetDayStatus(GameTimeHandler.DayEnum.End);
+        GameTimeHandler.Instance.SetDayStatus(GameTimeHandler.DayEnum.End);
 
 
         DialogBean dialogBean = new DialogBean();

@@ -24,14 +24,6 @@ public class ItemTownGuildImproveInnLevelCpt : BaseMonoBehaviour, DialogView.IDi
     public StoreInfoBean storeInfo;
     public bool isAllPre = true;
 
-    ;
-    protected UIGameManager uiGameManager;
-    private void Awake()
-    {
-        gameDataManager = Find<GameDataManager>(ImportantTypeEnum.GameDataManager);
-        uiGameManager = Find<UIGameManager>(ImportantTypeEnum.GameUI);
-    }
-
     private void Start()
     {
         if (btSubmit != null)
@@ -84,10 +76,11 @@ public class ItemTownGuildImproveInnLevelCpt : BaseMonoBehaviour, DialogView.IDi
     public void CreatePreDataItem(string preData)
     {
         List<PreTypeBean> listPreData = PreTypeEnumTools.GetListPreData(preData);
+        GameDataBean gameData = GameDataHandler.Instance.manager.GetGameData();
         foreach (var itemData in listPreData)
         {
             GameObject objPre = Instantiate(objPreContainer, objPreModel);
-            PreTypeEnumTools.GetPreDetails(itemData,gameData);
+            PreTypeEnumTools.GetPreDetails(itemData, gameData);
             //设置图标
             Sprite spIcon = itemData.spPreIcon;
             Image ivIcon = CptUtil.GetCptInChildrenByName<Image>(objPre, "Icon");
@@ -146,15 +139,13 @@ public class ItemTownGuildImproveInnLevelCpt : BaseMonoBehaviour, DialogView.IDi
     public void OnClickSubmit()
     {
         AudioHandler.Instance.PlaySound(AudioSoundEnum.ButtonForNormal);
+        GameDataBean gameData = GameDataHandler.Instance.manager.GetGameData();
         if (isAllPre)
         {
             //前置如果有需要临时支付的条件
             PreTypeEnumTools.CompletePre(storeInfo.pre_data, gameData);
             //获取所有奖励
-            RewardTypeEnumTools.CompleteReward(
-                gameDataManager,
-                null,
-                storeInfo.reward_data);
+            RewardTypeEnumTools.CompleteReward(null, storeInfo.reward_data);
             //客栈升级
             gameData.innAttributes.SetInnLevelUp();
 

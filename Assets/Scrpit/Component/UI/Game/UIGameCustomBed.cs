@@ -223,7 +223,7 @@ public class UIGameCustomBed : UIBaseOne, IRadioGroupCallBack
     /// </summary>
     public void OnClickForSumbit()
     {
-        GameDataBean gameData = uiGameManager.gameData;
+        GameDataBean gameData = GameDataHandler.Instance.manager.GetGameData();
         if (!gameData.HasEnoughMoney(customPriceL, customPriceM, customPriceS))
         {
             ToastHandler.Instance.ToastHint(GameCommonInfo.GetUITextById(1005));
@@ -284,7 +284,7 @@ public class UIGameCustomBed : UIBaseOne, IRadioGroupCallBack
     public override void Submit(DialogView dialogView, DialogBean dialogBean)
     {
         base.Submit(dialogView, dialogBean);
-        GameDataBean gameData = uiGameManager.gameData;
+        GameDataBean gameData = GameDataHandler.Instance.manager.GetGameData();
         if (dialogView as FindBedDialogView)
         {
             FindBedDialogView findBedDialog = dialogView as FindBedDialogView;

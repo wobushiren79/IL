@@ -185,10 +185,7 @@ public class UIMiniGameEnd : BaseUIComponent
         itemReasonWin.SetContent(reasonStr);
         itemReasonWin.SetIcon(IconDataHandler.Instance.manager.GetIconSpriteByName("text_win_1"));
         //添加奖励
-        RewardTypeEnumTools.CompleteReward(
-            uiGameManager.gameDataManager,
-            miniGameData.GetListUserCharacterData(),
-            miniGameData.listReward);
+        RewardTypeEnumTools.CompleteReward(miniGameData.GetListUserCharacterData(),miniGameData.listReward);
         //遍历奖励列表
         foreach (var itemReward in miniGameData.listReward)
         {

@@ -217,10 +217,10 @@ public class ItemGameHotelBedCpt : ItemGameBaseCpt, DialogView.IDialogCallBack
     /// </summary>
     public void OnClickResearch()
     {
-        UIGameManager uiGameManager = GetUIManager<UIGameManager>();
+        GameDataBean gameData = GameDataHandler.Instance.manager.GetGameData();
         AudioHandler.Instance.PlaySound(AudioSoundEnum.ButtonForNormal);
         //首先判断客栈等级是否足够
-        if (!buildBedData.CheckCanResearch(uiGameManager.gameData, out string failStr))
+        if (!buildBedData.CheckCanResearch(gameData, out string failStr))
         {
             ToastHandler.Instance.ToastHint(failStr);
             return;
@@ -232,9 +232,9 @@ public class ItemGameHotelBedCpt : ItemGameBaseCpt, DialogView.IDialogCallBack
         PickForCharacterDialogView pickForCharacterDialog = DialogHandler.Instance.CreateDialog<PickForCharacterDialogView>(DialogEnum.PickForCharacter, this, dialogData);
         pickForCharacterDialog.SetPickCharacterMax(1);
         //设置排出人员 （老板和没有在休息的员工）
-        List<CharacterBean> listCharacter = uiGameManager.gameData.listWorkerCharacter;
+        List<CharacterBean> listCharacter = gameData.listWorkerCharacter;
         List<string> listExpelIds = new List<string>();
-        listExpelIds.Add(uiGameManager.gameData.userCharacter.baseInfo.characterId);
+        listExpelIds.Add(gameData.userCharacter.baseInfo.characterId);
         foreach (CharacterBean itemData in listCharacter)
         {
             //休息日 排出不是工作或者休息的
@@ -276,18 +276,18 @@ public class ItemGameHotelBedCpt : ItemGameBaseCpt, DialogView.IDialogCallBack
     #region 确认回调
     public void Submit(DialogView dialogView, DialogBean dialogBean)
     {
-        UIGameManager uiGameManager = GetUIManager<UIGameManager>();
+        GameDataBean gameData = GameDataHandler.Instance.manager.GetGameData();
         if (dialogView as PickForCharacterDialogView)
         {
             buildBedData.GetResearchPrice(out long researchPriceL, out long researchPriceM, out long researchPriceS);
             //先判断一下是否有钱支付
-            if (!uiGameManager.gameData.HasEnoughMoney(researchPriceL, researchPriceM, researchPriceS))
+            if (!gameData.HasEnoughMoney(researchPriceL, researchPriceM, researchPriceS))
             {
                 ToastHandler.Instance.ToastHint(GameCommonInfo.GetUITextById(1005));
                 return;
             }
             //扣除金钱
-            uiGameManager.gameData.PayMoney(researchPriceL,researchPriceM,researchPriceS);
+            gameData.PayMoney(researchPriceL,researchPriceM,researchPriceS);
             //角色选择
             PickForCharacterDialogView pickForCharacterDialog = dialogView as PickForCharacterDialogView;
             List<CharacterBean> listPickCharacter = pickForCharacterDialog.GetPickCharacter();
@@ -314,13 +314,13 @@ public class ItemGameHotelBedCpt : ItemGameBaseCpt, DialogView.IDialogCallBack
                     return;
                 }
                 //丢弃确认
-                uiGameManager.gameData.RemoveBed(buildBedData);
+                gameData.RemoveBed(buildBedData);
                 uiComponent.RefreshUI();
             }
             else if (dialogBean.dialogPosition == 2)
             {
                 //普通弹窗（取消研究）
-                buildBedData.CancelResearch(uiGameManager.gameData);
+                buildBedData.CancelResearch(gameData);
             }
         }
         //重新设置数据

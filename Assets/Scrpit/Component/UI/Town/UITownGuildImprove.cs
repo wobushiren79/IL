@@ -33,18 +33,18 @@ public class UITownGuildImprove : UIBaseOne, IRadioGroupCallBack
     /// <param name="type"></param>
     public void ChangeUIType(int type)
     {
-
         uiInnInfo.Close() ;
         uiCharacterInfo.Close();
+        GameDataBean gameData = GameDataHandler.Instance.manager.GetGameData();
         switch (type)
         {
             case 0:
                 uiInnInfo.Open();
-                uiInnInfo.InitData(uiGameManager.gameData);
+                uiInnInfo.InitData(gameData);
                 break;
             case 1:
                 uiCharacterInfo.Open();
-                uiCharacterInfo.InitData(uiGameManager.gameData);
+                uiCharacterInfo.InitData(gameData);
                 break;
         }
     }

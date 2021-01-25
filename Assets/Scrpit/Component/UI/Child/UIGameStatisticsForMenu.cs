@@ -30,7 +30,7 @@ public class UIGameStatisticsForMenu : BaseUIChildComponent<UIGameStatistics>
 
     public IEnumerator CoroutineForCreateMenuList(Dictionary<long, MenuInfoBean> listData)
     {
-        GameDataManager gameDataManager = ((UIGameManager)uiComponent.uiManager).gameDataManager;
+        GameDataBean gameData = GameDataHandler.Instance.manager.GetGameData();
         foreach (var itemData in listData)
         {
             MenuOwnBean menuOwn= gameData.GetMenuById(itemData.Key);

@@ -11,16 +11,9 @@ public class NpcWorkerBuilder : BaseMonoBehaviour
 
     public List<NpcAIWorkerCpt> listNpcWorker = new List<NpcAIWorkerCpt>();
 
-    ;
-
-    private void Awake()
-    {
-        gameDataManager = Find<GameDataManager>(ImportantTypeEnum.GameDataManager);
-    }
-
     public void BuildAllWorker()
     {
-        if (objContainer == null || objWorkModel == null || gameDataManager == null)
+        if (objContainer == null || objWorkModel == null)
         {
             return;
         }

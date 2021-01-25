@@ -9,15 +9,12 @@ public class UIGameStatisticsForRevenue : BaseUIChildComponent<UIGameStatistics>
     //柱状图
     public CartogramBarView cartogramBar;
 
-    ;
-
     public List<int> listYear;
     public UserRevenueBean userRevenueData;
 
     public override void Awake()
     {
         base.Awake();
-        gameDataManager = ((UIGameManager)uiComponent.uiManager).gameDataManager;
         if (rgMonth != null)
             rgMonth.SetCallBack(this);
         if (ddYear != null)
@@ -27,8 +24,8 @@ public class UIGameStatisticsForRevenue : BaseUIChildComponent<UIGameStatistics>
     public override void Open()
     {
         base.Open();
-        gameDataManager.SetUserRevenueCallBack(this);
-        gameDataManager.GetUserRevenueYear();
+        GameDataHandler.Instance.manager.SetUserRevenueCallBack(this);
+        GameDataHandler.Instance.manager.GetUserRevenueYear();
     }
 
     /// <summary>
@@ -37,7 +34,7 @@ public class UIGameStatisticsForRevenue : BaseUIChildComponent<UIGameStatistics>
     /// <param name="position"></param>
     public void OnValueChangedForYear(int position)
     {
-        gameDataManager.GetUserRevenueByYear(listYear[position]);
+        GameDataHandler.Instance.manager.GetUserRevenueByYear(listYear[position]);
     }
 
     /// <summary>
@@ -112,7 +109,8 @@ public class UIGameStatisticsForRevenue : BaseUIChildComponent<UIGameStatistics>
     public void GetUserRevenueYearSuccess(List<int> listYear)
     {
         this.listYear = listYear;
-        ddYear.ClearOptions();
+        ddYear.ClearOptions(); 
+        GameDataBean gameData = GameDataHandler.Instance.manager.GetGameData();
         if (this.listYear == null || this.listYear.Count == 0)
         {
             this.listYear = new List<int>

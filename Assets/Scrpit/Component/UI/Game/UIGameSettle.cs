@@ -62,7 +62,7 @@ public class UIGameSettle : BaseUIComponent
 
     public void InitData()
     {
-        GameDataManager gameDataManager = uiGameManager.gameDataManager;
+        GameDataBean gameData = GameDataHandler.Instance.manager.GetGameData();
         UserAchievementBean userAchievement = gameData.GetAchievementData();
         //停止时间
         GameTimeHandler.Instance.SetTimeStatus(true);

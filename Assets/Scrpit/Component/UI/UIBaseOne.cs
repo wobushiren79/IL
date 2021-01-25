@@ -2,7 +2,7 @@
 using UnityEditor;
 using UnityEngine.UI;
 
-public class UIBaseOne : BaseUIComponent ,DialogView.IDialogCallBack
+public class UIBaseOne : BaseUIComponent, DialogView.IDialogCallBack
 {
     //返回按钮
     public Button btBack;
@@ -53,40 +53,38 @@ public class UIBaseOne : BaseUIComponent ,DialogView.IDialogCallBack
 
     public void SetMoney()
     {
-        if (uiGameManager.gameDataManager != null)
+        GameDataBean gameData = GameDataHandler.Instance.manager.GetGameData();
+        if (tvMoneyL != null)
         {
-            if (tvMoneyL != null)
-            {
-                tvMoneyL.text = uiGameManager.gameData.moneyL + "";
-            }
-            if (tvMoneyM != null)
-            {
-                tvMoneyM.text = uiGameManager.gameData.moneyM + "";
-            }
-            if (tvMoneyS != null)
-            {
-                tvMoneyS.text = uiGameManager.gameData.moneyS + "";
-            }
-            if (tvGuildCoin != null)
-            {
-                tvGuildCoin.text = uiGameManager.gameData.guildCoin + "";
-            }
-            if (tvTrophy1 != null)
-            {
-                tvTrophy1.text = uiGameManager.gameData.trophyElementary+"";
-            }
-            if (tvTrophy2 != null)
-            {
-                tvTrophy2.text = uiGameManager.gameData.trophyIntermediate + "";
-            }
-            if (tvTrophy3 != null)
-            {
-                tvTrophy3.text = uiGameManager.gameData.trophyAdvanced + "";
-            }
-            if (tvTrophy4 != null)
-            {
-                tvTrophy4.text = uiGameManager.gameData.trophyLegendary + "";
-            }
+            tvMoneyL.text = gameData.moneyL + "";
+        }
+        if (tvMoneyM != null)
+        {
+            tvMoneyM.text = gameData.moneyM + "";
+        }
+        if (tvMoneyS != null)
+        {
+            tvMoneyS.text = gameData.moneyS + "";
+        }
+        if (tvGuildCoin != null)
+        {
+            tvGuildCoin.text = gameData.guildCoin + "";
+        }
+        if (tvTrophy1 != null)
+        {
+            tvTrophy1.text = gameData.trophyElementary + "";
+        }
+        if (tvTrophy2 != null)
+        {
+            tvTrophy2.text = gameData.trophyIntermediate + "";
+        }
+        if (tvTrophy3 != null)
+        {
+            tvTrophy3.text = gameData.trophyAdvanced + "";
+        }
+        if (tvTrophy4 != null)
+        {
+            tvTrophy4.text = gameData.trophyLegendary + "";
         }
     }
 

@@ -24,7 +24,7 @@ public class UITownBank : UIBaseOne, IRadioGroupCallBack
         base.Update();
         if (tvLoansNumber != null)
         {
-            GameDataBean gameData = uiGameManager.gameData;
+            GameDataBean gameData = GameDataHandler.Instance.manager.GetGameData();
             tvLoansNumber.text = loansStr + "\n" + "(" + gameData.listLoans.Count + "/" + gameData.loansNumberLimit + ")";
         }
     }

@@ -66,7 +66,7 @@ public class UIGameTest : BaseUIComponent
     /// </summary>
     public void AddAll()
     {
-        GameDataBean gameData = uiGameManager.gameData;
+        GameDataBean gameData = GameDataHandler.Instance.manager.GetGameData();
         gameData.listItems.Clear();
         List<ItemsInfoBean> listItem = GameItemsHandler.Instance.manager.GetAllItems();
         foreach (ItemsInfoBean itemsInfo in listItem)
@@ -88,10 +88,10 @@ public class UIGameTest : BaseUIComponent
     {
         if (long.TryParse(etItemId.text, out long itemId))
         {
-
+            GameDataBean gameData = GameDataHandler.Instance.manager.GetGameData();
             if (long.TryParse(etItemNumber.text, out long itemNumber))
             {
-                uiGameManager.gameData.AddItemsNumber(itemId, itemNumber);
+                gameData.AddItemsNumber(itemId, itemNumber);
             }
             else
             {
@@ -114,7 +114,8 @@ public class UIGameTest : BaseUIComponent
 
             if (long.TryParse(etBuildItemNumber.text, out long itemNumber))
             {
-                uiGameManager.gameData.AddBuildNumber(itemId, itemNumber);
+                GameDataBean gameData = GameDataHandler.Instance.manager.GetGameData();
+                gameData.AddBuildNumber(itemId, itemNumber);
             }
             else
             {
