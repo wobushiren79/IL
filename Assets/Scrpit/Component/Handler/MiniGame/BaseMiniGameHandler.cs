@@ -18,7 +18,7 @@ public class BaseMiniGameHandler<B, D> : BaseHandler, UIMiniGameCountDown.ICallB
 
     protected virtual void Awake()
     {
-        miniGameBuilder = FindInChildren<B>(ImportantTypeEnum.MiniGameBuilder);
+        miniGameBuilder = CptUtil.AddCpt<B>(gameObject);
     }
 
     /// <summary>

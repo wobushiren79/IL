@@ -122,6 +122,7 @@ public class BaseUIManager : BaseManager
             {
                 GameObject objUIComponent = Instantiate(gameObject, uiModel.gameObject);
                 uiComponent = objUIComponent.GetComponent<BaseUIComponent>();
+                uiComponent.OpenUI();
                 uiList.Add(uiComponent);
             }
             else

@@ -54,7 +54,6 @@ public class UIMainStart : BaseUIComponent
             tvExit.text = GameCommonInfo.GetUITextById(4014);
 
         SetVersion(ProjectConfigInfo.GAME_VERSION);
-        AnimForInit();
     }
 
     public override void OpenUI()
@@ -69,13 +68,25 @@ public class UIMainStart : BaseUIComponent
     public void AnimForInit()
     {
         if (btStart != null)
-            btStart.transform.DOScaleX(0,0.5f).From().SetEase(Ease.OutBack);
+        {
+            btStart.transform.localScale = Vector3.one;
+            btStart.transform.DOScaleX(0, 0.5f).From().SetEase(Ease.OutBack);
+        }
         if (btContinue != null)
+        {
+            btContinue.transform.localScale = Vector3.one;
             btContinue.transform.DOScaleX(0, 0.5f).From().SetEase(Ease.OutBack).SetDelay(0.1f);
+        }
         if (btSetting != null)
+        {
+            btSetting.transform.localScale = Vector3.one;
             btSetting.transform.DOScaleX(0, 0.5f).From().SetEase(Ease.OutBack).SetDelay(0.2f);
+        }
         if (btExit != null)
+        {
+            btExit.transform.localScale = Vector3.one;
             btExit.transform.DOScaleX(0, 0.5f).From().SetEase(Ease.OutBack).SetDelay(0.3f);
+        }
     }
 
     /// <summary>
@@ -96,7 +107,7 @@ public class UIMainStart : BaseUIComponent
     public void OpenContinueUI()
     {
         //按键音效
-        AudioHandler.Instance.PlaySound( AudioSoundEnum.ButtonForNormal);
+        AudioHandler.Instance.PlaySound(AudioSoundEnum.ButtonForNormal);
         UIHandler.Instance.manager.OpenUIAndCloseOther<UIMainContinue>(UIEnum.MainContinue);
     }
 

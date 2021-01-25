@@ -10,16 +10,9 @@ public class MiniGameCookingHandler : BaseMiniGameHandler<MiniGameCookingBuilder
     UIMiniGameCookingSettlement.ICallBack
 {
     //事件处理
-    protected EventHandler eventHandler;
     protected UIMiniGameCooking uiMiniGameCooking;
     protected UIMiniGameCookingSelect uiMiniGameCookingSelect;
     protected UIMiniGameCookingSettlement uiMiniGameCookingSettlement;
-
-    protected override void Awake()
-    {
-        base.Awake();
-        eventHandler = Find<EventHandler>(ImportantTypeEnum.EventHandler);
-    }
 
     /// <summary>
     /// 初始化游戏
