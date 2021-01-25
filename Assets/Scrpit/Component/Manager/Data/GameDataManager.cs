@@ -9,29 +9,14 @@ public class GameDataManager : BaseManager, IGameDataView, IUserRevenueView
     public GameDataController gameDataController;
     public UserRevenueController userRevenueController;
 
-    //简略游戏数据
-    public List<GameDataSimpleBean> listGameDataSimple;
-
     //游戏数据
     protected GameDataBean gameData;
-    protected IUserRevenueCallBack userRevenueCallBack;
-    protected IGameDataSimpleCallBack simpleGameDataCallBack;
 
     private void Awake()
     {
         gameData = new GameDataBean();
         gameDataController = new GameDataController(this, this);
         userRevenueController = new UserRevenueController(this, this);
-    }
-
-    public void SetSimpleGameDataCallBack(IGameDataSimpleCallBack callBack)
-    {
-        simpleGameDataCallBack = callBack;
-    }
-
-    public void SetUserRevenueCallBack(IUserRevenueCallBack callBack)
-    {
-        userRevenueCallBack = callBack;
     }
 
     /// <summary>
@@ -74,9 +59,9 @@ public class GameDataManager : BaseManager, IGameDataView, IUserRevenueView
     /// <summary>
     /// 获取简介数据
     /// </summary>
-    public void GetSimpleGameDataList()
+    public void GetSimpleGameDataList(Action<List<GameDataSimpleBean>> action)
     {
-        gameDataController.GetSimpleGameData();
+        gameDataController.GetSimpleGameData(action);
     }
 
 
@@ -94,21 +79,21 @@ public class GameDataManager : BaseManager, IGameDataView, IUserRevenueView
     /// 获取营收数据
     /// </summary>
     /// <param name="year"></param>
-    public void GetUserRevenueByYear(int year)
+    public void GetUserRevenueByYear(int year, Action<UserRevenueBean> action)
     {
         if (gameData == null)
             return;
-        userRevenueController.GetUserRevenueByYear(gameData.userId, year);
+        userRevenueController.GetUserRevenueByYear(gameData.userId, year, action);
     }
 
     /// <summary>
     /// 获取所有营收年份
     /// </summary>
-    public void GetUserRevenueYear()
+    public void GetUserRevenueYear(Action<List<int>> action)
     {
         if (gameData == null)
             return;
-        userRevenueController.GetUserRevenueYear(gameData.userId);
+        userRevenueController.GetUserRevenueYear(gameData.userId, action);
     }
 
     #region 数据回调
@@ -118,7 +103,7 @@ public class GameDataManager : BaseManager, IGameDataView, IUserRevenueView
 
     public void DeleteGameDataSuccess()
     {
-        gameDataController.GetSimpleGameData();
+
     }
 
     public void GetGameDataFail()
@@ -129,13 +114,9 @@ public class GameDataManager : BaseManager, IGameDataView, IUserRevenueView
     {
     }
 
-    public void GetGameDataSimpleListSuccess(List<GameDataSimpleBean> listData)
+    public void GetGameDataSimpleListSuccess(List<GameDataSimpleBean> listData, Action<List<GameDataSimpleBean>> action)
     {
-        this.listGameDataSimple = listData;
-        if (simpleGameDataCallBack != null)
-        {
-            simpleGameDataCallBack.GetSimpleGameDataSuccess(listData);
-        }
+        action?.Invoke(listData);
     }
 
     public void GetGameDataSuccess(GameDataBean gameData)
@@ -155,39 +136,18 @@ public class GameDataManager : BaseManager, IGameDataView, IUserRevenueView
 
     }
 
-    public void GetUserRevenueYearSuccess(List<int> listYear)
-    {
-        if (userRevenueCallBack != null)
-            userRevenueCallBack.GetUserRevenueYearSuccess(listYear);
-    }
-
-    public void GetUserRevenueSuccess(UserRevenueBean userRevenue)
-    {
-        if (userRevenueCallBack != null)
-            userRevenueCallBack.GetUserRevenueSuccess(userRevenue);
-    }
-
     public void GetUserRevenueFail()
     {
     }
 
+    public void GetUserRevenueYearSuccess(List<int> listYear, Action<List<int>> action)
+    {
+        action?.Invoke(listYear);
+    }
 
+    public void GetUserRevenueSuccess(UserRevenueBean userRevenue, Action<UserRevenueBean> action)
+    {
+        action?.Invoke(userRevenue);
+    }
     #endregion
-
-    public interface IGameDataCallBack
-    {
-
-    }
-
-    public interface IGameDataSimpleCallBack
-    {
-        void GetSimpleGameDataSuccess(List<GameDataSimpleBean> listData);
-    }
-
-    public interface IUserRevenueCallBack
-    {
-        void GetUserRevenueSuccess(UserRevenueBean userRevenue);
-        void GetUserRevenueYearSuccess(List<int> listYear);
-    }
-
 }

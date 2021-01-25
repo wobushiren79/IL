@@ -3,8 +3,9 @@ using UnityEditor;
 using UnityEngine.UI;
 using System.Collections.Generic;
 using DG.Tweening;
+using System;
 
-public class UIMainContinue : BaseUIComponent, GameDataManager.IGameDataSimpleCallBack
+public class UIMainContinue : BaseUIComponent
 {
     //返回按钮
     public Button btBack;
@@ -23,9 +24,7 @@ public class UIMainContinue : BaseUIComponent, GameDataManager.IGameDataSimpleCa
     public override void OpenUI()
     {
         base.OpenUI();
-   
-        GameDataHandler.Instance.manager.SetSimpleGameDataCallBack(this);
-        GameDataHandler.Instance.manager.GetSimpleGameDataList();
+        GameDataHandler.Instance.manager.GetSimpleGameDataList(SetSimpleGameData);
         AnimForInit();
     }
 
@@ -70,7 +69,7 @@ public class UIMainContinue : BaseUIComponent, GameDataManager.IGameDataSimpleCa
     }
 
     #region  数据列表回调
-    public void GetSimpleGameDataSuccess(List<GameDataSimpleBean> listData)
+    public void SetSimpleGameData(List<GameDataSimpleBean> listData)
     {
         CreateListItem(listData);
     }

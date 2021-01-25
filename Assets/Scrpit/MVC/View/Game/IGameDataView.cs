@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using UnityEditor;
 using System.Collections.Generic;
+using System;
 
 public interface IGameDataView
 {
@@ -8,7 +9,7 @@ public interface IGameDataView
     /// 获取简略游戏数据列表成功
     /// </summary>
     /// <param name="listData"></param>
-    void GetGameDataSimpleListSuccess(List<GameDataSimpleBean> listData);
+    void GetGameDataSimpleListSuccess(List<GameDataSimpleBean> listData, Action<List<GameDataSimpleBean>> action);
 
     /// <summary>
     /// 获取简略游戏数据列表失败

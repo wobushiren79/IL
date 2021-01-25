@@ -2,7 +2,7 @@
 using UnityEditor;
 using System.Collections.Generic;
 using UnityEngine.UI;
-public class UIGameStatisticsForRevenue : BaseUIChildComponent<UIGameStatistics>, IRadioGroupCallBack, GameDataManager.IUserRevenueCallBack
+public class UIGameStatisticsForRevenue : BaseUIChildComponent<UIGameStatistics>, IRadioGroupCallBack
 {
     public RadioGroupView rgMonth;
     public Dropdown ddYear;
@@ -24,8 +24,7 @@ public class UIGameStatisticsForRevenue : BaseUIChildComponent<UIGameStatistics>
     public override void Open()
     {
         base.Open();
-        GameDataHandler.Instance.manager.SetUserRevenueCallBack(this);
-        GameDataHandler.Instance.manager.GetUserRevenueYear();
+        GameDataHandler.Instance.manager.GetUserRevenueYear(SetUserRevenueYearData);
     }
 
     /// <summary>
@@ -34,7 +33,7 @@ public class UIGameStatisticsForRevenue : BaseUIChildComponent<UIGameStatistics>
     /// <param name="position"></param>
     public void OnValueChangedForYear(int position)
     {
-        GameDataHandler.Instance.manager.GetUserRevenueByYear(listYear[position]);
+        GameDataHandler.Instance.manager.GetUserRevenueByYear(listYear[position], SetUserRevenueData);
     }
 
     /// <summary>
@@ -62,18 +61,19 @@ public class UIGameStatisticsForRevenue : BaseUIChildComponent<UIGameStatistics>
     {
         AudioHandler.Instance.PlaySound(AudioSoundEnum.ButtonForNormal);
         int month = 1;
-        switch (rbview.name)
+        SeasonsEnum season = EnumUtil.GetEnum<SeasonsEnum>(rbview.name);
+        switch (season)
         {
-            case "Spring":
+            case SeasonsEnum.Spring:
                 month = 1;
                 break;
-            case "Summer":
+            case SeasonsEnum.Summer:
                 month = 2;
                 break;
-            case "Autumn":
+            case SeasonsEnum.Autumn:
                 month = 3;
                 break;
-            case "Winter":
+            case SeasonsEnum.Winter:
                 month = 4;
                 break;
         }
@@ -95,7 +95,7 @@ public class UIGameStatisticsForRevenue : BaseUIChildComponent<UIGameStatistics>
     #endregion
 
     #region 营收数据回调
-    public void GetUserRevenueSuccess(UserRevenueBean userRevenueData)
+    public void SetUserRevenueData(UserRevenueBean userRevenueData)
     {
         this.userRevenueData = userRevenueData;
         GameTimeHandler.Instance.GetTime(out int year,out int month,out int day);
@@ -106,7 +106,7 @@ public class UIGameStatisticsForRevenue : BaseUIChildComponent<UIGameStatistics>
         rgMonth.SetPosition( month - 1 , true);
     }
 
-    public void GetUserRevenueYearSuccess(List<int> listYear)
+    public void SetUserRevenueYearData(List<int> listYear)
     {
         this.listYear = listYear;
         ddYear.ClearOptions(); 

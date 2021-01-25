@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using UnityEditor;
 using System.Collections.Generic;
+using System;
 
 public class UserRevenueController : BaseMVCController<UserRevenueModel, IUserRevenueView>
 {
@@ -53,16 +54,16 @@ public class UserRevenueController : BaseMVCController<UserRevenueModel, IUserRe
         GetModel().SetUserRevenue(userRevenueData);
     }
 
-    public void GetUserRevenueByYear(string userId, int year)
+    public void GetUserRevenueByYear(string userId, int year, Action<UserRevenueBean> action)
     {
         UserRevenueBean userRevenueData = GetModel().GetUserRevenueByYear(userId, year);
-        GetView().GetUserRevenueSuccess(userRevenueData);
+        GetView().GetUserRevenueSuccess(userRevenueData, action);
     }
 
-    public void GetUserRevenueYear(string userId)
+    public void GetUserRevenueYear(string userId, Action<List<int>> action)
     {
         List<int> listYear = GetModel().GetUserRevenueYear(userId);
-        GetView().GetUserRevenueYearSuccess(listYear);
+        GetView().GetUserRevenueYearSuccess(listYear, action);
     }
 
 }

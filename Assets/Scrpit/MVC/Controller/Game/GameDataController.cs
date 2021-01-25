@@ -78,9 +78,9 @@ public class GameDataController : BaseMVCController<GameDataModel, IGameDataView
     /// <summary>
     /// 获取用户数据列表
     /// </summary>
-    public void GetSimpleGameData()
+    public void GetSimpleGameData(Action<List<GameDataSimpleBean>> action)
     {
         List<GameDataSimpleBean> listData= GetModel().GetSimpleGameDataList();
-        GetView().GetGameDataSimpleListSuccess(listData);
+        GetView().GetGameDataSimpleListSuccess(listData, action);
     }
 }
