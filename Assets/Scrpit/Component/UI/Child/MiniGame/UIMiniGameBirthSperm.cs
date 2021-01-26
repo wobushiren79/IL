@@ -15,19 +15,20 @@ public class UIMiniGameBirthSperm : BaseUIChildComponent<UIMiniGameBirth>
         rtfSperm.DOMove(spermData.positionEnd, 10).SetEase(Ease.Linear).OnComplete(() => { });
     }
 
-    private void OnTriggerStay2D(Collider2D collision)
+    private void OnTriggerEnter2D(Collider2D collision)
     {
         UIMiniGameBirthEnemy enemy = collision.gameObject.GetComponent<UIMiniGameBirthEnemy>();
         if (enemy)
         {
-            DestroyImmediate(gameObject);
+            Destroy(gameObject);
             return;
         }
         UIMiniGameBirthEgg egg = collision.gameObject.GetComponent<UIMiniGameBirthEgg>();
         if (egg)
         {
-            DestroyImmediate(gameObject);
+            Destroy(gameObject);
             return;
         }
     }
+
 }
