@@ -15,8 +15,14 @@ public class InnBuildManager : BaseManager, IBuildDataView
     public TileBeanDictionary dicWallTile = new TileBeanDictionary();
     //地板tile列表
     public TileBeanDictionary dicFloorTile = new TileBeanDictionary();
+    //地面tile列表
+    public TileBeanDictionary dicGroundTile = new TileBeanDictionary();
+    //其他tile列表
+    public TileBeanDictionary dicOtherTile = new TileBeanDictionary();
+
     //家具模型列表
     public GameObjectDictionary dicFurnitureCpt = new GameObjectDictionary();
+
 
     //家具图标
     public SpriteAtlas atlasForFunrniture;
@@ -34,6 +40,7 @@ public class InnBuildManager : BaseManager, IBuildDataView
     public void Awake()
     {
         buildDataController = new BuildDataController(this, this);
+        buildDataController.GetAllBuildItemsData();
     }
 
     /// <summary>
@@ -192,6 +199,26 @@ public class InnBuildManager : BaseManager, IBuildDataView
     public TileBase GetWallTileByName(string name)
     {
         return GetModel(dicWallTile, "tile/wall", name);
+    }
+
+    /// <summary>
+    /// 根据名字获取tile
+    /// </summary>
+    /// <param name="name"></param>
+    /// <returns></returns>
+    public TileBase GetGroundTileByName(string name)
+    {
+        return GetModel(dicGroundTile, "tile/ground", name);
+    }
+
+    /// <summary>
+    /// 根据名字获取tile
+    /// </summary>
+    /// <param name="name"></param>
+    /// <returns></returns>
+    public TileBase GetOtherTileByName(string name)
+    {
+        return GetModel(dicOtherTile, "tile/other", name);
     }
 
     #region 建筑数据回调

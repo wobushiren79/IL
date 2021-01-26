@@ -23,6 +23,7 @@ public class StoryBuilder : BaseMonoBehaviour, StoryInfoManager.CallBack
 
     public virtual void Awake()
     {
+        objNpcModel = LoadAssetUtil.SyncLoadAsset<GameObject>("character/character", "CharacterForStory");
         listStoryDetails = new List<StoryInfoDetailsBean>();
         listNpcObj = new List<GameObject>();
     }

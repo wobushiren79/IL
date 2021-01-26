@@ -8,6 +8,7 @@ public class SceneUtil
 
     public static void SceneChange(ScenesEnum scenenName)
     {
+        UIHandler.Instance.manager.CloseAllUI();
         //获取当前场景名字
         string beforeSceneName = SceneManager.GetActiveScene().name;
         GameCommonInfo.ScenesChangeData.beforeScene = EnumUtil.GetEnum<ScenesEnum>(beforeSceneName);

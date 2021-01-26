@@ -5,12 +5,20 @@ using System.Collections.Generic;
 public class InnFurnitureBuilder : BaseMonoBehaviour
 {
     //装饰容器
-    public GameObject buildContainer;
+    protected GameObject _buildContainer;
 
-    private void Awake()
+    public GameObject buildContainer
     {
-        buildContainer = GameObject.Find("FurnitureContainer");
+        get
+        {
+            if (_buildContainer == null)
+            {
+                _buildContainer = GameObject.FindGameObjectWithTag("FurnitureContainer");
+            }
+            return _buildContainer;
+        }
     }
+
 
     /// <summary>
     /// 开始建造

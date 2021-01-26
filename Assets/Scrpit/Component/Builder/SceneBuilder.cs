@@ -5,8 +5,8 @@ using System.Collections.Generic;
 
 public class SceneBuilder : BaseTilemapBuilder
 {
-    public Tilemap tileMapForGround;
-    public Tilemap tileMapForGroundElement;
+    protected Tilemap _tileMapForGround;
+    protected Tilemap _tileMapForGroundElement;
 
     public List<TileBean> listTileGroundForSeasons;
     public List<TileBean> listTileGressForSeasons;
@@ -14,6 +14,32 @@ public class SceneBuilder : BaseTilemapBuilder
     public TileBean tileDataForGround;
     public TileBean tileDataForGress;
 
+    public Tilemap tileMapForGround
+    {
+        get
+        {
+            if (_tileMapForGround == null)
+            {
+                GameObject obj = GameObject.FindGameObjectWithTag("Ground");
+                if (obj != null)
+                    _tileMapForGround = obj.GetComponent<Tilemap>();
+            }
+            return _tileMapForGround;
+        }
+    }
+    public Tilemap tileMapForGroundElement
+    {
+        get
+        {
+            if (_tileMapForGroundElement == null)
+            {
+                GameObject obj = GameObject.FindGameObjectWithTag("GroundElement");
+                if (obj != null)
+                    _tileMapForGroundElement = obj.GetComponent<Tilemap>();
+            }
+            return _tileMapForGroundElement;
+        }
+    }
     /// <summary>
     /// 构建场景
     /// </summary>

@@ -5,12 +5,28 @@ using UnityEngine.Tilemaps;
 
 public class InnWallBuilder : BaseTilemapBuilder
 {
+    protected Tilemap _buildTilemap;
+
+    public Tilemap buildTilemap
+    {
+        get
+        {
+            if (_buildTilemap == null)
+            {
+                GameObject obj = GameObject.FindGameObjectWithTag("InnWall");
+                if (obj != null)
+                    _buildTilemap = obj.GetComponent<Tilemap>();
+            }
+            return _buildTilemap;
+        }
+    }
+
     public void StartBuild()
     {
         GameDataBean gameData = GameDataHandler.Instance.manager.GetGameData();
         if (gameData != null && gameData.innBuildData != null)
         {
-            ClearAllTiles();
+            ClearAllTiles(buildTilemap);
             BuildWall(gameData.innBuildData.listWall);
             BuildWall(gameData.innBuildData.listSecondWall);
         }
@@ -29,7 +45,7 @@ public class InnWallBuilder : BaseTilemapBuilder
             InnResBean itemData = listData[i];
             BuildItemBean buildItemData = InnBuildHandler.Instance.manager.GetBuildDataById(itemData.id);
             TileBase wallTile = InnBuildHandler.Instance.manager.GetWallTileByName(buildItemData.tile_name);
-            Build(wallTile, new Vector3Int((int)itemData.startPosition.x, (int)itemData.startPosition.y, 0));
+            Build(buildTilemap, wallTile, new Vector3Int((int)itemData.startPosition.x, (int)itemData.startPosition.y, 0));
         }
     }
 
@@ -44,7 +60,7 @@ public class InnWallBuilder : BaseTilemapBuilder
             return;
         BuildItemBean buildItemData = InnBuildHandler.Instance.manager.GetBuildDataById(itemData.id);
         TileBase wallTile = InnBuildHandler.Instance.manager.GetWallTileByName(buildItemData.tile_name);
-        Build(wallTile, new Vector3Int((int)itemData.startPosition.x, (int)itemData.startPosition.y, 0));
+        Build(buildTilemap, wallTile, new Vector3Int((int)itemData.startPosition.x, (int)itemData.startPosition.y, 0));
     }
 
     /// <summary>
@@ -54,8 +70,8 @@ public class InnWallBuilder : BaseTilemapBuilder
     /// <param name="changeTileName"></param>
     public void ChangeWall(Vector3Int changePosition, string changeTileName)
     {
-        TileBase floorTile = InnBuildHandler.Instance.manager.GetWallTileByName(changeTileName);
-        Build(floorTile, changePosition);
+        TileBase wallTile = InnBuildHandler.Instance.manager.GetWallTileByName(changeTileName);
+        Build(buildTilemap, wallTile, changePosition);
     }
 
     /// <summary>
@@ -64,6 +80,11 @@ public class InnWallBuilder : BaseTilemapBuilder
     /// <param name="position"></param>
     public void ClearWall(Vector3Int position)
     {
-        ClearTile(position);
+        ClearTile(buildTilemap, position);
+    }
+
+    public GameObject GetTilemapContainer()
+    {
+        return base.GetTilemapContainer(buildTilemap);
     }
 }

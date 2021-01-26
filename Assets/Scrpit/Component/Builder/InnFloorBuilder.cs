@@ -5,12 +5,29 @@ using UnityEngine.Tilemaps;
 
 public class InnFloorBuilder : BaseTilemapBuilder
 {
+    protected Tilemap _buildTilemap;
+
+    public Tilemap buildTilemap
+    {
+        get
+        {
+            if (_buildTilemap == null)
+            {
+                GameObject obj = GameObject.FindGameObjectWithTag("InnFloor");
+                if (obj != null)
+                    _buildTilemap = obj.GetComponent<Tilemap>();
+            }
+            return _buildTilemap;
+        }
+    }
+
+
     public void StartBuild()
     {
         GameDataBean gameData = GameDataHandler.Instance.manager.GetGameData();
         if (gameData != null && gameData.innBuildData != null)
         {
-            ClearAllTiles();
+            ClearAllTiles(buildTilemap);
             BuildFloor(gameData.innBuildData.listFloor);
             BuildFloor(gameData.innBuildData.listSecondFloor);
         }
@@ -40,7 +57,7 @@ public class InnFloorBuilder : BaseTilemapBuilder
             return;
         BuildItemBean buildItemData = InnBuildHandler.Instance.manager.GetBuildDataById(itemData.id);
         TileBase floorTile = InnBuildHandler.Instance.manager.GetFloorTileByName(buildItemData.tile_name);
-        Build(floorTile, new Vector3Int((int)itemData.startPosition.x, (int)itemData.startPosition.y, 0));
+        Build(buildTilemap, floorTile, new Vector3Int((int)itemData.startPosition.x, (int)itemData.startPosition.y, 0));
     }
 
     /// <summary>
@@ -51,6 +68,6 @@ public class InnFloorBuilder : BaseTilemapBuilder
     public void ChangeFloor(Vector3Int changePosition, string changeTileName)
     {
         TileBase floorTile = InnBuildHandler.Instance.manager.GetFloorTileByName(changeTileName);
-        Build(floorTile, changePosition);
+        Build(buildTilemap, floorTile, changePosition);
     }
 }
