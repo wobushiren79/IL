@@ -14,4 +14,20 @@ public class UIMiniGameBirthSperm : BaseUIChildComponent<UIMiniGameBirth>
         rtfSperm.position = spermData.positionStart;
         rtfSperm.DOMove(spermData.positionEnd, 10).SetEase(Ease.Linear).OnComplete(() => { });
     }
+
+    private void OnTriggerStay2D(Collider2D collision)
+    {
+        UIMiniGameBirthEnemy enemy = collision.gameObject.GetComponent<UIMiniGameBirthEnemy>();
+        if (enemy)
+        {
+            DestroyImmediate(gameObject);
+            return;
+        }
+        UIMiniGameBirthEgg egg = collision.gameObject.GetComponent<UIMiniGameBirthEgg>();
+        if (egg)
+        {
+            DestroyImmediate(gameObject);
+            return;
+        }
+    }
 }
