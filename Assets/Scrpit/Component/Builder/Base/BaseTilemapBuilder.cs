@@ -3,7 +3,7 @@ using UnityEditor;
 using UnityEngine.Tilemaps;
 using System.Collections.Generic;
 
-public class BaseTilemapBuilder : BaseMonoBehaviour
+public class BaseTilemapBuilder : BaseBuilder
 {
     public void Build(Tilemap buildTilemap, TileBase tile, int startX, int startY, int endX, int endY)
     {
