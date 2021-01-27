@@ -612,7 +612,7 @@ public class StoryCreateWindowsEditor : EditorWindow
         characterDress.Awake();
 
         baseNpcAI.transform.localPosition = position;
-        baseNpcAI.SetCharacterData(gameItemsManager, characterData);
+        baseNpcAI.SetCharacterData(characterData);
         baseNpcAI.name = "" + number;
         objNpc.SetActive(true);
 

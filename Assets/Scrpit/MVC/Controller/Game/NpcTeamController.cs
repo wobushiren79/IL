@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using UnityEditor;
 using System.Collections.Generic;
+using System;
 
 public class NpcTeamController : BaseMVCController<NpcTeamModel, INpcTeamView>
 {
@@ -19,7 +20,7 @@ public class NpcTeamController : BaseMVCController<NpcTeamModel, INpcTeamView>
     /// 通过类型 获取NPC队伍
     /// </summary>
     /// <param name="npcTeamType"></param>
-    public void GetNpcTeamByType(NpcTeamTypeEnum npcTeamType)
+    public void GetNpcTeamByType(NpcTeamTypeEnum npcTeamType, Action<List<NpcTeamBean>> action)
     {
         List<NpcTeamBean> listData = GetModel().GetNpcTeamByType(npcTeamType);
         if (CheckUtil.ListIsNull(listData))
@@ -28,7 +29,20 @@ public class NpcTeamController : BaseMVCController<NpcTeamModel, INpcTeamView>
         }
         else
         {
-            GetView().GetNpcTeamSuccess(npcTeamType, listData);
+            GetView().GetNpcTeamSuccess(npcTeamType, listData, action);
+        }
+    }
+
+    public void GetAllNpcTeam( Action<List<NpcTeamBean>> action)
+    {
+        List<NpcTeamBean> listData = GetModel().GetAllNpcTeam();
+        if (CheckUtil.ListIsNull(listData))
+        {
+            GetView().GetNpcTeamFail();
+        }
+        else
+        {
+            GetView().GetAllNpcTeamSuccess(listData, action);
         }
     }
 }

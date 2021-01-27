@@ -48,7 +48,7 @@ public class BaseNpcAI : BaseObservable<IBaseObserver>
     /// </summary>
     /// <param name="gameItemsManager"></param>
     /// <param name="characterBean"></param>
-    public virtual void SetCharacterData(GameItemsManager gameItemsManager, CharacterBean characterBean)
+    public virtual void SetCharacterData(CharacterBean characterBean)
     {
         if (characterBean == null)
             return;
@@ -136,10 +136,6 @@ public class BaseNpcAI : BaseObservable<IBaseObserver>
             }
             characterMoveCpt.SetMoveSpeed(speed);
         }
-    }
-    public virtual void SetCharacterData(CharacterBean characterBean)
-    {
-        SetCharacterData(characterBean);
     }
 
     /// <summary>

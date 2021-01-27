@@ -816,7 +816,7 @@ public class NpcCreateWindowEditor : EditorWindow
         CharacterDressCpt characterDress = CptUtil.GetCptInChildrenByName<CharacterDressCpt>(baseNpcAI.gameObject, "Body");
         characterDress.Awake();
 
-        baseNpcAI.SetCharacterData(gameItemsManager, characterData);
+        baseNpcAI.SetCharacterData(characterData);
         return objNpc;
     }
 }

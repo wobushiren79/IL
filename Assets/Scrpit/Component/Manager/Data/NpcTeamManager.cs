@@ -1,21 +1,23 @@
 ﻿using UnityEngine;
 using UnityEditor;
 using System.Collections.Generic;
+using System;
 
 public class NpcTeamManager : BaseManager, INpcTeamView
 {
     public NpcTeamController npcTeamController;
 
-    public List<NpcTeamBean> listCustomerTeam;
-    public List<NpcTeamBean> listFriendTeam;
-    public List<NpcTeamBean> listRascalTeam;
-    public List<NpcTeamBean> listSundryTeam;
-    public List<NpcTeamBean> listEntertainTeam;
-    public List<NpcTeamBean> listDisappointedTeam;
-    public List<NpcTeamBean> listInfiniteTowersBossTeam;
+    public List<NpcTeamBean> listCustomerTeam = new List<NpcTeamBean>();
+    public List<NpcTeamBean> listFriendTeam = new List<NpcTeamBean>();
+    public List<NpcTeamBean> listRascalTeam = new List<NpcTeamBean>();
+    public List<NpcTeamBean> listSundryTeam = new List<NpcTeamBean>();
+    public List<NpcTeamBean> listEntertainTeam = new List<NpcTeamBean>();
+    public List<NpcTeamBean> listDisappointedTeam = new List<NpcTeamBean>();
+    public List<NpcTeamBean> listInfiniteTowersBossTeam = new List<NpcTeamBean>();
     private void Awake()
     {
         npcTeamController = new NpcTeamController(this, this);
+        npcTeamController.GetAllNpcTeam(null);
     }
 
     /// <summary>
@@ -25,7 +27,7 @@ public class NpcTeamManager : BaseManager, INpcTeamView
     /// <returns></returns>
     public List<NpcTeamBean> GetRandomTeamMeetConditionByType(NpcTeamTypeEnum npcTeamType, GameDataBean gameData)
     {
-        List<NpcTeamBean> listData =null;
+        List<NpcTeamBean> listData = null;
         switch (npcTeamType)
         {
             case NpcTeamTypeEnum.Customer:
@@ -147,7 +149,7 @@ public class NpcTeamManager : BaseManager, INpcTeamView
     /// <param name="gameData"></param>
     /// <param name="listData"></param>
     /// <returns></returns>
-    public List<NpcTeamBean> GetMeetConditionTeam(GameDataBean gameData,  List<NpcTeamBean> listData)
+    public List<NpcTeamBean> GetMeetConditionTeam(GameDataBean gameData, List<NpcTeamBean> listData)
     {
         List<NpcTeamBean> listMeet = new List<NpcTeamBean>();
         foreach (NpcTeamBean itemTeam in listData)
@@ -161,37 +163,53 @@ public class NpcTeamManager : BaseManager, INpcTeamView
     }
 
     #region 数据回调
-    public void GetNpcTeamSuccess(NpcTeamTypeEnum npcTeam, List<NpcTeamBean> listData)
-    {
-        switch (npcTeam)
-        {
-            case NpcTeamTypeEnum.Customer:
-                listCustomerTeam = listData;
-                break;
-            case NpcTeamTypeEnum.Friend:
-                listFriendTeam = listData;
-                break;
-            case NpcTeamTypeEnum.Rascal:
-                listRascalTeam = listData;
-                break;
-            case NpcTeamTypeEnum.Sundry:
-                listSundryTeam = listData;
-                break;
-            case NpcTeamTypeEnum.Entertain:
-                listEntertainTeam = listData;
-                break;
-            case NpcTeamTypeEnum.Disappointed:
-                listDisappointedTeam = listData;
-                break;
-            case NpcTeamTypeEnum.InfiniteTowersBoss:
-                listInfiniteTowersBossTeam = listData;
-                break;
-        }
-    }
-
     public void GetNpcTeamFail()
     {
 
+    }
+
+    public void GetNpcTeamSuccess(NpcTeamTypeEnum npcTeam, List<NpcTeamBean> listData, Action<List<NpcTeamBean>> action)
+    {
+    }
+
+    public void GetAllNpcTeamSuccess(List<NpcTeamBean> listData, Action<List<NpcTeamBean>> action)
+    {
+        listCustomerTeam.Clear();
+        listFriendTeam.Clear();
+        listRascalTeam.Clear();
+        listSundryTeam.Clear();
+        listEntertainTeam.Clear();
+        listDisappointedTeam.Clear();
+        listInfiniteTowersBossTeam.Clear();
+        for (int i = 0; i < listData.Count; i++)
+        {
+            NpcTeamBean npcTeamData = listData[i];
+            switch (npcTeamData.GetTeamType())
+            {
+                case NpcTeamTypeEnum.Customer:
+                    listCustomerTeam.Add(npcTeamData);
+                    break;
+                case NpcTeamTypeEnum.Friend:
+                    listFriendTeam.Add(npcTeamData);
+                    break;
+                case NpcTeamTypeEnum.Rascal:
+                    listRascalTeam.Add(npcTeamData);
+                    break;
+                case NpcTeamTypeEnum.Sundry:
+                    listSundryTeam.Add(npcTeamData);
+                    break;
+                case NpcTeamTypeEnum.Entertain:
+                    listEntertainTeam.Add(npcTeamData);
+                    break;
+                case NpcTeamTypeEnum.Disappointed:
+                    listDisappointedTeam.Add(npcTeamData);
+                    break;
+                case NpcTeamTypeEnum.InfiniteTowersBoss:
+                    listInfiniteTowersBossTeam.Add(npcTeamData);
+                    break;
+            }
+        }
+        action?.Invoke(listData);
     }
     #endregion
 }

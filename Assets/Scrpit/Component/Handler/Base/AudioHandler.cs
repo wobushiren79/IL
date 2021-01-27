@@ -5,20 +5,60 @@ using System.Collections;
 
 public class AudioHandler : BaseHandler<AudioHandler, AudioManager>
 {
-    protected AudioListener audioListener;
-    protected AudioSource audioSourceForMusic;
-    protected AudioSource audioSourceForSound;
-    protected AudioSource audioSourceForEnvironment;
+    protected AudioListener _audioListener;
+    protected AudioSource _audioSourceForMusic;
+    protected AudioSource _audioSourceForSound;
+    protected AudioSource _audioSourceForEnvironment;
 
     protected int sourceNumber = 0;
     protected int sourceMaxNumber = 5;
-    protected override void Awake()
+
+    public AudioListener audioSourceForListener
     {
-        base.Awake();
-        audioListener = Find<AudioListener>(ImportantTypeEnum.MainCamera);
-        audioSourceForMusic = CptUtil.GetCptInChildrenByName<AudioSource>(Camera.main.gameObject, "Music");
-        audioSourceForSound = CptUtil.GetCptInChildrenByName<AudioSource>(Camera.main.gameObject, "Sound");
-        audioSourceForEnvironment = CptUtil.GetCptInChildrenByName<AudioSource>(Camera.main.gameObject, "Environment");
+        get
+        {
+            if (_audioListener == null)
+            {
+                _audioListener = FindWithTag<AudioListener>(TagInfo.Tag_AudioListener);
+            }
+            return _audioListener;
+        }
+    }
+
+    public AudioSource audioSourceForMusic
+    {
+        get
+        {
+            if (_audioSourceForMusic == null)
+            {
+                _audioSourceForMusic = FindWithTag<AudioSource>(TagInfo.Tag_AudioMusic);
+            }
+            return _audioSourceForMusic;
+        }
+    }
+
+    public AudioSource audioSourceForSound
+    {
+        get
+        {
+            if (_audioSourceForSound == null)
+            {
+                _audioSourceForSound = FindWithTag<AudioSource>(TagInfo.Tag_AudioSound);
+            }
+            return _audioSourceForSound;
+        }
+    }
+
+    public AudioSource audioSourceForEnvironment
+    {
+        get
+        {
+            if (_audioSourceForEnvironment == null)
+            {
+                _audioSourceForEnvironment = FindWithTag<AudioSource>(TagInfo.Tag_AudioEnvironment);
+            }
+            return _audioSourceForEnvironment;
+        }
     }
 
     /// <summary>

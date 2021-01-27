@@ -21,12 +21,21 @@ public class NpcTeamService : BaseMVCService
     }
 
     /// <summary>
-    /// 查询所有装备数据
+    /// 查询数据
     /// </summary>
     /// <returns></returns>
     public List<NpcTeamBean> QueryDataByType(int teamType)
     {
         return BaseQueryData<NpcTeamBean>("team_id", tableNameForMain + ".valid", "1", tableNameForMain + ".team_type", teamType + "");
+    }
+
+    /// <summary>
+    /// 查询所有数据
+    /// </summary>
+    /// <returns></returns>
+    public List<NpcTeamBean> QueryAllData()
+    {
+        return BaseQueryAllData<NpcTeamBean>("team_id");
     }
 
     /// <summary>

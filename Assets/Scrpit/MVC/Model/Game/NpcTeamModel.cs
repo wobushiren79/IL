@@ -15,5 +15,8 @@ public class NpcTeamModel : BaseMVCModel
     {
         return npcTeamService.QueryDataByType((int)npcTeamType);
     }
-
+    public List<NpcTeamBean> GetAllNpcTeam()
+    {
+        return npcTeamService.QueryAllData();
+    }
 }

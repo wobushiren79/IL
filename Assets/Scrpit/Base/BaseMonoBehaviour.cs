@@ -105,6 +105,14 @@ public class BaseMonoBehaviour : MonoBehaviour
         }
     }
 
+    public T FindWithTag<T>(string tag)
+    {
+        GameObject obj = GameObject.FindGameObjectWithTag(tag);
+        if (obj)
+            return obj.GetComponent<T>();
+        return default(T);
+    }
+
     /// <summary>
     /// 通过反射链接UI控件
     /// </summary>

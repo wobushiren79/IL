@@ -16,9 +16,9 @@ public class NpcAIUserCpt : BaseNpcAI
         }
     }
 
-    public override void SetCharacterData(GameItemsManager gameItemsManager, CharacterBean characterBean)
+    public override void SetCharacterData(CharacterBean characterBean)
     {
-        base.SetCharacterData(gameItemsManager, characterBean);
+        base.SetCharacterData(characterBean);
         InitCharacterSpeed(1);
     }
 
