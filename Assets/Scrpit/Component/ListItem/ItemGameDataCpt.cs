@@ -143,8 +143,7 @@ public class ItemGameDataCpt : ItemGameBaseCpt, DialogView.IDialogCallBack
     public void GameContinue()
     {
         AudioHandler.Instance.PlaySound(AudioSoundEnum.ButtonForNormal);
-
-        GameCommonInfo.GameUserId = gameData.userId;
+        GameDataHandler.Instance.manager.GetGameDataByUserId(gameData.userId);
         SceneUtil.SceneChange(ScenesEnum.GameInnScene);
     }
 

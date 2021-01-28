@@ -410,9 +410,9 @@ public class UIGameSetting : BaseUIComponent, DropdownView.ICallBack, ProgressVi
         }
         else if (dialogBean.dialogPosition == 3)
         {
-            string userId = GameCommonInfo.GameUserId;
+            GameDataBean gameData =  GameDataHandler.Instance.manager.GetGameData();
+            GameDataHandler.Instance.manager.GetGameDataByUserId(gameData.userId);
             GameCommonInfo.ClearData();
-            GameCommonInfo.GameUserId = userId;
             SceneUtil.SceneChange(ScenesEnum.GameInnScene);
         }
 

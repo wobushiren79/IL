@@ -25,6 +25,7 @@ public class SceneGameInnInit : BaseSceneInit, DialogView.IDialogCallBack
     public override void Start()
     {
         base.Start();
+     
         GameDataBean gameData = GameDataHandler.Instance.manager.GetGameData();
         //初始化场景
         if (sceneInnManager != null)
@@ -78,6 +79,10 @@ public class SceneGameInnInit : BaseSceneInit, DialogView.IDialogCallBack
 
 
         StartCoroutine(BuildNavMesh());
+    }
+    private void OnDestroy()
+    {
+        GameTimeHandler.Instance.UnRegisterNotifyForTime(NotifyForTime);
     }
 
     /// <summary>

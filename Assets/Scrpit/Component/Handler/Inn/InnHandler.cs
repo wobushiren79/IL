@@ -71,7 +71,10 @@ public class InnHandler : BaseHandler<InnHandler, InnManager>
 
         GameTimeHandler.instance.RegisterNotifyForTime(NotifyForTime);
     }
-
+    private void OnDestroy()
+    {
+        GameTimeHandler.Instance.UnRegisterNotifyForTime(NotifyForTime);
+    }
     public void Update()
     {
         HandleForInnOpen();

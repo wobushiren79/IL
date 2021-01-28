@@ -336,8 +336,9 @@ public class UIMainCreate : BaseUIComponent,
         gameData.userCharacter.attributes.force = force;
         gameData.userCharacter.attributes.lucky = lucky;
         gameData.userCharacter.attributes.life = 50;
-        GameDataHandler.Instance.manager.CreateGameData(gameData);
 
+        GameDataHandler.Instance.manager.CreateGameData(gameData);
+        GameDataHandler.Instance.manager.GetGameDataByUserId(gameData.userId);
         UIHandler.Instance.manager.CloseAllUI();
         SceneUtil.SceneChange(ScenesEnum.GameInnScene);
     }

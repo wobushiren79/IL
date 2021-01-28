@@ -14,6 +14,7 @@ public class BaseSceneInit : BaseMonoBehaviour
 
     public virtual void Start()
     {
+        GameTimeHandler.Instance.SetTimeStop();
         StartCoroutine(BuildNavMesh());
     }
 

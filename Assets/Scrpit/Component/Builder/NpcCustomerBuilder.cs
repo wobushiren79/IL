@@ -31,6 +31,11 @@ public class NpcCustomerBuilder : NpcNormalBuilder
         StartBuildCustomer();
     }
 
+    private void OnDestroy()
+    {
+        GameTimeHandler.Instance.UnRegisterNotifyForTime(NotifyForTime);
+    }
+
     /// <summary>
     /// 初始化生成NPC
     /// </summary>

@@ -16,7 +16,11 @@ public class SeasonsHandler : BaseHandler
     private void Start()
     {
         GameTimeHandler.Instance.RegisterNotifyForTime(NotifyForTime);
-        ChangeSeasons();
+    }
+
+    private void OnDestroy()
+    {
+        GameTimeHandler.Instance.UnRegisterNotifyForTime(NotifyForTime);
     }
 
     /// <summary>

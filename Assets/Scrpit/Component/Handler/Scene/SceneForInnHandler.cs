@@ -13,7 +13,10 @@ public class SceneForInnHandler : BaseHandler
 
         GameTimeHandler.Instance.RegisterNotifyForTime(NotifyForTime);
     }
-
+    private void OnDestroy()
+    {
+        GameTimeHandler.Instance.UnRegisterNotifyForTime(NotifyForTime);
+    }
 
     public void NotifyForTime(GameTimeHandler.NotifyTypeEnum notifyType, float timeHour)
     {

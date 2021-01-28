@@ -54,7 +54,10 @@ public class GameEventHandler : BaseHandler<GameEventHandler, GameEventManager>,
 
         GameTimeHandler.Instance.RegisterNotifyForTime(NotifyForTime);
     }
-
+    private void OnDestroy()
+    {
+        GameTimeHandler.Instance.UnRegisterNotifyForTime(NotifyForTime);
+    }
     public void InitData()
     {
         mEventStatus = EventStatusEnum.EventEnd;

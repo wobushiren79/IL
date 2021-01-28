@@ -59,7 +59,6 @@ public class GameDataModel : BaseMVCModel
     public void AddGameData(GameDataBean gameData)
     {
         string userId = "UserId_" + SystemUtil.GetUUID(SystemUtil.UUIDTypeEnum.N);
-        GameCommonInfo.GameUserId = userId;
         gameData.userCharacter.baseInfo.characterId = userId;
         gameData.userId = userId;
         gameData.moneyS = 1000;

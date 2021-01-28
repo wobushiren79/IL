@@ -57,7 +57,10 @@ public class GameTimeHandler : BaseHandler<GameTimeHandler, GameTimeManager>
     {
         this.notifyForTime += notifyForTime;
     }
-
+    public void UnRegisterNotifyForTime(Action<NotifyTypeEnum, float> notifyForTime)
+    {
+        this.notifyForTime -= notifyForTime;
+    }
     /// <summary>
     /// 进行下一天
     /// </summary>

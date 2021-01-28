@@ -3,8 +3,6 @@ using UnityEditor;
 
 public class GameCommonInfo
 {
-    //游戏用户ID
-    public static string GameUserId;
     //游戏设置
     public static GameConfigBean GameConfig;
     //进入竞技场准备数据
@@ -27,7 +25,6 @@ public class GameCommonInfo
 
     public static void ClearData()
     {
-        GameUserId = null;
         ArenaPrepareData = null;
         InfiniteTowersData = null;
         DailyLimitData = new UserDailyLimitBean();

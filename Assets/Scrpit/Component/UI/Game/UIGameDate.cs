@@ -20,12 +20,10 @@ public class UIGameDate : BaseUIComponent
     protected float animTimeForWaitNext = 1f;//动画时间
     protected float animTimeForShowDialog = 2f;//动画延迟
 
-    protected NpcCustomerBuilder npcCustomerBuilder;
 
     public override void Awake()
     {
         base.Awake();
-        npcCustomerBuilder = uiGameManager.npcCustomerBuilder;
     }
 
     private void Start()

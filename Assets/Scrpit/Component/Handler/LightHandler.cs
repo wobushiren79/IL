@@ -16,7 +16,10 @@ public class LightHandler : BaseHandler
         GameTimeHandler.Instance.RegisterNotifyForTime(NotifyForTime);
         CheckTime();
     }
-
+    private void OnDestroy()
+    {
+        GameTimeHandler.Instance.UnRegisterNotifyForTime(NotifyForTime);
+    }
     public void CheckTime()
     {
         //转换场景检测时间

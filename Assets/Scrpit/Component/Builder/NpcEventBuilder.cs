@@ -28,7 +28,10 @@ public class NpcEventBuilder : NpcNormalBuilder
     {
         GameTimeHandler.Instance.RegisterNotifyForTime(NotifyForTime);
     }
-
+    private void OnDestroy()
+    {
+        GameTimeHandler.Instance.UnRegisterNotifyForTime(NotifyForTime);
+    }
     /// <summary>
     /// 开始事件
     /// </summary>
