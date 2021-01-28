@@ -131,10 +131,6 @@ public class SceneGameInnInit : BaseSceneInit, DialogView.IDialogCallBack
             GameDataHandler.Instance.AddTimeProcess(addHour * 60);
         }
 
-        //重置游戏时间
-        GameCommonInfo.GameData.gameTime.hour = 0;
-        GameCommonInfo.GameData.gameTime.minute = 0;
-
         if (GameCommonInfo.CurrentDayData.dayStatus == GameTimeHandler.DayEnum.None)
         {
             //重新进入游戏

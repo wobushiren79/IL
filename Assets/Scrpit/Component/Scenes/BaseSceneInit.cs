@@ -14,15 +14,6 @@ public class BaseSceneInit : BaseMonoBehaviour
 
     public virtual void Start()
     {
-        GameDataBean gameData =  GameDataHandler.Instance.manager.GetGameData();
-        if (GameCommonInfo.GameData == null || CheckUtil.StringIsNull(GameCommonInfo.GameData.userId))
-        {
-            GameDataHandler.Instance.manager.GetGameDataByUserId(GameCommonInfo.GameUserId);
-        }
-        else
-        {
-            gameData = GameCommonInfo.GameData;
-        }
         StartCoroutine(BuildNavMesh());
     }
 

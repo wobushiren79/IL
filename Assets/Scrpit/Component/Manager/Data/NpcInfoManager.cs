@@ -7,11 +7,12 @@ public class NpcInfoManager : BaseManager, INpcInfoView
 {
     public NpcInfoController npcInfoController;
 
-    public Dictionary<long, NpcInfoBean> listNpcInfo;//NPC数据
+    public Dictionary<long, NpcInfoBean> listNpcInfo = new Dictionary<long, NpcInfoBean>();//NPC数据
 
     public void Awake()
     {
         npcInfoController = new NpcInfoController(this, this);
+        npcInfoController.GetAllNpcInfo();
     }
 
     /// <summary>
@@ -157,10 +158,12 @@ public class NpcInfoManager : BaseManager, INpcInfoView
     public void GetNpcInfoSuccess(int type, List<NpcInfoBean> listData)
     {
         this.listNpcInfo = new Dictionary<long, NpcInfoBean>();
-        foreach (NpcInfoBean itemData in listData)
+        for (int i=0;i< listData.Count;i++)
         {
+            NpcInfoBean itemData = listData[i];
             listNpcInfo.Add(itemData.id, itemData);
-        };
+        }
+
     }
     #endregion
 }

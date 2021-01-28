@@ -124,7 +124,6 @@ public class GameDataManager : BaseManager, IGameDataView, IUserRevenueView
         if (gameData == null)
             gameData = new GameDataBean();
         this.gameData = gameData;
-        GameCommonInfo.GameData = gameData;
     }
 
     public void SetGameDataFail()

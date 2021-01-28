@@ -7,8 +7,6 @@ public class GameCommonInfo
     public static string GameUserId;
     //游戏设置
     public static GameConfigBean GameConfig;
-    //游戏数据
-    public static GameDataBean GameData;
     //进入竞技场准备数据
     public static ArenaPrepareBean ArenaPrepareData;
     //进入无尽之塔准备数据
@@ -30,7 +28,6 @@ public class GameCommonInfo
     public static void ClearData()
     {
         GameUserId = null;
-        GameData = null;
         ArenaPrepareData = null;
         InfiniteTowersData = null;
         DailyLimitData = new UserDailyLimitBean();
