@@ -7,6 +7,13 @@ using RotaryHeart.Lib.SerializableDictionary;
 
 public class BaseManager : BaseMonoBehaviour
 {
+    protected T GetModel<T>(string assetBundlePath, string name) where T : Object
+    {
+        if (name == null)
+            return null;
+        T model = LoadAssetUtil.SyncLoadAsset<T>(assetBundlePath, name);
+        return model;
+    }
     protected T GetModel<T>(Dictionary<string, T> listModel, string assetBundlePath, string name) where T : Object
     {
         if (name == null)
@@ -16,12 +23,12 @@ public class BaseManager : BaseMonoBehaviour
             return value;
         }
 
-        T anim = LoadAssetUtil.SyncLoadAsset<T>(assetBundlePath, name);
-        if (anim != null)
+        T model = GetModel<T>(assetBundlePath, name);
+        if (model != null)
         {
-            listModel.Add(name, anim);
+            listModel.Add(name, model);
         }
-        return anim;
+        return model;
     }
     protected T GetModel<T>(SerializableDictionaryBase<string, T> listModel, string assetBundlePath, string name) where T : Object
     {
@@ -32,12 +39,12 @@ public class BaseManager : BaseMonoBehaviour
             return value;
         }
 
-        T anim = LoadAssetUtil.SyncLoadAsset<T>(assetBundlePath, name);
-        if (anim != null)
+        T model = LoadAssetUtil.SyncLoadAsset<T>(assetBundlePath, name);
+        if (model != null)
         {
-            listModel.Add(name, anim);
+            listModel.Add(name, model);
         }
-        return anim;
+        return model;
     }
 
     protected Sprite GetSpriteByName(IconBeanDictionary dicIcon,ref SpriteAtlas spriteAtlas, string atlasName, string assetBundlePath, string name)

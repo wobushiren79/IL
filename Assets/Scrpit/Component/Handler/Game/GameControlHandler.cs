@@ -33,7 +33,7 @@ public class GameControlHandler : BaseHandler<GameControlHandler, GameControlMan
     /// </summary>
     public void EndAllControl()
     {
-        Dictionary<string, BaseControl> dicControl = manager.dicControl;
+        Dictionary<ControlEnum, BaseControl> dicControl = manager.dicControl;
         foreach (var itemDic in dicControl)
         {
             itemDic.Value.EndControl();
@@ -66,12 +66,11 @@ public class GameControlHandler : BaseHandler<GameControlHandler, GameControlMan
     /// <param name="controlEnum"></param>
     public T StartControl<T>(ControlEnum controlEnum) where T : BaseControl
     {
-        string controlName = EnumUtil.GetEnumName(controlEnum);
-        Dictionary<string, BaseControl> dicControl = manager.dicControl;
+        Dictionary<ControlEnum, BaseControl> dicControl = manager.dicControl;
         BaseControl baseControl = null;
         foreach (var itemDic in dicControl)
         {
-            if (itemDic.Key.Equals(controlName))
+            if (itemDic.Key == controlEnum)
             {
                 itemDic.Value.StartControl();
                 baseControl = itemDic.Value;
@@ -84,6 +83,7 @@ public class GameControlHandler : BaseHandler<GameControlHandler, GameControlMan
         if (baseControl == null)
         {
             baseControl = manager.GetControl<T>(controlEnum);
+            baseControl.StartControl();
         }
         return baseControl as T;
     }

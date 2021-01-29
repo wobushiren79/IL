@@ -6,17 +6,27 @@ using System.Diagnostics;
 
 public class ControlForBuildCpt : BaseControl
 {
-    //屏幕
-    public RectTransform screenRTF;
-    //镜头对象
+   //镜头对象
     public CharacterMoveCpt cameraMove;
-    //建筑临时存放容器
-    public GameObject buildItemTempContainer;
-
-    public UIGameBuild uiGameBuild;
 
     //地形模型
-    public GameObject listBuildSpaceContent;
+    protected GameObject _listBuildSpaceContent;
+
+    public GameObject listBuildSpaceContent
+    {
+        get
+        {
+            if (_listBuildSpaceContent == null)
+            {
+                _listBuildSpaceContent = new GameObject();
+                _listBuildSpaceContent.name = "BuildSpace";
+                _listBuildSpaceContent.transform.SetParent(GameControlHandler.Instance.transform);
+                _listBuildSpaceContent.transform.position = Vector3.zero;
+            }
+            return _listBuildSpaceContent;
+        }
+    }
+
     public GameObject itemBuildSpaceModel;
     //图标
     public Sprite spRed;
@@ -120,7 +130,7 @@ public class ControlForBuildCpt : BaseControl
     /// </summary>
     public void InitBuildingExist()
     {
-        listBuildingExist.Clear(); 
+        listBuildingExist.Clear();
         GameDataBean gameData = GameDataHandler.Instance.manager.GetGameData();
         List<InnResBean> listFurniture = gameData.GetInnBuildData().GetFurnitureList(buildLayer);
         if (listFurniture != null)
@@ -158,7 +168,7 @@ public class ControlForBuildCpt : BaseControl
     /// </summary>
     /// <param name="id"></param>
     /// <param name="buildBedData"></param>
-    public void ShowBuildItem(long id,BuildBedBean buildBedData)
+    public void ShowBuildItem(long id, BuildBedBean buildBedData)
     {
         AudioHandler.Instance.PlaySound(AudioSoundEnum.ButtonForNormal);
         //先删除原有可能已经展示的建筑
@@ -166,7 +176,7 @@ public class ControlForBuildCpt : BaseControl
         //建造建筑
         GameObject buildItemObj = InnBuildHandler.Instance.builderForFurniture.BuildFurniture(id, buildBedData);
         //物体先在建筑控件上显示
-        buildItemObj.transform.parent = buildItemTempContainer.transform;
+        buildItemObj.transform.SetParent(GameControlHandler.Instance.gameObject.transform);
         if (buildItemObj == null)
             return;
         buildItemCpt = buildItemObj.GetComponent<BaseBuildItemCpt>();
@@ -231,7 +241,6 @@ public class ControlForBuildCpt : BaseControl
         listBuildSpaceSR.Clear();
     }
 
-
     /// <summary>
     /// 处理-镜头移动
     /// </summary>
@@ -260,7 +269,7 @@ public class ControlForBuildCpt : BaseControl
             return;
         base.HandleForMouseMove(out float moveX, out float moveY);
         base.HandleForMouseButtonMove(out float moveButtonX, out float moveButtonY);
-        cameraMove.Move(moveX + moveButtonX, moveY+ moveButtonY);
+        cameraMove.Move(moveX + moveButtonX, moveY + moveButtonY);
     }
     /// <summary>
     ///  处理-建筑旋转
@@ -300,6 +309,7 @@ public class ControlForBuildCpt : BaseControl
     protected void HandleForBuildItemPosition(out Vector3 buildPosition)
     {
         //屏幕坐标转换为UI坐标(获取鼠标位置)
+        RectTransform screenRTF = UIHandler.Instance.manager.GetContainer();
         RectTransformUtility.ScreenPointToWorldPointInRectangle(screenRTF, Input.mousePosition, Camera.main, out Vector3 mousePosition);
         if (buildItemCpt == null)
         {
@@ -373,6 +383,7 @@ public class ControlForBuildCpt : BaseControl
                 InitBuildingExist();
                 //刷新UI
                 //里面有移除选中功能
+                UIGameBuild uiGameBuild = UIHandler.Instance.manager.GetUI<UIGameBuild>(UIEnum.GameBuild);
                 uiGameBuild.RefreshUI();
             }
             //不能建造 相关提示
@@ -436,7 +447,7 @@ public class ControlForBuildCpt : BaseControl
                 if (buildItemData.build_type == (int)BuildItemTypeEnum.Bed)
                 {
                     //如果是床
-                    BuildBedBean buildBedData= gameData.GetBedByRemarkId(itemFurnitureData.remarkId);
+                    BuildBedBean buildBedData = gameData.GetBedByRemarkId(itemFurnitureData.remarkId);
                     buildBedData.isSet = false;
                 }
                 else if (buildItemData.build_type == (int)BuildItemTypeEnum.Stairs)
@@ -446,7 +457,7 @@ public class ControlForBuildCpt : BaseControl
                     InnResBean itemStarisData = null;
                     if (dismantleLayer == 1)
                     {
-                        itemStarisData = buildData.GetFurnitureByPosition(2, buildPosition + new Vector3(0,100));
+                        itemStarisData = buildData.GetFurnitureByPosition(2, buildPosition + new Vector3(0, 100));
                         buildData.GetFurnitureList(2).Remove(itemStarisData);
                         //移除场景中的建筑物
                         InnBuildHandler.Instance.builderForFurniture.DestroyFurnitureByPosition(sceneFurniturePosition + new Vector3(0, 100));
@@ -464,7 +475,7 @@ public class ControlForBuildCpt : BaseControl
                     //背包里添加一个
                     gameData.AddBuildNumber(itemFurnitureData.id, 1);
                 }
-        
+
             }
         }
         //如果拆除的是墙壁
@@ -472,9 +483,9 @@ public class ControlForBuildCpt : BaseControl
         {
             //判断是否是最外的墙壁
             Vector3 startPosition = itemWallData.GetStartPosition();
-            gameData.GetInnBuildData().GetInnSize(buildLayer, out int innWidth, out int innHeight, out int offsetHeight);        
+            gameData.GetInnBuildData().GetInnSize(buildLayer, out int innWidth, out int innHeight, out int offsetHeight);
             bool isOutWall = false;
-            if (buildLayer==1)
+            if (buildLayer == 1)
             {
                 isOutWall = (startPosition.x == 0 || startPosition.x == (innWidth - 1)) || startPosition.y == (innHeight - 1) + offsetHeight;
             }
@@ -543,8 +554,8 @@ public class ControlForBuildCpt : BaseControl
 
             //楼下也要添加同样的数据
             GameObject objFirstStairs = Instantiate(InnBuildHandler.Instance.builderForFurniture.buildContainer, buildItemCpt.gameObject);
-            objFirstStairs.transform.position += new Vector3(0,-100,0);
-            BuildStairsCpt firstStairs= objFirstStairs.GetComponent<BuildStairsCpt>();
+            objFirstStairs.transform.position += new Vector3(0, -100, 0);
+            BuildStairsCpt firstStairs = objFirstStairs.GetComponent<BuildStairsCpt>();
             firstStairs.SetLayer(buildLayer - 1);
             InnResBean addFirstData = new InnResBean(firstStairs.buildItemData.id, objFirstStairs.transform.position, listFirstBuildPosition, firstStairs.direction);
             //设置相同的备注ID
@@ -564,8 +575,8 @@ public class ControlForBuildCpt : BaseControl
             .DOScale(new Vector3(0.2f, 0.2f, 0.2f), 0.5f)
             .From()
             .SetEase(Ease.OutBack);
-           
-        if ( buildItemCpt.buildItemData.build_type == (int)BuildItemTypeEnum.Bed|| itemData.itemNumber <= 0 )
+
+        if (buildItemCpt.buildItemData.build_type == (int)BuildItemTypeEnum.Bed || itemData.itemNumber <= 0)
         {
             //如果没有了，则不能继续建造
             ClearSelectBuildItem();
@@ -574,7 +585,7 @@ public class ControlForBuildCpt : BaseControl
         {
             //如果还有则实例化一个新的
             //物体先在建筑控件上显示   
-            GameObject objCopy = Instantiate(buildItemTempContainer, buildItemCpt.gameObject);
+            GameObject objCopy = Instantiate(GameControlHandler.Instance.gameObject, buildItemCpt.gameObject);
             objCopy.transform.localScale = new Vector3(1, 1, 1);
             buildItemCpt = objCopy.GetComponent<BaseBuildItemCpt>();
         }
@@ -587,7 +598,7 @@ public class ControlForBuildCpt : BaseControl
     protected void BuildItemForFloor(Vector3 buildPosition)
     {
         if (buildItemCpt == null)
-            return; 
+            return;
         GameDataBean gameData = GameDataHandler.Instance.manager.GetGameData();
         //tile坐标需要从左下角计算 所以需要x-1
         buildPosition -= new Vector3(1, 0, 0);

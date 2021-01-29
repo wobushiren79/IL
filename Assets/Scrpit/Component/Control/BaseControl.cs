@@ -4,21 +4,8 @@ using Cinemachine;
 
 public class BaseControl : BaseMonoBehaviour
 {
-    //镜头
-    protected CinemachineVirtualCamera camera2D;
-    protected CinemachineConfiner cameraConfiner;
     //镜头跟随对象
     public GameObject cameraFollowObj;
-
-    /// <summary>
-    /// 设置摄像头
-    /// </summary>
-    /// <param name="camera"></param>
-    public void SetCamera2D(CinemachineVirtualCamera camera2D)
-    {
-        this.camera2D = camera2D;
-        cameraConfiner = this.camera2D.GetComponent<CinemachineConfiner>();
-    }
 
     /// <summary>
     /// 设置镜头跟随
@@ -34,7 +21,7 @@ public class BaseControl : BaseMonoBehaviour
         {
             cameraFollowObj = gameObject;
         }
-        camera2D.Follow = cameraFollowObj.transform;
+        GameCameraHandler.Instance.manager.camera2D.Follow = cameraFollowObj.transform;
     }
 
     /// <summary>
@@ -45,7 +32,7 @@ public class BaseControl : BaseMonoBehaviour
         gameObject.SetActive(true);
         this.enabled = true;
         if (cameraFollowObj != null)
-            camera2D.Follow = cameraFollowObj.transform;
+            GameCameraHandler.Instance.manager.camera2D.Follow = cameraFollowObj.transform;
     }
 
     /// <summary>
@@ -63,7 +50,7 @@ public class BaseControl : BaseMonoBehaviour
     {
         this.enabled = true;
         if (cameraFollowObj != null)
-            camera2D.Follow = cameraFollowObj.transform;
+            GameCameraHandler.Instance.manager.camera2D.Follow = cameraFollowObj.transform;
     }
 
 
@@ -91,9 +78,9 @@ public class BaseControl : BaseMonoBehaviour
     /// <param name="position"></param>
     public void SetCameraPosition(Vector2 position)
     {
-        if (camera2D != null)
+        if (GameCameraHandler.Instance.manager.camera2D != null)
         {
-            camera2D.transform.position = new Vector3(position.x, position.y, camera2D.transform.position.z);
+            GameCameraHandler.Instance.manager.camera2D.transform.position = new Vector3(position.x, position.y, GameCameraHandler.Instance.manager.camera2D.transform.position.z);
         }
 ;
     }
@@ -105,9 +92,9 @@ public class BaseControl : BaseMonoBehaviour
     ///
     public void SetCameraOrthographicSize(float orthographicSize)
     {
-        if (camera2D != null)
+        if (GameCameraHandler.Instance.manager.camera2D != null)
         {
-            camera2D.m_Lens.OrthographicSize = orthographicSize;
+            GameCameraHandler.Instance.manager.camera2D.m_Lens.OrthographicSize = orthographicSize;
         }
 
     }
@@ -119,9 +106,9 @@ public class BaseControl : BaseMonoBehaviour
     public float GetCameraOrthographicSize()
     {
         float size = 0;
-        if (camera2D != null)
+        if (GameCameraHandler.Instance.manager.camera2D != null)
         {
-            size = camera2D.m_Lens.OrthographicSize;
+            size = GameCameraHandler.Instance.manager.camera2D.m_Lens.OrthographicSize;
         }
         return size;
     }

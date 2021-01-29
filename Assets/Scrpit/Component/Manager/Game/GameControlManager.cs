@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class GameControlManager : BaseManager
 {
-    public Dictionary<string, BaseControl> dicControl = new Dictionary<string, BaseControl>();
+    public Dictionary<GameControlHandler.ControlEnum, BaseControl> dicControl = new Dictionary<GameControlHandler.ControlEnum, BaseControl>();
 
     /// <summary>
     /// 获取当前控制
@@ -31,15 +31,19 @@ public class GameControlManager : BaseManager
     public T GetControl<T>(GameControlHandler.ControlEnum controlEnum) where T : BaseControl
     {
         string controlName = EnumUtil.GetEnumName(controlEnum);
-        if (dicControl.TryGetValue(controlName, out BaseControl baseControl))
+        if (dicControl.TryGetValue(controlEnum, out BaseControl baseControl))
         {
             return baseControl as T;
         }
         else
         {
-            BaseControl baseControl1 = GetModel(dicControl, "", controlName);
-            baseControl1.transform.SetParent(transform);
-            return baseControl as T;
+            GameObject objModel = GetModel<GameObject>("control/control", controlName);
+            GameObject obj = Instantiate(gameObject, objModel);
+            DestroyImmediate(objModel, true);
+            BaseControl controlModel = obj.GetComponent<BaseControl>();
+            controlModel.transform.SetParent(transform);
+            dicControl.Add(controlEnum, controlModel);
+            return controlModel as T;
         }
     }
 }

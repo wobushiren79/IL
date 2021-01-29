@@ -16,4 +16,6 @@ public class TagInfo
     public readonly static string Tag_AudioEnvironment = "AudioEnvironment";
     public readonly static string Tag_AudioSound = "AudioSound";
     public readonly static string Tag_AudioListener = "AudioListener";
+
+    public readonly static string Tag_Camera2D = "Camera2D";
 }
