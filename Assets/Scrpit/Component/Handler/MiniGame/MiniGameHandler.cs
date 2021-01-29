@@ -14,6 +14,50 @@ public class MiniGameHandler : BaseHandler<MiniGameHandler, MiniGameManager>
         }
     }
 
+    //弹幕
+    protected MiniGameBarrageHandler _handlerForBarrage;
+
+    public MiniGameBarrageHandler handlerForBarrage
+    {
+        get
+        {
+            return GetHandler(_handlerForBarrage);
+        }
+    }
+
+    //算账
+    protected MiniGameAccountHandler _handlerForAccount;
+
+    public MiniGameAccountHandler handlerForAccount
+    {
+        get
+        {
+            return GetHandler(_handlerForAccount);
+        }
+    }
+
+    //辩论
+    protected MiniGameDebateHandler _handlerForDebate;
+
+    public MiniGameDebateHandler handlerForDebate
+    {
+        get
+        {
+            return GetHandler(_handlerForDebate);
+        }
+    }
+
+    //战斗
+    protected MiniGameCombatHandler _handlerForCombat;
+
+    public MiniGameCookingHandler handlerForCombat
+    {
+        get
+        {
+            return GetHandler(_handlerForCombat);
+        }
+    }
+
     //出生
     protected MiniGameBirthHandler _handlerForBirth;
 

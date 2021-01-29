@@ -188,11 +188,11 @@ public class GameEventHandler : BaseHandler<GameEventHandler, GameEventManager>,
         if (GameCommonInfo.GameConfig.statusForEventCameraMove == 1)
         {
             //先还原层数
-            ControlForWorkCpt controlForWork = GameControlHandler.Instance.GetControl<ControlForWorkCpt>(ControlEnum.Work);
+            ControlForWorkCpt controlForWork = GameControlHandler.Instance.manager.GetControl<ControlForWorkCpt>(ControlEnum.Work);
             if (controlForWork != null)
                 controlForWork.SetLayer(1);
             //镜头跟随
-            GameControlHandler.Instance.GetControl().SetFollowPosition(npcAIRascal.transform.position);
+            GameControlHandler.Instance.manager.GetControl().SetFollowPosition(npcAIRascal.transform.position);
         }
         float lastTimeScale = GameTimeHandler.Instance.GetTimeScale();
         bool isTrigger = EventTriggerForTalk(markId, false);
@@ -214,11 +214,11 @@ public class GameEventHandler : BaseHandler<GameEventHandler, GameEventManager>,
         if (GameCommonInfo.GameConfig.statusForEventCameraMove == 1)
         {
             //先还原层数
-            ControlForWorkCpt controlForWork = GameControlHandler.Instance.GetControl<ControlForWorkCpt>(GameControlHandler.ControlEnum.Work);
+            ControlForWorkCpt controlForWork = GameControlHandler.Instance.manager.GetControl<ControlForWorkCpt>(GameControlHandler.ControlEnum.Work);
             if (controlForWork != null)
                 controlForWork.SetLayer(1);
             //镜头跟随
-            GameControlHandler.Instance.GetControl().SetFollowPosition(npcAISundry.transform.position);
+            GameControlHandler.Instance.manager.GetControl().SetFollowPosition(npcAISundry.transform.position);
         }
         float lastTimeScale = GameTimeHandler.Instance.GetTimeScale();
         bool isTrigger = EventTriggerForTalk(markId, false);
@@ -354,7 +354,7 @@ public class GameEventHandler : BaseHandler<GameEventHandler, GameEventManager>,
 
             //事件结束 操作回复
             //如果是故事模式 则恢复普通控制状态
-            if (GameControlHandler.Instance.GetControl() == GameControlHandler.Instance.GetControl<ControlForStoryCpt>(ControlEnum.Story))
+            if (GameControlHandler.Instance.manager.GetControl() == GameControlHandler.Instance.manager.GetControl<ControlForStoryCpt>(ControlEnum.Story))
             {
                 GameControlHandler.Instance.StartControl<BaseControl>(ControlEnum.Normal);
             }

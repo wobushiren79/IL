@@ -12,7 +12,7 @@ public class NpcPasserBuilder : NpcNormalBuilder
     protected override void Awake()
     {
         base.Awake();
-        sceneTownManager = Find<SceneTownManager>( ImportantTypeEnum.SceneManager);
+        sceneTownManager = Find<SceneTownManager>(ImportantTypeEnum.SceneManager);
     }
 
     private void Start()

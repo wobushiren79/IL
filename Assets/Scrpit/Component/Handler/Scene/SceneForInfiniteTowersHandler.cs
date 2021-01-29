@@ -121,13 +121,13 @@ public class SceneForInfiniteTowersHandler : BaseHandler, IBaseObserver
             //删除记录
             gameData.RemoveInfiniteTowersData(infiniteTowersData);
             //跳转场景
-            SceneUtil.SceneChange(ScenesEnum.GameMountainScene);
+            GameScenesHandler.Instance.ChangeScene(ScenesEnum.GameMountainScene);
         }
         else if (miniGameCombatData.GetGameResult() == MiniGameResultEnum.Escape)
         {
             //战斗逃跑
             //跳转场景
-            SceneUtil.SceneChange(ScenesEnum.GameMountainScene);
+            GameScenesHandler.Instance.ChangeScene(ScenesEnum.GameMountainScene);
         }
     }
 

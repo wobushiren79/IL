@@ -22,5 +22,5 @@ public enum DialogEnum
     SelectForNpc = 7,
     SelectForBed = 14,
 
-
+    ItemsSelection = 15,
 }

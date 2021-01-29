@@ -27,15 +27,15 @@ public class UIMiniGameBirth : BaseUIComponent
     /// </summary>
     public void OnClickForFire()
     {
+        //获取发射数据
+        MiniGameHandler.Instance.handlerForBirth.FireSperm(out MiniGameBirthSpermBean spermData);
+        if (spermData == null)
+            return;
         RectTransform rtfSperm = (RectTransform)Instantiate(modelForSperm.transform, ui_SpermContainer);
         rtfSperm.gameObject.SetActive(true);
         UIMiniGameBirthSperm sperm = rtfSperm.GetComponent<UIMiniGameBirthSperm>();
-        MiniGameBirthSpermBean spermData = new MiniGameBirthSpermBean()
-        {
-            positionStart = ui_Start.position,
-            positionEnd = ui_End.position
-        };
+        spermData.positionStart = ui_Start.position;
+        spermData.positionEnd = ui_End.position;
         sperm.InitData(spermData);
-
     }
 }

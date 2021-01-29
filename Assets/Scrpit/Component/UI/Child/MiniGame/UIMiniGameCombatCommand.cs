@@ -82,7 +82,7 @@ public class UIMiniGameCombatCommand : BaseUIChildComponent<UIMiniGameCombat>, D
 
         DialogBean dialogData = new DialogBean();
         PickForItemsDialogView pickForItemsDialog = DialogHandler.Instance.CreateDialog<PickForItemsDialogView>(DialogEnum.PickForItems, this, dialogData);
-        pickForItemsDialog.SetData(new List<GeneralEnum>() { GeneralEnum.Medicine }, PopupItemsSelection.SelectionTypeEnum.Use);
+        pickForItemsDialog.SetData(new List<GeneralEnum>() { GeneralEnum.Medicine }, ItemsSelectionDialogView.SelectionTypeEnum.Use);
     }
 
     /// <summary>

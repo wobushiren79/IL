@@ -106,7 +106,7 @@ public class ItemMountainInfiniteTowersCpt : ItemGameBaseCpt,DialogView.IDialogC
 
         //跳转场景
         GameCommonInfo.SetInfiniteTowersPrepareData(infiniteTowersData);
-        SceneUtil.SceneChange(ScenesEnum.GameInfiniteTowersScene);
+        GameScenesHandler.Instance.ChangeScene(ScenesEnum.GameInfiniteTowersScene);
     }
 
     #region 确认回调

@@ -21,7 +21,7 @@ public class MiniGameDebateHandler : BaseMiniGameHandler<MiniGameDebateBuilder, 
         miniGameBuilder.CreateAllCharacter(miniGameData.listUserGameData, miniGameData.listEnemyGameData, miniGameData.miniGamePosition);
         //设置摄像机位置
         GameControlHandler.Instance.StartControl<ControlForMiniGameDebateCpt>(GameControlHandler.ControlEnum.MiniGameDebate);
-        GameControlHandler.Instance.GetControl().SetFollowPosition(miniGameData.miniGamePosition);
+        GameControlHandler.Instance.manager.GetControl().SetFollowPosition(miniGameData.miniGamePosition);
 
         //打开倒计时UI
         OpenCountDownUI(miniGameData);

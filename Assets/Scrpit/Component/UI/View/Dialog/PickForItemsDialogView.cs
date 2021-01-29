@@ -11,7 +11,7 @@ public class PickForItemsDialogView : DialogView, ItemGameBackpackPickCpt.ICallB
     private ItemBean mSelectedItems;
     private ItemsInfoBean mSelectedItemsInfo;
 
-    protected PopupItemsSelection.SelectionTypeEnum itemSelectionType;
+    protected ItemsSelectionDialogView.SelectionTypeEnum itemSelectionType;
     protected List<GeneralEnum> listPickType = new List<GeneralEnum>();
     protected List<ItemBean> listItems = new List<ItemBean>();
 
@@ -57,7 +57,7 @@ public class PickForItemsDialogView : DialogView, ItemGameBackpackPickCpt.ICallB
         itemBackpack.SetSelectionType(itemSelectionType);
     }
 
-    public void SetData(List<GeneralEnum> listPickType, PopupItemsSelection.SelectionTypeEnum  itemSelectionType)
+    public void SetData(List<GeneralEnum> listPickType, ItemsSelectionDialogView.SelectionTypeEnum  itemSelectionType)
     {
         this.listPickType = listPickType;
         this.itemSelectionType = itemSelectionType;

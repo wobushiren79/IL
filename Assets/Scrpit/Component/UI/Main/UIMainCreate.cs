@@ -340,7 +340,7 @@ public class UIMainCreate : BaseUIComponent,
         GameDataHandler.Instance.manager.CreateGameData(gameData);
         GameDataHandler.Instance.manager.GetGameDataByUserId(gameData.userId);
         UIHandler.Instance.manager.CloseAllUI();
-        SceneUtil.SceneChange(ScenesEnum.GameInnScene);
+        GameScenesHandler.Instance.ChangeScene(ScenesEnum.GameInnScene);
     }
 
     public void Cancel(DialogView dialogView, DialogBean dialogBean)

@@ -10,11 +10,6 @@ public class ItemGameBackpackEquipCpt : ItemGameBackpackCpt
 
     public int type = 0;
 
-    public override void Awake()
-    {
-        base.Awake();
-    }
-
     public void SetData(CharacterBean characterData, ItemsInfoBean itemsInfoData, ItemBean itemData)
     {
         this.characterData = characterData;
@@ -31,18 +26,18 @@ public class ItemGameBackpackEquipCpt : ItemGameBackpackCpt
         }
         if (itemsInfoData == null || itemsInfoData.id == 0)
             return;
-
-        if (popupItemsSelection != null)
-            popupItemsSelection.SetCallBack(this);
+        DialogBean dialogData = new DialogBean();
+        ItemsSelectionDialogView itemsSelectionDialog = DialogHandler.Instance.CreateDialog<ItemsSelectionDialogView>(DialogEnum.ItemsSelection, null, dialogData);
+        itemsSelectionDialog.SetCallBack(this);
         if (type == 1)
         {
             //普通装备卸载
-            popupItemsSelection.Open(PopupItemsSelection.SelectionTypeEnum.Unload);
+            itemsSelectionDialog.Open(ItemsSelectionDialogView.SelectionTypeEnum.Unload);
         }
         else if (type == 2)
         {
             //幻化装备卸载
-            popupItemsSelection.Open(PopupItemsSelection.SelectionTypeEnum.Unload);
+            itemsSelectionDialog.Open(ItemsSelectionDialogView.SelectionTypeEnum.Unload);
         }
         else
         {
@@ -57,16 +52,16 @@ public class ItemGameBackpackEquipCpt : ItemGameBackpackCpt
                 case GeneralEnum.Accoutant:
                 case GeneralEnum.Accost:
                 case GeneralEnum.Beater:
-                    popupItemsSelection.Open(PopupItemsSelection.SelectionTypeEnum.EquipAndDiscardAndTFEquip);
+                    itemsSelectionDialog.Open(ItemsSelectionDialogView.SelectionTypeEnum.EquipAndDiscardAndTFEquip);
                     break;
                 case GeneralEnum.Book:
                 case GeneralEnum.SkillBook:
                 case GeneralEnum.Other:
 
-                    popupItemsSelection.Open(PopupItemsSelection.SelectionTypeEnum.UseAndDiscard);
+                    itemsSelectionDialog.Open(ItemsSelectionDialogView.SelectionTypeEnum.UseAndDiscard);
                     break;
                 default:
-                    popupItemsSelection.Open(PopupItemsSelection.SelectionTypeEnum.Discard);
+                    itemsSelectionDialog.Open(ItemsSelectionDialogView.SelectionTypeEnum.Discard);
                     break;
             }
         }
@@ -103,7 +98,7 @@ public class ItemGameBackpackEquipCpt : ItemGameBackpackCpt
     }
 
     #region  装备回调
-    public override void SelectionUse(PopupItemsSelection view)
+    public override void SelectionUse(ItemsSelectionDialogView view)
     {
         GeneralEnum itemsType = itemsInfoData.GetItemsType();
         switch (itemsType)
@@ -172,21 +167,21 @@ public class ItemGameBackpackEquipCpt : ItemGameBackpackCpt
         GetUIComponent<UIGameEquip>().RefreshUI();
     }
 
-    public override void SelectionEquip(PopupItemsSelection view)
+    public override void SelectionEquip(ItemsSelectionDialogView view)
     {
         UIGameEquip uiGameEquip = GetUIComponent<UIGameEquip>();
         uiGameEquip.SetEquip(itemsInfoData,false);
         RefreshItems(itemsInfoData.id, -1);
     }
 
-    public override void SelectionTFEquip(PopupItemsSelection view)
+    public override void SelectionTFEquip(ItemsSelectionDialogView view)
     {
         UIGameEquip uiGameEquip = GetUIComponent<UIGameEquip>();
         uiGameEquip.SetEquip(itemsInfoData,true);
         RefreshItems(itemsInfoData.id, -1);
     }
 
-    public override void SelectionUnload(PopupItemsSelection view)
+    public override void SelectionUnload(ItemsSelectionDialogView view)
     {
         UIGameEquip uiGameEquip = GetUIComponent<UIGameEquip>();
         ItemsInfoBean nullItems = new ItemsInfoBean();

@@ -9,10 +9,7 @@ public enum ImportantTypeEnum
     GameUI,
 
     Init,
-    GameDataManager,
-    NpcManager,
     UIManager,
-    StoryManager,
     SceneManager,
 
     StoryBuilder,
@@ -22,8 +19,6 @@ public enum ImportantTypeEnum
     SceneBuilder,
     GambleBuilder,
 
-    GameDataHandler,
-    EventHandler,
     TimeHandler,
     ControlHandler,
     WeatherHandler,
@@ -34,7 +29,6 @@ public enum ImportantTypeEnum
     GambleHandler,
     CursorHandler,
 
-    Popup,
     Sun,
     Steam,
 }

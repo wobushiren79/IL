@@ -2,7 +2,7 @@
 using UnityEditor;
 using UnityEngine.UI;
 using DG.Tweening;
-public class PopupItemsSelection : BaseMonoBehaviour
+public class ItemsSelectionDialogView : DialogView
 {
     public enum SelectionTypeEnum
     {
@@ -35,8 +35,9 @@ public class PopupItemsSelection : BaseMonoBehaviour
     public float offsetY = 0;
 
 
-    private void Start()
+    public override void Start()
     {
+        base.Start();
         if (btBack != null)
             btBack.onClick.AddListener(Close);
         if (btUse != null)
@@ -60,10 +61,8 @@ public class PopupItemsSelection : BaseMonoBehaviour
         this.callBack = callBack;
     }
 
-
     public void Close()
     {
-
         AudioHandler.Instance.PlaySound(AudioSoundEnum.ButtonForNormal);
         gameObject.SetActive(false);
     }
@@ -204,42 +203,42 @@ public class PopupItemsSelection : BaseMonoBehaviour
         /// 选择使用
         /// </summary>
         /// <param name="view"></param>
-        void SelectionUse(PopupItemsSelection view);
+        void SelectionUse(ItemsSelectionDialogView view);
 
         /// <summary>
         /// 选择丢弃
         /// </summary>
         /// <param name="view"></param>
-        void SelectionDiscard(PopupItemsSelection view);
+        void SelectionDiscard(ItemsSelectionDialogView view);
 
         /// <summary>
         /// 选择装备
         /// </summary>
         /// <param name="view"></param>
-        void SelectionEquip(PopupItemsSelection view);
+        void SelectionEquip(ItemsSelectionDialogView view);
 
         /// <summary>
         /// 选择幻化装备
         /// </summary>
         /// <param name="view"></param>
-        void SelectionTFEquip(PopupItemsSelection view);
+        void SelectionTFEquip(ItemsSelectionDialogView view);
 
         /// <summary>
         /// 选择卸下
         /// </summary>
         /// <param name="view"></param>
-        void SelectionUnload(PopupItemsSelection view);
+        void SelectionUnload(ItemsSelectionDialogView view);
 
         /// <summary>
         /// 选择赠送
         /// </summary>
         /// <param name="view"></param>
-        void SelectionGift(PopupItemsSelection view);
+        void SelectionGift(ItemsSelectionDialogView view);
 
         /// <summary>
         /// 选择阅读
         /// </summary>
         /// <param name="view"></param>
-        void SelectionRead(PopupItemsSelection view);
+        void SelectionRead(ItemsSelectionDialogView view);
     }
 }

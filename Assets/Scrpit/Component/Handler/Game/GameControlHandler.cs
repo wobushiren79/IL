@@ -3,7 +3,7 @@ using UnityEditor;
 using System.Collections.Generic;
 using Cinemachine;
 
-public class GameControlHandler : BaseHandler<GameControlHandler,GameControlManager>
+public class GameControlHandler : BaseHandler<GameControlHandler, GameControlManager>
 {
     public enum ControlEnum
     {
@@ -17,29 +17,27 @@ public class GameControlHandler : BaseHandler<GameControlHandler,GameControlMana
         MiniGameAccount,//算账小游戏
         MiniGameDebate,//辩论
     }
-    public List<BaseControl> listControl = new List<BaseControl>();
-
-    /// <summary>
-    /// 初始化
-    /// </summary>
-    protected override void Awake()
-    {
-        base.Awake();
-        CinemachineVirtualCamera camera2D = Find<CinemachineVirtualCamera>(ImportantTypeEnum.Camera2D);
-        foreach (BaseControl itemControl in listControl)
-        {
-            itemControl.SetCamera2D(camera2D);
-        }
-    }
 
     /// <summary>
     /// 暂停控制
     /// </summary>
     public void StopControl()
     {
-        BaseControl control = GetControl();
+        BaseControl control = manager.GetControl();
         if (control != null)
             control.StopControl();
+    }
+
+    /// <summary>
+    /// 关闭所有控制
+    /// </summary>
+    public void EndAllControl()
+    {
+        Dictionary<string, BaseControl> dicControl = manager.dicControl;
+        foreach (var itemDic in dicControl)
+        {
+            itemDic.Value.EndControl();
+        }
     }
 
     /// <summary>
@@ -47,7 +45,7 @@ public class GameControlHandler : BaseHandler<GameControlHandler,GameControlMana
     /// </summary>
     public void EndControl()
     {
-        BaseControl control = GetControl();
+        BaseControl control = manager.GetControl();
         if (control != null)
             control.EndControl();
     }
@@ -57,7 +55,7 @@ public class GameControlHandler : BaseHandler<GameControlHandler,GameControlMana
     /// </summary>
     public void RestoreControl()
     {
-        BaseControl control = GetControl();
+        BaseControl control = manager.GetControl();
         if (control != null)
             control.RestoreControl();
     }
@@ -66,59 +64,27 @@ public class GameControlHandler : BaseHandler<GameControlHandler,GameControlMana
     /// 开始控制
     /// </summary>
     /// <param name="controlEnum"></param>
-    public T StartControl<T>(ControlEnum controlEnum) where T: BaseControl
+    public T StartControl<T>(ControlEnum controlEnum) where T : BaseControl
     {
         string controlName = EnumUtil.GetEnumName(controlEnum);
+        Dictionary<string, BaseControl> dicControl = manager.dicControl;
         BaseControl baseControl = null;
-        for (int i = 0; i < listControl.Count; i++)
+        foreach (var itemDic in dicControl)
         {
-            BaseControl itemControl = listControl[i];
-            if (itemControl.name.Equals(controlName))
+            if (itemDic.Key.Equals(controlName))
             {
-                itemControl.StartControl();
-                baseControl = itemControl;
+                itemDic.Value.StartControl();
+                baseControl = itemDic.Value;
             }
             else
             {
-                itemControl.EndControl();
+                itemDic.Value.EndControl();
             }
+        }
+        if (baseControl == null)
+        {
+            baseControl = manager.GetControl<T>(controlEnum);
         }
         return baseControl as T;
-    }
-
-    /// <summary>
-    /// 获取当前控制
-    /// </summary>
-    /// <returns></returns>
-    public BaseControl GetControl()
-    {
-        for (int i = 0; i < listControl.Count; i++)
-        {
-            BaseControl itemControl = listControl[i];
-            if (itemControl.gameObject.activeSelf)
-            {
-                return itemControl;
-            }
-        }
-        return null;
-    }
-
-    /// <summary>
-    /// 通过类型获取控制
-    /// </summary>
-    /// <param name="controlEnum"></param>
-    /// <returns></returns>
-    public T GetControl<T>(ControlEnum controlEnum) where T: BaseControl
-    {
-        string controlName = EnumUtil.GetEnumName(controlEnum);
-        for (int i = 0; i < listControl.Count; i++)
-        {
-            BaseControl itemControl = listControl[i];
-            if (itemControl.name.Equals(controlName))
-            {
-                return itemControl as T;
-            }
-        }
-        return null;
     }
 }

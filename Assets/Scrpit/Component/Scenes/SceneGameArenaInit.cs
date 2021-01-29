@@ -275,8 +275,8 @@ public class SceneGameArenaInit : BaseSceneInit, IBaseObserver
             case MiniGameStatusEnum.GameEnd:
                 break;
             case MiniGameStatusEnum.GameClose:
-                SceneUtil.SceneChange(GameCommonInfo.ScenesChangeData.beforeScene);
-                //SceneUtil.SceneChange(ScenesEnum.GameArenaScene);
+                GameScenesHandler.Instance.ChangeScene(GameCommonInfo.ScenesChangeData.beforeScene);
+                //GameScenesHandler.Instance.ChangeScene(ScenesEnum.GameArenaScene);
                 break;
         }
     }

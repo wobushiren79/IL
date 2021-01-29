@@ -22,5 +22,21 @@ public class MiniGameBirthHandler : BaseMiniGameHandler<MiniGameBirthBuilder, Mi
         base.EndGame(gameResult);
     }
 
+    /// <summary>
+    /// 到达卵子
+    /// </summary>
+    public void ArriveEgg()
+    {
 
+    }
+
+    /// <summary>
+    /// 发射精子
+    /// </summary>
+    public bool FireSperm(out MiniGameBirthSpermBean spermData)
+    {
+        spermData = new MiniGameBirthSpermBean();
+        spermData.timeForSpeed = 10;
+        return true;
+    }
 }

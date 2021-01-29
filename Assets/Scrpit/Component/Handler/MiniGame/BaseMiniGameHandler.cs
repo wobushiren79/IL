@@ -37,7 +37,7 @@ public class BaseMiniGameHandler<B, D> : BaseHandler, UIMiniGameCountDown.ICallB
     public virtual void SetCameraPosition(Vector3 cameraPosition)
     {
         //设置摄像机位置
-        GameControlHandler.Instance.GetControl().SetFollowPosition(cameraPosition);
+        GameControlHandler.Instance.manager.GetControl().SetFollowPosition(cameraPosition);
     }
 
     /// <summary>
@@ -92,7 +92,7 @@ public class BaseMiniGameHandler<B, D> : BaseHandler, UIMiniGameCountDown.ICallB
             SetMiniGameStatus(MiniGameStatusEnum.GameEnd);
             StopAllCoroutines();
             //拉近尽头
-            BaseControl baseControl = GameControlHandler.Instance.GetControl();
+            BaseControl baseControl = GameControlHandler.Instance.manager.GetControl();
             baseControl.SetCameraOrthographicSize(6);
             if (isSlow)
             {

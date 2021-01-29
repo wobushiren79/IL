@@ -36,7 +36,7 @@ public abstract class BaseNormalSceneInit : BaseSceneInit, DialogView.IDialogCal
             weatherHandler.SetWeahter(GameCommonInfo.CurrentDayData.weatherToday);
         }
         //如果是在室内
-        if (GameControlHandler.Instance.GetControl().transform.position.y < -50)
+        if (GameControlHandler.Instance.manager.GetControl().transform.position.y < -50)
         {
             AudioHandler.Instance.PauseEnvironment();
         }
@@ -92,12 +92,12 @@ public abstract class BaseNormalSceneInit : BaseSceneInit, DialogView.IDialogCal
     #region  弹窗通知回调
     public void Submit(DialogView dialogView, DialogBean dialogData)
     {
-        SceneUtil.SceneChange(ScenesEnum.GameInnScene);
+        GameScenesHandler.Instance.ChangeScene(ScenesEnum.GameInnScene);
     }
 
     public void Cancel(DialogView dialogView, DialogBean dialogData)
     {
-        SceneUtil.SceneChange(ScenesEnum.GameInnScene);
+        GameScenesHandler.Instance.ChangeScene(ScenesEnum.GameInnScene);
     }
     #endregion
 

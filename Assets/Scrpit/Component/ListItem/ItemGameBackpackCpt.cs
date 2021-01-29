@@ -5,7 +5,7 @@ using UnityEngine.EventSystems;
 using UnityEngine.Events;
 using DG.Tweening;
 
-public class ItemGameBackpackCpt : ItemGameBaseCpt, IPointerClickHandler, PopupItemsSelection.ICallBack, DialogView.IDialogCallBack
+public class ItemGameBackpackCpt : ItemGameBaseCpt, IPointerClickHandler, ItemsSelectionDialogView.ICallBack, DialogView.IDialogCallBack
 {
     public Text tvName;
     public Text tvNumber;
@@ -19,16 +19,9 @@ public class ItemGameBackpackCpt : ItemGameBaseCpt, IPointerClickHandler, PopupI
     public UnityEvent leftClick;
     public UnityEvent rightClick;
 
-    protected UIGameManager uiGameManager;
-    protected PopupItemsSelection popupItemsSelection;
-
     public bool isOpenClick = true;
 
-    public virtual void Awake()
-    {
-        uiGameManager = Find<UIGameManager>(ImportantTypeEnum.GameUI);
-        popupItemsSelection = uiGameManager.popupItemsSelection;
-    }
+
 
     public void Start()
     {
@@ -71,7 +64,7 @@ public class ItemGameBackpackCpt : ItemGameBaseCpt, IPointerClickHandler, PopupI
     /// <param name="iconKey"></param>
     /// <param name="itemType"></param>
     public void SetIcon(ItemsInfoBean itemsInfo)
-    {    
+    {
         Vector2 offsetMin = new Vector2(0, 0);
         Vector2 offsetMax = new Vector2(0, 0);
         Sprite spIcon = null;
@@ -94,7 +87,7 @@ public class ItemGameBackpackCpt : ItemGameBaseCpt, IPointerClickHandler, PopupI
                 default:
                     break;
             }
-            spIcon = GeneralEnumTools.GetGeneralSprite(itemsInfo,  false);
+            spIcon = GeneralEnumTools.GetGeneralSprite(itemsInfo, false);
         }
         if (spIcon != null)
             ivIcon.color = new Color(1, 1, 1, 1);
@@ -145,18 +138,19 @@ public class ItemGameBackpackCpt : ItemGameBaseCpt, IPointerClickHandler, PopupI
         }
         if (itemsInfoData == null)
             return;
-        if (popupItemsSelection != null)
-            popupItemsSelection.SetCallBack(this);
+        DialogBean dialogData = new DialogBean();
+        ItemsSelectionDialogView selectionDialog = DialogHandler.Instance.CreateDialog<ItemsSelectionDialogView>(DialogEnum.ItemsSelection, null, dialogData);
+        selectionDialog.SetCallBack(this);
         switch (itemsInfoData.GetItemsType())
         {
             case GeneralEnum.Menu:
-                popupItemsSelection.Open(PopupItemsSelection.SelectionTypeEnum.UseAndDiscard);
+                selectionDialog.Open(ItemsSelectionDialogView.SelectionTypeEnum.UseAndDiscard);
                 break;
             case GeneralEnum.Read:
-                popupItemsSelection.Open(PopupItemsSelection.SelectionTypeEnum.ReadAndDiscard);
+                selectionDialog.Open(ItemsSelectionDialogView.SelectionTypeEnum.ReadAndDiscard);
                 break;
             default:
-                popupItemsSelection.Open(PopupItemsSelection.SelectionTypeEnum.Discard);
+                selectionDialog.Open(ItemsSelectionDialogView.SelectionTypeEnum.Discard);
                 break;
         }
     }
@@ -166,27 +160,27 @@ public class ItemGameBackpackCpt : ItemGameBaseCpt, IPointerClickHandler, PopupI
     /// 使用
     /// </summary>
     /// <param name="view"></param>
-    public virtual void SelectionUse(PopupItemsSelection view)
+    public virtual void SelectionUse(ItemsSelectionDialogView view)
     {
         if (itemsInfoData == null || itemBean == null)
             return;
-        GameDataBean gameData =  GameDataHandler.Instance.manager.GetGameData();
+        GameDataBean gameData = GameDataHandler.Instance.manager.GetGameData();
         switch (itemsInfoData.GetItemsType())
         {
             case GeneralEnum.Menu:
                 //添加菜谱
                 if (gameData.AddFoodMenu(itemsInfoData.add_id))
-                { 
-                    MenuInfoBean menuInfo= InnFoodHandler.Instance.manager.GetFoodDataById(itemsInfoData.add_id);
+                {
+                    MenuInfoBean menuInfo = InnFoodHandler.Instance.manager.GetFoodDataById(itemsInfoData.add_id);
                     RefreshItems(itemsInfoData.id, -1);
                     DialogBean dialogData = new DialogBean
                     {
                         title = GameCommonInfo.GetUITextById(1047),
                         content = menuInfo.name
                     };
-                    AchievementDialogView achievementDialog=DialogHandler.Instance.CreateDialog<AchievementDialogView>(DialogEnum.Achievement, this, dialogData);
+                    AchievementDialogView achievementDialog = DialogHandler.Instance.CreateDialog<AchievementDialogView>(DialogEnum.Achievement, this, dialogData);
                     achievementDialog.SetData(1, menuInfo.icon_key);
-                    ToastHandler.Instance.ToastHint(ivIcon.sprite,GameCommonInfo.GetUITextById(1006));
+                    ToastHandler.Instance.ToastHint(ivIcon.sprite, GameCommonInfo.GetUITextById(1006));
                 }
                 else
                 {
@@ -202,7 +196,7 @@ public class ItemGameBackpackCpt : ItemGameBaseCpt, IPointerClickHandler, PopupI
     /// 删除
     /// </summary>
     /// <param name="view"></param>
-    public virtual void SelectionDiscard(PopupItemsSelection view)
+    public virtual void SelectionDiscard(ItemsSelectionDialogView view)
     {
         if (itemsInfoData == null)
             return;
@@ -227,27 +221,27 @@ public class ItemGameBackpackCpt : ItemGameBaseCpt, IPointerClickHandler, PopupI
 
     }
 
-    public virtual void SelectionEquip(PopupItemsSelection view)
+    public virtual void SelectionEquip(ItemsSelectionDialogView view)
     {
 
     }
 
-    public virtual void SelectionTFEquip(PopupItemsSelection view)
+    public virtual void SelectionTFEquip(ItemsSelectionDialogView view)
     {
 
     }
 
-    public virtual void SelectionUnload(PopupItemsSelection view)
+    public virtual void SelectionUnload(ItemsSelectionDialogView view)
     {
 
     }
 
-    public virtual void SelectionGift(PopupItemsSelection view)
+    public virtual void SelectionGift(ItemsSelectionDialogView view)
     {
 
     }
 
-    public virtual void SelectionRead(PopupItemsSelection view)
+    public virtual void SelectionRead(ItemsSelectionDialogView view)
     {
         GameEventHandler.Instance.EventTriggerForLook(itemsInfoData.add_id);
     }

@@ -89,7 +89,7 @@ public class ItemGameBuildCpt : ItemGameBaseCpt
     /// </summary>
     public void StartBuild()
     {
-        ControlForBuildCpt controlForBuild = GameControlHandler.Instance.GetControl<ControlForBuildCpt>(ControlEnum.Build);
+        ControlForBuildCpt controlForBuild = GameControlHandler.Instance.manager.GetControl<ControlForBuildCpt>(ControlEnum.Build);
         controlForBuild.ShowBuildItem(buildData.id);
     }
 

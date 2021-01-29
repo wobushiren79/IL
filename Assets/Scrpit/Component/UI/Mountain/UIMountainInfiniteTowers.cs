@@ -178,7 +178,7 @@ public class UIMountainInfiniteTowers : BaseUIComponent, DialogView.IDialogCallB
                 gameData.AddInfinteTowersData(infiniteTowersData);
                 //跳转场景
                 GameCommonInfo.SetInfiniteTowersPrepareData(infiniteTowersData);
-                SceneUtil.SceneChange(ScenesEnum.GameInfiniteTowersScene);
+                GameScenesHandler.Instance.ChangeScene(ScenesEnum.GameInfiniteTowersScene);
             }
             else if (dialogBean.dialogPosition == 1)
             {

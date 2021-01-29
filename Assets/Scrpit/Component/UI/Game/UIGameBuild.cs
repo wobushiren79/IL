@@ -93,7 +93,7 @@ public class UIGameBuild : BaseUIComponent, IRadioGroupCallBack
     {
         base.CloseUI();
         //删除当前选中
-        GameControlHandler.Instance.GetControl<ControlForBuildCpt>(GameControlHandler.ControlEnum.Build).ClearBuildItem();
+        GameControlHandler.Instance.manager.GetControl<ControlForBuildCpt>(GameControlHandler.ControlEnum.Build).ClearBuildItem();
         SetInnBuildActive(true, true);
         //时间添加1小时
         GameTimeHandler.Instance.AddHour(1);
@@ -103,7 +103,7 @@ public class UIGameBuild : BaseUIComponent, IRadioGroupCallBack
         GameTimeHandler.Instance.SetTimeStatus(false);
         //设置角色到门口
         Vector3 startPosition = InnHandler.Instance.GetRandomEntrancePosition();
-        GameControlHandler.Instance.GetControl<BaseControl>(GameControlHandler.ControlEnum.Normal).SetFollowPosition(startPosition + new Vector3(0, -2, 0));
+        GameControlHandler.Instance.manager.GetControl<BaseControl>(GameControlHandler.ControlEnum.Normal).SetFollowPosition(startPosition + new Vector3(0, -2, 0));
         //隐藏床的范围显示
         SetBedRangeStatus(false);
     }
@@ -188,7 +188,7 @@ public class UIGameBuild : BaseUIComponent, IRadioGroupCallBack
         }
 
         //镜头初始化
-        ControlForBuildCpt controlForBuild = (GameControlHandler.Instance.GetControl<ControlForBuildCpt>(GameControlHandler.ControlEnum.Build));
+        ControlForBuildCpt controlForBuild = GameControlHandler.Instance.manager.GetControl<ControlForBuildCpt>(GameControlHandler.ControlEnum.Build);
         controlForBuild.SetLayer(innLayer);
         if (innLayer == 1)
         {
@@ -320,7 +320,7 @@ public class UIGameBuild : BaseUIComponent, IRadioGroupCallBack
     /// </summary>
     public void DismantleMode()
     {
-        GameControlHandler.Instance.GetControl<ControlForBuildCpt>(GameControlHandler.ControlEnum.Build).SetDismantleMode();
+        GameControlHandler.Instance.manager.GetControl<ControlForBuildCpt>(GameControlHandler.ControlEnum.Build).SetDismantleMode();
     }
 
     /// <summary>
@@ -330,7 +330,7 @@ public class UIGameBuild : BaseUIComponent, IRadioGroupCallBack
     {
         AudioHandler.Instance.PlaySound(AudioSoundEnum.ButtonForBack);
         //删除当前选中
-        GameControlHandler.Instance.GetControl<ControlForBuildCpt>(GameControlHandler.ControlEnum.Build).ClearBuildItem();
+        GameControlHandler.Instance.manager.GetControl<ControlForBuildCpt>(GameControlHandler.ControlEnum.Build).ClearBuildItem();
         //重新构建地形
         AstarPath.active.Scan();
         //重新构建客栈
@@ -419,7 +419,7 @@ public class UIGameBuild : BaseUIComponent, IRadioGroupCallBack
     {
         AudioHandler.Instance.PlaySound(AudioSoundEnum.ButtonForNormal);
         //删除当前选中
-        GameControlHandler.Instance.GetControl<ControlForBuildCpt>(GameControlHandler.ControlEnum.Build).ClearBuildItem();
+        GameControlHandler.Instance.manager.GetControl<ControlForBuildCpt>(GameControlHandler.ControlEnum.Build).ClearBuildItem();
         btDismantle.gameObject.SetActive(true);
         if (rbview == rbTypeTable)
         {

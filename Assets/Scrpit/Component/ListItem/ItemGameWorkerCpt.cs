@@ -286,7 +286,7 @@ public class ItemGameWorkerCpt : ItemGameBaseCpt, DialogView.IDialogCallBack, Wo
         DialogBean dialogData = new DialogBean();
         // dialogData.content = string.Format(GameCommonInfo.GetUITextById(3063), characterData.baseInfo.name);
         PickForItemsDialogView dialogView = DialogHandler.Instance.CreateDialog<PickForItemsDialogView>(DialogEnum.PickForItems, this, dialogData);
-        dialogView.SetData(null, PopupItemsSelection.SelectionTypeEnum.Gift);
+        dialogView.SetData(null, ItemsSelectionDialogView.SelectionTypeEnum.Gift);
         dialogView.SetSubmitDestroy(false);
     }
 

@@ -287,9 +287,9 @@ public class ItemTownArenaCpt : ItemGameBaseCpt, DialogView.IDialogCallBack
                 //设置竞技场数据
                 GameCommonInfo.SetArenaPrepareData(miniGameData);
                 //保存之前的位置
-                GameCommonInfo.ScenesChangeData.beforeUserPosition = GameControlHandler.Instance.GetControl<BaseControl>(GameControlHandler.ControlEnum.Normal).transform.position;
+                GameCommonInfo.ScenesChangeData.beforeUserPosition = GameControlHandler.Instance.manager.GetControl<BaseControl>(GameControlHandler.ControlEnum.Normal).transform.position;
                 //跳转到竞技场
-                SceneUtil.SceneChange(ScenesEnum.GameArenaScene);
+                GameScenesHandler.Instance.ChangeScene(ScenesEnum.GameArenaScene);
             }
             else if (arenaJoinType == 2)
             {

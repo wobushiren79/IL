@@ -521,7 +521,7 @@ public class UIGameMain : BaseUIComponent, DialogView.IDialogCallBack, IRadioGro
     /// <param name="layer"></param>
     public void SetInnLayer(int layer)
     {
-        ControlForWorkCpt controlForWork = (ControlForWorkCpt)GameControlHandler.Instance.GetControl();
+        ControlForWorkCpt controlForWork = (ControlForWorkCpt)GameControlHandler.Instance.manager.GetControl();
         controlForWork.SetLayer(layer);
     }
 

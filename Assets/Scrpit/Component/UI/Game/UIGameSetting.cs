@@ -329,7 +329,6 @@ public class UIGameSetting : BaseUIComponent, DropdownView.ICallBack, ProgressVi
         }
     }   
 
-
     #region 下拉回调
     public void OnDropDownValueChange(DropdownView view, int position, Dropdown.OptionData optionData)
     {
@@ -372,7 +371,6 @@ public class UIGameSetting : BaseUIComponent, DropdownView.ICallBack, ProgressVi
     }
     #endregion
 
-
     #region 进度条回调
     public void OnProgressViewValueChange(ProgressView progressView, float value)
     {
@@ -404,8 +402,8 @@ public class UIGameSetting : BaseUIComponent, DropdownView.ICallBack, ProgressVi
         }
         else if (dialogBean.dialogPosition == 2)
         {
-            //回调主菜单
-            SceneUtil.SceneChange(ScenesEnum.MainScene);
+            //回调主菜单       
+            GameScenesHandler.Instance.ChangeScene(ScenesEnum.MainScene);
             GameCommonInfo.ClearData();
         }
         else if (dialogBean.dialogPosition == 3)
@@ -413,7 +411,7 @@ public class UIGameSetting : BaseUIComponent, DropdownView.ICallBack, ProgressVi
             GameDataBean gameData =  GameDataHandler.Instance.manager.GetGameData();
             GameDataHandler.Instance.manager.GetGameDataByUserId(gameData.userId);
             GameCommonInfo.ClearData();
-            SceneUtil.SceneChange(ScenesEnum.GameInnScene);
+            GameScenesHandler.Instance.ChangeScene(ScenesEnum.GameInnScene);
         }
 
     }

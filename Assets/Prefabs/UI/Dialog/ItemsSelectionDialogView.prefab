@@ -895,7 +895,7 @@ GameObject:
   - component: {fileID: 4246832423765207087}
   - component: {fileID: 4246832423765207086}
   m_Layer: 5
-  m_Name: PopupItemsSelection
+  m_Name: ItemsSelectionDialogView
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1025,6 +1025,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f25a5b2b07bccd140a032db31df24ee7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  objDialog: {fileID: 0}
+  btSubmit: {fileID: 0}
+  tvSubmit: {fileID: 0}
+  btCancel: {fileID: 0}
+  tvCancel: {fileID: 0}
+  btBackground: {fileID: 0}
+  tvTitle: {fileID: 0}
+  tvContent: {fileID: 0}
+  cgDialog: {fileID: 0}
+  dialogData:
+    title: 
+    content: 
+    submitStr: 
+    cancelStr: 
+    dialogPosition: 0
+    remark: 
   btBack: {fileID: 4246832423765207084}
   btUse: {fileID: 4246832424910982527}
   btDiscard: {fileID: 4246832424909031096}

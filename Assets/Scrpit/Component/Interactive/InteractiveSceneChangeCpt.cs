@@ -26,7 +26,7 @@ public class InteractiveSceneChangeCpt : BaseInteractiveCpt
                         (weatherData.weatherType == WeatherTypeEnum.Cloudy
                         || weatherData.weatherType == WeatherTypeEnum.Sunny))
                     {
-                        SceneUtil.SceneChange(changeScene);
+                        GameScenesHandler.Instance.ChangeScene(changeScene);
                     }
                     else
                     {
@@ -36,7 +36,7 @@ public class InteractiveSceneChangeCpt : BaseInteractiveCpt
                 else
                 {
 
-                    SceneUtil.SceneChange(changeScene);
+                    GameScenesHandler.Instance.ChangeScene(changeScene);
                 }
             }     
         }
