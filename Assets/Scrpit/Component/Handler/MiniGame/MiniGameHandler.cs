@@ -50,7 +50,7 @@ public class MiniGameHandler : BaseHandler<MiniGameHandler, MiniGameManager>
     //战斗
     protected MiniGameCombatHandler _handlerForCombat;
 
-    public MiniGameCookingHandler handlerForCombat
+    public MiniGameCombatHandler handlerForCombat
     {
         get
         {
