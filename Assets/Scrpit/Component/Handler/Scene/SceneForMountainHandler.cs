@@ -6,17 +6,8 @@ public class SceneForMountainHandler : BaseHandler
     public MoveByGameTimeCpt sun;
     public MoveByGameTimeCpt moon;
 
-    protected GameTimeHandler gameTimeHandler;
-
-    private void Awake()
-    {
-        gameTimeHandler = Find<GameTimeHandler>(ImportantTypeEnum.TimeHandler);
-    }
-
     private void Update()
     {
-        if (gameTimeHandler == null)
-            return;
         GameTimeHandler.Instance.GetTime(out float hour, out float min);
         if (hour >= 6 && hour < 21)
         {

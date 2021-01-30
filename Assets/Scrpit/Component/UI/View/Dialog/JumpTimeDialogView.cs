@@ -13,13 +13,11 @@ public class JumpTimeDialogView : DialogView
 
     public int jumpNumber = 1;
 
-    protected LightHandler lightHandler;
     protected BaseSceneInit baseSceneInit;
 
     public override void Awake()
     {
         base.Awake();
-        lightHandler = Find<LightHandler>(ImportantTypeEnum.LightHandler);
         baseSceneInit = Find<BaseSceneInit>(ImportantTypeEnum.Init);
 
         if (btSubNumber)

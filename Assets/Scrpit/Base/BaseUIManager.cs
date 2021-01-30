@@ -55,7 +55,7 @@ public class BaseUIManager : BaseManager
         for (int i = 0; i < uiList.Count; i++)
         {
             BaseUIComponent itemUI = uiList[i];
-            if (itemUI.name.Contains(uiName))
+            if (itemUI.name.Equals(uiName))
             {
                 return itemUI as T;
             }
@@ -86,7 +86,7 @@ public class BaseUIManager : BaseManager
         for (int i = 0; i < uiList.Count; i++)
         {
             BaseUIComponent itemUI = uiList[i];
-            if (itemUI.name.Contains(uiName))
+            if (itemUI.name.Equals(uiName))
             {
                 tempUIList.Add(itemUI);
             }
@@ -107,7 +107,7 @@ public class BaseUIManager : BaseManager
         for (int i = 0; i < uiList.Count; i++)
         {
             BaseUIComponent itemUI = uiList[i];
-            if (itemUI.name.Contains(uiName))
+            if (itemUI.name.Equals(uiName))
             {
                 uiComponent = itemUI;
                 itemUI.OpenUI();
@@ -121,6 +121,7 @@ public class BaseUIManager : BaseManager
             if (uiModel)
             {
                 GameObject objUIComponent = Instantiate(gameObject, uiModel.gameObject);
+                objUIComponent.name =objUIComponent.name.Replace("(Clone)", "");
                 uiComponent = objUIComponent.GetComponent<BaseUIComponent>();
                 uiComponent.OpenUI();
                 uiList.Add(uiComponent);
@@ -155,7 +156,7 @@ public class BaseUIManager : BaseManager
         for (int i = 0; i < uiList.Count; i++)
         {
             BaseUIComponent itemUI = uiList[i];
-            if (itemUI.name.Contains(uiName))
+            if (itemUI.name.Equals(uiName))
             {
                 itemUI.CloseUI();
             }
@@ -187,7 +188,7 @@ public class BaseUIManager : BaseManager
         for (int i = 0; i < uiList.Count; i++)
         {
             BaseUIComponent itemUI = uiList[i];
-            if (!itemUI.name.Contains(uiName))
+            if (!itemUI.name.Equals(uiName))
             {
                 if (itemUI.gameObject.activeSelf)
                     itemUI.CloseUI();
@@ -252,7 +253,7 @@ public class BaseUIManager : BaseManager
         for (int i = 0; i < uiList.Count; i++)
         {
             BaseUIComponent itemUI = uiList[i];
-            if (itemUI.name.Contains(uiName))
+            if (itemUI.name.Equals(uiName))
             {
                 itemUI.RefreshUI();
             }

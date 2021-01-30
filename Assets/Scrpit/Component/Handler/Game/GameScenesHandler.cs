@@ -1,8 +1,9 @@
 ﻿using UnityEditor;
 using UnityEngine;
 
-public class GameScenesHandler : BaseHandler<GameScenesHandler,GameScenesManager>
+public class GameScenesHandler : BaseHandler<GameScenesHandler, GameScenesManager>
 {
+
     public void ChangeScene(ScenesEnum scenes)
     {
         //停止所有控制

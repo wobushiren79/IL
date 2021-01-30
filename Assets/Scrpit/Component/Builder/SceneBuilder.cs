@@ -11,9 +11,6 @@ public class SceneBuilder : BaseTilemapBuilder
     public List<TileBean> listTileGroundForSeasons;
     public List<TileBean> listTileGressForSeasons;
 
-    public TileBean tileDataForGround;
-    public TileBean tileDataForGress;
-
     public Tilemap tileMapForGround
     {
         get
@@ -46,52 +43,41 @@ public class SceneBuilder : BaseTilemapBuilder
     /// <param name="seasons"></param>
     public void BuildScene(SeasonsEnum seasons)
     {
-        //替换地面
-        TileBean newTileDataForGround = GetTileByName(EnumUtil.GetEnumName(seasons), listTileGroundForSeasons);
-        if (!newTileDataForGround.key.Equals(tileDataForGround.key))
-        {
-            tileMapForGround.SwapTile(tileDataForGround.value, newTileDataForGround.value);
-            tileDataForGround = newTileDataForGround;
-        }
-
-        //替换草地
-
-        TileBean newTileDataForGress = GetTileByName(EnumUtil.GetEnumName(seasons), listTileGressForSeasons);
-        if (!newTileDataForGress.key.Equals(tileDataForGress.key))
-        {
-            tileMapForGroundElement.SwapTile(tileDataForGress.value, newTileDataForGress.value);
-            tileDataForGress = newTileDataForGress;
-        }
-
-
+        string tileGroundName = "";
+        string tileGressName = "";
         switch (seasons)
         {
             case SeasonsEnum.Spring:
+                tileGroundName = "tile_gress_1";
+                tileGressName = "Gress_1";
                 break;
             case SeasonsEnum.Summer:
+                tileGroundName = "tile_gress_2";
+                tileGressName = "Gress_2";
                 break;
             case SeasonsEnum.Autumn:
+                tileGroundName = "tile_gress_3";
+                tileGressName = "Gress_3";
                 break;
             case SeasonsEnum.Winter:
+                tileGroundName = "tile_gress_4";
+                tileGressName = "Gress_4";
                 break;
-        }
-    }
-
-    /// <summary>
-    /// 通过名字获取tile
-    /// </summary>
-    /// <param name="name"></param>
-    /// <param name="listData"></param>
-    /// <returns></returns>
-    private TileBean GetTileByName(string name, List<TileBean> listData)
-    {
-        foreach (TileBean itemTile in listData)
+        }       
+        //替换地面
+        TileBase newTileDataForGround = InnBuildHandler.Instance.manager.GetGroundTileByName(tileGroundName);
+        TileBase defGroundTile = tileMapForGround.GetTile(Vector3Int.zero);
+        if (!newTileDataForGround.name.Equals(defGroundTile.name))
         {
-            if (itemTile.key.Equals(name))
-            {
-                return itemTile;
-            }
+            tileMapForGround.SwapTile(defGroundTile, newTileDataForGround);
         }
-        return null;
+
+        //替换草地
+        TileBase newTileDataForGress = InnBuildHandler.Instance.manager.GetOtherTileByName(tileGressName);
+        TileBase defGressTile = tileMapForGroundElement.GetTile(Vector3Int.zero);
+        if (!newTileDataForGress.name.Equals(defGressTile.name))
+        {
+            tileMapForGroundElement.SwapTile(defGressTile, newTileDataForGress);
+        }
     }
 }

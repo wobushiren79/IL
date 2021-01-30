@@ -101,9 +101,8 @@ public class UIMiniGameCombatCommand : BaseUIChildComponent<UIMiniGameCombat>, D
     /// </summary>
     public void CommandEscape()
     {
-        MiniGameCombatHandler miniGameCombatHandler = ((UIGameManager)uiComponent.uiManager).miniGameCombatHandler;
         Close();
-        miniGameCombatHandler.EndGame(MiniGameResultEnum.Escape);
+        MiniGameHandler.Instance.handlerForCombat.EndGame(MiniGameResultEnum.Escape);
     }
 
     #region 弹窗回调

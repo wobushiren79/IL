@@ -23,7 +23,6 @@ public class GameTimeHandler : BaseHandler<GameTimeHandler, GameTimeManager>
     }
 
     protected Action<NotifyTypeEnum,float>  notifyForTime;
-    protected LightHandler lightHandler;
 
     public float hour;
     public float min;
@@ -34,12 +33,6 @@ public class GameTimeHandler : BaseHandler<GameTimeHandler, GameTimeManager>
     public bool isStopTime = true;
     //时间流逝速度
     public float timeSclae = 1;
-
-    protected override void Awake()
-    {
-        base.Awake();
-        lightHandler = Find<LightHandler>(ImportantTypeEnum.LightHandler);
-    }
 
     private void Update()
     {
@@ -276,8 +269,8 @@ public class GameTimeHandler : BaseHandler<GameTimeHandler, GameTimeManager>
         this.hour = (float)hour;
         this.min = (float)min;
         gameData.gameTime.SetTimeForHM((int)this.hour, (int)this.min);
-        if (lightHandler != null)
-            lightHandler.CheckTime();
+
+        GameLightHandler.instance.CheckTime();
     }
 
     /// <summary>
@@ -290,8 +283,8 @@ public class GameTimeHandler : BaseHandler<GameTimeHandler, GameTimeManager>
         GameDataBean gameData = GameDataHandler.Instance.manager.GetGameData();
         hour += addHour;
         gameData.gameTime.hour = (int)hour;
-        if (lightHandler != null)
-            lightHandler.CheckTime();
+
+        GameLightHandler.instance.CheckTime();
     }
 
     /// <summary>

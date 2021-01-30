@@ -329,4 +329,32 @@ public class TypeConversionUtil
         }
         return new string(charList);
     }
+
+    /// <summary>
+    /// Sprite转Tex2D
+    /// </summary>
+    /// <param name="sprite"></param>
+    /// <returns></returns>
+    public static Texture2D SpriteToTex2D(Sprite sprite)
+    {
+        var targetTex = new Texture2D((int)sprite.rect.width, (int)sprite.rect.height);
+        var pixels = sprite.texture.GetPixels(
+            (int)sprite.textureRect.x,
+            (int)sprite.textureRect.y,
+            (int)sprite.textureRect.width,
+            (int)sprite.textureRect.height);
+        targetTex.SetPixels(pixels);
+        targetTex.Apply();
+        return targetTex;
+    }
+
+    /// <summary>
+    /// Tex2D转Sprite
+    /// </summary>
+    /// <param name="t2d"></param>
+    /// <returns></returns>
+    public static Sprite Tex2DToSprite(Texture2D t2d)
+    {
+        return Sprite.Create(t2d, new Rect(0, 0, t2d.width, t2d.height), Vector2.zero);
+    }
 }

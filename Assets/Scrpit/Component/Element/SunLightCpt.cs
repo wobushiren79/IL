@@ -11,12 +11,10 @@ public class SunLightCpt : LightCpt
     //可控颜色加成
     public Color offsetColor;
 
-    protected GameTimeHandler gameTimeHandler;
     protected WeatherHandler weatherHandler;
 
     private void Awake()
     {
-        gameTimeHandler = Find<GameTimeHandler>(ImportantTypeEnum.TimeHandler);
         weatherHandler = Find<WeatherHandler>(ImportantTypeEnum.WeatherHandler);
     }
 
@@ -30,8 +28,6 @@ public class SunLightCpt : LightCpt
     /// </summary>
     public void HandleForTime()
     {
-        if (gameTimeHandler == null)
-            return;
         GameTimeHandler.Instance.GetTime(out float hour, out float min);
 
         float leap = 0;

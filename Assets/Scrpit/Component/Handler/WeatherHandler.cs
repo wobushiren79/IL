@@ -15,14 +15,12 @@ public class WeatherHandler : BaseMonoBehaviour
 
     public WeatherBean weatherData;
 
-    protected GameTimeHandler gameTimeHandler;
     //太阳光
     protected SunLightCpt sunLight;
 
     private void Awake()
     {
         sunLight = Find<SunLightCpt>(ImportantTypeEnum.Sun);
-        gameTimeHandler = Find<GameTimeHandler>(ImportantTypeEnum.TimeHandler);
     }
 
     /// <summary>

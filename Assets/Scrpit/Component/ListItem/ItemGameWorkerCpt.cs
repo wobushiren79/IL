@@ -245,10 +245,9 @@ public class ItemGameWorkerCpt : ItemGameBaseCpt, DialogView.IDialogCallBack, Wo
         AudioHandler.Instance.PlaySound(AudioSoundEnum.ButtonForNormal);
         if (uiComponent != null)
         {
-            UIGameWorkerDetails uiWorkerDetails = UIHandler.Instance.manager.GetUI<UIGameWorkerDetails>(UIEnum.GameWorkerDetails);
+            UIGameWorkerDetails uiWorkerDetails = UIHandler.Instance.manager.OpenUIAndCloseOther<UIGameWorkerDetails>(UIEnum.GameWorkerDetails);
             UIGameWorker uiWorker = (UIGameWorker)uiComponent;
             uiWorkerDetails.SetCharacterData(uiWorker.listCharacterData, characterData);
-            UIHandler.Instance.manager.OpenUIAndCloseOther<UIGameWorkerDetails>(UIEnum.GameWorkerDetails);
         }
     }
 

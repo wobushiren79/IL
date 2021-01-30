@@ -61,6 +61,7 @@ public class UIGameWorkerDetails : BaseUIComponent, IRadioGroupCallBack
     {
         this.listCharacter = listCharacter;
         this.characterData = characterData;
+        RefreshUI();
     }
 
     private void Start()
@@ -90,7 +91,6 @@ public class UIGameWorkerDetails : BaseUIComponent, IRadioGroupCallBack
     {
         if (characterData == null)
             return;
-
         workerChefInfo.Close();
         workerWaiterInfo.Close();
         workerAccountantInfo.Close();
@@ -99,6 +99,7 @@ public class UIGameWorkerDetails : BaseUIComponent, IRadioGroupCallBack
         workerSkillInfo.Close();
         workerBookInfo.Close();
         generalInfo.Close();
+
         if (name.Contains("General"))
         {
             generalInfo.Open();
@@ -281,10 +282,12 @@ public class UIGameWorkerDetails : BaseUIComponent, IRadioGroupCallBack
 
     protected void OnClickForLastCharacter()
     {
+        AudioHandler.Instance.PlaySound(AudioSoundEnum.ButtonForNormal);
         ChangeCharacter(-1);
     }
     protected void OnClickForNextCharacter()
     {
+        AudioHandler.Instance.PlaySound(AudioSoundEnum.ButtonForNormal);
         ChangeCharacter(1);
     }
     protected void ChangeCharacter(int number)

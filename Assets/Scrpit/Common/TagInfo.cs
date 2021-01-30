@@ -18,4 +18,10 @@ public class TagInfo
     public readonly static string Tag_AudioListener = "AudioListener";
 
     public readonly static string Tag_Camera2D = "Camera2D";
+
+    public readonly static string Tag_LightContainer = "LightContainer";
+    public readonly static string Tag_SeasonsContainer = "SeasonsContainer";
+
+    public readonly static string Tag_Cursor = "Cursor";
+    
 }

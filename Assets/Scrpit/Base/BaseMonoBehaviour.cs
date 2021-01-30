@@ -113,6 +113,19 @@ public class BaseMonoBehaviour : MonoBehaviour
         return default(T);
     }
 
+    public List<T> FindListWithTag<T>(string tag)
+    {
+        List<T> listData = new List<T>();
+        GameObject[] objArray = GameObject.FindGameObjectsWithTag(tag);
+        for (int i=0;i< objArray.Length;i++)
+        {
+            GameObject itemObj = objArray[i];
+            T itemCpt= itemObj.GetComponent<T>();
+            listData.Add(itemCpt);
+        }
+        return listData;
+    }
+
     /// <summary>
     /// 通过反射链接UI控件
     /// </summary>

@@ -28,7 +28,6 @@ public class ItemsSelectionDialogView : DialogView
     public GameObject objContent;
 
     //屏幕(用来找到鼠标点击的相对位置)
-    public RectTransform screenRTF;
     public RectTransform popupRTF;
     //鼠标位置和弹窗偏移量
     public float offsetX = 0;
@@ -119,6 +118,7 @@ public class ItemsSelectionDialogView : DialogView
         if (gameObject.activeSelf)
         {
             //屏幕坐标转换为UI坐标
+            RectTransform screenRTF = UIHandler.Instance.manager.GetContainer();
             RectTransformUtility.ScreenPointToLocalPointInRectangle(screenRTF, Input.mousePosition, Camera.main, out Vector2 outPosition);
             float moveX = outPosition.x;
             float moveY = outPosition.y;

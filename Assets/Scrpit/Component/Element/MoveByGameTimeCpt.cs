@@ -9,11 +9,6 @@ public class MoveByGameTimeCpt : BaseMonoBehaviour
     public float startTimeHour;
     public float endTimeHour;
 
-    private void Awake()
-    {
-        gameTimeHandler = Find<GameTimeHandler>(ImportantTypeEnum.TimeHandler);
-    }
-
     private void Update()
     {
         if (gameTimeHandler == null)
