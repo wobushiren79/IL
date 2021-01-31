@@ -9,11 +9,31 @@ public class InnPayHandler : BaseMonoBehaviour
     public List<BuildCounterCpt> listCounterCpt = new List<BuildCounterCpt>();
 
     //柜台容器
-    public GameObject counterContainer;
+    protected GameObject _counterContainer;
+    public GameObject counterContainer
+    {
+        get
+        {
+            if (_counterContainer == null)
+            {
+                _counterContainer = GameObject.FindGameObjectWithTag(TagInfo.Tag_FurnitureContainer);
+            }
+            return _counterContainer;
+        }
+    }
     //算账人容器
-    public GameObject accountingContainer;
-    //支付特效
-    public GameObject objPayEffects;
+    protected GameObject _accountingContainer;
+    public GameObject accountingContainer
+    {
+        get
+        {
+            if (_accountingContainer == null)
+            {
+                _accountingContainer = GameObject.FindGameObjectWithTag(TagInfo.Tag_NpcWorkerContainer);
+            }
+            return _accountingContainer;
+        }
+    }
 
     /// <summary>
     /// 找到所有柜台
@@ -122,7 +142,9 @@ public class InnPayHandler : BaseMonoBehaviour
     /// </summary>
     public void ShowPayEffects(Vector3 position, long priceL, long priceM, long priceS)
     {
-        GameObject payEffects = Instantiate(objPayEffects, position, new Quaternion());
+        GameObject payEffects = EffectHandler.Instance.manager.CreateOtherEffect(gameObject, "PayMoney");
+        payEffects.transform.position = position;
+        payEffects.transform.rotation = new Quaternion();
         PayMoneyCpt payMoneyCpt = payEffects.GetComponent<PayMoneyCpt>();
         payMoneyCpt.SetData(position, priceL, priceM, priceS);
     }

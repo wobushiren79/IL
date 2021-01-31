@@ -7,8 +7,6 @@ public class ControlForWorkCpt : BaseControl, DialogView.IDialogCallBack
 {
     //角色移动组建
     public CharacterMoveCpt cameraMove;
-    //指针控制
-    public CursorHandler cursorHandler;
     public List<Texture2D> listTexCursorDaze;
 
     //选中的NPC
@@ -20,11 +18,6 @@ public class ControlForWorkCpt : BaseControl, DialogView.IDialogCallBack
     protected DialogView dialogSelectView;
 
     public int layer = 0;
-
-    private void Awake()
-    {
-        cursorHandler = Find<CursorHandler>(ImportantTypeEnum.CursorHandler);
-    }
 
     private void Update()
     {
@@ -149,13 +142,13 @@ public class ControlForWorkCpt : BaseControl, DialogView.IDialogCallBack
                     //如果在偷懒 则惊醒
                     if (npcAIWorker.GetWorkerStatus() == NpcAIWorkerCpt.WorkerIntentEnum.Daze)
                     {
-                        cursorHandler.SetCursor(CursorHandler.CursorType.Knock);
+                        CursorHandler.Instance.SetCursor(CursorHandler.CursorType.Knock);
                         return npcAIWorker;
                     }
                 }
             }
         }
-        cursorHandler.SetCursor(CursorHandler.CursorType.Def);
+        CursorHandler.Instance.SetCursor(CursorHandler.CursorType.Def);
         return null;
     }
 

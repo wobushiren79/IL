@@ -5,8 +5,18 @@ using System.Collections.Generic;
 public class InnWaiterHandler : BaseMonoBehaviour
 {
 
-    public GameObject waiterContainer;
-
+    protected GameObject _waiterContainer;
+    public GameObject waiterContainer
+    {
+        get
+        {
+            if (_waiterContainer == null)
+            {
+                _waiterContainer = GameObject.FindGameObjectWithTag(TagInfo.Tag_NpcWorkerContainer);
+            }
+            return _waiterContainer;
+        }
+    }
 
     /// <summary>
     /// 设置运送食物

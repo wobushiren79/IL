@@ -11,6 +11,13 @@ public class MiniGameCombatHandler : BaseMiniGameHandler<MiniGameCombatBuilder, 
     //游戏UI
     protected UIMiniGameCombat uiMiniGameCombat;
 
+
+    protected override void Awake()
+    {
+        builderName = "MiniGameCombatBuilder";
+        base.Awake();
+    }
+
     /// <summary>
     /// 初始化数据
     /// </summary>

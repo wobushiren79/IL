@@ -13,6 +13,11 @@ public class MiniGameCookingHandler : BaseMiniGameHandler<MiniGameCookingBuilder
     protected UIMiniGameCooking uiMiniGameCooking;
     protected UIMiniGameCookingSelect uiMiniGameCookingSelect;
     protected UIMiniGameCookingSettlement uiMiniGameCookingSettlement;
+    protected override void Awake()
+    {
+        builderName = "MiniGameCookingBuilder";
+        base.Awake();
+    }
 
     /// <summary>
     /// 初始化游戏

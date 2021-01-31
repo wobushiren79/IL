@@ -5,7 +5,7 @@ using System.Linq;
 using static GameControlHandler;
 using System;
 
-public class GameEventHandler : BaseHandler<GameEventHandler, GameEventManager>, UIGameText.ICallBack, IBaseObserver
+public class GameEventHandler : BaseHandler<GameEventHandler, GameEventManager>, UIGameText.ICallBack
 {
     public enum EventTypeEnum
     {
@@ -29,12 +29,6 @@ public class GameEventHandler : BaseHandler<GameEventHandler, GameEventManager>,
         TextSelectResult,//文本选择
     }
 
-    ;
-    protected NpcImportantBuilder npcImportantBuilder;
-
-    protected MiniGameCombatHandler miniGameCombatHandler;
-    protected MiniGameDebateHandler miniGameDebateHandler;
-
     private EventStatusEnum mEventStatus = EventStatusEnum.EventEnd;
     private EventTypeEnum mEventType;
     private Vector3 mEventPosition = Vector3.zero;
@@ -45,17 +39,15 @@ public class GameEventHandler : BaseHandler<GameEventHandler, GameEventManager>,
     protected override void Awake()
     {
         base.Awake();
-
-        miniGameCombatHandler = Find<MiniGameCombatHandler>(ImportantTypeEnum.MiniGameHandler);
-        miniGameDebateHandler = Find<MiniGameDebateHandler>(ImportantTypeEnum.MiniGameHandler);
-        miniGameDebateHandler.AddObserver(this);
-        miniGameDebateHandler.AddObserver(this);
-        npcImportantBuilder = Find<NpcImportantBuilder>(ImportantTypeEnum.NpcBuilder);
-
+        MiniGameHandler.Instance.handlerForDebate.RegisterNotifyForMiniGameStatus(NotifyForMiniGameStatus);
+        MiniGameHandler.Instance.handlerForCombat.RegisterNotifyForMiniGameStatus(NotifyForMiniGameStatus);
         GameTimeHandler.Instance.RegisterNotifyForTime(NotifyForTime);
+
     }
     private void OnDestroy()
     {
+        MiniGameHandler.Instance.handlerForDebate.UnRegisterNotifyForMiniGameStatus(NotifyForMiniGameStatus);
+        MiniGameHandler.Instance.handlerForCombat.UnRegisterNotifyForMiniGameStatus(NotifyForMiniGameStatus);
         GameTimeHandler.Instance.UnRegisterNotifyForTime(NotifyForTime);
     }
     public void InitData()
@@ -70,8 +62,7 @@ public class GameEventHandler : BaseHandler<GameEventHandler, GameEventManager>,
         //移除所有观察者
         notifyForEvent = null;
         //显示重要NPC
-        if (npcImportantBuilder != null)
-            npcImportantBuilder.ShowNpc();
+        NpcHandler.Instance.buildForImportant.ShowNpc();
     }
 
     public void RegisterNotifyForEvent(Action<NotifyEventTypeEnum, object[]> notifyForEvent)
@@ -249,8 +240,7 @@ public class GameEventHandler : BaseHandler<GameEventHandler, GameEventManager>,
         BaseControl baseControl = GameControlHandler.Instance.StartControl<ControlForStoryCpt>(GameControlHandler.ControlEnum.Story);
         baseControl.transform.position = new Vector3(storyInfo.position_x, storyInfo.position_y);
         //隐藏重要NPC
-        if (npcImportantBuilder != null)
-            npcImportantBuilder.HideNpc();
+        NpcHandler.Instance.buildForImportant.HideNpc();
         UIHandler.Instance.manager.CloseAllUI();
         //设置文本的回调
         UIGameText uiGameText = UIHandler.Instance.manager.GetUI<UIGameText>(UIEnum.GameText);
@@ -502,16 +492,15 @@ public class GameEventHandler : BaseHandler<GameEventHandler, GameEventManager>,
             switch (miniGameData.gameType)
             {
                 case MiniGameEnum.Combat:
-                    miniGameCombatHandler.InitGame((MiniGameCombatBean)miniGameData);
+                    MiniGameHandler.Instance.handlerForCombat.InitGame((MiniGameCombatBean)miniGameData);
                     break;
                 case MiniGameEnum.Debate:
-                    miniGameDebateHandler.InitGame((MiniGameDebateBean)miniGameData);
+                    MiniGameHandler.Instance.handlerForDebate.InitGame((MiniGameDebateBean)miniGameData);
                     break;
             }
             mEventPosition = miniGameData.miniGamePosition;
             //隐藏重要NPC
-            if (npcImportantBuilder != null)
-                npcImportantBuilder.HideNpc();
+            NpcHandler.Instance.buildForImportant.HideNpc();
         }
         notifyForEvent?.Invoke(NotifyEventTypeEnum.TextSelectResult, new object[] { textData });
     }
@@ -519,33 +508,29 @@ public class GameEventHandler : BaseHandler<GameEventHandler, GameEventManager>,
 
 
     #region 回调处理
-    public void ObserbableUpdate<T>(T observable, int type, params object[] obj) where T : UnityEngine.Object
+    public void NotifyForMiniGameStatus(MiniGameStatusEnum type, params object[] obj)
     {
-        if (observable as MiniGameCombatHandler
-            || observable as MiniGameDebateHandler)
+        switch (type)
         {
-            switch ((MiniGameStatusEnum)type)
-            {
-                case MiniGameStatusEnum.Gameing:
-                    break;
-                case MiniGameStatusEnum.GameEnd:
-                    break;
-                case MiniGameStatusEnum.GameClose:
-                    MiniGameBaseBean miniGameData = (MiniGameBaseBean)obj[0];
-                    GameControlHandler.Instance.StartControl<BaseControl>(ControlEnum.Normal);
-                    SetEventStatus(EventStatusEnum.EventEnd);
-                    if (miniGameData.GetGameResult() == MiniGameResultEnum.Win)
-                    {
-                        if (miniGameData.gameResultWinTalkMarkId != 0)
-                            EventTriggerForTalk(miniGameData.gameResultWinTalkMarkId, true);
-                    }
-                    else
-                    {
-                        if (miniGameData.gameResultLoseTalkMarkId != 0)
-                            EventTriggerForTalk(miniGameData.gameResultLoseTalkMarkId, true);
-                    }
-                    break;
-            }
+            case MiniGameStatusEnum.Gameing:
+                break;
+            case MiniGameStatusEnum.GameEnd:
+                break;
+            case MiniGameStatusEnum.GameClose:
+                MiniGameBaseBean miniGameData = (MiniGameBaseBean)obj[0];
+                GameControlHandler.Instance.StartControl<BaseControl>(ControlEnum.Normal);
+                SetEventStatus(EventStatusEnum.EventEnd);
+                if (miniGameData.GetGameResult() == MiniGameResultEnum.Win)
+                {
+                    if (miniGameData.gameResultWinTalkMarkId != 0)
+                        EventTriggerForTalk(miniGameData.gameResultWinTalkMarkId, true);
+                }
+                else
+                {
+                    if (miniGameData.gameResultLoseTalkMarkId != 0)
+                        EventTriggerForTalk(miniGameData.gameResultLoseTalkMarkId, true);
+                }
+                break;
         }
     }
     public void NotifyForTime(GameTimeHandler.NotifyTypeEnum notifyType, float timeHour)

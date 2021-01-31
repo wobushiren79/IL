@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class BaseSingletonMonoBehaviour<T> : BaseMonoBehaviour where T : BaseMonoBehaviour
 {
-    protected static volatile T instance;
+    private static volatile T instance;
     protected static object syncRoot = new Object();
 
     public static T Instance

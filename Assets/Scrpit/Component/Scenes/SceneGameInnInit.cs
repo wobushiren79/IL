@@ -8,24 +8,17 @@ public class SceneGameInnInit : BaseSceneInit, DialogView.IDialogCallBack
 {
     protected SceneInnManager sceneInnManager;
 
-    protected NpcCustomerBuilder npcCustomerBuilder;
-    protected NpcWorkerBuilder npcWorkerBuilder;
-    protected NpcEventBuilder npcEventBuilder;
-
     public override void Awake()
     {
         base.Awake();
 
         sceneInnManager = Find<SceneInnManager>(ImportantTypeEnum.SceneManager);
-        npcCustomerBuilder = Find<NpcCustomerBuilder>(ImportantTypeEnum.NpcBuilder);
-        npcWorkerBuilder = Find<NpcWorkerBuilder>(ImportantTypeEnum.NpcBuilder);
-        npcEventBuilder = Find<NpcEventBuilder>(ImportantTypeEnum.NpcBuilder);
     }
 
     public override void Start()
     {
         base.Start();
-     
+
         GameDataBean gameData = GameDataHandler.Instance.manager.GetGameData();
         //初始化场景
         if (sceneInnManager != null)
@@ -48,10 +41,7 @@ public class SceneGameInnInit : BaseSceneInit, DialogView.IDialogCallBack
         InnHandler.Instance.InitRecord();
 
         //设置天气
-        if (weatherHandler != null)
-        {
-            weatherHandler.SetWeahter(GameCommonInfo.CurrentDayData.weatherToday);
-        }
+        GameWeatherHandler.Instance.SetWeahter(GameCommonInfo.CurrentDayData.weatherToday);
 
         //增加回调
         GameTimeHandler.Instance.RegisterNotifyForTime(NotifyForTime);
@@ -75,8 +65,8 @@ public class SceneGameInnInit : BaseSceneInit, DialogView.IDialogCallBack
             BaseControl baseControl = GameControlHandler.Instance.StartControl<BaseControl>(GameControlHandler.ControlEnum.Normal);
             baseControl.SetFollowPosition(startPosition);
         }
-
-
+        //改变四季
+        GameSeasonsHandler.Instance.ChangeSeasons();
 
         StartCoroutine(BuildNavMesh());
     }
@@ -92,7 +82,7 @@ public class SceneGameInnInit : BaseSceneInit, DialogView.IDialogCallBack
     {
         base.RefreshScene();
         //建造NPC
-        npcCustomerBuilder.BuilderCustomerForInit(20);
+        NpcHandler.Instance.builderForCustomer.BuilderCustomerForInit(20);
     }
 
     /// <summary>
@@ -101,23 +91,21 @@ public class SceneGameInnInit : BaseSceneInit, DialogView.IDialogCallBack
     public void InitNewDay()
     {
         //随机化一个天气
-        if (weatherHandler != null)
-        {
-            WeatherBean weatherData = null;
-            GameDataBean gameData = GameDataHandler.Instance.manager.GetGameData();
-            if (gameData.gameTime.month == 4 && gameData.gameTime.day == 1)
-            {
-                //冬月的第一天必定下大雪
-                weatherData = new WeatherBean(WeatherTypeEnum.Snow);
-                weatherHandler.SetWeahter(weatherData);
-            }
-            else
-            {
-                weatherData = weatherHandler.RandomWeather();
 
-            }
-            GameCommonInfo.CurrentDayData.weatherToday = weatherData;
+        WeatherBean weatherData = null;
+        GameDataBean gameData = GameDataHandler.Instance.manager.GetGameData();
+        if (gameData.gameTime.month == 4 && gameData.gameTime.day == 1)
+        {
+            //冬月的第一天必定下大雪
+            weatherData = new WeatherBean(WeatherTypeEnum.Snow);
+            GameWeatherHandler.Instance.SetWeahter(weatherData);
         }
+        else
+        {
+            weatherData = GameWeatherHandler.Instance.RandomWeather();
+
+        }
+        GameCommonInfo.CurrentDayData.weatherToday = weatherData;
     }
 
     /// <summary>
@@ -167,14 +155,11 @@ public class SceneGameInnInit : BaseSceneInit, DialogView.IDialogCallBack
         //停止控制
         GameControlHandler.Instance.StopControl();
         //清楚所有NPC
-        if (npcCustomerBuilder != null)
-            npcCustomerBuilder.ClearNpc();
+        NpcHandler.Instance.builderForCustomer.ClearNpc();
         //清楚所有NPC
-        if (npcWorkerBuilder != null)
-            npcWorkerBuilder.ClearAllWork();
+        NpcHandler.Instance.builderForWorker.ClearAllWork();
         //清楚所有NPC
-        if (npcEventBuilder != null)
-            npcEventBuilder.ClearNpc();
+        NpcHandler.Instance.builderForEvent.ClearNpc();
         //停止控制
         GameControlHandler.Instance.EndControl();
 

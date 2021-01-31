@@ -4,9 +4,6 @@ using System;
 
 public class SceneGameTownInit : BaseNormalSceneInit
 {
-    public NpcImportantBuilder npcImportantBuilder;
-    public NpcPasserBuilder npcPasserBuilder;
-
     protected SceneTownManager sceneTownManager;
 
     public override void Awake()
@@ -18,18 +15,20 @@ public class SceneGameTownInit : BaseNormalSceneInit
     public override void Start()
     {
         base.Start();
-        RefreshScene();
+        RefreshScene();       
+
     }
 
     public override void RefreshScene()
     {
         base.RefreshScene();
         //构建重要的NPC
-        if (npcImportantBuilder != null)
-            npcImportantBuilder.BuildImportantForTown();
+        NpcHandler.Instance.buildForImportant.BuildImportantForTown();
         //构建普通路人NPC
-        if (npcPasserBuilder != null)
-            npcPasserBuilder.BuilderPasserForInit(20);
+        NpcHandler.Instance.buildForPasser.BuilderPasserForInit(20);
+
+        //改变四季
+        GameSeasonsHandler.Instance.ChangeSeasons();
     }
 
     /// <summary>

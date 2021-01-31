@@ -32,17 +32,8 @@ public class InnHandler : BaseHandler<InnHandler, InnManager>
     //住宿处理
     public InnHotelHandler innHotelHandler;
 
-    //NPC创建
-    protected NpcWorkerBuilder workerBuilder;
-    protected NpcCustomerBuilder customerBuilder;
-    protected NpcEventBuilder eventBuilder;
-    //游戏数据处理
-    protected GameDataHandler gameDataHandler;
-
     //闹事的人的列表
     public List<NpcAIRascalCpt> rascalrQueue = new List<NpcAIRascalCpt>();
-
-
     //排队就餐的人
     public List<OrderForCustomer> cusomerQueue = new List<OrderForCustomer>();
     //排队等待烹饪的食物
@@ -64,12 +55,15 @@ public class InnHandler : BaseHandler<InnHandler, InnManager>
     protected override void Awake()
     {
         base.Awake();
+        innTableHandler = gameObject.AddComponent<InnTableHandler>();
+        innCookHandler = gameObject.AddComponent<InnCookHandler>();
+        innWaiterHandler = gameObject.AddComponent<InnWaiterHandler>();
+        innPayHandler = gameObject.AddComponent<InnPayHandler>();
+        innFightHandler = gameObject.AddComponent<InnFightHandler>();
+        innEntranceHandler = gameObject.AddComponent<InnEntranceHandler>();
+        innHotelHandler = gameObject.AddComponent<InnHotelHandler>();
 
-        workerBuilder = Find<NpcWorkerBuilder>(ImportantTypeEnum.NpcBuilder);
-        customerBuilder = Find<NpcCustomerBuilder>(ImportantTypeEnum.NpcBuilder);
-        eventBuilder = Find<NpcEventBuilder>(ImportantTypeEnum.NpcBuilder);
-
-        GameTimeHandler.instance.RegisterNotifyForTime(NotifyForTime);
+        GameTimeHandler.Instance.RegisterNotifyForTime(NotifyForTime);
     }
     private void OnDestroy()
     {
@@ -111,7 +105,7 @@ public class InnHandler : BaseHandler<InnHandler, InnManager>
     /// </summary>
     public void InitWorker()
     {
-        workerBuilder.InitWorkerData();
+        NpcHandler.Instance.builderForWorker.InitWorkerData();
     }
 
     /// <summary>
@@ -124,11 +118,9 @@ public class InnHandler : BaseHandler<InnHandler, InnManager>
 
         //删除所有顾客
         //驱除所有顾客
-        if (customerBuilder != null)
-            customerBuilder.ClearNpc();
+        NpcHandler.Instance.builderForCustomer.ClearNpc();
         //清理事件NPC
-        if (eventBuilder != null)
-            eventBuilder.ClearNpc();
+        NpcHandler.Instance.builderForEvent.ClearNpc();
 
         for (int i = 0; i < listOrder.Count; i++)
         {
@@ -152,16 +144,16 @@ public class InnHandler : BaseHandler<InnHandler, InnManager>
 
         //结束所有拉人活动 
         //结束所有引路活动
-        for (int i = 0; i < workerBuilder.listNpcWorker.Count; i++)
+        for (int i = 0; i < NpcHandler.Instance.builderForWorker.listNpcWorker.Count; i++)
         {
-            NpcAIWorkerCpt itemWorker = workerBuilder.listNpcWorker[i];
+            NpcAIWorkerCpt itemWorker = NpcHandler.Instance.builderForWorker.listNpcWorker[i];
             if (itemWorker != null && itemWorker.aiForAccost.npcAICustomer != null)
             {
                 itemWorker.aiForAccost.npcAICustomer.SetIntent(NpcAICustomerCpt.CustomerIntentEnum.Leave);
             }
         }
 
-        workerBuilder.ClearAllWork();
+        NpcHandler.Instance.builderForWorker.ClearAllWork();
 
         rascalrQueue.Clear();
         cusomerQueue.Clear();
@@ -180,7 +172,7 @@ public class InnHandler : BaseHandler<InnHandler, InnManager>
     public void OpenInn()
     {
         AudioHandler.Instance.PlayMusicForLoop(AudioMusicEnum.Game);
-        workerBuilder.BuildAllWorker();
+        NpcHandler.Instance.builderForWorker.BuildAllWorker();
         InitInn();
         innStatus = InnStatusEnum.Open;
     }
@@ -574,7 +566,7 @@ public class InnHandler : BaseHandler<InnHandler, InnManager>
         }
 
         //金钱增加
-        gameDataHandler.AddMoney(payMoneyL, payMoneyM, payMoneyS);
+        GameDataHandler.Instance.AddMoney(payMoneyL, payMoneyM, payMoneyS);
         //播放音效
         if (isPlaySound)
         {
@@ -607,7 +599,7 @@ public class InnHandler : BaseHandler<InnHandler, InnManager>
     public void DistributionWorkForIdleWorker()
     {
         //获取所有工作者
-        List<NpcAIWorkerCpt> listWork = workerBuilder.listNpcWorker;
+        List<NpcAIWorkerCpt> listWork = NpcHandler.Instance.builderForWorker.listNpcWorker;
         if (listWork == null)
             return;
         for (int i = 0; i < listWork.Count; i++)

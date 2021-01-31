@@ -1,13 +1,28 @@
 ﻿using UnityEngine;
 using UnityEditor;
 using System.Collections.Generic;
+using System.Linq;
 
 public class GameLightHandler : BaseHandler<GameLightHandler,GameLightManager>
-{
+{    
+    //太阳光
+    protected SunLightCpt _sunLight;
     //灯光容器列表
     protected List<GameObject> _listLightContainer = new List<GameObject>();
     //开灯时间
     public int openLightTime = 19;
+
+    public SunLightCpt sunLight
+    {
+        get
+        {
+            if (_sunLight==null)
+            {
+                _sunLight = FindWithTag<SunLightCpt>(TagInfo.Tag_Sun);
+            }
+            return _sunLight;
+        }
+    }
 
     public List<GameObject> listLightContainer
     {
@@ -15,7 +30,7 @@ public class GameLightHandler : BaseHandler<GameLightHandler,GameLightManager>
         {
             if (CheckUtil.ListIsNull(_listLightContainer))
             {
-                _listLightContainer = FindListWithTag<GameObject>(TagInfo.Tag_LightContainer);
+                _listLightContainer = GameObject.FindGameObjectsWithTag(TagInfo.Tag_LightContainer).ToList();
             }
             return _listLightContainer;
         }

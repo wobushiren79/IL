@@ -3,9 +3,6 @@ using UnityEditor;
 
 public enum ImportantTypeEnum
 {
-    Camera2D,
-    Camera,
-    MainCamera,
     GameUI,
 
     Init,
@@ -13,18 +10,11 @@ public enum ImportantTypeEnum
     SceneManager,
 
     StoryBuilder,
-    NpcBuilder,
     InnBuilder,
-    MiniGameBuilder,
     GambleBuilder,
 
-    WeatherHandler,
-    EcologyHandler,
-    MiniGameHandler,
     SceneHandler,
     GambleHandler,
-    CursorHandler,
 
-    Sun,
     Steam,
 }

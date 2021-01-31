@@ -270,7 +270,7 @@ public class GameTimeHandler : BaseHandler<GameTimeHandler, GameTimeManager>
         this.min = (float)min;
         gameData.gameTime.SetTimeForHM((int)this.hour, (int)this.min);
 
-        GameLightHandler.instance.CheckTime();
+        GameLightHandler.Instance.CheckTime();
     }
 
     /// <summary>
@@ -284,7 +284,7 @@ public class GameTimeHandler : BaseHandler<GameTimeHandler, GameTimeManager>
         hour += addHour;
         gameData.gameTime.hour = (int)hour;
 
-        GameLightHandler.instance.CheckTime();
+        GameLightHandler.Instance.CheckTime();
     }
 
     /// <summary>

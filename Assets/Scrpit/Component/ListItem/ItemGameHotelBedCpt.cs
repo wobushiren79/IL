@@ -194,7 +194,7 @@ public class ItemGameHotelBedCpt : ItemGameBaseCpt, DialogView.IDialogCallBack
     /// </summary>
     public void OnClickForRemove()
     {
-        UIGameManager uiGameManager = GetUIManager<UIGameManager>();
+        
         if (buildBedData.GetBedStatus()== ResearchStatusEnum.Researching)
         {
             ToastHandler.Instance.ToastHint(GameCommonInfo.GetUITextById(1313));
@@ -262,7 +262,7 @@ public class ItemGameHotelBedCpt : ItemGameBaseCpt, DialogView.IDialogCallBack
     /// </summary>
     public void OnClickResearchCancel()
     {
-        UIGameManager uiGameManager = GetUIManager<UIGameManager>();
+        
         AudioHandler.Instance.PlaySound(AudioSoundEnum.ButtonForNormal);
         DialogBean dialogData = new DialogBean
         {

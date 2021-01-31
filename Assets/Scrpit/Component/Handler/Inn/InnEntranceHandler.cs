@@ -9,8 +9,18 @@ public class InnEntranceHandler : BaseMonoBehaviour
     public List<BuildStairsCpt> listStairsCpt;
 
     //门容器
-    public GameObject container;
-
+    protected GameObject _container;
+    public GameObject container
+    {
+        get
+        {
+            if (_container == null)
+            {
+                _container = GameObject.FindGameObjectWithTag(TagInfo.Tag_FurnitureContainer);
+            }
+            return _container;
+        }
+    }
     /// <summary>
     /// 找到所有门
     /// </summary>

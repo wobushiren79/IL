@@ -80,7 +80,7 @@ public class ItemMountainInfiniteTowersCpt : ItemGameBaseCpt,DialogView.IDialogC
     /// </summary>
     public void OnClickForCancel()
     {
-        UIGameManager uiGameManager = GetUIManager<UIGameManager>();
+        
         DialogBean dialogData = new DialogBean();
         dialogData.content = GameCommonInfo.GetUITextById(3111);
         dialogData.dialogPosition = 0;

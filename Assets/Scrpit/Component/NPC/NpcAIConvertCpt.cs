@@ -189,7 +189,7 @@ public class NpcAIConvertCpt : NpcAISundryCpt
     /// </summary>
     public void SetTeamIntent(ConvertIntentEnum convertIntent)
     {
-        List<NpcAISundryCpt> listNpc = npcEventBuilder.GetSundryTeamByTeamCode(teamCode);
+        List<NpcAISundryCpt> listNpc = NpcHandler.Instance.builderForEvent.GetSundryTeamByTeamCode(teamCode);
         foreach (NpcAISundryCpt itemNpc in listNpc)
         {
             NpcAIConvertCpt itemConvert = (NpcAIConvertCpt)itemNpc;

@@ -50,7 +50,7 @@ public class UIGameEquip : BaseUIComponent, TextSearchView.ICallBack
 
     public List<CharacterBean> listCharacter = new List<CharacterBean>();
     protected List<ItemBean> listItemData = new List<ItemBean>();
-    private void Start() 
+    private void Start()
     {
         if (btBack != null)
             btBack.onClick.AddListener(OpenWorkUI);
@@ -161,7 +161,7 @@ public class UIGameEquip : BaseUIComponent, TextSearchView.ICallBack
     /// <param name="characterEquip"></param>
     public void SetAttributes(CharacterAttributesBean characterAttributes, CharacterEquipBean characterEquip)
     {
-        characterData.GetAttributes( out CharacterAttributesBean totalAttributes, out CharacterAttributesBean selfAttributes, out CharacterAttributesBean equipAttributes);
+        characterData.GetAttributes(out CharacterAttributesBean totalAttributes, out CharacterAttributesBean selfAttributes, out CharacterAttributesBean equipAttributes);
         if (tvCook != null)
             tvCook.text = GameCommonInfo.GetUITextById(1) + "：" + selfAttributes.cook + (equipAttributes.cook == 0 ? "" : "+" + equipAttributes.cook);
         if (tvSpeed != null)
@@ -196,10 +196,10 @@ public class UIGameEquip : BaseUIComponent, TextSearchView.ICallBack
     /// </summary>
     /// <param name="itemInfo"></param>
     /// <param name="isTFequip">是否是幻化</param>
-    public void SetEquip(ItemsInfoBean itemInfo,bool isTFequip)
+    public void SetEquip(ItemsInfoBean itemInfo, bool isTFequip)
     {
         if (itemInfo == null)
-            return; 
+            return;
         GameDataBean gameData = GameDataHandler.Instance.manager.GetGameData();
         ItemGameBackpackEquipCpt itemCpt = null;
         long unloadEquipId = 0;
@@ -207,7 +207,7 @@ public class UIGameEquip : BaseUIComponent, TextSearchView.ICallBack
         switch (itemType)
         {
             case GeneralEnum.Hat:
-    
+
                 if (isTFequip)
                 {
                     itemCpt = equipTFHat;
@@ -220,7 +220,7 @@ public class UIGameEquip : BaseUIComponent, TextSearchView.ICallBack
                     unloadEquipId = characterData.equips.hatId;
                     characterData.equips.hatId = itemInfo.id;
                 }
-      
+
                 break;
             case GeneralEnum.Clothes:
                 if (isTFequip)
@@ -277,10 +277,8 @@ public class UIGameEquip : BaseUIComponent, TextSearchView.ICallBack
             gameData.AddItemsNumber(unloadEquipId, 1);
         }
         //刷新场景中的人物
-        if (uiGameManager.npcWorkerBuilder != null)
-        {
-            uiGameManager.npcWorkerBuilder.RefreshWorkerData();
-        }
+        if (SceneUtil.GetCurrentScene() == ScenesEnum.GameInnScene)
+            NpcHandler.Instance.builderForWorker.RefreshWorkerData();
     }
 
     /// <summary>
@@ -360,7 +358,8 @@ public class UIGameEquip : BaseUIComponent, TextSearchView.ICallBack
     #region  搜索文本回调
     public void SearchTextStart(string text)
     {
-        listItemData = listItemData.OrderByDescending(data => {
+        listItemData = listItemData.OrderByDescending(data =>
+        {
             ItemsInfoBean itemsInfoBean = GameItemsHandler.Instance.manager.GetItemsById(data.itemId);
             if (itemsInfoBean.name.Contains(text))
             {

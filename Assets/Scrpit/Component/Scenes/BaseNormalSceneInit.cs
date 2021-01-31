@@ -31,10 +31,8 @@ public abstract class BaseNormalSceneInit : BaseSceneInit, DialogView.IDialogCal
     public virtual void InitWeather()
     {
         //设置天气
-        if (weatherHandler != null)
-        {
-            weatherHandler.SetWeahter(GameCommonInfo.CurrentDayData.weatherToday);
-        }
+        if (SceneUtil.GetCurrentScene() == ScenesEnum.GameInnScene || SceneUtil.GetCurrentScene() == ScenesEnum.GameTownScene)
+            GameWeatherHandler.Instance.SetWeahter(GameCommonInfo.CurrentDayData.weatherToday);
         //如果是在室内
         if (GameControlHandler.Instance.manager.GetControl().transform.position.y < -50)
         {
@@ -46,7 +44,8 @@ public abstract class BaseNormalSceneInit : BaseSceneInit, DialogView.IDialogCal
     /// <summary>
     /// 初始化角色位置
     /// </summary>
-    public virtual ControlForMoveCpt InitUserPosition() {
+    public virtual ControlForMoveCpt InitUserPosition()
+    {
         //开始角色控制
         ControlForMoveCpt moveControl = GameControlHandler.Instance.StartControl<ControlForMoveCpt>(GameControlHandler.ControlEnum.Normal);
         return moveControl;

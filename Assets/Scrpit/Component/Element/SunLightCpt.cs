@@ -11,13 +11,6 @@ public class SunLightCpt : LightCpt
     //可控颜色加成
     public Color offsetColor;
 
-    protected WeatherHandler weatherHandler;
-
-    private void Awake()
-    {
-        weatherHandler = Find<WeatherHandler>(ImportantTypeEnum.WeatherHandler);
-    }
-
     private void Update()
     {
         HandleForTime();

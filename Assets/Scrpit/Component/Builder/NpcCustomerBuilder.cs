@@ -14,11 +14,6 @@ public class NpcCustomerBuilder : NpcNormalBuilder
     protected float buildTeamGustomerRate = 0;
     protected float buildCustomerForHotelRate = 0;
 
-    protected override void Awake()
-    {
-        base.Awake();
-    }
-
     private void Start()
     {
         GameDataBean gameData = GameDataHandler.Instance.manager.GetGameData();
@@ -306,10 +301,8 @@ public class NpcCustomerBuilder : NpcNormalBuilder
             buildInterval = 5;
         }
         //天气加成
-        if (weatherHandler != null)
-        {
-            buildInterval -= weatherHandler.weatherData.weatherAddition;
-        }
+        buildInterval -= GameWeatherHandler.Instance.manager.weatherData.weatherAddition;
+
         GameDataBean gameData = GameDataHandler.Instance.manager.GetGameData();
         gameData.GetInnAttributesData().GetInnLevel(out int levelTitle, out int levelStar);
         if (levelTitle == 1)

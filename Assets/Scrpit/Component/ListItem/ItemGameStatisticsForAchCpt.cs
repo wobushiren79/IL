@@ -20,7 +20,6 @@ public class ItemGameStatisticsForAchCpt : ItemGameBaseCpt
     {
         if (isUnLock)
         {
-            UIGameManager uiGameManager = uiComponent.GetUIManager<UIGameManager>();
             Sprite spIcon = IconDataHandler.Instance.manager.GetIconSpriteByName(achievementInfo.icon_key);
             SetIcon(spIcon);
             popupButton.SetData(AchievementStatusEnum.Completed, achievementInfo);

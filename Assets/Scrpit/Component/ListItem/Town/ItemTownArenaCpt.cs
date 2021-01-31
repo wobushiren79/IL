@@ -103,7 +103,7 @@ public class ItemTownArenaCpt : ItemGameBaseCpt, DialogView.IDialogCallBack
     /// <param name="listReward"></param>
     public void SetReward(List<RewardTypeBean> listReward)
     {
-        UIGameManager uiGameManager = GetUIManager<UIGameManager>();
+        
         foreach (RewardTypeBean itemReward in listReward)
         {
             GameObject objReward = Instantiate(objRewardContainer, objRewardModel);

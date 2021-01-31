@@ -53,8 +53,6 @@ public class NpcAIRascalCpt : BaseNpcAI
 
     //客栈区域数据管理
     protected SceneInnManager sceneInnManager;
-    //Npc生成器
-    protected NpcEventBuilder npcEventBuilder;
 
     //是否移动  用于追击判定
     protected bool isMove = false;
@@ -63,7 +61,6 @@ public class NpcAIRascalCpt : BaseNpcAI
     {
         base.Awake();
         sceneInnManager = Find<SceneInnManager>(ImportantTypeEnum.SceneManager);
-        npcEventBuilder = Find<NpcEventBuilder>(ImportantTypeEnum.NpcBuilder);
     }
 
     private void Update()
@@ -375,7 +372,7 @@ public class NpcAIRascalCpt : BaseNpcAI
     /// </summary>
     public void SetTeamIntent(RascalIntentEnum rascalIntent)
     {
-        List<NpcAIRascalCpt> listNpc = npcEventBuilder.GetRascalTeamByTeamCode(teamCode);
+        List<NpcAIRascalCpt> listNpc = NpcHandler.Instance.builderForEvent.GetRascalTeamByTeamCode(teamCode);
         if (rascalIntent == RascalIntentEnum.Leave)
         {
             leavePosition = sceneInnManager.GetRandomSceneExportPosition();

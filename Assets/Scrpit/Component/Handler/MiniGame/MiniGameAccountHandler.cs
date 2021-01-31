@@ -7,6 +7,11 @@ public class MiniGameAccountHandler : BaseMiniGameHandler<MiniGameAccountBuilder
     MiniGameAccountEjectorCpt.ICallBack
 {
 
+    protected override void Awake()
+    {
+        builderName = "MiniGameAccountBuilder";
+        base.Awake();
+    }
 
     public override void InitGame(MiniGameAccountBean miniGameData)
     {

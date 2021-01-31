@@ -2,23 +2,47 @@
 using DG.Tweening;
 using UnityEditor;
 using System.Collections.Generic;
+using System;
 
 public class BaseMiniGameHandler<B, D> : BaseHandler, UIMiniGameCountDown.ICallBack, UIMiniGameEnd.ICallBack
     where D : MiniGameBaseBean
     where B : BaseMiniGameBuilder
 {
+
+    Action<MiniGameStatusEnum, object[]> notifyForMiniGameStatus;
+
     //数据
     //游戏构建器
     public B miniGameBuilder;
     //游戏数据
     public D miniGameData;
 
+    public string builderName = "";
+
     //迷你游戏状态
     private MiniGameStatusEnum mMiniGameStatus = MiniGameStatusEnum.GamePre;
 
     protected virtual void Awake()
     {
-        miniGameBuilder = CptUtil.AddCpt<B>(gameObject);
+        GameObject objModel = LoadAssetUtil.SyncLoadAsset<GameObject>("builder/minigame", builderName);
+        if (objModel == null)
+            return;
+        GameObject objItem =  Instantiate(gameObject, objModel);
+        DestroyImmediate(objModel,true);
+        miniGameBuilder = objItem.GetComponent<B>();
+    }
+
+    /// <summary>
+    /// 注册时间通知
+    /// </summary>
+    /// <param name="notifyForTime"></param>
+    public void RegisterNotifyForMiniGameStatus(Action<MiniGameStatusEnum, object[]> notifyForMiniGameStatus)
+    {
+        this.notifyForMiniGameStatus += notifyForMiniGameStatus;
+    }
+    public void UnRegisterNotifyForMiniGameStatus(Action<MiniGameStatusEnum, object[]> notifyForMiniGameStatus)
+    {
+        this.notifyForMiniGameStatus -= notifyForMiniGameStatus;
     }
 
     /// <summary>
@@ -66,6 +90,7 @@ public class BaseMiniGameHandler<B, D> : BaseHandler, UIMiniGameCountDown.ICallB
         this.miniGameData = miniGameData;
         GameTimeHandler.Instance.SetTimeStop();
         SetMiniGameStatus(MiniGameStatusEnum.GamePre);
+        notifyForMiniGameStatus?.Invoke(MiniGameStatusEnum.GamePre, new object[] { miniGameData });
     }
 
     /// <summary>
@@ -77,7 +102,7 @@ public class BaseMiniGameHandler<B, D> : BaseHandler, UIMiniGameCountDown.ICallB
 
         SetMiniGameStatus(MiniGameStatusEnum.Gameing);
         //通知 游戏开始
-        NotifyAllObserver((int)MiniGameStatusEnum.Gameing, miniGameData);
+        notifyForMiniGameStatus?.Invoke(MiniGameStatusEnum.Gameing, new object[] { miniGameData });
     }
 
     /// <summary>
@@ -106,7 +131,7 @@ public class BaseMiniGameHandler<B, D> : BaseHandler, UIMiniGameCountDown.ICallB
 
                 miniGameBuilder.DestroyAll();
                 //设置游戏数据
-                miniGameData.SetGameResult(gameResulte); 
+                miniGameData.SetGameResult(gameResulte);
                 GameDataBean gameData = GameDataHandler.Instance.manager.GetGameData();
                 //经验加成
                 List<MiniGameCharacterBean> listUserData = miniGameData.GetListUserGameData();
@@ -115,7 +140,7 @@ public class BaseMiniGameHandler<B, D> : BaseHandler, UIMiniGameCountDown.ICallB
                 {
                     foreach (CharacterBean itemWorkerData in listWorkerData)
                     {
-                        if (itemWorkerData.baseInfo.characterId==null|| itemCharacterData.characterData.baseInfo.characterId==null)
+                        if (itemWorkerData.baseInfo.characterId == null || itemCharacterData.characterData.baseInfo.characterId == null)
                         {
                             continue;
                         }
@@ -123,7 +148,7 @@ public class BaseMiniGameHandler<B, D> : BaseHandler, UIMiniGameCountDown.ICallB
                         {
                             WorkerEnum workerType = MiniGameEnumTools.GetWorkerTypeByMiniGameType(miniGameData.gameType);
                             CharacterWorkerBaseBean characterWorker = itemWorkerData.baseInfo.GetWorkerInfoByType(workerType);
-                            if (miniGameData.GetGameResult()== MiniGameResultEnum.Win)
+                            if (miniGameData.GetGameResult() == MiniGameResultEnum.Win)
                             {
                                 characterWorker.AddExp(10, out bool isLevelUp);
                             }
@@ -141,7 +166,7 @@ public class BaseMiniGameHandler<B, D> : BaseHandler, UIMiniGameCountDown.ICallB
                 uiMiniGameEnd.SetCallBack(this);
             });
             //通知 游戏结束
-            NotifyAllObserver((int)MiniGameStatusEnum.GameEnd, miniGameData);
+            notifyForMiniGameStatus?.Invoke(MiniGameStatusEnum.GameEnd, new object[] { miniGameData });
             AudioHandler.Instance.StopMusic();
         }
     }
@@ -186,8 +211,8 @@ public class BaseMiniGameHandler<B, D> : BaseHandler, UIMiniGameCountDown.ICallB
     public void OnClickClose()
     {
         GameTimeHandler.Instance.SetTimeRestore();
-        //通知 关闭游戏
-        NotifyAllObserver((int)MiniGameStatusEnum.GameClose, miniGameData);
+        //通知 关闭游戏      
+        notifyForMiniGameStatus?.Invoke(MiniGameStatusEnum.GameClose, new object[] { miniGameData });
     }
     #endregion
 }

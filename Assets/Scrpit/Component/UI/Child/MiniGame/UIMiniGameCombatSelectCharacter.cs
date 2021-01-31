@@ -14,21 +14,11 @@ public class UIMiniGameCombatSelectCharacter : BaseUIChildComponent<UIMiniGameCo
     public NpcAIMiniGameCombatCpt currentSelectNpc;
     public GameObject currentSelectCursor;
 
-    protected MiniGameCombatBuilder miniGameCombatBuilder;
-    protected MiniGameCombatHandler miniGameCombatHandler;
-    protected UIGameManager uiGameManager;
 
     protected int selectType;
     protected int selectNumber;
     protected ICallBack callBack;
 
-    public override void Awake()
-    {
-        base.Awake();
-        miniGameCombatBuilder = FindInChildren<MiniGameCombatBuilder>(ImportantTypeEnum.MiniGameBuilder);
-        miniGameCombatHandler = Find<MiniGameCombatHandler>(ImportantTypeEnum.MiniGameHandler);
-        uiGameManager = Find<UIGameManager>(ImportantTypeEnum.GameUI);
-    }
 
     private void Update()
     {
@@ -39,13 +29,14 @@ public class UIMiniGameCombatSelectCharacter : BaseUIChildComponent<UIMiniGameCo
             {
                 NpcAIMiniGameCombatCpt itemNpc = itemSelect.Key;
                 GameObject objCursor = itemSelect.Value;
-                GameUtil.WorldPointToUILocalPoint((RectTransform)uiGameManager.transform, itemNpc.transform.position + new Vector3(0, 0.5f), (RectTransform)objCursor.transform);
+
+                GameUtil.WorldPointToUILocalPoint(UIHandler.Instance.manager.GetContainer(), itemNpc.transform.position + new Vector3(0, 0.5f), (RectTransform)objCursor.transform);
             }
         }
         //设置指定角色图标
         if(currentSelectCursor!=null&& currentSelectNpc != null)
         {
-            GameUtil.WorldPointToUILocalPoint((RectTransform)uiGameManager.transform, currentSelectNpc.transform.position + new Vector3(0, 0.5f), (RectTransform)currentSelectCursor.transform);
+            GameUtil.WorldPointToUILocalPoint(UIHandler.Instance.manager.GetContainer(), currentSelectNpc.transform.position + new Vector3(0, 0.5f), (RectTransform)currentSelectCursor.transform);
         }
     }
 
@@ -94,17 +85,17 @@ public class UIMiniGameCombatSelectCharacter : BaseUIChildComponent<UIMiniGameCo
         //友方
         if (selectType == 1)
         {
-            listData = miniGameCombatBuilder.GetUserCharacter();
+            listData = MiniGameHandler.Instance.handlerForCombat.miniGameBuilder.GetUserCharacter();
         }
         //敌方
         else if (selectType == 2)
         {
-            listData = miniGameCombatBuilder.GetEnemyCharacter();
+            listData = MiniGameHandler.Instance.handlerForCombat.miniGameBuilder.GetEnemyCharacter();
         }
         //通用
         else
         {
-            listData = miniGameCombatBuilder.GetAllCharacter();
+            listData = MiniGameHandler.Instance.handlerForCombat.miniGameBuilder.GetAllCharacter();
         }
         //如果选择的人数大于=一共的对象，那么默认选择全部
         if(selectNumber >= listData.Count)
@@ -146,7 +137,7 @@ public class UIMiniGameCombatSelectCharacter : BaseUIChildComponent<UIMiniGameCo
             currentSelectNpc = listData[changeNumber];
         }
         //镜头对准选中的角色
-        miniGameCombatHandler.SetCameraPosition(currentSelectNpc.transform.position);
+        MiniGameHandler.Instance.handlerForCombat.SetCameraPosition(currentSelectNpc.transform.position);
 
         //如果是全选
         if (selectNumber == 0)

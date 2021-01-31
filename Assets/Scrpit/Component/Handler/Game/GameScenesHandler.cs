@@ -4,6 +4,8 @@ using UnityEngine;
 public class GameScenesHandler : BaseHandler<GameScenesHandler, GameScenesManager>
 {
 
+    protected BaseSceneInit _sceneInit;
+
     public void ChangeScene(ScenesEnum scenes)
     {
         //停止所有控制
@@ -14,6 +16,15 @@ public class GameScenesHandler : BaseHandler<GameScenesHandler, GameScenesManage
         UIHandler.Instance.manager.CloseAllUI();
         //切换场景
         SceneUtil.SceneChange(scenes);
+    }
+
+    public T GetSceneInit<T>() where T : BaseSceneInit
+    {
+        if (_sceneInit == null)
+        {
+            _sceneInit = FindWithTag<T>(TagInfo.Tag_SceneInit);
+        }
+        return _sceneInit as T;
     }
 
 }

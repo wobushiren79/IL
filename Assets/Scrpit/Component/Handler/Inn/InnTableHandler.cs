@@ -7,7 +7,18 @@ public class InnTableHandler : BaseMonoBehaviour
     //桌子列表
     public List<BuildTableCpt> listTableCpt;
     //桌子容器
-    public GameObject tableContainer;
+    protected GameObject _tableContainer;
+    public GameObject tableContainer
+    {
+        get
+        {
+            if (_tableContainer == null)
+            {
+                _tableContainer = GameObject.FindGameObjectWithTag(TagInfo.Tag_FurnitureContainer);
+            }
+            return _tableContainer;
+        }
+    }
 
     /// <summary>
     /// 找到所有桌子

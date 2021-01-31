@@ -7,11 +7,6 @@ using System;
 
 public class NpcAIMiniGameCombatCpt : BaseNpcAI
 {
-    //战斗游戏处理
-    protected MiniGameCombatHandler gameCombatHandler;
-    //战斗游戏创建
-    protected MiniGameCombatBuilder gameCombatBuilder;
-
     //角色数据
     public MiniGameCharacterForCombatBean characterMiniGameData;
     //角色血量
@@ -24,13 +19,6 @@ public class NpcAIMiniGameCombatCpt : BaseNpcAI
     public SpriteRenderer srCombatStatus;
     //伤害数字
     public GameObject objDamageModel;
-
-    public override void Awake()
-    {
-        base.Awake();
-        gameCombatHandler = Find<MiniGameCombatHandler>(ImportantTypeEnum.MiniGameHandler);
-        gameCombatBuilder = FindInChildren<MiniGameCombatBuilder>(ImportantTypeEnum.MiniGameBuilder);
-    }
 
     public override void SetCharacterDead()
     {
@@ -115,14 +103,14 @@ public class NpcAIMiniGameCombatCpt : BaseNpcAI
         //如果是友方AI
         if (characterMiniGameData.characterType == 1)
         {
-            relativeOurList = gameCombatHandler.miniGameBuilder.GetCharacter(1);
-            relativeEnemyList = gameCombatHandler.miniGameBuilder.GetCharacter(0);
+            relativeOurList = MiniGameHandler.Instance.handlerForCombat.miniGameBuilder.GetCharacter(1);
+            relativeEnemyList = MiniGameHandler.Instance.handlerForCombat.miniGameBuilder.GetCharacter(0);
         }
         //如果是敌方AI
         else if (characterMiniGameData.characterType == 0)
         {
-            relativeOurList = gameCombatHandler.miniGameBuilder.GetCharacter(0);
-            relativeEnemyList = gameCombatHandler.miniGameBuilder.GetCharacter(1);
+            relativeOurList = MiniGameHandler.Instance.handlerForCombat.miniGameBuilder.GetCharacter(0);
+            relativeEnemyList = MiniGameHandler.Instance.handlerForCombat.miniGameBuilder.GetCharacter(1);
         }
         float intentRate = UnityEngine.Random.Range(0f, 1f);
         if (intentRate <= 0.5f)
@@ -156,8 +144,8 @@ public class NpcAIMiniGameCombatCpt : BaseNpcAI
     /// </summary>
     public IEnumerator CoroutineForIntentFight(List<NpcAIMiniGameCombatCpt> relativeOurList, List<NpcAIMiniGameCombatCpt> relativeEnemyList)
     {
-        gameCombatHandler.miniGameData.SetRoundActionCommand(MiniGameCombatCommand.Fight);
-        gameCombatHandler.miniGameData.SetRoundActionPowerTest(0.8f);
+        MiniGameHandler.Instance.handlerForCombat.miniGameData.SetRoundActionCommand(MiniGameCombatCommand.Fight);
+        MiniGameHandler.Instance.handlerForCombat.miniGameData.SetRoundActionPowerTest(0.8f);
         //选择血最少的
         NpcAIMiniGameCombatCpt targetNpc = null;
         //for (int i = 0; i < relativeEnemyList.Count; i++)
@@ -185,9 +173,9 @@ public class NpcAIMiniGameCombatCpt : BaseNpcAI
         //}
         //随机选一个
         targetNpc = RandomUtil.GetRandomDataByList(relativeEnemyList);
-        gameCombatHandler.miniGameData.SetRoundTargetCharacter(targetNpc);
+        MiniGameHandler.Instance.handlerForCombat.miniGameData.SetRoundTargetCharacter(targetNpc);
         yield return new WaitForSeconds(1);
-        gameCombatHandler.RoundForAction();
+        MiniGameHandler.Instance.handlerForCombat.RoundForAction();
     }
 
     /// <summary>
@@ -202,8 +190,8 @@ public class NpcAIMiniGameCombatCpt : BaseNpcAI
         }
         else
         {
-            gameCombatHandler.miniGameData.SetRoundActionCommand(MiniGameCombatCommand.Skill);
-            gameCombatHandler.miniGameData.SetRoundActionSkill(skillInfo);
+            MiniGameHandler.Instance.handlerForCombat.miniGameData.SetRoundActionCommand(MiniGameCombatCommand.Skill);
+            MiniGameHandler.Instance.handlerForCombat.miniGameData.SetRoundActionSkill(skillInfo);
             EffectDetailsEnumTools.GetEffectRange(skillInfo.effect_details, out int impactNumber, out int impactType);
 
             List<NpcAIMiniGameCombatCpt> listSelectTargetNpc = new List<NpcAIMiniGameCombatCpt>();
@@ -222,9 +210,9 @@ public class NpcAIMiniGameCombatCpt : BaseNpcAI
                 //如果选择是选择敌人
                 listSelectTargetNpc.AddRange(GetSelectTargetByNumber(impactNumber, relativeEnemyList));
             }
-            gameCombatHandler.miniGameData.SetRoundTargetCharacter(listSelectTargetNpc);
+            MiniGameHandler.Instance.handlerForCombat.miniGameData.SetRoundTargetCharacter(listSelectTargetNpc);
             yield return new WaitForSeconds(1f);
-            gameCombatHandler.RoundForAction();
+            MiniGameHandler.Instance.handlerForCombat.RoundForAction();
 
         }
     }
@@ -280,7 +268,7 @@ public class NpcAIMiniGameCombatCpt : BaseNpcAI
         //完成数据
         itemCombatEffect.CompleteEffect(characterMiniGameData);
         //检测角色血量
-        gameCombatHandler.CheckCharacterLife();
+        MiniGameHandler.Instance.handlerForCombat.CheckCharacterLife();
 
         if (characterMiniGameData.characterCurrentLife <= 0)
         {
@@ -329,7 +317,7 @@ public class NpcAIMiniGameCombatCpt : BaseNpcAI
             }
         }
         //播放粒子特效
-        gameCombatBuilder.CreateCombatEffect(effectPSName, transform.position + new Vector3(0, 0.5f));
+        MiniGameHandler.Instance.handlerForCombat.miniGameBuilder.CreateCombatEffect(effectPSName, transform.position + new Vector3(0, 0.5f));
         if (durationForRound > 0)
         {
             characterMiniGameData.listCombatEffect.Add(gameCombatEffectData);

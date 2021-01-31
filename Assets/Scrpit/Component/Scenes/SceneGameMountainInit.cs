@@ -4,13 +4,11 @@ using UnityEditor;
 public class SceneGameMountainInit : BaseNormalSceneInit
 {
     public SceneMountainManager sceneMountainManager;
-    public NpcImportantBuilder npcImportantBuilder;
 
     public override void Awake()
     {
         base.Awake();
         sceneMountainManager = Find<SceneMountainManager>(ImportantTypeEnum.SceneManager);
-        npcImportantBuilder = Find<NpcImportantBuilder>(ImportantTypeEnum.NpcBuilder);
     }
 
     public override void Start()
@@ -23,8 +21,10 @@ public class SceneGameMountainInit : BaseNormalSceneInit
     {
         base.RefreshScene();
         //构建重要的NPC
-        if (npcImportantBuilder != null)
-            npcImportantBuilder.BuildImportantForMountain();
+        NpcHandler.Instance.buildForImportant.BuildImportantForMountain();
+
+        //改变四季
+        GameSeasonsHandler.Instance.ChangeSeasons();
     }
 
     public override ControlForMoveCpt InitUserPosition()

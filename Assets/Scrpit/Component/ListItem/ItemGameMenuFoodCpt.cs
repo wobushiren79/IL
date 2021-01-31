@@ -50,7 +50,6 @@ public class ItemGameMenuFoodCpt : ItemGameBaseCpt, IRadioButtonCallBack, Dialog
     {
         if (rbShow != null)
             rbShow.SetCallBack(this);
-        UIGameManager uiGameManager = GetUIManager<UIGameManager>();
         if (pbReputation != null)
         {
             pbReputation.SetContent(GameCommonInfo.GetUITextById(100));

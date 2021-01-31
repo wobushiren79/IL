@@ -36,8 +36,6 @@ public class NpcAIMiniGameCookingCpt : BaseNpcAI
     //开始的位置
     public Vector3 startPosition;
 
-    //游戏处理
-    protected MiniGameCookingHandler miniGameCookingHandler;
     //该NPC的数据
     public MiniGameCharacterForCookingBean characterMiniGameData;
     //该NPC的评审桌
@@ -51,11 +49,6 @@ public class NpcAIMiniGameCookingCpt : BaseNpcAI
     //被评审的对象
     public NpcAIMiniGameCookingCpt auditTargetNpc;
 
-    public override void Awake()
-    {
-        base.Awake();
-        miniGameCookingHandler = Find<MiniGameCookingHandler>(ImportantTypeEnum.MiniGameHandler);
-    }
 
     private void Update()
     {
@@ -68,7 +61,7 @@ public class NpcAIMiniGameCookingCpt : BaseNpcAI
                     {
                         //如果是玩家到达灶台 则开始选择制作的食物
                         SetIntent(MiniGameCookingIntentEnum.Idle);
-                        miniGameCookingHandler.StartSelectMenu();
+                        MiniGameHandler.Instance.handlerForCooking.StartSelectMenu();
                     }
                     else
                     {
@@ -83,7 +76,7 @@ public class NpcAIMiniGameCookingCpt : BaseNpcAI
                 if (characterMiniGameData.characterType == 1 && characterMoveCpt.IsAutoMoveStop())
                 {
                     SetIntent(MiniGameCookingIntentEnum.Idle);
-                    miniGameCookingHandler.StartStoryForGameAudit();
+                    MiniGameHandler.Instance.handlerForCooking.StartStoryForGameAudit();
                 }
                 break;
         }
@@ -303,7 +296,7 @@ public class NpcAIMiniGameCookingCpt : BaseNpcAI
     /// <returns></returns>
     private int AuditFoodForTheme()
     {
-        CookingThemeBean cookingTheme = miniGameCookingHandler.miniGameData.GetCookingTheme();
+        CookingThemeBean cookingTheme = MiniGameHandler.Instance.handlerForCooking.miniGameData.GetCookingTheme();
         MenuInfoBean menuInfo = auditTargetNpc.characterMiniGameData.GetCookingMenuInfo();
         float similarity = cookingTheme.GetSimilarity(menuInfo);
         return ScoreDeal((int)(similarity * 100));

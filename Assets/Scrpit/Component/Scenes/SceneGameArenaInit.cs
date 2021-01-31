@@ -5,43 +5,36 @@ using UnityEngine.AI;
 using System.Collections;
 using System;
 
-public class SceneGameArenaInit : BaseSceneInit, IBaseObserver
+public class SceneGameArenaInit : BaseSceneInit
 {
     //场景数据管理
     protected SceneArenaManager sceneArenaManager;
 
-    //弹幕游戏控制
-    protected MiniGameBarrageHandler barrageHandler;
-    //战斗游戏控制
-    protected MiniGameCombatHandler combatHandler;
-    //烹饪游戏控制
-    protected MiniGameCookingHandler cookingHandler;
-    //计算游戏处理
-    protected MiniGameAccountHandler accountHandler;
-    //辩论游戏处理
-    protected MiniGameDebateHandler debateHandler;
-   
 
     public override void Awake()
     {
         base.Awake();
         sceneArenaManager = Find<SceneArenaManager>(ImportantTypeEnum.SceneManager);
-        barrageHandler = Find<MiniGameBarrageHandler>(ImportantTypeEnum.MiniGameHandler);
-        combatHandler = Find<MiniGameCombatHandler>(ImportantTypeEnum.MiniGameHandler);
-        cookingHandler = Find<MiniGameCookingHandler>(ImportantTypeEnum.MiniGameHandler);
-        accountHandler = Find<MiniGameAccountHandler>(ImportantTypeEnum.MiniGameHandler);
-        debateHandler = Find<MiniGameDebateHandler>(ImportantTypeEnum.MiniGameHandler);
     }
 
     public override void Start()
     {
         base.Start();
         InitSceneData();
-        barrageHandler.AddObserver(this);
-        combatHandler.AddObserver(this);
-        cookingHandler.AddObserver(this);
-        accountHandler.AddObserver(this);
-        debateHandler.AddObserver(this);
+        MiniGameHandler.Instance.handlerForBarrage.RegisterNotifyForMiniGameStatus(NotifyForMiniGameStatus);
+        MiniGameHandler.Instance.handlerForCombat.RegisterNotifyForMiniGameStatus(NotifyForMiniGameStatus);
+        MiniGameHandler.Instance.handlerForCooking.RegisterNotifyForMiniGameStatus(NotifyForMiniGameStatus);
+        MiniGameHandler.Instance.handlerForAccount.RegisterNotifyForMiniGameStatus(NotifyForMiniGameStatus);
+        MiniGameHandler.Instance.handlerForDebate.RegisterNotifyForMiniGameStatus(NotifyForMiniGameStatus);
+    }
+
+    private void OnDestroy()
+    {
+        MiniGameHandler.Instance.handlerForBarrage.UnRegisterNotifyForMiniGameStatus(NotifyForMiniGameStatus);
+        MiniGameHandler.Instance.handlerForCombat.UnRegisterNotifyForMiniGameStatus(NotifyForMiniGameStatus);
+        MiniGameHandler.Instance.handlerForCooking.UnRegisterNotifyForMiniGameStatus(NotifyForMiniGameStatus);
+        MiniGameHandler.Instance.handlerForAccount.UnRegisterNotifyForMiniGameStatus(NotifyForMiniGameStatus);
+        MiniGameHandler.Instance.handlerForDebate.UnRegisterNotifyForMiniGameStatus(NotifyForMiniGameStatus);
     }
 
     public void InitSceneData()
@@ -184,16 +177,16 @@ public class SceneGameArenaInit : BaseSceneInit, IBaseObserver
         gameCookingData.listCompereStartPosition = listComperePosition;
         //设置游戏用通告版
         List<MiniGameCookingCallBoardCpt> listCallBoard = sceneArenaManager.GetArenaForCookingCallBoardBy2();
-        cookingHandler.miniGameBuilder.SetListCallBoard(listCallBoard);
+        MiniGameHandler.Instance.handlerForCooking.miniGameBuilder.SetListCallBoard(listCallBoard);
         //设置游戏用评审桌子
         List<MiniGameCookingAuditTableCpt> listAuditTable = sceneArenaManager.GetArenaForCookingAuditTableBy2();
-        cookingHandler.miniGameBuilder.SetListAuditTable(listAuditTable);
+        MiniGameHandler.Instance.handlerForCooking.miniGameBuilder.SetListAuditTable(listAuditTable);
         //设置游戏用灶台
         List<MiniGameCookingStoveCpt> listStove = sceneArenaManager.GetArenaForCookingStoveBy2();
-        cookingHandler.miniGameBuilder.SetListStove(listStove);
-        cookingHandler.miniGameBuilder.SetListStove(listStove);
+        MiniGameHandler.Instance.handlerForCooking.miniGameBuilder.SetListStove(listStove);
+        MiniGameHandler.Instance.handlerForCooking.miniGameBuilder.SetListStove(listStove);
         //准备游戏
-        cookingHandler.InitGame(gameCookingData);
+        MiniGameHandler.Instance.handlerForCooking.InitGame(gameCookingData);
     }
 
     /// <summary>
@@ -219,7 +212,7 @@ public class SceneGameArenaInit : BaseSceneInit, IBaseObserver
         sceneArenaManager.GetArenaForBarrageUserPositionBy1(out Vector3 userPosition);
         gameBarrageData.userStartPosition = userPosition;
         //弹幕处理初始化
-        barrageHandler.InitGame(gameBarrageData);
+        MiniGameHandler.Instance.handlerForBarrage.InitGame(gameBarrageData);
     }
 
     /// <summary>
@@ -232,7 +225,7 @@ public class SceneGameArenaInit : BaseSceneInit, IBaseObserver
         sceneArenaManager.GetArenaForCombatBy1(out Vector3 combatPosition);
         gameCombatData.miniGamePosition = combatPosition;
         //初始化游戏
-        combatHandler.InitGame(gameCombatData);
+        MiniGameHandler.Instance.handlerForCombat.InitGame(gameCombatData);
     }
 
     /// <summary>
@@ -248,7 +241,7 @@ public class SceneGameArenaInit : BaseSceneInit, IBaseObserver
         gameAccountData.cameraPosition = cameraPosition;
         gameAccountData.tfMoneyPosition = tfMoneyPosition;
         //初始化游戏
-        accountHandler.InitGame(gameAccountData);
+        MiniGameHandler.Instance.handlerForAccount.InitGame(gameAccountData);
     }
 
     /// <summary>
@@ -262,13 +255,13 @@ public class SceneGameArenaInit : BaseSceneInit, IBaseObserver
         gameDebateData.miniGamePosition = debatePosition;
 
         //初始化游戏
-        debateHandler.InitGame(gameDebateData);
+        MiniGameHandler.Instance.handlerForDebate.InitGame(gameDebateData);
     }
 
     #region 通知回调
-    public void ObserbableUpdate<T>(T observable, int type, params object[] obj) where T : UnityEngine.Object
+    public void NotifyForMiniGameStatus(MiniGameStatusEnum type, params object[] obj)
     {
-        switch ((MiniGameStatusEnum)type)
+        switch (type)
         {
             case MiniGameStatusEnum.Gameing:
                 break;

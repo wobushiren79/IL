@@ -2,20 +2,23 @@
 using System.Collections;
 using System.Collections.Generic;
 
-public class SceneForInfiniteTowersHandler : BaseHandler, IBaseObserver
+public class SceneForInfiniteTowersHandler : BaseHandler
 {
-    protected MiniGameCombatHandler combatHandler;
     protected SceneInfiniteTowersManager infiniteTowersManager;
 
     protected UserInfiniteTowersBean infiniteTowersData;
     public void Awake()
     {
-        combatHandler = Find<MiniGameCombatHandler>(ImportantTypeEnum.MiniGameHandler);
         infiniteTowersManager = Find<SceneInfiniteTowersManager>(ImportantTypeEnum.SceneManager);
     }
     public void Start()
     {
-        combatHandler.AddObserver(this);
+        MiniGameHandler.Instance.handlerForCombat.RegisterNotifyForMiniGameStatus(NotifyForMiniGameStatus);
+    }
+
+    private void OnDestroy()
+    {
+        MiniGameHandler.Instance.handlerForCombat.UnRegisterNotifyForMiniGameStatus(NotifyForMiniGameStatus);
     }
 
     public MiniGameCombatBean InitCombat(UserInfiniteTowersBean infiniteTowersData)
@@ -81,7 +84,7 @@ public class SceneForInfiniteTowersHandler : BaseHandler, IBaseObserver
 
     public void StartCombat(MiniGameCombatBean combatData, UserInfiniteTowersBean infiniteTowersData)
     {
-        combatHandler.InitGame(combatData);
+        MiniGameHandler.Instance.handlerForCombat.InitGame(combatData);
 
         UIMiniGameCountDown uiCountDown = UIHandler.Instance.manager.GetUI<UIMiniGameCountDown>(UIEnum.MiniGameCountDown);
         //设置标题
@@ -102,7 +105,7 @@ public class SceneForInfiniteTowersHandler : BaseHandler, IBaseObserver
 
     protected void GameEndHandle()
     {
-        MiniGameCombatBean miniGameCombatData = combatHandler.miniGameData;
+        MiniGameCombatBean miniGameCombatData = MiniGameHandler.Instance.handlerForCombat.miniGameData;
         GameDataBean gameData = GameDataHandler.Instance.manager.GetGameData();
         if (miniGameCombatData.GetGameResult() == MiniGameResultEnum.Win)
         {
@@ -132,21 +135,17 @@ public class SceneForInfiniteTowersHandler : BaseHandler, IBaseObserver
     }
 
     #region 结果回调
-    public void ObserbableUpdate<T>(T observable, int type, params object[] obj) where T : Object
+    public void NotifyForMiniGameStatus(MiniGameStatusEnum type, params object[] obj)
     {
-
-        if (observable as MiniGameCombatHandler)
+        switch (type)
         {
-            switch ((MiniGameStatusEnum)type)
-            {
-                case MiniGameStatusEnum.Gameing:
-                    break;
-                case MiniGameStatusEnum.GameEnd:
-                    break;
-                case MiniGameStatusEnum.GameClose:
-                    GameEndHandle();
-                    break;
-            }
+            case MiniGameStatusEnum.Gameing:
+                break;
+            case MiniGameStatusEnum.GameEnd:
+                break;
+            case MiniGameStatusEnum.GameClose:
+                GameEndHandle();
+                break;
         }
     }
     #endregion

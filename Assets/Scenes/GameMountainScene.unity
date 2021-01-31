@@ -7084,7 +7084,7 @@ GameObject:
   - component: {fileID: 356861090}
   m_Layer: 0
   m_Name: GroundElement
-  m_TagString: Untagged
+  m_TagString: GroundElement
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -7267,6 +7267,15 @@ Tilemap:
       m_TileColorIndex: 0
       m_TileObjectToInstantiateIndex: 65535
       m_AllTileFlags: 1073741825
+  - first: {x: 200, y: 0, z: 0}
+    second:
+      serializedVersion: 2
+      m_TileIndex: 10
+      m_TileSpriteIndex: 10
+      m_TileMatrixIndex: 0
+      m_TileColorIndex: 0
+      m_TileObjectToInstantiateIndex: 65535
+      m_AllTileFlags: 2
   - first: {x: -15, y: 2, z: 0}
     second:
       serializedVersion: 2
@@ -7946,6 +7955,8 @@ Tilemap:
     m_Data: {fileID: 11400000, guid: 64547e0a701418a44b682d4978819a42, type: 2}
   - m_RefCount: 1
     m_Data: {fileID: 11400000, guid: 2c617bffded194b44ac5bbefbeabf32b, type: 2}
+  - m_RefCount: 1
+    m_Data: {fileID: 11400000, guid: 595bb13a77779f4468349d9fddedc9d2, type: 2}
   m_TileSpriteArray:
   - m_RefCount: 8
     m_Data: {fileID: -5399540996807933884, guid: 6d68464086c95254a97fda7a406b366a,
@@ -7976,8 +7987,11 @@ Tilemap:
       type: 3}
   - m_RefCount: 1
     m_Data: {fileID: -88514369963958472, guid: dff3bf22bd00fce4a964c6b2448afc6b, type: 3}
+  - m_RefCount: 1
+    m_Data: {fileID: 2498722118007377109, guid: df3b36b9d263ea44aaa947391a4557aa,
+      type: 3}
   m_TileMatrixArray:
-  - m_RefCount: 85
+  - m_RefCount: 86
     m_Data:
       e00: 1
       e01: 0
@@ -7996,13 +8010,13 @@ Tilemap:
       e32: 0
       e33: 1
   m_TileColorArray:
-  - m_RefCount: 85
+  - m_RefCount: 86
     m_Data: {r: 1, g: 1, b: 1, a: 1}
   m_TileObjectToInstantiateArray: []
   m_AnimationFrameRate: 1
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_Origin: {x: -25, y: -3, z: 0}
-  m_Size: {x: 50, y: 19, z: 1}
+  m_Size: {x: 226, y: 19, z: 1}
   m_TileAnchor: {x: 0.5, y: 0.5, z: 0}
   m_TileOrientation: 0
   m_TileOrientationMatrix:
@@ -14838,7 +14852,7 @@ GameObject:
   - component: {fileID: 956110949}
   m_Layer: 0
   m_Name: Ground
-  m_TagString: Untagged
+  m_TagString: Ground
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -15579,6 +15593,15 @@ Tilemap:
       m_TileColorIndex: 0
       m_TileObjectToInstantiateIndex: 65535
       m_AllTileFlags: 1073741825
+  - first: {x: 200, y: 0, z: 0}
+    second:
+      serializedVersion: 2
+      m_TileIndex: 8
+      m_TileSpriteIndex: 10
+      m_TileMatrixIndex: 0
+      m_TileColorIndex: 0
+      m_TileObjectToInstantiateIndex: 65535
+      m_AllTileFlags: 1
   - first: {x: -25, y: 1, z: 0}
     second:
       serializedVersion: 2
@@ -21879,8 +21902,8 @@ Tilemap:
     m_Data: {fileID: 0}
   - m_RefCount: 0
     m_Data: {fileID: 0}
-  - m_RefCount: 0
-    m_Data: {fileID: 0}
+  - m_RefCount: 1
+    m_Data: {fileID: 11400000, guid: 7f2e9005f47a2c84bb83e78f982dc7e6, type: 2}
   m_TileSpriteArray:
   - m_RefCount: 0
     m_Data: {fileID: 0}
@@ -21902,10 +21925,10 @@ Tilemap:
     m_Data: {fileID: 0}
   - m_RefCount: 0
     m_Data: {fileID: 0}
-  - m_RefCount: 0
-    m_Data: {fileID: 0}
+  - m_RefCount: 1
+    m_Data: {fileID: 21300000, guid: 764e9bbdb664c3e438ab23056fe4c49e, type: 3}
   m_TileMatrixArray:
-  - m_RefCount: 772
+  - m_RefCount: 773
     m_Data:
       e00: 1
       e01: 0
@@ -21924,13 +21947,13 @@ Tilemap:
       e32: 0
       e33: 1
   m_TileColorArray:
-  - m_RefCount: 772
+  - m_RefCount: 773
     m_Data: {r: 1, g: 1, b: 1, a: 1}
   m_TileObjectToInstantiateArray: []
   m_AnimationFrameRate: 1
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_Origin: {x: -25, y: -8, z: 0}
-  m_Size: {x: 50, y: 64, z: 1}
+  m_Size: {x: 226, y: 64, z: 1}
   m_TileAnchor: {x: 0.5, y: 0.5, z: 0}
   m_TileOrientation: 0
   m_TileOrientationMatrix:
@@ -23980,7 +24003,7 @@ GameObject:
   - component: {fileID: 1049687575}
   m_Layer: 0
   m_Name: NpcBuilder
-  m_TagString: Builder
+  m_TagString: NpcBuilder
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -36214,6 +36237,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   miniGameBuilder: {fileID: 0}
+  builderName: 
   preCombatTime: 0.5
   combatTime: 1
   uiMiniGameDebate: {fileID: 0}
@@ -36230,6 +36254,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   miniGameBuilder: {fileID: 0}
+  builderName: 
 --- !u!1 &1631978816
 GameObject:
   m_ObjectHideFlags: 0
@@ -37659,7 +37684,7 @@ GameObject:
   - component: {fileID: 1970329371}
   m_Layer: 0
   m_Name: Important
-  m_TagString: Untagged
+  m_TagString: NpcImportantContainer
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -38219,7 +38244,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sceneMountainManager: {fileID: 98028071}
-  npcImportantBuilder: {fileID: 0}
 --- !u!1001 &2078868414
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -38603,7 +38627,7 @@ PrefabInstance:
     - target: {fileID: 8943621853117188304, guid: 9ead96eac66fa8f4393bfb4ff1fe75a4,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -0.0000009536743
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8943621853117188304, guid: 9ead96eac66fa8f4393bfb4ff1fe75a4,
         type: 3}

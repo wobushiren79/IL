@@ -13,23 +13,16 @@ public class BackgroundAngleChangeCpt : BaseMonoBehaviour
     public float minCameraY;
     public float maxCameraY;
 
-    protected CinemachineVirtualCamera camera2D;
-
-    private void Start()
-    {
-        camera2D = Find<CinemachineVirtualCamera>(ImportantTypeEnum.Camera2D);
-    }
-
-
     private void Update()
     {
-        if (camera2D == null || minCameraY == maxCameraY)
+        if (minCameraY == maxCameraY)
         {
             return;
         }
-        if (camera2D.transform.position.y >= minCameraY && camera2D.transform.position.y <= maxCameraY)
+       
+        if (GameCameraHandler.Instance.manager.camera2D.transform.position.y >= minCameraY &&  GameCameraHandler.Instance.manager.camera2D.transform.position.y <= maxCameraY)
         {
-            float lerp = (camera2D.transform.position.y - minCameraY) / (maxCameraY - minCameraY);
+            float lerp = (GameCameraHandler.Instance.manager.camera2D.transform.position.y - minCameraY) / (maxCameraY - minCameraY);
             transform.position = new Vector3(0, Mathf.Lerp(minUpAndDown, maxUpAndDown, lerp), 0);
         }
 

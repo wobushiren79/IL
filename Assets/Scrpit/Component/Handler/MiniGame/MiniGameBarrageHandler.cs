@@ -9,6 +9,7 @@ public class MiniGameBarrageHandler : BaseMiniGameHandler<MiniGameBarrageBuilder
 
     protected override void Awake()
     {
+        builderName = "MiniGameBarrageBuilder";
         base.Awake();
     }
 

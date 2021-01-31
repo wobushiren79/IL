@@ -7,8 +7,18 @@ public class InnHotelHandler : InnBaseHandler
     //桌子列表
     public List<BuildBedCpt> listBedCpt;
     //桌子容器
-    public GameObject bedContainer;
-
+    protected GameObject _bedContainer;
+    public GameObject bedContainer
+    {
+        get
+        {
+            if (_bedContainer == null)
+            {
+                _bedContainer = GameObject.FindGameObjectWithTag(TagInfo.Tag_FurnitureContainer);
+            }
+            return _bedContainer;
+        }
+    }
     /// <summary>
     /// 找到所有桌子
     /// </summary>

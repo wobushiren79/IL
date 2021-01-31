@@ -25,13 +25,11 @@ public class NpcAISundryCpt : BaseNpcAI
     public int addFavorability = 0;
 
     protected SceneInnManager sceneInnManager;
-    protected NpcEventBuilder npcEventBuilder;
 
     public override void Awake()
     {
         base.Awake();
         sceneInnManager = Find<SceneInnManager>(ImportantTypeEnum.SceneManager);
-        npcEventBuilder = Find<NpcEventBuilder>(ImportantTypeEnum.NpcBuilder);
     }
 
     public virtual void Update()
@@ -170,7 +168,7 @@ public class NpcAISundryCpt : BaseNpcAI
     /// </summary>
     public void SetTeamIntent(SundryIntentEnum sundryIntent)
     {
-        List<NpcAISundryCpt> listNpc = npcEventBuilder.GetSundryTeamByTeamCode(teamCode);
+        List<NpcAISundryCpt> listNpc = NpcHandler.Instance.builderForEvent.GetSundryTeamByTeamCode(teamCode);
         if (sundryIntent == SundryIntentEnum.Leave)
         {
             leavePosition = sceneInnManager.GetRandomSceneExportPosition();

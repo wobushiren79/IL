@@ -10,9 +10,33 @@ public class InnCookHandler : InnBaseHandler
     public List<NpcAIWorkerCpt> listChefCpt = new List<NpcAIWorkerCpt>();
 
     //灶台容器
-    public GameObject stoveContainer;
+    protected GameObject _stoveContainer;
+    public GameObject stoveContainer
+    {
+        get
+        {
+            if (_stoveContainer==null)
+            {
+                _stoveContainer = GameObject.FindGameObjectWithTag(TagInfo.Tag_FurnitureContainer);
+            }
+            return _stoveContainer; 
+        }
+    }
+
     //厨师容器
-    public GameObject ChefContainer;
+    protected GameObject _chefContainer;
+
+    public GameObject chefContainer
+    {
+        get
+        {
+            if (_stoveContainer == null)
+            {
+                _stoveContainer = GameObject.FindGameObjectWithTag(TagInfo.Tag_NpcWorkerContainer);
+            }
+            return _stoveContainer;
+        }
+    }
 
     /// <summary>
     /// 找到所有灶台

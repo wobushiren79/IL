@@ -11,13 +11,6 @@ public class WorkerNumberView : BaseMonoBehaviour
     public Text tvNumberForAccost;
     public Text tvNumberForBeater;
 
-    protected NpcWorkerBuilder workerBuilder;
-
-    private void Awake()
-    {
-        workerBuilder = Find<NpcWorkerBuilder>(ImportantTypeEnum.NpcBuilder);
-    }
-
     private void Update()
     {
         HandleForUI();
@@ -25,7 +18,7 @@ public class WorkerNumberView : BaseMonoBehaviour
 
     public void HandleForUI()
     {
-        if (workerBuilder != null && workerBuilder.listNpcWorker != null)
+        if (NpcHandler.Instance.builderForWorker.listNpcWorker != null)
         {
             int numberForIdle = 0;
             int numberForChef = 0;
@@ -33,9 +26,9 @@ public class WorkerNumberView : BaseMonoBehaviour
             int numberForAccount = 0;
             int numberForAccost = 0;
             int numberForBeater = 0;
-            for (int i = 0; i < workerBuilder.listNpcWorker.Count; i++)
+            for (int i = 0; i < NpcHandler.Instance.builderForWorker.listNpcWorker.Count; i++)
             {
-                NpcAIWorkerCpt npcWorker = workerBuilder.listNpcWorker[i];
+                NpcAIWorkerCpt npcWorker = NpcHandler.Instance.builderForWorker.listNpcWorker[i];
                 NpcAIWorkerCpt.WorkerIntentEnum workerIntent = npcWorker.GetWorkerStatus();
                 if (workerIntent == NpcAIWorkerCpt.WorkerIntentEnum.Idle || workerIntent == NpcAIWorkerCpt.WorkerIntentEnum.Daze)
                 {

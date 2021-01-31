@@ -3,15 +3,6 @@ using UnityEditor;
 
 public class ControlForMiniGameCombatCpt : BaseControl
 {
-    protected UIGameManager uiGameManager;
-    protected MiniGameCombatHandler gameCombatHandler;
-    protected UIMiniGameCombat uiMiniGameCombat;
-    private void Awake()
-    {
-        gameCombatHandler = Find<MiniGameCombatHandler>(ImportantTypeEnum.MiniGameHandler);
-        uiGameManager = Find<UIGameManager>(ImportantTypeEnum.GameUI);
-        uiMiniGameCombat = UIHandler.Instance.manager.GetUI<UIMiniGameCombat>(UIEnum.MiniGameCombat);
-    }
 
     /// <summary>
     /// 选中一个角色
@@ -33,7 +24,8 @@ public class ControlForMiniGameCombatCpt : BaseControl
     public void HandleForSelectCharacter()
     {
         //如果没有在玩家回合 切没有在选择人物中则不处理
-        if (gameCombatHandler.miniGameData.GetCombatStatus() != MiniGameCombatBean.MiniGameCombatStatusEnum.OurRound
+        UIMiniGameCombat uiMiniGameCombat = UIHandler.Instance.manager.GetUI<UIMiniGameCombat>(UIEnum.MiniGameCombat);
+        if (MiniGameHandler.Instance.handlerForCombat.miniGameData.GetCombatStatus() != MiniGameCombatBean.MiniGameCombatStatusEnum.OurRound
             || !uiMiniGameCombat.isSelecting)
         {
             return;
@@ -57,7 +49,7 @@ public class ControlForMiniGameCombatCpt : BaseControl
         {
             uiMiniGameCombat.OpenCombatCommand();
             //开启选中特效
-            gameCombatHandler.SelectCharacter(gameCombatHandler.miniGameData.GetRoundActionCharacter());
+            MiniGameHandler.Instance.handlerForCombat.SelectCharacter(MiniGameHandler.Instance.handlerForCombat.miniGameData.GetRoundActionCharacter());
         }
     }
 }

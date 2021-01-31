@@ -133,9 +133,7 @@ public class UIGameTest : BaseUIComponent
     /// </summary>
     public void CreateGuestTeam()
     {
-        if (uiGameManager.npcEventBuilder == null)
-            return;
-        uiGameManager.npcCustomerBuilder.BuildGuestTeam(long.Parse(etNpcGuestTeamId.text));
+        NpcHandler.Instance.builderForCustomer.BuildGuestTeam(long.Parse(etNpcGuestTeamId.text));
     }
 
     /// <summary>
@@ -143,9 +141,7 @@ public class UIGameTest : BaseUIComponent
     /// </summary>
     public void CreateFriendForOne()
     {
-        if (uiGameManager.npcEventBuilder == null)
-            return;
-        uiGameManager.npcEventBuilder.BuildTownFriendsForOne(long.Parse(etNpcGuestTeamId.text));
+        NpcHandler.Instance.builderForEvent.BuildTownFriendsForOne(long.Parse(etNpcGuestTeamId.text));
     }
 
     /// <summary>
@@ -153,9 +149,7 @@ public class UIGameTest : BaseUIComponent
     /// </summary>
     public void CreateFriendForTeam()
     {
-        if (uiGameManager.npcEventBuilder == null)
-            return;
-        uiGameManager.npcEventBuilder.BuildTownFriendsForTeam(long.Parse(etNpcGuestTeamId.text));
+        NpcHandler.Instance.builderForEvent.BuildTownFriendsForTeam(long.Parse(etNpcGuestTeamId.text));
     }
 
     /// <summary>
@@ -163,9 +157,7 @@ public class UIGameTest : BaseUIComponent
     /// </summary>
     public void CreateRascal()
     {
-        if (uiGameManager.npcEventBuilder == null)
-            return;
-        uiGameManager.npcEventBuilder.BuildRascal(long.Parse(etNpcGuestTeamId.text));
+        NpcHandler.Instance.builderForEvent.BuildRascal(long.Parse(etNpcGuestTeamId.text));
     }
 
     /// <summary>
@@ -173,15 +165,11 @@ public class UIGameTest : BaseUIComponent
     /// </summary>
     public void CreateSundry()
     {
-        if (uiGameManager.npcEventBuilder == null)
-            return;
-        uiGameManager.npcEventBuilder.BuildSundry(long.Parse(etNpcGuestTeamId.text));
+        NpcHandler.Instance.builderForEvent.BuildSundry(long.Parse(etNpcGuestTeamId.text));
     }
 
     public void CreateConvert()
     {
-        if (uiGameManager.npcEventBuilder == null)
-            return;
-        uiGameManager.npcEventBuilder.BuildConvert(long.Parse(etNpcGuestTeamId.text));
+        NpcHandler.Instance.builderForEvent.BuildConvert(long.Parse(etNpcGuestTeamId.text));
     }
 }

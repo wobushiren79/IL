@@ -8,9 +8,6 @@ public class SceneBuilder : BaseTilemapBuilder
     protected Tilemap _tileMapForGround;
     protected Tilemap _tileMapForGroundElement;
 
-    public List<TileBean> listTileGroundForSeasons;
-    public List<TileBean> listTileGressForSeasons;
-
     public Tilemap tileMapForGround
     {
         get
@@ -37,6 +34,7 @@ public class SceneBuilder : BaseTilemapBuilder
             return _tileMapForGroundElement;
         }
     }
+
     /// <summary>
     /// 构建场景
     /// </summary>
@@ -63,18 +61,20 @@ public class SceneBuilder : BaseTilemapBuilder
                 tileGroundName = "tile_gress_4";
                 tileGressName = "Gress_4";
                 break;
-        }       
+        }
+
         //替换地面
         TileBase newTileDataForGround = InnBuildHandler.Instance.manager.GetGroundTileByName(tileGroundName);
-        TileBase defGroundTile = tileMapForGround.GetTile(Vector3Int.zero);
+        TileBase defGroundTile = tileMapForGround.GetTile(new Vector3Int(200, 0, 0));
         if (!newTileDataForGround.name.Equals(defGroundTile.name))
         {
             tileMapForGround.SwapTile(defGroundTile, newTileDataForGround);
         }
 
         //替换草地
+        TileBase defGressTile = tileMapForGroundElement.GetTile(new Vector3Int(200, 0, 0));
         TileBase newTileDataForGress = InnBuildHandler.Instance.manager.GetOtherTileByName(tileGressName);
-        TileBase defGressTile = tileMapForGroundElement.GetTile(Vector3Int.zero);
+
         if (!newTileDataForGress.name.Equals(defGressTile.name))
         {
             tileMapForGroundElement.SwapTile(defGressTile, newTileDataForGress);

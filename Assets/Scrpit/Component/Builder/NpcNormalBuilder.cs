@@ -9,9 +9,6 @@ public class NpcNormalBuilder : BaseMonoBehaviour
     //顾客模型
     public GameObject objNormalModel;
 
-    //NPC数据管理
-    protected WeatherHandler weatherHandler;
-
     //初始化大量随机NPC位置
     public List<Transform> listInitStartPosition;
     //有序化生成NPC位置
@@ -24,8 +21,9 @@ public class NpcNormalBuilder : BaseMonoBehaviour
 
     protected virtual void Awake()
     {
-        weatherHandler = Find<WeatherHandler>(ImportantTypeEnum.WeatherHandler);
+        
     }
+
 
     /// <summary>
     /// 随机获取初始化点位置

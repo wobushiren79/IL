@@ -10,7 +10,8 @@ public class MiniGameHandler : BaseHandler<MiniGameHandler, MiniGameManager>
     {
         get
         {
-            return GetHandler(_handlerForCooking);
+            _handlerForCooking = GetHandler(_handlerForCooking);
+            return _handlerForCooking;
         }
     }
 
@@ -21,7 +22,8 @@ public class MiniGameHandler : BaseHandler<MiniGameHandler, MiniGameManager>
     {
         get
         {
-            return GetHandler(_handlerForBarrage);
+            _handlerForBarrage = GetHandler(_handlerForBarrage);
+            return _handlerForBarrage;
         }
     }
 
@@ -32,7 +34,8 @@ public class MiniGameHandler : BaseHandler<MiniGameHandler, MiniGameManager>
     {
         get
         {
-            return GetHandler(_handlerForAccount);
+            _handlerForAccount = GetHandler(_handlerForAccount);
+            return _handlerForAccount;
         }
     }
 
@@ -43,7 +46,8 @@ public class MiniGameHandler : BaseHandler<MiniGameHandler, MiniGameManager>
     {
         get
         {
-            return GetHandler(_handlerForDebate);
+            _handlerForDebate = GetHandler(_handlerForDebate);
+            return _handlerForDebate;
         }
     }
 
@@ -54,7 +58,8 @@ public class MiniGameHandler : BaseHandler<MiniGameHandler, MiniGameManager>
     {
         get
         {
-            return GetHandler(_handlerForCombat);
+            _handlerForCombat = GetHandler(_handlerForCombat);
+            return _handlerForCombat;
         }
     }
 
@@ -65,7 +70,8 @@ public class MiniGameHandler : BaseHandler<MiniGameHandler, MiniGameManager>
     {
         get
         {
-            return GetHandler(_handlerForBirth);
+            _handlerForBirth = GetHandler(_handlerForBirth);
+            return _handlerForBirth;
         }
     }
 

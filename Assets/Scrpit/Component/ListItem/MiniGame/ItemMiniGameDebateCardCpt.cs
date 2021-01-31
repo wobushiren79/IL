@@ -27,12 +27,6 @@ public class ItemMiniGameDebateCardCpt : ItemGameBaseCpt, IPointerEnterHandler, 
     public bool isOpenPointer = false;
 
 
-    protected MiniGameDebateHandler debateHandler;
-    private void Start()
-    {
-        debateHandler = Find<MiniGameDebateHandler>(ImportantTypeEnum.MiniGameHandler);
-    }
-
     /// <summary>
     /// 设置数据
     /// </summary>
@@ -120,7 +114,7 @@ public class ItemMiniGameDebateCardCpt : ItemGameBaseCpt, IPointerEnterHandler, 
             AudioHandler.Instance.PlaySound(AudioSoundEnum.SetCard);
             transform.DOKill();
             transform.localScale = new Vector3(1, 1, 1);
-            debateHandler.StartCombat(this);
+            MiniGameHandler.Instance.handlerForDebate.StartCombat(this);
         }
     }
 }

@@ -4,12 +4,9 @@ using System.Collections;
 
 public class BaseSceneInit : BaseMonoBehaviour
 {
-    protected WeatherHandler weatherHandler;
-
-
     public virtual void Awake()
     {
-        weatherHandler = Find<WeatherHandler>(ImportantTypeEnum.WeatherHandler);
+
     }
 
     public virtual void Start()

@@ -13,10 +13,6 @@ public class UIGameTestForMiniGame : BaseUIComponent
     public InputField etCombatEnemyIds;
     public Button btCombatBuild;
 
-
-
-    protected MiniGameCombatHandler miniGameCombatHandler;
-
     public void InitUI()
     {
         objMiniGameCombat.gameObject.SetActive(false);
@@ -24,7 +20,6 @@ public class UIGameTestForMiniGame : BaseUIComponent
 
     private void Start()
     {
-        miniGameCombatHandler = Find<MiniGameCombatHandler>( ImportantTypeEnum.MiniGameHandler);
         btCombat.onClick.AddListener(OnClickShowCombatUI);
         btCombatBuild.onClick.AddListener(OnClickCombatBuild);
     }
@@ -72,7 +67,7 @@ public class UIGameTestForMiniGame : BaseUIComponent
         //找到竞技场战斗的地点
         miniGameCombat.miniGamePosition = new Vector3(0, 10, 0);
         //初始化游戏
-        miniGameCombatHandler.InitGame(miniGameCombat);
+        MiniGameHandler.Instance.handlerForCombat.InitGame(miniGameCombat);
     }
 
 

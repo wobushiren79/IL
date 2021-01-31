@@ -11,9 +11,6 @@ public class NpcAIMiniGameBarrageCpt : BaseNpcAI, SightForMiniGameBarrageCpt.ICa
         Dodge = 1,//躲避
     }
 
-
-    //弹幕游戏处理
-    protected MiniGameBarrageHandler gameBarrageHandler;
     //迷你游戏数据
     public MiniGameCharacterBean characterMiniGameData;
     //寻路AI
@@ -23,12 +20,6 @@ public class NpcAIMiniGameBarrageCpt : BaseNpcAI, SightForMiniGameBarrageCpt.ICa
     //视野
     public SightForMiniGameBarrageCpt sightForMiniGameBarrage;
 
-
-    public override void Awake()
-    {
-        base.Awake();
-        gameBarrageHandler = Find<MiniGameBarrageHandler>( ImportantTypeEnum.MiniGameHandler);
-    }
 
     /// <summary>
     /// 设置NPC数据
@@ -51,19 +42,17 @@ public class NpcAIMiniGameBarrageCpt : BaseNpcAI, SightForMiniGameBarrageCpt.ICa
     /// <param name="damage"></param>
     public void UnderAttack(int damage)
     {
-        if (characterMiniGameData == null
-            || gameBarrageHandler == null
-            || gameBarrageHandler.GetMiniGameStatus() != MiniGameStatusEnum.Gameing)
+        if (characterMiniGameData == null || MiniGameHandler.Instance.handlerForBarrage.GetMiniGameStatus() != MiniGameStatusEnum.Gameing)
             return;
         AudioHandler.Instance.PlaySound(AudioSoundEnum.Damage);
         characterMiniGameData.AddLife(-damage);
         psBlood.Play();
         //如果是控制的角色并且生命值低于胜利生命值
-        if (characterMiniGameData.characterCurrentLife < gameBarrageHandler.miniGameData.winLife)
+        if (characterMiniGameData.characterCurrentLife < MiniGameHandler.Instance.handlerForBarrage.miniGameData.winLife)
         {
             if (characterMiniGameData.characterType == 1)
             {
-                gameBarrageHandler.EndGame(MiniGameResultEnum.Lose);
+                MiniGameHandler.Instance.handlerForBarrage.EndGame(MiniGameResultEnum.Lose);
             }
         }
     }

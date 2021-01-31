@@ -3,12 +3,6 @@ using UnityEditor;
 
 public class MiniGameBarrageEjectorCpt : BaseMonoBehaviour
 {
-    protected MiniGameBarrageBuilder miniGameBarrageBuilder;
-
-    private void Awake()
-    {
-        miniGameBarrageBuilder = FindInChildren < MiniGameBarrageBuilder > (ImportantTypeEnum.MiniGameBuilder);
-    }
 
     /// <summary>
     /// 发射类型
@@ -145,29 +139,29 @@ public class MiniGameBarrageEjectorCpt : BaseMonoBehaviour
         {
             case MiniGameBarrageBulletTypeEnum.Stone:
                 damage = 10;
-                spBullet = miniGameBarrageBuilder.spStone;
-                animatorController = miniGameBarrageBuilder.animatorControllerForStone;
+                spBullet = MiniGameHandler.Instance.handlerForBarrage.miniGameBuilder.spStone;
+                animatorController = MiniGameHandler.Instance.handlerForBarrage.miniGameBuilder.animatorControllerForStone;
                 hasDesAnim = true;  
                 break;
             case MiniGameBarrageBulletTypeEnum.Arrow:
                 damage = 10;
-                spBullet = miniGameBarrageBuilder.spArrow;
-                animatorController = miniGameBarrageBuilder.animatorControllerForArrow;
+                spBullet = MiniGameHandler.Instance.handlerForBarrage.miniGameBuilder.spArrow;
+                animatorController = MiniGameHandler.Instance.handlerForBarrage.miniGameBuilder.animatorControllerForArrow;
                 break;
             case MiniGameBarrageBulletTypeEnum.Darts:
                 damage = 20;
-                spBullet = miniGameBarrageBuilder.spDarts;
-                animatorController = miniGameBarrageBuilder.animatorControllerForDarts;
+                spBullet = MiniGameHandler.Instance.handlerForBarrage.miniGameBuilder.spDarts;
+                animatorController = MiniGameHandler.Instance.handlerForBarrage.miniGameBuilder.animatorControllerForDarts;
                 break;
             case MiniGameBarrageBulletTypeEnum.Fireball:
                 damage = 30;
-                spBullet = miniGameBarrageBuilder.spFireball;
-                animatorController = miniGameBarrageBuilder.animatorControllerForFireball;
+                spBullet = MiniGameHandler.Instance.handlerForBarrage.miniGameBuilder.spFireball;
+                animatorController = MiniGameHandler.Instance.handlerForBarrage.miniGameBuilder.animatorControllerForFireball;
                 break;
             case MiniGameBarrageBulletTypeEnum.Egg:
                 damage = 40;
-                spBullet = miniGameBarrageBuilder.spEgg;
-                animatorController = miniGameBarrageBuilder.animatorControllerForEgg;
+                spBullet = MiniGameHandler.Instance.handlerForBarrage.miniGameBuilder.spEgg;
+                animatorController = MiniGameHandler.Instance.handlerForBarrage.miniGameBuilder.animatorControllerForEgg;
                 hasDesAnim = true;
                 break;
         }

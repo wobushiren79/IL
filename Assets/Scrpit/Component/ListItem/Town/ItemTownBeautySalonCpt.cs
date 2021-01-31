@@ -16,11 +16,9 @@ public class ItemTownBeautySalonCpt : ItemGameBaseCpt
     public BodyTypeEnum type;
     public string data;
 
-    protected UIGameManager uiGameManager;
     protected ICallBack callBack;
     private void Awake()
     {
-        uiGameManager = GetUIManager<UIGameManager>();
         if (btSubmit)
             btSubmit.onClick.AddListener(OnClickForSubmit);
     }

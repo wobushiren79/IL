@@ -3,6 +3,13 @@ using UnityEngine;
 
 public class MiniGameBirthHandler : BaseMiniGameHandler<MiniGameBirthBuilder, MiniGameBirthBean>
 {
+
+    protected override void Awake()
+    {
+        builderName = "MiniGameBirthBuilder";
+        base.Awake();
+    }
+
     public override void InitGame(MiniGameBirthBean miniGameData)
     {
         base.InitGame(miniGameData);

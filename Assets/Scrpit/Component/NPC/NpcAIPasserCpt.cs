@@ -18,8 +18,6 @@ public class NpcAIPasserCpt : BaseNpcAI
 
     //城镇数据
     protected SceneTownManager sceneTownManager;
-    //事件处理
-    protected MiniGameCombatHandler miniGameCombatHandler;
 
     //移动目标点
     public Vector2 movePosition;
@@ -40,7 +38,6 @@ public class NpcAIPasserCpt : BaseNpcAI
         base.Awake();
 
         sceneTownManager = Find<SceneTownManager>(ImportantTypeEnum.SceneManager);
-        miniGameCombatHandler = Find<MiniGameCombatHandler>(ImportantTypeEnum.MiniGameHandler);
     }
 
     private void FixedUpdate()
@@ -124,10 +121,10 @@ public class NpcAIPasserCpt : BaseNpcAI
     {
         if (passerIntent != PasserIntentEnum.GoToEvent
             && passerIntent != PasserIntentEnum.LookOnEvent
-            && miniGameCombatHandler.GetMiniGameStatus() == MiniGameStatusEnum.Gameing
-            && Vector2.Distance(transform.position, miniGameCombatHandler.GetMiniGamePosition()) <= 10)
+            && MiniGameHandler.Instance.handlerForCombat.GetMiniGameStatus() == MiniGameStatusEnum.Gameing
+            && Vector2.Distance(transform.position, MiniGameHandler.Instance.handlerForCombat.GetMiniGamePosition()) <= 10)
         {
-            SetIntent(PasserIntentEnum.GoToEvent, miniGameCombatHandler.GetMiniGamePosition());
+            SetIntent(PasserIntentEnum.GoToEvent, MiniGameHandler.Instance.handlerForCombat.GetMiniGamePosition());
             return true;
         }
         else
@@ -141,7 +138,7 @@ public class NpcAIPasserCpt : BaseNpcAI
     /// </summary>
     public bool CheckEventEnd()
     {
-        if (miniGameCombatHandler.GetMiniGameStatus() != MiniGameStatusEnum.Gameing)
+        if (MiniGameHandler.Instance.handlerForCombat.GetMiniGameStatus() != MiniGameStatusEnum.Gameing)
         {
             if (npcLocation == TownBuildingEnum.Town)
             {

@@ -8,8 +8,6 @@ public class BaseUIComponent : BaseMonoBehaviour
 { 
     //UI管理
     public BaseUIManager uiManager;
-    //UI管理
-    public UIGameManager uiGameManager;
     //UI动画
     public Animator uiAnimator;
     //备注数据
@@ -20,7 +18,6 @@ public class BaseUIComponent : BaseMonoBehaviour
         if (uiManager == null)
         {
             uiManager = GetComponentInParent<BaseUIManager>();
-            uiGameManager = CptUtil.AddCpt<UIGameManager>(UIHandler.Instance.manager.gameObject);
         }
         if (uiAnimator == null)
             uiAnimator = GetComponent<Animator>();

@@ -9,11 +9,9 @@ public class BaseGambleHandler<T,B> : BaseHandler
     public T gambleData;
 
     protected B gambleBuilder;
-    protected UIGameManager uiGameManager;
     private void Awake()
     {
         gambleBuilder = Find<B>(ImportantTypeEnum.GambleBuilder);
-        uiGameManager = Find<UIGameManager>(ImportantTypeEnum.GameUI);
     }
 
     /// <summary>

@@ -600,11 +600,11 @@ public class UIGameMain : BaseUIComponent, DialogView.IDialogCallBack, IRadioGro
         Scene scene = SceneManager.GetActiveScene();
         if (scene.name.Equals(EnumUtil.GetEnumName(ScenesEnum.GameInnScene)))
         {
-            ((SceneGameInnInit)uiGameManager.sceneInit).CleanInnData();
+            GameScenesHandler.Instance.GetSceneInit<SceneGameInnInit>().CleanInnData();
         }
         else
         {
-            ((BaseNormalSceneInit)uiGameManager.sceneInit).EndDay();
+            GameScenesHandler.Instance.GetSceneInit<BaseNormalSceneInit>().EndDay();
         }
     }
 
