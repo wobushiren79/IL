@@ -20,13 +20,14 @@ public class UIMiniGameBirthSperm : BaseUIChildComponent<UIMiniGameBirth>
         UIMiniGameBirthEnemy enemy = collision.gameObject.GetComponent<UIMiniGameBirthEnemy>();
         if (enemy)
         {
+            MiniGameHandler.Instance.handlerForBirth.DestroySperm(spermData);
             Destroy(gameObject);
             return;
         }
         UIMiniGameBirthEgg egg = collision.gameObject.GetComponent<UIMiniGameBirthEgg>();
         if (egg)
         {
-            MiniGameHandler.Instance.handlerForBirth.ArriveEgg();
+            MiniGameHandler.Instance.handlerForBirth.ArriveEgg(spermData);
             Destroy(gameObject);
             return;
         }

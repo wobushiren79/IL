@@ -10,7 +10,7 @@ public class MiniGameBirthBean : MiniGameBaseBean
 
     public override void InitForMiniGame()
     {
-
+        life = 3;
     }
 
     public void AddLife(int addLife)
