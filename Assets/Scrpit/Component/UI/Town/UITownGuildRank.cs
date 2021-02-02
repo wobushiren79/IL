@@ -33,7 +33,7 @@ public class UITownGuildRank : UIBaseRank
         }
         string innName = gameData.GetInnAttributesData().innName;
         string playerName = gameData.userCharacter.baseInfo.name;
-        steamHandler.SetGetLeaderboardData(rankTypeId, intScore, innName + "-" + playerName , this);
+        SteamHandler.Instance.SetGetLeaderboardData(rankTypeId, intScore, innName + "-" + playerName , this);
     }
 
     public long GetScoreByType(RankTypeEnum rankType)
@@ -84,8 +84,8 @@ public class UITownGuildRank : UIBaseRank
     {
         base.OnClickForRefresh();
 
-        steamHandler.GetLeaderboardDataForUser(rankTypeId, this);
-        steamHandler.GetLeaderboardDataForGlobal(rankTypeId, 1, 30, this);
+        SteamHandler.Instance.GetLeaderboardDataForUser(rankTypeId, this);
+        SteamHandler.Instance.GetLeaderboardDataForGlobal(rankTypeId, 1, 30, this);
     }
 
 

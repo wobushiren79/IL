@@ -22,9 +22,10 @@ public class SceneGameMountainInit : BaseNormalSceneInit
         base.RefreshScene();
         //构建重要的NPC
         NpcHandler.Instance.buildForImportant.BuildImportantForMountain();
-
         //改变四季
         GameSeasonsHandler.Instance.ChangeSeasons();
+
+        UIHandler.Instance.manager.OpenUI<UIGameMain>(UIEnum.GameMain);
     }
 
     public override ControlForMoveCpt InitUserPosition()

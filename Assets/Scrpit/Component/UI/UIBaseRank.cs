@@ -19,18 +19,14 @@ public class UIBaseRank : UIBaseOne, IRadioGroupCallBack
     public ItemTownGuildRankCpt itemRankForLocal;
     public ItemTownGuildRankCpt itemRankForUser;
 
-
-
     public ulong rankTypeId;
 
     public RankTypeEnum rankType = RankTypeEnum.GetMoneyS;
 
-    protected SteamHandler steamHandler;
 
     public override void Awake()
     {
         base.Awake();
-        steamHandler = Find<SteamHandler>(ImportantTypeEnum.Steam);
         if (rgRankType != null) rgRankType.SetCallBack(this);
     }
 
@@ -131,8 +127,7 @@ public class UIBaseRank : UIBaseOne, IRadioGroupCallBack
         //设置本地数据
         SetLocalData();
         //获取排行榜ID
-        if (steamHandler != null)
-            steamHandler.GetLeaderboardId(rankName, this);
+        SteamHandler.Instance.GetLeaderboardId(rankName, this);
     }
 
     public void RadioButtonUnSelected(RadioGroupView rgView, int position, RadioButtonView rbview)
@@ -146,8 +141,8 @@ public class UIBaseRank : UIBaseOne, IRadioGroupCallBack
     public void FindLeaderboardSuccess(ulong leaderboard)
     {
         this.rankTypeId = leaderboard;
-        steamHandler.GetLeaderboardDataForUser(rankTypeId, this);
-        steamHandler.GetLeaderboardDataForGlobal(rankTypeId, 1, 30, this);
+        SteamHandler.Instance.GetLeaderboardDataForUser(rankTypeId, this);
+        SteamHandler.Instance.GetLeaderboardDataForGlobal(rankTypeId, 1, 30, this);
     }
 
     public void FindLeaderboardFail(SteamLeaderboardImpl.SteamLeaderboardFailEnum msg)

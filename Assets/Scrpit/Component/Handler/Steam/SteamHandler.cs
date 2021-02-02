@@ -3,11 +3,18 @@ using UnityEditor;
 using System.Collections;
 using Steamworks;
 
-public class SteamHandler : BaseHandler<SteamHandler,BaseManager>
+public class SteamHandler : BaseHandler<SteamHandler, BaseManager>
 {
     public SteamUserStatsImpl steamUserStats;
     public SteamLeaderboardImpl steamLeaderboard;
     public SteamWebImpl steamWeb;
+
+    public SteamManager steamManager;
+    protected override void Awake()
+    {
+        base.Awake();
+        steamManager = gameObject.AddComponent<SteamManager>();
+    }
 
     private void Start()
     {
@@ -34,6 +41,8 @@ public class SteamHandler : BaseHandler<SteamHandler,BaseManager>
     /// </summary>
     public void UnLockAchievement(long achId)
     {
+        if (!SteamManager.Initialized)
+            return;
         if (steamUserStats == null)
         {
             steamUserStats = new SteamUserStatsImpl();
@@ -51,6 +60,8 @@ public class SteamHandler : BaseHandler<SteamHandler,BaseManager>
     /// <param name="callBack"></param>
     public void SetGetLeaderboardData(ulong leaderboardId, int score, string details, ISteamLeaderboardUpdateCallBack callBack)
     {
+        if (!SteamManager.Initialized)
+            return;
         if (steamLeaderboard == null)
         {
             steamLeaderboard = new SteamLeaderboardImpl();
@@ -72,6 +83,8 @@ public class SteamHandler : BaseHandler<SteamHandler,BaseManager>
     /// <param name="callBack"></param>
     public void GetLeaderboardId(string leaderboardName, ISteamLeaderboardFindCallBack callBack)
     {
+        if (!SteamManager.Initialized)
+            return;
         if (steamLeaderboard == null)
         {
             steamLeaderboard = new SteamLeaderboardImpl();
@@ -87,6 +100,8 @@ public class SteamHandler : BaseHandler<SteamHandler,BaseManager>
     /// <param name="endRank"></param>
     public void GetLeaderboardDataForGlobal(ulong leaderboardId, int startRank, int endRank, ISteamLeaderboardEntriesCallBack callBack)
     {
+        if (!SteamManager.Initialized)
+            return;
         if (steamLeaderboard == null)
         {
             steamLeaderboard = new SteamLeaderboardImpl();
@@ -102,6 +117,8 @@ public class SteamHandler : BaseHandler<SteamHandler,BaseManager>
     /// <param name="callBack"></param>
     public void GetLeaderboardDataForUserList(ulong leaderboardId, CSteamID[] userList, ISteamLeaderboardEntriesCallBack callBack)
     {
+        if (!SteamManager.Initialized)
+            return;
         if (steamLeaderboard == null)
         {
             steamLeaderboard = new SteamLeaderboardImpl();
@@ -111,6 +128,8 @@ public class SteamHandler : BaseHandler<SteamHandler,BaseManager>
 
     public void GetLeaderboardDataForUser(ulong leaderboardId, ISteamLeaderboardEntriesCallBack callBack)
     {
+        if (!SteamManager.Initialized)
+            return;
         if (steamLeaderboard == null)
         {
             steamLeaderboard = new SteamLeaderboardImpl();
@@ -120,6 +139,8 @@ public class SteamHandler : BaseHandler<SteamHandler,BaseManager>
 
     public void GetLeaderboardDataForUser(ulong leaderboardId, CSteamID userId, ISteamLeaderboardEntriesCallBack callBack)
     {
+        if (!SteamManager.Initialized)
+            return;
         if (steamLeaderboard == null)
         {
             steamLeaderboard = new SteamLeaderboardImpl();

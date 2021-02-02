@@ -10,16 +10,10 @@ public class ItemDialogPickForSkillCpt : BaseMonoBehaviour
     public Button btSubmit;
     public PopupSkillButton infoSkillPopup;
 
-    protected IconDataManager iconDataManager;
     protected ICallBack callBack;
 
     public SkillInfoBean skillInfoData;
     public int usedNumber;
-
-    private void Awake()
-    {
-        iconDataManager = Find<IconDataManager>(ImportantTypeEnum.UIManager);
-    }
 
     private void Start()
     {

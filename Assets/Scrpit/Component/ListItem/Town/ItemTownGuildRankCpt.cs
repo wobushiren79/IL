@@ -15,7 +15,6 @@ public class ItemTownGuildRankCpt : ItemGameBaseCpt, IWebRequestCallBack<SteamWe
     public SteamLeaderboardEntryBean rankData;
     public RankTypeEnum rankType;
 
-    protected SteamHandler steamHandler;
 
     public Sprite spGetMoneyS;
     public Sprite spNumberOrder;
@@ -25,12 +24,6 @@ public class ItemTownGuildRankCpt : ItemGameBaseCpt, IWebRequestCallBack<SteamWe
     public Sprite spMaxDayGetMoneyS;
     public Sprite spMaxDayCompleteOrder;
 
-    protected IconDataManager iconDataManager;
-    public void Awake()
-    {
-        steamHandler = Find<SteamHandler>(ImportantTypeEnum.Steam);
-        iconDataManager = Find<IconDataManager>(ImportantTypeEnum.UIManager);
-    }
 
     public void SetData(RankTypeEnum rankType, SteamLeaderboardEntryBean rankData)
     {
@@ -45,7 +38,7 @@ public class ItemTownGuildRankCpt : ItemGameBaseCpt, IWebRequestCallBack<SteamWe
         //开始获取头像和名字
         if (rankData.steamID.m_SteamID != 0)
         {
-            StartCoroutine(steamHandler.GetUserInfo(rankData.steamID.m_SteamID + "", this));
+            StartCoroutine(SteamHandler.Instance.GetUserInfo(rankData.steamID.m_SteamID + "", this));
         }
     }
 

@@ -8,14 +8,6 @@ public class UIGameStatisticsDetailsBase<T> : BaseUIChildComponent<T>
     public GameObject objItemTextModel;
     public GameObject ObjItemMoneyModel;
 
-    protected IconDataManager iconDataManager;
-
-    public override void Awake()
-    {
-        base.Awake();
-        iconDataManager = Find<IconDataManager>(ImportantTypeEnum.UIManager);
-    }
-
     /// <summary>
     /// 创建文本Item
     /// </summary>

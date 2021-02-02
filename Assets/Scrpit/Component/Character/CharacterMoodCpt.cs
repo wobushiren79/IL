@@ -7,13 +7,6 @@ public class CharacterMoodCpt : BaseMonoBehaviour
 
     private Sprite spCurrent;
 
-    protected IconDataManager iconDataManager;
-
-
-    private void Awake()
-    {
-        iconDataManager = Find<IconDataManager>(ImportantTypeEnum.UIManager);
-    }
     public void CloseMood()
     {
         characterStatusIcon.RemoveStatusIconByType(CharacterStatusIconEnum.Mood);

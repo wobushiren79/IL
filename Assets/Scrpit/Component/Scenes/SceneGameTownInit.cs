@@ -15,8 +15,8 @@ public class SceneGameTownInit : BaseNormalSceneInit
     public override void Start()
     {
         base.Start();
-        RefreshScene();       
-
+        RefreshScene();
+        UIHandler.Instance.manager.OpenUI<UIGameMain>(UIEnum.GameMain);
     }
 
     public override void RefreshScene()
@@ -26,7 +26,6 @@ public class SceneGameTownInit : BaseNormalSceneInit
         NpcHandler.Instance.buildForImportant.BuildImportantForTown();
         //构建普通路人NPC
         NpcHandler.Instance.buildForPasser.BuilderPasserForInit(20);
-
         //改变四季
         GameSeasonsHandler.Instance.ChangeSeasons();
     }
