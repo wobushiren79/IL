@@ -39,8 +39,10 @@ public class MiniGameBirthHandler : BaseMiniGameHandler<MiniGameBirthBuilder, Mi
     /// </summary>
     public void ArriveEgg(MiniGameBirthSpermBean spermData)
     {
+       //获取家族数据
        GameDataBean gameData = GameDataHandler.Instance.manager.GetGameData();
        FamilyDataBean familyData =  gameData.GetFamilyData();
+       //增加怀孕进度
        familyData.addBirthPro(0.05f);
        DestroySperm(spermData);
     }
