@@ -7,6 +7,32 @@ public class ReflexUtil : ScriptableObject
 {
 
     /// <summary>
+    /// 通过反射自动连接自己的数据
+    /// </summary>
+    /// <param name="obj">对象</param>
+    /// <param name="markStr">标记文字</param>
+    public static void AutoLinkDataForSelf<T>(T obj, string markStr) where T : BaseMonoBehaviour
+    {
+        Type trueType = obj.GetType();
+        FieldInfo[] fields = trueType.GetFields();
+        for (int i = 0; i < fields.Length; i++)
+        {
+            var field = fields[i];
+            if (!field.Name.Contains(markStr))
+            {
+                continue;
+            }
+            Component tmpCom = obj.GetComponent(field.FieldType);
+            if (tmpCom == null)
+            {
+                //Debug.LogWarning("window " + trueType.Name + ",can not find：" + field.Name.Replace(markStr, ""));
+                continue;
+            }
+            field.SetValue(obj, tmpCom);
+        }
+    }
+
+    /// <summary>
     /// 通过反射自动连接空间里数据
     /// </summary>
     /// <param name="obj">对象</param>
