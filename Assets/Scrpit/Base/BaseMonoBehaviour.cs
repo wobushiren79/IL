@@ -52,10 +52,6 @@ public class BaseMonoBehaviour : MonoBehaviour
     /// <typeparam name="T"></typeparam>
     /// <param name="importantType"></param>
     /// <returns></returns>
-    public T Find<T>(ImportantTypeEnum importantType)
-    {
-        return Find<T>(EnumUtil.GetEnumName(importantType));
-    }
     public T Find<T>(string name)
     {
         GameObject objFind = GameObject.Find(name);
@@ -80,11 +76,6 @@ public class BaseMonoBehaviour : MonoBehaviour
         {
             return objFind.GetComponent(type);
         }
-    }
-
-    public T FindInChildren<T>(ImportantTypeEnum importantType)
-    {
-        return FindInChildren<T>(EnumUtil.GetEnumName(importantType));
     }
     public T FindInChildren<T>(string name)
     {

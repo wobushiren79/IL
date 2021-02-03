@@ -5,15 +5,7 @@ using System.Collections.Generic;
 
 public class NpcPasserBuilder : NpcNormalBuilder
 {
-    protected SceneTownManager sceneTownManager;
-
     public List<NpcAIPasserCpt> listPasser = new List<NpcAIPasserCpt>();
-
-    protected override void Awake()
-    {
-        base.Awake();
-        sceneTownManager = Find<SceneTownManager>(ImportantTypeEnum.SceneManager);
-    }
 
     private void Start()
     {
@@ -42,6 +34,7 @@ public class NpcPasserBuilder : NpcNormalBuilder
         while (isBuildNpc)
         {
             yield return new WaitForSeconds(buildInterval);
+            SceneTownManager sceneTownManager = GameScenesHandler.Instance.manager.GetSceneManager<SceneTownManager>();
             Vector3 npcPosition = sceneTownManager.GetRandomTownDoorPosition();
             BuilderPasser(npcPosition);
         }
@@ -75,5 +68,5 @@ public class NpcPasserBuilder : NpcNormalBuilder
         return listPasser;
     }
 
-    
+
 }

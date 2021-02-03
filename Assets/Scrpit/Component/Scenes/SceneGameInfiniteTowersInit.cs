@@ -3,15 +3,9 @@ using System.Collections;
 
 public class SceneGameInfiniteTowersInit : BaseNormalSceneInit
 {
-    protected SceneForInfiniteTowersHandler infiniteTowersHandler;
 
     protected UserInfiniteTowersBean infiniteTowersData;
-    public override void Awake()
-    {
-        base.Awake();
-        infiniteTowersHandler = Find<SceneForInfiniteTowersHandler>(ImportantTypeEnum.SceneHandler);
 
-    }
 
     public override void Start()
     {
@@ -26,7 +20,7 @@ public class SceneGameInfiniteTowersInit : BaseNormalSceneInit
             infiniteTowersData.layer = 10;
             infiniteTowersData.listMembers.Add("");
         }
-        
+        SceneForInfiniteTowersHandler infiniteTowersHandler = GameScenesHandler.Instance.manager.GetSceneHandler<SceneForInfiniteTowersHandler>();
         infiniteTowersHandler.NextLayer(infiniteTowersData);
     }
 }

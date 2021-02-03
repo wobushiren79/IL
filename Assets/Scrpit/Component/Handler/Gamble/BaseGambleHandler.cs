@@ -11,7 +11,7 @@ public class BaseGambleHandler<T,B> : BaseHandler
     protected B gambleBuilder;
     private void Awake()
     {
-        gambleBuilder = Find<B>(ImportantTypeEnum.GambleBuilder);
+        gambleBuilder = FindWithTag<B>(TagInfo.Tag_GambleBuilder);
     }
 
     /// <summary>

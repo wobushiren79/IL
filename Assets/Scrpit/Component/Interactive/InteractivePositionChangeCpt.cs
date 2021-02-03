@@ -12,12 +12,6 @@ public class InteractivePositionChangeCpt : BaseInteractiveCpt
 
     private GameObject mInteractiveObj;
 
-    protected SceneTownManager sceneTownManager;
-    private void Awake()
-    {
-        sceneTownManager = Find<SceneTownManager>(ImportantTypeEnum.SceneManager);
-    }
-
     public override void InteractiveDetection(CharacterInteractiveCpt characterInt)
     {
         if (Input.GetButtonDown(InputInfo.Interactive_E))
@@ -25,6 +19,7 @@ public class InteractivePositionChangeCpt : BaseInteractiveCpt
             if (mInteractiveObj != null)
             {
                 AudioHandler.Instance.PlaySound(AudioSoundEnum.ButtonForNormal);
+                SceneTownManager sceneTownManager = GameScenesHandler.Instance.manager.GetSceneManager<SceneTownManager>();
                 sceneTownManager.GetBuildingDoorPosition(positionChange,out Vector2 outDoorPosition,out Vector2 inDoorPosition);
                 //本身是在外 要转换到里
                 int checkOutOrIn = 0;

@@ -12,13 +12,6 @@ public class InteractivePositionChangeForMountainCpt : BaseInteractiveCpt
 
     private GameObject mInteractiveObj;
 
-    protected SceneMountainManager sceneTownManager;
-
-    private void Awake()
-    {
-        sceneTownManager = Find<SceneMountainManager>(ImportantTypeEnum.SceneManager);
-    }
-
     public override void InteractiveDetection(CharacterInteractiveCpt characterInt)
     {
         if (Input.GetButtonDown(InputInfo.Interactive_E))
@@ -26,6 +19,7 @@ public class InteractivePositionChangeForMountainCpt : BaseInteractiveCpt
             if (mInteractiveObj != null)
             {
                 AudioHandler.Instance.PlaySound(AudioSoundEnum.ButtonForNormal);
+                SceneMountainManager sceneTownManager = GameScenesHandler.Instance.manager.GetSceneManager<SceneMountainManager>();
                 sceneTownManager.GetBuildingDoorPosition(positionChange, out Vector2 outDoorPosition, out Vector2 inDoorPosition);
                 //本身是在外 要转换到里
                 //int checkOutOrIn = 0;

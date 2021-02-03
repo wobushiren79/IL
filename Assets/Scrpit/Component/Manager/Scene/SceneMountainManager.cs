@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using UnityEditor;
 
-public class SceneMountainManager : BaseMonoBehaviour
+public class SceneMountainManager : SceneBaseManager
 {
     //山顶出口
     public Transform exitDoor;

@@ -3,7 +3,7 @@ using UnityEditor;
 using System.Collections.Generic;
 using System;
 
-public class SceneArenaManager : BaseManager
+public class SceneArenaManager : SceneBaseManager
 {
     public Transform arena_1_CombatPosition;
     public Transform arena_1_EjectorPosition_1;

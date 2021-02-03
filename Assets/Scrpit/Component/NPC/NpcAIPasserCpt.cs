@@ -16,9 +16,6 @@ public class NpcAIPasserCpt : BaseNpcAI
         LookOnEvent,//看热闹
     }
 
-    //城镇数据
-    protected SceneTownManager sceneTownManager;
-
     //移动目标点
     public Vector2 movePosition;
     //备用目标点
@@ -32,13 +29,6 @@ public class NpcAIPasserCpt : BaseNpcAI
     public TownBuildingEnum npcLocation;
     //路人意图
     public PasserIntentEnum passerIntent = PasserIntentEnum.LeaveTown;
-
-    public override void Awake()
-    {
-        base.Awake();
-
-        sceneTownManager = Find<SceneTownManager>(ImportantTypeEnum.SceneManager);
-    }
 
     private void FixedUpdate()
     {
@@ -151,6 +141,7 @@ public class NpcAIPasserCpt : BaseNpcAI
                 if (randomIntent == 0)
                 {
                     //开始逛街
+                    SceneTownManager sceneTownManager = GameScenesHandler.Instance.manager.GetSceneManager<SceneTownManager>();
                     movePosition = sceneTownManager.GetRandomBuildingInsidePosition(npcLocation);
                     characterMoveCpt.SetDestination(movePosition);
                     //开始逛街
@@ -237,6 +228,7 @@ public class NpcAIPasserCpt : BaseNpcAI
     public void IntentForStayInTown()
     {
         //开始逛街
+        SceneTownManager sceneTownManager = GameScenesHandler.Instance.manager.GetSceneManager<SceneTownManager>();
         movePosition = sceneTownManager.GetRandomBuildingInsidePosition(TownBuildingEnum.Town);
         characterMoveCpt.SetDestination(movePosition);
     }
@@ -246,8 +238,7 @@ public class NpcAIPasserCpt : BaseNpcAI
     /// </summary>
     public void IntentForLeaveTown()
     {
-        if (sceneTownManager == null)
-            return;
+        SceneTownManager sceneTownManager = GameScenesHandler.Instance.manager.GetSceneManager<SceneTownManager>();
         //获取城镇出口位置
         movePosition = sceneTownManager.GetRandomTownDoorPosition();
         characterMoveCpt.SetDestination(movePosition);
@@ -258,8 +249,7 @@ public class NpcAIPasserCpt : BaseNpcAI
     /// </summary>
     public void IntentForGoToBuilding(TownBuildingEnum buildingEnum)
     {
-        if (sceneTownManager == null)
-            return;
+        SceneTownManager sceneTownManager = GameScenesHandler.Instance.manager.GetSceneManager<SceneTownManager>();
         this.buildingToGo = buildingEnum;
 
         //获取建筑的门
@@ -282,8 +272,9 @@ public class NpcAIPasserCpt : BaseNpcAI
         //设置当前所在地
         SetLocation(buildingEnum);
         //进入建筑后开启自动寻路
-       // characterMoveCpt.OpenNavMeshAgent();
+        // characterMoveCpt.OpenNavMeshAgent();
         //开始逛街
+        SceneTownManager sceneTownManager = GameScenesHandler.Instance.manager.GetSceneManager<SceneTownManager>();
         movePosition = sceneTownManager.GetRandomBuildingInsidePosition(buildingEnum);
         characterMoveCpt.SetDestination(movePosition);
         //开始逛街
@@ -345,6 +336,7 @@ public class NpcAIPasserCpt : BaseNpcAI
     /// <returns></returns>
     public IEnumerator CoroutineForStayTimeCountdown(TownBuildingEnum buildingEnum)
     {
+        SceneTownManager sceneTownManager = GameScenesHandler.Instance.manager.GetSceneManager<SceneTownManager>();
         for (int i = 0; i < 3; i++)
         {
             //重新设置地点

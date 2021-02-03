@@ -51,17 +51,9 @@ public class NpcAIRascalCpt : BaseNpcAI
     //小队中的位置
     public int teamRank;
 
-    //客栈区域数据管理
-    protected SceneInnManager sceneInnManager;
-
     //是否移动  用于追击判定
     protected bool isMove = false;
 
-    public override void Awake()
-    {
-        base.Awake();
-        sceneInnManager = Find<SceneInnManager>(ImportantTypeEnum.SceneManager);
-    }
 
     private void Update()
     {
@@ -251,6 +243,7 @@ public class NpcAIRascalCpt : BaseNpcAI
         //随机获取一个退出点 如果已经有团队的点则不需要获取
         if (leavePosition == Vector3.zero)
         {
+            SceneInnManager sceneInnManager = GameScenesHandler.Instance.manager.GetSceneManager<SceneInnManager>();
             leavePosition = sceneInnManager.GetRandomSceneExportPosition();
         }
         movePosition = leavePosition + new Vector3(Random.Range(-0.5f, 0.5f), Random.Range(-0.5f, 0.5f));
@@ -375,6 +368,7 @@ public class NpcAIRascalCpt : BaseNpcAI
         List<NpcAIRascalCpt> listNpc = NpcHandler.Instance.builderForEvent.GetRascalTeamByTeamCode(teamCode);
         if (rascalIntent == RascalIntentEnum.Leave)
         {
+            SceneInnManager sceneInnManager = GameScenesHandler.Instance.manager.GetSceneManager<SceneInnManager>();
             leavePosition = sceneInnManager.GetRandomSceneExportPosition();
         }
         foreach (NpcAIRascalCpt itemNpc in listNpc)

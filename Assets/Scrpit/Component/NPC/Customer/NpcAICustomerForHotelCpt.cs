@@ -70,19 +70,10 @@ public class NpcAICustomerForHotelCpt : BaseNpcAI
     //表情控制
     public CharacterMoodCpt characterMoodCpt;
 
-    //客栈区域数据管理
-    protected SceneInnManager sceneInnManager;
-
     public OrderForHotel orderForHotel;
 
     //等待动画
     public RuntimeAnimatorController waitIconAnim;
-
-    public override void Awake()
-    {
-        base.Awake();
-        sceneInnManager = Find<SceneInnManager>(ImportantTypeEnum.SceneManager);
-    }
 
     public void Update()
     {
@@ -164,8 +155,7 @@ public class NpcAICustomerForHotelCpt : BaseNpcAI
     /// </summary>
     public void IntentForWalk()
     {
-        if (sceneInnManager == null)
-            return;
+        SceneInnManager sceneInnManager = GameScenesHandler.Instance.manager.GetSceneManager<SceneInnManager>();
         if (transform.position.x > 0)
             //如果角色在右边生成 出口则设置为左边
             movePosition = sceneInnManager.GetRandomSceneExportPosition(1);
@@ -181,6 +171,7 @@ public class NpcAICustomerForHotelCpt : BaseNpcAI
     public void IntentForLeave()
     {
         //随机获取一个退出点
+        SceneInnManager sceneInnManager = GameScenesHandler.Instance.manager.GetSceneManager<SceneInnManager>();
         movePosition = sceneInnManager.GetRandomSceneExportPosition();
         characterMoveCpt.SetDestination(movePosition);
     }

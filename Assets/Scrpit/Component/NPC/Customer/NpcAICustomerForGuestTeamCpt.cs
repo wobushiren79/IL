@@ -80,6 +80,7 @@ public class NpcAICustomerForGuestTeamCpt : NpcAICustomerCpt
                 }
                 if (allReady)
                 {
+                    SceneInnManager sceneInnManager = GameScenesHandler.Instance.manager.GetSceneManager<SceneInnManager>();
                     Vector3 leavePostion = sceneInnManager.GetRandomSceneExportPosition();
                     foreach (NpcAICustomerForGuestTeamCpt teamMember in listTeamMember)
                     {

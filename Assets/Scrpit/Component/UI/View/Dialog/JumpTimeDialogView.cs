@@ -13,12 +13,10 @@ public class JumpTimeDialogView : DialogView
 
     public int jumpNumber = 1;
 
-    protected BaseSceneInit baseSceneInit;
 
     public override void Awake()
     {
         base.Awake();
-        baseSceneInit = Find<BaseSceneInit>(ImportantTypeEnum.Init);
 
         if (btSubNumber)
             btSubNumber.onClick.AddListener(OnClickForSub);
@@ -93,7 +91,7 @@ public class JumpTimeDialogView : DialogView
         base.SubmitOnClick();
         GameTimeHandler.Instance.GetTime(out float hour, out float min);
         GameTimeHandler.Instance.SetTime((jumpNumber + (int)hour), (int)min);
-        baseSceneInit.RefreshScene();
+        GameScenesHandler.Instance.manager.GetSceneInit<BaseSceneInit>().RefreshScene();
         GameDataHandler.Instance.AddTimeProcess(jumpNumber * 60);
     }
 }

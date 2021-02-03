@@ -2,7 +2,7 @@
 using UnityEditor;
 using System.Collections.Generic;
 
-public class SceneInnManager : BaseManager
+public class SceneInnManager : SceneBaseManager
 {
 
     //客栈区域出入口

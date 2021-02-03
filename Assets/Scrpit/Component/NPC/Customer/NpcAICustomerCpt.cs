@@ -36,9 +36,6 @@ public class NpcAICustomerCpt : BaseNpcAI
     //表情控制
     public CharacterMoodCpt characterMoodCpt;
 
-    //客栈区域数据管理
-    protected SceneInnManager sceneInnManager;
-
     //移动目标点
     public Vector3 movePosition;
 
@@ -57,7 +54,6 @@ public class NpcAICustomerCpt : BaseNpcAI
     {
         base.Awake();
         customerType = CustomerTypeEnum.Normal;
-        sceneInnManager = Find<SceneInnManager>(ImportantTypeEnum.SceneManager);
     }
 
     public void Update()
@@ -255,14 +251,17 @@ public class NpcAICustomerCpt : BaseNpcAI
     /// </summary>
     public void IntentForWalk()
     {
-        if (sceneInnManager == null)
-            return;
+        SceneInnManager sceneInnManager = GameScenesHandler.Instance.manager.GetSceneManager<SceneInnManager>();
         if (transform.position.x > 0)
+        {
             //如果角色在右边生成 出口则设置为左边
             movePosition = sceneInnManager.GetRandomSceneExportPosition(1);
+        }
         else
+        {
             //如果角色在左边生成 出口则设置为右边
             movePosition = sceneInnManager.GetRandomSceneExportPosition(0);
+        }
         characterMoveCpt.SetDestination(movePosition);
     }
 
@@ -405,6 +404,7 @@ public class NpcAICustomerCpt : BaseNpcAI
     public virtual void IntentForLeave()
     {
         //随机获取一个退出点
+        SceneInnManager sceneInnManager = GameScenesHandler.Instance.manager.GetSceneManager<SceneInnManager>();
         movePosition = sceneInnManager.GetRandomSceneExportPosition();
         characterMoveCpt.SetDestination(movePosition);
     }

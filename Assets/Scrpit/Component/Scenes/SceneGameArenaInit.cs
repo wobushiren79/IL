@@ -10,13 +10,6 @@ public class SceneGameArenaInit : BaseSceneInit
     //场景数据管理
     protected SceneArenaManager sceneArenaManager;
 
-
-    public override void Awake()
-    {
-        base.Awake();
-        sceneArenaManager = Find<SceneArenaManager>(ImportantTypeEnum.SceneManager);
-    }
-
     public override void Start()
     {
         base.Start();

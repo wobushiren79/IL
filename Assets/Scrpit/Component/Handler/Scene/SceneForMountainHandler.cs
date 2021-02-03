@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using UnityEditor;
 
-public class SceneForMountainHandler : BaseHandler
+public class SceneForMountainHandler : SceneBaseHandler
 {
     public MoveByGameTimeCpt sun;
     public MoveByGameTimeCpt moon;

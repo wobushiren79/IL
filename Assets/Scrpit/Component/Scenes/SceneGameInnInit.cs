@@ -6,14 +6,7 @@ using UnityEngine.SceneManagement;
 using Pathfinding;
 public class SceneGameInnInit : BaseSceneInit, DialogView.IDialogCallBack
 {
-    protected SceneInnManager sceneInnManager;
 
-    public override void Awake()
-    {
-        base.Awake();
-
-        sceneInnManager = Find<SceneInnManager>(ImportantTypeEnum.SceneManager);
-    }
 
     public override void Start()
     {
@@ -21,13 +14,13 @@ public class SceneGameInnInit : BaseSceneInit, DialogView.IDialogCallBack
 
         GameDataBean gameData = GameDataHandler.Instance.manager.GetGameData();
         //初始化场景
-        if (sceneInnManager != null)
-        {
-            InnBuildBean innBuildData = gameData.GetInnBuildData();
-            sceneInnManager.InitScene(innBuildData.innWidth, innBuildData.innHeight);
 
-            //innBuildData.ChangeInnSize(2, innBuildManager, 9, 9);
-        }
+        SceneInnManager sceneInnManager = GameScenesHandler.Instance.manager.GetSceneManager<SceneInnManager>();
+        InnBuildBean innBuildData = gameData.GetInnBuildData();
+        sceneInnManager.InitScene(innBuildData.innWidth, innBuildData.innHeight);
+
+        //innBuildData.ChangeInnSize(2, innBuildManager, 9, 9);
+
 
         //构建地板
         InnBuildHandler.Instance.builderForFloor.StartBuild();

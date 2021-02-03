@@ -3,13 +3,6 @@ using UnityEditor;
 
 public class SceneGameMountainInit : BaseNormalSceneInit
 {
-    public SceneMountainManager sceneMountainManager;
-
-    public override void Awake()
-    {
-        base.Awake();
-        sceneMountainManager = Find<SceneMountainManager>(ImportantTypeEnum.SceneManager);
-    }
 
     public override void Start()
     {
@@ -31,7 +24,7 @@ public class SceneGameMountainInit : BaseNormalSceneInit
     public override ControlForMoveCpt InitUserPosition()
     {
         ControlForMoveCpt moveControl = base.InitUserPosition();
-
+        SceneMountainManager sceneMountainManager = GameScenesHandler.Instance.manager.GetSceneManager<SceneMountainManager>();
         //位置控制
         switch (GameCommonInfo.ScenesChangeData.beforeScene)
         {

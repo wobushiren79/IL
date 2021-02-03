@@ -2,7 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 
-public class SceneInfiniteTowersManager : BaseMonoBehaviour
+public class SceneInfiniteTowersManager : SceneBaseManager
 {
     public Transform tfLayerForNormal_1;
     public Transform tfLayerForBoss_1;

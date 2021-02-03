@@ -2,7 +2,7 @@
 using UnityEditor;
 using System.Collections.Generic;
 
-public class SceneTownManager : BaseManager
+public class SceneTownManager : SceneBaseManager
 {
     //小镇出入口
     public List<Transform> listTownDoor;

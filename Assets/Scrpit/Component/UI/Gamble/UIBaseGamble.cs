@@ -35,8 +35,8 @@ public class UIBaseGamble<T, H, B> : BaseUIComponent, DialogView.IDialogCallBack
     public override void Awake()
     {
         base.Awake();
-        gambleHandler = Find<H>(ImportantTypeEnum.GambleHandler);
-        gambleBuilder = Find<B>(ImportantTypeEnum.GambleBuilder);
+        gambleHandler = FindWithTag<H>(TagInfo.Tag_GambleHandler);
+        gambleBuilder = FindWithTag<B>(TagInfo.Tag_GambleBuilder);
     }
 
     private void Start()

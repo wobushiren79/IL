@@ -24,13 +24,6 @@ public class NpcAISundryCpt : BaseNpcAI
     //增加的好感
     public int addFavorability = 0;
 
-    protected SceneInnManager sceneInnManager;
-
-    public override void Awake()
-    {
-        base.Awake();
-        sceneInnManager = Find<SceneInnManager>(ImportantTypeEnum.SceneManager);
-    }
 
     public virtual void Update()
     {
@@ -157,6 +150,7 @@ public class NpcAISundryCpt : BaseNpcAI
     {
         if(leavePosition== Vector3.zero)
         {
+            SceneInnManager sceneInnManager = GameScenesHandler.Instance.manager.GetSceneManager<SceneInnManager>();
             leavePosition = sceneInnManager.GetRandomSceneExportPosition();
         }
         movePosition = leavePosition + new Vector3(Random.Range(-0.5f, 0.5f), Random.Range(-0.5f, 0.5f));
@@ -171,6 +165,7 @@ public class NpcAISundryCpt : BaseNpcAI
         List<NpcAISundryCpt> listNpc = NpcHandler.Instance.builderForEvent.GetSundryTeamByTeamCode(teamCode);
         if (sundryIntent == SundryIntentEnum.Leave)
         {
+            SceneInnManager sceneInnManager = GameScenesHandler.Instance.manager.GetSceneManager<SceneInnManager>();
             leavePosition = sceneInnManager.GetRandomSceneExportPosition();
         }
         foreach (NpcAISundryCpt itemNpc in listNpc)

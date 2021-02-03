@@ -2,15 +2,10 @@
 using System.Collections;
 using System.Collections.Generic;
 
-public class SceneForInfiniteTowersHandler : BaseHandler
+public class SceneForInfiniteTowersHandler : SceneBaseHandler
 {
-    protected SceneInfiniteTowersManager infiniteTowersManager;
-
     protected UserInfiniteTowersBean infiniteTowersData;
-    public void Awake()
-    {
-        infiniteTowersManager = Find<SceneInfiniteTowersManager>(ImportantTypeEnum.SceneManager);
-    }
+
     public void Start()
     {
         MiniGameHandler.Instance.handlerForCombat.RegisterNotifyForMiniGameStatus(NotifyForMiniGameStatus);
@@ -23,6 +18,7 @@ public class SceneForInfiniteTowersHandler : BaseHandler
 
     public MiniGameCombatBean InitCombat(UserInfiniteTowersBean infiniteTowersData)
     {
+        SceneInfiniteTowersManager infiniteTowersManager = GameScenesHandler.Instance.manager.GetSceneManager<SceneInfiniteTowersManager>();
         //设置标牌
         infiniteTowersManager.SetSignForLayer(infiniteTowersData.layer);
         //设置战斗数据

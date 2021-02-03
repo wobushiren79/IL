@@ -4,13 +4,6 @@ using System;
 
 public class SceneGameTownInit : BaseNormalSceneInit
 {
-    protected SceneTownManager sceneTownManager;
-
-    public override void Awake()
-    {
-        base.Awake();
-        sceneTownManager = Find<SceneTownManager>(ImportantTypeEnum.SceneManager);
-    }
 
     public override void Start()
     {
@@ -36,6 +29,7 @@ public class SceneGameTownInit : BaseNormalSceneInit
     public override ControlForMoveCpt InitUserPosition()
     {
         ControlForMoveCpt moveControl = base.InitUserPosition();
+        SceneTownManager sceneTownManager = GameScenesHandler.Instance.manager.GetSceneManager<SceneTownManager>();
         //位置控制
         switch (GameCommonInfo.ScenesChangeData.beforeScene)
         {

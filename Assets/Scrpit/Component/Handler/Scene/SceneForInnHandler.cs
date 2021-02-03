@@ -3,14 +3,10 @@ using UnityEditor;
 using System.Collections;
 using UnityEngine.AI;
 
-public class SceneForInnHandler : BaseHandler
+public class SceneForInnHandler : SceneBaseHandler
 {
-    protected SceneInnManager sceneInnManager;
-
     private void Awake()
     {
-        sceneInnManager = Find<SceneInnManager>(ImportantTypeEnum.SceneManager);
-
         GameTimeHandler.Instance.RegisterNotifyForTime(NotifyForTime);
     }
     private void OnDestroy()
@@ -23,12 +19,10 @@ public class SceneForInnHandler : BaseHandler
         if (notifyType ==  GameTimeHandler.NotifyTypeEnum.NewDay)
         {
             //初始化场景
-            if (sceneInnManager != null)
-            {
-                GameDataBean gameData = GameDataHandler.Instance.manager.GetGameData();
-                InnBuildBean innBuildData = gameData.GetInnBuildData();
-                sceneInnManager.InitScene(innBuildData.innWidth, innBuildData.innHeight);
-            }
+            GameDataBean gameData = GameDataHandler.Instance.manager.GetGameData();
+            InnBuildBean innBuildData = gameData.GetInnBuildData();
+            SceneInnManager sceneInnManager = GameScenesHandler.Instance.manager.GetSceneManager<SceneInnManager>();
+            sceneInnManager.InitScene(innBuildData.innWidth, innBuildData.innHeight);
             //StartCoroutine(CoroutineForBuildNavMesh());
         }
     }

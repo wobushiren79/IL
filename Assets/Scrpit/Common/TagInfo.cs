@@ -25,9 +25,15 @@ public class TagInfo
     public readonly static string Tag_Cursor = "Cursor";
     public readonly static string Tag_Sun = "Sun";
     public readonly static string Tag_NpcBuilder = "NpcBuilder";
+
     public readonly static string Tag_SceneInit = "SceneInit";
+    public readonly static string Tag_SceneManager = "SceneManager";
+    public readonly static string Tag_SceneHandler = "SceneHandler";
 
     public readonly static string Tag_NpcWorkerContainer = "NpcWorkerContainer";
     public readonly static string Tag_NpcEventContainer = "NpcEventContainer";
     public readonly static string Tag_NpcCustomerContainer = "NpcCustomerContainer";
+
+    public readonly static string Tag_GambleBuilder = "GambleBuilder";
+    public readonly static string Tag_GambleHandler = "GambleHandler";
 }
