@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using UnityEditor;
+using System.Collections.Generic;
 
 public enum MiniGameEnum
 {
@@ -14,6 +15,12 @@ public enum MiniGameEnum
 
 public class MiniGameEnumTools
 {
+    public static MiniGameEnum GetRandomMiniGameTypeForArena()
+    {
+        List<MiniGameEnum> list = new List<MiniGameEnum>(){ MiniGameEnum.Cooking, MiniGameEnum.Barrage, MiniGameEnum.Account, MiniGameEnum.Debate, MiniGameEnum.Combat };
+        return RandomUtil.GetRandomDataByList(list);
+    }
+
     /// <summary>
     /// 获取基础游戏数据
     /// </summary>
