@@ -250,6 +250,9 @@ public class AudioHandler : BaseHandler<AudioHandler, AudioManager>
             case AudioSoundEnum.Thunder:
                 audioClip = manager.GetSoundClip("sound_thunder_1");
                 break;
+            case AudioSoundEnum.Door:
+                audioClip = manager.GetSoundClip("sound_door_1");
+                break;
         }
         if (audioClip != null)
         {

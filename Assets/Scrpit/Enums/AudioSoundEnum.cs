@@ -22,6 +22,7 @@ public enum AudioSoundEnum
     Eat=120,//吃东西
     Lock = 130,//锁
     Clean=140,//清理
+    Door=150,//开门
     Damage = 201,//伤害声
 
     CountDownStart = 211,//倒计时开始

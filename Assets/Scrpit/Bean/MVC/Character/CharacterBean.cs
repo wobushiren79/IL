@@ -62,16 +62,17 @@ public class CharacterBean
         characterData.baseInfo.characterType = (int)NpcTypeEnum.RecruitNormal;
         //设置随机名字
         characterData.baseInfo.name = RandomUtil.GetRandomGenerateChineseWord(UnityEngine.Random.Range(2, 4));
+        float randomRare = UnityEngine.Random.Range(0, 1);
         //生成随机能力
         characterData.attributes.CreateRandomData(
-            10, 50,
-            50, 100,
-            1, 5,
-            1, 5,
-            1, 5,
-            1, 5,
-            1, 5,
-            1, 5);
+                  1, 500,
+                  1, 100,
+                  1, 10,
+                  1, 10,
+                  1, 10,
+                  1, 10,
+                  1, 10,
+                  1, 10);
         //随机身体数据
         characterData.body.CreateRandomBody();
         //根据性别装备服装

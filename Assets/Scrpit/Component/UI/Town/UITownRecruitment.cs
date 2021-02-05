@@ -68,7 +68,8 @@ public class UITownRecruitment : UIBaseOne, DialogView.IDialogCallBack
     public void CreateCandidateData()
     {
         GameCommonInfo.InitRandomSeed();
-        for (int i = 0; i < Random.Range(1, 15); i++)
+        int randomNumber = Random.Range(1, 15);
+        for (int i = 0; i < randomNumber; i++)
         {
             CharacterBean characterData = CharacterBean.CreateRandomWorkerData();
             GameCommonInfo.DailyLimitData.AddRecruitmentCharacter(characterData);
@@ -130,7 +131,7 @@ public class UITownRecruitment : UIBaseOne, DialogView.IDialogCallBack
         dialogData.title = GameCommonInfo.GetUITextById(3062);
         PickForMoneyDialogView pickForMoneyDialog = DialogHandler.Instance.CreateDialog<PickForMoneyDialogView>(DialogEnum.PickForMoney, this, dialogData);
         pickForMoneyDialog.SetData(1, 1, 100);
-        pickForMoneyDialog.SetMaxMoney(99999,99999,99999);
+        pickForMoneyDialog.SetMaxMoney(99999, 99999, 99999);
     }
 
     protected int pickMoneyL = 0;
@@ -149,7 +150,7 @@ public class UITownRecruitment : UIBaseOne, DialogView.IDialogCallBack
         }
         else if (dialogView as FindCharacterDialogView)
         {
-            if (!CheckUtil.StringIsNull(dialogBean.remark)&& dialogBean.remark.Equals("Continue"))
+            if (!CheckUtil.StringIsNull(dialogBean.remark) && dialogBean.remark.Equals("Continue"))
             {
                 ShowPickCharacter();
             }
@@ -157,7 +158,7 @@ public class UITownRecruitment : UIBaseOne, DialogView.IDialogCallBack
             {
                 //如果是招募回调
                 GameDataBean gameData = GameDataHandler.Instance.manager.GetGameData();
-                FindCharacterDialogView findCharacterDialog = (FindCharacterDialogView)dialogView;
+                FindCharacterDialogView findCharacterDialog = dialogView as FindCharacterDialogView;
                 gameData.listWorkerCharacter.Add(findCharacterDialog.characterData);
                 ToastHandler.Instance.ToastHint(string.Format(GameCommonInfo.GetUITextById(1053), findCharacterDialog.characterData.baseInfo.name));
             }
@@ -181,7 +182,7 @@ public class UITownRecruitment : UIBaseOne, DialogView.IDialogCallBack
         }
         gameData.PayMoney(pickMoneyL, pickMoneyM, pickMoneyS);
 
-        
+
 
         DialogBean dialogData = new DialogBean();
         //根据金额获取角色

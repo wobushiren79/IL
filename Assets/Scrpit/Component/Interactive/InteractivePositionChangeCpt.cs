@@ -18,7 +18,7 @@ public class InteractivePositionChangeCpt : BaseInteractiveCpt
         {
             if (mInteractiveObj != null)
             {
-                AudioHandler.Instance.PlaySound(AudioSoundEnum.ButtonForNormal);
+                AudioHandler.Instance.PlaySound(AudioSoundEnum.Door);
                 SceneTownManager sceneTownManager = GameScenesHandler.Instance.manager.GetSceneManager<SceneTownManager>();
                 sceneTownManager.GetBuildingDoorPosition(positionChange,out Vector2 outDoorPosition,out Vector2 inDoorPosition);
                 //本身是在外 要转换到里
