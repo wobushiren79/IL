@@ -11,7 +11,8 @@ public class BaseGambleHandler<T,B> : BaseHandler
     protected B gambleBuilder;
     private void Awake()
     {
-        gambleBuilder = FindWithTag<B>(TagInfo.Tag_GambleBuilder);
+        tag = TagInfo.Tag_Gamble;
+        gambleBuilder = gameObject.AddComponent<B>();
     }
 
     /// <summary>

@@ -9,6 +9,11 @@ public class UIGambleTrickySize : UIBaseGamble<GambleTrickySizeBean,GambleTricky
     public override void OpenUI()
     {
         base.OpenUI();
+    }
+
+    public override void SetRemarkData(string remarkData)
+    {
+        base.SetRemarkData(remarkData);
         //根据等级设置杯子数量
         int level = int.Parse(remarkData);
         gambleData = new GambleTrickySizeBean
@@ -19,8 +24,8 @@ public class UIGambleTrickySize : UIBaseGamble<GambleTrickySizeBean,GambleTricky
             betMaxForMoneyS = 100 * level * 5
         };
         SetData(gambleData);
-        gambleBuilder.SetCup(gambleTrickySizeItem);
-        gambleHandler.InitGame(gambleData);
+        MiniGameHandler.Instance.handlerForGambleSize.SetCup(gambleTrickySizeItem);
+        MiniGameHandler.Instance.handlerForGambleSize.InitGame(gambleData);
     }
 
     public override void CloseUI()

@@ -51,6 +51,22 @@ public class GambleTrickyCupHandler : BaseGambleHandler<GambleTrickyCupBean , Ga
     }
 
     /// <summary>
+    /// 清楚所有杯子
+    /// </summary>
+    public void CleanAllCup()
+    {
+        gambleBuilder.CleanAllCup();
+    }
+    
+    /// <summary>
+    /// 增加杯子
+    /// </summary>
+    public void AddCup(GambleTrickyCupItem gambleTrickyCup)
+    {
+        gambleBuilder.AddCup(gambleTrickyCup);
+    }
+
+    /// <summary>
     /// 协程-开始改变杯子
     /// </summary>
     public IEnumerator CoroutineForStartChangeCup()
@@ -96,6 +112,8 @@ public class GambleTrickyCupHandler : BaseGambleHandler<GambleTrickyCupBean , Ga
             EndGame();
         }
     }
+
+
 
     #region 杯子选择回调
     public void CupChoose(GambleTrickyCupItem chooseCup)

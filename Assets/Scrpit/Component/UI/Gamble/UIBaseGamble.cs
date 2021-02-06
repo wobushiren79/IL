@@ -27,17 +27,33 @@ public class UIBaseGamble<T, H, B> : BaseUIComponent, DialogView.IDialogCallBack
     public Button btStart;
 
     public T gambleData;
-    protected H gambleHandler;
-    protected B gambleBuilder;
+    protected H _gambleHandler;
+    protected B _gambleBuilder;
 
+    public H gambleHandler
+    {
+        get
+        {
+            if (_gambleHandler == null)
+            {
+                _gambleHandler = FindWithTag<H>(TagInfo.Tag_Gamble);
+            }
+            return _gambleHandler;
+        }
+    }
+    public B gambleBuilder
+    {
+        get
+        {
+            if (_gambleBuilder == null)
+            {
+                _gambleBuilder = FindWithTag<B>(TagInfo.Tag_Gamble);
+            }
+            return _gambleBuilder;
+        }
+    }
     public GameObject objWinMoneyModel;
 
-    public override void Awake()
-    {
-        base.Awake();
-        gambleHandler = FindWithTag<H>(TagInfo.Tag_GambleHandler);
-        gambleBuilder = FindWithTag<B>(TagInfo.Tag_GambleBuilder);
-    }
 
     private void Start()
     {

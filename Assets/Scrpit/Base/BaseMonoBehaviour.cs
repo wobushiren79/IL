@@ -98,9 +98,18 @@ public class BaseMonoBehaviour : MonoBehaviour
 
     public T FindWithTag<T>(string tag)
     {
-        GameObject obj = GameObject.FindGameObjectWithTag(tag);
-        if (obj)
-            return obj.GetComponent<T>();
+        GameObject[] objArray = GameObject.FindGameObjectsWithTag(tag);
+        if (CheckUtil.ArrayIsNull(objArray))
+        {
+            return default(T);
+        }
+        for (int i = 0; i < objArray.Length; i++)
+        {
+            GameObject itemObj = objArray[i];
+            T data= itemObj.GetComponent<T>();
+            if (data != null)
+                return data;
+        }
         return default(T);
     }
 
@@ -108,10 +117,14 @@ public class BaseMonoBehaviour : MonoBehaviour
     {
         List<T> listData = new List<T>();
         GameObject[] objArray = GameObject.FindGameObjectsWithTag(tag);
-        for (int i=0;i< objArray.Length;i++)
+        if (CheckUtil.ArrayIsNull(objArray))
+        {
+            return listData;
+        }
+        for (int i = 0; i < objArray.Length; i++)
         {
             GameObject itemObj = objArray[i];
-            T itemCpt= itemObj.GetComponent<T>();
+            T itemCpt = itemObj.GetComponent<T>();
             listData.Add(itemCpt);
         }
         return listData;

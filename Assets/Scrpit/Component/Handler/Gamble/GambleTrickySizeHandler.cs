@@ -46,6 +46,15 @@ public class GambleTrickySizeHandler : BaseGambleHandler<GambleTrickySizeBean, G
         cup.SetStatus(GambleTrickySizeItem.CupStatusEnum.Result);
         StartCoroutine(CoroutineForSettlement());
     }
+    
+    /// <summary>
+    /// 设置杯子
+    /// </summary>
+    /// <param name="gambleTrickySizeItem"></param>
+    public void SetCup(GambleTrickySizeItem gambleTrickySizeItem)
+    {
+        gambleBuilder.SetCup(gambleTrickySizeItem);
+    }
 
     /// <summary>
     /// 协程-开始改变杯子

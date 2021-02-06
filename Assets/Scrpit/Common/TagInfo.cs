@@ -34,6 +34,5 @@ public class TagInfo
     public readonly static string Tag_NpcEventContainer = "NpcEventContainer";
     public readonly static string Tag_NpcCustomerContainer = "NpcCustomerContainer";
 
-    public readonly static string Tag_GambleBuilder = "GambleBuilder";
-    public readonly static string Tag_GambleHandler = "GambleHandler";
+    public readonly static string Tag_Gamble = "Gamble";
 }

@@ -75,6 +75,25 @@ public class MiniGameHandler : BaseHandler<MiniGameHandler, MiniGameManager>
         }
     }
 
+    protected GambleTrickyCupHandler _handlerForGambleCup;
+    public GambleTrickyCupHandler handlerForGambleCup
+    {
+        get
+        {
+            _handlerForGambleCup = GetHandler(_handlerForGambleCup);
+            return _handlerForGambleCup;
+        }
+    }
+
+    protected GambleTrickySizeHandler _handlerForGambleSize;
+    public GambleTrickySizeHandler handlerForGambleSize
+    {
+        get
+        {
+            _handlerForGambleSize = GetHandler(_handlerForGambleSize);
+            return _handlerForGambleSize;
+        }
+    }
     protected T GetHandler<T>(T handler) where T : BaseMonoBehaviour
     {
         if (handler == null)

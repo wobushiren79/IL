@@ -10,9 +10,14 @@ public class UIGambleTrickyCup : UIBaseGamble<GambleTrickyCupBean, GambleTrickyC
 
     public override void OpenUI()
     {
-        if (gambleBuilder)
-            gambleBuilder.CleanAllCup();
-        base.OpenUI();
+        MiniGameHandler.Instance.handlerForGambleCup.CleanAllCup();
+        base.OpenUI();   
+    }
+
+    public override void SetRemarkData(string remarkData)
+    {
+        base.SetRemarkData(remarkData);
+
         //根据等级设置杯子数量
         int level = int.Parse(remarkData);
         gambleData = new GambleTrickyCupBean
@@ -24,13 +29,13 @@ public class UIGambleTrickyCup : UIBaseGamble<GambleTrickyCupBean, GambleTrickyC
             betMaxForMoneyS = 100 * level * 5
         };
         SetData(gambleData);
-        gambleHandler.InitGame(gambleData);
+        MiniGameHandler.Instance.handlerForGambleCup.InitGame(gambleData);
     }
 
     public override void CloseUI()
     {
         base.CloseUI();
-        gambleBuilder.CleanAllCup();
+        MiniGameHandler.Instance.handlerForGambleCup.CleanAllCup();
     }
 
     public override void SetData(GambleTrickyCupBean gambleData)
@@ -63,7 +68,7 @@ public class UIGambleTrickyCup : UIBaseGamble<GambleTrickyCupBean, GambleTrickyC
             RectTransform rtItem = ((RectTransform)objItemCup.transform);
             rtItem.anchoredPosition = new Vector2(itemW * (i + 1) - width / 2, rtItem.anchoredPosition.y);
 
-            gambleBuilder.AddCup(itemCup);
+            MiniGameHandler.Instance.handlerForGambleCup.AddCup(itemCup);
         }
     }
 

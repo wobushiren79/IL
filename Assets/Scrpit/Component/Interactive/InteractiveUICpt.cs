@@ -27,16 +27,16 @@ public class InteractiveUICpt : BaseInteractiveCpt
                 else
                 {
                     baseUIComponent = UIHandler.Instance.manager.OpenUIAndCloseOther<BaseUIComponent>(uiType);
+                    if (!CheckUtil.StringIsNull(remarkData))
+                        baseUIComponent.SetRemarkData(remarkData);
                 }
             }
             else
             {
                 baseUIComponent = UIHandler.Instance.manager.OpenUIAndCloseOther<BaseUIComponent>(uiType);
-            }
-            if (!CheckUtil.StringIsNull(remarkData))
-            {
-                baseUIComponent.SetRemarkData(remarkData);
-            }
+                if (!CheckUtil.StringIsNull(remarkData))
+                    baseUIComponent.SetRemarkData(remarkData);
+            }    
         }
     }
 

@@ -10,7 +10,7 @@ public class GameDataManager : BaseManager, IGameDataView, IUserRevenueView
     public UserRevenueController userRevenueController;
 
     //游戏数据
-    protected GameDataBean gameData;
+    public GameDataBean gameData;
 
     private void Awake()
     {
