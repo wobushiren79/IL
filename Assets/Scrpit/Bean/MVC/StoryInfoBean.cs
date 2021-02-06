@@ -22,4 +22,9 @@ public class StoryInfoBean : BaseBean
 
     //触发条件
     public string trigger_condition;
+
+    public ScenesEnum GetStoryScene()
+    {
+        return (ScenesEnum)story_scene;
+    }
 }

@@ -4,7 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System;
 
-public class StoryBuilder : BaseMonoBehaviour, StoryInfoManager.CallBack
+public class StoryBuilder : BaseMonoBehaviour
 {
     [Header("控件")]
     public GameObject objNpcModel;
@@ -35,7 +35,7 @@ public class StoryBuilder : BaseMonoBehaviour, StoryInfoManager.CallBack
     public void BuildStory(StoryInfoBean storyInfo)
     {
         this.storyInfo = storyInfo;
-        StoryInfoHandler.Instance.manager.GetStoryDetailsById(storyInfo.id, this);
+        StoryInfoHandler.Instance.manager.GetStoryDetailsById(storyInfo.id, SetStoryDetailsData);
     }
 
     /// <summary>
@@ -276,7 +276,7 @@ public class StoryBuilder : BaseMonoBehaviour, StoryInfoManager.CallBack
     }
 
     #region  获取故事详情回调
-    public void GetStoryDetailsSuccess(List<StoryInfoDetailsBean> listData)
+    public void SetStoryDetailsData(List<StoryInfoDetailsBean> listData)
     {
         ClearStoryScene();
         listStoryDetails = listData;

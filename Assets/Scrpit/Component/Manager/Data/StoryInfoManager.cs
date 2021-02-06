@@ -1,17 +1,17 @@
 ﻿using UnityEngine;
 using UnityEditor;
 using System.Collections.Generic;
+using System;
 
 public class StoryInfoManager : BaseManager, IStoryInfoView
 {
     public StoryInfoController storyInfoController;
-    public Dictionary<long, StoryInfoBean> mapStory;
-
-    public CallBack callBack;
+    public Dictionary<long, StoryInfoBean> mapStory = new Dictionary<long, StoryInfoBean>();
 
     private void Awake()
     {
         storyInfoController = new StoryInfoController(this, this);
+        storyInfoController.GetAllStoryInfo(null);
     }
 
     /// <summary>
@@ -24,21 +24,20 @@ public class StoryInfoManager : BaseManager, IStoryInfoView
         return GetDataById(id, mapStory);
     }
 
-    public void GetStoryDetailsById(long id, CallBack callBack)
+    public void GetStoryDetailsById(long id, Action<List<StoryInfoDetailsBean>> action)
     {
-        this.callBack = callBack;
-        storyInfoController.GetStoryDetailsById(id);
+        storyInfoController.GetStoryDetailsById(id, action);
     }
 
     /// <summary>
     /// 检测故事是否触发
     /// </summary>
     /// 
-    public StoryInfoBean CheckStory(GameDataBean gameData)
+    public StoryInfoBean CheckStory(GameDataBean gameData,ScenesEnum scenesEnum)
     {
-        return CheckStory(gameData, TownBuildingEnum.Town, 2);
+        return CheckStory(gameData, scenesEnum,TownBuildingEnum.Town, 2);
     }
-    public StoryInfoBean CheckStory(GameDataBean gameData, TownBuildingEnum positionType, int outOrIn)
+    public StoryInfoBean CheckStory(GameDataBean gameData,ScenesEnum scenesEnum, TownBuildingEnum positionType, int outOrIn)
     {
         if (mapStory == null)
             return null;
@@ -46,6 +45,11 @@ public class StoryInfoManager : BaseManager, IStoryInfoView
         {
             StoryInfoBean storyInfo = mapStory[key];
             //TODO 检测条件
+            //判断场景是否符合
+            if (scenesEnum != storyInfo.GetStoryScene())
+            {
+                continue;
+            }
             //判断该事件是否可重复触发
             if (storyInfo.trigger_loop == 0)
             {
@@ -53,6 +57,7 @@ public class StoryInfoManager : BaseManager, IStoryInfoView
                 if (gameData.CheckTriggeredEvent(storyInfo.id))
                     continue;
             }
+            //检测触发条件
             if (!EventTriggerEnumTools.CheckIsAllTrigger(gameData, storyInfo.trigger_condition))
             {
                 continue;
@@ -69,21 +74,6 @@ public class StoryInfoManager : BaseManager, IStoryInfoView
         return null;
     }
     #region 故事数据回调
-    public void GetStoryInfoSuccess(List<StoryInfoBean> listData)
-    {
-        mapStory = new Dictionary<long, StoryInfoBean>();
-        foreach (StoryInfoBean itemData in listData)
-        {
-            mapStory.Add(itemData.id, itemData);
-        }
-    }
-
-    public void GetStoryDetailsByIdSuccess(List<StoryInfoDetailsBean> listData)
-    {
-        if (callBack != null)
-            callBack.GetStoryDetailsSuccess(listData);
-    }
-
     public void GetStoryInfoFail()
     {
     }
@@ -91,10 +81,21 @@ public class StoryInfoManager : BaseManager, IStoryInfoView
     public void GetStoryDetailsFail()
     {
     }
+
+    public void GetStoryInfoSuccess(List<StoryInfoBean> listData, Action<List<StoryInfoBean>> action)
+    {
+        mapStory = new Dictionary<long, StoryInfoBean>();
+        foreach (StoryInfoBean itemData in listData)
+        {
+            mapStory.Add(itemData.id, itemData);
+        }
+        action?.Invoke(listData);
+    }
+
+    public void GetStoryDetailsByIdSuccess(List<StoryInfoDetailsBean> listData, Action<List<StoryInfoDetailsBean>> action)
+    {
+        action?.Invoke(listData);
+    }
     #endregion
 
-    public interface CallBack
-    {
-        void GetStoryDetailsSuccess(List<StoryInfoDetailsBean> listData);
-    }
 }

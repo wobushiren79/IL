@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using UnityEditor;
 using System.Collections.Generic;
+using System;
 
 public class StoryInfoController : BaseMVCController<StoryInfoModel, IStoryInfoView>
 {
@@ -13,29 +14,29 @@ public class StoryInfoController : BaseMVCController<StoryInfoModel, IStoryInfoV
 
     }
 
-    public void GetStoryInfoByScene(ScenesEnum scene)
+    public void GetStoryInfoByScene(ScenesEnum scene, Action<List<StoryInfoBean>> action)
     {
         List<StoryInfoBean> listData = GetModel().GetStoryInfoByScene(scene);
         if (listData != null)
-            GetView().GetStoryInfoSuccess(listData);
+            GetView().GetStoryInfoSuccess(listData, action);
         else
             GetView().GetStoryInfoFail();
     }
 
-    public void GetAllStoryInfo()
+    public void GetAllStoryInfo(Action<List<StoryInfoBean>> action)
     {
         List<StoryInfoBean> listData = GetModel().GetAllStoryInfo();
         if (listData != null)
-            GetView().GetStoryInfoSuccess(listData);
+            GetView().GetStoryInfoSuccess(listData, action);
         else
             GetView().GetStoryInfoFail();
     }
 
-    public void GetStoryDetailsById(long id)
+    public void GetStoryDetailsById(long id, Action<List<StoryInfoDetailsBean>> action)
     {
         List<StoryInfoDetailsBean> listData = GetModel().GetStoryDetailsById(id);
         if (listData != null)
-            GetView().GetStoryDetailsByIdSuccess(listData);
+            GetView().GetStoryDetailsByIdSuccess(listData, action);
         else
             GetView().GetStoryDetailsFail();
     }

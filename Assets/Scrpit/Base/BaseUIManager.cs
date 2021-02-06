@@ -60,6 +60,11 @@ public class BaseUIManager : BaseManager
                 return itemUI as T;
             }
         }
+        T uiComponent = CreateUI<T>(uiName);
+        if (uiComponent)
+        {
+            return uiComponent as T;
+        }
         return null;
     }
 
@@ -100,38 +105,24 @@ public class BaseUIManager : BaseManager
     /// <param name="uiName"></param>
     public T OpenUIByName<T>(string uiName) where T: BaseUIComponent 
     {
-        BaseUIComponent uiComponent = null;
         if (CheckUtil.StringIsNull(uiName))
-            return uiComponent as T;
-        bool hasData = false;
+            return null;
         for (int i = 0; i < uiList.Count; i++)
         {
             BaseUIComponent itemUI = uiList[i];
             if (itemUI.name.Equals(uiName))
             {
-                uiComponent = itemUI;
                 itemUI.OpenUI();
-                hasData = true;
+                return itemUI as T;
             }
         }
-        if (!hasData)
+        T uiComponent = CreateUI<T>(uiName);
+        if (uiComponent)
         {
-            GameObject uiModel = LoadAssetUtil.SyncLoadAsset<GameObject>("ui/ui", uiName);
-            //BaseUIComponent uiModel = LoadResourcesUtil.SyncLoadData<BaseUIComponent>("UI/"+ uiName);
-            if (uiModel)
-            {
-                GameObject objUIComponent = Instantiate(gameObject, uiModel.gameObject);
-                objUIComponent.name =objUIComponent.name.Replace("(Clone)", "");
-                uiComponent = objUIComponent.GetComponent<BaseUIComponent>();
-                uiComponent.OpenUI();
-                uiList.Add(uiComponent);
-            }
-            else
-            {
-                LogUtil.LogError("没有找到指定UI："+ "ui/ui " + uiName);
-            }
+            uiComponent.OpenUI();
+            return uiComponent;
         }
-        return uiComponent as T;
+        return null;
     }
 
     /// <summary>
@@ -281,5 +272,31 @@ public class BaseUIManager : BaseManager
     public RectTransform GetContainer()
     {
         return (RectTransform)gameObject.transform;
+    }
+
+    /// <summary>
+    /// 创建UI
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
+    /// <param name="uiName"></param>
+    /// <returns></returns>
+    protected T CreateUI<T>(string uiName) where T : BaseUIComponent
+    {
+        GameObject uiModel = LoadAssetUtil.SyncLoadAsset<GameObject>("ui/ui", uiName);
+        //BaseUIComponent uiModel = LoadResourcesUtil.SyncLoadData<BaseUIComponent>("UI/"+ uiName);
+        if (uiModel)
+        {
+            GameObject objUIComponent = Instantiate(gameObject, uiModel.gameObject);
+            objUIComponent.SetActive(false);
+            objUIComponent.name = objUIComponent.name.Replace("(Clone)", "");
+            T uiComponent = objUIComponent.GetComponent<T>();
+            uiList.Add(uiComponent);
+            return uiComponent;
+        }
+        else
+        {
+            LogUtil.LogError("没有找到指定UI：" + "ui/ui " + uiName);
+            return null;
+        }
     }
 }

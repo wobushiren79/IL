@@ -430,7 +430,7 @@ public class UIGameMain : BaseUIComponent, DialogView.IDialogCallBack, IRadioGro
     public void OpenMenuUI()
     {
         AudioHandler.Instance.PlaySound(AudioSoundEnum.ButtonForNormal);
-        UIHandler.Instance.manager.OpenUIAndCloseOther<UIGameMain>(UIEnum.GameMenu);
+        UIHandler.Instance.manager.OpenUIAndCloseOther<UIGameMenu>(UIEnum.GameMenu);
     }
 
     public void OpenBackpackUI()

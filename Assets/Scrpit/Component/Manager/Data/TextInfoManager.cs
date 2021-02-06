@@ -103,6 +103,7 @@ public class TextInfoManager : BaseManager, ITextInfoView
         //继续查询该人物的所有对话
         CharacterFavorabilityBean characterFavorability = gameData.GetCharacterFavorability(npcInfo.id);
         GetTextForTalkByMinFavorability(npcInfo.id, characterFavorability.favorabilityLevel, action);
+        action?.Invoke(listTextData);
     }
 
     /// <summary>
@@ -215,8 +216,9 @@ public class TextInfoManager : BaseManager, ITextInfoView
         mapTalkRecruitData = new Dictionary<long, List<TextInfoBean>>();
         mapTalkRascalData = new Dictionary<long, List<TextInfoBean>>();
         mapTalkExchangeData = new Dictionary<long, List<TextInfoBean>>();
-        foreach (TextInfoBean itemTalkInfo in listData)
+        for (int i=0;i< listData.Count;i++)
         {
+            TextInfoBean itemTalkInfo = listData[i];
             long markId = itemTalkInfo.mark_id;
             Dictionary<long, List<TextInfoBean>> addMap = new Dictionary<long, List<TextInfoBean>>();
             switch (itemTalkInfo.GetTextTalkType())
@@ -248,6 +250,7 @@ public class TextInfoManager : BaseManager, ITextInfoView
                 addMap.Add(markId, listTemp);
             }
         }
+        //action?.Invoke(listData);
     }
 
     public void GetTextInfoForTalkByTypeSuccess(TextTalkTypeEnum textTalkType, List<TextInfoBean> listData, Action<List<TextInfoBean>> action)

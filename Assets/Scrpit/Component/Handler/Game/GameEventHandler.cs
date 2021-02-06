@@ -62,7 +62,10 @@ public class GameEventHandler : BaseHandler<GameEventHandler, GameEventManager>,
         //移除所有观察者
         notifyForEvent = null;
         //显示重要NPC
-        NpcHandler.Instance.buildForImportant.ShowNpc();
+        if (NpcHandler.Instance.buildForImportant)
+        {
+            NpcHandler.Instance.buildForImportant.ShowNpc();
+        }
     }
 
     public void RegisterNotifyForEvent(Action<NotifyEventTypeEnum, object[]> notifyForEvent)
@@ -240,7 +243,10 @@ public class GameEventHandler : BaseHandler<GameEventHandler, GameEventManager>,
         BaseControl baseControl = GameControlHandler.Instance.StartControl<ControlForStoryCpt>(GameControlHandler.ControlEnum.Story);
         baseControl.transform.position = new Vector3(storyInfo.position_x, storyInfo.position_y);
         //隐藏重要NPC
-        NpcHandler.Instance.buildForImportant.HideNpc();
+        if (NpcHandler.Instance.buildForImportant!= null)
+        {
+            NpcHandler.Instance.buildForImportant.HideNpc();
+        } 
         UIHandler.Instance.manager.CloseAllUI();
         //设置文本的回调
         UIGameText uiGameText = UIHandler.Instance.manager.GetUI<UIGameText>(UIEnum.GameText);
@@ -276,7 +282,7 @@ public class GameEventHandler : BaseHandler<GameEventHandler, GameEventManager>,
             return false;
         }
         GameDataBean gameData = GameDataHandler.Instance.manager.GetGameData();
-        StoryInfoBean storyInfo = StoryInfoHandler.Instance.manager.CheckStory(gameData, positionType, OutOrIn);
+        StoryInfoBean storyInfo = StoryInfoHandler.Instance.manager.CheckStory(gameData,SceneUtil.GetCurrentScene(),positionType, OutOrIn);
         if (storyInfo != null)
         {
             EventTriggerForStory(storyInfo);
@@ -294,7 +300,7 @@ public class GameEventHandler : BaseHandler<GameEventHandler, GameEventManager>,
             return false;
         }
         GameDataBean gameData = GameDataHandler.Instance.manager.GetGameData();
-        StoryInfoBean storyInfo = StoryInfoHandler.Instance.manager.CheckStory(gameData);
+        StoryInfoBean storyInfo = StoryInfoHandler.Instance.manager.CheckStory(gameData,SceneUtil.GetCurrentScene());
         if (storyInfo != null)
         {
             EventTriggerForStory(storyInfo);
