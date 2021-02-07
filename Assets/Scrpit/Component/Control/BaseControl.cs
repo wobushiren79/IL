@@ -179,26 +179,26 @@ public class BaseControl : BaseMonoBehaviour
     {
         if (Input.GetButton(InputInfo.Zoom_In))
         {
-            ZoomCamera(-0.1f);
+            ZoomCamera(-2f);
         }
         if (Input.GetButton(InputInfo.Zoom_Out))
         {
-            ZoomCamera(+0.1f);
+            ZoomCamera(+2f);
         }
         if (Input.GetAxis(InputInfo.Zoom_Mouse) > 0)
         {
-            ZoomCamera(-0.2f);
+            ZoomCamera(-15f);
         }
         if (Input.GetAxis(InputInfo.Zoom_Mouse) < 0)
         {
-            ZoomCamera(+0.2f);
+            ZoomCamera(+15f);
         }
     }
 
     public void ZoomCamera(float addZoom)
     {
         float size = GetCameraOrthographicSize();
-        size += addZoom;
+        size += (addZoom * Time.deltaTime);
         if (size < 7)
         {
             size = 7;

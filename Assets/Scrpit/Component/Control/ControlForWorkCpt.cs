@@ -274,7 +274,7 @@ public class ControlForWorkCpt : BaseControl, DialogView.IDialogCallBack
             return;
         base.HandleForMouseMove(out float moveX, out float moveY);
         base.HandleForMouseButtonMove(out float moveButtonX, out float moveButtonY);
-        cameraMove.MoveForUnscaled(moveX + moveButtonX, moveY + moveButtonY);
+        cameraMove.MoveForUnscaled(moveX + moveButtonX*3, moveY + moveButtonY*3);
     }
 
     /// <summary>
