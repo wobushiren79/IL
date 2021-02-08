@@ -4,10 +4,12 @@ using UnityEditor;
 public class WeatherForFogCpt : WeatherCpt
 {
     public GameObject objFog;
+    public ParticleSystem psFog;
 
     public override void OpenWeather(WeatherBean weatherData)
     {
         base.OpenWeather(weatherData);
+        InitPS();
         objFog.SetActive(false);
         switch (weatherData.weatherType)
         {
@@ -22,4 +24,10 @@ public class WeatherForFogCpt : WeatherCpt
         objFog.SetActive(true);
     }
 
+    public void InitPS()
+    {
+        SceneBaseManager sceneBaseManager = GameScenesHandler.Instance.manager.GetSceneManager<SceneBaseManager>();
+        ParticleSystem.ShapeModule shapeModule = psFog.shape;
+        shapeModule.scale = sceneBaseManager.scaleRangeForFog;
+    }
 }

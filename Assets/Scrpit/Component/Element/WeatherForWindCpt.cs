@@ -13,7 +13,7 @@ public class WeatherForWindCpt : WeatherCpt
     public override void OpenWeather(WeatherBean weatherData)
     {
         base.OpenWeather(weatherData);
-        objWind_1.SetActive(true);
+        objWind_1.SetActive(false);
         objWind_2.SetActive(false);
         objDefoliation_1.SetActive(false);
         switch (weatherData.weatherType)
@@ -31,8 +31,7 @@ public class WeatherForWindCpt : WeatherCpt
 
     public override void CloseWeather()
     {
-        
-            AudioHandler.Instance.StopEnvironment();
+        AudioHandler.Instance.StopEnvironment();
         objWind_1.SetActive(false);
         objWind_2.SetActive(false);
         objDefoliation_1.SetActive(false);
@@ -44,7 +43,14 @@ public class WeatherForWindCpt : WeatherCpt
     /// </summary>
     public void SetWind()
     {
+        objWind_1.SetActive(true);
+        ParticleSystem.ShapeModule shapeModuleWind_1 = psWind_1.shape;
+        shapeModuleWind_1.position = GameScenesHandler.Instance.manager.GetSceneManager<SceneBaseManager>().positionForWind;
+        shapeModuleWind_1.scale = GameScenesHandler.Instance.manager.GetSceneManager<SceneBaseManager>().scaleForWind;
+
         objWind_2.SetActive(true);
+        ParticleSystem.ShapeModule shapeModuleWind_2 = psWind_1.shape;
+        shapeModuleWind_2.scale = GameScenesHandler.Instance.manager.GetSceneManager<SceneBaseManager>().scaleRangeForWind;
     }
 
     /// <summary>
@@ -52,7 +58,17 @@ public class WeatherForWindCpt : WeatherCpt
     /// </summary>
     public void SetDefoliation()
     {
+        objWind_1.SetActive(true);
+        ParticleSystem.ShapeModule shapeModule = psWind_1.shape;
+        shapeModule.position = GameScenesHandler.Instance.manager.GetSceneManager<SceneBaseManager>().positionForWind;
+        shapeModule.scale = GameScenesHandler.Instance.manager.GetSceneManager<SceneBaseManager>().scaleForWind;
+
         objDefoliation_1.SetActive(true);
+        ParticleSystem.ShapeModule shapeModuleDefoliation = psDefoliation_1.shape;
+        shapeModuleDefoliation.position = GameScenesHandler.Instance.manager.GetSceneManager<SceneBaseManager>().positionForWind;
+        shapeModuleDefoliation.scale = GameScenesHandler.Instance.manager.GetSceneManager<SceneBaseManager>().scaleForWind;
     }
+
+
 
 }

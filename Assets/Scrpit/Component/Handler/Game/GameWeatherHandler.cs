@@ -29,7 +29,7 @@ public class GameWeatherHandler : BaseHandler<GameWeatherHandler, GameWeatherMan
             weatherStatusRandom = RandomUtil.GetRandomDataByList(listWeather);
         }
         WeatherBean weatherData = new WeatherBean(weatherStatusRandom);
-        SetWeahter(weatherData);
+        SetWeather(weatherData);
         return weatherData;
     }
 
@@ -37,17 +37,13 @@ public class GameWeatherHandler : BaseHandler<GameWeatherHandler, GameWeatherMan
     /// 设置天气
     /// </summary>
     /// <param name="weatherStatus"></param>
-    public void SetWeahter(WeatherBean weatherData)
+    public void SetWeather(WeatherBean weatherData)
     {
         if (weatherData == null)
             return;
         manager.weatherData = weatherData;
 
-        manager.weatherSunny.CloseWeather();
-        manager.weatherRain.CloseWeather();
-        manager.weatherFog.CloseWeather();
-        manager.weatherSnow.CloseWeather();
-        manager.weatherWind.CloseWeather();
+        CloseWeather();
 
         Color sunLightOffset = Color.black;
         switch (weatherData.weatherType)
@@ -79,5 +75,16 @@ public class GameWeatherHandler : BaseHandler<GameWeatherHandler, GameWeatherMan
         GameLightHandler.Instance.sunLight.SetOffsetColor(sunLightOffset);
     }
 
+    /// <summary>
+    /// 关闭所有天气
+    /// </summary>
+    public void CloseWeather()
+    {
+        manager.weatherSunny.CloseWeather();
+        manager.weatherRain.CloseWeather();
+        manager.weatherFog.CloseWeather();
+        manager.weatherSnow.CloseWeather();
+        manager.weatherWind.CloseWeather();
+    }
 
 }

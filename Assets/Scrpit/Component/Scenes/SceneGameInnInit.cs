@@ -34,7 +34,7 @@ public class SceneGameInnInit : BaseSceneInit, DialogView.IDialogCallBack
         InnHandler.Instance.InitRecord();
 
         //设置天气
-        GameWeatherHandler.Instance.SetWeahter(GameCommonInfo.CurrentDayData.weatherToday);
+        GameWeatherHandler.Instance.SetWeather(GameCommonInfo.CurrentDayData.weatherToday);
 
         //增加回调
         GameTimeHandler.Instance.RegisterNotifyForTime(NotifyForTime);
@@ -91,7 +91,7 @@ public class SceneGameInnInit : BaseSceneInit, DialogView.IDialogCallBack
         {
             //冬月的第一天必定下大雪
             weatherData = new WeatherBean(WeatherTypeEnum.Snow);
-            GameWeatherHandler.Instance.SetWeahter(weatherData);
+            GameWeatherHandler.Instance.SetWeather(weatherData);
         }
         else
         {

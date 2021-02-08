@@ -19,6 +19,7 @@ public class WeatherForRainCpt : WeatherCpt
     public override void OpenWeather(WeatherBean weatherData)
     {
         base.OpenWeather(weatherData);
+        InitPS();
         objRain.SetActive(true);
         objThunder.SetActive(false);
         switch (weatherData.weatherType)
@@ -47,12 +48,20 @@ public class WeatherForRainCpt : WeatherCpt
         base.CloseWeather();
     }
 
+    public void InitPS()
+    {
+        SceneBaseManager sceneBaseManager = GameScenesHandler.Instance.manager.GetSceneManager<SceneBaseManager>();
+        ParticleSystem.ShapeModule shapeModule = psRain.shape;
+        shapeModule.position = sceneBaseManager.positionForRain;
+        shapeModule.scale = sceneBaseManager.scaleForRain;
+    }
+
     /// <summary>
     /// 设置小雨
     /// </summary>
     public void SetLightRain()
     {
-        ParticleSystem.EmissionModule emissionModule = psRain.emission;
+        ParticleSystem.EmissionModule emissionModule = psRain.emission;      
         emissionModule.rateOverTime = Random.Range(100, 200);
     }
 

@@ -6,6 +6,8 @@ public class GameScenesHandler : BaseHandler<GameScenesHandler, GameScenesManage
 
     public void ChangeScene(ScenesEnum scenes)
     {
+        //关门所有天气
+        GameWeatherHandler.Instance.CloseWeather();
         //停止所有控制
         GameControlHandler.Instance.EndAllControl();
         //停止时间
