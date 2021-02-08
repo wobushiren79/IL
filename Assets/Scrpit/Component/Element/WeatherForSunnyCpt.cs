@@ -11,7 +11,7 @@ public class WeatherForSunnyCpt : WeatherCpt
         objCloudy.SetActive(false);
         switch (weatherData.weatherType)
         {
-            case WeatherTypeEnum.Snow:
+            case WeatherTypeEnum.Sunny:
                 SetSunny();
                 break;
             case WeatherTypeEnum.Cloudy:

@@ -3,7 +3,7 @@ using UnityEditor;
 using System.Collections.Generic;
 using System;
 
-public class GameWeatherHandler : BaseHandler<GameWeatherHandler,GameWeatherManager>
+public class GameWeatherHandler : BaseHandler<GameWeatherHandler, GameWeatherManager>
 {
 
     /// <summary>
@@ -60,7 +60,7 @@ public class GameWeatherHandler : BaseHandler<GameWeatherHandler,GameWeatherMana
             case WeatherTypeEnum.Rain:
             case WeatherTypeEnum.Thunderstorm:
                 manager.weatherRain.OpenWeather(weatherData);
-                sunLightOffset = new Color(-0.2f,-0.2f,-0.2f,1);
+                sunLightOffset = new Color(-0.2f, -0.2f, -0.2f, 1);
                 break;
             case WeatherTypeEnum.Fog:
                 manager.weatherFog.OpenWeather(weatherData);

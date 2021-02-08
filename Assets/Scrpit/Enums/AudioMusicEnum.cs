@@ -8,4 +8,5 @@ public enum AudioMusicEnum
     Main=3,
     Game=4,
     Battle=5,
+    Rest=6,
 }

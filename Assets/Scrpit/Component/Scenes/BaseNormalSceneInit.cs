@@ -32,7 +32,9 @@ public abstract class BaseNormalSceneInit : BaseSceneInit, DialogView.IDialogCal
     {
         //设置天气
         if (SceneUtil.GetCurrentScene() == ScenesEnum.GameInnScene || SceneUtil.GetCurrentScene() == ScenesEnum.GameTownScene)
+        {
             GameWeatherHandler.Instance.SetWeahter(GameCommonInfo.CurrentDayData.weatherToday);
+        }
         //如果是在室内
         if (GameControlHandler.Instance.manager.GetControl().transform.position.y < -50)
         {

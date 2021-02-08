@@ -45,6 +45,7 @@ public class InnHandler : BaseHandler<InnHandler, InnManager>
 
     //排队等待接待的住宿
     public List<OrderForHotel> hotelQueue = new List<OrderForHotel>();
+    //排队清理床单
     public List<OrderForHotel> bedCleanQueue = new List<OrderForHotel>();
 
     //订单列表
@@ -823,9 +824,9 @@ public class InnHandler : BaseHandler<InnHandler, InnManager>
     {
         if (innStatus == InnStatusEnum.Open)
         {
-            //每隔0.1s 检测一次
+            //每隔0.5s 检测一次
             timerForInnHandle += Time.time;
-            if (timerForInnHandle <= 0.1f)
+            if (timerForInnHandle <= 0.2f)
             {
                 return;
             }

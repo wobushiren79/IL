@@ -72,7 +72,6 @@ public class GameControlHandler : BaseHandler<GameControlHandler, GameControlMan
         {
             if (itemDic.Key == controlEnum)
             {
-                itemDic.Value.StartControl();
                 baseControl = itemDic.Value;
             }
             else
@@ -83,8 +82,8 @@ public class GameControlHandler : BaseHandler<GameControlHandler, GameControlMan
         if (baseControl == null)
         {
             baseControl = manager.GetControl<T>(controlEnum);
-            baseControl.StartControl();
         }
+        baseControl.StartControl();
         return baseControl as T;
     }
 }

@@ -114,9 +114,18 @@ public class AudioHandler : BaseHandler<AudioHandler, AudioManager>
                 List<AudioClip> listBattleClip = new List<AudioClip>()
                 {
                     manager.GetMusicClip("music_4"),
-                    manager.GetMusicClip("music_8")
+                    manager.GetMusicClip("music_8"),
+                    manager.GetMusicClip("music_11")
                 };
                 audioClip = RandomUtil.GetRandomDataByList(listBattleClip);
+                break;
+            case AudioMusicEnum.Rest:
+                List<AudioClip> listRestClip = new List<AudioClip>()
+                {
+                    manager.GetMusicClip("music_9"),
+                    manager.GetMusicClip("music_10")
+                };
+                audioClip = RandomUtil.GetRandomDataByList(listRestClip);
                 break;
         }
         if (audioClip != null)
