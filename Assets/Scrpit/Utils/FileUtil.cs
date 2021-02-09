@@ -1,7 +1,6 @@
 ﻿using UnityEngine;
 using System;
 using System.IO;
-using System.Windows.Forms;
 using System.Text;
 
 public class FileUtil
@@ -67,29 +66,29 @@ public class FileUtil
     /// </summary>
     /// <param name="filter">需要打开的文件类型</param>
     /// <returns></returns>
-    public static string OpenFileDialog(string filter)
-    {
-        OpenFileDialog ofd = new OpenFileDialog();   //new一个方法
-        ofd.InitialDirectory = "file://" + UnityEngine.Application.dataPath;  //定义打开的默认文件夹位置//定义打开的默认文件夹位置
-        ofd.Filter = filter;
-        if (ofd.ShowDialog() == DialogResult.OK)
-        {
-            return ofd.FileName;
-        }
-        else
-        {
-            return null;
-        }
-    }
+    //public static string OpenFileDialog(string filter)
+    //{
+    //    OpenFileDialog ofd = new OpenFileDialog();   //new一个方法
+    //    ofd.InitialDirectory = "file://" + UnityEngine.Application.dataPath;  //定义打开的默认文件夹位置//定义打开的默认文件夹位置
+    //    ofd.Filter = filter;
+    //    if (ofd.ShowDialog() == DialogResult.OK)
+    //    {
+    //        return ofd.FileName;
+    //    }
+    //    else
+    //    {
+    //        return null;
+    //    }
+    //}
 
     /// <summary>
     /// 打开文件选择弹窗 for图片类型
     /// </summary>
-    public static string OpenFileDialogForPic()
-    {
-        string filter = "(*.jpg,*.png,*.jpeg,*.bmp)|*.jpg;*.png;*.jpeg;*.bmp";
-        return OpenFileDialog(filter);
-    }
+    //public static string OpenFileDialogForPic()
+    //{
+    //    string filter = "(*.jpg,*.png,*.jpeg,*.bmp)|*.jpg;*.png;*.jpeg;*.bmp";
+    //    return OpenFileDialog(filter);
+    //}
 
 
     /// <summary>
