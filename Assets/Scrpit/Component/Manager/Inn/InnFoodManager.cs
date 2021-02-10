@@ -46,7 +46,7 @@ public class InnFoodManager : BaseManager, IMenuInfoView, ICookingThemeView
     /// <returns></returns>
     public Sprite GetFoodSpriteByName(string name)
     {
-        return  GetSpriteByName(dicFoodIcon,ref foodAtlas, "AtlasForFood","sprite/food", name + "_0");
+        return  GetSpriteByName(dicFoodIcon,ref foodAtlas, "AtlasForFood", ProjectConfigInfo.ASSETBUNDLE_SPRITEATLAS, name + "_0");
     }
     /// <summary>
     /// 通过名字获取食物图标
@@ -55,7 +55,7 @@ public class InnFoodManager : BaseManager, IMenuInfoView, ICookingThemeView
     /// <returns></returns>
     public Sprite GetFoodLastSpriteByName(string name)
     {
-        return GetSpriteByName(dicFoodIcon, ref foodAtlas, "AtlasForFood", "sprite/food", name + "_1");
+        return GetSpriteByName(dicFoodIcon, ref foodAtlas, "AtlasForFood", ProjectConfigInfo.ASSETBUNDLE_SPRITEATLAS, name + "_1");
     }
 
     /// <summary>

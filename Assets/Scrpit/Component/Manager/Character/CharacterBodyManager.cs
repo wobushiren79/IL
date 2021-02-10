@@ -214,7 +214,7 @@ public class CharacterBodyManager : BaseManager
                 spriteData = mouthAtlas;
                 break;
         }
-        Sprite spData = GetSpriteByName(dicData,ref spriteData, atlasName, "sprite/body", name);
+        Sprite spData = GetSpriteByName(dicData,ref spriteData, atlasName, ProjectConfigInfo.ASSETBUNDLE_SPRITEATLAS, name);
         switch (type)
         {
             case 1:

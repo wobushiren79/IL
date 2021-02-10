@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using UnityEditor;
+using UnityEngine.U2D;
 
 public class GameCommonInfo
 {
@@ -36,10 +37,18 @@ public class GameCommonInfo
     {
         GameConfig = new GameConfigBean();
         mGameConfigController = new GameConfigController(null, new GameConfigCallBack());
-        baseDataController = new BaseDataController(null,null);
+        baseDataController = new BaseDataController(null, null);
         mUITextController = new UITextController(null, null);
         mGameConfigController.GetGameConfigData();
         baseDataController.InitBaseData();
+        SpriteAtlasManager.atlasRequested += RequestAtlas;
+    }
+
+    private static void RequestAtlas(string tag, System.Action<SpriteAtlas> callback)
+    {
+        SpriteAtlas sa = LoadAssetUtil.SyncLoadAsset<SpriteAtlas>(ProjectConfigInfo.ASSETBUNDLE_SPRITEATLAS, tag);
+        if (sa != null)
+            callback?.Invoke(sa);
     }
 
     /// <summary>

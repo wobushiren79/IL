@@ -22,12 +22,12 @@ public class IconDataManager : BaseManager
     /// <returns></returns>
     public Sprite GetIconSpriteByName(string name)
     {
-        return GetSpriteByName(dicIcon, ref iconAtlas, "AtlasForIcon", "sprite/icon", name);
+        return GetSpriteByName(dicIcon, ref iconAtlas, "AtlasForIcon", ProjectConfigInfo.ASSETBUNDLE_SPRITEATLAS, name);
     }
 
     public Sprite GetBackgroundSpriteByName(string name)
     {
-        return GetSpriteByName(dicBackground, ref backgroundAtlas, "AtlasForBackground", "sprite/background", name);
+        return GetSpriteByName(dicBackground, ref backgroundAtlas, "AtlasForBackground", ProjectConfigInfo.ASSETBUNDLE_SPRITEATLAS, name);
     }
 
     public Texture2D GetTextureUIByName(string name)

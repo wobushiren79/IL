@@ -32,4 +32,9 @@ public class ProjectConfigInfo
     /// 数据单词刷新个数
     /// </summary>
     public readonly static int ITEM_REFRESH_NUMBER = 10;
+
+    /// <summary>
+    /// SPRITEATLAS
+    /// </summary>
+    public readonly static string ASSETBUNDLE_SPRITEATLAS = "sprite/atlas";
 }

@@ -49,7 +49,7 @@ public class InnBuildManager : BaseManager, IBuildDataView
     /// <returns></returns>
     public Sprite GetFurnitureSpriteByName(string name)
     {
-        return GetSpriteByName(dicFunrnitureIcon, ref atlasForFunrniture, "AtlasForFurniture", "sprite/furniture", name);
+        return GetSpriteByName(dicFunrnitureIcon, ref atlasForFunrniture, "AtlasForFurniture", ProjectConfigInfo.ASSETBUNDLE_SPRITEATLAS, name);
     }
 
     /// <summary>
@@ -59,7 +59,7 @@ public class InnBuildManager : BaseManager, IBuildDataView
     /// <returns></returns>
     public Sprite GetFloorSpriteByName(string name)
     {
-        return GetSpriteByName(dicFloorIcon, ref atlasForFloor, "AtlasForFloor", "sprite/furniture", name);
+        return GetSpriteByName(dicFloorIcon, ref atlasForFloor, "AtlasForFloor", ProjectConfigInfo.ASSETBUNDLE_SPRITEATLAS, name);
     }
 
     /// <summary>
@@ -69,7 +69,7 @@ public class InnBuildManager : BaseManager, IBuildDataView
     /// <returns></returns>
     public Sprite GetWallSpriteByName(string name)
     {
-        return GetSpriteByName(dicWallIcon, ref atlasForWall, "AtlasForWall", "sprite/furniture", name);
+        return GetSpriteByName(dicWallIcon, ref atlasForWall, "AtlasForWall", ProjectConfigInfo.ASSETBUNDLE_SPRITEATLAS, name);
     }
 
     /// <summary>

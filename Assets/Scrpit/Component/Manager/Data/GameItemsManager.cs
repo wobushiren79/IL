@@ -213,7 +213,7 @@ public class GameItemsManager : BaseManager, IItemsInfoView
 
     protected Sprite GetSpriteDataByName(string name)
     {
-        return  GetSpriteByName(dicItemsIcon,ref itemsAtlas, "AtlasForItems", "sprite/items", name);
+        return  GetSpriteByName(dicItemsIcon,ref itemsAtlas, "AtlasForItems", ProjectConfigInfo.ASSETBUNDLE_SPRITEATLAS, name);
     }
 
     protected AnimationClip GetAnimClipByName(string name)
