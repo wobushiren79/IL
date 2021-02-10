@@ -66,6 +66,7 @@ public class BaseManager : BaseMonoBehaviour
         }
         //如果没有atlas 先加载atlas
         spriteAtlas = LoadAssetUtil.SyncLoadAsset<SpriteAtlas>(assetBundlePath, atlasName);
+
         //加载成功后在读取一次
         if (spriteAtlas != null)
             return GetSpriteByName(dicIcon,ref spriteAtlas, atlasName, assetBundlePath, name);
@@ -92,7 +93,9 @@ public class BaseManager : BaseMonoBehaviour
         spriteAtlas = LoadAssetUtil.SyncLoadAsset<SpriteAtlas>(assetBundlePath, atlasName);
         //加载成功后在读取一次
         if (spriteAtlas != null)
+        {
             return GetSpriteByName(dicIcon, ref spriteAtlas, atlasName, assetBundlePath, name);
+        }  
         return null;
     }
 

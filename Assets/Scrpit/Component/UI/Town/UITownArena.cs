@@ -80,7 +80,7 @@ public class UITownArena : UIBaseOne, IRadioGroupCallBack
     private List<MiniGameBaseBean> CreateMiniGameData(TrophyTypeEnum type)
     {
         List<MiniGameBaseBean> listMiniGameData = new List<MiniGameBaseBean>();
-        int arenaNumber = UnityEngine.Random.Range(1, 10);
+        int arenaNumber = UnityEngine.Random.Range(5, 15);
         for (int i = 0; i < arenaNumber; i++)
         {
             MiniGameEnum gameType = MiniGameEnumTools.GetRandomMiniGameTypeForArena();

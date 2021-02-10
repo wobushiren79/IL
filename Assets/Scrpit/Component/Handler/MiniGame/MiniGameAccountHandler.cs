@@ -10,7 +10,7 @@ public class MiniGameAccountHandler : BaseMiniGameHandler<MiniGameAccountBuilder
     protected override void Awake()
     {
         builderName = "MiniGameAccountBuilder";
-        base.Awake();
+        base.Awake(); 
     }
 
     public override void InitGame(MiniGameAccountBean miniGameData)
@@ -27,6 +27,7 @@ public class MiniGameAccountHandler : BaseMiniGameHandler<MiniGameAccountBuilder
         miniGameBuilder.CreateMoney(miniGameData.winMoneyL, miniGameData.winMoneyM, miniGameData.winMoneyS, miniGameData.tfMoneyPosition);
         //打开倒计时UI
         OpenCountDownUI(miniGameData);
+    
     }
 
     public override void StartGame()

@@ -23,6 +23,8 @@ public class SceneArenaManager : SceneBaseManager
     public GameObject arena_2_Obj_AuditTable_Container;
     public GameObject arena_2_Obj_Stove_Container;
 
+
+    public MiniGameAccountEjectorCpt arena_3_AccountEjector;
     public Transform arena_3_PlayerPosition;
     public Transform arena_3_CameraPosition;
     public Transform arena_3_MoneyPosition;
@@ -163,5 +165,14 @@ public class SceneArenaManager : SceneBaseManager
     public void GetArenaForAccountMoneyBy3(out Transform tfMoneyPosition)
     {
         tfMoneyPosition = arena_3_MoneyPosition;
+    }
+
+    /// <summary>
+    /// 获取竞技场3的发射器
+    /// </summary>
+    /// <param name="ejectorCpt"></param>
+    public void GetArenaForAccountEjectorBy3(out MiniGameAccountEjectorCpt ejectorCpt)
+    {
+        ejectorCpt = arena_3_AccountEjector;
     }
 }

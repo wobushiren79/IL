@@ -236,6 +236,8 @@ public class SceneGameArenaInit : BaseSceneInit
         gameAccountData.tfMoneyPosition = tfMoneyPosition;
         //初始化游戏
         MiniGameHandler.Instance.handlerForAccount.InitGame(gameAccountData);
+        sceneArenaManager.GetArenaForAccountEjectorBy3(out MiniGameAccountEjectorCpt ejectorCpt);
+        MiniGameHandler.Instance.handlerForAccount.miniGameBuilder.ejectorCpt = ejectorCpt;
     }
 
     /// <summary>

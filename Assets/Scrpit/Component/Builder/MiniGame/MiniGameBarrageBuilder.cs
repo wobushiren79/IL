@@ -19,9 +19,6 @@ public class MiniGameBarrageBuilder : BaseMiniGameBuilder
     //所有的游玩对象
     public List<NpcAIMiniGameBarrageCpt> listGamePlayer = new List<NpcAIMiniGameBarrageCpt>();
 
-    //控制器
-    public ControlForMiniGameBarrageCpt controlForMiniGameBarrageCpt;
-
     public Sprite spStone;
     public RuntimeAnimatorController animatorControllerForStone;
     public Sprite spArrow;
@@ -61,6 +58,7 @@ public class MiniGameBarrageBuilder : BaseMiniGameBuilder
         foreach (MiniGameCharacterBean itemUserData in listUserData)
         {
             NpcAIMiniGameBarrageCpt npcCpt = CreatePlayer(itemUserData, userStartPosition);
+            ControlForMiniGameBarrageCpt controlForMiniGameBarrageCpt= GameControlHandler.Instance.manager.GetControl<ControlForMiniGameBarrageCpt>( GameControlHandler.ControlEnum.MiniGameBarrage);
             controlForMiniGameBarrageCpt.SetCameraFollowObj(npcCpt);
         }
     }
