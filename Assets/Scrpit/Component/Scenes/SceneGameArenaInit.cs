@@ -7,9 +7,6 @@ using System;
 
 public class SceneGameArenaInit : BaseSceneInit
 {
-    //场景数据管理
-    protected SceneArenaManager sceneArenaManager;
-
     public override void Start()
     {
         base.Start();
@@ -137,6 +134,7 @@ public class SceneGameArenaInit : BaseSceneInit
             default:
                 break;
         }
+        SceneArenaManager sceneArenaManager = GameScenesHandler.Instance.manager.GetSceneManager<SceneArenaManager>();
         //设置每个玩家的初始位置
         sceneArenaManager.GetArenaForCookingPlayerPositionBy2(out Vector3 playerStartPosition);
         //总共玩家数量为单数 则初始点为playerStartPosition，如果是双数则从playerStartPosition.x -0.5f开始
@@ -188,6 +186,7 @@ public class SceneGameArenaInit : BaseSceneInit
     /// <param name="gameBarrageData"></param>
     public void InitGameBarrage(MiniGameBarrageBean gameBarrageData)
     {
+        SceneArenaManager sceneArenaManager = GameScenesHandler.Instance.manager.GetSceneManager<SceneArenaManager>();
         //添加竞技场发射台坐标
         if (gameBarrageData.launchNumber <= 1)
         {
@@ -214,6 +213,7 @@ public class SceneGameArenaInit : BaseSceneInit
     /// <param name="gameCombatData"></param>
     public void InitGameCombat(MiniGameCombatBean gameCombatData)
     {
+        SceneArenaManager sceneArenaManager = GameScenesHandler.Instance.manager.GetSceneManager<SceneArenaManager>();
         //找到竞技场战斗的地点
         sceneArenaManager.GetArenaForCombatBy1(out Vector3 combatPosition);
         gameCombatData.miniGamePosition = combatPosition;
@@ -227,6 +227,7 @@ public class SceneGameArenaInit : BaseSceneInit
     /// <param name="gameAccountData"></param>
     public void InitGameAccout(MiniGameAccountBean gameAccountData)
     {
+        SceneArenaManager sceneArenaManager = GameScenesHandler.Instance.manager.GetSceneManager<SceneArenaManager>();
         sceneArenaManager.GetArenaForAccountPlayerBy3(out Vector3 playerPosition);
         sceneArenaManager.GetArenaForAccountCameraBy3(out Vector3 cameraPosition);
         sceneArenaManager.GetArenaForAccountMoneyBy3(out Transform tfMoneyPosition);
@@ -243,6 +244,7 @@ public class SceneGameArenaInit : BaseSceneInit
     /// <param name="gameDebateData"></param>
     public void InitGameDebate(MiniGameDebateBean gameDebateData)
     {
+        SceneArenaManager sceneArenaManager = GameScenesHandler.Instance.manager.GetSceneManager<SceneArenaManager>();
         //找到竞技场战斗的地点
         sceneArenaManager.GetArenaForCombatBy1(out Vector3 debatePosition);
         gameDebateData.miniGamePosition = debatePosition;

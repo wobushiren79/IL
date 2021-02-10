@@ -15,6 +15,7 @@ public class UIGameDate : BaseUIComponent
     public GameObject objDialog;
     public Button btWork;
     public Button btRest;
+    public Button btBrith;
 
     [Header("数据")]
     protected float animTimeForWaitNext = 1f;//动画时间
@@ -34,23 +35,22 @@ public class UIGameDate : BaseUIComponent
             btWork.onClick.AddListener(OnClickInnWork);
         if (btRest != null)
             btRest.onClick.AddListener(OnClickInnRest);
+        if (btBrith != null)
+            btBrith.onClick.AddListener(OnClickBirth);
     }
 
     public override void OpenUI()
     {
         base.OpenUI();
         AnimForInit();
-
-
+        btBrith.gameObject.SetActive(false);
         GameTimeHandler.Instance.SetTimeStop();
         GameTimeHandler.Instance.GetTime(out int year, out int month, out int day);
         //设置日历
         calendarView.InitData(year, month, day);
-        //保存数据
-
         //下一天
         StartCoroutine(CoroutineForNextDay());
-
+        //停止控制
         GameControlHandler.Instance.StopControl();
     }
 
@@ -58,7 +58,7 @@ public class UIGameDate : BaseUIComponent
     {
         base.CloseUI();
         objDialog.SetActive(false);
-       GameControlHandler.Instance.RestoreControl();
+        GameControlHandler.Instance.RestoreControl();
     }
 
     /// <summary>
@@ -68,6 +68,23 @@ public class UIGameDate : BaseUIComponent
     {
         if (objContent != null)
             objContent.transform.DOScaleY(0, 0.5f).From().SetEase(Ease.OutBack);
+    }
+
+    /// <summary>
+    /// 生孩子初始化
+    /// </summary>
+    public void BirthForInit()
+    {
+        GameDataBean gameData = GameDataHandler.Instance.manager.GetGameData();
+        //如果是结婚之后 并且当天还拥有爱爱次数
+        if (gameData.GetFamilyData().CheckMarry(gameData.gameTime) && GameCommonInfo.DailyLimitData.CheckBirthNumber(1))
+        {
+            btBrith.gameObject.SetActive(true);
+        }
+        else
+        {
+            btBrith.gameObject.SetActive(false);
+        }
     }
 
     /// <summary>
@@ -85,10 +102,18 @@ public class UIGameDate : BaseUIComponent
     /// </summary>
     public void OnClickInnRest()
     {
-
         AudioHandler.Instance.PlaySound(AudioSoundEnum.ButtonForNormal);
         InnRest();
     }
+
+    /// <summary>
+    /// 按钮-生孩子
+    /// </summary>
+    public void OnClickBirth()
+    {
+        AudioHandler.Instance.PlaySound(AudioSoundEnum.ButtonForNormal);
+    }
+
 
     /// <summary>
     /// 协程-下一天
@@ -131,6 +156,7 @@ public class UIGameDate : BaseUIComponent
             objDialog.SetActive(true);
             objDialog.transform.localScale = new Vector3(1, 1, 1);
             objDialog.transform.DOScale(Vector3.zero, 0.5f).From().SetEase(Ease.OutBack);
+            BirthForInit();
         }
     }
 

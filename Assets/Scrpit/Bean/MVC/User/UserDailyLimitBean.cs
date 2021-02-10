@@ -6,7 +6,6 @@ public class UserDailyLimitBean
 {
     //银行换金上限
     public int exchangeMoneyL = 0;
-
     //当前对话过的NPC
     public List<long> listNpcTalk = new List<long>();
     //当前送过礼物的NPC
@@ -22,6 +21,8 @@ public class UserDailyLimitBean
     public List<MiniGameBaseBean> listArenaDataForLegendary;
     //每日事件数量上限
     public int numberForEvent = 0;
+    //每日爱爱数量上限
+    public int numberForBirth = 0;
 
     public void InitData(GameDataBean gameData)
     {
@@ -43,6 +44,9 @@ public class UserDailyLimitBean
 
         //每日事件数量
         numberForEvent = (levelTitle==0 ? 3 :  (levelTitle - 1) * 5 + levelStar + 3);
+
+        //每日爱爱次数
+        numberForBirth = 1;
 
         listNpcGift.Clear();
         listNpcTalk.Clear();
@@ -223,6 +227,23 @@ public class UserDailyLimitBean
         else
         {
             numberForEvent -= number;
+            return true;
+        }
+    }
+
+    /// <summary>
+    /// 检测是否还有爱爱次数
+    /// </summary>
+    /// <param name="number"></param>
+    /// <returns></returns>
+    public bool CheckBirthNumber(int number)
+    {
+        if (numberForBirth - number < 0)
+        {
+            return false;
+        }
+        else
+        {
             return true;
         }
     }
