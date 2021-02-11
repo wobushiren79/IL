@@ -20,8 +20,9 @@ public class WebRequest
 
         UnityWebRequest webRequest = UnityWebRequest.Get(https + data);
         yield return webRequest.SendWebRequest();
-        if (webRequest.isHttpError || webRequest.isNetworkError)
+        if (webRequest.result == UnityWebRequest.Result.ProtocolError || webRequest.result == UnityWebRequest.Result.ConnectionError)
         {
+           
             callBack.WebRequestGetFail(https, webRequest.error);
         }
         else
@@ -34,7 +35,7 @@ public class WebRequest
     {
         UnityWebRequest webRequest = UnityWebRequest.Post(https, form);
         yield return webRequest.SendWebRequest();
-        if (webRequest.isHttpError || webRequest.isNetworkError)
+        if (webRequest.result == UnityWebRequest.Result.ProtocolError || webRequest.result == UnityWebRequest.Result.ConnectionError)
         {
             callBack.WebRequestGetFail(https, webRequest.error);
         }
@@ -50,7 +51,7 @@ public class WebRequest
         DownloadHandlerTexture texDl = new DownloadHandlerTexture(true);
         webRequest.downloadHandler = texDl;
         yield return webRequest.SendWebRequest();
-        if (webRequest.isHttpError || webRequest.isNetworkError)
+        if (webRequest.result == UnityWebRequest.Result.ProtocolError || webRequest.result == UnityWebRequest.Result.ConnectionError)
         {
             callBack.WebRequestForSpriteFail(url, webRequest.error);
         }
@@ -69,7 +70,7 @@ public class WebRequest
         DownloadHandlerTexture texDl = new DownloadHandlerTexture(true);
         webRequest.downloadHandler = texDl;
         yield return webRequest.SendWebRequest();
-        if (webRequest.isHttpError || webRequest.isNetworkError)
+        if (webRequest.result == UnityWebRequest.Result.ProtocolError || webRequest.result == UnityWebRequest.Result.ConnectionError)
         {
             callBack.WebRequestForTextureFail(url, webRequest.error);
         }
