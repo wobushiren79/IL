@@ -77,7 +77,10 @@ public class UIGameDate : BaseUIComponent
     {
         GameDataBean gameData = GameDataHandler.Instance.manager.GetGameData();
         //如果是结婚之后 并且当天还拥有爱爱次数
-        if (gameData.GetFamilyData().CheckMarry(gameData.gameTime) && GameCommonInfo.DailyLimitData.CheckBirthNumber(1))
+        if (
+            //gameData.GetFamilyData().CheckMarry(gameData.gameTime)&&
+            GameCommonInfo.DailyLimitData.CheckBirthNumber(1)
+            )
         {
             btBrith.gameObject.SetActive(true);
         }
@@ -112,6 +115,13 @@ public class UIGameDate : BaseUIComponent
     public void OnClickBirth()
     {
         AudioHandler.Instance.PlaySound(AudioSoundEnum.ButtonForNormal);
+        MiniGameBirthBean gameBirthData = MiniGameEnumTools.GetMiniGameData(MiniGameEnum.Birth) as MiniGameBirthBean;
+        gameBirthData.fireNumber = 10;
+        gameBirthData.enmeySpeed = 3;
+        gameBirthData.enmeyBuildInterval = 1;
+        gameBirthData.playSpeed = 5;
+        gameBirthData.InitForMiniGame();
+        MiniGameHandler.Instance.handlerForBirth.InitGame(gameBirthData);
     }
 
 

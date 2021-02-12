@@ -190,6 +190,7 @@ public class BaseMiniGameHandler<B, D> : BaseHandler, UIMiniGameCountDown.ICallB
         //设置准备UI的数据
         uiCountDown.SetData(targetTitleStr, listWinConditions, isCountDown);
     }
+
     public void OpenCountDownUI(MiniGameBaseBean miniGameData)
     {
         OpenCountDownUI(miniGameData, true);

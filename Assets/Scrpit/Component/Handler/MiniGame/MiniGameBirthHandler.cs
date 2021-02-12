@@ -18,8 +18,7 @@ public class MiniGameBirthHandler : BaseMiniGameHandler<MiniGameBirthBuilder, Mi
         listSperm.Clear();
         base.InitGame(miniGameData);
         //打开倒计时UI
-        // OpenCountDownUI(miniGameData);
-        UIHandler.Instance.manager.OpenUIAndCloseOther<UIMiniGameBirth>(UIEnum.MiniGameBirth);
+        OpenCountDownUI(miniGameData,false);
     }
 
     public override void StartGame()
@@ -32,6 +31,12 @@ public class MiniGameBirthHandler : BaseMiniGameHandler<MiniGameBirthBuilder, Mi
     {
         base.EndGame(gameResult);
         listSperm.Clear();
+    }
+
+    public override void GamePreCountDownEnd()
+    {
+        base.GamePreCountDownEnd();
+        StartGame();
     }
 
     /// <summary>
@@ -67,11 +72,11 @@ public class MiniGameBirthHandler : BaseMiniGameHandler<MiniGameBirthBuilder, Mi
     {
         spermData = null;
         //没有次数了
-        if (miniGameData.life <= 0)
+        if (miniGameData.fireNumber <= 0)
             return false;
         spermData = new MiniGameBirthSpermBean
         {
-            timeForSpeed = 10
+            timeForSpeed = miniGameData.playSpeed,
         };
         listSperm.Add(spermData);
         return true;
@@ -83,7 +88,7 @@ public class MiniGameBirthHandler : BaseMiniGameHandler<MiniGameBirthBuilder, Mi
     /// <returns></returns>
     public bool CheckGameOver()
     {
-        if (miniGameData.life <= 0 && listSperm.Count < 0)
+        if (miniGameData.fireNumber <= 0 && listSperm.Count < 0)
         {
             EndGame(MiniGameResultEnum.Win);
             return true;

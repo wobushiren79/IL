@@ -11,6 +11,7 @@ public abstract class MiniGameBaseBean
     //胜利条件
     public float winSurvivalTime;//生存时间(秒)
     public long winLife;//生命值多少以上
+    public int winFireNumber;//可以使用的次数
     public int winSurvivalNumber;//生存角色个数
     public int winBringDownNumber;//打到角色个数
     public int winScore;//胜利分数
@@ -151,6 +152,10 @@ public abstract class MiniGameBaseBean
                 GetListWinConditionsForWinSurvivalNumber(listWinConditions);
                 GetListWinConditionsForWinBringDownNumber(listWinConditions);
                 break;
+            case MiniGameEnum.Birth:
+                GetListWinConditionsForWinFireNumber(listWinConditions);
+                break;
+
         }
         return listWinConditions;
     }
@@ -180,6 +185,9 @@ public abstract class MiniGameBaseBean
                 break;
             case MiniGameEnum.Combat:
                 gameName = GameCommonInfo.GetUITextById(205);
+                break;
+            case MiniGameEnum.Birth:
+                gameName = GameCommonInfo.GetUITextById(206);
                 break;
         }
         return gameName;
@@ -292,6 +300,15 @@ public abstract class MiniGameBaseBean
 
 
     #region 胜利列表
+    protected void GetListWinConditionsForWinFireNumber(List<string> listData)
+    {
+        if (winFireNumber != 0)
+        {
+            string data = string.Format(GameCommonInfo.GetUITextById(218), winFireNumber+"");
+            listData.Add(data);
+        }
+    }
+
     protected void GetListWinConditionsForWinSurvivalTime(List<string> listData)
     {
         if (winSurvivalTime != 0)

@@ -10,8 +10,6 @@ public class UIMiniGameBirthEnemyArea : BaseUIChildComponent<UIMiniGameBirth>
 
     public bool isCreateEnemy = false;
 
-    public float timeForCreateEnemyInterval = 1;
-
     private void Start()
     {
         StartCreateEnemy();
@@ -33,8 +31,10 @@ public class UIMiniGameBirthEnemyArea : BaseUIChildComponent<UIMiniGameBirth>
     {
         isCreateEnemy = true;
         while (isCreateEnemy)
-        {
-            yield return new WaitForSeconds(timeForCreateEnemyInterval);
+        {       
+            //获取敌人速度
+            float enmeyBuildInterval = MiniGameHandler.Instance.handlerForBirth.miniGameData.enmeyBuildInterval;
+            yield return new WaitForSeconds(enmeyBuildInterval);
             CreateEnemyItem();
         }
     }
@@ -45,7 +45,11 @@ public class UIMiniGameBirthEnemyArea : BaseUIChildComponent<UIMiniGameBirth>
         GameObject objEnemy = Instantiate(gameObject, objModel);
         UIMiniGameBirthEnemy enemy = objEnemy.GetComponent<UIMiniGameBirthEnemy>();
         GetRandomEnemyStartAndEndPosition(out Vector3 startPosition, out Vector3 endPosition);
-        enemy.SetData(startPosition, endPosition);
+
+        //获取敌人速度
+        float speedEnemy = MiniGameHandler.Instance.handlerForBirth.miniGameData.enmeySpeed;
+        //设置敌人输入
+        enemy.SetData(startPosition, endPosition, speedEnemy);
     }
 
     protected void GetRandomEnemyStartAndEndPosition(out Vector3 startPosition, out Vector3 endPosition)

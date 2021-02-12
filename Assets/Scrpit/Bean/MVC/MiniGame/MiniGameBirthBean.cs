@@ -6,23 +6,22 @@ public class MiniGameBirthBean : MiniGameBaseBean
     public Vector3 startPosition;
     public Vector3 endPosition;
 
-    public int life;
+    public int fireNumber;
+    public float enmeySpeed;
+    public float enmeyBuildInterval;
+    public float playSpeed;
 
     public override void InitForMiniGame()
     {
-        life = 3;
+        gameType = MiniGameEnum.Birth;
+        this.winFireNumber = fireNumber;
     }
 
-    public void AddLife(int addLife)
+    public void AddFireNumber(int addNumber)
     {
-        life += addLife;
-        if (life < 0)
-            life = 0;
-    }
-
-    public void SetLife(int life)
-    {
-        this.life = life;
+        fireNumber += addNumber;
+        if (fireNumber < 0)
+            fireNumber = 0;
     }
 
     public void SetStartPosition(Vector3 startPosition)
