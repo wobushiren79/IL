@@ -14,9 +14,21 @@ public class FamilyDataBean : BaseBean
     //怀孕天数
     public int birthDay = 0;
     //妻子数据
-    public CharacterBean wifeCharacter;
+    public CharacterForFamilyBean wifeCharacter;
     //孩子数据
-    public List<CharacterBean> listChildCharacter;
+    public List<CharacterForFamilyBean> listChildCharacter = new List<CharacterForFamilyBean>();
+
+    /// <summary>
+    /// 获取所有家庭数据
+    /// </summary>
+    /// <returns></returns>
+    public List<CharacterForFamilyBean> GetAllFamilyData()
+    {
+        List<CharacterForFamilyBean> listData = new List<CharacterForFamilyBean>();
+        if (wifeCharacter != null) { listData.Add(wifeCharacter); }
+        if (!CheckUtil.ListIsNull(listChildCharacter)) { listData.AddRange(listChildCharacter); }
+        return listData;
+    }
 
     /// <summary>
     /// 增加怀孕进度
@@ -41,7 +53,7 @@ public class FamilyDataBean : BaseBean
             return false;
         int marryDay = timeForMarry.year * 4 * 42 + timeForMarry.month * 42 + timeForMarry.day;
         int currentDay = time.year * 4 * 42 + time.month * 42 + time.day;
-        if (currentDay> marryDay)
+        if (currentDay > marryDay)
         {
             return true;
         }

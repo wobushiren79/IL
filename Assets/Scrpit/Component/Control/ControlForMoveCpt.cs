@@ -82,7 +82,6 @@ public class ControlForMoveCpt : BaseControl
         base.StopControl();
         if (characterMoveCpt != null)
             characterMoveCpt.SetAnimStatus(0);
-        AudioHandler.Instance.StopMusic();
     }
 
     public override void EndControl()
@@ -90,7 +89,6 @@ public class ControlForMoveCpt : BaseControl
         base.EndControl();
         if (characterMoveCpt != null)
             characterMoveCpt.SetAnimStatus(0);
-        AudioHandler.Instance.StopMusic();
     }
 
     public override void StartControl()
@@ -104,7 +102,6 @@ public class ControlForMoveCpt : BaseControl
     {
         base.RestoreControl();
         InitCharacter();
-        AudioHandler.Instance.PlayMusicForLoop(AudioMusicEnum.Rest);
     }
 
     /// <summary>

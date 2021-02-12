@@ -20,6 +20,7 @@ public abstract class BaseNormalSceneInit : BaseSceneInit, DialogView.IDialogCal
         //设置天气
         InitWeather();
     }
+
     private void OnDestroy()
     {
         GameTimeHandler.Instance.UnRegisterNotifyForTime(NotifyForTime);

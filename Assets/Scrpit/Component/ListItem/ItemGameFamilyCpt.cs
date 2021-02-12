@@ -3,11 +3,16 @@ using UnityEngine;
 using UnityEngine.UI;
 public class ItemGameFamilyCpt : ItemGameBaseCpt
 {
-    public Text tvName;
-    public Text tvCall;
-    public CharacterUICpt characterUI;
+    public Text ui_TVName;
+    public Text ui_TVCall;
+    public CharacterUICpt ui_CharacterUI;
 
-    public void SetData(CharacterBean characterData)
+    private void Awake()
+    {
+        AutoLinkUI();
+    }
+
+    public void SetData(CharacterForFamilyBean characterData)
     {
         SetName(characterData.baseInfo.name);
         SetCall(characterData.baseInfo.name);
@@ -20,8 +25,8 @@ public class ItemGameFamilyCpt : ItemGameBaseCpt
     /// <param name="name"></param>
     public void SetName(string name)
     {
-        if (tvName)
-            tvName.text = name;
+        if (ui_TVName)
+            ui_TVName.text = name;
     }
 
     /// <summary>
@@ -30,8 +35,8 @@ public class ItemGameFamilyCpt : ItemGameBaseCpt
     /// <param name="call"></param>
     public void SetCall(string call)
     {
-        if (tvCall)
-            tvCall.text = call;
+        if (ui_TVCall)
+            ui_TVCall.text = call;
     }
 
     /// <summary>
@@ -40,7 +45,7 @@ public class ItemGameFamilyCpt : ItemGameBaseCpt
     /// <param name="characterData"></param>
     public void SetCharacterUI(CharacterBean characterData)
     {
-        if (characterUI)
-            characterUI.SetCharacterData(characterData.body, characterData.equips);
+        if (ui_CharacterUI)
+            ui_CharacterUI.SetCharacterData(characterData.body, characterData.equips);
     }
 }
