@@ -458,6 +458,15 @@ public class GameDataBean
     }
 
     /// <summary>
+    /// 获取游戏中时间-年
+    /// </summary>
+    /// <returns></returns>
+    public int GetGameTimeForYear()
+    {
+       return gameTime.year - 221;
+    }
+
+    /// <summary>
     /// 获取
     /// </summary>
     /// <param name="innBuildManager"></param>
@@ -643,6 +652,12 @@ public class GameDataBean
         return GetNumber(itemId, listBuild);
     }
 
+    /// <summary>
+    /// 获取物品数量
+    /// </summary>
+    /// <param name="itemId"></param>
+    /// <param name="listData"></param>
+    /// <returns></returns>
     public long GetNumber(long itemId, List<ItemBean> listData)
     {
         long number = 0;

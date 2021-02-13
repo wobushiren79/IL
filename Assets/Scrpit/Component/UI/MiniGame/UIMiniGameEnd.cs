@@ -181,6 +181,9 @@ public class UIMiniGameEnd : BaseUIComponent
                 //决斗胜利
                 reasonStr = GameCommonInfo.GetUITextById(45);
                 break;
+            default:
+                reasonStr = GameCommonInfo.GetUITextById(901);
+                break;
         }
         itemReasonWin.SetContent(reasonStr);
         itemReasonWin.SetIcon(IconDataHandler.Instance.manager.GetIconSpriteByName("text_win_1"));

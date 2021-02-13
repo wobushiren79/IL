@@ -18,7 +18,7 @@ public class MiniGameBirthHandler : BaseMiniGameHandler<MiniGameBirthBuilder, Mi
         listSperm.Clear();
         base.InitGame(miniGameData);
         //打开倒计时UI
-        OpenCountDownUI(miniGameData,false);
+        OpenCountDownUI(miniGameData, false);
     }
 
     public override void StartGame()
@@ -29,8 +29,10 @@ public class MiniGameBirthHandler : BaseMiniGameHandler<MiniGameBirthBuilder, Mi
 
     public override void EndGame(MiniGameResultEnum gameResult)
     {
-        base.EndGame(gameResult);
+        //每日限制减少
+        GameCommonInfo.DailyLimitData.numberForBirth--;
         listSperm.Clear();
+        base.EndGame(gameResult);
     }
 
     public override void GamePreCountDownEnd()
@@ -44,12 +46,15 @@ public class MiniGameBirthHandler : BaseMiniGameHandler<MiniGameBirthBuilder, Mi
     /// </summary>
     public void ArriveEgg(MiniGameBirthSpermBean spermData)
     {
-       //获取家族数据
-       GameDataBean gameData = GameDataHandler.Instance.manager.GetGameData();
-       FamilyDataBean familyData =  gameData.GetFamilyData();
-       //增加怀孕进度
-       familyData.addBirthPro(0.05f);
-       DestroySperm(spermData);
+        //获取家族数据
+        GameDataBean gameData = GameDataHandler.Instance.manager.GetGameData();
+        FamilyDataBean familyData = gameData.GetFamilyData();
+        //增加怀孕进度
+        familyData.addBirthPro(miniGameData.addBirthPro);
+        DestroySperm(spermData);
+        //刷新UI
+        BaseUIComponent ui = UIHandler.Instance.manager.GetOpenUI();
+        ui.RefreshUI();
     }
 
     /// <summary>
@@ -70,6 +75,7 @@ public class MiniGameBirthHandler : BaseMiniGameHandler<MiniGameBirthBuilder, Mi
     /// </summary>
     public bool FireSperm(out MiniGameBirthSpermBean spermData)
     {
+        CheckGameOver();
         spermData = null;
         //没有次数了
         if (miniGameData.fireNumber <= 0)
@@ -79,6 +85,8 @@ public class MiniGameBirthHandler : BaseMiniGameHandler<MiniGameBirthBuilder, Mi
             timeForSpeed = miniGameData.playSpeed,
         };
         listSperm.Add(spermData);
+        //减少次数
+        miniGameData.fireNumber--;
         return true;
     }
 
@@ -88,11 +96,11 @@ public class MiniGameBirthHandler : BaseMiniGameHandler<MiniGameBirthBuilder, Mi
     /// <returns></returns>
     public bool CheckGameOver()
     {
-        if (miniGameData.fireNumber <= 0 && listSperm.Count < 0)
+        if (miniGameData.fireNumber <= 0 && listSperm.Count <= 0)
         {
-            EndGame(MiniGameResultEnum.Win);
+            EndGame(MiniGameResultEnum.Win,false);
             return true;
         }
-        return false;     
+        return false;
     }
 }

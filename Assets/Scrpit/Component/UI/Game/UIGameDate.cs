@@ -115,13 +115,23 @@ public class UIGameDate : BaseUIComponent
     public void OnClickBirth()
     {
         AudioHandler.Instance.PlaySound(AudioSoundEnum.ButtonForNormal);
+        GameDataBean gameData = GameDataHandler.Instance.manager.GetGameData();
+        int year = gameData.GetGameTimeForYear();
+        if (year == 0)
+            year = 1;
+        float playSpeed = Mathf.Clamp(10f / year, 2, 10);
         MiniGameBirthBean gameBirthData = MiniGameEnumTools.GetMiniGameData(MiniGameEnum.Birth) as MiniGameBirthBean;
+
         gameBirthData.fireNumber = 10;
         gameBirthData.enmeySpeed = 3;
-        gameBirthData.enmeyBuildInterval = 1;
-        gameBirthData.playSpeed = 5;
+        gameBirthData.enmeyBuildInterval = 1f;
+        gameBirthData.playSpeed = playSpeed;
+        gameBirthData.addBirthPro = 0.05f;
+        gameBirthData.gameReason = MiniGameReasonEnum.Other;
+
         gameBirthData.InitForMiniGame();
         MiniGameHandler.Instance.handlerForBirth.InitGame(gameBirthData);
+        MiniGameHandler.Instance.handlerForBirth.RegisterNotifyForMiniGameStatus(NotifyForMiniGameStatus);
     }
 
 
@@ -217,9 +227,24 @@ public class UIGameDate : BaseUIComponent
         else
         {
             //触发了事件
-
-
         }
     }
 
+    /// <summary>
+    /// 小游戏回掉
+    /// </summary>
+    /// <param name="miniGameStatus"></param>
+    /// <param name="data"></param>
+    protected void NotifyForMiniGameStatus(MiniGameStatusEnum miniGameStatus, params object[] data)
+    {
+        if (miniGameStatus == MiniGameStatusEnum.GameClose)
+        {
+            UIGameDate ui = UIHandler.Instance.manager.GetUI<UIGameDate>(UIEnum.GameDate);
+            ui.gameObject.SetActive(true);
+            objDialog.SetActive(true);
+            BirthForInit();
+            GameTimeHandler.Instance.SetTimeStop();
+            GameControlHandler.Instance.StopControl();
+        }
+    }
 }

@@ -11,6 +11,8 @@ public class MiniGameBirthBean : MiniGameBaseBean
     public float enmeyBuildInterval;
     public float playSpeed;
 
+    public float addBirthPro;
+
     public override void InitForMiniGame()
     {
         gameType = MiniGameEnum.Birth;

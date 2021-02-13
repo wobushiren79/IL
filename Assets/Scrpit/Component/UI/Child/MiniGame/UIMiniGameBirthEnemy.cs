@@ -14,9 +14,16 @@ public class UIMiniGameBirthEnemy : BaseUIChildComponent<UIMiniGameBirth>
         rtf
             .DOAnchorPos(endPosition, speedForEnemy)
             .SetEase(Ease.Linear)
-            .OnComplete(() =>
-        {
-            Destroy(gameObject);
-        });
+            .OnComplete(() => { DestroyEnemy(); });
+    }
+
+    /// <summary>
+    /// 删除
+    /// </summary>
+    public void DestroyEnemy()
+    {
+        CanvasGroup canvasGroup = GetComponent<CanvasGroup>();
+        canvasGroup.DOFade(0, 0.4f);
+        transform.DOScale(new Vector3(1.2f, 1.2f, 1.2f), 0.5f).OnComplete(() => { Destroy(gameObject); });
     }
 }

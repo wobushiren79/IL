@@ -21,16 +21,29 @@ public class UIMiniGameBirthSperm : BaseUIChildComponent<UIMiniGameBirth>
         if (enemy)
         {
             MiniGameHandler.Instance.handlerForBirth.DestroySperm(spermData);
-            Destroy(gameObject);
+            AudioHandler.Instance.PlaySound(AudioSoundEnum.Error);
+            DestroySperm();
             return;
         }
         UIMiniGameBirthEgg egg = collision.gameObject.GetComponent<UIMiniGameBirthEgg>();
         if (egg)
         {
+            egg.TakeSpermSuccess();
             MiniGameHandler.Instance.handlerForBirth.ArriveEgg(spermData);
-            Destroy(gameObject);
+            AudioHandler.Instance.PlaySound(AudioSoundEnum.Correct);
+            DestroySperm();
             return;
         }
+    }
+
+    /// <summary>
+    /// 删除
+    /// </summary>
+    public void DestroySperm()
+    {
+        CanvasGroup canvasGroup= GetComponent<CanvasGroup>();
+        canvasGroup.DOFade(0, 0.4f);
+        transform.DOScale(new Vector3(1.2f, 1.2f, 1.2f), 0.5f).OnComplete(() => { Destroy(gameObject); });
     }
 
 }

@@ -118,7 +118,8 @@ public class BaseMiniGameHandler<B, D> : BaseHandler, UIMiniGameCountDown.ICallB
             StopAllCoroutines();
             //拉近尽头
             BaseControl baseControl = GameControlHandler.Instance.manager.GetControl();
-            baseControl.SetCameraOrthographicSize(6);
+            if(baseControl)
+                baseControl.SetCameraOrthographicSize(6);
             if (isSlow)
             {
                 //开启慢镜头
@@ -126,10 +127,11 @@ public class BaseMiniGameHandler<B, D> : BaseHandler, UIMiniGameCountDown.ICallB
             }
             transform.DOScale(new Vector3(1, 1, 1), 0.3f).OnComplete(delegate ()
             {
-                Time.timeScale = 1f;
-                baseControl.SetCameraOrthographicSize();
-
-                miniGameBuilder.DestroyAll();
+                Time.timeScale = 1f; 
+                if (baseControl)
+                    baseControl.SetCameraOrthographicSize();
+                if(miniGameBuilder)
+                    miniGameBuilder.DestroyAll();
                 //设置游戏数据
                 miniGameData.SetGameResult(gameResulte);
                 GameDataBean gameData = GameDataHandler.Instance.manager.GetGameData();
@@ -214,6 +216,7 @@ public class BaseMiniGameHandler<B, D> : BaseHandler, UIMiniGameCountDown.ICallB
         GameTimeHandler.Instance.SetTimeRestore();
         //通知 关闭游戏      
         notifyForMiniGameStatus?.Invoke(MiniGameStatusEnum.GameClose, new object[] { miniGameData });
+        notifyForMiniGameStatus = null;
     }
     #endregion
 }
