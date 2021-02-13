@@ -600,7 +600,10 @@ public class InnHandler : BaseHandler<InnHandler, InnManager>
     public void DistributionWorkForIdleWorker()
     {
         //获取所有工作者
-        List<NpcAIWorkerCpt> listWork = NpcHandler.Instance.builderForWorker.listNpcWorker;
+        NpcWorkerBuilder npcWorkerBuilder = NpcHandler.Instance.builderForWorker;
+        if (npcWorkerBuilder == null)
+            return;
+        List<NpcAIWorkerCpt> listWork = npcWorkerBuilder.listNpcWorker;
         if (listWork == null)
             return;
         for (int i = 0; i < listWork.Count; i++)

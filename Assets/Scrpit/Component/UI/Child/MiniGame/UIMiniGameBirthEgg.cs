@@ -20,7 +20,7 @@ public class UIMiniGameBirthEgg : BaseUIChildComponent<UIMiniGameBirth>
     {
         transform.DOKill();
         transform.transform.localScale = Vector3.one;
-        transform.DOShakeScale(0.5f,1,5,10);
+        transform.DOScale(new Vector3(1.2f,1.2f,1.2f),0.5f).SetEase(Ease.OutBack);
     }
 
 }

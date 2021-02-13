@@ -28,10 +28,7 @@ public class GameLightHandler : BaseHandler<GameLightHandler,GameLightManager>
     {
         get
         {
-            if (CheckUtil.ListIsNull(_listLightContainer))
-            {
-                _listLightContainer = GameObject.FindGameObjectsWithTag(TagInfo.Tag_LightContainer).ToList();
-            }
+            _listLightContainer = GameObject.FindGameObjectsWithTag(TagInfo.Tag_LightContainer).ToList();
             return _listLightContainer;
         }
     }

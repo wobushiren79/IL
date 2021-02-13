@@ -27,12 +27,12 @@ public class MiniGameBirthHandler : BaseMiniGameHandler<MiniGameBirthBuilder, Mi
         UIHandler.Instance.manager.OpenUIAndCloseOther<UIMiniGameBirth>(UIEnum.MiniGameBirth);
     }
 
-    public override void EndGame(MiniGameResultEnum gameResult)
+    public override void EndGame(MiniGameResultEnum gameResult,bool isSlow)
     {
         //每日限制减少
         GameCommonInfo.DailyLimitData.numberForBirth--;
         listSperm.Clear();
-        base.EndGame(gameResult);
+        base.EndGame(gameResult, isSlow);
     }
 
     public override void GamePreCountDownEnd()
