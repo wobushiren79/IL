@@ -7,17 +7,19 @@ using UnityEditor;
 public class LoadAssetUtil
 {
     public static readonly string PathURL = Application.streamingAssetsPath + "/";
- 
+
+#if UNITY_EDITOR
     /// <summary>
     /// 加载资源-editor可用
     /// </summary>
     /// <typeparam name="T"></typeparam>
     /// <param name="path"></param>
     /// <returns></returns>
-    public static T LoadAssetAtPathForEditor<T>(string path) where T :  Object
+    public static T LoadAssetAtPathForEditor<T>(string path) where T : Object
     {
-       return  AssetDatabase.LoadAssetAtPath(path, typeof(T)) as T ;
+        return AssetDatabase.LoadAssetAtPath(path, typeof(T)) as T;
     }
+#endif
 
     /// <summary>
     /// 同步-加载asset资源

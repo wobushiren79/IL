@@ -78,7 +78,7 @@ public class UIGameDate : BaseUIComponent
         GameDataBean gameData = GameDataHandler.Instance.manager.GetGameData();
         //如果是结婚之后 并且当天还拥有爱爱次数
         if (
-            //gameData.GetFamilyData().CheckMarry(gameData.gameTime)&&
+            gameData.GetFamilyData().CheckMarry(gameData.gameTime)&&
             GameCommonInfo.DailyLimitData.CheckBirthNumber(1)
             )
         {
