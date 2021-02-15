@@ -44,7 +44,7 @@ public class GameCommonInfo
         SpriteAtlasManager.atlasRequested += RequestAtlas;
     }
 
-    private static void RequestAtlas(string tag, System.Action<SpriteAtlas> callback)
+    public static void RequestAtlas(string tag, System.Action<SpriteAtlas> callback)
     {
         SpriteAtlas sa = LoadAssetUtil.SyncLoadAsset<SpriteAtlas>(ProjectConfigInfo.ASSETBUNDLE_SPRITEATLAS, tag);
         if (sa != null)

@@ -177,6 +177,8 @@ public class SceneGameInnInit : BaseSceneInit, DialogView.IDialogCallBack
         if (notifyType == GameTimeHandler.NotifyTypeEnum.NewDay)
         {
             InitNewDay();
+            //重新烘培场景
+            StartCoroutine(BuildNavMesh());
         }
         else if (notifyType == GameTimeHandler.NotifyTypeEnum.EndDay)
         {

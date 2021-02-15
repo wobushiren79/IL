@@ -213,7 +213,7 @@ public class GameItemsManager : BaseManager, IItemsInfoView
 
     protected Sprite GetSpriteDataByName(string name)
     {
-        return  GetSpriteByName(dicItemsIcon,ref itemsAtlas, "AtlasForItems", ProjectConfigInfo.ASSETBUNDLE_SPRITEATLAS, name);
+        return GetSpriteByName(dicItemsIcon, ref itemsAtlas, "AtlasForItems", ProjectConfigInfo.ASSETBUNDLE_SPRITEATLAS, name, "Assets/Texture/SpriteAtlas/AtlasForItems.spriteatlas");
     }
 
     protected AnimationClip GetAnimClipByName(string name)
@@ -225,8 +225,9 @@ public class GameItemsManager : BaseManager, IItemsInfoView
     public void GetItemsInfoSuccess(List<ItemsInfoBean> listData)
     {
         this.listDataItems = new Dictionary<long, ItemsInfoBean>();
-        foreach (ItemsInfoBean itemData in listData)
+        for (int i = 0; i < listData.Count; i++)
         {
+            ItemsInfoBean itemData = listData[i];
             this.listDataItems.Add(itemData.id, itemData);
         }
     }

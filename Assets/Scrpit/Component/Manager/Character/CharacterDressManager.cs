@@ -174,7 +174,7 @@ public class CharacterDressManager : BaseManager
                 spriteData = shoesAtlas;
                 break;
         }
-        Sprite itemSprite = GetSpriteByName(dicData,ref spriteData, atlasName, ProjectConfigInfo.ASSETBUNDLE_SPRITEATLAS, name);
+        Sprite itemSprite = GetSpriteByName(dicData,ref spriteData, atlasName, ProjectConfigInfo.ASSETBUNDLE_SPRITEATLAS, name, "Assets/Texture/SpriteAtlas/"+ atlasName+".spriteatlas");
         switch (type)
         {
             case 1:

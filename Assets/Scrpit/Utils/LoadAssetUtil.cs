@@ -2,10 +2,23 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using UnityEditor;
 
 public class LoadAssetUtil
 {
     public static readonly string PathURL = Application.streamingAssetsPath + "/";
+ 
+    /// <summary>
+    /// 加载资源-editor可用
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
+    /// <param name="path"></param>
+    /// <returns></returns>
+    public static T LoadAssetAtPathForEditor<T>(string path) where T :  Object
+    {
+       return  AssetDatabase.LoadAssetAtPath(path, typeof(T)) as T ;
+    }
+
     /// <summary>
     /// 同步-加载asset资源
     /// </summary>

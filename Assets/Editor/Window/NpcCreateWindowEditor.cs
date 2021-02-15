@@ -4,11 +4,10 @@ using System.Collections.Generic;
 using System;
 using Cinemachine;
 using System.Collections;
+using UnityEngine.U2D;
 
 public class NpcCreateWindowEditor : EditorWindow
 {
-    GameItemsManager gameItemsManager;
-    NpcInfoManager npcInfoManager;
     NpcInfoService npcInfoService;
     TextInfoService textInfoService;
     NpcTeamService npcTeamService;
@@ -60,17 +59,13 @@ public class NpcCreateWindowEditor : EditorWindow
     {
         mCamera2D = GameObject.Find("Camera2D").GetComponent<CinemachineVirtualCamera>();
 
-        gameItemsManager = new GameItemsManager();
-        npcInfoManager = new NpcInfoManager();
+
         npcInfoService = new NpcInfoService();
         textInfoService = new TextInfoService();
         npcTeamService = new NpcTeamService();
 
-        gameItemsManager.Awake();
-        npcInfoManager.Awake();
-
-        gameItemsManager.itemsInfoController.GetAllItemsInfo();
-        npcInfoManager.npcInfoController.GetAllNpcInfo();
+        NpcInfoHandler.Instance.manager.Awake();
+        GameItemsHandler.Instance.manager.Awake();
     }
 
     private void RefreshData()
@@ -80,8 +75,8 @@ public class NpcCreateWindowEditor : EditorWindow
         mapNpcTalkInfoForFind.Clear();
         mapNpcTeamTalkInfoForFind.Clear();
 
-        gameItemsManager.itemsInfoController.GetAllItemsInfo();
-        npcInfoManager.npcInfoController.GetAllNpcInfo();
+        NpcInfoHandler.Instance.manager.Awake();
+        GameItemsHandler.Instance.manager.Awake();
     }
 
 
@@ -100,10 +95,10 @@ public class NpcCreateWindowEditor : EditorWindow
         mObjNpcModel = EditorGUILayout.ObjectField(new GUIContent("NPC模型", ""), mObjNpcModel, typeof(GameObject), true) as GameObject;
         GUILayout.Label("-----------------------------------------------------------------------------------------------------------");
         //Npc 创建UI
-        GUINpcInfoCreate(npcInfoService, gameItemsManager, mObjNpcContainer, mObjNpcModel, npcInfoForCreate);
+        GUINpcInfoCreate(npcInfoService, mObjNpcContainer, mObjNpcModel, npcInfoForCreate);
         //NPC 查询UI
         GUINpcInfoFind(
-            npcInfoService, gameItemsManager,
+            npcInfoService,
             mObjNpcContainer, mObjNpcModel,
             findNpcIdsStr, listNpcDataForFind,
             out findNpcIdsStr, out listNpcDataForFind
@@ -116,7 +111,7 @@ public class NpcCreateWindowEditor : EditorWindow
         copyNpcId = EditorUI.GUIEditorText(copyNpcId, 100);
         if (EditorUI.GUIButton("复制"))
         {
-            CharacterBean characterData= npcInfoManager.GetCharacterDataById(copyNpcId);
+            CharacterBean characterData= NpcInfoHandler.Instance.manager.GetCharacterDataById(copyNpcId);
             characterData.npcInfoData.id = copyNpcNewId;
             characterData.npcInfoData.npc_id = copyNpcNewId;
             npcInfoService.InsertData(characterData.npcInfoData);
@@ -154,7 +149,7 @@ public class NpcCreateWindowEditor : EditorWindow
     /// NPC创建
     /// </summary>
     public static void GUINpcInfoCreate(
-        NpcInfoService npcInfoService, GameItemsManager gameItemsManager,
+        NpcInfoService npcInfoService,
         GameObject objNpcContainer, GameObject objNpcModel,
         NpcInfoBean npcInfo)
     {
@@ -162,7 +157,7 @@ public class NpcCreateWindowEditor : EditorWindow
         if (GUILayout.Button("显示", GUILayout.Width(100), GUILayout.Height(20)))
         {
             CharacterBean characterData = NpcInfoBean.NpcInfoToCharacterData(npcInfo);
-            ShowNpc(gameItemsManager, objNpcContainer, objNpcModel, characterData);
+            ShowNpc(objNpcContainer, objNpcModel, characterData);
         }
         if (GUILayout.Button("创建", GUILayout.Width(100), GUILayout.Height(20)))
         {
@@ -171,7 +166,7 @@ public class NpcCreateWindowEditor : EditorWindow
             npcInfoService.InsertData(npcInfo);
         }
         GUILayout.EndHorizontal();
-        GUINpcInfoItem(gameItemsManager, objNpcContainer, npcInfo);
+        GUINpcInfoItem(objNpcContainer, npcInfo);
     }
 
     /// <summary>
@@ -179,7 +174,6 @@ public class NpcCreateWindowEditor : EditorWindow
     /// </summary>
     public static void GUINpcInfoFind(
         NpcInfoService npcInfoService,
-        GameItemsManager gameItemsManager,
         GameObject objNpcContainer, GameObject objNpcModel,
         string findIdsStr, List<NpcInfoBean> listNpcDataForFind,
         out string outFindIdStr, out List<NpcInfoBean> outListNpcDataForFind)
@@ -230,7 +224,7 @@ public class NpcCreateWindowEditor : EditorWindow
             if (GUILayout.Button("显示", GUILayout.Width(100), GUILayout.Height(20)))
             {
                 CharacterBean characterData = NpcInfoBean.NpcInfoToCharacterData(itemData);
-                ShowNpc(gameItemsManager, objNpcContainer, objNpcModel, characterData);
+                ShowNpc(objNpcContainer, objNpcModel, characterData);
             }
             if (GUILayout.Button("更新", GUILayout.Width(100), GUILayout.Height(20)))
             {
@@ -242,7 +236,7 @@ public class NpcCreateWindowEditor : EditorWindow
                 listNpcDataForFind.Remove(itemData);
             }
             GUILayout.EndHorizontal();
-            GUINpcInfoItem(gameItemsManager, objNpcContainer, itemData);
+            GUINpcInfoItem(objNpcContainer, itemData);
             GUILayout.Label("------------------------------------");
         }
         outFindIdStr = findIdsStr;
@@ -252,7 +246,7 @@ public class NpcCreateWindowEditor : EditorWindow
     /// <summary>
     /// Npc Item
     /// </summary>
-    public static void GUINpcInfoItem(GameItemsManager gameItemsManager, GameObject objNpcContainer, NpcInfoBean npcInfo)
+    public static void GUINpcInfoItem(GameObject objNpcContainer, NpcInfoBean npcInfo)
     {
         if (GUILayout.Button("获取场景位置数据", GUILayout.Width(120), GUILayout.Height(20)))
         {
@@ -362,34 +356,34 @@ public class NpcCreateWindowEditor : EditorWindow
         EditorUI.GUIText("面具：", 50);
         npcInfo.mask_id = long.Parse(EditorGUILayout.TextArea(npcInfo.mask_id + "", GUILayout.Width(100), GUILayout.Height(20)));
         string maskPath = "Assets/Texture/Character/Dress/Mask/";
-        ItemsInfoBean maskInfo = gameItemsManager.GetItemsById(npcInfo.mask_id);
+        ItemsInfoBean maskInfo = GameItemsHandler.Instance.manager.GetItemsById(npcInfo.mask_id);
         if (maskInfo != null)
             EditorUI.GUIPic(maskPath, maskInfo.icon_key);
         EditorUI.GUIText("|", 10);
         EditorUI.GUIText("帽子：", 50);
         npcInfo.hat_id = long.Parse(EditorGUILayout.TextArea(npcInfo.hat_id + "", GUILayout.Width(100), GUILayout.Height(20)));
         string hatPath = "Assets/Texture/Character/Dress/Hat/";
-        ItemsInfoBean hatInfo = gameItemsManager.GetItemsById(npcInfo.hat_id);
+        ItemsInfoBean hatInfo = GameItemsHandler.Instance.manager.GetItemsById(npcInfo.hat_id);
         if (hatInfo != null)
             EditorUI.GUIPic(hatPath, hatInfo.icon_key);
         EditorUI.GUIText("|", 10);
         EditorUI.GUIText("衣服：", 50);
         npcInfo.clothes_id = long.Parse(EditorGUILayout.TextArea(npcInfo.clothes_id + "", GUILayout.Width(100), GUILayout.Height(20)));
         string clothesPath = "Assets/Texture/Character/Dress/Clothes/";
-        ItemsInfoBean clothesInfo = gameItemsManager.GetItemsById(npcInfo.clothes_id);
+        ItemsInfoBean clothesInfo = GameItemsHandler.Instance.manager.GetItemsById(npcInfo.clothes_id);
         if (clothesInfo != null)
             EditorUI.GUIPic(clothesPath, clothesInfo.icon_key);
         EditorUI.GUIText("|", 10);
         EditorUI.GUIText("鞋子：", 50);
         npcInfo.shoes_id = long.Parse(EditorGUILayout.TextArea(npcInfo.shoes_id + "", GUILayout.Width(100), GUILayout.Height(20)));
         string shoesPath = "Assets/Texture/Character/Dress/Shoes/";
-        ItemsInfoBean shoesInfo = gameItemsManager.GetItemsById(npcInfo.shoes_id);
+        ItemsInfoBean shoesInfo = GameItemsHandler.Instance.manager.GetItemsById(npcInfo.shoes_id);
         if (shoesInfo != null)
             EditorUI.GUIPic(shoesPath, shoesInfo.icon_key);
         EditorUI.GUIText("|", 10);
         EditorUI.GUIText("武器：", 50);
         npcInfo.hand_id = long.Parse(EditorGUILayout.TextArea(npcInfo.hand_id + "", GUILayout.Width(100), GUILayout.Height(20)));
-        ItemsInfoBean handInfo = gameItemsManager.GetItemsById(npcInfo.hand_id);
+        ItemsInfoBean handInfo = GameItemsHandler.Instance.manager.GetItemsById(npcInfo.hand_id);
         if (handInfo != null)
             EditorUI.GUIText(handInfo.name, 50);
 
@@ -803,7 +797,7 @@ public class NpcCreateWindowEditor : EditorWindow
     /// <summary>
     ///  展示NPC
     /// </summary>
-    public static GameObject ShowNpc(GameItemsManager gameItemsManager, GameObject objNpcContainer, GameObject objNpcModel, CharacterBean characterData)
+    public static GameObject ShowNpc(GameObject objNpcContainer, GameObject objNpcModel, CharacterBean characterData)
     {
         CptUtil.RemoveChildsByActiveInEditor(objNpcContainer);
         GameObject objNpc = GameObject.Instantiate(objNpcModel, objNpcContainer.transform);
