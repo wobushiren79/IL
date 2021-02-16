@@ -99,9 +99,24 @@ public class TextInfoManager : BaseManager, ITextInfoView
                     break;
             }
         }
-        listTextData.Add(new TextInfoBean(TextInfoTypeEnum.Talk, 1, GameCommonInfo.GetUITextById(99103)));
-        //继续查询该人物的所有对话
+
         CharacterFavorabilityBean characterFavorability = gameData.GetCharacterFavorability(npcInfo.id);
+        FamilyDataBean familyData= gameData.GetFamilyData();
+        //如果满足了结婚条件。添加结婚对话
+        if (
+            //该角色是否可以结婚
+            npcInfo.CheckCanMarry() 
+            //好感是否达到要求
+            && characterFavorability.CheckCanMarry() 
+            //是否已经向其他人求婚或者已经结婚
+            && (familyData.timeForMarry == null || familyData.timeForMarry.year == 0))
+        {
+            listTextData.Add(new TextInfoBean(TextInfoTypeEnum.Talk, 1, GameCommonInfo.GetUITextById(99205)));
+        }
+        //离开选项
+        listTextData.Add(new TextInfoBean(TextInfoTypeEnum.Talk, 1, GameCommonInfo.GetUITextById(99103)));
+
+        //继续查询该人物的所有对话
         GetTextForTalkByMinFavorability(npcInfo.id, characterFavorability.favorabilityLevel, action);
         action?.Invoke(listTextData);
     }

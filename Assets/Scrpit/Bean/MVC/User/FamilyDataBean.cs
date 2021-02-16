@@ -51,6 +51,8 @@ public class FamilyDataBean : BaseBean
     {
         if (timeForMarry == null)
             return false;
+        if (timeForMarry.year == 0 || timeForMarry.month == 0 || timeForMarry.day == 0)
+            return false;
         int marryDay = timeForMarry.year * 4 * 42 + timeForMarry.month * 42 + timeForMarry.day;
         int currentDay = time.year * 4 * 42 + time.month * 42 + time.day;
         if (currentDay > marryDay)

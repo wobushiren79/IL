@@ -306,6 +306,24 @@ public class UIGameText : BaseUIComponent, DialogView.IDialogCallBack
                         TextInfoHandler.Instance.manager.listTextData = RandomUtil.GetRandomDataByDictionary(TextInfoHandler.Instance.manager.mapTalkExchangeData);
                         NextText(1);
                     }
+                    //求婚
+                    else if (textData.content.Equals(GameCommonInfo.GetUITextById(99205)))
+                    {
+                        gameData.CheckHasItems(99900021, out bool hasItems, out long number);
+                        //判断是否有信物
+                        if (hasItems)
+                        {
+                            DialogBean dialogData = new DialogBean();
+                            dialogData.content = string.Format(GameCommonInfo.GetUITextById(3121), mTalkNpcInfo.name);
+                            DialogHandler.Instance.CreateDialog<DialogView>(DialogEnum.Normal, this, dialogData);
+                            NextText(textData.next_order);
+                        }
+                        else
+                        {
+                            ItemsInfoBean itemsInfo = GameItemsHandler.Instance.manager.GetItemsById(99900021);
+                            ToastHandler.Instance.ToastHint(string.Format(GameCommonInfo.GetUITextById(5023), itemsInfo.name, "1"));
+                        }
+                    }
                 }
                 else
                 {
@@ -331,56 +349,71 @@ public class UIGameText : BaseUIComponent, DialogView.IDialogCallBack
     public void Submit(DialogView dialogView, DialogBean dialogBean)
     {
         GameDataBean gameData = GameDataHandler.Instance.manager.GetGameData();
-        //获取选择物品
-        PickForItemsDialogView pickForItemsDialog = dialogView as PickForItemsDialogView;
-        pickForItemsDialog.GetSelectedItems(out ItemsInfoBean itemsInfo, out ItemBean itemData);
-        //获取赠送人
-        CharacterBean characterData = NpcInfoHandler.Instance.manager.GetCharacterDataById(mTalkNpcInfo.id);
-        CharacterFavorabilityBean characterFavorability = gameData.GetCharacterFavorability(mTalkNpcInfo.id);
-        int addFavorability;
-        int favorabilityForTalk;
-        //根据物品稀有度增加好感
-        switch (itemsInfo.GetItemRarity())
+        //送礼
+        if (dialogView is PickForItemsDialogView)
         {
-            case RarityEnum.Normal:
-                addFavorability = 1;
-                favorabilityForTalk = 1;
-                break;
-            case RarityEnum.Rare:
-                addFavorability = 3;
-                favorabilityForTalk = 3;
-                break;
-            case RarityEnum.SuperRare:
-                addFavorability = 6;
-                favorabilityForTalk = 3;
-                break;
-            case RarityEnum.SuperiorSuperRare:
-                addFavorability = 10;
-                favorabilityForTalk = 3;
-                break;
-            case RarityEnum.UltraRare:
-                addFavorability = 15;
-                favorabilityForTalk = 3;
-                break;
-            default:
-                addFavorability = 1;
-                favorabilityForTalk = 1;
-                break;
-        }
-        //增加送礼次数
-        characterFavorability.AddGiftNumber(1);
-        //删减物品
-        gameData.AddItemsNumber(itemData.itemId, -1);
-        //增加每日限制
-        GameCommonInfo.DailyLimitData.AddGiftNpc(mTalkNpcInfo.id);
-        //通过增加好感查询对话
-        TextInfoHandler.Instance.manager.listTextData = TextInfoHandler.Instance.manager.GetGiftTalkByFavorability(favorabilityForTalk);
-        ShowText(TextInfoHandler.Instance.manager.listTextData);
+            //获取选择物品
+            PickForItemsDialogView pickForItemsDialog = dialogView as PickForItemsDialogView;
+            pickForItemsDialog.GetSelectedItems(out ItemsInfoBean itemsInfo, out ItemBean itemData);
+            //获取赠送人
+            CharacterBean characterData = NpcInfoHandler.Instance.manager.GetCharacterDataById(mTalkNpcInfo.id);
+            CharacterFavorabilityBean characterFavorability = gameData.GetCharacterFavorability(mTalkNpcInfo.id);
+            int addFavorability;
+            int favorabilityForTalk;
+            //根据物品稀有度增加好感
+            switch (itemsInfo.GetItemRarity())
+            {
+                case RarityEnum.Normal:
+                    addFavorability = 1;
+                    favorabilityForTalk = 1;
+                    break;
+                case RarityEnum.Rare:
+                    addFavorability = 3;
+                    favorabilityForTalk = 3;
+                    break;
+                case RarityEnum.SuperRare:
+                    addFavorability = 6;
+                    favorabilityForTalk = 3;
+                    break;
+                case RarityEnum.SuperiorSuperRare:
+                    addFavorability = 10;
+                    favorabilityForTalk = 3;
+                    break;
+                case RarityEnum.UltraRare:
+                    addFavorability = 15;
+                    favorabilityForTalk = 3;
+                    break;
+                default:
+                    addFavorability = 1;
+                    favorabilityForTalk = 1;
+                    break;
+            }
+            //增加送礼次数
+            characterFavorability.AddGiftNumber(1);
+            //删减物品
+            gameData.AddItemsNumber(itemData.itemId, -1);
+            //增加每日限制
+            GameCommonInfo.DailyLimitData.AddGiftNpc(mTalkNpcInfo.id);
+            //通过增加好感查询对话
+            TextInfoHandler.Instance.manager.listTextData = TextInfoHandler.Instance.manager.GetGiftTalkByFavorability(favorabilityForTalk);
+            ShowText(TextInfoHandler.Instance.manager.listTextData);
 
-        //文本里面会默认加好感
-        //先减去文本加的好感 再添加实际的好感加成
-        characterFavorability.AddFavorability(-favorabilityForTalk);
-        characterFavorability.AddFavorability(addFavorability);
+            //文本里面会默认加好感
+            //先减去文本加的好感 再添加实际的好感加成
+            characterFavorability.AddFavorability(-favorabilityForTalk);
+            characterFavorability.AddFavorability(addFavorability);
+        }
+        //求婚
+        else
+        {
+            //减去信物
+            gameData.AddItemsNumber(99900021,-1);
+            //弹窗提示
+            ToastHandler.Instance.ToastHint(GameCommonInfo.GetUITextById(1341));
+            //设置3天后结婚
+            gameData.familyData.timeForMarry = GameTimeHandler.Instance.GetAfterDay(3);
+        }
+
     }
 
     public void Cancel(DialogView dialogView, DialogBean dialogBean)

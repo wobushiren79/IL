@@ -77,10 +77,7 @@ public class UIGameDate : BaseUIComponent
     {
         GameDataBean gameData = GameDataHandler.Instance.manager.GetGameData();
         //如果是结婚之后 并且当天还拥有爱爱次数
-        if (
-            gameData.GetFamilyData().CheckMarry(gameData.gameTime)&&
-            GameCommonInfo.DailyLimitData.CheckBirthNumber(1)
-            )
+        if (gameData.GetFamilyData().CheckMarry(gameData.gameTime) && GameCommonInfo.DailyLimitData.CheckBirthNumber(1))
         {
             btBrith.gameObject.SetActive(true);
         }
@@ -161,6 +158,7 @@ public class UIGameDate : BaseUIComponent
                 itemWork.baseInfo.SetWorkerStatus(WorkerStatusEnum.Rest);
             }
         }
+        FamilyDataBean familyData = gameData.GetFamilyData();
         // 第一年和第二年 第一天默认不营业
         if ((year == 221 || year == 222) && month == 1 && day == 1)
         {
@@ -168,6 +166,11 @@ public class UIGameDate : BaseUIComponent
         }
         //如果时建设中则不营业
         else if (gameData.GetInnBuildData().listBuildDay.Count > 0)
+        {
+            InnRest();
+        }
+        //如果是结婚日
+        else if (familyData.timeForMarry.year == year && familyData.timeForMarry.month == month && familyData.timeForMarry.day == day)
         {
             InnRest();
         }

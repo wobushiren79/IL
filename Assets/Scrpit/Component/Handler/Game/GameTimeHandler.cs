@@ -34,6 +34,9 @@ public class GameTimeHandler : BaseHandler<GameTimeHandler, GameTimeManager>
     //时间流逝速度
     public float timeSclae = 1;
 
+    //一个月的上限天数
+    protected int maxForDay = 42;
+
     private void Update()
     {
         if (!isStopTime)
@@ -65,7 +68,7 @@ public class GameTimeHandler : BaseHandler<GameTimeHandler, GameTimeManager>
         for (int i = 0; i < nextDay; i++)
         {
             timeData.day += 1;
-            if (timeData.day > 42)
+            if (timeData.day > maxForDay)
             {
                 timeData.day = 1;
                 timeData.month += 1;
@@ -94,7 +97,7 @@ public class GameTimeHandler : BaseHandler<GameTimeHandler, GameTimeManager>
         for (int i = 0; i < afterDay; i++)
         {
             tempDay += 1;
-            if (tempDay > 42)
+            if (tempDay > maxForDay)
             {
                 tempDay = 1;
                 tempMonth += 1;
@@ -303,6 +306,5 @@ public class GameTimeHandler : BaseHandler<GameTimeHandler, GameTimeManager>
     public void SetDayStatus(DayEnum dayStauts)
     {
         this.dayStauts = dayStauts;
-        GameCommonInfo.CurrentDayData.dayStatus = this.dayStauts;
     }
 }

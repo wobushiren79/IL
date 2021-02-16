@@ -10,6 +10,7 @@ public class DialogHandler : BaseUIHandler<DialogHandler, DialogManager>
     {
         sortingOrder = 2;
         base.Awake();
+        ChangeUIRenderMode(RenderMode.ScreenSpaceCamera);
     }
     public T CreateDialog<T>(DialogEnum dialogType, DialogView.IDialogCallBack callBack, DialogBean dialogBean) where T : DialogView
     {

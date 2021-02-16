@@ -66,10 +66,6 @@ public abstract class BaseNormalSceneInit : BaseSceneInit, DialogView.IDialogCal
         //停止控制
         GameControlHandler.Instance.EndControl();
 
-        //重置游戏时间
-        GameTimeHandler.Instance.SetDayStatus(GameTimeHandler.DayEnum.End);
-
-
         DialogBean dialogBean = new DialogBean();
         if (GameTimeHandler.Instance.GetDayStatus() == GameTimeHandler.DayEnum.Work)
         {
@@ -79,7 +75,10 @@ public abstract class BaseNormalSceneInit : BaseSceneInit, DialogView.IDialogCal
         {
             dialogBean.content = GameCommonInfo.GetUITextById(3014);
         }
-        DialogHandler.Instance.CreateDialog<DialogView>(DialogEnum.Text, this, dialogBean, 5);
+        DialogHandler.Instance.CreateDialog<DialogView>(DialogEnum.Text, this, dialogBean);
+
+        //重置游戏时间
+        GameTimeHandler.Instance.SetDayStatus(GameTimeHandler.DayEnum.End);
     }
     #region  时间通知回调
     public void NotifyForTime(GameTimeHandler.NotifyTypeEnum notifyType, float timeHour)

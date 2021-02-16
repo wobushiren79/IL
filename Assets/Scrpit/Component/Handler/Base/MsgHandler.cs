@@ -7,5 +7,6 @@ public class MsgHandler : BaseUIHandler<MsgHandler,MsgManager>
     {
         sortingOrder = 3;
         base.Awake();
+        ChangeUIRenderMode(RenderMode.ScreenSpaceCamera);
     }
 }

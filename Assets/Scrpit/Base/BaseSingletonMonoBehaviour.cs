@@ -25,10 +25,8 @@ public class BaseSingletonMonoBehaviour<T> : BaseMonoBehaviour where T : BaseMon
                                 if (i == 0)
                                 {
                                     instance = instances[i];
-#if !UNITY_EDITOR
-                                    DontDestroyOnLoad(objItem); 
-#endif
-
+                                    if (Application.isPlaying)
+                                        DontDestroyOnLoad(objItem); 
                                 }
                                 else
                                 {
@@ -41,9 +39,8 @@ public class BaseSingletonMonoBehaviour<T> : BaseMonoBehaviour where T : BaseMon
                             GameObject objInstance = new GameObject();
                             objInstance.name = typeof(T).Name;
                             instance = objInstance.AddComponent<T>();
-#if !UNITY_EDITOR
-                            DontDestroyOnLoad(objInstance);
-#endif
+                            if (Application.isPlaying)
+                                DontDestroyOnLoad(objInstance);
                         }
                     }
                 }

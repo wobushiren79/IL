@@ -159,4 +159,20 @@ public class NpcInfoBean : BaseBean
         NpcTalkTypeEnum[] talkTypes = StringUtil.SplitBySubstringForArrayEnum<NpcTalkTypeEnum>(talk_types, ',');
         return talkTypes.ToList();
     }
+
+    /// <summary>
+    /// 检测是否能结婚
+    /// </summary>
+    /// <returns></returns>
+    public bool CheckCanMarry()
+    {
+        if (marry_status == 1)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
 }

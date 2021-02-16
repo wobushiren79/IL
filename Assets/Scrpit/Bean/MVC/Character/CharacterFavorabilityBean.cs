@@ -145,4 +145,18 @@ public class CharacterFavorabilityBean
     {
         talkNumber += number;
     }
+
+
+    /// <summary>
+    /// 检测是否能结婚
+    /// </summary>
+    /// <returns></returns>
+    public bool CheckCanMarry()
+    {
+        if (favorabilityLevel >= 6)
+        {
+            return true;
+        }
+        return false;
+    }
 }

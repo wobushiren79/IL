@@ -35,13 +35,15 @@ public class SceneGameInnInit : BaseSceneInit, DialogView.IDialogCallBack
 
         //设置天气
         GameWeatherHandler.Instance.SetWeather(GameCommonInfo.CurrentDayData.weatherToday);
+        //打开UI
+        UIHandler.Instance.manager.OpenUI<UIGameMain>(UIEnum.GameMain);
 
         //增加回调
         GameTimeHandler.Instance.RegisterNotifyForTime(NotifyForTime);
         TimeBean timeData = gameData.gameTime;
         if (timeData.hour >= 24
             || timeData.hour < 6
-            || GameCommonInfo.CurrentDayData.dayStatus == GameTimeHandler.DayEnum.End)
+            || GameTimeHandler.Instance.GetDayStatus() == GameTimeHandler.DayEnum.End)
         {
             //如果是需要切换第二天
             EndDay();
@@ -109,7 +111,7 @@ public class SceneGameInnInit : BaseSceneInit, DialogView.IDialogCallBack
         //停止时间
         GameTimeHandler.Instance.SetTimeStatus(true);
         GameDataBean gameData = GameDataHandler.Instance.manager.GetGameData();
-        if (GameCommonInfo.CurrentDayData.dayStatus != GameTimeHandler.DayEnum.None)
+        if (GameTimeHandler.Instance.GetDayStatus()!= GameTimeHandler.DayEnum.None)
         {
             //重新进入游戏则不增加经验
             //如果有菜谱研究 增加研究点数
@@ -117,21 +119,24 @@ public class SceneGameInnInit : BaseSceneInit, DialogView.IDialogCallBack
             GameDataHandler.Instance.AddTimeProcess(addHour * 60);
         }
 
-        if (GameCommonInfo.CurrentDayData.dayStatus == GameTimeHandler.DayEnum.None)
+        //重置游戏时间
+        gameData.gameTime.hour = 0;
+        gameData.gameTime.minute = 0;
+        if (GameTimeHandler.Instance.GetDayStatus() == GameTimeHandler.DayEnum.None)
         {
             //重新进入游戏
             //打开日历
             UIHandler.Instance.manager.OpenUIAndCloseOther<UIGameDate>(UIEnum.GameDate);
         }
-        else if (GameCommonInfo.CurrentDayData.dayStatus == GameTimeHandler.DayEnum.Work)
+        else if (GameTimeHandler.Instance.GetDayStatus() == GameTimeHandler.DayEnum.Work)
         {
             //如果是工作状态结束一天 则进入结算画面
             UIHandler.Instance.manager.OpenUIAndCloseOther<UIGameSettle>(UIEnum.GameSettle);
             //保存数据
             GameDataHandler.Instance.manager.SaveGameData(InnHandler.Instance.GetInnRecord());
         }
-        else if (GameCommonInfo.CurrentDayData.dayStatus == GameTimeHandler.DayEnum.Rest
-            || GameCommonInfo.CurrentDayData.dayStatus == GameTimeHandler.DayEnum.End)
+        else if (GameTimeHandler.Instance.GetDayStatus() == GameTimeHandler.DayEnum.Rest
+            || GameTimeHandler.Instance.GetDayStatus() == GameTimeHandler.DayEnum.End)
         {
             //打开日历
             UIHandler.Instance.manager.OpenUIAndCloseOther<UIGameDate>(UIEnum.GameDate);

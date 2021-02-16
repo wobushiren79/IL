@@ -9,6 +9,7 @@ public class ToastHandler : BaseUIHandler<ToastHandler,ToastManager>
         sortingOrder = 5;
         base.Awake();
         manager.LoadToastListContainer();
+        ChangeUIRenderMode(RenderMode.ScreenSpaceCamera);
     }
 
     /// <summary>

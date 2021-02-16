@@ -30,7 +30,7 @@ public class ItemGameFavorabilityCpt : ItemGameBaseCpt
         SetCharacterUI(characterData);
         SetName(characterData.baseInfo.titleName, characterData.baseInfo.name);
         SetSex(characterData.body.sex);
-        SetFavorabilityLevel(characterData.npcInfoData.marry_status,characterFavorability.favorabilityLevel);
+        SetFavorabilityLevel(characterData.npcInfoData.CheckCanMarry(),characterFavorability.favorabilityLevel);
         characterFavorability.GetFavorability(out int favorability, out int favorabilityMax);
         SetFavorability(favorability, favorabilityMax);
         bool isTalk=  GameCommonInfo.DailyLimitData.CheckIsTalkNpc(characterFavorability.characterId);
@@ -97,11 +97,11 @@ public class ItemGameFavorabilityCpt : ItemGameBaseCpt
     /// 设置好感度
     /// </summary>
     /// <param name="favorabilityLevel"></param>
-    public void SetFavorabilityLevel(int marryStatus, int favorabilityLevel)
+    public void SetFavorabilityLevel(bool canMarry, int favorabilityLevel)
     {
         CptUtil.RemoveChildsByActive(objFavorabilityContainer);
         int loveMax = 5;
-        if (marryStatus==1)
+        if (canMarry)
         {
             loveMax = 6;
         }

@@ -180,7 +180,7 @@ public class InnHandler : BaseHandler<InnHandler, InnManager>
 
     public InnRecordBean GetInnRecord()
     {
-        innRecord.status = (int)GameCommonInfo.CurrentDayData.dayStatus;
+        innRecord.status = (int)GameTimeHandler.Instance.GetDayStatus();
         return innRecord;
     }
 

@@ -286,6 +286,15 @@ public class UIGameMain : BaseUIComponent, DialogView.IDialogCallBack, IRadioGro
         {
             btHotel.gameObject.SetActive(false);
         }
+        //是否展示建造按钮
+        if(SceneUtil.GetCurrentScene() == ScenesEnum.GameInnScene)
+        {
+            btBuild.gameObject.SetActive(true);
+        }
+        else
+        {
+            btBuild.gameObject.SetActive(false);
+        }
     }
 
     /// <summary>

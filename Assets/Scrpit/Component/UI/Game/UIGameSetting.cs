@@ -236,6 +236,14 @@ public class UIGameSetting : BaseUIComponent, DropdownView.ICallBack, ProgressVi
             }
         }
 
+        btExitGame.onClick.AddListener(OnClickExitGame);
+        btGoMain.onClick.AddListener(OnClickGoMain);
+        btRestartDay.onClick.AddListener(OnClickRestartDay);
+    }
+
+    public override void OpenUI()
+    {
+        base.OpenUI();
         //离开游戏回到主菜单初始化
         if (SceneUtil.GetCurrentScene() == ScenesEnum.MainScene)
         {
@@ -249,15 +257,6 @@ public class UIGameSetting : BaseUIComponent, DropdownView.ICallBack, ProgressVi
             btGoMain.gameObject.SetActive(true);
             btRestartDay.gameObject.SetActive(true);
         }
-        btExitGame.onClick.AddListener(OnClickExitGame);
-        btGoMain.onClick.AddListener(OnClickGoMain);
-        btRestartDay.onClick.AddListener(OnClickRestartDay);
-    }
-
-    public override void OpenUI()
-    {
-        base.OpenUI();
-
     }
 
     /// <summary>

@@ -117,6 +117,27 @@ public class CalendarView : BaseMonoBehaviour, IDateInfoView
     }
 
     /// <summary>
+    /// 设置结婚日
+    /// </summary>
+    public void SetMarryDay()
+    {
+        GameDataBean gameData = GameDataHandler.Instance.manager.GetGameData();
+        FamilyDataBean familyData = gameData.GetFamilyData();
+        if (familyData != null && familyData.timeForMarry != null)
+        {
+            foreach (ItemGameCalendarCpt itemGameCalendar in mListItemDay)
+            {
+                if (itemGameCalendar.dateInfo.day == familyData.timeForMarry.day
+                    && itemGameCalendar.dateInfo.month == familyData.timeForMarry.month
+                    && year == familyData.timeForMarry.year)
+                {
+                    itemGameCalendar.SetRemark("婚");
+                }
+            }
+        }
+    }
+
+    /// <summary>
     /// 设置年份
     /// </summary>
     /// <param name="year"></param>
@@ -207,6 +228,8 @@ public class CalendarView : BaseMonoBehaviour, IDateInfoView
         SetCurrentDay(day);
         //如果当天是修建日，则需在日历上显示
         SetBuildDay();
+        //如果当天是结婚日，则需在日历上显示
+        SetMarryDay();
 
         OnGUI();
     }
