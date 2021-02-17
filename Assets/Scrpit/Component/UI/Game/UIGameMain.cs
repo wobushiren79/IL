@@ -295,6 +295,15 @@ public class UIGameMain : BaseUIComponent, DialogView.IDialogCallBack, IRadioGro
         {
             btBuild.gameObject.SetActive(false);
         }
+        //是否展示家族按钮
+        if (gameData.GetFamilyData().CheckMarry(gameData.gameTime))
+        {
+            btFamily.gameObject.SetActive(true);
+        }
+        else
+        {
+            btFamily.gameObject.SetActive(false);
+        }       
     }
 
     /// <summary>

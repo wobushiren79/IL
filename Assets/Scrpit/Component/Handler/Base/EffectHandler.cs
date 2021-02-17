@@ -17,14 +17,23 @@ public class EffectHandler : BaseHandler<EffectHandler, EffectManager>
         if (objEffect == null)
             return objEffect;
         objEffect.transform.position = effectPosition;
-        ParticleSystem[] listParticleSystem = objEffect.GetComponentsInChildren<ParticleSystem>();
-        for (int i = 0; i < listParticleSystem.Length; i++)
+       
+        EffectPSCpt effectPS = objEffect.GetComponent<EffectPSCpt>();
+        if (effectPS)
         {
-            ParticleSystem particleSystem = listParticleSystem[i];
-            ParticleSystem.MainModule psMain = particleSystem.main;
-            psMain.loop = false;
-            //psMain.stopAction = ParticleSystemStopAction.Callback;
-            particleSystem.Play();
+            effectPS.Play();
+        }
+        else
+        {
+            ParticleSystem[] listParticleSystem = objEffect.GetComponentsInChildren<ParticleSystem>();
+            for (int i = 0; i < listParticleSystem.Length; i++)
+            {
+                ParticleSystem particleSystem = listParticleSystem[i];
+                ParticleSystem.MainModule psMain = particleSystem.main;
+                psMain.loop = false;
+                //psMain.stopAction = ParticleSystemStopAction.Callback;
+                particleSystem.Play();
+            }
         }
         if (delayTime <= 0)
         {

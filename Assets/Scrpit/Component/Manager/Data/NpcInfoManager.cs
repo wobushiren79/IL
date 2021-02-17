@@ -24,7 +24,7 @@ public class NpcInfoManager : BaseManager, INpcInfoView
         CharacterBean characterData = null;
         if (listNpcInfo.TryGetValue(randomId, out NpcInfoBean npcInfo))
         {
-            characterData = NpcInfoBean.NpcInfoToCharacterData(npcInfo);
+            characterData = new CharacterBean(npcInfo);
         }
         return characterData;
     }
@@ -48,7 +48,7 @@ public class NpcInfoManager : BaseManager, INpcInfoView
             return null;
         if (listNpcInfo.TryGetValue(id, out NpcInfoBean npcInfo))
         {
-            CharacterBean characterData = NpcInfoBean.NpcInfoToCharacterData(npcInfo);
+            CharacterBean characterData = new CharacterBean(npcInfo);
             return characterData;
         }
         return null;
@@ -68,7 +68,7 @@ public class NpcInfoManager : BaseManager, INpcInfoView
         {
             if (listNpcInfo.TryGetValue(id, out NpcInfoBean npcInfo))
             {
-                CharacterBean characterData = NpcInfoBean.NpcInfoToCharacterData(npcInfo);
+                CharacterBean characterData = new CharacterBean(npcInfo);
                 listData.Add(characterData);
             }
         }
@@ -100,7 +100,7 @@ public class NpcInfoManager : BaseManager, INpcInfoView
                 NpcInfoBean itemData = listNpcInfo[key];
                 if (itemData.npc_type == type)
                 {
-                    CharacterBean characterData = NpcInfoBean.NpcInfoToCharacterData(itemData);
+                    CharacterBean characterData = new CharacterBean(itemData);
                     listData.Add(characterData);
                 }
             }
@@ -119,7 +119,7 @@ public class NpcInfoManager : BaseManager, INpcInfoView
         foreach (long key in listNpcInfo.Keys)
         {
             NpcInfoBean itemData = listNpcInfo[key];
-            CharacterBean characterData = NpcInfoBean.NpcInfoToCharacterData(itemData);
+            CharacterBean characterData = new CharacterBean(itemData);
             listData.Add(characterData);
         }
         return listData;

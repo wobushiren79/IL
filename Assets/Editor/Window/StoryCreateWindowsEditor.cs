@@ -595,7 +595,7 @@ public class StoryCreateWindowsEditor : EditorWindow
         }
         else
         {
-            characterData = NpcInfoBean.NpcInfoToCharacterData(mapNpcInfo[createNpcId]);
+            characterData = new CharacterBean(mapNpcInfo[createNpcId]);
         }
 
         if (characterData == null)

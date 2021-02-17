@@ -39,15 +39,11 @@ public class GameEventHandler : BaseHandler<GameEventHandler, GameEventManager>,
     protected override void Awake()
     {
         base.Awake();
-        MiniGameHandler.Instance.handlerForDebate.RegisterNotifyForMiniGameStatus(NotifyForMiniGameStatus);
-        MiniGameHandler.Instance.handlerForCombat.RegisterNotifyForMiniGameStatus(NotifyForMiniGameStatus);
         GameTimeHandler.Instance.RegisterNotifyForTime(NotifyForTime);
 
     }
     private void OnDestroy()
     {
-        MiniGameHandler.Instance.handlerForDebate.UnRegisterNotifyForMiniGameStatus(NotifyForMiniGameStatus);
-        MiniGameHandler.Instance.handlerForCombat.UnRegisterNotifyForMiniGameStatus(NotifyForMiniGameStatus);
         GameTimeHandler.Instance.UnRegisterNotifyForTime(NotifyForTime);
     }
     public void InitData()
@@ -498,9 +494,11 @@ public class GameEventHandler : BaseHandler<GameEventHandler, GameEventManager>,
             switch (miniGameData.gameType)
             {
                 case MiniGameEnum.Combat:
+                    MiniGameHandler.Instance.handlerForCombat.RegisterNotifyForMiniGameStatus(NotifyForMiniGameStatus);
                     MiniGameHandler.Instance.handlerForCombat.InitGame((MiniGameCombatBean)miniGameData);
                     break;
                 case MiniGameEnum.Debate:
+                    MiniGameHandler.Instance.handlerForDebate.RegisterNotifyForMiniGameStatus(NotifyForMiniGameStatus);
                     MiniGameHandler.Instance.handlerForDebate.InitGame((MiniGameDebateBean)miniGameData);
                     break;
             }

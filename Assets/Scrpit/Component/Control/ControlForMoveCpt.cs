@@ -113,7 +113,8 @@ public class ControlForMoveCpt : BaseControl
         if (gameData.userCharacter != null && npcAI != null && npcAI as NpcAIUserCpt)
         {
             npcAI.SetCharacterData(gameData.userCharacter);
-            audioForWalk.volume = GameCommonInfo.GameConfig.soundVolume * 0.5f;
+            audioForWalk.clip = AudioHandler.Instance.manager.GetSoundClip("sound_walk_1");
+            audioForWalk.volume = GameCommonInfo.GameConfig.soundVolume * 0.5f; 
         }
     }
 

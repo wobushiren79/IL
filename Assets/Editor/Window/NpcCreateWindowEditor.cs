@@ -156,7 +156,7 @@ public class NpcCreateWindowEditor : EditorWindow
         GUILayout.BeginHorizontal();
         if (GUILayout.Button("显示", GUILayout.Width(100), GUILayout.Height(20)))
         {
-            CharacterBean characterData = NpcInfoBean.NpcInfoToCharacterData(npcInfo);
+            CharacterBean characterData = new CharacterBean(npcInfo);
             ShowNpc(objNpcContainer, objNpcModel, characterData);
         }
         if (GUILayout.Button("创建", GUILayout.Width(100), GUILayout.Height(20)))
@@ -223,7 +223,7 @@ public class NpcCreateWindowEditor : EditorWindow
             GUILayout.BeginHorizontal();
             if (GUILayout.Button("显示", GUILayout.Width(100), GUILayout.Height(20)))
             {
-                CharacterBean characterData = NpcInfoBean.NpcInfoToCharacterData(itemData);
+                CharacterBean characterData = new CharacterBean(itemData);
                 ShowNpc(objNpcContainer, objNpcModel, characterData);
             }
             if (GUILayout.Button("更新", GUILayout.Width(100), GUILayout.Height(20)))

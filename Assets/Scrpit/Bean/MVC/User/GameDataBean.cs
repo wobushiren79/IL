@@ -627,6 +627,8 @@ public class GameDataBean
     /// <returns></returns>
     public FamilyDataBean GetFamilyData()
     {
+        if (familyData == null)
+            familyData = new FamilyDataBean();
         return familyData; 
     }
 

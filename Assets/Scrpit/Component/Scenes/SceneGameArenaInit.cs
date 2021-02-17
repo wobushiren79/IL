@@ -11,20 +11,6 @@ public class SceneGameArenaInit : BaseSceneInit
     {
         base.Start();
         InitSceneData();
-        MiniGameHandler.Instance.handlerForBarrage.RegisterNotifyForMiniGameStatus(NotifyForMiniGameStatus);
-        MiniGameHandler.Instance.handlerForCombat.RegisterNotifyForMiniGameStatus(NotifyForMiniGameStatus);
-        MiniGameHandler.Instance.handlerForCooking.RegisterNotifyForMiniGameStatus(NotifyForMiniGameStatus);
-        MiniGameHandler.Instance.handlerForAccount.RegisterNotifyForMiniGameStatus(NotifyForMiniGameStatus);
-        MiniGameHandler.Instance.handlerForDebate.RegisterNotifyForMiniGameStatus(NotifyForMiniGameStatus);
-    }
-
-    private void OnDestroy()
-    {
-        MiniGameHandler.Instance.handlerForBarrage.UnRegisterNotifyForMiniGameStatus(NotifyForMiniGameStatus);
-        MiniGameHandler.Instance.handlerForCombat.UnRegisterNotifyForMiniGameStatus(NotifyForMiniGameStatus);
-        MiniGameHandler.Instance.handlerForCooking.UnRegisterNotifyForMiniGameStatus(NotifyForMiniGameStatus);
-        MiniGameHandler.Instance.handlerForAccount.UnRegisterNotifyForMiniGameStatus(NotifyForMiniGameStatus);
-        MiniGameHandler.Instance.handlerForDebate.UnRegisterNotifyForMiniGameStatus(NotifyForMiniGameStatus);
     }
 
     public void InitSceneData()
@@ -101,18 +87,23 @@ public class SceneGameArenaInit : BaseSceneInit
         switch (arenaPrepareData.miniGameData.gameType)
         {
             case MiniGameEnum.Cooking:
+                MiniGameHandler.Instance.handlerForCooking.RegisterNotifyForMiniGameStatus(NotifyForMiniGameStatus);
                 InitGameCooking((MiniGameCookingBean)arenaPrepareData.miniGameData);
                 break;
             case MiniGameEnum.Barrage:
+                MiniGameHandler.Instance.handlerForBarrage.RegisterNotifyForMiniGameStatus(NotifyForMiniGameStatus);
                 InitGameBarrage((MiniGameBarrageBean)arenaPrepareData.miniGameData);
                 break;
             case MiniGameEnum.Combat:
+                MiniGameHandler.Instance.handlerForCombat.RegisterNotifyForMiniGameStatus(NotifyForMiniGameStatus);
                 InitGameCombat((MiniGameCombatBean)arenaPrepareData.miniGameData);
                 break;
             case MiniGameEnum.Account:
+                MiniGameHandler.Instance.handlerForAccount.RegisterNotifyForMiniGameStatus(NotifyForMiniGameStatus);
                 InitGameAccout((MiniGameAccountBean)arenaPrepareData.miniGameData);
                 break;
             case MiniGameEnum.Debate:
+                MiniGameHandler.Instance.handlerForDebate.RegisterNotifyForMiniGameStatus(NotifyForMiniGameStatus);
                 InitGameDebate((MiniGameDebateBean)arenaPrepareData.miniGameData);
                 break;
         }

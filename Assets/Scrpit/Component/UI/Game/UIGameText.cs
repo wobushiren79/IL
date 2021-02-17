@@ -411,7 +411,14 @@ public class UIGameText : BaseUIComponent, DialogView.IDialogCallBack
             //弹窗提示
             ToastHandler.Instance.ToastHint(GameCommonInfo.GetUITextById(1341));
             //设置3天后结婚
-            gameData.familyData.timeForMarry = GameTimeHandler.Instance.GetAfterDay(3);
+            FamilyDataBean familyData = gameData.GetFamilyData();
+            familyData.timeForMarry = GameTimeHandler.Instance.GetAfterDay(3);
+            //设置妻子数据
+            CharacterForFamilyBean characterData = new CharacterForFamilyBean(mTalkNpcInfo);
+            characterData.SetFamilyType(FamilyTypeEnum.Mate);
+            familyData.wifeCharacter = characterData;
+
+
         }
 
     }

@@ -62,6 +62,8 @@ public class SceneGameInnInit : BaseSceneInit, DialogView.IDialogCallBack
         }
         //改变四季
         GameSeasonsHandler.Instance.ChangeSeasons();
+        //其他场景切过来需要重置一下客栈数据
+        InnHandler.Instance.CloseInn();
 
         StartCoroutine(BuildNavMesh());
     }

@@ -21,6 +21,6 @@ public class SceneGameInfiniteTowersInit : BaseNormalSceneInit
             infiniteTowersData.listMembers.Add("");
         }
         SceneForInfiniteTowersHandler infiniteTowersHandler = GameScenesHandler.Instance.manager.GetSceneHandler<SceneForInfiniteTowersHandler>();
-        infiniteTowersHandler.NextLayer(infiniteTowersData);
+        StartCoroutine(infiniteTowersHandler.NextLayer(infiniteTowersData));
     }
 }

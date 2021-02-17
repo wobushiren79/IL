@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using UnityEditor;
 using System;
-
+using System.Linq;
 
 [Serializable]
 public class CharacterBean
@@ -16,6 +16,71 @@ public class CharacterBean
     public CharacterEquipBean equips = new CharacterEquipBean();
     //NPC相关数据
     public NpcInfoBean npcInfoData = new NpcInfoBean();
+
+
+    public CharacterBean(NpcInfoBean npcInfo)
+    {
+        baseInfo.characterType = npcInfo.npc_type;
+        baseInfo.characterId = npcInfo.id + "";
+        baseInfo.titleName = npcInfo.title_name;
+        baseInfo.name = npcInfo.name;
+        baseInfo.priceL = npcInfo.wage_l;
+        baseInfo.priceM = npcInfo.wage_m;
+        baseInfo.priceS = npcInfo.wage_s;
+        //设置最喜欢的东西
+        if (!CheckUtil.StringIsNull(npcInfo.love_items))
+            baseInfo.listLoveItems = StringUtil.SplitBySubstringForArrayLong(npcInfo.love_items, ',').ToList();
+        body = new CharacterBodyBean();
+        body.hair = npcInfo.hair_id;
+        //设置头发颜色
+        ColorBean hairColor = new ColorBean(npcInfo.hair_color);
+        if (hairColor != null)
+            body.hairColor = hairColor;
+        body.eye = npcInfo.eye_id;
+        //设置眼睛颜色
+        ColorBean eyeColor = new ColorBean(npcInfo.eye_color);
+        if (eyeColor != null)
+            body.eyeColor = eyeColor;
+        body.mouth = npcInfo.mouth_id;
+        //设置嘴巴颜色
+        ColorBean mouthColor = new ColorBean(npcInfo.mouth_color);
+        if (mouthColor != null)
+            body.mouthColor = mouthColor;
+        body.sex = npcInfo.sex;
+        body.face = npcInfo.face;
+        //设置皮肤颜色
+        ColorBean skinColor = new ColorBean(npcInfo.skin_color);
+        if (skinColor != null)
+            body.skinColor = skinColor;
+        //设置装备
+        equips = new CharacterEquipBean();
+        equips.maskId = npcInfo.mask_id;
+        equips.handId = npcInfo.hand_id;
+        equips.hatId = npcInfo.hat_id;
+        equips.clothesId = npcInfo.clothes_id;
+        equips.shoesId = npcInfo.shoes_id;
+        equips.maskId = npcInfo.mask_id;
+
+        //设置属性
+        attributes = new CharacterAttributesBean();
+        attributes.loyal = npcInfo.attributes_loyal;
+        attributes.life = npcInfo.attributes_life;
+        attributes.cook = npcInfo.attributes_cook;
+        attributes.speed = npcInfo.attributes_speed;
+        attributes.account = npcInfo.attributes_account;
+        attributes.charm = npcInfo.attributes_charm;
+        attributes.force = npcInfo.attributes_force;
+        attributes.lucky = npcInfo.attributes_lucky;
+        //设置技能
+        attributes.listSkills = npcInfo.GetSkillIds();
+
+        npcInfoData = npcInfo;
+    }
+
+    public CharacterBean()
+    {
+
+    }
 
     /// <summary>
     /// 创建随机敌人数据

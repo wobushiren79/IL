@@ -127,8 +127,8 @@ public class UIGameDate : BaseUIComponent
         gameBirthData.gameReason = MiniGameReasonEnum.Other;
 
         gameBirthData.InitForMiniGame();
-        MiniGameHandler.Instance.handlerForBirth.InitGame(gameBirthData);
         MiniGameHandler.Instance.handlerForBirth.RegisterNotifyForMiniGameStatus(NotifyForMiniGameStatus);
+        MiniGameHandler.Instance.handlerForBirth.InitGame(gameBirthData);
     }
 
 

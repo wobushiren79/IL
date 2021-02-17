@@ -31,6 +31,7 @@ public class GameCommonInfo
         DailyLimitData = new UserDailyLimitBean();
         CurrentDayData = new CurrentDayBean();
         ScenesChangeData = new ScenesChangeBean();
+        GameTimeHandler.Instance.SetDayStatus(GameTimeHandler.DayEnum.None);
     }
 
     static GameCommonInfo()

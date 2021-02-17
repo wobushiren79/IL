@@ -9,7 +9,7 @@ public class FamilyDataBean : BaseBean
     //怀孕进度
     public float birthPro = 0;
     //结婚日
-    public TimeBean timeForMarry;
+    public TimeBean timeForMarry = new TimeBean();
 
     //怀孕天数
     public int birthDay = 0;

@@ -16,7 +16,6 @@ public class NpcAIConvertCpt : NpcAISundryCpt
 
     public GameObject objEntertainPS;
 
-    protected EffectHandler effectHandler;
     //想要说的对话
     public List<TextInfoBean> listShoutTextInfo = new List<TextInfoBean>();
 
@@ -216,12 +215,12 @@ public class NpcAIConvertCpt : NpcAISundryCpt
                 {
                     if (teamData.GetTeamType() == NpcTeamTypeEnum.Entertain)
                     {
-                        effectHandler.PlayEffect(customerCpt.objEffectContainer, "Effect_Happy_1", customerCpt.transform.position + new Vector3(0, 0.5f),0);
+                        EffectHandler.Instance.PlayEffect(customerCpt.objEffectContainer, "Effect_Happy_1", customerCpt.transform.position + new Vector3(0, 0.5f),0);
                         customerCpt.ChangeMood(20f);
                     }
                     else if (teamData.GetTeamType() == NpcTeamTypeEnum.Disappointed)
                     {
-                        effectHandler.PlayEffect(customerCpt.objEffectContainer, "Effect_Sulkiness_1", customerCpt.transform.position + new Vector3(0, 0.5f),0);
+                        EffectHandler.Instance.PlayEffect(customerCpt.objEffectContainer, "Effect_Sulkiness_1", customerCpt.transform.position + new Vector3(0, 0.5f),0);
                         customerCpt.ChangeMood(-20f);
                     }
                     else
