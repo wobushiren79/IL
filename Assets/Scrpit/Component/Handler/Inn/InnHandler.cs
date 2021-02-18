@@ -200,12 +200,13 @@ public class InnHandler : BaseHandler<InnHandler, InnManager>
     public BuildCounterCpt GetCounter(Vector3 position)
     {
         BuildCounterCpt counterCpt = null;
-        if (GameCommonInfo.GameConfig.statusForCheckOut == 0)
+        GameConfigBean gameConfig = GameDataHandler.Instance.manager.GetGameConfig();
+        if (gameConfig.statusForCheckOut == 0)
         {
             //选择最近的柜台
             counterCpt = innPayHandler.GetCloseCounter(position);
         }
-        else if (GameCommonInfo.GameConfig.statusForCheckOut == 1)
+        else if (gameConfig.statusForCheckOut == 1)
         {
             //随机选择一个柜台
             counterCpt = RandomUtil.GetRandomDataByList(innPayHandler.listCounterCpt);
@@ -471,7 +472,7 @@ public class InnHandler : BaseHandler<InnHandler, InnManager>
     public void SettlementAllCustomer()
     {
         if (CheckUtil.ListIsNull(listOrder))
-            return; 
+            return;
         GameDataBean gameData = GameDataHandler.Instance.manager.GetGameData();
         for (int i = 0; i < listOrder.Count; i++)
         {

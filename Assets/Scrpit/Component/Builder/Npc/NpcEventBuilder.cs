@@ -37,7 +37,8 @@ public class NpcEventBuilder : NpcNormalBuilder
     /// </summary>
     public void StartEvent()
     {
-        if (GameCommonInfo.GameConfig.statusForEvent == 0)
+        GameConfigBean gameConfig = GameDataHandler.Instance.manager.GetGameConfig();
+        if (gameConfig.statusForEvent == 0)
         {
             return;
         }

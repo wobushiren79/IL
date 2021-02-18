@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 public class BuildItemService : BaseMVCService
 {
-    public BuildItemService() : base("build_item", "build_item_details_" + GameCommonInfo.GameConfig.language)
+    public BuildItemService() : base("build_item", "build_item_details_" + GameDataHandler.Instance.manager.GetGameConfig().language)
     {
     }
 

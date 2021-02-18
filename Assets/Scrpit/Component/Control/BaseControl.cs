@@ -121,8 +121,8 @@ public class BaseControl : BaseMonoBehaviour
     {
         moveX = 0;
         moveY = 0;
-
-        if (GameCommonInfo.GameConfig.statusForMouseMove == 0)
+        GameConfigBean gameConfig = GameDataHandler.Instance.manager.GetGameConfig();
+        if (gameConfig.statusForMouseMove == 0)
         {
             return;
         }

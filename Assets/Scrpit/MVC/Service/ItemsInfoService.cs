@@ -7,7 +7,7 @@ public class ItemsInfoService : BaseMVCService
 {
     private readonly string mLeftIntactTableName;
 
-    public ItemsInfoService() : base("items_info", "items_info_details_" + GameCommonInfo.GameConfig.language)
+    public ItemsInfoService() : base("items_info", "items_info_details_" + GameDataHandler.Instance.manager.GetGameConfig().language)
     {
         mLeftIntactTableName = "items_intact_info";
     }

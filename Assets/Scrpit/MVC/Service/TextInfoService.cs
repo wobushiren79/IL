@@ -16,19 +16,20 @@ public class TextInfoService : BaseMVCService
     /// <param name="textEnum"></param>
     private void InitTableByTextType(TextEnum textEnum)
     {
+       GameConfigBean gameConfig = GameDataHandler.Instance.manager.GetGameConfig();
         switch (textEnum)
         {
             case TextEnum.Look:
                 tableNameForMain = "text_look";
-                tableNameForLeft = "text_look_details_" + GameCommonInfo.GameConfig.language;
+                tableNameForLeft = "text_look_details_" + gameConfig.language;
                 break;
             case TextEnum.Talk:
                 tableNameForMain = "text_talk";
-                tableNameForLeft = "text_talk_details_" + GameCommonInfo.GameConfig.language;
+                tableNameForLeft = "text_talk_details_" + gameConfig.language;
                 break;
             case TextEnum.Story:
                 tableNameForMain = "text_story";
-                tableNameForLeft = "text_story_details_" + GameCommonInfo.GameConfig.language;
+                tableNameForLeft = "text_story_details_" + gameConfig.language;
                 break;
         }
     }
@@ -173,8 +174,9 @@ public class TextInfoService : BaseMVCService
 
     public List<TextInfoBean> QueryDataForFirstOrderByFavorability(long characterId, int favorability)
     {
+        GameConfigBean gameConfig = GameDataHandler.Instance.manager.GetGameConfig();
         tableNameForMain = "text_talk";
-        tableNameForLeft = "text_talk_details_" + GameCommonInfo.GameConfig.language;
+        tableNameForLeft = "text_talk_details_" + gameConfig.language;
         string[] leftTable = new string[] { tableNameForLeft };
         string[] mainKey = new string[] { "id" };
         string[] leftKey = new string[] { "text_id" };
@@ -187,8 +189,9 @@ public class TextInfoService : BaseMVCService
 
     public List<TextInfoBean> QueryDataForFirstOrderByFirstMeet(long characterId)
     {
+        GameConfigBean gameConfig = GameDataHandler.Instance.manager.GetGameConfig();
         tableNameForMain = "text_talk";
-        tableNameForLeft = "text_talk_details_" + GameCommonInfo.GameConfig.language;
+        tableNameForLeft = "text_talk_details_" + gameConfig.language;
         string[] leftTable = new string[] { tableNameForLeft };
         string[] mainKey = new string[] { "id" };
         string[] leftKey = new string[] { "text_id" };

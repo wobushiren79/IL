@@ -66,9 +66,10 @@ public class AudioHandler : BaseHandler<AudioHandler, AudioManager>
     /// </summary>
     public void InitAudio()
     {
-        audioSourceForMusic.volume = GameCommonInfo.GameConfig.musicVolume;
-        audioSourceForSound.volume = GameCommonInfo.GameConfig.soundVolume;
-        audioSourceForEnvironment.volume = GameCommonInfo.GameConfig.environmentVolume;
+        GameConfigBean gameConfig = GameDataHandler.Instance.manager.GetGameConfig();
+        audioSourceForMusic.volume = gameConfig.musicVolume;
+        audioSourceForSound.volume = gameConfig.soundVolume;
+        audioSourceForEnvironment.volume = gameConfig.environmentVolume;
     }
 
     /// <summary>
@@ -77,7 +78,8 @@ public class AudioHandler : BaseHandler<AudioHandler, AudioManager>
     /// <param name="audioMusic"></param>
     public void PlayMusicForLoop(AudioMusicEnum audioMusic)
     {
-        PlayMusicForLoop(audioMusic, GameCommonInfo.GameConfig.musicVolume);
+        GameConfigBean gameConfig = GameDataHandler.Instance.manager.GetGameConfig();
+        PlayMusicForLoop(audioMusic, gameConfig.musicVolume);
     }
 
     /// <summary>
@@ -289,7 +291,8 @@ public class AudioHandler : BaseHandler<AudioHandler, AudioManager>
 
     public void PlaySound(AudioSoundEnum sound)
     {
-        PlaySound(sound, Camera.main.transform.position, GameCommonInfo.GameConfig.soundVolume);
+        GameConfigBean gameConfig = GameDataHandler.Instance.manager.GetGameConfig();
+        PlaySound(sound, Camera.main.transform.position, gameConfig.soundVolume);
     }
     public void PlaySound(AudioSoundEnum sound, float volumeScale)
     {

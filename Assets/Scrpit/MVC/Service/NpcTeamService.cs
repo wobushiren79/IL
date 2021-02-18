@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 public class NpcTeamService : BaseMVCService
 {
-    public NpcTeamService() : base("npc_team", "npc_team_details_" + GameCommonInfo.GameConfig.language)
+    public NpcTeamService() : base("npc_team", "npc_team_details_" + GameDataHandler.Instance.manager.GetGameConfig().language)
     {
 
     }

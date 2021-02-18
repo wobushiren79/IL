@@ -114,7 +114,8 @@ public class ControlForMoveCpt : BaseControl
         {
             npcAI.SetCharacterData(gameData.userCharacter);
             audioForWalk.clip = AudioHandler.Instance.manager.GetSoundClip("sound_walk_1");
-            audioForWalk.volume = GameCommonInfo.GameConfig.soundVolume * 0.5f; 
+            GameConfigBean gameConfig = GameDataHandler.Instance.manager.GetGameConfig();
+            audioForWalk.volume = gameConfig.soundVolume * 0.5f; 
         }
     }
 

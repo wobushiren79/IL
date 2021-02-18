@@ -175,7 +175,8 @@ public class GameEventHandler : BaseHandler<GameEventHandler, GameEventManager>,
     /// <returns></returns>
     public bool EventTriggerForTalkByRascal(NpcAIRascalCpt npcAIRascal, long markId)
     {
-        if (GameCommonInfo.GameConfig.statusForEventCameraMove == 1)
+        GameConfigBean gameConfig = GameDataHandler.Instance.manager.GetGameConfig();
+        if (gameConfig.statusForEventCameraMove == 1)
         {
             //先还原层数
             ControlForWorkCpt controlForWork = GameControlHandler.Instance.manager.GetControl<ControlForWorkCpt>(ControlEnum.Work);
@@ -186,7 +187,7 @@ public class GameEventHandler : BaseHandler<GameEventHandler, GameEventManager>,
         }
         float lastTimeScale = GameTimeHandler.Instance.GetTimeScale();
         bool isTrigger = EventTriggerForTalk(markId, false);
-        if (GameCommonInfo.GameConfig.statusForEventStopTimeScale == 0)
+        if (gameConfig.statusForEventStopTimeScale == 0)
         {
             GameTimeHandler.Instance.SetTimeScale(lastTimeScale);
         }
@@ -201,7 +202,8 @@ public class GameEventHandler : BaseHandler<GameEventHandler, GameEventManager>,
     /// <returns></returns>
     public bool EventTriggerForTalkBySundry(NpcAISundryCpt npcAISundry, long markId)
     {
-        if (GameCommonInfo.GameConfig.statusForEventCameraMove == 1)
+        GameConfigBean gameConfig = GameDataHandler.Instance.manager.GetGameConfig();
+        if (gameConfig.statusForEventCameraMove == 1)
         {
             //先还原层数
             ControlForWorkCpt controlForWork = GameControlHandler.Instance.manager.GetControl<ControlForWorkCpt>(GameControlHandler.ControlEnum.Work);
@@ -212,7 +214,7 @@ public class GameEventHandler : BaseHandler<GameEventHandler, GameEventManager>,
         }
         float lastTimeScale = GameTimeHandler.Instance.GetTimeScale();
         bool isTrigger = EventTriggerForTalk(markId, false);
-        if (GameCommonInfo.GameConfig.statusForEventStopTimeScale == 0)
+        if (gameConfig.statusForEventStopTimeScale == 0)
         {
             GameTimeHandler.Instance.SetTimeScale(lastTimeScale);
         }

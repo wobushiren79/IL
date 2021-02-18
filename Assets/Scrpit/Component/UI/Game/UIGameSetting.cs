@@ -30,6 +30,7 @@ public class UIGameSetting : BaseUIComponent, DropdownView.ICallBack, ProgressVi
 
     public void Start()
     {
+        GameConfigBean gameConfig = GameDataHandler.Instance.manager.GetGameConfig();
         if (btBack != null)
         {
             btBack.onClick.AddListener(OnClickBack);
@@ -43,7 +44,8 @@ public class UIGameSetting : BaseUIComponent, DropdownView.ICallBack, ProgressVi
                 new Dropdown.OptionData("全屏")
             };
             dvWindow.SetData(listWindow);
-            switch (GameCommonInfo.GameConfig.window)
+
+            switch (gameConfig.window)
             {
                 case 0:
                     dvWindow.SetPosition("窗口");
@@ -66,7 +68,7 @@ public class UIGameSetting : BaseUIComponent, DropdownView.ICallBack, ProgressVi
                 new Dropdown.OptionData("选择人少的柜台结账")
             };
             dvCheckOut.SetData(listCheckOut);
-            switch (GameCommonInfo.GameConfig.statusForCheckOut)
+            switch (gameConfig.statusForCheckOut)
             {
                 case 0:
                     dvCheckOut.SetPosition(0);
@@ -90,7 +92,7 @@ public class UIGameSetting : BaseUIComponent, DropdownView.ICallBack, ProgressVi
                //new Dropdown.OptionData("English")
             };
             dvLanguage.SetData(listLanguage);
-            switch (GameCommonInfo.GameConfig.language)
+            switch (GameDataHandler.Instance.manager.GetGameConfig().language)
             {
                 case "cn":
                     dvLanguage.SetPosition("简体中文");
@@ -105,19 +107,19 @@ public class UIGameSetting : BaseUIComponent, DropdownView.ICallBack, ProgressVi
         //音乐选择初始化
         if (pvMusic != null)
         {
-            pvMusic.SetData(GameCommonInfo.GameConfig.musicVolume);
+            pvMusic.SetData(gameConfig.musicVolume);
             pvMusic.SetCallBack(this);
         }
         //音效选择初始化
         if (pvSound != null)
         {
-            pvSound.SetData(GameCommonInfo.GameConfig.soundVolume);
+            pvSound.SetData(gameConfig.soundVolume);
             pvSound.SetCallBack(this);
         }
         //环境音乐初始化
         if (pvEnvironment != null)
         {
-            pvEnvironment.SetData(GameCommonInfo.GameConfig.environmentVolume);
+            pvEnvironment.SetData(gameConfig.environmentVolume);
             pvEnvironment.SetCallBack(this);
         }
 
@@ -125,18 +127,18 @@ public class UIGameSetting : BaseUIComponent, DropdownView.ICallBack, ProgressVi
         if (rbFrames != null)
         {
             rbFrames.SetCallBack(this);
-            if (GameCommonInfo.GameConfig.statusForFrames == 0)
+            if (gameConfig.statusForFrames == 0)
             {
                 rbFrames.ChangeStates(RadioButtonView.RadioButtonStatus.Unselected);
             }
-            else if (GameCommonInfo.GameConfig.statusForFrames == 1)
+            else if (gameConfig.statusForFrames == 1)
             {
                 rbFrames.ChangeStates(RadioButtonView.RadioButtonStatus.Selected);
             }
         }
         if (etFrames != null)
         {
-            etFrames.text = GameCommonInfo.GameConfig.frames + "";
+            etFrames.text = gameConfig.frames + "";
             etFrames.onEndEdit.AddListener(OnValueChangeForFrame);
         }
 
@@ -144,11 +146,11 @@ public class UIGameSetting : BaseUIComponent, DropdownView.ICallBack, ProgressVi
         if (rbMouseMove != null)
         {
             rbMouseMove.SetCallBack(this);
-            if (GameCommonInfo.GameConfig.statusForMouseMove == 0)
+            if (gameConfig.statusForMouseMove == 0)
             {
                 rbMouseMove.ChangeStates(RadioButtonView.RadioButtonStatus.Unselected);
             }
-            else if (GameCommonInfo.GameConfig.statusForMouseMove == 1)
+            else if (gameConfig.statusForMouseMove == 1)
             {
                 rbMouseMove.ChangeStates(RadioButtonView.RadioButtonStatus.Selected);
             }
@@ -158,11 +160,11 @@ public class UIGameSetting : BaseUIComponent, DropdownView.ICallBack, ProgressVi
         if (rbKeyTip != null)
         {
             rbKeyTip.SetCallBack(this);
-            if (GameCommonInfo.GameConfig.statusForKeyTip == 0)
+            if (gameConfig.statusForKeyTip == 0)
             {
                 rbKeyTip.ChangeStates(RadioButtonView.RadioButtonStatus.Unselected);
             }
-            else if (GameCommonInfo.GameConfig.statusForKeyTip == 1)
+            else if (gameConfig.statusForKeyTip == 1)
             {
                 rbKeyTip.ChangeStates(RadioButtonView.RadioButtonStatus.Selected);
             }
@@ -171,11 +173,11 @@ public class UIGameSetting : BaseUIComponent, DropdownView.ICallBack, ProgressVi
         if (rbEventCameraMove != null)
         {
             rbEventCameraMove.SetCallBack(this);
-            if (GameCommonInfo.GameConfig.statusForEventCameraMove == 0)
+            if (gameConfig.statusForEventCameraMove == 0)
             {
                 rbEventCameraMove.ChangeStates(RadioButtonView.RadioButtonStatus.Unselected);
             }
-            else if (GameCommonInfo.GameConfig.statusForEventCameraMove == 1)
+            else if (gameConfig.statusForEventCameraMove == 1)
             {
                 rbEventCameraMove.ChangeStates(RadioButtonView.RadioButtonStatus.Selected);
             }
@@ -184,11 +186,11 @@ public class UIGameSetting : BaseUIComponent, DropdownView.ICallBack, ProgressVi
         if (rbEventStopTimeScale != null)
         {
             rbEventStopTimeScale.SetCallBack(this);
-            if (GameCommonInfo.GameConfig.statusForEventStopTimeScale == 0)
+            if (gameConfig.statusForEventStopTimeScale == 0)
             {
                 rbEventStopTimeScale.ChangeStates(RadioButtonView.RadioButtonStatus.Unselected);
             }
-            else if (GameCommonInfo.GameConfig.statusForEventStopTimeScale == 1)
+            else if (gameConfig.statusForEventStopTimeScale == 1)
             {
                 rbEventStopTimeScale.ChangeStates(RadioButtonView.RadioButtonStatus.Selected);
             }
@@ -198,11 +200,11 @@ public class UIGameSetting : BaseUIComponent, DropdownView.ICallBack, ProgressVi
         if (rbEvent != null)
         {
             rbEvent.SetCallBack(this);
-            if (GameCommonInfo.GameConfig.statusForEvent == 0)
+            if (gameConfig.statusForEvent == 0)
             {
                 rbEvent.ChangeStates(RadioButtonView.RadioButtonStatus.Unselected);
             }
-            else if (GameCommonInfo.GameConfig.statusForEvent == 1)
+            else if (gameConfig.statusForEvent == 1)
             {
                 rbEvent.ChangeStates(RadioButtonView.RadioButtonStatus.Selected);
             }
@@ -212,11 +214,11 @@ public class UIGameSetting : BaseUIComponent, DropdownView.ICallBack, ProgressVi
         if (rbWorkerNumber != null)
         {
             rbWorkerNumber.SetCallBack(this);
-            if (GameCommonInfo.GameConfig.statusForWorkerNumber == 0)
+            if (gameConfig.statusForWorkerNumber == 0)
             {
                 rbWorkerNumber.ChangeStates(RadioButtonView.RadioButtonStatus.Unselected);
             }
-            else if (GameCommonInfo.GameConfig.statusForWorkerNumber == 1)
+            else if (gameConfig.statusForWorkerNumber == 1)
             {
                 rbWorkerNumber.ChangeStates(RadioButtonView.RadioButtonStatus.Selected);
             }
@@ -226,11 +228,11 @@ public class UIGameSetting : BaseUIComponent, DropdownView.ICallBack, ProgressVi
         if (rbPowerTest != null)
         {
             rbPowerTest.SetCallBack(this);
-            if (GameCommonInfo.GameConfig.statusForCombatForPowerTest == 0)
+            if (gameConfig.statusForCombatForPowerTest == 0)
             {
                 rbPowerTest.ChangeStates(RadioButtonView.RadioButtonStatus.Unselected);
             }
-            else if (GameCommonInfo.GameConfig.statusForCombatForPowerTest == 1)
+            else if (gameConfig.statusForCombatForPowerTest == 1)
             {
                 rbPowerTest.ChangeStates(RadioButtonView.RadioButtonStatus.Selected);
             }
@@ -273,7 +275,7 @@ public class UIGameSetting : BaseUIComponent, DropdownView.ICallBack, ProgressVi
         {
             UIHandler.Instance.manager.OpenUIAndCloseOther<UIGameMain>(UIEnum.GameMain);
         }
-        GameCommonInfo.SaveGameConfig();
+        GameDataHandler.Instance.manager.SaveGameConfig();
     }
 
 
@@ -326,8 +328,9 @@ public class UIGameSetting : BaseUIComponent, DropdownView.ICallBack, ProgressVi
                 etFrames.text = "30";
                 return;
             }
-            GameCommonInfo.GameConfig.frames = result;      
-            FPSHandler.Instance.SetData(GameCommonInfo.GameConfig.statusForFrames, GameCommonInfo.GameConfig.frames);
+            GameConfigBean gameConfig = GameDataHandler.Instance.manager.GetGameConfig();
+            gameConfig.frames = result;      
+            FPSHandler.Instance.SetData(gameConfig.statusForFrames, gameConfig.frames);
         }
     }   
 
@@ -335,6 +338,7 @@ public class UIGameSetting : BaseUIComponent, DropdownView.ICallBack, ProgressVi
     public void OnDropDownValueChange(DropdownView view, int position, Dropdown.OptionData optionData)
     {
         AudioHandler.Instance.PlaySound(AudioSoundEnum.ButtonForNormal);
+        GameConfigBean gameConfig = GameDataHandler.Instance.manager.GetGameConfig();
         if (view== dvLanguage)
         {
             string languageStr = "cn";
@@ -344,7 +348,7 @@ public class UIGameSetting : BaseUIComponent, DropdownView.ICallBack, ProgressVi
                     languageStr = "cn";
                     break;
             }
-            GameCommonInfo.GameConfig.language = languageStr;
+            GameDataHandler.Instance.manager.GetGameConfig().language = languageStr;
         }
         else if (view == dvWindow)
         {
@@ -364,11 +368,11 @@ public class UIGameSetting : BaseUIComponent, DropdownView.ICallBack, ProgressVi
                     Screen.fullScreen = true;
                     break;
             }
-            GameCommonInfo.GameConfig.window = windowType;
+            gameConfig.window = windowType;
         }
         else if (view == dvCheckOut)
         {
-            GameCommonInfo.GameConfig.statusForCheckOut = position;
+            gameConfig.statusForCheckOut = position;
         }
     }
     #endregion
@@ -376,17 +380,18 @@ public class UIGameSetting : BaseUIComponent, DropdownView.ICallBack, ProgressVi
     #region 进度条回调
     public void OnProgressViewValueChange(ProgressView progressView, float value)
     {
+        GameConfigBean gameConfig = GameDataHandler.Instance.manager.GetGameConfig();
         if (progressView == pvMusic)
         {
-            GameCommonInfo.GameConfig.musicVolume = value;
+            gameConfig.musicVolume = value;
         }
         else if (progressView == pvSound)
         {
-            GameCommonInfo.GameConfig.soundVolume = value;
+            gameConfig.soundVolume = value;
         }
         else if (progressView == pvEnvironment)
         {
-            GameCommonInfo.GameConfig.environmentVolume = value;
+            gameConfig.environmentVolume = value;
         }
         AudioHandler.Instance.InitAudio();
     }
@@ -429,16 +434,17 @@ public class UIGameSetting : BaseUIComponent, DropdownView.ICallBack, ProgressVi
     public void RadioButtonSelected(RadioButtonView view, RadioButtonView.RadioButtonStatus buttonStates)
     {
         AudioHandler.Instance.PlaySound(AudioSoundEnum.ButtonForNormal);
+        GameConfigBean gameConfig = GameDataHandler.Instance.manager.GetGameConfig();
         if (view == rbKeyTip)
         {
             //按键提示
             if (buttonStates == RadioButtonView.RadioButtonStatus.Selected)
             {
-                GameCommonInfo.GameConfig.statusForKeyTip = 1;
+                gameConfig.statusForKeyTip = 1;
             }
             else if (buttonStates == RadioButtonView.RadioButtonStatus.Unselected)
             {
-                GameCommonInfo.GameConfig.statusForKeyTip = 0;
+                gameConfig.statusForKeyTip = 0;
             }
         }
         else if (view == rbFrames)
@@ -446,24 +452,24 @@ public class UIGameSetting : BaseUIComponent, DropdownView.ICallBack, ProgressVi
             //按键提示
             if (buttonStates == RadioButtonView.RadioButtonStatus.Selected)
             {
-                GameCommonInfo.GameConfig.statusForFrames = 1;
+                gameConfig.statusForFrames = 1;
             }
             else if (buttonStates == RadioButtonView.RadioButtonStatus.Unselected)
             {
-                GameCommonInfo.GameConfig.statusForFrames = 0;
+                gameConfig.statusForFrames = 0;
             }
-            FPSHandler.Instance.SetData(GameCommonInfo.GameConfig.statusForFrames, GameCommonInfo.GameConfig.frames);
+            FPSHandler.Instance.SetData(gameConfig.statusForFrames, gameConfig.frames);
         }
         else if (view == rbMouseMove)
         {
             //按键提示
             if (buttonStates == RadioButtonView.RadioButtonStatus.Selected)
             {
-                GameCommonInfo.GameConfig.statusForMouseMove = 1;
+                gameConfig.statusForMouseMove = 1;
             }
             else if (buttonStates == RadioButtonView.RadioButtonStatus.Unselected)
             {
-                GameCommonInfo.GameConfig.statusForMouseMove = 0;
+                gameConfig.statusForMouseMove = 0;
             }
         }
         else if (view == rbEventCameraMove)
@@ -471,11 +477,11 @@ public class UIGameSetting : BaseUIComponent, DropdownView.ICallBack, ProgressVi
             //按键提示
             if (buttonStates == RadioButtonView.RadioButtonStatus.Selected)
             {
-                GameCommonInfo.GameConfig.statusForEventCameraMove = 1;
+                gameConfig.statusForEventCameraMove = 1;
             }
             else if (buttonStates == RadioButtonView.RadioButtonStatus.Unselected)
             {
-                GameCommonInfo.GameConfig.statusForEventCameraMove = 0;
+                gameConfig.statusForEventCameraMove = 0;
             }
         }
         else if (view == rbEventStopTimeScale)
@@ -483,11 +489,11 @@ public class UIGameSetting : BaseUIComponent, DropdownView.ICallBack, ProgressVi
             //按键提示
             if (buttonStates == RadioButtonView.RadioButtonStatus.Selected)
             {
-                GameCommonInfo.GameConfig.statusForEventStopTimeScale = 1;
+                gameConfig.statusForEventStopTimeScale = 1;
             }
             else if (buttonStates == RadioButtonView.RadioButtonStatus.Unselected)
             {
-                GameCommonInfo.GameConfig.statusForEventStopTimeScale = 0;
+                gameConfig.statusForEventStopTimeScale = 0;
             }
         }
         else if (view == rbEvent)
@@ -495,11 +501,11 @@ public class UIGameSetting : BaseUIComponent, DropdownView.ICallBack, ProgressVi
             //按键提示
             if (buttonStates == RadioButtonView.RadioButtonStatus.Selected)
             {
-                GameCommonInfo.GameConfig.statusForEvent = 1;
+                gameConfig.statusForEvent = 1;
             }
             else if (buttonStates == RadioButtonView.RadioButtonStatus.Unselected)
             {
-                GameCommonInfo.GameConfig.statusForEvent = 0;
+                gameConfig.statusForEvent = 0;
             }
         }
         else if (view == rbWorkerNumber)
@@ -507,11 +513,11 @@ public class UIGameSetting : BaseUIComponent, DropdownView.ICallBack, ProgressVi
             //按键提示
             if (buttonStates == RadioButtonView.RadioButtonStatus.Selected)
             {
-                GameCommonInfo.GameConfig.statusForWorkerNumber = 1;
+                gameConfig.statusForWorkerNumber = 1;
             }
             else if (buttonStates == RadioButtonView.RadioButtonStatus.Unselected)
             {
-                GameCommonInfo.GameConfig.statusForWorkerNumber = 0;
+                gameConfig.statusForWorkerNumber = 0;
             }
         }
         else if (view == rbPowerTest)
@@ -519,11 +525,11 @@ public class UIGameSetting : BaseUIComponent, DropdownView.ICallBack, ProgressVi
             //按键提示
             if (buttonStates == RadioButtonView.RadioButtonStatus.Selected)
             {
-                GameCommonInfo.GameConfig.statusForCombatForPowerTest = 1;
+                gameConfig.statusForCombatForPowerTest = 1;
             }
             else if (buttonStates == RadioButtonView.RadioButtonStatus.Unselected)
             {
-                GameCommonInfo.GameConfig.statusForCombatForPowerTest = 0;
+                gameConfig.statusForCombatForPowerTest = 0;
             }
         }
     }

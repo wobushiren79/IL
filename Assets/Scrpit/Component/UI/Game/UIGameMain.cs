@@ -260,8 +260,8 @@ public class UIGameMain : BaseUIComponent, DialogView.IDialogCallBack, IRadioGro
         //        btJumpTime.gameObject.SetActive(false);
         //    }
         //}
-
-        if (GameCommonInfo.GameConfig.statusForWorkerNumber == 0)
+        GameConfigBean gameConfig = GameDataHandler.Instance.manager.GetGameConfig();
+        if (gameConfig.statusForWorkerNumber == 0)
         {
             workerNumber.Close();
         }

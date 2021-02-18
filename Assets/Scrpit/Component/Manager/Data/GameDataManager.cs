@@ -3,20 +3,25 @@ using UnityEditor;
 using System.Collections.Generic;
 using System;
 
-public class GameDataManager : BaseManager, IGameDataView, IUserRevenueView
+public class GameDataManager : BaseManager, IGameDataView, IUserRevenueView, IGameConfigView
 {
-    //游戏数据控制
-    public GameDataController gameDataController;
-    public UserRevenueController userRevenueController;
-
+    //游戏设置
+    public GameConfigBean gameConfig;
     //游戏数据
     public GameDataBean gameData;
+
+    //游戏数据控制
+    public GameDataController controllerForGameData;
+    public UserRevenueController controllerForUserRevenue;
+    public GameConfigController controllerForGameConfig;
 
     private void Awake()
     {
         gameData = new GameDataBean();
-        gameDataController = new GameDataController(this, this);
-        userRevenueController = new UserRevenueController(this, this);
+        controllerForGameData = new GameDataController(this, this);
+        controllerForUserRevenue = new UserRevenueController(this, this);
+        controllerForGameConfig = new GameConfigController(this,this);
+        controllerForGameConfig.GetGameConfigData();
     }
 
     /// <summary>
@@ -34,7 +39,7 @@ public class GameDataManager : BaseManager, IGameDataView, IUserRevenueView
     /// <param name="gameUserId"></param>
     public void GetGameDataByUserId(string gameUserId)
     {
-        gameDataController.GetGameDataByUserId(gameUserId);
+        controllerForGameData.GetGameDataByUserId(gameUserId);
     }
 
     /// <summary>
@@ -43,7 +48,7 @@ public class GameDataManager : BaseManager, IGameDataView, IUserRevenueView
     /// <param name="userId"></param>
     public void DeleteGameDataByUserId(string userId)
     {
-        gameDataController.DeleteUserDataByUserId(userId);
+        controllerForGameData.DeleteUserDataByUserId(userId);
     }
 
     /// <summary>
@@ -52,7 +57,7 @@ public class GameDataManager : BaseManager, IGameDataView, IUserRevenueView
     /// <param name="gameDataBean"></param>
     public void CreateGameData(GameDataBean gameDataBean)
     {
-        gameDataController.CreateUserData(gameDataBean);
+        controllerForGameData.CreateUserData(gameDataBean);
     }
 
 
@@ -61,9 +66,8 @@ public class GameDataManager : BaseManager, IGameDataView, IUserRevenueView
     /// </summary>
     public void GetSimpleGameDataList(Action<List<GameDataSimpleBean>> action)
     {
-        gameDataController.GetSimpleGameData(action);
+        controllerForGameData.GetSimpleGameData(action);
     }
-
 
     /// <summary>
     /// 保存游戏数据
@@ -71,8 +75,8 @@ public class GameDataManager : BaseManager, IGameDataView, IUserRevenueView
     /// <param name="innRecord">客栈流水</param>
     public void SaveGameData(InnRecordBean innRecordData)
     {
-        gameDataController.SaveUserData(gameData);
-        userRevenueController.SetUserRevenue(gameData.userId,innRecordData);
+        controllerForGameData.SaveUserData(gameData);
+        controllerForUserRevenue.SetUserRevenue(gameData.userId,innRecordData);
     }
 
     /// <summary>
@@ -83,7 +87,7 @@ public class GameDataManager : BaseManager, IGameDataView, IUserRevenueView
     {
         if (gameData == null)
             return;
-        userRevenueController.GetUserRevenueByYear(gameData.userId, year, action);
+        controllerForUserRevenue.GetUserRevenueByYear(gameData.userId, year, action);
     }
 
     /// <summary>
@@ -93,7 +97,24 @@ public class GameDataManager : BaseManager, IGameDataView, IUserRevenueView
     {
         if (gameData == null)
             return;
-        userRevenueController.GetUserRevenueYear(gameData.userId, action);
+        controllerForUserRevenue.GetUserRevenueYear(gameData.userId, action);
+    }
+
+    /// <summary>
+    /// 保存游戏设置
+    /// </summary>
+    public void SaveGameConfig()
+    {
+        controllerForGameConfig.SaveGameConfigData(gameConfig);
+    }
+
+    /// <summary>
+    /// 获取游戏设置
+    /// </summary>
+    /// <returns></returns>
+    public GameConfigBean GetGameConfig()
+    {
+        return gameConfig;
     }
 
     #region 数据回调
@@ -147,6 +168,25 @@ public class GameDataManager : BaseManager, IGameDataView, IUserRevenueView
     public void GetUserRevenueSuccess(UserRevenueBean userRevenue, Action<UserRevenueBean> action)
     {
         action?.Invoke(userRevenue);
+    }
+    public void GetGameConfigFail()
+    {
+
+    }
+
+    public void GetGameConfigSuccess(GameConfigBean configBean)
+    {
+        gameConfig = configBean;
+    }
+
+    public void SetGameConfigFail()
+    {
+
+    }
+
+    public void SetGameConfigSuccess(GameConfigBean configBean)
+    {
+
     }
     #endregion
 }

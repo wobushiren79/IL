@@ -4,8 +4,9 @@ using System.Collections.Generic;
 
 public class SkillInfoService : BaseMVCService
 {
-    public SkillInfoService() : base("skill_info", "skill_info_details_" + GameCommonInfo.GameConfig.language)
+    public SkillInfoService() : base("skill_info", "skill_info_details_" + GameDataHandler.Instance.manager.GetGameConfig().language)
     {
+
     }
 
     public List<SkillInfoBean> QueryAllData()

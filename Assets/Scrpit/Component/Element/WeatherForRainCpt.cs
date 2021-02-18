@@ -34,8 +34,8 @@ public class WeatherForRainCpt : WeatherCpt
                 SetThunderstorm();
                 break;
         }
-        
-        AudioHandler.Instance.PlayEnvironment(AudioEnvironmentEnum.Rain,GameCommonInfo.GameConfig.environmentVolume);
+        GameConfigBean gameConfig = GameDataHandler.Instance.manager.GetGameConfig();
+        AudioHandler.Instance.PlayEnvironment(AudioEnvironmentEnum.Rain, gameConfig.environmentVolume);
     }
 
     public override void CloseWeather()

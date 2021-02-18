@@ -4,8 +4,6 @@ using UnityEngine.U2D;
 
 public class GameCommonInfo
 {
-    //游戏设置
-    public static GameConfigBean GameConfig;
     //进入竞技场准备数据
     public static ArenaPrepareBean ArenaPrepareData;
     //进入无尽之塔准备数据
@@ -18,8 +16,6 @@ public class GameCommonInfo
     public static CurrentDayBean CurrentDayData = new CurrentDayBean();
     // 预加载场景名字
     public static ScenesChangeBean ScenesChangeData = new ScenesChangeBean();
-
-    private static GameConfigController mGameConfigController;
 
     public static BaseDataController baseDataController;
 
@@ -35,10 +31,7 @@ public class GameCommonInfo
 
     static GameCommonInfo()
     {
-        GameConfig = new GameConfigBean();
-        mGameConfigController = new GameConfigController(null, new GameConfigCallBack());
         baseDataController = new BaseDataController(null, null);
-        mGameConfigController.GetGameConfigData();
         baseDataController.InitBaseData();
         SpriteAtlasManager.atlasRequested += RequestAtlas;
     }
@@ -75,33 +68,4 @@ public class GameCommonInfo
     {
         InfiniteTowersData = data;
     }
-
-    public static void SaveGameConfig()
-    {
-        mGameConfigController.SaveGameConfigData(GameConfig);
-    }
-
-    public class GameConfigCallBack : IGameConfigView
-    {
-        public void GetGameConfigFail()
-        {
-
-        }
-
-        public void GetGameConfigSuccess(GameConfigBean configBean)
-        {
-            GameConfig = configBean;
-        }
-
-        public void SetGameConfigFail()
-        {
-
-        }
-
-        public void SetGameConfigSuccess(GameConfigBean configBean)
-        {
-
-        }
-    }
-
 }

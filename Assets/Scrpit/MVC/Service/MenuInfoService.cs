@@ -4,8 +4,9 @@ using System.Collections.Generic;
 
 public class MenuInfoService : BaseMVCService
 {
-    public MenuInfoService():base("menu_info", "menu_info_details_" + GameCommonInfo.GameConfig.language)
+    public MenuInfoService():base("menu_info", "menu_info_details_" + GameDataHandler.Instance.manager.GetGameConfig().language)
     {
+
     }
 
     /// <summary>

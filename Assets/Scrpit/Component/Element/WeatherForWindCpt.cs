@@ -25,8 +25,8 @@ public class WeatherForWindCpt : WeatherCpt
                 SetDefoliation();
                 break;
         }
-        
-            AudioHandler.Instance.PlayEnvironment(AudioEnvironmentEnum.Wind,GameCommonInfo.GameConfig.environmentVolume);
+        GameConfigBean gameConfig = GameDataHandler.Instance.manager.GetGameConfig();
+        AudioHandler.Instance.PlayEnvironment(AudioEnvironmentEnum.Wind, gameConfig.environmentVolume);
     }
 
     public override void CloseWeather()

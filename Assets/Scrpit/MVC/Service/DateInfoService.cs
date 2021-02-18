@@ -7,7 +7,7 @@ public class DateInfoService : BaseMVCService
 
     public string mLeftId = "date_id";
 
-    public DateInfoService() : base("date_info", "date_info_details_" + GameCommonInfo.GameConfig.language)
+    public DateInfoService() : base("date_info", "date_info_details_" + GameDataHandler.Instance.manager.GetGameConfig().language)
     {
 
     }

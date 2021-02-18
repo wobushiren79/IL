@@ -12,11 +12,12 @@ public class KeyTipView : BaseMonoBehaviour
 
     private void OnEnable()
     {
-        if (GameCommonInfo.GameConfig.statusForKeyTip==0)
+        GameConfigBean gameConfig = GameDataHandler.Instance.manager.GetGameConfig();
+        if (gameConfig.statusForKeyTip == 0)
         {
             cgKeyTip.alpha = 0;
         }
-        else if (GameCommonInfo.GameConfig.statusForKeyTip == 1)
+        else if (gameConfig.statusForKeyTip == 1)
         {
             cgKeyTip.alpha = 1;
         }

@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 public class StoreInfoService : BaseMVCService
 {
-    public StoreInfoService() : base("store_info", "store_info_details_" + GameCommonInfo.GameConfig.language)
+    public StoreInfoService() : base("store_info", "store_info_details_" + GameDataHandler.Instance.manager.GetGameConfig().language)
     {
 
     }

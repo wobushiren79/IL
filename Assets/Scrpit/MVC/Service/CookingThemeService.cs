@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 public class CookingThemeService : BaseMVCService
 {
-    public CookingThemeService() : base("cooking_theme", "cooking_theme_details_" + GameCommonInfo.GameConfig.language)
+    public CookingThemeService() : base("cooking_theme", "cooking_theme_details_" + GameDataHandler.Instance.manager.GetGameConfig().language)
     {
 
     }

@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 public class AchievementInfoService : BaseMVCService
 {
-    public AchievementInfoService() : base("achievement_info", "achievement_info_details_" + GameCommonInfo.GameConfig.language)
+    public AchievementInfoService() : base("achievement_info", "achievement_info_details_" + GameDataHandler.Instance.manager.GetGameConfig().language)
     {
 
     }

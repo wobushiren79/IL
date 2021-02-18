@@ -298,7 +298,8 @@ public class UIMiniGameCombat : UIBaseMiniGame<MiniGameCombatBean>
     {
         uiForCombatCommand.Close();
         uiForSelectCharacter.Close();
-        if (GameCommonInfo.GameConfig.statusForCombatForPowerTest == 1 )
+        GameConfigBean gameConfig = GameDataHandler.Instance.manager.GetGameConfig();
+        if (gameConfig.statusForCombatForPowerTest == 1 )
         {
             //获取属性
             

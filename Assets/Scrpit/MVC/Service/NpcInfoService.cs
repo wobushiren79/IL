@@ -6,7 +6,7 @@ using System;
 public class NpcInfoService: BaseMVCService
 {
 
-    public NpcInfoService() : base("npc_info", "npc_info_details_" + GameCommonInfo.GameConfig.language)
+    public NpcInfoService() : base("npc_info", "npc_info_details_" + GameDataHandler.Instance.manager.GetGameConfig().language)
     {
 
     }
