@@ -78,7 +78,7 @@ public class ItemGameDataCpt : ItemGameBaseCpt, DialogView.IDialogCallBack
         if (tvInnName != null)
             tvInnName.text = innName;
         if (tvUserName != null)
-            tvUserName.text = GameCommonInfo.GetUITextById(58) + ":" + userName;
+            tvUserName.text = TextHandler.Instance.manager.GetTextById(58) + ":" + userName;
     }
 
     /// <summary>
@@ -118,9 +118,9 @@ public class ItemGameDataCpt : ItemGameBaseCpt, DialogView.IDialogCallBack
         if (tvGameTime != null)
         {
             tvGameTime.text =
-                year + GameCommonInfo.GetUITextById(29) +
-                month + GameCommonInfo.GetUITextById(30) +
-                day + GameCommonInfo.GetUITextById(31);
+                year + TextHandler.Instance.manager.GetTextById(29) +
+                month + TextHandler.Instance.manager.GetTextById(30) +
+                day + TextHandler.Instance.manager.GetTextById(31);
         }
     }
 
@@ -133,7 +133,7 @@ public class ItemGameDataCpt : ItemGameBaseCpt, DialogView.IDialogCallBack
     {
         if (tvPlayTime != null)
         {
-            tvPlayTime.text = GameCommonInfo.GetUITextById(48) + " " + hour + ":" + min;
+            tvPlayTime.text = TextHandler.Instance.manager.GetTextById(48) + " " + hour + ":" + min;
         }
     }
 
@@ -155,7 +155,7 @@ public class ItemGameDataCpt : ItemGameBaseCpt, DialogView.IDialogCallBack
         AudioHandler.Instance.PlaySound(AudioSoundEnum.ButtonForBack);
 
         DialogBean dialogData = new DialogBean();
-        dialogData.content = GameCommonInfo.GetUITextById(3011);
+        dialogData.content = TextHandler.Instance.manager.GetTextById(3011);
         DialogHandler.Instance.CreateDialog<DialogView>(DialogEnum.Normal, this, dialogData);
     }
 

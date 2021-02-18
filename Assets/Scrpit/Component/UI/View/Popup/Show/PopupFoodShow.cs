@@ -105,7 +105,7 @@ public class PopupFoodShow : PopupShowView
         proLevel.SetData(nextLevelExp, ownData.menuExp);
         if (ownData.GetMenuStatus() == ResearchStatusEnum.WaitForResearch)
         {
-            proLevel.SetContent(GameCommonInfo.GetUITextById(287));
+            proLevel.SetContent(TextHandler.Instance.manager.GetTextById(287));
         }
     }
 
@@ -146,7 +146,7 @@ public class PopupFoodShow : PopupShowView
     public void AddItemForMakeTime(float makeTime)
     {
         Sprite spIcon = IconDataHandler.Instance.manager.GetIconSpriteByName("hourglass_1");
-        CreateItem(objItemBaseContainer, spIcon, GameCommonInfo.GetUITextById(40), makeTime + GameCommonInfo.GetUITextById(38));
+        CreateItem(objItemBaseContainer, spIcon, TextHandler.Instance.manager.GetTextById(40), makeTime + TextHandler.Instance.manager.GetTextById(38));
     }
 
     /// <summary>
@@ -163,35 +163,35 @@ public class PopupFoodShow : PopupShowView
         switch (ingredient)
         {
             case IngredientsEnum.Oilsalt://油盐
-                ingNameStr = GameCommonInfo.GetUITextById(21);
+                ingNameStr = TextHandler.Instance.manager.GetTextById(21);
                 iconKey = "ui_ing_oilsalt";
                 break;
             case IngredientsEnum.Meat://鲜肉
-                ingNameStr = GameCommonInfo.GetUITextById(22);
+                ingNameStr = TextHandler.Instance.manager.GetTextById(22);
                 iconKey = "ui_ing_meat";
                 break;
             case IngredientsEnum.Riverfresh://河鲜
-                ingNameStr = GameCommonInfo.GetUITextById(23);
+                ingNameStr = TextHandler.Instance.manager.GetTextById(23);
                 iconKey = "ui_ing_riverfresh";
                 break;
             case IngredientsEnum.Seafood://海鲜
-                ingNameStr = GameCommonInfo.GetUITextById(24);
+                ingNameStr = TextHandler.Instance.manager.GetTextById(24);
                 iconKey = "ui_ing_seafood";
                 break;
             case IngredientsEnum.Vegetables://蔬菜
-                ingNameStr = GameCommonInfo.GetUITextById(25);
+                ingNameStr = TextHandler.Instance.manager.GetTextById(25);
                 iconKey = "ui_ing_vegetables";
                 break;
             case IngredientsEnum.Melonfruit://瓜果
-                ingNameStr = GameCommonInfo.GetUITextById(26);
+                ingNameStr = TextHandler.Instance.manager.GetTextById(26);
                 iconKey = "ui_ing_melonfruit";
                 break;
             case IngredientsEnum.Waterwine://酒水
-                ingNameStr = GameCommonInfo.GetUITextById(27);
+                ingNameStr = TextHandler.Instance.manager.GetTextById(27);
                 iconKey = "ui_ing_waterwine";
                 break;
             case IngredientsEnum.Flour://面粉
-                ingNameStr = GameCommonInfo.GetUITextById(28);
+                ingNameStr = TextHandler.Instance.manager.GetTextById(28);
                 iconKey = "ui_ing_flour";
                 break;
         }
@@ -206,7 +206,7 @@ public class PopupFoodShow : PopupShowView
     public void AddItemForSellNumber(long number)
     {
         Sprite spIcon = IconDataHandler.Instance.manager.GetIconSpriteByName("ui_features_menu");
-        CreateItem(objItemStatisticsContainer, spIcon, Color.red, GameCommonInfo.GetUITextById(332), number + "");
+        CreateItem(objItemStatisticsContainer, spIcon, Color.red, TextHandler.Instance.manager.GetTextById(332), number + "");
     }
 
     /// <summary>
@@ -224,15 +224,15 @@ public class PopupFoodShow : PopupShowView
         {
             case MoneyEnum.L:
                 iconKey = "money_3";
-                contentStr = GameCommonInfo.GetUITextById(333);
+                contentStr = TextHandler.Instance.manager.GetTextById(333);
                 break;
             case MoneyEnum.M:
                 iconKey = "money_2";
-                contentStr = GameCommonInfo.GetUITextById(334);
+                contentStr = TextHandler.Instance.manager.GetTextById(334);
                 break;
             case MoneyEnum.S:
                 iconKey = "money_1";
-                contentStr = GameCommonInfo.GetUITextById(335);
+                contentStr = TextHandler.Instance.manager.GetTextById(335);
                 break;
         }
         Sprite spIcon = IconDataHandler.Instance.manager.GetIconSpriteByName(iconKey);

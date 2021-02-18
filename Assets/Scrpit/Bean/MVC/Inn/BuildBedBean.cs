@@ -456,7 +456,7 @@ public class BuildBedBean : BaseBean
         {
             if (levelTitle <= 0)
             {
-                failStr = string.Format(GameCommonInfo.GetUITextById(1072), gameData.GetInnAttributesData().GetInnLevelStr(1, 1));
+                failStr = string.Format(TextHandler.Instance.manager.GetTextById(1072), gameData.GetInnAttributesData().GetInnLevelStr(1, 1));
                 return false;
             }
         }
@@ -464,7 +464,7 @@ public class BuildBedBean : BaseBean
         {
             if (levelTitle <= 1)
             {
-                failStr = string.Format(GameCommonInfo.GetUITextById(1072), gameData.GetInnAttributesData().GetInnLevelStr(2, 1));
+                failStr = string.Format(TextHandler.Instance.manager.GetTextById(1072), gameData.GetInnAttributesData().GetInnLevelStr(2, 1));
                 return false;
             }
         }
@@ -472,13 +472,13 @@ public class BuildBedBean : BaseBean
         {
             if (levelTitle <= 2)
             {
-                failStr = string.Format(GameCommonInfo.GetUITextById(1072), gameData.GetInnAttributesData().GetInnLevelStr(3, 1));
+                failStr = string.Format(TextHandler.Instance.manager.GetTextById(1072), gameData.GetInnAttributesData().GetInnLevelStr(3, 1));
                 return false;
             }
         }
         else if (bedLevel == LevelTypeEnum.Sun)
         {
-            failStr = GameCommonInfo.GetUITextById(1073);
+            failStr = TextHandler.Instance.manager.GetTextById(1073);
             return false;
         }
 
@@ -486,7 +486,7 @@ public class BuildBedBean : BaseBean
         GetResearchPrice(out long researchPriceL, out long researchPriceM, out long researchPriceS);
         if (!gameData.HasEnoughMoney(researchPriceL, researchPriceM, researchPriceS))
         {
-            failStr = GameCommonInfo.GetUITextById(1005);
+            failStr = TextHandler.Instance.manager.GetTextById(1005);
             return false;
         }
 

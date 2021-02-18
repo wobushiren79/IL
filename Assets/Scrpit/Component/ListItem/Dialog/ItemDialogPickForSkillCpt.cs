@@ -95,7 +95,7 @@ public class ItemDialogPickForSkillCpt : BaseMonoBehaviour
         int restNumber = skillInfoData.GetRestNumber(usedNumber);
         if (restNumber <= 0)
         {
-            ToastHandler.Instance.ToastHint(ivIcon.sprite,GameCommonInfo.GetUITextById(1046));
+            ToastHandler.Instance.ToastHint(ivIcon.sprite,TextHandler.Instance.manager.GetTextById(1046));
             return;
         }
         if (callBack != null)

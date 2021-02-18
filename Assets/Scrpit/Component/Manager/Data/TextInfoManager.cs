@@ -59,43 +59,43 @@ public class TextInfoManager : BaseManager, ITextInfoView
         listTextData = new List<TextInfoBean>();
 
         List<NpcTalkTypeEnum>  npcTalkTypes= npcInfo.GetTalkTypes();
-        listTextData.Add(new TextInfoBean(TextInfoTypeEnum.Talk,0, GameCommonInfo.GetUITextById(99101)));
+        listTextData.Add(new TextInfoBean(TextInfoTypeEnum.Talk,0, TextHandler.Instance.manager.GetTextById(99101)));
         foreach (NpcTalkTypeEnum itemType in npcTalkTypes)
         {
             switch (itemType)
             {
                 case NpcTalkTypeEnum.Talk:
-                    listTextData.Add(new TextInfoBean(TextInfoTypeEnum.Talk, 1, GameCommonInfo.GetUITextById(99102)));
+                    listTextData.Add(new TextInfoBean(TextInfoTypeEnum.Talk, 1, TextHandler.Instance.manager.GetTextById(99102)));
                     break;
                 case NpcTalkTypeEnum.OneTalk:
                     if (!GameCommonInfo.DailyLimitData.CheckIsTalkNpc(npcInfo.id))
                     {
-                        listTextData.Add(new TextInfoBean(TextInfoTypeEnum.Talk, 1, GameCommonInfo.GetUITextById(99102)));
+                        listTextData.Add(new TextInfoBean(TextInfoTypeEnum.Talk, 1, TextHandler.Instance.manager.GetTextById(99102)));
                     }
                     break;
                 case NpcTalkTypeEnum.Recruit:
                     if (!gameData.CheckHasWorker(npcInfo.id + ""))
                     {
-                        listTextData.Add(new TextInfoBean(TextInfoTypeEnum.Talk, 1, GameCommonInfo.GetUITextById(99104)));
+                        listTextData.Add(new TextInfoBean(TextInfoTypeEnum.Talk, 1, TextHandler.Instance.manager.GetTextById(99104)));
                     }
                     break;
                 case NpcTalkTypeEnum.Gift:
                     if (!GameCommonInfo.DailyLimitData.CheckIsGiftNpc(npcInfo.id))
                     {
-                        listTextData.Add(new TextInfoBean(TextInfoTypeEnum.Talk, 1, GameCommonInfo.GetUITextById(99105)));
+                        listTextData.Add(new TextInfoBean(TextInfoTypeEnum.Talk, 1, TextHandler.Instance.manager.GetTextById(99105)));
                     }
                     break;
                 case NpcTalkTypeEnum.GuildCoinExchange:
-                    listTextData.Add(new TextInfoBean(TextInfoTypeEnum.Talk, 1, GameCommonInfo.GetUITextById(99201)));
+                    listTextData.Add(new TextInfoBean(TextInfoTypeEnum.Talk, 1, TextHandler.Instance.manager.GetTextById(99201)));
                     break;
                 case NpcTalkTypeEnum.TrophyExchange:
-                    listTextData.Add(new TextInfoBean(TextInfoTypeEnum.Talk, 1, GameCommonInfo.GetUITextById(99202)));
+                    listTextData.Add(new TextInfoBean(TextInfoTypeEnum.Talk, 1, TextHandler.Instance.manager.GetTextById(99202)));
                     break;
                 case NpcTalkTypeEnum.InfiniteTowerEquipExchange:
-                    listTextData.Add(new TextInfoBean(TextInfoTypeEnum.Talk, 1, GameCommonInfo.GetUITextById(99203)));
+                    listTextData.Add(new TextInfoBean(TextInfoTypeEnum.Talk, 1, TextHandler.Instance.manager.GetTextById(99203)));
                     break;
                 case NpcTalkTypeEnum.InfiniteTowerItemsExchange:
-                    listTextData.Add(new TextInfoBean(TextInfoTypeEnum.Talk, 1, GameCommonInfo.GetUITextById(99204)));
+                    listTextData.Add(new TextInfoBean(TextInfoTypeEnum.Talk, 1, TextHandler.Instance.manager.GetTextById(99204)));
                     break;
             }
         }
@@ -111,10 +111,10 @@ public class TextInfoManager : BaseManager, ITextInfoView
             //是否已经向其他人求婚或者已经结婚
             && (familyData.timeForMarry == null || familyData.timeForMarry.year == 0))
         {
-            listTextData.Add(new TextInfoBean(TextInfoTypeEnum.Talk, 1, GameCommonInfo.GetUITextById(99205)));
+            listTextData.Add(new TextInfoBean(TextInfoTypeEnum.Talk, 1, TextHandler.Instance.manager.GetTextById(99205)));
         }
         //离开选项
-        listTextData.Add(new TextInfoBean(TextInfoTypeEnum.Talk, 1, GameCommonInfo.GetUITextById(99103)));
+        listTextData.Add(new TextInfoBean(TextInfoTypeEnum.Talk, 1, TextHandler.Instance.manager.GetTextById(99103)));
 
         //继续查询该人物的所有对话
         GetTextForTalkByMinFavorability(npcInfo.id, characterFavorability.favorabilityLevel, action);

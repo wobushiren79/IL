@@ -74,7 +74,7 @@ public class UIMiniGameEnd : BaseUIComponent
         AudioHandler.Instance.PlaySound(AudioSoundEnum.Reward);
         if (tvGameResult != null)
         {
-            tvGameResult.text = GameCommonInfo.GetUITextById(41);
+            tvGameResult.text = TextHandler.Instance.manager.GetTextById(41);
             tvGameResult.color = new Color(0.5f, 0, 0);
         }
 
@@ -97,7 +97,7 @@ public class UIMiniGameEnd : BaseUIComponent
     {
         if (tvGameResult != null)
         {
-            tvGameResult.text = GameCommonInfo.GetUITextById(42);
+            tvGameResult.text = TextHandler.Instance.manager.GetTextById(42);
             tvGameResult.color = new Color(1f, 1f, 1f);
         }
 
@@ -139,7 +139,7 @@ public class UIMiniGameEnd : BaseUIComponent
         {
             case MiniGameReasonEnum.Improve:
                 //晋升成功
-                reasonStr = GameCommonInfo.GetUITextById(43);
+                reasonStr = TextHandler.Instance.manager.GetTextById(43);
                 //数据添加
                 Sprite attributeIcon = null;
                 string attributeRewardContent = "";
@@ -175,14 +175,14 @@ public class UIMiniGameEnd : BaseUIComponent
                 break;
             case MiniGameReasonEnum.Fight:
                 //决斗胜利
-                reasonStr = GameCommonInfo.GetUITextById(44);
+                reasonStr = TextHandler.Instance.manager.GetTextById(44);
                 break;
             case MiniGameReasonEnum.Recruit:
                 //决斗胜利
-                reasonStr = GameCommonInfo.GetUITextById(45);
+                reasonStr = TextHandler.Instance.manager.GetTextById(45);
                 break;
             default:
-                reasonStr = GameCommonInfo.GetUITextById(901);
+                reasonStr = TextHandler.Instance.manager.GetTextById(901);
                 break;
         }
         itemReasonWin.SetContent(reasonStr);
@@ -225,7 +225,7 @@ public class UIMiniGameEnd : BaseUIComponent
         GameObject objItem = Instantiate(objResultContainer, objResultLoseModel);
         ItemMiniGameEndResultLoseCpt itemLose = objItem.GetComponent<ItemMiniGameEndResultLoseCpt>();
         //获取失败文本
-        string content = GameCommonInfo.GetUITextById(UnityEngine.Random.Range(99011, 99015));
+        string content = TextHandler.Instance.manager.GetTextById(UnityEngine.Random.Range(99011, 99015));
         if (itemLose != null)
             itemLose.SetContent(content);
         //设置动画

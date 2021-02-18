@@ -396,7 +396,7 @@ public class ControlForBuildCpt : BaseControl
                     //只有一次点击时才出提示
                     if (Input.GetButtonDown(InputInfo.Confirm))
                     {
-                        //ToastHandler.Instance.ToastHint(GameCommonInfo.GetUITextById(1003));
+                        //ToastHandler.Instance.ToastHint(TextHandler.Instance.manager.GetTextById(1003));
                     }
                 }
                 else
@@ -405,7 +405,7 @@ public class ControlForBuildCpt : BaseControl
                     //只有一次点击时才出提示
                     if (Input.GetButtonDown(InputInfo.Confirm))
                     {
-                        ToastHandler.Instance.ToastHint(GameCommonInfo.GetUITextById(1002));
+                        ToastHandler.Instance.ToastHint(TextHandler.Instance.manager.GetTextById(1002));
                     }
                 }
             }
@@ -435,7 +435,7 @@ public class ControlForBuildCpt : BaseControl
                 //只有一次点击时才出提示
                 if (Input.GetButtonDown(InputInfo.Confirm))
                 {
-                    ToastHandler.Instance.ToastHint(GameCommonInfo.GetUITextById(1004));
+                    ToastHandler.Instance.ToastHint(TextHandler.Instance.manager.GetTextById(1004));
                 }
             }
             else
@@ -498,7 +498,7 @@ public class ControlForBuildCpt : BaseControl
                 //只有一次点击时才出提示
                 if (Input.GetButtonDown(InputInfo.Confirm))
                 {
-                    ToastHandler.Instance.ToastHint(GameCommonInfo.GetUITextById(1023));
+                    ToastHandler.Instance.ToastHint(TextHandler.Instance.manager.GetTextById(1023));
                 }
             }
             else

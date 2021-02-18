@@ -21,7 +21,7 @@ public class ItemGameMainHintForInfiniteTowersCpt : ItemGameBaseCpt
     {
         if (infiniteTowersData != null)
         {
-            SetName(infiniteTowersData.layer + GameCommonInfo.GetUITextById(83));
+            SetName(infiniteTowersData.layer + TextHandler.Instance.manager.GetTextById(83));
             SetProgress(infiniteTowersData.proForSend);
         }
     }

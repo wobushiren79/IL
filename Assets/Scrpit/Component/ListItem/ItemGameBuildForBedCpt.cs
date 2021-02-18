@@ -48,7 +48,7 @@ public class ItemGameBuildForBedCpt : ItemGameBaseCpt
     {
         if (tvBedPrice != null)
         {
-            tvBedPrice.text = priceS + "/" + GameCommonInfo.GetUITextById(37);
+            tvBedPrice.text = priceS + "/" + TextHandler.Instance.manager.GetTextById(37);
         }
     }
 

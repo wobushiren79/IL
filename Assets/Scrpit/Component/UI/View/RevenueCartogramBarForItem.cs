@@ -14,7 +14,7 @@ public class RevenueCartogramBarForItem : CartogramBarForItem
 
     public override void SetHData(string data)
     {
-        data += GameCommonInfo.GetUITextById(31);
+        data += TextHandler.Instance.manager.GetTextById(31);
         base.SetHData(data);
     }
 
@@ -22,26 +22,26 @@ public class RevenueCartogramBarForItem : CartogramBarForItem
     {
         if (cartogramData.value_4 == (int)GameTimeHandler.DayEnum.Rest)
         {
-            data = GameCommonInfo.GetUITextById(20);
+            data = TextHandler.Instance.manager.GetTextById(20);
         }
         else
         {
             data = "";
             if (cartogramData.value_1 != 0)
             {
-                data += (cartogramData.value_1 + GameCommonInfo.GetUITextById(16));
+                data += (cartogramData.value_1 + TextHandler.Instance.manager.GetTextById(16));
             }
             if (cartogramData.value_2 != 0)
             {
-                data += (cartogramData.value_2 + GameCommonInfo.GetUITextById(17));
+                data += (cartogramData.value_2 + TextHandler.Instance.manager.GetTextById(17));
             }
             if (cartogramData.value_3 != 0)
             {
-                data += (cartogramData.value_3 + GameCommonInfo.GetUITextById(18));
+                data += (cartogramData.value_3 + TextHandler.Instance.manager.GetTextById(18));
             }
             if (cartogramData.value_1 == 0 && cartogramData.value_2 == 0 && cartogramData.value_3 == 0)
             {
-                data += GameCommonInfo.GetUITextById(47);
+                data += TextHandler.Instance.manager.GetTextById(47);
             }
         }
         base.SetVData(data);

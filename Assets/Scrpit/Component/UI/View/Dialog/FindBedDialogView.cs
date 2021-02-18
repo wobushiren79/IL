@@ -133,12 +133,12 @@ public class FindBedDialogView : DialogView
         {
             string priceStr = "";
             if (price_l > 0)
-                priceStr += price_l + GameCommonInfo.GetUITextById(16);
+                priceStr += price_l + TextHandler.Instance.manager.GetTextById(16);
             if (price_m > 0)
-                priceStr += price_m + GameCommonInfo.GetUITextById(17);
+                priceStr += price_m + TextHandler.Instance.manager.GetTextById(17);
             if (price_s > 0)
-                priceStr += price_s + GameCommonInfo.GetUITextById(18);
-            tvPrice.text = priceStr  + "/" + GameCommonInfo.GetUITextById(37);
+                priceStr += price_s + TextHandler.Instance.manager.GetTextById(18);
+            tvPrice.text = priceStr  + "/" + TextHandler.Instance.manager.GetTextById(37);
         }
     }
 }

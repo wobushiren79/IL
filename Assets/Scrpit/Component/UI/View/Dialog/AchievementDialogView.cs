@@ -32,7 +32,7 @@ public class AchievementDialogView : DialogView
         this.achievementInfo = achievementInfo;
         SetIcon(achievementInfo.type, achievementInfo.icon_key, achievementInfo.icon_key_remark);
         SetName(achievementInfo.name);
-        SetTitle(GameCommonInfo.GetUITextById(76));
+        SetTitle(TextHandler.Instance.manager.GetTextById(76));
         SetReward(achievementInfo.reward_data);
         SetDataForCommon();
     }
@@ -43,7 +43,7 @@ public class AchievementDialogView : DialogView
     /// <param name="storeInfo"></param>
     public void SetData(StoreInfoBean storeInfo)
     {
-        SetTitle(GameCommonInfo.GetUITextById(43));
+        SetTitle(TextHandler.Instance.manager.GetTextById(43));
         SetIcon(2, "keyboard_button_up_1", "");
         SetName(storeInfo.name);
         SetReward(storeInfo.reward_data);

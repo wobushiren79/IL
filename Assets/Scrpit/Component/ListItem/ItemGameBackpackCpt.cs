@@ -175,16 +175,16 @@ public class ItemGameBackpackCpt : ItemGameBaseCpt, IPointerClickHandler, ItemsS
                     RefreshItems(itemsInfoData.id, -1);
                     DialogBean dialogData = new DialogBean
                     {
-                        title = GameCommonInfo.GetUITextById(1047),
+                        title = TextHandler.Instance.manager.GetTextById(1047),
                         content = menuInfo.name
                     };
                     AchievementDialogView achievementDialog = DialogHandler.Instance.CreateDialog<AchievementDialogView>(DialogEnum.Achievement, this, dialogData);
                     achievementDialog.SetData(1, menuInfo.icon_key);
-                    ToastHandler.Instance.ToastHint(ivIcon.sprite, GameCommonInfo.GetUITextById(1006));
+                    ToastHandler.Instance.ToastHint(ivIcon.sprite, TextHandler.Instance.manager.GetTextById(1006));
                 }
                 else
                 {
-                    ToastHandler.Instance.ToastHint(GameCommonInfo.GetUITextById(1007));
+                    ToastHandler.Instance.ToastHint(TextHandler.Instance.manager.GetTextById(1007));
                 };
                 break;
             default:
@@ -204,7 +204,7 @@ public class ItemGameBackpackCpt : ItemGameBaseCpt, IPointerClickHandler, ItemsS
         {
             DialogBean dialogBean = new DialogBean
             {
-                content = string.Format(GameCommonInfo.GetUITextById(3001), itemsInfoData.name),
+                content = string.Format(TextHandler.Instance.manager.GetTextById(3001), itemsInfoData.name),
                 remark = "1"
             };
             DialogHandler.Instance.CreateDialog<DialogView>(DialogEnum.Normal, this, dialogBean);
@@ -213,7 +213,7 @@ public class ItemGameBackpackCpt : ItemGameBaseCpt, IPointerClickHandler, ItemsS
         {
             DialogBean dialogBean = new DialogBean
             {
-                content = string.Format(GameCommonInfo.GetUITextById(3001), itemsInfoData.name)
+                content = string.Format(TextHandler.Instance.manager.GetTextById(3001), itemsInfoData.name)
             };
             PickForNumberDialogView pickForNumberDialog = DialogHandler.Instance.CreateDialog<PickForNumberDialogView>(DialogEnum.PickForNumber, this, dialogBean);
             pickForNumberDialog.SetData(ivIcon.sprite, itemBean.itemNumber);
@@ -259,7 +259,7 @@ public class ItemGameBackpackCpt : ItemGameBaseCpt, IPointerClickHandler, ItemsS
             //创建确认弹窗
             DialogBean dialogBean = new DialogBean
             {
-                content = string.Format(GameCommonInfo.GetUITextById(3001), itemsInfoData.name + "x" + pickNumber),
+                content = string.Format(TextHandler.Instance.manager.GetTextById(3001), itemsInfoData.name + "x" + pickNumber),
                 remark = "" + pickNumber
             };
             DialogHandler.Instance.CreateDialog<DialogView>(DialogEnum.Normal, this, dialogBean);

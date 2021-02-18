@@ -74,7 +74,7 @@ public class PopupItemsShow : PopupShowView
 
     public void SetType(GeneralEnum type)
     {
-        string typeStr = GameCommonInfo.GetUITextById(400) + "：" + GeneralEnumTools.GetGeneralName(type);
+        string typeStr = TextHandler.Instance.manager.GetTextById(400) + "：" + GeneralEnumTools.GetGeneralName(type);
         if (tvType != null)
             tvType.text = typeStr;
     }
@@ -87,7 +87,7 @@ public class PopupItemsShow : PopupShowView
     {
         CptUtil.RemoveChildsByActive(objAttributeContainer);
         CreateItemAttributes("ui_ability_life", data.add_life, AttributesTypeEnumTools.GetAttributesName(AttributesTypeEnum.Life), colorForAttribute);
-        CreateItemAttributes("ui_ability_cook", data.add_cook, GameCommonInfo.GetUITextById(1), colorForAttribute);
+        CreateItemAttributes("ui_ability_cook", data.add_cook, TextHandler.Instance.manager.GetTextById(1), colorForAttribute);
         CreateItemAttributes("ui_ability_speed", data.add_speed, AttributesTypeEnumTools.GetAttributesName(AttributesTypeEnum.Speed), colorForAttribute);
         CreateItemAttributes("ui_ability_account", data.add_account, AttributesTypeEnumTools.GetAttributesName(AttributesTypeEnum.Account), colorForAttribute);
         CreateItemAttributes("ui_ability_charm", data.add_charm, AttributesTypeEnumTools.GetAttributesName(AttributesTypeEnum.Charm), colorForAttribute);
@@ -108,7 +108,7 @@ public class PopupItemsShow : PopupShowView
             string describe = itemData.effectDescribe;
             if (durationForRound != 0)
             {
-                describe += ("\n" + string.Format(GameCommonInfo.GetUITextById(502), "" + durationForRound));
+                describe += ("\n" + string.Format(TextHandler.Instance.manager.GetTextById(502), "" + durationForRound));
             }
             CreateItemAttributes(itemData.spIcon, describe);
         }

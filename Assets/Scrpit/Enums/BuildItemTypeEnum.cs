@@ -56,16 +56,16 @@ public class BuildItemTypeEnumTools
         switch (buildItemType)
         {
             case BuildItemTypeEnum.BedBase:
-                name = GameCommonInfo.GetUITextById(801);
+                name = TextHandler.Instance.manager.GetTextById(801);
                 break;
             case BuildItemTypeEnum.BedBar:
-                name = GameCommonInfo.GetUITextById(802);
+                name = TextHandler.Instance.manager.GetTextById(802);
                 break;
             case BuildItemTypeEnum.BedSheets:
-                name = GameCommonInfo.GetUITextById(803);
+                name = TextHandler.Instance.manager.GetTextById(803);
                 break;
             case BuildItemTypeEnum.BedPillow:
-                name = GameCommonInfo.GetUITextById(804);
+                name = TextHandler.Instance.manager.GetTextById(804);
                 break;
             default:
                 break;

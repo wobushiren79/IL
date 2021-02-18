@@ -55,7 +55,7 @@ public class ItemTownGuildImproveInnLevelCpt : BaseMonoBehaviour, DialogView.IDi
     {
         if (tvTitle == null)
             return;
-        tvTitle.text = GameCommonInfo.GetUITextById(71) + ":" + name;
+        tvTitle.text = TextHandler.Instance.manager.GetTextById(71) + ":" + name;
     }
 
     /// <summary>
@@ -149,7 +149,7 @@ public class ItemTownGuildImproveInnLevelCpt : BaseMonoBehaviour, DialogView.IDi
             //客栈升级
             gameData.innAttributes.SetInnLevelUp();
 
-            ToastHandler.Instance.ToastHint(ivTitleIcon.sprite, GameCommonInfo.GetUITextById(1062));
+            ToastHandler.Instance.ToastHint(ivTitleIcon.sprite, TextHandler.Instance.manager.GetTextById(1062));
             UIHandler.Instance.manager.OpenUIAndCloseOther<UIGameMain>(UIEnum.GameMain);
 
             DialogBean dialogData = new DialogBean();
@@ -158,7 +158,7 @@ public class ItemTownGuildImproveInnLevelCpt : BaseMonoBehaviour, DialogView.IDi
         }
         else
         {
-            ToastHandler.Instance.ToastHint(GameCommonInfo.GetUITextById(1061));
+            ToastHandler.Instance.ToastHint(TextHandler.Instance.manager.GetTextById(1061));
         }
     }
 

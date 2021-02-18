@@ -152,7 +152,7 @@ public class NpcAIWorkerForChefCpt : NpcAIWokerFoBaseCpt
         }
         else
         {
-            npcAIWorker.characterShoutCpt.Shout(GameCommonInfo.GetUITextById(13001));
+            npcAIWorker.characterShoutCpt.Shout(TextHandler.Instance.manager.GetTextById(13001));
             orderForCustomer.customer.SendForCanNotCook();
             SetIntent(ChefIntentEnum.Idle);
         }

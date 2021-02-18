@@ -41,15 +41,15 @@ public class ItemMiniGameDebateCardCpt : ItemGameBaseCpt, IPointerEnterHandler, 
         {
             case DebateCardTypeEnun.Rock:
                 spIcon = spRock;
-                name = GameCommonInfo.GetUITextById(261);
+                name = TextHandler.Instance.manager.GetTextById(261);
                 break;
             case DebateCardTypeEnun.Paper:
                 spIcon = spPaper;
-                name = GameCommonInfo.GetUITextById(262);
+                name = TextHandler.Instance.manager.GetTextById(262);
                 break;
             case DebateCardTypeEnun.Scissors:
                 spIcon = spScissors;
-                name = GameCommonInfo.GetUITextById(263);
+                name = TextHandler.Instance.manager.GetTextById(263);
                 break;
         }
         SetIcon(spIcon);

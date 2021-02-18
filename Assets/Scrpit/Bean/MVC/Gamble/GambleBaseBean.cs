@@ -94,10 +94,10 @@ public class GambleBaseBean
         switch (gambleType)
         {
             case GambleTypeEnum.TrickyCup:
-                gambleName = GameCommonInfo.GetUITextById(601);
+                gambleName = TextHandler.Instance.manager.GetTextById(601);
                 break;
             case GambleTypeEnum.TrickySize:
-                gambleName = GameCommonInfo.GetUITextById(602);
+                gambleName = TextHandler.Instance.manager.GetTextById(602);
                 break;
         }
     }

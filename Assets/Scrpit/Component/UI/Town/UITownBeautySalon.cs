@@ -222,24 +222,24 @@ public class UITownBeautySalon : UIBaseOne, IRadioGroupCallBack, ItemTownBeautyS
             && CheckUtil.StringIsNull(selectMouth)
             && CheckUtil.StringIsNull(selectSkin))
         {
-            ToastHandler.Instance.ToastHint(GameCommonInfo.GetUITextById(7005));
+            ToastHandler.Instance.ToastHint(TextHandler.Instance.manager.GetTextById(7005));
             return;
         }
         DialogBean dialogData = new DialogBean();
         string price = "";
         if (priceL != 0)
         {
-            price += priceL + GameCommonInfo.GetUITextById(16);
+            price += priceL + TextHandler.Instance.manager.GetTextById(16);
         }
         if (priceM != 0)
         {
-            price += priceM + GameCommonInfo.GetUITextById(17);
+            price += priceM + TextHandler.Instance.manager.GetTextById(17);
         }
         if (priceS != 0)
         {
-            price += priceS + GameCommonInfo.GetUITextById(18);
+            price += priceS + TextHandler.Instance.manager.GetTextById(18);
         }
-        dialogData.content = string.Format(GameCommonInfo.GetUITextById(3104), price, characterData.baseInfo.name);
+        dialogData.content = string.Format(TextHandler.Instance.manager.GetTextById(3104), price, characterData.baseInfo.name);
         DialogHandler.Instance.CreateDialog<DialogView>(DialogEnum.Normal, this, dialogData);
     }
 
@@ -350,7 +350,7 @@ public class UITownBeautySalon : UIBaseOne, IRadioGroupCallBack, ItemTownBeautyS
             }
             else
             {
-                ToastHandler.Instance.ToastHint(GameCommonInfo.GetUITextById(1005));
+                ToastHandler.Instance.ToastHint(TextHandler.Instance.manager.GetTextById(1005));
             }
 
         }

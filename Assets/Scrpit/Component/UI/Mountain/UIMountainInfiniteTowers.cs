@@ -190,7 +190,7 @@ public class UIMountainInfiniteTowers : BaseUIComponent, DialogView.IDialogCallB
                     WorkerStatusEnum workerStatusEnum = itemCharacter.baseInfo.GetWorkerStatus();
                     if (workerStatusEnum != WorkerStatusEnum.Rest && workerStatusEnum != WorkerStatusEnum.Work)
                     {
-                        ToastHandler.Instance.ToastHint(GameCommonInfo.GetUITextById(1142));
+                        ToastHandler.Instance.ToastHint(TextHandler.Instance.manager.GetTextById(1142));
                         return;
                     }
                 }

@@ -45,7 +45,7 @@ public class UIGameFamily : UIBaseOne
     {
         if (ui_TVMarryDate && time != null)
         {
-            ui_TVMarryDate.text = string.Format(GameCommonInfo.GetUITextById(78), time.year + "", time.month + "", time.day + "");
+            ui_TVMarryDate.text = string.Format(TextHandler.Instance.manager.GetTextById(78), time.year + "", time.month + "", time.day + "");
         }
     }
 

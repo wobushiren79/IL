@@ -172,22 +172,22 @@ public abstract class MiniGameBaseBean
         switch (gameType)
         {
             case MiniGameEnum.Cooking:
-                gameName = GameCommonInfo.GetUITextById(201);
+                gameName = TextHandler.Instance.manager.GetTextById(201);
                 break;
             case MiniGameEnum.Barrage:
-                gameName = GameCommonInfo.GetUITextById(202);
+                gameName = TextHandler.Instance.manager.GetTextById(202);
                 break;
             case MiniGameEnum.Account:
-                gameName = GameCommonInfo.GetUITextById(203);
+                gameName = TextHandler.Instance.manager.GetTextById(203);
                 break;
             case MiniGameEnum.Debate:
-                gameName = GameCommonInfo.GetUITextById(204);
+                gameName = TextHandler.Instance.manager.GetTextById(204);
                 break;
             case MiniGameEnum.Combat:
-                gameName = GameCommonInfo.GetUITextById(205);
+                gameName = TextHandler.Instance.manager.GetTextById(205);
                 break;
             case MiniGameEnum.Birth:
-                gameName = GameCommonInfo.GetUITextById(206);
+                gameName = TextHandler.Instance.manager.GetTextById(206);
                 break;
         }
         return gameName;
@@ -304,7 +304,7 @@ public abstract class MiniGameBaseBean
     {
         if (winFireNumber != 0)
         {
-            string data = string.Format(GameCommonInfo.GetUITextById(218), winFireNumber+"");
+            string data = string.Format(TextHandler.Instance.manager.GetTextById(218), winFireNumber+"");
             listData.Add(data);
         }
     }
@@ -313,7 +313,7 @@ public abstract class MiniGameBaseBean
     {
         if (winSurvivalTime != 0)
         {
-            string data = string.Format(GameCommonInfo.GetUITextById(211), winSurvivalTime + GameCommonInfo.GetUITextById(39));
+            string data = string.Format(TextHandler.Instance.manager.GetTextById(211), winSurvivalTime + TextHandler.Instance.manager.GetTextById(39));
             listData.Add(data);
         }
     }
@@ -321,7 +321,7 @@ public abstract class MiniGameBaseBean
     {
         if (winLife != 0)
         {
-            string data = string.Format(GameCommonInfo.GetUITextById(212), winLife + "");
+            string data = string.Format(TextHandler.Instance.manager.GetTextById(212), winLife + "");
             listData.Add(data);
         }
     }
@@ -329,7 +329,7 @@ public abstract class MiniGameBaseBean
     {
         if (winSurvivalNumber != 0)
         {
-            string data = string.Format(GameCommonInfo.GetUITextById(213), winSurvivalNumber + "");
+            string data = string.Format(TextHandler.Instance.manager.GetTextById(213), winSurvivalNumber + "");
             listData.Add(data);
         }
     }
@@ -337,7 +337,7 @@ public abstract class MiniGameBaseBean
     {
         if (winBringDownNumber != 0)
         {
-            string winBringDownNumberStr = string.Format(GameCommonInfo.GetUITextById(214), winBringDownNumber + "");
+            string winBringDownNumberStr = string.Format(TextHandler.Instance.manager.GetTextById(214), winBringDownNumber + "");
             listData.Add(winBringDownNumberStr);
         }
     }
@@ -345,7 +345,7 @@ public abstract class MiniGameBaseBean
     {
         if (winScore != 0)
         {
-            string data = string.Format(GameCommonInfo.GetUITextById(215), winScore + "");
+            string data = string.Format(TextHandler.Instance.manager.GetTextById(215), winScore + "");
             listData.Add(data);
         }
     }
@@ -353,7 +353,7 @@ public abstract class MiniGameBaseBean
     {
         if (winRank != 0)
         {
-            string data = string.Format(GameCommonInfo.GetUITextById(217), winRank + "");
+            string data = string.Format(TextHandler.Instance.manager.GetTextById(217), winRank + "");
             listData.Add(data);
         }
     }
@@ -365,17 +365,17 @@ public abstract class MiniGameBaseBean
             string moneyStr = "";
             if (winMoneyL != 0)
             {
-                moneyStr += winMoneyL + GameCommonInfo.GetUITextById(16);
+                moneyStr += winMoneyL + TextHandler.Instance.manager.GetTextById(16);
             }
             if (winMoneyM != 0)
             {
-                moneyStr += winMoneyM + GameCommonInfo.GetUITextById(17);
+                moneyStr += winMoneyM + TextHandler.Instance.manager.GetTextById(17);
             }
             if (winMoneyS != 0)
             {
-                moneyStr += winMoneyS + GameCommonInfo.GetUITextById(18);
+                moneyStr += winMoneyS + TextHandler.Instance.manager.GetTextById(18);
             }
-            string winMoneyStr = string.Format(GameCommonInfo.GetUITextById(216), moneyStr);
+            string winMoneyStr = string.Format(TextHandler.Instance.manager.GetTextById(216), moneyStr);
             listData.Add(winMoneyStr);
         }
     }

@@ -29,7 +29,7 @@ public class UIGameWorkerDetailsChefInfo : UIGameStatisticsDetailsBase<UIGameWor
     public void AddCookNumber(long number)
     {
         Sprite spIcon = GetSpriteByName("worker_cook_pro_2");
-        CreateTextItem(spIcon, GameCommonInfo.GetUITextById(311), number + "");
+        CreateTextItem(spIcon, TextHandler.Instance.manager.GetTextById(311), number + "");
     }
 
     /// <summary>
@@ -39,7 +39,7 @@ public class UIGameWorkerDetailsChefInfo : UIGameStatisticsDetailsBase<UIGameWor
     public void AddCookTime(float time)
     {
         Sprite spIcon = GetSpriteByName("hourglass_1");
-        CreateTextItem(spIcon, GameCommonInfo.GetUITextById(312), time + GameCommonInfo.GetUITextById(38));
+        CreateTextItem(spIcon, TextHandler.Instance.manager.GetTextById(312), time + TextHandler.Instance.manager.GetTextById(38));
     }
 
     /// <summary>

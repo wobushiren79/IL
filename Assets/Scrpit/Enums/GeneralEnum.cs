@@ -86,47 +86,47 @@ public class GeneralEnumTools
         switch (type)
         {
             case GeneralEnum.Mask:
-                itemsnTypeName = GameCommonInfo.GetUITextById(401);
+                itemsnTypeName = TextHandler.Instance.manager.GetTextById(401);
                 break;
             case GeneralEnum.Hat:
-                itemsnTypeName = GameCommonInfo.GetUITextById(402);
+                itemsnTypeName = TextHandler.Instance.manager.GetTextById(402);
                 break;
             case GeneralEnum.Clothes:
-                itemsnTypeName = GameCommonInfo.GetUITextById(403);
+                itemsnTypeName = TextHandler.Instance.manager.GetTextById(403);
                 break;
             case GeneralEnum.Shoes:
-                itemsnTypeName = GameCommonInfo.GetUITextById(404);
+                itemsnTypeName = TextHandler.Instance.manager.GetTextById(404);
                 break;
             case GeneralEnum.Chef:
             case GeneralEnum.Waiter:
             case GeneralEnum.Accoutant:
             case GeneralEnum.Accost:
             case GeneralEnum.Beater:
-                itemsnTypeName = GameCommonInfo.GetUITextById(405);
+                itemsnTypeName = TextHandler.Instance.manager.GetTextById(405);
                 break;
             case GeneralEnum.Ing:
-                itemsnTypeName = GameCommonInfo.GetUITextById(406);
+                itemsnTypeName = TextHandler.Instance.manager.GetTextById(406);
                 break;
             case GeneralEnum.Book:
-                itemsnTypeName = GameCommonInfo.GetUITextById(407);
+                itemsnTypeName = TextHandler.Instance.manager.GetTextById(407);
                 break;
             case GeneralEnum.Menu:
-                itemsnTypeName = GameCommonInfo.GetUITextById(408);
+                itemsnTypeName = TextHandler.Instance.manager.GetTextById(408);
                 break;
             case GeneralEnum.Medicine:
-                itemsnTypeName = GameCommonInfo.GetUITextById(409);
+                itemsnTypeName = TextHandler.Instance.manager.GetTextById(409);
                 break;
             case GeneralEnum.SkillBook:
-                itemsnTypeName = GameCommonInfo.GetUITextById(410);
+                itemsnTypeName = TextHandler.Instance.manager.GetTextById(410);
                 break;
             case GeneralEnum.Read:
-                itemsnTypeName = GameCommonInfo.GetUITextById(411);
+                itemsnTypeName = TextHandler.Instance.manager.GetTextById(411);
                 break;
             case GeneralEnum.Gift:
-                itemsnTypeName = GameCommonInfo.GetUITextById(412);
+                itemsnTypeName = TextHandler.Instance.manager.GetTextById(412);
                 break;
             case GeneralEnum.Other:
-                itemsnTypeName = GameCommonInfo.GetUITextById(413);
+                itemsnTypeName = TextHandler.Instance.manager.GetTextById(413);
                 break;
             default:
                 break;

@@ -77,13 +77,13 @@ public class BaseGambleHandler<T,B> : BaseHandler
         GameDataBean gameData = GameDataHandler.Instance.manager.GetGameData();
         if (!gameData.HasEnoughMoney(moneyL, moneyM, moneyS))
         {
-            ToastHandler.Instance.ToastHint(GameCommonInfo.GetUITextById(1005));
+            ToastHandler.Instance.ToastHint(TextHandler.Instance.manager.GetTextById(1005));
             return;
         }
         //检测是否超过最大下注金额
         if (gambleData.betForMoneyS + moneyS > gambleData.betMaxForMoneyS)
         {
-            ToastHandler.Instance.ToastHint(GameCommonInfo.GetUITextById(1302));
+            ToastHandler.Instance.ToastHint(TextHandler.Instance.manager.GetTextById(1302));
             return;
         }
         gameData.PayMoney(moneyL, moneyM, moneyS);

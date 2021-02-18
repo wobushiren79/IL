@@ -20,28 +20,28 @@ public class IngredientsEnumTools
         switch (ingredients)
         {
             case IngredientsEnum.Oilsalt:
-                name = GameCommonInfo.GetUITextById(21);
+                name = TextHandler.Instance.manager.GetTextById(21);
                 break;
             case IngredientsEnum.Meat:
-                name = GameCommonInfo.GetUITextById(22);
+                name = TextHandler.Instance.manager.GetTextById(22);
                 break;
             case IngredientsEnum.Riverfresh:
-                name = GameCommonInfo.GetUITextById(23);
+                name = TextHandler.Instance.manager.GetTextById(23);
                 break;
             case IngredientsEnum.Seafood:
-                name = GameCommonInfo.GetUITextById(24);
+                name = TextHandler.Instance.manager.GetTextById(24);
                 break;
             case IngredientsEnum.Vegetables:
-                name = GameCommonInfo.GetUITextById(25);
+                name = TextHandler.Instance.manager.GetTextById(25);
                 break;
             case IngredientsEnum.Melonfruit:
-                name = GameCommonInfo.GetUITextById(26);
+                name = TextHandler.Instance.manager.GetTextById(26);
                 break;
             case IngredientsEnum.Waterwine:
-                name = GameCommonInfo.GetUITextById(27);
+                name = TextHandler.Instance.manager.GetTextById(27);
                 break;
             case IngredientsEnum.Flour:
-                name = GameCommonInfo.GetUITextById(28);
+                name = TextHandler.Instance.manager.GetTextById(28);
                 break;
         }
         return name;

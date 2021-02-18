@@ -45,13 +45,13 @@ public class UIMainStart : BaseUIComponent
             btMaker.onClick.AddListener(OpenMakerUI);
         }
         if (tvStart != null)
-            tvStart.text = GameCommonInfo.GetUITextById(4011);
+            tvStart.text = TextHandler.Instance.manager.GetTextById(4011);
         if (tvContinue != null)
-            tvContinue.text = GameCommonInfo.GetUITextById(4012);
+            tvContinue.text = TextHandler.Instance.manager.GetTextById(4012);
         if (tvSetting != null)
-            tvSetting.text = GameCommonInfo.GetUITextById(4013);
+            tvSetting.text = TextHandler.Instance.manager.GetTextById(4013);
         if (tvExit != null)
-            tvExit.text = GameCommonInfo.GetUITextById(4014);
+            tvExit.text = TextHandler.Instance.manager.GetTextById(4014);
 
         SetVersion(ProjectConfigInfo.GAME_VERSION);
     }

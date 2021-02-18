@@ -17,8 +17,8 @@ public class UITextService
     /// 查询所有场景数据
     /// </summary>
     /// <returns></returns>
-    public List<TextInfoBean> QueryAllData()
+    public List<UITextBean> QueryAllData()
     {
-        return SQLiteHandle.LoadTableData<TextInfoBean>(ProjectConfigInfo.DATA_BASE_INFO_NAME, tableNameForMain, new string[] { mLeftTableName }, "id", new string[] { "text_id" });
+        return SQLiteHandle.LoadTableData<UITextBean>(ProjectConfigInfo.DATA_BASE_INFO_NAME, tableNameForMain, new string[] { mLeftTableName }, "id", new string[] { "text_id" });
     }
 }

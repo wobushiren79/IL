@@ -148,7 +148,7 @@ public class ItemTownStoreForGoodsCpt : ItemTownStoreCpt, DialogView.IDialogCall
         if (objCookBook != null && add_book == 0)
             objCookBook.SetActive(false);
         if (tvCook != null)
-            tvCook.text = GameCommonInfo.GetUITextById(1) + "+" + add_cook;
+            tvCook.text = TextHandler.Instance.manager.GetTextById(1) + "+" + add_cook;
         if (tvSpeed != null)
             tvSpeed.text = AttributesTypeEnumTools.GetAttributesName(AttributesTypeEnum.Speed) + "+" + add_speed;
         if (tvAccount != null)
@@ -160,7 +160,7 @@ public class ItemTownStoreForGoodsCpt : ItemTownStoreCpt, DialogView.IDialogCall
         if (tvLucky != null)
             tvLucky.text = AttributesTypeEnumTools.GetAttributesName(AttributesTypeEnum.Lucky) + "+" + add_lucky;
         if (tvCookBook != null)
-            tvCookBook.text = GameCommonInfo.GetUITextById(7) + "+" + add_book;
+            tvCookBook.text = TextHandler.Instance.manager.GetTextById(7) + "+" + add_book;
     }
 
     public override void SetOwn()
@@ -172,11 +172,11 @@ public class ItemTownStoreForGoodsCpt : ItemTownStoreCpt, DialogView.IDialogCall
             if (tvOwn != null)
                 if (isHas)
                 {
-                    tvOwn.text = (GameCommonInfo.GetUITextById(195));
+                    tvOwn.text = (TextHandler.Instance.manager.GetTextById(195));
                 }
                 else
                 {
-                    tvOwn.text = (GameCommonInfo.GetUITextById(196));
+                    tvOwn.text = (TextHandler.Instance.manager.GetTextById(196));
                     tvOwn.color = Color.gray;
                 }
         }
@@ -216,17 +216,17 @@ public class ItemTownStoreForGoodsCpt : ItemTownStoreCpt, DialogView.IDialogCall
             long number = pickForNumberDialog.GetPickNumber();
             if (!gameData.HasEnoughMoney(storeInfo.price_l* number, storeInfo.price_m* number, storeInfo.price_s* number))
             {
-                ToastHandler.Instance.ToastHint(GameCommonInfo.GetUITextById(1005));
+                ToastHandler.Instance.ToastHint(TextHandler.Instance.manager.GetTextById(1005));
                 return;
             }
             if (!gameData.HasEnoughGuildCoin(storeInfo.guild_coin * number))
             {
-                ToastHandler.Instance.ToastHint(GameCommonInfo.GetUITextById(1012));
+                ToastHandler.Instance.ToastHint(TextHandler.Instance.manager.GetTextById(1012));
                 return;
             }
             if (!gameData.HasEnoughTrophy(storeInfo.trophy_elementary * number, storeInfo.trophy_intermediate * number, storeInfo.trophy_advanced * number, storeInfo.trophy_legendary * number))
             {
-                ToastHandler.Instance.ToastHint(GameCommonInfo.GetUITextById(1021));
+                ToastHandler.Instance.ToastHint(TextHandler.Instance.manager.GetTextById(1021));
                 return;
             }
 
@@ -242,7 +242,7 @@ public class ItemTownStoreForGoodsCpt : ItemTownStoreCpt, DialogView.IDialogCall
             }
             gameData.AddItemsNumber(storeInfo.mark_id, number * getNumber);
 
-            ToastHandler.Instance.ToastHint(ivIcon.sprite, string.Format(GameCommonInfo.GetUITextById(1010), itemsInfo.name + "x" + (number * getNumber)));
+            ToastHandler.Instance.ToastHint(ivIcon.sprite, string.Format(TextHandler.Instance.manager.GetTextById(1010), itemsInfo.name + "x" + (number * getNumber)));
             RefreshUI();
         }
     }

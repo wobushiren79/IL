@@ -101,7 +101,7 @@ public class PickForMoneyDialogView : DialogView
     {
         if (moneyL == 0 && moneyM == 0 && moneyS == 0)
         {
-            ToastHandler.Instance.ToastHint(GameCommonInfo.GetUITextById(1033));
+            ToastHandler.Instance.ToastHint(TextHandler.Instance.manager.GetTextById(1033));
             return;
         }
         base.SubmitOnClick();

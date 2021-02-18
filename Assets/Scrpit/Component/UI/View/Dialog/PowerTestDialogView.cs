@@ -36,7 +36,7 @@ public class PowerTestDialogView : DialogView, StrengthTestView.ICallBack
         resultsForce = 0;
         if (moveSpeed < 0.1f)
             moveSpeed = 0.1f;
-        strengthTest.SetData(GameCommonInfo.GetUITextById(52), moveSpeed);
+        strengthTest.SetData(TextHandler.Instance.manager.GetTextById(52), moveSpeed);
         StartPowerTest();
     }
 

@@ -61,7 +61,7 @@ public class ItemPopupRecordCpt : BaseMonoBehaviour
             }
             else
             {
-                tvNumber.text = number + GameCommonInfo.GetUITextById(81);
+                tvNumber.text = number + TextHandler.Instance.manager.GetTextById(81);
             }
 
     }

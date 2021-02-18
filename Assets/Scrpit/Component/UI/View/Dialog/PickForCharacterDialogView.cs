@@ -128,7 +128,7 @@ public class PickForCharacterDialogView : DialogView, ItemGameDialogPickCharacte
         if (CheckUtil.ListIsNull(listPickCharacter))
         {
             AudioHandler.Instance.PlaySound(AudioSoundEnum.ButtonForNormal);
-            ToastHandler.Instance.ToastHint(GameCommonInfo.GetUITextById(1032));
+            ToastHandler.Instance.ToastHint(TextHandler.Instance.manager.GetTextById(1032));
         }
         else
         {
@@ -162,7 +162,7 @@ public class PickForCharacterDialogView : DialogView, ItemGameDialogPickCharacte
         {
             if(CheckUtil.StringIsNull(dialogData.title))
             {
-                tvTitle.text = GameCommonInfo.GetUITextById(4015) + "(" + listPickCharacter.Count + "/" + pickCharacterMax + ")";
+                tvTitle.text = TextHandler.Instance.manager.GetTextById(4015) + "(" + listPickCharacter.Count + "/" + pickCharacterMax + ")";
             }
             else
             {
@@ -296,7 +296,7 @@ public class PickForCharacterDialogView : DialogView, ItemGameDialogPickCharacte
         {
             if (listPickCharacter.Count >= pickCharacterMax)
             {
-                ToastHandler.Instance.ToastHint(GameCommonInfo.GetUITextById(1052));
+                ToastHandler.Instance.ToastHint(TextHandler.Instance.manager.GetTextById(1052));
                 itemView.ChangeStatus();
             }
             else

@@ -74,7 +74,7 @@ public class SceneForInfiniteTowersHandler : SceneBaseHandler
 
         UIMiniGameCountDown uiCountDown = UIHandler.Instance.manager.GetUI<UIMiniGameCountDown>(UIEnum.MiniGameCountDown);
         //设置标题
-        uiCountDown.SetTitle(infiniteTowersData.layer + GameCommonInfo.GetUITextById(83));
+        uiCountDown.SetTitle(infiniteTowersData.layer + TextHandler.Instance.manager.GetTextById(83));
     }
 
     public IEnumerator NextLayer(UserInfiniteTowersBean infiniteTowersData)

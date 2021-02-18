@@ -74,7 +74,7 @@ public class PopupBedShow : PopupShowView
         proLevel.SetData(nextLevelExp, buildBedData.bedExp);
         if (buildBedData.GetBedStatus() == ResearchStatusEnum.WaitForResearch)
         {
-            proLevel.SetContent(GameCommonInfo.GetUITextById(287));
+            proLevel.SetContent(TextHandler.Instance.manager.GetTextById(287));
         }
     }
 
@@ -115,7 +115,7 @@ public class PopupBedShow : PopupShowView
     public void AddItemForSellTime(long time)
     {
         Sprite spIcon = IconDataHandler.Instance.manager.GetIconSpriteByName("time_wait_1_0");
-        CreateItem(objItemStatisticsContainer, spIcon, Color.white, GameCommonInfo.GetUITextById(352), time + " h");
+        CreateItem(objItemStatisticsContainer, spIcon, Color.white, TextHandler.Instance.manager.GetTextById(352), time + " h");
     }
 
     /// <summary>
@@ -125,7 +125,7 @@ public class PopupBedShow : PopupShowView
     public void AddItemForSellNumber(long number)
     {
         Sprite spIcon = IconDataHandler.Instance.manager.GetIconSpriteByName("ui_features_bed");
-        CreateItem(objItemStatisticsContainer, spIcon, Color.red, GameCommonInfo.GetUITextById(351), number + "");
+        CreateItem(objItemStatisticsContainer, spIcon, Color.red, TextHandler.Instance.manager.GetTextById(351), number + "");
     }
 
     /// <summary>
@@ -141,15 +141,15 @@ public class PopupBedShow : PopupShowView
         {
             case MoneyEnum.L:
                 iconKey = "money_3";
-                contentStr = GameCommonInfo.GetUITextById(333);
+                contentStr = TextHandler.Instance.manager.GetTextById(333);
                 break;
             case MoneyEnum.M:
                 iconKey = "money_2";
-                contentStr = GameCommonInfo.GetUITextById(334);
+                contentStr = TextHandler.Instance.manager.GetTextById(334);
                 break;
             case MoneyEnum.S:
                 iconKey = "money_1";
-                contentStr = GameCommonInfo.GetUITextById(335);
+                contentStr = TextHandler.Instance.manager.GetTextById(335);
                 break;
         }
         Sprite spIcon = IconDataHandler.Instance.manager.GetIconSpriteByName(iconKey);

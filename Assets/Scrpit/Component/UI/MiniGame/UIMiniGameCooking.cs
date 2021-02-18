@@ -101,7 +101,7 @@ public class UIMiniGameCooking : BaseUIComponent
     public void StartCookingPre()
     {
         mPhaseType = MiniGameCookingPhaseTypeEnum.Pre;
-        SetTitle(GameCommonInfo.GetUITextById(231));
+        SetTitle(TextHandler.Instance.manager.GetTextById(231));
         //创建按钮
         CreateRandomCookingButton();
         StartCountDown();
@@ -113,7 +113,7 @@ public class UIMiniGameCooking : BaseUIComponent
     public void StartCookingMaking()
     {
         mPhaseType = MiniGameCookingPhaseTypeEnum.Making;
-        SetTitle(GameCommonInfo.GetUITextById(232));
+        SetTitle(TextHandler.Instance.manager.GetTextById(232));
         //创建按钮
         CreateRandomCookingButton();
         StartCountDown();
@@ -125,7 +125,7 @@ public class UIMiniGameCooking : BaseUIComponent
     public void StartCookingEnd()
     {
         mPhaseType = MiniGameCookingPhaseTypeEnum.End;
-        SetTitle(GameCommonInfo.GetUITextById(233));
+        SetTitle(TextHandler.Instance.manager.GetTextById(233));
         //创建按钮
         CreateRandomCookingButton();
         StartCountDown();
@@ -223,7 +223,7 @@ public class UIMiniGameCooking : BaseUIComponent
         if (mPhaseType == MiniGameCookingPhaseTypeEnum.End)
         {
             objCountDown.SetActive(true);
-            tvCountDown.text = GameCommonInfo.GetUITextById(256);
+            tvCountDown.text = TextHandler.Instance.manager.GetTextById(256);
             tvCountDown.transform.DOScale(new Vector3(3, 3, 3), 0.5f).From().SetEase(Ease.OutBack);
             yield return new WaitForSeconds(3);
         }
@@ -304,19 +304,19 @@ public class UIMiniGameCooking : BaseUIComponent
         tvCountDown.transform.DOScale(new Vector3(3, 3, 3), 0.5f).From().SetEase(Ease.OutBack);
         yield return new WaitForSeconds(2);
         AudioHandler.Instance.PlaySound(AudioSoundEnum.CountDownStart);
-        tvCountDown.text = GameCommonInfo.GetUITextById(252);
+        tvCountDown.text = TextHandler.Instance.manager.GetTextById(252);
         tvCountDown.transform.DOScale(new Vector3(3, 3, 3), 0.5f).From().SetEase(Ease.OutBack);
         yield return new WaitForSeconds(0.7f);
         AudioHandler.Instance.PlaySound(AudioSoundEnum.CountDownStart);
-        tvCountDown.text = GameCommonInfo.GetUITextById(253);
+        tvCountDown.text = TextHandler.Instance.manager.GetTextById(253);
         tvCountDown.transform.DOScale(new Vector3(3, 3, 3), 0.5f).From().SetEase(Ease.OutBack);
         yield return new WaitForSeconds(0.7f);
         AudioHandler.Instance.PlaySound(AudioSoundEnum.CountDownStart);
-        tvCountDown.text = GameCommonInfo.GetUITextById(254);
+        tvCountDown.text = TextHandler.Instance.manager.GetTextById(254);
         tvCountDown.transform.DOScale(new Vector3(3, 3, 3), 0.5f).From().SetEase(Ease.OutBack);
         yield return new WaitForSeconds(0.7f);
         AudioHandler.Instance.PlaySound(AudioSoundEnum.CountDownEnd);
-        tvCountDown.text = GameCommonInfo.GetUITextById(255);
+        tvCountDown.text = TextHandler.Instance.manager.GetTextById(255);
         tvCountDown.transform.DOScale(new Vector3(3, 3, 3), 0.5f).From().SetEase(Ease.OutBack);
         yield return new WaitForSeconds(0.7f);
         objCountDown.SetActive(false);

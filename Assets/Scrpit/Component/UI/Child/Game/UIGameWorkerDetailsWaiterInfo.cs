@@ -26,7 +26,7 @@ public class UIGameWorkerDetailsWaiterInfo : UIGameStatisticsDetailsBase<UIGameW
     public void AddSendNumber(long number)
     {
         Sprite spIcon = GetSpriteByName("worker_send_pro_0");
-        CreateTextItem(spIcon, GameCommonInfo.GetUITextById(313), number + "");
+        CreateTextItem(spIcon, TextHandler.Instance.manager.GetTextById(313), number + "");
     }
 
     /// <summary>
@@ -36,7 +36,7 @@ public class UIGameWorkerDetailsWaiterInfo : UIGameStatisticsDetailsBase<UIGameW
     public void AddCleanTableNumber(long number)
     {
         Sprite spIcon = GetSpriteByName("worker_clear_pro_0");
-        CreateTextItem(spIcon, GameCommonInfo.GetUITextById(314), number + "");
+        CreateTextItem(spIcon, TextHandler.Instance.manager.GetTextById(314), number + "");
     }
 
     /// <summary>
@@ -46,7 +46,7 @@ public class UIGameWorkerDetailsWaiterInfo : UIGameStatisticsDetailsBase<UIGameW
     public void AddCleanTime(float time)
     {
         Sprite spIcon = GetSpriteByName("hourglass_1");
-        CreateTextItem(spIcon, GameCommonInfo.GetUITextById(315), time + GameCommonInfo.GetUITextById(38));
+        CreateTextItem(spIcon, TextHandler.Instance.manager.GetTextById(315), time + TextHandler.Instance.manager.GetTextById(38));
     }
 
 
@@ -57,7 +57,7 @@ public class UIGameWorkerDetailsWaiterInfo : UIGameStatisticsDetailsBase<UIGameW
     public void AddCleanBedNumber(float number)
     {
         Sprite spIcon = GetSpriteByName("worker_waiter_bed_pro_0");
-        CreateTextItem(spIcon, GameCommonInfo.GetUITextById(348), number + "");
+        CreateTextItem(spIcon, TextHandler.Instance.manager.GetTextById(348), number + "");
     }
 
 

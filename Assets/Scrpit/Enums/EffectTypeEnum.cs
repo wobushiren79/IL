@@ -154,7 +154,7 @@ public class EffectTypeEnumTools : DataTools
     private static EffectTypeBean GetEffectDetailsForAddLife(EffectTypeBean effectTypeData)
     {
         effectTypeData.effectData = float.Parse(effectTypeData.data);
-        effectTypeData.effectDescribe = string.Format(GameCommonInfo.GetUITextById(501), effectTypeData.data);
+        effectTypeData.effectDescribe = string.Format(TextHandler.Instance.manager.GetTextById(501), effectTypeData.data);
         effectTypeData.spIcon = IconDataHandler.Instance.manager.GetIconSpriteByName("ui_effect_addlife_1");
         return effectTypeData;
     }
@@ -168,7 +168,7 @@ public class EffectTypeEnumTools : DataTools
     {
         float addLifeRate = float.Parse(effectTypeData.data);
         effectTypeData.effectData = addLifeRate;
-        effectTypeData.effectDescribe = string.Format(GameCommonInfo.GetUITextById(507), (addLifeRate * 100) + "");
+        effectTypeData.effectDescribe = string.Format(TextHandler.Instance.manager.GetTextById(507), (addLifeRate * 100) + "");
         effectTypeData.spIcon = IconDataHandler.Instance.manager.GetIconSpriteByName("ui_effect_addlife_1");
         return effectTypeData;
     }
@@ -182,7 +182,7 @@ public class EffectTypeEnumTools : DataTools
     {
         float defRate = float.Parse(effectTypeData.data);
         effectTypeData.effectData = defRate;
-        effectTypeData.effectDescribe = string.Format(GameCommonInfo.GetUITextById(503), (defRate * 100) + "%");
+        effectTypeData.effectDescribe = string.Format(TextHandler.Instance.manager.GetTextById(503), (defRate * 100) + "%");
         effectTypeData.spIcon = IconDataHandler.Instance.manager.GetIconSpriteByName("ui_effect_defend_1");
         return effectTypeData;
     }
@@ -226,7 +226,7 @@ public class EffectTypeEnumTools : DataTools
         }
         effectTypeData.effectData = float.Parse(effectTypeData.data);
         string attributesName = AttributesTypeEnumTools.GetAttributesName(attributesType);
-        effectTypeData.effectDescribe = string.Format(GameCommonInfo.GetUITextById(505), effectTypeData.data, attributesName);
+        effectTypeData.effectDescribe = string.Format(TextHandler.Instance.manager.GetTextById(505), effectTypeData.data, attributesName);
         effectTypeData.spIcon = IconDataHandler.Instance.manager.GetIconSpriteByName(iconStr);
         return effectTypeData;
     }
@@ -269,7 +269,7 @@ public class EffectTypeEnumTools : DataTools
         }
         effectTypeData.effectData = float.Parse(effectTypeData.data);
         string attributesName = AttributesTypeEnumTools.GetAttributesName(attributesType);
-        effectTypeData.effectDescribe = string.Format(GameCommonInfo.GetUITextById(506), effectTypeData.effectData * 100 + "", attributesName);
+        effectTypeData.effectDescribe = string.Format(TextHandler.Instance.manager.GetTextById(506), effectTypeData.effectData * 100 + "", attributesName);
         effectTypeData.spIcon = IconDataHandler.Instance.manager.GetIconSpriteByName(iconStr);
         return effectTypeData;
     }
@@ -314,7 +314,7 @@ public class EffectTypeEnumTools : DataTools
         }
         effectTypeData.effectData = float.Parse(effectTypeData.data);
         string attributesName = AttributesTypeEnumTools.GetAttributesName(attributesType);
-        effectTypeData.effectDescribe = string.Format(GameCommonInfo.GetUITextById(531), effectTypeData.data, attributesName);
+        effectTypeData.effectDescribe = string.Format(TextHandler.Instance.manager.GetTextById(531), effectTypeData.data, attributesName);
         effectTypeData.spIcon = IconDataHandler.Instance.manager.GetIconSpriteByName(iconStr);
         return effectTypeData;
     }
@@ -358,7 +358,7 @@ public class EffectTypeEnumTools : DataTools
         }
         effectTypeData.effectData = float.Parse(effectTypeData.data);
         string attributesName = AttributesTypeEnumTools.GetAttributesName(attributesType);
-        effectTypeData.effectDescribe = string.Format(GameCommonInfo.GetUITextById(532), effectTypeData.effectData * 100 + "", attributesName);
+        effectTypeData.effectDescribe = string.Format(TextHandler.Instance.manager.GetTextById(532), effectTypeData.effectData * 100 + "", attributesName);
         effectTypeData.spIcon = IconDataHandler.Instance.manager.GetIconSpriteByName(iconStr);
         return effectTypeData;
     }
@@ -366,7 +366,7 @@ public class EffectTypeEnumTools : DataTools
     private static EffectTypeBean GetEffectDetailsForDamage(EffectTypeBean effectTypeData, Sprite spRemark)
     {
         effectTypeData.effectData = int.Parse(effectTypeData.data);
-        effectTypeData.effectDescribe = string.Format(GameCommonInfo.GetUITextById(504), effectTypeData.data);
+        effectTypeData.effectDescribe = string.Format(TextHandler.Instance.manager.GetTextById(504), effectTypeData.data);
         effectTypeData.spIcon = IconDataHandler.Instance.manager.GetIconSpriteByName("ui_features_favorability");
         effectTypeData.spIconRemark = spRemark;
         effectTypeData.colorIcon = Color.red;
@@ -399,7 +399,7 @@ public class EffectTypeEnumTools : DataTools
         }
         effectTypeData.effectData = float.Parse(effectTypeData.data);
         string attibutesName = AttributesTypeEnumTools.GetAttributesName(attributesType);
-        effectTypeData.effectDescribe = string.Format(GameCommonInfo.GetUITextById(521), attibutesName, effectTypeData.data);
+        effectTypeData.effectDescribe = string.Format(TextHandler.Instance.manager.GetTextById(521), attibutesName, effectTypeData.data);
         effectTypeData.colorIcon = Color.red;
         effectTypeData.spIconRemark = spRemark;
         effectTypeData.spIcon = AttributesTypeEnumTools.GetAttributesIcon(attributesType);

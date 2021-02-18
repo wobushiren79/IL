@@ -49,15 +49,15 @@ public class ItemTownGuildRankCpt : ItemGameBaseCpt, IWebRequestCallBack<SteamWe
         switch (rankType)
         {
             case RankTypeEnum.GetMoneyS:
-                dataStr = score + GameCommonInfo.GetUITextById(18);
+                dataStr = score + TextHandler.Instance.manager.GetTextById(18);
                 spData = IconDataHandler.Instance.manager.GetIconSpriteByName("ach_money_s_2");
                 break;
             case RankTypeEnum.NumberOrderForFood:
-                dataStr = score + GameCommonInfo.GetUITextById(82);
+                dataStr = score + TextHandler.Instance.manager.GetTextById(82);
                 spData = IconDataHandler.Instance.manager.GetIconSpriteByName("ach_ordernumber_1");
                 break;
             case RankTypeEnum.NumberOrderForHotel:
-                dataStr = score + GameCommonInfo.GetUITextById(82);
+                dataStr = score + TextHandler.Instance.manager.GetTextById(82);
                 spData = IconDataHandler.Instance.manager.GetIconSpriteByName("worker_waiter_bed_pro_2");
                 break;
 
@@ -77,11 +77,11 @@ public class ItemTownGuildRankCpt : ItemGameBaseCpt, IWebRequestCallBack<SteamWe
                 break;
 
             case RankTypeEnum.MaxDayGetMoneyForFoodS:
-                dataStr = score + GameCommonInfo.GetUITextById(18);
+                dataStr = score + TextHandler.Instance.manager.GetTextById(18);
                 spData = IconDataHandler.Instance.manager.GetIconSpriteByName("ach_money_s_2");
                 break;
             case RankTypeEnum.MaxDayGetMoneyForHotelS:
-                dataStr = score + GameCommonInfo.GetUITextById(18);
+                dataStr = score + TextHandler.Instance.manager.GetTextById(18);
                 spData = IconDataHandler.Instance.manager.GetIconSpriteByName("ach_money_s_2");
                 break;
 

@@ -97,34 +97,34 @@ public class NpcAIWorkerCpt : BaseNpcAI
         switch (workerIntent)
         {
             case WorkerIntentEnum.Idle:
-                statusStr = GameCommonInfo.GetUITextById(171);
+                statusStr = TextHandler.Instance.manager.GetTextById(171);
                 break;
             case WorkerIntentEnum.Daze:
-                statusStr = GameCommonInfo.GetUITextById(178);
+                statusStr = TextHandler.Instance.manager.GetTextById(178);
                 break;
             case WorkerIntentEnum.WaiterSend:
-                statusStr = GameCommonInfo.GetUITextById(172);
+                statusStr = TextHandler.Instance.manager.GetTextById(172);
                 break;
             case WorkerIntentEnum.WaiterClean:
-                statusStr = GameCommonInfo.GetUITextById(173);
+                statusStr = TextHandler.Instance.manager.GetTextById(173);
                 break;
             case WorkerIntentEnum.WaiterBed:
-                statusStr = GameCommonInfo.GetUITextById(180);
+                statusStr = TextHandler.Instance.manager.GetTextById(180);
                 break;
             case WorkerIntentEnum.Cook:
-                statusStr = GameCommonInfo.GetUITextById(174);
+                statusStr = TextHandler.Instance.manager.GetTextById(174);
                 break;
             case WorkerIntentEnum.Accounting:
-                statusStr = GameCommonInfo.GetUITextById(175);
+                statusStr = TextHandler.Instance.manager.GetTextById(175);
                 break;
             case WorkerIntentEnum.AccostSolicit:
-                statusStr = GameCommonInfo.GetUITextById(176);
+                statusStr = TextHandler.Instance.manager.GetTextById(176);
                 break;
             case WorkerIntentEnum.AccostGuide:
-                statusStr = GameCommonInfo.GetUITextById(179);
+                statusStr = TextHandler.Instance.manager.GetTextById(179);
                 break;
             case WorkerIntentEnum.Beater:
-                statusStr = GameCommonInfo.GetUITextById(177);
+                statusStr = TextHandler.Instance.manager.GetTextById(177);
                 break;
         }
         return workerIntent;

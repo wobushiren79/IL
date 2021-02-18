@@ -155,19 +155,19 @@ public class CharacterWorkerBaseBean
         switch (workerType)
         {
             case WorkerEnum.Chef:
-                workerName = GameCommonInfo.GetUITextById(11);
+                workerName = TextHandler.Instance.manager.GetTextById(11);
                 break;
             case WorkerEnum.Waiter:
-                workerName = GameCommonInfo.GetUITextById(12);
+                workerName = TextHandler.Instance.manager.GetTextById(12);
                 break;
             case WorkerEnum.Accountant:
-                workerName = GameCommonInfo.GetUITextById(13);
+                workerName = TextHandler.Instance.manager.GetTextById(13);
                 break;
             case WorkerEnum.Accost:
-                workerName = GameCommonInfo.GetUITextById(14);
+                workerName = TextHandler.Instance.manager.GetTextById(14);
                 break;
             case WorkerEnum.Beater:
-                workerName = GameCommonInfo.GetUITextById(15);
+                workerName = TextHandler.Instance.manager.GetTextById(15);
                 break;
         }
         return workerName;
@@ -183,25 +183,25 @@ public class CharacterWorkerBaseBean
         switch (level)
         {
             case 0:
-                workerLevelName = GameCommonInfo.GetUITextById(110);
+                workerLevelName = TextHandler.Instance.manager.GetTextById(110);
                 break;
             case 1:
-                workerLevelName = GameCommonInfo.GetUITextById(111);
+                workerLevelName = TextHandler.Instance.manager.GetTextById(111);
                 break;
             case 2:
-                workerLevelName = GameCommonInfo.GetUITextById(112);
+                workerLevelName = TextHandler.Instance.manager.GetTextById(112);
                 break;
             case 3:
-                workerLevelName = GameCommonInfo.GetUITextById(113);
+                workerLevelName = TextHandler.Instance.manager.GetTextById(113);
                 break;
             case 4:
-                workerLevelName = GameCommonInfo.GetUITextById(114);
+                workerLevelName = TextHandler.Instance.manager.GetTextById(114);
                 break;
             case 5:
-                workerLevelName = GameCommonInfo.GetUITextById(115);
+                workerLevelName = TextHandler.Instance.manager.GetTextById(115);
                 break;
             case 6:
-                workerLevelName = GameCommonInfo.GetUITextById(116);
+                workerLevelName = TextHandler.Instance.manager.GetTextById(116);
                 break;
         }
         return workerLevelName;

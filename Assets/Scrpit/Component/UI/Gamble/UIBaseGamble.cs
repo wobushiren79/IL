@@ -116,7 +116,7 @@ public class UIBaseGamble<T, H, B> : BaseUIComponent, DialogView.IDialogCallBack
         if (tvBetMoneyS != null)
             tvBetMoneyS.text = gambleData.betForMoneyS + "/" + gambleData.betMaxForMoneyS;
         if (winRewardRate != null)
-            winRewardRate.text = GameCommonInfo.GetUITextById(612) + "x" + gambleData.winRewardRate;
+            winRewardRate.text = TextHandler.Instance.manager.GetTextById(612) + "x" + gambleData.winRewardRate;
     }
 
     /// <summary>
@@ -138,7 +138,7 @@ public class UIBaseGamble<T, H, B> : BaseUIComponent, DialogView.IDialogCallBack
         if (gambleData.GetGambleStatus() == GambleStatusType.Prepare)
         {
             DialogBean dialogData = new DialogBean();
-            dialogData.title = GameCommonInfo.GetUITextById(611);
+            dialogData.title = TextHandler.Instance.manager.GetTextById(611);
             PickForMoneyDialogView PickForMoneyDialog = DialogHandler.Instance.CreateDialog<PickForMoneyDialogView>(DialogEnum.PickForMoney, this, dialogData);
             PickForMoneyDialog.SetData((int)gambleData.betMaxForMoneyL / 10, (int)gambleData.betMaxForMoneyM / 10, (int)gambleData.betMaxForMoneyS / 10);
             PickForMoneyDialog.SetMaxMoney(gambleData.betMaxForMoneyL, gambleData.betMaxForMoneyM, gambleData.betMaxForMoneyS);
@@ -172,7 +172,7 @@ public class UIBaseGamble<T, H, B> : BaseUIComponent, DialogView.IDialogCallBack
             if (gambleData.betForMoneyS == 0)
             {
                 Sprite iconSp = IconDataHandler.Instance.manager.GetIconSpriteByName("money_1");
-                ToastHandler.Instance.ToastHint(iconSp, GameCommonInfo.GetUITextById(1301));
+                ToastHandler.Instance.ToastHint(iconSp, TextHandler.Instance.manager.GetTextById(1301));
                 return;
             }
             gambleHandler.StartChange();

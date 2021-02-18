@@ -359,7 +359,7 @@ public class NpcAIPasserCpt : BaseNpcAI
             //int expression = UnityEngine.Random.Range(1, 7);
             //SetExpression((CharacterExpressionCpt.CharacterExpressionEnum)expression, 2);
             int shoutId = Random.Range(13301, 13306);
-            SetShout(GameCommonInfo.GetUITextById(shoutId));
+            SetShout(TextHandler.Instance.manager.GetTextById(shoutId));
         }
     }
 }

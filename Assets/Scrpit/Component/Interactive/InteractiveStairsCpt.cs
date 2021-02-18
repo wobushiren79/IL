@@ -30,11 +30,11 @@ public class InteractiveStairsCpt : BaseInteractiveCpt
     {
         if (buildStairsCpt.layer == 1)
         {
-            characterInt.ShowInteractive(GameCommonInfo.GetUITextById(95));
+            characterInt.ShowInteractive(TextHandler.Instance.manager.GetTextById(95));
         }
         else
         {
-            characterInt.ShowInteractive(GameCommonInfo.GetUITextById(96));
+            characterInt.ShowInteractive(TextHandler.Instance.manager.GetTextById(96));
         }
     }
 }

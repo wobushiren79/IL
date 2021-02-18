@@ -84,7 +84,7 @@ public class ItemTownGoodsMarketCpt : ItemGameBaseCpt, DialogView.IDialogCallBac
         AudioHandler.Instance.PlaySound(AudioSoundEnum.ButtonForNormal);
         int buyNumber = int.Parse(etNumber.text);
         DialogBean dialogData = new DialogBean();
-        dialogData.content = string.Format(GameCommonInfo.GetUITextById(3009), tvPirce.text, buyNumber, goodsData.name);
+        dialogData.content = string.Format(TextHandler.Instance.manager.GetTextById(3009), tvPirce.text, buyNumber, goodsData.name);
         DialogHandler.Instance.CreateDialog<DialogView>(DialogEnum.Normal, this, dialogData);
     }
 
@@ -283,18 +283,18 @@ public class ItemTownGoodsMarketCpt : ItemGameBaseCpt, DialogView.IDialogCallBac
         GameDataBean gameData = GameDataHandler.Instance.manager.GetGameData();
         if (buyNumber <= 0)
         {
-            ToastHandler.Instance.ToastHint(GameCommonInfo.GetUITextById(1017));
+            ToastHandler.Instance.ToastHint(TextHandler.Instance.manager.GetTextById(1017));
             return;
         }
         if (!gameData.HasEnoughMoney(price_l * buyNumber, price_m * buyNumber, price_s * buyNumber))
         {
-            ToastHandler.Instance.ToastHint(GameCommonInfo.GetUITextById(1005));
+            ToastHandler.Instance.ToastHint(TextHandler.Instance.manager.GetTextById(1005));
             return;
         }
         gameData.PayMoney(price_l * buyNumber, price_m * buyNumber, price_s * buyNumber);
         gameData.AddIng(ingType, buyNumber);
         RreshData();
-        ToastHandler.Instance.ToastHint(ivIcon.sprite, string.Format(GameCommonInfo.GetUITextById(1018), buyNumber, goodsData.name, tvPirce.text));
+        ToastHandler.Instance.ToastHint(ivIcon.sprite, string.Format(TextHandler.Instance.manager.GetTextById(1018), buyNumber, goodsData.name, tvPirce.text));
     }
 
     public void Cancel(DialogView dialogView, DialogBean dialogBean)

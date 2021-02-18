@@ -215,7 +215,7 @@ public class NpcAIWorkerForWaiterCpt : NpcAIWokerFoBaseCpt
         BuildStairsCpt buildStairs = InnHandler.Instance.GetCloseStairs(transform.position);
         if (buildStairs == null)
         {
-            npcAIWorker.SetShout(GameCommonInfo.GetUITextById(13402));
+            npcAIWorker.SetShout(TextHandler.Instance.manager.GetTextById(13402));
             SetIntent(WaiterIntentEnum.Idle);
             return;
         }
@@ -251,7 +251,7 @@ public class NpcAIWorkerForWaiterCpt : NpcAIWokerFoBaseCpt
         if (!CheckUtil.CheckPath(sleepPosition, transform.position))
         {
             //不能到达
-            npcAIWorker.SetShout(GameCommonInfo.GetUITextById(13405));
+            npcAIWorker.SetShout(TextHandler.Instance.manager.GetTextById(13405));
             SetIntent(WaiterIntentEnum.GoToStairsForSecond);
             return;
         }

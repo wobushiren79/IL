@@ -43,7 +43,7 @@ public class ItemTownBankLoansCpt : ItemGameBaseCpt, DialogView.IDialogCallBack
     public void SetLoansDays(int day)
     {
         if (tvDays != null)
-            tvDays.text = day + GameCommonInfo.GetUITextById(31);
+            tvDays.text = day + TextHandler.Instance.manager.GetTextById(31);
     }
 
     public void SetMoneyForDay(long moneys)
@@ -58,13 +58,13 @@ public class ItemTownBankLoansCpt : ItemGameBaseCpt, DialogView.IDialogCallBack
         AudioHandler.Instance.PlaySound(AudioSoundEnum.ButtonForNormal);
         if (gameData.listLoans.Count >= gameData.loansNumberLimit)
         {
-            ToastHandler.Instance.ToastHint(GameCommonInfo.GetUITextById(1091));
+            ToastHandler.Instance.ToastHint(TextHandler.Instance.manager.GetTextById(1091));
             return;
         }
 
         DialogBean dialogData = new DialogBean
         {
-            content = string.Format(GameCommonInfo.GetUITextById(3091), tvMoneyS.text, tvDays.text)
+            content = string.Format(TextHandler.Instance.manager.GetTextById(3091), tvMoneyS.text, tvDays.text)
         };
         DialogHandler.Instance.CreateDialog<DialogView>(DialogEnum.Normal, this, dialogData);
 
@@ -77,11 +77,11 @@ public class ItemTownBankLoansCpt : ItemGameBaseCpt, DialogView.IDialogCallBack
         if (gameData.AddLoans(loansData))
         {
             gameData.AddMoney(0, 0, loansData.moneyS);
-            ToastHandler.Instance.ToastHint(string.Format(GameCommonInfo.GetUITextById(1092), tvMoneyS.text));
+            ToastHandler.Instance.ToastHint(string.Format(TextHandler.Instance.manager.GetTextById(1092), tvMoneyS.text));
         }
         else
         {
-            ToastHandler.Instance.ToastHint(GameCommonInfo.GetUITextById(1091));
+            ToastHandler.Instance.ToastHint(TextHandler.Instance.manager.GetTextById(1091));
         }
     }
 

@@ -30,7 +30,7 @@ public class UIGameWorkerDetailsAccostInfo : UIGameStatisticsDetailsBase<UIGameW
     public void AddAccostSolicitTotalNumber(long number)
     {
         Sprite spIcon = GetSpriteByName("worker_accost_pro_0");
-        CreateTextItem(spIcon, GameCommonInfo.GetUITextById(323), number + "");
+        CreateTextItem(spIcon, TextHandler.Instance.manager.GetTextById(323), number + "");
     }
 
     /// <summary>
@@ -40,7 +40,7 @@ public class UIGameWorkerDetailsAccostInfo : UIGameStatisticsDetailsBase<UIGameW
     public void AddAccostSolicitSuccessNumber(long number)
     {
         Sprite spIcon = GetSpriteByName("worker_accost_pro_0");
-        CreateTextItem(spIcon, GameCommonInfo.GetUITextById(324), number + "");
+        CreateTextItem(spIcon, TextHandler.Instance.manager.GetTextById(324), number + "");
     }
 
 
@@ -51,7 +51,7 @@ public class UIGameWorkerDetailsAccostInfo : UIGameStatisticsDetailsBase<UIGameW
     public void AddAccostSolicitFailNumber(long number)
     {
         Sprite spIcon = GetSpriteByName("worker_accost_pro_0");
-        CreateTextItem(spIcon, GameCommonInfo.GetUITextById(325), number + "");
+        CreateTextItem(spIcon, TextHandler.Instance.manager.GetTextById(325), number + "");
     }
 
     /// <summary>
@@ -60,6 +60,6 @@ public class UIGameWorkerDetailsAccostInfo : UIGameStatisticsDetailsBase<UIGameW
     public void AddAccostGuideNumber(long number)
     {
         Sprite spIcon = GetSpriteByName("worker_accost_guide_pro_0");
-        CreateTextItem(spIcon, GameCommonInfo.GetUITextById(347), number + "");
+        CreateTextItem(spIcon, TextHandler.Instance.manager.GetTextById(347), number + "");
     }
 }

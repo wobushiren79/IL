@@ -61,11 +61,11 @@ public class SelectForBedDialogView : DialogView
         {
             if (subAesthetics!=0)
             {
-                tvAesthetics.text = GameCommonInfo.GetUITextById(10) + ":" + addAesthetics + "" + subAesthetics;
+                tvAesthetics.text = TextHandler.Instance.manager.GetTextById(10) + ":" + addAesthetics + "" + subAesthetics;
             }
             else
             {
-                tvAesthetics.text = GameCommonInfo.GetUITextById(10) + ":" + addAesthetics;
+                tvAesthetics.text = TextHandler.Instance.manager.GetTextById(10) + ":" + addAesthetics;
             }
       
         }

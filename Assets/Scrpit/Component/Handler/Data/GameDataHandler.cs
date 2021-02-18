@@ -151,7 +151,7 @@ public class GameDataHandler : BaseHandler<GameDataHandler,GameDataManager>, Dia
                         //如果是成功攻略
                         //弹出提示
                         AudioHandler.Instance.PlaySound(AudioSoundEnum.Reward);
-                        ToastHandler.Instance.ToastHint(string.Format(GameCommonInfo.GetUITextById(1331), itemInfiniteTowerData.layer+""));
+                        ToastHandler.Instance.ToastHint(string.Format(TextHandler.Instance.manager.GetTextById(1331), itemInfiniteTowerData.layer+""));
                         //添加奖励物品
                         int totalLucky = 0;
                         for (int c = 0; c < listCharacterData.Count; c++)
@@ -171,7 +171,7 @@ public class GameDataHandler : BaseHandler<GameDataHandler,GameDataManager>, Dia
                         {
                             //弹出提示
                             AudioHandler.Instance.PlaySound(AudioSoundEnum.Reward);
-                            ToastHandler.Instance.ToastHint(string.Format(GameCommonInfo.GetUITextById(1332), (itemInfiniteTowerData.layer-1) + ""));
+                            ToastHandler.Instance.ToastHint(string.Format(TextHandler.Instance.manager.GetTextById(1332), (itemInfiniteTowerData.layer-1) + ""));
                             itemInfiniteTowerData.proForSend = -1;
                             //还原员工状态
                             for (int c = 0; c < listCharacterData.Count; c++)
@@ -189,7 +189,7 @@ public class GameDataHandler : BaseHandler<GameDataHandler,GameDataManager>, Dia
                     {
                         //弹出提示
                         AudioHandler.Instance.PlaySound(AudioSoundEnum.Passive);
-                        ToastHandler.Instance.ToastHint(string.Format(GameCommonInfo.GetUITextById(1333), itemInfiniteTowerData.layer + ""));
+                        ToastHandler.Instance.ToastHint(string.Format(TextHandler.Instance.manager.GetTextById(1333), itemInfiniteTowerData.layer + ""));
                         //如果是失败攻略
                         itemInfiniteTowerData.proForSend = -1;
                         //还原员工状态
@@ -239,13 +239,13 @@ public class GameDataHandler : BaseHandler<GameDataHandler,GameDataManager>, Dia
             if (isCompleteResearch)
             {
                 itemBed.CompleteResearch(gameData);
-                string toastStr = string.Format(GameCommonInfo.GetUITextById(1071), itemBed.bedName);
+                string toastStr = string.Format(TextHandler.Instance.manager.GetTextById(1071), itemBed.bedName);
                 AudioHandler.Instance.PlaySound(AudioSoundEnum.Reward);
                 ToastHandler.Instance.ToastHint(InnFoodHandler.Instance.manager.GetFoodSpriteByName("ui_features_bed"), toastStr, 5);
 
                 DialogBean dialogData = new DialogBean
                 {
-                    title = GameCommonInfo.GetUITextById(1048),
+                    title = TextHandler.Instance.manager.GetTextById(1048),
                     content = toastStr
                 };
                 AchievementDialogView achievementDialog = DialogHandler.Instance.CreateDialog<AchievementDialogView>(DialogEnum.Achievement, this, dialogData);
@@ -287,13 +287,13 @@ public class GameDataHandler : BaseHandler<GameDataHandler,GameDataManager>, Dia
             if (isCompleteResearch)
             {
                 itemMenu.CompleteResearch(gameData);
-                string toastStr = string.Format(GameCommonInfo.GetUITextById(1071), menuInfo.name);
+                string toastStr = string.Format(TextHandler.Instance.manager.GetTextById(1071), menuInfo.name);
                 AudioHandler.Instance.PlaySound(AudioSoundEnum.Reward);
                 ToastHandler.Instance.ToastHint(InnFoodHandler.Instance.manager.GetFoodSpriteByName(menuInfo.icon_key), toastStr, 5);
 
                 DialogBean dialogData = new DialogBean
                 {
-                    title = GameCommonInfo.GetUITextById(1048),
+                    title = TextHandler.Instance.manager.GetTextById(1048),
                     content = toastStr
                 };
                 AchievementDialogView achievementDialog = DialogHandler.Instance.CreateDialog<AchievementDialogView>(DialogEnum.Achievement, this, dialogData);

@@ -69,11 +69,11 @@ public abstract class BaseNormalSceneInit : BaseSceneInit, DialogView.IDialogCal
         DialogBean dialogBean = new DialogBean();
         if (GameTimeHandler.Instance.GetDayStatus() == GameTimeHandler.DayEnum.Work)
         {
-            dialogBean.content = GameCommonInfo.GetUITextById(3006);
+            dialogBean.content = TextHandler.Instance.manager.GetTextById(3006);
         }
         else if (GameTimeHandler.Instance.GetDayStatus() == GameTimeHandler.DayEnum.Rest)
         {
-            dialogBean.content = GameCommonInfo.GetUITextById(3014);
+            dialogBean.content = TextHandler.Instance.manager.GetTextById(3014);
         }
         DialogHandler.Instance.CreateDialog<DialogView>(DialogEnum.Text, this, dialogBean);
 

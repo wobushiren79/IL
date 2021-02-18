@@ -77,7 +77,7 @@ public class ItemGameBackpackEquipCpt : ItemGameBackpackCpt
     {
         if (listData == null || listData.Count == 0)
         {
-            ToastHandler.Instance.ToastHint(ivIcon.sprite, GameCommonInfo.GetUITextById(1065));
+            ToastHandler.Instance.ToastHint(ivIcon.sprite, TextHandler.Instance.manager.GetTextById(1065));
             return;
         }
         SkillInfoBean skillInfo = listData[0];
@@ -91,7 +91,7 @@ public class ItemGameBackpackEquipCpt : ItemGameBackpackCpt
         {
             //学习该技能
             characterData.attributes.LearnSkill(itemsInfoData.add_id);
-            string toastStr = string.Format(GameCommonInfo.GetUITextById(1064), characterData.baseInfo.name, itemsInfoData.name);
+            string toastStr = string.Format(TextHandler.Instance.manager.GetTextById(1064), characterData.baseInfo.name, itemsInfoData.name);
             ToastHandler.Instance.ToastHint(ivIcon.sprite, toastStr);
             RefreshItems(itemsInfoData.id, -1);
         }
@@ -108,7 +108,7 @@ public class ItemGameBackpackEquipCpt : ItemGameBackpackCpt
                 if (characterData.attributes.CheckLearnBook(itemsInfoData.id))
                 {
                     //已经学习过该图书
-                    string toastStr = string.Format(GameCommonInfo.GetUITextById(1009), characterData.baseInfo.name, itemsInfoData.name);
+                    string toastStr = string.Format(TextHandler.Instance.manager.GetTextById(1009), characterData.baseInfo.name, itemsInfoData.name);
                     ToastHandler.Instance.ToastHint(toastStr);
                 }
                 else
@@ -125,7 +125,7 @@ public class ItemGameBackpackEquipCpt : ItemGameBackpackCpt
                         }
                         else
                         {
-                            ToastHandler.Instance.ToastHint(GameCommonInfo.GetUITextById(1035));
+                            ToastHandler.Instance.ToastHint(TextHandler.Instance.manager.GetTextById(1035));
                         }
                     }
                     else
@@ -138,7 +138,7 @@ public class ItemGameBackpackEquipCpt : ItemGameBackpackCpt
                 if (characterData.attributes.CheckLearnSkills(itemsInfoData.add_id))
                 {
                     //已经学习过该技能
-                    string toastStr = string.Format(GameCommonInfo.GetUITextById(1063), characterData.baseInfo.name, itemsInfoData.name);
+                    string toastStr = string.Format(TextHandler.Instance.manager.GetTextById(1063), characterData.baseInfo.name, itemsInfoData.name);
                     ToastHandler.Instance.ToastHint(toastStr);
                 }
                 else
@@ -157,7 +157,7 @@ public class ItemGameBackpackEquipCpt : ItemGameBackpackCpt
                         int removePosition = UnityEngine.Random.Range(0, characterData.attributes.listSkills.Count);
                         characterData.attributes.listSkills.RemoveAt(removePosition);
                     }
-                    ToastHandler.Instance.ToastHint(characterData.baseInfo.name + GameCommonInfo.GetUITextById(1067));
+                    ToastHandler.Instance.ToastHint(characterData.baseInfo.name + TextHandler.Instance.manager.GetTextById(1067));
                     RefreshItems(itemsInfoData.id, -1);
                 }
                 break;
@@ -214,7 +214,7 @@ public class ItemGameBackpackEquipCpt : ItemGameBackpackCpt
         //学习该图书
         characterData.attributes.LearnBook(itemsInfoData.id);
         characterData.attributes.AddAttributes(itemsInfoData);
-        string toastStr = string.Format(GameCommonInfo.GetUITextById(1008), characterData.baseInfo.name, itemsInfoData.name);
+        string toastStr = string.Format(TextHandler.Instance.manager.GetTextById(1008), characterData.baseInfo.name, itemsInfoData.name);
         ToastHandler.Instance.ToastHint(ivIcon.sprite, toastStr);
         RefreshItems(itemsInfoData.id, -1);
     }

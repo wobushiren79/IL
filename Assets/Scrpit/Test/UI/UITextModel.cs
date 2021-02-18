@@ -15,9 +15,9 @@ public class UITextModel : BaseMVCModel
     /// 获取所有数据
     /// </summary>
     /// <returns></returns>
-    public List<TextInfoBean> GetAllData()
+    public List<UITextBean> GetAllData()
     {
-        List<TextInfoBean> listData = mUITextService.QueryAllData();
+        List<UITextBean> listData = mUITextService.QueryAllData();
         return listData;
     }
 

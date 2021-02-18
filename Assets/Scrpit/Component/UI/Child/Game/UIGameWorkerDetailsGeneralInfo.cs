@@ -25,7 +25,7 @@ public class UIGameWorkerDetailsGeneralInfo : UIGameStatisticsDetailsBase<UIGame
     public void AddWorkDays(long days)
     {
         Sprite spIcon = GetSpriteByName("time_wait_1_0");
-        CreateTextItem(spIcon, GameCommonInfo.GetUITextById(337), days + "");
+        CreateTextItem(spIcon, TextHandler.Instance.manager.GetTextById(337), days + "");
     }
 
     /// <summary>
@@ -35,6 +35,6 @@ public class UIGameWorkerDetailsGeneralInfo : UIGameStatisticsDetailsBase<UIGame
     public void AddDazeNumber(long number)
     {
         Sprite spIcon = GetSpriteByName("daze_1");
-        CreateTextItem(spIcon, GameCommonInfo.GetUITextById(349), number + "");
+        CreateTextItem(spIcon, TextHandler.Instance.manager.GetTextById(349), number + "");
     }
 }

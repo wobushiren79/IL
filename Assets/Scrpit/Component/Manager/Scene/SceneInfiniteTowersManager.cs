@@ -17,7 +17,7 @@ public class SceneInfiniteTowersManager : SceneBaseManager
     {
         foreach (SignForInfiniteTowersCpt itemSign in listSignForLayer)
         {
-            itemSign.SetData(layer + GameCommonInfo.GetUITextById(83));
+            itemSign.SetData(layer + TextHandler.Instance.manager.GetTextById(83));
         }
     }
 

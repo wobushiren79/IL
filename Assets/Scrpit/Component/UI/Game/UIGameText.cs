@@ -202,7 +202,7 @@ public class UIGameText : BaseUIComponent, DialogView.IDialogCallBack
         {
             otherName = userName.Substring(userName.Length - 1, 1);
             //男的叫哥哥  女的叫姐姐
-            string otherStr = sex == 1 ? GameCommonInfo.GetUITextById(99001) : GameCommonInfo.GetUITextById(99002);
+            string otherStr = sex == 1 ? TextHandler.Instance.manager.GetTextById(99001) : TextHandler.Instance.manager.GetTextById(99002);
             otherName += otherStr;
         }
         content = content.Replace(GameSubstitutionInfo.User_Other_Name, otherName);
@@ -238,7 +238,7 @@ public class UIGameText : BaseUIComponent, DialogView.IDialogCallBack
                 //如果是对话选项
                 if (textData.GetTextType() == TextInfoTypeEnum.Talk)
                 {
-                    if (textData.content.Equals(GameCommonInfo.GetUITextById(99102)))
+                    if (textData.content.Equals(TextHandler.Instance.manager.GetTextById(99102)))
                     {
                         //对话
                         TextInfoHandler.Instance.manager.listTextData = RandomUtil.GetRandomDataByDictionary(TextInfoHandler.Instance.manager.mapTalkNormalData);
@@ -253,17 +253,17 @@ public class UIGameText : BaseUIComponent, DialogView.IDialogCallBack
                         characterFavorability.AddTalkNumber(1);
                     }
                     //退出
-                    else if (textData.content.Equals(GameCommonInfo.GetUITextById(99103)))
+                    else if (textData.content.Equals(TextHandler.Instance.manager.GetTextById(99103)))
                     {
                         NextText();
                     }
                     //招募
-                    else if (textData.content.Equals(GameCommonInfo.GetUITextById(99104)))
+                    else if (textData.content.Equals(TextHandler.Instance.manager.GetTextById(99104)))
                     {
 
                         if (gameData.CheckIsMaxWorker())
                         {
-                            ToastHandler.Instance.ToastHint(GameCommonInfo.GetUITextById(1051));
+                            ToastHandler.Instance.ToastHint(TextHandler.Instance.manager.GetTextById(1051));
                         }
                         else
                         {
@@ -272,56 +272,56 @@ public class UIGameText : BaseUIComponent, DialogView.IDialogCallBack
                         }
                     }
                     //送礼
-                    else if (textData.content.Equals(GameCommonInfo.GetUITextById(99105)))
+                    else if (textData.content.Equals(TextHandler.Instance.manager.GetTextById(99105)))
                     {
                         DialogBean dialogData = new DialogBean();
                         PickForItemsDialogView pickForItemsDialog = DialogHandler.Instance.CreateDialog<PickForItemsDialogView>(DialogEnum.PickForItems, this, dialogData);
                         pickForItemsDialog.SetData(null, ItemsSelectionDialogView.SelectionTypeEnum.Gift);
                     }
                     //换取公会勋章
-                    else if (textData.content.Equals(GameCommonInfo.GetUITextById(99201)))
+                    else if (textData.content.Equals(TextHandler.Instance.manager.GetTextById(99201)))
                     {
                         //对话
                         TextInfoHandler.Instance.manager.listTextData = RandomUtil.GetRandomDataByDictionary(TextInfoHandler.Instance.manager.mapTalkExchangeData);
                         NextText(1);
                     }
                     //换取奖杯
-                    else if (textData.content.Equals(GameCommonInfo.GetUITextById(99202)))
+                    else if (textData.content.Equals(TextHandler.Instance.manager.GetTextById(99202)))
                     {
                         //对话
                         TextInfoHandler.Instance.manager.listTextData = RandomUtil.GetRandomDataByDictionary(TextInfoHandler.Instance.manager.mapTalkExchangeData);
                         NextText(1);
                     }
                     //换取无尽之塔装备
-                    else if (textData.content.Equals(GameCommonInfo.GetUITextById(99203)))
+                    else if (textData.content.Equals(TextHandler.Instance.manager.GetTextById(99203)))
                     {
                         //对话
                         TextInfoHandler.Instance.manager.listTextData = RandomUtil.GetRandomDataByDictionary(TextInfoHandler.Instance.manager.mapTalkExchangeData);
                         NextText(1);
                     }
                     //换取无尽之塔道具
-                    else if (textData.content.Equals(GameCommonInfo.GetUITextById(99204)))
+                    else if (textData.content.Equals(TextHandler.Instance.manager.GetTextById(99204)))
                     {
                         //对话
                         TextInfoHandler.Instance.manager.listTextData = RandomUtil.GetRandomDataByDictionary(TextInfoHandler.Instance.manager.mapTalkExchangeData);
                         NextText(1);
                     }
                     //求婚
-                    else if (textData.content.Equals(GameCommonInfo.GetUITextById(99205)))
+                    else if (textData.content.Equals(TextHandler.Instance.manager.GetTextById(99205)))
                     {
                         gameData.CheckHasItems(99900021, out bool hasItems, out long number);
                         //判断是否有信物
                         if (hasItems)
                         {
                             DialogBean dialogData = new DialogBean();
-                            dialogData.content = string.Format(GameCommonInfo.GetUITextById(3121), mTalkNpcInfo.name);
+                            dialogData.content = string.Format(TextHandler.Instance.manager.GetTextById(3121), mTalkNpcInfo.name);
                             DialogHandler.Instance.CreateDialog<DialogView>(DialogEnum.Normal, this, dialogData);
                             NextText(textData.next_order);
                         }
                         else
                         {
                             ItemsInfoBean itemsInfo = GameItemsHandler.Instance.manager.GetItemsById(99900021);
-                            ToastHandler.Instance.ToastHint(string.Format(GameCommonInfo.GetUITextById(5023), itemsInfo.name, "1"));
+                            ToastHandler.Instance.ToastHint(string.Format(TextHandler.Instance.manager.GetTextById(5023), itemsInfo.name, "1"));
                         }
                     }
                 }
@@ -409,7 +409,7 @@ public class UIGameText : BaseUIComponent, DialogView.IDialogCallBack
             //减去信物
             gameData.AddItemsNumber(99900021,-1);
             //弹窗提示
-            ToastHandler.Instance.ToastHint(GameCommonInfo.GetUITextById(1341));
+            ToastHandler.Instance.ToastHint(TextHandler.Instance.manager.GetTextById(1341));
             //设置3天后结婚
             FamilyDataBean familyData = gameData.GetFamilyData();
             familyData.timeForMarry = GameTimeHandler.Instance.GetAfterDay(3);

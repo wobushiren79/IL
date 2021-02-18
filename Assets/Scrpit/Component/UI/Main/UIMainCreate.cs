@@ -198,16 +198,16 @@ public class UIMainCreate : BaseUIComponent,
 
         if (CheckUtil.StringIsNull(etInnName.text))
         {
-            ToastHandler.Instance.ToastHint(GameCommonInfo.GetUITextById(1000));
+            ToastHandler.Instance.ToastHint(TextHandler.Instance.manager.GetTextById(1000));
             return;
         }
         if (CheckUtil.StringIsNull(etUserName.text))
         {
-            ToastHandler.Instance.ToastHint(GameCommonInfo.GetUITextById(1001));
+            ToastHandler.Instance.ToastHint(TextHandler.Instance.manager.GetTextById(1001));
             return;
         }
         DialogBean dialogData = new DialogBean();
-        dialogData.content = GameCommonInfo.GetUITextById(3012);
+        dialogData.content = TextHandler.Instance.manager.GetTextById(3012);
         DialogHandler.Instance.CreateDialog<DialogView>(DialogEnum.Normal, this, dialogData);
     }
 

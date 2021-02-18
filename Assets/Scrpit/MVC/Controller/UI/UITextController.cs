@@ -3,9 +3,9 @@ using UnityEditor;
 using System.Collections.Generic;
 using System;
 
-public class UITextController : BaseMVCController<UITextModel,IUITextView>
+public class UITextController : BaseMVCController<UITextModel, IUITextView>
 {
-    private Dictionary<long, TextInfoBean> mMapData;
+    private Dictionary<long, UITextBean> dicText = new Dictionary<long, UITextBean>();
 
     public UITextController(BaseMonoBehaviour content, IUITextView view) : base(content, view)
     {
@@ -23,15 +23,16 @@ public class UITextController : BaseMVCController<UITextModel,IUITextView>
     /// <summary>
     /// 刷新数据
     /// </summary>
-    public void RefreshData()
+    public void GetAllData()
     {
-        mMapData = new Dictionary<long, TextInfoBean>();
-        List<TextInfoBean> listData = GetModel().GetAllData();
+        dicText = new Dictionary<long, UITextBean>();
+        List<UITextBean> listData = GetModel().GetAllData();
         if (listData == null)
             return;
-        foreach (TextInfoBean itemData in listData)
+        for (int i = 0; i < listData.Count; i++)
         {
-            mMapData.Add(itemData.id, itemData);
+            UITextBean itemData = listData[i];
+            dicText.Add(itemData.id, itemData);
         }
     }
 
@@ -42,16 +43,17 @@ public class UITextController : BaseMVCController<UITextModel,IUITextView>
     /// <returns></returns>
     public string GetTextById(long id)
     {
-        if (mMapData == null)
+        if (dicText == null)
             return null;
-        if (mMapData.TryGetValue(id,out TextInfoBean textInfo))
+        if (dicText.TryGetValue(id, out UITextBean value))
         {
-            return textInfo.content;
+            return value.content;
         }
         else
         {
             LogUtil.LogError("没有找到ID为" + id + "的UI内容");
-            return "???";
+            return null;
         }
     }
+
 }

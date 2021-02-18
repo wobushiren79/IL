@@ -86,7 +86,7 @@ public class UIMainCreateAttributesChange : BaseUIChildComponent<UIMainCreate>, 
     {
         if (tvTitle != null)
         {
-            tvTitle.text = string.Format(GameCommonInfo.GetUITextById(77), " "+ pointsForResidue );
+            tvTitle.text = string.Format(TextHandler.Instance.manager.GetTextById(77), " "+ pointsForResidue );
         }
     }
 

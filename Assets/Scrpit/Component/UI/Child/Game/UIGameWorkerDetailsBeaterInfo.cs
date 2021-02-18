@@ -28,7 +28,7 @@ public class UIGameWorkerDetailsBeaterInfo : UIGameStatisticsDetailsBase<UIGameW
     public void AddFightNumber(long number)
     {
         Sprite spIcon = GetSpriteByName("worker_beater_pro_2");
-        CreateTextItem(spIcon,GameCommonInfo.GetUITextById(327), number+"");
+        CreateTextItem(spIcon,TextHandler.Instance.manager.GetTextById(327), number+"");
     }
 
     /// <summary>
@@ -38,7 +38,7 @@ public class UIGameWorkerDetailsBeaterInfo : UIGameStatisticsDetailsBase<UIGameW
     public void AddFightTime(float time)
     {
         Sprite spIcon = GetSpriteByName("hourglass_1");
-        CreateTextItem(spIcon, GameCommonInfo.GetUITextById(328), time + GameCommonInfo.GetUITextById(38));
+        CreateTextItem(spIcon, TextHandler.Instance.manager.GetTextById(328), time + TextHandler.Instance.manager.GetTextById(38));
     }
 
     /// <summary>
@@ -48,7 +48,7 @@ public class UIGameWorkerDetailsBeaterInfo : UIGameStatisticsDetailsBase<UIGameW
     public void AddFightWinNumber(long number)
     {
         Sprite spIcon = GetSpriteByName("expression_love");
-        CreateTextItem(spIcon, GameCommonInfo.GetUITextById(329), number + "");
+        CreateTextItem(spIcon, TextHandler.Instance.manager.GetTextById(329), number + "");
     }
 
     /// <summary>
@@ -58,7 +58,7 @@ public class UIGameWorkerDetailsBeaterInfo : UIGameStatisticsDetailsBase<UIGameW
     public void AddFightLoseNumber(long number)
     {
         Sprite spIcon = GetSpriteByName("expression_dead");
-        CreateTextItem(spIcon, GameCommonInfo.GetUITextById(330), number + "");
+        CreateTextItem(spIcon, TextHandler.Instance.manager.GetTextById(330), number + "");
     }
 
 
@@ -69,6 +69,6 @@ public class UIGameWorkerDetailsBeaterInfo : UIGameStatisticsDetailsBase<UIGameW
     public void AddRestTime(float time)
     {
         Sprite spIcon = GetSpriteByName("hourglass_1");
-        CreateTextItem(spIcon, GameCommonInfo.GetUITextById(331), time + GameCommonInfo.GetUITextById(38));
+        CreateTextItem(spIcon, TextHandler.Instance.manager.GetTextById(331), time + TextHandler.Instance.manager.GetTextById(38));
     }
 }

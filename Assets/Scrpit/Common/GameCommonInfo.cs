@@ -20,7 +20,6 @@ public class GameCommonInfo
     public static ScenesChangeBean ScenesChangeData = new ScenesChangeBean();
 
     private static GameConfigController mGameConfigController;
-    private static UITextController mUITextController;
 
     public static BaseDataController baseDataController;
 
@@ -39,7 +38,6 @@ public class GameCommonInfo
         GameConfig = new GameConfigBean();
         mGameConfigController = new GameConfigController(null, new GameConfigCallBack());
         baseDataController = new BaseDataController(null, null);
-        mUITextController = new UITextController(null, null);
         mGameConfigController.GetGameConfigData();
         baseDataController.InitBaseData();
         SpriteAtlasManager.atlasRequested += RequestAtlas;
@@ -58,11 +56,6 @@ public class GameCommonInfo
     public static void InitRandomSeed()
     {
         Random.InitState(RandomSeed);
-    }
-
-    public static string GetUITextById(long id)
-    {
-        return mUITextController.GetTextById(id);
     }
 
     /// <summary>
@@ -98,7 +91,6 @@ public class GameCommonInfo
         public void GetGameConfigSuccess(GameConfigBean configBean)
         {
             GameConfig = configBean;
-            mUITextController.RefreshData();
         }
 
         public void SetGameConfigFail()

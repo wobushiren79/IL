@@ -103,37 +103,37 @@ public class NpcAICustomerCpt : BaseNpcAI
         switch (customerIntent)
         {
             case CustomerIntentEnum.Walk:
-                intentStr = GameCommonInfo.GetUITextById(151);
+                intentStr = TextHandler.Instance.manager.GetTextById(151);
                 break;
             case CustomerIntentEnum.Want:
-                intentStr = GameCommonInfo.GetUITextById(152);
+                intentStr = TextHandler.Instance.manager.GetTextById(152);
                 break;
             case CustomerIntentEnum.WaitSeat:
-                intentStr = GameCommonInfo.GetUITextById(153);
+                intentStr = TextHandler.Instance.manager.GetTextById(153);
                 break;
             case CustomerIntentEnum.GotoSeat:
-                intentStr = GameCommonInfo.GetUITextById(154);
+                intentStr = TextHandler.Instance.manager.GetTextById(154);
                 break;
             case CustomerIntentEnum.WaitFood:
-                intentStr = GameCommonInfo.GetUITextById(155);
+                intentStr = TextHandler.Instance.manager.GetTextById(155);
                 break;
             case CustomerIntentEnum.Eatting:
-                intentStr = GameCommonInfo.GetUITextById(156);
+                intentStr = TextHandler.Instance.manager.GetTextById(156);
                 break;
             case CustomerIntentEnum.GotoPay:
-                intentStr = GameCommonInfo.GetUITextById(157);
+                intentStr = TextHandler.Instance.manager.GetTextById(157);
                 break;
             case CustomerIntentEnum.WaitPay:
-                intentStr = GameCommonInfo.GetUITextById(158);
+                intentStr = TextHandler.Instance.manager.GetTextById(158);
                 break;
             case CustomerIntentEnum.Pay:
-                intentStr = GameCommonInfo.GetUITextById(159);
+                intentStr = TextHandler.Instance.manager.GetTextById(159);
                 break;
             case CustomerIntentEnum.Leave:
-                intentStr = GameCommonInfo.GetUITextById(160);
+                intentStr = TextHandler.Instance.manager.GetTextById(160);
                 break;
             case CustomerIntentEnum.WaitAccost:
-                intentStr = GameCommonInfo.GetUITextById(161);
+                intentStr = TextHandler.Instance.manager.GetTextById(161);
                 break;
         }
         return customerIntent;
@@ -183,7 +183,7 @@ public class NpcAICustomerCpt : BaseNpcAI
         {
             //如果没有菜品出售 心情直接降100 
             ChangeMood(-99999);
-            characterShoutCpt.Shout(GameCommonInfo.GetUITextById(13002));
+            characterShoutCpt.Shout(TextHandler.Instance.manager.GetTextById(13002));
         }
         else
         {

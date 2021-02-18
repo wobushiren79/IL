@@ -286,7 +286,7 @@ public class UIGameSetting : BaseUIComponent, DropdownView.ICallBack, ProgressVi
         AudioHandler.Instance.PlaySound(AudioSoundEnum.ButtonForNormal);
         DialogBean dialogBean = new DialogBean();
         dialogBean.dialogPosition = 1;
-        dialogBean.content = GameCommonInfo.GetUITextById(3081);
+        dialogBean.content = TextHandler.Instance.manager.GetTextById(3081);
         DialogHandler.Instance.CreateDialog<DialogView>(DialogEnum.Normal, this, dialogBean);
     }
 
@@ -298,7 +298,7 @@ public class UIGameSetting : BaseUIComponent, DropdownView.ICallBack, ProgressVi
         AudioHandler.Instance.PlaySound(AudioSoundEnum.ButtonForNormal);
         DialogBean dialogBean = new DialogBean();
         dialogBean.dialogPosition = 2;
-        dialogBean.content = GameCommonInfo.GetUITextById(3082);
+        dialogBean.content = TextHandler.Instance.manager.GetTextById(3082);
         DialogHandler.Instance.CreateDialog<DialogView>(DialogEnum.Normal, this, dialogBean);
     }
 
@@ -310,7 +310,7 @@ public class UIGameSetting : BaseUIComponent, DropdownView.ICallBack, ProgressVi
         AudioHandler.Instance.PlaySound(AudioSoundEnum.ButtonForNormal);
         DialogBean dialogBean = new DialogBean();
         dialogBean.dialogPosition = 3;
-        dialogBean.content = GameCommonInfo.GetUITextById(3083);
+        dialogBean.content = TextHandler.Instance.manager.GetTextById(3083);
         DialogHandler.Instance.CreateDialog<DialogView>(DialogEnum.Normal, this, dialogBean);
     }
 

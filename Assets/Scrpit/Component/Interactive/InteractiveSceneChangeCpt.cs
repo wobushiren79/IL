@@ -30,7 +30,7 @@ public class InteractiveSceneChangeCpt : BaseInteractiveCpt
                     }
                     else
                     {
-                        ToastHandler.Instance.ToastHint(GameCommonInfo.GetUITextById(1321));
+                        ToastHandler.Instance.ToastHint(TextHandler.Instance.manager.GetTextById(1321));
                     }
                 }
                 else

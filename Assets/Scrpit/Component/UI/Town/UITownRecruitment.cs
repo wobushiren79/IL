@@ -36,7 +36,7 @@ public class UITownRecruitment : UIBaseOne, DialogView.IDialogCallBack
             btFindWorker.onClick.AddListener(FindWorkerByMoney);
         if (popupPromptButton != null)
         {
-            popupPromptButton.SetContent(GameCommonInfo.GetUITextById(271));
+            popupPromptButton.SetContent(TextHandler.Instance.manager.GetTextById(271));
         }
     }
 
@@ -121,14 +121,14 @@ public class UITownRecruitment : UIBaseOne, DialogView.IDialogCallBack
         GameDataBean gameData = GameDataHandler.Instance.manager.GetGameData();
         if (gameData.listWorkerCharacter.Count >= gameData.workerNumberLimit)
         {
-            ToastHandler.Instance.ToastHint(GameCommonInfo.GetUITextById(1051));
+            ToastHandler.Instance.ToastHint(TextHandler.Instance.manager.GetTextById(1051));
             return;
         }
         pickMoneyL = 0;
         pickMoneyM = 0;
         pickMoneyS = 0;
         DialogBean dialogData = new DialogBean();
-        dialogData.title = GameCommonInfo.GetUITextById(3062);
+        dialogData.title = TextHandler.Instance.manager.GetTextById(3062);
         PickForMoneyDialogView pickForMoneyDialog = DialogHandler.Instance.CreateDialog<PickForMoneyDialogView>(DialogEnum.PickForMoney, this, dialogData);
         pickForMoneyDialog.SetData(1, 1, 100);
         pickForMoneyDialog.SetMaxMoney(99999, 99999, 99999);
@@ -160,7 +160,7 @@ public class UITownRecruitment : UIBaseOne, DialogView.IDialogCallBack
                 GameDataBean gameData = GameDataHandler.Instance.manager.GetGameData();
                 FindCharacterDialogView findCharacterDialog = dialogView as FindCharacterDialogView;
                 gameData.listWorkerCharacter.Add(findCharacterDialog.characterData);
-                ToastHandler.Instance.ToastHint(string.Format(GameCommonInfo.GetUITextById(1053), findCharacterDialog.characterData.baseInfo.name));
+                ToastHandler.Instance.ToastHint(string.Format(TextHandler.Instance.manager.GetTextById(1053), findCharacterDialog.characterData.baseInfo.name));
             }
         }
     }
@@ -177,7 +177,7 @@ public class UITownRecruitment : UIBaseOne, DialogView.IDialogCallBack
         GameDataBean gameData = GameDataHandler.Instance.manager.GetGameData();
         if (!gameData.HasEnoughMoney(pickMoneyL, pickMoneyM, pickMoneyS))
         {
-            ToastHandler.Instance.ToastHint(GameCommonInfo.GetUITextById(1005));
+            ToastHandler.Instance.ToastHint(TextHandler.Instance.manager.GetTextById(1005));
             return;
         }
         gameData.PayMoney(pickMoneyL, pickMoneyM, pickMoneyS);

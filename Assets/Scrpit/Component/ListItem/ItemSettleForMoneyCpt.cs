@@ -27,13 +27,13 @@ public class ItemSettleForMoneyCpt : ItemGameBaseCpt
             //收入
             if (status == 1)
             {
-                tvStatus.text = GameCommonInfo.GetUITextById(181);
+                tvStatus.text = TextHandler.Instance.manager.GetTextById(181);
                 tvStatus.color = Color.green;
             }
             //支出
             else if (status == 0)
             {
-                tvStatus.text = GameCommonInfo.GetUITextById(182);
+                tvStatus.text = TextHandler.Instance.manager.GetTextById(182);
                 tvStatus.color = Color.red;
             }
         }

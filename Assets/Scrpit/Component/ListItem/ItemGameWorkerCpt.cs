@@ -63,15 +63,15 @@ public class ItemGameWorkerCpt : ItemGameBaseCpt, DialogView.IDialogCallBack, Wo
     {
         if (pbName != null)
         {
-            pbName.SetContent(GameCommonInfo.GetUITextById(61));
+            pbName.SetContent(TextHandler.Instance.manager.GetTextById(61));
         }
         if (pbPrice != null)
         {
-            pbPrice.SetContent(GameCommonInfo.GetUITextById(11002));
+            pbPrice.SetContent(TextHandler.Instance.manager.GetTextById(11002));
         }
         if (pbLoyal != null)
         {
-            pbLoyal.SetContent(GameCommonInfo.GetUITextById(11003));
+            pbLoyal.SetContent(TextHandler.Instance.manager.GetTextById(11003));
         }
         if (pbCook != null)
         {
@@ -259,19 +259,19 @@ public class ItemGameWorkerCpt : ItemGameBaseCpt, DialogView.IDialogCallBack, Wo
         AudioHandler.Instance.PlaySound(AudioSoundEnum.ButtonForNormal);
         if (GameTimeHandler.Instance.GetDayStatus() == GameTimeHandler.DayEnum.Work)
         {
-            ToastHandler.Instance.ToastHint(GameCommonInfo.GetUITextById(1082));
+            ToastHandler.Instance.ToastHint(TextHandler.Instance.manager.GetTextById(1082));
         }
         else
         {
             if (characterData.baseInfo.GetWorkerStatus() == WorkerStatusEnum.Work || characterData.baseInfo.GetWorkerStatus() == WorkerStatusEnum.Rest)
             {
                 DialogBean dialogData = new DialogBean();
-                dialogData.content = string.Format(GameCommonInfo.GetUITextById(3063), characterData.baseInfo.name);
+                dialogData.content = string.Format(TextHandler.Instance.manager.GetTextById(3063), characterData.baseInfo.name);
                 DialogHandler.Instance.CreateDialog<DialogView>(DialogEnum.Normal, this, dialogData);
             }
             else
             {
-                ToastHandler.Instance.ToastHint(GameCommonInfo.GetUITextById(1083));
+                ToastHandler.Instance.ToastHint(TextHandler.Instance.manager.GetTextById(1083));
             }
         }
     }
@@ -283,7 +283,7 @@ public class ItemGameWorkerCpt : ItemGameBaseCpt, DialogView.IDialogCallBack, Wo
     {
         AudioHandler.Instance.PlaySound(AudioSoundEnum.ButtonForNormal);
         DialogBean dialogData = new DialogBean();
-        // dialogData.content = string.Format(GameCommonInfo.GetUITextById(3063), characterData.baseInfo.name);
+        // dialogData.content = string.Format(TextHandler.Instance.manager.GetTextById(3063), characterData.baseInfo.name);
         PickForItemsDialogView dialogView = DialogHandler.Instance.CreateDialog<PickForItemsDialogView>(DialogEnum.PickForItems, this, dialogData);
         dialogView.SetData(null, ItemsSelectionDialogView.SelectionTypeEnum.Gift);
         dialogView.SetSubmitDestroy(false);
@@ -468,7 +468,7 @@ public class ItemGameWorkerCpt : ItemGameBaseCpt, DialogView.IDialogCallBack, Wo
                     if (GameTimeHandler.Instance.GetDayStatus() == GameTimeHandler.DayEnum.Rest)
                     {
                         tvStatus.color = Color.green;
-                        workerStatusStr = GameCommonInfo.GetUITextById(282);
+                        workerStatusStr = TextHandler.Instance.manager.GetTextById(282);
                     }
                     else if (GameTimeHandler.Instance.GetDayStatus() == GameTimeHandler.DayEnum.Work)
                     {
@@ -509,7 +509,7 @@ public class ItemGameWorkerCpt : ItemGameBaseCpt, DialogView.IDialogCallBack, Wo
             //刷新UI
             SetData(characterData);
             //提示
-            ToastHandler.Instance.ToastHint(ivLoyal.sprite, string.Format(GameCommonInfo.GetUITextById(1132), characterData.baseInfo.name, addLoyal + ""));
+            ToastHandler.Instance.ToastHint(ivLoyal.sprite, string.Format(TextHandler.Instance.manager.GetTextById(1132), characterData.baseInfo.name, addLoyal + ""));
             pickForItems.RefreshUI();
         }
         else
@@ -541,7 +541,7 @@ public class ItemGameWorkerCpt : ItemGameBaseCpt, DialogView.IDialogCallBack, Wo
             if (characterData.equips.shoesTFId != 0)
                 gameData.AddItemsNumber(characterData.equips.shoesTFId, 1);
 
-            ToastHandler.Instance.ToastHint(string.Format(GameCommonInfo.GetUITextById(1081), characterData.baseInfo.name));
+            ToastHandler.Instance.ToastHint(string.Format(TextHandler.Instance.manager.GetTextById(1081), characterData.baseInfo.name));
             gameData.RemoveWorker(characterData);
 
             transform.DOScale(Vector3.zero, 0.3f).OnComplete(delegate

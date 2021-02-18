@@ -88,19 +88,19 @@ public class PopupRecordShow : PopupShowView
             switch ((SeasonsEnum)month)
             {
                 case SeasonsEnum.Spring:
-                    monthStr = GameCommonInfo.GetUITextById(33);
+                    monthStr = TextHandler.Instance.manager.GetTextById(33);
                     break;
                 case SeasonsEnum.Summer:
-                    monthStr = GameCommonInfo.GetUITextById(34);
+                    monthStr = TextHandler.Instance.manager.GetTextById(34);
                     break;
                 case SeasonsEnum.Autumn:
-                    monthStr = GameCommonInfo.GetUITextById(35);
+                    monthStr = TextHandler.Instance.manager.GetTextById(35);
                     break;
                 case SeasonsEnum.Winter:
-                    monthStr = GameCommonInfo.GetUITextById(36);
+                    monthStr = TextHandler.Instance.manager.GetTextById(36);
                     break;
             }
-            tvDate.text = year + GameCommonInfo.GetUITextById(29) + monthStr + GameCommonInfo.GetUITextById(30) + day + GameCommonInfo.GetUITextById(31);
+            tvDate.text = year + TextHandler.Instance.manager.GetTextById(29) + monthStr + TextHandler.Instance.manager.GetTextById(30) + day + TextHandler.Instance.manager.GetTextById(31);
         }
     }
 
@@ -118,11 +118,11 @@ public class PopupRecordShow : PopupShowView
             case DayEnum.None:
                 break;
             case DayEnum.Work:
-                statusStr = GameCommonInfo.GetUITextById(72);
+                statusStr = TextHandler.Instance.manager.GetTextById(72);
                 tvStatus.color = Color.green;
                 break;
             case DayEnum.Rest:
-                statusStr = GameCommonInfo.GetUITextById(73);
+                statusStr = TextHandler.Instance.manager.GetTextById(73);
                 tvStatus.color = Color.red;
                 break;
         }
@@ -282,7 +282,7 @@ public class PopupRecordShow : PopupShowView
             GameObject objItem = Instantiate(objShowContainer, objShowItem);
             ItemPopupRecordCpt itemCpt = objItem.GetComponent<ItemPopupRecordCpt>();
             Sprite spIcon = IconDataHandler.Instance.manager.GetIconSpriteByName("ach_sellmenunumber_2");
-            itemCpt.SetData(spIcon, GameCommonInfo.GetUITextById(332), 0, priceL, priceM, priceS);
+            itemCpt.SetData(spIcon, TextHandler.Instance.manager.GetTextById(332), 0, priceL, priceM, priceS);
         }
         else
         {
@@ -311,7 +311,7 @@ public class PopupRecordShow : PopupShowView
             GameObject objItem = Instantiate(objShowContainer, objShowItem);
             ItemPopupRecordCpt itemCpt = objItem.GetComponent<ItemPopupRecordCpt>();
             Sprite spIcon = IconDataHandler.Instance.manager.GetIconSpriteByName("worker_waiter_bed_pro_2");
-            itemCpt.SetData(spIcon, GameCommonInfo.GetUITextById(351), 0, priceL, priceM, priceS);
+            itemCpt.SetData(spIcon, TextHandler.Instance.manager.GetTextById(351), 0, priceL, priceM, priceS);
         }
     }
 }

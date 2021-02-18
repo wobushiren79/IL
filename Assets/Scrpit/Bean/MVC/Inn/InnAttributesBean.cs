@@ -35,32 +35,32 @@ public class InnAttributesBean
         switch (levelTitle)
         {
             case 1:
-                levelTitleStr = GameCommonInfo.GetUITextById(2007);
+                levelTitleStr = TextHandler.Instance.manager.GetTextById(2007);
                 break;
             case 2:
-                levelTitleStr = GameCommonInfo.GetUITextById(2008);
+                levelTitleStr = TextHandler.Instance.manager.GetTextById(2008);
                 break;
             case 3:
-                levelTitleStr = GameCommonInfo.GetUITextById(2009);
+                levelTitleStr = TextHandler.Instance.manager.GetTextById(2009);
                 break;
         }
 
         switch (levelStar)
         {
             case 1:
-                levelStarStr = GameCommonInfo.GetUITextById(2010);
+                levelStarStr = TextHandler.Instance.manager.GetTextById(2010);
                 break;
             case 2:
-                levelStarStr = GameCommonInfo.GetUITextById(2011);
+                levelStarStr = TextHandler.Instance.manager.GetTextById(2011);
                 break;
             case 3:
-                levelStarStr = GameCommonInfo.GetUITextById(2012);
+                levelStarStr = TextHandler.Instance.manager.GetTextById(2012);
                 break;
             case 4:
-                levelStarStr = GameCommonInfo.GetUITextById(2013);
+                levelStarStr = TextHandler.Instance.manager.GetTextById(2013);
                 break;
             case 5:
-                levelStarStr = GameCommonInfo.GetUITextById(2014);
+                levelStarStr = TextHandler.Instance.manager.GetTextById(2014);
                 break;
         }
         return levelTitleStr + levelStarStr;

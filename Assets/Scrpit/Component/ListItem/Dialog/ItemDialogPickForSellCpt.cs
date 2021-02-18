@@ -129,7 +129,7 @@ public class ItemDialogPickForSellCpt : BaseMonoBehaviour, DialogView.IDialogCal
     {
         if (tvOwn == null)
             return;
-        tvOwn.text = (GameCommonInfo.GetUITextById(4001) + "\n" + itemData.itemNumber);
+        tvOwn.text = (TextHandler.Instance.manager.GetTextById(4001) + "\n" + itemData.itemNumber);
     }
 
     /// <summary>
@@ -167,7 +167,7 @@ public class ItemDialogPickForSellCpt : BaseMonoBehaviour, DialogView.IDialogCal
     public void OnClickForSell()
     {
         DialogBean dialogData = new DialogBean();
-        dialogData.content = string.Format(GameCommonInfo.GetUITextById(3102), tvName.text, sellNumber + "");
+        dialogData.content = string.Format(TextHandler.Instance.manager.GetTextById(3102), tvName.text, sellNumber + "");
         DialogHandler.Instance.CreateDialog<DialogView>(DialogEnum.Normal, this, dialogData);
     }
 

@@ -74,31 +74,31 @@ public class WeatherTypeEnumTools
             case WeatherTypeEnum.Sunny:
                 break;
             case WeatherTypeEnum.Cloudy:
-                name = GameCommonInfo.GetUITextById(701);
+                name = TextHandler.Instance.manager.GetTextById(701);
                 break;
             case WeatherTypeEnum.LightRain:
-                name = GameCommonInfo.GetUITextById(702);
+                name = TextHandler.Instance.manager.GetTextById(702);
                 break;
             case WeatherTypeEnum.Rain:
-                name = GameCommonInfo.GetUITextById(703);
+                name = TextHandler.Instance.manager.GetTextById(703);
                 break;
             case WeatherTypeEnum.Thunderstorm:
-                name = GameCommonInfo.GetUITextById(704);
+                name = TextHandler.Instance.manager.GetTextById(704);
                 break;
             case WeatherTypeEnum.Fog:
-                name = GameCommonInfo.GetUITextById(705);
+                name = TextHandler.Instance.manager.GetTextById(705);
                 break;
             case WeatherTypeEnum.LightSnow:
-                name = GameCommonInfo.GetUITextById(706);
+                name = TextHandler.Instance.manager.GetTextById(706);
                 break;
             case WeatherTypeEnum.Snow:
-                name = GameCommonInfo.GetUITextById(707);
+                name = TextHandler.Instance.manager.GetTextById(707);
                 break;
             case WeatherTypeEnum.Wind:
-                name = GameCommonInfo.GetUITextById(708);
+                name = TextHandler.Instance.manager.GetTextById(708);
                 break;
             case WeatherTypeEnum.Defoliation:
-                name = GameCommonInfo.GetUITextById(709);
+                name = TextHandler.Instance.manager.GetTextById(709);
                 break;
         }
         return name;

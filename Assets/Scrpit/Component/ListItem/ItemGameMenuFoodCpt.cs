@@ -52,13 +52,13 @@ public class ItemGameMenuFoodCpt : ItemGameBaseCpt, IRadioButtonCallBack, Dialog
             rbShow.SetCallBack(this);
         if (pbReputation != null)
         {
-            pbReputation.SetContent(GameCommonInfo.GetUITextById(100));
+            pbReputation.SetContent(TextHandler.Instance.manager.GetTextById(100));
         }
         if (btResearch != null)
             btResearch.onClick.AddListener(OnClickResearch);
         if (btResearchCancel != null)
             btResearchCancel.onClick.AddListener(OnClickResearchCancel);
-        stringForNoIng = GameCommonInfo.GetUITextById(13001);
+        stringForNoIng = TextHandler.Instance.manager.GetTextById(13001);
     }
 
 
@@ -131,12 +131,12 @@ public class ItemGameMenuFoodCpt : ItemGameBaseCpt, IRadioButtonCallBack, Dialog
     {
         if (popupForResearch == null)
             return;
-        string content = GameCommonInfo.GetUITextById(285);
+        string content = TextHandler.Instance.manager.GetTextById(285);
 
         SortedList<IngredientsEnum, long> listIng = menuOwn.GetResearchIngredients(data);
         if (listIng != null && listIng.Count != 0)
         {
-            content += (" " + GameCommonInfo.GetUITextById(286) + "\n");
+            content += (" " + TextHandler.Instance.manager.GetTextById(286) + "\n");
         }
         foreach (var item in listIng)
         {
@@ -230,14 +230,14 @@ public class ItemGameMenuFoodCpt : ItemGameBaseCpt, IRadioButtonCallBack, Dialog
             if (rbShow != null)
                 rbShow.ChangeStates(RadioButtonView.RadioButtonStatus.Selected);
             if (tvShow != null)
-                tvShow.text = GameCommonInfo.GetUITextById(2021);
+                tvShow.text = TextHandler.Instance.manager.GetTextById(2021);
         }
         else
         {
             if (rbShow != null)
                 rbShow.ChangeStates(RadioButtonView.RadioButtonStatus.Unselected);
             if (tvShow != null)
-                tvShow.text = GameCommonInfo.GetUITextById(2020);
+                tvShow.text = TextHandler.Instance.manager.GetTextById(2020);
         }
     }
 
@@ -315,7 +315,7 @@ public class ItemGameMenuFoodCpt : ItemGameBaseCpt, IRadioButtonCallBack, Dialog
 
         DialogBean dialogData = new DialogBean
         {
-            title = GameCommonInfo.GetUITextById(3071)
+            title = TextHandler.Instance.manager.GetTextById(3071)
         };
         PickForCharacterDialogView pickForCharacterDialog = DialogHandler.Instance.CreateDialog<PickForCharacterDialogView>(DialogEnum.PickForCharacter, this, dialogData);
         pickForCharacterDialog.SetPickCharacterMax(1);
@@ -353,7 +353,7 @@ public class ItemGameMenuFoodCpt : ItemGameBaseCpt, IRadioButtonCallBack, Dialog
         AudioHandler.Instance.PlaySound(AudioSoundEnum.ButtonForNormal);
         DialogBean dialogData = new DialogBean
         {
-            content = GameCommonInfo.GetUITextById(3072)
+            content = TextHandler.Instance.manager.GetTextById(3072)
         };
         DialogHandler.Instance.CreateDialog<DialogView>(DialogEnum.Normal, this, dialogData);
     }
@@ -367,11 +367,11 @@ public class ItemGameMenuFoodCpt : ItemGameBaseCpt, IRadioButtonCallBack, Dialog
             switch (buttonStatus)
             {
                 case RadioButtonView.RadioButtonStatus.Selected:
-                    tvShow.text = GameCommonInfo.GetUITextById(2021);
+                    tvShow.text = TextHandler.Instance.manager.GetTextById(2021);
                     menuOwnData.isSell = true;
                     break;
                 case RadioButtonView.RadioButtonStatus.Unselected:
-                    tvShow.text = GameCommonInfo.GetUITextById(2020);
+                    tvShow.text = TextHandler.Instance.manager.GetTextById(2020);
                     menuOwnData.isSell = false;
                     break;
             }
@@ -404,7 +404,7 @@ public class ItemGameMenuFoodCpt : ItemGameBaseCpt, IRadioButtonCallBack, Dialog
                 }
                 if (!hasEnoughIng)
                 {
-                    ToastHandler.Instance.ToastHint(GameCommonInfo.GetUITextById(1045));
+                    ToastHandler.Instance.ToastHint(TextHandler.Instance.manager.GetTextById(1045));
                     return;
                 }
                 foreach (var itemIng in listIng)
@@ -413,7 +413,7 @@ public class ItemGameMenuFoodCpt : ItemGameBaseCpt, IRadioButtonCallBack, Dialog
                 }
                 //开始研究
                 menuOwnData.StartResearch(listPickCharacter);
-                string toastStr = string.Format(GameCommonInfo.GetUITextById(1201), listPickCharacter[0].baseInfo.name, foodData.name);
+                string toastStr = string.Format(TextHandler.Instance.manager.GetTextById(1201), listPickCharacter[0].baseInfo.name, foodData.name);
                 ToastHandler.Instance.ToastHint(ivFood.sprite, toastStr);
             }
         }

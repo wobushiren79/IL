@@ -188,29 +188,29 @@ public class UIGameMain : BaseUIComponent, DialogView.IDialogCallBack, IRadioGro
             return;
 
         if (popupWorker != null)
-            popupWorker.SetContent(GameCommonInfo.GetUITextById(2031));
+            popupWorker.SetContent(TextHandler.Instance.manager.GetTextById(2031));
         if (popupBuild != null)
-            popupBuild.SetContent(GameCommonInfo.GetUITextById(2032));
+            popupBuild.SetContent(TextHandler.Instance.manager.GetTextById(2032));
         if (popupMenu != null)
-            popupMenu.SetContent(GameCommonInfo.GetUITextById(2033));
+            popupMenu.SetContent(TextHandler.Instance.manager.GetTextById(2033));
         if (popupBackpack != null)
-            popupBackpack.SetContent(GameCommonInfo.GetUITextById(2034));
+            popupBackpack.SetContent(TextHandler.Instance.manager.GetTextById(2034));
         if (popupFavorability != null)
-            popupFavorability.SetContent(GameCommonInfo.GetUITextById(2035));
+            popupFavorability.SetContent(TextHandler.Instance.manager.GetTextById(2035));
         if (popupSave != null)
-            popupSave.SetContent(GameCommonInfo.GetUITextById(2036));
+            popupSave.SetContent(TextHandler.Instance.manager.GetTextById(2036));
         if (popupInnData != null)
-            popupInnData.SetContent(GameCommonInfo.GetUITextById(2037));
+            popupInnData.SetContent(TextHandler.Instance.manager.GetTextById(2037));
         if (popupSetting != null)
-            popupSetting.SetContent(GameCommonInfo.GetUITextById(2038));
+            popupSetting.SetContent(TextHandler.Instance.manager.GetTextById(2038));
         if (popupHelp != null)
-            popupHelp.SetContent(GameCommonInfo.GetUITextById(2039));
+            popupHelp.SetContent(TextHandler.Instance.manager.GetTextById(2039));
         if (popupJumpTime != null)
-            popupJumpTime.SetContent(GameCommonInfo.GetUITextById(2040));
+            popupJumpTime.SetContent(TextHandler.Instance.manager.GetTextById(2040));
         if (popupHotel != null)
-            popupHotel.SetContent(GameCommonInfo.GetUITextById(2041));
+            popupHotel.SetContent(TextHandler.Instance.manager.GetTextById(2041));
         if (popupFamily != null)
-            popupFamily.SetContent(GameCommonInfo.GetUITextById(2042));
+            popupFamily.SetContent(TextHandler.Instance.manager.GetTextById(2042));
         SetInnPraise(innAttributes);
         SetInnAesthetics(innAttributes);
         SetInnRichNess(innAttributes);
@@ -348,7 +348,7 @@ public class UIGameMain : BaseUIComponent, DialogView.IDialogCallBack, IRadioGro
         innAttributes.GetAesthetics(out float maxAesthetics, out float aesthetics);
         if (popupAesthetics != null)
         {
-            popupAesthetics.SetContent(GameCommonInfo.GetUITextById(2003) + ":" + aesthetics + "/" + maxAesthetics);
+            popupAesthetics.SetContent(TextHandler.Instance.manager.GetTextById(2003) + ":" + aesthetics + "/" + maxAesthetics);
         }
         if (proAesthetics != null)
         {
@@ -365,7 +365,7 @@ public class UIGameMain : BaseUIComponent, DialogView.IDialogCallBack, IRadioGro
         innAttributes.GetRichness(out int maxRichness, out int richness);
         if (popupRichness != null)
         {
-            popupRichness.SetContent(GameCommonInfo.GetUITextById(2005) + ":" + richness + "/" + maxRichness);
+            popupRichness.SetContent(TextHandler.Instance.manager.GetTextById(2005) + ":" + richness + "/" + maxRichness);
         }
         if (proRichness != null)
         {
@@ -382,7 +382,7 @@ public class UIGameMain : BaseUIComponent, DialogView.IDialogCallBack, IRadioGro
         innAttributes.GetPraise(out int maxPraise, out int praise);
         if (popupPraise != null)
         {
-            popupPraise.SetContent(GameCommonInfo.GetUITextById(2004) + " " + (System.Math.Round((float)praise / maxPraise, 4) * 100) + "%");
+            popupPraise.SetContent(TextHandler.Instance.manager.GetTextById(2004) + " " + (System.Math.Round((float)praise / maxPraise, 4) * 100) + "%");
         }
         if (proPraise != null)
         {
@@ -400,7 +400,7 @@ public class UIGameMain : BaseUIComponent, DialogView.IDialogCallBack, IRadioGro
         string innLevelStr = innAttributes.GetInnLevel(out int innLevelTitle, out int innLevelStar);
         if (popupInnLevel != null)
         {
-            popupInnLevel.SetContent(GameCommonInfo.GetUITextById(2006) + " " + innLevelStr);
+            popupInnLevel.SetContent(TextHandler.Instance.manager.GetTextById(2006) + " " + innLevelStr);
         }
 
         if (ivInnLevel != null)
@@ -428,13 +428,13 @@ public class UIGameMain : BaseUIComponent, DialogView.IDialogCallBack, IRadioGro
         if (CheckUtil.ListIsNull(InnHandler.Instance.rascalrQueue))
         {
             DialogBean dialogBean = new DialogBean();
-            dialogBean.content = GameCommonInfo.GetUITextById(3007);
+            dialogBean.content = TextHandler.Instance.manager.GetTextById(3007);
             dialogBean.dialogPosition = 1;
             DialogHandler.Instance.CreateDialog<DialogView>(DialogEnum.Normal, this, dialogBean);
         }
         else
         {
-            ToastHandler.Instance.ToastHint(GameCommonInfo.GetUITextById(1016));
+            ToastHandler.Instance.ToastHint(TextHandler.Instance.manager.GetTextById(1016));
         }
     }
 
@@ -486,7 +486,7 @@ public class UIGameMain : BaseUIComponent, DialogView.IDialogCallBack, IRadioGro
         AudioHandler.Instance.PlaySound(AudioSoundEnum.ButtonForNormal);
         AudioHandler.Instance.PlaySound(AudioSoundEnum.ButtonForNormal);
         DialogBean dialogBean = new DialogBean();
-        dialogBean.content = GameCommonInfo.GetUITextById(3004);
+        dialogBean.content = TextHandler.Instance.manager.GetTextById(3004);
         dialogBean.dialogPosition = 0;
         DialogHandler.Instance.CreateDialog<DialogView>(DialogEnum.Normal, this, dialogBean);
     }

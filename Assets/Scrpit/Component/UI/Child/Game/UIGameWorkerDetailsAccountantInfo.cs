@@ -34,9 +34,9 @@ public class UIGameWorkerDetailsAccountantInfo : UIGameStatisticsDetailsBase<UIG
     public void AddTotalData(long totalNumber, long totalMoneyL, long totalMoneyM, long totalMoneyS)
     {
         Sprite spIcon1 = GetSpriteByName("worker_accounting_pro_0");
-        CreateTextItem(spIcon1, GameCommonInfo.GetUITextById(316), totalNumber + "");
+        CreateTextItem(spIcon1, TextHandler.Instance.manager.GetTextById(316), totalNumber + "");
         Sprite spIcon2 = GetSpriteByName("money_1");
-        CreateMoneyItem(spIcon2, GameCommonInfo.GetUITextById(317), totalMoneyL, totalMoneyM, totalMoneyS);
+        CreateMoneyItem(spIcon2, TextHandler.Instance.manager.GetTextById(317), totalMoneyL, totalMoneyM, totalMoneyS);
     }
 
     /// <summary>
@@ -49,9 +49,9 @@ public class UIGameWorkerDetailsAccountantInfo : UIGameStatisticsDetailsBase<UIG
     public void AddSuccessData(long successNumber, long moreMoneyL, long moreMoneyM, long moreMoneyS)
     {
         Sprite spIcon1 = GetSpriteByName("worker_accounting_pro_0");
-        CreateTextItem(spIcon1, GameCommonInfo.GetUITextById(318), Color.green, successNumber + "");
+        CreateTextItem(spIcon1, TextHandler.Instance.manager.GetTextById(318), Color.green, successNumber + "");
         Sprite spIcon2 = GetSpriteByName("money_1");
-        CreateMoneyItem(spIcon2, GameCommonInfo.GetUITextById(319), Color.green, moreMoneyL, moreMoneyM, moreMoneyS);
+        CreateMoneyItem(spIcon2, TextHandler.Instance.manager.GetTextById(319), Color.green, moreMoneyL, moreMoneyM, moreMoneyS);
     }
 
     /// <summary>
@@ -64,9 +64,9 @@ public class UIGameWorkerDetailsAccountantInfo : UIGameStatisticsDetailsBase<UIG
     public void AddFailData(long failNumber, long loseMoneyL, long loseMoneyM, long loseMoneyS)
     {
         Sprite spIcon1 = GetSpriteByName("worker_accounting_pro_0");
-        CreateTextItem(spIcon1, GameCommonInfo.GetUITextById(320), Color.red, failNumber + "");
+        CreateTextItem(spIcon1, TextHandler.Instance.manager.GetTextById(320), Color.red, failNumber + "");
         Sprite spIcon2 = GetSpriteByName("money_1");
-        CreateMoneyItem(spIcon2, GameCommonInfo.GetUITextById(321), Color.red, loseMoneyL, loseMoneyM, loseMoneyS);
+        CreateMoneyItem(spIcon2, TextHandler.Instance.manager.GetTextById(321), Color.red, loseMoneyL, loseMoneyM, loseMoneyS);
     }
 
     /// <summary>
@@ -76,6 +76,6 @@ public class UIGameWorkerDetailsAccountantInfo : UIGameStatisticsDetailsBase<UIG
     public void AddAccountingTime(float time)
     {
         Sprite spIcon = GetSpriteByName("hourglass_1");
-        CreateTextItem(spIcon, GameCommonInfo.GetUITextById(322), time + GameCommonInfo.GetUITextById(38));
+        CreateTextItem(spIcon, TextHandler.Instance.manager.GetTextById(322), time + TextHandler.Instance.manager.GetTextById(38));
     }
 }

@@ -406,7 +406,7 @@ public class MenuOwnBean
         {
             if (levelTitle <= 0)
             {
-                failStr = string.Format(GameCommonInfo.GetUITextById(1072), gameData.GetInnAttributesData().GetInnLevelStr(1, 1));
+                failStr = string.Format(TextHandler.Instance.manager.GetTextById(1072), gameData.GetInnAttributesData().GetInnLevelStr(1, 1));
                 return false;
             }
         }
@@ -414,7 +414,7 @@ public class MenuOwnBean
         {
             if (levelTitle <= 1)
             {
-                failStr = string.Format(GameCommonInfo.GetUITextById(1072), gameData.GetInnAttributesData().GetInnLevelStr(2, 1));
+                failStr = string.Format(TextHandler.Instance.manager.GetTextById(1072), gameData.GetInnAttributesData().GetInnLevelStr(2, 1));
                 return false;
             }
         }
@@ -422,13 +422,13 @@ public class MenuOwnBean
         {
             if (levelTitle <= 2)
             {
-                failStr = string.Format(GameCommonInfo.GetUITextById(1072), gameData.GetInnAttributesData().GetInnLevelStr(3, 1));
+                failStr = string.Format(TextHandler.Instance.manager.GetTextById(1072), gameData.GetInnAttributesData().GetInnLevelStr(3, 1));
                 return false;
             }
         }
         else if (menuLevel == LevelTypeEnum.Sun)
         {
-            failStr = GameCommonInfo.GetUITextById(1073);
+            failStr = TextHandler.Instance.manager.GetTextById(1073);
             return false;
         }
         return true;

@@ -116,7 +116,7 @@ public class NpcAIWorkerForBeaterCpt : NpcAIWokerFoBaseCpt
         //设置角色死亡
         npcAIWorker.SetCharacterDead();
         //弹窗提示
-        string toastStr = string.Format(GameCommonInfo.GetUITextById(1015), npcAIWorker.characterData.baseInfo.name, restTime + "");
+        string toastStr = string.Format(TextHandler.Instance.manager.GetTextById(1015), npcAIWorker.characterData.baseInfo.name, restTime + "");
         ToastHandler.Instance.ToastHint(toastStr, 5);
         //设置不工作
         StartCoroutine(StartRest(restTime));

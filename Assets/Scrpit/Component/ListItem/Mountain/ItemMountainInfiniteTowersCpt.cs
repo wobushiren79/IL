@@ -82,7 +82,7 @@ public class ItemMountainInfiniteTowersCpt : ItemGameBaseCpt,DialogView.IDialogC
     {
         
         DialogBean dialogData = new DialogBean();
-        dialogData.content = GameCommonInfo.GetUITextById(3111);
+        dialogData.content = TextHandler.Instance.manager.GetTextById(3111);
         dialogData.dialogPosition = 0;
         DialogHandler.Instance.CreateDialog<DialogView>(DialogEnum.Normal, this, dialogData);
     }
@@ -99,7 +99,7 @@ public class ItemMountainInfiniteTowersCpt : ItemGameBaseCpt,DialogView.IDialogC
             if (characterData.baseInfo.GetWorkerStatus() != WorkerStatusEnum.Rest
                 && characterData.baseInfo.GetWorkerStatus() != WorkerStatusEnum.Work)
             {
-                ToastHandler.Instance.ToastHint(GameCommonInfo.GetUITextById(1141));
+                ToastHandler.Instance.ToastHint(TextHandler.Instance.manager.GetTextById(1141));
                 return;
             }
         }

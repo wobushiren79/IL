@@ -137,7 +137,7 @@ public class ItemGameHotelBedCpt : ItemGameBaseCpt, DialogView.IDialogCallBack
     {
         if (tvPrice != null)
         {
-            tvPrice.text = priceS + "/" + GameCommonInfo.GetUITextById(37);
+            tvPrice.text = priceS + "/" + TextHandler.Instance.manager.GetTextById(37);
         }
     }
 
@@ -172,19 +172,19 @@ public class ItemGameHotelBedCpt : ItemGameBaseCpt, DialogView.IDialogCallBack
         if (popupForResearch == null)
             return;
         buildBedData.GetResearchPrice(out long researchPriceL, out long researchPriceM, out long researchPriceS);
-        string content = GameCommonInfo.GetUITextById(285);
-        content += (" " + GameCommonInfo.GetUITextById(286) + "\n");
+        string content = TextHandler.Instance.manager.GetTextById(285);
+        content += (" " + TextHandler.Instance.manager.GetTextById(286) + "\n");
         if (researchPriceL!=0)
         {
-            content +=( researchPriceL+ GameCommonInfo.GetUITextById(16));
+            content +=( researchPriceL+ TextHandler.Instance.manager.GetTextById(16));
         }
         if (researchPriceM != 0)
         {
-            content += (researchPriceM+ GameCommonInfo.GetUITextById(17));
+            content += (researchPriceM+ TextHandler.Instance.manager.GetTextById(17));
         }
         if (researchPriceS != 0)
         {
-            content += (researchPriceS + GameCommonInfo.GetUITextById(18));
+            content += (researchPriceS + TextHandler.Instance.manager.GetTextById(18));
         }
         popupForResearch.SetContent(content);
     }
@@ -197,17 +197,17 @@ public class ItemGameHotelBedCpt : ItemGameBaseCpt, DialogView.IDialogCallBack
         
         if (buildBedData.GetBedStatus()== ResearchStatusEnum.Researching)
         {
-            ToastHandler.Instance.ToastHint(GameCommonInfo.GetUITextById(1313));
+            ToastHandler.Instance.ToastHint(TextHandler.Instance.manager.GetTextById(1313));
             return;
         }
         if (buildBedData.isSet)
         {
-            ToastHandler.Instance.ToastHint(GameCommonInfo.GetUITextById(1314));
+            ToastHandler.Instance.ToastHint(TextHandler.Instance.manager.GetTextById(1314));
             return;
         }
         DialogBean dialogData = new DialogBean();
         dialogData.dialogPosition = 1;
-        dialogData.content = string.Format(GameCommonInfo.GetUITextById(3001), buildBedData.bedName);
+        dialogData.content = string.Format(TextHandler.Instance.manager.GetTextById(3001), buildBedData.bedName);
 
         DialogHandler.Instance.CreateDialog<DialogView>(DialogEnum.Normal, this, dialogData);
     }
@@ -227,7 +227,7 @@ public class ItemGameHotelBedCpt : ItemGameBaseCpt, DialogView.IDialogCallBack
         }
         DialogBean dialogData = new DialogBean
         {
-            title = GameCommonInfo.GetUITextById(3071)
+            title = TextHandler.Instance.manager.GetTextById(3071)
         };
         PickForCharacterDialogView pickForCharacterDialog = DialogHandler.Instance.CreateDialog<PickForCharacterDialogView>(DialogEnum.PickForCharacter, this, dialogData);
         pickForCharacterDialog.SetPickCharacterMax(1);
@@ -267,7 +267,7 @@ public class ItemGameHotelBedCpt : ItemGameBaseCpt, DialogView.IDialogCallBack
         DialogBean dialogData = new DialogBean
         {
             dialogPosition = 2,
-            content = GameCommonInfo.GetUITextById(3072)
+            content = TextHandler.Instance.manager.GetTextById(3072)
         };
         DialogHandler.Instance.CreateDialog<DialogView>(DialogEnum.Normal, this, dialogData);
     }
@@ -283,7 +283,7 @@ public class ItemGameHotelBedCpt : ItemGameBaseCpt, DialogView.IDialogCallBack
             //先判断一下是否有钱支付
             if (!gameData.HasEnoughMoney(researchPriceL, researchPriceM, researchPriceS))
             {
-                ToastHandler.Instance.ToastHint(GameCommonInfo.GetUITextById(1005));
+                ToastHandler.Instance.ToastHint(TextHandler.Instance.manager.GetTextById(1005));
                 return;
             }
             //扣除金钱
@@ -295,7 +295,7 @@ public class ItemGameHotelBedCpt : ItemGameBaseCpt, DialogView.IDialogCallBack
             {
                 //开始研究
                 buildBedData.StartResearch(listPickCharacter);
-                string toastStr = string.Format(GameCommonInfo.GetUITextById(1201), listPickCharacter[0].baseInfo.name, buildBedData.bedName);
+                string toastStr = string.Format(TextHandler.Instance.manager.GetTextById(1201), listPickCharacter[0].baseInfo.name, buildBedData.bedName);
                 ToastHandler.Instance.ToastHint(toastStr);
             }
         }
@@ -305,12 +305,12 @@ public class ItemGameHotelBedCpt : ItemGameBaseCpt, DialogView.IDialogCallBack
             {
                 if (buildBedData.GetBedStatus() == ResearchStatusEnum.Researching)
                 {
-                    ToastHandler.Instance.ToastHint(GameCommonInfo.GetUITextById(1313));
+                    ToastHandler.Instance.ToastHint(TextHandler.Instance.manager.GetTextById(1313));
                     return;
                 }
                 if (buildBedData.isSet)
                 {
-                    ToastHandler.Instance.ToastHint(GameCommonInfo.GetUITextById(1314));
+                    ToastHandler.Instance.ToastHint(TextHandler.Instance.manager.GetTextById(1314));
                     return;
                 }
                 //丢弃确认

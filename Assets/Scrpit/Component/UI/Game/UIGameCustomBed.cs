@@ -226,12 +226,12 @@ public class UIGameCustomBed : UIBaseOne, IRadioGroupCallBack
         GameDataBean gameData = GameDataHandler.Instance.manager.GetGameData();
         if (!gameData.HasEnoughMoney(customPriceL, customPriceM, customPriceS))
         {
-            ToastHandler.Instance.ToastHint(GameCommonInfo.GetUITextById(1005));
+            ToastHandler.Instance.ToastHint(TextHandler.Instance.manager.GetTextById(1005));
             return;
         }
         if (etBedName.text.Length <= 0)
         {
-            ToastHandler.Instance.ToastHint(GameCommonInfo.GetUITextById(1312));
+            ToastHandler.Instance.ToastHint(TextHandler.Instance.manager.GetTextById(1312));
             return;
         }
 
@@ -239,17 +239,17 @@ public class UIGameCustomBed : UIBaseOne, IRadioGroupCallBack
         string moneyStr = "";
         if (customPriceL != 0)
         {
-            moneyStr += customPriceL + GameCommonInfo.GetUITextById(16);
+            moneyStr += customPriceL + TextHandler.Instance.manager.GetTextById(16);
         }
         if (customPriceM != 0)
         {
-            moneyStr += customPriceM + GameCommonInfo.GetUITextById(17);
+            moneyStr += customPriceM + TextHandler.Instance.manager.GetTextById(17);
         }
         if (customPriceS != 0)
         {
-            moneyStr += customPriceS + GameCommonInfo.GetUITextById(18);
+            moneyStr += customPriceS + TextHandler.Instance.manager.GetTextById(18);
         }
-        dialogData.content = string.Format(GameCommonInfo.GetUITextById(3103), moneyStr);
+        dialogData.content = string.Format(TextHandler.Instance.manager.GetTextById(3103), moneyStr);
         DialogHandler.Instance.CreateDialog<DialogView>(DialogEnum.Normal, this, dialogData);
     }
 
@@ -289,18 +289,18 @@ public class UIGameCustomBed : UIBaseOne, IRadioGroupCallBack
         {
             FindBedDialogView findBedDialog = dialogView as FindBedDialogView;
             gameData.AddBed(findBedDialog.buildBedData);
-            ToastHandler.Instance.ToastHint(GameCommonInfo.GetUITextById(1311));
+            ToastHandler.Instance.ToastHint(TextHandler.Instance.manager.GetTextById(1311));
         }
         else
         {
             if (!gameData.HasEnoughMoney(customPriceL, customPriceM, customPriceS))
             {
-                ToastHandler.Instance.ToastHint(GameCommonInfo.GetUITextById(1005));
+                ToastHandler.Instance.ToastHint(TextHandler.Instance.manager.GetTextById(1005));
                 return;
             }
             if (etBedName.text.Length <= 0)
             {
-                ToastHandler.Instance.ToastHint(GameCommonInfo.GetUITextById(1312));
+                ToastHandler.Instance.ToastHint(TextHandler.Instance.manager.GetTextById(1312));
                 return;
             }
             //支付金钱

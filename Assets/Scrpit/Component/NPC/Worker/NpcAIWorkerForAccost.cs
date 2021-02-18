@@ -229,12 +229,12 @@ public class NpcAIWorkerForAccost : NpcAIWokerFoBaseCpt
         BuildStairsCpt buildStairs = InnHandler.Instance.GetCloseStairs(transform.position);
         if (buildStairs == null)
         {
-            npcAIWorker.SetShout(GameCommonInfo.GetUITextById(13402));
+            npcAIWorker.SetShout(TextHandler.Instance.manager.GetTextById(13402));
             orderForHotel.customer.ChangeMood(-99999);
             SetIntent(AccostIntentEnum.Idle);
             return;
         }
-        npcAIWorker.SetShout(GameCommonInfo.GetUITextById(13404));
+        npcAIWorker.SetShout(TextHandler.Instance.manager.GetTextById(13404));
         InnHandler.Instance.GetStairsByRemarkId(buildStairs.remarkId, out Vector3 layerFirstPosition, out Vector3 layerSecondPosition);
         orderForHotel.layerFirstStairsPosition = layerFirstPosition;
         orderForHotel.layerSecondStairsPosition = layerSecondPosition;
@@ -267,7 +267,7 @@ public class NpcAIWorkerForAccost : NpcAIWokerFoBaseCpt
         if (!CheckUtil.CheckPath(sleepPosition,transform.position))
         {
             //不能到达
-            npcAIWorker.SetShout(GameCommonInfo.GetUITextById(13405));
+            npcAIWorker.SetShout(TextHandler.Instance.manager.GetTextById(13405));
             SetIntent(AccostIntentEnum.GoToStairsForSecond);
             return;
         }

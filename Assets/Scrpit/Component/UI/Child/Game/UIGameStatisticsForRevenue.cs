@@ -107,7 +107,7 @@ public class UIGameStatisticsForRevenue : BaseUIChildComponent<UIGameStatistics>
         {
             Dropdown.OptionData optionData = new Dropdown.OptionData
             {
-                text = string.Format(GameCommonInfo.GetUITextById(46), itemYear + "")
+                text = string.Format(TextHandler.Instance.manager.GetTextById(46), itemYear + "")
             };
             listOptionData.Add(optionData);
         }

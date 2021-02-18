@@ -308,13 +308,13 @@ public class PreTypeEnumTools : DataTools
         switch (preTypeData.dataType)
         {
             case PreTypeEnum.HaveItems:
-                preTypeData.preDescribe = string.Format(GameCommonInfo.GetUITextById(5021), itemsInfo.name, itemsNumber + "");
+                preTypeData.preDescribe = string.Format(TextHandler.Instance.manager.GetTextById(5021), itemsInfo.name, itemsNumber + "");
                 break;
             case PreTypeEnum.PayItems:
-                preTypeData.preDescribe = string.Format(GameCommonInfo.GetUITextById(5022), itemsInfo.name, itemsNumber + "");
+                preTypeData.preDescribe = string.Format(TextHandler.Instance.manager.GetTextById(5022), itemsInfo.name, itemsNumber + "");
                 break;
         }
-        preTypeData.preFailStr = string.Format(GameCommonInfo.GetUITextById(5023), itemsInfo.name, itemsNumber + "");
+        preTypeData.preFailStr = string.Format(TextHandler.Instance.manager.GetTextById(5023), itemsInfo.name, itemsNumber + "");
         return preTypeData;
     }
 
@@ -336,50 +336,50 @@ public class PreTypeEnumTools : DataTools
         {
             case PreTypeEnum.PayMoneyL:
                 have = gameData.moneyL;
-                preTypeData.preDescribe = GameCommonInfo.GetUITextById(5001);
-                preTypeData.preFailStr = GameCommonInfo.GetUITextById(1005);
+                preTypeData.preDescribe = TextHandler.Instance.manager.GetTextById(5001);
+                preTypeData.preFailStr = TextHandler.Instance.manager.GetTextById(1005);
                 iconKey = "money_3";
                 break;
             case PreTypeEnum.PayMoneyM:
                 have = gameData.moneyM;
-                preTypeData.preDescribe = GameCommonInfo.GetUITextById(5002);
-                preTypeData.preFailStr = GameCommonInfo.GetUITextById(1005);
+                preTypeData.preDescribe = TextHandler.Instance.manager.GetTextById(5002);
+                preTypeData.preFailStr = TextHandler.Instance.manager.GetTextById(1005);
                 iconKey = "money_2";
                 break;
             case PreTypeEnum.PayMoneyS:
                 have = gameData.moneyS;
-                preTypeData.preDescribe = GameCommonInfo.GetUITextById(5003);
-                preTypeData.preFailStr = GameCommonInfo.GetUITextById(1005);
+                preTypeData.preDescribe = TextHandler.Instance.manager.GetTextById(5003);
+                preTypeData.preFailStr = TextHandler.Instance.manager.GetTextById(1005);
                 iconKey = "money_1";
                 break;
             case PreTypeEnum.PayGuildCoin:
                 have = gameData.guildCoin;
-                preTypeData.preDescribe = GameCommonInfo.GetUITextById(5201);
-                preTypeData.preFailStr = GameCommonInfo.GetUITextById(1012);
+                preTypeData.preDescribe = TextHandler.Instance.manager.GetTextById(5201);
+                preTypeData.preFailStr = TextHandler.Instance.manager.GetTextById(1012);
                 iconKey = "guild_coin_2";
                 break;
             case PreTypeEnum.PayTrophyElementary:
                 have = gameData.trophyElementary;
-                preTypeData.preDescribe = GameCommonInfo.GetUITextById(5203);
-                preTypeData.preFailStr = GameCommonInfo.GetUITextById(1021);
+                preTypeData.preDescribe = TextHandler.Instance.manager.GetTextById(5203);
+                preTypeData.preFailStr = TextHandler.Instance.manager.GetTextById(1021);
                 iconKey = "trophy_1_0";
                 break;
             case PreTypeEnum.PayTrophyIntermediate:
                 have = gameData.trophyIntermediate;
-                preTypeData.preDescribe = GameCommonInfo.GetUITextById(5204);
-                preTypeData.preFailStr = GameCommonInfo.GetUITextById(1021);
+                preTypeData.preDescribe = TextHandler.Instance.manager.GetTextById(5204);
+                preTypeData.preFailStr = TextHandler.Instance.manager.GetTextById(1021);
                 iconKey = "trophy_1_1";
                 break;
             case PreTypeEnum.PayTrophyAdvanced:
                 have = gameData.trophyAdvanced;
-                preTypeData.preDescribe = GameCommonInfo.GetUITextById(5205);
-                preTypeData.preFailStr = GameCommonInfo.GetUITextById(1021);
+                preTypeData.preDescribe = TextHandler.Instance.manager.GetTextById(5205);
+                preTypeData.preFailStr = TextHandler.Instance.manager.GetTextById(1021);
                 iconKey = "trophy_1_2";
                 break;
             case PreTypeEnum.PayTrophyLegendary:
                 have = gameData.trophyLegendary;
-                preTypeData.preDescribe = GameCommonInfo.GetUITextById(5206);
-                preTypeData.preFailStr = GameCommonInfo.GetUITextById(1021);
+                preTypeData.preDescribe = TextHandler.Instance.manager.GetTextById(5206);
+                preTypeData.preFailStr = TextHandler.Instance.manager.GetTextById(1021);
                 iconKey = "trophy_1_3";
                 break;
         }
@@ -419,50 +419,50 @@ public class PreTypeEnumTools : DataTools
         {
             case PreTypeEnum.HaveMoneyL:
                 own = gameData.moneyL;
-                preTypeData.preFailStr = GameCommonInfo.GetUITextById(1005);
-                preTypeData.preDescribe = GameCommonInfo.GetUITextById(5004);
+                preTypeData.preFailStr = TextHandler.Instance.manager.GetTextById(1005);
+                preTypeData.preDescribe = TextHandler.Instance.manager.GetTextById(5004);
                 iconKey = "money_3";
                 break;
             case PreTypeEnum.HaveMoneyM:
                 own = gameData.moneyM;
-                preTypeData.preFailStr = GameCommonInfo.GetUITextById(1005);
-                preTypeData.preDescribe = GameCommonInfo.GetUITextById(5005);
+                preTypeData.preFailStr = TextHandler.Instance.manager.GetTextById(1005);
+                preTypeData.preDescribe = TextHandler.Instance.manager.GetTextById(5005);
                 iconKey = "money_2";
                 break;
             case PreTypeEnum.HaveMoneyS:
                 own = gameData.moneyS;
-                preTypeData.preFailStr = GameCommonInfo.GetUITextById(1005);
-                preTypeData.preDescribe = GameCommonInfo.GetUITextById(5006);
+                preTypeData.preFailStr = TextHandler.Instance.manager.GetTextById(1005);
+                preTypeData.preDescribe = TextHandler.Instance.manager.GetTextById(5006);
                 iconKey = "money_1";
                 break;
             case PreTypeEnum.PayGuildCoin:
                 own = gameData.guildCoin;
-                preTypeData.preDescribe = GameCommonInfo.GetUITextById(5202);
-                preTypeData.preFailStr = GameCommonInfo.GetUITextById(1012);
+                preTypeData.preDescribe = TextHandler.Instance.manager.GetTextById(5202);
+                preTypeData.preFailStr = TextHandler.Instance.manager.GetTextById(1012);
                 iconKey = "guild_coin_2";
                 break;
             case PreTypeEnum.PayTrophyElementary:
                 own = gameData.trophyElementary;
-                preTypeData.preDescribe = GameCommonInfo.GetUITextById(5207);
-                preTypeData.preFailStr = GameCommonInfo.GetUITextById(1021);
+                preTypeData.preDescribe = TextHandler.Instance.manager.GetTextById(5207);
+                preTypeData.preFailStr = TextHandler.Instance.manager.GetTextById(1021);
                 iconKey = "trophy_1_0";
                 break;
             case PreTypeEnum.PayTrophyIntermediate:
                 own = gameData.trophyIntermediate;
-                preTypeData.preDescribe = GameCommonInfo.GetUITextById(5208);
-                preTypeData.preFailStr = GameCommonInfo.GetUITextById(1021);
+                preTypeData.preDescribe = TextHandler.Instance.manager.GetTextById(5208);
+                preTypeData.preFailStr = TextHandler.Instance.manager.GetTextById(1021);
                 iconKey = "trophy_1_1";
                 break;
             case PreTypeEnum.PayTrophyAdvanced:
                 own = gameData.trophyAdvanced;
-                preTypeData.preDescribe = GameCommonInfo.GetUITextById(5209);
-                preTypeData.preFailStr = GameCommonInfo.GetUITextById(1021);
+                preTypeData.preDescribe = TextHandler.Instance.manager.GetTextById(5209);
+                preTypeData.preFailStr = TextHandler.Instance.manager.GetTextById(1021);
                 iconKey = "trophy_1_2";
                 break;
             case PreTypeEnum.PayTrophyLegendary:
                 own = gameData.trophyLegendary;
-                preTypeData.preDescribe = GameCommonInfo.GetUITextById(5210);
-                preTypeData.preFailStr = GameCommonInfo.GetUITextById(1021);
+                preTypeData.preDescribe = TextHandler.Instance.manager.GetTextById(5210);
+                preTypeData.preFailStr = TextHandler.Instance.manager.GetTextById(1021);
                 iconKey = "trophy_1_3";
                 break;
         }
@@ -503,37 +503,37 @@ public class PreTypeEnumTools : DataTools
             case PreTypeEnum.AttributeForForce:
                 targetAttributes = characterData.attributes.force;
                 iconKey = "ui_ability_force";
-                preTypeData.preFailStr = GameCommonInfo.GetUITextById(5010);
+                preTypeData.preFailStr = TextHandler.Instance.manager.GetTextById(5010);
                 break;
             case PreTypeEnum.AttributeForSpeed:
                 targetAttributes = characterData.attributes.speed;
                 iconKey = "ui_ability_speed";
-                preTypeData.preFailStr = GameCommonInfo.GetUITextById(5011);
+                preTypeData.preFailStr = TextHandler.Instance.manager.GetTextById(5011);
                 break;
             case PreTypeEnum.AttributeForLucky:
                 targetAttributes = characterData.attributes.lucky;
                 iconKey = "ui_ability_lucky";
-                preTypeData.preFailStr = GameCommonInfo.GetUITextById(5012);
+                preTypeData.preFailStr = TextHandler.Instance.manager.GetTextById(5012);
                 break;
             case PreTypeEnum.AttributeForCook:
                 targetAttributes = characterData.attributes.cook;
                 iconKey = "ui_ability_cook";
-                preTypeData.preFailStr = GameCommonInfo.GetUITextById(5013);
+                preTypeData.preFailStr = TextHandler.Instance.manager.GetTextById(5013);
                 break;
             case PreTypeEnum.AttributeForAccount:
                 targetAttributes = characterData.attributes.account;
                 iconKey = "ui_ability_account";
-                preTypeData.preFailStr = GameCommonInfo.GetUITextById(5014);
+                preTypeData.preFailStr = TextHandler.Instance.manager.GetTextById(5014);
                 break;
             case PreTypeEnum.AttributeForCharm:
                 targetAttributes = characterData.attributes.charm;
                 iconKey = "ui_ability_charm";
-                preTypeData.preFailStr = GameCommonInfo.GetUITextById(5015);
+                preTypeData.preFailStr = TextHandler.Instance.manager.GetTextById(5015);
                 break;
             case PreTypeEnum.AttributeForLife:
                 targetAttributes = characterData.attributes.life;
                 iconKey = "ui_ability_life";
-                preTypeData.preFailStr = GameCommonInfo.GetUITextById(5016);
+                preTypeData.preFailStr = TextHandler.Instance.manager.GetTextById(5016);
                 break;
         }
         preTypeData.spPreIcon = IconDataHandler.Instance.manager.GetIconSpriteByName(iconKey);
@@ -600,8 +600,8 @@ public class PreTypeEnumTools : DataTools
             preTypeData.isPre = false;
         }
         preTypeData.spPreIcon = spIcon;
-        preTypeData.preDescribe = string.Format(GameCommonInfo.GetUITextById(5031), ingName, dataIng + "");
-        preTypeData.preFailStr = string.Format(GameCommonInfo.GetUITextById(5023), ingName, dataIng + "");
+        preTypeData.preDescribe = string.Format(TextHandler.Instance.manager.GetTextById(5031), ingName, dataIng + "");
+        preTypeData.preFailStr = string.Format(TextHandler.Instance.manager.GetTextById(5023), ingName, dataIng + "");
         return preTypeData;
     }
 
@@ -625,14 +625,14 @@ public class PreTypeEnumTools : DataTools
         {
             case PreTypeEnum.OrderNumberForTotal:
                 spIcon = IconDataHandler.Instance.manager.GetIconSpriteByName("team_2");
-                preDescribeTitle = GameCommonInfo.GetUITextById(5041);
-                preFailTitle = GameCommonInfo.GetUITextById(5042);
+                preDescribeTitle = TextHandler.Instance.manager.GetTextById(5041);
+                preFailTitle = TextHandler.Instance.manager.GetTextById(5042);
                 numberTotal = userAchievement.GetNumberForAllCustomerFood();
                 break;
             case PreTypeEnum.OrderNumberForHotelTotal:
                 spIcon = IconDataHandler.Instance.manager.GetIconSpriteByName("worker_waiter_bed_pro_2");
-                preDescribeTitle = GameCommonInfo.GetUITextById(5043);
-                preFailTitle = GameCommonInfo.GetUITextById(5044);
+                preDescribeTitle = TextHandler.Instance.manager.GetTextById(5043);
+                preFailTitle = TextHandler.Instance.manager.GetTextById(5044);
                 numberTotal = userAchievement.GetNumberForAllCustomerHotel();
                 break;
         }
@@ -674,17 +674,17 @@ public class PreTypeEnumTools : DataTools
         {
             case PreTypeEnum.GetMoneyL:
                 haveMoney = userAchievement.ownMoneyL;
-                preTypeData.preDescribe = GameCommonInfo.GetUITextById(5007);
+                preTypeData.preDescribe = TextHandler.Instance.manager.GetTextById(5007);
                 iconKey = "money_3";
                 break;
             case PreTypeEnum.GetMoneyM:
                 haveMoney = userAchievement.ownMoneyM;
-                preTypeData.preDescribe = GameCommonInfo.GetUITextById(5008);
+                preTypeData.preDescribe = TextHandler.Instance.manager.GetTextById(5008);
                 iconKey = "money_2";
                 break;
             case PreTypeEnum.GetMoneyS:
                 haveMoney = userAchievement.ownMoneyS;
-                preTypeData.preDescribe = GameCommonInfo.GetUITextById(5009);
+                preTypeData.preDescribe = TextHandler.Instance.manager.GetTextById(5009);
                 iconKey = "money_1";
                 break;
         }
@@ -702,7 +702,7 @@ public class PreTypeEnumTools : DataTools
         }
         preTypeData.spPreIcon = IconDataHandler.Instance.manager.GetIconSpriteByName(iconKey);
         preTypeData.preDescribe = string.Format(preTypeData.preDescribe, preMoneyStr);
-        preTypeData.preFailStr = GameCommonInfo.GetUITextById(1024);
+        preTypeData.preFailStr = TextHandler.Instance.manager.GetTextById(1024);
         return preTypeData;
     }
 
@@ -717,32 +717,32 @@ public class PreTypeEnumTools : DataTools
         {
             case PreTypeEnum.InnPraiseNumberForExcited:
                 praiseType = PraiseTypeEnum.Excited;
-                preDesStr = GameCommonInfo.GetUITextById(5051);
+                preDesStr = TextHandler.Instance.manager.GetTextById(5051);
                 spIcon = IconDataHandler.Instance.manager.GetIconSpriteByName("customer_mood_0");
                 break;
             case PreTypeEnum.InnPraiseNumberForHappy:
                 praiseType = PraiseTypeEnum.Happy;
-                preDesStr = GameCommonInfo.GetUITextById(5052);
+                preDesStr = TextHandler.Instance.manager.GetTextById(5052);
                 spIcon = IconDataHandler.Instance.manager.GetIconSpriteByName("customer_mood_1");
                 break;
             case PreTypeEnum.InnPraiseNumberForOkay:
                 praiseType = PraiseTypeEnum.Okay;
-                preDesStr = GameCommonInfo.GetUITextById(5053);
+                preDesStr = TextHandler.Instance.manager.GetTextById(5053);
                 spIcon = IconDataHandler.Instance.manager.GetIconSpriteByName("customer_mood_2");
                 break;
             case PreTypeEnum.InnPraiseNumberForOrdinary:
                 praiseType = PraiseTypeEnum.Ordinary;
-                preDesStr = GameCommonInfo.GetUITextById(5054);
+                preDesStr = TextHandler.Instance.manager.GetTextById(5054);
                 spIcon = IconDataHandler.Instance.manager.GetIconSpriteByName("customer_mood_3");
                 break;
             case PreTypeEnum.InnPraiseNumberForDisappointed:
                 praiseType = PraiseTypeEnum.Disappointed;
-                preDesStr = GameCommonInfo.GetUITextById(5055);
+                preDesStr = TextHandler.Instance.manager.GetTextById(5055);
                 spIcon = IconDataHandler.Instance.manager.GetIconSpriteByName("customer_mood_4");
                 break;
             case PreTypeEnum.InnPraiseNumberForAnger:
                 praiseType = PraiseTypeEnum.Anger;
-                preDesStr = GameCommonInfo.GetUITextById(5056);
+                preDesStr = TextHandler.Instance.manager.GetTextById(5056);
                 spIcon = IconDataHandler.Instance.manager.GetIconSpriteByName("customer_mood_5");
                 break;
         }
@@ -762,7 +762,7 @@ public class PreTypeEnumTools : DataTools
         }
         preTypeData.spPreIcon = spIcon;
         preTypeData.preDescribe = string.Format(preDesStr, preProStr + "");
-        preTypeData.preFailStr = GameCommonInfo.GetUITextById(5057);
+        preTypeData.preFailStr = TextHandler.Instance.manager.GetTextById(5057);
         return preTypeData;
     }
 
@@ -789,25 +789,25 @@ public class PreTypeEnumTools : DataTools
             case PreTypeEnum.MenuNumber:
                 List<MenuOwnBean> listMenu = gameData.GetMenuList();
                 menuNumber = listMenu.Count;
-                content = GameCommonInfo.GetUITextById(5061);
-                contentFail = GameCommonInfo.GetUITextById(5062);
+                content = TextHandler.Instance.manager.GetTextById(5061);
+                contentFail = TextHandler.Instance.manager.GetTextById(5062);
                 break;
             case PreTypeEnum.MenuLevelStarNumber:
                 menuNumber = gameData.GetMenuNumberByLevel(LevelTypeEnum.Star);
-                content = GameCommonInfo.GetUITextById(5063);
-                contentFail = GameCommonInfo.GetUITextById(5064);
+                content = TextHandler.Instance.manager.GetTextById(5063);
+                contentFail = TextHandler.Instance.manager.GetTextById(5064);
                 levelStr = LevelTypeEnumTools.GetLevelStr(LevelTypeEnum.Star);
                 break;
             case PreTypeEnum.MenuLevelMoonNumber:
                 menuNumber = gameData.GetMenuNumberByLevel(LevelTypeEnum.Moon);
-                content = GameCommonInfo.GetUITextById(5063);
-                contentFail = GameCommonInfo.GetUITextById(5064);
+                content = TextHandler.Instance.manager.GetTextById(5063);
+                contentFail = TextHandler.Instance.manager.GetTextById(5064);
                 levelStr = LevelTypeEnumTools.GetLevelStr(LevelTypeEnum.Moon);
                 break;
             case PreTypeEnum.MenuLevelSunNumber:
                 menuNumber = gameData.GetMenuNumberByLevel(LevelTypeEnum.Sun);
-                content = GameCommonInfo.GetUITextById(5063);
-                contentFail = GameCommonInfo.GetUITextById(5064);
+                content = TextHandler.Instance.manager.GetTextById(5063);
+                contentFail = TextHandler.Instance.manager.GetTextById(5064);
                 levelStr = LevelTypeEnumTools.GetLevelStr(LevelTypeEnum.Sun);
                 break;
 
@@ -854,25 +854,25 @@ public class PreTypeEnumTools : DataTools
             case PreTypeEnum.BedNumber:
                 List<BuildBedBean> listBed = gameData.listBed;
                 bedNumber = listBed.Count;
-                content = GameCommonInfo.GetUITextById(5065);
-                contentFail = GameCommonInfo.GetUITextById(5066);
+                content = TextHandler.Instance.manager.GetTextById(5065);
+                contentFail = TextHandler.Instance.manager.GetTextById(5066);
                 break;
             case PreTypeEnum.BedLevelStarNumber:
                 bedNumber = gameData.GetBedNumberByLevel(LevelTypeEnum.Star);
-                content = GameCommonInfo.GetUITextById(5067);
-                contentFail = GameCommonInfo.GetUITextById(5068);
+                content = TextHandler.Instance.manager.GetTextById(5067);
+                contentFail = TextHandler.Instance.manager.GetTextById(5068);
                 levelStr = LevelTypeEnumTools.GetLevelStr(LevelTypeEnum.Star);
                 break;
             case PreTypeEnum.BedLevelMoonNumber:
                 bedNumber = gameData.GetBedNumberByLevel(LevelTypeEnum.Moon);
-                content = GameCommonInfo.GetUITextById(5067);
-                contentFail = GameCommonInfo.GetUITextById(5068);
+                content = TextHandler.Instance.manager.GetTextById(5067);
+                contentFail = TextHandler.Instance.manager.GetTextById(5068);
                 levelStr = LevelTypeEnumTools.GetLevelStr(LevelTypeEnum.Moon);
                 break;
             case PreTypeEnum.BedLevelSunNumber:
                 bedNumber = gameData.GetBedNumberByLevel(LevelTypeEnum.Sun);
-                content = GameCommonInfo.GetUITextById(5067);
-                contentFail = GameCommonInfo.GetUITextById(5068);
+                content = TextHandler.Instance.manager.GetTextById(5067);
+                contentFail = TextHandler.Instance.manager.GetTextById(5068);
                 levelStr = LevelTypeEnumTools.GetLevelStr(LevelTypeEnum.Sun);
                 break;
 
@@ -927,8 +927,8 @@ public class PreTypeEnumTools : DataTools
             preTypeData.progress = sellNumber / (float)dataNumber;
         }
         preTypeData.spPreIcon = spIcon;
-        preTypeData.preDescribe = string.Format(GameCommonInfo.GetUITextById(5071), preProStr + "");
-        preTypeData.preFailStr = GameCommonInfo.GetUITextById(5072);
+        preTypeData.preDescribe = string.Format(TextHandler.Instance.manager.GetTextById(5071), preProStr + "");
+        preTypeData.preFailStr = TextHandler.Instance.manager.GetTextById(5072);
         return preTypeData;
     }
 
@@ -956,8 +956,8 @@ public class PreTypeEnumTools : DataTools
         preTypeData.isPre = hasAllMenu;
         preTypeData.spPreIcon = spIcon;
 
-        preTypeData.preDescribe = string.Format(GameCommonInfo.GetUITextById(5073), foodListStr + "");
-        preTypeData.preFailStr = string.Format(GameCommonInfo.GetUITextById(5074), noFoodStr + "");
+        preTypeData.preDescribe = string.Format(TextHandler.Instance.manager.GetTextById(5073), foodListStr + "");
+        preTypeData.preFailStr = string.Format(TextHandler.Instance.manager.GetTextById(5074), noFoodStr + "");
         return preTypeData;
 
     }
@@ -974,7 +974,7 @@ public class PreTypeEnumTools : DataTools
             switch (preTypeData.dataType)
             {
                 case PreTypeEnum.WorkerForCookFoodNumber:
-                    preDesStr = GameCommonInfo.GetUITextById(311);
+                    preDesStr = TextHandler.Instance.manager.GetTextById(311);
                     CharacterWorkerForChefBean characterWorkerForChef = (CharacterWorkerForChefBean)itemWorkerData.baseInfo.GetWorkerInfoByType(WorkerEnum.Chef);
                     workerNumber += characterWorkerForChef.cookNumber;
                     break;
@@ -984,17 +984,17 @@ public class PreTypeEnumTools : DataTools
                     CharacterWorkerForWaiterBean characterWorkerForWaiter = (CharacterWorkerForWaiterBean)itemWorkerData.baseInfo.GetWorkerInfoByType(WorkerEnum.Waiter);
                     if (preTypeData.dataType == PreTypeEnum.WorkerForCleanFoodNumber)
                     {
-                        preDesStr = GameCommonInfo.GetUITextById(314);
+                        preDesStr = TextHandler.Instance.manager.GetTextById(314);
                         workerNumber += characterWorkerForWaiter.cleanTotalNumber;
                     }
                     else if (preTypeData.dataType == PreTypeEnum.WorkerForSendFoodNumber)
                     {
-                        preDesStr = GameCommonInfo.GetUITextById(313);
+                        preDesStr = TextHandler.Instance.manager.GetTextById(313);
                         workerNumber += characterWorkerForWaiter.sendTotalNumber;
                     }
                     else if (preTypeData.dataType == PreTypeEnum.WorkerForCleanBedNumber)
                     {
-                        preDesStr = GameCommonInfo.GetUITextById(348);
+                        preDesStr = TextHandler.Instance.manager.GetTextById(348);
                         workerNumber += characterWorkerForWaiter.cleanBedTotalNumber;
                     }
                     break;
@@ -1003,12 +1003,12 @@ public class PreTypeEnumTools : DataTools
                     CharacterWorkerForAccountantBean characterWorkerForAccountant = (CharacterWorkerForAccountantBean)itemWorkerData.baseInfo.GetWorkerInfoByType(WorkerEnum.Accountant);
                     if (preTypeData.dataType == PreTypeEnum.WorkerForAccountantSuccessNumber)
                     {
-                        preDesStr = GameCommonInfo.GetUITextById(318);
+                        preDesStr = TextHandler.Instance.manager.GetTextById(318);
                         workerNumber += characterWorkerForAccountant.accountingSuccessNumber;
                     }
                     else if (preTypeData.dataType == PreTypeEnum.WorkerForAccountantFailNumber)
                     {
-                        preDesStr = GameCommonInfo.GetUITextById(320);
+                        preDesStr = TextHandler.Instance.manager.GetTextById(320);
                         workerNumber += characterWorkerForAccountant.accountingErrorNumber;
                     }
 
@@ -1020,17 +1020,17 @@ public class PreTypeEnumTools : DataTools
                     CharacterWorkerForAccostBean characterWorkerForAccost = (CharacterWorkerForAccostBean)itemWorkerData.baseInfo.GetWorkerInfoByType(WorkerEnum.Accost);
                     if (preTypeData.dataType == PreTypeEnum.WorkerForAccostSuccessNumber)
                     {
-                        preDesStr = GameCommonInfo.GetUITextById(324);
+                        preDesStr = TextHandler.Instance.manager.GetTextById(324);
                         workerNumber += characterWorkerForAccost.accostSuccessNumber;
                     }
                     else if (preTypeData.dataType == PreTypeEnum.WorkerForAccostFailNumber)
                     {
-                        preDesStr = GameCommonInfo.GetUITextById(325);
+                        preDesStr = TextHandler.Instance.manager.GetTextById(325);
                         workerNumber += characterWorkerForAccost.accostFailNumber;
                     }
                     else if (preTypeData.dataType == PreTypeEnum.WorkerForAccostGuideNumber)
                     {
-                        preDesStr = GameCommonInfo.GetUITextById(347);
+                        preDesStr = TextHandler.Instance.manager.GetTextById(347);
                         workerNumber += characterWorkerForAccost.guideNumber;
                     }
                     break;
@@ -1039,12 +1039,12 @@ public class PreTypeEnumTools : DataTools
                     CharacterWorkerForBeaterBean characterWorkerForBeater = (CharacterWorkerForBeaterBean)itemWorkerData.baseInfo.GetWorkerInfoByType(WorkerEnum.Beater);
                     if (preTypeData.dataType == PreTypeEnum.WorkerForFightSuccessNumber)
                     {
-                        preDesStr = GameCommonInfo.GetUITextById(329);
+                        preDesStr = TextHandler.Instance.manager.GetTextById(329);
                         workerNumber += characterWorkerForBeater.fightWinNumber;
                     }
                     else if (preTypeData.dataType == PreTypeEnum.WorkerForFightFailNumber)
                     {
-                        preDesStr = GameCommonInfo.GetUITextById(330);
+                        preDesStr = TextHandler.Instance.manager.GetTextById(330);
                         workerNumber += characterWorkerForBeater.fightLoseNumber;
                     }
                     break;
@@ -1064,7 +1064,7 @@ public class PreTypeEnumTools : DataTools
         }
         preTypeData.spPreIcon = spIcon;
         preTypeData.preDescribe = preDesStr + preProStr;
-        preTypeData.preFailStr = GameCommonInfo.GetUITextById(5081);
+        preTypeData.preFailStr = TextHandler.Instance.manager.GetTextById(5081);
         return preTypeData;
     }
 
@@ -1085,7 +1085,7 @@ public class PreTypeEnumTools : DataTools
         switch (preTypeData.dataType)
         {
             case PreTypeEnum.InnPraise:
-                preDesStr = GameCommonInfo.GetUITextById(5091);
+                preDesStr = TextHandler.Instance.manager.GetTextById(5091);
                 spIcon = IconDataHandler.Instance.manager.GetIconSpriteByName("ui_praise");
                 break;
         }
@@ -1106,7 +1106,7 @@ public class PreTypeEnumTools : DataTools
         }
         preTypeData.spPreIcon = spIcon;
         preTypeData.preDescribe = preDesStr + preProStr;
-        preTypeData.preFailStr = GameCommonInfo.GetUITextById(5092);
+        preTypeData.preFailStr = TextHandler.Instance.manager.GetTextById(5092);
         return preTypeData;
     }
 
@@ -1127,7 +1127,7 @@ public class PreTypeEnumTools : DataTools
         switch (preTypeData.dataType)
         {
             case PreTypeEnum.InnAesthetics:
-                preDesStr = GameCommonInfo.GetUITextById(5101);
+                preDesStr = TextHandler.Instance.manager.GetTextById(5101);
                 spIcon = IconDataHandler.Instance.manager.GetIconSpriteByName("ui_aesthetics");
                 break;
         }
@@ -1147,7 +1147,7 @@ public class PreTypeEnumTools : DataTools
         }
         preTypeData.spPreIcon = spIcon;
         preTypeData.preDescribe = preDesStr + preProStr;
-        preTypeData.preFailStr = GameCommonInfo.GetUITextById(5102);
+        preTypeData.preFailStr = TextHandler.Instance.manager.GetTextById(5102);
         return preTypeData;
     }
 
@@ -1172,8 +1172,8 @@ public class PreTypeEnumTools : DataTools
             preData.isPre = false;
         }
         CharacterBean characterData = NpcInfoHandler.Instance.manager.GetCharacterDataById(npcId);
-        preData.preDescribe = string.Format(GameCommonInfo.GetUITextById(5221), characterData.baseInfo.name, npcFavorabilityLevel + "");
-        preData.preFailStr = string.Format(GameCommonInfo.GetUITextById(5222), characterData.baseInfo.name, npcFavorabilityLevel + "");
+        preData.preDescribe = string.Format(TextHandler.Instance.manager.GetTextById(5221), characterData.baseInfo.name, npcFavorabilityLevel + "");
+        preData.preFailStr = string.Format(TextHandler.Instance.manager.GetTextById(5222), characterData.baseInfo.name, npcFavorabilityLevel + "");
         return preData;
     }
     /// <summary>
@@ -1186,7 +1186,7 @@ public class PreTypeEnumTools : DataTools
     {
         Sprite spIcon = IconDataHandler.Instance.manager.GetIconSpriteByName("ui_praise");
         int maxLayer = int.Parse(preTypeData.data);
-        string preProStr = string.Format(GameCommonInfo.GetUITextById(5111), maxLayer + "");
+        string preProStr = string.Format(TextHandler.Instance.manager.GetTextById(5111), maxLayer + "");
         string preDesStr = "";
         UserAchievementBean userAchievement = gameData.GetAchievementData();
         int currrentLayer = userAchievement.maxInfiniteTowersLayer;
@@ -1204,7 +1204,7 @@ public class PreTypeEnumTools : DataTools
         }
         preTypeData.spPreIcon = spIcon;
         preTypeData.preDescribe = preDesStr + preProStr;
-        preTypeData.preFailStr = GameCommonInfo.GetUITextById(5112);
+        preTypeData.preFailStr = TextHandler.Instance.manager.GetTextById(5112);
         return preTypeData;
     }
 
