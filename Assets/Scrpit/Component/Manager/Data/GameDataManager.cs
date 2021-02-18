@@ -114,6 +114,8 @@ public class GameDataManager : BaseManager, IGameDataView, IUserRevenueView, IGa
     /// <returns></returns>
     public GameConfigBean GetGameConfig()
     {
+        if (gameConfig == null)
+            gameConfig = new GameConfigBean();
         return gameConfig;
     }
 

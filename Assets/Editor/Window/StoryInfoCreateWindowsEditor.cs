@@ -4,42 +4,22 @@ using System.Collections.Generic;
 using Cinemachine;
 using static CharacterExpressionCpt;
 
-public class StoryCreateWindowsEditor : EditorWindow
+public class StoryInfoCreateWindowsEditor : EditorWindow
 {
-    private GameObject mObjContent;
-    private GameObject mObjNpcModel;
-    //镜头
-    private GameObject mObjCarmera;
-    private CinemachineVirtualCamera mCamera2D;
 
     [MenuItem("Tools/Window/StoryCreate")]
     static void CreateWindows()
     {
-        EditorWindow.GetWindow(typeof(StoryCreateWindowsEditor));
+        EditorWindow.GetWindow(typeof(StoryInfoCreateWindowsEditor));
     }
 
-    public StoryCreateWindowsEditor()
+    public StoryInfoCreateWindowsEditor()
     {
         this.titleContent = new GUIContent("剧情创建辅助工具");
     }
 
-    private void OnDestroy()
-    {
-        CptUtil.RemoveChildsByActiveInEditor(mObjContent);
-    }
-
-    private void OnFocus()
-    {
-        mCamera2D = mObjCarmera.GetComponent<CinemachineVirtualCamera>();
-    }
-
     private void OnEnable()
     {
-        mObjContent = GameObject.Find("StoryBuilder");
-        mObjNpcModel = mObjContent.transform.Find("CharacterForStory").gameObject;
-        mObjCarmera = GameObject.Find("Camera2D");
-
-        mCamera2D = mObjCarmera.GetComponent<CinemachineVirtualCamera>();
         //查询所有NPC数据
         listAllStoryInfoDetails = null;
         listOrderStoryInfoDetails = null;
@@ -51,14 +31,12 @@ public class StoryCreateWindowsEditor : EditorWindow
         {
             mapNpcInfo.Add(itemInfo.id, itemInfo);
         }
-        gameItemsManager = new GameItemsManager();
-        gameItemsManager.Awake();
-        gameItemsManager.itemsInfoController.GetAllItemsInfo();
+        GameItemsHandler.Instance.manager.Awake();
+
         textInfoService = new TextInfoService();
         storyInfoService = new StoryInfoService();
     }
 
-    GameItemsManager gameItemsManager;
     TextInfoService textInfoService;
     StoryInfoService storyInfoService;
 
@@ -195,7 +173,7 @@ public class StoryCreateWindowsEditor : EditorWindow
         if (GUILayout.Button("显示详情", GUILayout.Width(100), GUILayout.Height(20)))
         {
             mFindStoryId = storyInfo.id;
-            mObjContent.transform.position = new Vector3(storyInfo.position_x, storyInfo.position_y);
+            StoryInfoHandler.Instance.builderForStory.transform.position = new Vector3(storyInfo.position_x, storyInfo.position_y);
             QueryStoryInfoData(mFindStoryId);
             QueryStoryDetailsData(mFindStoryId);
         }
@@ -215,15 +193,8 @@ public class StoryCreateWindowsEditor : EditorWindow
         GUILayout.Label("坐标：", GUILayout.Width(150), GUILayout.Height(20));
         if (GUILayout.Button("获取容器坐标", GUILayout.Width(150), GUILayout.Height(20)))
         {
-            if (mObjContent == null)
-            {
-                LogUtil.LogError("容器没有定义");
-            }
-            else
-            {
-                storyInfo.position_x = mObjContent.transform.position.x;
-                storyInfo.position_y = mObjContent.transform.position.y;
-            }
+            storyInfo.position_x = StoryInfoHandler.Instance.builderForStory.transform.position.x;
+            storyInfo.position_y = StoryInfoHandler.Instance.builderForStory.transform.position.y;
         }
         storyInfo.position_x = float.Parse(EditorGUILayout.TextArea(storyInfo.position_x + "", GUILayout.Width(100), GUILayout.Height(20)));
         storyInfo.position_y = float.Parse(EditorGUILayout.TextArea(storyInfo.position_y + "", GUILayout.Width(100), GUILayout.Height(20)));
@@ -567,16 +538,6 @@ public class StoryCreateWindowsEditor : EditorWindow
     /// <param name="idStr"></param>
     public GameObject CreateNpc(string idStr)
     {
-        if (mObjContent == null)
-        {
-            LogUtil.LogError("还没有定义剧情容器");
-            return null;
-        }
-        if (mObjNpcModel == null)
-        {
-            LogUtil.LogError("还没有NPC模型");
-            return null;
-        }
         if (long.TryParse(idStr, out long createNpcId))
         {
             return CreateNpc(createNpcId, Vector3.zero, 0);
@@ -605,7 +566,7 @@ public class StoryCreateWindowsEditor : EditorWindow
             return null;
         }
 
-        objNpc = Instantiate(mObjNpcModel, mObjContent.transform);
+        objNpc = Instantiate(StoryInfoHandler.Instance.manager.objNpcModel, StoryInfoHandler.Instance.builderForStory.transform);
         BaseNpcAI baseNpcAI = objNpc.GetComponent<BaseNpcAI>();
         baseNpcAI.Awake();
        
@@ -658,17 +619,12 @@ public class StoryCreateWindowsEditor : EditorWindow
     /// <param name="storyId"></param>
     public void QueryStoryDetailsData(long mFindStoryId)
     {
-        if (mObjContent == null)
-        {
-            LogUtil.LogError("还没有定义剧情容器");
-            return;
-        }
         //清空容器
-        for (int i = 0; i < mObjContent.transform.childCount; i++)
+        for (int i = 0; i < StoryInfoHandler.Instance.builderForStory.transform.childCount; i++)
         {
-            if (mObjContent.transform.GetChild(i).gameObject.activeSelf)
+            if (StoryInfoHandler.Instance.builderForStory.transform.GetChild(i).gameObject.activeSelf)
             {
-                GameObject.DestroyImmediate(mObjContent.transform.GetChild(i).gameObject);
+                GameObject.DestroyImmediate(StoryInfoHandler.Instance.builderForStory.transform.GetChild(i).gameObject);
             }
         }
         listAllStoryInfoDetails = storyInfoService.QueryStoryDetailsById(mFindStoryId);
@@ -712,7 +668,7 @@ public class StoryCreateWindowsEditor : EditorWindow
             StoryInfoDetailsBean.StoryInfoDetailsTypeEnum storyInfoDetailsType = itemData.GetStoryInfoDetailsType();
             if (storyInfoDetailsType == StoryInfoDetailsBean.StoryInfoDetailsTypeEnum.NpcPosition)
             {
-                BaseNpcAI npcAI = CptUtil.GetCptInChildrenByName<BaseNpcAI>(mObjContent, itemData.npc_num + "");
+                BaseNpcAI npcAI = CptUtil.GetCptInChildrenByName<BaseNpcAI>(StoryInfoHandler.Instance.builderForStory.gameObject, itemData.npc_num + "");
                 if (npcAI == null)
                 {
                     NpcInfoBean npcInfoBean;
@@ -751,20 +707,21 @@ public class StoryCreateWindowsEditor : EditorWindow
                 int[] numList = StringUtil.SplitBySubstringForArrayInt(itemData.npc_destroy, ',');
                 foreach (int num in numList)
                 {
-                    BaseNpcAI npcAI = CptUtil.GetCptInChildrenByName<BaseNpcAI>(mObjContent, num + "");
+                    BaseNpcAI npcAI = CptUtil.GetCptInChildrenByName<BaseNpcAI>(StoryInfoHandler.Instance.builderForStory.gameObject, num + "");
                     DestroyImmediate(npcAI.gameObject);
                 }
             }
             else if (storyInfoDetailsType == StoryInfoDetailsBean.StoryInfoDetailsTypeEnum.CameraPosition)
             {
-                Vector3 cameraWorldPosition = mObjContent.transform.TransformPoint(new Vector3(itemData.camera_position_x, itemData.camera_position_y, -10));
-                mCamera2D.Follow = null;
-                mCamera2D.transform.position = cameraWorldPosition;
+                Vector3 cameraWorldPosition = StoryInfoHandler.Instance.builderForStory.transform.TransformPoint(new Vector3(itemData.camera_position_x, itemData.camera_position_y, -10));
+
+                GameCameraHandler.Instance.manager.camera2D.Follow = null;
+                GameCameraHandler.Instance.manager.camera2D.transform.position = cameraWorldPosition;
             }
             else if (itemData.type == (int)StoryInfoDetailsBean.StoryInfoDetailsTypeEnum.CameraFollowCharacter)
             {
-                BaseNpcAI npcAI = CptUtil.GetCptInChildrenByName<BaseNpcAI>(mObjContent, itemData.camera_follow_character + "");
-                mCamera2D.Follow = npcAI.transform;
+                BaseNpcAI npcAI = CptUtil.GetCptInChildrenByName<BaseNpcAI>(StoryInfoHandler.Instance.builderForStory.gameObject, itemData.camera_follow_character + "");
+                GameCameraHandler.Instance.manager.camera2D.Follow = npcAI.transform;
             }
         }
     }
@@ -825,13 +782,13 @@ public class StoryCreateWindowsEditor : EditorWindow
     /// <returns></returns>
     public GameObject GetSceneObjByName(string name)
     {
-        for (int i = 0; i < mObjContent.transform.childCount; i++)
+        for (int i = 0; i < StoryInfoHandler.Instance.builderForStory.transform.childCount; i++)
         {
-            if (mObjContent.transform.GetChild(i).gameObject.activeSelf)
+            if (StoryInfoHandler.Instance.builderForStory.transform.GetChild(i).gameObject.activeSelf)
             {
-                if (mObjContent.transform.GetChild(i).gameObject.name.Equals(name))
+                if (StoryInfoHandler.Instance.builderForStory.transform.GetChild(i).gameObject.name.Equals(name))
                 {
-                    return mObjContent.transform.GetChild(i).gameObject;
+                    return StoryInfoHandler.Instance.builderForStory.transform.GetChild(i).gameObject;
                 }
             }
         }
