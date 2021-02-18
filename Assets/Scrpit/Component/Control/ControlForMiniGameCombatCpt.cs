@@ -41,7 +41,7 @@ public class ControlForMiniGameCombatCpt : BaseControl
         {
             uiMiniGameCombat.uiForSelectCharacter.ChangeCharacter(1);
         }
-        if (Input.GetButtonDown(InputInfo.Interactive_E))
+        if (Input.GetButtonDown(InputInfo.Interactive_E)|| Input.GetButtonDown(InputInfo.Confirm))
         {
             uiMiniGameCombat.uiForSelectCharacter.ConfirmSelect();
         }

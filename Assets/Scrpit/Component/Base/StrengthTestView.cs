@@ -20,7 +20,7 @@ public class StrengthTestView : BaseMonoBehaviour
     {
         if (mIsTest)
         {
-            if (Input.GetButtonDown(InputInfo.Interactive_E))
+            if (Input.GetButtonDown(InputInfo.Interactive_E) || Input.GetButtonDown(InputInfo.Confirm))
             {
                 mIsTest = false;
                 if (mCallBack != null)
@@ -35,11 +35,6 @@ public class StrengthTestView : BaseMonoBehaviour
                 sliderStrength.value = 0;
             sliderStrength.value += (strengthSpeed * Time.deltaTime * mDirection);
         }
-    }
-
-    private void FixedUpdate()
-    {
-
     }
 
     /// <summary>

@@ -414,13 +414,10 @@ public class UIGameText : BaseUIComponent, DialogView.IDialogCallBack
             FamilyDataBean familyData = gameData.GetFamilyData();
             familyData.timeForMarry = GameTimeHandler.Instance.GetAfterDay(3);
             //设置妻子数据
-            CharacterForFamilyBean characterData = new CharacterForFamilyBean(mTalkNpcInfo);
+            CharacterForFamilyBean characterData = new CharacterForFamilyBean(mTalkNpcInfo, familyData.timeForMarry);
             characterData.SetFamilyType(FamilyTypeEnum.Mate);
             familyData.wifeCharacter = characterData;
-
-
         }
-
     }
 
     public void Cancel(DialogView dialogView, DialogBean dialogBean)

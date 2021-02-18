@@ -7,9 +7,14 @@ public class StoryInfoManager : BaseManager, IStoryInfoView
 {
     public StoryInfoController storyInfoController;
     public Dictionary<long, StoryInfoBean> mapStory = new Dictionary<long, StoryInfoBean>();
+    //剧情道具
+    public Dictionary<string, GameObject> dicStoryProp =new Dictionary<string, GameObject>();
+    //剧情所用人物模型
+    public GameObject objNpcModel;
 
     private void Awake()
     {
+        objNpcModel = LoadAssetUtil.SyncLoadAsset<GameObject>("character/character", "CharacterForStory");
         storyInfoController = new StoryInfoController(this, this);
         storyInfoController.GetAllStoryInfo(null);
     }
@@ -27,6 +32,17 @@ public class StoryInfoManager : BaseManager, IStoryInfoView
     public void GetStoryDetailsById(long id, Action<List<StoryInfoDetailsBean>> action)
     {
         storyInfoController.GetStoryDetailsById(id, action);
+    }
+
+    /// <summary>
+    /// 获取故事道具模型
+    /// </summary>
+    /// <param name="name"></param>
+    /// <returns></returns>
+    public GameObject GetStoryPropModelByName(string name)
+    {
+        GameObject objModel = GetModel(dicStoryProp, "", name);
+        return objModel;
     }
 
     /// <summary>

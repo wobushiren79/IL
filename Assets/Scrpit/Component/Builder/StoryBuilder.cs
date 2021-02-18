@@ -6,26 +6,26 @@ using System;
 
 public class StoryBuilder : BaseMonoBehaviour
 {
-    [Header("控件")]
-    public GameObject objNpcModel;
-
     //剧情
     public StoryInfoBean storyInfo;
     //剧情详情
     public List<StoryInfoDetailsBean> listStoryDetails;
     //剧情NPC列表
     public List<GameObject> listNpcObj;
+    //剧情道具列表
+    public List<GameObject> listPropObj;
 
     //剧情点
     private int mStoryOrder = 1;
     //迷你游戏数据
     private MiniGameCookingBean mGameCookingData;
 
+
     public virtual void Awake()
     {
-        objNpcModel = LoadAssetUtil.SyncLoadAsset<GameObject>("character/character", "CharacterForStory");
         listStoryDetails = new List<StoryInfoDetailsBean>();
         listNpcObj = new List<GameObject>();
+        listPropObj = new List<GameObject>();
     }
 
     /// <summary>
@@ -83,7 +83,7 @@ public class StoryBuilder : BaseMonoBehaviour
         BaseControl baseControl = null;
         foreach (StoryInfoDetailsBean itemData in listData)
         {
-            switch ((StoryInfoDetailsBean.StoryInfoDetailsTypeEnum)itemData.type)
+            switch (itemData.GetStoryInfoDetailsType())
             {
                 case StoryInfoDetailsBean.StoryInfoDetailsTypeEnum.NpcPosition:
                     //Npc站位
@@ -135,13 +135,17 @@ public class StoryBuilder : BaseMonoBehaviour
                 case StoryInfoDetailsBean.StoryInfoDetailsTypeEnum.Talk:
                     //进入对话
                     isNext = false;
-                    UIGameText uiComponent = (UIGameText)UIHandler.Instance.manager.OpenUIAndCloseOther<UIGameText>(UIEnum.GameText);
+                    UIGameText uiComponent = UIHandler.Instance.manager.OpenUIAndCloseOther<UIGameText>(UIEnum.GameText);
                     uiComponent.SetData(TextEnum.Story, itemData.text_mark_id);
                     break;
                 case StoryInfoDetailsBean.StoryInfoDetailsTypeEnum.AutoNext:
                     //剧情自动跳转
                     isNext = false;
                     StartCoroutine(StoryAutoNext(itemData.wait_time));
+                    break;
+                case StoryInfoDetailsBean.StoryInfoDetailsTypeEnum.PropPosition:
+                    //道具位置
+                    CreateProp(itemData);
                     break;
                 case StoryInfoDetailsBean.StoryInfoDetailsTypeEnum.CameraPosition:
                     //设置摄像头位置
@@ -232,6 +236,7 @@ public class StoryBuilder : BaseMonoBehaviour
     /// <param name="itemData"></param>
     public BaseNpcAI CreateNpc(StoryInfoDetailsBean itemData)
     {
+        GameObject objNpcModel = StoryInfoHandler.Instance.manager.objNpcModel;
         GameObject objNpc = Instantiate(transform.gameObject, objNpcModel);
         objNpc.transform.localPosition = new Vector3(itemData.npc_position_x, itemData.npc_position_y);
         listNpcObj.Add(objNpc);
@@ -254,6 +259,19 @@ public class StoryBuilder : BaseMonoBehaviour
     }
 
     /// <summary>
+    /// 生成道具
+    /// </summary>
+    /// <param name="itemData"></param>
+    public void CreateProp(StoryInfoDetailsBean itemData)
+    {
+        GameObject objPropModel = StoryInfoHandler.Instance.manager.GetStoryPropModelByName("");
+        GameObject objProp = Instantiate(transform.gameObject, objPropModel);
+        objProp.transform.localPosition = new Vector3(itemData.position_x, itemData.position_y);
+        listPropObj.Add(objProp);
+        objProp.name = "prop_";
+    }
+
+    /// <summary>
     /// 清理剧情场景
     /// </summary>
     public void ClearStoryScene()
@@ -262,6 +280,7 @@ public class StoryBuilder : BaseMonoBehaviour
         CptUtil.RemoveChildsByActive(transform);
         gameObject.transform.position = Vector3.zero;
         listNpcObj.Clear();
+        listPropObj.Clear();
         mStoryOrder = 1;
     }
 

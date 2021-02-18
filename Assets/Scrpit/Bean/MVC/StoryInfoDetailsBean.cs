@@ -1,20 +1,21 @@
 ﻿using UnityEngine;
 using UnityEditor;
 
-public class StoryInfoDetailsBean 
+public class StoryInfoDetailsBean
 {
     public enum StoryInfoDetailsTypeEnum
     {
-        NpcPosition=1,//NPC位置
-        Expression=2,//表情
-        SceneInt=3,//场景互动
-        NpcDestory=4,//销毁NPC
+        NpcPosition = 1,//NPC位置
+        Expression = 2,//表情
+        SceneInt = 3,//场景互动
+        NpcDestory = 4,//销毁NPC
 
-        Talk =11,//对话
-        AutoNext=12,//指定时间跳转
+        Talk = 11,//对话
+        AutoNext = 12,//指定时间跳转
+        PropPosition = 13,//道具位置
 
         CameraPosition = 21,//摄像机位置
-        CameraFollowCharacter=22,//摄像头跟随目标
+        CameraFollowCharacter = 22,//摄像头跟随目标
         AudioSound = 31,//音效播放
     }
 
@@ -23,6 +24,9 @@ public class StoryInfoDetailsBean
     public int type;
     //事件顺序
     public int story_order;
+
+    public float position_x;
+    public float position_y;
 
     //NPCID
     public long npc_id;
@@ -67,5 +71,14 @@ public class StoryInfoDetailsBean
     public AudioSoundEnum GetAudioSound()
     {
         return (AudioSoundEnum)audio_sound;
+    }
+
+    /// <summary>
+    /// 获取类型
+    /// </summary>
+    /// <returns></returns>
+    public StoryInfoDetailsTypeEnum GetStoryInfoDetailsType()
+    {
+        return (StoryInfoDetailsTypeEnum)type;
     }
 }

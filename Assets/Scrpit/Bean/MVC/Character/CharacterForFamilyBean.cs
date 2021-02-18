@@ -6,14 +6,16 @@ using System;
 public class CharacterForFamilyBean : CharacterBean
 {
     public int familyType;
-    public CharacterForFamilyBean()
-    {
 
+    public TimeBean birthTime;
+    public CharacterForFamilyBean(TimeBean birthTime)
+    {
+        this.birthTime = birthTime;
     }
 
-    public CharacterForFamilyBean(NpcInfoBean npcInfo) : base(npcInfo)
+    public CharacterForFamilyBean(NpcInfoBean npcInfo, TimeBean birthTime) : base(npcInfo)
     {
-
+        this.birthTime = birthTime;
     }
 
     public FamilyTypeEnum GetFamilyType()

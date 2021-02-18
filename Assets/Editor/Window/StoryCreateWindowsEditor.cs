@@ -280,7 +280,8 @@ public class StoryCreateWindowsEditor : EditorWindow
         foreach (StoryInfoDetailsBean itemData in listOrderStoryInfoDetails)
         {
             GUILayout.BeginHorizontal();
-            if(itemData.type != (int)StoryInfoDetailsBean.StoryInfoDetailsTypeEnum.Talk)
+            StoryInfoDetailsBean.StoryInfoDetailsTypeEnum storyInfoDetailsType = itemData.GetStoryInfoDetailsType();
+            if (storyInfoDetailsType == StoryInfoDetailsBean.StoryInfoDetailsTypeEnum.Talk)
             {
                 if (GUILayout.Button("删除", GUILayout.Width(200), GUILayout.Height(20)))
                 {
@@ -288,7 +289,7 @@ public class StoryCreateWindowsEditor : EditorWindow
                     listOrderStoryInfoDetails.Remove(itemData);
                 }
             }
-            if (itemData.type == (int)StoryInfoDetailsBean.StoryInfoDetailsTypeEnum.NpcPosition)
+            if (storyInfoDetailsType == StoryInfoDetailsBean.StoryInfoDetailsTypeEnum.NpcPosition)
             {
                 if (GUILayout.Button("更新显示", GUILayout.Width(100), GUILayout.Height(20)))
                 {
@@ -330,7 +331,7 @@ public class StoryCreateWindowsEditor : EditorWindow
 
 
             }
-            else if (itemData.type == (int)StoryInfoDetailsBean.StoryInfoDetailsTypeEnum.Talk)
+            else if (storyInfoDetailsType == StoryInfoDetailsBean.StoryInfoDetailsTypeEnum.Talk)
             {
                 GUILayout.BeginVertical();
                 GUILayout.Space(20);
@@ -443,14 +444,14 @@ public class StoryCreateWindowsEditor : EditorWindow
                 GUILayout.EndVertical();
 
             }
-            else if (itemData.type == (int)StoryInfoDetailsBean.StoryInfoDetailsTypeEnum.Expression)
+            else if (storyInfoDetailsType == StoryInfoDetailsBean.StoryInfoDetailsTypeEnum.Expression)
             {
                 GUILayout.Label("指定NPC展现表情 ", GUILayout.Width(150), GUILayout.Height(20));
                 GUILayout.Label("NPC编号：", GUILayout.Width(120), GUILayout.Height(20));
                 itemData.npc_num = int.Parse(EditorGUILayout.TextArea(itemData.npc_num + "", GUILayout.Width(200), GUILayout.Height(20)));
                 itemData.expression = (int)(CharacterExpressionEnum)EditorGUILayout.EnumPopup("表情编号：", (CharacterExpressionEnum)itemData.expression, GUILayout.Width(300), GUILayout.Height(20));
             }
-            else if (itemData.type == (int)StoryInfoDetailsBean.StoryInfoDetailsTypeEnum.SceneInt)
+            else if (storyInfoDetailsType == StoryInfoDetailsBean.StoryInfoDetailsTypeEnum.SceneInt)
             {
                 GUILayout.Label("场景互动 ", GUILayout.Width(120), GUILayout.Height(20));
                 GUILayout.Label("互动物体名称：", GUILayout.Width(120), GUILayout.Height(20));
@@ -463,7 +464,7 @@ public class StoryCreateWindowsEditor : EditorWindow
                 itemData.scene_intcomponent_parameters = EditorGUILayout.TextArea(itemData.scene_intcomponent_parameters, GUILayout.Width(200), GUILayout.Height(20));
 
             }
-            else if (itemData.type == (int)StoryInfoDetailsBean.StoryInfoDetailsTypeEnum.NpcDestory)
+            else if (storyInfoDetailsType == StoryInfoDetailsBean.StoryInfoDetailsTypeEnum.NpcDestory)
             {
                 GUILayout.Label("删除角色(num,num)：", GUILayout.Width(120), GUILayout.Height(20));
                 itemData.npc_destroy = EditorGUILayout.TextArea(itemData.npc_destroy, GUILayout.Width(200), GUILayout.Height(20));
@@ -480,7 +481,7 @@ public class StoryCreateWindowsEditor : EditorWindow
                 GUILayout.Label("延迟时间s:", GUILayout.Width(120), GUILayout.Height(20));
                 itemData.wait_time = float.Parse(EditorGUILayout.TextArea(itemData.wait_time + "", GUILayout.Width(100), GUILayout.Height(20)));
             }
-            else if (itemData.type == (int)StoryInfoDetailsBean.StoryInfoDetailsTypeEnum.CameraPosition)
+            else if (storyInfoDetailsType == StoryInfoDetailsBean.StoryInfoDetailsTypeEnum.CameraPosition)
             {
                 if (GUILayout.Button("删除", GUILayout.Width(100), GUILayout.Height(20)))
                 {
@@ -492,7 +493,7 @@ public class StoryCreateWindowsEditor : EditorWindow
                 GUILayout.Label("y:", GUILayout.Width(50), GUILayout.Height(20));
                 itemData.camera_position_y = float.Parse(EditorGUILayout.TextArea(itemData.camera_position_y + "", GUILayout.Width(100), GUILayout.Height(20)));
             }
-            else if (itemData.type == (int)StoryInfoDetailsBean.StoryInfoDetailsTypeEnum.CameraFollowCharacter)
+            else if (storyInfoDetailsType == StoryInfoDetailsBean.StoryInfoDetailsTypeEnum.CameraFollowCharacter)
             {
                 if (GUILayout.Button("删除", GUILayout.Width(100), GUILayout.Height(20)))
                 {
@@ -501,7 +502,7 @@ public class StoryCreateWindowsEditor : EditorWindow
                 GUILayout.Label("摄像头跟随角色序号 ", GUILayout.Width(200), GUILayout.Height(20));
                 itemData.camera_follow_character = int.Parse(EditorGUILayout.TextArea(itemData.camera_follow_character + "", GUILayout.Width(100), GUILayout.Height(20)));
             }
-            else if (itemData.type == (int)StoryInfoDetailsBean.StoryInfoDetailsTypeEnum.AudioSound)
+            else if (storyInfoDetailsType == StoryInfoDetailsBean.StoryInfoDetailsTypeEnum.AudioSound)
             {
                 if (GUILayout.Button("删除", GUILayout.Width(100), GUILayout.Height(20)))
                 {
@@ -708,7 +709,8 @@ public class StoryCreateWindowsEditor : EditorWindow
         listStoryTextInfo = null;
         foreach (StoryInfoDetailsBean itemData in listData)
         {
-            if (itemData.type == (int)StoryInfoDetailsBean.StoryInfoDetailsTypeEnum.NpcPosition)
+            StoryInfoDetailsBean.StoryInfoDetailsTypeEnum storyInfoDetailsType = itemData.GetStoryInfoDetailsType();
+            if (storyInfoDetailsType == StoryInfoDetailsBean.StoryInfoDetailsTypeEnum.NpcPosition)
             {
                 BaseNpcAI npcAI = CptUtil.GetCptInChildrenByName<BaseNpcAI>(mObjContent, itemData.npc_num + "");
                 if (npcAI == null)
@@ -740,11 +742,11 @@ public class StoryCreateWindowsEditor : EditorWindow
                 npcAI.SetCharacterFace(itemData.npc_face);
             }
             //如果是对话 查询对话数据
-            else if (itemData.type == (int)StoryInfoDetailsBean.StoryInfoDetailsTypeEnum.Talk)
+            else if (storyInfoDetailsType == StoryInfoDetailsBean.StoryInfoDetailsTypeEnum.Talk)
             {
                 listStoryTextInfo = textInfoService.QueryDataByMarkId(TextEnum.Story, itemData.text_mark_id);
             }
-            else if (itemData.type == (int)StoryInfoDetailsBean.StoryInfoDetailsTypeEnum.NpcDestory)
+            else if (storyInfoDetailsType == StoryInfoDetailsBean.StoryInfoDetailsTypeEnum.NpcDestory)
             {
                 int[] numList = StringUtil.SplitBySubstringForArrayInt(itemData.npc_destroy, ',');
                 foreach (int num in numList)
@@ -753,7 +755,7 @@ public class StoryCreateWindowsEditor : EditorWindow
                     DestroyImmediate(npcAI.gameObject);
                 }
             }
-            else if (itemData.type == (int)StoryInfoDetailsBean.StoryInfoDetailsTypeEnum.CameraPosition)
+            else if (storyInfoDetailsType == StoryInfoDetailsBean.StoryInfoDetailsTypeEnum.CameraPosition)
             {
                 Vector3 cameraWorldPosition = mObjContent.transform.TransformPoint(new Vector3(itemData.camera_position_x, itemData.camera_position_y, -10));
                 mCamera2D.Follow = null;
