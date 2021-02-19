@@ -41,7 +41,7 @@ public class StoryInfoManager : BaseManager, IStoryInfoView
     /// <returns></returns>
     public GameObject GetStoryPropModelByName(string name)
     {
-        GameObject objModel = GetModel(dicStoryProp, "", name);
+        GameObject objModel = GetModel(dicStoryProp, "model/story", name);
         return objModel;
     }
 

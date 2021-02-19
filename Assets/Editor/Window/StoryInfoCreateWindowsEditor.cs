@@ -796,6 +796,7 @@ public class StoryInfoCreateWindowsEditor : EditorWindow
                 {
                     GameObject objModel = StoryInfoHandler.Instance.manager.GetStoryPropModelByName(itemData.key_name);
                     objProp = Instantiate(objModel, StoryInfoHandler.Instance.builderForStory.transform);
+                    objProp.name = "prop_" + itemData.num;
                 }
                 //设置位置和朝向
                 objProp.transform.localPosition = new Vector3(itemData.position_x, itemData.position_y);
