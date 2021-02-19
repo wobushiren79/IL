@@ -87,7 +87,7 @@ public class StoryBuilder : BaseMonoBehaviour
             {
                 case StoryInfoDetailsBean.StoryInfoDetailsTypeEnum.NpcPosition:
                     //Npc站位
-                    GameObject objNpc = GetNpcByNpcNum(itemData.npc_num);
+                    GameObject objNpc = GetNpcByNpcNum(itemData.num);
                     BaseNpcAI npcAI = null;
                     if (objNpc == null)
                     {
@@ -97,9 +97,9 @@ public class StoryBuilder : BaseMonoBehaviour
                     else
                     {
                         npcAI = objNpc.GetComponent<BaseNpcAI>();
-                        npcAI.characterMoveCpt.SetDestinationLocal(transform, new Vector3(itemData.npc_position_x, itemData.npc_position_y));
+                        npcAI.characterMoveCpt.SetDestinationLocal(transform, new Vector3(itemData.position_x, itemData.position_y));
                     }
-                    npcAI.SetCharacterFace(itemData.npc_face);
+                    npcAI.SetCharacterFace(itemData.face);
                     break;
                 case StoryInfoDetailsBean.StoryInfoDetailsTypeEnum.NpcDestory:
                     //删除角色
@@ -114,7 +114,7 @@ public class StoryBuilder : BaseMonoBehaviour
                     break;
                 case StoryInfoDetailsBean.StoryInfoDetailsTypeEnum.Expression:
                     //表情
-                    SetCharacterExpression(itemData.npc_num, itemData.expression);
+                    SetCharacterExpression(itemData.num, itemData.expression);
                     break;
                 case StoryInfoDetailsBean.StoryInfoDetailsTypeEnum.SceneInt:
                     try
@@ -145,12 +145,30 @@ public class StoryBuilder : BaseMonoBehaviour
                     break;
                 case StoryInfoDetailsBean.StoryInfoDetailsTypeEnum.PropPosition:
                     //道具位置
-                    CreateProp(itemData);
+                    GameObject objProp =  GetPropByNpcNum(itemData.num);
+                    if (objProp == null)
+                    {
+                        CreateProp(itemData);
+                    }
+                    else
+                    {
+                        CharacterMoveCpt characterMove = objProp.GetComponent<CharacterMoveCpt>();
+                        //如果可以移动
+                        if (characterMove)
+                        {
+                            characterMove.SetDestinationLocal(transform, new Vector3(itemData.position_x, itemData.position_y));
+                        }
+                        //如果不能移动则直接设置坐标
+                        else
+                        {
+                            objProp.transform.localPosition = new Vector3(itemData.position_x, itemData.position_y);
+                        }
+                    }      
                     break;
                 case StoryInfoDetailsBean.StoryInfoDetailsTypeEnum.CameraPosition:
                     //设置摄像头位置
                     baseControl = GameControlHandler.Instance.manager.GetControl<ControlForStoryCpt>(GameControlHandler.ControlEnum.Story);
-                    Vector3 cameraWorldPosition = transform.TransformPoint(new Vector3(itemData.camera_position_x, itemData.camera_position_y));
+                    Vector3 cameraWorldPosition = transform.TransformPoint(new Vector3(itemData.position_x, itemData.position_y));
                     baseControl.SetCameraFollowObj(null);
                     baseControl.SetFollowPosition(cameraWorldPosition);
                     break;
@@ -221,7 +239,7 @@ public class StoryBuilder : BaseMonoBehaviour
         {
             foreach (GameObject itemNpc in listNpcObj)
             {
-                if (itemNpc.name.Equals(npcNum + ""))
+                if (itemNpc.name.Equals("character_"+ npcNum))
                 {
                     return itemNpc;
                 }
@@ -230,6 +248,20 @@ public class StoryBuilder : BaseMonoBehaviour
         return null;
     }
 
+    public GameObject GetPropByNpcNum(int propNum)
+    {
+        if (listPropObj != null)
+        {
+            foreach (GameObject itemProp in listPropObj)
+            {
+                if (itemProp.name.Equals("prop_" + propNum))
+                {
+                    return itemProp;
+                }
+            }
+        }
+        return null;
+    }
     /// <summary>
     /// 生成NPC
     /// </summary>
@@ -238,7 +270,7 @@ public class StoryBuilder : BaseMonoBehaviour
     {
         GameObject objNpcModel = StoryInfoHandler.Instance.manager.objNpcModel;
         GameObject objNpc = Instantiate(transform.gameObject, objNpcModel);
-        objNpc.transform.localPosition = new Vector3(itemData.npc_position_x, itemData.npc_position_y);
+        objNpc.transform.localPosition = new Vector3(itemData.position_x, itemData.position_y);
         listNpcObj.Add(objNpc);
         NpcAIStoryCpt aiNpc = objNpc.GetComponent<NpcAIStoryCpt>();
         CharacterBean characterData;
@@ -251,7 +283,7 @@ public class StoryBuilder : BaseMonoBehaviour
         else
             characterData = NpcInfoHandler.Instance.manager.GetCharacterDataById(itemData.npc_id);
         //设置编号
-        objNpc.name = itemData.npc_num + "";
+        objNpc.name = "character_" + itemData.num;
         aiNpc.SetCharacterData(characterData);
         //默认设置NPC速度为1
         aiNpc.characterMoveCpt.SetMoveSpeed(1);
@@ -264,11 +296,33 @@ public class StoryBuilder : BaseMonoBehaviour
     /// <param name="itemData"></param>
     public void CreateProp(StoryInfoDetailsBean itemData)
     {
-        GameObject objPropModel = StoryInfoHandler.Instance.manager.GetStoryPropModelByName("");
+        GameObject objPropModel = StoryInfoHandler.Instance.manager.GetStoryPropModelByName(itemData.key_name);
         GameObject objProp = Instantiate(transform.gameObject, objPropModel);
-        objProp.transform.localPosition = new Vector3(itemData.position_x, itemData.position_y);
+
         listPropObj.Add(objProp);
-        objProp.name = "prop_";
+        objProp.name = "prop_" + itemData.num;
+
+        //设置位置和朝向
+        objProp.transform.localPosition = new Vector3(itemData.position_x, itemData.position_y);
+        Vector3 bodyScale = objProp.transform.localScale;
+        switch (itemData.face)
+        {
+            case 1:
+                bodyScale.x = -1;
+                break;
+
+            case 2:
+                bodyScale.x = 1;
+                break;
+        }
+        objProp.transform.localScale = bodyScale;
+
+        //如果有移动控件
+        CharacterMoveCpt characterMove = objProp.GetComponent<CharacterMoveCpt>();
+        if (characterMove != null)
+        {
+            characterMove.SetMoveSpeed(1);
+        }
     }
 
     /// <summary>

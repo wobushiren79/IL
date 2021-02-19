@@ -25,18 +25,18 @@ public class StoryInfoDetailsBean
     //事件顺序
     public int story_order;
 
+    public string key_name;
+
+    //坐标
     public float position_x;
     public float position_y;
+    //编号
+    public int num;
 
     //NPCID
     public long npc_id;
-    //NPC坐标
-    public float npc_position_x;
-    public float npc_position_y;
-    //NPC编号
-    public int npc_num;
     //npc朝向
-    public int npc_face;
+    public int face;
 
     //剧情自动跳转时间
     public float wait_time;
@@ -45,8 +45,6 @@ public class StoryInfoDetailsBean
     //表情
     public int expression;
 
-    public float camera_position_x;
-    public float camera_position_y;
     public int camera_follow_character;
 
     //摧毁的NPCID
