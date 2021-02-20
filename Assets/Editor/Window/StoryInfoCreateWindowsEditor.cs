@@ -292,6 +292,9 @@ public class StoryInfoCreateWindowsEditor : EditorWindow
             case StoryInfoDetailsBean.StoryInfoDetailsTypeEnum.AudioSound:
                 UIForStoryInfoDetailsAudioSound(itemData);
                 break;
+            case StoryInfoDetailsBean.StoryInfoDetailsTypeEnum.AudioMusic:
+                UIForStoryInfoDetailsAudioMusic(itemData);
+                break;
         }
         GUILayout.EndHorizontal();
     }
@@ -521,6 +524,29 @@ public class StoryInfoCreateWindowsEditor : EditorWindow
         EditorUI.GUIText("道具朝向1左2右:", 120, 20);
         itemData.face = EditorUI.GUIEditorText(itemData.face, 50, 20);
     }
+
+    protected void UIForStoryInfoDetailsWorkerPosition(StoryInfoDetailsBean itemData)
+    {
+        if (EditorUI.GUIButton("删除"))
+        {
+            RemoveStoryInfoDetailsItem(itemData);
+            return;
+        }
+        EditorUI.GUIText("员工站位", 100, 20);
+        EditorUI.GUIText("员工站位X:", 120, 20);
+        itemData.position_x = EditorUI.GUIEditorText(itemData.position_x, 100, 20);
+        EditorUI.GUIText("员工站位Y:", 120, 20);
+        itemData.position_y = EditorUI.GUIEditorText(itemData.position_y, 100, 20);
+        EditorUI.GUIText("员工朝向1左2右:", 120, 20);
+        itemData.face = EditorUI.GUIEditorText(itemData.face , 50, 20);
+        EditorUI.GUIText("员工间隔(x y):", 120, 20);
+        itemData.offset_x = EditorUI.GUIEditorText(itemData.offset_x , 50, 20);
+        itemData.offset_y = EditorUI.GUIEditorText(itemData.offset_y, 50, 20);
+        EditorUI.GUIText("员工横竖排数(h v):", 120, 20);
+        itemData.horizontal = EditorUI.GUIEditorText(itemData.horizontal, 50, 20);
+        itemData.vertical = EditorUI.GUIEditorText(itemData.vertical, 50, 20);
+    }
+
     protected void UIForStoryInfoDetailsCameraPosition(StoryInfoDetailsBean itemData)
     {
         if (EditorUI.GUIButton("删除"))
@@ -534,6 +560,8 @@ public class StoryInfoCreateWindowsEditor : EditorWindow
         EditorUI.GUIText("y:", 50, 20);
         itemData.position_y = EditorUI.GUIEditorText(itemData.position_y, 100, 20);
     }
+
+
     protected void UIForStoryInfoDetailsCameraFollowCharacter(StoryInfoDetailsBean itemData)
     {
         if (EditorUI.GUIButton("删除"))
@@ -552,6 +580,15 @@ public class StoryInfoCreateWindowsEditor : EditorWindow
             return;
         }
         itemData.audio_sound = (int)EditorUI.GUIEnum<AudioSoundEnum>("音效类型：", itemData.audio_sound, 300, 20);
+    }
+    protected void UIForStoryInfoDetailsAudioMusic(StoryInfoDetailsBean itemData)
+    {
+        if (EditorUI.GUIButton("删除"))
+        {
+            RemoveStoryInfoDetailsItem(itemData);
+            return;
+        }
+        itemData.audio_music = (int)EditorUI.GUIEnum<AudioMusicEnum>("音乐类型：", itemData.audio_music, 300, 20);
     }
 
     protected void UIForStoryInfoDetailsButton()
@@ -603,11 +640,20 @@ public class StoryInfoCreateWindowsEditor : EditorWindow
         {
             CreateStoryInfoDetailsDataByType(mFindStoryId, StoryInfoDetailsBean.StoryInfoDetailsTypeEnum.AudioSound);
         }
+        if (EditorUI.GUIButton("添加音乐播放", 200, 20))
+        {
+            CreateStoryInfoDetailsDataByType(mFindStoryId, StoryInfoDetailsBean.StoryInfoDetailsTypeEnum.AudioMusic);
+        }
+        if (EditorUI.GUIButton("添加员工", 200, 20))
+        {
+            CreateStoryInfoDetailsDataByType(mFindStoryId, StoryInfoDetailsBean.StoryInfoDetailsTypeEnum.WorkerPosition);
+        }
+        GUILayout.EndHorizontal();
+
         if (EditorUI.GUIButton("保存该序号下的故事数据", 200, 20))
         {
             storyInfoService.UpdateStoryDetailsByIdAndOrder(mFindStoryId, mFindStroyOrder, listOrderStoryInfoDetails);
         }
-        GUILayout.EndHorizontal();
     }
 
 

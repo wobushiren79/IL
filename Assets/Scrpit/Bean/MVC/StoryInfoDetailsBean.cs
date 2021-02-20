@@ -13,10 +13,11 @@ public class StoryInfoDetailsBean
         Talk = 11,//对话
         AutoNext = 12,//指定时间跳转
         PropPosition = 13,//道具位置
-
+        WorkerPosition = 14,//员工位置
         CameraPosition = 21,//摄像机位置
         CameraFollowCharacter = 22,//摄像头跟随目标
         AudioSound = 31,//音效播放
+        AudioMusic=32,//音乐播放
     }
 
     public long story_id;
@@ -61,6 +62,15 @@ public class StoryInfoDetailsBean
 
     //播放的音效
     public int audio_sound;
+    public int audio_music;
+
+    //偏移
+    public float offset_x;
+    public float offset_y;
+
+    //横竖
+    public int horizontal;
+    public int vertical;
 
     /// <summary>
     /// 获取播放的音效
@@ -69,6 +79,10 @@ public class StoryInfoDetailsBean
     public AudioSoundEnum GetAudioSound()
     {
         return (AudioSoundEnum)audio_sound;
+    }
+    public AudioMusicEnum GetAudioMusic()
+    {
+        return (AudioMusicEnum)audio_music;
     }
 
     /// <summary>

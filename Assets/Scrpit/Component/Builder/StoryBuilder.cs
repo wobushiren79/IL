@@ -80,107 +80,43 @@ public class StoryBuilder : BaseMonoBehaviour
         //设置剧情发生坐标
         gameObject.transform.position = new Vector3(storyInfo.position_x, storyInfo.position_y);
         bool isNext = true;
-        BaseControl baseControl = null;
-        foreach (StoryInfoDetailsBean itemData in listData)
+        for (int i = 0; i < listData.Count; i++)
         {
+            StoryInfoDetailsBean itemData = listData[i];
             switch (itemData.GetStoryInfoDetailsType())
             {
                 case StoryInfoDetailsBean.StoryInfoDetailsTypeEnum.NpcPosition:
-                    //Npc站位
-                    GameObject objNpc = GetNpcByNpcNum(itemData.num);
-                    BaseNpcAI npcAI = null;
-                    if (objNpc == null)
-                    {
-                        npcAI = CreateNpc(itemData);
-                        objNpc = npcAI.gameObject;
-                    }
-                    else
-                    {
-                        npcAI = objNpc.GetComponent<BaseNpcAI>();
-                        npcAI.characterMoveCpt.SetDestinationLocal(transform, new Vector3(itemData.position_x, itemData.position_y));
-                    }
-                    npcAI.SetCharacterFace(itemData.face);
+                    HandleForNpcPosition(itemData);
                     break;
                 case StoryInfoDetailsBean.StoryInfoDetailsTypeEnum.NpcDestory:
-                    //删除角色
-                    int[] npcNum = StringUtil.SplitBySubstringForArrayInt(itemData.npc_destroy, ',');
-                    float destroyTime = itemData.wait_time;
-                    foreach (int itemNpcNum in npcNum)
-                    {
-                        objNpc = GetNpcByNpcNum(itemNpcNum);
-                            //延迟删除
-                        StartCoroutine(CoroutineForDelayDestoryNpc(destroyTime, objNpc));
-                    }
+                    HandleForNpcDestory(itemData);
                     break;
                 case StoryInfoDetailsBean.StoryInfoDetailsTypeEnum.Expression:
-                    //表情
-                    SetCharacterExpression(itemData.num, itemData.expression);
+                    HandleForExpression(itemData);
                     break;
                 case StoryInfoDetailsBean.StoryInfoDetailsTypeEnum.SceneInt:
-                    try
-                    {
-                        //场景物体互动
-                        GameObject objFind = GameObject.Find(itemData.scene_intobj_name);
-                        //参数
-                        List<string> listparameter = StringUtil.SplitBySubstringForListStr(itemData.scene_intcomponent_parameters, ',');
-                        //通过反射调取方法
-                        ReflexUtil.GetInvokeMethod(objFind, itemData.scene_intcomponent_name, itemData.scene_intcomponent_method, listparameter);
-                    }
-                    catch
-                    {
-
-                    }
-
+                    HandleForSceneInt(itemData);
                     break;
                 case StoryInfoDetailsBean.StoryInfoDetailsTypeEnum.Talk:
-                    //进入对话
-                    isNext = false;
-                    UIGameText uiComponent = UIHandler.Instance.manager.OpenUIAndCloseOther<UIGameText>(UIEnum.GameText);
-                    uiComponent.SetData(TextEnum.Story, itemData.text_mark_id);
+                    isNext = HandleForTalk(itemData);
                     break;
                 case StoryInfoDetailsBean.StoryInfoDetailsTypeEnum.AutoNext:
-                    //剧情自动跳转
-                    isNext = false;
-                    StartCoroutine(StoryAutoNext(itemData.wait_time));
+                    isNext = HandleForAutoNext(itemData);
                     break;
                 case StoryInfoDetailsBean.StoryInfoDetailsTypeEnum.PropPosition:
-                    //道具位置
-                    GameObject objProp =  GetPropByNpcNum(itemData.num);
-                    if (objProp == null)
-                    {
-                        CreateProp(itemData);
-                    }
-                    else
-                    {
-                        CharacterMoveCpt characterMove = objProp.GetComponent<CharacterMoveCpt>();
-                        //如果可以移动
-                        if (characterMove)
-                        {
-                            characterMove.SetDestinationLocal(transform, new Vector3(itemData.position_x, itemData.position_y));
-                        }
-                        //如果不能移动则直接设置坐标
-                        else
-                        {
-                            objProp.transform.localPosition = new Vector3(itemData.position_x, itemData.position_y);
-                        }
-                    }      
+                    HandleForPropPosition(itemData);
                     break;
                 case StoryInfoDetailsBean.StoryInfoDetailsTypeEnum.CameraPosition:
-                    //设置摄像头位置
-                    baseControl = GameControlHandler.Instance.manager.GetControl<ControlForStoryCpt>(GameControlHandler.ControlEnum.Story);
-                    Vector3 cameraWorldPosition = transform.TransformPoint(new Vector3(itemData.position_x, itemData.position_y));
-                    baseControl.SetCameraFollowObj(null);
-                    baseControl.SetFollowPosition(cameraWorldPosition);
+                    HandleForCameraPosition(itemData);
                     break;
                 case StoryInfoDetailsBean.StoryInfoDetailsTypeEnum.CameraFollowCharacter:
-                    //设置摄像头位置
-                    objNpc = GetNpcByNpcNum(itemData.camera_follow_character);
-                    baseControl = GameControlHandler.Instance.manager.GetControl<ControlForStoryCpt>(GameControlHandler.ControlEnum.Story);
-                    baseControl.SetCameraFollowObj(objNpc);
+                    HandleForCameraFollowCharacter(itemData);
                     break;
                 case StoryInfoDetailsBean.StoryInfoDetailsTypeEnum.AudioSound:
-                    //播放音效
-                    AudioHandler.Instance.PlaySound(itemData.GetAudioSound());
+                    HandleForAudioSound(itemData);
+                    break;
+                case StoryInfoDetailsBean.StoryInfoDetailsTypeEnum.AudioMusic:
+                    HandleForAudioMusic(itemData);
                     break;
             }
         }
@@ -188,6 +124,126 @@ public class StoryBuilder : BaseMonoBehaviour
             NextStoryOrder();
     }
 
+    public void HandleForNpcPosition(StoryInfoDetailsBean itemData)
+    {
+        //Npc站位
+        GameObject objNpc = GetNpcByNpcNum(itemData.num);
+        BaseNpcAI npcAI;
+        if (objNpc == null)
+        {
+            npcAI = CreateNpc(itemData);
+            objNpc = npcAI.gameObject;
+        }
+        else
+        {
+            npcAI = objNpc.GetComponent<BaseNpcAI>();
+            npcAI.characterMoveCpt.SetDestinationLocal(transform, new Vector3(itemData.position_x, itemData.position_y));
+        }
+        npcAI.SetCharacterFace(itemData.face);
+    }
+
+    public void HandleForNpcDestory(StoryInfoDetailsBean itemData)
+    {
+        //删除角色
+        int[] npcNum = StringUtil.SplitBySubstringForArrayInt(itemData.npc_destroy, ',');
+        float destroyTime = itemData.wait_time;
+        foreach (int itemNpcNum in npcNum)
+        {
+            GameObject objNpc = GetNpcByNpcNum(itemNpcNum);
+            //延迟删除
+            StartCoroutine(CoroutineForDelayDestoryNpc(destroyTime, objNpc));
+        }
+    }
+
+    public void HandleForExpression(StoryInfoDetailsBean itemData)
+    {
+        //表情
+        SetCharacterExpression(itemData.num, itemData.expression);
+    }
+
+    public void HandleForSceneInt(StoryInfoDetailsBean itemData)
+    {
+        try
+        {
+            //场景物体互动
+            GameObject objFind = GameObject.Find(itemData.scene_intobj_name);
+            //参数
+            List<string> listparameter = StringUtil.SplitBySubstringForListStr(itemData.scene_intcomponent_parameters, ',');
+            //通过反射调取方法
+            ReflexUtil.GetInvokeMethod(objFind, itemData.scene_intcomponent_name, itemData.scene_intcomponent_method, listparameter);
+        }
+        catch
+        {
+
+        }
+    }
+
+    public bool HandleForTalk(StoryInfoDetailsBean itemData)
+    {
+        //进入对话;
+        UIGameText uiComponent = UIHandler.Instance.manager.OpenUIAndCloseOther<UIGameText>(UIEnum.GameText);
+        uiComponent.SetData(TextEnum.Story, itemData.text_mark_id);
+        return false;
+    }
+
+    public bool HandleForAutoNext(StoryInfoDetailsBean itemData)
+    {                    
+        //剧情自动跳转
+        StartCoroutine(CoroutineForAutoNext(itemData.wait_time));
+        return false;
+    }
+
+    public void HandleForPropPosition(StoryInfoDetailsBean itemData)
+    {
+        //道具位置
+        GameObject objProp = GetPropByNpcNum(itemData.num);
+        if (objProp == null)
+        {
+            CreateProp(itemData);
+        }
+        else
+        {
+            CharacterMoveCpt characterMove = objProp.GetComponent<CharacterMoveCpt>();
+            //如果可以移动
+            if (characterMove)
+            {
+                characterMove.SetDestinationLocal(transform, new Vector3(itemData.position_x, itemData.position_y));
+            }
+            //如果不能移动则直接设置坐标
+            else
+            {
+                objProp.transform.localPosition = new Vector3(itemData.position_x, itemData.position_y);
+            }
+        }
+    }
+
+    public void HandleForCameraPosition(StoryInfoDetailsBean itemData)
+    {
+        //设置摄像头位置
+        BaseControl baseControl = GameControlHandler.Instance.manager.GetControl<ControlForStoryCpt>(GameControlHandler.ControlEnum.Story);
+        Vector3 cameraWorldPosition = transform.TransformPoint(new Vector3(itemData.position_x, itemData.position_y));
+        baseControl.SetCameraFollowObj(null);
+        baseControl.SetFollowPosition(cameraWorldPosition);
+    }
+
+    public void HandleForCameraFollowCharacter(StoryInfoDetailsBean itemData)
+    {
+        //设置摄像头位置
+        GameObject objNpc = GetNpcByNpcNum(itemData.camera_follow_character);
+        BaseControl baseControl  = GameControlHandler.Instance.manager.GetControl<ControlForStoryCpt>(GameControlHandler.ControlEnum.Story);
+        baseControl.SetCameraFollowObj(objNpc);
+    }
+
+    public void HandleForAudioSound(StoryInfoDetailsBean itemData)
+    {
+        //播放音效
+        AudioHandler.Instance.PlaySound(itemData.GetAudioSound());
+    }
+    public void HandleForAudioMusic(StoryInfoDetailsBean itemData)
+    {
+        //播放音效
+        AudioHandler.Instance.PlayMusicForLoop(itemData.GetAudioMusic());
+    }
     /// <summary>
     /// 下一个剧情点
     /// </summary>
@@ -204,12 +260,6 @@ public class StoryBuilder : BaseMonoBehaviour
         }
         else
             CreateStoryScene(listOrderData);
-    }
-
-    public IEnumerator StoryAutoNext(float waitTime)
-    {
-        yield return new WaitForSeconds(waitTime);
-        NextStoryOrder();
     }
 
     /// <summary>
@@ -239,7 +289,7 @@ public class StoryBuilder : BaseMonoBehaviour
         {
             foreach (GameObject itemNpc in listNpcObj)
             {
-                if (itemNpc.name.Equals("character_"+ npcNum))
+                if (itemNpc.name.Equals("character_" + npcNum))
                 {
                     return itemNpc;
                 }
@@ -376,8 +426,19 @@ public class StoryBuilder : BaseMonoBehaviour
         if (objNpc != null)
         {
             listNpcObj.Remove(objNpc);
-            Destroy(objNpc);      
+            Destroy(objNpc);
         }
- 
+
+    }
+
+    /// <summary>
+    /// 协程-自动开始下一个
+    /// </summary>
+    /// <param name="waitTime"></param>
+    /// <returns></returns>
+    protected IEnumerator CoroutineForAutoNext(float waitTime)
+    {
+        yield return new WaitForSeconds(waitTime);
+        NextStoryOrder();
     }
 }
