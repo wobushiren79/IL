@@ -23,7 +23,8 @@ public enum UIEnum
     GameSetting = 1014,
     GameHelp = 1015,
     GameHotel = 1016,
-    GameFamily=1017,
+    GameFamily = 1017,
+    GameTest = 1999,
 
     TownMarket = 2001,//市场UI
     TownRecruitment = 2002,//招人UI
@@ -51,7 +52,7 @@ public enum UIEnum
     MiniGameCookingSettlement = 3007,//料理游戏 结算UI
     MiniGameAccount = 3008,//算账小游戏UI
     MiniGameDebate = 3009,//辩论小游戏UI
-    MiniGameBirth=3019,//剩余小游戏UI
+    MiniGameBirth = 3019,//剩余小游戏UI
 
     GambleTrickyCup = 4001,//赌博 猜蛊
     GambleTrickySize = 4002,//赌博 猜大小
@@ -60,5 +61,5 @@ public enum UIEnum
 
 
     MountainInfiniteTowersRank = 6001,//无尽之塔排名
-    MountainInfiniteTowers= 6002,
+    MountainInfiniteTowers = 6002,
 }

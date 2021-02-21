@@ -6,18 +6,22 @@ public class StoryInfoDetailsBean
     public enum StoryInfoDetailsTypeEnum
     {
         NpcPosition = 1,//NPC位置
-        Expression = 2,//表情
-        SceneInt = 3,//场景互动
+        NpcExpression = 2,//表情
+        NpcEquip = 3,//NPC穿着
         NpcDestory = 4,//销毁NPC
 
         Talk = 11,//对话
         AutoNext = 12,//指定时间跳转
         PropPosition = 13,//道具位置
         WorkerPosition = 14,//员工位置
+
         CameraPosition = 21,//摄像机位置
         CameraFollowCharacter = 22,//摄像头跟随目标
+
         AudioSound = 31,//音效播放
-        AudioMusic=32,//音乐播放
+        AudioMusic = 32,//音乐播放
+
+        SceneInt = 41,//场景互动
     }
 
     public long story_id;
@@ -46,10 +50,12 @@ public class StoryInfoDetailsBean
     //表情
     public int expression;
 
-    public int camera_follow_character;
-
     //摧毁的NPCID
     public string npc_destroy;
+
+    public string npc_hat;
+    public string npc_clothes;
+    public string npc_shoes;
 
     //场景互动物体名称
     public string scene_intobj_name;
@@ -71,6 +77,47 @@ public class StoryInfoDetailsBean
     //横竖
     public int horizontal;
     public int vertical;
+
+    //获取NPC装备
+    public void GetNpcEquip(SexEnum sex,out long hatId, out long clothesId, out long shoesId)
+    {
+        hatId = GetNpcEquip(sex, npc_hat);
+        clothesId = GetNpcEquip(sex, npc_clothes);
+        shoesId = GetNpcEquip(sex, npc_shoes);
+    }
+
+    protected long GetNpcEquip(SexEnum sex,string data)
+    {
+        long hatId = 0;
+        if (CheckUtil.StringIsNull(data))
+        {
+            hatId = -1;
+        }
+        else
+        {
+            string[] hatList = StringUtil.SplitBySubstringForArrayStr(data, ',');
+            if (hatList.Length >= 2)
+            {
+                switch (sex)
+                {
+                    case SexEnum.Man:
+                        hatId = long.Parse(hatList[0]);
+                        break;
+                    case SexEnum.Woman:
+                        hatId = long.Parse(hatList[1]);
+                        break;
+                    default:
+                        hatId = long.Parse(hatList[0]);
+                        break;
+                }
+            }
+            else
+            {
+                hatId = long.Parse(npc_hat);
+            }
+        }
+        return hatId;
+    }
 
     /// <summary>
     /// 获取播放的音效

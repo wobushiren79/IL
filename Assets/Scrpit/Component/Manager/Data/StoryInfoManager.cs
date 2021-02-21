@@ -12,7 +12,7 @@ public class StoryInfoManager : BaseManager, IStoryInfoView
     //剧情所用人物模型
     public GameObject objNpcModel;
 
-    private void Awake()
+    public void Awake()
     {
         objNpcModel = LoadAssetUtil.SyncLoadAsset<GameObject>("character/character", "CharacterForStory");
         storyInfoController = new StoryInfoController(this, this);

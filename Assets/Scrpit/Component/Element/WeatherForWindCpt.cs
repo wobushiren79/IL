@@ -44,13 +44,14 @@ public class WeatherForWindCpt : WeatherCpt
     public void SetWind()
     {
         objWind_1.SetActive(true);
+        SceneBaseManager sceneManager = GameScenesHandler.Instance.manager.GetSceneManager<SceneBaseManager>();
         ParticleSystem.ShapeModule shapeModuleWind_1 = psWind_1.shape;
-        shapeModuleWind_1.position = GameScenesHandler.Instance.manager.GetSceneManager<SceneBaseManager>().positionForWind;
-        shapeModuleWind_1.scale = GameScenesHandler.Instance.manager.GetSceneManager<SceneBaseManager>().scaleForWind;
+        shapeModuleWind_1.position = sceneManager.positionForWind;
+        shapeModuleWind_1.scale = sceneManager.scaleForWind;
 
         objWind_2.SetActive(true);
         ParticleSystem.ShapeModule shapeModuleWind_2 = psWind_1.shape;
-        shapeModuleWind_2.scale = GameScenesHandler.Instance.manager.GetSceneManager<SceneBaseManager>().scaleRangeForWind;
+        shapeModuleWind_2.scale = sceneManager.scaleRangeForWind;
     }
 
     /// <summary>
@@ -59,14 +60,15 @@ public class WeatherForWindCpt : WeatherCpt
     public void SetDefoliation()
     {
         objWind_1.SetActive(true);
+        SceneBaseManager sceneManager = GameScenesHandler.Instance.manager.GetSceneManager<SceneBaseManager>();
         ParticleSystem.ShapeModule shapeModule = psWind_1.shape;
-        shapeModule.position = GameScenesHandler.Instance.manager.GetSceneManager<SceneBaseManager>().positionForWind;
-        shapeModule.scale = GameScenesHandler.Instance.manager.GetSceneManager<SceneBaseManager>().scaleForWind;
+        shapeModule.position = sceneManager.positionForWind;
+        shapeModule.scale = sceneManager.scaleForWind;
 
         objDefoliation_1.SetActive(true);
         ParticleSystem.ShapeModule shapeModuleDefoliation = psDefoliation_1.shape;
-        shapeModuleDefoliation.position = GameScenesHandler.Instance.manager.GetSceneManager<SceneBaseManager>().positionForWind;
-        shapeModuleDefoliation.scale = GameScenesHandler.Instance.manager.GetSceneManager<SceneBaseManager>().scaleForWind;
+        shapeModuleDefoliation.position = sceneManager.positionForWind;
+        shapeModuleDefoliation.scale = sceneManager.scaleForWind;
     }
 
 

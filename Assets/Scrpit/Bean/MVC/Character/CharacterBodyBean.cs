@@ -62,4 +62,14 @@ public class CharacterBodyBean
         mouth = CharacterBodyHandler.Instance.manager.GetRandomMouthStr();
         mouthColor = ColorBean.Random();
     }
+
+    /// <summary>
+    /// 获取性别
+    /// </summary>
+    /// <returns></returns>
+    public SexEnum GetSex()
+    {
+        return (SexEnum)sex;
+    }
+
 }

@@ -91,9 +91,13 @@ public class StoryBuilder : BaseMonoBehaviour
                 case StoryInfoDetailsBean.StoryInfoDetailsTypeEnum.NpcDestory:
                     HandleForNpcDestory(itemData);
                     break;
-                case StoryInfoDetailsBean.StoryInfoDetailsTypeEnum.Expression:
-                    HandleForExpression(itemData);
+                case StoryInfoDetailsBean.StoryInfoDetailsTypeEnum.NpcExpression:
+                    HandleForNpcExpression(itemData);
                     break;
+                case StoryInfoDetailsBean.StoryInfoDetailsTypeEnum.NpcEquip:
+                    HandleForNpcEquip(itemData);
+                    break;
+
                 case StoryInfoDetailsBean.StoryInfoDetailsTypeEnum.SceneInt:
                     HandleForSceneInt(itemData);
                     break;
@@ -106,18 +110,26 @@ public class StoryBuilder : BaseMonoBehaviour
                 case StoryInfoDetailsBean.StoryInfoDetailsTypeEnum.PropPosition:
                     HandleForPropPosition(itemData);
                     break;
+                case StoryInfoDetailsBean.StoryInfoDetailsTypeEnum.WorkerPosition:
+                    HandleForWorkerPosition(itemData);
+                    break;
+
+
                 case StoryInfoDetailsBean.StoryInfoDetailsTypeEnum.CameraPosition:
                     HandleForCameraPosition(itemData);
                     break;
                 case StoryInfoDetailsBean.StoryInfoDetailsTypeEnum.CameraFollowCharacter:
                     HandleForCameraFollowCharacter(itemData);
                     break;
+
+
                 case StoryInfoDetailsBean.StoryInfoDetailsTypeEnum.AudioSound:
                     HandleForAudioSound(itemData);
                     break;
                 case StoryInfoDetailsBean.StoryInfoDetailsTypeEnum.AudioMusic:
                     HandleForAudioMusic(itemData);
                     break;
+
             }
         }
         if (isNext)
@@ -154,12 +166,36 @@ public class StoryBuilder : BaseMonoBehaviour
             StartCoroutine(CoroutineForDelayDestoryNpc(destroyTime, objNpc));
         }
     }
-
-    public void HandleForExpression(StoryInfoDetailsBean itemData)
+    public void HandleForNpcExpression(StoryInfoDetailsBean itemData)
     {
         //表情
-        SetCharacterExpression(itemData.num, itemData.expression);
+        GameObject objItem = GetNpcByNpcNum(itemData.num);
+        if (objItem != null)
+        {
+            NpcAIStoryCpt npcAIStory = objItem.GetComponent<NpcAIStoryCpt>();
+            if (npcAIStory != null)
+                npcAIStory.SetExpression(itemData.expression);
+        }
     }
+
+    public void HandleForNpcEquip(StoryInfoDetailsBean itemData)
+    {
+        //装备
+        GameObject objItem = GetNpcByNpcNum(itemData.num);
+        if (objItem != null)
+        {
+            NpcAIStoryCpt npcAIStory = objItem.GetComponent<NpcAIStoryCpt>();
+            itemData.GetNpcEquip(npcAIStory.characterData.body.GetSex(), out long hatId, out long clothesId, out long shoesId);
+            if (hatId != -1)
+                npcAIStory.characterData.equips.hatTFId = hatId;
+            if (clothesId != -1)
+                npcAIStory.characterData.equips.clothesTFId = clothesId;
+            if (shoesId != -1)
+                npcAIStory.characterData.equips.shoesTFId = shoesId;
+            npcAIStory.SetCharacterData(npcAIStory.characterData);
+        }
+    }
+
 
     public void HandleForSceneInt(StoryInfoDetailsBean itemData)
     {
@@ -187,7 +223,7 @@ public class StoryBuilder : BaseMonoBehaviour
     }
 
     public bool HandleForAutoNext(StoryInfoDetailsBean itemData)
-    {                    
+    {
         //剧情自动跳转
         StartCoroutine(CoroutineForAutoNext(itemData.wait_time));
         return false;
@@ -229,9 +265,14 @@ public class StoryBuilder : BaseMonoBehaviour
     public void HandleForCameraFollowCharacter(StoryInfoDetailsBean itemData)
     {
         //设置摄像头位置
-        GameObject objNpc = GetNpcByNpcNum(itemData.camera_follow_character);
-        BaseControl baseControl  = GameControlHandler.Instance.manager.GetControl<ControlForStoryCpt>(GameControlHandler.ControlEnum.Story);
+        GameObject objNpc = GetNpcByNpcNum(itemData.num);
+        BaseControl baseControl = GameControlHandler.Instance.manager.GetControl<ControlForStoryCpt>(GameControlHandler.ControlEnum.Story);
         baseControl.SetCameraFollowObj(objNpc);
+    }
+
+    public void HandleForWorkerPosition(StoryInfoDetailsBean itemData)
+    {
+        CreateAllWorker(itemData);
     }
 
     public void HandleForAudioSound(StoryInfoDetailsBean itemData)
@@ -244,6 +285,9 @@ public class StoryBuilder : BaseMonoBehaviour
         //播放音效
         AudioHandler.Instance.PlayMusicForLoop(itemData.GetAudioMusic());
     }
+
+
+
     /// <summary>
     /// 下一个剧情点
     /// </summary>
@@ -260,22 +304,6 @@ public class StoryBuilder : BaseMonoBehaviour
         }
         else
             CreateStoryScene(listOrderData);
-    }
-
-    /// <summary>
-    /// 设置人物表情
-    /// </summary>
-    /// <param name="npcNum"></param>
-    /// <param name="expression"></param>
-    public void SetCharacterExpression(int npcNum, int expression)
-    {
-        GameObject objItem = GetNpcByNpcNum(npcNum);
-        if (objItem != null)
-        {
-            NpcAIStoryCpt npcAIStory = objItem.GetComponent<NpcAIStoryCpt>();
-            if (npcAIStory != null)
-                npcAIStory.SetExpression(expression);
-        }
     }
 
     /// <summary>
@@ -338,6 +366,46 @@ public class StoryBuilder : BaseMonoBehaviour
         //默认设置NPC速度为1
         aiNpc.characterMoveCpt.SetMoveSpeed(1);
         return aiNpc;
+    }
+
+    /// <summary>
+    /// 生成所有员工
+    /// </summary>
+    /// <param name="itemData"></param>
+    public void CreateAllWorker(StoryInfoDetailsBean itemData)
+    {
+        GameDataBean gameData = GameDataHandler.Instance.manager.GetGameData();
+        List<CharacterBean> listCharacterData = gameData.listWorkerCharacter;
+        if (CheckUtil.ListIsNull(listCharacterData))
+            return;
+        if (itemData.horizontal == 0)
+            itemData.horizontal = 1;
+        int horizontalNumber = listCharacterData.Count / itemData.horizontal;
+        int tempHorizontalNumber = 0;
+        for (int i = 0; i < listCharacterData.Count; i++)
+        {
+            CharacterBean characterData = listCharacterData[i];
+            GameObject objNpcModel = StoryInfoHandler.Instance.manager.objNpcModel;
+            GameObject objNpc = Instantiate(transform.gameObject, objNpcModel);
+
+            int tempHorizontal = i / horizontalNumber;
+            if (tempHorizontalNumber >= horizontalNumber)
+            {
+                tempHorizontalNumber = 0;
+            }
+            float positionX = itemData.position_x + tempHorizontalNumber * itemData.offset_x;
+            float positionY = itemData.position_y + tempHorizontal * itemData.offset_y;
+
+            tempHorizontalNumber++;
+
+            objNpc.transform.localPosition = new Vector3(positionX, positionY);
+            NpcAIStoryCpt aiNpc = objNpc.GetComponent<NpcAIStoryCpt>();
+            //设置编号
+            objNpc.name = "character_" + (i + 1001);
+            aiNpc.SetCharacterData(characterData);
+            aiNpc.SetCharacterFace(itemData.face);
+            listNpcObj.Add(objNpc);
+        }
     }
 
     /// <summary>

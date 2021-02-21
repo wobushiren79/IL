@@ -17,8 +17,8 @@ public class UIGameMain : BaseUIComponent, DialogView.IDialogCallBack, IRadioGro
     public Button btBackpack;
     public PopupPromptButton popupFavorability;
     public Button btFavorability;
-    public PopupPromptButton popupSave;
-    public Button btSave;
+    public PopupPromptButton popupDebug;
+    public Button btDebug;
     public PopupPromptButton popupInnData;
     public Button btInnData;
     public PopupPromptButton popupHelp;
@@ -31,7 +31,6 @@ public class UIGameMain : BaseUIComponent, DialogView.IDialogCallBack, IRadioGro
     public Button btHotel;
     public PopupPromptButton popupFamily;
     public Button btFamily;
-
 
     public Button btSleep;
 
@@ -101,8 +100,8 @@ public class UIGameMain : BaseUIComponent, DialogView.IDialogCallBack, IRadioGro
         if (btHelp != null)
             btHelp.onClick.AddListener(OpenHelpUI);
 
-        if (btSave != null)
-            btSave.onClick.AddListener(SaveData);
+        if (btDebug != null)
+            btDebug.onClick.AddListener(OpenTestUI);
 
         if (btSleep != null)
             btSleep.onClick.AddListener(OnClickForEndDay);
@@ -197,8 +196,8 @@ public class UIGameMain : BaseUIComponent, DialogView.IDialogCallBack, IRadioGro
             popupBackpack.SetContent(TextHandler.Instance.manager.GetTextById(2034));
         if (popupFavorability != null)
             popupFavorability.SetContent(TextHandler.Instance.manager.GetTextById(2035));
-        if (popupSave != null)
-            popupSave.SetContent(TextHandler.Instance.manager.GetTextById(2036));
+        if (popupDebug != null)
+            popupDebug.SetContent(TextHandler.Instance.manager.GetTextById(2036));
         if (popupInnData != null)
             popupInnData.SetContent(TextHandler.Instance.manager.GetTextById(2037));
         if (popupSetting != null)
@@ -287,7 +286,7 @@ public class UIGameMain : BaseUIComponent, DialogView.IDialogCallBack, IRadioGro
             btHotel.gameObject.SetActive(false);
         }
         //是否展示建造按钮
-        if(SceneUtil.GetCurrentScene() == ScenesEnum.GameInnScene)
+        if (SceneUtil.GetCurrentScene() == ScenesEnum.GameInnScene)
         {
             btBuild.gameObject.SetActive(true);
         }
@@ -303,7 +302,16 @@ public class UIGameMain : BaseUIComponent, DialogView.IDialogCallBack, IRadioGro
         else
         {
             btFamily.gameObject.SetActive(false);
-        }       
+        }
+        //是否展示测试按钮
+        if (ProjectConfigInfo.BUILD_TYPE == ProjectBuildTypeEnum.Debug)
+        {
+            btDebug.gameObject.SetActive(true);
+        }
+        else
+        {
+            btDebug.gameObject.SetActive(false);
+        }
     }
 
     /// <summary>
@@ -416,12 +424,6 @@ public class UIGameMain : BaseUIComponent, DialogView.IDialogCallBack, IRadioGro
         }
     }
 
-    public void SaveData()
-    {
-        AudioHandler.Instance.PlaySound(AudioSoundEnum.ButtonForNormal);
-        GameDataHandler.Instance.manager.SaveGameData(InnHandler.Instance.GetInnRecord());
-    }
-
     public void OpenBuildUI()
     {
         AudioHandler.Instance.PlaySound(AudioSoundEnum.ButtonForNormal);
@@ -479,6 +481,12 @@ public class UIGameMain : BaseUIComponent, DialogView.IDialogCallBack, IRadioGro
     {
         AudioHandler.Instance.PlaySound(AudioSoundEnum.ButtonForNormal);
         UIHandler.Instance.manager.OpenUIAndCloseOther<UIGameHelp>(UIEnum.GameHelp);
+    }
+
+    public void OpenTestUI()
+    {
+        AudioHandler.Instance.PlaySound(AudioSoundEnum.ButtonForNormal);
+        UIHandler.Instance.manager.OpenUIAndCloseOther<UIGameTest>(UIEnum.GameTest);
     }
 
     public void OnClickForEndDay()
@@ -692,7 +700,7 @@ public class UIGameMain : BaseUIComponent, DialogView.IDialogCallBack, IRadioGro
 
     #region 通知回调
 
-    public void NotifyForData(GameDataHandler.NotifyTypeEnum notifyType,params object[] obj)
+    public void NotifyForData(GameDataHandler.NotifyTypeEnum notifyType, params object[] obj)
     {
         if (notifyType == GameDataHandler.NotifyTypeEnum.AddMoney)
         {

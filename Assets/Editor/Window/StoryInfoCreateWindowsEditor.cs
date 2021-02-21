@@ -18,6 +18,8 @@ public class StoryInfoCreateWindowsEditor : EditorWindow
         this.titleContent = new GUIContent("剧情创建辅助工具");
     }
 
+    
+
     private void OnEnable()
     {
         //查询所有NPC数据
@@ -32,7 +34,7 @@ public class StoryInfoCreateWindowsEditor : EditorWindow
             mapNpcInfo.Add(itemInfo.id, itemInfo);
         }
         GameItemsHandler.Instance.manager.Awake();
-
+        StoryInfoHandler.Instance.manager.Awake();
         textInfoService = new TextInfoService();
         storyInfoService = new StoryInfoService();
     }
@@ -64,9 +66,12 @@ public class StoryInfoCreateWindowsEditor : EditorWindow
         // mObjNpcModel = EditorGUILayout.ObjectField(new GUIContent("NPC模型", ""), mObjNpcModel, typeof(GameObject), true) as GameObject;
         if (EditorUI.GUIButton("刷新", 100, 20))
         {
-            listStoryInfo.Clear();
-            listAllStoryInfoDetails.Clear();
-            listOrderStoryInfoDetails.Clear();
+            if(listStoryInfo!=null)
+                listStoryInfo.Clear();
+            if (listAllStoryInfoDetails != null)
+                listAllStoryInfoDetails.Clear();
+            if (listOrderStoryInfoDetails != null)
+                listOrderStoryInfoDetails.Clear();
             listStoryTextInfo = null;
         }
         //NPC创建
@@ -262,20 +267,21 @@ public class StoryInfoCreateWindowsEditor : EditorWindow
         StoryInfoDetailsBean.StoryInfoDetailsTypeEnum storyInfoDetailsType = itemData.GetStoryInfoDetailsType();
         switch (storyInfoDetailsType)
         {
-            case StoryInfoDetailsBean.StoryInfoDetailsTypeEnum.Talk:
-                UIForStoryInfoDetailsTalk(itemData);
-                break;
             case StoryInfoDetailsBean.StoryInfoDetailsTypeEnum.NpcPosition:
                 UIForStoryInfoDetailsNpcPosition(itemData);
                 break;
-            case StoryInfoDetailsBean.StoryInfoDetailsTypeEnum.Expression:
+            case StoryInfoDetailsBean.StoryInfoDetailsTypeEnum.NpcExpression:
                 UIForStoryInfoDetailsExpression(itemData);
-                break;
-            case StoryInfoDetailsBean.StoryInfoDetailsTypeEnum.SceneInt:
-                UIForStoryInfoDetailsSceneInt(itemData);
                 break;
             case StoryInfoDetailsBean.StoryInfoDetailsTypeEnum.NpcDestory:
                 UIForStoryInfoDetailsNpcDestory(itemData);
+                break;
+            case StoryInfoDetailsBean.StoryInfoDetailsTypeEnum.NpcEquip:
+                UIForStoryInfoDetailsNpcEquip(itemData);
+                break;
+
+            case StoryInfoDetailsBean.StoryInfoDetailsTypeEnum.Talk:
+                UIForStoryInfoDetailsTalk(itemData);
                 break;
             case StoryInfoDetailsBean.StoryInfoDetailsTypeEnum.AutoNext:
                 UIForStoryInfoDetailsAutoNext(itemData);
@@ -283,17 +289,30 @@ public class StoryInfoCreateWindowsEditor : EditorWindow
             case StoryInfoDetailsBean.StoryInfoDetailsTypeEnum.PropPosition:
                 UIForStoryInfoDetailsPropPosition(itemData);
                 break;
+            case StoryInfoDetailsBean.StoryInfoDetailsTypeEnum.WorkerPosition:
+                UIForStoryInfoDetailsWorkerPosition(itemData);
+                break;
+
+
             case StoryInfoDetailsBean.StoryInfoDetailsTypeEnum.CameraPosition:
                 UIForStoryInfoDetailsCameraPosition(itemData);
                 break;
             case StoryInfoDetailsBean.StoryInfoDetailsTypeEnum.CameraFollowCharacter:
                 UIForStoryInfoDetailsCameraFollowCharacter(itemData);
                 break;
+
+
             case StoryInfoDetailsBean.StoryInfoDetailsTypeEnum.AudioSound:
                 UIForStoryInfoDetailsAudioSound(itemData);
                 break;
             case StoryInfoDetailsBean.StoryInfoDetailsTypeEnum.AudioMusic:
                 UIForStoryInfoDetailsAudioMusic(itemData);
+                break;
+
+
+
+            case StoryInfoDetailsBean.StoryInfoDetailsTypeEnum.SceneInt:
+                UIForStoryInfoDetailsSceneInt(itemData);
                 break;
         }
         GUILayout.EndHorizontal();
@@ -348,7 +367,7 @@ public class StoryInfoCreateWindowsEditor : EditorWindow
                 }
                 EditorUI.GUIText("ID", 50, 20);
                 textInfo.id = EditorUI.GUIEditorText(textInfo.id, 120, 20);
-                textInfo.type = (int)EditorUI.GUIEnum<TextInfoTypeEnum>("对话类型", textInfo.type, 100, 20);
+                textInfo.type = (int)EditorUI.GUIEnum<TextInfoTypeEnum>("对话类型", textInfo.type, 300, 20);
                 EditorUI.GUIText("对话顺序", 100, 20);
                 textInfo.text_order = int.Parse(EditorUI.GUIEditorText(textInfo.text_order + "", 100, 20));
                 EditorUI.GUIText("下一对话", 100, 20);
@@ -483,6 +502,19 @@ public class StoryInfoCreateWindowsEditor : EditorWindow
         EditorUI.GUIText("延迟删除时间s：", 120, 20);
         itemData.wait_time = EditorUI.GUIEditorText(itemData.wait_time);
     }
+
+    protected void UIForStoryInfoDetailsNpcEquip(StoryInfoDetailsBean itemData)
+    {
+        EditorUI.GUIText("指定NPC穿着（可以用，分割  前为男后为女）：", 300, 20);
+        EditorUI.GUIText("NPC num：", 120, 20);
+        itemData.num = EditorUI.GUIEditorText(itemData.num);
+        EditorUI.GUIText("头ID(-1默认 0不穿)：", 150, 20);
+        itemData.npc_hat = EditorUI.GUIEditorText(itemData.npc_hat);
+        EditorUI.GUIText("衣ID(-1默认 0不穿)：", 150, 20);
+        itemData.npc_clothes = EditorUI.GUIEditorText(itemData.npc_clothes);
+        EditorUI.GUIText("鞋ID(-1默认 0不穿)：", 150, 20);
+        itemData.npc_shoes = EditorUI.GUIEditorText(itemData.npc_shoes);
+    }
     protected void UIForStoryInfoDetailsAutoNext(StoryInfoDetailsBean itemData)
     {
         if (EditorUI.GUIButton("删除"))
@@ -570,7 +602,7 @@ public class StoryInfoCreateWindowsEditor : EditorWindow
             return;
         }
         EditorUI.GUIText("摄像头跟随角色序号 ", 200, 20);
-        itemData.camera_follow_character = int.Parse(EditorUI.GUIEditorText(itemData.camera_follow_character + "", 100, 20));
+        itemData.num = EditorUI.GUIEditorText(itemData.num , 100, 20);
     }
     protected void UIForStoryInfoDetailsAudioSound(StoryInfoDetailsBean itemData)
     {
@@ -600,19 +632,23 @@ public class StoryInfoCreateWindowsEditor : EditorWindow
         }
         if (EditorUI.GUIButton("添加人物表情", 200, 20))
         {
-            CreateStoryInfoDetailsDataByType(mFindStoryId, StoryInfoDetailsBean.StoryInfoDetailsTypeEnum.Expression);
-        }
-        if (EditorUI.GUIButton("添加对话", 200, 20))
-        {
-            CreateStoryInfoDetailsDataByType(mFindStoryId, StoryInfoDetailsBean.StoryInfoDetailsTypeEnum.Talk);
+            CreateStoryInfoDetailsDataByType(mFindStoryId, StoryInfoDetailsBean.StoryInfoDetailsTypeEnum.NpcExpression);
         }
         if (EditorUI.GUIButton("删除人物", 200, 20))
         {
             CreateStoryInfoDetailsDataByType(mFindStoryId, StoryInfoDetailsBean.StoryInfoDetailsTypeEnum.NpcDestory);
         }
+        if (EditorUI.GUIButton("设置人物装备", 200, 20))
+        {
+            CreateStoryInfoDetailsDataByType(mFindStoryId, StoryInfoDetailsBean.StoryInfoDetailsTypeEnum.NpcEquip);
+        }
         GUILayout.EndHorizontal();
 
         GUILayout.BeginHorizontal();
+        if (EditorUI.GUIButton("添加对话", 200, 20))
+        {
+            CreateStoryInfoDetailsDataByType(mFindStoryId, StoryInfoDetailsBean.StoryInfoDetailsTypeEnum.Talk);
+        }
         if (EditorUI.GUIButton("添加场景互动", 200, 20))
         {
             CreateStoryInfoDetailsDataByType(mFindStoryId, StoryInfoDetailsBean.StoryInfoDetailsTypeEnum.SceneInt);
@@ -625,13 +661,17 @@ public class StoryInfoCreateWindowsEditor : EditorWindow
         {
             CreateStoryInfoDetailsDataByType(mFindStoryId, StoryInfoDetailsBean.StoryInfoDetailsTypeEnum.PropPosition);
         }
-        if (EditorUI.GUIButton("添加摄像头坐标", 200, 20))
+        if (EditorUI.GUIButton("添加员工", 200, 20))
         {
-            CreateStoryInfoDetailsDataByType(mFindStoryId, StoryInfoDetailsBean.StoryInfoDetailsTypeEnum.CameraPosition);
+            CreateStoryInfoDetailsDataByType(mFindStoryId, StoryInfoDetailsBean.StoryInfoDetailsTypeEnum.WorkerPosition);
         }
         GUILayout.EndHorizontal();
 
         GUILayout.BeginHorizontal();
+        if (EditorUI.GUIButton("添加摄像头坐标", 200, 20))
+        {
+            CreateStoryInfoDetailsDataByType(mFindStoryId, StoryInfoDetailsBean.StoryInfoDetailsTypeEnum.CameraPosition);
+        }
         if (EditorUI.GUIButton("添加摄像头跟随角色", 200, 20))
         {
             CreateStoryInfoDetailsDataByType(mFindStoryId, StoryInfoDetailsBean.StoryInfoDetailsTypeEnum.CameraFollowCharacter);
@@ -644,10 +684,7 @@ public class StoryInfoCreateWindowsEditor : EditorWindow
         {
             CreateStoryInfoDetailsDataByType(mFindStoryId, StoryInfoDetailsBean.StoryInfoDetailsTypeEnum.AudioMusic);
         }
-        if (EditorUI.GUIButton("添加员工", 200, 20))
-        {
-            CreateStoryInfoDetailsDataByType(mFindStoryId, StoryInfoDetailsBean.StoryInfoDetailsTypeEnum.WorkerPosition);
-        }
+
         GUILayout.EndHorizontal();
 
         if (EditorUI.GUIButton("保存该序号下的故事数据", 200, 20))
@@ -716,7 +753,7 @@ public class StoryInfoCreateWindowsEditor : EditorWindow
 
         baseNpcAI.transform.localPosition = position;
         baseNpcAI.SetCharacterData(characterData);
-        baseNpcAI.name = "" + number;
+        baseNpcAI.name = "character_" + number;
         objNpc.SetActive(true);
 
         return objNpc;
@@ -810,7 +847,10 @@ public class StoryInfoCreateWindowsEditor : EditorWindow
             if (storyInfoDetailsType == StoryInfoDetailsBean.StoryInfoDetailsTypeEnum.NpcPosition)
             {
                 GameObject objNpc = GetSceneObjByName("character_" + itemData.num);
-                BaseNpcAI npcAI = objNpc.GetComponent<BaseNpcAI>();
+                BaseNpcAI npcAI = null;
+                if (objNpc!=null)
+                     npcAI = objNpc.GetComponent<BaseNpcAI>();
+     
                 if (npcAI == null)
                 {
                     NpcInfoBean npcInfoBean;
@@ -834,6 +874,28 @@ public class StoryInfoCreateWindowsEditor : EditorWindow
                 npcAI.transform.localPosition = new Vector3(itemData.position_x, itemData.position_y);
                 //设置朝向
                 npcAI.SetCharacterFace(itemData.face);
+            }
+            else if (storyInfoDetailsType == StoryInfoDetailsBean.StoryInfoDetailsTypeEnum.NpcEquip)
+            {
+                GameObject objNpc = GetSceneObjByName("character_" + itemData.num);
+                if (objNpc == null)
+                {
+                    continue;
+                }
+                BaseNpcAI npcAI = objNpc.GetComponent<BaseNpcAI>();
+                if (npcAI == null)
+                {
+                    continue;
+                }
+                SexEnum sex = npcAI.characterData.body.GetSex();
+                itemData.GetNpcEquip(sex, out long hatId, out long clothesId, out long shoesId);
+                if (hatId != -1)
+                    npcAI.characterData.equips.hatTFId = hatId;
+                if (clothesId != -1)
+                    npcAI.characterData.equips.clothesTFId = clothesId;
+                if (shoesId != -1)
+                    npcAI.characterData.equips.shoesTFId = shoesId;
+                npcAI.SetCharacterData(npcAI.characterData);
             }
             else if (storyInfoDetailsType == StoryInfoDetailsBean.StoryInfoDetailsTypeEnum.PropPosition)
             {
@@ -882,7 +944,7 @@ public class StoryInfoCreateWindowsEditor : EditorWindow
             }
             else if (itemData.type == (int)StoryInfoDetailsBean.StoryInfoDetailsTypeEnum.CameraFollowCharacter)
             {
-                BaseNpcAI npcAI = CptUtil.GetCptInChildrenByName<BaseNpcAI>(StoryInfoHandler.Instance.builderForStory.gameObject, itemData.camera_follow_character + "");
+                BaseNpcAI npcAI = CptUtil.GetCptInChildrenByName<BaseNpcAI>(StoryInfoHandler.Instance.builderForStory.gameObject,"character_"+ itemData.num);
                 GameCameraHandler.Instance.manager.camera2D.Follow = npcAI.transform;
             }
         }
@@ -898,7 +960,7 @@ public class StoryInfoCreateWindowsEditor : EditorWindow
                 itemDetailsInfo.npc_id = 1;
                 itemDetailsInfo.num = 1;
                 break;
-            case StoryInfoDetailsBean.StoryInfoDetailsTypeEnum.Expression:
+            case StoryInfoDetailsBean.StoryInfoDetailsTypeEnum.NpcExpression:
                 break;
             case StoryInfoDetailsBean.StoryInfoDetailsTypeEnum.Talk:
                 itemDetailsInfo.text_mark_id = storyId * 10000 + mFindStroyOrder;

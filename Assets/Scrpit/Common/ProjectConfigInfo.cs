@@ -9,6 +9,11 @@ public class ProjectConfigInfo
     public readonly static string GAME_VERSION = "0.4.0";
 
     /// <summary>
+    /// 游戏生成版本
+    /// </summary>
+    public readonly static ProjectBuildTypeEnum BUILD_TYPE = ProjectBuildTypeEnum.Debug;
+
+    /// <summary>
     /// 是否打开日志输出
     /// </summary>
     public static readonly bool IS_OPEN_LOG_MSG = true;

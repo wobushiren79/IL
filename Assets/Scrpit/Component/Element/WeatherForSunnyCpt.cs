@@ -4,10 +4,11 @@ using UnityEditor;
 public class WeatherForSunnyCpt : WeatherCpt
 {
     public GameObject objCloudy;
-
+    public ParticleSystem psCloudy;
     public override void OpenWeather(WeatherBean weatherData)
     {
         base.OpenWeather(weatherData);
+        InitPS();
         objCloudy.SetActive(false);
         switch (weatherData.weatherType)
         {
@@ -28,5 +29,13 @@ public class WeatherForSunnyCpt : WeatherCpt
     public void SetSunny()
     {
 
+    }
+
+    public void InitPS()
+    {
+        SceneBaseManager sceneBaseManager = GameScenesHandler.Instance.manager.GetSceneManager<SceneBaseManager>();
+        ParticleSystem.ShapeModule shapeModule = psCloudy.shape;
+        shapeModule.scale = sceneBaseManager.scaleForSunny;
+        shapeModule.position = sceneBaseManager.positionForSunny;
     }
 }

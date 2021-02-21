@@ -12,7 +12,6 @@ public class NpcCreateWindowEditor : EditorWindow
     TextInfoService textInfoService;
     NpcTeamService npcTeamService;
 
-    private CinemachineVirtualCamera mCamera2D;
     private GameObject mObjNpcContainer;
     private GameObject mObjNpcModel;
 
@@ -57,9 +56,6 @@ public class NpcCreateWindowEditor : EditorWindow
 
     private void OnEnable()
     {
-        mCamera2D = GameObject.Find("Camera2D").GetComponent<CinemachineVirtualCamera>();
-
-
         npcInfoService = new NpcInfoService();
         textInfoService = new TextInfoService();
         npcTeamService = new NpcTeamService();

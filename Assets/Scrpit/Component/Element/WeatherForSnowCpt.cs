@@ -10,6 +10,7 @@ public class WeatherForSnowCpt : WeatherCpt
     {
         base.OpenWeather(weatherData);
         objSnow.SetActive(true);
+        InitPS();
         switch (weatherData.weatherType)
         {
             case WeatherTypeEnum.LightSnow:
@@ -43,5 +44,13 @@ public class WeatherForSnowCpt : WeatherCpt
     {
         ParticleSystem.EmissionModule emissionModule = psSnow.emission;
         emissionModule.rateOverTime = Random.Range(200, 300);
+    }
+
+    public void InitPS()
+    {
+        SceneBaseManager sceneBaseManager = GameScenesHandler.Instance.manager.GetSceneManager<SceneBaseManager>();
+        ParticleSystem.ShapeModule shapeModule = psSnow.shape;
+        shapeModule.position = sceneBaseManager.positionForSnow;
+        shapeModule.scale = sceneBaseManager.scaleForSnow;
     }
 }

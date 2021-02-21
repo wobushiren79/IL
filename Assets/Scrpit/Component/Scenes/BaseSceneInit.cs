@@ -6,7 +6,7 @@ public class BaseSceneInit : BaseMonoBehaviour
 {
     public virtual void Awake()
     {
-
+        int randSeed =  GameCommonInfo.RandomSeed;
     }
 
     public virtual void Start()

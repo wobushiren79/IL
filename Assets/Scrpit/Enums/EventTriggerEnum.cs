@@ -37,6 +37,8 @@ public class EventTriggerEnumTools
     /// <returns></returns>
     public static bool CheckIsAllTrigger(GameDataBean gameData, string data)
     {
+        if (CheckUtil.StringIsNull(data))
+            return false;
         List<EventTriggerBean> listTriggerData = GetListTriggerData(data);
         foreach (var itemTriggerData in listTriggerData)
         {
