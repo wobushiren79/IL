@@ -64,11 +64,13 @@ public class UIGameWorkerDetails : BaseUIComponent, IRadioGroupCallBack
         RefreshUI();
     }
 
-    private void Start()
+    public override void Awake()
     {
+        base.Awake();
         if (btBack != null)
+        {
             btBack.onClick.AddListener(OpenWorkUI);
-
+        }
         if (rgWorkerTitle != null)
         {
             rgWorkerTitle.SetCallBack(this);
@@ -83,6 +85,8 @@ public class UIGameWorkerDetails : BaseUIComponent, IRadioGroupCallBack
         }
     }
 
+
+    protected int selectTypePosition = 0;
     /// <summary>
     /// 初始化数据
     /// </summary>
@@ -117,7 +121,7 @@ public class UIGameWorkerDetails : BaseUIComponent, IRadioGroupCallBack
         }
         else if (name.Contains("Chef"))
         {
-            
+
             workerChefInfo.Open();
             workerChefInfo.SetData(characterData.baseInfo.chefInfo);
         }
@@ -160,8 +164,7 @@ public class UIGameWorkerDetails : BaseUIComponent, IRadioGroupCallBack
         SetEquip(characterData.equips);
         SetWorkerInfo(characterData.baseInfo);
         characterUICpt.SetCharacterData(characterData.body, characterData.equips);
-        rgWorkerTitle.SetPosition(0, false);
-        InitDataByWorker("General");
+        rgWorkerTitle.SetPosition(selectTypePosition, true);
     }
 
     public void OpenWorkUI()
@@ -208,7 +211,7 @@ public class UIGameWorkerDetails : BaseUIComponent, IRadioGroupCallBack
     {
 
         //装备物品刷新
-        equipHand.SetData(characterData,GameItemsHandler.Instance.manager.GetItemsById(equips.handId), null);
+        equipHand.SetData(characterData, GameItemsHandler.Instance.manager.GetItemsById(equips.handId), null);
         equipHat.SetData(characterData, GameItemsHandler.Instance.manager.GetItemsById(equips.hatId), null);
         equipClothes.SetData(characterData, GameItemsHandler.Instance.manager.GetItemsById(equips.clothesId), null);
         equipShoes.SetData(characterData, GameItemsHandler.Instance.manager.GetItemsById(equips.shoesId), null);
@@ -303,7 +306,7 @@ public class UIGameWorkerDetails : BaseUIComponent, IRadioGroupCallBack
             if (itemCharater == characterData)
             {
                 nextPosition = i + number;
-                if(nextPosition >= listCharacter.Count)
+                if (nextPosition >= listCharacter.Count)
                 {
                     nextPosition = nextPosition - listCharacter.Count;
                 }
@@ -321,6 +324,7 @@ public class UIGameWorkerDetails : BaseUIComponent, IRadioGroupCallBack
     #region 数据类型选择回调
     public void RadioButtonSelected(RadioGroupView rgView, int position, RadioButtonView rbview)
     {
+        this.selectTypePosition = position;
         AudioHandler.Instance.PlaySound(AudioSoundEnum.ButtonForNormal);
         InitDataByWorker(rbview.name);
     }

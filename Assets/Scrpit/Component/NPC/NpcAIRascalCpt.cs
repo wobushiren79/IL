@@ -65,7 +65,11 @@ public class NpcAIRascalCpt : BaseNpcAI
             case RascalIntentEnum.Leave:
                 HandlerLeave();
                 break;
+            case RascalIntentEnum.Fighting:
+                HandlerFighting();
+                break;
         }
+
     }
 
     public override void OnDestroy()
@@ -149,6 +153,17 @@ public class NpcAIRascalCpt : BaseNpcAI
         //到底目的地删除对象
         if (characterMoveCpt.IsAutoMoveStop())
             Destroy(gameObject);
+    }
+
+    protected float audioTime = 0;
+    protected void HandlerFighting()
+    {
+        audioTime -= Time.deltaTime;
+        if (audioTime <= 0)
+        {
+            AudioHandler.Instance.PlaySound(AudioSoundEnum.Fight);
+            audioTime = 1;
+        }
     }
 
     /// <summary>

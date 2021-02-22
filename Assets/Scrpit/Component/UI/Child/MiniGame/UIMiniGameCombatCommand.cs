@@ -62,14 +62,10 @@ public class UIMiniGameCombatCommand : BaseUIChildComponent<UIMiniGameCombat>, D
         //获取角色拥有的技能
         List<long> listSkill = npcCpt.characterMiniGameData.characterData.attributes.listSkills;
 
-        Action<List<SkillInfoBean>> callBack = (listSkillInfo) =>
-        {
-            DialogBean dialogData = new DialogBean();
-            PickForSkillDialogView pickForSkillDialog = DialogHandler.Instance.CreateDialog<PickForSkillDialogView>(DialogEnum.PickForSkill, this, dialogData);
-            Dictionary<long, int> listUsedSkill = npcCpt.characterMiniGameData.listUsedSkill;
-            pickForSkillDialog.SetData(listSkillInfo, listUsedSkill);
-        };
-        SkillInfoHandler.Instance.manager.GetSkillByIds(listSkill, callBack);
+        DialogBean dialogData = new DialogBean();
+        PickForSkillDialogView pickForSkillDialog = DialogHandler.Instance.CreateDialog<PickForSkillDialogView>(DialogEnum.PickForSkill, this, dialogData);
+        Dictionary<long, int> listUsedSkill = npcCpt.characterMiniGameData.listUsedSkill;
+        pickForSkillDialog.SetData(listSkill, listUsedSkill);
     }
 
     /// <summary>

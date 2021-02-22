@@ -14,6 +14,8 @@ public class GameScenesHandler : BaseHandler<GameScenesHandler, GameScenesManage
         GameTimeHandler.Instance.SetTimeStop();
         //关闭所有UI
         UIHandler.Instance.manager.CloseAllUI();
+        //关闭所有音乐
+        AudioHandler.Instance.StopMusic();
         //切换场景
         SceneUtil.SceneChange(scenes);
     }

@@ -212,7 +212,16 @@ public class AudioHandler : BaseHandler<AudioHandler, AudioManager>
                 audioClip = manager.GetSoundClip("sound_hit_1");
                 break;
             case AudioSoundEnum.Fight:
-                audioClip = manager.GetSoundClip("sound_fight_1");
+                int fightRandom = Random.Range(0, 2);
+                if (fightRandom == 0)
+                {
+                    audioClip = manager.GetSoundClip("sound_fight_1");
+                }
+                else if (fightRandom == 1)
+                {
+                    audioClip = manager.GetSoundClip("sound_fight_2");
+                }
+                break;
                 break;
             case AudioSoundEnum.FightForKnife:
                 audioClip = manager.GetSoundClip("sound_fight_knife_1");

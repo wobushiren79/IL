@@ -21,6 +21,7 @@ public class TextSearchView : BaseMonoBehaviour
 
     public void OnClickForSubmit()
     {
+        AudioHandler.Instance.PlaySound(AudioSoundEnum.ButtonForNormal);
         if (callBack!=null)
         {
             callBack.SearchTextStart(etText.text);

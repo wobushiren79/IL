@@ -10,6 +10,7 @@ public class UIGameWorkerDetailsSkillInfo : BaseUIChildComponent<UIGameWorkerDet
     public GameObject objSkillItemContainer;
     public GameObject objSkillItemModel;
 
+    protected List<long> listSkill = new List<long>();
     public override void Open()
     {
         base.Open();
@@ -21,8 +22,8 @@ public class UIGameWorkerDetailsSkillInfo : BaseUIChildComponent<UIGameWorkerDet
     /// <param name="listSkill"></param>
     public void SetData(List<long> listSkill)
     {
-        Action<List<SkillInfoBean>> callBack = SetSkillInfoData;
-        SkillInfoHandler.Instance.manager.GetSkillByIds(listSkill, callBack);
+        this.listSkill = listSkill;
+        SkillInfoHandler.Instance.manager.GetAllSkills(SetSkillInfoData);
     }
 
     public void CreateSkillList(List<SkillInfoBean> listData)
@@ -37,9 +38,13 @@ public class UIGameWorkerDetailsSkillInfo : BaseUIChildComponent<UIGameWorkerDet
         {
             tvNull.gameObject.SetActive(false);
         }
-
-        foreach (SkillInfoBean itemSkill in listData)
+        for (int i = 0; i < listData.Count; i++)
         {
+            SkillInfoBean itemSkill = listData[i];
+            if (!listSkill.Contains(itemSkill.id))
+            {
+                continue;
+            }
             GameObject objItem = Instantiate(objSkillItemContainer, objSkillItemModel);
             ItemBaseTextCpt itemBaseText = objItem.GetComponent<ItemBaseTextCpt>();
             PopupSkillButton infoSkillPopup = objItem.GetComponent<PopupSkillButton>();

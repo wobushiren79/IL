@@ -9,20 +9,20 @@ public class PickForSkillDialogView : DialogView, ItemDialogPickForSkillCpt.ICal
     public GameObject objSkillContainer;
     public GameObject objSkillModel;
 
-    public List<SkillInfoBean> listSkillInfo;
+    public List<long> listSkill;
     public Dictionary<long, int> listUsedData;
 
     public SkillInfoBean selectedSkill;
     /// <summary>
     /// 设置数据
     /// </summary>
-    /// <param name="listSkillInfo">拥有的技能</param>
+    /// <param name="listSkill">拥有的技能</param>
     /// <param name="listUsedData">技能使用情况</param>
-    public void SetData(List<SkillInfoBean> listSkillInfo, Dictionary<long, int> listUsedData)
+    public void SetData(List<long> listSkill, Dictionary<long, int> listUsedData)
     {
-        this.listSkillInfo = listSkillInfo;
+        this.listSkill = listSkill;
         this.listUsedData = listUsedData;
-        CreateListSkill();
+        SkillInfoHandler.Instance.manager.GetAllSkills(SetListSkill);
     }
     
     /// <summary>
@@ -37,18 +37,21 @@ public class PickForSkillDialogView : DialogView, ItemDialogPickForSkillCpt.ICal
     /// <summary>
     /// 创建技能列表
     /// </summary>
-    public void CreateListSkill()
+    public void SetListSkill(List<SkillInfoBean> listAllData)
     {
         tvNull.gameObject.SetActive(false);
-        if (listSkillInfo == null || listSkillInfo.Count == 0)
+        if (listSkill == null || listSkill.Count == 0)
         {
             tvNull.gameObject.SetActive(true);
             return;
         }
-        for (int i = 0; i < listSkillInfo.Count; i++)
+        for (int i = 0; i < listAllData.Count; i++)
         {
-            SkillInfoBean itemSkillInfo = listSkillInfo[i];
-            CreateSkillItem(itemSkillInfo);
+            SkillInfoBean itemSkillInfo = listAllData[i];
+            if (listSkill.Contains(itemSkillInfo.id))
+            {
+                CreateSkillItem(itemSkillInfo);
+            }
         }
     }
 

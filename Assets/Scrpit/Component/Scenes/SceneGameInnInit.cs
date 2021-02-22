@@ -57,7 +57,7 @@ public class SceneGameInnInit : BaseSceneInit, DialogView.IDialogCallBack
             RefreshScene();
             //设置位置
             Vector3 startPosition = sceneInnManager.GetTownEntranceLeft();
-            BaseControl baseControl = GameControlHandler.Instance.StartControl<BaseControl>(GameControlHandler.ControlEnum.Normal);
+            ControlForMoveCpt baseControl = GameControlHandler.Instance.StartControl<ControlForMoveCpt>(GameControlHandler.ControlEnum.Normal);
             baseControl.SetFollowPosition(startPosition);
         }
         //改变四季

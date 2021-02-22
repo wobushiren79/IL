@@ -15,10 +15,10 @@ public class UITownArena : UIBaseOne, IRadioGroupCallBack
     private List<StoreInfoBean> listArenaInfo;
     public Text tvNull;
 
-    protected TrophyTypeEnum arenaType = TrophyTypeEnum.Elementary;
-    public override void Start()
+    protected int selectTypePosition = 0;
+    public override void Awake()
     {
-        base.Start();
+        base.Awake();
         if (rgType != null)
         {
             rgType.SetCallBack(this);
@@ -28,16 +28,13 @@ public class UITownArena : UIBaseOne, IRadioGroupCallBack
     public override void OpenUI()
     {
         base.OpenUI();
-        rgType.SetPosition(0, false);
-
-        Action<List<StoreInfoBean>> callBack = SetStoreData;
-        StoreInfoHandler.Instance.manager.GetStoreInfoForArenaInfo(callBack);
+        StoreInfoHandler.Instance.manager.GetStoreInfoForArenaInfo(SetStoreData);
     }
 
     public override void RefreshUI()
     {
         base.RefreshUI();
-        InitData(arenaType);
+        rgType.SetPosition(selectTypePosition,true);
     }
 
     /// <summary>
@@ -46,7 +43,6 @@ public class UITownArena : UIBaseOne, IRadioGroupCallBack
     /// <param name="type"></param>
     public void InitData(TrophyTypeEnum type)
     {
-        this.arenaType = type;
         CptUtil.RemoveChildsByActive(objArenaContainer);
         List<MiniGameBaseBean> listMiniGameData = GameCommonInfo.DailyLimitData.GetArenaDataByType(type);
         if (listMiniGameData == null)
@@ -361,12 +357,13 @@ public class UITownArena : UIBaseOne, IRadioGroupCallBack
     public void SetStoreData(List<StoreInfoBean> listData)
     {
         listArenaInfo = listData;
-        InitData(TrophyTypeEnum.Elementary);
+        rgType.SetPosition(selectTypePosition, true);
     }
 
     #region 等级选择回调
     public void RadioButtonSelected(RadioGroupView rgView, int position, RadioButtonView rbview)
     {
+        this.selectTypePosition = position;
         TrophyTypeEnum trophyType = EnumUtil.GetEnum<TrophyTypeEnum>(rbview.name);
         InitData(trophyType);
     }

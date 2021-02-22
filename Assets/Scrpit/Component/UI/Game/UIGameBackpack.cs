@@ -13,6 +13,16 @@ public class UIGameBackpack : UIBaseOne, TextSearchView.ICallBack
     public Text tvNull;
     public Button btClearUp;
 
+    public Button ui_ItemShowSortDetails_Weapons;
+    public Button ui_ItemShowSortDetails_Hat;
+    public Button ui_ItemShowSortDetails_Clothes;
+    public Button ui_ItemShowSortDetails_Shoes;
+    public Button ui_ItemShowSortDetails_Book;
+    public Button ui_ItemShowSortDetails_Menu;
+    public Button ui_ItemShowSortDetails_Medicine;
+    public Button ui_ItemShowSortDetails_Skill;
+    public Button ui_ItemShowSortDetails_Gift;
+
     protected List<ItemBean> listItemData = new List<ItemBean>();
     public override void Awake()
     {
@@ -65,8 +75,38 @@ public class UIGameBackpack : UIBaseOne, TextSearchView.ICallBack
         backpackCpt.SetData(itemsInfoBean, itemBean);
     }
 
+
+
+
+    /// <summary>
+    /// 招募NPC排序点击
+    /// </summary>
+    public void OnClickForSortSpecial()
+    {
+        AudioHandler.Instance.PlaySound(AudioSoundEnum.ButtonForNormal);
+
+    }
+
+    public void SortForItemsType(List<GeneralEnum> listItemsType)
+    {
+        listItemData = listItemData.OrderByDescending(data =>
+        {
+            ItemsInfoBean itemsInfoBean = GameItemsHandler.Instance.manager.GetItemsById(data.itemId);
+            if (listItemsType.Contains(itemsInfoBean.GetItemsType()))
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }).ToList();
+        gridVertical.RefreshAllCells();
+    }
+
     public void OnClickForClearUp()
     {
+        AudioHandler.Instance.PlaySound(AudioSoundEnum.ButtonForNormal);
         GameDataBean gameData = GameDataHandler.Instance.manager.GetGameData();
         gameData.listItems = gameData.listItems
             .OrderBy(data =>

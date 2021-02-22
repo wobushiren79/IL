@@ -9,13 +9,15 @@ public class UIGameWorkerDetailsBookInfo : BaseUIChildComponent<UIGameWorkerDeta
     public GameObject objBookItemContainer;
     public GameObject objBookItemModel;
 
+    public List<long> listBook = new List<long>();
     /// <summary>
     /// 设置数据
     /// </summary>
     /// <param name="listSkill"></param>
     public void SetData(List<long> listBook)
     {
-        List<ItemsInfoBean> listData = GameItemsHandler.Instance.manager.GetItemsByIds(listBook);
+        this.listBook = listBook;
+        List<ItemsInfoBean> listData = GameItemsHandler.Instance.manager.GetItemsListByType(GeneralEnum.Book);
         CreateBookList(listData);
     }
 
@@ -35,9 +37,13 @@ public class UIGameWorkerDetailsBookInfo : BaseUIChildComponent<UIGameWorkerDeta
         {
             tvNull.gameObject.SetActive(false);
         }
-
-        foreach (ItemsInfoBean itemData in listData)
+        for (int i = 0; i < listData.Count; i++)
         {
+            ItemsInfoBean itemData = listData[i];
+            if (!listBook.Contains(itemData.id))
+            {
+                continue;
+            }
             GameObject objItem = Instantiate(objBookItemContainer, objBookItemModel);
             ItemBaseTextCpt itemBaseText = objItem.GetComponent<ItemBaseTextCpt>();
             PopupItemsButton infoItemsPopup = objItem.GetComponent<PopupItemsButton>();

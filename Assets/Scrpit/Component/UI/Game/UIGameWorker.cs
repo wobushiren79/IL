@@ -16,6 +16,8 @@ public class UIGameWorker : BaseUIComponent
     public Button btSortDef;
     public Button btSortLevelUp;
     public Button btSortLoyalty;
+    public Button btSortSpecial;
+
 
     public Button btFilterChef;
     public Button btFilterWaiterCleanBed;
@@ -45,6 +47,8 @@ public class UIGameWorker : BaseUIComponent
             btSortLevelUp.onClick.AddListener(OnClickForSortLevelUp);
         if (btSortLoyalty != null)
             btSortLoyalty.onClick.AddListener(OnClickForSortLoyalty);
+        if (btSortSpecial != null)
+            btSortSpecial.onClick.AddListener(OnClickForSortSpecial);
 
         if (btFilterChef != null)
             btFilterChef.onClick.AddListener(OnClickForChef);
@@ -183,6 +187,22 @@ public class UIGameWorker : BaseUIComponent
             (data) =>
             {
                 return data.attributes.loyal;
+            }).ToList();
+        InitData();
+    }
+
+    /// <summary>
+    /// 招募NPC排序点击
+    /// </summary>
+    public void OnClickForSortSpecial()
+    {
+        AudioHandler.Instance.PlaySound(AudioSoundEnum.ButtonForNormal);
+        this.listCharacterData = this.listCharacterData.OrderBy(
+            (data) =>
+            {
+                if (data.npcInfoData != null)
+                    return  true;
+                return false;
             }).ToList();
         InitData();
     }
