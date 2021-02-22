@@ -4,8 +4,9 @@ using System.Collections.Generic;
 
 public class NpcImportantBuilder : BaseMonoBehaviour
 {
-    public GameObject objNpcModel;
     public GameObject objNpcContainer;
+    public GameObject objNpcModel;
+
 
     public List<NpcAIImportantCpt> listTownNpc = new List<NpcAIImportantCpt>();
     public List<NpcAIImportantCpt> listRecruitTownNpc = new List<NpcAIImportantCpt>();

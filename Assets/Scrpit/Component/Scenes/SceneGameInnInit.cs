@@ -32,7 +32,8 @@ public class SceneGameInnInit : BaseSceneInit, DialogView.IDialogCallBack
         //初始化客栈处理
         InnHandler.Instance.InitInn();
         InnHandler.Instance.InitRecord();
-
+        //其他场景切过来需要重置一下客栈数据
+        InnHandler.Instance.CloseInn();
         //设置天气
         GameWeatherHandler.Instance.SetWeather(GameCommonInfo.CurrentDayData.weatherToday);
         //打开UI
@@ -62,8 +63,6 @@ public class SceneGameInnInit : BaseSceneInit, DialogView.IDialogCallBack
         }
         //改变四季
         GameSeasonsHandler.Instance.ChangeSeasons();
-        //其他场景切过来需要重置一下客栈数据
-        InnHandler.Instance.CloseInn();
 
         StartCoroutine(BuildNavMesh());
     }

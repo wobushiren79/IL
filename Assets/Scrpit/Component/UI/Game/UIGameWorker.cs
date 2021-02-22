@@ -121,9 +121,8 @@ public class UIGameWorker : BaseUIComponent
 
     public void InitData()
     {
-        StopAllCoroutines();
         gridVertical.SetCellCount(listCharacterData.Count);
-
+        gridVertical.RefreshAllCells();
     }
 
     /// <summary>
@@ -197,12 +196,12 @@ public class UIGameWorker : BaseUIComponent
     public void OnClickForSortSpecial()
     {
         AudioHandler.Instance.PlaySound(AudioSoundEnum.ButtonForNormal);
-        this.listCharacterData = this.listCharacterData.OrderBy(
+        this.listCharacterData = this.listCharacterData.OrderByDescending(
             (data) =>
             {
-                if (data.npcInfoData != null)
-                    return  true;
-                return false;
+                if (data.npcInfoData != null&&data.npcInfoData.id!=0)
+                    return  1;
+                return 0;
             }).ToList();
         InitData();
     }
