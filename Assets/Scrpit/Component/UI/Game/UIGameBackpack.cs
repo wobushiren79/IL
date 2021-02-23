@@ -35,6 +35,24 @@ public class UIGameBackpack : UIBaseOne, TextSearchView.ICallBack
         {
             gridVertical.AddCellListener(OnCellForItems);
         }
+        if (ui_ItemShowSortDetails_Weapons)
+            ui_ItemShowSortDetails_Weapons.onClick.AddListener(OnClickForSortWeapons);
+        if (ui_ItemShowSortDetails_Hat)
+            ui_ItemShowSortDetails_Hat.onClick.AddListener(OnClickForSortHat);
+        if (ui_ItemShowSortDetails_Clothes)
+            ui_ItemShowSortDetails_Clothes.onClick.AddListener(OnClickForSortClothes);
+        if (ui_ItemShowSortDetails_Shoes)
+            ui_ItemShowSortDetails_Shoes.onClick.AddListener(OnClickForSortShoes);
+        if (ui_ItemShowSortDetails_Book)
+            ui_ItemShowSortDetails_Book.onClick.AddListener(OnClickForSortBook);
+        if (ui_ItemShowSortDetails_Menu)
+            ui_ItemShowSortDetails_Menu.onClick.AddListener(OnClickForSortMenu);
+        if (ui_ItemShowSortDetails_Medicine)
+            ui_ItemShowSortDetails_Medicine.onClick.AddListener(OnClickForSortMedicine);
+        if (ui_ItemShowSortDetails_Skill)
+            ui_ItemShowSortDetails_Skill.onClick.AddListener(OnClickForSortSkill);
+        if (ui_ItemShowSortDetails_Gift)
+            ui_ItemShowSortDetails_Gift.onClick.AddListener(OnClickForSortGift);
         if (textSearchView)
             textSearchView.SetCallBack(this);
     }
@@ -76,19 +94,51 @@ public class UIGameBackpack : UIBaseOne, TextSearchView.ICallBack
     }
 
 
-
-
-    /// <summary>
-    /// 招募NPC排序点击
-    /// </summary>
-    public void OnClickForSortSpecial()
+    #region 物品排序
+    public void OnClickForSortWeapons()
     {
-        AudioHandler.Instance.PlaySound(AudioSoundEnum.ButtonForNormal);
-
+        SortForItemsType(new List<GeneralEnum>() 
+        { GeneralEnum.Chef, GeneralEnum.Waiter, GeneralEnum.Accost, GeneralEnum.Accoutant, GeneralEnum.Beater });
     }
-
+    public void OnClickForSortHat()
+    {
+        SortForItemsType(GeneralEnum.Hat);
+    }
+    public void OnClickForSortClothes()
+    {
+        SortForItemsType(GeneralEnum.Clothes);
+    }
+    public void OnClickForSortShoes()
+    {
+        SortForItemsType(GeneralEnum.Shoes);
+    }
+    public void OnClickForSortBook()
+    {
+        SortForItemsType(GeneralEnum.Book);
+    }
+    public void OnClickForSortMenu()
+    {
+        SortForItemsType(GeneralEnum.Menu);
+    }
+    public void OnClickForSortMedicine()
+    {
+        SortForItemsType(GeneralEnum.Medicine);
+    }
+    public void OnClickForSortSkill()
+    {
+        SortForItemsType(GeneralEnum.SkillBook);
+    }
+    public void OnClickForSortGift()
+    {
+        SortForItemsType(GeneralEnum.Gift);
+    }
+    public void SortForItemsType(GeneralEnum listItemsType)
+    {
+        SortForItemsType(new List<GeneralEnum>() { listItemsType });
+    }
     public void SortForItemsType(List<GeneralEnum> listItemsType)
     {
+        AudioHandler.Instance.PlaySound(AudioSoundEnum.ButtonForNormal);
         listItemData = listItemData.OrderByDescending(data =>
         {
             ItemsInfoBean itemsInfoBean = GameItemsHandler.Instance.manager.GetItemsById(data.itemId);
@@ -103,6 +153,7 @@ public class UIGameBackpack : UIBaseOne, TextSearchView.ICallBack
         }).ToList();
         gridVertical.RefreshAllCells();
     }
+    #endregion
 
     public void OnClickForClearUp()
     {

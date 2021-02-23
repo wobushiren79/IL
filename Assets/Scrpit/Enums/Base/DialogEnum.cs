@@ -23,4 +23,6 @@ public enum DialogEnum
     SelectForBed = 14,
 
     ItemsSelection = 15,
+
+    InputText=16,
 }

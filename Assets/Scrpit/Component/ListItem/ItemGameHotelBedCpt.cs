@@ -11,6 +11,7 @@ public class ItemGameHotelBedCpt : ItemGameBaseCpt, DialogView.IDialogCallBack
     public Image ivBgLevel;
     public Text tvName;
     public Text tvPrice;
+    public Button btEtName;
 
 
     public PopupPromptButton popupForResearch;
@@ -36,6 +37,8 @@ public class ItemGameHotelBedCpt : ItemGameBaseCpt, DialogView.IDialogCallBack
             btResearch.onClick.AddListener(OnClickResearch);
         if (btResearchCancel != null)
             btResearchCancel.onClick.AddListener(OnClickResearchCancel);
+        if (btEtName != null)
+            btEtName.onClick.AddListener(OnClickForEdName);
     }
 
     public void SetData(BuildBedBean buildBedData)
@@ -262,7 +265,6 @@ public class ItemGameHotelBedCpt : ItemGameBaseCpt, DialogView.IDialogCallBack
     /// </summary>
     public void OnClickResearchCancel()
     {
-        
         AudioHandler.Instance.PlaySound(AudioSoundEnum.ButtonForNormal);
         DialogBean dialogData = new DialogBean
         {
@@ -272,12 +274,18 @@ public class ItemGameHotelBedCpt : ItemGameBaseCpt, DialogView.IDialogCallBack
         DialogHandler.Instance.CreateDialog<DialogView>(DialogEnum.Normal, this, dialogData);
     }
 
+    public void OnClickForEdName()
+    {
+        AudioHandler.Instance.PlaySound(AudioSoundEnum.ButtonForNormal);
+        DialogBean dialogData = new DialogBean();
+        DialogHandler.Instance.CreateDialog<InputTextDialogView>(DialogEnum.InputText, this, dialogData);
+    }
 
     #region 确认回调
     public void Submit(DialogView dialogView, DialogBean dialogBean)
     {
         GameDataBean gameData = GameDataHandler.Instance.manager.GetGameData();
-        if (dialogView as PickForCharacterDialogView)
+        if (dialogView is PickForCharacterDialogView)
         {
             buildBedData.GetResearchPrice(out long researchPriceL, out long researchPriceM, out long researchPriceS);
             //先判断一下是否有钱支付
@@ -298,6 +306,13 @@ public class ItemGameHotelBedCpt : ItemGameBaseCpt, DialogView.IDialogCallBack
                 string toastStr = string.Format(TextHandler.Instance.manager.GetTextById(1201), listPickCharacter[0].baseInfo.name, buildBedData.bedName);
                 ToastHandler.Instance.ToastHint(toastStr);
             }
+        }
+        else if (dialogView is InputTextDialogView)
+        {
+            InputTextDialogView inputTextDialog= dialogView as InputTextDialogView;    
+            string bedName = inputTextDialog.GetText();
+            if(!CheckUtil.StringIsNull(bedName))
+                buildBedData.bedName = bedName;
         }
         else
         {
