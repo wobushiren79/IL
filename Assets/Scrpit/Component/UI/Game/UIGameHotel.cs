@@ -8,8 +8,7 @@ using System.Linq;
 public class UIGameHotel : BaseUIComponent
 {
     public Button btBack;
-    public GameObject objBedContainer;
-    public GameObject objBedModel;
+    public ScrollGridVertical gridVertical;
 
     [Header("排序")]
     public Button btSortDef;
@@ -31,6 +30,8 @@ public class UIGameHotel : BaseUIComponent
             btSortLevelUp.onClick.AddListener(OnClickForSortLevelUp);
         if (btSortPrice != null)
             btSortPrice.onClick.AddListener(OnClickForSortPrice);
+
+        gridVertical.AddCellListener(OnCellForItems);
     }
 
     public override void OpenUI()
@@ -46,28 +47,17 @@ public class UIGameHotel : BaseUIComponent
         List<BuildBedBean> listBed = gameData.listBed;
         this.listBedData.Clear();
         this.listBedData.AddRange(listBed);
-        CreateBedList();
+        gridVertical.SetCellCount(listBedData.Count);
+        gridVertical.RefreshAllCells();
     }
 
-    public void CreateBedList()
+    public void OnCellForItems(ScrollGridCell itemCell)
     {
-        StopAllCoroutines();
-        CptUtil.RemoveChildsByActive(objBedContainer.transform);
-        StartCoroutine(CoroutineForCreateBedList());
+        BuildBedBean itemData = listBedData[itemCell.index];
+        ItemGameHotelBedCpt itemCpt = itemCell.GetComponent<ItemGameHotelBedCpt>();
+        itemCpt.SetData(itemData);
     }
 
-
-    public IEnumerator CoroutineForCreateBedList()
-    {
-        for (int i = 0; i < listBedData.Count; i++)
-        {
-            BuildBedBean itemData = listBedData[i];
-            GameObject objBed = Instantiate(objBedContainer, objBedModel);
-            ItemGameHotelBedCpt itemCpt = objBed.GetComponent<ItemGameHotelBedCpt>();
-            itemCpt.SetData(itemData);
-            yield return new WaitForEndOfFrame();
-        }
-    }
 
     /// <summary>
     /// 默认排序点击
@@ -79,7 +69,8 @@ public class UIGameHotel : BaseUIComponent
         List<BuildBedBean> listBed = gameData.listBed;
         this.listBedData.Clear();
         this.listBedData.AddRange(listBed);
-        CreateBedList();
+        gridVertical.SetCellCount(listBedData.Count);
+        gridVertical.RefreshAllCells();
     }
 
     /// <summary>
@@ -93,7 +84,7 @@ public class UIGameHotel : BaseUIComponent
             {
                 return data.bedStatus;
             }).ToList();
-        CreateBedList();
+        gridVertical.RefreshAllCells();
     }
 
     /// <summary>
@@ -107,7 +98,7 @@ public class UIGameHotel : BaseUIComponent
             {
                 return data.priceS;
             }).ToList();
-        CreateBedList();
+        gridVertical.RefreshAllCells();
     }
 
     /// <summary>
@@ -121,7 +112,7 @@ public class UIGameHotel : BaseUIComponent
             {
                 return data.bedLevel;
             }).ToList();
-        CreateBedList();
+        gridVertical.RefreshAllCells();
     }
 
     /// <summary>

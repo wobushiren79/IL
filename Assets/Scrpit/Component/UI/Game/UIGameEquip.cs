@@ -61,6 +61,7 @@ public class UIGameEquip : BaseUIComponent, TextSearchView.ICallBack
     public Button ui_ItemShowSortDetails_Skill;
     public Button ui_ItemShowSortDetails_Gift;
 
+    protected GeneralEnum sortType = GeneralEnum.Null;
     private void Start()
     {
         if (btBack != null)
@@ -346,6 +347,7 @@ public class UIGameEquip : BaseUIComponent, TextSearchView.ICallBack
         {
             tvNull.gameObject.SetActive(false);
         }
+        SortForItemsType(sortType);
     }
 
     protected void OnClickForLastCharacter()
@@ -387,8 +389,7 @@ public class UIGameEquip : BaseUIComponent, TextSearchView.ICallBack
     #region 物品排序
     public void OnClickForSortWeapons()
     {
-        SortForItemsType(new List<GeneralEnum>()
-        { GeneralEnum.Chef, GeneralEnum.Waiter, GeneralEnum.Accost, GeneralEnum.Accoutant, GeneralEnum.Beater });
+        SortForItemsType(GeneralEnum.Chef);
     }
     public void OnClickForSortHat()
     {
@@ -422,12 +423,21 @@ public class UIGameEquip : BaseUIComponent, TextSearchView.ICallBack
     {
         SortForItemsType(GeneralEnum.Gift);
     }
-    public void SortForItemsType(GeneralEnum listItemsType)
+    public void SortForItemsType(GeneralEnum itemsType)
     {
-        SortForItemsType(new List<GeneralEnum>() { listItemsType });
-    }
-    public void SortForItemsType(List<GeneralEnum> listItemsType)
-    {
+        sortType = itemsType;
+        if (sortType == GeneralEnum.Null)
+            return;
+        List<GeneralEnum> listItemsType = null;
+        if (itemsType == GeneralEnum.Chef || itemsType == GeneralEnum.Waiter || itemsType == GeneralEnum.Accost || itemsType == GeneralEnum.Accoutant || itemsType == GeneralEnum.Beater)
+        {
+            listItemsType = new List<GeneralEnum>() { GeneralEnum.Chef, GeneralEnum.Waiter, GeneralEnum.Accost, GeneralEnum.Accoutant, GeneralEnum.Beater };
+        }
+        else
+        {
+            listItemsType = new List<GeneralEnum>() { itemsType };
+        }
+
         AudioHandler.Instance.PlaySound(AudioSoundEnum.ButtonForNormal);
         listItemData = listItemData.OrderByDescending(data =>
         {
