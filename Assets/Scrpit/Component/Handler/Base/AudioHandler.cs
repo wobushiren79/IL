@@ -222,7 +222,6 @@ public class AudioHandler : BaseHandler<AudioHandler, AudioManager>
                     audioClip = manager.GetSoundClip("sound_fight_2");
                 }
                 break;
-                break;
             case AudioSoundEnum.FightForKnife:
                 audioClip = manager.GetSoundClip("sound_fight_knife_1");
                 break;
