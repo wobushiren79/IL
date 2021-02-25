@@ -14,6 +14,7 @@ public class StoryInfoDetailsBean
         AutoNext = 12,//指定时间跳转
         PropPosition = 13,//道具位置
         WorkerPosition = 14,//员工位置
+        Effect = 15,//粒子特效
 
         CameraPosition = 21,//摄像机位置
         CameraFollowCharacter = 22,//摄像头跟随目标
