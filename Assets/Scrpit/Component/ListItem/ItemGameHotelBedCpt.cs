@@ -278,6 +278,8 @@ public class ItemGameHotelBedCpt : ItemGameBaseCpt, DialogView.IDialogCallBack
     {
         AudioHandler.Instance.PlaySound(AudioSoundEnum.ButtonForNormal);
         DialogBean dialogData = new DialogBean();
+        //dialogData.content = buildBedData.bedName;
+        dialogData.title = TextHandler.Instance.manager.GetTextById(8001);
         DialogHandler.Instance.CreateDialog<InputTextDialogView>(DialogEnum.InputText, this, dialogData);
     }
 

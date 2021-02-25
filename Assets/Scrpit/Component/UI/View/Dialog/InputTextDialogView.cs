@@ -4,10 +4,20 @@ using UnityEngine.UI;
 public class InputTextDialogView : DialogView
 {
     public InputField etContent;
+    public Text tvHint;
 
-    public void SetData(string text)
+
+    public override void InitData()
     {
-        SetText(text);
+        base.InitData();
+        if (!CheckUtil.StringIsNull(dialogData.content))
+        {
+            SetText(dialogData.content);
+        }
+        if (!CheckUtil.StringIsNull(dialogData.title))
+        {
+            SetHint(dialogData.title);
+        }
     }
 
     /// <summary>
@@ -16,8 +26,14 @@ public class InputTextDialogView : DialogView
     /// <param name="text"></param>
     public void SetText(string text)
     {
-        if(etContent)
+        if (etContent)
             etContent.text = text;
+    }
+
+    public void SetHint(string hint)
+    {
+        if (tvHint)
+            tvHint.text = hint;
     }
 
     /// <summary>
@@ -31,5 +47,16 @@ public class InputTextDialogView : DialogView
             return etContent.text;
         }
         return null;
+    }
+
+    public override void SubmitOnClick()
+    {
+        if (CheckUtil.StringIsNull(etContent.text))
+        {
+            ToastHandler.Instance.ToastHint(TextHandler.Instance.manager.GetTextById(1025));
+            return;
+        }
+        base.SubmitOnClick();
+
     }
 }
