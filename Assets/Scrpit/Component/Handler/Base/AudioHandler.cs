@@ -129,6 +129,9 @@ public class AudioHandler : BaseHandler<AudioHandler, AudioManager>
                 };
                 audioClip = RandomUtil.GetRandomDataByList(listRestClip);
                 break;
+            case AudioMusicEnum.Marry:
+                audioClip = manager.GetMusicClip("music_marry_1");
+                break;
         }
         if (audioClip != null)
         {

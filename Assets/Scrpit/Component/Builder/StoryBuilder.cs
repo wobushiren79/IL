@@ -98,9 +98,7 @@ public class StoryBuilder : BaseMonoBehaviour
                     HandleForNpcEquip(itemData);
                     break;
 
-                case StoryInfoDetailsBean.StoryInfoDetailsTypeEnum.SceneInt:
-                    HandleForSceneInt(itemData);
-                    break;
+
                 case StoryInfoDetailsBean.StoryInfoDetailsTypeEnum.Talk:
                     isNext = HandleForTalk(itemData);
                     break;
@@ -112,6 +110,9 @@ public class StoryBuilder : BaseMonoBehaviour
                     break;
                 case StoryInfoDetailsBean.StoryInfoDetailsTypeEnum.WorkerPosition:
                     HandleForWorkerPosition(itemData);
+                    break;
+                case StoryInfoDetailsBean.StoryInfoDetailsTypeEnum.Effect:
+                    HandleForEffect(itemData);
                     break;
 
 
@@ -130,6 +131,9 @@ public class StoryBuilder : BaseMonoBehaviour
                     HandleForAudioMusic(itemData);
                     break;
 
+                case StoryInfoDetailsBean.StoryInfoDetailsTypeEnum.SceneInt:
+                    HandleForSceneInt(itemData);
+                    break;
             }
         }
         if (isNext)
@@ -273,6 +277,14 @@ public class StoryBuilder : BaseMonoBehaviour
     public void HandleForWorkerPosition(StoryInfoDetailsBean itemData)
     {
         CreateAllWorker(itemData);
+    }
+
+    public void HandleForEffect(StoryInfoDetailsBean itemData)
+    {
+        Vector3 effectPosition = new Vector3(itemData.position_x,itemData.position_y);
+        string effectName = itemData.key_name;
+        float effectTime = itemData.wait_time;
+        EffectHandler.Instance.PlayEffect(effectName, effectPosition, effectTime);
     }
 
     public void HandleForAudioSound(StoryInfoDetailsBean itemData)

@@ -292,7 +292,9 @@ public class StoryInfoCreateWindowsEditor : EditorWindow
             case StoryInfoDetailsBean.StoryInfoDetailsTypeEnum.WorkerPosition:
                 UIForStoryInfoDetailsWorkerPosition(itemData);
                 break;
-
+            case StoryInfoDetailsBean.StoryInfoDetailsTypeEnum.Effect:
+                UIForStoryInfoDetailsEffect(itemData);
+                break;
 
             case StoryInfoDetailsBean.StoryInfoDetailsTypeEnum.CameraPosition:
                 UIForStoryInfoDetailsCameraPosition(itemData);
@@ -577,6 +579,23 @@ public class StoryInfoCreateWindowsEditor : EditorWindow
         EditorUI.GUIText("员工横竖排数(h v):", 120, 20);
         itemData.horizontal = EditorUI.GUIEditorText(itemData.horizontal, 50, 20);
         itemData.vertical = EditorUI.GUIEditorText(itemData.vertical, 50, 20);
+    }
+
+    protected  void UIForStoryInfoDetailsEffect(StoryInfoDetailsBean itemData)
+    {
+        if (EditorUI.GUIButton("删除"))
+        {
+            RemoveStoryInfoDetailsItem(itemData);
+            return;
+        }
+        EditorUI.GUIText("粒子名称:", 50, 20);
+        itemData.key_name = EditorUI.GUIEditorText(itemData.key_name, 100, 20);
+        EditorUI.GUIText("粒子位置X:", 120, 20);
+        itemData.position_x = EditorUI.GUIEditorText(itemData.position_x, 100, 20);
+        EditorUI.GUIText("粒子位置Y:", 120, 20);
+        itemData.position_y = EditorUI.GUIEditorText(itemData.position_y, 100, 20);
+        EditorUI.GUIText("持续时间（-1为永久）:", 120, 20);
+        itemData.wait_time= EditorUI.GUIEditorText(itemData.wait_time, 100, 20);
     }
 
     protected void UIForStoryInfoDetailsCameraPosition(StoryInfoDetailsBean itemData)

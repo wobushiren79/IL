@@ -152,7 +152,7 @@ public class CharacterBodyManager : BaseManager
     /// <returns></returns>
     public string GetRandomMouthStr()
     {
-        int hairNumber = Random.Range(1, 39);
+        int hairNumber = Random.Range(1, 12);
         return "character_mouth_" + hairNumber;
     }
 
