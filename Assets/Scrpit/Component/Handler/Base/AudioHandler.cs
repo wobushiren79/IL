@@ -275,6 +275,9 @@ public class AudioHandler : BaseHandler<AudioHandler, AudioManager>
             case AudioSoundEnum.Door:
                 audioClip = manager.GetSoundClip("sound_door_1");
                 break;
+            case AudioSoundEnum.Firecrackers:
+                audioClip = manager.GetSoundClip("sound_firecrackers_1");
+                break;
         }
         if (audioClip != null)
         {

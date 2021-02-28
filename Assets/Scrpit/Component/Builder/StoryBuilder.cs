@@ -366,15 +366,24 @@ public class StoryBuilder : BaseMonoBehaviour
         CharacterBean characterData;
         if (itemData.npc_id == 0)
         {
+            //使用自己的数据
             GameControlHandler.Instance.manager.GetControl<ControlForStoryCpt>(GameControlHandler.ControlEnum.Story).SetCameraFollowObj(objNpc);
             GameDataBean gameData = GameDataHandler.Instance.manager.GetGameData();
             characterData = gameData.userCharacter;
+        }
+        else if (itemData.npc_id == -1)
+        {
+            // 使用妻子的数据
+            GameDataBean gameData = GameDataHandler.Instance.manager.GetGameData();
+            FamilyDataBean familyData =  gameData.GetFamilyData();
+            characterData = familyData.wifeCharacter as CharacterBean;
         }
         else
             characterData = NpcInfoHandler.Instance.manager.GetCharacterDataById(itemData.npc_id);
         //设置编号
         objNpc.name = "character_" + itemData.num;
-        aiNpc.SetCharacterData(characterData);
+        CharacterBean copyCharacterData = ClassUtil.DeepCopyByBin<CharacterBean>(characterData);
+        aiNpc.SetCharacterData(copyCharacterData);
         //默认设置NPC速度为1
         aiNpc.characterMoveCpt.SetMoveSpeed(1);
         return aiNpc;

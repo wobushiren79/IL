@@ -11,18 +11,21 @@ public class EffectPSCpt : BaseMonoBehaviour
     {
         effectPS = GetComponent<ParticleSystem>();
         ParticleSystem.MainModule mainModule = effectPS.main;
-        mainModule.loop = false;
         mainModule.stopAction = ParticleSystemStopAction.Callback;
     }
 
     /// <summary>
     /// 播放
     /// </summary>
-    public void Play()
+    public void Play(bool isLoop)
     {
+        ParticleSystem.MainModule mainModule = effectPS.main;
+        mainModule.loop = isLoop;
         effectPS.Play();
         AudioHandler.Instance.PlaySound(soundType);
     }
+
+    
 
     /// <summary>
     /// 粒子结束监听

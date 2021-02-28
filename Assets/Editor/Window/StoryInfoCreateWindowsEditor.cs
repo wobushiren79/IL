@@ -461,11 +461,16 @@ public class StoryInfoCreateWindowsEditor : EditorWindow
             npcInfo = new NpcInfoBean();
             npcInfo.name = "玩家";
         }
+        else if (itemData.npc_id == -1)
+        {
+            npcInfo = new NpcInfoBean();
+            npcInfo.name = "妻子";
+        }
         else
         {
             npcInfo = mapNpcInfo[itemData.npc_id];
         }
-        EditorUI.GUIText("NPCId:", 50, 20);
+        EditorUI.GUIText("NPCId(0:自己，-1：妻子):", 200, 20);
         itemData.npc_id = EditorUI.GUIEditorText(itemData.npc_id, 100, 20);
         EditorUI.GUIText("姓名：" + npcInfo.title_name + "-" + npcInfo.name, 200, 20);
         EditorUI.GUIText("NPC序号:", 100, 20);
@@ -684,6 +689,10 @@ public class StoryInfoCreateWindowsEditor : EditorWindow
         {
             CreateStoryInfoDetailsDataByType(mFindStoryId, StoryInfoDetailsBean.StoryInfoDetailsTypeEnum.WorkerPosition);
         }
+        if (EditorUI.GUIButton("添加粒子", 200, 20))
+        {
+            CreateStoryInfoDetailsDataByType(mFindStoryId, StoryInfoDetailsBean.StoryInfoDetailsTypeEnum.Effect);
+        }
         GUILayout.EndHorizontal();
 
         GUILayout.BeginHorizontal();
@@ -874,6 +883,10 @@ public class StoryInfoCreateWindowsEditor : EditorWindow
                 {
                     NpcInfoBean npcInfoBean;
                     if (itemData.npc_id == 0)
+                    {
+                        npcInfoBean = new NpcInfoBean();
+                    }
+                    else if (itemData.npc_id == -1)
                     {
                         npcInfoBean = new NpcInfoBean();
                     }

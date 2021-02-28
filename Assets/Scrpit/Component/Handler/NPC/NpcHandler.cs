@@ -70,4 +70,26 @@ public class NpcHandler : BaseHandler<NpcHandler,NpcManager>
             return _buildForPasser;
         }
     }
+
+    /// <summary>
+    /// 暂停路人NPC建造
+    /// </summary>
+    public void StopBuildNpc()
+    {
+        if (builderForCustomer != null)
+        {
+            builderForCustomer.StopBuildCustomer();
+        }
+    }
+
+    /// <summary>
+    /// 回复路人NPC建造
+    /// </summary>
+    public void RestoreBuildNpc()
+    {
+        if (builderForCustomer != null)
+        {
+            builderForCustomer.StartBuildCustomer();
+        }
+    }
 }

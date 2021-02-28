@@ -361,15 +361,21 @@ public class GameEventHandler : BaseHandler<GameEventHandler, GameEventManager>,
             {
                 GameDataBean gameData = GameDataHandler.Instance.manager.GetGameData();
                 gameData.AddTraggeredEvent(storyInfo.id);
-            }      
+            }
             //打开主界面UI
             UIHandler.Instance.manager.OpenUIAndCloseOther<UIGameMain>(UIEnum.GameMain);
             //恢复时间
             GameTimeHandler.Instance.SetTimeRestore();
-
+            //回复生成NPC
+            NpcHandler.Instance.RestoreBuildNpc();
             //初始化数据
             InitData();
 
+        }
+        else if (eventStatus == EventStatusEnum.EventIng)
+        {
+            //暂停生成NPC
+            NpcHandler.Instance.StopBuildNpc();
         }
     }
 

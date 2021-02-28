@@ -64,4 +64,18 @@ public class FamilyDataBean : BaseBean
             return false;
         }
     }
+
+    /// <summary>
+    /// 检测是否是结婚日
+    /// </summary>
+    /// <param name="time"></param>
+    /// <returns></returns>
+    public bool CheckIsMarryDay(TimeBean time)
+    {
+        if(time.year==timeForMarry.year&& time.month == timeForMarry.month && time.day == timeForMarry.day)
+        {
+            return true;
+        }
+        return false;
+    }
 }
