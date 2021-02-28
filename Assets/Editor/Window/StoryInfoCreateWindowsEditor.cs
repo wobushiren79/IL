@@ -295,6 +295,9 @@ public class StoryInfoCreateWindowsEditor : EditorWindow
             case StoryInfoDetailsBean.StoryInfoDetailsTypeEnum.Effect:
                 UIForStoryInfoDetailsEffect(itemData);
                 break;
+            case StoryInfoDetailsBean.StoryInfoDetailsTypeEnum.SetTime:
+                UIForStoryInfoSetTime(itemData);
+                break;
 
             case StoryInfoDetailsBean.StoryInfoDetailsTypeEnum.CameraPosition:
                 UIForStoryInfoDetailsCameraPosition(itemData);
@@ -602,6 +605,19 @@ public class StoryInfoCreateWindowsEditor : EditorWindow
         EditorUI.GUIText("持续时间（-1为永久）:", 120, 20);
         itemData.wait_time= EditorUI.GUIEditorText(itemData.wait_time, 100, 20);
     }
+    protected void UIForStoryInfoSetTime(StoryInfoDetailsBean itemData)
+    {
+        if (EditorUI.GUIButton("删除"))
+        {
+            RemoveStoryInfoDetailsItem(itemData);
+            return;
+        }
+        EditorUI.GUIText("设置时间:", 50, 20);
+        EditorUI.GUIText("小时:", 50, 20);
+        itemData.time_hour = EditorUI.GUIEditorText(itemData.time_hour, 100, 20);
+        EditorUI.GUIText("分钟", 50, 20);
+        itemData.time_minute = EditorUI.GUIEditorText(itemData.time_minute, 100, 20);
+    }
 
     protected void UIForStoryInfoDetailsCameraPosition(StoryInfoDetailsBean itemData)
     {
@@ -692,6 +708,10 @@ public class StoryInfoCreateWindowsEditor : EditorWindow
         if (EditorUI.GUIButton("添加粒子", 200, 20))
         {
             CreateStoryInfoDetailsDataByType(mFindStoryId, StoryInfoDetailsBean.StoryInfoDetailsTypeEnum.Effect);
+        }
+        if (EditorUI.GUIButton("设置时间", 200, 20))
+        {
+            CreateStoryInfoDetailsDataByType(mFindStoryId, StoryInfoDetailsBean.StoryInfoDetailsTypeEnum.SetTime);
         }
         GUILayout.EndHorizontal();
 

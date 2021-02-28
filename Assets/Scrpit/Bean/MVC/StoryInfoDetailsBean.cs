@@ -11,10 +11,11 @@ public class StoryInfoDetailsBean
         NpcDestory = 4,//销毁NPC
 
         Talk = 11,//对话
-        AutoNext = 12,//指定时间跳转
+        AutoNext = 12,//指定跳转
         PropPosition = 13,//道具位置
         WorkerPosition = 14,//员工位置
         Effect = 15,//粒子特效
+        SetTime = 16,//设置时间
 
         CameraPosition = 21,//摄像机位置
         CameraFollowCharacter = 22,//摄像头跟随目标
@@ -78,6 +79,12 @@ public class StoryInfoDetailsBean
     //横竖
     public int horizontal;
     public int vertical;
+
+    public int time_year;
+    public int time_month;
+    public int time_day;
+    public int time_hour;
+    public int time_minute;
 
     //获取NPC装备
     public void GetNpcEquip(SexEnum sex,out long hatId, out long clothesId, out long shoesId)

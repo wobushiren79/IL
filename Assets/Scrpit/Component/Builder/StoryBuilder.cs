@@ -114,6 +114,9 @@ public class StoryBuilder : BaseMonoBehaviour
                 case StoryInfoDetailsBean.StoryInfoDetailsTypeEnum.Effect:
                     HandleForEffect(itemData);
                     break;
+                case StoryInfoDetailsBean.StoryInfoDetailsTypeEnum.SetTime:
+                    HandleForSetTime(itemData);
+                    break;
 
 
                 case StoryInfoDetailsBean.StoryInfoDetailsTypeEnum.CameraPosition:
@@ -285,6 +288,11 @@ public class StoryBuilder : BaseMonoBehaviour
         string effectName = itemData.key_name;
         float effectTime = itemData.wait_time;
         EffectHandler.Instance.PlayEffect(effectName, effectPosition, effectTime);
+    }
+
+    public void HandleForSetTime(StoryInfoDetailsBean itemData)
+    {
+        GameTimeHandler.Instance.SetTime(itemData.time_hour,itemData.time_minute);
     }
 
     public void HandleForAudioSound(StoryInfoDetailsBean itemData)
