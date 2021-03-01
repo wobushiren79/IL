@@ -122,6 +122,8 @@ public class InnHandler : BaseHandler<InnHandler, InnManager>
         NpcHandler.Instance.builderForCustomer.ClearNpc();
         //清理事件NPC
         NpcHandler.Instance.builderForEvent.ClearNpc();
+        //清理家族NPC
+        NpcHandler.Instance.builderForFamily.ClearNpc();
 
         for (int i = 0; i < listOrder.Count; i++)
         {

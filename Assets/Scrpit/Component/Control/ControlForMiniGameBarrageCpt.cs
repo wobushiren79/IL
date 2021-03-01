@@ -14,4 +14,13 @@ public class ControlForMiniGameBarrageCpt : ControlForMoveCpt
         characterMoveCpt.isManualMove = true;
         npcAI = npcCpt;
     }
+
+    public override void StartControl()
+    {
+        gameObject.SetActive(true);
+        this.enabled = true;
+        if (cameraFollowObj != null)
+            GameCameraHandler.Instance.manager.camera2D.Follow = cameraFollowObj.transform;
+        InitCharacter();
+    }
 }

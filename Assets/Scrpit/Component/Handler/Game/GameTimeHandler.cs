@@ -20,6 +20,8 @@ public class GameTimeHandler : BaseHandler<GameTimeHandler, GameTimeManager>
         NewDay,//新的一天
         EndDay,
         TimePoint,//整点报时
+        StartRest,//开始休息
+        StartWork,//开始工作
     }
 
     protected Action<NotifyTypeEnum,float>  notifyForTime;
@@ -306,5 +308,14 @@ public class GameTimeHandler : BaseHandler<GameTimeHandler, GameTimeManager>
     public void SetDayStatus(DayEnum dayStauts)
     {
         this.dayStauts = dayStauts;
+        switch (dayStauts)
+        {
+            case DayEnum.Work:
+                notifyForTime?.Invoke(NotifyTypeEnum.StartWork, -1);
+                break;
+            case DayEnum.Rest:
+                notifyForTime?.Invoke(NotifyTypeEnum.StartRest, -1);
+                break;
+        }
     }
 }

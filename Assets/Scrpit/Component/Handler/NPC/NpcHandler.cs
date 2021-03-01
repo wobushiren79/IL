@@ -71,6 +71,20 @@ public class NpcHandler : BaseHandler<NpcHandler,NpcManager>
         }
     }
 
+
+    protected NpcFamilyBuilder _builderForFamily;
+    public NpcFamilyBuilder builderForFamily
+    {
+        get
+        {
+            if (_builderForFamily == null)
+            {
+                _builderForFamily = FindWithTag<NpcFamilyBuilder>(TagInfo.Tag_NpcBuilder);
+            }
+            return _builderForFamily;
+        }
+    }
+
     /// <summary>
     /// 暂停路人NPC建造
     /// </summary>

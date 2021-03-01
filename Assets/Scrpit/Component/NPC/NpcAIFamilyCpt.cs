@@ -35,6 +35,7 @@ public class NpcAIFamilyCpt : BaseNpcAI
         bool canGo = CheckUtil.CheckPath(transform.position, movePosition);
         if (canGo)
             SetCharacterMove(movePosition);
+        StartCoroutine(CoroutineForIdle());
     }
 
     /// <summary>

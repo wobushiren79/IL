@@ -79,6 +79,8 @@ public class SceneGameInnInit : BaseSceneInit, DialogView.IDialogCallBack
         base.RefreshScene();
         //建造NPC
         NpcHandler.Instance.builderForCustomer.BuilderCustomerForInit(20);
+        //建筑家庭成员
+        NpcHandler.Instance.builderForFamily.BuildFamily();
     }
 
     /// <summary>

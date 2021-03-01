@@ -3,6 +3,8 @@ using UnityEditor;
 using UnityEngine.UI;
 using System.Collections.Generic;
 using System.Collections;
+using System.Linq;
+
 public class UIGameFavorability : BaseUIComponent
 {
     public Button btBack;
@@ -60,7 +62,7 @@ public class UIGameFavorability : BaseUIComponent
         {
             CharacterFavorabilityBean characterFavorability = listData[i];
             CharacterBean characterData = NpcInfoHandler.Instance.manager.GetCharacterDataById(characterFavorability.characterId);
-     
+
             //只显示小镇居民数据
             if (characterData.npcInfoData.npc_type != (int)NpcTypeEnum.Town)
                 continue;
@@ -83,15 +85,30 @@ public class UIGameFavorability : BaseUIComponent
     #region 排序
     public void OnClickForSortFavorability()
     {
-
+        AudioHandler.Instance.PlaySound(AudioSoundEnum.ButtonForNormal);
+        listFavorabilityData = listFavorabilityData.OrderByDescending(data =>
+        {
+            return data.favorability;
+        }).ToList();
+        gridVertical.RefreshAllCells();
     }
     public void OnClickForSortGift()
     {
-
+        AudioHandler.Instance.PlaySound(AudioSoundEnum.ButtonForNormal);
+        listFavorabilityData = listFavorabilityData.OrderByDescending(data =>
+        {
+            return GameCommonInfo.DailyLimitData.CheckIsGiftNpc(data.characterId);
+        }).ToList();
+        gridVertical.RefreshAllCells();
     }
     public void OnClickForSortTalk()
     {
-
+        AudioHandler.Instance.PlaySound(AudioSoundEnum.ButtonForNormal);
+        listFavorabilityData = listFavorabilityData.OrderByDescending(data =>
+        {
+            return GameCommonInfo.DailyLimitData.CheckIsTalkNpc(data.characterId);
+        }).ToList();
+        gridVertical.RefreshAllCells();
     }
     #endregion
 }

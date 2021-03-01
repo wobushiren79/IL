@@ -4,6 +4,14 @@ using UnityEngine;
 
 public class NpcFamilyBuilder : NpcNormalBuilder
 {
+    private void Start()
+    {
+        GameTimeHandler.Instance.RegisterNotifyForTime(NotifyForTime);
+    }
+    private void OnDestroy()
+    {
+        GameTimeHandler.Instance.UnRegisterNotifyForTime(NotifyForTime);
+    }
 
     /// <summary>
     /// 建造家族成员
@@ -37,9 +45,41 @@ public class NpcFamilyBuilder : NpcNormalBuilder
                 return;
             }
         }
-        GameObject objFamily = BuildNpc(objNormalModel, characterForFamily, Vector3.zero);
+
+        //获取门的坐标 并在门周围生成NPC
+        Vector3 doorPosition = InnHandler.Instance.GetRandomEntrancePosition();
+        //向下3个单位
+        doorPosition += new Vector3(0, -3f, 0);
+        GameObject objFamily = BuildNpc(objNormalModel, characterForFamily, doorPosition);
+
         NpcAIFamilyCpt npcAIFamily = objFamily.GetComponent<NpcAIFamilyCpt>();
         npcAIFamily.SetIntent(NpcAIFamilyCpt.FamilyIntentEnum.Idle);
     }
 
+    /// <summary>
+    /// 时间回调
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
+    /// <param name="observable"></param>
+    /// <param name="type"></param>
+    /// <param name="obj"></param>
+    public void NotifyForTime(GameTimeHandler.NotifyTypeEnum notifyType, float timeHour)
+    {
+        if (notifyType == GameTimeHandler.NotifyTypeEnum.NewDay)
+        {
+            ClearNpc();
+        }
+        else if (notifyType == GameTimeHandler.NotifyTypeEnum.EndDay)
+        {
+            ClearNpc();
+        }
+        else if (notifyType == GameTimeHandler.NotifyTypeEnum.TimePoint)
+        {
+
+        }
+        else if (notifyType == GameTimeHandler.NotifyTypeEnum.StartRest)
+        {
+            BuildFamily();
+        }
+    }
 }

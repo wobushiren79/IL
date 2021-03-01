@@ -235,7 +235,8 @@ public class AudioHandler : BaseHandler<AudioHandler, AudioManager>
                 audioClip = manager.GetSoundClip("sound_show_1");
                 break;
             case AudioSoundEnum.Correct:
-                audioClip = manager.GetSoundClip("sound_btn_5");
+                //audioClip = manager.GetSoundClip("sound_btn_5");
+                audioClip = manager.GetSoundClip("sound_btn_3");
                 break;
             case AudioSoundEnum.Error:
                 audioClip = manager.GetSoundClip("sound_error_1");
