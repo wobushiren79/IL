@@ -12,6 +12,7 @@ public enum EventTriggerEnum
     Day,
     Favorability,//好感
     EventIds,//需触发事件ID
+    Marry,//结婚事件
 }
 
 public class EventTriggerBean
@@ -95,6 +96,9 @@ public class EventTriggerEnumTools
             case EventTriggerEnum.EventIds:
                 GetTriggerDetailsForEventIds(triggerData, gameData);
                 break;
+            case EventTriggerEnum.Marry:
+                GetTriggerDetailsForMarry(triggerData, gameData);
+                break;
         }
         return triggerData;
     }
@@ -158,6 +162,24 @@ public class EventTriggerEnumTools
     {
         long[] idsData = StringUtil.SplitBySubstringForArrayLong(triggerData.triggerData, ',');
         if (gameData.CheckTriggeredEvent(idsData))
+        {
+            triggerData.isTrigger = true;
+        }
+        else
+        {
+            triggerData.isTrigger = false;
+        }
+    }
+    
+    /// <summary>
+    /// 获取触发条件详情 结婚
+    /// </summary>
+    /// <param name="triggerData"></param>
+    /// <param name="gameData"></param>
+    private static void GetTriggerDetailsForMarry(EventTriggerBean triggerData, GameDataBean gameData)
+    {
+        FamilyDataBean familyData = gameData.GetFamilyData();
+        if (familyData.CheckIsMarryDay(gameData.gameTime))
         {
             triggerData.isTrigger = true;
         }

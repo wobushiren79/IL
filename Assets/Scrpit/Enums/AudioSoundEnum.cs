@@ -23,6 +23,7 @@ public enum AudioSoundEnum
     Lock = 130,//锁
     Clean = 140,//清理
     Door = 150,//开门
+    Firecrackers=160,//鞭炮
     Damage = 201,//伤害声
 
     CountDownStart = 211,//倒计时开始

@@ -2,6 +2,7 @@
 using UnityEditor;
 using System;
 using System.Collections.Generic;
+using UnityEngine.EventSystems;
 
 public class ControlForWorkCpt : BaseControl, DialogView.IDialogCallBack
 {
@@ -59,6 +60,7 @@ public class ControlForWorkCpt : BaseControl, DialogView.IDialogCallBack
             return;
         //float hMove = Input.GetAxis(InputInfo.Horizontal);
         //float vMove = Input.GetAxis(InputInfo.Vertical);
+
         float hMove = 0;
         float vMove = 0;
         if (Input.GetButton(InputInfo.Direction_Left))
@@ -157,6 +159,10 @@ public class ControlForWorkCpt : BaseControl, DialogView.IDialogCallBack
     /// </summary>
     public void HandleForSelect()
     {
+        if (EventSystem.current.IsPointerOverGameObject())
+        {
+            return;
+        }
         //偷懒员工选中处理
         NpcAIWorkerCpt workerDaze = HandleForDazeWorker();
 

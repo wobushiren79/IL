@@ -55,7 +55,7 @@ public class FamilyDataBean : BaseBean
             return false;
         int marryDay = timeForMarry.year * 4 * 42 + timeForMarry.month * 42 + timeForMarry.day;
         int currentDay = time.year * 4 * 42 + time.month * 42 + time.day;
-        if (currentDay > marryDay)
+        if (currentDay >= marryDay)
         {
             return true;
         }
@@ -63,5 +63,19 @@ public class FamilyDataBean : BaseBean
         {
             return false;
         }
+    }
+
+    /// <summary>
+    /// 检测是否是结婚日
+    /// </summary>
+    /// <param name="time"></param>
+    /// <returns></returns>
+    public bool CheckIsMarryDay(TimeBean time)
+    {
+        if(time.year==timeForMarry.year&& time.month == timeForMarry.month && time.day == timeForMarry.day)
+        {
+            return true;
+        }
+        return false;
     }
 }

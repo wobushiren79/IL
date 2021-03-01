@@ -11,6 +11,8 @@ public class EffectManager : BaseManager
     public GameObject CreateEffect(GameObject objContainer, string name)
     {
         GameObject objModel =  GetModel(listEffect, "effect/effect", name);
+        if (objContainer == null)
+            objContainer = gameObject;
         GameObject objEffect = Instantiate(objContainer, objModel);
         return objEffect;
     }
@@ -18,6 +20,8 @@ public class EffectManager : BaseManager
     public GameObject CreateOtherEffect(GameObject objContainer, string name)
     {
         GameObject objModel = GetModel(listEffect, "effect/effect_other", name);
+        if (objContainer == null)
+            objContainer = gameObject;
         GameObject objEffect = Instantiate(objContainer, objModel);
         return objEffect;
     }

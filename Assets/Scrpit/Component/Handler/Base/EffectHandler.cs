@@ -21,7 +21,15 @@ public class EffectHandler : BaseHandler<EffectHandler, EffectManager>
         EffectPSCpt effectPS = objEffect.GetComponent<EffectPSCpt>();
         if (effectPS)
         {
-            effectPS.Play();
+            //如果延迟时间为0 怎说明删除时机又粒子效果本身控制 所有设置为不循环。播放玩就删除
+            if (delayTime == 0)
+            {
+                effectPS.Play(false);
+            }
+            else
+            {
+                effectPS.Play(true);
+            }
         }
         else
         {

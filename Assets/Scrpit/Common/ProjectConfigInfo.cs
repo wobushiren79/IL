@@ -11,7 +11,7 @@ public class ProjectConfigInfo
     /// <summary>
     /// 游戏生成版本
     /// </summary>
-    public readonly static ProjectBuildTypeEnum BUILD_TYPE = ProjectBuildTypeEnum.Debug;
+    public readonly static ProjectBuildTypeEnum BUILD_TYPE = ProjectBuildTypeEnum.Release;
 
     /// <summary>
     /// 是否打开日志输出

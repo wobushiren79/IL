@@ -241,10 +241,10 @@ public class GameEventHandler : BaseHandler<GameEventHandler, GameEventManager>,
         BaseControl baseControl = GameControlHandler.Instance.StartControl<ControlForStoryCpt>(GameControlHandler.ControlEnum.Story);
         baseControl.transform.position = new Vector3(storyInfo.position_x, storyInfo.position_y);
         //隐藏重要NPC
-        if (NpcHandler.Instance.buildForImportant!= null)
+        if (NpcHandler.Instance.buildForImportant != null)
         {
             NpcHandler.Instance.buildForImportant.HideNpc();
-        } 
+        }
         UIHandler.Instance.manager.CloseAllUI();
         //设置文本的回调
         UIGameText uiGameText = UIHandler.Instance.manager.GetUI<UIGameText>(UIEnum.GameText);
@@ -280,7 +280,7 @@ public class GameEventHandler : BaseHandler<GameEventHandler, GameEventManager>,
             return false;
         }
         GameDataBean gameData = GameDataHandler.Instance.manager.GetGameData();
-        StoryInfoBean storyInfo = StoryInfoHandler.Instance.manager.CheckStory(gameData,SceneUtil.GetCurrentScene(),positionType, OutOrIn);
+        StoryInfoBean storyInfo = StoryInfoHandler.Instance.manager.CheckStory(gameData, SceneUtil.GetCurrentScene(), positionType, OutOrIn);
         if (storyInfo != null)
         {
             EventTriggerForStory(storyInfo);
@@ -298,7 +298,7 @@ public class GameEventHandler : BaseHandler<GameEventHandler, GameEventManager>,
             return false;
         }
         GameDataBean gameData = GameDataHandler.Instance.manager.GetGameData();
-        StoryInfoBean storyInfo = StoryInfoHandler.Instance.manager.CheckStory(gameData,SceneUtil.GetCurrentScene());
+        StoryInfoBean storyInfo = StoryInfoHandler.Instance.manager.CheckStory(gameData, SceneUtil.GetCurrentScene());
         if (storyInfo != null)
         {
             EventTriggerForStory(storyInfo);
@@ -361,15 +361,23 @@ public class GameEventHandler : BaseHandler<GameEventHandler, GameEventManager>,
             {
                 GameDataBean gameData = GameDataHandler.Instance.manager.GetGameData();
                 gameData.AddTraggeredEvent(storyInfo.id);
-            }      
+            }
             //打开主界面UI
             UIHandler.Instance.manager.OpenUIAndCloseOther<UIGameMain>(UIEnum.GameMain);
             //恢复时间
             GameTimeHandler.Instance.SetTimeRestore();
-
+            //回复生成NPC
+            if (mEventType == EventTypeEnum.Story)
+                NpcHandler.Instance.RestoreBuildNpc();
             //初始化数据
             InitData();
 
+        }
+        else if (eventStatus == EventStatusEnum.EventIng)
+        {
+            //暂停生成NPC
+            if (mEventType == EventTypeEnum.Story)
+                NpcHandler.Instance.StopBuildNpc();
         }
     }
 

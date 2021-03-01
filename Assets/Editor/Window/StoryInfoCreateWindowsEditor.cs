@@ -295,6 +295,9 @@ public class StoryInfoCreateWindowsEditor : EditorWindow
             case StoryInfoDetailsBean.StoryInfoDetailsTypeEnum.Effect:
                 UIForStoryInfoDetailsEffect(itemData);
                 break;
+            case StoryInfoDetailsBean.StoryInfoDetailsTypeEnum.SetTime:
+                UIForStoryInfoSetTime(itemData);
+                break;
 
             case StoryInfoDetailsBean.StoryInfoDetailsTypeEnum.CameraPosition:
                 UIForStoryInfoDetailsCameraPosition(itemData);
@@ -461,11 +464,16 @@ public class StoryInfoCreateWindowsEditor : EditorWindow
             npcInfo = new NpcInfoBean();
             npcInfo.name = "玩家";
         }
+        else if (itemData.npc_id == -1)
+        {
+            npcInfo = new NpcInfoBean();
+            npcInfo.name = "妻子";
+        }
         else
         {
             npcInfo = mapNpcInfo[itemData.npc_id];
         }
-        EditorUI.GUIText("NPCId:", 50, 20);
+        EditorUI.GUIText("NPCId(0:自己，-1：妻子):", 200, 20);
         itemData.npc_id = EditorUI.GUIEditorText(itemData.npc_id, 100, 20);
         EditorUI.GUIText("姓名：" + npcInfo.title_name + "-" + npcInfo.name, 200, 20);
         EditorUI.GUIText("NPC序号:", 100, 20);
@@ -597,6 +605,19 @@ public class StoryInfoCreateWindowsEditor : EditorWindow
         EditorUI.GUIText("持续时间（-1为永久）:", 120, 20);
         itemData.wait_time= EditorUI.GUIEditorText(itemData.wait_time, 100, 20);
     }
+    protected void UIForStoryInfoSetTime(StoryInfoDetailsBean itemData)
+    {
+        if (EditorUI.GUIButton("删除"))
+        {
+            RemoveStoryInfoDetailsItem(itemData);
+            return;
+        }
+        EditorUI.GUIText("设置时间:", 50, 20);
+        EditorUI.GUIText("小时:", 50, 20);
+        itemData.time_hour = EditorUI.GUIEditorText(itemData.time_hour, 100, 20);
+        EditorUI.GUIText("分钟", 50, 20);
+        itemData.time_minute = EditorUI.GUIEditorText(itemData.time_minute, 100, 20);
+    }
 
     protected void UIForStoryInfoDetailsCameraPosition(StoryInfoDetailsBean itemData)
     {
@@ -683,6 +704,14 @@ public class StoryInfoCreateWindowsEditor : EditorWindow
         if (EditorUI.GUIButton("添加员工", 200, 20))
         {
             CreateStoryInfoDetailsDataByType(mFindStoryId, StoryInfoDetailsBean.StoryInfoDetailsTypeEnum.WorkerPosition);
+        }
+        if (EditorUI.GUIButton("添加粒子", 200, 20))
+        {
+            CreateStoryInfoDetailsDataByType(mFindStoryId, StoryInfoDetailsBean.StoryInfoDetailsTypeEnum.Effect);
+        }
+        if (EditorUI.GUIButton("设置时间", 200, 20))
+        {
+            CreateStoryInfoDetailsDataByType(mFindStoryId, StoryInfoDetailsBean.StoryInfoDetailsTypeEnum.SetTime);
         }
         GUILayout.EndHorizontal();
 
@@ -874,6 +903,10 @@ public class StoryInfoCreateWindowsEditor : EditorWindow
                 {
                     NpcInfoBean npcInfoBean;
                     if (itemData.npc_id == 0)
+                    {
+                        npcInfoBean = new NpcInfoBean();
+                    }
+                    else if (itemData.npc_id == -1)
                     {
                         npcInfoBean = new NpcInfoBean();
                     }
