@@ -26,7 +26,10 @@ public class FamilyDataBean : BaseBean
     {
         List<CharacterForFamilyBean> listData = new List<CharacterForFamilyBean>();
         if (wifeCharacter != null) { listData.Add(wifeCharacter); }
-        if (!CheckUtil.ListIsNull(listChildCharacter)) { listData.AddRange(listChildCharacter); }
+        if (!CheckUtil.ListIsNull(listChildCharacter))
+        {
+            listData.AddRange(listChildCharacter); 
+        }
         return listData;
     }
 
@@ -72,10 +75,27 @@ public class FamilyDataBean : BaseBean
     /// <returns></returns>
     public bool CheckIsMarryDay(TimeBean time)
     {
-        if(time.year==timeForMarry.year&& time.month == timeForMarry.month && time.day == timeForMarry.day)
+        if (time.year == timeForMarry.year && time.month == timeForMarry.month && time.day == timeForMarry.day)
         {
             return true;
         }
         return false;
+    }
+
+    /// <summary>
+    /// 检测是否是妻子
+    /// </summary>
+    /// <param name="characterId"></param>
+    /// <returns></returns>
+    public bool CheckIsWife(long characterId)
+    {
+        if (wifeCharacter == null || wifeCharacter.npcInfoData.id != characterId)
+        {
+            return false;
+        }
+        else
+        {
+            return true;
+        }
     }
 }

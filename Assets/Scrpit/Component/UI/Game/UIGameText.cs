@@ -164,12 +164,12 @@ public class UIGameText : BaseUIComponent, DialogView.IDialogCallBack
             case TextInfoTypeEnum.Book:
                 //书本详情
                 uiForBook.Open();
-                uiForBook.SetData(currentTextData.name, currentTextData.content);
+                uiForBook.SetData(currentTextData);
                 break;
             case TextInfoTypeEnum.Behind:
                 //黑幕
                 uiForBehind.Open();
-                uiForBehind.SetData(currentTextData.content, currentTextData.wait_time);
+                uiForBehind.SetData(currentTextData);
                 break;
 
         }

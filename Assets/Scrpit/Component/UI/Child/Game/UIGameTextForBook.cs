@@ -33,10 +33,11 @@ public class UIGameTextForBook : BaseUIChildComponent<UIGameText>
     /// </summary>
     /// <param name="bookName"></param>
     /// <param name="bookContent"></param>
-    public void SetData(string bookName, string bookContent)
+    public void SetData(TextInfoBean textInfo)
     {
-        SetBookName(bookName);
-        SetBookContent(bookContent);
+        SetBookName(textInfo.name);
+        SetBookContent(textInfo.content);
+        AddReward(textInfo.reward_data);
     }
 
     /// <summary>
@@ -58,6 +59,17 @@ public class UIGameTextForBook : BaseUIChildComponent<UIGameText>
     {
         if (tvBookContent != null)
             tvBookContent.text = bookContent;
+    }
+
+    /// <summary>
+    /// 增加奖励
+    /// </summary>
+    /// <param name="reward"></param>
+    public void AddReward(string reward)
+    {
+        if (CheckUtil.StringIsNull(reward))
+            return;
+        RewardTypeEnumTools.CompleteReward(null, reward);
     }
 
     public void OnClickBack()

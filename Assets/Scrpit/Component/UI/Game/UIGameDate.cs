@@ -21,7 +21,6 @@ public class UIGameDate : BaseUIComponent
     protected float animTimeForWaitNext = 1f;//动画时间
     protected float animTimeForShowDialog = 2f;//动画延迟
 
-
     public override void Awake()
     {
         base.Awake();
@@ -121,9 +120,9 @@ public class UIGameDate : BaseUIComponent
 
         gameBirthData.fireNumber = 10;
         gameBirthData.enmeySpeed = 3;
-        gameBirthData.enmeyBuildInterval = 1f;
+        gameBirthData.enmeyBuildInterval = 0.8f;
         gameBirthData.playSpeed = playSpeed;
-        gameBirthData.addBirthPro = 0.05f;
+        gameBirthData.addBirthPro = 0.01f;
         gameBirthData.gameReason = MiniGameReasonEnum.Other;
 
         gameBirthData.InitForMiniGame();

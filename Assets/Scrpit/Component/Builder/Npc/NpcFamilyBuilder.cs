@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class NpcFamilyBuilder : NpcNormalBuilder
 {
+
     /// <summary>
     /// 建造家族成员
     /// </summary>
@@ -26,7 +27,19 @@ public class NpcFamilyBuilder : NpcNormalBuilder
     /// <param name="characterForFamily"></param>
     public void CreateFamilyCharacter(CharacterForFamilyBean characterForFamily)
     {
-        BuildNpc(objNormalModel, characterForFamily,Vector3.zero);
+        FamilyTypeEnum familyType = characterForFamily.GetFamilyType();
+        if (familyType == FamilyTypeEnum.Daughter || familyType == FamilyTypeEnum.Son)
+        {
+            //如果是女儿或者儿子 需要3年后才能移动
+            GameDataBean gameData= GameDataHandler.Instance.manager.GetGameData();
+            if (!characterForFamily.CheckIsGrowUp(gameData.gameTime))
+            {
+                return;
+            }
+        }
+        GameObject objFamily = BuildNpc(objNormalModel, characterForFamily, Vector3.zero);
+        NpcAIFamilyCpt npcAIFamily = objFamily.GetComponent<NpcAIFamilyCpt>();
+        npcAIFamily.SetIntent(NpcAIFamilyCpt.FamilyIntentEnum.Idle);
     }
 
 }
