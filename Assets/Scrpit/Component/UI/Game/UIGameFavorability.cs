@@ -10,6 +10,10 @@ public class UIGameFavorability : BaseUIComponent
     public ScrollGridVertical gridVertical;
     public List<CharacterFavorabilityBean> listFavorabilityData = new List<CharacterFavorabilityBean>();
 
+    public Button ui_ItemSort_Favorability;
+    public Button ui_ItemSort_Gift;
+    public Button ui_ItemSort_Talk;
+
     private void Start()
     {
         if (btBack != null)
@@ -20,6 +24,12 @@ public class UIGameFavorability : BaseUIComponent
         {
             gridVertical.AddCellListener(OnCellForItem);
         }
+        if (ui_ItemSort_Favorability)
+            ui_ItemSort_Favorability.onClick.AddListener(OnClickForSortFavorability);
+        if (ui_ItemSort_Gift)
+            ui_ItemSort_Gift.onClick.AddListener(OnClickForSortGift);
+        if (ui_ItemSort_Talk)
+            ui_ItemSort_Talk.onClick.AddListener(OnClickForSortTalk);
     }
 
     public override void OpenUI()
@@ -68,4 +78,20 @@ public class UIGameFavorability : BaseUIComponent
         AudioHandler.Instance.PlaySound(AudioSoundEnum.ButtonForBack);
         UIHandler.Instance.manager.OpenUIAndCloseOther<UIGameMain>(UIEnum.GameMain);
     }
+
+
+    #region 排序
+    public void OnClickForSortFavorability()
+    {
+
+    }
+    public void OnClickForSortGift()
+    {
+
+    }
+    public void OnClickForSortTalk()
+    {
+
+    }
+    #endregion
 }
