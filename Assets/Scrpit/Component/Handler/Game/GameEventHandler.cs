@@ -31,7 +31,6 @@ public class GameEventHandler : BaseHandler<GameEventHandler, GameEventManager>,
 
     private EventStatusEnum mEventStatus = EventStatusEnum.EventEnd;
     private EventTypeEnum mEventType;
-    private Vector3 mEventPosition = Vector3.zero;
 
     protected StoryInfoBean storyInfo;
 
@@ -49,7 +48,6 @@ public class GameEventHandler : BaseHandler<GameEventHandler, GameEventManager>,
     public void InitData()
     {
         mEventStatus = EventStatusEnum.EventEnd;
-        mEventPosition = Vector3.zero;
         //通知事件结束
         if (storyInfo == null)
             notifyForEvent?.Invoke(NotifyEventTypeEnum.EventEnd, new object[] { -1 });
@@ -232,7 +230,6 @@ public class GameEventHandler : BaseHandler<GameEventHandler, GameEventManager>,
             return false;
         }
         this.storyInfo = storyInfo;
-        mEventPosition = new Vector3(storyInfo.position_x, storyInfo.position_y);
         SetEventStatus(EventStatusEnum.EventIng);
         SetEventType(EventTypeEnum.Story);
         //暂停时间
@@ -345,30 +342,37 @@ public class GameEventHandler : BaseHandler<GameEventHandler, GameEventManager>,
         mEventStatus = eventStatus;
         if (eventStatus == EventStatusEnum.EventEnd)
         {
-
-            //事件结束 操作回复
-            //如果是故事模式 则恢复普通控制状态
-            if (GameControlHandler.Instance.manager.GetControl() == GameControlHandler.Instance.manager.GetControl<ControlForStoryCpt>(ControlEnum.Story))
-            {
-                GameControlHandler.Instance.StartControl<BaseControl>(ControlEnum.Normal);
-            }
-            else
-            {
-                GameControlHandler.Instance.RestoreControl();
-            }
+         
             //保存数据
             if (storyInfo != null)
             {
                 GameDataBean gameData = GameDataHandler.Instance.manager.GetGameData();
                 gameData.AddTraggeredEvent(storyInfo.id);
             }
-            //打开主界面UI
-            UIHandler.Instance.manager.OpenUIAndCloseOther<UIGameMain>(UIEnum.GameMain);
-            //恢复时间
-            GameTimeHandler.Instance.SetTimeRestore();
+            if (mEventType != EventTypeEnum.StoryForMiniGameCooking)
+            {
+                //打开主界面UI
+                UIHandler.Instance.manager.OpenUIAndCloseOther<UIGameMain>(UIEnum.GameMain);
+                //恢复时间
+                GameTimeHandler.Instance.SetTimeRestore();
+            }
+
             //回复生成NPC
+            //事件结束 操作回复
             if (mEventType == EventTypeEnum.Story)
+            {
                 NpcHandler.Instance.RestoreBuildNpc();
+                GameControlHandler.Instance.StartControl<BaseControl>(ControlEnum.Normal);
+            }
+            else if (mEventType == EventTypeEnum.StoryForMiniGameCooking)
+            {
+
+            }
+            else
+            {
+                GameControlHandler.Instance.RestoreControl();
+            }
+  
             //初始化数据
             InitData();
 
@@ -512,7 +516,6 @@ public class GameEventHandler : BaseHandler<GameEventHandler, GameEventManager>,
                     MiniGameHandler.Instance.handlerForDebate.InitGame((MiniGameDebateBean)miniGameData);
                     break;
             }
-            mEventPosition = miniGameData.miniGamePosition;
             //隐藏重要NPC
             NpcHandler.Instance.buildForImportant.HideNpc();
         }
