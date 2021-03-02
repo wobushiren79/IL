@@ -87,4 +87,11 @@ public class MiniGameAccountBuilder : BaseMiniGameBuilder
     {
         return userCharacterAI;
     }
+
+    public override void DestroyAll()
+    {
+        base.DestroyAll();
+        CptUtil.RemoveChildsByActive(objCharacterContainer);
+        CptUtil.RemoveChildsByActive(objMoneyContainer);
+    }
 }

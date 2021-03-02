@@ -178,4 +178,16 @@ public class MiniGameCookingBuilder : BaseMiniGameBuilder
     {
         return listStove;
     }
+
+    public override void DestroyAll()
+    {
+        base.DestroyAll();
+        listEnemyCharacter.Clear();
+        listAuditerCharacter.Clear();
+        listCompereCharacter.Clear();
+        listCallBoard.Clear();
+        listAuditTable.Clear();
+        listStove.Clear();
+        CptUtil.RemoveChildsByActive(objNpcContainer);
+    }
 }

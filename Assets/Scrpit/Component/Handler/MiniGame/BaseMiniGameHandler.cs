@@ -213,6 +213,7 @@ public class BaseMiniGameHandler<B, D> : BaseHandler, UIMiniGameCountDown.ICallB
     #region 游戏结束按钮回调
     public void OnClickClose()
     {
+        miniGameBuilder.DestroyAll();
         GameTimeHandler.Instance.SetTimeRestore();
         //通知 关闭游戏      
         notifyForMiniGameStatus?.Invoke(MiniGameStatusEnum.GameClose, new object[] { miniGameData });

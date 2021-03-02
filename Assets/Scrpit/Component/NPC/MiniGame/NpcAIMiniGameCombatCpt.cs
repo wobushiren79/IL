@@ -317,7 +317,8 @@ public class NpcAIMiniGameCombatCpt : BaseNpcAI
             }
         }
         //播放粒子特效
-        MiniGameHandler.Instance.handlerForCombat.miniGameBuilder.CreateCombatEffect(effectPSName, transform.position + new Vector3(0, 0.5f));
+        if(!CheckUtil.StringIsNull(effectPSName))
+            MiniGameHandler.Instance.handlerForCombat.miniGameBuilder.CreateCombatEffect(effectPSName, transform.position + new Vector3(0, 0.5f));
         if (durationForRound > 0)
         {
             characterMiniGameData.listCombatEffect.Add(gameCombatEffectData);
