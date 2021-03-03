@@ -199,6 +199,7 @@ public class ItemsSelectionDialogView : DialogView
 
     public interface ICallBack
     {
+
         /// <summary>
         /// 选择使用
         /// </summary>
