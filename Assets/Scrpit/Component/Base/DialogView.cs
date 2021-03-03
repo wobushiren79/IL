@@ -2,6 +2,7 @@
 using UnityEditor;
 using DG.Tweening;
 using UnityEngine.UI;
+using System;
 
 public class DialogView : BaseMonoBehaviour
 {
@@ -17,7 +18,11 @@ public class DialogView : BaseMonoBehaviour
     public Text tvTitle;
     public Text tvContent;
     public CanvasGroup cgDialog;
-    private IDialogCallBack mCallBack;
+
+    protected IDialogCallBack callBack;
+
+    protected Action<DialogView, DialogBean> actionSubmit;
+    protected Action<DialogView, DialogBean> actionCancel;
 
     public DialogBean dialogData;
 
@@ -75,11 +80,8 @@ public class DialogView : BaseMonoBehaviour
 
     public virtual void SubmitOnClick()
     {
-        AudioHandler.Instance.PlaySound(AudioSoundEnum.ButtonForNormal);
-        if (mCallBack != null)
-        {
-            mCallBack.Submit(this, dialogData);
-        }
+        callBack?.Submit(this, dialogData);
+        actionSubmit?.Invoke(this, dialogData);
         if (isSubmitDestroy)
         {
             DestroyDialog();
@@ -87,11 +89,8 @@ public class DialogView : BaseMonoBehaviour
     }
     public virtual void CancelOnClick()
     {
-        AudioHandler.Instance.PlaySound(AudioSoundEnum.ButtonForBack);
-        if (mCallBack != null)
-        {
-            mCallBack.Cancel(this, dialogData);
-        }
+        callBack?.Cancel(this, dialogData);
+        actionCancel?.Invoke(this, dialogData);
         DestroyDialog();
     }
 
@@ -110,7 +109,13 @@ public class DialogView : BaseMonoBehaviour
 
     public void SetCallBack(IDialogCallBack callBack)
     {
-        this.mCallBack = callBack;
+        this.callBack = callBack;
+    }
+
+    public void SetAction(Action<DialogView, DialogBean> actionSubmit, Action<DialogView, DialogBean> actionCancel)
+    {
+        this.actionSubmit = actionSubmit;
+        this.actionCancel = actionCancel;
     }
 
     public void SetData(DialogBean dialogData)

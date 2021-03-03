@@ -15,7 +15,7 @@ public class ItemsSelectionDialogView : DialogView
         ReadAndDiscard,//阅读和丢弃
     }
 
-    public ICallBack callBack;
+    public ICallBack selectCallBack;
     public Button btBack;
 
     public Button btUse;
@@ -55,9 +55,9 @@ public class ItemsSelectionDialogView : DialogView
             btRead.onClick.AddListener(ReadItems);
     }
 
-    public void SetCallBack(ICallBack callBack)
+    public void SetCallBack(ICallBack selectCallBack)
     {
-        this.callBack = callBack;
+        this.selectCallBack = selectCallBack;
     }
 
     public void Close()
@@ -132,8 +132,8 @@ public class ItemsSelectionDialogView : DialogView
     /// </summary>
     public void UseItems()
     {
-        if (callBack != null)
-            callBack.SelectionUse(this);
+        if (selectCallBack != null)
+            selectCallBack.SelectionUse(this);
         Close();
     }
 
@@ -142,8 +142,8 @@ public class ItemsSelectionDialogView : DialogView
     /// </summary>
     public void DiscardItems()
     {
-        if (callBack != null)
-            callBack.SelectionDiscard(this);
+        if (selectCallBack != null)
+            selectCallBack.SelectionDiscard(this);
         Close();
     }
 
@@ -152,8 +152,8 @@ public class ItemsSelectionDialogView : DialogView
     /// </summary>
     public void EquipItems()
     {
-        if (callBack != null)
-            callBack.SelectionEquip(this);
+        if (selectCallBack != null)
+            selectCallBack.SelectionEquip(this);
         Close();
     }
 
@@ -162,8 +162,8 @@ public class ItemsSelectionDialogView : DialogView
     /// </summary>
     public void TFEquipItems()
     {
-        if (callBack != null)
-            callBack.SelectionTFEquip(this);
+        if (selectCallBack != null)
+            selectCallBack.SelectionTFEquip(this);
         Close();
     }
 
@@ -172,8 +172,8 @@ public class ItemsSelectionDialogView : DialogView
     /// </summary>
     public void UnloadItems()
     {
-        if (callBack != null)
-            callBack.SelectionUnload(this);
+        if (selectCallBack != null)
+            selectCallBack.SelectionUnload(this);
         Close();
     }
 
@@ -182,8 +182,8 @@ public class ItemsSelectionDialogView : DialogView
     /// </summary>
     public void GiftItems()
     {
-        if (callBack != null)
-            callBack.SelectionGift(this);
+        if (selectCallBack != null)
+            selectCallBack.SelectionGift(this);
         Close();
     }
 
@@ -192,8 +192,8 @@ public class ItemsSelectionDialogView : DialogView
     /// </summary>
     public void ReadItems()
     {
-        if (callBack != null)
-            callBack.SelectionRead(this);
+        if (selectCallBack != null)
+            selectCallBack.SelectionRead(this);
         Close();
     }
 

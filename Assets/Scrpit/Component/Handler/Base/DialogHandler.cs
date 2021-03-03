@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -14,10 +15,13 @@ public class DialogHandler : BaseUIHandler<DialogHandler, DialogManager>
     }
     public T CreateDialog<T>(DialogEnum dialogType, DialogView.IDialogCallBack callBack, DialogBean dialogBean) where T : DialogView
     {
-        return CreateDialog<T>(dialogType, callBack, dialogBean, 0);
+        return CreateDialog<T>(dialogType, null, null, callBack, dialogBean, 0);
     }
-
-    public T CreateDialog<T>(DialogEnum dialogType, DialogView.IDialogCallBack callBack, DialogBean dialogBean, float delayDelete) where T : DialogView
+    public T CreateDialog<T>(DialogEnum dialogType, DialogBean dialogBean, Action<DialogView, DialogBean> actionSubmit, Action<DialogView, DialogBean> actionCancel) where T : DialogView
+    {
+        return CreateDialog<T>(dialogType, actionSubmit, actionCancel, null, dialogBean, 0);
+    }
+    public T CreateDialog<T>(DialogEnum dialogType, Action<DialogView, DialogBean> actionSubmit, Action<DialogView, DialogBean> actionCancel, DialogView.IDialogCallBack callBack, DialogBean dialogBean, float delayDelete) where T : DialogView
     {
         string dialogName = EnumUtil.GetEnumName(dialogType);
         GameObject objDialogModel = manager.GetDialogModel(dialogName);
@@ -26,7 +30,7 @@ public class DialogHandler : BaseUIHandler<DialogHandler, DialogManager>
             LogUtil.LogError("没有找到指定Dialog：" + dialogName);
             return null;
         }
-          
+
         GameObject objDialog = Instantiate(gameObject, objDialogModel);
         if (objDialog)
         {
@@ -34,6 +38,7 @@ public class DialogHandler : BaseUIHandler<DialogHandler, DialogManager>
             if (dialogView == null)
                 Destroy(objDialog);
             dialogView.SetCallBack(callBack);
+            dialogView.SetAction(actionSubmit, actionCancel);
             dialogView.SetData(dialogBean);
             if (delayDelete != 0)
                 dialogView.SetDelayDelete(delayDelete);
