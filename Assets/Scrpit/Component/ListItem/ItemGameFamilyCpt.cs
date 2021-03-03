@@ -6,6 +6,7 @@ public class ItemGameFamilyCpt : ItemGameBaseCpt
     public Text ui_TVName;
     public Text ui_TVCall;
     public CharacterUICpt ui_CharacterUI;
+    public Image ui_CharacterChild;
 
     private void Awake()
     {
@@ -43,8 +44,17 @@ public class ItemGameFamilyCpt : ItemGameBaseCpt
     /// 设置角色形象
     /// </summary>
     /// <param name="characterData"></param>
-    public void SetCharacterUI(CharacterBean characterData)
+    public void SetCharacterUI(CharacterForFamilyBean characterData)
     {
+        GameDataBean gameData = GameDataHandler.Instance.manager.GetGameData();
+        if (characterData.CheckIsGrowUp(gameData.gameTime))
+        {
+            ui_CharacterChild.gameObject.SetActive(true);
+        }
+        else
+        {
+            ui_CharacterChild.gameObject.SetActive(false);
+        }
         if (ui_CharacterUI)
             ui_CharacterUI.SetCharacterData(characterData.body, characterData.equips);
     }

@@ -384,7 +384,7 @@ public class StoryBuilder : BaseMonoBehaviour
             // 使用妻子的数据
             GameDataBean gameData = GameDataHandler.Instance.manager.GetGameData();
             FamilyDataBean familyData =  gameData.GetFamilyData();
-            characterData = familyData.wifeCharacter as CharacterBean;
+            characterData = familyData.mateCharacter as CharacterBean;
         }
         else
             characterData = NpcInfoHandler.Instance.manager.GetCharacterDataById(itemData.npc_id);

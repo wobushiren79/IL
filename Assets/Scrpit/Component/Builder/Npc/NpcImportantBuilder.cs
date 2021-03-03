@@ -76,7 +76,7 @@ public class NpcImportantBuilder : BaseMonoBehaviour
             }
             //检测是否是老婆
             FamilyDataBean familyData = gameData.GetFamilyData();
-            if (familyData.CheckIsWife(characterData.npcInfoData.id))
+            if (familyData.CheckIsMate(characterData.npcInfoData.id))
             {
                 return null;
             }

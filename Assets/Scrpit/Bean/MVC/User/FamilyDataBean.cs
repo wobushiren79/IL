@@ -13,8 +13,8 @@ public class FamilyDataBean : BaseBean
 
     //怀孕天数
     public int birthDay = 0;
-    //妻子数据
-    public CharacterForFamilyBean wifeCharacter;
+    //伴侣数据
+    public CharacterForFamilyBean mateCharacter;
     //孩子数据
     public List<CharacterForFamilyBean> listChildCharacter = new List<CharacterForFamilyBean>();
 
@@ -25,10 +25,10 @@ public class FamilyDataBean : BaseBean
     public List<CharacterForFamilyBean> GetAllFamilyData()
     {
         List<CharacterForFamilyBean> listData = new List<CharacterForFamilyBean>();
-        if (wifeCharacter != null) { listData.Add(wifeCharacter); }
+        if (mateCharacter != null) { listData.Add(mateCharacter); }
         if (!CheckUtil.ListIsNull(listChildCharacter))
         {
-            listData.AddRange(listChildCharacter); 
+            listData.AddRange(listChildCharacter);
         }
         return listData;
     }
@@ -87,9 +87,9 @@ public class FamilyDataBean : BaseBean
     /// </summary>
     /// <param name="characterId"></param>
     /// <returns></returns>
-    public bool CheckIsWife(long characterId)
+    public bool CheckIsMate(long characterId)
     {
-        if (wifeCharacter == null || wifeCharacter.npcInfoData.id != characterId)
+        if (mateCharacter == null || mateCharacter.npcInfoData.id != characterId)
         {
             return false;
         }
@@ -97,5 +97,44 @@ public class FamilyDataBean : BaseBean
         {
             return true;
         }
+    }
+
+    public CharacterForFamilyBean CreateChild(string name, CharacterBean userData, CharacterBean mateData)
+    {
+        GameDataBean gameData = GameDataHandler.Instance.manager.GetGameData();
+        CharacterForFamilyBean childData = new CharacterForFamilyBean(gameData.gameTime);
+        childData.baseInfo.name = name;
+
+        childData.body.eye = UnityEngine.Random.Range(0, 2) == 0 ? userData.body.eye : mateData.body.eye;
+        childData.body.eyeColor = UnityEngine.Random.Range(0, 2) == 0 ? userData.body.eyeColor : mateData.body.eyeColor;
+        childData.body.hair = UnityEngine.Random.Range(0, 2) == 0 ? userData.body.hair : mateData.body.hair;
+        childData.body.hairColor = UnityEngine.Random.Range(0, 2) == 0 ? userData.body.hairColor : mateData.body.hairColor;
+        childData.body.mouth = UnityEngine.Random.Range(0, 2) == 0 ? userData.body.mouth : mateData.body.mouth;
+        childData.body.mouthColor = UnityEngine.Random.Range(0, 2) == 0 ? userData.body.mouthColor : mateData.body.mouthColor;
+        childData.body.skin = UnityEngine.Random.Range(0, 2) == 0 ? userData.body.skin : mateData.body.skin;
+        childData.body.skinColor = UnityEngine.Random.Range(0, 2) == 0 ? userData.body.skinColor : mateData.body.skinColor;
+
+        childData.attributes.cook = 1;
+        childData.attributes.speed = 1;
+        childData.attributes.account = 1;
+        childData.attributes.charm = 1;
+        childData.attributes.force = 1;
+        childData.attributes.lucky = 1;
+        childData.attributes.life = 50;
+
+        int sex = UnityEngine.Random.Range(0, 2);
+        if (sex == 0)
+        {
+            childData.SetFamilyType(FamilyTypeEnum.Son);
+            childData.body.SetSex(SexEnum.Man);
+        }
+        else
+        {
+            childData.SetFamilyType(FamilyTypeEnum.Daughter);
+            childData.body.SetSex(SexEnum.Woman);
+        }
+
+        listChildCharacter.Add(childData);
+        return childData;
     }
 }

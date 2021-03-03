@@ -31,6 +31,7 @@ public enum RewardTypeEnum
     AddAccountantExp,
     AddAccostExp,
     AddBeaterExp,
+    AddChild,//增加孩子
 }
 
 public class RewardTypeBean : DataBean<RewardTypeEnum>
@@ -143,6 +144,11 @@ public class RewardTypeEnumTools : DataTools
             case RewardTypeEnum.AddBeaterExp:
                 GetRewardDetailsForWorkerExp(data);
                 break;
+            case RewardTypeEnum.AddChild:
+                GetRewardDetailsForChild(data);
+                break;
+
+
         }
         return data;
     }
@@ -371,6 +377,19 @@ public class RewardTypeEnumTools : DataTools
     }
 
     /// <summary>
+    /// 获取孩子的奖励详情
+    /// </summary>
+    /// <param name="rewardTypeData"></param>
+    /// <param name="ingName"></param>
+    /// <returns></returns>
+    private static RewardTypeBean GetRewardDetailsForChild(RewardTypeBean data)
+    {
+        data.rewardDescribe = TextHandler.Instance.manager.GetTextById(6101);
+        data.spRewardIcon = IconDataHandler.Instance.manager.GetIconSpriteByName("child_1");
+        return data;
+    }
+
+    /// <summary>
     /// 完成所有奖励
     /// </summary>
     /// <param name="reward_data"></param>
@@ -495,8 +514,18 @@ public class RewardTypeEnumTools : DataTools
                 case RewardTypeEnum.AddBeaterExp:
                     CompleteRewardForExp(listCharacterData, WorkerEnum.Beater, itemData.rewardNumber);
                     break;
+                case RewardTypeEnum.AddChild:
+                    CompleteRewardForAddChild(itemData);
+                    break;
             }
         }
+    }
+
+    protected static void CompleteRewardForAddChild(RewardTypeBean rewardTypeData)
+    {
+        GameDataBean gameData = GameDataHandler.Instance.manager.GetGameData();
+        FamilyDataBean familyData = gameData.GetFamilyData();
+        familyData.CreateChild(rewardTypeData.data, gameData.userCharacter, familyData.mateCharacter);
     }
 
     protected static void CompleteRewardForExp(List<CharacterBean> listCharacterData, WorkerEnum workerType, int exp)

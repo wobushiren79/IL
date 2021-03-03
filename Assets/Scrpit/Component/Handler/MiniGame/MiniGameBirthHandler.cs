@@ -2,7 +2,7 @@
 using UnityEditor;
 using UnityEngine;
 
-public class MiniGameBirthHandler : BaseMiniGameHandler<MiniGameBirthBuilder, MiniGameBirthBean>
+public class MiniGameBirthHandler : BaseMiniGameHandler<MiniGameBirthBuilder, MiniGameBirthBean>,DialogView.IDialogCallBack
 {
 
     public List<MiniGameBirthSpermBean> listSperm = new List<MiniGameBirthSpermBean>();
@@ -27,11 +27,42 @@ public class MiniGameBirthHandler : BaseMiniGameHandler<MiniGameBirthBuilder, Mi
         UIHandler.Instance.manager.OpenUIAndCloseOther<UIMiniGameBirth>(UIEnum.MiniGameBirth);
     }
 
-    public override void EndGame(MiniGameResultEnum gameResult,bool isSlow)
+    public override void EndGame(MiniGameResultEnum gameResult, bool isSlow)
     {
         //每日限制减少
         GameCommonInfo.DailyLimitData.numberForBirth--;
         listSperm.Clear();
+        //检测是否达到生孩子标准
+        GameDataBean gameData = GameDataHandler.Instance.manager.GetGameData();
+        FamilyDataBean familyData = gameData.GetFamilyData();
+        
+        //如果可以生孩子
+        if (familyData.birthPro >= 1)
+        {
+            familyData.birthPro = 0;
+            if (familyData.listChildCharacter.Count>=3)
+            {
+                ToastHandler.Instance.ToastHint(TextHandler.Instance.manager.GetTextById(1351));
+            }
+            else
+            {
+                if (familyData.mateCharacter.body.GetSex() == gameData.userCharacter.body.GetSex())
+                {
+                    //同性
+                    ToastHandler.Instance.ToastHint(TextHandler.Instance.manager.GetTextById(7032), 10);
+                }
+                else
+                {
+                    //异性
+                    ToastHandler.Instance.ToastHint(TextHandler.Instance.manager.GetTextById(7031), 10);
+                }
+                
+                DialogBean dialogData = new DialogBean();
+                dialogData.title = TextHandler.Instance.manager.GetTextById(8011);
+                DialogHandler.Instance.CreateDialog<InputTextDialogView>(DialogEnum.InputText, this, dialogData);
+                return; 
+            }     
+        }
         base.EndGame(gameResult, isSlow);
     }
 
@@ -98,9 +129,25 @@ public class MiniGameBirthHandler : BaseMiniGameHandler<MiniGameBirthBuilder, Mi
     {
         if (miniGameData.fireNumber <= 0 && listSperm.Count <= 0)
         {
-            EndGame(MiniGameResultEnum.Win,false);
+            EndGame(MiniGameResultEnum.Win, false);
             return true;
         }
         return false;
     }
+
+
+    #region 弹窗检测回调
+    public void Submit(DialogView dialogView, DialogBean dialogBean)
+    {
+        RewardTypeBean rewardTypeData = new RewardTypeBean();
+        rewardTypeData.dataType = RewardTypeEnum.AddChild;
+        miniGameData.listReward.Add(rewardTypeData);
+        base.EndGame(MiniGameResultEnum.Win, false);
+    }
+
+    public void Cancel(DialogView dialogView, DialogBean dialogBean)
+    {
+        base.EndGame(MiniGameResultEnum.Win, false);
+    }
+    #endregion
 }

@@ -416,7 +416,7 @@ public class UIGameText : BaseUIComponent, DialogView.IDialogCallBack
             //设置妻子数据
             CharacterForFamilyBean characterData = new CharacterForFamilyBean(mTalkNpcInfo, familyData.timeForMarry);
             characterData.SetFamilyType(FamilyTypeEnum.Mate);
-            familyData.wifeCharacter = characterData;
+            familyData.mateCharacter = characterData;
         }
     }
 

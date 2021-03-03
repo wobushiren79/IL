@@ -72,4 +72,9 @@ public class CharacterBodyBean
         return (SexEnum)sex;
     }
 
+    public void SetSex(SexEnum sex)
+    {
+        this.sex= (int)sex;
+    }
+
 }
