@@ -308,7 +308,11 @@ public class UIGameEquip : BaseUIComponent, TextSearchView.ICallBack
         }
         //刷新场景中的人物
         if (SceneUtil.GetCurrentScene() == ScenesEnum.GameInnScene)
+        {
             NpcHandler.Instance.builderForWorker.RefreshWorkerData();
+            NpcHandler.Instance.builderForFamily.RefreshWorkerData();
+        }
+    
     }
 
     /// <summary>

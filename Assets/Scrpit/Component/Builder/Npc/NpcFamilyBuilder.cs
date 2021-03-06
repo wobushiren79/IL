@@ -1,9 +1,13 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class NpcFamilyBuilder : NpcNormalBuilder
 {
+
+    protected List<NpcAIFamilyCpt> listFamilyCharacter = new List<NpcAIFamilyCpt>();
+
     private void Start()
     {
         GameTimeHandler.Instance.RegisterNotifyForTime(NotifyForTime);
@@ -35,6 +39,8 @@ public class NpcFamilyBuilder : NpcNormalBuilder
     /// <param name="characterForFamily"></param>
     public void CreateFamilyCharacter(CharacterForFamilyBean characterForFamily)
     {
+        if (characterForFamily == null)
+            return;
         FamilyTypeEnum familyType = characterForFamily.GetFamilyType();
         if (familyType == FamilyTypeEnum.Daughter || familyType == FamilyTypeEnum.Son)
         {
@@ -51,9 +57,11 @@ public class NpcFamilyBuilder : NpcNormalBuilder
         //向下3个单位
         doorPosition += new Vector3(0, -3f, 0);
         GameObject objFamily = BuildNpc(objNormalModel, characterForFamily, doorPosition);
-
+        if (objFamily == null)
+            return;
         NpcAIFamilyCpt npcAIFamily = objFamily.GetComponent<NpcAIFamilyCpt>();
         npcAIFamily.SetIntent(NpcAIFamilyCpt.FamilyIntentEnum.Idle);
+        listFamilyCharacter.Add(npcAIFamily);
     }
 
     /// <summary>
@@ -82,4 +90,24 @@ public class NpcFamilyBuilder : NpcNormalBuilder
             BuildFamily();
         }
     }
+
+    public override void ClearNpc()
+    {
+        base.ClearNpc();
+        listFamilyCharacter.Clear();
+    }
+
+    /// <summary>
+    /// 刷新工作者数据
+    /// </summary>
+    public void RefreshWorkerData()
+    {
+        if (listFamilyCharacter == null)
+            return;
+        foreach (NpcAIFamilyCpt npcFamily in listFamilyCharacter)
+        {
+            npcFamily.SetCharacterData(npcFamily.characterData);
+        }
+    }
+
 }

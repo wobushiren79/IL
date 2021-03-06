@@ -20,7 +20,7 @@ public class BaseMiniGameHandler<B, D> : BaseHandler, UIMiniGameCountDown.ICallB
     public string builderName = "";
 
     //迷你游戏状态
-    private MiniGameStatusEnum mMiniGameStatus = MiniGameStatusEnum.GamePre;
+    protected MiniGameStatusEnum miniGameStatus = MiniGameStatusEnum.GamePre;
 
     protected virtual void Awake()
     {
@@ -51,7 +51,7 @@ public class BaseMiniGameHandler<B, D> : BaseHandler, UIMiniGameCountDown.ICallB
     /// <param name="status"></param>
     public void SetMiniGameStatus(MiniGameStatusEnum status)
     {
-        mMiniGameStatus = status;
+        miniGameStatus = status;
     }
 
     /// <summary>
@@ -70,7 +70,7 @@ public class BaseMiniGameHandler<B, D> : BaseHandler, UIMiniGameCountDown.ICallB
     /// <returns></returns>
     public MiniGameStatusEnum GetMiniGameStatus()
     {
-        return mMiniGameStatus;
+        return miniGameStatus;
     }
 
     /// <summary>
@@ -213,7 +213,8 @@ public class BaseMiniGameHandler<B, D> : BaseHandler, UIMiniGameCountDown.ICallB
     #region 游戏结束按钮回调
     public void OnClickClose()
     {
-        miniGameBuilder.DestroyAll();
+        if(miniGameBuilder!=null)
+            miniGameBuilder.DestroyAll();
         GameTimeHandler.Instance.SetTimeRestore();
         //通知 关闭游戏      
         notifyForMiniGameStatus?.Invoke(MiniGameStatusEnum.GameClose, new object[] { miniGameData });

@@ -2,7 +2,7 @@
 using UnityEditor;
 using UnityEngine;
 
-public class MiniGameBirthHandler : BaseMiniGameHandler<MiniGameBirthBuilder, MiniGameBirthBean>,DialogView.IDialogCallBack
+public class MiniGameBirthHandler : BaseMiniGameHandler<MiniGameBirthBuilder, MiniGameBirthBean>, DialogView.IDialogCallBack
 {
 
     public List<MiniGameBirthSpermBean> listSperm = new List<MiniGameBirthSpermBean>();
@@ -35,12 +35,12 @@ public class MiniGameBirthHandler : BaseMiniGameHandler<MiniGameBirthBuilder, Mi
         //检测是否达到生孩子标准
         GameDataBean gameData = GameDataHandler.Instance.manager.GetGameData();
         FamilyDataBean familyData = gameData.GetFamilyData();
-        
+
         //如果可以生孩子
         if (familyData.birthPro >= 1)
         {
             familyData.birthPro = 0;
-            if (familyData.listChildCharacter.Count>=3)
+            if (familyData.listChildCharacter.Count >= 3)
             {
                 ToastHandler.Instance.ToastHint(TextHandler.Instance.manager.GetTextById(1351));
             }
@@ -56,12 +56,14 @@ public class MiniGameBirthHandler : BaseMiniGameHandler<MiniGameBirthBuilder, Mi
                     //异性
                     ToastHandler.Instance.ToastHint(TextHandler.Instance.manager.GetTextById(7031), 10);
                 }
-                
+
                 DialogBean dialogData = new DialogBean();
                 dialogData.title = TextHandler.Instance.manager.GetTextById(8011);
                 DialogHandler.Instance.CreateDialog<InputTextDialogView>(DialogEnum.InputText, this, dialogData);
-                return; 
-            }     
+                //设置游戏数据
+                miniGameData.SetGameResult(MiniGameResultEnum.Win);
+                return;
+            }
         }
         base.EndGame(gameResult, isSlow);
     }
@@ -127,7 +129,7 @@ public class MiniGameBirthHandler : BaseMiniGameHandler<MiniGameBirthBuilder, Mi
     /// <returns></returns>
     public bool CheckGameOver()
     {
-        if (miniGameData.fireNumber <= 0 && listSperm.Count <= 0)
+        if (miniGameData.gameResult !=  MiniGameResultEnum.Win && miniGameData.fireNumber <= 0 && listSperm.Count <= 0)
         {
             EndGame(MiniGameResultEnum.Win, false);
             return true;
@@ -139,6 +141,7 @@ public class MiniGameBirthHandler : BaseMiniGameHandler<MiniGameBirthBuilder, Mi
     #region 弹窗检测回调
     public void Submit(DialogView dialogView, DialogBean dialogBean)
     {
+        AudioHandler.Instance.PlaySound(AudioSoundEnum.Reward);
         RewardTypeBean rewardTypeData = new RewardTypeBean();
         rewardTypeData.dataType = RewardTypeEnum.AddChild;
         miniGameData.listReward.Add(rewardTypeData);
@@ -147,6 +150,7 @@ public class MiniGameBirthHandler : BaseMiniGameHandler<MiniGameBirthBuilder, Mi
 
     public void Cancel(DialogView dialogView, DialogBean dialogBean)
     {
+        AudioHandler.Instance.PlaySound(AudioSoundEnum.Error);
         base.EndGame(MiniGameResultEnum.Win, false);
     }
     #endregion

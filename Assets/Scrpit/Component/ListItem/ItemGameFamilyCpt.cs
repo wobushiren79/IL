@@ -16,7 +16,7 @@ public class ItemGameFamilyCpt : ItemGameBaseCpt
     public void SetData(CharacterForFamilyBean characterData)
     {
         SetName(characterData.baseInfo.name);
-        SetCall(characterData.baseInfo.name);
+        SetCall(characterData.GetFamilyName());
         SetCharacterUI(characterData);
     }
 
@@ -47,13 +47,15 @@ public class ItemGameFamilyCpt : ItemGameBaseCpt
     public void SetCharacterUI(CharacterForFamilyBean characterData)
     {
         GameDataBean gameData = GameDataHandler.Instance.manager.GetGameData();
-        if (characterData.CheckIsGrowUp(gameData.gameTime))
+        if (characterData.GetFamilyType()!= FamilyTypeEnum.Mate && !characterData.CheckIsGrowUp(gameData.gameTime))
         {
             ui_CharacterChild.gameObject.SetActive(true);
+            ui_CharacterUI.gameObject.SetActive(false);
         }
         else
         {
             ui_CharacterChild.gameObject.SetActive(false);
+            ui_CharacterUI.gameObject.SetActive(true);
         }
         if (ui_CharacterUI)
             ui_CharacterUI.SetCharacterData(characterData.body, characterData.equips);

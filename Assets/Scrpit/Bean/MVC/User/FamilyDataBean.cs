@@ -25,7 +25,7 @@ public class FamilyDataBean : BaseBean
     public List<CharacterForFamilyBean> GetAllFamilyData()
     {
         List<CharacterForFamilyBean> listData = new List<CharacterForFamilyBean>();
-        if (mateCharacter != null) { listData.Add(mateCharacter); }
+        if (mateCharacter != null && mateCharacter.body != null) { listData.Add(mateCharacter); }
         if (!CheckUtil.ListIsNull(listChildCharacter))
         {
             listData.AddRange(listChildCharacter);

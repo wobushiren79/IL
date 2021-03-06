@@ -29,6 +29,7 @@ public class UIMiniGameBirth : BaseUIComponent
     public override void OpenUI()
     {
         base.OpenUI();
+        ui_EnemyArea.StartCreateEnemy();
         RefreshUI();
     }
 

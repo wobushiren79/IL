@@ -21,7 +21,7 @@ public class NpcNormalBuilder : BaseMonoBehaviour
 
     protected virtual void Awake()
     {
-        
+
     }
 
 
@@ -66,12 +66,12 @@ public class NpcNormalBuilder : BaseMonoBehaviour
             return null;
         //随机生成身体数据
         characterData.body.CreateRandomBody();
-        return BuildNpc(objNpcModel,characterData, startPosition);
+        return BuildNpc(objNpcModel, characterData, startPosition);
     }
 
     public GameObject BuildNpc(GameObject objModel, CharacterBean characterData, Vector3 startPosition)
     {
-        if (characterData == null)
+        if (characterData == null || characterData.body == null)
             return null;
         GameObject npcObj = Instantiate(objContainer, objModel);
         npcObj.transform.localScale = new Vector3(1, 1);

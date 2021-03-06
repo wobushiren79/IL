@@ -237,7 +237,7 @@ public class ItemGameHotelBedCpt : ItemGameBaseCpt, DialogView.IDialogCallBack
         //设置排出人员 （老板和没有在休息的员工）
         List<CharacterBean> listCharacter = gameData.listWorkerCharacter;
         List<string> listExpelIds = new List<string>();
-        listExpelIds.Add(gameData.userCharacter.baseInfo.characterId);
+        listExpelIds.AddRange(gameData.GetAllFamilyCharacterIds());
         foreach (CharacterBean itemData in listCharacter)
         {
             //休息日 排出不是工作或者休息的

@@ -96,7 +96,7 @@ public class GameDataBean
     /// <param name="arenaTrophy3"></param>
     /// <param name="arenaTrophy4"></param>
     /// <param name="isRecord">是否记录</param>
-    public void AddArenaTrophy(long trophyElementary, long trophyIntermediate, long trophyAdvanced, long trophyLegendary,bool isRecord)
+    public void AddArenaTrophy(long trophyElementary, long trophyIntermediate, long trophyAdvanced, long trophyLegendary, bool isRecord)
     {
         this.trophyElementary += trophyElementary;
         this.trophyIntermediate += trophyIntermediate;
@@ -212,7 +212,7 @@ public class GameDataBean
     public bool AddFoodMenu(long menuId)
     {
         // 检测是否已经学过
-        bool hasMenu =  CheckHasMenu(menuId);
+        bool hasMenu = CheckHasMenu(menuId);
         if (hasMenu)
         {
             //已经有了 添加失败
@@ -346,11 +346,11 @@ public class GameDataBean
     /// <param name="priceM"></param>
     /// <param name="priceS"></param>
     /// <param name="isBedLevelUp"></param>
-    public void AddBedSellNumber(string remarkId, long number,long sleeptime, long priceL, long priceM, long priceS, out bool isBedLevelUp)
+    public void AddBedSellNumber(string remarkId, long number, long sleeptime, long priceL, long priceM, long priceS, out bool isBedLevelUp)
     {
         isBedLevelUp = false;
-        BuildBedBean buildBedData=  GetBedByRemarkId(remarkId);
-        if (buildBedData!=null)
+        BuildBedBean buildBedData = GetBedByRemarkId(remarkId);
+        if (buildBedData != null)
         {
             buildBedData.SellBed(number, sleeptime, priceL, priceM, priceS, out isBedLevelUp);
         }
@@ -365,10 +365,42 @@ public class GameDataBean
     public List<CharacterBean> GetAllCharacterData()
     {
         List<CharacterBean> listData = new List<CharacterBean>();
+
+        //添加主角
         if (userCharacter != null)
             listData.Add(userCharacter);
+        //添加孩子
+        FamilyDataBean familyData = GetFamilyData();
+        List<CharacterForFamilyBean> listFamily = familyData.GetAllFamilyData();
+        for (int i = 0; i < listFamily.Count; i++)
+        {
+            CharacterForFamilyBean characterForFamily = listFamily[i];
+            if (characterForFamily.GetFamilyType() != FamilyTypeEnum.Mate && characterForFamily.CheckIsGrowUp(gameTime))
+                listData.Add(characterForFamily);
+        }
+        //添加工作者
         if (listWorkerCharacter != null)
             listData.AddRange(listWorkerCharacter);
+
+
+        return listData;
+    }
+    /// <summary>
+    ///  包括主角
+    /// </summary>
+    /// <returns></returns>
+    public List<string> GetAllFamilyCharacterIds()
+    {
+        List<string> listData = new List<string>();
+        if (userCharacter != null)
+            listData.Add(userCharacter.baseInfo.characterId);
+        FamilyDataBean familyData = GetFamilyData();
+        List<CharacterForFamilyBean> listFamily = familyData.GetAllFamilyData();
+        for (int i = 0; i < listFamily.Count; i++)
+        {
+            CharacterForFamilyBean characterForFamily = listFamily[i];
+            listData.Add(characterForFamily.baseInfo.characterId);
+        }
         return listData;
     }
 
@@ -376,10 +408,10 @@ public class GameDataBean
     /// 通过ID获取员工信息
     /// </summary>
     /// <returns></returns>
-    public  CharacterBean GetCharacterDataById(string characterId) 
+    public CharacterBean GetCharacterDataById(string characterId)
     {
         List<CharacterBean> listData = GetAllCharacterData();
-        for (int i = 0;i< listData.Count;i++)
+        for (int i = 0; i < listData.Count; i++)
         {
             CharacterBean itemCharacter = listData[i];
             if (itemCharacter.baseInfo.characterId == null)
@@ -393,6 +425,7 @@ public class GameDataBean
         }
         return null;
     }
+
 
 
     /// <summary>
@@ -463,7 +496,7 @@ public class GameDataBean
     /// <returns></returns>
     public int GetGameTimeForYear()
     {
-       return gameTime.year - 221;
+        return gameTime.year - 221;
     }
 
     /// <summary>
@@ -477,7 +510,7 @@ public class GameDataBean
         List<ItemBean> listData = new List<ItemBean>();
         foreach (ItemBean itemData in listBuild)
         {
-            BuildItemBean buildItemData= InnBuildHandler.Instance.manager.GetBuildDataById(itemData.itemId);
+            BuildItemBean buildItemData = InnBuildHandler.Instance.manager.GetBuildDataById(itemData.itemId);
             if (buildItemData.GetBuildType() == type)
             {
                 listData.Add(itemData);
@@ -613,7 +646,7 @@ public class GameDataBean
         int number = 0;
         foreach (MenuOwnBean itemMenu in listMenu)
         {
-            if(itemMenu.GetMenuLevel() >= menuLevel)
+            if (itemMenu.GetMenuLevel() >= menuLevel)
             {
                 number++;
             }
@@ -629,7 +662,7 @@ public class GameDataBean
     {
         if (familyData == null)
             familyData = new FamilyDataBean();
-        return familyData; 
+        return familyData;
     }
 
 

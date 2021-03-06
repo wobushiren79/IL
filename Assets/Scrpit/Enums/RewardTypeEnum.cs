@@ -385,7 +385,7 @@ public class RewardTypeEnumTools : DataTools
     private static RewardTypeBean GetRewardDetailsForChild(RewardTypeBean data)
     {
         data.rewardDescribe = TextHandler.Instance.manager.GetTextById(6101);
-        data.spRewardIcon = IconDataHandler.Instance.manager.GetIconSpriteByName("child_1");
+        data.spRewardIcon = IconDataHandler.Instance.manager.GetIconSpriteByName("baby_1");
         return data;
     }
 

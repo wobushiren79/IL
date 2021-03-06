@@ -10,11 +10,6 @@ public class UIMiniGameBirthEnemyArea : BaseUIChildComponent<UIMiniGameBirth>
 
     public bool isCreateEnemy = false;
 
-    private void Start()
-    {
-        StartCreateEnemy();
-    }
-
     public void StartCreateEnemy()
     {
         StartCoroutine(CoroutineForCreateEnemy());

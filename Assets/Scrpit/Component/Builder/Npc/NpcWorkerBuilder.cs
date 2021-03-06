@@ -19,16 +19,8 @@ public class NpcWorkerBuilder : BaseMonoBehaviour
         }
         ClearAllWork();
         GameDataBean gameData = GameDataHandler.Instance.manager.GetGameData();
-        List<CharacterBean> listAllWork = gameData.listWorkerCharacter;
+        List<CharacterBean> listAllWork = gameData.GetAllCharacterData();
 
-        if (gameData.userCharacter.baseInfo.GetWorkerStatus() == WorkerStatusEnum.Work)
-        {
-            //获取门的坐标 并在门周围生成NPC
-            Vector3 doorPosition = InnHandler.Instance.GetRandomEntrancePosition();
-            //向下3个单位
-            doorPosition += new Vector3(0, -3f, 0);
-            BuildWork(gameData.userCharacter, doorPosition);
-        }
         for (int i = 0; i < listAllWork.Count; i++)
         {
             //获取门的坐标 并在门周围生成NPC

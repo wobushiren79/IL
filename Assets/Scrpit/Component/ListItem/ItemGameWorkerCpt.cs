@@ -172,7 +172,7 @@ public class ItemGameWorkerCpt : ItemGameBaseCpt, DialogView.IDialogCallBack, Wo
         }
         //如果是用户，则不能解雇 也不能送礼
         GameDataBean gameData = GameDataHandler.Instance.manager.GetGameData();
-        if (data == gameData.userCharacter)
+        if (data == gameData.userCharacter || data is CharacterForFamilyBean)
         {
             if (btFire != null)
                 btFire.gameObject.SetActive(false);
