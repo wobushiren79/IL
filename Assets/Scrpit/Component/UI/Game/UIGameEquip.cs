@@ -310,7 +310,7 @@ public class UIGameEquip : BaseUIComponent, TextSearchView.ICallBack
         if (SceneUtil.GetCurrentScene() == ScenesEnum.GameInnScene)
         {
             NpcHandler.Instance.builderForWorker.RefreshWorkerData();
-            NpcHandler.Instance.builderForFamily.RefreshWorkerData();
+            NpcHandler.Instance.builderForFamily.RefreshFamilyData();
         }
     
     }
