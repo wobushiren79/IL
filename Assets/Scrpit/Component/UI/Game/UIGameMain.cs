@@ -167,6 +167,7 @@ public class UIGameMain : BaseUIComponent, DialogView.IDialogCallBack, IRadioGro
         GameTimeHandler.Instance.SetTimeScale(1);
         rgTimeScale.SetPosition(-1, false);
         GameControlHandler.Instance.StopControl();
+        uiHint.Close();
     }
 
     public override void OpenUI()

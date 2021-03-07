@@ -119,8 +119,6 @@ public class GameDataHandler : BaseHandler<GameDataHandler,GameDataManager>, Dia
     /// <param name="time"></param>
     public void AddInfiniteTowers(int time)
     {
-        if (GameTimeHandler.Instance.isStopTime)
-            return; 
         GameDataBean gameData = manager.GetGameData();
         List<UserInfiniteTowersBean> listInfiniteTowersData = gameData.listInfinteTowers;
         if (CheckUtil.ListIsNull(listInfiniteTowersData))

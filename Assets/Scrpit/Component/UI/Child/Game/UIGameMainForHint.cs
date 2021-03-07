@@ -207,6 +207,8 @@ public class UIGameMainForHint : BaseUIChildComponent<UIGameMain>
     {
         if (listResearch != null)
             listResearch.Clear();
+        if (listInfiniteTowers != null)
+            listInfiniteTowers.Clear();
         CptUtil.RemoveChildsByActive(objHintContainer);
     }
 

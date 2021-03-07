@@ -93,6 +93,10 @@ public class SelectForNpcDialogView : DialogView, IBaseObserver
             SetName(characterData.baseInfo.name);
             SetDataForRascal((NpcAIRascalCpt)baseNpc);
         }
+        else
+        {
+            SetName(characterData.baseInfo.name);
+        }
      
     }
 
