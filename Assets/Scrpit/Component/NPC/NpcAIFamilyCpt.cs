@@ -8,6 +8,7 @@ public class NpcAIFamilyCpt : BaseNpcAI
     {
         Idle,
     }
+
     public FamilyIntentEnum familyIntent;
 
     public override void OnDestroy()
@@ -27,6 +28,10 @@ public class NpcAIFamilyCpt : BaseNpcAI
         }
     }
 
+    private void OnEnable()
+    {
+        SetIntent(FamilyIntentEnum.Idle);
+    }
 
     protected void SetIntentIdle()
     {

@@ -57,6 +57,7 @@ public class ToastHandler : BaseUIHandler<ToastHandler,ToastManager>
         {
             ToastView toastView = objToast.GetComponent<ToastView>();
             toastView.SetData(toastIconSp, toastContentStr, destoryTime);
+            GameUtil.RefreshRectViewHight((RectTransform)manager.objToastContainer.transform,false);
         }
         else
         {

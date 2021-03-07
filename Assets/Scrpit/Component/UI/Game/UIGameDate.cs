@@ -188,7 +188,7 @@ public class UIGameDate : BaseUIComponent
     public void InnWork()
     {
         GameDataBean gameData = GameDataHandler.Instance.manager.GetGameData();
-        List<CharacterBean> listWorker = gameData.GetAllCharacterData();
+        List<CharacterBean> listWorker = gameData.listWorkerCharacter;
         //计算员工请假概率
         foreach (CharacterBean itemWork in listWorker)
         {

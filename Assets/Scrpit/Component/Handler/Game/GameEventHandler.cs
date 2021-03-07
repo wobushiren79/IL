@@ -60,6 +60,10 @@ public class GameEventHandler : BaseHandler<GameEventHandler, GameEventManager>,
         {
             NpcHandler.Instance.buildForImportant.ShowNpc();
         }
+        if (NpcHandler.Instance.builderForFamily)
+        {
+            NpcHandler.Instance.builderForFamily.ShowNpc();
+        }
     }
 
     public void RegisterNotifyForEvent(Action<NotifyEventTypeEnum, object[]> notifyForEvent)
@@ -242,6 +246,10 @@ public class GameEventHandler : BaseHandler<GameEventHandler, GameEventManager>,
         {
             NpcHandler.Instance.buildForImportant.HideNpc();
         }
+        if (NpcHandler.Instance.builderForFamily != null)
+        {
+            NpcHandler.Instance.builderForFamily.HideNpc();
+        }
         UIHandler.Instance.manager.CloseAllUI();
         //设置文本的回调
         UIGameText uiGameText = UIHandler.Instance.manager.GetUI<UIGameText>(UIEnum.GameText);
@@ -342,7 +350,7 @@ public class GameEventHandler : BaseHandler<GameEventHandler, GameEventManager>,
         mEventStatus = eventStatus;
         if (eventStatus == EventStatusEnum.EventEnd)
         {
-         
+
             //保存数据
             if (storyInfo != null)
             {
@@ -372,7 +380,7 @@ public class GameEventHandler : BaseHandler<GameEventHandler, GameEventManager>,
             {
                 GameControlHandler.Instance.RestoreControl();
             }
-  
+
             //初始化数据
             InitData();
 
@@ -517,7 +525,10 @@ public class GameEventHandler : BaseHandler<GameEventHandler, GameEventManager>,
                     break;
             }
             //隐藏重要NPC
-            NpcHandler.Instance.buildForImportant.HideNpc();
+            if (NpcHandler.Instance.buildForImportant)
+                NpcHandler.Instance.buildForImportant.HideNpc();
+            if (NpcHandler.Instance.builderForFamily)
+                NpcHandler.Instance.builderForFamily.HideNpc();
         }
         notifyForEvent?.Invoke(NotifyEventTypeEnum.TextSelectResult, new object[] { textData });
     }

@@ -292,14 +292,14 @@ public class UIGameText : BaseUIComponent, DialogView.IDialogCallBack
                         TextInfoHandler.Instance.manager.listTextData = RandomUtil.GetRandomDataByDictionary(TextInfoHandler.Instance.manager.mapTalkExchangeData);
                         NextText(1);
                     }
-                    //换取无尽之塔装备
+                    //换取装备
                     else if (textData.content.Equals(TextHandler.Instance.manager.GetTextById(99203)))
                     {
                         //对话
                         TextInfoHandler.Instance.manager.listTextData = RandomUtil.GetRandomDataByDictionary(TextInfoHandler.Instance.manager.mapTalkExchangeData);
                         NextText(1);
                     }
-                    //换取无尽之塔道具
+                    //换取道具
                     else if (textData.content.Equals(TextHandler.Instance.manager.GetTextById(99204)))
                     {
                         //对话

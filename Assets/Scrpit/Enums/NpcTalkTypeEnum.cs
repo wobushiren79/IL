@@ -10,6 +10,6 @@ public enum NpcTalkTypeEnum
     GuildCoinExchange = 101,//公会勋章交换
     TrophyExchange = 102,//奖杯交换
 
-    InfiniteTowerEquipExchange = 201,//无尽之塔装备交换
-    InfiniteTowerItemsExchange = 202,//无尽之塔物品交换
+    EquipExchange = 201,//装备交换
+    ItemsExchange = 202,//物品交换
 }

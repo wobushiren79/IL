@@ -41,16 +41,26 @@ public class NpcFamilyBuilder : NpcNormalBuilder
     {
         if (characterForFamily == null)
             return;
-        FamilyTypeEnum familyType = characterForFamily.GetFamilyType();
+        FamilyTypeEnum familyType = characterForFamily.GetFamilyType(); 
+        GameDataBean gameData = GameDataHandler.Instance.manager.GetGameData();
+        FamilyDataBean familyData= gameData.GetFamilyData();
         if (familyType == FamilyTypeEnum.Daughter || familyType == FamilyTypeEnum.Son)
         {
             //如果是女儿或者儿子 需要3年后才能移动
-            GameDataBean gameData= GameDataHandler.Instance.manager.GetGameData();
             if (!characterForFamily.CheckIsGrowUp(gameData.gameTime))
             {
                 return;
             }
+        } 
+        else if (familyType == FamilyTypeEnum.Mate) 
+        {
+            //如果是伴侣需要结婚日之后才刷新
+            if (!familyData.CheckMarry(gameData.gameTime))
+            {
+                return;
+            }
         }
+
 
         //获取门的坐标 并在门周围生成NPC
         Vector3 doorPosition = InnHandler.Instance.GetRandomEntrancePosition();
@@ -60,7 +70,6 @@ public class NpcFamilyBuilder : NpcNormalBuilder
         if (objFamily == null)
             return;
         NpcAIFamilyCpt npcAIFamily = objFamily.GetComponent<NpcAIFamilyCpt>();
-        npcAIFamily.SetIntent(NpcAIFamilyCpt.FamilyIntentEnum.Idle);
         listFamilyCharacter.Add(npcAIFamily);
     }
 
@@ -100,7 +109,7 @@ public class NpcFamilyBuilder : NpcNormalBuilder
     /// <summary>
     /// 刷新工作者数据
     /// </summary>
-    public void RefreshWorkerData()
+    public void RefreshFamilyData()
     {
         if (listFamilyCharacter == null)
             return;
@@ -109,5 +118,20 @@ public class NpcFamilyBuilder : NpcNormalBuilder
             npcFamily.SetCharacterData(npcFamily.characterData);
         }
     }
+    public void HideNpc()
+    {
+        foreach (NpcAIFamilyCpt itemNpc in listFamilyCharacter)
+        {
+            itemNpc.gameObject.SetActive(false);
+        }
 
+    }
+
+    public void ShowNpc()
+    {
+        foreach (NpcAIFamilyCpt itemNpc in listFamilyCharacter)
+        {
+            itemNpc.gameObject.SetActive(true);
+        }
+    }
 }

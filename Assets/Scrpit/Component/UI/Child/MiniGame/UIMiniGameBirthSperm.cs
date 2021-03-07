@@ -6,6 +6,7 @@ public class UIMiniGameBirthSperm : BaseUIChildComponent<UIMiniGameBirth>
 {
     protected MiniGameBirthSpermBean spermData;
 
+    protected bool isDestroy = false;
     public void InitData(MiniGameBirthSpermBean spermData)
     {
         this.spermData = spermData;
@@ -17,9 +18,12 @@ public class UIMiniGameBirthSperm : BaseUIChildComponent<UIMiniGameBirth>
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
+        if (isDestroy)
+            return;
         UIMiniGameBirthEnemy enemy = collision.gameObject.GetComponent<UIMiniGameBirthEnemy>();
         if (enemy)
         {
+            isDestroy = true;
             MiniGameHandler.Instance.handlerForBirth.DestroySperm(spermData);
             AudioHandler.Instance.PlaySound(AudioSoundEnum.Error);
             DestroySperm();
@@ -28,6 +32,7 @@ public class UIMiniGameBirthSperm : BaseUIChildComponent<UIMiniGameBirth>
         UIMiniGameBirthEgg egg = collision.gameObject.GetComponent<UIMiniGameBirthEgg>();
         if (egg)
         {
+            isDestroy = true;
             egg.TakeSpermSuccess();
             MiniGameHandler.Instance.handlerForBirth.ArriveEgg(spermData);
             AudioHandler.Instance.PlaySound(AudioSoundEnum.Correct);

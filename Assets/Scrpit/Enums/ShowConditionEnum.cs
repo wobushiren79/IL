@@ -12,6 +12,7 @@ public enum ShowConditionEnum
     TimeForDay,
     TimeForHour,
     NpcFavorability,//NPC好感
+    IsMarry,
 }
 
 public class ShowConditionBean : DataBean<ShowConditionEnum>
@@ -78,6 +79,9 @@ public class ShowConditionTools : DataTools
                 break;
             case ShowConditionEnum.NpcFavorability:
                 GetConditionDetailsForNpcFavorability(gameData, conditionData);
+                break;
+            case ShowConditionEnum.IsMarry:
+                GetConditionDetailsForIsMarry(gameData, conditionData);
                 break;
         }
         return conditionData;
@@ -175,4 +179,23 @@ public class ShowConditionTools : DataTools
         return conditionData;
     }
 
+    /// <summary>
+    /// 获取出现详情  是否结婚
+    /// </summary>
+    /// <param name="gameData"></param>
+    /// <param name="conditionData"></param>
+    /// <returns></returns>
+    protected static ShowConditionBean GetConditionDetailsForIsMarry(GameDataBean gameData, ShowConditionBean conditionData)
+    {
+        FamilyDataBean familyData= gameData.GetFamilyData();
+        if (familyData.CheckMarry(gameData.gameTime))
+        {
+            conditionData.isCondition = true;
+        }
+        else
+        {
+            conditionData.isCondition = false;
+        }
+        return conditionData;
+    }
 }

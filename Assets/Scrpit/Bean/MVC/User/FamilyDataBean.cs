@@ -25,7 +25,7 @@ public class FamilyDataBean : BaseBean
     public List<CharacterForFamilyBean> GetAllFamilyData()
     {
         List<CharacterForFamilyBean> listData = new List<CharacterForFamilyBean>();
-        if (mateCharacter != null && mateCharacter.body != null) { listData.Add(mateCharacter); }
+        if (mateCharacter != null && mateCharacter.baseInfo != null && !CheckUtil.StringIsNull(mateCharacter.baseInfo.characterId)) { listData.Add(mateCharacter); }
         if (!CheckUtil.ListIsNull(listChildCharacter))
         {
             listData.AddRange(listChildCharacter);
@@ -89,7 +89,7 @@ public class FamilyDataBean : BaseBean
     /// <returns></returns>
     public bool CheckIsMate(long characterId)
     {
-        if (mateCharacter == null || mateCharacter.npcInfoData.id != characterId)
+        if (mateCharacter == null || mateCharacter.npcInfoData==null || mateCharacter.npcInfoData.id != characterId)
         {
             return false;
         }

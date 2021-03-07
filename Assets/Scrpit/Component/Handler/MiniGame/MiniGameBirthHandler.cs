@@ -129,7 +129,7 @@ public class MiniGameBirthHandler : BaseMiniGameHandler<MiniGameBirthBuilder, Mi
     /// <returns></returns>
     public bool CheckGameOver()
     {
-        if (miniGameData.gameResult !=  MiniGameResultEnum.Win && miniGameData.fireNumber <= 0 && listSperm.Count <= 0)
+        if (miniGameData.gameResult != MiniGameResultEnum.Win && miniGameData.fireNumber <= 0 && listSperm.Count <= 0)
         {
             EndGame(MiniGameResultEnum.Win, false);
             return true;
@@ -141,9 +141,11 @@ public class MiniGameBirthHandler : BaseMiniGameHandler<MiniGameBirthBuilder, Mi
     #region 弹窗检测回调
     public void Submit(DialogView dialogView, DialogBean dialogBean)
     {
+        InputTextDialogView inputTextDialog = dialogView as InputTextDialogView;
         AudioHandler.Instance.PlaySound(AudioSoundEnum.Reward);
         RewardTypeBean rewardTypeData = new RewardTypeBean();
         rewardTypeData.dataType = RewardTypeEnum.AddChild;
+        rewardTypeData.data = inputTextDialog.GetText();
         miniGameData.listReward.Add(rewardTypeData);
         base.EndGame(MiniGameResultEnum.Win, false);
     }

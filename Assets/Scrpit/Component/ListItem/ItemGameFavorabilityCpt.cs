@@ -31,7 +31,7 @@ public class ItemGameFavorabilityCpt : ItemGameBaseCpt
         SetName(characterData.baseInfo.titleName, characterData.baseInfo.name);
         SetSex(characterData.body.sex);
         SetFavorabilityLevel(characterData.npcInfoData.CheckCanMarry(),characterFavorability.favorabilityLevel);
-        characterFavorability.GetFavorability(out int favorability, out int favorabilityMax);
+        characterFavorability.GetFavorability(characterData.npcInfoData.CheckCanMarry(),out int favorability, out int favorabilityMax);
         SetFavorability(favorability, favorabilityMax);
         bool isTalk=  GameCommonInfo.DailyLimitData.CheckIsTalkNpc(characterFavorability.characterId);
         bool isGift = GameCommonInfo.DailyLimitData.CheckIsGiftNpc(characterFavorability.characterId);

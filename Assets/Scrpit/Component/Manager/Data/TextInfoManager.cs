@@ -91,10 +91,10 @@ public class TextInfoManager : BaseManager, ITextInfoView
                 case NpcTalkTypeEnum.TrophyExchange:
                     listTextData.Add(new TextInfoBean(TextInfoTypeEnum.Talk, 1, TextHandler.Instance.manager.GetTextById(99202)));
                     break;
-                case NpcTalkTypeEnum.InfiniteTowerEquipExchange:
+                case NpcTalkTypeEnum.EquipExchange:
                     listTextData.Add(new TextInfoBean(TextInfoTypeEnum.Talk, 1, TextHandler.Instance.manager.GetTextById(99203)));
                     break;
-                case NpcTalkTypeEnum.InfiniteTowerItemsExchange:
+                case NpcTalkTypeEnum.ItemsExchange:
                     listTextData.Add(new TextInfoBean(TextInfoTypeEnum.Talk, 1, TextHandler.Instance.manager.GetTextById(99204)));
                     break;
             }

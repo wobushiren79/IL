@@ -7,6 +7,7 @@ using System.Collections.Generic;
 public class UIGameMain : BaseUIComponent, DialogView.IDialogCallBack, IRadioGroupCallBack
 {
     [Header("控件")]
+    public RectTransform trfFunction;
     public PopupPromptButton popupWorker;
     public Button btWorker;
     public PopupPromptButton popupBuild;
@@ -124,7 +125,6 @@ public class UIGameMain : BaseUIComponent, DialogView.IDialogCallBack, IRadioGro
             btLayerSecondLayer.onClick.AddListener(OnClickForSecondLayer);
 
         InitInnData();
-        RefreshUI();
 
         GameDataBean gameData = GameDataHandler.Instance.manager.GetGameData();
         //判断是否展示教程
@@ -133,6 +133,7 @@ public class UIGameMain : BaseUIComponent, DialogView.IDialogCallBack, IRadioGro
         {
             UIHandler.Instance.manager.OpenUIAndCloseOther<UIGameHelp>(UIEnum.GameHelp);
         }
+        RefreshUI();
     }
 
     private void Update()
@@ -155,6 +156,7 @@ public class UIGameMain : BaseUIComponent, DialogView.IDialogCallBack, IRadioGro
         SetMoney(MoneyEnum.L, gameData.moneyL);
         SetMoney(MoneyEnum.M, gameData.moneyM);
         SetMoney(MoneyEnum.S, gameData.moneyS);
+        GameUtil.RefreshRectViewHight(trfFunction, true);
     }
 
     public override void CloseUI()
