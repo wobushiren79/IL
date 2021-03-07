@@ -9,7 +9,8 @@ public class WeatherForSnowCpt : WeatherCpt
     public override void OpenWeather(WeatherBean weatherData)
     {
         base.OpenWeather(weatherData);
-        objSnow.SetActive(true);
+        if (objSnow != null)
+            objSnow.SetActive(true);
         InitPS();
         switch (weatherData.weatherType)
         {
@@ -24,7 +25,8 @@ public class WeatherForSnowCpt : WeatherCpt
 
     public override void CloseWeather()
     {
-        objSnow.SetActive(false);
+        if (objSnow != null)
+            objSnow.SetActive(false);
         base.CloseWeather();
     }
 

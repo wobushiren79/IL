@@ -3,10 +3,6 @@ using UnityEditor;
 
 public interface ISteamUserStats
 {
-    /// <summary>
-    /// 初始化用户状态
-    /// </summary>
-    void InitUserStats();
 
     /// <summary>
     /// 改变统计数字

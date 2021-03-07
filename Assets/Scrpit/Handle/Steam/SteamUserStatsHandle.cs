@@ -10,8 +10,7 @@ public class SteamUserStatsHandle : ScriptableObject
     {
         if (SteamManager.Initialized)
         {
-            SteamUserStatsImpl statsImpl = new SteamUserStatsImpl();
-            statsImpl.InitUserStats();
+            SteamUserStatsImpl.InitUserStats();
         }
     }
 

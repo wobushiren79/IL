@@ -9,7 +9,8 @@ public class WeatherForSunnyCpt : WeatherCpt
     {
         base.OpenWeather(weatherData);
         InitPS();
-        objCloudy.SetActive(false);
+        if (objCloudy != null)
+            objCloudy.SetActive(false);
         switch (weatherData.weatherType)
         {
             case WeatherTypeEnum.Sunny:
@@ -23,7 +24,8 @@ public class WeatherForSunnyCpt : WeatherCpt
 
     public void SetCloudy()
     {
-        objCloudy.SetActive(true);
+        if (objCloudy != null)
+            objCloudy.SetActive(true);
     }
 
     public void SetSunny()

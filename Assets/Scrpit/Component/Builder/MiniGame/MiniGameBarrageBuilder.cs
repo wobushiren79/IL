@@ -14,6 +14,9 @@ public class MiniGameBarrageBuilder : BaseMiniGameBuilder
     //玩家模型
     public GameObject objPlayerModel;
 
+    //玩家容器
+    public GameObject objBulletContainer;
+
     //所有的发射器
     public List<MiniGameBarrageEjectorCpt> listEjector = new List<MiniGameBarrageEjectorCpt>();
     //所有的游玩对象
@@ -106,12 +109,18 @@ public class MiniGameBarrageBuilder : BaseMiniGameBuilder
         listEjector.Clear();
     }
 
+    public void DestoryBullet()
+    {
+       CptUtil.RemoveChild(objBulletContainer.transform);
+    }
+
     /// <summary>
     /// 删除所有
     /// </summary>
     public override void DestroyAll()
     {
         base.DestroyAll();
+        DestoryBullet();
         DestoryPlayer();
         DestoryEjector();
     }

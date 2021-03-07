@@ -20,8 +20,10 @@ public class WeatherForRainCpt : WeatherCpt
     {
         base.OpenWeather(weatherData);
         InitPS();
-        objRain.SetActive(true);
-        objThunder.SetActive(false);
+        if (objRain != null)
+            objRain.SetActive(true);
+        if (objThunder != null)
+            objThunder.SetActive(false);
         switch (weatherData.weatherType)
         {
             case WeatherTypeEnum.LightRain:
@@ -42,9 +44,11 @@ public class WeatherForRainCpt : WeatherCpt
     {
         
         AudioHandler.Instance.StopEnvironment();
-        StopAllCoroutines();
-        objRain.SetActive(false);
-        objThunder.SetActive(false);
+        StopAllCoroutines(); 
+        if (objRain != null)
+            objRain.SetActive(false);
+        if (objThunder != null)
+            objThunder.SetActive(false);
         base.CloseWeather();
     }
 
@@ -79,7 +83,8 @@ public class WeatherForRainCpt : WeatherCpt
     /// </summary>
     public void SetThunderstorm()
     {
-        objThunder.SetActive(true);
+        if (objThunder != null)
+            objThunder.SetActive(true);
         lightThunder.intensity = 0;
         ParticleSystem.EmissionModule emissionModule = psRain.emission;
         emissionModule.rateOverTime = 2000;

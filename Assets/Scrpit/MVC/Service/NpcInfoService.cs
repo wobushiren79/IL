@@ -17,7 +17,7 @@ public class NpcInfoService: BaseMVCService
     /// <returns></returns>
     public List<NpcInfoBean> QueryAllData()
     {
-        return BaseQueryData<NpcInfoBean>("npc_id", tableNameForMain + ".valid", "1");
+        return BaseQueryAllData<NpcInfoBean>("npc_id");
     }
 
     /// <summary>

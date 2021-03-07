@@ -9,11 +9,6 @@ public class UITownBankChangeMoney : BaseUIChildComponent<UITownBank>
     public ItemTownBankExchangeCpt MToL;
     public ItemTownBankExchangeCpt LToM;
 
-    private void Start()
-    {
-        InitData();
-    }
-
     public override void Open()
     {
         base.Open();
@@ -21,6 +16,7 @@ public class UITownBankChangeMoney : BaseUIChildComponent<UITownBank>
         AnimForInit(MToS.gameObject);
         AnimForInit(MToL.gameObject);
         AnimForInit(LToM.gameObject);
+        InitData();
     }
 
     public void InitData()

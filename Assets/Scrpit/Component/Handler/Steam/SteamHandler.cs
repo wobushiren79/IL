@@ -18,8 +18,7 @@ public class SteamHandler : BaseHandler<SteamHandler, BaseManager>
 
     private void Start()
     {
-        steamUserStats = new SteamUserStatsImpl();
-        steamUserStats.InitUserStats();
+        SteamUserStatsImpl.InitUserStats();
     }
 
 
@@ -45,8 +44,8 @@ public class SteamHandler : BaseHandler<SteamHandler, BaseManager>
             return;
         if (steamUserStats == null)
         {
-            steamUserStats = new SteamUserStatsImpl();
-            steamUserStats.InitUserStats();
+            //steamUserStats = new SteamUserStatsImpl();
+            SteamUserStatsImpl.InitUserStats();
         }
         steamUserStats.UserCompleteAchievement(achId + "");
     }

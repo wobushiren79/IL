@@ -9,8 +9,9 @@ public class WeatherForFogCpt : WeatherCpt
     public override void OpenWeather(WeatherBean weatherData)
     {
         base.OpenWeather(weatherData);
-        InitPS();
-        objFog.SetActive(false);
+        InitPS(); 
+        if (objFog != null)
+            objFog.SetActive(false);
         switch (weatherData.weatherType)
         {
             case WeatherTypeEnum.Fog:
@@ -21,6 +22,7 @@ public class WeatherForFogCpt : WeatherCpt
 
     public void SetFog()
     {
+        if(objFog!=null)
         objFog.SetActive(true);
     }
 
