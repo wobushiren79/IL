@@ -57,6 +57,7 @@ public class ItemTownBankExchangeCpt : ItemGameBaseCpt, DialogView.IDialogCallBa
     {
         SetExchangeType(exchangeType);
         SetRate(exchangeOld, exchangeNew);
+        etNewMoney.text = "";
         RefreshUI();
     }
 
