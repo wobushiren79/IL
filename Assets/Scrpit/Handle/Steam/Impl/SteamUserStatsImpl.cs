@@ -7,7 +7,7 @@ public class SteamUserStatsImpl : ISteamUserStats
     /// <summary>
     /// 初始化数据
     /// </summary>
-    public static void InitUserStats()
+    public void InitUserStats()
     {
         CallResult<UserStatsReceived_t> call = CallResult<UserStatsReceived_t>.Create(OnUserStatsReceived);
         SteamAPICall_t steamAPICall_T = SteamUserStats.RequestUserStats(SteamUser.GetSteamID());
@@ -19,8 +19,8 @@ public class SteamUserStatsImpl : ISteamUserStats
     /// </summary>
     /// <param name="pCallback"></param>
     /// <param name="bIOFailure"></param>
-    [AOT.MonoPInvokeCallbackAttribute(typeof(UserStatsReceived_t))]
-    public static void OnUserStatsReceived(UserStatsReceived_t pCallback, bool bIOFailure)
+    [AOT.MonoPInvokeCallback(typeof(UserStatsReceived_t))]
+    public  void OnUserStatsReceived(UserStatsReceived_t pCallback, bool bIOFailure)
     {
 
     }

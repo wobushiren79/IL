@@ -214,8 +214,6 @@ public class GameDataHandler : BaseHandler<GameDataHandler,GameDataManager>, Dia
     /// <param name="time"></param>
     public void AddBedResearch(int time)
     {
-        if (GameTimeHandler.Instance.isStopTime)
-            return;
         GameDataBean gameData = manager.GetGameData();
         List<BuildBedBean> listBed = gameData.GetBedListForResearching();
         if (CheckUtil.ListIsNull(listBed))
@@ -259,8 +257,6 @@ public class GameDataHandler : BaseHandler<GameDataHandler,GameDataManager>, Dia
     /// <param name="time"></param>
     public void AddMenuResearch(int time)
     {
-        if (GameTimeHandler.Instance.isStopTime)
-            return; 
         GameDataBean gameData = manager.GetGameData();
         List<MenuOwnBean> listMenu = gameData.GetMenuListForResearching();
         if (CheckUtil.ListIsNull(listMenu))

@@ -16,8 +16,6 @@ public class UIGameSettle : BaseUIComponent
     public GameObject objIncomeS;
     public Text tvIncomeS;
 
-
-
     public GameObject objExpensesL;
     public Text tvExpensesL;
     public GameObject objExpensesM;
@@ -25,12 +23,7 @@ public class UIGameSettle : BaseUIComponent
     public GameObject objExpensesS;
     public Text tvExpensesS;
 
-
-
-    public GameObject objListRecordContent;
-
-    public GameObject objItemModelForMoney;
-    public GameObject objItemModelForOther;
+    public ScrollGridVertical gridVertical;
 
     public Sprite spIconOilsalt;
     public Sprite spIconMeat;
@@ -41,17 +34,32 @@ public class UIGameSettle : BaseUIComponent
     public Sprite spIconWaterwine;
     public Sprite spIconFlour;
 
-    private float animDelay;
+    List<ItemData> listData = new List<ItemData>();
+    public struct ItemData
+    {
+        public Sprite icon;
+        public int type;
+        public int state;
+        public string name;
+        public string content;
+        public Color colorContent;
+        public long moneyL;
+        public long moneyM;
+        public long moneyS;
+    }
 
     public override void Awake()
     {
         base.Awake();
+        if (gridVertical != null)
+            gridVertical.AddCellListener(OnCellForItem);
     }
 
     private void Start()
     {
         if (btSubmit != null)
             btSubmit.onClick.AddListener(OpenDateUI);
+
     }
 
     public override void OpenUI()
@@ -60,14 +68,28 @@ public class UIGameSettle : BaseUIComponent
         InitData();
     }
 
+    public void OnCellForItem(ScrollGridCell itemCell)
+    {
+        ItemSettleCpt itemSettle = itemCell.GetComponent<ItemSettleCpt>();
+        ItemData itemData = listData[itemCell.index];
+        if (itemData.type == 1)
+        {
+            itemSettle.SetData(itemData.icon, itemData.name, itemData.state, itemData.moneyL, itemData.moneyM, itemData.moneyS);
+        }
+        else
+        {
+            itemSettle.SetData(itemData.content, itemData.icon, itemData.name, itemData.colorContent);
+        }
+    }
+
     public void InitData()
     {
+        listData.Clear();
         GameDataBean gameData = GameDataHandler.Instance.manager.GetGameData();
         UserAchievementBean userAchievement = gameData.GetAchievementData();
         //停止时间
         GameTimeHandler.Instance.SetTimeStatus(true);
-        CptUtil.RemoveChildsByActive(objListRecordContent.transform);
-        animDelay = 0f;
+
         InnRecordBean innRecord = InnHandler.Instance.GetInnRecord();
         long totalCustomerForFood = innRecord.GetTotalCompleteCustomerForFood();
         long totalCustomerForHotel = innRecord.GetTotalCompleteCustomerForHotel();
@@ -113,61 +135,45 @@ public class UIGameSettle : BaseUIComponent
         {
             ingName = IngredientsEnumTools.GetIngredientName(IngredientsEnum.Oilsalt);
             CreateItemForOther("-" + innRecord.consumeIngOilsalt + "(" + TextHandler.Instance.manager.GetTextById(93) + gameData.ingOilsalt + ")", spIconOilsalt, consumeIngStr + " " + ingName, Color.red);
-            //CreateItemForMoney(spIconOilsalt, string.Format(TextHandler.Instance.manager.GetTextById(339), ingName), 0, 0, 0, innRecord.consumeIngOilsalt * 5);
-            //innRecord.AddPayIng(0, 0, innRecord.consumeIngOilsalt * 5);
         }
         if (innRecord.consumeIngMeat > 0)
         {
             ingName = IngredientsEnumTools.GetIngredientName(IngredientsEnum.Meat);
             CreateItemForOther("-" + innRecord.consumeIngMeat + "(" + TextHandler.Instance.manager.GetTextById(93) + gameData.ingMeat + ")", spIconMeat, consumeIngStr + " " + ingName, Color.red);
-            //CreateItemForMoney(spIconMeat, string.Format(TextHandler.Instance.manager.GetTextById(339), ingName), 0, 0, 0, innRecord.consumeIngMeat * 10);
-            //innRecord.AddPayIng(0, 0, innRecord.consumeIngMeat * 10);
         }
         if (innRecord.consumeIngRiverfresh > 0)
         {
             ingName = IngredientsEnumTools.GetIngredientName(IngredientsEnum.Riverfresh);
             CreateItemForOther("-" + innRecord.consumeIngRiverfresh + "(" + TextHandler.Instance.manager.GetTextById(93) + gameData.ingRiverfresh + ")", spIconRiverfresh, consumeIngStr + " " + ingName, Color.red);
-            //CreateItemForMoney(spIconRiverfresh, string.Format(TextHandler.Instance.manager.GetTextById(339), ingName), 0, 0, 0, innRecord.consumeIngRiverfresh * 10);
-            //innRecord.AddPayIng(0, 0, innRecord.consumeIngRiverfresh * 10);
         }
         if (innRecord.consumeIngSeafood > 0)
         {
             ingName = IngredientsEnumTools.GetIngredientName(IngredientsEnum.Seafood);
             CreateItemForOther("-" + innRecord.consumeIngSeafood + "(" + TextHandler.Instance.manager.GetTextById(93) + gameData.ingSeafood + ")", spIconSeafood, consumeIngStr + " " + ingName, Color.red);
-            //CreateItemForMoney(spIconSeafood, string.Format(TextHandler.Instance.manager.GetTextById(339), ingName), 0, 0, 0, innRecord.consumeIngSeafood * 50);
-            //innRecord.AddPayIng(0, 0, innRecord.consumeIngSeafood * 50);
         }
         if (innRecord.consumeIngVegetables > 0)
         {
             ingName = IngredientsEnumTools.GetIngredientName(IngredientsEnum.Vegetables);
             CreateItemForOther("-" + innRecord.consumeIngVegetables + "(" + TextHandler.Instance.manager.GetTextById(93) + gameData.ingVegetables + ")", spIconVegetables, consumeIngStr + " " + ingName, Color.red);
-            //CreateItemForMoney(spIconVegetables, string.Format(TextHandler.Instance.manager.GetTextById(339), ingName), 0, 0, 0, innRecord.consumeIngVegetables * 5);
-            //innRecord.AddPayIng(0, 0, innRecord.consumeIngVegetables * 5);
         }
         if (innRecord.consumeIngMelonfruit > 0)
         {
             ingName = IngredientsEnumTools.GetIngredientName(IngredientsEnum.Melonfruit);
             CreateItemForOther("-" + innRecord.consumeIngMelonfruit + "(" + TextHandler.Instance.manager.GetTextById(93) + gameData.ingMelonfruit + ")", spIconMelonfruit, consumeIngStr + " " + ingName, Color.red);
-            //CreateItemForMoney(spIconMelonfruit, string.Format(TextHandler.Instance.manager.GetTextById(339), ingName), 0, 0, 0, innRecord.consumeIngMelonfruit * 5);
-            // innRecord.AddPayIng(0, 0, innRecord.consumeIngMelonfruit * 5);
         }
         if (innRecord.consumeIngWaterwine > 0)
         {
             ingName = IngredientsEnumTools.GetIngredientName(IngredientsEnum.Waterwine);
             CreateItemForOther("-" + innRecord.consumeIngWaterwine + "(" + TextHandler.Instance.manager.GetTextById(93) + gameData.ingWaterwine + ")", spIconWaterwine, consumeIngStr + " " + ingName, Color.red);
-            // CreateItemForMoney(spIconWaterwine, string.Format(TextHandler.Instance.manager.GetTextById(339), ingName), 0, 0, 0, innRecord.consumeIngWaterwine * 10);
-            // innRecord.AddPayIng(0, 0, innRecord.consumeIngWaterwine * 10);
         }
         if (innRecord.consumeIngFlour > 0)
         {
             ingName = IngredientsEnumTools.GetIngredientName(IngredientsEnum.Flour);
             CreateItemForOther("-" + innRecord.consumeIngFlour + "(" + TextHandler.Instance.manager.GetTextById(93) + gameData.ingFlour + ")", spIconFlour, consumeIngStr + " " + ingName, Color.red);
-            // CreateItemForMoney(spIconFlour, string.Format(TextHandler.Instance.manager.GetTextById(339), ingName), 0, 0, 0, innRecord.consumeIngFlour * 5);
-            // innRecord.AddPayIng(0, 0, innRecord.consumeIngFlour * 5);
         }
         //评价
-        if(innRecord.praiseExcitedNumber!=0)
-             CreateItemForOther(innRecord.praiseExcitedNumber + "", IconDataHandler.Instance.manager.GetIconSpriteByName("customer_mood_0"), "", Color.green);
+        if (innRecord.praiseExcitedNumber != 0)
+            CreateItemForOther(innRecord.praiseExcitedNumber + "", IconDataHandler.Instance.manager.GetIconSpriteByName("customer_mood_0"), "", Color.green);
         if (innRecord.praiseHappyNumber != 0)
             CreateItemForOther(innRecord.praiseHappyNumber + "", IconDataHandler.Instance.manager.GetIconSpriteByName("customer_mood_1"), "", Color.green);
         if (innRecord.praiseOkayNumber != 0)
@@ -226,33 +232,34 @@ public class UIGameSettle : BaseUIComponent
         tvExpensesL.text = expensesL + "";
         tvExpensesM.text = expensesM + "";
         tvExpensesS.text = expensesS + "";
+
+        gridVertical.SetCellCount(listData.Count);
     }
 
     public void CreateItemForMoney(Sprite spIcon, string name, int status, long moneyL, long moneyM, long moneyS)
     {
-        GameObject objMoneyItem = Instantiate(objListRecordContent, objItemModelForMoney);
-        ItemSettleForMoneyCpt itemCpt = objMoneyItem.GetComponent<ItemSettleForMoneyCpt>();
-        itemCpt.SetData(spIcon, name, status, moneyL, moneyM, moneyS);
-        AnimForItemShow(objMoneyItem);
+        ItemData itemData = new ItemData();
+        itemData.icon = spIcon;
+        itemData.name = name;
+        itemData.state = status;
+        itemData.moneyL = moneyL;
+        itemData.moneyM = moneyM;
+        itemData.moneyS = moneyS;
+        itemData.type = 1;
+        listData.Add(itemData);
     }
 
     public void CreateItemForOther(string number, Sprite ingIcon, string name, Color numberColor)
     {
-        GameObject objOtherItem = Instantiate(objListRecordContent, objItemModelForOther);
-        ItemSettleForOtherCpt itemCpt = objOtherItem.GetComponent<ItemSettleForOtherCpt>();
-        itemCpt.SetData(number, ingIcon, name, numberColor);
-        AnimForItemShow(objOtherItem);
+        ItemData itemData = new ItemData();
+        itemData.icon = ingIcon;
+        itemData.name = name;
+        itemData.content = number;
+        itemData.colorContent = numberColor;
+        itemData.type = 2;
+        listData.Add(itemData);
     }
 
-    /// <summary>
-    /// item出现动画
-    /// </summary>
-    /// <param name="objItem"></param>
-    public void AnimForItemShow(GameObject objItem)
-    {
-        objItem.transform.DOScale(new Vector3(0, 0, 0), 0.5f).From();
-        animDelay += 0.1f;
-    }
 
     public void OpenDateUI()
     {
