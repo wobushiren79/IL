@@ -14,8 +14,7 @@ public class UIGameAttendance : UIBaseOne, ItemGameAttendanceCpt.ICallBack
     public Button btSelectAll;
     public Button btUnSelectAll;
 
-    public GameObject objListContent;
-    public GameObject objItemWorkModel;
+    public ScrollGridVertical gridVertical;
 
     //出勤金钱
     public long attendancePriceL;
@@ -23,7 +22,7 @@ public class UIGameAttendance : UIBaseOne, ItemGameAttendanceCpt.ICallBack
     public long attendancePriceS;
 
     public int attendanceNumber;//出勤人数
-
+    public List<CharacterBean> listData = new List<CharacterBean>();
     public override void Start()
     {
         base.Start();
@@ -33,16 +32,48 @@ public class UIGameAttendance : UIBaseOne, ItemGameAttendanceCpt.ICallBack
             btSelectAll.onClick.AddListener(OnClickForSelectAll);
         if (btUnSelectAll != null)
             btUnSelectAll.onClick.AddListener(OnClickForUnSelectAll);
+        if (gridVertical != null)
+            gridVertical.AddCellListener(OnCellForItem);
     }
 
     public override void OpenUI()
     {
         base.OpenUI();
+
+        InitData();
+        InitAttendancePrice();
+    }
+
+    public void InitAttendancePrice()
+    {
         attendanceNumber = 0;
         attendancePriceL = 0;
         attendancePriceM = 0;
         attendancePriceS = 0;
-        InitData();
+        for (int i = 0; i < listData.Count; i++)
+        {
+            CharacterBean characterData = listData[i];
+            //初始化数据
+            if (characterData.baseInfo.GetWorkerStatus() == WorkerStatusEnum.Work)
+            {
+                attendancePriceL += characterData.baseInfo.priceL;
+                attendancePriceM += characterData.baseInfo.priceM;
+                attendancePriceS += characterData.baseInfo.priceS;
+                attendanceNumber += 1;
+            }
+        }
+        tvPriceL.text = attendancePriceL + "";
+        tvPriceM.text = attendancePriceM + "";
+        tvPirceS.text = attendancePriceS + "";
+        tvNumber.text = TextHandler.Instance.manager.GetTextById(4003) + attendanceNumber;
+    }
+
+    public void OnCellForItem(ScrollGridCell itemCell)
+    {
+        CharacterBean characterData = listData[itemCell.index];
+        ItemGameAttendanceCpt workerItem = itemCell.GetComponent<ItemGameAttendanceCpt>();
+        workerItem.SetData(characterData);
+        workerItem.SetCallBack(this);
     }
 
     /// <summary>
@@ -97,45 +128,9 @@ public class UIGameAttendance : UIBaseOne, ItemGameAttendanceCpt.ICallBack
 
     public void InitData()
     {
-        CptUtil.RemoveChildsByActive(objListContent);
         GameDataBean gameData = GameDataHandler.Instance.manager.GetGameData();
-        List<CharacterBean> listData = gameData.GetAllCharacterData();
-        for (int i = 0; i < listData.Count; i++)
-        {
-            CharacterBean itemData = listData[i];
-            CreateWorkerItem(itemData);
-        }
-        SetTotalData();
-    }
-
-    public void CreateWorkerItem(CharacterBean characterData)
-    {
-        if (objListContent == null || objItemWorkModel == null)
-            return;
-        GameObject objWorkerItem = Instantiate(objListContent, objItemWorkModel);
-        ItemGameAttendanceCpt workerItem = objWorkerItem.GetComponent<ItemGameAttendanceCpt>();
-        if (workerItem != null)
-        {
-            workerItem.SetData(characterData);
-            workerItem.SetCallBack(this);
-        }
-        //初始化数据
-        if (characterData.baseInfo.GetWorkerStatus() == WorkerStatusEnum.Work)
-        {
-            attendancePriceL += characterData.baseInfo.priceL;
-            attendancePriceM += characterData.baseInfo.priceM;
-            attendancePriceS += characterData.baseInfo.priceS;
-            attendanceNumber += 1;
-        }
-
-    }
-
-    public void SetTotalData()
-    {
-        tvPriceL.text = attendancePriceL + "";
-        tvPriceM.text = attendancePriceM + "";
-        tvPirceS.text = attendancePriceS + "";
-        tvNumber.text = TextHandler.Instance.manager.GetTextById(4003) + attendanceNumber;
+        listData = gameData.GetAllCharacterData();
+        gridVertical.SetCellCount(listData.Count);
     }
 
 
@@ -152,43 +147,29 @@ public class UIGameAttendance : UIBaseOne, ItemGameAttendanceCpt.ICallBack
     protected void ChangeAllSelectStatus(bool isSelect)
     {
         AudioHandler.Instance.PlaySound(AudioSoundEnum.ButtonForNormal);
-        ItemGameAttendanceCpt[] listAttendance = objListContent.GetComponentsInChildren<ItemGameAttendanceCpt>();
-        for (int i = 0; i < listAttendance.Length; i++)
+        for (int i = 0; i < listData.Count; i++)
         {
-            ItemGameAttendanceCpt itemAttendance= listAttendance[i];
-            if (itemAttendance.gameObject.activeSelf)
+            CharacterBean characterData = listData[i];
+            WorkerStatusEnum workerStatus = characterData.baseInfo.GetWorkerStatus();
+            if (workerStatus == WorkerStatusEnum.Work)
             {
-                itemAttendance.ChangeSelectStauts(isSelect);
+                if (!isSelect)
+                    characterData.baseInfo.SetWorkerStatus(WorkerStatusEnum.Rest);
+            }
+            else if (workerStatus == WorkerStatusEnum.Rest)
+            {
+                if (isSelect)
+                    characterData.baseInfo.SetWorkerStatus(WorkerStatusEnum.Work);
             }
         }
+        gridVertical.RefreshAllCells();
+        InitAttendancePrice();
     }
 
     #region  出勤回调
     public void AttendanceChange(ItemGameAttendanceCpt itemView, WorkerStatusEnum workerStatus, CharacterBean characterBean)
     {
-        if (workerStatus == WorkerStatusEnum.Work)
-        {
-            attendancePriceL += characterBean.baseInfo.priceL;
-            attendancePriceM += characterBean.baseInfo.priceM;
-            attendancePriceS += characterBean.baseInfo.priceS;
-            attendanceNumber += 1;
-        }
-        else
-        {
-            attendancePriceL -= characterBean.baseInfo.priceL;
-            attendancePriceM -= characterBean.baseInfo.priceM;
-            attendancePriceS -= characterBean.baseInfo.priceS;
-            attendanceNumber -= 1;
-        }
-        if (attendancePriceL < 0)
-            attendancePriceL = 0;
-        if (attendancePriceM < 0)
-            attendancePriceM = 0;
-        if (attendancePriceS < 0)
-            attendancePriceS = 0;
-        if (attendanceNumber < 0)
-            attendanceNumber = 0;
-        SetTotalData();
+        InitAttendancePrice();
     }
     #endregion
 }
