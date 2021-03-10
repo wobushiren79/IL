@@ -76,7 +76,7 @@ public class MiniGameCombatHandler : BaseMiniGameHandler<MiniGameCombatBuilder, 
     /// <param name="character"></param>
     public void SelectCharacter(NpcAIMiniGameCombatCpt character)
     {
-        miniGameBuilder.DeleteSelectEffect();
+        miniGameBuilder.DeleteAllEffect();
         miniGameBuilder.CreateSelectEffect(character.transform.position);
         SetCameraPosition(character.transform.position);
     }
@@ -253,7 +253,7 @@ public class MiniGameCombatHandler : BaseMiniGameHandler<MiniGameCombatBuilder, 
     public IEnumerator CoroutineForAction()
     {
         //先取消选中框
-        miniGameBuilder.DeleteSelectEffect();
+        miniGameBuilder.DeleteAllEffect();
 
         switch (miniGameData.GetRoundActionCommand())
         {
