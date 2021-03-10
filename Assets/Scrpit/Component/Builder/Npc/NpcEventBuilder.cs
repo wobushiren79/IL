@@ -113,7 +113,7 @@ public class NpcEventBuilder : NpcNormalBuilder
             //生成NPC
             GameObject npcObj = BuildNpc(objConvertModel, characterData, npcPosition + new Vector3(UnityEngine.Random.Range(-0.5f, 0.5f), UnityEngine.Random.Range(-0.5f, 0.5f)));
             //设置意图
-            NpcAIConvertCpt convertCpt = npcObj.GetComponent<NpcAIConvertCpt>(); 
+            NpcAIConvertCpt convertCpt = npcObj.GetComponent<NpcAIConvertCpt>();
             GameDataBean gameData = GameDataHandler.Instance.manager.GetGameData();
             CharacterFavorabilityBean characterFavorability = gameData.GetCharacterFavorability(long.Parse(characterData.baseInfo.characterId));
             convertCpt.SetTeamData(teamCode, npcTeam, i);
@@ -147,8 +147,8 @@ public class NpcEventBuilder : NpcNormalBuilder
             return;
         //if (listExistTeamId.Contains(npcTeam.id))
         //改成了每日一次
-        if ( listExistTeamId.Count > 0 )
-             return;
+        if (listExistTeamId.Count > 0)
+            return;
         //获取小队成员数据
         npcTeam.GetTeamCharacterData(out List<CharacterBean> listLeader, out List<CharacterBean> listMembers);
         //设置小队相关
@@ -168,7 +168,7 @@ public class NpcEventBuilder : NpcNormalBuilder
             //生成NPC
             GameObject npcObj = BuildNpc(objRascalModel, characterData, npcPosition + new Vector3(UnityEngine.Random.Range(-0.5f, 0.5f), UnityEngine.Random.Range(-0.5f, 0.5f)));
             //设置意图
-            NpcAIRascalCpt rascalCpt = npcObj.GetComponent<NpcAIRascalCpt>(); 
+            NpcAIRascalCpt rascalCpt = npcObj.GetComponent<NpcAIRascalCpt>();
             GameDataBean gameData = GameDataHandler.Instance.manager.GetGameData();
             CharacterFavorabilityBean characterFavorability = gameData.GetCharacterFavorability(long.Parse(characterData.baseInfo.characterId));
             rascalCpt.SetTeamData(teamCode, npcTeam, i);
@@ -177,7 +177,7 @@ public class NpcEventBuilder : NpcNormalBuilder
             rascalCpt.SetIntent(NpcAIRascalCpt.RascalIntentEnum.GoToInn);
 
             //设置捣乱者血量
-            characterData.GetAttributes( out CharacterAttributesBean characterAttributes);
+            characterData.GetAttributes(out CharacterAttributesBean characterAttributes);
             rascalCpt.characterMaxLife = characterAttributes.life;
             rascalCpt.characterLife = characterAttributes.life;
         }
@@ -208,6 +208,18 @@ public class NpcEventBuilder : NpcNormalBuilder
             return;
         //获取小队成员数据
         npcTeam.GetTeamCharacterData(out List<CharacterBean> listLeader, out List<CharacterBean> listMembers);
+        //检测是否为结婚对象
+        GameDataBean gameData = GameDataHandler.Instance.manager.GetGameData();
+        FamilyDataBean familyData = gameData.GetFamilyData();
+        for (int i = 0; i < listLeader.Count; i++)
+        {
+            CharacterBean itemCharacter = listLeader[i];
+            if (familyData.mateCharacter != null && familyData.mateCharacter.baseInfo != null && familyData.mateCharacter.baseInfo.characterId != null)
+                if (itemCharacter.baseInfo.characterId.Equals(familyData.mateCharacter.baseInfo.characterId))
+                {
+                    return;
+                }
+        }
         //设置小队相关
         string teamCode = SystemUtil.GetUUID(SystemUtil.UUIDTypeEnum.N);
         int npcNumber = listLeader.Count + listMembers.Count;
@@ -226,7 +238,7 @@ public class NpcEventBuilder : NpcNormalBuilder
             GameObject npcObj = BuildNpc(objSundryModel, characterData, npcPosition + new Vector3(UnityEngine.Random.Range(-0.5f, 0.5f), UnityEngine.Random.Range(-0.5f, 0.5f)));
             //设置意图
             NpcAISundryCpt sundryCpt = npcObj.GetComponent<NpcAISundryCpt>();
-            GameDataBean gameData = GameDataHandler.Instance.manager.GetGameData();
+
             CharacterFavorabilityBean characterFavorability = gameData.GetCharacterFavorability(long.Parse(characterData.baseInfo.characterId));
             sundryCpt.SetTeamData(teamCode, npcTeam, i);
             sundryCpt.SetIntent(NpcAISundryCpt.SundryIntentEnum.GoToInn);
@@ -320,7 +332,7 @@ public class NpcEventBuilder : NpcNormalBuilder
         string teamCode = SystemUtil.GetUUID(SystemUtil.UUIDTypeEnum.N);
         Color teamColor = new Color(UnityEngine.Random.Range(0f, 1f), UnityEngine.Random.Range(0f, 1f), UnityEngine.Random.Range(0f, 1f));
         //获取小队成员数据
-        teamData.GetTeamCharacterData( out List<CharacterBean> listLeader, out List<CharacterBean> listMembers);
+        teamData.GetTeamCharacterData(out List<CharacterBean> listLeader, out List<CharacterBean> listMembers);
         GameDataBean gameData = GameDataHandler.Instance.manager.GetGameData();
         //设置小队人数(团队领袖全生成，小队成员随机生成)
         int npcNumber = listLeader.Count + listMembers.Count;

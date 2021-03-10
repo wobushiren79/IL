@@ -178,6 +178,8 @@ public class InnHandler : BaseHandler<InnHandler, InnManager>
         NpcHandler.Instance.builderForWorker.BuildAllWorker();
         InitInn();
         innStatus = InnStatusEnum.Open;
+        //生成客人
+        NpcHandler.Instance.builderForCustomer.StartBuildCustomer();
     }
 
     public InnRecordBean GetInnRecord()

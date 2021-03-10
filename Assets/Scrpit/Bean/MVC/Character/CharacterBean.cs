@@ -455,9 +455,9 @@ public class CharacterBean
         GetAttributes(out CharacterAttributesBean totalAttributes, out CharacterAttributesBean selfAttributes, out CharacterAttributesBean equipAttributes);
         float randomRate = UnityEngine.Random.Range(0f, 1f);
         float successRate = 0;
-        //如果是掌柜    
+        //如果是掌柜    或者孩子
         GameDataBean gameData = GameDataHandler.Instance.manager.GetGameData();
-        if (this == gameData.userCharacter)
+        if (this == gameData.userCharacter || this is CharacterForFamilyBean)
         {
             successRate = 1;
         }

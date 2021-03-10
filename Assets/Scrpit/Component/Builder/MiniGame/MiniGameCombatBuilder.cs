@@ -137,7 +137,11 @@ public class MiniGameCombatBuilder : BaseMiniGameBuilder
     {
         Destroy(objEffect);
     }
-    public void DeleteSelectEffect()
+
+    /// <summary>
+    /// 删除所有特效
+    /// </summary>
+    public void DeleteAllEffect()
     {
         CptUtil.RemoveChildsByActive(objSelectEffectContainer);
     }
@@ -157,5 +161,6 @@ public class MiniGameCombatBuilder : BaseMiniGameBuilder
     {
         base.DestroyAll();
         DestroyAllCharacter();
+        DeleteAllEffect();
     }
 }
