@@ -1,12 +1,9 @@
 ﻿using UnityEngine;
 using UnityEditor;
+using System.IO;
 
 public class GameDataService : BaseDataStorageImpl<GameDataBean>
 {
-    public GameDataService()
-    {
-
-    }
 
     /// <summary>
     /// 查询游戏配置数据

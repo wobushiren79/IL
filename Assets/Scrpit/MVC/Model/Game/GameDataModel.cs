@@ -13,6 +13,7 @@ public class GameDataModel : BaseMVCModel
         mGameListDataService = new GameListDataService();
     }
 
+
     /// <summary>
     /// 通过用户ID获取游戏数据
     /// </summary>
@@ -107,7 +108,7 @@ public class GameDataModel : BaseMVCModel
         gameData.innBuildData.AddFurniture(1, innResStove);
         gameData.innBuildData.AddFurniture(1, innResTable);
         //修改客栈大小
-        gameData.innBuildData.ChangeInnSize(1 , new List<InnResBean>() { innResDoor }, 9, 9);
+        gameData.innBuildData.ChangeInnSize(1, new List<InnResBean>() { innResDoor }, 9, 9);
         //母亲的信
         gameData.listItems.Add(new ItemBean(1500001, 1));
         //添加家具
@@ -116,7 +117,7 @@ public class GameDataModel : BaseMVCModel
         //添加菜单
         gameData.listMenu.Add(new MenuOwnBean(1));
         gameData.listMenu.Add(new MenuOwnBean(2));
-    
+
         //设置时间
         TimeBean gameTime = new TimeBean();
         gameTime.SetTimeForYMD(221, 1, 0);
@@ -139,7 +140,37 @@ public class GameDataModel : BaseMVCModel
     /// <returns></returns>
     public List<GameDataSimpleBean> GetSimpleGameDataList()
     {
-        return mGameListDataService.QueryData();
+
+        List<string> listUserId = mGameListDataService.QueryDataAllUserId();
+        List<GameDataSimpleBean> listData = mGameListDataService.QueryData();
+        if (listData == null)
+        {
+            listData = new List<GameDataSimpleBean>();
+        }
+        if (listData.Count < listUserId.Count)
+        {
+            for (int i = 0; i < listUserId.Count; i++)
+            {
+                string userId = listUserId[i];
+                bool hasData = false;
+                for (int f = 0; f < listData.Count; f++)
+                {
+                    GameDataSimpleBean gameDataSimple = listData[f];
+                    if (gameDataSimple.userId.Equals(userId))
+                    {
+                        hasData = true;
+                    }
+                }
+                if (!hasData)
+                {
+                    GameDataBean gameData = mGameDataService.QueryDataByUserId(userId);
+                    GameDataSimpleBean gameDataSimple = GameDataSimpleBean.ToSimpleData(gameData);
+                    listData.Add(gameDataSimple);
+                }
+            }
+            mGameListDataService.UpdateData(listData);
+        }
+        return listData;
     }
 
     /// <summary>

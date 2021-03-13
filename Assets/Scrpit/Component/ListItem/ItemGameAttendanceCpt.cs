@@ -34,25 +34,26 @@ public class ItemGameAttendanceCpt : ItemGameWorkerCpt,IRadioButtonCallBack
     /// <param name="isAttendance"></param>
     public void SetAttendance(WorkerStatusEnum workerStatus)
     {
-        if (rbAttendance.GetEnabled() == false)
-            return;
-        if(this.workerStatus == workerStatus)
-            return;
         this.workerStatus = workerStatus;
         characterData.baseInfo.SetWorkerStatus(workerStatus);
         characterData.baseInfo.GetWorkerStatus(out string workerStatusStr);
-        if (workerStatus == WorkerStatusEnum.Work)
+        if (workerStatus == WorkerStatusEnum.Rest || workerStatus == WorkerStatusEnum.Work)
         {
-            rbAttendance.ChangeStates(RadioButtonView.RadioButtonStatus.Selected);
-        }
-        else if (workerStatus == WorkerStatusEnum.Rest)
-        {
-            rbAttendance.ChangeStates(RadioButtonView.RadioButtonStatus.Unselected);
+            rbAttendance.SetEnabled(true);
+            if (workerStatus == WorkerStatusEnum.Work)
+            {
+                rbAttendance.ChangeStates(RadioButtonView.RadioButtonStatus.Selected);
+            }
+            else if (workerStatus == WorkerStatusEnum.Rest)
+            {
+                rbAttendance.ChangeStates(RadioButtonView.RadioButtonStatus.Unselected);
+            }
+            ivAttendance.gameObject.SetActive(true);
         }
         else
         {
-            rbAttendance.ChangeStates(RadioButtonView.RadioButtonStatus.Unselected);
             rbAttendance.SetEnabled(false);
+            rbAttendance.ChangeStates(RadioButtonView.RadioButtonStatus.Unselected);
             ivAttendance.gameObject.SetActive(false);
         }
         rbAttendance.rbText.text = workerStatusStr;
@@ -60,20 +61,6 @@ public class ItemGameAttendanceCpt : ItemGameWorkerCpt,IRadioButtonCallBack
             mCallBack.AttendanceChange(this, workerStatus, characterData);
     }
 
-    public void ChangeSelectStauts(bool isSelect)
-    {
-        if (rbAttendance.GetEnabled() == false)
-            return;
-        if(isSelect)
-        {
-            SetAttendance(WorkerStatusEnum.Work);
-        }
-        else
-        {
-            SetAttendance(WorkerStatusEnum.Rest);
-        }
-   
-    }
 
     #region RB回调
     public void RadioButtonSelected(RadioButtonView view, RadioButtonView.RadioButtonStatus buttonStatus)
@@ -87,7 +74,6 @@ public class ItemGameAttendanceCpt : ItemGameWorkerCpt,IRadioButtonCallBack
         {
             SetAttendance(WorkerStatusEnum.Rest);
         }
-      
     }
     #endregion
 

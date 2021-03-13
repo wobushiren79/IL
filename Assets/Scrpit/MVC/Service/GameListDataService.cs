@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using UnityEditor;
 using System.Collections.Generic;
+using System.IO;
 
 public class GameListDataService : BaseDataStorageImpl<GameDataSimpleBean>
 {
@@ -9,6 +10,27 @@ public class GameListDataService : BaseDataStorageImpl<GameDataSimpleBean>
     public GameListDataService()
     {
         mSaveFileName = "GameDataSimpleList";
+    }
+
+    /// <summary>
+    /// 查询存档文件数量
+    /// </summary>
+    public List<string> QueryDataAllUserId()
+    {
+        DirectoryInfo dires = new DirectoryInfo(Application.persistentDataPath);
+        DirectoryInfo[] directoryInfos= dires.GetDirectories();
+        List<string> listData = new List<string>();
+        if (directoryInfos != null)
+        {
+            foreach (DirectoryInfo itemDir in directoryInfos)
+            {
+                if (itemDir.Name.Contains("UserId_"))
+                {
+                    listData.Add(itemDir.Name);
+                }
+            }
+        }
+        return listData;
     }
 
     /// <summary>

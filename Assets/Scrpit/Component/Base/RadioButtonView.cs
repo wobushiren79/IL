@@ -63,43 +63,62 @@ public class RadioButtonView : BaseMonoBehaviour
     public void ChangeStates(RadioButtonStatus status)
     {
         if (rbButton.enabled == false)
-            return;
-        this.status = status;
-        switch (status)
         {
-            case RadioButtonStatus.Selected:
-                if (rbImage) {
-                    rbImage.sprite = spSelected;
-                    rbImage.color = colorIVSelected;
-                }
-                if (rbText)
-                    rbText.color = colorTVSelected;
-                break;
-            case RadioButtonStatus.Unselected:
-                if (rbImage) {
-                    rbImage.sprite = spUnselected;
-                    rbImage.color = colorIVUnselected;
-                }
-                if (rbText)
-                    rbText.color = colorTVUnselected;
-                break;
+            if (rbImage)
+            {
+                rbImage.sprite = spUnselected;
+                rbImage.color = colorIVUnselected;
+            }
+            if (rbText)
+                rbText.color = colorTVUnselected;
         }
+        else
+        {
+            this.status = status;
+            switch (status)
+            {
+                case RadioButtonStatus.Selected:
+                    if (rbImage)
+                    {
+                        rbImage.sprite = spSelected;
+                        rbImage.color = colorIVSelected;
+                    }
+                    if (rbText)
+                        rbText.color = colorTVSelected;
+                    break;
+                case RadioButtonStatus.Unselected:
+                    if (rbImage)
+                    {
+                        rbImage.sprite = spUnselected;
+                        rbImage.color = colorIVUnselected;
+                    }
+                    if (rbText)
+                        rbText.color = colorTVUnselected;
+                    break;
+            }
+        }
+
     }
 
 
     public void ChangeStates()
     {
         if (rbButton.enabled == false)
-            return;
-        if (status == RadioButtonStatus.Selected)
         {
-            status = RadioButtonStatus.Unselected;
+            ChangeStates(RadioButtonStatus.Unselected);
         }
         else
         {
-            status = RadioButtonStatus.Selected;
+            if (status == RadioButtonStatus.Selected)
+            {
+                status = RadioButtonStatus.Unselected;
+            }
+            else
+            {
+                status = RadioButtonStatus.Selected;
+            }
+            ChangeStates(status);
         }
-        ChangeStates(status);
     }
 
     /// <summary>

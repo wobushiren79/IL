@@ -63,8 +63,6 @@ public class UIMountainInfiniteTowers : BaseUIComponent, DialogView.IDialogCallB
         base.RefreshUI();
         GameDataBean gameData = GameDataHandler.Instance.manager.GetGameData();
         listData = gameData.listInfinteTowers;
-        gridVertical.SetCellCount(listData.Count);
-        gridVertical.RefreshAllCells();
         if (listData.Count <= 0)
         {
             objNull.SetActive(true);
@@ -75,6 +73,8 @@ public class UIMountainInfiniteTowers : BaseUIComponent, DialogView.IDialogCallB
         }
         UserAchievementBean userAchievement = gameData.GetAchievementData();
         SetMaxLayer(userAchievement.maxInfiniteTowersLayer);
+        gridVertical.SetCellCount(listData.Count);
+        gridVertical.RefreshAllCells();
     }
 
     /// <summary>
@@ -94,7 +94,8 @@ public class UIMountainInfiniteTowers : BaseUIComponent, DialogView.IDialogCallB
     public void OnCellForInfiniteTowers(ScrollGridCell scrollGridCell)
     {
         ItemMountainInfiniteTowersCpt itemCpt = scrollGridCell.GetComponent<ItemMountainInfiniteTowersCpt>();
-        itemCpt.SetData(listData[scrollGridCell.index]);
+        UserInfiniteTowersBean userInfiniteTowers = listData[scrollGridCell.index];
+        itemCpt.SetData(userInfiniteTowers);
     }
 
     /// <summary>

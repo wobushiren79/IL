@@ -101,7 +101,6 @@ public class SceneGameInnInit : BaseSceneInit, DialogView.IDialogCallBack
         else
         {
             weatherData = GameWeatherHandler.Instance.RandomWeather();
-
         }
         GameCommonInfo.CurrentDayData.weatherToday = weatherData;
     }

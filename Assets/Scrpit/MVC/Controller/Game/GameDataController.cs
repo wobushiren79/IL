@@ -80,7 +80,7 @@ public class GameDataController : BaseMVCController<GameDataModel, IGameDataView
     /// </summary>
     public void GetSimpleGameData(Action<List<GameDataSimpleBean>> action)
     {
-        List<GameDataSimpleBean> listData= GetModel().GetSimpleGameDataList();
+        List<GameDataSimpleBean> listData = GetModel().GetSimpleGameDataList();
         GetView().GetGameDataSimpleListSuccess(listData, action);
     }
 }
