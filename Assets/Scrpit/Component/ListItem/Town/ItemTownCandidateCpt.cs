@@ -46,6 +46,7 @@ public class ItemTownCandidateCpt : ItemGameBaseCpt, DialogView.IDialogCallBack
         if (characterData == null)
             return;
         this.characterData = characterData;
+
         SetName(characterData.baseInfo.name);
         SetPrice(characterData.baseInfo.priceL, characterData.baseInfo.priceM, characterData.baseInfo.priceS);
         SetAbility(characterData);

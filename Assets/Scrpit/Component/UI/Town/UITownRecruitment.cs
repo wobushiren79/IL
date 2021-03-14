@@ -13,20 +13,15 @@ public class UITownRecruitment : UIBaseOne, DialogView.IDialogCallBack
     public PopupPromptButton popupPromptButton;
     public Text tvNull;
 
-    public GameObject objCandidateContent;
-    public GameObject objCandidateModel;
+    protected List<CharacterBean> listData = new List<CharacterBean>();
+
+    public ScrollGridVertical gridVertical;
 
     public override void Awake()
     {
         base.Awake();
-        if (GameCommonInfo.DailyLimitData.listRecruitmentCharacter == null)
-        {
-            CreateCandidateData();
-        }
-        else
-        {
-            CreateRecruitmentList(GameCommonInfo.DailyLimitData.listRecruitmentCharacter);
-        }
+        if (gridVertical)
+            gridVertical.AddCellListener(OnCellForItem);
     }
 
     public override void Start()
@@ -43,6 +38,10 @@ public class UITownRecruitment : UIBaseOne, DialogView.IDialogCallBack
     public override void RefreshUI()
     {
         base.RefreshUI();
+        if (GameCommonInfo.DailyLimitData.listRecruitmentCharacter == null)
+        {
+            CreateCandidateData();
+        }
         CreateRecruitmentList(GameCommonInfo.DailyLimitData.listRecruitmentCharacter);
     }
 
@@ -60,6 +59,13 @@ public class UITownRecruitment : UIBaseOne, DialogView.IDialogCallBack
     {
         base.OpenUI();
         RefreshUI();
+    }
+
+    public void OnCellForItem(ScrollGridCell itemCell)
+    {
+        ItemTownCandidateCpt itemCpt = itemCell.GetComponent<ItemTownCandidateCpt>();
+        CharacterBean itemData = listData[itemCell.index];
+        itemCpt.SetData(itemData);
     }
 
     /// <summary>
@@ -82,23 +88,12 @@ public class UITownRecruitment : UIBaseOne, DialogView.IDialogCallBack
     /// <param name="listData"></param>
     public void CreateRecruitmentList(List<CharacterBean> listData)
     {
-        CptUtil.RemoveChildsByActive(objCandidateContent.transform);
+        this.listData = listData;
         if (CheckUtil.ListIsNull(listData))
             tvNull.gameObject.SetActive(true);
         else
             tvNull.gameObject.SetActive(false);
-        for (int i = 0; i < listData.Count; i++)
-        {
-            CharacterBean itemData = listData[i];
-            GameObject objCandidate = Instantiate(objCandidateContent, objCandidateModel);
-            ItemTownCandidateCpt itemCpt = objCandidate.GetComponent<ItemTownCandidateCpt>();
-            itemCpt.SetData(itemData);
-            objCandidate.transform
-                .DOScale(new Vector3(0, 0, 0), 0.5f)
-                .From()
-                .SetEase(Ease.OutBack)
-                .SetDelay(i * 0.05f);
-        }
+        gridVertical.SetCellCount(listData.Count);
     }
 
     /// <summary>
@@ -137,6 +132,7 @@ public class UITownRecruitment : UIBaseOne, DialogView.IDialogCallBack
     protected int pickMoneyL = 0;
     protected int pickMoneyM = 0;
     protected int pickMoneyS = 0;
+
     #region 弹窗回调
     public override void Submit(DialogView dialogView, DialogBean dialogBean)
     {
