@@ -8,13 +8,16 @@ public class UIMiniGameCookingSelect : BaseUIComponent
 {
     public Text tvTheme;
 
-    public GameObject objMenuContainer;
-    public GameObject objMenuModel;
+    public ScrollGridVertical gridVertical;
 
     public MiniGameCookingBean gameCookingData;
-
+    List<MenuOwnBean> listOwnMenu;
     private ICallBack mCallBack;
-    
+
+    public void Start()
+    {
+        gridVertical.AddCellListener(OnCellForItem);
+    }
 
     public void SetCallBack(ICallBack callBack)
     {
@@ -34,21 +37,24 @@ public class UIMiniGameCookingSelect : BaseUIComponent
         AnimForInit();
     }
 
+    public void OnCellForItem(ScrollGridCell itemCell)
+    {
+        ItemMiniGameCookingSelectMenuCpt itemCpt = itemCell.GetComponent<ItemMiniGameCookingSelectMenuCpt>();
+        MenuOwnBean itemData = listOwnMenu[itemCell.index];
+        itemCpt.SetData(itemData, InnFoodHandler.Instance.manager.GetFoodDataById(itemData.menuId));
+    }
+
+    
+
     /// <summary>
     /// 初始化数据
     /// </summary>
     public void InitData()
     {
         GameDataBean gameData = GameDataHandler.Instance.manager.GetGameData();
-
-        List<MenuOwnBean> listOwnMenu = gameData.GetMenuList();
-        for (int i = 0; i < listOwnMenu.Count; i++)
-        {
-            MenuOwnBean itemData= listOwnMenu[i];
-            GameObject objItem = Instantiate(objMenuContainer, objMenuModel);
-            ItemMiniGameCookingSelectMenuCpt itemCpt = objItem.GetComponent<ItemMiniGameCookingSelectMenuCpt>();
-            itemCpt.SetData(itemData, InnFoodHandler.Instance.manager.GetFoodDataById(itemData.menuId));
-        }
+        listOwnMenu = gameData.GetMenuList();
+        gridVertical.SetCellCount(listOwnMenu.Count);
+        gridVertical.RefreshAllCells();
     }
 
     /// <summary>
