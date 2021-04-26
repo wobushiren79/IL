@@ -8,7 +8,7 @@ public class UGUIUtil
     /// </summary>
     /// <param name="tfRoot"></param>
     /// <param name="tfIcon"></param>
-    public Vector3 GetUIRootPosForIcon(Transform tfRoot,Transform tfIcon)
+    public static Vector3 GetUIRootPosForIcon(Transform tfRoot,Transform tfIcon)
     {
         return tfRoot.InverseTransformPoint(tfIcon.position);
     }

@@ -303,11 +303,11 @@ public class GameDataHandler : BaseHandler<GameDataHandler,GameDataManager>, Dia
     /// <param name="priceL"></param>
     /// <param name="priceM"></param>
     /// <param name="priceS"></param>
-    public void AddMoney(long priceL, long priceM, long priceS)
+    public void AddMoney(long priceL, long priceM, long priceS,Vector3 payPosition)
     {
         GameDataBean gameData = manager.GetGameData();
         gameData.AddMoney(priceL, priceM, priceS); 
-        notifyForData?.Invoke(NotifyTypeEnum.AddMoney, new object[] { priceL, priceM, priceS });
+        notifyForData?.Invoke(NotifyTypeEnum.AddMoney, new object[] { priceL, priceM, priceS , payPosition });
     }
 
     #region 弹窗回调

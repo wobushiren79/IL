@@ -572,13 +572,13 @@ public class InnHandler : BaseHandler<InnHandler, InnManager>
         }
 
         //金钱增加
-        GameDataHandler.Instance.AddMoney(payMoneyL, payMoneyM, payMoneyS);
+        GameDataHandler.Instance.AddMoney( payMoneyL, payMoneyM, payMoneyS, payEffectsPosition);
         //播放音效
         if (isPlaySound)
         {
             AudioHandler.Instance.PlaySound(AudioSoundEnum.PayMoney);
             //展示特效
-            innPayHandler.ShowPayEffects(payEffectsPosition, payMoneyL, payMoneyM, payMoneyS);
+            //innPayHandler.ShowPayEffects(payEffectsPosition, payMoneyL, payMoneyM, payMoneyS);
         }
     }
 

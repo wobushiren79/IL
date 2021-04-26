@@ -560,7 +560,7 @@ public class UIGameMain : BaseUIComponent, DialogView.IDialogCallBack, IRadioGro
     /// <param name="priceL"></param>
     /// <param name="priceM"></param>
     /// <param name="priceS"></param>
-    private void AnimForAddMoney(long priceL, long priceM, long priceS)
+    private void AnimForAddMoney(long priceL, long priceM, long priceS,Vector3 startPosition)
     {
         GameDataBean gameData = GameDataHandler.Instance.manager.GetGameData();
         if (priceL != 0)
@@ -568,59 +568,63 @@ public class UIGameMain : BaseUIComponent, DialogView.IDialogCallBack, IRadioGro
             if (tweenForMoneyL != null)
                 tweenForMoneyL.Kill();
             long startMoney = gameData.moneyL - priceL;
-            tweenForMoneyL = DOTween.To(() => startMoney, x => { SetMoney(MoneyEnum.L, x); }, gameData.moneyL, 1);
-            tvMoneyL.transform.localScale = new Vector3(1, 1, 1);
-            tvMoneyL.transform.DOPunchScale(new Vector3(1f, 1f, 1f), 1f, 10, 1);
-            AnimForMoneyItem(MoneyEnum.L, priceL);
+            tweenForMoneyL = DOTween.To(() => startMoney, x => { SetMoney(MoneyEnum.L, x); }, gameData.moneyL, 2);
+            //tvMoneyL.transform.localScale = new Vector3(1, 1, 1);
+            //tvMoneyL.transform.DOPunchScale(new Vector3(1f, 1f, 1f), 1f, 10, 1);
+            AnimForMoneyItem(startPosition,MoneyEnum.L, priceL);
         }
         if (priceM != 0)
         {
             if (tweenForMoneyM != null)
                 tweenForMoneyM.Kill();
             long startMoney = gameData.moneyM - priceM;
-            tweenForMoneyM = DOTween.To(() => startMoney, x => { SetMoney(MoneyEnum.M, x); }, gameData.moneyM, 1);
-            tvMoneyM.transform.localScale = new Vector3(1, 1, 1);
-            tvMoneyM.transform.DOPunchScale(new Vector3(1f, 1f, 1f), 1f, 10, 1);
-            AnimForMoneyItem(MoneyEnum.M, priceM);
+            tweenForMoneyM = DOTween.To(() => startMoney, x => { SetMoney(MoneyEnum.M, x); }, gameData.moneyM, 2);
+            //tvMoneyM.transform.localScale = new Vector3(1, 1, 1);
+            //tvMoneyM.transform.DOPunchScale(new Vector3(1f, 1f, 1f), 1f, 10, 1);
+            AnimForMoneyItem(startPosition,MoneyEnum.M, priceM);
         }
         if (priceS != 0)
         {
             if (tweenForMoneyS != null)
                 tweenForMoneyS.Kill();
             long startMoney = gameData.moneyS - priceS;
-            tweenForMoneyS = DOTween.To(() => startMoney, x => { SetMoney(MoneyEnum.S, x); }, gameData.moneyS, 1);
-            tvMoneyS.transform.localScale = new Vector3(1, 1, 1);
-            tvMoneyS.transform.DOPunchScale(new Vector3(1f, 1f, 1f), 1f, 10, 1);
-            AnimForMoneyItem(MoneyEnum.S, priceS);
+            tweenForMoneyS = DOTween.To(() => startMoney, x => { SetMoney(MoneyEnum.S, x); }, gameData.moneyS, 2);
+            //tvMoneyS.transform.localScale = new Vector3(1, 1, 1);
+            //tvMoneyS.transform.DOPunchScale(new Vector3(1f, 1f, 1f), 1f, 10, 1);
+            AnimForMoneyItem(startPosition,MoneyEnum.S, priceS);
         }
     }
 
-    private void AnimForMoneyItem(MoneyEnum moneyType, long money)
+    private void AnimForMoneyItem(Vector3 addPosition, MoneyEnum moneyType, long money)
     {
-        Vector3 startPosition = Vector3.zero;
+        Vector2 startPosition = GameUtil.WorldPointToUILocalPoint((RectTransform)transform, addPosition);
+        Vector3 endPosition = Vector3.zero;
         Color tvColor = Color.black;
+
+        GameObject itemMoney = Instantiate(gameObject, tvMoneyForAnimModel.gameObject);
+        ((RectTransform)itemMoney.transform).anchoredPosition = startPosition;
         switch (moneyType)
         {
             case MoneyEnum.L:
-                startPosition = tvMoneyL.transform.position;
+                endPosition = UGUIUtil.GetUIRootPosForIcon((RectTransform)transform, (RectTransform)tvMoneyL.transform);
                 tvColor = tvMoneyL.color;
                 break;
             case MoneyEnum.M:
-                startPosition = tvMoneyM.transform.position;
+                endPosition = UGUIUtil.GetUIRootPosForIcon((RectTransform)transform, (RectTransform)tvMoneyM.transform);
                 tvColor = tvMoneyM.color;
                 break;
             case MoneyEnum.S:
-                startPosition = tvMoneyS.transform.position;
+                endPosition = UGUIUtil.GetUIRootPosForIcon((RectTransform)transform, (RectTransform)tvMoneyS.transform);
                 tvColor = tvMoneyS.color;
                 break;
         }
-        GameObject itemMoney = Instantiate(gameObject, tvMoneyForAnimModel.gameObject, startPosition);
         Text tvItem = itemMoney.GetComponent<Text>();
-        tvItem.DOFade(0, 1).SetDelay(1);
+        //tvItem.DOFade(0, 1).SetDelay(1);
         tvItem.color = tvColor;
         tvItem.text = money + "";
         RectTransform rtItem = ((RectTransform)itemMoney.transform);
-        rtItem.DOAnchorPosY(rtItem.anchoredPosition.y + 30, 2).OnComplete(delegate () { Destroy(itemMoney); });
+        rtItem.DOAnchorPos(endPosition,2).OnComplete(delegate () { Destroy(itemMoney); });
+        //rtItem.DOAnchorPosY(rtItem.anchoredPosition.y + 30, 2).OnComplete(delegate () { Destroy(itemMoney); });
     }
 
     protected void EndDay()
@@ -710,7 +714,8 @@ public class UIGameMain : BaseUIComponent, DialogView.IDialogCallBack, IRadioGro
             long priceL = System.Convert.ToInt64(obj[0]);
             long priceM = System.Convert.ToInt64(obj[1]);
             long priceS = System.Convert.ToInt64(obj[2]);
-            AnimForAddMoney(priceL, priceM, priceS);
+            Vector3 position = (Vector3)(obj[3]);
+            AnimForAddMoney(priceL, priceM, priceS, position);
         }
         else if (notifyType == GameDataHandler.NotifyTypeEnum.MenuResearchChange)
         {

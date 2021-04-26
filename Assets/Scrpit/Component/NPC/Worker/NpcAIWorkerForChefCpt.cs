@@ -169,7 +169,7 @@ public class NpcAIWorkerForChefCpt : NpcAIWokerFoBaseCpt
         yield return new WaitForSeconds(foodTime);
         //如果顾客已经没人
         //记录数据
-        if (gameObject != null)
+        if (gameObject != null && orderForCustomer != null && orderForCustomer.foodData != null)
         {
             npcAIWorker.characterData.baseInfo.chefInfo.AddCookNumber(1, orderForCustomer.foodData.id);
             //添加经验
