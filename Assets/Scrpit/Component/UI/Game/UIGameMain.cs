@@ -568,7 +568,7 @@ public class UIGameMain : BaseUIComponent, DialogView.IDialogCallBack, IRadioGro
             if (tweenForMoneyL != null)
                 tweenForMoneyL.Kill();
             long startMoney = gameData.moneyL - priceL;
-            tweenForMoneyL = DOTween.To(() => startMoney, x => { SetMoney(MoneyEnum.L, x); }, gameData.moneyL, 2);
+            tweenForMoneyL = DOTween.To(() => startMoney, x => { SetMoney(MoneyEnum.L, x); }, gameData.moneyL, 3);
             //tvMoneyL.transform.localScale = new Vector3(1, 1, 1);
             //tvMoneyL.transform.DOPunchScale(new Vector3(1f, 1f, 1f), 1f, 10, 1);
             AnimForMoneyItem(startPosition,MoneyEnum.L, priceL);
@@ -578,7 +578,7 @@ public class UIGameMain : BaseUIComponent, DialogView.IDialogCallBack, IRadioGro
             if (tweenForMoneyM != null)
                 tweenForMoneyM.Kill();
             long startMoney = gameData.moneyM - priceM;
-            tweenForMoneyM = DOTween.To(() => startMoney, x => { SetMoney(MoneyEnum.M, x); }, gameData.moneyM, 2);
+            tweenForMoneyM = DOTween.To(() => startMoney, x => { SetMoney(MoneyEnum.M, x); }, gameData.moneyM, 3);
             //tvMoneyM.transform.localScale = new Vector3(1, 1, 1);
             //tvMoneyM.transform.DOPunchScale(new Vector3(1f, 1f, 1f), 1f, 10, 1);
             AnimForMoneyItem(startPosition,MoneyEnum.M, priceM);
@@ -588,7 +588,7 @@ public class UIGameMain : BaseUIComponent, DialogView.IDialogCallBack, IRadioGro
             if (tweenForMoneyS != null)
                 tweenForMoneyS.Kill();
             long startMoney = gameData.moneyS - priceS;
-            tweenForMoneyS = DOTween.To(() => startMoney, x => { SetMoney(MoneyEnum.S, x); }, gameData.moneyS, 2);
+            tweenForMoneyS = DOTween.To(() => startMoney, x => { SetMoney(MoneyEnum.S, x); }, gameData.moneyS, 3);
             //tvMoneyS.transform.localScale = new Vector3(1, 1, 1);
             //tvMoneyS.transform.DOPunchScale(new Vector3(1f, 1f, 1f), 1f, 10, 1);
             AnimForMoneyItem(startPosition,MoneyEnum.S, priceS);
@@ -623,9 +623,10 @@ public class UIGameMain : BaseUIComponent, DialogView.IDialogCallBack, IRadioGro
         tvItem.color = tvColor;
         tvItem.text = money + "";
         RectTransform rtItem = ((RectTransform)itemMoney.transform);
-        rtItem.DOAnchorPos(endPosition,2).OnComplete(delegate () { Destroy(itemMoney); });
-        //rtItem.DOAnchorPosY(rtItem.anchoredPosition.y + 30, 2).OnComplete(delegate () { Destroy(itemMoney); });
+
+        rtItem.DOAnchorPos(endPosition,3).OnComplete(delegate () { Destroy(itemMoney); });
     }
+
 
     protected void EndDay()
     {

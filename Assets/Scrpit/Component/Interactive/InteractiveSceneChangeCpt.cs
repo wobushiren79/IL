@@ -3,7 +3,7 @@ using UnityEditor;
 
 public class InteractiveSceneChangeCpt : BaseInteractiveCpt
 {
-     
+
     public string interactiveContent;
     //需要跳转的场景
     public ScenesEnum changeScene;
@@ -12,7 +12,7 @@ public class InteractiveSceneChangeCpt : BaseInteractiveCpt
     {
         if (Input.GetButtonDown(InputInfo.Interactive_E))
         {
-            if(changeScene== ScenesEnum.GameSquareScene || changeScene == ScenesEnum.GameForestScene)
+            if (changeScene == ScenesEnum.GameSquareScene || changeScene == ScenesEnum.GameForestScene || changeScene == ScenesEnum.GameCourtyard)
             {
                 ToastHandler.Instance.ToastHint("您被不可思议的力量阻挡了去路（暂未开放）");
             }
@@ -22,7 +22,7 @@ public class InteractiveSceneChangeCpt : BaseInteractiveCpt
                 {
                     //如果山顶 特殊天气不能前往
                     WeatherBean weatherData = GameCommonInfo.CurrentDayData.weatherToday;
-                    if (weatherData!= null && 
+                    if (weatherData != null &&
                         (weatherData.weatherType == WeatherTypeEnum.Cloudy
                         || weatherData.weatherType == WeatherTypeEnum.Sunny))
                     {
@@ -38,7 +38,7 @@ public class InteractiveSceneChangeCpt : BaseInteractiveCpt
 
                     GameScenesHandler.Instance.ChangeScene(changeScene);
                 }
-            }     
+            }
         }
     }
 
