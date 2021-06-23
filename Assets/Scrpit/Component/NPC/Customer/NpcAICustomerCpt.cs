@@ -165,7 +165,8 @@ public class NpcAICustomerCpt : BaseNpcAI
         //到目标点就删除
         if (!characterMoveCpt.IsAutoMoveStop())
             return;
-        Destroy(gameObject);
+        gameObject.SetActive(false);
+        NpcHandler.Instance.builderForCustomer.listHideNpc.Enqueue(gameObject);
     }
 
     /// <summary>

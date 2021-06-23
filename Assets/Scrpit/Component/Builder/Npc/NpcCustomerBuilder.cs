@@ -11,8 +11,13 @@ public class NpcCustomerBuilder : NpcNormalBuilder
     public GameObject objCustomerForHotelModel;
 
     protected List<NpcTeamBean> listTeamCustomer = new List<NpcTeamBean>();
+
     protected float buildTeamGustomerRate = 0;
     protected float buildCustomerForHotelRate = 0;
+
+
+    public Queue<GameObject> listGuestTeamHide = new Queue<GameObject>();
+    public Queue<GameObject> listCustomerForHotelHide = new Queue<GameObject>();
 
     private void Start()
     {
@@ -182,10 +187,8 @@ public class NpcCustomerBuilder : NpcNormalBuilder
             //随机生成身体数据
             characterData.body.CreateRandomEye();
 
-            GameObject npcObj = Instantiate(objContainer, objGuestTeamModel);
 
-            npcObj.transform.localScale = new Vector3(1, 1);
-            npcObj.transform.position = npcPosition + new Vector3(UnityEngine.Random.Range(-0.5f, 0.5f), UnityEngine.Random.Range(-0.5f, 0.5f));
+            GameObject npcObj = BuildNpc(listGuestTeamHide, objGuestTeamModel, characterData, npcPosition + new Vector3(UnityEngine.Random.Range(-0.5f, 0.5f), UnityEngine.Random.Range(-0.5f, 0.5f)));
             BaseNpcAI baseNpcAI = npcObj.GetComponent<BaseNpcAI>();
             baseNpcAI.SetCharacterData(characterData);
             baseNpcAI.AddStatusIconForGuestTeam(teamColor);
@@ -216,7 +219,7 @@ public class NpcCustomerBuilder : NpcNormalBuilder
         if (objContainer.transform.childCount > buildMaxNumber)
             return;
         //生成NPC
-        GameObject npcObj = BuildNpc(objCustomerForHotelModel, npcPosition);
+        GameObject npcObj = BuildNpc(listCustomerForHotelHide,objCustomerForHotelModel, npcPosition);
         //设置意图
         NpcAICustomerForHotelCpt customerAI = npcObj.GetComponent<NpcAICustomerForHotelCpt>();
         //想要吃饭概率

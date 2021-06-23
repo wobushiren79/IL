@@ -66,7 +66,7 @@ public class NpcFamilyBuilder : NpcNormalBuilder
         Vector3 doorPosition = InnHandler.Instance.GetRandomEntrancePosition();
         //向下3个单位
         doorPosition += new Vector3(0, -3f, 0);
-        GameObject objFamily = BuildNpc(objNormalModel, characterForFamily, doorPosition);
+        GameObject objFamily = BuildNpc(listHideNpc, objNormalModel, characterForFamily, doorPosition);
         if (objFamily == null)
             return;
         NpcAIFamilyCpt npcAIFamily = objFamily.GetComponent<NpcAIFamilyCpt>();

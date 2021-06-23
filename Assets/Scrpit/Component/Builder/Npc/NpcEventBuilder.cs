@@ -24,6 +24,10 @@ public class NpcEventBuilder : NpcNormalBuilder
     public List<NpcTeamBean> listFriend = new List<NpcTeamBean>();
     public List<NpcTeamBean> listConvert = new List<NpcTeamBean>();
 
+    public Queue<GameObject> listFriendHide = new Queue<GameObject>();
+    public Queue<GameObject> listSundryHide = new Queue<GameObject>();
+    public Queue<GameObject> listConvertHide = new Queue<GameObject>();
+    public Queue<GameObject> listRascalHide = new Queue<GameObject>();
     private void Start()
     {
         GameTimeHandler.Instance.RegisterNotifyForTime(NotifyForTime);
@@ -111,7 +115,7 @@ public class NpcEventBuilder : NpcNormalBuilder
                 characterData = listMembers[i - listLeader.Count];
             }
             //生成NPC
-            GameObject npcObj = BuildNpc(objConvertModel, characterData, npcPosition + new Vector3(UnityEngine.Random.Range(-0.5f, 0.5f), UnityEngine.Random.Range(-0.5f, 0.5f)));
+            GameObject npcObj = BuildNpc(listConvertHide, objConvertModel, characterData, npcPosition + new Vector3(UnityEngine.Random.Range(-0.5f, 0.5f), UnityEngine.Random.Range(-0.5f, 0.5f)));
             //设置意图
             NpcAIConvertCpt convertCpt = npcObj.GetComponent<NpcAIConvertCpt>();
             GameDataBean gameData = GameDataHandler.Instance.manager.GetGameData();
@@ -166,7 +170,7 @@ public class NpcEventBuilder : NpcNormalBuilder
                 characterData = listMembers[i - listLeader.Count];
             }
             //生成NPC
-            GameObject npcObj = BuildNpc(objRascalModel, characterData, npcPosition + new Vector3(UnityEngine.Random.Range(-0.5f, 0.5f), UnityEngine.Random.Range(-0.5f, 0.5f)));
+            GameObject npcObj = BuildNpc(listRascalHide, objRascalModel, characterData, npcPosition + new Vector3(UnityEngine.Random.Range(-0.5f, 0.5f), UnityEngine.Random.Range(-0.5f, 0.5f)));
             //设置意图
             NpcAIRascalCpt rascalCpt = npcObj.GetComponent<NpcAIRascalCpt>();
             GameDataBean gameData = GameDataHandler.Instance.manager.GetGameData();
@@ -235,7 +239,7 @@ public class NpcEventBuilder : NpcNormalBuilder
                 characterData = listMembers[i - listLeader.Count];
             }
             //生成NPC
-            GameObject npcObj = BuildNpc(objSundryModel, characterData, npcPosition + new Vector3(UnityEngine.Random.Range(-0.5f, 0.5f), UnityEngine.Random.Range(-0.5f, 0.5f)));
+            GameObject npcObj = BuildNpc(listSundryHide, objSundryModel, characterData, npcPosition + new Vector3(UnityEngine.Random.Range(-0.5f, 0.5f), UnityEngine.Random.Range(-0.5f, 0.5f)));
             //设置意图
             NpcAISundryCpt sundryCpt = npcObj.GetComponent<NpcAISundryCpt>();
 
@@ -305,11 +309,8 @@ public class NpcEventBuilder : NpcNormalBuilder
 
     public void BuildTownFriendsForOne(CharacterBean characterData, CharacterFavorabilityBean characterFavorability, Vector3 npcPosition)
     {
-        //随机生成身体数据
-        GameObject npcObj = Instantiate(objContainer, objFriendModel);
-
-        npcObj.transform.localScale = new Vector3(1, 1);
-        npcObj.transform.position = npcPosition;
+        //生成NPC
+        GameObject npcObj = BuildNpc(listFriendHide, objFriendModel, characterData, npcPosition);
 
         BaseNpcAI baseNpcAI = npcObj.GetComponent<BaseNpcAI>();
         baseNpcAI.SetCharacterData(characterData);

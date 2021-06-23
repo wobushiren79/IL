@@ -19,6 +19,9 @@ public class NpcNormalBuilder : BaseMonoBehaviour
     public float buildInterval = 5;
     public int buildMaxNumber = 100;
 
+    public Queue<GameObject> listHideNpc = new Queue<GameObject>();
+
+
     protected virtual void Awake()
     {
 
@@ -56,24 +59,35 @@ public class NpcNormalBuilder : BaseMonoBehaviour
     /// <returns></returns>
     public GameObject BuildNpc(Vector3 startPosition)
     {
-        return BuildNpc(objNormalModel, startPosition);
+        return BuildNpc(listHideNpc, objNormalModel, startPosition);
     }
 
-    public GameObject BuildNpc(GameObject objNpcModel, Vector3 startPosition)
+    public GameObject BuildNpc(Queue<GameObject> listHide,GameObject objNpcModel, Vector3 startPosition)
     {
         CharacterBean characterData = NpcInfoHandler.Instance.manager.GetRandomCharacterData();
         if (characterData == null)
             return null;
         //随机生成身体数据
         characterData.body.CreateRandomBody();
-        return BuildNpc(objNpcModel, characterData, startPosition);
+        return BuildNpc(listHide, objNpcModel, characterData, startPosition);
     }
 
-    public GameObject BuildNpc(GameObject objModel, CharacterBean characterData, Vector3 startPosition)
+    public GameObject BuildNpc(Queue<GameObject> listHide, GameObject objModel, CharacterBean characterData, Vector3 startPosition)
     {
         if (characterData == null || characterData.body == null)
             return null;
-        GameObject npcObj = Instantiate(objContainer, objModel);
+
+        GameObject npcObj = null;
+
+        if (listHide.Count > 0)
+        {
+            npcObj = listHide.Dequeue();
+        }
+        else
+        {
+            npcObj = Instantiate(objContainer, objModel);
+        }
+        npcObj.gameObject.SetActive(true);
         npcObj.transform.localScale = new Vector3(1, 1);
         npcObj.transform.position = startPosition;
 
