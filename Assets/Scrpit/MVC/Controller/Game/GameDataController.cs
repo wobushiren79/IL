@@ -27,7 +27,7 @@ public class GameDataController : BaseMVCController<GameDataModel, IGameDataView
             return;
         }
         GetModel().AddGameData(gameData);
-        GameDataSimpleBean gameDataSimple= GameDataSimpleBean.ToSimpleData(gameData);
+        GameDataSimpleBean gameDataSimple = GameDataSimpleBean.ToSimpleData(gameData);
         GetModel().SetSimpleGameDataByUserId(gameData.userId, gameDataSimple);
         GetView().SetGameDataSuccess();
     }
@@ -71,7 +71,7 @@ public class GameDataController : BaseMVCController<GameDataModel, IGameDataView
     /// <param name="userId"></param>
     public void GetGameDataByUserId(string userId)
     {
-        GameDataBean gameData=  GetModel().GetGameDataByUserId(userId);
+        GameDataBean gameData =  GetModel().GetGameDataByUserId(userId);
         GetView().GetGameDataSuccess(gameData);
     }
 

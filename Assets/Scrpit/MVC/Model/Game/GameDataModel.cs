@@ -140,35 +140,43 @@ public class GameDataModel : BaseMVCModel
     /// <returns></returns>
     public List<GameDataSimpleBean> GetSimpleGameDataList()
     {
-
         List<string> listUserId = mGameListDataService.QueryDataAllUserId();
         List<GameDataSimpleBean> listData = mGameListDataService.QueryData();
         if (listData == null)
         {
             listData = new List<GameDataSimpleBean>();
         }
-        if (listData.Count < listUserId.Count)
+        try
         {
-            for (int i = 0; i < listUserId.Count; i++)
+            if (listData.Count < listUserId.Count)
             {
-                string userId = listUserId[i];
-                bool hasData = false;
-                for (int f = 0; f < listData.Count; f++)
+                for (int i = 0; i < listUserId.Count; i++)
                 {
-                    GameDataSimpleBean gameDataSimple = listData[f];
-                    if (gameDataSimple.userId.Equals(userId))
+                    string userId = listUserId[i];
+                    if (CheckUtil.StringIsNull(userId))
+                        continue;
+                    bool hasData = false;
+                    for (int f = 0; f < listData.Count; f++)
                     {
-                        hasData = true;
+                        GameDataSimpleBean gameDataSimple = listData[f];
+                        if (gameDataSimple.userId.Equals(userId))
+                        {
+                            hasData = true;
+                        }
+                    }
+                    if (!hasData)
+                    {
+                        GameDataBean gameData = mGameDataService.QueryDataByUserId(userId);
+                        GameDataSimpleBean gameDataSimple = GameDataSimpleBean.ToSimpleData(gameData);
+                        listData.Add(gameDataSimple);
                     }
                 }
-                if (!hasData)
-                {
-                    GameDataBean gameData = mGameDataService.QueryDataByUserId(userId);
-                    GameDataSimpleBean gameDataSimple = GameDataSimpleBean.ToSimpleData(gameData);
-                    listData.Add(gameDataSimple);
-                }
+                mGameListDataService.UpdateData(listData);
             }
-            mGameListDataService.UpdateData(listData);
+        }
+        catch
+        {
+
         }
         return listData;
     }

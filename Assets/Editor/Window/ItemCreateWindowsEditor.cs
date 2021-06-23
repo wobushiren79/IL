@@ -325,43 +325,44 @@ public class ItemCreateWindowsEditor : EditorWindow
         }
         if (GUILayout.Button("查询百宝斋商品", GUILayout.Width(100), GUILayout.Height(20)))
         {
-            storeInfoManager.GetStoreInfoForGrocery(null);
+            
+            storeInfoManager.GetStoreInfoForGrocery((listData)=> { listFindStoreItem = listData; });
         }
         if (GUILayout.Button("查询绸缎庄商品", GUILayout.Width(100), GUILayout.Height(20)))
         {
-            storeInfoManager.GetStoreInfoForDress(null);
+            storeInfoManager.GetStoreInfoForDress((listData) => { listFindStoreItem = listData; });
         }
         if (GUILayout.Button("查询建造商品", GUILayout.Width(100), GUILayout.Height(20)))
         {
-            storeInfoManager.GetStoreInfoForCarpenter(null);
+            storeInfoManager.GetStoreInfoForCarpenter((listData) => { listFindStoreItem = listData; });
         }
         if (GUILayout.Button("查询药店商品", GUILayout.Width(100), GUILayout.Height(20)))
         {
-            storeInfoManager.GetStoreInfoForPharmacy(null);
+            storeInfoManager.GetStoreInfoForPharmacy((listData) => { listFindStoreItem = listData; });
         }
         if (GUILayout.Button("查询公会商品", GUILayout.Width(100), GUILayout.Height(20)))
         {
-            storeInfoManager.GetStoreInfoForGuildGoods(null);
+            storeInfoManager.GetStoreInfoForGuildGoods((listData) => { listFindStoreItem = listData; });
         }
         if (GUILayout.Button("查询职业升级", GUILayout.Width(100), GUILayout.Height(20)))
         {
-            storeInfoManager.GetStoreInfoForGuildImprove(null);
+            storeInfoManager.GetStoreInfoForGuildImprove((listData) => { listFindStoreItem = listData; });
         }
         if (GUILayout.Button("查询客栈升级", GUILayout.Width(100), GUILayout.Height(20)))
         {
-            storeInfoManager.GetStoreInfoForGuildInnLevel(null);
+            storeInfoManager.GetStoreInfoForGuildInnLevel((listData) => { listFindStoreItem = listData; });
         }
         if (GUILayout.Button("查询斗技场", GUILayout.Width(100), GUILayout.Height(20)))
         {
-            storeInfoManager.GetStoreInfoForArenaInfo(null);
+            storeInfoManager.GetStoreInfoForArenaInfo((listData) => { listFindStoreItem = listData; });
         }
         if (GUILayout.Button("查询斗技场商品", GUILayout.Width(100), GUILayout.Height(20)))
         {
-            storeInfoManager.GetStoreInfoForArenaGoods(null);
+            storeInfoManager.GetStoreInfoForArenaGoods((listData) => { listFindStoreItem = listData; });
         }
         if (GUILayout.Button("查询床商品", GUILayout.Width(100), GUILayout.Height(20)))
         {
-            storeInfoManager.GetStoreInfoForCarpenterBed(null);
+            storeInfoManager.GetStoreInfoForCarpenterBed((listData) => { listFindStoreItem = listData; });
         }
         GUILayout.EndHorizontal();
         if (listFindStoreItem == null)
@@ -1170,8 +1171,8 @@ public class ItemCreateWindowsEditor : EditorWindow
         buildItem.build_type = (int)EditorUI.GUIEnum<BuildItemTypeEnum>("类型：", buildItem.build_type);
         EditorUI.GUIText("模型ID：");
         buildItem.model_name = EditorUI.GUIEditorText(buildItem.model_name);
-        EditorUI.GUIText(" 图标：", 200);
-        buildItem.icon_key = EditorUI.GUIEditorText(buildItem.icon_key);
+        EditorUI.GUIText(" 图标：",50);
+        buildItem.icon_key = EditorUI.GUIEditorText(buildItem.icon_key,200);
         string picPath = "";
         switch ((BuildItemTypeEnum)buildItem.build_type)
         {
@@ -1220,7 +1221,7 @@ public class ItemCreateWindowsEditor : EditorWindow
             case BuildItemTypeEnum.Floor:
             case BuildItemTypeEnum.Wall:
                 EditorUI.GUIText("tile名字：");
-                buildItem.tile_name = EditorUI.GUIEditorText(buildItem.tile_name);
+                buildItem.tile_name = EditorUI.GUIEditorText(buildItem.tile_name,200);
                 break;
             default:
                 break;

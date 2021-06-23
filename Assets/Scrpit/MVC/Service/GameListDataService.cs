@@ -17,19 +17,28 @@ public class GameListDataService : BaseDataStorageImpl<GameDataSimpleBean>
     /// </summary>
     public List<string> QueryDataAllUserId()
     {
-        DirectoryInfo dires = new DirectoryInfo(Application.persistentDataPath);
-        DirectoryInfo[] directoryInfos= dires.GetDirectories();
         List<string> listData = new List<string>();
-        if (directoryInfos != null)
+        try
         {
-            foreach (DirectoryInfo itemDir in directoryInfos)
+            DirectoryInfo dires = new DirectoryInfo(Application.persistentDataPath);
+            DirectoryInfo[] directoryInfos = dires.GetDirectories();
+
+            if (directoryInfos != null)
             {
-                if (itemDir.Name.Contains("UserId_"))
+                foreach (DirectoryInfo itemDir in directoryInfos)
                 {
-                    listData.Add(itemDir.Name);
+                    if (itemDir.Name.Contains("UserId_"))
+                    {
+                        listData.Add(itemDir.Name);
+                    }
                 }
             }
         }
+        catch
+        {
+
+        }
+
         return listData;
     }
 
