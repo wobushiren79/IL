@@ -167,6 +167,8 @@ public class NpcAICustomerCpt : BaseNpcAI
             return;
         gameObject.SetActive(false);
         gameObject.transform.position = new Vector3(0, -10000, 0);
+        orderForCustomer = new OrderForCustomer(CustomerTypeEnum.Normal,this);
+        timeWaitSeat = 20;
         NpcHandler.Instance.builderForCustomer.listHideNpc.Enqueue(gameObject);
     }
 

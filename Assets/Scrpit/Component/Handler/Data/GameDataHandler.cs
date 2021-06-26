@@ -148,8 +148,20 @@ public class GameDataHandler : BaseHandler<GameDataHandler,GameDataManager>, Dia
                     {
                         //如果是成功攻略
                         //弹出提示
-                        AudioHandler.Instance.PlaySound(AudioSoundEnum.Reward);
-                        ToastHandler.Instance.ToastHint(string.Format(TextHandler.Instance.manager.GetTextById(1331), itemInfiniteTowerData.layer+""));
+                        if (manager.gameConfig.isShowDetailsForTower)
+                        {
+                            AudioHandler.Instance.PlaySound(AudioSoundEnum.Reward);
+                            ToastHandler.Instance.ToastHint(string.Format(TextHandler.Instance.manager.GetTextById(1331), itemInfiniteTowerData.layer + ""));
+                        }
+                        else
+                        {
+                            if (itemInfiniteTowerData.layer % 10 == 0)
+                            {
+                                AudioHandler.Instance.PlaySound(AudioSoundEnum.Reward);
+                                ToastHandler.Instance.ToastHint(string.Format(TextHandler.Instance.manager.GetTextById(1331), itemInfiniteTowerData.layer + ""));
+                            }
+                        }
+        
                         //添加奖励物品
                         int totalLucky = 0;
                         for (int c = 0; c < listCharacterData.Count; c++)

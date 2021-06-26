@@ -50,6 +50,8 @@ public class MiniGameCombatHandler : BaseMiniGameHandler<MiniGameCombatBuilder, 
         uiMiniGameCombat.SetData(miniGameData);
         miniGameData.SetCombatStatus(MiniGameCombatStatusEnum.Rounding);
         uiMiniGameCombat.StartRound();
+        //战斗速度设置
+        Time.timeScale = GameDataHandler.Instance.manager.gameData.speedForCombat;
     }
 
     /// <summary>

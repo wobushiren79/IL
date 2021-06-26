@@ -33,5 +33,7 @@ public class NpcAICostomerForFriendCpt : NpcAICustomerForGuestTeamCpt
             }
         }
         base.IntentForLeave();
+
+        orderForCustomer = new OrderForCustomer(CustomerTypeEnum.Friend, this);
     }
 }

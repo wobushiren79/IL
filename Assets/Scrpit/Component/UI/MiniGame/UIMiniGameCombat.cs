@@ -207,6 +207,7 @@ public class UIMiniGameCombat : UIBaseMiniGame<MiniGameCombatBean>
     public void CombatSpeedChange(float timeSpeed)
     {
         Time.timeScale = timeSpeed;
+        GameDataHandler.Instance.manager.gameData.speedForCombat = timeSpeed;
     }
 
     /// <summary>

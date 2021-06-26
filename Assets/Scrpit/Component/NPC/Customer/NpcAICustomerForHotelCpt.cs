@@ -311,6 +311,7 @@ public class NpcAICustomerForHotelCpt : BaseNpcAI
             return;
         gameObject.SetActive(false);
         gameObject.transform.position = new Vector3(0, -10000, 0);
+        orderForHotel = new OrderForHotel(this,null);
         NpcHandler.Instance.builderForCustomer.listCustomerForHotelHide.Enqueue(gameObject);
     }
 

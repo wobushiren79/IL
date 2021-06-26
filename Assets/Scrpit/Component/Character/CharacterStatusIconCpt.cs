@@ -41,6 +41,17 @@ public class CharacterStatusIconCpt : BaseMonoBehaviour
         return objStatus;
     }
 
+    public void RemoveAllStatusIcon()
+    {
+        for (int i = 0; i < listStatusIcon.Count; i++)
+        {
+            CharacterStatusIconItemCpt itemCpt = listStatusIcon[i];
+            if(itemCpt!=null)
+                Destroy(itemCpt.gameObject);
+        }
+        listStatusIcon.Clear();
+    }
+
     /// <summary>
     /// 根据类型移除图标
     /// </summary>

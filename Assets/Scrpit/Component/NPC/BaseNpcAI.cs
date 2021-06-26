@@ -291,6 +291,14 @@ public class BaseNpcAI : BaseObservable<IBaseObserver>
     }
 
     /// <summary>
+    /// 清除所有状态图标
+    /// </summary>
+    public void ClearAllStatusIcon()
+    {
+        characterStatusIcon.RemoveAllStatusIcon();
+    }
+
+    /// <summary>
     /// 设置角色朝向 1左 2 右
     /// </summary>
     /// <param name="face"></param>

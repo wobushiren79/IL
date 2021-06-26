@@ -92,6 +92,10 @@ public class NpcAICustomerForGuestTeamCpt : NpcAICustomerCpt
             case CustomerIntentForGuestTeamEnum.Together:
                 gameObject.SetActive(false);
                 gameObject.transform.position = new Vector3(0, -10000, 0);
+                orderForCustomer = null;
+                timeWaitSeat = 20;
+                guestTeamIntent = CustomerIntentForGuestTeamEnum.Together;
+                customerType = CustomerTypeEnum.Team;
                 NpcHandler.Instance.builderForCustomer.listGuestTeamHide.Enqueue(gameObject);
                 break;
         }

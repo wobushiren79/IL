@@ -52,6 +52,8 @@ public class GameDataBean
     public int workerNumberLimit = 2;//员工人员招聘上限
     public int loansNumberLimit = 3;//贷款上限
 
+    public float speedForCombat = 1;//战斗加速
+
     /// <summary>
     /// 增加无尽之塔数据
     /// </summary>

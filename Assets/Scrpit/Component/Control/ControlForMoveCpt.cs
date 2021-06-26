@@ -41,7 +41,8 @@ public class ControlForMoveCpt : BaseControl
         }
     }
 
-    public void FixedUpdate()
+
+    private void Update()
     {
         if (characterMoveCpt == null)
             return;
@@ -66,7 +67,6 @@ public class ControlForMoveCpt : BaseControl
             }
         }
     }
-
 
     /// <summary>
     /// 设置位置

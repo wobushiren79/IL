@@ -26,6 +26,7 @@ public class UIGameSetting : BaseUIComponent, DropdownView.ICallBack, ProgressVi
     public RadioButtonView rbEvent;
     public RadioButtonView rbWorkerNumber;
     public RadioButtonView rbPowerTest;
+    public RadioButtonView rbTownerInfo;
     public InputField etFrames;
 
     public void Start()
@@ -235,6 +236,20 @@ public class UIGameSetting : BaseUIComponent, DropdownView.ICallBack, ProgressVi
             else if (gameConfig.statusForCombatForPowerTest == 1)
             {
                 rbPowerTest.ChangeStates(RadioButtonView.RadioButtonStatus.Selected);
+            }
+        }
+
+        //盘龙塔详细信息
+        if (rbTownerInfo != null)
+        {
+            rbTownerInfo.SetCallBack(this);
+            if (!gameConfig.isShowDetailsForTower)
+            {
+                rbTownerInfo.ChangeStates(RadioButtonView.RadioButtonStatus.Unselected);
+            }
+            else
+            {
+                rbTownerInfo.ChangeStates(RadioButtonView.RadioButtonStatus.Selected);
             }
         }
 
@@ -530,6 +545,17 @@ public class UIGameSetting : BaseUIComponent, DropdownView.ICallBack, ProgressVi
             else if (buttonStates == RadioButtonView.RadioButtonStatus.Unselected)
             {
                 gameConfig.statusForCombatForPowerTest = 0;
+            }
+        }
+        else if (view== rbTownerInfo)
+        {
+            if (buttonStates == RadioButtonView.RadioButtonStatus.Selected)
+            {
+                gameConfig.isShowDetailsForTower = true;
+            }
+            else if (buttonStates == RadioButtonView.RadioButtonStatus.Unselected)
+            {
+                gameConfig.isShowDetailsForTower = false;
             }
         }
     }
