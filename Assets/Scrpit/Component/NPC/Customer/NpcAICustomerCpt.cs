@@ -166,6 +166,7 @@ public class NpcAICustomerCpt : BaseNpcAI
         if (!characterMoveCpt.IsAutoMoveStop())
             return;
         gameObject.SetActive(false);
+        gameObject.transform.position = new Vector3(0, -10000, 0);
         NpcHandler.Instance.builderForCustomer.listHideNpc.Enqueue(gameObject);
     }
 

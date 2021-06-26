@@ -90,9 +90,12 @@ public class NpcAICustomerForGuestTeamCpt : NpcAICustomerCpt
                 }
                 break;
             case CustomerIntentForGuestTeamEnum.Together:
-                Destroy(gameObject);
+                gameObject.SetActive(false);
+                gameObject.transform.position = new Vector3(0, -10000, 0);
+                NpcHandler.Instance.builderForCustomer.listGuestTeamHide.Enqueue(gameObject);
                 break;
         }
+
     }
 
     /// <summary>

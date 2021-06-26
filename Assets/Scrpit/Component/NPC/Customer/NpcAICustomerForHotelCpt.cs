@@ -309,7 +309,9 @@ public class NpcAICustomerForHotelCpt : BaseNpcAI
         //到目标点就删除
         if (!characterMoveCpt.IsAutoMoveStop())
             return;
-        Destroy(gameObject);
+        gameObject.SetActive(false);
+        gameObject.transform.position = new Vector3(0, -10000, 0);
+        NpcHandler.Instance.builderForCustomer.listCustomerForHotelHide.Enqueue(gameObject);
     }
 
     /// <summary>

@@ -82,6 +82,10 @@ public class NpcNormalBuilder : BaseMonoBehaviour
         if (listHide.Count > 0)
         {
             npcObj = listHide.Dequeue();
+            if (npcObj == null)
+            {
+                return BuildNpc(listHide, objModel, characterData, startPosition);
+            }         
         }
         else
         {
