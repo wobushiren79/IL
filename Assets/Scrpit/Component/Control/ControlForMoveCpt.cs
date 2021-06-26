@@ -44,6 +44,11 @@ public class ControlForMoveCpt : BaseControl
 
     private void Update()
     {
+
+    }
+
+    private void FixedUpdate()
+    {
         if (characterMoveCpt == null)
             return;
         float hMove = Input.GetAxis(InputInfo.Horizontal);

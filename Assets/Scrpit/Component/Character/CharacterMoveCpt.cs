@@ -194,13 +194,12 @@ public class CharacterMoveCpt : BaseMonoBehaviour
             objCharacterBody.transform.localScale = theScale;
         }
 
-        //Vector2 lerpPosition = Vector3.Lerp(Vector2.zero, new Vector2(x, y), lerpOffset);
-         Vector3 movePosition = new Vector3(x,y,0);
-         characterRigidbody.transform.Translate(movePosition * moveSpeed * Time.deltaTime * 1.25f);
+        //Vector3 movePosition = new Vector3(x,y,0);
+        //characterRigidbody.transform.Translate(movePosition * moveSpeed * Time.deltaTime * 1.25f);
 
         // objMove.transform.position= Vector3.Lerp(objMove.transform.position,new Vector3(x,y)+ objMove.transform.position, moveSpeed * Time.deltaTime);
-        //Vector3 movePosition =  objMove.transform.position + new Vector3(6 * x * moveSpeed * Time.deltaTime,6 * y * moveSpeed * Time.deltaTime);
-        //characterRigidbody.MovePosition(movePosition);
+        Vector3 movePosition = characterRigidbody.transform.position + new Vector3( 1.25f* x * moveSpeed * Time.deltaTime, 1.25f * y * moveSpeed * Time.deltaTime);
+        characterRigidbody.MovePosition(movePosition);
         BoundaryMove();
     }
 
