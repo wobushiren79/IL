@@ -88,7 +88,7 @@ public class NpcNormalBuilder : BaseMonoBehaviour
             }         
         }
         else
-        {
+        {        
             npcObj = Instantiate(objContainer, objModel);
         }
         npcObj.gameObject.SetActive(true);

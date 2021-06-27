@@ -2,6 +2,7 @@
 using UnityEditor;
 using System.Collections.Generic;
 using System.Collections;
+using System;
 
 public class NpcCustomerBuilder : NpcNormalBuilder
 {
@@ -83,22 +84,21 @@ public class NpcCustomerBuilder : NpcNormalBuilder
             {
                 BuildCustomer();
                 //有一定概率创建团队
-                float buildTeamRate = Random.Range(0, 1f);
+                float buildTeamRate = UnityEngine.Random.Range(0, 1f);
                 if (buildTeamRate < buildTeamGustomerRate)
                 {
                     BuildGuestTeam();
                 }
                 //有一定概率创建住宿
-                float buildCustomerHotelRateRandom = Random.Range(0, 1f);
+                float buildCustomerHotelRateRandom = UnityEngine.Random.Range(0, 1f);
                 if (buildCustomerHotelRateRandom < buildCustomerForHotelRate)
                 {
                     BuildCustomerForHotel();
                 }
-                //BuildCustomerForHotel();
             }
-            catch
+            catch(Exception e)
             {
-
+                LogUtil.LogError(e.ToString());
             }
         }
     }
@@ -114,9 +114,6 @@ public class NpcCustomerBuilder : NpcNormalBuilder
 
     public void BuildCustomer(Vector3 npcPosition)
     {
-        //如果大于构建上线则不再创建新NPC
-        if (objContainer.transform.childCount > buildMaxNumber)
-            return;
         //生成NPC
         GameObject npcObj = BuildNpc(npcPosition);
         //设置意图
@@ -137,9 +134,6 @@ public class NpcCustomerBuilder : NpcNormalBuilder
     /// </summary>
     public void BuildGuestTeam()
     {
-        //如果大于构建上线则不再创建新NPC
-        if (objContainer.transform.childCount > buildMaxNumber)
-            return;
         Vector3 npcPosition = GetRandomStartPosition();
         NpcTeamBean teamData = RandomUtil.GetRandomDataByList(listTeamCustomer);
         BuildGuestTeam(teamData, npcPosition);
@@ -147,9 +141,6 @@ public class NpcCustomerBuilder : NpcNormalBuilder
 
     public void BuildGuestTeam(long teamId)
     {
-        //如果大于构建上线则不再创建新NPC
-        if (objContainer.transform.childCount > buildMaxNumber)
-            return;
         Vector3 npcPosition = GetRandomStartPosition();
         NpcTeamBean teamData = NpcTeamHandler.Instance.manager.GetCustomerTeam(teamId);
         BuildGuestTeam(teamData, npcPosition);
@@ -161,13 +152,13 @@ public class NpcCustomerBuilder : NpcNormalBuilder
             return;
         //设置小队相关
         string teamCode = SystemUtil.GetUUID(SystemUtil.UUIDTypeEnum.N);
-        Color teamColor = new Color(Random.Range(0f, 1f), Random.Range(0f, 1f), Random.Range(0f, 1f));
+        Color teamColor = new Color(UnityEngine.Random.Range(0f, 1f), UnityEngine.Random.Range(0f, 1f), UnityEngine.Random.Range(0f, 1f));
         //设置是否想吃
         bool isWant = IsWantEat(CustomerTypeEnum.Team);
         //获取小队成员数据
         npcTeam.GetTeamCharacterData(out List<CharacterBean> listLeader, out List<CharacterBean> listMembers);
         //设置小队人数(团队领袖全生成，小队成员随机生成)
-        int npcNumber = Random.Range(listLeader.Count + 1, listLeader.Count + 1 + npcTeam.team_number);
+        int npcNumber = UnityEngine.Random.Range(listLeader.Count + 1, listLeader.Count + 1 + npcTeam.team_number);
         for (int i = 0; i < npcNumber; i++)
         {
             CharacterBean characterData = null;
@@ -215,9 +206,6 @@ public class NpcCustomerBuilder : NpcNormalBuilder
     }
     public void BuildCustomerForHotel(Vector3 npcPosition)
     {
-        //如果大于构建上线则不再创建新NPC
-        if (objContainer.transform.childCount > buildMaxNumber)
-            return;
         //生成NPC
         GameObject npcObj = BuildNpc(listCustomerForHotelHide,objCustomerForHotelModel, npcPosition);
         //设置意图
