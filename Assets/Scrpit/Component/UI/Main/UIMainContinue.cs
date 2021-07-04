@@ -51,10 +51,15 @@ public class UIMainContinue : BaseUIComponent
         tvNull.gameObject.SetActive(false);
         for (int i = 0; i < listGameData.Count; i++)
         {
+            GameDataSimpleBean gameDataSimple = listGameData[i];
+            if (gameDataSimple==null)
+            {
+                continue;
+            }
             GameObject itemGameObj = Instantiate(objGameDataModel, objGameDataContent.transform);
             itemGameObj.SetActive(true);
             ItemGameDataCpt itemGameDataCpt = itemGameObj.GetComponent<ItemGameDataCpt>();
-            itemGameDataCpt.SetData(listGameData[i]);
+            itemGameDataCpt.SetData(gameDataSimple);
         }
     }
 

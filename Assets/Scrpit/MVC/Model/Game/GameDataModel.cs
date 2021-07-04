@@ -198,6 +198,12 @@ public class GameDataModel : BaseMVCModel
             for (int i = 0; i < tempListData.Count; i++)
             {
                 GameDataSimpleBean itemData = tempListData[i];
+                if (itemData == null)
+                {
+                    tempListData.RemoveAt(i);
+                    i--;
+                    continue;
+                }
                 if (itemData.userId.Equals(userId))
                 {
                     hasDataPosition = i;
