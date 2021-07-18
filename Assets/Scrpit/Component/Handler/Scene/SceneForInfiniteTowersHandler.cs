@@ -79,6 +79,7 @@ public class SceneForInfiniteTowersHandler : SceneBaseHandler
 
     public IEnumerator NextLayer(UserInfiniteTowersBean infiniteTowersData)
     {
+        GameTimeHandler.Instance.SetTimeStop();
         //延迟开始。
         yield return new WaitForSeconds(0.1f);
         //清理一下系统
