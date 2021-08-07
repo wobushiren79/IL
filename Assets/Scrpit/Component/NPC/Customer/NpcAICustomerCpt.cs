@@ -15,6 +15,7 @@ public class NpcAICustomerCpt : BaseNpcAI
 
     public enum CustomerIntentEnum
     {
+        None=-1,
         Walk = 0,//路过
         Want = 1,//想要吃饭
         WaitSeat = 2,//等待座位
@@ -165,7 +166,7 @@ public class NpcAICustomerCpt : BaseNpcAI
         //到目标点就删除
         if (!characterMoveCpt.IsAutoMoveStop())
             return;
-        gameObject.SetActive(false);
+        SetIntent(CustomerIntentEnum.None);
         gameObject.transform.position = new Vector3(0, -10000, 0);
         orderForCustomer = new OrderForCustomer(CustomerTypeEnum.Normal,this);
         timeWaitSeat = 20;

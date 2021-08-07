@@ -5,6 +5,7 @@ public class NpcAICustomerForHotelCpt : BaseNpcAI
 {
     public enum CustomerHotelIntentEnum
     {
+        None=-1,
         Walk = 0,//路过
         GoToInn = 1,//前往客栈
         WaitAccost = 2,
@@ -309,7 +310,8 @@ public class NpcAICustomerForHotelCpt : BaseNpcAI
         //到目标点就删除
         if (!characterMoveCpt.IsAutoMoveStop())
             return;
-        gameObject.SetActive(false);
+        //gameObject.SetActive(false);
+        SetIntent(CustomerHotelIntentEnum.None);
         gameObject.transform.position = new Vector3(0, -10000, 0);
         orderForHotel = new OrderForHotel(this,null);
         NpcHandler.Instance.builderForCustomer.listCustomerForHotelHide.Enqueue(gameObject);

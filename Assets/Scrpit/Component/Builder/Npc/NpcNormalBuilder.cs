@@ -91,7 +91,8 @@ public class NpcNormalBuilder : BaseMonoBehaviour
         {        
             npcObj = Instantiate(objContainer, objModel);
         }
-        npcObj.gameObject.SetActive(true);
+        if(!npcObj.activeSelf)
+            npcObj.gameObject.SetActive(true);
         npcObj.transform.localScale = new Vector3(1, 1);
         npcObj.transform.position = startPosition;
 
