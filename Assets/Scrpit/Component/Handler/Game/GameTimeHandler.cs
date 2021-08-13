@@ -24,7 +24,7 @@ public class GameTimeHandler : BaseHandler<GameTimeHandler, GameTimeManager>
         StartWork,//开始工作
     }
 
-    protected Action<NotifyTypeEnum,float>  notifyForTime;
+    protected Action<NotifyTypeEnum, float> notifyForTime;
 
     public float hour;
     public float min;
@@ -51,7 +51,7 @@ public class GameTimeHandler : BaseHandler<GameTimeHandler, GameTimeManager>
     /// 注册时间通知
     /// </summary>
     /// <param name="notifyForTime"></param>
-    public void RegisterNotifyForTime(Action<NotifyTypeEnum,float> notifyForTime)
+    public void RegisterNotifyForTime(Action<NotifyTypeEnum, float> notifyForTime)
     {
         this.notifyForTime += notifyForTime;
     }
@@ -135,7 +135,7 @@ public class GameTimeHandler : BaseHandler<GameTimeHandler, GameTimeManager>
             SetTimeScale(1);
             SystemUtil.GCCollect();
             //TODO 一天时间结束处理
-            notifyForTime?.Invoke(NotifyTypeEnum.EndDay,-1);
+            notifyForTime?.Invoke(NotifyTypeEnum.EndDay, -1);
         }
         GameDataBean gameData = GameDataHandler.Instance.manager.GetGameData();
         TimeBean timeData = gameData.gameTime;
@@ -193,6 +193,17 @@ public class GameTimeHandler : BaseHandler<GameTimeHandler, GameTimeManager>
                 InnBuildHandler.Instance.builderForWall.StartBuild();
             }
         }
+        //增加家族成员日子
+        List<CharacterForFamilyBean> listFamilyData = gameData.GetFamilyData().GetAllFamilyData();
+        if (!CheckUtil.ListIsNull(listFamilyData))
+        {
+            for (int i = 0; i < listFamilyData.Count; i++)
+            {
+                CharacterForFamilyBean itemData = listFamilyData[i];
+                itemData.AddBirthDay(1);
+            }
+        }
+
         //通知新的一天
         notifyForTime?.Invoke(NotifyTypeEnum.NewDay, -1);
         SystemUtil.GCCollect();
