@@ -167,6 +167,7 @@ public class NpcAICustomerCpt : BaseNpcAI
         if (!characterMoveCpt.IsAutoMoveStop())
             return;
         SetIntent(CustomerIntentEnum.None);
+        gameObject.SetActive(false);
         gameObject.transform.position = new Vector3(0, -10000, 0);
         orderForCustomer = new OrderForCustomer(CustomerTypeEnum.Normal,this);
         timeWaitSeat = 20;

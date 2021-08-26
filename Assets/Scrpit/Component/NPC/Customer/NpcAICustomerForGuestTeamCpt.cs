@@ -93,6 +93,7 @@ public class NpcAICustomerForGuestTeamCpt : NpcAICustomerCpt
             case CustomerIntentForGuestTeamEnum.Together:
                 //gameObject.SetActive(false);
                 SetIntent(CustomerIntentEnum.None);
+                gameObject.SetActive(false);
                 gameObject.transform.position = new Vector3(0, -10000, 0);
                 orderForCustomer = null;
                 timeWaitSeat = 20;

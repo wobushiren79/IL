@@ -310,8 +310,8 @@ public class NpcAICustomerForHotelCpt : BaseNpcAI
         //到目标点就删除
         if (!characterMoveCpt.IsAutoMoveStop())
             return;
-        //gameObject.SetActive(false);
         SetIntent(CustomerHotelIntentEnum.None);
+        gameObject.SetActive(false);
         gameObject.transform.position = new Vector3(0, -10000, 0);
         orderForHotel = new OrderForHotel(this,null);
         NpcHandler.Instance.builderForCustomer.listCustomerForHotelHide.Enqueue(gameObject);
