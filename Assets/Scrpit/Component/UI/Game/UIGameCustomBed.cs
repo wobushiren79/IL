@@ -293,28 +293,7 @@ public class UIGameCustomBed : UIBaseOne, IRadioGroupCallBack
         }
         else
         {
-            if (!gameData.HasEnoughMoney(customPriceL, customPriceM, customPriceS))
-            {
-                ToastHandler.Instance.ToastHint(TextHandler.Instance.manager.GetTextById(1005));
-                return;
-            }
-            if (etBedName.text.Length <= 0)
-            {
-                ToastHandler.Instance.ToastHint(TextHandler.Instance.manager.GetTextById(1312));
-                return;
-            }
-            //支付金钱
-            gameData.PayMoney(customPriceL, customPriceM, customPriceS);
-            //播放音效
-            AudioHandler.Instance.PlaySound(AudioSoundEnum.Reward);
-
-            DialogBean dialogData = new DialogBean();
-            FindBedDialogView findBedDialog = DialogHandler.Instance.CreateDialog<FindBedDialogView>(DialogEnum.FindBed, this, dialogData);
-            //如果幸运值生成数据
-            gameData.userCharacter.GetAttributes(out CharacterAttributesBean characterAttributes);
-            BuildBedBean buildBedData = customBedData.RandomDataByLucky(characterAttributes.lucky);
-            findBedDialog.SetData(buildBedData);
-
+            ShowBuySuccessDialog();
         }
     }
 
@@ -324,4 +303,35 @@ public class UIGameCustomBed : UIBaseOne, IRadioGroupCallBack
 
     }
     #endregion
+
+    private void ShowBuySuccessDialog()
+    {
+        GameDataBean gameData = GameDataHandler.Instance.manager.GetGameData();
+        if (!gameData.HasEnoughMoney(customPriceL, customPriceM, customPriceS))
+        {
+            ToastHandler.Instance.ToastHint(TextHandler.Instance.manager.GetTextById(1005));
+            return;
+        }
+        if (etBedName.text.Length <= 0)
+        {
+            ToastHandler.Instance.ToastHint(TextHandler.Instance.manager.GetTextById(1312));
+            return;
+        }
+        //支付金钱
+        gameData.PayMoney(customPriceL, customPriceM, customPriceS);
+        //播放音效
+        AudioHandler.Instance.PlaySound(AudioSoundEnum.Reward);
+
+        DialogBean dialogData = new DialogBean();
+        FindBedDialogView findBedDialog = DialogHandler.Instance.CreateDialog<FindBedDialogView>(DialogEnum.FindBed, this, dialogData);
+        //点击继续
+        findBedDialog.SetCallBackForContinue((view, data) =>
+        {
+            ShowBuySuccessDialog();
+        });
+        //如果幸运值生成数据
+        gameData.userCharacter.GetAttributes(out CharacterAttributesBean characterAttributes);
+        BuildBedBean buildBedData = customBedData.RandomDataByLucky(characterAttributes.lucky);
+        findBedDialog.SetData(buildBedData);
+    }
 }

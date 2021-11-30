@@ -2,6 +2,7 @@
 using UnityEditor;
 using UnityEngine.UI;
 using DG.Tweening;
+using System;
 
 public class FindBedDialogView : DialogView
 {
@@ -22,11 +23,15 @@ public class FindBedDialogView : DialogView
     public Sprite spBGNormal;
     public Sprite spBGRare;
 
+    public Button btContinue;
+
+    protected Action<DialogView, DialogBean> actionContinue;
 
     public override void Start()
     {
         base.Start();
         StartAnim();
+        btContinue.onClick.AddListener(OnClickForContinue);
     }
 
     /// <summary>
@@ -34,6 +39,7 @@ public class FindBedDialogView : DialogView
     /// </summary>
     public void StartAnim()
     {
+        btContinue.gameObject.SetActive(false);
         btSubmit.gameObject.SetActive(false);
         btCancel.gameObject.SetActive(false);
         if (objContent != null)
@@ -42,11 +48,29 @@ public class FindBedDialogView : DialogView
             {
                 btSubmit.gameObject.SetActive(true);
                 btCancel.gameObject.SetActive(true);
+                btContinue.gameObject.SetActive(true);
                 btSubmit.transform.DOScale(new Vector3(0, 0, 0), 0.2f).From().SetEase(Ease.OutBack);
                 btCancel.transform.DOScale(new Vector3(0, 0, 0), 0.2f).From().SetEase(Ease.OutBack);
                 objContent.transform.DOScale(new Vector3(0.9f, 0.9f, 0.9f), 5).SetLoops(-1, LoopType.Yoyo);
             });
         }
+    }
+
+    /// <summary>
+    /// 设置继续回调
+    /// </summary>
+    public void SetCallBackForContinue(Action<DialogView, DialogBean> actionContinue)
+    {
+        this.actionContinue += actionContinue;
+    }
+
+    /// <summary>
+    /// 点击续购
+    /// </summary>
+    public void OnClickForContinue()
+    {
+        actionContinue?.Invoke(this, dialogData);
+        DestroyDialog();
     }
 
     /// <summary>

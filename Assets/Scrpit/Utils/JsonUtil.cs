@@ -10,8 +10,15 @@ public class JsonUtil : ScriptableObject
     /// <returns></returns>
     public static T FromJson<T>(string strData)
     {
-        T dataBean = JsonUtility.FromJson<T>(strData);
-        return dataBean;
+        try
+        {
+            T dataBean = JsonUtility.FromJson<T>(strData);
+            return dataBean;
+        }
+        catch
+        {
+            return default(T);
+        }
     }
 
     /// <summary>

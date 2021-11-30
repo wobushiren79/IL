@@ -384,7 +384,6 @@ public class GameDataBean
         if (listWorkerCharacter != null)
             listData.AddRange(listWorkerCharacter);
 
-
         return listData;
     }
     /// <summary>
@@ -1202,5 +1201,23 @@ public class GameDataBean
     public bool RemoveInfiniteTowersData(UserInfiniteTowersBean infiniteTowersData)
     {
         return listInfinteTowers.Remove(infiniteTowersData);
+    }
+
+    /// <summary>
+    /// 清空所有爬塔记录
+    /// </summary>
+    public void CleanInfinteTowers()
+    {
+        listInfinteTowers.Clear();
+        List<CharacterBean> listCharacterData = GetAllCharacterData();
+        //还原员工状态
+        for (int c = 0; c < listCharacterData.Count; c++)
+        {
+            CharacterBean itemCharacterData = listCharacterData[c];
+            if (itemCharacterData.baseInfo.GetWorkerStatus() == WorkerStatusEnum.InfiniteTowers)
+            {
+                itemCharacterData.baseInfo.SetWorkerStatus(WorkerStatusEnum.Rest);
+            }
+        }
     }
 }

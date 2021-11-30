@@ -79,8 +79,7 @@ public class ItemMountainInfiniteTowersCpt : ItemGameBaseCpt,DialogView.IDialogC
     /// 点击 取消
     /// </summary>
     public void OnClickForCancel()
-    {
-        
+    {       
         DialogBean dialogData = new DialogBean();
         dialogData.content = TextHandler.Instance.manager.GetTextById(3111);
         dialogData.dialogPosition = 0;

@@ -49,7 +49,7 @@ public class CharacterForFamilyBean : CharacterBean
     public bool CheckIsGrowUp(TimeBean currentTime)
     {
         int days = (currentTime.year - birthTime.year) * 42 * 4 + (currentTime.month - birthTime.month) * 42 + (currentTime.day - birthTime.day);
-        if (days >= 504 || bornDays>=504)
+        if (days >= 504 || bornDays >= 504)
         {
             return true;
         }
@@ -59,7 +59,7 @@ public class CharacterForFamilyBean : CharacterBean
     public string GetFamilyName()
     {
         string name = "???";
-        switch (GetFamilyType()) 
+        switch (GetFamilyType())
         {
             case FamilyTypeEnum.Mate:
                 name = TextHandler.Instance.manager.GetTextById(451);

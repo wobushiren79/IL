@@ -61,6 +61,7 @@ MonoBehaviour:
   m_Material: {fileID: 0}
   m_Color: {r: 0, g: 0.8773585, b: 0.109077, a: 1}
   m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
@@ -157,6 +158,7 @@ MonoBehaviour:
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
@@ -285,6 +287,7 @@ MonoBehaviour:
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
@@ -325,6 +328,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Navigation:
     m_Mode: 3
+    m_WrapAround: 0
     m_SelectOnUp: {fileID: 0}
     m_SelectOnDown: {fileID: 0}
     m_SelectOnLeft: {fileID: 0}
@@ -373,6 +377,7 @@ MonoBehaviour:
     items_id: 0
     items_type: 0
     icon_key: 
+    anim_key: 
     add_life: 0
     add_cook: 0
     add_speed: 0
@@ -387,6 +392,8 @@ MonoBehaviour:
     effect_details: 
     name: 
     content: 
+    rarity: 0
+    remark: 
   spIcon: {fileID: 0}
 --- !u!114 &5063714416960623473
 MonoBehaviour:
@@ -406,13 +413,14 @@ MonoBehaviour:
   rtIcon: {fileID: 3873794516648867488}
   ivIcon: {fileID: 3873794516648867485}
   infoItemsPopup: {fileID: 3409717296471551505}
-  itemsInfoBean:
+  itemsInfoData:
     id: 0
     valid: 0
     intact_id: 0
     items_id: 0
     items_type: 0
     icon_key: 
+    anim_key: 
     add_life: 0
     add_cook: 0
     add_speed: 0
@@ -427,6 +435,8 @@ MonoBehaviour:
     effect_details: 
     name: 
     content: 
+    rarity: 0
+    remark: 
   itemBean:
     itemId: 0
     itemNumber: 0
@@ -436,6 +446,7 @@ MonoBehaviour:
   rightClick:
     m_PersistentCalls:
       m_Calls: []
+  isOpenClick: 1
   characterData:
     baseInfo:
       characterId: 
@@ -446,6 +457,7 @@ MonoBehaviour:
       priceS: 0
       priceM: 0
       priceL: 0
+      dazeNumber: 0
       chefInfo:
         workerType: 1
         workerLevel: 0
@@ -453,7 +465,6 @@ MonoBehaviour:
         priority: 0
         isWorking: 1
         cookNumber: 0
-        cookTime: 0
         listFoodCookNumer: []
       waiterInfo:
         workerType: 2
@@ -463,7 +474,13 @@ MonoBehaviour:
         isWorking: 1
         cleanTotalNumber: 0
         sendTotalNumber: 0
-        cleanTotalTime: 0
+        cleanBedTotalNumber: 0
+        isWorkingForSend: 1
+        priorityForSend: 0
+        isWorkingForCleanTable: 1
+        priorityForCleanTable: 0
+        isWorkingCleanBed: 0
+        priorityForCleanBed: 0
       accountantInfo:
         workerType: 3
         workerLevel: 0
@@ -482,7 +499,6 @@ MonoBehaviour:
         accountingMoneyL: 0
         accountingMoneyM: 0
         accountingMoneyS: 0
-        accountingTotalTime: 0
       accostInfo:
         workerType: 4
         workerLevel: 0
@@ -492,7 +508,11 @@ MonoBehaviour:
         accostTotalNumber: 0
         accostSuccessNumber: 0
         accostFailNumber: 0
-        accostTotalTime: 0
+        guideNumber: 0
+        isWorkingForSolicit: 1
+        priorityForSolicit: 0
+        isWorkingForGuide: 0
+        priorityForGuide: 0
       beaterInfo:
         workerType: 5
         workerLevel: 0
@@ -502,8 +522,6 @@ MonoBehaviour:
         fightTotalNumber: 0
         fightWinNumber: 0
         fightLoseNumber: 0
-        fightTotalTime: 0
-        restTotalTime: 0
       workerStatus: 0
       listLoveItems: 
     attributes:
@@ -519,6 +537,7 @@ MonoBehaviour:
       listLearnBook: 
     body:
       sex: 1
+      skin: 
       skinColor:
         r: 1
         g: 1
@@ -543,18 +562,31 @@ MonoBehaviour:
         b: 1
         a: 1
       face: 0
+      timeForBirthday:
+        year: 0
+        month: 0
+        day: 0
+        hour: 0
+        minute: 0
+        second: 0
     equips:
       maskId: 0
       handId: 0
       hatId: 0
       clothesId: 0
       shoesId: 0
+      maskTFId: 0
+      handTFId: 0
+      hatTFId: 0
+      clothesTFId: 0
+      shoesTFId: 0
     npcInfoData:
       id: 0
       valid: 0
       npc_id: 0
       npc_type: 0
       sex: 0
+      marry_status: 0
       face: 0
       mask_id: 0
       hand_id: 0
@@ -572,7 +604,7 @@ MonoBehaviour:
       name: 
       position_x: 0
       position_y: 0
-      talk_ids: 
+      talk_types: 
       skill_ids: 
       attributes_loyal: 0
       attributes_life: 0
@@ -588,31 +620,8 @@ MonoBehaviour:
       love_items: 
       love_menus: 
       condition: 
+      remark: 
   type: 0
-  itemsInfoData:
-    id: 0
-    valid: 0
-    intact_id: 0
-    items_id: 0
-    items_type: 0
-    icon_key: 
-    add_life: 0
-    add_cook: 0
-    add_speed: 0
-    add_account: 0
-    add_charm: 0
-    add_force: 0
-    add_lucky: 0
-    add_loyal: 0
-    rotation_angle: 0
-    add_id: 0
-    effect: 
-    effect_details: 
-    name: 
-    content: 
-  itemData:
-    itemId: 0
-    itemNumber: 0
 --- !u!114 &673818028657333158
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -686,12 +695,13 @@ MonoBehaviour:
   m_Material: {fileID: 0}
   m_Color: {r: 0.81568635, g: 0.2784314, b: 0.1137255, a: 1}
   m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
   m_FontData:
-    m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
+    m_Font: {fileID: 12800000, guid: 1b55002fea9009a46bd1c17470cdb9b8, type: 3}
     m_FontSize: 16
     m_FontStyle: 1
     m_BestFit: 0

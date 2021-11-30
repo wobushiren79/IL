@@ -9,6 +9,7 @@ public class UIMountainInfiniteTowers : BaseUIComponent, DialogView.IDialogCallB
     public Button btBack;
     public Button btStart;
     public Button btSend;
+    public Button btClean;
 
     public Text tvMaxLayer;
     public ScrollGridVertical gridVertical;
@@ -25,6 +26,8 @@ public class UIMountainInfiniteTowers : BaseUIComponent, DialogView.IDialogCallB
             btStart.onClick.AddListener(OnClickForStart);
         if (btSend)
             btSend.onClick.AddListener(OnClickForSend);
+        if (btClean)
+            btClean.onClick.AddListener(OnClickForClean);
         if (gridVertical)
             gridVertical.AddCellListener(OnCellForInfiniteTowers);
     }
@@ -159,6 +162,19 @@ public class UIMountainInfiniteTowers : BaseUIComponent, DialogView.IDialogCallB
         pickForCharacterDialog.SetPickCharacterMax(3);
     }
 
+
+    /// <summary>
+    /// 重置所有
+    /// </summary>
+    public void OnClickForClean()
+    {
+        AudioHandler.Instance.PlaySound(AudioSoundEnum.ButtonForNormal);
+        DialogBean dialogData = new DialogBean();
+        dialogData.dialogPosition = 1;
+        dialogData.content = TextHandler.Instance.manager.GetTextById(3112);
+        DialogHandler.Instance.CreateDialog<DialogView>(DialogEnum.Normal,this,dialogData);
+    }
+
     #region 弹窗回调
     public void Submit(DialogView dialogView, DialogBean dialogBean)
     {
@@ -204,6 +220,16 @@ public class UIMountainInfiniteTowers : BaseUIComponent, DialogView.IDialogCallB
                 //计算每层攀登几率
                 infiniteTowersData.InitSuccessRate(GameItemsHandler.Instance.manager, listMembers);
                 gameData.AddInfinteTowersData(infiniteTowersData);
+                RefreshUI();
+            }
+        }
+        else
+        {
+            if (dialogBean.dialogPosition == 1)
+            {
+                //重置所有爬塔记录
+                GameDataBean gameData = GameDataHandler.Instance.manager.GetGameData();
+                gameData.CleanInfinteTowers();
                 RefreshUI();
             }
         }

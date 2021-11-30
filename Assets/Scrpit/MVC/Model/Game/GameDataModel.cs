@@ -167,7 +167,10 @@ public class GameDataModel : BaseMVCModel
                     if (!hasData)
                     {
                         GameDataBean gameData = mGameDataService.QueryDataByUserId(userId);
+                        if (gameData==null)
+                            continue;
                         GameDataSimpleBean gameDataSimple = GameDataSimpleBean.ToSimpleData(gameData);
+            
                         listData.Add(gameDataSimple);
                     }
                 }

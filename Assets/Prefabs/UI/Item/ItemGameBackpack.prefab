@@ -63,6 +63,7 @@ MonoBehaviour:
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
@@ -191,6 +192,7 @@ MonoBehaviour:
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
@@ -223,13 +225,14 @@ MonoBehaviour:
   rtIcon: {fileID: 3873794516648867488}
   ivIcon: {fileID: 3873794516648867485}
   infoItemsPopup: {fileID: 3409717296471551505}
-  itemsInfoBean:
+  itemsInfoData:
     id: 0
     valid: 0
     intact_id: 0
     items_id: 0
     items_type: 0
     icon_key: 
+    anim_key: 
     add_life: 0
     add_cook: 0
     add_speed: 0
@@ -244,6 +247,8 @@ MonoBehaviour:
     effect_details: 
     name: 
     content: 
+    rarity: 0
+    remark: 
   itemBean:
     itemId: 0
     itemNumber: 0
@@ -253,6 +258,7 @@ MonoBehaviour:
   rightClick:
     m_PersistentCalls:
       m_Calls: []
+  isOpenClick: 1
 --- !u!225 &3873794517372139308
 CanvasGroup:
   m_ObjectHideFlags: 0
@@ -279,6 +285,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Navigation:
     m_Mode: 3
+    m_WrapAround: 0
     m_SelectOnUp: {fileID: 0}
     m_SelectOnDown: {fileID: 0}
     m_SelectOnLeft: {fileID: 0}
@@ -327,6 +334,7 @@ MonoBehaviour:
     items_id: 0
     items_type: 0
     icon_key: 
+    anim_key: 
     add_life: 0
     add_cook: 0
     add_speed: 0
@@ -341,6 +349,8 @@ MonoBehaviour:
     effect_details: 
     name: 
     content: 
+    rarity: 0
+    remark: 
   spIcon: {fileID: 0}
 --- !u!114 &7656180474809735293
 MonoBehaviour:
@@ -415,12 +425,13 @@ MonoBehaviour:
   m_Material: {fileID: 0}
   m_Color: {r: 0.81568635, g: 0.2784314, b: 0.1137255, a: 1}
   m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
   m_FontData:
-    m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
+    m_Font: {fileID: 12800000, guid: 1b55002fea9009a46bd1c17470cdb9b8, type: 3}
     m_FontSize: 16
     m_FontStyle: 1
     m_BestFit: 0
@@ -494,6 +505,7 @@ MonoBehaviour:
   m_Material: {fileID: 0}
   m_Color: {r: 0.035146024, g: 0.8962264, b: 0, a: 1}
   m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
