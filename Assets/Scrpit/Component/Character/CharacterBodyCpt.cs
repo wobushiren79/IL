@@ -5,19 +5,8 @@ using UnityEngine;
 [ExecuteInEditMode]
 public class CharacterBodyCpt : BaseMonoBehaviour
 {
-    //头
-    public SpriteRenderer sprHead;
-    //躯干
-    public SpriteRenderer sprTrunk;
-    //脚
-    public SpriteRenderer sprFootLeft;
-    public SpriteRenderer sprFootRight;
-    //头发
-    public SpriteRenderer sprHair;
-    //眼睛
-    public SpriteRenderer sprEye;
-    //嘴巴
-    public SpriteRenderer sprMouth;
+    //身体
+    public SpriteRenderer srBody;
 
     //角色属性
     public CharacterBodyBean characterBodyData;
@@ -94,12 +83,12 @@ public class CharacterBodyCpt : BaseMonoBehaviour
     /// <param name="hairColor"></param>
     public void SetHair(string hair, Color hairColor)
     {
-        if (sprHair == null)
+        if (srBody == null)
             return;
-        Sprite spHair = CharacterBodyHandler.Instance.manager.GetHairSpriteByName(hair);
+        Texture texHair = CharacterBodyHandler.Instance.manager.GetHairTexByName(hair);
         if (hair != null)
-            sprHair.sprite = spHair;
-        sprHair.color = hairColor;
+            srBody.material.SetTexture("_Hair", texHair);
+        srBody.material.SetColor("_ColorHair", hairColor);
         //数据保存
         if (characterBodyData == null)
             characterBodyData = new CharacterBodyBean();
@@ -109,13 +98,13 @@ public class CharacterBodyCpt : BaseMonoBehaviour
     }
     public void SetHair(string hair)
     {
-        if (sprHair == null)
+        if (srBody == null)
             return;
-        SetHair(hair, sprHair.color);
+        SetHair(hair, srBody.material.GetColor("_ColorHair"));
     }
     public void SetHair(Color hairColor)
     {
-        if (sprHair == null)
+        if (srBody == null)
             return;
         SetHair(null, hairColor);
     }
@@ -127,12 +116,12 @@ public class CharacterBodyCpt : BaseMonoBehaviour
     /// <param name="mouthColor"></param>
     public void SetEye(string eye, Color eyeColor, bool isSave)
     {
-        if (sprEye == null)
+        if (srBody == null)
             return;
-        Sprite spEye = CharacterBodyHandler.Instance.manager.GetEyeSpriteByName(eye);
+        Texture texEye = CharacterBodyHandler.Instance.manager.GetEyeTexByName(eye);
         if (eye != null)
-            sprEye.sprite = spEye;
-        sprEye.color = eyeColor;
+            srBody.sharedMaterial.SetTexture("_Eye", texEye);
+        srBody.material.SetColor("_ColorEye", eyeColor);
         if (!isSave)
             return;
         //数据保存
@@ -144,13 +133,13 @@ public class CharacterBodyCpt : BaseMonoBehaviour
     }
     public void SetEye(string eye)
     {
-        if (sprEye == null)
+        if (srBody == null)
             return;
-        SetEye(eye, sprEye.color, true);
+        SetEye(eye, srBody.material.GetColor("_ColorEye"), true);
     }
     public void SetEye(Color eyeColor)
     {
-        if (sprEye == null)
+        if (srBody == null)
             return;
         SetEye(null, eyeColor, true);
     }
@@ -167,12 +156,12 @@ public class CharacterBodyCpt : BaseMonoBehaviour
     /// <param name="mouthColor"></param>
     public void SetMouth(string mouth, Color mouthColor)
     {
-        if (sprMouth == null)
+        if (srBody == null)
             return;
-        Sprite spMouth = CharacterBodyHandler.Instance.manager.GetMouthSpriteByName(mouth);
+        Texture texMouth = CharacterBodyHandler.Instance.manager.GetMouthTexByName(mouth);
         if (mouth != null)
-            sprMouth.sprite = spMouth;
-        sprMouth.color = mouthColor;
+            srBody.material.SetTexture("_Mouth", texMouth);
+        srBody.material.SetColor("_ColorMouth", mouthColor);
         //数据保存
         if (characterBodyData == null)
             characterBodyData = new CharacterBodyBean();
@@ -182,13 +171,13 @@ public class CharacterBodyCpt : BaseMonoBehaviour
     }
     public void SetMouth(string mouth)
     {
-        if (sprMouth == null)
+        if (srBody == null)
             return;
-        SetMouth(mouth, sprMouth.color);
+        SetMouth(mouth, srBody.material.GetColor("_ColorMouth"));
     }
     public void SetMouth(Color mouthColor)
     {
-        if (sprMouth == null)
+        if (srBody == null)
             return;
         SetMouth(null, mouthColor);
     }
@@ -199,43 +188,40 @@ public class CharacterBodyCpt : BaseMonoBehaviour
     /// <param name="sex">0未知 1男 2女 3中性</param>
     public void SetSex(int sex, string otherSkin)
     {
-        Sprite spTrunk = null;
+        Texture texTrunk = null;
         if (CheckUtil.StringIsNull(otherSkin)||otherSkin.Equals("Def"))
         {
             switch (sex)
             {
                 case 0:
-                    spTrunk = CharacterBodyHandler.Instance.manager.GetTrunkSpriteByName("character_body_man");
+                    texTrunk = CharacterBodyHandler.Instance.manager.GetTrunkTexByName("character_body_man");
                     break;
                 case 1:
-                    spTrunk = CharacterBodyHandler.Instance.manager.GetTrunkSpriteByName("character_body_man");
+                    texTrunk = CharacterBodyHandler.Instance.manager.GetTrunkTexByName("character_body_man");
                     break;
                 case 2:
-                    spTrunk = CharacterBodyHandler.Instance.manager.GetTrunkSpriteByName("character_body_woman");
+                    texTrunk = CharacterBodyHandler.Instance.manager.GetTrunkTexByName("character_body_woman");
                     break;
                 case 3:
-                    spTrunk = CharacterBodyHandler.Instance.manager.GetTrunkSpriteByName("character_body_man");
+                    texTrunk = CharacterBodyHandler.Instance.manager.GetTrunkTexByName("character_body_man");
                     break;
             }
-            if (sprTrunk != null && spTrunk != null)
-                sprTrunk.sprite = spTrunk;
-            if (sprHead != null)
-                sprHead.sprite = CharacterBodyHandler.Instance.manager.GetTrunkSpriteByName("character_head");
-            if (sprFootLeft != null)
-                sprFootLeft.sprite = CharacterBodyHandler.Instance.manager.GetTrunkSpriteByName("character_body_left_foot");
-            if (sprFootRight != null)
-                sprFootRight.sprite = CharacterBodyHandler.Instance.manager.GetTrunkSpriteByName("character_body_right_foot");
+            if (srBody == null)
+                return;
+            if (texTrunk != null)
+                srBody.material.SetTexture("_Trunk", texTrunk);
+            srBody.material.SetTexture("_Head", CharacterBodyHandler.Instance.manager.GetTrunkTexByName("character_head"));
+            srBody.material.SetTexture("_FootLeft", CharacterBodyHandler.Instance.manager.GetTrunkTexByName("character_body_left_foot"));
+            srBody.material.SetTexture("_FootRight", CharacterBodyHandler.Instance.manager.GetTrunkTexByName("character_body_right_foot"));
         }
         else
         {
-            if (sprHead != null)
-                sprHead.sprite = CharacterBodyHandler.Instance.manager.GetTrunkSpriteByName(otherSkin + "_0");
-            if (sprTrunk != null)
-                sprTrunk.sprite = CharacterBodyHandler.Instance.manager.GetTrunkSpriteByName(otherSkin + "_1");
-            if (sprFootLeft != null)
-                sprFootLeft.sprite = CharacterBodyHandler.Instance.manager.GetTrunkSpriteByName(otherSkin + "_2");
-            if (sprFootRight != null)
-                sprFootRight.sprite = CharacterBodyHandler.Instance.manager.GetTrunkSpriteByName(otherSkin + "_3");
+            if (srBody == null)
+                return;
+            srBody.material.SetTexture("_Head", CharacterBodyHandler.Instance.manager.GetTrunkTexByName(otherSkin + "_0"));
+            srBody.material.SetTexture("_Trunk", CharacterBodyHandler.Instance.manager.GetTrunkTexByName(otherSkin + "_1"));
+            srBody.material.SetTexture("_FootLeft", CharacterBodyHandler.Instance.manager.GetTrunkTexByName(otherSkin + "_2"));
+            srBody.material.SetTexture("_FootRight", CharacterBodyHandler.Instance.manager.GetTrunkTexByName(otherSkin + "_3"));
         }
 
         //数据保存
@@ -251,15 +237,12 @@ public class CharacterBodyCpt : BaseMonoBehaviour
     /// <param name="skinColor">皮肤颜色</param>
     public void SetSkin(Color skinColor)
     {
-        if (sprHead == null
-            || sprTrunk == null
-            || sprFootLeft == null
-            || sprFootRight == null)
+        if (srBody == null)
             return;
-        sprHead.color = skinColor;
-        sprTrunk.color = skinColor;
-        sprFootLeft.color = skinColor;
-        sprFootRight.color = skinColor;
+        srBody.material.SetColor("_ColorHead", skinColor);
+        srBody.material.SetColor("_ColorTrunk", skinColor);
+        srBody.material.SetColor("_ColorFootLeft", skinColor);
+        srBody.material.SetColor("_ColorFootRight", skinColor);
         //数据保存
         if (characterBodyData == null)
             characterBodyData = new CharacterBodyBean();

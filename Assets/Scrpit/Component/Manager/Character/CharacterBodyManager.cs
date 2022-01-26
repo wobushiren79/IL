@@ -17,7 +17,7 @@ public class CharacterBodyManager : BaseManager
     public SpriteAtlas mouthAtlas;
     public IconBeanDictionary listIconBodyMouth = new IconBeanDictionary();
 
-
+    public Dictionary<string, Texture2D> dicTex = new Dictionary<string, Texture2D>();
     /// <summary>
     /// 获取躯干
     /// </summary>
@@ -26,6 +26,11 @@ public class CharacterBodyManager : BaseManager
     public Sprite GetTrunkSpriteByName(string name)
     {
         return GetSpriteDataByName(1, name);
+    }
+
+    public Texture GetTrunkTexByName(string name)
+    {
+        return TryGetText(name, 1);
     }
 
     /// <summary>
@@ -50,6 +55,11 @@ public class CharacterBodyManager : BaseManager
     public Sprite GetHairSpriteByName(string name)
     {
         return GetSpriteDataByName(2, name);
+    }
+
+    public Texture GetHairTexByName(string name)
+    {
+        return TryGetText(name, 2);
     }
 
     /// <summary>
@@ -99,6 +109,14 @@ public class CharacterBodyManager : BaseManager
     {
         return GetSpriteDataByName(3, name); ;
     }
+
+    public Texture2D GetEyeTexByName(string name)
+    {
+        return TryGetText( name, 3);
+    }
+
+
+
     /// <summary>
     /// 获取随机眼睛
     /// </summary>
@@ -144,8 +162,14 @@ public class CharacterBodyManager : BaseManager
     /// <returns></returns>
     public Sprite GetMouthSpriteByName(string name)
     {
-        return GetSpriteDataByName(4, name); ;
+        return GetSpriteDataByName(4, name);
     }
+
+    public Texture GetMouthTexByName(string name)
+    {
+        return TryGetText(name, 4);
+    }
+
     /// <summary>
     /// 获取随机嘴巴
     /// </summary>
@@ -214,7 +238,7 @@ public class CharacterBodyManager : BaseManager
                 spriteData = mouthAtlas;
                 break;
         }
-        Sprite spData = GetSpriteByName(dicData,ref spriteData, atlasName, ProjectConfigInfo.ASSETBUNDLE_SPRITEATLAS, name, "Assets/Texture/SpriteAtlas/" + atlasName + ".spriteatlas");
+        Sprite spData = GetSpriteByName(dicData, ref spriteData, atlasName, ProjectConfigInfo.ASSETBUNDLE_SPRITEATLAS, name, "Assets/Texture/SpriteAtlas/" + atlasName + ".spriteatlas");
         switch (type)
         {
             case 1:
@@ -232,5 +256,31 @@ public class CharacterBodyManager : BaseManager
         }
         return spData;
     }
-
+    public Texture2D TryGetText(string name, int type)
+    {
+        if (dicTex.TryGetValue(name, out Texture2D value))
+        {
+            return value;
+        }
+        Sprite spData = null;
+        switch (type)
+        {
+            case 1:
+                spData = GetTrunkSpriteByName(name);
+                break;
+            case 2:
+                spData = GetHairSpriteByName(name);
+                break;
+            case 3:
+                spData = GetEyeSpriteByName(name);
+                break;
+            case 4:
+                spData = GetMouthSpriteByName(name);
+                break;
+        }
+        if (spData == null)
+            return null;
+        value = TextureUtil.SpriteToTexture2D(spData);
+        return value;
+    }
 }
