@@ -30,7 +30,7 @@ public class CharacterBodyManager : BaseManager
 
     public Texture GetTrunkTexByName(string name)
     {
-        return TryGetText(name, 1);
+        return TryGetTexture(name, 1);
     }
 
     /// <summary>
@@ -59,7 +59,7 @@ public class CharacterBodyManager : BaseManager
 
     public Texture GetHairTexByName(string name)
     {
-        return TryGetText(name, 2);
+        return TryGetTexture(name, 2);
     }
 
     /// <summary>
@@ -112,7 +112,7 @@ public class CharacterBodyManager : BaseManager
 
     public Texture2D GetEyeTexByName(string name)
     {
-        return TryGetText( name, 3);
+        return TryGetTexture( name, 3);
     }
 
 
@@ -167,7 +167,7 @@ public class CharacterBodyManager : BaseManager
 
     public Texture GetMouthTexByName(string name)
     {
-        return TryGetText(name, 4);
+        return TryGetTexture(name, 4);
     }
 
     /// <summary>
@@ -256,8 +256,10 @@ public class CharacterBodyManager : BaseManager
         }
         return spData;
     }
-    public Texture2D TryGetText(string name, int type)
+    public Texture2D TryGetTexture(string name, int type)
     {
+        if (name == null)
+            return null;
         if (dicTex.TryGetValue(name, out Texture2D value))
         {
             return value;
@@ -281,6 +283,7 @@ public class CharacterBodyManager : BaseManager
         if (spData == null)
             return null;
         value = TextureUtil.SpriteToTexture2D(spData);
+        dicTex.Add(name,value);
         return value;
     }
 }

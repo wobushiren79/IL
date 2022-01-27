@@ -30,6 +30,7 @@ public class CharacterDressManager : BaseManager
     public AnimBeanDictionary listShoesAnim = new AnimBeanDictionary();
 
 
+    public Dictionary<string, Texture2D> dicTex = new Dictionary<string, Texture2D>();
 
     public AnimationClip GetAnimByName(GeneralEnum generalEnum, string name)
     {
@@ -73,6 +74,11 @@ public class CharacterDressManager : BaseManager
         return GetSpriteDataByName(1, name);
     }
 
+    public Texture2D GetMaskTextureByName(string name)
+    {
+        return TryGetTexture(name,1);
+    }
+
     /// <summary>
     /// 根据名字获取面具动画
     /// </summary>
@@ -84,13 +90,28 @@ public class CharacterDressManager : BaseManager
     }
 
     /// <summary>
-    /// 根据名字获取鞋子
+    /// 根据名字获取帽子
     /// </summary>
     /// <param name="name"></param>
     /// <returns></returns>
-    public Sprite GetShoesSpriteByName(string name)
+    public Sprite GetHatSpriteByName(string name)
     {
-        return GetSpriteDataByName(4, name);
+        return GetSpriteDataByName(2, name);
+    }
+
+    public Texture2D GetHatTextureByName(string name)
+    {
+        return TryGetTexture(name,2);
+    }
+
+    /// <summary>
+    /// 根据名字获取帽子动画
+    /// </summary>
+    /// <param name="name"></param>
+    /// <returns></returns>
+    public AnimationClip GetHatAnimClipByName(string name)
+    {
+        return GetAnimClipByName(2, name);
     }
 
     /// <summary>
@@ -113,6 +134,12 @@ public class CharacterDressManager : BaseManager
         return GetSpriteDataByName(3, name);
     }
 
+
+    public Texture2D GetClothesTextureByName(string name)
+    {
+        return TryGetTexture(name, 3);
+    }
+
     /// <summary>
     /// 根据名字获取衣服动画
     /// </summary>
@@ -124,23 +151,18 @@ public class CharacterDressManager : BaseManager
     }
 
     /// <summary>
-    /// 根据名字获取帽子
+    /// 根据名字获取鞋子
     /// </summary>
     /// <param name="name"></param>
     /// <returns></returns>
-    public Sprite GetHatSpriteByName(string name)
+    public Sprite GetShoesSpriteByName(string name)
     {
-        return GetSpriteDataByName(2, name);
+        return GetSpriteDataByName(4, name);
     }
 
-    /// <summary>
-    /// 根据名字获取帽子动画
-    /// </summary>
-    /// <param name="name"></param>
-    /// <returns></returns>
-    public AnimationClip GetHatAnimClipByName(string name)
+    public Texture2D GetShoesTextureByName(string name)
     {
-        return GetAnimClipByName(2, name);
+        return TryGetTexture(name, 4);
     }
 
     protected Sprite GetSpriteDataByName(int type, string name)
@@ -191,6 +213,37 @@ public class CharacterDressManager : BaseManager
                 break;
         }
         return itemSprite;
+    }
+
+    public Texture2D TryGetTexture(string name, int type)
+    {
+        if (name == null)
+            return null;
+        if (dicTex.TryGetValue(name, out Texture2D value))
+        {
+            return value;
+        }
+        Sprite spData = null;
+        switch (type)
+        {
+            case 1:
+                spData = GetMaskSpriteByName(name);
+                break;
+            case 2:
+                spData = GetHatSpriteByName(name);
+                break;
+            case 3:
+                spData = GetClothesSpriteByName(name);
+                break;
+            case 4:
+                spData = GetShoesSpriteByName(name);
+                break;
+        }
+        if (spData == null)
+            return null;
+        value = TextureUtil.SpriteToTexture2D(spData);
+        dicTex.Add(name, value);
+        return value;
     }
 
     protected AnimationClip GetAnimClipByName(int type, string name)

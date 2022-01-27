@@ -3,30 +3,20 @@ using UnityEditor;
 
 public class CharacterDressCpt : BaseMonoBehaviour
 {
-    //面具
-    public SpriteRenderer sprMask;
-    //帽子
-    public SpriteRenderer sprHat;
-    public SpriteRenderer sprHair;
-
-    //衣服
-    public SpriteRenderer sprClothes;
-    //鞋子
-    public SpriteRenderer sprShoes;
-    //手持
-    public SpriteRenderer sprHand;
+    public SpriteRenderer srHand;
+    public SpriteRenderer srBody;
 
     //角色属性
     public CharacterEquipBean characterEquipData;
 
     //动画
-    public Animator animForClothes;
-    protected AnimatorOverrideController aocForClothes;
-    public Animator animForMask;
-    protected AnimatorOverrideController aocForMask;
-    public Animator animForHat;
-    protected AnimatorOverrideController aocForHat;
-    public Animator animForShoes;
+    //public Animator animForClothes;
+    //protected AnimatorOverrideController aocForClothes;
+    //public Animator animForMask;
+    //protected AnimatorOverrideController aocForMask;
+    //public Animator animForHat;
+    //protected AnimatorOverrideController aocForHat;
+    //public Animator animForShoes;
     protected AnimatorOverrideController aocForShoes;
     public Animator animForHand;
     protected AnimatorOverrideController aocForHand;
@@ -36,17 +26,17 @@ public class CharacterDressCpt : BaseMonoBehaviour
     public void Awake()
     {
 
-        aocForMask = new AnimatorOverrideController(animForMask.runtimeAnimatorController);
-        animForMask.runtimeAnimatorController = aocForMask;
+        //aocForMask = new AnimatorOverrideController(animForMask.runtimeAnimatorController);
+        //animForMask.runtimeAnimatorController = aocForMask;
 
-        aocForHat = new AnimatorOverrideController(animForHat.runtimeAnimatorController);
-        animForHat.runtimeAnimatorController = aocForHat;
+        //aocForHat = new AnimatorOverrideController(animForHat.runtimeAnimatorController);
+        //animForHat.runtimeAnimatorController = aocForHat;
 
-        aocForClothes = new AnimatorOverrideController(animForClothes.runtimeAnimatorController);
-        animForClothes.runtimeAnimatorController = aocForClothes;
+        //aocForClothes = new AnimatorOverrideController(animForClothes.runtimeAnimatorController);
+        //animForClothes.runtimeAnimatorController = aocForClothes;
 
-        aocForShoes = new AnimatorOverrideController(animForShoes.runtimeAnimatorController);
-        animForShoes.runtimeAnimatorController = aocForShoes;
+        //aocForShoes = new AnimatorOverrideController(animForShoes.runtimeAnimatorController);
+        //animForShoes.runtimeAnimatorController = aocForShoes;
 
         aocForHand = new AnimatorOverrideController(animForHand.runtimeAnimatorController);
         animForHand.runtimeAnimatorController = aocForHand;
@@ -70,27 +60,39 @@ public class CharacterDressCpt : BaseMonoBehaviour
         {
             itemsInfo = null;
         }
-        if (sprHat == null)
+        if (srBody == null)
             return;
-        Sprite hatSP;
+        Texture2D hatTEX;
+        Color colorHair= srBody.material.GetColor("_ColorHair");
         if (itemsInfo == null || itemsInfo.icon_key == null)
         {
-            sprHair.color = new Color(sprHair.color.r, sprHair.color.g, sprHair.color.b, 1);
-            hatSP = null;
+            colorHair = new Color(colorHair.r, colorHair.g, colorHair.b, 1);
+            srBody.material.SetColor("_ColorHair", colorHair);
+            hatTEX = null;
             characterEquipData.hatId = 0;
         }
         else
         {
-            sprHair.color = new Color(sprHair.color.r, sprHair.color.g, sprHair.color.b, 0);
-            hatSP = CharacterDressHandler.Instance.manager.GetHatSpriteByName(itemsInfo.icon_key);
+            colorHair = new Color(colorHair.r, colorHair.g, colorHair.b, 0);
+            srBody.material.SetColor("_ColorHair", colorHair);
+            hatTEX = CharacterDressHandler.Instance.manager.GetHatTextureByName(itemsInfo.icon_key);
             //设置装备数据
             if (characterEquipData == null)
                 characterEquipData = new CharacterEquipBean();
             characterEquipData.hatId = itemsInfo.id;
         }
-        sprHat.sprite = hatSP;
+        if (hatTEX == null)
+        {
+            srBody.material.SetColor("_ColorHat", new Color(0, 0, 0, 0));
+        }
+        else
+        {
+            srBody.material.SetColor("_ColorHat", new Color(1, 1, 1, 1));
+            srBody.material.SetTexture("_Hat", hatTEX);
+        }
+
         //设置动画
-        SetAnimForEquip(animForHat, aocForHat, itemsInfo);
+        //SetAnimForEquip(animForHat, aocForHat, itemsInfo);
     }
 
     /// <summary>
@@ -99,23 +101,32 @@ public class CharacterDressCpt : BaseMonoBehaviour
     /// <param name="itemsInfo"></param>
     public void SetMask(ItemsInfoBean itemsInfo)
     {
-        if (sprMask == null)
+        if (srBody == null)
             return;
-        Sprite maskSP = null;
+        Texture2D maskTex = null;
         if (itemsInfo == null)
-            maskSP = null;
+            maskTex = null;
         else
         {
             if (itemsInfo.id != 0)
-                maskSP = CharacterDressHandler.Instance.manager.GetMaskSpriteByName(itemsInfo.icon_key);
+                maskTex = CharacterDressHandler.Instance.manager.GetMaskTextureByName(itemsInfo.icon_key);
             //设置装备数据
             if (characterEquipData == null)
                 characterEquipData = new CharacterEquipBean();
             characterEquipData.maskId = itemsInfo.id;
         }
-        sprMask.sprite = maskSP;
+        if (maskTex == null)
+        {
+            srBody.material.SetColor("_ColorMask", new Color(0, 0, 0, 0));
+        }
+        else
+        {
+            srBody.material.SetColor("_ColorMask", new Color(1, 1, 1, 1));
+            srBody.material.SetTexture("_Mask", maskTex);
+        }
+
         //设置动画
-        SetAnimForEquip(animForMask, aocForMask, itemsInfo);
+        //SetAnimForEquip(animForMask, aocForMask, itemsInfo);
     }
 
     /// <summary>
@@ -129,18 +140,18 @@ public class CharacterDressCpt : BaseMonoBehaviour
         {
             itemsInfo = null;
         }
-        if (sprClothes == null)
+        if (srBody == null)
             return;
-        Sprite clothesSP = null;
+        Texture2D clothesTex = null;
         if (itemsInfo == null)
         {
-            clothesSP = null;
+            clothesTex = null;
         }
         else
         {
             if (itemsInfo.id != 0)
             {
-                clothesSP = CharacterDressHandler.Instance.manager.GetClothesSpriteByName(itemsInfo.icon_key);
+                clothesTex = CharacterDressHandler.Instance.manager.GetClothesTextureByName(itemsInfo.icon_key);
             }
                
             //设置装备数据
@@ -149,9 +160,18 @@ public class CharacterDressCpt : BaseMonoBehaviour
             characterEquipData.clothesId = itemsInfo.id;
 
         }
-        sprClothes.sprite = clothesSP;
+        if (clothesTex == null)
+        {
+            srBody.material.SetColor("_ColorClothes", new Color(0,0,0,0));
+        }
+        else
+        {
+            srBody.material.SetColor("_ColorClothes", new Color(1, 1, 1, 1));
+            srBody.material.SetTexture("_Clothes", clothesTex);
+        }
+
         //设置动画
-        SetAnimForEquip(animForClothes, aocForClothes, itemsInfo);
+        //SetAnimForEquip(animForClothes, aocForClothes, itemsInfo);
     }
 
 
@@ -166,23 +186,32 @@ public class CharacterDressCpt : BaseMonoBehaviour
         {
             itemsInfo = null;
         }
-        if (sprShoes == null)
+        if (srBody == null)
             return;
-        Sprite shoesSP;
+        Texture2D shoesTex;
         if (itemsInfo == null)
-            shoesSP = null;
+            shoesTex = null;
         else
         {
-            shoesSP = CharacterDressHandler.Instance.manager.GetShoesSpriteByName(itemsInfo.icon_key);
+            shoesTex = CharacterDressHandler.Instance.manager.GetShoesTextureByName(itemsInfo.icon_key);
             //设置装备数据
             if (characterEquipData == null)
                 characterEquipData = new CharacterEquipBean();
             characterEquipData.shoesId = itemsInfo.id;
         }
-        sprShoes.sprite = shoesSP;
+        if (shoesTex == null)
+        {
+            srBody.material.SetColor("_ColorShoes", new Color(0, 0, 0, 0));
+        }
+        else
+        {
+            srBody.material.SetColor("_ColorShoes", new Color(1, 1, 1, 1));
+            srBody.material.SetTexture("_Shoes", shoesTex);
+        }
+
         //设置动画
         //需要考虑左右脚
-        SetAnimForEquip(animForShoes, aocForShoes, itemsInfo);
+        //SetAnimForEquip(animForShoes, aocForShoes, itemsInfo);
     }
 
     /// <summary>
@@ -191,7 +220,7 @@ public class CharacterDressCpt : BaseMonoBehaviour
     /// <param name="itemsInfo"></param>
     public void SetHand(ItemsInfoBean itemsInfo)
     {
-        if (sprHand == null)
+        if (srBody == null)
             return;
         Sprite handSP;
         if (itemsInfo == null)
@@ -204,15 +233,15 @@ public class CharacterDressCpt : BaseMonoBehaviour
                 characterEquipData = new CharacterEquipBean();
             characterEquipData.handId = itemsInfo.id;
         }
-        sprHand.sprite = handSP;
+        srHand.sprite = handSP;
         //设置旋转角度
         if (itemsInfo != null && itemsInfo.rotation_angle != 0)
         {
-            sprHand.transform.localEulerAngles = new Vector3(0, 0, itemsInfo.rotation_angle);
+            srHand.transform.localEulerAngles = new Vector3(0, 0, itemsInfo.rotation_angle);
         }
         else
         {
-            sprHand.transform.localEulerAngles = new Vector3(0, 0, 45);
+            srHand.transform.localEulerAngles = new Vector3(0, 0, 45);
         }
         //设置动画
         SetAnimForEquip(animForHand, aocForHand, itemsInfo);
