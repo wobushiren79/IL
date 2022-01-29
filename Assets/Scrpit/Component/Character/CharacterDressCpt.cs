@@ -3,7 +3,6 @@ using UnityEditor;
 
 public class CharacterDressCpt : BaseMonoBehaviour
 {
-    public SpriteRenderer srHand;
     public SpriteRenderer srBody;
 
     //角色属性
@@ -17,9 +16,9 @@ public class CharacterDressCpt : BaseMonoBehaviour
     //public Animator animForHat;
     //protected AnimatorOverrideController aocForHat;
     //public Animator animForShoes;
-    protected AnimatorOverrideController aocForShoes;
-    public Animator animForHand;
-    protected AnimatorOverrideController aocForHand;
+    //protected AnimatorOverrideController aocForShoes;
+    //public Animator animForHand;
+    //protected AnimatorOverrideController aocForHand;
 
     public AnimationClip animForOriginalClip;
 
@@ -38,8 +37,8 @@ public class CharacterDressCpt : BaseMonoBehaviour
         //aocForShoes = new AnimatorOverrideController(animForShoes.runtimeAnimatorController);
         //animForShoes.runtimeAnimatorController = aocForShoes;
 
-        aocForHand = new AnimatorOverrideController(animForHand.runtimeAnimatorController);
-        animForHand.runtimeAnimatorController = aocForHand;
+        //aocForHand = new AnimatorOverrideController(animForHand.runtimeAnimatorController);
+        //animForHand.runtimeAnimatorController = aocForHand;
     }
 
     public CharacterEquipBean GetCharacterEquipData()
@@ -55,6 +54,7 @@ public class CharacterDressCpt : BaseMonoBehaviour
     /// <param name="itemsInfo"></param>
     public void SetHat(ItemsInfoBean itemsInfo)
     {
+        this.itemsInfoHat = itemsInfo;
         //皇帝的新衣
         if (itemsInfo != null && itemsInfo.id == 119999)
         {
@@ -101,6 +101,7 @@ public class CharacterDressCpt : BaseMonoBehaviour
     /// <param name="itemsInfo"></param>
     public void SetMask(ItemsInfoBean itemsInfo)
     {
+        this.itemsInfoMask = itemsInfo;
         if (srBody == null)
             return;
         Texture2D maskTex = null;
@@ -135,6 +136,7 @@ public class CharacterDressCpt : BaseMonoBehaviour
     /// <param name="itemsInfo"></param>
     public void SetClothes(ItemsInfoBean itemsInfo)
     {
+        this.itemsInfoClothes = itemsInfo;
         //皇帝的新衣
         if (itemsInfo != null && itemsInfo.id == 219999)
         {
@@ -181,6 +183,7 @@ public class CharacterDressCpt : BaseMonoBehaviour
     /// <param name="itemsInfo"></param>
     public void SetShoes(ItemsInfoBean itemsInfo)
     {
+        this.itemsInfoShoes = itemsInfo;
         //皇帝的新衣
         if (itemsInfo != null && itemsInfo.id == 319999)
         {
@@ -220,31 +223,59 @@ public class CharacterDressCpt : BaseMonoBehaviour
     /// <param name="itemsInfo"></param>
     public void SetHand(ItemsInfoBean itemsInfo)
     {
+        this.itemsInfoHand = itemsInfo;
         if (srBody == null)
             return;
-        Sprite handSP;
+        Texture2D handTex;
         if (itemsInfo == null)
-            handSP = null;
+            handTex = null;
         else
         {
-            handSP = GameItemsHandler.Instance.manager.GetItemsSpriteByName(itemsInfo.icon_key);
+            handTex = GameItemsHandler.Instance.manager.GetItemsTextureByName(itemsInfo.icon_key);
             //设置装备数据
             if (characterEquipData == null)
                 characterEquipData = new CharacterEquipBean();
             characterEquipData.handId = itemsInfo.id;
         }
-        srHand.sprite = handSP;
-        //设置旋转角度
-        if (itemsInfo != null && itemsInfo.rotation_angle != 0)
+        if (handTex == null)
         {
-            srHand.transform.localEulerAngles = new Vector3(0, 0, itemsInfo.rotation_angle);
+            srBody.material.SetColor("_ColorHand", new Color(0, 0, 0, 0));
         }
         else
         {
-            srHand.transform.localEulerAngles = new Vector3(0, 0, 45);
+            srBody.material.SetColor("_ColorHand", new Color(1, 1, 1, 1));
+            srBody.material.SetTexture("_Hand", handTex);
+
+            if (itemsInfo.anim_length != 0)
+            {
+                srBody.material.SetFloat("_HandLength", itemsInfo.anim_length);
+                Texture2DArray texture2DArray = new Texture2DArray(handTex.width,
+                handTex.height, itemsInfo.anim_length, handTex.format, true, false);
+                texture2DArray.filterMode = FilterMode.Point;
+                texture2DArray.wrapMode = TextureWrapMode.Repeat;
+
+                for (int i = 0; i < itemsInfo.anim_length; i++)
+                {
+                    Texture2D itemTex = GameItemsHandler.Instance.manager.GetItemsTextureByName($"{itemsInfo.icon_key}_{i}");
+                    texture2DArray.SetPixels(itemTex.GetPixels(), i, 0);
+                }
+                texture2DArray.Apply(false);
+
+                srBody.material.SetTexture("_HandArray", texture2DArray);
+            }
+             
+        }
+        //设置旋转角度
+        if (itemsInfo != null && itemsInfo.rotation_angle != 0)
+        {
+            srBody.material.SetFloat ("_HandRotate", itemsInfo.rotation_angle);
+        }
+        else
+        {
+            srBody.material.SetFloat("_HandRotate", 45);
         }
         //设置动画
-        SetAnimForEquip(animForHand, aocForHand, itemsInfo);
+        //SetAnimForEquip(animForHand, aocForHand, itemsInfo);
     }
 
     /// <summary>
@@ -298,4 +329,94 @@ public class CharacterDressCpt : BaseMonoBehaviour
             animator.enabled = false;
         }
     }
+
+    /// <summary>
+    /// 设置装备动画
+    /// </summary>
+    /// <param name="itemsInfo"></param>
+    public void SetAnimForEquip(ItemsInfoBean itemsInfo)
+    {
+        if ( itemsInfo == null || itemsInfo.id == 0)
+            return;
+        //设置动画
+        if (itemsInfo.anim_length <= 0)
+            return;
+        GeneralEnum itemType = itemsInfo.GetItemsType();
+        switch (itemType)
+        {
+            case GeneralEnum.Mask:
+            case GeneralEnum.Hat:
+            case GeneralEnum.Clothes:
+            case GeneralEnum.Shoes:
+                break;
+            case GeneralEnum.Chef:
+            case GeneralEnum.Waiter:
+            case GeneralEnum.Accoutant:
+            case GeneralEnum.Accost:
+            case GeneralEnum.Beater:
+                break;
+        }
+    }
+
+    protected ItemsInfoBean itemsInfoMask;
+    protected ItemsInfoBean itemsInfoHat;
+    protected ItemsInfoBean itemsInfoClothes;
+    protected ItemsInfoBean itemsInfoShoes;
+    protected ItemsInfoBean itemsInfoHand;
+
+
+    protected int animMaskIndex = -1;
+    protected int animHatIndex = -1;
+    protected int animClothesIndex = -1;
+    protected int animShoesIndex = -1;
+    protected int animHandIndex = -1;
+
+    protected float timeChange = 0;
+    /// <summary>
+    /// 处理装备动画
+    /// </summary>
+    //protected void HandleForEquipAnim()
+    //{
+    //    timeChange += Time.deltaTime;
+    //    if (timeChange < 0.5f)
+    //        return;
+    //    if (animHandIndex >= 0 && itemsInfoHand != null)
+    //    {
+    //        Texture2D texAnim = GameItemsHandler.Instance.manager.GetItemsTextureByName(itemsInfoHand.icon_key);
+    //        srBody.material.SetTexture("_Hand", texAnim);
+    //    }
+    //    timeChange = 0;
+    //}
+
+    //protected void HandleForEquipItemAnim(int index, ItemsInfoBean itemsInfo)
+    //{
+    //    if (index >= 0 && itemsInfo != null)
+    //    {
+    //        GeneralEnum itemType = itemsInfo.GetItemsType();
+    //        Texture2D texAnim = null;
+    //        switch (itemType)
+    //        {
+    //            case GeneralEnum.Mask:
+    //                texAnim = CharacterDressHandler.Instance.manager.GetMaskTextureByName(itemsInfo.icon_key);
+    //                break;
+    //            case GeneralEnum.Hat:
+    //                texAnim = CharacterDressHandler.Instance.manager.GetHatTextureByName(itemsInfo.icon_key);
+    //                break;
+    //            case GeneralEnum.Clothes:
+    //                texAnim = CharacterDressHandler.Instance.manager.GetClothesTextureByName(itemsInfo.icon_key);
+    //                break;
+    //            case GeneralEnum.Shoes:
+    //                texAnim = CharacterDressHandler.Instance.manager.GetShoesTextureByName(itemsInfo.icon_key);
+    //                break;
+    //            case GeneralEnum.Chef:
+    //            case GeneralEnum.Waiter:
+    //            case GeneralEnum.Accoutant:
+    //            case GeneralEnum.Accost:
+    //            case GeneralEnum.Beater:
+    //                texAnim = GameItemsHandler.Instance.manager.GetItemsTextureByName(itemsInfo.icon_key);
+    //                break;
+    //        }
+    //        srBody.material.SetTexture("_Hand", texAnim);
+    //    }
+    //}
 }

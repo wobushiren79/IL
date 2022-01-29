@@ -16,7 +16,7 @@ public class GameItemsManager : BaseManager, IItemsInfoView
     //物品数据
     public Dictionary<long, ItemsInfoBean> listDataItems;
 
-
+    public Dictionary<string, Texture2D> listItemsTex= new Dictionary<string, Texture2D>();
     public void Awake()
     {
         itemsInfoController = new ItemsInfoController(this, this);
@@ -199,6 +199,20 @@ public class GameItemsManager : BaseManager, IItemsInfoView
     public Sprite GetItemsSpriteByName(string name)
     {
         return GetSpriteDataByName(name);
+    }
+
+    public Texture2D GetItemsTextureByName(string name)
+    {
+        if (listItemsTex.TryGetValue(name,out Texture2D value))
+        {
+            return value;
+        }
+        Sprite itemsp = GetItemsSpriteByName(name);
+        if (itemsp == null)
+            return null;
+        value = TextureUtil.SpriteToTexture2D(itemsp);
+        listItemsTex.Add(name, value);
+        return value;
     }
 
     /// <summary>

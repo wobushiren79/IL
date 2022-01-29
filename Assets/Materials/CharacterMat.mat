@@ -36,6 +36,10 @@ Material:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - Texture2D_1b5b8acfa7ea4a0e93f2a5872c5b8f3e:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - Texture2D_1bb3c2a5f04f4eb4a6fba541ac0e1136:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
@@ -125,14 +129,18 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _FootLeft:
-        m_Texture: {fileID: 0}
+        m_Texture: {fileID: 2800000, guid: 4f9cfd16cbd66a74a8404fb88ed168e4, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _FootRight:
-        m_Texture: {fileID: 0}
+        m_Texture: {fileID: 2800000, guid: 23d986145b2fa6f46876f2fd09b22254, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _Hair:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _Hand:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
@@ -141,7 +149,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _Head:
-        m_Texture: {fileID: 0}
+        m_Texture: {fileID: 2800000, guid: 1a4d196a9b6dad64dac23e87f54cec4a, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MainTex:
@@ -201,7 +209,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _Trunk:
-        m_Texture: {fileID: 0}
+        m_Texture: {fileID: 2800000, guid: 3f3db2b70d7f0c64f9221682b2d01a46, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - unity_Lightmaps:
@@ -221,9 +229,11 @@ Material:
     - Vector1_9bdfd5795cfc4d038ed3cf5c5ad762d5: 0.1
     - Vector1_babda32bf84941cb973c5e456c835dec: 0
     - Vector1_ca13d56eb52b4bb6b4c1384607c288c0: 0
+    - Vector1_cf9d3c9c368f40828d8c72d6fb761489: 45
     - _AO: 1
     - _AlphaClip: 0.1
     - _EnableExternalAlpha: 0
+    - _HandRotate: 0
     - _Metallic: 0
     - _Smoothness: 0
     m_Colors:
@@ -239,6 +249,7 @@ Material:
     - Color_3b25c73af0b04261aa82c554c9b2cae8: {r: 1, g: 1, b: 1, a: 1}
     - Color_3ba1dfbda96c4422b6dc1932f9d90f11: {r: 1, g: 1, b: 1, a: 1}
     - Color_521cea96c4e140aca7072ea16001e167: {r: 0, g: 0, b: 0, a: 0}
+    - Color_5895c70997554ef485d7adf76bba0191: {r: 1, g: 1, b: 1, a: 0}
     - Color_630f3006930d4a27a1ae970dbe35865b: {r: 1, g: 1, b: 1, a: 1}
     - Color_7b4070ebd4ae41c19c52db735d8e9052: {r: 0, g: 0, b: 0, a: 0}
     - Color_b1eff83dd651430997af05dc67be6724: {r: 0, g: 0, b: 0, a: 0}
@@ -247,18 +258,26 @@ Material:
     - Color_e358e651a11e45baa65c89b4f0973363: {r: 0, g: 0, b: 0, a: 0}
     - Color_f05a4b27aefa42a1a0e3f386b42100d2: {r: 0, g: 0, b: 0, a: 0}
     - Color_f6016e4e1fc94df3b302576710ee2ae0: {r: 1, g: 1, b: 1, a: 1}
+    - Vector2_40727b5f619e451eb4a19a42dcb3cf1c: {r: 0, g: 0, b: 0, a: 0}
+    - Vector2_713c811dddfb4f86a1f0d4bc47b93df6: {r: 0, g: 0, b: 0, a: 0}
+    - Vector2_9b25f41f101540b5a44e9c29f4c2ffd6: {r: 0, g: 0, b: 0, a: 0}
+    - Vector2_cebc9c16a9f74ea28a6e3c2b9cd620e1: {r: 0, g: 0, b: 0, a: 0}
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _ColorClothes: {r: 0, g: 0, b: 0, a: 0}
     - _ColorEye: {r: 0, g: 0, b: 0, a: 0}
-    - _ColorFoot: {r: 0, g: 0, b: 0, a: 0}
+    - _ColorFoot: {r: 1, g: 1, b: 1, a: 1}
     - _ColorHair: {r: 0, g: 0, b: 0, a: 0}
+    - _ColorHand: {r: 0, g: 0, b: 0, a: 0}
     - _ColorHat: {r: 0, g: 0, b: 0, a: 0}
-    - _ColorHead: {r: 0, g: 0, b: 0, a: 0}
+    - _ColorHead: {r: 1, g: 1, b: 1, a: 1}
     - _ColorMask: {r: 0, g: 0, b: 0, a: 0}
     - _ColorMouth: {r: 0, g: 0, b: 0, a: 0}
     - _ColorShadow: {r: 1, g: 1, b: 1, a: 0.19607843}
     - _ColorShoes: {r: 0, g: 0, b: 0, a: 0}
-    - _ColorTrunk: {r: 0, g: 0, b: 0, a: 0}
+    - _ColorTrunk: {r: 1, g: 1, b: 1, a: 0.98039216}
     - _Flip: {r: 1, g: 1, b: 1, a: 1}
+    - _FootOffset: {r: 0, g: 0, b: 0, a: 0}
+    - _HeadOffset: {r: 0, g: 0, b: 0, a: 0}
     - _RendererColor: {r: 1, g: 1, b: 1, a: 1}
+    - _TrunkOffset: {r: 0, g: 0, b: 0, a: 0}
   m_BuildTextureStacks: []
