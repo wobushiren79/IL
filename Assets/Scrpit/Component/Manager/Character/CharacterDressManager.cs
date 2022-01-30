@@ -30,7 +30,7 @@ public class CharacterDressManager : BaseManager
     public AnimBeanDictionary listShoesAnim = new AnimBeanDictionary();
 
 
-    public Dictionary<string, Texture2D> dicTex = new Dictionary<string, Texture2D>();
+    public Dictionary<string, Texture2DArray> dicTex = new Dictionary<string, Texture2DArray>();
 
     public AnimationClip GetAnimByName(GeneralEnum generalEnum, string name)
     {
@@ -74,9 +74,9 @@ public class CharacterDressManager : BaseManager
         return GetSpriteDataByName(1, name);
     }
 
-    public Texture2D GetMaskTextureByName(string name)
+    public Texture2DArray GetMaskTextureByName(string name, int animLength)
     {
-        return TryGetTexture(name,1);
+        return TryGetTexture(name, animLength, 1);
     }
 
     /// <summary>
@@ -86,7 +86,7 @@ public class CharacterDressManager : BaseManager
     /// <returns></returns>
     public AnimationClip GetMaskAnimClipByName(string name)
     {
-        return GetAnimClipByName(1,  name);
+        return GetAnimClipByName(1, name);
     }
 
     /// <summary>
@@ -99,9 +99,9 @@ public class CharacterDressManager : BaseManager
         return GetSpriteDataByName(2, name);
     }
 
-    public Texture2D GetHatTextureByName(string name)
+    public Texture2DArray GetHatTextureByName(string name, int animLength)
     {
-        return TryGetTexture(name,2);
+        return TryGetTexture(name, animLength, 2);
     }
 
     /// <summary>
@@ -135,9 +135,9 @@ public class CharacterDressManager : BaseManager
     }
 
 
-    public Texture2D GetClothesTextureByName(string name)
+    public Texture2DArray GetClothesTextureByName(string name, int animLength)
     {
-        return TryGetTexture(name, 3);
+        return TryGetTexture(name, animLength, 3);
     }
 
     /// <summary>
@@ -160,9 +160,9 @@ public class CharacterDressManager : BaseManager
         return GetSpriteDataByName(4, name);
     }
 
-    public Texture2D GetShoesTextureByName(string name)
+    public Texture2DArray GetShoesTextureByName(string name, int animLength)
     {
-        return TryGetTexture(name, 4);
+        return TryGetTexture(name, animLength, 4);
     }
 
     protected Sprite GetSpriteDataByName(int type, string name)
@@ -196,7 +196,7 @@ public class CharacterDressManager : BaseManager
                 spriteData = shoesAtlas;
                 break;
         }
-        Sprite itemSprite = GetSpriteByName(dicData,ref spriteData, atlasName, ProjectConfigInfo.ASSETBUNDLE_SPRITEATLAS, name, "Assets/Texture/SpriteAtlas/"+ atlasName+".spriteatlas");
+        Sprite itemSprite = GetSpriteByName(dicData, ref spriteData, atlasName, ProjectConfigInfo.ASSETBUNDLE_SPRITEATLAS, name, "Assets/Texture/SpriteAtlas/" + atlasName + ".spriteatlas");
         switch (type)
         {
             case 1:
@@ -215,35 +215,56 @@ public class CharacterDressManager : BaseManager
         return itemSprite;
     }
 
-    public Texture2D TryGetTexture(string name, int type)
+    public Texture2DArray TryGetTexture(string name, int animLength, int type)
     {
         if (name == null)
             return null;
-        if (dicTex.TryGetValue(name, out Texture2D value))
+        if (dicTex.TryGetValue(name, out Texture2DArray texture2DArray))
         {
-            return value;
+            return texture2DArray;
         }
-        Sprite spData = null;
-        switch (type)
+        for (int i = 0; i < animLength; i++)
         {
-            case 1:
-                spData = GetMaskSpriteByName(name);
-                break;
-            case 2:
-                spData = GetHatSpriteByName(name);
-                break;
-            case 3:
-                spData = GetClothesSpriteByName(name);
-                break;
-            case 4:
-                spData = GetShoesSpriteByName(name);
-                break;
+            Sprite spData = null;
+            string spName;
+            if (animLength == 1)
+            {
+                spName = name;
+            }
+            else
+            {
+                spName = $"{name}_{i}";
+            }
+            switch (type)
+            {
+                case 1:
+                    spData = GetMaskSpriteByName(spName);
+                    break;
+                case 2:
+                    spData = GetHatSpriteByName(spName);
+                    break;
+                case 3:
+                    spData = GetClothesSpriteByName(spName);
+                    break;
+                case 4:
+                    spData = GetShoesSpriteByName(spName);
+                    break;
+            }
+            if (spData == null)
+                return null;
+            Texture2D itemTex = TextureUtil.SpriteToTexture2D(spData);
+
+            if (texture2DArray == null)
+            {
+                texture2DArray = new Texture2DArray(itemTex.width, itemTex.height, animLength, itemTex.format, true, false);
+                texture2DArray.filterMode = FilterMode.Point;
+                texture2DArray.wrapMode = TextureWrapMode.Clamp;
+            }
+            texture2DArray.SetPixels(itemTex.GetPixels(), i);
         }
-        if (spData == null)
-            return null;
-        value = TextureUtil.SpriteToTexture2D(spData);
-        dicTex.Add(name, value);
-        return value;
+        texture2DArray.Apply();
+        dicTex.Add(name, texture2DArray);
+        return texture2DArray;
     }
 
     protected AnimationClip GetAnimClipByName(int type, string name)
@@ -266,6 +287,6 @@ public class CharacterDressManager : BaseManager
                 dicData = listShoesAnim;
                 break;
         }
-        return  GetModel(dicData, "anim/dress", name);
+        return GetModel(dicData, "anim/dress", name);
     }
 }

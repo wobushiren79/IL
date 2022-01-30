@@ -16,7 +16,7 @@ public class GameItemsManager : BaseManager, IItemsInfoView
     //物品数据
     public Dictionary<long, ItemsInfoBean> listDataItems;
 
-    public Dictionary<string, Texture2D> listItemsTex= new Dictionary<string, Texture2D>();
+    public Dictionary<string, Texture2DArray> listItemsTex = new Dictionary<string, Texture2DArray>();
     public void Awake()
     {
         itemsInfoController = new ItemsInfoController(this, this);
@@ -201,18 +201,39 @@ public class GameItemsManager : BaseManager, IItemsInfoView
         return GetSpriteDataByName(name);
     }
 
-    public Texture2D GetItemsTextureByName(string name)
+    public Texture2DArray GetItemsTextureByName(string name, int animLength)
     {
-        if (listItemsTex.TryGetValue(name,out Texture2D value))
+        if (listItemsTex.TryGetValue(name, out Texture2DArray texture2DArray))
         {
-            return value;
+            return texture2DArray;
         }
-        Sprite itemsp = GetItemsSpriteByName(name);
-        if (itemsp == null)
-            return null;
-        value = TextureUtil.SpriteToTexture2D(itemsp);
-        listItemsTex.Add(name, value);
-        return value;
+        for (int i = 0; i < animLength; i++)
+        {
+            Sprite itemsp;
+            if (animLength == 1)
+            {
+                itemsp = GetItemsSpriteByName(name);
+            }
+            else
+            {
+                itemsp = GetItemsSpriteByName($"{name}_{i}");
+            }
+
+            if (itemsp == null)
+                return null;
+            Texture2D itemTex = TextureUtil.SpriteToTexture2D(itemsp, isSameWH: true);
+
+            if (texture2DArray == null)
+            {
+                texture2DArray = new Texture2DArray(itemTex.width, itemTex.height, animLength, itemTex.format, true, false);
+                texture2DArray.filterMode = FilterMode.Point;
+                texture2DArray.wrapMode = TextureWrapMode.Clamp;
+            }
+            texture2DArray.SetPixels(itemTex.GetPixels(), i);
+        }
+        texture2DArray.Apply();
+        listItemsTex.Add(name, texture2DArray);
+        return texture2DArray;
     }
 
     /// <summary>
