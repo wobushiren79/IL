@@ -22,6 +22,8 @@ public class CharacterDressCpt : BaseMonoBehaviour
 
     public AnimationClip animForOriginalClip;
 
+    protected CharacterBodyCpt characterBodyCpt;
+
     public void Awake()
     {
 
@@ -39,6 +41,8 @@ public class CharacterDressCpt : BaseMonoBehaviour
 
         //aocForHand = new AnimatorOverrideController(animForHand.runtimeAnimatorController);
         //animForHand.runtimeAnimatorController = aocForHand;
+
+        characterBodyCpt = GetComponent<CharacterBodyCpt>();
     }
 
     public CharacterEquipBean GetCharacterEquipData()
@@ -60,20 +64,24 @@ public class CharacterDressCpt : BaseMonoBehaviour
             itemsInfo = null;
         }
         Texture2DArray hatTEX = SetAnimForEquip("Hat", itemsInfo);
-        if (itemsInfo == null)
-        {
-
-        }
         Color colorHair = srBody.material.GetColor("_ColorHair");
         if (itemsInfo == null || itemsInfo.icon_key == null)
         {
-            colorHair = new Color(colorHair.r, colorHair.g, colorHair.b, 1);
-            srBody.material.SetColor("_ColorHair", colorHair);
+            if (characterBodyCpt != null)
+            {
+                string hairData =  characterBodyCpt.characterBodyData.hair;
+                //如果有头发才显示头发
+                if (!CheckUtil.StringIsNull(hairData))
+                {
+                    colorHair = new Color(colorHair.r, colorHair.g, colorHair.b, 1);
+                    srBody.material.SetColor("_ColorHair", colorHair);
+                }
+            }
             hatTEX = null;
             characterEquipData.hatId = 0;
         }
         else
-        {
+        {       
             colorHair = new Color(colorHair.r, colorHair.g, colorHair.b, 0);
             srBody.material.SetColor("_ColorHair", colorHair);
             //设置装备数据

@@ -46,7 +46,7 @@ public class TextureUtil
     /// <param name="filterMode">适配模式</param>
     /// <param name="isSameWH">是否相同宽高</param>
     /// <returns></returns>
-    public static Texture2D SpriteToTexture2D(Sprite sprite, FilterMode filterMode = FilterMode.Point,bool isSameWH = false)
+    public static Texture2D SpriteToTexture2D(Sprite sprite, FilterMode filterMode = FilterMode.Point, bool isSameWH = false, int fixedW = 0, int fixedH = 0)
     {
         try
         {
@@ -57,18 +57,22 @@ public class TextureUtil
                 if (isSameWH)
                 {
                     int moreSize = (int)(sprite.rect.width > sprite.rect.height ? sprite.rect.width : sprite.rect.height);
-                    texture = new Texture2D(moreSize, moreSize, TextureFormat.RGBA32, false);
+                    texture = new Texture2D(moreSize, moreSize);
+                }
+                else if (fixedW != 0 && fixedH != 0)
+                {
+                    texture = new Texture2D(fixedW, fixedH);
                 }
                 else
                 {
-                    texture = new Texture2D((int)sprite.rect.width, (int)sprite.rect.height, TextureFormat.RGBA32, false);
+                    texture = new Texture2D((int)sprite.rect.width, (int)sprite.rect.height);
                 }
 
                 Color[] pixels = sprite.texture.GetPixels
                     (
-                        (int)(sprite.textureRect.x),                                         
-                        (int)(sprite.textureRect.y),                                                
-                        (int)(sprite.textureRect.width),                                              
+                        (int)(sprite.textureRect.x),
+                        (int)(sprite.textureRect.y),
+                        (int)(sprite.textureRect.width),
                         (int)(sprite.textureRect.height)
                     );
                 //如果大小不对 则需要调整pixel的位置
@@ -77,15 +81,22 @@ public class TextureUtil
                     int offset = (int)Mathf.Abs(sprite.rect.width - sprite.rect.height);
                     //默认设置所有的像素为透明
                     texture.SetPixels(new Color[texture.width * texture.height]);
-                    if (sprite.rect.width > sprite.rect.height)
+                    if (fixedW != 0 && fixedH != 0)
                     {
-                        //如果原图 W>H
-                        texture.SetPixels(0, offset/2, (int)sprite.rect.width, (int)sprite.rect.height, pixels);
+                        texture.SetPixels((int)(fixedW - sprite.rect.width) / 2, (int)(fixedH - sprite.rect.height) / 2, (int)sprite.rect.width, (int)sprite.rect.height, pixels);
                     }
                     else
-                    {  
-                        //如果原图 H>W
-                        texture.SetPixels(offset/2, 0, (int)sprite.rect.width, (int)sprite.rect.height, pixels);
+                    {
+                        if (sprite.rect.width > sprite.rect.height)
+                        {
+                            //如果原图 W>H
+                            texture.SetPixels(0, offset / 2, (int)sprite.rect.width, (int)sprite.rect.height, pixels);
+                        }
+                        else
+                        {
+                            //如果原图 H>W
+                            texture.SetPixels(offset / 2, 0, (int)sprite.rect.width, (int)sprite.rect.height, pixels);
+                        }
                     }
                 }
                 else

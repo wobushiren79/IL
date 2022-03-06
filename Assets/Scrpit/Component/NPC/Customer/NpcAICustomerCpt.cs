@@ -57,8 +57,16 @@ public class NpcAICustomerCpt : BaseNpcAI
         customerType = CustomerTypeEnum.Normal;
     }
 
+    protected float timeIntentUpdate = 0;
+    protected float timeIntentUpdateOffset = 0.2f;
     public void Update()
     {
+        if (timeIntentUpdate > 0)
+        {
+            timeIntentUpdate -= Time.deltaTime;
+            return;
+        }
+        timeIntentUpdate = timeIntentUpdateOffset;
         switch (customerIntent)
         {
             case CustomerIntentEnum.Walk:
@@ -79,7 +87,7 @@ public class NpcAICustomerCpt : BaseNpcAI
                 HandleForOrderFood();
                 break;
             case CustomerIntentEnum.WaitFood:
-                ChangeMood(-Time.deltaTime);
+                ChangeMood(-timeIntentUpdateOffset);
                 break;
             case CustomerIntentEnum.GotoPay:
                 if (characterMoveCpt.IsAutoMoveStop())
@@ -88,7 +96,7 @@ public class NpcAICustomerCpt : BaseNpcAI
                 }
                 break;
             case CustomerIntentEnum.WaitPay:
-                ChangeMood(-Time.deltaTime);
+                ChangeMood(-timeIntentUpdateOffset);
                 break;
         }
     }

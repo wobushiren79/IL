@@ -8,7 +8,8 @@ public class CharacterStatusIconCpt : BaseMonoBehaviour
     public GameObject objIconModel;
 
     public List<CharacterStatusIconItemCpt> listStatusIcon = new List<CharacterStatusIconItemCpt>();
-
+    [HideInInspector]
+    public CharacterMoodCpt characterMood;
     public void AddStatusIcon(CharacterStatusIconBean statusData)
     {
         //获取新的位置
@@ -46,10 +47,12 @@ public class CharacterStatusIconCpt : BaseMonoBehaviour
         for (int i = 0; i < listStatusIcon.Count; i++)
         {
             CharacterStatusIconItemCpt itemCpt = listStatusIcon[i];
-            if(itemCpt!=null)
+            if (itemCpt != null)
                 Destroy(itemCpt.gameObject);
         }
         listStatusIcon.Clear();
+        if (characterMood != null)
+            characterMood.spCurrent = null;
     }
 
     /// <summary>
@@ -73,7 +76,12 @@ public class CharacterStatusIconCpt : BaseMonoBehaviour
                     Destroy(itemCpt.gameObject);
                     listStatusIcon.Remove(itemCpt);
                     i--;
-                }  
+                    if(characterStatus == CharacterStatusIconEnum.Mood)
+                    {
+                        if (characterMood != null)
+                            characterMood.spCurrent = null;
+                    }
+                }
             }
         }
         float totalX = (listStatusIcon.Count - 1) * 0.5f;
@@ -102,12 +110,18 @@ public class CharacterStatusIconCpt : BaseMonoBehaviour
             CharacterStatusIconItemCpt itemData = listStatusIcon[i];
             if (itemData.statusIconData.markId.Equals(markId))
             {
-                itemData.transform.DOScale(new Vector3(0, 0, 0), 0.5f).OnComplete(delegate { 
-                    if(itemData.gameObject)
+                itemData.transform.DOScale(new Vector3(0, 0, 0), 0.5f).OnComplete(delegate
+                {
+                    if (itemData.gameObject)
                         Destroy(itemData.gameObject);
                 });
                 listStatusIcon.Remove(itemData);
                 i--;
+                if (itemData.statusIconData.iconStatus == CharacterStatusIconEnum.Mood)
+                {
+                    if (characterMood != null)
+                        characterMood.spCurrent = null;
+                }
             }
         }
         float totalX = (listStatusIcon.Count - 1) * 0.5f;
@@ -130,6 +144,12 @@ public class CharacterStatusIconCpt : BaseMonoBehaviour
         for (int i = 0; i < listStatusIcon.Count; i++)
         {
             CharacterStatusIconItemCpt itemData = listStatusIcon[i];
+            if (itemData == null || itemData.gameObject == null)
+            {
+                listStatusIcon.RemoveAt(i);
+                i--;
+                continue;
+            }
             if (itemData.statusIconData.iconStatus == statusData.iconStatus)
             {
                 hasData = true;
@@ -137,9 +157,11 @@ public class CharacterStatusIconCpt : BaseMonoBehaviour
                 itemData.statusIconData.spColor = statusData.spColor;
                 itemData.SetData(itemData.statusIconData);
                 itemData.transform.localScale = new Vector3(1, 1, 1);
+                itemData.gameObject.SetActive(true);
                 itemData.transform.DOScale(new Vector3(0, 0, 0), 0.5f).From().SetEase(Ease.OutBack); ;
             }
         }
+
         if (!hasData)
         {
             AddStatusIcon(statusData);

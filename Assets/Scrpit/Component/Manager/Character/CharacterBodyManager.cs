@@ -210,7 +210,7 @@ public class CharacterBodyManager : BaseManager
 
     protected Sprite GetSpriteDataByName(int type, string name)
     {
-        if (name == null)
+        if (CheckUtil.StringIsNull(name))
             return null;
         IconBeanDictionary dicData = null;
         SpriteAtlas spriteData = null;
@@ -258,7 +258,7 @@ public class CharacterBodyManager : BaseManager
     }
     public Texture2D TryGetTexture(string name, int type)
     {
-        if (name == null)
+        if (CheckUtil.StringIsNull(name))
             return null;
         if (dicTex.TryGetValue(name, out Texture2D value))
         {

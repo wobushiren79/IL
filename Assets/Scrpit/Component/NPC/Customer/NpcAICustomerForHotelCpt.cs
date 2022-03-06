@@ -76,8 +76,16 @@ public class NpcAICustomerForHotelCpt : BaseNpcAI
     //等待动画
     public RuntimeAnimatorController waitIconAnim;
 
+    protected float timeIntentUpdate = 0;
+    protected float timeIntentUpdateOffset = 0.2f;
     public void Update()
     {
+        if (timeIntentUpdate > 0)
+        {
+            timeIntentUpdate -= Time.deltaTime;
+            return;
+        }
+        timeIntentUpdate = timeIntentUpdateOffset;
         switch (customerHotelIntent)
         {
             case CustomerHotelIntentEnum.Walk:
@@ -85,7 +93,7 @@ public class NpcAICustomerForHotelCpt : BaseNpcAI
                 HandleForLeave();
                 break;
             case CustomerHotelIntentEnum.WaitAccost:
-                ChangeMood(-Time.deltaTime);
+                ChangeMood(-timeIntentUpdateOffset);
                 break;
             case CustomerHotelIntentEnum.GoToInn:
                 HandleForGoToInn();
@@ -103,7 +111,7 @@ public class NpcAICustomerForHotelCpt : BaseNpcAI
                 HandleForGoToPay();
                 break;
             case CustomerHotelIntentEnum.WaitPay:
-                ChangeMood(-Time.deltaTime);
+                ChangeMood(-timeIntentUpdateOffset);
                 break;
         }
     }

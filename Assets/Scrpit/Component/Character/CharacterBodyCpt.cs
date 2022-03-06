@@ -86,9 +86,15 @@ public class CharacterBodyCpt : BaseMonoBehaviour
         if (srBody == null)
             return;
         Texture texHair = CharacterBodyHandler.Instance.manager.GetHairTexByName(hair);
-        if (hair != null)
+        if (CheckUtil.StringIsNull(hair) || texHair==null)
+        {
+            srBody.material.SetColor("_ColorHair", new Color(0, 0, 0, 0));
+        }
+        else
+        {
             srBody.material.SetTexture("_Hair", texHair);
-        srBody.material.SetColor("_ColorHair", hairColor);
+            srBody.material.SetColor("_ColorHair", hairColor);
+        }
         //数据保存
         if (characterBodyData == null)
             characterBodyData = new CharacterBodyBean();
@@ -100,13 +106,12 @@ public class CharacterBodyCpt : BaseMonoBehaviour
     {
         if (srBody == null)
             return;
-        SetHair(hair, srBody.material.GetColor("_ColorHair"));
+        SetHair(hair, characterBodyData.hairColor.GetColor());
     }
-    public void SetHair(Color hairColor)
+    public void SetHairColor(Color hairColor)
     {
-        if (srBody == null)
-            return;
-        SetHair(null, hairColor);
+        srBody.material.SetColor("_ColorHair", hairColor);
+        characterBodyData.hairColor = TypeConversionUtil.ColorToColorBean(hairColor);
     }
 
     /// <summary>
@@ -114,38 +119,40 @@ public class CharacterBodyCpt : BaseMonoBehaviour
     /// </summary>
     /// <param name="mouth"></param>
     /// <param name="mouthColor"></param>
-    public void SetEye(string eye, Color eyeColor, bool isSave)
+    public void SetEye(string eye, Color eyeColor, bool isSave = true)
     {
         if (srBody == null)
             return;
         Texture texEye = CharacterBodyHandler.Instance.manager.GetEyeTexByName(eye);
-        if (eye != null)
+        if (CheckUtil.StringIsNull(eye) || texEye == null)
+        {
+            srBody.material.SetColor("_ColorEye", new Color(0, 0, 0, 0));
+        }
+        else
+        {
             srBody.sharedMaterial.SetTexture("_Eye", texEye);
-        srBody.material.SetColor("_ColorEye", eyeColor);
+            srBody.material.SetColor("_ColorEye", eyeColor);
+        }
+
         if (!isSave)
             return;
         //数据保存
         if (characterBodyData == null)
             characterBodyData = new CharacterBodyBean();
         if (eye != null)
-            characterBodyData.eye = eye;
+            characterBodyData.eye = eye;     
         characterBodyData.eyeColor = TypeConversionUtil.ColorToColorBean(eyeColor);
     }
     public void SetEye(string eye)
     {
         if (srBody == null)
             return;
-        SetEye(eye, srBody.material.GetColor("_ColorEye"), true);
+        SetEye(eye, characterBodyData.eyeColor.GetColor(), true);
     }
-    public void SetEye(Color eyeColor)
+    public void SetEyeColor(Color eyeColor)
     {
-        if (srBody == null)
-            return;
-        SetEye(null, eyeColor, true);
-    }
-    public void SetEye(string eye, Color eyeColor)
-    {
-        SetEye(eye, eyeColor, true);
+        srBody.material.SetColor("_ColorEye", eyeColor);
+        characterBodyData.eyeColor = TypeConversionUtil.ColorToColorBean(eyeColor);
     }
 
 
@@ -159,27 +166,33 @@ public class CharacterBodyCpt : BaseMonoBehaviour
         if (srBody == null)
             return;
         Texture texMouth = CharacterBodyHandler.Instance.manager.GetMouthTexByName(mouth);
-        if (mouth != null)
-            srBody.material.SetTexture("_Mouth", texMouth);
-        srBody.material.SetColor("_ColorMouth", mouthColor);
+        if (CheckUtil.StringIsNull(mouth) || texMouth == null)
+        {
+            srBody.material.SetColor("_ColorMouth", new Color(0, 0, 0, 0));
+        }
+        else
+        {
+            srBody.sharedMaterial.SetTexture("_Mouth", texMouth);
+            srBody.material.SetColor("_ColorMouth", mouthColor);
+        }
         //数据保存
         if (characterBodyData == null)
             characterBodyData = new CharacterBodyBean();
         if (mouth != null)
             characterBodyData.mouth = mouth;
         characterBodyData.mouthColor = TypeConversionUtil.ColorToColorBean(mouthColor);
+
     }
     public void SetMouth(string mouth)
     {
         if (srBody == null)
             return;
-        SetMouth(mouth, srBody.material.GetColor("_ColorMouth"));
+        SetMouth(mouth, characterBodyData.mouthColor.GetColor());
     }
-    public void SetMouth(Color mouthColor)
+    public void SetMouthColor(Color mouthColor)
     {
-        if (srBody == null)
-            return;
-        SetMouth(null, mouthColor);
+        srBody.material.SetColor("_ColorMouth", mouthColor);
+        characterBodyData.mouthColor = TypeConversionUtil.ColorToColorBean(mouthColor);
     }
 
     /// <summary>
@@ -189,7 +202,7 @@ public class CharacterBodyCpt : BaseMonoBehaviour
     public void SetSex(int sex, string otherSkin)
     {
         Texture texTrunk = null;
-        if (CheckUtil.StringIsNull(otherSkin)||otherSkin.Equals("Def"))
+        if (CheckUtil.StringIsNull(otherSkin) || otherSkin.Equals("Def"))
         {
             switch (sex)
             {
@@ -241,8 +254,7 @@ public class CharacterBodyCpt : BaseMonoBehaviour
             return;
         srBody.material.SetColor("_ColorHead", skinColor);
         srBody.material.SetColor("_ColorTrunk", skinColor);
-        srBody.material.SetColor("_ColorFootLeft", skinColor);
-        srBody.material.SetColor("_ColorFootRight", skinColor);
+        srBody.material.SetColor("_ColorFoot", skinColor);
         //数据保存
         if (characterBodyData == null)
             characterBodyData = new CharacterBodyBean();

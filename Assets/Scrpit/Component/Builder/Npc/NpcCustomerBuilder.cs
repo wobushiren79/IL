@@ -27,7 +27,7 @@ public class NpcCustomerBuilder : NpcNormalBuilder
         InnBuildBean innBuild = gameData.GetInnBuildData();
         buildCustomerForHotelRate = innAttributes.CalculationCustomerForHotelRate(innBuild);
         buildTeamGustomerRate = innAttributes.CalculationTeamCustomerBuildRate();
-        buildMaxNumber = 500;
+        buildMaxNumber = 1000;
         GameTimeHandler.Instance.RegisterNotifyForTime(NotifyForTime);
         StartBuildCustomer();
     }

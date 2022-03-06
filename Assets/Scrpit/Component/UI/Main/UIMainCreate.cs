@@ -274,15 +274,15 @@ public class UIMainCreate : BaseUIComponent,
         }
         else if (colorView == colorHair)
         {
-            characterBodyCpt.SetHair(colorHair.GetColor());
+            characterBodyCpt.SetHairColor(colorHair.GetColor());
         }
         else if (colorView == colorEye)
         {
-            characterBodyCpt.SetEye(colorEye.GetColor());
+            characterBodyCpt.SetEyeColor(colorEye.GetColor());
         }
         else if (colorView == colorMouth)
         {
-            characterBodyCpt.SetMouth(colorMouth.GetColor());
+            characterBodyCpt.SetMouthColor(colorMouth.GetColor());
         }
 
     }

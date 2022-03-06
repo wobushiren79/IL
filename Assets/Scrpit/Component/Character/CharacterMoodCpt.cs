@@ -4,8 +4,12 @@ using UnityEditor;
 public class CharacterMoodCpt : BaseMonoBehaviour
 {
     public CharacterStatusIconCpt characterStatusIcon;
+    public Sprite spCurrent;
 
-    private Sprite spCurrent;
+    public void Awake()
+    {
+        characterStatusIcon.characterMood = this; 
+    }
 
     public void CloseMood()
     {
@@ -40,11 +44,11 @@ public class CharacterMoodCpt : BaseMonoBehaviour
         if (spCurrent == null ||!spCurrent.name.Contains(spKey))
         {
             Sprite spIcon = IconDataHandler.Instance.manager.GetIconSpriteByName(spKey);
+            spCurrent = spIcon;
             CharacterStatusIconBean statusIconData = new CharacterStatusIconBean();
             statusIconData.iconStatus = CharacterStatusIconEnum.Mood;
             statusIconData.spIcon = spIcon;
             characterStatusIcon.ChangeStatusIcon(statusIconData);
-            spCurrent = spIcon;
         }
     }
 
