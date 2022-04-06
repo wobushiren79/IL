@@ -26,6 +26,7 @@ public class UIGameSetting : BaseUIComponent, DropdownView.ICallBack, ProgressVi
     public RadioButtonView rbEvent;
     public RadioButtonView rbWorkerNumber;
     public RadioButtonView rbPowerTest;
+    public RadioButtonView rbFightCamera;
     public RadioButtonView rbTownerInfo;
     public InputField etFrames;
 
@@ -236,6 +237,20 @@ public class UIGameSetting : BaseUIComponent, DropdownView.ICallBack, ProgressVi
             else if (gameConfig.statusForCombatForPowerTest == 1)
             {
                 rbPowerTest.ChangeStates(RadioButtonView.RadioButtonStatus.Selected);
+            }
+        }
+
+        //是否固定战斗视角
+        if (rbFightCamera != null)
+        {
+            rbFightCamera.SetCallBack(this);
+            if (gameConfig.statusForFightCamera == 0)
+            {
+                rbFightCamera.ChangeStates(RadioButtonView.RadioButtonStatus.Unselected);
+            }
+            else if (gameConfig.statusForFightCamera == 1)
+            {
+                rbFightCamera.ChangeStates(RadioButtonView.RadioButtonStatus.Selected);
             }
         }
 
@@ -546,6 +561,18 @@ public class UIGameSetting : BaseUIComponent, DropdownView.ICallBack, ProgressVi
             else if (buttonStates == RadioButtonView.RadioButtonStatus.Unselected)
             {
                 gameConfig.statusForCombatForPowerTest = 0;
+            }
+        }
+        else if (view == rbFightCamera)
+        {
+            //按键提示
+            if (buttonStates == RadioButtonView.RadioButtonStatus.Selected)
+            {
+                gameConfig.statusForFightCamera = 1;
+            }
+            else if (buttonStates == RadioButtonView.RadioButtonStatus.Unselected)
+            {
+                gameConfig.statusForFightCamera = 0;
             }
         }
         else if (view== rbTownerInfo)

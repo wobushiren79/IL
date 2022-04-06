@@ -80,7 +80,10 @@ public class MiniGameCombatHandler : BaseMiniGameHandler<MiniGameCombatBuilder, 
     {
         miniGameBuilder.DeleteAllEffect();
         miniGameBuilder.CreateSelectEffect(character.transform.position);
-        SetCameraPosition(character.transform.position);
+
+        GameConfigBean gameConfig = GameDataHandler.Instance.manager.GetGameConfig();
+        if (gameConfig.statusForFightCamera == 0)
+            SetCameraPosition(character.transform.position);
     }
 
     /// <summary>

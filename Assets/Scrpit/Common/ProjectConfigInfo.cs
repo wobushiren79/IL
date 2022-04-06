@@ -6,7 +6,7 @@ public class ProjectConfigInfo
     /// <summary>
     /// 游戏版本
     /// </summary>
-    public readonly static string GAME_VERSION = "0.4.14";
+    public readonly static string GAME_VERSION = "0.4.15";
 
     /// <summary>
     /// 游戏生成版本

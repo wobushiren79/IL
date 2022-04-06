@@ -44,6 +44,9 @@ public class GameConfigBean
 
     //是否开启力度测试
     public int statusForCombatForPowerTest = 1;
+    
+    //是否固定战斗视角
+    public int statusForFightCamera = 0;
 
     //是否展示详细的潘龙信息
     public bool isShowDetailsForTower = true;

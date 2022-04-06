@@ -137,7 +137,9 @@ public class UIMiniGameCombatSelectCharacter : BaseUIChildComponent<UIMiniGameCo
             currentSelectNpc = listData[changeNumber];
         }
         //镜头对准选中的角色
-        MiniGameHandler.Instance.handlerForCombat.SetCameraPosition(currentSelectNpc.transform.position);
+        GameConfigBean gameConfig = GameDataHandler.Instance.manager.GetGameConfig();
+        if (gameConfig.statusForFightCamera == 0)
+            MiniGameHandler.Instance.handlerForCombat.SetCameraPosition(currentSelectNpc.transform.position);
 
         //如果是全选
         if (selectNumber == 0)
