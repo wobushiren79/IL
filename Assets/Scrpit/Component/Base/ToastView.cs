@@ -57,8 +57,8 @@ public class ToastView : BaseMonoBehaviour
     private void DestroyToast(float timeDelay)
     {
         if (cgToast != null)
-            cgToast.DOFade(0,0.2f).SetDelay(timeDelay);
-        transform.DOScale(new Vector3(0, 0), 0.2f).SetDelay(timeDelay).OnComplete(delegate () {
+            cgToast.DOFade(0,0.2f).SetUpdate(true).SetDelay(timeDelay);
+        transform.DOScale(new Vector3(0, 0), 0.2f).SetDelay(timeDelay).SetUpdate(true).OnComplete(delegate () {
             Destroy(gameObject);
         });
     }

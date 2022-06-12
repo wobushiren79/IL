@@ -160,7 +160,7 @@ public class BaseControl : BaseMonoBehaviour
             Vector3 mousePosition = Input.mousePosition;
             if (oldMouseButtonMove!=Vector3.zero)
             {
-                Vector3 moveNormalized =  (oldMouseButtonMove - mousePosition).normalized * 100 * Time.deltaTime;
+                Vector3 moveNormalized =  (oldMouseButtonMove - mousePosition).normalized * 100 * Time.unscaledDeltaTime;
                 moveX = moveNormalized.x;
                 moveY = moveNormalized.y;
             }
