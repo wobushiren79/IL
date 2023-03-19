@@ -31,6 +31,38 @@ public class NpcCustomerBuilder : NpcNormalBuilder
         GameTimeHandler.Instance.RegisterNotifyForTime(NotifyForTime);
         StartBuildCustomer();
     }
+    float timeUpdateBuild = 0;
+    
+    private void Update()
+    {
+        timeUpdateBuild += Time.deltaTime;
+        if (timeUpdateBuild > buildInterval)
+        {
+            timeUpdateBuild = 0;
+            if (!isBuildNpc)
+                return;
+            try
+            {
+                BuildCustomer();
+                //有一定概率创建团队
+                float buildTeamRate = UnityEngine.Random.Range(0, 1f);
+                if (buildTeamRate < buildTeamGustomerRate)
+                {
+                    BuildGuestTeam();
+                }
+                //有一定概率创建住宿
+                float buildCustomerHotelRateRandom = UnityEngine.Random.Range(0, 1f);
+                if (buildCustomerHotelRateRandom < buildCustomerForHotelRate)
+                {
+                    BuildCustomerForHotel();
+                }
+            }
+            catch (Exception e)
+            {
+                LogUtil.LogError(e.ToString());
+            }
+        }    
+    }
 
     private void OnDestroy()
     {
@@ -57,9 +89,7 @@ public class NpcCustomerBuilder : NpcNormalBuilder
     /// </summary>
     public void StartBuildCustomer()
     {
-        StopAllCoroutines();
         isBuildNpc = true;
-        StartCoroutine(StartBuild());
     }
 
     /// <summary>
@@ -67,41 +97,10 @@ public class NpcCustomerBuilder : NpcNormalBuilder
     /// </summary>
     public void StopBuildCustomer()
     {
+        LogUtil.Log("停止建造NPC");
         isBuildNpc = false;
-        StopAllCoroutines();
     }
 
-    /// <summary>
-    /// 开始创建NPC
-    /// </summary>
-    /// <returns></returns>
-    private IEnumerator StartBuild()
-    {
-        while (isBuildNpc)
-        {
-            yield return new WaitForSeconds(buildInterval);
-            try
-            {
-                BuildCustomer();
-                //有一定概率创建团队
-                float buildTeamRate = UnityEngine.Random.Range(0, 1f);
-                if (buildTeamRate < buildTeamGustomerRate)
-                {
-                    BuildGuestTeam();
-                }
-                //有一定概率创建住宿
-                float buildCustomerHotelRateRandom = UnityEngine.Random.Range(0, 1f);
-                if (buildCustomerHotelRateRandom < buildCustomerForHotelRate)
-                {
-                    BuildCustomerForHotel();
-                }
-            }
-            catch(Exception e)
-            {
-                LogUtil.LogError(e.ToString());
-            }
-        }
-    }
 
     /// <summary>
     /// 创建普通顾客
