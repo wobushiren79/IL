@@ -206,7 +206,7 @@ public class ItemCreateWindowsEditor : EditorWindow
         }
 
         GUILayout.Label("成就ID：", GUILayout.Width(50), GUILayout.Height(20));
-        achievementInfo.id = long.Parse(EditorGUILayout.TextArea(achievementInfo.id + "", GUILayout.Width(100), GUILayout.Height(20)));
+        achievementInfo.id = int.Parse(EditorGUILayout.TextArea(achievementInfo.id + "", GUILayout.Width(100), GUILayout.Height(20)));
         achievementInfo.ach_id = achievementInfo.id;
         achievementInfo.type = (int)(AchievementTypeEnum)EditorGUILayout.EnumPopup("成就类型", (AchievementTypeEnum)achievementInfo.type, GUILayout.Width(300), GUILayout.Height(20));
         string path = "Assets/Texture/Common/UI/";
@@ -229,14 +229,14 @@ public class ItemCreateWindowsEditor : EditorWindow
         GUILayout.Label("前置：", GUILayout.Width(100), GUILayout.Height(20));
         if (GUILayout.Button("添加前置", GUILayout.Width(100), GUILayout.Height(20)))
         {
-            achievementInfo.pre_data += ("|" + EnumUtil.GetEnumName(PreTypeEnum.PayMoneyL) + ":" + "1|");
+            achievementInfo.pre_data += ("|" + PreTypeEnum.PayMoneyL.GetEnumName() + ":" + "1|");
         }
-        List<string> listPreData = StringUtil.SplitBySubstringForListStr(achievementInfo.pre_data, '|');
+        List<string> listPreData = achievementInfo.pre_data.SplitForListStr('|');
         achievementInfo.pre_data = "";
         for (int i = 0; i < listPreData.Count; i++)
         {
             string itemPreData = listPreData[i];
-            if (CheckUtil.StringIsNull(itemPreData))
+            if (itemPreData.IsNull())
             {
                 continue;
             }
@@ -247,8 +247,8 @@ public class ItemCreateWindowsEditor : EditorWindow
                 i--;
                 continue;
             }
-            List<string> listItemPreData = StringUtil.SplitBySubstringForListStr(itemPreData, ':');
-            listItemPreData[0] = EnumUtil.GetEnumName(EditorGUILayout.EnumPopup("前置类型", EnumUtil.GetEnum<PreTypeEnum>(listItemPreData[0]), GUILayout.Width(300), GUILayout.Height(20)));
+            List<string> listItemPreData = itemPreData.SplitForListStr(':');
+            listItemPreData[0] = EditorGUILayout.EnumPopup("前置类型", listItemPreData[0].GetEnumName().GetEnum<PreTypeEnum>(), GUILayout.Width(300), GUILayout.Height(20)).GetEnumName();
             listItemPreData[1] = EditorGUILayout.TextArea(listItemPreData[1] + "", GUILayout.Width(100), GUILayout.Height(20));
             EditorGUILayout.EndHorizontal();
             achievementInfo.pre_data += (listItemPreData[0] + ":" + listItemPreData[1]) + "|";
@@ -260,14 +260,14 @@ public class ItemCreateWindowsEditor : EditorWindow
         GUILayout.Label("奖励：", GUILayout.Width(100), GUILayout.Height(20));
         if (GUILayout.Button("添加奖励", GUILayout.Width(100), GUILayout.Height(20)))
         {
-            achievementInfo.reward_data += (EnumUtil.GetEnumName(RewardTypeEnum.AddWorkerNumber) + ":" + "1|");
+            achievementInfo.reward_data += (RewardTypeEnum.AddWorkerNumber.GetEnumName() + ":" + "1|");
         }
-        List<string> listRewardData = StringUtil.SplitBySubstringForListStr(achievementInfo.reward_data, '|');
+        List<string> listRewardData = achievementInfo.reward_data.SplitForListStr('|');
         achievementInfo.reward_data = "";
         for (int i = 0; i < listRewardData.Count; i++)
         {
             string itemRewardData = listRewardData[i];
-            if (CheckUtil.StringIsNull(itemRewardData))
+            if (itemRewardData.IsNull())
             {
                 continue;
             }
@@ -278,8 +278,8 @@ public class ItemCreateWindowsEditor : EditorWindow
                 i--;
                 continue;
             }
-            List<string> listItemRewardData = StringUtil.SplitBySubstringForListStr(itemRewardData, ':');
-            listItemRewardData[0] = EnumUtil.GetEnumName(EditorGUILayout.EnumPopup("奖励类型", EnumUtil.GetEnum<RewardTypeEnum>(listItemRewardData[0]), GUILayout.Width(300), GUILayout.Height(20)));
+            List<string> listItemRewardData = itemRewardData.SplitForListStr(':');
+            listItemRewardData[0] = EditorGUILayout.EnumPopup("奖励类型", listItemRewardData[0].GetEnumName().GetEnum<RewardTypeEnum>(), GUILayout.Width(300), GUILayout.Height(20)).GetEnumName();
             listItemRewardData[1] = EditorGUILayout.TextArea(listItemRewardData[1] + "", GUILayout.Width(100), GUILayout.Height(20));
             EditorGUILayout.EndHorizontal();
             achievementInfo.reward_data += (listItemRewardData[0] + ":" + listItemRewardData[1]) + "|";
@@ -325,8 +325,8 @@ public class ItemCreateWindowsEditor : EditorWindow
         }
         if (GUILayout.Button("查询百宝斋商品", GUILayout.Width(100), GUILayout.Height(20)))
         {
-            
-            storeInfoManager.GetStoreInfoForGrocery((listData)=> { listFindStoreItem = listData; });
+
+            storeInfoManager.GetStoreInfoForGrocery((listData) => { listFindStoreItem = listData; });
         }
         if (GUILayout.Button("查询绸缎庄商品", GUILayout.Width(100), GUILayout.Height(20)))
         {
@@ -401,7 +401,7 @@ public class ItemCreateWindowsEditor : EditorWindow
         }
 
         GUILayout.Label("商品ID：", GUILayout.Width(50), GUILayout.Height(20));
-        storeInfo.id = long.Parse(EditorGUILayout.TextArea(storeInfo.id + "", GUILayout.Width(100), GUILayout.Height(20)));
+        storeInfo.id = int.Parse(EditorGUILayout.TextArea(storeInfo.id + "", GUILayout.Width(100), GUILayout.Height(20)));
         storeInfo.store_id = storeInfo.id;
         storeInfo.type = (int)(StoreTypeEnum)EditorGUILayout.EnumPopup("商品类型", (StoreTypeEnum)storeInfo.type, GUILayout.Width(300), GUILayout.Height(20));
         switch ((StoreTypeEnum)storeInfo.type)
@@ -450,7 +450,7 @@ public class ItemCreateWindowsEditor : EditorWindow
     /// <param name="storeInfo"></param>
     private void GUIStoreItemForGoods(StoreInfoBean storeInfo)
     {
-        //if (CheckUtil.StringIsNull(storeInfo.mark))
+        //if (storeInfo.mark.IsNull())
         //{
         //    storeInfo.mark = "1";
         //}
@@ -479,7 +479,7 @@ public class ItemCreateWindowsEditor : EditorWindow
             }
         }
         EditorUI.GUIText("获得数量");
-        storeInfo.get_number = EditorUI.GUIEditorText(storeInfo.get_number,50);
+        storeInfo.get_number = EditorUI.GUIEditorText(storeInfo.get_number, 50);
         GUILayout.Label("价格--", GUILayout.Width(50), GUILayout.Height(20));
         GUILayout.Label("LMS：", GUILayout.Width(50), GUILayout.Height(20));
         storeInfo.price_l = long.Parse(EditorGUILayout.TextArea(storeInfo.price_l + "", GUILayout.Width(100), GUILayout.Height(20)));
@@ -531,12 +531,12 @@ public class ItemCreateWindowsEditor : EditorWindow
     private void GUIStoreItemForArenaInfo(StoreInfoBean storeInfo)
     {
         GUILayout.Label("竞赛等级：", GUILayout.Width(100), GUILayout.Height(20));
-        storeInfo.mark_type = (int)(TrophyTypeEnum)EditorGUILayout.EnumPopup("职业", EnumUtil.GetEnum<TrophyTypeEnum>(storeInfo.mark_type + ""), GUILayout.Width(300), GUILayout.Height(20));
-        if (CheckUtil.StringIsNull(storeInfo.pre_data))
+        storeInfo.mark_type = (int)(TrophyTypeEnum)EditorGUILayout.EnumPopup("职业", $"{storeInfo.mark_type}".GetEnum<TrophyTypeEnum>(), GUILayout.Width(300), GUILayout.Height(20));
+        if (storeInfo.pre_data.IsNull())
         {
             storeInfo.pre_data = "Chef";
         }
-        storeInfo.pre_data = ((WorkerEnum)EditorGUILayout.EnumPopup("职业", EnumUtil.GetEnum<WorkerEnum>(storeInfo.pre_data), GUILayout.Width(300), GUILayout.Height(20))) + "";
+        storeInfo.pre_data = ((WorkerEnum)EditorGUILayout.EnumPopup("职业", $"{storeInfo.pre_data}".GetEnum<WorkerEnum>(), GUILayout.Width(300), GUILayout.Height(20))) + "";
 
         GUILayout.Label("报名费LMS：", GUILayout.Width(100), GUILayout.Height(20));
         storeInfo.price_l = long.Parse(EditorGUILayout.TextArea(storeInfo.price_l + "", GUILayout.Width(100), GUILayout.Height(20)));
@@ -591,9 +591,9 @@ public class ItemCreateWindowsEditor : EditorWindow
         createItemType = EditorUI.GUIEnum<GeneralEnum>("物品类型", (int)createItemType, 200);
         createItemsInfo.items_type = (int)createItemType;
 
-        EditorUI.GUIText("名字：",50);
-        createItemsInfo.name = EditorUI.GUIEditorText(createItemsInfo.name + "",150);
-        
+        EditorUI.GUIText("名字：", 50);
+        createItemsInfo.name = EditorUI.GUIEditorText(createItemsInfo.name + "", 150);
+
         if (createItemType == GeneralEnum.Hat)
         {
             if (!createItemsInfo.name.Contains("-头"))
@@ -680,7 +680,7 @@ public class ItemCreateWindowsEditor : EditorWindow
         GUILayout.Label("物品ID：", GUILayout.Width(50), GUILayout.Height(20));
         EditorGUILayout.TextArea((inputId + autoId) + "", GUILayout.Width(100), GUILayout.Height(20));
 
-        createItemsInfo.id = (inputId + autoId);
+        createItemsInfo.id = (int)(inputId + autoId);
         createItemsInfo.items_id = createItemsInfo.id;
 
         GUILayout.Label("描述：");
@@ -724,7 +724,7 @@ public class ItemCreateWindowsEditor : EditorWindow
         findIds = EditorGUILayout.TextArea(findIds + "", GUILayout.Width(100), GUILayout.Height(20));
         if (GUILayout.Button("查询", GUILayout.Width(100), GUILayout.Height(20)))
         {
-            long[] idArray = StringUtil.SplitBySubstringForArrayLong(findIds, ',');
+            long[] idArray = findIds.SplitForArrayLong(',');
             listFindItem = gameItemsManager.GetItemsByIds(idArray);
         }
         if (GUILayout.Button("查询所有", GUILayout.Width(100), GUILayout.Height(20)))
@@ -803,7 +803,7 @@ public class ItemCreateWindowsEditor : EditorWindow
             }
 
             EditorUI.GUIText("物品ID：");
-            itemInfo.id = long.Parse(EditorGUILayout.TextArea(itemInfo.id + "", GUILayout.Width(100), GUILayout.Height(20)));
+            itemInfo.id = int.Parse(EditorGUILayout.TextArea(itemInfo.id + "", GUILayout.Width(100), GUILayout.Height(20)));
             EditorUI.GUIText("物品稀有度：");
             itemInfo.rarity = EditorUI.GUIEditorText(itemInfo.rarity, 20);
 
@@ -942,14 +942,14 @@ public class ItemCreateWindowsEditor : EditorWindow
         GUILayout.Label("奖励：", GUILayout.Width(100), GUILayout.Height(20));
         if (GUILayout.Button("添加奖励", GUILayout.Width(100), GUILayout.Height(20)))
         {
-            storeInfo.reward_data += (EnumUtil.GetEnumName(RewardTypeEnum.AddItems) + ":" + "1|");
+            storeInfo.reward_data += (RewardTypeEnum.AddItems.GetEnumName() + ":" + "1|");
         }
-        List<string> listRewardData = StringUtil.SplitBySubstringForListStr(storeInfo.reward_data, '|');
+        List<string> listRewardData = storeInfo.reward_data.SplitForListStr('|');
         storeInfo.reward_data = "";
         for (int i = 0; i < listRewardData.Count; i++)
         {
             string itemRewardData = listRewardData[i];
-            if (CheckUtil.StringIsNull(itemRewardData))
+            if (itemRewardData.IsNull())
             {
                 continue;
             }
@@ -960,8 +960,8 @@ public class ItemCreateWindowsEditor : EditorWindow
                 i--;
                 continue;
             }
-            List<string> listItemRewardData = StringUtil.SplitBySubstringForListStr(itemRewardData, ':');
-            listItemRewardData[0] = EnumUtil.GetEnumName(EditorGUILayout.EnumPopup("奖励类型", EnumUtil.GetEnum<RewardTypeEnum>(listItemRewardData[0]), GUILayout.Width(300), GUILayout.Height(20)));
+            List<string> listItemRewardData = itemRewardData.SplitForListStr(':');
+            listItemRewardData[0] = EditorGUILayout.EnumPopup("奖励类型", listItemRewardData[0].GetEnum<RewardTypeEnum>(), GUILayout.Width(300), GUILayout.Height(20)).GetEnumName();
             listItemRewardData[1] = EditorGUILayout.TextArea(listItemRewardData[1] + "", GUILayout.Width(100), GUILayout.Height(20));
             EditorGUILayout.EndHorizontal();
             storeInfo.reward_data += (listItemRewardData[0] + ":" + listItemRewardData[1]) + "|";
@@ -980,14 +980,14 @@ public class ItemCreateWindowsEditor : EditorWindow
         GUILayout.Label("前置：", GUILayout.Width(100), GUILayout.Height(20));
         if (GUILayout.Button("添加前置", GUILayout.Width(100), GUILayout.Height(20)))
         {
-            storeInfo.pre_data += ("|" + EnumUtil.GetEnumName(PreTypeEnum.PayMoneyL) + ":" + "1|");
+            storeInfo.pre_data += ("|" + PreTypeEnum.PayMoneyL.GetEnumName() + ":" + "1|");
         }
-        List<string> listPreData = StringUtil.SplitBySubstringForListStr(storeInfo.pre_data, '|');
+        List<string> listPreData = storeInfo.pre_data.SplitForListStr('|');
         storeInfo.pre_data = "";
         for (int i = 0; i < listPreData.Count; i++)
         {
             string itemPreData = listPreData[i];
-            if (CheckUtil.StringIsNull(itemPreData))
+            if (itemPreData.IsNull())
             {
                 continue;
             }
@@ -998,8 +998,8 @@ public class ItemCreateWindowsEditor : EditorWindow
                 i--;
                 continue;
             }
-            List<string> listItemPreData = StringUtil.SplitBySubstringForListStr(itemPreData, ':');
-            listItemPreData[0] = EnumUtil.GetEnumName(EditorGUILayout.EnumPopup("前置类型", EnumUtil.GetEnum<PreTypeEnum>(listItemPreData[0]), GUILayout.Width(300), GUILayout.Height(20)));
+            List<string> listItemPreData = itemPreData.SplitForListStr(':');
+            listItemPreData[0] = EditorGUILayout.EnumPopup("前置类型", listItemPreData[0].GetEnum<PreTypeEnum>(), GUILayout.Width(300), GUILayout.Height(20)).GetEnumName();
             listItemPreData[1] = EditorGUILayout.TextArea(listItemPreData[1] + "", GUILayout.Width(100), GUILayout.Height(20));
             EditorGUILayout.EndHorizontal();
             storeInfo.pre_data += (listItemPreData[0] + ":" + listItemPreData[1]) + "|";
@@ -1018,14 +1018,14 @@ public class ItemCreateWindowsEditor : EditorWindow
         GUILayout.Label("小游戏前置：", GUILayout.Width(100), GUILayout.Height(20));
         if (GUILayout.Button("添加前置", GUILayout.Width(100), GUILayout.Height(20)))
         {
-            storeInfo.pre_data_minigame += ("|" + EnumUtil.GetEnumName(PreTypeForMiniGameEnum.WinSurvivalTime) + ":" + "1|");
+            storeInfo.pre_data_minigame += ("|" + PreTypeForMiniGameEnum.WinSurvivalTime.GetEnumName() + ":" + "1|");
         }
-        List<string> listPreData = StringUtil.SplitBySubstringForListStr(storeInfo.pre_data_minigame, '|');
+        List<string> listPreData = storeInfo.pre_data_minigame.SplitForListStr('|');
         storeInfo.pre_data_minigame = "";
         for (int i = 0; i < listPreData.Count; i++)
         {
             string itemPreData = listPreData[i];
-            if (CheckUtil.StringIsNull(itemPreData))
+            if (itemPreData.IsNull())
             {
                 continue;
             }
@@ -1036,8 +1036,8 @@ public class ItemCreateWindowsEditor : EditorWindow
                 i--;
                 continue;
             }
-            List<string> listItemPreData = StringUtil.SplitBySubstringForListStr(itemPreData, ':');
-            listItemPreData[0] = EnumUtil.GetEnumName(EditorGUILayout.EnumPopup("前置类型", EnumUtil.GetEnum<PreTypeForMiniGameEnum>(listItemPreData[0]), GUILayout.Width(300), GUILayout.Height(20)));
+            List<string> listItemPreData = itemPreData.SplitForListStr(':');
+            listItemPreData[0] = EditorGUILayout.EnumPopup("前置类型", listItemPreData[0].GetEnum<PreTypeForMiniGameEnum>(), GUILayout.Width(300), GUILayout.Height(20)).GetEnumName();
             listItemPreData[1] = EditorGUILayout.TextArea(listItemPreData[1] + "", GUILayout.Width(100), GUILayout.Height(20));
             EditorGUILayout.EndHorizontal();
             storeInfo.pre_data_minigame += (listItemPreData[0] + ":" + listItemPreData[1]) + "|";
@@ -1171,8 +1171,8 @@ public class ItemCreateWindowsEditor : EditorWindow
         buildItem.build_type = (int)EditorUI.GUIEnum<BuildItemTypeEnum>("类型：", buildItem.build_type);
         EditorUI.GUIText("模型ID：");
         buildItem.model_name = EditorUI.GUIEditorText(buildItem.model_name);
-        EditorUI.GUIText(" 图标：",50);
-        buildItem.icon_key = EditorUI.GUIEditorText(buildItem.icon_key,200);
+        EditorUI.GUIText(" 图标：", 50);
+        buildItem.icon_key = EditorUI.GUIEditorText(buildItem.icon_key, 200);
         string picPath = "";
         switch ((BuildItemTypeEnum)buildItem.build_type)
         {
@@ -1206,7 +1206,7 @@ public class ItemCreateWindowsEditor : EditorWindow
             default:
                 break;
         }
-        EditorUI.GUIPic(picPath, buildItem.icon_key);
+        EditorUI.GUIPic(picPath + "/" + buildItem.icon_key);
 
         switch ((BuildItemTypeEnum)buildItem.build_type)
         {
@@ -1221,7 +1221,7 @@ public class ItemCreateWindowsEditor : EditorWindow
             case BuildItemTypeEnum.Floor:
             case BuildItemTypeEnum.Wall:
                 EditorUI.GUIText("tile名字：");
-                buildItem.tile_name = EditorUI.GUIEditorText(buildItem.tile_name,200);
+                buildItem.tile_name = EditorUI.GUIEditorText(buildItem.tile_name, 200);
                 break;
             default:
                 break;
@@ -1262,7 +1262,7 @@ public class ItemCreateWindowsEditor : EditorWindow
         findIds = EditorUI.GUIEditorText(findIds);
         if (EditorUI.GUIButton("查询指定ID"))
         {
-            long[] ids = StringUtil.SplitBySubstringForArrayLong(findIds, ',');
+            long[] ids = findIds.SplitForArrayLong(',');
             listData = menuInfoService.QueryDataByIds(ids);
         }
         if (EditorUI.GUIButton("查询所有菜单"))
@@ -1270,7 +1270,7 @@ public class ItemCreateWindowsEditor : EditorWindow
             listData = menuInfoService.QueryAllData();
         }
         GUILayout.EndHorizontal();
-        if (!CheckUtil.ListIsNull(listData))
+        if (!listData.IsNull())
         {
 
             for (int i = 0; i < listData.Count; i++)
@@ -1350,7 +1350,7 @@ public class ItemCreateWindowsEditor : EditorWindow
         EditorUI.GUIText("图片名称:");
         menuInfo.icon_key = EditorUI.GUIEditorText(menuInfo.icon_key, 150);
         string menuPicPath = "Assets/Texture/Food/";
-        EditorUI.GUIPic(menuPicPath, menuInfo.icon_key);
+        EditorUI.GUIPic(menuPicPath + "/" + menuInfo.icon_key);
         EditorUI.GUIText("稀有度:");
         menuInfo.rarity = EditorUI.GUIEditorText(menuInfo.rarity);
         EditorUI.GUIText("材料 油盐:");
@@ -1404,7 +1404,7 @@ public class ItemCreateWindowsEditor : EditorWindow
         findIds = EditorUI.GUIEditorText(findIds);
         if (EditorUI.GUIButton("查询指定ID"))
         {
-            long[] ids = StringUtil.SplitBySubstringForArrayLong(findIds, ',');
+            long[] ids = findIds.SplitForArrayLong(',');
             listData = skillInfoService.QueryDataByIds(ids);
         }
         if (EditorUI.GUIButton("查询所有技能"))
@@ -1412,7 +1412,7 @@ public class ItemCreateWindowsEditor : EditorWindow
             listData = skillInfoService.QueryAllData();
         }
         GUILayout.EndHorizontal();
-        if (!CheckUtil.ListIsNull(listData))
+        if (!listData.IsNull())
         {
 
             for (int i = 0; i < listData.Count; i++)
@@ -1453,7 +1453,7 @@ public class ItemCreateWindowsEditor : EditorWindow
         EditorUI.GUIText("图片名称:");
         skillInfo.icon_key = EditorUI.GUIEditorText(skillInfo.icon_key, 150);
         string menuPicPath = "Assets/Texture/Common/UI/";
-        EditorUI.GUIPic(menuPicPath, skillInfo.icon_key);
+        EditorUI.GUIPic(menuPicPath + "/" + skillInfo.icon_key);
         EditorUI.GUIText("使用数量");
         skillInfo.use_number = EditorUI.GUIEditorText(skillInfo.use_number);
         skillInfo.effect = EditorUI.GUIListData<EffectTypeEnum>("效果", skillInfo.effect);

@@ -93,7 +93,7 @@ TextureImporter:
       213: 7355437862395985623
     second: tile_mountain_1_19
   externalObjects: {}
-  serializedVersion: 10
+  serializedVersion: 12
   mipmaps:
     mipMapMode: 0
     enableMipMap: 0
@@ -110,9 +110,12 @@ TextureImporter:
     externalNormalMap: 0
     heightScale: 0.25
     normalMapFilter: 0
+    flipGreenChannel: 0
   isReadable: 1
   streamingMipmaps: 0
   streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
   grayScaleToAlpha: 0
   generateCubemap: 6
   cubemapConvolution: 0
@@ -122,8 +125,8 @@ TextureImporter:
   textureSettings:
     serializedVersion: 2
     filterMode: 0
-    aniso: -1
-    mipBias: -100
+    aniso: 1
+    mipBias: 0
     wrapU: 1
     wrapV: 1
     wrapW: 1
@@ -144,9 +147,15 @@ TextureImporter:
   textureType: 8
   textureShape: 1
   singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
   maxTextureSizeSet: 0
   compressionQualitySet: 0
   textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 1
+  swizzle: 50462976
+  cookieLightType: 1
   platformSettings:
   - serializedVersion: 3
     buildTarget: DefaultTexturePlatform
@@ -162,6 +171,18 @@ TextureImporter:
     forceMaximumCompressionQuality_BC6H_BC7: 0
   - serializedVersion: 3
     buildTarget: Standalone
+    maxTextureSize: 8192
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 100
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Server
     maxTextureSize: 8192
     resizeAlgorithm: 0
     textureFormat: -1
@@ -605,9 +626,29 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
-  spritePackingTag: 
+    nameFileIdTable:
+      tile_mountain_1_0: 7505513400107344332
+      tile_mountain_1_1: 911379644957434911
+      tile_mountain_1_10: -1558931329325964766
+      tile_mountain_1_11: 884872263520736567
+      tile_mountain_1_12: 3125806117461385064
+      tile_mountain_1_13: 6466067656157142372
+      tile_mountain_1_14: 7817619072646126030
+      tile_mountain_1_15: 4192714070932521746
+      tile_mountain_1_16: -3146979490473052745
+      tile_mountain_1_17: 92722944153200509
+      tile_mountain_1_18: 7753921104761980864
+      tile_mountain_1_19: 7355437862395985623
+      tile_mountain_1_2: 657056425263514501
+      tile_mountain_1_3: -2313917853132319560
+      tile_mountain_1_4: 8263403804627303214
+      tile_mountain_1_5: -560380952763448563
+      tile_mountain_1_6: -7912689519744675768
+      tile_mountain_1_7: -1964527978250472924
+      tile_mountain_1_8: -8765660967011826508
+      tile_mountain_1_9: -2293113988404186030
+  mipmapLimitGroupName: 
   pSDRemoveMatte: 0
-  pSDShowRemoveMatteOption: 0
   userData: 
   assetBundleName: 
   assetBundleVariant: 

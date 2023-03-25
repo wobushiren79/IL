@@ -63,7 +63,7 @@ TextureImporter:
       213: -4968852659605700625
     second: tile_wall_glass_1_19
   externalObjects: {}
-  serializedVersion: 11
+  serializedVersion: 12
   mipmaps:
     mipMapMode: 0
     enableMipMap: 0
@@ -80,9 +80,12 @@ TextureImporter:
     externalNormalMap: 0
     heightScale: 0.25
     normalMapFilter: 0
+    flipGreenChannel: 0
   isReadable: 1
   streamingMipmaps: 0
   streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
   grayScaleToAlpha: 0
   generateCubemap: 6
   cubemapConvolution: 0
@@ -92,8 +95,8 @@ TextureImporter:
   textureSettings:
     serializedVersion: 2
     filterMode: 0
-    aniso: -1
-    mipBias: -100
+    aniso: 1
+    mipBias: 0
     wrapU: 1
     wrapV: 1
     wrapW: 1
@@ -114,13 +117,42 @@ TextureImporter:
   textureType: 8
   textureShape: 1
   singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
   maxTextureSizeSet: 0
   compressionQualitySet: 0
   textureFormatSet: 0
+  ignorePngGamma: 0
   applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 1
   platformSettings:
   - serializedVersion: 3
     buildTarget: DefaultTexturePlatform
+    maxTextureSize: 8192
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 100
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Standalone
+    maxTextureSize: 8192
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 100
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Server
     maxTextureSize: 8192
     resizeAlgorithm: 0
     textureFormat: -1
@@ -564,9 +596,29 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
-  spritePackingTag: 
+    nameFileIdTable:
+      tile_wall_glass_1_0: 1634607249667490848
+      tile_wall_glass_1_1: 8904215273858187990
+      tile_wall_glass_1_10: -2738715444269832659
+      tile_wall_glass_1_11: -6353023409750480238
+      tile_wall_glass_1_12: -436685591215564425
+      tile_wall_glass_1_13: -2093260810065780893
+      tile_wall_glass_1_14: 9046241326636401283
+      tile_wall_glass_1_15: 3438731017422837425
+      tile_wall_glass_1_16: -624742311628316296
+      tile_wall_glass_1_17: -6267097080135834250
+      tile_wall_glass_1_18: -6045317914755344159
+      tile_wall_glass_1_19: -4968852659605700625
+      tile_wall_glass_1_2: 867872258852931740
+      tile_wall_glass_1_3: 7689750136253711717
+      tile_wall_glass_1_4: 8667635678262149875
+      tile_wall_glass_1_5: -8382781237477323551
+      tile_wall_glass_1_6: 5267699919548581938
+      tile_wall_glass_1_7: -9178535824814437720
+      tile_wall_glass_1_8: 2409973522625704194
+      tile_wall_glass_1_9: 6712892008720058907
+  mipmapLimitGroupName: 
   pSDRemoveMatte: 0
-  pSDShowRemoveMatteOption: 0
   userData: 
   assetBundleName: 
   assetBundleVariant: 

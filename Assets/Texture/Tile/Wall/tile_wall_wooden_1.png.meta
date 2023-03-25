@@ -63,7 +63,7 @@ TextureImporter:
       213: 2742204142395435835
     second: tile_wall_wooden_1_19
   externalObjects: {}
-  serializedVersion: 10
+  serializedVersion: 12
   mipmaps:
     mipMapMode: 0
     enableMipMap: 0
@@ -80,9 +80,12 @@ TextureImporter:
     externalNormalMap: 0
     heightScale: 0.25
     normalMapFilter: 0
+    flipGreenChannel: 0
   isReadable: 1
   streamingMipmaps: 0
   streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
   grayScaleToAlpha: 0
   generateCubemap: 6
   cubemapConvolution: 0
@@ -92,8 +95,8 @@ TextureImporter:
   textureSettings:
     serializedVersion: 2
     filterMode: 0
-    aniso: -1
-    mipBias: -100
+    aniso: 1
+    mipBias: 0
     wrapU: 1
     wrapV: 1
     wrapW: 1
@@ -114,12 +117,42 @@ TextureImporter:
   textureType: 8
   textureShape: 1
   singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
   maxTextureSizeSet: 0
   compressionQualitySet: 0
   textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 1
+  swizzle: 50462976
+  cookieLightType: 1
   platformSettings:
   - serializedVersion: 3
     buildTarget: DefaultTexturePlatform
+    maxTextureSize: 8192
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 100
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Standalone
+    maxTextureSize: 8192
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 100
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Server
     maxTextureSize: 8192
     resizeAlgorithm: 0
     textureFormat: -1
@@ -563,9 +596,29 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
-  spritePackingTag: 
+    nameFileIdTable:
+      tile_wall_wooden_1_0: -2507609473545348892
+      tile_wall_wooden_1_1: 3661975881240618143
+      tile_wall_wooden_1_10: 2853911605484600572
+      tile_wall_wooden_1_11: 8692014209690784888
+      tile_wall_wooden_1_12: 9080270745326959072
+      tile_wall_wooden_1_13: 6691846446822030538
+      tile_wall_wooden_1_14: 5506818809515819583
+      tile_wall_wooden_1_15: 7435304205746490114
+      tile_wall_wooden_1_16: -342254935477538658
+      tile_wall_wooden_1_17: -1564027635543650674
+      tile_wall_wooden_1_18: 4200954535199123442
+      tile_wall_wooden_1_19: 2742204142395435835
+      tile_wall_wooden_1_2: 4223267785685882662
+      tile_wall_wooden_1_3: 2161277139019833679
+      tile_wall_wooden_1_4: 4852548519652258995
+      tile_wall_wooden_1_5: -4746700618074479778
+      tile_wall_wooden_1_6: -4590519699767221633
+      tile_wall_wooden_1_7: 9016303623587253294
+      tile_wall_wooden_1_8: 7953941369010015902
+      tile_wall_wooden_1_9: 1654534060343679691
+  mipmapLimitGroupName: 
   pSDRemoveMatte: 0
-  pSDShowRemoveMatteOption: 0
   userData: 
   assetBundleName: 
   assetBundleVariant: 

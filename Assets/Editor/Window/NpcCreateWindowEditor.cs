@@ -107,22 +107,22 @@ public class NpcCreateWindowEditor : EditorWindow
         copyNpcId = EditorUI.GUIEditorText(copyNpcId, 100);
         if (EditorUI.GUIButton("复制"))
         {
-            CharacterBean characterData= NpcInfoHandler.Instance.manager.GetCharacterDataById(copyNpcId);
-            characterData.npcInfoData.id = copyNpcNewId;
+            CharacterBean characterData = NpcInfoHandler.Instance.manager.GetCharacterDataById(copyNpcId);
+            characterData.npcInfoData.id = (int)copyNpcNewId;
             characterData.npcInfoData.npc_id = copyNpcNewId;
             npcInfoService.InsertData(characterData.npcInfoData);
         }
         GUILayout.EndHorizontal();
         GUILayout.Label("-----------------------------------------------------------------------------------------------------------");
         //Npc 对话逻辑添加UI
-        long[] findIDs = StringUtil.SplitBySubstringForArrayLong(findNpcIdsStr, ',');
+        long[] findIDs = findNpcIdsStr.SplitForArrayLong(',');
         if (findIDs != null && findIDs.Length > 0)
         {
             GUINpcTalkCreateByMarkId(findIDs[0], (int)npcTalkInfoTypeForCreate, mapNpcTalkInfoForFind);
         }
         //NPC 对话查询UI
         GUINpcTalkFind(
-            textInfoService, 
+            textInfoService,
             long.Parse(findNpcIdsStr), npcTalkInfoTypeForCreate, mapNpcTalkInfoForFind,
             out npcTalkInfoTypeForCreate);
         GUILayout.Label("-----------------------------------------------------------------------------------------------------------");
@@ -180,7 +180,7 @@ public class NpcCreateWindowEditor : EditorWindow
         findIdsStr = EditorGUILayout.TextArea(findIdsStr + "", GUILayout.Width(100), GUILayout.Height(20));
         if (GUILayout.Button("查询", GUILayout.Width(100), GUILayout.Height(20)))
         {
-            long[] ids = StringUtil.SplitBySubstringForArrayLong(findIdsStr, ',');
+            long[] ids = findIdsStr.SplitForArrayLong(',');
             listNpcDataForFind = npcInfoService.QueryDataByIds(ids);
         }
         if (GUILayout.Button("查询全部", GUILayout.Width(100), GUILayout.Height(20)))
@@ -251,7 +251,7 @@ public class NpcCreateWindowEditor : EditorWindow
             npcInfo.position_y = npcAI.transform.position.y;
         }
         GUILayout.Label("NPCID：", GUILayout.Width(100), GUILayout.Height(20));
-        npcInfo.id = long.Parse(EditorGUILayout.TextArea(npcInfo.id + "", GUILayout.Width(100), GUILayout.Height(20)));
+        npcInfo.id = int.Parse(EditorGUILayout.TextArea(npcInfo.id + "", GUILayout.Width(100), GUILayout.Height(20)));
         npcInfo.npc_id = npcInfo.id;
         GUILayout.BeginHorizontal();
         npcInfo.npc_type = (int)EditorUI.GUIEnum<NpcTypeEnum>("Npc类型：", npcInfo.npc_type);
@@ -280,7 +280,7 @@ public class NpcCreateWindowEditor : EditorWindow
             GUILayout.Label("眼睛：", GUILayout.Width(100), GUILayout.Height(20));
             npcInfo.eye_id = EditorGUILayout.TextArea(npcInfo.eye_id + "", GUILayout.Width(200), GUILayout.Height(20));
             string eyePath = "Assets/Texture/Character/Eye/";
-            EditorUI.GUIPic(eyePath, npcInfo.eye_id);
+            EditorUI.GUIPic(eyePath + "/" + npcInfo.eye_id);
             GUILayout.Label("眼睛颜色：", GUILayout.Width(100), GUILayout.Height(20));
             ColorBean eyeColorData = new ColorBean(npcInfo.eye_color);
             Color eyeColor = eyeColorData.GetColor(); ;
@@ -290,7 +290,7 @@ public class NpcCreateWindowEditor : EditorWindow
             GUILayout.Label("嘴巴：", GUILayout.Width(100), GUILayout.Height(20));
             npcInfo.mouth_id = EditorGUILayout.TextArea(npcInfo.mouth_id + "", GUILayout.Width(200), GUILayout.Height(20));
             string mouthPath = "Assets/Texture/Character/Mouth/";
-            EditorUI.GUIPic(mouthPath, npcInfo.mouth_id);
+            EditorUI.GUIPic(mouthPath + "/" + npcInfo.mouth_id);
             GUILayout.Label("嘴巴颜色：", GUILayout.Width(100), GUILayout.Height(20));
             ColorBean mouthColorData = new ColorBean(npcInfo.mouth_color);
             Color mouthColor = mouthColorData.GetColor(); ;
@@ -300,7 +300,7 @@ public class NpcCreateWindowEditor : EditorWindow
             GUILayout.Label("头发：", GUILayout.Width(100), GUILayout.Height(20));
             npcInfo.hair_id = EditorGUILayout.TextArea(npcInfo.hair_id + "", GUILayout.Width(200), GUILayout.Height(20));
             string hairPath = "Assets/Texture/Character/Hair/";
-            EditorUI.GUIPic(hairPath, npcInfo.hair_id);
+            EditorUI.GUIPic(hairPath + "/" + npcInfo.hair_id);
             GUILayout.Label("头发颜色：", GUILayout.Width(100), GUILayout.Height(20));
             ColorBean hairColorData = new ColorBean(npcInfo.hair_color);
             Color hairColor = hairColorData.GetColor(); ;
@@ -354,28 +354,28 @@ public class NpcCreateWindowEditor : EditorWindow
         string maskPath = "Assets/Texture/Character/Dress/Mask/";
         ItemsInfoBean maskInfo = GameItemsHandler.Instance.manager.GetItemsById(npcInfo.mask_id);
         if (maskInfo != null)
-            EditorUI.GUIPic(maskPath, maskInfo.icon_key);
+            EditorUI.GUIPic(maskPath + "/" + maskInfo.icon_key);
         EditorUI.GUIText("|", 10);
         EditorUI.GUIText("帽子：", 50);
         npcInfo.hat_id = long.Parse(EditorGUILayout.TextArea(npcInfo.hat_id + "", GUILayout.Width(100), GUILayout.Height(20)));
         string hatPath = "Assets/Texture/Character/Dress/Hat/";
         ItemsInfoBean hatInfo = GameItemsHandler.Instance.manager.GetItemsById(npcInfo.hat_id);
         if (hatInfo != null)
-            EditorUI.GUIPic(hatPath, hatInfo.icon_key);
+            EditorUI.GUIPic(hatPath + "/" + hatInfo.icon_key);
         EditorUI.GUIText("|", 10);
         EditorUI.GUIText("衣服：", 50);
         npcInfo.clothes_id = long.Parse(EditorGUILayout.TextArea(npcInfo.clothes_id + "", GUILayout.Width(100), GUILayout.Height(20)));
         string clothesPath = "Assets/Texture/Character/Dress/Clothes/";
         ItemsInfoBean clothesInfo = GameItemsHandler.Instance.manager.GetItemsById(npcInfo.clothes_id);
         if (clothesInfo != null)
-            EditorUI.GUIPic(clothesPath, clothesInfo.icon_key);
+            EditorUI.GUIPic(clothesPath + "/" + clothesInfo.icon_key);
         EditorUI.GUIText("|", 10);
         EditorUI.GUIText("鞋子：", 50);
         npcInfo.shoes_id = long.Parse(EditorGUILayout.TextArea(npcInfo.shoes_id + "", GUILayout.Width(100), GUILayout.Height(20)));
         string shoesPath = "Assets/Texture/Character/Dress/Shoes/";
         ItemsInfoBean shoesInfo = GameItemsHandler.Instance.manager.GetItemsById(npcInfo.shoes_id);
         if (shoesInfo != null)
-            EditorUI.GUIPic(shoesPath, shoesInfo.icon_key);
+            EditorUI.GUIPic(shoesPath + "/" + shoesInfo.icon_key);
         EditorUI.GUIText("|", 10);
         EditorUI.GUIText("武器：", 50);
         npcInfo.hand_id = long.Parse(EditorGUILayout.TextArea(npcInfo.hand_id + "", GUILayout.Width(100), GUILayout.Height(20)));
@@ -420,7 +420,7 @@ public class NpcCreateWindowEditor : EditorWindow
 
         if (GUILayout.Button("查询团队", GUILayout.Width(100), GUILayout.Height(20)))
         {
-            long[] findIds = StringUtil.SplitBySubstringForArrayLong(findIdsStr, ',');
+            long[] findIds = findIdsStr.SplitForArrayLong(',');
             listFindData = npcTeamService.QueryDataById(findIds);
         }
 
@@ -496,7 +496,7 @@ public class NpcCreateWindowEditor : EditorWindow
         GUILayout.Label("团队名称", GUILayout.Width(100), GUILayout.Height(20));
         npcTeamData.name = EditorGUILayout.TextArea(npcTeamData.name + "", GUILayout.Width(100), GUILayout.Height(20));
         GUILayout.Label("团队ID", GUILayout.Width(100), GUILayout.Height(20));
-        npcTeamData.id = long.Parse(EditorGUILayout.TextArea(npcTeamData.id + "", GUILayout.Width(100), GUILayout.Height(20)));
+        npcTeamData.id = int.Parse(EditorGUILayout.TextArea(npcTeamData.id + "", GUILayout.Width(100), GUILayout.Height(20)));
         npcTeamData.team_id = npcTeamData.id;
         GUILayout.Label("团队领袖IDs(,)", GUILayout.Width(100), GUILayout.Height(20));
         npcTeamData.team_leader = EditorGUILayout.TextArea(npcTeamData.team_leader + "", GUILayout.Width(200), GUILayout.Height(20));
@@ -680,7 +680,7 @@ public class NpcCreateWindowEditor : EditorWindow
         {
             TextInfoBean addText = new TextInfoBean();
             addText.mark_id = markId;
-            addText.id = addText.mark_id * 1000 + (listTextData.Count + 1);
+            addText.id = (int)(addText.mark_id * 1000 + (listTextData.Count + 1));
             addText.text_id = addText.id;
             addText.user_id = listTextData.Count > 0 ? listTextData[0].user_id : userId;
             addText.valid = 1;
@@ -710,7 +710,7 @@ public class NpcCreateWindowEditor : EditorWindow
                 textInfoService.DeleteDataById(TextEnum.Talk, itemTalkInfo.id);
             }
             GUILayout.Label("talkId：", GUILayout.Width(100), GUILayout.Height(20));
-            itemTalkInfo.id = long.Parse(EditorGUILayout.TextArea(itemTalkInfo.id + "", GUILayout.Width(150), GUILayout.Height(20)));
+            itemTalkInfo.id = int.Parse(EditorGUILayout.TextArea(itemTalkInfo.id + "", GUILayout.Width(150), GUILayout.Height(20)));
             itemTalkInfo.text_id = itemTalkInfo.id;
             GUILayout.Label("对话顺序：", GUILayout.Width(100), GUILayout.Height(20));
             itemTalkInfo.text_order = int.Parse(EditorGUILayout.TextArea(itemTalkInfo.text_order + "", GUILayout.Width(50), GUILayout.Height(20)));

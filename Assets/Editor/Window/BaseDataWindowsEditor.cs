@@ -37,7 +37,7 @@ public class BaseDataWindowsEditor : EditorWindow
             foreach (BaseDataBean itemData in listBaseData)
             {
                 GUILayout.BeginHorizontal();
-                BaseDataTypeEnum baseDataType = EnumUtil.GetEnum<BaseDataTypeEnum>(itemData.name);
+                BaseDataTypeEnum baseDataType = (BaseDataTypeEnum)itemData.id;
                 EditorUI.GUIText("ID:" + itemData.id, 120);
                 switch (baseDataType)
                 {

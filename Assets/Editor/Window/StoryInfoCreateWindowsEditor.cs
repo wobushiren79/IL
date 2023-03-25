@@ -115,7 +115,7 @@ public class StoryInfoCreateWindowsEditor : EditorWindow
             mCreateStoryInfo.id += mCreateStoryInfo.location_type * 100000;
         }
         inputId = EditorUI.GUIEditorText(inputId, 100, 20);
-        mCreateStoryInfo.id += inputId;
+        mCreateStoryInfo.id += (int)inputId;
         EditorUI.GUIText("id：" + mCreateStoryInfo.id, 150, 20);
         EditorUI.GUIText("备注：", 50, 20);
         mCreateStoryInfo.note = EditorUI.GUIEditorText(mCreateStoryInfo.note + "", 100, 20);
@@ -339,7 +339,7 @@ public class StoryInfoCreateWindowsEditor : EditorWindow
             if (listStoryTextInfo == null)
                 listStoryTextInfo = new List<TextInfoBean>();
             TextInfoBean textInfo = new TextInfoBean();
-            textInfo.id = itemData.text_mark_id * 1000 + listStoryTextInfo.Count + 1;
+            textInfo.id = (int)itemData.text_mark_id * 1000 + listStoryTextInfo.Count + 1;
             textInfo.text_id = textInfo.id;
             textInfo.type = 0;
             textInfo.mark_id = itemData.text_mark_id;
@@ -980,7 +980,7 @@ public class StoryInfoCreateWindowsEditor : EditorWindow
             }
             else if (storyInfoDetailsType == StoryInfoDetailsBean.StoryInfoDetailsTypeEnum.NpcDestory)
             {
-                int[] numList = StringUtil.SplitBySubstringForArrayInt(itemData.npc_destroy, ',');
+                int[] numList = itemData.npc_destroy.SplitForArrayInt(',');
                 foreach (int num in numList)
                 {
                     BaseNpcAI npcAI = CptUtil.GetCptInChildrenByName<BaseNpcAI>(StoryInfoHandler.Instance.builderForStory.gameObject, num + "");
@@ -991,13 +991,13 @@ public class StoryInfoCreateWindowsEditor : EditorWindow
             {
                 Vector3 cameraWorldPosition = StoryInfoHandler.Instance.builderForStory.transform.TransformPoint(new Vector3(itemData.position_x, itemData.position_y, -10));
 
-                GameCameraHandler.Instance.manager.camera2D.Follow = null;
-                GameCameraHandler.Instance.manager.camera2D.transform.position = cameraWorldPosition;
+                CameraHandler.Instance.manager.camera2D.Follow = null;
+                CameraHandler.Instance.manager.camera2D.transform.position = cameraWorldPosition;
             }
             else if (itemData.type == (int)StoryInfoDetailsBean.StoryInfoDetailsTypeEnum.CameraFollowCharacter)
             {
                 BaseNpcAI npcAI = CptUtil.GetCptInChildrenByName<BaseNpcAI>(StoryInfoHandler.Instance.builderForStory.gameObject,"character_"+ itemData.num);
-                GameCameraHandler.Instance.manager.camera2D.Follow = npcAI.transform;
+                CameraHandler.Instance.manager.camera2D.Follow = npcAI.transform;
             }
         }
     }
@@ -1084,14 +1084,14 @@ public class StoryInfoCreateWindowsEditor : EditorWindow
         EditorUI.GUIText("触发条件：", 100, 20);
         if (EditorUI.GUIButton("添加条件", 100, 20))
         {
-            storyInfo.trigger_condition += ("|" + EnumUtil.GetEnumName(EventTriggerEnum.Year) + ":" + "1|");
+            storyInfo.trigger_condition += ("|" + EventTriggerEnum.Year.GetEnumName() + ":" + "1|");
         }
-        List<string> listTriggerData = StringUtil.SplitBySubstringForListStr(storyInfo.trigger_condition, '|');
+        List<string> listTriggerData = storyInfo.trigger_condition.SplitForListStr('|');
         storyInfo.trigger_condition = "";
         for (int i = 0; i < listTriggerData.Count; i++)
         {
             string itemTriggerData = listTriggerData[i];
-            if (CheckUtil.StringIsNull(itemTriggerData))
+            if (itemTriggerData.IsNull())
             {
                 continue;
             }
@@ -1102,8 +1102,8 @@ public class StoryInfoCreateWindowsEditor : EditorWindow
                 i--;
                 continue;
             }
-            List<string> listItemTriggerData = StringUtil.SplitBySubstringForListStr(itemTriggerData, ':');
-            listItemTriggerData[0] = EnumUtil.GetEnumName(EditorUI.GUIEnum<EventTriggerEnum>("触发条件", (int)EnumUtil.GetEnum<EventTriggerEnum>(listItemTriggerData[0]), 300, 20));
+            List<string> listItemTriggerData = itemTriggerData.SplitForListStr(':');
+            listItemTriggerData[0] = EditorUI.GUIEnum<EventTriggerEnum>("触发条件", (int)listItemTriggerData[0].GetEnum<EventTriggerEnum>(), 300, 20).GetEnumName();
             listItemTriggerData[1] = EditorUI.GUIEditorText(listItemTriggerData[1] + "", 100, 20);
             EditorGUILayout.EndHorizontal();
             storyInfo.trigger_condition += (listItemTriggerData[0] + ":" + listItemTriggerData[1]) + "|";
