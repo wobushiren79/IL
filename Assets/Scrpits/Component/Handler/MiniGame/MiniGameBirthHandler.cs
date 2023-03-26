@@ -7,7 +7,7 @@ public class MiniGameBirthHandler : BaseMiniGameHandler<MiniGameBirthBuilder, Mi
 
     public List<MiniGameBirthSpermBean> listSperm = new List<MiniGameBirthSpermBean>();
 
-    protected override void Awake()
+    public override void Awake()
     {
         builderName = "MiniGameBirthBuilder";
         base.Awake();

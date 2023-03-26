@@ -4,41 +4,19 @@ using System.Collections.Generic;
 
 public class BaseDataController : BaseMVCController<BaseDataModel, IBaseDataView>
 {
-    public Dictionary<BaseDataTypeEnum, string> mapBaseData;
-
     public BaseDataController(BaseMonoBehaviour content, IBaseDataView view) : base(content, view)
     {
 
     }
-
     public override void InitData()
     {
 
     }
 
-    public void InitBaseData()
-    {
-        List<BaseDataBean> listData = GetModel().GetAllBaseData();
-        if (listData == null)
-            return;
-        mapBaseData = new Dictionary<BaseDataTypeEnum, string>();
-        foreach (BaseDataBean itemData in listData)
-        {
-            //BaseDataTypeEnum baseDataType = itemData.name.GetEnum<BaseDataTypeEnum>();
-           // mapBaseData.Add(baseDataType, itemData.content);
-        }
-    }
-
     public void GetBaseData(BaseDataTypeEnum baseDataType, out string data)
     {
-        if (mapBaseData.TryGetValue(baseDataType, out string value))
-        {
-            data = value;
-        }
-        else
-        {
-            data = null;
-        }
+        BaseInfoBean baseInfo = BaseInfoCfg.GetItemData((long)baseDataType);
+        data = baseInfo.content;
     }
 
     public void GetBaseData(BaseDataTypeEnum baseDataType,out int data)
@@ -79,4 +57,5 @@ public class BaseDataController : BaseMVCController<BaseDataModel, IBaseDataView
             data = 0;
         }
     }
+
 }

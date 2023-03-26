@@ -13,7 +13,7 @@ public class MiniGameDebateHandler : BaseMiniGameHandler<MiniGameDebateBuilder, 
     public float combatTime = 1f;
     //斗魅的UI
     public UIMiniGameDebate uiMiniGameDebate;
-    protected override void Awake()
+    public override void Awake()
     {
         builderName = "MiniGameDebateBuilder";
         base.Awake();

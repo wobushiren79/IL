@@ -22,7 +22,7 @@ public class BaseMiniGameHandler<B, D> : BaseHandler<BaseMiniGameHandler<B, D>,B
     //迷你游戏状态
     protected MiniGameStatusEnum miniGameStatus = MiniGameStatusEnum.GamePre;
 
-    protected virtual void Awake()
+    public override void Awake()
     {
         GameObject objModel = LoadAssetUtil.SyncLoadAsset<GameObject>("builder/minigame", builderName);
         if (objModel == null)

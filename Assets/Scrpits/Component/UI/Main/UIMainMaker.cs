@@ -1,19 +1,19 @@
 ﻿using UnityEngine;
 using UnityEditor;
 using UnityEngine.UI;
-public class UIMainMaker : BaseUIComponent
+public partial class UIMainMaker : BaseUIComponent
 {
-    public Button btBack;
-
-    private void Start()
+    public override void OnClickForButton(Button viewButton)
     {
-        if (btBack != null)
-            btBack.onClick.AddListener(OnClickBack);
+        if (viewButton == ui_Back)
+        {
+            OnClickBack();
+        }
     }
 
 
     public void OnClickBack()
-    {        
+    {
         //按键音效
         AudioHandler.Instance.PlaySound(AudioSoundEnum.ButtonForBack);
 

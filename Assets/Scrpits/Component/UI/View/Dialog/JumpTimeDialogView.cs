@@ -34,8 +34,9 @@ public class JumpTimeDialogView : DialogView
         GameTimeHandler.Instance.SetTimeStop();
     }
 
-    private void OnDisable()
+    public override void OnDisable()
     {
+        base.OnDisable();
         GameControlHandler.Instance.RestoreControl();
 
         GameTimeHandler.Instance.SetTimeStatus(false);

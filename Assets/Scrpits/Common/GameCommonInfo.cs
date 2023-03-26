@@ -32,7 +32,6 @@ public class GameCommonInfo
     static GameCommonInfo()
     {
         baseDataController = new BaseDataController(null, null);
-        baseDataController.InitBaseData();
 
         IconHandler.Instance.InitData();
     }

@@ -4,53 +4,16 @@ using UnityEngine.UI;
 using System.Collections.Generic;
 using DG.Tweening;
 
-public class UIMainCreate : BaseUIComponent,
+public partial class UIMainCreate : BaseUIComponent,
     IRadioGroupCallBack,
     ColorView.ICallBack,
     SelectView.ICallBack,
     DialogView.IDialogCallBack
 
 {
-    public GameObject objContent;
-
-    //返回按钮
-    public Button btBack;
-    public Text tvBack;
-    //开始按钮
-    public Button btCreate;
-    public Text tvCreate;
-    //按钮-随机角色
-    public Button btRandomCharacter;
-
-    public InputField etInnName;
-    public InputField etUserName;
-
-    //性别选择
-    public RadioGroupView rgSex;
-    //皮肤颜色
-    public ColorView colorSkin;
-    //发型
-    public ColorView colorHair;
-    public SelectView selectHair;
-    //眼睛
-    public ColorView colorEye;
-    public SelectView selectEye;
-    //嘴
-    public ColorView colorMouth;
-    public SelectView selectMouth;
-    //帽子
-    public SelectView selectHat;
-    //衣服
-    public SelectView selectClothes;
-    //鞋子
-    public SelectView selectShoes;
-    //属性
-    public UIMainCreateAttributesChange attributesChange;
-
-    //角色身体控制
-    public CharacterBodyCpt characterBodyCpt;
-    //角色着装控制
-    public CharacterDressCpt characterDressCpt;
+    public ColorView ui_ColorHair;
+    public ColorView ui_ColorEye;
+    public ColorView ui_ColorMouth;
 
     public List<IconBean> listSelectHair;
     public List<IconBean> listSelectEye;
@@ -60,60 +23,76 @@ public class UIMainCreate : BaseUIComponent,
     public List<ItemsInfoBean> listSelectClothes;
     public List<ItemsInfoBean> listSelectShoes;
 
-
+    public override void Awake()
+    {
+        base.Awake();
+        ui_ColorHair = ui_ItemMainCreateColorAndSelectView_Hair.GetComponent<ColorView>();
+        ui_ColorEye = ui_ItemMainCreateColorAndSelectView_Eye.GetComponent<ColorView>();
+        ui_ColorMouth = ui_ItemMainCreateColorAndSelectView_Mouth.GetComponent<ColorView>();
+    }
 
     private void Start()
     {
         InitData();
+        if (ui_Sex != null)
+            ui_Sex.SetCallBack(this);
+        if (ui_Skin != null)
+            ui_Skin.SetCallBack(this);
+        if (ui_ColorHair != null)
+            ui_ColorHair.SetCallBack(this);
+        if (ui_ItemMainCreateColorAndSelectView_Hair != null)
+        {
+            ui_ItemMainCreateColorAndSelectView_Hair.SetListData(listSelectHair.Count);
+            ui_ItemMainCreateColorAndSelectView_Hair.SetCallBack(this);
+        }
+        if (ui_ColorEye != null)
+            ui_ColorEye.SetCallBack(this);
+        if (ui_ItemMainCreateColorAndSelectView_Eye != null)
+        {
+            ui_ItemMainCreateColorAndSelectView_Eye.SetListData(listSelectEye.Count);
+            ui_ItemMainCreateColorAndSelectView_Eye.SetCallBack(this);
+        }
+        if (ui_ColorMouth != null)
+            ui_ColorMouth.SetCallBack(this);
+        if (ui_ItemMainCreateColorAndSelectView_Mouth != null)
+        {
+            ui_ItemMainCreateColorAndSelectView_Mouth.SetListData(listSelectMouth.Count);
+            ui_ItemMainCreateColorAndSelectView_Mouth.SetCallBack(this);
+        }
 
-        if (btBack != null)
-            btBack.onClick.AddListener(OpenStartUI);
-        if (btCreate != null)
-            btCreate.onClick.AddListener(CreateNewGame);
-        if (rgSex != null)
-            rgSex.SetCallBack(this);
-        if (colorSkin != null)
-            colorSkin.SetCallBack(this);
-        if (colorHair != null)
-            colorHair.SetCallBack(this);
-        if (selectHair != null)
+        if (ui_ItemMainCreateEquipView_Hat != null)
         {
-            selectHair.SetListData(listSelectHair.Count);
-            selectHair.SetCallBack(this);
+            ui_ItemMainCreateEquipView_Hat.SetListData(listSelectHat.Count);
+            ui_ItemMainCreateEquipView_Hat.SetCallBack(this);
         }
-        if (colorEye != null)
-            colorEye.SetCallBack(this);
-        if (selectEye != null)
+        if (ui_ItemMainCreateEquipView_Clothes != null)
         {
-            selectEye.SetListData(listSelectEye.Count);
-            selectEye.SetCallBack(this);
+            ui_ItemMainCreateEquipView_Clothes.SetListData(listSelectClothes.Count);
+            ui_ItemMainCreateEquipView_Clothes.SetCallBack(this);
         }
-        if (colorMouth != null)
-            colorMouth.SetCallBack(this);
-        if (selectMouth != null)
+        if (ui_ItemMainCreateEquipView_Shoes != null)
         {
-            selectMouth.SetListData(listSelectMouth.Count);
-            selectMouth.SetCallBack(this);
+            ui_ItemMainCreateEquipView_Shoes.SetListData(listSelectShoes.Count);
+            ui_ItemMainCreateEquipView_Shoes.SetCallBack(this);
         }
-        if (selectHat != null)
-        {
-            selectHat.SetListData(listSelectHat.Count);
-            selectHat.SetCallBack(this);
-        }
-        if (selectClothes != null)
-        {
-            selectClothes.SetListData(listSelectClothes.Count);
-            selectClothes.SetCallBack(this);
-        }
-        if (selectShoes != null)
-        {
-            selectShoes.SetListData(listSelectShoes.Count);
-            selectShoes.SetCallBack(this);
-        }
-        if (btRandomCharacter != null)
-            btRandomCharacter.onClick.AddListener(OnClickRandomCharacter);
     }
 
+
+    public override void OnClickForButton(Button viewButton)
+    {
+        if (viewButton == ui_BTBack)
+        {
+            OpenStartUI();
+        }
+        else if (viewButton == ui_BTCreate)
+        {
+            CreateNewGame();
+        }
+        else if (viewButton == ui_RandomCharacter)
+        {
+            OnClickRandomCharacter();
+        }
+    }
     public override void OpenUI()
     {
         base.OpenUI();
@@ -133,7 +112,7 @@ public class UIMainCreate : BaseUIComponent,
             iconBean.value = itemSprite;
             listSelectHair.Add(iconBean);
         }
-        ChangeSelectPosition(selectHair, 0);
+        ChangeSelectPosition(ui_ItemMainCreateColorAndSelectView_Hair, 0);
         //初始化可选择眼睛
         List<Sprite> listEye = CharacterBodyHandler.Instance.manager.GetCreateCharacterEye();
         listSelectEye = new List<IconBean>();
@@ -145,7 +124,7 @@ public class UIMainCreate : BaseUIComponent,
             iconBean.value = itemSprite;
             listSelectEye.Add(iconBean);
         }
-        ChangeSelectPosition(selectEye, 0);
+        ChangeSelectPosition(ui_ItemMainCreateColorAndSelectView_Eye, 0);
         //初始化可选择嘴巴
         List<Sprite> listMouth = CharacterBodyHandler.Instance.manager.GetCreateCharacterMouth();
         listSelectMouth = new List<IconBean>();
@@ -157,7 +136,7 @@ public class UIMainCreate : BaseUIComponent,
             iconBean.value = itemSprite;
             listSelectMouth.Add(iconBean);
         }
-        ChangeSelectPosition(selectMouth, 0);
+        ChangeSelectPosition(ui_ItemMainCreateColorAndSelectView_Hair, 0);
         //初始化帽子
         GameCommonInfo.baseDataController.GetBaseData(BaseDataTypeEnum.HatForLevel0, out string hatListStr);
         long[] listHat = hatListStr.SplitForArrayLong(',');
@@ -180,12 +159,12 @@ public class UIMainCreate : BaseUIComponent,
     /// </summary>
     public void AnimForInit()
     {
-        if (objContent != null)
-            objContent.transform.DOScaleX(0, 0.5f).From().SetEase(Ease.OutExpo);
-        if (btCreate != null)
-            btCreate.transform.DOScaleX(0, 0.5f).From().SetEase(Ease.OutBack);
-        if (btBack != null)
-            btBack.transform.DOScaleX(0, 0.5f).From().SetEase(Ease.OutBack).SetDelay(0.1f);
+        if (ui_CreateContent != null)
+            ui_CreateContent.transform.DOScaleX(0, 0.5f).From().SetEase(Ease.OutExpo);
+        if (ui_BTCreate != null)
+            ui_BTCreate.transform.DOScaleX(0, 0.5f).From().SetEase(Ease.OutBack);
+        if (ui_BTBack != null)
+            ui_BTBack.transform.DOScaleX(0, 0.5f).From().SetEase(Ease.OutBack).SetDelay(0.1f);
     }
 
     /// <summary>
@@ -196,12 +175,12 @@ public class UIMainCreate : BaseUIComponent,
         //按键音效
         AudioHandler.Instance.PlaySound(AudioSoundEnum.ButtonForNormal);
 
-        if (etInnName.text.IsNull())
+        if (ui_ETInnName.text.IsNull())
         {
             UIHandler.Instance.ToastHint<ToastView>(TextHandler.Instance.manager.GetTextById(1000));
             return;
         }
-        if (etUserName.text.IsNull())
+        if (ui_ETUserName.text.IsNull())
         {
             UIHandler.Instance.ToastHint<ToastView>(TextHandler.Instance.manager.GetTextById(1001));
             return;
@@ -227,21 +206,21 @@ public class UIMainCreate : BaseUIComponent,
     /// </summary>
     public void OnClickRandomCharacter ()
     {
-        colorSkin.RandomData();
-        colorHair.RandomData();
-        selectHair.RandomSelect();
+        ui_Skin.RandomData();
+        ui_ColorHair.RandomData();
+        ui_ItemMainCreateColorAndSelectView_Hair.RandomSelect();
 
 
-        colorEye.RandomData();
-        selectEye.RandomSelect();
+        ui_ColorEye.RandomData();
+        ui_ItemMainCreateColorAndSelectView_Eye.RandomSelect();
 
-        colorMouth.RandomData();
-        selectMouth.RandomSelect();
+        ui_ColorMouth.RandomData();
+        ui_ItemMainCreateColorAndSelectView_Mouth.RandomSelect();
 
-        selectClothes.RandomSelect();
-        selectShoes.RandomSelect();
+        ui_ItemMainCreateEquipView_Clothes.RandomSelect();
+        ui_ItemMainCreateEquipView_Shoes.RandomSelect();
 
-        attributesChange.RandomData();
+        ui_AttributesChange.RandomData();
     }
 
 
@@ -252,11 +231,11 @@ public class UIMainCreate : BaseUIComponent,
 
         if (position == 0)
         {
-            characterBodyCpt.SetSex(1,null);
+            ui_CharacterUI.SetSex(1, null);
         }
         else
         {
-            characterBodyCpt.SetSex(2, null);
+            ui_CharacterUI.SetSex(2, null);
         }
     }
 
@@ -269,21 +248,21 @@ public class UIMainCreate : BaseUIComponent,
     #region 颜色回调
     public void ColorChange(ColorView colorView, float r, float g, float b)
     {
-        if (colorView == colorSkin)
+        if (colorView == ui_Skin)
         {
-            characterBodyCpt.SetSkin(colorSkin.GetColor());
+            ui_CharacterUI.SetSkin(ui_Skin.GetColor());
         }
-        else if (colorView == colorHair)
+        else if (colorView == ui_ColorHair)
         {
-            characterBodyCpt.SetHairColor(colorHair.GetColor());
+            ui_CharacterUI.SetHairColor(ui_ColorHair.GetColor());
         }
-        else if (colorView == colorEye)
+        else if (colorView == ui_ColorEye)
         {
-            characterBodyCpt.SetEyeColor(colorEye.GetColor());
+            ui_CharacterUI.SetEyeColor(ui_ColorEye.GetColor());
         }
-        else if (colorView == colorMouth)
+        else if (colorView == ui_ColorMouth)
         {
-            characterBodyCpt.SetMouthColor(colorMouth.GetColor());
+            ui_CharacterUI.SetMouthColor(ui_ColorMouth.GetColor());
         }
 
     }
@@ -292,29 +271,29 @@ public class UIMainCreate : BaseUIComponent,
     #region 选择回调
     public void ChangeSelectPosition(SelectView selectView, int position)
     {
-        if (selectView == selectHair)
+        if (selectView == ui_ItemMainCreateColorAndSelectView_Hair)
         {
-            characterBodyCpt.SetHair(listSelectHair[position].key);
+            ui_CharacterUI.SetHair(listSelectHair[position].key,ui_ColorHair.GetColor());
         }
-        else if (selectView == selectEye)
+        else if (selectView == ui_ItemMainCreateColorAndSelectView_Eye)
         {
-            characterBodyCpt.SetEye(listSelectEye[position].key);
+            ui_CharacterUI.SetEye(listSelectEye[position].key,ui_ColorEye.GetColor());
         }
-        else if (selectView == selectMouth)
+        else if (selectView == ui_ItemMainCreateColorAndSelectView_Mouth)
         {
-            characterBodyCpt.SetMouth(listSelectMouth[position].key);
+            ui_CharacterUI.SetMouth(listSelectMouth[position].key,ui_ColorMouth.GetColor());
         }
-        else if (selectView == selectHat)
+        else if (selectView == ui_ItemMainCreateEquipView_Hat)
         {
-            characterDressCpt.SetHat(listSelectHat[position]);
+            ui_CharacterUI.SetHat(listSelectHat[position].id, ui_ColorHair.GetColor());
         }
-        else if (selectView == selectClothes)
+        else if (selectView == ui_ItemMainCreateEquipView_Clothes)
         {
-            characterDressCpt.SetClothes(listSelectClothes[position]);
+            ui_CharacterUI.SetClothes(listSelectClothes[position].id);
         }
-        else if (selectView == selectShoes)
+        else if (selectView == ui_ItemMainCreateEquipView_Shoes)
         {
-            characterDressCpt.SetShoes(listSelectShoes[position]);
+            ui_CharacterUI.SetShoes(listSelectShoes[position].id);
         }
     }
     #endregion
@@ -323,13 +302,13 @@ public class UIMainCreate : BaseUIComponent,
     public void Submit(DialogView dialogView, DialogBean dialogBean)
     {
         GameDataBean gameData = new GameDataBean();
-        gameData.innAttributes.innName = etInnName.text;
+        gameData.innAttributes.innName = ui_ETInnName.text;
 
         gameData.userCharacter = new CharacterBean();
-        gameData.userCharacter.baseInfo.name = etUserName.text;
-        gameData.userCharacter.body = characterBodyCpt.GetCharacterBodyData();
-        gameData.userCharacter.equips = characterDressCpt.GetCharacterEquipData();
-        attributesChange.GetAttributesPoints(out int cook, out int speed, out int account, out int charm, out int force, out int lucky);
+        gameData.userCharacter.baseInfo.name = ui_ETUserName.text;
+        gameData.userCharacter.body = ui_CharacterUI.characterBodyData;
+        gameData.userCharacter.equips = ui_CharacterUI.characterEquipData;
+        ui_AttributesChange.GetAttributesPoints(out int cook, out int speed, out int account, out int charm, out int force, out int lucky);
         gameData.userCharacter.attributes.cook = cook;
         gameData.userCharacter.attributes.speed = speed;
         gameData.userCharacter.attributes.account = account;

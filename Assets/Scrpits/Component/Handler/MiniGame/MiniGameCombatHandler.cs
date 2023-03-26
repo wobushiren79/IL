@@ -12,7 +12,7 @@ public class MiniGameCombatHandler : BaseMiniGameHandler<MiniGameCombatBuilder, 
     protected UIMiniGameCombat uiMiniGameCombat;
 
 
-    protected override void Awake()
+    public override void Awake()
     {
         builderName = "MiniGameCombatBuilder";
         base.Awake();

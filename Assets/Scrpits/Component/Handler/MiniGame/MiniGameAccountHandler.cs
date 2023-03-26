@@ -7,7 +7,7 @@ public class MiniGameAccountHandler : BaseMiniGameHandler<MiniGameAccountBuilder
     MiniGameAccountEjectorCpt.ICallBack
 {
 
-    protected override void Awake()
+    public override void Awake()
     {
         builderName = "MiniGameAccountBuilder";
         base.Awake(); 

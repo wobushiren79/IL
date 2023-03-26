@@ -26,8 +26,9 @@ public class SelectForBedDialogView : DialogView
         buildBedCpt.ShowRange(true);
     }
 
-    private void OnDisable()
+    public override void OnDisable()
     {
+        base.OnDisable();
         buildBedCpt.ShowRange(false);
     }
 

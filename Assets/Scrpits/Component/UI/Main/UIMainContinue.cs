@@ -5,20 +5,20 @@ using System.Collections.Generic;
 using DG.Tweening;
 using System;
 
-public class UIMainContinue : BaseUIComponent
+public partial class UIMainContinue : BaseUIComponent
 {
-    //返回按钮
-    public Button btBack;
-    public Text tvBack;
-    public Text tvNull;
-
-    public GameObject objGameDataContent;//列表
-    public GameObject objGameDataModel;//模型
-
-    private void Start()
+    public override void Awake()
     {
-        if (btBack != null)
-            btBack.onClick.AddListener(OpenStartUI);
+        base.Awake();
+        ui_ItemGameData.ShowObj(false);
+    }
+
+    public override void OnClickForButton(Button viewButton)
+    {
+        if (viewButton == ui_BTBack)
+        {
+            OpenStartUI();
+        }
     }
 
     public override void OpenUI()
@@ -42,21 +42,21 @@ public class UIMainContinue : BaseUIComponent
     /// <param name="listGameData"></param>
     public void CreateListItem(List<GameDataSimpleBean> listGameData)
     {
-        CptUtil.RemoveChildsByActive(objGameDataContent.transform);
+        ui_GameDataContent.transform.DestroyAllChild(true);
         if (listGameData.IsNull())
         {
-            tvNull.gameObject.SetActive(true);
+            ui_Null.gameObject.SetActive(true);
             return;
         }
-        tvNull.gameObject.SetActive(false);
+        ui_Null.gameObject.SetActive(false);
         for (int i = 0; i < listGameData.Count; i++)
         {
             GameDataSimpleBean gameDataSimple = listGameData[i];
-            if (gameDataSimple==null)
+            if (gameDataSimple == null)
             {
                 continue;
             }
-            GameObject itemGameObj = Instantiate(objGameDataModel, objGameDataContent.transform);
+            GameObject itemGameObj = Instantiate(ui_GameDataContent.gameObject, ui_ItemGameData.gameObject);
             itemGameObj.SetActive(true);
             ItemGameDataCpt itemGameDataCpt = itemGameObj.GetComponent<ItemGameDataCpt>();
             itemGameDataCpt.SetData(gameDataSimple);

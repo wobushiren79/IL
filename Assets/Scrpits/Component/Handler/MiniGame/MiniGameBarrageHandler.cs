@@ -6,8 +6,7 @@ using System.Collections.Generic;
 
 public class MiniGameBarrageHandler : BaseMiniGameHandler<MiniGameBarrageBuilder, MiniGameBarrageBean>, UIMiniGameCountDown.ICallBack, UIMiniGameEnd.ICallBack
 {
-
-    protected override void Awake()
+    public override void Awake()
     {
         builderName = "MiniGameBarrageBuilder";
         base.Awake();

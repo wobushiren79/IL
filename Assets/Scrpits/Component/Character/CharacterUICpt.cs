@@ -124,7 +124,12 @@ public class CharacterUICpt : BaseMonoBehaviour
             return;
         Sprite spHair = CharacterBodyHandler.Instance.manager.GetHairSpriteByName(hairName);
         ivHair.sprite = spHair;
-        if (spHair == null)
+        SetHairColor(hairColor);
+    }
+
+    public void SetHairColor(Color hairColor)
+    {
+        if (ivHair.sprite == null)
         {
             ivHair.color = new Color(1, 1, 1, 0);
         }
@@ -145,7 +150,12 @@ public class CharacterUICpt : BaseMonoBehaviour
             return;
         Sprite spEye = CharacterBodyHandler.Instance.manager.GetEyeSpriteByName(eyeName);
         ivEye.sprite = spEye;
-        if (spEye == null)
+        SetEyeColor(eyeColor);
+    }
+
+    public void SetEyeColor(Color eyeColor)
+    {
+        if (ivEye.sprite == null)
         {
             ivEye.color = new Color(1, 1, 1, 0);
         }
@@ -166,7 +176,12 @@ public class CharacterUICpt : BaseMonoBehaviour
             return;
         Sprite spMouth = CharacterBodyHandler.Instance.manager.GetMouthSpriteByName(mouthName);
         ivMouth.sprite = spMouth;
-        if (spMouth == null)
+        SetMouthColor(mouthColor);
+    }
+
+    public void SetMouthColor(Color mouthColor)
+    {
+        if (ivMouth.sprite == null)
         {
             ivMouth.color = new Color(1, 1, 1, 0);
         }

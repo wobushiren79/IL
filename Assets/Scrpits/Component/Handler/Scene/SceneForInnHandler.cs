@@ -5,8 +5,9 @@ using UnityEngine.AI;
 
 public class SceneForInnHandler : SceneBaseHandler
 {
-    private void Awake()
+    public override void Awake()
     {
+        base.Awake();
         GameTimeHandler.Instance.RegisterNotifyForTime(NotifyForTime);
     }
     private void OnDestroy()
