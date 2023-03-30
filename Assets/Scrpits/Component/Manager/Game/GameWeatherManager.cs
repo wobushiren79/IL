@@ -17,7 +17,7 @@ public class GameWeatherManager : BaseManager
         {
             if (_weatherSunny==null)
             {
-                _weatherSunny = CreateWeather<WeatherForSunnyCpt>("weather/weather", "Sunny");
+                _weatherSunny = CreateWeather<WeatherForSunnyCpt>("Assets/Prefabs/Effects/Weather/Sunny.prefab");
             }
             return _weatherSunny;
         }
@@ -29,7 +29,7 @@ public class GameWeatherManager : BaseManager
         {
             if (_weatherRain == null)
             {
-                _weatherRain = CreateWeather<WeatherForRainCpt>("weather/weather", "Rain");
+                _weatherRain = CreateWeather<WeatherForRainCpt>("Assets/Prefabs/Effects/Weather/Rain.prefab");
             }
             return _weatherRain;
         }
@@ -41,7 +41,7 @@ public class GameWeatherManager : BaseManager
         {
             if (_weatherFog == null)
             {
-                _weatherFog = CreateWeather<WeatherForFogCpt>("weather/weather", "Fog");
+                _weatherFog = CreateWeather<WeatherForFogCpt>("Assets/Prefabs/Effects/Weather/Fog.prefab");
             }
             return _weatherFog;
         }
@@ -53,7 +53,7 @@ public class GameWeatherManager : BaseManager
         {
             if (_weatherSnow == null)
             {
-                _weatherSnow = CreateWeather<WeatherForSnowCpt>("weather/weather", "Snow");
+                _weatherSnow = CreateWeather<WeatherForSnowCpt>("Assets/Prefabs/Effects/Weather/Snow.prefab");
             }
             return _weatherSnow;
         }
@@ -65,15 +65,15 @@ public class GameWeatherManager : BaseManager
         {
             if (_weatherWind == null)
             {
-                _weatherWind = CreateWeather<WeatherForWindCpt>("weather/weather", "Wind");
+                _weatherWind = CreateWeather<WeatherForWindCpt>("Assets/Prefabs/Effects/Weather/Wind.prefab");
             }
             return _weatherWind;
         }
     }
 
-    protected T CreateWeather<T>(string path,string name)
+    protected T CreateWeather<T>(string path)
     {
-        GameObject objMdoel = GetModel<GameObject>(path, name);
+        GameObject objMdoel = LoadAddressablesUtil.LoadAssetSync<GameObject>(path);
         GameObject objItem = Instantiate(gameObject, objMdoel);
         objItem.name = name;
         return objItem.GetComponent<T>();

@@ -192,6 +192,7 @@ public class ControlForWorkCpt : BaseControl, DialogView.IDialogCallBack
                         AudioHandler.Instance.PlaySound(AudioSoundEnum.ButtonForShow);
                         DialogBean dialogData = new DialogBean();
                         dialogData.dialogType = DialogEnum.SelectForNpc;
+                        dialogData.callBack = this;
                         dialogSelectView = UIHandler.Instance.ShowDialog<SelectForNpcDialogView>(dialogData);
                         ((SelectForNpcDialogView)dialogSelectView).SetData(selectNpc);
                         //如果是员工
@@ -212,6 +213,7 @@ public class ControlForWorkCpt : BaseControl, DialogView.IDialogCallBack
                         AudioHandler.Instance.PlaySound(AudioSoundEnum.ButtonForShow);
                         DialogBean dialogData = new DialogBean();
                         dialogData.dialogType = DialogEnum.SelectForBed;
+                        dialogData.callBack = this;
                         dialogSelectView = UIHandler.Instance.ShowDialog<SelectForBedDialogView>(dialogData);
                         ((SelectForBedDialogView)dialogSelectView).SetData(selectBed);
                         return;

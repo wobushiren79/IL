@@ -83,8 +83,7 @@ public class CharacterBodyManager : BaseManager
         {
             Sprite sprite = GetHairSpriteByName("character_hair_" + i);
             listData.Add(sprite);
-        }
-        return listData;
+        }        return listData;
     }
 
     /// <summary>

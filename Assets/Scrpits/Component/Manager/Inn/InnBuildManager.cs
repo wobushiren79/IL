@@ -23,53 +23,10 @@ public class InnBuildManager : BaseManager, IBuildDataView
     //家具模型列表
     public GameObjectDictionary dicFurnitureCpt = new GameObjectDictionary();
 
-
-    //家具图标
-    public SpriteAtlas atlasForFunrniture;
-    //墙壁图标
-    public SpriteAtlas atlasForWall;
-    //地板图标
-    public SpriteAtlas atlasForFloor;
-    //地板图标
-    public IconBeanDictionary dicFunrnitureIcon = new IconBeanDictionary();
-    //地板图标
-    public IconBeanDictionary dicFloorIcon = new IconBeanDictionary();
-    //墙体图标
-    public IconBeanDictionary dicWallIcon = new IconBeanDictionary();
-
     public void Awake()
     {
         buildDataController = new BuildDataController(this, this);
         buildDataController.GetAllBuildItemsData();
-    }
-
-    /// <summary>
-    /// 通过名字获取家具图标
-    /// </summary>
-    /// <returns></returns>
-    public Sprite GetFurnitureSpriteByName(string name)
-    {
-        return GetSpriteByName(dicFunrnitureIcon, ref atlasForFunrniture, "AtlasForFurniture", ProjectConfigInfo.ASSETBUNDLE_SPRITEATLAS, name);
-    }
-
-    /// <summary>
-    /// 通过名字获取地板图标
-    /// </summary>
-    /// <param name="name"></param>
-    /// <returns></returns>
-    public Sprite GetFloorSpriteByName(string name)
-    {
-        return GetSpriteByName(dicFloorIcon, ref atlasForFloor, "AtlasForFloor", ProjectConfigInfo.ASSETBUNDLE_SPRITEATLAS, name);
-    }
-
-    /// <summary>
-    /// 通过名字获取墙体图标
-    /// </summary>
-    /// <param name="name"></param>
-    /// <returns></returns>
-    public Sprite GetWallSpriteByName(string name)
-    {
-        return GetSpriteByName(dicWallIcon, ref atlasForWall, "AtlasForWall", ProjectConfigInfo.ASSETBUNDLE_SPRITEATLAS, name);
     }
 
     /// <summary>
@@ -80,7 +37,7 @@ public class InnBuildManager : BaseManager, IBuildDataView
     public GameObject GetFurnitureObjById(InnResBean furnitureData, Transform tfFather, BuildBedBean buildBedData)
     {
         BuildItemBean buildItemData = GetBuildDataById(furnitureData.id);
-        GameObject furnitureObjModel = GetModel(dicFurnitureCpt, "model/furniture", buildItemData.model_name);
+        GameObject furnitureObjModel = LoadAddressablesUtil.LoadAssetSync<GameObject>($"Assets/Prefabs/BuildItem/Base/{buildItemData.model_name}.prefab");
         GameObject furnitureObj = Instantiate(tfFather.gameObject, furnitureObjModel);
         BaseBuildItemCpt buildItemCpt = furnitureObj.GetComponent<BaseBuildItemCpt>();
         List<string> listIcon = buildItemData.GetIconList();
@@ -88,61 +45,61 @@ public class InnBuildManager : BaseManager, IBuildDataView
         {
             case BuildItemTypeEnum.Counter:
                 BuildCounterCpt buildCounter = (BuildCounterCpt)buildItemCpt;
-                Sprite spLeftCounter = GetFurnitureSpriteByName(listIcon[0] + "_0");
-                Sprite spRightCounter = GetFurnitureSpriteByName(listIcon[0] + "_1");
-                Sprite spDownCounter = GetFurnitureSpriteByName(listIcon[0] + "_2");
-                Sprite spUpCounter = GetFurnitureSpriteByName(listIcon[0] + "_3");
+                Sprite spLeftCounter = IconHandler.Instance.GetFurnitureSpriteByName(listIcon[0] + "_0");
+                Sprite spRightCounter = IconHandler.Instance.GetFurnitureSpriteByName(listIcon[0] + "_1");
+                Sprite spDownCounter = IconHandler.Instance.GetFurnitureSpriteByName(listIcon[0] + "_2");
+                Sprite spUpCounter = IconHandler.Instance.GetFurnitureSpriteByName(listIcon[0] + "_3");
                 buildCounter.SetData(buildItemData, spLeftCounter, spRightCounter, spDownCounter, spUpCounter);
                 break;
             case BuildItemTypeEnum.Stove:
                 BuildStoveCpt buildStove = (BuildStoveCpt)buildItemCpt;
-                Sprite spLeftStove = GetFurnitureSpriteByName(listIcon[0] + "_0");
-                Sprite spRightStove = GetFurnitureSpriteByName(listIcon[0] + "_1");
-                Sprite spDownStove = GetFurnitureSpriteByName(listIcon[0] + "_2");
-                Sprite spUpStove = GetFurnitureSpriteByName(listIcon[0] + "_3");
+                Sprite spLeftStove = IconHandler.Instance.GetFurnitureSpriteByName(listIcon[0] + "_0");
+                Sprite spRightStove = IconHandler.Instance.GetFurnitureSpriteByName(listIcon[0] + "_1");
+                Sprite spDownStove = IconHandler.Instance.GetFurnitureSpriteByName(listIcon[0] + "_2");
+                Sprite spUpStove = IconHandler.Instance.GetFurnitureSpriteByName(listIcon[0] + "_3");
                 buildStove.SetData(buildItemData, spLeftStove, spRightStove, spDownStove, spUpStove);
                 break;
             case BuildItemTypeEnum.Table:
                 BuildTableCpt buildTable = (BuildTableCpt)buildItemCpt;
 
-                Sprite spLeftChair = GetFurnitureSpriteByName(listIcon[1] + "_0");
-                Sprite spRightChair = GetFurnitureSpriteByName(listIcon[1] + "_1");
-                Sprite spDownChair = GetFurnitureSpriteByName(listIcon[1] + "_2");
-                Sprite spUpChair = GetFurnitureSpriteByName(listIcon[1] + "_3");
+                Sprite spLeftChair = IconHandler.Instance.GetFurnitureSpriteByName(listIcon[1] + "_0");
+                Sprite spRightChair = IconHandler.Instance.GetFurnitureSpriteByName(listIcon[1] + "_1");
+                Sprite spDownChair = IconHandler.Instance.GetFurnitureSpriteByName(listIcon[1] + "_2");
+                Sprite spUpChair = IconHandler.Instance.GetFurnitureSpriteByName(listIcon[1] + "_3");
 
                 if (buildItemData.model_name.Equals("Table_1"))
                 {
-                    Sprite spTable = GetFurnitureSpriteByName(listIcon[0]);
+                    Sprite spTable = IconHandler.Instance.GetFurnitureSpriteByName(listIcon[0]);
                     buildTable.SetData(buildItemData, spTable, spLeftChair, spRightChair, spDownChair, spUpChair);
                 }
                 else if (buildItemData.model_name.Equals("Table_2"))
                 {
-                    Sprite spLeftTable = GetFurnitureSpriteByName(listIcon[0] + "_0");
-                    Sprite spRightTable = GetFurnitureSpriteByName(listIcon[0] + "_1");
-                    Sprite spDownTable = GetFurnitureSpriteByName(listIcon[0] + "_2");
-                    Sprite spUpTable = GetFurnitureSpriteByName(listIcon[0] + "_3");
+                    Sprite spLeftTable = IconHandler.Instance.GetFurnitureSpriteByName(listIcon[0] + "_0");
+                    Sprite spRightTable = IconHandler.Instance.GetFurnitureSpriteByName(listIcon[0] + "_1");
+                    Sprite spDownTable = IconHandler.Instance.GetFurnitureSpriteByName(listIcon[0] + "_2");
+                    Sprite spUpTable = IconHandler.Instance.GetFurnitureSpriteByName(listIcon[0] + "_3");
                     buildTable.SetData(buildItemData, spLeftTable, spRightTable, spDownTable, spUpTable, spLeftChair, spRightChair, spDownChair, spUpChair);
                 }
 
                 break;
             case BuildItemTypeEnum.Decoration:
                 BuildDecorationCpt buildDecoration = (BuildDecorationCpt)buildItemCpt;
-                Sprite spDecoration = GetFurnitureSpriteByName(buildItemData.icon_key);
+                Sprite spDecoration = IconHandler.Instance.GetFurnitureSpriteByName(buildItemData.icon_key);
                 buildDecoration.SetData(buildItemData, spDecoration);
                 break;
             case BuildItemTypeEnum.Door:
                 BuildDoorCpt buildDoor = (BuildDoorCpt)buildItemCpt;
-                Sprite spDoor = GetFurnitureSpriteByName(listIcon[0]);
+                Sprite spDoor = IconHandler.Instance.GetFurnitureSpriteByName(listIcon[0]);
                 buildDoor.SetData(buildItemData, spDoor);
                 break;
             case BuildItemTypeEnum.Floor:
                 BuildFloorCpt buildFloor = (BuildFloorCpt)buildItemCpt;
-                Sprite spFloor = GetFloorSpriteByName(buildItemData.icon_key);
+                Sprite spFloor = IconHandler.Instance.GetFloorSpriteByName(buildItemData.icon_key);
                 buildFloor.SetData(buildItemData, spFloor);
                 break;
             case BuildItemTypeEnum.Wall:
                 BuildWallCpt buildWall = (BuildWallCpt)buildItemCpt;
-                Sprite spWall = GetWallSpriteByName(buildItemData.icon_key);
+                Sprite spWall = IconHandler.Instance.GetWallSpriteByName(buildItemData.icon_key);
                 buildWall.SetData(buildItemData, spWall);
                 break;
             case BuildItemTypeEnum.Bed:
@@ -188,7 +145,7 @@ public class InnBuildManager : BaseManager, IBuildDataView
     /// <returns></returns>
     public TileBase GetFloorTileByName(string name)
     {
-        return GetModel(dicFloorTile, "tile/floor", name);
+        return LoadAddressablesUtil.LoadAssetSync<TileBase>($"Assets/Tile/Tiles/Floor/{name}.asset");
     }
 
     /// <summary>
@@ -198,7 +155,7 @@ public class InnBuildManager : BaseManager, IBuildDataView
     /// <returns></returns>
     public TileBase GetWallTileByName(string name)
     {
-        return GetModel(dicWallTile, "tile/wall", name);
+        return LoadAddressablesUtil.LoadAssetSync<TileBase>($"Assets/Tile/Tiles/Wall/{name}.asset");
     }
 
     /// <summary>
@@ -208,7 +165,7 @@ public class InnBuildManager : BaseManager, IBuildDataView
     /// <returns></returns>
     public TileBase GetGroundTileByName(string name)
     {
-        return GetModel(dicGroundTile, "tile/ground", name);
+        return LoadAddressablesUtil.LoadAssetSync<TileBase>($"Assets/Tile/Tiles/Ground/{name}.asset");
     }
 
     /// <summary>
@@ -218,7 +175,7 @@ public class InnBuildManager : BaseManager, IBuildDataView
     /// <returns></returns>
     public TileBase GetOtherTileByName(string name)
     {
-        return GetModel(dicOtherTile, "tile/other", name);
+        return LoadAddressablesUtil.LoadAssetSync<TileBase>($"Assets/Tile/Tiles/Other/{name}.asset");
     }
 
     #region 建筑数据回调

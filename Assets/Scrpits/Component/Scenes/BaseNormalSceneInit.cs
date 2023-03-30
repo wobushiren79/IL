@@ -76,6 +76,7 @@ public abstract class BaseNormalSceneInit : BaseSceneInit, DialogView.IDialogCal
             dialogBean.content = TextHandler.Instance.manager.GetTextById(3014);
         }
         dialogBean.dialogType = DialogEnum.Text;
+        dialogBean.callBack = this;
         UIHandler.Instance.ShowDialog<DialogView>(dialogBean);
 
         //重置游戏时间

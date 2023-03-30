@@ -284,6 +284,7 @@ public class ItemTownGuildImproveCharacterCpt : ItemGameBaseCpt, DialogView.IDia
         dialogData.content = contentStr;
         dialogData.dialogPosition = type;
         dialogData.dialogType = DialogEnum.Normal;
+        dialogData.callBack = this;
         UIHandler.Instance.ShowDialog<DialogView>(dialogData);
     }
 

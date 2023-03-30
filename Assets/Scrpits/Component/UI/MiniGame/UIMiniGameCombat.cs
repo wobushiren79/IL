@@ -308,6 +308,7 @@ public class UIMiniGameCombat : UIBaseMiniGame<MiniGameCombatBean>
 
             DialogBean dialogData = new DialogBean();
             dialogData.dialogType = DialogEnum.PowerTest;
+            dialogData.callBack = this;
             PowerTestDialogView powerTestDialog = UIHandler.Instance.ShowDialog<PowerTestDialogView>(dialogData);
             powerTestDialog.SetCallBack(this);
             powerTestDialog.SetData(1.5f, 1);

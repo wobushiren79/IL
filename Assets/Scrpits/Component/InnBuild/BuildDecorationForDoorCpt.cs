@@ -17,11 +17,11 @@ public class BuildDecorationForDoorCpt : BuildDecorationCpt
         base.SetData(buildItemData);
 
         List<string> listIconStr = buildItemData.GetIconList();
-        Sprite spLeftAndRight = InnBuildHandler.Instance.manager.GetFurnitureSpriteByName(listIconStr[0] + "_0");
-        Sprite spUpAndDown = InnBuildHandler.Instance.manager.GetFurnitureSpriteByName(listIconStr[0] + "_2");
+        Sprite spLeftAndRight = IconHandler.Instance.GetFurnitureSpriteByName(listIconStr[0] + "_0");
+        Sprite spUpAndDown = IconHandler.Instance.GetFurnitureSpriteByName(listIconStr[0] + "_2");
 
-        spLeftAndRightOpen = InnBuildHandler.Instance.manager.GetFurnitureSpriteByName(listIconStr[0] + "_1");
-        spUpAndDownOpen = InnBuildHandler.Instance.manager.GetFurnitureSpriteByName(listIconStr[0] + "_3");
+        spLeftAndRightOpen = IconHandler.Instance.GetFurnitureSpriteByName(listIconStr[0] + "_1");
+        spUpAndDownOpen = IconHandler.Instance.GetFurnitureSpriteByName(listIconStr[0] + "_3");
         SetSprite(spLeftAndRight, spLeftAndRight, spUpAndDown, spUpAndDown);
     }
 

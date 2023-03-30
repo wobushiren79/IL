@@ -229,6 +229,7 @@ public class ItemTownArenaCpt : ItemGameBaseCpt, DialogView.IDialogCallBack
         string gameTime = miniGameData.preGameTime + TextHandler.Instance.manager.GetTextById(37);
         dialogData.content = string.Format(TextHandler.Instance.manager.GetTextById(3021), gameName, gameTime);
         dialogData.dialogType = DialogEnum.Normal;
+        dialogData.callBack = this;
         UIHandler.Instance.ShowDialog<DialogView>(dialogData);
         arenaJoinType = 1;
     }
@@ -251,6 +252,7 @@ public class ItemTownArenaCpt : ItemGameBaseCpt, DialogView.IDialogCallBack
         string gameTime = miniGameData.preGameTime + TextHandler.Instance.manager.GetTextById(37);
         dialogData.content = string.Format(TextHandler.Instance.manager.GetTextById(3022), gameName, gameTime);
         dialogData.dialogType = DialogEnum.Normal;
+        dialogData.callBack = this;
         UIHandler.Instance.ShowDialog<DialogView>(dialogData);
         arenaJoinType = 2;
     }
@@ -330,6 +332,7 @@ public class ItemTownArenaCpt : ItemGameBaseCpt, DialogView.IDialogCallBack
             //弹出选人界面
             DialogBean dialogData = new DialogBean();
             dialogData.dialogType = DialogEnum.PickForCharacter;
+            dialogData.callBack = this;
             PickForCharacterDialogView pickForCharacterDialog = UIHandler.Instance.ShowDialog<PickForCharacterDialogView>(dialogData);
             pickForCharacterDialog.SetPickCharacterMax(1);
             List<string> listExpelCharacterId = new List<string>();

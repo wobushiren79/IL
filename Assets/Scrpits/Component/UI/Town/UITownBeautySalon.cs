@@ -206,6 +206,7 @@ public class UITownBeautySalon : UIBaseOne, IRadioGroupCallBack, ItemTownBeautyS
     {
         DialogBean dialogData = new DialogBean();
         dialogData.dialogType = DialogEnum.PickForCharacter;
+        dialogData.callBack = this;
         PickForCharacterDialogView pickForCharacterDialog = UIHandler.Instance.ShowDialog<PickForCharacterDialogView>(dialogData);
         pickForCharacterDialog.SetPickCharacterMax(1);
 
@@ -241,6 +242,7 @@ public class UITownBeautySalon : UIBaseOne, IRadioGroupCallBack, ItemTownBeautyS
             price += priceS + TextHandler.Instance.manager.GetTextById(18);
         }
         dialogData.dialogType = DialogEnum.Normal;
+        dialogData.callBack = this;
         dialogData.content = string.Format(TextHandler.Instance.manager.GetTextById(3104), price, characterData.baseInfo.name);
         UIHandler.Instance.ShowDialog<DialogView>(dialogData);
     }

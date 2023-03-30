@@ -60,6 +60,7 @@ public class MiniGameBirthHandler : BaseMiniGameHandler<MiniGameBirthBuilder, Mi
                 DialogBean dialogData = new DialogBean();
                 dialogData.title = TextHandler.Instance.manager.GetTextById(8011);
                 dialogData.dialogType = DialogEnum.InputText;
+                dialogData.callBack = this;
                 UIHandler.Instance.ShowDialog<InputTextDialogView>(dialogData);
                 //设置游戏数据
                 miniGameData.SetGameResult(MiniGameResultEnum.Win);

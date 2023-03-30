@@ -169,6 +169,7 @@ public class ItemDialogPickForSellCpt : BaseMonoBehaviour, DialogView.IDialogCal
         DialogBean dialogData = new DialogBean();
         dialogData.content = string.Format(TextHandler.Instance.manager.GetTextById(3102), tvName.text, sellNumber + "");
         dialogData.dialogType = DialogEnum.Normal;
+        dialogData.callBack = this;
         UIHandler.Instance.ShowDialog<DialogView>(dialogData);
     }
 

@@ -176,6 +176,7 @@ public class SceneGameInnInit : BaseSceneInit, DialogView.IDialogCallBack
             dialogBean.content = TextHandler.Instance.manager.GetTextById(3014);
         }
         dialogBean.dialogType = DialogEnum.Text;
+        dialogBean.callBack = this;
         UIHandler.Instance.ShowDialog<DialogView>(dialogBean);
     }
 

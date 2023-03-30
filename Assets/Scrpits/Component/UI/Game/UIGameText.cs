@@ -275,6 +275,7 @@ public class UIGameText : BaseUIComponent, DialogView.IDialogCallBack
                     else if (textData.content.Equals(TextHandler.Instance.manager.GetTextById(99105)))
                     {
                         DialogBean dialogData = new DialogBean();
+                        dialogData.callBack = this;
                         dialogData.dialogType = DialogEnum.PickForItems;
                         PickForItemsDialogView pickForItemsDialog = UIHandler.Instance.ShowDialog<PickForItemsDialogView>(dialogData);
                         pickForItemsDialog.SetData(null, ItemsSelectionDialogView.SelectionTypeEnum.Gift);
@@ -317,6 +318,7 @@ public class UIGameText : BaseUIComponent, DialogView.IDialogCallBack
                             DialogBean dialogData = new DialogBean();
                             dialogData.content = string.Format(TextHandler.Instance.manager.GetTextById(3121), mTalkNpcInfo.name);
                             dialogData.dialogType = DialogEnum.Normal;
+                            dialogData.callBack = this;
                             UIHandler.Instance.ShowDialog<DialogView>(dialogData);
                             NextText(textData.next_order);
                         }

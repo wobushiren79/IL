@@ -84,6 +84,7 @@ public class ItemMountainInfiniteTowersCpt : ItemGameBaseCpt,DialogView.IDialogC
         dialogData.content = TextHandler.Instance.manager.GetTextById(3111);
         dialogData.dialogPosition = 0;
         dialogData.dialogType = DialogEnum.Normal;
+        dialogData.callBack = this;
         UIHandler.Instance.ShowDialog<DialogView>(dialogData);
     }
 

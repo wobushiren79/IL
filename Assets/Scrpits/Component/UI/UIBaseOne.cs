@@ -102,6 +102,7 @@ public class UIBaseOne : BaseUIComponent, DialogView.IDialogCallBack
         DialogBean dialogData = new DialogBean();
         dialogData.title = TextHandler.Instance.manager.GetTextById(3101);
         dialogData.dialogType = DialogEnum.PickForSell;
+        dialogData.callBack = this;
         pickForSellDialog = UIHandler.Instance.ShowDialog<PickForSellDialogView>(dialogData);
     }
 

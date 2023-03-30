@@ -29,24 +29,24 @@ public class BuildItemTypeEnumTools
         switch ((BuildItemTypeEnum)buildItem.build_type)
         {
             case BuildItemTypeEnum.Floor:
-                return InnBuildHandler.Instance.manager.GetFloorSpriteByName(buildItem.icon_key);
+                return IconHandler.Instance.GetFloorSpriteByName(buildItem.icon_key);
             case BuildItemTypeEnum.Wall:
-                return InnBuildHandler.Instance.manager.GetWallSpriteByName(buildItem.icon_key);
+                return IconHandler.Instance.GetWallSpriteByName(buildItem.icon_key);
             case BuildItemTypeEnum.Table:
                 if (buildItem.model_name.Equals(BuildItemModelTypeEnum.Table_1.GetEnumName()))
                 {
-                    return InnBuildHandler.Instance.manager.GetFurnitureSpriteByName(buildItem.icon_key);
+                    return IconHandler.Instance.GetFurnitureSpriteByName(buildItem.icon_key);
                 }
                 else if (buildItem.model_name.Equals(BuildItemModelTypeEnum.Table_2.GetEnumName()))
                 {
-                    return InnBuildHandler.Instance.manager.GetFurnitureSpriteByName(buildItem.icon_key + "_2");
+                    return IconHandler.Instance.GetFurnitureSpriteByName(buildItem.icon_key + "_2");
                 }
                 else
                 {
-                    return InnBuildHandler.Instance.manager.GetFurnitureSpriteByName(buildItem.icon_key);
+                    return IconHandler.Instance.GetFurnitureSpriteByName(buildItem.icon_key);
                 }
             default:
-                return InnBuildHandler.Instance.manager.GetFurnitureSpriteByName(buildItem.icon_key);
+                return IconHandler.Instance.GetFurnitureSpriteByName(buildItem.icon_key);
         }
     }
 

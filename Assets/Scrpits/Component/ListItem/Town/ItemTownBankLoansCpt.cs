@@ -64,6 +64,7 @@ public class ItemTownBankLoansCpt : ItemGameBaseCpt, DialogView.IDialogCallBack
 
         DialogBean dialogData = new DialogBean
         {
+            callBack = this,
             dialogType = DialogEnum.Normal,
             content = string.Format(TextHandler.Instance.manager.GetTextById(3091), tvMoneyS.text, tvDays.text)
         };

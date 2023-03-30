@@ -3,13 +3,8 @@ using UnityEditor;
 using UnityEngine.UI;
 using System.Collections.Generic;
 
-public class UIGameSetting : BaseUIComponent, DropdownView.ICallBack, ProgressView.ICallBack, DialogView.IDialogCallBack, IRadioButtonCallBack
+public partial class UIGameSetting : BaseUIComponent, DropdownView.ICallBack, ProgressView.ICallBack, DialogView.IDialogCallBack, IRadioButtonCallBack
 {
-    public Button btExitGame;
-    public Button btGoMain;
-    public Button btRestartDay;
-
-    public Button btBack;
     public DropdownView dvLanguage;
     public DropdownView dvWindow;
     public DropdownView dvCheckOut;
@@ -33,10 +28,6 @@ public class UIGameSetting : BaseUIComponent, DropdownView.ICallBack, ProgressVi
     public void Start()
     {
         GameConfigBean gameConfig = GameDataHandler.Instance.manager.GetGameConfig();
-        if (btBack != null)
-        {
-            btBack.onClick.AddListener(OnClickBack);
-        }
         if (dvWindow != null)
         {
             dvWindow.SetCallBack(this);
@@ -267,10 +258,27 @@ public class UIGameSetting : BaseUIComponent, DropdownView.ICallBack, ProgressVi
                 rbTownerInfo.ChangeStates(true);
             }
         }
+    }
 
-        btExitGame.onClick.AddListener(OnClickExitGame);
-        btGoMain.onClick.AddListener(OnClickGoMain);
-        btRestartDay.onClick.AddListener(OnClickRestartDay);
+    public override void OnClickForButton(Button viewButton)
+    {
+        if (viewButton == ui_ExitGame)
+        {
+            OnClickExitGame();
+    
+        }
+        else if (viewButton == ui_GoMain)
+        {
+            OnClickGoMain();
+        }
+        else if (viewButton == ui_RestartDay)
+        {
+            OnClickRestartDay();
+        }
+        else if (viewButton == ui_BT_Back)
+        {
+            OnClickBack();
+        }
     }
 
     public override void OpenUI()
@@ -279,15 +287,15 @@ public class UIGameSetting : BaseUIComponent, DropdownView.ICallBack, ProgressVi
         //离开游戏回到主菜单初始化
         if (SceneUtil.GetCurrentScene() == ScenesEnum.MainScene)
         {
-            btExitGame.gameObject.SetActive(false);
-            btGoMain.gameObject.SetActive(false);
-            btRestartDay.gameObject.SetActive(false);
+            ui_ExitGame.gameObject.SetActive(false);
+            ui_GoMain.gameObject.SetActive(false);
+            ui_RestartDay.gameObject.SetActive(false);
         }
         else
         {
-            btExitGame.gameObject.SetActive(true);
-            btGoMain.gameObject.SetActive(true);
-            btRestartDay.gameObject.SetActive(true);
+            ui_ExitGame.gameObject.SetActive(true);
+            ui_GoMain.gameObject.SetActive(true);
+            ui_RestartDay.gameObject.SetActive(true);
         }
     }
 
@@ -316,11 +324,12 @@ public class UIGameSetting : BaseUIComponent, DropdownView.ICallBack, ProgressVi
     public void OnClickExitGame()
     {
         AudioHandler.Instance.PlaySound(AudioSoundEnum.ButtonForNormal);
-        DialogBean dialogBean = new DialogBean();
-        dialogBean.dialogType = DialogEnum.Normal;
-        dialogBean.dialogPosition = 1;
-        dialogBean.content = TextHandler.Instance.manager.GetTextById(3081);
-        UIHandler.Instance.ShowDialog<DialogView>(dialogBean);
+        DialogBean dialogData = new DialogBean();
+        dialogData.dialogType = DialogEnum.Normal;
+        dialogData.dialogPosition = 1;
+        dialogData.callBack = this;
+        dialogData.content = TextHandler.Instance.manager.GetTextById(3081);
+        UIHandler.Instance.ShowDialog<DialogView>(dialogData);
     }
 
     /// <summary>
@@ -329,11 +338,12 @@ public class UIGameSetting : BaseUIComponent, DropdownView.ICallBack, ProgressVi
     public void OnClickGoMain()
     {
         AudioHandler.Instance.PlaySound(AudioSoundEnum.ButtonForNormal);
-        DialogBean dialogBean = new DialogBean();
-        dialogBean.dialogType = DialogEnum.Normal;
-        dialogBean.dialogPosition = 2;
-        dialogBean.content = TextHandler.Instance.manager.GetTextById(3082);
-        UIHandler.Instance.ShowDialog<DialogView>(dialogBean);
+        DialogBean dialogData = new DialogBean();
+        dialogData.dialogType = DialogEnum.Normal;
+        dialogData.dialogPosition = 2;
+        dialogData.callBack = this;
+        dialogData.content = TextHandler.Instance.manager.GetTextById(3082);
+        UIHandler.Instance.ShowDialog<DialogView>(dialogData);
     }
 
     /// <summary>
@@ -342,11 +352,12 @@ public class UIGameSetting : BaseUIComponent, DropdownView.ICallBack, ProgressVi
     public void OnClickRestartDay()
     {
         AudioHandler.Instance.PlaySound(AudioSoundEnum.ButtonForNormal);
-        DialogBean dialogBean = new DialogBean();
-        dialogBean.dialogPosition = 3;
-        dialogBean.dialogType = DialogEnum.Normal;
-        dialogBean.content = TextHandler.Instance.manager.GetTextById(3083);
-        UIHandler.Instance.ShowDialog<DialogView>(dialogBean);
+        DialogBean dialogData = new DialogBean();
+        dialogData.dialogPosition = 3;
+        dialogData.callBack = this;
+        dialogData.dialogType = DialogEnum.Normal;
+        dialogData.content = TextHandler.Instance.manager.GetTextById(3083);
+        UIHandler.Instance.ShowDialog<DialogView>(dialogData);
     }
 
     /// <summary>

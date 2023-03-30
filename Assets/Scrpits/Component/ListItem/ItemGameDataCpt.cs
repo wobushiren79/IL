@@ -157,6 +157,7 @@ public class ItemGameDataCpt : ItemGameBaseCpt, DialogView.IDialogCallBack
         DialogBean dialogData = new DialogBean();
         dialogData.content = TextHandler.Instance.manager.GetTextById(3011);
         dialogData.dialogType = DialogEnum.Normal;
+        dialogData.callBack = this;
         UIHandler.Instance.ShowDialog<DialogView>(dialogData);
     }
 

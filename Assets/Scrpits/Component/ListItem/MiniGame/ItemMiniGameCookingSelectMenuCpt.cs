@@ -50,6 +50,7 @@ public class ItemMiniGameCookingSelectMenuCpt : ItemGameBaseCpt, DialogView.IDia
         DialogBean dialogData = new DialogBean();
         dialogData.content = string.Format(TextHandler.Instance.manager.GetTextById(3051), menuInfo.name);
         dialogData.dialogType = DialogEnum.Normal;
+        dialogData.callBack = this;
         UIHandler.Instance.ShowDialog<DialogView>(dialogData);
     }
 

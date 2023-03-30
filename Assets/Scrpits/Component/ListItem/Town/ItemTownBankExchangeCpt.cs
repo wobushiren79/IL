@@ -253,11 +253,12 @@ public class ItemTownBankExchangeCpt : ItemGameBaseCpt, DialogView.IDialogCallBa
             return;
         }
 
-        DialogBean dialogBean = new DialogBean();
+        DialogBean dialogData = new DialogBean();
         mExchangeMoneyStr = exchangeMoney + moneyNewUnit + "";
-        dialogBean.content = string.Format(TextHandler.Instance.manager.GetTextById(3041), payMoney + moneyOldUnit + "", mExchangeMoneyStr);
-        dialogBean.dialogType = DialogEnum.Normal;
-        UIHandler.Instance.ShowDialog<DialogView>(dialogBean);
+        dialogData.content = string.Format(TextHandler.Instance.manager.GetTextById(3041), payMoney + moneyOldUnit + "", mExchangeMoneyStr);
+        dialogData.dialogType = DialogEnum.Normal;
+        dialogData.callBack = this;
+        UIHandler.Instance.ShowDialog<DialogView>(dialogData);
     }
 
     private long mPayMoneyL = 0;

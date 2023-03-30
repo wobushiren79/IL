@@ -67,6 +67,7 @@ public class UIMiniGameCombatCommand : BaseUIView, DialogView.IDialogCallBack
 
         DialogBean dialogData = new DialogBean();
         dialogData.dialogType = DialogEnum.PickForSkill;
+        dialogData.callBack = this;
         PickForSkillDialogView pickForSkillDialog = UIHandler.Instance.ShowDialog<PickForSkillDialogView>(dialogData);
         Dictionary<long, int> listUsedSkill = npcCpt.characterMiniGameData.listUsedSkill;
         pickForSkillDialog.SetData(listSkill, listUsedSkill);
@@ -83,6 +84,7 @@ public class UIMiniGameCombatCommand : BaseUIView, DialogView.IDialogCallBack
 
         DialogBean dialogData = new DialogBean();
         dialogData.dialogType = DialogEnum.PickForItems;
+        dialogData.callBack = this;
         PickForItemsDialogView pickForItemsDialog = UIHandler.Instance.ShowDialog<PickForItemsDialogView>(dialogData);
         pickForItemsDialog.SetData(new List<GeneralEnum>() { GeneralEnum.Medicine }, ItemsSelectionDialogView.SelectionTypeEnum.Use);
     }

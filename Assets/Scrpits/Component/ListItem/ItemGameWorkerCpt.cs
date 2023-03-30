@@ -268,6 +268,7 @@ public class ItemGameWorkerCpt : ItemGameBaseCpt, DialogView.IDialogCallBack, Wo
                 DialogBean dialogData = new DialogBean();
                 dialogData.content = string.Format(TextHandler.Instance.manager.GetTextById(3063), characterData.baseInfo.name);
                 dialogData.dialogType = DialogEnum.Normal;
+                dialogData.callBack = this;
                 UIHandler.Instance.ShowDialog<DialogView>(dialogData);
             }
             else
@@ -286,6 +287,7 @@ public class ItemGameWorkerCpt : ItemGameBaseCpt, DialogView.IDialogCallBack, Wo
         DialogBean dialogData = new DialogBean();
         // dialogData.content = string.Format(TextHandler.Instance.manager.GetTextById(3063), characterData.baseInfo.name);
         dialogData.dialogType = DialogEnum.PickForItems;
+        dialogData.callBack = this;
         PickForItemsDialogView dialogView = UIHandler.Instance.ShowDialog<PickForItemsDialogView>(dialogData);
         dialogView.SetData(null, ItemsSelectionDialogView.SelectionTypeEnum.Gift);
         dialogView.SetSubmitDestroy(false);

@@ -170,12 +170,14 @@ public class ItemTownCerpenterCpt : ItemTownStoreCpt, DialogView.IDialogCallBack
             else
                 dialogBean.content = string.Format(TextHandler.Instance.manager.GetTextById(3002), buildItemData.name);
             dialogBean.dialogType = DialogEnum.Normal;
+            dialogBean.callBack = this;
             UIHandler.Instance.ShowDialog<DialogView>(dialogBean);
         }
         else
         {
             DialogBean dialogBean = new DialogBean();
             dialogBean.dialogType = DialogEnum.PickForNumber;
+            dialogBean.callBack = this;
             PickForNumberDialogView dialogView = UIHandler.Instance.ShowDialog<PickForNumberDialogView>(dialogBean);
             dialogView.SetData(ivIcon.sprite, 999);
         }

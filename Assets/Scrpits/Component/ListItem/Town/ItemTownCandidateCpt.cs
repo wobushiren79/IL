@@ -36,10 +36,11 @@ public class ItemTownCandidateCpt : ItemGameBaseCpt, DialogView.IDialogCallBack
             return;
         };
         //确认
-        DialogBean dialogBean = new DialogBean();
-        dialogBean.dialogType = DialogEnum.Normal;
-        dialogBean.content = string.Format(TextHandler.Instance.manager.GetTextById(3061), characterData.baseInfo.priceS + "", characterData.baseInfo.name + "");
-        UIHandler.Instance.ShowDialog<DialogView>(dialogBean);
+        DialogBean dialogData = new DialogBean();
+        dialogData.dialogType = DialogEnum.Normal;
+        dialogData.callBack = this;
+        dialogData.content = string.Format(TextHandler.Instance.manager.GetTextById(3061), characterData.baseInfo.priceS + "", characterData.baseInfo.name + "");
+        UIHandler.Instance.ShowDialog<DialogView>(dialogData);
     }
 
     public void SetData(CharacterBean characterData)

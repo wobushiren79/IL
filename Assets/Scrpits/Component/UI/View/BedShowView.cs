@@ -24,27 +24,27 @@ public class BedShowView : BaseMonoBehaviour
     {
         if (ivBedBase == null)
             return;
-        ivBedBase.sprite = InnBuildHandler.Instance.manager.GetFurnitureSpriteByName(bedBaseData.icon_key);
+        ivBedBase.sprite = IconHandler.Instance.GetFurnitureSpriteByName(bedBaseData.icon_key);
     }
 
     public void SetBarData(BuildItemBean bedBarData)
     {
         if (ivBedBar == null)
             return;
-        ivBedBar.sprite = InnBuildHandler.Instance.manager.GetFurnitureSpriteByName(bedBarData.icon_key);
+        ivBedBar.sprite = IconHandler.Instance.GetFurnitureSpriteByName(bedBarData.icon_key);
     }
 
     public void SetSheetsData(BuildItemBean bedSheetsData)
     {
         if (ivBedSheets == null)
             return;
-        ivBedSheets.sprite = InnBuildHandler.Instance.manager.GetFurnitureSpriteByName(bedSheetsData.icon_key);
+        ivBedSheets.sprite = IconHandler.Instance.GetFurnitureSpriteByName(bedSheetsData.icon_key);
     }
 
     public void SetPillowData(BuildItemBean bedPillowData)
     {
         if (ivBedPillow == null)
             return;
-        ivBedPillow.sprite = InnBuildHandler.Instance.manager.GetFurnitureSpriteByName(bedPillowData.icon_key);
+        ivBedPillow.sprite = IconHandler.Instance.GetFurnitureSpriteByName(bedPillowData.icon_key);
     }
 }

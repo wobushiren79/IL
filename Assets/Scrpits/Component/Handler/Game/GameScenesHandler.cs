@@ -17,7 +17,7 @@ public class GameScenesHandler : BaseHandler<GameScenesHandler, GameScenesManage
         //关闭所有音乐
         AudioHandler.Instance.StopMusic();
         //切换场景
-        SceneUtil.SceneChange(scenes);
+        SceneUtil.SceneChange(scenes,true);
     }
 
 }

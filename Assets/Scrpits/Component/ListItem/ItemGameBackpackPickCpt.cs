@@ -21,6 +21,7 @@ public class ItemGameBackpackPickCpt : ItemGameBackpackCpt
             return;
         DialogBean dialogData = new DialogBean();
         dialogData.dialogType = DialogEnum.ItemsSelection;
+        dialogData.callBack = this;
         ItemsSelectionDialogView itemsSelectionDialog = UIHandler.Instance.ShowDialog<ItemsSelectionDialogView>(dialogData);
         itemsSelectionDialog.SetCallBack(this);
         itemsSelectionDialog.Open(selectionType);

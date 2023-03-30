@@ -188,6 +188,7 @@ public partial class UIMainCreate : BaseUIComponent,
         DialogBean dialogData = new DialogBean();
         dialogData.content = TextHandler.Instance.manager.GetTextById(3012);
         dialogData.dialogType = DialogEnum.Normal;
+        dialogData.callBack = this;
         UIHandler.Instance.ShowDialog<DialogView>(dialogData);
     }
 

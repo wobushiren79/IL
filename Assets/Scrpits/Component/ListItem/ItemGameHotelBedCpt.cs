@@ -212,6 +212,7 @@ public class ItemGameHotelBedCpt : ItemGameBaseCpt, DialogView.IDialogCallBack
         dialogData.dialogPosition = 1;
         dialogData.content = string.Format(TextHandler.Instance.manager.GetTextById(3001), buildBedData.bedName);
         dialogData.dialogType = DialogEnum.Normal;
+        dialogData.callBack = this;
         UIHandler.Instance.ShowDialog<DialogView>(dialogData);
     }
 
@@ -231,7 +232,8 @@ public class ItemGameHotelBedCpt : ItemGameBaseCpt, DialogView.IDialogCallBack
         DialogBean dialogData = new DialogBean
         {
             dialogType= DialogEnum.PickForCharacter,
-            title = TextHandler.Instance.manager.GetTextById(3071)
+            title = TextHandler.Instance.manager.GetTextById(3071),
+            callBack = this
         };
         PickForCharacterDialogView pickForCharacterDialog = UIHandler.Instance.ShowDialog<PickForCharacterDialogView>(dialogData);
         pickForCharacterDialog.SetPickCharacterMax(1);
@@ -271,7 +273,8 @@ public class ItemGameHotelBedCpt : ItemGameBaseCpt, DialogView.IDialogCallBack
         {
             dialogType = DialogEnum.Normal,
             dialogPosition = 2,
-            content = TextHandler.Instance.manager.GetTextById(3072)
+            content = TextHandler.Instance.manager.GetTextById(3072),
+            callBack = this
         };
         UIHandler.Instance.ShowDialog<DialogView>(dialogData);
     }
@@ -283,6 +286,7 @@ public class ItemGameHotelBedCpt : ItemGameBaseCpt, DialogView.IDialogCallBack
         //dialogData.content = buildBedData.bedName;
         dialogData.title = TextHandler.Instance.manager.GetTextById(8001);
         dialogData.dialogType = DialogEnum.InputText;
+        dialogData.callBack = this;
         UIHandler.Instance.ShowDialog<InputTextDialogView>(dialogData);
     }
 

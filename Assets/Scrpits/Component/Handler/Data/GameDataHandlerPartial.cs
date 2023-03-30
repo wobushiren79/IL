@@ -255,7 +255,8 @@ public partial class GameDataHandler : BaseHandler<GameDataHandler,GameDataManag
                 {
                     dialogType = DialogEnum.Achievement,
                     title = TextHandler.Instance.manager.GetTextById(1048),
-                    content = toastStr
+                    content = toastStr,
+                    callBack = this
                 };
                 AchievementDialogView achievementDialog = UIHandler.Instance.ShowDialog<AchievementDialogView>(dialogData);
                 achievementDialog.SetData(2, "ui_features_bed");
@@ -302,7 +303,8 @@ public partial class GameDataHandler : BaseHandler<GameDataHandler,GameDataManag
                 {
                     dialogType = DialogEnum.Achievement,
                     title = TextHandler.Instance.manager.GetTextById(1048),
-                    content = toastStr
+                    content = toastStr,
+                    callBack = this
                 };
                 AchievementDialogView achievementDialog = UIHandler.Instance.ShowDialog<AchievementDialogView>(dialogData);
                 achievementDialog.SetData(1, menuInfo.icon_key);

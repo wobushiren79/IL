@@ -250,6 +250,7 @@ public class UIGameCustomBed : UIBaseOne, IRadioGroupCallBack
             moneyStr += customPriceS + TextHandler.Instance.manager.GetTextById(18);
         }
         dialogData.dialogType = DialogEnum.Normal;
+        dialogData.callBack = this;
         dialogData.content = string.Format(TextHandler.Instance.manager.GetTextById(3103), moneyStr);
         UIHandler.Instance.ShowDialog<DialogView>(dialogData);
     }
@@ -325,6 +326,7 @@ public class UIGameCustomBed : UIBaseOne, IRadioGroupCallBack
 
         DialogBean dialogData = new DialogBean();
         dialogData.dialogType = DialogEnum.FindBed;
+        dialogData.callBack = this;
         FindBedDialogView findBedDialog = UIHandler.Instance.ShowDialog<FindBedDialogView>(dialogData);
         //点击继续
         findBedDialog.SetCallBackForContinue((view, data) =>

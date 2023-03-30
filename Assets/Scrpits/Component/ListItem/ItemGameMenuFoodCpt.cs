@@ -316,7 +316,8 @@ public class ItemGameMenuFoodCpt : ItemGameBaseCpt, IRadioButtonCallBack, Dialog
         DialogBean dialogData = new DialogBean
         {
             dialogType = DialogEnum.PickForCharacter,
-            title = TextHandler.Instance.manager.GetTextById(3071)
+            title = TextHandler.Instance.manager.GetTextById(3071),
+            callBack = this
         };
         PickForCharacterDialogView pickForCharacterDialog = UIHandler.Instance.ShowDialog<PickForCharacterDialogView>(dialogData);
         pickForCharacterDialog.SetPickCharacterMax(1);
@@ -355,7 +356,8 @@ public class ItemGameMenuFoodCpt : ItemGameBaseCpt, IRadioButtonCallBack, Dialog
         DialogBean dialogData = new DialogBean
         {
             dialogType = DialogEnum.Normal,
-            content = TextHandler.Instance.manager.GetTextById(3072)
+            content = TextHandler.Instance.manager.GetTextById(3072),
+            callBack = this
         };
         UIHandler.Instance.ShowDialog<DialogView>(dialogData);
     }

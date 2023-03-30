@@ -80,13 +80,13 @@ public class BuildBedCpt : BaseBuildItemCpt
         {
             string cleanStr = buildItemData.GetIconList()[0] + "_clean";
             string iconKey = GetIconKey(cleanStr);
-            srSheets.sprite = InnBuildHandler.Instance.manager.GetFurnitureSpriteByName(iconKey);
+            srSheets.sprite = IconHandler.Instance.GetFurnitureSpriteByName(iconKey);
         }
         else if (bedStatus == BedStatusEnum.WaitClean)
         {
             string noCleanStr = buildItemData.GetIconList()[0] + "_noclean";
             string iconKey = GetIconKey(noCleanStr);
-            srSheets.sprite = InnBuildHandler.Instance.manager.GetFurnitureSpriteByName(iconKey);
+            srSheets.sprite = IconHandler.Instance.GetFurnitureSpriteByName(iconKey);
         }
 
     }
@@ -127,14 +127,14 @@ public class BuildBedCpt : BaseBuildItemCpt
     {
         BuildItemBean buildItemData = InnBuildHandler.Instance.manager.GetBuildDataById(baseId);
         string iconKey = GetIconKey(buildItemData.GetIconList()[0]);
-        srBase.sprite = InnBuildHandler.Instance.manager.GetFurnitureSpriteByName(iconKey);
+        srBase.sprite = IconHandler.Instance.GetFurnitureSpriteByName(iconKey);
     }
 
     public void SetBar(long barId)
     {
         BuildItemBean buildItemData = InnBuildHandler.Instance.manager.GetBuildDataById(barId);
         string iconKey = GetIconKey(buildItemData.GetIconList()[0]);
-        srBar.sprite = InnBuildHandler.Instance.manager.GetFurnitureSpriteByName(iconKey);
+        srBar.sprite = IconHandler.Instance.GetFurnitureSpriteByName(iconKey);
     }
 
     public void SetSheets(long sheetsId)
@@ -143,14 +143,14 @@ public class BuildBedCpt : BaseBuildItemCpt
         string cleanStr = buildItemData.GetIconList()[0] + "_clean";
         string noCleanStr = buildItemData.GetIconList()[0] + "_noclean";
         string iconKey = GetIconKey(cleanStr);
-        srSheets.sprite = InnBuildHandler.Instance.manager.GetFurnitureSpriteByName(iconKey);
+        srSheets.sprite = IconHandler.Instance.GetFurnitureSpriteByName(iconKey);
     }
 
     public void SetPillow(long pillowId)
     {
         BuildItemBean buildItemData = InnBuildHandler.Instance.manager.GetBuildDataById(pillowId);
         string iconKey = GetIconKey(buildItemData.GetIconList()[0]);
-        srPillow.sprite = InnBuildHandler.Instance.manager.GetFurnitureSpriteByName(iconKey);
+        srPillow.sprite = IconHandler.Instance.GetFurnitureSpriteByName(iconKey);
     }
     
     /// <summary>

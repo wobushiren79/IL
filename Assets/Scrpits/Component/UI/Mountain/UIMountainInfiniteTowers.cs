@@ -120,6 +120,7 @@ public class UIMountainInfiniteTowers : BaseUIComponent, DialogView.IDialogCallB
         DialogBean dialogData = new DialogBean();
         dialogData.dialogPosition = 0;
         dialogData.dialogType = DialogEnum.PickForCharacter;
+        dialogData.callBack = this;
         PickForCharacterDialogView pickForCharacterDialog = UIHandler.Instance.ShowDialog<PickForCharacterDialogView>(dialogData);
         //排除不能参加的人
         List<string> listExpel = new List<string>();
@@ -147,6 +148,7 @@ public class UIMountainInfiniteTowers : BaseUIComponent, DialogView.IDialogCallB
         DialogBean dialogData = new DialogBean();
         dialogData.dialogPosition = 1;
         dialogData.dialogType = DialogEnum.PickForCharacter;
+        dialogData.callBack = this;
         PickForCharacterDialogView pickForCharacterDialog = UIHandler.Instance.ShowDialog<PickForCharacterDialogView>(dialogData);
         //排除主角和不能参加的人
         List<string> listExpel = new List<string>();
@@ -173,6 +175,7 @@ public class UIMountainInfiniteTowers : BaseUIComponent, DialogView.IDialogCallB
         AudioHandler.Instance.PlaySound(AudioSoundEnum.ButtonForNormal);
         DialogBean dialogData = new DialogBean();
         dialogData.dialogPosition = 1;
+        dialogData.callBack = this;
         dialogData.content = TextHandler.Instance.manager.GetTextById(3112);
         dialogData.dialogType = DialogEnum.Normal;
         UIHandler.Instance.ShowDialog<DialogView>(dialogData);

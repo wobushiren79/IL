@@ -32,13 +32,13 @@ public class BuildStairsCpt : BaseBuildItemCpt
         objDownBox.SetActive(false);
         if (layer == 1)
         {
-            Sprite spFirst = InnBuildHandler.Instance.manager.GetFurnitureSpriteByName(listIcon[0] + "_0");
+            Sprite spFirst = IconHandler.Instance.GetFurnitureSpriteByName(listIcon[0] + "_0");
             SetSprite(spFirst, spFirst, spFirst, spFirst);
             objUpBox.SetActive(true);
         }
         else if (layer == 2)
         {
-            Sprite spSecond= InnBuildHandler.Instance.manager.GetFurnitureSpriteByName(listIcon[0] + "_1");
+            Sprite spSecond= IconHandler.Instance.GetFurnitureSpriteByName(listIcon[0] + "_1");
             SetSprite(spSecond, spSecond, spSecond, spSecond);
             objDownBox.SetActive(true);
         }

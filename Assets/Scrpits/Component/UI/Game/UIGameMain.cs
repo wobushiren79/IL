@@ -432,11 +432,12 @@ public class UIGameMain : BaseUIComponent, DialogView.IDialogCallBack, IRadioGro
         AudioHandler.Instance.PlaySound(AudioSoundEnum.ButtonForNormal);
         if (InnHandler.Instance.rascalrQueue.IsNull())
         {
-            DialogBean dialogBean = new DialogBean();
-            dialogBean.content = TextHandler.Instance.manager.GetTextById(3007);
-            dialogBean.dialogPosition = 1;
-            dialogBean.dialogType = DialogEnum.Normal;
-            UIHandler.Instance.ShowDialog<DialogView>(dialogBean);
+            DialogBean dialogData = new DialogBean();
+            dialogData.content = TextHandler.Instance.manager.GetTextById(3007);
+            dialogData.dialogPosition = 1;
+            dialogData.dialogType = DialogEnum.Normal;
+            dialogData.callBack = this;
+            UIHandler.Instance.ShowDialog<DialogView>(dialogData);
         }
         else
         {
@@ -497,11 +498,12 @@ public class UIGameMain : BaseUIComponent, DialogView.IDialogCallBack, IRadioGro
     {
         AudioHandler.Instance.PlaySound(AudioSoundEnum.ButtonForNormal);
         AudioHandler.Instance.PlaySound(AudioSoundEnum.ButtonForNormal);
-        DialogBean dialogBean = new DialogBean();
-        dialogBean.content = TextHandler.Instance.manager.GetTextById(3004);
-        dialogBean.dialogPosition = 0;
-        dialogBean.dialogType = DialogEnum.Normal;
-        UIHandler.Instance.ShowDialog<DialogView>(dialogBean);
+        DialogBean dialogData = new DialogBean();
+        dialogData.content = TextHandler.Instance.manager.GetTextById(3004);
+        dialogData.dialogPosition = 0;
+        dialogData.dialogType = DialogEnum.Normal;
+        dialogData.callBack = this;
+        UIHandler.Instance.ShowDialog<DialogView>(dialogData);
     }
 
     public void OnClickForJumpTime()
@@ -511,9 +513,10 @@ public class UIGameMain : BaseUIComponent, DialogView.IDialogCallBack, IRadioGro
             return;
         }
         AudioHandler.Instance.PlaySound(AudioSoundEnum.ButtonForNormal);
-        DialogBean dialogBean = new DialogBean();
-        dialogBean.dialogType = DialogEnum.JumpTime;
-        JumpTimeDialogView jumpTimeDialog = UIHandler.Instance.ShowDialog<JumpTimeDialogView>(dialogBean);
+        DialogBean dialogData = new DialogBean();
+        dialogData.dialogType = DialogEnum.JumpTime;
+        dialogData.callBack = this;
+        JumpTimeDialogView jumpTimeDialog = UIHandler.Instance.ShowDialog<JumpTimeDialogView>(dialogData);
         jumpTimeDialog.SetData();
     }
 
