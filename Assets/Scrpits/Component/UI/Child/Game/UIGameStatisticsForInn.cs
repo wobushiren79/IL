@@ -60,9 +60,9 @@ public class UIGameStatisticsForInn : UIGameStatisticsDetailsBase<UIGameStatisti
     /// <param name="moneyS"></param>
     public void AddItemForMaxDayGetMoney(long moneyFoodL, long moneyFoodM, long moneyFoodS, long moneyHotelL, long moneyHotelM, long moneyHotelS)
     {
-        Sprite spIcon_1 = IconDataHandler.Instance.manager.GetIconSpriteByName("money_1");
+        Sprite spIcon_1 = IconHandler.Instance.GetIconSpriteByName("money_1");
         CreateTextItem(spIcon_1, Color.white, TextHandler.Instance.manager.GetTextById(340), moneyFoodS + TextHandler.Instance.manager.GetTextById(18));
-        Sprite spIcon_2 = IconDataHandler.Instance.manager.GetIconSpriteByName("money_1");
+        Sprite spIcon_2 = IconHandler.Instance.GetIconSpriteByName("money_1");
         CreateTextItem(spIcon_2, Color.white, TextHandler.Instance.manager.GetTextById(345), moneyHotelS + TextHandler.Instance.manager.GetTextById(18));
     }
 
@@ -72,9 +72,9 @@ public class UIGameStatisticsForInn : UIGameStatisticsDetailsBase<UIGameStatisti
     /// <param name="orderNumber"></param>
     public void AddItemForMaxDayCompleteOrder(long orderFoodNumber,long orderHotelNumber)
     {
-        Sprite spIcon_1 = IconDataHandler.Instance.manager.GetIconSpriteByName("ach_ordernumber_1");
+        Sprite spIcon_1 = IconHandler.Instance.GetIconSpriteByName("ach_ordernumber_1");
         CreateTextItem(spIcon_1, Color.white, TextHandler.Instance.manager.GetTextById(341), orderFoodNumber + "");
-        Sprite spIcon_2 = IconDataHandler.Instance.manager.GetIconSpriteByName("worker_waiter_bed_pro_2");
+        Sprite spIcon_2 = IconHandler.Instance.GetIconSpriteByName("worker_waiter_bed_pro_2");
         CreateTextItem(spIcon_2, Color.white, TextHandler.Instance.manager.GetTextById(346), orderHotelNumber + "");
     }
 
@@ -88,13 +88,13 @@ public class UIGameStatisticsForInn : UIGameStatisticsDetailsBase<UIGameStatisti
         long numberForCustomerHotel,
         long numberForCustomerHotelComplete)
     {
-        Sprite spIcon_1 = IconDataHandler.Instance.manager.GetIconSpriteByName("team_2");
+        Sprite spIcon_1 = IconHandler.Instance.GetIconSpriteByName("team_2");
         CreateTextItem(spIcon_1, Color.red, TextHandler.Instance.manager.GetTextById(301), numberForCustomerFood + TextHandler.Instance.manager.GetTextById(82));
-        Sprite spIcon_2 = IconDataHandler.Instance.manager.GetIconSpriteByName("team_2");
+        Sprite spIcon_2 = IconHandler.Instance.GetIconSpriteByName("team_2");
         CreateTextItem(spIcon_2, Color.red, TextHandler.Instance.manager.GetTextById(338), numberForCustomerFoodComplete + TextHandler.Instance.manager.GetTextById(82));
-        Sprite spIcon_3 = IconDataHandler.Instance.manager.GetIconSpriteByName("worker_waiter_bed_pro_2");
+        Sprite spIcon_3 = IconHandler.Instance.GetIconSpriteByName("worker_waiter_bed_pro_2");
         CreateTextItem(spIcon_3, Color.white, TextHandler.Instance.manager.GetTextById(342), numberForCustomerHotel + TextHandler.Instance.manager.GetTextById(82));
-        Sprite spIcon_4 = IconDataHandler.Instance.manager.GetIconSpriteByName("worker_waiter_bed_pro_2");
+        Sprite spIcon_4 = IconHandler.Instance.GetIconSpriteByName("worker_waiter_bed_pro_2");
         CreateTextItem(spIcon_4, Color.white, TextHandler.Instance.manager.GetTextById(343), numberForCustomerHotelComplete + TextHandler.Instance.manager.GetTextById(82));
     }
 
@@ -123,7 +123,7 @@ public class UIGameStatisticsForInn : UIGameStatisticsDetailsBase<UIGameStatisti
                 contentStr = TextHandler.Instance.manager.GetTextById(303);
                 break;
         }
-        Sprite spIcon = IconDataHandler.Instance.manager.GetIconSpriteByName(iconKey);
+        Sprite spIcon = IconHandler.Instance.GetIconSpriteByName(iconKey);
         CreateTextItem(spIcon, contentStr, money + "");
         //CreateMoneyItem(spIconL, TextHandler.Instance.manager.GetTextById(305), moneyL, moneyM, moneyS);
     }
@@ -153,7 +153,7 @@ public class UIGameStatisticsForInn : UIGameStatisticsDetailsBase<UIGameStatisti
                 contentStr = TextHandler.Instance.manager.GetTextById(361);
                 break;
         }
-        Sprite spIcon = IconDataHandler.Instance.manager.GetIconSpriteByName(iconKey);
+        Sprite spIcon = IconHandler.Instance.GetIconSpriteByName(iconKey);
         CreateTextItem(spIcon, contentStr,Color.red, money + "");
     }
 
@@ -163,7 +163,7 @@ public class UIGameStatisticsForInn : UIGameStatisticsDetailsBase<UIGameStatisti
     /// <param name="number"></param>
     public void AddItemForGuildCoin(long number)
     {
-        Sprite spIcon = IconDataHandler.Instance.manager.GetIconSpriteByName("guild_coin_2");
+        Sprite spIcon = IconHandler.Instance.GetIconSpriteByName("guild_coin_2");
         CreateTextItem(spIcon, TextHandler.Instance.manager.GetTextById(306), number + "");
     }
 
@@ -195,7 +195,7 @@ public class UIGameStatisticsForInn : UIGameStatisticsDetailsBase<UIGameStatisti
                 contentStr = TextHandler.Instance.manager.GetTextById(310);
                 break;
         }
-        Sprite spIcon = IconDataHandler.Instance.manager.GetIconSpriteByName(iconKey);
+        Sprite spIcon = IconHandler.Instance.GetIconSpriteByName(iconKey);
         CreateTextItem(spIcon, contentStr, number + "");
     }
 
@@ -228,7 +228,7 @@ public class UIGameStatisticsForInn : UIGameStatisticsDetailsBase<UIGameStatisti
                 iconKey = "customer_mood_5";
                 break;
         }
-        Sprite spIcon = IconDataHandler.Instance.manager.GetIconSpriteByName(iconKey);
+        Sprite spIcon = IconHandler.Instance.GetIconSpriteByName(iconKey);
         CreateTextItem(spIcon, TextHandler.Instance.manager.GetTextById(336), number + "");
     }
 

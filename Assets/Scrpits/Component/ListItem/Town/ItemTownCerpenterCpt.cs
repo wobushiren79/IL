@@ -12,7 +12,7 @@ public class ItemTownCerpenterCpt : ItemTownStoreCpt, DialogView.IDialogCallBack
     public GameObject objOwn;
     public BuildItemBean buildItemData;
 
-    public PopupPromptButton infoPromptPopup;
+    public UIPopupPromptButton infoPromptPopup;
 
 
     public override void RefreshUI()
@@ -100,7 +100,7 @@ public class ItemTownCerpenterCpt : ItemTownStoreCpt, DialogView.IDialogCallBack
         Sprite spIcon = null;
         if (type == StoreForCarpenterTypeEnum.Expansion)
         {
-            spIcon = IconDataHandler.Instance.manager.GetIconSpriteByName(storeInfo.icon_key);
+            spIcon = IconHandler.Instance.GetIconSpriteByName(storeInfo.icon_key);
         }
         else
         {

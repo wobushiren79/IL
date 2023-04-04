@@ -12,9 +12,9 @@ public class CursorManager : BaseManager
         {
             if (_listKnockTex.IsNull())
             {
-                Texture2D sp1 = IconDataHandler.Instance.manager.GetTextureUIByName("cursor_11");
-                Texture2D sp2 = IconDataHandler.Instance.manager.GetTextureUIByName("cursor_12");
-                Texture2D sp3 = IconDataHandler.Instance.manager.GetTextureUIByName("cursor_13");
+                Texture2D sp1 = IconHandler.Instance.GetTextureUIByName("cursor_11");
+                Texture2D sp2 = IconHandler.Instance.GetTextureUIByName("cursor_12");
+                Texture2D sp3 = IconHandler.Instance.GetTextureUIByName("cursor_13");
                 _listKnockTex.Add(sp1);
                 _listKnockTex.Add(sp2);
                 _listKnockTex.Add(sp3);

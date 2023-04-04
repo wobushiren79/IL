@@ -25,7 +25,7 @@ public class ItemGameMainHintForResearchCpt : ItemGameBaseCpt
     public void SetData(BuildBedBean bedData)
     {
         this.bedData = bedData;
-        Sprite spBedIcon = IconDataHandler.Instance.manager.GetIconSpriteByName("ui_features_bed");
+        Sprite spBedIcon = IconHandler.Instance.GetIconSpriteByName("ui_features_bed");
         SetIcon(spBedIcon);
         SetName(bedData.bedName);
         RefreshData();

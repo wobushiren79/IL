@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 public class ItemGameHotelBedCpt : ItemGameBaseCpt, DialogView.IDialogCallBack
 {
-    public PopupBedButton infoBedPopup;
+    public UIPopupBedButton infoBedPopup;
     public BedShowView bedShow;
     public Image ivLevel;
     public Image ivBgLevel;
@@ -14,7 +14,7 @@ public class ItemGameHotelBedCpt : ItemGameBaseCpt, DialogView.IDialogCallBack
     public Button btEtName;
 
 
-    public PopupPromptButton popupForResearch;
+    public UIPopupPromptButton popupForResearch;
     public GameObject objResearch;
     public Button btResearch;
 

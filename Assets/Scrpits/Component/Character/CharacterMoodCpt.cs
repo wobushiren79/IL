@@ -43,7 +43,7 @@ public class CharacterMoodCpt : BaseMonoBehaviour
         //避免实时更新带来的多次调用
         if (spCurrent == null ||!spCurrent.name.Contains(spKey))
         {
-            Sprite spIcon = IconDataHandler.Instance.manager.GetIconSpriteByName(spKey);
+            Sprite spIcon = IconHandler.Instance.GetIconSpriteByName(spKey);
             spCurrent = spIcon;
             CharacterStatusIconBean statusIconData = new CharacterStatusIconBean();
             statusIconData.iconStatus = CharacterStatusIconEnum.Mood;

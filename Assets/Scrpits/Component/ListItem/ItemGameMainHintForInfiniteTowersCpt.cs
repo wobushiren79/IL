@@ -9,7 +9,6 @@ public class ItemGameMainHintForInfiniteTowersCpt : ItemGameBaseCpt
     public ProgressView progressView;
 
     public UserInfiniteTowersBean infiniteTowersData;
-    protected IconDataManager iconDataManager;
 
     public void SetData(UserInfiniteTowersBean  infiniteTowersData)
     {

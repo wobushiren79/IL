@@ -349,7 +349,7 @@ public class ItemTownGuildImproveCharacterCpt : ItemGameBaseCpt, DialogView.IDia
                 RewardTypeEnumTools.CompleteReward(miniGameData.GetListUserCharacterData(), miniGameData.listReward);
 
                 //数据添加
-                Sprite attributeIcon = IconDataHandler.Instance.manager.GetIconSpriteByName("keyboard_button_up_1");
+                Sprite attributeIcon = IconHandler.Instance.GetIconSpriteByName("keyboard_button_up_1");
                 string attributeRewardContent = "";
                 foreach (MiniGameCharacterBean miniGameCharacterData in miniGameData.listUserGameData)
                 {

@@ -565,7 +565,7 @@ public class InnHandler : BaseHandler<InnHandler, InnManager>
             userAchievement.AddNumberForCustomerHotelComplete(1);
             if (isBedLevelUp)
             {
-                Sprite spBedIcon = IconDataHandler.Instance.manager.GetIconSpriteByName("worker_waiter_bed_pro_2");
+                Sprite spBedIcon = IconHandler.Instance.GetIconSpriteByName("worker_waiter_bed_pro_2");
                 UIHandler.Instance.ToastHint<ToastView>(spBedIcon, string.Format(TextHandler.Instance.manager.GetTextById(1131), orderForHotel.bed.buildBedData.bedName));
             }
             payEffectsPosition = orderForHotel.customer.transform.position;

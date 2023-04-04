@@ -77,6 +77,6 @@ public class IngredientsEnumTools
                 iconKey = "ui_ing_flour";
                 break;
         }
-       return IconDataHandler.Instance.manager.GetIconSpriteByName(iconKey);
+       return IconHandler.Instance.GetIconSpriteByName(iconKey);
     }
 }

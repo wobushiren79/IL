@@ -14,7 +14,7 @@ public class FindCharacterDialogView : DialogView
     public Image ivHaloBG;
     public Sprite spSexMan;
     public Sprite spSexWoman;
-    public PopupAbilityButton popupAbilityButton;
+    public UIPopupAbilityButton popupAbilityButton;
     public Button btContinue;
 
 

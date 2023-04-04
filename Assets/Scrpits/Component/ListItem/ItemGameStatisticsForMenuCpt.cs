@@ -10,7 +10,7 @@ public class ItemGameStatisticsForMenuCpt : ItemBaseTextCpt
     public Image ivIconBackground;
     public Image ivNameBackground;
     public Image ivNumberBackground;
-    public PopupFoodButton popupButton;
+    public UIPopupFoodButton popupButton;
 
     public MenuOwnBean menuOwn;
     public MenuInfoBean menuInfo;
@@ -39,7 +39,7 @@ public class ItemGameStatisticsForMenuCpt : ItemBaseTextCpt
             ivNameBackground.gameObject.SetActive(false);
             SetName("???");
             SetNumber("???");
-            SetIcon(IconDataHandler.Instance.manager.GetIconSpriteByName("questionmark_1"), Color.white);
+            SetIcon(IconHandler.Instance.GetIconSpriteByName("questionmark_1"), Color.white);
         }
     }
 

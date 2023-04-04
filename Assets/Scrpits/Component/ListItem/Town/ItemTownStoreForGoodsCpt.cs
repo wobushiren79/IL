@@ -17,7 +17,7 @@ public class ItemTownStoreForGoodsCpt : ItemTownStoreCpt, DialogView.IDialogCall
     public Text tvLucky;
     public GameObject objCookBook;
     public Text tvCookBook;
-    public PopupItemsButton infoItemsPopup;
+    public UIPopupItemsButton infoItemsPopup;
 
     public ItemsInfoBean itemsInfo;
 

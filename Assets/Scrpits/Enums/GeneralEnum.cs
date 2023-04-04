@@ -48,19 +48,19 @@ public class GeneralEnumTools
                 break;
             case GeneralEnum.Hat:
                 if (isHideDres)
-                    spIcon = IconDataHandler.Instance.manager.GetIconSpriteByName("unknown_hat_1");
+                    spIcon = IconHandler.Instance.GetIconSpriteByName("unknown_hat_1");
                 else
                     spIcon = CharacterDressHandler.Instance.manager.GetHatSpriteByName(itemsInfo.icon_key);
                 break;
             case GeneralEnum.Clothes:
                 if (isHideDres)
-                    spIcon = IconDataHandler.Instance.manager.GetIconSpriteByName("unknown_clothes_1");
+                    spIcon = IconHandler.Instance.GetIconSpriteByName("unknown_clothes_1");
                 else
                     spIcon = CharacterDressHandler.Instance.manager.GetClothesSpriteByName(itemsInfo.icon_key);
                 break;
             case GeneralEnum.Shoes:
                 if (isHideDres)
-                    spIcon = IconDataHandler.Instance.manager.GetIconSpriteByName("unknown_shoes_1");
+                    spIcon = IconHandler.Instance.GetIconSpriteByName("unknown_shoes_1");
                 else
                     spIcon = CharacterDressHandler.Instance.manager.GetShoesSpriteByName(itemsInfo.icon_key);
                 break;
@@ -70,7 +70,7 @@ public class GeneralEnumTools
             case GeneralEnum.Read:
             case GeneralEnum.Gift:
             case GeneralEnum.Other:
-                spIcon = IconDataHandler.Instance.manager.GetIconSpriteByName(itemsInfo.icon_key);
+                spIcon = IconHandler.Instance.GetIconSpriteByName(itemsInfo.icon_key);
                 break;
             default:
                 spIcon = GameItemsHandler.Instance.manager.GetItemsSpriteByName(itemsInfo.icon_key);

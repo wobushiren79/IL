@@ -170,7 +170,7 @@ public class UIMiniGameEnd : BaseUIComponent
                     }
                 }
                 //创建属性奖励
-                attributeIcon = IconDataHandler.Instance.manager.GetIconSpriteByName("keyboard_button_up_1");
+                attributeIcon = IconHandler.Instance.GetIconSpriteByName("keyboard_button_up_1");
                 CreateWinReward(attributeIcon, null, attributeRewardContent);
                 break;
             case MiniGameReasonEnum.Fight:
@@ -186,7 +186,7 @@ public class UIMiniGameEnd : BaseUIComponent
                 break;
         }
         itemReasonWin.SetContent(reasonStr);
-        itemReasonWin.SetIcon(IconDataHandler.Instance.manager.GetIconSpriteByName("text_win_1"));
+        itemReasonWin.SetIcon(IconHandler.Instance.GetIconSpriteByName("text_win_1"));
         //添加奖励
         RewardTypeEnumTools.CompleteReward(miniGameData.GetListUserCharacterData(),miniGameData.listReward);
         //遍历奖励列表

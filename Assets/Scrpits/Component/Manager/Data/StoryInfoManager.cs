@@ -14,7 +14,7 @@ public class StoryInfoManager : BaseManager, IStoryInfoView
 
     public void Awake()
     {
-        objNpcModel = LoadAssetUtil.SyncLoadAsset<GameObject>("character/character", "CharacterForStory");
+        objNpcModel = LoadAddressablesUtil.LoadAssetSync<GameObject>("Assets/Prefabs/Character/CharacterForStory.prefab");
         storyInfoController = new StoryInfoController(this, this);
         storyInfoController.GetAllStoryInfo(null);
     }

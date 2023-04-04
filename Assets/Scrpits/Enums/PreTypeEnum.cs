@@ -395,7 +395,7 @@ public class PreTypeEnumTools : DataTools
             preStr = "(" + have + "/" + pay + ")";
             preTypeData.progress = have / (float)pay;
         }
-        preTypeData.spPreIcon = IconDataHandler.Instance.manager.GetIconSpriteByName(iconKey);
+        preTypeData.spPreIcon = IconHandler.Instance.GetIconSpriteByName(iconKey);
         preTypeData.preDescribe = string.Format(preTypeData.preDescribe, preStr);
         return preTypeData;
     }
@@ -479,7 +479,7 @@ public class PreTypeEnumTools : DataTools
             haveStr = "(" + own + "/" + have + ")";
             preTypeData.progress = own / (float)have;
         }
-        preTypeData.spPreIcon = IconDataHandler.Instance.manager.GetIconSpriteByName(iconKey);
+        preTypeData.spPreIcon = IconHandler.Instance.GetIconSpriteByName(iconKey);
         preTypeData.preDescribe = string.Format(preTypeData.preDescribe, haveStr);
         return preTypeData;
     }
@@ -536,7 +536,7 @@ public class PreTypeEnumTools : DataTools
                 preTypeData.preFailStr = TextHandler.Instance.manager.GetTextById(5016);
                 break;
         }
-        preTypeData.spPreIcon = IconDataHandler.Instance.manager.GetIconSpriteByName(iconKey);
+        preTypeData.spPreIcon = IconHandler.Instance.GetIconSpriteByName(iconKey);
         preTypeData.preFailStr = string.Format(preTypeData.preFailStr, dataAttributes + "");
         if (targetAttributes < dataAttributes)
         {
@@ -624,13 +624,13 @@ public class PreTypeEnumTools : DataTools
         switch (preTypeData.dataType)
         {
             case PreTypeEnum.OrderNumberForTotal:
-                spIcon = IconDataHandler.Instance.manager.GetIconSpriteByName("team_2");
+                spIcon = IconHandler.Instance.GetIconSpriteByName("team_2");
                 preDescribeTitle = TextHandler.Instance.manager.GetTextById(5041);
                 preFailTitle = TextHandler.Instance.manager.GetTextById(5042);
                 numberTotal = userAchievement.GetNumberForAllCustomerFood();
                 break;
             case PreTypeEnum.OrderNumberForHotelTotal:
-                spIcon = IconDataHandler.Instance.manager.GetIconSpriteByName("worker_waiter_bed_pro_2");
+                spIcon = IconHandler.Instance.GetIconSpriteByName("worker_waiter_bed_pro_2");
                 preDescribeTitle = TextHandler.Instance.manager.GetTextById(5043);
                 preFailTitle = TextHandler.Instance.manager.GetTextById(5044);
                 numberTotal = userAchievement.GetNumberForAllCustomerHotel();
@@ -700,7 +700,7 @@ public class PreTypeEnumTools : DataTools
             preMoneyStr = "(" + haveMoney + "/" + getMoney + ")";
             preTypeData.progress = haveMoney / (float)getMoney;
         }
-        preTypeData.spPreIcon = IconDataHandler.Instance.manager.GetIconSpriteByName(iconKey);
+        preTypeData.spPreIcon = IconHandler.Instance.GetIconSpriteByName(iconKey);
         preTypeData.preDescribe = string.Format(preTypeData.preDescribe, preMoneyStr);
         preTypeData.preFailStr = TextHandler.Instance.manager.GetTextById(1024);
         return preTypeData;
@@ -718,32 +718,32 @@ public class PreTypeEnumTools : DataTools
             case PreTypeEnum.InnPraiseNumberForExcited:
                 praiseType = PraiseTypeEnum.Excited;
                 preDesStr = TextHandler.Instance.manager.GetTextById(5051);
-                spIcon = IconDataHandler.Instance.manager.GetIconSpriteByName("customer_mood_0");
+                spIcon = IconHandler.Instance.GetIconSpriteByName("customer_mood_0");
                 break;
             case PreTypeEnum.InnPraiseNumberForHappy:
                 praiseType = PraiseTypeEnum.Happy;
                 preDesStr = TextHandler.Instance.manager.GetTextById(5052);
-                spIcon = IconDataHandler.Instance.manager.GetIconSpriteByName("customer_mood_1");
+                spIcon = IconHandler.Instance.GetIconSpriteByName("customer_mood_1");
                 break;
             case PreTypeEnum.InnPraiseNumberForOkay:
                 praiseType = PraiseTypeEnum.Okay;
                 preDesStr = TextHandler.Instance.manager.GetTextById(5053);
-                spIcon = IconDataHandler.Instance.manager.GetIconSpriteByName("customer_mood_2");
+                spIcon = IconHandler.Instance.GetIconSpriteByName("customer_mood_2");
                 break;
             case PreTypeEnum.InnPraiseNumberForOrdinary:
                 praiseType = PraiseTypeEnum.Ordinary;
                 preDesStr = TextHandler.Instance.manager.GetTextById(5054);
-                spIcon = IconDataHandler.Instance.manager.GetIconSpriteByName("customer_mood_3");
+                spIcon = IconHandler.Instance.GetIconSpriteByName("customer_mood_3");
                 break;
             case PreTypeEnum.InnPraiseNumberForDisappointed:
                 praiseType = PraiseTypeEnum.Disappointed;
                 preDesStr = TextHandler.Instance.manager.GetTextById(5055);
-                spIcon = IconDataHandler.Instance.manager.GetIconSpriteByName("customer_mood_4");
+                spIcon = IconHandler.Instance.GetIconSpriteByName("customer_mood_4");
                 break;
             case PreTypeEnum.InnPraiseNumberForAnger:
                 praiseType = PraiseTypeEnum.Anger;
                 preDesStr = TextHandler.Instance.manager.GetTextById(5056);
-                spIcon = IconDataHandler.Instance.manager.GetIconSpriteByName("customer_mood_5");
+                spIcon = IconHandler.Instance.GetIconSpriteByName("customer_mood_5");
                 break;
         }
         UserAchievementBean userAchievement = gameData.GetAchievementData();
@@ -779,7 +779,7 @@ public class PreTypeEnumTools : DataTools
         Sprite spIcon = null;
         long dataNumber = long.Parse(preTypeData.data);
         string preProStr = "";
-        spIcon = IconDataHandler.Instance.manager.GetIconSpriteByName("ui_features_menu");
+        spIcon = IconHandler.Instance.GetIconSpriteByName("ui_features_menu");
         int menuNumber = 0;
         string content = "";
         string contentFail = "";
@@ -844,7 +844,7 @@ public class PreTypeEnumTools : DataTools
         Sprite spIcon = null;
         long dataNumber = long.Parse(preTypeData.data);
         string preProStr = "";
-        spIcon = IconDataHandler.Instance.manager.GetIconSpriteByName("worker_waiter_bed_pro_2");
+        spIcon = IconHandler.Instance.GetIconSpriteByName("worker_waiter_bed_pro_2");
         int bedNumber = 0;
         string content = "";
         string contentFail = "";
@@ -905,7 +905,7 @@ public class PreTypeEnumTools : DataTools
         switch (preTypeData.dataType)
         {
             case PreTypeEnum.SellMenuNumber:
-                spIcon = IconDataHandler.Instance.manager.GetIconSpriteByName("ui_features_menu");
+                spIcon = IconHandler.Instance.GetIconSpriteByName("ui_features_menu");
                 break;
         }
         List<MenuOwnBean> listMenu = gameData.GetMenuList();
@@ -1086,7 +1086,7 @@ public class PreTypeEnumTools : DataTools
         {
             case PreTypeEnum.InnPraise:
                 preDesStr = TextHandler.Instance.manager.GetTextById(5091);
-                spIcon = IconDataHandler.Instance.manager.GetIconSpriteByName("ui_praise");
+                spIcon = IconHandler.Instance.GetIconSpriteByName("ui_praise");
                 break;
         }
         InnAttributesBean innAttributes = gameData.GetInnAttributesData();
@@ -1128,7 +1128,7 @@ public class PreTypeEnumTools : DataTools
         {
             case PreTypeEnum.InnAesthetics:
                 preDesStr = TextHandler.Instance.manager.GetTextById(5101);
-                spIcon = IconDataHandler.Instance.manager.GetIconSpriteByName("ui_aesthetics");
+                spIcon = IconHandler.Instance.GetIconSpriteByName("ui_aesthetics");
                 break;
         }
         InnAttributesBean innAttributes = gameData.GetInnAttributesData();
@@ -1184,7 +1184,7 @@ public class PreTypeEnumTools : DataTools
     /// <returns></returns>
     protected static PreTypeBean GetPreDetailsForInfiniteTowersMaxLayer(PreTypeBean preTypeData, GameDataBean gameData, bool isComplete)
     {
-        Sprite spIcon = IconDataHandler.Instance.manager.GetIconSpriteByName("ui_praise");
+        Sprite spIcon = IconHandler.Instance.GetIconSpriteByName("ui_praise");
         int maxLayer = int.Parse(preTypeData.data);
         string preProStr = string.Format(TextHandler.Instance.manager.GetTextById(5111), maxLayer + "");
         string preDesStr = "";

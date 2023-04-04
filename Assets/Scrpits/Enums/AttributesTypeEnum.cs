@@ -79,7 +79,7 @@ public static class AttributesTypeEnumTools
                 name = "love_1";
                 break;
         }
-        return IconDataHandler.Instance.manager.GetIconSpriteByName(name);
+        return IconHandler.Instance.GetIconSpriteByName(name);
     }
 
 }

@@ -7,7 +7,7 @@ public class ItemTownCandidateCpt : ItemGameBaseCpt, DialogView.IDialogCallBack
     public Text tvPrice;
     public Button btSubmit;
     public Image ivSex;
-    public PopupAbilityButton popupAbilityButton;
+    public UIPopupAbilityButton popupAbilityButton;
     public CharacterUICpt characterUICpt;
 
     public Sprite spMan;

@@ -29,6 +29,7 @@ RectTransform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 5821971185163910241}
   m_RootOrder: 0
@@ -128,6 +129,7 @@ RectTransform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 5821971185163910241}
   m_Father: {fileID: 0}
@@ -158,9 +160,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3c6e5be26b8b4f44d9f197ee0ff4f193, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  popupRTF: {fileID: 5625648732451010230}
+  rectTransform: {fileID: 5625648732451010230}
+  rtfContent: {fileID: 0}
   offsetX: 0
   offsetY: 0
+  offsetPivot: {x: 0, y: 0}
   tvContent: {fileID: 5625648731390071527}
 --- !u!225 &5625648732451010224
 CanvasGroup:
@@ -278,6 +282,7 @@ RectTransform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 5625648731390071525}
   m_Father: {fileID: 5625648732451010230}

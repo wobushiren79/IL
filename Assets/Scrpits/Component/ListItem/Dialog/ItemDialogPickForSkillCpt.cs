@@ -8,7 +8,7 @@ public class ItemDialogPickForSkillCpt : BaseMonoBehaviour
     public Text tvName;
     public Text tvNumber;
     public Button btSubmit;
-    public PopupSkillButton infoSkillPopup;
+    public UIPopupSkillButton infoSkillPopup;
 
     protected ICallBack callBack;
 
@@ -66,7 +66,7 @@ public class ItemDialogPickForSkillCpt : BaseMonoBehaviour
     /// <param name="iconKey"></param>
     public void SetIcon(string iconKey)
     {
-        Sprite spIcon = IconDataHandler.Instance.manager.GetIconSpriteByName(iconKey);
+        Sprite spIcon = IconHandler.Instance.GetIconSpriteByName(iconKey);
         if (ivIcon != null)
             ivIcon.sprite = spIcon;
     }

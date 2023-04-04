@@ -7,7 +7,7 @@ public class ItemTownGuildAchievementCpt : ItemGameBaseCpt
     public Image ivIconRemark;
     public Image ivBackground;
     public Button btSubmit;
-    public PopupAchievementButton popupButton;
+    public UIPopupAchievementButton popupButton;
 
     public Sprite spIconUnknow;
     public Sprite spBackPass;
@@ -116,7 +116,7 @@ public class ItemTownGuildAchievementCpt : ItemGameBaseCpt
     {
         if (ivIcon == null)
             return;
-        Sprite spIcon = IconDataHandler.Instance.manager.GetIconSpriteByName(iconKey);
+        Sprite spIcon = IconHandler.Instance.GetIconSpriteByName(iconKey);
         if (spIcon != null)
             ivIcon.sprite = spIcon;
         else
@@ -125,7 +125,7 @@ public class ItemTownGuildAchievementCpt : ItemGameBaseCpt
         //设置备用图标
         if (!iconKeyRemark.IsNull())
         {
-            Sprite spIconRemark = IconDataHandler.Instance.manager.GetIconSpriteByName(iconKeyRemark);
+            Sprite spIconRemark = IconHandler.Instance.GetIconSpriteByName(iconKeyRemark);
             if (spIconRemark != null)
             {
                 ivIconRemark.sprite = spIconRemark;

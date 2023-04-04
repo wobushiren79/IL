@@ -8,7 +8,7 @@ public class ItemGameMenuFoodCpt : ItemGameBaseCpt, IRadioButtonCallBack, Dialog
 {
     [Header("控件")]
     public Text tvName;
-    public PopupFoodButton pbFood;
+    public UIPopupFoodButton pbFood;
     public Image ivFood;
     public GameObject objPriceS;
     public Text tvPriceS;
@@ -18,13 +18,13 @@ public class ItemGameMenuFoodCpt : ItemGameBaseCpt, IRadioButtonCallBack, Dialog
     public Text tvPriceL;
     public RadioButtonView rbShow;
     public Text tvShow;
-    public PopupPromptButton pbReputation;
+    public UIPopupPromptButton pbReputation;
     public Image ivReputation;
     public Text tvMenuRarity;
 
     public GameObject objResearch;
     public Button btResearch;
-    public PopupPromptButton popupForResearch;
+    public UIPopupPromptButton popupForResearch;
 
     public GameObject objResearchCancel;
     public Button btResearchCancel;

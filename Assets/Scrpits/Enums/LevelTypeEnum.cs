@@ -46,15 +46,15 @@ public class LevelTypeEnumTools
         }
         else if (level == LevelTypeEnum.Star)
         {
-            spIcon = IconDataHandler.Instance.manager.GetIconSpriteByName("reputation_level_1_1");
+            spIcon = IconHandler.Instance.GetIconSpriteByName("reputation_level_1_1");
         }
         else if (level == LevelTypeEnum.Moon)
         {
-            spIcon = IconDataHandler.Instance.manager.GetIconSpriteByName("reputation_level_2_1");
+            spIcon = IconHandler.Instance.GetIconSpriteByName("reputation_level_2_1");
         }
         else if (level == LevelTypeEnum.Sun)
         {
-            spIcon = IconDataHandler.Instance.manager.GetIconSpriteByName("reputation_level_3_1");
+            spIcon = IconHandler.Instance.GetIconSpriteByName("reputation_level_3_1");
         }
         return spIcon;
     }

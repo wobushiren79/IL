@@ -72,7 +72,7 @@ public class AchievementDialogView : DialogView
             }
             else
             {
-                spIcon = IconDataHandler.Instance.manager.GetIconSpriteByName(iconKey);
+                spIcon = IconHandler.Instance.GetIconSpriteByName(iconKey);
             }
 
             if (spIcon != null)

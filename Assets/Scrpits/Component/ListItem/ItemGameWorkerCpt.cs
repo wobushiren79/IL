@@ -9,14 +9,14 @@ public class ItemGameWorkerCpt : ItemGameBaseCpt, DialogView.IDialogCallBack, Wo
 {
     [Header("控件")]
     public Text tvName;
-    public PopupPromptButton pbName;
+    public UIPopupPromptButton pbName;
 
     public Text tvPrice;
-    public PopupPromptButton pbPrice;
+    public UIPopupPromptButton pbPrice;
 
     public Image ivLoyal;
     public Text tvLoyal;
-    public PopupPromptButton pbLoyal;
+    public UIPopupPromptButton pbLoyal;
 
     public Text tvLevelUp;
 
@@ -25,17 +25,17 @@ public class ItemGameWorkerCpt : ItemGameBaseCpt, DialogView.IDialogCallBack, Wo
     public Text tvStatus;
 
     public TextMeshProUGUI tvCook;
-    public PopupPromptButton pbCook;
+    public UIPopupPromptButton pbCook;
     public TextMeshProUGUI tvSpeed;
-    public PopupPromptButton pbSpeed;
+    public UIPopupPromptButton pbSpeed;
     public TextMeshProUGUI tvAccount;
-    public PopupPromptButton pbAccount;
+    public UIPopupPromptButton pbAccount;
     public TextMeshProUGUI tvCharm;
-    public PopupPromptButton pbCharm;
+    public UIPopupPromptButton pbCharm;
     public TextMeshProUGUI tvForce;
-    public PopupPromptButton pbForce;
+    public UIPopupPromptButton pbForce;
     public TextMeshProUGUI tvLucky;
-    public PopupPromptButton pbLucky;
+    public UIPopupPromptButton pbLucky;
 
     public Button btEquip;
     public Button btDetails;
@@ -51,13 +51,13 @@ public class ItemGameWorkerCpt : ItemGameBaseCpt, DialogView.IDialogCallBack, Wo
     public WorkerPriorityView wvAccostForGuide;
     public WorkerPriorityView wvBeater;
 
-    public PopupCharacterButton infoCharacterPopup;
+    public UIPopupCharacterButton infoCharacterPopup;
 
     [Header("数据")]
     public CharacterUICpt characterUICpt;
     public CharacterBean characterData;
 
-    protected PopupPromptShow infoPromptPopup;
+    protected UIPopupPromptShow infoPromptPopup;
 
     private void Start()
     {
@@ -358,11 +358,11 @@ public class ItemGameWorkerCpt : ItemGameBaseCpt, DialogView.IDialogCallBack, Wo
         {
             if (sex == 1)
             {
-                ivSex.sprite = IconDataHandler.Instance.manager.GetIconSpriteByName("sex_man");
+                ivSex.sprite = IconHandler.Instance.GetIconSpriteByName("sex_man");
             }
             else if (sex == 2)
             {
-                ivSex.sprite = IconDataHandler.Instance.manager.GetIconSpriteByName("sex_woman");
+                ivSex.sprite = IconHandler.Instance.GetIconSpriteByName("sex_woman");
             }
         }
     }

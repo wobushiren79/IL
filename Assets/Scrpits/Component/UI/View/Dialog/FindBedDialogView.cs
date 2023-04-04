@@ -14,7 +14,7 @@ public class FindBedDialogView : DialogView
     public Image ivCardBG;
     public Image ivHaloBG;
 
-    public PopupBedButton popupBedButton;
+    public UIPopupBedButton popupBedButton;
 
     public BuildBedBean buildBedData;
 

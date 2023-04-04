@@ -3,7 +3,7 @@ using UnityEditor;
 using UnityEngine.UI;
 public class ItemGameStatisticsForAchCpt : ItemGameBaseCpt
 {
-    public PopupAchievementButton popupButton;
+    public UIPopupAchievementButton popupButton;
     public Image ivIcon;
     public Image ivBackground;
 
@@ -20,7 +20,7 @@ public class ItemGameStatisticsForAchCpt : ItemGameBaseCpt
     {
         if (isUnLock)
         {
-            Sprite spIcon = IconDataHandler.Instance.manager.GetIconSpriteByName(achievementInfo.icon_key);
+            Sprite spIcon = IconHandler.Instance.GetIconSpriteByName(achievementInfo.icon_key);
             SetIcon(spIcon);
             popupButton.SetData(AchievementStatusEnum.Completed, achievementInfo);
             ivBackground.sprite = spUnLockBackground;

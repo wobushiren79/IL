@@ -337,7 +337,7 @@ public class MiniGameCombatHandler : BaseMiniGameHandler<MiniGameCombatBuilder, 
         NpcAIMiniGameCombatCpt actionNpc = miniGameData.GetRoundActionCharacter();
         List<NpcAIMiniGameCombatCpt> listTargetNpc = miniGameData.GetRoundTargetListCharacter();
         SkillInfoBean skillData = miniGameData.GetRoundActionSkill();
-        Sprite spSkill= IconDataHandler.Instance.manager.GetIconSpriteByName(skillData.icon_key);
+        Sprite spSkill= IconHandler.Instance.GetIconSpriteByName(skillData.icon_key);
         //喊出技能名字
         actionNpc.SetShout(skillData.name);
         yield return new WaitForSeconds(1f);

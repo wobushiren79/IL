@@ -8,29 +8,29 @@ public class UIGameMain : BaseUIComponent, DialogView.IDialogCallBack, IRadioGro
 {
     [Header("控件")]
     public RectTransform trfFunction;
-    public PopupPromptButton popupWorker;
+    public UIPopupPromptButton popupWorker;
     public Button btWorker;
-    public PopupPromptButton popupBuild;
+    public UIPopupPromptButton popupBuild;
     public Button btBuild;
-    public PopupPromptButton popupMenu;
+    public UIPopupPromptButton popupMenu;
     public Button btMenu;
-    public PopupPromptButton popupBackpack;
+    public UIPopupPromptButton popupBackpack;
     public Button btBackpack;
-    public PopupPromptButton popupFavorability;
+    public UIPopupPromptButton popupFavorability;
     public Button btFavorability;
-    public PopupPromptButton popupDebug;
+    public UIPopupPromptButton popupDebug;
     public Button btDebug;
-    public PopupPromptButton popupInnData;
+    public UIPopupPromptButton popupInnData;
     public Button btInnData;
-    public PopupPromptButton popupHelp;
+    public UIPopupPromptButton popupHelp;
     public Button btHelp;
-    public PopupPromptButton popupSetting;
+    public UIPopupPromptButton popupSetting;
     public Button btSetting;
-    public PopupPromptButton popupJumpTime;
+    public UIPopupPromptButton popupJumpTime;
     public Button btJumpTime;
-    public PopupPromptButton popupHotel;
+    public UIPopupPromptButton popupHotel;
     public Button btHotel;
-    public PopupPromptButton popupFamily;
+    public UIPopupPromptButton popupFamily;
     public Button btFamily;
 
     public Button btSleep;
@@ -39,14 +39,14 @@ public class UIGameMain : BaseUIComponent, DialogView.IDialogCallBack, IRadioGro
     public Text tvMoneyM;
     public Text tvMoneyL;
 
-    public PopupPromptButton popupAesthetics;
-    public PopupPromptButton popupPraise;
-    public PopupPromptButton popupRichness;
+    public UIPopupPromptButton popupAesthetics;
+    public UIPopupPromptButton popupPraise;
+    public UIPopupPromptButton popupRichness;
     public ProgressView proAesthetics;
     public ProgressView proPraise;
     public ProgressView proRichness;
 
-    public PopupPromptButton popupInnLevel;
+    public UIPopupPromptButton popupInnLevel;
     public Image ivInnLevel;
 
     public ClockView clockView;//时钟
@@ -416,7 +416,12 @@ public class UIGameMain : BaseUIComponent, DialogView.IDialogCallBack, IRadioGro
 
         if (ivInnLevel != null)
         {
-            Sprite spIcon = IconDataHandler.Instance.manager.GetIconSpriteByName("inn_level_" + innLevelTitle + "_" + (innLevelStar - 1));
+            if (innLevelTitle == 0)
+            {
+                ivInnLevel.gameObject.SetActive(false);
+                return;
+            }
+            Sprite spIcon = IconHandler.Instance.GetIconSpriteByName("inn_level_" + innLevelTitle + "_" + (innLevelStar - 1));
             if (spIcon)
             {
                 ivInnLevel.gameObject.SetActive(true);

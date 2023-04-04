@@ -37,9 +37,8 @@ public class GameControlManager : BaseManager
         }
         else
         {
-            GameObject objModel = GetModel<GameObject>("control/control", controlName);
+            GameObject objModel = LoadAddressablesUtil.LoadAssetSync<GameObject>($"Assets/Prefabs/Control/{controlName}.prefab");
             GameObject obj = Instantiate(gameObject, objModel);
-            DestroyImmediate(objModel, true);
             BaseControl controlModel = obj.GetComponent<BaseControl>();
             controlModel.transform.SetParent(transform);
             dicControl.Add(controlEnum, controlModel);

@@ -3,7 +3,7 @@ using UnityEditor;
 
 public class RevenueCartogramBarForItem : CartogramBarForItem
 {
-    public PopupRecordButton popupButton;
+    public UIPopupRecordButton popupButton;
     public InnRecordBean innRecordData;
 
     public void SetRecordData(InnRecordBean innRecordData)

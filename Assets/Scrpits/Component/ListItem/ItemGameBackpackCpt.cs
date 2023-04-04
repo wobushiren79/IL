@@ -11,7 +11,7 @@ public class ItemGameBackpackCpt : ItemGameBaseCpt, IPointerClickHandler, ItemsS
     public Text tvNumber;
     public RectTransform rtIcon;
     public Image ivIcon;
-    public PopupItemsButton infoItemsPopup;
+    public UIPopupItemsButton infoItemsPopup;
 
     public ItemsInfoBean itemsInfoData;
     public ItemBean itemBean;

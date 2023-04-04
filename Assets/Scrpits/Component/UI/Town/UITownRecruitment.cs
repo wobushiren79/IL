@@ -10,7 +10,7 @@ public class UITownRecruitment : UIBaseOne, DialogView.IDialogCallBack
     public Text tvNumber;
     //重金寻聘
     public Button btFindWorker;
-    public PopupPromptButton popupPromptButton;
+    public UIPopupPromptButton popupPromptButton;
     public Text tvNull;
 
     protected List<CharacterBean> listData = new List<CharacterBean>();

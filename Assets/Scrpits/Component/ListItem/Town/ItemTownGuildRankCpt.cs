@@ -50,69 +50,69 @@ public class ItemTownGuildRankCpt : ItemGameBaseCpt, IWebRequestCallBack<SteamWe
         {
             case RankTypeEnum.GetMoneyS:
                 dataStr = score + TextHandler.Instance.manager.GetTextById(18);
-                spData = IconDataHandler.Instance.manager.GetIconSpriteByName("ach_money_s_2");
+                spData = IconHandler.Instance.GetIconSpriteByName("ach_money_s_2");
                 break;
             case RankTypeEnum.NumberOrderForFood:
                 dataStr = score + TextHandler.Instance.manager.GetTextById(82);
-                spData = IconDataHandler.Instance.manager.GetIconSpriteByName("ach_ordernumber_1");
+                spData = IconHandler.Instance.GetIconSpriteByName("ach_ordernumber_1");
                 break;
             case RankTypeEnum.NumberOrderForHotel:
                 dataStr = score + TextHandler.Instance.manager.GetTextById(82);
-                spData = IconDataHandler.Instance.manager.GetIconSpriteByName("worker_waiter_bed_pro_2");
+                spData = IconHandler.Instance.GetIconSpriteByName("worker_waiter_bed_pro_2");
                 break;
 
             case RankTypeEnum.NumberPraiseExcited:
                 dataStr = score + "";
-                spData = IconDataHandler.Instance.manager.GetIconSpriteByName("ach_accost_1");
+                spData = IconHandler.Instance.GetIconSpriteByName("ach_accost_1");
                 break;
             case RankTypeEnum.NumberPraiseAnger:
                 dataStr = score + "";
-                spData = IconDataHandler.Instance.manager.GetIconSpriteByName("ach_accost_2");
+                spData = IconHandler.Instance.GetIconSpriteByName("ach_accost_2");
                 break;
             case RankTypeEnum.TimePlay:
                 TimeBean timeData = new TimeBean();
                 timeData.AddTimeForHMS(0, 0, score);
                 dataStr = timeData.hour + ":" + timeData.minute + ":" + timeData.second;
-                spData = IconDataHandler.Instance.manager.GetIconSpriteByName("time_wait_1_0");
+                spData = IconHandler.Instance.GetIconSpriteByName("time_wait_1_0");
                 break;
 
             case RankTypeEnum.MaxDayGetMoneyForFoodS:
                 dataStr = score + TextHandler.Instance.manager.GetTextById(18);
-                spData = IconDataHandler.Instance.manager.GetIconSpriteByName("ach_money_s_2");
+                spData = IconHandler.Instance.GetIconSpriteByName("ach_money_s_2");
                 break;
             case RankTypeEnum.MaxDayGetMoneyForHotelS:
                 dataStr = score + TextHandler.Instance.manager.GetTextById(18);
-                spData = IconDataHandler.Instance.manager.GetIconSpriteByName("ach_money_s_2");
+                spData = IconHandler.Instance.GetIconSpriteByName("ach_money_s_2");
                 break;
 
             case RankTypeEnum.MaxDayCompleteOrderForFood:
                 dataStr = score + "";
-                spData = IconDataHandler.Instance.manager.GetIconSpriteByName("ach_ordernumber_1");
+                spData = IconHandler.Instance.GetIconSpriteByName("ach_ordernumber_1");
                 break;
             case RankTypeEnum.MaxDayCompleteOrderForHotel:
                 dataStr = score + "";
-                spData = IconDataHandler.Instance.manager.GetIconSpriteByName("worker_waiter_bed_pro_2");
+                spData = IconHandler.Instance.GetIconSpriteByName("worker_waiter_bed_pro_2");
                 break;
 
             case RankTypeEnum.NumberForGetElementary:
                 dataStr = score + "";
-                spData = IconDataHandler.Instance.manager.GetIconSpriteByName("trophy_1_0");
+                spData = IconHandler.Instance.GetIconSpriteByName("trophy_1_0");
                 break;
             case RankTypeEnum.NumberForGetIntermediate:
                 dataStr = score + "";
-                spData = IconDataHandler.Instance.manager.GetIconSpriteByName("trophy_1_1");
+                spData = IconHandler.Instance.GetIconSpriteByName("trophy_1_1");
                 break;
             case RankTypeEnum.NumberForGetAdvanced:
                 dataStr = score + "";
-                spData = IconDataHandler.Instance.manager.GetIconSpriteByName("trophy_1_2");
+                spData = IconHandler.Instance.GetIconSpriteByName("trophy_1_2");
                 break;
             case RankTypeEnum.NumberForGetLegendary:
                 dataStr = score + "";
-                spData = IconDataHandler.Instance.manager.GetIconSpriteByName("trophy_1_3");
+                spData = IconHandler.Instance.GetIconSpriteByName("trophy_1_3");
                 break;
             case RankTypeEnum.MaxLayer:
                 dataStr = score + "";
-                spData = IconDataHandler.Instance.manager.GetIconSpriteByName("infinitetowers_1");
+                spData = IconHandler.Instance.GetIconSpriteByName("infinitetowers_1");
                 break;
         }
         if (tvData != null)

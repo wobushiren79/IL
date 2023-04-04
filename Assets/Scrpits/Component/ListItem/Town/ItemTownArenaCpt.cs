@@ -114,7 +114,7 @@ public class ItemTownArenaCpt : ItemGameBaseCpt, DialogView.IDialogCallBack
             tvNumber.text = "x" + itemReward.rewardNumber;
             if (itemReward.dataType == RewardTypeEnum.AddItems)
             {
-                PopupItemsButton infoItemsPopup = objReward.GetComponent<PopupItemsButton>();
+                UIPopupItemsButton infoItemsPopup = objReward.GetComponent<UIPopupItemsButton>();
                 ItemsInfoBean itemsInfo = GameItemsHandler.Instance.manager.GetItemsById(itemReward.rewardId);
                 infoItemsPopup.SetData(itemsInfo, itemReward.spRewardIcon);
             }

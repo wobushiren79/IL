@@ -49,7 +49,7 @@ public static class WorkerEnumTools
                 spriteKey = "worker_beater_1";
                 break;
         }
-        return IconDataHandler.Instance.manager.GetIconSpriteByName(spriteKey);
+        return IconHandler.Instance.GetIconSpriteByName(spriteKey);
     }
 
     public static string GetWorkerName(WorkerEnum worker)

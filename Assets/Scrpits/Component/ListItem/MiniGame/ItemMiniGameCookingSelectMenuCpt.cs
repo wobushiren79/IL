@@ -5,7 +5,7 @@ using System;
 
 public class ItemMiniGameCookingSelectMenuCpt : ItemGameBaseCpt, DialogView.IDialogCallBack
 {
-    public PopupFoodButton infoFoodPopup;
+    public UIPopupFoodButton infoFoodPopup;
 
     public Text tvName;
     public Image ivIcon;

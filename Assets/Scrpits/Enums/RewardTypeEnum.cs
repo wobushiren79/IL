@@ -92,7 +92,7 @@ public class RewardTypeEnumTools : DataTools
         switch (data.dataType)
         {
             case RewardTypeEnum.AddWorkerNumber:
-                data.spRewardIcon = IconDataHandler.Instance.manager.GetIconSpriteByName("ui_features_worker");
+                data.spRewardIcon = IconHandler.Instance.GetIconSpriteByName("ui_features_worker");
                 data.rewardDescribe = string.Format(TextHandler.Instance.manager.GetTextById(6001), data.data);
                 data.rewardNumber = int.Parse(data.data);
                 break;
@@ -107,7 +107,7 @@ public class RewardTypeEnumTools : DataTools
                 GetRewardDetailsForAddMoney(data);
                 break;
             case RewardTypeEnum.AddGuildCoin:
-                data.spRewardIcon = IconDataHandler.Instance.manager.GetIconSpriteByName("guild_coin_2");
+                data.spRewardIcon = IconHandler.Instance.GetIconSpriteByName("guild_coin_2");
                 data.rewardDescribe = string.Format(TextHandler.Instance.manager.GetTextById(6005), data.data);
                 data.rewardNumber = int.Parse(data.data);
                 break;
@@ -216,7 +216,7 @@ public class RewardTypeEnumTools : DataTools
                 rewardDescribe = string.Format(TextHandler.Instance.manager.GetTextById(6009), listData[0] + "");
                 break;
         }
-        rewardTypeData.spRewardIcon = IconDataHandler.Instance.manager.GetIconSpriteByName(iconKey);
+        rewardTypeData.spRewardIcon = IconHandler.Instance.GetIconSpriteByName(iconKey);
         rewardTypeData.rewardDescribe = rewardDescribe;
         rewardTypeData.rewardNumber = listData[0];
         if (listData.Length > 1)
@@ -252,7 +252,7 @@ public class RewardTypeEnumTools : DataTools
                 rewardDescribe = string.Format(TextHandler.Instance.manager.GetTextById(6004), rewardTypeData.data);
                 break;
         }
-        rewardTypeData.spRewardIcon = IconDataHandler.Instance.manager.GetIconSpriteByName(iconKey);
+        rewardTypeData.spRewardIcon = IconHandler.Instance.GetIconSpriteByName(iconKey);
         rewardTypeData.rewardDescribe = rewardDescribe;
         rewardTypeData.rewardNumber = int.Parse(rewardTypeData.data);
         return rewardTypeData;
@@ -385,7 +385,7 @@ public class RewardTypeEnumTools : DataTools
     private static RewardTypeBean GetRewardDetailsForChild(RewardTypeBean data)
     {
         data.rewardDescribe = TextHandler.Instance.manager.GetTextById(6101);
-        data.spRewardIcon = IconDataHandler.Instance.manager.GetIconSpriteByName("baby_1");
+        data.spRewardIcon = IconHandler.Instance.GetIconSpriteByName("baby_1");
         return data;
     }
 

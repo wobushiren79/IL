@@ -122,7 +122,7 @@ public class ControlForMoveCpt : BaseControl
             GameConfigBean gameConfig = GameDataHandler.Instance.manager.GetGameConfig();
             audioForWalk.volume = gameConfig.soundVolume * 0.5f;
 
-            audioForWalk.clip = LoadAddressablesUtil.LoadAssetSync<AudioClip>("sound_walk_1");
+            audioForWalk.clip = LoadAddressablesUtil.LoadAssetSync<AudioClip>("Assets/Audio/Sound/sound_walk_1.mp3");
         }
     }
 

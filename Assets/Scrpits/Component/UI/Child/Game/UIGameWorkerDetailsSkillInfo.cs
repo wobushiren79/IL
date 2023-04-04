@@ -43,9 +43,9 @@ public class UIGameWorkerDetailsSkillInfo : BaseUIView
             }
             GameObject objItem = Instantiate(objSkillItemContainer, objSkillItemModel);
             ItemBaseTextCpt itemBaseText = objItem.GetComponent<ItemBaseTextCpt>();
-            PopupSkillButton infoSkillPopup = objItem.GetComponent<PopupSkillButton>();
+            UIPopupSkillButton infoSkillPopup = objItem.GetComponent<UIPopupSkillButton>();
 
-            Sprite spIcon = IconDataHandler.Instance.manager.GetIconSpriteByName(itemSkill.icon_key);
+            Sprite spIcon = IconHandler.Instance.GetIconSpriteByName(itemSkill.icon_key);
             itemBaseText.SetData(spIcon, itemSkill.name, "");
             infoSkillPopup.SetData(itemSkill);
         }
