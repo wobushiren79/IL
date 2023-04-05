@@ -30,6 +30,7 @@ RectTransform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 5357969935066136041}
   m_Father: {fileID: 0}
@@ -143,7 +144,7 @@ MonoBehaviour:
   rbButton: {fileID: 6913177718203463459}
   rbImage: {fileID: 8552392375983207483}
   rbText: {fileID: 4932401322383630950}
-  status: 0
+  isSelect: 1
 --- !u!1 &7646498025049383758
 GameObject:
   m_ObjectHideFlags: 0
@@ -172,6 +173,7 @@ RectTransform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 6126490456831843430}
   m_RootOrder: 0
@@ -211,7 +213,7 @@ MonoBehaviour:
       m_Calls: []
   m_FontData:
     m_Font: {fileID: 12800000, guid: 1b55002fea9009a46bd1c17470cdb9b8, type: 3}
-    m_FontSize: 1
+    m_FontSize: 30
     m_FontStyle: 1
     m_BestFit: 1
     m_MinSize: 1

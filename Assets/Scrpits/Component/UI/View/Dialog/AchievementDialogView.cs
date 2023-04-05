@@ -68,7 +68,7 @@ public class AchievementDialogView : DialogView
             Sprite spIcon;
             if (type == 1)
             {
-                spIcon = InnFoodHandler.Instance.manager.GetFoodSpriteByName(iconKey);
+                spIcon = IconHandler.Instance.GetFoodSpriteByName(iconKey);
             }
             else
             {

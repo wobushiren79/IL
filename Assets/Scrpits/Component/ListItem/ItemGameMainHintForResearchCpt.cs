@@ -35,7 +35,7 @@ public class ItemGameMainHintForResearchCpt : ItemGameBaseCpt
     {
         this.menuOwn = menuOwn;
         MenuInfoBean menuInfo =  InnFoodHandler.Instance.manager.GetFoodDataById(menuOwn.menuId);
-        Sprite spFoodIcon= InnFoodHandler.Instance.manager.GetFoodSpriteByName(menuInfo.icon_key);
+        Sprite spFoodIcon= IconHandler.Instance.GetFoodSpriteByName(menuInfo.icon_key);
         SetIcon(spFoodIcon);
         SetName(menuInfo.name);
         RefreshData();

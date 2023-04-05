@@ -3,20 +3,8 @@ using UnityEngine;
 using UnityEngine.UI;
 using DG.Tweening;
 
-public class UIMiniGameBirth : BaseUIComponent
+public partial class UIMiniGameBirth : BaseUIComponent
 {
-
-    public RectTransform ui_Start;
-    public RectTransform ui_End;
-    public RectTransform ui_SpermContainer;
-
-    public UIMiniGameBirthEnemyArea ui_EnemyArea;
-    public UIMiniGameBirthEgg ui_Egg;
-
-    public ProgressView ui_BirthPro;
-    public Button ui_BTFire;
-    public Text ui_TVFireNumber;
-
     public UIMiniGameBirthSperm modelForSperm;
 
     public override void Awake()

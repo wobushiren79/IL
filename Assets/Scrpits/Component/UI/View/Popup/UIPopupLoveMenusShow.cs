@@ -23,7 +23,7 @@ public class UIPopupLoveMenusShow : PopupShowView
         foreach (long menuId in listLoveMenu)
         {
             MenuInfoBean menuInfo = InnFoodHandler.Instance.manager.GetFoodDataById(menuId);
-            Sprite spFood = InnFoodHandler.Instance.manager.GetFoodSpriteByName(menuInfo.icon_key);
+            Sprite spFood = IconHandler.Instance.GetFoodSpriteByName(menuInfo.icon_key);
             GameObject objLoveMenu = Instantiate(objLoveMenuContainer, objLoveMenuModel);
             ItemBaseTextCpt itemLoveMenu = objLoveMenu.GetComponent<ItemBaseTextCpt>();
 

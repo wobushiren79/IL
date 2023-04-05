@@ -28,6 +28,7 @@ RectTransform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 284451275321244720}
   m_RootOrder: 0
@@ -67,7 +68,7 @@ MonoBehaviour:
       m_Calls: []
   m_FontData:
     m_Font: {fileID: 12800000, guid: 1b55002fea9009a46bd1c17470cdb9b8, type: 3}
-    m_FontSize: 1
+    m_FontSize: 25
     m_FontStyle: 1
     m_BestFit: 1
     m_MinSize: 1
@@ -107,6 +108,7 @@ RectTransform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 6526023255502042154}
   m_Father: {fileID: 6526023255725422113}
@@ -184,6 +186,7 @@ RectTransform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 6526023256855794817}
   m_Father: {fileID: 6526023256722435763}
@@ -310,6 +313,7 @@ RectTransform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 6526023256182956299}
   m_Father: {fileID: 6526023256722435763}
@@ -400,6 +404,7 @@ RectTransform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 6526023255280431084}
   m_RootOrder: 0
@@ -439,7 +444,7 @@ MonoBehaviour:
       m_Calls: []
   m_FontData:
     m_Font: {fileID: 12800000, guid: 1b55002fea9009a46bd1c17470cdb9b8, type: 3}
-    m_FontSize: 1
+    m_FontSize: 20
     m_FontStyle: 1
     m_BestFit: 1
     m_MinSize: 1
@@ -494,6 +499,7 @@ RectTransform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 6526023256665120592}
   m_Father: {fileID: 6526023257077939632}
@@ -574,6 +580,7 @@ RectTransform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 6526023255952960986}
   - {fileID: 6526023255280431084}
@@ -838,6 +845,8 @@ MonoBehaviour:
     npcInfoData:
       id: 0
       valid: 0
+      name_cn: 
+      name_en: 
       npc_id: 0
       npc_type: 0
       sex: 0
@@ -888,6 +897,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a9a7926dd6abb8146b9711a0bc71f073, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  rectTransform: {fileID: 0}
+  btnTarget: {fileID: 0}
 --- !u!1 &6526023255952960987
 GameObject:
   m_ObjectHideFlags: 0
@@ -916,6 +927,7 @@ RectTransform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 902378865116809211}
   m_Father: {fileID: 6526023255725422113}
@@ -992,6 +1004,7 @@ RectTransform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 6526023255725422113}
   m_Father: {fileID: 6526023255403194424}
@@ -1068,6 +1081,7 @@ RectTransform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 6526023256855794817}
   m_RootOrder: 0
@@ -1144,6 +1158,7 @@ RectTransform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 6526023255514840645}
   m_RootOrder: 0
@@ -1183,7 +1198,7 @@ MonoBehaviour:
       m_Calls: []
   m_FontData:
     m_Font: {fileID: 12800000, guid: 1b55002fea9009a46bd1c17470cdb9b8, type: 3}
-    m_FontSize: 1
+    m_FontSize: 25
     m_FontStyle: 1
     m_BestFit: 1
     m_MinSize: 1
@@ -1239,6 +1254,7 @@ RectTransform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 6526023255403194424}
   - {fileID: 6526023255281949647}
@@ -1350,6 +1366,7 @@ RectTransform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 6526023257077939632}
   - {fileID: 6526023256879752572}
@@ -1457,22 +1474,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 51db5d98bb0fa86449b31f6e413a157b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  objDialog: {fileID: 0}
-  btSubmit: {fileID: 6526023256879752571}
-  tvSubmit: {fileID: 0}
-  btCancel: {fileID: 6526023256931816831}
-  tvCancel: {fileID: 0}
-  btBackground: {fileID: 0}
-  tvTitle: {fileID: 6526023256665120607}
-  tvContent: {fileID: 0}
-  cgDialog: {fileID: 6526023256844059509}
+  rectTransform: {fileID: 0}
+  ui_Submit: {fileID: 0}
+  ui_SubmitText: {fileID: 0}
+  ui_Cancel: {fileID: 0}
+  ui_CancelText: {fileID: 0}
+  ui_Background: {fileID: 0}
+  ui_Title: {fileID: 0}
+  ui_Content: {fileID: 0}
   dialogData:
+    dialogType: 0
     title: 
     content: 
     submitStr: 
     cancelStr: 
     dialogPosition: 0
     remark: 
+    delayDelete: 0
   tvNull: {fileID: 8385993569101659763}
   btSortDef: {fileID: 4810723897772659314}
   btSortLife: {fileID: 7811528181872212237}
@@ -1526,6 +1544,7 @@ RectTransform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 6526023256504878618}
   m_Father: {fileID: 6526023255281949647}
@@ -1565,6 +1584,7 @@ RectTransform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 6526023256844059498}
   m_RootOrder: 1
@@ -1685,6 +1705,7 @@ RectTransform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 6526023256844059498}
   m_RootOrder: 2
@@ -1805,6 +1826,7 @@ RectTransform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 6526023255514840645}
   - {fileID: 6526023256722435763}
@@ -1928,6 +1950,7 @@ RectTransform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 6589588592111350168}
   - {fileID: 340091140378984366}
@@ -2437,12 +2460,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c4fe78642b45b674083d292c0331ca54, type: 3}
---- !u!224 &8714456558264835302 stripped
-RectTransform:
-  m_CorrespondingSourceObject: {fileID: 5047433569003000991, guid: c4fe78642b45b674083d292c0331ca54,
-    type: 3}
-  m_PrefabInstance: {fileID: 4531727364538534009}
-  m_PrefabAsset: {fileID: 0}
 --- !u!114 &4509467596898300218 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 33555876073535811, guid: c4fe78642b45b674083d292c0331ca54,
@@ -2455,6 +2472,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!224 &8714456558264835302 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 5047433569003000991, guid: c4fe78642b45b674083d292c0331ca54,
+    type: 3}
+  m_PrefabInstance: {fileID: 4531727364538534009}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &4806511789640887089
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3304,6 +3327,12 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c4fe78642b45b674083d292c0331ca54, type: 3}
+--- !u!224 &3031836845009867985 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 5047433569003000991, guid: c4fe78642b45b674083d292c0331ca54,
+    type: 3}
+  m_PrefabInstance: {fileID: 7790991624863957070}
+  m_PrefabAsset: {fileID: 0}
 --- !u!114 &7811528181872212237 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 33555876073535811, guid: c4fe78642b45b674083d292c0331ca54,
@@ -3316,12 +3345,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!224 &3031836845009867985 stripped
-RectTransform:
-  m_CorrespondingSourceObject: {fileID: 5047433569003000991, guid: c4fe78642b45b674083d292c0331ca54,
-    type: 3}
-  m_PrefabInstance: {fileID: 7790991624863957070}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &8188338867776534871
 PrefabInstance:
   m_ObjectHideFlags: 0

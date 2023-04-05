@@ -3,10 +3,12 @@ using UnityEngine.UI;
 using UnityEditor;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 
 public class ItemGameMenuFoodCpt : ItemGameBaseCpt, IRadioButtonCallBack, DialogView.IDialogCallBack
 {
     [Header("控件")]
+    //public Text tvName;
     public Text tvName;
     public UIPopupFoodButton pbFood;
     public Image ivFood;
@@ -154,30 +156,31 @@ public class ItemGameMenuFoodCpt : ItemGameBaseCpt, IRadioButtonCallBack, Dialog
     {
         pbReputation.gameObject.SetActive(true);
         ivReputation.sprite = spIcon;
+        tvName.color = new Color(0.81f, 0.27f, 0.1f, 1f);
         if (level == LevelTypeEnum.Init)
         {
-            tvName.color = new Color(0, 0, 0, 1f);
+            //tvName.color = new Color(0, 0, 0, 1f);
             ivBackground.sprite = spBackgroundInit;
             pbReputation.gameObject.SetActive(false);
         }
         else if (level == LevelTypeEnum.Star)
         {
-            tvName.color = new Color(0, 0.75f, 0, 1f);
+            //tvName.color = new Color(0, 0.75f, 0, 1f);
             ivBackground.sprite = spBackgroundStar;
         }
         else if (level == LevelTypeEnum.Moon)
         {
-            tvName.color = new Color(0.1f, 0.75f, 0.95f, 1f);
+            //tvName.color = new Color(0.1f, 0.75f, 0.95f, 1f);
             ivBackground.sprite = spBackgroundMoon;
         }
         else if (level == LevelTypeEnum.Sun)
         {
-            tvName.color = new Color(1, 0.85f, 0.2f, 1f);
+            //tvName.color = new Color(1, 0.85f, 0.2f, 1f);
             ivBackground.sprite = spBackgroundSun;
         }
         else
         {
-            tvName.color = new Color(0, 0, 0, 1f);
+            tvName.color = new Color(0.81f, 0.27f, 0.1f, 1f);
             ivBackground.sprite = spBackgroundInit;
         }
     }
@@ -210,7 +213,7 @@ public class ItemGameMenuFoodCpt : ItemGameBaseCpt, IRadioButtonCallBack, Dialog
     public void SetFoodIcon(string iconKey)
     {
         
-        Sprite spFood = InnFoodHandler.Instance.manager.GetFoodSpriteByName(iconKey);
+        Sprite spFood = IconHandler.Instance.GetFoodSpriteByName(iconKey);
         //食物图标设置
         if (ivFood != null)
         {

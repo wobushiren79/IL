@@ -28,6 +28,7 @@ RectTransform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 3841797937962751620}
   - {fileID: 6339627664151170375}
@@ -59,22 +60,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aebfe9173be5596489f87c404a9b1f5c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  objDialog: {fileID: 0}
-  btSubmit: {fileID: 0}
-  tvSubmit: {fileID: 0}
-  btCancel: {fileID: 0}
-  tvCancel: {fileID: 0}
-  btBackground: {fileID: 0}
-  tvTitle: {fileID: 0}
-  tvContent: {fileID: 0}
-  cgDialog: {fileID: 0}
+  rectTransform: {fileID: 0}
+  ui_Submit: {fileID: 0}
+  ui_SubmitText: {fileID: 0}
+  ui_Cancel: {fileID: 0}
+  ui_CancelText: {fileID: 0}
+  ui_Background: {fileID: 0}
+  ui_Title: {fileID: 0}
+  ui_Content: {fileID: 0}
   dialogData:
+    dialogType: 0
     title: 
     content: 
     submitStr: 
     cancelStr: 
     dialogPosition: 0
     remark: 
+    delayDelete: 0
   strengthTest: {fileID: 5369894286297898850}
   resultsForce: 0
 --- !u!1001 &2654162899881464640

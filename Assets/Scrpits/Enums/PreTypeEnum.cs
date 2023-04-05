@@ -944,7 +944,7 @@ public class PreTypeEnumTools : DataTools
         foreach (long menuId in menuIds)
         {
             MenuInfoBean menuInfo = InnFoodHandler.Instance.manager.GetFoodDataById(menuId);
-            spIcon = InnFoodHandler.Instance.manager.GetFoodSpriteByName(menuInfo.icon_key);
+            spIcon = IconHandler.Instance.GetFoodSpriteByName(menuInfo.icon_key);
             foodListStr += ("《" + menuInfo.name + "》");
             bool hasMenu = gameData.CheckHasMenu(menuId);
             if (!hasMenu)

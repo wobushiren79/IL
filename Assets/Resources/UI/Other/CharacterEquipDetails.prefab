@@ -29,6 +29,7 @@ RectTransform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 840960653357415504}
   - {fileID: 1557050629967826133}
@@ -137,6 +138,7 @@ RectTransform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1222727563155826174}
   m_Father: {fileID: 1222727563559880036}
@@ -250,11 +252,14 @@ MonoBehaviour:
   itemsInfoData:
     id: 0
     valid: 0
+    name_cn: 
+    name_en: 
     intact_id: 0
     items_id: 0
     items_type: 0
     icon_key: 
     anim_key: 
+    anim_length: 0
     add_life: 0
     add_cook: 0
     add_speed: 0
@@ -417,6 +422,8 @@ MonoBehaviour:
     npcInfoData:
       id: 0
       valid: 0
+      name_cn: 
+      name_en: 
       npc_id: 0
       npc_type: 0
       sex: 0
@@ -468,14 +475,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9f50fe07f4e6e024f961413f0733e03f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  rectTransform: {fileID: 0}
+  btnTarget: {fileID: 0}
   itemsInfo:
     id: 0
     valid: 0
+    name_cn: 
+    name_en: 
     intact_id: 0
     items_id: 0
     items_type: 0
     icon_key: 
     anim_key: 
+    anim_length: 0
     add_life: 0
     add_cook: 0
     add_speed: 0
@@ -522,6 +534,7 @@ RectTransform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1222727563004470513}
   m_RootOrder: 0
@@ -614,6 +627,7 @@ RectTransform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1222727564140623437}
   m_RootOrder: 0
@@ -717,6 +731,7 @@ RectTransform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1222727563004470513}
   - {fileID: 1222727564113138505}
@@ -823,6 +838,7 @@ RectTransform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1222727564461536041}
   m_RootOrder: 1
@@ -862,7 +878,7 @@ MonoBehaviour:
       m_Calls: []
   m_FontData:
     m_Font: {fileID: 12800000, guid: 1b55002fea9009a46bd1c17470cdb9b8, type: 3}
-    m_FontSize: 1
+    m_FontSize: 25
     m_FontStyle: 1
     m_BestFit: 1
     m_MinSize: 1
@@ -919,6 +935,7 @@ RectTransform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1222727564359799170}
   m_RootOrder: 0
@@ -1024,6 +1041,7 @@ RectTransform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1222727564429442617}
   m_Father: {fileID: 1222727563559880036}
@@ -1137,11 +1155,14 @@ MonoBehaviour:
   itemsInfoData:
     id: 0
     valid: 0
+    name_cn: 
+    name_en: 
     intact_id: 0
     items_id: 0
     items_type: 0
     icon_key: 
     anim_key: 
+    anim_length: 0
     add_life: 0
     add_cook: 0
     add_speed: 0
@@ -1304,6 +1325,8 @@ MonoBehaviour:
     npcInfoData:
       id: 0
       valid: 0
+      name_cn: 
+      name_en: 
       npc_id: 0
       npc_type: 0
       sex: 0
@@ -1355,14 +1378,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9f50fe07f4e6e024f961413f0733e03f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  rectTransform: {fileID: 0}
+  btnTarget: {fileID: 0}
   itemsInfo:
     id: 0
     valid: 0
+    name_cn: 
+    name_en: 
     intact_id: 0
     items_id: 0
     items_type: 0
     icon_key: 
     anim_key: 
+    anim_length: 0
     add_life: 0
     add_cook: 0
     add_speed: 0
@@ -1411,6 +1439,7 @@ RectTransform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1222727563258549304}
   m_Father: {fileID: 1222727563559880036}
@@ -1524,11 +1553,14 @@ MonoBehaviour:
   itemsInfoData:
     id: 0
     valid: 0
+    name_cn: 
+    name_en: 
     intact_id: 0
     items_id: 0
     items_type: 0
     icon_key: 
     anim_key: 
+    anim_length: 0
     add_life: 0
     add_cook: 0
     add_speed: 0
@@ -1691,6 +1723,8 @@ MonoBehaviour:
     npcInfoData:
       id: 0
       valid: 0
+      name_cn: 
+      name_en: 
       npc_id: 0
       npc_type: 0
       sex: 0
@@ -1742,14 +1776,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9f50fe07f4e6e024f961413f0733e03f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  rectTransform: {fileID: 0}
+  btnTarget: {fileID: 0}
   itemsInfo:
     id: 0
     valid: 0
+    name_cn: 
+    name_en: 
     intact_id: 0
     items_id: 0
     items_type: 0
     icon_key: 
     anim_key: 
+    anim_length: 0
     add_life: 0
     add_cook: 0
     add_speed: 0
@@ -1798,6 +1837,7 @@ RectTransform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1222727563949123223}
   m_Father: {fileID: 1222727563559880036}
@@ -1911,11 +1951,14 @@ MonoBehaviour:
   itemsInfoData:
     id: 0
     valid: 0
+    name_cn: 
+    name_en: 
     intact_id: 0
     items_id: 0
     items_type: 0
     icon_key: 
     anim_key: 
+    anim_length: 0
     add_life: 0
     add_cook: 0
     add_speed: 0
@@ -2078,6 +2121,8 @@ MonoBehaviour:
     npcInfoData:
       id: 0
       valid: 0
+      name_cn: 
+      name_en: 
       npc_id: 0
       npc_type: 0
       sex: 0
@@ -2129,14 +2174,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9f50fe07f4e6e024f961413f0733e03f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  rectTransform: {fileID: 0}
+  btnTarget: {fileID: 0}
   itemsInfo:
     id: 0
     valid: 0
+    name_cn: 
+    name_en: 
     intact_id: 0
     items_id: 0
     items_type: 0
     icon_key: 
     anim_key: 
+    anim_length: 0
     add_life: 0
     add_cook: 0
     add_speed: 0
@@ -2184,6 +2234,7 @@ RectTransform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1222727564113138505}
   m_RootOrder: 0
@@ -2285,6 +2336,7 @@ RectTransform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1222727564782114539}
   - {fileID: 1222727563753509197}
@@ -2332,6 +2384,7 @@ RectTransform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1222727563559880036}
   - {fileID: 1015438284267533265}
@@ -2412,6 +2465,7 @@ RectTransform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1222727564461536041}
   m_RootOrder: 0
@@ -2489,6 +2543,7 @@ RectTransform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1557050629967826133}
   m_RootOrder: 1
@@ -2594,6 +2649,7 @@ RectTransform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 428150253193773948}
   - {fileID: 7900282083771399603}
@@ -2708,11 +2764,14 @@ MonoBehaviour:
   itemsInfoData:
     id: 0
     valid: 0
+    name_cn: 
+    name_en: 
     intact_id: 0
     items_id: 0
     items_type: 0
     icon_key: 
     anim_key: 
+    anim_length: 0
     add_life: 0
     add_cook: 0
     add_speed: 0
@@ -2875,6 +2934,8 @@ MonoBehaviour:
     npcInfoData:
       id: 0
       valid: 0
+      name_cn: 
+      name_en: 
       npc_id: 0
       npc_type: 0
       sex: 0
@@ -2926,14 +2987,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9f50fe07f4e6e024f961413f0733e03f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  rectTransform: {fileID: 0}
+  btnTarget: {fileID: 0}
   itemsInfo:
     id: 0
     valid: 0
+    name_cn: 
+    name_en: 
     intact_id: 0
     items_id: 0
     items_type: 0
     icon_key: 
     anim_key: 
+    anim_length: 0
     add_life: 0
     add_cook: 0
     add_speed: 0
@@ -2980,6 +3046,7 @@ RectTransform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 840960653357415504}
   m_RootOrder: 1
@@ -3073,6 +3140,7 @@ RectTransform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 5951846758459049838}
   - {fileID: 1374352096295039236}
@@ -3187,11 +3255,14 @@ MonoBehaviour:
   itemsInfoData:
     id: 0
     valid: 0
+    name_cn: 
+    name_en: 
     intact_id: 0
     items_id: 0
     items_type: 0
     icon_key: 
     anim_key: 
+    anim_length: 0
     add_life: 0
     add_cook: 0
     add_speed: 0
@@ -3354,6 +3425,8 @@ MonoBehaviour:
     npcInfoData:
       id: 0
       valid: 0
+      name_cn: 
+      name_en: 
       npc_id: 0
       npc_type: 0
       sex: 0
@@ -3405,14 +3478,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9f50fe07f4e6e024f961413f0733e03f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  rectTransform: {fileID: 0}
+  btnTarget: {fileID: 0}
   itemsInfo:
     id: 0
     valid: 0
+    name_cn: 
+    name_en: 
     intact_id: 0
     items_id: 0
     items_type: 0
     icon_key: 
     anim_key: 
+    anim_length: 0
     add_life: 0
     add_cook: 0
     add_speed: 0
@@ -3461,6 +3539,7 @@ RectTransform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 8217458728457943882}
   - {fileID: 7220933619670092830}
@@ -3575,11 +3654,14 @@ MonoBehaviour:
   itemsInfoData:
     id: 0
     valid: 0
+    name_cn: 
+    name_en: 
     intact_id: 0
     items_id: 0
     items_type: 0
     icon_key: 
     anim_key: 
+    anim_length: 0
     add_life: 0
     add_cook: 0
     add_speed: 0
@@ -3742,6 +3824,8 @@ MonoBehaviour:
     npcInfoData:
       id: 0
       valid: 0
+      name_cn: 
+      name_en: 
       npc_id: 0
       npc_type: 0
       sex: 0
@@ -3793,14 +3877,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9f50fe07f4e6e024f961413f0733e03f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  rectTransform: {fileID: 0}
+  btnTarget: {fileID: 0}
   itemsInfo:
     id: 0
     valid: 0
+    name_cn: 
+    name_en: 
     intact_id: 0
     items_id: 0
     items_type: 0
     icon_key: 
     anim_key: 
+    anim_length: 0
     add_life: 0
     add_cook: 0
     add_speed: 0
@@ -3845,6 +3934,7 @@ RectTransform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 7651899255750894955}
   m_Father: {fileID: 1222727564552750543}
@@ -3894,6 +3984,7 @@ RectTransform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 2089584904891199679}
   - {fileID: 2364416809171202604}
@@ -4008,11 +4099,14 @@ MonoBehaviour:
   itemsInfoData:
     id: 0
     valid: 0
+    name_cn: 
+    name_en: 
     intact_id: 0
     items_id: 0
     items_type: 0
     icon_key: 
     anim_key: 
+    anim_length: 0
     add_life: 0
     add_cook: 0
     add_speed: 0
@@ -4175,6 +4269,8 @@ MonoBehaviour:
     npcInfoData:
       id: 0
       valid: 0
+      name_cn: 
+      name_en: 
       npc_id: 0
       npc_type: 0
       sex: 0
@@ -4226,14 +4322,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9f50fe07f4e6e024f961413f0733e03f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  rectTransform: {fileID: 0}
+  btnTarget: {fileID: 0}
   itemsInfo:
     id: 0
     valid: 0
+    name_cn: 
+    name_en: 
     intact_id: 0
     items_id: 0
     items_type: 0
     icon_key: 
     anim_key: 
+    anim_length: 0
     add_life: 0
     add_cook: 0
     add_speed: 0
@@ -4281,6 +4382,7 @@ RectTransform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1394496293077829656}
   m_RootOrder: 1
@@ -4385,6 +4487,7 @@ RectTransform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 6872785197932654001}
   m_RootOrder: 1
@@ -4487,6 +4590,7 @@ RectTransform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1394496293077829656}
   m_RootOrder: 0
@@ -4526,7 +4630,7 @@ MonoBehaviour:
       m_Calls: []
   m_FontData:
     m_Font: {fileID: 12800000, guid: 1b55002fea9009a46bd1c17470cdb9b8, type: 3}
-    m_FontSize: 30
+    m_FontSize: 40
     m_FontStyle: 1
     m_BestFit: 1
     m_MinSize: 3
@@ -4566,6 +4670,7 @@ RectTransform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1222727564552750543}
   m_RootOrder: 4
@@ -4641,6 +4746,7 @@ RectTransform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1557050629967826133}
   m_RootOrder: 0
@@ -4680,7 +4786,7 @@ MonoBehaviour:
       m_Calls: []
   m_FontData:
     m_Font: {fileID: 12800000, guid: 1b55002fea9009a46bd1c17470cdb9b8, type: 3}
-    m_FontSize: 30
+    m_FontSize: 40
     m_FontStyle: 1
     m_BestFit: 1
     m_MinSize: 3
@@ -4720,6 +4826,7 @@ RectTransform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 840960653357415504}
   m_RootOrder: 0
@@ -4759,7 +4866,7 @@ MonoBehaviour:
       m_Calls: []
   m_FontData:
     m_Font: {fileID: 12800000, guid: 1b55002fea9009a46bd1c17470cdb9b8, type: 3}
-    m_FontSize: 30
+    m_FontSize: 40
     m_FontStyle: 1
     m_BestFit: 1
     m_MinSize: 3
@@ -4799,6 +4906,7 @@ RectTransform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 6872785197932654001}
   m_RootOrder: 0
@@ -4838,7 +4946,7 @@ MonoBehaviour:
       m_Calls: []
   m_FontData:
     m_Font: {fileID: 12800000, guid: 1b55002fea9009a46bd1c17470cdb9b8, type: 3}
-    m_FontSize: 30
+    m_FontSize: 40
     m_FontStyle: 1
     m_BestFit: 1
     m_MinSize: 3

@@ -44,6 +44,6 @@ public class UIPopupPromptButton : PopupButtonView<UIPopupPromptShow>
 
     public override void PopupHide()
     {
-
+        StopAllCoroutines();
     }
 }

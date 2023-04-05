@@ -31,6 +31,7 @@ RectTransform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 3873794517372139314}
   m_RootOrder: 0
@@ -107,7 +108,7 @@ MonoBehaviour:
   m_UseGraphicAlpha: 1
 --- !u!95 &4804195916273130179
 Animator:
-  serializedVersion: 3
+  serializedVersion: 5
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -120,10 +121,12 @@ Animator:
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
   m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorControllerStateOnDisable: 0
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &3873794517372139315
 GameObject:
   m_ObjectHideFlags: 0
@@ -157,6 +160,7 @@ RectTransform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 3873794516648867488}
   - {fileID: 3873794517669730072}
@@ -275,14 +279,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9f50fe07f4e6e024f961413f0733e03f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  rectTransform: {fileID: 0}
+  btnTarget: {fileID: 0}
   itemsInfo:
     id: 0
     valid: 0
+    name_cn: 
+    name_en: 
     intact_id: 0
     items_id: 0
     items_type: 0
     icon_key: 
     anim_key: 
+    anim_length: 0
     add_life: 0
     add_cook: 0
     add_speed: 0
@@ -321,11 +330,14 @@ MonoBehaviour:
   itemsInfoData:
     id: 0
     valid: 0
+    name_cn: 
+    name_en: 
     intact_id: 0
     items_id: 0
     items_type: 0
     icon_key: 
     anim_key: 
+    anim_length: 0
     add_life: 0
     add_cook: 0
     add_speed: 0
@@ -393,6 +405,7 @@ RectTransform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 3873794517372139314}
   m_RootOrder: 1
@@ -473,6 +486,7 @@ RectTransform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 3873794517372139314}
   m_RootOrder: 2
@@ -512,7 +526,7 @@ MonoBehaviour:
       m_Calls: []
   m_FontData:
     m_Font: {fileID: 12800000, guid: a22e44409f8bfc24ba16a3e3d655ef28, type: 3}
-    m_FontSize: 1
+    m_FontSize: 25
     m_FontStyle: 1
     m_BestFit: 1
     m_MinSize: 1

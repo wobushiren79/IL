@@ -29,6 +29,7 @@ RectTransform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 4931717678005559087}
   m_RootOrder: 4
@@ -68,7 +69,7 @@ MonoBehaviour:
       m_Calls: []
   m_FontData:
     m_Font: {fileID: 12800000, guid: 1b55002fea9009a46bd1c17470cdb9b8, type: 3}
-    m_FontSize: 1
+    m_FontSize: 25
     m_FontStyle: 1
     m_BestFit: 1
     m_MinSize: 1
@@ -126,6 +127,7 @@ RectTransform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1533213818978120864}
   - {fileID: 1262238022435773580}
@@ -247,6 +249,8 @@ MonoBehaviour:
   storeInfo:
     id: 0
     valid: 0
+    name_cn: 
+    name_en: 
     store_id: 0
     type: 0
     store_goods_type: 0
@@ -289,11 +293,14 @@ MonoBehaviour:
   itemsInfo:
     id: 0
     valid: 0
+    name_cn: 
+    name_en: 
     intact_id: 0
     items_id: 0
     items_type: 0
     icon_key: 
     anim_key: 
+    anim_length: 0
     add_life: 0
     add_cook: 0
     add_speed: 0
@@ -322,14 +329,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9f50fe07f4e6e024f961413f0733e03f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  rectTransform: {fileID: 0}
+  btnTarget: {fileID: 0}
   itemsInfo:
     id: 0
     valid: 0
+    name_cn: 
+    name_en: 
     intact_id: 0
     items_id: 0
     items_type: 0
     icon_key: 
     anim_key: 
+    anim_length: 0
     add_life: 0
     add_cook: 0
     add_speed: 0
@@ -376,6 +388,7 @@ RectTransform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1262238022435773580}
   m_RootOrder: 0
@@ -470,6 +483,7 @@ RectTransform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 14983395478988508}
   m_Father: {fileID: 4931717678005559087}
@@ -547,6 +561,7 @@ RectTransform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 4931717678005559087}
   m_RootOrder: 3
@@ -642,6 +657,7 @@ RectTransform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 4931717678005559087}
   m_RootOrder: 0
@@ -1108,12 +1124,6 @@ PrefabInstance:
         type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1d1fc6564aa57f24fb10e3030fc3ba59, type: 3}
---- !u!224 &5303259680908077589 stripped
-RectTransform:
-  m_CorrespondingSourceObject: {fileID: 5369379419922776211, guid: 1d1fc6564aa57f24fb10e3030fc3ba59,
-    type: 3}
-  m_PrefabInstance: {fileID: 223817371400743558}
-  m_PrefabAsset: {fileID: 0}
 --- !u!114 &2198003455690658837 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 2133519618187394707, guid: 1d1fc6564aa57f24fb10e3030fc3ba59,
@@ -1126,3 +1136,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5cd3031713388734886221067edc30eb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!224 &5303259680908077589 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 5369379419922776211, guid: 1d1fc6564aa57f24fb10e3030fc3ba59,
+    type: 3}
+  m_PrefabInstance: {fileID: 223817371400743558}
+  m_PrefabAsset: {fileID: 0}

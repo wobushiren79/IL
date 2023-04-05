@@ -542,7 +542,7 @@ public class InnHandler : BaseHandler<InnHandler, InnManager>
             userAchievement.AddNumberForCustomerFoodComplete(orderForCustomer.customer.customerType, 1);
             if (isMenuLevelUp)
             {
-                Sprite spFoodIcon = InnFoodHandler.Instance.manager.GetFoodSpriteByName(orderForCustomer.foodData.icon_key);
+                Sprite spFoodIcon = IconHandler.Instance.GetFoodSpriteByName(orderForCustomer.foodData.icon_key);
                 UIHandler.Instance.ToastHint<ToastView>(spFoodIcon, string.Format(TextHandler.Instance.manager.GetTextById(1131), orderForCustomer.foodData.name));
             }
             payEffectsPosition = orderForCustomer.customer.transform.position;

@@ -200,7 +200,7 @@ public class UIGameSettle : BaseUIComponent
         foreach (GameItemsBean itemData in innRecord.listSellNumber)
         {
             MenuInfoBean foodData = InnFoodHandler.Instance.manager.GetFoodDataById(itemData.itemId);
-            Sprite foodIcon = InnFoodHandler.Instance.manager.GetFoodSpriteByName(foodData.icon_key);
+            Sprite foodIcon = IconHandler.Instance.GetFoodSpriteByName(foodData.icon_key);
             CreateItemForMoney(
                 foodIcon,
                 foodData.name + " x" + itemData.itemNumber,

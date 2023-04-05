@@ -249,7 +249,7 @@ public partial class GameDataHandler : BaseHandler<GameDataHandler,GameDataManag
                 itemBed.CompleteResearch(gameData);
                 string toastStr = string.Format(TextHandler.Instance.manager.GetTextById(1071), itemBed.bedName);
                 AudioHandler.Instance.PlaySound(AudioSoundEnum.Reward);
-                UIHandler.Instance.ToastHint<ToastView>(InnFoodHandler.Instance.manager.GetFoodSpriteByName("ui_features_bed"), toastStr, 5);
+                UIHandler.Instance.ToastHint<ToastView>(IconHandler.Instance.GetFoodSpriteByName("ui_features_bed"), toastStr, 5);
 
                 DialogBean dialogData = new DialogBean
                 {
@@ -297,7 +297,7 @@ public partial class GameDataHandler : BaseHandler<GameDataHandler,GameDataManag
                 itemMenu.CompleteResearch(gameData);
                 string toastStr = string.Format(TextHandler.Instance.manager.GetTextById(1071), menuInfo.name);
                 AudioHandler.Instance.PlaySound(AudioSoundEnum.Reward);
-                UIHandler.Instance.ToastHint<ToastView>(InnFoodHandler.Instance.manager.GetFoodSpriteByName(menuInfo.icon_key), toastStr, 5);
+                UIHandler.Instance.ToastHint<ToastView>(IconHandler.Instance.GetFoodSpriteByName(menuInfo.icon_key), toastStr, 5);
 
                 DialogBean dialogData = new DialogBean
                 {

@@ -63,7 +63,7 @@ public class UIGameWorkerDetailsChefInfo : UIGameStatisticsDetailsBase<UIGameWor
             if (menuInfo == null)
                 continue;
             //获取食物图标
-            Sprite spFoodIcon = InnFoodHandler.Instance.manager.GetFoodSpriteByName(menuInfo.icon_key);
+            Sprite spFoodIcon = IconHandler.Instance.GetFoodSpriteByName(menuInfo.icon_key);
             //生成Item
             GameObject foodInfoCpt = Instantiate(objItemMenuContent, objItemMenuModel);
             //设置数据

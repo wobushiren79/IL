@@ -292,7 +292,7 @@ public class UIPopupRecordShow : PopupShowView
                 GameObject objItem = Instantiate(objShowContainer, objShowItem);
                 ItemPopupRecordCpt itemCpt = objItem.GetComponent<ItemPopupRecordCpt>();
                 MenuInfoBean menuInfo = InnFoodHandler.Instance.manager.GetFoodDataById(itemData.itemId);
-                Sprite spIcon = InnFoodHandler.Instance.manager.GetFoodSpriteByName(menuInfo.icon_key);
+                Sprite spIcon = IconHandler.Instance.GetFoodSpriteByName(menuInfo.icon_key);
                 itemCpt.SetData(spIcon, menuInfo.name, itemData.itemNumber, itemData.priceL, itemData.priceM, itemData.priceS);
             }
         }

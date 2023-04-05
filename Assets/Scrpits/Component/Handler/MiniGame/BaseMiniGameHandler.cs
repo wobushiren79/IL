@@ -24,11 +24,18 @@ public class BaseMiniGameHandler<B, D> : BaseHandler<BaseMiniGameHandler<B, D>,B
 
     public override void Awake()
     {
-        GameObject objModel = LoadAssetUtil.SyncLoadAsset<GameObject>("builder/minigame", builderName);
+        GameObject objModel = null;
+        try
+        {
+            objModel = LoadAddressablesUtil.LoadAssetSync<GameObject>($"Assets/Prefabs/Builder/{builderName}.prefab");
+        }
+        catch
+        {
+            LogUtil.Log($"没有找到{builderName}的迷你游戏构建 可能会引发错误");
+        }
         if (objModel == null)
             return;
         GameObject objItem =  Instantiate(gameObject, objModel);
-        DestroyImmediate(objModel,true);
         miniGameBuilder = objItem.GetComponent<B>();
     }
 

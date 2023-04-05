@@ -16,6 +16,8 @@ public partial class IconHandler
     public SpriteAtlas atlasForWall;
     //地板图标
     public SpriteAtlas atlasForFloor;
+    //食物图标
+    public SpriteAtlas foodAtlas;
     //地板图标
     public Dictionary<string, Sprite> dicFunrnitureIcon = new Dictionary<string, Sprite>();
     //地板图标
@@ -26,6 +28,8 @@ public partial class IconHandler
     public Dictionary<string, Sprite> dicIcon = new Dictionary<string, Sprite>();
 
     public Dictionary<string, Sprite> dicBackground = new Dictionary<string, Sprite>();
+    //食物图标
+    public Dictionary<string, Sprite> dicFoodIcon = new Dictionary<string, Sprite>();
 
     public static string PathSpriteAtlas = "Assets/Texture/SpriteAtlas";
 
@@ -34,8 +38,30 @@ public partial class IconHandler
     public string PathAtlasForWall = $"{PathSpriteAtlas}/AtlasForWall.spriteatlas";
     public string PathAtlasForIcon = $"{PathSpriteAtlas}/AtlasForIcon.spriteatlas";
     public string PathAtlasForBackground = $"{PathSpriteAtlas}/AtlasForBackground.spriteatlas";
+    public string PathAtlasForFood = $"{PathSpriteAtlas}/AtlasForFood.spriteatlas";
 
     public Dictionary<string, Texture2D> dicTextureUI = new Dictionary<string, Texture2D>();
+
+
+
+    /// <summary>
+    /// 通过名字获取食物图标
+    /// </summary>
+    /// <param name="name"></param>
+    /// <returns></returns>
+    public Sprite GetFoodSpriteByName(string name)
+    {
+        return manager.GetSpriteByNameSync(dicFoodIcon, ref foodAtlas, PathAtlasForFood, name + "_0");
+    }
+    /// <summary>
+    /// 通过名字获取食物图标
+    /// </summary>
+    /// <param name="name"></param>
+    /// <returns></returns>
+    public Sprite GetFoodLastSpriteByName(string name)
+    {
+        return manager.GetSpriteByNameSync(dicFoodIcon, ref foodAtlas, PathAtlasForFood, name + "_1");
+    }
 
     /// <summary>
     /// 根据名字获取UI图标

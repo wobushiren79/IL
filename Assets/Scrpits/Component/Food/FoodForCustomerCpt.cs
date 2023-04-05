@@ -31,7 +31,7 @@ public class FoodForCustomerCpt : BaseMonoBehaviour
         if (foodData != null )
         {
             //设置图标
-            srFood.sprite = InnFoodHandler.Instance.manager.GetFoodSpriteByName(foodData.icon_key);
+            srFood.sprite = IconHandler.Instance.GetFoodSpriteByName(foodData.icon_key);
             //设置动画
             if (!foodData.anim_key.IsNull())
             {
@@ -96,7 +96,7 @@ public class FoodForCustomerCpt : BaseMonoBehaviour
 
         if (foodData != null)
         {
-            srFood.sprite = InnFoodHandler.Instance.manager.GetFoodLastSpriteByName(foodData.icon_key);
+            srFood.sprite = IconHandler.Instance.GetFoodLastSpriteByName(foodData.icon_key);
         }
    
         objGoodFood.SetActive(false);

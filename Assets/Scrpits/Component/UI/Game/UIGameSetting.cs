@@ -3,7 +3,12 @@ using UnityEditor;
 using UnityEngine.UI;
 using System.Collections.Generic;
 
-public partial class UIGameSetting : BaseUIComponent, DropdownView.ICallBack, ProgressView.ICallBack, DialogView.IDialogCallBack, IRadioButtonCallBack
+public partial class UIGameSetting : BaseUIComponent,
+    DropdownView.ICallBack, 
+    ProgressView.ICallBack,
+    DialogView.IDialogCallBack, 
+    IRadioButtonCallBack,
+    IRadioGroupCallBack
 {
     public DropdownView dvLanguage;
     public DropdownView dvWindow;
@@ -12,7 +17,8 @@ public partial class UIGameSetting : BaseUIComponent, DropdownView.ICallBack, Pr
     public ProgressView pvMusic;
     public ProgressView pvSound;
     public ProgressView pvEnvironment;
-
+    public ProgressView pvUISize;
+    
     public RadioButtonView rbFrames;
     public RadioButtonView rbMouseMove;
     public RadioButtonView rbKeyTip;
@@ -24,6 +30,15 @@ public partial class UIGameSetting : BaseUIComponent, DropdownView.ICallBack, Pr
     public RadioButtonView rbFightCamera;
     public RadioButtonView rbTownerInfo;
     public InputField etFrames;
+
+    public override void Awake()
+    {
+        base.Awake();
+        ui_Types.SetCallBack(this);
+        //ui_TypeAudio.SetCallBack(this);
+        //ui_TypeGame.SetCallBack(this);
+        //ui_TypeScreen.SetCallBack(this);
+    }
 
     public void Start()
     {
@@ -94,7 +109,13 @@ public partial class UIGameSetting : BaseUIComponent, DropdownView.ICallBack, Pr
 
         }
 
-
+        //UI大小选择初始化
+        if (pvUISize != null)
+        {
+            pvUISize.SetProMinMax(0.5f, 1.5f);
+            pvUISize.SetData(gameConfig.uiSize);
+            pvUISize.SetCallBack(this);
+        }
 
 
         //音乐选择初始化
@@ -260,12 +281,12 @@ public partial class UIGameSetting : BaseUIComponent, DropdownView.ICallBack, Pr
         }
     }
 
+
     public override void OnClickForButton(Button viewButton)
     {
         if (viewButton == ui_ExitGame)
         {
             OnClickExitGame();
-    
         }
         else if (viewButton == ui_GoMain)
         {
@@ -297,6 +318,7 @@ public partial class UIGameSetting : BaseUIComponent, DropdownView.ICallBack, Pr
             ui_GoMain.gameObject.SetActive(true);
             ui_RestartDay.gameObject.SetActive(true);
         }
+        ui_Types.SetPosition(0,true);
     }
 
     /// <summary>
@@ -366,24 +388,78 @@ public partial class UIGameSetting : BaseUIComponent, DropdownView.ICallBack, Pr
     /// <param name="value"></param>
     public void OnValueChangeForFrame(string value)
     {
-        if (int.TryParse(value,out int result)) {
+        if (int.TryParse(value, out int result))
+        {
             if (result < 30)
             {
                 etFrames.text = "30";
                 return;
             }
             GameConfigBean gameConfig = GameDataHandler.Instance.manager.GetGameConfig();
-            gameConfig.frames = result;      
+            gameConfig.frames = result;
             FPSHandler.Instance.SetData(gameConfig.stateForFrames, gameConfig.frames);
         }
-    }   
+    }
+
+    /// <summary>
+    /// 修改设置类型
+    /// </summary>
+    /// <param name="type"></param>
+    public void ChangeType(int type)
+    {
+        ui_ItemLanguage.ShowObj(false);
+        ui_ItemKeyTip.ShowObj(false);
+        ui_ItemMouseMove.ShowObj(false);
+        ui_ItemEventCameraMove.ShowObj(false);
+        ui_ItemTowerInfo.ShowObj(false);
+        ui_ItemFightCamera.ShowObj(false);
+        ui_ItemPowerTest.ShowObj(false);
+        ui_ItemWorkNumber.ShowObj(false);
+        ui_ItemCheckOut.ShowObj(false);
+        ui_ItemEvent.ShowObj(false);
+        ui_ItemEventStopTimeScale.ShowObj(false);
+
+        ui_ItemWindow.ShowObj(false);
+        ui_ItemFrames.ShowObj(false);
+        ui_ItemUISize.ShowObj(false);
+
+        ui_ItemMusic.ShowObj(false);
+        ui_ItemSound.ShowObj(false);
+        ui_ItemEnvironment.ShowObj(false);
+
+        switch (type)
+        {
+            case 1:
+                ui_ItemKeyTip.ShowObj(true);
+                ui_ItemLanguage.ShowObj(true);
+                ui_ItemMouseMove.ShowObj(true);
+                ui_ItemEventCameraMove.ShowObj(true);
+                ui_ItemTowerInfo.ShowObj(true);
+                ui_ItemFightCamera.ShowObj(true);
+                ui_ItemPowerTest.ShowObj(true);
+                ui_ItemWorkNumber.ShowObj(true);
+                ui_ItemCheckOut.ShowObj(true);
+                ui_ItemEventStopTimeScale.ShowObj(true);
+                break;
+            case 2:
+                ui_ItemFrames.ShowObj(true);
+                ui_ItemWindow.ShowObj(true);
+                ui_ItemUISize.ShowObj(true);
+                break;
+            case 3:
+                ui_ItemMusic.ShowObj(true);
+                ui_ItemSound.ShowObj(true);
+                ui_ItemEnvironment.ShowObj(true);
+                break;
+        }
+    }
 
     #region 下拉回调
     public void OnDropDownValueChange(DropdownView view, int position, Dropdown.OptionData optionData)
     {
         AudioHandler.Instance.PlaySound(AudioSoundEnum.ButtonForNormal);
         GameConfigBean gameConfig = GameDataHandler.Instance.manager.GetGameConfig();
-        if (view== dvLanguage)
+        if (view == dvLanguage)
         {
             string languageStr = "cn";
             switch (optionData.text)
@@ -429,16 +505,34 @@ public partial class UIGameSetting : BaseUIComponent, DropdownView.ICallBack, Pr
         if (progressView == pvMusic)
         {
             gameConfig.musicVolume = value;
+            AudioHandler.Instance.InitAudio();
         }
         else if (progressView == pvSound)
         {
             gameConfig.soundVolume = value;
+            AudioHandler.Instance.InitAudio();
         }
         else if (progressView == pvEnvironment)
         {
             gameConfig.environmentVolume = value;
+            AudioHandler.Instance.InitAudio();
         }
-        AudioHandler.Instance.InitAudio();
+        else if (progressView == pvUISize)
+        {
+            if (value < 0.5f)
+            {
+                gameConfig.uiSize = 0.5f;
+            }
+            else if (value > 1.5f)
+            {
+                gameConfig.uiSize = 1.5f;
+            }
+            else
+            {
+                gameConfig.uiSize = value;
+            }
+            UIHandler.Instance.ChangeUISize(gameConfig.uiSize);
+        }
     }
 
 
@@ -460,7 +554,7 @@ public partial class UIGameSetting : BaseUIComponent, DropdownView.ICallBack, Pr
         }
         else if (dialogBean.dialogPosition == 3)
         {
-            GameDataBean gameData =  GameDataHandler.Instance.manager.GetGameData();
+            GameDataBean gameData = GameDataHandler.Instance.manager.GetGameData();
             GameDataHandler.Instance.manager.GetGameDataByUserId(gameData.userId);
             GameCommonInfo.ClearData();
             GameScenesHandler.Instance.ChangeScene(ScenesEnum.GameInnScene);
@@ -480,6 +574,7 @@ public partial class UIGameSetting : BaseUIComponent, DropdownView.ICallBack, Pr
     {
         AudioHandler.Instance.PlaySound(AudioSoundEnum.ButtonForNormal);
         GameConfigBean gameConfig = GameDataHandler.Instance.manager.GetGameConfig();
+
         if (view == rbKeyTip)
         {
             //按键提示
@@ -589,7 +684,7 @@ public partial class UIGameSetting : BaseUIComponent, DropdownView.ICallBack, Pr
                 gameConfig.statusForFightCamera = 0;
             }
         }
-        else if (view== rbTownerInfo)
+        else if (view == rbTownerInfo)
         {
             if (buttonStates == true)
             {
@@ -600,6 +695,30 @@ public partial class UIGameSetting : BaseUIComponent, DropdownView.ICallBack, Pr
                 gameConfig.isShowDetailsForTower = false;
             }
         }
+    }
+
+    public void RadioButtonSelected(RadioGroupView rgView, int position, RadioButtonView rbview)
+    {
+        AudioHandler.Instance.PlaySound(AudioSoundEnum.ButtonForNormal);
+        GameConfigBean gameConfig = GameDataHandler.Instance.manager.GetGameConfig();
+
+        if (rbview == ui_TypeGame)
+        {
+            ChangeType(1);
+        }
+        else if (rbview == ui_TypeScreen)
+        {
+            ChangeType(2);
+        }
+        else if (rbview == ui_TypeAudio)
+        {
+            ChangeType(3);
+        }
+    }
+
+    public void RadioButtonUnSelected(RadioGroupView rgView, int position, RadioButtonView rbview)
+    {
+
     }
     #endregion
 }

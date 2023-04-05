@@ -4,10 +4,6 @@ using System.Collections.Generic;
 using UnityEngine.U2D;
 public class InnFoodManager : BaseManager, IMenuInfoView, ICookingThemeView
 {
-    //食物图标
-    public SpriteAtlas foodAtlas;
-    //食物图标
-    public IconBeanDictionary dicFoodIcon = new IconBeanDictionary();
     //食物动画
     public AnimBeanDictionary dicFoodAnim = new AnimBeanDictionary();
     
@@ -39,24 +35,6 @@ public class InnFoodManager : BaseManager, IMenuInfoView, ICookingThemeView
     }
 
 
-    /// <summary>
-    /// 通过名字获取食物图标
-    /// </summary>
-    /// <param name="name"></param>
-    /// <returns></returns>
-    public Sprite GetFoodSpriteByName(string name)
-    {
-        return  GetSpriteByName(dicFoodIcon,ref foodAtlas, "AtlasForFood", ProjectConfigInfo.ASSETBUNDLE_SPRITEATLAS, name + "_0");
-    }
-    /// <summary>
-    /// 通过名字获取食物图标
-    /// </summary>
-    /// <param name="name"></param>
-    /// <returns></returns>
-    public Sprite GetFoodLastSpriteByName(string name)
-    {
-        return GetSpriteByName(dicFoodIcon, ref foodAtlas, "AtlasForFood", ProjectConfigInfo.ASSETBUNDLE_SPRITEATLAS, name + "_1");
-    }
 
     /// <summary>
     /// 通过自己的列表获取食物数据

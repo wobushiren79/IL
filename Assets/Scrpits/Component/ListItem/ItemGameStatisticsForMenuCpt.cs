@@ -29,7 +29,7 @@ public class ItemGameStatisticsForMenuCpt : ItemBaseTextCpt
         {
             popupButton.SetData(menuOwn, menuInfo);
             SetName(menuInfo.name);
-            SetIcon(InnFoodHandler.Instance.manager.GetFoodSpriteByName(menuInfo.icon_key),Color.white);
+            SetIcon(IconHandler.Instance.GetFoodSpriteByName(menuInfo.icon_key),Color.white);
             SetNumber(menuOwn.sellNumber + "");
         }
         else
