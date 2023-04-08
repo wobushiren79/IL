@@ -9,6 +9,10 @@ public class AnimForMainStartTitle : BaseMonoBehaviour
     {
         rtfContent = GetComponent<RectTransform>();
         timeForRoate = Random.Range(5, 20);
+    }
+
+    public void Start()
+    {
         StartAnim();
     }
 

@@ -122,7 +122,7 @@ public class MiniGameCookingStoveCpt : BaseMonoBehaviour
                 iconKey += "flour_1";
                 break;
         }
-        Sprite spIcon = GameItemsHandler.Instance.manager.GetItemsSpriteByName(iconKey);
+        Sprite spIcon = IconHandler.Instance.GetItemsSpriteByName(iconKey);
         if (srIngredientPre != null)
         {
             srIngredientPre.sprite = spIcon;

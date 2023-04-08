@@ -12,6 +12,7 @@ public class StoryInfoManager : BaseManager, IStoryInfoView
     //剧情所用人物模型
     public GameObject objNpcModel;
 
+    public static string pathStoryItems = "Assets/Prefabs/Stroy";
     public void Awake()
     {
         objNpcModel = LoadAddressablesUtil.LoadAssetSync<GameObject>("Assets/Prefabs/Character/CharacterForStory.prefab");
@@ -41,7 +42,7 @@ public class StoryInfoManager : BaseManager, IStoryInfoView
     /// <returns></returns>
     public GameObject GetStoryPropModelByName(string name)
     {
-        GameObject objModel = GetModel(dicStoryProp, "model/story", name);
+        GameObject objModel = GetModelForAddressablesSync(dicStoryProp, $"{pathStoryItems}/{name}.prefab");
         return objModel;
     }
 

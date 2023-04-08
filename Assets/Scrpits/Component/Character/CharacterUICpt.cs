@@ -291,7 +291,7 @@ public class CharacterUICpt : BaseMonoBehaviour
         Sprite spHand = null;
         if (itemsInfo != null)
         {
-            spHand = GameItemsHandler.Instance.manager.GetItemsSpriteByName(itemsInfo.icon_key);
+            spHand = IconHandler.Instance.GetItemsSpriteByName(itemsInfo.icon_key);
         }
         if (spHand == null)
         {

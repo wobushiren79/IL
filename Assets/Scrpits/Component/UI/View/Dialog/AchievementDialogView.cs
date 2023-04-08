@@ -82,7 +82,7 @@ public class AchievementDialogView : DialogView
         if (ivRemark != null && !remarkIconKey.IsNull())
         {
             ivRemark.gameObject.SetActive(true);
-            Sprite spIconRemark = GameItemsHandler.Instance.manager.GetItemsSpriteByName(remarkIconKey);
+            Sprite spIconRemark = IconHandler.Instance.GetItemsSpriteByName(remarkIconKey);
             if (spIconRemark != null)
                 ivRemark.sprite = spIconRemark;
         }

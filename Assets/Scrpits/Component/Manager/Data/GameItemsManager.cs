@@ -4,10 +4,6 @@ using System.Collections.Generic;
 using UnityEngine.U2D;
 public class GameItemsManager : BaseManager, IItemsInfoView
 {
-    //物品图标
-    public SpriteAtlas itemsAtlas;
-    //物品图标
-    public IconBeanDictionary dicItemsIcon = new IconBeanDictionary();
     //物品动画列表
     public AnimBeanDictionary dicItemsAnim = new AnimBeanDictionary();
 
@@ -191,16 +187,6 @@ public class GameItemsManager : BaseManager, IItemsInfoView
         return listData;
     }
 
-    /// <summary>
-    /// 通过名字获取Icon
-    /// </summary>
-    /// <param name="name"></param>
-    /// <returns></returns>
-    public Sprite GetItemsSpriteByName(string name)
-    {
-        return GetSpriteDataByName(name);
-    }
-
     public Texture2DArray GetItemsTextureByName(string name, int animLength)
     {
         if (listItemsTex.TryGetValue(name, out Texture2DArray texture2DArray))
@@ -212,11 +198,11 @@ public class GameItemsManager : BaseManager, IItemsInfoView
             Sprite itemsp;
             if (animLength == 1)
             {
-                itemsp = GetItemsSpriteByName(name);
+                itemsp = IconHandler.Instance.GetItemsSpriteByName(name);
             }
             else
             {
-                itemsp = GetItemsSpriteByName($"{name}_{i}");
+                itemsp = IconHandler.Instance.GetItemsSpriteByName($"{name}_{i}");
             }
 
             if (itemsp == null)
@@ -244,11 +230,6 @@ public class GameItemsManager : BaseManager, IItemsInfoView
     public AnimationClip GetItemsAnimClipByName(string name)
     {
         return GetAnimClipByName(name);
-    }
-
-    protected Sprite GetSpriteDataByName(string name)
-    {
-        return GetSpriteByName(dicItemsIcon, ref itemsAtlas, "AtlasForItems", ProjectConfigInfo.ASSETBUNDLE_SPRITEATLAS, name, "Assets/Texture/SpriteAtlas/AtlasForItems.spriteatlas");
     }
 
     protected AnimationClip GetAnimClipByName(string name)

@@ -73,7 +73,7 @@ public class GeneralEnumTools
                 spIcon = IconHandler.Instance.GetIconSpriteByName(itemsInfo.icon_key);
                 break;
             default:
-                spIcon = GameItemsHandler.Instance.manager.GetItemsSpriteByName(itemsInfo.icon_key);
+                spIcon = IconHandler.Instance.GetItemsSpriteByName(itemsInfo.icon_key);
                 break;
         }
         return spIcon;
