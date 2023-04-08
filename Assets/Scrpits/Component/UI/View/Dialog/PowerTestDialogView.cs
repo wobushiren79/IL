@@ -50,7 +50,7 @@ public class PowerTestDialogView : DialogView, StrengthTestView.ICallBack
     {
         if (mCallBack != null)
             mCallBack.PowerTestEnd(value);
-        DestroyDialog();
+        CancelOnClick();
     }
     #endregion
 

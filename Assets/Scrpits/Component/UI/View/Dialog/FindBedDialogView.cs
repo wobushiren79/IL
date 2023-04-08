@@ -70,7 +70,7 @@ public class FindBedDialogView : DialogView
     public void OnClickForContinue()
     {
         actionContinue?.Invoke(this, dialogData);
-        DestroyDialog();
+        CancelOnClick();
     }
 
     /// <summary>

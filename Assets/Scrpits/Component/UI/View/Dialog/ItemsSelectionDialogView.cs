@@ -63,7 +63,7 @@ public class ItemsSelectionDialogView : DialogView
     public void Close()
     {
         AudioHandler.Instance.PlaySound(AudioSoundEnum.ButtonForNormal);
-        gameObject.SetActive(false);
+        CancelOnClick();
     }
 
     public void Open(SelectionTypeEnum type)
@@ -119,7 +119,7 @@ public class ItemsSelectionDialogView : DialogView
         {
             //屏幕坐标转换为UI坐标
             RectTransform screenRTF = (RectTransform)UIHandler.Instance.manager.GetUITypeContainer(UITypeEnum.UIBase);
-            RectTransformUtility.ScreenPointToLocalPointInRectangle(screenRTF, Input.mousePosition, Camera.main, out Vector2 outPosition);
+            RectTransformUtility.ScreenPointToLocalPointInRectangle(screenRTF, Input.mousePosition, null, out Vector2 outPosition);
             float moveX = outPosition.x;
             float moveY = outPosition.y;
             //Vector3 newPosition= Vector3.Lerp(transform.localPosition, new Vector3(moveX + offsetX, moveY + offsetY, transform.localPosition.z),0.5f);
