@@ -2,7 +2,7 @@
 using UnityEditor;
 using System;
 
-public class EffectPSCpt : BaseMonoBehaviour
+public class EffectPSCpt : EffectBase
 {
     protected ParticleSystem effectPS;
     public AudioSoundEnum soundType;

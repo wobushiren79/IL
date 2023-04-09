@@ -34,6 +34,8 @@ public class UITownArena : UIBaseOne, IRadioGroupCallBack
     public override void RefreshUI(bool isOpenInit = false)
     {
         base.RefreshUI(isOpenInit);
+        if (isOpenInit)
+            return;
         rgType.SetPosition(selectTypePosition,true);
     }
 

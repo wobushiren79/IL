@@ -156,6 +156,8 @@ public class UIGameWorkerDetails : BaseUIComponent, IRadioGroupCallBack
     public override void RefreshUI(bool isOpenInit = false)
     {
         base.RefreshUI(isOpenInit);
+        if (isOpenInit)
+            return;
         if (characterData == null)
             return;
         SetLoyal(characterData.attributes.loyal);

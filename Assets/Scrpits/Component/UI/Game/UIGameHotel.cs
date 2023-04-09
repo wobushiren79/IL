@@ -43,6 +43,8 @@ public class UIGameHotel : BaseUIComponent
     public override void RefreshUI(bool isOpenInit = false)
     {
         base.RefreshUI(isOpenInit);
+        if (isOpenInit)
+            return;
         GameDataBean gameData = GameDataHandler.Instance.manager.GetGameData();
         List<BuildBedBean> listBed = gameData.listBed;
         this.listBedData.Clear();

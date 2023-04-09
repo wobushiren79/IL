@@ -37,6 +37,8 @@ public class UITownCarpenter : UIBaseOne, IRadioGroupCallBack
     public override void RefreshUI(bool isOpenInit = false)
     {
         base.RefreshUI(isOpenInit);
+        if (isOpenInit)
+            return;
         InitDataByType(selectType);
         SetCustomBed();
     }

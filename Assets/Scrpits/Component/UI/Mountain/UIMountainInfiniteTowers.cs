@@ -64,6 +64,8 @@ public class UIMountainInfiniteTowers : BaseUIComponent, DialogView.IDialogCallB
     public override void RefreshUI(bool isOpenInit = false)
     {
         base.RefreshUI(isOpenInit);
+        if (isOpenInit)
+            return;
         GameDataBean gameData = GameDataHandler.Instance.manager.GetGameData();
         listData = gameData.listInfinteTowers;
         if (listData.Count <= 0)

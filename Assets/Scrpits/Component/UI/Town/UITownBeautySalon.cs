@@ -76,6 +76,8 @@ public class UITownBeautySalon : UIBaseOne, IRadioGroupCallBack, ItemTownBeautyS
     public override void RefreshUI(bool isOpenInit = false)
     {
         base.RefreshUI(isOpenInit);
+        if (isOpenInit)
+            return;
         SetCharacterData();
         SetPrice();
         SetName(characterData.baseInfo.name);

@@ -132,6 +132,8 @@ public class UIGameEquip : BaseUIComponent, TextSearchView.ICallBack
     public override void RefreshUI(bool isOpenInit = false)
     {
         base.RefreshUI(isOpenInit);
+        if (isOpenInit)
+            return;
         SetSex(characterData.body.sex);
         SetLoyal(characterData.attributes.loyal);
         SetAttributes(characterData.attributes, characterData.equips);

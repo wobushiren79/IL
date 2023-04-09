@@ -35,7 +35,8 @@ public class UIMiniGameDebate : UIBaseMiniGame<MiniGameDebateBean>
     public override void RefreshUI(bool isOpenInit = false)
     {
         base.RefreshUI(isOpenInit);
-
+        if (isOpenInit)
+            return;
         MiniGameCharacterForDebateBean userGameData =  (MiniGameCharacterForDebateBean)miniGameData.GetUserGameData();
         MiniGameCharacterForDebateBean enemyGameData = (MiniGameCharacterForDebateBean)miniGameData.GetEnemyGameData();
 

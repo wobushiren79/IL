@@ -24,6 +24,8 @@ public class UITownGuildImprove : UIBaseOne, IRadioGroupCallBack
     public override void RefreshUI(bool isOpenInit = false)
     {
         base.RefreshUI(isOpenInit);
+        if (isOpenInit)
+            return;
         ChangeUIType(typePosition);
     }
 

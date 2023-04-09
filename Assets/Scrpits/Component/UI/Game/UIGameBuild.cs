@@ -113,6 +113,8 @@ public class UIGameBuild : BaseUIComponent, IRadioGroupCallBack
     /// </summary>
     public override void RefreshUI(bool isOpenInit = false)
     {
+        if (isOpenInit)
+            return;
         GameDataBean gameData = GameDataHandler.Instance.manager.GetGameData();
         //刷新列表数据
         List<ItemBean> listBuildData = gameData.GetBuildDataByType(buildType);

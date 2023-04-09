@@ -44,14 +44,14 @@ public class UIMiniGameCombatSelectCharacter : BaseUIView
     public override void OpenUI()
     {
         base.OpenUI();
-        UIMiniGameCombat uiMiniGameCombat = UIHandler.Instance.GetComponent<UIMiniGameCombat>();
+        UIMiniGameCombat uiMiniGameCombat = UIHandler.Instance.GetUI<UIMiniGameCombat>();
         uiMiniGameCombat.isSelecting = true;
     }
 
     public override void CloseUI()
     {
         base.CloseUI();
-        UIMiniGameCombat uiMiniGameCombat = UIHandler.Instance.GetComponent<UIMiniGameCombat>();
+        UIMiniGameCombat uiMiniGameCombat = UIHandler.Instance.GetUI<UIMiniGameCombat>();
         uiMiniGameCombat.isSelecting = false;
         listSelectNpc.Clear();
         CptUtil.RemoveChildsByActive(objSelectIconContainer);

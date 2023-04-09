@@ -84,6 +84,8 @@ public class UIMiniGameCombat : UIBaseMiniGame<MiniGameCombatBean>
     public override void RefreshUI(bool isOpenInit = false)
     {
         base.RefreshUI(isOpenInit);
+        if (isOpenInit)
+            return;
         for (int i = 0; i < listCharacterInfo.Count; i++)
         {
             ItemMiniGameCombatCharacterInfoCpt itemInfo= listCharacterInfo[i];

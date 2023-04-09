@@ -12,11 +12,11 @@ public class InteractiveUICpt : BaseInteractiveCpt
 
     public override void InteractiveDetection(CharacterInteractiveCpt characterInt)
     {
-
         //如果当前页面不是即将要打开的页面 并且当前页面是主界面
         if (Input.GetButtonDown(InputInfo.Interactive_E))
         {
-            BaseUIComponent baseUIComponent = UIHandler.Instance.GetUI<BaseUIComponent>();
+            string uiName = $"UI{uiType.GetEnumName()}";
+            BaseUIComponent baseUIComponent = UIHandler.Instance.GetUI<BaseUIComponent>(uiNameIn: uiName);
             BaseUIComponent currentUIComponent = UIHandler.Instance.GetOpenUI();
             if (baseUIComponent != null)
             {
@@ -26,14 +26,14 @@ public class InteractiveUICpt : BaseInteractiveCpt
                 }
                 else
                 {
-                    baseUIComponent = UIHandler.Instance.OpenUIAndCloseOther<BaseUIComponent>();
+                    baseUIComponent = UIHandler.Instance.OpenUIAndCloseOther<BaseUIComponent>(uiNameIn: uiName);
                     if (!remarkData.IsNull())
                         baseUIComponent.SetRemarkData(remarkData);
                 }
             }
             else
             {
-                baseUIComponent = UIHandler.Instance.OpenUIAndCloseOther<BaseUIComponent>();
+                baseUIComponent = UIHandler.Instance.OpenUIAndCloseOther<BaseUIComponent>(uiNameIn: uiName);
                 if (!remarkData.IsNull())
                     baseUIComponent.SetRemarkData(remarkData);
             }    

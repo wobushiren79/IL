@@ -152,6 +152,8 @@ public class UIGameMain : BaseUIComponent, DialogView.IDialogCallBack, IRadioGro
     public override void RefreshUI(bool isOpenInit = false)
     {
         base.RefreshUI(isOpenInit);
+        if (isOpenInit)
+            return;
         GameDataBean gameData = GameDataHandler.Instance.manager.GetGameData();
         SetMoney(MoneyEnum.L, gameData.moneyL);
         SetMoney(MoneyEnum.M, gameData.moneyM);

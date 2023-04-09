@@ -24,6 +24,8 @@ public partial class UIMiniGameBirth : BaseUIComponent
     public override void RefreshUI(bool isOpenInit = false)
     {
         base.RefreshUI(isOpenInit);
+        if (isOpenInit)
+            return;
         //设置开火数量
         MiniGameBirthBean miniGameBirthData = MiniGameHandler.Instance.handlerForBirth.miniGameData;
         SetFireNumber(miniGameBirthData.fireNumber, miniGameBirthData.winFireNumber);

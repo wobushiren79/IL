@@ -38,6 +38,8 @@ public class UITownRecruitment : UIBaseOne, DialogView.IDialogCallBack
     public override void RefreshUI(bool isOpenInit = false)
     {
         base.RefreshUI(isOpenInit);
+        if (isOpenInit)
+            return;
         if (GameCommonInfo.DailyLimitData.listRecruitmentCharacter == null)
         {
             CreateCandidateData();

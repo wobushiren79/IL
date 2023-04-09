@@ -69,6 +69,8 @@ public class UIGameBackpack : UIBaseOne, TextSearchView.ICallBack
     public override void RefreshUI(bool isOpenInit = false)
     {
         base.RefreshUI(isOpenInit);
+        if (isOpenInit)
+            return;
         listItemData.Clear();
         GameDataBean gameData = GameDataHandler.Instance.manager.GetGameData();
         listItemData.AddRange(gameData.listItems);

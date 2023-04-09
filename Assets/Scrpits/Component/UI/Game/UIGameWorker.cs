@@ -90,6 +90,8 @@ public class UIGameWorker : BaseUIComponent
     public override void RefreshUI(bool isOpenInit = false)
     {
         base.RefreshUI(isOpenInit);
+        if (isOpenInit)
+            return;
         for (int  i = 0 ; i< listCharacterData.Count;i++)
         {
             CharacterBean characterItem=  listCharacterData[i];
