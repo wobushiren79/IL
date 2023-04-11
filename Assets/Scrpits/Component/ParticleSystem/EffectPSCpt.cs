@@ -14,18 +14,12 @@ public class EffectPSCpt : EffectBase
         mainModule.stopAction = ParticleSystemStopAction.Callback;
     }
 
-    /// <summary>
-    /// 播放
-    /// </summary>
-    public void Play(bool isLoop)
+    public override void PlayEffect()
     {
-        ParticleSystem.MainModule mainModule = effectPS.main;
-        mainModule.loop = isLoop;
+        base.PlayEffect();
         effectPS.Play();
         AudioHandler.Instance.PlaySound(soundType);
     }
-
-    
 
     /// <summary>
     /// 粒子结束监听

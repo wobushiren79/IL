@@ -3,6 +3,7 @@ using UnityEditor;
 
 public enum AudioSoundEnum
 {
+    None = 1,
     ButtonForNormal = 100001,//普通的按键音效
     ButtonForBack = 100002,//退出音效
     ButtonForHighLight = 100003,//高亮音效

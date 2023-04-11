@@ -90,6 +90,8 @@ public partial class AudioHandler
                     PlaySound(100031);
                 }
                 break;
+            case AudioSoundEnum.None:
+                break;
             default:
                 PlaySound((int)sound);
                 break;

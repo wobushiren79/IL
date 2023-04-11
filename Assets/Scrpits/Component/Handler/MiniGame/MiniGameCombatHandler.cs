@@ -79,7 +79,10 @@ public class MiniGameCombatHandler : BaseMiniGameHandler<MiniGameCombatBuilder, 
     public void SelectCharacter(NpcAIMiniGameCombatCpt character)
     {
         miniGameBuilder.DeleteAllEffect();
-        miniGameBuilder.CreateSelectEffect(character.transform.position);
+        miniGameBuilder.CreateSelectEffect(character.transform.position,(effectBase)=> 
+        { 
+            
+        });
 
         GameConfigBean gameConfig = GameDataHandler.Instance.manager.GetGameConfig();
         if (gameConfig.statusForFightCamera == 0)

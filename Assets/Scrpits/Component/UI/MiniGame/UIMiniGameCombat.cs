@@ -66,16 +66,6 @@ public class UIMiniGameCombat : UIBaseMiniGame<MiniGameCombatBean>
     {
         //回合条移动处理
         HandleForRoundMove();
-        //排序
-        if (listCharacterRound != null)
-        {
-            listCharacterRound = listCharacterRound.OrderByDescending(i => ((RectTransform)i.transform).anchoredPosition.x).ToList();
-            for (int i = 0; i < listCharacterRound.Count; i++)
-            {
-                RectTransform itemRTF = (RectTransform)listCharacterRound[i].transform;
-                itemRTF.SetAsFirstSibling();
-            }
-        }
     }
 
     /// <summary>
@@ -181,6 +171,7 @@ public class UIMiniGameCombat : UIBaseMiniGame<MiniGameCombatBean>
         //创建回合条信息
         GameObject objRoundItem = Instantiate(objRoundCharacterContainer, objRoundCharacterModel);
         RectTransform rtfItemRound = objRoundItem.GetComponent<RectTransform>();
+        rtfItemRound.anchoredPosition = new Vector2(0, rtfItemRound.anchoredPosition.y);
         ItemMiniGameCombatCharacterRoundCpt characterRoundCpt = objRoundItem.GetComponent<ItemMiniGameCombatCharacterRoundCpt>();
         characterRoundCpt.SetData((MiniGameCharacterForCombatBean)gameCharacterData);
         listCharacterRound.Add(characterRoundCpt);
@@ -227,16 +218,18 @@ public class UIMiniGameCombat : UIBaseMiniGame<MiniGameCombatBean>
     {
         if (!isRounding)
             return;
+        float withRound = rtfRoundContainer.rect.width;
         for (int i = 0; i < listCharacterRound.Count; i++)
         {
             ItemMiniGameCombatCharacterRoundCpt itemCpt = listCharacterRound[i];
-            float roundSpeed = (0.5f + itemCpt.speedForMove / 10f);
+            float roundSpeed = itemCpt.speedForMove * Time.deltaTime * 3.5f;
             //回合条向右移动
-            itemCpt.transform.Translate(new Vector3(1, 0) * Time.deltaTime * roundSpeed);
+            RectTransform itemRtf = (RectTransform)itemCpt.transform;
+            itemRtf.anchoredPosition = new Vector2(itemRtf.anchoredPosition.x + roundSpeed, itemRtf.anchoredPosition.y);
             //检测是否到达目标点
-            if (itemCpt.transform.position.x >= objRoundEnd.transform.position.x)
+            if (itemRtf.anchoredPosition.x  >= withRound)
             {
-                itemCpt.transform.position = objRoundEnd.transform.position;
+                itemRtf.anchoredPosition = new Vector2(withRound, itemRtf.anchoredPosition.y);
                 //设置为选中状态
                 itemCpt.SetStatus(true);
                 //通知轮到角色回合
@@ -244,6 +237,17 @@ public class UIMiniGameCombat : UIBaseMiniGame<MiniGameCombatBean>
                     callBack.CharacterRound(itemCpt.gameCharacterData);
                 isRounding = false;
                 break;
+            }
+        }
+
+        //排序
+        if (listCharacterRound != null)
+        {
+            listCharacterRound = listCharacterRound.OrderByDescending(i => ((RectTransform)i.transform).anchoredPosition.x).ToList();
+            for (int i = 0; i < listCharacterRound.Count; i++)
+            {
+                RectTransform itemRTF = (RectTransform)listCharacterRound[i].transform;
+                itemRTF.SetAsFirstSibling();
             }
         }
     }

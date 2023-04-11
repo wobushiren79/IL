@@ -7,14 +7,14 @@ public class MiniGameCombatBuilder : BaseMiniGameBuilder
 {
     public GameObject objPlayerContainer;
     public GameObject objPlayerModel;
-    //选择特效容器
-    public GameObject objSelectEffectContainer;
 
     //我方角色
     public List<NpcAIMiniGameCombatCpt> listUserCharacter = new List<NpcAIMiniGameCombatCpt>();
     //地方角色
     public List<NpcAIMiniGameCombatCpt> listEnemyCharacter = new List<NpcAIMiniGameCombatCpt>();
 
+    //粒子特效
+    public List<GameObject> objListEffect = new List<GameObject>();
 
     /// <summary>
     /// 获取所有角色
@@ -113,15 +113,16 @@ public class MiniGameCombatBuilder : BaseMiniGameBuilder
     /// <summary>
     /// 创建选择特效
     /// </summary>
-    public void CreateSelectEffect(Vector3 position,Action<EffectBase> callBackForComplete = null)
+    public void CreateSelectEffect(Vector3 position, Action<EffectBase> callBackForComplete = null)
     {
         EffectBean effectData = new EffectBean();
-        effectData.effectName = EffectInfo.Effect_Sulkiness_1;
+        effectData.effectName = EffectInfo.Effect_Select_1;
         effectData.effectPosition = position;
-        EffectHandler.Instance.ShowEffect(effectData,(effect)=>
-        {
-            callBackForComplete?.Invoke(effect);
-        });
+        EffectHandler.Instance.ShowEffect(effectData, (effect) =>
+         {
+             objListEffect.Add(effect.gameObject);
+             callBackForComplete?.Invoke(effect);
+         });
         //return EffectHandler.Instance.PlayEffect(objSelectEffectContainer, "Effect_Select_1", position,0);
     }
 
@@ -138,18 +139,10 @@ public class MiniGameCombatBuilder : BaseMiniGameBuilder
         effectData.effectPosition = position;
         EffectHandler.Instance.ShowEffect(effectData, (effect) =>
         {
+            objListEffect.Add(effect.gameObject);
             callBackForComplete?.Invoke(effect);
         });
         //return EffectHandler.Instance.PlayEffect(objSelectEffectContainer,combatEffectName, position,0);
-    }
-
-    /// <summary>
-    /// 删除选择特效
-    /// </summary>
-    /// <param name="objEffect"></param>
-    public void DeleteSelectEffect(GameObject objEffect)
-    {
-        Destroy(objEffect);
     }
 
     /// <summary>
@@ -157,7 +150,11 @@ public class MiniGameCombatBuilder : BaseMiniGameBuilder
     /// </summary>
     public void DeleteAllEffect()
     {
-        CptUtil.RemoveChildsByActive(objSelectEffectContainer);
+        for (int i = 0; i < objListEffect.Count; i++)
+        {
+            GameObject.Destroy(objListEffect[i].gameObject);
+        }
+        objListEffect.Clear();
     }
 
     /// <summary>
