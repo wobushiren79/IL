@@ -15,8 +15,6 @@ public class UIMiniGameCountDown : BaseUIComponent
     public Button btTargetStart;
 
     public Text tvCountDown;
-
-    private ICallBack mCallBack;
     //是否倒计时
     private bool mIsCountDown;
     private void Start()
@@ -29,6 +27,28 @@ public class UIMiniGameCountDown : BaseUIComponent
     {
         base.OpenUI();
         GameControlHandler.Instance.StopControl();
+
+        //如果是在无尽之塔的斗武 并且开启自动战斗 则自动点击
+        GameDataBean gameData = GameDataHandler.Instance.manager.GetGameData();
+        if (SceneUtil.GetCurrentScene() == ScenesEnum.GameInfiniteTowersScene && gameData.isAutoForCombat)
+        {    
+            if (MiniGameHandler.Instance.handlerForCombat.miniGameData.gameType == MiniGameEnum.Combat)
+            {
+                StartAutoEnd();
+            }
+        }
+    }
+
+
+    /// <summary>
+    /// 自动结束
+    /// </summary>
+    public void StartAutoEnd()
+    {
+        this.WaitExecuteSeconds(2, () =>
+        {
+            StartCountDown();
+        });
     }
 
     /// <summary>
@@ -82,6 +102,7 @@ public class UIMiniGameCountDown : BaseUIComponent
     /// </summary>
     public void StartCountDown()
     {
+        StopAllCoroutines();
         AudioHandler.Instance.PlaySound(AudioSoundEnum.ButtonForNormal);
         objTarget.SetActive(false);
         objCountDown.SetActive(true);
@@ -96,16 +117,14 @@ public class UIMiniGameCountDown : BaseUIComponent
         else
         {
             //没有倒计时 直接结束
-            if (mCallBack != null)
-                mCallBack.GamePreCountDownEnd();
+            EventHandler.Instance.TriggerEvent(EventsInfo.MiniGame_GamePreCountDownEnd);
         }
     }
 
     public IEnumerator ShowCountDown()
     {
         //回调
-        if (mCallBack != null)
-            mCallBack.GamePreCountDownStart();
+        EventHandler.Instance.TriggerEvent(EventsInfo.MiniGame_GamePreCountDownStart);
         //恢复控制
         GameControlHandler.Instance.RestoreControl();
 
@@ -134,21 +153,6 @@ public class UIMiniGameCountDown : BaseUIComponent
             }
             yield return new WaitForSeconds(0.8f);
         }
-        if (mCallBack != null)
-            mCallBack.GamePreCountDownEnd();
+        EventHandler.Instance.TriggerEvent(EventsInfo.MiniGame_GamePreCountDownEnd);
     }
-
-    public void SetCallBack(ICallBack callBack)
-    {
-        mCallBack = callBack;
-    }
-
-    public interface ICallBack
-    {
-        //游戏开始倒计时
-        void GamePreCountDownStart();
-        //游戏倒计时结束
-        void GamePreCountDownEnd();
-    }
-
 }

@@ -77,21 +77,22 @@ public class SceneForInfiniteTowersHandler : SceneBaseHandler
         uiCountDown.SetTitle(infiniteTowersData.layer + TextHandler.Instance.manager.GetTextById(83));
     }
 
-    public IEnumerator NextLayer(UserInfiniteTowersBean infiniteTowersData)
+    public void NextLayer(UserInfiniteTowersBean infiniteTowersData)
     {
         GameTimeHandler.Instance.SetTimeStop();
-        //延迟开始。
-        yield return new WaitForSeconds(0.1f);
-        //清理一下系统
-        SystemUtil.GCCollect();
+        this.WaitExecuteEndOfFrame(1,()=> 
+        {
+            //清理一下系统
+            SystemUtil.GCCollect();
 
-        this.infiniteTowersData = infiniteTowersData;
-        //添加通知
-        MiniGameHandler.Instance.handlerForCombat.RegisterNotifyForMiniGameStatus(NotifyForMiniGameStatus);
-        //获取战斗数据
-        MiniGameCombatBean gameCombatData = InitCombat(infiniteTowersData);
-        //开始战斗
-        StartCombat(gameCombatData, infiniteTowersData);
+            this.infiniteTowersData = infiniteTowersData;
+            //添加通知
+            MiniGameHandler.Instance.handlerForCombat.RegisterNotifyForMiniGameStatus(NotifyForMiniGameStatus);
+            //获取战斗数据
+            MiniGameCombatBean gameCombatData = InitCombat(infiniteTowersData);
+            //开始战斗
+            StartCombat(gameCombatData, infiniteTowersData);
+        });
     }
 
     protected void GameEndHandle()
@@ -107,7 +108,7 @@ public class SceneForInfiniteTowersHandler : SceneBaseHandler
             UserAchievementBean userAchievement = gameData.userAchievement;
             userAchievement.SetMaxInfiniteTowersLayer(infiniteTowersData.layer);
             //开始下一层
-            StartCoroutine(NextLayer(infiniteTowersData));
+            NextLayer(infiniteTowersData);
         }
         else if (miniGameCombatData.GetGameResult() == MiniGameResultEnum.Lose)
         {

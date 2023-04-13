@@ -11,17 +11,10 @@ public class UIMiniGameCookingSettlement : BaseUIComponent
     public GameObject objItemSettlementContainer;
     public GameObject objItemSettlementModel;
 
-    private ICallBack mCallBack;
-
     private void Start()
     {
         if (btClose != null)
             btClose.onClick.AddListener(CloseUI);
-    }
-
-    public void SetCallBack(ICallBack callBack)
-    {
-        mCallBack = callBack;
     }
 
     public void SetData(List<NpcAIMiniGameCookingCpt> listNpc)
@@ -32,8 +25,7 @@ public class UIMiniGameCookingSettlement : BaseUIComponent
     public override void CloseUI()
     {
         base.CloseUI();
-        if (mCallBack != null)
-            mCallBack.UIMiniGameCookingSettlementClose();
+        EventHandler.Instance.TriggerEvent(EventsInfo.MiniGameCooking_CookingSettlementClose);
     }
 
     /// <summary>
@@ -54,10 +46,4 @@ public class UIMiniGameCookingSettlement : BaseUIComponent
             objItem.transform.DOScale(new Vector3(0, 0, 0), 0.5f).From().SetEase(Ease.OutBack).SetDelay(i * 0.1f);
         }
     }
-
-    public interface ICallBack
-    {
-        void UIMiniGameCookingSettlementClose();
-    }
-
 }

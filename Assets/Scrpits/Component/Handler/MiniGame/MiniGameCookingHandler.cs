@@ -3,11 +3,9 @@ using UnityEditor;
 using System.Collections.Generic;
 using System;
 using System.Linq;
+using static UIMiniGameCooking;
 
-public class MiniGameCookingHandler : BaseMiniGameHandler<MiniGameCookingBuilder, MiniGameCookingBean>,
-    UIMiniGameCookingSelect.ICallBack,
-    UIMiniGameCooking.ICallBack,
-    UIMiniGameCookingSettlement.ICallBack
+public class MiniGameCookingHandler : BaseMiniGameHandler<MiniGameCookingBuilder, MiniGameCookingBean>
 {
     //事件处理
     protected UIMiniGameCooking uiMiniGameCooking;
@@ -25,6 +23,10 @@ public class MiniGameCookingHandler : BaseMiniGameHandler<MiniGameCookingBuilder
     /// <param name="miniGameData"></param>
     public override void InitGame(MiniGameCookingBean miniGameData)
     {
+        EventHandler.Instance.RegisterEvent<MenuInfoBean>(EventsInfo.MiniGameCooking_MenuSelect, EventForMenuSelect);
+        EventHandler.Instance.RegisterEvent<MiniGameCookingPhaseTypeEnum, MiniGameCookingSettleBean>(EventsInfo.MiniGameCooking_CookingSettle, EventForGameCookingSettle);
+        EventHandler.Instance.RegisterEvent(EventsInfo.MiniGameCooking_CookingSettlementClose, EventForCookingSettlementClose);
+
         base.InitGame(miniGameData);
         miniGameBuilder.CreateAllCharacter(
             miniGameData.listUserGameData, miniGameData.userStartPosition,
@@ -116,13 +118,25 @@ public class MiniGameCookingHandler : BaseMiniGameHandler<MiniGameCookingBuilder
     }
 
     /// <summary>
+    /// 游戏结束
+    /// </summary>
+    /// <param name="gameResulte"></param>
+    /// <param name="isSlow"></param>
+    public override void EndGame(MiniGameResultEnum gameResulte, bool isSlow)
+    {
+        base.EndGame(gameResulte, isSlow);
+        EventHandler.Instance.UnRegisterEvent<MenuInfoBean>(EventsInfo.MiniGameCooking_MenuSelect, EventForMenuSelect);
+        EventHandler.Instance.UnRegisterEvent<MiniGameCookingPhaseTypeEnum, MiniGameCookingSettleBean>(EventsInfo.MiniGameCooking_CookingSettle, EventForGameCookingSettle);
+        EventHandler.Instance.UnRegisterEvent(EventsInfo.MiniGameCooking_CookingSettlementClose, EventForCookingSettlementClose);
+    }
+
+    /// <summary>
     /// 开始选择制作的食物
     /// </summary>
     public void StartSelectMenu()
     {
         //打开游戏UI
         uiMiniGameCookingSelect = UIHandler.Instance.OpenUIAndCloseOther<UIMiniGameCookingSelect>();
-        uiMiniGameCookingSelect.SetCallBack(this);
         uiMiniGameCookingSelect.SetData(miniGameData);
     }
 
@@ -133,12 +147,11 @@ public class MiniGameCookingHandler : BaseMiniGameHandler<MiniGameCookingBuilder
     {
         //计算游戏时间
         float gameTiming = 10;
-        miniGameBuilder.GetUserCharacter().characterData.GetAttributes( out CharacterAttributesBean attributes);
+        miniGameBuilder.GetUserCharacter().characterData.GetAttributes(out CharacterAttributesBean attributes);
         gameTiming += (attributes.cook * 0.3f);
         //打开UI
         uiMiniGameCooking = UIHandler.Instance.OpenUIAndCloseOther<UIMiniGameCooking>();
         uiMiniGameCooking.SetData(miniGameData, gameTiming);
-        uiMiniGameCooking.SetCallBack(this);
         uiMiniGameCooking.StartCookingPre();
         //角色就位
         NpcAIMiniGameCookingCpt npcAI = miniGameBuilder.GetUserCharacter();
@@ -303,7 +316,7 @@ public class MiniGameCookingHandler : BaseMiniGameHandler<MiniGameCookingBuilder
 
     #region 通知回调
 
-    public void NotifyForEvent(GameEventHandler.NotifyEventTypeEnum notifyEventType,params object[] obj)
+    public void NotifyForEvent(GameEventHandler.NotifyEventTypeEnum notifyEventType, params object[] obj)
     {
         if (notifyEventType == GameEventHandler.NotifyEventTypeEnum.EventEnd)
         {
@@ -327,7 +340,6 @@ public class MiniGameCookingHandler : BaseMiniGameHandler<MiniGameCookingBuilder
                 listPlayer = listPlayer.OrderByDescending(item => item.characterMiniGameData.scoreForTotal).ToList();
                 //打开结算UI
                 uiMiniGameCookingSettlement = UIHandler.Instance.OpenUIAndCloseOther<UIMiniGameCookingSettlement>();
-                uiMiniGameCookingSettlement.SetCallBack(this);
                 uiMiniGameCookingSettlement.SetData(listPlayer);
             }
         }
@@ -345,18 +357,20 @@ public class MiniGameCookingHandler : BaseMiniGameHandler<MiniGameCookingBuilder
     }
     #endregion
 
-    #region UI选择回调
-    public void UIMiniGameCookingSelect(MenuInfoBean menuInfo)
+    #region 事件回调
+    /// <summary>
+    /// 事件-菜单选择
+    /// </summary>
+    /// <param name="menuInfo"></param>
+    public void EventForMenuSelect(MenuInfoBean menuInfo)
     {
         //设置操作角色的料理
         miniGameBuilder.GetUserCharacter().characterMiniGameData.SetCookingMenuInfo(menuInfo);
         //开始准备烹饪的游戏
         StartPreCooking(menuInfo);
     }
-    #endregion
 
-    #region UI游戏回调
-    public void UIMiniGameCookingSettle(UIMiniGameCooking.MiniGameCookingPhaseTypeEnum type, MiniGameCookingSettleBean settleData)
+    public void EventForGameCookingSettle(MiniGameCookingPhaseTypeEnum type, MiniGameCookingSettleBean settleData)
     {
         switch (type)
         {
@@ -374,10 +388,8 @@ public class MiniGameCookingHandler : BaseMiniGameHandler<MiniGameCookingBuilder
                 break;
         }
     }
-    #endregion
 
-    #region UI结算回调
-    public void UIMiniGameCookingSettlementClose()
+    public void EventForCookingSettlementClose()
     {   //打开游戏控制器
         BaseControl baseControl = GameControlHandler.Instance.StartControl<ControlForMiniGameCookingCpt>(GameControlHandler.ControlEnum.MiniGameCooking);
         baseControl.SetCameraFollowObj(miniGameBuilder.GetUserCharacter().gameObject);

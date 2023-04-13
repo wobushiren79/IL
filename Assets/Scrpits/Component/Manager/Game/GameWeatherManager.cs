@@ -75,7 +75,6 @@ public class GameWeatherManager : BaseManager
     {
         GameObject objMdoel = LoadAddressablesUtil.LoadAssetSync<GameObject>(path);
         GameObject objItem = Instantiate(gameObject, objMdoel);
-        objItem.name = name;
         return objItem.GetComponent<T>();
     }
 }

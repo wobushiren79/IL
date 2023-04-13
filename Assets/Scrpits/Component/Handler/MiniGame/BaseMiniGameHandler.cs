@@ -4,7 +4,7 @@ using UnityEditor;
 using System.Collections.Generic;
 using System;
 
-public class BaseMiniGameHandler<B, D> : BaseHandler<BaseMiniGameHandler<B, D>,BaseManager>, UIMiniGameCountDown.ICallBack, UIMiniGameEnd.ICallBack
+public class BaseMiniGameHandler<B, D> : BaseHandler<BaseMiniGameHandler<B, D>,BaseManager>
     where D : MiniGameBaseBean
     where B : BaseMiniGameBuilder
 {
@@ -37,6 +37,10 @@ public class BaseMiniGameHandler<B, D> : BaseHandler<BaseMiniGameHandler<B, D>,B
             return;
         GameObject objItem =  Instantiate(gameObject, objModel);
         miniGameBuilder = objItem.GetComponent<B>();
+
+        EventHandler.Instance.RegisterEvent(EventsInfo.MiniGame_GamePreCountDownStart, GamePreCountDownStart);
+        EventHandler.Instance.RegisterEvent(EventsInfo.MiniGame_GamePreCountDownEnd, GamePreCountDownEnd);
+        EventHandler.Instance.RegisterEvent(EventsInfo.MiniGame_EventForOnClickClose, EventForOnClickClose);    
     }
 
     /// <summary>
@@ -172,7 +176,6 @@ public class BaseMiniGameHandler<B, D> : BaseHandler<BaseMiniGameHandler<B, D>,B
                 //打开游戏结束UI
                 UIMiniGameEnd uiMiniGameEnd = UIHandler.Instance.OpenUIAndCloseOther<UIMiniGameEnd>();
                 uiMiniGameEnd.SetData(miniGameData);
-                uiMiniGameEnd.SetCallBack(this);
             });
             //通知 游戏结束
             notifyForMiniGameStatus?.Invoke(MiniGameStatusEnum.GameEnd, new object[] { miniGameData });
@@ -192,7 +195,6 @@ public class BaseMiniGameHandler<B, D> : BaseHandler<BaseMiniGameHandler<B, D>,B
     {
         //打开游戏准备倒计时UI
         UIMiniGameCountDown uiCountDown = UIHandler.Instance.OpenUIAndCloseOther<UIMiniGameCountDown>();
-        uiCountDown.SetCallBack(this);
         //设置胜利条件
         List<string> listWinConditions = miniGameData.GetListWinConditions();
         string targetTitleStr = miniGameData.GetGameName();
@@ -205,7 +207,7 @@ public class BaseMiniGameHandler<B, D> : BaseHandler<BaseMiniGameHandler<B, D>,B
         OpenCountDownUI(miniGameData, true);
     }
 
-    #region 倒计时UI回调
+    #region 倒计时
     public virtual void GamePreCountDownStart()
     {
 
@@ -218,7 +220,7 @@ public class BaseMiniGameHandler<B, D> : BaseHandler<BaseMiniGameHandler<B, D>,B
     #endregion
 
     #region 游戏结束按钮回调
-    public void OnClickClose()
+    public void EventForOnClickClose()
     {
         if(miniGameBuilder!=null)
             miniGameBuilder.DestroyAll();

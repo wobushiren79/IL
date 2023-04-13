@@ -207,7 +207,7 @@ public class GameItemsManager : BaseManager, IItemsInfoView
 
             if (itemsp == null)
                 return null;
-            Texture2D itemTex = TextureUtil.SpriteToTexture2D(itemsp,isSameWH:true);
+            Texture2D itemTex = TextureUtil.SpriteToTexture2D(itemsp, isSameWH: true, texW: 64, texH: 64);
 
             if (texture2DArray == null)
             {

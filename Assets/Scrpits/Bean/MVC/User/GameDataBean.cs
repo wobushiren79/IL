@@ -53,6 +53,7 @@ public class GameDataBean
     public int loansNumberLimit = 3;//贷款上限
 
     public float speedForCombat = 1;//战斗加速
+    public bool isAutoForCombat = false;//是否自动战斗
 
     /// <summary>
     /// 增加无尽之塔数据
@@ -1178,6 +1179,20 @@ public class GameDataBean
     /// <returns></returns>
     public bool RemoveWorker(CharacterBean characterData)
     {
+        //清除攀龙塔数据
+        if(characterData!=null&& characterData.baseInfo!=null&& characterData.baseInfo.characterId != null)
+        {
+            for (int i = 0; i < listInfinteTowers.Count; i++)
+            {
+                var itemData = listInfinteTowers[i];
+                if (itemData.listMembers.Contains(characterData.baseInfo.characterId))
+                {
+                    listInfinteTowers.Remove(itemData);
+                    i--;
+                }
+            }
+        }
+
         if (listWorkerCharacter != null && characterData != null)
             return listWorkerCharacter.Remove(characterData);
         return false;

@@ -4,7 +4,7 @@ using UnityEditor;
 using System.Collections;
 using System.Collections.Generic;
 
-public class MiniGameBarrageHandler : BaseMiniGameHandler<MiniGameBarrageBuilder, MiniGameBarrageBean>, UIMiniGameCountDown.ICallBack, UIMiniGameEnd.ICallBack
+public class MiniGameBarrageHandler : BaseMiniGameHandler<MiniGameBarrageBuilder, MiniGameBarrageBean>
 {
     public override void Awake()
     {

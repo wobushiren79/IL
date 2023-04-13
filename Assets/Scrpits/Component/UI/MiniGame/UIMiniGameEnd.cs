@@ -29,22 +29,11 @@ public class UIMiniGameEnd : BaseUIComponent
     public GameObject objResultWinModel;
     public GameObject objResultLoseModel;
 
-    public ICallBack callBack;
-
     public MiniGameBaseBean miniGameData;
     private void Start()
     {
         if (btClose != null)
             btClose.onClick.AddListener(OnClickClose);
-    }
-
-    /// <summary>
-    /// 设置回调
-    /// </summary>
-    /// <param name="callBack"></param>
-    public void SetCallBack(ICallBack callBack)
-    {
-        this.callBack = callBack;
     }
 
     /// <summary>
@@ -64,6 +53,15 @@ public class UIMiniGameEnd : BaseUIComponent
         }
         objContent.transform.localScale = new Vector3(1, 1, 1);
         objContent.transform.DOScale(new Vector3(0.2f, 0.2f, 0.2f), 0.5f).From().SetEase(Ease.OutBack);
+
+        //如果是在无尽之塔的斗武 并且开启自动战斗 则自动点击
+        GameDataBean gameData = GameDataHandler.Instance.manager.GetGameData();
+        if(miniGameData.gameType == MiniGameEnum.Combat 
+            && SceneUtil.GetCurrentScene()== ScenesEnum.GameInfiniteTowersScene
+            && gameData.isAutoForCombat)
+        {
+            StartAutoEnd();
+        }
     }
 
     /// <summary>
@@ -114,13 +112,24 @@ public class UIMiniGameEnd : BaseUIComponent
     }
 
     /// <summary>
+    /// 自动结束
+    /// </summary>
+    public void StartAutoEnd()
+    {
+        this.WaitExecuteSeconds(2, () =>
+        {
+            OnClickClose();
+        });
+    }
+
+    /// <summary>
     /// 关闭按钮
     /// </summary>
     public void OnClickClose()
     {
+        StopAllCoroutines();
         CloseUI();
-        if (callBack != null)
-            callBack.OnClickClose();
+        EventHandler.Instance.TriggerEvent(EventsInfo.MiniGame_EventForOnClickClose);
     }
 
     /// <summary>
@@ -230,10 +239,5 @@ public class UIMiniGameEnd : BaseUIComponent
             itemLose.SetContent(content);
         //设置动画
         objItem.transform.DOScale(new Vector3(0f, 0f, 0f), 0.5f).From().SetEase(Ease.OutBack).SetDelay(0.7f);
-    }
-
-    public interface ICallBack
-    {
-        void OnClickClose();
     }
 }

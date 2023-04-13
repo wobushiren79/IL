@@ -6,11 +6,13 @@ using System;
 using System.Collections;
 using static MiniGameCombatBean;
 
-public class MiniGameCombatHandler : BaseMiniGameHandler<MiniGameCombatBuilder, MiniGameCombatBean>, UIMiniGameCountDown.ICallBack, UIMiniGameCombat.ICallBack
+public class MiniGameCombatHandler : BaseMiniGameHandler<MiniGameCombatBuilder, MiniGameCombatBean>
 {
     //游戏UI
     protected UIMiniGameCombat uiMiniGameCombat;
 
+    //当前回合行动的角色
+    public MiniGameCharacterForCombatBean roundGameCharacterData;
 
     public override void Awake()
     {
@@ -24,6 +26,8 @@ public class MiniGameCombatHandler : BaseMiniGameHandler<MiniGameCombatBuilder, 
     /// <param name="gameCombatData"></param>
     public override void InitGame(MiniGameCombatBean gameCombatData)
     {
+        EventHandler.Instance.RegisterEvent<MiniGameCharacterForCombatBean>(EventsInfo.MiniGameCombat_EventForCharacterRound, EventForCharacterRound);
+        EventHandler.Instance.RegisterEvent(EventsInfo.MiniGameCombat_EventForCommandEnd, EventForCommandEnd);
         base.InitGame(gameCombatData);
         if (gameCombatData == null)
         {
@@ -46,7 +50,6 @@ public class MiniGameCombatHandler : BaseMiniGameHandler<MiniGameCombatBuilder, 
         base.StartGame();
         //打开游戏UI
         uiMiniGameCombat = UIHandler.Instance.OpenUIAndCloseOther<UIMiniGameCombat>();
-        uiMiniGameCombat.SetCallBack(this);
         uiMiniGameCombat.SetData(miniGameData);
         miniGameData.SetCombatStatus(MiniGameCombatStatusEnum.Rounding);
         uiMiniGameCombat.StartRound();
@@ -61,6 +64,10 @@ public class MiniGameCombatHandler : BaseMiniGameHandler<MiniGameCombatBuilder, 
     public override void EndGame(MiniGameResultEnum gameResulte)
     {
         base.EndGame(gameResulte,false);
+
+        EventHandler.Instance.UnRegisterEvent(EventsInfo.MiniGameCombat_EventForCommandEnd, EventForCommandEnd);
+        EventHandler.Instance.UnRegisterEvent<MiniGameCharacterForCombatBean>(EventsInfo.MiniGameCombat_EventForCharacterRound, EventForCharacterRound);
+        StopAllCoroutines();
     }
 
     /// <summary>
@@ -210,7 +217,15 @@ public class MiniGameCombatHandler : BaseMiniGameHandler<MiniGameCombatBuilder, 
             {
                 //友方行动
                 miniGameData.SetCombatStatus(MiniGameCombatStatusEnum.OurRound);
-                uiMiniGameCombat.OpenCombatCommand();
+                GameDataBean gameData = GameDataHandler.Instance.manager.GetGameData();
+                if (gameData.isAutoForCombat)
+                {
+                    npcCpt.OpenAI();
+                }
+                else
+                {
+                    uiMiniGameCombat.OpenCombatCommand();
+                }
             }
             //开启选中特效
             SelectCharacter(npcCpt);
@@ -218,7 +233,7 @@ public class MiniGameCombatHandler : BaseMiniGameHandler<MiniGameCombatBuilder, 
     }
 
 
-    #region 倒计时UI回调
+    #region 倒计时
     public override void GamePreCountDownStart()
     {
         base.GamePreCountDownStart();
@@ -232,14 +247,15 @@ public class MiniGameCombatHandler : BaseMiniGameHandler<MiniGameCombatBuilder, 
     }
     #endregion
 
-    #region 游戏UI回调
+    #region 游戏事件
     /// <summary>
     /// 角色的回合
     /// </summary>
     /// <param name="gameCharacterData"></param>
-    public void CharacterRound(MiniGameCharacterForCombatBean gameCharacterData)
+    public void EventForCharacterRound(MiniGameCharacterForCombatBean gameCharacterData)
     {
-        StartCoroutine(RoundForPre(gameCharacterData));
+        this.roundGameCharacterData = gameCharacterData;
+        StartCoroutine(RoundForPre(roundGameCharacterData));
         uiMiniGameCombat.RefreshUI();
     }
 
@@ -247,7 +263,7 @@ public class MiniGameCombatHandler : BaseMiniGameHandler<MiniGameCombatBuilder, 
     /// 指令 结束
     /// </summary>
     /// <param name="details"></param>
-    public void CommandEnd()
+    public void EventForCommandEnd()
     {
         RoundForAction();
         uiMiniGameCombat.RefreshUI();

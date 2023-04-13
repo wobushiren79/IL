@@ -28,8 +28,6 @@ public class UIMiniGameCooking : BaseUIComponent
     public MiniGameCookingBean gameCookingData;
     public float gameTiming;//游戏计时时间
 
-    private ICallBack mCallBack;
-
     private bool mIsPlay = false;
     protected int buttonNumber = 45;
     protected int buttonPosition = 0;
@@ -83,13 +81,7 @@ public class UIMiniGameCooking : BaseUIComponent
             return;
         }
     }
-
-    public void SetCallBack(ICallBack callBack)
-    {
-        this.mCallBack = callBack;
-    }
-
-    public void SetData(MiniGameCookingBean gameCookingData,float gameTiming)
+    public void SetData(MiniGameCookingBean gameCookingData, float gameTiming)
     {
         this.gameCookingData = gameCookingData;
         this.gameTiming = gameTiming;
@@ -189,7 +181,7 @@ public class UIMiniGameCooking : BaseUIComponent
     /// <param name="name"></param>
     public void SetTitle(string name)
     {
-        if (objTitle!=null&&tvTitle != null)
+        if (objTitle != null && tvTitle != null)
         {
             tvTitle.text = name;
             objTitle.transform.DOScale(new Vector3(3, 3, 3), 1).From().SetEase(Ease.OutBack);
@@ -208,7 +200,8 @@ public class UIMiniGameCooking : BaseUIComponent
         int unfinishNumber = 0;
         foreach (ItemMiniGameCookingButtonCpt itemCpt in mListButton)
         {
-            switch (itemCpt.buttonStatus) {
+            switch (itemCpt.buttonStatus)
+            {
                 case 0:
                     unfinishNumber++;
                     break;
@@ -227,18 +220,16 @@ public class UIMiniGameCooking : BaseUIComponent
             tvCountDown.transform.DOScale(new Vector3(3, 3, 3), 0.5f).From().SetEase(Ease.OutBack);
             yield return new WaitForSeconds(3);
         }
-        if (mCallBack != null)
+
+        MiniGameCookingSettleBean cookingSettleData = new MiniGameCookingSettleBean
         {
-            MiniGameCookingSettleBean cookingSettleData = new MiniGameCookingSettleBean
-            {
-                maxTime = sliderTime.maxValue,
-                residueTime = sliderTime.value,
-                correctNumber = correctNumber,
-                errorNumber = errorNumber,
-                unfinishNumber = unfinishNumber
-            };
-            mCallBack.UIMiniGameCookingSettle(mPhaseType, cookingSettleData);
-        }
+            maxTime = sliderTime.maxValue,
+            residueTime = sliderTime.value,
+            correctNumber = correctNumber,
+            errorNumber = errorNumber,
+            unfinishNumber = unfinishNumber
+        };
+        EventHandler.Instance.TriggerEvent(EventsInfo.MiniGameCooking_CookingSettle, mPhaseType, cookingSettleData);
     }
 
     /// <summary>
@@ -267,8 +258,8 @@ public class UIMiniGameCooking : BaseUIComponent
             //倒计时开始计时
             StartCoroutine(CoroutineForTiming());
         }
-        ItemMiniGameCookingButtonCpt itemButton= mListButton[buttonPosition];
-        if(itemButton.buttonType== type)
+        ItemMiniGameCookingButtonCpt itemButton = mListButton[buttonPosition];
+        if (itemButton.buttonType == type)
         {
             AudioHandler.Instance.PlaySound(AudioSoundEnum.Correct);
             itemButton.SetButtonClickCorrect();
@@ -342,14 +333,5 @@ public class UIMiniGameCooking : BaseUIComponent
                 StartCoroutine(SettleGame());
             }
         }
-    }
-
-    public interface ICallBack
-    {
-        /// <summary>
-        /// 游戏完成结算
-        /// </summary>
-        /// <param name="type">1备料  2烹饪 3摆盘</param>
-        void UIMiniGameCookingSettle(MiniGameCookingPhaseTypeEnum type, MiniGameCookingSettleBean settleData);
     }
 }

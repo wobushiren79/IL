@@ -68,6 +68,27 @@ public class UIMountainInfiniteTowers : BaseUIComponent, DialogView.IDialogCallB
             return;
         GameDataBean gameData = GameDataHandler.Instance.manager.GetGameData();
         listData = gameData.listInfinteTowers;
+        //纠错处理 如果员工被辞退了 则不显示该条数据
+        for (int i = 0; i < listData.Count; i++)
+        {
+            var itemData =  listData[i];
+            bool isAllAt = true;
+            foreach (var memberId in itemData.listMembers)
+            {
+                CharacterBean characterData = gameData.GetCharacterDataById(memberId);
+                if (characterData == null)
+                {
+                    isAllAt = false;
+                    break;
+                }              
+            }
+            if (!isAllAt)
+            {
+                listData.Remove(itemData);
+                i--;
+            }
+        }
+
         if (listData.Count <= 0)
         {
             objNull.SetActive(true);
@@ -89,7 +110,7 @@ public class UIMountainInfiniteTowers : BaseUIComponent, DialogView.IDialogCallB
     public void SetMaxLayer(long maxLayer)
     {
         if (tvMaxLayer)
-            tvMaxLayer.text = maxLayer+"";
+            tvMaxLayer.text = maxLayer + "";
     }
 
     /// <summary>

@@ -70,6 +70,11 @@ public class ItemMountainInfiniteTowersCpt : ItemGameBaseCpt,DialogView.IDialogC
 
             //设置数据
             CharacterBean characterData = gameData.GetCharacterDataById(memberId);
+            if (characterData == null)
+            {
+                //如果没有这个角色。该角色已经被辞退
+                continue;
+            }
             characterUI.SetCharacterData(characterData.body, characterData.equips);
             tvName.text = characterData.baseInfo.name;
         }

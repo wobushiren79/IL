@@ -12,16 +12,10 @@ public class UIMiniGameCookingSelect : BaseUIComponent
 
     public MiniGameCookingBean gameCookingData;
     List<MenuOwnBean> listOwnMenu;
-    private ICallBack mCallBack;
 
     public void Start()
     {
         gridVertical.AddCellListener(OnCellForItem);
-    }
-
-    public void SetCallBack(ICallBack callBack)
-    {
-        this.mCallBack = callBack;
     }
 
     public void SetData(MiniGameCookingBean gameCookingData)
@@ -84,12 +78,6 @@ public class UIMiniGameCookingSelect : BaseUIComponent
     /// <param name="menuInfo"></param>
     public void SelectMenu(MenuInfoBean menuInfo)
     {
-        if (mCallBack != null)
-            mCallBack.UIMiniGameCookingSelect(menuInfo);
-    }
-
-    public interface ICallBack
-    {
-        void UIMiniGameCookingSelect(MenuInfoBean menuInfo);
+        EventHandler.Instance.TriggerEvent(EventsInfo.MiniGameCooking_MenuSelect, menuInfo);
     }
 }

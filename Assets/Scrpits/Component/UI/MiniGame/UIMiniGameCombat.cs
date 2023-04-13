@@ -6,17 +6,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System;
 
-public class UIMiniGameCombat : UIBaseMiniGame<MiniGameCombatBean>
-    , UIMiniGameCombatSelectCharacter.ICallBack
-    , UIMiniGameCombatCommand.ICallBack
-    , DialogView.IDialogCallBack
-    , PowerTestDialogView.ICallBack
+public partial class UIMiniGameCombat : UIBaseMiniGame<MiniGameCombatBean>,
+    UIMiniGameCombatSelectCharacter.ICallBack,
+    UIMiniGameCombatCommand.ICallBack,
+    DialogView.IDialogCallBack,
+    PowerTestDialogView.ICallBack,
+    IRadioGroupCallBack,
+    IRadioButtonCallBack
 {
-    //战斗速度控制
-    public Button btSpeed1x;
-    public Button btSpeed2x;
-    public Button btSpeed5x;
-
     //角色选择UI
     public UIMiniGameCombatSelectCharacter uiForSelectCharacter;
     //战斗指令
@@ -40,9 +37,6 @@ public class UIMiniGameCombat : UIBaseMiniGame<MiniGameCombatBean>
     public List<ItemMiniGameCombatCharacterInfoCpt> listCharacterInfo = new List<ItemMiniGameCombatCharacterInfoCpt>();
     public List<ItemMiniGameCombatCharacterRoundCpt> listCharacterRound = new List<ItemMiniGameCombatCharacterRoundCpt>();
 
-    protected ICallBack callBack;
-
-
     public bool isRounding = false;//是否回合进行中
     public bool isSelecting = false;//是否正在选择中
 
@@ -52,17 +46,11 @@ public class UIMiniGameCombat : UIBaseMiniGame<MiniGameCombatBean>
             uiForSelectCharacter.SetCallBack(this);
         if (uiForCombatCommand != null)
             uiForCombatCommand.SetCallBack(this);
-        if (btSpeed1x)
-            btSpeed1x.onClick.AddListener(OnClickForSpeed1x);
-        if (btSpeed2x)
-            btSpeed2x.onClick.AddListener(OnClickForSpeed2x);
-        if (btSpeed5x)
-            btSpeed5x.onClick.AddListener(OnClickForSpeed5x);
+        ui_SpeedControl.SetCallBack(this);
+        ui_Auto.SetCallBack(this);
     }
 
-    
-
-    private void Update()
+    private void Update() 
     {
         //回合条移动处理
         HandleForRoundMove();
@@ -78,7 +66,7 @@ public class UIMiniGameCombat : UIBaseMiniGame<MiniGameCombatBean>
             return;
         for (int i = 0; i < listCharacterInfo.Count; i++)
         {
-            ItemMiniGameCombatCharacterInfoCpt itemInfo= listCharacterInfo[i];
+            ItemMiniGameCombatCharacterInfoCpt itemInfo = listCharacterInfo[i];
             itemInfo.RefreshUI();
         }
         for (int i = 0; i < listCharacterRound.Count; i++)
@@ -86,15 +74,23 @@ public class UIMiniGameCombat : UIBaseMiniGame<MiniGameCombatBean>
             ItemMiniGameCombatCharacterRoundCpt itemInfo = listCharacterRound[i];
             itemInfo.RefreshUI();
         }
-    }
 
-    /// <summary>
-    /// 设置回调
-    /// </summary>
-    /// <param name="callBack"></param>
-    public void SetCallBack(ICallBack callBack)
-    {
-        this.callBack = callBack;
+        //设置自动战斗的状态
+        GameDataBean gameData = GameDataHandler.Instance.manager.GetGameData();
+        ui_Auto.SetStates(gameData.isAutoForCombat);
+        //设置速度
+        if (gameData.speedForCombat == 1)
+        {
+            ui_SpeedControl.SetPosition(0, false);
+        }
+        else if (gameData.speedForCombat == 2)
+        {
+            ui_SpeedControl.SetPosition(1, false);
+        }
+        else if (gameData.speedForCombat == 5)
+        {
+            ui_SpeedControl.SetPosition(2, false);
+        }
     }
 
     /// <summary>
@@ -180,19 +176,6 @@ public class UIMiniGameCombat : UIBaseMiniGame<MiniGameCombatBean>
         objRoundItem.transform.DOScale(new Vector3(0.2f, 0.2f, 0.2f), 0.5f).From().SetDelay(0.1f * position).SetEase(Ease.OutBack);
     }
 
-    public void OnClickForSpeed1x()
-    {
-        CombatSpeedChange(1);
-    }
-    public void OnClickForSpeed2x()
-    {
-        CombatSpeedChange(2);
-    }
-    public void OnClickForSpeed5x()
-    {
-        CombatSpeedChange(5);
-    }
-
     /// <summary>
     /// 战斗速度改变
     /// </summary>
@@ -222,19 +205,18 @@ public class UIMiniGameCombat : UIBaseMiniGame<MiniGameCombatBean>
         for (int i = 0; i < listCharacterRound.Count; i++)
         {
             ItemMiniGameCombatCharacterRoundCpt itemCpt = listCharacterRound[i];
-            float roundSpeed = itemCpt.speedForMove * Time.deltaTime * 3.5f;
+            float roundSpeed = itemCpt.speedForMove * Time.deltaTime * 5f;
             //回合条向右移动
             RectTransform itemRtf = (RectTransform)itemCpt.transform;
             itemRtf.anchoredPosition = new Vector2(itemRtf.anchoredPosition.x + roundSpeed, itemRtf.anchoredPosition.y);
             //检测是否到达目标点
-            if (itemRtf.anchoredPosition.x  >= withRound)
+            if (itemRtf.anchoredPosition.x >= withRound)
             {
                 itemRtf.anchoredPosition = new Vector2(withRound, itemRtf.anchoredPosition.y);
                 //设置为选中状态
                 itemCpt.SetStatus(true);
                 //通知轮到角色回合
-                if (callBack != null)
-                    callBack.CharacterRound(itemCpt.gameCharacterData);
+                EventHandler.Instance.TriggerEvent(EventsInfo.MiniGameCombat_EventForCharacterRound, itemCpt.gameCharacterData);
                 isRounding = false;
                 break;
             }
@@ -306,11 +288,10 @@ public class UIMiniGameCombat : UIBaseMiniGame<MiniGameCombatBean>
         uiForCombatCommand.CloseUI();
         uiForSelectCharacter.CloseUI();
         GameConfigBean gameConfig = GameDataHandler.Instance.manager.GetGameConfig();
-        if (gameConfig.statusForCombatForPowerTest == 1 )
+        if (gameConfig.statusForCombatForPowerTest == 1)
         {
             //获取属性
-            
-            gameCharacterData.characterData.GetAttributes( out CharacterAttributesBean characterAttributes);
+            gameCharacterData.characterData.GetAttributes(out CharacterAttributesBean characterAttributes);
 
             DialogBean dialogData = new DialogBean();
             dialogData.dialogType = DialogEnum.PowerTest;
@@ -360,8 +341,7 @@ public class UIMiniGameCombat : UIBaseMiniGame<MiniGameCombatBean>
     {
         AudioHandler.Instance.PlaySound(AudioSoundEnum.ButtonForNormal);
         miniGameData.SetRoundActionPowerTest(resultsPower);
-        if (callBack != null)
-            callBack.CommandEnd();
+        EventHandler.Instance.TriggerEvent(EventsInfo.MiniGameCombat_EventForCommandEnd);
     }
     #endregion
 
@@ -379,8 +359,7 @@ public class UIMiniGameCombat : UIBaseMiniGame<MiniGameCombatBean>
         else
         {
             CloseAll();
-            if (callBack != null)
-                callBack.CommandEnd();
+            EventHandler.Instance.TriggerEvent(EventsInfo.MiniGameCombat_EventForCommandEnd);
         }
     }
     #endregion
@@ -389,7 +368,7 @@ public class UIMiniGameCombat : UIBaseMiniGame<MiniGameCombatBean>
     #region 物品和技能选择回调
     public void PickItemsComplete(ItemsInfoBean itemsInfo)
     {
-        EffectDetailsEnumTools.GetEffectRange(itemsInfo.effect_details,out int impactNumber,out int impactType);
+        EffectDetailsEnumTools.GetEffectRange(itemsInfo.effect_details, out int impactNumber, out int impactType);
         OpenSelectCharacter(impactNumber, impactType);
     }
 
@@ -402,8 +381,7 @@ public class UIMiniGameCombat : UIBaseMiniGame<MiniGameCombatBean>
     public void PassComplete()
     {
         CloseAll();
-        if (callBack != null)
-            callBack.CommandEnd();
+        EventHandler.Instance.TriggerEvent(EventsInfo.MiniGameCombat_EventForCommandEnd);
     }
     #endregion
 
@@ -417,22 +395,46 @@ public class UIMiniGameCombat : UIBaseMiniGame<MiniGameCombatBean>
     {
 
     }
-
-
     #endregion
 
-    public interface ICallBack
+    public void RadioButtonSelected(RadioButtonView view, bool isSelect)
     {
-        /// <summary>
-        /// 轮到一个角色的回合
-        /// </summary>
-        /// <param name="gameCharacterData"></param>
-        void CharacterRound(MiniGameCharacterForCombatBean gameCharacterData);
-
-        /// <summary>
-        /// 指令 结束
-        /// </summary>
-        void CommandEnd();
+        //自动战斗
+        if (view == ui_Auto)
+        {
+            GameDataBean gameData = GameDataHandler.Instance.manager.GetGameData();
+            if(gameData.isAutoForCombat != isSelect)
+            {
+                gameData.isAutoForCombat = isSelect;
+                if (isSelect)
+                {
+                    uiForCombatCommand.CloseUI();
+                    MiniGameCharacterForCombatBean roundGameCharacterData = MiniGameHandler.Instance.handlerForCombat.roundGameCharacterData;
+                    //通知轮到角色回合
+                    EventHandler.Instance.TriggerEvent(EventsInfo.MiniGameCombat_EventForCharacterRound, roundGameCharacterData);
+                }
+            }
+        }
     }
 
+    public void RadioButtonSelected(RadioGroupView rgView, int position, RadioButtonView rbview)
+    {
+        if (rbview == ui_Speed1)
+        {
+            CombatSpeedChange(1);
+        }
+        else if (rbview == ui_Speed2)
+        {
+            CombatSpeedChange(2);
+        }
+        else if (rbview == ui_Speed5)
+        {
+            CombatSpeedChange(5);
+        }
+    }
+
+    public void RadioButtonUnSelected(RadioGroupView rgView, int position, RadioButtonView rbview)
+    {
+
+    }
 }

@@ -309,7 +309,7 @@ public class UIGameMain : BaseUIComponent, DialogView.IDialogCallBack, IRadioGro
             btFamily.gameObject.SetActive(false);
         }
         //是否展示测试按钮
-        if (ProjectConfigInfo.BUILD_TYPE == ProjectBuildTypeEnum.Debug)
+        if (Application.platform ==  RuntimePlatform.WindowsEditor)
         {
             btDebug.gameObject.SetActive(true);
         }
