@@ -21,8 +21,6 @@ namespace Pathfinding {
 	///
 	/// This list will be sorted by the cost to reach that node (more specifically the G score if you are familiar with the terminology for search algorithms).
 	/// [Open online documentation to see images]
-	///
-	/// \ingroup paths
 	/// </summary>
 	public class ConstantPath : Path {
 		public GraphNode startNode;
@@ -43,7 +41,7 @@ namespace Pathfinding {
 		/// </summary>
 		public PathEndingCondition endingCondition;
 
-		internal override bool FloodingPath {
+		public override bool FloodingPath {
 			get {
 				return true;
 			}
@@ -76,7 +74,7 @@ namespace Pathfinding {
 
 		protected override void OnEnterPool () {
 			base.OnEnterPool();
-			if (allNodes != null) Util.ListPool<GraphNode>.Release (ref allNodes);
+			if (allNodes != null) Util.ListPool<GraphNode>.Release(ref allNodes);
 		}
 
 		/// <summary>
@@ -88,7 +86,7 @@ namespace Pathfinding {
 		/// </summary>
 		protected override void Reset () {
 			base.Reset();
-			allNodes = Util.ListPool<GraphNode>.Claim ();
+			allNodes = Util.ListPool<GraphNode>.Claim();
 			endingCondition = null;
 			originalStartPoint = Vector3.zero;
 			startPoint = Vector3.zero;
@@ -210,7 +208,7 @@ namespace Pathfinding {
 
 	/// <summary>
 	/// Target is found when the path is longer than a specified value.
-	/// Actually this is defined as when the current node's G score is >= a specified amount (EndingConditionDistance.maxGScore).\n
+	/// Actually this is defined as when the current node's G score is >= a specified amount (EndingConditionDistance.maxGScore).
 	/// The G score is the cost from the start node to the current node, so an area with a higher penalty (weight) will add more to the G score.
 	/// However the G score is usually just the shortest distance from the start to the current node.
 	///

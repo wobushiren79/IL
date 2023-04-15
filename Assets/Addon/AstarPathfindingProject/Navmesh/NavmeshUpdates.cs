@@ -2,9 +2,7 @@ using UnityEngine;
 using System.Collections.Generic;
 using Pathfinding.Util;
 using Pathfinding.Serialization;
-#if UNITY_5_5_OR_NEWER
 using UnityEngine.Profiling;
-#endif
 
 namespace Pathfinding {
 	/// <summary>
@@ -96,6 +94,8 @@ namespace Pathfinding {
 
 			/// <summary>Called when a NavmeshCut or NavmeshAdd is enabled</summary>
 			public void AddClipper (NavmeshClipper obj) {
+				if (!obj.graphMask.Contains((int)graph.graphIndex)) return;
+
 				// Without the forceCreate parameter set to true then no handler will be created
 				// because there are no clippers in the scene yet. However one is being added right now.
 				Refresh(true);
@@ -244,7 +244,7 @@ namespace Pathfinding {
 				}
 				forcedReloadRects.ClearFast();
 
-				if (hasBeenUpdated == null) hasBeenUpdated = ListPool<NavmeshClipper>.Claim ();
+				if (hasBeenUpdated == null) hasBeenUpdated = ListPool<NavmeshClipper>.Claim();
 
 				// Reload all bounds touching the previous bounds and current bounds
 				// of navmesh cuts that have moved or changed in some other way
@@ -275,7 +275,7 @@ namespace Pathfinding {
 					hasBeenUpdated[i].NotifyUpdated();
 				}
 
-				ListPool<NavmeshClipper>.Release (ref hasBeenUpdated);
+				ListPool<NavmeshClipper>.Release(ref hasBeenUpdated);
 			}
 		}
 	}

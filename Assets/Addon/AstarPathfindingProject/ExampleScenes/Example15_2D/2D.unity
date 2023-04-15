@@ -9310,7 +9310,6 @@ MonoBehaviour:
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
-  m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -9339,7 +9338,7 @@ MonoBehaviour:
 
     The
     agent only recalculates the path when a double click is detected, however that
-    can easily be changed by modifying the ''repath rate'' on the AILerp component.
+    can easily be changed by modifying the settings on the AILerp component.
 
 
     Double
@@ -10050,9 +10049,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 847a14d4dc9cc43679ab34fc78e0182f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  version: 2
-  repathRate: Infinity
-  canSearch: 1
+  version: 4
+  autoRepath:
+    mode: 0
+    interval: Infinity
+    sensitivity: 10
+    maximumInterval: 2
+    visualizeSensitivity: 0
   canMove: 1
   speed: 4
   orientation: 1
@@ -10061,6 +10064,8 @@ MonoBehaviour:
   interpolatePathSwitches: 1
   switchPathInterpolationSpeed: 10
   targetCompatibility: {fileID: 0}
+  repathRateCompatibility: Infinity
+  canSearchCompability: 1
 --- !u!114 &878340689
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -11288,7 +11293,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   version: 1
   data:
-    dataString: UEsDBBQAAAgIAABAIexrpft3gwIAAHUFAAALACQAZ3JhcGgwLmpzb24KACAAAAAAAAEAGAAAgD7V3rGdAQCAPtXesZ0BAIA+1d6xnQF1VE1v2zAM/SuBzivgZG227rYlaboBbYNmQw9zD4pEx0JkydBHk7TIfx8pO7WTbYAB2+R7JB9J6Y0p42sQwbq5U/LOSmBfBoy+2YdB57yFHV9bs1SvcMQ8KRlKAvGEeeRBWbQPieZtBcEp8dWsNYEzNEajCuuqmVzDxPrg0Vxw7QFdzgZiGzS9DdgOXxfXRNm31Fd6Dw74JcAEcD3cqIUNT2DRCM2rGiQV3KFHVy16NEwwg1JaBPGF1Vr5tg4W9nXS+cj3pFIqjppSbsKWoNZloFB94kNReAht1Y7vp8pha5qI7Jtt+lVxv2lqeuE6puSpmibk3V/ei8ZdOFvdHrMOM8oQSiU2WJ/gPvTa2TdPT8uOZsv1hq80PJVg7u3c2WgkOoOLRI0eRtPu913YpASx6exNqWfGWHedPp8eaTgk7buJVtWqdeHvUtvU5zRwcDiR71huWgffotBKNfzy8JOv+3vTOm6U8wFdrUZDxa1sdARls9Qx0hLDxDoDrh+hBsN12C8wTjif35nv/6wbTkekzd76jpt/RknmDp9lZ66F3Xaz8vAjVvXCKhOWwJ0oe/F8abd34MuHGLQy0E2BHPfYxYk1ptk9/w/aMrqCix4twC5EB1MeeNp+rAmXRPap2NHEMFFr2sekgoL/RhX0PFOXS455dTKze4uVofHk/Ux7sI5Knm45Gwt+nWUfMxiPLscY/CIDGK3E5VBk48/y09UVS8dAGew514umae2ocIVMp8Xgyh9vscHc8TodO+n4dq5eK+s7pDKFXQoHYB6aCO9iwWESvBrkTCqUuYQQlEnLx95ypq3YgMzfA+WpsbNdcDzvouSsVi82kCVnk3Rz5ezADn8AUEsDBBQAAAgIAABAIezL9RFbbQAAAHgAAAAJACQAbWV0YS5qc29uCgAgAAAAAAABABgAAIA+1d6xnQEAgD7V3rGdAQCAPtXesZ0Bq1YqSy0qzszPU7JSMNEz0jM01VFQSi9KLMgoBooYgjilmSkgdrSSWXKipYGBsUGqmZGJWVpisq5BaqpRUrKJYbKBmUWKuampUixQfUllQapfYm4qRE9AYklGWmZeSmZeup57UWaKO8hopdhaAFBLAQItABQAAAgIAABAIexrpft3gwIAAHUFAAALACQAAAAAAAAAAAAAAAAAAABncmFwaDAuanNvbgoAIAAAAAAAAQAYAACAPtXesZ0BAIA+1d6xnQEAgD7V3rGdAVBLAQItABQAAAgIAABAIezL9RFbbQAAAHgAAAAJACQAAAAAAAAAAAAAANACAABtZXRhLmpzb24KACAAAAAAAAEAGAAAgD7V3rGdAQCAPtXesZ0BAIA+1d6xnQFQSwUGAAAAAAIAAgC4AAAAiAMAAAAA
+    dataString: UEsDBBQAAAgIAAAIIex9cx9sVgIAACIFAAALACQAZ3JhcGgwLmpzb24KACAAAAAAAAEAGAAAgD7V3rGdAQCAPtXesZ0BAIA+1d6xnQF1VNtu2kAQ/RXk50YyNNCmby0ktFVIUGjVhyoPw3qMV6x3rb2UQMS/d2a91Ia2EpLtM2cuZy68ZlK7BoU3dm5lsTAFZh8GGb9nbwYZRNsTeGkIHhIinanRWyk+6o1ibk5g0LI0tr4tNjg1zjuCS1AOyWSNZ29N0Osge6HH1Q277JPrgZ+DI70J1B5tjzdKtOEZLWihoG6wWMkDduzROLFHw0jTpCQx2F8YpaRLdWR+30SZT7BnlYUE0hRzM7dCuak8h+o7PpalQ5+qtrCfSUutaSNmn4yvOFINbtvW9AtUiMljNW3IxV/Wq9ZcWlN/PmUd5pzBV1JsqT4Bzvfa2Ydn52UHvQO1hbXCHxXqBzO3JuiCjN4Gdg0OR7Pu84+waYVi2+FtqRdgaLpOX06PNRyj9pepkvU6mehzpUzscxw4WprIFyo3roNLLEK5hu8Ov8GmvzfJcCet82RKGiF4cy/1lvezzz7hM+n8vaxl20deA1azNsEyO7uNLWbxwU+N1Wj7QRrUoPx+SYn95cAvbP/3ugO+pVRusp1O5cIlwh0/zy9MS7Prhuvwa6ibpZHarxCsqHrxXGV2C3TVY/BKauzGxoYHavvUaN0uq/uH2yrYEkTPzeOLDxZn4CGeC9VEW1X0Xamj0UMHpXiBowoO/pNU8O+Zu1wB5VURzh4MVUbg2fOZF2cTZHF+FtlEwE2ev81xMrqeUPCrHHG0FtdDkU/eF+/G4yzejdTUc1DLtmlpVLRzutOi6UZO/2iDuYUm3mlhYTeXh9q4jil1aVbCIurHNkIUe/wNUEsDBBQAAAgIAAAIIexu4XRLNAAAADcAAAASACQAZ3JhcGgwX2VkaXRvci5qc29uCgAgAAAAAAABABgAAIA+1d6xnQEAgD7V3rGdAQCAPtXesZ0Bq1bKyU/OTk1RslIoKSpN1VFQKs7IL3etKClKBAqlJeYUg8QKMsvyS4B8JefUvJLUIqVaAFBLAwQUAAAICAAACCHskMp7YmwAAAB3AAAACQAkAG1ldGEuanNvbgoAIAAAAAAAAQAYAACAPtXesZ0BAIA+1d6xnQEAgD7V3rGdAatWKkstKs7Mz1OyUjDRM9Sz0FFQSi9KLMgoBgoYgjilmSkgdrSSWXKipYGBsUGqmZGJWVpisq5BaqpRUrKJYbKBmUWKuampUixQfUllQapfYm4qRE9AYklGWmZeSmZeup57UWaKO8hopdhaAFBLAQItABQAAAgIAAAIIex9cx9sVgIAACIFAAALACQAAAAAAAAAAAAAAAAAAABncmFwaDAuanNvbgoAIAAAAAAAAQAYAACAPtXesZ0BAIA+1d6xnQEAgD7V3rGdAVBLAQItABQAAAgIAAAIIexu4XRLNAAAADcAAAASACQAAAAAAAAAAAAAAKMCAABncmFwaDBfZWRpdG9yLmpzb24KACAAAAAAAAEAGAAAgD7V3rGdAQCAPtXesZ0BAIA+1d6xnQFQSwECLQAUAAAICAAACCHskMp7YmwAAAB3AAAACQAkAAAAAAAAAAAAAAArAwAAbWV0YS5qc29uCgAgAAAAAAABABgAAIA+1d6xnQEAgD7V3rGdAQCAPtXesZ0BUEsFBgAAAAADAAMAHAEAAOIDAAAAAA==
     upgradeData: 
     file_cachedStartup: {fileID: 0}
     data_cachedStartup: 

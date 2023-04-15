@@ -1,8 +1,6 @@
 using UnityEngine;
 using System.Collections.Generic;
-#if UNITY_5_5_OR_NEWER
 using UnityEngine.Profiling;
-#endif
 
 namespace Pathfinding {
 	using System.IO;
@@ -11,7 +9,7 @@ namespace Pathfinding {
 	using Math = System.Math;
 	using System.Linq;
 
-	/// <summary>Base class for RecastGraph and NavMeshGraph</summary>
+	/// <summary>Base class for <see cref="RecastGraph"/> and <see cref="NavMeshGraph"/></summary>
 	public abstract class NavmeshBase : NavGraph, INavmesh, INavmeshHolder, ITransformedGraph
 		, IRaycastableGraph {
 #if ASTAR_RECAST_LARGER_TILES
@@ -121,7 +119,7 @@ namespace Pathfinding {
 		/// Does not update the <see cref="transform"/> field.
 		/// See: <see cref="RelocateNodes(GraphTransform)"/>
 		/// </summary>
-		public abstract GraphTransform CalculateTransform ();
+		public abstract GraphTransform CalculateTransform();
 
 		/// <summary>
 		/// Called when tiles have been completely recalculated.
@@ -158,8 +156,8 @@ namespace Pathfinding {
 		/// <summary>
 		/// Vertex coordinate for the specified vertex index.
 		///
-		/// \throws IndexOutOfRangeException if the vertex index is invalid.
-		/// \throws NullReferenceException if the tile the vertex is in is not calculated.
+		/// Throws: IndexOutOfRangeException if the vertex index is invalid.
+		/// Throws: NullReferenceException if the tile the vertex is in is not calculated.
 		///
 		/// See: NavmeshTile.GetVertex
 		/// </summary>
@@ -250,7 +248,7 @@ namespace Pathfinding {
 
 			if (tiles != null) {
 				for (int i = 0; i < tiles.Length; i++) {
-					Pathfinding.Util.ObjectPool<BBTree>.Release (ref tiles[i].bbTree);
+					Pathfinding.Util.ObjectPool<BBTree>.Release(ref tiles[i].bbTree);
 				}
 			}
 		}
@@ -311,7 +309,7 @@ namespace Pathfinding {
 					   vertsInGraphSpace = new Int3[0],
 					   tris = new int[0],
 					   nodes = new TriangleMeshNode[0],
-					   bbTree = ObjectPool<BBTree>.Claim (),
+					   bbTree = ObjectPool<BBTree>.Claim(),
 					   graph = this,
 			};
 		}
@@ -562,9 +560,9 @@ namespace Pathfinding {
 		/// Version: Since 3.7.6 the implementation is thread safe
 		/// </summary>
 		protected static void CreateNodeConnections (TriangleMeshNode[] nodes) {
-			List<Connection> connections = ListPool<Connection>.Claim ();
+			List<Connection> connections = ListPool<Connection>.Claim();
 
-			var nodeRefs = ObjectPoolSimple<Dictionary<Int2, int> >.Claim ();
+			var nodeRefs = ObjectPoolSimple<Dictionary<Int2, int> >.Claim();
 
 			nodeRefs.Clear();
 
@@ -621,8 +619,8 @@ namespace Pathfinding {
 			}
 
 			nodeRefs.Clear();
-			ObjectPoolSimple<Dictionary<Int2, int> >.Release (ref nodeRefs);
-			ListPool<Connection>.Release (ref connections);
+			ObjectPoolSimple<Dictionary<Int2, int> >.Release(ref nodeRefs);
+			ListPool<Connection>.Release(ref connections);
 		}
 
 		/// <summary>
@@ -684,7 +682,7 @@ namespace Pathfinding {
 
 			// Find all nodes of the second tile which are adjacent to the border between the tiles.
 			// This is used to speed up the matching process (the impact can be very significant for large tiles, but is insignificant for small ones).
-			TriangleMeshNode[] closeToEdge = ArrayPool<TriangleMeshNode>.Claim (nodes2.Length);
+			TriangleMeshNode[] closeToEdge = ArrayPool<TriangleMeshNode>.Claim(nodes2.Length);
 			int numCloseToEdge = 0;
 			for (int j = 0; j < nodes2.Length; j++) {
 				TriangleMeshNode nodeB = nodes2[j];
@@ -741,8 +739,8 @@ namespace Pathfinding {
 											VectorMath.SqrDistanceSegmentSegment((Vector3)aVertex1, (Vector3)aVertex2, (Vector3)bVertex1, (Vector3)bVertex2) < MaxTileConnectionEdgeDistance*MaxTileConnectionEdgeDistance) {
 											uint cost = (uint)(nodeA.position - nodeB.position).costMagnitude;
 
-											nodeA.AddConnection(nodeB, cost, a);
-											nodeB.AddConnection(nodeA, cost, b);
+											nodeA.AddConnection(nodeB, cost, (byte)a);
+											nodeB.AddConnection(nodeA, cost, (byte)b);
 										}
 									}
 								}
@@ -752,7 +750,7 @@ namespace Pathfinding {
 				}
 			}
 
-			ArrayPool<TriangleMeshNode>.Release (ref closeToEdge);
+			ArrayPool<TriangleMeshNode>.Release(ref closeToEdge);
 		}
 
 		/// <summary>
@@ -787,7 +785,7 @@ namespace Pathfinding {
 
 				// Remove the connections array explicitly for performance.
 				// Otherwise the Destroy method will try to remove the connections in both directions one by one which is slow.
-				ArrayPool<Connection>.Release (ref node.connections, true);
+				ArrayPool<Connection>.Release(ref node.connections, true);
 				node.Destroy();
 			}
 		}
@@ -840,7 +838,7 @@ namespace Pathfinding {
 			for (int i = 0; i < nodes.Length; i++) {
 				if (nodes[i] != null) batchNodesToDestroy.Add(nodes[i]);
 			}
-			ObjectPool<BBTree>.Release (ref tile.bbTree);
+			ObjectPool<BBTree>.Release(ref tile.bbTree);
 			// TODO: Pool tile object and various arrays in it?
 			tiles[x + z*tileXCount] = null;
 		}
@@ -867,7 +865,7 @@ namespace Pathfinding {
 			for (int i = 0, j = 0; i < tris.Length; i += 3, j++) {
 				recycling[verts[tris[i+0]].GetHashCode() + verts[tris[i+1]].GetHashCode() + verts[tris[i+2]].GetHashCode()] = j;
 			}
-			var connectionsToKeep = ListPool<Connection>.Claim ();
+			var connectionsToKeep = ListPool<Connection>.Claim();
 
 			for (int i = 0; i < nodes.Length; i++) {
 				var node = nodes[i];
@@ -889,7 +887,7 @@ namespace Pathfinding {
 								connectionsToKeep.Add(node.connections[j]);
 							}
 						}
-						ArrayPool<Connection>.Release (ref node.connections, true);
+						ArrayPool<Connection>.Release(ref node.connections, true);
 						if (connectionsToKeep.Count > 0) {
 							node.connections = connectionsToKeep.ToArrayFromPool();
 							node.SetConnectivityDirty();
@@ -900,7 +898,7 @@ namespace Pathfinding {
 			}
 
 			recycling.Clear();
-			ListPool<Connection>.Release (ref connectionsToKeep);
+			ListPool<Connection>.Release(ref connectionsToKeep);
 		}
 
 		/// <summary>
@@ -940,7 +938,7 @@ namespace Pathfinding {
 				w = w,
 				d = d,
 				tris = tris,
-				bbTree = ObjectPool<BBTree>.Claim (),
+				bbTree = ObjectPool<BBTree>.Claim(),
 				graph = this,
 			};
 
@@ -1039,7 +1037,7 @@ namespace Pathfinding {
 		/// [Open online documentation to see images]
 		/// </summary>
 		public bool Linecast (Vector3 origin, Vector3 end) {
-			return Linecast(origin, end, GetNearest(origin, NNConstraint.None).node);
+			return Linecast(origin, end, null);
 		}
 
 		/// <summary>
@@ -1049,10 +1047,11 @@ namespace Pathfinding {
 		///
 		/// [Open online documentation to see images]
 		/// </summary>
-		/// <param name="origin">Point to linecast from</param>
-		/// <param name="end">Point to linecast to</param>
-		/// <param name="hit">Contains info on what was hit, see GraphHitInfo</param>
-		/// <param name="hint">You need to pass the node closest to the start point</param>
+		/// <param name="origin">Point to linecast from.</param>
+		/// <param name="end">Point to linecast to.</param>
+		/// <param name="hit">Contains info on what was hit, see GraphHitInfo.</param>
+		/// <param name="hint">You may pass the node closest to the start point if you already know it for a minor performance boost.
+		/// 			   If null, a search for the closest node will be done. This parameter is mostly deprecated and should be avoided. Pass null instead.</param>
 		public bool Linecast (Vector3 origin, Vector3 end, GraphNode hint, out GraphHitInfo hit) {
 			return Linecast(this, origin, end, hint, out hit, null);
 		}
@@ -1064,9 +1063,10 @@ namespace Pathfinding {
 		///
 		/// [Open online documentation to see images]
 		/// </summary>
-		/// <param name="origin">Point to linecast from</param>
-		/// <param name="end">Point to linecast to</param>
-		/// <param name="hint">You need to pass the node closest to the start point</param>
+		/// <param name="origin">Point to linecast from.</param>
+		/// <param name="end">Point to linecast to.</param>
+		/// <param name="hint">You may pass the node closest to the start point if you already know it for a minor performance boost.
+		/// 			   If null, a search for the closest node will be done. This parameter is mostly deprecated and should be avoided. Pass null instead.</param>
 		public bool Linecast (Vector3 origin, Vector3 end, GraphNode hint) {
 			GraphHitInfo hit;
 
@@ -1080,11 +1080,12 @@ namespace Pathfinding {
 		///
 		/// [Open online documentation to see images]
 		/// </summary>
-		/// <param name="origin">Point to linecast from</param>
-		/// <param name="end">Point to linecast to</param>
-		/// <param name="hit">Contains info on what was hit, see GraphHitInfo</param>
-		/// <param name="hint">You need to pass the node closest to the start point</param>
-		/// <param name="trace">If a list is passed, then it will be filled with all nodes the linecast traverses</param>
+		/// <param name="origin">Point to linecast from.</param>
+		/// <param name="end">Point to linecast to.</param>
+		/// <param name="hit">Contains info on what was hit, see GraphHitInfo.</param>
+		/// <param name="hint">You may pass the node closest to the start point if you already know it for a minor performance boost.
+		/// 			   If null, a search for the closest node will be done. This parameter is mostly deprecated and should be avoided. Pass null instead.</param>
+		/// <param name="trace">If a list is passed, then it will be filled with all nodes the linecast traverses.</param>
 		public bool Linecast (Vector3 origin, Vector3 end, GraphNode hint, out GraphHitInfo hit, List<GraphNode> trace) {
 			return Linecast(this, origin, end, hint, out hit, trace);
 		}
@@ -1096,17 +1097,42 @@ namespace Pathfinding {
 		///
 		/// [Open online documentation to see images]
 		/// </summary>
-		/// <param name="graph">The graph to perform the search on</param>
-		/// <param name="origin">Point to start from</param>
-		/// <param name="end">Point to linecast to</param>
-		/// <param name="hit">Contains info on what was hit, see GraphHitInfo</param>
-		/// <param name="hint">You need to pass the node closest to the start point, if null, a search for the closest node will be done</param>
+		/// <param name="origin">Point to linecast from.</param>
+		/// <param name="end">Point to linecast to.</param>
+		/// <param name="hit">Contains info on what was hit, see GraphHitInfo.</param>
+		/// <param name="trace">If a list is passed, then it will be filled with all nodes the linecast traverses.</param>
+		/// <param name="filter">If not null then the delegate will be called for each node and if it returns false the node will be treated as unwalkable and a hit will be returned.
+		///               Note that unwalkable nodes are always treated as unwalkable regardless of what this filter returns.</param>
+		public bool Linecast (Vector3 origin, Vector3 end, out GraphHitInfo hit, List<GraphNode> trace, System.Func<GraphNode, bool> filter) {
+			return Linecast(this, origin, end, null, out hit, trace, filter);
+		}
+
+		/// <summary>
+		/// Returns if there is an obstacle between origin and end on the graph.
+		///
+		/// This is not the same as Physics.Linecast, this function traverses the \b graph and looks for collisions instead of checking for collider intersection.
+		///
+		/// [Open online documentation to see images]
+		/// </summary>
+		/// <param name="graph">The graph to perform the search on.</param>
+		/// <param name="origin">Point to start from.</param>
+		/// <param name="end">Point to linecast to.</param>
+		/// <param name="hit">Contains info on what was hit, see GraphHitInfo.</param>
+		/// <param name="hint">You may pass the node closest to the start point if you already know it for a minor performance boost.
+		/// 			   If null, a search for the closest node will be done. This parameter is mostly deprecated and should be avoided. Pass null instead.</param>
 		public static bool Linecast (NavmeshBase graph, Vector3 origin, Vector3 end, GraphNode hint, out GraphHitInfo hit) {
 			return Linecast(graph, origin, end, hint, out hit, null);
 		}
 
-		/// <summary>Cached <see cref="Pathfinding.NNConstraint.None"/> to reduce allocations</summary>
-		static readonly NNConstraint NNConstraintNone = NNConstraint.None;
+		/// <summary>Cached <see cref="Pathfinding.NNConstraint.None"/> with distanceXZ=true to reduce allocations</summary>
+		static readonly NNConstraint NNConstraintNoneXZ = new NNConstraint {
+			constrainWalkability = false,
+			constrainArea = false,
+			constrainTags = false,
+			constrainDistance = false,
+			graphMask = -1,
+			distanceXZ = true,
+		};
 
 		/// <summary>Used to optimize linecasts by precomputing some values</summary>
 		static readonly byte[] LinecastShapeEdgeLookup;
@@ -1161,7 +1187,9 @@ namespace Pathfinding {
 		/// <param name="hit">Contains info on what was hit, see GraphHitInfo</param>
 		/// <param name="hint">If you already know the node which contains the origin point, you may pass it here for slighly improved performance. If null, a search for the closest node will be done.</param>
 		/// <param name="trace">If a list is passed, then it will be filled with all nodes along the line up until it hits an obstacle or reaches the end.</param>
-		public static bool Linecast (NavmeshBase graph, Vector3 origin, Vector3 end, GraphNode hint, out GraphHitInfo hit, List<GraphNode> trace) {
+		/// <param name="filter">If not null then the delegate will be called for each node and if it returns false the node will be treated as unwalkable and a hit will be returned.
+		///               Note that unwalkable nodes are always treated as unwalkable regardless of what this filter returns.</param>
+		public static bool Linecast (NavmeshBase graph, Vector3 origin, Vector3 end, GraphNode hint, out GraphHitInfo hit, List<GraphNode> trace, System.Func<GraphNode, bool> filter = null) {
 			hit = new GraphHitInfo();
 
 			if (float.IsNaN(origin.x + origin.y + origin.z)) throw new System.ArgumentException("origin is NaN");
@@ -1169,7 +1197,7 @@ namespace Pathfinding {
 
 			var node = hint as TriangleMeshNode;
 			if (node == null) {
-				node = graph.GetNearest(origin, NNConstraintNone).node as TriangleMeshNode;
+				node = graph.GetNearest(origin, NNConstraintNoneXZ).node as TriangleMeshNode;
 
 				if (node == null) {
 					Debug.LogError("Could not find a valid node to start from");
@@ -1183,7 +1211,7 @@ namespace Pathfinding {
 			var i3originInGraphSpace = node.ClosestPointOnNodeXZInGraphSpace(origin);
 			hit.origin = graph.transform.Transform((Vector3)i3originInGraphSpace);
 
-			if (!node.Walkable) {
+			if (!node.Walkable || (filter != null && !filter(node))) {
 				hit.node = node;
 				hit.point = hit.origin;
 				hit.tangentOrigin = hit.origin;
@@ -1224,9 +1252,25 @@ namespace Pathfinding {
 				if (sideNodeExit != Side.Left) {
 					// Ray stops before it leaves the current node.
 					// The endpoint must be inside the current node.
+
 					hit.point = end;
 					hit.node = node;
-					return false;
+
+					var endNode = graph.GetNearest(end, NNConstraintNoneXZ).node as TriangleMeshNode;
+					if (endNode == node || endNode == null) {
+						// We ended up at the right node.
+						// If endNode == null we also take this branch.
+						// That case may happen if a linecast is made to a point, but the point way a very large distance straight up into the air.
+						// The linecast may indeed reach the right point, but it's so far away up into the air that the GetNearest method will stop searching.
+						return false;
+					} else {
+						// The closest node to the end point was not the node we ended up at.
+						// This can happen if a linecast is done between two floors of a building.
+						// The linecast may reach the right location when seen from above
+						// but it will have ended up on the wrong floor of the building.
+						// This indicates that the start and end points cannot be connected by a valid straight line on the navmesh.
+						return true;
+					}
 				}
 
 				if (shapeEdgeA == 0xFF) {
@@ -1239,12 +1283,14 @@ namespace Pathfinding {
 				} else {
 					bool success = false;
 					var nodeConnections = node.connections;
+
+					// Check all node connetions to see which one is the next node along the ray's path
 					for (int i = 0; i < nodeConnections.Length; i++) {
 						if (nodeConnections[i].shapeEdge == shapeEdgeA) {
 							// This might be the next node that we enter
 
 							var neighbour = nodeConnections[i].node as TriangleMeshNode;
-							if (neighbour == null || !neighbour.Walkable) continue;
+							if (neighbour == null || !neighbour.Walkable || (filter != null && !filter(neighbour))) continue;
 
 							var neighbourConnections = neighbour.connections;
 							int shapeEdgeB = -1;
@@ -1257,7 +1303,7 @@ namespace Pathfinding {
 
 							if (shapeEdgeB == -1) {
 								// Connection was mono-directional!
-								// This shouldn't normally not happen on navmeshes happen on navmeshes (when the shapeEdge matches at least) unless a user has done something strange to the navmesh.
+								// This shouldn't normally happen on navmeshes (when the shapeEdge matches at least) unless a user has done something strange to the navmesh.
 								continue;
 							}
 
@@ -1380,8 +1426,8 @@ namespace Pathfinding {
 			for (int i = startTile; i < endTile; i++) if (tiles[i] != null) numNodes += tiles[i].nodes.Length;
 
 			// Vertex array might be a bit larger than necessary, but that's ok
-			var vertices = ArrayPool<Vector3>.Claim (numNodes*3);
-			var colors = ArrayPool<Color>.Claim (numNodes*3);
+			var vertices = ArrayPool<Vector3>.Claim(numNodes*3);
+			var colors = ArrayPool<Color>.Claim(numNodes*3);
 			int offset = 0;
 			for (int i = startTile; i < endTile; i++) {
 				var tile = tiles[i];
@@ -1406,8 +1452,8 @@ namespace Pathfinding {
 			if (showMeshOutline) helper.DrawWireTriangles(vertices, colors, numNodes);
 
 			// Return lists to the pool
-			ArrayPool<Vector3>.Release (ref vertices);
-			ArrayPool<Color>.Release (ref colors);
+			ArrayPool<Vector3>.Release(ref vertices);
+			ArrayPool<Color>.Release(ref colors);
 		}
 
 		/// <summary>Creates an outline of the navmesh for use in OnDrawGizmos in the editor</summary>
@@ -1551,7 +1597,7 @@ namespace Pathfinding {
 						z = tz,
 						w = reader.ReadInt32(),
 						d = reader.ReadInt32(),
-						bbTree = ObjectPool<BBTree>.Claim (),
+						bbTree = ObjectPool<BBTree>.Claim(),
 						graph = this,
 					};
 

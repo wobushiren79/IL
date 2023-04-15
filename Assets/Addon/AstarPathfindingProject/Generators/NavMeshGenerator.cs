@@ -6,21 +6,26 @@ namespace Pathfinding {
 	using Pathfinding.Serialization;
 
 	public interface INavmesh {
-		void GetNodes (System.Action<GraphNode> del);
+		void GetNodes(System.Action<GraphNode> del);
 	}
 
 	/// <summary>
 	/// Generates graphs based on navmeshes.
-	/// \ingroup graphs
-	/// Navmeshes are meshes where each triangle defines a walkable area.
+	/// [Open online documentation to see images]
+	///
+	/// Navmeshes are meshes in which each triangle defines a walkable area.
 	/// These are great because the AI can get so much more information on how it can walk.
-	/// Polygons instead of points mean that the funnel smoother can produce really nice looking paths and the graphs are also really fast to search
+	/// Polygons instead of points mean that the <see cref="FunnelModifier"/> can produce really nice looking paths, and the graphs are also really fast to search
 	/// and have a low memory footprint because fewer nodes are usually needed to describe the same area compared to grid graphs.
 	///
-	/// See: Pathfinding.RecastGraph
+	/// The navmesh graph requires that you create a navmesh manually. The package also has support for generating navmeshes automatically using the <see cref="RecastGraph"/>.
+	///
+	/// For a tutorial on how to configure a navmesh graph, take a look at getstarted2 (view in online documentation for working links).
 	///
 	/// [Open online documentation to see images]
 	/// [Open online documentation to see images]
+	///
+	/// See: Pathfinding.RecastGraph
 	/// </summary>
 	[JsonOptIn]
 	[Pathfinding.Util.Preserve]
@@ -201,22 +206,6 @@ namespace Pathfinding {
 			});
 		}
 
-		/// <summary>Scans the graph using the path to an .obj mesh</summary>
-		[System.Obsolete("Set the mesh to ObjImporter.ImportFile(...) and scan the graph the normal way instead")]
-		public void ScanInternal (string objMeshPath) {
-			Mesh mesh = ObjImporter.ImportFile(objMeshPath);
-
-			if (mesh == null) {
-				Debug.LogError("Couldn't read .obj file at '"+objMeshPath+"'");
-				return;
-			}
-
-			sourceMesh = mesh;
-
-			var scan = ScanInternal().GetEnumerator();
-			while (scan.MoveNext()) {}
-		}
-
 		protected override IEnumerable<Progress> ScanInternal () {
 			cachedSourceMeshBoundsMin = sourceMesh != null ? sourceMesh.bounds.min : Vector3.zero;
 			transform = CalculateTransform();
@@ -233,7 +222,7 @@ namespace Pathfinding {
 
 			forcedBoundsSize = sourceMesh.bounds.size * scale;
 			Vector3[] vectorVertices = sourceMesh.vertices;
-			var intVertices = ListPool<Int3>.Claim (vectorVertices.Length);
+			var intVertices = ListPool<Int3>.Claim(vectorVertices.Length);
 			var matrix = Matrix4x4.TRS(-sourceMesh.bounds.min * scale, Quaternion.identity, Vector3.one * scale);
 			// Convert the vertices to integer coordinates and also position them in graph space
 			// so that the minimum of the bounding box of the mesh is at the origin
@@ -248,7 +237,7 @@ namespace Pathfinding {
 			Int3[] compressedVertices = null;
 			int[] compressedTriangles = null;
 			Polygon.CompressMesh(intVertices, new List<int>(sourceMesh.triangles), out compressedVertices, out compressedTriangles);
-			ListPool<Int3>.Release (ref intVertices);
+			ListPool<Int3>.Release(ref intVertices);
 
 			yield return new Progress(0.2f, "Building Nodes");
 
