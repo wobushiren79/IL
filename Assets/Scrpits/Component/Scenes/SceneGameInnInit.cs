@@ -37,7 +37,7 @@ public class SceneGameInnInit : BaseSceneInit, DialogView.IDialogCallBack
         //设置天气
         GameWeatherHandler.Instance.SetWeather(GameCommonInfo.CurrentDayData.weatherToday);
         //打开UI
-        UIHandler.Instance.OpenUI<UIGameMain>();
+        UIHandler.Instance.OpenUIAndCloseOther<UIGameMain>();
 
         //增加回调
         GameTimeHandler.Instance.RegisterNotifyForTime(NotifyForTime);

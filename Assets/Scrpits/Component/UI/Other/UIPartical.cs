@@ -2,16 +2,23 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[ExecuteInEditMode]
+//[ExecuteInEditMode]
 public class UIPartical : MonoBehaviour
 {
-    public RectTransform rtfTarget;
-
-    private void OnGUI()
+    public RectTransform targetUI;
+    public float positionZ = 0;
+    public void Awake()
     {
-        float x = rtfTarget.localScale.x;
-        float y = rtfTarget.localScale.y;
-        transform.localScale = new Vector3(x, y);
+        if (targetUI == null)
+        {
+            targetUI = transform.parent.GetComponent<RectTransform>();
+        }
     }
 
+    //更新位置
+    public void LateUpdate()
+    {
+        Vector3 worldPosition = GameUtil.UILocalPointToWorldPoint(targetUI.transform.position, Camera.main, null);
+        transform.position = new Vector3(worldPosition.x, worldPosition.y, positionZ);
+    }
 }

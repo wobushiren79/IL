@@ -14,6 +14,7 @@ public class LightCpt : BaseMonoBehaviour
 
     public LightStatusEnum lightStatus = LightStatusEnum.Close;
 
+    protected float defIntensity = 0.6f;
     private void Awake()
     {
         lightStatus = LightStatusEnum.Close;
@@ -24,6 +25,7 @@ public class LightCpt : BaseMonoBehaviour
         if (light2D == null)
             return;
         light2D.color = new Color(r, g, b);
+        light2D.intensity = defIntensity;
     }
 
     public void SetLightColor(Color color)
@@ -31,6 +33,7 @@ public class LightCpt : BaseMonoBehaviour
         if (light2D == null)
             return;
         light2D.color = color;
+        light2D.intensity = defIntensity;
     }
 
     public virtual void OpenLight()
@@ -41,12 +44,15 @@ public class LightCpt : BaseMonoBehaviour
         float targetIntensity = light2D.intensity;
         light2D.intensity = 0;
         if (light2D != null)
+        {
             light2D.gameObject.SetActive(true);
-        float changeIntensity = 0;
-        Tween tween = DOTween
-            .To(() => changeIntensity, x => changeIntensity = x, targetIntensity, 10)
-            .OnUpdate(() => { light2D.intensity = changeIntensity; })
-            .OnKill(() => { light2D.intensity = targetIntensity; });
+            float changeIntensity = 0;
+            Tween tween = DOTween
+                .To(() => changeIntensity, x => changeIntensity = x, targetIntensity, 10)
+                .OnUpdate(() => { light2D.intensity = changeIntensity; })
+                .OnKill(() => { light2D.intensity = targetIntensity; });
+            light2D.intensity = defIntensity;
+        }
     }
 
     public virtual void CloseLight()
@@ -55,6 +61,9 @@ public class LightCpt : BaseMonoBehaviour
             return;
         lightStatus = LightStatusEnum.Close;
         if (light2D != null)
+        {
             light2D.gameObject.SetActive(false);
+            light2D.intensity = defIntensity;
+        }
     }
 }

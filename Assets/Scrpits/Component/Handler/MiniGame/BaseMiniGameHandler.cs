@@ -37,10 +37,6 @@ public class BaseMiniGameHandler<B, D> : BaseHandler<BaseMiniGameHandler<B, D>,B
             return;
         GameObject objItem =  Instantiate(gameObject, objModel);
         miniGameBuilder = objItem.GetComponent<B>();
-
-        EventHandler.Instance.RegisterEvent(EventsInfo.MiniGame_GamePreCountDownStart, GamePreCountDownStart);
-        EventHandler.Instance.RegisterEvent(EventsInfo.MiniGame_GamePreCountDownEnd, GamePreCountDownEnd);
-        EventHandler.Instance.RegisterEvent(EventsInfo.MiniGame_EventForOnClickClose, EventForOnClickClose);    
     }
 
     /// <summary>
@@ -102,6 +98,14 @@ public class BaseMiniGameHandler<B, D> : BaseHandler<BaseMiniGameHandler<B, D>,B
         GameTimeHandler.Instance.SetTimeStop();
         SetMiniGameStatus(MiniGameStatusEnum.GamePre);
         notifyForMiniGameStatus?.Invoke(MiniGameStatusEnum.GamePre, new object[] { miniGameData });
+
+        EventHandler.Instance.UnRegisterEvent(EventsInfo.MiniGame_GamePreCountDownStart, GamePreCountDownStart);
+        EventHandler.Instance.UnRegisterEvent(EventsInfo.MiniGame_GamePreCountDownEnd, GamePreCountDownEnd);
+        EventHandler.Instance.UnRegisterEvent(EventsInfo.MiniGame_EventForOnClickClose, EventForOnClickClose);
+
+        EventHandler.Instance.RegisterEvent(EventsInfo.MiniGame_GamePreCountDownStart, GamePreCountDownStart);
+        EventHandler.Instance.RegisterEvent(EventsInfo.MiniGame_GamePreCountDownEnd, GamePreCountDownEnd);
+        EventHandler.Instance.RegisterEvent(EventsInfo.MiniGame_EventForOnClickClose, EventForOnClickClose);
     }
 
     /// <summary>
@@ -228,6 +232,10 @@ public class BaseMiniGameHandler<B, D> : BaseHandler<BaseMiniGameHandler<B, D>,B
         //通知 关闭游戏      
         notifyForMiniGameStatus?.Invoke(MiniGameStatusEnum.GameClose, new object[] { miniGameData });
         notifyForMiniGameStatus = null;
+
+        EventHandler.Instance.UnRegisterEvent(EventsInfo.MiniGame_GamePreCountDownStart, GamePreCountDownStart);
+        EventHandler.Instance.UnRegisterEvent(EventsInfo.MiniGame_GamePreCountDownEnd, GamePreCountDownEnd);
+        EventHandler.Instance.UnRegisterEvent(EventsInfo.MiniGame_EventForOnClickClose, EventForOnClickClose);
     }
     #endregion
 }

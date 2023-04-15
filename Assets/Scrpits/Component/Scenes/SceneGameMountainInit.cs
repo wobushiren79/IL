@@ -18,7 +18,7 @@ public class SceneGameMountainInit : BaseNormalSceneInit
         //改变四季
         GameSeasonsHandler.Instance.ChangeSeasons();
 
-        UIHandler.Instance.OpenUI<UIGameMain>();
+        UIHandler.Instance.OpenUIAndCloseOther<UIGameMain>();
     }
 
     public override ControlForMoveCpt InitUserPosition()

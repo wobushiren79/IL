@@ -28,8 +28,6 @@ public class UIMiniGameDebate : UIBaseMiniGame<MiniGameDebateBean>
     public GameObject objCombatUserEndPosition;
     public GameObject objCombatEnemyEndPosition;
 
-    public ParticleSystem psCombat;
-
     private ICallBack mCallBack;
 
     public override void RefreshUI(bool isOpenInit = false)
@@ -243,8 +241,6 @@ public class UIMiniGameDebate : UIBaseMiniGame<MiniGameDebateBean>
                 {
                     //败者先删除动画
                     CardDestroyAnim(loserCard);
-                    //卡牌特效
-                    psCombat.Play();
                     CardDestroyAnim(winnerCard, 1f);
                     //输赢
                     if (userCard== winnerCard)

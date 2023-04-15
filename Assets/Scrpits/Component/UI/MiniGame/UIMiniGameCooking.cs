@@ -28,7 +28,8 @@ public class UIMiniGameCooking : BaseUIComponent
     public MiniGameCookingBean gameCookingData;
     public float gameTiming;//游戏计时时间
 
-    private bool mIsPlay = false;
+    private bool mIsPlay = false;//是否开始玩
+    private bool isButtonStart = false;//是否开始按钮
     protected int buttonNumber = 45;
     protected int buttonPosition = 0;
 
@@ -80,9 +81,13 @@ public class UIMiniGameCooking : BaseUIComponent
             ButtonClick(ItemMiniGameCookingButtonCpt.MiniGameCookingButtonTypeEnum.Four);
             return;
         }
+        HandleForTiming();
     }
     public void SetData(MiniGameCookingBean gameCookingData, float gameTiming)
     {
+        isButtonStart = false;
+        mIsPlay = false;
+
         this.gameCookingData = gameCookingData;
         this.gameTiming = gameTiming;
     }
@@ -193,6 +198,7 @@ public class UIMiniGameCooking : BaseUIComponent
     /// </summary>
     public IEnumerator SettleGame()
     {
+        isButtonStart = false;
         mIsPlay = false;
         buttonPosition = 0;
         int correctNumber = 0;
@@ -256,7 +262,11 @@ public class UIMiniGameCooking : BaseUIComponent
         if (buttonPosition == 0)
         {
             //倒计时开始计时
-            StartCoroutine(CoroutineForTiming());
+            if (gameTiming < 1)
+                gameTiming = 1;
+            sliderTime.maxValue = gameTiming;
+            sliderTime.value = sliderTime.maxValue;
+            isButtonStart = true;
         }
         ItemMiniGameCookingButtonCpt itemButton = mListButton[buttonPosition];
         if (itemButton.buttonType == type)
@@ -318,16 +328,11 @@ public class UIMiniGameCooking : BaseUIComponent
     /// 协程 计时
     /// </summary>
     /// <returns></returns>
-    private IEnumerator CoroutineForTiming()
+    private void HandleForTiming()
     {
-        if (gameTiming < 1)
-            gameTiming = 1;
-        sliderTime.maxValue = gameTiming;
-        sliderTime.value = sliderTime.maxValue;
-        while (mIsPlay)
+        if (mIsPlay && isButtonStart)
         {
-            yield return new WaitForSeconds(0.1f);
-            sliderTime.value -= 0.1f;
+            sliderTime.value -= Time.deltaTime;
             if (sliderTime.value <= 0)
             {
                 StartCoroutine(SettleGame());

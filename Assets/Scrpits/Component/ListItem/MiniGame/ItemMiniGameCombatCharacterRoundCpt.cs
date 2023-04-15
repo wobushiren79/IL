@@ -7,7 +7,6 @@ public class ItemMiniGameCombatCharacterRoundCpt : ItemGameBaseCpt
     public CharacterUICpt characterUI;
     public MiniGameCharacterForCombatBean gameCharacterData;
 
-    public ParticleSystem psSelected;
     public int speedForMove = 0;
 
     public void RefreshUI()
@@ -51,12 +50,11 @@ public class ItemMiniGameCombatCharacterRoundCpt : ItemGameBaseCpt
     {
         if (isSelected)
         {
-            psSelected.gameObject.SetActive(true);
-            psSelected.Play();
+      
         }
         else
         {
-            psSelected.gameObject.SetActive(false);
+
         }
     }
 }

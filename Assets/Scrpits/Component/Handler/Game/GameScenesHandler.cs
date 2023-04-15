@@ -14,10 +14,11 @@ public class GameScenesHandler : BaseHandler<GameScenesHandler, GameScenesManage
         GameTimeHandler.Instance.SetTimeStop();
         //关闭所有UI
         UIHandler.Instance.CloseAllUI();
+        UIHandler.Instance.OpenUIAndCloseOther<UILoading>();
         //关闭所有音乐
         AudioHandler.Instance.StopMusic();
         //切换场景
-        SceneUtil.SceneChange(scenes,true);
+        UIHandler.Instance.StartCoroutine(SceneUtil.SceneChangeAsync(scenes));
     }
 
 }

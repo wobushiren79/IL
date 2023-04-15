@@ -9,7 +9,7 @@ public class SceneGameTownInit : BaseNormalSceneInit
     {
         base.Start();
         RefreshScene();
-        UIHandler.Instance.OpenUI<UIGameMain>();
+        UIHandler.Instance.OpenUIAndCloseOther<UIGameMain>();
     }
 
     public override void RefreshScene()

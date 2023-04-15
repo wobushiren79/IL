@@ -18,7 +18,7 @@ public class SceneForInfiniteTowersHandler : SceneBaseHandler
         //获取战斗成员数据
         //获取友方数据
         List<CharacterBean> listUserData = new List<CharacterBean>();
-        int totalLucky = 0; 
+        int totalLucky = 0;
         GameDataBean gameData = GameDataHandler.Instance.manager.GetGameData();
         foreach (string memberId in infiniteTowersData.listMembers)
         {
@@ -26,7 +26,7 @@ public class SceneForInfiniteTowersHandler : SceneBaseHandler
             if (itemCharacterData != null)
             {
                 listUserData.Add(itemCharacterData);
-                itemCharacterData.GetAttributes( out CharacterAttributesBean characterAttributes);
+                itemCharacterData.GetAttributes(out CharacterAttributesBean characterAttributes);
                 totalLucky += characterAttributes.lucky;
             }
         }
@@ -45,7 +45,7 @@ public class SceneForInfiniteTowersHandler : SceneBaseHandler
         //设置敌方能力
         foreach (CharacterBean itemEnemyData in listEnemyData)
         {
-            CharacterAttributesBean enemyAttributes = infiniteTowersManager.GetEnemyAttributesByLayer(itemEnemyData,infiniteTowersData.layer);
+            CharacterAttributesBean enemyAttributes = infiniteTowersManager.GetEnemyAttributesByLayer(itemEnemyData, infiniteTowersData.layer);
             if (enemyAttributes != null)
                 itemEnemyData.attributes.InitAttributes(enemyAttributes);
         }
@@ -58,10 +58,10 @@ public class SceneForInfiniteTowersHandler : SceneBaseHandler
 
         //添加奖励装备
         List<RewardTypeBean> listRewardEquip = RewardTypeEnumTools.GetRewardEnemyEquipForInfiniteTowers(listEnemyData, infiniteTowersData.layer, totalLucky);
-        if(!listRewardEquip.IsNull())
+        if (!listRewardEquip.IsNull())
             miniGameCombat.listReward.AddRange(listRewardEquip);
         //添加奖励物品
-        List<RewardTypeBean> listRewardItems = RewardTypeEnumTools.GetRewardItemsForInfiniteTowers(listEnemyData, infiniteTowersData.layer, totalLucky,false);
+        List<RewardTypeBean> listRewardItems = RewardTypeEnumTools.GetRewardItemsForInfiniteTowers(listEnemyData, infiniteTowersData.layer, totalLucky, false);
         if (!listRewardItems.IsNull())
             miniGameCombat.listReward.AddRange(listRewardItems);
         return miniGameCombat;
@@ -80,19 +80,19 @@ public class SceneForInfiniteTowersHandler : SceneBaseHandler
     public void NextLayer(UserInfiniteTowersBean infiniteTowersData)
     {
         GameTimeHandler.Instance.SetTimeStop();
-        this.WaitExecuteEndOfFrame(1,()=> 
-        {
+        this.WaitExecuteEndOfFrame(1, () =>
+         {
             //清理一下系统
             SystemUtil.GCCollect();
 
-            this.infiniteTowersData = infiniteTowersData;
+             this.infiniteTowersData = infiniteTowersData;
             //添加通知
             MiniGameHandler.Instance.handlerForCombat.RegisterNotifyForMiniGameStatus(NotifyForMiniGameStatus);
             //获取战斗数据
             MiniGameCombatBean gameCombatData = InitCombat(infiniteTowersData);
             //开始战斗
             StartCombat(gameCombatData, infiniteTowersData);
-        });
+         });
     }
 
     protected void GameEndHandle()

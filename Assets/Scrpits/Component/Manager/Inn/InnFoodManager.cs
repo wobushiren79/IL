@@ -5,7 +5,7 @@ using UnityEngine.U2D;
 public class InnFoodManager : BaseManager, IMenuInfoView, ICookingThemeView
 {
     //食物动画
-    public AnimBeanDictionary dicFoodAnim = new AnimBeanDictionary();
+    public Dictionary<string,AnimationClip> dicFoodAnim = new Dictionary<string, AnimationClip>();
     
     //菜单数据
     public Dictionary<long, MenuInfoBean> listMenuData;
@@ -31,7 +31,7 @@ public class InnFoodManager : BaseManager, IMenuInfoView, ICookingThemeView
     /// <returns></returns>
     public AnimationClip GetFoodAnimByName(string name)
     {
-       return GetModel(dicFoodAnim,"anim/food", name);
+       return GetModelForAddressablesSync<AnimationClip>(dicFoodAnim,$"Assets/Anim/Animation/Food/{name}.anim");
     }
 
 
