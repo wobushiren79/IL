@@ -30,6 +30,10 @@ public class UIBaseGamble<T, H, B> : BaseUIComponent, DialogView.IDialogCallBack
     protected H _gambleHandler;
     protected B _gambleBuilder;
 
+    //上一次下注金额
+    protected int lastBetMoneyL = 0;
+    protected int lastBetMoneyM = 0;
+    protected int lastBetMoneyS = 0;
     public H gambleHandler
     {
         get
@@ -92,6 +96,15 @@ public class UIBaseGamble<T, H, B> : BaseUIComponent, DialogView.IDialogCallBack
         //获取赌博名称
         gambleData.GetGambleName(out string gambleName);
         SetTitle(gambleName);
+    }
+
+    /// <summary>
+    /// 重置数据
+    /// </summary>
+    public void ResetData()
+    {
+        if (gambleHandler != null)
+            gambleHandler.BetMoney(lastBetMoneyL, lastBetMoneyM, lastBetMoneyS, false);
     }
 
     /// <summary>
@@ -227,6 +240,9 @@ public class UIBaseGamble<T, H, B> : BaseUIComponent, DialogView.IDialogCallBack
             PickForMoneyDialogView pickForMoneyDialog = dialogView as PickForMoneyDialogView;
             pickForMoneyDialog.GetPickMoney(out int moneyL, out int moneyM, out int moneyS);
             gambleHandler.BetMoney(moneyL, moneyM, moneyS);
+            lastBetMoneyL = gambleData.betForMoneyL;
+            lastBetMoneyM = gambleData.betForMoneyM;
+            lastBetMoneyS = gambleData.betForMoneyS;
         }
     }
 

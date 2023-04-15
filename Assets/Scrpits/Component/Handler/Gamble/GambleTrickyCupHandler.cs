@@ -11,6 +11,7 @@ public class GambleTrickyCupHandler : BaseGambleHandler<GambleTrickyCupBean , Ga
     {
         base.InitGame(gambleData);
         gambleUI  =  UIHandler.Instance.GetUI<UIGambleTrickyCup>();
+        gambleUI.ResetData();
         //初始化所有杯子
         gambleBuilder.InitAllCup();
     }

@@ -72,19 +72,21 @@ public class BaseGambleHandler<T,B> : BaseHandler<BaseGambleHandler<T,B>, BaseGa
     /// <summary>
     /// 下注
     /// </summary>
-    public virtual void BetMoney(int moneyL, int moneyM, int moneyS)
+    public virtual void BetMoney(int moneyL, int moneyM, int moneyS,bool isShowHint = true)
     {
         //检测是否有足够金钱
         GameDataBean gameData = GameDataHandler.Instance.manager.GetGameData();
         if (!gameData.HasEnoughMoney(moneyL, moneyM, moneyS))
         {
-            UIHandler.Instance.ToastHint<ToastView>(TextHandler.Instance.manager.GetTextById(1005));
+            if(isShowHint)
+                UIHandler.Instance.ToastHint<ToastView>(TextHandler.Instance.manager.GetTextById(1005));
             return;
         }
         //检测是否超过最大下注金额
         if (gambleData.betForMoneyS + moneyS > gambleData.betMaxForMoneyS)
         {
-            UIHandler.Instance.ToastHint<ToastView>(TextHandler.Instance.manager.GetTextById(1302));
+            if (isShowHint)
+                UIHandler.Instance.ToastHint<ToastView>(TextHandler.Instance.manager.GetTextById(1302));
             return;
         }
         gameData.PayMoney(moneyL, moneyM, moneyS);

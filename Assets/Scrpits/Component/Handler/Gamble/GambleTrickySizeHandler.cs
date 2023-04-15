@@ -11,6 +11,7 @@ public class GambleTrickySizeHandler : BaseGambleHandler<GambleTrickySizeBean, G
     {
         base.InitGame(gambleData);
         gambleUI = UIHandler.Instance.GetUI<UIGambleTrickySize>();
+        gambleUI.ResetData();
         //初始化
         gambleBuilder.InitCup();
     }
