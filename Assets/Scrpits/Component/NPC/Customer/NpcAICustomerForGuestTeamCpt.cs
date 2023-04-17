@@ -100,6 +100,8 @@ public class NpcAICustomerForGuestTeamCpt : NpcAICustomerCpt
                 guestTeamIntent = CustomerIntentForGuestTeamEnum.Together;
                 customerType = CustomerTypeEnum.Team;
                 NpcHandler.Instance.builderForCustomer.listGuestTeamHide.Enqueue(gameObject);
+                //移除这个团队
+                NpcHandler.Instance.builderForCustomer.ClearGuestTeam(teamCode);
                 break;
         }
 

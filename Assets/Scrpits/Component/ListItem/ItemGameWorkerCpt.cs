@@ -550,8 +550,11 @@ public class ItemGameWorkerCpt : ItemGameBaseCpt, DialogView.IDialogCallBack, Wo
 
             transform.DOScale(Vector3.zero, 0.3f).OnComplete(delegate
             {
-                transform.localScale = new Vector3(1, 1, 1);
-                characterData.baseInfo.characterId = null;
+                if (gameObject != null)
+                {
+                    transform.localScale = new Vector3(1, 1, 1);
+                    characterData.baseInfo.characterId = null;
+                }
                 uiComponent.RefreshUI();
             });
         }

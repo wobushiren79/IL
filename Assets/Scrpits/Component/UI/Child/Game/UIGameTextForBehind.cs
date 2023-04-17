@@ -15,8 +15,11 @@ public class UIGameTextForBehind : BaseUIView
             tvBehind.text = uiGameText.SetContentDetails(textInfo.content);
             tvBehind.DOFade(0, textInfo.wait_time).From().OnComplete(delegate
            {
-               AddReward(textInfo.reward_data);
-               uiGameText.NextText();
+               if (gameObject != null)
+               {
+                   AddReward(textInfo.reward_data);
+                   uiGameText.NextText();
+               }             
            });
         }
     }

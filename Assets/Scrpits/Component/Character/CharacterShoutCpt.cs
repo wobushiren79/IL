@@ -30,7 +30,8 @@ public class CharacterShoutCpt : BaseMonoBehaviour
         shoutObj.transform.DOScale(new Vector3(0, 0, 0), 0.5f).SetEase(Ease.OutBack).From();
         shoutObj.transform.DOScale(new Vector3(0, 0, 0), 0.5f).SetDelay(2).OnComplete(delegate ()
         {
-            shoutObj.SetActive(false);
+            if(this!=null && shoutObj != null)
+                shoutObj.SetActive(false);
         });
     }
 }

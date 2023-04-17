@@ -89,12 +89,6 @@ public class CharacterMoveCpt : BaseMonoBehaviour
         }
     }
 
-
-    private void FixedUpdate()
-    {
-
-    }
-
     /// <summary>
     /// 自动移动
     /// </summary>
@@ -262,23 +256,29 @@ public class CharacterMoveCpt : BaseMonoBehaviour
     public void BoundaryMove()
     {
         Vector3 newPosition = objMove.transform.position;
+        bool isBound = false;
         if (maxMoveX != 0 && objMove.transform.position.x > maxMoveX)
         {
+            isBound = true;
             newPosition.x = maxMoveX;
         }
         if (minMoveX != 0 && objMove.transform.position.x < minMoveX)
         {
+            isBound = true;
             newPosition.x = minMoveX;
         }
         if (maxMoveY != 0 && objMove.transform.position.y > maxMoveY)
         {
+            isBound = true;
             newPosition.y = maxMoveY;
         }
         if (minMoveY != 0 && objMove.transform.position.y < minMoveY)
         {
+            isBound = true;
             newPosition.y = minMoveY;
         }
-        objMove.transform.position = newPosition;
+        if(isBound)
+            objMove.transform.position = newPosition;
     }
 
     /// <summary>

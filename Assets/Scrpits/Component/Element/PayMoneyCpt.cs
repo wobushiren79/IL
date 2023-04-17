@@ -15,7 +15,8 @@ public class PayMoneyCpt : BaseMonoBehaviour
         iconMoney.DOFade(0, 2).SetDelay(2);
         transform.DOMoveY(startPosition.y + 1f, 4).OnComplete(delegate ()
         {
-            Destroy(gameObject);
+            if(gameObject!=null)
+                Destroy(gameObject);
         });
         transform.DOPunchScale(new Vector3(1.2f, 1.2f, 1.2f), 0.5f, 5, 1);
     }

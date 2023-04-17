@@ -266,7 +266,8 @@ public class MiniGameDebateHandler : BaseMiniGameHandler<MiniGameDebateBuilder, 
             .OnComplete
                 (() =>
                 {
-                    Destroy(objEffect);
+                    if(objEffect != null)
+                        Destroy(objEffect);
                 });
     }
 }

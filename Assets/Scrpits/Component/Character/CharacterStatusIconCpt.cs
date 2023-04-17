@@ -48,7 +48,10 @@ public class CharacterStatusIconCpt : BaseMonoBehaviour
         {
             CharacterStatusIconItemCpt itemCpt = listStatusIcon[i];
             if (itemCpt != null)
+            {
+                itemCpt.transform.DOKill();
                 Destroy(itemCpt.gameObject);
+            }
         }
         listStatusIcon.Clear();
         if (characterMood != null)
@@ -73,6 +76,7 @@ public class CharacterStatusIconCpt : BaseMonoBehaviour
                     //    if (itemCpt && itemCpt.gameObject)
                     //        Destroy(itemCpt.gameObject);
                     //});
+                    itemCpt.transform.DOKill();
                     Destroy(itemCpt.gameObject);
                     listStatusIcon.Remove(itemCpt);
                     i--;
@@ -112,7 +116,7 @@ public class CharacterStatusIconCpt : BaseMonoBehaviour
             {
                 itemData.transform.DOScale(new Vector3(0, 0, 0), 0.5f).OnComplete(delegate
                 {
-                    if (itemData.gameObject)
+                    if (itemData.gameObject != null)
                         Destroy(itemData.gameObject);
                 });
                 listStatusIcon.Remove(itemData);

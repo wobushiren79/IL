@@ -5,7 +5,7 @@ using UnityEngine.U2D;
 public class GameItemsManager : BaseManager, IItemsInfoView
 {
     //物品动画列表
-    public AnimBeanDictionary dicItemsAnim = new AnimBeanDictionary();
+    public Dictionary<string,AnimationClip> dicItemsAnim = new Dictionary<string, AnimationClip>();
 
     //物品控制
     public ItemsInfoController itemsInfoController;
@@ -234,7 +234,7 @@ public class GameItemsManager : BaseManager, IItemsInfoView
 
     protected AnimationClip GetAnimClipByName(string name)
     {
-        return GetModel(dicItemsAnim, "anim/items", name);
+        return GetModelForAddressablesSync<AnimationClip>(dicItemsAnim,$"Assets/Anim/Animation/Equip/Items/{name}.anim");
     }
 
     #region   装备获取回调

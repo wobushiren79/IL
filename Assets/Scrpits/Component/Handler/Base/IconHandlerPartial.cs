@@ -121,7 +121,7 @@ public partial class IconHandler
             {
                 spName = $"{name}_{i}";
             }
-            spData = GetDressSpriteDataByName(type, name);
+            spData = GetDressSpriteDataByName(type, spName);
             if (spData == null)
                 return null;
             Texture2D itemTex = TextureUtil.SpriteToTexture2D(spData);

@@ -20,6 +20,9 @@ public class NpcCustomerBuilder : NpcNormalBuilder
     public Queue<GameObject> listGuestTeamHide = new Queue<GameObject>();
     public Queue<GameObject> listCustomerForHotelHide = new Queue<GameObject>();
 
+    //团队成员
+    public Dictionary<string, List<NpcAICustomerForGuestTeamCpt>> dicGuestTeam = new Dictionary<string, List<NpcAICustomerForGuestTeamCpt>>();
+
     private void Start()
     {
         GameDataBean gameData = GameDataHandler.Instance.manager.GetGameData();
@@ -158,6 +161,8 @@ public class NpcCustomerBuilder : NpcNormalBuilder
         npcTeam.GetTeamCharacterData(out List<CharacterBean> listLeader, out List<CharacterBean> listMembers);
         //设置小队人数(团队领袖全生成，小队成员随机生成)
         int npcNumber = UnityEngine.Random.Range(listLeader.Count + 1, listLeader.Count + 1 + npcTeam.team_number);
+
+        List<NpcAICustomerForGuestTeamCpt> listGuestTeam = new List<NpcAICustomerForGuestTeamCpt>();
         for (int i = 0; i < npcNumber; i++)
         {
             CharacterBean characterData = null;
@@ -177,7 +182,6 @@ public class NpcCustomerBuilder : NpcNormalBuilder
             //随机生成身体数据
             characterData.body.CreateRandomEye();
 
-
             GameObject npcObj = BuildNpc(listGuestTeamHide, objGuestTeamModel, characterData, npcPosition + new Vector3(UnityEngine.Random.Range(-0.5f, 0.5f), UnityEngine.Random.Range(-0.5f, 0.5f)));
             BaseNpcAI baseNpcAI = npcObj.GetComponent<BaseNpcAI>();
             baseNpcAI.SetCharacterData(characterData);
@@ -192,7 +196,9 @@ public class NpcCustomerBuilder : NpcNormalBuilder
             {
                 customerAI.SetIntent(NpcAICustomerCpt.CustomerIntentEnum.Walk);
             }
+            listGuestTeam.Add(customerAI);
         }
+        dicGuestTeam.Add(teamCode, listGuestTeam);
     }
 
     /// <summary>
@@ -227,18 +233,13 @@ public class NpcCustomerBuilder : NpcNormalBuilder
     /// <returns></returns>
     public List<NpcAICustomerForGuestTeamCpt> GetGuestTeamByTeamCode(string teamCode)
     {
-        List<NpcAICustomerForGuestTeamCpt> listTeamMember = new List<NpcAICustomerForGuestTeamCpt>();
         if (teamCode.IsNull())
-            return listTeamMember;
-        NpcAICustomerForGuestTeamCpt[] arrayTeam = objContainer.GetComponentsInChildren<NpcAICustomerForGuestTeamCpt>();
-        foreach (NpcAICustomerForGuestTeamCpt itemData in arrayTeam)
+            return new List<NpcAICustomerForGuestTeamCpt>();
+        if (dicGuestTeam.TryGetValue(teamCode,out List<NpcAICustomerForGuestTeamCpt> data))
         {
-            if (itemData.teamCode.EndsWith(teamCode))
-            {
-                listTeamMember.Add(itemData);
-            }
+            return data;
         }
-        return listTeamMember;
+        return new List<NpcAICustomerForGuestTeamCpt>();
     }
 
     /// <summary>
@@ -343,6 +344,24 @@ public class NpcCustomerBuilder : NpcNormalBuilder
         else if (notifyType == GameTimeHandler.NotifyTypeEnum.TimePoint)
         {
             HandleNpcBuildTime((int)timeHour);
+        }
+    }
+
+    public override void ClearNpc()
+    {
+        base.ClearNpc();
+        dicGuestTeam.Clear();
+    }
+
+    /// <summary>
+    /// 清除小队
+    /// </summary>
+    /// <param name="teamCode"></param>
+    public void ClearGuestTeam(string teamCode)
+    {
+        if (NpcHandler.Instance.builderForCustomer.dicGuestTeam.ContainsKey(teamCode))
+        {
+            NpcHandler.Instance.builderForCustomer.dicGuestTeam.Remove(teamCode);
         }
     }
 }

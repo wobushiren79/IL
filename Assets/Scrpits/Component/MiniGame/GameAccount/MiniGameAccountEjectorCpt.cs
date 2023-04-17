@@ -111,7 +111,10 @@ public class MiniGameAccountEjectorCpt : BaseMonoBehaviour
             .OnComplete(
             delegate ()
                 {
-                    Settlement();
+                    if (gameObject != null)
+                    {
+                        Settlement();
+                    }
                 });
     }
 

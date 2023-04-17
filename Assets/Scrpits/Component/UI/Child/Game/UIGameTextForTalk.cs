@@ -243,7 +243,8 @@ public class UIGameTextForTalk : BaseUIView
                 ivFavorability.gameObject.SetActive(true);
                 ivFavorability.transform.DOScale(new Vector3(0, 0, 0), 1).From().SetEase(Ease.OutBack).OnComplete(delegate ()
                 {
-                    ivFavorability.gameObject.SetActive(false);
+                    if (ivFavorability != null)
+                        ivFavorability.gameObject.SetActive(false);
                 });
                 ivFavorability.DOColor(new Color(1, 1, 1, 0), 1).From();
             }

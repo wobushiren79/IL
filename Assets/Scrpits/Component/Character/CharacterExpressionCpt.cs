@@ -85,7 +85,10 @@ public class CharacterExpressionCpt : BaseMonoBehaviour
             }
             else
             {
-                StartCoroutine(TimeDes(desTime));
+                if (this != null && spExpression != null)
+                {
+                    StartCoroutine(TimeDes(desTime));
+                }
             }
         });
     }
