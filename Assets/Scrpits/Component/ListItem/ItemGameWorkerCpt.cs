@@ -231,7 +231,7 @@ public class ItemGameWorkerCpt : ItemGameBaseCpt, DialogView.IDialogCallBack, Wo
         AudioHandler.Instance.PlaySound(AudioSoundEnum.ButtonForNormal);
         if (uiComponent != null)
         {
-            UIGameEquip uiequip = UIHandler.Instance.OpenUI<UIGameEquip>();
+            UIGameEquip uiequip = UIHandler.Instance.OpenUIAndCloseOther<UIGameEquip>();
             uiequip.SetCharacterData(((UIGameWorker)uiComponent).listCharacterData, characterData);
             UIHandler.Instance.OpenUIAndCloseOther<UIGameEquip>();
         }

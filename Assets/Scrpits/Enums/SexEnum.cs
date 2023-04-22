@@ -6,5 +6,5 @@ public enum SexEnum
     Unknow=0,
     Man=1,
     Woman=2,
-    neutral=3,
+    Neutral=3,
 }

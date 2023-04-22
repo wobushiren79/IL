@@ -161,7 +161,7 @@ public class SceneInfiniteTowersManager : SceneBaseManager
         else
         {
             //普通层数
-            List<CharacterBean> listCharacter =NpcInfoHandler.Instance.manager.GetCharacterDataByType(NpcTypeEnum.GuestTeam);
+            List<CharacterBean> listCharacter = NpcInfoHandler.Instance.manager.GetCharacterDataByType(NpcTypeEnum.GuestTeam);
             List<CharacterBean> listTempCharacter = new List<CharacterBean>();
             if (!listCharacter.IsNull())
                 for (int i = 0; i < listCharacter.Count; i++)
@@ -185,18 +185,16 @@ public class SceneInfiniteTowersManager : SceneBaseManager
             {
                 baseCharacterData = RandomUtil.GetRandomDataByList(listTempCharacter);
             }
-
             //随机生成身体数据
-            CharacterBean characterOne = ClassUtil.DeepCopyByReflect(baseCharacterData);
+            CharacterBean characterOne = ClassUtil.DeepCopyBySerialize(baseCharacterData);
             characterOne.body.CreateRandomBody();
             listData.Add(characterOne);
-            CharacterBean characterTwo = ClassUtil.DeepCopyByReflect(baseCharacterData);
+            CharacterBean characterTwo = ClassUtil.DeepCopyBySerialize(baseCharacterData);
             characterTwo.body.CreateRandomBody();
             listData.Add(characterTwo);
-            CharacterBean characterThree = ClassUtil.DeepCopyByReflect(baseCharacterData);
+            CharacterBean characterThree = ClassUtil.DeepCopyBySerialize(baseCharacterData);
             characterThree.body.CreateRandomBody();
             listData.Add(characterThree);
-
         }
 
         return listData;

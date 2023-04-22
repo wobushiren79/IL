@@ -24,9 +24,13 @@ public class ItemMiniGameCombatCharacterInfoCpt : ItemGameBaseCpt
         if (gameCharacterData != null)
         {
             if (gameCharacterData.characterCurrentLife > 0)
+            {
                 SetLife(gameCharacterData.characterCurrentLife, gameCharacterData.characterMaxLife);
+            }        
             else
+            {
                 SetDead();
+            }   
         }
     }
 
@@ -61,6 +65,7 @@ public class ItemMiniGameCombatCharacterInfoCpt : ItemGameBaseCpt
             ivDead.DOFade(0,1).From();
             tvDead.transform.DOScale(new Vector3(1.5f, 1.5f, 1.5f), 1).From();
             tvDead.transform.DOLocalRotate(new Vector3(0,0,-45),1).From();
+            SetLife(gameCharacterData.characterCurrentLife, gameCharacterData.characterMaxLife);
         }
     }
 

@@ -277,7 +277,7 @@ public class CharacterMoveCpt : BaseMonoBehaviour
             isBound = true;
             newPosition.y = minMoveY;
         }
-        if(isBound)
+        if (isBound)
             objMove.transform.position = newPosition;
     }
 

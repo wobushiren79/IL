@@ -31,6 +31,8 @@ public class JumpTextCpt : BaseMonoBehaviour
         }
     }
 
+    Tween animForTVContent;
+    Tween animForTVContentShadow;
     /// <summary>
     /// 初始化动画
     /// </summary>
@@ -42,12 +44,25 @@ public class JumpTextCpt : BaseMonoBehaviour
         {
             if (gameObject!=null)
             {
-                Destroy(gameObject);
+                if (animForTVContent != null)
+                {
+                    animForTVContent.Kill();
+                }
+                if (animForTVContentShadow != null)
+                {
+                    animForTVContentShadow.Kill();
+                }
+                transform.DOKill();
+                Destroy(gameObject);     
             }
         });
         if (tvContent != null)
-            DOTween.To(() => 1f, alpha => tvContent.color = new Color(tvContent.color.r, tvContent.color.g, tvContent.color.b, alpha), 0f, 0.9f).SetDelay(2.5f);
+        {
+            animForTVContent = DOTween.To(() => 1f, alpha => tvContent.color = new Color(tvContent.color.r, tvContent.color.g, tvContent.color.b, alpha), 0f, 0.9f).SetDelay(2.5f);
+        }     
         if (tvContentShadow != null)
-            DOTween.To(() => 1f, alpha => tvContentShadow.color = new Color(tvContentShadow.color.r, tvContentShadow.color.g, tvContentShadow.color.b, alpha), 0f, 1).SetDelay(2.5f);
+        {
+            animForTVContentShadow = DOTween.To(() => 1f, alpha => tvContentShadow.color = new Color(tvContentShadow.color.r, tvContentShadow.color.g, tvContentShadow.color.b, alpha), 0f, 1).SetDelay(2.5f);
+        }     
     }
 }

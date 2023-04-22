@@ -42,7 +42,7 @@ public class CharacterUICpt : BaseMonoBehaviour
                 int sex = 1;
                 if (characterBodyData != null)
                     sex = characterBodyData.sex;
-                SetSex(sex, bodyData);
+                SetSex((SexEnum)sex, bodyData);
                 break;
         }
     }
@@ -59,7 +59,7 @@ public class CharacterUICpt : BaseMonoBehaviour
         SetMouth(characterBodyData.mouth, characterBodyData.mouthColor.GetColor());
 
         SetSkin(characterBodyData.skinColor.GetColor());
-        SetSex(characterBodyData.sex, characterBodyData.skin);
+        SetSex((SexEnum)characterBodyData.sex, characterBodyData.skin);
 
         if (characterEquipData.maskTFId != 0)
         {
@@ -195,23 +195,23 @@ public class CharacterUICpt : BaseMonoBehaviour
     /// 设置性别
     /// </summary>
     /// <param name="sex">0未知 1男 2女 3中性</param>
-    public void SetSex(int sex, string otherSkin)
+    public void SetSex(SexEnum sex, string otherSkin)
     {
         Sprite spTrunk = null;
         if (otherSkin.IsNull()|| otherSkin.Equals("Def"))
         {
             switch (sex)
             {
-                case 0:
+                case SexEnum.Unknow:
                     spTrunk = CharacterBodyHandler.Instance.manager.GetTrunkSpriteByName("character_body_man");
                     break;
-                case 1:
+                case  SexEnum.Man:
                     spTrunk = CharacterBodyHandler.Instance.manager.GetTrunkSpriteByName("character_body_man");
                     break;
-                case 2:
+                case  SexEnum.Woman:
                     spTrunk = CharacterBodyHandler.Instance.manager.GetTrunkSpriteByName("character_body_woman");
                     break;
-                case 3:
+                case  SexEnum.Neutral:
                     spTrunk = CharacterBodyHandler.Instance.manager.GetTrunkSpriteByName("character_body_man");
                     break;
             }

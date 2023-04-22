@@ -75,6 +75,18 @@ public partial class UIMainCreate : BaseUIComponent,
             ui_ItemMainCreateEquipView_Shoes.SetListData(listSelectShoes.Count);
             ui_ItemMainCreateEquipView_Shoes.SetCallBack(this);
         }
+
+        ui_ItemMainCreateColorAndSelectView_Hair.SetPosition(0);
+        ui_ItemMainCreateColorAndSelectView_Eye.SetPosition(0);
+        ui_ItemMainCreateColorAndSelectView_Mouth.SetPosition(0);
+        ui_ItemMainCreateEquipView_Hat.SetPosition(0);
+        ui_ItemMainCreateEquipView_Clothes.SetPosition(0);
+        ui_ItemMainCreateEquipView_Shoes.SetPosition(0);
+        ui_Sex.SetPosition(0,true);
+        ui_Skin.SetData(1,1,1);
+        ui_ColorHair.SetData(1, 1, 1);
+        ui_ColorEye.SetData(1,1,1);
+        ui_ColorMouth.SetData(1, 1, 1);
     }
 
 
@@ -112,7 +124,6 @@ public partial class UIMainCreate : BaseUIComponent,
             iconBean.value = itemSprite;
             listSelectHair.Add(iconBean);
         }
-        ChangeSelectPosition(ui_ItemMainCreateColorAndSelectView_Hair, 0);
         //初始化可选择眼睛
         List<Sprite> listEye = CharacterBodyHandler.Instance.manager.GetCreateCharacterEye();
         listSelectEye = new List<IconBean>();
@@ -124,7 +135,6 @@ public partial class UIMainCreate : BaseUIComponent,
             iconBean.value = itemSprite;
             listSelectEye.Add(iconBean);
         }
-        ChangeSelectPosition(ui_ItemMainCreateColorAndSelectView_Eye, 0);
         //初始化可选择嘴巴
         List<Sprite> listMouth = CharacterBodyHandler.Instance.manager.GetCreateCharacterMouth();
         listSelectMouth = new List<IconBean>();
@@ -136,7 +146,6 @@ public partial class UIMainCreate : BaseUIComponent,
             iconBean.value = itemSprite;
             listSelectMouth.Add(iconBean);
         }
-        ChangeSelectPosition(ui_ItemMainCreateColorAndSelectView_Hair, 0);
         //初始化帽子
         GameCommonInfo.baseDataController.GetBaseData(BaseDataTypeEnum.HatForLevel0, out string hatListStr);
         long[] listHat = hatListStr.SplitForArrayLong(',');
@@ -232,11 +241,13 @@ public partial class UIMainCreate : BaseUIComponent,
 
         if (position == 0)
         {
-            ui_CharacterUI.SetSex(1, null);
+            ui_CharacterUI.characterBodyData.SetSex(SexEnum.Man);
+            ui_CharacterUI.SetSex(SexEnum.Man, null);
         }
         else
         {
-            ui_CharacterUI.SetSex(2, null);
+            ui_CharacterUI.characterBodyData.SetSex(SexEnum.Woman);
+            ui_CharacterUI.SetSex(SexEnum.Woman, null);
         }
     }
 
@@ -251,19 +262,27 @@ public partial class UIMainCreate : BaseUIComponent,
     {
         if (colorView == ui_Skin)
         {
-            ui_CharacterUI.SetSkin(ui_Skin.GetColor());
+            Color colorSkin = ui_Skin.GetColor();
+            ui_CharacterUI.characterBodyData.skinColor = new ColorBean(colorSkin);
+            ui_CharacterUI.SetSkin(colorSkin);
         }
         else if (colorView == ui_ColorHair)
         {
-            ui_CharacterUI.SetHairColor(ui_ColorHair.GetColor());
+            Color colorHair = ui_ColorHair.GetColor();
+            ui_CharacterUI.characterBodyData.hairColor = new ColorBean(colorHair);
+            ui_CharacterUI.SetHairColor(colorHair);
         }
         else if (colorView == ui_ColorEye)
         {
-            ui_CharacterUI.SetEyeColor(ui_ColorEye.GetColor());
+            Color colorEye = ui_ColorEye.GetColor();
+            ui_CharacterUI.characterBodyData.eyeColor = new ColorBean(colorEye);
+            ui_CharacterUI.SetEyeColor(colorEye);
         }
         else if (colorView == ui_ColorMouth)
         {
-            ui_CharacterUI.SetMouthColor(ui_ColorMouth.GetColor());
+            Color colorMouth = ui_ColorMouth.GetColor();
+            ui_CharacterUI.characterBodyData.mouthColor = new ColorBean(colorMouth);
+            ui_CharacterUI.SetMouthColor(colorMouth);
         }
 
     }
@@ -274,27 +293,39 @@ public partial class UIMainCreate : BaseUIComponent,
     {
         if (selectView == ui_ItemMainCreateColorAndSelectView_Hair)
         {
-            ui_CharacterUI.SetHair(listSelectHair[position].key,ui_ColorHair.GetColor());
+            string hairName = listSelectHair[position].key;
+            ui_CharacterUI.characterBodyData.hair = hairName;
+            ui_CharacterUI.SetHair(hairName, ui_ColorHair.GetColor());
         }
         else if (selectView == ui_ItemMainCreateColorAndSelectView_Eye)
         {
-            ui_CharacterUI.SetEye(listSelectEye[position].key,ui_ColorEye.GetColor());
+            string eyeName = listSelectEye[position].key;
+            ui_CharacterUI.characterBodyData.eye = eyeName;
+            ui_CharacterUI.SetEye(eyeName, ui_ColorEye.GetColor());
         }
         else if (selectView == ui_ItemMainCreateColorAndSelectView_Mouth)
         {
-            ui_CharacterUI.SetMouth(listSelectMouth[position].key,ui_ColorMouth.GetColor());
+            string mouthName = listSelectMouth[position].key;
+            ui_CharacterUI.characterBodyData.mouth = mouthName;
+            ui_CharacterUI.SetMouth(mouthName, ui_ColorMouth.GetColor());
         }
         else if (selectView == ui_ItemMainCreateEquipView_Hat)
         {
-            ui_CharacterUI.SetHat(listSelectHat[position].id, ui_ColorHair.GetColor());
+            long hatId = listSelectHat[position].id;
+            ui_CharacterUI.characterEquipData.hatId = hatId;
+            ui_CharacterUI.SetHat(hatId, ui_ColorHair.GetColor());
         }
         else if (selectView == ui_ItemMainCreateEquipView_Clothes)
         {
-            ui_CharacterUI.SetClothes(listSelectClothes[position].id);
+            long clothesId = listSelectClothes[position].id;
+            ui_CharacterUI.characterEquipData.clothesId = clothesId;
+            ui_CharacterUI.SetClothes(clothesId);
         }
         else if (selectView == ui_ItemMainCreateEquipView_Shoes)
         {
-            ui_CharacterUI.SetShoes(listSelectShoes[position].id);
+            long shoesId = listSelectShoes[position].id;
+            ui_CharacterUI.characterEquipData.shoesId = shoesId;
+            ui_CharacterUI.SetShoes(shoesId);
         }
     }
     #endregion
