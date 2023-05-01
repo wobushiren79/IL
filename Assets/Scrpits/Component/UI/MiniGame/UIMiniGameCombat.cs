@@ -258,6 +258,7 @@ public partial class UIMiniGameCombat : UIBaseMiniGame<MiniGameCombatBean>,
     {
         uiForSelectCharacter.CloseUI();
         uiForCombatCommand.OpenUI();
+        ui_SpeedControl.ShowObj(true);
     }
 
     /// <summary>
@@ -276,6 +277,7 @@ public partial class UIMiniGameCombat : UIBaseMiniGame<MiniGameCombatBean>,
         {
             uiForCombatCommand.CloseUI();
             uiForSelectCharacter.OpenUI();
+            ui_SpeedControl.ShowObj(false);
             uiForSelectCharacter.SetData(selectNumber, selectType);
         }
     }
@@ -287,6 +289,7 @@ public partial class UIMiniGameCombat : UIBaseMiniGame<MiniGameCombatBean>,
     {
         uiForCombatCommand.CloseUI();
         uiForSelectCharacter.CloseUI();
+        ui_SpeedControl.ShowObj(false);
         GameConfigBean gameConfig = GameDataHandler.Instance.manager.GetGameConfig();
         if (gameConfig.statusForCombatForPowerTest == 1)
         {

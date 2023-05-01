@@ -39,6 +39,17 @@ public class StoryInfoCreateWindowsEditor : EditorWindow
         storyInfoService = new StoryInfoService();
     }
 
+    public void OnDisable()
+    {
+        GameItemsHandler.Instance.DestorySelf(1);
+        StoryInfoHandler.Instance.DestorySelf(1); 
+        GameDataHandler.Instance.DestorySelf(1);
+        IconHandler.Instance.DestorySelf(1);
+        CameraHandler.Instance.DestorySelf(1);
+        CharacterBodyHandler.Instance.DestorySelf(1);
+        CharacterDressHandler.Instance.DestorySelf(1);
+    }
+
     TextInfoService textInfoService;
     StoryInfoService storyInfoService;
 

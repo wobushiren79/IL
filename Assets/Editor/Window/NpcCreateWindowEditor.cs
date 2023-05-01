@@ -64,6 +64,14 @@ public class NpcCreateWindowEditor : EditorWindow
         GameItemsHandler.Instance.manager.Awake();
     }
 
+    public void OnDisable()
+    {
+        GameItemsHandler.Instance.DestorySelf(1);
+        GameDataHandler.Instance.DestorySelf(1);
+        NpcInfoHandler.Instance.DestorySelf(1);
+
+    }
+
     private void RefreshData()
     {
         listNpcDataForFind.Clear();
@@ -82,16 +90,23 @@ public class NpcCreateWindowEditor : EditorWindow
         //滚动布局
         scrollPosition = GUILayout.BeginScrollView(scrollPosition);
 
+        //模型容器
+        GUILayout.BeginVertical("box");
         if (GUILayout.Button("刷新", GUILayout.Width(100), GUILayout.Height(20)))
         {
             RefreshData();
         }
+        mObjNpcContainer = EditorGUILayout.ObjectField(new GUIContent("Npc容器", ""), mObjNpcContainer, typeof(GameObject), true,GUILayout.Width(500)) as GameObject;
+        mObjNpcModel = EditorGUILayout.ObjectField(new GUIContent("NPC模型", ""), mObjNpcModel, typeof(GameObject), true, GUILayout.Width(500)) as GameObject;
+        GUILayout.EndVertical();
 
-        mObjNpcContainer = EditorGUILayout.ObjectField(new GUIContent("Npc容器", ""), mObjNpcContainer, typeof(GameObject), true) as GameObject;
-        mObjNpcModel = EditorGUILayout.ObjectField(new GUIContent("NPC模型", ""), mObjNpcModel, typeof(GameObject), true) as GameObject;
-        GUILayout.Label("-----------------------------------------------------------------------------------------------------------");
+        GUILayout.Space(10);
+
         //Npc 创建UI
         GUINpcInfoCreate(npcInfoService, mObjNpcContainer, mObjNpcModel, npcInfoForCreate);
+
+        GUILayout.Space(10);
+
         //NPC 查询UI
         GUINpcInfoFind(
             npcInfoService,
@@ -149,13 +164,14 @@ public class NpcCreateWindowEditor : EditorWindow
         GameObject objNpcContainer, GameObject objNpcModel,
         NpcInfoBean npcInfo)
     {
+        GUILayout.BeginVertical("box");
         GUILayout.BeginHorizontal();
-        if (GUILayout.Button("显示", GUILayout.Width(100), GUILayout.Height(20)))
+        if (EditorUI.GUIButton("显示下方的NPC数据",200))
         {
             CharacterBean characterData = new CharacterBean(npcInfo);
             ShowNpc(objNpcContainer, objNpcModel, characterData);
         }
-        if (GUILayout.Button("创建", GUILayout.Width(100), GUILayout.Height(20)))
+        if (GUILayout.Button("创建下方的NPC", GUILayout.Width(100), GUILayout.Height(20)))
         {
             npcInfo.valid = 1;
             npcInfo.face = 1;
@@ -163,6 +179,7 @@ public class NpcCreateWindowEditor : EditorWindow
         }
         GUILayout.EndHorizontal();
         GUINpcInfoItem(objNpcContainer, npcInfo);
+        GUILayout.EndVertical();
     }
 
     /// <summary>
