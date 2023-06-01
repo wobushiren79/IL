@@ -57,7 +57,16 @@ public class SceneGameInnInit : BaseSceneInit, DialogView.IDialogCallBack
             //建造NPC
             RefreshScene();
             //设置位置
-            Vector3 startPosition = sceneInnManager.GetTownEntranceLeft();
+            Vector3 startPosition;
+            switch (GameCommonInfo.ScenesChangeData.beforeScene)
+            {
+                case ScenesEnum.GameTownScene:
+                    startPosition = sceneInnManager.GetCourtyardEntrance();
+                    break;
+                default:
+                    startPosition = sceneInnManager.GetTownEntranceLeft();
+                    break;
+            }
             ControlForMoveCpt baseControl = GameControlHandler.Instance.StartControl<ControlForMoveCpt>(GameControlHandler.ControlEnum.Normal);
             baseControl.SetFollowPosition(startPosition);
         }

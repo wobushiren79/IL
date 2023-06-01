@@ -12,9 +12,9 @@ public class InteractiveSceneChangeCpt : BaseInteractiveCpt
     {
         if (Input.GetButtonDown(InputInfo.Interactive_E))
         {
-            if (changeScene == ScenesEnum.GameSquareScene || changeScene == ScenesEnum.GameForestScene || changeScene == ScenesEnum.GameCourtyard)
+            if (changeScene == ScenesEnum.GameSquareScene || changeScene == ScenesEnum.GameForestScene)
             {
-                UIHandler.Instance.ToastHint<ToastView>("您被不可思议的力量阻挡了去路（暂未开放）");
+                UIHandler.Instance.ToastHint<ToastView>(TextHandler.Instance.GetTextById(1361));
             }
             else
             {

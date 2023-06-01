@@ -11,6 +11,6 @@ public enum ScenesEnum
     GameForestScene = 5,
     GameSquareScene = 6,
     GameInfiniteTowersScene = 7,
-    GameCourtyard = 8,
+    GameCourtyardScene = 8,
     LoadingScene = 99999,
 }

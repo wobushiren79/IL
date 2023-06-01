@@ -10,6 +10,7 @@ public class SceneInnManager : SceneBaseManager
     //城镇入口
     public Transform townEntranceLeft;
     public Transform townEntranceRight;
+    public Transform courtyardEntrance;
 
     public GameObject objEcologyContainer;
 
@@ -78,5 +79,14 @@ public class SceneInnManager : SceneBaseManager
     public Vector2 GetTownEntranceRight()
     {
         return townEntranceRight.transform.position;
+    }
+
+    /// <summary>
+    /// 获取后庭入口
+    /// </summary>
+    /// <returns></returns>
+    public Vector2 GetCourtyardEntrance()
+    {
+        return courtyardEntrance.transform.position;
     }
 }
