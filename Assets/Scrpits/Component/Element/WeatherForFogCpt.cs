@@ -30,6 +30,6 @@ public class WeatherForFogCpt : WeatherCpt
     {
         SceneBaseManager sceneBaseManager = GameScenesHandler.Instance.manager.GetSceneManager<SceneBaseManager>();
         ParticleSystem.ShapeModule shapeModule = psFog.shape;
-        shapeModule.scale = sceneBaseManager.scaleRangeForFog;
+        shapeModule.scale = sceneBaseManager.fogScaleRange;
     }
 }

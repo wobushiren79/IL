@@ -55,8 +55,8 @@ public class WeatherForRainCpt : WeatherCpt
     {
         SceneBaseManager sceneBaseManager = GameScenesHandler.Instance.manager.GetSceneManager<SceneBaseManager>();
         ParticleSystem.ShapeModule shapeModule = psRain.shape;
-        shapeModule.position = sceneBaseManager.positionForRain;
-        shapeModule.scale = sceneBaseManager.scaleForRain;
+        shapeModule.position = sceneBaseManager.rainPosition;
+        shapeModule.scale = sceneBaseManager.rainScale;
     }
 
     /// <summary>

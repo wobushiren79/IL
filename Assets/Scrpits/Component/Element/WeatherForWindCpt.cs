@@ -52,13 +52,13 @@ public class WeatherForWindCpt : WeatherCpt
             objWind_1.SetActive(true);
         SceneBaseManager sceneManager = GameScenesHandler.Instance.manager.GetSceneManager<SceneBaseManager>();
         ParticleSystem.ShapeModule shapeModuleWind_1 = psWind_1.shape;
-        shapeModuleWind_1.position = sceneManager.positionForWind;
-        shapeModuleWind_1.scale = sceneManager.scaleForWind;
+        shapeModuleWind_1.position = sceneManager.windPosition;
+        shapeModuleWind_1.scale = sceneManager.windScale;
 
         if (objWind_2)
             objWind_2.SetActive(true);
         ParticleSystem.ShapeModule shapeModuleWind_2 = psWind_1.shape;
-        shapeModuleWind_2.scale = sceneManager.scaleRangeForWind;
+        shapeModuleWind_2.scale = sceneManager.windScaleRange;
     }
 
     /// <summary>
@@ -70,14 +70,14 @@ public class WeatherForWindCpt : WeatherCpt
             objWind_1.SetActive(true);
         SceneBaseManager sceneManager = GameScenesHandler.Instance.manager.GetSceneManager<SceneBaseManager>();
         ParticleSystem.ShapeModule shapeModule = psWind_1.shape;
-        shapeModule.position = sceneManager.positionForWind;
-        shapeModule.scale = sceneManager.scaleForWind;
+        shapeModule.position = sceneManager.windPosition;
+        shapeModule.scale = sceneManager.windScale;
 
         if (objDefoliation_1)
             objDefoliation_1.SetActive(true);
         ParticleSystem.ShapeModule shapeModuleDefoliation = psDefoliation_1.shape;
-        shapeModuleDefoliation.position = sceneManager.positionForWind;
-        shapeModuleDefoliation.scale = sceneManager.scaleForWind;
+        shapeModuleDefoliation.position = sceneManager.windPosition;
+        shapeModuleDefoliation.scale = sceneManager.windScale;
     }
 
 

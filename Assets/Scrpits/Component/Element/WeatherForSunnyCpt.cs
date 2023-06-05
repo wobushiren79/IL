@@ -37,7 +37,7 @@ public class WeatherForSunnyCpt : WeatherCpt
     {
         SceneBaseManager sceneBaseManager = GameScenesHandler.Instance.manager.GetSceneManager<SceneBaseManager>();
         ParticleSystem.ShapeModule shapeModule = psCloudy.shape;
-        shapeModule.scale = sceneBaseManager.scaleForSunny;
-        shapeModule.position = sceneBaseManager.positionForSunny;
+        shapeModule.scale = sceneBaseManager.sunnyScale;
+        shapeModule.position = sceneBaseManager.sunnyPosition;
     }
 }

@@ -52,7 +52,7 @@ public class WeatherForSnowCpt : WeatherCpt
     {
         SceneBaseManager sceneBaseManager = GameScenesHandler.Instance.manager.GetSceneManager<SceneBaseManager>();
         ParticleSystem.ShapeModule shapeModule = psSnow.shape;
-        shapeModule.position = sceneBaseManager.positionForSnow;
-        shapeModule.scale = sceneBaseManager.scaleForSnow;
+        shapeModule.position = sceneBaseManager.snowPosition;
+        shapeModule.scale = sceneBaseManager.snowScale;
     }
 }
