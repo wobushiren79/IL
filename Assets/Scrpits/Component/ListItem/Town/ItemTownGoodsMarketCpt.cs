@@ -14,6 +14,7 @@ public class ItemTownGoodsMarketCpt : ItemGameBaseCpt, DialogView.IDialogCallBac
     public Button btNumberSub;
     public Button btSubmit;
     public Text tvOwn;
+    public Text tvBuyLimit;
     public Image ivRiseAndFall;
 
     //涨跌图标
@@ -44,7 +45,9 @@ public class ItemTownGoodsMarketCpt : ItemGameBaseCpt, DialogView.IDialogCallBac
     /// </summary>
     public void RreshData()
     {
-        SetOwn((IngredientsEnum)goodsData.mark_type);
+        IngredientsEnum markType = (IngredientsEnum)goodsData.mark_type;
+        SetOwn(markType);
+        SetCanBuy(markType);
     }
 
     /// <summary>
@@ -64,7 +67,7 @@ public class ItemTownGoodsMarketCpt : ItemGameBaseCpt, DialogView.IDialogCallBac
         List<string> listRiseAndFall = goodsData.mark.SplitForListStr('|');
         SeasonsEnum[] listRise = new SeasonsEnum[0];
         SeasonsEnum[] listFall = new SeasonsEnum[0];
-        if (listRiseAndFall.Count>=1)
+        if (listRiseAndFall.Count >= 1)
         {
             listRise = listRiseAndFall[0].SplitForArrayEnum<SeasonsEnum>(',');
         }
@@ -74,7 +77,7 @@ public class ItemTownGoodsMarketCpt : ItemGameBaseCpt, DialogView.IDialogCallBac
         }
         SetRiseAndFall(listRise.ToList(), listFall.ToList());
 
-    
+
         SetPrice(price_l, price_m, price_s, 1);
         RreshData();
     }
@@ -163,6 +166,66 @@ public class ItemTownGoodsMarketCpt : ItemGameBaseCpt, DialogView.IDialogCallBac
                 break;
         }
         tvOwn.text = ownNumber + "";
+    }
+
+    /// <summary>
+    /// 设置能够购买的数量
+    /// </summary>
+    /// <param name="ingType"></param>
+    public void SetCanBuy(IngredientsEnum ingType)
+    {
+        int canBuyNumber = GetBuyLimit(ingType);
+
+        //设置参数
+        if (canBuyNumber == -1)
+        {
+            tvBuyLimit.text = "-";
+        }
+        else
+        {
+            tvBuyLimit.text = $"{canBuyNumber}";
+        }
+    }
+
+    public int GetBuyLimit(IngredientsEnum ingType)
+    {
+        var dicMarkBuy = GameCommonInfo.DailyLimitData.dicMarketBuy;
+        GameDataBean gameData = GameDataHandler.Instance.manager.GetGameData();
+        //获取 食材店老板 夏端禹的好感
+        CharacterFavorabilityBean characterFavorability = gameData.GetCharacterFavorability(10001);
+        int favorabilityLevel = characterFavorability.GetFavorabilityLevel();
+        int canBuyNumber = -1;
+        switch (favorabilityLevel)
+        {
+            case 0:
+                canBuyNumber = 100;
+                break;
+            case 1:
+                canBuyNumber = 500;
+                break;
+            case 2:
+                canBuyNumber = 1000;
+                break;
+            case 3:
+                canBuyNumber = 2000;
+                break;
+            case 4:
+                canBuyNumber = 5000;
+                break;
+            default:
+                canBuyNumber = -1;
+                break;
+        }
+        if (dicMarkBuy.TryGetValue(ingType, out int value))
+        {
+            if (canBuyNumber != -1)
+            {
+                canBuyNumber -= value;
+                if (canBuyNumber < 0)
+                    canBuyNumber = 0;
+            }
+        }
+        return canBuyNumber;
     }
 
     /// <summary>
@@ -293,8 +356,16 @@ public class ItemTownGoodsMarketCpt : ItemGameBaseCpt, DialogView.IDialogCallBac
             UIHandler.Instance.ToastHint<ToastView>(TextHandler.Instance.manager.GetTextById(1005));
             return;
         }
+        int buyLimitNum = GetBuyLimit(ingType);
+        if (buyNumber > buyLimitNum)
+        {
+            UIHandler.Instance.ToastHint<ToastView>(TextHandler.Instance.manager.GetTextById(1026));
+            return;
+        }
         gameData.PayMoney(price_l * buyNumber, price_m * buyNumber, price_s * buyNumber);
         gameData.AddIng(ingType, buyNumber);
+        GameCommonInfo.DailyLimitData.AddMarketBuy(ingType, buyNumber);
+
         RreshData();
         UIHandler.Instance.ToastHint<ToastView>(ivIcon.sprite, string.Format(TextHandler.Instance.manager.GetTextById(1018), buyNumber, goodsData.name, tvPirce.text));
     }

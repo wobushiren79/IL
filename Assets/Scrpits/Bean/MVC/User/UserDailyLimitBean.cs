@@ -23,6 +23,8 @@ public class UserDailyLimitBean
     public int numberForEvent = 0;
     //每日爱爱数量上限
     public int numberForBirth = 0;
+    //每日购买的食材数量
+    public Dictionary<IngredientsEnum, int> dicMarketBuy = new Dictionary<IngredientsEnum, int>();
 
     public void InitData(GameDataBean gameData)
     {
@@ -56,9 +58,25 @@ public class UserDailyLimitBean
         listArenaDataForIntermediate = null;
         listArenaDataForAdvanced = null;
         listArenaDataForLegendary = null;
+        dicMarketBuy.Clear();
     }
 
-
+    /// <summary>
+    /// 增加食材购买数量
+    /// </summary>
+    /// <param name="ingredientsEnum"></param>
+    /// <param name="addNum"></param>
+    public void AddMarketBuy(IngredientsEnum ingredientsEnum,int addNum)
+    {
+        if (dicMarketBuy.TryGetValue(ingredientsEnum,out int value))
+        {
+            dicMarketBuy[ingredientsEnum] = (addNum + value);
+        }
+        else
+        {
+            dicMarketBuy.Add(ingredientsEnum, addNum);
+        }
+    }
 
     /// <summary>
     /// 增加参加过竞技场的名单

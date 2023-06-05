@@ -60,7 +60,7 @@ public class SceneGameInnInit : BaseSceneInit, DialogView.IDialogCallBack
             Vector3 startPosition;
             switch (GameCommonInfo.ScenesChangeData.beforeScene)
             {
-                case ScenesEnum.GameTownScene:
+                case ScenesEnum.GameCourtyardScene:
                     startPosition = sceneInnManager.GetCourtyardEntrance();
                     break;
                 default:

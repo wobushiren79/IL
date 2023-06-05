@@ -19,9 +19,8 @@ public class SceneGameCourtyardInit : BaseNormalSceneInit
 
         UIHandler.Instance.OpenUIAndCloseOther<UIGameMain>();
 
-        //测试 天气
-        WeatherBean weatherData = new WeatherBean(WeatherTypeEnum.Wind);
-        GameWeatherHandler.Instance.SetWeather(weatherData);
+        //设置天气
+        GameWeatherHandler.Instance.SetWeather(GameCommonInfo.CurrentDayData.weatherToday);
     }
 
     public override ControlForMoveCpt InitUserPosition()
