@@ -9,6 +9,7 @@ public class GameControlHandler : BaseHandler<GameControlHandler, GameControlMan
     {
         Normal,//普通
         Build,//建筑模式
+        BuildCourtyard,//种田模式
         Work,//上班模式
         Story,//故事模式
         MiniGameBarrage,//弹幕小游戏操作

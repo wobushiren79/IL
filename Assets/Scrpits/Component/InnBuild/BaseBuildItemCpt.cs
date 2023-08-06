@@ -6,6 +6,7 @@ public class BaseBuildItemCpt : BaseMonoBehaviour
 {
     //建筑数据
     public BuildItemBean buildItemData;
+    public ItemBean itemData;
 
     public Direction2DEnum direction = Direction2DEnum.Left;
 
@@ -39,9 +40,10 @@ public class BaseBuildItemCpt : BaseMonoBehaviour
     /// 设置建筑数据
     /// </summary>
     /// <param name="buildItemData"></param>
-    public virtual void SetData(BuildItemBean buildItemData)
+    public virtual void SetData(BuildItemBean buildItemData, ItemBean itemData = null)
     {
         this.buildItemData = buildItemData;
+        this.itemData = itemData;
     }
 
     /// <summary>
@@ -49,9 +51,9 @@ public class BaseBuildItemCpt : BaseMonoBehaviour
     /// </summary>
     /// <param name="buildItemData"></param>
     /// <param name="spIcon"></param>
-    public virtual void SetData(BuildItemBean buildItemData, Sprite spIcon)
+    public virtual void SetData(BuildItemBean buildItemData, Sprite spIcon, ItemBean itemData = null)
     {
-        SetData(buildItemData);
+        SetData(buildItemData, itemData);
         SetSprite(spIcon, spIcon, spIcon, spIcon);
     }
 
@@ -63,9 +65,9 @@ public class BaseBuildItemCpt : BaseMonoBehaviour
     /// <param name="spRight"></param>
     /// <param name="spDown"></param>
     /// <param name="spUp"></param>
-    public void SetData(BuildItemBean buildItemData, Sprite spLeft, Sprite spRight, Sprite spDown, Sprite spUp)
+    public void SetData(BuildItemBean buildItemData, Sprite spLeft, Sprite spRight, Sprite spDown, Sprite spUp, ItemBean itemData = null)
     {
-        SetData(buildItemData);
+        SetData(buildItemData, itemData);
         SetSprite(spLeft, spRight, spDown, spUp);
     }
 

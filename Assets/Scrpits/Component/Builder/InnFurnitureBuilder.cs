@@ -75,10 +75,10 @@ public class InnFurnitureBuilder : BaseMonoBehaviour
     /// </summary>
     /// <param name="id"></param>
     /// <returns></returns>
-    public GameObject BuildFurniture(long id, BuildBedBean buildBedData)
+    public GameObject BuildFurniture(long id, BuildBedBean buildBedData, ItemBean itemData = null)
     {
         InnResBean innResBean = new InnResBean(id, Vector3.zero, new List<Vector3>(), Direction2DEnum.Left);
-        return BuildFurniture(innResBean, buildBedData);
+        return BuildFurniture(innResBean, buildBedData, itemData);
     }
 
     /// <summary>
@@ -86,11 +86,11 @@ public class InnFurnitureBuilder : BaseMonoBehaviour
     /// </summary>
     /// <param name="furnitureData"></param>
     /// <returns></returns>
-    public GameObject BuildFurniture(InnResBean furnitureData, BuildBedBean buildBedData)
+    public GameObject BuildFurniture(InnResBean furnitureData, BuildBedBean buildBedData, ItemBean itemData = null)
     {
         if (furnitureData == null)
             return null;
-        GameObject buildItemObj = InnBuildHandler.Instance.manager.GetFurnitureObjById(furnitureData, buildContainer.transform, buildBedData);
+        GameObject buildItemObj = InnBuildHandler.Instance.manager.GetFurnitureObjById(furnitureData, buildContainer.transform, buildBedData, itemData);
         buildItemObj.transform.position = TypeConversionUtil.Vector3BeanToVector3(furnitureData.startPosition);
         BaseBuildItemCpt buildItemCpt = buildItemObj.GetComponent<BaseBuildItemCpt>();
         buildItemCpt.SetDirection(furnitureData.direction);

@@ -12,6 +12,9 @@ public class SceneGameCourtyardInit : BaseNormalSceneInit
     public override void RefreshScene()
     {
         base.RefreshScene();
+
+        InitTestData();
+
         //构建重要的NPC
         //NpcHandler.Instance.buildForImportant.BuildImportantForMountain();
         //改变四季
@@ -21,6 +24,25 @@ public class SceneGameCourtyardInit : BaseNormalSceneInit
 
         //设置天气
         GameWeatherHandler.Instance.SetWeather(GameCommonInfo.CurrentDayData.weatherToday);
+
+        //构建地板
+        InnBuildHandler.Instance.builderForCourtyard.StartBuild();
+    }
+
+    /// <summary>
+    /// 初始化测试数据
+    /// </summary>
+    public void InitTestData()
+    {
+        //测试数据
+        var gameData = GameDataHandler.Instance.manager.GetGameData();
+        if (gameData.userId.IsNull())
+        {
+            gameData.AddNewItems(9900001, 999);
+            GameTimeHandler.Instance.SetTime(9, 0);
+            InnCourtyardBean innCourtyardData = gameData.GetInnCourtyardData();
+            innCourtyardData.courtyardLevel = 4;
+        }
     }
 
     public override ControlForMoveCpt InitUserPosition()

@@ -12,7 +12,7 @@ public class BuildDecorationForDoorCpt : BuildDecorationCpt
     public GameObject objTableDownPosition;
     public GameObject objTableUpPosition;
 
-    public override void SetData(BuildItemBean buildItemData, Sprite spIcon)
+    public override void SetData(BuildItemBean buildItemData, Sprite spIcon, ItemBean itemData = null)
     {
         base.SetData(buildItemData);
 

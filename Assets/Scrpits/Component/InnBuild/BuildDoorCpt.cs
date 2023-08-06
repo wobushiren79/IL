@@ -18,7 +18,7 @@ public class BuildDoorCpt : BaseBuildItemCpt
         return entranceObj.transform.position;
     }
 
-    public override void SetData(BuildItemBean buildItemData)
+    public override void SetData(BuildItemBean buildItemData, ItemBean itemData = null)
     {
         base.SetData(buildItemData);
         GameDataBean gameData = GameDataHandler.Instance.manager.GetGameData();

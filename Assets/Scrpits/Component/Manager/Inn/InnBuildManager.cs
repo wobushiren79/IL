@@ -34,7 +34,7 @@ public class InnBuildManager : BaseManager, IBuildDataView
     /// </summary>
     /// <param name="id"></param>
     /// <returns></returns>
-    public GameObject GetFurnitureObjById(InnResBean furnitureData, Transform tfFather, BuildBedBean buildBedData)
+    public GameObject GetFurnitureObjById(InnResBean furnitureData, Transform tfFather, BuildBedBean buildBedData, ItemBean itemData = null)
     {
         BuildItemBean buildItemData = GetBuildDataById(furnitureData.id);
         GameObject furnitureObjModel = LoadAddressablesUtil.LoadAssetSync<GameObject>($"Assets/Prefabs/BuildItem/Base/{buildItemData.model_name}.prefab");
@@ -119,6 +119,12 @@ public class InnBuildManager : BaseManager, IBuildDataView
                     buildStairs.SetLayer(2);
                 }
                 break;
+            case BuildItemTypeEnum.Seed:
+                BuildSeedCpt buildSeed = (BuildSeedCpt)buildItemCpt;
+                var itemSeedInfo = GameItemsHandler.Instance.manager.GetItemsById(itemData.itemId);
+                Sprite spSeed = IconHandler.Instance.GetItemsSpriteByName(itemSeedInfo.icon_key);
+                buildSeed.SetData(buildItemData, spSeed, itemData);
+                break;
             default:
                 buildItemCpt.SetData(buildItemData);
                 break;
@@ -166,6 +172,16 @@ public class InnBuildManager : BaseManager, IBuildDataView
     public TileBase GetGroundTileByName(string name)
     {
         return LoadAddressablesUtil.LoadAssetSync<TileBase>($"Assets/Tile/Tiles/Ground/{name}.asset");
+    }
+
+    /// <summary>
+    /// 获取后庭
+    /// </summary>
+    /// <param name="name"></param>
+    /// <returns></returns>
+    public TileBase GetCourtyardTileByName(string name)
+    {
+        return LoadAddressablesUtil.LoadAssetSync<TileBase>($"Assets/Tile/Tiles/Courtyard/{name}.asset");
     }
 
     /// <summary>

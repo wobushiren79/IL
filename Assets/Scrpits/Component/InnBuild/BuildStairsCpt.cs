@@ -13,7 +13,7 @@ public class BuildStairsCpt : BaseBuildItemCpt
     public string remarkId = "";
 
 
-    public override void SetData(BuildItemBean buildItemData)
+    public override void SetData(BuildItemBean buildItemData, ItemBean itemData = null)
     {
         base.SetData(buildItemData);
         SetLayer(2);

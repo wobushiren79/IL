@@ -4,8 +4,6 @@ using UnityEngine;
 public class InnBuildHandler : BaseHandler<InnBuildHandler, InnBuildManager>
 {
     protected InnFurnitureBuilder _builderForFurniture;
-    protected InnFloorBuilder _builderForFloor;
-    protected InnWallBuilder _builderForWall;
     public InnFurnitureBuilder builderForFurniture
     {
         get
@@ -18,6 +16,7 @@ public class InnBuildHandler : BaseHandler<InnBuildHandler, InnBuildManager>
         }
     }
 
+    protected InnFloorBuilder _builderForFloor;
     public InnFloorBuilder builderForFloor
     {
         get
@@ -30,6 +29,7 @@ public class InnBuildHandler : BaseHandler<InnBuildHandler, InnBuildManager>
         }
     }
 
+    protected InnWallBuilder _builderForWall;
     public InnWallBuilder builderForWall
     {
         get
@@ -39,6 +39,20 @@ public class InnBuildHandler : BaseHandler<InnBuildHandler, InnBuildManager>
                 _builderForWall = CptUtil.AddCpt<InnWallBuilder>(gameObject);
             }
             return _builderForWall;
+        }
+    }
+
+    //后庭建设
+    protected InnCourtyardBuilder _builderForCourtyard;
+    public InnCourtyardBuilder builderForCourtyard
+    {
+        get
+        {
+            if (_builderForCourtyard == null)
+            {
+                _builderForCourtyard = CptUtil.AddCpt<InnCourtyardBuilder>(gameObject);
+            }
+            return _builderForCourtyard;
         }
     }
 }

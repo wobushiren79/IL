@@ -23,6 +23,7 @@ public enum GeneralEnum
     Gift = 16,//礼物
     Mask = 21,//面具
 
+    Seed = 99,//花园用品
     Other = 999,//其他
 }
 
@@ -127,6 +128,9 @@ public class GeneralEnumTools
                 break;
             case GeneralEnum.Other:
                 itemsnTypeName = TextHandler.Instance.manager.GetTextById(413);
+                break;
+            case GeneralEnum.Seed:
+                itemsnTypeName = TextHandler.Instance.manager.GetTextById(414);
                 break;
             default:
                 break;

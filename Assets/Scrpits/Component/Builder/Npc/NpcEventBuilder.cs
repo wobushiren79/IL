@@ -196,6 +196,8 @@ public class NpcEventBuilder : NpcNormalBuilder
     {
         Vector3 npcPosition = GetRandomStartPosition();
         NpcTeamBean teamData = RandomUtil.GetRandomDataByList(listSundry);
+        if (teamData == null)
+            return;
         BuildSundry(teamData, npcPosition);
     }
 
@@ -203,11 +205,18 @@ public class NpcEventBuilder : NpcNormalBuilder
     {
         Vector3 npcPosition = GetRandomStartPosition();
         NpcTeamBean teamData = NpcTeamHandler.Instance.manager.GetSundryTeam(teamId);
+        if (teamData ==null)
+        {
+            LogUtil.LogError($"没有找到 {teamId} 的NPC队伍信息");
+            return;
+        }
         BuildSundry(teamData, npcPosition);
     }
 
     public void BuildSundry(NpcTeamBean npcTeam, Vector3 npcPosition)
     {
+        if (npcTeam == null)
+            return;
         if (listExistTeamId.Contains(npcTeam.id))
             return;
         //获取小队成员数据

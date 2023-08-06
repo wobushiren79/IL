@@ -12,12 +12,14 @@ public enum BuildItemTypeEnum
     Decoration = 6,
     Door = 9,
     Bed = 10,
-    Stairs=11,
+    Stairs = 11,
 
-    BedBase=101,
-    BedBar=102,
-    BedSheets=103,
-    BedPillow=104,
+    Seed = 98,//种子 
+    Courtyard = 99,//后庭（耕地）
+    BedBase = 101,
+    BedBar = 102,
+    BedSheets = 103,
+    BedPillow = 104,
 }
 
 public class BuildItemTypeEnumTools

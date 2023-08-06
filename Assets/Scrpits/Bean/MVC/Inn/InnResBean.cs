@@ -27,7 +27,7 @@ public class InnResBean
     public InnResBean(long id, Vector3 startPosition, List<Vector3> listPosition, Direction2DEnum direction2D)
     {
         this.id = id;
-        this.startPosition = new Vector3Bean(startPosition); ;
+        this.startPosition = new Vector3Bean(startPosition);
         if (listPosition != null)
             this.listPosition = TypeConversionUtil.ListV3ToListV3Bean(listPosition);
         this.direction = (int)direction2D;

@@ -4,36 +4,22 @@ using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using DG.Tweening;
 using System.Collections.Generic;
-public class UIGameMain : BaseUIComponent, DialogView.IDialogCallBack, IRadioGroupCallBack
+public partial class UIGameMain : BaseUIComponent, DialogView.IDialogCallBack, IRadioGroupCallBack
 {
     [Header("控件")]
-    public RectTransform trfFunction;
     public UIPopupPromptButton popupWorker;
-    public Button btWorker;
     public UIPopupPromptButton popupBuild;
-    public Button btBuild;
     public UIPopupPromptButton popupMenu;
-    public Button btMenu;
     public UIPopupPromptButton popupBackpack;
-    public Button btBackpack;
     public UIPopupPromptButton popupFavorability;
-    public Button btFavorability;
     public UIPopupPromptButton popupDebug;
-    public Button btDebug;
     public UIPopupPromptButton popupInnData;
-    public Button btInnData;
     public UIPopupPromptButton popupHelp;
-    public Button btHelp;
     public UIPopupPromptButton popupSetting;
-    public Button btSetting;
     public UIPopupPromptButton popupJumpTime;
-    public Button btJumpTime;
     public UIPopupPromptButton popupHotel;
-    public Button btHotel;
     public UIPopupPromptButton popupFamily;
-    public Button btFamily;
-
-    public Button btSleep;
+    public UIPopupPromptButton popupCourtyard;
 
     public Text tvMoneyS;
     public Text tvMoneyM;
@@ -75,47 +61,69 @@ public class UIGameMain : BaseUIComponent, DialogView.IDialogCallBack, IRadioGro
         GameDataHandler.Instance.RegisterNotifyForData(NotifyForData);
     }
 
+    public override void OnClickForButton(Button viewButton)
+    {
+        base.OnClickForButton(viewButton);
+        if (viewButton == ui_ItemGameMainFeaturesItem_Worker)
+        {
+            OpenWorkerUI();
+        }
+        else if (viewButton == ui_ItemGameMainFeaturesItem_Build)
+        {
+            OpenBuildUI();
+        }
+        else if (viewButton == ui_ItemGameMainFeaturesItem_Menu)
+        {
+            OpenMenuUI();
+        }
+        else if (viewButton == ui_ItemGameMainFeaturesItem_Bag)
+        {
+            OpenBackpackUI();
+        }
+        else if (viewButton == ui_ItemGameMainFeaturesItem_Favorability)
+        {
+            OpenFavorabilityUI();
+        }
+        else if (viewButton == ui_ItemGameMainFeaturesItem_Statistics)
+        {
+            OpenStatisticsUI();
+        }
+        else if (viewButton == ui_ItemGameMainFeaturesItem_Setting)
+        {
+            OpenSettingUI();
+        }
+        else if (viewButton == ui_ItemGameMainFeaturesItem_Help)
+        {
+            OpenHelpUI();
+        }
+        else if (viewButton == ui_ItemGameMainFeaturesItem_Debug)
+        {
+            OpenTestUI();
+        }
+        else if (viewButton == ui_ItemGameMainFeaturesItem_Hotel)
+        {
+            OnClickForHotel();
+        }
+        else if (viewButton == ui_ItemGameMainFeaturesItem_Family)
+        {
+            OnClickForFamily();
+        }
+        else if (viewButton == ui_ItemGameMainFeaturesItem_Courtyard)
+        {
+            OnClickForCourtyard();
+        }
+        else if (viewButton == ui_Day)
+        {
+            OnClickForJumpTime();
+        }
+        else if (viewButton == ui_Sleep)
+        {
+            OnClickForEndDay();
+        }
+    }
+
     public void Start()
     {
-        if (btWorker != null)
-            btWorker.onClick.AddListener(OpenWorkerUI);
-
-        if (btBuild != null)
-            btBuild.onClick.AddListener(OpenBuildUI);
-
-        if (btMenu != null)
-            btMenu.onClick.AddListener(OpenMenuUI);
-
-        if (btBackpack != null)
-            btBackpack.onClick.AddListener(OpenBackpackUI);
-
-        if (btFavorability != null)
-            btFavorability.onClick.AddListener(OpenFavorabilityUI);
-
-        if (btInnData != null)
-            btInnData.onClick.AddListener(OpenStatisticsUI);
-
-        if (btSetting != null)
-            btSetting.onClick.AddListener(OpenSettingUI);
-
-        if (btHelp != null)
-            btHelp.onClick.AddListener(OpenHelpUI);
-
-        if (btDebug != null)
-            btDebug.onClick.AddListener(OpenTestUI);
-
-        if (btSleep != null)
-            btSleep.onClick.AddListener(OnClickForEndDay);
-
-        if (btJumpTime != null)
-            btJumpTime.onClick.AddListener(OnClickForJumpTime);
-
-        if (btHotel != null)
-            btHotel.onClick.AddListener(OnClickForHotel);
-
-        if (btFamily != null)
-            btFamily.onClick.AddListener(OnClickForFamily);
-
         if (rgTimeScale != null)
             rgTimeScale.SetCallBack(this);
 
@@ -158,7 +166,7 @@ public class UIGameMain : BaseUIComponent, DialogView.IDialogCallBack, IRadioGro
         SetMoney(MoneyEnum.L, gameData.moneyL);
         SetMoney(MoneyEnum.M, gameData.moneyM);
         SetMoney(MoneyEnum.S, gameData.moneyS);
-        GameUtil.RefreshRectTransform(trfFunction);
+        GameUtil.RefreshRectTransform(ui_Features);
     }
 
     public override void CloseUI()
@@ -215,6 +223,8 @@ public class UIGameMain : BaseUIComponent, DialogView.IDialogCallBack, IRadioGro
             popupHotel.SetContent(TextHandler.Instance.manager.GetTextById(2041));
         if (popupFamily != null)
             popupFamily.SetContent(TextHandler.Instance.manager.GetTextById(2042));
+        if (popupCourtyard != null)
+            popupCourtyard.SetContent(TextHandler.Instance.manager.GetTextById(2043));
         SetInnPraise(innAttributes);
         SetInnAesthetics(innAttributes);
         SetInnRichNess(innAttributes);
@@ -284,38 +294,38 @@ public class UIGameMain : BaseUIComponent, DialogView.IDialogCallBack, IRadioGro
         //是否展示住店相关
         if (gameData.listBed.Count != 0)
         {
-            btHotel.gameObject.SetActive(true);
+            ui_ItemGameMainFeaturesItem_Hotel.ShowObj(true);
         }
         else
         {
-            btHotel.gameObject.SetActive(false);
+            ui_ItemGameMainFeaturesItem_Hotel.ShowObj(false);
         }
         //是否展示建造按钮
         if (SceneUtil.GetCurrentScene() == ScenesEnum.GameInnScene)
         {
-            btBuild.gameObject.SetActive(true);
+            ui_ItemGameMainFeaturesItem_Build.ShowObj(true);
         }
         else
         {
-            btBuild.gameObject.SetActive(false);
+            ui_ItemGameMainFeaturesItem_Build.ShowObj(false);
         }
         //是否展示家族按钮
         if (gameData.GetFamilyData().CheckMarry(gameData.gameTime))
         {
-            btFamily.gameObject.SetActive(true);
+            ui_ItemGameMainFeaturesItem_Family.ShowObj(true);
         }
         else
         {
-            btFamily.gameObject.SetActive(false);
+            ui_ItemGameMainFeaturesItem_Family.ShowObj(false);
         }
         //是否展示测试按钮
         if (Application.platform ==  RuntimePlatform.WindowsEditor)
         {
-            btDebug.gameObject.SetActive(true);
+            ui_ItemGameMainFeaturesItem_Debug.gameObject.ShowObj(true);
         }
         else
         {
-            btDebug.gameObject.SetActive(false);
+            ui_ItemGameMainFeaturesItem_Debug.gameObject.ShowObj(false);
         }
     }
 
@@ -449,6 +459,16 @@ public class UIGameMain : BaseUIComponent, DialogView.IDialogCallBack, IRadioGro
         else
         {
             UIHandler.Instance.ToastHint<ToastView>(TextHandler.Instance.manager.GetTextById(1016));
+        }
+    }
+
+    public void OnClickForCourtyard()
+    {
+        AudioHandler.Instance.PlaySound(AudioSoundEnum.ButtonForNormal);
+        ScenesEnum scenes = SceneUtil.GetCurrentScene();
+        if(scenes == ScenesEnum.GameCourtyardScene)
+        {
+            UIHandler.Instance.OpenUIAndCloseOther<UIGameBuildCourtyard>();
         }
     }
 

@@ -24,6 +24,8 @@ public class GameDataBean
     public List<CharacterBean> listWorkerCharacter = new List<CharacterBean>();//员工
 
     public InnBuildBean innBuildData;//客栈建筑数据
+    public InnCourtyardBean innCourtyardData;//后庭数据
+
     public TimeBean gameTime = new TimeBean();//游戏时间
     public TimeBean playTime = new TimeBean();//游玩时间
     public UserAchievementBean userAchievement = new UserAchievementBean();//成就相关
@@ -493,6 +495,17 @@ public class GameDataBean
     }
 
     /// <summary>
+    /// 获取后庭数据
+    /// </summary>
+    /// <returns></returns>
+    public InnCourtyardBean GetInnCourtyardData()
+    {
+        if (innCourtyardData == null)
+            innCourtyardData = new InnCourtyardBean();
+        return innCourtyardData;
+    }
+
+    /// <summary>
     /// 获取游戏中时间-年
     /// </summary>
     /// <returns></returns>
@@ -677,6 +690,26 @@ public class GameDataBean
     public long GetItemsNumber(long itemId)
     {
         return GetNumber(itemId, listItems);
+    }
+
+    /// <summary>
+    /// 通过类型获取指定类型的物品
+    /// </summary>
+    /// <param name="generalType"></param>
+    /// <returns></returns>
+    public List<ItemBean> GetItemsByType(GeneralEnum generalType)
+    {
+        List<ItemBean> listData = new List<ItemBean>();
+        for (int i = 0; i < listItems.Count; i++)
+        {
+            var itemData = listItems[i];
+            var itemsInfo = GameItemsHandler.Instance.manager.GetItemsById(itemData.itemId);
+            if (itemsInfo.GetItemsType() == generalType)
+            {
+                listData.Add(itemData);
+            }
+        }
+        return listData;
     }
 
     /// <summary>
@@ -1180,7 +1213,7 @@ public class GameDataBean
     public bool RemoveWorker(CharacterBean characterData)
     {
         //清除攀龙塔数据
-        if(characterData!=null&& characterData.baseInfo!=null&& characterData.baseInfo.characterId != null)
+        if (characterData != null && characterData.baseInfo != null && characterData.baseInfo.characterId != null)
         {
             for (int i = 0; i < listInfinteTowers.Count; i++)
             {
