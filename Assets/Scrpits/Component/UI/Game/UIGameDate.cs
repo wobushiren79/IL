@@ -180,6 +180,19 @@ public class UIGameDate : BaseUIComponent
             objDialog.transform.DOScale(Vector3.zero, 0.5f).From().SetEase(Ease.OutBack);
             BirthForInit();
         }
+
+        HandleCourtyardData();
+    }
+
+    /// <summary>
+    /// 处理后院数据
+    /// </summary>
+    public void HandleCourtyardData()
+    {
+        //检测所有的收获物品
+        GameDataBean gameData = GameDataHandler.Instance.manager.GetGameData();
+        InnCourtyardBean innCourtyardData = gameData.GetInnCourtyardData();
+        innCourtyardData.AddDay(1);
     }
 
     /// <summary>

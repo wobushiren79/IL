@@ -480,6 +480,7 @@ public class ItemGameWorkerCpt : ItemGameBaseCpt, DialogView.IDialogCallBack, Wo
                     }
                     break;
                 case WorkerStatusEnum.Research:
+                case WorkerStatusEnum.CourtyardManager:
                     tvStatus.color = Color.red;
                     break;
                 case WorkerStatusEnum.Rest:

@@ -54,6 +54,7 @@ public class ItemGameAttendanceCpt : ItemGameWorkerCpt,IRadioButtonCallBack
         {
             rbAttendance.SetEnabled(false);
             rbAttendance.ChangeStates(false);
+            rbAttendance.rbText.color = rbAttendance.colorTVUnselected;
             ivAttendance.gameObject.SetActive(false);
         }
         rbAttendance.rbText.text = workerStatusStr;

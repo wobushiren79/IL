@@ -3,7 +3,7 @@ using UnityEditor;
 using UnityEngine;
 using UnityEngine.UI;
 
-public partial class UIGameBuildCourtyard : BaseUIComponent
+public partial class UIGameBuildCourtyard : BaseUIComponent,IRadioButtonCallBack
 {
     protected List<ItemBean> listSeedData = new List<ItemBean>();
 
@@ -21,7 +21,6 @@ public partial class UIGameBuildCourtyard : BaseUIComponent
         //停止时间
         GameTimeHandler.Instance.SetTimeStatus(true);
         GameControlHandler.Instance.StartControl<ControlForBuildCourtyardCpt>(GameControlHandler.ControlEnum.BuildCourtyard);
-        InitData();
     }
 
     public override void CloseUI()
@@ -50,11 +49,13 @@ public partial class UIGameBuildCourtyard : BaseUIComponent
         {
             ui_Content.RefreshAllCells();
         }
+        InitData();
     }
 
     public void InitData()
     {
         GameDataBean gameData = GameDataHandler.Instance.manager.GetGameData();
+        InnCourtyardBean innCourtyardData = gameData.GetInnCourtyardData();
         listSeedData = gameData.GetItemsByType(GeneralEnum.Seed);
         ui_Content.SetCellCount(listSeedData.Count);
 
@@ -65,6 +66,37 @@ public partial class UIGameBuildCourtyard : BaseUIComponent
         else
         {
             ui_Null.ShowObj(false);
+        }
+
+        //自动续种
+        if (ui_ItemEventAutoSeedCheckBox_1 != null)
+        {
+            ui_ItemEventAutoSeedCheckBox_1.SetCallBack(this);
+
+
+            if (innCourtyardData.isAutoSeed)
+            {
+                ui_ItemEventAutoSeedCheckBox_1.ChangeStates(true);
+            }
+            else
+            {
+                ui_ItemEventAutoSeedCheckBox_1.ChangeStates(false);
+            }
+        }
+        //初始化选人
+        if (innCourtyardData.managerId.IsNull())
+        {
+            ui_CharacterUI.ShowObj(false);
+            ui_CharacterName.ShowObj(false);
+        }
+        else
+        {
+            ui_CharacterUI.ShowObj(true);
+            ui_CharacterName.ShowObj(true);
+            var characterData = gameData.GetCharacterDataById(innCourtyardData.managerId);
+            ui_CharacterUI.SetCharacterData(characterData.body, characterData.equips);
+
+            ui_CharacterName.text = characterData.baseInfo.name;
         }
     }
 
@@ -86,7 +118,12 @@ public partial class UIGameBuildCourtyard : BaseUIComponent
         {
             OnClickForDismantleMode();
         }
+        else if (viewButton == ui_ManagerChangeBtn)
+        {
+            OnClickForChangeMananger();
+        }
     }
+
     /// <summary>
     /// 拆除模式
     /// </summary>
@@ -95,10 +132,78 @@ public partial class UIGameBuildCourtyard : BaseUIComponent
         GameControlHandler.Instance.manager.GetControl<ControlForBuildCourtyardCpt>(GameControlHandler.ControlEnum.BuildCourtyard).SetDismantleMode();
     }
 
+    /// <summary>
+    /// 点击更换管理员
+    /// </summary>
+    public void OnClickForChangeMananger()
+    {
+        GameDataBean gameData = GameDataHandler.Instance.manager.GetGameData();
+        InnCourtyardBean innCourtyardData = gameData.GetInnCourtyardData();
+        AudioHandler.Instance.PlaySound(AudioSoundEnum.ButtonForNormal);
+        DialogBean dialogData = new DialogBean();
+        dialogData.dialogPosition = 0;
+        dialogData.dialogType = DialogEnum.PickForCharacter;
+        dialogData.actionSubmit = (view,data)=> 
+        {
+            //还原原来的
+            if (!innCourtyardData.managerId.IsNull())
+            {
+                var oldManager = gameData.GetCharacterDataById(innCourtyardData.managerId);
+                oldManager.baseInfo.SetWorkerStatus(WorkerStatusEnum.Rest);
+            }
+
+            PickForCharacterDialogView pickForCharacterDialogView = view as PickForCharacterDialogView;
+            List<CharacterBean> listMembers = pickForCharacterDialogView.GetPickCharacter();
+            if (listMembers.IsNull())
+            {
+                innCourtyardData.managerId = null;
+            }
+            else 
+            {
+                //派遣
+                foreach (CharacterBean itemCharacter in listMembers)
+                {
+                    innCourtyardData.managerId = itemCharacter.baseInfo.characterId;
+                    itemCharacter.baseInfo.SetWorkerStatus(WorkerStatusEnum.CourtyardManager);
+                }
+            }
+            RefreshUI();
+        };
+        PickForCharacterDialogView pickForCharacterDialog = UIHandler.Instance.ShowDialog<PickForCharacterDialogView>(dialogData);
+        //排除不能参加的人
+        List<string> listExpel = new List<string>();
+        List<CharacterBean> listCharacter = gameData.GetAllCharacterData();
+        for (int i = 0; i < listCharacter.Count; i++)
+        {
+            CharacterBean itemCharacter = listCharacter[i];
+            if (itemCharacter == gameData.userCharacter
+              || (itemCharacter.baseInfo.GetWorkerStatus() != WorkerStatusEnum.Rest && itemCharacter.baseInfo.GetWorkerStatus() != WorkerStatusEnum.Work && itemCharacter.baseInfo.GetWorkerStatus() != WorkerStatusEnum.CourtyardManager))
+            {
+                listExpel.Add(itemCharacter.baseInfo.characterId);
+            }
+        }
+
+        pickForCharacterDialog.SetExpelCharacter(listExpel);
+        pickForCharacterDialog.SetPickCharacterMax(1);
+        pickForCharacterDialog.SetIsNullSelect(true);
+    }
+
     public void OnClickForBack()
     {
         AudioHandler.Instance.PlaySound(AudioSoundEnum.ButtonForBack);
         //打开主UI
         UIHandler.Instance.OpenUIAndCloseOther<UIGameMain>();
     }
+
+    #region 回调
+    public void RadioButtonSelected(RadioButtonView view, bool isSelect)
+    {
+        if (view == ui_ItemEventAutoSeedCheckBox_1)
+        {
+            GameDataBean gameData = GameDataHandler.Instance.manager.GetGameData();
+            InnCourtyardBean innCourtyardData = gameData.GetInnCourtyardData();
+            innCourtyardData.isAutoSeed = isSelect;
+        }
+    }
+    #endregion
 }

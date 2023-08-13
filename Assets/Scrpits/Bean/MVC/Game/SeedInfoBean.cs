@@ -20,6 +20,14 @@ public partial class SeedInfoBean : BaseBean
 	/// </summary>
 	public int growup_totleloop;
 	/// <summary>
+	///收获的道具
+	/// </summary>
+	public string get_items;
+	/// <summary>
+	///收获的食材
+	/// </summary>
+	public string get_ingredient;
+	/// <summary>
 	///备注
 	/// </summary>
 	public string remark;

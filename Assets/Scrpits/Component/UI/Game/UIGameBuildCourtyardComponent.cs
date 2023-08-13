@@ -14,5 +14,17 @@ public partial class UIGameBuildCourtyard
 
     public Text ui_Null;
 
+    public CharacterUICpt ui_CharacterUI;
+
+    public Button ui_ManagerChangeBtn;
+
+    public Text ui_ManagerChangeBtnTex;
+
+    public Text ui_Title;
+
+    public RadioButtonView ui_ItemEventAutoSeedCheckBox_1;
+
+    public Text ui_CharacterName;
+
 
 }

@@ -22,10 +22,13 @@ public class PickForCharacterDialogView : DialogView, ItemGameDialogPickCharacte
     public GameObject objPickCharacterModel;
 
     public int pickCharacterMax = 0;
+    //是否能不选择角色
+    public bool isNullSelect = false;
     public List<CharacterBean> listCharacterData = new List<CharacterBean>();
 
     public List<CharacterBean> listPickCharacter = new List<CharacterBean>();
     public List<string> listExpelCharacterId = new List<string>();
+
 
     public override void Awake()
     {
@@ -56,6 +59,15 @@ public class PickForCharacterDialogView : DialogView, ItemGameDialogPickCharacte
     public void SetPickCharacterMax(int pickCharacterMax)
     {
         this.pickCharacterMax = pickCharacterMax;
+    }
+    
+    /// <summary>
+    /// 设置是否能不选择角色
+    /// </summary>
+    /// <param name="isNullSelect"></param>
+    public void SetIsNullSelect(bool isNullSelect)
+    {
+        this.isNullSelect = isNullSelect;
     }
 
     /// <summary>
@@ -125,7 +137,7 @@ public class PickForCharacterDialogView : DialogView, ItemGameDialogPickCharacte
 
     public override void SubmitOnClick()
     {
-        if (listPickCharacter.IsNull())
+        if (listPickCharacter.IsNull() && !isNullSelect)
         {
             AudioHandler.Instance.PlaySound(AudioSoundEnum.ButtonForNormal);
             UIHandler.Instance.ToastHint<ToastView>(TextHandler.Instance.manager.GetTextById(1032));

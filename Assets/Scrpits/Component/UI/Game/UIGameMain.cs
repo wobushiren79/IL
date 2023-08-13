@@ -309,6 +309,15 @@ public partial class UIGameMain : BaseUIComponent, DialogView.IDialogCallBack, I
         {
             ui_ItemGameMainFeaturesItem_Build.ShowObj(false);
         }
+        //是否展示后院按钮
+        if (SceneUtil.GetCurrentScene() == ScenesEnum.GameCourtyardScene)
+        {
+            ui_ItemGameMainFeaturesItem_Courtyard.ShowObj(true);
+        }
+        else
+        {
+            ui_ItemGameMainFeaturesItem_Courtyard.ShowObj(false);
+        }
         //是否展示家族按钮
         if (gameData.GetFamilyData().CheckMarry(gameData.gameTime))
         {

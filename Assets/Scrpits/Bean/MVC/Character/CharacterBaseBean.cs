@@ -109,6 +109,9 @@ public class CharacterBaseBean
             case WorkerStatusEnum.InfiniteTowers:
                 workerStatusStr = TextHandler.Instance.manager.GetTextById(288);
                 break;
+            case WorkerStatusEnum.CourtyardManager:
+                workerStatusStr = TextHandler.Instance.manager.GetTextById(289);
+                break;
         }
         return workerStatus;
     }
