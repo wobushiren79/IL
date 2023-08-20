@@ -16,6 +16,10 @@ public partial class SeedInfoBean : BaseBean
 	/// </summary>
 	public int growup_oneloopday;
 	/// <summary>
+	///摇晃状态（0静止 1摇晃）
+	/// </summary>
+	public string shake_state;
+	/// <summary>
 	///总共的成长周期
 	/// </summary>
 	public int growup_totleloop;

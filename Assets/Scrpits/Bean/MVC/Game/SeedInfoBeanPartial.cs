@@ -5,6 +5,9 @@ public partial class SeedInfoBean
     public Dictionary<IngredientsEnum, int> dicIngNum;
 
     public Dictionary<ItemBean, float> dicItemsNum;
+
+    public int[] arrayShakeStates;
+
     /// <summary>
     /// 获取种子的Tile
     /// </summary>
@@ -17,6 +20,20 @@ public partial class SeedInfoBean
             growTime = growup_totleloop - 1;
         }
         return $"{tile}{growTime + 1}";
+    }
+
+    /// <summary>
+    /// 获取摇晃状态
+    /// </summary>
+    /// <param name="growTime"></param>
+    /// <returns></returns>
+    public int GetSeedShake(int growTime)
+    {
+        if (arrayShakeStates == null)
+        {
+            arrayShakeStates = shake_state.SplitForArrayInt(',');
+        }
+        return arrayShakeStates[growTime];
     }
 
     /// <summary>

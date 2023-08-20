@@ -35,6 +35,23 @@ public class InnCourtyardBuilder : BaseTilemapBuilder
             return _buildTilemapForPlant;
         }
     }
+
+    protected Tilemap _buildTilemapForPlantNoShake;
+
+    public Tilemap buildTilemapForPlantNoShake
+    {
+        get
+        {
+            if (_buildTilemapForPlantNoShake == null)
+            {
+                GameObject obj = GameObject.FindGameObjectWithTag("Plant_NoShake");
+                if (obj != null)
+                    _buildTilemapForPlantNoShake = obj.GetComponent<Tilemap>();
+            }
+            return _buildTilemapForPlantNoShake;
+        }
+    }
+
     /// <summary>
     /// 开始建筑
     /// </summary>
@@ -64,10 +81,26 @@ public class InnCourtyardBuilder : BaseTilemapBuilder
             int growLoop = Mathf.FloorToInt(seedData.growDay / (float)seedInfo.growup_oneloopday);
             //获取指定周期的tile
             string tileName = seedInfo.GetSeedTile(growLoop);
+            int shakeState = seedInfo.GetSeedShake(growLoop);
             TileBase plantTile = InnBuildHandler.Instance.manager.GetCourtyardTileByName(tileName);
 
             Vector3 position = itemData.startPosition.GetVector3();
-            Build(buildTilemapForPlant, plantTile, new Vector3Int((int)position.x, (int)position.y, 0));
+            Tilemap targetPlant;
+            Tilemap targetPlantClear;
+            //如果是摇晃
+            if (shakeState == 1)
+            {
+                targetPlant = buildTilemapForPlant;
+                targetPlantClear = buildTilemapForPlantNoShake;
+            }
+            else
+            {
+                targetPlant = buildTilemapForPlantNoShake;
+                targetPlantClear = buildTilemapForPlant;
+            }
+            
+            Build(targetPlant, plantTile, new Vector3Int((int)position.x, (int)position.y, 0));
+            ClearTile(targetPlantClear, new Vector3Int((int)position.x, (int)position.y, 0));
 
             //湿润的土地
             BuildItemBean buildItemData = InnBuildHandler.Instance.manager.GetBuildDataById(999998);
@@ -91,9 +124,25 @@ public class InnCourtyardBuilder : BaseTilemapBuilder
             int growLoop = Mathf.FloorToInt(seedData.growDay / (float)seedInfo.growup_oneloopday);
             //获取指定周期的tile
             string tileName = seedInfo.GetSeedTile(growLoop);
+            int shakeState = seedInfo.GetSeedShake(growLoop);
+
+            Tilemap targetPlant;
+            Tilemap targetPlantClear;
+            //如果是摇晃
+            if (shakeState == 1)
+            {
+                targetPlant = buildTilemapForPlant;
+                targetPlantClear = buildTilemapForPlantNoShake;
+            }
+            else
+            {
+                targetPlant = buildTilemapForPlantNoShake;
+                targetPlantClear = buildTilemapForPlant;
+            }
 
             TileBase plantTile = InnBuildHandler.Instance.manager.GetCourtyardTileByName(tileName);
-            Build(buildTilemapForPlant, plantTile, changePosition);
+            Build(targetPlant, plantTile, changePosition);
+            ClearTile(targetPlantClear, changePosition);
 
             //湿润的土地
             BuildItemBean buildItemData = InnBuildHandler.Instance.manager.GetBuildDataById(999998);
@@ -103,6 +152,7 @@ public class InnCourtyardBuilder : BaseTilemapBuilder
         else
         {
             ClearTile(buildTilemapForPlant, changePosition);
+            ClearTile(buildTilemapForPlantNoShake, changePosition);
 
             //干燥的土地
             BuildItemBean buildItemData = InnBuildHandler.Instance.manager.GetBuildDataById(999999);

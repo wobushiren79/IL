@@ -39,6 +39,10 @@ public class SceneGameCourtyardInit : BaseNormalSceneInit
         if (gameData.userId.IsNull())
         {
             gameData.AddNewItems(9900001, 999);
+            gameData.AddNewItems(9901001, 999);
+            gameData.AddNewItems(9901002, 999);
+            gameData.AddNewItems(9902001, 999);
+            gameData.AddNewItems(9902002, 999);
             GameTimeHandler.Instance.SetTime(9, 0);
             InnCourtyardBean innCourtyardData = gameData.GetInnCourtyardData();
             innCourtyardData.courtyardLevel = 4;
