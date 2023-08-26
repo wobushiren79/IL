@@ -54,7 +54,7 @@ public class StoreInfoManager : BaseManager, IStoreInfoView
         storeInfoController.GetCarpenterBedInfo(action);
     }
     /// <summary>
-    /// 获取建筑坊数据
+    /// 获取药店数据
     /// </summary>
     public void GetStoreInfoForPharmacy(Action<List<StoreInfoBean>> action)
     {

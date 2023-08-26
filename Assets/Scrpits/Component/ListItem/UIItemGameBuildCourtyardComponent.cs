@@ -10,5 +10,13 @@ public partial class UIItemGameBuildCourtyard
 
     public Text ui_Number;
 
+    public Text ui_DaysTex;
+
+    public Image ui_IngIcon;
+
+    public Text ui_IngTex;
+
+    public RectTransform ui_Ing;
+
 
 }

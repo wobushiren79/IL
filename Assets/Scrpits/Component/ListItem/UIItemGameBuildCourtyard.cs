@@ -1,4 +1,5 @@
-﻿using UnityEditor;
+﻿using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.UI;
 using static GameControlHandler;
@@ -26,6 +27,41 @@ public partial class UIItemGameBuildCourtyard : BaseUIView
         SetName(itemsInfo.name);
         SetIcon(itemsInfo.icon_key);
         SetNum(itemData.itemNumber);
+        var seedInfo = SeedInfoCfg.GetItemDataByItemId(itemData.itemId);
+        SetDays(seedInfo.growup_oneloopday * seedInfo.growup_totleloop);
+        seedInfo.GetIng(out Dictionary<IngredientsEnum, int> dicIng);
+        if (dicIng.IsNull())
+        {
+            ui_Ing.ShowObj(false);
+        }
+        else
+        {
+            ui_Ing.ShowObj(true);
+            foreach (var itemIng in dicIng)
+            {
+                SetIngNum(itemIng.Key, itemIng.Value);
+                break;                
+            }
+        }
+    }
+
+    /// <summary>
+    /// 设置天数
+    /// </summary>
+    /// <param name="days"></param>
+    public void SetDays(int days)
+    {
+        ui_DaysTex.text = $"{days}";
+    }
+
+    /// <summary>
+    /// 设置食材数量
+    /// </summary>
+    public void SetIngNum(IngredientsEnum ingredients, int num)
+    {
+        Sprite spIcon = IngredientsEnumTools.GetIngredientIcon(ingredients);
+        ui_IngIcon.sprite = spIcon;
+        ui_IngTex.text = $"{num}";
     }
 
 

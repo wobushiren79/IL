@@ -165,7 +165,15 @@ public class ItemTownCerpenterCpt : ItemTownStoreCpt, DialogView.IDialogCallBack
             DialogBean dialogBean = new DialogBean();
             if (storeInfo.store_goods_type == (int)StoreForCarpenterTypeEnum.Expansion)
             {
-                dialogBean.content = string.Format(TextHandler.Instance.manager.GetTextById(3010), 1 + "");
+                //如果是庭院
+                if (storeInfo.mark_type == 3)
+                {
+                    dialogBean.content = string.Format(TextHandler.Instance.manager.GetTextById(3016));
+                }
+                else
+                {
+                    dialogBean.content = string.Format(TextHandler.Instance.manager.GetTextById(3010), 1 + "");
+                }
             }
             else
                 dialogBean.content = string.Format(TextHandler.Instance.manager.GetTextById(3002), buildItemData.name);
@@ -250,6 +258,7 @@ public class ItemTownCerpenterCpt : ItemTownStoreCpt, DialogView.IDialogCallBack
             if (storeInfo.store_goods_type == (int)StoreForCarpenterTypeEnum.Expansion)
             {
                 InnBuildBean innBuildData = gameData.GetInnBuildData();
+                InnCourtyardBean innCourtyardData = gameData.GetInnCourtyardData();
                 if (storeInfo.mark_type == 1)
                 {
                     //1楼扩建
@@ -264,11 +273,19 @@ public class ItemTownCerpenterCpt : ItemTownStoreCpt, DialogView.IDialogCallBack
                     innBuildData.buildInnSecondWidth = storeInfo.mark_x;
                     innBuildData.buildInnSecondHeight = storeInfo.mark_y;
                 }
+                else if (storeInfo.mark_type == 3)
+                {
+                    //庭院扩建
+                    innCourtyardData.courtyardLevel = int.Parse(storeInfo.mark);
+                }
 
-                //设置修建天数
-                List<TimeBean> listBuildDay = new List<TimeBean>();
-                listBuildDay.Add(GameTimeHandler.Instance.GetAfterDay(1));
-                innBuildData.listBuildDay = listBuildDay;
+                if (storeInfo.mark_type != 3)
+                {
+                    //设置修建天数
+                    List<TimeBean> listBuildDay = new List<TimeBean>();
+                    listBuildDay.Add(GameTimeHandler.Instance.GetAfterDay(1));
+                    innBuildData.listBuildDay = listBuildDay;
+                }
 
                 GetUIComponent<UITownCarpenter>().RefreshUI();
                 toastStr = string.Format(TextHandler.Instance.manager.GetTextById(1011), storeInfo.name);

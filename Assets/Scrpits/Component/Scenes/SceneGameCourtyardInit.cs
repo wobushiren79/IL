@@ -45,7 +45,7 @@ public class SceneGameCourtyardInit : BaseNormalSceneInit
             gameData.AddNewItems(9902002, 999);
             GameTimeHandler.Instance.SetTime(9, 0);
             InnCourtyardBean innCourtyardData = gameData.GetInnCourtyardData();
-            innCourtyardData.courtyardLevel = 4;
+            innCourtyardData.courtyardLevel = 9;
         }
     }
 

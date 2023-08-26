@@ -3,14 +3,16 @@ using UnityEditor;
 using System.Collections.Generic;
 using System;
 
-public class UITownPharmacy : UIBaseOne, IRadioGroupCallBack
+public partial class UITownPharmacy : UIBaseOne, IRadioGroupCallBack
 {
     public GameObject objItemsContainer;
     public GameObject objItemsModel;
 
     public RadioGroupView rgType;
 
-    protected List<StoreInfoBean> listData;
+    protected List<StoreInfoBean> listMedicineData;
+    protected List<StoreInfoBean> listSeedData;
+
     public override void Awake()
     {
         base.Awake();
@@ -37,29 +39,44 @@ public class UITownPharmacy : UIBaseOne, IRadioGroupCallBack
             return;
         foreach (StoreInfoBean storeInfo in listData)
         {
-            GameObject objItem=  Instantiate(objItemsContainer, objItemsModel);
-            ItemTownStoreForGoodsCpt itemCpt= objItem.GetComponent<ItemTownStoreForGoodsCpt>();
+            GameObject objItem = Instantiate(objItemsContainer, objItemsModel);
+            ItemTownStoreForGoodsCpt itemCpt = objItem.GetComponent<ItemTownStoreForGoodsCpt>();
             itemCpt.SetData(storeInfo);
         }
     }
-    
+
     /// <summary>
     /// 设置商店数据
     /// </summary>
     /// <param name="listData"></param>
     public void SetStoreData(List<StoreInfoBean> listData)
     {
-        this.listData = listData;
-        CreateItemsList(listData);
+        listMedicineData = new List<StoreInfoBean>();
+        listSeedData = new List<StoreInfoBean>();
+        for (int i = 0; i < listData.Count; i++)
+        {
+            var itemData = listData[i];
+            if (itemData.store_goods_type == 1)
+            {
+                listMedicineData.Add(itemData);
+            }
+            else if (itemData.store_goods_type == 2)
+            {
+                listSeedData.Add(itemData);
+            }
+        }
+        CreateItemsList(listMedicineData);
     }
     #region 类型选择回调
     public void RadioButtonSelected(RadioGroupView rgView, int position, RadioButtonView rbview)
     {
-        switch (rbview.name)
+        if (rbview == ui_Medicine)
         {
-            case "Medicine":
-                CreateItemsList(listData);
-                break;
+            CreateItemsList(listMedicineData);
+        }
+        else if (rbview == ui_Seed)
+        {
+            CreateItemsList(listSeedData);
         }
     }
 

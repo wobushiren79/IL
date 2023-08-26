@@ -106,11 +106,13 @@ public class UITownCarpenter : UIBaseOne, IRadioGroupCallBack
         if (listData == null || objCarpenterContent == null)
             return;
         GameDataBean gameData = GameDataHandler.Instance.manager.GetGameData();
+        InnBuildBean innBuild = gameData.GetInnBuildData();
+        InnCourtyardBean innCourtyard = gameData.GetInnCourtyardData();
         for (int i = 0; i < listData.Count; i++)
         {
             StoreInfoBean itemData = listData[i];
             //如果扩建 
-            InnBuildBean innBuild = gameData.GetInnBuildData();
+
             if (itemData.store_goods_type == (int)StoreForCarpenterTypeEnum.Expansion)
             {
                 if (itemData.mark_type == 1)
@@ -123,6 +125,13 @@ public class UITownCarpenter : UIBaseOne, IRadioGroupCallBack
                 else if (itemData.mark_type == 2)
                 {
                     if (innBuild.buildSecondLevel + 1 != int.Parse(itemData.mark) || innBuild.buildSecondLevel > innBuild.buildLevel)
+                    {
+                        continue;
+                    }
+                }
+                else if (itemData.mark_type == 3)
+                {
+                    if (innCourtyard.courtyardLevel + 1 != int.Parse(itemData.mark))
                     {
                         continue;
                     }

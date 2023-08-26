@@ -7,7 +7,7 @@ using System.Collections.Generic;
 [Serializable]
 public class InnCourtyardBean
 {
-    public int courtyardLevel = 1;
+    public int courtyardLevel = 0;
 
     public List<InnResBean> listSeedData = new List<InnResBean>();
     //是否自动播种
@@ -49,20 +49,31 @@ public class InnCourtyardBean
                 seedInfoData.GetIng(out Dictionary<IngredientsEnum, int> dicIngData);
                 foreach (var itemIngData in dicIngData)
                 {
+                    float addRate = 0;
+                    if (!managerId.IsNull())
+                    {
+                        //获取管理员数据
+                        var managerCharaterData = gameData.GetCharacterDataById(managerId);
+                        if (managerCharaterData != null)
+                        {
+                            managerCharaterData.GetAttributes(out CharacterAttributesBean totalAttributes, out CharacterAttributesBean selfAttributes, out CharacterAttributesBean equipAttributes);
+                            addRate = (totalAttributes.charm / 50f) + (totalAttributes.lucky / 50f);
+                        }
+                    }
                     if (dicIngDataAdd.TryGetValue(itemIngData.Key, out int addNum))
                     {
-                        dicIngDataAdd[itemIngData.Key] = addNum + itemIngData.Value;
+                        dicIngDataAdd[itemIngData.Key] = addNum + itemIngData.Value + (int)(addRate * itemIngData.Value);
                     }
                     else
                     {
-                        dicIngDataAdd.Add(itemIngData.Key, itemIngData.Value);
+                        dicIngDataAdd.Add(itemIngData.Key, itemIngData.Value + (int)(addRate * itemIngData.Value));
                     }
                 }
                 //添加道具
                 seedInfoData.GetItems(out listItemsDataAdd);
 
                 //查看背包是否还有同类型的种子
-                if (gameData.GetItemsNumber(innRes.id) > 0)
+                if (isAutoSeed && gameData.GetItemsNumber(innRes.id) > 0)
                 {
                     //如果有则直接种植
                     seedData.growDay = 0;
