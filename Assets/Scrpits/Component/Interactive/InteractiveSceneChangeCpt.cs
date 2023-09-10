@@ -16,6 +16,18 @@ public class InteractiveSceneChangeCpt : BaseInteractiveCpt
             {
                 UIHandler.Instance.ToastHint<ToastView>(TextHandler.Instance.GetTextById(1361));
             }
+            else if (changeScene == ScenesEnum.GameCourtyardScene)
+            {
+                GameDataBean gameData = GameDataHandler.Instance.manager.GetGameData();
+                InnCourtyardBean innCourtyard = gameData.GetInnCourtyardData();
+                //如果还没有扩建后院
+                if (innCourtyard.courtyardLevel <= 0)
+                {
+                    UIHandler.Instance.ToastHint<ToastView>(TextHandler.Instance.GetTextById(1362));
+                    return;
+                }
+                GameScenesHandler.Instance.ChangeScene(changeScene);
+            }
             else
             {
                 if (changeScene == ScenesEnum.GameMountainScene)
@@ -35,7 +47,6 @@ public class InteractiveSceneChangeCpt : BaseInteractiveCpt
                 }
                 else
                 {
-
                     GameScenesHandler.Instance.ChangeScene(changeScene);
                 }
             }
