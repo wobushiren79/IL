@@ -151,7 +151,7 @@ public class ItemGameBackpackEquipCpt : ItemGameBackpackCpt
                 }
                 break;
             case GeneralEnum.Other:
-                if ( itemsInfoData.id == 99900001)
+                if (itemsInfoData.id == 99900001)
                 {
                     //忘记技能的孟婆汤
                     if (! characterData.attributes.listSkills.IsNull())
@@ -161,6 +161,19 @@ public class ItemGameBackpackEquipCpt : ItemGameBackpackCpt
                     }
                     UIHandler.Instance.ToastHint<ToastView>(characterData.baseInfo.name + TextHandler.Instance.manager.GetTextById(1067));
                     RefreshItems(itemsInfoData.id, -1);
+                }
+                else if (itemsInfoData.id == 99900002)
+                {
+                    if (characterData.attributes.CheckLearnItem(itemsInfoData.id))
+                    {
+                        //已经学习过该图书
+                        string toastStr = string.Format(TextHandler.Instance.manager.GetTextById(1055), characterData.baseInfo.name, itemsInfoData.name);
+                        UIHandler.Instance.ToastHint<ToastView>(toastStr);
+                    }
+                    else
+                    {
+                        LearnItem();
+                    }
                 }
                 break;
             default:
@@ -217,6 +230,16 @@ public class ItemGameBackpackEquipCpt : ItemGameBackpackCpt
         characterData.attributes.LearnBook(itemsInfoData.id);
         characterData.attributes.AddAttributes(itemsInfoData);
         string toastStr = string.Format(TextHandler.Instance.manager.GetTextById(1008), characterData.baseInfo.name, itemsInfoData.name);
+        UIHandler.Instance.ToastHint<ToastView>(ivIcon.sprite, toastStr);
+        RefreshItems(itemsInfoData.id, -1);
+    }
+
+    protected void LearnItem()
+    {
+        //学习该道具
+        characterData.attributes.LearnItem(itemsInfoData.id);
+        characterData.attributes.AddAttributes(itemsInfoData);
+        string toastStr = string.Format(TextHandler.Instance.manager.GetTextById(1054), characterData.baseInfo.name, itemsInfoData.name);
         UIHandler.Instance.ToastHint<ToastView>(ivIcon.sprite, toastStr);
         RefreshItems(itemsInfoData.id, -1);
     }

@@ -20,6 +20,8 @@ public class CharacterAttributesBean
     public List<long> listSkills = new List<long>();
     //学会的书籍
     public List<long> listLearnBook = new List<long>();
+    //使用过的一次性道具
+    public List<long> listUseItem = new List<long>();
 
     /// <summary>
     /// 初始化属性
@@ -52,6 +54,15 @@ public class CharacterAttributesBean
             characterAttributes.charm,
             characterAttributes.force,
             characterAttributes.lucky);
+    }
+
+    /// <summary>
+    /// 学习道具
+    /// </summary>
+    /// <param name="itemId"></param>
+    public void LearnItem(long itemId)
+    {
+        listUseItem.Add(itemId);
     }
 
     /// <summary>
@@ -88,6 +99,16 @@ public class CharacterAttributesBean
     public bool CheckLearnSkills(long skillId)
     {
         return listSkills.Contains(skillId);
+    }
+
+    /// <summary>
+    /// 检测和是否学习国使用的道具
+    /// </summary>
+    /// <param name="itemId"></param>
+    /// <returns></returns>
+    public bool CheckLearnItem(long itemId)
+    {
+        return listUseItem.Contains(itemId);
     }
 
     /// <summary>

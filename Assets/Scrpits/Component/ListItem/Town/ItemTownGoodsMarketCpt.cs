@@ -198,19 +198,19 @@ public class ItemTownGoodsMarketCpt : ItemGameBaseCpt, DialogView.IDialogCallBac
         switch (favorabilityLevel)
         {
             case 0:
-                canBuyNumber = 100;
-                break;
-            case 1:
                 canBuyNumber = 500;
                 break;
-            case 2:
-                canBuyNumber = 1000;
-                break;
-            case 3:
+            case 1:
                 canBuyNumber = 2000;
                 break;
-            case 4:
+            case 2:
                 canBuyNumber = 5000;
+                break;
+            case 3:
+                canBuyNumber = 10000;
+                break;
+            case 4:
+                canBuyNumber = 20000;
                 break;
             default:
                 canBuyNumber = -1;

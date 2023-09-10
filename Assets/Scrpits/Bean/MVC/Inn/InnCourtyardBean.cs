@@ -70,7 +70,25 @@ public class InnCourtyardBean
                     }
                 }
                 //添加道具
-                seedInfoData.GetItems(out listItemsDataAdd);
+                seedInfoData.GetItems(out List<ItemBean> listItemsDataAddItem);
+                for (int z = 0; z < listItemsDataAddItem.Count; z++)
+                {
+                    ItemBean itemDataZ = listItemsDataAddItem[z];
+                    bool hasData = false;
+                    for (int w = 0; w < listItemsDataAdd.Count; w++)
+                    {
+                        ItemBean itemDataW = listItemsDataAdd[w];
+                        if (itemDataW.itemId == itemDataZ.itemId)
+                        {
+                            itemDataW.itemNumber += itemDataZ.itemNumber;
+                            hasData = true;
+                        }
+                    }
+                    if (hasData == false)
+                    {
+                        listItemsDataAdd.Add(new ItemBean(itemDataZ.itemId,itemDataZ.itemNumber));
+                    }
+                }
 
                 //查看背包是否还有同类型的种子
                 if (isAutoSeed && gameData.GetItemsNumber(innRes.id) > 0)
@@ -88,7 +106,7 @@ public class InnCourtyardBean
                     listSeedData.Remove(innRes);
                 }
             }
-            else 
+            else
             {
                 innRes.remark = JsonUtil.ToJson(seedData);
             }
@@ -107,7 +125,7 @@ public class InnCourtyardBean
         {
             ItemBean itemData = listItemsDataAdd[i];
             gameData.AddItemsNumber(itemData.itemId, itemData.itemNumber);
-            var itemsInfo =  GameItemsHandler.Instance.manager.GetItemsById(itemData.itemId);
+            var itemsInfo = GameItemsHandler.Instance.manager.GetItemsById(itemData.itemId);
             Sprite spItem = GeneralEnumTools.GetGeneralSprite(itemsInfo, false);
             UIHandler.Instance.ToastHint<ToastView>(spItem, string.Format(TextHandler.Instance.manager.GetTextById(6099), $"{itemsInfo.name}x{itemData.itemNumber}"));
         }
