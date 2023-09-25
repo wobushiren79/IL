@@ -57,7 +57,7 @@ public class InnCourtyardBean
                         if (managerCharaterData != null)
                         {
                             managerCharaterData.GetAttributes(out CharacterAttributesBean totalAttributes, out CharacterAttributesBean selfAttributes, out CharacterAttributesBean equipAttributes);
-                            addRate = (totalAttributes.charm / 50f) + (totalAttributes.lucky / 50f);
+                            addRate = (totalAttributes.charm / 100f) + (totalAttributes.lucky / 100f);
                         }
                     }
                     if (dicIngDataAdd.TryGetValue(itemIngData.Key, out int addNum))
