@@ -357,7 +357,7 @@ public class ItemTownGoodsMarketCpt : ItemGameBaseCpt, DialogView.IDialogCallBac
             return;
         }
         int buyLimitNum = GetBuyLimit(ingType);
-        if (buyNumber > buyLimitNum)
+        if (buyLimitNum != -1 && buyNumber > buyLimitNum)
         {
             UIHandler.Instance.ToastHint<ToastView>(TextHandler.Instance.manager.GetTextById(1026));
             return;
