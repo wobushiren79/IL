@@ -2,7 +2,7 @@
 using UnityEditor;
 using UnityEngine;
 
-public class CameraManager : BaseManager
+public partial class CameraManager 
 {
     protected CinemachineVirtualCamera _camera2D;
 
@@ -16,18 +16,5 @@ public class CameraManager : BaseManager
         }
     }
 
-
-    protected Camera _uiCamera;
-
-    public Camera uiCamera
-    {
-        get
-        {
-            if (_uiCamera == null)
-            {
-                return Camera.main;
-            }
-            return Camera.main;
-        }
-    }
+   
 }

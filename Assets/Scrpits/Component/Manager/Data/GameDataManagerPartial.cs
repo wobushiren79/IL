@@ -5,15 +5,12 @@ using System;
 
 public partial class GameDataManager : BaseManager, IGameDataView, IUserRevenueView, IGameConfigView
 {
-    //游戏设置
-    public GameConfigBean gameConfig;
     //游戏数据
     public GameDataBean gameData;
 
     //游戏数据控制
     public GameDataController controllerForGameData;
     public UserRevenueController controllerForUserRevenue;
-    public GameConfigController controllerForGameConfig;
 
     private void Awake()
     {
@@ -100,25 +97,6 @@ public partial class GameDataManager : BaseManager, IGameDataView, IUserRevenueV
         controllerForUserRevenue.GetUserRevenueYear(gameData.userId, action);
     }
 
-    /// <summary>
-    /// 保存游戏设置
-    /// </summary>
-    public void SaveGameConfig()
-    {
-        controllerForGameConfig.SaveGameConfigData(gameConfig);
-    }
-
-    /// <summary>
-    /// 获取游戏设置
-    /// </summary>
-    /// <returns></returns>
-    public GameConfigBean GetGameConfig()
-    {
-        if (gameConfig == null)
-            gameConfig = new GameConfigBean();
-        return gameConfig;
-    }
-
     #region 数据回调
     public void DeleteGameDataFail()
     {
@@ -170,25 +148,6 @@ public partial class GameDataManager : BaseManager, IGameDataView, IUserRevenueV
     public void GetUserRevenueSuccess(UserRevenueBean userRevenue, Action<UserRevenueBean> action)
     {
         action?.Invoke(userRevenue);
-    }
-    public void GetGameConfigFail()
-    {
-
-    }
-
-    public void GetGameConfigSuccess(GameConfigBean configBean)
-    {
-        gameConfig = configBean;
-    }
-
-    public void SetGameConfigFail()
-    {
-
-    }
-
-    public void SetGameConfigSuccess(GameConfigBean configBean)
-    {
-
     }
     #endregion
 }
